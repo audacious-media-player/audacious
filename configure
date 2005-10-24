@@ -28907,7 +28907,7 @@ PLUGIN_LDFLAGS='-module -avoid-version -export-symbols-regex "get_.plugin_info"'
 
 
 
-                                                                                                                                                                                                                                                                                        ac_config_files="$ac_config_files Makefile audacious.1 audacious.spec audacious.pc audacious/audacious.desktop audacious/Makefile audacious/glade/Makefile audacious/images/Makefile libaudacious/Makefile Output/Makefile Output/OSS/Makefile Output/esd/Makefile Output/alsa/Makefile Input/Makefile Input/mpg123/Makefile Input/aac/Makefile Input/aac/libmp4v2/Makefile Input/aac/libfaad2/Makefile Input/aac/src/Makefile Input/vorbis/Makefile Input/cdaudio/Makefile Input/wav/Makefile Visualization/Makefile Visualization/blur_scope/Makefile po/Makefile.in intl/Makefile icons/Makefile skin/Makefile"
+                                                                                                                                                                                                                                                                                                  ac_config_files="$ac_config_files Makefile audacious.1 audacious.spec audacious.pc audacious/audacious.desktop audacious/Makefile audacious/glade/Makefile audacious/images/Makefile libaudacious/Makefile Output/Makefile Output/OSS/Makefile Output/esd/Makefile Output/alsa/Makefile Input/Makefile Input/mpg123/Makefile Input/aac/Makefile Input/aac/libmp4v2/Makefile Input/aac/libfaad2/Makefile Input/aac/src/Makefile Input/tonegen/Makefile Input/vorbis/Makefile Input/cdaudio/Makefile Input/wav/Makefile Visualization/Makefile Visualization/blur_scope/Makefile po/Makefile.in intl/Makefile icons/Makefile skin/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -29597,6 +29597,7 @@ do
   "Input/aac/libmp4v2/Makefile" ) CONFIG_FILES="$CONFIG_FILES Input/aac/libmp4v2/Makefile" ;;
   "Input/aac/libfaad2/Makefile" ) CONFIG_FILES="$CONFIG_FILES Input/aac/libfaad2/Makefile" ;;
   "Input/aac/src/Makefile" ) CONFIG_FILES="$CONFIG_FILES Input/aac/src/Makefile" ;;
+  "Input/tonegen/Makefile" ) CONFIG_FILES="$CONFIG_FILES Input/tonegen/Makefile" ;;
   "Input/vorbis/Makefile" ) CONFIG_FILES="$CONFIG_FILES Input/vorbis/Makefile" ;;
   "Input/cdaudio/Makefile" ) CONFIG_FILES="$CONFIG_FILES Input/cdaudio/Makefile" ;;
   "Input/wav/Makefile" ) CONFIG_FILES="$CONFIG_FILES Input/wav/Makefile" ;;
@@ -30714,6 +30715,7 @@ echo "    + id3v2 editing:                      $have_id3lib"
 echo "  MPEG 4 Audio (AAC):                     $enable_aac"
 echo "  CD Digital Audio (cdda):                yes"
 echo "  Microsoft WAV (wav):                    yes"
+echo "  Tone Generator:                         yes"
 echo "  Ogg Vorbis (vorbis):                    $have_oggvorbis"
 echo ""
 echo "  Visualization"

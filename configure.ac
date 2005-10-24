@@ -602,6 +602,7 @@ AC_CONFIG_FILES([
 	Input/aac/libmp4v2/Makefile
 	Input/aac/libfaad2/Makefile
 	Input/aac/src/Makefile
+	Input/tonegen/Makefile
         Input/vorbis/Makefile
         Input/cdaudio/Makefile
         Input/wav/Makefile
@@ -652,6 +653,7 @@ echo "    + id3v2 editing:                      $have_id3lib"
 echo "  MPEG 4 Audio (AAC):                     $enable_aac"
 echo "  CD Digital Audio (cdda):                yes"
 echo "  Microsoft WAV (wav):                    yes"
+echo "  Tone Generator:                         yes"
 echo "  Ogg Vorbis (vorbis):                    $have_oggvorbis"
 echo ""
 echo "  Visualization"
