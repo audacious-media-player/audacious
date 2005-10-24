@@ -17,9 +17,9 @@
 #include "mp4.h"
 
 #include <audacious/plugin.h>
-#include <audacious/util.h>
-#include <audacious/configfile.h>
-#include <audacious/titlestring.h>
+#include <libaudacious/util.h>
+#include <libaudacious/configfile.h>
+#include <libaudacious/titlestring.h>
 
 #define MP4_DESCRIPTION	"MP4 & MPEG2/4-AAC audio player - 1.2.x"
 #define MP4_VERSION	"ver. 0.4 - 24 November 2003"
