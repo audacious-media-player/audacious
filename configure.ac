@@ -601,6 +601,7 @@ AC_CONFIG_FILES([
 	Input/aac/Makefile
 	Input/aac/libmp4v2/Makefile
 	Input/aac/libfaad2/Makefile
+	Input/aac/src/Makefile
         Input/vorbis/Makefile
         Input/cdaudio/Makefile
         Input/wav/Makefile
