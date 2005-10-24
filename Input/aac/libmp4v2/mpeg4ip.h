@@ -233,34 +233,6 @@ char *strsep(char **strp, const char *delim);
 
 #define ADV_SPACE(a) {while (isspace(*(a)) && (*(a) != '\0'))(a)++;}
 
-#ifndef HAVE_GTK
-typedef char gchar;
-typedef unsigned char guchar;
-
-typedef int gint;
-typedef unsigned int guint;
-
-typedef long glong;
-typedef unsigned long gulong;
-
-typedef double gdouble;
-
-typedef int gboolean;
-
-typedef int16_t gint16;
-typedef uint16_t guint16;
-
-typedef int32_t gint32;
-typedef uint32_t guint32;
-
-typedef int64_t gint64;
-typedef uint64_t guint64;
-
-typedef uint8_t  guint8;
-typedef int8_t gint8;
-
-#endif
-
 #ifndef FALSE
 #define FALSE 0
 #endif

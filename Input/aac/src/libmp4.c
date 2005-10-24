@@ -16,10 +16,10 @@
 #include "faad.h"
 #include "mp4.h"
 
-#include <xmms/plugin.h>
-#include <xmms/util.h>
-#include <xmms/configfile.h>
-#include <xmms/titlestring.h>
+#include <audacious/plugin.h>
+#include <audacious/util.h>
+#include <audacious/configfile.h>
+#include <audacious/titlestring.h>
 
 #define MP4_DESCRIPTION	"MP4 & MPEG2/4-AAC audio player - 1.2.x"
 #define MP4_VERSION	"ver. 0.4 - 24 November 2003"
