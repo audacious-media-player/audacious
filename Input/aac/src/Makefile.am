@@ -2,7 +2,7 @@ lib_LTLIBRARIES = libaac.la
 
 libdir = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
-libaac_la_LDFLAGS = $(PLUGIN_LDFLAGS)
+libaac_la_LDFLAGS = $(PLUGIN_LDFLAGS) ../libmp4v2/libmp4v2.la ../libfaad2/libfaad2.la
 
 libaac_la_SOURCES = aac_utils.c libmp4.c mp4_utils.c
 
