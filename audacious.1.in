@@ -1,0 +1,205 @@
+.TH AUDACIOUS "24 October 2005" "Version @VERSION@" "Audacious Manual Pages"
+.SH NAME
+Audacious \- an audio player for X.
+.SH SYNOPSIS
+.B audacious
+[\-h] [\-\-help] [\-n \fI<session>\fP] [\-\-session=\fI<session>\fP] [\-r]
+[\-\-rew] [\-p] [\-\-play] [\-u] [\-\-pause] [\-s] [\-\-stop] [\-f]
+[\-\-fwd] [\-e] [\-\-enqueue] [\-m] [\-\-show\-main\-window] [\-v]
+[\-\-version] [\fIfilename\fP]...
+.SH DESCRIPTION
+\fIAudacious\fP is a media player, based on Beep Media Player, 
+which is in turn based on the X Multimedia System.
+It is used to play audio and other kinds of media files.  By default
+Audacious can play MPEG audio, Ogg Vorbis, RIFF wav, most module formats,
+and a few other formats.  Audacious can be extended through plugins to play
+a number of other audio and video formats.
+.SH OPTIONS
+Audacious accepts the following options:
+.TP
+.B \-h, \-\-help
+Show summary of options.
+.TP
+.B \-n, \-\-session
+Select Audacious/BMP/XMMS session (Default: 0).
+.TP
+.B \-r, \-\-rew
+Skip backwards in playlist.
+.TP
+.B \-p, \-\-play
+Start playing current playlist.
+.TP
+.B \-u, \-\-pause
+Pause current song.
+.TP
+.B \-s, \-\-stop
+Stop current song.
+.TP
+.B \-t, \-\-play\-pause
+Pause if playing, play otherwise.
+.TP
+.B \-f, \-\-fwd
+Skip forward in playlist.
+.TP
+.B \-e, \-\-enqueue
+Don't clear the playlist.
+.TP
+.B \-m, \-\-show\-main\-window
+Show the main window.
+.TP
+.B \-v, \-\-version
+Print version number and exit.
+.SH SKINS
+Audacious supports Winamp Classic style skins.  Skins may be stored in either
+archived (\fI.zip\fP, \fI.wsz\fP, \fI.tgz\fP, \fI.tar.gz\fP, 
+or \fI.tar.bz2\fP) or unarchived format.  Audacious looks for skinfiles in
+@datadir@/audacious/Skins, ~/.audacious/Skins, and locations specified by the
+\fBSKINSDIR\fP variable.
+.SH KEYBINDINGS
+Global keybindings for Audacious:
+
+.in +2
+.ta \w'Shift + Control + w 'u
+z	Previous song
+.br
+x	Play
+.br
+c	Pause
+.br
+v	Stop
+.br
+b	Next song
+.br
+l	Play file
+.br
+j	Jump to file
+.br
+r	Toggle Repeat
+.br
+s	Toggle Shuffle
+.br
+Shift + l	Play directory
+.br
+Control + l	Play location
+.br
+Control + p	Preferences dialog
+.br
+Control + v	Visualization plugin dialog
+.br
+Control + r	Time remaining
+.br
+Control + a	Always on top
+.br
+Control + w	Winshade mode
+.br
+Control + d	Doublesize mode
+.br
+Control + e	Easy move
+.br
+Control + j	Jump to time
+.br
+Control + z	Start of list
+.br
+Control + n	No Playlist Advance
+.br
+Control + 3	File info dialog
+.br
+Control + Alt + w	Toggle Equalizer winshade mode
+.br
+Shift + Control + w	Playlist winshade mode
+.br
+Alt + w	Hide/show mainwindow
+.br
+Alt + e	Hide/show playlistwindow
+.br
+Alt + g	Hide/show Equalizer
+.br
+Alt + s	Skin selecting window
+.in -2
+
+Main window specific:
+
+.in +2
+.br
+Arrow key up	Volume up 2%
+.br
+Arrow key down	Volume down 2%
+.br
+Arrow key right	Skip 5 seconds forward in song
+.br
+Arrow key left	Skip 5 seconds back in song
+.in -2
+
+Playlist window specific:
+
+.in +2
+.br
+Arrow key up	Up one step in playlist
+.br
+Arrow key down	Down one step in playlist
+.br
+Delete	Remove selected songs from playlist
+.br
+Page Up	Move one page up
+.br
+Page Down	Move one page down
+.br
+Home	First page in playlist
+.br
+End	Last page in playlist
+.br
+Enter	Play selected song
+.br
+Insert	Add file dialog
+.br
+Shift + Insert	Add directory dialog
+.br
+Alt + Insert	Add url dialog
+.in -2 
+
+Equalizer shade mode specific:
+
+.in +2
+.br
+Arrow key up	Volume up 2%
+.br
+Arrow key down	Volume down 2%
+.br
+Arrow key right	Balance 4% to right
+.br
+Arrow key left	Balance 4% to left
+.in -2
+.SH FILES
+.TP \w'~/.audacious/playlist.m3uXX'u
+~/.audacious/config
+Users' Audacious configuration.
+.TP
+~/.audacious/playlist.m3u
+Default playlist usually loaded on startup.
+.TP
+~/.audacious/gtkrc 
+Users set of Audacious-specific GTK config settings. Options such as widget
+color and fonts sizes can be set here.
+.TP
+~/.audacious/menurc 
+Users set of keybindings.
+.TP
+~/.audacious/Skins, @datadir@/audacious/Skins
+Default locations where Audacious should look for skinfiles.
+.TP
+~/.audacious/Plugins
+Location of user installed plugins.
+.SH ENVIRONMENT
+.TP 12
+.B SKINSDIR
+Colon separated list of paths where Audacious should look for skinfiles.
+.TP
+.B TARCMD
+Tar command supporting GNU tar style decompression.  Used for
+unpacking gzip and bzip2 compressed skins.  Default is \fItar\fP.
+.TP
+.B UNZIPCMD
+Command for decompressing zip files (skins).  Default is \fIunzip\fP.
+.SH OTHER INFO
+The webpage for Audacious is at http://audacious.nenolod.net.  Here you can find
+info about Audacious, download the latest version, plugins, and skins.

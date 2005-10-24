@@ -1,0 +1,17 @@
+# Usually the message domain is the same as the package name.
+DOMAIN = $(PACKAGE)
+
+# These two variables depend on the location of this directory.
+subdir = po
+top_builddir = ..
+
+# These options get passed to xgettext.
+XGETTEXT_OPTIONS = --keyword=_ --keyword=N_
+
+# This is the copyright holder that gets inserted into the header of the
+# $(DOMAIN).pot file.
+COPYRIGHT_HOLDER = Translator <translator@invalid>
+
+# This is the list of locale categories, beyond LC_MESSAGES, for which the
+# message catalogs shall be used.  It is usually empty.
+EXTRA_LOCALE_CATEGORIES =

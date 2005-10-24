@@ -1,0 +1,22 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+data_dir=@datadir@/@PACKAGE@
+
+version=@VERSION@
+include_dir=@includedir@
+audacious_include_dir=@includedir@
+lib_dir=@libdir@
+
+plugin_dir=@plugindir@
+input_plugin_dir=@plugindir@/@INPUT_PLUGIN_DIR@
+output_plugin_dir=@plugindir@/@OUTPUT_PLUGIN_DIR@
+general_plugin_dir=@plugindir@/@GENERAL_PLUGIN_DIR@
+visualization_plugin_dir=@plugindir@/@VISUALIZATION_PLUGIN_DIR@
+effect_plugin_dir=@plugindir@/@EFFECT_PLUGIN_DIR@
+
+Name: Audacious
+Description: Audacious is a versatile and handy multi platform media player
+Version: @VERSION@
+Requires: @PC_REQUIRES@
+Libs: -L${lib_dir} -laudacious
+Cflags: -I${audacious_include_dir}

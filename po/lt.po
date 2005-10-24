@@ -1,0 +1,3465 @@
+# Lithuanian translation of BMP.
+# Copyright (C) 2004 Rimas Kudelis <rq@akl.lt>
+# This file is distributed under the same license as the BMP package.
+# Rimas Kudelis <rq@akl.lt>, 2004.
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: BMP\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-10-22 14:40+0800\n"
+"PO-Revision-Date: 2004-12-06 19:02+0200\n"
+"Last-Translator: Rimas Kudelis <rq@akl.lt>\n"
+"Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Input/cdaudio/cdaudio.c:180
+msgid "CD Audio Plugin"
+msgstr "CD audio įskiepis"
+
+#: Input/cdaudio/cdaudio.c:1004 Input/cdaudio/cdaudio.c:1013
+#, c-format
+msgid "CD Audio Track %02u"
+msgstr "CD audio takelis %02u"
+
+#: Input/cdaudio/cdinfo.c:157 Input/cdaudio/cdinfo.c:158
+#: Input/cdaudio/cdinfo.c:159
+msgid "(unknown)"
+msgstr "(nežinomas)"
+
+#: Input/cdaudio/configure.c:199 Input/cdaudio/configure.c:213
+#: Input/cdaudio/configure.c:541
+#, c-format
+msgid "Drive %d"
+msgstr "Įrenginys %d"
+
+#: Input/cdaudio/configure.c:259
+#, c-format
+msgid ""
+"Failed to open device %s\n"
+"Error: %s\n"
+"\n"
+msgstr ""
+"Nepavyko atverti įrenginio %s\n"
+"Klaida: %s\n"
+"\n"
+
+#: Input/cdaudio/configure.c:266
+msgid ""
+"Failed to read \"Table of Contents\"\n"
+"Maybe no disc in the drive?\n"
+"\n"
+msgstr ""
+"Nepavyko nuskaityti disko turinio\n"
+"Gal diskų įrenginyje nėra disko?\n"
+"\n"
+
+#: Input/cdaudio/configure.c:270
+#, c-format
+msgid ""
+"Device %s OK.\n"
+"Disc has %d tracks"
+msgstr ""
+"Įrenginys %s OK.\n"
+"Diske yra %d takeliai"
+
+# msgstr[0] ""
+# "Įrenginys %s OK.\n"
+# "Diske yra %d takelis"
+# msgstr[2] ""
+# "Įrenginys %s OK.\n"
+# "Diske yra %d takelių"
+#: Input/cdaudio/configure.c:279
+#, c-format
+msgid " (%d data tracks)"
+msgstr " (%d duomenų takeliai)"
+
+# msgstr[0] " (%d duomenų takelis)"
+# msgstr[2] " (%d duomenų takelių)"
+#: Input/cdaudio/configure.c:280
+#, c-format
+msgid ""
+"\n"
+"Total length: %d:%d\n"
+msgstr ""
+"\n"
+"Bendra trukmė: %d:%d\n"
+
+#: Input/cdaudio/configure.c:285
+msgid "Digital audio extraction not tested as the disc has no audio tracks\n"
+msgstr ""
+"Skaitmeninio garso nuskaitymas neišbandytas, nes diske nėra garso takelių\n"
+
+#: Input/cdaudio/configure.c:302
+msgid ""
+"Digital audio extraction test: OK\n"
+"\n"
+msgstr ""
+"Skaitmeninio garso nuskaitymo testas: OK\n"
+"\n"
+
+#: Input/cdaudio/configure.c:306
+#, c-format
+msgid ""
+"Digital audio extraction test failed: %s\n"
+"\n"
+msgstr ""
+"Skaitmeninio garso nuskaitymo testas nepavyko: %s\n"
+"\n"
+
+#: Input/cdaudio/configure.c:316
+#, c-format
+msgid ""
+"Failed to check directory %s\n"
+"Error: %s"
+msgstr ""
+"Nepavyko ištrinti aplanko %s\n"
+"Klaida: %s"
+
+#: Input/cdaudio/configure.c:322
+#, c-format
+msgid "Error: %s exist, but is not a directory"
+msgstr "Klaida: %s egzistuoja, tačiau tai nėra segtuvas"
+
+#: Input/cdaudio/configure.c:325
+#, c-format
+msgid "Directory %s OK."
+msgstr "Aplankas %s OK."
+
+#: Input/cdaudio/configure.c:369
+msgid "Device:"
+msgstr "įrenginys:"
+
+#: Input/cdaudio/configure.c:377
+msgid "_Device:"
+msgstr "Į_renginys:"
+
+#: Input/cdaudio/configure.c:387
+msgid "Dir_ectory:"
+msgstr "_Aplankas:"
+
+#: Input/cdaudio/configure.c:399
+msgid "Play mode:"
+msgstr "Grojimo režimas:"
+
+#: Input/cdaudio/configure.c:405
+msgid "Analog"
+msgstr "Analoginis"
+
+#: Input/cdaudio/configure.c:413
+msgid "Digital audio extraction"
+msgstr "Skaitmeninis garso nuskaitymas"
+
+#: Input/cdaudio/configure.c:423
+msgid "Volume control:"
+msgstr "Garso valdymas:"
+
+#: Input/cdaudio/configure.c:429
+msgid "No mixer"
+msgstr "Jokio mikserio"
+
+#: Input/cdaudio/configure.c:435
+msgid "CDROM drive"
+msgstr "CDROM įrenginys"
+
+#: Input/cdaudio/configure.c:441
+msgid "OSS mixer"
+msgstr "OSS mikseris"
+
+#: Input/cdaudio/configure.c:464
+msgid "Check drive..."
+msgstr "Patikrinti įrenginį…"
+
+#: Input/cdaudio/configure.c:470
+msgid "Remove drive"
+msgstr "Pašalinti įrenginį"
+
+#: Input/cdaudio/configure.c:515
+msgid "CD Audio Player Configuration"
+msgstr "CD Audio grotuvo konfigūravimas"
+
+#: Input/cdaudio/configure.c:553
+msgid "Add drive"
+msgstr "Pridėti įrenginį"
+
+#: Input/cdaudio/configure.c:561
+msgid "Device"
+msgstr "įrenginys"
+
+#: Input/cdaudio/configure.c:571
+msgid "CDDB:"
+msgstr "CDDB:"
+
+#: Input/cdaudio/configure.c:582
+msgid "Use CDDB"
+msgstr "Naudoti CDDB"
+
+#: Input/cdaudio/configure.c:586
+msgid "Get server list"
+msgstr "Parsisiųsti serverių sąrašą"
+
+#: Input/cdaudio/configure.c:589
+msgid "Show network window"
+msgstr "Parodyti tinklo langą"
+
+#: Input/cdaudio/configure.c:599
+msgid "CDDB server:"
+msgstr "CDDB serveris:"
+
+#: Input/cdaudio/configure.c:614
+msgid "CD Index:"
+msgstr "CD rodyklė:"
+
+#: Input/cdaudio/configure.c:621
+msgid "Use CD Index"
+msgstr "Naudoti CD rodyklę"
+
+#: Input/cdaudio/configure.c:630
+msgid "CD Index server:"
+msgstr "CD rodyklės serveris:"
+
+#: Input/cdaudio/configure.c:645
+msgid "Track names:"
+msgstr "Takelių pavadinimai:"
+
+#: Input/cdaudio/configure.c:652 Input/mpg123/configure.c:799
+#: Input/vorbis/configure.c:472
+msgid "Override generic titles"
+msgstr "Nepaisyti bendro pavadinimų formato"
+
+#: Input/cdaudio/configure.c:668
+msgid "Name format:"
+msgstr "Pavadinimo formatas:"
+
+#: Input/cdaudio/configure.c:680
+msgid "CD Info"
+msgstr "Apie CD"
+
+#: Input/mpg123/configure.c:260
+msgid "Select the directory where you want to store the MPEG streams:"
+msgstr "Išrinkite aplanką, kuriame saugosite MPEG srautus:"
+
+#: Input/mpg123/configure.c:344
+msgid "MPEG Audio Plugin Configuration"
+msgstr "MPEG garso įskiepio konfigūravimas"
+
+#: Input/mpg123/configure.c:361
+msgid "Resolution:"
+msgstr "Raiška:"
+
+#: Input/mpg123/configure.c:369
+msgid "16 bit"
+msgstr "16 bitų"
+
+#: Input/mpg123/configure.c:378
+msgid "8 bit"
+msgstr "8 bitai"
+
+#: Input/mpg123/configure.c:385 Input/vorbis/fileinfo.c:862
+#: Input/vorbis/fileinfo.c:918
+msgid "Channels:"
+msgstr "Kanalai:"
+
+#: Input/mpg123/configure.c:393
+msgid "Stereo (if available)"
+msgstr "Stereo (jei įmanoma)"
+
+#: Input/mpg123/configure.c:404
+msgid "Mono"
+msgstr "Mono"
+
+#: Input/mpg123/configure.c:411
+msgid "Down sample:"
+msgstr "Kokybės santykis:"
+
+#: Input/mpg123/configure.c:420
+msgid "1:1 (44 kHz)"
+msgstr "1:1 (44 kHz)"
+
+#: Input/mpg123/configure.c:431
+msgid "1:2 (22 kHz)"
+msgstr "1:2 (22 kHz)"
+
+#: Input/mpg123/configure.c:442
+msgid "1:4 (11 kHz)"
+msgstr "1:4 (11 kHz)"
+
+#: Input/mpg123/configure.c:455
+msgid "Decoder:"
+msgstr "Dekoderis:"
+
+#: Input/mpg123/configure.c:464
+msgid "Automatic detection"
+msgstr "Automatinis parinkimas"
+
+#: Input/mpg123/configure.c:472
+msgid "3DNow! optimized decoder"
+msgstr "3DNow! optimizuotas dekoderis"
+
+#: Input/mpg123/configure.c:480
+msgid "MMX optimized decoder"
+msgstr "MMX optimizuotas dekoderis"
+
+#: Input/mpg123/configure.c:487
+msgid "FPU decoder"
+msgstr "FPU dekoderis"
+
+#: Input/mpg123/configure.c:513
+msgid "Options"
+msgstr "Nustatymai"
+
+#: Input/mpg123/configure.c:520
+msgid "Content"
+msgstr "Turinys"
+
+#: Input/mpg123/configure.c:526
+msgid "Extension"
+msgstr "Plėtinys"
+
+#: Input/mpg123/configure.c:532
+msgid "Extension and content"
+msgstr "Turinys ir plėtinys"
+
+#: Input/mpg123/configure.c:556
+msgid "Decoder"
+msgstr "Dekoderis"
+
+#: Input/mpg123/configure.c:560 Input/vorbis/configure.c:287
+#: Output/OSS/configure.c:302 Output/esd/configure.c:171
+msgid "Buffering:"
+msgstr "Buferiavimas:"
+
+#: Input/mpg123/configure.c:573 Input/vorbis/configure.c:299
+msgid "Buffer size (kb):"
+msgstr "Buferio dydis (kb):"
+
+#: Input/mpg123/configure.c:588 Input/vorbis/configure.c:313
+#: Output/OSS/configure.c:329 Output/esd/configure.c:198
+msgid "Pre-buffer (percent):"
+msgstr "Išankstinis buferiavimas (procentais):"
+
+#: Input/mpg123/configure.c:602 Input/vorbis/configure.c:327
+msgid "Proxy:"
+msgstr "Tarpinė stotis:"
+
+#: Input/mpg123/configure.c:612 Input/vorbis/configure.c:337
+msgid "Use proxy"
+msgstr "Naudoti tarpinę stotį"
+
+#: Input/mpg123/configure.c:625 Input/vorbis/configure.c:350
+#: Output/esd/configure.c:114 Output/esd/configure.c:144
+msgid "Host:"
+msgstr "Hostas:"
+
+#: Input/mpg123/configure.c:635 Input/vorbis/configure.c:360
+#: Output/esd/configure.c:153
+msgid "Port:"
+msgstr "Portas:"
+
+#: Input/mpg123/configure.c:648 Input/vorbis/configure.c:373
+msgid "Use authentication"
+msgstr "Autentikuotis"
+
+#: Input/mpg123/configure.c:665 Input/vorbis/configure.c:390
+msgid "Username:"
+msgstr "Vartotojas:"
+
+#: Input/mpg123/configure.c:676 Input/vorbis/configure.c:401
+msgid "Password:"
+msgstr "Slaptažodis:"
+
+#: Input/mpg123/configure.c:693 Input/vorbis/configure.c:418
+msgid "Save stream to disk:"
+msgstr "Išsaugoti srautą diske:"
+
+#: Input/mpg123/configure.c:704 Input/vorbis/configure.c:429
+msgid "Save stream to disk"
+msgstr "Išsaugoti srautą diske"
+
+#: Input/mpg123/configure.c:718 Input/vorbis/configure.c:443
+msgid "Path:"
+msgstr "Kelias:"
+
+#: Input/mpg123/configure.c:728 Input/vorbis/configure.c:453
+msgid "Browse"
+msgstr "naršyti"
+
+#: Input/mpg123/configure.c:734
+msgid "SHOUT/Icecast:"
+msgstr "SHOUT/Icecast:"
+
+#: Input/mpg123/configure.c:748
+msgid "Enable Icecast Metadata UDP Channel"
+msgstr "Aktyvuoti Icecast metainformacijos UDP kanalą"
+
+#: Input/mpg123/configure.c:755 Input/vorbis/configure.c:460
+msgid "Streaming"
+msgstr "Srautai"
+
+#: Input/mpg123/configure.c:757
+msgid "ID3 Tags:"
+msgstr "ID3 žymos:"
+
+#: Input/mpg123/configure.c:765
+msgid "Disable ID3V2 tags"
+msgstr "Ignoruoti ID3v2 žymas"
+
+#: Input/mpg123/configure.c:774
+msgid "Convert non-UTF8 ID3 tags to UTF8"
+msgstr "Konvertuoti ID3 aprašus į UTF-8"
+
+#: Input/mpg123/configure.c:787
+msgid "ID3 encoding:"
+msgstr "ID3 aprašų koduotė:"
+
+#: Input/mpg123/configure.c:812
+msgid "ID3 format:"
+msgstr "Pavadinimo formatas:"
+
+#: Input/mpg123/configure.c:826 Input/vorbis/configure.c:499
+#: audacious/prefswin.c:95
+msgid "Title"
+msgstr "Pavadinimas"
+
+#: Input/mpg123/fileinfo.c:471
+#, c-format
+msgid ""
+"%s\n"
+"Unable to write to file: %s"
+msgstr ""
+"%s\n"
+"Nepavyksta įrašyti bylos: %s"
+
+#: Input/mpg123/fileinfo.c:472 Input/mpg123/fileinfo.c:477
+msgid "Couldn't write tag!"
+msgstr "Nepavyko įrašyti žymos!"
+
+#: Input/mpg123/fileinfo.c:476 Input/mpg123/fileinfo.c:567
+#, c-format
+msgid ""
+"%s\n"
+"Unable to open file: %s"
+msgstr ""
+"%s\n"
+"Nepavyksta atverti bylos: %s"
+
+#: Input/mpg123/fileinfo.c:479 Input/mpg123/fileinfo.c:570
+msgid "File Info"
+msgstr "Apie bylą"
+
+#: Input/mpg123/fileinfo.c:479 Input/mpg123/fileinfo.c:570
+#: Input/mpg123/http.c:220 Input/mpg123/mpg123.c:1184
+#: Input/vorbis/fileinfo.c:212 Input/vorbis/http.c:218
+#: Input/vorbis/vorbis.c:802 Output/OSS/about.c:54 Output/esd/about.c:49
+#: Output/alsa/about.c:53
+msgid "Ok"
+msgstr "Gerai"
+
+#: Input/mpg123/fileinfo.c:556
+#, c-format
+msgid ""
+"%s\n"
+"Unable to truncate file: %s"
+msgstr ""
+"%s\n"
+"Nepavyksta apkapoti bylos: %s"
+
+#: Input/mpg123/fileinfo.c:558 Input/mpg123/fileinfo.c:568
+msgid "Couldn't remove tag!"
+msgstr "Nepavyko pašalinti žymos!"
+
+#: Input/mpg123/fileinfo.c:562
+msgid "No tag to remove!"
+msgstr "Šalinama žyma neegzistuoja!"
+
+#: Input/mpg123/fileinfo.c:602
+msgid "Stereo"
+msgstr "Stereo"
+
+#: Input/mpg123/fileinfo.c:602
+msgid "Joint stereo"
+msgstr "Jungtinis stereo"
+
+#: Input/mpg123/fileinfo.c:603
+msgid "Dual channel"
+msgstr "Du kanalai"
+
+#: Input/mpg123/fileinfo.c:603
+msgid "Single channel"
+msgstr "Vienas kanalas"
+
+#: Input/mpg123/fileinfo.c:618 Input/mpg123/fileinfo.c:1258
+#: Input/mpg123/fileinfo.c:1379
+#, c-format
+msgid "%d KBit/s"
+msgstr "%d KBit/s"
+
+#: Input/mpg123/fileinfo.c:619 Input/mpg123/fileinfo.c:1262
+#: Input/mpg123/fileinfo.c:1383
+#, c-format
+msgid "%ld Hz"
+msgstr "%ld Hz"
+
+#: Input/mpg123/fileinfo.c:639
+msgid "None"
+msgstr "Joks"
+
+#: Input/mpg123/fileinfo.c:640
+msgid "50/15 ms"
+msgstr "50/15 ms"
+
+#: Input/mpg123/fileinfo.c:642
+msgid "CCIT J.17"
+msgstr "CCIT J.17"
+
+#: Input/mpg123/fileinfo.c:643
+msgid "No"
+msgstr "Ne"
+
+#: Input/mpg123/fileinfo.c:644
+msgid "Yes"
+msgstr "Taip"
+
+#: Input/mpg123/fileinfo.c:691 Input/vorbis/fileinfo.c:557
+msgid "Name:"
+msgstr "Pavadinimas:"
+
+#: Input/mpg123/fileinfo.c:707
+msgid " MPEG Info "
+msgstr "MPEG informacija"
+
+#: Input/mpg123/fileinfo.c:722 Input/mpg123/fileinfo.c:1122
+msgid "MPEG Level:"
+msgstr "MPEG lygis:"
+
+#: Input/mpg123/fileinfo.c:735 Input/mpg123/fileinfo.c:1125
+#: Input/vorbis/fileinfo.c:836 Input/vorbis/fileinfo.c:912
+msgid "Bit rate:"
+msgstr "Nominalus bitų sekos greitis:"
+
+#: Input/mpg123/fileinfo.c:748 Input/mpg123/fileinfo.c:1128
+#: Input/vorbis/fileinfo.c:849 Input/vorbis/fileinfo.c:915
+msgid "Sample rate:"
+msgstr "Semplų dažnis:"
+
+#: Input/mpg123/fileinfo.c:762 Input/mpg123/fileinfo.c:1143
+msgid "Frames:"
+msgstr "Kadrai:"
+
+#: Input/mpg123/fileinfo.c:775 Input/mpg123/fileinfo.c:1146
+#: Input/vorbis/fileinfo.c:888 Input/vorbis/fileinfo.c:924
+msgid "File size:"
+msgstr "Bylos dydis:"
+
+#: Input/mpg123/fileinfo.c:798 Input/mpg123/fileinfo.c:1131
+msgid "Error Protection:"
+msgstr "Apsauga nuo klaidų:"
+
+#: Input/mpg123/fileinfo.c:811 Input/mpg123/fileinfo.c:1134
+#: Input/vorbis/fileinfo.c:718
+msgid "Copyright:"
+msgstr "Apsaugota autorinėmis teisėmis:"
+
+#: Input/mpg123/fileinfo.c:824 Input/mpg123/fileinfo.c:1137
+msgid "Original:"
+msgstr "Originalas:"
+
+#: Input/mpg123/fileinfo.c:837 Input/mpg123/fileinfo.c:1140
+msgid "Emphasis:"
+msgstr "Pabrėžimas:"
+
+#: Input/mpg123/fileinfo.c:851
+msgid " ID3 Tag "
+msgstr " ID3 žyma"
+
+#: Input/mpg123/fileinfo.c:859 Input/vorbis/fileinfo.c:580
+msgid "Title:"
+msgstr "Pavadinimas:"
+
+#: Input/mpg123/fileinfo.c:874 Input/vorbis/fileinfo.c:591
+msgid "Artist:"
+msgstr "Atlikėjas:"
+
+#: Input/mpg123/fileinfo.c:889 Input/vorbis/fileinfo.c:602
+msgid "Album:"
+msgstr "Albumas:"
+
+#: Input/mpg123/fileinfo.c:904 Input/vorbis/fileinfo.c:613
+msgid "Comment:"
+msgstr "Komentaras:"
+
+#: Input/mpg123/fileinfo.c:926
+msgid "Year:"
+msgstr "Metai:"
+
+#: Input/mpg123/fileinfo.c:938 Input/vorbis/fileinfo.c:636
+msgid "Track number:"
+msgstr "Takelio numeris:"
+
+#: Input/mpg123/fileinfo.c:970 Input/vorbis/fileinfo.c:648
+msgid "Genre:"
+msgstr "Žanras:"
+
+#: Input/mpg123/fileinfo.c:1007
+msgid "Copy album tags"
+msgstr "Kopijuoti albumo duomenis"
+
+#: Input/mpg123/fileinfo.c:1008
+msgid "Paste album tags"
+msgstr "Įdėti albumo duomenis"
+
+#: Input/mpg123/fileinfo.c:1101 Input/vorbis/fileinfo.c:1014
+#: audacious/mainwin.c:780
+#, c-format
+msgid "%s - BMP"
+msgstr "%s - BMP"
+
+#: Input/mpg123/fileinfo.c:1123 Input/mpg123/fileinfo.c:1126
+#: Input/mpg123/fileinfo.c:1129 Input/mpg123/fileinfo.c:1132
+#: Input/mpg123/fileinfo.c:1135 Input/mpg123/fileinfo.c:1138
+#: Input/mpg123/fileinfo.c:1141 Input/mpg123/fileinfo.c:1144
+#: Input/mpg123/fileinfo.c:1147 Input/vorbis/fileinfo.c:913
+#: Input/vorbis/fileinfo.c:916 Input/vorbis/fileinfo.c:919
+#: Input/vorbis/fileinfo.c:922 Input/vorbis/fileinfo.c:925
+msgid "N/A"
+msgstr "Neprieinama"
+
+#: Input/mpg123/fileinfo.c:1250 Input/mpg123/fileinfo.c:1371
+#, c-format
+msgid ""
+"Variable,\n"
+"avg. bitrate: %d KBit/s"
+msgstr ""
+"Kintamas,\n"
+"vid. greitis:·%d·KBit/s"
+
+#: Input/mpg123/fileinfo.c:1264 Input/mpg123/fileinfo.c:1266
+#: Input/mpg123/fileinfo.c:1267 Input/mpg123/fileinfo.c:1268
+#: Input/mpg123/fileinfo.c:1385 Input/mpg123/fileinfo.c:1387
+#: Input/mpg123/fileinfo.c:1388 Input/mpg123/fileinfo.c:1389
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: Input/mpg123/fileinfo.c:1269 Input/mpg123/fileinfo.c:1390
+#: Input/vorbis/fileinfo.c:957
+#, c-format
+msgid "%d"
+msgstr "%d"
+
+#: Input/mpg123/fileinfo.c:1270 Input/mpg123/fileinfo.c:1391
+#, c-format
+msgid "%lu Bytes"
+msgstr "%lu Baitų"
+
+# msgstr[0] "%lu Baitas"
+# msgstr[1] "%lu Baitai"
+#: Input/mpg123/http.c:220 Input/vorbis/http.c:218
+msgid "Error"
+msgstr "Klaida"
+
+#: Input/mpg123/http.c:374 Input/vorbis/http.c:326
+#, c-format
+msgid "LOOKING UP %s"
+msgstr "IEŠKAU %s"
+
+#: Input/mpg123/http.c:379 Input/vorbis/http.c:331
+#, c-format
+msgid "Couldn't look up host %s"
+msgstr "Nepavyko rasti hosto %s"
+
+#: Input/mpg123/http.c:392 Input/vorbis/http.c:344
+#, c-format
+msgid "CONNECTING TO %s:%d"
+msgstr "JUNGIUOSI PRIE %s:%d"
+
+#: Input/mpg123/http.c:400 Input/mpg123/http.c:420 Input/vorbis/http.c:352
+#: Input/vorbis/http.c:372
+#, c-format
+msgid "Couldn't connect to host %s"
+msgstr "Nepavyko prisijungti prie hosto %s"
+
+#: Input/mpg123/http.c:483 Input/vorbis/http.c:420
+msgid "CONNECTED: WAITING FOR REPLY"
+msgstr "PRISIJUNGIAU. LAUKIU ATSAKYMO"
+
+#: Input/mpg123/http.c:520 Input/vorbis/http.c:457
+#, c-format
+msgid ""
+"Couldn't connect to host %s\n"
+"Server reported: %s"
+msgstr ""
+"Nepavyko prisijungti prie hosto %s\n"
+"Serveris pranešė: %s"
+
+#: Input/mpg123/http.c:638 Input/vorbis/http.c:556
+#, c-format
+msgid "PRE-BUFFERING: %dKB/%dKB"
+msgstr "BUFERIUOJU: %dKB/%dKB"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Blues"
+msgstr "Blues"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Classic Rock"
+msgstr "Classic Rock"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Country"
+msgstr "Country"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Dance"
+msgstr "Dance"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Disco"
+msgstr "Disco"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Funk"
+msgstr "Funk"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Grunge"
+msgstr "cGrunge"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Hip-Hop"
+msgstr "Hip-Hop"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "Jazz"
+msgstr "Jazz"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "Metal"
+msgstr "Metal"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "New Age"
+msgstr "New Age"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "Oldies"
+msgstr "Oldies"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Other"
+msgstr "Other"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Pop"
+msgstr "cPopsas"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "R&B"
+msgstr "R&B"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Rap"
+msgstr "Rap"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Reggae"
+msgstr "cRegis"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Rock"
+msgstr "Rock"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Techno"
+msgstr "Techno"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Industrial"
+msgstr "Industrial"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Alternative"
+msgstr "Alternative"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Ska"
+msgstr "Ska"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Death Metal"
+msgstr "Death Metal"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Pranks"
+msgstr "Pranks"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Soundtrack"
+msgstr "Soundtrack"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Euro-Techno"
+msgstr "Euro-Techno"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Ambient"
+msgstr "Ambient"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Trip-Hop"
+msgstr "Trip-Hop"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Vocal"
+msgstr "Vocal"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Jazz+Funk"
+msgstr "Jazz+Funk"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Fusion"
+msgstr "Fusion"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Trance"
+msgstr "Trance"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Classical"
+msgstr "Classical"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "Instrumental"
+msgstr "Instrumental"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "Acid"
+msgstr "Acid"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "House"
+msgstr "House"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "Game"
+msgstr "Game"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "Sound Clip"
+msgstr "Sound Clip"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "Gospel"
+msgstr "Gospel"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "Noise"
+msgstr "Noise"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "AlternRock"
+msgstr "AlternRock"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Bass"
+msgstr "Bass"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Soul"
+msgstr "Soul"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Punk"
+msgstr "Punk"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Space"
+msgstr "Space"
+
+#: Input/mpg123/mpg123.c:51 Input/vorbis/fileinfo.c:94
+msgid "Meditative"
+msgstr "Meditative"
+
+#: Input/mpg123/mpg123.c:51 Input/vorbis/fileinfo.c:94
+msgid "Instrumental Pop"
+msgstr "Instrumental Pop"
+
+#: Input/mpg123/mpg123.c:52 Input/vorbis/fileinfo.c:95
+msgid "Instrumental Rock"
+msgstr "Instrumental Rock"
+
+#: Input/mpg123/mpg123.c:52 Input/vorbis/fileinfo.c:95
+msgid "Ethnic"
+msgstr "Ethnic"
+
+#: Input/mpg123/mpg123.c:52 Input/vorbis/fileinfo.c:95
+msgid "Gothic"
+msgstr "Gothic"
+
+#: Input/mpg123/mpg123.c:53 Input/vorbis/fileinfo.c:96
+msgid "Darkwave"
+msgstr "Darkwave"
+
+#: Input/mpg123/mpg123.c:53 Input/vorbis/fileinfo.c:96
+msgid "Techno-Industrial"
+msgstr "Techno-Industrial"
+
+#: Input/mpg123/mpg123.c:53 Input/vorbis/fileinfo.c:96
+msgid "Electronic"
+msgstr "Electronic"
+
+#: Input/mpg123/mpg123.c:54 Input/vorbis/fileinfo.c:97
+msgid "Pop-Folk"
+msgstr "Pop-Folk"
+
+#: Input/mpg123/mpg123.c:54 Input/vorbis/fileinfo.c:97
+msgid "Eurodance"
+msgstr "Eurodance"
+
+#: Input/mpg123/mpg123.c:54 Input/vorbis/fileinfo.c:97
+msgid "Dream"
+msgstr "Dream"
+
+#: Input/mpg123/mpg123.c:55 Input/vorbis/fileinfo.c:98
+msgid "Southern Rock"
+msgstr "Southern Rock"
+
+#: Input/mpg123/mpg123.c:55 Input/vorbis/fileinfo.c:98
+msgid "Comedy"
+msgstr "Comedy"
+
+#: Input/mpg123/mpg123.c:55 Input/vorbis/fileinfo.c:98
+msgid "Cult"
+msgstr "Cult"
+
+#: Input/mpg123/mpg123.c:56 Input/vorbis/fileinfo.c:99
+msgid "Gangsta Rap"
+msgstr "Gangsta Rap"
+
+#: Input/mpg123/mpg123.c:56 Input/vorbis/fileinfo.c:99
+msgid "Top 40"
+msgstr "Top 40"
+
+#: Input/mpg123/mpg123.c:56 Input/vorbis/fileinfo.c:99
+msgid "Christian Rap"
+msgstr "Christian Rap"
+
+#: Input/mpg123/mpg123.c:57 Input/vorbis/fileinfo.c:100
+msgid "Pop/Funk"
+msgstr "Pop/Funk"
+
+#: Input/mpg123/mpg123.c:57 Input/vorbis/fileinfo.c:100
+msgid "Jungle"
+msgstr "Jungle"
+
+#: Input/mpg123/mpg123.c:57 Input/vorbis/fileinfo.c:100
+msgid "Native American"
+msgstr "Native American"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "Cabaret"
+msgstr "Cabaret"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "New Wave"
+msgstr "New Wave"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "Psychedelic"
+msgstr "Psychedelic"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "Rave"
+msgstr "Rave"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Showtunes"
+msgstr "Showtunes"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Trailer"
+msgstr "Trailer"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Lo-Fi"
+msgstr "Lo-Fi"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Tribal"
+msgstr "Tribal"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Acid Punk"
+msgstr "Acid Punk"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Acid Jazz"
+msgstr "Acid Jazz"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Polka"
+msgstr "Polka"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Retro"
+msgstr "Retro"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Musical"
+msgstr "Musical"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Rock & Roll"
+msgstr "Rock & Roll"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Hard Rock"
+msgstr "Hard Rock"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Folk"
+msgstr "Folk"
+
+#: Input/mpg123/mpg123.c:62 Input/vorbis/fileinfo.c:105
+msgid "Folk/Rock"
+msgstr "Folk/Rock"
+
+#: Input/mpg123/mpg123.c:62 Input/vorbis/fileinfo.c:105
+msgid "National Folk"
+msgstr "National Folk"
+
+#: Input/mpg123/mpg123.c:62 Input/vorbis/fileinfo.c:105
+msgid "Swing"
+msgstr "Swing"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Fast-Fusion"
+msgstr "c"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Bebob"
+msgstr "Bebob"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Latin"
+msgstr "Latin"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Revival"
+msgstr "Revival"
+
+#: Input/mpg123/mpg123.c:64 Input/vorbis/fileinfo.c:107
+msgid "Celtic"
+msgstr "Celtic"
+
+#: Input/mpg123/mpg123.c:64 Input/vorbis/fileinfo.c:107
+msgid "Bluegrass"
+msgstr "Bluegrass"
+
+#: Input/mpg123/mpg123.c:64 Input/vorbis/fileinfo.c:107
+msgid "Avantgarde"
+msgstr "Avantgarde"
+
+#: Input/mpg123/mpg123.c:65 Input/vorbis/fileinfo.c:108
+msgid "Gothic Rock"
+msgstr "Gothic Rock"
+
+#: Input/mpg123/mpg123.c:65 Input/vorbis/fileinfo.c:108
+msgid "Progressive Rock"
+msgstr "Progressive Rock"
+
+#: Input/mpg123/mpg123.c:66 Input/vorbis/fileinfo.c:109
+msgid "Psychedelic Rock"
+msgstr "Psychedelic Rock"
+
+#: Input/mpg123/mpg123.c:66 Input/vorbis/fileinfo.c:109
+msgid "Symphonic Rock"
+msgstr "Symphonic Rock"
+
+#: Input/mpg123/mpg123.c:66 Input/vorbis/fileinfo.c:109
+msgid "Slow Rock"
+msgstr "Slow Rock"
+
+#: Input/mpg123/mpg123.c:67 Input/vorbis/fileinfo.c:110
+msgid "Big Band"
+msgstr "Big Band"
+
+#: Input/mpg123/mpg123.c:67 Input/vorbis/fileinfo.c:110
+msgid "Chorus"
+msgstr "Chorus"
+
+#: Input/mpg123/mpg123.c:67 Input/vorbis/fileinfo.c:110
+msgid "Easy Listening"
+msgstr "Easy Listening"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Acoustic"
+msgstr "Acoustic"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Humour"
+msgstr "Humour"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Speech"
+msgstr "Speech"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Chanson"
+msgstr "Chanson"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Opera"
+msgstr "Opera"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Chamber Music"
+msgstr "c"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Sonata"
+msgstr "Sonata"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Symphony"
+msgstr "Symphony"
+
+#: Input/mpg123/mpg123.c:70 Input/vorbis/fileinfo.c:113
+msgid "Booty Bass"
+msgstr "Booty Bass"
+
+#: Input/mpg123/mpg123.c:70 Input/vorbis/fileinfo.c:113
+msgid "Primus"
+msgstr "Primus"
+
+#: Input/mpg123/mpg123.c:70 Input/vorbis/fileinfo.c:113
+msgid "Porn Groove"
+msgstr "Porn Groove"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Satire"
+msgstr "Satire"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Slow Jam"
+msgstr "Slow Jam"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Club"
+msgstr "Club"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Tango"
+msgstr "Tango"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Samba"
+msgstr "Samba"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Folklore"
+msgstr "Folklore"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Ballad"
+msgstr "Ballad"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Power Ballad"
+msgstr "Power Ballad"
+
+#: Input/mpg123/mpg123.c:73 Input/vorbis/fileinfo.c:116
+msgid "Rhythmic Soul"
+msgstr "c"
+
+#: Input/mpg123/mpg123.c:73 Input/vorbis/fileinfo.c:116
+msgid "Freestyle"
+msgstr "Freestyle"
+
+#: Input/mpg123/mpg123.c:73 Input/vorbis/fileinfo.c:116
+msgid "Duet"
+msgstr "Duet"
+
+#: Input/mpg123/mpg123.c:74 Input/vorbis/fileinfo.c:117
+msgid "Punk Rock"
+msgstr "Punk Rock"
+
+#: Input/mpg123/mpg123.c:74 Input/vorbis/fileinfo.c:117
+msgid "Drum Solo"
+msgstr "Drum Solo"
+
+#: Input/mpg123/mpg123.c:74 Input/vorbis/fileinfo.c:117
+msgid "A Cappella"
+msgstr "A Cappella"
+
+#: Input/mpg123/mpg123.c:75 Input/vorbis/fileinfo.c:118
+msgid "Euro-House"
+msgstr "c"
+
+#: Input/mpg123/mpg123.c:75 Input/vorbis/fileinfo.c:118
+msgid "Dance Hall"
+msgstr "Dance Hall"
+
+#: Input/mpg123/mpg123.c:75 Input/vorbis/fileinfo.c:118
+msgid "Goa"
+msgstr "Goa"
+
+#: Input/mpg123/mpg123.c:76 Input/vorbis/fileinfo.c:119
+msgid "Drum & Bass"
+msgstr "Drum & Bass"
+
+#: Input/mpg123/mpg123.c:76 Input/vorbis/fileinfo.c:119
+msgid "Club-House"
+msgstr "Club-House"
+
+#: Input/mpg123/mpg123.c:76 Input/vorbis/fileinfo.c:119
+msgid "Hardcore"
+msgstr "Hardcore"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "Terror"
+msgstr "Terror"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "Indie"
+msgstr "Indie"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "BritPop"
+msgstr "BritPop"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "Negerpunk"
+msgstr "Negerpunk"
+
+#: Input/mpg123/mpg123.c:78 Input/vorbis/fileinfo.c:121
+msgid "Polsk Punk"
+msgstr "Polsk Punk"
+
+#: Input/mpg123/mpg123.c:78 Input/vorbis/fileinfo.c:121
+msgid "Beat"
+msgstr "Beat"
+
+#: Input/mpg123/mpg123.c:78 Input/vorbis/fileinfo.c:121
+msgid "Christian Gangsta Rap"
+msgstr "Christian Gangsta Rap"
+
+#: Input/mpg123/mpg123.c:79 Input/vorbis/fileinfo.c:122
+msgid "Heavy Metal"
+msgstr "Heavy Metal"
+
+#: Input/mpg123/mpg123.c:79 Input/vorbis/fileinfo.c:122
+msgid "Black Metal"
+msgstr "Black Metal"
+
+#: Input/mpg123/mpg123.c:79 Input/vorbis/fileinfo.c:122
+msgid "Crossover"
+msgstr "c"
+
+#: Input/mpg123/mpg123.c:80 Input/vorbis/fileinfo.c:123
+msgid "Contemporary Christian"
+msgstr "Contemporary Christian"
+
+#: Input/mpg123/mpg123.c:80 Input/vorbis/fileinfo.c:123
+msgid "Christian Rock"
+msgstr "c"
+
+#: Input/mpg123/mpg123.c:81 Input/vorbis/fileinfo.c:124
+msgid "Merengue"
+msgstr "Merengue"
+
+#: Input/mpg123/mpg123.c:81 Input/vorbis/fileinfo.c:124
+msgid "Salsa"
+msgstr "c"
+
+#: Input/mpg123/mpg123.c:81 Input/vorbis/fileinfo.c:124
+msgid "Thrash Metal"
+msgstr "Thrash Metal"
+
+#: Input/mpg123/mpg123.c:82 Input/vorbis/fileinfo.c:125
+msgid "Anime"
+msgstr "Anime"
+
+#: Input/mpg123/mpg123.c:82 Input/vorbis/fileinfo.c:125
+msgid "JPop"
+msgstr "JPop"
+
+#: Input/mpg123/mpg123.c:82 Input/vorbis/fileinfo.c:125
+msgid "Synthpop"
+msgstr "Synthpop"
+
+#: Input/mpg123/mpg123.c:1181
+msgid "About MPEG Audio Plugin"
+msgstr "Apie MPEG audio įskiepį"
+
+#: Input/mpg123/mpg123.c:1182
+msgid ""
+"mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
+"Plugin by The XMMS team"
+msgstr ""
+"mpg123 dekodavimo variklio autorius Michael Hipp <mh@mpg123.de>\n"
+"Įskiepį parašė XMMS komanda"
+
+#: Input/mpg123/mpg123.c:1218
+msgid "MPEG Audio Plugin"
+msgstr "MPEG audio įskiepis"
+
+#: Input/vorbis/configure.c:192
+msgid "Select the directory where you want to store the Ogg Vorbis streams:"
+msgstr "Išrinkite aplanką, kuriame saugosite Ogg Vorbis srautus:"
+
+#: Input/vorbis/configure.c:275
+msgid "Ogg Vorbis Audio Plugin Configuration"
+msgstr "Ogg Vorbis garso įskiepio kofigūravimas"
+
+#: Input/vorbis/configure.c:464
+msgid "Ogg Vorbis Tags:"
+msgstr "Ogg Vorbis žymos:"
+
+#: Input/vorbis/configure.c:485 audacious/glade/prefswin.glade:2261
+msgid "Title format:"
+msgstr "Pavadinimo formatas:"
+
+#: Input/vorbis/configure.c:503
+msgid "ReplayGain Settings:"
+msgstr ""
+
+#: Input/vorbis/configure.c:511
+msgid "Enable Clipping Prevention"
+msgstr "Aktyvuoti apkarpymo prevenciją"
+
+#: Input/vorbis/configure.c:516
+msgid "Enable ReplayGain"
+msgstr ""
+
+#: Input/vorbis/configure.c:521
+msgid "ReplayGain Type:"
+msgstr ""
+
+#: Input/vorbis/configure.c:532
+msgid "use Track Gain/Peak"
+msgstr ""
+
+#: Input/vorbis/configure.c:542
+msgid "use Album Gain/Peak"
+msgstr ""
+
+#: Input/vorbis/configure.c:554
+msgid "Enable 6dB Boost + Hard Limiting"
+msgstr ""
+
+#: Input/vorbis/configure.c:560
+msgid "ReplayGain"
+msgstr ""
+
+#: Input/vorbis/fileinfo.c:210
+#, c-format
+msgid ""
+"An error occured:\n"
+"%s"
+msgstr ""
+"Įvyko klaida:\n"
+"%s"
+
+#: Input/vorbis/fileinfo.c:212
+msgid "Error!"
+msgstr "Klaida!"
+
+#: Input/vorbis/fileinfo.c:242
+msgid "Failed to modify tag (open)"
+msgstr "Nepavyko pakeisti (atverti) žymos"
+
+#: Input/vorbis/fileinfo.c:295
+msgid "Failed to modify tag (close)"
+msgstr "Nepavyko pakeisti (užverti) žymos"
+
+#: Input/vorbis/fileinfo.c:320 Input/vorbis/fileinfo.c:329
+msgid "Failed to modify tag"
+msgstr "Nepavyko pakeisti žymos"
+
+#: Input/vorbis/fileinfo.c:572
+msgid " Ogg Vorbis Tag "
+msgstr " Ogg Vorbis žyma"
+
+#: Input/vorbis/fileinfo.c:624
+msgid "Date:"
+msgstr "Data:"
+
+#: Input/vorbis/fileinfo.c:666
+msgid "Description:"
+msgstr "Aprašymas:"
+
+#: Input/vorbis/fileinfo.c:676
+msgid "Location:"
+msgstr "Vieta:"
+
+#: Input/vorbis/fileinfo.c:686
+msgid "Version:"
+msgstr "Versija:"
+
+#: Input/vorbis/fileinfo.c:697
+msgid "ISRC number:"
+msgstr "ISRC numeris:"
+
+#: Input/vorbis/fileinfo.c:708
+msgid "Organization:"
+msgstr "Organizacija:"
+
+#: Input/vorbis/fileinfo.c:755
+msgid " Ogg Vorbis ReplayGain "
+msgstr ""
+
+#: Input/vorbis/fileinfo.c:761
+msgid "Track gain:"
+msgstr ""
+
+#: Input/vorbis/fileinfo.c:771
+msgid "Track peak:"
+msgstr ""
+
+#: Input/vorbis/fileinfo.c:782
+msgid "Album gain:"
+msgstr ""
+
+#: Input/vorbis/fileinfo.c:792
+msgid "Album peak:"
+msgstr ""
+
+#: Input/vorbis/fileinfo.c:821
+msgid " Ogg Vorbis Info "
+msgstr " Ogg Vorbis informacija"
+
+#: Input/vorbis/fileinfo.c:875 Input/vorbis/fileinfo.c:921
+msgid "Length:"
+msgstr "Trukmė:"
+
+#: Input/vorbis/fileinfo.c:955
+#, c-format
+msgid "%d KBit/s (nominal)"
+msgstr "%d KBit/s (nominaliai)"
+
+#: Input/vorbis/fileinfo.c:956
+#, c-format
+msgid "%d Hz"
+msgstr "%d Hz"
+
+#: Input/vorbis/fileinfo.c:959
+#, c-format
+msgid "%d:%.2d"
+msgstr "%d:%.2d"
+
+#: Input/vorbis/fileinfo.c:961
+#, c-format
+msgid "%d Bytes"
+msgstr "%d Baitų"
+
+# msgstr[0] "%d Baitas"
+# msgstr[1] "%d Baitai"
+#: Input/vorbis/vorbis.c:134
+msgid "Ogg Vorbis Audio Plugin"
+msgstr "Ogg Vorbis audio įskiepis"
+
+#: Input/vorbis/vorbis.c:784
+msgid "About Ogg Vorbis Audio Plugin"
+msgstr "Apie Ogg Vorbis audio įskiepį"
+
+#: Input/vorbis/vorbis.c:790
+msgid ""
+"Ogg Vorbis Plugin by the Xiph.org Foundation\n"
+"\n"
+"Original code by\n"
+"Tony Arcieri <bascule@inferno.tusculum.edu>\n"
+"Contributions from\n"
+"Chris Montgomery <monty@xiph.org>\n"
+"Peter Alm <peter@xmms.org>\n"
+"Michael Smith <msmith@labyrinth.edu.au>\n"
+"Jack Moffitt <jack@icecast.org>\n"
+"Jorn Baayen <jorn@nl.linux.org>\n"
+"Haavard Kvaalen <havardk@xmms.org>\n"
+"Gian-Carlo Pascutto <gcp@sjeng.org>\n"
+"\n"
+"Visit the Xiph.org Foundation at http://www.xiph.org/\n"
+msgstr ""
+"Ogg Vorbis įskiepio autoriai - Xiph.org Foundation\n"
+"\n"
+"Pradinis kodas:\n"
+"Tony Arcieri <bascule@inferno.tusculum.edu>\n"
+"Papildymai:nChris Montgomery <monty@xiph.org>\n"
+"Peter Alm <peter@xmms.org>\n"
+"Michael Smith <msmith@labyrinth.edu.au>\n"
+"Jack Moffitt <jack@icecast.org>\n"
+"Jorn Baayen <jorn@nl.linux.org>\n"
+"Haavard Kvaalen <havardk@xmms.org>\n"
+"Gian-Carlo Pascutto <gcp@sjeng.org>\n"
+"\n"
+"Aplankykite Xiph.org Foundation adresu http://www.xiph.org/\n"
+
+#: Input/wav/wav.c:67
+msgid "WAV Audio Plugin"
+msgstr "WAV audio įskiepis"
+
+#: Output/OSS/OSS.c:50
+msgid "OSS Output Plugin"
+msgstr "OSS išvesties įskiepis"
+
+#: Output/OSS/about.c:39
+msgid "About OSS Driver"
+msgstr "Apie OSS įskiepį"
+
+#: Output/OSS/about.c:40
+msgid ""
+"XMMS OSS Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+"XMMS OSS tvarkyklė\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+
+#: Output/OSS/configure.c:149
+#, c-format
+msgid "Default (%s)"
+msgstr "Įprastasis (%s)"
+
+#: Output/OSS/configure.c:167
+msgid "Default"
+msgstr "Įprastasis"
+
+#: Output/OSS/configure.c:199
+msgid "OSS Driver configuration"
+msgstr "OSS tvarkyklės konfigūravimas"
+
+#: Output/OSS/configure.c:215 Output/alsa/configure.c:295
+msgid "Audio device:"
+msgstr "Garso įrenginys:"
+
+#: Output/OSS/configure.c:237 Output/OSS/configure.c:278
+msgid "Use alternate device:"
+msgstr "Naudoti alternatyvų įrenginį:"
+
+#: Output/OSS/configure.c:258 Output/alsa/configure.c:339
+msgid "Mixer device:"
+msgstr "Mikserio įrenginys:"
+
+#: Output/OSS/configure.c:300
+msgid "Devices"
+msgstr "įrenginiai"
+
+#: Output/OSS/configure.c:315 Output/esd/configure.c:184
+msgid "Buffer size (ms):"
+msgstr "Buferio dydis (ms):"
+
+#: Output/OSS/configure.c:340 Output/esd/configure.c:209
+msgid "Buffering"
+msgstr "Buferiavimas"
+
+#: Output/OSS/configure.c:341
+msgid "Mixer Settings:"
+msgstr "Mikserio nustatymai:"
+
+#: Output/OSS/configure.c:347
+msgid "Volume controls Master not PCM"
+msgstr "Garsas reguliuoja pagrindinį, o ne PCM kanalą"
+
+#: Output/OSS/configure.c:353
+msgid "Mixer"
+msgstr "Mikseris"
+
+#: Output/esd/about.c:34
+msgid "About ESounD Plugin"
+msgstr "Apie ESounD įskiepį"
+
+#: Output/esd/about.c:35
+msgid ""
+"XMMS ESounD Plugin\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+"XMMS ESounD įskiepis\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+
+#: Output/esd/configure.c:102
+msgid "ESD Output Plugin configuration"
+msgstr "ESD išvesties įskiepio konfigūravimas"
+
+#: Output/esd/configure.c:125
+msgid "Use remote host"
+msgstr "Naudoti nutolusį hostą"
+
+#: Output/esd/configure.c:132
+msgid "Volume controls OSS mixer"
+msgstr "Garsas reguliuoja OSS mikserį"
+
+#: Output/esd/configure.c:169
+msgid "Server"
+msgstr "Serveris"
+
+#: Output/esd/esd.c:47
+msgid "eSound Output Plugin"
+msgstr "eSound išvesties įskiepis"
+
+#: Output/alsa/about.c:36
+msgid "About ALSA Driver"
+msgstr "Apie ALSAįskiepį"
+
+#: Output/alsa/about.c:37
+msgid ""
+"XMMS ALSA Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA.\n"
+"Author: Matthieu Sozeau (mattam@altern.org)"
+msgstr ""
+"XMMS ALSA tvarkyklė\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA.\n"
+"Autorius: Matthieu Sozeau (mattam@altern.org)"
+
+#: Output/alsa/alsa.c:46
+#, c-format
+msgid "ALSA %s output plugin"
+msgstr "ALSA %s išvesties įskiepis"
+
+#: Output/alsa/configure.c:164
+msgid "Unknown soundcard"
+msgstr "Nežinoma garso plokštė"
+
+#: Output/alsa/configure.c:217
+#, c-format
+msgid "Default PCM device (%s)"
+msgstr "Įprastasis PCM įrenginys (%s)"
+
+#: Output/alsa/configure.c:280
+msgid "ALSA Driver configuration"
+msgstr "ALSA tvarkyklės konfigūravimas"
+
+#: Output/alsa/configure.c:308
+msgid "Mixer:"
+msgstr "Mikseris:"
+
+#: Output/alsa/configure.c:316
+msgid "Use software volume control"
+msgstr "Naudoti programinį garso valdymą"
+
+#: Output/alsa/configure.c:326
+msgid "Mixer card:"
+msgstr "Mikserio korta:"
+
+#: Output/alsa/configure.c:359
+msgid "Device settings"
+msgstr "Įrenginio nustatymai:"
+
+#: Output/alsa/configure.c:361
+msgid "Advanced settings:"
+msgstr "Papildomi nustatymai:"
+
+#: Output/alsa/configure.c:374
+msgid "Buffer time (ms):"
+msgstr "Buferio dydis (ms):"
+
+#: Output/alsa/configure.c:388
+msgid "Period time (ms):"
+msgstr "Periodas (ms):"
+
+#: Output/alsa/configure.c:402
+#, fuzzy
+msgid "Thread buffer time (ms):"
+msgstr "Buferio dydis (ms):"
+
+#: Output/alsa/configure.c:416
+msgid "Multi-thread mode"
+msgstr ""
+
+#: Output/alsa/configure.c:421
+msgid "Mmap mode"
+msgstr "Mmap režimas"
+
+#: Output/alsa/configure.c:427
+msgid "Advanced settings"
+msgstr "Papildomi nustatymai"
+
+#: Visualization/blur_scope/blur_scope.c:57
+msgid "/Toggle Decorations"
+msgstr "/Perjungti dekoracijų vaizdavimą"
+
+#: Visualization/blur_scope/blur_scope.c:59
+msgid "/-"
+msgstr "/-"
+
+#: Visualization/blur_scope/blur_scope.c:60
+msgid "/Close"
+msgstr "/Užverti"
+
+#: Visualization/blur_scope/blur_scope.c:198
+msgid "Blur scope"
+msgstr "Akiratis"
+
+#: Visualization/blur_scope/config.c:73
+msgid "Blur Scope: Color selection"
+msgstr "Akiratis: spalvos pasirinkimas"
+
+#: Visualization/blur_scope/config.c:83
+msgid "Options:"
+msgstr "Nustatymai:"
+
+#: libaudacious/titlestring.c:324
+msgid "Performer/Artist"
+msgstr "Atlikėjas"
+
+#: libaudacious/titlestring.c:325 audacious/prefswin.c:94
+msgid "Album"
+msgstr "Albumas"
+
+#: libaudacious/titlestring.c:326 audacious/prefswin.c:97
+msgid "Genre"
+msgstr "Žanras"
+
+#: libaudacious/titlestring.c:327
+msgid "File name"
+msgstr "Bylos pavadinimas"
+
+#: libaudacious/titlestring.c:328
+msgid "File path"
+msgstr "Bylos kelias"
+
+#: libaudacious/titlestring.c:329
+msgid "File extension"
+msgstr "Bylos plėtinys"
+
+#: libaudacious/titlestring.c:330
+msgid "Track name"
+msgstr "Takelio pavadinimas"
+
+#: libaudacious/titlestring.c:331
+msgid "Track number"
+msgstr "Takelio numeris"
+
+#: libaudacious/titlestring.c:332 audacious/prefswin.c:100
+msgid "Date"
+msgstr "Data"
+
+#: libaudacious/titlestring.c:333 audacious/prefswin.c:101
+msgid "Year"
+msgstr "Metai"
+
+#: libaudacious/titlestring.c:334 audacious/prefswin.c:102
+msgid "Comment"
+msgstr "Komentaras"
+
+#: libaudacious/titlestring.c:385
+msgid "%{n:...%}: Display \"...\" only if element %n is present"
+msgstr "%{n:...%}: Rodyti „…“ tik jei rastas elementas %n"
+
+#: audacious/about.c:42
+#, fuzzy, c-format
+msgid ""
+"<big><b>Beep Media Player %s</b></big>\n"
+"A media player based on XMMS\n"
+"\n"
+"Copyright (C) 2003-2005 BMP Development Team\n"
+msgstr ""
+"<big><b>Beep Media Player %s</b></big>\n"
+"Media grotuvas, XMMS pagrindu\n"
+"\n"
+"© 2003-2004 BMP Development Team\n"
+
+#: audacious/about.c:48
+msgid "Developers:"
+msgstr "Kūrėjai:"
+
+#: audacious/about.c:49
+msgid "Artem Baguinski"
+msgstr "Artem Baguinski"
+
+#: audacious/about.c:50 audacious/about.c:85 audacious/about.c:169
+msgid "Edward Brocklesby"
+msgstr "Edward Brocklesby"
+
+#: audacious/about.c:51 audacious/about.c:99
+msgid "Chong Kai Xiong"
+msgstr "Chong Kai Xiong"
+
+#: audacious/about.c:52 audacious/about.c:84
+msgid "Milosz Derezynski"
+msgstr "Milosz Derezynski"
+
+#: audacious/about.c:53
+msgid "David Lau"
+msgstr "David Lau"
+
+#: audacious/about.c:54
+msgid "Ole Andre Vadla Ravnaas"
+msgstr "Ole Andre Vadla Ravnaas"
+
+#: audacious/about.c:55
+msgid "Michiel Sikkes"
+msgstr "Michiel Sikkes"
+
+#: audacious/about.c:58
+msgid "With Additional Help:"
+msgstr "Taip pat prisidėjo:"
+
+#: audacious/about.c:59
+msgid "Andrei Badea"
+msgstr "Andrei Badea"
+
+#: audacious/about.c:60
+msgid "Peter Behroozi"
+msgstr "Peter Behroozi"
+
+#: audacious/about.c:61
+msgid "Bernard Blackham"
+msgstr "Bernard Blackham"
+
+#: audacious/about.c:62
+msgid "Oliver Blin"
+msgstr "Oliver Blin"
+
+#: audacious/about.c:63
+msgid "Tomas Bzatek"
+msgstr "Tomas Bzatek"
+
+#: audacious/about.c:64 audacious/about.c:149
+msgid "Liviu Danicel"
+msgstr "Liviu Danicel"
+
+#: audacious/about.c:65
+msgid "Jon Dowland"
+msgstr "Jon Dowland"
+
+#: audacious/about.c:66
+msgid "Artur Frysiak"
+msgstr "Artur Frysiak"
+
+#: audacious/about.c:67
+msgid "Sebastian Kapfer"
+msgstr "Sebastian Kapfer"
+
+#: audacious/about.c:68
+msgid "Lukas Koberstein"
+msgstr "Lukas Koberstein"
+
+#: audacious/about.c:69 audacious/about.c:153
+msgid "Dan Korostelev"
+msgstr "Dan Korostelev"
+
+#: audacious/about.c:70
+msgid "Jolan Luff"
+msgstr "Jolan Luff"
+
+#: audacious/about.c:71
+msgid "Michael Marineau"
+msgstr "Michael Marineau"
+
+#: audacious/about.c:72
+msgid "Tim-Philipp Muller"
+msgstr "Tim-Philipp Muller"
+
+#: audacious/about.c:73
+msgid "Julien Portalier"
+msgstr "Julien Portalier"
+
+#: audacious/about.c:74
+msgid "Andrew Ruder"
+msgstr "Andrew Ruder"
+
+#: audacious/about.c:75
+msgid "Olivier Samyn"
+msgstr "Olivier Samyn"
+
+#: audacious/about.c:76
+msgid "Martijn Vernooij"
+msgstr "Martijn Vernooij"
+
+#: audacious/about.c:79
+msgid "ClearSky skin:"
+msgstr ""
+
+#: audacious/about.c:80
+msgid "Will Reinhart"
+msgstr ""
+
+#: audacious/about.c:83
+msgid "Homepage and Graphics:"
+msgstr "Interneto svetainė ir grafika:"
+
+#: audacious/about.c:92
+msgid "Brazilian Portuguese:"
+msgstr "Į brazilų k. (portugalų dialektą):"
+
+#: audacious/about.c:93
+msgid "Philipi Pinto"
+msgstr "Philipi Pinto"
+
+#: audacious/about.c:95
+msgid "Breton:"
+msgstr "į bretonų k.:"
+
+#: audacious/about.c:96
+msgid "Thierry Vignaud"
+msgstr "Thierry Vignaud"
+
+#: audacious/about.c:98
+msgid "Chinese:"
+msgstr "Į kinų k.:"
+
+#: audacious/about.c:100
+msgid "Chao-Hsiung Liao"
+msgstr ""
+
+#: audacious/about.c:102
+msgid "Czech:"
+msgstr "Į čekų k.:"
+
+#: audacious/about.c:103
+msgid "Jan Narovec"
+msgstr "Jan Narovec"
+
+#: audacious/about.c:105
+msgid "Dutch:"
+msgstr "Į olandų k.:"
+
+#: audacious/about.c:106
+msgid "Laurens Buhler"
+msgstr "Laurens Buhler"
+
+#: audacious/about.c:108
+#, fuzzy
+msgid "Finnish:"
+msgstr "Į ispanų k.:"
+
+#: audacious/about.c:109
+msgid "Pauli Virtanen"
+msgstr ""
+
+#: audacious/about.c:111
+msgid "French:"
+msgstr "Į prancūzų k.:"
+
+#: audacious/about.c:112
+msgid "David Le Brun"
+msgstr "David Le Brun"
+
+#: audacious/about.c:114
+msgid "German:"
+msgstr "Į vokiečių k.:"
+
+#: audacious/about.c:115
+msgid "Matthias Debus"
+msgstr "Matthias Debus"
+
+#: audacious/about.c:117
+#, fuzzy
+msgid "Georgian: "
+msgstr "Į vokiečių k.:"
+
+#: audacious/about.c:118
+msgid "George Machitidze"
+msgstr ""
+
+#: audacious/about.c:120
+msgid "Greek:"
+msgstr "Į graikų k.:"
+
+#: audacious/about.c:121
+msgid "Kouzinopoulos Haris"
+msgstr "Kouzinopoulos Haris"
+
+#: audacious/about.c:122
+msgid "Stavros Giannouris"
+msgstr ""
+
+#: audacious/about.c:124
+msgid "Hindi:"
+msgstr ""
+
+#: audacious/about.c:125
+msgid "Dhananjaya Sharma"
+msgstr ""
+
+#: audacious/about.c:127
+msgid "Hungarian:"
+msgstr "Į vengrų k.:"
+
+#: audacious/about.c:128
+msgid "Laszlo Dvornik"
+msgstr "Laszlo Dvornik"
+
+#: audacious/about.c:130
+msgid "Italian:"
+msgstr "Į italų k.:"
+
+#: audacious/about.c:131
+msgid "Alessio D'Ascanio"
+msgstr "Alessio D'Ascanio"
+
+#: audacious/about.c:133
+msgid "Japanese:"
+msgstr "Į japonų k.:"
+
+#: audacious/about.c:134
+msgid "Takeshi Aihana"
+msgstr "Takeshi Aihana"
+
+#: audacious/about.c:136
+msgid "Korean:"
+msgstr "Į korėjiečių k.:"
+
+#: audacious/about.c:137
+msgid "DongCheon Park"
+msgstr "DongCheon Park"
+
+#: audacious/about.c:139
+msgid "Lithuanian:"
+msgstr "Į lietuvių k.:"
+
+#: audacious/about.c:140
+msgid "Rimas Kudelis"
+msgstr "Rimas Kudelis"
+
+#: audacious/about.c:142
+msgid "Macedonian:"
+msgstr "Į makedonų k.:"
+
+#: audacious/about.c:143
+msgid "Arangel Angov"
+msgstr "Arangel Angov"
+
+#: audacious/about.c:145
+msgid "Polish:"
+msgstr "Į lenkų k.:"
+
+#: audacious/about.c:146
+msgid "Jacek Wolszczak"
+msgstr "Jacek Wolszczak"
+
+#: audacious/about.c:148
+msgid "Romanian:"
+msgstr "Į rumunų k.:"
+
+#: audacious/about.c:151
+msgid "Russian:"
+msgstr "Į rusų k.:"
+
+#: audacious/about.c:152
+msgid "Pavlo Bohmat"
+msgstr "Pavlo Bohmat"
+
+#: audacious/about.c:154
+msgid "Vitaly Lipatov"
+msgstr ""
+
+#: audacious/about.c:156
+msgid "Slovak:"
+msgstr "Į slovakų k.:"
+
+#: audacious/about.c:157
+msgid "Pavel Kanzelsberger"
+msgstr "Pavel Kanzelsberger"
+
+#: audacious/about.c:159
+msgid "Spanish:"
+msgstr "Į ispanų k.:"
+
+#: audacious/about.c:160
+msgid "Francisco Javier F. Serrador"
+msgstr "Francisco Javier F. Serrador"
+
+#: audacious/about.c:162
+msgid "Swedish:"
+msgstr "Į švedų k.:"
+
+#: audacious/about.c:163
+msgid "Martin Persenius"
+msgstr "Martin Persenius"
+
+#: audacious/about.c:165
+#, fuzzy
+msgid "Ukrainian:"
+msgstr "Į rumunų k.:"
+
+#: audacious/about.c:166
+msgid "Mykola Lynnyk"
+msgstr ""
+
+#: audacious/about.c:168
+msgid "Welsh:"
+msgstr "Į velsiečių k.:"
+
+#: audacious/about.c:266
+msgid "About BMP"
+msgstr "Apie BMP"
+
+#: audacious/about.c:311
+msgid "Credits"
+msgstr "Credits"
+
+#: audacious/about.c:315
+msgid "Translators"
+msgstr "Vertėjai"
+
+#: audacious/eq_slider.c:93
+msgid "PREAMP"
+msgstr "Stiprinimas"
+
+#: audacious/eq_slider.c:93
+msgid "60HZ"
+msgstr "60HZ"
+
+#: audacious/eq_slider.c:93
+msgid "170HZ"
+msgstr "170HZ"
+
+#: audacious/eq_slider.c:94
+msgid "310HZ"
+msgstr "310HZ"
+
+#: audacious/eq_slider.c:94
+msgid "600HZ"
+msgstr "600HZ"
+
+#: audacious/eq_slider.c:94
+msgid "1KHZ"
+msgstr "1KHZ"
+
+#: audacious/eq_slider.c:95
+msgid "3KHZ"
+msgstr "3KHZ"
+
+#: audacious/eq_slider.c:95
+msgid "6KHZ"
+msgstr "6KHZ"
+
+#: audacious/eq_slider.c:95
+msgid "12KHZ"
+msgstr "12KHZ"
+
+#: audacious/eq_slider.c:96
+msgid "14KHZ"
+msgstr "14KHZ"
+
+#: audacious/eq_slider.c:96
+msgid "16KHZ"
+msgstr "16KHZ"
+
+#: audacious/equalizer.c:127
+msgid "/Load"
+msgstr "/Įkelti"
+
+#: audacious/equalizer.c:128
+msgid "/Load/Preset"
+msgstr "/Įkelti/Šabloną"
+
+#: audacious/equalizer.c:130
+msgid "/Load/Auto-load preset"
+msgstr "/Įkelti/Automatiškai įsikeliantį šabloną"
+
+#: audacious/equalizer.c:132
+msgid "/Load/Default"
+msgstr "/Įkelti/Įprastąjį"
+
+#: audacious/equalizer.c:135
+msgid "/Load/Zero"
+msgstr "/Įkelti/Nulius"
+
+#: audacious/equalizer.c:138
+msgid "/Load/From file"
+msgstr "/Įkelti/Iš bylos"
+
+#: audacious/equalizer.c:140
+msgid "/Load/From WinAMP EQF file"
+msgstr "/Įkelti/Iš WinAMP EQF bylos"
+
+#: audacious/equalizer.c:142
+msgid "/Import"
+msgstr "/Importuoti"
+
+#: audacious/equalizer.c:143
+msgid "/Import/WinAMP Presets"
+msgstr "/Įmportuoti/WinAMP šablonus"
+
+#: audacious/equalizer.c:145
+msgid "/Save"
+msgstr "/Išsaugoti"
+
+#: audacious/equalizer.c:146
+msgid "/Save/Preset"
+msgstr "/Išsaugoti/Šabloną"
+
+#: audacious/equalizer.c:148
+msgid "/Save/Auto-load preset"
+msgstr "/Išsaugoti/Automatiškai įsikeliantį šabloną"
+
+#: audacious/equalizer.c:150
+msgid "/Save/Default"
+msgstr "/Išsaugoti/Įprastąjį"
+
+#: audacious/equalizer.c:153
+msgid "/Save/To file"
+msgstr "/Išsaugoti/Į bylą"
+
+#: audacious/equalizer.c:155
+msgid "/Save/To WinAMP EQF file"
+msgstr "/Išsaugoti/WinAMP EQF bylon"
+
+#: audacious/equalizer.c:157
+msgid "/Delete"
+msgstr "/Šalinti"
+
+#: audacious/equalizer.c:158
+msgid "/Delete/Preset"
+msgstr "/Šalinti/Šabloną"
+
+#: audacious/equalizer.c:160
+msgid "/Delete/Auto-load preset"
+msgstr "/Šalinti/Automatiškai įsikeliantį šabloną"
+
+#: audacious/equalizer.c:741
+msgid "BMP Equalizer"
+msgstr "BMP ekvalaizeris"
+
+#: audacious/equalizer.c:1366
+msgid "Preset"
+msgstr "Šablonas"
+
+#: audacious/equalizer.c:1409
+msgid "Presets"
+msgstr "Šablonai"
+
+#: audacious/equalizer.c:1468
+msgid "Load preset"
+msgstr "Įkelti šabloną"
+
+#: audacious/equalizer.c:1482
+msgid "Load auto-preset"
+msgstr "Įkelti automatinį šabloną"
+
+#: audacious/equalizer.c:1507 audacious/equalizer.c:1513 audacious/equalizer.c:1520
+msgid "Load equalizer preset"
+msgstr "Įkelti ekvalaizerio šabloną"
+
+#: audacious/equalizer.c:1529
+msgid "Save preset"
+msgstr "Išsaugoti šabloną"
+
+#: audacious/equalizer.c:1548
+msgid "Save auto-preset"
+msgstr "Išsaugoti automatiškai įsikeliantį šabloną"
+
+#: audacious/equalizer.c:1581 audacious/equalizer.c:1600
+msgid "Save equalizer preset"
+msgstr "Išsaugoti ekvalaizerio šabloną"
+
+#: audacious/equalizer.c:1609
+msgid "Delete preset"
+msgstr "Pašalinti šabloną"
+
+#: audacious/equalizer.c:1625
+msgid "Delete auto-preset"
+msgstr "Pašalinti automatiškai įsikeliantį šabloną"
+
+#: audacious/getopt.c:616
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr "%s: raktas „%s“ netinkama\n"
+
+#: audacious/getopt.c:638
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr "%s: raktas „--%s“ nepriima argumento\n"
+
+#: audacious/getopt.c:644
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr "%s: raktas „%c%s“ nepriima argumento\n"
+
+#: audacious/getopt.c:661 audacious/getopt.c:819
+#, c-format
+msgid "%s: option `%s' requires an argument\n"
+msgstr "%s: raktas „%s“ reikalauja argumento\n"
+
+#: audacious/getopt.c:687
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr "%s: neatpažintas raktas „--%s“\n"
+
+#: audacious/getopt.c:691
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr "%s: neatpažintas raktas „%c%s“\n"
+
+#: audacious/getopt.c:715
+#, c-format
+msgid "%s: illegal option -- %c\n"
+msgstr "%s: netinkamas raktas -- %c\n"
+
+#: audacious/getopt.c:718
+#, c-format
+msgid "%s: invalid option -- %c\n"
+msgstr "%s: netinkamas raktas -- %c\n"
+
+#: audacious/getopt.c:745 audacious/getopt.c:861
+#, c-format
+msgid "%s: option requires an argument -- %c\n"
+msgstr "%s: raktas reikalauja argumento -- %c\n"
+
+#: audacious/getopt.c:790
+#, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr "%s: raktas „-W %s“ yra netinkamas\n"
+
+#: audacious/getopt.c:805
+#, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr "%s: raktas „-W %s“ nepriima argumento\n"
+
+#: audacious/input.c:299
+msgid ""
+"<b><big>Unable to play files.</big></b>\n"
+"\n"
+"The following files could not be played. Please check that:\n"
+"1. they are accessible.\n"
+"2. you have enabled the media plugins required."
+msgstr ""
+"<b><big>Nepavyko groti bylų.</big></b>\n"
+"\n"
+"Šios bylos negalėjo būti pagrotos. Prašome patikrinti, ar:\n"
+"1. jos prieinamos.\n"
+"2. įjungtas joms reikalingas media įskiepis."
+
+#: audacious/input.c:324
+msgid "Don't show this warning anymore"
+msgstr "Daugiau neberodyti šio pranešimo"
+
+#: audacious/input.c:326
+msgid "Show more _details"
+msgstr "Rodyti _detaliau"
+
+# msgstr[0] "Įtrauktas %d elementas."
+# msgstr[1] "Įtraukti %d elementai."
+#: audacious/input.c:340 audacious/prefswin.c:98 audacious/prefswin.c:447 audacious/prefswin.c:535
+#: audacious/prefswin.c:624 audacious/prefswin.c:720
+msgid "Filename"
+msgstr "Bylos vardas"
+
+#: audacious/input.c:489
+#, c-format
+msgid "bmp: %s"
+msgstr "bmp: %s"
+
+#: audacious/input.c:505
+msgid "Filename:"
+msgstr "Bylos vardas:"
+
+#: audacious/input.c:523
+msgid "No input plugin recognized this file"
+msgstr "Šiai bylai nerasta įvesties įskiepio"
+
+#: audacious/input.c:525
+#, c-format
+msgid "Input plugin: %s"
+msgstr "įvesties įskiepis: %s"
+
+#: audacious/logger.c:120
+#, c-format
+msgid "Unable to create log file (%s)!\n"
+msgstr "Nepavyko sukurti žurnalo bylos (%s)!\n"
+
+#: audacious/main.c:77 audacious/main.c:79
+msgid "Beep Media Player"
+msgstr "Multimedijos grotuvas „Beep“"
+
+#: audacious/main.c:371
+#, c-format
+msgid "Could not create directory (%s): %s"
+msgstr "Nepavyko sukurti aplanko (%s): %s"
+
+#: audacious/main.c:625
+msgid ""
+"Usage: beep-media-player [options] [files] ...\n"
+"\n"
+"Options:\n"
+"--------\n"
+msgstr ""
+"Naudojimas: beep-media-player [raktai] [bylos] …\n"
+"\n"
+"Raktai:\n"
+"--------\n"
+
+#: audacious/main.c:630
+msgid "Display this text and exit"
+msgstr "Parodyti šią žinutę ir baigti darbą"
+
+#: audacious/main.c:633
+msgid "Select BMP/XMMS session (Default: 0)"
+msgstr "Pasirinkti BMP/XMMS sesiją (Nutylimai: 0)"
+
+#: audacious/main.c:636
+msgid "Skip backwards in playlist"
+msgstr "Šoktelti atgal grojaraštyje"
+
+#: audacious/main.c:639
+msgid "Start playing current playlist"
+msgstr "Pradėti groti esamą grojaraštį"
+
+#: audacious/main.c:642
+msgid "Pause current song"
+msgstr "Pristabdyti grojamą dainą"
+
+#: audacious/main.c:645
+msgid "Stop current song"
+msgstr "Sustabdyti grojamą dainą"
+
+#: audacious/main.c:648
+msgid "Pause if playing, play otherwise"
+msgstr "Pristabdyti, jei grojama, kitu atveju groti"
+
+#: audacious/main.c:651
+msgid "Skip forward in playlist"
+msgstr "Šoktelti pirmyn grojaraštyje"
+
+#: audacious/main.c:654
+msgid "Don't clear the playlist"
+msgstr "Neišvalyti grojaraščio"
+
+#: audacious/main.c:657
+msgid "Show the main window"
+msgstr "Parodyti pagrindinį langą"
+
+#: audacious/main.c:660
+msgid "Activate BMP"
+msgstr "Aktyvinti BMP"
+
+#: audacious/main.c:663
+msgid "Previous session ID"
+msgstr "Praėjusios sesijos ID"
+
+#: audacious/main.c:666
+msgid "Print version number and exit\n"
+msgstr "Parodyti versijos numerį ir baigti darbą\n"
+
+#: audacious/main.c:841
+msgid ""
+"\n"
+"Received SIGSEGV\n"
+"\n"
+"This could be a bug in BMP. If you don't know why this happened, send a mail "
+"to us at beepmp-devel@lists.sourceforge.net\n"
+"\n"
+msgstr ""
+"\n"
+"Gautas SIGSEGV signalas\n"
+"\n"
+"Tai gali būti BMP riktas. Jei nežinote, kodėl tai nutiko, prašome nusiųsti "
+"laišką adresu beepmp-devel@lists.sourceforge.net\n"
+"\n"
+
+#: audacious/main.c:864
+#, c-format
+msgid ""
+"<b><big>Unable to load skin.</big></b>\n"
+"\n"
+"Check that skin at '%s' is usable and default skin is properly installed at "
+"'%s'\n"
+msgstr ""
+"<b><big>Nepavyko įkelti rūbo.</big></b>\n"
+"\n"
+"Įsitikinkite, jog įmanoma naudoti rūbą, esantį „%s“ ir kad tvarkingai "
+"įdiegtas numatytasis rūbas, esantis „%s“.\n"
+
+#: audacious/main.c:899
+#, c-format
+msgid ""
+"Sorry, your GTK+ version (%d.%d.%d) does not work with BMP.\n"
+"Please use GTK+ %s or newer.\n"
+msgstr ""
+"Atsiprašome, tačiau jūsų GTK+ versija (%d.%d.%d) neveiks su BMP.\n"
+"Prašome naudoti GTK+ %s ar naujesnę versiją.\n"
+
+#: audacious/main.c:910
+msgid ""
+"Sorry, threads isn't supported on your platform.\n"
+"\n"
+"If you're on a libc5 based linux system and installed Glib & GTK+ before "
+"you\n"
+"installed LinuxThreads you need to recompile Glib & GTK+.\n"
+msgstr ""
+"Atsiprašome, jūsų platformoje nepalaikomos gijos.\n"
+"\n"
+"Jei jūs naudojate libc5 pagrindo linux sistemą ir įsidiegėte Glib bei GTK+ "
+"prieš\n"
+"įsidiegdami LinuxThreads, jums reikia perkompiliuoti Glib ir GTK+.\n"
+
+#: audacious/main.c:923
+msgid "BMP: Unable to open display, exiting."
+msgstr "BMP: Nepavyko pasinaudoti displėjum, baigiu darbą."
+
+#: audacious/mainwin.c:235 audacious/mainwin.c:361 audacious/playlistwin.c:125
+msgid "/View Track Details"
+msgstr "/Takelio informacija"
+
+#: audacious/mainwin.c:238
+msgid "/Autoscroll Songname"
+msgstr "/Automatiškai slinkti pavadinimą"
+
+#: audacious/mainwin.c:248
+msgid "/Visualization Mode"
+msgstr "Vizualizacijos tipas"
+
+#: audacious/mainwin.c:249
+msgid "/Visualization Mode/Analyzer"
+msgstr "/Vizualizacijos tipas/Analizė"
+
+#: audacious/mainwin.c:251
+msgid "/Visualization Mode/Scope"
+msgstr "Vizualizacijos tipas/Akiratis"
+
+#: audacious/mainwin.c:253
+msgid "/Visualization Mode/Off"
+msgstr "/Vizualizacijos tipas/Išjungta"
+
+#: audacious/mainwin.c:255
+msgid "/Analyzer Mode"
+msgstr "/Analizės būdas"
+
+#: audacious/mainwin.c:256
+msgid "/Analyzer Mode/Normal"
+msgstr "/Analizės būdas/Normali"
+
+#: audacious/mainwin.c:258
+msgid "/Analyzer Mode/Fire"
+msgstr "/Analizės būdas/Ugnis"
+
+#: audacious/mainwin.c:260
+msgid "/Analyzer Mode/Vertical Lines"
+msgstr "/Analizės būdas/Gulsčios linijos"
+
+#: audacious/mainwin.c:263
+msgid "/Analyzer Mode/Lines"
+msgstr "/Analizės būdas/Linijos"
+
+#: audacious/mainwin.c:265
+msgid "/Analyzer Mode/Bars"
+msgstr "/Analizės būdas/Stulpeliai"
+
+#: audacious/mainwin.c:268
+msgid "/Analyzer Mode/Peaks"
+msgstr "/Analizės režimas/Pikai"
+
+#: audacious/mainwin.c:270
+msgid "/Scope Mode"
+msgstr "/Akiračio būdas"
+
+#: audacious/mainwin.c:271
+msgid "/Scope Mode/Dot Scope"
+msgstr "/Akiračio būdas/Taškinis akiratis"
+
+#: audacious/mainwin.c:273
+msgid "/Scope Mode/Line Scope"
+msgstr "/Akiračio būdas/Linijinis akiratis"
+
+#: audacious/mainwin.c:275
+msgid "/Scope Mode/Solid Scope"
+msgstr "/Akiračio būdas/Vientisas akiratis"
+
+#: audacious/mainwin.c:277
+msgid "/WindowShade VU Mode"
+msgstr "s"
+
+#: audacious/mainwin.c:278
+msgid "/WindowShade VU Mode/Normal"
+msgstr "/Suvynioto lango VU būdas/Normalus"
+
+#: audacious/mainwin.c:280
+msgid "/WindowShade VU Mode/Smooth"
+msgstr "/Suvynioto lango VU būdas/Glodus"
+
+#: audacious/mainwin.c:282
+msgid "/Refresh Rate"
+msgstr "/Atnaujinimo dažnis"
+
+#: audacious/mainwin.c:283
+msgid "/Refresh Rate/Full (~50 fps)"
+msgstr "/Atnaujinimo dažnis/Pilnas (~50 fps)"
+
+#: audacious/mainwin.c:285
+msgid "/Refresh Rate/Half (~25 fps)"
+msgstr "/Atnaujinimo dažnis/Pusinis (~25 fps)"
+
+#: audacious/mainwin.c:287
+msgid "/Refresh Rate/Quarter (~13 fps)"
+msgstr "/Atnaujinimo dažnis/Ketvirtinis (~13fps)"
+
+#: audacious/mainwin.c:289
+msgid "/Refresh Rate/Eighth (~6 fps)"
+msgstr "/Atnaujinimo dažnis/Aštuntinis (~6fps)"
+
+#: audacious/mainwin.c:291
+msgid "/Analyzer Falloff"
+msgstr "/Analizės atkritimas"
+
+#: audacious/mainwin.c:292
+msgid "/Analyzer Falloff/Slowest"
+msgstr "/Analizės atkiritimas/Lėčiausias"
+
+#: audacious/mainwin.c:294
+msgid "/Analyzer Falloff/Slow"
+msgstr "/Analizės atkritimas/Lėtas"
+
+#: audacious/mainwin.c:296
+msgid "/Analyzer Falloff/Medium"
+msgstr "/Analizės atkritimas/Vidutinis"
+
+#: audacious/mainwin.c:298
+msgid "/Analyzer Falloff/Fast"
+msgstr "/Analizės atkritimas/Greitas"
+
+#: audacious/mainwin.c:300
+msgid "/Analyzer Falloff/Fastest"
+msgstr "/Analizės atkritimas/Greičiausias"
+
+#: audacious/mainwin.c:302
+msgid "/Peaks Falloff"
+msgstr "/Pikų atkritimas"
+
+#: audacious/mainwin.c:303
+msgid "/Peaks Falloff/Slowest"
+msgstr "/Pikų atkritimas/Lėčiausias"
+
+#: audacious/mainwin.c:305
+msgid "/Peaks Falloff/Slow"
+msgstr "/Pikų atkritimas/Lėtas"
+
+#: audacious/mainwin.c:307
+msgid "/Peaks Falloff/Medium"
+msgstr "/Pikų atkritimas/Vidutinis"
+
+#: audacious/mainwin.c:309
+msgid "/Peaks Falloff/Fast"
+msgstr "/Pikų atkritimas/Greitas"
+
+#: audacious/mainwin.c:311
+msgid "/Peaks Falloff/Fastest"
+msgstr "/Pikų atkritimas/Greičiausias"
+
+#: audacious/mainwin.c:326
+msgid "/Repeat"
+msgstr "/Kartoti"
+
+#: audacious/mainwin.c:328
+msgid "/Shuffle"
+msgstr "/Atsitiktine tvarka"
+
+#: audacious/mainwin.c:335
+msgid "/Play"
+msgstr "/Groti"
+
+#: audacious/mainwin.c:337
+msgid "/Pause"
+msgstr "/Pristabdyti"
+
+#: audacious/mainwin.c:339
+msgid "/Stop"
+msgstr "/Sustabdyti"
+
+#: audacious/mainwin.c:341
+msgid "/Previous"
+msgstr "/Šokti atgal"
+
+#: audacious/mainwin.c:343
+msgid "/Next"
+msgstr "/Šokti pirmyn"
+
+#: audacious/mainwin.c:346
+msgid "/Jump to Playlist Start"
+msgstr "/Šokti į grojaraščio pradžią"
+
+#: audacious/mainwin.c:349
+msgid "/Jump to File"
+msgstr "/Šokti į bylą"
+
+#: audacious/mainwin.c:351
+msgid "/Jump to Time"
+msgstr "/Šokti į laiką"
+
+#: audacious/mainwin.c:364
+msgid "/Preferences"
+msgstr "/Nustatymai"
+
+#: audacious/mainwin.c:366
+msgid "/_View"
+msgstr "/_Rodinys"
+
+#: audacious/mainwin.c:368
+msgid "/About BMP"
+msgstr "/Apie BMP"
+
+#: audacious/mainwin.c:370
+msgid "/_Quit"
+msgstr "/_Išeiti"
+
+#: audacious/mainwin.c:380
+msgid "/Files..."
+msgstr "/Bylas…"
+
+#: audacious/mainwin.c:387
+msgid "/Internet location..."
+msgstr "/Adresą internete…"
+
+#: audacious/mainwin.c:401
+msgid "/Show Playlist Editor"
+msgstr "/Parodyti grojaraščio redaktorių"
+
+#: audacious/mainwin.c:403
+msgid "/Show Equalizer"
+msgstr "/Rodyti ekvalaizerį"
+
+#: audacious/mainwin.c:406
+msgid "/Time Elapsed"
+msgstr "/Praėjęs laikas"
+
+#: audacious/mainwin.c:408
+msgid "/Time Remaining"
+msgstr "/Likęs laikas"
+
+#: audacious/mainwin.c:411
+msgid "/Always On Top"
+msgstr "/Visada viršuje"
+
+#: audacious/mainwin.c:413
+msgid "/Put on All Workspaces"
+msgstr "/Rodyti visuose darbalaukiuose"
+
+#: audacious/mainwin.c:416
+msgid "/Roll up Player"
+msgstr "/Sutraukti grotuvą"
+
+#: audacious/mainwin.c:418
+msgid "/Roll up Playlist Editor"
+msgstr "/Sutraukti grojaraščio redaktorių"
+
+#: audacious/mainwin.c:420
+msgid "/Roll up Equalizer"
+msgstr "/Sutraukti ekvalaizerį"
+
+#: audacious/mainwin.c:782 audacious/mainwin.c:3098
+msgid "BMP"
+msgstr "BMP"
+
+#: audacious/mainwin.c:820
+msgid "VBR"
+msgstr "VBR"
+
+#: audacious/mainwin.c:1246
+msgid "Jump to Time"
+msgstr "Šokti į laiką"
+
+#: audacious/mainwin.c:1267
+msgid "minutes:seconds"
+msgstr "minučių:sekundžių"
+
+#: audacious/mainwin.c:1277
+msgid "Track length:"
+msgstr "Takelio trukmė:"
+
+#: audacious/mainwin.c:1364
+#, fuzzy
+msgid "Un_queue"
+msgstr "Eilė"
+
+#: audacious/mainwin.c:1366 audacious/mainwin.c:1688
+#, fuzzy
+msgid "_Queue"
+msgstr "Eilė"
+
+#: audacious/mainwin.c:1618
+msgid "Jump to Track"
+msgstr "Šokti į takelį"
+
+#: audacious/mainwin.c:1657
+msgid "Filter: "
+msgstr "Filtruoti:"
+
+#: audacious/mainwin.c:1884
+msgid "Add Folders"
+msgstr "Pridėti aplankus"
+
+#: audacious/mainwin.c:1935
+msgid "Add Internet Address"
+msgstr "Pridėti adresą internete…"
+
+#: audacious/mainwin.c:2063
+#, c-format
+msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
+msgstr "PERŠOKTI Į: %d:%-2.2d/%d:%-2.2d (%d%%)"
+
+#: audacious/mainwin.c:2095 audacious/mainwin.c:2769
+#, c-format
+msgid "VOLUME: %d%%"
+msgstr "GARSUMAS: %d%%"
+
+#: audacious/mainwin.c:2126 audacious/mainwin.c:2772
+#, c-format
+msgid "BALANCE: %d%% LEFT"
+msgstr "BALANSAS: %d%% KAIRĖJE"
+
+#: audacious/mainwin.c:2130 audacious/mainwin.c:2775
+msgid "BALANCE: CENTER"
+msgstr "BALANSAS: VIDURYS"
+
+#: audacious/mainwin.c:2134 audacious/mainwin.c:2777
+#, c-format
+msgid "BALANCE: %d%% RIGHT"
+msgstr "BALANSAS: %d%% DEŠINĖJE"
+
+#: audacious/mainwin.c:2544
+msgid "OPTIONS MENU"
+msgstr "NUSTATYMŲ MENIU"
+
+#: audacious/mainwin.c:2549
+msgid "DISABLE ALWAYS ON TOP (N/A)"
+msgstr "ATJUNGTI „VISADA VIRŠUJE“ (N/A)"
+
+#: audacious/mainwin.c:2551
+msgid "ENABLE ALWAYS ON TOP (N/A)"
+msgstr "ĮJUNGTI „VISADA VIRŠUJE“ (N/A)"
+
+#: audacious/mainwin.c:2554
+msgid "DISABLE ALWAYS ON TOP"
+msgstr "ATJUNGTI „VISADA VIRŠUJE“"
+
+#: audacious/mainwin.c:2556
+msgid "ENABLE ALWAYS ON TOP"
+msgstr "ĮJUNGTI „VISADA VIRŠUJE“"
+
+#: audacious/mainwin.c:2559
+msgid "FILE INFO BOX"
+msgstr "DIALOGAS „APIE BYLĄ“"
+
+#: audacious/mainwin.c:2562
+msgid "** DOUBLESIZE HAS BEEN REMOVED **"
+msgstr "** DVIGUBAS DYDIS PAŠALINTAS IŠ PROGRAMOS **"
+
+#: audacious/mainwin.c:2565
+msgid "VISUALIZATION MENU"
+msgstr "VIZUALIZACIJOS MENIU"
+
+#: audacious/mainwin.c:2610
+msgid ""
+"<b><big>No playable CD found.</big></b>\n"
+"\n"
+"No CD inserted, or inserted CD is not an audio CD.\n"
+msgstr ""
+"<b><big>Neradau CD, kurį galėčiau groti.</big></b>\n"
+"\n"
+"CD įrenginyje nėra disko, arba įdėtas ne AudioCD diskas.\n"
+
+#: audacious/mainwin.c:2627
+msgid ""
+"<b><big>Couldn't open audio.</big></b>\n"
+"\n"
+"Please check that:\n"
+"1. You have the correct output plugin selected.\n"
+"2. No other programs is blocking the soundcard.\n"
+"3. Your soundcard is configured properly.\n"
+msgstr ""
+"<b><big>Nepavyko atverti garso įrenginio.</big></b>\n"
+"\n"
+"Prašome įsitikinti, kad:\n"
+"\n"
+"1. Jūs išsirinkote tinkamą išvesties įskiepį.\n"
+"2. Kitos programos neblokuoja garso įrenginio.\n"
+"3. Jūsų garso įrenginys sukonfigūruotas teisingai.\n"
+
+#: audacious/playlistwin.c:131 audacious/playlistwin.c:192
+msgid "/Remove Selected"
+msgstr "/Pašalinti pažymėtus"
+
+#: audacious/playlistwin.c:135 audacious/playlistwin.c:188
+msgid "/Remove Unselected"
+msgstr "/Pašalinti nepažymėtus"
+
+#: audacious/playlistwin.c:139 audacious/playlistwin.c:184
+msgid "/Remove All"
+msgstr "/Pašalinti visus"
+
+#: audacious/playlistwin.c:145
+msgid "/Queue Toggle"
+msgstr "/Perjungti eilės rodomumą"
+
+#: audacious/playlistwin.c:151
+msgid "/Add CD..."
+msgstr "/Pridėti CD…"
+
+#: audacious/playlistwin.c:155
+msgid "/Add Internet Address..."
+msgstr "/Pridėti adresą internete…"
+
+#: audacious/playlistwin.c:161
+#, fuzzy
+msgid "/Add Folders..."
+msgstr "/Pridėti bylas…"
+
+#: audacious/playlistwin.c:166
+msgid "/Add Files..."
+msgstr "/Pridėti bylas…"
+
+#: audacious/playlistwin.c:172
+msgid "/Clear Queue"
+msgstr "/Išvalyti eilę"
+
+#: audacious/playlistwin.c:178
+msgid "/Remove Unavailable Files"
+msgstr "/Pašalinti nepasiekiamas bylas"
+
+#: audacious/playlistwin.c:198
+msgid "/New List"
+msgstr "/Naujas grojaraštis"
+
+#: audacious/playlistwin.c:204
+msgid "/Load List"
+msgstr "/Įkelti grojaraštį"
+
+#: audacious/playlistwin.c:208
+msgid "/Save List"
+msgstr "/Išsaugoti grojaraštį"
+
+#: audacious/playlistwin.c:214
+msgid "/Update View"
+msgstr "/Atnaujinti vaizdą"
+
+#: audacious/playlistwin.c:220
+msgid "/Invert Selection"
+msgstr "/Žymėti priešingai"
+
+#: audacious/playlistwin.c:226
+msgid "/Select None"
+msgstr "/Panaikinti žymėjimą"
+
+#: audacious/playlistwin.c:230
+msgid "/Select All"
+msgstr "/Žymėti visus"
+
+#: audacious/playlistwin.c:236
+msgid "/Randomize List"
+msgstr "/Sumaišyti grojaraštį"
+
+#: audacious/playlistwin.c:238
+msgid "/Reverse List"
+msgstr "/Apversti grojaraštį"
+
+#: audacious/playlistwin.c:241
+msgid "/Sort List"
+msgstr "/Rūšiuoti grojaraštį"
+
+#: audacious/playlistwin.c:242
+msgid "/Sort List/By Title"
+msgstr "/Rūšiuoti grojaraštį/Pagal pavadinimą"
+
+#: audacious/playlistwin.c:244
+msgid "/Sort List/By Filename"
+msgstr "/Rūšiuoti grojaraštį/Pagal bylos vardą"
+
+#: audacious/playlistwin.c:246
+msgid "/Sort List/By Path + Filename"
+msgstr "/Rūšiuoti grojaraštį/Pagal kelią ir bylą"
+
+#: audacious/playlistwin.c:248
+msgid "/Sort List/By Date"
+msgstr "/Rūšiuoti grojaraštį/pagal datą"
+
+#: audacious/playlistwin.c:250
+msgid "/Sort Selection"
+msgstr "/Rūšiuoti pasirinktus"
+
+#: audacious/playlistwin.c:251
+msgid "/Sort Selection/By Title"
+msgstr "/Rūšiuoti pasirinktus/Pagal pavadinimą"
+
+#: audacious/playlistwin.c:253
+msgid "/Sort Selection/By Filename"
+msgstr "/Rūšiuoti pasirinktus/Pagal bylos vardą"
+
+#: audacious/playlistwin.c:255
+msgid "/Sort Selection/By Path + Filename"
+msgstr "/Rūšiuoti pasirinktus/Pagal kelią ir bylą"
+
+#: audacious/playlistwin.c:257
+msgid "/Sort Selection/By Date"
+msgstr "/Rūšiuoti pasirinktus/Pagal datą"
+
+#: audacious/playlistwin.c:783
+#, c-format
+msgid "Error writing playlist \"%s\": %s"
+msgstr "Klaida įrašant grojaraštį „%s“: %s"
+
+#: audacious/playlistwin.c:804
+#, c-format
+msgid "%s already exist. Continue?"
+msgstr "%s jau egzistuoja. Tęsti?"
+
+#: audacious/playlistwin.c:818
+#, fuzzy, c-format
+msgid ""
+"<b><big>Unable to save playlist.</big></b>\n"
+"\n"
+"Unknown file type for '%s'.\n"
+msgstr "Nepavyko išsaugoti grojaraščio! Nežinomas bylos %s tipas"
+
+#: audacious/playlistwin.c:928
+#, fuzzy
+msgid "Load Playlist"
+msgstr "Įkrauti grojaraštį"
+
+#: audacious/playlistwin.c:940
+#, fuzzy
+msgid "Save Playlist"
+msgstr "Išsaugoti grojaraštį"
+
+#: audacious/playlistwin.c:1675
+msgid "BMP Playlist Editor"
+msgstr "BMP grojaraščio redaktorius"
+
+#: audacious/prefswin.c:83 audacious/glade/prefswin.glade:1379
+msgid "Appearance"
+msgstr "Išvaizda"
+
+#: audacious/prefswin.c:84 audacious/glade/prefswin.glade:2783
+msgid "Equalizer"
+msgstr "Ekvalaizeris"
+
+#: audacious/prefswin.c:85 audacious/glade/prefswin.glade:1669
+msgid "Mouse"
+msgstr "Pelė"
+
+#: audacious/prefswin.c:86 audacious/glade/prefswin.glade:2403
+msgid "Playlist"
+msgstr "Grojaraštis"
+
+#: audacious/prefswin.c:87 audacious/glade/prefswin.glade:869
+msgid "Plugins"
+msgstr "Įskiepiai"
+
+#: audacious/prefswin.c:93
+msgid "Artist"
+msgstr "Atlikėjas"
+
+#: audacious/prefswin.c:96
+msgid "Tracknumber"
+msgstr "Takelio numeris"
+
+#: audacious/prefswin.c:99
+msgid "Filepath"
+msgstr "Bylos kelias"
+
+#: audacious/prefswin.c:417 audacious/prefswin.c:504 audacious/prefswin.c:593
+#: audacious/prefswin.c:689
+msgid "Enabled"
+msgstr "Įjungtas"
+
+#: audacious/prefswin.c:433 audacious/prefswin.c:520 audacious/prefswin.c:609
+#: audacious/prefswin.c:705
+msgid "Description"
+msgstr "Aprašymas"
+
+#: audacious/prefswin.c:1462
+msgid "Category"
+msgstr "Kategorija"
+
+#: audacious/prefswin.c:1630
+msgid "Preferences Window"
+msgstr "Nustatymų langas"
+
+#: audacious/util.c:882
+msgid "Add/Open Files dialog"
+msgstr "Pridėti/atverti bylas"
+
+#: audacious/util.c:940
+msgid "Open Files"
+msgstr "Atverti bylas"
+
+#: audacious/util.c:944
+msgid "Close dialog on Open"
+msgstr "Atvėrus, užverti dialogą"
+
+#: audacious/util.c:956 audacious/glade/addfiles.glade:8
+msgid "Add Files"
+msgstr "Pridėti bylas"
+
+#: audacious/util.c:960
+msgid "Close dialog on Add"
+msgstr "Pridėjus, užverti dialogą"
+
+#: audacious/util.c:1176
+msgid "  (invalid UTF-8)"
+msgstr "  (blogas UTF-8)"
+
+#: audacious/glade/prefswin.glade:8
+msgid "BMP Preferences"
+msgstr "BMP nustatymai"
+
+#: audacious/glade/prefswin.glade:85
+msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
+msgstr "<span size=\"xx-large\"><b>Įskiepiai</b></span>"
+
+#: audacious/glade/prefswin.glade:147
+msgid "_Media plugin list:"
+msgstr "_Media įskiepių sąrašas"
+
+#: audacious/glade/prefswin.glade:244
+msgid "<span size=\"medium\"><b>Media</b></span>"
+msgstr "<span size=\"medium\"><b>Media</b></span>"
+
+#: audacious/glade/prefswin.glade:282
+msgid "_General plugin list:"
+msgstr "_Bendrinių įskiepių sąrašas"
+
+#: audacious/glade/prefswin.glade:379
+msgid "<span size=\"medium\"><b>General</b></span>"
+msgstr "<span size=\"medium\"><b>Bendriniai</b></span>"
+
+#: audacious/glade/prefswin.glade:417
+msgid "_Visualization plugin list:"
+msgstr "_Vizualizacijos įskiepių sąrašas:"
+
+#: audacious/glade/prefswin.glade:514
+msgid "<b>Visualization</b>"
+msgstr "<b>Vizualizacija</b>"
+
+#: audacious/glade/prefswin.glade:552
+msgid "_Effect plugin list:"
+msgstr "_Efektų įskiepių sąrašas:"
+
+#: audacious/glade/prefswin.glade:649
+msgid "<b>Effects</b>"
+msgstr "<b>Efektai</b>"
+
+#: audacious/glade/prefswin.glade:693
+msgid "_Current output plugin:"
+msgstr "_Pasirinktas išvesties įskiepies:"
+
+#: audacious/glade/prefswin.glade:753
+msgid ""
+"The change is now effective in BMP's configuration database, but won't take "
+"effect for playback until the next song!\n"
+"\n"
+"Optionally, you can stop and restart playback for the change to take effect."
+msgstr ""
+"Pakeitimas išsaugotas BMP nustatymų duomenų bazėje, tačiau jis įsigalios tik "
+"pradėjus groti kitą dainą!\n"
+"\n"
+"Jei norite, galite sustabdyti ir perleisti esamą dainą, kad pakeitimai "
+"įsigaliotų nedelsiant."
+
+#: audacious/glade/prefswin.glade:835
+msgid "<span size=\"medium\"><b>Output</b></span>"
+msgstr "<span size=\"medium\"><b>Išvestis</b></span>"
+
+#: audacious/glade/prefswin.glade:894
+msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
+msgstr "<span size=\"xx-large\"><b>Išvaizda</b></span>"
+
+#: audacious/glade/prefswin.glade:951
+msgid "<b>_Skin</b>"
+msgstr "<b>_Rūbas:</b>"
+
+#: audacious/glade/prefswin.glade:1039
+msgid "<b>_Fonts</b>"
+msgstr "<b>_Šriftai:</b>"
+
+#: audacious/glade/prefswin.glade:1092
+msgid "_Player:"
+msgstr "_Grotuvas:"
+
+#: audacious/glade/prefswin.glade:1131
+msgid "_Playlist:"
+msgstr "_Grojaraštis:"
+
+#: audacious/glade/prefswin.glade:1159
+msgid "Select main player window font:"
+msgstr "Pasirinkite pagrindinio grotuvo lango šriftą:"
+
+#: audacious/glade/prefswin.glade:1181
+msgid "Select playlist font:"
+msgstr "Pasirinkite grojaraščio šriftą:"
+
+#: audacious/glade/prefswin.glade:1233
+msgid "<b>_Miscellaneous</b>"
+msgstr "<b>_Kita</b>"
+
+#: audacious/glade/prefswin.glade:1285
+msgid "Show track numbers in playlist"
+msgstr "Grojaraštyje rodyti takelio numerį"
+
+#: audacious/glade/prefswin.glade:1335
+msgid "Use custom cursors"
+msgstr "Naudoti derintus kursorius"
+
+#: audacious/glade/prefswin.glade:1404
+msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
+msgstr "<span size=\"xx-large\"><b>Pelė</b></span>"
+
+#: audacious/glade/prefswin.glade:1455
+msgid "<b>Mouse wheel</b>"
+msgstr "<b>Pelės ratukas</b>"
+
+#: audacious/glade/prefswin.glade:1499
+#, fuzzy
+msgid "Changes volume by"
+msgstr "Pelės ratukas keičia garsumą"
+
+#: audacious/glade/prefswin.glade:1523
+msgid "percent"
+msgstr "procentų"
+
+#: audacious/glade/prefswin.glade:1547
+#, fuzzy
+msgid "Scrolls playlist by"
+msgstr "Pelės ratukas peršoka grojaraščiu"
+
+#: audacious/glade/prefswin.glade:1596
+msgid "lines"
+msgstr "eilučių"
+
+#: audacious/glade/prefswin.glade:1694
+msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
+msgstr "<span size=\"xx-large\"><b>Grojaraštis</b></span>"
+
+#: audacious/glade/prefswin.glade:1751
+msgid "<b>Filename</b>"
+msgstr "<b>Bylos vardas</b>"
+
+#: audacious/glade/prefswin.glade:1789
+msgid "Convert underscores to blanks"
+msgstr "Keisti pabraukimus tarpais"
+
+#: audacious/glade/prefswin.glade:1824
+msgid "Convert %20 to blanks"
+msgstr "Keisti %20 tarpais"
+
+#: audacious/glade/prefswin.glade:1864
+msgid "<b>Metadata</b>"
+msgstr "<b>Aprašai</b>"
+
+#: audacious/glade/prefswin.glade:1901
+msgid "Load metadata (tag information) from music files."
+msgstr "Įkelti aprašus, esančius garso bylose"
+
+#: audacious/glade/prefswin.glade:1903
+msgid "Load metadata from playlists and files"
+msgstr "Įkelti aprašus iš grojaraščių bei bylų"
+
+#: audacious/glade/prefswin.glade:1941
+msgid "Load metadata when adding the file to the playlist or opening it"
+msgstr "Aprašus įkelti, pridedant bylą į grojaraštį ar jį atveriant"
+
+#: audacious/glade/prefswin.glade:1943
+msgid "On load"
+msgstr "Įkraunant"
+
+#: audacious/glade/prefswin.glade:1963
+msgid "Load metadata on demand when displaying the file in the playlist"
+msgstr "Aprašus įkelti tik rodant bylą grojaraštyje"
+
+#: audacious/glade/prefswin.glade:1965
+msgid "On display"
+msgstr "Rodant"
+
+#: audacious/glade/prefswin.glade:2013
+msgid "<b>Playback</b>"
+msgstr "<b>Grojimas</b>"
+
+#: audacious/glade/prefswin.glade:2050
+msgid "When finished playing a song, don't automatically advance to the next."
+msgstr "Baigus groti kūrinį, į kitą automatiškai neperšokti."
+
+#: audacious/glade/prefswin.glade:2052
+msgid "Don't advance in the playlist"
+msgstr "Nesislinkti grojaraščiu"
+
+#: audacious/glade/prefswin.glade:2087
+msgid "Pause between songs"
+msgstr "Pauzė tarp dainų"
+
+#: audacious/glade/prefswin.glade:2125
+msgid "Pause for"
+msgstr "Pristabdyti"
+
+#: audacious/glade/prefswin.glade:2167
+msgid "seconds"
+msgstr "sekundėms"
+
+#: audacious/glade/prefswin.glade:2215
+msgid "<b>Song display</b>"
+msgstr "<b>Kūrinio pavadinimo vaizdavimas</b>"
+
+#: audacious/glade/prefswin.glade:2285
+msgid "Custom string:"
+msgstr "Derinta eilutė:"
+
+#: audacious/glade/prefswin.glade:2315 audacious/glade/prefswin.glade:2547
+#: audacious/glade/prefswin.glade:2570
+msgid "*"
+msgstr "*"
+
+#: audacious/glade/prefswin.glade:2332
+msgid ""
+"TITLE\n"
+"ARTIST - TITLE\n"
+"ARTIST - ALBUM - TITLE\n"
+"ALBUM - TITLE\n"
+"Custom"
+msgstr ""
+"PAVADINIMAS\n"
+"ATLIKĖJAS - PAVADINIMAS\n"
+"ATLIKĖJAS - ALBUMAS - PAVADINIMAS\n"
+"ALBUMAS - PAVADINIMAS\n"
+"Derinta"
+
+#: audacious/glade/prefswin.glade:2350
+msgid "Show information about titlestring format"
+msgstr "Parodyti informaciją apie pavadinimo formatą"
+
+#: audacious/glade/prefswin.glade:2428
+msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
+msgstr "<span size=\"xx-large\"><b>Ekvalaizeris</b></span>"
+
+#: audacious/glade/prefswin.glade:2479
+msgid "<b>Presets</b>"
+msgstr "<b>Šablonai</b>"
+
+#: audacious/glade/prefswin.glade:2587
+msgid "Directory preset file:"
+msgstr "Aplanko ekvalaizerio šablono byla:"
+
+#: audacious/glade/prefswin.glade:2611
+msgid "File preset extension:"
+msgstr "Bylos ekvalaizerio šablono plėtinys:"
+
+#: audacious/glade/prefswin.glade:2655
+msgid "Available _Presets:"
+msgstr "_Galimi šablonai:"
+
+#: audacious/glade/addfiles.glade:77
+msgid "Close Dialog on Add"
+msgstr "Pridėjus, užverti dialogą2"
+
+#: audacious/glade/addfiles.glade:105
+msgid "Select All"
+msgstr "Žymėti visus"
+
+#: audacious/glade/addfiles.glade:116
+msgid "Deselect All"
+msgstr "Atžymėti visus"
+
+#~ msgid "Default skin:"
+#~ msgstr "Įprastasis rūbas:"
+
+#~ msgid "Vlad Gerasimov"
+#~ msgstr "Vlad Gerasimov"
+
+#~ msgid "Could not initialize gnome-vfs.\n"
+#~ msgstr "Nepavyko inicializuoti gnome-vfs.\n"
+
+#~ msgid "/No Playlist Advance"
+#~ msgstr "/Nesislinkti grojaraščiu"
+
+#~ msgid "/By extension"
+#~ msgstr "/Pagal plėtinį"
+
+#~ msgid "Add Folders - BMP"
+#~ msgstr "Pridėti aplankus – BMP"
+
+#~ msgid "Add URL"
+#~ msgstr "Pridėti URL"
+
+#~ msgid "/Sort by Title"
+#~ msgstr "?Rūšiuoti pagal pavadinimą"
+
+#~ msgid "/Sort by Filename"
+#~ msgstr "/Rūšiuoti pagal bylos vardą"
+
+#~ msgid "/Sort by Date"
+#~ msgstr "/Rūšiuoti pagal datą"

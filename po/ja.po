@@ -1,0 +1,3436 @@
+# bmp ja.po.
+# Copyright (C) 2000-2004 Free Software Foundation, Inc.
+# This file is distributed under the same license as the bmp package.
+# Hiroshi Takekawa <sian@big.or.jp>, 2000-2003. (XMMS)
+# -----------------------------------------------------
+# Takeshi AIHANA <aihana@gnome.gr.jp>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bmp HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-10-22 14:40+0800\n"
+"PO-Revision-Date: 2004-12-06 23:45+0900\n"
+"Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
+"Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=EUC-JP\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Input/cdaudio/cdaudio.c:180
+msgid "CD Audio Plugin"
+msgstr "CD オーディオ・プラグイン"
+
+#: Input/cdaudio/cdaudio.c:1004 Input/cdaudio/cdaudio.c:1013
+#, c-format
+msgid "CD Audio Track %02u"
+msgstr "CD オーディオ・トラック %02u"
+
+#: Input/cdaudio/cdinfo.c:157 Input/cdaudio/cdinfo.c:158
+#: Input/cdaudio/cdinfo.c:159
+msgid "(unknown)"
+msgstr "(不明)"
+
+#: Input/cdaudio/configure.c:199 Input/cdaudio/configure.c:213
+#: Input/cdaudio/configure.c:541
+#, c-format
+msgid "Drive %d"
+msgstr "ドライブ %d"
+
+#: Input/cdaudio/configure.c:259
+#, c-format
+msgid ""
+"Failed to open device %s\n"
+"Error: %s\n"
+"\n"
+msgstr ""
+"デバイス %s のオープンに失敗しました。\n"
+"[ERROR] %s\n"
+"\n"
+
+#: Input/cdaudio/configure.c:266
+msgid ""
+"Failed to read \"Table of Contents\"\n"
+"Maybe no disc in the drive?\n"
+"\n"
+msgstr ""
+"\"目次\" の読み込みに失敗しました。\n"
+"ドライブにディスクが入っていないかも？\n"
+"\n"
+
+#: Input/cdaudio/configure.c:270
+#, c-format
+msgid ""
+"Device %s OK.\n"
+"Disc has %d tracks"
+msgstr ""
+"デバイス %s は OK です。\n"
+"ディスクには %d 個のトラックがあります。"
+
+#: Input/cdaudio/configure.c:279
+#, c-format
+msgid " (%d data tracks)"
+msgstr " (%d 個のデータ・トラック)"
+
+#: Input/cdaudio/configure.c:280
+#, c-format
+msgid ""
+"\n"
+"Total length: %d:%d\n"
+msgstr ""
+"\n"
+"演奏時間の合計: %d:%d\n"
+
+#: Input/cdaudio/configure.c:285
+msgid "Digital audio extraction not tested as the disc has no audio tracks\n"
+msgstr ""
+"ディスクにオーディオ・トラックが無いので、ディジタル・オーディオ抽出のテスト"
+"は行いません。\n"
+
+#: Input/cdaudio/configure.c:302
+msgid ""
+"Digital audio extraction test: OK\n"
+"\n"
+msgstr "ディジタル・オーディオ抽出のテスト: OK\n"
+
+#: Input/cdaudio/configure.c:306
+#, c-format
+msgid ""
+"Digital audio extraction test failed: %s\n"
+"\n"
+msgstr "ディジタル・オーディオ抽出のテスト: 失敗 (%s)\n"
+
+#: Input/cdaudio/configure.c:316
+#, c-format
+msgid ""
+"Failed to check directory %s\n"
+"Error: %s"
+msgstr ""
+"フォルダ %s のチェックに失敗しました。\n"
+"[ERROR] %s"
+
+#: Input/cdaudio/configure.c:322
+#, c-format
+msgid "Error: %s exist, but is not a directory"
+msgstr "[ERROR] %s は存在していますが、フォルダではありません。"
+
+#: Input/cdaudio/configure.c:325
+#, c-format
+msgid "Directory %s OK."
+msgstr "フォルダ %s: OK"
+
+#: Input/cdaudio/configure.c:369
+msgid "Device:"
+msgstr "デバイス:"
+
+#: Input/cdaudio/configure.c:377
+msgid "_Device:"
+msgstr "デバイス(_D):"
+
+#: Input/cdaudio/configure.c:387
+msgid "Dir_ectory:"
+msgstr "フォルダ(_E):"
+
+#: Input/cdaudio/configure.c:399
+msgid "Play mode:"
+msgstr "演奏モード:"
+
+#: Input/cdaudio/configure.c:405
+msgid "Analog"
+msgstr "アナログ"
+
+#: Input/cdaudio/configure.c:413
+msgid "Digital audio extraction"
+msgstr "ディジタル・オーディオ抽出"
+
+#: Input/cdaudio/configure.c:423
+msgid "Volume control:"
+msgstr "音量コントロール:"
+
+#: Input/cdaudio/configure.c:429
+msgid "No mixer"
+msgstr "ミキサなし"
+
+#: Input/cdaudio/configure.c:435
+msgid "CDROM drive"
+msgstr "CD-ROM ドライブ"
+
+#: Input/cdaudio/configure.c:441
+msgid "OSS mixer"
+msgstr "OSS ミキサ"
+
+#: Input/cdaudio/configure.c:464
+msgid "Check drive..."
+msgstr "ドライブのチェック..."
+
+#: Input/cdaudio/configure.c:470
+msgid "Remove drive"
+msgstr "ドライブの削除"
+
+#: Input/cdaudio/configure.c:515
+msgid "CD Audio Player Configuration"
+msgstr "CD オーディオ・プレイヤの設定"
+
+#: Input/cdaudio/configure.c:553
+msgid "Add drive"
+msgstr "ドライブの追加"
+
+#: Input/cdaudio/configure.c:561
+msgid "Device"
+msgstr "デバイス"
+
+#: Input/cdaudio/configure.c:571
+msgid "CDDB:"
+msgstr "CDDB:"
+
+#: Input/cdaudio/configure.c:582
+msgid "Use CDDB"
+msgstr "CDDB を利用する"
+
+#: Input/cdaudio/configure.c:586
+msgid "Get server list"
+msgstr "サーバ・リストの取得"
+
+#: Input/cdaudio/configure.c:589
+msgid "Show network window"
+msgstr "ネットワーク・ウィンドウの表示"
+
+#: Input/cdaudio/configure.c:599
+msgid "CDDB server:"
+msgstr "CDDB サーバ:"
+
+#: Input/cdaudio/configure.c:614
+msgid "CD Index:"
+msgstr "CD インデックス:"
+
+#: Input/cdaudio/configure.c:621
+msgid "Use CD Index"
+msgstr "CD インデックスを利用する"
+
+#: Input/cdaudio/configure.c:630
+msgid "CD Index server:"
+msgstr "CD インデックス・サーバ:"
+
+#: Input/cdaudio/configure.c:645
+msgid "Track names:"
+msgstr "トラック名:"
+
+#: Input/cdaudio/configure.c:652 Input/mpg123/configure.c:799
+#: Input/vorbis/configure.c:472
+msgid "Override generic titles"
+msgstr "オリジナルのタイトルを上書きする"
+
+#: Input/cdaudio/configure.c:668
+msgid "Name format:"
+msgstr "名前の書式:"
+
+#: Input/cdaudio/configure.c:680
+msgid "CD Info"
+msgstr "CD の情報"
+
+#: Input/mpg123/configure.c:260
+msgid "Select the directory where you want to store the MPEG streams:"
+msgstr "MPEG ストリームを格納するフォルダを選択して下さい:"
+
+#: Input/mpg123/configure.c:344
+msgid "MPEG Audio Plugin Configuration"
+msgstr "MPEG オーディオ・プラグインの設定"
+
+#: Input/mpg123/configure.c:361
+msgid "Resolution:"
+msgstr "解像度:"
+
+#: Input/mpg123/configure.c:369
+msgid "16 bit"
+msgstr "16ビット"
+
+#: Input/mpg123/configure.c:378
+msgid "8 bit"
+msgstr " 8ビット"
+
+#: Input/mpg123/configure.c:385 Input/vorbis/fileinfo.c:862
+#: Input/vorbis/fileinfo.c:918
+msgid "Channels:"
+msgstr "チャンネル数:"
+
+#: Input/mpg123/configure.c:393
+msgid "Stereo (if available)"
+msgstr "ステレオ (可能ならば)"
+
+#: Input/mpg123/configure.c:404
+msgid "Mono"
+msgstr "モノラル"
+
+#: Input/mpg123/configure.c:411
+msgid "Down sample:"
+msgstr "ダウン・サンプル:"
+
+#: Input/mpg123/configure.c:420
+msgid "1:1 (44 kHz)"
+msgstr "1:1 (44 kHz)"
+
+#: Input/mpg123/configure.c:431
+msgid "1:2 (22 kHz)"
+msgstr "1:2 (22 kHz)"
+
+#: Input/mpg123/configure.c:442
+msgid "1:4 (11 kHz)"
+msgstr "1:4 (11 kHz)"
+
+#: Input/mpg123/configure.c:455
+msgid "Decoder:"
+msgstr "デコーダ:"
+
+#: Input/mpg123/configure.c:464
+msgid "Automatic detection"
+msgstr "自動検出"
+
+#: Input/mpg123/configure.c:472
+msgid "3DNow! optimized decoder"
+msgstr "3DNow! 最適化デコーダ"
+
+#: Input/mpg123/configure.c:480
+msgid "MMX optimized decoder"
+msgstr "MMX 最適化デコーダ"
+
+#: Input/mpg123/configure.c:487
+msgid "FPU decoder"
+msgstr "FPU デコーダ"
+
+#: Input/mpg123/configure.c:513
+msgid "Options"
+msgstr "オプション"
+
+#: Input/mpg123/configure.c:520
+msgid "Content"
+msgstr "内容"
+
+#: Input/mpg123/configure.c:526
+msgid "Extension"
+msgstr "拡張子"
+
+#: Input/mpg123/configure.c:532
+msgid "Extension and content"
+msgstr "内容と拡張子"
+
+#: Input/mpg123/configure.c:556
+msgid "Decoder"
+msgstr "デコーダ"
+
+#: Input/mpg123/configure.c:560 Input/vorbis/configure.c:287
+#: Output/OSS/configure.c:302 Output/esd/configure.c:171
+msgid "Buffering:"
+msgstr "バッファリング:"
+
+#: Input/mpg123/configure.c:573 Input/vorbis/configure.c:299
+msgid "Buffer size (kb):"
+msgstr "バッファのサイズ (Kバイト):"
+
+#: Input/mpg123/configure.c:588 Input/vorbis/configure.c:313
+#: Output/OSS/configure.c:329 Output/esd/configure.c:198
+msgid "Pre-buffer (percent):"
+msgstr "事前にバッファリングする割合 (％):"
+
+#: Input/mpg123/configure.c:602 Input/vorbis/configure.c:327
+msgid "Proxy:"
+msgstr "プロキシ:"
+
+#: Input/mpg123/configure.c:612 Input/vorbis/configure.c:337
+msgid "Use proxy"
+msgstr "プロキシを使う"
+
+#: Input/mpg123/configure.c:625 Input/vorbis/configure.c:350
+#: Output/esd/configure.c:114 Output/esd/configure.c:144
+msgid "Host:"
+msgstr "ホスト名:"
+
+#: Input/mpg123/configure.c:635 Input/vorbis/configure.c:360
+#: Output/esd/configure.c:153
+msgid "Port:"
+msgstr "ポート番号:"
+
+#: Input/mpg123/configure.c:648 Input/vorbis/configure.c:373
+msgid "Use authentication"
+msgstr "認証を行う"
+
+#: Input/mpg123/configure.c:665 Input/vorbis/configure.c:390
+msgid "Username:"
+msgstr "ユーザ名:"
+
+#: Input/mpg123/configure.c:676 Input/vorbis/configure.c:401
+msgid "Password:"
+msgstr "パスワード:"
+
+#: Input/mpg123/configure.c:693 Input/vorbis/configure.c:418
+msgid "Save stream to disk:"
+msgstr "ストリームの保存:"
+
+#: Input/mpg123/configure.c:704 Input/vorbis/configure.c:429
+msgid "Save stream to disk"
+msgstr "ストリームをディスクに保存する"
+
+#: Input/mpg123/configure.c:718 Input/vorbis/configure.c:443
+msgid "Path:"
+msgstr "パス名:"
+
+#: Input/mpg123/configure.c:728 Input/vorbis/configure.c:453
+msgid "Browse"
+msgstr "参照"
+
+#: Input/mpg123/configure.c:734
+msgid "SHOUT/Icecast:"
+msgstr "SHOUT/Icecast:"
+
+#: Input/mpg123/configure.c:748
+msgid "Enable Icecast Metadata UDP Channel"
+msgstr "Icecast メタデータ UDP チャンネルを有効にする"
+
+#: Input/mpg123/configure.c:755 Input/vorbis/configure.c:460
+msgid "Streaming"
+msgstr "ストリーミング"
+
+#: Input/mpg123/configure.c:757
+msgid "ID3 Tags:"
+msgstr "ID3 タグ:"
+
+#: Input/mpg123/configure.c:765
+msgid "Disable ID3V2 tags"
+msgstr "ID3V2 のタグを無効にする"
+
+#: Input/mpg123/configure.c:774
+msgid "Convert non-UTF8 ID3 tags to UTF8"
+msgstr "UTF-8 ではないタグを UTF-8 に変換する"
+
+#: Input/mpg123/configure.c:787
+msgid "ID3 encoding:"
+msgstr "ID3 のエンコーディング:"
+
+#: Input/mpg123/configure.c:812
+msgid "ID3 format:"
+msgstr "ID3 の書式:"
+
+#: Input/mpg123/configure.c:826 Input/vorbis/configure.c:499
+#: audacious/prefswin.c:95
+msgid "Title"
+msgstr "タイトル"
+
+#: Input/mpg123/fileinfo.c:471
+#, c-format
+msgid ""
+"%s\n"
+"Unable to write to file: %s"
+msgstr ""
+"%s\n"
+"ファイルに書き込めません: %s"
+
+#: Input/mpg123/fileinfo.c:472 Input/mpg123/fileinfo.c:477
+msgid "Couldn't write tag!"
+msgstr "タグを書き込めませんでした！"
+
+#: Input/mpg123/fileinfo.c:476 Input/mpg123/fileinfo.c:567
+#, c-format
+msgid ""
+"%s\n"
+"Unable to open file: %s"
+msgstr ""
+"%s\n"
+"ファイルを開けません: %s"
+
+#: Input/mpg123/fileinfo.c:479 Input/mpg123/fileinfo.c:570
+msgid "File Info"
+msgstr "ファイル情報"
+
+#: Input/mpg123/fileinfo.c:479 Input/mpg123/fileinfo.c:570
+#: Input/mpg123/http.c:220 Input/mpg123/mpg123.c:1184
+#: Input/vorbis/fileinfo.c:212 Input/vorbis/http.c:218
+#: Input/vorbis/vorbis.c:802 Output/OSS/about.c:54 Output/esd/about.c:49
+#: Output/alsa/about.c:53
+msgid "Ok"
+msgstr "OK"
+
+#: Input/mpg123/fileinfo.c:556
+#, c-format
+msgid ""
+"%s\n"
+"Unable to truncate file: %s"
+msgstr ""
+"%s\n"
+"ファイルを切りつめられません: %s"
+
+#: Input/mpg123/fileinfo.c:558 Input/mpg123/fileinfo.c:568
+msgid "Couldn't remove tag!"
+msgstr "タグを削除できませんでした！"
+
+#: Input/mpg123/fileinfo.c:562
+msgid "No tag to remove!"
+msgstr "削除するタグがありません！"
+
+#: Input/mpg123/fileinfo.c:602
+msgid "Stereo"
+msgstr "ステレオ"
+
+#: Input/mpg123/fileinfo.c:602
+msgid "Joint stereo"
+msgstr "ジョイント・ステレオ"
+
+#: Input/mpg123/fileinfo.c:603
+msgid "Dual channel"
+msgstr "デュアル・チャンネル"
+
+#: Input/mpg123/fileinfo.c:603
+msgid "Single channel"
+msgstr "シングル・チャンネル"
+
+#: Input/mpg123/fileinfo.c:618 Input/mpg123/fileinfo.c:1258
+#: Input/mpg123/fileinfo.c:1379
+#, c-format
+msgid "%d KBit/s"
+msgstr "%d Kビット/秒"
+
+#: Input/mpg123/fileinfo.c:619 Input/mpg123/fileinfo.c:1262
+#: Input/mpg123/fileinfo.c:1383
+#, c-format
+msgid "%ld Hz"
+msgstr "%ld Hz"
+
+#: Input/mpg123/fileinfo.c:639
+msgid "None"
+msgstr "なし"
+
+#: Input/mpg123/fileinfo.c:640
+msgid "50/15 ms"
+msgstr "50/15 ms"
+
+#: Input/mpg123/fileinfo.c:642
+msgid "CCIT J.17"
+msgstr "CCIT J.17"
+
+#: Input/mpg123/fileinfo.c:643
+msgid "No"
+msgstr "いいえ"
+
+#: Input/mpg123/fileinfo.c:644
+msgid "Yes"
+msgstr "はい"
+
+#: Input/mpg123/fileinfo.c:691 Input/vorbis/fileinfo.c:557
+msgid "Name:"
+msgstr "名前:"
+
+#: Input/mpg123/fileinfo.c:707
+msgid " MPEG Info "
+msgstr " MPEG 情報 "
+
+#: Input/mpg123/fileinfo.c:722 Input/mpg123/fileinfo.c:1122
+msgid "MPEG Level:"
+msgstr "MPEG レベル:"
+
+#: Input/mpg123/fileinfo.c:735 Input/mpg123/fileinfo.c:1125
+#: Input/vorbis/fileinfo.c:836 Input/vorbis/fileinfo.c:912
+msgid "Bit rate:"
+msgstr "ビット・レート:"
+
+#: Input/mpg123/fileinfo.c:748 Input/mpg123/fileinfo.c:1128
+#: Input/vorbis/fileinfo.c:849 Input/vorbis/fileinfo.c:915
+msgid "Sample rate:"
+msgstr "サンプリング・レート:"
+
+#: Input/mpg123/fileinfo.c:762 Input/mpg123/fileinfo.c:1143
+msgid "Frames:"
+msgstr "フレーム数:"
+
+#: Input/mpg123/fileinfo.c:775 Input/mpg123/fileinfo.c:1146
+#: Input/vorbis/fileinfo.c:888 Input/vorbis/fileinfo.c:924
+msgid "File size:"
+msgstr "ファイル・サイズ:"
+
+#: Input/mpg123/fileinfo.c:798 Input/mpg123/fileinfo.c:1131
+msgid "Error Protection:"
+msgstr "エラー保護:"
+
+#: Input/mpg123/fileinfo.c:811 Input/mpg123/fileinfo.c:1134
+#: Input/vorbis/fileinfo.c:718
+msgid "Copyright:"
+msgstr "著作権:"
+
+#: Input/mpg123/fileinfo.c:824 Input/mpg123/fileinfo.c:1137
+msgid "Original:"
+msgstr "オリジナル:"
+
+#: Input/mpg123/fileinfo.c:837 Input/mpg123/fileinfo.c:1140
+msgid "Emphasis:"
+msgstr "強調:"
+
+#: Input/mpg123/fileinfo.c:851
+msgid " ID3 Tag "
+msgstr " ID3 タグ "
+
+#: Input/mpg123/fileinfo.c:859 Input/vorbis/fileinfo.c:580
+msgid "Title:"
+msgstr "タイトル:"
+
+#: Input/mpg123/fileinfo.c:874 Input/vorbis/fileinfo.c:591
+msgid "Artist:"
+msgstr "アーティスト:"
+
+#: Input/mpg123/fileinfo.c:889 Input/vorbis/fileinfo.c:602
+msgid "Album:"
+msgstr "アルバム名:"
+
+#: Input/mpg123/fileinfo.c:904 Input/vorbis/fileinfo.c:613
+msgid "Comment:"
+msgstr "コメント:"
+
+#: Input/mpg123/fileinfo.c:926
+msgid "Year:"
+msgstr "制作年:"
+
+#: Input/mpg123/fileinfo.c:938 Input/vorbis/fileinfo.c:636
+msgid "Track number:"
+msgstr "トラック番号:"
+
+#: Input/mpg123/fileinfo.c:970 Input/vorbis/fileinfo.c:648
+msgid "Genre:"
+msgstr "ジャンル:"
+
+#: Input/mpg123/fileinfo.c:1007
+msgid "Copy album tags"
+msgstr "アルバムのタグをコピーする"
+
+#: Input/mpg123/fileinfo.c:1008
+msgid "Paste album tags"
+msgstr "アルバムのタグを貼り付ける"
+
+#: Input/mpg123/fileinfo.c:1101 Input/vorbis/fileinfo.c:1014
+#: audacious/mainwin.c:780
+#, c-format
+msgid "%s - BMP"
+msgstr "%s - BMP"
+
+#: Input/mpg123/fileinfo.c:1123 Input/mpg123/fileinfo.c:1126
+#: Input/mpg123/fileinfo.c:1129 Input/mpg123/fileinfo.c:1132
+#: Input/mpg123/fileinfo.c:1135 Input/mpg123/fileinfo.c:1138
+#: Input/mpg123/fileinfo.c:1141 Input/mpg123/fileinfo.c:1144
+#: Input/mpg123/fileinfo.c:1147 Input/vorbis/fileinfo.c:913
+#: Input/vorbis/fileinfo.c:916 Input/vorbis/fileinfo.c:919
+#: Input/vorbis/fileinfo.c:922 Input/vorbis/fileinfo.c:925
+msgid "N/A"
+msgstr "N/A"
+
+#: Input/mpg123/fileinfo.c:1250 Input/mpg123/fileinfo.c:1371
+#, c-format
+msgid ""
+"Variable,\n"
+"avg. bitrate: %d KBit/s"
+msgstr ""
+"可変、\n"
+"平均ビットレート: %d Kビット/秒"
+
+#: Input/mpg123/fileinfo.c:1264 Input/mpg123/fileinfo.c:1266
+#: Input/mpg123/fileinfo.c:1267 Input/mpg123/fileinfo.c:1268
+#: Input/mpg123/fileinfo.c:1385 Input/mpg123/fileinfo.c:1387
+#: Input/mpg123/fileinfo.c:1388 Input/mpg123/fileinfo.c:1389
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: Input/mpg123/fileinfo.c:1269 Input/mpg123/fileinfo.c:1390
+#: Input/vorbis/fileinfo.c:957
+#, c-format
+msgid "%d"
+msgstr "%d"
+
+#: Input/mpg123/fileinfo.c:1270 Input/mpg123/fileinfo.c:1391
+#, c-format
+msgid "%lu Bytes"
+msgstr "%lu バイト"
+
+#: Input/mpg123/http.c:220 Input/vorbis/http.c:218
+msgid "Error"
+msgstr "エラー"
+
+#: Input/mpg123/http.c:374 Input/vorbis/http.c:326
+#, c-format
+msgid "LOOKING UP %s"
+msgstr "%s の検索中"
+
+#: Input/mpg123/http.c:379 Input/vorbis/http.c:331
+#, c-format
+msgid "Couldn't look up host %s"
+msgstr "ホスト %s を見つけられませんでした"
+
+#: Input/mpg123/http.c:392 Input/vorbis/http.c:344
+#, c-format
+msgid "CONNECTING TO %s:%d"
+msgstr "%s:%d へ接続中"
+
+#: Input/mpg123/http.c:400 Input/mpg123/http.c:420 Input/vorbis/http.c:352
+#: Input/vorbis/http.c:372
+#, c-format
+msgid "Couldn't connect to host %s"
+msgstr "ホスト %s へ接続できませんでした"
+
+#: Input/mpg123/http.c:483 Input/vorbis/http.c:420
+msgid "CONNECTED: WAITING FOR REPLY"
+msgstr "接続完了: 応答を待っています"
+
+#: Input/mpg123/http.c:520 Input/vorbis/http.c:457
+#, c-format
+msgid ""
+"Couldn't connect to host %s\n"
+"Server reported: %s"
+msgstr ""
+"ホスト %s へ接続できませんでした。\n"
+"サーバからの報告: %s"
+
+#: Input/mpg123/http.c:638 Input/vorbis/http.c:556
+#, c-format
+msgid "PRE-BUFFERING: %dKB/%dKB"
+msgstr "プレ・バッファリング中: %d/%d Kバイト"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Blues"
+msgstr "ブルース"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Classic Rock"
+msgstr "クラシック・ロック"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Country"
+msgstr "カントリー"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Dance"
+msgstr "ダンス"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Disco"
+msgstr "ディスコ"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Funk"
+msgstr "ファンキー"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Grunge"
+msgstr "グランジ"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Hip-Hop"
+msgstr "ヒップ・ホップ"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "Jazz"
+msgstr "ジャズ"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "Metal"
+msgstr "メタル"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "New Age"
+msgstr "ニューエイジ"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "Oldies"
+msgstr "オールディーズ"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Other"
+msgstr "その他"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Pop"
+msgstr "ポップ"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "R&B"
+msgstr "Ｒ＆Ｂ"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Rap"
+msgstr "ラップ"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Reggae"
+msgstr "レゲェ"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Rock"
+msgstr "ロック"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Techno"
+msgstr "テクノ"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Industrial"
+msgstr "インダストリアル"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Alternative"
+msgstr "Alternative"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Ska"
+msgstr "Ska"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Death Metal"
+msgstr "Deth メタル"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Pranks"
+msgstr "Pranks"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Soundtrack"
+msgstr "サウンドトラック"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Euro-Techno"
+msgstr "ユーロ・テクノ"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Ambient"
+msgstr "アンビエント"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Trip-Hop"
+msgstr "トリップ・ホップ"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Vocal"
+msgstr "ヴォーカル"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Jazz+Funk"
+msgstr "ジャズ+ファンク"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Fusion"
+msgstr "フュージョン"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Trance"
+msgstr "トランス"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Classical"
+msgstr "クラシカル"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "Instrumental"
+msgstr "インスツルメント"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "Acid"
+msgstr "Acid"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "House"
+msgstr "ハウス"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "Game"
+msgstr "ゲーム"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "Sound Clip"
+msgstr "サウンド・クリップ"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "Gospel"
+msgstr "ゴスペル"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "Noise"
+msgstr "Noise"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "AlternRock"
+msgstr "AlternRock"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Bass"
+msgstr "Bass"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Soul"
+msgstr "ソウル"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Punk"
+msgstr "パンク"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Space"
+msgstr "Space"
+
+#: Input/mpg123/mpg123.c:51 Input/vorbis/fileinfo.c:94
+msgid "Meditative"
+msgstr "Meditative"
+
+#: Input/mpg123/mpg123.c:51 Input/vorbis/fileinfo.c:94
+msgid "Instrumental Pop"
+msgstr "インスツルメント・ポップ"
+
+#: Input/mpg123/mpg123.c:52 Input/vorbis/fileinfo.c:95
+msgid "Instrumental Rock"
+msgstr "インスツルメント・ロック"
+
+#: Input/mpg123/mpg123.c:52 Input/vorbis/fileinfo.c:95
+msgid "Ethnic"
+msgstr "エスニック"
+
+#: Input/mpg123/mpg123.c:52 Input/vorbis/fileinfo.c:95
+msgid "Gothic"
+msgstr "ゴシック"
+
+#: Input/mpg123/mpg123.c:53 Input/vorbis/fileinfo.c:96
+msgid "Darkwave"
+msgstr "Darkwave"
+
+#: Input/mpg123/mpg123.c:53 Input/vorbis/fileinfo.c:96
+msgid "Techno-Industrial"
+msgstr "テクノ・インスツルメント"
+
+#: Input/mpg123/mpg123.c:53 Input/vorbis/fileinfo.c:96
+msgid "Electronic"
+msgstr "エレクトロニック"
+
+#: Input/mpg123/mpg123.c:54 Input/vorbis/fileinfo.c:97
+msgid "Pop-Folk"
+msgstr "ポップ・フォーク"
+
+#: Input/mpg123/mpg123.c:54 Input/vorbis/fileinfo.c:97
+msgid "Eurodance"
+msgstr "ユーロダンス"
+
+#: Input/mpg123/mpg123.c:54 Input/vorbis/fileinfo.c:97
+msgid "Dream"
+msgstr "Dream"
+
+#: Input/mpg123/mpg123.c:55 Input/vorbis/fileinfo.c:98
+msgid "Southern Rock"
+msgstr "サザン・ロック"
+
+#: Input/mpg123/mpg123.c:55 Input/vorbis/fileinfo.c:98
+msgid "Comedy"
+msgstr "コメディ"
+
+#: Input/mpg123/mpg123.c:55 Input/vorbis/fileinfo.c:98
+msgid "Cult"
+msgstr "カルト"
+
+#: Input/mpg123/mpg123.c:56 Input/vorbis/fileinfo.c:99
+msgid "Gangsta Rap"
+msgstr "Gangsta Rap"
+
+#: Input/mpg123/mpg123.c:56 Input/vorbis/fileinfo.c:99
+msgid "Top 40"
+msgstr "トップ 40"
+
+#: Input/mpg123/mpg123.c:56 Input/vorbis/fileinfo.c:99
+msgid "Christian Rap"
+msgstr "クリスチャン・ラップ"
+
+#: Input/mpg123/mpg123.c:57 Input/vorbis/fileinfo.c:100
+msgid "Pop/Funk"
+msgstr "ポップ/ファンキー"
+
+#: Input/mpg123/mpg123.c:57 Input/vorbis/fileinfo.c:100
+msgid "Jungle"
+msgstr "ジャングル"
+
+#: Input/mpg123/mpg123.c:57 Input/vorbis/fileinfo.c:100
+msgid "Native American"
+msgstr "ネィテイブ・アメリカン"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "Cabaret"
+msgstr "Cabaret"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "New Wave"
+msgstr "ニューウェーブ"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "Psychedelic"
+msgstr "サイケデリック"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "Rave"
+msgstr "レイブ"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Showtunes"
+msgstr "Showtunes"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Trailer"
+msgstr "トレイラー"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Lo-Fi"
+msgstr "Lo-Fi"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Tribal"
+msgstr "Tribal"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Acid Punk"
+msgstr "Acid Punk"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Acid Jazz"
+msgstr "Acid Jazz"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Polka"
+msgstr "ポルカ"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Retro"
+msgstr "レトロ"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Musical"
+msgstr "ミュージカル"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Rock & Roll"
+msgstr "ロックンロール"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Hard Rock"
+msgstr "ハードロック"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Folk"
+msgstr "フォーク"
+
+#: Input/mpg123/mpg123.c:62 Input/vorbis/fileinfo.c:105
+msgid "Folk/Rock"
+msgstr "フォーク/ロック"
+
+#: Input/mpg123/mpg123.c:62 Input/vorbis/fileinfo.c:105
+msgid "National Folk"
+msgstr "ナショナル・フォーク"
+
+#: Input/mpg123/mpg123.c:62 Input/vorbis/fileinfo.c:105
+msgid "Swing"
+msgstr "Swing"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Fast-Fusion"
+msgstr "Fast-Fusion"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Bebob"
+msgstr "Bebob"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Latin"
+msgstr "ラテン"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Revival"
+msgstr "リバイバル"
+
+#: Input/mpg123/mpg123.c:64 Input/vorbis/fileinfo.c:107
+msgid "Celtic"
+msgstr "セルティック"
+
+#: Input/mpg123/mpg123.c:64 Input/vorbis/fileinfo.c:107
+msgid "Bluegrass"
+msgstr "ブルーグラス"
+
+#: Input/mpg123/mpg123.c:64 Input/vorbis/fileinfo.c:107
+msgid "Avantgarde"
+msgstr "アバンギャルド"
+
+#: Input/mpg123/mpg123.c:65 Input/vorbis/fileinfo.c:108
+msgid "Gothic Rock"
+msgstr "ゴシック・ロック"
+
+#: Input/mpg123/mpg123.c:65 Input/vorbis/fileinfo.c:108
+msgid "Progressive Rock"
+msgstr "Progressive ロック"
+
+#: Input/mpg123/mpg123.c:66 Input/vorbis/fileinfo.c:109
+msgid "Psychedelic Rock"
+msgstr "サイケデリック・ロック"
+
+#: Input/mpg123/mpg123.c:66 Input/vorbis/fileinfo.c:109
+msgid "Symphonic Rock"
+msgstr "Symphonic ロック"
+
+#: Input/mpg123/mpg123.c:66 Input/vorbis/fileinfo.c:109
+msgid "Slow Rock"
+msgstr "スロー・ロック"
+
+#: Input/mpg123/mpg123.c:67 Input/vorbis/fileinfo.c:110
+msgid "Big Band"
+msgstr "ビッグ・バンド"
+
+#: Input/mpg123/mpg123.c:67 Input/vorbis/fileinfo.c:110
+msgid "Chorus"
+msgstr "コーラス"
+
+#: Input/mpg123/mpg123.c:67 Input/vorbis/fileinfo.c:110
+msgid "Easy Listening"
+msgstr "Easy Listening"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Acoustic"
+msgstr "アコースティック"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Humour"
+msgstr "ユーモア"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Speech"
+msgstr "スピーチ"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Chanson"
+msgstr "シャンソン"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Opera"
+msgstr "オペラ"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Chamber Music"
+msgstr "Chamber ミュージック"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Sonata"
+msgstr "ソナタ"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Symphony"
+msgstr "シンフォニー"
+
+#: Input/mpg123/mpg123.c:70 Input/vorbis/fileinfo.c:113
+msgid "Booty Bass"
+msgstr "Booty Bass"
+
+#: Input/mpg123/mpg123.c:70 Input/vorbis/fileinfo.c:113
+msgid "Primus"
+msgstr "プリマス"
+
+#: Input/mpg123/mpg123.c:70 Input/vorbis/fileinfo.c:113
+msgid "Porn Groove"
+msgstr "Porn Groove"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Satire"
+msgstr "風刺"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Slow Jam"
+msgstr "スロージャム"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Club"
+msgstr "クラブ"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Tango"
+msgstr "タンゴ"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Samba"
+msgstr "サンバ"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Folklore"
+msgstr "フォークロア"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Ballad"
+msgstr "バラード"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Power Ballad"
+msgstr "パワー・バラード"
+
+#: Input/mpg123/mpg123.c:73 Input/vorbis/fileinfo.c:116
+msgid "Rhythmic Soul"
+msgstr "リズミック・ソウル"
+
+#: Input/mpg123/mpg123.c:73 Input/vorbis/fileinfo.c:116
+msgid "Freestyle"
+msgstr "フリースタイル"
+
+#: Input/mpg123/mpg123.c:73 Input/vorbis/fileinfo.c:116
+msgid "Duet"
+msgstr "デュエット"
+
+#: Input/mpg123/mpg123.c:74 Input/vorbis/fileinfo.c:117
+msgid "Punk Rock"
+msgstr "パンク・ロック"
+
+#: Input/mpg123/mpg123.c:74 Input/vorbis/fileinfo.c:117
+msgid "Drum Solo"
+msgstr "ドラムソロ"
+
+#: Input/mpg123/mpg123.c:74 Input/vorbis/fileinfo.c:117
+msgid "A Cappella"
+msgstr "ア・カペラ"
+
+#: Input/mpg123/mpg123.c:75 Input/vorbis/fileinfo.c:118
+msgid "Euro-House"
+msgstr "ユーロハウス"
+
+#: Input/mpg123/mpg123.c:75 Input/vorbis/fileinfo.c:118
+msgid "Dance Hall"
+msgstr "ダンス・ホール"
+
+#: Input/mpg123/mpg123.c:75 Input/vorbis/fileinfo.c:118
+msgid "Goa"
+msgstr "ゴア"
+
+#: Input/mpg123/mpg123.c:76 Input/vorbis/fileinfo.c:119
+msgid "Drum & Bass"
+msgstr "ドラム＆バス"
+
+#: Input/mpg123/mpg123.c:76 Input/vorbis/fileinfo.c:119
+msgid "Club-House"
+msgstr "クラブハウス"
+
+#: Input/mpg123/mpg123.c:76 Input/vorbis/fileinfo.c:119
+msgid "Hardcore"
+msgstr "ハードコア"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "Terror"
+msgstr "テラー"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "Indie"
+msgstr "インディーズ"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "BritPop"
+msgstr "BritPop"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "Negerpunk"
+msgstr "Negerpunk"
+
+#: Input/mpg123/mpg123.c:78 Input/vorbis/fileinfo.c:121
+msgid "Polsk Punk"
+msgstr "Polsk Punk"
+
+#: Input/mpg123/mpg123.c:78 Input/vorbis/fileinfo.c:121
+msgid "Beat"
+msgstr "ビート"
+
+#: Input/mpg123/mpg123.c:78 Input/vorbis/fileinfo.c:121
+msgid "Christian Gangsta Rap"
+msgstr "クリスチャン・ガングスタ・ラップ"
+
+#: Input/mpg123/mpg123.c:79 Input/vorbis/fileinfo.c:122
+msgid "Heavy Metal"
+msgstr "ヘヴィーメタル"
+
+#: Input/mpg123/mpg123.c:79 Input/vorbis/fileinfo.c:122
+msgid "Black Metal"
+msgstr "ブラックメタル"
+
+#: Input/mpg123/mpg123.c:79 Input/vorbis/fileinfo.c:122
+msgid "Crossover"
+msgstr "クロスオーバー"
+
+#: Input/mpg123/mpg123.c:80 Input/vorbis/fileinfo.c:123
+msgid "Contemporary Christian"
+msgstr "コンテンポラリ・クリスチャン"
+
+#: Input/mpg123/mpg123.c:80 Input/vorbis/fileinfo.c:123
+msgid "Christian Rock"
+msgstr "クリスチャン・ロック"
+
+#: Input/mpg123/mpg123.c:81 Input/vorbis/fileinfo.c:124
+msgid "Merengue"
+msgstr "メレンゲ"
+
+#: Input/mpg123/mpg123.c:81 Input/vorbis/fileinfo.c:124
+msgid "Salsa"
+msgstr "サルサ"
+
+#: Input/mpg123/mpg123.c:81 Input/vorbis/fileinfo.c:124
+msgid "Thrash Metal"
+msgstr "トラッシュメタル"
+
+#: Input/mpg123/mpg123.c:82 Input/vorbis/fileinfo.c:125
+msgid "Anime"
+msgstr "アニメ"
+
+#: Input/mpg123/mpg123.c:82 Input/vorbis/fileinfo.c:125
+msgid "JPop"
+msgstr "Jポップ"
+
+#: Input/mpg123/mpg123.c:82 Input/vorbis/fileinfo.c:125
+msgid "Synthpop"
+msgstr "シンセポップ"
+
+#: Input/mpg123/mpg123.c:1181
+msgid "About MPEG Audio Plugin"
+msgstr "MPEG オーディオ・プラグインについて"
+
+#: Input/mpg123/mpg123.c:1182
+msgid ""
+"mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
+"Plugin by The XMMS team"
+msgstr ""
+"mpg123 でコーディング・エンジン: Michael Hipp <mh@mpg123.de>\n"
+"プラグインの提供は XMMS チーム"
+
+#: Input/mpg123/mpg123.c:1218
+msgid "MPEG Audio Plugin"
+msgstr "MPEG オーディオ・プラグイン"
+
+#: Input/vorbis/configure.c:192
+msgid "Select the directory where you want to store the Ogg Vorbis streams:"
+msgstr "Ogg Vorbis ストリームを格納するフォルダの選択:"
+
+#: Input/vorbis/configure.c:275
+msgid "Ogg Vorbis Audio Plugin Configuration"
+msgstr "Ogg Vorbis オーディオ・プラグインの設定"
+
+#: Input/vorbis/configure.c:464
+msgid "Ogg Vorbis Tags:"
+msgstr "Ogg Vorbis タグ:"
+
+#: Input/vorbis/configure.c:485 audacious/glade/prefswin.glade:2261
+msgid "Title format:"
+msgstr "タイトルの書式:"
+
+#: Input/vorbis/configure.c:503
+msgid "ReplayGain Settings:"
+msgstr "リプレイゲインの設定:"
+
+#: Input/vorbis/configure.c:511
+msgid "Enable Clipping Prevention"
+msgstr "クリッピング回避機能を有効にする"
+
+#: Input/vorbis/configure.c:516
+msgid "Enable ReplayGain"
+msgstr "リプレイゲインを有効にする"
+
+#: Input/vorbis/configure.c:521
+msgid "ReplayGain Type:"
+msgstr "リプレイゲインの種類:"
+
+#: Input/vorbis/configure.c:532
+msgid "use Track Gain/Peak"
+msgstr "トラックのゲイン/ピークを使用する"
+
+#: Input/vorbis/configure.c:542
+msgid "use Album Gain/Peak"
+msgstr "アルバムのゲイン/ピークを使用する"
+
+#: Input/vorbis/configure.c:554
+msgid "Enable 6dB Boost + Hard Limiting"
+msgstr "6dB ブースト + ハード・リミットを有効にする"
+
+#: Input/vorbis/configure.c:560
+msgid "ReplayGain"
+msgstr "リプレイゲイン"
+
+#: Input/vorbis/fileinfo.c:210
+#, c-format
+msgid ""
+"An error occured:\n"
+"%s"
+msgstr ""
+"エラー発生:\n"
+"%s"
+
+#: Input/vorbis/fileinfo.c:212
+msgid "Error!"
+msgstr "エラー！"
+
+#: Input/vorbis/fileinfo.c:242
+msgid "Failed to modify tag (open)"
+msgstr "タグの修正に失敗しました (open)"
+
+#: Input/vorbis/fileinfo.c:295
+msgid "Failed to modify tag (close)"
+msgstr "タグの修正に失敗しました (close)"
+
+#: Input/vorbis/fileinfo.c:320 Input/vorbis/fileinfo.c:329
+msgid "Failed to modify tag"
+msgstr "タグの修正に失敗"
+
+#: Input/vorbis/fileinfo.c:572
+msgid " Ogg Vorbis Tag "
+msgstr " Ogg Vorbis タグ "
+
+#: Input/vorbis/fileinfo.c:624
+msgid "Date:"
+msgstr "日付:"
+
+#: Input/vorbis/fileinfo.c:666
+msgid "Description:"
+msgstr "詳細:"
+
+#: Input/vorbis/fileinfo.c:676
+msgid "Location:"
+msgstr "場所:"
+
+#: Input/vorbis/fileinfo.c:686
+msgid "Version:"
+msgstr "バージョン:"
+
+#: Input/vorbis/fileinfo.c:697
+msgid "ISRC number:"
+msgstr "ISRC 番号:"
+
+#: Input/vorbis/fileinfo.c:708
+msgid "Organization:"
+msgstr "組織:"
+
+#: Input/vorbis/fileinfo.c:755
+msgid " Ogg Vorbis ReplayGain "
+msgstr " Ogg Vorbis リプレイゲイン "
+
+#: Input/vorbis/fileinfo.c:761
+msgid "Track gain:"
+msgstr "トラックのゲイン:"
+
+#: Input/vorbis/fileinfo.c:771
+msgid "Track peak:"
+msgstr "トラックのピーク:"
+
+#: Input/vorbis/fileinfo.c:782
+msgid "Album gain:"
+msgstr "アルバムのゲイン:"
+
+#: Input/vorbis/fileinfo.c:792
+msgid "Album peak:"
+msgstr "アルバムのピーク:"
+
+#: Input/vorbis/fileinfo.c:821
+msgid " Ogg Vorbis Info "
+msgstr " Ogg Vorbis 情報 "
+
+#: Input/vorbis/fileinfo.c:875 Input/vorbis/fileinfo.c:921
+msgid "Length:"
+msgstr "演奏時間:"
+
+#: Input/vorbis/fileinfo.c:955
+#, c-format
+msgid "%d KBit/s (nominal)"
+msgstr "%d Kビット/秒 (ノーマル)"
+
+#: Input/vorbis/fileinfo.c:956
+#, c-format
+msgid "%d Hz"
+msgstr "%d Hz"
+
+#: Input/vorbis/fileinfo.c:959
+#, c-format
+msgid "%d:%.2d"
+msgstr "%d:%.2d"
+
+#: Input/vorbis/fileinfo.c:961
+#, c-format
+msgid "%d Bytes"
+msgstr "%d バイト"
+
+#: Input/vorbis/vorbis.c:134
+msgid "Ogg Vorbis Audio Plugin"
+msgstr "Ogg Vorbis オーディオ・プラグイン"
+
+#: Input/vorbis/vorbis.c:784
+msgid "About Ogg Vorbis Audio Plugin"
+msgstr "Ogg Vorbis オーディオ・プラグインについて"
+
+#: Input/vorbis/vorbis.c:790
+msgid ""
+"Ogg Vorbis Plugin by the Xiph.org Foundation\n"
+"\n"
+"Original code by\n"
+"Tony Arcieri <bascule@inferno.tusculum.edu>\n"
+"Contributions from\n"
+"Chris Montgomery <monty@xiph.org>\n"
+"Peter Alm <peter@xmms.org>\n"
+"Michael Smith <msmith@labyrinth.edu.au>\n"
+"Jack Moffitt <jack@icecast.org>\n"
+"Jorn Baayen <jorn@nl.linux.org>\n"
+"Haavard Kvaalen <havardk@xmms.org>\n"
+"Gian-Carlo Pascutto <gcp@sjeng.org>\n"
+"\n"
+"Visit the Xiph.org Foundation at http://www.xiph.org/\n"
+msgstr ""
+"Ogg Vorbis プラグインの提供: Xiph.org Foundation\n"
+"\n"
+"オリジナルのコード:\n"
+"Tony Arcieri <bascule@inferno.tusculum.edu>\n"
+"Contributions from\n"
+"Chris Montgomery <monty@xiph.org>\n"
+"Peter Alm <peter@xmms.org>\n"
+"Michael Smith <msmith@labyrinth.edu.au>\n"
+"Jack Moffitt <jack@icecast.org>\n"
+"Jorn Baayen <jorn@nl.linux.org>\n"
+"Haavard Kvaalen <havardk@xmms.org>\n"
+"Gian-Carlo Pascutto <gcp@sjeng.org>\n"
+"\n"
+"Xiph.org Foundation <http://www.xiph.org/> もご覧下さい。\n"
+
+#: Input/wav/wav.c:67
+msgid "WAV Audio Plugin"
+msgstr "WAV オーディオ・プラグイン"
+
+#: Output/OSS/OSS.c:50
+msgid "OSS Output Plugin"
+msgstr "OSS 出力プラグイン"
+
+#: Output/OSS/about.c:39
+msgid "About OSS Driver"
+msgstr "OSS ドライバについて"
+
+#: Output/OSS/about.c:40
+msgid ""
+"XMMS OSS Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+"XMMS OSS ドライバ\n"
+"\n"
+"このプログラムはフリーソフトウェアです;\n"
+"フリーソフトウェア財団が提供する GNU 一般公有使用許諾契約書\n"
+"の第二版、あるいはそれ以降の版が定める条項の下で\n"
+"本プログラムを再頒布または変更することができます。\n"
+"\n"
+"本プログラムは有用とは思いますが、\n"
+"頒布にあたっては、市場性及び特定目的、適合性についての\n"
+"暗黙の保証を含めて、いかなる保証も行ないません。\n"
+"詳細については GNU 一般公有使用許諾契約書をご覧下さい。\n"
+"\n"
+"あなたは、本プログラムと一緒に\n"
+"GNU 一般公有使用許諾契約書の写しを受け取っているはずです。\n"
+"そうでない場合は、Free Software Foundation, Inc., 59\n"
+"Temple Place - Suite 330, Boston, MA 02111-1307, USA へ\n"
+"手紙を書いて下さい。"
+
+#: Output/OSS/configure.c:149
+#, c-format
+msgid "Default (%s)"
+msgstr "デフォルト (%s)"
+
+#: Output/OSS/configure.c:167
+msgid "Default"
+msgstr "デフォルト"
+
+#: Output/OSS/configure.c:199
+msgid "OSS Driver configuration"
+msgstr "OSS ドライバの設定"
+
+#: Output/OSS/configure.c:215 Output/alsa/configure.c:295
+msgid "Audio device:"
+msgstr "オーディオ・デバイス:"
+
+#: Output/OSS/configure.c:237 Output/OSS/configure.c:278
+msgid "Use alternate device:"
+msgstr "代替えのデバイスを使用する:"
+
+#: Output/OSS/configure.c:258 Output/alsa/configure.c:339
+msgid "Mixer device:"
+msgstr "ミキサ・デバイス:"
+
+#: Output/OSS/configure.c:300
+msgid "Devices"
+msgstr "デバイス"
+
+#: Output/OSS/configure.c:315 Output/esd/configure.c:184
+msgid "Buffer size (ms):"
+msgstr "バッファのサイズ (ms):"
+
+#: Output/OSS/configure.c:340 Output/esd/configure.c:209
+msgid "Buffering"
+msgstr "バッファリング"
+
+#: Output/OSS/configure.c:341
+msgid "Mixer Settings:"
+msgstr "ミキサの設定:"
+
+#: Output/OSS/configure.c:347
+msgid "Volume controls Master not PCM"
+msgstr "音量の調整は PCM ではなくマスタを使用する"
+
+#: Output/OSS/configure.c:353
+msgid "Mixer"
+msgstr "ミキサ"
+
+#: Output/esd/about.c:34
+msgid "About ESounD Plugin"
+msgstr "ESounD プラグインについて"
+
+#: Output/esd/about.c:35
+msgid ""
+"XMMS ESounD Plugin\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+"XMMS ESounD プラグイン\n"
+"\n"
+"このプログラムはフリーソフトウェアです;\n"
+"フリーソフトウェア財団が提供する GNU 一般公有使用許諾契約書\n"
+"の第二版、あるいはそれ以降の版が定める条項の下で\n"
+"本プログラムを再頒布または変更することができます。\n"
+"\n"
+"本プログラムは有用とは思いますが、\n"
+"頒布にあたっては、市場性及び特定目的、適合性についての\n"
+"暗黙の保証を含めて、いかなる保証も行ないません。\n"
+"詳細については GNU 一般公有使用許諾契約書をご覧下さい。\n"
+"\n"
+"あなたは、本プログラムと一緒に\n"
+"GNU 一般公有使用許諾契約書の写しを受け取っているはずです。\n"
+"そうでない場合は、Free Software Foundation, Inc., 59\n"
+"Temple Place - Suite 330, Boston, MA 02111-1307, USA へ\n"
+"手紙を書いて下さい。"
+
+#: Output/esd/configure.c:102
+msgid "ESD Output Plugin configuration"
+msgstr "ESD 出力プラグインの設定"
+
+#: Output/esd/configure.c:125
+msgid "Use remote host"
+msgstr "リモート・ホストを利用する"
+
+#: Output/esd/configure.c:132
+msgid "Volume controls OSS mixer"
+msgstr "音量の調整は OSS ミキサを使用する"
+
+#: Output/esd/configure.c:169
+msgid "Server"
+msgstr "サーバ"
+
+#: Output/esd/esd.c:47
+msgid "eSound Output Plugin"
+msgstr "eSound 出力プラグイン"
+
+#: Output/alsa/about.c:36
+msgid "About ALSA Driver"
+msgstr "ALSA ドライバについて"
+
+#: Output/alsa/about.c:37
+msgid ""
+"XMMS ALSA Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA.\n"
+"Author: Matthieu Sozeau (mattam@altern.org)"
+msgstr ""
+"XMMS ALSA ドライバ\n"
+"\n"
+"このプログラムはフリーソフトウェアです;\n"
+"フリーソフトウェア財団が提供する GNU 一般公有使用許諾契約書\n"
+"の第二版、あるいはそれ以降の版が定める条項の下で\n"
+"本プログラムを再頒布または変更することができます。\n"
+"\n"
+"本プログラムは有用とは思いますが、\n"
+"頒布にあたっては、市場性及び特定目的、適合性についての\n"
+"暗黙の保証を含めて、いかなる保証も行ないません。\n"
+"詳細については GNU 一般公有使用許諾契約書をご覧下さい。\n"
+"\n"
+"あなたは、本プログラムと一緒に\n"
+"GNU 一般公有使用許諾契約書の写しを受け取っているはずです。\n"
+"そうでない場合は、Free Software Foundation, Inc., 59\n"
+"Temple Place - Suite 330, Boston, MA 02111-1307, USA へ\n"
+"手紙を書いて下さい。\n"
+"作者: Matthieu Sozeau <mattam@altern.org>"
+
+#: Output/alsa/alsa.c:46
+#, c-format
+msgid "ALSA %s output plugin"
+msgstr "ALSA %s 出力プラグイン"
+
+#: Output/alsa/configure.c:164
+msgid "Unknown soundcard"
+msgstr "サウンドカードが不明です"
+
+#: Output/alsa/configure.c:217
+#, c-format
+msgid "Default PCM device (%s)"
+msgstr "デフォルトの PCM デバイス (%s)"
+
+#: Output/alsa/configure.c:280
+msgid "ALSA Driver configuration"
+msgstr "ALSA ドライバの設定"
+
+#: Output/alsa/configure.c:308
+msgid "Mixer:"
+msgstr "ミキサ:"
+
+#: Output/alsa/configure.c:316
+msgid "Use software volume control"
+msgstr "ソフトウェア音量コントロールを使用する"
+
+#: Output/alsa/configure.c:326
+msgid "Mixer card:"
+msgstr "ミキサのカード:"
+
+#: Output/alsa/configure.c:359
+msgid "Device settings"
+msgstr "デバイスの設定"
+
+#: Output/alsa/configure.c:361
+msgid "Advanced settings:"
+msgstr "拡張設定:"
+
+#: Output/alsa/configure.c:374
+msgid "Buffer time (ms):"
+msgstr "バッファ時間 (ms):"
+
+#: Output/alsa/configure.c:388
+msgid "Period time (ms):"
+msgstr "ピリオド時間 (ms):"
+
+#: Output/alsa/configure.c:402
+#, fuzzy
+msgid "Thread buffer time (ms):"
+msgstr "バッファ時間 (ms):"
+
+#: Output/alsa/configure.c:416
+msgid "Multi-thread mode"
+msgstr ""
+
+#: Output/alsa/configure.c:421
+msgid "Mmap mode"
+msgstr "Mmap モードで使用する"
+
+#: Output/alsa/configure.c:427
+msgid "Advanced settings"
+msgstr "拡張設定"
+
+#: Visualization/blur_scope/blur_scope.c:57
+msgid "/Toggle Decorations"
+msgstr "/装飾の切り替え"
+
+#: Visualization/blur_scope/blur_scope.c:59
+msgid "/-"
+msgstr "/-"
+
+#: Visualization/blur_scope/blur_scope.c:60
+msgid "/Close"
+msgstr "/閉じる"
+
+#: Visualization/blur_scope/blur_scope.c:198
+msgid "Blur scope"
+msgstr "Blur スコープ"
+
+#: Visualization/blur_scope/config.c:73
+msgid "Blur Scope: Color selection"
+msgstr "Blur スコープ: 色の選択"
+
+#: Visualization/blur_scope/config.c:83
+msgid "Options:"
+msgstr "オプション:"
+
+#: libaudacious/titlestring.c:324
+msgid "Performer/Artist"
+msgstr "演奏者/アーティスト"
+
+#: libaudacious/titlestring.c:325 audacious/prefswin.c:94
+msgid "Album"
+msgstr "アルバム名"
+
+#: libaudacious/titlestring.c:326 audacious/prefswin.c:97
+msgid "Genre"
+msgstr "ジャンル"
+
+#: libaudacious/titlestring.c:327
+msgid "File name"
+msgstr "ファイル名"
+
+#: libaudacious/titlestring.c:328
+msgid "File path"
+msgstr "フォルダ"
+
+#: libaudacious/titlestring.c:329
+msgid "File extension"
+msgstr "拡張子"
+
+#: libaudacious/titlestring.c:330
+msgid "Track name"
+msgstr "トラック名"
+
+#: libaudacious/titlestring.c:331
+msgid "Track number"
+msgstr "トラック番号"
+
+#: libaudacious/titlestring.c:332 audacious/prefswin.c:100
+msgid "Date"
+msgstr "日付"
+
+#: libaudacious/titlestring.c:333 audacious/prefswin.c:101
+msgid "Year"
+msgstr "制作年"
+
+#: libaudacious/titlestring.c:334 audacious/prefswin.c:102
+msgid "Comment"
+msgstr "コメント"
+
+#: libaudacious/titlestring.c:385
+msgid "%{n:...%}: Display \"...\" only if element %n is present"
+msgstr "%{n:...%}: トラック番号 %n が存在している場合にのみ \"...\" を表示する"
+
+#: audacious/about.c:42
+#, fuzzy, c-format
+msgid ""
+"<big><b>Beep Media Player %s</b></big>\n"
+"A media player based on XMMS\n"
+"\n"
+"Copyright (C) 2003-2005 BMP Development Team\n"
+msgstr ""
+"<big><b>Beep メディア・プレイヤー %s</b></big>\n"
+"XMMS をベースにしたメディア・プレイヤーです。\n"
+"\n"
+"Copyright (C) 2003-2004 BMP 開発チーム\n"
+
+#: audacious/about.c:48
+msgid "Developers:"
+msgstr "開発者:"
+
+#: audacious/about.c:49
+msgid "Artem Baguinski"
+msgstr "Artem Baguinski"
+
+#: audacious/about.c:50 audacious/about.c:85 audacious/about.c:169
+msgid "Edward Brocklesby"
+msgstr "Edward Brocklesby"
+
+#: audacious/about.c:51 audacious/about.c:99
+msgid "Chong Kai Xiong"
+msgstr "Chong Kai Xiong"
+
+#: audacious/about.c:52 audacious/about.c:84
+msgid "Milosz Derezynski"
+msgstr "Milosz Derezynski"
+
+#: audacious/about.c:53
+msgid "David Lau"
+msgstr "David Lau"
+
+#: audacious/about.c:54
+msgid "Ole Andre Vadla Ravnaas"
+msgstr "Ole Andre Vadla Ravnaas"
+
+#: audacious/about.c:55
+msgid "Michiel Sikkes"
+msgstr "Michiel Sikkes"
+
+#: audacious/about.c:58
+msgid "With Additional Help:"
+msgstr "With Additional Help:"
+
+#: audacious/about.c:59
+msgid "Andrei Badea"
+msgstr "Andrei Badea"
+
+#: audacious/about.c:60
+msgid "Peter Behroozi"
+msgstr "Peter Behroozi"
+
+#: audacious/about.c:61
+msgid "Bernard Blackham"
+msgstr "Bernard Blackham"
+
+#: audacious/about.c:62
+msgid "Oliver Blin"
+msgstr "Oliver Blin"
+
+#: audacious/about.c:63
+msgid "Tomas Bzatek"
+msgstr "Tomas Bzatek"
+
+#: audacious/about.c:64 audacious/about.c:149
+msgid "Liviu Danicel"
+msgstr "Liviu Danicel"
+
+#: audacious/about.c:65
+msgid "Jon Dowland"
+msgstr "Jon Dowland"
+
+#: audacious/about.c:66
+msgid "Artur Frysiak"
+msgstr "Artur Frysiak"
+
+#: audacious/about.c:67
+msgid "Sebastian Kapfer"
+msgstr "Sebastian Kapfer"
+
+#: audacious/about.c:68
+msgid "Lukas Koberstein"
+msgstr "Lukas Koberstein"
+
+#: audacious/about.c:69 audacious/about.c:153
+msgid "Dan Korostelev"
+msgstr "Dan Korostelev"
+
+#: audacious/about.c:70
+msgid "Jolan Luff"
+msgstr "Jolan Luff"
+
+#: audacious/about.c:71
+msgid "Michael Marineau"
+msgstr "Michael Marineau"
+
+#: audacious/about.c:72
+msgid "Tim-Philipp Muller"
+msgstr "Tim-Philipp Muller"
+
+#: audacious/about.c:73
+msgid "Julien Portalier"
+msgstr "Julien Portalier"
+
+#: audacious/about.c:74
+msgid "Andrew Ruder"
+msgstr "Andrew Ruder"
+
+#: audacious/about.c:75
+msgid "Olivier Samyn"
+msgstr "Olivier Samyn"
+
+#: audacious/about.c:76
+msgid "Martijn Vernooij"
+msgstr "Martijn Vernooij"
+
+#: audacious/about.c:79
+msgid "ClearSky skin:"
+msgstr ""
+
+#: audacious/about.c:80
+msgid "Will Reinhart"
+msgstr ""
+
+#: audacious/about.c:83
+msgid "Homepage and Graphics:"
+msgstr "ホームページとグラフィクス:"
+
+#: audacious/about.c:92
+msgid "Brazilian Portuguese:"
+msgstr "ブラジル・ポルトガル語:"
+
+#: audacious/about.c:93
+msgid "Philipi Pinto"
+msgstr "Philipi Pinto"
+
+#: audacious/about.c:95
+msgid "Breton:"
+msgstr "ブレトン語:"
+
+#: audacious/about.c:96
+msgid "Thierry Vignaud"
+msgstr "Thierry Vignaud"
+
+#: audacious/about.c:98
+msgid "Chinese:"
+msgstr "中国語:"
+
+#: audacious/about.c:100
+msgid "Chao-Hsiung Liao"
+msgstr ""
+
+#: audacious/about.c:102
+msgid "Czech:"
+msgstr "チェコ語:"
+
+#: audacious/about.c:103
+msgid "Jan Narovec"
+msgstr "Jan Narovec"
+
+#: audacious/about.c:105
+msgid "Dutch:"
+msgstr "オランダ語:"
+
+#: audacious/about.c:106
+msgid "Laurens Buhler"
+msgstr "Laurens Buhler"
+
+#: audacious/about.c:108
+#, fuzzy
+msgid "Finnish:"
+msgstr "スペイン語:"
+
+#: audacious/about.c:109
+msgid "Pauli Virtanen"
+msgstr ""
+
+#: audacious/about.c:111
+msgid "French:"
+msgstr "フランス語:"
+
+#: audacious/about.c:112
+msgid "David Le Brun"
+msgstr "David Le Brun"
+
+#: audacious/about.c:114
+msgid "German:"
+msgstr "ドイツ語:"
+
+#: audacious/about.c:115
+msgid "Matthias Debus"
+msgstr "Matthias Debus"
+
+#: audacious/about.c:117
+#, fuzzy
+msgid "Georgian: "
+msgstr "ドイツ語:"
+
+#: audacious/about.c:118
+msgid "George Machitidze"
+msgstr ""
+
+#: audacious/about.c:120
+msgid "Greek:"
+msgstr "ギリシア語:"
+
+#: audacious/about.c:121
+msgid "Kouzinopoulos Haris"
+msgstr "Kouzinopoulos Haris"
+
+#: audacious/about.c:122
+msgid "Stavros Giannouris"
+msgstr ""
+
+#: audacious/about.c:124
+msgid "Hindi:"
+msgstr ""
+
+#: audacious/about.c:125
+msgid "Dhananjaya Sharma"
+msgstr ""
+
+#: audacious/about.c:127
+msgid "Hungarian:"
+msgstr "ハンガリー語:"
+
+#: audacious/about.c:128
+msgid "Laszlo Dvornik"
+msgstr "Laszlo Dvornik"
+
+#: audacious/about.c:130
+msgid "Italian:"
+msgstr "イタリア語:"
+
+#: audacious/about.c:131
+msgid "Alessio D'Ascanio"
+msgstr "Alessio D'Ascanio"
+
+#: audacious/about.c:133
+msgid "Japanese:"
+msgstr "日本語:"
+
+#: audacious/about.c:134
+msgid "Takeshi Aihana"
+msgstr "相花 毅"
+
+#: audacious/about.c:136
+msgid "Korean:"
+msgstr "韓国語:"
+
+#: audacious/about.c:137
+msgid "DongCheon Park"
+msgstr "DongCheon Park"
+
+#: audacious/about.c:139
+msgid "Lithuanian:"
+msgstr "リトアニア語:"
+
+#: audacious/about.c:140
+msgid "Rimas Kudelis"
+msgstr "Rimas Kudelis"
+
+#: audacious/about.c:142
+msgid "Macedonian:"
+msgstr "マケドニア語:"
+
+#: audacious/about.c:143
+msgid "Arangel Angov"
+msgstr "Arangel Angov"
+
+#: audacious/about.c:145
+msgid "Polish:"
+msgstr "ポーランド語:"
+
+#: audacious/about.c:146
+msgid "Jacek Wolszczak"
+msgstr "Jacek Wolszczak"
+
+#: audacious/about.c:148
+msgid "Romanian:"
+msgstr "ルーマニア語:"
+
+#: audacious/about.c:151
+msgid "Russian:"
+msgstr "ロシア語:"
+
+#: audacious/about.c:152
+msgid "Pavlo Bohmat"
+msgstr "Pavlo Bohmat"
+
+#: audacious/about.c:154
+msgid "Vitaly Lipatov"
+msgstr ""
+
+#: audacious/about.c:156
+msgid "Slovak:"
+msgstr "スロバキア語:"
+
+#: audacious/about.c:157
+msgid "Pavel Kanzelsberger"
+msgstr "Pavel Kanzelsberger"
+
+#: audacious/about.c:159
+msgid "Spanish:"
+msgstr "スペイン語:"
+
+#: audacious/about.c:160
+msgid "Francisco Javier F. Serrador"
+msgstr "Francisco Javier F. Serrador"
+
+#: audacious/about.c:162
+msgid "Swedish:"
+msgstr "スウェーデン語:"
+
+#: audacious/about.c:163
+msgid "Martin Persenius"
+msgstr "Martin Persenius"
+
+#: audacious/about.c:165
+#, fuzzy
+msgid "Ukrainian:"
+msgstr "ルーマニア語:"
+
+#: audacious/about.c:166
+msgid "Mykola Lynnyk"
+msgstr ""
+
+#: audacious/about.c:168
+msgid "Welsh:"
+msgstr "ウェールズ語:"
+
+#: audacious/about.c:266
+msgid "About BMP"
+msgstr "BMP について"
+
+#: audacious/about.c:311
+msgid "Credits"
+msgstr "クレジット"
+
+#: audacious/about.c:315
+msgid "Translators"
+msgstr "翻訳者"
+
+#: audacious/eq_slider.c:93
+msgid "PREAMP"
+msgstr "PREAMP"
+
+#: audacious/eq_slider.c:93
+msgid "60HZ"
+msgstr "60HZ"
+
+#: audacious/eq_slider.c:93
+msgid "170HZ"
+msgstr "170HZ"
+
+#: audacious/eq_slider.c:94
+msgid "310HZ"
+msgstr "310HZ"
+
+#: audacious/eq_slider.c:94
+msgid "600HZ"
+msgstr "600HZ"
+
+#: audacious/eq_slider.c:94
+msgid "1KHZ"
+msgstr "1KHZ"
+
+#: audacious/eq_slider.c:95
+msgid "3KHZ"
+msgstr "3KHZ"
+
+#: audacious/eq_slider.c:95
+msgid "6KHZ"
+msgstr "6KHZ"
+
+#: audacious/eq_slider.c:95
+msgid "12KHZ"
+msgstr "12KHZ"
+
+#: audacious/eq_slider.c:96
+msgid "14KHZ"
+msgstr "14KHZ"
+
+#: audacious/eq_slider.c:96
+msgid "16KHZ"
+msgstr "16KHZ"
+
+#: audacious/equalizer.c:127
+msgid "/Load"
+msgstr "/読み込み"
+
+#: audacious/equalizer.c:128
+msgid "/Load/Preset"
+msgstr "/読み込み/プリセット"
+
+#: audacious/equalizer.c:130
+msgid "/Load/Auto-load preset"
+msgstr "/読み込み/自動読み込みのプリセット"
+
+#: audacious/equalizer.c:132
+msgid "/Load/Default"
+msgstr "/読み込み/デフォルト"
+
+#: audacious/equalizer.c:135
+msgid "/Load/Zero"
+msgstr "/読み込み/リセット"
+
+#: audacious/equalizer.c:138
+msgid "/Load/From file"
+msgstr "/読み込み/ファイル"
+
+#: audacious/equalizer.c:140
+msgid "/Load/From WinAMP EQF file"
+msgstr "/読み込み/WinAMP EQF ファイル"
+
+#: audacious/equalizer.c:142
+msgid "/Import"
+msgstr "/インポート"
+
+#: audacious/equalizer.c:143
+msgid "/Import/WinAMP Presets"
+msgstr "/インポート/WinAMP プリセット"
+
+#: audacious/equalizer.c:145
+msgid "/Save"
+msgstr "/保存"
+
+#: audacious/equalizer.c:146
+msgid "/Save/Preset"
+msgstr "/保存/プリセット"
+
+#: audacious/equalizer.c:148
+msgid "/Save/Auto-load preset"
+msgstr "/保存/自動読み込みのプリセット"
+
+#: audacious/equalizer.c:150
+msgid "/Save/Default"
+msgstr "/保存/デフォルト"
+
+#: audacious/equalizer.c:153
+msgid "/Save/To file"
+msgstr "/保存/ファイル"
+
+#: audacious/equalizer.c:155
+msgid "/Save/To WinAMP EQF file"
+msgstr "/保存/WinAMP EQF ファイル"
+
+#: audacious/equalizer.c:157
+msgid "/Delete"
+msgstr "/削除"
+
+#: audacious/equalizer.c:158
+msgid "/Delete/Preset"
+msgstr "/削除/プリセット"
+
+#: audacious/equalizer.c:160
+msgid "/Delete/Auto-load preset"
+msgstr "/削除/自動読み込みのプリセット"
+
+#: audacious/equalizer.c:741
+msgid "BMP Equalizer"
+msgstr "BMP イコライザ"
+
+#: audacious/equalizer.c:1366
+msgid "Preset"
+msgstr "プリセット"
+
+#: audacious/equalizer.c:1409
+msgid "Presets"
+msgstr "プリセット"
+
+#: audacious/equalizer.c:1468
+msgid "Load preset"
+msgstr "プリセットの読み込み"
+
+#: audacious/equalizer.c:1482
+msgid "Load auto-preset"
+msgstr "自動読み込みのプリセットの読み込み"
+
+#: audacious/equalizer.c:1507 audacious/equalizer.c:1513 audacious/equalizer.c:1520
+msgid "Load equalizer preset"
+msgstr "イコライザ・プリセットの読み込み"
+
+#: audacious/equalizer.c:1529
+msgid "Save preset"
+msgstr "プリセットの保存"
+
+#: audacious/equalizer.c:1548
+msgid "Save auto-preset"
+msgstr "自動読み込みのプリセットの保存"
+
+#: audacious/equalizer.c:1581 audacious/equalizer.c:1600
+msgid "Save equalizer preset"
+msgstr "イコライザ・プリセットの保存"
+
+#: audacious/equalizer.c:1609
+msgid "Delete preset"
+msgstr "プリセットの削除"
+
+#: audacious/equalizer.c:1625
+msgid "Delete auto-preset"
+msgstr "自動読み込みのプリセットの削除"
+
+#: audacious/getopt.c:616
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr "%s: オプション '%s' があいまいです\n"
+
+#: audacious/getopt.c:638
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr "%s: オプション '--%s' は引数をとりません\n"
+
+#: audacious/getopt.c:644
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr "%s: オプション '%c%s' は引数をとりません\n"
+
+#: audacious/getopt.c:661 audacious/getopt.c:819
+#, c-format
+msgid "%s: option `%s' requires an argument\n"
+msgstr "%s: オプション '%s' には引数が必要です\n"
+
+#: audacious/getopt.c:687
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr "%s: 無効なオプション '--%s'\n"
+
+#: audacious/getopt.c:691
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr "%s: 無効なオプション '%c%s'\n"
+
+#: audacious/getopt.c:715
+#, c-format
+msgid "%s: illegal option -- %c\n"
+msgstr "%s: 間違ったオプション -- %c\n"
+
+#: audacious/getopt.c:718
+#, c-format
+msgid "%s: invalid option -- %c\n"
+msgstr "%s: 間違ったオプション -- %c\n"
+
+#: audacious/getopt.c:745 audacious/getopt.c:861
+#, c-format
+msgid "%s: option requires an argument -- %c\n"
+msgstr "%s: オプションには引数が必要です -- %c\n"
+
+#: audacious/getopt.c:790
+#, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr "%s: オプション '-W %s' があいまいです\n"
+
+#: audacious/getopt.c:805
+#, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr "%s: オプション '-W %s' は引数をとりません\n"
+
+#: audacious/input.c:299
+msgid ""
+"<b><big>Unable to play files.</big></b>\n"
+"\n"
+"The following files could not be played. Please check that:\n"
+"1. they are accessible.\n"
+"2. you have enabled the media plugins required."
+msgstr ""
+"<b><big>ファイルを演奏できません。</big></b>\n"
+"\n"
+"次のファイルを演奏できませんでした。以下をチェックして下さい:\n"
+"1. アクセス可能であるか。\n"
+"2. 演奏に必要なメディアのプラグインを有効にしているか。"
+
+#: audacious/input.c:324
+msgid "Don't show this warning anymore"
+msgstr "次回からこの警告を表示しない"
+
+#: audacious/input.c:326
+msgid "Show more _details"
+msgstr "詳細を表示する(_D)"
+
+#: audacious/input.c:340 audacious/prefswin.c:98 audacious/prefswin.c:447 audacious/prefswin.c:535
+#: audacious/prefswin.c:624 audacious/prefswin.c:720
+msgid "Filename"
+msgstr "ファイル名"
+
+#: audacious/input.c:489
+#, c-format
+msgid "bmp: %s"
+msgstr "bmp: %s"
+
+#: audacious/input.c:505
+msgid "Filename:"
+msgstr "ファイル名:"
+
+#: audacious/input.c:523
+msgid "No input plugin recognized this file"
+msgstr "このファイルを認識する入力プラグインではありません"
+
+#: audacious/input.c:525
+#, c-format
+msgid "Input plugin: %s"
+msgstr "入力プラグイン: %s"
+
+#: audacious/logger.c:120
+#, c-format
+msgid "Unable to create log file (%s)!\n"
+msgstr "ログ・ファイル (%s) を作成できません！\n"
+
+#: audacious/main.c:77 audacious/main.c:79
+msgid "Beep Media Player"
+msgstr "Beep メディア・プレイヤ"
+
+#: audacious/main.c:371
+#, c-format
+msgid "Could not create directory (%s): %s"
+msgstr "フォルダ (%s) を作成できませんでした: %s"
+
+#: audacious/main.c:625
+msgid ""
+"Usage: beep-media-player [options] [files] ...\n"
+"\n"
+"Options:\n"
+"--------\n"
+msgstr ""
+"用法: beep-media-player [オプション] [ファイル] ...\n"
+"\n"
+"オプション:\n"
+"--------\n"
+
+#: audacious/main.c:630
+msgid "Display this text and exit"
+msgstr "このメッセージを表示して終了する"
+
+#: audacious/main.c:633
+msgid "Select BMP/XMMS session (Default: 0)"
+msgstr "BMP/XMMS セッションを選択する (デフォルト: 0)"
+
+#: audacious/main.c:636
+msgid "Skip backwards in playlist"
+msgstr "演奏一覧の一つ前の曲にジャンプする"
+
+#: audacious/main.c:639
+msgid "Start playing current playlist"
+msgstr "現在の演奏一覧で演奏を開始する"
+
+#: audacious/main.c:642
+msgid "Pause current song"
+msgstr "現在の曲を一時停止する"
+
+#: audacious/main.c:645
+msgid "Stop current song"
+msgstr "現在の曲を停止する"
+
+#: audacious/main.c:648
+msgid "Pause if playing, play otherwise"
+msgstr "演奏していたら一時停止し、それ以外は演奏する"
+
+#: audacious/main.c:651
+msgid "Skip forward in playlist"
+msgstr "演奏一覧の一つ次の曲にジャンプする"
+
+#: audacious/main.c:654
+msgid "Don't clear the playlist"
+msgstr "演奏一覧をクリアしない"
+
+#: audacious/main.c:657
+msgid "Show the main window"
+msgstr "メイン・ウィンドウを表示する"
+
+#: audacious/main.c:660
+msgid "Activate BMP"
+msgstr "BMP をアクティブにする"
+
+#: audacious/main.c:663
+msgid "Previous session ID"
+msgstr "以前のセッション ID を指定する"
+
+#: audacious/main.c:666
+msgid "Print version number and exit\n"
+msgstr "バージョンを表示して終了する\n"
+
+#: audacious/main.c:841
+msgid ""
+"\n"
+"Received SIGSEGV\n"
+"\n"
+"This could be a bug in BMP. If you don't know why this happened, send a mail "
+"to us at beepmp-devel@lists.sourceforge.net\n"
+"\n"
+msgstr ""
+"\n"
+"シグナル SIGSEGV を受け取りました。\n"
+"\n"
+"これは BMP のバグの可能性があります。発生の原因が不明な場合は、<beepmp-"
+"devel@lists.sourceforge.net> に報告して下さい。\n"
+"\n"
+
+#: audacious/main.c:864
+#, c-format
+msgid ""
+"<b><big>Unable to load skin.</big></b>\n"
+"\n"
+"Check that skin at '%s' is usable and default skin is properly installed at "
+"'%s'\n"
+msgstr ""
+"<b><big>スキンをロードできません。</big></b>\n"
+"\n"
+"'%s' にあるスキンが利用可能であるか確認して下さい。\n"
+"デフォルトのスキンはおそらく '%s' にインストールされています。\n"
+
+#: audacious/main.c:899
+#, c-format
+msgid ""
+"Sorry, your GTK+ version (%d.%d.%d) does not work with BMP.\n"
+"Please use GTK+ %s or newer.\n"
+msgstr ""
+"すみませんが、BMP ではお使いの GTK+ のバージョン (%d.%d.%d) をサポートしてい"
+"ません。\n"
+"GTK+ %s またはそれ以降のバージョンをお使い下さい。\n"
+
+#: audacious/main.c:910
+msgid ""
+"Sorry, threads isn't supported on your platform.\n"
+"\n"
+"If you're on a libc5 based linux system and installed Glib & GTK+ before "
+"you\n"
+"installed LinuxThreads you need to recompile Glib & GTK+.\n"
+msgstr ""
+"すみませんが、お使いのシステムでは Thread をサポートしていないようです。\n"
+"\n"
+"libc5 ベースのシステムの場合と LinuxThreads をインストールする前に Glib と "
+"GTK+ をインストールした場合は、Glib と GTK+ を再コンパイルして再インストール"
+"する必要があります。\n"
+
+#: audacious/main.c:923
+msgid "BMP: Unable to open display, exiting."
+msgstr "BMP: X ディスプレイを開けません。強制終了します。"
+
+#: audacious/mainwin.c:235 audacious/mainwin.c:361 audacious/playlistwin.c:125
+msgid "/View Track Details"
+msgstr "/トラックの詳細"
+
+#: audacious/mainwin.c:238
+msgid "/Autoscroll Songname"
+msgstr "/曲名の自動スクロール"
+
+#: audacious/mainwin.c:248
+msgid "/Visualization Mode"
+msgstr "/視覚化モード"
+
+#: audacious/mainwin.c:249
+msgid "/Visualization Mode/Analyzer"
+msgstr "/視覚化モード/アナライザ"
+
+#: audacious/mainwin.c:251
+msgid "/Visualization Mode/Scope"
+msgstr "/視覚化モード/スコープ"
+
+#: audacious/mainwin.c:253
+msgid "/Visualization Mode/Off"
+msgstr "/視覚化モード/無効"
+
+#: audacious/mainwin.c:255
+msgid "/Analyzer Mode"
+msgstr "/アナライザ・モード"
+
+#: audacious/mainwin.c:256
+msgid "/Analyzer Mode/Normal"
+msgstr "/アナライザ・モード/標準"
+
+#: audacious/mainwin.c:258
+msgid "/Analyzer Mode/Fire"
+msgstr "/アナライザ・モード/ファイア"
+
+#: audacious/mainwin.c:260
+msgid "/Analyzer Mode/Vertical Lines"
+msgstr "/アナライザ・モード/垂直ライン"
+
+#: audacious/mainwin.c:263
+msgid "/Analyzer Mode/Lines"
+msgstr "/アナライザ・モード/ライン"
+
+#: audacious/mainwin.c:265
+msgid "/Analyzer Mode/Bars"
+msgstr "/アナライザ・モード/バー"
+
+#: audacious/mainwin.c:268
+msgid "/Analyzer Mode/Peaks"
+msgstr "/アナライザ・モード/ピーク"
+
+#: audacious/mainwin.c:270
+msgid "/Scope Mode"
+msgstr "/スコープ・モード"
+
+#: audacious/mainwin.c:271
+msgid "/Scope Mode/Dot Scope"
+msgstr "/スコープ・モード/ドット・スコープ"
+
+#: audacious/mainwin.c:273
+msgid "/Scope Mode/Line Scope"
+msgstr "/スコープ・モード/ライン・スコープ"
+
+#: audacious/mainwin.c:275
+msgid "/Scope Mode/Solid Scope"
+msgstr "/スコープ・モード/ソリッド・モード"
+
+#: audacious/mainwin.c:277
+msgid "/WindowShade VU Mode"
+msgstr "/WindowShade VU モード"
+
+#: audacious/mainwin.c:278
+msgid "/WindowShade VU Mode/Normal"
+msgstr "/WindowShade VU モード/標準"
+
+#: audacious/mainwin.c:280
+msgid "/WindowShade VU Mode/Smooth"
+msgstr "/WindowShade VU モード/スムーズ"
+
+#: audacious/mainwin.c:282
+msgid "/Refresh Rate"
+msgstr "/リフレッシュ・レート"
+
+#: audacious/mainwin.c:283
+msgid "/Refresh Rate/Full (~50 fps)"
+msgstr "/リフレッシュ・レート/1:1 (〜50 fps)"
+
+#: audacious/mainwin.c:285
+msgid "/Refresh Rate/Half (~25 fps)"
+msgstr "/リフレッシュ・レート/1:2 (〜25 fps)"
+
+#: audacious/mainwin.c:287
+msgid "/Refresh Rate/Quarter (~13 fps)"
+msgstr "/リフレッシュ・レート/1:4(〜13 fps)"
+
+#: audacious/mainwin.c:289
+msgid "/Refresh Rate/Eighth (~6 fps)"
+msgstr "/リフレッシュ・レート/1:8 (〜6 fps)"
+
+#: audacious/mainwin.c:291
+msgid "/Analyzer Falloff"
+msgstr "/アナライザ・フォールオフ"
+
+#: audacious/mainwin.c:292
+msgid "/Analyzer Falloff/Slowest"
+msgstr "/アナライザ・フォールオフ/最低速"
+
+#: audacious/mainwin.c:294
+msgid "/Analyzer Falloff/Slow"
+msgstr "/アナライザ・フォールオフ/低速"
+
+#: audacious/mainwin.c:296
+msgid "/Analyzer Falloff/Medium"
+msgstr "/アナライザ・フォールオフ/中速"
+
+#: audacious/mainwin.c:298
+msgid "/Analyzer Falloff/Fast"
+msgstr "/アナライザ・フォールオフ/高速"
+
+#: audacious/mainwin.c:300
+msgid "/Analyzer Falloff/Fastest"
+msgstr "/アナライザ・フォールオフ/最高速"
+
+#: audacious/mainwin.c:302
+msgid "/Peaks Falloff"
+msgstr "/ピーク・フォールオフ"
+
+#: audacious/mainwin.c:303
+msgid "/Peaks Falloff/Slowest"
+msgstr "/ピーク・フォールオフ/最低速"
+
+#: audacious/mainwin.c:305
+msgid "/Peaks Falloff/Slow"
+msgstr "/ピーク・フォールオフ/低速"
+
+#: audacious/mainwin.c:307
+msgid "/Peaks Falloff/Medium"
+msgstr "/ピーク・フォールオフ/中速"
+
+#: audacious/mainwin.c:309
+msgid "/Peaks Falloff/Fast"
+msgstr "/ピーク・フォールオフ/高速"
+
+#: audacious/mainwin.c:311
+msgid "/Peaks Falloff/Fastest"
+msgstr "/ピーク・フォールオフ/最高速"
+
+#: audacious/mainwin.c:326
+msgid "/Repeat"
+msgstr "/リピート"
+
+#: audacious/mainwin.c:328
+msgid "/Shuffle"
+msgstr "/シャッフル"
+
+#: audacious/mainwin.c:335
+msgid "/Play"
+msgstr "/演奏"
+
+#: audacious/mainwin.c:337
+msgid "/Pause"
+msgstr "/一時停止"
+
+#: audacious/mainwin.c:339
+msgid "/Stop"
+msgstr "/停止"
+
+#: audacious/mainwin.c:341
+msgid "/Previous"
+msgstr "/前の曲"
+
+#: audacious/mainwin.c:343
+msgid "/Next"
+msgstr "/次の曲"
+
+#: audacious/mainwin.c:346
+msgid "/Jump to Playlist Start"
+msgstr "/演奏一覧の開始へ移動"
+
+#: audacious/mainwin.c:349
+msgid "/Jump to File"
+msgstr "/指定したファイルへ移動"
+
+#: audacious/mainwin.c:351
+msgid "/Jump to Time"
+msgstr "/指定した時間へ移動"
+
+#: audacious/mainwin.c:364
+msgid "/Preferences"
+msgstr "/設定"
+
+#: audacious/mainwin.c:366
+msgid "/_View"
+msgstr "/表示(_V)"
+
+#: audacious/mainwin.c:368
+msgid "/About BMP"
+msgstr "/情報"
+
+#: audacious/mainwin.c:370
+msgid "/_Quit"
+msgstr "/終了(_Q)"
+
+#: audacious/mainwin.c:380
+msgid "/Files..."
+msgstr "/ファイル..."
+
+#: audacious/mainwin.c:387
+msgid "/Internet location..."
+msgstr "/インターネット上の場所..."
+
+#: audacious/mainwin.c:401
+msgid "/Show Playlist Editor"
+msgstr "/演奏一覧エディタを表示する"
+
+#: audacious/mainwin.c:403
+msgid "/Show Equalizer"
+msgstr "/イコライザを表示する"
+
+#: audacious/mainwin.c:406
+msgid "/Time Elapsed"
+msgstr "/経過時間を表示する"
+
+#: audacious/mainwin.c:408
+msgid "/Time Remaining"
+msgstr "/残り時間を表示する"
+
+#: audacious/mainwin.c:411
+msgid "/Always On Top"
+msgstr "/常に最前面に配置する"
+
+#: audacious/mainwin.c:413
+msgid "/Put on All Workspaces"
+msgstr "/全ワークスペースに配置する"
+
+#: audacious/mainwin.c:416
+msgid "/Roll up Player"
+msgstr "/プレイヤを巻き上げる"
+
+#: audacious/mainwin.c:418
+msgid "/Roll up Playlist Editor"
+msgstr "/演奏一覧エディタを巻き上げる"
+
+#: audacious/mainwin.c:420
+msgid "/Roll up Equalizer"
+msgstr "/イコライザを巻き上げる"
+
+#: audacious/mainwin.c:782 audacious/mainwin.c:3098
+msgid "BMP"
+msgstr "BMP"
+
+#: audacious/mainwin.c:820
+msgid "VBR"
+msgstr "VBR"
+
+#: audacious/mainwin.c:1246
+msgid "Jump to Time"
+msgstr "指定した時間へ移動"
+
+#: audacious/mainwin.c:1267
+msgid "minutes:seconds"
+msgstr "分:秒"
+
+#: audacious/mainwin.c:1277
+msgid "Track length:"
+msgstr "トラックの合計時間:"
+
+#: audacious/mainwin.c:1364
+#, fuzzy
+msgid "Un_queue"
+msgstr "キュー"
+
+#: audacious/mainwin.c:1366 audacious/mainwin.c:1688
+#, fuzzy
+msgid "_Queue"
+msgstr "キュー"
+
+#: audacious/mainwin.c:1618
+msgid "Jump to Track"
+msgstr "指定トラックへ移動"
+
+#: audacious/mainwin.c:1657
+msgid "Filter: "
+msgstr "フィルタ:"
+
+#: audacious/mainwin.c:1884
+msgid "Add Folders"
+msgstr "フォルダの追加"
+
+#: audacious/mainwin.c:1935
+msgid "Add Internet Address"
+msgstr "インターネット・アドレスの追加"
+
+#: audacious/mainwin.c:2063
+#, c-format
+msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
+msgstr "移動先: %d:%-2.2d/%d:%-2.2d (%d%%)"
+
+#: audacious/mainwin.c:2095 audacious/mainwin.c:2769
+#, c-format
+msgid "VOLUME: %d%%"
+msgstr "音量: %d%%"
+
+#: audacious/mainwin.c:2126 audacious/mainwin.c:2772
+#, c-format
+msgid "BALANCE: %d%% LEFT"
+msgstr "バランス: %d%% (左寄り)"
+
+#: audacious/mainwin.c:2130 audacious/mainwin.c:2775
+msgid "BALANCE: CENTER"
+msgstr "バランス: 中央"
+
+#: audacious/mainwin.c:2134 audacious/mainwin.c:2777
+#, c-format
+msgid "BALANCE: %d%% RIGHT"
+msgstr "バランス: %d%% (右寄り)"
+
+#: audacious/mainwin.c:2544
+msgid "OPTIONS MENU"
+msgstr "オプション・メニュー"
+
+#: audacious/mainwin.c:2549
+msgid "DISABLE ALWAYS ON TOP (N/A)"
+msgstr "\"常に最前面に配置する\" は無効 (N/A)"
+
+#: audacious/mainwin.c:2551
+msgid "ENABLE ALWAYS ON TOP (N/A)"
+msgstr "\"常に最前面に配置する\" は有効 (使用不可)"
+
+#: audacious/mainwin.c:2554
+msgid "DISABLE ALWAYS ON TOP"
+msgstr "\"常に最前面に配置\" は無効"
+
+#: audacious/mainwin.c:2556
+msgid "ENABLE ALWAYS ON TOP"
+msgstr "\"常に最前面に配置\" は有効"
+
+#: audacious/mainwin.c:2559
+msgid "FILE INFO BOX"
+msgstr "ファイル情報ボックス"
+
+#: audacious/mainwin.c:2562
+msgid "** DOUBLESIZE HAS BEEN REMOVED **"
+msgstr "** サイズを二倍にする機能は無くなりました **"
+
+#: audacious/mainwin.c:2565
+msgid "VISUALIZATION MENU"
+msgstr "視覚化メニュー"
+
+#: audacious/mainwin.c:2610
+msgid ""
+"<b><big>No playable CD found.</big></b>\n"
+"\n"
+"No CD inserted, or inserted CD is not an audio CD.\n"
+msgstr ""
+"<b><big>演奏できる CD が見つかりませんでした。</big></b>\n"
+"\n"
+"CD が挿入されていないか、挿入された CD はオーディオ CD ではありません。\n"
+
+#: audacious/mainwin.c:2627
+msgid ""
+"<b><big>Couldn't open audio.</big></b>\n"
+"\n"
+"Please check that:\n"
+"1. You have the correct output plugin selected.\n"
+"2. No other programs is blocking the soundcard.\n"
+"3. Your soundcard is configured properly.\n"
+msgstr ""
+"<b><big>オーディオ・デバイスを開けませんでした。</big></b>\n"
+"\n"
+"以下をチェックして下さい:\n"
+"1. 現在選択している出力プラグインが正しいか。\n"
+"2. お使いのサウンドカードをブロックしているアプリが他に存在しないか。\n"
+"3. お使いのサウンドカードが正しく設定されているか。\n"
+
+#: audacious/playlistwin.c:131 audacious/playlistwin.c:192
+msgid "/Remove Selected"
+msgstr "/選択したエントリの削除"
+
+#: audacious/playlistwin.c:135 audacious/playlistwin.c:188
+msgid "/Remove Unselected"
+msgstr "/選択していないエントリの削除"
+
+#: audacious/playlistwin.c:139 audacious/playlistwin.c:184
+msgid "/Remove All"
+msgstr "/全て削除"
+
+#: audacious/playlistwin.c:145
+msgid "/Queue Toggle"
+msgstr "/キューを切り替える"
+
+#: audacious/playlistwin.c:151
+msgid "/Add CD..."
+msgstr "/CD の追加..."
+
+#: audacious/playlistwin.c:155
+msgid "/Add Internet Address..."
+msgstr "インターネット・アドレスの追加..."
+
+#: audacious/playlistwin.c:161
+#, fuzzy
+msgid "/Add Folders..."
+msgstr "/ファイルの追加..."
+
+#: audacious/playlistwin.c:166
+msgid "/Add Files..."
+msgstr "/ファイルの追加..."
+
+#: audacious/playlistwin.c:172
+msgid "/Clear Queue"
+msgstr "/キューのクリア"
+
+#: audacious/playlistwin.c:178
+msgid "/Remove Unavailable Files"
+msgstr "/利用不可ファイルの削除"
+
+#: audacious/playlistwin.c:198
+msgid "/New List"
+msgstr "/新しい一覧"
+
+#: audacious/playlistwin.c:204
+msgid "/Load List"
+msgstr "/演奏一覧の読み込み"
+
+#: audacious/playlistwin.c:208
+msgid "/Save List"
+msgstr "/演奏一覧の保存"
+
+#: audacious/playlistwin.c:214
+msgid "/Update View"
+msgstr "/表示のリフレッシュ"
+
+#: audacious/playlistwin.c:220
+msgid "/Invert Selection"
+msgstr "/選択範囲の反転"
+
+#: audacious/playlistwin.c:226
+msgid "/Select None"
+msgstr "/未選択にする"
+
+#: audacious/playlistwin.c:230
+msgid "/Select All"
+msgstr "/全て選択"
+
+#: audacious/playlistwin.c:236
+msgid "/Randomize List"
+msgstr "/順番をランダムにする"
+
+#: audacious/playlistwin.c:238
+msgid "/Reverse List"
+msgstr "/逆順にする"
+
+#: audacious/playlistwin.c:241
+msgid "/Sort List"
+msgstr "/演奏一覧のソート"
+
+#: audacious/playlistwin.c:242
+msgid "/Sort List/By Title"
+msgstr "/演奏一覧のソート/タイトル順"
+
+#: audacious/playlistwin.c:244
+msgid "/Sort List/By Filename"
+msgstr "/演奏一覧のソート/ファイル名順"
+
+#: audacious/playlistwin.c:246
+msgid "/Sort List/By Path + Filename"
+msgstr "/演奏一覧のソート/パス名とファイル名順"
+
+#: audacious/playlistwin.c:248
+msgid "/Sort List/By Date"
+msgstr "/演奏一覧のソート/日付順"
+
+#: audacious/playlistwin.c:250
+msgid "/Sort Selection"
+msgstr "/選択範囲のソート"
+
+#: audacious/playlistwin.c:251
+msgid "/Sort Selection/By Title"
+msgstr "/選択範囲のソート/タイトル順"
+
+#: audacious/playlistwin.c:253
+msgid "/Sort Selection/By Filename"
+msgstr "/選択範囲のソート/ファイル名順"
+
+#: audacious/playlistwin.c:255
+msgid "/Sort Selection/By Path + Filename"
+msgstr "/選択範囲のソート/パス名とファイル名順"
+
+#: audacious/playlistwin.c:257
+msgid "/Sort Selection/By Date"
+msgstr "/選択範囲のソート/日付順"
+
+#: audacious/playlistwin.c:783
+#, c-format
+msgid "Error writing playlist \"%s\": %s"
+msgstr "演奏一覧 \"%s\" を書き込む際にエラー: %s"
+
+#: audacious/playlistwin.c:804
+#, c-format
+msgid "%s already exist. Continue?"
+msgstr "%s は既に存在しています。続行しますか？"
+
+#: audacious/playlistwin.c:818
+#, fuzzy, c-format
+msgid ""
+"<b><big>Unable to save playlist.</big></b>\n"
+"\n"
+"Unknown file type for '%s'.\n"
+msgstr "演奏一覧を保存できません！ (%s のファイルの種類が不明です)"
+
+#: audacious/playlistwin.c:928
+#, fuzzy
+msgid "Load Playlist"
+msgstr "演奏一覧の読み込み"
+
+#: audacious/playlistwin.c:940
+#, fuzzy
+msgid "Save Playlist"
+msgstr "演奏一覧の保存"
+
+#: audacious/playlistwin.c:1675
+msgid "BMP Playlist Editor"
+msgstr "BMP 演奏一覧エディタ"
+
+#: audacious/prefswin.c:83 audacious/glade/prefswin.glade:1379
+msgid "Appearance"
+msgstr "外観"
+
+#: audacious/prefswin.c:84 audacious/glade/prefswin.glade:2783
+msgid "Equalizer"
+msgstr "イコライザ"
+
+#: audacious/prefswin.c:85 audacious/glade/prefswin.glade:1669
+msgid "Mouse"
+msgstr "マウス"
+
+#: audacious/prefswin.c:86 audacious/glade/prefswin.glade:2403
+msgid "Playlist"
+msgstr "演奏一覧"
+
+#: audacious/prefswin.c:87 audacious/glade/prefswin.glade:869
+msgid "Plugins"
+msgstr "プラグイン"
+
+#: audacious/prefswin.c:93
+msgid "Artist"
+msgstr "アーティスト"
+
+#: audacious/prefswin.c:96
+msgid "Tracknumber"
+msgstr "トラック番号"
+
+#: audacious/prefswin.c:99
+msgid "Filepath"
+msgstr "パス名"
+
+#: audacious/prefswin.c:417 audacious/prefswin.c:504 audacious/prefswin.c:593
+#: audacious/prefswin.c:689
+msgid "Enabled"
+msgstr "有効"
+
+#: audacious/prefswin.c:433 audacious/prefswin.c:520 audacious/prefswin.c:609
+#: audacious/prefswin.c:705
+msgid "Description"
+msgstr "説明"
+
+#: audacious/prefswin.c:1462
+msgid "Category"
+msgstr "カテゴリ"
+
+#: audacious/prefswin.c:1630
+msgid "Preferences Window"
+msgstr "設定ウィンドウ"
+
+#: audacious/util.c:882
+msgid "Add/Open Files dialog"
+msgstr "ファイルの追加/開くダイアログ"
+
+#: audacious/util.c:940
+msgid "Open Files"
+msgstr "ファイルを開く"
+
+#: audacious/util.c:944
+msgid "Close dialog on Open"
+msgstr "開いたらダイアログを閉じる"
+
+#: audacious/util.c:956 audacious/glade/addfiles.glade:8
+msgid "Add Files"
+msgstr "ファイルの追加"
+
+#: audacious/util.c:960
+msgid "Close dialog on Add"
+msgstr "追加したらダイアログを閉じる"
+
+#: audacious/util.c:1176
+msgid "  (invalid UTF-8)"
+msgstr "  (不正な UTF-8)"
+
+#: audacious/glade/prefswin.glade:8
+msgid "BMP Preferences"
+msgstr "BMP の設定"
+
+#: audacious/glade/prefswin.glade:85
+msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
+msgstr "<span size=\"xx-large\"><b>プラグイン</b></span>"
+
+#: audacious/glade/prefswin.glade:147
+msgid "_Media plugin list:"
+msgstr "メディア・プラグインの一覧(_M):"
+
+#: audacious/glade/prefswin.glade:244
+msgid "<span size=\"medium\"><b>Media</b></span>"
+msgstr "<span size=\"medium\"><b>メディア</b></span>"
+
+#: audacious/glade/prefswin.glade:282
+msgid "_General plugin list:"
+msgstr "全般プラグインの一覧(_G):"
+
+#: audacious/glade/prefswin.glade:379
+msgid "<span size=\"medium\"><b>General</b></span>"
+msgstr "<span size=\"medium\"><b>全般</b></span>"
+
+#: audacious/glade/prefswin.glade:417
+msgid "_Visualization plugin list:"
+msgstr "視覚化プラグインの一覧(_V):"
+
+#: audacious/glade/prefswin.glade:514
+msgid "<b>Visualization</b>"
+msgstr "<b>視覚化</b>"
+
+#: audacious/glade/prefswin.glade:552
+msgid "_Effect plugin list:"
+msgstr "エフェクト・プラグインの一覧(_E):"
+
+#: audacious/glade/prefswin.glade:649
+msgid "<b>Effects</b>"
+msgstr "<b>エフェクト</b>"
+
+#: audacious/glade/prefswin.glade:693
+msgid "_Current output plugin:"
+msgstr "現在の出力プラグイン(_C):"
+
+#: audacious/glade/prefswin.glade:753
+msgid ""
+"The change is now effective in BMP's configuration database, but won't take "
+"effect for playback until the next song!\n"
+"\n"
+"Optionally, you can stop and restart playback for the change to take effect."
+msgstr ""
+"変更が BMP の設定データベース内で今から有効になりますが、演奏に対する変更は次"
+"の曲まで適用されません！\n"
+"\n"
+"演奏に対する適用を有効にするために、いったん演奏を中止して再開することをお奨"
+"めします。"
+
+#: audacious/glade/prefswin.glade:835
+msgid "<span size=\"medium\"><b>Output</b></span>"
+msgstr "<span size=\"medium\"><b>出力</b></span>"
+
+#: audacious/glade/prefswin.glade:894
+msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
+msgstr "<span size=\"xx-large\"><b>外観</b></span>"
+
+#: audacious/glade/prefswin.glade:951
+msgid "<b>_Skin</b>"
+msgstr "<b>スキン(_S)</b>"
+
+#: audacious/glade/prefswin.glade:1039
+msgid "<b>_Fonts</b>"
+msgstr "<b>フォント(_F)</b>"
+
+#: audacious/glade/prefswin.glade:1092
+msgid "_Player:"
+msgstr "演奏者(_P):"
+
+#: audacious/glade/prefswin.glade:1131
+msgid "_Playlist:"
+msgstr "演奏一覧(_P):"
+
+#: audacious/glade/prefswin.glade:1159
+msgid "Select main player window font:"
+msgstr "メイン・ウィンドウで使用するフォントの選択"
+
+#: audacious/glade/prefswin.glade:1181
+msgid "Select playlist font:"
+msgstr "演奏一覧で使用するフォントの選択:"
+
+#: audacious/glade/prefswin.glade:1233
+msgid "<b>_Miscellaneous</b>"
+msgstr "<b>その他(_M)</b>"
+
+#: audacious/glade/prefswin.glade:1285
+msgid "Show track numbers in playlist"
+msgstr "演奏一覧にトラック番号を表示する"
+
+#: audacious/glade/prefswin.glade:1335
+msgid "Use custom cursors"
+msgstr "カスタム・カーソルを使用する"
+
+#: audacious/glade/prefswin.glade:1404
+msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
+msgstr "<span size=\"xx-large\"><b>マウス</b></span>"
+
+#: audacious/glade/prefswin.glade:1455
+msgid "<b>Mouse wheel</b>"
+msgstr "<b>マウスのホィール</b>"
+
+#: audacious/glade/prefswin.glade:1499
+#, fuzzy
+msgid "Changes volume by"
+msgstr "ホィールで音量を変更する割合: "
+
+#: audacious/glade/prefswin.glade:1523
+msgid "percent"
+msgstr "％"
+
+#: audacious/glade/prefswin.glade:1547
+#, fuzzy
+msgid "Scrolls playlist by"
+msgstr "演奏一覧で移動する量: "
+
+#: audacious/glade/prefswin.glade:1596
+msgid "lines"
+msgstr "行"
+
+#: audacious/glade/prefswin.glade:1694
+msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
+msgstr "<span size=\"xx-large\"><b>演奏一覧</b></span>"
+
+#: audacious/glade/prefswin.glade:1751
+msgid "<b>Filename</b>"
+msgstr "<b>ファイル名</b>"
+
+#: audacious/glade/prefswin.glade:1789
+msgid "Convert underscores to blanks"
+msgstr "アンダースコア (_) をスペースに変換する"
+
+#: audacious/glade/prefswin.glade:1824
+msgid "Convert %20 to blanks"
+msgstr "'%20' をスペースに変換する"
+
+#: audacious/glade/prefswin.glade:1864
+msgid "<b>Metadata</b>"
+msgstr "<b>メタデータ</b>"
+
+#: audacious/glade/prefswin.glade:1901
+msgid "Load metadata (tag information) from music files."
+msgstr "曲ファイルからタグ情報を読み込みます"
+
+#: audacious/glade/prefswin.glade:1903
+msgid "Load metadata from playlists and files"
+msgstr "演奏一覧とファイルからメタデータを読み込む"
+
+#: audacious/glade/prefswin.glade:1941
+msgid "Load metadata when adding the file to the playlist or opening it"
+msgstr ""
+"演奏一覧へファイルを追加するか、演奏一覧を開いたらタグ情報を読み込みます"
+
+#: audacious/glade/prefswin.glade:1943
+msgid "On load"
+msgstr "読み込み時"
+
+#: audacious/glade/prefswin.glade:1963
+msgid "Load metadata on demand when displaying the file in the playlist"
+msgstr "演奏一覧にファイルを表示したら、必要に応じてタグ情報を読み込みます"
+
+#: audacious/glade/prefswin.glade:1965
+msgid "On display"
+msgstr "表示時"
+
+#: audacious/glade/prefswin.glade:2013
+msgid "<b>Playback</b>"
+msgstr "<b>再生</b>"
+
+#: audacious/glade/prefswin.glade:2050
+msgid "When finished playing a song, don't automatically advance to the next."
+msgstr "曲の演奏が終了したら、次の曲を自動的に演奏しません"
+
+#: audacious/glade/prefswin.glade:2052
+msgid "Don't advance in the playlist"
+msgstr "演奏一覧の次の曲へ進めない"
+
+#: audacious/glade/prefswin.glade:2087
+msgid "Pause between songs"
+msgstr "曲の間に一時停止する"
+
+#: audacious/glade/prefswin.glade:2125
+msgid "Pause for"
+msgstr "一時停止の時間: "
+
+#: audacious/glade/prefswin.glade:2167
+msgid "seconds"
+msgstr "秒"
+
+#: audacious/glade/prefswin.glade:2215
+msgid "<b>Song display</b>"
+msgstr "<b>曲名の表示</b>"
+
+#: audacious/glade/prefswin.glade:2285
+msgid "Custom string:"
+msgstr "タイトルの文字:"
+
+#: audacious/glade/prefswin.glade:2315 audacious/glade/prefswin.glade:2547
+#: audacious/glade/prefswin.glade:2570
+msgid "*"
+msgstr "*"
+
+#: audacious/glade/prefswin.glade:2332
+msgid ""
+"TITLE\n"
+"ARTIST - TITLE\n"
+"ARTIST - ALBUM - TITLE\n"
+"ALBUM - TITLE\n"
+"Custom"
+msgstr ""
+"タイトル\n"
+"アーティスト - タイトル\n"
+"アーティスト - アルバム名 - タイトル\n"
+"アルバム名 - タイトル\n"
+"カスタム"
+
+#: audacious/glade/prefswin.glade:2350
+msgid "Show information about titlestring format"
+msgstr "タイトルに使用できる書式を表示します"
+
+#: audacious/glade/prefswin.glade:2428
+msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
+msgstr "<span size=\"xx-large\"><b>イコライザr</b></span>"
+
+#: audacious/glade/prefswin.glade:2479
+msgid "<b>Presets</b>"
+msgstr "<b>プリセット</b>"
+
+#: audacious/glade/prefswin.glade:2587
+msgid "Directory preset file:"
+msgstr "フォルダのプリセット:"
+
+#: audacious/glade/prefswin.glade:2611
+msgid "File preset extension:"
+msgstr "プリセットの拡張子:"
+
+#: audacious/glade/prefswin.glade:2655
+msgid "Available _Presets:"
+msgstr "利用可能なプリセット(_P):"
+
+#: audacious/glade/addfiles.glade:77
+msgid "Close Dialog on Add"
+msgstr "追加したらダイアログを閉じる"
+
+#: audacious/glade/addfiles.glade:105
+msgid "Select All"
+msgstr "全て選択"
+
+#: audacious/glade/addfiles.glade:116
+msgid "Deselect All"
+msgstr "全て選択解除"
+
+#~ msgid "Default skin:"
+#~ msgstr "デフォルトのスキン:"
+
+#~ msgid "Vlad Gerasimov"
+#~ msgstr "Vlad Gerasimov"
+
+#~ msgid "Could not initialize gnome-vfs.\n"
+#~ msgstr "gnome-vfs を初期化できませんでした。\n"
+
+#~ msgid "/By extension"
+#~ msgstr "/拡張子順"

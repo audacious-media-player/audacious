@@ -1,0 +1,101 @@
+
+# CD audio input plugin
+Input/cdaudio/cdaudio.c
+Input/cdaudio/cddb.c
+Input/cdaudio/cdinfo.c
+Input/cdaudio/configure.c
+Input/cdaudio/http.c
+
+# mp3 input plugin
+Input/mpg123/common.c
+Input/mpg123/configure.c
+Input/mpg123/fileinfo.c
+Input/mpg123/http.c
+Input/mpg123/mpg123.c
+
+# vorbis input plugin
+Input/vorbis/configure.c
+Input/vorbis/fileinfo.c
+Input/vorbis/http.c
+Input/vorbis/vorbis.c
+
+# wav input plugin
+Input/wav/wav.c
+
+# OSS output plugin
+Output/OSS/OSS.c
+Output/OSS/about.c
+Output/OSS/audio.c
+Output/OSS/configure.c
+Output/OSS/init.c
+Output/OSS/mixer.c
+
+# ESD output plugin
+Output/esd/about.c
+Output/esd/audio.c
+Output/esd/configure.c
+Output/esd/esd.c
+Output/esd/init.c
+Output/esd/mixer.c
+
+# ALSA output plugin
+Output/alsa/about.c
+Output/alsa/alsa.c
+Output/alsa/configure.c
+
+# Blurscope visualization plugin
+Visualization/blur_scope/blur_scope.c
+Visualization/blur_scope/config.c
+
+# libbeep
+libaudacious/dirbrowser.c
+libaudacious/titlestring.c
+libaudacious/util.c
+libaudacious/beepctrl.c
+
+# Beep
+audacious/about.c
+audacious/controlsocket.c
+audacious/dock.c
+audacious/effect.c
+audacious/eq_graph.c
+audacious/eq_slider.c
+audacious/equalizer.c
+audacious/fft.c
+audacious/fullscreen.c
+audacious/general.c
+audacious/getopt.c
+audacious/getopt1.c
+audacious/hints.c
+audacious/hslider.c
+audacious/input.c
+audacious/logger.c
+audacious/main.c
+audacious/mainwin.c
+audacious/menurow.c
+audacious/monostereo.c
+audacious/number.c
+audacious/output.c
+audacious/pbutton.c
+audacious/playlist.c
+audacious/playlist_list.c
+audacious/playlist_popup.c
+audacious/playlist_slider.c
+audacious/playlistwin.c
+audacious/playstatus.c
+audacious/pluginenum.c
+audacious/prefswin.c
+audacious/sbutton.c
+audacious/skin.c
+audacious/skinwin.c
+audacious/svis.c
+audacious/tbutton.c
+audacious/textbox.c
+audacious/util.c
+audacious/vis.c
+audacious/visualization.c
+audacious/widget.c
+
+# Glade files
+audacious/glade/prefswin.glade
+audacious/glade/addfiles.glade

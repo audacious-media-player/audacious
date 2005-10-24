@@ -1,0 +1,3615 @@
+# Translation of bmp.pot to Russian for Beep Media Player.
+# Copyright (C) 2004  Free Software Foundation, Inc.
+# За основу взят перевод Александра Коваленко для XMMS...
+# Улучшения перевода приветствуются :)
+# Pavlo Bohmat <bohm@ukr.net>, 2004.
+# Vitaly Lipatov <lav@altlinux.ru>, 2004.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bmp cvs20041231\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-10-22 14:40+0800\n"
+"PO-Revision-Date: 2004-12-31 13:17MSK\n"
+"Last-Translator: Vitaly Lipatov <lav@altlinux.ru>\n"
+"Language-Team: Russian <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
+
+#: Input/cdaudio/cdaudio.c:180
+msgid "CD Audio Plugin"
+msgstr "Модуль поддержки аудио компакт-дисков"
+
+#: Input/cdaudio/cdaudio.c:1004 Input/cdaudio/cdaudio.c:1013
+#, c-format
+msgid "CD Audio Track %02u"
+msgstr "CD аудио-дорожка %02u"
+
+#: Input/cdaudio/cdinfo.c:157 Input/cdaudio/cdinfo.c:158
+#: Input/cdaudio/cdinfo.c:159
+msgid "(unknown)"
+msgstr "(неизвестно)"
+
+#: Input/cdaudio/configure.c:199 Input/cdaudio/configure.c:213
+#: Input/cdaudio/configure.c:541
+#, c-format
+msgid "Drive %d"
+msgstr "Привод %d"
+
+#: Input/cdaudio/configure.c:259
+#, c-format
+msgid ""
+"Failed to open device %s\n"
+"Error: %s\n"
+"\n"
+msgstr ""
+"Не удалось открыть устройство %s\n"
+"Ошибка: %s\n"
+"\n"
+
+#: Input/cdaudio/configure.c:266
+msgid ""
+"Failed to read \"Table of Contents\"\n"
+"Maybe no disc in the drive?\n"
+"\n"
+msgstr ""
+"Не удалось прочитать \"Оглавление\"\n"
+"Возможно нет диска в приводе?\n"
+"\n"
+
+#: Input/cdaudio/configure.c:270
+#, c-format
+msgid ""
+"Device %s OK.\n"
+"Disc has %d tracks"
+msgstr ""
+"Привод %s: ОК.\n"
+"На диске %d дорожек"
+
+#: Input/cdaudio/configure.c:279
+#, c-format
+msgid " (%d data tracks)"
+msgstr " (%d дорожек с данными)"
+
+#: Input/cdaudio/configure.c:280
+#, c-format
+msgid ""
+"\n"
+"Total length: %d:%d\n"
+msgstr ""
+"\n"
+"Общая длительность: %d:%d\n"
+
+#: Input/cdaudio/configure.c:285
+msgid "Digital audio extraction not tested as the disc has no audio tracks\n"
+msgstr ""
+"Цифровое считывание аудио не тестировалось, так как на диске нет аудио-"
+"дорожек\n"
+
+#: Input/cdaudio/configure.c:302
+msgid ""
+"Digital audio extraction test: OK\n"
+"\n"
+msgstr ""
+"Тестирование цифрового считывания: OK\n"
+"\n"
+
+#: Input/cdaudio/configure.c:306
+#, c-format
+msgid ""
+"Digital audio extraction test failed: %s\n"
+"\n"
+msgstr ""
+"Тестирование цифрового считывания неудачно: %s\n"
+"\n"
+
+#: Input/cdaudio/configure.c:316
+#, c-format
+msgid ""
+"Failed to check directory %s\n"
+"Error: %s"
+msgstr ""
+"Не удалось проверить каталог %s\n"
+"Ошибка: %s"
+
+#: Input/cdaudio/configure.c:322
+#, c-format
+msgid "Error: %s exist, but is not a directory"
+msgstr "Ошибка: %s существует, но не является каталогом"
+
+#: Input/cdaudio/configure.c:325
+#, c-format
+msgid "Directory %s OK."
+msgstr "Каталог %s OK."
+
+#: Input/cdaudio/configure.c:369
+msgid "Device:"
+msgstr "Устройство:"
+
+#: Input/cdaudio/configure.c:377
+msgid "_Device:"
+msgstr "_Устройство:"
+
+#: Input/cdaudio/configure.c:387
+msgid "Dir_ectory:"
+msgstr "_Каталог:"
+
+#: Input/cdaudio/configure.c:399
+msgid "Play mode:"
+msgstr "Режим воспроизведения:"
+
+#: Input/cdaudio/configure.c:405
+msgid "Analog"
+msgstr "Аналоговый"
+
+#: Input/cdaudio/configure.c:413
+msgid "Digital audio extraction"
+msgstr "Цифровое считывание аудио"
+
+#: Input/cdaudio/configure.c:423
+msgid "Volume control:"
+msgstr "Регулятор громкости:"
+
+#: Input/cdaudio/configure.c:429
+msgid "No mixer"
+msgstr "Нет микшера"
+
+#: Input/cdaudio/configure.c:435
+msgid "CDROM drive"
+msgstr "Привод CD-ROM"
+
+#: Input/cdaudio/configure.c:441
+msgid "OSS mixer"
+msgstr "OSS-микшер"
+
+#: Input/cdaudio/configure.c:464
+msgid "Check drive..."
+msgstr "Проверить привод"
+
+#: Input/cdaudio/configure.c:470
+msgid "Remove drive"
+msgstr "Удалить привод"
+
+#: Input/cdaudio/configure.c:515
+msgid "CD Audio Player Configuration"
+msgstr "Изменение настроек проигрывателя компакт дисков"
+
+#: Input/cdaudio/configure.c:553
+msgid "Add drive"
+msgstr "Добавить привод"
+
+#: Input/cdaudio/configure.c:561
+msgid "Device"
+msgstr "Устройство"
+
+#: Input/cdaudio/configure.c:571
+msgid "CDDB:"
+msgstr "CDDB:"
+
+#: Input/cdaudio/configure.c:582
+msgid "Use CDDB"
+msgstr "Использовать CDDB"
+
+#: Input/cdaudio/configure.c:586
+msgid "Get server list"
+msgstr "Получить список серверов"
+
+#: Input/cdaudio/configure.c:589
+msgid "Show network window"
+msgstr "Показать окно сети"
+
+#: Input/cdaudio/configure.c:599
+msgid "CDDB server:"
+msgstr "Cервер CDDB:"
+
+#: Input/cdaudio/configure.c:614
+msgid "CD Index:"
+msgstr "Индекс CD:"
+
+#: Input/cdaudio/configure.c:621
+msgid "Use CD Index"
+msgstr "Использовать индекс CD"
+
+#: Input/cdaudio/configure.c:630
+msgid "CD Index server:"
+msgstr "Сервер индексов CD:"
+
+#: Input/cdaudio/configure.c:645
+msgid "Track names:"
+msgstr "Названия дорожек:"
+
+#: Input/cdaudio/configure.c:652 Input/mpg123/configure.c:799
+#: Input/vorbis/configure.c:472
+msgid "Override generic titles"
+msgstr "Не использовать стандартные названия"
+
+#: Input/cdaudio/configure.c:668
+msgid "Name format:"
+msgstr "Формат названия:"
+
+#: Input/cdaudio/configure.c:680
+msgid "CD Info"
+msgstr "Информация о CD"
+
+#: Input/mpg123/configure.c:260
+msgid "Select the directory where you want to store the MPEG streams:"
+msgstr "Выберите каталог, в котором вы хотите сохранить потоки MPEG:"
+
+#: Input/mpg123/configure.c:344
+msgid "MPEG Audio Plugin Configuration"
+msgstr "Изменение настроек модуля поддержки формата MPEG"
+
+#: Input/mpg123/configure.c:361
+msgid "Resolution:"
+msgstr "Разрешение:"
+
+#: Input/mpg123/configure.c:369
+msgid "16 bit"
+msgstr "16 бит"
+
+#: Input/mpg123/configure.c:378
+msgid "8 bit"
+msgstr "8 бит"
+
+#: Input/mpg123/configure.c:385 Input/vorbis/fileinfo.c:862
+#: Input/vorbis/fileinfo.c:918
+msgid "Channels:"
+msgstr "Каналы:"
+
+#: Input/mpg123/configure.c:393
+msgid "Stereo (if available)"
+msgstr "Стерео (если доступно)"
+
+#: Input/mpg123/configure.c:404
+msgid "Mono"
+msgstr "Моно"
+
+#: Input/mpg123/configure.c:411
+msgid "Down sample:"
+msgstr "Частота:"
+
+#: Input/mpg123/configure.c:420
+msgid "1:1 (44 kHz)"
+msgstr "1:1 (44 кГц)"
+
+#: Input/mpg123/configure.c:431
+msgid "1:2 (22 kHz)"
+msgstr "1:2 (22 кГц)"
+
+#: Input/mpg123/configure.c:442
+msgid "1:4 (11 kHz)"
+msgstr "1:4 (11 кГц)"
+
+#: Input/mpg123/configure.c:455
+msgid "Decoder:"
+msgstr "Декодер:"
+
+#: Input/mpg123/configure.c:464
+msgid "Automatic detection"
+msgstr "Автоматическое определение"
+
+#: Input/mpg123/configure.c:472
+msgid "3DNow! optimized decoder"
+msgstr "Оптимизированный декодер 3DNow!"
+
+#: Input/mpg123/configure.c:480
+msgid "MMX optimized decoder"
+msgstr "Оптимизированный для MMX декодер"
+
+#: Input/mpg123/configure.c:487
+msgid "FPU decoder"
+msgstr "Декодер FPU"
+
+#: Input/mpg123/configure.c:513
+msgid "Options"
+msgstr "Параметры:"
+
+#: Input/mpg123/configure.c:520
+msgid "Content"
+msgstr "Определять тип по содержимому"
+
+#: Input/mpg123/configure.c:526
+msgid "Extension"
+msgstr "Определять тип по расширению"
+
+#: Input/mpg123/configure.c:532
+msgid "Extension and content"
+msgstr "Определять тип по расширению и содержимому"
+
+#: Input/mpg123/configure.c:556
+msgid "Decoder"
+msgstr "Декодер"
+
+#: Input/mpg123/configure.c:560 Input/vorbis/configure.c:287
+#: Output/OSS/configure.c:302 Output/esd/configure.c:171
+msgid "Buffering:"
+msgstr "Буферизация:"
+
+#: Input/mpg123/configure.c:573 Input/vorbis/configure.c:299
+msgid "Buffer size (kb):"
+msgstr "Размер буфера (Кб):"
+
+#: Input/mpg123/configure.c:588 Input/vorbis/configure.c:313
+#: Output/OSS/configure.c:329 Output/esd/configure.c:198
+msgid "Pre-buffer (percent):"
+msgstr "Пребуферизация (%):"
+
+#: Input/mpg123/configure.c:602 Input/vorbis/configure.c:327
+msgid "Proxy:"
+msgstr "Прокси:"
+
+#: Input/mpg123/configure.c:612 Input/vorbis/configure.c:337
+msgid "Use proxy"
+msgstr "Использовать прокси"
+
+#: Input/mpg123/configure.c:625 Input/vorbis/configure.c:350
+#: Output/esd/configure.c:114 Output/esd/configure.c:144
+msgid "Host:"
+msgstr "Узел:"
+
+#: Input/mpg123/configure.c:635 Input/vorbis/configure.c:360
+#: Output/esd/configure.c:153
+msgid "Port:"
+msgstr "Порт:"
+
+#: Input/mpg123/configure.c:648 Input/vorbis/configure.c:373
+msgid "Use authentication"
+msgstr "Использовать идентификацию"
+
+#: Input/mpg123/configure.c:665 Input/vorbis/configure.c:390
+msgid "Username:"
+msgstr "Имя пользователя:"
+
+#: Input/mpg123/configure.c:676 Input/vorbis/configure.c:401
+msgid "Password:"
+msgstr "Пароль:"
+
+#: Input/mpg123/configure.c:693 Input/vorbis/configure.c:418
+msgid "Save stream to disk:"
+msgstr "Сохранение потока на диск:"
+
+#: Input/mpg123/configure.c:704 Input/vorbis/configure.c:429
+msgid "Save stream to disk"
+msgstr "Сохранять поток на диск:"
+
+#: Input/mpg123/configure.c:718 Input/vorbis/configure.c:443
+msgid "Path:"
+msgstr "Путь:"
+
+#: Input/mpg123/configure.c:728 Input/vorbis/configure.c:453
+msgid "Browse"
+msgstr "Обзор"
+
+#: Input/mpg123/configure.c:734
+msgid "SHOUT/Icecast:"
+msgstr "SHOUT/Icecast:"
+
+#: Input/mpg123/configure.c:748
+msgid "Enable Icecast Metadata UDP Channel"
+msgstr "Включить канал метаданных Icecast UDP"
+
+#: Input/mpg123/configure.c:755 Input/vorbis/configure.c:460
+msgid "Streaming"
+msgstr "Потоковый"
+
+#: Input/mpg123/configure.c:757
+msgid "ID3 Tags:"
+msgstr "ID3-теги:"
+
+#: Input/mpg123/configure.c:765
+msgid "Disable ID3V2 tags"
+msgstr "Не использовать тэги ID3V2"
+
+#: Input/mpg123/configure.c:774
+msgid "Convert non-UTF8 ID3 tags to UTF8"
+msgstr ""
+"Преобразовывать ID3-теги (названия песен и др.) из локальной кодировки в "
+"Юникод"
+
+#: Input/mpg123/configure.c:787
+msgid "ID3 encoding:"
+msgstr "Кодировка ID3-тегов:"
+
+#: Input/mpg123/configure.c:812
+msgid "ID3 format:"
+msgstr "Формат ID3-тега:"
+
+#: Input/mpg123/configure.c:826 Input/vorbis/configure.c:499
+#: audacious/prefswin.c:95
+msgid "Title"
+msgstr "Название"
+
+#: Input/mpg123/fileinfo.c:471
+#, c-format
+msgid ""
+"%s\n"
+"Unable to write to file: %s"
+msgstr ""
+"%s\n"
+"Невозможно записать в файл: %s"
+
+#: Input/mpg123/fileinfo.c:472 Input/mpg123/fileinfo.c:477
+msgid "Couldn't write tag!"
+msgstr "Не могу записать тег!"
+
+#: Input/mpg123/fileinfo.c:476 Input/mpg123/fileinfo.c:567
+#, c-format
+msgid ""
+"%s\n"
+"Unable to open file: %s"
+msgstr ""
+"%s\n"
+"Невозможно открыть файл: %s"
+
+#: Input/mpg123/fileinfo.c:479 Input/mpg123/fileinfo.c:570
+msgid "File Info"
+msgstr "Инфрмация о файле"
+
+#: Input/mpg123/fileinfo.c:479 Input/mpg123/fileinfo.c:570
+#: Input/mpg123/http.c:220 Input/mpg123/mpg123.c:1184
+#: Input/vorbis/fileinfo.c:212 Input/vorbis/http.c:218
+#: Input/vorbis/vorbis.c:802 Output/OSS/about.c:54 Output/esd/about.c:49
+#: Output/alsa/about.c:53
+msgid "Ok"
+msgstr "ОК"
+
+#: Input/mpg123/fileinfo.c:556
+#, c-format
+msgid ""
+"%s\n"
+"Unable to truncate file: %s"
+msgstr ""
+"%s\n"
+"Невозможно урезать файл: %s"
+
+#: Input/mpg123/fileinfo.c:558 Input/mpg123/fileinfo.c:568
+msgid "Couldn't remove tag!"
+msgstr "Не могу удалить тег!"
+
+#: Input/mpg123/fileinfo.c:562
+msgid "No tag to remove!"
+msgstr "Нет тега для удаления!"
+
+#: Input/mpg123/fileinfo.c:602
+msgid "Stereo"
+msgstr "Стерео"
+
+#: Input/mpg123/fileinfo.c:602
+msgid "Joint stereo"
+msgstr "Объединённое стерео"
+
+#: Input/mpg123/fileinfo.c:603
+msgid "Dual channel"
+msgstr "Два канала"
+
+#: Input/mpg123/fileinfo.c:603
+msgid "Single channel"
+msgstr "Один канал"
+
+#: Input/mpg123/fileinfo.c:618 Input/mpg123/fileinfo.c:1258
+#: Input/mpg123/fileinfo.c:1379
+#, c-format
+msgid "%d KBit/s"
+msgstr "%d кБит/с"
+
+#: Input/mpg123/fileinfo.c:619 Input/mpg123/fileinfo.c:1262
+#: Input/mpg123/fileinfo.c:1383
+#, c-format
+msgid "%ld Hz"
+msgstr "%ld Гц"
+
+#: Input/mpg123/fileinfo.c:639
+msgid "None"
+msgstr "Никакой"
+
+#: Input/mpg123/fileinfo.c:640
+msgid "50/15 ms"
+msgstr "50/15 мс"
+
+#: Input/mpg123/fileinfo.c:642
+msgid "CCIT J.17"
+msgstr "CCIT J.17"
+
+#: Input/mpg123/fileinfo.c:643
+msgid "No"
+msgstr "Нет"
+
+#: Input/mpg123/fileinfo.c:644
+msgid "Yes"
+msgstr "Да"
+
+#: Input/mpg123/fileinfo.c:691 Input/vorbis/fileinfo.c:557
+msgid "Name:"
+msgstr "Имя:"
+
+#: Input/mpg123/fileinfo.c:707
+msgid " MPEG Info "
+msgstr " Информация MPEG "
+
+#: Input/mpg123/fileinfo.c:722 Input/mpg123/fileinfo.c:1122
+msgid "MPEG Level:"
+msgstr "MPEG уровень:"
+
+#: Input/mpg123/fileinfo.c:735 Input/mpg123/fileinfo.c:1125
+#: Input/vorbis/fileinfo.c:836 Input/vorbis/fileinfo.c:912
+msgid "Bit rate:"
+msgstr "Битовая частота:"
+
+#: Input/mpg123/fileinfo.c:748 Input/mpg123/fileinfo.c:1128
+#: Input/vorbis/fileinfo.c:849 Input/vorbis/fileinfo.c:915
+msgid "Sample rate:"
+msgstr "Частота:"
+
+#: Input/mpg123/fileinfo.c:762 Input/mpg123/fileinfo.c:1143
+msgid "Frames:"
+msgstr "Кадров:"
+
+#: Input/mpg123/fileinfo.c:775 Input/mpg123/fileinfo.c:1146
+#: Input/vorbis/fileinfo.c:888 Input/vorbis/fileinfo.c:924
+msgid "File size:"
+msgstr "Размер файла:"
+
+#: Input/mpg123/fileinfo.c:798 Input/mpg123/fileinfo.c:1131
+msgid "Error Protection:"
+msgstr "Защита от ошибок:"
+
+#: Input/mpg123/fileinfo.c:811 Input/mpg123/fileinfo.c:1134
+#: Input/vorbis/fileinfo.c:718
+msgid "Copyright:"
+msgstr "Авторское право:"
+
+#: Input/mpg123/fileinfo.c:824 Input/mpg123/fileinfo.c:1137
+msgid "Original:"
+msgstr "Оригинальный:"
+
+#: Input/mpg123/fileinfo.c:837 Input/mpg123/fileinfo.c:1140
+msgid "Emphasis:"
+msgstr "Выразительный:"
+
+#: Input/mpg123/fileinfo.c:851
+msgid " ID3 Tag "
+msgstr " ID3-тег "
+
+#: Input/mpg123/fileinfo.c:859 Input/vorbis/fileinfo.c:580
+msgid "Title:"
+msgstr "Название:"
+
+#: Input/mpg123/fileinfo.c:874 Input/vorbis/fileinfo.c:591
+msgid "Artist:"
+msgstr "Исполнитель:"
+
+#: Input/mpg123/fileinfo.c:889 Input/vorbis/fileinfo.c:602
+msgid "Album:"
+msgstr "Альбом:"
+
+#: Input/mpg123/fileinfo.c:904 Input/vorbis/fileinfo.c:613
+msgid "Comment:"
+msgstr "Комментарий:"
+
+#: Input/mpg123/fileinfo.c:926
+msgid "Year:"
+msgstr "Год:"
+
+#: Input/mpg123/fileinfo.c:938 Input/vorbis/fileinfo.c:636
+msgid "Track number:"
+msgstr "Номер дорожки:"
+
+#: Input/mpg123/fileinfo.c:970 Input/vorbis/fileinfo.c:648
+msgid "Genre:"
+msgstr "Стиль:"
+
+#: Input/mpg123/fileinfo.c:1007
+msgid "Copy album tags"
+msgstr ""
+
+#: Input/mpg123/fileinfo.c:1008
+msgid "Paste album tags"
+msgstr ""
+
+#: Input/mpg123/fileinfo.c:1101 Input/vorbis/fileinfo.c:1014
+#: audacious/mainwin.c:780
+#, c-format
+msgid "%s - BMP"
+msgstr "%s - BMP"
+
+#: Input/mpg123/fileinfo.c:1123 Input/mpg123/fileinfo.c:1126
+#: Input/mpg123/fileinfo.c:1129 Input/mpg123/fileinfo.c:1132
+#: Input/mpg123/fileinfo.c:1135 Input/mpg123/fileinfo.c:1138
+#: Input/mpg123/fileinfo.c:1141 Input/mpg123/fileinfo.c:1144
+#: Input/mpg123/fileinfo.c:1147 Input/vorbis/fileinfo.c:913
+#: Input/vorbis/fileinfo.c:916 Input/vorbis/fileinfo.c:919
+#: Input/vorbis/fileinfo.c:922 Input/vorbis/fileinfo.c:925
+msgid "N/A"
+msgstr "Н/Д"
+
+#: Input/mpg123/fileinfo.c:1250 Input/mpg123/fileinfo.c:1371
+#, c-format
+msgid ""
+"Variable,\n"
+"avg. bitrate: %d KBit/s"
+msgstr ""
+"Переменная,\n"
+"средняя битовая частота: %d кб/с"
+
+#: Input/mpg123/fileinfo.c:1264 Input/mpg123/fileinfo.c:1266
+#: Input/mpg123/fileinfo.c:1267 Input/mpg123/fileinfo.c:1268
+#: Input/mpg123/fileinfo.c:1385 Input/mpg123/fileinfo.c:1387
+#: Input/mpg123/fileinfo.c:1388 Input/mpg123/fileinfo.c:1389
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: Input/mpg123/fileinfo.c:1269 Input/mpg123/fileinfo.c:1390
+#: Input/vorbis/fileinfo.c:957
+#, c-format
+msgid "%d"
+msgstr "%d"
+
+#: Input/mpg123/fileinfo.c:1270 Input/mpg123/fileinfo.c:1391
+#, c-format
+msgid "%lu Bytes"
+msgstr "%lu байт"
+
+#: Input/mpg123/http.c:220 Input/vorbis/http.c:218
+msgid "Error"
+msgstr "Ошибка"
+
+#: Input/mpg123/http.c:374 Input/vorbis/http.c:326
+#, c-format
+msgid "LOOKING UP %s"
+msgstr "ИЩЕМ %s"
+
+#: Input/mpg123/http.c:379 Input/vorbis/http.c:331
+#, c-format
+msgid "Couldn't look up host %s"
+msgstr "Не могу найти узел %s"
+
+#: Input/mpg123/http.c:392 Input/vorbis/http.c:344
+#, c-format
+msgid "CONNECTING TO %s:%d"
+msgstr "ПОДКЛЮЧЕН К %s:%d"
+
+#: Input/mpg123/http.c:400 Input/mpg123/http.c:420 Input/vorbis/http.c:352
+#: Input/vorbis/http.c:372
+#, c-format
+msgid "Couldn't connect to host %s"
+msgstr "Не могу подключиться к узлу %s"
+
+#: Input/mpg123/http.c:483 Input/vorbis/http.c:420
+msgid "CONNECTED: WAITING FOR REPLY"
+msgstr "ПОДКЛЮЧЕН: ЖДУ ОТВЕТА"
+
+#: Input/mpg123/http.c:520 Input/vorbis/http.c:457
+#, c-format
+msgid ""
+"Couldn't connect to host %s\n"
+"Server reported: %s"
+msgstr ""
+"Не могу подключиться к узлу %s\n"
+"сервер возвратил: %s"
+
+#: Input/mpg123/http.c:638 Input/vorbis/http.c:556
+#, c-format
+msgid "PRE-BUFFERING: %dKB/%dKB"
+msgstr "ПРЕБУФЕРИЗАЦИЯ: %dКб/%dКб"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Blues"
+msgstr "Блюз"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Classic Rock"
+msgstr "Классический рок"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Country"
+msgstr "Кантри"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Dance"
+msgstr "Дэнс"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Disco"
+msgstr "Диско"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Funk"
+msgstr "Фанк"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Grunge"
+msgstr "Гранж"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Hip-Hop"
+msgstr "Хип-Хоп"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "Jazz"
+msgstr "Джаз"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "Metal"
+msgstr "Метал"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "New Age"
+msgstr "Нью Эйдж"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "Oldies"
+msgstr "Ретро"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Other"
+msgstr "Другое"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Pop"
+msgstr "Поп"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "R&B"
+msgstr "R&B"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Rap"
+msgstr "Рэп"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Reggae"
+msgstr "Регги"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Rock"
+msgstr "Рок"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Techno"
+msgstr "Техно"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Industrial"
+msgstr "Индустриальный"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Alternative"
+msgstr "Альтернативный"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Ska"
+msgstr "Ска"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Death Metal"
+msgstr "Дэз метал"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Pranks"
+msgstr "Шалость"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Soundtrack"
+msgstr "Звуковая дорожка"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Euro-Techno"
+msgstr "Евро-Техно"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Ambient"
+msgstr "Окружающая среда"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Trip-Hop"
+msgstr "Трип-Хоп"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Vocal"
+msgstr "Вокал"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Jazz+Funk"
+msgstr "Джаз+Фанк"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Fusion"
+msgstr "Слияние"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Trance"
+msgstr "Транс"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Classical"
+msgstr "Классика"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "Instrumental"
+msgstr "Инструментальный"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "Acid"
+msgstr "Кислота"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "House"
+msgstr "Дом"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "Game"
+msgstr "Игра"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "Sound Clip"
+msgstr "Музыкальный клип"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "Gospel"
+msgstr "Евангелие"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "Noise"
+msgstr "Шум"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "AlternRock"
+msgstr "Альтернативный рок"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Bass"
+msgstr "Бас"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Soul"
+msgstr "Душа"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Punk"
+msgstr "Панк"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Space"
+msgstr "Космос"
+
+#: Input/mpg123/mpg123.c:51 Input/vorbis/fileinfo.c:94
+msgid "Meditative"
+msgstr "Медитация"
+
+#: Input/mpg123/mpg123.c:51 Input/vorbis/fileinfo.c:94
+msgid "Instrumental Pop"
+msgstr "Иструментальный поп"
+
+#: Input/mpg123/mpg123.c:52 Input/vorbis/fileinfo.c:95
+msgid "Instrumental Rock"
+msgstr "Иструментальный рок"
+
+#: Input/mpg123/mpg123.c:52 Input/vorbis/fileinfo.c:95
+msgid "Ethnic"
+msgstr "Этнический"
+
+#: Input/mpg123/mpg123.c:52 Input/vorbis/fileinfo.c:95
+msgid "Gothic"
+msgstr "Готический"
+
+#: Input/mpg123/mpg123.c:53 Input/vorbis/fileinfo.c:96
+msgid "Darkwave"
+msgstr "Темная волна"
+
+#: Input/mpg123/mpg123.c:53 Input/vorbis/fileinfo.c:96
+msgid "Techno-Industrial"
+msgstr "Техноиндустриальный"
+
+#: Input/mpg123/mpg123.c:53 Input/vorbis/fileinfo.c:96
+msgid "Electronic"
+msgstr "Электронный"
+
+#: Input/mpg123/mpg123.c:54 Input/vorbis/fileinfo.c:97
+msgid "Pop-Folk"
+msgstr "Народный поп"
+
+#: Input/mpg123/mpg123.c:54 Input/vorbis/fileinfo.c:97
+msgid "Eurodance"
+msgstr "Евродэнс"
+
+#: Input/mpg123/mpg123.c:54 Input/vorbis/fileinfo.c:97
+msgid "Dream"
+msgstr "Сон"
+
+#: Input/mpg123/mpg123.c:55 Input/vorbis/fileinfo.c:98
+msgid "Southern Rock"
+msgstr "Южный рок"
+
+#: Input/mpg123/mpg123.c:55 Input/vorbis/fileinfo.c:98
+msgid "Comedy"
+msgstr "Комедия"
+
+#: Input/mpg123/mpg123.c:55 Input/vorbis/fileinfo.c:98
+msgid "Cult"
+msgstr "Культ"
+
+#: Input/mpg123/mpg123.c:56 Input/vorbis/fileinfo.c:99
+msgid "Gangsta Rap"
+msgstr "Черный рэп"
+
+#: Input/mpg123/mpg123.c:56 Input/vorbis/fileinfo.c:99
+msgid "Top 40"
+msgstr "Top 40"
+
+#: Input/mpg123/mpg123.c:56 Input/vorbis/fileinfo.c:99
+msgid "Christian Rap"
+msgstr "Христианский реп"
+
+#: Input/mpg123/mpg123.c:57 Input/vorbis/fileinfo.c:100
+msgid "Pop/Funk"
+msgstr "Поп/Фанк"
+
+#: Input/mpg123/mpg123.c:57 Input/vorbis/fileinfo.c:100
+msgid "Jungle"
+msgstr "Джангл"
+
+#: Input/mpg123/mpg123.c:57 Input/vorbis/fileinfo.c:100
+msgid "Native American"
+msgstr "Народная американская"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "Cabaret"
+msgstr "Кабаре"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "New Wave"
+msgstr "Новая волна"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "Psychedelic"
+msgstr "Психоделия"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "Rave"
+msgstr "Рэйв"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Showtunes"
+msgstr "Импровизация"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Trailer"
+msgstr "Анонс"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Lo-Fi"
+msgstr "Lo-Fi"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Tribal"
+msgstr "Семейное"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Acid Punk"
+msgstr "Кислотный панк"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Acid Jazz"
+msgstr "Кислотный джаз"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Polka"
+msgstr "Полька"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Retro"
+msgstr "Ретро"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Musical"
+msgstr "Музыкальное"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Rock & Roll"
+msgstr "Рок-н-рол"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Hard Rock"
+msgstr "Тяжелый рок"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Folk"
+msgstr "Фольк"
+
+#: Input/mpg123/mpg123.c:62 Input/vorbis/fileinfo.c:105
+msgid "Folk/Rock"
+msgstr "Фольк/Рок"
+
+#: Input/mpg123/mpg123.c:62 Input/vorbis/fileinfo.c:105
+msgid "National Folk"
+msgstr "Национальный фольк"
+
+#: Input/mpg123/mpg123.c:62 Input/vorbis/fileinfo.c:105
+msgid "Swing"
+msgstr "Свинг"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Fast-Fusion"
+msgstr "Быстрое слияние"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Bebob"
+msgstr "Бибоп"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Latin"
+msgstr "Латиноамериканская"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Revival"
+msgstr "Возрождение"
+
+#: Input/mpg123/mpg123.c:64 Input/vorbis/fileinfo.c:107
+msgid "Celtic"
+msgstr "Кельтская"
+
+#: Input/mpg123/mpg123.c:64 Input/vorbis/fileinfo.c:107
+msgid "Bluegrass"
+msgstr "Голубая трава"
+
+#: Input/mpg123/mpg123.c:64 Input/vorbis/fileinfo.c:107
+msgid "Avantgarde"
+msgstr "Авангард"
+
+#: Input/mpg123/mpg123.c:65 Input/vorbis/fileinfo.c:108
+msgid "Gothic Rock"
+msgstr "Готический рок"
+
+#: Input/mpg123/mpg123.c:65 Input/vorbis/fileinfo.c:108
+msgid "Progressive Rock"
+msgstr "Прогрессивный рок"
+
+#: Input/mpg123/mpg123.c:66 Input/vorbis/fileinfo.c:109
+msgid "Psychedelic Rock"
+msgstr "Психоделический рок"
+
+#: Input/mpg123/mpg123.c:66 Input/vorbis/fileinfo.c:109
+msgid "Symphonic Rock"
+msgstr "Симфонический рок"
+
+#: Input/mpg123/mpg123.c:66 Input/vorbis/fileinfo.c:109
+msgid "Slow Rock"
+msgstr "Медленный рок"
+
+#: Input/mpg123/mpg123.c:67 Input/vorbis/fileinfo.c:110
+msgid "Big Band"
+msgstr "Большой бэнд"
+
+#: Input/mpg123/mpg123.c:67 Input/vorbis/fileinfo.c:110
+msgid "Chorus"
+msgstr "Хор"
+
+#: Input/mpg123/mpg123.c:67 Input/vorbis/fileinfo.c:110
+msgid "Easy Listening"
+msgstr "Лёгкая музыка"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Acoustic"
+msgstr "Акустическая"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Humour"
+msgstr "Юмор"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Speech"
+msgstr "Речь"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Chanson"
+msgstr "Шансон"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Opera"
+msgstr "Опера"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Chamber Music"
+msgstr "Камерная музыка"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Sonata"
+msgstr "Соната"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Symphony"
+msgstr "Симфония"
+
+#: Input/mpg123/mpg123.c:70 Input/vorbis/fileinfo.c:113
+msgid "Booty Bass"
+msgstr "Небрежный бас"
+
+#: Input/mpg123/mpg123.c:70 Input/vorbis/fileinfo.c:113
+msgid "Primus"
+msgstr "Прима"
+
+#: Input/mpg123/mpg123.c:70 Input/vorbis/fileinfo.c:113
+msgid "Porn Groove"
+msgstr "Порн грув"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Satire"
+msgstr "Сатира"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Slow Jam"
+msgstr "Медленный джэм"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Club"
+msgstr "Клуб"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Tango"
+msgstr "Танго"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Samba"
+msgstr "Самба"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Folklore"
+msgstr "Фольклор"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Ballad"
+msgstr "Баллада"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Power Ballad"
+msgstr "Сильная баллада"
+
+#: Input/mpg123/mpg123.c:73 Input/vorbis/fileinfo.c:116
+msgid "Rhythmic Soul"
+msgstr "Ритмичный соул"
+
+#: Input/mpg123/mpg123.c:73 Input/vorbis/fileinfo.c:116
+msgid "Freestyle"
+msgstr "Свободный стиль"
+
+#: Input/mpg123/mpg123.c:73 Input/vorbis/fileinfo.c:116
+msgid "Duet"
+msgstr "Дуэт"
+
+#: Input/mpg123/mpg123.c:74 Input/vorbis/fileinfo.c:117
+msgid "Punk Rock"
+msgstr "Панк рок"
+
+#: Input/mpg123/mpg123.c:74 Input/vorbis/fileinfo.c:117
+msgid "Drum Solo"
+msgstr "Ударное соло"
+
+#: Input/mpg123/mpg123.c:74 Input/vorbis/fileinfo.c:117
+msgid "A Cappella"
+msgstr "А Капелла"
+
+#: Input/mpg123/mpg123.c:75 Input/vorbis/fileinfo.c:118
+msgid "Euro-House"
+msgstr "Евро-дом"
+
+#: Input/mpg123/mpg123.c:75 Input/vorbis/fileinfo.c:118
+msgid "Dance Hall"
+msgstr "Танцевальный зал"
+
+#: Input/mpg123/mpg123.c:75 Input/vorbis/fileinfo.c:118
+msgid "Goa"
+msgstr "Гоа"
+
+#: Input/mpg123/mpg123.c:76 Input/vorbis/fileinfo.c:119
+msgid "Drum & Bass"
+msgstr "Ударники и бас"
+
+#: Input/mpg123/mpg123.c:76 Input/vorbis/fileinfo.c:119
+msgid "Club-House"
+msgstr "Клуб-дом"
+
+#: Input/mpg123/mpg123.c:76 Input/vorbis/fileinfo.c:119
+msgid "Hardcore"
+msgstr "Нардкор"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "Terror"
+msgstr "Террор"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "Indie"
+msgstr "Независимая музыка"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "BritPop"
+msgstr "Бритпоп"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "Negerpunk"
+msgstr "Черный панк"
+
+#: Input/mpg123/mpg123.c:78 Input/vorbis/fileinfo.c:121
+msgid "Polsk Punk"
+msgstr "Польский панк"
+
+#: Input/mpg123/mpg123.c:78 Input/vorbis/fileinfo.c:121
+msgid "Beat"
+msgstr "Бит"
+
+#: Input/mpg123/mpg123.c:78 Input/vorbis/fileinfo.c:121
+msgid "Christian Gangsta Rap"
+msgstr "Черный христианский рэп"
+
+#: Input/mpg123/mpg123.c:79 Input/vorbis/fileinfo.c:122
+msgid "Heavy Metal"
+msgstr "Тяжелый метал"
+
+#: Input/mpg123/mpg123.c:79 Input/vorbis/fileinfo.c:122
+msgid "Black Metal"
+msgstr "Чёрный метал"
+
+#: Input/mpg123/mpg123.c:79 Input/vorbis/fileinfo.c:122
+msgid "Crossover"
+msgstr "Переходный"
+
+#: Input/mpg123/mpg123.c:80 Input/vorbis/fileinfo.c:123
+msgid "Contemporary Christian"
+msgstr "Современная христианская"
+
+#: Input/mpg123/mpg123.c:80 Input/vorbis/fileinfo.c:123
+msgid "Christian Rock"
+msgstr "Христианский рок"
+
+#: Input/mpg123/mpg123.c:81 Input/vorbis/fileinfo.c:124
+msgid "Merengue"
+msgstr "Меренга"
+
+#: Input/mpg123/mpg123.c:81 Input/vorbis/fileinfo.c:124
+msgid "Salsa"
+msgstr "Салса"
+
+#: Input/mpg123/mpg123.c:81 Input/vorbis/fileinfo.c:124
+msgid "Thrash Metal"
+msgstr "Треш метал"
+
+#: Input/mpg123/mpg123.c:82 Input/vorbis/fileinfo.c:125
+msgid "Anime"
+msgstr "Аниме"
+
+#: Input/mpg123/mpg123.c:82 Input/vorbis/fileinfo.c:125
+msgid "JPop"
+msgstr "JPop"
+
+#: Input/mpg123/mpg123.c:82 Input/vorbis/fileinfo.c:125
+msgid "Synthpop"
+msgstr "Электронный поп"
+
+#: Input/mpg123/mpg123.c:1181
+msgid "About MPEG Audio Plugin"
+msgstr "Об модуле поддержки формата MPEG"
+
+#: Input/mpg123/mpg123.c:1182
+msgid ""
+"mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
+"Plugin by The XMMS team"
+msgstr ""
+"Движок декодирования mpg123 Майкла Хиппа <mh@mpg123.de>\n"
+"Модуль написан командой XMMS"
+
+#: Input/mpg123/mpg123.c:1218
+msgid "MPEG Audio Plugin"
+msgstr "Модуль поддержки MPEG"
+
+#: Input/vorbis/configure.c:192
+msgid "Select the directory where you want to store the Ogg Vorbis streams:"
+msgstr "Выберите каталог, в котором вы хотите сохранить потоки Ogg Vorbis:"
+
+#: Input/vorbis/configure.c:275
+msgid "Ogg Vorbis Audio Plugin Configuration"
+msgstr "Изменение настроек модуля поддержки формата Ogg Vorbis"
+
+#: Input/vorbis/configure.c:464
+msgid "Ogg Vorbis Tags:"
+msgstr "Теги Ogg Vorbis:"
+
+#: Input/vorbis/configure.c:485 audacious/glade/prefswin.glade:2261
+msgid "Title format:"
+msgstr "Формат названия:"
+
+#: Input/vorbis/configure.c:503
+msgid "ReplayGain Settings:"
+msgstr "Настройки ReplayGain:"
+
+#: Input/vorbis/configure.c:511
+msgid "Enable Clipping Prevention"
+msgstr "Включить предотвращение срезания"
+
+#: Input/vorbis/configure.c:516
+msgid "Enable ReplayGain"
+msgstr "Включить ReplayGain"
+
+#: Input/vorbis/configure.c:521
+msgid "ReplayGain Type:"
+msgstr "Тип ReplayGain:"
+
+#: Input/vorbis/configure.c:532
+msgid "use Track Gain/Peak"
+msgstr "использовать Дорожка Gain/Peak"
+
+#: Input/vorbis/configure.c:542
+msgid "use Album Gain/Peak"
+msgstr "использовать Альбом Gain/Peak"
+
+#: Input/vorbis/configure.c:554
+msgid "Enable 6dB Boost + Hard Limiting"
+msgstr "Включить усиление на 6dB + тяжелое ограничение"
+
+#: Input/vorbis/configure.c:560
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+#: Input/vorbis/fileinfo.c:210
+#, c-format
+msgid ""
+"An error occured:\n"
+"%s"
+msgstr ""
+"Произошла ошибка:\n"
+"%s"
+
+#: Input/vorbis/fileinfo.c:212
+msgid "Error!"
+msgstr "Ошибка!"
+
+#: Input/vorbis/fileinfo.c:242
+msgid "Failed to modify tag (open)"
+msgstr "Не удалось изменить тег (открыть)"
+
+#: Input/vorbis/fileinfo.c:295
+msgid "Failed to modify tag (close)"
+msgstr "Не удалось изменить тег (закрыть)"
+
+#: Input/vorbis/fileinfo.c:320 Input/vorbis/fileinfo.c:329
+msgid "Failed to modify tag"
+msgstr "Не удалось изменить тег"
+
+#: Input/vorbis/fileinfo.c:572
+msgid " Ogg Vorbis Tag "
+msgstr " Тег Ogg Vorbis "
+
+#: Input/vorbis/fileinfo.c:624
+msgid "Date:"
+msgstr "Дата:"
+
+#: Input/vorbis/fileinfo.c:666
+msgid "Description:"
+msgstr "Описание:"
+
+#: Input/vorbis/fileinfo.c:676
+msgid "Location:"
+msgstr "Местоположение:"
+
+#: Input/vorbis/fileinfo.c:686
+msgid "Version:"
+msgstr "Версия:"
+
+#: Input/vorbis/fileinfo.c:697
+msgid "ISRC number:"
+msgstr "Номер ISRC:"
+
+#: Input/vorbis/fileinfo.c:708
+msgid "Organization:"
+msgstr "Организация:"
+
+#: Input/vorbis/fileinfo.c:755
+msgid " Ogg Vorbis ReplayGain "
+msgstr " Ogg Vorbis ReplayGain"
+
+#: Input/vorbis/fileinfo.c:761
+msgid "Track gain:"
+msgstr "Gain дорожки:"
+
+#: Input/vorbis/fileinfo.c:771
+msgid "Track peak:"
+msgstr "Peak дорожки:"
+
+#: Input/vorbis/fileinfo.c:782
+msgid "Album gain:"
+msgstr "Gain альбома:"
+
+#: Input/vorbis/fileinfo.c:792
+msgid "Album peak:"
+msgstr "Peak альбома:"
+
+#: Input/vorbis/fileinfo.c:821
+msgid " Ogg Vorbis Info "
+msgstr " Информация Ogg Vorbis "
+
+#: Input/vorbis/fileinfo.c:875 Input/vorbis/fileinfo.c:921
+msgid "Length:"
+msgstr "Длина:"
+
+#: Input/vorbis/fileinfo.c:955
+#, c-format
+msgid "%d KBit/s (nominal)"
+msgstr "%d кБит/с (номинал)"
+
+#: Input/vorbis/fileinfo.c:956
+#, c-format
+msgid "%d Hz"
+msgstr "%d Гц"
+
+#: Input/vorbis/fileinfo.c:959
+#, c-format
+msgid "%d:%.2d"
+msgstr "%d:%.2d"
+
+#: Input/vorbis/fileinfo.c:961
+#, c-format
+msgid "%d Bytes"
+msgstr "%d байт"
+
+#: Input/vorbis/vorbis.c:134
+msgid "Ogg Vorbis Audio Plugin"
+msgstr "Модуль поддержки Ogg Vorbis"
+
+#: Input/vorbis/vorbis.c:784
+msgid "About Ogg Vorbis Audio Plugin"
+msgstr "Об модуле поддержки формата Ogg Vorbis"
+
+#: Input/vorbis/vorbis.c:790
+msgid ""
+"Ogg Vorbis Plugin by the Xiph.org Foundation\n"
+"\n"
+"Original code by\n"
+"Tony Arcieri <bascule@inferno.tusculum.edu>\n"
+"Contributions from\n"
+"Chris Montgomery <monty@xiph.org>\n"
+"Peter Alm <peter@xmms.org>\n"
+"Michael Smith <msmith@labyrinth.edu.au>\n"
+"Jack Moffitt <jack@icecast.org>\n"
+"Jorn Baayen <jorn@nl.linux.org>\n"
+"Haavard Kvaalen <havardk@xmms.org>\n"
+"Gian-Carlo Pascutto <gcp@sjeng.org>\n"
+"\n"
+"Visit the Xiph.org Foundation at http://www.xiph.org/\n"
+msgstr ""
+"Расширение \"Ogg Vorbis\" от фонда Xiph.org\n"
+"\n"
+"Первоначальный код написан\n"
+"Tony Arcieri <bascule@inferno.tusculum.edu>\n"
+"Улучшения и дополнения:\n"
+"Chris Montgomery <monty@xiph.org>\n"
+"Peter Alm <peter@xmms.org>\n"
+"Michael Smith <msmith@labyrinth.edu.au>\n"
+"Jack Moffitt <jack@icecast.org>\n"
+"Jorn Baayen <jorn@nl.linux.org>\n"
+"Haavard Kvaalen <havardk@xmms.org>\n"
+"Gian-Carlo Pascutto <gcp@sjeng.org>\n"
+"\n"
+"Посетите фонд Xiph.org по адресу http://www.xiph.org/\n"
+
+#: Input/wav/wav.c:67
+msgid "WAV Audio Plugin"
+msgstr "Модуль поддержки WAV"
+
+#: Output/OSS/OSS.c:50
+msgid "OSS Output Plugin"
+msgstr "Модуль вывода звука OSS"
+
+#: Output/OSS/about.c:39
+msgid "About OSS Driver"
+msgstr "О модуле вывода звука OSS"
+
+#: Output/OSS/about.c:40
+msgid ""
+"XMMS OSS Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+"XMMS OSS драйвер\n"
+"\n"
+" Эта программа - бесплатное программное обеспечение; вы можете "
+"распространять и/или модифицировать ее\n"
+"в соответствии с условиями Лицензии GNU, опубликованную\n"
+"Организацией Бесплатного Программного Обеспечения; вы можете пользоваться "
+"версией 2 Лицензии или\n"
+"(по вашему желанию) любой более поздней версией.\n"
+"\n"
+"Эта программа распространяется в надежде, что она будет полезна,\n"
+"но БЕЗ ВСЯКОЙ ГАРАНТИИ; даже без гарании подразумеваемой\n"
+"РАБОТОСПОСОБНОСТИ или ПРИГОДНОСТИ ДЛЯ КАКОЙ-ЛИБО ЦЕЛИ. Пожалуйста,\n"
+"за подробностями обратитесь к Лицензии GNU.\n"
+"\n"
+"Вы должны были получить копию Лицензии GNU\n"
+"вместе с этой программой; если же нет, то напишите об этом по адресу: \n"
+"Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA "
+"02111-1307,\n"
+"USA."
+
+#: Output/OSS/configure.c:149
+#, c-format
+msgid "Default (%s)"
+msgstr "По умолчанию (%s)"
+
+#: Output/OSS/configure.c:167
+msgid "Default"
+msgstr "По умолчанию"
+
+#: Output/OSS/configure.c:199
+msgid "OSS Driver configuration"
+msgstr "Настройка драйвера OSS"
+
+#: Output/OSS/configure.c:215 Output/alsa/configure.c:295
+msgid "Audio device:"
+msgstr "Аудиоустройство:"
+
+#: Output/OSS/configure.c:237 Output/OSS/configure.c:278
+msgid "Use alternate device:"
+msgstr "Использовать альтернативное устройство:"
+
+#: Output/OSS/configure.c:258 Output/alsa/configure.c:339
+msgid "Mixer device:"
+msgstr "Устройство микшера:"
+
+#: Output/OSS/configure.c:300
+msgid "Devices"
+msgstr "Устройства"
+
+#: Output/OSS/configure.c:315 Output/esd/configure.c:184
+msgid "Buffer size (ms):"
+msgstr "Размер буфера (мс):"
+
+#: Output/OSS/configure.c:340 Output/esd/configure.c:209
+msgid "Buffering"
+msgstr "Буферизация"
+
+#: Output/OSS/configure.c:341
+msgid "Mixer Settings:"
+msgstr "Настройки микшера:"
+
+#: Output/OSS/configure.c:347
+msgid "Volume controls Master not PCM"
+msgstr "Громкость регулирует Мастер, а не PCM"
+
+#: Output/OSS/configure.c:353
+msgid "Mixer"
+msgstr "Микшер"
+
+#: Output/esd/about.c:34
+msgid "About ESounD Plugin"
+msgstr "О модуле вывода звука ESounD"
+
+#: Output/esd/about.c:35
+msgid ""
+"XMMS ESounD Plugin\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+"Модуль XMMS ESounD\n"
+"\n"
+" Эта программа - бесплатное программное обеспечение; вы можете "
+"распространять и/или модифицировать ее\n"
+"в соответствии с условиями Лицензии GNU, опубликованную\n"
+"Организацией Бесплатного Программного Обеспечения; вы можете пользоваться "
+"версией 2 Лицензии или\n"
+"(по вашему желанию) любой более поздней версией.\n"
+"\n"
+"Эта программа распространяется в надежде, что она будет полезна,\n"
+"но БЕЗ ВСЯКОЙ ГАРАНТИИ; даже без гарании подразумеваемой\n"
+"РАБОТОСПОСОБНОСТИ или ПРИГОДНОСТИ ДЛЯ КАКОЙ-ЛИБО ЦЕЛИ. Пожалуйста,\n"
+"за подробностями обратитесь к Лицензии GNU.\n"
+"\n"
+"Вы должны были получить копию Лицензии GNU\n"
+"вместе с этой программой; если же нет, то напишите об этом по адресу: \n"
+"Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA "
+"02111-1307,\n"
+"USA."
+
+#: Output/esd/configure.c:102
+msgid "ESD Output Plugin configuration"
+msgstr "Изменение настроек модуля вывода звука ESD"
+
+#: Output/esd/configure.c:125
+msgid "Use remote host"
+msgstr "Использовать удалённый узел"
+
+#: Output/esd/configure.c:132
+msgid "Volume controls OSS mixer"
+msgstr "Громкость регулирет OSS микшер"
+
+#: Output/esd/configure.c:169
+msgid "Server"
+msgstr "Сервер"
+
+#: Output/esd/esd.c:47
+msgid "eSound Output Plugin"
+msgstr "Модуль вывода звука eSound"
+
+#: Output/alsa/about.c:36
+msgid "About ALSA Driver"
+msgstr "О модуле вывода звука ALSA"
+
+#: Output/alsa/about.c:37
+msgid ""
+"XMMS ALSA Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA.\n"
+"Author: Matthieu Sozeau (mattam@altern.org)"
+msgstr ""
+"XMMS ALSA драйвер\n"
+"\n"
+" Эта программа - бесплатное программное обеспечение; вы можете "
+"распространять и/или модифицировать ее\n"
+"в соответствии с условиями Лицензии GNU, опубликованную\n"
+"Организацией Бесплатного Программного Обеспечения; вы можете пользоваться "
+"версией 2 Лицензии или\n"
+"(по вашему желанию) любой более поздней версией.\n"
+"\n"
+"Эта программа распространяется в надежде, что она будет полезна,\n"
+"но БЕЗ ВСЯКОЙ ГАРАНТИИ; даже без гарании подразумеваемой\n"
+"РАБОТОСПОСОБНОСТИ или ПРИГОДНОСТИ ДЛЯ КАКОЙ-ЛИБО ЦЕЛИ. Пожалуйста,\n"
+"за подробностями обратитесь к Лицензии GNU.\n"
+"\n"
+"Вы должны были получить копию Лицензии GNU\n"
+"вместе с этой программой; если же нет, то напишите об этом по адресу: \n"
+"Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA "
+"02111-1307,\n"
+"USA."
+
+#: Output/alsa/alsa.c:46
+#, c-format
+msgid "ALSA %s output plugin"
+msgstr "Модуль вывода звука ALSA %s"
+
+#: Output/alsa/configure.c:164
+msgid "Unknown soundcard"
+msgstr "Неизвестная звуковая карта"
+
+#: Output/alsa/configure.c:217
+#, c-format
+msgid "Default PCM device (%s)"
+msgstr "Устройство PCM по умолчанию (%s)"
+
+#: Output/alsa/configure.c:280
+msgid "ALSA Driver configuration"
+msgstr "Изменение настроек модуля вывода ALSA"
+
+#: Output/alsa/configure.c:308
+msgid "Mixer:"
+msgstr "Микшер:"
+
+#: Output/alsa/configure.c:316
+msgid "Use software volume control"
+msgstr "Использовать программный регулятор громкости"
+
+#: Output/alsa/configure.c:326
+msgid "Mixer card:"
+msgstr "Карта микшера:"
+
+#: Output/alsa/configure.c:359
+msgid "Device settings"
+msgstr "Настройки устройства"
+
+#: Output/alsa/configure.c:361
+msgid "Advanced settings:"
+msgstr "Дополнительные настройки:"
+
+#: Output/alsa/configure.c:374
+msgid "Buffer time (ms):"
+msgstr "Время буфера (мс):"
+
+#: Output/alsa/configure.c:388
+msgid "Period time (ms):"
+msgstr "Размер периода (мс):"
+
+#: Output/alsa/configure.c:402
+#, fuzzy
+msgid "Thread buffer time (ms):"
+msgstr "Время буфера (мс):"
+
+#: Output/alsa/configure.c:416
+msgid "Multi-thread mode"
+msgstr ""
+
+#: Output/alsa/configure.c:421
+msgid "Mmap mode"
+msgstr "Режим mmap"
+
+#: Output/alsa/configure.c:427
+msgid "Advanced settings"
+msgstr "Дополнительные настройки"
+
+#: Visualization/blur_scope/blur_scope.c:57
+msgid "/Toggle Decorations"
+msgstr "/Переключить отображение обрамления"
+
+#: Visualization/blur_scope/blur_scope.c:59
+msgid "/-"
+msgstr "/-"
+
+#: Visualization/blur_scope/blur_scope.c:60
+msgid "/Close"
+msgstr "/Закрыть"
+
+#: Visualization/blur_scope/blur_scope.c:198
+msgid "Blur scope"
+msgstr "Размытый осциллоскоп"
+
+#: Visualization/blur_scope/config.c:73
+msgid "Blur Scope: Color selection"
+msgstr "Размытый осциллоскоп: выбор цвета"
+
+#: Visualization/blur_scope/config.c:83
+msgid "Options:"
+msgstr "Параметры:"
+
+#: libaudacious/titlestring.c:324
+msgid "Performer/Artist"
+msgstr "Исполнитель"
+
+#: libaudacious/titlestring.c:325 audacious/prefswin.c:94
+msgid "Album"
+msgstr "Альбом"
+
+#: libaudacious/titlestring.c:326 audacious/prefswin.c:97
+msgid "Genre"
+msgstr "Стиль"
+
+#: libaudacious/titlestring.c:327
+msgid "File name"
+msgstr "Имя файла"
+
+#: libaudacious/titlestring.c:328
+msgid "File path"
+msgstr "Путь к файлу"
+
+#: libaudacious/titlestring.c:329
+msgid "File extension"
+msgstr "Расширение файла"
+
+#: libaudacious/titlestring.c:330
+msgid "Track name"
+msgstr "Имя дорожки"
+
+#: libaudacious/titlestring.c:331
+msgid "Track number"
+msgstr "Номер дорожки"
+
+#: libaudacious/titlestring.c:332 audacious/prefswin.c:100
+msgid "Date"
+msgstr "Дата"
+
+#: libaudacious/titlestring.c:333 audacious/prefswin.c:101
+msgid "Year"
+msgstr "Год"
+
+#: libaudacious/titlestring.c:334 audacious/prefswin.c:102
+msgid "Comment"
+msgstr "Комментарий"
+
+#: libaudacious/titlestring.c:385
+msgid "%{n:...%}: Display \"...\" only if element %n is present"
+msgstr "%{n:...%}: Отображать \"...\", когда элемент %n присутствует"
+
+#: audacious/about.c:42
+#, fuzzy, c-format
+msgid ""
+"<big><b>Beep Media Player %s</b></big>\n"
+"A media player based on XMMS\n"
+"\n"
+"Copyright (C) 2003-2005 BMP Development Team\n"
+msgstr ""
+"<big><b>Beep Media Player %s</b></big>\n"
+"Мультимедийный проигрыватель, основанный на XMMS\n"
+"\n"
+"Copyright (C) 2003-2004 Команда разработчиков BMP\n"
+
+#: audacious/about.c:48
+msgid "Developers:"
+msgstr "Разработчики:"
+
+#: audacious/about.c:49
+msgid "Artem Baguinski"
+msgstr ""
+
+#: audacious/about.c:50 audacious/about.c:85 audacious/about.c:169
+msgid "Edward Brocklesby"
+msgstr "Edward Brocklesby"
+
+#: audacious/about.c:51 audacious/about.c:99
+msgid "Chong Kai Xiong"
+msgstr "Chong Kai Xiong"
+
+#: audacious/about.c:52 audacious/about.c:84
+msgid "Milosz Derezynski"
+msgstr "Milosz Derezynski"
+
+#: audacious/about.c:53
+msgid "David Lau"
+msgstr "David Lau"
+
+#: audacious/about.c:54
+msgid "Ole Andre Vadla Ravnaas"
+msgstr "Ole Andre Vadla Ravnaas"
+
+#: audacious/about.c:55
+msgid "Michiel Sikkes"
+msgstr "Michiel Sikkes"
+
+#: audacious/about.c:58
+msgid "With Additional Help:"
+msgstr "С дополнительной помощью:"
+
+#: audacious/about.c:59
+msgid "Andrei Badea"
+msgstr ""
+
+#: audacious/about.c:60
+msgid "Peter Behroozi"
+msgstr ""
+
+#: audacious/about.c:61
+msgid "Bernard Blackham"
+msgstr "Bernard Blackham"
+
+#: audacious/about.c:62
+msgid "Oliver Blin"
+msgstr "Oliver Blin"
+
+#: audacious/about.c:63
+msgid "Tomas Bzatek"
+msgstr "Tomas Bzatek"
+
+#: audacious/about.c:64 audacious/about.c:149
+msgid "Liviu Danicel"
+msgstr ""
+
+#: audacious/about.c:65
+msgid "Jon Dowland"
+msgstr "Jon Dowland"
+
+#: audacious/about.c:66
+msgid "Artur Frysiak"
+msgstr "Artur Frysiak"
+
+#: audacious/about.c:67
+msgid "Sebastian Kapfer"
+msgstr "Sebastian Kapfer"
+
+#: audacious/about.c:68
+msgid "Lukas Koberstein"
+msgstr "Lukas Koberstein"
+
+#: audacious/about.c:69 audacious/about.c:153
+msgid "Dan Korostelev"
+msgstr "Dan Korostelev <dan@ats.energo.ru>"
+
+#: audacious/about.c:70
+msgid "Jolan Luff"
+msgstr ""
+
+#: audacious/about.c:71
+#, fuzzy
+msgid "Michael Marineau"
+msgstr "Michiel Sikkes"
+
+#: audacious/about.c:72
+msgid "Tim-Philipp Muller"
+msgstr "Tim-Philipp Muller"
+
+#: audacious/about.c:73
+msgid "Julien Portalier"
+msgstr ""
+
+#: audacious/about.c:74
+msgid "Andrew Ruder"
+msgstr ""
+
+#: audacious/about.c:75
+msgid "Olivier Samyn"
+msgstr "Olivier Samyn"
+
+#: audacious/about.c:76
+msgid "Martijn Vernooij"
+msgstr "Martijn Vernooij"
+
+#: audacious/about.c:79
+msgid "ClearSky skin:"
+msgstr ""
+
+#: audacious/about.c:80
+msgid "Will Reinhart"
+msgstr ""
+
+#: audacious/about.c:83
+msgid "Homepage and Graphics:"
+msgstr "Домашняя страница и графика:"
+
+#: audacious/about.c:92
+msgid "Brazilian Portuguese:"
+msgstr ""
+
+#: audacious/about.c:93
+msgid "Philipi Pinto"
+msgstr ""
+
+#: audacious/about.c:95
+msgid "Breton:"
+msgstr ""
+
+#: audacious/about.c:96
+msgid "Thierry Vignaud"
+msgstr ""
+
+#: audacious/about.c:98
+msgid "Chinese:"
+msgstr "Китайский:"
+
+#: audacious/about.c:100
+msgid "Chao-Hsiung Liao"
+msgstr ""
+
+#: audacious/about.c:102
+#, fuzzy
+msgid "Czech:"
+msgstr "Французкий:"
+
+#: audacious/about.c:103
+msgid "Jan Narovec"
+msgstr ""
+
+#: audacious/about.c:105
+msgid "Dutch:"
+msgstr "Голладский:"
+
+#: audacious/about.c:106
+msgid "Laurens Buhler"
+msgstr "Laurens Buhler"
+
+#: audacious/about.c:108
+#, fuzzy
+msgid "Finnish:"
+msgstr "Испанский:"
+
+#: audacious/about.c:109
+msgid "Pauli Virtanen"
+msgstr ""
+
+#: audacious/about.c:111
+msgid "French:"
+msgstr "Французкий:"
+
+#: audacious/about.c:112
+msgid "David Le Brun"
+msgstr "David Le Brun"
+
+#: audacious/about.c:114
+msgid "German:"
+msgstr "Немецкий:"
+
+#: audacious/about.c:115
+msgid "Matthias Debus"
+msgstr "Matthias Debus"
+
+#: audacious/about.c:117
+#, fuzzy
+msgid "Georgian: "
+msgstr "Немецкий:"
+
+#: audacious/about.c:118
+msgid "George Machitidze"
+msgstr ""
+
+#: audacious/about.c:120
+#, fuzzy
+msgid "Greek:"
+msgstr "Стиль:"
+
+#: audacious/about.c:121
+msgid "Kouzinopoulos Haris"
+msgstr ""
+
+#: audacious/about.c:122
+msgid "Stavros Giannouris"
+msgstr ""
+
+#: audacious/about.c:124
+msgid "Hindi:"
+msgstr ""
+
+#: audacious/about.c:125
+msgid "Dhananjaya Sharma"
+msgstr ""
+
+#: audacious/about.c:127
+msgid "Hungarian:"
+msgstr ""
+
+#: audacious/about.c:128
+msgid "Laszlo Dvornik"
+msgstr ""
+
+#: audacious/about.c:130
+msgid "Italian:"
+msgstr "Итальянский:"
+
+#: audacious/about.c:131
+msgid "Alessio D'Ascanio"
+msgstr "Alessio D'Ascanio"
+
+#: audacious/about.c:133
+msgid "Japanese:"
+msgstr "Японский:"
+
+#: audacious/about.c:134
+msgid "Takeshi Aihana"
+msgstr "Takeshi Aihana"
+
+#: audacious/about.c:136
+msgid "Korean:"
+msgstr "Корейский:"
+
+#: audacious/about.c:137
+msgid "DongCheon Park"
+msgstr "DongCheon Park"
+
+#: audacious/about.c:139
+msgid "Lithuanian:"
+msgstr "Литовский:"
+
+#: audacious/about.c:140
+msgid "Rimas Kudelis"
+msgstr "Rimas Kudelis"
+
+#: audacious/about.c:142
+msgid "Macedonian:"
+msgstr ""
+
+#: audacious/about.c:143
+msgid "Arangel Angov"
+msgstr ""
+
+#: audacious/about.c:145
+msgid "Polish:"
+msgstr "Польский:"
+
+#: audacious/about.c:146
+msgid "Jacek Wolszczak"
+msgstr "Jacek Wolszczak"
+
+#: audacious/about.c:148
+#, fuzzy
+msgid "Romanian:"
+msgstr "Литовский:"
+
+#: audacious/about.c:151
+msgid "Russian:"
+msgstr "Русский:"
+
+#: audacious/about.c:152
+msgid "Pavlo Bohmat"
+msgstr "Pavlo Bohmat"
+
+#: audacious/about.c:154
+msgid "Vitaly Lipatov"
+msgstr ""
+
+#: audacious/about.c:156
+msgid "Slovak:"
+msgstr ""
+
+#: audacious/about.c:157
+msgid "Pavel Kanzelsberger"
+msgstr ""
+
+#: audacious/about.c:159
+msgid "Spanish:"
+msgstr "Испанский:"
+
+#: audacious/about.c:160
+msgid "Francisco Javier F. Serrador"
+msgstr "Francisco Javier F. Serrador"
+
+#: audacious/about.c:162
+msgid "Swedish:"
+msgstr "Шведский:"
+
+#: audacious/about.c:163
+msgid "Martin Persenius"
+msgstr "Martin Persenius"
+
+#: audacious/about.c:165
+#, fuzzy
+msgid "Ukrainian:"
+msgstr "Организация:"
+
+#: audacious/about.c:166
+msgid "Mykola Lynnyk"
+msgstr ""
+
+#: audacious/about.c:168
+msgid "Welsh:"
+msgstr "Валлийский:"
+
+#: audacious/about.c:266
+msgid "About BMP"
+msgstr "О программе"
+
+#: audacious/about.c:311
+msgid "Credits"
+msgstr "Авторы"
+
+#: audacious/about.c:315
+msgid "Translators"
+msgstr "Переводчики"
+
+#: audacious/eq_slider.c:93
+msgid "PREAMP"
+msgstr "PREAMP"
+
+#: audacious/eq_slider.c:93
+msgid "60HZ"
+msgstr "60 Гц"
+
+#: audacious/eq_slider.c:93
+msgid "170HZ"
+msgstr "170 Гц"
+
+#: audacious/eq_slider.c:94
+msgid "310HZ"
+msgstr "310 Гц"
+
+#: audacious/eq_slider.c:94
+msgid "600HZ"
+msgstr "600 Гц"
+
+#: audacious/eq_slider.c:94
+msgid "1KHZ"
+msgstr "1 кГц"
+
+#: audacious/eq_slider.c:95
+msgid "3KHZ"
+msgstr "3 кГц"
+
+#: audacious/eq_slider.c:95
+msgid "6KHZ"
+msgstr "6 кГц"
+
+#: audacious/eq_slider.c:95
+msgid "12KHZ"
+msgstr "12 кГц"
+
+#: audacious/eq_slider.c:96
+msgid "14KHZ"
+msgstr "14 кГц"
+
+#: audacious/eq_slider.c:96
+msgid "16KHZ"
+msgstr "16 кГц"
+
+#: audacious/equalizer.c:127
+msgid "/Load"
+msgstr "/Загрузить"
+
+#: audacious/equalizer.c:128
+msgid "/Load/Preset"
+msgstr "/Загрузить/Предустановку"
+
+#: audacious/equalizer.c:130
+msgid "/Load/Auto-load preset"
+msgstr "/Загрузить/Автозагружаемую предустановку"
+
+#: audacious/equalizer.c:132
+msgid "/Load/Default"
+msgstr "/Загрузить/Предустановку по умолчанию"
+
+#: audacious/equalizer.c:135
+msgid "/Load/Zero"
+msgstr "/Загрузить/Пустую предустановку"
+
+#: audacious/equalizer.c:138
+msgid "/Load/From file"
+msgstr "/Загрузить/Из файла"
+
+#: audacious/equalizer.c:140
+msgid "/Load/From WinAMP EQF file"
+msgstr "/Загрузить/Из файла WinAMP EQF"
+
+#: audacious/equalizer.c:142
+msgid "/Import"
+msgstr "/Импортировать"
+
+#: audacious/equalizer.c:143
+msgid "/Import/WinAMP Presets"
+msgstr "/Импортировать/Предустановки из WinAMP"
+
+#: audacious/equalizer.c:145
+msgid "/Save"
+msgstr "/Сохранить"
+
+#: audacious/equalizer.c:146
+msgid "/Save/Preset"
+msgstr "/Сохранить/Предустановку"
+
+#: audacious/equalizer.c:148
+msgid "/Save/Auto-load preset"
+msgstr "/Сохранить/Автозагружаемую предустановку"
+
+#: audacious/equalizer.c:150
+msgid "/Save/Default"
+msgstr "/Сохранить/Сделать по умолчанию"
+
+#: audacious/equalizer.c:153
+msgid "/Save/To file"
+msgstr "/Сохранить/В файл"
+
+#: audacious/equalizer.c:155
+msgid "/Save/To WinAMP EQF file"
+msgstr "/Сохранить/В файл WinAMP EQF"
+
+#: audacious/equalizer.c:157
+msgid "/Delete"
+msgstr "/Удалить"
+
+#: audacious/equalizer.c:158
+msgid "/Delete/Preset"
+msgstr "/Удалить/Предустановку"
+
+#: audacious/equalizer.c:160
+msgid "/Delete/Auto-load preset"
+msgstr "/Удалить/Автозагружаемую предустановку"
+
+#: audacious/equalizer.c:741
+msgid "BMP Equalizer"
+msgstr "Эквалайзер ВМР"
+
+#: audacious/equalizer.c:1366
+msgid "Preset"
+msgstr "Предустановку"
+
+#: audacious/equalizer.c:1409
+msgid "Presets"
+msgstr "Предустановки"
+
+#: audacious/equalizer.c:1468
+msgid "Load preset"
+msgstr "Загрузка предустановки"
+
+#: audacious/equalizer.c:1482
+msgid "Load auto-preset"
+msgstr "Загрузка автозагружаемой предустановки"
+
+#: audacious/equalizer.c:1507 audacious/equalizer.c:1513 audacious/equalizer.c:1520
+msgid "Load equalizer preset"
+msgstr "Загрузка предустановок эквалайзера"
+
+#: audacious/equalizer.c:1529
+msgid "Save preset"
+msgstr "Сохранить предустановку"
+
+#: audacious/equalizer.c:1548
+msgid "Save auto-preset"
+msgstr "Сохранить автоустановки"
+
+#: audacious/equalizer.c:1581 audacious/equalizer.c:1600
+msgid "Save equalizer preset"
+msgstr "Сохранить установки эквалайзера"
+
+#: audacious/equalizer.c:1609
+msgid "Delete preset"
+msgstr "Удалить предустановку"
+
+#: audacious/equalizer.c:1625
+msgid "Delete auto-preset"
+msgstr "Удалить автозагружаемую предустановку"
+
+#: audacious/getopt.c:616
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr "%s: параметр `%s' неопределён\n"
+
+#: audacious/getopt.c:638
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr "%s: параметр `--%s' не позволяет аргумента\n"
+
+#: audacious/getopt.c:644
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr "%s: параметр `%c%s' не позволяет аргумента\n"
+
+#: audacious/getopt.c:661 audacious/getopt.c:819
+#, c-format
+msgid "%s: option `%s' requires an argument\n"
+msgstr "%s: параметр `%s' требует аргумент\n"
+
+#: audacious/getopt.c:687
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr "%s: неизвестный параметр `--%s'\n"
+
+#: audacious/getopt.c:691
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr "%s: неизвестный параметр `%c%s'\n"
+
+#: audacious/getopt.c:715
+#, c-format
+msgid "%s: illegal option -- %c\n"
+msgstr "%s: некорректный параметр -- %c\n"
+
+#: audacious/getopt.c:718
+#, c-format
+msgid "%s: invalid option -- %c\n"
+msgstr "%s: неправильный параметр -- %c\n"
+
+#: audacious/getopt.c:745 audacious/getopt.c:861
+#, c-format
+msgid "%s: option requires an argument -- %c\n"
+msgstr "%s: параметр требует аргумент -- %c\n"
+
+#: audacious/getopt.c:790
+#, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr "%s: параметр `-W %s' не определён\n"
+
+#: audacious/getopt.c:805
+#, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr "%s: параметр `-W %s' не требует аргумента\n"
+
+#: audacious/input.c:299
+msgid ""
+"<b><big>Unable to play files.</big></b>\n"
+"\n"
+"The following files could not be played. Please check that:\n"
+"1. they are accessible.\n"
+"2. you have enabled the media plugins required."
+msgstr ""
+"<b><big>Невозможно воспроизвести файлы.</big></b>\n"
+"\n"
+"Некоторые файлы не могут быть воспроизведены. Пожалуйста, проверьте "
+"следующее:\n"
+"1. Доступность этих файлов.\n"
+"2. Включены необходимые аудио-модули."
+
+#: audacious/input.c:324
+msgid "Don't show this warning anymore"
+msgstr "Больше не показывать это предупреждение"
+
+#: audacious/input.c:326
+msgid "Show more _details"
+msgstr "_Подробнее"
+
+#: audacious/input.c:340 audacious/prefswin.c:98 audacious/prefswin.c:447 audacious/prefswin.c:535
+#: audacious/prefswin.c:624 audacious/prefswin.c:720
+msgid "Filename"
+msgstr "Название файла"
+
+#: audacious/input.c:489
+#, c-format
+msgid "bmp: %s"
+msgstr "BMP: %s"
+
+#: audacious/input.c:505
+msgid "Filename:"
+msgstr "Название файла:"
+
+#: audacious/input.c:523
+msgid "No input plugin recognized this file"
+msgstr "Нет модуля ввода, распознающего этот файл"
+
+#: audacious/input.c:525
+#, c-format
+msgid "Input plugin: %s"
+msgstr "Модуль ввода: %s"
+
+#: audacious/logger.c:120
+#, c-format
+msgid "Unable to create log file (%s)!\n"
+msgstr "Невозможно создать файл журнала (%s)!\n"
+
+#: audacious/main.c:77 audacious/main.c:79
+msgid "Beep Media Player"
+msgstr "Beep Media Player"
+
+#: audacious/main.c:371
+#, c-format
+msgid "Could not create directory (%s): %s"
+msgstr "Невозможно создать каталог (%s): %s"
+
+#: audacious/main.c:625
+msgid ""
+"Usage: beep-media-player [options] [files] ...\n"
+"\n"
+"Options:\n"
+"--------\n"
+msgstr ""
+"Использование: beep-media-player [параметры] [файлы] ...\n"
+"\n"
+"Параметры:\n"
+"--------\n"
+
+#: audacious/main.c:630
+msgid "Display this text and exit"
+msgstr "Отобразить этот текст и выйти"
+
+#: audacious/main.c:633
+msgid "Select BMP/XMMS session (Default: 0)"
+msgstr "Указать ВМР/XMMS сессию (по умолчанию: 0)"
+
+#: audacious/main.c:636
+msgid "Skip backwards in playlist"
+msgstr "Перейти к предыдущей песне в списке песен"
+
+#: audacious/main.c:639
+msgid "Start playing current playlist"
+msgstr "Начать проигрывание текущего списка воспроизведения"
+
+#: audacious/main.c:642
+msgid "Pause current song"
+msgstr "Приостановить текущую песню"
+
+#: audacious/main.c:645
+msgid "Stop current song"
+msgstr "Остановить текущую песню"
+
+#: audacious/main.c:648
+msgid "Pause if playing, play otherwise"
+msgstr "Приостановить, если что-либо проигрывается, иначе воспроизводить"
+
+#: audacious/main.c:651
+msgid "Skip forward in playlist"
+msgstr "Перейти к следующей песне в списке песен"
+
+#: audacious/main.c:654
+msgid "Don't clear the playlist"
+msgstr "Не очищать список воспроизведения"
+
+#: audacious/main.c:657
+msgid "Show the main window"
+msgstr "Показать главное окно"
+
+#: audacious/main.c:660
+msgid "Activate BMP"
+msgstr ""
+
+#: audacious/main.c:663
+msgid "Previous session ID"
+msgstr "Идентификатор предыдущей сессии"
+
+#: audacious/main.c:666
+msgid "Print version number and exit\n"
+msgstr "Вывести номер версии и выйти\n"
+
+#: audacious/main.c:841
+msgid ""
+"\n"
+"Received SIGSEGV\n"
+"\n"
+"This could be a bug in BMP. If you don't know why this happened, send a mail "
+"to us at beepmp-devel@lists.sourceforge.net\n"
+"\n"
+msgstr ""
+"\n"
+"Получен SIGSEGV\n"
+"\n"
+"Возможно, это ошибка в BMP. Если вы не знаете почему это произошло, "
+"отправьте письмо на beepmp-devel@lists.sourceforge.net\n"
+"\n"
+
+#: audacious/main.c:864
+#, c-format
+msgid ""
+"<b><big>Unable to load skin.</big></b>\n"
+"\n"
+"Check that skin at '%s' is usable and default skin is properly installed at "
+"'%s'\n"
+msgstr ""
+"<b><big>Невозможно загрузить тему.</big></b>\n"
+"\n"
+"Проверьте, пригодна ли к использованию тема '%s' и установлена ли тема по "
+"умолчанию в '%s'\n"
+
+#: audacious/main.c:899
+#, c-format
+msgid ""
+"Sorry, your GTK+ version (%d.%d.%d) does not work with BMP.\n"
+"Please use GTK+ %s or newer.\n"
+msgstr ""
+"Простите, ваша версия GTK+ (%d.%d.%d) не будет работать с BMP.\n"
+"Пожалуйста, используйте GTK+ %s или новее.\n"
+
+#: audacious/main.c:910
+msgid ""
+"Sorry, threads isn't supported on your platform.\n"
+"\n"
+"If you're on a libc5 based linux system and installed Glib & GTK+ before "
+"you\n"
+"installed LinuxThreads you need to recompile Glib & GTK+.\n"
+msgstr ""
+"Простите, потоки не поддерживаются на вашей платформе.\n"
+"\n"
+"Если вы используете систему Linux, базирующуюся на libc5 и установленными "
+"Glib и GTK+, вам\n"
+"перед установкой LinuxThreads необходимо перекомпилировать Glib и GTK+.\n"
+
+#: audacious/main.c:923
+msgid "BMP: Unable to open display, exiting."
+msgstr "ВМР: Невозможно открыть экран для отображения, выходим."
+
+#: audacious/mainwin.c:235 audacious/mainwin.c:361 audacious/playlistwin.c:125
+msgid "/View Track Details"
+msgstr "/Информация о песне"
+
+#: audacious/mainwin.c:238
+msgid "/Autoscroll Songname"
+msgstr "/Автопрокрутка названия песни"
+
+#: audacious/mainwin.c:248
+msgid "/Visualization Mode"
+msgstr "/Режим визуализации"
+
+#: audacious/mainwin.c:249
+msgid "/Visualization Mode/Analyzer"
+msgstr "/Режим визуализации/Анализатор"
+
+#: audacious/mainwin.c:251
+msgid "/Visualization Mode/Scope"
+msgstr "/Режим визуализации/График"
+
+#: audacious/mainwin.c:253
+msgid "/Visualization Mode/Off"
+msgstr "/Режим визуализации/Выключено"
+
+#: audacious/mainwin.c:255
+msgid "/Analyzer Mode"
+msgstr "/Режим анализатора"
+
+#: audacious/mainwin.c:256
+msgid "/Analyzer Mode/Normal"
+msgstr "/Режим анализатора/Обычный"
+
+#: audacious/mainwin.c:258
+msgid "/Analyzer Mode/Fire"
+msgstr "/Режим анализатора/Пламя"
+
+#: audacious/mainwin.c:260
+msgid "/Analyzer Mode/Vertical Lines"
+msgstr "/Режим анализатора/Вертикальные линии"
+
+#: audacious/mainwin.c:263
+msgid "/Analyzer Mode/Lines"
+msgstr "/Режим анализатора/Линии"
+
+#: audacious/mainwin.c:265
+msgid "/Analyzer Mode/Bars"
+msgstr "/Режим анализатора/Полоски"
+
+#: audacious/mainwin.c:268
+msgid "/Analyzer Mode/Peaks"
+msgstr "/Режим анализатора/Пики"
+
+#: audacious/mainwin.c:270
+msgid "/Scope Mode"
+msgstr "/Режим графика"
+
+#: audacious/mainwin.c:271
+msgid "/Scope Mode/Dot Scope"
+msgstr "/Режим графика/Точки"
+
+#: audacious/mainwin.c:273
+msgid "/Scope Mode/Line Scope"
+msgstr "/Режим графика/Линии"
+
+#: audacious/mainwin.c:275
+msgid "/Scope Mode/Solid Scope"
+msgstr "/Режим графика/Заливка"
+
+#: audacious/mainwin.c:277
+msgid "/WindowShade VU Mode"
+msgstr "/При минимизированном окне"
+
+#: audacious/mainwin.c:278
+msgid "/WindowShade VU Mode/Normal"
+msgstr "/При минимизированном окне/Обычный"
+
+#: audacious/mainwin.c:280
+msgid "/WindowShade VU Mode/Smooth"
+msgstr "/При минимизированном окне/Плавный"
+
+#: audacious/mainwin.c:282
+msgid "/Refresh Rate"
+msgstr "/Частота обновления"
+
+#: audacious/mainwin.c:283
+msgid "/Refresh Rate/Full (~50 fps)"
+msgstr "/Частота обновления/Полная (~50 fps)"
+
+#: audacious/mainwin.c:285
+msgid "/Refresh Rate/Half (~25 fps)"
+msgstr "/Частота обновления/Половина (~25 fps)"
+
+#: audacious/mainwin.c:287
+msgid "/Refresh Rate/Quarter (~13 fps)"
+msgstr "/Частота обновления/Четверть (~13 fps)"
+
+#: audacious/mainwin.c:289
+msgid "/Refresh Rate/Eighth (~6 fps)"
+msgstr "/Частота обновления/Восьмая (~6 fps)"
+
+#: audacious/mainwin.c:291
+msgid "/Analyzer Falloff"
+msgstr "/Падение анализатора"
+
+#: audacious/mainwin.c:292
+msgid "/Analyzer Falloff/Slowest"
+msgstr "/Падение Анализатора/Самое медленное"
+
+#: audacious/mainwin.c:294
+msgid "/Analyzer Falloff/Slow"
+msgstr "/Падение Анализатора/Медленное"
+
+#: audacious/mainwin.c:296
+msgid "/Analyzer Falloff/Medium"
+msgstr "/Падение Анализатора/Среднее"
+
+#: audacious/mainwin.c:298
+msgid "/Analyzer Falloff/Fast"
+msgstr "/Падение Анализатора/Быстрое"
+
+#: audacious/mainwin.c:300
+msgid "/Analyzer Falloff/Fastest"
+msgstr "/Падение Анализатора/Самое быстрое"
+
+#: audacious/mainwin.c:302
+msgid "/Peaks Falloff"
+msgstr "/Падение пиков"
+
+#: audacious/mainwin.c:303
+msgid "/Peaks Falloff/Slowest"
+msgstr "/Падение пиков/Самое медленное"
+
+#: audacious/mainwin.c:305
+msgid "/Peaks Falloff/Slow"
+msgstr "/Падение пиков/Медленное"
+
+#: audacious/mainwin.c:307
+msgid "/Peaks Falloff/Medium"
+msgstr "/Падение пиков/Среднее"
+
+#: audacious/mainwin.c:309
+msgid "/Peaks Falloff/Fast"
+msgstr "/Падение пиков/Быстрое"
+
+#: audacious/mainwin.c:311
+msgid "/Peaks Falloff/Fastest"
+msgstr "/Падение пиков/Быстрей некуда"
+
+#: audacious/mainwin.c:326
+msgid "/Repeat"
+msgstr "/Повторять"
+
+#: audacious/mainwin.c:328
+msgid "/Shuffle"
+msgstr "/Случайно"
+
+#: audacious/mainwin.c:335
+msgid "/Play"
+msgstr "/Воспроизведение"
+
+#: audacious/mainwin.c:337
+msgid "/Pause"
+msgstr "/Приостановить"
+
+#: audacious/mainwin.c:339
+msgid "/Stop"
+msgstr "/Остановить"
+
+#: audacious/mainwin.c:341
+msgid "/Previous"
+msgstr "/Предыдущая песня"
+
+#: audacious/mainwin.c:343
+msgid "/Next"
+msgstr "/Следующая песня"
+
+#: audacious/mainwin.c:346
+msgid "/Jump to Playlist Start"
+msgstr "/Перейти на первую песню в списке"
+
+#: audacious/mainwin.c:349
+msgid "/Jump to File"
+msgstr "/Перескочить на файл"
+
+#: audacious/mainwin.c:351
+msgid "/Jump to Time"
+msgstr "/Перескочить на время"
+
+#: audacious/mainwin.c:364
+msgid "/Preferences"
+msgstr "/Изменить настройки"
+
+#: audacious/mainwin.c:366
+msgid "/_View"
+msgstr ""
+
+#: audacious/mainwin.c:368
+msgid "/About BMP"
+msgstr "/О программе"
+
+#: audacious/mainwin.c:370
+msgid "/_Quit"
+msgstr "/_Выход"
+
+#: audacious/mainwin.c:380
+#, fuzzy
+msgid "/Files..."
+msgstr "/Добавить/Файлы..."
+
+#: audacious/mainwin.c:387
+#, fuzzy
+msgid "/Internet location..."
+msgstr "/Добавить/Местоположение в интернет..."
+
+#: audacious/mainwin.c:401
+msgid "/Show Playlist Editor"
+msgstr "/Показать редактор списка песен"
+
+#: audacious/mainwin.c:403
+#, fuzzy
+msgid "/Show Equalizer"
+msgstr "Эквалайзер"
+
+#: audacious/mainwin.c:406
+msgid "/Time Elapsed"
+msgstr "/Показывать прошедшее время"
+
+#: audacious/mainwin.c:408
+msgid "/Time Remaining"
+msgstr "/Показывать оставшееся время"
+
+#: audacious/mainwin.c:411
+msgid "/Always On Top"
+msgstr "/Поднять на передний план"
+
+#: audacious/mainwin.c:413
+msgid "/Put on All Workspaces"
+msgstr ""
+
+#: audacious/mainwin.c:416
+msgid "/Roll up Player"
+msgstr ""
+
+#: audacious/mainwin.c:418
+#, fuzzy
+msgid "/Roll up Playlist Editor"
+msgstr "/Сделать список воспроизведения активным окном"
+
+#: audacious/mainwin.c:420
+#, fuzzy
+msgid "/Roll up Equalizer"
+msgstr "Эквалайзер"
+
+#: audacious/mainwin.c:782 audacious/mainwin.c:3098
+msgid "BMP"
+msgstr "BMP"
+
+#: audacious/mainwin.c:820
+msgid "VBR"
+msgstr "VBR"
+
+#: audacious/mainwin.c:1246
+msgid "Jump to Time"
+msgstr "Перескочить на время"
+
+#: audacious/mainwin.c:1267
+msgid "minutes:seconds"
+msgstr "минут:секунд"
+
+#: audacious/mainwin.c:1277
+msgid "Track length:"
+msgstr "Длина дорожки:"
+
+#: audacious/mainwin.c:1364
+#, fuzzy
+msgid "Un_queue"
+msgstr "Очередь"
+
+#: audacious/mainwin.c:1366 audacious/mainwin.c:1688
+#, fuzzy
+msgid "_Queue"
+msgstr "Очередь"
+
+#: audacious/mainwin.c:1618
+msgid "Jump to Track"
+msgstr "Перескочить на дорожку"
+
+#: audacious/mainwin.c:1657
+msgid "Filter: "
+msgstr "Фильтр: "
+
+#: audacious/mainwin.c:1884
+msgid "Add Folders"
+msgstr "Добавление каталогов"
+
+#: audacious/mainwin.c:1935
+#, fuzzy
+msgid "Add Internet Address"
+msgstr "/Добавить/Адрес интернет..."
+
+#: audacious/mainwin.c:2063
+#, c-format
+msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
+msgstr "ПЕРЕМЕЩЕНИЕ: %d:%-2.2d/%d:%-2.2d (%d%%)"
+
+#: audacious/mainwin.c:2095 audacious/mainwin.c:2769
+#, c-format
+msgid "VOLUME: %d%%"
+msgstr "ГРОМКОСТЬ: %d%%"
+
+#: audacious/mainwin.c:2126 audacious/mainwin.c:2772
+#, c-format
+msgid "BALANCE: %d%% LEFT"
+msgstr "БАЛАНС: %d%% ВЛЕВО"
+
+#: audacious/mainwin.c:2130 audacious/mainwin.c:2775
+msgid "BALANCE: CENTER"
+msgstr "БАЛАНС: ЦЕНТР"
+
+#: audacious/mainwin.c:2134 audacious/mainwin.c:2777
+#, c-format
+msgid "BALANCE: %d%% RIGHT"
+msgstr "БАЛАНС: %d%% ВПРАВО"
+
+#: audacious/mainwin.c:2544
+msgid "OPTIONS MENU"
+msgstr "МЕНЮ НАСТРОЕК"
+
+#: audacious/mainwin.c:2549
+msgid "DISABLE ALWAYS ON TOP (N/A)"
+msgstr "ОТКЛЮЧИТЬ ВСЕГДА НАВЕРХУ (Н/Д)"
+
+#: audacious/mainwin.c:2551
+msgid "ENABLE ALWAYS ON TOP (N/A)"
+msgstr "ВКЛЮЧИТЬ ВСЕГДА НАВЕРХУ (Н/Д)"
+
+#: audacious/mainwin.c:2554
+msgid "DISABLE ALWAYS ON TOP"
+msgstr "ОТКЛЮЧИТЬ ВСЕГДА НАВЕРХУ"
+
+#: audacious/mainwin.c:2556
+msgid "ENABLE ALWAYS ON TOP"
+msgstr "ВКЛЮЧИТЬ ВСЕГДА НАВЕРХУ"
+
+#: audacious/mainwin.c:2559
+msgid "FILE INFO BOX"
+msgstr "ОКНО ИНФОРМАЦИИ О ФАЙЛЕ"
+
+#: audacious/mainwin.c:2562
+msgid "** DOUBLESIZE HAS BEEN REMOVED **"
+msgstr ""
+
+#: audacious/mainwin.c:2565
+msgid "VISUALIZATION MENU"
+msgstr "МЕНЮ ВИЗУАЛИЗАЦИИ"
+
+#: audacious/mainwin.c:2610
+msgid ""
+"<b><big>No playable CD found.</big></b>\n"
+"\n"
+"No CD inserted, or inserted CD is not an audio CD.\n"
+msgstr ""
+"<b><big>Не найдено воспроизводимого CD.</big></b>\n"
+"\n"
+"Компакт-диск отсутствует или не содержит аудио-дорожек.\n"
+
+#: audacious/mainwin.c:2627
+msgid ""
+"<b><big>Couldn't open audio.</big></b>\n"
+"\n"
+"Please check that:\n"
+"1. You have the correct output plugin selected.\n"
+"2. No other programs is blocking the soundcard.\n"
+"3. Your soundcard is configured properly.\n"
+msgstr ""
+"<b><big>Не могу открыть аудио-устройство</big></b>\n"
+"\n"
+"Пожалуйста, проверьте следующее:\n"
+"1. Правильность выбора модуля вывода.\n"
+"2. Не блокируют ли другие программы звуковую карту.\n"
+"3. Правильность настройки звуковой карты.\n"
+
+#: audacious/playlistwin.c:131 audacious/playlistwin.c:192
+msgid "/Remove Selected"
+msgstr "/Удалить выделенное"
+
+#: audacious/playlistwin.c:135 audacious/playlistwin.c:188
+#, fuzzy
+msgid "/Remove Unselected"
+msgstr "/Удалить выделенное"
+
+#: audacious/playlistwin.c:139 audacious/playlistwin.c:184
+#, fuzzy
+msgid "/Remove All"
+msgstr "/Удалить выделенное"
+
+#: audacious/playlistwin.c:145
+msgid "/Queue Toggle"
+msgstr "/Поставить песню в очередь"
+
+#: audacious/playlistwin.c:151
+#, fuzzy
+msgid "/Add CD..."
+msgstr "/Добавить/Файлы..."
+
+#: audacious/playlistwin.c:155
+#, fuzzy
+msgid "/Add Internet Address..."
+msgstr "/Добавить/Адрес интернет..."
+
+#: audacious/playlistwin.c:161
+#, fuzzy
+msgid "/Add Folders..."
+msgstr "/Добавить/Каталоги..."
+
+#: audacious/playlistwin.c:166
+#, fuzzy
+msgid "/Add Files..."
+msgstr "/Добавить/Файлы..."
+
+#: audacious/playlistwin.c:172
+msgid "/Clear Queue"
+msgstr "/Очистить очередь"
+
+#: audacious/playlistwin.c:178
+msgid "/Remove Unavailable Files"
+msgstr "/Удалить недоступные файлы"
+
+#: audacious/playlistwin.c:198
+msgid "/New List"
+msgstr "/Новый список"
+
+#: audacious/playlistwin.c:204
+#, fuzzy
+msgid "/Load List"
+msgstr "/Сортировать список"
+
+#: audacious/playlistwin.c:208
+#, fuzzy
+msgid "/Save List"
+msgstr "/Новый список"
+
+#: audacious/playlistwin.c:214
+msgid "/Update View"
+msgstr "/Обновить видимый список"
+
+#: audacious/playlistwin.c:220
+#, fuzzy
+msgid "/Invert Selection"
+msgstr "/Сортировать выбранные"
+
+#: audacious/playlistwin.c:226
+#, fuzzy
+msgid "/Select None"
+msgstr "/Сортировать выбранные"
+
+#: audacious/playlistwin.c:230
+#, fuzzy
+msgid "/Select All"
+msgstr "Выделить все"
+
+#: audacious/playlistwin.c:236
+msgid "/Randomize List"
+msgstr "/Перемешать список"
+
+#: audacious/playlistwin.c:238
+msgid "/Reverse List"
+msgstr "/Перевернуть список"
+
+#: audacious/playlistwin.c:241
+msgid "/Sort List"
+msgstr "/Сортировать список"
+
+#: audacious/playlistwin.c:242
+msgid "/Sort List/By Title"
+msgstr "/Сортировать список/По названию"
+
+#: audacious/playlistwin.c:244
+msgid "/Sort List/By Filename"
+msgstr "/Сортировать список/По имени файла"
+
+#: audacious/playlistwin.c:246
+msgid "/Sort List/By Path + Filename"
+msgstr "/Сортировать список/По пути + имя файла"
+
+#: audacious/playlistwin.c:248
+msgid "/Sort List/By Date"
+msgstr "/Сортировать список/По дате"
+
+#: audacious/playlistwin.c:250
+msgid "/Sort Selection"
+msgstr "/Сортировать выбранные"
+
+#: audacious/playlistwin.c:251
+msgid "/Sort Selection/By Title"
+msgstr "/Сортировать выбранные/По названию"
+
+#: audacious/playlistwin.c:253
+msgid "/Sort Selection/By Filename"
+msgstr "/Сортировать выбранные/По имени файла"
+
+#: audacious/playlistwin.c:255
+msgid "/Sort Selection/By Path + Filename"
+msgstr "/Сортировать выбранные/По пути + имя файла"
+
+#: audacious/playlistwin.c:257
+msgid "/Sort Selection/By Date"
+msgstr "/Сортировать выбранные/По дате"
+
+#: audacious/playlistwin.c:783
+#, c-format
+msgid "Error writing playlist \"%s\": %s"
+msgstr "Ошибка записи списка песен \"%s\": %s"
+
+#: audacious/playlistwin.c:804
+#, c-format
+msgid "%s already exist. Continue?"
+msgstr "%s уже существует. Продолжить?"
+
+#: audacious/playlistwin.c:818
+#, fuzzy, c-format
+msgid ""
+"<b><big>Unable to save playlist.</big></b>\n"
+"\n"
+"Unknown file type for '%s'.\n"
+msgstr "Невозможно сохранить список воспроизведения! Неизвестный тип файла %s"
+
+#: audacious/playlistwin.c:928
+#, fuzzy
+msgid "Load Playlist"
+msgstr "Загрузка списка воспроизведения"
+
+#: audacious/playlistwin.c:940
+#, fuzzy
+msgid "Save Playlist"
+msgstr "Сохранение списка воспроизведения"
+
+#: audacious/playlistwin.c:1675
+msgid "BMP Playlist Editor"
+msgstr "Редактор списка воспроизведения BMP"
+
+#: audacious/prefswin.c:83 audacious/glade/prefswin.glade:1379
+msgid "Appearance"
+msgstr "Внешний вид"
+
+#: audacious/prefswin.c:84 audacious/glade/prefswin.glade:2783
+msgid "Equalizer"
+msgstr "Эквалайзер"
+
+#: audacious/prefswin.c:85 audacious/glade/prefswin.glade:1669
+msgid "Mouse"
+msgstr "Мышь"
+
+#: audacious/prefswin.c:86 audacious/glade/prefswin.glade:2403
+msgid "Playlist"
+msgstr "Список воспроизведения"
+
+#: audacious/prefswin.c:87 audacious/glade/prefswin.glade:869
+msgid "Plugins"
+msgstr "Модули"
+
+#: audacious/prefswin.c:93
+msgid "Artist"
+msgstr "Исполнитель"
+
+#: audacious/prefswin.c:96
+msgid "Tracknumber"
+msgstr "Номер дорожки"
+
+#: audacious/prefswin.c:99
+msgid "Filepath"
+msgstr "Путь к файлу"
+
+#: audacious/prefswin.c:417 audacious/prefswin.c:504 audacious/prefswin.c:593
+#: audacious/prefswin.c:689
+msgid "Enabled"
+msgstr "Включен"
+
+#: audacious/prefswin.c:433 audacious/prefswin.c:520 audacious/prefswin.c:609
+#: audacious/prefswin.c:705
+msgid "Description"
+msgstr "Описание"
+
+#: audacious/prefswin.c:1462
+msgid "Category"
+msgstr "Категория"
+
+#: audacious/prefswin.c:1630
+msgid "Preferences Window"
+msgstr "Окно настроек"
+
+#: audacious/util.c:882
+#, fuzzy
+msgid "Add/Open Files dialog"
+msgstr "Добавление файлов"
+
+#: audacious/util.c:940
+#, fuzzy
+msgid "Open Files"
+msgstr "/Убрать файлы"
+
+#: audacious/util.c:944
+msgid "Close dialog on Open"
+msgstr ""
+
+#: audacious/util.c:956 audacious/glade/addfiles.glade:8
+msgid "Add Files"
+msgstr "Добавление файлов"
+
+#: audacious/util.c:960
+msgid "Close dialog on Add"
+msgstr ""
+
+#: audacious/util.c:1176
+msgid "  (invalid UTF-8)"
+msgstr "  (недопустимая последовательность Юникод)"
+
+#: audacious/glade/prefswin.glade:8
+msgid "BMP Preferences"
+msgstr "Изменение настроек BMP"
+
+#: audacious/glade/prefswin.glade:85
+msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
+msgstr "<span size=\"xx-large\"><b>Модули</b></span>"
+
+#: audacious/glade/prefswin.glade:147
+msgid "_Media plugin list:"
+msgstr "_Список модулей поддержки музыкальных форматов:"
+
+#: audacious/glade/prefswin.glade:244
+msgid "<span size=\"medium\"><b>Media</b></span>"
+msgstr "<span size=\"medium\"><b>Медиа</b></span>"
+
+#: audacious/glade/prefswin.glade:282
+msgid "_General plugin list:"
+msgstr "_Список модулей общего назначения:"
+
+#: audacious/glade/prefswin.glade:379
+msgid "<span size=\"medium\"><b>General</b></span>"
+msgstr "<span size=\"medium\"><b>Общие</b></span>"
+
+#: audacious/glade/prefswin.glade:417
+msgid "_Visualization plugin list:"
+msgstr "Список модулей _визуализации:"
+
+#: audacious/glade/prefswin.glade:514
+msgid "<b>Visualization</b>"
+msgstr "<b>Визуализация</b>"
+
+#: audacious/glade/prefswin.glade:552
+msgid "_Effect plugin list:"
+msgstr "Список модулей _эффектов:"
+
+#: audacious/glade/prefswin.glade:649
+msgid "<b>Effects</b>"
+msgstr "<b>Эффекты</b>"
+
+#: audacious/glade/prefswin.glade:693
+msgid "_Current output plugin:"
+msgstr "_Текущий модуль вывода звука:"
+
+#: audacious/glade/prefswin.glade:753
+msgid ""
+"The change is now effective in BMP's configuration database, but won't take "
+"effect for playback until the next song!\n"
+"\n"
+"Optionally, you can stop and restart playback for the change to take effect."
+msgstr ""
+"Изменения задействованы в конфигурации базы данных BMP, но не будут "
+"задействованы при воспроизведении до следующей песни!\n"
+"\n"
+"Дополнительно, чтобы изменения вступили в силу, вы можете остановить и "
+"перезапустить воспроизведение."
+
+#: audacious/glade/prefswin.glade:835
+msgid "<span size=\"medium\"><b>Output</b></span>"
+msgstr "<span size=\"medium\"><b>Вывод звука</b></span>"
+
+#: audacious/glade/prefswin.glade:894
+msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
+msgstr "<span size=\"xx-large\"><b>Внешний вид</b></span>"
+
+#: audacious/glade/prefswin.glade:951
+msgid "<b>_Skin</b>"
+msgstr "<b>_Тема</b>"
+
+#: audacious/glade/prefswin.glade:1039
+msgid "<b>_Fonts</b>"
+msgstr "<b>_Шрифты</b>"
+
+#: audacious/glade/prefswin.glade:1092
+msgid "_Player:"
+msgstr "_Главное окно:"
+
+#: audacious/glade/prefswin.glade:1131
+msgid "_Playlist:"
+msgstr "_Список воспроизведения:"
+
+#: audacious/glade/prefswin.glade:1159
+msgid "Select main player window font:"
+msgstr "Выбор шрифта для главного окна"
+
+#: audacious/glade/prefswin.glade:1181
+msgid "Select playlist font:"
+msgstr "Выбор шрифта для списка воспроизведения"
+
+#: audacious/glade/prefswin.glade:1233
+msgid "<b>_Miscellaneous</b>"
+msgstr "<b>_Разное</b>"
+
+#: audacious/glade/prefswin.glade:1285
+msgid "Show track numbers in playlist"
+msgstr "Показывать номера песен в списке воспроизведения"
+
+#: audacious/glade/prefswin.glade:1335
+msgid "Use custom cursors"
+msgstr "Использовать курсоры, установленные темой"
+
+#: audacious/glade/prefswin.glade:1404
+msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
+msgstr "<span size=\"xx-large\"><b>Мышь</b></span>"
+
+#: audacious/glade/prefswin.glade:1455
+msgid "<b>Mouse wheel</b>"
+msgstr "<b>Колесо мыши</b>"
+
+#: audacious/glade/prefswin.glade:1499
+#, fuzzy
+msgid "Changes volume by"
+msgstr "Поворот колеса мыши изменяет громкость на"
+
+#: audacious/glade/prefswin.glade:1523
+msgid "percent"
+msgstr "процентов"
+
+#: audacious/glade/prefswin.glade:1547
+#, fuzzy
+msgid "Scrolls playlist by"
+msgstr "Поворот колеса мыши прокручивает список воспроизведения на"
+
+#: audacious/glade/prefswin.glade:1596
+msgid "lines"
+msgstr "строк"
+
+#: audacious/glade/prefswin.glade:1694
+msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
+msgstr "<span size=\"xx-large\"><b>Список воспроизведения</b></span>"
+
+#: audacious/glade/prefswin.glade:1751
+msgid "<b>Filename</b>"
+msgstr "<b>Название файла</b>"
+
+#: audacious/glade/prefswin.glade:1789
+msgid "Convert underscores to blanks"
+msgstr "Преобразовывать подчёркивание в пробел"
+
+#: audacious/glade/prefswin.glade:1824
+msgid "Convert %20 to blanks"
+msgstr "Преобразовывать %20 в пробел"
+
+#: audacious/glade/prefswin.glade:1864
+msgid "<b>Metadata</b>"
+msgstr "<b>Информация о песне и исполнителе</b>"
+
+#: audacious/glade/prefswin.glade:1901
+msgid "Load metadata (tag information) from music files."
+msgstr ""
+"Загружать информацию о песне и исполнителе (информационный тэг) из "
+"музыкальных файлов."
+
+#: audacious/glade/prefswin.glade:1903
+msgid "Load metadata from playlists and files"
+msgstr ""
+"Загружать информацию о песнях из музыкальных файлов и списков воспроизведения"
+
+#: audacious/glade/prefswin.glade:1941
+msgid "Load metadata when adding the file to the playlist or opening it"
+msgstr ""
+"Загружать метаданные при добавлении файла в список воспроизведения или "
+"открытии"
+
+#: audacious/glade/prefswin.glade:1943
+msgid "On load"
+msgstr "При открытии"
+
+#: audacious/glade/prefswin.glade:1963
+msgid "Load metadata on demand when displaying the file in the playlist"
+msgstr "Загружать метаданные при отображении файла в списке воспроизведения"
+
+#: audacious/glade/prefswin.glade:1965
+msgid "On display"
+msgstr "При отображении"
+
+#: audacious/glade/prefswin.glade:2013
+msgid "<b>Playback</b>"
+msgstr "<b>Воспроизведение</b>"
+
+#: audacious/glade/prefswin.glade:2050
+msgid "When finished playing a song, don't automatically advance to the next."
+msgstr ""
+"При завершении проигрывания песни не передвигаться автоматически на "
+"следующую."
+
+#: audacious/glade/prefswin.glade:2052
+msgid "Don't advance in the playlist"
+msgstr "Не продвигаться по списку воспроизведения"
+
+#: audacious/glade/prefswin.glade:2087
+msgid "Pause between songs"
+msgstr "Пауза между песнями"
+
+#: audacious/glade/prefswin.glade:2125
+msgid "Pause for"
+msgstr "Приостанавливать на"
+
+#: audacious/glade/prefswin.glade:2167
+msgid "seconds"
+msgstr "секунд"
+
+#: audacious/glade/prefswin.glade:2215
+msgid "<b>Song display</b>"
+msgstr "<b>Отображение названия песни</b>"
+
+#: audacious/glade/prefswin.glade:2285
+msgid "Custom string:"
+msgstr "Особый:"
+
+#: audacious/glade/prefswin.glade:2315 audacious/glade/prefswin.glade:2547
+#: audacious/glade/prefswin.glade:2570
+msgid "*"
+msgstr "*"
+
+#: audacious/glade/prefswin.glade:2332
+msgid ""
+"TITLE\n"
+"ARTIST - TITLE\n"
+"ARTIST - ALBUM - TITLE\n"
+"ALBUM - TITLE\n"
+"Custom"
+msgstr ""
+"Название\n"
+"Исполнитель - Название\n"
+"Исполнитель - Альбом - Название\n"
+"Альбом - Название\n"
+"Особое"
+
+#: audacious/glade/prefswin.glade:2350
+msgid "Show information about titlestring format"
+msgstr "Вставить последовательность строки названия"
+
+#: audacious/glade/prefswin.glade:2428
+msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
+msgstr "<span size=\"xx-large\"><b>Эквалайзер</b></span>"
+
+#: audacious/glade/prefswin.glade:2479
+msgid "<b>Presets</b>"
+msgstr "<b>Предустановки</b>"
+
+#: audacious/glade/prefswin.glade:2587
+msgid "Directory preset file:"
+msgstr "Файл каталога предустановок:"
+
+#: audacious/glade/prefswin.glade:2611
+msgid "File preset extension:"
+msgstr "Файл расширений для предустановок:"
+
+#: audacious/glade/prefswin.glade:2655
+msgid "Available _Presets:"
+msgstr "Доступные _предустановки:"
+
+#: audacious/glade/addfiles.glade:77
+msgid "Close Dialog on Add"
+msgstr ""
+
+#: audacious/glade/addfiles.glade:105
+msgid "Select All"
+msgstr "Выделить все"
+
+#: audacious/glade/addfiles.glade:116
+msgid "Deselect All"
+msgstr "Снять выделение"
+
+#~ msgid "Enable SHOUT/Icecast title streaming"
+#~ msgstr "Разрешить приём названий через SHOUT/Icecast"
+
+#~ msgid "Danicel Liviu Cristian"
+#~ msgstr "Danicel Liviu Cristian"
+
+#~ msgid "Default skin:"
+#~ msgstr "Тема по умолчанию:"
+
+#~ msgid "Vlad Gerasimov"
+#~ msgstr "Владислав Герасимов"
+
+#~ msgid "XMMS compatibility mode"
+#~ msgstr "Режим совместимости с XMMS"
+
+#~ msgid "Could not initialize gnome-vfs.\n"
+#~ msgstr "Невозможно инициализировать gnome-vfs.\n"
+
+#~ msgid "/Visualization plugins"
+#~ msgstr "/Модули визуализации"
+
+#~ msgid "/Play CD"
+#~ msgstr "/Воспроизвести CD"
+
+#~ msgid "/5 seconds REW"
+#~ msgstr "/Назад на 5 секунд"
+
+#~ msgid "/5 seconds FFWD"
+#~ msgstr "/Вперёд на 5 секунд"
+
+#~ msgid "/Add"
+#~ msgstr "/Добавить"
+
+#~ msgid "/Playback"
+#~ msgstr "/Воспроизведение"
+
+#~ msgid "/_Options"
+#~ msgstr "/_Параметры"
+
+#~ msgid "/Show Graphical EQ"
+#~ msgstr "/Показать графический эквалайзер"
+
+#~ msgid "/Reload skin"
+#~ msgstr "/Перезагрузить тему"
+
+#~ msgid "/No Playlist Advance"
+#~ msgstr "/Не переходить на следующую песню"
+
+#~ msgid "/Show on all desktops"
+#~ msgstr "/Поместить на все рабочие места"
+
+#~ msgid "/WindowShade Mode"
+#~ msgstr "/Скрутить главное окно"
+
+#~ msgid "/Playlist WindowShade Mode"
+#~ msgstr "/Скрутить окно списка воспроизведения"
+
+#~ msgid "/Equalizer WindowShade Mode"
+#~ msgstr "/Скрутить окно эквалайзера"
+
+#~ msgid "/DoubleSize"
+#~ msgstr "/Двойной размер"
+
+#~ msgid "/Easy Move"
+#~ msgstr "/Простое перемещение"
+
+#~ msgid "Jump to:"
+#~ msgstr "Перескочить на:"
+
+#~ msgid "Jump"
+#~ msgstr "Перескочить"
+
+#~ msgid "Add URL"
+#~ msgstr "Добавление URL"
+
+#~ msgid "DISABLE DOUBLESIZE"
+#~ msgstr "ОТКЛЮЧИТЬ ДВОЙНОЙ РАЗМЕР"
+
+#~ msgid "ENABLE DOUBLESIZE"
+#~ msgstr "ВКЛЮЧИТЬ ДВОЙНОЙ РАЗМЕР"
+
+#~ msgid "/By extension"
+#~ msgstr "/По расширению"
+
+#~ msgid "/Playlist"
+#~ msgstr "/Список воспроизведения"
+
+#~ msgid "/Close Window"
+#~ msgstr "/Закрыть окно"
+
+#~ msgid "/Sort by Title"
+#~ msgstr "/Сортировать по названию"
+
+#~ msgid "/Sort by Filename"
+#~ msgstr "/Сортировать по имени файла"
+
+#~ msgid "/Sort by Date"
+#~ msgstr "/Сортировать по дате"
+
+#~ msgid "Failed to delete \"%s\": %s."
+#~ msgstr "Не удалось удалить \"%s\": %s."
+
+#~ msgid "%d of %d files successfully deleted."
+#~ msgstr "%d из %d файлов успешно удалены."
+
+#~ msgid "XMMS: Files deleted"
+#~ msgstr "BMP: Файлы удалены"
+
+#~ msgid "Really delete %d files?"
+#~ msgstr "Действительно удалить %d файл(ов)?"
+
+#~ msgid "Really delete: \"%s\"?"
+#~ msgstr "Действительно удалить: \"%s\"?"
+
+#~ msgid "Play Files"
+#~ msgstr "Воспроизвести файлы"
+
+#~ msgid "Load"
+#~ msgstr "Загрузить"
+
+#~ msgid "Auto-load preset"
+#~ msgstr "Автоматически загружать предустановки"
+
+#~ msgid "Zero"
+#~ msgstr "Пустой"
+
+#~ msgid "From file"
+#~ msgstr "Из файла"
+
+#~ msgid "From WinAMP EQF file"
+#~ msgstr "Из EQF-файла WinAMP "
+
+#~ msgid "Import"
+#~ msgstr "Импортировать"
+
+#~ msgid "WinAMP presets"
+#~ msgstr "Предустановки из WinAMP"
+
+#~ msgid "To file"
+#~ msgstr "В файл"
+
+#~ msgid "To WinAMP EQF file"
+#~ msgstr "В EQF-файл WinAMP"
+
+#~ msgid "Configure Equalizer"
+#~ msgstr "Настроить эквалайзер"
+
+#~ msgid "Smooth title scrolling in main window"
+#~ msgstr "Плавная прокрутка названия в главном окне"

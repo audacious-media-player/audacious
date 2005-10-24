@@ -1,0 +1,3639 @@
+# Korean translation for the BMP(Beep Media Player)
+# Copyright (C) 2003 Free Software Foundation, Inc.
+# This file is distributed under the same license as the bmp package.
+# DongCheon Park <dcpark@kaist.ac.kr>, 2003-2004.
+# Merged with the previous XMMS Korean translation by
+#   Sang-Jin Hwang <accel@accellinux.org>, 1999.
+#   Man-Yong Lee <yong@linuxkorea.co.kr>, 2000.
+#   Jaegeum Choe <baedaron@hananet.net>, 2001.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bmp 0.9.7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-10-22 14:40+0800\n"
+"PO-Revision-Date: 2004-06-29 19:02+0900\n"
+"Last-Translator: DongCheon Park <dcpark@kaist.ac.kr>\n"
+"Language-Team: Korean <ko@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Input/cdaudio/cdaudio.c:180
+msgid "CD Audio Plugin"
+msgstr "CD 오디오 플러그인"
+
+#: Input/cdaudio/cdaudio.c:1004 Input/cdaudio/cdaudio.c:1013
+#, c-format
+msgid "CD Audio Track %02u"
+msgstr "CD 오디오 트랙 %02u"
+
+#: Input/cdaudio/cdinfo.c:157 Input/cdaudio/cdinfo.c:158
+#: Input/cdaudio/cdinfo.c:159
+msgid "(unknown)"
+msgstr "(알 수 없음)"
+
+#: Input/cdaudio/configure.c:199 Input/cdaudio/configure.c:213
+#: Input/cdaudio/configure.c:541
+#, c-format
+msgid "Drive %d"
+msgstr "드라이브 %d"
+
+#: Input/cdaudio/configure.c:259
+#, c-format
+msgid ""
+"Failed to open device %s\n"
+"Error: %s\n"
+"\n"
+msgstr ""
+"%s 장치 열기 실패\n"
+"오류: %s\n"
+"\n"
+
+#: Input/cdaudio/configure.c:266
+msgid ""
+"Failed to read \"Table of Contents\"\n"
+"Maybe no disc in the drive?\n"
+"\n"
+msgstr ""
+"\"목록\" 읽기 실패\n"
+"드라이브에 디스크가 없을지도?\n"
+"\n"
+
+#: Input/cdaudio/configure.c:270
+#, c-format
+msgid ""
+"Device %s OK.\n"
+"Disc has %d tracks"
+msgstr ""
+"%s 장치 정상.\n"
+"디스크에 %d개 트랙 존재"
+
+#: Input/cdaudio/configure.c:279
+#, c-format
+msgid " (%d data tracks)"
+msgstr " (%d 데이터 트랙)"
+
+#: Input/cdaudio/configure.c:280
+#, c-format
+msgid ""
+"\n"
+"Total length: %d:%d\n"
+msgstr ""
+"\n"
+"전체 길이: %d:%d\n"
+
+#: Input/cdaudio/configure.c:285
+msgid "Digital audio extraction not tested as the disc has no audio tracks\n"
+msgstr ""
+"디스크에 오디오 트랙이 없으므로 디지털 오디오 추출 시험을 못했습니다.\n"
+
+#: Input/cdaudio/configure.c:302
+msgid ""
+"Digital audio extraction test: OK\n"
+"\n"
+msgstr ""
+"디지털 오디오 추출 시험: 정상\n"
+"\n"
+
+#: Input/cdaudio/configure.c:306
+#, c-format
+msgid ""
+"Digital audio extraction test failed: %s\n"
+"\n"
+msgstr ""
+"디지털 오디오 추출 시험 실패: %s\n"
+"\n"
+
+#: Input/cdaudio/configure.c:316
+#, c-format
+msgid ""
+"Failed to check directory %s\n"
+"Error: %s"
+msgstr ""
+"%s 디렉토리 검사 실패\n"
+"오류: %s"
+
+#: Input/cdaudio/configure.c:322
+#, c-format
+msgid "Error: %s exist, but is not a directory"
+msgstr "오류: %s가 존재하나, 디렉토리가 아닙니다."
+
+#: Input/cdaudio/configure.c:325
+#, c-format
+msgid "Directory %s OK."
+msgstr "%s 디렉토리 정상."
+
+#: Input/cdaudio/configure.c:369
+msgid "Device:"
+msgstr "장치:"
+
+#: Input/cdaudio/configure.c:377
+msgid "_Device:"
+msgstr "장치(_D):"
+
+#: Input/cdaudio/configure.c:387
+msgid "Dir_ectory:"
+msgstr "디렉토리(_e):"
+
+#: Input/cdaudio/configure.c:399
+msgid "Play mode:"
+msgstr "재생 모드:"
+
+#: Input/cdaudio/configure.c:405
+msgid "Analog"
+msgstr "아날로그"
+
+#: Input/cdaudio/configure.c:413
+msgid "Digital audio extraction"
+msgstr "디지털 오디오 추출"
+
+#: Input/cdaudio/configure.c:423
+msgid "Volume control:"
+msgstr "음량 조절:"
+
+#: Input/cdaudio/configure.c:429
+msgid "No mixer"
+msgstr "믹서 없음"
+
+#: Input/cdaudio/configure.c:435
+msgid "CDROM drive"
+msgstr "CDROM 드라이브"
+
+#: Input/cdaudio/configure.c:441
+msgid "OSS mixer"
+msgstr "OSS 믹서"
+
+#: Input/cdaudio/configure.c:464
+msgid "Check drive..."
+msgstr "드라이브 검사..."
+
+#: Input/cdaudio/configure.c:470
+msgid "Remove drive"
+msgstr "드라이브 제거"
+
+#: Input/cdaudio/configure.c:515
+msgid "CD Audio Player Configuration"
+msgstr "CD 오디오 재생기 설정"
+
+#: Input/cdaudio/configure.c:553
+msgid "Add drive"
+msgstr "드라이브 추가"
+
+#: Input/cdaudio/configure.c:561
+msgid "Device"
+msgstr "장치"
+
+#: Input/cdaudio/configure.c:571
+msgid "CDDB:"
+msgstr "CDDB:"
+
+#: Input/cdaudio/configure.c:582
+msgid "Use CDDB"
+msgstr "CDDB 사용"
+
+#: Input/cdaudio/configure.c:586
+msgid "Get server list"
+msgstr "서버 목록 얻기"
+
+#: Input/cdaudio/configure.c:589
+msgid "Show network window"
+msgstr "네트워크 창 보기"
+
+#: Input/cdaudio/configure.c:599
+msgid "CDDB server:"
+msgstr "CDDB 서버:"
+
+#: Input/cdaudio/configure.c:614
+msgid "CD Index:"
+msgstr "CD 인덱스:"
+
+#: Input/cdaudio/configure.c:621
+msgid "Use CD Index"
+msgstr "CD 인덱스 사용"
+
+#: Input/cdaudio/configure.c:630
+msgid "CD Index server:"
+msgstr "CD 인덱스 서버:"
+
+#: Input/cdaudio/configure.c:645
+msgid "Track names:"
+msgstr "트랙 이름:"
+
+#: Input/cdaudio/configure.c:652 Input/mpg123/configure.c:799
+#: Input/vorbis/configure.c:472
+msgid "Override generic titles"
+msgstr "일반 제목 덮어쓰기"
+
+#: Input/cdaudio/configure.c:668
+msgid "Name format:"
+msgstr "이름 형식:"
+
+#: Input/cdaudio/configure.c:680
+msgid "CD Info"
+msgstr "CD 정보"
+
+#: Input/mpg123/configure.c:260
+msgid "Select the directory where you want to store the MPEG streams:"
+msgstr "MPEG 스트림을 저장할 디렉토리 선택:"
+
+#: Input/mpg123/configure.c:344
+#, fuzzy
+msgid "MPEG Audio Plugin Configuration"
+msgstr "bmp: MPEG 오디오 플러그인 설정"
+
+#: Input/mpg123/configure.c:361
+msgid "Resolution:"
+msgstr "해상도:"
+
+#: Input/mpg123/configure.c:369
+msgid "16 bit"
+msgstr "16 비트"
+
+#: Input/mpg123/configure.c:378
+msgid "8 bit"
+msgstr "8 비트"
+
+#: Input/mpg123/configure.c:385 Input/vorbis/fileinfo.c:862
+#: Input/vorbis/fileinfo.c:918
+msgid "Channels:"
+msgstr "채널:"
+
+#: Input/mpg123/configure.c:393
+msgid "Stereo (if available)"
+msgstr "스테레오 (가능한 경우)"
+
+#: Input/mpg123/configure.c:404
+msgid "Mono"
+msgstr "모노"
+
+#: Input/mpg123/configure.c:411
+msgid "Down sample:"
+msgstr "샘플 다운:"
+
+#: Input/mpg123/configure.c:420
+msgid "1:1 (44 kHz)"
+msgstr "1:1 (44 kHz)"
+
+#: Input/mpg123/configure.c:431
+msgid "1:2 (22 kHz)"
+msgstr "1:2 (22 kHz)"
+
+#: Input/mpg123/configure.c:442
+msgid "1:4 (11 kHz)"
+msgstr "1:4 (11 kHz)"
+
+#: Input/mpg123/configure.c:455
+msgid "Decoder:"
+msgstr "디코더:"
+
+#: Input/mpg123/configure.c:464
+msgid "Automatic detection"
+msgstr "자동 감지"
+
+#: Input/mpg123/configure.c:472
+msgid "3DNow! optimized decoder"
+msgstr "3DNow! 최적화 디코더"
+
+#: Input/mpg123/configure.c:480
+msgid "MMX optimized decoder"
+msgstr "MMX 최적화 디코더"
+
+#: Input/mpg123/configure.c:487
+msgid "FPU decoder"
+msgstr "FPU 디코더"
+
+#: Input/mpg123/configure.c:513
+msgid "Options"
+msgstr "선택사항"
+
+#: Input/mpg123/configure.c:520
+msgid "Content"
+msgstr "내용"
+
+#: Input/mpg123/configure.c:526
+msgid "Extension"
+msgstr "확장자"
+
+#: Input/mpg123/configure.c:532
+msgid "Extension and content"
+msgstr "확장자 및 내용"
+
+#: Input/mpg123/configure.c:556
+msgid "Decoder"
+msgstr "디코더"
+
+#: Input/mpg123/configure.c:560 Input/vorbis/configure.c:287
+#: Output/OSS/configure.c:302 Output/esd/configure.c:171
+msgid "Buffering:"
+msgstr "버퍼링:"
+
+#: Input/mpg123/configure.c:573 Input/vorbis/configure.c:299
+msgid "Buffer size (kb):"
+msgstr "버퍼 크기 (kb):"
+
+#: Input/mpg123/configure.c:588 Input/vorbis/configure.c:313
+#: Output/OSS/configure.c:329 Output/esd/configure.c:198
+msgid "Pre-buffer (percent):"
+msgstr "사전 버퍼 (퍼센트):"
+
+#: Input/mpg123/configure.c:602 Input/vorbis/configure.c:327
+msgid "Proxy:"
+msgstr "프록시:"
+
+#: Input/mpg123/configure.c:612 Input/vorbis/configure.c:337
+msgid "Use proxy"
+msgstr "프록시 사용"
+
+#: Input/mpg123/configure.c:625 Input/vorbis/configure.c:350
+#: Output/esd/configure.c:114 Output/esd/configure.c:144
+msgid "Host:"
+msgstr "호스트:"
+
+#: Input/mpg123/configure.c:635 Input/vorbis/configure.c:360
+#: Output/esd/configure.c:153
+msgid "Port:"
+msgstr "포트:"
+
+#: Input/mpg123/configure.c:648 Input/vorbis/configure.c:373
+msgid "Use authentication"
+msgstr "인증 사용"
+
+#: Input/mpg123/configure.c:665 Input/vorbis/configure.c:390
+msgid "Username:"
+msgstr "사용자명:"
+
+#: Input/mpg123/configure.c:676 Input/vorbis/configure.c:401
+msgid "Password:"
+msgstr "비밀번호:"
+
+#: Input/mpg123/configure.c:693 Input/vorbis/configure.c:418
+msgid "Save stream to disk:"
+msgstr "스트림을 저장할 디스크:"
+
+#: Input/mpg123/configure.c:704 Input/vorbis/configure.c:429
+msgid "Save stream to disk"
+msgstr "디스크에 스트림 저장"
+
+#: Input/mpg123/configure.c:718 Input/vorbis/configure.c:443
+msgid "Path:"
+msgstr "경로:"
+
+#: Input/mpg123/configure.c:728 Input/vorbis/configure.c:453
+msgid "Browse"
+msgstr "탐색"
+
+#: Input/mpg123/configure.c:734
+msgid "SHOUT/Icecast:"
+msgstr "샤우트/아이스캐스트:"
+
+#: Input/mpg123/configure.c:748
+msgid "Enable Icecast Metadata UDP Channel"
+msgstr "아이스캐스트 메타정보 UDP 채널 사용"
+
+#: Input/mpg123/configure.c:755 Input/vorbis/configure.c:460
+msgid "Streaming"
+msgstr "스트리밍"
+
+#: Input/mpg123/configure.c:757
+msgid "ID3 Tags:"
+msgstr "ID3 태그:"
+
+#: Input/mpg123/configure.c:765
+msgid "Disable ID3V2 tags"
+msgstr "ID3V2 태그 사용 안함"
+
+#: Input/mpg123/configure.c:774
+msgid "Convert non-UTF8 ID3 tags to UTF8"
+msgstr ""
+
+#: Input/mpg123/configure.c:787
+msgid "ID3 encoding:"
+msgstr ""
+
+#: Input/mpg123/configure.c:812
+msgid "ID3 format:"
+msgstr "ID3 형식:"
+
+#: Input/mpg123/configure.c:826 Input/vorbis/configure.c:499
+#: audacious/prefswin.c:95
+msgid "Title"
+msgstr "제목"
+
+#: Input/mpg123/fileinfo.c:471
+#, c-format
+msgid ""
+"%s\n"
+"Unable to write to file: %s"
+msgstr ""
+"%s\n"
+"파일로 기록할 수 없습니다.: %s"
+
+#: Input/mpg123/fileinfo.c:472 Input/mpg123/fileinfo.c:477
+msgid "Couldn't write tag!"
+msgstr "태그를 쓸 수 없습니다!"
+
+#: Input/mpg123/fileinfo.c:476 Input/mpg123/fileinfo.c:567
+#, c-format
+msgid ""
+"%s\n"
+"Unable to open file: %s"
+msgstr ""
+"%s\n"
+"파일을 열 수 없습니다.: %s"
+
+#: Input/mpg123/fileinfo.c:479 Input/mpg123/fileinfo.c:570
+msgid "File Info"
+msgstr "파일 정보"
+
+#: Input/mpg123/fileinfo.c:479 Input/mpg123/fileinfo.c:570
+#: Input/mpg123/http.c:220 Input/mpg123/mpg123.c:1184
+#: Input/vorbis/fileinfo.c:212 Input/vorbis/http.c:218
+#: Input/vorbis/vorbis.c:802 Output/OSS/about.c:54 Output/esd/about.c:49
+#: Output/alsa/about.c:53
+msgid "Ok"
+msgstr "확인"
+
+#: Input/mpg123/fileinfo.c:556
+#, c-format
+msgid ""
+"%s\n"
+"Unable to truncate file: %s"
+msgstr ""
+"%s\n"
+"파일을 자를 수 없습니다.: %s"
+
+#: Input/mpg123/fileinfo.c:558 Input/mpg123/fileinfo.c:568
+msgid "Couldn't remove tag!"
+msgstr "태그를 제거할 수 없습니다!"
+
+#: Input/mpg123/fileinfo.c:562
+msgid "No tag to remove!"
+msgstr "제거할 태그가 없습니다!"
+
+#: Input/mpg123/fileinfo.c:602
+msgid "Stereo"
+msgstr "스테레오"
+
+#: Input/mpg123/fileinfo.c:602
+msgid "Joint stereo"
+msgstr "조인트 스테레오"
+
+#: Input/mpg123/fileinfo.c:603
+msgid "Dual channel"
+msgstr "이중 채널"
+
+#: Input/mpg123/fileinfo.c:603
+msgid "Single channel"
+msgstr "단일 채널"
+
+#: Input/mpg123/fileinfo.c:618 Input/mpg123/fileinfo.c:1258
+#: Input/mpg123/fileinfo.c:1379
+#, c-format
+msgid "%d KBit/s"
+msgstr "%d KBit/s"
+
+#: Input/mpg123/fileinfo.c:619 Input/mpg123/fileinfo.c:1262
+#: Input/mpg123/fileinfo.c:1383
+#, c-format
+msgid "%ld Hz"
+msgstr "%ld Hz"
+
+#: Input/mpg123/fileinfo.c:639
+msgid "None"
+msgstr "없음"
+
+#: Input/mpg123/fileinfo.c:640
+msgid "50/15 ms"
+msgstr "50/15 ms"
+
+#: Input/mpg123/fileinfo.c:642
+msgid "CCIT J.17"
+msgstr "CCIT J.17"
+
+#: Input/mpg123/fileinfo.c:643
+msgid "No"
+msgstr "아니오"
+
+#: Input/mpg123/fileinfo.c:644
+msgid "Yes"
+msgstr "예"
+
+#: Input/mpg123/fileinfo.c:691 Input/vorbis/fileinfo.c:557
+msgid "Name:"
+msgstr "이름:"
+
+#: Input/mpg123/fileinfo.c:707
+msgid " MPEG Info "
+msgstr " MPEG 정보 "
+
+#: Input/mpg123/fileinfo.c:722 Input/mpg123/fileinfo.c:1122
+msgid "MPEG Level:"
+msgstr "MPEG 수준:"
+
+#: Input/mpg123/fileinfo.c:735 Input/mpg123/fileinfo.c:1125
+#: Input/vorbis/fileinfo.c:836 Input/vorbis/fileinfo.c:912
+msgid "Bit rate:"
+msgstr "비트율:"
+
+#: Input/mpg123/fileinfo.c:748 Input/mpg123/fileinfo.c:1128
+#: Input/vorbis/fileinfo.c:849 Input/vorbis/fileinfo.c:915
+msgid "Sample rate:"
+msgstr "샘플링율:"
+
+#: Input/mpg123/fileinfo.c:762 Input/mpg123/fileinfo.c:1143
+msgid "Frames:"
+msgstr "프레임수:"
+
+#: Input/mpg123/fileinfo.c:775 Input/mpg123/fileinfo.c:1146
+#: Input/vorbis/fileinfo.c:888 Input/vorbis/fileinfo.c:924
+msgid "File size:"
+msgstr "파일크기:"
+
+#: Input/mpg123/fileinfo.c:798 Input/mpg123/fileinfo.c:1131
+msgid "Error Protection:"
+msgstr "오류 방지:"
+
+#: Input/mpg123/fileinfo.c:811 Input/mpg123/fileinfo.c:1134
+#: Input/vorbis/fileinfo.c:718
+msgid "Copyright:"
+msgstr "사용권:"
+
+#: Input/mpg123/fileinfo.c:824 Input/mpg123/fileinfo.c:1137
+msgid "Original:"
+msgstr "원본:"
+
+#: Input/mpg123/fileinfo.c:837 Input/mpg123/fileinfo.c:1140
+msgid "Emphasis:"
+msgstr "강조:"
+
+#: Input/mpg123/fileinfo.c:851
+msgid " ID3 Tag "
+msgstr "ID3 태그"
+
+#: Input/mpg123/fileinfo.c:859 Input/vorbis/fileinfo.c:580
+msgid "Title:"
+msgstr "제목:"
+
+#: Input/mpg123/fileinfo.c:874 Input/vorbis/fileinfo.c:591
+msgid "Artist:"
+msgstr "가수:"
+
+#: Input/mpg123/fileinfo.c:889 Input/vorbis/fileinfo.c:602
+msgid "Album:"
+msgstr "앨범:"
+
+#: Input/mpg123/fileinfo.c:904 Input/vorbis/fileinfo.c:613
+msgid "Comment:"
+msgstr "설명:"
+
+#: Input/mpg123/fileinfo.c:926
+msgid "Year:"
+msgstr "연도:"
+
+#: Input/mpg123/fileinfo.c:938 Input/vorbis/fileinfo.c:636
+msgid "Track number:"
+msgstr "트랙 번호:"
+
+#: Input/mpg123/fileinfo.c:970 Input/vorbis/fileinfo.c:648
+msgid "Genre:"
+msgstr "장르:"
+
+#: Input/mpg123/fileinfo.c:1007
+msgid "Copy album tags"
+msgstr ""
+
+#: Input/mpg123/fileinfo.c:1008
+msgid "Paste album tags"
+msgstr ""
+
+#: Input/mpg123/fileinfo.c:1101 Input/vorbis/fileinfo.c:1014
+#: audacious/mainwin.c:780
+#, c-format
+msgid "%s - BMP"
+msgstr "%s - BMP"
+
+#: Input/mpg123/fileinfo.c:1123 Input/mpg123/fileinfo.c:1126
+#: Input/mpg123/fileinfo.c:1129 Input/mpg123/fileinfo.c:1132
+#: Input/mpg123/fileinfo.c:1135 Input/mpg123/fileinfo.c:1138
+#: Input/mpg123/fileinfo.c:1141 Input/mpg123/fileinfo.c:1144
+#: Input/mpg123/fileinfo.c:1147 Input/vorbis/fileinfo.c:913
+#: Input/vorbis/fileinfo.c:916 Input/vorbis/fileinfo.c:919
+#: Input/vorbis/fileinfo.c:922 Input/vorbis/fileinfo.c:925
+msgid "N/A"
+msgstr "불가"
+
+#: Input/mpg123/fileinfo.c:1250 Input/mpg123/fileinfo.c:1371
+#, c-format
+msgid ""
+"Variable,\n"
+"avg. bitrate: %d KBit/s"
+msgstr ""
+"가변,\n"
+"평균 비트율: %d KBit/s"
+
+#: Input/mpg123/fileinfo.c:1264 Input/mpg123/fileinfo.c:1266
+#: Input/mpg123/fileinfo.c:1267 Input/mpg123/fileinfo.c:1268
+#: Input/mpg123/fileinfo.c:1385 Input/mpg123/fileinfo.c:1387
+#: Input/mpg123/fileinfo.c:1388 Input/mpg123/fileinfo.c:1389
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: Input/mpg123/fileinfo.c:1269 Input/mpg123/fileinfo.c:1390
+#: Input/vorbis/fileinfo.c:957
+#, c-format
+msgid "%d"
+msgstr "%d"
+
+#: Input/mpg123/fileinfo.c:1270 Input/mpg123/fileinfo.c:1391
+#, c-format
+msgid "%lu Bytes"
+msgstr "%lu 바이트"
+
+#: Input/mpg123/http.c:220 Input/vorbis/http.c:218
+msgid "Error"
+msgstr "오류"
+
+#: Input/mpg123/http.c:374 Input/vorbis/http.c:326
+#, c-format
+msgid "LOOKING UP %s"
+msgstr "%s 찾는 중"
+
+#: Input/mpg123/http.c:379 Input/vorbis/http.c:331
+#, c-format
+msgid "Couldn't look up host %s"
+msgstr "%s 호스트를 찾을 수 없습니다."
+
+#: Input/mpg123/http.c:392 Input/vorbis/http.c:344
+#, c-format
+msgid "CONNECTING TO %s:%d"
+msgstr "%s에 연결중:%d"
+
+#: Input/mpg123/http.c:400 Input/mpg123/http.c:420 Input/vorbis/http.c:352
+#: Input/vorbis/http.c:372
+#, c-format
+msgid "Couldn't connect to host %s"
+msgstr "%s 호스트에 연결할 수 없습니다."
+
+#: Input/mpg123/http.c:483 Input/vorbis/http.c:420
+msgid "CONNECTED: WAITING FOR REPLY"
+msgstr "연결됨: 응답을 기다리는 중"
+
+#: Input/mpg123/http.c:520 Input/vorbis/http.c:457
+#, c-format
+msgid ""
+"Couldn't connect to host %s\n"
+"Server reported: %s"
+msgstr ""
+"%s 호스트에 연결할 수 없습니다.\n"
+"서버 응답: %s"
+
+#: Input/mpg123/http.c:638 Input/vorbis/http.c:556
+#, c-format
+msgid "PRE-BUFFERING: %dKB/%dKB"
+msgstr "사전 버퍼링: %dKB/%dKB"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Blues"
+msgstr "블루스"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Classic Rock"
+msgstr "고전 락"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Country"
+msgstr "컨트리"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Dance"
+msgstr "댄스"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Disco"
+msgstr "디스코"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Funk"
+msgstr "펑크"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Grunge"
+msgstr "그런지"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Hip-Hop"
+msgstr "힙합"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "Jazz"
+msgstr "재즈"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "Metal"
+msgstr "메탈"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "New Age"
+msgstr "뉴에이지"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "Oldies"
+msgstr "올드팝"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Other"
+msgstr "기타"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Pop"
+msgstr "팝"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "R&B"
+msgstr "R&B"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Rap"
+msgstr "랩"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Reggae"
+msgstr "레게"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Rock"
+msgstr "락"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Techno"
+msgstr "테크노"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Industrial"
+msgstr "인터스트리얼"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Alternative"
+msgstr "얼터너티브"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Ska"
+msgstr "스카"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Death Metal"
+msgstr "데스 메탈"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Pranks"
+msgstr "프랭크스"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Soundtrack"
+msgstr "사운드트랙"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Euro-Techno"
+msgstr "유로-테크노"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Ambient"
+msgstr "엠비엔트"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Trip-Hop"
+msgstr "트립 합"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Vocal"
+msgstr "보컬"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Jazz+Funk"
+msgstr "재즈+펑크"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Fusion"
+msgstr "퓨젼"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Trance"
+msgstr "트랜스"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Classical"
+msgstr "클래식"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "Instrumental"
+msgstr "기악"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "Acid"
+msgstr "에시드"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "House"
+msgstr "하우스"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "Game"
+msgstr "게임"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "Sound Clip"
+msgstr "소리 클립"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "Gospel"
+msgstr "성가"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "Noise"
+msgstr "잡음"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "AlternRock"
+msgstr "알턴 락"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Bass"
+msgstr "베이스"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Soul"
+msgstr "소울"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Punk"
+msgstr "펑크"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Space"
+msgstr "우주"
+
+#: Input/mpg123/mpg123.c:51 Input/vorbis/fileinfo.c:94
+msgid "Meditative"
+msgstr "명상"
+
+#: Input/mpg123/mpg123.c:51 Input/vorbis/fileinfo.c:94
+msgid "Instrumental Pop"
+msgstr "인스트루멘탈 팝"
+
+#: Input/mpg123/mpg123.c:52 Input/vorbis/fileinfo.c:95
+msgid "Instrumental Rock"
+msgstr "인스트루멘탈 록"
+
+#: Input/mpg123/mpg123.c:52 Input/vorbis/fileinfo.c:95
+msgid "Ethnic"
+msgstr "민족"
+
+#: Input/mpg123/mpg123.c:52 Input/vorbis/fileinfo.c:95
+msgid "Gothic"
+msgstr "고딕"
+
+#: Input/mpg123/mpg123.c:53 Input/vorbis/fileinfo.c:96
+msgid "Darkwave"
+msgstr "다크웨이브"
+
+#: Input/mpg123/mpg123.c:53 Input/vorbis/fileinfo.c:96
+msgid "Techno-Industrial"
+msgstr "인터스트리얼 테크노"
+
+#: Input/mpg123/mpg123.c:53 Input/vorbis/fileinfo.c:96
+msgid "Electronic"
+msgstr "전자음악"
+
+#: Input/mpg123/mpg123.c:54 Input/vorbis/fileinfo.c:97
+msgid "Pop-Folk"
+msgstr "팝-포크"
+
+#: Input/mpg123/mpg123.c:54 Input/vorbis/fileinfo.c:97
+msgid "Eurodance"
+msgstr "유로댄스"
+
+#: Input/mpg123/mpg123.c:54 Input/vorbis/fileinfo.c:97
+msgid "Dream"
+msgstr "드림"
+
+#: Input/mpg123/mpg123.c:55 Input/vorbis/fileinfo.c:98
+msgid "Southern Rock"
+msgstr "남부 락"
+
+#: Input/mpg123/mpg123.c:55 Input/vorbis/fileinfo.c:98
+msgid "Comedy"
+msgstr "코메디"
+
+#: Input/mpg123/mpg123.c:55 Input/vorbis/fileinfo.c:98
+msgid "Cult"
+msgstr "컬트"
+
+#: Input/mpg123/mpg123.c:56 Input/vorbis/fileinfo.c:99
+msgid "Gangsta Rap"
+msgstr "갱스터 랩"
+
+#: Input/mpg123/mpg123.c:56 Input/vorbis/fileinfo.c:99
+msgid "Top 40"
+msgstr "톱 40"
+
+#: Input/mpg123/mpg123.c:56 Input/vorbis/fileinfo.c:99
+msgid "Christian Rap"
+msgstr "기독교 랩"
+
+#: Input/mpg123/mpg123.c:57 Input/vorbis/fileinfo.c:100
+msgid "Pop/Funk"
+msgstr "팝/펑크"
+
+#: Input/mpg123/mpg123.c:57 Input/vorbis/fileinfo.c:100
+msgid "Jungle"
+msgstr "정글"
+
+#: Input/mpg123/mpg123.c:57 Input/vorbis/fileinfo.c:100
+msgid "Native American"
+msgstr "북미 토속"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "Cabaret"
+msgstr "카바레"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "New Wave"
+msgstr "뉴 웨이브"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "Psychedelic"
+msgstr "환각풍"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "Rave"
+msgstr "레이브"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Showtunes"
+msgstr "쇼 음악"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Trailer"
+msgstr "예고음악"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Lo-Fi"
+msgstr "로-파이"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Tribal"
+msgstr "트라이벌"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Acid Punk"
+msgstr "에시드 펑크"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Acid Jazz"
+msgstr "에시드 재즈"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Polka"
+msgstr "폴카"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Retro"
+msgstr "레트로"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Musical"
+msgstr "뮤지컬"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Rock & Roll"
+msgstr "락 & 롤"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Hard Rock"
+msgstr "하드 락"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Folk"
+msgstr "포크"
+
+#: Input/mpg123/mpg123.c:62 Input/vorbis/fileinfo.c:105
+msgid "Folk/Rock"
+msgstr "포크/록"
+
+#: Input/mpg123/mpg123.c:62 Input/vorbis/fileinfo.c:105
+msgid "National Folk"
+msgstr "내쇼날 포크"
+
+#: Input/mpg123/mpg123.c:62 Input/vorbis/fileinfo.c:105
+msgid "Swing"
+msgstr "스윙"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Fast-Fusion"
+msgstr "빠른-퓨전"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Bebob"
+msgstr "비밥"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Latin"
+msgstr "라틴"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Revival"
+msgstr "리바이벌"
+
+#: Input/mpg123/mpg123.c:64 Input/vorbis/fileinfo.c:107
+msgid "Celtic"
+msgstr "켈트"
+
+#: Input/mpg123/mpg123.c:64 Input/vorbis/fileinfo.c:107
+msgid "Bluegrass"
+msgstr "블루그래스"
+
+#: Input/mpg123/mpg123.c:64 Input/vorbis/fileinfo.c:107
+msgid "Avantgarde"
+msgstr "전위"
+
+#: Input/mpg123/mpg123.c:65 Input/vorbis/fileinfo.c:108
+msgid "Gothic Rock"
+msgstr "고딕 락"
+
+#: Input/mpg123/mpg123.c:65 Input/vorbis/fileinfo.c:108
+msgid "Progressive Rock"
+msgstr "프로그래시브 락"
+
+#: Input/mpg123/mpg123.c:66 Input/vorbis/fileinfo.c:109
+msgid "Psychedelic Rock"
+msgstr "환각풍 락"
+
+#: Input/mpg123/mpg123.c:66 Input/vorbis/fileinfo.c:109
+msgid "Symphonic Rock"
+msgstr "교향악단풍 락"
+
+#: Input/mpg123/mpg123.c:66 Input/vorbis/fileinfo.c:109
+msgid "Slow Rock"
+msgstr "느린 락"
+
+#: Input/mpg123/mpg123.c:67 Input/vorbis/fileinfo.c:110
+msgid "Big Band"
+msgstr "큰 밴드"
+
+#: Input/mpg123/mpg123.c:67 Input/vorbis/fileinfo.c:110
+msgid "Chorus"
+msgstr "합창"
+
+#: Input/mpg123/mpg123.c:67 Input/vorbis/fileinfo.c:110
+msgid "Easy Listening"
+msgstr "이지 리스닝"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Acoustic"
+msgstr "어쿠스틱"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Humour"
+msgstr "유머"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Speech"
+msgstr "연설"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Chanson"
+msgstr "샹숑"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Opera"
+msgstr "오페라"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Chamber Music"
+msgstr "실내악"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Sonata"
+msgstr "소나타"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Symphony"
+msgstr "교향악"
+
+#: Input/mpg123/mpg123.c:70 Input/vorbis/fileinfo.c:113
+msgid "Booty Bass"
+msgstr "부티 배이스"
+
+#: Input/mpg123/mpg123.c:70 Input/vorbis/fileinfo.c:113
+msgid "Primus"
+msgstr "프라이머스"
+
+#: Input/mpg123/mpg123.c:70 Input/vorbis/fileinfo.c:113
+msgid "Porn Groove"
+msgstr "포르노풍"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Satire"
+msgstr "풍자"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Slow Jam"
+msgstr "슬로우 잼"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Club"
+msgstr "클럽"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Tango"
+msgstr "탱고"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Samba"
+msgstr "삼바"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Folklore"
+msgstr "민속악"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Ballad"
+msgstr "발라드"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Power Ballad"
+msgstr "파워 발라드"
+
+#: Input/mpg123/mpg123.c:73 Input/vorbis/fileinfo.c:116
+msgid "Rhythmic Soul"
+msgstr "리드믹 소울"
+
+#: Input/mpg123/mpg123.c:73 Input/vorbis/fileinfo.c:116
+msgid "Freestyle"
+msgstr "프리스타일"
+
+#: Input/mpg123/mpg123.c:73 Input/vorbis/fileinfo.c:116
+msgid "Duet"
+msgstr "듀엣"
+
+#: Input/mpg123/mpg123.c:74 Input/vorbis/fileinfo.c:117
+msgid "Punk Rock"
+msgstr "펑크 락"
+
+#: Input/mpg123/mpg123.c:74 Input/vorbis/fileinfo.c:117
+msgid "Drum Solo"
+msgstr "드럼 독주"
+
+#: Input/mpg123/mpg123.c:74 Input/vorbis/fileinfo.c:117
+msgid "A Cappella"
+msgstr "아 카펠라"
+
+#: Input/mpg123/mpg123.c:75 Input/vorbis/fileinfo.c:118
+msgid "Euro-House"
+msgstr "유로-하우스"
+
+#: Input/mpg123/mpg123.c:75 Input/vorbis/fileinfo.c:118
+msgid "Dance Hall"
+msgstr "댄스홀"
+
+#: Input/mpg123/mpg123.c:75 Input/vorbis/fileinfo.c:118
+msgid "Goa"
+msgstr "인도풍"
+
+#: Input/mpg123/mpg123.c:76 Input/vorbis/fileinfo.c:119
+msgid "Drum & Bass"
+msgstr "드럼 & 베이스"
+
+#: Input/mpg123/mpg123.c:76 Input/vorbis/fileinfo.c:119
+msgid "Club-House"
+msgstr "클럽-하우스"
+
+#: Input/mpg123/mpg123.c:76 Input/vorbis/fileinfo.c:119
+msgid "Hardcore"
+msgstr "하드코어"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "Terror"
+msgstr "콩포"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "Indie"
+msgstr "인디"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "BritPop"
+msgstr "영국팝"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "Negerpunk"
+msgstr "흑인펑크"
+
+#: Input/mpg123/mpg123.c:78 Input/vorbis/fileinfo.c:121
+msgid "Polsk Punk"
+msgstr "Polsk 펑크"
+
+#: Input/mpg123/mpg123.c:78 Input/vorbis/fileinfo.c:121
+msgid "Beat"
+msgstr "비트"
+
+#: Input/mpg123/mpg123.c:78 Input/vorbis/fileinfo.c:121
+msgid "Christian Gangsta Rap"
+msgstr "기독교 갱스터 랩"
+
+#: Input/mpg123/mpg123.c:79 Input/vorbis/fileinfo.c:122
+msgid "Heavy Metal"
+msgstr "헤비 메탈"
+
+#: Input/mpg123/mpg123.c:79 Input/vorbis/fileinfo.c:122
+msgid "Black Metal"
+msgstr "흑인 메탈"
+
+#: Input/mpg123/mpg123.c:79 Input/vorbis/fileinfo.c:122
+msgid "Crossover"
+msgstr "크로스 오버"
+
+#: Input/mpg123/mpg123.c:80 Input/vorbis/fileinfo.c:123
+msgid "Contemporary Christian"
+msgstr "현재 기독교"
+
+#: Input/mpg123/mpg123.c:80 Input/vorbis/fileinfo.c:123
+msgid "Christian Rock"
+msgstr "기독교 락"
+
+#: Input/mpg123/mpg123.c:81 Input/vorbis/fileinfo.c:124
+msgid "Merengue"
+msgstr "메렝계"
+
+#: Input/mpg123/mpg123.c:81 Input/vorbis/fileinfo.c:124
+msgid "Salsa"
+msgstr "살사"
+
+#: Input/mpg123/mpg123.c:81 Input/vorbis/fileinfo.c:124
+msgid "Thrash Metal"
+msgstr "트래시 메탈"
+
+#: Input/mpg123/mpg123.c:82 Input/vorbis/fileinfo.c:125
+msgid "Anime"
+msgstr "만화"
+
+#: Input/mpg123/mpg123.c:82 Input/vorbis/fileinfo.c:125
+msgid "JPop"
+msgstr "일본 팝"
+
+#: Input/mpg123/mpg123.c:82 Input/vorbis/fileinfo.c:125
+msgid "Synthpop"
+msgstr "신스팝"
+
+#: Input/mpg123/mpg123.c:1181
+msgid "About MPEG Audio Plugin"
+msgstr "MPEG 오디오 플러그인 정보"
+
+#: Input/mpg123/mpg123.c:1182
+msgid ""
+"mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
+"Plugin by The XMMS team"
+msgstr ""
+"mpg123 디코딩 엔진 제작 Michael Hipp <mh@mpg123.de> \n"
+"플러그인 제작 XMMS 팀"
+
+#: Input/mpg123/mpg123.c:1218
+msgid "MPEG Audio Plugin"
+msgstr "MPEG 오디오 플러그인"
+
+#: Input/vorbis/configure.c:192
+msgid "Select the directory where you want to store the Ogg Vorbis streams:"
+msgstr "Ogg Vorbis 스트림을 저장할 디렉토리 선택:"
+
+#: Input/vorbis/configure.c:275
+#, fuzzy
+msgid "Ogg Vorbis Audio Plugin Configuration"
+msgstr "bmp: Ogg Vorbis 오디오 플러그인 설정"
+
+#: Input/vorbis/configure.c:464
+msgid "Ogg Vorbis Tags:"
+msgstr "Ogg Vorbis 태그:"
+
+#: Input/vorbis/configure.c:485 audacious/glade/prefswin.glade:2261
+msgid "Title format:"
+msgstr "제목 형식:"
+
+#: Input/vorbis/configure.c:503
+msgid "ReplayGain Settings:"
+msgstr "재생 음량조정 설정:"
+
+#: Input/vorbis/configure.c:511
+msgid "Enable Clipping Prevention"
+msgstr "클립핑 방지 사용"
+
+#: Input/vorbis/configure.c:516
+msgid "Enable ReplayGain"
+msgstr "재생 음량조정 사용"
+
+#: Input/vorbis/configure.c:521
+msgid "ReplayGain Type:"
+msgstr "재생 음량조정 형식:"
+
+#: Input/vorbis/configure.c:532
+msgid "use Track Gain/Peak"
+msgstr "트랙 음량조정/최고점 사용"
+
+#: Input/vorbis/configure.c:542
+msgid "use Album Gain/Peak"
+msgstr "앨범 음량조정/최고점 사용"
+
+#: Input/vorbis/configure.c:554
+msgid "Enable 6dB Boost + Hard Limiting"
+msgstr "6dB 부스트 + 강제 제한 사용"
+
+#: Input/vorbis/configure.c:560
+msgid "ReplayGain"
+msgstr "재생 음량조정"
+
+#: Input/vorbis/fileinfo.c:210
+#, c-format
+msgid ""
+"An error occured:\n"
+"%s"
+msgstr ""
+"오류 발생:\n"
+"%s"
+
+#: Input/vorbis/fileinfo.c:212
+msgid "Error!"
+msgstr "오류!"
+
+#: Input/vorbis/fileinfo.c:242
+msgid "Failed to modify tag (open)"
+msgstr "태그 수정 실패 (열기)"
+
+#: Input/vorbis/fileinfo.c:295
+msgid "Failed to modify tag (close)"
+msgstr "태그 수정 실패 (닫기)"
+
+#: Input/vorbis/fileinfo.c:320 Input/vorbis/fileinfo.c:329
+msgid "Failed to modify tag"
+msgstr "태그 수정 실패"
+
+#: Input/vorbis/fileinfo.c:572
+msgid " Ogg Vorbis Tag "
+msgstr "Ogg Vorbis 태그"
+
+#: Input/vorbis/fileinfo.c:624
+msgid "Date:"
+msgstr "날짜:"
+
+#: Input/vorbis/fileinfo.c:666
+msgid "Description:"
+msgstr "설명:"
+
+#: Input/vorbis/fileinfo.c:676
+msgid "Location:"
+msgstr "위치:"
+
+#: Input/vorbis/fileinfo.c:686
+msgid "Version:"
+msgstr "버전:"
+
+#: Input/vorbis/fileinfo.c:697
+msgid "ISRC number:"
+msgstr "ISRC 번호:"
+
+#: Input/vorbis/fileinfo.c:708
+msgid "Organization:"
+msgstr "조직:"
+
+#: Input/vorbis/fileinfo.c:755
+msgid " Ogg Vorbis ReplayGain "
+msgstr "Ogg Vorbis 재생 음량조정 "
+
+#: Input/vorbis/fileinfo.c:761
+msgid "Track gain:"
+msgstr "트랙 음량조정:"
+
+#: Input/vorbis/fileinfo.c:771
+msgid "Track peak:"
+msgstr "트랙 최고점:"
+
+#: Input/vorbis/fileinfo.c:782
+msgid "Album gain:"
+msgstr "앨범 음량조정:"
+
+#: Input/vorbis/fileinfo.c:792
+msgid "Album peak:"
+msgstr "앨범 최고점:"
+
+#: Input/vorbis/fileinfo.c:821
+msgid " Ogg Vorbis Info "
+msgstr "Ogg Vorbis 정보 "
+
+#: Input/vorbis/fileinfo.c:875 Input/vorbis/fileinfo.c:921
+msgid "Length:"
+msgstr "길이:"
+
+#: Input/vorbis/fileinfo.c:955
+#, c-format
+msgid "%d KBit/s (nominal)"
+msgstr "%d KBit/s (보통)"
+
+#: Input/vorbis/fileinfo.c:956
+#, c-format
+msgid "%d Hz"
+msgstr "%d Hz"
+
+#: Input/vorbis/fileinfo.c:959
+#, c-format
+msgid "%d:%.2d"
+msgstr "%d:%.2d"
+
+#: Input/vorbis/fileinfo.c:961
+#, c-format
+msgid "%d Bytes"
+msgstr "%d Bytes"
+
+#: Input/vorbis/vorbis.c:134
+msgid "Ogg Vorbis Audio Plugin"
+msgstr "Ogg Vorbis 오디오 플러그인"
+
+#: Input/vorbis/vorbis.c:784
+msgid "About Ogg Vorbis Audio Plugin"
+msgstr "Ogg Vorbis 오디오 플러그인 정보"
+
+#: Input/vorbis/vorbis.c:790
+msgid ""
+"Ogg Vorbis Plugin by the Xiph.org Foundation\n"
+"\n"
+"Original code by\n"
+"Tony Arcieri <bascule@inferno.tusculum.edu>\n"
+"Contributions from\n"
+"Chris Montgomery <monty@xiph.org>\n"
+"Peter Alm <peter@xmms.org>\n"
+"Michael Smith <msmith@labyrinth.edu.au>\n"
+"Jack Moffitt <jack@icecast.org>\n"
+"Jorn Baayen <jorn@nl.linux.org>\n"
+"Haavard Kvaalen <havardk@xmms.org>\n"
+"Gian-Carlo Pascutto <gcp@sjeng.org>\n"
+"\n"
+"Visit the Xiph.org Foundation at http://www.xiph.org/\n"
+msgstr ""
+"Ogg Vorbis 플러그인, Xiph.org 재단\n"
+"\n"
+"원래 코드:\n"
+"Tony Arcieri <bascule@inferno.tusculum.edu>\n"
+"기여한 사람:\n"
+"Chris Montgomery <monty@xiph.org>\n"
+"Peter Alm <peter@xmms.org>\n"
+"Michael Smith <msmith@labyrinth.edu.au>\n"
+"Jack Moffitt <jack@icecast.org>\n"
+"Jorn Baayen <jorn@nl.linux.org>\n"
+"Haavard Kvaalen <havardk@xmms.org>\n"
+"Gian-Carlo Pascutto <gcp@sjeng.org>\n"
+"\n"
+"Xiph.org 재단 주소 - http://www.xiph.org/\n"
+
+#: Input/wav/wav.c:67
+msgid "WAV Audio Plugin"
+msgstr "WAV 오디오 플러그인"
+
+#: Output/OSS/OSS.c:50
+msgid "OSS Output Plugin"
+msgstr "OSS 출력 플러그인"
+
+#: Output/OSS/about.c:39
+msgid "About OSS Driver"
+msgstr "OSS 드라이버 정보"
+
+#: Output/OSS/about.c:40
+msgid ""
+"XMMS OSS Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+"XMMS OSS 드라이버\n"
+"\n"
+"본 프로그램은 공개 소프트웨어입니다; 자유 소프트웨어 재단(Free Software\n"
+"Foundation)의 GNU General Public License에 따라 본 프로그램을 수정하거나\n"
+"GPL의 두번째 버전, 혹은 (선택에 따라) 그 이후의 임의의 버전으로 재배포할\n"
+"수도 있습니다.\n"
+"\n"
+"본 프로그램이 유용하게 배포되길 바랍니다. 하지만 본 프로그램은\n"
+"상품성 또는 특정 목적에의 사용 가능성에 대한 보증이나 기타\n"
+"어떤한 보증도 하지 않습니다. 보다 자세한 사항은 GNU General\n"
+"Public License를 참고하시기 바랍니다.\n"
+"\n"
+"여러분께서는 GNU General Public License를 본 프로그램과 함께\n"
+"받으셨습니다; 만약 그렇지 않다면, Free Software\n"
+"Foundation, Inc,, 59 Template Place - Suite 330, Boston, NA 02111-1307,\n"
+"USA로 연락하시기 바랍니다."
+
+#: Output/OSS/configure.c:149
+#, c-format
+msgid "Default (%s)"
+msgstr "기본값 (%s)"
+
+#: Output/OSS/configure.c:167
+msgid "Default"
+msgstr "기본값"
+
+#: Output/OSS/configure.c:199
+msgid "OSS Driver configuration"
+msgstr "OSS 드라이버 설정"
+
+#: Output/OSS/configure.c:215 Output/alsa/configure.c:295
+msgid "Audio device:"
+msgstr "오디오 장치:"
+
+#: Output/OSS/configure.c:237 Output/OSS/configure.c:278
+msgid "Use alternate device:"
+msgstr "다른 장치 사용하기:"
+
+#: Output/OSS/configure.c:258 Output/alsa/configure.c:339
+msgid "Mixer device:"
+msgstr "믹서 장치:"
+
+#: Output/OSS/configure.c:300
+msgid "Devices"
+msgstr "장치"
+
+#: Output/OSS/configure.c:315 Output/esd/configure.c:184
+msgid "Buffer size (ms):"
+msgstr "버퍼 크기 (ms):"
+
+#: Output/OSS/configure.c:340 Output/esd/configure.c:209
+msgid "Buffering"
+msgstr "버퍼링"
+
+#: Output/OSS/configure.c:341
+msgid "Mixer Settings:"
+msgstr "믹서 설정:"
+
+#: Output/OSS/configure.c:347
+msgid "Volume controls Master not PCM"
+msgstr "음량 제어를 PCM으로 하지 않음"
+
+#: Output/OSS/configure.c:353
+msgid "Mixer"
+msgstr "믹서"
+
+#: Output/esd/about.c:34
+msgid "About ESounD Plugin"
+msgstr "ESounD 오디오 플러그인 정보"
+
+#: Output/esd/about.c:35
+msgid ""
+"XMMS ESounD Plugin\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+"XMMS ESounD 플러그인\n"
+"\n"
+"본 프로그램은 공개 소프트웨어입니다; 자유 소프트웨어 재단(Free Software\n"
+"Foundation)의 GNU General Public License에 따라 본 프로그램을 수정하거나\n"
+"GPL의 두번째 버전, 혹은 (선택에 따라) 그 이후의 임의의 버전으로 재배포할\n"
+"수도 있습니다.\n"
+"\n"
+"본 프로그램이 유용하게 배포되길 바랍니다. 하지만 본 프로그램은\n"
+"상품성 또는 특정 목적에의 사용 가능성에 대한 보증이나 기타\n"
+"어떤한 보증도 하지 않습니다. 보다 자세한 사항은 GNU General\n"
+"Public License를 참고하시기 바랍니다.\n"
+"\n"
+"여러분께서는 GNU General Public License를 본 프로그램과 함께\n"
+"받으셨습니다; 만약 그렇지 않다면, Free Software\n"
+"Foundation, Inc,, 59 Template Place - Suite 330, Boston, NA 02111-1307,\n"
+"USA로 연락하시기 바랍니다."
+
+#: Output/esd/configure.c:102
+msgid "ESD Output Plugin configuration"
+msgstr "ESD 출력 플러그인 설정"
+
+#: Output/esd/configure.c:125
+msgid "Use remote host"
+msgstr "원격 호스트 사용"
+
+#: Output/esd/configure.c:132
+msgid "Volume controls OSS mixer"
+msgstr "음량 제어 OSS 믹서"
+
+#: Output/esd/configure.c:169
+msgid "Server"
+msgstr "서버"
+
+#: Output/esd/esd.c:47
+msgid "eSound Output Plugin"
+msgstr "eSound 출력 플러그인"
+
+#: Output/alsa/about.c:36
+msgid "About ALSA Driver"
+msgstr "ALSA 드라이버 정보"
+
+#: Output/alsa/about.c:37
+msgid ""
+"XMMS ALSA Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA.\n"
+"Author: Matthieu Sozeau (mattam@altern.org)"
+msgstr ""
+"XMMS ALSA 드라이버\n"
+"\n"
+"본 프로그램은 공개 소프트웨어입니다; 자유 소프트웨어 재단(Free Software\n"
+"Foundation)의 GNU General Public License에 따라 본 프로그램을 수정하거나\n"
+"GPL의 두번째 버전, 혹은 (선택에 따라) 그 이후의 임의의 버전으로 재배포할\n"
+"수도 있습니다.\n"
+"\n"
+"본 프로그램이 유용하게 배포되길 바랍니다. 하지만 본 프로그램은\n"
+"상품성 또는 특정 목적에의 사용 가능성에 대한 보증이나 기타\n"
+"어떤한 보증도 하지 않습니다. 보다 자세한 사항은 GNU General\n"
+"Public License를 참고하시기 바랍니다.\n"
+"\n"
+"여러분께서는 GNU General Public License를 본 프로그램과 함께\n"
+"받으셨습니다; 만약 그렇지 않다면, Free Software\n"
+"Foundation, Inc,, 59 Template Place - Suite 330, Boston, NA 02111-1307,\n"
+"USA로 연락하시기 바랍니다.\n"
+"제작자: Matthleu Sozeau (mattam@altern.org)"
+
+#: Output/alsa/alsa.c:46
+#, c-format
+msgid "ALSA %s output plugin"
+msgstr "ALSA %s 출력 플러그인"
+
+#: Output/alsa/configure.c:164
+msgid "Unknown soundcard"
+msgstr "알 수 없는 사운드카드"
+
+#: Output/alsa/configure.c:217
+#, c-format
+msgid "Default PCM device (%s)"
+msgstr "기본 PCM 장치 (%s)"
+
+#: Output/alsa/configure.c:280
+msgid "ALSA Driver configuration"
+msgstr "ALSA 드라이버 설정"
+
+#: Output/alsa/configure.c:308
+msgid "Mixer:"
+msgstr "믹서:"
+
+#: Output/alsa/configure.c:316
+msgid "Use software volume control"
+msgstr "소프트웨어 음량 조절 사용"
+
+#: Output/alsa/configure.c:326
+msgid "Mixer card:"
+msgstr "믹서 카드:"
+
+#: Output/alsa/configure.c:359
+msgid "Device settings"
+msgstr "장치 설정"
+
+#: Output/alsa/configure.c:361
+msgid "Advanced settings:"
+msgstr "고급 설정:"
+
+#: Output/alsa/configure.c:374
+msgid "Buffer time (ms):"
+msgstr "버퍼 시간 (ms):"
+
+#: Output/alsa/configure.c:388
+msgid "Period time (ms):"
+msgstr "주기 시간 (ms):"
+
+#: Output/alsa/configure.c:402
+#, fuzzy
+msgid "Thread buffer time (ms):"
+msgstr "버퍼 시간 (ms):"
+
+#: Output/alsa/configure.c:416
+msgid "Multi-thread mode"
+msgstr ""
+
+#: Output/alsa/configure.c:421
+msgid "Mmap mode"
+msgstr "Mmap 모드"
+
+#: Output/alsa/configure.c:427
+msgid "Advanced settings"
+msgstr "고급 설정"
+
+#: Visualization/blur_scope/blur_scope.c:57
+msgid "/Toggle Decorations"
+msgstr "/데코레이션 보이기"
+
+#: Visualization/blur_scope/blur_scope.c:59
+msgid "/-"
+msgstr "/-"
+
+#: Visualization/blur_scope/blur_scope.c:60
+msgid "/Close"
+msgstr "/닫기"
+
+#: Visualization/blur_scope/blur_scope.c:198
+msgid "Blur scope"
+msgstr "흐림 영역"
+
+#: Visualization/blur_scope/config.c:73
+msgid "Blur Scope: Color selection"
+msgstr "흐림 영역: 색상 선택"
+
+#: Visualization/blur_scope/config.c:83
+msgid "Options:"
+msgstr "선택사항:"
+
+#: libaudacious/titlestring.c:324
+msgid "Performer/Artist"
+msgstr "연주자/가수"
+
+#: libaudacious/titlestring.c:325 audacious/prefswin.c:94
+msgid "Album"
+msgstr "앨범"
+
+#: libaudacious/titlestring.c:326 audacious/prefswin.c:97
+msgid "Genre"
+msgstr "장르"
+
+#: libaudacious/titlestring.c:327
+msgid "File name"
+msgstr "파일 이름"
+
+#: libaudacious/titlestring.c:328
+msgid "File path"
+msgstr "파일 경로"
+
+#: libaudacious/titlestring.c:329
+msgid "File extension"
+msgstr "파일 확장자"
+
+#: libaudacious/titlestring.c:330
+msgid "Track name"
+msgstr "트랙 이름"
+
+#: libaudacious/titlestring.c:331
+msgid "Track number"
+msgstr "트랙 번호"
+
+#: libaudacious/titlestring.c:332 audacious/prefswin.c:100
+msgid "Date"
+msgstr "날짜"
+
+#: libaudacious/titlestring.c:333 audacious/prefswin.c:101
+msgid "Year"
+msgstr "연도"
+
+#: libaudacious/titlestring.c:334 audacious/prefswin.c:102
+msgid "Comment"
+msgstr "설명"
+
+#: libaudacious/titlestring.c:385
+msgid "%{n:...%}: Display \"...\" only if element %n is present"
+msgstr "%{n:...%}: 표시 \"...\" %n 항목이 있는 경우만"
+
+#: audacious/about.c:42
+#, fuzzy, c-format
+msgid ""
+"<big><b>Beep Media Player %s</b></big>\n"
+"A media player based on XMMS\n"
+"\n"
+"Copyright (C) 2003-2005 BMP Development Team\n"
+msgstr ""
+"<big><b>Beep Media Player %s</b></big>\n"
+"XMMS 기반의 미디어 플레이어\n"
+"\n"
+"Copyright (C) 2003-2004 BMP 개발 팀\n"
+"한글번역: 동쪽하늘 (dcpark@kaist.ac.kr)\n"
+
+#: audacious/about.c:48
+msgid "Developers:"
+msgstr "개발자:"
+
+#: audacious/about.c:49
+msgid "Artem Baguinski"
+msgstr ""
+
+#: audacious/about.c:50 audacious/about.c:85 audacious/about.c:169
+msgid "Edward Brocklesby"
+msgstr "Edward Brocklesby"
+
+#: audacious/about.c:51 audacious/about.c:99
+msgid "Chong Kai Xiong"
+msgstr "Chong Kai Xiong"
+
+#: audacious/about.c:52 audacious/about.c:84
+msgid "Milosz Derezynski"
+msgstr "Milosz Derezynski"
+
+#: audacious/about.c:53
+msgid "David Lau"
+msgstr "David Lau"
+
+#: audacious/about.c:54
+msgid "Ole Andre Vadla Ravnaas"
+msgstr "Ole Andre Vadla Ravnaas"
+
+#: audacious/about.c:55
+msgid "Michiel Sikkes"
+msgstr "Michiel Sikkes"
+
+#: audacious/about.c:58
+msgid "With Additional Help:"
+msgstr "도움 주신 분들:"
+
+#: audacious/about.c:59
+msgid "Andrei Badea"
+msgstr ""
+
+#: audacious/about.c:60
+msgid "Peter Behroozi"
+msgstr ""
+
+#: audacious/about.c:61
+msgid "Bernard Blackham"
+msgstr "Bernard Blackham"
+
+#: audacious/about.c:62
+msgid "Oliver Blin"
+msgstr "Oliver Blin"
+
+#: audacious/about.c:63
+msgid "Tomas Bzatek"
+msgstr "Tomas Bzatek"
+
+#: audacious/about.c:64 audacious/about.c:149
+msgid "Liviu Danicel"
+msgstr ""
+
+#: audacious/about.c:65
+msgid "Jon Dowland"
+msgstr "Jon Dowland"
+
+#: audacious/about.c:66
+msgid "Artur Frysiak"
+msgstr "Artur Frysiak"
+
+#: audacious/about.c:67
+msgid "Sebastian Kapfer"
+msgstr "Sebastian Kapfer"
+
+#: audacious/about.c:68
+msgid "Lukas Koberstein"
+msgstr "Lukas Koberstein"
+
+#: audacious/about.c:69 audacious/about.c:153
+msgid "Dan Korostelev"
+msgstr ""
+
+#: audacious/about.c:70
+msgid "Jolan Luff"
+msgstr ""
+
+#: audacious/about.c:71
+#, fuzzy
+msgid "Michael Marineau"
+msgstr "Michiel Sikkes"
+
+#: audacious/about.c:72
+msgid "Tim-Philipp Muller"
+msgstr "Tim-Philipp Muller"
+
+#: audacious/about.c:73
+msgid "Julien Portalier"
+msgstr ""
+
+#: audacious/about.c:74
+msgid "Andrew Ruder"
+msgstr ""
+
+#: audacious/about.c:75
+msgid "Olivier Samyn"
+msgstr "Olivier Samyn"
+
+#: audacious/about.c:76
+msgid "Martijn Vernooij"
+msgstr "Martijn Vernooij"
+
+#: audacious/about.c:79
+msgid "ClearSky skin:"
+msgstr ""
+
+#: audacious/about.c:80
+msgid "Will Reinhart"
+msgstr ""
+
+#: audacious/about.c:83
+msgid "Homepage and Graphics:"
+msgstr "홈페이지 및 그래픽:"
+
+#: audacious/about.c:92
+msgid "Brazilian Portuguese:"
+msgstr ""
+
+#: audacious/about.c:93
+msgid "Philipi Pinto"
+msgstr ""
+
+#: audacious/about.c:95
+msgid "Breton:"
+msgstr ""
+
+#: audacious/about.c:96
+msgid "Thierry Vignaud"
+msgstr ""
+
+#: audacious/about.c:98
+msgid "Chinese:"
+msgstr "중국어:"
+
+#: audacious/about.c:100
+msgid "Chao-Hsiung Liao"
+msgstr ""
+
+#: audacious/about.c:102
+#, fuzzy
+msgid "Czech:"
+msgstr "프랑스어:"
+
+#: audacious/about.c:103
+msgid "Jan Narovec"
+msgstr ""
+
+#: audacious/about.c:105
+#, fuzzy
+msgid "Dutch:"
+msgstr "듀엣"
+
+#: audacious/about.c:106
+msgid "Laurens Buhler"
+msgstr ""
+
+#: audacious/about.c:108
+#, fuzzy
+msgid "Finnish:"
+msgstr "스페인어:"
+
+#: audacious/about.c:109
+msgid "Pauli Virtanen"
+msgstr ""
+
+#: audacious/about.c:111
+msgid "French:"
+msgstr "프랑스어:"
+
+#: audacious/about.c:112
+msgid "David Le Brun"
+msgstr "David Le Brun"
+
+#: audacious/about.c:114
+msgid "German:"
+msgstr "독일어:"
+
+#: audacious/about.c:115
+msgid "Matthias Debus"
+msgstr "Matthias Debus"
+
+#: audacious/about.c:117
+#, fuzzy
+msgid "Georgian: "
+msgstr "독일어:"
+
+#: audacious/about.c:118
+msgid "George Machitidze"
+msgstr ""
+
+#: audacious/about.c:120
+#, fuzzy
+msgid "Greek:"
+msgstr "장르:"
+
+#: audacious/about.c:121
+msgid "Kouzinopoulos Haris"
+msgstr ""
+
+#: audacious/about.c:122
+msgid "Stavros Giannouris"
+msgstr ""
+
+#: audacious/about.c:124
+msgid "Hindi:"
+msgstr ""
+
+#: audacious/about.c:125
+msgid "Dhananjaya Sharma"
+msgstr ""
+
+#: audacious/about.c:127
+msgid "Hungarian:"
+msgstr ""
+
+#: audacious/about.c:128
+msgid "Laszlo Dvornik"
+msgstr ""
+
+#: audacious/about.c:130
+#, fuzzy
+msgid "Italian:"
+msgstr "리투아니아어:"
+
+#: audacious/about.c:131
+msgid "Alessio D'Ascanio"
+msgstr ""
+
+#: audacious/about.c:133
+msgid "Japanese:"
+msgstr "일본어:"
+
+#: audacious/about.c:134
+msgid "Takeshi Aihana"
+msgstr "Takeshi Aihana"
+
+#: audacious/about.c:136
+msgid "Korean:"
+msgstr ""
+
+#: audacious/about.c:137
+msgid "DongCheon Park"
+msgstr ""
+
+#: audacious/about.c:139
+msgid "Lithuanian:"
+msgstr "리투아니아어:"
+
+#: audacious/about.c:140
+msgid "Rimas Kudelis"
+msgstr "Rimas Kudelis"
+
+#: audacious/about.c:142
+msgid "Macedonian:"
+msgstr ""
+
+#: audacious/about.c:143
+msgid "Arangel Angov"
+msgstr ""
+
+#: audacious/about.c:145
+msgid "Polish:"
+msgstr "폴란드어:"
+
+#: audacious/about.c:146
+msgid "Jacek Wolszczak"
+msgstr "Jacek Wolszczak"
+
+#: audacious/about.c:148
+#, fuzzy
+msgid "Romanian:"
+msgstr "리투아니아어:"
+
+#: audacious/about.c:151
+msgid "Russian:"
+msgstr ""
+
+#: audacious/about.c:152
+msgid "Pavlo Bohmat"
+msgstr ""
+
+#: audacious/about.c:154
+msgid "Vitaly Lipatov"
+msgstr ""
+
+#: audacious/about.c:156
+msgid "Slovak:"
+msgstr ""
+
+#: audacious/about.c:157
+msgid "Pavel Kanzelsberger"
+msgstr ""
+
+#: audacious/about.c:159
+msgid "Spanish:"
+msgstr "스페인어:"
+
+#: audacious/about.c:160
+msgid "Francisco Javier F. Serrador"
+msgstr "Francisco Javier F. Serrador"
+
+#: audacious/about.c:162
+msgid "Swedish:"
+msgstr "스웨덴어:"
+
+#: audacious/about.c:163
+msgid "Martin Persenius"
+msgstr "Martin Persenius"
+
+#: audacious/about.c:165
+#, fuzzy
+msgid "Ukrainian:"
+msgstr "조직:"
+
+#: audacious/about.c:166
+msgid "Mykola Lynnyk"
+msgstr ""
+
+#: audacious/about.c:168
+msgid "Welsh:"
+msgstr "웨일스어:"
+
+#: audacious/about.c:266
+msgid "About BMP"
+msgstr "BMP 정보"
+
+#: audacious/about.c:311
+msgid "Credits"
+msgstr "공로"
+
+#: audacious/about.c:315
+msgid "Translators"
+msgstr "번역"
+
+#: audacious/eq_slider.c:93
+msgid "PREAMP"
+msgstr "PREAMP"
+
+#: audacious/eq_slider.c:93
+msgid "60HZ"
+msgstr "60HZ"
+
+#: audacious/eq_slider.c:93
+msgid "170HZ"
+msgstr "170HZ"
+
+#: audacious/eq_slider.c:94
+msgid "310HZ"
+msgstr "310HZ"
+
+#: audacious/eq_slider.c:94
+msgid "600HZ"
+msgstr "600HZ"
+
+#: audacious/eq_slider.c:94
+msgid "1KHZ"
+msgstr "1KHZ"
+
+#: audacious/eq_slider.c:95
+msgid "3KHZ"
+msgstr "3KHZ"
+
+#: audacious/eq_slider.c:95
+msgid "6KHZ"
+msgstr "6KHZ"
+
+#: audacious/eq_slider.c:95
+msgid "12KHZ"
+msgstr "12KHZ"
+
+#: audacious/eq_slider.c:96
+msgid "14KHZ"
+msgstr "14KHZ"
+
+#: audacious/eq_slider.c:96
+msgid "16KHZ"
+msgstr "16KHZ"
+
+#: audacious/equalizer.c:127
+msgid "/Load"
+msgstr "/읽기"
+
+#: audacious/equalizer.c:128
+msgid "/Load/Preset"
+msgstr "/읽기/설정값"
+
+#: audacious/equalizer.c:130
+msgid "/Load/Auto-load preset"
+msgstr "/읽기/설정값 자동-읽기"
+
+#: audacious/equalizer.c:132
+msgid "/Load/Default"
+msgstr "/읽기/기본값"
+
+#: audacious/equalizer.c:135
+msgid "/Load/Zero"
+msgstr "/읽기/없음"
+
+#: audacious/equalizer.c:138
+msgid "/Load/From file"
+msgstr "/읽기/파일"
+
+#: audacious/equalizer.c:140
+msgid "/Load/From WinAMP EQF file"
+msgstr "/읽기/WinAMP EQF 파일"
+
+#: audacious/equalizer.c:142
+msgid "/Import"
+msgstr "/가져오기"
+
+#: audacious/equalizer.c:143
+msgid "/Import/WinAMP Presets"
+msgstr "/가져오기/Winamp 설정값"
+
+#: audacious/equalizer.c:145
+msgid "/Save"
+msgstr "/저장"
+
+#: audacious/equalizer.c:146
+msgid "/Save/Preset"
+msgstr "/저장/설정값"
+
+#: audacious/equalizer.c:148
+msgid "/Save/Auto-load preset"
+msgstr "/저장/설정값 자동-읽기"
+
+#: audacious/equalizer.c:150
+msgid "/Save/Default"
+msgstr "/저장/기본값"
+
+#: audacious/equalizer.c:153
+msgid "/Save/To file"
+msgstr "/저장/파일"
+
+#: audacious/equalizer.c:155
+msgid "/Save/To WinAMP EQF file"
+msgstr "/저장/WinAMP EQF파일"
+
+#: audacious/equalizer.c:157
+msgid "/Delete"
+msgstr "/삭제"
+
+#: audacious/equalizer.c:158
+msgid "/Delete/Preset"
+msgstr "/삭제/설정값"
+
+#: audacious/equalizer.c:160
+msgid "/Delete/Auto-load preset"
+msgstr "/삭제/설정값 자동-읽기"
+
+#: audacious/equalizer.c:741
+msgid "BMP Equalizer"
+msgstr "BMP 이퀄라이저"
+
+#: audacious/equalizer.c:1366
+msgid "Preset"
+msgstr "설정값"
+
+#: audacious/equalizer.c:1409
+msgid "Presets"
+msgstr "설정값"
+
+#: audacious/equalizer.c:1468
+msgid "Load preset"
+msgstr "설정값 읽기"
+
+#: audacious/equalizer.c:1482
+msgid "Load auto-preset"
+msgstr "자동-설정값 읽기"
+
+#: audacious/equalizer.c:1507 audacious/equalizer.c:1513 audacious/equalizer.c:1520
+msgid "Load equalizer preset"
+msgstr "이퀄라이저 설정값 읽기"
+
+#: audacious/equalizer.c:1529
+msgid "Save preset"
+msgstr "설정값 저장"
+
+#: audacious/equalizer.c:1548
+msgid "Save auto-preset"
+msgstr "자동-설정값 저장"
+
+#: audacious/equalizer.c:1581 audacious/equalizer.c:1600
+msgid "Save equalizer preset"
+msgstr "이퀄라이저 설정값 저장"
+
+#: audacious/equalizer.c:1609
+msgid "Delete preset"
+msgstr "설정값 삭제"
+
+#: audacious/equalizer.c:1625
+msgid "Delete auto-preset"
+msgstr "자동 설정값 삭제"
+
+#: audacious/getopt.c:616
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr "%s: 알 수 없는 옵션 '%s'\n"
+
+#: audacious/getopt.c:638
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr "%s: `--%s' 옵션은 인자를 사용하지 않습니다.\n"
+
+#: audacious/getopt.c:644
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr "%s: `%c%s' 옵션은 인자를 사용하지 않습니다.\n"
+
+#: audacious/getopt.c:661 audacious/getopt.c:819
+#, c-format
+msgid "%s: option `%s' requires an argument\n"
+msgstr "%s: `%s' 옵션은 인자가 필요합니다.\n"
+
+#: audacious/getopt.c:687
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr "%s: 알 수 없는 옵션 `--%s'\n"
+
+#: audacious/getopt.c:691
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr "%s: 알 수 없는 옵션 %c%s'\n"
+
+#: audacious/getopt.c:715
+#, c-format
+msgid "%s: illegal option -- %c\n"
+msgstr "%s: 부적절한 옵션 -- %c\n"
+
+#: audacious/getopt.c:718
+#, c-format
+msgid "%s: invalid option -- %c\n"
+msgstr "%s: 잘못된 옵션 -- %c\n"
+
+#: audacious/getopt.c:745 audacious/getopt.c:861
+#, c-format
+msgid "%s: option requires an argument -- %c\n"
+msgstr "%s: 인자가 필요한 옵션 -- %c\n"
+
+#: audacious/getopt.c:790
+#, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr "%s: 알 수 없는 옵션 `-W %s'\n"
+
+#: audacious/getopt.c:805
+#, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr "%s: `-W %s' 옵션은 인자를 사용하지 않습니다.\n"
+
+#: audacious/input.c:299
+msgid ""
+"<b><big>Unable to play files.</big></b>\n"
+"\n"
+"The following files could not be played. Please check that:\n"
+"1. they are accessible.\n"
+"2. you have enabled the media plugins required."
+msgstr ""
+
+#: audacious/input.c:324
+msgid "Don't show this warning anymore"
+msgstr "이 경고를 다시 보이지 않습니다."
+
+#: audacious/input.c:326
+msgid "Show more _details"
+msgstr ""
+
+#: audacious/input.c:340 audacious/prefswin.c:98 audacious/prefswin.c:447 audacious/prefswin.c:535
+#: audacious/prefswin.c:624 audacious/prefswin.c:720
+msgid "Filename"
+msgstr "파일이름"
+
+#: audacious/input.c:489
+#, c-format
+msgid "bmp: %s"
+msgstr "bmp: %s"
+
+#: audacious/input.c:505
+msgid "Filename:"
+msgstr "파일이름:"
+
+#: audacious/input.c:523
+msgid "No input plugin recognized this file"
+msgstr "이 파일을 인식하는 입력 플러그인이 없습니다."
+
+#: audacious/input.c:525
+#, c-format
+msgid "Input plugin: %s"
+msgstr "입력 플러그인: %s"
+
+#: audacious/logger.c:120
+#, c-format
+msgid "Unable to create log file (%s)!\n"
+msgstr "(%s) 로그 파일을 생성할 수 없습니다!\n"
+
+#: audacious/main.c:77 audacious/main.c:79
+msgid "Beep Media Player"
+msgstr "Beep Media Player"
+
+#: audacious/main.c:371
+#, c-format
+msgid "Could not create directory (%s): %s"
+msgstr "(%s) 디렉토리를 생성할 수 없습니다.: %s"
+
+#: audacious/main.c:625
+msgid ""
+"Usage: beep-media-player [options] [files] ...\n"
+"\n"
+"Options:\n"
+"--------\n"
+msgstr ""
+"사용법: beep-media-player [선택사항] [파일] ...\n"
+"\n"
+"선택사항:\n"
+"--------\n"
+
+#: audacious/main.c:630
+msgid "Display this text and exit"
+msgstr "이 도움말을 표시하고 끝냄"
+
+#: audacious/main.c:633
+msgid "Select BMP/XMMS session (Default: 0)"
+msgstr "BMP/XMMS 세션 선택 (기본값: 0)"
+
+#: audacious/main.c:636
+msgid "Skip backwards in playlist"
+msgstr "재생목록의 뒷부분 건너뛰기"
+
+#: audacious/main.c:639
+msgid "Start playing current playlist"
+msgstr "현재 재생목록 재생 시작"
+
+#: audacious/main.c:642
+msgid "Pause current song"
+msgstr "현재 노래 멈춤"
+
+#: audacious/main.c:645
+msgid "Stop current song"
+msgstr "현재 노래 정지"
+
+#: audacious/main.c:648
+msgid "Pause if playing, play otherwise"
+msgstr "재생중이면 멈춤, 그 외에는 재생"
+
+#: audacious/main.c:651
+msgid "Skip forward in playlist"
+msgstr "재생목록의 앞부분 건너뛰기"
+
+#: audacious/main.c:654
+msgid "Don't clear the playlist"
+msgstr "재생목록 지우지 않음"
+
+#: audacious/main.c:657
+msgid "Show the main window"
+msgstr "기본 창 보임"
+
+#: audacious/main.c:660
+msgid "Activate BMP"
+msgstr ""
+
+#: audacious/main.c:663
+msgid "Previous session ID"
+msgstr "이전 세션 ID"
+
+#: audacious/main.c:666
+msgid "Print version number and exit\n"
+msgstr "버전 번호를 출력하고 끝냄\n"
+
+#: audacious/main.c:841
+msgid ""
+"\n"
+"Received SIGSEGV\n"
+"\n"
+"This could be a bug in BMP. If you don't know why this happened, send a mail "
+"to us at beepmp-devel@lists.sourceforge.net\n"
+"\n"
+msgstr ""
+"\n"
+"SIGSEGV 신호를 받았습니다.\n"
+"\n"
+"이것은 BMP의 버그일 수 있습니다. 이것이 발생한 이유를 모른다면,\n"
+"beepmp-devel@lists.sourceforge.net으로 메일을 보내주시기 바랍니다.\n"
+"\n"
+
+#: audacious/main.c:864
+#, c-format
+msgid ""
+"<b><big>Unable to load skin.</big></b>\n"
+"\n"
+"Check that skin at '%s' is usable and default skin is properly installed at "
+"'%s'\n"
+msgstr ""
+"<b><big>스킨을 읽을 수 없습니다.</big></b>\n"
+"\n"
+"'%s'에 있는 스킨이 사용가능한지, 기본 스킨이 '%s'에 제대로 설치되어있는지 확"
+"인하시기 바랍니다.\n"
+
+#: audacious/main.c:899
+#, c-format
+msgid ""
+"Sorry, your GTK+ version (%d.%d.%d) does not work with BMP.\n"
+"Please use GTK+ %s or newer.\n"
+msgstr ""
+"사용 중인 GTK+ 버전 (%d.%d.%d)에서는 BMP가 동작하지 않습니다.\n"
+"GTK+ %s 이나 그 이상을 사용하세요.\n"
+
+#: audacious/main.c:910
+msgid ""
+"Sorry, threads isn't supported on your platform.\n"
+"\n"
+"If you're on a libc5 based linux system and installed Glib & GTK+ before "
+"you\n"
+"installed LinuxThreads you need to recompile Glib & GTK+.\n"
+msgstr ""
+"현재 플랫폼에서 쓰레드가 지원되지 않습니다.\n"
+"\n"
+"사용 중인 리눅스 시스템이 libc5 기반이며 LinuxThreads를 설치하기 전에 Glib과 "
+"GTK+를 설치하셨다면\n"
+"Glib과 GTK+를 다시 컴파일해야 합니다.\n"
+
+#: audacious/main.c:923
+msgid "BMP: Unable to open display, exiting."
+msgstr "BMP: 디스플레이를 열 수 없어, 종료합니다."
+
+#: audacious/mainwin.c:235 audacious/mainwin.c:361 audacious/playlistwin.c:125
+msgid "/View Track Details"
+msgstr "/트랙 세부정보 보기"
+
+#: audacious/mainwin.c:238
+msgid "/Autoscroll Songname"
+msgstr "/제목 자동 스크롤"
+
+#: audacious/mainwin.c:248
+msgid "/Visualization Mode"
+msgstr "/시각효과 모드"
+
+#: audacious/mainwin.c:249
+msgid "/Visualization Mode/Analyzer"
+msgstr "/시각효과 모드/스펙트럼"
+
+#: audacious/mainwin.c:251
+msgid "/Visualization Mode/Scope"
+msgstr "/시각효과 모드/파형"
+
+#: audacious/mainwin.c:253
+msgid "/Visualization Mode/Off"
+msgstr "/시각효과 모드/끄기"
+
+#: audacious/mainwin.c:255
+msgid "/Analyzer Mode"
+msgstr "/스펙트럼 모드"
+
+#: audacious/mainwin.c:256
+msgid "/Analyzer Mode/Normal"
+msgstr "/스펙트럼 모드/일반"
+
+#: audacious/mainwin.c:258
+msgid "/Analyzer Mode/Fire"
+msgstr "/스펙트럼 모드/화염"
+
+#: audacious/mainwin.c:260
+msgid "/Analyzer Mode/Vertical Lines"
+msgstr "/스펙트럼 모드/수직선"
+
+#: audacious/mainwin.c:263
+msgid "/Analyzer Mode/Lines"
+msgstr "/스펙트럼 모드/선"
+
+#: audacious/mainwin.c:265
+msgid "/Analyzer Mode/Bars"
+msgstr "/스펙트럼 모드/막대기"
+
+#: audacious/mainwin.c:268
+msgid "/Analyzer Mode/Peaks"
+msgstr "/스펙트럼 모드/꼭지점"
+
+#: audacious/mainwin.c:270
+msgid "/Scope Mode"
+msgstr "/파형 모드"
+
+#: audacious/mainwin.c:271
+msgid "/Scope Mode/Dot Scope"
+msgstr "/파형 모드/점 파형"
+
+#: audacious/mainwin.c:273
+msgid "/Scope Mode/Line Scope"
+msgstr "/파형 모드/선 파형"
+
+#: audacious/mainwin.c:275
+msgid "/Scope Mode/Solid Scope"
+msgstr "/파형 모드/고체 파형"
+
+#: audacious/mainwin.c:277
+msgid "/WindowShade VU Mode"
+msgstr "/창줄임 VU 모드"
+
+#: audacious/mainwin.c:278
+msgid "/WindowShade VU Mode/Normal"
+msgstr "/창줄임 VU 모드/일반"
+
+#: audacious/mainwin.c:280
+msgid "/WindowShade VU Mode/Smooth"
+msgstr "/창줄임 VU 모드/부드럽게"
+
+#: audacious/mainwin.c:282
+msgid "/Refresh Rate"
+msgstr "/재생율"
+
+#: audacious/mainwin.c:283
+msgid "/Refresh Rate/Full (~50 fps)"
+msgstr "/재생율/최대 (~50 fps)"
+
+#: audacious/mainwin.c:285
+msgid "/Refresh Rate/Half (~25 fps)"
+msgstr "/재생율/중간 (~25 fps)"
+
+#: audacious/mainwin.c:287
+msgid "/Refresh Rate/Quarter (~13 fps)"
+msgstr "/재생율/25% (~13 fps)"
+
+#: audacious/mainwin.c:289
+msgid "/Refresh Rate/Eighth (~6 fps)"
+msgstr "/재생율/12.5% (~6 fps)"
+
+#: audacious/mainwin.c:291
+msgid "/Analyzer Falloff"
+msgstr "/스펙트럼 감소"
+
+#: audacious/mainwin.c:292
+msgid "/Analyzer Falloff/Slowest"
+msgstr "/스펙트럼 감소/최대한 느리게"
+
+#: audacious/mainwin.c:294
+msgid "/Analyzer Falloff/Slow"
+msgstr "/스펙트럼 감소/느리게"
+
+#: audacious/mainwin.c:296
+msgid "/Analyzer Falloff/Medium"
+msgstr "/스펙트럼 감소/중간"
+
+#: audacious/mainwin.c:298
+msgid "/Analyzer Falloff/Fast"
+msgstr "/스펙트럼 감소/빠르게"
+
+#: audacious/mainwin.c:300
+msgid "/Analyzer Falloff/Fastest"
+msgstr "/스펙트럼 감소/최대한 빠르게"
+
+#: audacious/mainwin.c:302
+msgid "/Peaks Falloff"
+msgstr "/최고점 감소"
+
+#: audacious/mainwin.c:303
+msgid "/Peaks Falloff/Slowest"
+msgstr "/최고점 감소/최대한 느리게"
+
+#: audacious/mainwin.c:305
+msgid "/Peaks Falloff/Slow"
+msgstr "/최고점 감소/느리게"
+
+#: audacious/mainwin.c:307
+msgid "/Peaks Falloff/Medium"
+msgstr "/최고점 감소/중간"
+
+#: audacious/mainwin.c:309
+msgid "/Peaks Falloff/Fast"
+msgstr "/최고점 감소/빠르게"
+
+#: audacious/mainwin.c:311
+msgid "/Peaks Falloff/Fastest"
+msgstr "/최고점 감소/최대한 빠르게"
+
+#: audacious/mainwin.c:326
+msgid "/Repeat"
+msgstr "/반복"
+
+#: audacious/mainwin.c:328
+msgid "/Shuffle"
+msgstr "/뒤섞기"
+
+#: audacious/mainwin.c:335
+msgid "/Play"
+msgstr "/재생"
+
+#: audacious/mainwin.c:337
+msgid "/Pause"
+msgstr "/멈춤"
+
+#: audacious/mainwin.c:339
+msgid "/Stop"
+msgstr "/정지"
+
+#: audacious/mainwin.c:341
+msgid "/Previous"
+msgstr "/이전"
+
+#: audacious/mainwin.c:343
+msgid "/Next"
+msgstr "/다음"
+
+#: audacious/mainwin.c:346
+msgid "/Jump to Playlist Start"
+msgstr "/목록 처음으로"
+
+#: audacious/mainwin.c:349
+msgid "/Jump to File"
+msgstr "/파일 이동"
+
+#: audacious/mainwin.c:351
+msgid "/Jump to Time"
+msgstr "/시간 이동"
+
+#: audacious/mainwin.c:364
+msgid "/Preferences"
+msgstr "/환경설정"
+
+#: audacious/mainwin.c:366
+msgid "/_View"
+msgstr ""
+
+#: audacious/mainwin.c:368
+msgid "/About BMP"
+msgstr "/BMP 정보"
+
+#: audacious/mainwin.c:370
+msgid "/_Quit"
+msgstr "/끝내기(_Q)"
+
+#: audacious/mainwin.c:380
+#, fuzzy
+msgid "/Files..."
+msgstr "/추가/파일..."
+
+#: audacious/mainwin.c:387
+#, fuzzy
+msgid "/Internet location..."
+msgstr "/추가/인터넷 위치..."
+
+#: audacious/mainwin.c:401
+msgid "/Show Playlist Editor"
+msgstr "/재생목록 편집기 보기"
+
+#: audacious/mainwin.c:403
+#, fuzzy
+msgid "/Show Equalizer"
+msgstr "이퀄라이저"
+
+#: audacious/mainwin.c:406
+msgid "/Time Elapsed"
+msgstr "/경과 시간"
+
+#: audacious/mainwin.c:408
+msgid "/Time Remaining"
+msgstr "/남은 시간"
+
+#: audacious/mainwin.c:411
+msgid "/Always On Top"
+msgstr "/항상 맨 위"
+
+#: audacious/mainwin.c:413
+msgid "/Put on All Workspaces"
+msgstr ""
+
+#: audacious/mainwin.c:416
+msgid "/Roll up Player"
+msgstr ""
+
+#: audacious/mainwin.c:418
+#, fuzzy
+msgid "/Roll up Playlist Editor"
+msgstr "/재생목록 편집기 활성"
+
+#: audacious/mainwin.c:420
+#, fuzzy
+msgid "/Roll up Equalizer"
+msgstr "이퀄라이저"
+
+#: audacious/mainwin.c:782 audacious/mainwin.c:3098
+msgid "BMP"
+msgstr "BMP"
+
+#: audacious/mainwin.c:820
+msgid "VBR"
+msgstr "VBR"
+
+#: audacious/mainwin.c:1246
+msgid "Jump to Time"
+msgstr "시간 이동"
+
+#: audacious/mainwin.c:1267
+msgid "minutes:seconds"
+msgstr "분:초"
+
+#: audacious/mainwin.c:1277
+msgid "Track length:"
+msgstr "트랙 길이:"
+
+#: audacious/mainwin.c:1364
+#, fuzzy
+msgid "Un_queue"
+msgstr "대기열"
+
+#: audacious/mainwin.c:1366 audacious/mainwin.c:1688
+#, fuzzy
+msgid "_Queue"
+msgstr "대기열"
+
+#: audacious/mainwin.c:1618
+msgid "Jump to Track"
+msgstr "트랙 이동"
+
+#: audacious/mainwin.c:1657
+msgid "Filter: "
+msgstr "필터: "
+
+#: audacious/mainwin.c:1884
+#, fuzzy
+msgid "Add Folders"
+msgstr "파일 추가"
+
+#: audacious/mainwin.c:1935
+#, fuzzy
+msgid "Add Internet Address"
+msgstr "/추가/인터넷 주소..."
+
+#: audacious/mainwin.c:2063
+#, c-format
+msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
+msgstr "이동 위치: %d:%-2.2d/%d:%-2.2d (%d%%)"
+
+#: audacious/mainwin.c:2095 audacious/mainwin.c:2769
+#, c-format
+msgid "VOLUME: %d%%"
+msgstr "음량: %d%%"
+
+#: audacious/mainwin.c:2126 audacious/mainwin.c:2772
+#, c-format
+msgid "BALANCE: %d%% LEFT"
+msgstr "균형: %d%% 왼쪽"
+
+#: audacious/mainwin.c:2130 audacious/mainwin.c:2775
+msgid "BALANCE: CENTER"
+msgstr "균형: 가운데"
+
+#: audacious/mainwin.c:2134 audacious/mainwin.c:2777
+#, c-format
+msgid "BALANCE: %d%% RIGHT"
+msgstr "균형: %d%% 오른쪽"
+
+#: audacious/mainwin.c:2544
+msgid "OPTIONS MENU"
+msgstr "옵션 메뉴"
+
+#: audacious/mainwin.c:2549
+msgid "DISABLE ALWAYS ON TOP (N/A)"
+msgstr "항상 맨 위 해제 (불가)"
+
+#: audacious/mainwin.c:2551
+msgid "ENABLE ALWAYS ON TOP (N/A)"
+msgstr "항상 맨 위 설정 (불가)"
+
+#: audacious/mainwin.c:2554
+msgid "DISABLE ALWAYS ON TOP"
+msgstr "항상 맨 위 해제"
+
+#: audacious/mainwin.c:2556
+msgid "ENABLE ALWAYS ON TOP"
+msgstr "항상 맨 위 설정"
+
+#: audacious/mainwin.c:2559
+msgid "FILE INFO BOX"
+msgstr "파일 정보 상자"
+
+#: audacious/mainwin.c:2562
+msgid "** DOUBLESIZE HAS BEEN REMOVED **"
+msgstr ""
+
+#: audacious/mainwin.c:2565
+msgid "VISUALIZATION MENU"
+msgstr "시각효과 메뉴"
+
+#: audacious/mainwin.c:2610
+msgid ""
+"<b><big>No playable CD found.</big></b>\n"
+"\n"
+"No CD inserted, or inserted CD is not an audio CD.\n"
+msgstr ""
+"<b><big>재생가능한 CD가 없습니다.</big></b>\n"
+"\n"
+"삽입된 CD가 없거나, 오디오 CD가 아닙니다.\n"
+
+#: audacious/mainwin.c:2627
+msgid ""
+"<b><big>Couldn't open audio.</big></b>\n"
+"\n"
+"Please check that:\n"
+"1. You have the correct output plugin selected.\n"
+"2. No other programs is blocking the soundcard.\n"
+"3. Your soundcard is configured properly.\n"
+msgstr ""
+"<b><big>오디오를 열 수 없습니다.</big></b>\n"
+"\n"
+"점검 사항:\n"
+"1. 올바른 출력 플러그인 선택 여부\n"
+"2. 다른 프로그램의 사운드카드 사용 여부\n"
+"3. 사운드카드의 올바른 설정 여부\n"
+
+#: audacious/playlistwin.c:131 audacious/playlistwin.c:192
+msgid "/Remove Selected"
+msgstr "/선택항목 제거"
+
+#: audacious/playlistwin.c:135 audacious/playlistwin.c:188
+#, fuzzy
+msgid "/Remove Unselected"
+msgstr "/선택항목 제거"
+
+#: audacious/playlistwin.c:139 audacious/playlistwin.c:184
+#, fuzzy
+msgid "/Remove All"
+msgstr "/선택항목 제거"
+
+#: audacious/playlistwin.c:145
+msgid "/Queue Toggle"
+msgstr "/대기열 고정"
+
+#: audacious/playlistwin.c:151
+#, fuzzy
+msgid "/Add CD..."
+msgstr "/추가/파일..."
+
+#: audacious/playlistwin.c:155
+#, fuzzy
+msgid "/Add Internet Address..."
+msgstr "/추가/인터넷 주소..."
+
+#: audacious/playlistwin.c:161
+#, fuzzy
+msgid "/Add Folders..."
+msgstr "/추가/파일..."
+
+#: audacious/playlistwin.c:166
+#, fuzzy
+msgid "/Add Files..."
+msgstr "/추가/파일..."
+
+#: audacious/playlistwin.c:172
+msgid "/Clear Queue"
+msgstr "/대기열 비움"
+
+#: audacious/playlistwin.c:178
+msgid "/Remove Unavailable Files"
+msgstr "/유효하지 않은 파일 제거"
+
+#: audacious/playlistwin.c:198
+msgid "/New List"
+msgstr "/새 목록"
+
+#: audacious/playlistwin.c:204
+#, fuzzy
+msgid "/Load List"
+msgstr "/목록 정렬"
+
+#: audacious/playlistwin.c:208
+#, fuzzy
+msgid "/Save List"
+msgstr "/새 목록"
+
+#: audacious/playlistwin.c:214
+msgid "/Update View"
+msgstr "/보기 새로고침"
+
+#: audacious/playlistwin.c:220
+#, fuzzy
+msgid "/Invert Selection"
+msgstr "/선택 정렬"
+
+#: audacious/playlistwin.c:226
+#, fuzzy
+msgid "/Select None"
+msgstr "/선택 정렬"
+
+#: audacious/playlistwin.c:230
+#, fuzzy
+msgid "/Select All"
+msgstr "모두 선택"
+
+#: audacious/playlistwin.c:236
+msgid "/Randomize List"
+msgstr "/목록 무작위화"
+
+#: audacious/playlistwin.c:238
+msgid "/Reverse List"
+msgstr "/목록 역순으로"
+
+#: audacious/playlistwin.c:241
+msgid "/Sort List"
+msgstr "/목록 정렬"
+
+#: audacious/playlistwin.c:242
+msgid "/Sort List/By Title"
+msgstr "/목록 정렬/제목 순"
+
+#: audacious/playlistwin.c:244
+msgid "/Sort List/By Filename"
+msgstr "/목록 정렬/파일이름 순"
+
+#: audacious/playlistwin.c:246
+msgid "/Sort List/By Path + Filename"
+msgstr "/목록 정렬/경로 + 파일이름 순"
+
+#: audacious/playlistwin.c:248
+msgid "/Sort List/By Date"
+msgstr "/목록 정렬/날짜 순"
+
+#: audacious/playlistwin.c:250
+msgid "/Sort Selection"
+msgstr "/선택 정렬"
+
+#: audacious/playlistwin.c:251
+msgid "/Sort Selection/By Title"
+msgstr "/선택 정렬/제목 순"
+
+#: audacious/playlistwin.c:253
+msgid "/Sort Selection/By Filename"
+msgstr "/선택 정렬/파일이름 순"
+
+#: audacious/playlistwin.c:255
+msgid "/Sort Selection/By Path + Filename"
+msgstr "/선택 정렬/경로 + 파일이름 순"
+
+#: audacious/playlistwin.c:257
+msgid "/Sort Selection/By Date"
+msgstr "/선택 정렬/날짜 순"
+
+#: audacious/playlistwin.c:783
+#, c-format
+msgid "Error writing playlist \"%s\": %s"
+msgstr "재생목록 \"%s\" 쓰기 오류: %s"
+
+#: audacious/playlistwin.c:804
+#, c-format
+msgid "%s already exist. Continue?"
+msgstr "%s는 이미 존재합니다. 계속 할까요?"
+
+#: audacious/playlistwin.c:818
+#, fuzzy, c-format
+msgid ""
+"<b><big>Unable to save playlist.</big></b>\n"
+"\n"
+"Unknown file type for '%s'.\n"
+msgstr "재생목록을 저장할 수 없습니다! %s의 파일형식을 알 수 없습니다."
+
+#: audacious/playlistwin.c:928
+#, fuzzy
+msgid "Load Playlist"
+msgstr "재생목록 열기"
+
+#: audacious/playlistwin.c:940
+#, fuzzy
+msgid "Save Playlist"
+msgstr "재생목록 저장"
+
+#: audacious/playlistwin.c:1675
+msgid "BMP Playlist Editor"
+msgstr "BMP 재생목록 편집기"
+
+#: audacious/prefswin.c:83 audacious/glade/prefswin.glade:1379
+msgid "Appearance"
+msgstr "겉모양"
+
+#: audacious/prefswin.c:84 audacious/glade/prefswin.glade:2783
+msgid "Equalizer"
+msgstr "이퀄라이저"
+
+#: audacious/prefswin.c:85 audacious/glade/prefswin.glade:1669
+msgid "Mouse"
+msgstr "마우스"
+
+#: audacious/prefswin.c:86 audacious/glade/prefswin.glade:2403
+msgid "Playlist"
+msgstr "재생목록"
+
+#: audacious/prefswin.c:87 audacious/glade/prefswin.glade:869
+msgid "Plugins"
+msgstr "플러그인"
+
+#: audacious/prefswin.c:93
+#, fuzzy
+msgid "Artist"
+msgstr "가수:"
+
+#: audacious/prefswin.c:96
+#, fuzzy
+msgid "Tracknumber"
+msgstr "트랙 번호"
+
+#: audacious/prefswin.c:99
+#, fuzzy
+msgid "Filepath"
+msgstr "파일 경로"
+
+#: audacious/prefswin.c:417 audacious/prefswin.c:504 audacious/prefswin.c:593
+#: audacious/prefswin.c:689
+msgid "Enabled"
+msgstr "사용함"
+
+#: audacious/prefswin.c:433 audacious/prefswin.c:520 audacious/prefswin.c:609
+#: audacious/prefswin.c:705
+msgid "Description"
+msgstr "설명:"
+
+#: audacious/prefswin.c:1462
+msgid "Category"
+msgstr "카테고리"
+
+#: audacious/prefswin.c:1630
+msgid "Preferences Window"
+msgstr "선택사항 창"
+
+#: audacious/util.c:882
+#, fuzzy
+msgid "Add/Open Files dialog"
+msgstr "파일 추가"
+
+#: audacious/util.c:940
+#, fuzzy
+msgid "Open Files"
+msgstr "/파일 자르기"
+
+#: audacious/util.c:944
+msgid "Close dialog on Open"
+msgstr ""
+
+#: audacious/util.c:956 audacious/glade/addfiles.glade:8
+msgid "Add Files"
+msgstr "파일 추가"
+
+#: audacious/util.c:960
+msgid "Close dialog on Add"
+msgstr ""
+
+#: audacious/util.c:1176
+msgid "  (invalid UTF-8)"
+msgstr "  (유효하지 않은 UTF-8)"
+
+#: audacious/glade/prefswin.glade:8
+msgid "BMP Preferences"
+msgstr "BMP 선택사항"
+
+#: audacious/glade/prefswin.glade:85
+msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
+msgstr "<span size=\"xx-large\"><b>플러그인</b></span>"
+
+#: audacious/glade/prefswin.glade:147
+#, fuzzy
+msgid "_Media plugin list:"
+msgstr "플러그인 목록(_P):"
+
+#: audacious/glade/prefswin.glade:244
+msgid "<span size=\"medium\"><b>Media</b></span>"
+msgstr "<span size=\"medium\"><b>미디어</b></span>"
+
+#: audacious/glade/prefswin.glade:282
+#, fuzzy
+msgid "_General plugin list:"
+msgstr "플러그인 목록(_P):"
+
+#: audacious/glade/prefswin.glade:379
+msgid "<span size=\"medium\"><b>General</b></span>"
+msgstr "<span size=\"medium\"><b>일반</b></span>"
+
+#: audacious/glade/prefswin.glade:417
+#, fuzzy
+msgid "_Visualization plugin list:"
+msgstr "/시각효과 플러그인"
+
+#: audacious/glade/prefswin.glade:514
+msgid "<b>Visualization</b>"
+msgstr "<b>시각효과</b>"
+
+#: audacious/glade/prefswin.glade:552
+#, fuzzy
+msgid "_Effect plugin list:"
+msgstr "플러그인 목록(_P):"
+
+#: audacious/glade/prefswin.glade:649
+#, fuzzy
+msgid "<b>Effects</b>"
+msgstr "<b>설정값</b>"
+
+#: audacious/glade/prefswin.glade:693
+msgid "_Current output plugin:"
+msgstr "현재 출력 플러그인(_C):"
+
+#: audacious/glade/prefswin.glade:753
+msgid ""
+"The change is now effective in BMP's configuration database, but won't take "
+"effect for playback until the next song!\n"
+"\n"
+"Optionally, you can stop and restart playback for the change to take effect."
+msgstr ""
+"변경사항이 BMP 설정 데이터베이스에 저장되었지만, 다음 곡때 까지는 재생에 반영"
+"되지 않습니다!\n"
+"\n"
+"재생을 멈추고 다시 재생시켜서 변경사항을 반영할 수도 있습니다."
+
+#: audacious/glade/prefswin.glade:835
+msgid "<span size=\"medium\"><b>Output</b></span>"
+msgstr "<span size=\"medium\"><b>출력</b></span>"
+
+#: audacious/glade/prefswin.glade:894
+msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
+msgstr "<span size=\"xx-large\"><b>겉모양</b></span>"
+
+#: audacious/glade/prefswin.glade:951
+msgid "<b>_Skin</b>"
+msgstr "<b>스킨(_S)</b>"
+
+#: audacious/glade/prefswin.glade:1039
+msgid "<b>_Fonts</b>"
+msgstr "<b>글꼴(_F)</b>"
+
+#: audacious/glade/prefswin.glade:1092
+msgid "_Player:"
+msgstr "플레이어(_P):"
+
+#: audacious/glade/prefswin.glade:1131
+msgid "_Playlist:"
+msgstr "재생목록(_P):"
+
+#: audacious/glade/prefswin.glade:1159
+msgid "Select main player window font:"
+msgstr "기본 재생 창 글꼴 선택:"
+
+#: audacious/glade/prefswin.glade:1181
+msgid "Select playlist font:"
+msgstr "재생목록 글꼴 선택:"
+
+#: audacious/glade/prefswin.glade:1233
+msgid "<b>_Miscellaneous</b>"
+msgstr "<b>기타(_M)</b>"
+
+#: audacious/glade/prefswin.glade:1285
+msgid "Show track numbers in playlist"
+msgstr "재생목록에 트랙 번호 보이기"
+
+#: audacious/glade/prefswin.glade:1335
+msgid "Use custom cursors"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:1404
+msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
+msgstr "<span size=\"xx-large\"><b>마우스</b></span>"
+
+#: audacious/glade/prefswin.glade:1455
+msgid "<b>Mouse wheel</b>"
+msgstr "<b>마우스 휠</b>"
+
+#: audacious/glade/prefswin.glade:1499
+#, fuzzy
+msgid "Changes volume by"
+msgstr "마우스 휠에 의한 음량 조절"
+
+#: audacious/glade/prefswin.glade:1523
+msgid "percent"
+msgstr "퍼센트"
+
+#: audacious/glade/prefswin.glade:1547
+#, fuzzy
+msgid "Scrolls playlist by"
+msgstr "재생목록에서 마우스 스크롤"
+
+#: audacious/glade/prefswin.glade:1596
+msgid "lines"
+msgstr "줄"
+
+#: audacious/glade/prefswin.glade:1694
+msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
+msgstr "<span size=\"xx-large\"><b>재생목록</b></span>"
+
+#: audacious/glade/prefswin.glade:1751
+msgid "<b>Filename</b>"
+msgstr "<b>파일이름</b>"
+
+#: audacious/glade/prefswin.glade:1789
+msgid "Convert underscores to blanks"
+msgstr "밑줄을 공백으로 바꿈"
+
+#: audacious/glade/prefswin.glade:1824
+msgid "Convert %20 to blanks"
+msgstr "%20을 공백으로 바꿈"
+
+#: audacious/glade/prefswin.glade:1864
+msgid "<b>Metadata</b>"
+msgstr "<b>메타데이터</b>"
+
+#: audacious/glade/prefswin.glade:1901
+msgid "Load metadata (tag information) from music files."
+msgstr "음악 파일로부터 메타데이터(태그 정보) 읽기"
+
+#: audacious/glade/prefswin.glade:1903
+msgid "Load metadata from playlists and files"
+msgstr "재생목록 및 파일로부터 메타데이터 읽기"
+
+#: audacious/glade/prefswin.glade:1941
+msgid "Load metadata when adding the file to the playlist or opening it"
+msgstr "파일을 열거나 재생목록에 추가할 때 메타테이터 읽기"
+
+#: audacious/glade/prefswin.glade:1943
+msgid "On load"
+msgstr "읽을 때"
+
+#: audacious/glade/prefswin.glade:1963
+msgid "Load metadata on demand when displaying the file in the playlist"
+msgstr "재생목록에 파일을 표시하도록 요청시 메타데이터 읽기"
+
+#: audacious/glade/prefswin.glade:1965
+msgid "On display"
+msgstr "표시할 때"
+
+#: audacious/glade/prefswin.glade:2013
+msgid "<b>Playback</b>"
+msgstr "<b>재생하기</b>"
+
+#: audacious/glade/prefswin.glade:2050
+msgid "When finished playing a song, don't automatically advance to the next."
+msgstr "재생이 끝나면, 자동으로 다음곡 진행 안함."
+
+#: audacious/glade/prefswin.glade:2052
+msgid "Don't advance in the playlist"
+msgstr "재생목록에서 다음곡 진행 안함"
+
+#: audacious/glade/prefswin.glade:2087
+msgid "Pause between songs"
+msgstr "곡사이 멈춤 시간"
+
+#: audacious/glade/prefswin.glade:2125
+msgid "Pause for"
+msgstr "잠시 멈춤"
+
+#: audacious/glade/prefswin.glade:2167
+msgid "seconds"
+msgstr "초"
+
+#: audacious/glade/prefswin.glade:2215
+msgid "<b>Song display</b>"
+msgstr "<b>노래 표시</b>"
+
+#: audacious/glade/prefswin.glade:2285
+msgid "Custom string:"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:2315 audacious/glade/prefswin.glade:2547
+#: audacious/glade/prefswin.glade:2570
+msgid "*"
+msgstr "*"
+
+#: audacious/glade/prefswin.glade:2332
+msgid ""
+"TITLE\n"
+"ARTIST - TITLE\n"
+"ARTIST - ALBUM - TITLE\n"
+"ALBUM - TITLE\n"
+"Custom"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:2350
+msgid "Show information about titlestring format"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:2428
+msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
+msgstr "<span size=\"xx-large\"><b>이퀄라이저</b></span>"
+
+#: audacious/glade/prefswin.glade:2479
+msgid "<b>Presets</b>"
+msgstr "<b>설정값</b>"
+
+#: audacious/glade/prefswin.glade:2587
+msgid "Directory preset file:"
+msgstr "설정값 파일 디렉토리:"
+
+#: audacious/glade/prefswin.glade:2611
+msgid "File preset extension:"
+msgstr "설정값 파일 확장자:"
+
+#: audacious/glade/prefswin.glade:2655
+msgid "Available _Presets:"
+msgstr "가능한 설정값(_P):"
+
+#: audacious/glade/addfiles.glade:77
+msgid "Close Dialog on Add"
+msgstr ""
+
+#: audacious/glade/addfiles.glade:105
+msgid "Select All"
+msgstr "모두 선택"
+
+#: audacious/glade/addfiles.glade:116
+msgid "Deselect All"
+msgstr "선택 해제"
+
+#~ msgid "Enable SHOUT/Icecast title streaming"
+#~ msgstr "샤우트/아이스캐스트 제목 스트리밍 사용"
+
+#~ msgid "Danicel Liviu Cristian"
+#~ msgstr "Danicel Liviu Cristian"
+
+#~ msgid "Default skin:"
+#~ msgstr "기본 스킨:"
+
+#~ msgid "Vlad Gerasimov"
+#~ msgstr "Vlad Gerasimov"
+
+#~ msgid "XMMS compatibility mode"
+#~ msgstr "XMMS 호환성 모드"
+
+#~ msgid "Could not initialize gnome-vfs.\n"
+#~ msgstr "gnome-vfs를 초기화 할 수 없습니다.\n"
+
+#~ msgid "/Visualization plugins"
+#~ msgstr "/시각효과 플러그인"
+
+#~ msgid "/Play CD"
+#~ msgstr "/CD 재생"
+
+#~ msgid "/5 seconds REW"
+#~ msgstr "/5 초 되감기"
+
+#~ msgid "/5 seconds FFWD"
+#~ msgstr "/5 초 빨리감기"
+
+#~ msgid "/Add"
+#~ msgstr "/추가"
+
+#~ msgid "/Playback"
+#~ msgstr "/재생하기"
+
+#~ msgid "/_Options"
+#~ msgstr "/선택사항(_O)"
+
+#~ msgid "/Show Graphical EQ"
+#~ msgstr "/그래픽 EQ 보기"
+
+#~ msgid "/Reload skin"
+#~ msgstr "/스킨 다시 읽기"
+
+#~ msgid "/No Playlist Advance"
+#~ msgstr "/다음곡 진행 안함"
+
+#~ msgid "/Show on all desktops"
+#~ msgstr "/모든 작업공간에 두기"
+
+#~ msgid "/WindowShade Mode"
+#~ msgstr "/창줄임 모드"
+
+#~ msgid "/Playlist WindowShade Mode"
+#~ msgstr "/재생목록 창줄임 모드"
+
+#~ msgid "/Equalizer WindowShade Mode"
+#~ msgstr "/이퀄라이저 창줄임 모드"
+
+#~ msgid "/DoubleSize"
+#~ msgstr "/두배 크기"
+
+#~ msgid "/Easy Move"
+#~ msgstr "/쉬운 이동"
+
+#~ msgid "Jump to:"
+#~ msgstr "이동할 위치:"
+
+#~ msgid "Jump"
+#~ msgstr "이동"
+
+#~ msgid "Add URL"
+#~ msgstr "URL 추가..."
+
+#~ msgid "DISABLE DOUBLESIZE"
+#~ msgstr "두배크기 해제"
+
+#~ msgid "ENABLE DOUBLESIZE"
+#~ msgstr "두배크기 설정"
+
+#~ msgid "/By extension"
+#~ msgstr "/확장자 순"
+
+#~ msgid "/Playlist"
+#~ msgstr "/재생목록"
+
+#~ msgid "/Close Window"
+#~ msgstr "/창 닫기"
+
+#~ msgid "/Sort by Title"
+#~ msgstr "/노래제목 순으로 정렬"
+
+#~ msgid "/Sort by Filename"
+#~ msgstr "/파일이름 순으로 정렬"
+
+#~ msgid "/Sort by Date"
+#~ msgstr "/날짜 순으로 정렬"
+
+#~ msgid "Failed to delete \"%s\": %s."
+#~ msgstr "\"%s\" 삭제 실패: %s."
+
+#~ msgid "%d of %d files successfully deleted."
+#~ msgstr "%d/%d 파일이 성공적으로 삭제되었습니다."
+
+#~ msgid "XMMS: Files deleted"
+#~ msgstr "XMMS: 파일이 삭제되었습니다."
+
+#~ msgid "Really delete %d files?"
+#~ msgstr "정말로 %d 파일을 삭제할까요?"
+
+#~ msgid "Really delete: \"%s\"?"
+#~ msgstr "정말로 삭제할까요: \"%s\"?"
+
+#~ msgid "Play Files"
+#~ msgstr "파일 재생"
+
+#~ msgid "Load"
+#~ msgstr "읽기"
+
+#~ msgid "Auto-load preset"
+#~ msgstr "설정값 자동-읽기"
+
+#~ msgid "Zero"
+#~ msgstr "없음"
+
+#~ msgid "From file"
+#~ msgstr "파일에서"
+
+#~ msgid "From WinAMP EQF file"
+#~ msgstr "WinAMP EQF 파일에서"
+
+#~ msgid "Import"
+#~ msgstr "가져오기"
+
+#~ msgid "WinAMP presets"
+#~ msgstr "Winamp 설정값"
+
+#~ msgid "To file"
+#~ msgstr "파일로"
+
+#~ msgid "To WinAMP EQF file"
+#~ msgstr "WinAMP EQF파일로"
+
+#~ msgid "Configure Equalizer"
+#~ msgstr "이퀄라이저 설정"
+
+#~ msgid "Smooth title scrolling in main window"
+#~ msgstr "기본 창에 부드러운 제목 스크롤"
+
+#~ msgid "%d items were added."
+#~ msgstr "%d 항목이 추가되었습니다."
+
+#~ msgid "Directory"
+#~ msgstr "디렉토리"
+
+#~ msgid "Directory browser"
+#~ msgstr "디렉토리 브라우저"
+
+#~ msgid "Unplayable files - BMP"
+#~ msgstr "재생 불가능한 파일 - BMP"
+
+#~ msgid ""
+#~ "The following files could not be played. They are either not accessible "
+#~ "or require a dedicated input plugin."
+#~ msgstr ""
+#~ "다음 파일들을 재생할 수 없습니다. 접근할 수 없거나 특정한 입력 플러그인이 "
+#~ "필요합니다."
+
+#~ msgid "/Add/Directories..."
+#~ msgstr "/추가/디렉토리..."
+
+#~ msgid "Add Directories... "
+#~ msgstr "디렉토리 추가..."
+
+#~ msgid "Look into sub_folders"
+#~ msgstr "하위 폴더 찾아 보기"
+
+#~ msgid "<b>_Filter:</b>"
+#~ msgstr "<b>필터:</b> "
+
+#~ msgid "_Look for plugins in:"
+#~ msgstr "플러그인 검색(_L):"
+
+#~ msgid "<span size=\"medium\"><b>Settings</b></span>"
+#~ msgstr "<span size=\"medium\"><b>설정</b></span>"
+
+#~ msgid "%p - %t\n"
+#~ msgstr "%p - %t\n"

@@ -1,0 +1,3590 @@
+# fi Finnish translation
+# Beep Media Player Finnish translation
+# Copyright (C) 2004 Free Software Foundation, Inc.
+# This file is distributed under the same license as Beep Media Player.
+# Pauli Virtanen <pauli.virtanen@hut.fi>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: fi\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-10-22 14:40+0800\n"
+"PO-Revision-Date: 2005-03-13 21:31+0200\n"
+"Last-Translator: Pauli Virtanen <pauli.virtanen@hut.fi>\n"
+"Language-Team: Finnish <lokalisointi-laatu@linux-aktivaattori.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3.1\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+
+#: Input/cdaudio/cdaudio.c:180
+msgid "CD Audio Plugin"
+msgstr "CD-soitinliitännäinen"
+
+#: Input/cdaudio/cdaudio.c:1004 Input/cdaudio/cdaudio.c:1013
+#, c-format
+msgid "CD Audio Track %02u"
+msgstr "CD:n ääniraita %02u"
+
+#: Input/cdaudio/cdinfo.c:157 Input/cdaudio/cdinfo.c:158
+#: Input/cdaudio/cdinfo.c:159
+msgid "(unknown)"
+msgstr "(tuntematon)"
+
+#: Input/cdaudio/configure.c:199 Input/cdaudio/configure.c:213
+#: Input/cdaudio/configure.c:541
+#, c-format
+msgid "Drive %d"
+msgstr "Asema %d"
+
+#: Input/cdaudio/configure.c:259
+#, c-format
+msgid ""
+"Failed to open device %s\n"
+"Error: %s\n"
+"\n"
+msgstr ""
+"Laitteen %s avaaminen epäonnistui.\n"
+"Virhe: %s\n"
+"\n"
+
+#: Input/cdaudio/configure.c:266
+msgid ""
+"Failed to read \"Table of Contents\"\n"
+"Maybe no disc in the drive?\n"
+"\n"
+msgstr ""
+"Levyn \"sisällysluettelon\" luku epäonnistui.\n"
+"Ehkäpä asemassa ei ole levyä?\n"
+"\n"
+
+#: Input/cdaudio/configure.c:270
+#, c-format
+msgid ""
+"Device %s OK.\n"
+"Disc has %d tracks"
+msgstr ""
+"Laite %s on kunnossa.\n"
+"Levyllä on %d raitaa"
+
+#: Input/cdaudio/configure.c:279
+#, c-format
+msgid " (%d data tracks)"
+msgstr " (%d dataraitaa)"
+
+#: Input/cdaudio/configure.c:280
+#, c-format
+msgid ""
+"\n"
+"Total length: %d:%d\n"
+msgstr ""
+"\n"
+"Kokonaispituus: %d:%d\n"
+
+#: Input/cdaudio/configure.c:285
+msgid "Digital audio extraction not tested as the disc has no audio tracks\n"
+msgstr ""
+"Digitaalista äänen lukua ei yritetty koska levyllä ei ole ääniraitoja\n"
+
+#: Input/cdaudio/configure.c:302
+msgid ""
+"Digital audio extraction test: OK\n"
+"\n"
+msgstr ""
+"Digitaalisen äänen lukutesti: kunnossa\n"
+"\n"
+
+#: Input/cdaudio/configure.c:306
+#, c-format
+msgid ""
+"Digital audio extraction test failed: %s\n"
+"\n"
+msgstr ""
+"Digitaalisen äänen lukutesti epäonnistui: %s\n"
+"\n"
+
+#: Input/cdaudio/configure.c:316
+#, c-format
+msgid ""
+"Failed to check directory %s\n"
+"Error: %s"
+msgstr ""
+"Kansion %s tarkistus epäonnistui.\n"
+"Virhe: %s"
+
+#: Input/cdaudio/configure.c:322
+#, c-format
+msgid "Error: %s exist, but is not a directory"
+msgstr "Virhe: %s on olemassa, mutta ei ole kansio."
+
+#: Input/cdaudio/configure.c:325
+#, c-format
+msgid "Directory %s OK."
+msgstr "Kansio %s on kunnossa."
+
+#: Input/cdaudio/configure.c:369
+msgid "Device:"
+msgstr "Laite:"
+
+#: Input/cdaudio/configure.c:377
+msgid "_Device:"
+msgstr "_Laite:"
+
+#: Input/cdaudio/configure.c:387
+msgid "Dir_ectory:"
+msgstr "_Kansio:"
+
+#: Input/cdaudio/configure.c:399
+msgid "Play mode:"
+msgstr "Soittotapa:"
+
+#: Input/cdaudio/configure.c:405
+msgid "Analog"
+msgstr "Analoginen"
+
+#: Input/cdaudio/configure.c:413
+msgid "Digital audio extraction"
+msgstr "Digitaalinen äänen luku"
+
+#: Input/cdaudio/configure.c:423
+msgid "Volume control:"
+msgstr "Äänenvoimakkuus:"
+
+#: Input/cdaudio/configure.c:429
+msgid "No mixer"
+msgstr "Ei mikseriä"
+
+#: Input/cdaudio/configure.c:435
+msgid "CDROM drive"
+msgstr "CD-asema"
+
+#: Input/cdaudio/configure.c:441
+msgid "OSS mixer"
+msgstr "OSS:n mikseri"
+
+#: Input/cdaudio/configure.c:464
+msgid "Check drive..."
+msgstr "Tarkista asema..."
+
+#: Input/cdaudio/configure.c:470
+msgid "Remove drive"
+msgstr "Poista asema"
+
+#: Input/cdaudio/configure.c:515
+msgid "CD Audio Player Configuration"
+msgstr "CD-soittimen asetukset"
+
+#: Input/cdaudio/configure.c:553
+msgid "Add drive"
+msgstr "Lisää asema"
+
+#: Input/cdaudio/configure.c:561
+msgid "Device"
+msgstr "Laite"
+
+#: Input/cdaudio/configure.c:571
+msgid "CDDB:"
+msgstr "CDDB:"
+
+#: Input/cdaudio/configure.c:582
+msgid "Use CDDB"
+msgstr "Käytä CDDB:tä"
+
+#: Input/cdaudio/configure.c:586
+msgid "Get server list"
+msgstr "Hae palvelinluettelo"
+
+#: Input/cdaudio/configure.c:589
+msgid "Show network window"
+msgstr "Näytä verkkoikkuna"
+
+#: Input/cdaudio/configure.c:599
+msgid "CDDB server:"
+msgstr "CDDB-palvelin:"
+
+#: Input/cdaudio/configure.c:614
+msgid "CD Index:"
+msgstr "CD-hakemisto:"
+
+#: Input/cdaudio/configure.c:621
+msgid "Use CD Index"
+msgstr "Käytä CD-hakemistoa"
+
+#: Input/cdaudio/configure.c:630
+msgid "CD Index server:"
+msgstr "CD-hakemistopalvelin:"
+
+#: Input/cdaudio/configure.c:645
+msgid "Track names:"
+msgstr "Kappaleiden nimet:"
+
+#: Input/cdaudio/configure.c:652 Input/mpg123/configure.c:799
+#: Input/vorbis/configure.c:472
+msgid "Override generic titles"
+msgstr "Sivuuta yleisnimitykset"
+
+#: Input/cdaudio/configure.c:668
+msgid "Name format:"
+msgstr "Nimien muoto:"
+
+#: Input/cdaudio/configure.c:680
+msgid "CD Info"
+msgstr "CD-tiedot"
+
+#: Input/mpg123/configure.c:260
+msgid "Select the directory where you want to store the MPEG streams:"
+msgstr "Valitse hakemisto, johon haluat tallentaa MPEG-virrat:"
+
+#: Input/mpg123/configure.c:344
+msgid "MPEG Audio Plugin Configuration"
+msgstr "MPEG-ääniliitännäisen asetukset"
+
+#: Input/mpg123/configure.c:361
+msgid "Resolution:"
+msgstr "Tarkkuus:"
+
+#: Input/mpg123/configure.c:369
+msgid "16 bit"
+msgstr "16 bittiä"
+
+#: Input/mpg123/configure.c:378
+msgid "8 bit"
+msgstr "8 bittiä"
+
+#: Input/mpg123/configure.c:385 Input/vorbis/fileinfo.c:862
+#: Input/vorbis/fileinfo.c:918
+msgid "Channels:"
+msgstr "Kanavia:"
+
+#: Input/mpg123/configure.c:393
+msgid "Stereo (if available)"
+msgstr "Stereo (jos saatavilla)"
+
+#: Input/mpg123/configure.c:404
+msgid "Mono"
+msgstr "Mono"
+
+#: Input/mpg123/configure.c:411
+msgid "Down sample:"
+msgstr "Alinäytteistys:"
+
+#: Input/mpg123/configure.c:420
+msgid "1:1 (44 kHz)"
+msgstr "1:1 (44 kHz)"
+
+#: Input/mpg123/configure.c:431
+msgid "1:2 (22 kHz)"
+msgstr "1:2 (22 kHz)"
+
+#: Input/mpg123/configure.c:442
+msgid "1:4 (11 kHz)"
+msgstr "1:4 (11 kHz)"
+
+#: Input/mpg123/configure.c:455
+msgid "Decoder:"
+msgstr "Dekooderi:"
+
+#: Input/mpg123/configure.c:464
+msgid "Automatic detection"
+msgstr "Automaattinen tunnistus"
+
+#: Input/mpg123/configure.c:472
+msgid "3DNow! optimized decoder"
+msgstr "3DNow!-optimoitu purku"
+
+#: Input/mpg123/configure.c:480
+msgid "MMX optimized decoder"
+msgstr "MMX-optimoitu purku"
+
+#: Input/mpg123/configure.c:487
+msgid "FPU decoder"
+msgstr "FPU-purku"
+
+#: Input/mpg123/configure.c:513
+msgid "Options"
+msgstr "Asetukset"
+
+#: Input/mpg123/configure.c:520
+msgid "Content"
+msgstr "Sisältö"
+
+#: Input/mpg123/configure.c:526
+msgid "Extension"
+msgstr "Pääte"
+
+#: Input/mpg123/configure.c:532
+msgid "Extension and content"
+msgstr "Pääte ja sisältö"
+
+#: Input/mpg123/configure.c:556
+msgid "Decoder"
+msgstr "Dekooderi"
+
+#: Input/mpg123/configure.c:560 Input/vorbis/configure.c:287
+#: Output/OSS/configure.c:302 Output/esd/configure.c:171
+msgid "Buffering:"
+msgstr "Puskurointi:"
+
+#: Input/mpg123/configure.c:573 Input/vorbis/configure.c:299
+msgid "Buffer size (kb):"
+msgstr "Puskurin koko (kt):"
+
+#: Input/mpg123/configure.c:588 Input/vorbis/configure.c:313
+#: Output/OSS/configure.c:329 Output/esd/configure.c:198
+msgid "Pre-buffer (percent):"
+msgstr "Esipuskurointi (%):"
+
+#: Input/mpg123/configure.c:602 Input/vorbis/configure.c:327
+msgid "Proxy:"
+msgstr "Välityspalvelin:"
+
+#: Input/mpg123/configure.c:612 Input/vorbis/configure.c:337
+msgid "Use proxy"
+msgstr "Käytä välityspalvelinta"
+
+#: Input/mpg123/configure.c:625 Input/vorbis/configure.c:350
+#: Output/esd/configure.c:114 Output/esd/configure.c:144
+msgid "Host:"
+msgstr "Konenimi:"
+
+#: Input/mpg123/configure.c:635 Input/vorbis/configure.c:360
+#: Output/esd/configure.c:153
+msgid "Port:"
+msgstr "Portti:"
+
+#: Input/mpg123/configure.c:648 Input/vorbis/configure.c:373
+msgid "Use authentication"
+msgstr "Käytä todennusta"
+
+#: Input/mpg123/configure.c:665 Input/vorbis/configure.c:390
+msgid "Username:"
+msgstr "Käyttäjänimi:"
+
+#: Input/mpg123/configure.c:676 Input/vorbis/configure.c:401
+msgid "Password:"
+msgstr "Salasana:"
+
+#: Input/mpg123/configure.c:693 Input/vorbis/configure.c:418
+msgid "Save stream to disk:"
+msgstr "Tallenna virta levylle:"
+
+#: Input/mpg123/configure.c:704 Input/vorbis/configure.c:429
+msgid "Save stream to disk"
+msgstr "Tallenna virta levylle"
+
+#: Input/mpg123/configure.c:718 Input/vorbis/configure.c:443
+msgid "Path:"
+msgstr "Polku:"
+
+#: Input/mpg123/configure.c:728 Input/vorbis/configure.c:453
+msgid "Browse"
+msgstr "Selaa"
+
+#: Input/mpg123/configure.c:734
+msgid "SHOUT/Icecast:"
+msgstr "SHOUT/Icecast:"
+
+#: Input/mpg123/configure.c:748
+msgid "Enable Icecast Metadata UDP Channel"
+msgstr "Käytä Icecastin UDP-metatietokanavaa"
+
+#: Input/mpg123/configure.c:755 Input/vorbis/configure.c:460
+msgid "Streaming"
+msgstr "Virrat"
+
+#: Input/mpg123/configure.c:757
+msgid "ID3 Tags:"
+msgstr "ID3-tiedot:"
+
+#: Input/mpg123/configure.c:765
+msgid "Disable ID3V2 tags"
+msgstr "Poista ID3v2-tiedot käytöstä"
+
+#: Input/mpg123/configure.c:774
+msgid "Convert non-UTF8 ID3 tags to UTF8"
+msgstr "Muunna ID3-tietojen merkistö UTF-8:ksi jos muussa muodossa"
+
+#: Input/mpg123/configure.c:787
+msgid "ID3 encoding:"
+msgstr "ID3-merkistö:"
+
+#: Input/mpg123/configure.c:812
+msgid "ID3 format:"
+msgstr "ID3-muoto:"
+
+#: Input/mpg123/configure.c:826 Input/vorbis/configure.c:499
+#: audacious/prefswin.c:95
+msgid "Title"
+msgstr "Nimi"
+
+#: Input/mpg123/fileinfo.c:471
+#, c-format
+msgid ""
+"%s\n"
+"Unable to write to file: %s"
+msgstr ""
+"%s\n"
+"Tiedostoon ei voi kirjoittaa: %s"
+
+#: Input/mpg123/fileinfo.c:472 Input/mpg123/fileinfo.c:477
+msgid "Couldn't write tag!"
+msgstr "Tietojen kirjoittaminen epäonnistui!"
+
+#: Input/mpg123/fileinfo.c:476 Input/mpg123/fileinfo.c:567
+#, c-format
+msgid ""
+"%s\n"
+"Unable to open file: %s"
+msgstr ""
+"%s\n"
+"Tiedostoa ei voi avata: %s"
+
+#: Input/mpg123/fileinfo.c:479 Input/mpg123/fileinfo.c:570
+msgid "File Info"
+msgstr "Tiedoston tiedot"
+
+#: Input/mpg123/fileinfo.c:479 Input/mpg123/fileinfo.c:570
+#: Input/mpg123/http.c:220 Input/mpg123/mpg123.c:1184
+#: Input/vorbis/fileinfo.c:212 Input/vorbis/http.c:218
+#: Input/vorbis/vorbis.c:802 Output/OSS/about.c:54 Output/esd/about.c:49
+#: Output/alsa/about.c:53
+msgid "Ok"
+msgstr "OK"
+
+#: Input/mpg123/fileinfo.c:556
+#, c-format
+msgid ""
+"%s\n"
+"Unable to truncate file: %s"
+msgstr ""
+"%s\n"
+"Tiedostoa ei voi typistää: %s"
+
+#: Input/mpg123/fileinfo.c:558 Input/mpg123/fileinfo.c:568
+msgid "Couldn't remove tag!"
+msgstr "Tietoa ei voi poistaa!"
+
+#: Input/mpg123/fileinfo.c:562
+msgid "No tag to remove!"
+msgstr "Poistettavaa tietoa ei ole!"
+
+#: Input/mpg123/fileinfo.c:602
+msgid "Stereo"
+msgstr "Stereo"
+
+#: Input/mpg123/fileinfo.c:602
+msgid "Joint stereo"
+msgstr "Yhdistetty stereo"
+
+#: Input/mpg123/fileinfo.c:603
+msgid "Dual channel"
+msgstr "Kaksikanavainen"
+
+#: Input/mpg123/fileinfo.c:603
+msgid "Single channel"
+msgstr "Yksikanavainen"
+
+#: Input/mpg123/fileinfo.c:618 Input/mpg123/fileinfo.c:1258
+#: Input/mpg123/fileinfo.c:1379
+#, c-format
+msgid "%d KBit/s"
+msgstr "%d kbit/s"
+
+#: Input/mpg123/fileinfo.c:619 Input/mpg123/fileinfo.c:1262
+#: Input/mpg123/fileinfo.c:1383
+#, c-format
+msgid "%ld Hz"
+msgstr "%ld Hz"
+
+#: Input/mpg123/fileinfo.c:639
+msgid "None"
+msgstr "Ei mikään"
+
+#: Input/mpg123/fileinfo.c:640
+msgid "50/15 ms"
+msgstr "50/15 ms"
+
+#: Input/mpg123/fileinfo.c:642
+msgid "CCIT J.17"
+msgstr "CCIT J.17"
+
+#: Input/mpg123/fileinfo.c:643
+msgid "No"
+msgstr "Ei"
+
+#: Input/mpg123/fileinfo.c:644
+msgid "Yes"
+msgstr "Kyllä"
+
+#: Input/mpg123/fileinfo.c:691 Input/vorbis/fileinfo.c:557
+msgid "Name:"
+msgstr "Nimi:"
+
+#: Input/mpg123/fileinfo.c:707
+msgid " MPEG Info "
+msgstr " MPEG-tietoja "
+
+#: Input/mpg123/fileinfo.c:722 Input/mpg123/fileinfo.c:1122
+msgid "MPEG Level:"
+msgstr "MPEG-taso:"
+
+#: Input/mpg123/fileinfo.c:735 Input/mpg123/fileinfo.c:1125
+#: Input/vorbis/fileinfo.c:836 Input/vorbis/fileinfo.c:912
+msgid "Bit rate:"
+msgstr "Bittinopeus:"
+
+#: Input/mpg123/fileinfo.c:748 Input/mpg123/fileinfo.c:1128
+#: Input/vorbis/fileinfo.c:849 Input/vorbis/fileinfo.c:915
+msgid "Sample rate:"
+msgstr "Näytetaajuus:"
+
+#: Input/mpg123/fileinfo.c:762 Input/mpg123/fileinfo.c:1143
+msgid "Frames:"
+msgstr "Kehyksiä:"
+
+#: Input/mpg123/fileinfo.c:775 Input/mpg123/fileinfo.c:1146
+#: Input/vorbis/fileinfo.c:888 Input/vorbis/fileinfo.c:924
+msgid "File size:"
+msgstr "Tiedostokoko:"
+
+#: Input/mpg123/fileinfo.c:798 Input/mpg123/fileinfo.c:1131
+msgid "Error Protection:"
+msgstr "Virheenesto:"
+
+#: Input/mpg123/fileinfo.c:811 Input/mpg123/fileinfo.c:1134
+#: Input/vorbis/fileinfo.c:718
+msgid "Copyright:"
+msgstr "Tekijänoikeus:"
+
+#: Input/mpg123/fileinfo.c:824 Input/mpg123/fileinfo.c:1137
+msgid "Original:"
+msgstr "Alkuperäinen:"
+
+#: Input/mpg123/fileinfo.c:837 Input/mpg123/fileinfo.c:1140
+msgid "Emphasis:"
+msgstr "Korostus:"
+
+#: Input/mpg123/fileinfo.c:851
+msgid " ID3 Tag "
+msgstr " ID3-tieto "
+
+#: Input/mpg123/fileinfo.c:859 Input/vorbis/fileinfo.c:580
+msgid "Title:"
+msgstr "Nimi:"
+
+#: Input/mpg123/fileinfo.c:874 Input/vorbis/fileinfo.c:591
+msgid "Artist:"
+msgstr "Esittäjä:"
+
+#: Input/mpg123/fileinfo.c:889 Input/vorbis/fileinfo.c:602
+msgid "Album:"
+msgstr "Levy:"
+
+#: Input/mpg123/fileinfo.c:904 Input/vorbis/fileinfo.c:613
+msgid "Comment:"
+msgstr "Kommentti:"
+
+#: Input/mpg123/fileinfo.c:926
+msgid "Year:"
+msgstr "Vuosi:"
+
+#: Input/mpg123/fileinfo.c:938 Input/vorbis/fileinfo.c:636
+msgid "Track number:"
+msgstr "Kappalenumero:"
+
+#: Input/mpg123/fileinfo.c:970 Input/vorbis/fileinfo.c:648
+msgid "Genre:"
+msgstr "Tyylilaji:"
+
+#: Input/mpg123/fileinfo.c:1007
+msgid "Copy album tags"
+msgstr "Kopioi levyn tiedot"
+
+#: Input/mpg123/fileinfo.c:1008
+msgid "Paste album tags"
+msgstr "Liitä levyn tiedot"
+
+#: Input/mpg123/fileinfo.c:1101 Input/vorbis/fileinfo.c:1014
+#: audacious/mainwin.c:780
+#, c-format
+msgid "%s - BMP"
+msgstr "%s - BMP"
+
+#: Input/mpg123/fileinfo.c:1123 Input/mpg123/fileinfo.c:1126
+#: Input/mpg123/fileinfo.c:1129 Input/mpg123/fileinfo.c:1132
+#: Input/mpg123/fileinfo.c:1135 Input/mpg123/fileinfo.c:1138
+#: Input/mpg123/fileinfo.c:1141 Input/mpg123/fileinfo.c:1144
+#: Input/mpg123/fileinfo.c:1147 Input/vorbis/fileinfo.c:913
+#: Input/vorbis/fileinfo.c:916 Input/vorbis/fileinfo.c:919
+#: Input/vorbis/fileinfo.c:922 Input/vorbis/fileinfo.c:925
+msgid "N/A"
+msgstr "ei"
+
+#: Input/mpg123/fileinfo.c:1250 Input/mpg123/fileinfo.c:1371
+#, c-format
+msgid ""
+"Variable,\n"
+"avg. bitrate: %d KBit/s"
+msgstr ""
+"Vaihteleva,\n"
+"keskimäärin %d kbit/s"
+
+#: Input/mpg123/fileinfo.c:1264 Input/mpg123/fileinfo.c:1266
+#: Input/mpg123/fileinfo.c:1267 Input/mpg123/fileinfo.c:1268
+#: Input/mpg123/fileinfo.c:1385 Input/mpg123/fileinfo.c:1387
+#: Input/mpg123/fileinfo.c:1388 Input/mpg123/fileinfo.c:1389
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: Input/mpg123/fileinfo.c:1269 Input/mpg123/fileinfo.c:1390
+#: Input/vorbis/fileinfo.c:957
+#, c-format
+msgid "%d"
+msgstr "%d"
+
+#: Input/mpg123/fileinfo.c:1270 Input/mpg123/fileinfo.c:1391
+#, c-format
+msgid "%lu Bytes"
+msgstr "%lu tavua"
+
+#: Input/mpg123/http.c:220 Input/vorbis/http.c:218
+msgid "Error"
+msgstr "Virhe"
+
+#: Input/mpg123/http.c:374 Input/vorbis/http.c:326
+#, c-format
+msgid "LOOKING UP %s"
+msgstr "HAETAAN %s"
+
+#: Input/mpg123/http.c:379 Input/vorbis/http.c:331
+#, c-format
+msgid "Couldn't look up host %s"
+msgstr "Konenimen %s haku epäonnistui"
+
+#: Input/mpg123/http.c:392 Input/vorbis/http.c:344
+#, c-format
+msgid "CONNECTING TO %s:%d"
+msgstr "YHDISTETÄÄN OSOITTEESEEN %s:%d"
+
+#: Input/mpg123/http.c:400 Input/mpg123/http.c:420 Input/vorbis/http.c:352
+#: Input/vorbis/http.c:372
+#, c-format
+msgid "Couldn't connect to host %s"
+msgstr "Koneeseen %s yhdistäminen epäonnistui-"
+
+#: Input/mpg123/http.c:483 Input/vorbis/http.c:420
+msgid "CONNECTED: WAITING FOR REPLY"
+msgstr "YHDISTETTY: ODOTTAA VASTAUSTA"
+
+#: Input/mpg123/http.c:520 Input/vorbis/http.c:457
+#, c-format
+msgid ""
+"Couldn't connect to host %s\n"
+"Server reported: %s"
+msgstr ""
+"Koneeseen %s yhdistäminen epäonnistui\n"
+"Palvelimen ilmoitus: %s"
+
+#: Input/mpg123/http.c:638 Input/vorbis/http.c:556
+#, c-format
+msgid "PRE-BUFFERING: %dKB/%dKB"
+msgstr "ESIPUSKUROINTI: %d/%d kt"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Blues"
+msgstr "Blues"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Classic Rock"
+msgstr "Klassinen rock"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Country"
+msgstr "Kantri"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Dance"
+msgstr "Tanssi"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Disco"
+msgstr "Disko"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Funk"
+msgstr "Funk"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Grunge"
+msgstr "Grunge"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Hip-Hop"
+msgstr "Hip-Hop"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "Jazz"
+msgstr "Jazz"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "Metal"
+msgstr "Metalli"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "New Age"
+msgstr "New Age"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "Oldies"
+msgstr "Klassikot"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Other"
+msgstr "Muu"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Pop"
+msgstr "Pop"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "R&B"
+msgstr "R&B"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Rap"
+msgstr "Rap"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Reggae"
+msgstr "Reggae"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Rock"
+msgstr "Rock"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Techno"
+msgstr "Tekno"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Industrial"
+msgstr "Industrial"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Alternative"
+msgstr "Vaihtoehtoinen"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Ska"
+msgstr "Ska"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Death Metal"
+msgstr "Death Metal"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Pranks"
+msgstr "Pilat"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Soundtrack"
+msgstr "Ääniraita"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Euro-Techno"
+msgstr "Euro-tekno"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Ambient"
+msgstr "Ambient"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Trip-Hop"
+msgstr "Trip-Hop"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Vocal"
+msgstr "Laulu"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Jazz+Funk"
+msgstr "Jazz+Funk"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Fusion"
+msgstr "Fuusio"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Trance"
+msgstr "Trance"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Classical"
+msgstr "Klassinen"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "Instrumental"
+msgstr "Instrumentaali"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "Acid"
+msgstr "Acid"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "House"
+msgstr "House"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "Game"
+msgstr "Peli"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "Sound Clip"
+msgstr "Äänileike"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "Gospel"
+msgstr "Gospel"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "Noise"
+msgstr "Melu"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "AlternRock"
+msgstr "Vaihtoehtorock"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Bass"
+msgstr "Basso"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Soul"
+msgstr "Soul"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Punk"
+msgstr "Punk"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Space"
+msgstr "Avaruus"
+
+#: Input/mpg123/mpg123.c:51 Input/vorbis/fileinfo.c:94
+msgid "Meditative"
+msgstr "Meditaatio"
+
+#: Input/mpg123/mpg123.c:51 Input/vorbis/fileinfo.c:94
+msgid "Instrumental Pop"
+msgstr "Instrumentaalipop"
+
+#: Input/mpg123/mpg123.c:52 Input/vorbis/fileinfo.c:95
+msgid "Instrumental Rock"
+msgstr "Instrumentaalirock"
+
+#: Input/mpg123/mpg123.c:52 Input/vorbis/fileinfo.c:95
+msgid "Ethnic"
+msgstr "Etninen"
+
+#: Input/mpg123/mpg123.c:52 Input/vorbis/fileinfo.c:95
+msgid "Gothic"
+msgstr "Goottilainen"
+
+#: Input/mpg123/mpg123.c:53 Input/vorbis/fileinfo.c:96
+msgid "Darkwave"
+msgstr "Darkwave"
+
+#: Input/mpg123/mpg123.c:53 Input/vorbis/fileinfo.c:96
+msgid "Techno-Industrial"
+msgstr "Tekno-industrial"
+
+#: Input/mpg123/mpg123.c:53 Input/vorbis/fileinfo.c:96
+msgid "Electronic"
+msgstr "Elektroninen"
+
+#: Input/mpg123/mpg123.c:54 Input/vorbis/fileinfo.c:97
+msgid "Pop-Folk"
+msgstr "Pop-Folk"
+
+#: Input/mpg123/mpg123.c:54 Input/vorbis/fileinfo.c:97
+msgid "Eurodance"
+msgstr "Eurodance"
+
+#: Input/mpg123/mpg123.c:54 Input/vorbis/fileinfo.c:97
+msgid "Dream"
+msgstr "Uni"
+
+#: Input/mpg123/mpg123.c:55 Input/vorbis/fileinfo.c:98
+msgid "Southern Rock"
+msgstr "Eteläinen rock"
+
+#: Input/mpg123/mpg123.c:55 Input/vorbis/fileinfo.c:98
+msgid "Comedy"
+msgstr "Komedia"
+
+#: Input/mpg123/mpg123.c:55 Input/vorbis/fileinfo.c:98
+msgid "Cult"
+msgstr "Kultti"
+
+#: Input/mpg123/mpg123.c:56 Input/vorbis/fileinfo.c:99
+msgid "Gangsta Rap"
+msgstr "Gangsta-rap"
+
+#: Input/mpg123/mpg123.c:56 Input/vorbis/fileinfo.c:99
+msgid "Top 40"
+msgstr "Top 40"
+
+#: Input/mpg123/mpg123.c:56 Input/vorbis/fileinfo.c:99
+msgid "Christian Rap"
+msgstr "Kristillinen rap"
+
+#: Input/mpg123/mpg123.c:57 Input/vorbis/fileinfo.c:100
+msgid "Pop/Funk"
+msgstr "Pop/Funk"
+
+#: Input/mpg123/mpg123.c:57 Input/vorbis/fileinfo.c:100
+msgid "Jungle"
+msgstr "Jungle"
+
+#: Input/mpg123/mpg123.c:57 Input/vorbis/fileinfo.c:100
+msgid "Native American"
+msgstr "Alkuperäisamerikkalainen"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "Cabaret"
+msgstr "Kabaree"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "New Wave"
+msgstr "New Wave"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "Psychedelic"
+msgstr "Psykedeelinen"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "Rave"
+msgstr "Rave"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Showtunes"
+msgstr "Showmusiikki"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Trailer"
+msgstr "Esittely"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Lo-Fi"
+msgstr "Lo-Fi"
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Tribal"
+msgstr "Heimo"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Acid Punk"
+msgstr "Acid Punk"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Acid Jazz"
+msgstr "Acid Jazz"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Polka"
+msgstr "Polkka"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Retro"
+msgstr "Retro"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Musical"
+msgstr "Muusikaali"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Rock & Roll"
+msgstr "Rock'n'Roll"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Hard Rock"
+msgstr "Hard Rock"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Folk"
+msgstr "Folk"
+
+#: Input/mpg123/mpg123.c:62 Input/vorbis/fileinfo.c:105
+msgid "Folk/Rock"
+msgstr "Folk/Rock"
+
+#: Input/mpg123/mpg123.c:62 Input/vorbis/fileinfo.c:105
+msgid "National Folk"
+msgstr "Kansallinen folk"
+
+#: Input/mpg123/mpg123.c:62 Input/vorbis/fileinfo.c:105
+msgid "Swing"
+msgstr "Swing"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Fast-Fusion"
+msgstr "Nopea fuusio"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Bebob"
+msgstr "Bebob"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Latin"
+msgstr "Latinalainen"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Revival"
+msgstr "Revival"
+
+#: Input/mpg123/mpg123.c:64 Input/vorbis/fileinfo.c:107
+msgid "Celtic"
+msgstr "Kelttiläinen"
+
+#: Input/mpg123/mpg123.c:64 Input/vorbis/fileinfo.c:107
+msgid "Bluegrass"
+msgstr "Bluegrass"
+
+#: Input/mpg123/mpg123.c:64 Input/vorbis/fileinfo.c:107
+msgid "Avantgarde"
+msgstr "Avantgarde"
+
+#: Input/mpg123/mpg123.c:65 Input/vorbis/fileinfo.c:108
+msgid "Gothic Rock"
+msgstr "Goottirock"
+
+#: Input/mpg123/mpg123.c:65 Input/vorbis/fileinfo.c:108
+msgid "Progressive Rock"
+msgstr "Progressiivinen rock"
+
+#: Input/mpg123/mpg123.c:66 Input/vorbis/fileinfo.c:109
+msgid "Psychedelic Rock"
+msgstr "Psykedeelinen rock"
+
+#: Input/mpg123/mpg123.c:66 Input/vorbis/fileinfo.c:109
+msgid "Symphonic Rock"
+msgstr "Sinfoninen rock"
+
+#: Input/mpg123/mpg123.c:66 Input/vorbis/fileinfo.c:109
+msgid "Slow Rock"
+msgstr "Hidas rock"
+
+#: Input/mpg123/mpg123.c:67 Input/vorbis/fileinfo.c:110
+msgid "Big Band"
+msgstr "Big band"
+
+#: Input/mpg123/mpg123.c:67 Input/vorbis/fileinfo.c:110
+msgid "Chorus"
+msgstr "Kuoro"
+
+#: Input/mpg123/mpg123.c:67 Input/vorbis/fileinfo.c:110
+msgid "Easy Listening"
+msgstr "Kevyt kuunneltava"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Acoustic"
+msgstr "Akustinen"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Humour"
+msgstr "Huumori"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Speech"
+msgstr "Puhe"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Chanson"
+msgstr "Chanson"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Opera"
+msgstr "Ooppera"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Chamber Music"
+msgstr "Kamarimusiikki"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Sonata"
+msgstr "Sonetti"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Symphony"
+msgstr "Sinfonia"
+
+#: Input/mpg123/mpg123.c:70 Input/vorbis/fileinfo.c:113
+msgid "Booty Bass"
+msgstr "Booty bass"
+
+#: Input/mpg123/mpg123.c:70 Input/vorbis/fileinfo.c:113
+msgid "Primus"
+msgstr "Primus"
+
+#: Input/mpg123/mpg123.c:70 Input/vorbis/fileinfo.c:113
+msgid "Porn Groove"
+msgstr "Pornogroove"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Satire"
+msgstr "Satiiri"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Slow Jam"
+msgstr "Hidas jam"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Club"
+msgstr "Klubi"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Tango"
+msgstr "Tango"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Samba"
+msgstr "Samba"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Folklore"
+msgstr "Kansantaru"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Ballad"
+msgstr "Balladi"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Power Ballad"
+msgstr "Voimaballadi"
+
+#: Input/mpg123/mpg123.c:73 Input/vorbis/fileinfo.c:116
+msgid "Rhythmic Soul"
+msgstr "Rytminen soul"
+
+#: Input/mpg123/mpg123.c:73 Input/vorbis/fileinfo.c:116
+msgid "Freestyle"
+msgstr "Vapaamuotoinen"
+
+#: Input/mpg123/mpg123.c:73 Input/vorbis/fileinfo.c:116
+msgid "Duet"
+msgstr "Duetto"
+
+#: Input/mpg123/mpg123.c:74 Input/vorbis/fileinfo.c:117
+msgid "Punk Rock"
+msgstr "Punk rock"
+
+#: Input/mpg123/mpg123.c:74 Input/vorbis/fileinfo.c:117
+msgid "Drum Solo"
+msgstr "Rumpusoolo"
+
+#: Input/mpg123/mpg123.c:74 Input/vorbis/fileinfo.c:117
+msgid "A Cappella"
+msgstr "A Cappella"
+
+#: Input/mpg123/mpg123.c:75 Input/vorbis/fileinfo.c:118
+msgid "Euro-House"
+msgstr "Euro-House"
+
+#: Input/mpg123/mpg123.c:75 Input/vorbis/fileinfo.c:118
+msgid "Dance Hall"
+msgstr "Tanssihalli"
+
+#: Input/mpg123/mpg123.c:75 Input/vorbis/fileinfo.c:118
+msgid "Goa"
+msgstr "Goa"
+
+#: Input/mpg123/mpg123.c:76 Input/vorbis/fileinfo.c:119
+msgid "Drum & Bass"
+msgstr "Drum & Bass"
+
+#: Input/mpg123/mpg123.c:76 Input/vorbis/fileinfo.c:119
+msgid "Club-House"
+msgstr "Kulbi-house"
+
+#: Input/mpg123/mpg123.c:76 Input/vorbis/fileinfo.c:119
+msgid "Hardcore"
+msgstr "Hardcore"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "Terror"
+msgstr "Kauhu"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "Indie"
+msgstr "Riippumaton"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "BritPop"
+msgstr "Brittipop"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "Negerpunk"
+msgstr "Musta punk"
+
+#: Input/mpg123/mpg123.c:78 Input/vorbis/fileinfo.c:121
+msgid "Polsk Punk"
+msgstr "Puolapunk"
+
+#: Input/mpg123/mpg123.c:78 Input/vorbis/fileinfo.c:121
+msgid "Beat"
+msgstr "Beat"
+
+#: Input/mpg123/mpg123.c:78 Input/vorbis/fileinfo.c:121
+msgid "Christian Gangsta Rap"
+msgstr "Kristinllinen gangsta-rap"
+
+#: Input/mpg123/mpg123.c:79 Input/vorbis/fileinfo.c:122
+msgid "Heavy Metal"
+msgstr "Hevi"
+
+#: Input/mpg123/mpg123.c:79 Input/vorbis/fileinfo.c:122
+msgid "Black Metal"
+msgstr "Black Metal"
+
+#: Input/mpg123/mpg123.c:79 Input/vorbis/fileinfo.c:122
+msgid "Crossover"
+msgstr "Sekoitus"
+
+#: Input/mpg123/mpg123.c:80 Input/vorbis/fileinfo.c:123
+msgid "Contemporary Christian"
+msgstr "Nykyaikainen kristillinen"
+
+#: Input/mpg123/mpg123.c:80 Input/vorbis/fileinfo.c:123
+msgid "Christian Rock"
+msgstr "Kristillinen rock"
+
+#: Input/mpg123/mpg123.c:81 Input/vorbis/fileinfo.c:124
+msgid "Merengue"
+msgstr "Merengue"
+
+#: Input/mpg123/mpg123.c:81 Input/vorbis/fileinfo.c:124
+msgid "Salsa"
+msgstr "Salsa"
+
+#: Input/mpg123/mpg123.c:81 Input/vorbis/fileinfo.c:124
+msgid "Thrash Metal"
+msgstr "Thrash Metal"
+
+#: Input/mpg123/mpg123.c:82 Input/vorbis/fileinfo.c:125
+msgid "Anime"
+msgstr "Anime"
+
+#: Input/mpg123/mpg123.c:82 Input/vorbis/fileinfo.c:125
+msgid "JPop"
+msgstr "JPop"
+
+#: Input/mpg123/mpg123.c:82 Input/vorbis/fileinfo.c:125
+msgid "Synthpop"
+msgstr "Synthpop"
+
+#: Input/mpg123/mpg123.c:1181
+msgid "About MPEG Audio Plugin"
+msgstr "MPEG-ääniliitännäisestä"
+
+#: Input/mpg123/mpg123.c:1182
+msgid ""
+"mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
+"Plugin by The XMMS team"
+msgstr ""
+"mpg123 purkaja, tehnyt: Michael Hipp <mh@mpg123.de>\n"
+"Liitännäisen tekijä: XMMS-ryhmä."
+
+#: Input/mpg123/mpg123.c:1218
+msgid "MPEG Audio Plugin"
+msgstr "MPEG-ääniliitännäinen"
+
+#: Input/vorbis/configure.c:192
+msgid "Select the directory where you want to store the Ogg Vorbis streams:"
+msgstr "Valitse hakemisto, johon Ogg Vorbis -virrat tallentuvat:"
+
+#: Input/vorbis/configure.c:275
+msgid "Ogg Vorbis Audio Plugin Configuration"
+msgstr "Ogg Vorbis -ääniliitännäisen asetukset"
+
+#: Input/vorbis/configure.c:464
+msgid "Ogg Vorbis Tags:"
+msgstr "Ogg Vorbis -tiedot:"
+
+#: Input/vorbis/configure.c:485 audacious/glade/prefswin.glade:2261
+msgid "Title format:"
+msgstr "Nimikkeen muoto:"
+
+#: Input/vorbis/configure.c:503
+msgid "ReplayGain Settings:"
+msgstr "ReplayGain-asetukset:"
+
+#: Input/vorbis/configure.c:511
+msgid "Enable Clipping Prevention"
+msgstr "Estä huippujen leikkautuminen"
+
+#: Input/vorbis/configure.c:516
+msgid "Enable ReplayGain"
+msgstr "Käytä ReplayGainia"
+
+#: Input/vorbis/configure.c:521
+msgid "ReplayGain Type:"
+msgstr "ReplayGainin tyyppi:"
+
+#: Input/vorbis/configure.c:532
+msgid "use Track Gain/Peak"
+msgstr "Käytä kappaleen vahvistusta ja huippuarvoa"
+
+#: Input/vorbis/configure.c:542
+msgid "use Album Gain/Peak"
+msgstr "Käytä levyn vahvistusta ja huippuarvoa"
+
+#: Input/vorbis/configure.c:554
+msgid "Enable 6dB Boost + Hard Limiting"
+msgstr "Ota 6:n dB:n vahvistus ja vahva rajoitus käyttöön"
+
+#: Input/vorbis/configure.c:560
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+#: Input/vorbis/fileinfo.c:210
+#, c-format
+msgid ""
+"An error occured:\n"
+"%s"
+msgstr ""
+"Virhe tapahtui:\n"
+"%s"
+
+#: Input/vorbis/fileinfo.c:212
+msgid "Error!"
+msgstr "Virhe!"
+
+#: Input/vorbis/fileinfo.c:242
+msgid "Failed to modify tag (open)"
+msgstr "Tietojen muokkaus (avaus) epäonnistui"
+
+#: Input/vorbis/fileinfo.c:295
+msgid "Failed to modify tag (close)"
+msgstr "Tietojen muokkaus (sulkeminen) epäonnistui"
+
+#: Input/vorbis/fileinfo.c:320 Input/vorbis/fileinfo.c:329
+msgid "Failed to modify tag"
+msgstr "Tietojen muokkaus epäonnistui"
+
+#: Input/vorbis/fileinfo.c:572
+msgid " Ogg Vorbis Tag "
+msgstr " Ogg Vorbis -tiedot"
+
+#: Input/vorbis/fileinfo.c:624
+msgid "Date:"
+msgstr "Päiväys:"
+
+#: Input/vorbis/fileinfo.c:666
+msgid "Description:"
+msgstr "Kuvaus:"
+
+#: Input/vorbis/fileinfo.c:676
+msgid "Location:"
+msgstr "Sijainti:"
+
+#: Input/vorbis/fileinfo.c:686
+msgid "Version:"
+msgstr "Versio:"
+
+#: Input/vorbis/fileinfo.c:697
+msgid "ISRC number:"
+msgstr "ISRC-numero:"
+
+#: Input/vorbis/fileinfo.c:708
+msgid "Organization:"
+msgstr "Organisaatio:"
+
+#: Input/vorbis/fileinfo.c:755
+msgid " Ogg Vorbis ReplayGain "
+msgstr " Ogg Vorbis -ReplayGain "
+
+#: Input/vorbis/fileinfo.c:761
+msgid "Track gain:"
+msgstr "Kappaleen vahvistus:"
+
+#: Input/vorbis/fileinfo.c:771
+msgid "Track peak:"
+msgstr "Kappaleen huippuarvo:"
+
+#: Input/vorbis/fileinfo.c:782
+msgid "Album gain:"
+msgstr "Levyn vahvistus:"
+
+#: Input/vorbis/fileinfo.c:792
+msgid "Album peak:"
+msgstr "Levyn huippuarvo:"
+
+#: Input/vorbis/fileinfo.c:821
+msgid " Ogg Vorbis Info "
+msgstr " Ogg Vorbis -tietoja"
+
+#: Input/vorbis/fileinfo.c:875 Input/vorbis/fileinfo.c:921
+msgid "Length:"
+msgstr "Kesto:"
+
+#: Input/vorbis/fileinfo.c:955
+#, c-format
+msgid "%d KBit/s (nominal)"
+msgstr "%d kbit/s (nimellinen)"
+
+#: Input/vorbis/fileinfo.c:956
+#, c-format
+msgid "%d Hz"
+msgstr "%d Hz"
+
+#: Input/vorbis/fileinfo.c:959
+#, c-format
+msgid "%d:%.2d"
+msgstr "%d:%.2d"
+
+#: Input/vorbis/fileinfo.c:961
+#, c-format
+msgid "%d Bytes"
+msgstr "%d tavua"
+
+#: Input/vorbis/vorbis.c:134
+msgid "Ogg Vorbis Audio Plugin"
+msgstr "Ogg Vorbis -ääniliitännäinen"
+
+#: Input/vorbis/vorbis.c:784
+msgid "About Ogg Vorbis Audio Plugin"
+msgstr "Ogg Vorbis -ääniliitännäisestä"
+
+#: Input/vorbis/vorbis.c:790
+msgid ""
+"Ogg Vorbis Plugin by the Xiph.org Foundation\n"
+"\n"
+"Original code by\n"
+"Tony Arcieri <bascule@inferno.tusculum.edu>\n"
+"Contributions from\n"
+"Chris Montgomery <monty@xiph.org>\n"
+"Peter Alm <peter@xmms.org>\n"
+"Michael Smith <msmith@labyrinth.edu.au>\n"
+"Jack Moffitt <jack@icecast.org>\n"
+"Jorn Baayen <jorn@nl.linux.org>\n"
+"Haavard Kvaalen <havardk@xmms.org>\n"
+"Gian-Carlo Pascutto <gcp@sjeng.org>\n"
+"\n"
+"Visit the Xiph.org Foundation at http://www.xiph.org/\n"
+msgstr ""
+"Xiph.org-säätiön Ogg Vorbis -liitännäinen:\n"
+"\n"
+"Alkuperäisen ohjelman tekijät:\n"
+"Tony Arcieri <bascule@inferno.tusculum.edu>\n"
+"Avustuksia seuraavilta:\n"
+"Chris Montgomery <monty@xiph.org>\n"
+"Peter Alm <peter@xmms.org>\n"
+"Michael Smith <msmith@labyrinth.edu.au>\n"
+"Jack Moffitt <jack@icecast.org>\n"
+"Jorn Baayen <jorn@nl.linux.org>\n"
+"Håvard Kvålen <havardk@xmms.org>\n"
+"Gian-Carlo Pascutto <gcp@sjeng.org>\n"
+"\n"
+"Vieraile Xiph.org-säätiön sivuilla osoitteessa http://www.xiph.org/\n"
+
+#: Input/wav/wav.c:67
+msgid "WAV Audio Plugin"
+msgstr "WAV-ääniliitännäinen"
+
+#: Output/OSS/OSS.c:50
+msgid "OSS Output Plugin"
+msgstr "OSS-ulostuloliitännäinen"
+
+#: Output/OSS/about.c:39
+msgid "About OSS Driver"
+msgstr "OSS-liitännäisestä"
+
+#: Output/OSS/about.c:40
+msgid ""
+"XMMS OSS Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+"XMMS:n OSS-liitännäinen\n"
+"\n"
+"Tämä ohjelma on vapaaohjelma, ja sitä saa levittää ja muokata Free\n"
+"Software Foundationin julkaiseman GNU General Public License\n"
+"-lisenssin version 2 tai valinnaisesti myöhemmän version ehtojen\n"
+"mukaisesti.\n"
+"\n"
+"Tätä ohjelmaa levitetään toivoen, että se olisi hyödyllinen, mutta\n"
+"ILMAN MINKÄÄNLAISTA TAKUUTA, ei edes takuuta MYYNTIKELPOISUUDESTA tai\n"
+"SOPIVUUDESTA TIETTYYN KÄYTTÖÖN. Lisätietoja on GNU General Public\n"
+"Licence -lisenssissä.\n"
+"\n"
+"GNU General Public Licence -lisenssin kopion tulisi olla toimitettuna\n"
+"tämän ohjelman mukana. Jos näin ei ole, kirjoita Free Software\n"
+"Foundationille, Inc., 59 Temple Place, Suite 330, Boston MA 02111-1307\n"
+"USA."
+
+#: Output/OSS/configure.c:149
+#, c-format
+msgid "Default (%s)"
+msgstr "Oletus (%s)"
+
+#: Output/OSS/configure.c:167
+msgid "Default"
+msgstr "Oletus"
+
+#: Output/OSS/configure.c:199
+msgid "OSS Driver configuration"
+msgstr "OSS-liitännäisen asetukset"
+
+#: Output/OSS/configure.c:215 Output/alsa/configure.c:295
+msgid "Audio device:"
+msgstr "Äänilaite:"
+
+#: Output/OSS/configure.c:237 Output/OSS/configure.c:278
+msgid "Use alternate device:"
+msgstr "Käytä vaihtoehtoista äänilaitetta:"
+
+#: Output/OSS/configure.c:258 Output/alsa/configure.c:339
+msgid "Mixer device:"
+msgstr "Mikserilaite:"
+
+#: Output/OSS/configure.c:300
+msgid "Devices"
+msgstr "Laitteet"
+
+#: Output/OSS/configure.c:315 Output/esd/configure.c:184
+msgid "Buffer size (ms):"
+msgstr "Puskurin koko (ms):"
+
+#: Output/OSS/configure.c:340 Output/esd/configure.c:209
+msgid "Buffering"
+msgstr "Puskurointi"
+
+#: Output/OSS/configure.c:341
+msgid "Mixer Settings:"
+msgstr "Mikserin asetukset:"
+
+#: Output/OSS/configure.c:347
+msgid "Volume controls Master not PCM"
+msgstr "Äänenvoimakkuuden säädin muuttaa pää-, eikä PCM-äänenvoimakkuutta"
+
+#: Output/OSS/configure.c:353
+msgid "Mixer"
+msgstr "Mikseri"
+
+#: Output/esd/about.c:34
+msgid "About ESounD Plugin"
+msgstr "Tietoja Esound-liitännäisestä"
+
+#: Output/esd/about.c:35
+msgid ""
+"XMMS ESounD Plugin\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+"XMMS:n Esound-liitännäinen\n"
+"\n"
+"Tämä ohjelma on vapaaohjelma, ja sitä saa levittää ja muokata Free\n"
+"Software Foundationin julkaiseman GNU General Public License\n"
+"-lisenssin version 2 tai valinnaisesti myöhemmän version ehtojen\n"
+"mukaisesti.\n"
+"\n"
+"Tätä ohjelmaa levitetään toivoen, että se olisi hyödyllinen, mutta\n"
+"ILMAN MINKÄÄNLAISTA TAKUUTA, ei edes takuuta MYYNTIKELPOISUUDESTA tai\n"
+"SOPIVUUDESTA TIETTYYN KÄYTTÖÖN. Lisätietoja on GNU General Public\n"
+"Licence -lisenssissä.\n"
+"\n"
+"GNU General Public Licence -lisenssin kopion tulisi olla toimitettuna\n"
+"tämän ohjelman mukana. Jos näin ei ole, kirjoita Free Software\n"
+"Foundationille, Inc., 59 Temple Place, Suite 330, Boston MA 02111-1307\n"
+"USA."
+
+#: Output/esd/configure.c:102
+msgid "ESD Output Plugin configuration"
+msgstr "ESD-ulostuloliitännäisen asetukset"
+
+#: Output/esd/configure.c:125
+msgid "Use remote host"
+msgstr "Käytä etäkonetta"
+
+#: Output/esd/configure.c:132
+msgid "Volume controls OSS mixer"
+msgstr "Äänenvoimakkuus säätää pää-äänenvoimakkuutta"
+
+#: Output/esd/configure.c:169
+msgid "Server"
+msgstr "Palvelin"
+
+#: Output/esd/esd.c:47
+msgid "eSound Output Plugin"
+msgstr "Esound-ulostuloliitännäinen"
+
+#: Output/alsa/about.c:36
+msgid "About ALSA Driver"
+msgstr "Alsa-liitännäisestä"
+
+#: Output/alsa/about.c:37
+msgid ""
+"XMMS ALSA Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA.\n"
+"Author: Matthieu Sozeau (mattam@altern.org)"
+msgstr ""
+"XMMS:n Alsa-liitännäinen\n"
+"Tekijä: Matthieu Sozeau (mattam@altern.org)\n"
+"\n"
+"Tämä ohjelma on vapaaohjelma, ja sitä saa levittää ja muokata Free\n"
+"Software Foundationin julkaiseman GNU General Public License\n"
+"-lisenssin version 2 tai valinnaisesti myöhemmän version ehtojen\n"
+"mukaisesti.\n"
+"\n"
+"Tätä ohjelmaa levitetään toivoen, että se olisi hyödyllinen, mutta\n"
+"ILMAN MINKÄÄNLAISTA TAKUUTA, ei edes takuuta MYYNTIKELPOISUUDESTA tai\n"
+"SOPIVUUDESTA TIETTYYN KÄYTTÖÖN. Lisätietoja on GNU General Public\n"
+"Licence -lisenssissä.\n"
+"\n"
+"GNU General Public Licence -lisenssin kopion tulisi olla toimitettuna\n"
+"tämän ohjelman mukana. Jos näin ei ole, kirjoita Free Software\n"
+"Foundationille, Inc., 59 Temple Place, Suite 330, Boston MA 02111-1307\n"
+"USA."
+
+#: Output/alsa/alsa.c:46
+#, c-format
+msgid "ALSA %s output plugin"
+msgstr "ALSA %s -ulostuloliitännäinen"
+
+#: Output/alsa/configure.c:164
+msgid "Unknown soundcard"
+msgstr "Tuntematon äänikortti"
+
+#: Output/alsa/configure.c:217
+#, c-format
+msgid "Default PCM device (%s)"
+msgstr "Oletusarvoinen PCM-laite (%s)"
+
+#: Output/alsa/configure.c:280
+msgid "ALSA Driver configuration"
+msgstr "Alsa-liitännäisen asetukset"
+
+#: Output/alsa/configure.c:308
+msgid "Mixer:"
+msgstr "Mikseri:"
+
+#: Output/alsa/configure.c:316
+msgid "Use software volume control"
+msgstr "Käytä ohjelmiston äänenvoimakkuussäätöä"
+
+#: Output/alsa/configure.c:326
+msgid "Mixer card:"
+msgstr "Mikserikortti:"
+
+#: Output/alsa/configure.c:359
+msgid "Device settings"
+msgstr "Laitteen asetukset"
+
+#: Output/alsa/configure.c:361
+msgid "Advanced settings:"
+msgstr "Lisäasetukset:"
+
+#: Output/alsa/configure.c:374
+msgid "Buffer time (ms):"
+msgstr "Puskuri ms:"
+
+#: Output/alsa/configure.c:388
+msgid "Period time (ms):"
+msgstr "Jakson aika (ms):"
+
+#: Output/alsa/configure.c:402
+msgid "Thread buffer time (ms):"
+msgstr "Säikeen puskuriaika (ms):"
+
+#: Output/alsa/configure.c:416
+msgid "Multi-thread mode"
+msgstr "Monisäikeinen tila"
+
+#: Output/alsa/configure.c:421
+msgid "Mmap mode"
+msgstr "MMap-tila"
+
+#: Output/alsa/configure.c:427
+msgid "Advanced settings"
+msgstr "Lisäasetukset"
+
+#: Visualization/blur_scope/blur_scope.c:57
+msgid "/Toggle Decorations"
+msgstr "/Ikkunareunukset käyttöön tai pois"
+
+#: Visualization/blur_scope/blur_scope.c:59
+msgid "/-"
+msgstr "/-"
+
+#: Visualization/blur_scope/blur_scope.c:60
+msgid "/Close"
+msgstr "/Sulje"
+
+#: Visualization/blur_scope/blur_scope.c:198
+msgid "Blur scope"
+msgstr "Sumea oskilloskooppi"
+
+#: Visualization/blur_scope/config.c:73
+msgid "Blur Scope: Color selection"
+msgstr "Sumean oskilloskoopin väri"
+
+#: Visualization/blur_scope/config.c:83
+msgid "Options:"
+msgstr "Asetukset:"
+
+#: libaudacious/titlestring.c:324
+msgid "Performer/Artist"
+msgstr "Tekijä/Esittäjä"
+
+#: libaudacious/titlestring.c:325 audacious/prefswin.c:94
+msgid "Album"
+msgstr "Levy"
+
+#: libaudacious/titlestring.c:326 audacious/prefswin.c:97
+msgid "Genre"
+msgstr "Tyylilaji"
+
+#: libaudacious/titlestring.c:327
+msgid "File name"
+msgstr "Tiedostonimi"
+
+#: libaudacious/titlestring.c:328
+msgid "File path"
+msgstr "Tiedoston polku"
+
+#: libaudacious/titlestring.c:329
+msgid "File extension"
+msgstr "Tiedostopääte"
+
+#: libaudacious/titlestring.c:330
+msgid "Track name"
+msgstr "Kappaleen nimi"
+
+#: libaudacious/titlestring.c:331
+msgid "Track number"
+msgstr "Kappaleen numero"
+
+#: libaudacious/titlestring.c:332 audacious/prefswin.c:100
+msgid "Date"
+msgstr "Päiväys"
+
+#: libaudacious/titlestring.c:333 audacious/prefswin.c:101
+msgid "Year"
+msgstr "Vuosi"
+
+#: libaudacious/titlestring.c:334 audacious/prefswin.c:102
+msgid "Comment"
+msgstr "Kommentti"
+
+#: libaudacious/titlestring.c:385
+msgid "%{n:...%}: Display \"...\" only if element %n is present"
+msgstr "%{n:...%}: Näytä \"...\" vain jos kohta %n on olemassa"
+
+#: audacious/about.c:42
+#, fuzzy, c-format
+msgid ""
+"<big><b>Beep Media Player %s</b></big>\n"
+"A media player based on XMMS\n"
+"\n"
+"Copyright (C) 2003-2005 BMP Development Team\n"
+msgstr ""
+"<big><b>Beep Media Player %s</b></big>\n"
+"XMMS:än perustuva musiikkisoitin\n"
+"\n"
+"Copyright (C) 2003-2004 BMP-kehittäjäryhmä\n"
+
+#: audacious/about.c:48
+msgid "Developers:"
+msgstr "Kehittäjät:"
+
+#: audacious/about.c:49
+msgid "Artem Baguinski"
+msgstr "Artem Baguinski"
+
+#: audacious/about.c:50 audacious/about.c:85 audacious/about.c:169
+msgid "Edward Brocklesby"
+msgstr "Edward Brocklesby"
+
+#: audacious/about.c:51 audacious/about.c:99
+msgid "Chong Kai Xiong"
+msgstr "Chong Kai Xiong"
+
+#: audacious/about.c:52 audacious/about.c:84
+msgid "Milosz Derezynski"
+msgstr "Milosz Derezynski"
+
+#: audacious/about.c:53
+msgid "David Lau"
+msgstr "David Lau"
+
+#: audacious/about.c:54
+msgid "Ole Andre Vadla Ravnaas"
+msgstr "Ole Andre Vadla Ravnaas"
+
+#: audacious/about.c:55
+msgid "Michiel Sikkes"
+msgstr "Michiel Sikkes"
+
+#: audacious/about.c:58
+msgid "With Additional Help:"
+msgstr "Avustajat:"
+
+#: audacious/about.c:59
+msgid "Andrei Badea"
+msgstr "Andrei Badea"
+
+#: audacious/about.c:60
+msgid "Peter Behroozi"
+msgstr "Peter Behroozi"
+
+#: audacious/about.c:61
+msgid "Bernard Blackham"
+msgstr "Bernard Blackham"
+
+#: audacious/about.c:62
+msgid "Oliver Blin"
+msgstr "Oliver Blin"
+
+#: audacious/about.c:63
+msgid "Tomas Bzatek"
+msgstr "Tomas Bzatek"
+
+#: audacious/about.c:64 audacious/about.c:149
+msgid "Liviu Danicel"
+msgstr "Liviu Danicel"
+
+#: audacious/about.c:65
+msgid "Jon Dowland"
+msgstr "Jon Dowland"
+
+#: audacious/about.c:66
+msgid "Artur Frysiak"
+msgstr "Artur Frysiak"
+
+#: audacious/about.c:67
+msgid "Sebastian Kapfer"
+msgstr "Sebastian Kapfer"
+
+#: audacious/about.c:68
+msgid "Lukas Koberstein"
+msgstr "Lukas Koberstein"
+
+#: audacious/about.c:69 audacious/about.c:153
+msgid "Dan Korostelev"
+msgstr "Dan Korostelev"
+
+#: audacious/about.c:70
+msgid "Jolan Luff"
+msgstr "Jolan Luff"
+
+#: audacious/about.c:71
+msgid "Michael Marineau"
+msgstr "Michael Marineau"
+
+#: audacious/about.c:72
+msgid "Tim-Philipp Muller"
+msgstr "Tim-Philipp Muller"
+
+#: audacious/about.c:73
+msgid "Julien Portalier"
+msgstr "Julien Portalier"
+
+#: audacious/about.c:74
+msgid "Andrew Ruder"
+msgstr "Andrew Ruder"
+
+#: audacious/about.c:75
+msgid "Olivier Samyn"
+msgstr "Olivier Samyn"
+
+#: audacious/about.c:76
+msgid "Martijn Vernooij"
+msgstr "Martijn Vernooij"
+
+#: audacious/about.c:79
+msgid "ClearSky skin:"
+msgstr ""
+
+#: audacious/about.c:80
+msgid "Will Reinhart"
+msgstr ""
+
+#: audacious/about.c:83
+msgid "Homepage and Graphics:"
+msgstr "Kotisivu ja grafiikka:"
+
+#: audacious/about.c:92
+msgid "Brazilian Portuguese:"
+msgstr "portugali (Brasilia):"
+
+#: audacious/about.c:93
+msgid "Philipi Pinto"
+msgstr "Philipi Pinto"
+
+#: audacious/about.c:95
+msgid "Breton:"
+msgstr "bretoni:"
+
+#: audacious/about.c:96
+msgid "Thierry Vignaud"
+msgstr "Thierry Vignaud"
+
+#: audacious/about.c:98
+msgid "Chinese:"
+msgstr "kiina:"
+
+#: audacious/about.c:100
+msgid "Chao-Hsiung Liao"
+msgstr "Chao-Hsiung Liao"
+
+#: audacious/about.c:102
+msgid "Czech:"
+msgstr "tšekki:"
+
+#: audacious/about.c:103
+msgid "Jan Narovec"
+msgstr "Jan Narovec"
+
+#: audacious/about.c:105
+msgid "Dutch:"
+msgstr "hollanti:"
+
+#: audacious/about.c:106
+msgid "Laurens Buhler"
+msgstr "Laurens Buhler"
+
+#: audacious/about.c:108
+#, fuzzy
+msgid "Finnish:"
+msgstr "espanja:"
+
+#: audacious/about.c:109
+msgid "Pauli Virtanen"
+msgstr ""
+
+#: audacious/about.c:111
+msgid "French:"
+msgstr "ranska:"
+
+#: audacious/about.c:112
+msgid "David Le Brun"
+msgstr "David Le Brun"
+
+#: audacious/about.c:114
+msgid "German:"
+msgstr "saksa:"
+
+#: audacious/about.c:115
+msgid "Matthias Debus"
+msgstr "Matthias Debus"
+
+#: audacious/about.c:117
+#, fuzzy
+msgid "Georgian: "
+msgstr "saksa:"
+
+#: audacious/about.c:118
+msgid "George Machitidze"
+msgstr ""
+
+#: audacious/about.c:120
+msgid "Greek:"
+msgstr "kreikka:"
+
+#: audacious/about.c:121
+msgid "Kouzinopoulos Haris"
+msgstr "Kouzinopoulos Haris"
+
+#: audacious/about.c:122
+msgid "Stavros Giannouris"
+msgstr ""
+
+#: audacious/about.c:124
+msgid "Hindi:"
+msgstr ""
+
+#: audacious/about.c:125
+msgid "Dhananjaya Sharma"
+msgstr ""
+
+#: audacious/about.c:127
+msgid "Hungarian:"
+msgstr "unkari:"
+
+#: audacious/about.c:128
+msgid "Laszlo Dvornik"
+msgstr "Laszlo Dvornik"
+
+#: audacious/about.c:130
+msgid "Italian:"
+msgstr "italia:"
+
+#: audacious/about.c:131
+msgid "Alessio D'Ascanio"
+msgstr "Alessio D'Ascanio"
+
+#: audacious/about.c:133
+msgid "Japanese:"
+msgstr "japani:"
+
+#: audacious/about.c:134
+msgid "Takeshi Aihana"
+msgstr "Takeshi Aihana"
+
+#: audacious/about.c:136
+msgid "Korean:"
+msgstr "korea:"
+
+#: audacious/about.c:137
+msgid "DongCheon Park"
+msgstr "DongCheon Park"
+
+#: audacious/about.c:139
+msgid "Lithuanian:"
+msgstr "liettua:"
+
+#: audacious/about.c:140
+msgid "Rimas Kudelis"
+msgstr "Rimas Kudelis"
+
+#: audacious/about.c:142
+msgid "Macedonian:"
+msgstr "makedonia:"
+
+#: audacious/about.c:143
+msgid "Arangel Angov"
+msgstr "Arangel Angov"
+
+#: audacious/about.c:145
+msgid "Polish:"
+msgstr "puola:"
+
+#: audacious/about.c:146
+msgid "Jacek Wolszczak"
+msgstr "Jacek Wolszczak"
+
+#: audacious/about.c:148
+msgid "Romanian:"
+msgstr "romania:"
+
+#: audacious/about.c:151
+msgid "Russian:"
+msgstr "venäjä:"
+
+#: audacious/about.c:152
+msgid "Pavlo Bohmat"
+msgstr "Pavlo Bohmat"
+
+#: audacious/about.c:154
+msgid "Vitaly Lipatov"
+msgstr ""
+
+#: audacious/about.c:156
+msgid "Slovak:"
+msgstr "slovakki:"
+
+#: audacious/about.c:157
+msgid "Pavel Kanzelsberger"
+msgstr "Pavel Kanzelsberger"
+
+#: audacious/about.c:159
+msgid "Spanish:"
+msgstr "espanja:"
+
+#: audacious/about.c:160
+msgid "Francisco Javier F. Serrador"
+msgstr "Francisco Javier F. Serrador"
+
+#: audacious/about.c:162
+msgid "Swedish:"
+msgstr "ruotsi:"
+
+#: audacious/about.c:163
+msgid "Martin Persenius"
+msgstr "Martin Persenius"
+
+#: audacious/about.c:165
+#, fuzzy
+msgid "Ukrainian:"
+msgstr "romania:"
+
+#: audacious/about.c:166
+msgid "Mykola Lynnyk"
+msgstr ""
+
+#: audacious/about.c:168
+msgid "Welsh:"
+msgstr "kymri:"
+
+#: audacious/about.c:266
+msgid "About BMP"
+msgstr "BMP:stä"
+
+#: audacious/about.c:311
+msgid "Credits"
+msgstr "Tekijät"
+
+#: audacious/about.c:315
+msgid "Translators"
+msgstr "Kääntäjät"
+
+#: audacious/eq_slider.c:93
+msgid "PREAMP"
+msgstr "ESIVAHVISTUS"
+
+#: audacious/eq_slider.c:93
+msgid "60HZ"
+msgstr "60 Hz"
+
+#: audacious/eq_slider.c:93
+msgid "170HZ"
+msgstr "170 Hz"
+
+#: audacious/eq_slider.c:94
+msgid "310HZ"
+msgstr "310 Hz"
+
+#: audacious/eq_slider.c:94
+msgid "600HZ"
+msgstr "600 Hz"
+
+#: audacious/eq_slider.c:94
+msgid "1KHZ"
+msgstr "1 kHz"
+
+#: audacious/eq_slider.c:95
+msgid "3KHZ"
+msgstr "30 kHz"
+
+#: audacious/eq_slider.c:95
+msgid "6KHZ"
+msgstr "6 kHz"
+
+#: audacious/eq_slider.c:95
+msgid "12KHZ"
+msgstr "12 kHz"
+
+#: audacious/eq_slider.c:96
+msgid "14KHZ"
+msgstr "14 kHz"
+
+#: audacious/eq_slider.c:96
+msgid "16KHZ"
+msgstr "16 kHz"
+
+#: audacious/equalizer.c:127
+msgid "/Load"
+msgstr "/Lataa"
+
+#: audacious/equalizer.c:128
+msgid "/Load/Preset"
+msgstr "/Lataa/Asetus"
+
+#: audacious/equalizer.c:130
+msgid "/Load/Auto-load preset"
+msgstr "/Lataa/Automaattinen asetus"
+
+#: audacious/equalizer.c:132
+msgid "/Load/Default"
+msgstr "/Lataa/Oletus"
+
+#: audacious/equalizer.c:135
+msgid "/Load/Zero"
+msgstr "/Lataa/Nolla"
+
+#: audacious/equalizer.c:138
+msgid "/Load/From file"
+msgstr "/Lataa/Tiedosto"
+
+#: audacious/equalizer.c:140
+msgid "/Load/From WinAMP EQF file"
+msgstr "/Lataa/Winampin EQF-tiedosto"
+
+#: audacious/equalizer.c:142
+msgid "/Import"
+msgstr "/Tuo"
+
+#: audacious/equalizer.c:143
+msgid "/Import/WinAMP Presets"
+msgstr "/Tuo/Winampin asetukset"
+
+#: audacious/equalizer.c:145
+msgid "/Save"
+msgstr "/Tallenna"
+
+#: audacious/equalizer.c:146
+msgid "/Save/Preset"
+msgstr "/Tallenna/Asetus"
+
+#: audacious/equalizer.c:148
+msgid "/Save/Auto-load preset"
+msgstr "/Tallenna/Automaattinen asetus"
+
+#: audacious/equalizer.c:150
+msgid "/Save/Default"
+msgstr "/Tallenna/Oletus"
+
+#: audacious/equalizer.c:153
+msgid "/Save/To file"
+msgstr "/Tallenna/Tiedosto"
+
+#: audacious/equalizer.c:155
+msgid "/Save/To WinAMP EQF file"
+msgstr "/Tallenna/Winampin EQF-tiedosto"
+
+#: audacious/equalizer.c:157
+msgid "/Delete"
+msgstr "/Poista"
+
+#: audacious/equalizer.c:158
+msgid "/Delete/Preset"
+msgstr "/Poista/Asetus"
+
+#: audacious/equalizer.c:160
+msgid "/Delete/Auto-load preset"
+msgstr "/Poista/Automaattinen asetus"
+
+#: audacious/equalizer.c:741
+msgid "BMP Equalizer"
+msgstr "BMP:n taajuuskorjain"
+
+#: audacious/equalizer.c:1366
+msgid "Preset"
+msgstr "Asetus"
+
+#: audacious/equalizer.c:1409
+msgid "Presets"
+msgstr "Asetukset"
+
+#: audacious/equalizer.c:1468
+msgid "Load preset"
+msgstr "Lataa asetus"
+
+#: audacious/equalizer.c:1482
+msgid "Load auto-preset"
+msgstr "Lataa automaattinen asetus"
+
+#: audacious/equalizer.c:1507 audacious/equalizer.c:1513 audacious/equalizer.c:1520
+msgid "Load equalizer preset"
+msgstr "Lataa taajuuskorjaimen asetus"
+
+#: audacious/equalizer.c:1529
+msgid "Save preset"
+msgstr "Tallenna asetus"
+
+#: audacious/equalizer.c:1548
+msgid "Save auto-preset"
+msgstr "Tallenna automaattinen asetus"
+
+#: audacious/equalizer.c:1581 audacious/equalizer.c:1600
+msgid "Save equalizer preset"
+msgstr "Tallenna taajuuskorjaimen asetus"
+
+#: audacious/equalizer.c:1609
+msgid "Delete preset"
+msgstr "Poista asetus"
+
+#: audacious/equalizer.c:1625
+msgid "Delete auto-preset"
+msgstr "Poista automaattinen asetus"
+
+#: audacious/getopt.c:616
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr "%s: valitsin `%s' ei ole yksiselitteinen\n"
+
+#: audacious/getopt.c:638
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr "%s: valitsin `--%s' ei tarvitse parametria\n"
+
+#: audacious/getopt.c:644
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr "%s: valitsin `%c%s' ei tarvitse parametria\n"
+
+#: audacious/getopt.c:661 audacious/getopt.c:819
+#, c-format
+msgid "%s: option `%s' requires an argument\n"
+msgstr "%s: valitsin `%s' vaatii parametrin\n"
+
+#: audacious/getopt.c:687
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr "%s: tuntematon valitsin `--%s'\n"
+
+#: audacious/getopt.c:691
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr "%s: tuntematon valitsin `%c%s'\n"
+
+#: audacious/getopt.c:715
+#, c-format
+msgid "%s: illegal option -- %c\n"
+msgstr "%s: ei-sallittu valitsin -- %c\n"
+
+#: audacious/getopt.c:718
+#, c-format
+msgid "%s: invalid option -- %c\n"
+msgstr "%s: virheellinen valitsin -- %c\n"
+
+#: audacious/getopt.c:745 audacious/getopt.c:861
+#, c-format
+msgid "%s: option requires an argument -- %c\n"
+msgstr "%s: valitsin tarvitsee parametrin -- %c\n"
+
+#: audacious/getopt.c:790
+#, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr "%s: valitsin `-W %s' ei ole yksiselitteinen\n"
+
+#: audacious/getopt.c:805
+#, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr "%s: valitsin `-W %s' ei tarvitse parametria\n"
+
+#: audacious/input.c:299
+msgid ""
+"<b><big>Unable to play files.</big></b>\n"
+"\n"
+"The following files could not be played. Please check that:\n"
+"1. they are accessible.\n"
+"2. you have enabled the media plugins required."
+msgstr ""
+"<b><big>Tiedostojen soittaminen ei onnistu.</big></b>\n"
+"\n"
+"Seuraavien tiedostojen soittaminen ei onnistunut. Tarkista että:\n"
+"1. Tiedostoja voi käyttää.\n"
+"2. Tarpeelliset liitännäiset ovat käytössä."
+
+#: audacious/input.c:324
+msgid "Don't show this warning anymore"
+msgstr "Älä näytä tätä varoitusta enää"
+
+#: audacious/input.c:326
+msgid "Show more _details"
+msgstr "Näytä _lisätietoja"
+
+#: audacious/input.c:340 audacious/prefswin.c:98 audacious/prefswin.c:447 audacious/prefswin.c:535
+#: audacious/prefswin.c:624 audacious/prefswin.c:720
+msgid "Filename"
+msgstr "Tiedostonimi"
+
+#: audacious/input.c:489
+#, c-format
+msgid "bmp: %s"
+msgstr "bmp: %s"
+
+#: audacious/input.c:505
+msgid "Filename:"
+msgstr "Tiedostonimi:"
+
+#: audacious/input.c:523
+msgid "No input plugin recognized this file"
+msgstr "Yksikään liitännäinen ei tunnistanut tätä tiedostoa"
+
+#: audacious/input.c:525
+#, c-format
+msgid "Input plugin: %s"
+msgstr "Syöteliitännäinen: %s"
+
+#: audacious/logger.c:120
+#, c-format
+msgid "Unable to create log file (%s)!\n"
+msgstr "Lokitiedoston (%s) luominen ei onnistu.\n"
+
+#: audacious/main.c:77 audacious/main.c:79
+msgid "Beep Media Player"
+msgstr "Beep-mediasoitin"
+
+#: audacious/main.c:371
+#, c-format
+msgid "Could not create directory (%s): %s"
+msgstr "Kansion (%s) luominen epäonnistui: %s"
+
+#: audacious/main.c:625
+msgid ""
+"Usage: beep-media-player [options] [files] ...\n"
+"\n"
+"Options:\n"
+"--------\n"
+msgstr ""
+"Käyttö: beep-media-player [valitsimet] [tiedostot] ...\n"
+"\n"
+"Valitsimet:\n"
+"-----------\n"
+
+#: audacious/main.c:630
+msgid "Display this text and exit"
+msgstr "Näytä tämä teksti ja lopeta"
+
+#: audacious/main.c:633
+msgid "Select BMP/XMMS session (Default: 0)"
+msgstr "Valitse BMP:n tai XMMS:n istuntonumero (oletus: 0)"
+
+#: audacious/main.c:636
+msgid "Skip backwards in playlist"
+msgstr "Siirry taaksepäin soittolistassa"
+
+#: audacious/main.c:639
+msgid "Start playing current playlist"
+msgstr "Soita nykyistä soittolistaa"
+
+#: audacious/main.c:642
+msgid "Pause current song"
+msgstr "Aloita tauko nykyisessä kappaleessa"
+
+#: audacious/main.c:645
+msgid "Stop current song"
+msgstr "Pysäytä nykyisen kappaleen soittaminen"
+
+#: audacious/main.c:648
+msgid "Pause if playing, play otherwise"
+msgstr "Pidä tauko jos kappale soi, muuten aloita soittaminen"
+
+#: audacious/main.c:651
+msgid "Skip forward in playlist"
+msgstr "Siirry eteenpäin soittolistassa"
+
+#: audacious/main.c:654
+msgid "Don't clear the playlist"
+msgstr "Älä tyhjennä soittolistaa"
+
+#: audacious/main.c:657
+msgid "Show the main window"
+msgstr "Näytä pääikkuna"
+
+#: audacious/main.c:660
+msgid "Activate BMP"
+msgstr "Aktivoi BMP"
+
+#: audacious/main.c:663
+msgid "Previous session ID"
+msgstr "Edellisen istunnon tunniste"
+
+#: audacious/main.c:666
+msgid "Print version number and exit\n"
+msgstr "Tulosta versionumero ja lopeta\n"
+
+#: audacious/main.c:841
+msgid ""
+"\n"
+"Received SIGSEGV\n"
+"\n"
+"This could be a bug in BMP. If you don't know why this happened, send a mail "
+"to us at beepmp-devel@lists.sourceforge.net\n"
+"\n"
+msgstr ""
+"\n"
+"Signaali SIGSEGV vastaanotettu\n"
+"\n"
+"Tämä voi merkitä ohjelmistovirhettä BMP:ssä. Jos et tiedä miksi tämä "
+"tapahtui, ota yhteyttä kehittäjiin sähköpostiosoitteessa beepmp-devel@lists."
+"sourceforge.net\n"
+"\n"
+
+#: audacious/main.c:864
+#, c-format
+msgid ""
+"<b><big>Unable to load skin.</big></b>\n"
+"\n"
+"Check that skin at '%s' is usable and default skin is properly installed at "
+"'%s'\n"
+msgstr ""
+"<b><big>Teeman lataaminen ei onnistunut.</big></b>\n"
+"\n"
+"Tarkista että teema \"%s\" on käytettävissä, ja että oletusarvoinen teema on "
+"asennettu kunnolla kansioon \"%s\"\n"
+
+#: audacious/main.c:899
+#, c-format
+msgid ""
+"Sorry, your GTK+ version (%d.%d.%d) does not work with BMP.\n"
+"Please use GTK+ %s or newer.\n"
+msgstr ""
+"Tietokoneellesi asennettu GTK+:n versio (%d.%d.%d) ei ole yhteensopiva BMP:n "
+"kanssa.\n"
+"Käytä GTK+:n versiota %s tai uudempaa.\n"
+
+#: audacious/main.c:910
+msgid ""
+"Sorry, threads isn't supported on your platform.\n"
+"\n"
+"If you're on a libc5 based linux system and installed Glib & GTK+ before "
+"you\n"
+"installed LinuxThreads you need to recompile Glib & GTK+.\n"
+msgstr ""
+"Järjestelmäsi ei tue säikeitä.\n"
+"\n"
+"Jos käytät libc5-pohjaista Linux-järjestelmää ja asensit Glibin ja GTK+:n "
+"ennen\n"
+"LinuxThreadsia, niin Glib ja GTK+ täytyy kääntää uudestaan.\n"
+
+#: audacious/main.c:923
+msgid "BMP: Unable to open display, exiting."
+msgstr "BMP: näytön avaaminen ei onnistu, sulkeutuu."
+
+#: audacious/mainwin.c:235 audacious/mainwin.c:361 audacious/playlistwin.c:125
+msgid "/View Track Details"
+msgstr "/Näytä kappaleen tiedot"
+
+#: audacious/mainwin.c:238
+msgid "/Autoscroll Songname"
+msgstr "/Vieritä kappaleen nimeä"
+
+#: audacious/mainwin.c:248
+msgid "/Visualization Mode"
+msgstr "/Visualisointitapa"
+
+#: audacious/mainwin.c:249
+msgid "/Visualization Mode/Analyzer"
+msgstr "/Visualisointitapa/Taajuusspektri"
+
+#: audacious/mainwin.c:251
+msgid "/Visualization Mode/Scope"
+msgstr "/Visualisointitapa/Oskilloskooppi"
+
+#: audacious/mainwin.c:253
+msgid "/Visualization Mode/Off"
+msgstr "/Visualisointitapa/Ei käytössä"
+
+#: audacious/mainwin.c:255
+msgid "/Analyzer Mode"
+msgstr "/Taajuusspektri"
+
+#: audacious/mainwin.c:256
+msgid "/Analyzer Mode/Normal"
+msgstr "/Taajuusspektri/Tavallinen"
+
+#: audacious/mainwin.c:258
+msgid "/Analyzer Mode/Fire"
+msgstr "/Taajuusspektri/Tuli"
+
+#: audacious/mainwin.c:260
+msgid "/Analyzer Mode/Vertical Lines"
+msgstr "/Taajuusspektri/Pystyviivat"
+
+#: audacious/mainwin.c:263
+msgid "/Analyzer Mode/Lines"
+msgstr "/Taajuusspektri/Viivat"
+
+#: audacious/mainwin.c:265
+msgid "/Analyzer Mode/Bars"
+msgstr "/Taajuusspektri/Palkit"
+
+#: audacious/mainwin.c:268
+msgid "/Analyzer Mode/Peaks"
+msgstr "/Taajuusspektri/Huiput"
+
+#: audacious/mainwin.c:270
+msgid "/Scope Mode"
+msgstr "/Oskilloskooppi"
+
+#: audacious/mainwin.c:271
+msgid "/Scope Mode/Dot Scope"
+msgstr "/Oskilloskooppi/Pisteet"
+
+#: audacious/mainwin.c:273
+msgid "/Scope Mode/Line Scope"
+msgstr "/Oskilloskooppi/Viiva"
+
+#: audacious/mainwin.c:275
+msgid "/Scope Mode/Solid Scope"
+msgstr "/Oskilloskooppi/Yhtenäinen"
+
+#: audacious/mainwin.c:277
+msgid "/WindowShade VU Mode"
+msgstr "/Rullattu ikkuna"
+
+#: audacious/mainwin.c:278
+msgid "/WindowShade VU Mode/Normal"
+msgstr "/Rullattu ikkuna/Tavallinen"
+
+#: audacious/mainwin.c:280
+msgid "/WindowShade VU Mode/Smooth"
+msgstr "/Rullattu ikkuna/Pehmeä"
+
+#: audacious/mainwin.c:282
+msgid "/Refresh Rate"
+msgstr "/Päivitystaajuus"
+
+#: audacious/mainwin.c:283
+msgid "/Refresh Rate/Full (~50 fps)"
+msgstr "/Päivitystaajuus/Täysi (~50 Hz)"
+
+#: audacious/mainwin.c:285
+msgid "/Refresh Rate/Half (~25 fps)"
+msgstr "/Päivitystaajuus/Puolet (~25 Hz)"
+
+#: audacious/mainwin.c:287
+msgid "/Refresh Rate/Quarter (~13 fps)"
+msgstr "/Päivitystaajuus/Neljäsosa (~13 Hz)"
+
+#: audacious/mainwin.c:289
+msgid "/Refresh Rate/Eighth (~6 fps)"
+msgstr "/Päivitystaajuus/Kahdeksasosa (~6 Hz)"
+
+#: audacious/mainwin.c:291
+msgid "/Analyzer Falloff"
+msgstr "/Taajuusspektrin nopeus"
+
+#: audacious/mainwin.c:292
+msgid "/Analyzer Falloff/Slowest"
+msgstr "/Taajuusspektrin nopeus/Hitain"
+
+#: audacious/mainwin.c:294
+msgid "/Analyzer Falloff/Slow"
+msgstr "/Taajuusspektrin nopeus/Hidas"
+
+#: audacious/mainwin.c:296
+msgid "/Analyzer Falloff/Medium"
+msgstr "/Taajuusspektrin nopeus/Keskinopea"
+
+#: audacious/mainwin.c:298
+msgid "/Analyzer Falloff/Fast"
+msgstr "/Taajuusspektrin nopeus/Nopea"
+
+#: audacious/mainwin.c:300
+msgid "/Analyzer Falloff/Fastest"
+msgstr "/Taajuusspektrin nopeus/Nopein"
+
+#: audacious/mainwin.c:302
+msgid "/Peaks Falloff"
+msgstr "/Huippujen nopeus"
+
+#: audacious/mainwin.c:303
+msgid "/Peaks Falloff/Slowest"
+msgstr "/Huippujen nopeus/Hitain"
+
+#: audacious/mainwin.c:305
+msgid "/Peaks Falloff/Slow"
+msgstr "/Huippujen nopeus/Hidas"
+
+#: audacious/mainwin.c:307
+msgid "/Peaks Falloff/Medium"
+msgstr "/Huippujen nopeus/Keskinopea"
+
+#: audacious/mainwin.c:309
+msgid "/Peaks Falloff/Fast"
+msgstr "/Huippujen nopeus/Nopea"
+
+#: audacious/mainwin.c:311
+msgid "/Peaks Falloff/Fastest"
+msgstr "/Huippujen nopeus/Nopein"
+
+#: audacious/mainwin.c:326
+msgid "/Repeat"
+msgstr "/Toisto"
+
+#: audacious/mainwin.c:328
+msgid "/Shuffle"
+msgstr "/Sekaisin"
+
+#: audacious/mainwin.c:335
+msgid "/Play"
+msgstr "/Soita"
+
+#: audacious/mainwin.c:337
+msgid "/Pause"
+msgstr "/Tauko"
+
+#: audacious/mainwin.c:339
+msgid "/Stop"
+msgstr "/Pysäytä"
+
+#: audacious/mainwin.c:341
+msgid "/Previous"
+msgstr "/Edellinen"
+
+#: audacious/mainwin.c:343
+msgid "/Next"
+msgstr "/Seuraava"
+
+#: audacious/mainwin.c:346
+msgid "/Jump to Playlist Start"
+msgstr "/Siirry soittolistan alkuun"
+
+#: audacious/mainwin.c:349
+msgid "/Jump to File"
+msgstr "/Siirry tiedoston kohdalle"
+
+#: audacious/mainwin.c:351
+msgid "/Jump to Time"
+msgstr "/Siirrä ajanhetkeä"
+
+#: audacious/mainwin.c:364
+msgid "/Preferences"
+msgstr "/Asetukset"
+
+#: audacious/mainwin.c:366
+msgid "/_View"
+msgstr "/_Näytä"
+
+#: audacious/mainwin.c:368
+msgid "/About BMP"
+msgstr "/BMP:stä"
+
+#: audacious/mainwin.c:370
+msgid "/_Quit"
+msgstr "/_Lopeta"
+
+#: audacious/mainwin.c:380
+msgid "/Files..."
+msgstr "/Tiedostot..."
+
+#: audacious/mainwin.c:387
+msgid "/Internet location..."
+msgstr "/Internet-osoite..."
+
+#: audacious/mainwin.c:401
+msgid "/Show Playlist Editor"
+msgstr "/Näytä soittolistan muokkain"
+
+#: audacious/mainwin.c:403
+msgid "/Show Equalizer"
+msgstr "/Näytä taajuuskorjain"
+
+#: audacious/mainwin.c:406
+msgid "/Time Elapsed"
+msgstr "/Kulunut aika"
+
+#: audacious/mainwin.c:408
+msgid "/Time Remaining"
+msgstr "/Aikaa jäljellä"
+
+#: audacious/mainwin.c:411
+msgid "/Always On Top"
+msgstr "/Aina päällimmäisenä"
+
+#: audacious/mainwin.c:413
+msgid "/Put on All Workspaces"
+msgstr "/Näkyy kaikissa työtiloissa"
+
+#: audacious/mainwin.c:416
+msgid "/Roll up Player"
+msgstr "/Rullaa soittoikkuna"
+
+#: audacious/mainwin.c:418
+msgid "/Roll up Playlist Editor"
+msgstr "/Rullaa soittolistan muokkausikkuna"
+
+#: audacious/mainwin.c:420
+msgid "/Roll up Equalizer"
+msgstr "/Rullaa taajuuskorjainikkuna"
+
+#: audacious/mainwin.c:782 audacious/mainwin.c:3098
+msgid "BMP"
+msgstr "BMP"
+
+#: audacious/mainwin.c:820
+msgid "VBR"
+msgstr "VBR"
+
+#: audacious/mainwin.c:1246
+msgid "Jump to Time"
+msgstr "Siirry hetkeen"
+
+#: audacious/mainwin.c:1267
+msgid "minutes:seconds"
+msgstr "minuutti:sekunti"
+
+#: audacious/mainwin.c:1277
+msgid "Track length:"
+msgstr "Kappaleen kesto:"
+
+#: audacious/mainwin.c:1364
+msgid "Un_queue"
+msgstr "_Poista jonosta"
+
+#: audacious/mainwin.c:1366 audacious/mainwin.c:1688
+#, fuzzy
+msgid "_Queue"
+msgstr "Lisää jonoon"
+
+#: audacious/mainwin.c:1618
+msgid "Jump to Track"
+msgstr "Siirry kappaleeseen"
+
+#: audacious/mainwin.c:1657
+msgid "Filter: "
+msgstr "Suodatin:"
+
+#: audacious/mainwin.c:1884
+msgid "Add Folders"
+msgstr "Lisää kansioita"
+
+#: audacious/mainwin.c:1935
+msgid "Add Internet Address"
+msgstr "Lisää internet-osoite"
+
+#: audacious/mainwin.c:2063
+#, c-format
+msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
+msgstr "SIIRRY: %d:%-2.2d/%d:%-2.2d (%d%%)"
+
+#: audacious/mainwin.c:2095 audacious/mainwin.c:2769
+#, c-format
+msgid "VOLUME: %d%%"
+msgstr "ÄÄNENVOIMAKKUUS: %d%%"
+
+#: audacious/mainwin.c:2126 audacious/mainwin.c:2772
+#, c-format
+msgid "BALANCE: %d%% LEFT"
+msgstr "TASAPAINO: %d%% VASEN"
+
+#: audacious/mainwin.c:2130 audacious/mainwin.c:2775
+msgid "BALANCE: CENTER"
+msgstr "TASAPAINO: KESKELLÄ"
+
+#: audacious/mainwin.c:2134 audacious/mainwin.c:2777
+#, c-format
+msgid "BALANCE: %d%% RIGHT"
+msgstr "TASAPAINO: %d%% OIKEA"
+
+#: audacious/mainwin.c:2544
+msgid "OPTIONS MENU"
+msgstr "ASETUSVALIKKO"
+
+#: audacious/mainwin.c:2549
+msgid "DISABLE ALWAYS ON TOP (N/A)"
+msgstr "ÄLÄ PIDÄ AINA PÄÄLLIMMÄISENÄ (N/A)"
+
+#: audacious/mainwin.c:2551
+msgid "ENABLE ALWAYS ON TOP (N/A)"
+msgstr "PIDÄ AINA PÄÄLLIMMÄISENÄ (N/A)"
+
+#: audacious/mainwin.c:2554
+msgid "DISABLE ALWAYS ON TOP"
+msgstr "ÄLÄ PIDÄ AINA PÄÄLLIMMÄISENÄ"
+
+#: audacious/mainwin.c:2556
+msgid "ENABLE ALWAYS ON TOP"
+msgstr "PIDÄ AINA PÄÄLLIMMÄISENÄ"
+
+#: audacious/mainwin.c:2559
+msgid "FILE INFO BOX"
+msgstr "TIEDOSTOTIEDOT"
+
+#: audacious/mainwin.c:2562
+msgid "** DOUBLESIZE HAS BEEN REMOVED **"
+msgstr "** KOKO ON NYT YKSINKERTAINEN **"
+
+#: audacious/mainwin.c:2565
+msgid "VISUALIZATION MENU"
+msgstr "VISUALISOINTIVALIKKO"
+
+#: audacious/mainwin.c:2610
+msgid ""
+"<b><big>No playable CD found.</big></b>\n"
+"\n"
+"No CD inserted, or inserted CD is not an audio CD.\n"
+msgstr ""
+"<b><big>Soitettavaa CD:tä ei löydy.</big></b>\n"
+"\n"
+"CD:tä ei joko ole asemassa, tai asemassa oleva CD ei sisällä ääntä.\n"
+
+#: audacious/mainwin.c:2627
+msgid ""
+"<b><big>Couldn't open audio.</big></b>\n"
+"\n"
+"Please check that:\n"
+"1. You have the correct output plugin selected.\n"
+"2. No other programs is blocking the soundcard.\n"
+"3. Your soundcard is configured properly.\n"
+msgstr ""
+"<b><big>Äänilaitteen avaaminen epäonnistui.</big></b>\n"
+"\n"
+"Tarkista että:\n"
+"1. Oikea ulostuloliitännäinen on valittu.\n"
+"2. Muut ohjelmat eivät käytä juuri nyt äänikorttia.\n"
+"3. Äänikortin asetukset ovat oikein.\n"
+
+#: audacious/playlistwin.c:131 audacious/playlistwin.c:192
+msgid "/Remove Selected"
+msgstr "/Poista valitut"
+
+#: audacious/playlistwin.c:135 audacious/playlistwin.c:188
+msgid "/Remove Unselected"
+msgstr "/Poista valitsemattomat"
+
+#: audacious/playlistwin.c:139 audacious/playlistwin.c:184
+msgid "/Remove All"
+msgstr "/Poista kaikki"
+
+#: audacious/playlistwin.c:145
+msgid "/Queue Toggle"
+msgstr "/Muuta soittojonoa"
+
+#: audacious/playlistwin.c:151
+msgid "/Add CD..."
+msgstr "/Lisää CD..."
+
+#: audacious/playlistwin.c:155
+msgid "/Add Internet Address..."
+msgstr "/Lisää internet-osoite..."
+
+#: audacious/playlistwin.c:161
+#, fuzzy
+msgid "/Add Folders..."
+msgstr "/Lisää tiedostoja..."
+
+#: audacious/playlistwin.c:166
+msgid "/Add Files..."
+msgstr "/Lisää tiedostoja..."
+
+#: audacious/playlistwin.c:172
+msgid "/Clear Queue"
+msgstr "/Tyhjennä jono"
+
+#: audacious/playlistwin.c:178
+msgid "/Remove Unavailable Files"
+msgstr "/Poista kappaleet, jotka eivät ole saatavilla"
+
+#: audacious/playlistwin.c:198
+msgid "/New List"
+msgstr "/Uusi lista"
+
+#: audacious/playlistwin.c:204
+msgid "/Load List"
+msgstr "/Avaa lista"
+
+#: audacious/playlistwin.c:208
+msgid "/Save List"
+msgstr "/Tallenna lista"
+
+#: audacious/playlistwin.c:214
+msgid "/Update View"
+msgstr "/Päivitä näkymä"
+
+#: audacious/playlistwin.c:220
+msgid "/Invert Selection"
+msgstr "/Käänteinen valinta"
+
+#: audacious/playlistwin.c:226
+msgid "/Select None"
+msgstr "/Tyhjä valinta"
+
+#: audacious/playlistwin.c:230
+msgid "/Select All"
+msgstr "/Valitse kaikki"
+
+#: audacious/playlistwin.c:236
+msgid "/Randomize List"
+msgstr "/Sekoita lista"
+
+#: audacious/playlistwin.c:238
+msgid "/Reverse List"
+msgstr "/Käänteinen järjestys"
+
+#: audacious/playlistwin.c:241
+msgid "/Sort List"
+msgstr "/Järjestä lista"
+
+#: audacious/playlistwin.c:242
+msgid "/Sort List/By Title"
+msgstr "/Järjestä lista/Nimen mukaan"
+
+#: audacious/playlistwin.c:244
+msgid "/Sort List/By Filename"
+msgstr "/Järjestä lista/Tiedostonimen mukaan"
+
+#: audacious/playlistwin.c:246
+msgid "/Sort List/By Path + Filename"
+msgstr "/Järjestä lista/Täydellisen tiedostonimen mukaan"
+
+#: audacious/playlistwin.c:248
+msgid "/Sort List/By Date"
+msgstr "/Järjestä lista/Päiväyksen mukaan"
+
+#: audacious/playlistwin.c:250
+msgid "/Sort Selection"
+msgstr "/Järjestä valittu osa"
+
+#: audacious/playlistwin.c:251
+msgid "/Sort Selection/By Title"
+msgstr "/Järjestä valittu osa/Nimien mukaan"
+
+#: audacious/playlistwin.c:253
+msgid "/Sort Selection/By Filename"
+msgstr "/Järjestä valittu osa/Tiedostonimien mukaan"
+
+#: audacious/playlistwin.c:255
+msgid "/Sort Selection/By Path + Filename"
+msgstr "/Järjestä valittu osa/Täydellisten tiedostonimien mukaan"
+
+#: audacious/playlistwin.c:257
+msgid "/Sort Selection/By Date"
+msgstr "/Järjestä valittu osa/Päiväyksen mukaan"
+
+#: audacious/playlistwin.c:783
+#, c-format
+msgid "Error writing playlist \"%s\": %s"
+msgstr "Virhe soittolistan \"%s\" kirjoittamisessa: %s"
+
+#: audacious/playlistwin.c:804
+#, c-format
+msgid "%s already exist. Continue?"
+msgstr "%s on jo olemassa. Jatketaanko?"
+
+#: audacious/playlistwin.c:818
+#, fuzzy, c-format
+msgid ""
+"<b><big>Unable to save playlist.</big></b>\n"
+"\n"
+"Unknown file type for '%s'.\n"
+msgstr ""
+"Soittolistan tallentaminen epäonnistui. Tuntematon tiedoston \"%s\" tyyppi."
+
+#: audacious/playlistwin.c:928
+#, fuzzy
+msgid "Load Playlist"
+msgstr "Avaa soittolista"
+
+#: audacious/playlistwin.c:940
+msgid "Save Playlist"
+msgstr "Tallenna soittolista"
+
+#: audacious/playlistwin.c:1675
+msgid "BMP Playlist Editor"
+msgstr "BMP:n soittolistan muokkain"
+
+#: audacious/prefswin.c:83 audacious/glade/prefswin.glade:1379
+msgid "Appearance"
+msgstr "Ulkonäkö"
+
+#: audacious/prefswin.c:84 audacious/glade/prefswin.glade:2783
+msgid "Equalizer"
+msgstr "Taajuuskorjain"
+
+#: audacious/prefswin.c:85 audacious/glade/prefswin.glade:1669
+msgid "Mouse"
+msgstr "Hiiri"
+
+#: audacious/prefswin.c:86 audacious/glade/prefswin.glade:2403
+msgid "Playlist"
+msgstr "Soittolista"
+
+#: audacious/prefswin.c:87 audacious/glade/prefswin.glade:869
+msgid "Plugins"
+msgstr "Liitännäiset"
+
+#: audacious/prefswin.c:93
+msgid "Artist"
+msgstr "Esittäjä"
+
+#: audacious/prefswin.c:96
+msgid "Tracknumber"
+msgstr "Kappalenumero"
+
+#: audacious/prefswin.c:99
+msgid "Filepath"
+msgstr "Tiedostopolku"
+
+#: audacious/prefswin.c:417 audacious/prefswin.c:504 audacious/prefswin.c:593
+#: audacious/prefswin.c:689
+msgid "Enabled"
+msgstr "Käytössä"
+
+#: audacious/prefswin.c:433 audacious/prefswin.c:520 audacious/prefswin.c:609
+#: audacious/prefswin.c:705
+msgid "Description"
+msgstr "Kuvaus"
+
+#: audacious/prefswin.c:1462
+msgid "Category"
+msgstr "Luokka"
+
+#: audacious/prefswin.c:1630
+msgid "Preferences Window"
+msgstr "Asetusikkuna"
+
+#: audacious/util.c:882
+msgid "Add/Open Files dialog"
+msgstr "Lisää/avaa tiedostoja -ikkuna"
+
+#: audacious/util.c:940
+msgid "Open Files"
+msgstr "Avaa tiedostoja"
+
+#: audacious/util.c:944
+msgid "Close dialog on Open"
+msgstr "Sulje ikkuna kun tiedostot avattu"
+
+#: audacious/util.c:956 audacious/glade/addfiles.glade:8
+msgid "Add Files"
+msgstr "Lisää tiedostoja"
+
+#: audacious/util.c:960
+msgid "Close dialog on Add"
+msgstr "Sulje ikkuna kun tiedostot lisätty"
+
+#: audacious/util.c:1176
+msgid "  (invalid UTF-8)"
+msgstr "  (virheellistä UTF-8:aa)"
+
+#: audacious/glade/prefswin.glade:8
+msgid "BMP Preferences"
+msgstr "BMP:n asetukset"
+
+#: audacious/glade/prefswin.glade:85
+msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
+msgstr "<span size=\"xx-large\"><b>Liitännäiset</b></span>"
+
+#: audacious/glade/prefswin.glade:147
+msgid "_Media plugin list:"
+msgstr "_Tallenneliitännäisten luettelo:"
+
+#: audacious/glade/prefswin.glade:244
+msgid "<span size=\"medium\"><b>Media</b></span>"
+msgstr "<span size=\"medium\"><b>Tallenteet</b></span>"
+
+#: audacious/glade/prefswin.glade:282
+msgid "_General plugin list:"
+msgstr "_Yleisten liitännäisten luettelo:"
+
+#: audacious/glade/prefswin.glade:379
+msgid "<span size=\"medium\"><b>General</b></span>"
+msgstr "<span size=\"medium\"><b>Yleinen</b></span>"
+
+#: audacious/glade/prefswin.glade:417
+msgid "_Visualization plugin list:"
+msgstr "_Visualisointiliitännäisten luettelo:"
+
+#: audacious/glade/prefswin.glade:514
+msgid "<b>Visualization</b>"
+msgstr "<b>Visualisointi</b>"
+
+#: audacious/glade/prefswin.glade:552
+msgid "_Effect plugin list:"
+msgstr "_Efektiliitännäisten luettelo:"
+
+#: audacious/glade/prefswin.glade:649
+msgid "<b>Effects</b>"
+msgstr "<b>Tehosteet</b>"
+
+#: audacious/glade/prefswin.glade:693
+msgid "_Current output plugin:"
+msgstr "_Nykyinen ulostuloliitännäinen:"
+
+#: audacious/glade/prefswin.glade:753
+msgid ""
+"The change is now effective in BMP's configuration database, but won't take "
+"effect for playback until the next song!\n"
+"\n"
+"Optionally, you can stop and restart playback for the change to take effect."
+msgstr ""
+"Muutos on tallentunut BMP:n asetuksiin, mutta tulee voimaan vasta kun "
+"seuraava kappale alkaa soida.\n"
+"\n"
+"Asetukset saa voimaan myös pysäyttämällä ja jatkamalla kappaleen soittamista."
+
+#: audacious/glade/prefswin.glade:835
+msgid "<span size=\"medium\"><b>Output</b></span>"
+msgstr "<span size=\"medium\"><b>Ulostulo</b></span>"
+
+#: audacious/glade/prefswin.glade:894
+msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
+msgstr "<span size=\"xx-large\"><b>Ulkonäkö</b></span>"
+
+#: audacious/glade/prefswin.glade:951
+msgid "<b>_Skin</b>"
+msgstr "<b>_Teema</b>"
+
+#: audacious/glade/prefswin.glade:1039
+msgid "<b>_Fonts</b>"
+msgstr "<b>_Kirjasimet</b>"
+
+#: audacious/glade/prefswin.glade:1092
+msgid "_Player:"
+msgstr "_Soitin:"
+
+#: audacious/glade/prefswin.glade:1131
+msgid "_Playlist:"
+msgstr "_Soittolista:"
+
+#: audacious/glade/prefswin.glade:1159
+msgid "Select main player window font:"
+msgstr "Valitse pääikkunan kirjasinlaji:"
+
+#: audacious/glade/prefswin.glade:1181
+msgid "Select playlist font:"
+msgstr "Valitse soittolistan kirjasinlaji:"
+
+#: audacious/glade/prefswin.glade:1233
+msgid "<b>_Miscellaneous</b>"
+msgstr "<b>_Sekalaista</b>"
+
+#: audacious/glade/prefswin.glade:1285
+msgid "Show track numbers in playlist"
+msgstr "Näytä kappaleiden numerot soittolistassa"
+
+#: audacious/glade/prefswin.glade:1335
+msgid "Use custom cursors"
+msgstr "Käytä muita osoittimia"
+
+#: audacious/glade/prefswin.glade:1404
+msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
+msgstr "<span size=\"xx-large\"><b>Hiiri</b></span>"
+
+#: audacious/glade/prefswin.glade:1455
+msgid "<b>Mouse wheel</b>"
+msgstr "<b>Hiiren rulla</b>"
+
+#: audacious/glade/prefswin.glade:1499
+#, fuzzy
+msgid "Changes volume by"
+msgstr "Hiiren rulla muuttaa äänenvoimakkuutta määrällä"
+
+#: audacious/glade/prefswin.glade:1523
+msgid "percent"
+msgstr "prosenttia"
+
+#: audacious/glade/prefswin.glade:1547
+#, fuzzy
+msgid "Scrolls playlist by"
+msgstr "Hiiren rulla vierittää soittolistaa (rivejä)"
+
+#: audacious/glade/prefswin.glade:1596
+msgid "lines"
+msgstr "riviä"
+
+#: audacious/glade/prefswin.glade:1694
+msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
+msgstr "<span size=\"xx-large\"><b>Soittolista</b></span>"
+
+#: audacious/glade/prefswin.glade:1751
+msgid "<b>Filename</b>"
+msgstr "<b>Tiedostonimi</b>"
+
+#: audacious/glade/prefswin.glade:1789
+msgid "Convert underscores to blanks"
+msgstr "Muunna alaviivat väleiksi"
+
+#: audacious/glade/prefswin.glade:1824
+msgid "Convert %20 to blanks"
+msgstr "Muunna %20 väleiksi"
+
+#: audacious/glade/prefswin.glade:1864
+msgid "<b>Metadata</b>"
+msgstr "<b>Metatiedot</b>"
+
+#: audacious/glade/prefswin.glade:1901
+msgid "Load metadata (tag information) from music files."
+msgstr "Lataa metatiedot (lisätiedot) musiikkitiedostoista."
+
+#: audacious/glade/prefswin.glade:1903
+msgid "Load metadata from playlists and files"
+msgstr "Lataa metatiedot soittolistoista ja musiikkitiedostoista"
+
+#: audacious/glade/prefswin.glade:1941
+msgid "Load metadata when adding the file to the playlist or opening it"
+msgstr "Lataa metatiedot kun tiedosto lisätään soittolistaan tai avataan"
+
+#: audacious/glade/prefswin.glade:1943
+msgid "On load"
+msgstr "Avattaessa"
+
+#: audacious/glade/prefswin.glade:1963
+msgid "Load metadata on demand when displaying the file in the playlist"
+msgstr "Lataa metatiedot, kun tiedosto näytetään soittolistassa"
+
+#: audacious/glade/prefswin.glade:1965
+msgid "On display"
+msgstr "Näytettäessä"
+
+#: audacious/glade/prefswin.glade:2013
+msgid "<b>Playback</b>"
+msgstr "<b>Soitto</b>"
+
+#: audacious/glade/prefswin.glade:2050
+msgid "When finished playing a song, don't automatically advance to the next."
+msgstr "Kun kappale on soinut, älä soita seuraavaa itsestään."
+
+#: audacious/glade/prefswin.glade:2052
+msgid "Don't advance in the playlist"
+msgstr "Älä siirry eteenpäin soittolistassa"
+
+#: audacious/glade/prefswin.glade:2087
+msgid "Pause between songs"
+msgstr "Kappaleiden välinen tauko"
+
+#: audacious/glade/prefswin.glade:2125
+msgid "Pause for"
+msgstr "Tauotus"
+
+#: audacious/glade/prefswin.glade:2167
+msgid "seconds"
+msgstr "sekuntia"
+
+#: audacious/glade/prefswin.glade:2215
+msgid "<b>Song display</b>"
+msgstr "<b>Kappaleen näyttö</b>"
+
+#: audacious/glade/prefswin.glade:2285
+msgid "Custom string:"
+msgstr "Muu merkkijono:"
+
+#: audacious/glade/prefswin.glade:2315 audacious/glade/prefswin.glade:2547
+#: audacious/glade/prefswin.glade:2570
+msgid "*"
+msgstr "*"
+
+#: audacious/glade/prefswin.glade:2332
+msgid ""
+"TITLE\n"
+"ARTIST - TITLE\n"
+"ARTIST - ALBUM - TITLE\n"
+"ALBUM - TITLE\n"
+"Custom"
+msgstr ""
+"NIMI\n"
+"ESITTÄJÄ - NIMI\n"
+"ESITTÄJÄ - ALBUMI - NIMI\n"
+"ALBUMI - NIMI\n"
+"Muu"
+
+#: audacious/glade/prefswin.glade:2350
+msgid "Show information about titlestring format"
+msgstr "Näytä tietoja kappaleiden nimiketekstin muodosta"
+
+#: audacious/glade/prefswin.glade:2428
+msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
+msgstr "<span size=\"xx-large\"><b>Taajuuskorjain</b></span>"
+
+#: audacious/glade/prefswin.glade:2479
+msgid "<b>Presets</b>"
+msgstr "<b>Asetukset</b>"
+
+#: audacious/glade/prefswin.glade:2587
+msgid "Directory preset file:"
+msgstr "Asetushakemistotiedosto:"
+
+#: audacious/glade/prefswin.glade:2611
+msgid "File preset extension:"
+msgstr "Asetustiedostojen pääte:"
+
+#: audacious/glade/prefswin.glade:2655
+msgid "Available _Presets:"
+msgstr "Mahdolliset _asetukset:"
+
+#: audacious/glade/addfiles.glade:77
+msgid "Close Dialog on Add"
+msgstr "Sulje ikkuna kun lisätty"
+
+#: audacious/glade/addfiles.glade:105
+msgid "Select All"
+msgstr "Valitse kaikki"
+
+#: audacious/glade/addfiles.glade:116
+msgid "Deselect All"
+msgstr "Poista valinta"
+
+#~ msgid "Default skin:"
+#~ msgstr "Oletusteema:"
+
+#~ msgid "Vlad Gerasimov"
+#~ msgstr "Vlad Gerasimov"
+
+#~ msgid "Could not initialize gnome-vfs.\n"
+#~ msgstr "Gnome-vfs:n käynnistys ei onnistunut.\n"
+
+#~ msgid "/No Playlist Advance"
+#~ msgstr "/Älä etene soittolistassa"
+
+#~ msgid "/By extension"
+#~ msgstr "/Tiedostopäätteen mukaan"
+
+#~ msgid "Save playlist"
+#~ msgstr "Tallenna soittolista"
+
+#~ msgid "Toggle repeat mode"
+#~ msgstr "Soitetaanko soittolista uudelleen"
+
+#~ msgid "Toggle shuffle mode"
+#~ msgstr "Soitetaanko kappaleet satunnaisessa järjestyksessä"
+
+#~ msgid "Toggle playlist editor window"
+#~ msgstr "Näytä tai piilota soittolistan muokkausikkuna"
+
+#~ msgid "Toggle equalizer window"
+#~ msgstr "Näytä tai piilota taajuuskorjain"
+
+#~ msgid "Keep BMP windows above all others"
+#~ msgstr "Pidä BMP-ikkunat muiden ikkunoiden päällä"
+
+#~ msgid "Show BMP windows on all workspaces"
+#~ msgstr "Näytä BMP-ikkunat kaikissa työtiloissa"
+
+#~ msgid "Roll up player window"
+#~ msgstr "Rullaa soittoikkuna"
+
+#~ msgid "Roll up playlist editor window"
+#~ msgstr "Rullaa soittolistan muokkausikkuna"
+
+#~ msgid "Roll up equalizer window"
+#~ msgstr "Rullaa taajuuskorjainikkuna"
+
+#~ msgid "Autoscroll track tittle"
+#~ msgstr "Vieritä kappaleen nimeä"
+
+#~ msgid "Display time from beginning of track"
+#~ msgstr "Näytä kappaleen alusta kulunut aika"
+
+#~ msgid "Display time to end of track"
+#~ msgstr "Näytä kappaleen loppuun saakka jäljellä oleva aika"
+
+#~ msgid "Start playing"
+#~ msgstr "Aloita soittaminen"
+
+#~ msgid "Pause track"
+#~ msgstr "Pidä tauko"
+
+#~ msgid "Stop playing"
+#~ msgstr "Pysäytä soittaminen"
+
+#~ msgid "Play previous track"
+#~ msgstr "Soita edellinen kappale"
+
+#~ msgid "Play next track"
+#~ msgstr "Soita seuraava kappale"
+
+#~ msgid "Play first track in list"
+#~ msgstr "Soita soittolistan ensimmäinen kappale"
+
+#~ msgid "Jump to Track..."
+#~ msgstr "Siirry kappaleeseen..."
+
+#~ msgid "Jump to another track"
+#~ msgstr "Siirry toiseen kappaleeseen"
+
+#~ msgid "Jump to Time..."
+#~ msgstr "Siirry hetkeen..."
+
+#~ msgid "Jump to time"
+#~ msgstr "Siirry ajanhetkeen"
+
+#~ msgid "View track information"
+#~ msgstr "Näytä kappaleen tiedot"
+
+#~ msgid "Open preferences dialog"
+#~ msgstr "Avaa asetusikkuna"
+
+#~ msgid "View BMP project information"
+#~ msgstr "Näytä BMP-projektin tietoja"
+
+#~ msgid "Exit BMP"
+#~ msgstr "Lopeta BMP"
+
+#~ msgid "New playlist"
+#~ msgstr "Uusi soittolista"
+
+#~ msgid "Refresh List"
+#~ msgstr "Päivitä lista"
+
+#~ msgid "Refresh playlist"
+#~ msgstr "Päivitä soittolista"
+
+#~ msgid "Add CD tracks"
+#~ msgstr "Lisää kappaleita CD-levyltä"
+
+#~ msgid "Add Remote Track"
+#~ msgstr "Lisää verkossa oleva kappale"
+
+#~ msgid "Add Local Tracks"
+#~ msgstr "Lisää paikallisissa tiedostoissa olevia kappaleita"
+
+#~ msgid "Remove selected tracks"
+#~ msgstr "Poista valitut kappaleet"
+
+#~ msgid "Remove tracks that are not selected"
+#~ msgstr "Poista valitsemattomat kappaleet"
+
+#~ msgid "Remove all tracks"
+#~ msgstr "Poista kaikki kappaleet"
+
+#~ msgid "Remove tracks that are not longer accessible"
+#~ msgstr "Poista kappaleet, jotka eivät enää ole saatavilla"
+
+#~ msgid "Queue/unqueue selected track"
+#~ msgstr "Lisää tai poista valittu kappale soittojonosta"
+
+#~ msgid "Randomize track order"
+#~ msgstr "Sekoita kappaleiden järjestys"
+
+#~ msgid "Reverse track order"
+#~ msgstr "Järjestä kappaleet käänteiseen järjestykseen"
+
+#~ msgid "By Title"
+#~ msgstr "Nimen mukaan"
+
+#~ msgid "Sort all by title"
+#~ msgstr "Järjestä kaikki nimen mukaan"
+
+#~ msgid "By Filename"
+#~ msgstr "Tiedostonimen mukaan"
+
+#~ msgid "Sort all by filename"
+#~ msgstr "Järjestä kaikki tiedostonimen mukaan"
+
+#~ msgid "Sort all by full path"
+#~ msgstr "Järjestä kappaleet täydellisen tiedostonimen mukaan"
+
+#~ msgid "By Date"
+#~ msgstr "Päiväyksen mukaan"
+
+#~ msgid "Sort selected by date"
+#~ msgstr "Järjestä valittu osa päiväyksen mukaan"
+
+#~ msgid "Clear queued tracks"
+#~ msgstr "Tyhjennä kappaleet jonosta"
+
+#~ msgid "Invert selection"
+#~ msgstr "Käänteinen valinta"
+
+#~ msgid "Cancel selection"
+#~ msgstr "Peru valinta"
+
+#~ msgid "Select all"
+#~ msgstr "Valitse kaikki"

@@ -1,0 +1,138 @@
+BMP - beep media player (C) GPL 2003-2005
+
+Authors alphabetically
+----------------------
+
+Artem Baguinski <artm@v2.nl>
+Edward Brocklesby <ejb@goth.net>
+Chong Kai Xiong <descender@phreaker.net>
+Milosz Derezynski <m.derezynski@arcor.de>
+David Lau <coder_sku@users.sourceforge.net>
+Ole Andre Vadla Ravnaas <oleavr@jblinux.net>
+Michiel Sikkes <michiel@eyesopened.nl>
+
+ClearSky skin by Will Reinhart <willsan@xepher.net>
+
+
+Patch Authors
+-------------
+
+Andrei Badea
+Peter Behroozi
+Bernard Blackham
+Oliver Blin
+David Le Brun
+Tomas Bzatek
+Liviu Danicel
+Jon Dowland
+Artur Frysiak
+Sebastian Kapfer
+Lukas Koberstein
+Dan Korostelev
+Oliver Lehmann
+Jolan Luff
+Mike Lundy
+Michael Marineau
+Tim-Philipp Muller
+Julien Portalier
+Andrew Ruder
+Olivier Samyn
+John Spray
+Takashi Iwai
+Martijn Vernooij
+Thierry Vignaud
+
+
+Translators
+-----------
+
+Brazilian Portuguese - Philipi Pinto <philipi@gmx.net>
+Breton               - Thierry Vignaud <tvignaud@mandrakesoft.com>
+Czech                - Jan Narovec <jnarovec@students.zcu.cz>
+Dutch                - Laurens Buhler <masterpe@xs4all.nl>
+German               - Matthias Debus <psic4t@netbands.de>
+Georgian             - George Machitidze <giomac@global-erty.net>
+Greek                - Kouzinopoulos Haris <haris@mpa.gr>
+                       Stavros Giannouris <stavrosg2002@freemail.gr>
+Finnish              - Pauli Virtanen <pauli.virtanen@hut.fi>
+French               - David Le Brun <david@dyn-ns.net>
+Hindi                - Dhananjaya Sharma <dysxhi@yahoo.co.in>
+Hungarian            - Laszlo Dvornik <dvornik@gnome.hu>
+Italian              - Alessio D'Ascanio <otaku@fastwebnet.it>
+Japanese             - Takeshi Aihana <aihana@gnome.gr.jp>
+Korean               - DongCheon Park <dcpark@kaist.ac.kr>
+Lithuanian           - Rimas Kudelis <rq@akl.lt>
+Macedonian 	     - Arangel Angov <ufo@linux.net.mk>
+Polish               - Jacek Wolszczak <shutdownrunner@o2.pl>
+Romanian             - Liviu Danicel <liviu.danicel@spymac.com>
+Russian              - Pavlo Bohmat <bohm@ukr.net>
+                       Dan Korostelev <dan@ats.energo.ru>
+                       Vitaly Lipatov <lav@altlinux.ru>
+Simplified Chinese   - Chong Kai Xiong <descender@phreaker.net>
+Traditional Chinese  - Chao-Hsiung Liao <pesder.liao@msa.hinet.net>
+Slovak               - Pavel Kanzelsberger <kanzels@zmail.sk>
+Spanish              - Francisco Javier F. Serrador <serrador@cvs.gnome.org>
+Swedish              - Martin Persenius <martin@persenius.net>
+Ukrainian            - Mykola Lynnyk<definer@users.sf.net>
+Welsh                - Edward Brocklesby <ejb@goth.net>
+                       (Based on XMMS from Rhoslyn Prys <rhoslyn.prys@meddal.org.uk>)
+
+
+(please tell us if we left your name out)
+
+-
+
+Based on:
+
+XMMS - X Multimedia System (C)1998-2003
+
+       Main Programming: Peter Alm
+
+ Additional Programming: Håvard Kvålen
+                         Derrik Pates
+
+   With Additional Help: Sean Atkinson
+                         Jorn Baayen
+                         James M. Cape
+                         Anders Carlsson (effect plugins)
+                         Chun-Chung Chen (xfont patch)
+                         Tim Ferguson (joystick plugin)
+                         Ben Gertzfield
+                         Vesa Halttunen
+                         Logan Hanks
+                         Eric L. Hernes (FreeBSD patches)
+                         Ville Herva
+                         higway (MMX)
+                         Michael Hipp and others (MPG123 engine)
+                         Olle Hällnäs (compiling fixes)
+                         David Jacoby
+                         Osamu Kayasono (3DNow!)
+                         Lyle B Kempler
+                         J. Nick Koston (MikMod plugin)
+                         Aaron Lehmann
+                         Johan Levin (echo + stereo plugin)
+                         Eric Lindvall
+                         Colin Marquardt
+                         Willem Monsuwe
+                         John Riddoch (Solaris plugin)
+                         Josip Rodin
+                         Pablo Saratxaga (i18n)
+                         Carl van Schaik (pro logic plugin)
+                         Jörg Schuler
+                         Charles Sielski (irman plugin)
+                         Espen Skoglund
+                         Matthieu Sozeau (ALSA plugin)
+                         Kimura Takuhiro (3DNow!)
+                         Zinx Verituse
+                         Ryan Weaver (RPMs among other things)
+                         Chris Wilson
+                         Dave Yearke
+                         Stephan K. Zitz
+
+           Default skin: Leonard "Blayde" Tan
+                         Robin Sylvestre (Equalizer and Playlist)
+                         Thomas Nilsson (New titles, and cleanups)
+
+  Homepage and Graphics: Thomas Nilsson
+
+       Support and Docs: Olle Hällnäs

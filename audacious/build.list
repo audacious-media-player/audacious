@@ -1,0 +1,8 @@
+my_pixbuf
+	./info.png
+playlist_pixbuf
+	./playlist.png
+play_pixbuf
+	./play.png
+queue_pixbuf
+	./queue.png

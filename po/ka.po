@@ -1,0 +1,3352 @@
+# translation of bmpka.po to Georgian
+# translation of bmp.po to Georgian
+# This file is distributed under the same license as the PACKAGE package.
+# SophoLinux / Deer Leap Project Linux Georgian Translators Team, 2005.
+# George Machitidze <giomac@global-erty.net>, 2005.
+# George Machitidze <giomac@security.gov.ge>, 2005.
+# George Machitidze <giomac@gmail.com>, 2005.
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.35\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-10-22 14:40+0800\n"
+"PO-Revision-Date: 2005-10-14 13:54+0400\n"
+"Last-Translator: George Machitidze <giomac@gmail.com>\n"
+"Language-Team: Georgian <giomac@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.10.2\n"
+
+#: Input/cdaudio/cdaudio.c:180
+msgid "CD Audio Plugin"
+msgstr "აუდიო-CD-ს პლაგინი"
+
+#: Input/cdaudio/cdaudio.c:1004 Input/cdaudio/cdaudio.c:1013
+#, c-format
+msgid "CD Audio Track %02u"
+msgstr "აუდიო-CD-ს ჩანაწერი %02u"
+
+#: Input/cdaudio/cdinfo.c:157 Input/cdaudio/cdinfo.c:158
+#: Input/cdaudio/cdinfo.c:159
+msgid "(unknown)"
+msgstr "(უცნობი)"
+
+#: Input/cdaudio/configure.c:199 Input/cdaudio/configure.c:213
+#: Input/cdaudio/configure.c:541
+#, c-format
+msgid "Drive %d"
+msgstr "ამძრავი %d"
+
+#: Input/cdaudio/configure.c:259
+#, c-format
+msgid ""
+"Failed to open device %s\n"
+"Error: %s\n"
+"\n"
+msgstr ""
+"%s მოწყობილობის გახსნა შეუძლებელია\n"
+"შეცდომა: %s\n"
+"\n"
+
+#: Input/cdaudio/configure.c:266
+msgid ""
+"Failed to read \"Table of Contents\"\n"
+"Maybe no disc in the drive?\n"
+"\n"
+msgstr ""
+"შეუძლებელია \"Table of Contents\"\n"
+"Maybe no disc in the drive?\n"
+"\n"
+
+#: Input/cdaudio/configure.c:270
+#, c-format
+msgid ""
+"Device %s OK.\n"
+"Disc has %d tracks"
+msgstr ""
+"მოწყობილობა %s წესრიგშია.\n"
+"დისკს აქვს %d ჩანაწერი"
+
+#: Input/cdaudio/configure.c:279
+#, c-format
+msgid " (%d data tracks)"
+msgstr " (%d მონაცემთა ჩანაწერები)"
+
+#: Input/cdaudio/configure.c:280
+#, c-format
+msgid ""
+"\n"
+"Total length: %d:%d\n"
+msgstr ""
+"\n"
+"ჯამური ხანგრძლივობა: %d:%d\n"
+
+#: Input/cdaudio/configure.c:285
+msgid "Digital audio extraction not tested as the disc has no audio tracks\n"
+msgstr ""
+"ციფრული ნაკადით მიღება ვერ შემოწმდება თუ დისკზე არ არის აუდიო ჩანაწერი\n"
+
+#: Input/cdaudio/configure.c:302
+msgid ""
+"Digital audio extraction test: OK\n"
+"\n"
+msgstr ""
+"ციფრული ნაკადით მიღების ტესტი: წესრიგშია\n"
+"\n"
+
+#: Input/cdaudio/configure.c:306
+#, c-format
+msgid ""
+"Digital audio extraction test failed: %s\n"
+"\n"
+msgstr ""
+"ციფრული ნაკადით მიღების ტესტირების შეცდომა: %s\n"
+"\n"
+
+#: Input/cdaudio/configure.c:316
+#, c-format
+msgid ""
+"Failed to check directory %s\n"
+"Error: %s"
+msgstr ""
+"შეცდომა %s დირექტორიის შემოწმებისას:\n"
+"%s"
+
+#: Input/cdaudio/configure.c:322
+#, c-format
+msgid "Error: %s exist, but is not a directory"
+msgstr "შეცდომა: %s არსებობს, მაგრამ იგი არ წარმოადგენს დასტას"
+
+#: Input/cdaudio/configure.c:325
+#, c-format
+msgid "Directory %s OK."
+msgstr "კატალოგი %s წესრიგშია."
+
+#: Input/cdaudio/configure.c:369
+msgid "Device:"
+msgstr "მოწყობილობა:"
+
+#: Input/cdaudio/configure.c:377
+msgid "_Device:"
+msgstr "_მოწყობილობა:"
+
+#: Input/cdaudio/configure.c:387
+msgid "Dir_ectory:"
+msgstr "დირ_ექტორია:"
+
+#: Input/cdaudio/configure.c:399
+msgid "Play mode:"
+msgstr "დაკვრის რეჟიმი:"
+
+#: Input/cdaudio/configure.c:405
+msgid "Analog"
+msgstr "ანალოგური"
+
+#: Input/cdaudio/configure.c:413
+msgid "Digital audio extraction"
+msgstr "ციფრული ნაკადით მიღება"
+
+#: Input/cdaudio/configure.c:423
+msgid "Volume control:"
+msgstr "ხმის კონტროლი:"
+
+#: Input/cdaudio/configure.c:429
+msgid "No mixer"
+msgstr "მიქშერის გარეშე"
+
+#: Input/cdaudio/configure.c:435
+msgid "CDROM drive"
+msgstr "CDROM ამძრავი"
+
+#: Input/cdaudio/configure.c:441
+msgid "OSS mixer"
+msgstr "OSS მიქშერი"
+
+#: Input/cdaudio/configure.c:464
+msgid "Check drive..."
+msgstr "ამძრავის შემოწმება..."
+
+#: Input/cdaudio/configure.c:470
+msgid "Remove drive"
+msgstr "ამძრავის ამოღება"
+
+#: Input/cdaudio/configure.c:515
+msgid "CD Audio Player Configuration"
+msgstr "კომპაქტ-დისკების დამკვრელის კონფიგურაცია"
+
+#: Input/cdaudio/configure.c:553
+msgid "Add drive"
+msgstr "ამძრავის დამატება"
+
+#: Input/cdaudio/configure.c:561
+msgid "Device"
+msgstr "მოწყობილობა"
+
+#: Input/cdaudio/configure.c:571
+msgid "CDDB:"
+msgstr "CDDB:"
+
+#: Input/cdaudio/configure.c:582
+msgid "Use CDDB"
+msgstr "ჩართვა"
+
+#: Input/cdaudio/configure.c:586
+msgid "Get server list"
+msgstr "სერვერების სიის მიღება"
+
+#: Input/cdaudio/configure.c:589
+msgid "Show network window"
+msgstr "ქსელის ფანჯრის ჩვენება"
+
+#: Input/cdaudio/configure.c:599
+msgid "CDDB server:"
+msgstr "CDDB სერვერი:"
+
+#: Input/cdaudio/configure.c:614
+msgid "CD Index:"
+msgstr "CD-ინდექსი:"
+
+#: Input/cdaudio/configure.c:621
+msgid "Use CD Index"
+msgstr "გამოიყენე CD ინდექსირება"
+
+#: Input/cdaudio/configure.c:630
+msgid "CD Index server:"
+msgstr "CD ინდექსირების სერვერი:"
+
+#: Input/cdaudio/configure.c:645
+msgid "Track names:"
+msgstr "ჩანაწერების სახელები:"
+
+#: Input/cdaudio/configure.c:652 Input/mpg123/configure.c:799
+#: Input/vorbis/configure.c:472
+msgid "Override generic titles"
+msgstr "ზოგადი სათაურების იგნორირება"
+
+#: Input/cdaudio/configure.c:668
+msgid "Name format:"
+msgstr "სახელის ფორმატი:"
+
+#: Input/cdaudio/configure.c:680
+msgid "CD Info"
+msgstr "ინფორმაცია CD-ის შესახებ"
+
+#: Input/mpg123/configure.c:260
+msgid "Select the directory where you want to store the MPEG streams:"
+msgstr "აირჩიეთ დირექტორია, სადაც გსურთ MPEG ნაკადის შენახვა:"
+
+#: Input/mpg123/configure.c:344
+msgid "MPEG Audio Plugin Configuration"
+msgstr "MPEG აუდიო-პლაგინის კონფიგურაცია"
+
+#: Input/mpg123/configure.c:361
+msgid "Resolution:"
+msgstr "გარჩევადობა:"
+
+#: Input/mpg123/configure.c:369
+msgid "16 bit"
+msgstr "16 ბიტი"
+
+#: Input/mpg123/configure.c:378
+msgid "8 bit"
+msgstr "8 ბიტი"
+
+#: Input/mpg123/configure.c:385 Input/vorbis/fileinfo.c:862
+#: Input/vorbis/fileinfo.c:918
+msgid "Channels:"
+msgstr "არხები:"
+
+#: Input/mpg123/configure.c:393
+msgid "Stereo (if available)"
+msgstr "სტერეო (თუ შესაძლებელია)"
+
+#: Input/mpg123/configure.c:404
+msgid "Mono"
+msgstr "მონო"
+
+#: Input/mpg123/configure.c:411
+msgid "Down sample:"
+msgstr "დაყვანა:"
+
+#: Input/mpg123/configure.c:420
+msgid "1:1 (44 kHz)"
+msgstr "1:1 (44 კჰც)"
+
+#: Input/mpg123/configure.c:431
+msgid "1:2 (22 kHz)"
+msgstr "1:2 (22 კჰც)"
+
+#: Input/mpg123/configure.c:442
+msgid "1:4 (11 kHz)"
+msgstr "1:4 (11 კჰც)"
+
+#: Input/mpg123/configure.c:455
+msgid "Decoder:"
+msgstr "დეკოდერი:"
+
+#: Input/mpg123/configure.c:464
+msgid "Automatic detection"
+msgstr "ავტომატურად აღმოჩენა"
+
+#: Input/mpg123/configure.c:472
+msgid "3DNow! optimized decoder"
+msgstr "3DNow! ოპტიმიზირებული დეკოდერი"
+
+#: Input/mpg123/configure.c:480
+msgid "MMX optimized decoder"
+msgstr "MMX ოპტიმიზირებული დეკოდერი"
+
+#: Input/mpg123/configure.c:487
+msgid "FPU decoder"
+msgstr "FPU დეკოდერი"
+
+#: Input/mpg123/configure.c:513
+msgid "Options"
+msgstr "პარამეტრები"
+
+#: Input/mpg123/configure.c:520
+msgid "Content"
+msgstr "შიგთავსი"
+
+#: Input/mpg123/configure.c:526
+msgid "Extension"
+msgstr "გაფართოება"
+
+#: Input/mpg123/configure.c:532
+msgid "Extension and content"
+msgstr "გაფართოება და შიგთავსი"
+
+#: Input/mpg123/configure.c:556
+msgid "Decoder"
+msgstr "დეკოდერი"
+
+#: Input/mpg123/configure.c:560 Input/vorbis/configure.c:287
+#: Output/OSS/configure.c:302 Output/esd/configure.c:171
+msgid "Buffering:"
+msgstr "ბუფერი:"
+
+#: Input/mpg123/configure.c:573 Input/vorbis/configure.c:299
+msgid "Buffer size (kb):"
+msgstr "ბუფერის ზომა (კბ):"
+
+#: Input/mpg123/configure.c:588 Input/vorbis/configure.c:313
+#: Output/OSS/configure.c:329 Output/esd/configure.c:198
+msgid "Pre-buffer (percent):"
+msgstr "წინა-ბუფერი (პროცენტი):"
+
+#: Input/mpg123/configure.c:602 Input/vorbis/configure.c:327
+msgid "Proxy:"
+msgstr "პროქსი:"
+
+#: Input/mpg123/configure.c:612 Input/vorbis/configure.c:337
+msgid "Use proxy"
+msgstr "გამოიყენე პროქსი"
+
+#: Input/mpg123/configure.c:625 Input/vorbis/configure.c:350
+#: Output/esd/configure.c:114 Output/esd/configure.c:144
+msgid "Host:"
+msgstr "ჰოსტი:"
+
+#: Input/mpg123/configure.c:635 Input/vorbis/configure.c:360
+#: Output/esd/configure.c:153
+msgid "Port:"
+msgstr "პორტი:"
+
+#: Input/mpg123/configure.c:648 Input/vorbis/configure.c:373
+msgid "Use authentication"
+msgstr "აუთენტიკაციის გამოყენება"
+
+#: Input/mpg123/configure.c:665 Input/vorbis/configure.c:390
+msgid "Username:"
+msgstr "სახელი:"
+
+#: Input/mpg123/configure.c:676 Input/vorbis/configure.c:401
+msgid "Password:"
+msgstr "პაროლი:"
+
+#: Input/mpg123/configure.c:693 Input/vorbis/configure.c:418
+msgid "Save stream to disk:"
+msgstr "ნაკადის დისკზე შენახვა:"
+
+#: Input/mpg123/configure.c:704 Input/vorbis/configure.c:429
+msgid "Save stream to disk"
+msgstr "ნაკადის დისკზე შენახვა"
+
+#: Input/mpg123/configure.c:718 Input/vorbis/configure.c:443
+msgid "Path:"
+msgstr "გზა:"
+
+#: Input/mpg123/configure.c:728 Input/vorbis/configure.c:453
+msgid "Browse"
+msgstr "არჩევა"
+
+#: Input/mpg123/configure.c:734
+msgid "SHOUT/Icecast:"
+msgstr "SHOUT/Icecast:"
+
+#: Input/mpg123/configure.c:748
+msgid "Enable Icecast Metadata UDP Channel"
+msgstr "Icecast მეტა-მონაცემთა UDP არხით მიღება"
+
+#: Input/mpg123/configure.c:755 Input/vorbis/configure.c:460
+msgid "Streaming"
+msgstr "ნაკადი"
+
+#: Input/mpg123/configure.c:757
+msgid "ID3 Tags:"
+msgstr "ID3 ტეგები:"
+
+#: Input/mpg123/configure.c:765
+msgid "Disable ID3V2 tags"
+msgstr "ID3V2 ტეგების გათიშვა"
+
+#: Input/mpg123/configure.c:774
+msgid "Convert non-UTF8 ID3 tags to UTF8"
+msgstr "არა-UTF8 ID3 ტეგების გარდაქმნა UTF8-ში"
+
+#: Input/mpg123/configure.c:787
+msgid "ID3 encoding:"
+msgstr "ID3 დეკოდირება:"
+
+#: Input/mpg123/configure.c:812
+msgid "ID3 format:"
+msgstr "ID3 ფორმატი:"
+
+#: Input/mpg123/configure.c:826 Input/vorbis/configure.c:499
+#: audacious/prefswin.c:95
+msgid "Title"
+msgstr "სათაური"
+
+#: Input/mpg123/fileinfo.c:471
+#, c-format
+msgid ""
+"%s\n"
+"Unable to write to file: %s"
+msgstr ""
+"%s\n"
+"ფაილის ჩაწერა შეუძლებელია: %s"
+
+#: Input/mpg123/fileinfo.c:472 Input/mpg123/fileinfo.c:477
+msgid "Couldn't write tag!"
+msgstr "ჭდის ჩაწერა შეუძლებელია"
+
+#: Input/mpg123/fileinfo.c:476 Input/mpg123/fileinfo.c:567
+#, c-format
+msgid ""
+"%s\n"
+"Unable to open file: %s"
+msgstr ""
+"%s\n"
+"ფაილის გახსნა შეუძlებელია: %s"
+
+#: Input/mpg123/fileinfo.c:479 Input/mpg123/fileinfo.c:570
+msgid "File Info"
+msgstr "ინფორმაცის ფაილის შესახებ"
+
+#: Input/mpg123/fileinfo.c:479 Input/mpg123/fileinfo.c:570
+#: Input/mpg123/http.c:220 Input/mpg123/mpg123.c:1184
+#: Input/vorbis/fileinfo.c:212 Input/vorbis/http.c:218
+#: Input/vorbis/vorbis.c:802 Output/OSS/about.c:54 Output/esd/about.c:49
+#: Output/alsa/about.c:53
+msgid "Ok"
+msgstr "დიახ"
+
+#: Input/mpg123/fileinfo.c:556
+#, c-format
+msgid ""
+"%s\n"
+"Unable to truncate file: %s"
+msgstr ""
+"%s\n"
+"ფაილის დამუშავება შეუძლებელია: %s"
+
+#: Input/mpg123/fileinfo.c:558 Input/mpg123/fileinfo.c:568
+msgid "Couldn't remove tag!"
+msgstr "ჭდის ამოღება შეუძლებელია!"
+
+#: Input/mpg123/fileinfo.c:562
+msgid "No tag to remove!"
+msgstr "ფაილს ჭდე გააჩნია!"
+
+#: Input/mpg123/fileinfo.c:602
+msgid "Stereo"
+msgstr "სტერეო"
+
+#: Input/mpg123/fileinfo.c:602
+msgid "Joint stereo"
+msgstr "გაერთიანებული სტერეო"
+
+#: Input/mpg123/fileinfo.c:603
+msgid "Dual channel"
+msgstr "ორი არხი"
+
+#: Input/mpg123/fileinfo.c:603
+msgid "Single channel"
+msgstr "ერთი არხი"
+
+#: Input/mpg123/fileinfo.c:618 Input/mpg123/fileinfo.c:1258
+#: Input/mpg123/fileinfo.c:1379
+#, c-format
+msgid "%d KBit/s"
+msgstr ""
+
+#: Input/mpg123/fileinfo.c:619 Input/mpg123/fileinfo.c:1262
+#: Input/mpg123/fileinfo.c:1383
+#, c-format
+msgid "%ld Hz"
+msgstr "%ld ჰც"
+
+#: Input/mpg123/fileinfo.c:639
+msgid "None"
+msgstr "არ არის"
+
+#: Input/mpg123/fileinfo.c:640
+msgid "50/15 ms"
+msgstr "50/15 მწმ"
+
+#: Input/mpg123/fileinfo.c:642
+msgid "CCIT J.17"
+msgstr "CCIT J.17"
+
+#: Input/mpg123/fileinfo.c:643
+msgid "No"
+msgstr "არ არის"
+
+#: Input/mpg123/fileinfo.c:644
+msgid "Yes"
+msgstr "არის"
+
+#: Input/mpg123/fileinfo.c:691 Input/vorbis/fileinfo.c:557
+msgid "Name:"
+msgstr "სახელი:"
+
+#: Input/mpg123/fileinfo.c:707
+msgid " MPEG Info "
+msgstr " MPEG-ინფორმაცია "
+
+#: Input/mpg123/fileinfo.c:722 Input/mpg123/fileinfo.c:1122
+msgid "MPEG Level:"
+msgstr "MPEG-ის დონე:"
+
+#: Input/mpg123/fileinfo.c:735 Input/mpg123/fileinfo.c:1125
+#: Input/vorbis/fileinfo.c:836 Input/vorbis/fileinfo.c:912
+msgid "Bit rate:"
+msgstr "ნაკადის სიჩქარე:"
+
+#: Input/mpg123/fileinfo.c:748 Input/mpg123/fileinfo.c:1128
+#: Input/vorbis/fileinfo.c:849 Input/vorbis/fileinfo.c:915
+msgid "Sample rate:"
+msgstr "სემპლირების სიხშირე:"
+
+#: Input/mpg123/fileinfo.c:762 Input/mpg123/fileinfo.c:1143
+msgid "Frames:"
+msgstr "კადრები:"
+
+#: Input/mpg123/fileinfo.c:775 Input/mpg123/fileinfo.c:1146
+#: Input/vorbis/fileinfo.c:888 Input/vorbis/fileinfo.c:924
+msgid "File size:"
+msgstr "ფაილის ზომა:"
+
+#: Input/mpg123/fileinfo.c:798 Input/mpg123/fileinfo.c:1131
+msgid "Error Protection:"
+msgstr "შეცდომებისგან დაცვა:"
+
+#: Input/mpg123/fileinfo.c:811 Input/mpg123/fileinfo.c:1134
+#: Input/vorbis/fileinfo.c:718
+msgid "Copyright:"
+msgstr "უფლებები:"
+
+#: Input/mpg123/fileinfo.c:824 Input/mpg123/fileinfo.c:1137
+msgid "Original:"
+msgstr "ორიგინალური:"
+
+#: Input/mpg123/fileinfo.c:837 Input/mpg123/fileinfo.c:1140
+msgid "Emphasis:"
+msgstr ""
+
+#: Input/mpg123/fileinfo.c:851
+msgid " ID3 Tag "
+msgstr " ID3 ჭდე "
+
+#: Input/mpg123/fileinfo.c:859 Input/vorbis/fileinfo.c:580
+msgid "Title:"
+msgstr "სათაური:"
+
+#: Input/mpg123/fileinfo.c:874 Input/vorbis/fileinfo.c:591
+msgid "Artist:"
+msgstr "შემსრულებელი:"
+
+#: Input/mpg123/fileinfo.c:889 Input/vorbis/fileinfo.c:602
+msgid "Album:"
+msgstr "ალბომი:"
+
+#: Input/mpg123/fileinfo.c:904 Input/vorbis/fileinfo.c:613
+msgid "Comment:"
+msgstr "კომენტარი:"
+
+#: Input/mpg123/fileinfo.c:926
+msgid "Year:"
+msgstr "წელი:"
+
+#: Input/mpg123/fileinfo.c:938 Input/vorbis/fileinfo.c:636
+msgid "Track number:"
+msgstr "ჩანაწერის ნომერი:"
+
+#: Input/mpg123/fileinfo.c:970 Input/vorbis/fileinfo.c:648
+msgid "Genre:"
+msgstr "ჟანრი:"
+
+#: Input/mpg123/fileinfo.c:1007
+msgid "Copy album tags"
+msgstr "ალბომის ტეგების კოპირება"
+
+#: Input/mpg123/fileinfo.c:1008
+msgid "Paste album tags"
+msgstr "ალბომის ტეგების ჩასმა"
+
+#: Input/mpg123/fileinfo.c:1101 Input/vorbis/fileinfo.c:1014
+#: audacious/mainwin.c:780
+#, c-format
+msgid "%s - BMP"
+msgstr "%s - BMP"
+
+#: Input/mpg123/fileinfo.c:1123 Input/mpg123/fileinfo.c:1126
+#: Input/mpg123/fileinfo.c:1129 Input/mpg123/fileinfo.c:1132
+#: Input/mpg123/fileinfo.c:1135 Input/mpg123/fileinfo.c:1138
+#: Input/mpg123/fileinfo.c:1141 Input/mpg123/fileinfo.c:1144
+#: Input/mpg123/fileinfo.c:1147 Input/vorbis/fileinfo.c:913
+#: Input/vorbis/fileinfo.c:916 Input/vorbis/fileinfo.c:919
+#: Input/vorbis/fileinfo.c:922 Input/vorbis/fileinfo.c:925
+msgid "N/A"
+msgstr "განუსაზღვრელი"
+
+#: Input/mpg123/fileinfo.c:1250 Input/mpg123/fileinfo.c:1371
+#, c-format
+msgid ""
+"Variable,\n"
+"avg. bitrate: %d KBit/s"
+msgstr ""
+
+#: Input/mpg123/fileinfo.c:1264 Input/mpg123/fileinfo.c:1266
+#: Input/mpg123/fileinfo.c:1267 Input/mpg123/fileinfo.c:1268
+#: Input/mpg123/fileinfo.c:1385 Input/mpg123/fileinfo.c:1387
+#: Input/mpg123/fileinfo.c:1388 Input/mpg123/fileinfo.c:1389
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: Input/mpg123/fileinfo.c:1269 Input/mpg123/fileinfo.c:1390
+#: Input/vorbis/fileinfo.c:957
+#, c-format
+msgid "%d"
+msgstr "%d"
+
+#: Input/mpg123/fileinfo.c:1270 Input/mpg123/fileinfo.c:1391
+#, c-format
+msgid "%lu Bytes"
+msgstr "%lu ბაიტი"
+
+#: Input/mpg123/http.c:220 Input/vorbis/http.c:218
+msgid "Error"
+msgstr "შეცდომა"
+
+#: Input/mpg123/http.c:374 Input/vorbis/http.c:326
+#, c-format
+msgid "LOOKING UP %s"
+msgstr "ვეძებ %s-ს"
+
+#: Input/mpg123/http.c:379 Input/vorbis/http.c:331
+#, c-format
+msgid "Couldn't look up host %s"
+msgstr "%s ჰოსტის პოვნა შეუძლებელია"
+
+#: Input/mpg123/http.c:392 Input/vorbis/http.c:344
+#, c-format
+msgid "CONNECTING TO %s:%d"
+msgstr "ვუკავშირდები %s-ს:%d"
+
+#: Input/mpg123/http.c:400 Input/mpg123/http.c:420 Input/vorbis/http.c:352
+#: Input/vorbis/http.c:372
+#, c-format
+msgid "Couldn't connect to host %s"
+msgstr "ვერ დავუკავშირდი %s-ს"
+
+#: Input/mpg123/http.c:483 Input/vorbis/http.c:420
+msgid "CONNECTED: WAITING FOR REPLY"
+msgstr "დაკავშირებულია: ველოდები პასუხს"
+
+#: Input/mpg123/http.c:520 Input/vorbis/http.c:457
+#, c-format
+msgid ""
+"Couldn't connect to host %s\n"
+"Server reported: %s"
+msgstr ""
+"%s-თან დაკავშირება შეუძლებელია\n"
+"სერვერი პასუხობს: %s"
+
+#: Input/mpg123/http.c:638 Input/vorbis/http.c:556
+#, c-format
+msgid "PRE-BUFFERING: %dKB/%dKB"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Blues"
+msgstr "ბლუზი"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Classic Rock"
+msgstr "კლასიკური როკი"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Country"
+msgstr "ქანთრი"
+
+#: Input/mpg123/mpg123.c:40 Input/vorbis/fileinfo.c:83
+msgid "Dance"
+msgstr "საცეკვაო"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Disco"
+msgstr "დისკო"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Funk"
+msgstr "ფანკი"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Grunge"
+msgstr "გრანჟი"
+
+#: Input/mpg123/mpg123.c:41 Input/vorbis/fileinfo.c:84
+msgid "Hip-Hop"
+msgstr "ჰიპ-ჰოპი"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "Jazz"
+msgstr "ჯაზი"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "Metal"
+msgstr "მეტალი"
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "New Age"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:42 Input/vorbis/fileinfo.c:85
+msgid "Oldies"
+msgstr "ძველებური"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Other"
+msgstr "სხვა"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Pop"
+msgstr "პოპი"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "R&B"
+msgstr "რ&ბ"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Rap"
+msgstr "რეპი"
+
+#: Input/mpg123/mpg123.c:43 Input/vorbis/fileinfo.c:86
+msgid "Reggae"
+msgstr "რეგი"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Rock"
+msgstr "როკი"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Techno"
+msgstr "ტექნო"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Industrial"
+msgstr "ინდუსტრიული"
+
+#: Input/mpg123/mpg123.c:44 Input/vorbis/fileinfo.c:87
+msgid "Alternative"
+msgstr "ალტერნატივა"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Ska"
+msgstr "სკა"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Death Metal"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Pranks"
+msgstr "პრანკსი"
+
+#: Input/mpg123/mpg123.c:45 Input/vorbis/fileinfo.c:88
+msgid "Soundtrack"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Euro-Techno"
+msgstr "ევრო-ტექნო"
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Ambient"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Trip-Hop"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:46 Input/vorbis/fileinfo.c:89
+msgid "Vocal"
+msgstr "ვოკალური"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Jazz+Funk"
+msgstr "ჯაზზფანკი"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Fusion"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Trance"
+msgstr "ტრანსი"
+
+#: Input/mpg123/mpg123.c:47 Input/vorbis/fileinfo.c:90
+msgid "Classical"
+msgstr "კლასიკური"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "Instrumental"
+msgstr "ინსტრუმენტალური"
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "Acid"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "House"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:48 Input/vorbis/fileinfo.c:91
+msgid "Game"
+msgstr "თამაში"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "Sound Clip"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "Gospel"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "Noise"
+msgstr "ხმაური"
+
+#: Input/mpg123/mpg123.c:49 Input/vorbis/fileinfo.c:92
+msgid "AlternRock"
+msgstr "ალტერნატიული როკი"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Bass"
+msgstr "ბასი"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Soul"
+msgstr "სოული"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Punk"
+msgstr "პანკი"
+
+#: Input/mpg123/mpg123.c:50 Input/vorbis/fileinfo.c:93
+msgid "Space"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:51 Input/vorbis/fileinfo.c:94
+msgid "Meditative"
+msgstr "მედიტაციური"
+
+#: Input/mpg123/mpg123.c:51 Input/vorbis/fileinfo.c:94
+msgid "Instrumental Pop"
+msgstr "ინსტრუმენტული პოპი"
+
+#: Input/mpg123/mpg123.c:52 Input/vorbis/fileinfo.c:95
+msgid "Instrumental Rock"
+msgstr "ინსტრუმენტული როკი"
+
+#: Input/mpg123/mpg123.c:52 Input/vorbis/fileinfo.c:95
+msgid "Ethnic"
+msgstr "ეთნო"
+
+#: Input/mpg123/mpg123.c:52 Input/vorbis/fileinfo.c:95
+msgid "Gothic"
+msgstr "გოთიკური"
+
+#: Input/mpg123/mpg123.c:53 Input/vorbis/fileinfo.c:96
+msgid "Darkwave"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:53 Input/vorbis/fileinfo.c:96
+msgid "Techno-Industrial"
+msgstr "ტექნო-ინდუსტრიული"
+
+#: Input/mpg123/mpg123.c:53 Input/vorbis/fileinfo.c:96
+msgid "Electronic"
+msgstr "ელექტრონული"
+
+#: Input/mpg123/mpg123.c:54 Input/vorbis/fileinfo.c:97
+msgid "Pop-Folk"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:54 Input/vorbis/fileinfo.c:97
+msgid "Eurodance"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:54 Input/vorbis/fileinfo.c:97
+msgid "Dream"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:55 Input/vorbis/fileinfo.c:98
+msgid "Southern Rock"
+msgstr "სამხრეთული როკი"
+
+#: Input/mpg123/mpg123.c:55 Input/vorbis/fileinfo.c:98
+msgid "Comedy"
+msgstr "კომედია"
+
+#: Input/mpg123/mpg123.c:55 Input/vorbis/fileinfo.c:98
+msgid "Cult"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:56 Input/vorbis/fileinfo.c:99
+msgid "Gangsta Rap"
+msgstr "განგსტერული რეპი"
+
+#: Input/mpg123/mpg123.c:56 Input/vorbis/fileinfo.c:99
+msgid "Top 40"
+msgstr "საუკეთესო 40"
+
+#: Input/mpg123/mpg123.c:56 Input/vorbis/fileinfo.c:99
+msgid "Christian Rap"
+msgstr "ქრისტიანული რეპი"
+
+#: Input/mpg123/mpg123.c:57 Input/vorbis/fileinfo.c:100
+msgid "Pop/Funk"
+msgstr "პოპი/ფანკი"
+
+#: Input/mpg123/mpg123.c:57 Input/vorbis/fileinfo.c:100
+msgid "Jungle"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:57 Input/vorbis/fileinfo.c:100
+msgid "Native American"
+msgstr "ბუნებრივი ამერიკული"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "Cabaret"
+msgstr "კაბარე"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "New Wave"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "Psychedelic"
+msgstr "ფსიქოდელიური"
+
+#: Input/mpg123/mpg123.c:58 Input/vorbis/fileinfo.c:101
+msgid "Rave"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Showtunes"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Trailer"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Lo-Fi"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:59 Input/vorbis/fileinfo.c:102
+msgid "Tribal"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Acid Punk"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Acid Jazz"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Polka"
+msgstr "პოლკა"
+
+#: Input/mpg123/mpg123.c:60 Input/vorbis/fileinfo.c:103
+msgid "Retro"
+msgstr "რეტრო"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Musical"
+msgstr "მიუზიქლი"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Rock & Roll"
+msgstr "როკ-ენ-როლი"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Hard Rock"
+msgstr "მძიმე როკი"
+
+#: Input/mpg123/mpg123.c:61 Input/vorbis/fileinfo.c:104
+msgid "Folk"
+msgstr "ხალხური"
+
+#: Input/mpg123/mpg123.c:62 Input/vorbis/fileinfo.c:105
+msgid "Folk/Rock"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:62 Input/vorbis/fileinfo.c:105
+msgid "National Folk"
+msgstr "ეროვნული ხალხური"
+
+#: Input/mpg123/mpg123.c:62 Input/vorbis/fileinfo.c:105
+msgid "Swing"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Fast-Fusion"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Bebob"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Latin"
+msgstr "ლათინური"
+
+#: Input/mpg123/mpg123.c:63 Input/vorbis/fileinfo.c:106
+msgid "Revival"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:64 Input/vorbis/fileinfo.c:107
+msgid "Celtic"
+msgstr "კელტური"
+
+#: Input/mpg123/mpg123.c:64 Input/vorbis/fileinfo.c:107
+msgid "Bluegrass"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:64 Input/vorbis/fileinfo.c:107
+msgid "Avantgarde"
+msgstr "ავანგარდული"
+
+#: Input/mpg123/mpg123.c:65 Input/vorbis/fileinfo.c:108
+msgid "Gothic Rock"
+msgstr "გოთიკური როკი"
+
+#: Input/mpg123/mpg123.c:65 Input/vorbis/fileinfo.c:108
+msgid "Progressive Rock"
+msgstr "პროგრესული როკი"
+
+#: Input/mpg123/mpg123.c:66 Input/vorbis/fileinfo.c:109
+msgid "Psychedelic Rock"
+msgstr "ფსიქოდელიური როკი"
+
+#: Input/mpg123/mpg123.c:66 Input/vorbis/fileinfo.c:109
+msgid "Symphonic Rock"
+msgstr "სიმფონიური როკი"
+
+#: Input/mpg123/mpg123.c:66 Input/vorbis/fileinfo.c:109
+msgid "Slow Rock"
+msgstr "ნელი როკი"
+
+#: Input/mpg123/mpg123.c:67 Input/vorbis/fileinfo.c:110
+msgid "Big Band"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:67 Input/vorbis/fileinfo.c:110
+msgid "Chorus"
+msgstr "გუნდი"
+
+#: Input/mpg123/mpg123.c:67 Input/vorbis/fileinfo.c:110
+msgid "Easy Listening"
+msgstr "ადვილად მოსასმენი"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Acoustic"
+msgstr "აკუსტიკური"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Humour"
+msgstr "იუმორი"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Speech"
+msgstr "საუბარი"
+
+#: Input/mpg123/mpg123.c:68 Input/vorbis/fileinfo.c:111
+msgid "Chanson"
+msgstr "შანსონი"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Opera"
+msgstr "ოპერა"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Chamber Music"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Sonata"
+msgstr "სონატა"
+
+#: Input/mpg123/mpg123.c:69 Input/vorbis/fileinfo.c:112
+msgid "Symphony"
+msgstr "სიმფონია"
+
+#: Input/mpg123/mpg123.c:70 Input/vorbis/fileinfo.c:113
+msgid "Booty Bass"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:70 Input/vorbis/fileinfo.c:113
+msgid "Primus"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:70 Input/vorbis/fileinfo.c:113
+msgid "Porn Groove"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Satire"
+msgstr "სატირა"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Slow Jam"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Club"
+msgstr "კლუბი"
+
+#: Input/mpg123/mpg123.c:71 Input/vorbis/fileinfo.c:114
+msgid "Tango"
+msgstr "ტანგო"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Samba"
+msgstr "სამბა"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Folklore"
+msgstr "ფოლკლორი"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Ballad"
+msgstr "ბალადა"
+
+#: Input/mpg123/mpg123.c:72 Input/vorbis/fileinfo.c:115
+msgid "Power Ballad"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:73 Input/vorbis/fileinfo.c:116
+msgid "Rhythmic Soul"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:73 Input/vorbis/fileinfo.c:116
+msgid "Freestyle"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:73 Input/vorbis/fileinfo.c:116
+msgid "Duet"
+msgstr "დუეტი"
+
+#: Input/mpg123/mpg123.c:74 Input/vorbis/fileinfo.c:117
+msgid "Punk Rock"
+msgstr "პანკ როკი"
+
+#: Input/mpg123/mpg123.c:74 Input/vorbis/fileinfo.c:117
+msgid "Drum Solo"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:74 Input/vorbis/fileinfo.c:117
+msgid "A Cappella"
+msgstr "ა-კაპელა"
+
+#: Input/mpg123/mpg123.c:75 Input/vorbis/fileinfo.c:118
+msgid "Euro-House"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:75 Input/vorbis/fileinfo.c:118
+msgid "Dance Hall"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:75 Input/vorbis/fileinfo.c:118
+msgid "Goa"
+msgstr "გოა"
+
+#: Input/mpg123/mpg123.c:76 Input/vorbis/fileinfo.c:119
+msgid "Drum & Bass"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:76 Input/vorbis/fileinfo.c:119
+msgid "Club-House"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:76 Input/vorbis/fileinfo.c:119
+msgid "Hardcore"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "Terror"
+msgstr "ტერორი"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "Indie"
+msgstr "ინდი"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "BritPop"
+msgstr "ბრიტანული პოპი"
+
+#: Input/mpg123/mpg123.c:77 Input/vorbis/fileinfo.c:120
+msgid "Negerpunk"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:78 Input/vorbis/fileinfo.c:121
+msgid "Polsk Punk"
+msgstr "პოლონური პანკი"
+
+#: Input/mpg123/mpg123.c:78 Input/vorbis/fileinfo.c:121
+msgid "Beat"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:78 Input/vorbis/fileinfo.c:121
+msgid "Christian Gangsta Rap"
+msgstr "ქრისტიანული განგსტერული რეპი"
+
+#: Input/mpg123/mpg123.c:79 Input/vorbis/fileinfo.c:122
+msgid "Heavy Metal"
+msgstr "მძიმე მეტალი"
+
+#: Input/mpg123/mpg123.c:79 Input/vorbis/fileinfo.c:122
+msgid "Black Metal"
+msgstr "შავი მეტალი"
+
+#: Input/mpg123/mpg123.c:79 Input/vorbis/fileinfo.c:122
+msgid "Crossover"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:80 Input/vorbis/fileinfo.c:123
+msgid "Contemporary Christian"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:80 Input/vorbis/fileinfo.c:123
+msgid "Christian Rock"
+msgstr "ქრისტიანული როკი"
+
+#: Input/mpg123/mpg123.c:81 Input/vorbis/fileinfo.c:124
+msgid "Merengue"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:81 Input/vorbis/fileinfo.c:124
+msgid "Salsa"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:81 Input/vorbis/fileinfo.c:124
+msgid "Thrash Metal"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:82 Input/vorbis/fileinfo.c:125
+msgid "Anime"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:82 Input/vorbis/fileinfo.c:125
+msgid "JPop"
+msgstr "იაპონური პოპი"
+
+#: Input/mpg123/mpg123.c:82 Input/vorbis/fileinfo.c:125
+msgid "Synthpop"
+msgstr ""
+
+#: Input/mpg123/mpg123.c:1181
+msgid "About MPEG Audio Plugin"
+msgstr "MPEG აუდიო-პლაგინის შესახებ"
+
+#: Input/mpg123/mpg123.c:1182
+msgid ""
+"mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
+"Plugin by The XMMS team"
+msgstr ""
+"mpg123 დეკოდირების ძრავა Michael Hipp-ის მიერ <mh@mpg123.de>\n"
+"პლაგინი XMMS-ის გუნდის მიერ"
+
+#: Input/mpg123/mpg123.c:1218
+msgid "MPEG Audio Plugin"
+msgstr "MPEG აუდიო-პლაგინი"
+
+#: Input/vorbis/configure.c:192
+msgid "Select the directory where you want to store the Ogg Vorbis streams:"
+msgstr "აირჩიეთ დირექტორია, სადაც გსურთ Ogg Vorbis-ის ნაკადების შენახვა:"
+
+#: Input/vorbis/configure.c:275
+msgid "Ogg Vorbis Audio Plugin Configuration"
+msgstr "Ogg Vorbis-ის აუდიო პლაგინის კონფიგირაცია"
+
+#: Input/vorbis/configure.c:464
+msgid "Ogg Vorbis Tags:"
+msgstr "Ogg Vorbis-ის ტეგები:"
+
+#: Input/vorbis/configure.c:485 audacious/glade/prefswin.glade:2261
+msgid "Title format:"
+msgstr "სათაურის ფორმატი:"
+
+#: Input/vorbis/configure.c:503
+msgid "ReplayGain Settings:"
+msgstr ""
+
+#: Input/vorbis/configure.c:511
+msgid "Enable Clipping Prevention"
+msgstr ""
+
+#: Input/vorbis/configure.c:516
+msgid "Enable ReplayGain"
+msgstr ""
+
+#: Input/vorbis/configure.c:521
+msgid "ReplayGain Type:"
+msgstr ""
+
+#: Input/vorbis/configure.c:532
+msgid "use Track Gain/Peak"
+msgstr "ჩანაწერის ხმის დონის მიხედვით"
+
+#: Input/vorbis/configure.c:542
+msgid "use Album Gain/Peak"
+msgstr "ალბომის ხმის დონის მიხედვით"
+
+#: Input/vorbis/configure.c:554
+msgid "Enable 6dB Boost + Hard Limiting"
+msgstr ""
+
+#: Input/vorbis/configure.c:560
+msgid "ReplayGain"
+msgstr ""
+
+#: Input/vorbis/fileinfo.c:210
+#, c-format
+msgid ""
+"An error occured:\n"
+"%s"
+msgstr ""
+"შეცდომა:\n"
+"%s"
+
+#: Input/vorbis/fileinfo.c:212
+msgid "Error!"
+msgstr "შეცდომა!"
+
+#: Input/vorbis/fileinfo.c:242
+msgid "Failed to modify tag (open)"
+msgstr "შეცდომა ჭდის ცვლილებისას (გახსნა)"
+
+#: Input/vorbis/fileinfo.c:295
+msgid "Failed to modify tag (close)"
+msgstr "შეცდომა ჭდის ცვლილებისას (დახურვა)"
+
+#: Input/vorbis/fileinfo.c:320 Input/vorbis/fileinfo.c:329
+msgid "Failed to modify tag"
+msgstr "ჭდის შეცვლა შეუძლებელია"
+
+#: Input/vorbis/fileinfo.c:572
+msgid " Ogg Vorbis Tag "
+msgstr " Ogg Vorbis-ის ჭდე"
+
+#: Input/vorbis/fileinfo.c:624
+msgid "Date:"
+msgstr "თარიღი:"
+
+#: Input/vorbis/fileinfo.c:666
+msgid "Description:"
+msgstr "განმარტება:"
+
+#: Input/vorbis/fileinfo.c:676
+msgid "Location:"
+msgstr "მდებარეობა:"
+
+#: Input/vorbis/fileinfo.c:686
+msgid "Version:"
+msgstr "ვერსია:"
+
+#: Input/vorbis/fileinfo.c:697
+msgid "ISRC number:"
+msgstr "ISRC ნომერი:"
+
+#: Input/vorbis/fileinfo.c:708
+msgid "Organization:"
+msgstr "ორგანიზაცია:"
+
+#: Input/vorbis/fileinfo.c:755
+msgid " Ogg Vorbis ReplayGain "
+msgstr ""
+
+#: Input/vorbis/fileinfo.c:761
+msgid "Track gain:"
+msgstr "ჩანაწერის დონე:"
+
+#: Input/vorbis/fileinfo.c:771
+msgid "Track peak:"
+msgstr "ჩანაწერის პიკური დონე:"
+
+#: Input/vorbis/fileinfo.c:782
+msgid "Album gain:"
+msgstr "ალბომში ხმის დონე:"
+
+#: Input/vorbis/fileinfo.c:792
+msgid "Album peak:"
+msgstr "ალბომში ხმის პიკური დონე:"
+
+#: Input/vorbis/fileinfo.c:821
+msgid " Ogg Vorbis Info "
+msgstr " Ogg Vorbis-ის ინფორმაცია"
+
+#: Input/vorbis/fileinfo.c:875 Input/vorbis/fileinfo.c:921
+msgid "Length:"
+msgstr "სიგრძე:"
+
+#: Input/vorbis/fileinfo.c:955
+#, c-format
+msgid "%d KBit/s (nominal)"
+msgstr ""
+
+#: Input/vorbis/fileinfo.c:956
+#, c-format
+msgid "%d Hz"
+msgstr "%d ჰც"
+
+#: Input/vorbis/fileinfo.c:959
+#, c-format
+msgid "%d:%.2d"
+msgstr "%d:%.2d"
+
+#: Input/vorbis/fileinfo.c:961
+#, c-format
+msgid "%d Bytes"
+msgstr "%d ბაიტი"
+
+#: Input/vorbis/vorbis.c:134
+msgid "Ogg Vorbis Audio Plugin"
+msgstr "Ogg Vorbis აუდიო-პლაგინი"
+
+#: Input/vorbis/vorbis.c:784
+msgid "About Ogg Vorbis Audio Plugin"
+msgstr "Ogg Vorbis აუდიო-პლაგინის შესახებ"
+
+#: Input/vorbis/vorbis.c:790
+msgid ""
+"Ogg Vorbis Plugin by the Xiph.org Foundation\n"
+"\n"
+"Original code by\n"
+"Tony Arcieri <bascule@inferno.tusculum.edu>\n"
+"Contributions from\n"
+"Chris Montgomery <monty@xiph.org>\n"
+"Peter Alm <peter@xmms.org>\n"
+"Michael Smith <msmith@labyrinth.edu.au>\n"
+"Jack Moffitt <jack@icecast.org>\n"
+"Jorn Baayen <jorn@nl.linux.org>\n"
+"Haavard Kvaalen <havardk@xmms.org>\n"
+"Gian-Carlo Pascutto <gcp@sjeng.org>\n"
+"\n"
+"Visit the Xiph.org Foundation at http://www.xiph.org/\n"
+msgstr ""
+
+#: Input/wav/wav.c:67
+msgid "WAV Audio Plugin"
+msgstr "WAV აუდიო-პლაგინი"
+
+#: Output/OSS/OSS.c:50
+msgid "OSS Output Plugin"
+msgstr "OSS გამომყვანი პლაგინი"
+
+#: Output/OSS/about.c:39
+msgid "About OSS Driver"
+msgstr "OSS დრაივერის შესახებ"
+
+#: Output/OSS/about.c:40
+msgid ""
+"XMMS OSS Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+
+#: Output/OSS/configure.c:149
+#, c-format
+msgid "Default (%s)"
+msgstr "ნაგულისხმევი (%s)"
+
+#: Output/OSS/configure.c:167
+msgid "Default"
+msgstr "ნაგულისხმევი"
+
+#: Output/OSS/configure.c:199
+msgid "OSS Driver configuration"
+msgstr "OSS-ის დრაივერის კონფიგურაცია"
+
+#: Output/OSS/configure.c:215 Output/alsa/configure.c:295
+msgid "Audio device:"
+msgstr "აუდიო-მოწყობილობა:"
+
+#: Output/OSS/configure.c:237 Output/OSS/configure.c:278
+msgid "Use alternate device:"
+msgstr "გამოიყენე ალტერნატიული მოწყობილობა:"
+
+#: Output/OSS/configure.c:258 Output/alsa/configure.c:339
+msgid "Mixer device:"
+msgstr "მიქშერული მოწყობილობა:"
+
+#: Output/OSS/configure.c:300
+msgid "Devices"
+msgstr "მოწყობილობები"
+
+#: Output/OSS/configure.c:315 Output/esd/configure.c:184
+msgid "Buffer size (ms):"
+msgstr "ბუფერის ზომა (მწმ):"
+
+#: Output/OSS/configure.c:340 Output/esd/configure.c:209
+msgid "Buffering"
+msgstr "ბუფერი"
+
+#: Output/OSS/configure.c:341
+msgid "Mixer Settings:"
+msgstr "მიქშერის პარამეტრები:"
+
+#: Output/OSS/configure.c:347
+msgid "Volume controls Master not PCM"
+msgstr "ხმის კონტროლი მთავარი არხით (არა-PCM-ით)"
+
+#: Output/OSS/configure.c:353
+msgid "Mixer"
+msgstr "მიქშერი"
+
+#: Output/esd/about.c:34
+msgid "About ESounD Plugin"
+msgstr "ESounD პლაგინის შესახებ"
+
+#: Output/esd/about.c:35
+msgid ""
+"XMMS ESounD Plugin\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+
+#: Output/esd/configure.c:102
+msgid "ESD Output Plugin configuration"
+msgstr "ESD გამომყვანი პლაგინის კონფიგურაცია"
+
+#: Output/esd/configure.c:125
+msgid "Use remote host"
+msgstr "დაშორებული ჰოსტის გამოყენება"
+
+#: Output/esd/configure.c:132
+msgid "Volume controls OSS mixer"
+msgstr "ხმის კონტროლი OSS მიქშერით"
+
+#: Output/esd/configure.c:169
+msgid "Server"
+msgstr "სერვერი"
+
+#: Output/esd/esd.c:47
+msgid "eSound Output Plugin"
+msgstr "eSound გამომყვანი პლაგინი"
+
+#: Output/alsa/about.c:36
+msgid "About ALSA Driver"
+msgstr "ALSA დრაივერის შესახებ"
+
+#: Output/alsa/about.c:37
+msgid ""
+"XMMS ALSA Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA.\n"
+"Author: Matthieu Sozeau (mattam@altern.org)"
+msgstr ""
+
+#: Output/alsa/alsa.c:46
+#, c-format
+msgid "ALSA %s output plugin"
+msgstr "ALSA %s გამომყვანი პლაგინი"
+
+#: Output/alsa/configure.c:164
+msgid "Unknown soundcard"
+msgstr "უცნობი ხმის დაფა"
+
+#: Output/alsa/configure.c:217
+#, c-format
+msgid "Default PCM device (%s)"
+msgstr "ნაგულისხმევი PCM მოწყობილობა (%s)"
+
+#: Output/alsa/configure.c:280
+msgid "ALSA Driver configuration"
+msgstr "ALSA დრაივერის კონფიგურაცია"
+
+#: Output/alsa/configure.c:308
+msgid "Mixer:"
+msgstr "მიქშერი:"
+
+#: Output/alsa/configure.c:316
+msgid "Use software volume control"
+msgstr "პროგრამული ხმის კონტროლი"
+
+#: Output/alsa/configure.c:326
+msgid "Mixer card:"
+msgstr "მიქშერული დაფა:"
+
+#: Output/alsa/configure.c:359
+msgid "Device settings"
+msgstr "მოწყობილობის პარამეტრები:"
+
+#: Output/alsa/configure.c:361
+msgid "Advanced settings:"
+msgstr "დამატებითი პარამეტრები:"
+
+#: Output/alsa/configure.c:374
+msgid "Buffer time (ms):"
+msgstr "ბუფერის დრო (მწმ):"
+
+#: Output/alsa/configure.c:388
+msgid "Period time (ms):"
+msgstr "პერიოდის დრო (მწმ):"
+
+#: Output/alsa/configure.c:402
+#, fuzzy
+msgid "Thread buffer time (ms):"
+msgstr "ბუფერის დრო (მწმ):"
+
+#: Output/alsa/configure.c:416
+msgid "Multi-thread mode"
+msgstr ""
+
+#: Output/alsa/configure.c:421
+msgid "Mmap mode"
+msgstr "Mmap რეჟიმი"
+
+#: Output/alsa/configure.c:427
+msgid "Advanced settings"
+msgstr "დამატებითი პარამეტრები"
+
+#: Visualization/blur_scope/blur_scope.c:57
+msgid "/Toggle Decorations"
+msgstr "/დეკორაციების ჩართვა"
+
+#: Visualization/blur_scope/blur_scope.c:59
+msgid "/-"
+msgstr "/-"
+
+#: Visualization/blur_scope/blur_scope.c:60
+msgid "/Close"
+msgstr "/დაკეტვა"
+
+#: Visualization/blur_scope/blur_scope.c:198
+msgid "Blur scope"
+msgstr ""
+
+#: Visualization/blur_scope/config.c:73
+msgid "Blur Scope: Color selection"
+msgstr ""
+
+#: Visualization/blur_scope/config.c:83
+msgid "Options:"
+msgstr "პარამეტრები:"
+
+#: libaudacious/titlestring.c:324
+msgid "Performer/Artist"
+msgstr "შემსრულებელი"
+
+#: libaudacious/titlestring.c:325 audacious/prefswin.c:94
+msgid "Album"
+msgstr "ალბომი"
+
+#: libaudacious/titlestring.c:326 audacious/prefswin.c:97
+msgid "Genre"
+msgstr "ჟანრი"
+
+#: libaudacious/titlestring.c:327
+msgid "File name"
+msgstr "ფაილის სახელი"
+
+#: libaudacious/titlestring.c:328
+msgid "File path"
+msgstr "ფაილის მდებარეობა"
+
+#: libaudacious/titlestring.c:329
+msgid "File extension"
+msgstr "ფაილის გაფართოება"
+
+#: libaudacious/titlestring.c:330
+msgid "Track name"
+msgstr "ჩანაწერის სახელი"
+
+#: libaudacious/titlestring.c:331
+msgid "Track number"
+msgstr "ჩანაწერის ნომერი"
+
+#: libaudacious/titlestring.c:332 audacious/prefswin.c:100
+msgid "Date"
+msgstr "თარიღი"
+
+#: libaudacious/titlestring.c:333 audacious/prefswin.c:101
+msgid "Year"
+msgstr "წელი"
+
+#: libaudacious/titlestring.c:334 audacious/prefswin.c:102
+msgid "Comment"
+msgstr "კომენტარი"
+
+#: libaudacious/titlestring.c:385
+msgid "%{n:...%}: Display \"...\" only if element %n is present"
+msgstr "%{n:...%}: \"...\"-ის ჩვენება, მხოლოდ თუ ელემენტი %n არსებობს"
+
+#: audacious/about.c:42
+#, fuzzy, c-format
+msgid ""
+"<big><b>Beep Media Player %s</b></big>\n"
+"A media player based on XMMS\n"
+"\n"
+"Copyright (C) 2003-2005 BMP Development Team\n"
+msgstr ""
+"<big><b>Beep Media Player %s</b></big>\n"
+"XMMS-ზე დაფუძნებული მედია დამკვრელი\n"
+"\n"
+"საავტორო უფლებები (C) 2003-2004 BMP Development Team\n"
+
+#: audacious/about.c:48
+msgid "Developers:"
+msgstr "შემქმნელები:"
+
+#: audacious/about.c:49
+msgid "Artem Baguinski"
+msgstr ""
+
+#: audacious/about.c:50 audacious/about.c:85 audacious/about.c:169
+msgid "Edward Brocklesby"
+msgstr ""
+
+#: audacious/about.c:51 audacious/about.c:99
+msgid "Chong Kai Xiong"
+msgstr ""
+
+#: audacious/about.c:52 audacious/about.c:84
+msgid "Milosz Derezynski"
+msgstr ""
+
+#: audacious/about.c:53
+msgid "David Lau"
+msgstr ""
+
+#: audacious/about.c:54
+msgid "Ole Andre Vadla Ravnaas"
+msgstr ""
+
+#: audacious/about.c:55
+msgid "Michiel Sikkes"
+msgstr ""
+
+#: audacious/about.c:58
+msgid "With Additional Help:"
+msgstr "დამატებითი დახმარება:"
+
+#: audacious/about.c:59
+msgid "Andrei Badea"
+msgstr ""
+
+#: audacious/about.c:60
+msgid "Peter Behroozi"
+msgstr ""
+
+#: audacious/about.c:61
+msgid "Bernard Blackham"
+msgstr ""
+
+#: audacious/about.c:62
+msgid "Oliver Blin"
+msgstr ""
+
+#: audacious/about.c:63
+msgid "Tomas Bzatek"
+msgstr ""
+
+#: audacious/about.c:64 audacious/about.c:149
+msgid "Liviu Danicel"
+msgstr ""
+
+#: audacious/about.c:65
+msgid "Jon Dowland"
+msgstr ""
+
+#: audacious/about.c:66
+msgid "Artur Frysiak"
+msgstr ""
+
+#: audacious/about.c:67
+msgid "Sebastian Kapfer"
+msgstr ""
+
+#: audacious/about.c:68
+msgid "Lukas Koberstein"
+msgstr ""
+
+#: audacious/about.c:69 audacious/about.c:153
+msgid "Dan Korostelev"
+msgstr ""
+
+#: audacious/about.c:70
+msgid "Jolan Luff"
+msgstr ""
+
+#: audacious/about.c:71
+msgid "Michael Marineau"
+msgstr ""
+
+#: audacious/about.c:72
+msgid "Tim-Philipp Muller"
+msgstr ""
+
+#: audacious/about.c:73
+msgid "Julien Portalier"
+msgstr ""
+
+#: audacious/about.c:74
+msgid "Andrew Ruder"
+msgstr ""
+
+#: audacious/about.c:75
+msgid "Olivier Samyn"
+msgstr ""
+
+#: audacious/about.c:76
+msgid "Martijn Vernooij"
+msgstr ""
+
+#: audacious/about.c:79
+msgid "ClearSky skin:"
+msgstr ""
+
+#: audacious/about.c:80
+msgid "Will Reinhart"
+msgstr ""
+
+#: audacious/about.c:83
+msgid "Homepage and Graphics:"
+msgstr "ვებ გვერდი და გრაფიკა:"
+
+#: audacious/about.c:92
+msgid "Brazilian Portuguese:"
+msgstr "ბრაზილიური პორტუგალიური:"
+
+#: audacious/about.c:93
+msgid "Philipi Pinto"
+msgstr ""
+
+#: audacious/about.c:95
+msgid "Breton:"
+msgstr "ბრეტონული:"
+
+#: audacious/about.c:96
+msgid "Thierry Vignaud"
+msgstr ""
+
+#: audacious/about.c:98
+msgid "Chinese:"
+msgstr "ჩინური:"
+
+#: audacious/about.c:100
+msgid "Chao-Hsiung Liao"
+msgstr ""
+
+#: audacious/about.c:102
+msgid "Czech:"
+msgstr "ჩეხური:"
+
+#: audacious/about.c:103
+msgid "Jan Narovec"
+msgstr ""
+
+#: audacious/about.c:105
+msgid "Dutch:"
+msgstr "ჰოლანდიური:"
+
+#: audacious/about.c:106
+msgid "Laurens Buhler"
+msgstr ""
+
+#: audacious/about.c:108
+#, fuzzy
+msgid "Finnish:"
+msgstr "ესპანური:"
+
+#: audacious/about.c:109
+msgid "Pauli Virtanen"
+msgstr ""
+
+#: audacious/about.c:111
+msgid "French:"
+msgstr "ფრანგული:"
+
+#: audacious/about.c:112
+msgid "David Le Brun"
+msgstr ""
+
+#: audacious/about.c:114
+msgid "German:"
+msgstr "გერმანული"
+
+#: audacious/about.c:115
+msgid "Matthias Debus"
+msgstr ""
+
+#: audacious/about.c:117
+#, fuzzy
+msgid "Georgian: "
+msgstr "გერმანული"
+
+#: audacious/about.c:118
+msgid "George Machitidze"
+msgstr ""
+
+#: audacious/about.c:120
+msgid "Greek:"
+msgstr "ბერძნული:"
+
+#: audacious/about.c:121
+msgid "Kouzinopoulos Haris"
+msgstr ""
+
+#: audacious/about.c:122
+msgid "Stavros Giannouris"
+msgstr ""
+
+#: audacious/about.c:124
+msgid "Hindi:"
+msgstr ""
+
+#: audacious/about.c:125
+msgid "Dhananjaya Sharma"
+msgstr ""
+
+#: audacious/about.c:127
+msgid "Hungarian:"
+msgstr "უნგრული:"
+
+#: audacious/about.c:128
+msgid "Laszlo Dvornik"
+msgstr ""
+
+#: audacious/about.c:130
+msgid "Italian:"
+msgstr "იტალიური:"
+
+#: audacious/about.c:131
+msgid "Alessio D'Ascanio"
+msgstr ""
+
+#: audacious/about.c:133
+msgid "Japanese:"
+msgstr "იაპონური:"
+
+#: audacious/about.c:134
+msgid "Takeshi Aihana"
+msgstr ""
+
+#: audacious/about.c:136
+msgid "Korean:"
+msgstr "კორეული:"
+
+#: audacious/about.c:137
+msgid "DongCheon Park"
+msgstr ""
+
+#: audacious/about.c:139
+msgid "Lithuanian:"
+msgstr "ლიტვური:"
+
+#: audacious/about.c:140
+msgid "Rimas Kudelis"
+msgstr ""
+
+#: audacious/about.c:142
+msgid "Macedonian:"
+msgstr "მაკედონიური:"
+
+#: audacious/about.c:143
+msgid "Arangel Angov"
+msgstr ""
+
+#: audacious/about.c:145
+msgid "Polish:"
+msgstr "პოლონური:"
+
+#: audacious/about.c:146
+msgid "Jacek Wolszczak"
+msgstr ""
+
+#: audacious/about.c:148
+msgid "Romanian:"
+msgstr "რუმინული:"
+
+#: audacious/about.c:151
+msgid "Russian:"
+msgstr "რუსული:"
+
+#: audacious/about.c:152
+msgid "Pavlo Bohmat"
+msgstr ""
+
+#: audacious/about.c:154
+msgid "Vitaly Lipatov"
+msgstr ""
+
+#: audacious/about.c:156
+msgid "Slovak:"
+msgstr "სლოვაკური:"
+
+#: audacious/about.c:157
+msgid "Pavel Kanzelsberger"
+msgstr ""
+
+#: audacious/about.c:159
+msgid "Spanish:"
+msgstr "ესპანური:"
+
+#: audacious/about.c:160
+msgid "Francisco Javier F. Serrador"
+msgstr ""
+
+#: audacious/about.c:162
+msgid "Swedish:"
+msgstr "შვედური:"
+
+#: audacious/about.c:163
+msgid "Martin Persenius"
+msgstr ""
+
+#: audacious/about.c:165
+#, fuzzy
+msgid "Ukrainian:"
+msgstr "რუმინული:"
+
+#: audacious/about.c:166
+msgid "Mykola Lynnyk"
+msgstr ""
+
+#: audacious/about.c:168
+msgid "Welsh:"
+msgstr "უელსური:"
+
+#: audacious/about.c:266
+msgid "About BMP"
+msgstr "BMP-ს შესახებ"
+
+#: audacious/about.c:311
+msgid "Credits"
+msgstr "მადლობები"
+
+#: audacious/about.c:315
+msgid "Translators"
+msgstr "მთარგმნელები"
+
+#: audacious/eq_slider.c:93
+msgid "PREAMP"
+msgstr "გაძლიერება"
+
+#: audacious/eq_slider.c:93
+msgid "60HZ"
+msgstr "60ჰც"
+
+#: audacious/eq_slider.c:93
+msgid "170HZ"
+msgstr "170ჰც"
+
+#: audacious/eq_slider.c:94
+msgid "310HZ"
+msgstr "310ჰც"
+
+#: audacious/eq_slider.c:94
+msgid "600HZ"
+msgstr "600ჰც"
+
+#: audacious/eq_slider.c:94
+msgid "1KHZ"
+msgstr "1კჰც"
+
+#: audacious/eq_slider.c:95
+msgid "3KHZ"
+msgstr "3კჰც"
+
+#: audacious/eq_slider.c:95
+msgid "6KHZ"
+msgstr "6კჰც"
+
+#: audacious/eq_slider.c:95
+msgid "12KHZ"
+msgstr "12კჰც"
+
+#: audacious/eq_slider.c:96
+msgid "14KHZ"
+msgstr "14კჰც"
+
+#: audacious/eq_slider.c:96
+msgid "16KHZ"
+msgstr "16კჰც"
+
+#: audacious/equalizer.c:127
+msgid "/Load"
+msgstr "/ჩატვირთვა"
+
+#: audacious/equalizer.c:128
+msgid "/Load/Preset"
+msgstr ""
+
+#: audacious/equalizer.c:130
+msgid "/Load/Auto-load preset"
+msgstr "/ჩატვირთვა/ავტომატური"
+
+#: audacious/equalizer.c:132
+msgid "/Load/Default"
+msgstr "/ჩატვირთვა/ნაგულისხმევი"
+
+#: audacious/equalizer.c:135
+msgid "/Load/Zero"
+msgstr "/ჩატვირთვა/ნული"
+
+#: audacious/equalizer.c:138
+msgid "/Load/From file"
+msgstr "/ჩატვირთვა/ფაილიდან"
+
+#: audacious/equalizer.c:140
+msgid "/Load/From WinAMP EQF file"
+msgstr "/ჩატვირთვა/WinAMP-ის EQF ფაილიდან"
+
+#: audacious/equalizer.c:142
+msgid "/Import"
+msgstr "/იმპორტი"
+
+#: audacious/equalizer.c:143
+msgid "/Import/WinAMP Presets"
+msgstr ""
+
+#: audacious/equalizer.c:145
+msgid "/Save"
+msgstr "/შენახვა"
+
+#: audacious/equalizer.c:146
+msgid "/Save/Preset"
+msgstr ""
+
+#: audacious/equalizer.c:148
+msgid "/Save/Auto-load preset"
+msgstr "/შენახვა/ავტომატური"
+
+#: audacious/equalizer.c:150
+msgid "/Save/Default"
+msgstr "/შენახვა/ნაგულისხმევი"
+
+#: audacious/equalizer.c:153
+msgid "/Save/To file"
+msgstr "/შენახვა/ფაილში"
+
+#: audacious/equalizer.c:155
+msgid "/Save/To WinAMP EQF file"
+msgstr "/შენახვა/WinAMP-ის EQF ფაილში"
+
+#: audacious/equalizer.c:157
+msgid "/Delete"
+msgstr "/წაშლა"
+
+#: audacious/equalizer.c:158
+msgid "/Delete/Preset"
+msgstr ""
+
+#: audacious/equalizer.c:160
+msgid "/Delete/Auto-load preset"
+msgstr ""
+
+#: audacious/equalizer.c:741
+msgid "BMP Equalizer"
+msgstr "BMP ეკვალაიზერი"
+
+#: audacious/equalizer.c:1366
+msgid "Preset"
+msgstr ""
+
+#: audacious/equalizer.c:1409
+msgid "Presets"
+msgstr ""
+
+#: audacious/equalizer.c:1468
+msgid "Load preset"
+msgstr ""
+
+#: audacious/equalizer.c:1482
+msgid "Load auto-preset"
+msgstr ""
+
+#: audacious/equalizer.c:1507 audacious/equalizer.c:1513 audacious/equalizer.c:1520
+msgid "Load equalizer preset"
+msgstr ""
+
+#: audacious/equalizer.c:1529
+msgid "Save preset"
+msgstr ""
+
+#: audacious/equalizer.c:1548
+msgid "Save auto-preset"
+msgstr ""
+
+#: audacious/equalizer.c:1581 audacious/equalizer.c:1600
+msgid "Save equalizer preset"
+msgstr ""
+
+#: audacious/equalizer.c:1609
+msgid "Delete preset"
+msgstr ""
+
+#: audacious/equalizer.c:1625
+msgid "Delete auto-preset"
+msgstr ""
+
+#: audacious/getopt.c:616
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr ""
+
+#: audacious/getopt.c:638
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr "%s: პარამეტრს `--%s' არ სჭირდება არგუმენტი\n"
+
+#: audacious/getopt.c:644
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr "%s: პარამეტრს `%c%s' არ სჭირდება არგუმენტი\n"
+
+#: audacious/getopt.c:661 audacious/getopt.c:819
+#, c-format
+msgid "%s: option `%s' requires an argument\n"
+msgstr "%s: პარამეტრი `%s' მოითხოვს არგუმენტს\n"
+
+#: audacious/getopt.c:687
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr "%s: ამოუცნობი პარამეტრი `--%s'\n"
+
+#: audacious/getopt.c:691
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr "%s: ამოუცნობი პარამეტრი `%c%s'\n"
+
+#: audacious/getopt.c:715
+#, c-format
+msgid "%s: illegal option -- %c\n"
+msgstr "%s: არასწორი პარამეტრი -- %c\n"
+
+#: audacious/getopt.c:718
+#, c-format
+msgid "%s: invalid option -- %c\n"
+msgstr "%s: მცდარი პარამეტრი -- %c\n"
+
+#: audacious/getopt.c:745 audacious/getopt.c:861
+#, c-format
+msgid "%s: option requires an argument -- %c\n"
+msgstr "%s: პარამეტრი მოითხოვს არგუმენტს -- %c\n"
+
+#: audacious/getopt.c:790
+#, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr "%s: პარამეტრი `-W %s' მიუღებელია\n"
+
+#: audacious/getopt.c:805
+#, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr "%s: პარამეტრი `-W %s' არ მოითხოვს არგუმენტს\n"
+
+#: audacious/input.c:299
+msgid ""
+"<b><big>Unable to play files.</big></b>\n"
+"\n"
+"The following files could not be played. Please check that:\n"
+"1. they are accessible.\n"
+"2. you have enabled the media plugins required."
+msgstr ""
+"<b><big>ფაილების დაკვრა შეუძლებელია.</big></b>\n"
+"\n"
+"შემდეგი ფაილების დაკვრა არ არის შესაძლებელი. გთხოვთო გაადამოწმოთ, რომ:\n"
+"1. ისინი ხელმისაწვდომია.\n"
+"2. საჭირო მედია პლაგინები ჩართულია."
+
+#: audacious/input.c:324
+msgid "Don't show this warning anymore"
+msgstr "აღარ აჩვენო ეს გაფრხილება"
+
+#: audacious/input.c:326
+msgid "Show more _details"
+msgstr "_დეტალურად ჩვენება"
+
+#: audacious/input.c:340 audacious/prefswin.c:98 audacious/prefswin.c:447 audacious/prefswin.c:535
+#: audacious/prefswin.c:624 audacious/prefswin.c:720
+msgid "Filename"
+msgstr "ფაილის სახელი"
+
+#: audacious/input.c:489
+#, c-format
+msgid "bmp: %s"
+msgstr "bmp: %s"
+
+#: audacious/input.c:505
+msgid "Filename:"
+msgstr "ფაილის სახელი:"
+
+#: audacious/input.c:523
+msgid "No input plugin recognized this file"
+msgstr "ამ ფაილისთვის საჭირო შემყვანი პლაგინი ამოუცნობია"
+
+#: audacious/input.c:525
+#, c-format
+msgid "Input plugin: %s"
+msgstr "შემყვანი პლაგინი: %s"
+
+#: audacious/logger.c:120
+#, c-format
+msgid "Unable to create log file (%s)!\n"
+msgstr "შეუძლებელია ჟურნალის ფაილის შექმნა (%s)!\n"
+
+#: audacious/main.c:77 audacious/main.c:79
+msgid "Beep Media Player"
+msgstr "Beep Media Player"
+
+#: audacious/main.c:371
+#, c-format
+msgid "Could not create directory (%s): %s"
+msgstr "(%s) დირექტორიის შექმნა შეუძლებელია : %s"
+
+#: audacious/main.c:625
+msgid ""
+"Usage: beep-media-player [options] [files] ...\n"
+"\n"
+"Options:\n"
+"--------\n"
+msgstr ""
+"გამოყენება: beep-media-player [პარამეტრები] [ფაილები] ...\n"
+"\n"
+"პარამეტრები:\n"
+"--------\n"
+
+#: audacious/main.c:630
+msgid "Display this text and exit"
+msgstr "ამ ტექსტის ჩვენება და გასვლა"
+
+#: audacious/main.c:633
+msgid "Select BMP/XMMS session (Default: 0)"
+msgstr "BMP/XMMS სესიის არჩევა (ნაგულისხმევი: 0)"
+
+#: audacious/main.c:636
+msgid "Skip backwards in playlist"
+msgstr "რეპერტუარში უკან გადასვლა"
+
+#: audacious/main.c:639
+msgid "Start playing current playlist"
+msgstr "მიმდინარე რეპერტუარის დაკვრა"
+
+#: audacious/main.c:642
+msgid "Pause current song"
+msgstr "მიმდინარე სიმღერის დაპაუზება"
+
+#: audacious/main.c:645
+msgid "Stop current song"
+msgstr "მიმდინარე სიმღერის გაჩერება"
+
+#: audacious/main.c:648
+msgid "Pause if playing, play otherwise"
+msgstr "დააპაუზება თუ უკრავს, თუ არა - დაკვრა"
+
+#: audacious/main.c:651
+msgid "Skip forward in playlist"
+msgstr "რეპერტუარში წინ გადახტომა"
+
+#: audacious/main.c:654
+msgid "Don't clear the playlist"
+msgstr "რეპერტუარის გაწმენდის გარეშე"
+
+#: audacious/main.c:657
+msgid "Show the main window"
+msgstr "ძირითადი ფანჯრის ჩვენება"
+
+#: audacious/main.c:660
+msgid "Activate BMP"
+msgstr "BMP-ის აქტივაცია"
+
+#: audacious/main.c:663
+msgid "Previous session ID"
+msgstr "წინა სესიის ID"
+
+#: audacious/main.c:666
+msgid "Print version number and exit\n"
+msgstr "ვერსიის ნომრის დაბეჭდვა და გამოსვლა\n"
+
+#: audacious/main.c:841
+msgid ""
+"\n"
+"Received SIGSEGV\n"
+"\n"
+"This could be a bug in BMP. If you don't know why this happened, send a mail "
+"to us at beepmp-devel@lists.sourceforge.net\n"
+"\n"
+msgstr ""
+"\n"
+"მიღებულია SIGSEGV\n"
+"\n"
+"ეს შეიძლება იყოს BMP-ში არსებული შეცდომის ბრალი. თუ თქვენ არ იცით, თუ რის "
+"გამო მოხდა ეს, გამოგვიზავნეთ წერილი მისამართზე beepmp-devel@lists."
+"sourceforge.net\n"
+"\n"
+
+#: audacious/main.c:864
+#, c-format
+msgid ""
+"<b><big>Unable to load skin.</big></b>\n"
+"\n"
+"Check that skin at '%s' is usable and default skin is properly installed at "
+"'%s'\n"
+msgstr ""
+"<b><big>გარსის გახსნა შეუძლებელია.</big></b>\n"
+"\n"
+"გადაამოწმეთ, რომ გარსი '%s'-თან თავსებადია და ნაგულისხმევი გარსი სწორად არის "
+"დაყენებული '%s'-სთან\n"
+
+#: audacious/main.c:899
+#, c-format
+msgid ""
+"Sorry, your GTK+ version (%d.%d.%d) does not work with BMP.\n"
+"Please use GTK+ %s or newer.\n"
+msgstr ""
+"თქვენი GTK+-ის ვერსია (%d.%d.%d) არ მუშაობს BMP-თან.\n"
+"გთხოვთ გამოიყენოთ GTK+ %s ან უფრო ახალი.\n"
+
+#: audacious/main.c:910
+msgid ""
+"Sorry, threads isn't supported on your platform.\n"
+"\n"
+"If you're on a libc5 based linux system and installed Glib & GTK+ before "
+"you\n"
+"installed LinuxThreads you need to recompile Glib & GTK+.\n"
+msgstr ""
+
+#: audacious/main.c:923
+msgid "BMP: Unable to open display, exiting."
+msgstr "BMP: შეუძლებელია ეკრანის გახსნა, გამოვდივარ."
+
+#: audacious/mainwin.c:235 audacious/mainwin.c:361 audacious/playlistwin.c:125
+msgid "/View Track Details"
+msgstr "/ჩანაწერის დეტალები"
+
+#: audacious/mainwin.c:238
+msgid "/Autoscroll Songname"
+msgstr "/სიმღერის სახელის თვითგადახვევა"
+
+#: audacious/mainwin.c:248
+msgid "/Visualization Mode"
+msgstr "/ვიზუალიზაციის რეჟიმი"
+
+#: audacious/mainwin.c:249
+msgid "/Visualization Mode/Analyzer"
+msgstr "/ვიზუალიზაციის რეჟიმი/ანალიზატორი"
+
+#: audacious/mainwin.c:251
+msgid "/Visualization Mode/Scope"
+msgstr "/ვუზუალიზაციის რეჟიმი/ოსცილოგრაფი"
+
+#: audacious/mainwin.c:253
+msgid "/Visualization Mode/Off"
+msgstr "/ვიზუალიზაციის რეჟიმი/გათიშული"
+
+#: audacious/mainwin.c:255
+msgid "/Analyzer Mode"
+msgstr "/ანალიზატორის რეჟიმი"
+
+#: audacious/mainwin.c:256
+msgid "/Analyzer Mode/Normal"
+msgstr "/ანალიზატორის რეჟიმი/ნორმალური"
+
+#: audacious/mainwin.c:258
+msgid "/Analyzer Mode/Fire"
+msgstr "/ანალიზატორის რეჟიმი/ცეცლი"
+
+#: audacious/mainwin.c:260
+msgid "/Analyzer Mode/Vertical Lines"
+msgstr "/ანალიზატორის რეჟიმი/ვერტილაკური ხაზები"
+
+#: audacious/mainwin.c:263
+msgid "/Analyzer Mode/Lines"
+msgstr "/ანალიზატორის რეჟიმი/ზოლები"
+
+#: audacious/mainwin.c:265
+msgid "/Analyzer Mode/Bars"
+msgstr "/ანალიზატორის რეჟიმი/სვეტები"
+
+#: audacious/mainwin.c:268
+msgid "/Analyzer Mode/Peaks"
+msgstr "/ანალიზატორის რეჟიმი/პიკები"
+
+#: audacious/mainwin.c:270
+msgid "/Scope Mode"
+msgstr "/ოსცილოგრაფის რეჟიმი"
+
+#: audacious/mainwin.c:271
+msgid "/Scope Mode/Dot Scope"
+msgstr "/ოსცილოგრაფის რეჟიმი/წერტილოვანი"
+
+#: audacious/mainwin.c:273
+msgid "/Scope Mode/Line Scope"
+msgstr "/ოსცილოგრაფის რეჟიმი/ზოლები"
+
+#: audacious/mainwin.c:275
+msgid "/Scope Mode/Solid Scope"
+msgstr "/ოსცილოგრაფის რეჟიმი/შევსებული"
+
+#: audacious/mainwin.c:277
+msgid "/WindowShade VU Mode"
+msgstr ""
+
+#: audacious/mainwin.c:278
+msgid "/WindowShade VU Mode/Normal"
+msgstr ""
+
+#: audacious/mainwin.c:280
+msgid "/WindowShade VU Mode/Smooth"
+msgstr ""
+
+#: audacious/mainwin.c:282
+msgid "/Refresh Rate"
+msgstr "/განახლების სიხშირე"
+
+#: audacious/mainwin.c:283
+msgid "/Refresh Rate/Full (~50 fps)"
+msgstr "/განახლების სიხშირე/სრული (~50 კადრი/წმ)"
+
+#: audacious/mainwin.c:285
+msgid "/Refresh Rate/Half (~25 fps)"
+msgstr "/განახლების სიხშირე/ნახევარი (~25 კადრი/წმ)"
+
+#: audacious/mainwin.c:287
+msgid "/Refresh Rate/Quarter (~13 fps)"
+msgstr "/განახლების სიხშირე/მეოთხედი (~13 კადრი/წმ)"
+
+#: audacious/mainwin.c:289
+msgid "/Refresh Rate/Eighth (~6 fps)"
+msgstr "/განახლების სიხშირე/მერვედი (~6 კადრი/წმ)"
+
+#: audacious/mainwin.c:291
+msgid "/Analyzer Falloff"
+msgstr "/ანალიზატორის ვარდნა"
+
+#: audacious/mainwin.c:292
+msgid "/Analyzer Falloff/Slowest"
+msgstr "/ანალიზატორის ვარდნა/ძალიან ნელი"
+
+#: audacious/mainwin.c:294
+msgid "/Analyzer Falloff/Slow"
+msgstr "/ანალიზატორის ვარდნა/ნელი"
+
+#: audacious/mainwin.c:296
+msgid "/Analyzer Falloff/Medium"
+msgstr "/ანალიზატორის ვარდნა/საშუალო"
+
+#: audacious/mainwin.c:298
+msgid "/Analyzer Falloff/Fast"
+msgstr "/ანალიზატორის ცარდნა/სწრაფი"
+
+#: audacious/mainwin.c:300
+msgid "/Analyzer Falloff/Fastest"
+msgstr "/ანალიზატორის ვარდნა/ძალიან სწრაფი"
+
+#: audacious/mainwin.c:302
+msgid "/Peaks Falloff"
+msgstr "/პიკების ვარდნა"
+
+#: audacious/mainwin.c:303
+msgid "/Peaks Falloff/Slowest"
+msgstr "/პიკების ვარდნა/ძალიან ნელი"
+
+#: audacious/mainwin.c:305
+msgid "/Peaks Falloff/Slow"
+msgstr "/პიკების ვარდნა/ნელი"
+
+#: audacious/mainwin.c:307
+msgid "/Peaks Falloff/Medium"
+msgstr "/პიკების ვარდნა/საშუალო"
+
+#: audacious/mainwin.c:309
+msgid "/Peaks Falloff/Fast"
+msgstr "/პიკების ვარდნა/სწრაფი"
+
+#: audacious/mainwin.c:311
+msgid "/Peaks Falloff/Fastest"
+msgstr "/პიკების ვარდნა/ძალიან სწრაფი"
+
+#: audacious/mainwin.c:326
+msgid "/Repeat"
+msgstr "/გამეორება"
+
+#: audacious/mainwin.c:328
+msgid "/Shuffle"
+msgstr "/არეულად"
+
+#: audacious/mainwin.c:335
+msgid "/Play"
+msgstr "/დაკვრა"
+
+#: audacious/mainwin.c:337
+msgid "/Pause"
+msgstr "/პაუზა"
+
+#: audacious/mainwin.c:339
+msgid "/Stop"
+msgstr "/გაჩერება"
+
+#: audacious/mainwin.c:341
+msgid "/Previous"
+msgstr "/წინა"
+
+#: audacious/mainwin.c:343
+msgid "/Next"
+msgstr "/შემდეგი"
+
+#: audacious/mainwin.c:346
+msgid "/Jump to Playlist Start"
+msgstr "/რეპერტუარის დასაწისში გადასვლა"
+
+#: audacious/mainwin.c:349
+msgid "/Jump to File"
+msgstr "/ფაილზე გადასვლა"
+
+#: audacious/mainwin.c:351
+msgid "/Jump to Time"
+msgstr "/დროზე გადასვლა"
+
+#: audacious/mainwin.c:364
+msgid "/Preferences"
+msgstr "/თვისებები"
+
+#: audacious/mainwin.c:366
+msgid "/_View"
+msgstr "/_ხედი"
+
+#: audacious/mainwin.c:368
+msgid "/About BMP"
+msgstr "/BMP-ს შესახებ"
+
+#: audacious/mainwin.c:370
+msgid "/_Quit"
+msgstr "/_გასვლა"
+
+#: audacious/mainwin.c:380
+msgid "/Files..."
+msgstr "/ფაილები..."
+
+#: audacious/mainwin.c:387
+msgid "/Internet location..."
+msgstr "/ინტერნეტ-მდებარეობა..."
+
+#: audacious/mainwin.c:401
+msgid "/Show Playlist Editor"
+msgstr "/რეპერტუარის ჩვენება"
+
+#: audacious/mainwin.c:403
+msgid "/Show Equalizer"
+msgstr "/ეკვალაიზერის ჩენება"
+
+#: audacious/mainwin.c:406
+msgid "/Time Elapsed"
+msgstr "/გასული დრო"
+
+#: audacious/mainwin.c:408
+msgid "/Time Remaining"
+msgstr "/დარჩენილი დრო"
+
+#: audacious/mainwin.c:411
+msgid "/Always On Top"
+msgstr "/ყოველთვის ზემოდან"
+
+#: audacious/mainwin.c:413
+msgid "/Put on All Workspaces"
+msgstr "/ყველა სამუშაო მაგიდაზე ჩვენება"
+
+#: audacious/mainwin.c:416
+msgid "/Roll up Player"
+msgstr "/დამკვრელის აკეცვა"
+
+#: audacious/mainwin.c:418
+msgid "/Roll up Playlist Editor"
+msgstr "/რეპერტუარის აკეცვა"
+
+#: audacious/mainwin.c:420
+msgid "/Roll up Equalizer"
+msgstr "/ეკვალაიზერის აკეცვა"
+
+#: audacious/mainwin.c:782 audacious/mainwin.c:3098
+msgid "BMP"
+msgstr "BMP"
+
+#: audacious/mainwin.c:820
+msgid "VBR"
+msgstr "VBR"
+
+#: audacious/mainwin.c:1246
+msgid "Jump to Time"
+msgstr "დროზე გადასვლა"
+
+#: audacious/mainwin.c:1267
+msgid "minutes:seconds"
+msgstr "წუთები:წამები"
+
+#: audacious/mainwin.c:1277
+msgid "Track length:"
+msgstr "ჩანაწერის სიგრძე:"
+
+#: audacious/mainwin.c:1364
+#, fuzzy
+msgid "Un_queue"
+msgstr "რიგში ჩაყენება"
+
+#: audacious/mainwin.c:1366 audacious/mainwin.c:1688
+#, fuzzy
+msgid "_Queue"
+msgstr "რიგში ჩაყენება"
+
+#: audacious/mainwin.c:1618
+msgid "Jump to Track"
+msgstr "ჩანაწერზე გადასვლა"
+
+#: audacious/mainwin.c:1657
+msgid "Filter: "
+msgstr "ფილტრი: "
+
+#: audacious/mainwin.c:1884
+msgid "Add Folders"
+msgstr "საქაღალდეების დამატება"
+
+#: audacious/mainwin.c:1935
+msgid "Add Internet Address"
+msgstr "ინტერნეტ-მისამართის დამატება"
+
+#: audacious/mainwin.c:2063
+#, c-format
+msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
+msgstr "გადასვლა: %d:%-2.2d/%d:%-2.2d (%d%%)"
+
+#: audacious/mainwin.c:2095 audacious/mainwin.c:2769
+#, c-format
+msgid "VOLUME: %d%%"
+msgstr "ხმა: %d%%"
+
+#: audacious/mainwin.c:2126 audacious/mainwin.c:2772
+#, c-format
+msgid "BALANCE: %d%% LEFT"
+msgstr "ბალანსი: %d%% მარცხნივ"
+
+#: audacious/mainwin.c:2130 audacious/mainwin.c:2775
+msgid "BALANCE: CENTER"
+msgstr "ბალანსი: ცენტრი"
+
+#: audacious/mainwin.c:2134 audacious/mainwin.c:2777
+#, c-format
+msgid "BALANCE: %d%% RIGHT"
+msgstr "ბალანსი: %d%% მარჯვნივ"
+
+#: audacious/mainwin.c:2544
+msgid "OPTIONS MENU"
+msgstr "პარამეტრების მენიუ"
+
+#: audacious/mainwin.c:2549
+msgid "DISABLE ALWAYS ON TOP (N/A)"
+msgstr ""
+
+#: audacious/mainwin.c:2551
+msgid "ENABLE ALWAYS ON TOP (N/A)"
+msgstr ""
+
+#: audacious/mainwin.c:2554
+msgid "DISABLE ALWAYS ON TOP"
+msgstr ""
+
+#: audacious/mainwin.c:2556
+msgid "ENABLE ALWAYS ON TOP"
+msgstr ""
+
+#: audacious/mainwin.c:2559
+msgid "FILE INFO BOX"
+msgstr "ფაილის საინფორმაციო ფანჯარა"
+
+#: audacious/mainwin.c:2562
+msgid "** DOUBLESIZE HAS BEEN REMOVED **"
+msgstr ""
+
+#: audacious/mainwin.c:2565
+msgid "VISUALIZATION MENU"
+msgstr "ვიზუალიზაციის მენიუ"
+
+#: audacious/mainwin.c:2610
+msgid ""
+"<b><big>No playable CD found.</big></b>\n"
+"\n"
+"No CD inserted, or inserted CD is not an audio CD.\n"
+msgstr ""
+"<b><big>დასაკრავი CD ნაპოვნი არ არის.</big></b>\n"
+"\n"
+"CD ჩადებული არ არის, ან ჩადებული CD არ არის აუდიო CD.\n"
+
+#: audacious/mainwin.c:2627
+msgid ""
+"<b><big>Couldn't open audio.</big></b>\n"
+"\n"
+"Please check that:\n"
+"1. You have the correct output plugin selected.\n"
+"2. No other programs is blocking the soundcard.\n"
+"3. Your soundcard is configured properly.\n"
+msgstr ""
+
+#: audacious/playlistwin.c:131 audacious/playlistwin.c:192
+msgid "/Remove Selected"
+msgstr "/მონიშნული ფაილების ამოღება"
+
+#: audacious/playlistwin.c:135 audacious/playlistwin.c:188
+msgid "/Remove Unselected"
+msgstr "/მოუნიშნავი ფაილების დალაგება"
+
+#: audacious/playlistwin.c:139 audacious/playlistwin.c:184
+msgid "/Remove All"
+msgstr "/ყველა ფაილის ამოღება"
+
+#: audacious/playlistwin.c:145
+msgid "/Queue Toggle"
+msgstr "/რიგში ჩაყენება"
+
+#: audacious/playlistwin.c:151
+msgid "/Add CD..."
+msgstr "/CD-ის დამატება..."
+
+#: audacious/playlistwin.c:155
+msgid "/Add Internet Address..."
+msgstr "/ინტერნეტ-მისამართის დამატება..."
+
+#: audacious/playlistwin.c:161
+#, fuzzy
+msgid "/Add Folders..."
+msgstr "/ფაილების დამატება..."
+
+#: audacious/playlistwin.c:166
+msgid "/Add Files..."
+msgstr "/ფაილების დამატება..."
+
+#: audacious/playlistwin.c:172
+msgid "/Clear Queue"
+msgstr "/რიგის გაწმენდა"
+
+#: audacious/playlistwin.c:178
+msgid "/Remove Unavailable Files"
+msgstr "/მოუწვდომელი ფაილების ამოღება"
+
+#: audacious/playlistwin.c:198
+msgid "/New List"
+msgstr "/ახალი სია"
+
+#: audacious/playlistwin.c:204
+msgid "/Load List"
+msgstr "/სიის ჩატვირთვა"
+
+#: audacious/playlistwin.c:208
+msgid "/Save List"
+msgstr "/სიის შენახვა"
+
+#: audacious/playlistwin.c:214
+msgid "/Update View"
+msgstr "/ხედის განახლება"
+
+#: audacious/playlistwin.c:220
+msgid "/Invert Selection"
+msgstr "/არჩეულის ინვერსია"
+
+#: audacious/playlistwin.c:226
+msgid "/Select None"
+msgstr "/მონიშვნის მოხსნა"
+
+#: audacious/playlistwin.c:230
+msgid "/Select All"
+msgstr "/ყველას მონიშვნა"
+
+#: audacious/playlistwin.c:236
+msgid "/Randomize List"
+msgstr "/სიის არევა"
+
+#: audacious/playlistwin.c:238
+msgid "/Reverse List"
+msgstr "/სიის რევერსირება"
+
+#: audacious/playlistwin.c:241
+msgid "/Sort List"
+msgstr "/სიის დალაგება"
+
+#: audacious/playlistwin.c:242
+msgid "/Sort List/By Title"
+msgstr "/სიის დალაგება/სათაურის მიხედვით"
+
+#: audacious/playlistwin.c:244
+msgid "/Sort List/By Filename"
+msgstr "/სიის დალაგება/ფაილის სახელის მიხედვით"
+
+#: audacious/playlistwin.c:246
+msgid "/Sort List/By Path + Filename"
+msgstr "/სიის დალაგება/ადგილმდებარების და სახელის მიხედვით"
+
+#: audacious/playlistwin.c:248
+msgid "/Sort List/By Date"
+msgstr "/სიის დალაგება/თარიღის მიხედვით"
+
+#: audacious/playlistwin.c:250
+msgid "/Sort Selection"
+msgstr "/მონიშნულის დალაგება"
+
+#: audacious/playlistwin.c:251
+msgid "/Sort Selection/By Title"
+msgstr "/მონიშნულის დალაგება/სათაურის მიხედვით"
+
+#: audacious/playlistwin.c:253
+msgid "/Sort Selection/By Filename"
+msgstr "/მონიშნულის დალაგება/ფაილის სახელის მიხედვით"
+
+#: audacious/playlistwin.c:255
+msgid "/Sort Selection/By Path + Filename"
+msgstr "/მონიშნულის დალაგება/ადგილმდებარეობის და სახელის მიხედვით"
+
+#: audacious/playlistwin.c:257
+msgid "/Sort Selection/By Date"
+msgstr "/მონიშნულის დალაგება/თარიღის მიხედვით"
+
+#: audacious/playlistwin.c:783
+#, c-format
+msgid "Error writing playlist \"%s\": %s"
+msgstr "შეცდომა \"%s\" რეპერტუარის შენახვისას: %s"
+
+#: audacious/playlistwin.c:804
+#, c-format
+msgid "%s already exist. Continue?"
+msgstr "%s უკვე არსებობს. გავაგრძელო?"
+
+#: audacious/playlistwin.c:818
+#, fuzzy, c-format
+msgid ""
+"<b><big>Unable to save playlist.</big></b>\n"
+"\n"
+"Unknown file type for '%s'.\n"
+msgstr "რეპერტუარის შენახვა შეუძლებელია! ფაილის ტიპი %s უცნობია"
+
+#: audacious/playlistwin.c:928
+#, fuzzy
+msgid "Load Playlist"
+msgstr "რეპერტუარის ჩატვირთვა"
+
+#: audacious/playlistwin.c:940
+#, fuzzy
+msgid "Save Playlist"
+msgstr "რეპერტუარის შენახვა"
+
+#: audacious/playlistwin.c:1675
+msgid "BMP Playlist Editor"
+msgstr "BMP რეპერტუარი"
+
+#: audacious/prefswin.c:83 audacious/glade/prefswin.glade:1379
+msgid "Appearance"
+msgstr "იერსახე"
+
+#: audacious/prefswin.c:84 audacious/glade/prefswin.glade:2783
+msgid "Equalizer"
+msgstr "ეკვალაიზერი"
+
+#: audacious/prefswin.c:85 audacious/glade/prefswin.glade:1669
+msgid "Mouse"
+msgstr "თაგუნა"
+
+#: audacious/prefswin.c:86 audacious/glade/prefswin.glade:2403
+msgid "Playlist"
+msgstr "რეპერტუარი"
+
+#: audacious/prefswin.c:87 audacious/glade/prefswin.glade:869
+msgid "Plugins"
+msgstr "პლაგინები"
+
+#: audacious/prefswin.c:93
+msgid "Artist"
+msgstr "შემსრულებელი"
+
+#: audacious/prefswin.c:96
+msgid "Tracknumber"
+msgstr "ჩანაწერის ნომერი"
+
+#: audacious/prefswin.c:99
+msgid "Filepath"
+msgstr "ფაილის გეზი"
+
+#: audacious/prefswin.c:417 audacious/prefswin.c:504 audacious/prefswin.c:593
+#: audacious/prefswin.c:689
+msgid "Enabled"
+msgstr "ჩართვა"
+
+#: audacious/prefswin.c:433 audacious/prefswin.c:520 audacious/prefswin.c:609
+#: audacious/prefswin.c:705
+msgid "Description"
+msgstr "განმარტება"
+
+#: audacious/prefswin.c:1462
+msgid "Category"
+msgstr "კატეგორია"
+
+#: audacious/prefswin.c:1630
+msgid "Preferences Window"
+msgstr "თვისებების ფანჯარა"
+
+#: audacious/util.c:882
+msgid "Add/Open Files dialog"
+msgstr "ფაილების დამატების/გახსნის დიალოგი"
+
+#: audacious/util.c:940
+msgid "Open Files"
+msgstr "ფაილების გახსნა"
+
+#: audacious/util.c:944
+msgid "Close dialog on Open"
+msgstr "გახსნის შემდეგ დიალოგის დაკეტვა"
+
+#: audacious/util.c:956 audacious/glade/addfiles.glade:8
+msgid "Add Files"
+msgstr "ფაილების დამატება"
+
+#: audacious/util.c:960
+msgid "Close dialog on Add"
+msgstr "დამატების შემდეგ დიალოგის დაკეტვა"
+
+#: audacious/util.c:1176
+msgid "  (invalid UTF-8)"
+msgstr "  (არასწორი UTF-8)"
+
+#: audacious/glade/prefswin.glade:8
+msgid "BMP Preferences"
+msgstr "BMP-ის თვისებები"
+
+#: audacious/glade/prefswin.glade:85
+msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
+msgstr "<span size=\"xx-large\"><b>პლაგინები</b></span>"
+
+#: audacious/glade/prefswin.glade:147
+msgid "_Media plugin list:"
+msgstr "_მედიაპლაგინების სია:"
+
+#: audacious/glade/prefswin.glade:244
+msgid "<span size=\"medium\"><b>Media</b></span>"
+msgstr "<span size=\"medium\"><b>მედია</b></span>"
+
+#: audacious/glade/prefswin.glade:282
+msgid "_General plugin list:"
+msgstr "_ძირითადი პლაგინების სია:"
+
+#: audacious/glade/prefswin.glade:379
+msgid "<span size=\"medium\"><b>General</b></span>"
+msgstr "<span size=\"medium\"><b>ძირითადი</b></span>"
+
+#: audacious/glade/prefswin.glade:417
+msgid "_Visualization plugin list:"
+msgstr "_ვიზუალიზაციის პლაგინების სია:"
+
+#: audacious/glade/prefswin.glade:514
+msgid "<b>Visualization</b>"
+msgstr "<b>ვიზუალიზაცია</b>"
+
+#: audacious/glade/prefswin.glade:552
+msgid "_Effect plugin list:"
+msgstr "_ეფექტების პლაგინების სია:"
+
+#: audacious/glade/prefswin.glade:649
+msgid "<b>Effects</b>"
+msgstr "<b>ეფექტები</b>"
+
+#: audacious/glade/prefswin.glade:693
+msgid "_Current output plugin:"
+msgstr "_მიმდინარე გამომყვანი პლაგინი:"
+
+#: audacious/glade/prefswin.glade:753
+msgid ""
+"The change is now effective in BMP's configuration database, but won't take "
+"effect for playback until the next song!\n"
+"\n"
+"Optionally, you can stop and restart playback for the change to take effect."
+msgstr ""
+
+#: audacious/glade/prefswin.glade:835
+msgid "<span size=\"medium\"><b>Output</b></span>"
+msgstr "<span size=\"medium\"><b>გამომყვანი</b></span>"
+
+#: audacious/glade/prefswin.glade:894
+msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
+msgstr "<span size=\"xx-large\"><b>იერსახე</b></span>"
+
+#: audacious/glade/prefswin.glade:951
+msgid "<b>_Skin</b>"
+msgstr "<b>_გარსი</b>"
+
+#: audacious/glade/prefswin.glade:1039
+msgid "<b>_Fonts</b>"
+msgstr "<b>_შრიფტები</b>"
+
+#: audacious/glade/prefswin.glade:1092
+msgid "_Player:"
+msgstr "_დამკვრელი:"
+
+#: audacious/glade/prefswin.glade:1131
+msgid "_Playlist:"
+msgstr "_რეპერტუარი:"
+
+#: audacious/glade/prefswin.glade:1159
+msgid "Select main player window font:"
+msgstr "დამკვრელის მთავარი ფანჯრის შრიფტი:"
+
+#: audacious/glade/prefswin.glade:1181
+msgid "Select playlist font:"
+msgstr "რეპერტუარის შრიფტი"
+
+#: audacious/glade/prefswin.glade:1233
+msgid "<b>_Miscellaneous</b>"
+msgstr "<b>_სხვადასხვა</b>"
+
+#: audacious/glade/prefswin.glade:1285
+msgid "Show track numbers in playlist"
+msgstr "რეპერტუარში ჩანაწერების ნომრების ჩვენება"
+
+#: audacious/glade/prefswin.glade:1335
+msgid "Use custom cursors"
+msgstr "სხვა კურსორების გამოყენება"
+
+#: audacious/glade/prefswin.glade:1404
+msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
+msgstr "<span size=\"xx-large\"><b>თაგუნა</b></span>"
+
+#: audacious/glade/prefswin.glade:1455
+msgid "<b>Mouse wheel</b>"
+msgstr "<b>თაგუნას ბზრიალა</b>"
+
+#: audacious/glade/prefswin.glade:1499
+#, fuzzy
+msgid "Changes volume by"
+msgstr "ბზრიალა ცვლის ხმას"
+
+#: audacious/glade/prefswin.glade:1523
+msgid "percent"
+msgstr "პროცენტი"
+
+#: audacious/glade/prefswin.glade:1547
+#, fuzzy
+msgid "Scrolls playlist by"
+msgstr "ბზრიალა აბრუნებს რეპერტუარს"
+
+#: audacious/glade/prefswin.glade:1596
+msgid "lines"
+msgstr "სტრიქონი"
+
+#: audacious/glade/prefswin.glade:1694
+msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
+msgstr "<span size=\"xx-large\"><b>რეპერტუარი</b></span>"
+
+#: audacious/glade/prefswin.glade:1751
+msgid "<b>Filename</b>"
+msgstr "<b>ფაილის სახელი</b>"
+
+#: audacious/glade/prefswin.glade:1789
+msgid "Convert underscores to blanks"
+msgstr "_-ის გარდაქმნა ცარიელ სიმბოლოდ"
+
+#: audacious/glade/prefswin.glade:1824
+msgid "Convert %20 to blanks"
+msgstr "%20-ის გარდაქმნა ცარიელ სიმბოლოდ"
+
+#: audacious/glade/prefswin.glade:1864
+msgid "<b>Metadata</b>"
+msgstr "<b>მეტამონაცემები</b>"
+
+#: audacious/glade/prefswin.glade:1901
+msgid "Load metadata (tag information) from music files."
+msgstr "მეტა-მონაცემების (ტეგების) ჩატვირთვა მუსიკალური ფაილებიდან."
+
+#: audacious/glade/prefswin.glade:1903
+msgid "Load metadata from playlists and files"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:1941
+msgid "Load metadata when adding the file to the playlist or opening it"
+msgstr "მეტამონაცემების ჩატვირთვა ფაილის გახსნისას ან რეპერტუარში ცამატებისას"
+
+#: audacious/glade/prefswin.glade:1943
+msgid "On load"
+msgstr "ჩატვირთვისას"
+
+#: audacious/glade/prefswin.glade:1963
+msgid "Load metadata on demand when displaying the file in the playlist"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:1965
+msgid "On display"
+msgstr "ჩვენებისას"
+
+#: audacious/glade/prefswin.glade:2013
+msgid "<b>Playback</b>"
+msgstr "<b>დაკვრა</b>"
+
+#: audacious/glade/prefswin.glade:2050
+msgid "When finished playing a song, don't automatically advance to the next."
+msgstr "სიმღერის დამთავრებისას შემდეგზე ავტომატური გადასვლის მოხსნა."
+
+#: audacious/glade/prefswin.glade:2052
+msgid "Don't advance in the playlist"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:2087
+msgid "Pause between songs"
+msgstr "პაუზა სიმღერებს შორის"
+
+#: audacious/glade/prefswin.glade:2125
+msgid "Pause for"
+msgstr "პაუზა"
+
+#: audacious/glade/prefswin.glade:2167
+msgid "seconds"
+msgstr "წამი"
+
+#: audacious/glade/prefswin.glade:2215
+msgid "<b>Song display</b>"
+msgstr "<b>სიმღერის სახელის ჩვენება</b>"
+
+#: audacious/glade/prefswin.glade:2285
+msgid "Custom string:"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:2315 audacious/glade/prefswin.glade:2547
+#: audacious/glade/prefswin.glade:2570
+msgid "*"
+msgstr "*"
+
+#: audacious/glade/prefswin.glade:2332
+msgid ""
+"TITLE\n"
+"ARTIST - TITLE\n"
+"ARTIST - ALBUM - TITLE\n"
+"ALBUM - TITLE\n"
+"Custom"
+msgstr ""
+"სათაური\n"
+"შემსრულებელი - სათაური\n"
+"შემსრულებელი - ალბომი - სათაური\n"
+"ალბომი - სათაური\n"
+"სხვა"
+
+#: audacious/glade/prefswin.glade:2350
+msgid "Show information about titlestring format"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:2428
+msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
+msgstr "<span size=\"xx-large\"><b>ეკვალაიზერი</b></span>"
+
+#: audacious/glade/prefswin.glade:2479
+msgid "<b>Presets</b>"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:2587
+msgid "Directory preset file:"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:2611
+msgid "File preset extension:"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:2655
+msgid "Available _Presets:"
+msgstr ""
+
+#: audacious/glade/addfiles.glade:77
+msgid "Close Dialog on Add"
+msgstr "დამატების შემდეგ დიალოგის დაკეტვა"
+
+#: audacious/glade/addfiles.glade:105
+msgid "Select All"
+msgstr "ყველას მონიშვნა"
+
+#: audacious/glade/addfiles.glade:116
+msgid "Deselect All"
+msgstr "მონიშვნის მოხსნა"
+
+#~ msgid "Default skin:"
+#~ msgstr "ნაგულისხმევი გარსი:"
+
+#~ msgid "Could not initialize gnome-vfs.\n"
+#~ msgstr "შეუძლებელია gnome-vfs-ის ინიციალიზაცია.\n"
+
+#~ msgid "/By extension"
+#~ msgstr "/გაფართოების მიხედვით"
