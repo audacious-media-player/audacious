@@ -199,7 +199,7 @@ add_plugin(const gchar * filename)
         return;
 
     if (!(module = g_module_open(filename, 0))) {
-        g_warning("Failed to load plugin (%s): %s", 
+        printf("Failed to load plugin (%s): %s\n", 
                   filename, g_module_error());
         return;
     }
@@ -213,12 +213,12 @@ add_plugin(const gchar * filename)
             plugin->filename = g_strdup(filename);
             type->init(PLUGIN_GET_INFO(func));
 
-            g_message("Loaded %s plugin (%s)", type->name, filename);
+            printf("Loaded %s plugin (%s)\n", type->name, filename);
             return;
         }
     }
 
-    g_warning("Invalid plugin (%s)", filename);
+    printf("Invalid plugin (%s)\n", filename);
     g_module_close(module);
 }
 
