@@ -274,7 +274,7 @@ MP4Atom* MP4Atom::ReadAtom(MP4File* pFile, MP4Atom* pParentAtom)
 	u_int64_t pos = pFile->GetPosition();
 
 	VERBOSE_READ(pFile->GetVerbosity(), 
-		printf("ReadAtom: pos = 0x"LLX"\n", pos));
+		printf("ReadAtom: pos = 0x%llx\n", pos));
 
 	u_int64_t dataSize = pFile->ReadUInt32();
 
@@ -302,7 +302,7 @@ MP4Atom* MP4Atom::ReadAtom(MP4File* pFile, MP4Atom* pParentAtom)
 	dataSize -= hdrSize;
 
 	VERBOSE_READ(pFile->GetVerbosity(), 
-		printf("ReadAtom: type = %s data-size = "LLU" (0x"LLX")\n", 
+		printf("ReadAtom: type = %s data-size = %llu (0x%llx)\n", 
 			type, dataSize, dataSize));
 
 	if (pos + hdrSize + dataSize > pParentAtom->GetEnd()) {
@@ -517,7 +517,7 @@ void MP4Atom::ReadProperties(u_int32_t startIndex, u_int32_t count)
 
 		if (m_pFile->GetPosition() > m_end) {
 			VERBOSE_READ(GetVerbosity(), 
-				printf("ReadProperties: insufficient data for property: %s pos 0x"LLX" atom end 0x"LLX"\n",
+				printf("ReadProperties: insufficient data for property: %s pos 0x%llx atom end 0x%llx\n",
 					m_pProperties[i]->GetName(), 
 					m_pFile->GetPosition(), m_end)); 
 
