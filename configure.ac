@@ -29,6 +29,7 @@ AM_GNU_GETTEXT_VERSION([0.12.1])
 dnl Check for C compiler
 
 AC_LANG([C])
+AC_LANG([C++])
 AC_ISC_POSIX
 AC_C_BIGENDIAN
 
@@ -49,8 +50,6 @@ dnl FIXME: find a way to allow building static libbeep,
 dnl without building static plugins
 
 dnl Next four lines is a hack to prevent libtool checking for C++/F77
-m4_undefine([AC_PROG_CXX])
-m4_defun([AC_PROG_CXX],[])
 m4_undefine([AC_PROG_F77])
 m4_defun([AC_PROG_F77],[])
 
@@ -328,6 +327,15 @@ fi
 
 AM_CONDITIONAL(HAVE_OGGVORBIS, [test "$have_oggvorbis" = "yes"])
 
+dnl *** AAC
+
+AC_ARG_ENABLE(aac,
+    [  --disable-aac           disable aac plugin. [default=enabled] ],
+    [enable_aac=$enableval],
+    [enable_aac=yes]
+)
+
+AM_CONDITIONAL(ENABLE_AAC, test "$enable_aac" = "yes")
 
 dnl *** OSS output
 
@@ -590,6 +598,9 @@ AC_CONFIG_FILES([
         Output/alsa/Makefile
         Input/Makefile
         Input/mpg123/Makefile
+	Input/aac/Makefile
+	Input/aac/libmp4v2/Makefile
+	Input/aac/libfaad2/Makefile
         Input/vorbis/Makefile
         Input/cdaudio/Makefile
         Input/wav/Makefile
@@ -637,6 +648,7 @@ echo "  Input Plugins"
 echo "  -------------"
 echo "  MPEG 1/2/3 (mpg123):                    $enable_mp3"
 echo "    + id3v2 editing:                      $have_id3lib"
+echo "  MPEG 4 Audio (AAC):                     $enable_aac"
 echo "  CD Digital Audio (cdda):                yes"
 echo "  Microsoft WAV (wav):                    yes"
 echo "  Ogg Vorbis (vorbis):                    $have_oggvorbis"
