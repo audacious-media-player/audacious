@@ -1,6 +1,6 @@
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = intl libaudacious libvisual audacious Output Input Visualization po icons skin
+SUBDIRS = intl libaudacious audacious Output Input Visualization po icons skin
 
 man_MANS = audacious.1
 
