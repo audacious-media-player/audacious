@@ -31,13 +31,11 @@ u_int64_t MP4File::GetPosition(FILE* pFile)
 			pFile = m_pFile;
 		}
 
-		fpos_t fpos;
-		if (fgetpos(pFile, &fpos) < 0) {
+		u_int64_t fpos;
+		if (fgetpos(pFile, (fpos_t *) &fpos) < 0) {
 			throw new MP4Error(errno, "MP4GetPosition");
 		}
-		uint64_t ret;
-		ret = (u_int64_t) fpos;
-		return ret;
+		return fpos;
 	} else {
 		return m_memoryBufferPosition;
 	}
@@ -51,8 +49,7 @@ void MP4File::SetPosition(u_int64_t pos, FILE* pFile)
 			pFile = m_pFile;
 		}
 
-		fpos_t fpos = (fpos_t) pos;
-		if (fsetpos(pFile, &fpos) < 0) {
+		if (fsetpos(pFile, (fpos_t *) &pos) < 0) {
 			throw new MP4Error(errno, "MP4SetPosition");
 		}
 	} else {
