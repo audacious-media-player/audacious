@@ -203,16 +203,6 @@ typedef unsigned int socklen_t;
 #define __STRING(expr) #expr
 #endif
 
-#ifndef HAVE_STRSEP
-#ifdef __cplusplus
-extern "C" {
-#endif
-char *strsep(char **strp, const char *delim); 
-#ifdef __cplusplus
-}
-#endif
-#endif
-
 #ifndef MIN
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 #endif
