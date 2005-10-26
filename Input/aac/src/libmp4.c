@@ -117,9 +117,9 @@ static int	mp4_isFile(char *filename)
 
   if(filename){
     ext = strrchr(filename, '.');
-    if (!strncasecmp(filename, ".mp4", 4) ||	// official extention
-	!strncasecmp(filename, ".m4a", 4) ||	// Apple mp4 extention
-	!strncasecmp(filename, ".aac", 4)	// old MPEG2/4-AAC extention
+    if (!strncasecmp(ext, ".mp4", 4) ||	// official extention
+	!strncasecmp(ext, ".m4a", 4) ||	// Apple mp4 extention
+	!strncasecmp(ext, ".aac", 4)	// old MPEG2/4-AAC extention
 	){
       return (1);
     }
