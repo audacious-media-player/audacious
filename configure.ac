@@ -606,7 +606,6 @@ AC_CONFIG_FILES([
         audacious/glade/Makefile
 	audacious/images/Makefile
         libaudacious/Makefile
-	libvisual/Makefile
         Output/Makefile
         Output/OSS/Makefile
         Output/esd/Makefile
