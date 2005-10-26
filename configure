@@ -29254,7 +29254,7 @@ PLUGIN_LDFLAGS='-module -avoid-version -export-symbols-regex "get_.plugin_info"'
 
 
 
-                                                                                                                                                                                                                                                                                                                      ac_config_files="$ac_config_files Makefile audacious.1 audacious.spec audacious.pc audacious/audacious.desktop audacious/Makefile audacious/glade/Makefile audacious/images/Makefile libaudacious/Makefile libvisual/Makefile Output/Makefile Output/OSS/Makefile Output/esd/Makefile Output/alsa/Makefile Input/Makefile Input/mpg123/Makefile Input/aac/Makefile Input/aac/libmp4v2/Makefile Input/aac/libfaad2/Makefile Input/aac/src/Makefile Input/mikmod/Makefile Input/tonegen/Makefile Input/vorbis/Makefile Input/cdaudio/Makefile Input/wav/Makefile Visualization/Makefile Visualization/blur_scope/Makefile po/Makefile.in intl/Makefile icons/Makefile skin/Makefile"
+                                                                                                                                                                                                                                                                                                            ac_config_files="$ac_config_files Makefile audacious.1 audacious.spec audacious.pc audacious/audacious.desktop audacious/Makefile audacious/glade/Makefile audacious/images/Makefile libaudacious/Makefile Output/Makefile Output/OSS/Makefile Output/esd/Makefile Output/alsa/Makefile Input/Makefile Input/mpg123/Makefile Input/aac/Makefile Input/aac/libmp4v2/Makefile Input/aac/libfaad2/Makefile Input/aac/src/Makefile Input/mikmod/Makefile Input/tonegen/Makefile Input/vorbis/Makefile Input/cdaudio/Makefile Input/wav/Makefile Visualization/Makefile Visualization/blur_scope/Makefile po/Makefile.in intl/Makefile icons/Makefile skin/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -29941,7 +29941,6 @@ do
   "audacious/glade/Makefile" ) CONFIG_FILES="$CONFIG_FILES audacious/glade/Makefile" ;;
   "audacious/images/Makefile" ) CONFIG_FILES="$CONFIG_FILES audacious/images/Makefile" ;;
   "libaudacious/Makefile" ) CONFIG_FILES="$CONFIG_FILES libaudacious/Makefile" ;;
-  "libvisual/Makefile" ) CONFIG_FILES="$CONFIG_FILES libvisual/Makefile" ;;
   "Output/Makefile" ) CONFIG_FILES="$CONFIG_FILES Output/Makefile" ;;
   "Output/OSS/Makefile" ) CONFIG_FILES="$CONFIG_FILES Output/OSS/Makefile" ;;
   "Output/esd/Makefile" ) CONFIG_FILES="$CONFIG_FILES Output/esd/Makefile" ;;
