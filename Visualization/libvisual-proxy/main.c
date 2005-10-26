@@ -78,7 +78,7 @@ VisPlugin lv_bmp_vp =
 	NULL,				/* (void*) handle, filled in by xmms */
 	NULL,				/* (char*) Filename, filled in by xmms */
 	0,			 	/* The session ID for attaching to the control socket */
-	PACKAGE_STRING,			/* description */
+	"libvisual proxy plugin",	/* description */
 	2,				/* Numbers of PCM channels wanted in the call to render_pcm */
 	0,				/* Numbers of freq channels wanted in the call to render_freq */
 	lv_bmp_init,			/* init */
@@ -455,52 +455,45 @@ static int visual_render (void *arg)
 
 		visual_songinfo_set_simple_name (songinfo, song_name);
 
-		if ((SDL_GetAppState () & SDL_APPACTIVE) == FALSE) {
-			usleep (100000);
-		} else {
-			/* On depth change */
-			if (visual_bin_depth_changed (bin) == TRUE) {
-				if (SDL_MUSTLOCK (screen) == SDL_TRUE)
-					SDL_LockSurface (screen);
+		/* On depth change */
+		if (visual_bin_depth_changed (bin) == TRUE) {
+			if (SDL_MUSTLOCK (screen) == SDL_TRUE)
+				SDL_LockSurface (screen);
 
-				visual_video_set_buffer (video, screen->pixels);
-				if (visual_bin_get_depth (bin) == VISUAL_VIDEO_DEPTH_GL)
-					gl_plug = 1;
-				else
-					gl_plug = 0;
+			visual_video_set_buffer (video, screen->pixels);
+			if (visual_bin_get_depth (bin) == VISUAL_VIDEO_DEPTH_GL)
+				gl_plug = 1;
+			else
+				gl_plug = 0;
 			
-				sdl_create (options->width, options->height);
-				visual_bin_sync (bin, TRUE);
+			sdl_create (options->width, options->height);
+			visual_bin_sync (bin, TRUE);
 
-				if (SDL_MUSTLOCK (screen) == SDL_TRUE)
-					SDL_UnlockSurface (screen);
-			}
-                        
-			render_time = SDL_GetTicks ();
-			if (gl_plug == 1) {
-				visual_bin_run (bin);
-
-				SDL_GL_SwapBuffers ();
-			} else {
-				if (SDL_MUSTLOCK (screen) == SDL_TRUE)
-					SDL_LockSurface (screen);
-
-				visual_video_set_buffer (video, screen->pixels);
-				visual_bin_run (bin);
-
-				if (SDL_MUSTLOCK (screen) == SDL_TRUE)
-					SDL_UnlockSurface (screen);
-
-				pal = visual_bin_get_palette (bin);
-				sdl_set_pal ();
-
-				sdl_draw (screen);
-			}
-
-			now = SDL_GetTicks ();
-//                        if ((idle_time = (now - render_time)) < frame_length)
-  //                              usleep (idle_time*900);
+			if (SDL_MUSTLOCK (screen) == SDL_TRUE)
+				SDL_UnlockSurface (screen);
 		}
+                       
+		if (gl_plug == 1) {
+			visual_bin_run (bin);
+
+			SDL_GL_SwapBuffers ();
+		} else {
+			if (SDL_MUSTLOCK (screen) == SDL_TRUE)
+				SDL_LockSurface (screen);
+
+			printf("About to run visual plugin\n");
+			visual_bin_run (bin);
+
+			if (SDL_MUSTLOCK (screen) == SDL_TRUE)
+				SDL_UnlockSurface (screen);
+
+			pal = visual_bin_get_palette (bin);
+			sdl_set_pal ();
+
+			sdl_draw (screen);
+		}
+
+		usleep(500);
 
 		sdl_event_handle ();
 

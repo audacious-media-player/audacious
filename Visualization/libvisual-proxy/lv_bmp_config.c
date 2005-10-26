@@ -365,6 +365,7 @@ const char *lv_bmp_config_morph_plugin (void)
 
 void lv_bmp_config_window ()
 {
+#if 0
 	if (config_win != NULL) {
   		gtk_widget_grab_default (config_win->button_cancel);
 		gtk_widget_show (config_win->window_main);
@@ -409,6 +410,7 @@ void lv_bmp_config_window ()
 	config_win_load_morph_plugin_list ();
 
 	gtk_widget_show (config_win->window_main);
+#endif
 }
 
 static void on_checkbutton_fullscreen_toggled (GtkToggleButton *togglebutton, gpointer user_data)
