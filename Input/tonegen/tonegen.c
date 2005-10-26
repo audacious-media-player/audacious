@@ -26,6 +26,7 @@
 #include <string.h>
 #include <math.h>
 #include <stdio.h>
+#include <glib/gi18n.h>
 
 #define MIN_FREQ 10
 #define MAX_FREQ 20000
