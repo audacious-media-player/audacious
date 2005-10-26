@@ -72,9 +72,6 @@ static void set_defaults (void);
 
 Options *lv_bmp_config_open ()
 {
-#warning ***** Yes, I WANT 'trash' uninitialized *****
-	unsigned int trash;
-
 	actor_plugin_buffer = g_malloc0 (OPTIONS_MAX_NAME_LEN);
 	options.last_plugin = actor_plugin_buffer;
 	morph_plugin_buffer = g_malloc0 (OPTIONS_MAX_NAME_LEN);
@@ -82,7 +79,7 @@ Options *lv_bmp_config_open ()
 
 	config_visual_initialize ();
 
-	srand (trash);
+	srand (time(NULL));
 
 	load_actor_plugin_list ();
 

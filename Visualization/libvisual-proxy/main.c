@@ -142,7 +142,7 @@ static void lv_bmp_init ()
 					SDL_GetError(),
 					"\n\n", PACKAGE_NAME,
 					_(" will not be loaded."), 0);
-		msgwin = xmms_show_message (PACKAGE_NAME, msg, _("Accept"), TRUE, dummy, NULL);
+		msgwin = xmms_show_message ("libvisual-proxy", msg, _("Accept"), TRUE, dummy, NULL);
 		gtk_widget_show (msgwin);
 		g_free (msg);
 		return;
