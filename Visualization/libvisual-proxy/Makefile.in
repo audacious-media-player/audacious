@@ -300,7 +300,7 @@ target_vendor = @target_vendor@
 @HAVE_LIBVISUAL_TRUE@lib_LTLIBRARIES = libvisual_proxy.la
 INCLUDES = $(GTK_CFLAGS) $(LIBVISUAL_CFLAGS) $(SDL_CFLAGS) $(all_includes)
 libvisual_proxy_la_LDFLAGS = $(PLUGIN_LDFLAGS) $(GTK_LDFLAGS) $(LIBVISUAL_LDFLAGS) $(SDL_LDFLAGS)
-libvisual_proxy_la_LIBADD = $(GTK_LIBS) $(LIBVISUAL_LIBS) $(SDL_LIBS)
+libvisual_proxy_la_LIBADD = $(GTK_LIBS) $(LIBVISUAL_LIBS) $(SDL_LIBS) -lGL
 libvisual_proxy_la_CFLAGS = $(PLUGIN_CFLAGS)
 libvisual_proxy_la_SOURCES = main.c \
 			    lv_bmp_config.c lv_bmp_config.h \
