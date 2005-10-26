@@ -4,6 +4,7 @@
 #include <audacious/configfile.h>
 #include <audacious/util.h>
 #include <libvisual/libvisual.h>
+#include <glib/gi18n.h>
 
 #include "config.h"
 
