@@ -113,14 +113,13 @@ static void mp4_stop(void)
 
 static int	mp4_isFile(char *filename)
 {
-  if(filename){
-    gchar*	extention;
+  char *ext;
 
-    extention = strrchr(filename, '.');
-    if (extention &&
-	!strcasecmp(extention, ".mp4") ||	// official extention
-	!strcasecmp(extention, ".m4a") ||	// Apple mp4 extention
-	!strcasecmp(extention, ".aac")		// old MPEG2/4-AAC extention
+  if(filename){
+    ext = strrchr(filename, '.');
+    if (!strncasecmp(filename, ".mp4", 3) ||	// official extention
+	!strncasecmp(filename, ".m4a", 3) ||	// Apple mp4 extention
+	!strncasecmp(filename, ".aac", 3)	// old MPEG2/4-AAC extention
 	){
       return (1);
     }
