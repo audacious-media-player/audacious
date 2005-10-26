@@ -337,6 +337,20 @@ AC_ARG_ENABLE(aac,
 
 AM_CONDITIONAL(ENABLE_AAC, test "$enable_aac" = "yes")
 
+dnl *** mikmod
+AC_ARG_ENABLE( mikmod,
+[  --disable-mikmod        Disable mikmod input plugin [default=enabled]],,
+                enable_mikmod="yes")
+
+if test "x$enable_mikmod" = xyes; then
+        AM_PATH_LIBMIKMOD(3.1.5,have_mikmod=yes, have_mikmod=no)
+else
+        AC_MSG_RESULT([*** mikmod plugin disabled per user request ***])
+        have_mikmod=no
+fi
+AM_CONDITIONAL(HAVE_MIKMOD,test "x$have_mikmod" = xyes)
+
+
 dnl *** OSS output
 
 AC_ARG_ENABLE(oss,
@@ -603,6 +617,7 @@ AC_CONFIG_FILES([
 	Input/aac/libmp4v2/Makefile
 	Input/aac/libfaad2/Makefile
 	Input/aac/src/Makefile
+	Input/mikmod/Makefile
 	Input/tonegen/Makefile
         Input/vorbis/Makefile
         Input/cdaudio/Makefile
@@ -652,6 +667,7 @@ echo "  -------------"
 echo "  MPEG 1/2/3 (mpg123):                    $enable_mp3"
 echo "    + id3v2 editing:                      $have_id3lib"
 echo "  MPEG 4 Audio (AAC):                     $enable_aac"
+echo "  Module decoder (mikmod):                $enable_mikmod"
 echo "  CD Digital Audio (cdda):                yes"
 echo "  Microsoft WAV (wav):                    yes"
 echo "  Tone Generator:                         yes"
@@ -663,7 +679,7 @@ echo "  Blur Scope:                             yes"
 echo
 
 if test "$beep_cv_lib_xlibs_threadsafe" = "no"; then
-    echo "Note: You need to have thread-safe xlibs to use beep."
+    echo "Note: You need to have thread-safe xlibs to use Audacious."
     echo "If you are using libc5 thread aware Xlibs just skip this."
     echo ""
     echo "If you don't have those libs and you are on a libc5 system get them at:"

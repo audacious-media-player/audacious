@@ -462,7 +462,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS build build_cpu build_vendor build_os host host_cpu host_vendor host_os target target_cpu target_vendor target_os INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM mkdir_p AWK SET_MAKE am__leading_dot AMTAR am__tar am__untar LIBBEEP_MAJOR_VERSION LIBBEEP_MINOR_VERSION LIBBEEP_MICRO_VERSION MKINSTALLDIRS USE_NLS MSGFMT GMSGFMT XGETTEXT MSGMERGE CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CCDEPMODE am__fastdepCC_TRUE am__fastdepCC_FALSE RANLIB ac_ct_RANLIB CPP EGREP ALLOCA GLIBC21 LIBICONV LTLIBICONV INTLBISON BUILD_INCLUDED_LIBINTL USE_INCLUDED_LIBINTL CATOBJEXT DATADIRNAME INSTOBJEXT GENCAT INTLOBJS INTL_LIBTOOL_SUFFIX_PREFIX INTLLIBS LIBINTL LTLIBINTL POSUB CXX CXXFLAGS ac_ct_CXX CXXDEPMODE am__fastdepCXX_TRUE am__fastdepCXX_FALSE CCAS CCASFLAGS LN_S ECHO AR ac_ct_AR CXXCPP LIBTOOL BEEP_PATH BMP_RCPATH EFFECT_PLUGINS GENERAL_PLUGINS INPUT_PLUGINS OUTPUT_PLUGINS VISUALIZATION_PLUGINS X_CFLAGS X_PRE_LIBS X_LIBS X_EXTRA_LIBS PKG_CONFIG GTK_CFLAGS GTK_LIBS PC_REQUIRES LIBGLADE_CFLAGS LIBGLADE_LIBS USE_SIMD_TRUE USE_SIMD_FALSE GCONF_CFLAGS GCONF_LIBS HAVE_GCONF_TRUE HAVE_GCONF_FALSE GNOMEVFS_CFLAGS GNOMEVFS_LIBS HAVE_GNOME_VFS_TRUE HAVE_GNOME_VFS_FALSE ESD_CFLAGS ESD_LIBS HAVE_ESD_TRUE HAVE_ESD_FALSE ENABLE_MPG123_TRUE ENABLE_MPG123_FALSE ID3LIBS OGG_VORBIS_CFLAGS OGG_VORBIS_LIBS HAVE_OGGVORBIS_TRUE HAVE_OGGVORBIS_FALSE ENABLE_AAC_TRUE ENABLE_AAC_FALSE HAVE_OSS_TRUE HAVE_OSS_FALSE ALSA_CFLAGS ALSA_LIBS HAVE_ALSA_TRUE HAVE_ALSA_FALSE HAVE_CDROM_TRUE HAVE_CDROM_FALSE HAVE_LINUX_JOYSTICK_TRUE HAVE_LINUX_JOYSTICK_FALSE ARCH_DEFINES ARCH_X86_TRUE ARCH_X86_FALSE USE_X86ASM_TRUE USE_X86ASM_FALSE HAVE_SOLARIS_TRUE HAVE_SOLARIS_FALSE HAVE_SUN_TRUE HAVE_SUN_FALSE plugindir INPUT_PLUGIN_DIR OUTPUT_PLUGIN_DIR EFFECT_PLUGIN_DIR GENERAL_PLUGIN_DIR VISUALIZATION_PLUGIN_DIR pluginsubs localedir BEEP_DEFINES PLUGIN_LDFLAGS beepdir LIBOBJS LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS build build_cpu build_vendor build_os host host_cpu host_vendor host_os target target_cpu target_vendor target_os INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA CYGPATH_W PACKAGE VERSION ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO install_sh STRIP ac_ct_STRIP INSTALL_STRIP_PROGRAM mkdir_p AWK SET_MAKE am__leading_dot AMTAR am__tar am__untar LIBBEEP_MAJOR_VERSION LIBBEEP_MINOR_VERSION LIBBEEP_MICRO_VERSION MKINSTALLDIRS USE_NLS MSGFMT GMSGFMT XGETTEXT MSGMERGE CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT DEPDIR am__include am__quote AMDEP_TRUE AMDEP_FALSE AMDEPBACKSLASH CCDEPMODE am__fastdepCC_TRUE am__fastdepCC_FALSE RANLIB ac_ct_RANLIB CPP EGREP ALLOCA GLIBC21 LIBICONV LTLIBICONV INTLBISON BUILD_INCLUDED_LIBINTL USE_INCLUDED_LIBINTL CATOBJEXT DATADIRNAME INSTOBJEXT GENCAT INTLOBJS INTL_LIBTOOL_SUFFIX_PREFIX INTLLIBS LIBINTL LTLIBINTL POSUB CXX CXXFLAGS ac_ct_CXX CXXDEPMODE am__fastdepCXX_TRUE am__fastdepCXX_FALSE CCAS CCASFLAGS LN_S ECHO AR ac_ct_AR CXXCPP LIBTOOL BEEP_PATH BMP_RCPATH EFFECT_PLUGINS GENERAL_PLUGINS INPUT_PLUGINS OUTPUT_PLUGINS VISUALIZATION_PLUGINS X_CFLAGS X_PRE_LIBS X_LIBS X_EXTRA_LIBS PKG_CONFIG GTK_CFLAGS GTK_LIBS PC_REQUIRES LIBGLADE_CFLAGS LIBGLADE_LIBS USE_SIMD_TRUE USE_SIMD_FALSE GCONF_CFLAGS GCONF_LIBS HAVE_GCONF_TRUE HAVE_GCONF_FALSE GNOMEVFS_CFLAGS GNOMEVFS_LIBS HAVE_GNOME_VFS_TRUE HAVE_GNOME_VFS_FALSE ESD_CFLAGS ESD_LIBS HAVE_ESD_TRUE HAVE_ESD_FALSE ENABLE_MPG123_TRUE ENABLE_MPG123_FALSE ID3LIBS OGG_VORBIS_CFLAGS OGG_VORBIS_LIBS HAVE_OGGVORBIS_TRUE HAVE_OGGVORBIS_FALSE ENABLE_AAC_TRUE ENABLE_AAC_FALSE LIBMIKMOD_CONFIG LIBMIKMOD_CFLAGS LIBMIKMOD_LIBS LIBMIKMOD_LDADD HAVE_MIKMOD_TRUE HAVE_MIKMOD_FALSE HAVE_OSS_TRUE HAVE_OSS_FALSE ALSA_CFLAGS ALSA_LIBS HAVE_ALSA_TRUE HAVE_ALSA_FALSE HAVE_CDROM_TRUE HAVE_CDROM_FALSE HAVE_LINUX_JOYSTICK_TRUE HAVE_LINUX_JOYSTICK_FALSE ARCH_DEFINES ARCH_X86_TRUE ARCH_X86_FALSE USE_X86ASM_TRUE USE_X86ASM_FALSE HAVE_SOLARIS_TRUE HAVE_SOLARIS_FALSE HAVE_SUN_TRUE HAVE_SUN_FALSE plugindir INPUT_PLUGIN_DIR OUTPUT_PLUGIN_DIR EFFECT_PLUGIN_DIR GENERAL_PLUGIN_DIR VISUALIZATION_PLUGIN_DIR pluginsubs localedir BEEP_DEFINES PLUGIN_LDFLAGS beepdir LIBOBJS LTLIBOBJS'
 ac_subst_files=''
 
 # Initialize some variables set by options.
@@ -1049,6 +1049,8 @@ Optional Features:
   --disable-mp3           disable mp3 plugin. default=enabled
   --disable-vorbis        disable Ogg Vorbis input plugin (default=enabled)
   --disable-aac           disable aac plugin. default=enabled
+  --disable-mikmod        Disable mikmod input plugin default=enabled
+  --disable-libmikmodtest       Do not try to compile and run a test libmikmod program
   --disable-oss           disable the OSS output plugin
   --disable-alsa          disable ALSA input plugin (default=enabled)
 
@@ -1073,6 +1075,8 @@ Optional Packages:
   --with-cdda-dir=path               Path to default cdaudio directory.
   --with-xmms-eq                     Use old XMMS equalization code.
   --with-x                use the X Window System
+  --with-libmikmod-prefix=PFX   Prefix where libmikmod is installed (optional)
+  --with-libmikmod-exec-prefix=PFX Exec prefix where libmikmod is installed (optional)
 
 Some influential environment variables:
   CC          C compiler command
@@ -9297,7 +9301,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 9300 "configure"' > conftest.$ac_ext
+  echo '#line 9304 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -10760,11 +10764,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:10763: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:10767: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:10767: \$? = $ac_status" >&5
+   echo "$as_me:10771: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -11003,11 +11007,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:11006: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:11010: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:11010: \$? = $ac_status" >&5
+   echo "$as_me:11014: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -11063,11 +11067,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:11066: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:11070: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:11070: \$? = $ac_status" >&5
+   echo "$as_me:11074: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -13248,7 +13252,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 13251 "configure"
+#line 13255 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -13346,7 +13350,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 13349 "configure"
+#line 13353 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -15539,11 +15543,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15542: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15546: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:15546: \$? = $ac_status" >&5
+   echo "$as_me:15550: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -15599,11 +15603,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15602: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15606: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:15606: \$? = $ac_status" >&5
+   echo "$as_me:15610: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -16960,7 +16964,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 16963 "configure"
+#line 16967 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -17058,7 +17062,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 17061 "configure"
+#line 17065 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -17895,11 +17899,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17898: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17902: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:17902: \$? = $ac_status" >&5
+   echo "$as_me:17906: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -17955,11 +17959,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17958: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17962: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:17962: \$? = $ac_status" >&5
+   echo "$as_me:17966: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -19990,11 +19994,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:19993: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:19997: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:19997: \$? = $ac_status" >&5
+   echo "$as_me:20001: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -20233,11 +20237,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:20236: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:20240: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:20240: \$? = $ac_status" >&5
+   echo "$as_me:20244: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -20293,11 +20297,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:20296: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:20300: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:20300: \$? = $ac_status" >&5
+   echo "$as_me:20304: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -22478,7 +22482,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 22481 "configure"
+#line 22485 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -22576,7 +22580,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 22579 "configure"
+#line 22583 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -26334,6 +26338,349 @@ else
 fi
 
 
+# Check whether --enable-mikmod or --disable-mikmod was given.
+if test "${enable_mikmod+set}" = set; then
+  enableval="$enable_mikmod"
+
+else
+  enable_mikmod="yes"
+fi;
+
+if test "x$enable_mikmod" = xyes; then
+
+# Check whether --with-libmikmod-prefix or --without-libmikmod-prefix was given.
+if test "${with_libmikmod_prefix+set}" = set; then
+  withval="$with_libmikmod_prefix"
+  libmikmod_config_prefix="$withval"
+else
+  libmikmod_config_prefix=""
+fi;
+
+# Check whether --with-libmikmod-exec-prefix or --without-libmikmod-exec-prefix was given.
+if test "${with_libmikmod_exec_prefix+set}" = set; then
+  withval="$with_libmikmod_exec_prefix"
+  libmikmod_config_exec_prefix="$withval"
+else
+  libmikmod_config_exec_prefix=""
+fi;
+# Check whether --enable-libmikmodtest or --disable-libmikmodtest was given.
+if test "${enable_libmikmodtest+set}" = set; then
+  enableval="$enable_libmikmodtest"
+
+else
+  enable_libmikmodtest=yes
+fi;
+
+  if test x$libmikmod_config_exec_prefix != x ; then
+     libmikmod_config_args="$libmikmod_config_args --exec-prefix=$libmikmod_config_exec_prefix"
+     if test x${LIBMIKMOD_CONFIG+set} != xset ; then
+        LIBMIKMOD_CONFIG=$libmikmod_config_exec_prefix/bin/libmikmod-config
+     fi
+  fi
+  if test x$libmikmod_config_prefix != x ; then
+     libmikmod_config_args="$libmikmod_config_args --prefix=$libmikmod_config_prefix"
+     if test x${LIBMIKMOD_CONFIG+set} != xset ; then
+        LIBMIKMOD_CONFIG=$libmikmod_config_prefix/bin/libmikmod-config
+     fi
+  fi
+
+  # Extract the first word of "libmikmod-config", so it can be a program name with args.
+set dummy libmikmod-config; ac_word=$2
+echo "$as_me:$LINENO: checking for $ac_word" >&5
+echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6
+if test "${ac_cv_path_LIBMIKMOD_CONFIG+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  case $LIBMIKMOD_CONFIG in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_LIBMIKMOD_CONFIG="$LIBMIKMOD_CONFIG" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_path_LIBMIKMOD_CONFIG="$as_dir/$ac_word$ac_exec_ext"
+    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+
+  test -z "$ac_cv_path_LIBMIKMOD_CONFIG" && ac_cv_path_LIBMIKMOD_CONFIG="no"
+  ;;
+esac
+fi
+LIBMIKMOD_CONFIG=$ac_cv_path_LIBMIKMOD_CONFIG
+
+if test -n "$LIBMIKMOD_CONFIG"; then
+  echo "$as_me:$LINENO: result: $LIBMIKMOD_CONFIG" >&5
+echo "${ECHO_T}$LIBMIKMOD_CONFIG" >&6
+else
+  echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+fi
+
+  min_libmikmod_version=3.1.5
+  echo "$as_me:$LINENO: checking for libmikmod - version >= $min_libmikmod_version" >&5
+echo $ECHO_N "checking for libmikmod - version >= $min_libmikmod_version... $ECHO_C" >&6
+  no_libmikmod=""
+  if test "$LIBMIKMOD_CONFIG" = "no" ; then
+    no_libmikmod=yes
+  else
+    LIBMIKMOD_CFLAGS=`$LIBMIKMOD_CONFIG $libmikmod_config_args --cflags`
+    LIBMIKMOD_LIBS=`$LIBMIKMOD_CONFIG $libmikmod_config_args --libs`
+    LIBMIKMOD_LDADD=`$LIBMIKMOD_CONFIG $libmikmod_config_args --ldadd`
+    libmikmod_config_major_version=`$LIBMIKMOD_CONFIG $libmikmod_config_args --version | \
+           sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\).*/\1/'`
+    libmikmod_config_minor_version=`$LIBMIKMOD_CONFIG $libmikmod_config_args --version | \
+           sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\).*/\2/'`
+    libmikmod_config_micro_version=`$LIBMIKMOD_CONFIG $libmikmod_config_args --version | \
+           sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\).*/\3/'`
+    if test "x$enable_libmikmodtest" = "xyes" ; then
+      ac_save_CFLAGS="$CFLAGS"
+      ac_save_LIBS="$LIBS"
+      CFLAGS="$CFLAGS $LIBMIKMOD_CFLAGS $LIBMIKMOD_LDADD"
+      LIBS="$LIBMIKMOD_LIBS $LIBS"
+      rm -f conf.mikmodtest
+      if test "$cross_compiling" = yes; then
+  echo $ac_n "cross compiling; assumed OK... $ac_c"
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <mikmod.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+char* my_strdup (char *str)
+{
+  char *new_str;
+
+  if (str) {
+    new_str = malloc ((strlen (str) + 1) * sizeof(char));
+    strcpy (new_str, str);
+  } else
+    new_str = NULL;
+
+  return new_str;
+}
+
+int main()
+{
+  int major,minor,micro;
+  int libmikmod_major_version,libmikmod_minor_version,libmikmod_micro_version;
+  char *tmp_version;
+
+  system ("touch conf.mikmodtest");
+
+  /* HP/UX 9 (%@#!) writes to sscanf strings */
+  tmp_version = my_strdup("$min_libmikmod_version");
+  if (sscanf(tmp_version, "%d.%d.%d", &major, &minor, &micro) != 3) {
+     printf("%s, bad version string\n", "$min_libmikmod_version");
+     exit(1);
+   }
+
+  libmikmod_major_version=(MikMod_GetVersion()>>16)&255;
+  libmikmod_minor_version=(MikMod_GetVersion()>> 8)&255;
+  libmikmod_micro_version=(MikMod_GetVersion()    )&255;
+
+  if ((libmikmod_major_version != $libmikmod_config_major_version) ||
+      (libmikmod_minor_version != $libmikmod_config_minor_version) ||
+      (libmikmod_micro_version != $libmikmod_config_micro_version))
+    {
+      printf("\n*** 'libmikmod-config --version' returned %d.%d.%d, but libmikmod (%d.%d.%d)\n",
+             $libmikmod_config_major_version, $libmikmod_config_minor_version, $libmikmod_config_micro_version,
+             libmikmod_major_version, libmikmod_minor_version, libmikmod_micro_version);
+      printf ("*** was found! If libmikmod-config was correct, then it is best\n");
+      printf ("*** to remove the old version of libmikmod. You may also be able to fix the error\n");
+      printf("*** by modifying your LD_LIBRARY_PATH enviroment variable, or by editing\n");
+      printf("*** /etc/ld.so.conf. Make sure you have run ldconfig if that is\n");
+      printf("*** required on your system.\n");
+      printf("*** If libmikmod-config was wrong, set the environment variable LIBMIKMOD_CONFIG\n");
+      printf("*** to point to the correct copy of libmikmod-config, and remove the file config.cache\n");
+      printf("*** before re-running configure\n");
+    }
+  else if ((libmikmod_major_version != LIBMIKMOD_VERSION_MAJOR) ||
+	   (libmikmod_minor_version != LIBMIKMOD_VERSION_MINOR) ||
+           (libmikmod_micro_version != LIBMIKMOD_REVISION))
+    {
+      printf("*** libmikmod header files (version %d.%d.%d) do not match\n",
+	     LIBMIKMOD_VERSION_MAJOR, LIBMIKMOD_VERSION_MINOR, LIBMIKMOD_REVISION);
+      printf("*** library (version %d.%d.%d)\n",
+	     libmikmod_major_version, libmikmod_minor_version, libmikmod_micro_version);
+    }
+  else
+    {
+      if ((libmikmod_major_version > major) ||
+        ((libmikmod_major_version == major) && (libmikmod_minor_version > minor)) ||
+        ((libmikmod_major_version == major) && (libmikmod_minor_version == minor) && (libmikmod_micro_version >= micro)))
+      {
+        return 0;
+       }
+     else
+      {
+        printf("\n*** An old version of libmikmod (%d.%d.%d) was found.\n",
+               libmikmod_major_version, libmikmod_minor_version, libmikmod_micro_version);
+        printf("*** You need a version of libmikmod newer than %d.%d.%d.\n",
+	       major, minor, micro);
+        printf("***\n");
+        printf("*** If you have already installed a sufficiently new version, this error\n");
+        printf("*** probably means that the wrong copy of the libmikmod-config shell script is\n");
+        printf("*** being found. The easiest way to fix this is to remove the old version\n");
+        printf("*** of libmikmod, but you can also set the LIBMIKMOD_CONFIG environment to point to the\n");
+        printf("*** correct copy of libmikmod-config. (In this case, you will have to\n");
+        printf("*** modify your LD_LIBRARY_PATH enviroment variable, or edit /etc/ld.so.conf\n");
+        printf("*** so that the correct libraries are found at run-time))\n");
+      }
+    }
+  return 1;
+}
+
+_ACEOF
+rm -f conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  :
+else
+  echo "$as_me: program exited with status $ac_status" >&5
+echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+( exit $ac_status )
+no_libmikmod=yes
+fi
+rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+fi
+       CFLAGS="$ac_save_CFLAGS"
+       LIBS="$ac_save_LIBS"
+     fi
+  fi
+  if test "x$no_libmikmod" = x ; then
+     echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6
+     have_mikmod=yes
+  else
+     echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+     if test "$LIBMIKMOD_CONFIG" = "no" ; then
+       echo "*** The libmikmod-config script installed by libmikmod could not be found"
+       echo "*** If libmikmod was installed in PREFIX, make sure PREFIX/bin is in"
+       echo "*** your path, or set the LIBMIKMOD_CONFIG environment variable to the"
+       echo "*** full path to libmikmod-config."
+     else
+       if test -f conf.mikmodtest ; then
+        :
+       else
+          echo "*** Could not run libmikmod test program, checking why..."
+          CFLAGS="$CFLAGS $LIBMIKMOD_CFLAGS"
+          LIBS="$LIBS $LIBMIKMOD_LIBS"
+          cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+#include <mikmod.h>
+#include <stdio.h>
+
+int
+main ()
+{
+ return (MikMod_GetVersion()!=0);
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_cxx_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+   echo "*** The test program compiled, but did not run. This usually means"
+          echo "*** that the run-time linker is not finding libmikmod or finding the wrong"
+          echo "*** version of libmikmod. If it is not finding libmikmod, you'll need to set your"
+          echo "*** LD_LIBRARY_PATH environment variable, or edit /etc/ld.so.conf to point"
+          echo "*** to the installed location. Also, make sure you have run ldconfig if that"
+          echo "*** is required on your system"
+	  echo "***"
+          echo "*** If you have an old version installed, it is best to remove it, although"
+          echo "*** you may also be able to get things to work by modifying LD_LIBRARY_PATH"
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+ echo "*** The test program failed to compile or link. See the file config.log for the"
+          echo "*** exact error that occured. This usually means libmikmod was incorrectly installed"
+          echo "*** or that you have moved libmikmod since it was installed. In the latter case, you"
+          echo "*** may want to edit the libmikmod-config script: $LIBMIKMOD_CONFIG"
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+          CFLAGS="$ac_save_CFLAGS"
+          LIBS="$ac_save_LIBS"
+       fi
+     fi
+     LIBMIKMOD_CFLAGS=""
+     LIBMIKMOD_LIBS=""
+     LIBMIKMOD_LDADD=""
+     have_mikmod=no
+  fi
+
+
+
+  rm -f conf.mikmodtest
+
+else
+        echo "$as_me:$LINENO: result: *** mikmod plugin disabled per user request ***" >&5
+echo "${ECHO_T}*** mikmod plugin disabled per user request ***" >&6
+        have_mikmod=no
+fi
+
+
+if test "x$have_mikmod" = xyes; then
+  HAVE_MIKMOD_TRUE=
+  HAVE_MIKMOD_FALSE='#'
+else
+  HAVE_MIKMOD_TRUE='#'
+  HAVE_MIKMOD_FALSE=
+fi
+
+
+
 
 # Check whether --enable-oss or --disable-oss was given.
 if test "${enable_oss+set}" = set; then
@@ -28907,7 +29254,7 @@ PLUGIN_LDFLAGS='-module -avoid-version -export-symbols-regex "get_.plugin_info"'
 
 
 
-                                                                                                                                                                                                                                                                                                            ac_config_files="$ac_config_files Makefile audacious.1 audacious.spec audacious.pc audacious/audacious.desktop audacious/Makefile audacious/glade/Makefile audacious/images/Makefile libaudacious/Makefile libvisual/Makefile Output/Makefile Output/OSS/Makefile Output/esd/Makefile Output/alsa/Makefile Input/Makefile Input/mpg123/Makefile Input/aac/Makefile Input/aac/libmp4v2/Makefile Input/aac/libfaad2/Makefile Input/aac/src/Makefile Input/tonegen/Makefile Input/vorbis/Makefile Input/cdaudio/Makefile Input/wav/Makefile Visualization/Makefile Visualization/blur_scope/Makefile po/Makefile.in intl/Makefile icons/Makefile skin/Makefile"
+                                                                                                                                                                                                                                                                                                                      ac_config_files="$ac_config_files Makefile audacious.1 audacious.spec audacious.pc audacious/audacious.desktop audacious/Makefile audacious/glade/Makefile audacious/images/Makefile libaudacious/Makefile libvisual/Makefile Output/Makefile Output/OSS/Makefile Output/esd/Makefile Output/alsa/Makefile Input/Makefile Input/mpg123/Makefile Input/aac/Makefile Input/aac/libmp4v2/Makefile Input/aac/libfaad2/Makefile Input/aac/src/Makefile Input/mikmod/Makefile Input/tonegen/Makefile Input/vorbis/Makefile Input/cdaudio/Makefile Input/wav/Makefile Visualization/Makefile Visualization/blur_scope/Makefile po/Makefile.in intl/Makefile icons/Makefile skin/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -29068,6 +29415,13 @@ if test -z "${ENABLE_AAC_TRUE}" && test -z "${ENABLE_AAC_FALSE}"; then
   { { echo "$as_me:$LINENO: error: conditional \"ENABLE_AAC\" was never defined.
 Usually this means the macro was only invoked conditionally." >&5
 echo "$as_me: error: conditional \"ENABLE_AAC\" was never defined.
+Usually this means the macro was only invoked conditionally." >&2;}
+   { (exit 1); exit 1; }; }
+fi
+if test -z "${HAVE_MIKMOD_TRUE}" && test -z "${HAVE_MIKMOD_FALSE}"; then
+  { { echo "$as_me:$LINENO: error: conditional \"HAVE_MIKMOD\" was never defined.
+Usually this means the macro was only invoked conditionally." >&5
+echo "$as_me: error: conditional \"HAVE_MIKMOD\" was never defined.
 Usually this means the macro was only invoked conditionally." >&2;}
    { (exit 1); exit 1; }; }
 fi
@@ -29598,6 +29952,7 @@ do
   "Input/aac/libmp4v2/Makefile" ) CONFIG_FILES="$CONFIG_FILES Input/aac/libmp4v2/Makefile" ;;
   "Input/aac/libfaad2/Makefile" ) CONFIG_FILES="$CONFIG_FILES Input/aac/libfaad2/Makefile" ;;
   "Input/aac/src/Makefile" ) CONFIG_FILES="$CONFIG_FILES Input/aac/src/Makefile" ;;
+  "Input/mikmod/Makefile" ) CONFIG_FILES="$CONFIG_FILES Input/mikmod/Makefile" ;;
   "Input/tonegen/Makefile" ) CONFIG_FILES="$CONFIG_FILES Input/tonegen/Makefile" ;;
   "Input/vorbis/Makefile" ) CONFIG_FILES="$CONFIG_FILES Input/vorbis/Makefile" ;;
   "Input/cdaudio/Makefile" ) CONFIG_FILES="$CONFIG_FILES Input/cdaudio/Makefile" ;;
@@ -29830,6 +30185,12 @@ s,@HAVE_OGGVORBIS_TRUE@,$HAVE_OGGVORBIS_TRUE,;t t
 s,@HAVE_OGGVORBIS_FALSE@,$HAVE_OGGVORBIS_FALSE,;t t
 s,@ENABLE_AAC_TRUE@,$ENABLE_AAC_TRUE,;t t
 s,@ENABLE_AAC_FALSE@,$ENABLE_AAC_FALSE,;t t
+s,@LIBMIKMOD_CONFIG@,$LIBMIKMOD_CONFIG,;t t
+s,@LIBMIKMOD_CFLAGS@,$LIBMIKMOD_CFLAGS,;t t
+s,@LIBMIKMOD_LIBS@,$LIBMIKMOD_LIBS,;t t
+s,@LIBMIKMOD_LDADD@,$LIBMIKMOD_LDADD,;t t
+s,@HAVE_MIKMOD_TRUE@,$HAVE_MIKMOD_TRUE,;t t
+s,@HAVE_MIKMOD_FALSE@,$HAVE_MIKMOD_FALSE,;t t
 s,@HAVE_OSS_TRUE@,$HAVE_OSS_TRUE,;t t
 s,@HAVE_OSS_FALSE@,$HAVE_OSS_FALSE,;t t
 s,@ALSA_CFLAGS@,$ALSA_CFLAGS,;t t
@@ -30714,6 +31075,7 @@ echo "  -------------"
 echo "  MPEG 1/2/3 (mpg123):                    $enable_mp3"
 echo "    + id3v2 editing:                      $have_id3lib"
 echo "  MPEG 4 Audio (AAC):                     $enable_aac"
+echo "  Module decoder (mikmod):                $enable_mikmod"
 echo "  CD Digital Audio (cdda):                yes"
 echo "  Microsoft WAV (wav):                    yes"
 echo "  Tone Generator:                         yes"
@@ -30725,7 +31087,7 @@ echo "  Blur Scope:                             yes"
 echo
 
 if test "$beep_cv_lib_xlibs_threadsafe" = "no"; then
-    echo "Note: You need to have thread-safe xlibs to use beep."
+    echo "Note: You need to have thread-safe xlibs to use Audacious."
     echo "If you are using libc5 thread aware Xlibs just skip this."
     echo ""
     echo "If you don't have those libs and you are on a libc5 system get them at:"
