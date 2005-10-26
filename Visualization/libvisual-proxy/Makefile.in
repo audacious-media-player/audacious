@@ -65,7 +65,9 @@ am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(libdir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libvisual_proxy_la_LIBADD =
+am__DEPENDENCIES_1 =
+libvisual_proxy_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 am_libvisual_proxy_la_OBJECTS = libvisual_proxy_la-main.lo \
 	libvisual_proxy_la-lv_bmp_config.lo \
 	libvisual_proxy_la-config_gui.lo libvisual_proxy_la-about.lo
@@ -297,7 +299,8 @@ target_os = @target_os@
 target_vendor = @target_vendor@
 @HAVE_LIBVISUAL_TRUE@lib_LTLIBRARIES = libvisual_proxy.la
 INCLUDES = $(GTK_CFLAGS) $(LIBVISUAL_CFLAGS) $(SDL_CFLAGS) $(all_includes)
-libvisual_proxy_la_LDFLAGS = $(PLUGIN_LDFLAGS)
+libvisual_proxy_la_LDFLAGS = $(PLUGIN_LDFLAGS) $(GTK_LDFLAGS) $(LIBVISUAL_LDFLAGS) $(SDL_LDFLAGS)
+libvisual_proxy_la_LIBADD = $(GTK_LIBS) $(LIBVISUAL_LIBS) $(SDL_LIBS)
 libvisual_proxy_la_CFLAGS = $(PLUGIN_CFLAGS)
 libvisual_proxy_la_SOURCES = main.c \
 			    lv_bmp_config.c lv_bmp_config.h \

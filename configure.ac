@@ -19,6 +19,10 @@ AC_SUBST(LIBBEEP_MAJOR_VERSION)
 AC_SUBST(LIBBEEP_MINOR_VERSION)
 AC_SUBST(LIBBEEP_MICRO_VERSION)
 
+dnl XXX kludge for FreeBSD
+if test -d "/usr/X11R6/include"; then
+	CPPFLAGS="$CPPFLAGS -I/usr/X11R6/include"
+fi
 
 dnl GNU gettext
 
@@ -596,6 +600,37 @@ AC_SUBST(PLUGIN_LDFLAGS)
 AC_SUBST(beepdir)
 AC_SUBST(plugindir)
 
+have_libvisual="yes"
+
+AC_CHECK_HEADERS([GL/gl.h GL/glx.h GL/glu.h],opengl="yes",opengl="no")
+if test x"$opengl" = xno; then
+        AC_WARN([OpenGL and Glu headers not found, libvisual support cannot be built])
+	have_libvisual="no"
+fi
+
+AC_PATH_PROG(SDL_CONFIG, [sdl-config], [no])
+if test x$SDL_CONFIG = xno ; then
+  AC_WARN([
+*** sdl-config not found.
+*** If you have installed from binaries, probably you have not
+*** installed SDL development package.
+*** See http://www.libsdl.org
+***
+*** Disabling compilation of libvisual-proxy.
+])
+fi
+AM_PATH_SDL(1.2.5, , [AC_WARN([*** SDL >= 1.2.5 not installed - please install first ***])
+	have_libvisual="no"])
+
+PKG_CHECK_MODULES(LIBVISUAL, libvisual = 0.2.0, [libvis="yes"], [libvis="no"])
+if test x"$libvis" = xno; then
+	have_libvisual="no"
+fi
+AC_SUBST(LIBVISUAL_LIBS)
+AC_SUBST(LIBVISUAL_CFLAGS)
+
+AM_CONDITIONAL(HAVE_LIBVISUAL, test "x$have_libvisual" = xyes)
+
 AC_CONFIG_FILES([
         Makefile
         audacious.1
@@ -623,6 +658,7 @@ AC_CONFIG_FILES([
         Input/wav/Makefile
         Visualization/Makefile
         Visualization/blur_scope/Makefile
+	Visualization/libvisual-proxy/Makefile
         po/Makefile.in
         intl/Makefile
         icons/Makefile
@@ -638,7 +674,7 @@ echo
 echo "  Install path:                           ${prefix}"
 
 if test "$BEEP_PATH" != "no"; then
-    echo "  Current beep executable:                $BEEP_PATH"
+    echo "  Current Audacious executable:           $BEEP_PATH"
 fi
 
 echo "  Configuration path:                     \$HOME/$rc_path"
@@ -675,6 +711,7 @@ echo ""
 echo "  Visualization"
 echo "  -------------"
 echo "  Blur Scope:                             yes"
+echo "  libvisual-proxy:                        $have_libvisual"
 echo
 
 if test "$beep_cv_lib_xlibs_threadsafe" = "no"; then
