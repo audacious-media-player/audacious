@@ -481,7 +481,6 @@ static int visual_render (void *arg)
 			if (SDL_MUSTLOCK (screen) == SDL_TRUE)
 				SDL_LockSurface (screen);
 
-			printf("About to run visual plugin\n");
 			visual_bin_run (bin);
 
 			if (SDL_MUSTLOCK (screen) == SDL_TRUE)
