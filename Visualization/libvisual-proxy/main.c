@@ -493,7 +493,7 @@ static int visual_render (void *arg)
 			sdl_draw (screen);
 		}
 
-		usleep(500);
+		usleep(2000);
 
 		sdl_event_handle ();
 
