@@ -40,17 +40,8 @@ target_triplet = @target@
 subdir = Input/mpg123
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/m4/codeset.m4 \
-	$(top_srcdir)/m4/gettext.m4 $(top_srcdir)/m4/glibc21.m4 \
-	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/intdiv0.m4 \
-	$(top_srcdir)/m4/inttypes-pri.m4 $(top_srcdir)/m4/inttypes.m4 \
-	$(top_srcdir)/m4/inttypes_h.m4 $(top_srcdir)/m4/lcmessage.m4 \
-	$(top_srcdir)/m4/lib-ld.m4 $(top_srcdir)/m4/lib-link.m4 \
-	$(top_srcdir)/m4/lib-prefix.m4 $(top_srcdir)/m4/nls.m4 \
-	$(top_srcdir)/m4/pkg.m4 $(top_srcdir)/m4/po.m4 \
-	$(top_srcdir)/m4/progtest.m4 $(top_srcdir)/m4/stdint_h.m4 \
-	$(top_srcdir)/m4/uintmax_t.m4 $(top_srcdir)/m4/ulonglong.m4 \
-	$(top_srcdir)/acinclude.m4 $(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
@@ -175,6 +166,7 @@ GCONF_LIBS = @GCONF_LIBS@
 GENCAT = @GENCAT@
 GENERAL_PLUGINS = @GENERAL_PLUGINS@
 GENERAL_PLUGIN_DIR = @GENERAL_PLUGIN_DIR@
+GLIBC2 = @GLIBC2@
 GLIBC21 = @GLIBC21@
 GMSGFMT = @GMSGFMT@
 GNOMEVFS_CFLAGS = @GNOMEVFS_CFLAGS@
@@ -183,10 +175,13 @@ GTK_CFLAGS = @GTK_CFLAGS@
 GTK_LIBS = @GTK_LIBS@
 HAVE_ALSA_FALSE = @HAVE_ALSA_FALSE@
 HAVE_ALSA_TRUE = @HAVE_ALSA_TRUE@
+HAVE_ASPRINTF = @HAVE_ASPRINTF@
 HAVE_CDROM_FALSE = @HAVE_CDROM_FALSE@
 HAVE_CDROM_TRUE = @HAVE_CDROM_TRUE@
 HAVE_ESD_FALSE = @HAVE_ESD_FALSE@
 HAVE_ESD_TRUE = @HAVE_ESD_TRUE@
+HAVE_FLAC_FALSE = @HAVE_FLAC_FALSE@
+HAVE_FLAC_TRUE = @HAVE_FLAC_TRUE@
 HAVE_GCONF_FALSE = @HAVE_GCONF_FALSE@
 HAVE_GCONF_TRUE = @HAVE_GCONF_TRUE@
 HAVE_GNOME_VFS_FALSE = @HAVE_GNOME_VFS_FALSE@
@@ -201,10 +196,13 @@ HAVE_OGGVORBIS_FALSE = @HAVE_OGGVORBIS_FALSE@
 HAVE_OGGVORBIS_TRUE = @HAVE_OGGVORBIS_TRUE@
 HAVE_OSS_FALSE = @HAVE_OSS_FALSE@
 HAVE_OSS_TRUE = @HAVE_OSS_TRUE@
+HAVE_POSIX_PRINTF = @HAVE_POSIX_PRINTF@
+HAVE_SNPRINTF = @HAVE_SNPRINTF@
 HAVE_SOLARIS_FALSE = @HAVE_SOLARIS_FALSE@
 HAVE_SOLARIS_TRUE = @HAVE_SOLARIS_TRUE@
 HAVE_SUN_FALSE = @HAVE_SUN_FALSE@
 HAVE_SUN_TRUE = @HAVE_SUN_TRUE@
+HAVE_WPRINTF = @HAVE_WPRINTF@
 ID3LIBS = @ID3LIBS@
 INPUT_PLUGINS = @INPUT_PLUGINS@
 INPUT_PLUGIN_DIR = @INPUT_PLUGIN_DIR@
@@ -217,10 +215,13 @@ INTLBISON = @INTLBISON@
 INTLLIBS = @INTLLIBS@
 INTLOBJS = @INTLOBJS@
 INTL_LIBTOOL_SUFFIX_PREFIX = @INTL_LIBTOOL_SUFFIX_PREFIX@
+INTL_MACOSX_LIBS = @INTL_MACOSX_LIBS@
 LDFLAGS = @LDFLAGS@
 LIBBEEP_MAJOR_VERSION = @LIBBEEP_MAJOR_VERSION@
 LIBBEEP_MICRO_VERSION = @LIBBEEP_MICRO_VERSION@
 LIBBEEP_MINOR_VERSION = @LIBBEEP_MINOR_VERSION@
+LIBFLAC_CFLAGS = @LIBFLAC_CFLAGS@
+LIBFLAC_LIBS = @LIBFLAC_LIBS@
 LIBGLADE_CFLAGS = @LIBGLADE_CFLAGS@
 LIBGLADE_LIBS = @LIBGLADE_LIBS@
 LIBICONV = @LIBICONV@
@@ -284,6 +285,7 @@ ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
 ac_ct_RANLIB = @ac_ct_RANLIB@
 ac_ct_STRIP = @ac_ct_STRIP@
+ac_pt_PKG_CONFIG = @ac_pt_PKG_CONFIG@
 am__fastdepCC_FALSE = @am__fastdepCC_FALSE@
 am__fastdepCC_TRUE = @am__fastdepCC_TRUE@
 am__fastdepCXX_FALSE = @am__fastdepCXX_FALSE@
