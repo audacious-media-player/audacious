@@ -434,7 +434,7 @@ static int visual_render (void *arg)
 {
 	visual_running = 1;
 	visual_stopped = 0;
-        long render_time, now;
+        static long render_time, now;
         long frame_length;
         long idle_time;
 	long frames;
@@ -472,6 +472,8 @@ static int visual_render (void *arg)
 			if (SDL_MUSTLOCK (screen) == SDL_TRUE)
 				SDL_UnlockSurface (screen);
 		}
+
+		render_time = SDL_GetTicks();
                        
 		if (gl_plug == 1) {
 			visual_bin_run (bin);
@@ -492,7 +494,11 @@ static int visual_render (void *arg)
 			sdl_draw (screen);
 		}
 
-		usleep(10000);
+		now = SDL_GetTicks();
+		idle_time = now - render_time;
+
+		if (idle_time < frame_length)
+			usleep(frame_length);
 
 		sdl_event_handle ();
 
