@@ -29892,7 +29892,7 @@ else
 fi
 
 
-                                                                                                                                                                                                                                                                                                                      ac_config_files="$ac_config_files Makefile audacious.1 audacious.spec audacious.pc audacious/audacious.desktop audacious/Makefile audacious/glade/Makefile audacious/images/Makefile libaudacious/Makefile Output/Makefile Output/OSS/Makefile Output/esd/Makefile Output/alsa/Makefile Input/Makefile Input/mpg123/Makefile Input/aac/Makefile Input/aac/libmp4v2/Makefile Input/aac/libfaad2/Makefile Input/aac/src/Makefile Input/mikmod/Makefile Input/tonegen/Makefile Input/vorbis/Makefile Input/cdaudio/Makefile Input/wav/Makefile Visualization/Makefile Visualization/blur_scope/Makefile Visualization/libvisual-proxy/Makefile po/Makefile.in intl/Makefile icons/Makefile skin/Makefile"
+                                                                                                                                                                                                                                                                                                                                ac_config_files="$ac_config_files Makefile audacious.1 audacious.spec audacious.pc audacious/audacious.desktop audacious/Makefile audacious/glade/Makefile audacious/images/Makefile libaudacious/Makefile Output/Makefile Output/OSS/Makefile Output/esd/Makefile Output/alsa/Makefile Output/disk_writer/Makefile Input/Makefile Input/mpg123/Makefile Input/aac/Makefile Input/aac/libmp4v2/Makefile Input/aac/libfaad2/Makefile Input/aac/src/Makefile Input/mikmod/Makefile Input/tonegen/Makefile Input/vorbis/Makefile Input/cdaudio/Makefile Input/wav/Makefile Visualization/Makefile Visualization/blur_scope/Makefile Visualization/libvisual-proxy/Makefile po/Makefile.in intl/Makefile icons/Makefile skin/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -30590,6 +30590,7 @@ do
   "Output/OSS/Makefile" ) CONFIG_FILES="$CONFIG_FILES Output/OSS/Makefile" ;;
   "Output/esd/Makefile" ) CONFIG_FILES="$CONFIG_FILES Output/esd/Makefile" ;;
   "Output/alsa/Makefile" ) CONFIG_FILES="$CONFIG_FILES Output/alsa/Makefile" ;;
+  "Output/disk_writer/Makefile" ) CONFIG_FILES="$CONFIG_FILES Output/disk_writer/Makefile" ;;
   "Input/Makefile" ) CONFIG_FILES="$CONFIG_FILES Input/Makefile" ;;
   "Input/mpg123/Makefile" ) CONFIG_FILES="$CONFIG_FILES Input/mpg123/Makefile" ;;
   "Input/aac/Makefile" ) CONFIG_FILES="$CONFIG_FILES Input/aac/Makefile" ;;

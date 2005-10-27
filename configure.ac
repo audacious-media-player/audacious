@@ -645,6 +645,7 @@ AC_CONFIG_FILES([
         Output/OSS/Makefile
         Output/esd/Makefile
         Output/alsa/Makefile
+	Output/disk_writer/Makefile
         Input/Makefile
         Input/mpg123/Makefile
 	Input/aac/Makefile
