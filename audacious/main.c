@@ -622,7 +622,7 @@ bmp_set_default_icon(void)
 static void
 display_usage(void)
 {
-    g_print(_("Usage: beep-media-player [options] [files] ...\n\n"
+    g_print(_("Usage: audacious [options] [files] ...\n\n"
               "Options:\n"
               "--------\n"));
     g_print("\n-h, --help             ");
@@ -630,7 +630,7 @@ display_usage(void)
     g_print(_("Display this text and exit"));
     g_print("\n-n, --session          ");
     /* -n, --session switch */
-    g_print(_("Select BMP/XMMS session (Default: 0)"));
+    g_print(_("Select audacious/BMP/XMMS session (Default: 0)"));
     g_print("\n-r, --rew              ");
     /* -r, --rew switch */
     g_print(_("Skip backwards in playlist"));
@@ -657,7 +657,7 @@ display_usage(void)
     g_print(_("Show the main window"));
     g_print("\n-a, --activate         ");
     /* -a, --activate switch */
-    g_print(_("Activate BMP"));
+    g_print(_("Activate audacious"));
     g_print("\n-i, --sm-client-id     ");
     /* -i, --sm-client-id switch */
     g_print(_("Previous session ID"));
@@ -882,6 +882,7 @@ gint
 main(gint argc, gchar ** argv)
 {
     BmpCmdLineOpt options;
+    gboolean gtk_init_check_ok;
 
     /* Setup l10n early so we can print localized error messages */
     gtk_set_locale();
@@ -896,7 +897,7 @@ main(gint argc, gchar ** argv)
     /* Check GTK version. Really, this is only needed for binary
      * distribution since configure already checks. */
     if (!GTK_CHECK_VERSION(2, 4, 0)) {
-        g_printerr(_("Sorry, your GTK+ version (%d.%d.%d) does not work with BMP.\n"
+        g_printerr(_("Sorry, your GTK+ version (%d.%d.%d) does not work with audacious.\n"
                      "Please use GTK+ %s or newer.\n"),
                    gtk_major_version, gtk_minor_version, gtk_micro_version,
                    "2.4.0");
@@ -915,12 +916,16 @@ main(gint argc, gchar ** argv)
 
     gdk_threads_init();
 
-    if (!gtk_init_check(&argc, &argv)) {
+    gtk_init_check_ok = gtk_init_check(&argc, &argv);
+    /* Now let's parse the command line options first. */
+    parse_cmd_line(argc, argv, &options);
+    if (!gtk_init_check_ok) {
+    //    if (!gtk_init_check(&argc, &argv)) {
         if (argc < 2) {
             /* GTK check failed, and no arguments passed to indicate
                that user is intending to only remote control a running
                session */
-            g_printerr(_("BMP: Unable to open display, exiting."));
+            g_printerr(_("audacious: Unable to open display, exiting.\n"));
             exit(EXIT_FAILURE);
         }
 
@@ -935,8 +940,6 @@ main(gint argc, gchar ** argv)
 
     signal(SIGPIPE, SIG_IGN);   /* for controlsocket.c */
     signal(SIGSEGV, segfault_handler);
-
-    parse_cmd_line(argc, argv, &options);
 
     g_random_set_seed(time(NULL));
 
