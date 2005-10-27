@@ -354,6 +354,18 @@ else
 fi
 AM_CONDITIONAL(HAVE_MIKMOD,test "x$have_mikmod" = xyes)
 
+dnl *** flac
+AC_ARG_ENABLE( flc,
+[  --disable-flac        Disable flac input plugin [default=enabled]],,
+                enable_flac="yes")
+
+if test "x$enable_flac" = xyes; then
+        AM_PATH_LIBFLAC(have_flac=yes, have_flac=no)
+else
+        AC_MSG_RESULT([*** flac plugin disabled per user request ***])
+        have_flac=no
+fi
+AM_CONDITIONAL(HAVE_FLAC,test "x$have_flac" = xyes)
 
 dnl *** OSS output
 
@@ -657,6 +669,8 @@ AC_CONFIG_FILES([
         Input/vorbis/Makefile
         Input/cdaudio/Makefile
         Input/wav/Makefile
+	Input/flac/Makefile
+	Input/flac/plugin_common/Makefile
         Visualization/Makefile
         Visualization/blur_scope/Makefile
 	Visualization/libvisual-proxy/Makefile
@@ -708,6 +722,7 @@ echo "  CD Digital Audio (cdda):                yes"
 echo "  Microsoft WAV (wav):                    yes"
 echo "  Tone Generator:                         yes"
 echo "  Ogg Vorbis (vorbis):                    $have_oggvorbis"
+echo "  FLAC:                                   $enable_flac"
 echo ""
 echo "  Visualization"
 echo "  -------------"
