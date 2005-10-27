@@ -8,12 +8,12 @@ if test ! -f $TOP_DIR/configure.ac ; then
     exit 1
 fi
 
-AUTOCONF=${AUTOCONF:-autoconf259}
-AUTOMAKE=${AUTOMAKE:-automake19}
-ACLOCAL=${ACLOCAL:-aclocal19}
-AUTOHEADER=${AUTOHEADER:-autoheader259}
+AUTOCONF=${AUTOCONF:-autoconf}
+AUTOMAKE=${AUTOMAKE:-automake-1.9}
+ACLOCAL=${ACLOCAL:-aclocal-1.9}
+AUTOHEADER=${AUTOHEADER:-autoheader}
 AUTOPOINT=${AUTOPOINT:-autopoint}
-LIBTOOLIZE=${LIBTOOLIZE:-libtoolize15}
+LIBTOOLIZE=${LIBTOOLIZE:-libtoolize}
 
 dump_help_screen ()
 {
@@ -83,7 +83,7 @@ cd $TOP_DIR
 
 run_or_die $AUTOPOINT -f
 run_or_die $LIBTOOLIZE -f -c
-run_or_die $ACLOCAL -I m4 -I /usr/local/share/aclocal
+run_or_die $ACLOCAL -I m4
 run_or_die $AUTOHEADER
 run_or_die $AUTOCONF
 run_or_die $AUTOMAKE -a -c
