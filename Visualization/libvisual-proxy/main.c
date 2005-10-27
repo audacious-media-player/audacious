@@ -1,4 +1,3 @@
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -493,7 +492,7 @@ static int visual_render (void *arg)
 			sdl_draw (screen);
 		}
 
-		usleep(2000);
+		usleep(10000);
 
 		sdl_event_handle ();
 
