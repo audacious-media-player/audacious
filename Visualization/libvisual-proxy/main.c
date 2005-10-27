@@ -1,3 +1,4 @@
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -5,7 +6,7 @@
 
 #include <audacious/plugin.h>
 #include <audacious/util.h>
-#include <audacious/beepctrl.h>
+#include <libaudacious/beepctrl.h>
 
 #include <SDL.h>
 #include <SDL_thread.h>

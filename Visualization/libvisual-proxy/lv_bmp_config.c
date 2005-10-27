@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <gtk/gtk.h>
-#include <audacious/configfile.h>
+#include <libaudacious/configfile.h>
 #include <audacious/util.h>
 #include <libvisual/libvisual.h>
 #include <glib/gi18n.h>
