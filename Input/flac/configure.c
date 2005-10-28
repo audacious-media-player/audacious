@@ -28,9 +28,9 @@
 #include <pthread.h>
 #include <math.h>
 
-#include <audacious/configfile.h>
-#include <audacious/dirbrowser.h>
-#include <audacious/titlestring.h>
+#include <libaudacious/configfile.h>
+#include <libaudacious/dirbrowser.h>
+#include <libaudacious/titlestring.h>
 #include <audacious/util.h>
 #include <audacious/plugin.h>
 
