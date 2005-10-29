@@ -84,13 +84,6 @@ typedef void (*lib_message_func_t)(int loglevel,
 				   const char *lib,
 				   const char *fmt,
 				   ...);
-#ifndef HAVE_IN_PORT_T
-typedef uint16_t in_port_t;
-#endif
-
-#ifndef HAVE_SOCKLEN_T
-typedef unsigned int socklen_t;
-#endif
 
 #ifdef sun
 #include <limits.h>
