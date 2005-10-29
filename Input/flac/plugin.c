@@ -27,8 +27,8 @@
 
 #include <audacious/plugin.h>
 #include <audacious/util.h>
-#include <audacious/configfile.h>
-#include <audacious/titlestring.h>
+#include <libaudacious/configfile.h>
+#include <libaudacious/titlestring.h>
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
