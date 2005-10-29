@@ -653,27 +653,28 @@ AC_CONFIG_FILES([
         audacious/glade/Makefile
 	audacious/images/Makefile
         libaudacious/Makefile
-        Output/Makefile
-        Output/OSS/Makefile
-        Output/esd/Makefile
-        Output/alsa/Makefile
-	Output/disk_writer/Makefile
-        Input/Makefile
-        Input/mpg123/Makefile
-	Input/aac/Makefile
-	Input/aac/libmp4v2/Makefile
-	Input/aac/libfaad2/Makefile
-	Input/aac/src/Makefile
-	Input/mikmod/Makefile
-	Input/tonegen/Makefile
-        Input/vorbis/Makefile
-        Input/cdaudio/Makefile
-        Input/wav/Makefile
-	Input/flac/Makefile
-	Input/flac/plugin_common/Makefile
-        Visualization/Makefile
-        Visualization/blur_scope/Makefile
-	Visualization/libvisual-proxy/Makefile
+	Plugins/Makefile
+        Plugins/Output/Makefile
+        Plugins/Output/OSS/Makefile
+        Plugins/Output/esd/Makefile
+        Plugins/Output/alsa/Makefile
+	Plugins/Output/disk_writer/Makefile
+        Plugins/Input/Makefile
+        Plugins/Input/mpg123/Makefile
+	Plugins/Input/aac/Makefile
+	Plugins/Input/aac/libmp4v2/Makefile
+	Plugins/Input/aac/libfaad2/Makefile
+	Plugins/Input/aac/src/Makefile
+	Plugins/Input/mikmod/Makefile
+	Plugins/Input/tonegen/Makefile
+        Plugins/Input/vorbis/Makefile
+        Plugins/Input/cdaudio/Makefile
+        Plugins/Input/wav/Makefile
+	Plugins/Input/flac/Makefile
+	Plugins/Input/flac/plugin_common/Makefile
+        Plugins/Visualization/Makefile
+        Plugins/Visualization/blur_scope/Makefile
+	Plugins/Visualization/libvisual-proxy/Makefile
         po/Makefile.in
         intl/Makefile
         icons/Makefile
