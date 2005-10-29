@@ -145,7 +145,7 @@ typedef float float32_t;
 #else
 
 #ifdef HAVE_CONFIG_H
-#  include "../../../config.h"
+#  include "config.h"
 #endif
 
 #include <stdio.h>
