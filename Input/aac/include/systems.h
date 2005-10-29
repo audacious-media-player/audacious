@@ -23,82 +23,6 @@
 #ifndef __SYSTEMS_H__
 #define __SYSTEMS_H__
 
-#ifdef WIN32
-#define HAVE_IN_PORT_T
-#define HAVE_SOCKLEN_T
-#include <win32_ver.h>
-#else
-#include <config.h>
-#endif
-
-
-
-
-#ifdef WIN32
-
-#define _WIN32_WINNT 0x0400
-#include <windows.h>
-#include <stdio.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <time.h>
-#include <limits.h>
-
-typedef unsigned __int64 uint64_t;
-typedef unsigned __int32 uint32_t;
-typedef unsigned __int16 uint16_t;
-typedef unsigned __int8 uint8_t;
-typedef unsigned __int64 u_int64_t;
-typedef unsigned __int32 u_int32_t;
-typedef unsigned __int16 u_int16_t;
-typedef unsigned __int8 u_int8_t;
-typedef __int64 int64_t;
-typedef __int32 int32_t;
-typedef __int16 int16_t;
-typedef __int8  int8_t;
-typedef unsigned short in_port_t;
-typedef unsigned int socklen_t;
-typedef int ssize_t;
-#define snprintf _snprintf
-#define strncasecmp _strnicmp
-#define strcasecmp _stricmp
-
-#include <io.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#define write _write
-#define lseek _lseek
-#define close _close
-#define open _open
-#define access _access
-#define vsnprintf _vsnprintf
-#define F_OK 0
-#define OPEN_RDWR (_O_RDWR | _O_BINARY)
-#define OPEN_CREAT (_O_CREAT | _O_BINARY)
-#define OPEN_RDONLY (_O_RDONLY | _O_BINARY)
-#define srandom srand
-#define random rand
-
-#define IOSBINARY ios::binary
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-int gettimeofday(struct timeval *t, void *);
-#ifdef __cplusplus
-}
-#endif
-
-#define PATH_MAX MAX_PATH
-#define MAX_UINT64 -1
-#define LLD "%I64d"
-#define LLU "%I64u"
-#define LLX "%I64x"
-#define M_LLU 1000i64
-#define C_LLU 100i64
-#define I_LLU 1i64
-
 #define LOG_EMERG 0
 #define LOG_ALERT 1
 #define LOG_CRIT 2
@@ -108,34 +32,9 @@ int gettimeofday(struct timeval *t, void *);
 #define LOG_INFO 6
 #define LOG_DEBUG 7
 
-#if     !__STDC__ && _INTEGRAL_MAX_BITS >= 64
-#define VAR_TO_FPOS(fpos, var) (fpos) = (var)
-#define FPOS_TO_VAR(fpos, typed, var) (var) = (typed)(_FPOSOFF(fpos))
-#else
-#define VAR_TO_FPOS(fpos, var) (fpos).lopart = ((var) & UINT_MAX); (fpos).hipart = ((var) >> 32)
-#define FPOS_TO_VAR(fpos, typed, var) (var) = (typed)((uint64_t)((fpos).hipart ) << 32 | (fpos).lopart)
-#endif
-
-#define __STRING(expr) #expr
-
-#define FOPEN_READ_BINARY "rb"
-#define FOPEN_WRITE_BINARY "wb"
-
-#else /* UNIX */
-
 #include <stdio.h>
 #include <errno.h>
 #include <stdlib.h>
-
-#ifdef HAVE_INTTYPES_H
-#include <inttypes.h>
-#else
-#ifdef HAVE_STDINT_H
-#include <stdint.h>
-#else
-#error "Don't have stdint.h or inttypes.h - no way to get uint8_t"
-#endif
-#endif
 
 #include <unistd.h>
 #include <fcntl.h>
@@ -175,7 +74,6 @@ int gettimeofday(struct timeval *t, void *);
 
 #define FOPEN_READ_BINARY "r"
 #define FOPEN_WRITE_BINARY "w"
-#endif /* define unix */
 
 #include <stdarg.h>
 typedef void (*error_msg_func_t)(int loglevel,
@@ -227,8 +125,5 @@ typedef unsigned int socklen_t;
 #define FALSE 0
 #endif
 
-#endif /* __SYSTEMS_H__ */
-
-
-
+#endif /* define unix */
 
