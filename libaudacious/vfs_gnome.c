@@ -51,10 +51,10 @@ vfs_fopen(const gchar * path,
     file = g_new(VFSFile, 1);
 
     mode_to_gnome_vfs(mode, &g_mode, &truncate, &append);
+    gchar *escaped_file = gnome_vfs_escape_path_string(path);
 
     if (!truncate) {
-        g_result = gnome_vfs_open(&(file->handle), path, g_mode);
-
+        g_result = gnome_vfs_open(&(file->handle), escaped_file, g_mode);
         if (append && g_result == GNOME_VFS_ERROR_NOT_FOUND) {
             g_result = gnome_vfs_create(&(file->handle),
                                         path, g_mode, TRUE,
@@ -71,7 +71,7 @@ vfs_fopen(const gchar * path,
     }
     else {
         g_result = gnome_vfs_create(&(file->handle),
-                                    path, g_mode, FALSE,
+                                    escaped_file, g_mode, FALSE,
                                     S_IRUSR | S_IWUSR |
                                     S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
     }
@@ -83,6 +83,8 @@ vfs_fopen(const gchar * path,
         g_free(file);
         file = NULL;
     }
+
+    g_free(escaped_file);
 
     return file;
 }
