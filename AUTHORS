@@ -1,10 +1,19 @@
 Audacious (C) GPL 2005
 
+Authors listed alphabetically, by last name:
+--------------------------------------------
+
+William Pitcock <nenolod@nenolod.net>
 Mohammed Sameer <msameer@foolab.org>
+
+Translators
+-----------
+
+Japanese           - Dai
 
 -
 
-BAsed on:
+Based on:
 
 BMP - beep media player (C) GPL 2003-2005
 
@@ -18,9 +27,6 @@ Milosz Derezynski <m.derezynski@arcor.de>
 David Lau <coder_sku@users.sourceforge.net>
 Ole Andre Vadla Ravnaas <oleavr@jblinux.net>
 Michiel Sikkes <michiel@eyesopened.nl>
-
-ClearSky skin by Will Reinhart <willsan@xepher.net>
-
 
 Patch Authors
 -------------
@@ -49,7 +55,6 @@ John Spray
 Takashi Iwai
 Martijn Vernooij
 Thierry Vignaud
-
 
 Translators
 -----------
