@@ -19,6 +19,7 @@
 # GNU makefile
 #
 
+if HAVE_FLAC
 SUBDIRS = plugin_common
 
 noinst_HEADERS = \
@@ -33,6 +34,7 @@ noinst_HEADERS = \
 	replaygain_synthesis.h
 
 lib_LTLIBRARIES = libflac.la
+endif
 
 libdir = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
