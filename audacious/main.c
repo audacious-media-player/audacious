@@ -525,9 +525,10 @@ bmp_config_save(void)
                                 *bmp_boolents[i].be_vloc);
 
     /* HACK: Work-around for bug #129 */
+    /*
     bmp_cfg_db_set_bool(db, NULL, "playlist_shaded",
 		        FALSE);
-
+    */
     for (i = 0; i < ncfgient; ++i)
         if (bmp_numents[i].ie_wrt)
             bmp_cfg_db_set_int(db, NULL,
