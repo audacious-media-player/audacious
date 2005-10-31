@@ -535,6 +535,10 @@ playlistwin_set_shade(gboolean shaded)
                       cfg.playlist_width,
                       playlistwin_get_height());
 
+    /* This is a fix for #129 */
+    /* No idea, But it works! */
+    playlistwin_set_mask();
+
     draw_playlist_window(TRUE);
 }
 
