@@ -1,4 +1,3 @@
-
 /*
    libmikmod for xmms
 
@@ -69,7 +68,6 @@ static GtkWidget *mikmod_conf_window = NULL, *about_window = NULL;
 
 static void *play_loop(void *arg);
 static void config_ok(GtkWidget * widget, gpointer data);
-
 
 static void aboutbox()
 {
@@ -421,7 +419,7 @@ static void configure()
 
 	if (!mikmod_conf_window)
 	{
-		mikmod_conf_window = gtk_window_new(GTK_WINDOW_DIALOG);
+		mikmod_conf_window = gtk_window_new(GTK_WINDOW_POPUP);
 		gtk_object_set_data(GTK_OBJECT(mikmod_conf_window), "mikmod_conf_window", mikmod_conf_window);
 		gtk_window_set_title(GTK_WINDOW(mikmod_conf_window), _("MikMod Configuration"));
 		gtk_window_set_policy(GTK_WINDOW(mikmod_conf_window), FALSE, FALSE, FALSE);
