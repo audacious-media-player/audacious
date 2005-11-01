@@ -346,7 +346,7 @@ GtkItemFactoryEntry mainwin_playback_menu_entries[] = {
      MAINWIN_GENERAL_JTF, "<StockItem>", GTK_STOCK_JUMP_TO},
     {N_("/Jump to Time"), "<control>J", mainwin_general_menu_callback,
      MAINWIN_GENERAL_JTT, "<StockItem>", GTK_STOCK_JUMP_TO},
-    {"/-", NULL, NULL, 0, "<Seperator>"},
+    {"/-", NULL, NULL, 0, "<Separator>"},
     {N_("/View Track Details"), "<alt>I", mainwin_general_menu_callback,
      MAINWIN_GENERAL_FILEINFO, "<ImageItem>", my_pixbuf}
 };
