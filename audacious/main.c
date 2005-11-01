@@ -74,9 +74,9 @@
 
 
 /* Translatable string for beep.desktop's comment field */
-const gchar *desktop_comment = N_("Beep Media Player");
+const gchar *desktop_comment = N_("Audacious");
 
-const gchar *application_name = N_("Beep Media Player");
+const gchar *application_name = N_("Audacious");
 
 
 struct _BmpCmdLineOpt {
@@ -234,7 +234,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"playlist_visible", &cfg.playlist_visible, TRUE},
     {"playlist_transparent", &cfg.playlist_transparent, TRUE},
     {"use_fontsets", &cfg.use_fontsets, TRUE},
-    {"mainwin_use_xfont", &cfg.mainwin_use_xfont, TRUE},
+    {"mainwin_use_xfont", &cfg.mainwin_use_xfont, FALSE},
     {"equalizer_visible", &cfg.equalizer_visible, TRUE},
     {"equalizer_active", &cfg.equalizer_active, TRUE},
     {"equalizer_shaded", &cfg.equalizer_shaded, TRUE},

@@ -231,7 +231,7 @@ static void mainwin_play_menu_callback(gpointer user_data,
 
 /* Song name area menu */
 
-static GtkItemFactoryEntry mainwin_songname_menu_entries[] = {
+GtkItemFactoryEntry mainwin_songname_menu_entries[] = {
     {N_("/View Track Details"), "<alt>i", mainwin_general_menu_callback,
      MAINWIN_GENERAL_FILEINFO, "<ImageItem>", my_pixbuf},
     {"/-", NULL, NULL, 0, "<Separator>"},
@@ -244,7 +244,7 @@ static gint mainwin_songname_menu_entries_num =
 
 /* Mini-visualizer area menu */
 
-static GtkItemFactoryEntry mainwin_vis_menu_entries[] = {
+GtkItemFactoryEntry mainwin_vis_menu_entries[] = {
     {N_("/Visualization Mode"), NULL, NULL, 0, "<Branch>"},
     {N_("/Visualization Mode/Analyzer"), NULL, mainwin_vis_menu_callback,
      MAINWIN_VIS_ANALYZER, "<RadioItem>"},
@@ -317,7 +317,7 @@ static const gint mainwin_vis_menu_entries_num =
 
 /* Playback menu (now used only for accelerators) */
 
-static GtkItemFactoryEntry mainwin_playback_menu_entries[] = {
+GtkItemFactoryEntry mainwin_playback_menu_entries[] = {
 /*
     {N_("/Play CD"), "<alt>C", mainwin_general_menu_callback,
      MAINWIN_GENERAL_PLAYCD, "<StockItem>", GTK_STOCK_CDROM},
@@ -357,7 +357,7 @@ static const gint mainwin_playback_menu_entries_num =
 
 /* Main menu */
 
-static GtkItemFactoryEntry mainwin_general_menu_entries[] = {
+GtkItemFactoryEntry mainwin_general_menu_entries[] = {
     { N_("/View Track Details"), "<alt>I", mainwin_general_menu_callback,
      MAINWIN_GENERAL_FILEINFO, "<ImageItem>", my_pixbuf},
     {"/-", NULL, NULL, 0, "<Separator>"},
@@ -376,7 +376,7 @@ static const gint mainwin_general_menu_entries_num =
 
 /* Add submenu */
 
-static GtkItemFactoryEntry mainwin_add_menu_entries[] = {
+GtkItemFactoryEntry mainwin_add_menu_entries[] = {
     {N_("/Files..."), "f", mainwin_general_menu_callback,
      MAINWIN_GENERAL_PLAYFILE, "<StockItem>", GTK_STOCK_OPEN},
 /*
@@ -397,7 +397,7 @@ static const gint mainwin_add_menu_entries_num =
 
 /* View submenu */
 
-static GtkItemFactoryEntry mainwin_view_menu_entries[] = {
+GtkItemFactoryEntry mainwin_view_menu_entries[] = {
     {N_("/Show Playlist Editor"), "<alt>E", mainwin_general_menu_callback,
      MAINWIN_GENERAL_SHOWPLWIN, "<ToggleItem>"},
     {N_("/Show Equalizer"), "<alt>G", mainwin_general_menu_callback,
