@@ -318,19 +318,15 @@ static const gint mainwin_vis_menu_entries_num =
 /* Playback menu (now used only for accelerators) */
 
 GtkItemFactoryEntry mainwin_playback_menu_entries[] = {
-/*
     {N_("/Play CD"), "<alt>C", mainwin_general_menu_callback,
      MAINWIN_GENERAL_PLAYCD, "<StockItem>", GTK_STOCK_CDROM},
     {"/-", NULL, NULL, 0, "<Separator>"},
-*/
     {N_("/Repeat"), "R", mainwin_play_menu_callback,
      MAINWIN_OPT_REPEAT, "<ToggleItem>"},
     {N_("/Shuffle"), "S", mainwin_play_menu_callback,
      MAINWIN_OPT_SHUFFLE, "<ToggleItem>"},
-/*
     {N_("/No Playlist Advance"), "<control>N", mainwin_play_menu_callback,
      MAINWIN_OPT_NPA, "<ToggleItem>"},
-*/
     {"/-", NULL, NULL, 0, "<Separator>"},
     {N_("/Play"), "x", mainwin_general_menu_callback,
      MAINWIN_GENERAL_PLAY, "<Item>"},
@@ -350,6 +346,9 @@ GtkItemFactoryEntry mainwin_playback_menu_entries[] = {
      MAINWIN_GENERAL_JTF, "<StockItem>", GTK_STOCK_JUMP_TO},
     {N_("/Jump to Time"), "<control>J", mainwin_general_menu_callback,
      MAINWIN_GENERAL_JTT, "<StockItem>", GTK_STOCK_JUMP_TO},
+    {"/-", NULL, NULL, 0, "<Seperator>"},
+    {N_("/View Track Details"), "<alt>I", mainwin_general_menu_callback,
+     MAINWIN_GENERAL_FILEINFO, "<ImageItem>", my_pixbuf}
 };
 
 static const gint mainwin_playback_menu_entries_num =
@@ -368,13 +367,12 @@ GtkItemFactoryEntry mainwin_general_menu_entries[] = {
     {N_("/Play Location"), "<control>L", mainwin_general_menu_callback,
      MAINWIN_GENERAL_PLAYLOCATION, "<StockItem>", GTK_STOCK_NETWORK},
     {"/-", NULL, NULL, 0, "<Separator>"},
-    {N_("/View Track Details"), "<alt>I", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_FILEINFO, "<ImageItem>", my_pixbuf},
+    {N_("/V_isualization"), NULL, NULL, 0, "<Item>"},
+    {N_("/_Playback"), NULL, NULL, 0, "<Item>"},
+    {N_("/_View"), NULL, NULL, 0, "<Item>"},
     {"/-", NULL, NULL, 0, "<Separator>"},
     {N_("/Preferences"), "<control>P", mainwin_general_menu_callback,
      MAINWIN_GENERAL_PREFS, "<StockItem>", GTK_STOCK_PREFERENCES},
-    {N_("/_View"), NULL, NULL, 0, "<Item>"},
-    {"/-", NULL, NULL, 0, "<Separator>"},
     {N_("/_Quit"), NULL, mainwin_general_menu_callback,
      MAINWIN_GENERAL_EXIT, "<StockItem>", GTK_STOCK_QUIT}
 };
@@ -3195,6 +3193,8 @@ mainwin_create_menus(void)
                                    mainwin_accel);
 
     make_submenu(mainwin_general_menu, "/View", mainwin_view_menu);
+    make_submenu(mainwin_general_menu, "/Playback", mainwin_play_menu);
+    make_submenu(mainwin_general_menu, "/Visualization", mainwin_vis_menu);
 
     gtk_window_add_accel_group(GTK_WINDOW(mainwin), mainwin_accel);
 }
