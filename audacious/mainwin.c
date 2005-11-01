@@ -358,15 +358,23 @@ static const gint mainwin_playback_menu_entries_num =
 /* Main menu */
 
 GtkItemFactoryEntry mainwin_general_menu_entries[] = {
-    { N_("/View Track Details"), "<alt>I", mainwin_general_menu_callback,
+    {N_("/About Audacious"), NULL, mainwin_general_menu_callback,
+     MAINWIN_GENERAL_ABOUT, "<StockItem>", GTK_STOCK_DIALOG_INFO},
+    {"/-", NULL, NULL, 0, "<Separator>"},
+    {N_("/Play File"), "L", mainwin_general_menu_callback,
+     MAINWIN_GENERAL_PLAYFILE, "<StockItem>", GTK_STOCK_OPEN},
+    {N_("/Play Directory"), "<shift>L", mainwin_general_menu_callback,
+     MAINWIN_GENERAL_PLAYDIRECTORY, "<Item>"},
+    {N_("/Play Location"), "<control>L", mainwin_general_menu_callback,
+     MAINWIN_GENERAL_PLAYLOCATION, "<StockItem>", GTK_STOCK_NETWORK},
+    {"/-", NULL, NULL, 0, "<Separator>"},
+    {N_("/View Track Details"), "<alt>I", mainwin_general_menu_callback,
      MAINWIN_GENERAL_FILEINFO, "<ImageItem>", my_pixbuf},
     {"/-", NULL, NULL, 0, "<Separator>"},
     {N_("/Preferences"), "<control>P", mainwin_general_menu_callback,
      MAINWIN_GENERAL_PREFS, "<StockItem>", GTK_STOCK_PREFERENCES},
     {N_("/_View"), NULL, NULL, 0, "<Item>"},
     {"/-", NULL, NULL, 0, "<Separator>"},
-    {N_("/About Audacious"), NULL, mainwin_general_menu_callback,
-     MAINWIN_GENERAL_ABOUT, "<StockItem>", GTK_STOCK_DIALOG_INFO},
     {N_("/_Quit"), NULL, mainwin_general_menu_callback,
      MAINWIN_GENERAL_EXIT, "<StockItem>", GTK_STOCK_QUIT}
 };
@@ -1925,6 +1933,19 @@ on_add_url_add_clicked(GtkWidget * widget,
         playlist_add_url(text);
 }
 
+static void
+on_add_url_ok_clicked(GtkWidget * widget,
+                      GtkWidget * entry)
+{
+    const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
+    if (text && *text)
+    {
+        playlist_clear();
+        playlist_add_url(text);
+        bmp_playback_initiate();
+    }
+}
+
 void
 mainwin_show_add_url_window(void)
 {
@@ -1932,7 +1953,8 @@ mainwin_show_add_url_window(void)
 
     if (!url_window) {
         url_window =
-            util_add_url_dialog_new(_("Add Internet Address"),
+            util_add_url_dialog_new(_("Enter location to play:"),
+				    G_CALLBACK(on_add_url_ok_clicked),
                                     G_CALLBACK(on_add_url_add_clicked));
         gtk_window_set_transient_for(GTK_WINDOW(url_window),
                                      GTK_WINDOW(mainwin));

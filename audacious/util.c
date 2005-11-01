@@ -624,9 +624,10 @@ util_add_url_callback(GtkWidget * widget,
 }
 
 GtkWidget *
-util_add_url_dialog_new(const gchar * caption, GCallback enqueue_func)
+util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
+    GCallback enqueue_func)
 {
-    GtkWidget *win, *vbox, *bbox, *enqueue, *cancel, *combo, *entry;
+    GtkWidget *win, *vbox, *bbox, *enqueue, *ok, *cancel, *combo, *entry;
     GList *url;
 
     win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -653,7 +654,7 @@ util_add_url_dialog_new(const gchar * caption, GCallback enqueue_func)
                      G_CALLBACK(util_add_url_callback),
                      entry);
     g_signal_connect(entry, "activate",
-                     G_CALLBACK(enqueue_func),
+                     G_CALLBACK(ok_func),
                      entry);
     g_signal_connect_swapped(entry, "activate",
                              G_CALLBACK(gtk_widget_destroy),
@@ -663,6 +664,16 @@ util_add_url_dialog_new(const gchar * caption, GCallback enqueue_func)
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
     gtk_button_box_set_spacing(GTK_BUTTON_BOX(bbox), 5);
     gtk_box_pack_start(GTK_BOX(vbox), bbox, FALSE, FALSE, 0);
+
+    ok = gtk_button_new_from_stock(GTK_STOCK_OPEN);
+    g_signal_connect(ok, "clicked",
+		     G_CALLBACK(util_add_url_callback), entry);
+    g_signal_connect(ok, "clicked",
+		     G_CALLBACK(ok_func), entry);
+    g_signal_connect_swapped(ok, "clicked",
+                             G_CALLBACK(gtk_widget_destroy),
+                             win);
+    gtk_box_pack_start(GTK_BOX(bbox), ok, FALSE, FALSE, 0);
 
     enqueue = gtk_button_new_from_stock(GTK_STOCK_ADD);
     gtk_box_pack_start(GTK_BOX(bbox), enqueue, FALSE, FALSE, 0);

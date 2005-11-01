@@ -65,7 +65,7 @@ void util_item_factory_popup_with_data(GtkItemFactory * ifactory,
                                        GtkDestroyNotify destroy, guint x,
                                        guint y, guint mouse_button,
                                        guint32 time);
-GtkWidget *util_add_url_dialog_new(const gchar * caption,
+GtkWidget *util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
                                    GCallback enqueue_func);
 void util_menu_position(GtkMenu * menu, gint * x, gint * y,
                         gboolean * push_in, gpointer data);
