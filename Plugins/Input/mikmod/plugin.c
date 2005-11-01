@@ -419,7 +419,7 @@ static void configure()
 
 	if (!mikmod_conf_window)
 	{
-		mikmod_conf_window = gtk_window_new(GTK_WINDOW_POPUP);
+		mikmod_conf_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 		gtk_object_set_data(GTK_OBJECT(mikmod_conf_window), "mikmod_conf_window", mikmod_conf_window);
 		gtk_window_set_title(GTK_WINDOW(mikmod_conf_window), _("MikMod Configuration"));
 		gtk_window_set_policy(GTK_WINDOW(mikmod_conf_window), FALSE, FALSE, FALSE);
