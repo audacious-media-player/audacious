@@ -621,16 +621,6 @@ if test x"$opengl" = xno; then
 fi
 
 AC_PATH_PROG(SDL_CONFIG, [sdl-config], [no])
-if test x$SDL_CONFIG = xno ; then
-  AC_WARN([
-*** sdl-config not found.
-*** If you have installed from binaries, probably you have not
-*** installed SDL development package.
-*** See http://www.libsdl.org
-***
-*** Disabling compilation of libvisual-proxy.
-])
-fi
 AM_PATH_SDL(1.2.5, , [AC_WARN([*** SDL >= 1.2.5 not installed - please install first ***])
 	have_libvisual="no"])
 
