@@ -15,9 +15,9 @@
 #endif
 
 #ifdef WORDS_BIGENDIAN
-# define BLARGG_BIG_ENDIAN
+# define BLARGG_BIG_ENDIAN	1
 #else
-# define BLARGG_LITTLE_ENDIAN
+# define BLARGG_LITTLE_ENDIAN	1
 #endif
 
 // Source files use #include BLARGG_ENABLE_OPTIMIZER before performance-critical code
