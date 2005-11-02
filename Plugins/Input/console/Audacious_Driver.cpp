@@ -21,6 +21,12 @@ extern "C" {
 
 #include <cstring>
 
+#ifdef WORDS_BIGENDIAN
+# define MY_FMT FMT_S16_BE
+#else
+# define MY_FMT FMT_S16_LE
+#endif
+
 static Spc_Emu *spc = NULL;
 static GThread *decode_thread;
 
@@ -80,13 +86,13 @@ static void play_file(char *filename)
 	reader.read(&header, sizeof(header));
 
 	spc = new Spc_Emu;
-	spc->init(44100);
+	spc->init(32000);
 	spc->load(header, reader);
 	spc->start_track(0);
 
 	decode_thread = g_thread_create(play_loop, spc, TRUE, NULL);
 
-        if (!console_ip.output->open_audio(FMT_S16_NE, 44100, 1))
+        if (!console_ip.output->open_audio(MY_FMT, 32000, 1))
                  return;
 
 	printf("decode_thread started.\n");
@@ -144,14 +150,15 @@ static void console_pause(gshort p)
 static void *play_loop(gpointer arg)
 {
 	Spc_Emu *my_spc = (Spc_Emu *) arg;
-        Music_Emu::sample_t buf[16384];
+        Music_Emu::sample_t buf[4096];
 
-        while (my_spc->play(16384, buf) == NULL)
+        while (my_spc->play(4096, buf) == NULL)
         {
 		console_ip.add_vis_pcm(console_ip.output->written_time(),
-			FMT_S16_NE, 1, 16384, buf);
-	        while(console_ip.output->buffer_free() < 16384);
-		console_ip.output->write_audio(buf, 16384);
+			MY_FMT, 1, 4096, buf);
+	        while(console_ip.output->buffer_free() < 4096)
+			xmms_usleep(10000);
+		console_ip.output->write_audio(buf, 4096);
 	}
 
         delete spc;
