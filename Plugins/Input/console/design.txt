@@ -1,0 +1,177 @@
+Game_Music_Emu Design Notes
+
+
+Managing Complexity
+-------------------
+Complexity has been a factor in most library decisions. Many features
+have been passed by due to the complexity they would add. Once past a
+certain level, complexity prevents mentally grasping the library in its
+entirety, at which point more defects will occur and be hard to find.
+
+I chose 16-bit signed samples because it seems to be the most common
+format. Supporting multiple formats would add too much complexity to be
+worth it. Other formats can be obtained via conversion.
+
+I've kept interfaces fairly lean, leaving many possible features
+untapped but easy to add if necessary. For example the classic emulators
+could have volume and frequency equalization adjusted separately for
+each channel, since they each have an associated Blip_Synth.
+
+Source files of 400 lines or less seem to be the best size to limit
+complexity. In a few cases there is no reasonable way to split longer
+files, or there is benefit from having the source together in one file.
+
+
+Library Configuration
+---------------------
+Library optimizations can be configured through macros defined in
+config.h. By default, the library is configured to be most likely to
+compile and work on any platform, rather than be most optimal with
+increased chance of problems. It's easier to track down optimiztation
+problems if the library can first be shown to work correctly without
+them.
+
+
+Flexibility through indirection
+-------------------------------
+I've tried to allow the most flexibility of modules by using indirection
+to allow extension by the user. This keeps each module simple and more
+focused on its unique task.
+
+The classic emulators use Multi_Buffer, which potentially allows a
+separate Blip_Buffer for each channel. This keeps emulators free of
+typical code to allow output in mono, stereo, panning, etc.
+
+All emulators use a reader object to access file data, allowing it to be
+stored in a regular file, compressed archive, memory, or generated
+on-the-fly. Again, the library can be kept free of the particulars of
+file access and changes required to support new formats.
+
+
+Choice of pre-ISO (ARM) C++
+---------------------------
+The library started out as an unreleased NSF player written using ISO
+C++. The code was clean enough that I decided to release it as a player
+library. Before release I evaluated its use of C++ features to determine
+the important ones.
+
+Namespaces and exceptions weren't essential, so I compared a version of
+the library with and without them. I decided that I could do without and
+get better compatibility with older compilers or newer ones with buggy
+namespace and exception implementations.
+
+Templates are the worst area for most compilers, due to their inherent
+complexity, but they are too useful to avoid entirely. I've used them
+sparingly and in ways that compilers are more likely to work with.
+
+Sticking to ARM C++ has helped keep the library simpler to understand.
+
+
+Platform-specific optimization
+------------------------------
+Performance profiling doesn't shown any big bottlenecks that warrant
+heavy platform-specific optimization. The main bottlenecks are CPU
+emulation, Blip_Buffer synthesis and sample reading, Super NES DSP, Sega
+Genesis FM, and Fir_Resampler.
+
+Further optimization of the CPU emulators can probably only be achieved
+by writing them in assembly or using dynamic recompilation. Blip_Buffer
+might benefit somewhat from vector instructions. Sega Genesis FM
+synthesis can probably be made twice as fast by someone who fully
+understands its operation (I am almost clueless about its internals).
+The Super NES DSP might have some room for optimization. Fir_Resampler
+would benefit greatly from vector operations.
+
+Most of the above optimizations add more complexity than they are worth.
+All that seems worthwhile is optimization of Sega Genesis FM emulation
+and Fir_Resampler.
+
+
+Preventing Bugs
+---------------
+I've done many things to reduce the opportunity for defects. A general
+principle is to write code so that defects will be as visible as
+possible. I've used several techniques to achieve this.
+
+I put assertions at key points where defects seem likely or where
+corruption due to a defect is likely to be visible. I've also put
+assetions where violations of the interface are likely. In emulators
+where I am unsure of exact hardware operation in a particular case, I
+output a debug-only message noting that this has occurred; many times I
+haven't implemented a hardware feature because nothing uses it. I've
+made code brittle where there is no clear reason flexibility; code
+written to handle every possibility sacrifices quality and reliability
+to handle vaguely defined situations.
+
+
+Miscellaneous
+-------------
+I don't like naming header files with a ".hpp" suffix for some reason.
+They aren't as visually distinct from ".cpp" source files. The ".cpp"
+suffix is useful to inform the compiler that it's a C++ file rather than
+a C file, but I don't know of significant practical benefits the ".hpp"
+suffix gives over ".h" (I used to use *no* suffix for header files, but
+this does cause problems).
+
+When implementation has to be put in a header file, it's as far near the
+end as possible to prevent distraction from the public interface.
+
+
+CPU Cores
+---------
+I've spent lots of time coming up with techniques to optimize the CPU
+cores. Some of the most important: execute multiple instructions during
+an emulation call, keep state in local variables to allow register
+assignment, optimize state representation for most common instructions,
+defer status flag calculation until actually needed, read program code
+directly without a call to the memory read function, always pre-fetch
+the operand byte before decoding instruction, and emulate instructions
+using common blocks of code.
+
+I've successfully used Nes_Cpu in a simple NES emulator, and I'd like to
+make all the CPU emulators suitable for use in emulators. It seems a
+waste for them to be used only for the small amount of emulation
+necessary for game music files.
+
+I debugged the CPU cores by writing a test shell that ran them in
+parallel with other CPU cores and compared all memory accesses and
+processor states at each step. This provided good value at little cost.
+
+The CPU mapping page size is adjustable to allow the best tradeoff
+between memory/cache usage and handler granularity. The interface allows
+code to be somewhat independent of the page size.
+
+I optimize program memory accesses to to direct reads rather than calls
+to the memory read function. My assumption is that it would be difficult
+to get useful code out of hardware I/O addresses, so no software will
+intentionally execute out of I/O space. Since the page size can be
+changed easily, most program memory mapping schemes can be accommodated.
+This greatly reduces memory access function calls.
+
+
+Sub-Libraries
+-------------
+I've also released the sound cores as individual libraries to reduce
+complexity for emulator authors who just want a single sound core. These
+authors will be using the sound cores directly, while users of this
+music emulator library won't even see them, so documentation and demos
+can be specific to each library.
+
+
+Documentation
+-------------
+I started out with separate documentation in HTML and found that it
+wasn't going to be easy to maintain. I switched to putting descriptions
+of function behavior in header files before the function declarations.
+This has worked well so far.
+
+I think the concrete executable demo code helps the most when someone is
+using the library for the first time, since it shows a complete program
+and provides a framework for using the library. By recording to a sound
+file, I can keep the code portable, and the result can be listened to or
+examined closely, which is important for something real-time like sound.
+
+
+I want to write some tutorials to complement the demo code, desribing
+the basic framework and operation of the modules.
+

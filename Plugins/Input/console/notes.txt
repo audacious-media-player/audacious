@@ -1,0 +1,220 @@
+Game_Music_Emu Notes
+
+
+Architecture
+------------
+
+This library has several emulator classes derived from common interface
+classes. Music_Emu specifies the main interface, and Classic_Emu adds
+features available only for "classic" systems (frequency equalization
+and customizable multi-channel sound buffer).
+
+To play a given game music file, do the following:
+
+- Determine its file type
+- Create and set up an appropriate emulator
+- Load file header and file data into emulator
+- Start desired track
+- When samples are needed, call play()
+- When done, delete emulator
+
+Each emulator type defines a nested header_t structure type with members
+for the file header. When loading a file, the emulators expect the file
+header to have already been loaded; this allows the caller to use header
+fields like the game name and music author.
+
+See Music_Emu.h and Classic_Emu.h for reference.
+
+
+Error handling
+--------------
+
+Functions which can fail have a return type of blargg_err_t, which is a
+pointer to an error string (const char*). If the function is successful
+it returns blargg_success (NULL), otherwise it returns a pointer to an
+error string.
+
+To allow compatibility with older C++ compilers, no exceptions are
+thrown by any of the modules. The library is exception-safe, and any
+exceptions which occur are not intercepted.
+
+Due to the different ways compiler runtime libraries handle
+out-of-memory errors, if the library encounters one it will be reported
+in one of two ways: if the compiler is configured to throw an exception
+when operator new can't satisfy a request (which is the case in ISO
+C++), it is allowed to propagate normally, otherwise the error string
+"Out of memory" is returned.
+
+Significant violations of the documented interface are flagged with
+debug-only assertions. Failure of these usually indicates a caller error
+rather than a defect in the library.
+
+
+Configuration
+-------------
+
+The header "blargg_common.h" is used to establish a common environment.
+It attempts to automatically determine the features of the environment,
+but might need help.
+
+If HAVE_CONFIG_H is defined, the file "config.h" is included at the
+beginning of each library header file, allowing configuration options
+for the library to be set. It's fine if other libraries also use this
+scheme, as they won't conflict.
+
+Some libraries depend on the order of bytes in multibyte types. These
+will cause a compilation error if the order can't be determined. If this
+occurs, define the appropriate symbol. For big-endian (most significant
+byte first, i.e. Motorola 68000, PowerPC), #define BLARGG_BIG_ENDIAN to
+1. For little-endian (least significant byte first, i.e. Intel x86),
+#define BLARGG_LITTLE_ENDIAN to 1.
+
+Pre-ISO C++ compilers might not support bool. Support is provided where
+bool is not available, but the compiler's support of bool might not be
+properly determined. If errors occur in "blargg_common.h" in the bool
+section, #define BLARGG_COMPILER_HAS_BOOL to 1 if your compiler supports
+bool, otherwise 0.
+
+If your compiler supports namespaces, blargg_common.h uses standard
+headers with the "c" prefix to avoid bringing names from std into the
+global namespace. If your compiler supports namespaces but this isn't
+being detected by blargg_common.h, #define BLARGG_COMPILER_HAS_NAMESPACE
+to 1 in your config.h file.
+
+If you have any problems with "blargg_common.h", contact me.
+
+
+Game Music File Handling
+------------------------
+
+Game music files include text fields with information about the game and
+track. Each emulator's header_t defines the basic fields (game, song,
+author, copyright, track_count) supported by that music type, or has an
+enum { field = 0 } if unsupported. This allows the same code to be used
+for parsing each header if it checks that the field is non-zero.
+
+Text fields in most game music formats won't have a nul terminator if
+the string completely fills the field. The demos show one way to handle
+this.
+
+This library is focused on playback only and the emulators don't parse
+extended text fields, since this can be complex for some formats and can
+be done by the caller. To load the NSFE format, it must be parsed first
+and an NSF header must be made in memory and passed Nsf_Emu. See the
+Game Music Box source code for an example of this:
+
+    http://www.slack.net/~ant/game-music-box/dev.html 
+
+
+Frequency equalization
+----------------------
+
+The classic emulators allow frequency equalization to be adjusted;
+Classic_Emu::equalizer_t( treble, cutoff, bass ) specifies low-pass and
+high-pass filtering.
+
+Low-pass is an exponential rolloff beginning at 'cutoff' Hz and
+attenuating by 'treble' dB at 22kHz. For example, with cutoff = 8000 Hz
+and treble = -6 dB, the following results:
+
+        cutoff = 8kHz
+  0dB -------*__                
+	            ~~--__ treble = -6dB
+	                  ~~-*__
+	                        ~~--__
+	                              ~~--__
+	                                    ~~--__
+-18dB - - - - - - - - - - - - - - - - - - - - - -
+	  0      8kHz      22kHz               44kHz ...
+
+
+High-pass is a steep rolloff which passes -3dB attenuation at
+'breakpoint' Hz, where useful frequencies range from 0 to 6000 Hz.  For
+example, with breakpoint = 1000 Hz, the following results:
+
+      breakpoint = 1000 Hz
+ 0dB                 ___________
+-3dB      ,_*---~~~~~       
+        _~
+       /
+	  /
+      |
+      |
+-21dB - - - - - - - - - - - - -
+	  0   1000 Hz            4000 Hz
+
+Each emulator defaults to a profile that approximates its particular
+console's sound quality; this default can be determined by getting the
+current equalization just after creating the emulator. See Classic_Emu.h
+for reference.
+
+
+Emulator gain control
+---------------------
+
+Each emulator allows its gain to be adjusted. The default gains are
+selected to give consistent relative volumes between emulators without
+resulting in excessive clamping of samples that would otherwise go
+beyond the 16-bit range. A gain of 1.0 results in a conservative volume
+that rarely requires any clamping to stay within the 16-bit sample
+range. Clamping samples to 16 bits is handled by the library.
+
+
+Output sample rate
+------------------
+
+Each emulator has a way of specifying the output sample rate during
+initialization. All the emulators use internal band-limiting, so there
+is no reason to use a sample rate above 48kHz unless the sound hardware
+demands it; 44-48kHz will yield the best results. You could use the
+following code to choose a rate that is both near this range and an
+integral division of the native rate:
+
+	long adjust_rate( double native )
+	{
+		for ( double divider = 1; divider <= 4; divider++ )
+		{
+			long adjusted = native / divider + 0.5;
+			if ( adjusted <= 56000 )
+				return adjusted;
+		}
+		return 44100; // give up; CD rate probably works well enough
+	}
+
+
+Interface conventions
+----------------------
+
+If a function will keep a pointer to an object passed, to make this
+clear in source code it takes a pointer rather than a reference.
+
+Multi-word names have an underscore '_' separator between individual
+words.
+
+Functions are named with lowercase words. Functions which perform an
+action with side-effects are named with a verb phrase (i.e. load, move,
+run). Functions which set or return the value of a piece of state are
+named using a noun phrase (i.e. loaded, moved, running).
+
+Classes are named with capitalized words. Only the first letter of an
+acronym is capitalized. Class names are nouns, sometimes suggestive of
+what they do (i.e. File_Scanner).
+
+Structure, enumeration, and typedefs to these and built-in types are
+named using lowercase words with a _t suffix.
+
+Macros are named with all-uppercase words.
+
+Internal names which can't be hidden due to technical reasons have an
+underscore '_' suffix.
+
+
+Misc
+----
+
+Special thanks to Chris Moeller (kode54) for help with library testing
+and feedback. His openspc++ library in C++ was an essential starting
+point and framework for developing the SPC emulator. Brad Martin's
+excellent SNES DSP emulator (also part of openspc++) provided an
+essential foundation for the DSP core.
+
