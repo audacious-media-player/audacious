@@ -14,6 +14,12 @@
 	#define BLARGG_COMMON_H
 #endif
 
+#ifdef WORDS_BIGENDIAN
+# define BLARGG_BIG_ENDIAN
+#else
+# define BLARGG_LITTLE_ENDIAN
+#endif
+
 // Source files use #include BLARGG_ENABLE_OPTIMIZER before performance-critical code
 #ifndef BLARGG_ENABLE_OPTIMIZER
 	#define BLARGG_ENABLE_OPTIMIZER "blargg_common.h"
