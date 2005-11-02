@@ -8,12 +8,16 @@
 
 #include "Audacious_Driver.h"
 
+extern "C" {
+
 #include <glib/gi18n.h>
 #include "libaudacious/configfile.h"
 #include "libaudacious/util.h"
 #include "libaudacious/titlestring.h"
 #include "audacious/output.h"
 #include <gtk/gtk.h>
+
+};
 
 #include <cstring>
 
@@ -119,7 +123,7 @@ static void console_stop(void)
         console_ip.output->close_audio();
 }
 
-InputPlugin *get_iplugin_info(void)
+extern "C" InputPlugin *get_iplugin_info(void)
 {
         console_ip.description = g_strdup_printf(_("Console music plugin"));
         return &console_ip;
