@@ -1,4 +1,4 @@
-noinst_LTLIBRARIES = libconsole.la
+lib_LTLIBRARIES = libconsole.la
 
 libdir = $(plugin_dir)/$(INPUT_PLUGIN_DIR)
 
