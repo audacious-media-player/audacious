@@ -1,6 +1,6 @@
 lib_LTLIBRARIES = libconsole.la
 
-libdir = $(plugin_dir)/$(INPUT_PLUGIN_DIR)
+libdir = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
 libconsole_la_SOURCES = \
 	Blip_Buffer.cpp		\
