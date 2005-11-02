@@ -55,6 +55,8 @@ static gchar *get_title(gchar *filename)
 
 	title = g_strdup(header.song);
 
+	printf("song title is: %s\n", title);
+
 	return title;
 }
 
@@ -62,6 +64,8 @@ static void get_song_info(char *filename, char **title, int *length)
 {
 	(*title) = get_title(filename);
 	(*length) = -1;
+
+	printf("get_song_info() finished\n");
 }
 
 static void play_file(char *filename)
@@ -77,7 +81,9 @@ static void play_file(char *filename)
 	spc->load(header, reader);
 	spc->start_track(0);
 
-	decode_thread = g_thread_create(play_loop, NULL, FALSE, NULL);
+	decode_thread = g_thread_create(play_loop, spc, TRUE, NULL);
+
+	printf("decode_thread started.\n");
 }
 
 static void seek(gint time)
@@ -136,15 +142,22 @@ static void console_pause(gshort p)
 
 static void *play_loop(gpointer arg)
 {
+	Spc_Emu *my_spc = (Spc_Emu *) arg;
         Music_Emu::sample_t buf[1024];
 
-        while (spc->play(1024, buf))
+	printf("inside decode_thread, my_spc = %p, spc = %p\n", my_spc, spc);
+
+        do
         {
+		printf("buf = %s\n", buf);
                 produce_audio(console_ip.output->written_time(),
                                 FMT_S16_LE, 2, 1024, (char *) buf,
                                 NULL);
+		printf("writing audio to output device\n");
                 xmms_usleep(100000);
-        }
+        } while (my_spc->play(1024, buf));
+
+	printf("we're through in decode_thread, cleaning up\n");
 
         delete spc;
         g_thread_exit(NULL);
