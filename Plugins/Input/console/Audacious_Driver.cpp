@@ -25,9 +25,12 @@ static Spc_Emu *spc = NULL;
 static GThread *decode_thread;
 
 static void *play_loop(gpointer arg);
+static void console_init(void);
 static void console_stop(void);
 static void console_pause(gshort p);
 static int get_time(void);
+
+extern InputPlugin console_ip;
 
 static int is_our_file(gchar *filename)
 {
@@ -83,17 +86,15 @@ static void play_file(char *filename)
 
 	decode_thread = g_thread_create(play_loop, spc, TRUE, NULL);
 
+        if (!console_ip.output->open_audio(FMT_S16_NE, 44100, 1))
+                 return;
+
 	printf("decode_thread started.\n");
 }
 
 static void seek(gint time)
 {
 	// XXX: Not yet implemented
-}
-
-static void console_init(void)
-{
-	// nothing to do here
 }
 
 InputPlugin console_ip = {
@@ -143,21 +144,15 @@ static void console_pause(gshort p)
 static void *play_loop(gpointer arg)
 {
 	Spc_Emu *my_spc = (Spc_Emu *) arg;
-        Music_Emu::sample_t buf[1024];
+        Music_Emu::sample_t buf[16384];
 
-	printf("inside decode_thread, my_spc = %p, spc = %p\n", my_spc, spc);
-
-        do
+        while (my_spc->play(16384, buf) == NULL)
         {
-		printf("buf = %s\n", buf);
-                produce_audio(console_ip.output->written_time(),
-                                FMT_S16_LE, 2, 1024, (char *) buf,
-                                NULL);
-		printf("writing audio to output device\n");
-                xmms_usleep(100000);
-        } while (my_spc->play(1024, buf));
-
-	printf("we're through in decode_thread, cleaning up\n");
+		console_ip.add_vis_pcm(console_ip.output->written_time(),
+			FMT_S16_NE, 1, 16384, buf);
+	        while(console_ip.output->buffer_free() < 16384);
+		console_ip.output->write_audio(buf, 16384);
+	}
 
         delete spc;
         g_thread_exit(NULL);
@@ -168,5 +163,10 @@ static void *play_loop(gpointer arg)
 static int get_time(void)
 {
         return console_ip.output->output_time();
+}
+
+static void console_init(void)
+{
+
 }
 

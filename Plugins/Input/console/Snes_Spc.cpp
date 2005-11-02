@@ -5,6 +5,7 @@
 
 #include <assert.h>
 #include <string.h>
+#include <cstdio>
 
 /* Copyright (C) 2004-2005 Shay Green. This module is free software; you
 can redistribute it and/or modify it under the terms of the GNU Lesser
@@ -423,7 +424,7 @@ blargg_err_t Snes_Spc::skip( long count )
 blargg_err_t Snes_Spc::play( long count, sample_t* out )
 {
 	require( count % 2 == 0 ); // output is always in pairs of samples
-	
+
 	// CPU time() runs from -duration to 0
 	spc_time_t duration = (count / 2) * clocks_per_sample;
 	
