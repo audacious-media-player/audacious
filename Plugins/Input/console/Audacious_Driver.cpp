@@ -11,12 +11,16 @@
 #include "libaudacious/configfile.h"
 #include "libaudacious/util.h"
 #include "libaudacious/titlestring.h"
+#include "audacious/output.h"
 #include <gtk/gtk.h>
 
 #include <cstring>
 
 static Spc_Emu *spc = NULL;
-static GThread decode_thread;
+static GThread *decode_thread;
+static InputPlugin console_ip;
+
+static void *play_loop(gpointer arg);
 
 static int is_our_file(gchar *filename)
 {
@@ -35,7 +39,6 @@ static int is_our_file(gchar *filename)
 
 static gchar *get_title(gchar *filename)
 {
-	TitleInput *input;
 	gchar *title;
 	Emu_Std_Reader reader;
 	Spc_Emu::header_t header;
@@ -47,3 +50,45 @@ static gchar *get_title(gchar *filename)
 
 	return title;
 }
+
+static void get_song_info(char *filename, char **title, int *length)
+{
+	(*title) = get_title(filename);
+	(*length) = -1;
+}
+
+static void play_file(char *filename)
+{
+	Emu_Std_Reader reader;
+	Spc_Emu::header_t header;
+
+	reader.open(filename);
+	reader.read(&header, sizeof(header));
+
+	spc = new Spc_Emu;
+	spc->init(44100);
+	spc->load(header, reader);
+	spc->start_track(0);
+
+	decode_thread = g_thread_create(play_loop, NULL, FALSE, NULL);
+}
+
+static void *play_loop(gpointer arg)
+{
+	Music_Emu::sample_t buf[1024];
+
+	while (spc->play(1024, buf))
+	{
+		produce_audio(console_ip.output->written_time(),
+				FMT_S16_LE, 2, 1024, (char *) buf,
+				NULL);
+		xmms_usleep(100000);
+	}
+
+	delete spc;
+	g_thread_exit(NULL);
+
+	return NULL;
+}
+
+
