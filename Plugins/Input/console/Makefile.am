@@ -7,7 +7,7 @@ libconsole_la_SOURCES = \
 	Classic_Emu.cpp		\
 	Effects_Buffer.cpp	\
 	Fir_Resampler.cpp	\
-	Gb_Abu.cpp		\
+	Gb_Apu.cpp		\
 	Gb_Cpu.cpp		\
 	Gb_Oscs.cpp		\
 	Gbs_Emu.cpp		\
