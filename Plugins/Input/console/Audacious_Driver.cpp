@@ -95,6 +95,7 @@ static void get_song_info(char *filename, char **title, int *length)
 
 static void play_file(char *filename)
 {
+	gchar *name;
 	Emu_Std_Reader reader;
 	Spc_Emu::header_t header;
 
@@ -107,6 +108,12 @@ static void play_file(char *filename)
 	spc->start_track(0);
 
 	console_ip_is_going = TRUE;
+
+	name = get_title(filename);
+
+	console_ip.set_info(name, -1, 0, 32000, 2);
+
+	g_free(name);
 
 	decode_thread = g_thread_create(play_loop, spc, TRUE, NULL);
 
