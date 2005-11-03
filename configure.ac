@@ -662,6 +662,7 @@ AC_CONFIG_FILES([
         Plugins/Input/wav/Makefile
 	Plugins/Input/flac/Makefile
 	Plugins/Input/flac/plugin_common/Makefile
+	Plugins/Input/console/Makefile
         Plugins/Visualization/Makefile
         Plugins/Visualization/blur_scope/Makefile
 	Plugins/Visualization/libvisual-proxy/Makefile

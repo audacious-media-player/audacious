@@ -167,6 +167,8 @@ int main()
           echo "*** Could not run libmikmod test program, checking why..."
           CFLAGS="$CFLAGS $LIBMIKMOD_CFLAGS"
           LIBS="$LIBS $LIBMIKMOD_LIBS"
+	  echo "*** libs = $LIBS"
+	  echo "*** cflags = $CFLAGS"
           AC_TRY_LINK([
 #include <mikmod.h>
 #include <stdio.h>
