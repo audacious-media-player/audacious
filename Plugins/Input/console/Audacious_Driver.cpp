@@ -92,7 +92,7 @@ static void play_file(char *filename)
 
 	decode_thread = g_thread_create(play_loop, spc, TRUE, NULL);
 
-        if (!console_ip.output->open_audio(MY_FMT, 32000, 1))
+        if (!console_ip.output->open_audio(MY_FMT, 32000, 2))
                  return;
 
 	printf("decode_thread started.\n");
@@ -158,7 +158,7 @@ static void *play_loop(gpointer arg)
 			MY_FMT, 1, 4096, buf);
 	        while(console_ip.output->buffer_free() < 4096)
 			xmms_usleep(10000);
-		console_ip.output->write_audio(buf, 4096);
+		console_ip.output->write_audio(buf, 8192);
 	}
 
         delete spc;
