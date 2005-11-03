@@ -63,9 +63,26 @@ static gchar *get_title(gchar *filename)
 	reader.open(filename);
 	reader.read(&header, sizeof(header));
 
-	title = g_strdup(header.song);
+	if (header.song)
+	{
+		TitleInput *tinput;
 
-	printf("song title is: %s\n", title);
+		tinput = bmp_title_input_new();
+
+		tinput->performer = g_strdup(header.author);
+		tinput->album_name = g_strdup(header.game);
+		tinput->track_name = g_strdup(header.song);		
+
+		tinput->file_name = g_path_get_basename(filename);
+		tinput->file_path = g_path_get_dirname(filename);
+
+		title = xmms_get_titlestring(xmms_get_gentitle_format(),
+				tinput);
+
+		g_free(tinput);
+	}
+	else
+		title = g_strdup(filename);
 
 	return title;
 }
@@ -74,8 +91,6 @@ static void get_song_info(char *filename, char **title, int *length)
 {
 	(*title) = get_title(filename);
 	(*length) = -1;
-
-	printf("get_song_info() finished\n");
 }
 
 static void play_file(char *filename)
@@ -126,7 +141,7 @@ InputPlugin console_ip = {
 	NULL,
 	NULL,
 	NULL,
-	NULL,
+	get_song_info,
 	NULL,
 	NULL
 };
