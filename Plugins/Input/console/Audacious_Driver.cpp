@@ -179,8 +179,8 @@ static void *play_loop(gpointer arg)
         while (my_spc->play(4096, buf) == NULL && console_ip_is_going == TRUE)
         {
 		console_ip.add_vis_pcm(console_ip.output->written_time(),
-			MY_FMT, 1, 4096, buf);
-	        while(console_ip.output->buffer_free() < 4096 && console_ip_is_going == TRUE)
+			MY_FMT, 1, 8192, buf);
+	        while(console_ip.output->buffer_free() < 8192)
 			xmms_usleep(10000);
 		console_ip.output->write_audio(buf, 8192);
 	}
