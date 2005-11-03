@@ -174,15 +174,15 @@ static void console_pause(gshort p)
 static void *play_loop(gpointer arg)
 {
 	Spc_Emu *my_spc = (Spc_Emu *) arg;
-        Music_Emu::sample_t buf[4096];
+        Music_Emu::sample_t buf[1024];
 
-        while (my_spc->play(4096, buf) == NULL && console_ip_is_going == TRUE)
+        while (my_spc->play(1024, buf) == NULL && console_ip_is_going == TRUE)
         {
 		console_ip.add_vis_pcm(console_ip.output->written_time(),
-			MY_FMT, 1, 8192, buf);
-	        while(console_ip.output->buffer_free() < 8192)
+			MY_FMT, 1, 2048, buf);
+	        while(console_ip.output->buffer_free() < 2048)
 			xmms_usleep(10000);
-		console_ip.output->write_audio(buf, 8192);
+		console_ip.output->write_audio(buf, 2048);
 	}
 
         delete spc;
