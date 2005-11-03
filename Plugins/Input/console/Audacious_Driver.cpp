@@ -35,6 +35,7 @@ static void console_init(void);
 static void console_stop(void);
 static void console_pause(gshort p);
 static int get_time(void);
+static gboolean console_ip_is_going;
 
 extern InputPlugin console_ip;
 
@@ -90,12 +91,12 @@ static void play_file(char *filename)
 	spc->load(header, reader);
 	spc->start_track(0);
 
+	console_ip_is_going = TRUE;
+
 	decode_thread = g_thread_create(play_loop, spc, TRUE, NULL);
 
         if (!console_ip.output->open_audio(MY_FMT, 32000, 2))
                  return;
-
-	printf("decode_thread started.\n");
 }
 
 static void seek(gint time)
@@ -132,6 +133,7 @@ InputPlugin console_ip = {
 
 static void console_stop(void)
 {
+	console_ip_is_going = FALSE;
         g_thread_join(decode_thread);
         console_ip.output->close_audio();
 }
@@ -152,11 +154,11 @@ static void *play_loop(gpointer arg)
 	Spc_Emu *my_spc = (Spc_Emu *) arg;
         Music_Emu::sample_t buf[4096];
 
-        while (my_spc->play(4096, buf) == NULL)
+        while (my_spc->play(4096, buf) == NULL && console_ip_is_going == TRUE)
         {
 		console_ip.add_vis_pcm(console_ip.output->written_time(),
 			MY_FMT, 1, 4096, buf);
-	        while(console_ip.output->buffer_free() < 4096)
+	        while(console_ip.output->buffer_free() < 4096 && console_ip_is_going == TRUE)
 			xmms_usleep(10000);
 		console_ip.output->write_audio(buf, 8192);
 	}
