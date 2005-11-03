@@ -10,12 +10,13 @@
 
 extern "C" {
 
+#include <glib.h>
 #include <glib/gi18n.h>
+#include <gtk/gtk.h>
 #include "libaudacious/configfile.h"
 #include "libaudacious/util.h"
 #include "libaudacious/titlestring.h"
 #include "audacious/output.h"
-#include <gtk/gtk.h>
 
 };
 
@@ -32,6 +33,7 @@ static GThread *decode_thread;
 
 static void *play_loop(gpointer arg);
 static void console_init(void);
+extern "C" void console_aboutbox(void);
 static void console_stop(void);
 static void console_pause(gshort p);
 static int get_time(void);
@@ -111,7 +113,7 @@ static void play_file(char *filename)
 
 	name = get_title(filename);
 
-	console_ip.set_info(name, -1, 0, 32000, 2);
+	console_ip.set_info(name, -1, spc->voice_count(), 32000, 2);
 
 	g_free(name);
 
@@ -131,7 +133,7 @@ InputPlugin console_ip = {
 	NULL,
 	NULL,
 	console_init,
-	NULL,
+	console_aboutbox,
 	NULL,
 	is_our_file,
 	NULL,
@@ -162,7 +164,7 @@ static void console_stop(void)
 
 extern "C" InputPlugin *get_iplugin_info(void)
 {
-        console_ip.description = g_strdup_printf(_("Console music plugin"));
+        console_ip.description = g_strdup_printf(_("SPC, GYM, NSF, VGM and GBS module decoder"));
         return &console_ip;
 }
 
@@ -201,3 +203,11 @@ static void console_init(void)
 
 }
 
+extern "C" void console_aboutbox(void)
+{
+	xmms_show_message(_("About the Console Music Decoder"),
+			_("Console music decoder engine based on Game_Music_Emu 0.2.4.\n"
+			  "Audacious implementation by: William Pitcock <nenolod@nenolod.net>"),
+			_("Ok"),
+			FALSE, NULL, NULL);
+}
