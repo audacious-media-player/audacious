@@ -4,6 +4,8 @@
 #ifndef BOOST_CSTDINT_HPP
 #define BOOST_CSTDINT_HPP
 
+#ifndef int32_t
+
 #if BLARGG_USE_NAMESPACE
 	#include <climits>
 #else
@@ -37,6 +39,8 @@ typedef unsigned short  uint16_t;
 #endif
 
 BLARGG_END_NAMESPACE
+
+#endif
 
 #endif
 
