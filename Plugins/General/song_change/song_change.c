@@ -247,7 +247,7 @@ static void configure(void)
 	gtk_container_add(GTK_CONTAINER(song_frame), song_vbox);
 	
 	cmd_desc = gtk_label_new(_(
-		   "Shell-command to run when xmms starts a new song."));
+		   "Shell-command to run when Audacious starts a new song."));
 	gtk_label_set_justify(GTK_LABEL(cmd_desc), GTK_JUSTIFY_LEFT);
 	gtk_misc_set_alignment(GTK_MISC(cmd_desc), 0, 0.5);
 	gtk_box_pack_start(GTK_BOX(song_vbox), cmd_desc, FALSE, FALSE, 0);
@@ -292,7 +292,7 @@ static void configure(void)
 
 
 	cmd_end_desc = gtk_label_new(_(
-		"Shell-command to run when xmms reaches the end "
+		"Shell-command to run when Audacious reaches the end "
 		"of the playlist."));
 	gtk_label_set_justify(GTK_LABEL(cmd_end_desc), GTK_JUSTIFY_LEFT);
 	gtk_misc_set_alignment(GTK_MISC(cmd_end_desc), 0, 0.5);
