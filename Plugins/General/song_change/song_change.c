@@ -135,7 +135,7 @@ static void warn_user(void)
 	GtkWidget *warn_win, *warn_vbox, *warn_desc;
 	GtkWidget *warn_bbox, *warn_yes, *warn_no;
 
-	warn_win = gtk_window_new(GTK_WINDOW_DIALOG);
+	warn_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW(warn_win), _("Warning"));
 	gtk_window_set_transient_for(GTK_WINDOW(warn_win),
 				     GTK_WINDOW(configure_win));
@@ -228,7 +228,7 @@ static void configure(void)
 
 	read_config();
 
-	configure_win = gtk_window_new(GTK_WINDOW_DIALOG);
+	configure_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_signal_connect(GTK_OBJECT(configure_win), "destroy",
 			   GTK_SIGNAL_FUNC(gtk_widget_destroyed),
 			   &configure_win);
