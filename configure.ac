@@ -666,6 +666,8 @@ AC_CONFIG_FILES([
         Plugins/Visualization/Makefile
         Plugins/Visualization/blur_scope/Makefile
 	Plugins/Visualization/libvisual-proxy/Makefile
+	Plugins/General/Makefile
+	Plugins/General/song_change/Makefile
         po/Makefile.in
         intl/Makefile
         icons/Makefile
@@ -715,6 +717,11 @@ echo "  Microsoft WAV (wav):                    yes"
 echo "  Tone Generator:                         yes"
 echo "  Ogg Vorbis (vorbis):                    $have_oggvorbis"
 echo "  FLAC:                                   $have_flac"
+echo "  Game Music:                             yes"
+echo ""
+echo "  General"
+echo "  -------"
+echo "  Song Change:                            yes"
 echo ""
 echo "  Visualization"
 echo "  -------------"
