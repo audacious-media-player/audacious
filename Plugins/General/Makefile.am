@@ -1,0 +1,2 @@
+ALL_PLUGINS = song_change
+SUBDIRS = $(GENERAL_PLUGINS)
