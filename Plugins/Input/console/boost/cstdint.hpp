@@ -12,7 +12,7 @@
 
 BLARGG_BEGIN_NAMESPACE (boost)
 
-#include "sys/types.h"
+#include <inttypes.h>
 
 BLARGG_END_NAMESPACE
 
