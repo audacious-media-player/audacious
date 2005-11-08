@@ -857,7 +857,8 @@ static void
 on_use_bitmap_fonts_realize(GtkToggleButton * button,
                             gpointer data)
 {
-    gtk_toggle_button_set_active(button, cfg.show_numbers_in_pl);
+    gtk_toggle_button_set_active(button,
+	cfg.mainwin_use_xfont != FALSE ? FALSE : TRUE);
 }
 
 static void
