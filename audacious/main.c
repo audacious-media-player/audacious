@@ -992,16 +992,16 @@ main(gint argc, gchar ** argv)
      * interface to set menu items */
     create_prefs_window();
 
+    if (cfg.player_visible)
+        mainwin_show(TRUE);
+    else if (!cfg.playlist_visible && !cfg.equalizer_visible)
+        mainwin_show(TRUE);
+
     if (cfg.equalizer_visible)
         equalizerwin_show(TRUE);
 
     if (cfg.playlist_visible)
         playlistwin_show();
-
-    if (cfg.player_visible)
-        mainwin_show(TRUE);
-    else if (!cfg.playlist_visible && !cfg.equalizer_visible)
-        mainwin_show(TRUE);
 
     /* FIXME: move this away */
     hint_set_always(cfg.always_on_top);
