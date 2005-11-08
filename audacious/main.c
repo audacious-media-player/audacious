@@ -70,7 +70,7 @@
 #include "visualization.h"
 
 #include "pixmaps.h"
-#include "images/bmp_player.xpm"
+#include "images/audacious_player.xpm"
 
 
 /* Translatable string for beep.desktop's comment field */
@@ -615,7 +615,7 @@ bmp_set_default_icon(void)
 {
     GdkPixbuf *icon;
 
-    icon = gdk_pixbuf_new_from_xpm_data((const gchar **) bmp_player_icon);
+    icon = gdk_pixbuf_new_from_xpm_data((const gchar **) audacious_player_xpm);
     gtk_window_set_default_icon(icon);
     g_object_unref(icon);
 }

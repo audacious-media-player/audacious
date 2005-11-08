@@ -4,4 +4,4 @@ images_DATA = \
 
 EXTRA_DIST = \
 	$(images_DATA) \
-	bmp_player.xpm bmp_playlist.xpm bmp_eq.xpm
+	audacious_player.xpm audacious_playlist.xpm bmp_eq.xpm

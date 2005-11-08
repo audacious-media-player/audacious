@@ -55,7 +55,7 @@
 #include "util.h"
 
 #include "pixmaps.h"
-#include "images/bmp_playlist.xpm"
+#include "images/audacious_playlist.xpm"
 
 
 #define ITEM_SEPARATOR {"/-", NULL, NULL, 0, "<Separator>"}

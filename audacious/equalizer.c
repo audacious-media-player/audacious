@@ -55,8 +55,7 @@
 #include "libaudacious/rcfile.h"
 #include "libaudacious/vfs.h"
 
-#include "images/bmp_eq.xpm"
-
+#include "images/audacious_eq.xpm"
 
 enum PresetViewCols {
     PRESET_VIEW_COL_NAME,
