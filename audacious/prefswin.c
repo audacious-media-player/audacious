@@ -848,7 +848,25 @@ on_mainwin_font_button_font_set(GtkFontButton * button,
     g_free(cfg.mainwin_font);
     cfg.mainwin_font = g_strdup(gtk_font_button_get_font_name(button));
 
-    textbox_set_xfont(mainwin_info, TRUE, cfg.mainwin_font);
+    textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
+    mainwin_set_info_text();
+    draw_main_window(TRUE);
+}
+
+static void
+on_use_bitmap_fonts_realize(GtkToggleButton * button,
+                            gpointer data)
+{
+    gtk_toggle_button_set_active(button, cfg.show_numbers_in_pl);
+}
+
+static void
+on_use_bitmap_fonts_toggled(GtkToggleButton * button,
+                                    gpointer data)
+{
+    gboolean useit = gtk_toggle_button_get_active(button);
+    cfg.mainwin_use_xfont = useit != FALSE ? FALSE : TRUE;
+    textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
     mainwin_set_info_text();
     draw_main_window(TRUE);
 }
@@ -1583,6 +1601,8 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_custom_cursors_toggled)
     FUNC_MAP_ENTRY(on_mainwin_font_button_realize)
     FUNC_MAP_ENTRY(on_mainwin_font_button_font_set)
+    FUNC_MAP_ENTRY(on_use_bitmap_fonts_realize)
+    FUNC_MAP_ENTRY(on_use_bitmap_fonts_toggled)
     FUNC_MAP_ENTRY(on_mouse_wheel_volume_realize)
     FUNC_MAP_ENTRY(on_mouse_wheel_volume_changed)
     FUNC_MAP_ENTRY(on_mouse_wheel_scroll_pl_realize)

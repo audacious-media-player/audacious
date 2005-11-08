@@ -74,7 +74,7 @@ textbox_scroll(gpointer data)
     TextBox *tb = TEXT_BOX(data);
 
     if (!tb->tb_is_dragging) {
-        tb->tb_offset++;
+        tb->tb_offset += 5;
         if (tb->tb_offset >= tb->tb_pixmap_width)
             tb->tb_offset -= tb->tb_pixmap_width;
         widget_draw(WIDGET(tb));
@@ -417,7 +417,7 @@ textbox_generate_pixmap(TextBox * tb)
     if (tb->tb_is_scrollable) {
         if (tb->tb_scroll_enabled && !tb->tb_timeout_tag) {
             gint tag;
-            tag = TEXTBOX_SCROLL_SMOOTH_TIMEOUT;
+            tag = TEXTBOX_SCROLL_SMOOTH_TIMEOUT * 5;
             tb->tb_timeout_tag = gtk_timeout_add(tag, textbox_scroll, tb);
         }
     }
