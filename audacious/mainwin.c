@@ -3007,7 +3007,7 @@ mainwin_create_widgets(void)
         create_textbox(&mainwin_wlist, mainwin_bg, mainwin_gc, 112, 27,
                        153, 1, SKIN_TEXT);
     textbox_set_scroll(mainwin_info, cfg.autoscroll);
-    textbox_set_xfont(mainwin_info, TRUE, cfg.mainwin_font);
+    textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
     mainwin_rate_text =
         create_textbox(&mainwin_wlist, mainwin_bg, mainwin_gc, 111, 43, 15,
                        0, SKIN_TEXT);
