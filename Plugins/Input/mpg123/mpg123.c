@@ -1180,9 +1180,10 @@ aboutbox(void)
 
     aboutbox = xmms_show_message(_("About MPEG Audio Plugin"),
                                  _("mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
-                                  "Plugin by The XMMS team"),
-                                 _("Ok"),
-                                 FALSE, NULL, NULL);
+				   "Updated to 0.59s.mc3 by the Audacious team for greater accuracy and reliability.\n"
+                                   "Based on the original XMMS plugin."),
+                                  _("Ok"),
+                                  FALSE, NULL, NULL);
 
     g_signal_connect(G_OBJECT(aboutbox), "destroy",
                      G_CALLBACK(gtk_widget_destroyed), &aboutbox);
