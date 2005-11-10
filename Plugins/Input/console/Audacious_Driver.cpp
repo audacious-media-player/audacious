@@ -117,10 +117,10 @@ static void play_file(char *filename)
 
 	g_free(name);
 
-	decode_thread = g_thread_create(play_loop, spc, TRUE, NULL);
-
         if (!console_ip.output->open_audio(MY_FMT, 32000, 2))
                  return;
+
+	decode_thread = g_thread_create(play_loop, spc, TRUE, NULL);
 }
 
 static void seek(gint time)
