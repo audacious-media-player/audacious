@@ -41,11 +41,11 @@ AVCodecParserContext *av_parser_init(int codec_id)
     }
     return NULL;
  found:
-    s = av_mallocz(sizeof(AVCodecParserContext));
+    s = malloc(sizeof(AVCodecParserContext));
     if (!s)
         return NULL;
     s->parser = parser;
-    s->priv_data = av_mallocz(parser->priv_data_size);
+    s->priv_data = malloc(parser->priv_data_size);
     if (!s->priv_data) {
         free(s);
         return NULL;

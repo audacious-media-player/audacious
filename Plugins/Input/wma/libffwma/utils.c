@@ -221,7 +221,7 @@ void avcodec_get_context_defaults(AVCodecContext *s){
  * this can be deallocated by simply calling free() 
  */
 AVCodecContext *avcodec_alloc_context(void){
-    AVCodecContext *avctx= av_mallocz(sizeof(AVCodecContext));
+    AVCodecContext *avctx= malloc(sizeof(AVCodecContext));
     
     if(avctx==NULL) return NULL;
     
@@ -235,7 +235,7 @@ AVCodecContext *avcodec_alloc_context(void){
  * this can be deallocated by simply calling free() 
  */
 AVFrame *avcodec_alloc_frame(void){
-    AVFrame *pic= av_mallocz(sizeof(AVFrame));
+    AVFrame *pic= malloc(sizeof(AVFrame));
     
     return pic;
 }
@@ -251,7 +251,7 @@ int avcodec_open(AVCodecContext *avctx, AVCodec *codec)
     avctx->codec_id = codec->id;
     avctx->frame_number = 0;
     if (codec->priv_data_size > 0) {
-        avctx->priv_data = av_mallocz(codec->priv_data_size);
+        avctx->priv_data = malloc(codec->priv_data_size);
         if (!avctx->priv_data) 
             return -ENOMEM;
     } else {

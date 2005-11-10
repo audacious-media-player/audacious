@@ -500,7 +500,7 @@ static int asf_read_header(AVFormatContext *s, AVFormatParameters *ap)
                         value_len = get_le16(pb);
                         if ((value_type == 0) || (value_type == 1)) // unicode or byte
                         {
-                                value = (char *)av_mallocz(value_len);
+                                value = (char *)malloc(value_len);
                                 get_str16_nolen(pb, value_len, value, value_len);
                                 if (strcmp(name,"WM/AlbumTitle")==0) { strcpy(s->album, value); }
                                 if (strcmp(name,"WM/Genre")==0) { strcpy(s->genre, value); }

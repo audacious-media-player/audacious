@@ -1497,6 +1497,11 @@ AVStream *av_new_stream(AVFormatContext *s, int id)
     if (s->nb_streams >= MAX_STREAMS)
         return NULL;
 
+#if 0
+    /* we shouldn't have to do this but ffmpeg sucks --nenolod */
+    *s->streams = malloc(sizeof(AVStream *) * s->nb_streams);
+#endif
+
     st = malloc(sizeof(AVStream));
     if (!st)
         return NULL;
@@ -1509,7 +1514,8 @@ AVStream *av_new_stream(AVFormatContext *s, int id)
     st->id = id;
     st->start_time = AV_NOPTS_VALUE;
     st->duration = AV_NOPTS_VALUE;
-    s->streams[s->nb_streams++] = st;
+    s->streams[st->index] = st;
+    s->nb_streams++;	// WTF?
     return st;
 }
 
