@@ -293,7 +293,7 @@ extern int mpg123_get_songlen(struct frame *fr, int no);
 void mpg123_dct64_mmx(real *, real *, real *);
 int mpg123_synth_1to1_mmx(real *, int, unsigned char *, int *);
 
-void mpg123_dct36(real *, real *, real *, real *, real *);
+void dct36(real *, real *, real *, real *, real *);
 void dct36_3dnow(real *, real *, real *, real *, real *);
 int mpg123_synth_1to1_3dnow(real *, int, unsigned char *, int *);
 

@@ -130,7 +130,7 @@ set_synth_functions(struct frame *fr)
     };
 
 #ifdef USE_SIMD
-    static func_dct36 funcs_dct36[2] = { mpg123_dct36, dct36_3dnow };
+    static func_dct36 funcs_dct36[2] = { dct36, dct36_3dnow };
 #endif
 
     if (mpg123_cfg.resolution == 8)
