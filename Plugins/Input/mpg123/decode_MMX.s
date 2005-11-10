@@ -38,7 +38,7 @@ synth_1to1_MMX:
 .L2: 
         pushl %edx
         pushl %ecx
-        call mpg123_dct64_MMX
+        call mpg123_dct64_mmx
         addl $12,%esp
 	leal 1(%ebx), %ecx
         subl %ebp,%ebx                
