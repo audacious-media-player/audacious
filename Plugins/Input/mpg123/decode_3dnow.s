@@ -1,34 +1,31 @@
-/
-/ decode_3dnow.s - 3DNow! optimized synth_1to1()
-/
-/ This code based 'decode_3dnow.s' by Syuuhei Kashiyama
-/ <squash@mb.kcom.ne.jp>,only two types of changes have been made:
-/
-/ - remove PREFETCH instruction for speedup
-/ - change function name for support 3DNow! automatic detect
-/ - femms moved to before 'call dct64_3dnow'
-/
-/ You can find Kashiyama's original 3dnow! support patch
-/ (for mpg123-0.59o) at
-/ http://user.ecc.u-tokyo.ac.jp/~g810370/linux-simd/ (Japanese).
-/
-/ by KIMURA Takuhiro <kim@hannah.ipc.miyakyo-u.ac.jp> - until 31.Mar.1999
-/                    <kim@comtec.co.jp>               - after  1.Apr.1999
-/
-/ porting xmms-0.9.1 by Osamu kayasono <jacobi@jcom.home.ne.jp>
-/ - rename function name for xmms
-/ - disable equalizer for mpg123
+#
+# decode_3dnow.s - 3DNow! optimized synth_1to1()
+#
+# This code based 'decode_3dnow.s' by Syuuhei Kashiyama
+# <squash@mb.kcom.ne.jp>,only two types of changes have been made:
+#
+# - remove PREFETCH instruction for speedup
+# - change function name for support 3DNow! automatic detect
+# - femms moved to before 'call dct64_3dnow'
+#
+# You can find Kashiyama's original 3dnow! support patch
+# (for mpg123-0.59o) at
+# http:#/user.ecc.u-tokyo.ac.jp/~g810370/linux-simd/ (Japanese).
+#
+# by KIMURA Takuhiro <kim@hannah.ipc.miyakyo-u.ac.jp> - until 31.Mar.1999
+#                    <kim@comtec.co.jp>               - after  1.Apr.1999
+#
 
-///
-/// Replacement of synth_1to1() with AMD's 3DNow! SIMD operations support
-/// 
-/// Syuuhei Kashiyama <squash@mb.kcom.ne.jp>
-/// 
-/// The author of this program disclaim whole expressed or implied
-/// warranties with regard to this program, and in no event shall the
-/// author of this program liable to whatever resulted from the use of
-/// this program. Use it at your own risk.
-/// 
+##/
+##/ Replacement of synth_1to1() with AMD's 3DNow! SIMD operations support
+##/ 
+##/ Syuuhei Kashiyama <squash@mb.kcom.ne.jp>
+##/ 
+##/ The author of this program disclaim whole expressed or implied
+##/ warranties with regard to this program, and in no event shall the
+##/ author of this program liable to whatever resulted from the use of
+##/ this program. Use it at your own risk.
+##/ 
 
 	.local	buffs.40
 	.comm	buffs.40,4352,32
@@ -57,14 +54,7 @@ mpg123_synth_1to1_3dnow:
 
 	femms
 		
-///	/ disable equalizer by Osamu Kayasono
-///	cmpl $0,equalfile
-///	je .L25
-///	pushl %ebx
-///	pushl 48(%esp)
-///	call do_equalizer_3dnow
-///	addl $8,%esp
-///.L25:
+.L25:
 	testl %ebx,%ebx
 	jne .L26
 	decl bo.42
@@ -219,37 +209,37 @@ mpg123_synth_1to1_3dnow:
 	punpckldq 20(%ebx),%mm5
 	punpckldq -24(%edx),%mm6
 	pfadd %mm3,%mm0
-	movd 24(%ebx),%mm1
-	movd -28(%edx),%mm2
+	movd 24(%ebx),%mm1		
+	movd -28(%edx),%mm2		
 	pfmul %mm6,%mm5
 	punpckldq 28(%ebx),%mm1	
 	punpckldq -32(%edx),%mm2
 	pfadd %mm5,%mm0
-	movd 32(%ebx),%mm3
-	movd -36(%edx),%mm4
+	movd 32(%ebx),%mm3		
+	movd -36(%edx),%mm4		
 	pfmul %mm2,%mm1
 	punpckldq 36(%ebx),%mm3	
 	punpckldq -40(%edx),%mm4
-	pfadd %mm1,%mm0
-	movd 40(%ebx),%mm5
-	movd -44(%edx),%mm6
-	pfmul %mm4,%mm3
+	pfadd %mm1,%mm0			
+	movd 40(%ebx),%mm5		
+	movd -44(%edx),%mm6		
+	pfmul %mm4,%mm3			
 	punpckldq 44(%ebx),%mm5	
 	punpckldq -48(%edx),%mm6
-	pfadd %mm3,%mm0
-	movd 48(%ebx),%mm1
-	movd -52(%edx),%mm2
-	pfmul %mm6,%mm5
-	punpckldq 52(%ebx),%mm1
+	pfadd %mm3,%mm0			
+	movd 48(%ebx),%mm1		
+	movd -52(%edx),%mm2		
+	pfmul %mm6,%mm5			
+	punpckldq 52(%ebx),%mm1	
 	punpckldq -56(%edx),%mm2
 	pfadd %mm0,%mm5
-	movd 56(%ebx),%mm3
-	movd -60(%edx),%mm4
+	movd 56(%ebx),%mm3		
+	movd -60(%edx),%mm4		
 	pfmul %mm2,%mm1
 	punpckldq 60(%ebx),%mm3	
 	punpckldq (%edx),%mm4
-	pfadd %mm1,%mm5
-	addl $-128,%edx
+	pfadd %mm1,%mm5			
+	addl $-128,%edx			
 	addl $-64,%ebx
 	movd (%ebx),%mm0
 	movd -4(%edx),%mm1

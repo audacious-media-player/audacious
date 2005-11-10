@@ -2,9 +2,9 @@
 
 .text
 
-.globl mpg123_synth_MMX
+.globl synth_1to1_MMX
 
-mpg123_synth_MMX:
+synth_1to1_MMX: 
         pushl %ebp
         pushl %edi
         pushl %esi
@@ -38,7 +38,7 @@ mpg123_synth_MMX:
 .L2: 
         pushl %edx
         pushl %ecx
-        call dct64_MMX
+        call mpg123_dct64_MMX
         addl $12,%esp
 	leal 1(%ebx), %ecx
         subl %ebp,%ebx                

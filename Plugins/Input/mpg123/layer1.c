@@ -1,141 +1,120 @@
-
-/*
- * Mpeg Layer-1 audio decoder
+/* 
+ * Mpeg Layer-1 audio decoder 
  * --------------------------
  * copyright (c) 1995 by Michael Hipp, All rights reserved. See also 'README'
  * near unoptimzed ...
  *
- * may have a few bugs after last optimization ...
+ * may have a few bugs after last optimization ... 
  *
  */
-
 
 #include "audacious/output.h"
 #include "mpg123.h"
 #include "getbits.h"
 
-
-/* Used by the getbits macros */
-static unsigned long rval;
-
-void
-I_step_one(unsigned int balloc[],
-           unsigned int scale_index[2][SBLIMIT], struct frame *fr)
+void I_step_one(unsigned int balloc[], unsigned int scale_index[2][SBLIMIT],struct frame *fr)
 {
-    unsigned int *ba = balloc;
-    unsigned int *sca = (unsigned int *) scale_index;
+  unsigned int *ba=balloc;
+  unsigned int *sca = (unsigned int *) scale_index;
 
-    if (fr->stereo) {
-        int i;
-        int jsbound = fr->jsbound;
-
-        for (i = 0; i < jsbound; i++) {
-            *ba++ = mpg123_getbits(4);
-            *ba++ = mpg123_getbits(4);
-        }
-        for (i = jsbound; i < SBLIMIT; i++)
-            *ba++ = mpg123_getbits(4);
-
-        ba = balloc;
-
-        for (i = 0; i < jsbound; i++) {
-            if ((*ba++))
-                *sca++ = mpg123_getbits(6);
-            if ((*ba++))
-                *sca++ = mpg123_getbits(6);
-        }
-        for (i = jsbound; i < SBLIMIT; i++)
-            if ((*ba++)) {
-                *sca++ = mpg123_getbits(6);
-                *sca++ = mpg123_getbits(6);
-            }
+  if(fr->stereo) {
+    int i;
+    int jsbound = fr->jsbound;
+    for (i=0;i<jsbound;i++) { 
+      *ba++ = mpg123_getbits(&bsi,4);
+      *ba++ = mpg123_getbits(&bsi,4);
     }
-    else {
-        int i;
+    for (i=jsbound;i<SBLIMIT;i++)
+      *ba++ = mpg123_getbits(&bsi,4);
 
-        for (i = 0; i < SBLIMIT; i++)
-            *ba++ = mpg123_getbits(4);
-        ba = balloc;
-        for (i = 0; i < SBLIMIT; i++)
-            if ((*ba++))
-                *sca++ = mpg123_getbits(6);
+    ba = balloc;
+
+    for (i=0;i<jsbound;i++) {
+      if ((*ba++))
+        *sca++ = mpg123_getbits(&bsi,6);
+      if ((*ba++))
+        *sca++ = mpg123_getbits(&bsi,6);
     }
+    for (i=jsbound;i<SBLIMIT;i++)
+      if ((*ba++)) {
+        *sca++ =  mpg123_getbits(&bsi,6);
+        *sca++ =  mpg123_getbits(&bsi,6);
+      }
+  }
+  else {
+    int i;
+    for (i=0;i<SBLIMIT;i++)
+      *ba++ = mpg123_getbits(&bsi,4);
+    ba = balloc;
+    for (i=0;i<SBLIMIT;i++)
+      if ((*ba++))
+        *sca++ = mpg123_getbits(&bsi,6);
+  }
 }
 
-void
-I_step_two(real fraction[2][SBLIMIT],
-           unsigned int balloc[2 * SBLIMIT],
-           unsigned int scale_index[2][SBLIMIT], struct frame *fr)
+void I_step_two(real fraction[2][SBLIMIT],unsigned int balloc[2*SBLIMIT],
+	unsigned int scale_index[2][SBLIMIT],struct frame *fr)
 {
-    int i, n;
-    int smpb[2 * SBLIMIT];      /* values: 0-65535 */
-    int *sample;
-    register unsigned int *ba;
-    register unsigned int *sca = (unsigned int *) scale_index;
+  int i,n;
+  int smpb[2*SBLIMIT]; /* values: 0-65535 */
+  int *sample;
+  register unsigned int *ba;
+  register unsigned int *sca = (unsigned int *) scale_index;
 
-    if (fr->stereo) {
-        int jsbound = fr->jsbound;
-        register real *f0 = fraction[0];
-        register real *f1 = fraction[1];
-
-        ba = balloc;
-        for (sample = smpb, i = 0; i < jsbound; i++) {
-            if ((n = *ba++))
-                *sample++ = mpg123_getbits(n + 1);
-            if ((n = *ba++))
-                *sample++ = mpg123_getbits(n + 1);
-        }
-        for (i = jsbound; i < SBLIMIT; i++)
-            if ((n = *ba++))
-                *sample++ = mpg123_getbits(n + 1);
-
-        ba = balloc;
-        for (sample = smpb, i = 0; i < jsbound; i++) {
-            if ((n = *ba++))
-                *f0++ =
-                    (real) (((-1) << n) + (*sample++) +
-                            1) * mpg123_muls[n + 1][*sca++];
-            else
-                *f0++ = 0.0;
-            if ((n = *ba++))
-                *f1++ =
-                    (real) (((-1) << n) + (*sample++) +
-                            1) * mpg123_muls[n + 1][*sca++];
-            else
-                *f1++ = 0.0;
-        }
-        for (i = jsbound; i < SBLIMIT; i++) {
-            if ((n = *ba++)) {
-                real samp = (((-1) << n) + (*sample++) + 1);
-
-                *f0++ = samp * mpg123_muls[n + 1][*sca++];
-                *f1++ = samp * mpg123_muls[n + 1][*sca++];
-            }
-            else
-                *f0++ = *f1++ = 0.0;
-        }
-        for (i = fr->down_sample_sblimit; i < 32; i++)
-            fraction[0][i] = fraction[1][i] = 0.0;
+  if(fr->stereo) {
+    int jsbound = fr->jsbound;
+    register real *f0 = fraction[0];
+    register real *f1 = fraction[1];
+    ba = balloc;
+    for (sample=smpb,i=0;i<jsbound;i++)  {
+      if ((n = *ba++))
+        *sample++ = mpg123_getbits(&bsi,n+1);
+      if ((n = *ba++))
+        *sample++ = mpg123_getbits(&bsi,n+1);
     }
-    else {
-        register real *f0 = fraction[0];
+    for (i=jsbound;i<SBLIMIT;i++) 
+      if ((n = *ba++))
+        *sample++ = mpg123_getbits(&bsi,n+1);
 
-        ba = balloc;
-        for (sample = smpb, i = 0; i < SBLIMIT; i++)
-            if ((n = *ba++))
-                *sample++ = mpg123_getbits(n + 1);
-        ba = balloc;
-        for (sample = smpb, i = 0; i < SBLIMIT; i++) {
-            if ((n = *ba++))
-                *f0++ =
-                    (real) (((-1) << n) + (*sample++) +
-                            1) * mpg123_muls[n + 1][*sca++];
-            else
-                *f0++ = 0.0;
-        }
-        for (i = fr->down_sample_sblimit; i < 32; i++)
-            fraction[0][i] = 0.0;
+    ba = balloc;
+    for (sample=smpb,i=0;i<jsbound;i++) {
+      if((n=*ba++))
+        *f0++ = (real) ( ((-1)<<n) + (*sample++) + 1) * mpg123_muls[n+1][*sca++];
+      else
+        *f0++ = 0.0;
+      if((n=*ba++))
+        *f1++ = (real) ( ((-1)<<n) + (*sample++) + 1) * mpg123_muls[n+1][*sca++];
+      else
+        *f1++ = 0.0;
     }
+    for (i=jsbound;i<SBLIMIT;i++) {
+      if ((n=*ba++)) {
+        real samp = ( ((-1)<<n) + (*sample++) + 1);
+        *f0++ = samp * mpg123_muls[n+1][*sca++];
+        *f1++ = samp * mpg123_muls[n+1][*sca++];
+      }
+      else
+        *f0++ = *f1++ = 0.0;
+    }
+    for(i=fr->down_sample_sblimit;i<32;i++)
+      fraction[0][i] = fraction[1][i] = 0.0;
+  }
+  else {
+    register real *f0 = fraction[0];
+    ba = balloc;
+    for (sample=smpb,i=0;i<SBLIMIT;i++)
+      if ((n = *ba++))
+        *sample++ = mpg123_getbits(&bsi,n+1);
+    ba = balloc;
+    for (sample=smpb,i=0;i<SBLIMIT;i++) {
+      if((n=*ba++))
+        *f0++ = (real) ( ((-1)<<n) + (*sample++) + 1) * mpg123_muls[n+1][*sca++];
+      else
+        *f0++ = 0.0;
+    }
+    for(i=fr->down_sample_sblimit;i<32;i++)
+      fraction[0][i] = 0.0;
+  }
 }
 
 int

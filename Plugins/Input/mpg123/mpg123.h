@@ -45,6 +45,18 @@ enum {
 
 #define         ENCODING_SEPARATOR      " ,:;|/"
 
+#define		MAXFRAMESIZE		4096
+
+#define		DOUBLE_TO_REAL(x)	(x)
+#define		REAL_MUL(x, y)		(x * y)
+
+#ifndef REAL_PLUS_32767
+# define REAL_PLUS_32767        32767.0
+#endif
+#ifndef REAL_MINUS_32768
+# define REAL_MINUS_32768       -32768.0
+#endif
+
 struct id3v1tag_t {
     char tag[3];                /* always "TAG": defines ID3v1 tag 128 bytes before EOF */
     char title[30];
@@ -158,6 +170,26 @@ struct bitstream_info {
 };
 
 extern struct bitstream_info bsi;
+
+struct mpstr {
+  int bsize;
+  int framesize;
+  int fsizeold;
+  struct frame fr;
+ /* int (*do_layer)(struct mpstr *,struct frame *fr,int,struct audio_info_struct *); */
+  unsigned char bsspace[2][MAXFRAMESIZE+512]; /* MAXFRAMESIZE */
+  real hybrid_block[2][2][SBLIMIT*SSLIMIT];
+  int  hybrid_blc[2];
+  unsigned long header;
+  int bsnum;
+  real synth_buffs[2][2][0x110];
+  int  synth_bo;
+
+  struct bitstream_info bsi;
+};
+
+
+#define AUSHIFT		3
 
 /* ------ Declarations from "http.c" ------ */
 
