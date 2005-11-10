@@ -2,9 +2,9 @@
 
 .text
 
-.globl synth_1to1_MMX
+.globl mpg123_synth_1to1_mmx
 
-synth_1to1_MMX: 
+mpg123_synth_1to1_mmx: 
         pushl %ebp
         pushl %edi
         pushl %esi
