@@ -30,8 +30,8 @@
 #include <string.h>
 
 /* XMMS public headers */
-#include <bmp/plugin.h>
-#include <bmp/util.h>
+#include <audacious/plugin.h>
+#include <audacious/util.h>
 
 #define EQ_MAX_BANDS 10
 /* Number of channels (Stereo) */

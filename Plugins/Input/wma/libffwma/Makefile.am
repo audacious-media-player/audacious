@@ -1,6 +1,6 @@
-noinst_LIBRARIES=	libffwma.a
+noinst_LTLIBRARIES=	libffwma.la
 
-libffwma_a_SOURCES=	allcodecs.c allformats.c \
+libffwma_la_SOURCES=	allcodecs.c allformats.c \
 			asf.c avcodec.h avformat.h \
 			avi.h avio.c avio.h aviobuf.c \
 			bswap.h common.c common.h \
@@ -10,4 +10,4 @@ libffwma_a_SOURCES=	allcodecs.c allformats.c \
 			parser.c simple_idct.c \
 			simple_idct.h utils.c wmadata.h \
 			wmadec.c
-libffwma_a_CFLAGS=	 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -c
+libffwma_la_CFLAGS=	 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -c
