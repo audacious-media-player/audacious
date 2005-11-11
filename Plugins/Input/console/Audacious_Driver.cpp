@@ -123,12 +123,18 @@ static void play_file_spc(char *filename)
 	gchar *name;
 	Emu_Std_Reader reader;
 	Spc_Emu::header_t header;
+	gint samplerate;
+
+	if (audcfg.resample == TRUE)
+		samplerate = audcfg.resample_rate;
+	else
+		samplerate = Spc_Emu::native_sample_rate;
 
 	reader.open(filename);
 	reader.read(&header, sizeof(header));
 
 	spc = new Spc_Emu;
-	spc->init(32000);
+	spc->init(samplerate);
 	spc->load(header, reader);
 	spc->start_track(0);
 
@@ -138,14 +144,14 @@ static void play_file_spc(char *filename)
 
 	if (audcfg.loop_length)
 		console_ip.set_info(name, audcfg.loop_length * 1000, 
-			spc->voice_count() * 1000, 32000, 2);
+			spc->voice_count() * 1000, samplerate, 2);
 	else
-		console_ip.set_info(name, -1, spc->voice_count(), 32000, 2);
-
+		console_ip.set_info(name, -1, spc->voice_count() * 1000,
+			samplerate, 2);
 
 	g_free(name);
 
-        if (!console_ip.output->open_audio(MY_FMT, 32000, 2))
+        if (!console_ip.output->open_audio(MY_FMT, samplerate, 2))
                  return;
 
 	playing_type = PLAY_TYPE_SPC;
