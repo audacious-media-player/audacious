@@ -122,7 +122,7 @@ static void play_file(char *filename)
 
 	if (audcfg.loop_length)
 		console_ip.set_info(name, audcfg.loop_length * 1000, 
-			spc->voice_count(), 32000, 2);
+			spc->voice_count() * 1000, 32000, 2);
 	else
 		console_ip.set_info(name, -1, spc->voice_count(), 32000, 2);
 
