@@ -60,7 +60,7 @@ static int is_our_file(gchar *filename)
 	return 0;
 }
 
-static gchar *get_title(gchar *filename)
+static gchar *get_title_spc(gchar *filename)
 {
 	gchar *title;
 	Emu_Std_Reader reader;
@@ -91,6 +91,21 @@ static gchar *get_title(gchar *filename)
 		title = g_strdup(filename);
 
 	return title;
+}
+
+static gchar *get_title(gchar *filename)
+{
+	gchar *ext;
+
+	ext = strrchr(filename, '.');
+
+	if (ext)
+	{
+		if (!strcasecmp(ext, ".spc"))
+			return get_title_spc(filename);
+	}
+
+	return NULL;
 }
 
 static void get_song_info(char *filename, char **title, int *length)
