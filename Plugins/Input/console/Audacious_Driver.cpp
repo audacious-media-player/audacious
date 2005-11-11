@@ -263,7 +263,15 @@ static int get_time(void)
 
 static void console_init(void)
 {
+	ConfigFile *cfg;
 
+	cfg = xmms_cfg_open_default_file();
+
+	xmms_cfg_read_int(cfg, "console", "loop_length", &audcfg.loop_length);
+	xmms_cfg_read_boolean(cfg, "console", "resample", &audcfg.resample);
+	xmms_cfg_read_int(cfg, "console", "resample_rate", &audcfg.resample_rate);
+
+	xmms_cfg_free(cfg);
 }
 
 extern "C" void console_aboutbox(void)
