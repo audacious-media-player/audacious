@@ -16,9 +16,13 @@ extern "C" {
 #include "libaudacious/configfile.h"
 #include "libaudacious/util.h"
 #include "libaudacious/titlestring.h"
+#include "audacious/input.h"
 #include "audacious/output.h"
+#include "audacious/playback.h"
 
 };
+
+struct AudaciousConsoleConfig audcfg = { 180, FALSE, 32000 };
 
 #include <cstring>
 
@@ -38,7 +42,6 @@ static void console_stop(void);
 static void console_pause(gshort p);
 static int get_time(void);
 static gboolean console_ip_is_going;
-
 extern InputPlugin console_ip;
 
 static int is_our_file(gchar *filename)
@@ -92,7 +95,11 @@ static gchar *get_title(gchar *filename)
 static void get_song_info(char *filename, char **title, int *length)
 {
 	(*title) = get_title(filename);
-	(*length) = -1;
+
+	if (audcfg.loop_length)
+		(*length) = audcfg.loop_length;
+	else
+		(*length) = -1;
 }
 
 static void play_file(char *filename)
@@ -113,7 +120,12 @@ static void play_file(char *filename)
 
 	name = get_title(filename);
 
-	console_ip.set_info(name, -1, spc->voice_count(), 32000, 2);
+	if (audcfg.loop_length)
+		console_ip.set_info(name, audcfg.loop_length * 1000, 
+			spc->voice_count(), 32000, 2);
+	else
+		console_ip.set_info(name, -1, spc->voice_count(), 32000, 2);
+
 
 	g_free(name);
 
@@ -178,8 +190,16 @@ static void *play_loop(gpointer arg)
 	Spc_Emu *my_spc = (Spc_Emu *) arg;
         Music_Emu::sample_t buf[1024];
 
-        while (my_spc->play(1024, buf) == NULL && console_ip_is_going == TRUE)
-        {
+	for (;;)
+	{
+		if (!console_ip_is_going)
+			break;
+
+		my_spc->play(1024, buf);
+
+		if ((console_ip.output->output_time() / 1000) > 
+			audcfg.loop_length && audcfg.loop_length != 0)
+			break;
 		console_ip.add_vis_pcm(console_ip.output->written_time(),
 			MY_FMT, 1, 2048, buf);
 	        while(console_ip.output->buffer_free() < 2048)
@@ -188,6 +208,8 @@ static void *play_loop(gpointer arg)
 	}
 
         delete spc;
+        console_ip.output->close_audio();
+	console_ip_is_going = FALSE;
         g_thread_exit(NULL);
 
         return NULL;
@@ -195,7 +217,10 @@ static void *play_loop(gpointer arg)
 
 static int get_time(void)
 {
-        return console_ip.output->output_time();
+	if (console_ip_is_going == TRUE)
+		return console_ip.output->output_time();
+	else
+		return -1;
 }
 
 static void console_init(void)

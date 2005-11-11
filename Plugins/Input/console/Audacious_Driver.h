@@ -8,6 +8,8 @@
 #ifndef AUDACIOUS_DRIVER_H
 #define AUDACIOUS_DRIVER_H
 
+#include <glib.h>
+
 #include "Blip_Buffer.h"
 #include "Blip_Synth.h"
 #include "Classic_Emu.h"
@@ -40,5 +42,11 @@
 #include "blargg_endian.h"
 #include "blargg_source.h"
 #include "ym2612.h"
+
+struct AudaciousConsoleConfig {
+	gint loop_length;	// length to loop in seconds
+	gboolean resample;	// whether or not to resample
+	gint resample_rate;	// rate to resample at
+};
 
 #endif
