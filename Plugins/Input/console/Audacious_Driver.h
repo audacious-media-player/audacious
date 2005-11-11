@@ -49,4 +49,11 @@ struct AudaciousConsoleConfig {
 	gint resample_rate;	// rate to resample at
 };
 
+#define PLAY_TYPE_NONE		0
+#define PLAY_TYPE_SPC		1
+#define PLAY_TYPE_NSF		2
+#define PLAY_TYPE_VGM		3
+#define PLAY_TIME_GBS		4
+#define PLAY_TYPE_GYM		5
+
 #endif

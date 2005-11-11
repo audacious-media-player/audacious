@@ -35,7 +35,7 @@ struct AudaciousConsoleConfig audcfg = { 180, FALSE, 32000 };
 static Spc_Emu *spc = NULL;
 static GThread *decode_thread;
 
-static void *play_loop(gpointer arg);
+static void *play_loop_spc(gpointer arg);
 static void console_init(void);
 extern "C" void console_aboutbox(void);
 static void console_stop(void);
@@ -43,6 +43,7 @@ static void console_pause(gshort p);
 static int get_time(void);
 static gboolean console_ip_is_going;
 extern InputPlugin console_ip;
+static int playing_type;
 
 static int is_our_file(gchar *filename)
 {
@@ -102,7 +103,7 @@ static void get_song_info(char *filename, char **title, int *length)
 		(*length) = -1;
 }
 
-static void play_file(char *filename)
+static void play_file_spc(char *filename)
 {
 	gchar *name;
 	Emu_Std_Reader reader;
@@ -132,7 +133,22 @@ static void play_file(char *filename)
         if (!console_ip.output->open_audio(MY_FMT, 32000, 2))
                  return;
 
-	decode_thread = g_thread_create(play_loop, spc, TRUE, NULL);
+	playing_type = PLAY_TYPE_SPC;
+
+	decode_thread = g_thread_create(play_loop_spc, spc, TRUE, NULL);
+}
+
+static void play_file(char *filename)
+{
+	gchar *ext;
+
+	ext = strrchr(filename, '.');
+
+	if (ext)
+	{
+		if (!strcasecmp(ext, ".spc"))
+			play_file_spc(filename);
+	}
 }
 
 static void seek(gint time)
@@ -185,7 +201,7 @@ static void console_pause(gshort p)
         console_ip.output->pause(p);
 }
 
-static void *play_loop(gpointer arg)
+static void *play_loop_spc(gpointer arg)
 {
 	Spc_Emu *my_spc = (Spc_Emu *) arg;
         Music_Emu::sample_t buf[1024];
@@ -210,6 +226,7 @@ static void *play_loop(gpointer arg)
         delete spc;
         console_ip.output->close_audio();
 	console_ip_is_going = FALSE;
+	playing_type = PLAY_TYPE_NONE;
         g_thread_exit(NULL);
 
         return NULL;
