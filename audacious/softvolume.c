@@ -117,7 +117,7 @@ soft_volume_set(SoftVolumeConfig * c, gint l, gint r)
  *
  **************************************************************************/
 
-G_INLINE_FUNC void
+void
 effect_16bit(gint max, gint min, guint length, gint16 * sdata,
              SoftVolumeConfig * c)
 {
@@ -139,7 +139,7 @@ effect_16bit(gint max, gint min, guint length, gint16 * sdata,
  *
  **************************************************************************/
 
-G_INLINE_FUNC void
+void
 effect_8bit(gint max, gint min, guint length, gint8 * sdata,
             SoftVolumeConfig * c)
 {
