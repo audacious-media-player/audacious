@@ -15,7 +15,7 @@
 #define WRITE_SAMPLE(samples,sum,clip) \
   if( (sum) > REAL_PLUS_32767) { *(samples) = 0x7fff; (clip)++; } \
   else if( (sum) < REAL_MINUS_32768) { *(samples) = -0x8000; (clip)++; } \
-  else { *(samples) = REAL_TO_SHORT(sum); }
+  else { *(samples) = sum; }
 
 int mpg123_synth_1to1_8bit(real *bandPtr,int channel,unsigned char *samples,int *pnt)
 {
