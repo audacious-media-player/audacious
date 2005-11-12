@@ -91,10 +91,6 @@ bmp_playback_initiate(void)
     if (bmp_playback_get_playing())
         bmp_playback_stop();
 
-    ip_data.playback_mutex = g_mutex_new();
-
-    g_mutex_lock(ip_data.playback_mutex);
-
     vis_clear_data(mainwin_vis);
     vis_clear_data(playlistwin_vis);
     svis_clear_data(mainwin_svis);
@@ -118,15 +114,11 @@ bmp_playback_initiate(void)
 
     playlist_check_pos_current();
     mainwin_set_info_text();
-
-    g_mutex_unlock(ip_data.playback_mutex);
 }
 
 void
 bmp_playback_pause(void)
 {
-    g_mutex_lock(ip_data.playback_mutex);
-
     if (!bmp_playback_get_playing())
         return;
 
@@ -141,15 +133,11 @@ bmp_playback_pause(void)
         playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
 
     get_current_input_plugin()->pause(ip_data.paused);
-
-    g_mutex_unlock(ip_data.playback_mutex);
 }
 
 void
 bmp_playback_stop(void)
 {
-    g_mutex_lock(ip_data.playback_mutex);
-
     if (ip_data.playing && get_current_input_plugin()) {
         ip_data.playing = FALSE;
 
@@ -170,16 +158,11 @@ bmp_playback_stop(void)
     }
 
     ip_data.playing = FALSE;
-
-    g_mutex_unlock(ip_data.playback_mutex);
-    g_mutex_free(ip_data.playback_mutex);
 }
 
 void
 bmp_playback_stop_reentrant(void)
 {
-    g_mutex_lock(ip_data.playback_mutex);
-
     if (ip_data.playing && get_current_input_plugin()) {
         ip_data.playing = FALSE;
 
@@ -197,9 +180,6 @@ bmp_playback_stop_reentrant(void)
     }
 
     ip_data.playing = FALSE;
-
-    g_mutex_unlock(ip_data.playback_mutex);
-    g_mutex_free(ip_data.playback_mutex);
 }
 
 static void
