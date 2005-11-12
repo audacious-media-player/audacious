@@ -132,7 +132,8 @@ bmp_playback_pause(void)
     else
         playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
 
-    get_current_input_plugin()->pause(ip_data.paused);
+    if (get_current_input_plugin()->pause)
+        get_current_input_plugin()->pause(ip_data.paused);
 }
 
 void
