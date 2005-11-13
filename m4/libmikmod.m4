@@ -7,7 +7,7 @@ dnl AM_PATH_LIBMIKMOD([MINIMUM-VERSION, [ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND 
 dnl Test for libmikmod, and define LIBMIKMOD_CFLAGS, LIBMIKMOD_LIBS and
 dnl LIBMIKMOD_LDADD
 dnl
-AC_DEFUN(AM_PATH_LIBMIKMOD,
+AC_DEFUN([AM_PATH_LIBMIKMOD],
 [dnl 
 dnl Get the cflags and libraries from the libmikmod-config script
 dnl
@@ -68,7 +68,7 @@ AC_ARG_WITH(libmikmod-exec-prefix,[  --with-libmikmod-exec-prefix=PFX Exec prefi
   rm -f conf.mikmodtest
 ])
 
-AC_DEFUN(AC_FIND_FILE,
+AC_DEFUN([AC_FIND_FILE],
     [
 	$3=NO
 	for i in $2;
