@@ -26,7 +26,6 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
 #include <glib.h>
-#include <pthread.h>
 #include <string.h>
 
 /* XMMS public headers */
