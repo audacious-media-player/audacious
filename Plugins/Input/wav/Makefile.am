@@ -10,6 +10,8 @@ libwav_la_SOURCES =	\
 	wav-sndfile.c	\
 	wav-sndfile.h
 
+libwav_la_LDADD = -lsndfile
+
 else
 
 libwav_la_SOURCES = 	\
