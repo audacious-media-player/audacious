@@ -48,10 +48,12 @@ static const gchar *credit_text[] = {
     N_("Developers:"),
     N_("William Pitcock"),
     N_("Mohammed Sameer"),
+    N_("Tony Vroon"),
     NULL,
 
     N_("Special thanks to:"),
     N_("irc.atheme.org #audacious"),
+    N_("irc.freenode.net #audacious"),
     NULL,
 
     N_("BMP Developers:"),
