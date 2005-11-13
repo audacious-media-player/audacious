@@ -4,8 +4,18 @@ libdir = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
 libwav_la_LDFLAGS = $(PLUGIN_LDFLAGS)
 
+if HAVE_LIBSNDFILE
+
+libwav_la_SOURCES =	\
+	wav-sndfile.c	\
+	wav-sndfile.h
+
+else
+
 libwav_la_SOURCES = 	\
-wav.c \
-wav.h
+	wav.c \
+	wav.h
+
+endif
 
 INCLUDES = $(GTK_CFLAGS) -I$(top_builddir)/intl -I$(top_srcdir)
