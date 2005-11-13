@@ -1,4 +1,8 @@
+if HAVE_LIRC
+
 lib_LTLIBRARIES = liblirc.la
+
+endif
 
 libdir = $(plugindir)/$(GENERAL_PLUGIN_DIR)
 
