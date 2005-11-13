@@ -22,7 +22,6 @@
 #include "config.h"
 #include <glib.h>
 #include <stdlib.h>
-#include <pthread.h>
 #include <string.h>
 #include <math.h>
 #include <stdio.h>
@@ -40,7 +39,7 @@ static InputPlugin tone_ip;
 
 static gboolean going;
 static gboolean audio_error;
-static pthread_t play_thread;
+static GThread *play_thread;
 
 static void tone_about(void)
 {
@@ -120,7 +119,7 @@ static void* play_loop(void *arg)
 	tone_ip.output->buffer_free();
 	tone_ip.output->buffer_free();
 
-	pthread_exit(NULL);
+	g_thread_exit(NULL);
 }
 
 static GArray* tone_filename_parse(const char* filename)
@@ -198,7 +197,7 @@ static void tone_play(char *filename)
 	name = tone_title(filename);
 	tone_ip.set_info(name, -1, 16 * OUTPUT_FREQ, OUTPUT_FREQ, 1);
 	g_free(name);
-	pthread_create(&play_thread, NULL, play_loop, frequencies);
+	play_thread = g_thread_create((GThreadFunc)play_loop, frequencies, TRUE, NULL);
 }
 
 static void tone_stop(void)
@@ -206,7 +205,7 @@ static void tone_stop(void)
 	if (going)
 	{
 		going = FALSE;
-		pthread_join(play_thread, NULL);
+		g_thread_join(play_thread);
 		tone_ip.output->close_audio();
 	}
 }
