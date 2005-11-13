@@ -131,7 +131,6 @@ int mpg123_synth_1to1_mono2stereo(real *bandPtr,unsigned char *samples,int *pnt)
 
 int mpg123_synth_1to1(real *bandPtr,int channel,unsigned char *out,int *pnt)
 {
-#ifndef PENTIUM_OPT
   static real buffs[2][2][0x110];
   static const int step = 2;
   static int bo = 1;
@@ -140,9 +139,7 @@ int mpg123_synth_1to1(real *bandPtr,int channel,unsigned char *out,int *pnt)
   real *b0,(*buf)[0x110];
   int clip = 0; 
   int bo1;
-#endif
 
-#ifndef PENTIUM_OPT
   if(!channel) {
     bo--;
     bo &= 0xf;
@@ -232,21 +229,4 @@ int mpg123_synth_1to1(real *bandPtr,int channel,unsigned char *out,int *pnt)
   *pnt += 128;
 
   return clip;
-#elif defined(USE_MMX)
-  {
-    static short buffs[2][2][0x110];
-    static int bo = 1;
-    short *samples = (short *) (out + *pnt);
-    mpg123_synth_1to1_MMX(bandPtr, channel, samples, (short *) buffs, &bo); 
-    *pnt += 128;
-    return 0;
-  } 
-#else
-  {
-    int ret;
-    ret = mpg123_synth_1to1_pent(bandPtr,channel,out+*pnt);
-    *pnt += 128;
-    return ret;
-  }
-#endif
 }
