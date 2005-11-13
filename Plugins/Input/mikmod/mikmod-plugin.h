@@ -4,7 +4,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <limits.h>
-#include <pthread.h>
 #include <gtk/gtk.h>
 #include "audacious/plugin.h"
 #include <mikmod.h>

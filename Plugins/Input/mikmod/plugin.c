@@ -43,7 +43,7 @@ static void get_song_info(char *filename, char **title, int *length);
 static void configure();
 static void config_ok(GtkWidget * widget, gpointer data);
 
-static pthread_t decode_thread;
+static GThread *decode_thread;
 
 MIKMODConfig mikmod_cfg;
 extern gboolean mikmod_xmms_audio_error;
@@ -142,7 +142,7 @@ static void stop(void)
 	if (mikmod_going)
 	{
 		mikmod_going = 0;
-		pthread_join(decode_thread, NULL);
+		g_thread_join(decode_thread);
 	}
 }
 
@@ -382,7 +382,7 @@ static void play_file(char *filename)
    back the forth from pattrens */
 
 	mikmod_ip.set_info(mf->songname, -1, ((mf->bpm * 1000)), md_mixfreq, channelcnt);
-	pthread_create(&decode_thread, NULL, play_loop, NULL);
+	decode_thread = g_thread_create((GThreadFunc)play_loop, NULL, TRUE, NULL);
 	return;
 
 }
@@ -404,7 +404,7 @@ static void *play_loop(void *arg)
 
 	mikmod_going = 0;
 	MikMod_Exit();
-	pthread_exit(NULL);
+	g_thread_exit(NULL);
 }
 
 static void configure()
