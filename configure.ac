@@ -324,7 +324,7 @@ else
     AC_MSG_RESULT([*** LIRC plugin disabled per user request ***])
     have_lirc="no"
 fi
-AM_CONDITIONAL([LIRC], test x$have_lirc = xyes)
+AM_CONDITIONAL([ENABLE_LIRC], test "$have_lirc" = "yes")
 
 
 dnl *** Ogg Vorbis
