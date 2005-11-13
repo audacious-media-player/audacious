@@ -82,46 +82,11 @@ mpg123_make_decode_tables_fpu(long scaleval)
     }
 }
 
-#ifdef USE_SIMD
-
-gint16 mpg123_decwins[(512 + 32) * 2];
-
 void
 mpg123_make_decode_tables_mmx(long scaleval)
 {
-    int i, j, p, a;
-
-    scaleval = -scaleval;
-    a = 1;
-    for (i = 0, j = 0, p = 0; i < 512; i++, j += a, p += 32) {
-        if (p < 512 + 16) {
-            int val = ((gint64) intwinbase[j] * scaleval) >> 17;
-            val = CLAMP(val, -32767, 32767);
-            if (p < 512) {
-                int n = 1055 - p;
-                mpg123_decwins[n - 16] = val;
-                mpg123_decwins[n] = val;
-            }
-            if (!(p & 1))
-                val = -val;
-            mpg123_decwins[p + 16] = val;
-            mpg123_decwins[p] = val;
-        }
-        if (i % 32 == 31)
-            p -= 1023;
-        if (i % 64 == 63)
-            scaleval = -scaleval;
-        if (i == 256)
-            a = -1;
-    }
+    mpg123_make_decode_tables(scaleval);
 }
-
-#else
-void
-mpg123_make_decode_tables_mmx(long scaleval)
-{
-}
-#endif
 
 void
 mpg123_make_decode_tables(long scaleval)

@@ -13,11 +13,6 @@
 
 #include "audacious/util.h"
 
-
-#define CPU_HAS_MMX() (cpu_fflags & 0x800000)
-#define CPU_HAS_3DNOW() (cpu_efflags & 0x80000000)
-
-
 static const long outscale = 32768;
 
 static struct frame fr, temp_fr;
@@ -110,14 +105,6 @@ set_synth_functions(struct frame *fr)
         {mpg123_synth_1to1_8bit,
          mpg123_synth_2to1_8bit,
          mpg123_synth_4to1_8bit},
-#ifdef USE_SIMD
-        {mpg123_synth_1to1_mmx,
-         mpg123_synth_2to1,
-         mpg123_synth_4to1},
-        {mpg123_synth_1to1_3dnow,
-         mpg123_synth_2to1,
-         mpg123_synth_4to1}
-#endif
     };
 
     static func_mono funcs_mono[2][4] = {
@@ -129,33 +116,12 @@ set_synth_functions(struct frame *fr)
          mpg123_synth_4to1_8bit_mono}
     };
 
-#ifdef USE_SIMD
-    static func_dct36 funcs_dct36[2] = { dct36, dct36_3dnow };
-#endif
-
     if (mpg123_cfg.resolution == 8)
         p8 = 1;
     fr->synth = funcs[p8][ds];
     fr->synth_mono = funcs_mono[p8][ds];
     fr->synth_type = SYNTH_FPU;
 
-#ifdef USE_SIMD
-    fr->dct36 = funcs_dct36[0];
-
-    if (CPU_HAS_3DNOW() && !p8 &&
-        (mpg123_cfg.default_synth == SYNTH_3DNOW ||
-         mpg123_cfg.default_synth == SYNTH_AUTO)) {
-        fr->synth = funcs[3][ds];   /* 3DNow! optimized synth_1to1() */
-        fr->dct36 = funcs_dct36[1]; /* 3DNow! optimized dct36() */
-        fr->synth_type = SYNTH_3DNOW;
-    }
-    else if (CPU_HAS_MMX() && !p8 &&
-             (mpg123_cfg.default_synth == SYNTH_MMX ||
-              mpg123_cfg.default_synth == SYNTH_AUTO)) {
-        fr->synth = funcs[2][ds];   /* MMX optimized synth_1to1() */
-        fr->synth_type = SYNTH_MMX;
-    }
-#endif
     if (p8) {
         mpg123_make_conv16to8_table();
     }

@@ -110,9 +110,6 @@ struct frame {
     struct al_table *alloc;
     int (*synth) (real *, int, unsigned char *, int *);
     int (*synth_mono) (real *, unsigned char *, int *);
-#ifdef USE_SIMD
-    void (*dct36) (real *, real *, real *, real *, real *);
-#endif
     int stereo;
     int jsbound;
     int single;
@@ -289,22 +286,11 @@ extern void mpg123_huffman_decoder(int, int *);
 extern void mpg123_huffman_count1(int, int *);
 extern int mpg123_get_songlen(struct frame *fr, int no);
 
-#ifdef USE_SIMD
-void mpg123_dct64_mmx(real *, real *, real *);
-int mpg123_synth_1to1_mmx(real *, int, unsigned char *, int *);
-
-void dct36(real *, real *, real *, real *, real *);
-void dct36_3dnow(real *, real *, real *, real *, real *);
-int mpg123_synth_1to1_3dnow(real *, int, unsigned char *, int *);
-
-int mpg123_getcpuflags(guint32 * fflags, guint32 * efflags);
-#else
 #define mpg123_getcpuflags(a, b)		\
 do {						\
 	*(a) = 0;				\
 	*(b) = 0;				\
 } while (0)
-#endif
 
 void mpg123_init_layer3(int);
 void mpg123_init_layer2(gboolean);

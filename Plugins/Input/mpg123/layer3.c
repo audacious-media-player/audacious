@@ -1848,18 +1848,6 @@ mpg123_do_layer3(struct frame *fr)
         }
 #endif
         
-#ifdef USE_SIMD
-        if (fr->synth_type == SYNTH_MMX && single < 0) {
-            int i, sb;
-
-            for (sb = 0, i = 0; sb < SBLIMIT; sb++) {
-                for (ss = 0; ss < SSLIMIT; ss++) {
-                    hybridIn[0][sb][ss] *= 16384.0;
-                    hybridIn[1][sb][ss] *= 16384.0;
-                }
-            }
-        }
-#endif
         for (ch = 0; ch < stereo1; ch++) {
             struct gr_info_s *gr_info = &(sideinfo.ch[ch].gr[gr]);
 

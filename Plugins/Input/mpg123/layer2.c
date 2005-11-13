@@ -57,12 +57,6 @@ void mpg123_init_layer2(gboolean mmx)
     double m=mulmul[k];
 
     table = mpg123_muls[k];
-#ifdef USE_SIMD
-    if(mmx) 
-        for(j=3,i=0;i<63;i++,j--)
-	  *table++ = 16384 * m * pow(2.0,(double) j / 3.0);
-    else
-#endif
     for(j=3,i=0;i<63;i++,j--)
        *table  = m * pow(2.0, (double) j / 3.0);
     *table++ = 0.0;

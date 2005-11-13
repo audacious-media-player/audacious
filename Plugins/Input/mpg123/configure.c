@@ -24,11 +24,6 @@ static GtkWidget *decode_freq_frame, *decode_freq_vbox, *decode_freq_1to1,
     *decode_freq_1to2, *decode_freq_1to4;
 static GtkWidget *option_frame, *option_vbox, *detect_by_content,
     *detect_by_extension, *detect_by_both;
-#ifdef USE_SIMD
-static GtkWidget *auto_select, *decoder_3dnow, *decoder_mmx, *decoder_fpu;
-
-static void auto_select_cb(GtkWidget * w, gpointer data);
-#endif
 
 static GtkObject *streaming_size_adj, *streaming_pre_adj;
 static GtkWidget *streaming_proxy_use, *streaming_proxy_host_entry;
@@ -82,17 +77,6 @@ mpg123_configurewin_ok(GtkWidget * widget, gpointer data)
     else
         mpg123_cfg.detect_by = DETECT_EXTENSION;
 
-#ifdef USE_SIMD
-    if (GTK_TOGGLE_BUTTON(auto_select)->active)
-        mpg123_cfg.default_synth = SYNTH_AUTO;
-    else if (GTK_TOGGLE_BUTTON(decoder_fpu)->active)
-        mpg123_cfg.default_synth = SYNTH_FPU;
-    else if (GTK_TOGGLE_BUTTON(decoder_mmx)->active)
-        mpg123_cfg.default_synth = SYNTH_MMX;
-    else
-        mpg123_cfg.default_synth = SYNTH_3DNOW;
-
-#endif
     mpg123_cfg.http_buffer_size =
         (gint) GTK_ADJUSTMENT(streaming_size_adj)->value;
     mpg123_cfg.http_prebuffer =
@@ -186,10 +170,6 @@ mpg123_configurewin_ok(GtkWidget * widget, gpointer data)
                         mpg123_cfg.disable_id3v2);
     bmp_cfg_db_set_string(db, "MPG123", "id3_format", mpg123_cfg.id3_format);
     bmp_cfg_db_set_int(db, "MPG123", "detect_by", mpg123_cfg.detect_by);
-#ifdef USE_SIMD
-    bmp_cfg_db_set_int(db, "MPG123", "default_synth",
-                       mpg123_cfg.default_synth);
-#endif
 
 /* Encoding patch */
     bmp_cfg_db_set_bool(db, "MPG123", "title_encoding_enabled", mpg123_cfg.title_encoding_enabled);
@@ -199,19 +179,6 @@ mpg123_configurewin_ok(GtkWidget * widget, gpointer data)
     bmp_cfg_db_close(db);
     gtk_widget_destroy(mpg123_configurewin);
 }
-
-#ifdef USE_SIMD
-static void
-auto_select_cb(GtkWidget * w, gpointer data)
-{
-    gboolean autom = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(w));
-
-    gtk_widget_set_sensitive(decoder_fpu, !autom);
-    gtk_widget_set_sensitive(decoder_mmx, !autom);
-    gtk_widget_set_sensitive(decoder_3dnow, !autom);
-}
-
-#endif
 
 static void
 proxy_use_cb(GtkWidget * w, gpointer data)
@@ -447,69 +414,6 @@ mpg123_configure(void)
     gtk_box_pack_start(GTK_BOX(decode_freq_vbox), decode_freq_1to4, FALSE,
                        FALSE, 0);
 
-
-#ifdef USE_SIMD
-    {
-        GtkWidget *decoder_frame, *decoder_vbox;
-
-        decoder_frame = gtk_frame_new(_("Decoder:"));
-        gtk_box_pack_start(GTK_BOX(decode_vbox), decoder_frame, FALSE,
-                           FALSE, 0);
-
-        decoder_vbox = gtk_vbox_new(FALSE, 5);
-        gtk_container_set_border_width(GTK_CONTAINER(decoder_vbox), 5);
-        gtk_container_add(GTK_CONTAINER(decoder_frame), decoder_vbox);
-
-        auto_select =
-            gtk_check_button_new_with_label(_("Automatic detection"));
-        gtk_box_pack_start(GTK_BOX(decoder_vbox), auto_select, FALSE,
-                           FALSE, 0);
-        g_signal_connect(G_OBJECT(auto_select), "clicked",
-                         G_CALLBACK(auto_select_cb), NULL);
-
-        decoder_3dnow =
-            gtk_radio_button_new_with_label(NULL,
-                                            _("3DNow! optimized decoder"));
-        gtk_box_pack_start(GTK_BOX(decoder_vbox), decoder_3dnow, FALSE,
-                           FALSE, 0);
-
-        decoder_mmx =
-            gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON
-                                                        (decoder_3dnow),
-                                                        _
-                                                        ("MMX optimized decoder"));
-        gtk_box_pack_start(GTK_BOX(decoder_vbox), decoder_mmx, FALSE,
-                           FALSE, 0);
-
-        decoder_fpu =
-            gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON
-                                                        (decoder_3dnow),
-                                                        _("FPU decoder"));
-        gtk_box_pack_start(GTK_BOX(decoder_vbox), decoder_fpu, FALSE,
-                           FALSE, 0);
-
-        switch (mpg123_cfg.default_synth) {
-        case SYNTH_3DNOW:
-            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(decoder_3dnow),
-                                         TRUE);
-            break;
-        case SYNTH_MMX:
-            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(decoder_mmx),
-                                         TRUE);
-            break;
-        case SYNTH_FPU:
-            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(decoder_fpu),
-                                         TRUE);
-            break;
-        default:
-            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(decoder_fpu),
-                                         TRUE);
-            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(auto_select),
-                                         TRUE);
-            break;
-        }
-    }
-#endif
     option_frame = gtk_frame_new(_("Options"));
     gtk_box_pack_start(GTK_BOX(decode_vbox), option_frame, FALSE, FALSE, 0);
 
