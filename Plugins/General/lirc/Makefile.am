@@ -1,4 +1,4 @@
-if HAVE_LIRC
+if LIRC
 
 lib_LTLIBRARIES = liblirc.la
 
