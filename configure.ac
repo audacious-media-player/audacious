@@ -357,6 +357,26 @@ AC_ARG_ENABLE(aac,
 
 AM_CONDITIONAL(ENABLE_AAC, test "$enable_aac" = "yes")
 
+dnl *** sndfile
+
+AC_ARG_ENABLE(sndfile,
+    [  --disable-sndfile       disable sndfile extensions. [default=enabled] ],
+    [enable_sndfile=$enableval],
+    [enable_sndfile=yes]
+)
+
+if test "$enable_sndfile" = "yes"; then
+    PKG_CHECK_MODULES(SNDFILE, [sndfile >= 0.19],
+        [enable_sndfile=yes],
+        [enable_sndfile=no]
+    )
+else
+    AC_MSG_RESULT([*** libsndfile extensions disabled per user request ***])
+    enable_sndfile=no
+fi
+
+AM_CONDITIONAL([HAVE_LIBSNDFILE], test "$enable_sndfile" = "yes")
+
 dnl *** mikmod
 AC_ARG_ENABLE( mikmod,
 [  --disable-mikmod        Disable mikmod input plugin [default=enabled]],,
