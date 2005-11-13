@@ -1,2 +1,2 @@
-ALL_PLUGINS = song_change
+ALL_PLUGINS = song_change lirc
 SUBDIRS = $(GENERAL_PLUGINS)
