@@ -17,25 +17,7 @@ id3_frame_url.c id3_header.h id3_tag.c
 
 if ARCH_X86
 
-if USE_X86ASM
-
-if USE_SIMD
-
-EXTRA_SRC = decode_i386.c dct64_i386.c decode_i586.s \
-            decode_3dnow.s dct64_3dnow.s dct36_3dnow.s getcpuflags.s \
-            dct64_MMX.s decode_MMX.s
-
-else
-
-EXTRA_SRC = decode_i386.c dct64_i386.c decode_i586.s
-
-endif # USE_SIMD
-
-else
-
 EXTRA_SRC = decode_i386.c dct64_i386.c
-
-endif # SE_X86_ASM
 
 else
 
@@ -43,10 +25,8 @@ EXTRA_SRC = decode.c dct64.c
 
 endif # ARCH_X86
 
-EXTRA_DIST = decode.c decode_i386.c decode_i586.s decode_3dnow.s dct64_i386.c \
-             getbits.c dct64.c dct64_3dnow.s dct36_3dnow.s getcpuflags.s \
-             dct64_MMX.s decode_MMX.s \
-             mp3.xpm
+EXTRA_DIST = decode.c decode_i386.c dct64_i386.c \
+             getbits.c dct64.c mp3.xpm
 
 libmpg123_la_SOURCES = $(COMMON_SRC) $(EXTRA_SRC)
 libmpg123_la_LDFLAGS = $(PLUGIN_LDFLAGS)
