@@ -11,9 +11,6 @@
 #include "xmms-id3.h"
 #include "id3_header.h"
 
-/* max = 1728 */
-#define MAXFRAMESIZE 1792
-
 const int tabsel_123[2][3][16] = {
     {{0, 32, 64, 96, 128, 160, 192, 224, 256, 288, 320, 352, 384, 416,
       448,},
