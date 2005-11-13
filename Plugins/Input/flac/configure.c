@@ -25,7 +25,6 @@
 #include <string.h>
 #include <glib.h>
 #include <gtk/gtk.h>
-#include <pthread.h>
 #include <math.h>
 
 #include <libaudacious/configfile.h>

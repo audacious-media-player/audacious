@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-#include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -166,7 +165,7 @@ static unsigned sample_buffer_first_, sample_buffer_last_;
 
 static void *decoder_ = 0;
 static file_info_struct file_info_;
-static pthread_t decode_thread_;
+static GThread *decode_thread_;
 static FLAC__bool audio_error_ = false;
 static FLAC__bool is_big_endian_host_;
 
@@ -368,7 +367,7 @@ void FLAC_XMMS__play_file(char *filename)
 
 	file_info_.seek_to_in_sec = -1;
 	file_info_.play_thread_open = true;
-	pthread_create(&decode_thread_, NULL, play_loop_, NULL);
+	decode_thread_ = g_thread_create((GThreadFunc)play_loop_, NULL, TRUE, NULL);
 }
 
 void FLAC_XMMS__stop()
@@ -377,7 +376,7 @@ void FLAC_XMMS__stop()
 		file_info_.is_playing = false;
 		if(file_info_.play_thread_open) {
 			file_info_.play_thread_open = false;
-			pthread_join(decode_thread_, NULL);
+			g_thread_join(decode_thread_);
 		}
 		flac_ip.output->close_audio();
 		decoder_func_table_ -> safe_decoder_finish (decoder_);
@@ -545,7 +544,7 @@ void *play_loop_(void *arg)
 
 	g_free(file_info_.title);
 
-	pthread_exit(NULL);
+	g_thread_exit(NULL);
 	return 0; /* to silence the compiler warning about not returning a value */
 }
 

@@ -30,8 +30,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <pthread.h>
-
 #include <audacious/util.h>
 #include <audacious/plugin.h>
 
@@ -66,7 +64,7 @@ static gint sock, rd_index, wr_index, buffer_length, prebuffer_length;
 static guint64 buffer_read = 0;
 static gchar *buffer;
 static guint64 offset;
-static pthread_t thread;
+static GThread *thread;
 static GtkWidget *error_dialog = NULL;
 
 static FILE *output_file = NULL;
@@ -187,7 +185,7 @@ void flac_http_close(void)
 {
 	going = FALSE;
 
-	pthread_join(thread, NULL);
+	g_thread_join(thread);
 	g_free(icy_name);
 	icy_name = NULL;
 }
@@ -699,7 +697,7 @@ static void *http_buffer_loop(void *arg)
 	g_free(buffer);
 	g_free(url);
 	
-	pthread_exit(NULL);
+	g_thread_exit(NULL);
 	return NULL; /* avoid compiler warning */
 }
 
@@ -721,7 +719,7 @@ int flac_http_open(gchar * _url, guint64 _offset)
 	buffer = g_malloc(buffer_length);
 	offset = _offset;
 
-	pthread_create(&thread, NULL, http_buffer_loop, url);
+	thread = g_thread_create((GThreadFunc)http_buffer_loop, url, TRUE, NULL);
 
 	return 0;
 }
