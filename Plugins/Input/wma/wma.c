@@ -20,19 +20,14 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifdef HAVE_MALLOC_H
-#include <malloc.h>
-#endif
-#include <pthread.h>
-
 #include <glib.h>
 #include <glib/gprintf.h>
 
-#include <audacious/plugin.h>
-#include <audacious/configfile.h>
-#include <audacious/util.h>
-#include <audacious/titlestring.h>
-#include <audacious/vfs.h>
+#include "audacious/plugin.h"
+#include "libaudacious/configfile.h"
+#include "libaudacious/util.h"
+#include "libaudacious/titlestring.h"
+#include "libaudacious/vfs.h"
 
 #ifdef HAVE_CONFIG_H
 #	include "config.h"
@@ -52,8 +47,8 @@ static gboolean wma_pause = 0;
 static gboolean wma_eq_on = 0;
 static int wma_seekpos = -1;
 static int wma_st_buff, wma_idx;
-static pthread_t wma_decode_thread;
-static pthread_mutex_t  wma_mutex = PTHREAD_MUTEX_INITIALIZER;
+static GThread *wma_decode_thread;
+GStaticMutex wma_mutex = G_STATIC_MUTEX_INIT;
 static AVCodecContext *c = NULL;
 static AVFormatContext *ic = NULL;
 static uint8_t *wma_outbuf, *wma_s_outbuf;
@@ -134,8 +129,7 @@ static void wma_about(void)
 
 static void wma_init(void)
 {
-    	
-	avcodec_init();
+    	avcodec_init();
     	avcodec_register_all();
     	av_register_all();
     	init_iir();
@@ -155,7 +149,6 @@ static int wma_is_our_file(char *filename)
 
 static void wma_do_pause(short p)
 {
-	
 	wma_pause = p;
     	wma_ip.output->pause(wma_pause);
 }
@@ -264,7 +257,6 @@ static gchar *get_song_title(AVFormatContext *in, gchar * filename)
 
 static guint get_song_time(AVFormatContext *in)
 {
-	
 	if (in->duration)
 		return in->duration/1000;
     	else
@@ -326,7 +318,7 @@ static void *wma_play_loop(void *arg)
     	int out_size, size, len;
     	AVPacket pkt;
     
-    	pthread_mutex_lock(&wma_mutex);
+	g_static_mutex_lock(&wma_mutex);
     	
 	while (wma_decode) {
 		if (wma_seekpos != -1) {
@@ -386,17 +378,22 @@ static void *wma_play_loop(void *arg)
     	if (ic)
         	av_close_input_file(ic);
     
-	pthread_mutex_unlock(&wma_mutex);
-    	pthread_exit(NULL);
+	g_static_mutex_unlock(&wma_mutex);
+    	g_thread_exit(NULL);
+	return(NULL);
 }
 
 static void wma_play_file(char *filename) 
 {
+	return;
+	/*
+	Need to see if this is the cause of the big explosion
+
 	AVCodec *codec;
-    
+
     	if (av_open_input_file(&ic, filename, NULL, 0, NULL) < 0)
 		return;
-    
+
     	for (wma_idx = 0; wma_idx < ic->nb_streams; wma_idx++) {
         	c = &ic->streams[wma_idx]->codec;
         	
@@ -421,14 +418,15 @@ static void wma_play_file(char *filename)
 		return;
 
     	wma_st_buff  = ST_BUFF;
-	
+
     	wma_ip.set_info(wsong_title, wsong_time, c->bit_rate, c->sample_rate, c->channels);
 
     	wma_s_outbuf = g_malloc0(wma_st_buff);
     	wma_outbuf = g_malloc0(AVCODEC_MAX_AUDIO_FRAME_SIZE);
     	wma_seekpos = -1;
     	wma_decode = 1;
-    	pthread_create(&wma_decode_thread, NULL, wma_play_loop, NULL);
+    	wma_decode_thread = g_thread_create((GThreadFunc)wma_play_loop, NULL, TRUE, NULL);
+	*/
 }
 
 static void wma_stop(void) 
@@ -438,7 +436,7 @@ static void wma_stop(void)
 	if (wma_pause)
 		wma_do_pause(0);
     	
-	pthread_join(wma_decode_thread, NULL);
+	g_thread_join(wma_decode_thread);
     	wma_ip.output->close_audio();
 }	
 
