@@ -310,6 +310,23 @@ AC_SUBST(ID3LIBS)
 
 fi dnl $enable_mp3 = yes
 
+dnl *** LIRC client libraries
+
+AC_ARG_ENABLE(lirc,
+    [  --disable-lirc        disable LIRC plugin (default=enabled)],
+    [enable_lirc=$enableval],
+    [enable_lirc="yes"]
+)
+
+if test "$enable_lirc" = "yes"; then
+    AC_CHECK_LIB([lirc_client],[lirc_init],[have_lirc=yes],[have_lirc=no])
+else
+    AC_MSG_RESULT([*** LIRC plugin disabled per user request ***])
+    have_lirc="no"
+fi
+AM_CONDITIONAL([LIRC], test x$have_lirc = xyes)
+
+
 dnl *** Ogg Vorbis
 
 AC_ARG_ENABLE(vorbis,
@@ -670,6 +687,7 @@ AC_CONFIG_FILES([
 	Plugins/Visualization/libvisual-proxy/Makefile
 	Plugins/General/Makefile
 	Plugins/General/song_change/Makefile
+	Plugins/General/lirc/Makefile
         po/Makefile.in
         intl/Makefile
         icons/Makefile
@@ -724,6 +742,7 @@ echo ""
 echo "  General"
 echo "  -------"
 echo "  Song Change:                            yes"
+echo "  LIRC:                                   $have_lirc"
 echo ""
 echo "  Visualization"
 echo "  -------------"
