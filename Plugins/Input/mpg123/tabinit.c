@@ -85,7 +85,6 @@ mpg123_make_decode_tables_fpu(long scaleval)
 void
 mpg123_make_decode_tables_mmx(long scaleval)
 {
-    mpg123_make_decode_tables(scaleval);
 }
 
 void
