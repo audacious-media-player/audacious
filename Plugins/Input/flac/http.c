@@ -30,8 +30,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <audacious/util.h>
 #include <audacious/plugin.h>
+#include <libaudacious/util.h>
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>

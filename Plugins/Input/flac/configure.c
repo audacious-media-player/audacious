@@ -30,7 +30,7 @@
 #include <libaudacious/configfile.h>
 #include <libaudacious/dirbrowser.h>
 #include <libaudacious/titlestring.h>
-#include <audacious/util.h>
+#include <libaudacious/util.h>
 #include <audacious/plugin.h>
 
 #include "plugin_common/locale_hack.h"

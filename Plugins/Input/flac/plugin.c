@@ -25,7 +25,7 @@
 #include <unistd.h>
 
 #include <audacious/plugin.h>
-#include <audacious/util.h>
+#include <libaudacious/util.h>
 #include <libaudacious/configfile.h>
 #include <libaudacious/titlestring.h>
 
