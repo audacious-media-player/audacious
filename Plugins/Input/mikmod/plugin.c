@@ -405,6 +405,7 @@ static void *play_loop(void *arg)
 	mikmod_going = 0;
 	MikMod_Exit();
 	g_thread_exit(NULL);
+	return(NULL);
 }
 
 static void configure()
