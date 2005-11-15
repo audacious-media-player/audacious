@@ -120,6 +120,7 @@ static void* play_loop(void *arg)
 	tone_ip.output->buffer_free();
 
 	g_thread_exit(NULL);
+	return(NULL);
 }
 
 static GArray* tone_filename_parse(const char* filename)
