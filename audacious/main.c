@@ -85,6 +85,7 @@ struct _BmpCmdLineOpt {
     gboolean play, stop, pause, fwd, rew, play_pause, playcd;
     gboolean enqueue, mainwin, remote, activate;
     gboolean load_skins;
+    gboolean headless;
     gchar *previous_session_id;
 };
 
@@ -689,6 +690,7 @@ parse_cmd_line(gint argc,
         {"version", 0, NULL, 'v'},
         {"sm-client-id", 1, NULL, 'i'},
         {"xmms", 0, NULL, 'x'},
+        {"headless", 0, NULL, 'H'},
         {0, 0, 0, 0}
     };
 
@@ -698,7 +700,7 @@ parse_cmd_line(gint argc,
     memset(options, 0, sizeof(BmpCmdLineOpt));
     options->session = -1;
 
-    while ((c = getopt_long(argc, argv, "chn:rpusfemavtLS", long_options,
+    while ((c = getopt_long(argc, argv, "chn:HrpusfemavtLS", long_options,
                             NULL)) != -1) {
         switch (c) {
         case 'h':
@@ -706,6 +708,9 @@ parse_cmd_line(gint argc,
             break;
         case 'n':
             options->session = atoi(optarg);
+            break;
+        case 'H':
+            options->headless = TRUE;
             break;
         case 'r':
             options->rew = TRUE;
@@ -931,7 +936,10 @@ main(gint argc, gchar ** argv)
         }
 
         handle_cmd_line_options(&options, TRUE);
-        exit(EXIT_SUCCESS);
+
+        /* we could be running headless, so GTK probably wont matter */
+        if (options.headless != 1)
+          exit(EXIT_SUCCESS);
     }
 
     if (!vfs_init()) {
@@ -951,67 +959,88 @@ main(gint argc, gchar ** argv)
         exit(EXIT_SUCCESS);
     }
 
-    check_wm_hints();
+    if (options.headless != 1)
+    {
+        check_wm_hints();
 
-    bmp_set_default_icon();
+        bmp_set_default_icon();
 
-    gtk_accel_map_load(bmp_paths[BMP_PATH_ACCEL_FILE]);
+        gtk_accel_map_load(bmp_paths[BMP_PATH_ACCEL_FILE]);
 
-    mainwin_create();
-    playlistwin_create();
-    equalizerwin_create();
+        mainwin_create();
+        playlistwin_create();
+        equalizerwin_create();
 
-    if (!init_skins(cfg.skin)) {
-        run_load_skin_error_dialog(cfg.skin);
-        exit(EXIT_FAILURE);
+        if (!init_skins(cfg.skin)) {
+            run_load_skin_error_dialog(cfg.skin);
+            exit(EXIT_FAILURE);
+        }
+
+        GDK_THREADS_ENTER();
     }
 
-    GDK_THREADS_ENTER();
-
     plugin_system_init();
-    read_volume(VOLSET_STARTUP);
 
     playlist_load(bmp_paths[BMP_PATH_PLAYLIST_FILE]);
     playlist_set_position(cfg.playlist_position);
 
     /* this needs to be called after all 3 windows are created and
-       input plugins are setup'ed */
+     * input plugins are setup'ed 
+     * but not if we're running headless --nenolod
+     */
     mainwin_setup_menus();
 
-    GDK_THREADS_LEAVE();
+    if (options.headless != 1)
+        GDK_THREADS_LEAVE();
 
     ctrlsocket_start();
 
     handle_cmd_line_options(&options, FALSE);
 
-    GDK_THREADS_ENTER();
+    if (options.headless != 1)
+    {
+        GDK_THREADS_ENTER();
 
-    mainwin_set_info_text();
+        read_volume(VOLSET_STARTUP);
+        mainwin_set_info_text();
 
-    /* FIXME: delayed, because it deals directly with the plugin
-     * interface to set menu items */
-    create_prefs_window();
+        /* FIXME: delayed, because it deals directly with the plugin
+         * interface to set menu items */
+        create_prefs_window();
 
-    if (cfg.player_visible)
-        mainwin_show(TRUE);
-    else if (!cfg.playlist_visible && !cfg.equalizer_visible)
-        mainwin_show(TRUE);
+        if (cfg.player_visible)
+            mainwin_show(TRUE);
+        else if (!cfg.playlist_visible && !cfg.equalizer_visible)
+            mainwin_show(TRUE);
 
-    if (cfg.equalizer_visible)
-        equalizerwin_show(TRUE);
+        if (cfg.equalizer_visible)
+            equalizerwin_show(TRUE);
 
-    if (cfg.playlist_visible)
-        playlistwin_show();
+        if (cfg.playlist_visible)
+            playlistwin_show();
 
-    /* FIXME: move this away */
-    hint_set_always(cfg.always_on_top);
+        /* FIXME: move this away */
+        hint_set_always(cfg.always_on_top);
 
-    playlist_start_get_info_thread();
-    mainwin_attach_idle_func();
+        playlist_start_get_info_thread();
+        mainwin_attach_idle_func();
 
-    gtk_main();
+        gtk_main();
 
-    GDK_THREADS_LEAVE();
+        GDK_THREADS_LEAVE();
 
-    return EXIT_SUCCESS;
+        return EXIT_SUCCESS;
+    }
+    else
+    {
+        mainwin_set_info_text();
+        playlist_start_get_info_thread();
+
+        gtk_main();
+#if 0
+        for (;;)
+            xmms_usleep(10000);
+#endif
+        return EXIT_SUCCESS;
+    }
 }
