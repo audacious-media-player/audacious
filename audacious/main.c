@@ -663,6 +663,9 @@ display_usage(void)
     g_print("\n-i, --sm-client-id     ");
     /* -i, --sm-client-id switch */
     g_print(_("Previous session ID"));
+    g_print(_("\n-H, --headless       ");
+    /* -h, --headless switch */
+    g_print(_("Headless operation [experimental]"));
     g_print("\n-v, --version          ");
     /* -v, --version switch */
     g_print(_("Print version number and exit\n"));
