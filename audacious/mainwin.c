@@ -900,6 +900,9 @@ mainwin_clear_song_info(void)
 void
 mainwin_disable_seekbar(void)
 {
+    if (!mainwin)
+        return;
+
     /*
      * We dont call draw_main_window() here so this will not
      * remove them visually.  It will only prevent us from sending

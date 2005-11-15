@@ -1036,11 +1036,12 @@ main(gint argc, gchar ** argv)
         mainwin_set_info_text();
         playlist_start_get_info_thread();
 
-        gtk_main();
-#if 0
         for (;;)
+	{
+	    ctrlsocket_check();
             xmms_usleep(10000);
-#endif
+        }
+
         return EXIT_SUCCESS;
     }
 }

@@ -171,6 +171,9 @@ svis_clear_data(SVis * svis)
 {
     gint i;
 
+    if (!svis)
+        return;
+
     for (i = 0; i < 75; i++) {
         svis->vs_data[i] = (cfg.vis_type == VIS_SCOPE) ? 6 : 0;
     }

@@ -30,6 +30,9 @@ playstatus_draw(Widget * w)
     PlayStatus *ps = PLAY_STATUS(w);
     GdkPixmap *obj;
 
+    if (!w)
+        return;
+
     obj = ps->ps_widget.parent;
 
     if (ps->ps_status == STATUS_PLAY)
@@ -62,6 +65,9 @@ playstatus_draw(Widget * w)
 void
 playstatus_set_status(PlayStatus * ps, PStatus status)
 {
+    if (!ps)
+        return;
+
     ps->ps_status = status;
     widget_draw(WIDGET(ps));
 }

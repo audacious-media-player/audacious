@@ -75,6 +75,9 @@ widget_contains(Widget * widget, gint x, gint y)
 void
 widget_show(Widget * widget)
 {
+    if (!widget)
+        return;
+
     widget->visible = TRUE;
     widget_draw(widget);
 }
@@ -82,12 +85,18 @@ widget_show(Widget * widget)
 void
 widget_hide(Widget * widget)
 {
+    if (!widget)
+        return;
+
     widget->visible = FALSE;
 }
 
 gboolean
 widget_is_visible(Widget * widget)
 {
+    if (!widget)
+        return FALSE;
+
     return widget->visible;
 }
 

@@ -249,6 +249,9 @@ vis_clear_data(Vis * vis)
 {
     gint i;
 
+    if (!vis)
+        return;
+
     for (i = 0; i < 75; i++) {
         vis->vs_data[i] = (cfg.vis_type == VIS_SCOPE) ? 6 : 0;
         vis->vs_peak[i] = 0;

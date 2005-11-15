@@ -67,6 +67,9 @@ void
 monostereo_set_num_channels(MonoStereo * ms,
                             gint nch)
 {
+    if (!ms)
+        return;
+
     ms->ms_num_channels = nch;
     widget_draw(WIDGET(ms));
 }
