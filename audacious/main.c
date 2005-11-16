@@ -556,10 +556,13 @@ bmp_config_save(void)
         g_free(str);
     }
 
-    if (bmp_active_skin->path)
-        bmp_cfg_db_set_string(db, NULL, "skin", bmp_active_skin->path);
-    else
-        bmp_cfg_db_unset_key(db, NULL, "skin");
+    if (bmp_active_skin != NULL)
+    {
+        if (bmp_active_skin->path)
+            bmp_cfg_db_set_string(db, NULL, "skin", bmp_active_skin->path);
+        else
+            bmp_cfg_db_unset_key(db, NULL, "skin");
+    }
 
     if (get_current_output_plugin())
         bmp_cfg_db_set_string(db, NULL, "output_plugin",

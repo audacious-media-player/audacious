@@ -684,6 +684,8 @@ mainwin_quit_cb(void)
     plugin_system_cleanup();
     
     gtk_main_quit();
+
+    exit(EXIT_SUCCESS);
 }
 
 static void
@@ -859,6 +861,9 @@ mainwin_set_song_info(gint bitrate,
 void
 mainwin_clear_song_info(void)
 {
+    if (!mainwin)
+        return;
+
     /* clear title */
     G_LOCK(mainwin_title);
     g_free(mainwin_title_text);
