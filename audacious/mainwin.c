@@ -55,7 +55,7 @@
 #include "playlistwin.h"
 #include "prefswin.h"
 #include "skinwin.h"
-
+#include "genevent.h"
 #include "hslider.h"
 #include "menurow.h"
 #include "monostereo.h"
@@ -180,14 +180,14 @@ static PButton *mainwin_play, *mainwin_pause, *mainwin_stop;
 
 TButton *mainwin_shuffle, *mainwin_repeat, *mainwin_eq, *mainwin_pl;
 TextBox *mainwin_info;
+TextBox *mainwin_stime_min, *mainwin_stime_sec;
 
 static TextBox *mainwin_rate_text, *mainwin_freq_text;
-static TextBox *mainwin_stime_min, *mainwin_stime_sec;
 
 PlayStatus *mainwin_playstatus;
 
-static Number *mainwin_minus_num, *mainwin_10min_num, *mainwin_min_num;
-static Number *mainwin_10sec_num, *mainwin_sec_num;
+Number *mainwin_minus_num, *mainwin_10min_num, *mainwin_min_num;
+Number *mainwin_10sec_num, *mainwin_sec_num;
 
 static gboolean setting_volume = FALSE;
 
@@ -195,9 +195,10 @@ Vis *active_vis;
 Vis *mainwin_vis;
 SVis *mainwin_svis;
 
+HSlider *mainwin_sposition = NULL;
+
 static MenuRow *mainwin_menurow;
 static HSlider *mainwin_volume, *mainwin_balance, *mainwin_position;
-static HSlider *mainwin_sposition = NULL;
 static MonoStereo *mainwin_monostereo;
 static SButton *mainwin_srew, *mainwin_splay, *mainwin_spause;
 static SButton *mainwin_sstop, *mainwin_sfwd, *mainwin_seject, *mainwin_about;
@@ -3231,56 +3232,6 @@ mainwin_attach_idle_func(void)
                                        mainwin_idle_func, NULL);
 }
 
-static gboolean
-idle_func_change_song(gboolean waiting)
-{
-    static GTimer *pause_timer = NULL;
-
-    if (!pause_timer)
-        pause_timer = g_timer_new();
-
-    if (cfg.pause_between_songs) {
-        gint timeleft;
-
-        if (!waiting) {
-            g_timer_start(pause_timer);
-            waiting = TRUE;
-        }
-
-        timeleft = cfg.pause_between_songs_time -
-            (gint) g_timer_elapsed(pause_timer, NULL);
-
-        number_set_number(mainwin_10min_num, timeleft / 600);
-        number_set_number(mainwin_min_num, (timeleft / 60) % 10);
-        number_set_number(mainwin_10sec_num, (timeleft / 10) % 6);
-        number_set_number(mainwin_sec_num, timeleft % 10);
-
-        if (!mainwin_sposition->hs_pressed) {
-            gchar time_str[5];
-
-            g_snprintf(time_str, sizeof(time_str), "%2.2d", timeleft / 60);
-            textbox_set_text(mainwin_stime_min, time_str);
-
-            g_snprintf(time_str, sizeof(time_str), "%2.2d", timeleft % 60);
-            textbox_set_text(mainwin_stime_sec, time_str);
-        }
-
-        playlistwin_set_time(timeleft * 1000, 0, TIMER_ELAPSED);
-    }
-
-    if (!cfg.pause_between_songs ||
-        g_timer_elapsed(pause_timer, NULL) >= cfg.pause_between_songs_time) {
-
-        GDK_THREADS_ENTER();
-        playlist_eof_reached();
-        GDK_THREADS_LEAVE();
-
-        waiting = FALSE;
-    }
-
-    return waiting;
-}
-
 static void
 idle_func_update_song_info(gint time)
 {
@@ -3350,52 +3301,35 @@ idle_func_update_song_info(gint time)
     }
 }
 
-
 static gboolean
 mainwin_idle_func(gpointer data)
 {
-    static gboolean waiting = FALSE;
     static gint count = 0;
+    gint time = 0;
 
-    gint time;
-
-    if (bmp_playback_get_playing()) {
-        GDK_THREADS_ENTER();
-        vis_playback_start();
-        GDK_THREADS_LEAVE();
-
-        time = bmp_playback_get_time();
-
-        switch (time) {
-        case -1:
-            /* no song playing */
-            waiting = idle_func_change_song(waiting);
-            break;
-
+    /* run audcore events, then run our own. --nenolod */
+    switch((time = audcore_generic_events()))
+    {
         case -2:
             /* no usable output device */
             GDK_THREADS_ENTER();
             run_no_output_device_dialog();
             mainwin_stop_pushed();
             GDK_THREADS_LEAVE();
-            waiting = FALSE;
+            ev_waiting = FALSE;
             break;
 
         default:
-            /* song playing, all's well */
             idle_func_update_song_info(time);
-            waiting = FALSE;
-        }
-    }
-    else {
-        GDK_THREADS_ENTER();
-        vis_playback_stop();
-        GDK_THREADS_LEAVE();
+            /* nothing at this time */
     }
 
     GDK_THREADS_ENTER();
 
-    ctrlsocket_check();
+    if (bmp_playback_get_playing())
+        vis_playback_start();
+    else
+        vis_playback_stop();
 
     draw_main_window(mainwin_force_redraw);
 

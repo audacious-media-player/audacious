@@ -22,6 +22,7 @@ audacious_CFLAGS = \
 	-I$(top_srcdir)/intl
 
 audacious_SOURCES = \
+	genevent.c genevent.h \
 	skin.c skin.h \
 	util.c util.h \
 	output.c output.h \

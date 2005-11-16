@@ -31,6 +31,7 @@
 #include "textbox.h"
 #include "svis.h"
 #include "vis.h"
+#include "hslider.h"
 
 /* yes, main window size is fixed */
 #define MAINWIN_WIDTH            (gint)275
@@ -106,6 +107,7 @@ extern GtkItemFactory *mainwin_general_menu;
 extern GtkItemFactory *mainwin_vis_menu;
 extern GtkItemFactory *mainwin_play_menu, *mainwin_view_menu;
 
+extern TextBox *mainwin_stime_min, *mainwin_stime_sec;
 extern TextBox *mainwin_info;
 extern TButton *mainwin_shuffle, *mainwin_repeat, *mainwin_eq, *mainwin_pl;
 
@@ -115,6 +117,10 @@ extern SVis *mainwin_svis;
 
 extern PlayStatus *mainwin_playstatus;
 
+extern Number *mainwin_minus_num, *mainwin_10min_num, *mainwin_min_num;
+extern Number *mainwin_10sec_num, *mainwin_sec_num;
+
+extern HSlider *mainwin_sposition;
 
 void mainwin_create(void);
 void read_volume(gint when);

@@ -1,4 +1,7 @@
-/*  BMP - Cross-platform multimedia player
+/*  Audacious - Cross-platform multimedia platform.
+ *  Copyright (C) 2005  Audacious development team.
+ *
+ *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team.
  *
  *  Based on XMMS:
@@ -55,11 +58,13 @@
 #include "effect.h"
 #include "equalizer.h"
 #include "general.h"
+#include "genevent.h"
 #include "hints.h"
 #include "input.h"
 #include "logger.h"
 #include "mainwin.h"
 #include "output.h"
+#include "playback.h"
 #include "playlist.h"
 #include "playlistwin.h"
 #include "pluginenum.h"
@@ -1044,6 +1049,8 @@ main(gint argc, gchar ** argv)
 
         for (;;)
 	{
+	    /* headless eventloop */
+	    audcore_generic_events();
 	    ctrlsocket_check();
             xmms_usleep(10000);
         }
