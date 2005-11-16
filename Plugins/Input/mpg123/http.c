@@ -299,7 +299,6 @@ mpg123_http_read(gpointer data, gint length)
 static gboolean
 http_check_for_data(void)
 {
-
     fd_set set;
     struct timeval tv;
     gint ret;
