@@ -17,14 +17,12 @@ all hidden behind a flat C style API (with C linkage conventions).
 The test and util subdirectories contain some simple programs that use 
 this library.
 
+Once make install is run, to use this library, you should:
 To use this library in your application, it should be sufficient to:
 
-1) add mpeg4ip/include and mpeg4ip/lib/mp4v2 to your INCLUDE path,
-	e.g. gcc -Impeg4ip/include -Impeg4ip/lib/mp4v2 ...
+1) add the installed library to your final link:
+	e.g. gcc ... -o foo foo.cpp -lmp4v2
 
-2) add mpeg4ip/lib/mp4v2/libmp4v2.la (or /usr/local/lib/libmp4v2.la)
-	e.g. gcc ... -o foo foo.cpp mpeg4ip/lib/mp4v2/libmp4v2.a
-
-3) include mp4.h into your code,
+2) include mp4.h into your code,
 	e.g. #include <mp4.h>
 

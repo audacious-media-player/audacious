@@ -50,12 +50,17 @@ Atoms are the primary containers within an mp4 file. They can contain
 any combination of properties, other atoms, or descriptors.
 
 The mp4atom files contain the base class for all the atoms, and provide 
-generic functions that cover most cases. However, each atom has it's own 
-subclass contained in file atom_<name>.cpp, where <name> is the four 
-letter name of the atom defined in the MP4 specification. Typically this 
-atom file just specifies the properties of the atom or the possible child 
-atoms in the case of a container atom. In more specialized cases the atom 
-specific file provides routines to initialize, read, or write the atom.
+generic functions that cover most cases. Most atoms are covered in
+atom_standard.cpp.  Atoms that have a special read, generation or
+write needs are contained in their subclass contained in file atom_<name>.cpp,
+ where <name> is the four letter name of the atom defined in the MP4 
+specification. 
+
+Atoms that only specifies the properties of the atom or the possible child 
+atoms in the case of a container atom are located in atom_standard.cpp.
+
+In more specialized cases the atom specific file provides routines to 
+initialize, read, or write the atom.
 
 Properties are the atomic pieces of information. The basic types of 
 properties are integers, floats, strings, and byte arrays. For integers 
@@ -102,6 +107,15 @@ various names, but shared property names.
 
 Note that internally when performance matters the code looks up a property
 by name once, and then stores the returned pointer to the property class.
+
+To add an atom, first you should see if an existing atom exists that
+can be used.  If not, you need to decide if special read/write or
+generate properties need to be established; for example a property in the atom
+changes other properties (adds, or subtracts).  If there are no
+special cases, add the atom properties to atom_standard.cpp.  If there
+are special properties, add a new file, add a new class to atoms.h, and
+add the class to  MP4Atom::CreateAtom in mp4atom.cpp.
+
 
 
 Generic Tracks

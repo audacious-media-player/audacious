@@ -301,7 +301,7 @@ public:
 
 	void SetValue(const char* value, u_int32_t index = 0);
 
-	void AddValue(char* value) {
+	void AddValue(const char* value) {
 		u_int32_t count = GetCount();
 		SetCount(count + 1); 
 		SetValue(value, count);
@@ -387,7 +387,7 @@ public:
 	void SetValue(const u_int8_t* pValue, u_int32_t valueSize, 
 		u_int32_t index = 0);
 
-	void AddValue(u_int8_t* pValue, u_int32_t valueSize) {
+	void AddValue(const u_int8_t* pValue, u_int32_t valueSize) {
 		u_int32_t count = GetCount();
 		SetCount(count + 1); 
 		SetValue(pValue, valueSize, count);

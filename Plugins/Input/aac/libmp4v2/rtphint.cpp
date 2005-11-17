@@ -415,6 +415,8 @@ void MP4RtpHintTrack::SetPayload(
 		sdpMediaType = "audio";
 	} else if (!strcmp(m_pRefTrack->GetType(), MP4_VIDEO_TRACK_TYPE)) {
 		sdpMediaType = "video";
+	} else if (!strcmp(m_pRefTrack->GetType(), MP4_CNTL_TRACK_TYPE)) {
+	  sdpMediaType = "control";
 	} else {
 		sdpMediaType = "application";
 	}

@@ -37,7 +37,13 @@ void MP4FreeAtom::Write()
 
 	bool use64 = (GetSize() > (0xFFFFFFFF - 8)); 
 	BeginWrite(use64);
+#if 1
+	for (uint64_t ix = 0; ix < GetSize(); ix++) {
+	  m_pFile->WriteUInt8(0);
+	}
+#else
 	m_pFile->SetPosition(m_pFile->GetPosition() + GetSize());
+#endif
 	FinishWrite(use64);
 }
 

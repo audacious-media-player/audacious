@@ -13,7 +13,7 @@
  * 
  * The Initial Developer of the Original Code is Cisco Systems Inc.
  * Portions created by Cisco Systems Inc. are
- * Copyright (C) Cisco Systems Inc. 2001 - 2004.  All Rights Reserved.
+ * Copyright (C) Cisco Systems Inc. 2001 - 2005.  All Rights Reserved.
  * 
  * 3GPP features implementation is based on 3GPP's TS26.234-v5.60,
  * and was contributed by Ximpo Group Ltd.
@@ -234,6 +234,9 @@ public: /* equivalent to MP4 library API */
 			u_int8_t framesPerSample,
 			bool isAmrWB);
 
+	MP4TrackId AddHrefTrack(uint32_t timeScale,
+				MP4Duration sampleDuration);
+
 	MP4TrackId AddMP4VideoTrack(
 		u_int32_t timeScale, 
 		MP4Duration sampleDuration,
@@ -253,6 +256,7 @@ public: /* equivalent to MP4 library API */
                 u_int8_t  iv_len,
                 bool      selective_enc,
                 char      *kms_uri);
+
 
 	void SetH263Vendor(
 			MP4TrackId trackId,
@@ -286,10 +290,10 @@ public: /* equivalent to MP4 library API */
 				     uint8_t AVCLevelIndication,
 				     uint8_t sampleLenFieldSizeMinusOne);
 	bool AddH264SequenceParameterSet(MP4TrackId trackId,
-					 uint8_t *pSequence,
+					 const uint8_t *pSequence,
 					 uint16_t sequenceLen);
 	bool AddH264PictureParameterSet(MP4TrackId trackId,
-					uint8_t *pPicture,
+					const uint8_t *pPicture,
 					uint16_t pictureLen);
 	MP4TrackId AddHintTrack(MP4TrackId refTrackId);
 
@@ -310,7 +314,7 @@ public: /* equivalent to MP4 library API */
 
 	MP4Duration GetTrackFixedSampleDuration(MP4TrackId trackId);
 
-	float GetTrackVideoFrameRate(MP4TrackId trackId);
+	double GetTrackVideoFrameRate(MP4TrackId trackId);
 	
 	int GetTrackAudioChannels(MP4TrackId trackId);
 	void GetTrackESConfiguration(MP4TrackId trackId, 
@@ -535,7 +539,12 @@ public: /* equivalent to MP4 library API */
 		MP4Duration* pDuration = NULL);
 
 	/* iTunes metadata handling */
+ protected:
 	bool CreateMetadataAtom(const char* name);
+	bool DeleteMetadataAtom(const char* name);
+	bool GetMetadataString(const char *atom, char **value);
+	bool SetMetadataString(const char *atom, const char *value);
+ public:
 	bool MetadataDelete(void);
 	
 	/* set metadata */
@@ -549,6 +558,7 @@ public: /* equivalent to MP4 library API */
 	bool SetMetadataTrack(u_int16_t track, u_int16_t totalTracks);
 	bool SetMetadataDisk(u_int16_t disk, u_int16_t totalDisks);
 	bool SetMetadataGenre(const char *value);
+	bool SetMetadataGrouping(const char *value);
 	bool SetMetadataTempo(u_int16_t tempo);
 	bool SetMetadataCompilation(u_int8_t compilation);
 	bool SetMetadataCoverArt(u_int8_t *coverArt, u_int32_t size);
@@ -571,12 +581,31 @@ public: /* equivalent to MP4 library API */
 	bool GetMetadataTrack(u_int16_t* track, u_int16_t* totalTracks);
 	bool GetMetadataDisk(u_int16_t* disk, u_int16_t* totalDisks);
 	bool GetMetadataGenre(char **value);
+	bool GetMetadataGrouping(char **value);
 	bool GetMetadataTempo(u_int16_t* tempo);
 	bool GetMetadataCompilation(u_int8_t* compilation);
 	bool GetMetadataCoverArt(u_int8_t **coverArt, u_int32_t* size);
 	bool GetMetadataFreeForm(char *name, 
 				 u_int8_t** pValue, 
 				 u_int32_t* valueSize);
+
+	/* delete metadata */
+	bool DeleteMetadataName();
+	bool DeleteMetadataWriter();
+	bool DeleteMetadataAlbum();
+	bool DeleteMetadataArtist();
+	bool DeleteMetadataTool();
+	bool DeleteMetadataComment();
+	bool DeleteMetadataYear();
+	bool DeleteMetadataTrack();
+	bool DeleteMetadataDisk();
+	bool DeleteMetadataGenre();
+	bool DeleteMetadataGrouping();
+	bool DeleteMetadataTempo();
+	bool DeleteMetadataCompilation();
+	bool DeleteMetadataCoverArt();
+	bool DeleteMetadataFreeForm(char *name);
+
 	/* end of MP4 API */
 
 	/* "protected" interface to be used only by friends in library */
@@ -698,6 +727,10 @@ protected:
 		MP4Duration sampleDuration,
 		u_int16_t width, 
 		u_int16_t height, 
+		const char *videoType);
+	MP4TrackId AddCntlTrackDefault(
+		u_int32_t timeScale, 
+		MP4Duration sampleDuration,
 		const char *videoType);
 	void AddTrackToIod(MP4TrackId trackId);
 

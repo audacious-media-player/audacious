@@ -207,12 +207,24 @@ inline void MP4Free(void* p) {
 }
 
 inline u_int32_t STRTOINT32(const char* s) {
+#ifdef WORDS_BIGENDIAN
+  return (*(u_int32_t *)s);
+#else
+  return htonl(*(uint32_t *)s);
+#endif
+#if 0
 	return (s[0] << 24) | (s[1] << 16) | (s[2] << 8) | s[3];
+#endif
 }
 
 inline void INT32TOSTR(u_int32_t i, char* s) {
+#ifdef WORDS_BIGENDIAN
+  *(uint32_t *)s = i;
+  s[4] = 0;
+#else
 	s[0] = ((i >> 24) & 0xFF); s[1] = ((i >> 16) & 0xFF); 
 	s[2] = ((i >> 8) & 0xFF); s[3] = (i & 0xFF); s[4] = 0;
+#endif
 }
 
 inline MP4Timestamp MP4GetAbsTimestamp() {

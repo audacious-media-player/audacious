@@ -90,31 +90,15 @@ SOURCE=.\3gp.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\atom_amr.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\atom_avc1.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\atom_avcC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_bitr.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_btrt.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_co64.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_cprt.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_ctts.cpp
 # End Source File
 # Begin Source File
 
@@ -126,31 +110,7 @@ SOURCE=.\atom_damr.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\atom_dimm.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_dinf.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_dmax.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_dmed.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\atom_dref.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_drep.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_edts.cpp
 # End Source File
 # Begin Source File
 
@@ -166,15 +126,7 @@ SOURCE=.\atom_encv.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\atom_esds.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\atom_free.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_frma.cpp
 # End Source File
 # Begin Source File
 
@@ -190,27 +142,11 @@ SOURCE=.\atom_hinf.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\atom_hmhd.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\atom_hnti.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\atom_iKMS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_iods.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_iSFM.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_maxr.cpp
+SOURCE=.\atom_href.cpp
 # End Source File
 # Begin Source File
 
@@ -222,27 +158,7 @@ SOURCE=.\atom_mdhd.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\atom_mdia.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\atom_meta.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_mfhd.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_minf.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_moof.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_moov.cpp
 # End Source File
 # Begin Source File
 
@@ -258,27 +174,7 @@ SOURCE=.\atom_mp4v.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\atom_mvex.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\atom_mvhd.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_nmhd.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_nump.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_payt.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_pmax.cpp
 # End Source File
 # Begin Source File
 
@@ -294,35 +190,23 @@ SOURCE=.\atom_s263.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\atom_schi.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_schm.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\atom_sdp.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\atom_sinf.cpp
+SOURCE=.\atom_smi.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\atom_smhd.cpp
+SOURCE=.\atom_sound.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\atom_snro.cpp
+SOURCE=.\atom_standard.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\atom_stbl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_stco.cpp
 # End Source File
 # Begin Source File
 
@@ -338,19 +222,7 @@ SOURCE=.\atom_stsd.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\atom_stsh.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_stss.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\atom_stsz.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_stts.cpp
 # End Source File
 # Begin Source File
 
@@ -358,35 +230,7 @@ SOURCE=.\atom_tfhd.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\atom_tims.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\atom_tkhd.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_tmax.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_tmin.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_tpyl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_traf.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_trak.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_tref.cpp
 # End Source File
 # Begin Source File
 
@@ -394,19 +238,7 @@ SOURCE=.\atom_treftype.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\atom_trex.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_trpy.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\atom_trun.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_tsro.cpp
 # End Source File
 # Begin Source File
 
@@ -419,6 +251,10 @@ SOURCE=.\atom_url.cpp
 # Begin Source File
 
 SOURCE=.\atom_urn.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\atom_video.cpp
 # End Source File
 # Begin Source File
 
@@ -561,21 +397,5 @@ SOURCE=.\qosqualifiers.h
 SOURCE=.\rtphint.h
 # End Source File
 # End Group
-# Begin Source File
-
-SOURCE=.\atom_amr.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_smi.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_sound.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\atom_video.cpp
-# End Source File
 # End Target
 # End Project

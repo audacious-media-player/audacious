@@ -13,10 +13,11 @@
  * 
  * The Initial Developer of the Original Code is Cisco Systems Inc.
  * Portions created by Cisco Systems Inc. are
- * Copyright (C) Cisco Systems Inc. 2001.  All Rights Reserved.
+ * Copyright (C) Cisco Systems Inc. 2001-2005.  All Rights Reserved.
  * 
  * Contributor(s): 
  *		Dave Mackie		dmackie@cisco.com
+ *              Bill May                wmay@cisco.com
  */
 
 #include "mp4common.h"
@@ -333,6 +334,9 @@ const char* MP4NormalizeTrackType (const char* type,
 	if (!strcasecmp(type, "odsm")
 	  || !strcasecmp(type, "od")) {
 		return MP4_OD_TRACK_TYPE;
+	}
+	if (strcasecmp(type, "cntl") == 0) {
+	  return MP4_CNTL_TRACK_TYPE;
 	}
 	VERBOSE_WARNING(verbosity,
 			printf("Attempt to normalize %s did not match\n",

@@ -84,57 +84,21 @@ MP4Atom* MP4Atom::CreateAtom(const char* type)
 	pAtom = new MP4SoundAtom("alaw");
       }
       break;
-    case 'b':
-      if (ATOMID(type) == ATOMID("bitr")) {
-	pAtom = new MP4BitrAtom();
-      } else if (ATOMID(type) == ATOMID("btrt")) {
-	pAtom = new MP4BtrtAtom();
-      }
-      break;
-    case 'c':
-      if (ATOMID(type) == ATOMID("ctts")) {
-	pAtom = new MP4CttsAtom();
-      } else if (ATOMID(type) == ATOMID("co64")) {
-	pAtom = new MP4Co64Atom();
-      } else if (ATOMID(type) == ATOMID("cprt")) {
-	pAtom = new MP4CprtAtom();
-      } else if (ATOMID(type) == ATOMID("cpil")) { /* Apple iTunes */
-	pAtom = new MP4CpilAtom();
-      } else if (ATOMID(type) == ATOMID("covr")) { /* Apple iTunes */
-	pAtom = new MP4CovrAtom();
-      }
-      break;
     case 'd':
       if (ATOMID(type) == ATOMID("d263")) {
 	pAtom = new MP4D263Atom();
       } else if (ATOMID(type) == ATOMID("damr")) {
 	pAtom = new MP4DamrAtom();
-      } else if (ATOMID(type) == ATOMID("dinf")) {
-	pAtom = new MP4DinfAtom();
       } else if (ATOMID(type) == ATOMID("dref")) {
 	pAtom = new MP4DrefAtom();
       } else if (ATOMID(type) == ATOMID("dpnd")) {
 	pAtom = new MP4TrefTypeAtom(type);
-      } else if (ATOMID(type) == ATOMID("dmed")) {
-	pAtom = new MP4DmedAtom();
-      } else if (ATOMID(type) == ATOMID("dimm")) {
-	pAtom = new MP4DimmAtom();
-      } else if (ATOMID(type) == ATOMID("drep")) {
-	pAtom = new MP4DrepAtom();
-      } else if (ATOMID(type) == ATOMID("dmax")) {
-	pAtom = new MP4DmaxAtom();
       } else if (ATOMID(type) == ATOMID("data")) { /* Apple iTunes */
 	pAtom = new MP4DataAtom();
-      } else if (ATOMID(type) == ATOMID("disk")) { /* Apple iTunes */
-	pAtom = new MP4DiskAtom();
       }
       break;
     case 'e':
-      if (ATOMID(type) == ATOMID("esds")) {
-	pAtom = new MP4EsdsAtom();
-      } else if (ATOMID(type) == ATOMID("edts")) {
-	pAtom = new MP4EdtsAtom();
-      } else if (ATOMID(type) == ATOMID("elst")) {
+      if (ATOMID(type) == ATOMID("elst")) {
 	pAtom = new MP4ElstAtom();
       } else if (ATOMID(type) == ATOMID("enca")) {
 	pAtom = new MP4EncaAtom();
@@ -145,22 +109,13 @@ MP4Atom* MP4Atom::CreateAtom(const char* type)
     case 'f':
       if (ATOMID(type) == ATOMID("free")) {
 	pAtom = new MP4FreeAtom();
-      } else if (ATOMID(type) == ATOMID("frma")) {
-	pAtom = new MP4FrmaAtom();
       } else if (ATOMID(type) == ATOMID("ftyp")) {
 	pAtom = new MP4FtypAtom();
-      }
-      break;
-    case 'g':
-      if (ATOMID(type) == ATOMID("gnre")) { // Apple iTunes 
-	pAtom = new MP4GnreAtom();
       }
       break;
     case 'h':
       if (ATOMID(type) == ATOMID("hdlr")) {
 	pAtom = new MP4HdlrAtom();
-      } else if (ATOMID(type) == ATOMID("hmhd")) {
-	pAtom = new MP4HmhdAtom();
       } else if (ATOMID(type) == ATOMID("hint")) {
 	pAtom = new MP4TrefTypeAtom(type);
       } else if (ATOMID(type) == ATOMID("hnti")) {
@@ -169,19 +124,13 @@ MP4Atom* MP4Atom::CreateAtom(const char* type)
 	pAtom = new MP4HinfAtom();
       } else if (ATOMID(type) == ATOMID("h263")) {
 	pAtom = new MP4VideoAtom("h263");
+      } else if (ATOMID(type) == ATOMID("href")) {
+	pAtom = new MP4HrefAtom();
       }
       break;
     case 'i':
-      if (ATOMID(type) == ATOMID("iKMS")) {
-	pAtom = new MP4IKMSAtom();
-      } else if (ATOMID(type) == ATOMID("iSFM")) {
-	pAtom = new MP4ISFMAtom();
-      } else if (ATOMID(type) == ATOMID("iods")) {
-	pAtom = new MP4IodsAtom();
-      } else if (ATOMID(type) == ATOMID("ipir")) {
+      if (ATOMID(type) == ATOMID("ipir")) {
 	pAtom = new MP4TrefTypeAtom(type);
-      } else if (ATOMID(type) == ATOMID("ilst")) {
-	pAtom = new MP4IlstAtom();
       } else if (ATOMID(type) == ATOMID("ima4")) {
 	pAtom = new MP4SoundAtom("ima4");
       }
@@ -192,18 +141,12 @@ MP4Atom* MP4Atom::CreateAtom(const char* type)
       }
       break;
     case 'm':
-      if (ATOMID(type) == ATOMID("mdia")) {
-	pAtom = new MP4MdiaAtom();
-      } else if (ATOMID(type) == ATOMID("minf")) {
-	pAtom = new MP4MinfAtom();
-      } else if (ATOMID(type) == ATOMID("mdhd")) {
+      if (ATOMID(type) == ATOMID("mdhd")) {
 	pAtom = new MP4MdhdAtom();
-      } else if (ATOMID(type) == ATOMID("mdat")) {
-	pAtom = new MP4MdatAtom();
-      } else if (ATOMID(type) == ATOMID("moov")) {
-	pAtom = new MP4MoovAtom();
       } else if (ATOMID(type) == ATOMID("mvhd")) {
 	pAtom = new MP4MvhdAtom();
+      } else if (ATOMID(type) == ATOMID("mdat")) {
+	pAtom = new MP4MdatAtom();
       } else if (ATOMID(type) == ATOMID("mpod")) {
 	pAtom = new MP4TrefTypeAtom(type);
       } else if (ATOMID(type) == ATOMID("mp4a")) {
@@ -212,34 +155,13 @@ MP4Atom* MP4Atom::CreateAtom(const char* type)
 	pAtom = new MP4Mp4sAtom();
       } else if (ATOMID(type) == ATOMID("mp4v")) {
 	pAtom = new MP4Mp4vAtom();
-      } else if (ATOMID(type) == ATOMID("moof")) {
-	pAtom = new MP4MoofAtom();
-      } else if (ATOMID(type) == ATOMID("mfhd")) {
-	pAtom = new MP4MfhdAtom();
-      } else if (ATOMID(type) == ATOMID("mvex")) {
-	pAtom = new MP4MvexAtom();
-      } else if (ATOMID(type) == ATOMID("maxr")) {
-	pAtom = new MP4MaxrAtom();
-      } else if (ATOMID(type) == ATOMID("meta")) { // iTunes
-	pAtom = new MP4MetaAtom();
       } else if (ATOMID(type) == ATOMID("mean")) { // iTunes
 	pAtom = new MP4MeanAtom();
       }
       break;
     case 'n':
-      if (ATOMID(type) == ATOMID("nmhd")) {
-	pAtom = new MP4NmhdAtom();
-      } else if (ATOMID(type) == ATOMID("nump")) {
-	pAtom = new MP4NumpAtom();
-      } else if (ATOMID(type) == ATOMID("name")) { // iTunes
+      if (ATOMID(type) == ATOMID("name")) { // iTunes
 	pAtom = new MP4NameAtom();
-      }
-      break;
-    case 'p':
-      if (ATOMID(type) == ATOMID("pmax")) {
-	pAtom = new MP4PmaxAtom();
-      } else if (ATOMID(type) == ATOMID("payt")) {
-	pAtom = new MP4PaytAtom();
       }
       break;
     case 'r':
@@ -256,36 +178,18 @@ MP4Atom* MP4Atom::CreateAtom(const char* type)
 	pAtom = new MP4AmrAtom("samr");
       } else if (ATOMID(type) == ATOMID("sawb")) {
 	pAtom = new MP4AmrAtom("sawb");
-      } else if (ATOMID(type) == ATOMID("schi")) {
-	pAtom = new MP4SchiAtom();
-      } else if (ATOMID(type) == ATOMID("schm")) {
-	pAtom = new MP4SchmAtom();
-      } else if (ATOMID(type) == ATOMID("sinf")) {
-	pAtom = new MP4SinfAtom();
       } else if (ATOMID(type) == ATOMID("stbl")) {
 	pAtom = new MP4StblAtom();
       } else if (ATOMID(type) == ATOMID("stsd")) {
 	pAtom = new MP4StsdAtom();
-      } else if (ATOMID(type) == ATOMID("stts")) {
-	pAtom = new MP4SttsAtom();
       } else if (ATOMID(type) == ATOMID("stsz")) {
 	pAtom = new MP4StszAtom();
       } else if (ATOMID(type) == ATOMID("stsc")) {
 	pAtom = new MP4StscAtom();
-      } else if (ATOMID(type) == ATOMID("stco")) {
-	pAtom = new MP4StcoAtom();
-      } else if (ATOMID(type) == ATOMID("stss")) {
-	pAtom = new MP4StssAtom();
-      } else if (ATOMID(type) == ATOMID("stsh")) {
-	pAtom = new MP4StshAtom();
       } else if (ATOMID(type) == ATOMID("stdp")) {
 	pAtom = new MP4StdpAtom();
-      } else if (ATOMID(type) == ATOMID("smhd")) {
-	pAtom = new MP4SmhdAtom();
       } else if (ATOMID(type) == ATOMID("sdp ")) {
 	pAtom = new MP4SdpAtom();
-      } else if (ATOMID(type) == ATOMID("snro")) {
-	pAtom = new MP4SnroAtom();
       } else if (ATOMID(type) == ATOMID("sync")) {
 	pAtom = new MP4TrefTypeAtom(type);
       } else if (ATOMID(type) == ATOMID("skip")) {
@@ -296,36 +200,12 @@ MP4Atom* MP4Atom::CreateAtom(const char* type)
       }
       break;
     case 't':
-      if (ATOMID(type) == ATOMID("trak")) {
-	pAtom = new MP4TrakAtom();
-      } else if (ATOMID(type) == ATOMID("tkhd")) {
+      if (ATOMID(type) == ATOMID("tkhd")) {
 	pAtom = new MP4TkhdAtom();
-      } else if (ATOMID(type) == ATOMID("tref")) {
-	pAtom = new MP4TrefAtom();
-      } else if (ATOMID(type) == ATOMID("traf")) {
-	pAtom = new MP4TrafAtom();
       } else if (ATOMID(type) == ATOMID("tfhd")) {
 	pAtom = new MP4TfhdAtom();
-      } else if (ATOMID(type) == ATOMID("trex")) {
-	pAtom = new MP4TrexAtom();
       } else if (ATOMID(type) == ATOMID("trun")) {
 	pAtom = new MP4TrunAtom();
-      } else if (ATOMID(type) == ATOMID("tmin")) {
-	pAtom = new MP4TminAtom();
-      } else if (ATOMID(type) == ATOMID("tmax")) {
-	pAtom = new MP4TmaxAtom();
-      } else if (ATOMID(type) == ATOMID("trpy")) {
-	pAtom = new MP4TrpyAtom();
-      } else if (ATOMID(type) == ATOMID("tpyl")) {
-	pAtom = new MP4TpylAtom();
-      } else if (ATOMID(type) == ATOMID("tims")) {
-	pAtom = new MP4TimsAtom();
-      } else if (ATOMID(type) == ATOMID("tsro")) {
-	pAtom = new MP4TsroAtom();
-      } else if (ATOMID(type) == ATOMID("trkn")) { // iTunes
-	pAtom = new MP4TrknAtom();
-      } else if (ATOMID(type) == ATOMID("tmpo")) { // iTunes
-	pAtom = new MP4TmpoAtom();
       } else if (ATOMID(type) == ATOMID("twos")) {
 	pAtom = new MP4SoundAtom("twos");
       }
@@ -358,44 +238,12 @@ MP4Atom* MP4Atom::CreateAtom(const char* type)
 	pAtom = new MP4SmiAtom();
       }
       break;
-    case 0251: { // copyright symbol 
-static const char name[5]={0251,'n', 'a', 'm', '\0'};
-static const char art[5]={0251,'A', 'R', 'T', '\0'};
-static const char wrt[5]={0251,'w', 'r', 't', '\0'};
-static const char alb[5]={0251,'a', 'l', 'b', '\0'};
-static const char day[5]={0251,'d', 'a', 'y', '\0'};
-static const char too[5]={0251,'t', 'o', 'o', '\0'};
-static const char cmt[5]={0251,'c', 'm', 't', '\0'};
-static const char gen[5]={0251,'g', 'e', 'n', '\0'};
-      if (ATOMID(type) == ATOMID(name)) {
- 	pAtom = new MP4NamAtom();
-      } else if (ATOMID(type) == ATOMID(art)) { /* Apple iTunes */
- 	pAtom = new MP4ArtAtom();
-      } else if (ATOMID(type) == ATOMID(wrt)) { /* Apple iTunes */
- 	pAtom = new MP4WrtAtom();
-      } else if (ATOMID(type) == ATOMID(alb)) { /* Apple iTunes */
- 	pAtom = new MP4AlbAtom();
-      } else if (ATOMID(type) == ATOMID(day)) { /* Apple iTunes */
- 	pAtom = new MP4DayAtom();
-      } else if (ATOMID(type) == ATOMID(too)) { /* Apple iTunes */
- 	pAtom = new MP4TooAtom();
-      } else if (ATOMID(type) == ATOMID(cmt)) { /* Apple iTunes */
- 	pAtom = new MP4CmtAtom();
-      } else if (ATOMID(type) == ATOMID(gen)) { /* Apple iTunes */
-	pAtom = new MP4GenAtom();
-      }
-      break;
-    }
-    case '-':
-      if (ATOMID(type) == ATOMID("----")) { /* Apple iTunes */
- 	pAtom = new MP4DashAtom();
-      }
     }
   }
 
   if (pAtom == NULL) {
-    pAtom = new MP4Atom(type);
-    pAtom->SetUnknownType(true);
+    pAtom = new MP4StandardAtom(type);
+    // unknown type is set by StandardAtom type
   }
 
   ASSERT(pAtom);
@@ -439,7 +287,7 @@ MP4Atom* MP4Atom::ReadAtom(MP4File* pFile, MP4Atom* pParentAtom)
 	u_int64_t pos = pFile->GetPosition();
 
 	VERBOSE_READ(pFile->GetVerbosity(), 
-		printf("ReadAtom: pos = 0x"X64"\n", pos));
+		printf("ReadAtom: pos = 0x%llx\n", pos));
 
 	u_int64_t dataSize = pFile->ReadUInt32();
 
@@ -467,15 +315,17 @@ MP4Atom* MP4Atom::ReadAtom(MP4File* pFile, MP4Atom* pParentAtom)
 	dataSize -= hdrSize;
 
 	VERBOSE_READ(pFile->GetVerbosity(), 
-		printf("ReadAtom: type = %s data-size = "U64" (0x"X64")\n", 
-			type, dataSize, dataSize));
+		printf("ReadAtom: type = \"%s\" data-size = %llu (0x%llx) hdr %u\n", 
+		       type, dataSize, dataSize, hdrSize));
 
 	if (pos + hdrSize + dataSize > pParentAtom->GetEnd()) {
 		VERBOSE_ERROR(pFile->GetVerbosity(), 
-			printf("ReadAtom: invalid atom size, extends outside parent atom - skipping to end of %s \"%s\"\n", 
-			       pParentAtom->GetType(), type));
+			printf("ReadAtom: invalid atom size, extends outside parent atom - skipping to end of \"%s\" \"%s\" %llu vs %llu\n", 
+			       pParentAtom->GetType(), type,
+			       pos + hdrSize + dataSize, 
+			       pParentAtom->GetEnd()));
 		VERBOSE_READ(pFile->GetVerbosity(),
-			     printf("parent %s ("U64") pos "U64" hdr %d data "U64" sum "U64"\n",
+			     printf("parent %s (%llu) pos %llu hdr %d data %llu sum %llu\n",
 				    pParentAtom->GetType(),
 				    pParentAtom->GetEnd(),
 				    pos, 
@@ -542,7 +392,7 @@ void MP4Atom::Read()
 
 	if (ATOMID(m_type) != 0 && m_size > 1000000) {
 		VERBOSE_READ(GetVerbosity(), 
-			printf("Warning: %s atom size "U64" is suspect\n",
+			printf("Warning: %s atom size %llu is suspect\n",
 				m_type, m_size));
 	}
 
@@ -560,7 +410,7 @@ void MP4Atom::Skip()
 {
 	if (m_pFile->GetPosition() != m_end) {
 		VERBOSE_READ(m_pFile->GetVerbosity(),
-			printf("Skip: "U64" bytes\n", m_end - m_pFile->GetPosition()));
+			printf("Skip: %llu bytes\n", m_end - m_pFile->GetPosition()));
 	}
 	m_pFile->SetPosition(m_end);
 }
@@ -696,7 +546,7 @@ void MP4Atom::ReadProperties(u_int32_t startIndex, u_int32_t count)
 
 		if (m_pFile->GetPosition() > m_end) {
 			VERBOSE_READ(GetVerbosity(), 
-				printf("ReadProperties: insufficient data for property: %s pos 0x"X64" atom end 0x"X64"\n",
+				printf("ReadProperties: insufficient data for property: %s pos 0x%llx atom end 0x%llx\n",
 					m_pProperties[i]->GetName(), 
 					m_pFile->GetPosition(), m_end)); 
 
@@ -738,7 +588,7 @@ void MP4Atom::ReadChildAtoms()
 	    }
 	    // otherwise, output a warning, but don't care
 	    VERBOSE_WARNING(GetVerbosity(),
-			    printf("Error: In %s atom, extra "D64" bytes at end of atom\n", 
+			    printf("Error: In %s atom, extra %lld bytes at end of atom\n", 
 				   m_type, (m_end - position)));
 	    for (uint64_t ix = 0; ix < m_end - position; ix++) {
 	      m_pFile->ReadUInt8();
@@ -850,6 +700,10 @@ void MP4Atom::FinishWrite(bool use64)
 {
 	m_end = m_pFile->GetPosition();
 	m_size = (m_end - m_start);
+  VERBOSE_WRITE(GetVerbosity(), 
+		printf("end: type %s %llu %llu size %llu\n", m_type, 
+		       m_start, m_end,
+		       m_size));
 	//use64 = m_pFile->Use64Bits();
 	if (use64) {
 		m_pFile->SetPosition(m_start + 8);
