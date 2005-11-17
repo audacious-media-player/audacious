@@ -13,7 +13,7 @@
  * 
  * The Initial Developer of the Original Code is Cisco Systems Inc.
  * Portions created by Cisco Systems Inc. are
- * Copyright (C) Cisco Systems Inc. 2001 - 2005.  All Rights Reserved.
+ * Copyright (C) Cisco Systems Inc. 2001 - 2004.  All Rights Reserved.
  *
  * 3GPP features implementation is based on 3GPP's TS26.234-v5.60,
  * and was contributed by Ximpo Group Ltd.
@@ -24,7 +24,6 @@
  * Contributor(s): 
  *		Dave Mackie		dmackie@cisco.com
  *              Ximpo Group Ltd.                mp4v2@ximpo.com
- *              Bill May                wmay@cisco.com
  */
 
 #ifndef __MP4_ATOMS_INCLUDED__
@@ -52,18 +51,118 @@ protected:
 	void WriteAtomType(const char* type, bool onlyOne);
 };
 
-/***********************************************************************
- * Common atom classes - standard for anything that just contains atoms
- * and non-maleable properties, treftype and url
- ***********************************************************************/
-class MP4StandardAtom : public MP4Atom {
- public:
-  MP4StandardAtom(const char *name);
+class MP4FtypAtom : public MP4Atom {
+public:
+	MP4FtypAtom();
+	void Generate();
+	void Read();
+};
+
+class MP4MdatAtom : public MP4Atom {
+public:
+	MP4MdatAtom();
+	void Read();
+	void Write();
+};
+
+class MP4MoovAtom : public MP4Atom {
+public:
+	MP4MoovAtom();
+};
+
+class MP4MvhdAtom : public MP4Atom {
+public:
+	MP4MvhdAtom();
+	void Generate();
+	void Read();
+protected:
+	void AddProperties(u_int8_t version);
+};
+
+class MP4IodsAtom : public MP4Atom {
+public:
+	MP4IodsAtom();
+};
+
+class MP4TrakAtom : public MP4Atom {
+public:
+	MP4TrakAtom();
+};
+
+class MP4TkhdAtom : public MP4Atom {
+public:
+	MP4TkhdAtom();
+	void Generate();
+	void Read();
+protected:
+	void AddProperties(u_int8_t version);
+};
+
+class MP4TrefAtom : public MP4Atom {
+public:
+	MP4TrefAtom();
 };
 
 class MP4TrefTypeAtom : public MP4Atom {
 public:
 	MP4TrefTypeAtom(const char* type);
+	void Read();
+};
+
+class MP4MdiaAtom : public MP4Atom {
+public:
+	MP4MdiaAtom();
+};
+
+class MP4MdhdAtom : public MP4Atom {
+public:
+	MP4MdhdAtom();
+	void Generate();
+	void Read();
+protected:
+	void AddProperties(u_int8_t version);
+};
+
+class MP4HdlrAtom : public MP4Atom {
+public:
+	MP4HdlrAtom();
+	void Read();
+};
+
+class MP4MinfAtom : public MP4Atom {
+public:
+	MP4MinfAtom();
+};
+
+class MP4VmhdAtom : public MP4Atom {
+public:
+	MP4VmhdAtom();
+	void Generate();
+};
+
+class MP4SmhdAtom : public MP4Atom {
+public:
+	MP4SmhdAtom();
+};
+
+class MP4HmhdAtom : public MP4Atom {
+public:
+	MP4HmhdAtom();
+};
+
+class MP4NmhdAtom : public MP4Atom {
+public:
+	MP4NmhdAtom();
+};
+
+class MP4DinfAtom : public MP4Atom {
+public:
+	MP4DinfAtom();
+};
+
+class MP4DrefAtom : public MP4Atom {
+public:
+	MP4DrefAtom();
 	void Read();
 };
 
@@ -74,70 +173,22 @@ public:
 	void Write();
 };
 
-/***********************************************************************
- * Sound and Video atoms - use the generic atoms when possible
- * (MP4SoundAtom and MP4VideoAtom)
- ***********************************************************************/
-class MP4SoundAtom : public MP4Atom {
- public:
-  MP4SoundAtom(const char *atomid);
-  void Generate();
-  void Read();
-protected:
-  void AddProperties(u_int8_t version);
-};
-
-class MP4VideoAtom : public MP4Atom {
- public:
-  MP4VideoAtom(const char *atomid);
-  void Generate();
-};
-
-class MP4AmrAtom : public MP4Atom {
- public:
-  MP4AmrAtom(const char *type);
-  void Generate();
-};
-
-// H.264 atoms
-
-class MP4Avc1Atom : public MP4Atom {
- public:
-  MP4Avc1Atom();
-  void Generate();
-};
-
-class MP4AvcCAtom : public MP4Atom {
- public:
-  MP4AvcCAtom();
-  void Generate();
-};
-
-
-
-class MP4D263Atom : public MP4Atom {
- public:
-  MP4D263Atom();
-  void Generate();
-  void Write();
-};
- 
-class MP4DamrAtom : public MP4Atom {
- public: 
-  MP4DamrAtom();
-  void Generate();
-};
-
-class MP4EncaAtom : public MP4Atom {
+class MP4UrnAtom : public MP4Atom {
 public:
-        MP4EncaAtom();
-        void Generate();
+	MP4UrnAtom();
+	void Read();
 };
 
-class MP4EncvAtom : public MP4Atom {
+class MP4StblAtom : public MP4Atom {
 public:
-        MP4EncvAtom();
-        void Generate();
+	MP4StblAtom();
+	void Generate();
+};
+
+class MP4StsdAtom : public MP4Atom {
+public:
+	MP4StsdAtom();
+	void Read();
 };
 
 class MP4Mp4aAtom : public MP4Atom {
@@ -158,29 +209,63 @@ public:
 	void Generate();
 };
 
-
-class MP4S263Atom : public MP4Atom {
- public:
-  MP4S263Atom();
-  void Generate();
-};
- 
- 
- 
-/************************************************************************
- * Specialized Atoms
- ************************************************************************/
-
-class MP4DataAtom : public MP4Atom {
+class MP4EsdsAtom : public MP4Atom {
 public:
-    MP4DataAtom();
-    void Read();
+	MP4EsdsAtom();
 };
 
-class MP4DrefAtom : public MP4Atom {
+class MP4SttsAtom : public MP4Atom {
 public:
-	MP4DrefAtom();
+	MP4SttsAtom();
+};
+
+class MP4CttsAtom : public MP4Atom {
+public:
+	MP4CttsAtom();
+};
+
+class MP4StszAtom : public MP4Atom {
+public:
+	MP4StszAtom();
 	void Read();
+	void Write();
+};
+
+class MP4StscAtom : public MP4Atom {
+public:
+	MP4StscAtom();
+	void Read();
+};
+
+class MP4StcoAtom : public MP4Atom {
+public:
+	MP4StcoAtom();
+};
+
+class MP4Co64Atom : public MP4Atom {
+public:
+	MP4Co64Atom();
+};
+
+class MP4StssAtom : public MP4Atom {
+public:
+	MP4StssAtom();
+};
+
+class MP4StshAtom : public MP4Atom {
+public:
+	MP4StshAtom();
+};
+
+class MP4StdpAtom : public MP4Atom {
+public:
+	MP4StdpAtom();
+	void Read();
+};
+
+class MP4EdtsAtom : public MP4Atom {
+public:
+	MP4EdtsAtom();
 };
 
 class MP4ElstAtom : public MP4Atom {
@@ -192,75 +277,21 @@ protected:
 	void AddProperties(u_int8_t version);
 };
 
-class MP4FreeAtom : public MP4Atom {
+class MP4UdtaAtom : public MP4Atom {
 public:
-	MP4FreeAtom();
-	void Read();
-	void Write();
-};
-
-class MP4FtypAtom : public MP4Atom {
-public:
-	MP4FtypAtom();
-	void Generate();
+	MP4UdtaAtom();
 	void Read();
 };
 
-class MP4HdlrAtom : public MP4Atom {
+class MP4CprtAtom : public MP4Atom {
 public:
-	MP4HdlrAtom();
-	void Read();
-};
-
-class MP4HinfAtom : public MP4Atom {
-public:
-	MP4HinfAtom();
-	void Generate();
+	MP4CprtAtom();
 };
 
 class MP4HntiAtom : public MP4Atom {
 public:
 	MP4HntiAtom();
 	void Read();
-};
-
-
-class MP4MdatAtom : public MP4Atom {
-public:
-	MP4MdatAtom();
-	void Read();
-	void Write();
-};
-
-class MP4MdhdAtom : public MP4Atom {
-public:
-	MP4MdhdAtom();
-	void Generate();
-	void Read();
-protected:
-	void AddProperties(u_int8_t version);
-};
-
-class MP4MeanAtom : public MP4Atom {
-public:
-    MP4MeanAtom();
-    void Read();
-};
-
-
-class MP4MvhdAtom : public MP4Atom {
-public:
-	MP4MvhdAtom();
-	void Generate();
-	void Read();
-protected:
-	void AddProperties(u_int8_t version);
-};
-
-class MP4NameAtom : public MP4Atom {
-public:
-    MP4NameAtom();
-    void Read();
 };
 
 class MP4RtpAtom : public MP4Atom {
@@ -283,6 +314,21 @@ protected:
 	void WriteHntiType();
 };
 
+class MP4TimsAtom : public MP4Atom {
+public:
+	MP4TimsAtom();
+};
+
+class MP4TsroAtom : public MP4Atom {
+public:
+	MP4TsroAtom();
+};
+
+class MP4SnroAtom : public MP4Atom {
+public:
+	MP4SnroAtom();
+};
+
 class MP4SdpAtom : public MP4Atom {
 public:
 	MP4SdpAtom();
@@ -290,41 +336,95 @@ public:
 	void Write();
 };
 
-class MP4SmiAtom : public MP4Atom {
- public:
-  MP4SmiAtom(void);
-  void Read();
-};
-
-class MP4StblAtom : public MP4Atom {
+class MP4HinfAtom : public MP4Atom {
 public:
-	MP4StblAtom();
+	MP4HinfAtom();
 	void Generate();
 };
 
-class MP4StdpAtom : public MP4Atom {
+class MP4TrpyAtom : public MP4Atom {
 public:
-	MP4StdpAtom();
-	void Read();
+	MP4TrpyAtom();
 };
 
-class MP4StscAtom : public MP4Atom {
+class MP4NumpAtom : public MP4Atom {
 public:
-	MP4StscAtom();
-	void Read();
+	MP4NumpAtom();
 };
 
-class MP4StsdAtom : public MP4Atom {
+class MP4TpylAtom : public MP4Atom {
 public:
-	MP4StsdAtom();
-	void Read();
+	MP4TpylAtom();
 };
 
-class MP4StszAtom : public MP4Atom {
+class MP4MaxrAtom : public MP4Atom {
 public:
-	MP4StszAtom();
-	void Read();
-	void Write();
+	MP4MaxrAtom();
+};
+
+class MP4DmedAtom : public MP4Atom {
+public:
+	MP4DmedAtom();
+};
+
+class MP4DimmAtom : public MP4Atom {
+public:
+	MP4DimmAtom();
+};
+
+class MP4DrepAtom : public MP4Atom {
+public:
+	MP4DrepAtom();
+};
+
+class MP4TminAtom : public MP4Atom {
+public:
+	MP4TminAtom();
+};
+
+class MP4TmaxAtom : public MP4Atom {
+public:
+	MP4TmaxAtom();
+};
+
+class MP4PmaxAtom : public MP4Atom {
+public:
+	MP4PmaxAtom();
+};
+
+class MP4DmaxAtom : public MP4Atom {
+public:
+	MP4DmaxAtom();
+};
+
+class MP4PaytAtom : public MP4Atom {
+public:
+	MP4PaytAtom();
+};
+
+class MP4MvexAtom : public MP4Atom {
+public:
+	MP4MvexAtom();
+};
+
+class MP4TrexAtom : public MP4Atom {
+public:
+	MP4TrexAtom();
+};
+
+class MP4MoofAtom : public MP4Atom {
+public:
+	MP4MoofAtom();
+};
+
+class MP4MfhdAtom : public MP4Atom {
+public:
+	MP4MfhdAtom();
+};
+
+class MP4TrafAtom : public MP4Atom {
+public:
+	MP4TrafAtom();
 };
 
 class MP4TfhdAtom : public MP4Atom {
@@ -335,14 +435,6 @@ protected:
 	void AddProperties(u_int32_t flags);
 };
 
-class MP4TkhdAtom : public MP4Atom {
-public:
-	MP4TkhdAtom();
-	void Generate();
-	void Read();
-protected:
-	void AddProperties(u_int8_t version);
-};
 class MP4TrunAtom : public MP4Atom {
 public:
 	MP4TrunAtom();
@@ -351,27 +443,226 @@ protected:
 	void AddProperties(u_int32_t flags);
 };
 
-class MP4UdtaAtom : public MP4Atom {
+class MP4FreeAtom : public MP4Atom {
 public:
-	MP4UdtaAtom();
+	MP4FreeAtom();
 	void Read();
+	void Write();
 };
 
-class MP4UrnAtom : public MP4Atom {
+class MP4EncaAtom : public MP4Atom {
 public:
-	MP4UrnAtom();
-	void Read();
-};
-class MP4VmhdAtom : public MP4Atom {
-public:
-	MP4VmhdAtom();
-	void Generate();
+        MP4EncaAtom();
+        void Generate();
 };
 
-class MP4HrefAtom : public MP4Atom {
+class MP4EncvAtom : public MP4Atom {
+public:
+        MP4EncvAtom();
+        void Generate();
+};
+
+class MP4FrmaAtom : public MP4Atom {
+public:
+        MP4FrmaAtom();
+};
+
+class MP4IKMSAtom : public MP4Atom {
+public:
+        MP4IKMSAtom();
+};
+
+class MP4ISFMAtom : public MP4Atom {
+public:
+        MP4ISFMAtom();
+};
+
+class MP4SchiAtom : public MP4Atom {
+public:
+        MP4SchiAtom();
+};
+
+class MP4SchmAtom : public MP4Atom {
+public:
+        MP4SchmAtom();
+};
+
+class MP4SinfAtom : public MP4Atom {
+public:
+        MP4SinfAtom();
+};
+
+/* iTunes META data atoms */
+class MP4MetaAtom : public MP4Atom {
+public:
+	MP4MetaAtom();
+};
+
+class MP4NameAtom : public MP4Atom {
+public:
+    MP4NameAtom();
+    void Read();
+};
+
+class MP4MeanAtom : public MP4Atom {
+public:
+    MP4MeanAtom();
+    void Read();
+};
+
+class MP4DataAtom : public MP4Atom {
+public:
+    MP4DataAtom();
+    void Read();
+};
+
+class MP4IlstAtom : public MP4Atom {
+public:
+	MP4IlstAtom();
+};
+
+class MP4DashAtom : public MP4Atom {
+public:
+    MP4DashAtom();
+};
+
+class MP4NamAtom : public MP4Atom {
+public:
+	MP4NamAtom();
+};
+
+class MP4ArtAtom : public MP4Atom {
+public:
+	MP4ArtAtom();
+};
+
+class MP4WrtAtom : public MP4Atom {
+public:
+	MP4WrtAtom();
+};
+
+class MP4AlbAtom : public MP4Atom {
+public:
+	MP4AlbAtom();
+};
+
+class MP4TrknAtom : public MP4Atom {
+public:
+	MP4TrknAtom();
+};
+
+class MP4DayAtom : public MP4Atom {
+public:
+	MP4DayAtom();
+};
+
+class MP4GenAtom : public MP4Atom {
+public:
+	MP4GenAtom();
+};
+
+class MP4TooAtom : public MP4Atom {
+public:
+	MP4TooAtom();
+};
+
+class MP4GnreAtom : public MP4Atom {
+public:
+	MP4GnreAtom();
+};
+
+class MP4CpilAtom : public MP4Atom {
+public:
+	MP4CpilAtom();
+};
+
+class MP4TmpoAtom : public MP4Atom {
+public:
+	MP4TmpoAtom();
+};
+
+class MP4CmtAtom : public MP4Atom {
+public:
+	MP4CmtAtom();
+};
+
+class MP4CovrAtom : public MP4Atom {
  public:
-  MP4HrefAtom();
-  void Generate(void);
+  MP4CovrAtom();
 };
 
+class MP4DiskAtom : public MP4Atom {
+public:
+	MP4DiskAtom();
+};
+
+class MP4BitrAtom : public MP4Atom {
+ public:
+  MP4BitrAtom();
+};
+ 
+class MP4D263Atom : public MP4Atom {
+ public:
+  MP4D263Atom();
+  void Generate();
+  void Write();
+};
+ 
+class MP4DamrAtom : public MP4Atom {
+ public: 
+  MP4DamrAtom();
+  void Generate();
+};
+ 
+class MP4S263Atom : public MP4Atom {
+ public:
+  MP4S263Atom();
+  void Generate();
+};
+ 
+class MP4AmrAtom : public MP4Atom {
+ public:
+  MP4AmrAtom(const char *type);
+  void Generate();
+};
+ 
+// H.264 atoms
+
+class MP4Avc1Atom : public MP4Atom {
+ public:
+  MP4Avc1Atom();
+  void Generate();
+};
+
+class MP4AvcCAtom : public MP4Atom {
+ public:
+  MP4AvcCAtom();
+  void Generate();
+};
+
+class MP4BtrtAtom : public MP4Atom {
+ public:
+  MP4BtrtAtom();
+};
+
+class MP4SoundAtom : public MP4Atom {
+ public:
+  MP4SoundAtom(const char *atomid);
+  void Generate();
+  void Read();
+protected:
+  void AddProperties(u_int8_t version);
+};
+
+class MP4VideoAtom : public MP4Atom {
+ public:
+  MP4VideoAtom(const char *atomid);
+  void Generate();
+};
+
+class MP4SmiAtom : public MP4Atom {
+ public:
+  MP4SmiAtom(void);
+  void Read();
+};
 #endif /* __MP4_ATOMS_INCLUDED__ */

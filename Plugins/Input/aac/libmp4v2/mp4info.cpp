@@ -158,7 +158,7 @@ static char* PrintAudioInfo(
 		MP4GetTrackDuration(mp4File, trackId);
 
 	double msDuration =
-		(double) (MP4ConvertFromTrackDuration(mp4File, trackId,
+		UINT64_TO_DOUBLE(MP4ConvertFromTrackDuration(mp4File, trackId,
 			trackDuration, MP4_MSECS_TIME_SCALE));
 
 	u_int32_t avgBitRate =
@@ -302,46 +302,14 @@ static char* PrintVideoInfo(
 
 	const char *media_data_name;
 	uint8_t type = 0;
-	
 	media_data_name = MP4GetTrackMediaDataName(mp4File, trackId);
-	char  typebuffer[80];
+
 	if (media_data_name == NULL) {
 	  typeName = "Unknown - no media data name";
 	  foundTypeName = true;
 	} else if (strcasecmp(media_data_name, "avc1") == 0) {
 	  // avc
-	  uint8_t profile, level;
-	  char profileb[20], levelb[20];
-	  if (MP4GetTrackH264ProfileLevel(mp4File, trackId, &profile, &level)) {
-	    if (profile == 66) {
-	      strcpy(profileb, "Baseline");
-	    } else if (profile == 77) {
-	      strcpy(profileb, "Main");
-	    } else if (profile == 88) {
-	      strcpy(profileb, "Extended");
-	    } else {
-	      sprintf(profileb, "Unknown Profile %x", profile);
-	    } 
-	    switch (level) {
-	    case 10: case 20: case 30: case 40: case 50:
-	      sprintf(levelb, "%u", level / 10);
-	      break;
-	    case 11: case 12: case 13:
-	    case 21: case 22:
-	    case 31: case 32:
-	    case 41: case 42:
-	    case 51:
-	      sprintf(levelb, "%u.%u", level / 10, level % 10);
-	      break;
-	    default:
-	      sprintf(levelb, "unknown level %x", level);
-	      break;
-	    }
-	    sprintf(typebuffer, "H264 %s@%s", profileb, levelb);
-	    typeName = typebuffer;
-	  } else {
-	    typeName = "H.264 - profile/level error";
-	  }
+	  typeName = "H.264";
 	  foundTypeName = true;
 	} else if (strcasecmp(media_data_name, "s263") == 0) {
 	  // 3gp h.263
@@ -377,7 +345,7 @@ static char* PrintVideoInfo(
 		MP4GetTrackDuration(mp4File, trackId);
 
 	double msDuration =
-		(double) (MP4ConvertFromTrackDuration(mp4File, trackId,
+		UINT64_TO_DOUBLE(MP4ConvertFromTrackDuration(mp4File, trackId,
 			trackDuration, MP4_MSECS_TIME_SCALE));
 
 	u_int32_t avgBitRate =
@@ -389,14 +357,14 @@ static char* PrintVideoInfo(
 
 	u_int16_t height = MP4GetTrackVideoHeight(mp4File, trackId);
 
-	double fps = MP4GetTrackVideoFrameRate(mp4File, trackId);
+	float fps = MP4GetTrackVideoFrameRate(mp4File, trackId);
 
 	char *sInfo = (char*)MP4Malloc(256);
 
 	// type duration avgBitrate frameSize frameRate
 	if (foundTypeName) {
 	  sprintf(sInfo,
-		  "%u\tvideo\t%s%s, %.3f secs, %u kbps, %ux%u @ %f fps\n",
+		  "%u\tvideo\t%s%s, %.3f secs, %u kbps, %ux%u @ %.2f fps\n",
 		  trackId,
 		  MP4IsIsmaCrypMediaTrack(mp4File, trackId) ? "encv - " : "",
 		  typeName,
@@ -408,7 +376,7 @@ static char* PrintVideoInfo(
 		  );
 	} else {
 	  sprintf(sInfo,
-		  "%u\tvideo\t%s(%u), %.3f secs, %u kbps, %ux%u @ %f fps\n",
+		  "%u\tvideo\t%s(%u), %.3f secs, %u kbps, %ux%u @ %.2f fps\n",
 		  trackId,
 		  typeName,
 		  type, 
@@ -422,38 +390,7 @@ static char* PrintVideoInfo(
 
 	return sInfo;
 }
-static char* PrintCntlInfo(
-	MP4FileHandle mp4File,
-	MP4TrackId trackId)
-{
-  const char *media_data_name = MP4GetTrackMediaDataName(mp4File, trackId);
-  const char *typeName = "Unknown";
 
-  if (media_data_name == NULL) {
-    typeName = "Unknown - no media data name";
-  } else if (strcasecmp(media_data_name, "href") == 0) {
-    typeName = "ISMA Href";
-  } else {
-    typeName = media_data_name;
-  }
-
-  MP4Duration trackDuration = 
-    MP4GetTrackDuration(mp4File, trackId);
- 
-  double msDuration = 
-    (double) (MP4ConvertFromTrackDuration(mp4File, trackId, 
-						 trackDuration, MP4_MSECS_TIME_SCALE));
-  char *sInfo = (char *)MP4Malloc(256);
-
-  snprintf(sInfo, 256,
-	   "%u\tcontrol\t%s, %.3f secs\n",
-	   trackId, 
-	   typeName,
-	   msDuration / 1000.0);
-  return sInfo;
-}
-
-	  
 static char* PrintHintInfo(
 	MP4FileHandle mp4File,
 	MP4TrackId trackId)
@@ -492,8 +429,6 @@ static char* PrintTrackInfo(
 		trackInfo = PrintVideoInfo(mp4File, trackId);
 	} else if (!strcmp(trackType, MP4_HINT_TRACK_TYPE)) {
 		trackInfo = PrintHintInfo(mp4File, trackId);
-	} else if (strcmp(trackType, MP4_CNTL_TRACK_TYPE) == 0) {
-	  trackInfo = PrintCntlInfo(mp4File, trackId);
 	} else {
 		trackInfo = (char*)MP4Malloc(256);
 		if (!strcmp(trackType, MP4_OD_TRACK_TYPE)) {

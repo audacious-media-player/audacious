@@ -21,9 +21,9 @@
 #include <libaudacious/configfile.h>
 #include <libaudacious/titlestring.h>
 
-#define MP4_DESCRIPTION	"MP4 & MPEG2/4-AAC audio player - 1.2.x"
-#define MP4_VERSION	"ver. 0.4 - 24 November 2003"
-#define LIBMP4V2_VERSION "0.9.7"
+#define MP4_DESCRIPTION	"MP4 & MPEG2/4-AAC for bmp-0.9.7"
+#define MP4_VERSION	"ver.- 15 December 2004"
+#define LIBMP4V2_VERSION "1.2.0"
 #define MP4_ABOUT	"Written by ciberfred"
 #define BUFFER_SIZE	FAAD_MIN_STREAMSIZE*64
 
@@ -80,6 +80,9 @@ static pthread_t	decodeThread;
 static pthread_mutex_t	mutex = PTHREAD_MUTEX_INITIALIZER;
 static int		seekPosition = -1;
 
+void getMP4info(char*);
+int getAACTrack(MP4FileHandle);
+
 
 InputPlugin *get_iplugin_info(void)
 {
@@ -113,13 +116,14 @@ static void mp4_stop(void)
 
 static int	mp4_isFile(char *filename)
 {
-  char *ext;
-
   if(filename){
-    ext = strrchr(filename, '.');
-    if (ext && (!strncasecmp(ext, ".mp4", 4) ||	// official extention
-	!strncasecmp(ext, ".m4a", 4) ||	// Apple mp4 extention
-	!strncasecmp(ext, ".aac", 4)	// old MPEG2/4-AAC extention
+    gchar*	extention;
+
+    extention = strrchr(filename, '.');
+    if (extention &&(
+	!strcasecmp(extention, ".mp4") ||	// official extention
+	!strcasecmp(extention, ".m4a") ||	// Apple mp4 extention
+	!strcasecmp(extention, ".aac")		// old MPEG2/4-AAC extention
 	)){
       return (1);
     }
@@ -208,7 +212,7 @@ static void *mp4Decode(void *args)
       guint		bufferSize = 0;
       gulong		samplerate;
       guchar		channels;
-      guint		avgBitrate;
+      //guint		avgBitrate;
       MP4Duration	duration;
       gulong		msDuration;
       MP4SampleId	numSamples;
@@ -249,7 +253,7 @@ static void *mp4Decode(void *args)
       mp4_ip.output->open_audio(FMT_S16_NE, samplerate, channels);
       mp4_ip.output->flush(0);
       mp4_ip.set_info(args, msDuration, -1, samplerate/1000, channels);
-      g_print("MP4 - %d channels @ %d Hz\n", channels, samplerate);
+      g_print("MP4 - %d channels @ %d Hz\n", channels, (int)samplerate);
 
       while(bPlaying){
 	void*			sampleBuffer;
@@ -344,7 +348,7 @@ static void *mp4Decode(void *args)
     faacDecConfigurationPtr config;
 
     if((file = fopen(args, "rb")) == 0){
-      g_print("AAC: can't find file %s\n", args);
+      g_print("AAC: can't find file %s\n", (char*)args);
       bPlaying = FALSE;
       pthread_mutex_unlock(&mutex);
       pthread_exit(NULL);
@@ -377,7 +381,7 @@ static void *mp4Decode(void *args)
       pthread_exit(NULL);
     }
     XMMS_NEW_TITLEINPUT(input);
-    input->file_name = g_basename(temp);
+    input->file_name = (char*)g_basename(temp);
     input->file_ext = ext ? ext+1 : NULL;
     input->file_path = temp;
     if(!strncmp(buffer, "ID3", 3)){

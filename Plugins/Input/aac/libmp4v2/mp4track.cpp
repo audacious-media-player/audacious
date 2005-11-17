@@ -613,13 +613,14 @@ u_int32_t MP4Track::GetAvgBitrate()
 		return 0;
 	}
 
-	double calc = (double) (GetTotalOfSampleSizes());
-	// this is a bit better - we use the whole duration
-	calc *= 8.0;
-	calc *= GetTimeScale();
-	calc /=	(double) (GetDuration());
-	// we might want to think about rounding to the next 100 or 1000
-	return (uint32_t) ceil(calc);
+	u_int64_t durationSecs =
+		MP4ConvertTime(GetDuration(), GetTimeScale(), MP4_SECS_TIME_SCALE);
+
+	if (GetDuration() % GetTimeScale() != 0) {
+		durationSecs++;
+	}
+
+	return (GetTotalOfSampleSizes() * 8) / durationSecs;
 }
 
 u_int32_t MP4Track::GetMaxBitrate()
@@ -628,48 +629,32 @@ u_int32_t MP4Track::GetMaxBitrate()
 	MP4SampleId numSamples = GetNumberOfSamples();
 	u_int32_t maxBytesPerSec = 0;
 	u_int32_t bytesThisSec = 0;
-	MP4Timestamp thisSecStart = 0;
-	MP4Timestamp lastSampleTime = 0;
-	uint32_t lastSampleSize = 0;
+	MP4Timestamp thisSec = 0;
 
-	MP4SampleId thisSecStartSid = 1;
 	for (MP4SampleId sid = 1; sid <= numSamples; sid++) {
-	  uint32_t sampleSize;
-	  MP4Timestamp sampleTime;
+		u_int32_t sampleSize;
+		MP4Timestamp sampleTime;
 
-	  sampleSize = GetSampleSize(sid);
-	  GetSampleTimes(sid, &sampleTime, NULL);
-	  
-	  if (sampleTime < thisSecStart + timeScale) {
-	    bytesThisSec += sampleSize;
-	    lastSampleSize = sampleSize;
-	    lastSampleTime = sampleTime;
-	  } else {
-	    // we've already written the last sample and sampleSize.
-	    // this means that we've probably overflowed the last second
-	    // calculate the time we've overflowed
-	    MP4Duration overflow_dur = 
-	      (thisSecStart + timeScale) - lastSampleTime;
-	    // calculate the duration of the last sample
-	    MP4Duration lastSampleDur = sampleTime - lastSampleTime;
-	    uint32_t overflow_bytes;
-	    // now, calculate the number of bytes we overflowed.  Round up.
-	    overflow_bytes = 
-	      ((lastSampleSize * overflow_dur) + (lastSampleDur - 1)) / lastSampleDur;
+		sampleSize = GetSampleSize(sid);
 
-	    if (bytesThisSec - overflow_bytes > maxBytesPerSec) {
-	      maxBytesPerSec = bytesThisSec - overflow_bytes;
-	    }
+		GetSampleTimes(sid, &sampleTime, NULL);
 
-	    // now adjust the values for this sample.  Remove the bytes
-	    // from the first sample in this time frame
-	    lastSampleTime = sampleTime;
-	    lastSampleSize = sampleSize;
-	    bytesThisSec += sampleSize;
-	    bytesThisSec -= GetSampleSize(thisSecStartSid);
-	    thisSecStartSid++;
-	    GetSampleTimes(thisSecStartSid, &thisSecStart, NULL);
-	  }
+		// sample counts for current second
+		if (sampleTime < thisSec + timeScale) {
+			bytesThisSec += sampleSize;
+		} else { // sample is in a future second
+			if (bytesThisSec > maxBytesPerSec) {
+				maxBytesPerSec = bytesThisSec;
+			}
+
+			thisSec = sampleTime - (sampleTime % timeScale);
+			bytesThisSec = sampleSize;
+		}
+	}
+
+	// last second (or partial second) 
+	if (bytesThisSec > maxBytesPerSec) {
+		maxBytesPerSec = bytesThisSec;
 	}
 
 	return maxBytesPerSec * 8;

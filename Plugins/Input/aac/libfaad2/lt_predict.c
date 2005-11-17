@@ -1,6 +1,6 @@
 /*
 ** FAAD2 - Freeware Advanced Audio (AAC) Decoder including SBR decoding
-** Copyright (C) 2003 M. Bakker, Ahead Software AG, http://www.nero.com
+** Copyright (C) 2003-2004 M. Bakker, Ahead Software AG, http://www.nero.com
 **  
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 ** Commercial non-GPL licensing of this software is possible.
 ** For more info contact Ahead Software through Mpeg4AAClicense@nero.com.
 **
-** $Id: lt_predict.c,v 1.18 2003/11/12 20:47:58 menno Exp $
+** $Id: lt_predict.c,v 1.23 2004/09/04 14:56:28 menno Exp $
 **/
 
 
@@ -37,6 +37,11 @@
 #include "filtbank.h"
 #include "tns.h"
 
+
+/* static function declarations */
+static int16_t real_to_int16(real_t sig_in);
+
+
 /* check if the object type is an object type that can have LTP */
 uint8_t is_ltp_ot(uint8_t object_type)
 {
@@ -48,6 +53,9 @@ uint8_t is_ltp_ot(uint8_t object_type)
 #ifdef LD_DEC
         || (object_type == LD)
 #endif
+#ifdef SCALABLE_DEC
+        || (object_type == 6) /* TODO */
+#endif
         )
     {
         return 1;
@@ -57,7 +65,7 @@ uint8_t is_ltp_ot(uint8_t object_type)
     return 0;
 }
 
-static real_t codebook[8] =
+ALIGN static const real_t codebook[8] =
 {
     REAL_CONST(0.570829),
     REAL_CONST(0.696616),
@@ -76,8 +84,8 @@ void lt_prediction(ic_stream *ics, ltp_info *ltp, real_t *spec,
 {
     uint8_t sfb;
     uint16_t bin, i, num_samples;
-    real_t x_est[2048];
-    real_t X_est[2048];
+    ALIGN real_t x_est[2048];
+    ALIGN real_t X_est[2048];
 
     if (ics->window_sequence != EIGHT_SHORT_SEQUENCE)
     {
@@ -125,37 +133,37 @@ void lt_prediction(ic_stream *ics, ltp_info *ltp, real_t *spec,
 }
 
 #ifdef FIXED_POINT
-INLINE int16_t real_to_int16(real_t sig_in)
+static INLINE int16_t real_to_int16(real_t sig_in)
 {
     if (sig_in >= 0)
     {
         sig_in += (1 << (REAL_BITS-1));
-        if (sig_in > REAL_CONST(32767))
-            sig_in = 32767.0f;
+        if (sig_in >= REAL_CONST(32768))
+            return 32767;
     } else {
         sig_in += -(1 << (REAL_BITS-1));
-        if (sig_in < REAL_CONST(-32768))
-            sig_in = -32768.0f;
+        if (sig_in <= REAL_CONST(-32768))
+            return -32768;
     }
 
     return (sig_in >> REAL_BITS);
 }
 #else
-INLINE int16_t real_to_int16(real_t sig_in)
+static INLINE int16_t real_to_int16(real_t sig_in)
 {
     if (sig_in >= 0)
     {
 #ifndef HAS_LRINTF
         sig_in += 0.5f;
 #endif
-        if (sig_in > REAL_CONST(32767))
-            sig_in = 32767.0f;
+        if (sig_in >= 32768.0f)
+            return 32767;
     } else {
 #ifndef HAS_LRINTF
-        sig_in -= 0.5f;
+        sig_in += -0.5f;
 #endif
-        if (sig_in < REAL_CONST(-32768))
-            sig_in = -32768.0f;
+        if (sig_in <= -32768.0f)
+            return -32768;
     }
 
     return lrintf(sig_in);

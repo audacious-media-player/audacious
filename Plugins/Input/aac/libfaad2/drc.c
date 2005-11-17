@@ -1,6 +1,6 @@
 /*
 ** FAAD2 - Freeware Advanced Audio (AAC) Decoder including SBR decoding
-** Copyright (C) 2003 M. Bakker, Ahead Software AG, http://www.nero.com
+** Copyright (C) 2003-2004 M. Bakker, Ahead Software AG, http://www.nero.com
 **  
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 ** Commercial non-GPL licensing of this software is possible.
 ** For more info contact Ahead Software through Mpeg4AAClicense@nero.com.
 **
-** $Id: drc.c,v 1.19 2003/11/12 20:47:57 menno Exp $
+** $Id: drc.c,v 1.24 2004/09/04 14:56:28 menno Exp $
 **/
 
 #include "common.h"
@@ -35,7 +35,7 @@
 
 drc_info *drc_init(real_t cut, real_t boost)
 {
-    drc_info *drc = (drc_info*)malloc(sizeof(drc_info));
+    drc_info *drc = (drc_info*)faad_malloc(sizeof(drc_info));
     memset(drc, 0, sizeof(drc_info));
 
     drc->ctrl1 = cut;
@@ -51,7 +51,7 @@ drc_info *drc_init(real_t cut, real_t boost)
 
 void drc_end(drc_info *drc)
 {
-    if (drc) free(drc);
+    if (drc) faad_free(drc);
 }
 
 #ifdef FIXED_POINT

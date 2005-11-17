@@ -1,6 +1,6 @@
 /*
 ** FAAD2 - Freeware Advanced Audio (AAC) Decoder including SBR decoding
-** Copyright (C) 2003 M. Bakker, Ahead Software AG, http://www.nero.com
+** Copyright (C) 2003-2004 M. Bakker, Ahead Software AG, http://www.nero.com
 **  
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 ** Commercial non-GPL licensing of this software is possible.
 ** For more info contact Ahead Software through Mpeg4AAClicense@nero.com.
 **
-** $Id: specrec.h,v 1.20 2003/11/12 20:47:59 menno Exp $
+** $Id: specrec.h,v 1.28 2004/09/04 14:56:29 menno Exp $
 **/
 
 #ifndef __SPECREC_H__
@@ -34,18 +34,10 @@ extern "C" {
 
 #include "syntax.h"
 
-uint8_t window_grouping_info(faacDecHandle hDecoder, ic_stream *ics);
-static void quant_to_spec(ic_stream *ics, real_t *spec_data, uint16_t frame_len);
-static void inverse_quantization(real_t *x_invquant, int16_t *x_quant, uint16_t frame_len);
-static void apply_scalefactors(faacDecHandle hDecoder, ic_stream *ics, real_t *x_invquant,
-                               uint16_t frame_len);
-#ifndef FIXED_POINT
-void build_tables(real_t *pow2_table);
-#endif
-
-void reconstruct_channel_pair(faacDecHandle hDecoder, ic_stream *ics1, ic_stream *ics2,
-                              element *cpe, int16_t *spec_data1, int16_t *spec_data2);
-void reconstruct_single_channel(faacDecHandle hDecoder, ic_stream *ics, element *sce,
+uint8_t window_grouping_info(NeAACDecHandle hDecoder, ic_stream *ics);
+uint8_t reconstruct_channel_pair(NeAACDecHandle hDecoder, ic_stream *ics1, ic_stream *ics2,
+                                 element *cpe, int16_t *spec_data1, int16_t *spec_data2);
+uint8_t reconstruct_single_channel(NeAACDecHandle hDecoder, ic_stream *ics, element *sce,
                                 int16_t *spec_data);
 
 #ifdef __cplusplus

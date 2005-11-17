@@ -1,6 +1,6 @@
 /*
 ** FAAD2 - Freeware Advanced Audio (AAC) Decoder including SBR decoding
-** Copyright (C) 2003 M. Bakker, Ahead Software AG, http://www.nero.com
+** Copyright (C) 2003-2004 M. Bakker, Ahead Software AG, http://www.nero.com
 **  
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 ** Commercial non-GPL licensing of this software is possible.
 ** For more info contact Ahead Software through Mpeg4AAClicense@nero.com.
 **
-** $Id: mp4.c,v 1.24 2003/11/12 20:47:58 menno Exp $
+** $Id: mp4.c,v 1.32 2004/09/04 14:56:28 menno Exp $
 **/
 
 #include "common.h"
@@ -58,7 +58,11 @@ static uint8_t ObjectTypesTable[32] = {
 #else
     0, /*  5 SBR */
 #endif
+#ifdef SCALABLE_DEC
+    1, /*  6 AAC Scalable */
+#else
     0, /*  6 AAC Scalable */
+#endif
     0, /*  7 TwinVQ */
     0, /*  8 CELP */
     0, /*  9 HVXC */
@@ -79,7 +83,11 @@ static uint8_t ObjectTypesTable[32] = {
 #else
     0, /* 19 ER AAC LTP */
 #endif
+#ifdef SCALABLE_DEC
+    1, /* 20 ER AAC scalable */
+#else
     0, /* 20 ER AAC scalable */
+#endif
     0, /* 21 ER TwinVQ */
     0, /* 22 ER BSAC */
 #ifdef LD_DEC
@@ -111,17 +119,17 @@ static uint8_t ObjectTypesTable[32] = {
 };
 
 /* Table 1.6.1 */
-int8_t FAADAPI AudioSpecificConfig(uint8_t *pBuffer,
-                                   uint32_t buffer_size,
-                                   mp4AudioSpecificConfig *mp4ASC)
+int8_t NEAACDECAPI NeAACDecAudioSpecificConfig(uint8_t *pBuffer,
+                                               uint32_t buffer_size,
+                                               mp4AudioSpecificConfig *mp4ASC)
 {
     return AudioSpecificConfig2(pBuffer, buffer_size, mp4ASC, NULL);
 }
 
-int8_t FAADAPI AudioSpecificConfig2(uint8_t *pBuffer,
-                                    uint32_t buffer_size,
-                                    mp4AudioSpecificConfig *mp4ASC,
-                                    program_config *pce)
+int8_t AudioSpecificConfig2(uint8_t *pBuffer,
+                            uint32_t buffer_size,
+                            mp4AudioSpecificConfig *mp4ASC,
+                            program_config *pce)
 {
     bitfile ld;
     int8_t result = 0;
@@ -168,13 +176,28 @@ int8_t FAADAPI AudioSpecificConfig2(uint8_t *pBuffer,
         return -3;
     }
 
+#if (defined(PS_DEC) || defined(DRM_PS))
+    /* check if we have a mono file */
+    if (mp4ASC->channelsConfiguration == 1)
+    {
+        /* upMatrix to 2 channels for implicit signalling of PS */
+        mp4ASC->channelsConfiguration = 2;
+    }
+#endif
+
 #ifdef SBR_DEC
     mp4ASC->sbr_present_flag = -1;
     if (mp4ASC->objectTypeIndex == 5)
     {
+        uint8_t tmp;
+
         mp4ASC->sbr_present_flag = 1;
-        mp4ASC->samplingFrequencyIndex = (uint8_t)faad_getbits(&ld, 4
+        tmp = (uint8_t)faad_getbits(&ld, 4
             DEBUGVAR(1,5,"parse_audio_decoder_specific_info(): extensionSamplingFrequencyIndex"));
+        /* check for downsampled SBR */
+        if (tmp == mp4ASC->samplingFrequencyIndex)
+            mp4ASC->downSampledSBR = 1;
+        mp4ASC->samplingFrequencyIndex = tmp;
         if (mp4ASC->samplingFrequencyIndex == 15)
         {
             mp4ASC->samplingFrequency = (uint32_t)faad_getbits(&ld, 24
@@ -235,8 +258,15 @@ int8_t FAADAPI AudioSpecificConfig2(uint8_t *pBuffer,
 
                 if (mp4ASC->sbr_present_flag)
                 {
-                    mp4ASC->samplingFrequencyIndex = (uint8_t)faad_getbits(&ld, 4
+                    uint8_t tmp;
+                    tmp = (uint8_t)faad_getbits(&ld, 4
                         DEBUGVAR(1,12,"parse_audio_decoder_specific_info(): extensionSamplingFrequencyIndex"));
+
+                    /* check for downsampled SBR */
+                    if (tmp == mp4ASC->samplingFrequencyIndex)
+                        mp4ASC->downSampledSBR = 1;
+                    mp4ASC->samplingFrequencyIndex = tmp;
+
                     if (mp4ASC->samplingFrequencyIndex == 15)
                     {
                         mp4ASC->samplingFrequency = (uint32_t)faad_getbits(&ld, 24
@@ -257,6 +287,8 @@ int8_t FAADAPI AudioSpecificConfig2(uint8_t *pBuffer,
         {
             mp4ASC->samplingFrequency *= 2;
             mp4ASC->forceUpSampling = 1;
+        } else /* > 24000*/ {
+            mp4ASC->downSampledSBR = 1;
         }
     }
 #endif

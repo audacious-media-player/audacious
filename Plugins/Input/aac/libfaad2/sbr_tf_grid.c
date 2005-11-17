@@ -1,6 +1,6 @@
 /*
 ** FAAD2 - Freeware Advanced Audio (AAC) Decoder including SBR decoding
-** Copyright (C) 2003 M. Bakker, Ahead Software AG, http://www.nero.com
+** Copyright (C) 2003-2004 M. Bakker, Ahead Software AG, http://www.nero.com
 **  
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 ** Commercial non-GPL licensing of this software is possible.
 ** For more info contact Ahead Software through Mpeg4AAClicense@nero.com.
 **
-** $Id: sbr_tf_grid.c,v 1.8 2003/11/12 20:47:58 menno Exp $
+** $Id: sbr_tf_grid.c,v 1.15 2004/09/04 14:56:28 menno Exp $
 **/
 
 /* Time/Frequency grid */
@@ -37,17 +37,24 @@
 #include "sbr_syntax.h"
 #include "sbr_tf_grid.h"
 
+
+/* static function declarations */
+#if 0
+static int16_t rel_bord_lead(sbr_info *sbr, uint8_t ch, uint8_t l);
+static int16_t rel_bord_trail(sbr_info *sbr, uint8_t ch, uint8_t l);
+#endif
+static uint8_t middleBorder(sbr_info *sbr, uint8_t ch);
+
+
+/* function constructs new time border vector */
+/* first build into temp vector to be able to use previous vector on error */
 uint8_t envelope_time_border_vector(sbr_info *sbr, uint8_t ch)
 {
     uint8_t l, border, temp;
+    uint8_t t_E_temp[6] = {0};
 
-    for (l = 0; l <= sbr->L_E[ch]; l++)
-    {
-        sbr->t_E[ch][l] = 0;
-    }
-
-    sbr->t_E[ch][0] = sbr->rate * sbr->abs_bord_lead[ch];
-    sbr->t_E[ch][sbr->L_E[ch]] = sbr->rate * sbr->abs_bord_trail[ch];
+    t_E_temp[0] = sbr->rate * sbr->abs_bord_lead[ch];
+    t_E_temp[sbr->L_E[ch]] = sbr->rate * sbr->abs_bord_trail[ch];
 
     switch (sbr->bs_frame_class[ch])
     {
@@ -56,12 +63,12 @@ uint8_t envelope_time_border_vector(sbr_info *sbr, uint8_t ch)
         {
         case 4:
             temp = (int) (sbr->numTimeSlots / 4);
-            sbr->t_E[ch][3] = sbr->rate * 3 * temp;
-            sbr->t_E[ch][2] = sbr->rate * 2 * temp;
-            sbr->t_E[ch][1] = sbr->rate * temp;
+            t_E_temp[3] = sbr->rate * 3 * temp;
+            t_E_temp[2] = sbr->rate * 2 * temp;
+            t_E_temp[1] = sbr->rate * temp;
             break;
         case 2:
-            sbr->t_E[ch][1] = sbr->rate * (int) (sbr->numTimeSlots / 2);
+            t_E_temp[1] = sbr->rate * (int) (sbr->numTimeSlots / 2);
             break;
         default:
             break;
@@ -80,7 +87,7 @@ uint8_t envelope_time_border_vector(sbr_info *sbr, uint8_t ch)
                     return 1;
 
                 border -= sbr->bs_rel_bord[ch][l];
-                sbr->t_E[ch][--i] = sbr->rate * border;
+                t_E_temp[--i] = sbr->rate * border;
             }
         }
         break;
@@ -98,7 +105,7 @@ uint8_t envelope_time_border_vector(sbr_info *sbr, uint8_t ch)
                 if (sbr->rate * border + sbr->tHFAdj > sbr->numTimeSlotsRate+sbr->tHFGen)
                     return 1;
 
-                sbr->t_E[ch][i++] = sbr->rate * border;
+                t_E_temp[i++] = sbr->rate * border;
             }
         }
         break;
@@ -116,7 +123,7 @@ uint8_t envelope_time_border_vector(sbr_info *sbr, uint8_t ch)
                 if (sbr->rate * border + sbr->tHFAdj > sbr->numTimeSlotsRate+sbr->tHFGen)
                     return 1;
 
-                sbr->t_E[ch][i++] = sbr->rate * border;
+                t_E_temp[i++] = sbr->rate * border;
             }
         }
 
@@ -131,10 +138,16 @@ uint8_t envelope_time_border_vector(sbr_info *sbr, uint8_t ch)
                     return 1;
 
                 border -= sbr->bs_rel_bord_1[ch][l];
-                sbr->t_E[ch][--i] = sbr->rate * border;
+                t_E_temp[--i] = sbr->rate * border;
             }
         }
         break;
+    }
+
+    /* no error occured, we can safely use this t_E vector */
+    for (l = 0; l < 6; l++)
+    {
+        sbr->t_E[ch][l] = t_E_temp[l];
     }
 
     return 0;
@@ -155,6 +168,7 @@ void noise_floor_time_border_vector(sbr_info *sbr, uint8_t ch)
     }
 }
 
+#if 0
 static int16_t rel_bord_lead(sbr_info *sbr, uint8_t ch, uint8_t l)
 {
     uint8_t i;
@@ -209,10 +223,11 @@ static int16_t rel_bord_trail(sbr_info *sbr, uint8_t ch, uint8_t l)
 
     return 0;
 }
+#endif
 
 static uint8_t middleBorder(sbr_info *sbr, uint8_t ch)
 {
-    int8_t retval;
+    int8_t retval = 0;
 
     switch (sbr->bs_frame_class[ch])
     {

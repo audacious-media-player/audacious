@@ -1,6 +1,6 @@
 /*
 ** FAAD2 - Freeware Advanced Audio (AAC) Decoder including SBR decoding
-** Copyright (C) 2003 M. Bakker, Ahead Software AG, http://www.nero.com
+** Copyright (C) 2003-2004 M. Bakker, Ahead Software AG, http://www.nero.com
 **  
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -22,13 +22,18 @@
 ** Commercial non-GPL licensing of this software is possible.
 ** For more info contact Ahead Software through Mpeg4AAClicense@nero.com.
 **
-** $Id: pns.c,v 1.27 2003/11/12 20:47:58 menno Exp $
+** $Id: pns.c,v 1.34 2004/09/04 14:56:28 menno Exp $
 **/
 
 #include "common.h"
 #include "structs.h"
 
 #include "pns.h"
+
+
+/* static function declarations */
+static void gen_rand_vector(real_t *spec, int16_t scale_factor, uint16_t size,
+                            uint8_t sub);
 
 
 #ifdef FIXED_POINT
@@ -65,9 +70,6 @@ real_t fp_sqrt(real_t value)
 
 static real_t pow2_table[] =
 {
-    COEF_CONST(0.59460355750136),
-    COEF_CONST(0.70710678118655),
-    COEF_CONST(0.84089641525371),
     COEF_CONST(1.0),
     COEF_CONST(1.18920711500272),
     COEF_CONST(1.41421356237310),
@@ -126,8 +128,8 @@ static INLINE void gen_rand_vector(real_t *spec, int16_t scale_factor, uint16_t 
     {
         scale = DIV(REAL_CONST(1),energy);
 
-        exp = scale_factor / 4;
-        frac = scale_factor % 4;
+        exp = scale_factor >> 2;
+        frac = scale_factor & 3;
 
         /* IMDCT pre-scaling */
         exp -= sub;
@@ -138,7 +140,7 @@ static INLINE void gen_rand_vector(real_t *spec, int16_t scale_factor, uint16_t 
             scale <<= exp;
 
         if (frac)
-            scale = MUL_C(scale, pow2_table[frac + 3]);
+            scale = MUL_C(scale, pow2_table[frac]);
 
         for (i = 0; i < size; i++)
         {
@@ -182,6 +184,7 @@ void pns_decode(ic_stream *ics_left, ic_stream *ics_right,
             {
                 if (is_noise(ics_left, g, sfb))
                 {
+#ifdef LTP_DEC
                     /* Simultaneous use of LTP and PNS is not prevented in the
                        syntax. If both LTP, and PNS are enabled on the same
                        scalefactor band, PNS takes precedence, and no prediction
@@ -189,11 +192,14 @@ void pns_decode(ic_stream *ics_left, ic_stream *ics_right,
                     */
                     ics_left->ltp.long_used[sfb] = 0;
                     ics_left->ltp2.long_used[sfb] = 0;
+#endif
 
+#ifdef MAIN_DEC
                     /* For scalefactor bands coded using PNS the corresponding
                        predictors are switched to "off".
                     */
                     ics_left->pred.prediction_used[sfb] = 0;
+#endif
 
                     offs = ics_left->swb_offset[sfb];
                     size = ics_left->swb_offset[sfb+1] - offs;
@@ -235,9 +241,13 @@ void pns_decode(ic_stream *ics_left, ic_stream *ics_right,
                                     spec_left[(group*nshort) + offs + c];
                             }
                         } else /*if (ics_left->ms_mask_present == 0)*/ {
+#ifdef LTP_DEC
                             ics_right->ltp.long_used[sfb] = 0;
                             ics_right->ltp2.long_used[sfb] = 0;
+#endif
+#ifdef MAIN_DEC
                             ics_right->pred.prediction_used[sfb] = 0;
+#endif
 
                             offs = ics_right->swb_offset[sfb];
                             size = ics_right->swb_offset[sfb+1] - offs;

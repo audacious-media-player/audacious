@@ -215,11 +215,11 @@ void MP4Integer64Property::Dump(FILE* pFile, u_int8_t indent,
 	}
 	Indent(pFile, indent);
 	if (index != 0) 
-	  fprintf(pFile, "%s[%u] = %llu (0x%016llxf)\n", 
+	  fprintf(pFile, "%s[%u] = "U64" (0x%016"X64F")\n", 
 		  m_name, index, m_values[index], m_values[index]);
 	else
 	  fprintf(pFile, 
-		  "%s = %llu (0x%016llxf)\n", 
+		  "%s = "U64" (0x%016"X64F")\n", 
 		  m_name, m_values[index], m_values[index]);
 	fflush(pFile);
 }
@@ -256,11 +256,11 @@ void MP4BitfieldProperty::Dump(FILE* pFile, u_int8_t indent,
 	}
 	if (index != 0) 
 	fprintf(pFile, 
-		"%s[%u] = %llu (0x%0*llxf) <%u bits>\n", 
+		"%s[%u] = "U64" (0x%0*"X64F") <%u bits>\n", 
 		m_name, index, m_values[index], (int)hexWidth, m_values[index], m_numBits);
 	else 
 	  fprintf(pFile, 
-		  "%s = %llu (0x%0*llxf) <%u bits>\n", 
+		  "%s = "U64" (0x%0*"X64F") <%u bits>\n", 
 		  m_name, m_values[index], (int)hexWidth, m_values[index], m_numBits);
 	fflush(pFile);
 }

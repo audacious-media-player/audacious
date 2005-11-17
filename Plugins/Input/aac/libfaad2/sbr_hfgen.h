@@ -1,6 +1,6 @@
 /*
 ** FAAD2 - Freeware Advanced Audio (AAC) Decoder including SBR decoding
-** Copyright (C) 2003 M. Bakker, Ahead Software AG, http://www.nero.com
+** Copyright (C) 2003-2004 M. Bakker, Ahead Software AG, http://www.nero.com
 **  
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 ** Commercial non-GPL licensing of this software is possible.
 ** For more info contact Ahead Software through Mpeg4AAClicense@nero.com.
 **
-** $Id: sbr_hfgen.h,v 1.8 2003/11/12 20:47:58 menno Exp $
+** $Id: sbr_hfgen.h,v 1.16 2004/09/04 14:56:28 menno Exp $
 **/
 
 #ifndef __SBR_HFGEN_H__
@@ -32,22 +32,12 @@
 extern "C" {
 #endif
 
-void hf_generation(sbr_info *sbr, const qmf_t Xlow[MAX_NTSRHFG][32],
+void hf_generation(sbr_info *sbr, qmf_t Xlow[MAX_NTSRHFG][64],
                    qmf_t Xhigh[MAX_NTSRHFG][64]
 #ifdef SBR_LOW_POWER
                    ,real_t *deg
 #endif
                    ,uint8_t ch);
-
-static void calc_prediction_coef(sbr_info *sbr, const qmf_t Xlow[MAX_NTSRHFG][32],
-                                 complex_t *alpha_0, complex_t *alpha_1
-#ifdef SBR_LOW_POWER
-                                 , real_t *rxx
-#endif
-                                 );
-static void calc_aliasing_degree(sbr_info *sbr, real_t *rxx, real_t *deg);
-static void calc_chirp_factors(sbr_info *sbr, uint8_t ch);
-static void patch_construction(sbr_info *sbr);
 
 #ifdef __cplusplus
 }

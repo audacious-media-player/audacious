@@ -1,6 +1,6 @@
 /*
 ** FAAD2 - Freeware Advanced Audio (AAC) Decoder including SBR decoding
-** Copyright (C) 2003 M. Bakker, Ahead Software AG, http://www.nero.com
+** Copyright (C) 2003-2004 M. Bakker, Ahead Software AG, http://www.nero.com
 **  
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -22,18 +22,18 @@
 ** Commercial non-GPL licensing of this software is possible.
 ** For more info contact Ahead Software through Mpeg4AAClicense@nero.com.
 **
-** $Id: error.c,v 1.16 2003/11/12 20:47:57 menno Exp $
+** $Id: error.c,v 1.28 2004/09/04 14:56:28 menno Exp $
 **/
 
 #include "common.h"
 #include "error.h"
 
-extern int8_t *err_msg[] = {
+char *err_msg[] = {
     "No error",
     "Gain control not yet implemented",
     "Pulse coding not allowed in short blocks",
     "Invalid huffman codebook",
-    "Negative scalefactor found, should be impossible",
+    "Scalefactor out of range",
     "Unable to find ADTS syncword",
     "Channel coupling not yet implemented",
     "Channel configuration not allowed in error resilient frame",
@@ -41,9 +41,21 @@ extern int8_t *err_msg[] = {
     "Error decoding huffman scalefactor (bitstream error)",
     "Error decoding huffman codeword (bitstream error)",
     "Non existent huffman codebook number found",
-    "Maximum number of channels exceeded",
+    "Invalid number of channels",
     "Maximum number of bitstream elements exceeded",
     "Input data buffer too small",
     "Array index out of range",
-    "Maximum number of scalefactor bands exceeded"
+    "Maximum number of scalefactor bands exceeded",
+    "Quantised value out of range",
+    "LTP lag out of range",
+    "Invalid SBR parameter decoded",
+    "SBR called without being initialised",
+    "Unexpected channel configuration change",
+    "Error in program_config_element",
+    "First SBR frame is not the same as first AAC frame",
+    "Unexpected fill element with SBR data",
+    "Not all elements were provided with SBR data",
+    "LTP decoding not available",
+    "Output data buffer too small"
 };
+

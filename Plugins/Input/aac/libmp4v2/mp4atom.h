@@ -96,7 +96,7 @@ public:
 	};
 	void SetType(const char* type) {
 		if (type && *type != '\0') {
-		  // not needed ASSERT(strlen(type) == 4);
+			ASSERT(strlen(type) == 4);
 			memcpy(m_type, type, 4);
 			m_type[4] = '\0';
 		} else {

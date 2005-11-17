@@ -1,6 +1,6 @@
 /*
 ** FAAD2 - Freeware Advanced Audio (AAC) Decoder including SBR decoding
-** Copyright (C) 2003 M. Bakker, Ahead Software AG, http://www.nero.com
+** Copyright (C) 2003-2004 M. Bakker, Ahead Software AG, http://www.nero.com
 **  
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 ** Commercial non-GPL licensing of this software is possible.
 ** For more info contact Ahead Software through Mpeg4AAClicense@nero.com.
 **
-** $Id: tns.c,v 1.27 2003/11/12 20:47:59 menno Exp $
+** $Id: tns.c,v 1.35 2004/09/04 14:56:29 menno Exp $
 **/
 
 #include "common.h"
@@ -30,6 +30,16 @@
 
 #include "syntax.h"
 #include "tns.h"
+
+
+/* static function declarations */
+static void tns_decode_coef(uint8_t order, uint8_t coef_res_bits, uint8_t coef_compress,
+                            uint8_t *coef, real_t *a);
+static void tns_ar_filter(real_t *spectrum, uint16_t size, int8_t inc, real_t *lpc,
+                          uint8_t order);
+static void tns_ma_filter(real_t *spectrum, uint16_t size, int8_t inc, real_t *lpc,
+                          uint8_t order);
+
 
 #ifdef _MSC_VER
 #pragma warning(disable:4305)
@@ -229,24 +239,32 @@ static void tns_ar_filter(real_t *spectrum, uint16_t size, int8_t inc, real_t *l
 
     uint8_t j;
     uint16_t i;
-    real_t y, state[TNS_MAX_ORDER];
-
-    for (i = 0; i < order; i++)
-        state[i] = 0;
+    real_t y;
+    /* state is stored as a double ringbuffer */
+    real_t state[2*TNS_MAX_ORDER] = {0};
+    int8_t state_index = 0;
 
     for (i = 0; i < size; i++)
     {
         y = *spectrum;
 
         for (j = 0; j < order; j++)
-            y -= MUL_C(state[j], lpc[j+1]);
+            y -= MUL_C(state[state_index+j], lpc[j+1]);
 
-        for (j = order-1; j > 0; j--)
-            state[j] = state[j-1];
+        /* double ringbuffer state */
+        state_index--;
+        if (state_index < 0)
+            state_index = order-1;
+        state[state_index] = state[state_index + order] = y;
 
-        state[0] = y;
         *spectrum = y;
         spectrum += inc;
+
+//#define TNS_PRINT
+#ifdef TNS_PRINT
+        //printf("%d\n", y);
+        printf("0x%.8X\n", y);
+#endif
     }
 }
 
@@ -264,10 +282,10 @@ static void tns_ma_filter(real_t *spectrum, uint16_t size, int8_t inc, real_t *l
 
     uint8_t j;
     uint16_t i;
-    real_t y, state[TNS_MAX_ORDER];
-
-    for (i = 0; i < order; i++)
-        state[i] = REAL_CONST(0.0);
+    real_t y;
+    /* state is stored as a double ringbuffer */
+    real_t state[2*TNS_MAX_ORDER] = {0};
+    int8_t state_index = 0;
 
     for (i = 0; i < size; i++)
     {
@@ -276,10 +294,12 @@ static void tns_ma_filter(real_t *spectrum, uint16_t size, int8_t inc, real_t *l
         for (j = 0; j < order; j++)
             y += MUL_C(state[j], lpc[j+1]);
 
-        for (j = order-1; j > 0; j--)
-            state[j] = state[j-1];
+        /* double ringbuffer state */
+        state_index--;
+        if (state_index < 0)
+            state_index = order-1;
+        state[state_index] = state[state_index + order] = *spectrum;
 
-        state[0] = *spectrum;
         *spectrum = y;
         spectrum += inc;
     }

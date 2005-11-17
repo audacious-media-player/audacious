@@ -81,7 +81,7 @@ void MP4Descriptor::Read(MP4File* pFile)
 void MP4Descriptor::ReadHeader(MP4File* pFile)
 {
 	VERBOSE_READ(pFile->GetVerbosity(),
-		printf("ReadDescriptor: pos = 0x%llx\n", 
+		printf("ReadDescriptor: pos = 0x"X64"\n", 
 			pFile->GetPosition()));
 
 	// read tag and length

@@ -59,31 +59,25 @@ void MP4File::MakeIsmaCompliant(bool addIsmaComplianceSdp)
 	catch (MP4Error* e) {
 		delete e;
 	}
-	if (audioTrackId == MP4_INVALID_TRACK_ID &&
-	    videoTrackId == MP4_INVALID_TRACK_ID) return;
-
 	const char *audio_media_data_name, *video_media_data_name;
-	if (audioTrackId != MP4_INVALID_TRACK_ID) {
-	  audio_media_data_name = MP4GetTrackMediaDataName(this, audioTrackId);
-	  if (!(ATOMID(audio_media_data_name) == ATOMID("mp4a") ||
-		ATOMID(audio_media_data_name) == ATOMID("enca"))) {
-	    VERBOSE_ERROR(m_verbosity,
-			  printf("MakeIsmaCompliant:can't make ISMA compliant when file contains an %s track\n", audio_media_data_name);
-			  );
-	    return;
-	  }
+
+	audio_media_data_name = MP4GetTrackMediaDataName(this, audioTrackId);
+	if (!(ATOMID(audio_media_data_name) == ATOMID("mp4a") ||
+	      ATOMID(audio_media_data_name) == ATOMID("enca"))) {
+	  VERBOSE_ERROR(m_verbosity,
+			printf("MakeIsmaCompliant:can't make ISMA compliant when file contains an %s track\n", audio_media_data_name);
+			);
+	  return;
 	}
 	//
 	// Note - might have to check for avc1 here...
-	if (videoTrackId != MP4_INVALID_TRACK_ID) {
-	  video_media_data_name = MP4GetTrackMediaDataName(this, videoTrackId);
-	  if (!(ATOMID(video_media_data_name) == ATOMID("mp4v") ||
-		ATOMID(video_media_data_name) == ATOMID("encv"))) {
-	    VERBOSE_ERROR(m_verbosity,
-			  printf("MakeIsmaCompliant:can't make ISMA compliant when file contains an %s track\n", video_media_data_name);
-			  );
-	    return;
-	  }
+	video_media_data_name = MP4GetTrackMediaDataName(this, videoTrackId);
+	if (!(ATOMID(video_media_data_name) == ATOMID("mp4v") ||
+	      ATOMID(video_media_data_name) == ATOMID("encv"))) {
+	  VERBOSE_ERROR(m_verbosity,
+			printf("MakeIsmaCompliant:can't make ISMA compliant when file contains an %s track\n", video_media_data_name);
+			);
+	  return;
 	}
 
 	m_useIsma = true;
@@ -519,7 +513,7 @@ void MP4File::CreateIsmaIodFromParams(
     delete pVideoEsdProperty;
 
 	VERBOSE_ISMA(GetVerbosity(),
-		printf("OD data = %llu bytes\n", numBytes); MP4HexDump(pBytes, numBytes));
+		printf("OD data = "U64" bytes\n", numBytes); MP4HexDump(pBytes, numBytes));
 
 	char* odCmdBase64 = MP4ToBase64(pBytes, numBytes);
 
@@ -782,7 +776,7 @@ void MP4File::CreateIsmaODUpdateCommandFromFileForStream(
 	CreateIsmaODUpdateCommandForStream(
 		pAudioEsd, pVideoEsd, ppBytes, pNumBytes);
 	VERBOSE_ISMA(GetVerbosity(),
-		printf("After CreateImsaODUpdateCommandForStream len %llu =\n", *pNumBytes); MP4HexDump(*ppBytes, *pNumBytes));
+		printf("After CreateImsaODUpdateCommandForStream len "U64" =\n", *pNumBytes); MP4HexDump(*ppBytes, *pNumBytes));
 	// return SL config values to 2 (file)
 	// return ESID values to 0
 	if (pAudioSLConfigPredef) {

@@ -1,8 +1,9 @@
 /*
 ** some function for MP4 file based on libmp4v2 from mpeg4ip project
 */
-#include <mp4.h>
-#include <faad.h>
+#include <gtk/gtk.h>
+#include "mp4.h"
+#include "faad.h"
 
 const char *mp4AudioNames[]=
   {
@@ -52,27 +53,14 @@ int getAACTrack(MP4FileHandle file)
   for(i=0;i<numTracks;i++){
     MP4TrackId trackID = MP4FindTrackId(file, i, NULL, 0);
     const char *trackType = MP4GetTrackType(file, trackID);
+
     if(!strcmp(trackType, MP4_AUDIO_TRACK_TYPE)){//we found audio track !
-      int j=0;
-      u_int8_t audiotype = MP4GetTrackEsdsObjectTypeId(file, trackID);
-      while(mp4AudioTypes[j]){ // what kind of audio is ?
-	if(mp4AudioTypes[j] == audiotype){
-	  if(mp4AudioTypes[j] == MP4_MPEG4_AUDIO_TYPE){//MPEG4 audio ok
-	    audiotype = MP4GetTrackAudioMpeg4Type(file, trackID);
-	    printf("%d-%s\n", audiotype, mpeg4AudioNames[audiotype]);
-	    return (trackID);
-	  }
-	  else{
-	    printf("%s\n", mp4AudioNames[j]);
-	    if (mp4AudioTypes[j]== MP4_MPEG2_AAC_LC_AUDIO_TYPE ||
-		mp4AudioTypes[j]== MP4_MPEG2_AAC_MAIN_AUDIO_TYPE ||
-		mp4AudioTypes[j]== MP4_MPEG2_AAC_SSR_AUDIO_TYPE)
-	      return(trackID);
-	    return(-1);
-	  }
-	}
-	j++;
-      }
+      u_int8_t audiotype = MP4GetTrackAudioMpeg4Type(file, trackID);
+      g_print("%s\n", mpeg4AudioNames[audiotype]);
+      if(audiotype !=0)
+	return(trackID);
+      else
+	return(-1);
     }
   }
     return(-1);
@@ -111,7 +99,7 @@ int getVideoTrack(MP4FileHandle file)
 void getMP4info(char* file)
 {
   MP4FileHandle	mp4file;
-  MP4Duration	trackDuration;
+  //MP4Duration	trackDuration;
   int numTracks;
   int i=0;
 
@@ -126,7 +114,7 @@ void getMP4info(char* file)
     printf("Track %d, %s", trackID, trackType);
     if(!strcmp(trackType, MP4_AUDIO_TRACK_TYPE)){//we found audio track !
       int j=0;
-      u_int8_t audiotype = MP4GetTrackEsdsObjectTypeId(mp4file, trackID);
+      u_int8_t audiotype = MP4GetTrackAudioMpeg4Type(mp4file, trackID);
       while(mp4AudioTypes[j]){ // what kind of audio is ?
 	if(mp4AudioTypes[j] == audiotype){
 	  if(mp4AudioTypes[j] == MP4_MPEG4_AUDIO_TYPE){
@@ -134,18 +122,18 @@ void getMP4info(char* file)
 	    g_print(" %s", mpeg4AudioNames[audiotype]);
 	  }
 	  else{
-	    printf(" %s", mp4AudioNames[j]);
+	    g_print(" %s", mp4AudioNames[j]);
 	  }
-	  g_print(" duration :%d",
-		 MP4ConvertFromTrackDuration(mp4file, trackID,
-					     MP4GetTrackDuration(mp4file,
-								 trackID),
-					     MP4_MSECS_TIME_SCALE));
+	  g_print(" duration : %d",
+		  (int)MP4ConvertFromTrackDuration(mp4file, trackID,
+					      MP4GetTrackDuration(mp4file,
+								  trackID),
+					      MP4_MSECS_TIME_SCALE));
 	}
 	j++;
       }
     }
-    printf("\n");
+    g_print("\n");
   }
   MP4Close(mp4file);
 }

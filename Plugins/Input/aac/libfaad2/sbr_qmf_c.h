@@ -1,6 +1,6 @@
 /*
 ** FAAD2 - Freeware Advanced Audio (AAC) Decoder including SBR decoding
-** Copyright (C) 2003 M. Bakker, Ahead Software AG, http://www.nero.com
+** Copyright (C) 2003-2004 M. Bakker, Ahead Software AG, http://www.nero.com
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 ** Commercial non-GPL licensing of this software is possible.
 ** For more info contact Ahead Software through Mpeg4AAClicense@nero.com.
 **
-** $Id: sbr_qmf_c.h,v 1.7 2003/11/12 20:47:58 menno Exp $
+** $Id: sbr_qmf_c.h,v 1.13 2004/09/04 14:56:28 menno Exp $
 **/
 
 #ifndef __SBR_QMF_C_H__
@@ -38,7 +38,7 @@ extern "C" {
 #pragma warning(disable:4244)
 #endif
 
-static real_t qmf_c[640] = {
+ALIGN static const real_t qmf_c[640] = {
     FRAC_CONST(0), FRAC_CONST(-0.00055252865047),
     FRAC_CONST(-0.00056176925738), FRAC_CONST(-0.00049475180896),
     FRAC_CONST(-0.00048752279712), FRAC_CONST(-0.00048937912498),
@@ -199,7 +199,7 @@ static real_t qmf_c[640] = {
     FRAC_CONST(0.84803157770763), FRAC_CONST(0.84978051984268),
     FRAC_CONST(0.85119715249343), FRAC_CONST(0.85230470352147),
     FRAC_CONST(0.85310209497017), FRAC_CONST(0.85357205739107),
-    FRAC_CONST(0.85373856005937), FRAC_CONST(0.85357205739107),
+    FRAC_CONST(0.85373856005937 /*max*/), FRAC_CONST(0.85357205739107),
     FRAC_CONST(0.85310209497017), FRAC_CONST(0.85230470352147),
     FRAC_CONST(0.85119715249343), FRAC_CONST(0.84978051984268),
     FRAC_CONST(0.84803157770763), FRAC_CONST(0.84598184698206),
@@ -362,3 +362,4 @@ static real_t qmf_c[640] = {
 };
 
 #endif
+

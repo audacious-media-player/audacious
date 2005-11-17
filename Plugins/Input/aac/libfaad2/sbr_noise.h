@@ -1,6 +1,6 @@
 /*
 ** FAAD2 - Freeware Advanced Audio (AAC) Decoder including SBR decoding
-** Copyright (C) 2003 M. Bakker, Ahead Software AG, http://www.nero.com
+** Copyright (C) 2003-2004 M. Bakker, Ahead Software AG, http://www.nero.com
 **  
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 ** Commercial non-GPL licensing of this software is possible.
 ** For more info contact Ahead Software through Mpeg4AAClicense@nero.com.
 **
-** $Id: sbr_noise.h,v 1.7 2003/11/12 20:47:58 menno Exp $
+** $Id: sbr_noise.h,v 1.13 2004/09/04 14:56:28 menno Exp $
 **/
 
 #ifndef __SBR_NOISE_H__
@@ -39,7 +39,7 @@ extern "C" {
 
 
 /* Table 1.A.13 Noise table V */
-complex_t V[] = {
+ALIGN static const complex_t V[] = {
     { FRAC_CONST(-0.99948155879974), FRAC_CONST(-0.59483414888382) },
     { FRAC_CONST(0.97113454341888), FRAC_CONST(-0.67528516054153) },
     { FRAC_CONST(0.14130051434040), FRAC_CONST(-0.95090985298157) },
@@ -558,3 +558,4 @@ complex_t V[] = {
 
 #endif
 #endif
+

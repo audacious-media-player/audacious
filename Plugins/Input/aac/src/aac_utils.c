@@ -62,7 +62,7 @@ void	checkADTSForSeeking(FILE *fd,
     if(fread(header, 1, ADTS_HEADER_SIZE, fd)!=ADTS_HEADER_SIZE){
       break;
     }
-    if(!strncmp(header, "ID3", 3)){
+    if(!g_strncasecmp(header, "ID3", 3)){
       break;
     }
     if(!((header[0]==0xFF)&&((header[1]& 0xF6)==0xF0))){

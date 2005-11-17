@@ -68,7 +68,7 @@ LIB32=link.exe -lib
 MTL=midl.exe
 F90=df.exe
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
-# ADD CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "_DEBUG" /D "WIN32" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /ZI /Od /D "_DEBUG" /D "WIN32" /D "_MBCS" /D "_LIB" /YX /FD /GZ /c
 # ADD BASE RSC /l 0x413 /d "_DEBUG"
 # ADD RSC /l 0x413 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -106,6 +106,10 @@ SOURCE=.\decoder.c
 # Begin Source File
 
 SOURCE=.\drc.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\drm_dec.c
 # End Source File
 # Begin Source File
 
@@ -154,6 +158,14 @@ SOURCE=.\output.c
 # Begin Source File
 
 SOURCE=.\pns.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\ps_dec.c
+# End Source File
+# Begin Source File
+
+SOURCE=.\ps_syntax.c
 # End Source File
 # Begin Source File
 
@@ -309,11 +321,11 @@ SOURCE=.\decoder.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\dither.h
+SOURCE=.\drc.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\drc.h
+SOURCE=.\drm_dec.h
 # End Source File
 # Begin Source File
 
@@ -361,6 +373,10 @@ SOURCE=.\mdct.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\mdct_tab.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\mp4.h
 # End Source File
 # Begin Source File
@@ -374,6 +390,14 @@ SOURCE=.\output.h
 # Begin Source File
 
 SOURCE=.\pns.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ps_dec.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ps_tables.h
 # End Source File
 # Begin Source File
 

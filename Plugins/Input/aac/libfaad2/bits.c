@@ -1,6 +1,6 @@
 /*
 ** FAAD2 - Freeware Advanced Audio (AAC) Decoder including SBR decoding
-** Copyright (C) 2003 M. Bakker, Ahead Software AG, http://www.nero.com
+** Copyright (C) 2003-2004 M. Bakker, Ahead Software AG, http://www.nero.com
 **  
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 ** Commercial non-GPL licensing of this software is possible.
 ** For more info contact Ahead Software through Mpeg4AAClicense@nero.com.
 **
-** $Id: bits.c,v 1.28 2003/11/12 20:47:57 menno Exp $
+** $Id: bits.c,v 1.39 2004/09/04 14:56:27 menno Exp $
 **/
 
 #include "common.h"
@@ -49,7 +49,7 @@ void faad_initbits(bitfile *ld, const void *_buffer, const uint32_t buffer_size)
         return;
     }
 
-    ld->buffer = malloc((buffer_size+12)*sizeof(uint8_t));
+    ld->buffer = faad_malloc((buffer_size+12)*sizeof(uint8_t));
     memset(ld->buffer, 0, (buffer_size+12)*sizeof(uint8_t));
     memcpy(ld->buffer, _buffer, buffer_size*sizeof(uint8_t));
 
@@ -74,7 +74,13 @@ void faad_initbits(bitfile *ld, const void *_buffer, const uint32_t buffer_size)
 void faad_endbits(bitfile *ld)
 {
     if (ld)
-        if (ld->buffer) free(ld->buffer);
+    {
+        if (ld->buffer)
+        {
+            faad_free(ld->buffer);
+            ld->buffer = NULL;
+        }
+    }
 }
 
 uint32_t faad_get_processed_bits(bitfile *ld)
@@ -99,8 +105,13 @@ void faad_flushbits_ex(bitfile *ld, uint32_t bits)
     uint32_t tmp;
 
     ld->bufa = ld->bufb;
-    tmp = getdword(ld->tail);
-    ld->tail++;
+    if (ld->no_more_reading == 0)
+    {
+        tmp = getdword(ld->tail);
+        ld->tail++;
+    } else {
+        tmp = 0;
+    }
     ld->bufb = tmp;
     ld->bits_left += (32 - bits);
     ld->bytes_used += 4;
@@ -140,7 +151,7 @@ uint8_t *faad_getbitbuffer(bitfile *ld, uint32_t bits
     uint16_t bytes = (uint16_t)bits / 8;
     uint8_t remainder = (uint8_t)bits % 8;
 
-    uint8_t *buffer = (uint8_t*)malloc((bytes+1)*sizeof(uint8_t));
+    uint8_t *buffer = (uint8_t*)faad_malloc((bytes+1)*sizeof(uint8_t));
 
     for (i = 0; i < bytes; i++)
     {
@@ -156,6 +167,20 @@ uint8_t *faad_getbitbuffer(bitfile *ld, uint32_t bits
 
     return buffer;
 }
+
+#ifdef DRM
+/* return the original data buffer */
+void *faad_origbitbuffer(bitfile *ld)
+{
+    return (void*)ld->start;
+}
+
+/* return the original data buffer size */
+uint32_t faad_origbitbuffer_size(bitfile *ld)
+{
+    return ld->buffer_size;
+}
+#endif
 
 /* reversed bit reading routines, used for RVLC and HCR */
 void faad_initbits_rev(bitfile *ld, void *buffer,

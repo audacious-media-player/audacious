@@ -1,19 +1,19 @@
 /*
 ** FAAD2 - Freeware Advanced Audio (AAC) Decoder including SBR decoding
-** Copyright (C) 2003 M. Bakker, Ahead Software AG, http://www.nero.com
-**  
+** Copyright (C) 2003-2004 M. Bakker, Ahead Software AG, http://www.nero.com
+**
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
 ** the Free Software Foundation; either version 2 of the License, or
 ** (at your option) any later version.
-** 
+**
 ** This program is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
-** along with this program; if not, write to the Free Software 
+** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 **
 ** Any non-GPL usage of this software or parts of this software is strictly
@@ -22,7 +22,7 @@
 ** Commercial non-GPL licensing of this software is possible.
 ** For more info contact Ahead Software through Mpeg4AAClicense@nero.com.
 **
-** $Id: common.h,v 1.38 2003/11/12 20:47:57 menno Exp $
+** $Id: common.h,v 1.65 2004/09/08 09:43:11 gcp Exp $
 **/
 
 #ifndef __COMMON_H__
@@ -32,7 +32,16 @@
 extern "C" {
 #endif
 
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
 #define INLINE __inline
+#if 0 //defined(_WIN32) && !defined(_WIN32_WCE)
+#define ALIGN __declspec(align(16))
+#else
+#define ALIGN
+#endif
 
 #ifndef max
 #define max(a, b) (((a) > (b)) ? (a) : (b))
@@ -47,6 +56,10 @@ extern "C" {
 /* #define USE_DOUBLE_PRECISION */
 /* use fixed point reals */
 //#define FIXED_POINT
+//#define BIG_IQ_TABLE
+
+/* Use if target platform has address generators with autoincrement */
+//#define PREFER_POINTERS
 
 #ifdef _WIN32_WCE
 #define FIXED_POINT
@@ -64,8 +77,11 @@ extern "C" {
 #define LTP_DEC
 /* Allow decoding of LD profile AAC */
 #define LD_DEC
+/* Allow decoding of scalable profiles */
+//#define SCALABLE_DEC
 /* Allow decoding of Digital Radio Mondiale (DRM) */
 //#define DRM
+//#define DRM_PS
 
 /* LD can't do without LTP */
 #ifdef LD_DEC
@@ -80,9 +96,10 @@ extern "C" {
 #define ALLOW_SMALL_FRAMELENGTH
 
 
-// Define LC_ONLY_DECODER if you want a pure AAC LC decoder (independant of SBR_DEC)
+// Define LC_ONLY_DECODER if you want a pure AAC LC decoder (independant of SBR_DEC and PS_DEC)
 //#define LC_ONLY_DECODER
 #ifdef LC_ONLY_DECODER
+  #undef LD_DEC
   #undef LTP_DEC
   #undef MAIN_DEC
   #undef SSR_DEC
@@ -93,21 +110,28 @@ extern "C" {
 
 #define SBR_DEC
 //#define SBR_LOW_POWER
+#define PS_DEC
 
-/* FIXED POINT: No MAIN decoding, forced SBR Low Power decoder */
+/* FIXED POINT: No MAIN decoding */
 #ifdef FIXED_POINT
 # ifdef MAIN_DEC
 #  undef MAIN_DEC
 # endif
-# ifndef SBR_LOW_POWER
-#  define SBR_LOW_POWER
-# endif
 #endif // FIXED_POINT
 
+#ifdef DRM
+# ifndef SCALABLE_DEC
+#  define SCALABLE_DEC
+# endif
+#endif
+
+
 #ifdef FIXED_POINT
-#define SBR_DIV(A, B) (((int64_t)A << REAL_BITS)/B)
+#define DIV_R(A, B) (((int64_t)A << REAL_BITS)/B)
+#define DIV_C(A, B) (((int64_t)A << COEF_BITS)/B)
 #else
-#define SBR_DIV(A, B) ((A)/(B))
+#define DIV_R(A, B) ((A)/(B))
+#define DIV_C(A, B) ((A)/(B))
 #endif
 
 #ifndef SBR_LOW_POWER
@@ -123,13 +147,9 @@ extern "C" {
 
 /* END COMPILE TIME DEFINITIONS */
 
-#ifndef FIXED_POINT
-#define POW_TABLE_SIZE 200
-#endif
+#if defined(_WIN32) && !defined(__MINGW32__)
 
-
-#if defined(_WIN32)
-
+#include <stdlib.h>
 
 typedef unsigned __int64 uint64_t;
 typedef unsigned __int32 uint32_t;
@@ -143,10 +163,6 @@ typedef float float32_t;
 
 
 #else
-
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
 
 #include <stdio.h>
 #if HAVE_SYS_TYPES_H
@@ -226,12 +242,6 @@ char *strchr(), *strrchr();
 
 #if defined(FIXED_POINT)
 
-  #ifdef HAS_MATHF_H
-    #include <mathf.h>
-  #else
-    #include <math.h>
-  #endif
-
   #include "fixed.h"
 
 #elif defined(USE_DOUBLE_PRECISION)
@@ -254,6 +264,7 @@ char *strchr(), *strrchr();
 
   #define REAL_CONST(A) ((real_t)(A))
   #define COEF_CONST(A) ((real_t)(A))
+  #define Q2_CONST(A) ((real_t)(A))
   #define FRAC_CONST(A) ((real_t)(A)) /* pure fractional part */
 
 #else /* Normal floating point operation */
@@ -266,6 +277,7 @@ char *strchr(), *strrchr();
 
   #define REAL_CONST(A) ((real_t)(A))
   #define COEF_CONST(A) ((real_t)(A))
+  #define Q2_CONST(A) ((real_t)(A))
   #define FRAC_CONST(A) ((real_t)(A)) /* pure fractional part */
 
   /* Complex multiplication */
@@ -277,7 +289,7 @@ char *strchr(), *strrchr();
   }
 
 
-  #ifdef _WIN32
+  #if defined(_WIN32) && !defined(__MINGW32__)
     #define HAS_LRINTF
     static INLINE int lrintf(float f)
     {
@@ -287,6 +299,19 @@ char *strchr(), *strrchr();
             fld   f
             fistp i
         }
+        return i;
+    }
+  #elif (defined(__i386__) && defined(__GNUC__))
+    #define HAS_LRINTF
+    // from http://www.stereopsis.com/FPU.html
+    static INLINE int lrintf(float f)
+    {
+        int i;
+        __asm__ __volatile__ (
+            "flds %1        \n\t"
+            "fistpl %0      \n\t"
+            : "=m" (i)
+            : "m" (f));
         return i;
     }
   #endif
@@ -353,16 +378,41 @@ typedef real_t complex_t[2];
 
 
 /* common functions */
-int32_t int_log2(int32_t val);
+uint8_t cpu_has_sse(void);
 uint32_t random_int(void);
-uint8_t get_sr_index(uint32_t samplerate);
-uint8_t max_pred_sfb(uint8_t sr_index);
-uint8_t max_tns_sfb(uint8_t sr_index, uint8_t object_type, uint8_t is_short);
-uint32_t get_sample_rate(uint8_t sr_index);
-int8_t can_decode_ot(uint8_t object_type);
+uint32_t ones32(uint32_t x);
+uint32_t floor_log2(uint32_t x);
+uint32_t wl_min_lzc(uint32_t x);
+#ifdef FIXED_POINT
+#define LOG2_MIN_INF REAL_CONST(-10000)
+int32_t log2_int(uint32_t val);
+int32_t log2_fix(uint32_t val);
+int32_t pow2_int(real_t val);
+real_t pow2_fix(real_t val);
+#endif
+uint8_t get_sr_index(const uint32_t samplerate);
+uint8_t max_pred_sfb(const uint8_t sr_index);
+uint8_t max_tns_sfb(const uint8_t sr_index, const uint8_t object_type,
+                    const uint8_t is_short);
+uint32_t get_sample_rate(const uint8_t sr_index);
+int8_t can_decode_ot(const uint8_t object_type);
+
+void *faad_malloc(size_t size);
+void faad_free(void *b);
+
+//#define PROFILE
+#ifdef PROFILE
+static int64_t faad_get_ts()
+{
+    __asm
+    {
+        rdtsc
+    }
+}
+#endif
 
 #ifndef M_PI
-#define M_PI 3.14159265358979323846f
+#define M_PI 3.14159265358979323846
 #endif
 #ifndef M_PI_2 /* PI/2 */
 #define M_PI_2 1.57079632679489661923

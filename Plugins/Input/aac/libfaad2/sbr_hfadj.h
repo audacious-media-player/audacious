@@ -1,6 +1,6 @@
 /*
 ** FAAD2 - Freeware Advanced Audio (AAC) Decoder including SBR decoding
-** Copyright (C) 2003 M. Bakker, Ahead Software AG, http://www.nero.com
+** Copyright (C) 2003-2004 M. Bakker, Ahead Software AG, http://www.nero.com
 **  
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 ** Commercial non-GPL licensing of this software is possible.
 ** For more info contact Ahead Software through Mpeg4AAClicense@nero.com.
 **
-** $Id: sbr_hfadj.h,v 1.7 2003/11/12 20:47:58 menno Exp $
+** $Id: sbr_hfadj.h,v 1.15 2004/09/04 14:56:28 menno Exp $
 **/
 
 #ifndef __SBR_HFADJ_H__
@@ -32,17 +32,11 @@
 extern "C" {
 #endif
 
-typedef struct {
-
-    real_t Q_mapped[64][5];
-
-    uint8_t S_index_mapped[64][5];
-    uint8_t S_mapped[64][5];
-
-    real_t G_lim_boost[5][64];
-    real_t Q_M_lim_boost[5][64];
-    real_t S_M_boost[5][64];
-
+typedef struct
+{
+    real_t G_lim_boost[MAX_L_E][MAX_M];
+    real_t Q_M_lim_boost[MAX_L_E][MAX_M];
+    real_t S_M_boost[MAX_L_E][MAX_M];
 } sbr_hfadj_info;
 
 
@@ -51,20 +45,6 @@ void hf_adjustment(sbr_info *sbr, qmf_t Xsbr[MAX_NTSRHFG][64]
                    ,real_t *deg
 #endif
                    ,uint8_t ch);
-
-
-static void map_envelope_data(sbr_info *sbr, sbr_hfadj_info *adj, uint8_t ch);
-static void map_noise_data(sbr_info *sbr, sbr_hfadj_info *adj, uint8_t ch);
-static void map_sinusoids(sbr_info *sbr, sbr_hfadj_info *adj, uint8_t ch);
-static void estimate_current_envelope(sbr_info *sbr, sbr_hfadj_info *adj,
-                                      qmf_t Xsbr[MAX_NTSRHFG][64], uint8_t ch);
-static void additional_component_levels(sbr_info *sbr, sbr_hfadj_info *adj, uint8_t ch);
-static void calculate_gain(sbr_info *sbr, sbr_hfadj_info *adj, uint8_t ch);
-#ifdef SBR_LOW_POWER
-static void calc_gain_groups(sbr_info *sbr, sbr_hfadj_info *adj, real_t *deg, uint8_t ch);
-static void aliasing_reduction(sbr_info *sbr, sbr_hfadj_info *adj, real_t *deg, uint8_t ch);
-#endif
-static void hf_assembly(sbr_info *sbr, sbr_hfadj_info *adj, qmf_t Xsbr[MAX_NTSRHFG][64], uint8_t ch);
 
 
 #ifdef __cplusplus

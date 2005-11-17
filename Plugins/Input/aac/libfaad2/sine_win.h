@@ -1,6 +1,6 @@
 /*
 ** FAAD2 - Freeware Advanced Audio (AAC) Decoder including SBR decoding
-** Copyright (C) 2003 M. Bakker, Ahead Software AG, http://www.nero.com
+** Copyright (C) 2003-2004 M. Bakker, Ahead Software AG, http://www.nero.com
 **  
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 ** Commercial non-GPL licensing of this software is possible.
 ** For more info contact Ahead Software through Mpeg4AAClicense@nero.com.
 **
-** $Id: sine_win.h,v 1.9 2003/11/12 20:47:59 menno Exp $
+** $Id: sine_win.h,v 1.15 2004/09/04 14:56:28 menno Exp $
 **/
 
 #ifndef __SINE_WIN_H__
@@ -37,7 +37,7 @@ extern "C" {
 #pragma warning(disable:4244)
 #endif
 
-real_t sine_long_1024[] =
+ALIGN static const real_t sine_long_1024[] =
 {
     FRAC_CONST(0.00076699031874270449),
     FRAC_CONST(0.002300969151425805),
@@ -1066,7 +1066,7 @@ real_t sine_long_1024[] =
 };
 
 #ifdef ALLOW_SMALL_FRAMELENGTH
-real_t sine_long_960[] =
+ALIGN static const real_t sine_long_960[] =
 {
     FRAC_CONST(0.00081812299560725323),
     FRAC_CONST(0.0024543667964602917),
@@ -2031,7 +2031,7 @@ real_t sine_long_960[] =
 };
 #endif
 
-real_t sine_short_128[] =
+ALIGN static const real_t sine_short_128[] =
 {
     FRAC_CONST(0.0061358846491544753),
     FRAC_CONST(0.01840672990580482),
@@ -2164,7 +2164,7 @@ real_t sine_short_128[] =
 };
 
 #ifdef ALLOW_SMALL_FRAMELENGTH
-real_t sine_short_120[] =
+ALIGN static const real_t sine_short_120[] =
 {
     FRAC_CONST(0.0065449379673518581),
     FRAC_CONST(0.019633692460628301),
@@ -2290,7 +2290,7 @@ real_t sine_short_120[] =
 #endif
 
 #ifdef LD_DEC
-real_t sine_mid_512[] =
+ALIGN static const real_t sine_mid_512[] =
 {
     FRAC_CONST(0.0015339801862847655),
     FRAC_CONST(0.0046019261204485705),
@@ -2807,7 +2807,7 @@ real_t sine_mid_512[] =
 };
 
 #ifdef ALLOW_SMALL_FRAMELENGTH
-real_t sine_mid_480[] =
+ALIGN static const real_t sine_mid_480[] =
 {
     FRAC_CONST(0.0016362454436240478),
     FRAC_CONST(0.00490871880799799),
@@ -3292,7 +3292,7 @@ real_t sine_mid_480[] =
 };
 #endif
 
-real_t ld_mid_512[] =
+ALIGN static const real_t ld_mid_512[] =
 {
     FRAC_CONST(0),
     FRAC_CONST(0),
@@ -3809,7 +3809,7 @@ real_t ld_mid_512[] =
 };
 
 #ifdef ALLOW_SMALL_FRAMELENGTH
-real_t ld_mid_480[] =
+ALIGN static const real_t ld_mid_480[] =
 {
     FRAC_CONST(0),
     FRAC_CONST(0),
