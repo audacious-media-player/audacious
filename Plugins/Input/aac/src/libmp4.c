@@ -11,7 +11,6 @@
  * libid3 (3.8.x - www.id3.org)
 */
 
-#include <pthread.h>
 #include <gtk/gtk.h>
 #include "faad.h"
 #include "mp4.h"
@@ -76,8 +75,8 @@ typedef struct  _mp4cfg{
 
 static Mp4Config	mp4cfg;
 static gboolean		bPlaying = FALSE;
-static pthread_t	decodeThread;
-static pthread_mutex_t	mutex = PTHREAD_MUTEX_INITIALIZER;
+static GThread		*decodeThread;
+GStaticMutex 		mutex = G_STATIC_MUTEX_INIT;
 static int		seekPosition = -1;
 
 void getMP4info(char*);
@@ -91,7 +90,6 @@ InputPlugin *get_iplugin_info(void)
 
 static void mp4_init(void)
 {
-  memset(&decodeThread, 0, sizeof(pthread_t));
   mp4cfg.file_type = FILE_UNKNOW;
   seekPosition = -1;
   return;
@@ -100,7 +98,7 @@ static void mp4_init(void)
 static void mp4_play(char *filename)
 {
   bPlaying = TRUE;
-  pthread_create(&decodeThread, 0, mp4Decode, g_strdup(filename));
+  decodeThread = g_thread_create((GThreadFunc)mp4Decode, g_strdup(filename), TRUE, NULL);
   return;
 }
 
@@ -108,8 +106,7 @@ static void mp4_stop(void)
 {
   if(bPlaying){
     bPlaying = FALSE;
-    pthread_join(decodeThread, NULL);
-    memset(&decodeThread, 0, sizeof(pthread_t));
+    g_thread_join(decodeThread);
     mp4_ip.output->close_audio();
   }
 }
@@ -184,7 +181,7 @@ static void *mp4Decode(void *args)
 {
   MP4FileHandle mp4file;
 
-  pthread_mutex_lock(&mutex);
+  g_static_mutex_lock(&mutex);
   seekPosition = -1;
   bPlaying = TRUE;
   if(!(mp4file = MP4Read(args, 0))){
@@ -204,8 +201,8 @@ static void *mp4Decode(void *args)
       g_free(args);
       MP4Close(mp4file);
       bPlaying = FALSE;
-      pthread_mutex_unlock(&mutex);
-      pthread_exit(NULL);
+      g_static_mutex_unlock(&mutex);
+      g_thread_exit(NULL);
     }else{
       faacDecHandle	decoder;
       unsigned char	*buffer	= NULL;
@@ -225,16 +222,16 @@ static void *mp4Decode(void *args)
 	faacDecClose(decoder);
 	MP4Close(mp4file);
 	bPlaying = FALSE;
-	pthread_mutex_unlock(&mutex);
-	pthread_exit(NULL);
+	g_static_mutex_unlock(&mutex);
+	g_thread_exit(NULL);
       }
       if(faacDecInit2(decoder, buffer, bufferSize, &samplerate, &channels)<0){
 	g_free(args);
 	faacDecClose(decoder);
 	MP4Close(mp4file);
 	bPlaying = FALSE;
-	pthread_mutex_unlock(&mutex);
-	pthread_exit(NULL);
+	g_static_mutex_unlock(&mutex);
+	g_thread_exit(NULL);
       }
       g_free(buffer);
       if(channels == 0){
@@ -243,8 +240,8 @@ static void *mp4Decode(void *args)
 	faacDecClose(decoder);
 	MP4Close(mp4file);
 	bPlaying = FALSE;
-	pthread_mutex_unlock(&mutex);
-	pthread_exit(NULL);
+	g_static_mutex_unlock(&mutex);
+	g_thread_exit(NULL);
       }
       duration = MP4GetTrackDuration(mp4file, mp4track);
       msDuration = MP4ConvertFromTrackDuration(mp4file, mp4track, duration,
@@ -277,8 +274,8 @@ static void *mp4Decode(void *args)
 	  faacDecClose(decoder);
 	  MP4Close(mp4file);
 	  bPlaying = FALSE;
-	  pthread_mutex_unlock(&mutex);
-	  pthread_exit(NULL);
+	  g_static_mutex_unlock(&mutex);
+	  g_thread_exit(NULL);
 	}
 	rc = MP4ReadSample(mp4file, mp4track, sampleID++, &buffer, &bufferSize,
 			   NULL, NULL, NULL, NULL);
@@ -293,8 +290,8 @@ static void *mp4Decode(void *args)
 	  faacDecClose(decoder);
 	  MP4Close(mp4file);
 	  bPlaying = FALSE;
-	  pthread_mutex_unlock(&mutex);
-	  pthread_exit(NULL);
+	  g_static_mutex_unlock(&mutex);
+	  g_thread_exit(NULL);
 	}else{
 	  sampleBuffer = faacDecDecode(decoder, &frameInfo, buffer, bufferSize);
 	  if(frameInfo.error > 0){
@@ -305,8 +302,8 @@ static void *mp4Decode(void *args)
 	    faacDecClose(decoder);
 	    MP4Close(mp4file);
 	    bPlaying = FALSE;
-	    pthread_mutex_unlock(&mutex);
-	    pthread_exit(NULL);
+	    g_static_mutex_unlock(&mutex);
+	    g_thread_exit(NULL);
 	  }
 	  if(buffer){
 	    g_free(buffer); buffer=NULL; bufferSize=0;
@@ -329,8 +326,8 @@ static void *mp4Decode(void *args)
       faacDecClose(decoder);
       MP4Close(mp4file);
       bPlaying = FALSE;
-      pthread_mutex_unlock(&mutex);
-      pthread_exit(NULL);
+      g_static_mutex_unlock(&mutex);
+      g_thread_exit(NULL);
     }
   } else{
     // WE ARE READING AN AAC FILE
@@ -350,15 +347,15 @@ static void *mp4Decode(void *args)
     if((file = fopen(args, "rb")) == 0){
       g_print("AAC: can't find file %s\n", (char*)args);
       bPlaying = FALSE;
-      pthread_mutex_unlock(&mutex);
-      pthread_exit(NULL);
+      g_static_mutex_unlock(&mutex);
+      g_thread_exit(NULL);
     }
     if((decoder = faacDecOpen()) == NULL){
       g_print("AAC: Open Decoder Error\n");
       fclose(file);
       bPlaying = FALSE;
-      pthread_mutex_unlock(&mutex);
-      pthread_exit(NULL);
+      g_static_mutex_unlock(&mutex);
+      g_thread_exit(NULL);
     }
     config = faacDecGetCurrentConfiguration(decoder);
     config->useOldADTSFormat = 0;
@@ -368,8 +365,8 @@ static void *mp4Decode(void *args)
       fclose(file);
       bPlaying = FALSE;
       faacDecClose(decoder);
-      pthread_mutex_unlock(&mutex);
-      pthread_exit(NULL);
+      g_static_mutex_unlock(&mutex);
+      g_thread_exit(NULL);
     }
     if((buffervalid = fread(buffer, 1, BUFFER_SIZE, file))==0){
       g_print("AAC: Error reading file\n");
@@ -377,8 +374,8 @@ static void *mp4Decode(void *args)
       fclose(file);
       bPlaying = FALSE;
       faacDecClose(decoder);
-      pthread_mutex_unlock(&mutex);
-      pthread_exit(NULL);
+      g_static_mutex_unlock(&mutex);
+      g_thread_exit(NULL);
     }
     XMMS_NEW_TITLEINPUT(input);
     input->file_name = (char*)g_basename(temp);
@@ -420,8 +417,8 @@ static void *mp4Decode(void *args)
       */
       g_free(xmmstitle);
       bPlaying = FALSE;
-      pthread_mutex_unlock(&mutex);
-      pthread_exit(NULL);
+      g_static_mutex_unlock(&mutex);
+      g_thread_exit(NULL);
     }
     //if(bSeek){
     //mp4_ip.set_info(xmmstitle, lenght*1000, -1, samplerate, channels);
@@ -502,8 +499,8 @@ static void *mp4Decode(void *args)
     }
     */
     bPlaying = FALSE;
-    pthread_mutex_unlock(&mutex);
-    pthread_exit(NULL);
-    
+    g_static_mutex_unlock(&mutex);
+    g_thread_exit(NULL);
+    return(NULL);    
   }
 }

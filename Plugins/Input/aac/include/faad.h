@@ -25,8 +25,5 @@
 ** $Id: faad.h,v 1.47 2004/04/03 19:08:37 menno Exp $
 **/
 
-/* warn people for update */
-#pragma message("please update faad2 include filename and function names!")
-
 /* Backwards compatible link */
 #include "neaacdec.h"
