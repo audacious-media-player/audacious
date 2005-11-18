@@ -546,6 +546,9 @@ bmp_config_save(void)
     bmp_cfg_db_set_int(db, NULL, "playlist_position",
                        playlist_get_position());
 
+    bmp_cfg_db_set_bool(db, NULL, "mainwin_use_xfont",
+			cfg.mainwin_use_xfont);
+
     for (i = 0; i < ncfgsent; ++i) {
         if (bmp_strents[i].se_wrt)
             bmp_cfg_db_set_string(db, NULL,
