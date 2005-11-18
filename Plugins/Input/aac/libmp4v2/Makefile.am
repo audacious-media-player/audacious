@@ -1,6 +1,6 @@
 INCLUDES = -I../include -I.
 
-lib_LTLIBRARIES = libmp4v2.la 
+noinst_LTLIBRARIES = libmp4v2.la 
 
 include_HEADERS = mp4.h
 
