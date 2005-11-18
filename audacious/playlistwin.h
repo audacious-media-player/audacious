@@ -48,7 +48,7 @@
 #define PLAYLISTWIN_DEFAULT_POS_X       295
 #define PLAYLISTWIN_DEFAULT_POS_Y       20
 
-#define PLAYLISTWIN_DEFAULT_FONT        "Sans Bold 10"
+#define PLAYLISTWIN_DEFAULT_FONT        "Sans Bold 8"
 
 
 void playlistwin_update_list(void);
