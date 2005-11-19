@@ -36,10 +36,10 @@ int fft_inits(FFTContext *s, int nbits, int inverse)
     s->nbits = nbits;
     n = 1 << nbits;
 
-    s->exptab = malloc((n / 2) * sizeof(FFTComplex));
+    s->exptab = av_malloc((n / 2) * sizeof(FFTComplex));
     if (!s->exptab)
         goto fail;
-    s->revtab = malloc(n * sizeof(uint16_t));
+    s->revtab = av_malloc(n * sizeof(uint16_t));
     if (!s->revtab)
         goto fail;
     s->inverse = inverse;
@@ -73,7 +73,7 @@ int fft_inits(FFTContext *s, int nbits, int inverse)
             np = 1 << nbits;
             nblocks = np >> 3;
             np2 = np >> 1;
-            s->exptab1 = malloc(np * 2 * sizeof(FFTComplex));
+            s->exptab1 = av_malloc(np * 2 * sizeof(FFTComplex));
             if (!s->exptab1)
                 goto fail;
             q = s->exptab1;

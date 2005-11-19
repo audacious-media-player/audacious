@@ -12,6 +12,7 @@ extern "C" {
 #endif
 
 #include "common.h"
+//#include "rational.h"
 #include <sys/types.h> /* size_t */
 
 #define FFMPEG_VERSION_INT     0x000408
@@ -27,9 +28,73 @@ extern "C" {
 
 enum CodecID {
     CODEC_ID_NONE, 
+    CODEC_ID_MPEG1VIDEO,
+    CODEC_ID_MPEG2VIDEO, /* prefered ID for MPEG Video 1 or 2 decoding */
+    CODEC_ID_MPEG2VIDEO_XVMC,
+    CODEC_ID_H263,
+    CODEC_ID_RV10,
+    CODEC_ID_RV20,
+    CODEC_ID_MP2,
+    CODEC_ID_MP3, /* prefered ID for MPEG Audio layer 1, 2 or3 decoding */
+    CODEC_ID_VORBIS,
+    CODEC_ID_AC3,
+    CODEC_ID_MJPEG,
+    CODEC_ID_MJPEGB,
+    CODEC_ID_LJPEG,
+    CODEC_ID_SP5X,
+    CODEC_ID_MPEG4,
+    CODEC_ID_RAWVIDEO,
+    CODEC_ID_MSMPEG4V1,
+    CODEC_ID_MSMPEG4V2,
+    CODEC_ID_MSMPEG4V3,
+    CODEC_ID_WMV1,
+    CODEC_ID_WMV2,
+    CODEC_ID_H263P,
+    CODEC_ID_H263I,
+    CODEC_ID_FLV1,
+    CODEC_ID_SVQ1,
+    CODEC_ID_SVQ3,
+    CODEC_ID_DVVIDEO,
+    CODEC_ID_DVAUDIO,
     CODEC_ID_WMAV1,
     CODEC_ID_WMAV2,
-    
+    CODEC_ID_MACE3,
+    CODEC_ID_MACE6,
+    CODEC_ID_HUFFYUV,
+    CODEC_ID_CYUV,
+    CODEC_ID_H264,
+    CODEC_ID_INDEO3,
+    CODEC_ID_VP3,
+    CODEC_ID_THEORA,
+    CODEC_ID_AAC,
+    CODEC_ID_MPEG4AAC,
+    CODEC_ID_ASV1,
+    CODEC_ID_ASV2,
+    CODEC_ID_FFV1,
+    CODEC_ID_4XM,
+    CODEC_ID_VCR1,
+    CODEC_ID_CLJR,
+    CODEC_ID_MDEC,
+    CODEC_ID_ROQ,
+    CODEC_ID_INTERPLAY_VIDEO,
+    CODEC_ID_XAN_WC3,
+    CODEC_ID_XAN_WC4,
+    CODEC_ID_RPZA,
+    CODEC_ID_CINEPAK,
+    CODEC_ID_WS_VQA,
+    CODEC_ID_MSRLE,
+    CODEC_ID_MSVIDEO1,
+    CODEC_ID_IDCIN,
+    CODEC_ID_8BPS,
+    CODEC_ID_SMC,
+    CODEC_ID_FLIC,
+    CODEC_ID_TRUEMOTION1,
+    CODEC_ID_VMDVIDEO,
+    CODEC_ID_VMDAUDIO,
+    CODEC_ID_MSZH,
+    CODEC_ID_ZLIB,
+    CODEC_ID_QTRLE,
+
     /* various pcm "codecs" */
     CODEC_ID_PCM_S16LE,
     CODEC_ID_PCM_S16BE,
@@ -39,15 +104,65 @@ enum CodecID {
     CODEC_ID_PCM_U8,
     CODEC_ID_PCM_MULAW,
     CODEC_ID_PCM_ALAW,
+
+    /* various adpcm codecs */
+    CODEC_ID_ADPCM_IMA_QT,
+    CODEC_ID_ADPCM_IMA_WAV,
+    CODEC_ID_ADPCM_IMA_DK3,
+    CODEC_ID_ADPCM_IMA_DK4,
+    CODEC_ID_ADPCM_IMA_WS,
+    CODEC_ID_ADPCM_IMA_SMJPEG,
+    CODEC_ID_ADPCM_MS,
+    CODEC_ID_ADPCM_4XM,
+    CODEC_ID_ADPCM_XA,
+    CODEC_ID_ADPCM_ADX,
+    CODEC_ID_ADPCM_EA,
+
+	/* AMR */
+    CODEC_ID_AMR_NB,
+    CODEC_ID_AMR_WB,
+
+    /* RealAudio codecs*/
+    CODEC_ID_RA_144,
+    CODEC_ID_RA_288,
+
+    /* various DPCM codecs */
+    CODEC_ID_ROQ_DPCM,
+    CODEC_ID_INTERPLAY_DPCM,
+    CODEC_ID_XAN_DPCM,
+    
+    CODEC_ID_MPEG2TS, /* _FAKE_ codec to indicate a raw MPEG2 transport
+                         stream (only used by libavformat) */
 };
 
+/* CODEC_ID_MP3LAME is absolete */
+#define CODEC_ID_MP3LAME CODEC_ID_MP3
 
 enum CodecType {
     CODEC_TYPE_UNKNOWN = -1,
+    CODEC_TYPE_VIDEO,
     CODEC_TYPE_AUDIO,
     CODEC_TYPE_DATA,
 };
 
+/**
+ * Pixel format. Notes: 
+ *
+ * PIX_FMT_RGBA32 is handled in an endian-specific manner. A RGBA
+ * color is put together as:
+ *  (A << 24) | (R << 16) | (G << 8) | B
+ * This is stored as BGRA on little endian CPU architectures and ARGB on
+ * big endian CPUs.
+ *
+ * When the pixel format is palettized RGB (PIX_FMT_PAL8), the palettized
+ * image data is stored in AVFrame.data[0]. The palette is transported in
+ * AVFrame.data[1] and, is 1024 bytes long (256 4-byte entries) and is
+ * formatted the same as in PIX_FMT_RGBA32 described above (i.e., it is
+ * also endian-specific). Note also that the individual RGB palette
+ * components stored in AVFrame.data[1] should be in the range 0..255.
+ * This is important as many custom PAL8 video codecs that were designed
+ * to run on the IBM VGA graphics adapter use 6-bit palette components.
+ */
 enum PixelFormat {
     PIX_FMT_YUV420P,   ///< Planar YUV 4:2:0 (1 Cr & Cb sample per 2x2 Y samples)
     PIX_FMT_YUV422,    
@@ -1488,8 +1603,105 @@ typedef struct AVPaletteControl {
 
 } AVPaletteControl;
 
+extern AVCodec ac3_encoder;
+extern AVCodec mp2_encoder;
+extern AVCodec mp3lame_encoder;
+extern AVCodec oggvorbis_encoder;
+extern AVCodec faac_encoder;
+extern AVCodec mpeg1video_encoder;
+extern AVCodec mpeg2video_encoder;
+extern AVCodec h263_encoder;
+extern AVCodec h263p_encoder;
+extern AVCodec flv_encoder;
+extern AVCodec rv10_encoder;
+extern AVCodec rv20_encoder;
+extern AVCodec mjpeg_encoder;
+extern AVCodec ljpeg_encoder;
+extern AVCodec mpeg4_encoder;
+extern AVCodec msmpeg4v1_encoder;
+extern AVCodec msmpeg4v2_encoder;
+extern AVCodec msmpeg4v3_encoder;
+extern AVCodec wmv1_encoder;
+extern AVCodec wmv2_encoder;
+extern AVCodec huffyuv_encoder;
+extern AVCodec h264_encoder;
+extern AVCodec asv1_encoder;
+extern AVCodec asv2_encoder;
+extern AVCodec vcr1_encoder;
+extern AVCodec ffv1_encoder;
+extern AVCodec mdec_encoder;
+extern AVCodec zlib_encoder;
+
+extern AVCodec h263_decoder;
+extern AVCodec mpeg4_decoder;
+extern AVCodec msmpeg4v1_decoder;
+extern AVCodec msmpeg4v2_decoder;
+extern AVCodec msmpeg4v3_decoder;
+extern AVCodec wmv1_decoder;
+extern AVCodec wmv2_decoder;
+extern AVCodec mpeg1video_decoder;
+extern AVCodec mpeg2video_decoder;
+extern AVCodec mpegvideo_decoder;
+extern AVCodec mpeg_xvmc_decoder;
+extern AVCodec h263i_decoder;
+extern AVCodec flv_decoder;
+extern AVCodec rv10_decoder;
+extern AVCodec rv20_decoder;
+extern AVCodec svq1_decoder;
+extern AVCodec svq3_decoder;
+extern AVCodec dvvideo_decoder;
 extern AVCodec wmav1_decoder;
 extern AVCodec wmav2_decoder;
+extern AVCodec mjpeg_decoder;
+extern AVCodec mjpegb_decoder;
+extern AVCodec sp5x_decoder;
+extern AVCodec mp2_decoder;
+extern AVCodec mp3_decoder;
+extern AVCodec mace3_decoder;
+extern AVCodec mace6_decoder;
+extern AVCodec huffyuv_decoder;
+extern AVCodec oggvorbis_decoder;
+extern AVCodec cyuv_decoder;
+extern AVCodec h264_decoder;
+extern AVCodec indeo3_decoder;
+extern AVCodec vp3_decoder;
+extern AVCodec theora_decoder;
+extern AVCodec amr_nb_decoder;
+extern AVCodec amr_nb_encoder;
+extern AVCodec amr_wb_encoder;
+extern AVCodec amr_wb_decoder;
+extern AVCodec aac_decoder;
+extern AVCodec mpeg4aac_decoder;
+extern AVCodec asv1_decoder;
+extern AVCodec asv2_decoder;
+extern AVCodec vcr1_decoder;
+extern AVCodec cljr_decoder;
+extern AVCodec ffv1_decoder;
+extern AVCodec fourxm_decoder;
+extern AVCodec mdec_decoder;
+extern AVCodec roq_decoder;
+extern AVCodec interplay_video_decoder;
+extern AVCodec xan_wc3_decoder;
+extern AVCodec rpza_decoder;
+extern AVCodec cinepak_decoder;
+extern AVCodec msrle_decoder;
+extern AVCodec msvideo1_decoder;
+extern AVCodec vqa_decoder;
+extern AVCodec idcin_decoder;
+extern AVCodec eightbps_decoder;
+extern AVCodec smc_decoder;
+extern AVCodec flic_decoder;
+extern AVCodec vmdvideo_decoder;
+extern AVCodec vmdaudio_decoder;
+extern AVCodec truemotion1_decoder;
+extern AVCodec mszh_decoder;
+extern AVCodec zlib_decoder;
+extern AVCodec ra_144_decoder;
+extern AVCodec ra_288_decoder;
+extern AVCodec roq_dpcm_decoder;
+extern AVCodec interplay_dpcm_decoder;
+extern AVCodec xan_dpcm_decoder;
+extern AVCodec qtrle_decoder;
 
 /* pcm codecs */
 #define PCM_CODEC(id, name) \
@@ -1521,7 +1733,12 @@ PCM_CODEC(CODEC_ID_ADPCM_EA, adpcm_ea);
 
 #undef PCM_CODEC
 
+/* dummy raw video codec */
+extern AVCodec rawvideo_encoder;
+extern AVCodec rawvideo_decoder;
 
+/* the following codecs use external GPL libs */
+extern AVCodec ac3_decoder;
 
 /* resample.c */
 
@@ -1564,6 +1781,14 @@ void img_resample_close(ImgReSampleContext *s);
  */
 int avpicture_alloc(AVPicture *picture, int pix_fmt, int width, int height);
 
+/* Free a picture previously allocated by avpicture_alloc. */
+void avpicture_free(AVPicture *picture);
+
+int avpicture_fill(AVPicture *picture, uint8_t *ptr,
+                   int pix_fmt, int width, int height);
+int avpicture_layout(const AVPicture* src, int pix_fmt, int width, int height,
+                     unsigned char *dest, int dest_size);
+int avpicture_get_size(int pix_fmt, int width, int height);
 void avcodec_get_chroma_sub_sample(int pix_fmt, int *h_shift, int *v_shift);
 const char *avcodec_get_pix_fmt_name(int pix_fmt);
 enum PixelFormat avcodec_get_pix_fmt(const char* name);
@@ -1628,11 +1853,16 @@ int avcodec_open(AVCodecContext *avctx, AVCodec *codec);
 int avcodec_decode_audio(AVCodecContext *avctx, int16_t *samples, 
                          int *frame_size_ptr,
                          uint8_t *buf, int buf_size);
+int avcodec_decode_video(AVCodecContext *avctx, AVFrame *picture, 
+                         int *got_picture_ptr,
+                         uint8_t *buf, int buf_size);
 int avcodec_parse_frame(AVCodecContext *avctx, uint8_t **pdata, 
                         int *data_size_ptr,
                         uint8_t *buf, int buf_size);
 int avcodec_encode_audio(AVCodecContext *avctx, uint8_t *buf, int buf_size, 
                          const short *samples);
+int avcodec_encode_video(AVCodecContext *avctx, uint8_t *buf, int buf_size, 
+                         const AVFrame *pict);
 
 int avcodec_close(AVCodecContext *avctx);
 
@@ -1793,7 +2023,12 @@ extern AVCodecParser h264_parser;
 extern AVCodecParser mpegaudio_parser;
 extern AVCodecParser ac3_parser;
 
-/*char *av_strdup(const char *s);*/
+/* memory */
+void *av_malloc(unsigned int size);
+void *av_mallocz(unsigned int size);
+void *av_realloc(void *ptr, unsigned int size);
+void av_free(void *ptr);
+char *av_strdup(const char *s);
 void __av_freep(void **ptr);
 #define av_freep(p) __av_freep((void **)(p))
 void *av_fast_realloc(void *ptr, unsigned int *size, unsigned int min_size);

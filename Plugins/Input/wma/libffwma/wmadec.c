@@ -175,8 +175,8 @@ static void init_coef_vlc(VLC *vlc,
 
     init_vlc(vlc, 9, n, table_bits, 1, 1, table_codes, 4, 4);
 
-    run_table = malloc(n * sizeof(uint16_t));
-    level_table = malloc(n * sizeof(uint16_t));
+    run_table = av_malloc(n * sizeof(uint16_t));
+    level_table = av_malloc(n * sizeof(uint16_t));
     p = levels_table;
     i = 2;
     level = 1;
@@ -449,7 +449,7 @@ static int wma_decode_init(AVCodecContext * avctx)
         int n, j;
         float alpha;
         n = 1 << (s->frame_len_bits - i);
-        window = malloc(sizeof(float) * n);
+        window = av_malloc(sizeof(float) * n);
         alpha = M_PI / (2.0 * n);
         for(j=0;j<n;j++) {
             window[n - j - 1] = sin((j + 0.5) * alpha);
@@ -849,7 +849,7 @@ static int wma_decode_block(WMADecodeContext *s)
             VLC *coef_vlc;
             int level, run, sign, tindex;
             int16_t *ptr, *eptr;
-            const int16_t *level_table, *run_table;
+            const uint16_t *level_table, *run_table;
 
             /* special VLC tables are used for ms stereo because
                there is potentially less energy there */
@@ -1155,7 +1155,7 @@ static int wma_decode_frame(WMADecodeContext *s, int16_t *samples)
         iptr = s->frame_out[ch];
 
         for(i=0;i<n;i++) {
-            a = rintf(*iptr++);
+            a = lrintf(*iptr++);
             if (a > 32767)
                 a = 32767;
             else if (a < -32768)
@@ -1272,52 +1272,49 @@ static int wma_decode_superframe(AVCodecContext *avctx,
 
 static int wma_decode_end(AVCodecContext *avctx)
 {
-	WMADecodeContext *s = avctx->priv_data;
-    	int i;
+    WMADecodeContext *s = avctx->priv_data;
+    int i;
 
-    	for (i = 0; i < s->nb_block_sizes; i++)
-        	ff_mdct_end(&s->mdct_ctx[i]);
-	
-    	for (i = 0; i < s->nb_block_sizes; i++)
-        	free(s->windows[i]);
+    for(i = 0; i < s->nb_block_sizes; i++)
+        ff_mdct_end(&s->mdct_ctx[i]);
+    for(i = 0; i < s->nb_block_sizes; i++)
+        av_free(s->windows[i]);
 
-    	if (s->use_exp_vlc) {
-        	free_vlc(&s->exp_vlc);
-    	}
+    if (s->use_exp_vlc) {
+        free_vlc(&s->exp_vlc);
+    }
+    if (s->use_noise_coding) {
+        free_vlc(&s->hgain_vlc);
+    }
+    for(i = 0;i < 2; i++) {
+        free_vlc(&s->coef_vlc[i]);
+        av_free(s->run_table[i]);
+        av_free(s->level_table[i]);
+    }
     
-	if (s->use_noise_coding) {
-        	free_vlc(&s->hgain_vlc);
-    	}
-    
-	for (i = 0; i < 2; i++) {
-        	free_vlc(&s->coef_vlc[i]);
-        	free(s->run_table[i]);
-        	free(s->level_table[i]);
-    	}
-    
-    	return 0;
+    return 0;
 }
 
 AVCodec wmav1_decoder =
 {
-	"wmav1",
-    	CODEC_TYPE_AUDIO,
-    	CODEC_ID_WMAV1,
-    	sizeof(WMADecodeContext),
-    	wma_decode_init,
-    	NULL,
-    	wma_decode_end,
-    	wma_decode_superframe,
+    "wmav1",
+    CODEC_TYPE_AUDIO,
+    CODEC_ID_WMAV1,
+    sizeof(WMADecodeContext),
+    wma_decode_init,
+    NULL,
+    wma_decode_end,
+    wma_decode_superframe,
 };
 
 AVCodec wmav2_decoder =
 {
-	"wmav2",
-    	CODEC_TYPE_AUDIO,
-    	CODEC_ID_WMAV2,
-    	sizeof(WMADecodeContext),
-    	wma_decode_init,
-    	NULL,
-    	wma_decode_end,
-    	wma_decode_superframe,
+    "wmav2",
+    CODEC_TYPE_AUDIO,
+    CODEC_ID_WMAV2,
+    sizeof(WMADecodeContext),
+    wma_decode_init,
+    NULL,
+    wma_decode_end,
+    wma_decode_superframe,
 };

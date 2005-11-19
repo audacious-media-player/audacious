@@ -17,20 +17,23 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *   $Id: iir.h,v 1.1.1.1 2004/12/19 12:48:13 bogorodskiy Exp $
+ *   $Id: iir.h,v 1.1 2003/05/21 13:59:59 liebremx Exp $
  */
 #ifndef IIR_H
 #define IIR_H
 
 #include <stdio.h>
+#if 0
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
 #include <glib.h>
+#endif
+#include <pthread.h>
 #include <string.h>
+#include <math.h>
 
-/* XMMS public headers */
 #include <audacious/plugin.h>
-#include <audacious/util.h>
+#include <libaudacious/util.h>
 
 #define EQ_MAX_BANDS 10
 /* Number of channels (Stereo) */

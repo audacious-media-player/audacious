@@ -17,7 +17,7 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *   $Id: iir.c,v 1.1.1.1 2004/12/19 12:48:13 bogorodskiy Exp $
+ *   $Id: iir.c,v 1.5 2003/09/10 21:53:08 liebremx Exp $
  */
 
 /* IIR filter coefficients */
@@ -154,11 +154,11 @@ __inline__ int iir(gpointer * d, gint length)
 			out[channel] += (data[index+channel]>>2);
 
 			/* Round and convert to integer */
-			/*#ifdef X86*/
+#ifdef __i386__
                         tempgint = round_trick(out[channel]);
-/*#else
+#else
 			tempgint = (int)lroundf(out[channel]);
-#endif*/
+#endif
 
 			/* Limit the output */
 			if (tempgint < -32768)

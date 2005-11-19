@@ -17,17 +17,30 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 #include "avformat.h"
-
+#ifdef CONFIG_WIN32
+#include <sys/types.h>
+#include <sys/timeb.h>
+#elif defined(CONFIG_OS2)
+#include <string.h>
+#include <sys/time.h>
+#else
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/time.h>
+#endif
 #include <time.h>
 
 int64_t av_gettime(void)
 {
+#ifdef CONFIG_WIN32
+    struct _timeb tb;
+    _ftime(&tb);
+    return ((int64_t)tb.time * int64_t_C(1000) + (int64_t)tb.millitm) * int64_t_C(1000);
+#else
     struct timeval tv;
     gettimeofday(&tv,NULL);
     return (int64_t)tv.tv_sec * 1000000 + tv.tv_usec;
+#endif
 }
 
 #if !defined(HAVE_LOCALTIME_R)

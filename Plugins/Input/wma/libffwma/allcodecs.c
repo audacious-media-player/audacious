@@ -1,7 +1,6 @@
 /*
  * Utils for libavcodec
  * Copyright (c) 2002 Fabrice Bellard.
- * Copyright (c) 2004 Roman Bogorodskiy (bmp-wma specific stuff)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,17 +17,33 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/**
+ * @file allcodecs.c
+ * Utils for libavcodec.
+ */
+
 #include "avcodec.h"
 
+/* If you do not call this function, then you can select exactly which
+   formats you want to support */
+
+/**
+ * simple call to register all the codecs. 
+ */
 void avcodec_register_all(void)
 {
-	static int inited = 0;
+    static int inited = 0;
     
-    	if (inited != 0)
-		return;
-    	inited = 1;
+    if (inited != 0)
+	return;
+    inited = 1;
 
-    	register_avcodec(&wmav1_decoder);
-    	register_avcodec(&wmav2_decoder);
+    /* decoders */
+#ifdef CONFIG_DECODERS
+#ifdef CONFIG_RISKY
+    register_avcodec(&wmav1_decoder);
+    register_avcodec(&wmav2_decoder);
+#endif
+#endif
 }
 
