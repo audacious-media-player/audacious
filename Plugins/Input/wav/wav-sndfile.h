@@ -35,7 +35,6 @@ static	void 	plugin_init (void);
 static	int	is_our_file (char *filename);
 static	void 	play_start (char *filename);
 static	void 	play_stop (void);
-static	void 	do_pause (short pause);
 static	void 	file_seek (int time);
 static	int	get_time (void);
 static	void 	get_song_info (char *filename, char **title, int *length);

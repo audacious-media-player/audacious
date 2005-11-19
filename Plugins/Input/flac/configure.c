@@ -418,7 +418,7 @@ void FLAC_XMMS__configure(void)
 
 	convert_char_set = gtk_check_button_new_with_label(_("Convert Character Set"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(convert_char_set), flac_cfg.title.convert_char_set);
-	gtk_signal_connect(GTK_OBJECT(convert_char_set), "clicked", convert_char_set_cb, NULL);
+	gtk_signal_connect(GTK_OBJECT(convert_char_set), "clicked", (GCallback)convert_char_set_cb, NULL);
 	gtk_box_pack_start(GTK_BOX(title_tag_vbox), convert_char_set, FALSE, FALSE, 0);
 	/*  Combo boxes... */
 	hbox = gtk_hbox_new(FALSE,4);
@@ -449,7 +449,7 @@ void FLAC_XMMS__configure(void)
 
 	title_tag_override = gtk_check_button_new_with_label(_("Override generic titles"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(title_tag_override), flac_cfg.title.tag_override);
-	gtk_signal_connect(GTK_OBJECT(title_tag_override), "clicked", title_tag_override_cb, NULL);
+	gtk_signal_connect(GTK_OBJECT(title_tag_override), "clicked", (GCallback)title_tag_override_cb, NULL);
 	gtk_box_pack_start(GTK_BOX(title_tag_vbox), title_tag_override, FALSE, FALSE, 0);
 
 	title_tag_box = gtk_hbox_new(FALSE, 5);
@@ -486,12 +486,12 @@ void FLAC_XMMS__configure(void)
 
 	replaygain_enable = gtk_check_button_new_with_label(_("Enable ReplayGain processing"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(replaygain_enable), flac_cfg.output.replaygain.enable);
-	gtk_signal_connect(GTK_OBJECT(replaygain_enable), "clicked", replaygain_enable_cb, NULL);
+	gtk_signal_connect(GTK_OBJECT(replaygain_enable), "clicked", (GCallback)replaygain_enable_cb, NULL);
 	gtk_box_pack_start(GTK_BOX(replaygain_vbox), replaygain_enable, FALSE, FALSE, 0);
 
 	replaygain_album_mode = gtk_check_button_new_with_label(_("Album mode"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(replaygain_album_mode), flac_cfg.output.replaygain.album_mode);
-	gtk_signal_connect(GTK_OBJECT(replaygain_album_mode), "clicked", replaygain_album_mode_cb, NULL);
+	gtk_signal_connect(GTK_OBJECT(replaygain_album_mode), "clicked", (GCallback)replaygain_album_mode_cb, NULL);
 	gtk_box_pack_start(GTK_BOX(replaygain_vbox), replaygain_album_mode, FALSE, FALSE, 0);
 
 	hbox = gtk_hbox_new(FALSE,3);
@@ -499,7 +499,7 @@ void FLAC_XMMS__configure(void)
 	label = gtk_label_new(_("Preamp:"));
 	gtk_box_pack_start(GTK_BOX(hbox),label,FALSE,FALSE,0);
 	replaygain_preamp = gtk_adjustment_new(flac_cfg.output.replaygain.preamp, -24.0, +24.0, 1.0, 6.0, 0.0);
-	gtk_signal_connect(GTK_OBJECT(replaygain_preamp), "value-changed", replaygain_preamp_cb, NULL);
+	gtk_signal_connect(GTK_OBJECT(replaygain_preamp), "value-changed", (GCallback)replaygain_preamp_cb, NULL);
 	replaygain_preamp_hscale = gtk_hscale_new(GTK_ADJUSTMENT(replaygain_preamp));
 	gtk_scale_set_draw_value(GTK_SCALE(replaygain_preamp_hscale), FALSE);
 	gtk_box_pack_start(GTK_BOX(hbox),replaygain_preamp_hscale,TRUE,TRUE,0);
@@ -509,7 +509,7 @@ void FLAC_XMMS__configure(void)
 
 	replaygain_hard_limit = gtk_check_button_new_with_label(_("6dB hard limiting"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(replaygain_hard_limit), flac_cfg.output.replaygain.hard_limit);
-	gtk_signal_connect(GTK_OBJECT(replaygain_hard_limit), "clicked", replaygain_hard_limit_cb, NULL);
+	gtk_signal_connect(GTK_OBJECT(replaygain_hard_limit), "clicked", (GCallback)replaygain_hard_limit_cb, NULL);
 	gtk_box_pack_start(GTK_BOX(replaygain_vbox), replaygain_hard_limit, FALSE, FALSE, 0);
 
 	replaygain_enable_cb(replaygain_enable, NULL);
@@ -534,7 +534,7 @@ void FLAC_XMMS__configure(void)
 
 	resolution_normal_dither_24_to_16 = gtk_check_button_new_with_label(_("Dither 24bps to 16bps"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(resolution_normal_dither_24_to_16), flac_cfg.output.resolution.normal.dither_24_to_16);
-	gtk_signal_connect(GTK_OBJECT(resolution_normal_dither_24_to_16), "clicked", resolution_normal_dither_24_to_16_cb, NULL);
+	gtk_signal_connect(GTK_OBJECT(resolution_normal_dither_24_to_16), "clicked", (GCallback)resolution_normal_dither_24_to_16_cb, NULL);
 	gtk_box_pack_start(GTK_BOX(resolution_normal_vbox), resolution_normal_dither_24_to_16, FALSE, FALSE, 0);
 
 	resolution_replaygain_frame = gtk_frame_new(_("With ReplayGain"));
@@ -547,7 +547,7 @@ void FLAC_XMMS__configure(void)
 
 	resolution_replaygain_dither = gtk_check_button_new_with_label(_("Enable dithering"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(resolution_replaygain_dither), flac_cfg.output.resolution.replaygain.dither);
-	gtk_signal_connect(GTK_OBJECT(resolution_replaygain_dither), "clicked", resolution_replaygain_dither_cb, NULL);
+	gtk_signal_connect(GTK_OBJECT(resolution_replaygain_dither), "clicked", (GCallback)resolution_replaygain_dither_cb, NULL);
 	gtk_box_pack_start(GTK_BOX(resolution_replaygain_vbox), resolution_replaygain_dither, FALSE, FALSE, 0);
 
 	hbox = gtk_hbox_new(FALSE, 10);
@@ -565,25 +565,25 @@ void FLAC_XMMS__configure(void)
 	resolution_replaygain_noise_shaping_radio_none = gtk_radio_button_new_with_label(NULL, _("none"));
 	if(flac_cfg.output.resolution.replaygain.noise_shaping == 0)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(resolution_replaygain_noise_shaping_radio_none), TRUE);
-	gtk_signal_connect(GTK_OBJECT(resolution_replaygain_noise_shaping_radio_none), "clicked", resolution_replaygain_noise_shaping_cb, NULL);
+	gtk_signal_connect(GTK_OBJECT(resolution_replaygain_noise_shaping_radio_none), "clicked", (GCallback)resolution_replaygain_noise_shaping_cb, NULL);
 	gtk_container_add(GTK_CONTAINER(resolution_replaygain_noise_shaping_vbox), resolution_replaygain_noise_shaping_radio_none);
 
 	resolution_replaygain_noise_shaping_radio_low = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(resolution_replaygain_noise_shaping_radio_none), _("low"));
 	if(flac_cfg.output.resolution.replaygain.noise_shaping == 1)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(resolution_replaygain_noise_shaping_radio_low), TRUE);
-	gtk_signal_connect(GTK_OBJECT(resolution_replaygain_noise_shaping_radio_low), "clicked", resolution_replaygain_noise_shaping_cb, NULL);
+	gtk_signal_connect(GTK_OBJECT(resolution_replaygain_noise_shaping_radio_low), "clicked", (GCallback)resolution_replaygain_noise_shaping_cb, NULL);
 	gtk_container_add(GTK_CONTAINER(resolution_replaygain_noise_shaping_vbox), resolution_replaygain_noise_shaping_radio_low);
 
 	resolution_replaygain_noise_shaping_radio_medium = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(resolution_replaygain_noise_shaping_radio_none), _("medium"));
 	if(flac_cfg.output.resolution.replaygain.noise_shaping == 2)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(resolution_replaygain_noise_shaping_radio_medium), TRUE);
-	gtk_signal_connect(GTK_OBJECT(resolution_replaygain_noise_shaping_radio_medium), "clicked", resolution_replaygain_noise_shaping_cb, NULL);
+	gtk_signal_connect(GTK_OBJECT(resolution_replaygain_noise_shaping_radio_medium), "clicked", (GCallback)resolution_replaygain_noise_shaping_cb, NULL);
 	gtk_container_add(GTK_CONTAINER(resolution_replaygain_noise_shaping_vbox), resolution_replaygain_noise_shaping_radio_medium);
 
 	resolution_replaygain_noise_shaping_radio_high = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(resolution_replaygain_noise_shaping_radio_none), _("high"));
 	if(flac_cfg.output.resolution.replaygain.noise_shaping == 3)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(resolution_replaygain_noise_shaping_radio_high), TRUE);
-	gtk_signal_connect(GTK_OBJECT(resolution_replaygain_noise_shaping_radio_high), "clicked", resolution_replaygain_noise_shaping_cb, NULL);
+	gtk_signal_connect(GTK_OBJECT(resolution_replaygain_noise_shaping_radio_high), "clicked", (GCallback)resolution_replaygain_noise_shaping_cb, NULL);
 	gtk_container_add(GTK_CONTAINER(resolution_replaygain_noise_shaping_vbox), resolution_replaygain_noise_shaping_radio_high);
 
 	resolution_replaygain_bps_out_frame = gtk_frame_new(_("Dither to"));
@@ -597,13 +597,13 @@ void FLAC_XMMS__configure(void)
 	resolution_replaygain_bps_out_radio_16bps = gtk_radio_button_new_with_label(NULL, _("16 bps"));
 	if(flac_cfg.output.resolution.replaygain.bps_out == 16)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(resolution_replaygain_bps_out_radio_16bps), TRUE);
-	gtk_signal_connect(GTK_OBJECT(resolution_replaygain_bps_out_radio_16bps), "clicked", resolution_replaygain_bps_out_cb, NULL);
+	gtk_signal_connect(GTK_OBJECT(resolution_replaygain_bps_out_radio_16bps), "clicked", (GCallback)resolution_replaygain_bps_out_cb, NULL);
 	gtk_container_add(GTK_CONTAINER(resolution_replaygain_bps_out_vbox), resolution_replaygain_bps_out_radio_16bps);
 
 	resolution_replaygain_bps_out_radio_24bps = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(resolution_replaygain_bps_out_radio_16bps), _("24 bps"));
 	if(flac_cfg.output.resolution.replaygain.bps_out == 24)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(resolution_replaygain_bps_out_radio_24bps), TRUE);
-	gtk_signal_connect(GTK_OBJECT(resolution_replaygain_bps_out_radio_24bps), "clicked", resolution_replaygain_bps_out_cb, NULL);
+	gtk_signal_connect(GTK_OBJECT(resolution_replaygain_bps_out_radio_24bps), "clicked", (GCallback)resolution_replaygain_bps_out_cb, NULL);
 	gtk_container_add(GTK_CONTAINER(resolution_replaygain_bps_out_vbox), resolution_replaygain_bps_out_radio_24bps);
 
 	resolution_replaygain_dither_cb(resolution_replaygain_dither, NULL);

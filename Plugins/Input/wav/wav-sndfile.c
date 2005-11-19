@@ -259,7 +259,7 @@ static void wav_about(void)
 	          "Boston, MA  02111-1307  USA"),
                 _("Ok"), FALSE, NULL, NULL);
         gtk_signal_connect(GTK_OBJECT(box), "destroy",
-                           gtk_widget_destroyed, &box);
+                           (GCallback)gtk_widget_destroyed, &box);
 }
 
 
