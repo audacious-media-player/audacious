@@ -31,7 +31,6 @@
 
 #include "alsa.h"
 #include <ctype.h>
-#include <pthread.h>
 #include <libaudacious/xconvert.h>
 
 static snd_pcm_t *alsa_pcm;
@@ -58,7 +57,7 @@ static gboolean prebuffer, remove_prebuffer;
 static gboolean alsa_can_pause;
 
 /* for audio thread */
-static pthread_t audio_thread;	 /* audio loop thread */
+static GThread *audio_thread;	 /* audio loop thread */
 static int thread_buffer_size;	 /* size of intermediate buffer in bytes */
 static char *thread_buffer;	 /* audio intermediate buffer */
 static int rd_index, wr_index;	 /* current read/write position in int-buffer */
@@ -261,7 +260,7 @@ void alsa_close(void)
 
 	going = 0;
 
-	pthread_join(audio_thread, NULL);
+	g_thread_join(audio_thread);
 
 	alsa_cleanup_mixer();
 
@@ -851,7 +850,7 @@ static void *alsa_loop(void *arg)
 	alsa_close_pcm();
 	g_free(thread_buffer);
 	thread_buffer = NULL;
-	pthread_exit(NULL);
+	g_thread_exit(NULL);
 }
 
 /* open callback */
@@ -897,7 +896,7 @@ int alsa_open(AFormat fmt, int rate, int nch)
 	pause_request = FALSE;
 	flush_request = -1;
 	
-	pthread_create(&audio_thread, NULL, alsa_loop, NULL);
+	audio_thread = g_thread_create((GThreadFunc)alsa_loop, NULL, TRUE, NULL);
 	return 1;
 }
 
