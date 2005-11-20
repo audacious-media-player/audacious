@@ -53,7 +53,7 @@ struct AudaciousConsoleConfig {
 #define PLAY_TYPE_SPC		1
 #define PLAY_TYPE_NSF		2
 #define PLAY_TYPE_VGM		3
-#define PLAY_TIME_GBS		4
+#define PLAY_TYPE_GBS		4
 #define PLAY_TYPE_GYM		5
 
 #endif
