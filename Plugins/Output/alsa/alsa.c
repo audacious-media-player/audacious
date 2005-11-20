@@ -17,32 +17,30 @@
  */
 
 #include "alsa.h"
-#include <glib/gi18n.h>
 
-OutputPlugin alsa_op = {
-    NULL,
-    NULL,
-    NULL,
-    alsa_init,
-    alsa_about,
-    alsa_configure,
-    alsa_get_volume,
-    alsa_set_volume,
-    alsa_open,
-    alsa_write,
-    alsa_close,
-    alsa_flush,
-    alsa_pause,
-    alsa_free,
-    alsa_playing,
-    alsa_get_output_time,
-    alsa_get_written_time,
+OutputPlugin alsa_op =
+{
+	NULL,
+	NULL,
+	NULL,
+	alsa_init,
+	alsa_about,
+	alsa_configure,
+	alsa_get_volume,
+	alsa_set_volume,
+	alsa_open,
+	alsa_write,
+	alsa_close,
+	alsa_flush,
+	alsa_pause,
+	alsa_free,
+	alsa_playing,
+	alsa_get_output_time,
+	alsa_get_written_time,
 };
 
-OutputPlugin *
-get_oplugin_info(void)
+OutputPlugin *get_oplugin_info(void)
 {
-    alsa_op.description =
-        g_strdup_printf(_("ALSA %s output plugin"), VERSION);
-    return &alsa_op;
+	alsa_op.description = g_strdup_printf(_("ALSA %s output plugin"), VERSION);
+	return &alsa_op;
 }

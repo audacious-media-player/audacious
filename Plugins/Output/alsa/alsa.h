@@ -24,7 +24,9 @@
 #include "config.h"
 
 #include <libaudacious/util.h>
+#include <libaudacious/configdb.h>
 #include <audacious/plugin.h>
+#include <glib/gi18n.h>
 
 #define ALSA_PCM_NEW_HW_PARAMS_API
 #define ALSA_PCM_NEW_SW_PARAMS_API
@@ -50,8 +52,6 @@ struct alsa_config
 	int period_time;
 	int thread_buffer_time;
 	gboolean debug;
-	gboolean multi_thread;
-	gboolean mmap;
 	struct
 	{
 		int left, right;
