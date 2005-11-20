@@ -17,7 +17,7 @@
  */
 
 #include "alsa.h"
-#include <xmms/util.h>
+#include <libaudacious/util.h>
 
 void alsa_about(void)
 {
