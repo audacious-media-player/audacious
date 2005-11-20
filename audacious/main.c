@@ -1054,7 +1054,6 @@ main(gint argc, gchar ** argv)
 	{
 	    /* headless eventloop */
 	    audcore_generic_events();
-	    ctrlsocket_check();
 	    free_vis_data();          /* to prevent buffer overflow -- paranoia */
             xmms_usleep(10000);
         }

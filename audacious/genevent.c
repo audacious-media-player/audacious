@@ -132,6 +132,8 @@ audcore_generic_events(void)
 {
     gint time = 0;
 
+    ctrlsocket_check();
+
     if (bmp_playback_get_playing()) {
         time = bmp_playback_get_time();
 
