@@ -26,7 +26,7 @@
 
 #define XMMS_PROTOCOL_VERSION	     1
 
-#define CTRLSOCKET_NAME              "xmms"
+#define CTRLSOCKET_NAME              "audacious"
 #define CTRLSOCKET_IO_TIMEOUT_USEC   100000
 
 enum {
