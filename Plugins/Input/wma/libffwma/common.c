@@ -2,6 +2,7 @@
  * Common bit i/o utils
  * Copyright (c) 2000, 2001 Fabrice Bellard.
  * Copyright (c) 2002-2004 Michael Niedermayer <michaelni@gmx.at>
+ * Copyright (c) 2004 Roman Bogorodskiy (bmp-wma specific stuff)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -49,73 +50,10 @@ void init_put_bits(PutBitContext *s, uint8_t *buffer, int buffer_size)
 {
     s->buf = buffer;
     s->buf_end = s->buf + buffer_size;
-#ifdef ALT_BITSTREAM_WRITER
-    s->index=0;
-    ((uint32_t*)(s->buf))[0]=0;
-//    memset(buffer, 0, buffer_size);
-#else
     s->buf_ptr = s->buf;
     s->bit_left=32;
     s->bit_buf=0;
-#endif
 }
-
-//#ifdef CONFIG_ENCODERS
-#if 1
-
-/* return the number of bits output */
-int get_bit_count(PutBitContext *s)
-{
-#ifdef ALT_BITSTREAM_WRITER
-    return s->index;
-#else
-    return (s->buf_ptr - s->buf) * 8 + 32 - s->bit_left;
-#endif
-}
-
-void align_put_bits(PutBitContext *s)
-{
-#ifdef ALT_BITSTREAM_WRITER
-    put_bits(s,(  - s->index) & 7,0);
-#else
-    put_bits(s,s->bit_left & 7,0);
-#endif
-}
-
-#endif //CONFIG_ENCODERS
-
-/* pad the end of the output stream with zeros */
-void flush_put_bits(PutBitContext *s)
-{
-#ifdef ALT_BITSTREAM_WRITER
-    align_put_bits(s);
-#else
-    s->bit_buf<<= s->bit_left;
-    while (s->bit_left < 32) {
-        /* XXX: should test end of buffer */
-        *s->buf_ptr++=s->bit_buf >> 24;
-        s->bit_buf<<=8;
-        s->bit_left+=8;
-    }
-    s->bit_left=32;
-    s->bit_buf=0;
-#endif
-}
-
-#ifdef CONFIG_ENCODERS
-
-void put_string(PutBitContext * pbc, char *s)
-{
-    while(*s){
-        put_bits(pbc, 8, *s);
-        s++;
-    }
-    put_bits(pbc, 8, 0);
-}
-
-/* bit input functions */
-
-#endif //CONFIG_ENCODERS
 
 /**
  * init GetBitContext.
@@ -231,7 +169,7 @@ static int alloc_table(VLC *vlc, int size)
     vlc->table_size += size;
     if (vlc->table_size > vlc->table_allocated) {
         vlc->table_allocated += (1 << vlc->bits);
-        vlc->table = av_realloc(vlc->table,
+        vlc->table = realloc(vlc->table,
                                 sizeof(VLC_TYPE) * 2 * vlc->table_allocated);
         if (!vlc->table)
             return -1;
@@ -251,10 +189,7 @@ static int build_table(VLC *vlc, int table_nb_bits,
 
     table_size = 1 << table_nb_bits;
     table_index = alloc_table(vlc, table_size);
-#ifdef DEBUG_VLC
-    printf("new table index=%d size=%d code_prefix=%x n=%d\n",
-           table_index, table_size, code_prefix, n_prefix);
-#endif
+    
     if (table_index < 0)
         return -1;
     table = &vlc->table[table_index];
@@ -271,9 +206,6 @@ static int build_table(VLC *vlc, int table_nb_bits,
         /* we accept tables with holes */
         if (n <= 0)
             continue;
-#if defined(DEBUG_VLC) && 0
-        printf("i=%d n=%d code=0x%x\n", i, n, code);
-#endif
         /* if code matches the prefix, it is in the table */
         n -= n_prefix;
         if (n > 0 && (code >> n) == code_prefix) {
@@ -282,10 +214,6 @@ static int build_table(VLC *vlc, int table_nb_bits,
                 j = (code << (table_nb_bits - n)) & (table_size - 1);
                 nb = 1 << (table_nb_bits - n);
                 for(k=0;k<nb;k++) {
-#ifdef DEBUG_VLC
-                    av_log(NULL, AV_LOG_DEBUG, "%4x: code=%d n=%d\n",
-                           j, i, n);
-#endif
                     if (table[j][1] /*bits*/ != 0) {
                         av_log(NULL, AV_LOG_ERROR, "incorrect codes\n");
                         av_abort();
@@ -297,10 +225,6 @@ static int build_table(VLC *vlc, int table_nb_bits,
             } else {
                 n -= table_nb_bits;
                 j = (code >> n) & ((1 << table_nb_bits) - 1);
-#ifdef DEBUG_VLC
-                printf("%4x: n=%d (subtable)\n",
-                       j, n);
-#endif
                 /* compute table size */
                 n1 = -table[j][1]; //bits
                 if (n > n1)
@@ -364,15 +288,12 @@ int init_vlc(VLC *vlc, int nb_bits, int nb_codes,
     vlc->table = NULL;
     vlc->table_allocated = 0;
     vlc->table_size = 0;
-#ifdef DEBUG_VLC
-    printf("build table nb_codes=%d\n", nb_codes);
-#endif
 
     if (build_table(vlc, nb_bits, nb_codes,
                     bits, bits_wrap, bits_size,
                     codes, codes_wrap, codes_size,
                     0, 0) < 0) {
-        av_free(vlc->table);
+        free(vlc->table);
         return -1;
     }
     return 0;
@@ -381,7 +302,7 @@ int init_vlc(VLC *vlc, int nb_bits, int nb_codes,
 
 void free_vlc(VLC *vlc)
 {
-    av_free(vlc->table);
+	free(vlc->table);
 }
 
 int64_t ff_gcd(int64_t a, int64_t b){

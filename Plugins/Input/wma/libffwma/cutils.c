@@ -17,7 +17,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 #include "avformat.h"
-#include "avcodec.h"
 
 #if !defined(CONFIG_NOCUTILS)
 /**
@@ -122,7 +121,7 @@ void __dynarray_add(unsigned long **tab_ptr, int *nb_ptr, unsigned long elem)
             nb_alloc = 1;
         else
             nb_alloc = nb * 2;
-        tab = av_realloc(tab, nb_alloc * sizeof(unsigned long));
+        tab = realloc(tab, nb_alloc * sizeof(unsigned long));
         *tab_ptr = tab;
     }
     tab[nb++] = elem;

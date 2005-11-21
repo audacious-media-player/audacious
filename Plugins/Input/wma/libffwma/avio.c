@@ -68,7 +68,7 @@ int url_open(URLContext **puc, const char *filename, int flags)
     err = -ENOENT;
     goto fail;
  found:
-    uc = av_malloc(sizeof(URLContext) + strlen(filename));
+    uc = malloc(sizeof(URLContext) + strlen(filename));
     if (!uc) {
         err = -ENOMEM;
         goto fail;
@@ -80,7 +80,7 @@ int url_open(URLContext **puc, const char *filename, int flags)
     uc->max_packet_size = 0; /* default: stream file */
     err = up->url_open(uc, filename, flags);
     if (err < 0) {
-        av_free(uc);
+        free(uc);
         *puc = NULL;
         return err;
     }
@@ -100,20 +100,6 @@ int url_read(URLContext *h, unsigned char *buf, int size)
     return ret;
 }
 
-#ifdef CONFIG_ENCODERS
-int url_write(URLContext *h, unsigned char *buf, int size)
-{
-    int ret;
-    if (!(h->flags & (URL_WRONLY | URL_RDWR)))
-        return -EIO;
-    /* avoid sending too big packets */
-    if (h->max_packet_size && size > h->max_packet_size)
-        return -EIO; 
-    ret = h->prot->url_write(h, buf, size);
-    return ret;
-}
-#endif //CONFIG_ENCODERS
-
 offset_t url_seek(URLContext *h, offset_t pos, int whence)
 {
     offset_t ret;
@@ -126,11 +112,12 @@ offset_t url_seek(URLContext *h, offset_t pos, int whence)
 
 int url_close(URLContext *h)
 {
-    int ret;
+	int ret;
 
-    ret = h->prot->url_close(h);
-    av_free(h);
-    return ret;
+    	ret = h->prot->url_close(h);
+    	free(h);
+    
+	return ret;
 }
 
 int url_exist(const char *filename)

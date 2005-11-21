@@ -6,7 +6,7 @@ libffwma_la_SOURCES=	allcodecs.c allformats.c \
 			bswap.h common.c common.h \
 			cutils.c dsputil.c dsputil.h \
 			fft.c file.c futils.c mdct.c \
-			mem.c os_support.c os_support.h \
+			os_support.c os_support.h \
 			parser.c simple_idct.c \
 			simple_idct.h utils.c wmadata.h \
 			wmadec.c

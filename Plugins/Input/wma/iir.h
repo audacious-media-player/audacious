@@ -31,6 +31,7 @@
 #include <pthread.h>
 #include <string.h>
 #include <math.h>
+#include <tgmath.h>
 
 #include <audacious/plugin.h>
 #include <libaudacious/util.h>

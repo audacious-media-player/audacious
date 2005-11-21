@@ -38,7 +38,8 @@
 #include "avformat.h"
 #include "iir.h"
 
-#define ABOUT_TXT "Copyright (C) 2004,2005 Mokrushin I.V. aka McMCC (mcmcc@mail.ru).\n \
+#define ABOUT_TXT "Adapted for use in audacious by Tony Vroon (chainsaw@gentoo.org) from\n \
+the BEEP-WMA plugin which is Copyright (C) 2004,2005 Mokrushin I.V. aka McMCC (mcmcc@mail.ru).\n \
 This plugin based on source code " LIBAVCODEC_IDENT "\nby Fabrice Bellard from \
 http://ffmpeg.sourceforge.net.\n\n \
 This program is free software; you can redistribute it and/or modify \n \
@@ -49,8 +50,8 @@ This program is distributed in the hope that it will be useful, \n \
 but WITHOUT ANY WARRANTY; without even the implied warranty of \n \
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. \n \
 See the GNU General Public License for more details.\n"
-#define NAME "BEEPMP-WMA"
-#define VERSION "v.1.0.5"
+#define PLUGIN_NAME "Audacious-WMA"
+#define PLUGIN_VERSION "v.1.0.5"
 #define ST_BUFF 1024
 
 static GtkWidget *dialog1, *button1, *label1;
@@ -147,8 +148,8 @@ static void wma_about(void)
     memset(title, 0, 80);
     memset(message, 0, 1000);
 
-    sprintf(title, "About %s", NAME);
-    sprintf(message, "%s %s\n\n%s", NAME, VERSION, ABOUT_TXT);
+    sprintf(title, "About %s", PLUGIN_NAME);
+    sprintf(message, "%s %s\n\n%s", PLUGIN_NAME, PLUGIN_VERSION, ABOUT_TXT);
 
     dialog1 = gtk_dialog_new();
     gtk_signal_connect(GTK_OBJECT(dialog1), "destroy",
@@ -382,6 +383,7 @@ static void *wma_play_loop(void *arg)
     if(ic) av_close_input_file(ic);
     g_static_mutex_unlock(&wma_mutex);
     g_thread_exit(NULL);
+    return(NULL);
 }
 
 static void wma_play_file(char *filename) 
@@ -389,7 +391,7 @@ static void wma_play_file(char *filename)
     AVCodec *codec;
     
     if(av_open_input_file(&ic, str_twenty_to_space(filename), NULL, 0, NULL) < 0) return;
-    
+
     for(wma_idx = 0; wma_idx < ic->nb_streams; wma_idx++) {
         c = &ic->streams[wma_idx]->codec;
         if(c->codec_type == CODEC_TYPE_AUDIO) break;
