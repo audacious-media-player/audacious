@@ -1937,7 +1937,6 @@ playlistwin_sub_menu_callback(gpointer data,
     case PLAYLISTWIN_REFRESH:
         playlist_read_info_selection();
         playlistwin_update_list();
-        textbox_set_xfont(mainwin_info, TRUE, cfg.mainwin_font);
         break;
     }
 }
