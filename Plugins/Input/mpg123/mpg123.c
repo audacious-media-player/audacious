@@ -1145,8 +1145,9 @@ aboutbox(void)
         return;
 
     aboutbox = xmms_show_message(_("About MPEG Audio Plugin"),
-                                 _("mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
-				   "Updated to 0.59s.mc3 by the Audacious team for greater accuracy and reliability.\n"
+				 _("Audacious decoding engine by William Pitcock <nenolod@nenolod.net>, derived from:\n"
+                                   "mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
+				   "Derived partially from mpg123 0.59s.mc3 as well.\n"
                                    "Based on the original XMMS plugin."),
                                   _("Ok"),
                                   FALSE, NULL, NULL);
