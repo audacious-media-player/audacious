@@ -130,7 +130,7 @@ static const gchar *translators[] = {
     N_("Alessio D'Ascanio"),
     NULL,
     N_("Japanese:"),
-    N_("Takeshi Aihana"),
+    N_("Dai"),
     NULL,
     N_("Korean:"),
     N_("DongCheon Park"),
