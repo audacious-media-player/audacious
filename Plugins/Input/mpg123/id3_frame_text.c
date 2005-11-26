@@ -44,6 +44,8 @@
 gint8
 id3_get_encoding(struct id3_frame * frame)
 {
+    guint8 encoding;
+
     /* Type check */
     if (!id3_frame_is_text(frame) &&
         frame->fr_desc->fd_id != ID3_WXXX &&
@@ -63,8 +65,6 @@ id3_get_encoding(struct id3_frame * frame)
         return -1;
 
     ID3_FRAME_DEFINE_CURSOR(frame);
-    
-    guint8 encoding;
     ID3_FRAME_READ_OR_RETVAL(encoding, -1);
 
     return encoding;
@@ -260,6 +260,8 @@ id3_get_text(struct id3_frame *frame)
 char *
 id3_get_text_desc(struct id3_frame *frame)
 {
+    guint8 encoding;
+
     /* Type check */
     if (frame->fr_desc->fd_idstr[0] != 'T')
         return NULL;
@@ -273,8 +275,6 @@ id3_get_text_desc(struct id3_frame *frame)
         return NULL;
 
     ID3_FRAME_DEFINE_CURSOR(frame);
-    
-    guint8 encoding;
     ID3_FRAME_READ_OR_RETVAL(encoding, NULL);
 
     return id3_string_decode(encoding, cursor, length);
@@ -291,6 +291,7 @@ id3_get_text_desc(struct id3_frame *frame)
 int
 id3_get_text_number(struct id3_frame *frame)
 {
+    guint8 encoding;
     int number = 0;
 
     /* Check if frame is compressed */
@@ -298,8 +299,6 @@ id3_get_text_number(struct id3_frame *frame)
 	    return -1;
 
     ID3_FRAME_DEFINE_CURSOR(frame);
-    
-    guint8 encoding;
     ID3_FRAME_READ_OR_RETVAL(encoding, number);
 
     gchar* number_str = id3_string_decode(encoding, cursor, length);

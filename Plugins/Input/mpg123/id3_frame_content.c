@@ -46,6 +46,7 @@ char *
 id3_get_content(struct id3_frame *frame)
 {
      gchar *text, *text_it;
+     guint8 encoding;
 
      /* Type check */
      if (frame->fr_desc->fd_id != ID3_TCON)
@@ -56,8 +57,6 @@ id3_get_content(struct id3_frame *frame)
          return NULL;
 
      ID3_FRAME_DEFINE_CURSOR(frame);
-
-     guint8 encoding;
      ID3_FRAME_READ_OR_RETVAL(encoding, NULL);
 
      text = text_it = id3_string_decode(encoding, cursor, length);

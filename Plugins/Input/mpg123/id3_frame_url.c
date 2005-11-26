@@ -79,6 +79,8 @@ id3_get_url(struct id3_frame *frame)
 char *
 id3_get_url_desc(struct id3_frame *frame)
 {
+    guint8 encoding;
+
     /* Type check */
     if ( frame->fr_desc->fd_idstr[0] != 'W' )
 	return NULL;
@@ -92,8 +94,6 @@ id3_get_url_desc(struct id3_frame *frame)
 	    return NULL;
 	    
     ID3_FRAME_DEFINE_CURSOR(frame);
-    
-    guint8 encoding;
     ID3_FRAME_READ_OR_RETVAL(encoding, NULL);
     
     return id3_string_decode(encoding, cursor, length);
