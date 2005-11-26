@@ -149,6 +149,21 @@ struct id3_framedesc {
 #define ID3_ENCODING_UTF8	0x03
 
 
+/*
+ * Handy macros which help us writing more secure length-aware code
+ * which involves reading the frame's data buffer.
+ */
+
+#define ID3_FRAME_DEFINE_CURSOR(frame) \
+	gsize length = frame->fr_size; \
+	guint8* cursor = frame->fr_data;
+	
+#define ID3_FRAME_READ_OR_RETVAL(variable, retval) \
+	if (length < sizeof(variable)) \
+		return retval; \
+	memcpy((void*)&variable, (void*)cursor, sizeof(variable)); \
+	cursor += sizeof(variable); \
+	length -= sizeof(variable);
 
 /*
  * ID3 frame id numbers.
@@ -318,6 +333,21 @@ struct id3_framedesc {
 #define ID3_WPB ID3_FRAME_ID_22('W', 'P', 'B')
 #define ID3_WXX ID3_FRAME_ID_22('W', 'X', 'X')
 
+/*
+ * Handy macros which help us writing more secure length-aware code
+ * which involves reading the frame's data buffer.
+ */
+
+#define ID3_FRAME_DEFINE_CURSOR(frame) \
+	gsize length = frame->fr_size; \
+	guint8* cursor = frame->fr_data;
+	
+#define ID3_FRAME_READ_OR_RETVAL(variable, retval) \
+	if (length < sizeof(variable)) \
+		return retval; \
+	memcpy((void*)&variable, (void*)cursor, sizeof(variable)); \
+	cursor += sizeof(variable); \
+	length -= sizeof(variable);
 
 /*
  * Prototypes.
@@ -332,6 +362,7 @@ int id3_close(struct id3_tag *);
 int id3_tell(struct id3_tag *);
 int id3_alter_file(struct id3_tag *);
 int id3_write_tag(struct id3_tag *, int);
+char *id3_utf16_to_ascii(void *);
 
 /* From id3_frame.c */
 int id3_read_frame(struct id3_tag *id3);
@@ -343,7 +374,8 @@ void id3_destroy_frames(struct id3_tag *id);
 void id3_frame_clear_data(struct id3_frame *frame);
 
 /* From id3_frame_text.c */
-char *id3_utf16_to_ascii(void *);
+gsize id3_string_size(guint8 encoding, const void* text, gsize max_size);
+gchar* id3_string_decode(guint8 encoding, const void* text, gsize max_size);
 gint8 id3_get_encoding(struct id3_frame *);
 int id3_set_encoding(struct id3_frame *, gint8);
 char *id3_get_text(struct id3_frame *);
