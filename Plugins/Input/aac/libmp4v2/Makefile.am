@@ -82,6 +82,8 @@ libmp4v2_la_SOURCES = \
 	rtphint.cpp \
 	rtphint.h 
 
+libmp4v2_la_LDFLAGS = -lstdc++
+
 EXTRA_DIST = API_CHANGES \
 	INTERNALS \
 	libmp4v260.dsp \

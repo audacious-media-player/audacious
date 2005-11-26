@@ -1181,14 +1181,17 @@ mainwin_keypress(GtkWidget * grab_widget,
 
     case GDK_Up:
     case GDK_KP_Up:
+    case GDK_KP_8:
         mainwin_set_volume_diff(2);
         break;
     case GDK_Down:
     case GDK_KP_Down:
+    case GDK_KP_2:
         mainwin_set_volume_diff(-2);
         break;
     case GDK_Left:
     case GDK_KP_Left:
+    case GDK_KP_7:
         if (playlist_get_current_length() != -1)
             bmp_playback_seek(CLAMP
                               (bmp_playback_get_time() - 5000, 0,
@@ -1196,10 +1199,23 @@ mainwin_keypress(GtkWidget * grab_widget,
         break;
     case GDK_Right:
     case GDK_KP_Right:
+    case GDK_KP_9:
         if (playlist_get_current_length() != -1)
             bmp_playback_seek(CLAMP
                               (bmp_playback_get_time() + 5000, 0,
                                playlist_get_current_length()) / 1000);
+        break;
+    case GDK_KP_4:
+        playlist_prev();
+        break;
+    case GDK_KP_6:
+        playlist_next();
+        break;
+    case GDK_KP_Insert:
+        mainwin_jump_to_file();
+        break;
+    case GDK_KP_5:
+        mainwin_play_pushed();
         break;
     case GDK_Escape:
         mainwin_minimize_cb();
