@@ -3360,6 +3360,8 @@ mainwin_idle_func(gpointer data)
     draw_playlist_window(FALSE);
     draw_equalizer_window(FALSE);
 
+    playlistwin_update_list();
+
     if (mainwin_title_text) {
         G_LOCK(mainwin_title);
         gtk_window_set_title(GTK_WINDOW(mainwin), mainwin_title_text);
