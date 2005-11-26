@@ -1362,6 +1362,23 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
         else
             playlistwin_show_filebrowser();
         break;
+    case GDK_Left:
+    case GDK_KP_Left:
+    case GDK_KP_7:
+        if (playlist_get_current_length() != -1)
+            bmp_playback_seek(CLAMP
+                              (bmp_playback_get_time() - 5000, 0,
+                              playlist_get_current_length()) / 1000);
+        break;
+    case GDK_Right:
+    case GDK_KP_Right:
+    case GDK_KP_9:
+        if (playlist_get_current_length() != -1)
+            bmp_playback_seek(CLAMP
+                              (bmp_playback_get_time() + 5000, 0,
+                              playlist_get_current_length()) / 1000);
+        break;
+
     case GDK_Escape:
         mainwin_minimize_cb();
         break;
