@@ -3356,11 +3356,10 @@ mainwin_idle_func(gpointer data)
     else
         count--;
 
-    mainwin_force_redraw = FALSE;
-    draw_playlist_window(FALSE);
+    draw_playlist_window(TRUE);
     draw_equalizer_window(FALSE);
 
-    playlistwin_update_list();
+    mainwin_force_redraw = FALSE;
 
     if (mainwin_title_text) {
         G_LOCK(mainwin_title);

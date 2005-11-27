@@ -113,7 +113,6 @@ static SButton *playlistwin_sscroll_up, *playlistwin_sscroll_down;
 static GList *playlistwin_wlist = NULL;
 static gboolean playlistwin_vis_enabled = FALSE;
 
-
 static void plsort_menu_callback(gpointer cb_data, guint action,
                                            GtkWidget * w);
 static void playlistwin_sub_menu_callback(gpointer cb_data, guint action,
