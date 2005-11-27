@@ -127,7 +127,10 @@ widget_draw_quick(Widget * widget)
 {
     widget_lock(widget);
     if (WIDGET(widget)->draw != NULL)
+    {
 	WIDGET(widget)->draw(widget);
+        gdk_flush();
+    }
     widget_unlock(widget);
 }
 

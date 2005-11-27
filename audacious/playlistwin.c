@@ -534,10 +534,6 @@ playlistwin_set_shade(gboolean shaded)
     playlistwin_set_mask();
 
     draw_playlist_window(TRUE);
-
-    /* force a playlist redraw */
-    widget_draw(WIDGET(playlistwin_list));
-    widget_draw(WIDGET(playlistwin_slider));
 }
 
 static void
