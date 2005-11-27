@@ -427,8 +427,8 @@ playlistwin_update_list(void)
 {
     g_return_if_fail(playlistwin_list != NULL);
 
-    widget_draw_quick(WIDGET(playlistwin_list));
-    widget_draw_quick(WIDGET(playlistwin_slider));
+    widget_draw(WIDGET(playlistwin_list));
+    widget_draw(WIDGET(playlistwin_slider));
     playlistwin_update_info();
     playlistwin_update_sinfo();
     /*     mainwin_update_jtf(); */
