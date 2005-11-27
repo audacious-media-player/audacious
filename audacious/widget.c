@@ -123,6 +123,15 @@ widget_draw(Widget * widget)
 }
 
 void
+widget_draw_quick(Widget * widget)
+{
+    widget_lock(widget);
+    if (WIDGET(widget)->draw != NULL)
+	WIDGET(widget)->draw(widget);
+    widget_unlock(widget);
+}
+
+void
 widget_list_add(GList ** list, Widget * widget)
 {
     (*list) = g_list_append(*list, widget);

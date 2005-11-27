@@ -79,6 +79,7 @@ gboolean widget_is_visible(Widget * widget);
 void widget_resize(Widget * widget, gint width, gint height);
 void widget_move(Widget * widget, gint x, gint y);
 void widget_draw(Widget * widget);
+void widget_draw_quick(Widget * widget);
 
 void handle_press_cb(GList * wlist, GtkWidget * widget,
                      GdkEventButton * event);

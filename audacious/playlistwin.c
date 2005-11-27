@@ -427,8 +427,8 @@ playlistwin_update_list(void)
 {
     g_return_if_fail(playlistwin_list != NULL);
 
-    widget_draw(WIDGET(playlistwin_list));
-    widget_draw(WIDGET(playlistwin_slider));
+    widget_draw_quick(WIDGET(playlistwin_list));
+    widget_draw_quick(WIDGET(playlistwin_slider));
     playlistwin_update_info();
     playlistwin_update_sinfo();
     /*     mainwin_update_jtf(); */
@@ -532,7 +532,12 @@ playlistwin_set_shade(gboolean shaded)
                       playlistwin_get_height());
 
     playlistwin_set_mask();
+
     draw_playlist_window(TRUE);
+
+    /* force a playlist redraw */
+    widget_draw(WIDGET(playlistwin_list));
+    widget_draw(WIDGET(playlistwin_slider));
 }
 
 static void
