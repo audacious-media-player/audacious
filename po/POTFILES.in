@@ -1,59 +1,81 @@
+# Song Change general plugin
+Plugins/General/song_change/song_change.c
 
-# CD audio input plugin
-Input/cdaudio/cdaudio.c
-Input/cdaudio/cddb.c
-Input/cdaudio/cdinfo.c
-Input/cdaudio/configure.c
-Input/cdaudio/http.c
+# CD Audio input plugin
+Plugins/Input/cdaudio/cdaudio.c
+Plugins/Input/cdaudio/cdinfo.c
+Plugins/Input/cdaudio/configure.c
 
-# mp3 input plugin
-Input/mpg123/common.c
-Input/mpg123/configure.c
-Input/mpg123/fileinfo.c
-Input/mpg123/http.c
-Input/mpg123/mpg123.c
+# Console Music Decoder input plugin
+Plugins/Input/console/Audacious_Driver.cpp
 
-# vorbis input plugin
-Input/vorbis/configure.c
-Input/vorbis/fileinfo.c
-Input/vorbis/http.c
-Input/vorbis/vorbis.c
+# FLAC input plugin
+Plugins/Input/flac/charset.c
+Plugins/Input/flac/configure.c
+Plugins/Input/flac/fileinfo.c
+Plugins/Input/flac/http.c
 
-# wav input plugin
-Input/wav/wav.c
+# MikMod input plugin
+Plugins/Input/mikmod/plugin.c
 
-# OSS output plugin
-Output/OSS/OSS.c
-Output/OSS/about.c
-Output/OSS/audio.c
-Output/OSS/configure.c
-Output/OSS/init.c
-Output/OSS/mixer.c
+# MP3 input plugin
+Plugins/Input/mpg123/configure.c
+Plugins/Input/mpg123/fileinfo.c
+Plugins/Input/mpg123/http.c
+Plugins/Input/mpg123/id3_frame_content.c
+Plugins/Input/mpg123/mpg123.c
 
-# ESD output plugin
-Output/esd/about.c
-Output/esd/audio.c
-Output/esd/configure.c
-Output/esd/esd.c
-Output/esd/init.c
-Output/esd/mixer.c
+# Tone Generator input plugin
+Plugins/Input/tonegen/tonegen.c
+
+# Ogg Vorbis input plugin
+Plugins/Input/vorbis/configure.c
+Plugins/Input/vorbis/fileinfo.c
+Plugins/Input/vorbis/http.c
+Plugins/Input/vorbis/vorbis.c
+
+# WAV input plugin
+Plugins/Input/wav/wav.c
+Plugins/Input/wav/wav-sndfile.c
+
+# WMA input plugin
+Plugins/Input/wma/libffwma/bswap.h
 
 # ALSA output plugin
-Output/alsa/about.c
-Output/alsa/alsa.c
-Output/alsa/configure.c
+Plugins/Output/alsa/about.c
+Plugins/Output/alsa/alsa.c
+Plugins/Output/alsa/configure.c
 
-# Blurscope visualization plugin
-Visualization/blur_scope/blur_scope.c
-Visualization/blur_scope/config.c
+# Disk Writer output plugin
+Plugins/Output/disk_writer/disk_writer.c
 
-# libbeep
+# ESD output plugin
+Plugins/Output/esd/about.c
+Plugins/Output/esd/configure.c
+Plugins/Output/esd/esd.c
+
+# OSS output plugin
+Plugins/Output/OSS/about.c
+Plugins/Output/OSS/configure.c
+Plugins/Output/OSS/OSS.c
+
+# Blur Scope visualization plugin
+Plugins/Visualization/blur_scope/blur_scope.c
+Plugins/Visualization/blur_scope/config.c
+
+# Libvisual visualization plugin
+Plugins/Visualization/libvisual-proxy/about.c
+Plugins/Visualization/libvisual-proxy/config_gui.c
+Plugins/Visualization/libvisual-proxy/lv_bmp_config.c
+Plugins/Visualization/libvisual-proxy/main.c
+
+# libaudacious
 libaudacious/dirbrowser.c
 libaudacious/titlestring.c
 libaudacious/util.c
 libaudacious/beepctrl.c
 
-# Beep
+# Audacious
 audacious/about.c
 audacious/controlsocket.c
 audacious/dock.c
@@ -66,6 +88,7 @@ audacious/fullscreen.c
 audacious/general.c
 audacious/getopt.c
 audacious/getopt1.c
+audacious/glade.c
 audacious/hints.c
 audacious/hslider.c
 audacious/input.c
@@ -77,6 +100,7 @@ audacious/monostereo.c
 audacious/number.c
 audacious/output.c
 audacious/pbutton.c
+audacious/playback.c
 audacious/playlist.c
 audacious/playlist_list.c
 audacious/playlist_popup.c
