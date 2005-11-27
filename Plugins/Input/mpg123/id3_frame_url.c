@@ -30,7 +30,7 @@
 #include "xmms-id3.h"
 #include "id3_header.h"
 
-#include <string.h>
+
 
 /*
  * Function id3_get_url (frame)
@@ -42,33 +42,44 @@ char *
 id3_get_url(struct id3_frame *frame)
 {
     /* Type check */
-    if ( frame->fr_desc->fd_idstr[0] != 'W' )
-	return NULL;
+    if (frame->fr_desc->fd_idstr[0] != 'W')
+        return NULL;
 
     /* Check if frame is compressed */
     if (id3_decompress_frame(frame) == -1)
-	    return NULL;
-    
-    ID3_FRAME_DEFINE_CURSOR(frame);
-    
-    if ( frame->fr_desc->fd_id == ID3_WXXX ) {
-	/*
-	 * This is a user defined link frame.  Skip the description.
-	 */
-	guint8 encoding;
-	gsize description_size;
-	
-	ID3_FRAME_READ_OR_RETVAL(encoding, NULL);
-	
-	description_size = id3_string_size(encoding, cursor, length);
-	if (description_size == 0)
-	   return NULL;
-	cursor += description_size;
-	length -= description_size;
+        return NULL;
+
+    if (frame->fr_desc->fd_id == ID3_WXXX) {
+        /*
+         * This is a user defined link frame.  Skip the description.
+         */
+        switch (*(guint8 *) frame->fr_data) {
+        case ID3_ENCODING_ISO_8859_1:
+            {
+                char *text = (char *) frame->fr_data + 1;
+
+                while (*text != 0)
+                    text++;
+
+                return g_strdup(++text);
+            }
+        case ID3_ENCODING_UTF16:
+            {
+                gint16 *text16 = (gint16 *) ((glong) frame->fr_data + 1);
+
+                while (*text16 != 0)
+                    text16++;
+
+                return g_strdup((char *) (++text16));
+            }
+        default:
+            return NULL;
+        }
     }
-    
-    return id3_string_decode(ID3_ENCODING_ISO_8859_1, cursor, length);
+
+    return g_strdup((char *) frame->fr_data);
 }
+
 
 /*
  * Function id3_get_url_desc (frame)
@@ -79,22 +90,20 @@ id3_get_url(struct id3_frame *frame)
 char *
 id3_get_url_desc(struct id3_frame *frame)
 {
-    guint8 encoding;
-
     /* Type check */
-    if ( frame->fr_desc->fd_idstr[0] != 'W' )
-	return NULL;
+    if (frame->fr_desc->fd_idstr[0] != 'W')
+        return NULL;
 
     /* If predefined link frame, return description. */
-    if ( frame->fr_desc->fd_id != ID3_WXXX )
-	return frame->fr_desc->fd_description;
+    if (frame->fr_desc->fd_id != ID3_WXXX)
+        return frame->fr_desc->fd_description;
 
     /* Check if frame is compressed */
     if (id3_decompress_frame(frame) == -1)
-	    return NULL;
-	    
-    ID3_FRAME_DEFINE_CURSOR(frame);
-    ID3_FRAME_READ_OR_RETVAL(encoding, NULL);
-    
-    return id3_string_decode(encoding, cursor, length);
+        return NULL;
+
+    if (*(guint8 *) frame->fr_data == ID3_ENCODING_ISO_8859_1)
+        return g_strdup((char *) frame->fr_data + 1);
+    else
+        return id3_utf16_to_ascii((gint16 *) ((glong) frame->fr_data + 1));
 }

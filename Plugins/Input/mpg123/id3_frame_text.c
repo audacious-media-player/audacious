@@ -34,6 +34,22 @@
 #include "xmms-id3.h"
 #include "id3_header.h"
 
+
+char *
+id3_utf16_to_ascii(void *utf16)
+{
+    char ascii[256];
+    char *uc = (char *) utf16 + 2;
+    int i;
+
+    for (i = 0; *uc != 0 && i < sizeof(ascii); i++, uc += 2)
+        ascii[i] = *uc;
+
+    ascii[i] = 0;
+    return g_strdup(ascii);
+}
+
+
 /*
  * Function id3_get_encoding (frame)
  *
@@ -44,8 +60,6 @@
 gint8
 id3_get_encoding(struct id3_frame * frame)
 {
-    guint8 encoding;
-
     /* Type check */
     if (!id3_frame_is_text(frame) &&
         frame->fr_desc->fd_id != ID3_WXXX &&
@@ -64,10 +78,7 @@ id3_get_encoding(struct id3_frame * frame)
     if (id3_decompress_frame(frame) == -1)
         return -1;
 
-    ID3_FRAME_DEFINE_CURSOR(frame);
-    ID3_FRAME_READ_OR_RETVAL(encoding, -1);
-
-    return encoding;
+    return *(gint8 *) frame->fr_data;
 }
 
 
@@ -108,96 +119,6 @@ id3_set_encoding(struct id3_frame *frame, gint8 encoding)
     return 0;
 }
 
-/* Get size of string in bytes including null. */
-gsize id3_string_size(guint8 encoding, const void* text, gsize max_size)
-{
-    switch ( encoding ) {
-    case ID3_ENCODING_ISO_8859_1:
-    case ID3_ENCODING_UTF8:
-    {
-        const guint8* text8 = text;
-        while ( (max_size >= sizeof(*text8)) && (*text8 != 0) )
-        {
-    	   ++text8;
-    	   max_size -= sizeof(*text8);
-    	}
-        
-        if (max_size >= sizeof(*text8))
-        {
-           ++text8;
-           max_size -= sizeof(*text8);
-        }
-        
-        return text8 - (guint8*)text;
-    }
-    case ID3_ENCODING_UTF16:
-    case ID3_ENCODING_UTF16BE:
-    {
-        const guint16* text16 = (guint16*)text;
-        while ( (max_size > 0) && (*text16 != 0) )
-        {
-    	   ++text16;
-    	   max_size -= sizeof(*text16);
-    	}
-    	
-    	if (max_size > 0)
-    	{
-           ++text16;
-           max_size -= sizeof(*text16);
-        }
-
-        return (guint8*)text16 - (guint8*)text;
-    }
-    default:
-        return 0;
-    }
-}
-
-/* 
-Returns a newly-allocated UTF-8 string in the locale's encoding.
-max_size specifies the maximum size of 'text', including terminating nulls.
-*/
-gchar* id3_string_decode(guint8 encoding, const void* text, gsize max_size)
-{
-    /* Otherwise, we'll end up passing -1 to functions, eliminating safety benefits. */
-    if (max_size <= 0)
-       return NULL;
-
-    switch( encoding )
-    {
-        case ID3_ENCODING_ISO_8859_1:
-        {
-            return g_locale_to_utf8((const gchar*)text, max_size, NULL, NULL, NULL);
-        }
-        case ID3_ENCODING_UTF8:
-        {
-            if (g_utf8_validate((const gchar*)text, max_size, NULL))
-               return g_strndup((const gchar*)text, max_size);
-            else
-               return NULL;
-        }
-        case ID3_ENCODING_UTF16:
-        {
-            gsize size_bytes = id3_string_size(encoding, text, max_size);
-            gchar* utf8 = g_convert((const gchar*)text, size_bytes, "UTF-8", "UTF-16", NULL, NULL, NULL);
-            /* If conversion passes on the BOM as-is, we strip it. */
-            if (g_utf8_get_char(utf8) == 0xfeff)
-            {
-               gchar* new_utf8 = g_strdup(utf8+3);
-               g_free(utf8);
-               utf8 = new_utf8;
-            }
-            return utf8;
-        }
-        case ID3_ENCODING_UTF16BE:
-        {
-            gsize size_bytes = id3_string_size(encoding, text, max_size);
-            return g_convert((const gchar*)text, size_bytes, "UTF-8", "UTF-16BE", NULL, NULL, NULL);
-        }
-        default:
-            return NULL;
-    }
-}
 
 /*
  * Function id3_get_text (frame)
@@ -260,8 +181,6 @@ id3_get_text(struct id3_frame *frame)
 char *
 id3_get_text_desc(struct id3_frame *frame)
 {
-    guint8 encoding;
-
     /* Type check */
     if (frame->fr_desc->fd_idstr[0] != 'T')
         return NULL;
@@ -274,10 +193,10 @@ id3_get_text_desc(struct id3_frame *frame)
     if (id3_decompress_frame(frame) == -1)
         return NULL;
 
-    ID3_FRAME_DEFINE_CURSOR(frame);
-    ID3_FRAME_READ_OR_RETVAL(encoding, NULL);
-
-    return id3_string_decode(encoding, cursor, length);
+    if (*(guint8 *) frame->fr_data == ID3_ENCODING_ISO_8859_1)
+        return g_strdup((char *) frame->fr_data + 1);
+    else
+        return id3_utf16_to_ascii((char *) frame->fr_data + 1);
 }
 
 
@@ -291,25 +210,49 @@ id3_get_text_desc(struct id3_frame *frame)
 int
 id3_get_text_number(struct id3_frame *frame)
 {
-    guint8 encoding;
     int number = 0;
 
     /* Check if frame is compressed */
     if (id3_decompress_frame(frame) == -1)
-	    return -1;
+        return -1;
 
-    ID3_FRAME_DEFINE_CURSOR(frame);
-    ID3_FRAME_READ_OR_RETVAL(encoding, number);
+    /*
+     * Generate integer according to encoding.
+     */
+    switch (*(guint8 *) frame->fr_data) {
+    case ID3_ENCODING_ISO_8859_1:
+        {
+            char *text = ((char *) frame->fr_data) + 1;
 
-    gchar* number_str = id3_string_decode(encoding, cursor, length);
-    if (number_str != NULL)
-    {
-       sscanf(number_str, "%d", &number);
-       g_free(number_str);
+            while (*text >= '0' && *text <= '9') {
+                number *= 10;
+                number += *text - '0';
+                text++;
+            }
+
+            return number;
+        }
+    case ID3_ENCODING_UTF16:
+        {
+            char *text = ((char *) frame->fr_data) + 3;
+
+/*  	if (*(gint16 *) frame->fr_data == 0xfeff) */
+/*  	    text++; */
+
+            while (*text >= '0' && *text <= '9') {
+                number *= 10;
+                number += *text - '0';
+                text++;
+            }
+
+            return number;
+        }
+
+    default:
+        return -1;
     }
-    
-    return number;
 }
+
 
 /*
  * Function id3_set_text (frame, text)
@@ -399,7 +342,9 @@ id3_set_text_number(struct id3_frame *frame, int number)
      */
     *(gint8 *) frame->fr_raw_data = ID3_ENCODING_ISO_8859_1;
     text = (char *) frame->fr_raw_data + 1;
-    strcpy(text, buf);
+    while (--pos >= 0)
+        *text++ = buf[pos];
+    *text = '\0';
 
     frame->fr_altered = 1;
     frame->fr_owner->id3_altered = 1;

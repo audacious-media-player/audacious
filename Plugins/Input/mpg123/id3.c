@@ -39,19 +39,6 @@
 #include "xmms-id3.h"
 #include "id3_header.h"
 
-char *
-id3_utf16_to_ascii(void *utf16)
-{
-    char ascii[256];
-    char *uc = (char *) utf16 + 2;
-    int i;
-
-    for (i = 0; *uc != 0 && i < sizeof(ascii); i++, uc += 2)
-        ascii[i] = *uc;
-
-    ascii[i] = 0;
-    return g_strdup(ascii);
-}
 
 /*
 **

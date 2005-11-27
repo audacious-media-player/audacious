@@ -28,7 +28,6 @@
 
 #include <glib.h>
 #include <glib/gi18n.h>
-#include <string.h>
 
 #include "xmms-id3.h"
 
@@ -45,94 +44,95 @@
 char *
 id3_get_content(struct id3_frame *frame)
 {
-     gchar *text, *text_it;
-     guint8 encoding;
+    char *text, *text_beg, *ptr;
+    char buffer[256];
+    int spc = sizeof(buffer) - 1;
 
-     /* Type check */
-     if (frame->fr_desc->fd_id != ID3_TCON)
-         return NULL;
-
-     /* Check if frame is compressed */
-     if (id3_decompress_frame(frame) == -1)
-         return NULL;
-
-     ID3_FRAME_DEFINE_CURSOR(frame);
-     ID3_FRAME_READ_OR_RETVAL(encoding, NULL);
-
-     text = text_it = id3_string_decode(encoding, cursor, length);
-
-     if (text == NULL)
+    /* Type check */
+    if (frame->fr_desc->fd_id != ID3_TCON)
         return NULL;
 
-     /*
-      * Expand ID3v1 genre numbers.
-      */
-     while ((text_it = strstr(text_it, "(")) != NULL)
-     {
-         gchar* replace = NULL;
-         gchar* ref_start = text_it + 1;
+    /* Check if frame is compressed */
+    if (id3_decompress_frame(frame) == -1)
+        return NULL;
 
-         if (*ref_start == ')')
-         {
-            /* False alarm */
-            ++text_it;
-            continue;
-         }
+    if (*(guint8 *) frame->fr_data == ID3_ENCODING_ISO_8859_1)
+        text_beg = text = g_strdup((char *) frame->fr_data + 1);
+    else
+        text_beg = text = id3_utf16_to_ascii((char *) frame->fr_data + 1);
 
-         gsize ref_size = strstr(ref_start, ")") - ref_start;
+    /*
+     * If content is just plain text, return it.
+     */
+    if (text[0] != '(') {
+        return text;
+    }
 
-         if (strncmp(ref_start, "RX", ref_size) == 0)
-         {
-            replace = _("Remix");
-         }
-         else if (strncmp(ref_start, "CR", ref_size) == 0)
-         {
-            replace = _("Cover");
-         }
-         else
-         {
-             /* Maybe an ID3v1 genre? */
-             int genre_number;
-             gchar* genre_number_str = g_strndup(ref_start, ref_size);
-             if (sscanf(genre_number_str, "%d", &genre_number) > 0)
-             {
-                 /* Boundary check */
-                 if (genre_number >= sizeof(mpg123_id3_genres) / sizeof(char *))
-                     continue;
+    /*
+     * Expand ID3v1 genre numbers.
+     */
+    ptr = buffer;
+    while (text[0] == '(' && text[1] != '(' && spc > 0) {
+        const char *genre;
+        int num = 0;
 
-                 replace = gettext(mpg123_id3_genres[genre_number]);
-             }
-         }
+        if (text[1] == 'R' && text[2] == 'X') {
+            text += 4;
+            genre = _(" (Remix)");
+            if (ptr == buffer)
+                genre++;
 
-         if (replace != NULL)
-         {
-             /* Amazingly hairy code to replace a part of the original genre string
-                with 'replace'. */
-             gchar* copy = g_malloc(strlen(text) - ref_size + strlen(replace) + 1);
-             gsize pos = 0;
-             gsize copy_size;
+        }
+        else if (text[1] == 'C' && text[2] == 'R') {
+            text += 4;
+            genre = _(" (Cover)");
+            if (ptr == buffer)
+                genre++;
 
-             /* Copy the part before the replaced part */
-             copy_size = ref_start - text;
-             memcpy(copy + pos, text, copy_size);
-             pos += copy_size;
-             /* Copy the replacement instead of the original reference */
-             copy_size = strlen(replace);
-             memcpy(copy + pos, replace, copy_size);
-             pos += copy_size;
-             /* Copy the rest, including the null */
-             memcpy(copy + pos, ref_start + ref_size, strlen(ref_start + ref_size)+1);
+        }
+        else {
+            /* Get ID3v1 genre number */
+            text++;
+            while (*text != ')') {
+                num *= 10;
+                num += *text++ - '0';
+            }
+            text++;
 
-             /* Put into original variables */
-             gsize offset = text_it - text;
-             g_free(text);
-             text = copy;
-             text_it = text + offset;
-         }
+            /* Boundary check */
+            if (num >= sizeof(mpg123_id3_genres) / sizeof(char *))
+                continue;
 
-         ++text_it;
-     } 
+            genre = gettext(mpg123_id3_genres[num]);
 
-     return text;
+            if (ptr != buffer && spc-- > 0)
+                *ptr++ = '/';
+        }
 
+        /* Expand string into buffer */
+        while (*genre != '\0' && spc > 0) {
+            *ptr++ = *genre++;
+            spc--;
+        }
+    }
+
+    /*
+     * Add plaintext refinement.
+     */
+    if (*text == '(')
+        text++;
+    if (*text != '\0' && ptr != buffer && spc-- > 0)
+        *ptr++ = ' ';
+    while (*text != '\0' && spc > 0) {
+        *ptr++ = *text++;
+        spc--;
+    }
+    *ptr = '\0';
+
+    g_free(text_beg);
+
+    /*
+     * Return the expanded content string.
+     */
+    return g_strdup(buffer);
 }
