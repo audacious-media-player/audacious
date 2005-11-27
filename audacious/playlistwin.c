@@ -533,6 +533,9 @@ playlistwin_set_shade(gboolean shaded)
 
     playlistwin_set_mask();
 
+    widget_draw(WIDGET(playlistwin_list));
+    widget_draw(WIDGET(playlistwin_slider));
+
     draw_playlist_window(TRUE);
 }
 

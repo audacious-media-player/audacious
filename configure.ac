@@ -501,9 +501,7 @@ AC_CHECK_HEADERS(limits.h)
 AC_CHECK_HEADERS(wchar.h)
 AC_CHECK_HEADERS(fts.h)
 
-AC_CHECK_FUNCS(mkdtemp)
-AC_CHECK_FUNCS(getmntinfo)
-AC_CHECK_FUNCS(strtoul)
+AC_CHECK_FUNCS([mkdtemp getmntinfo strtoul lrintf])
 
 
 if test "${ac_cv_header_linux_cdrom_h}" = "yes" || test "${ac_cv_header_sys_cdio_h}" = "yes"
