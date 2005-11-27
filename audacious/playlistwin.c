@@ -501,9 +501,6 @@ playlistwin_set_geometry_hints(gboolean shaded)
 void
 playlistwin_set_shade(gboolean shaded)
 {
-    if (cfg.playlist_shaded == shaded)
-        return;
-
     cfg.playlist_shaded = shaded;
 
     if (shaded) {
@@ -534,8 +531,6 @@ playlistwin_set_shade(gboolean shaded)
                       cfg.playlist_width,
                       playlistwin_get_height());
 
-    /* This is a fix for #129 */
-    /* No idea, But it works! */
     playlistwin_set_mask();
     draw_playlist_window(TRUE);
 }
