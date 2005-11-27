@@ -537,7 +537,6 @@ playlistwin_set_shade(gboolean shaded)
     /* This is a fix for #129 */
     /* No idea, But it works! */
     playlistwin_set_mask();
-
     draw_playlist_window(TRUE);
 }
 
