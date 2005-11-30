@@ -23,7 +23,7 @@
 #ifndef __XMMS_WMA_C__
 #define __XMMS_WMA_C__
 
-#include <malloc.h>
+#include <stdlib.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
