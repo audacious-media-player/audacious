@@ -19,6 +19,8 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#define WEIRD_UTF_16_PLAYLIST_ENCODING
+
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
@@ -394,12 +396,39 @@ read_ini_string(const gchar * filename, const gchar * section,
     gchar *buffer, *ret_buffer = NULL;
     gint found_section = 0, off = 0, len = 0;
     gsize filesize;
+    gchar *outbuf;
+    unsigned char x[] = { 0xff, 0xfe, 0x00 };
+    int counter;
 
     if (!filename)
         return NULL;
 
     if (!g_file_get_contents(filename, &buffer, &filesize, NULL))
         return NULL;
+
+    /*
+     * Convert UTF-16 into something useful. Original implementation
+     * by incomp@#audacious. Cleanups \nenolod
+     */
+    if (!memcmp(&buffer[0],&x,2)) {
+        outbuf = g_malloc (filesize);	/* it's safe to waste memory. */
+
+        for (counter = 2; counter < filesize; counter += 2)
+            if (!memcmp(&buffer[counter+1], &x[2], 1))
+                outbuf[(counter-2)/2] = buffer[counter];
+            else
+		return NULL;
+
+        outbuf[(counter-2)/2] = '\0';
+
+        if ((filesize - 2) / 2 == (counter - 2) / 2) {
+            g_free(buffer);
+            buffer = outbuf;
+        } else {
+            g_free(outbuf);
+	    return NULL;	/* XXX wrong encoding */
+        }
+    }
 
     while (!ret_buffer && off < filesize) {
         while (off < filesize &&
