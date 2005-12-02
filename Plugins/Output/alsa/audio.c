@@ -851,6 +851,7 @@ static void *alsa_loop(void *arg)
 	g_free(thread_buffer);
 	thread_buffer = NULL;
 	g_thread_exit(NULL);
+	return(NULL);
 }
 
 /* open callback */
