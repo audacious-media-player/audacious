@@ -1173,7 +1173,7 @@ static int alsa_setup(struct snd_format *f)
 	      hw_period_size);
 	debug("bits per sample: %i; frame size: %i; Bps: %i",
 	      snd_pcm_format_physical_width(outputf->format),
-	      snd_pcm_frames_to_bytes(alsa_pcm, 1), outputf->bps);
+	      (int)snd_pcm_frames_to_bytes(alsa_pcm, 1), outputf->bps);
 
 	return 0;
 }

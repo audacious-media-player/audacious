@@ -325,7 +325,7 @@ void alsa_configure(void)
 
 	mixer_card_om = gtk_option_menu_new();
 	mset = get_cards(GTK_OPTION_MENU(mixer_card_om),
-			 mixer_card_cb, alsa_cfg.mixer_card);
+			 (GtkSignalFunc)mixer_card_cb, alsa_cfg.mixer_card);
 
 	gtk_table_attach(GTK_TABLE(mixer_table), mixer_card_om,
 			 1, 2, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
@@ -398,7 +398,7 @@ void alsa_configure(void)
 			 1, 2, 1, 2, 0, 0, 0, 0);
 
 
-	buffer_frame = gtk_frame_new(_("XMMS:"));
+	buffer_frame = gtk_frame_new(_("Audacious:"));
 	gtk_box_pack_start_defaults(GTK_BOX(advanced_vbox), buffer_frame);
 
 	buffer_vbox = gtk_vbox_new(FALSE, 0);
