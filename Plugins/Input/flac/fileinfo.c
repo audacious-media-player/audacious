@@ -122,9 +122,12 @@ static void get_entry_tag(GtkEntry * entry, const char *name)
 	gchar *text;
 	char *utf8;
 
-	text = gtk_entry_get_text(entry);
-	if (!text || strlen(text) == 0)
+	text = g_strdup(gtk_entry_get_text(entry));
+	if (!text || strlen(text) == 0) 
+	{
+		g_free(text);
 		return;
+	}
 	if(flac_cfg.title.convert_char_set)
 		utf8 = convert_from_user_to_utf8(text);
 	else
@@ -134,6 +137,7 @@ static void get_entry_tag(GtkEntry * entry, const char *name)
 
 	if(flac_cfg.title.convert_char_set)
 		free(utf8);
+	g_free(text);
 }
 
 static void show_tag()

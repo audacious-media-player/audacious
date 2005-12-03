@@ -167,7 +167,7 @@ GList *Charset_Create_List_UTF8_Only (void)
 /*
  * Return charset_name from charset_title
  */
-gchar *Charset_Get_Name_From_Title (gchar *charset_title)
+gchar *Charset_Get_Name_From_Title (const gchar *charset_title)
 {
 	guint i;
 
@@ -182,7 +182,7 @@ gchar *Charset_Get_Name_From_Title (gchar *charset_title)
 /*
  * Return charset_title from charset_name
  */
-gchar *Charset_Get_Title_From_Name (gchar *charset_name)
+gchar *Charset_Get_Title_From_Name (const gchar *charset_name)
 {
 	guint i;
 

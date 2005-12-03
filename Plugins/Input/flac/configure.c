@@ -121,7 +121,7 @@ static GtkWidget *streaming_cast_title, *streaming_udp_title;
 static GtkWidget *streaming_proxy_hbox, *streaming_proxy_auth_hbox, *streaming_save_dirbrowser;
 static GtkWidget *streaming_save_hbox;
 
-static gchar *gtk_entry_get_text_1 (GtkWidget *widget);
+static const gchar *gtk_entry_get_text_1 (GtkWidget *widget);
 static void flac_configurewin_ok(GtkWidget * widget, gpointer data);
 static void configure_destroy(GtkWidget * w, gpointer data);
 
@@ -803,7 +803,7 @@ void FLAC_XMMS__aboutbox()
 /*
  * Get text of an Entry or a ComboBox
  */
-static gchar *gtk_entry_get_text_1 (GtkWidget *widget)
+static const gchar *gtk_entry_get_text_1 (GtkWidget *widget)
 {
 	if (GTK_IS_COMBO(widget))
 	{
