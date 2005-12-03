@@ -391,7 +391,6 @@ void FLAC_XMMS__configure(void)
 		gdk_window_raise(flac_configurewin->window);
 		return;
 	}
-#warning FIX ME was _DIALOG
 	flac_configurewin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_signal_connect(GTK_OBJECT(flac_configurewin), "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroyed), &flac_configurewin);
 	gtk_signal_connect(GTK_OBJECT(flac_configurewin), "destroy", GTK_SIGNAL_FUNC(configure_destroy), &flac_configurewin);
