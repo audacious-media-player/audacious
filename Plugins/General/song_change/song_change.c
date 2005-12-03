@@ -108,15 +108,18 @@ static void save_and_close(GtkWidget *w, gpointer data)
 	char *cmd, *cmd_after, *cmd_end;
 	ConfigFile *cfgfile = xmms_cfg_open_default_file();
 
-	cmd = gtk_entry_get_text(GTK_ENTRY(cmd_entry));
-	cmd_after = gtk_entry_get_text(GTK_ENTRY(cmd_after_entry));
-	cmd_end = gtk_entry_get_text(GTK_ENTRY(cmd_end_entry));
+	cmd = g_strdup(gtk_entry_get_text(GTK_ENTRY(cmd_entry)));
+	cmd_after = g_strdup(gtk_entry_get_text(GTK_ENTRY(cmd_after_entry)));
+	cmd_end = g_strdup(gtk_entry_get_text(GTK_ENTRY(cmd_end_entry)));
 
 	xmms_cfg_write_string(cfgfile, "song_change", "cmd_line", cmd);
 	xmms_cfg_write_string(cfgfile, "song_change", "cmd_line_after", cmd_after);
 	xmms_cfg_write_string(cfgfile, "song_change", "cmd_line_end", cmd_end);
 	xmms_cfg_write_default_file(cfgfile);
 	xmms_cfg_free(cfgfile);
+	g_free(cmd);
+	g_free(cmd_after);
+	g_free(cmd_end);
 
 	if (timeout_tag)
 	{
@@ -200,15 +203,18 @@ static void configure_ok_cb(GtkWidget *w, gpointer data)
 {
 	char *cmd, *cmd_after, *cmd_end;
 
-	cmd = gtk_entry_get_text(GTK_ENTRY(cmd_entry));
-	cmd_after = gtk_entry_get_text(GTK_ENTRY(cmd_after_entry));
-	cmd_end = gtk_entry_get_text(GTK_ENTRY(cmd_end_entry));
+	cmd = g_strdup(gtk_entry_get_text(GTK_ENTRY(cmd_entry)));
+	cmd_after = g_strdup(gtk_entry_get_text(GTK_ENTRY(cmd_after_entry)));
+	cmd_end = g_strdup(gtk_entry_get_text(GTK_ENTRY(cmd_end_entry)));
 
 	if (check_command(cmd) < 0 || check_command(cmd_after) < 0
 	                           || check_command(cmd_end) < 0)
 		warn_user();
 	else
 		save_and_close(NULL, NULL);
+	g_free(cmd);
+	g_free(cmd_after);
+	g_free(cmd_end);
 }
 
 
