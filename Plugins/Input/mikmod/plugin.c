@@ -282,7 +282,7 @@ static gchar *get_title(gchar *filename)
 		ext = strrchr(temp, '.');
 		if (ext)
 			*ext = '\0';
-		input->file_name = g_basename(temp);
+		input->file_name = g_path_get_basename(temp);
 		input->file_ext = ext ? ext+1 : NULL;
 		input->file_path = temp;
 
