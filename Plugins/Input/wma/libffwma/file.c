@@ -41,32 +41,32 @@ static int file_open(URLContext *h, const char *filename, int flags)
     fd = open(filename, access, 0666);
     if (fd < 0)
         return -ENOENT;
-    h->priv_data = (void *)fd;
+    h->priv_data = (void *)(long)fd;
     return 0;
 }
 
 static int file_read(URLContext *h, unsigned char *buf, int size)
 {
-    int fd = (int)h->priv_data;
+    int fd = (int)(long)h->priv_data;
     return read(fd, buf, size);
 }
 
 static int file_write(URLContext *h, unsigned char *buf, int size)
 {
-    int fd = (int)h->priv_data;
+    int fd = (int)(long)h->priv_data;
     return write(fd, buf, size);
 }
 
 /* XXX: use llseek */
 static offset_t file_seek(URLContext *h, offset_t pos, int whence)
 {
-    int fd = (int)h->priv_data;
+    int fd = (int)(long)h->priv_data;
     return lseek(fd, pos, whence);
 }
 
 static int file_close(URLContext *h)
 {
-    int fd = (int)h->priv_data;
+    int fd = (int)(long)h->priv_data;
     return close(fd);
 }
 
@@ -90,19 +90,19 @@ static int pipe_open(URLContext *h, const char *filename, int flags)
     } else {
         fd = 0;
     }
-    h->priv_data = (void *)fd;
+    h->priv_data = (void *)(long)fd;
     return 0;
 }
 
 static int pipe_read(URLContext *h, unsigned char *buf, int size)
 {
-    int fd = (int)h->priv_data;
+    int fd = (int)(long)h->priv_data;
     return read(fd, buf, size);
 }
 
 static int pipe_write(URLContext *h, unsigned char *buf, int size)
 {
-    int fd = (int)h->priv_data;
+    int fd = (int)(long)h->priv_data;
     return write(fd, buf, size);
 }
 
