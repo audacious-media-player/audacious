@@ -1170,7 +1170,6 @@ static void calculate_gain(sbr_info *sbr, sbr_hfadj_info *adj, uint8_t ch)
             real_t den = 0;
             real_t acc1 = 0;
             real_t acc2 = 0;
-            uint8_t current_res_band_size = 0;
 
             uint8_t ml1, ml2;
 

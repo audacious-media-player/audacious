@@ -1810,7 +1810,7 @@ static uint8_t scale_factor_data(NeAACDecHandle hDecoder, ic_stream *ics, bitfil
 /* Table 4.4.27 */
 static void tns_data(ic_stream *ics, tns_info *tns, bitfile *ld)
 {
-    uint8_t w, filt, i, start_coef_bits, coef_bits;
+    uint8_t w, filt, i, start_coef_bits = 0, coef_bits;
     uint8_t n_filt_bits = 2;
     uint8_t length_bits = 6;
     uint8_t order_bits = 5;

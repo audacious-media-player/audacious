@@ -1027,7 +1027,7 @@ static void ps_decorrelate(ps_info *ps, qmf_t X_left[38][64], qmf_t X_right[38][
                            qmf_t X_hybrid_left[32][32], qmf_t X_hybrid_right[32][32])
 {
     uint8_t gr, n, m, bk;
-    uint8_t temp_delay;
+    uint8_t temp_delay = 0;
     uint8_t sb, maxsb;
     const complex_t *Phi_Fract_SubQmf;
     uint8_t temp_delay_ser[NO_ALLPASS_LINKS];
