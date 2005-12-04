@@ -18,6 +18,8 @@
  */
 #include "avformat.h"
 #include "avcodec.h"
+#include "cutils.h"
+#include "utils.h"
 
 #undef NDEBUG
 #include <assert.h>
@@ -1282,6 +1284,7 @@ static int has_codec_parameters(AVCodecContext *enc)
     return (val != 0);
 }
 
+#if 0          /* Dead code; compiler assures me it isn't used anywhere */
 static int try_decode_frame(AVStream *st, const uint8_t *data, int size)
 {
     int16_t *samples;
@@ -1313,7 +1316,7 @@ static int try_decode_frame(AVStream *st, const uint8_t *data, int size)
     avcodec_close(&st->codec);
     return ret;
 }
-
+#endif
 
 /* absolute maximum size we read until we abort */
 #define MAX_READ_SIZE        5000000

@@ -591,11 +591,6 @@ int dv1394_init(void);
 
 #include "os_support.h"
 
-int strstart(const char *str, const char *val, const char **ptr);
-int stristart(const char *str, const char *val, const char **ptr);
-void pstrcpy(char *buf, int buf_size, const char *str);
-char *pstrcat(char *buf, int buf_size, const char *s);
-
 void __dynarray_add(unsigned long **tab_ptr, int *nb_ptr, unsigned long elem);
 
 #ifdef __GNUC__
@@ -612,10 +607,6 @@ do {\
     __dynarray_add((unsigned long **)(tab), nb_ptr, (unsigned long)(elem));\
 } while(0)
 #endif
-
-time_t mktimegm(struct tm *tm);
-const char *small_strptime(const char *p, const char *fmt, 
-                           struct tm *dt);
 
 struct in_addr;
 int resolve_host(struct in_addr *sin_addr, const char *hostname);

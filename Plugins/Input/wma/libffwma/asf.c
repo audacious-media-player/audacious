@@ -19,6 +19,7 @@
 #include "avcodec.h"
 #include "avformat.h"
 #include "avi.h"
+#include "utils.h"
 
 #include <assert.h>
 #define MPA_FRAME_SIZE 1152
