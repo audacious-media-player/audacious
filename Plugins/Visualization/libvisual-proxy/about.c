@@ -51,7 +51,7 @@ GtkWidget* create_window_about (void)
 
   window_about = gtk_window_new (GTK_WINDOW_DIALOG);
   gtk_object_set_data (GTK_OBJECT (window_about), "window_about", window_about);
-  gtk_window_set_title (GTK_WINDOW (window_about), _("About Libvisual XMMS Plugin"));
+  gtk_window_set_title (GTK_WINDOW (window_about), _("About Libvisual Audacious Plugin"));
   gtk_window_set_position (GTK_WINDOW (window_about), GTK_WIN_POS_CENTER);
   gtk_window_set_default_size (GTK_WINDOW (window_about), 457, 230);
 
@@ -85,7 +85,7 @@ GtkWidget* create_window_about (void)
   gtk_widget_show (text_about);
   gtk_container_add (GTK_CONTAINER (scrolledwindow1), text_about);
   gtk_text_insert (GTK_TEXT (text_about), NULL, NULL, NULL,
-                   _("Libvisual XMMS Plugin\n\nCopyright (C) 2004, Duilio Protti <dprotti@users.sourceforge.net>\nDennis Smit <ds@nerds-incorporated.org>\n\nThe Libvisual XMMS Plugin, more information about Libvisual can be found at\nhttp://libvisual.sf.net\n"), -1);
+                   _("Libvisual Audacious Plugin\n\nCopyright (C) 2004, Duilio Protti <dprotti@users.sourceforge.net>\nDennis Smit <ds@nerds-incorporated.org>\n\nThe Libvisual Audacious Plugin, more information about Libvisual can be found at\nhttp://libvisual.sf.net\n"), -1);
 
   label_credits = gtk_label_new (_("Credits"));
   gtk_widget_ref (label_credits);

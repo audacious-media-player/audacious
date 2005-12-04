@@ -1011,7 +1011,7 @@ vorbis_file_info_box(gchar * filename)
                        
     filename_utf8 = filename_to_utf8(vte.filename);
 
-    title = g_strdup_printf(_("%s - BMP"), g_basename(filename_utf8));
+    title = g_strdup_printf(_("%s - Audacious"), g_basename(filename_utf8));
     gtk_window_set_title(GTK_WINDOW(window), title);
     g_free(title);
 

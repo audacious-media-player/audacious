@@ -643,7 +643,7 @@ display_usage(void)
     g_print(_("Display this text and exit"));
     g_print("\n-n, --session          ");
     /* -n, --session switch */
-    g_print(_("Select audacious/BMP/XMMS session (Default: 0)"));
+    g_print(_("Select Audacious/BMP/XMMS session (Default: 0)"));
     g_print("\n-r, --rew              ");
     /* -r, --rew switch */
     g_print(_("Skip backwards in playlist"));
@@ -670,7 +670,7 @@ display_usage(void)
     g_print(_("Show the main window"));
     g_print("\n-a, --activate         ");
     /* -a, --activate switch */
-    g_print(_("Activate audacious"));
+    g_print(_("Activate Audacious"));
     g_print("\n-i, --sm-client-id     ");
     /* -i, --sm-client-id switch */
     g_print(_("Previous session ID"));
@@ -917,7 +917,7 @@ main(gint argc, gchar ** argv)
     /* Check GTK version. Really, this is only needed for binary
      * distribution since configure already checks. */
     if (!GTK_CHECK_VERSION(2, 4, 0)) {
-        g_printerr(_("Sorry, your GTK+ version (%d.%d.%d) does not work with audacious.\n"
+        g_printerr(_("Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
                      "Please use GTK+ %s or newer.\n"),
                    gtk_major_version, gtk_minor_version, gtk_micro_version,
                    "2.4.0");

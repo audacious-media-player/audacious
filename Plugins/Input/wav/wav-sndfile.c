@@ -241,7 +241,7 @@ static void wav_about(void)
         static GtkWidget *box;
         box = xmms_show_message(
                 _("About sndfile WAV support"),
-                _("Adapted for audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
+                _("Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
                   "from the xmms_sndfile plugin which is:\n"
 		  "Copyright (C) 2000, 2002 Erik de Castro Lopo\n\n"
 		  "This program is free software ; you can redistribute it and/or modify \n"

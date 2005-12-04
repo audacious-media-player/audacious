@@ -113,7 +113,7 @@ static void lv_bmp_init ()
 
 	if (!visual_is_initialized ()) {
 	        argv = g_malloc (sizeof(char*));
-	        argv[0] = g_strdup (_("XMMS plugin"));
+	        argv[0] = g_strdup (_("Audacious plugin"));
         	argc = 1;
 
 		visual_init (&argc, &argv);

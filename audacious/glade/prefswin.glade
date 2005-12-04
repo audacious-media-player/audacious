@@ -808,7 +808,7 @@
 					    <widget class="GtkLabel" id="plugin_output_info_text">
 					      <property name="visible">True</property>
 					      <property name="can_focus">True</property>
-					      <property name="label" translatable="yes">The change is now effective in BMP's configuration database, but won't take effect for playback until the next song!
+					      <property name="label" translatable="yes">The change is now effective in Audacious' configuration database, but won't take effect for playback until the next song!
 
 Optionally, you can stop and restart playback for the change to take effect.</property>
 					      <property name="use_underline">False</property>

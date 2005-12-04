@@ -486,7 +486,7 @@ input_general_file_info_box(const gchar * filename, InputPlugin * ip)
 
     basename = g_path_get_basename(filename);
     fileinfo = filename_to_utf8(basename);
-    title = g_strdup_printf(_("bmp: %s"), fileinfo);
+    title = g_strdup_printf(_("audacious: %s"), fileinfo);
 
     gtk_window_set_title(GTK_WINDOW(window), title);
 

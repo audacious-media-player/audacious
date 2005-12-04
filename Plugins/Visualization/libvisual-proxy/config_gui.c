@@ -63,7 +63,7 @@ ConfigWin *lv_xmms_config_gui_new (void)
   
   window_main = gtk_window_new (GTK_WINDOW_DIALOG);
   gtk_object_set_data (GTK_OBJECT (window_main), "window_main", window_main);
-  gtk_window_set_title (GTK_WINDOW (window_main), _("LibVisual XMMS Plugin"));
+  gtk_window_set_title (GTK_WINDOW (window_main), _("LibVisual Audacious Plugin"));
   gtk_window_set_position (GTK_WINDOW (window_main), GTK_WIN_POS_CENTER);
   gtk_window_set_default_size (GTK_WINDOW (window_main), -1, 450);
 

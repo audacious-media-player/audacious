@@ -195,13 +195,13 @@ int lv_bmp_config_load_prefs ()
 		visual_log (VISUAL_LOG_WARNING, "Cannot determine which kind of plugin to show");
 
 	if (errors) {
-		visual_log (VISUAL_LOG_INFO, _("LibVisual BMP plugin: config file contain errors, fixing..."));
+		visual_log (VISUAL_LOG_INFO, _("LibVisual Audacious plugin: config file contain errors, fixing..."));
 		lv_bmp_config_save_prefs ();
 	} else if (must_update) {
-		visual_log (VISUAL_LOG_INFO, _("LibVisual BMP plugin: config file is from old version, updating..."));
+		visual_log (VISUAL_LOG_INFO, _("LibVisual Audacious plugin: config file is from old version, updating..."));
 		lv_bmp_config_save_prefs ();
 	} else if (must_create_entry) {
-		visual_log (VISUAL_LOG_INFO, _("LibVisual BMP plugin: adding entry to config file..."));
+		visual_log (VISUAL_LOG_INFO, _("LibVisual Audacious plugin: adding entry to config file..."));
 		lv_bmp_config_save_prefs ();
 	}
 
