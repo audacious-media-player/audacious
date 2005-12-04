@@ -120,7 +120,7 @@ http://fsinfo.cs.uni-sb.de/~columbus/lirc/index.html"
 
 static void win_set_icon (GtkWidget *win, char** image)
 {
-	Atom icon_atom;
+	GdkAtom icon_atom;
 	glong data[2];
 	
 	icon=gdk_pixmap_create_from_xpm_d(win->window, &icon_mask,
