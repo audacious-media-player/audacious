@@ -347,7 +347,7 @@ blargg_err_t Nsf_Emu::load( const header_t& h, Emu_Reader& in )
 
 	track_count_ = h.track_count;
 	
-	return setup_buffer( clock_rate + 0.5 );
+	return setup_buffer( ( int) (clock_rate + 0.5) );
 }
 
 void Nsf_Emu::set_voice( int i, Blip_Buffer* buf, Blip_Buffer*, Blip_Buffer* )
@@ -423,7 +423,7 @@ void Nsf_Emu::cpu_jsr( nes_addr_t pc, int adj )
 blip_time_t Nsf_Emu::run( int msec, bool* )
 {
 	// run cpu
-	blip_time_t duration = clocks_per_msec * msec;
+	blip_time_t duration = (blip_time_t) (clocks_per_msec * msec);
 	cpu.time( 0 );
 	while ( cpu.time() < duration )
 	{

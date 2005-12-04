@@ -152,7 +152,7 @@ inline void Spc_Dsp::mute_voices( int mask ) {
 }
 
 inline void Spc_Dsp::set_gain( double v ) {
-	emu_gain = v * (1 << emu_gain_bits);
+	emu_gain = (int) (v * (1 << emu_gain_bits));
 }
 
 #endif

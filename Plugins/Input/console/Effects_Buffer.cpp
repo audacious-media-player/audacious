@@ -144,15 +144,15 @@ void Effects_Buffer::config( const config_t& cfg )
 		chans.reverb_level = TO_FIXED( config_.reverb_level );
 		chans.echo_level = TO_FIXED( config_.echo_level );
 		
-		const int delay_offset = config_.delay_variance * sample_rate_ / (1000 * 2);
+		const int delay_offset = (int) config_.delay_variance * sample_rate_ / (1000 * 2);
 		
-		const int reverb_sample_delay = config_.reverb_delay * sample_rate_ / 1000;
+		const int reverb_sample_delay = (int) config_.reverb_delay * sample_rate_ / 1000;
 		chans.reverb_delay_l = pin_range( reverb_size -
 				(reverb_sample_delay - delay_offset) * 2, reverb_size - 2, 0 );
 		chans.reverb_delay_r = pin_range( reverb_size + 1 -
 				(reverb_sample_delay + delay_offset) * 2, reverb_size - 1, 1 );
 		
-		const int echo_sample_delay = config_.echo_delay * sample_rate_ / 1000;
+		const int echo_sample_delay = (int) config_.echo_delay * sample_rate_ / 1000;
 		chans.echo_delay_l = pin_range( echo_size - 1 - (echo_sample_delay - delay_offset),
 				echo_size - 1 );
 		chans.echo_delay_r = pin_range( echo_size - 1 - (echo_sample_delay + delay_offset),

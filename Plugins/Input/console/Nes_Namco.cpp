@@ -58,18 +58,21 @@ BOOST::uint8_t& Nes_Namco::access()
 	return reg [addr];
 }
 
+#define chars_to_long(s) ( (unsigned long)(s[0] << 24) | (unsigned long)(s[1] << 16) | \
+				(unsigned long)(s[2] << 8)  | (unsigned long)(s[3]) )
+
 void Nes_Namco::reflect_state( Tagged_Data& data )
 {
-	reflect_int16( data, 'ADDR', &addr_reg );
+	reflect_int16( data, chars_to_long("ADDR"), &addr_reg );
 	
 	static const char hex [17] = "0123456789ABCDEF";
 	int i;
 	for ( i = 0; i < reg_count; i++ )
-		reflect_int16( data, 'RG\0\0' + hex [i >> 4] * 0x100 + hex [i & 15], &reg [i] );
+		reflect_int16( data, chars_to_long("RG\0\0") + hex [i >> 4] * 0x100 + hex [i & 15], &reg [i] );
 	
 	for ( i = 0; i < osc_count; i++ ) {
-		reflect_int32( data, 'DLY0' + i, &oscs [i].delay );
-		reflect_int16( data, 'POS0' + i, &oscs [i].wave_pos );
+		reflect_int32( data, chars_to_long("DLY0") + i, &oscs [i].delay );
+		reflect_int16( data, chars_to_long("POS0") + i, &oscs [i].wave_pos );
 	}
 }
 

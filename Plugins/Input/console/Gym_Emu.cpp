@@ -64,7 +64,7 @@ blargg_err_t Gym_Emu::init( long sample_rate, double gain, double oversample_ )
 	
 	BLARGG_RETURN_ERR( blip_buf.sample_rate( sample_rate, 1000 / 30 ) );
 	
-	BLARGG_RETURN_ERR( fm.set_rate( sample_rate * oversample, base_clock / 7 ) );
+	BLARGG_RETURN_ERR( fm.set_rate( (long) (sample_rate * oversample), base_clock / 7 ) );
 	
 	blip_buf.clock_rate( clock_rate );
 	
@@ -219,8 +219,8 @@ void Gym_Emu::play_frame( sample_t* out )
 	parse_frame();
 	
 	// run SMS APU and buffer
-	blip_time_t clock_count = (pairs_per_frame + 1 - blip_buf.samples_avail()) *
-			clocks_per_sample;
+	blip_time_t clock_count = (blip_time_t) ((pairs_per_frame + 1 - blip_buf.samples_avail()) *
+			clocks_per_sample);
 	apu.end_frame( clock_count );
 	blip_buf.end_frame( clock_count );
 	assert( unsigned (blip_buf.samples_avail() - pairs_per_frame) <= 4 );
@@ -343,8 +343,8 @@ void Gym_Emu::run_dac( int dac_count )
 		this->last_dac = last_dac;
 	}
 	
-	int const step = 6 * oversample;
-	int remain = pairs_per_frame * oversample;
+	int const step = (int) (6 * oversample);
+	int remain = (int) (pairs_per_frame * oversample);
 	while ( remain ) {
 		int n = step;
 		if ( n > remain )

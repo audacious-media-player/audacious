@@ -299,7 +299,7 @@ blip_time_t Gbs_Emu::run( int msec, bool* added_stereo )
 {
 	require( rom ); // file must be loaded
 	
-	gb_time_t duration = clock_rate * (1.0 / 1000.0) * msec;
+	gb_time_t duration = (gb_time_t) (clock_rate * (1.0 / 1000.0) * msec);
 	cpu_time = 0;
 	while ( cpu_time < duration )
 	{

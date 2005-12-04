@@ -70,7 +70,7 @@ void gen_sinc( int width, double offset, double spacing, int count, double scale
 			y *= sinc( a );
 		}
 		
-		*p++ = y * scale;
+		*p++ = (T) (y * scale);
 		a += step;
 	}
 }

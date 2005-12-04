@@ -89,18 +89,21 @@ void Nes_Vrc6::end_frame( nes_time_t time )
 	assert( last_time >= 0 );
 }
 
+#define chars_to_long(s) ( (long)(s[0] << 24) | (long)(s[1] << 16) | \
+				(long)(s[2] << 8)  | (long)(s[3]) )
+
 void Nes_Vrc6::reflect_state( Tagged_Data& data )
 {
 	for ( int i = 0; i < osc_count; i++ )
 	{
-		Tagged_Data odata( data, 'cCH0' + i );
+		Tagged_Data odata( data, chars_to_long("cCH0") + i );
 		Vrc6_Osc& osc = oscs [i];
 		for ( int r = 0; r < reg_count; r++ )
-			reflect_int16( odata, 'REG0' + r, &osc.regs [r] );
-		reflect_int16( odata, 'DELY', &osc.delay );
-		reflect_int16( odata, 'PHAS', &osc.phase );
+			reflect_int16( odata, chars_to_long("REG0") + r, &osc.regs [r] );
+		reflect_int16( odata, chars_to_long("DELY"), &osc.delay );
+		reflect_int16( odata, chars_to_long("PHAS"), &osc.phase );
 		if ( i == 2 )
-			reflect_int16( odata, 'AMPL', &osc.amp );
+			reflect_int16( odata, chars_to_long("AMPL"), &osc.amp );
 	}
 }
 
