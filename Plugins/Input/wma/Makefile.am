@@ -1,6 +1,10 @@
+if ENABLE_WMA
+
 SUBDIRS = libffwma
 
 lib_LTLIBRARIES = libwma.la
+
+endif
 
 libdir = $(plugindir)/$(INPUT_PLUGIN_DIR)
 

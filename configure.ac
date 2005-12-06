@@ -403,6 +403,16 @@ else
 fi
 AM_CONDITIONAL(HAVE_FLAC,test "x$have_flac" = xyes)
 
+dnl *** WMA
+
+AC_ARG_ENABLE(wma,
+    [  --disable-wma           disable wma plugin. [default=enabled] ],
+    [enable_wma=$enableval],
+    [enable_wma=yes]
+)
+
+AM_CONDITIONAL(ENABLE_WMA, test "$enable_wma" = "yes")
+
 dnl *** OSS output
 
 AC_ARG_ENABLE(oss,
@@ -748,6 +758,7 @@ echo "  -------------"
 echo "  MPEG 1/2/3 (mpg123):                    $enable_mp3"
 echo "    + id3v2 editing:                      $have_id3lib"
 echo "  MPEG 4 Audio (AAC):                     $enable_aac"
+echo "  Windows Media Audio (wma):              $enable_wma"
 echo "  Module decoder (mikmod):                $enable_mikmod"
 echo "  CD Digital Audio (cdda):                yes"
 echo "  Microsoft WAV (wav):                    yes"
