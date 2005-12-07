@@ -29,7 +29,6 @@
 /* configure.c*/
 void on_config_ok_clicked(GtkButton *button, gpointer user_data);
 void on_config_apply_clicked(GtkButton *button, gpointer user_data);
-void on_output_oss_radio_toggled(GtkToggleButton *togglebutton, gpointer user_data);
 void on_output_plugin_radio_toggled(GtkToggleButton *togglebutton, gpointer user_data);
 void on_output_none_radio_toggled(GtkToggleButton *togglebutton, gpointer user_data);
 void on_config_adevice_alt_check_toggled(GtkToggleButton *togglebutton, gpointer user_data);

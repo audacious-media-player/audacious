@@ -426,10 +426,6 @@ xfade_init()
   xfade_load_config();
 
   /* set default strings if there is no existing config */
-  if(!config->oss_alt_audio_device)
-    config->oss_alt_audio_device = g_strdup(DEFAULT_OSS_ALT_AUDIO_DEVICE);
-  if(!config->oss_alt_mixer_device)
-    config->oss_alt_mixer_device = g_strdup(DEFAULT_OSS_ALT_MIXER_DEVICE);
   if(!config->op_config_string)
     config->op_config_string = g_strdup(DEFAULT_OP_CONFIG_STRING);
   if(!config->op_name)
@@ -566,7 +562,6 @@ void fini()
   xfade_save_config();
 
   /* free resources */
-  if(config->oss_alt_audio_device) g_free(config->oss_alt_audio_device);
   if(config->op_name) g_free(config->op_name);
   xfade_free_config();
   if(last_filename) g_free(last_filename);
@@ -836,8 +831,8 @@ album_match(gchar *old, gchar *new)
     return 0;
   }
 
-  old_track = extract_track(g_basename(old));
-  new_track = extract_track(g_basename(new));
+  old_track = extract_track(g_path_get_basename(old));
+  new_track = extract_track(g_path_get_basename(new));
   
   if(new_track <= 0) {
     DEBUG(("[crossfade] album_match: can't parse track number:\n"));

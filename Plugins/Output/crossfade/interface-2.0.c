@@ -34,13 +34,6 @@ create_config_win (void)
   GtkWidget *config_notebook;
   GtkWidget *config_output_page;
   GtkWidget *output_options_hbox;
-  GtkWidget *output_method_frame;
-  GtkWidget *output_method_vbox;
-  GtkWidget *output_oss_radio;
-  GSList *output_oss_radio_group = NULL;
-  GtkWidget *output_plugin_radio;
-  GtkWidget *output_none_radio;
-  GtkWidget *label1;
   GtkWidget *output_resampling_frame;
   GtkWidget *output_resampling_table;
   GtkWidget *resampling_rate_hbox;
@@ -51,62 +44,6 @@ create_config_win (void)
   GtkWidget *resampling_quality_optionmenu;
   GtkWidget *output_resampling_label;
   GtkWidget *output_notebook;
-  GtkWidget *output_oss_page;
-  GtkWidget *output_oss_notebook;
-  GtkWidget *oss_device_page;
-  GtkWidget *oss_adevice_frame;
-  GtkWidget *oss_adevice_vbox;
-  GtkWidget *oss_adevice_hbox;
-  GtkWidget *oss_adevice_optionmenu;
-  GtkWidget *convertwidget1;
-  GtkWidget *convertwidget2;
-  GtkWidget *oss_adevice_alt_hbox;
-  GtkWidget *oss_adevice_alt_check;
-  GtkWidget *oss_adevice_alt_entry;
-  GtkWidget *label3;
-  GtkWidget *oss_mdevice_frame;
-  GtkWidget *oss_mdevice_vbox;
-  GtkWidget *oss_mdevice_hbox;
-  GtkWidget *oss_mdevice_optionmenu;
-  GtkWidget *convertwidget3;
-  GtkWidget *convertwidget4;
-  GtkWidget *oss_mdevice_alt_hbox;
-  GtkWidget *oss_mdevice_alt_check;
-  GtkWidget *oss_mdevice_alt_entry;
-  GtkWidget *label4;
-  GtkWidget *oss_device_label;
-  GtkWidget *oss_buffer_page;
-  GtkWidget *oss_buffer_frame;
-  GtkWidget *oss_buffer_vbox;
-  GtkWidget *ossbuf_buffer_hbox;
-  GtkWidget *ossbuf_buffer_label;
-  GtkObject *ossbuf_buffer_spin_adj;
-  GtkWidget *ossbuf_buffer_spin;
-  GtkWidget *ossbuf_preload_hbox;
-  GtkWidget *ossbuf_preload_label;
-  GtkObject *ossbuf_preload_spin_adj;
-  GtkWidget *ossbuf_preload_spin;
-  GtkWidget *label5;
-  GtkWidget *oss_hwbuf_frame;
-  GtkWidget *oss_hwbuf_vbox;
-  GtkWidget *osshwb_maxbuf_check;
-  GtkWidget *osshwb_fragments_hbox;
-  GtkWidget *osshwb_fragments_label;
-  GtkObject *osshwb_fragments_spin_adj;
-  GtkWidget *osshwb_fragments_spin;
-  GtkWidget *osshwb_fragsize_hbox;
-  GtkWidget *osshwb_fragsize_label;
-  GtkObject *osshwb_fragsize_spin_adj;
-  GtkWidget *osshwb_fragsize_spin;
-  GtkWidget *label6;
-  GtkWidget *oss_buffer_label;
-  GtkWidget *oss_mixer_page;
-  GtkWidget *oss_mixer_frame;
-  GtkWidget *oss_mixer_vbox;
-  GtkWidget *ossmixer_pcm_check;
-  GtkWidget *label7;
-  GtkWidget *oss_mixer_label;
-  GtkWidget *label29;
   GtkWidget *output_plugin_page;
   GtkWidget *op_plugin_frame;
   GtkWidget *op_plugin_vbox;
@@ -411,39 +348,6 @@ create_config_win (void)
   gtk_widget_show (output_options_hbox);
   gtk_box_pack_start (GTK_BOX (config_output_page), output_options_hbox, FALSE, TRUE, 0);
 
-  output_method_frame = gtk_frame_new (NULL);
-  gtk_widget_show (output_method_frame);
-  gtk_box_pack_start (GTK_BOX (output_options_hbox), output_method_frame, TRUE, TRUE, 0);
-
-  output_method_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_widget_show (output_method_vbox);
-  gtk_container_add (GTK_CONTAINER (output_method_frame), output_method_vbox);
-  gtk_container_set_border_width (GTK_CONTAINER (output_method_vbox), 5);
-
-  output_oss_radio = gtk_radio_button_new_with_mnemonic (NULL, "Builtin OSS driver");
-  gtk_widget_show (output_oss_radio);
-  gtk_box_pack_start (GTK_BOX (output_method_vbox), output_oss_radio, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, output_oss_radio, "Use XMMS-crossfade's builtin OSS driver for output.", NULL);
-  gtk_radio_button_set_group (GTK_RADIO_BUTTON (output_oss_radio), output_oss_radio_group);
-  output_oss_radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (output_oss_radio));
-
-  output_plugin_radio = gtk_radio_button_new_with_mnemonic (NULL, "Output plugin");
-  gtk_widget_show (output_plugin_radio);
-  gtk_box_pack_start (GTK_BOX (output_method_vbox), output_plugin_radio, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tooltips, output_plugin_radio, "Use an existing plugin for output.", NULL);
-  gtk_radio_button_set_group (GTK_RADIO_BUTTON (output_plugin_radio), output_oss_radio_group);
-  output_oss_radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (output_plugin_radio));
-
-  output_none_radio = gtk_radio_button_new_with_mnemonic (NULL, "None [not implemented]");
-  gtk_box_pack_start (GTK_BOX (output_method_vbox), output_none_radio, FALSE, FALSE, 0);
-  gtk_widget_set_sensitive (output_none_radio, FALSE);
-  gtk_radio_button_set_group (GTK_RADIO_BUTTON (output_none_radio), output_oss_radio_group);
-  output_oss_radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (output_none_radio));
-
-  label1 = gtk_label_new ("Output method");
-  gtk_widget_show (label1);
-  gtk_frame_set_label_widget (GTK_FRAME (output_method_frame), label1);
-
   output_resampling_frame = gtk_frame_new (NULL);
   gtk_widget_show (output_resampling_frame);
   gtk_box_pack_start (GTK_BOX (output_options_hbox), output_resampling_frame, FALSE, FALSE, 0);
@@ -497,233 +401,6 @@ create_config_win (void)
   GTK_WIDGET_UNSET_FLAGS (output_notebook, GTK_CAN_FOCUS);
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (output_notebook), FALSE);
   gtk_notebook_set_show_border (GTK_NOTEBOOK (output_notebook), FALSE);
-
-  output_oss_page = gtk_vbox_new (FALSE, 5);
-  gtk_widget_show (output_oss_page);
-  gtk_container_add (GTK_CONTAINER (output_notebook), output_oss_page);
-
-  output_oss_notebook = gtk_notebook_new ();
-  gtk_widget_show (output_oss_notebook);
-  gtk_box_pack_start (GTK_BOX (output_oss_page), output_oss_notebook, FALSE, FALSE, 0);
-
-  oss_device_page = gtk_vbox_new (FALSE, 5);
-  gtk_widget_show (oss_device_page);
-  gtk_container_add (GTK_CONTAINER (output_oss_notebook), oss_device_page);
-  gtk_container_set_border_width (GTK_CONTAINER (oss_device_page), 5);
-
-  oss_adevice_frame = gtk_frame_new (NULL);
-  gtk_widget_show (oss_adevice_frame);
-  gtk_box_pack_start (GTK_BOX (oss_device_page), oss_adevice_frame, FALSE, FALSE, 0);
-
-  oss_adevice_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_widget_show (oss_adevice_vbox);
-  gtk_container_add (GTK_CONTAINER (oss_adevice_frame), oss_adevice_vbox);
-  gtk_container_set_border_width (GTK_CONTAINER (oss_adevice_vbox), 5);
-
-  oss_adevice_hbox = gtk_hbox_new (FALSE, 0);
-  gtk_widget_show (oss_adevice_hbox);
-  gtk_box_pack_start (GTK_BOX (oss_adevice_vbox), oss_adevice_hbox, TRUE, TRUE, 0);
-
-  oss_adevice_optionmenu = gtk_option_menu_new ();
-  gtk_widget_show (oss_adevice_optionmenu);
-  gtk_box_pack_start (GTK_BOX (oss_adevice_hbox), oss_adevice_optionmenu, TRUE, TRUE, 0);
-
-  convertwidget1 = gtk_menu_new ();
-
-  convertwidget2 = gtk_menu_item_new_with_mnemonic ("dummy");
-  gtk_widget_show (convertwidget2);
-  gtk_container_add (GTK_CONTAINER (convertwidget1), convertwidget2);
-
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (oss_adevice_optionmenu), convertwidget1);
-
-  oss_adevice_alt_hbox = gtk_hbox_new (FALSE, 0);
-  gtk_widget_show (oss_adevice_alt_hbox);
-  gtk_box_pack_start (GTK_BOX (oss_adevice_vbox), oss_adevice_alt_hbox, TRUE, TRUE, 0);
-
-  oss_adevice_alt_check = gtk_check_button_new_with_mnemonic ("Use alternate device:");
-  gtk_widget_show (oss_adevice_alt_check);
-  gtk_box_pack_start (GTK_BOX (oss_adevice_alt_hbox), oss_adevice_alt_check, FALSE, FALSE, 0);
-
-  oss_adevice_alt_entry = gtk_entry_new ();
-  gtk_widget_show (oss_adevice_alt_entry);
-  gtk_box_pack_start (GTK_BOX (oss_adevice_alt_hbox), oss_adevice_alt_entry, TRUE, TRUE, 0);
-
-  label3 = gtk_label_new ("Audio device");
-  gtk_widget_show (label3);
-  gtk_frame_set_label_widget (GTK_FRAME (oss_adevice_frame), label3);
-
-  oss_mdevice_frame = gtk_frame_new (NULL);
-  gtk_widget_show (oss_mdevice_frame);
-  gtk_box_pack_start (GTK_BOX (oss_device_page), oss_mdevice_frame, FALSE, FALSE, 0);
-
-  oss_mdevice_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_widget_show (oss_mdevice_vbox);
-  gtk_container_add (GTK_CONTAINER (oss_mdevice_frame), oss_mdevice_vbox);
-  gtk_container_set_border_width (GTK_CONTAINER (oss_mdevice_vbox), 5);
-
-  oss_mdevice_hbox = gtk_hbox_new (FALSE, 0);
-  gtk_widget_show (oss_mdevice_hbox);
-  gtk_box_pack_start (GTK_BOX (oss_mdevice_vbox), oss_mdevice_hbox, TRUE, TRUE, 0);
-
-  oss_mdevice_optionmenu = gtk_option_menu_new ();
-  gtk_widget_show (oss_mdevice_optionmenu);
-  gtk_box_pack_start (GTK_BOX (oss_mdevice_hbox), oss_mdevice_optionmenu, TRUE, TRUE, 0);
-
-  convertwidget3 = gtk_menu_new ();
-
-  convertwidget4 = gtk_menu_item_new_with_mnemonic ("dummy");
-  gtk_widget_show (convertwidget4);
-  gtk_container_add (GTK_CONTAINER (convertwidget3), convertwidget4);
-
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (oss_mdevice_optionmenu), convertwidget3);
-
-  oss_mdevice_alt_hbox = gtk_hbox_new (FALSE, 0);
-  gtk_widget_show (oss_mdevice_alt_hbox);
-  gtk_box_pack_start (GTK_BOX (oss_mdevice_vbox), oss_mdevice_alt_hbox, FALSE, FALSE, 0);
-
-  oss_mdevice_alt_check = gtk_check_button_new_with_mnemonic ("Use alternate device:");
-  gtk_widget_show (oss_mdevice_alt_check);
-  gtk_box_pack_start (GTK_BOX (oss_mdevice_alt_hbox), oss_mdevice_alt_check, FALSE, FALSE, 0);
-
-  oss_mdevice_alt_entry = gtk_entry_new ();
-  gtk_widget_show (oss_mdevice_alt_entry);
-  gtk_box_pack_start (GTK_BOX (oss_mdevice_alt_hbox), oss_mdevice_alt_entry, TRUE, TRUE, 0);
-
-  label4 = gtk_label_new ("Mixer device");
-  gtk_widget_show (label4);
-  gtk_frame_set_label_widget (GTK_FRAME (oss_mdevice_frame), label4);
-
-  oss_device_label = gtk_label_new ("Device");
-  gtk_widget_show (oss_device_label);
-  gtk_notebook_set_tab_label (GTK_NOTEBOOK (output_oss_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (output_oss_notebook), 0), oss_device_label);
-  gtk_label_set_justify (GTK_LABEL (oss_device_label), GTK_JUSTIFY_CENTER);
-
-  oss_buffer_page = gtk_vbox_new (FALSE, 5);
-  gtk_widget_show (oss_buffer_page);
-  gtk_container_add (GTK_CONTAINER (output_oss_notebook), oss_buffer_page);
-  gtk_container_set_border_width (GTK_CONTAINER (oss_buffer_page), 5);
-
-  oss_buffer_frame = gtk_frame_new (NULL);
-  gtk_widget_show (oss_buffer_frame);
-  gtk_box_pack_start (GTK_BOX (oss_buffer_page), oss_buffer_frame, FALSE, FALSE, 0);
-
-  oss_buffer_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_widget_show (oss_buffer_vbox);
-  gtk_container_add (GTK_CONTAINER (oss_buffer_frame), oss_buffer_vbox);
-  gtk_container_set_border_width (GTK_CONTAINER (oss_buffer_vbox), 5);
-
-  ossbuf_buffer_hbox = gtk_hbox_new (FALSE, 5);
-  gtk_widget_show (ossbuf_buffer_hbox);
-  gtk_box_pack_start (GTK_BOX (oss_buffer_vbox), ossbuf_buffer_hbox, FALSE, FALSE, 0);
-
-  ossbuf_buffer_label = gtk_label_new ("Buffer size (ms):");
-  gtk_widget_show (ossbuf_buffer_label);
-  gtk_box_pack_start (GTK_BOX (ossbuf_buffer_hbox), ossbuf_buffer_label, FALSE, FALSE, 0);
-
-  ossbuf_buffer_spin_adj = gtk_adjustment_new (0, 0, 60000, 10, 100, 10);
-  ossbuf_buffer_spin = gtk_spin_button_new (GTK_ADJUSTMENT (ossbuf_buffer_spin_adj), 0, 0);
-  gtk_widget_show (ossbuf_buffer_spin);
-  gtk_box_pack_start (GTK_BOX (ossbuf_buffer_hbox), ossbuf_buffer_spin, TRUE, TRUE, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (ossbuf_buffer_spin), TRUE);
-
-  ossbuf_preload_hbox = gtk_hbox_new (FALSE, 5);
-  gtk_widget_show (ossbuf_preload_hbox);
-  gtk_box_pack_start (GTK_BOX (oss_buffer_vbox), ossbuf_preload_hbox, TRUE, TRUE, 0);
-
-  ossbuf_preload_label = gtk_label_new ("Preload size (ms):");
-  gtk_widget_show (ossbuf_preload_label);
-  gtk_box_pack_start (GTK_BOX (ossbuf_preload_hbox), ossbuf_preload_label, FALSE, FALSE, 0);
-
-  ossbuf_preload_spin_adj = gtk_adjustment_new (1500, 0, 60000, 10, 100, 10);
-  ossbuf_preload_spin = gtk_spin_button_new (GTK_ADJUSTMENT (ossbuf_preload_spin_adj), 0, 0);
-  gtk_widget_show (ossbuf_preload_spin);
-  gtk_box_pack_start (GTK_BOX (ossbuf_preload_hbox), ossbuf_preload_spin, TRUE, TRUE, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (ossbuf_preload_spin), TRUE);
-
-  label5 = gtk_label_new ("Software buffer");
-  gtk_widget_show (label5);
-  gtk_frame_set_label_widget (GTK_FRAME (oss_buffer_frame), label5);
-
-  oss_hwbuf_frame = gtk_frame_new (NULL);
-  gtk_widget_show (oss_hwbuf_frame);
-  gtk_box_pack_start (GTK_BOX (oss_buffer_page), oss_hwbuf_frame, TRUE, TRUE, 0);
-
-  oss_hwbuf_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_widget_show (oss_hwbuf_vbox);
-  gtk_container_add (GTK_CONTAINER (oss_hwbuf_frame), oss_hwbuf_vbox);
-  gtk_container_set_border_width (GTK_CONTAINER (oss_hwbuf_vbox), 5);
-
-  osshwb_maxbuf_check = gtk_check_button_new_with_mnemonic ("Maximum device buffer size");
-  gtk_widget_show (osshwb_maxbuf_check);
-  gtk_box_pack_start (GTK_BOX (oss_hwbuf_vbox), osshwb_maxbuf_check, FALSE, FALSE, 0);
-
-  osshwb_fragments_hbox = gtk_hbox_new (FALSE, 5);
-  gtk_widget_show (osshwb_fragments_hbox);
-  gtk_box_pack_start (GTK_BOX (oss_hwbuf_vbox), osshwb_fragments_hbox, FALSE, FALSE, 0);
-
-  osshwb_fragments_label = gtk_label_new ("Number of Fragments:");
-  gtk_widget_show (osshwb_fragments_label);
-  gtk_box_pack_start (GTK_BOX (osshwb_fragments_hbox), osshwb_fragments_label, FALSE, FALSE, 0);
-
-  osshwb_fragments_spin_adj = gtk_adjustment_new (50, 2, 65535, 1, 10, 10);
-  osshwb_fragments_spin = gtk_spin_button_new (GTK_ADJUSTMENT (osshwb_fragments_spin_adj), 0, 0);
-  gtk_widget_show (osshwb_fragments_spin);
-  gtk_box_pack_start (GTK_BOX (osshwb_fragments_hbox), osshwb_fragments_spin, TRUE, TRUE, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (osshwb_fragments_spin), TRUE);
-
-  osshwb_fragsize_hbox = gtk_hbox_new (FALSE, 5);
-  gtk_widget_show (osshwb_fragsize_hbox);
-  gtk_box_pack_start (GTK_BOX (oss_hwbuf_vbox), osshwb_fragsize_hbox, TRUE, TRUE, 0);
-
-  osshwb_fragsize_label = gtk_label_new ("Fragment size (2^x bytes):");
-  gtk_widget_show (osshwb_fragsize_label);
-  gtk_box_pack_start (GTK_BOX (osshwb_fragsize_hbox), osshwb_fragsize_label, FALSE, FALSE, 0);
-
-  osshwb_fragsize_spin_adj = gtk_adjustment_new (11, 4, 16, 1, 10, 10);
-  osshwb_fragsize_spin = gtk_spin_button_new (GTK_ADJUSTMENT (osshwb_fragsize_spin_adj), 0, 0);
-  gtk_widget_show (osshwb_fragsize_spin);
-  gtk_box_pack_start (GTK_BOX (osshwb_fragsize_hbox), osshwb_fragsize_spin, TRUE, TRUE, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (osshwb_fragsize_spin), TRUE);
-
-  label6 = gtk_label_new ("Hardware device buffer");
-  gtk_widget_show (label6);
-  gtk_frame_set_label_widget (GTK_FRAME (oss_hwbuf_frame), label6);
-
-  oss_buffer_label = gtk_label_new ("Buffer");
-  gtk_widget_show (oss_buffer_label);
-  gtk_notebook_set_tab_label (GTK_NOTEBOOK (output_oss_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (output_oss_notebook), 1), oss_buffer_label);
-  gtk_label_set_justify (GTK_LABEL (oss_buffer_label), GTK_JUSTIFY_CENTER);
-
-  oss_mixer_page = gtk_vbox_new (FALSE, 5);
-  gtk_widget_show (oss_mixer_page);
-  gtk_container_add (GTK_CONTAINER (output_oss_notebook), oss_mixer_page);
-  gtk_container_set_border_width (GTK_CONTAINER (oss_mixer_page), 5);
-
-  oss_mixer_frame = gtk_frame_new (NULL);
-  gtk_widget_show (oss_mixer_frame);
-  gtk_box_pack_start (GTK_BOX (oss_mixer_page), oss_mixer_frame, FALSE, FALSE, 0);
-
-  oss_mixer_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_widget_show (oss_mixer_vbox);
-  gtk_container_add (GTK_CONTAINER (oss_mixer_frame), oss_mixer_vbox);
-  gtk_container_set_border_width (GTK_CONTAINER (oss_mixer_vbox), 5);
-
-  ossmixer_pcm_check = gtk_check_button_new_with_mnemonic ("Volume controls Master not PCM");
-  gtk_widget_show (ossmixer_pcm_check);
-  gtk_box_pack_start (GTK_BOX (oss_mixer_vbox), ossmixer_pcm_check, FALSE, FALSE, 0);
-
-  label7 = gtk_label_new ("Mixer options");
-  gtk_widget_show (label7);
-  gtk_frame_set_label_widget (GTK_FRAME (oss_mixer_frame), label7);
-
-  oss_mixer_label = gtk_label_new ("Mixer");
-  gtk_widget_show (oss_mixer_label);
-  gtk_notebook_set_tab_label (GTK_NOTEBOOK (output_oss_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (output_oss_notebook), 2), oss_mixer_label);
-  gtk_label_set_justify (GTK_LABEL (oss_mixer_label), GTK_JUSTIFY_CENTER);
-
-  label29 = gtk_label_new ("");
-  gtk_widget_show (label29);
-  gtk_notebook_set_tab_label (GTK_NOTEBOOK (output_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (output_notebook), 0), label29);
 
   output_plugin_page = gtk_vbox_new (FALSE, 5);
   gtk_widget_show (output_plugin_page);
@@ -808,7 +485,7 @@ create_config_win (void)
 
   label31 = gtk_label_new ("");
   gtk_widget_show (label31);
-  gtk_notebook_set_tab_label (GTK_NOTEBOOK (output_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (output_notebook), 1), label31);
+  gtk_notebook_set_tab_label (GTK_NOTEBOOK (output_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (output_notebook), 0), label31);
 
   empty_notebook_page = gtk_vbox_new (FALSE, 0);
   gtk_widget_show (empty_notebook_page);
@@ -816,7 +493,7 @@ create_config_win (void)
 
   label32 = gtk_label_new ("");
   gtk_widget_show (label32);
-  gtk_notebook_set_tab_label (GTK_NOTEBOOK (output_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (output_notebook), 2), label32);
+  gtk_notebook_set_tab_label (GTK_NOTEBOOK (output_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (output_notebook), 1), label32);
 
   empty_notebook_page = gtk_vbox_new (FALSE, 0);
   gtk_widget_show (empty_notebook_page);
@@ -824,7 +501,7 @@ create_config_win (void)
 
   label33 = gtk_label_new ("");
   gtk_widget_show (label33);
-  gtk_notebook_set_tab_label (GTK_NOTEBOOK (output_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (output_notebook), 3), label33);
+  gtk_notebook_set_tab_label (GTK_NOTEBOOK (output_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (output_notebook), 2), label33);
 
   empty_notebook_page = gtk_vbox_new (FALSE, 0);
   gtk_widget_show (empty_notebook_page);
@@ -832,7 +509,7 @@ create_config_win (void)
 
   label34 = gtk_label_new ("");
   gtk_widget_show (label34);
-  gtk_notebook_set_tab_label (GTK_NOTEBOOK (output_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (output_notebook), 4), label34);
+  gtk_notebook_set_tab_label (GTK_NOTEBOOK (output_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (output_notebook), 3), label34);
 
   output_help_label = gtk_label_new ("When modifying the Output Options or the Mixing buffer size, you need to stop/restart playback for the settings to take effect.");
   gtk_widget_show (output_help_label);
@@ -2085,24 +1762,6 @@ create_config_win (void)
   gtk_container_add (GTK_CONTAINER (config_bbox), config_apply);
   GTK_WIDGET_SET_FLAGS (config_apply, GTK_CAN_DEFAULT);
 
-  g_signal_connect ((gpointer) output_oss_radio, "toggled",
-                    G_CALLBACK (on_output_oss_radio_toggled),
-                    NULL);
-  g_signal_connect ((gpointer) output_plugin_radio, "toggled",
-                    G_CALLBACK (on_output_plugin_radio_toggled),
-                    NULL);
-  g_signal_connect ((gpointer) output_none_radio, "toggled",
-                    G_CALLBACK (on_output_none_radio_toggled),
-                    NULL);
-  g_signal_connect ((gpointer) oss_adevice_alt_check, "toggled",
-                    G_CALLBACK (on_config_adevice_alt_check_toggled),
-                    NULL);
-  g_signal_connect ((gpointer) oss_mdevice_alt_check, "toggled",
-                    G_CALLBACK (on_config_mdevice_alt_check_toggled),
-                    NULL);
-  g_signal_connect ((gpointer) osshwb_maxbuf_check, "toggled",
-                    G_CALLBACK (on_osshwb_maxbuf_check_toggled),
-                    NULL);
   g_signal_connect ((gpointer) op_configure_button, "clicked",
                     G_CALLBACK (on_output_plugin_configure_button_clicked),
                     NULL);
@@ -2281,12 +1940,6 @@ create_config_win (void)
   GLADE_HOOKUP_OBJECT (config_win, config_notebook, "config_notebook");
   GLADE_HOOKUP_OBJECT (config_win, config_output_page, "config_output_page");
   GLADE_HOOKUP_OBJECT (config_win, output_options_hbox, "output_options_hbox");
-  GLADE_HOOKUP_OBJECT (config_win, output_method_frame, "output_method_frame");
-  GLADE_HOOKUP_OBJECT (config_win, output_method_vbox, "output_method_vbox");
-  GLADE_HOOKUP_OBJECT (config_win, output_oss_radio, "output_oss_radio");
-  GLADE_HOOKUP_OBJECT (config_win, output_plugin_radio, "output_plugin_radio");
-  GLADE_HOOKUP_OBJECT (config_win, output_none_radio, "output_none_radio");
-  GLADE_HOOKUP_OBJECT (config_win, label1, "label1");
   GLADE_HOOKUP_OBJECT (config_win, output_resampling_frame, "output_resampling_frame");
   GLADE_HOOKUP_OBJECT (config_win, output_resampling_table, "output_resampling_table");
   GLADE_HOOKUP_OBJECT (config_win, resampling_rate_hbox, "resampling_rate_hbox");
@@ -2297,58 +1950,6 @@ create_config_win (void)
   GLADE_HOOKUP_OBJECT (config_win, resampling_quality_optionmenu, "resampling_quality_optionmenu");
   GLADE_HOOKUP_OBJECT (config_win, output_resampling_label, "output_resampling_label");
   GLADE_HOOKUP_OBJECT (config_win, output_notebook, "output_notebook");
-  GLADE_HOOKUP_OBJECT (config_win, output_oss_page, "output_oss_page");
-  GLADE_HOOKUP_OBJECT (config_win, output_oss_notebook, "output_oss_notebook");
-  GLADE_HOOKUP_OBJECT (config_win, oss_device_page, "oss_device_page");
-  GLADE_HOOKUP_OBJECT (config_win, oss_adevice_frame, "oss_adevice_frame");
-  GLADE_HOOKUP_OBJECT (config_win, oss_adevice_vbox, "oss_adevice_vbox");
-  GLADE_HOOKUP_OBJECT (config_win, oss_adevice_hbox, "oss_adevice_hbox");
-  GLADE_HOOKUP_OBJECT (config_win, oss_adevice_optionmenu, "oss_adevice_optionmenu");
-  GLADE_HOOKUP_OBJECT (config_win, convertwidget1, "convertwidget1");
-  GLADE_HOOKUP_OBJECT (config_win, convertwidget2, "convertwidget2");
-  GLADE_HOOKUP_OBJECT (config_win, oss_adevice_alt_hbox, "oss_adevice_alt_hbox");
-  GLADE_HOOKUP_OBJECT (config_win, oss_adevice_alt_check, "oss_adevice_alt_check");
-  GLADE_HOOKUP_OBJECT (config_win, oss_adevice_alt_entry, "oss_adevice_alt_entry");
-  GLADE_HOOKUP_OBJECT (config_win, label3, "label3");
-  GLADE_HOOKUP_OBJECT (config_win, oss_mdevice_frame, "oss_mdevice_frame");
-  GLADE_HOOKUP_OBJECT (config_win, oss_mdevice_vbox, "oss_mdevice_vbox");
-  GLADE_HOOKUP_OBJECT (config_win, oss_mdevice_hbox, "oss_mdevice_hbox");
-  GLADE_HOOKUP_OBJECT (config_win, oss_mdevice_optionmenu, "oss_mdevice_optionmenu");
-  GLADE_HOOKUP_OBJECT (config_win, convertwidget3, "convertwidget3");
-  GLADE_HOOKUP_OBJECT (config_win, convertwidget4, "convertwidget4");
-  GLADE_HOOKUP_OBJECT (config_win, oss_mdevice_alt_hbox, "oss_mdevice_alt_hbox");
-  GLADE_HOOKUP_OBJECT (config_win, oss_mdevice_alt_check, "oss_mdevice_alt_check");
-  GLADE_HOOKUP_OBJECT (config_win, oss_mdevice_alt_entry, "oss_mdevice_alt_entry");
-  GLADE_HOOKUP_OBJECT (config_win, label4, "label4");
-  GLADE_HOOKUP_OBJECT (config_win, oss_device_label, "oss_device_label");
-  GLADE_HOOKUP_OBJECT (config_win, oss_buffer_page, "oss_buffer_page");
-  GLADE_HOOKUP_OBJECT (config_win, oss_buffer_frame, "oss_buffer_frame");
-  GLADE_HOOKUP_OBJECT (config_win, oss_buffer_vbox, "oss_buffer_vbox");
-  GLADE_HOOKUP_OBJECT (config_win, ossbuf_buffer_hbox, "ossbuf_buffer_hbox");
-  GLADE_HOOKUP_OBJECT (config_win, ossbuf_buffer_label, "ossbuf_buffer_label");
-  GLADE_HOOKUP_OBJECT (config_win, ossbuf_buffer_spin, "ossbuf_buffer_spin");
-  GLADE_HOOKUP_OBJECT (config_win, ossbuf_preload_hbox, "ossbuf_preload_hbox");
-  GLADE_HOOKUP_OBJECT (config_win, ossbuf_preload_label, "ossbuf_preload_label");
-  GLADE_HOOKUP_OBJECT (config_win, ossbuf_preload_spin, "ossbuf_preload_spin");
-  GLADE_HOOKUP_OBJECT (config_win, label5, "label5");
-  GLADE_HOOKUP_OBJECT (config_win, oss_hwbuf_frame, "oss_hwbuf_frame");
-  GLADE_HOOKUP_OBJECT (config_win, oss_hwbuf_vbox, "oss_hwbuf_vbox");
-  GLADE_HOOKUP_OBJECT (config_win, osshwb_maxbuf_check, "osshwb_maxbuf_check");
-  GLADE_HOOKUP_OBJECT (config_win, osshwb_fragments_hbox, "osshwb_fragments_hbox");
-  GLADE_HOOKUP_OBJECT (config_win, osshwb_fragments_label, "osshwb_fragments_label");
-  GLADE_HOOKUP_OBJECT (config_win, osshwb_fragments_spin, "osshwb_fragments_spin");
-  GLADE_HOOKUP_OBJECT (config_win, osshwb_fragsize_hbox, "osshwb_fragsize_hbox");
-  GLADE_HOOKUP_OBJECT (config_win, osshwb_fragsize_label, "osshwb_fragsize_label");
-  GLADE_HOOKUP_OBJECT (config_win, osshwb_fragsize_spin, "osshwb_fragsize_spin");
-  GLADE_HOOKUP_OBJECT (config_win, label6, "label6");
-  GLADE_HOOKUP_OBJECT (config_win, oss_buffer_label, "oss_buffer_label");
-  GLADE_HOOKUP_OBJECT (config_win, oss_mixer_page, "oss_mixer_page");
-  GLADE_HOOKUP_OBJECT (config_win, oss_mixer_frame, "oss_mixer_frame");
-  GLADE_HOOKUP_OBJECT (config_win, oss_mixer_vbox, "oss_mixer_vbox");
-  GLADE_HOOKUP_OBJECT (config_win, ossmixer_pcm_check, "ossmixer_pcm_check");
-  GLADE_HOOKUP_OBJECT (config_win, label7, "label7");
-  GLADE_HOOKUP_OBJECT (config_win, oss_mixer_label, "oss_mixer_label");
-  GLADE_HOOKUP_OBJECT (config_win, label29, "label29");
   GLADE_HOOKUP_OBJECT (config_win, output_plugin_page, "output_plugin_page");
   GLADE_HOOKUP_OBJECT (config_win, op_plugin_frame, "op_plugin_frame");
   GLADE_HOOKUP_OBJECT (config_win, op_plugin_vbox, "op_plugin_vbox");

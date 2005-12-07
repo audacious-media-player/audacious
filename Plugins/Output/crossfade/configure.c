@@ -33,9 +33,6 @@
 #include "interface.h"
 #include "monitor.h"
 #include "support.h"
-#ifdef HAVE_OSS
-#  include "oss.h"
-#endif
 
 #include <stdio.h>
 #include <string.h>
@@ -46,14 +43,6 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <sys/stat.h>
-
-#ifdef HAVE_OSS
-#  ifdef HAVE_SYS_SOUNDCARD_H
-#    include <sys/soundcard.h>
-#  elif defined(HAVE_MACHINE_SOUNDCARD_H)
-#    include <machine/soundcard.h>
-#  endif
-#endif
 
 #ifdef HAVE_LIBSAMPLERATE
 #  include <samplerate.h>
@@ -282,11 +271,6 @@ xfade_load_config()
 
   if((cfgfile = xmms_cfg_open_default_file())) {
     /* config items used in v0.1 */
-    xmms_cfg_read_int    (cfgfile, section, "output_method",        &config->output_method);
-    xmms_cfg_read_int    (cfgfile, section, "audio_device",         &config->oss_audio_device);
-    xmms_cfg_read_boolean(cfgfile, section, "use_alt_audio_device", &config->oss_use_alt_audio_device);
-    xmms_cfg_read_string (cfgfile, section, "alt_audio_device",     &config->oss_alt_audio_device);
-    xmms_cfg_read_int    (cfgfile, section, "mixer_device",         &config->oss_mixer_device);
     xmms_cfg_read_string (cfgfile, section, "output_plugin",        &config->op_name);
     xmms_cfg_read_string (cfgfile, section, "op_config_string",     &config->op_config_string);
     xmms_cfg_read_int    (cfgfile, section, "buffer_size",          &config->mix_size_ms);
@@ -299,9 +283,6 @@ xfade_load_config()
     xmms_cfg_read_boolean(cfgfile, section, "enable_monitor",       &config->enable_monitor);
 
     /* config items introduced by v0.2 */
-    xmms_cfg_read_int    (cfgfile, section, "oss_buffer_size",      &config->oss_buffer_size_ms);
-    xmms_cfg_read_int    (cfgfile, section, "oss_preload_size",     &config->oss_preload_size_ms);
-    xmms_cfg_read_boolean(cfgfile, section, "oss_mixer_use_master", &config->oss_mixer_use_master);
     xmms_cfg_read_boolean(cfgfile, section, "gap_lead_enable",      &config->gap_lead_enable);
     xmms_cfg_read_int    (cfgfile, section, "gap_lead_len_ms",      &config->gap_lead_len_ms);
     xmms_cfg_read_int    (cfgfile, section, "gap_lead_level",       &config->gap_lead_level);
@@ -326,13 +307,7 @@ xfade_load_config()
     xmms_cfg_read_boolean(cfgfile, section, "effect_enable",        &config->ep_enable);
     xmms_cfg_read_int    (cfgfile, section, "output_rate",          &config->output_rate);
     
-    /* config items introduced by v0.2.7 */
-    xmms_cfg_read_boolean(cfgfile, section, "oss_maxbuf_enable",    &config->oss_maxbuf_enable);
-
     /* config items introduced by v0.3.0 */
-    xmms_cfg_read_boolean(cfgfile, section, "use_alt_mixer_device", &config->oss_use_alt_mixer_device);
-    xmms_cfg_read_int    (cfgfile, section, "oss_fragments",        &config->oss_fragments);
-    xmms_cfg_read_int    (cfgfile, section, "oss_fragment_size",    &config->oss_fragment_size);
     xmms_cfg_read_boolean(cfgfile, section, "volnorm_enable",       &config->volnorm_enable);
     xmms_cfg_read_boolean(cfgfile, section, "volnorm_use_qa",       &config->volnorm_use_qa);
     xmms_cfg_read_int    (cfgfile, section, "volnorm_target",       &config->volnorm_target);
@@ -345,7 +320,6 @@ xfade_load_config()
     xmms_cfg_read_boolean(cfgfile, section, "no_xfade_if_same_file",&config->no_xfade_if_same_file);
 
     /* config items introduced by v0.3.3 */
-    xmms_cfg_read_string (cfgfile, section, "alt_mixer_device",     &config->oss_alt_mixer_device);
     xmms_cfg_read_boolean(cfgfile, section, "gap_crossing",         &config->gap_crossing);
 
     /* config items introduced by v0.3.6 */
@@ -390,11 +364,6 @@ xfade_save_config()
     xmms_cfg_remove_key(cfgfile, section, "gap_lead_length");
       
     /* config items used in v0.1 */
-    xmms_cfg_write_int    (cfgfile, section, "output_method",        config->output_method);
-    xmms_cfg_write_int    (cfgfile, section, "audio_device",         config->oss_audio_device);
-    xmms_cfg_write_boolean(cfgfile, section, "use_alt_audio_device", config->oss_use_alt_audio_device);
-    xmms_cfg_write_string (cfgfile, section, "alt_audio_device",     config->oss_alt_audio_device ? config->oss_alt_audio_device : DEFAULT_OSS_ALT_AUDIO_DEVICE);
-    xmms_cfg_write_int    (cfgfile, section, "mixer_device",         config->oss_mixer_device);
     xmms_cfg_write_string (cfgfile, section, "output_plugin",        config->op_name ? config->op_name : DEFAULT_OP_NAME);
     xmms_cfg_write_string (cfgfile, section, "op_config_string",     config->op_config_string ? config->op_config_string : DEFAULT_OP_CONFIG_STRING);
     xmms_cfg_write_int    (cfgfile, section, "buffer_size",          config->mix_size_ms);
@@ -407,9 +376,6 @@ xfade_save_config()
     xmms_cfg_write_boolean(cfgfile, section, "enable_monitor",       config->enable_monitor);
     
     /* config items introduced by v0.2 */
-    xmms_cfg_write_int    (cfgfile, section, "oss_buffer_size",      config->oss_buffer_size_ms);
-    xmms_cfg_write_int    (cfgfile, section, "oss_preload_size",     config->oss_preload_size_ms);
-    xmms_cfg_write_boolean(cfgfile, section, "oss_mixer_use_master", config->oss_mixer_use_master);
     xmms_cfg_write_boolean(cfgfile, section, "gap_lead_enable",      config->gap_lead_enable);
     xmms_cfg_write_int    (cfgfile, section, "gap_lead_len_ms",      config->gap_lead_len_ms);
     xmms_cfg_write_int    (cfgfile, section, "gap_lead_level",       config->gap_lead_level);
@@ -434,13 +400,7 @@ xfade_save_config()
     xmms_cfg_write_boolean(cfgfile, section, "effect_enable",        config->ep_enable);
     xmms_cfg_write_int    (cfgfile, section, "output_rate",          config->output_rate);
    
-    /* config items introduced by v0.2.7 */
-    xmms_cfg_write_boolean(cfgfile, section, "oss_maxbuf_enable",    config->oss_maxbuf_enable);
-    
     /* config items introduced by v0.3.0 */
-    xmms_cfg_write_boolean(cfgfile, section, "use_alt_mixer_device", config->oss_use_alt_mixer_device);
-    xmms_cfg_write_int    (cfgfile, section, "oss_fragments",        config->oss_fragments);
-    xmms_cfg_write_int    (cfgfile, section, "oss_fragment_size",    config->oss_fragment_size);
 #ifdef VOLUME_NORMALIZER
     xmms_cfg_write_boolean(cfgfile, section, "volnorm_enable",       config->volnorm_enable);
     xmms_cfg_write_boolean(cfgfile, section, "volnorm_use_qa",       config->volnorm_use_qa);
@@ -455,7 +415,6 @@ xfade_save_config()
     xmms_cfg_write_boolean(cfgfile, section, "no_xfade_if_same_file",config->no_xfade_if_same_file);
 
     /* config items introduced by v0.3.2 */
-    xmms_cfg_write_string (cfgfile, section, "alt_mixer_device",     config->oss_alt_mixer_device ? config->oss_alt_mixer_device : DEFAULT_OSS_ALT_MIXER_DEVICE);
     xmms_cfg_write_boolean(cfgfile, section, "gap_crossing",         config->gap_crossing);
 
     /* config items introduced by v0.3.6 */
@@ -483,8 +442,6 @@ xfade_save_config()
 void
 xfade_free_config()
 {
-  SAFE_FREE(cfg->oss_alt_audio_device);
-  SAFE_FREE(cfg->oss_alt_mixer_device);
   SAFE_FREE(cfg->op_config_string);
   SAFE_FREE(cfg->op_name);
 
@@ -685,24 +642,6 @@ add_menu_item(GtkWidget *menu, gchar *title, GtkSignalFunc func, gint index, gin
 
 /*-- callbacks --------------------------------------------------------------*/
 
-void on_output_oss_radio_toggled(GtkToggleButton *togglebutton, gpointer user_data)
-{
-  SET_PAGE("output_notebook", 0);
-  cfg->output_method = OUTPUT_METHOD_BUILTIN_OSS;
-}
-
-void on_output_plugin_radio_toggled(GtkToggleButton *togglebutton, gpointer user_data)
-{
-  SET_PAGE("output_notebook", 1);
-  cfg->output_method = OUTPUT_METHOD_PLUGIN;
-}
-
-void on_output_none_radio_toggled(GtkToggleButton *togglebutton, gpointer user_data)
-{
-  SET_PAGE("output_notebook", 2);
-  cfg->output_method = OUTPUT_METHOD_BUILTIN_NULL;
-}
-
 static void resampling_rate_cb(GtkWidget *widget, gint index)
 {
   cfg->output_rate = index;
@@ -714,153 +653,6 @@ static void resampling_quality_cb(GtkWidget *widget, gint index)
   cfg->output_quality = index;
 }
 #endif
-
-/*** oss output **************************************************************/
-
-static void
-scan_devices(gchar *type, GtkWidget *option_menu, GtkSignalFunc signal_f)
-{
-#ifdef HAVE_OSS
-  gchar buffer[256];
-  FILE *file;
-
-  GtkWidget *item;
-  gboolean   found = FALSE;
-  gint       type_len = strlen(type);
-#endif
-
-  GtkWidget *menu;
-  gint  index = 0;
-  gint  mixer = 0;
-
-  menu = gtk_menu_new();
-
-#ifdef HAVE_OSS
-  /* look for devices in /dev/sndstat or /proc/asound/sndstat (OSS style) */
-  if((file = fopen("/dev/sndstat", "r")) ||
-     (file = fopen("/proc/asound/sndstat", "r")) ||
-     (file = fopen("/proc/asound/oss/sndstat", "r"))) {
-    while(fgets(buffer, sizeof(buffer), file)) {
-      gint i = strlen(buffer)-1;
-      while((i >= 0) && isspace(buffer[i])) buffer[i--] = 0;
-      if(found) {
-	if(!buffer[0] || !isdigit(buffer[0])) break;
-	if(index == 0) {
-	  gchar *label, *p = strchr(buffer, ':');
-	  if(p) do p++; while(*p == ' ');
-	  else p = buffer;
-	  label = g_strdup_printf("Default (%s)", p);
-	  item = gtk_menu_item_new_with_label(label);
-	  g_free(label);
-	}
-	else item = gtk_menu_item_new_with_label(buffer);
-	
-	gtk_signal_connect(GTK_OBJECT(item), "activate", GTK_SIGNAL_FUNC(signal_f),
-			   (gpointer)index);
-	gtk_widget_show(item);
-	gtk_menu_append(GTK_MENU(menu), item);
-	index++;
-      }
-      else if(!strcmp(buffer, type))
-	found = TRUE;
-      else if(!strncmp(buffer, type, type_len))
-	DEBUG(("[crossfade] scan_devices: %s\n", buffer));
-    }
-    fclose(file);
-    
-    if(!found)
-      DEBUG(("[crossfade] scan_devices: section \"%s\" not found!\n", type));
-  }
-  else {
-    DEBUG(("[crossfade] scan_devices: no sndstat found!\n"));
-#ifdef SOUND_MIXER_INFO
-    /* from xmms-3dse7 by Frank Cornelis */
-    DEBUG(("[crossfade] scan_devices: using alternate method...\n"));
-    for(;;) {
-      gchar      dev_name[32];
-      int        fd;
-      mixer_info info;
-      gchar     *label;
-      
-      if(mixer != 0)
-	sprintf(dev_name, "/dev/mixer%d", mixer);
-      else
-	strcpy(dev_name, "/dev/mixer");
-      
-      if((fd = open(dev_name, O_RDONLY)) != -1) {
-	if(ioctl(fd, SOUND_MIXER_INFO, &info) != -1) {
-	  label = g_strdup_printf(index ? "%s" : "Default (%s)", info.name);
-	  add_menu_item(menu, label, signal_f, index, NULL);
-	  g_free(label);
-	  index++;
-	}
-	close(fd);
-      }
-      else break;
-      mixer++;
-    }
-#endif                                                                       
-  }
-#endif  /* HAVE_OSS */
-  
-  /* create default entry if no device(s) could be found */
-  if(index == 0) add_menu_item(menu, "Default", signal_f, 0, NULL);
-
-  /* attach menu */
-  gtk_option_menu_set_menu(GTK_OPTION_MENU(option_menu), menu);
-}
-
-/*-- oss output callbacks ---------------------------------------------------*/
-
-void check_oss_dependencies()
-{
-  if(checking) return;
-  checking = TRUE;
-
-  SET_SENSITIVE("oss_adevice_optionmenu", !cfg->oss_use_alt_audio_device);
-  SET_SENSITIVE("oss_adevice_alt_entry",   cfg->oss_use_alt_audio_device);
-
-  SET_SENSITIVE("oss_mdevice_optionmenu", !cfg->oss_use_alt_mixer_device);
-  SET_SENSITIVE("oss_mdevice_alt_entry",   cfg->oss_use_alt_mixer_device);
-
-  SET_SENSITIVE("osshwb_fragments_label", !cfg->oss_maxbuf_enable);
-  SET_SENSITIVE("osshwb_fragments_spin",  !cfg->oss_maxbuf_enable);
-  SET_SENSITIVE("osshwb_fragsize_label",  !cfg->oss_maxbuf_enable);
-  SET_SENSITIVE("osshwb_fragsize_spin",   !cfg->oss_maxbuf_enable);
-
-  checking = FALSE;
-}
-
-void config_adevice_cb(GtkWidget *widget, gint device)
-{
-  cfg->oss_audio_device = device;
-}
-
-void config_mdevice_cb(GtkWidget *widget, gint device)
-{
-  cfg->oss_mixer_device = device;
-}
-
-void on_config_adevice_alt_check_toggled(GtkToggleButton *togglebutton, gpointer user_data)
-{
-  if(checking) return;
-  cfg->oss_use_alt_audio_device = gtk_toggle_button_get_active(togglebutton);
-  check_oss_dependencies();
-}
-
-void on_config_mdevice_alt_check_toggled(GtkToggleButton *togglebutton, gpointer user_data)
-{
-  if(checking) return;
-  cfg->oss_use_alt_mixer_device = gtk_toggle_button_get_active(togglebutton);
-  check_oss_dependencies();
-}
-
-void on_osshwb_maxbuf_check_toggled(GtkToggleButton *togglebutton, gpointer user_data)
-{
-  if(checking) return;
-  cfg->oss_maxbuf_enable = gtk_toggle_button_get_active(togglebutton);
-  check_oss_dependencies();
-}
 
 /*** plugin output ***********************************************************/
 
@@ -1197,18 +989,18 @@ create_crossfader_config_menu()
     for(i=0; i<MAX_FADE_CONFIGS; i++) xf_config_index_map[i] = -1;
     imap = xf_config_index_map;
     menu = gtk_menu_new();
-    add_menu_item(menu, "Start of playback",    xf_config_cb, FADE_CONFIG_START, &imap);
-    add_menu_item(menu, "Automatic songchange", xf_config_cb, FADE_CONFIG_XFADE, &imap);
+    add_menu_item(menu, "Start of playback",    GTK_SIGNAL_FUNC(xf_config_cb), FADE_CONFIG_START, &imap);
+    add_menu_item(menu, "Automatic songchange", GTK_SIGNAL_FUNC(xf_config_cb), FADE_CONFIG_XFADE, &imap);
 #if 0
     /* this should be FADE_TYPE_NONE all the time, anyway,
        so no need to make it configureable by the user */
-    add_menu_item(menu, "Automatic (gapless)",  xf_config_cb, FADE_CONFIG_ALBUM, &imap);
+    add_menu_item(menu, "Automatic (gapless)",  GTK_SIGNAL_FUNC(xf_config_cb), FADE_CONFIG_ALBUM, &imap);
 #endif
-    add_menu_item(menu, "Manual songchange",    xf_config_cb, FADE_CONFIG_MANUAL, &imap);
-    add_menu_item(menu, "Manual stop",          xf_config_cb, FADE_CONFIG_STOP, &imap);
-    add_menu_item(menu, "End of playlist",      xf_config_cb, FADE_CONFIG_EOP, &imap);
-    add_menu_item(menu, "Seeking",              xf_config_cb, FADE_CONFIG_SEEK, &imap);
-    add_menu_item(menu, "Pause",                xf_config_cb, FADE_CONFIG_PAUSE, &imap);
+    add_menu_item(menu, "Manual songchange",    GTK_SIGNAL_FUNC(xf_config_cb), FADE_CONFIG_MANUAL, &imap);
+    add_menu_item(menu, "Manual stop",          GTK_SIGNAL_FUNC(xf_config_cb), FADE_CONFIG_STOP, &imap);
+    add_menu_item(menu, "End of playlist",      GTK_SIGNAL_FUNC(xf_config_cb), FADE_CONFIG_EOP, &imap);
+    add_menu_item(menu, "Seeking",              GTK_SIGNAL_FUNC(xf_config_cb), FADE_CONFIG_SEEK, &imap);
+    add_menu_item(menu, "Pause",                GTK_SIGNAL_FUNC(xf_config_cb), FADE_CONFIG_PAUSE, &imap);
     gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu), menu);
   }
 
@@ -1226,16 +1018,16 @@ create_crossfader_type_menu()
     imap = xf_type_index_map;
     menu = gtk_menu_new();
     mask = cfg->fc[cfg->xf_index].type_mask;
-    if(mask & (1 << FADE_TYPE_REOPEN))      add_menu_item(menu, "Reopen output device", xf_type_cb, FADE_TYPE_REOPEN, &imap);
-    if(mask & (1 << FADE_TYPE_FLUSH))       add_menu_item(menu, "Flush output device",  xf_type_cb, FADE_TYPE_FLUSH, &imap);
-    if(mask & (1 << FADE_TYPE_NONE))        add_menu_item(menu, "None (gapless/off)",   xf_type_cb, FADE_TYPE_NONE, &imap);
-    if(mask & (1 << FADE_TYPE_PAUSE))       add_menu_item(menu, "Pause",                xf_type_cb, FADE_TYPE_PAUSE, &imap);
-    if(mask & (1 << FADE_TYPE_SIMPLE_XF))   add_menu_item(menu, "Simple crossfade",     xf_type_cb, FADE_TYPE_SIMPLE_XF, &imap);
-    if(mask & (1 << FADE_TYPE_ADVANCED_XF)) add_menu_item(menu, "Advanced crossfade",   xf_type_cb, FADE_TYPE_ADVANCED_XF, &imap);
-    if(mask & (1 << FADE_TYPE_FADEIN))      add_menu_item(menu, "Fadein",               xf_type_cb, FADE_TYPE_FADEIN, &imap);
-    if(mask & (1 << FADE_TYPE_FADEOUT))     add_menu_item(menu, "Fadeout",              xf_type_cb, FADE_TYPE_FADEOUT, &imap);
-    if(mask & (1 << FADE_TYPE_PAUSE_NONE))  add_menu_item(menu, "None",                 xf_type_cb, FADE_TYPE_PAUSE_NONE, &imap);
-    if(mask & (1 << FADE_TYPE_PAUSE_ADV))   add_menu_item(menu, "Fadeout/Fadein",       xf_type_cb, FADE_TYPE_PAUSE_ADV, &imap);
+    if(mask & (1 << FADE_TYPE_REOPEN))      add_menu_item(menu, "Reopen output device", GTK_SIGNAL_FUNC(xf_type_cb), FADE_TYPE_REOPEN, &imap);
+    if(mask & (1 << FADE_TYPE_FLUSH))       add_menu_item(menu, "Flush output device",  GTK_SIGNAL_FUNC(xf_type_cb), FADE_TYPE_FLUSH, &imap);
+    if(mask & (1 << FADE_TYPE_NONE))        add_menu_item(menu, "None (gapless/off)",   GTK_SIGNAL_FUNC(xf_type_cb), FADE_TYPE_NONE, &imap);
+    if(mask & (1 << FADE_TYPE_PAUSE))       add_menu_item(menu, "Pause",                GTK_SIGNAL_FUNC(xf_type_cb), FADE_TYPE_PAUSE, &imap);
+    if(mask & (1 << FADE_TYPE_SIMPLE_XF))   add_menu_item(menu, "Simple crossfade",     GTK_SIGNAL_FUNC(xf_type_cb), FADE_TYPE_SIMPLE_XF, &imap);
+    if(mask & (1 << FADE_TYPE_ADVANCED_XF)) add_menu_item(menu, "Advanced crossfade",   GTK_SIGNAL_FUNC(xf_type_cb), FADE_TYPE_ADVANCED_XF, &imap);
+    if(mask & (1 << FADE_TYPE_FADEIN))      add_menu_item(menu, "Fadein",               GTK_SIGNAL_FUNC(xf_type_cb), FADE_TYPE_FADEIN, &imap);
+    if(mask & (1 << FADE_TYPE_FADEOUT))     add_menu_item(menu, "Fadeout",              GTK_SIGNAL_FUNC(xf_type_cb), FADE_TYPE_FADEOUT, &imap);
+    if(mask & (1 << FADE_TYPE_PAUSE_NONE))  add_menu_item(menu, "None",                 GTK_SIGNAL_FUNC(xf_type_cb), FADE_TYPE_PAUSE_NONE, &imap);
+    if(mask & (1 << FADE_TYPE_PAUSE_ADV))   add_menu_item(menu, "Fadeout/Fadein",       GTK_SIGNAL_FUNC(xf_type_cb), FADE_TYPE_PAUSE_ADV, &imap);
     gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu), menu);
   }
 }
@@ -1770,31 +1562,6 @@ void on_config_apply_clicked(GtkButton *button, gpointer user_data)
 
   /* sample rate */
 
-  /* output method: builtin OSS */
-  if((widget = lookup_widget(config_win, "output_oss_notebook")))
-    cfg->oss_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(widget));
-
-  if((widget = lookup_widget(config_win, "oss_adevice_alt_entry"))) {
-    if(cfg->oss_alt_audio_device) g_free(cfg->oss_alt_audio_device);
-    cfg->oss_alt_audio_device = gtk_editable_get_chars(GTK_EDITABLE(widget), 0, -1);
-    g_strstrip(cfg->oss_alt_audio_device);
-  }
-
-  if((widget = lookup_widget(config_win, "oss_mdevice_alt_entry"))) {
-    if(cfg->oss_alt_mixer_device) g_free(cfg->oss_alt_mixer_device);
-    cfg->oss_alt_mixer_device = gtk_editable_get_chars(GTK_EDITABLE(widget), 0, -1);
-    g_strstrip(cfg->oss_alt_mixer_device);
-  }
-
-  cfg->oss_buffer_size_ms  = GET_SPIN  ("ossbuf_buffer_spin");
-  cfg->oss_preload_size_ms = GET_SPIN  ("ossbuf_preload_spin");
-
-  cfg->oss_fragments       = GET_SPIN  ("osshwb_fragments_spin");
-  cfg->oss_fragment_size   = GET_SPIN  ("osshwb_fragsize_spin");
-  cfg->oss_maxbuf_enable   = GET_TOGGLE("osshwb_maxbuf_check");
-
-  cfg->oss_mixer_use_master = GET_TOGGLE("ossmixer_pcm_check");
-
   /* output method: plugin */
   op_config.throttle_enable  = GET_TOGGLE("op_throttle_check");
   op_config.max_write_enable = GET_TOGGLE("op_maxblock_check");
@@ -1842,16 +1609,12 @@ void on_config_apply_clicked(GtkButton *button, gpointer user_data)
   g_static_mutex_lock(&buffer_mutex);
 
   /* free existing strings */
-  if(config->oss_alt_audio_device) g_free(config->oss_alt_audio_device);
-  if(config->oss_alt_mixer_device) g_free(config->oss_alt_mixer_device);
   if(config->op_config_string)     g_free(config->op_config_string);
   if(config->op_name)              g_free(config->op_name);
   if(config->ep_name)              g_free(config->ep_name);
 
   /* copy current settings (dupping the strings) */
   *config = *cfg;
-  config->oss_alt_audio_device = g_strdup(cfg->oss_alt_audio_device);
-  config->oss_alt_mixer_device = g_strdup(cfg->oss_alt_mixer_device);
   config->op_config_string     = g_strdup(cfg->op_config_string);
   config->op_name              = g_strdup(cfg->op_name);
   config->ep_name              = g_strdup(cfg->ep_name);
@@ -1894,16 +1657,12 @@ void xfade_configure()
 		       GTK_SIGNAL_FUNC(gtk_widget_destroyed), &config_win);
     
     /* free any strings that might be left in our local copy of the config */
-    if(cfg->oss_alt_audio_device) g_free(cfg->oss_alt_audio_device);
-    if(cfg->oss_alt_mixer_device) g_free(cfg->oss_alt_mixer_device);
     if(cfg->op_config_string)     g_free(cfg->op_config_string);
     if(cfg->op_name)              g_free(cfg->op_name);
     if(cfg->ep_name)              g_free(cfg->ep_name);
 
     /* copy current settings (dupping the strings) */
     *cfg = *config;
-    cfg->oss_alt_audio_device = g_strdup(config->oss_alt_audio_device);
-    cfg->oss_alt_mixer_device = g_strdup(config->oss_alt_mixer_device);
     cfg->op_config_string     = g_strdup(config->op_config_string);
     cfg->op_name              = g_strdup(config->op_name);
     cfg->ep_name              = g_strdup(config->ep_name);
@@ -1911,31 +1670,6 @@ void xfade_configure()
     /* go to remembered notebook page */
     if((widget = lookup_widget(config_win, "config_notebook")))
       gtk_notebook_set_page(GTK_NOTEBOOK(widget), config->page);
-
-    /* output: method */
-#ifdef HAVE_OSS
-    SET_SENSITIVE("output_oss_radio", TRUE);
-#else
-    SET_SENSITIVE("output_oss_radio", FALSE);
-#endif
-
-    switch(cfg->output_method) {
-    case OUTPUT_METHOD_BUILTIN_OSS:
-      widget = lookup_widget(config_win, "output_oss_radio");
-      break;
-    case OUTPUT_METHOD_PLUGIN:
-      widget = lookup_widget(config_win, "output_plugin_radio");
-      break;
-    case OUTPUT_METHOD_BUILTIN_NULL:
-      widget = lookup_widget(config_win, "output_none_radio");
-      break;
-    default:
-      widget = NULL;
-    }
-    if(widget) gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget), TRUE);
-
-    if((widget = lookup_widget(config_win, "output_notebook")))
-      gtk_notebook_set_page(GTK_NOTEBOOK(widget), cfg->output_method);
 
     /* output: resampling rate */
     if((widget = lookup_widget(config_win, "resampling_rate_optionmenu"))) {
@@ -1994,49 +1728,6 @@ void xfade_configure()
     HIDE("resampling_quality_hbox");
     HIDE("resampling_quality_optionmenu");
 #endif
-
-    /* output method: builtin OSS */
-    if((widget = lookup_widget(config_win, "output_oss_notebook")))
-      gtk_notebook_set_page(GTK_NOTEBOOK(widget), cfg->oss_page);
-
-    if((widget = lookup_widget(config_win, "oss_adevice_optionmenu"))) {
-      scan_devices("Audio devices:", widget, config_adevice_cb);
-      gtk_option_menu_set_history(GTK_OPTION_MENU(widget),
-				  cfg->oss_audio_device);
-      gtk_widget_set_sensitive(widget, !cfg->oss_use_alt_audio_device);
-    }
-    SET_TOGGLE("oss_adevice_alt_check", cfg->oss_use_alt_audio_device);
-    if((widget = lookup_widget(config_win, "oss_adevice_alt_entry"))) {
-      gtk_entry_set_text(GTK_ENTRY(widget), cfg->oss_alt_audio_device
-			 ? cfg->oss_alt_audio_device
-			 : DEFAULT_OSS_ALT_AUDIO_DEVICE);
-      gtk_widget_set_sensitive(widget, cfg->oss_use_alt_audio_device);
-    }
-    
-    if((widget = lookup_widget(config_win, "oss_mdevice_optionmenu"))) {
-      scan_devices("Mixers:", widget, config_mdevice_cb);
-      gtk_option_menu_set_history(GTK_OPTION_MENU(widget),
-				  cfg->oss_mixer_device);
-      gtk_widget_set_sensitive(widget, !cfg->oss_use_alt_mixer_device);
-    }
-    SET_TOGGLE("oss_mdevice_alt_check", cfg->oss_use_alt_mixer_device);
-    if((widget = lookup_widget(config_win, "oss_mdevice_alt_entry"))) {
-      gtk_entry_set_text(GTK_ENTRY(widget), cfg->oss_alt_mixer_device
-        		 ? cfg->oss_alt_mixer_device
-        		 : DEFAULT_OSS_ALT_MIXER_DEVICE); 
-      gtk_widget_set_sensitive(widget, cfg->oss_use_alt_mixer_device);
-    }
-
-    SET_SPIN  ("ossbuf_buffer_spin",  cfg->oss_buffer_size_ms);
-    SET_SPIN  ("ossbuf_preload_spin", cfg->oss_preload_size_ms);
-
-    SET_SPIN  ("osshwb_fragments_spin", cfg->oss_fragments);
-    SET_SPIN  ("osshwb_fragsize_spin",  cfg->oss_fragment_size);
-    SET_TOGGLE("osshwb_maxbuf_check",   cfg->oss_maxbuf_enable);
-
-    SET_TOGGLE("ossmixer_pcm_check", cfg->oss_mixer_use_master);
-
-    check_oss_dependencies();
 
     /* output method: plugin */
     xfade_load_plugin_config(cfg->op_config_string, cfg->op_name, &op_config);
@@ -2140,6 +1831,8 @@ void xfade_about()
 {
   if(!about_win) {
     gchar *about_text = 
+      "Audacious crossfading plugin\n"
+      "Code adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org> from:\n"
       "XMMS Crossfade Plugin "VERSION"\n"
       "Copyright (C) 2000-2004  Peter Eisenlohr <peter@eisenlohr.org>\n"
       "\n"
