@@ -234,11 +234,7 @@ gint xfade_update_monitor(gpointer userdata)
 
     /*** Position ***/
     if(1 || (monitor_position_label && monitor_total_label && monitor_left_label)) {
-#ifndef HAVE_BEEP
-      if(!get_input_playing() || (monitor_closing == CLOSED)) {  /* XMMS */
-#else
       if(!bmp_playback_get_playing() || (monitor_closing == CLOSED)) {  /* XMMS */
-#endif
 	gtk_label_set_text(monitor_position_label, default_position_str);
 	gtk_label_set_text(monitor_total_label,    default_total_str);
 	gtk_label_set_text(monitor_left_label,     default_left_str);

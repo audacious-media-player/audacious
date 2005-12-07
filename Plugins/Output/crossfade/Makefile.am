@@ -1,4 +1,6 @@
+if ENABLE_CROSSFADE
 lib_LTLIBRARIES = libcrossfade.la
+endif
 
 gtk_sources = \
 	interface-2.0.c \
@@ -7,22 +9,15 @@ gtk_sources = \
 	support-2.0.h \
 	callbacks.c \
 	callbacks.h
-interface-2.0.c:
-	glade-2 -w interface-2.0.glade
 
-if HAVE_LIBFFTW_COND
-fftw_sources = fft.c fft.h
-fftw_libs = -lfftw -lrfftw
-endif
-
-if HAVE_LIBSAMPLERATE_COND
+if HAVE_LIBSAMPLERATE
 samplerate_libs = -lsamplerate
 endif
 
 libdir = $(plugindir)/$(OUTPUT_PLUGIN_DIR)
 
 libcrossfade = @PLUGIN_LDFLAGS@
-libcrossfade_la_LIBADD  = $(fftw_libs) $(samplerate_libs)
+libcrossfade_la_LIBADD  = $(samplerate_libs)
 libcrossfade_la_SOURCES = \
 	crossfade.c \
 	crossfade.h \
@@ -44,6 +39,6 @@ libcrossfade_la_SOURCES = \
 	timing.h \
 	volume.c \
 	volume.h \
-	$(gtk_sources) \
-	$(fftw_sources)
+	$(gtk_sources)
 
+INCLUDES = $(GTK_CFLAGS) -I$(top_builddir)/intl -I$(top_srcdir)

@@ -36,9 +36,6 @@
 #include "rate.h"
 #include "volume.h"
 #include "timing.h"
-#ifdef HAVE_LIBFFTW
-#  include "fft.h"
-#endif
 
 #include <stdio.h>
 #include <string.h>
@@ -106,11 +103,7 @@ static gboolean  *xmms_playlist_get_info_going = NULL;  /* XMMS */
 static gboolean  *xmms_is_quitting             = NULL;  /* XMMS */
 static gboolean (*input_stopped_for_restart)() = NULL;  /* XMMS */
 
-#ifdef HAVE_CTOR
 void fini() __attribute__((destructor));
-#else
-void _fini() { fini(); }
-#endif
 
 /* local variables */
 static gint      session_id;
@@ -200,9 +193,6 @@ static effect_context_t   effect_context;
 static convert_context_t  convert_context;
 static rate_context_t     rate_context;
 static volume_context_t   volume_context;
-#ifdef HAVE_LIBFFTW
-static fft_context_t      fft_context;
-#endif
 
 static config_t  the_config;
        config_t *config = &the_config;
@@ -456,9 +446,6 @@ xfade_init()
   convert_init(&convert_context);
   rate_init(&rate_context);
   volume_init(&volume_context);
-#ifdef HAVE_LIBFFTW
-  fft_init(&fft_context);
-#endif
 
   /* reset */
   stopped = FALSE;
@@ -570,9 +557,6 @@ void fini()
   g_static_mutex_unlock (&buffer_mutex);
 
   /* free contexts */
-#ifdef HAVE_LIBFFTW
-  fft_free(&fft_context);
-#endif
   volume_free(&volume_context);
   rate_free(&rate_context);
   convert_free(&convert_context);
@@ -1727,11 +1711,6 @@ buffer_thread_f(void *arg)
 	if(the_op_config.max_write_enable
 	   && (blen > the_op_config.max_write_len))
 	  blen = the_op_config.max_write_len;
-
-#ifdef HAVE_LIBFFTW
-	/* fft playground */
-	fft_flow(&fft_context, (gpointer)data, blen);
-#endif
 
 	/* finally, write data */
 	the_op->write_audio(data, blen);

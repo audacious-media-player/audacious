@@ -335,11 +335,7 @@ OutputPlugin *get_crossfade_oplugin_info();
 
 /* xmms internal prototypes */ /* XMMS */
 gint     ctrlsocket_get_session_id();
-#ifndef HAVE_BEEP
-gboolean get_input_playing();
-#else
 gboolean bmp_playback_get_playing();
-#endif
 GList   *get_output_list();
 GList   *get_effect_list();
 gint     get_playlist_position();
