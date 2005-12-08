@@ -428,6 +428,19 @@ fi
 AM_CONDITIONAL(ENABLE_CROSSFADE, test "$enable_crossfade" = "yes")
 AM_CONDITIONAL(HAVE_LIBSAMPLERATE, test "$have_libsamplerate" = "yes")
 
+dnl *** sid
+AC_ARG_ENABLE( sid,
+[  --disable-sid           disable sid input plugin [default=enabled]],,
+                enable_sid="yes")
+
+if test "x$enable_sid" = xyes; then
+        AM_PATH_SIDPLAY(have_sidplay=yes, have_sidplay=no)
+else
+        AC_MSG_RESULT([*** sid plugin disabled per user request ***])
+        have_sidplay=no
+fi
+AM_CONDITIONAL(HAVE_SIDPLAY,test "x$have_sidplay" = xyes)
+
 dnl *** OSS output
 
 AC_ARG_ENABLE(oss,
@@ -722,6 +735,7 @@ AC_CONFIG_FILES([
         Plugins/Input/wav/Makefile
 	Plugins/Input/flac/Makefile
 	Plugins/Input/flac/plugin_common/Makefile
+	Plugins/Input/sid/Makefile
 	Plugins/Input/console/Makefile
 	Plugins/Input/wma/Makefile
 	Plugins/Input/wma/libffwma/Makefile
@@ -784,6 +798,7 @@ echo "    + sndfile extensions:                 $enable_sndfile"
 echo "  Tone Generator:                         yes"
 echo "  Ogg Vorbis (vorbis):                    $have_oggvorbis"
 echo "  FLAC:                                   $have_flac"
+echo "  SID:                                    $have_sidplay"
 echo "  Game Music:                             yes"
 echo ""
 echo "  General"
