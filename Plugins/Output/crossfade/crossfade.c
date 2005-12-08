@@ -737,7 +737,7 @@ xfade_apply_fade_config(fade_config_t *fc)
   fade = 0;
   length = out_len;
   while(length > 0) {
-    gint16 *p = (gint16 *) buffer->data + index;
+    gint16 *p = buffer->data + index;
     gint blen = buffer->size - index;
     if(blen > length) blen = length;
     
@@ -1697,7 +1697,7 @@ buffer_thread_f(void *arg)
       /* write length bytes to the device */
       length_bak = length;
       while(length > 0) {
-	data = (gint *) buffer->data + buffer->rd_index;
+	data = buffer->data + buffer->rd_index;
 	blen = buffer->size - buffer->rd_index;
 	if(blen > length) blen = length;
 
@@ -1918,7 +1918,7 @@ xfade_close_audio()
       while(length > 0) {
 	gint wr_xedni = (buffer->rd_index + buffer->used-1) % buffer->size + 1;
 	gint     blen = MIN(length, wr_xedni);
-	gint16     *p = (gint16 *) buffer->data + wr_xedni;
+	gint16     *p = buffer->data + wr_xedni;
 	gint    index = 0;
 	
 	while(index < blen) {
@@ -1948,7 +1948,7 @@ xfade_close_audio()
 	while(buffer->used > 0) {
 	  gint wr_xedni = (buffer->rd_index + buffer->used-1) % buffer->size + 1;
 	  gint     blen = MIN(buffer->used, wr_xedni);
-	  gint16     *p = (gint16 *) buffer->data + wr_xedni;
+	  gint16     *p = buffer->data + wr_xedni;
 	  gint    index = 0;
 
 	  while(index < blen) {
@@ -2065,7 +2065,7 @@ xfade_pause(short p)
       fade = 0;
       length = out_len;
       while(length > 0) {
-	gint16 *p = (gint16 *) buffer->data + index;
+	gint16 *p = buffer->data + index;
 	gint blen = buffer->size - index;
 	if(blen > length) blen = length;
 	
@@ -2084,7 +2084,7 @@ xfade_pause(short p)
       fade = 0;
       length = in_len;
       while(length > 0) {
-	gint16 *p = (gint16 *) buffer->data + index;
+	gint16 *p = buffer->data + index;
 	gint blen = buffer->size - index;
 	if(blen > length) blen = length;
 	
