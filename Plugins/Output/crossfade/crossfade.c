@@ -541,6 +541,7 @@ void fini()
   DEBUG(("[crossfade] fini: cleanup: waiting for buffer thread... done\n"));
 
   /* HACK: 0.3.5: close output plugin from THIS thread */
+#if 0
   if(output_opened) {
     DEBUG(("[crossfade] fini: cleanup: closing audio...\n"));
     if(the_op->close_audio) the_op->close_audio();
@@ -548,6 +549,7 @@ void fini()
     g_free(buffer->data);
     output_opened = FALSE;
   }
+#endif
   DEBUG(("[crossfade] fini: cleanup: done\n"));
 
   g_static_mutex_unlock (&buffer_mutex);
