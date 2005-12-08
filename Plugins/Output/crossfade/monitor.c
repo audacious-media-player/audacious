@@ -35,26 +35,26 @@
 #include "support.h"
 
 
-static GtkWidget   *monitor_win;
-static GtkWidget   *monitor_display_drawingarea;
-static GtkProgress *monitor_output_progress;
-static GtkLabel    *monitor_position_label;
-static GtkLabel    *monitor_total_label;
-static GtkLabel    *monitor_left_label;
-static GtkLabel    *monitor_output_time_label;
-static GtkLabel    *monitor_output_time_sep;
-static GtkLabel    *monitor_written_time_label;
+GtkWidget   *monitor_win;
+GtkWidget   *monitor_display_drawingarea;
+GtkProgress *monitor_output_progress;
+GtkLabel    *monitor_position_label;
+GtkLabel    *monitor_total_label;
+GtkLabel    *monitor_left_label;
+GtkLabel    *monitor_output_time_label;
+GtkLabel    *monitor_output_time_sep;
+GtkLabel    *monitor_written_time_label;
 
-static gchar       *default_position_str = NULL;
-static gchar       *default_total_str    = NULL;
-static gchar       *default_left_str     = NULL;
-static gchar       *default_output_time_str  = NULL;
-static gchar       *default_written_time_str = NULL;
+gchar       *default_position_str = NULL;
+gchar       *default_total_str    = NULL;
+gchar       *default_left_str     = NULL;
+gchar       *default_output_time_str  = NULL;
+gchar       *default_written_time_str = NULL;
 
-static gboolean monitor_active  = FALSE;
-static guint    monitor_tag;
-static gint     monitor_output_max;
-static gint     monitor_closing;
+gboolean monitor_active  = FALSE;
+guint    monitor_tag;
+gint     monitor_output_max;
+gint     monitor_closing;
 
 #define RUNNING 0
 #define CLOSING 1
