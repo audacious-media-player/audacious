@@ -41,7 +41,7 @@ static	int 	decoding;
 static	int 	seek_time = -1;
 
 static	GThread *decode_thread;
-
+GStaticMutex decode_mutex = G_STATIC_MUTEX_INIT;
 
 InputPlugin wav_ip = {
     NULL,
@@ -122,6 +122,8 @@ play_loop (void *arg)
 {	static short buffer [BUFFER_SIZE];
 	int samples;
 
+	g_static_mutex_lock(&decode_mutex);
+
 	decoding = TRUE;
 	while (decoding)
 	{
@@ -132,7 +134,7 @@ play_loop (void *arg)
 		{	wav_ip.add_vis_pcm (wav_ip.output->written_time (), HOST_SIGNED_SHORT, sfinfo.channels, samples * sizeof (short), buffer);
 
 			while ((wav_ip.output->buffer_free () < (samples * sizeof (short))) && decoding)
-				xmms_usleep (80000);
+				xmms_usleep (10000);
 			
 			wav_ip.output->write_audio (buffer, samples * sizeof (short));
    			}
@@ -148,6 +150,7 @@ play_loop (void *arg)
 
   		}; /* while (decoding) */
 
+	g_static_mutex_unlock(&decode_mutex);
 	g_thread_exit (NULL);
 	return NULL;
 } /* play_loop */
@@ -186,8 +189,7 @@ play_start (char *filename)
 
 	decode_thread = g_thread_create ((GThreadFunc)play_loop, NULL, TRUE, NULL);
 
-	while (decoding == FALSE)
-	    xmms_usleep (80000);
+    	xmms_usleep (40000);
 } /* play_start */
 
 static void
