@@ -12,7 +12,7 @@
 dnl AC_PATH_LIRC([MINIMUM-VERSION])
 dnl Check for LIRC and define LIRCD
 dnl
-AC_DEFUN(AC_PATH_LIRC,
+AC_DEFUN([AC_PATH_LIRC],
 [
   min_lirc_version=ifelse([$1], ,0.5.5,$1)
   AC_MSG_CHECKING(for LIRC>=$min_lirc_version)
