@@ -745,6 +745,8 @@ AC_CONFIG_FILES([
 	Plugins/General/Makefile
 	Plugins/General/song_change/Makefile
 	Plugins/General/lirc/Makefile
+	Plugins/Effect/Makefile
+	Plugins/Effect/ladspa/Makefile
         po/Makefile.in
         intl/Makefile
         icons/Makefile
@@ -805,6 +807,10 @@ echo "  General"
 echo "  -------"
 echo "  Song Change:                            yes"
 echo "  LIRC:                                   $have_lirc"
+echo
+echo "  Effect"
+echo "  ------"
+echo "  LADSPA effects host (ladspa):           yes"
 echo
 echo "  Visualization"
 echo "  -------------"
