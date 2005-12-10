@@ -377,18 +377,22 @@ fi
 
 AM_CONDITIONAL([HAVE_LIBSNDFILE], test "$enable_sndfile" = "yes")
 
-dnl *** mikmod
-AC_ARG_ENABLE( mikmod,
-[  --disable-mikmod        Disable mikmod input plugin [default=enabled]],,
-                enable_mikmod="yes")
+dnl *** modplug
 
-if test "x$enable_mikmod" = xyes; then
-        AM_PATH_LIBMIKMOD(3.1.5,have_mikmod=yes, have_mikmod=no)
+AC_ARG_ENABLE(modplug,
+    [  --disable-modplug        disable ModPlug plugin (default=enabled)],
+    [enable_modplug=$enableval],
+    [enable_modplug="yes"]
+)
+
+if test "$enable_modplug" = "yes"; then
+    AC_CHECK_LIB([modplug],[XMLinearTable],[have_modplug=yes],[have_modplug=no])
 else
-        AC_MSG_RESULT([*** mikmod plugin disabled per user request ***])
-        have_mikmod=no
+    AC_MSG_RESULT([*** ModPlug plugin disabled per user request ***])
+    have_modplug="no"
 fi
-AM_CONDITIONAL(HAVE_MIKMOD,test "x$have_mikmod" = xyes)
+
+AM_CONDITIONAL([HAVE_MODPLUG], test "$have_modplug" = "yes")
 
 dnl *** flac
 AC_ARG_ENABLE( flc,
@@ -728,7 +732,9 @@ AC_CONFIG_FILES([
 	Plugins/Input/aac/libmp4v2/Makefile
 	Plugins/Input/aac/libfaad2/Makefile
 	Plugins/Input/aac/src/Makefile
-	Plugins/Input/mikmod/Makefile
+	Plugins/Input/modplug/Makefile
+	Plugins/Input/modplug/archive/Makefile
+	Plugins/Input/modplug/gui/Makefile
 	Plugins/Input/tonegen/Makefile
         Plugins/Input/vorbis/Makefile
         Plugins/Input/cdaudio/Makefile
@@ -793,7 +799,7 @@ echo "  MPEG 1/2/3 (mpg123):                    $enable_mp3"
 echo "    + id3v2 editing:                      $have_id3lib"
 echo "  MPEG 4 Audio (AAC):                     $enable_aac"
 echo "  Windows Media Audio (wma):              $enable_wma"
-echo "  Module decoder (mikmod):                $enable_mikmod"
+echo "  Module decoder (modplug):               $enable_modplug"
 echo "  CD Digital Audio (cdda):                yes"
 echo "  Microsoft WAV (wav):                    yes"
 echo "    + sndfile extensions:                 $enable_sndfile"
