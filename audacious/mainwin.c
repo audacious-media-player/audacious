@@ -1816,63 +1816,56 @@ mainwin_drag_data_received(GtkWidget * widget,
                            guint time,
                            gpointer user_data)
 {
-    ConfigDb *db;
-    gchar *path, *decoded;
-
-    if (!selection_data->data) {
+    gchar **sourcelist, *path;
+    gchar *decoded;
+    gboolean not_font = FALSE;
+    
+    if (!selection_data->data)
+    {
         g_warning("DND data string is NULL");
         return;
     }
 
-    path = (gchar *) selection_data->data;
+    sourcelist = g_strsplit((gchar *)(selection_data->data),"\r\n",-1);
 
-	g_message(path);
+    for (path = *sourcelist; *path; path = *(++sourcelist))
+    {
+	if (str_has_prefix_nocase(path, "fonts:///"))
+	{
+    	    path += 8;
 
-    /* FIXME: use a real URL validator/parser */
+	    /* plain, since we already stripped the first URI part */
+    	    decoded = xmms_urldecode_plain(path);
 
-    if (str_has_prefix_nocase(path, "fonts:///")) {
-        path[strlen(path) - 2] = 0; /* Why the hell a CR&LF? */
-        path += 8;
-
-        /* plain, since we already stripped the first URI part */
-        decoded = xmms_urldecode_plain(path);
-
-        /* Get the old font's size, and add it to the dropped
-         * font's name */
-        cfg.playlist_font = g_strconcat(decoded + 1,
-                                        strrchr(cfg.playlist_font, ' '),
-                                        NULL);
-        playlist_list_set_font(cfg.playlist_font);
-        playlistwin_update_list();
+            /* Get the old font's size, and add it to the dropped
+	     * font's name
+	     */
+    	    cfg.playlist_font = g_strconcat(decoded + 1,
+        	                            strrchr(cfg.playlist_font, ' '),
+            	                            NULL);
+    	    playlist_list_set_font(cfg.playlist_font);
+    	    playlistwin_update_list();
         
-        g_free(decoded);
-        return;
-    }
+    	    g_free(decoded);
+    	    return;
+	}
 
-    if (str_has_prefix_nocase(path, "file:///")) {
-        path[strlen(path) - 2] = 0; /* Why the hell a CR&LF? */
-        path += 7;
+	if (str_has_prefix_nocase(path,"file:///"))
+	{
+	    if (not_font == FALSE)
+	    {
+		playlist_clear();
+		not_font = TRUE;
+	    }	
+    	    playlist_add_url(path);
+	}
+	
     }
-    else if (str_has_prefix_nocase(path, "file:")) {
-        path += 5;
-    }
-
-    if (file_is_archive(path)) {
-        bmp_active_skin_load(path);
-        skin_install_skin(path);    /* ...and install the skin */
-        skin_view_update(user_data);
-        /* Change skin name in the config file */
-        db = bmp_cfg_db_open();
-        bmp_cfg_db_set_string(db, NULL, "skin", path);
-        bmp_cfg_db_close(db);
-    }
-    else {
-        if (input_check_file((gchar *) selection_data->data, FALSE)) {
-            playlist_clear();
-            playlist_add_url((gchar *) selection_data->data);
-            bmp_playback_initiate();
-        }
-    }
+    
+    g_strfreev(sourcelist);
+    
+    if (not_font)
+	bmp_playback_initiate();
 }
 
 static void
