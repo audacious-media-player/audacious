@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp-hi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-27 11:51-0800\n"
+"POT-Creation-Date: 2005-12-09 18:03-0800\n"
 "PO-Revision-Date: 2005-08-20 21:59+0530\n"
 "Last-Translator: धनञ्जय शर्मा (Dhananjaya Sharma) <dysxhi@yahoo.co.in>\n"
 "Language-Team: Hindi, India <dysxhi@yahoo.co.in>\n"
@@ -338,7 +338,7 @@ msgstr ""
 #: Plugins/Input/mpg123/mpg123.c:1152 Plugins/Input/tonegen/tonegen.c:54
 #: Plugins/Input/vorbis/fileinfo.c:212 Plugins/Input/vorbis/http.c:218
 #: Plugins/Input/vorbis/vorbis.c:802 Plugins/Input/wav/wav-sndfile.c:260
-#: Plugins/Output/esd/about.c:49 Plugins/Output/OSS/about.c:54
+#: Plugins/Output/OSS/about.c:54 Plugins/Output/esd/about.c:49
 msgid "Ok"
 msgstr "ठीक"
 
@@ -783,8 +783,8 @@ msgid "Output"
 msgstr ""
 
 #: Plugins/Input/flac/configure.c:617 Plugins/Input/mpg123/configure.c:464
-#: Plugins/Input/vorbis/configure.c:287 Plugins/Output/esd/configure.c:171
-#: Plugins/Output/OSS/configure.c:302
+#: Plugins/Input/vorbis/configure.c:287 Plugins/Output/OSS/configure.c:302
+#: Plugins/Output/esd/configure.c:171
 msgid "Buffering:"
 msgstr "बफ़रिंग:"
 
@@ -794,8 +794,8 @@ msgid "Buffer size (kb):"
 msgstr "बफ़र का आकार (केबी):"
 
 #: Plugins/Input/flac/configure.c:638 Plugins/Input/mpg123/configure.c:492
-#: Plugins/Input/vorbis/configure.c:313 Plugins/Output/esd/configure.c:198
-#: Plugins/Output/OSS/configure.c:329
+#: Plugins/Input/vorbis/configure.c:313 Plugins/Output/OSS/configure.c:329
+#: Plugins/Output/esd/configure.c:198
 msgid "Pre-buffer (percent):"
 msgstr "प्री-बफ़र (प्रतिशत):"
 
@@ -2358,10 +2358,6 @@ msgstr ""
 "\n"
 "Xiph.org प्रतिष्ठान पर जाने के लिए http://www.xiph.org/ वेब-स्थल पर जायें\n"
 
-#: Plugins/Input/wav/wav.c:67
-msgid "WAV Audio Plugin"
-msgstr "वेव आडियो प्लग-इन"
-
 #: Plugins/Input/wav/wav-sndfile.c:243
 msgid "About sndfile WAV support"
 msgstr ""
@@ -2409,6 +2405,103 @@ msgstr ""
 #: Plugins/Input/wav/wav-sndfile.c:268
 msgid "sndfile WAV plugin"
 msgstr ""
+
+#: Plugins/Input/wav/wav.c:67
+msgid "WAV Audio Plugin"
+msgstr "वेव आडियो प्लग-इन"
+
+#: Plugins/Output/OSS/OSS.c:50
+msgid "OSS Output Plugin"
+msgstr "ओएसएस आउटपुट प्लग-इन"
+
+#: Plugins/Output/OSS/about.c:39
+msgid "About OSS Driver"
+msgstr "ओएसएस चालक चालक के बारे में"
+
+#: Plugins/Output/OSS/about.c:40
+msgid ""
+"XMMS OSS Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+"XMMS ओएसएस चालक\n"
+"\n"
+" यह कार्यक्रम एक मुक्त सॉफ़्टवेयर है; मुक्त सॉफ़्टवेयर फ़ाउन्डेशन द्वारा प्रकशित; \n"
+" या तो अनुमति-पत्र केसंस्मरण-२, या कोई बाद के संस्मरण (जैसा कि आप के पास हो) \n"
+" के जीएनयू सामान्यजन अनुमति-पत्र के नियमों के अन्तर्गत, आप इसे पुनःवितरित\n"
+"  और/या परिवर्तित कर सकते है।\n"
+"\n"
+"इस कार्यक्रम को इस आशा के साथ वितरित किया जाता है कि यह उपयोगी होगा\n"
+"परन्तु बिना की जमानत के; यहाँ तक सौदागरी की सांकेतिक जमानत या \n"
+"किसी विशेष उद्वेश्य की उपयुक्ता के लिए। और अधिक जानकारी के लिए\n"
+"जीएनयू सामान्यजन अनुमति-पत्र को देखें ।\n"
+"\n"
+"आपको इस कार्यक्रम से साथ जीएनयू सामान्यजन अनुमति-पत्र की एक \n"
+"प्रतिलिपि मिलना चाहिये, यदि नहीं, तो निम्न पते पर लिखें:\n"
+"the Free Software Foundation, Inc., 59 Temple Place - Suite 330, \n"
+"Boston, MA 02111-1307, USA."
+
+#: Plugins/Output/OSS/configure.c:149
+#, c-format
+msgid "Default (%s)"
+msgstr "डिफ़ाल्ट (%s)"
+
+#: Plugins/Output/OSS/configure.c:167
+msgid "Default"
+msgstr "डिफ़ाल्ट"
+
+#: Plugins/Output/OSS/configure.c:199
+msgid "OSS Driver configuration"
+msgstr "ओएसएस चालक संरचना"
+
+#: Plugins/Output/OSS/configure.c:215 Plugins/Output/alsa/configure.c:288
+msgid "Audio device:"
+msgstr "आडियो उपकरण:"
+
+#: Plugins/Output/OSS/configure.c:237 Plugins/Output/OSS/configure.c:278
+msgid "Use alternate device:"
+msgstr "वैकल्पिक उपकरण का उपयोग:"
+
+#: Plugins/Output/OSS/configure.c:258 Plugins/Output/alsa/configure.c:333
+msgid "Mixer device:"
+msgstr "मिक्सर उपकरण:"
+
+#: Plugins/Output/OSS/configure.c:300
+msgid "Devices"
+msgstr "उपकरणों"
+
+#: Plugins/Output/OSS/configure.c:315 Plugins/Output/esd/configure.c:184
+msgid "Buffer size (ms):"
+msgstr "बफ़र का आकार (एम०एस०):"
+
+#: Plugins/Output/OSS/configure.c:340 Plugins/Output/esd/configure.c:209
+msgid "Buffering"
+msgstr "बफ़रिंग"
+
+#: Plugins/Output/OSS/configure.c:341
+msgid "Mixer Settings:"
+msgstr "मिक्सर की समायोजनायें:"
+
+#: Plugins/Output/OSS/configure.c:347
+msgid "Volume controls Master not PCM"
+msgstr "वाल्यूम नियंत्रक स्वामी, पी०सी०एम० नहीं"
+
+#: Plugins/Output/OSS/configure.c:353
+msgid "Mixer"
+msgstr "मिक्सर"
 
 #: Plugins/Output/alsa/about.c:30
 msgid "About ALSA Driver"
@@ -2470,10 +2563,6 @@ msgstr "डिफ़ाल्ट पीसीएम उपकरण (%s)"
 msgid "ALSA Driver configuration"
 msgstr "आल्सा चालक की संरचना"
 
-#: Plugins/Output/alsa/configure.c:288 Plugins/Output/OSS/configure.c:215
-msgid "Audio device:"
-msgstr "आडियो उपकरण:"
-
 #: Plugins/Output/alsa/configure.c:302
 msgid "Mixer:"
 msgstr "मिश्रक:"
@@ -2485,10 +2574,6 @@ msgstr "सॉफ़्टवेयर वाल्यूम नियंत्र�
 #: Plugins/Output/alsa/configure.c:320
 msgid "Mixer card:"
 msgstr "मिश्रक कार्ड:"
-
-#: Plugins/Output/alsa/configure.c:333 Plugins/Output/OSS/configure.c:258
-msgid "Mixer device:"
-msgstr "मिक्सर उपकरण:"
 
 #: Plugins/Output/alsa/configure.c:353
 msgid "Device settings"
@@ -2596,94 +2681,9 @@ msgstr "ओएसएस मिक्सर के वाल्यूम नि�
 msgid "Server"
 msgstr "सर्वर"
 
-#: Plugins/Output/esd/configure.c:184 Plugins/Output/OSS/configure.c:315
-msgid "Buffer size (ms):"
-msgstr "बफ़र का आकार (एम०एस०):"
-
-#: Plugins/Output/esd/configure.c:209 Plugins/Output/OSS/configure.c:340
-msgid "Buffering"
-msgstr "बफ़रिंग"
-
 #: Plugins/Output/esd/esd.c:47
 msgid "eSound Output Plugin"
 msgstr "ई-साउण्ड आउटपुट प्लग-इन"
-
-#: Plugins/Output/OSS/about.c:39
-msgid "About OSS Driver"
-msgstr "ओएसएस चालक चालक के बारे में"
-
-#: Plugins/Output/OSS/about.c:40
-msgid ""
-"XMMS OSS Driver\n"
-"\n"
-" This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"GNU General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-"USA."
-msgstr ""
-"XMMS ओएसएस चालक\n"
-"\n"
-" यह कार्यक्रम एक मुक्त सॉफ़्टवेयर है; मुक्त सॉफ़्टवेयर फ़ाउन्डेशन द्वारा प्रकशित; \n"
-" या तो अनुमति-पत्र केसंस्मरण-२, या कोई बाद के संस्मरण (जैसा कि आप के पास हो) \n"
-" के जीएनयू सामान्यजन अनुमति-पत्र के नियमों के अन्तर्गत, आप इसे पुनःवितरित\n"
-"  और/या परिवर्तित कर सकते है।\n"
-"\n"
-"इस कार्यक्रम को इस आशा के साथ वितरित किया जाता है कि यह उपयोगी होगा\n"
-"परन्तु बिना की जमानत के; यहाँ तक सौदागरी की सांकेतिक जमानत या \n"
-"किसी विशेष उद्वेश्य की उपयुक्ता के लिए। और अधिक जानकारी के लिए\n"
-"जीएनयू सामान्यजन अनुमति-पत्र को देखें ।\n"
-"\n"
-"आपको इस कार्यक्रम से साथ जीएनयू सामान्यजन अनुमति-पत्र की एक \n"
-"प्रतिलिपि मिलना चाहिये, यदि नहीं, तो निम्न पते पर लिखें:\n"
-"the Free Software Foundation, Inc., 59 Temple Place - Suite 330, \n"
-"Boston, MA 02111-1307, USA."
-
-#: Plugins/Output/OSS/configure.c:149
-#, c-format
-msgid "Default (%s)"
-msgstr "डिफ़ाल्ट (%s)"
-
-#: Plugins/Output/OSS/configure.c:167
-msgid "Default"
-msgstr "डिफ़ाल्ट"
-
-#: Plugins/Output/OSS/configure.c:199
-msgid "OSS Driver configuration"
-msgstr "ओएसएस चालक संरचना"
-
-#: Plugins/Output/OSS/configure.c:237 Plugins/Output/OSS/configure.c:278
-msgid "Use alternate device:"
-msgstr "वैकल्पिक उपकरण का उपयोग:"
-
-#: Plugins/Output/OSS/configure.c:300
-msgid "Devices"
-msgstr "उपकरणों"
-
-#: Plugins/Output/OSS/configure.c:341
-msgid "Mixer Settings:"
-msgstr "मिक्सर की समायोजनायें:"
-
-#: Plugins/Output/OSS/configure.c:347
-msgid "Volume controls Master not PCM"
-msgstr "वाल्यूम नियंत्रक स्वामी, पी०सी०एम० नहीं"
-
-#: Plugins/Output/OSS/configure.c:353
-msgid "Mixer"
-msgstr "मिक्सर"
-
-#: Plugins/Output/OSS/OSS.c:50
-msgid "OSS Output Plugin"
-msgstr "ओएसएस आउटपुट प्लग-इन"
 
 #: Plugins/Visualization/blur_scope/blur_scope.c:57
 msgid "/Toggle Decorations"
@@ -3008,54 +3008,6 @@ msgstr ""
 #: Plugins/Visualization/libvisual-proxy/main.c:445
 msgid "Cannot initialize plugin's visual stuff"
 msgstr ""
-
-#: libaudacious/titlestring.c:324
-msgid "Performer/Artist"
-msgstr "नट/कलाकार"
-
-#: libaudacious/titlestring.c:325 audacious/prefswin.c:94
-msgid "Album"
-msgstr "एल्बम"
-
-#: libaudacious/titlestring.c:326 audacious/prefswin.c:97
-msgid "Genre"
-msgstr "प्रकार"
-
-#: libaudacious/titlestring.c:327
-msgid "File name"
-msgstr "संचिका का नाम"
-
-#: libaudacious/titlestring.c:328
-msgid "File path"
-msgstr "संचिका पथ"
-
-#: libaudacious/titlestring.c:329
-msgid "File extension"
-msgstr "संचिका उपनाम"
-
-#: libaudacious/titlestring.c:330
-msgid "Track name"
-msgstr "ट्रैक का नाम"
-
-#: libaudacious/titlestring.c:331
-msgid "Track number"
-msgstr "ट्रैक की संख्या"
-
-#: libaudacious/titlestring.c:332 audacious/prefswin.c:100
-msgid "Date"
-msgstr "दिनांक"
-
-#: libaudacious/titlestring.c:333 audacious/prefswin.c:101
-msgid "Year"
-msgstr "वर्ष"
-
-#: libaudacious/titlestring.c:334 audacious/prefswin.c:102
-msgid "Comment"
-msgstr "टिप्पणी"
-
-#: libaudacious/titlestring.c:385
-msgid "%{n:...%}: Display \"...\" only if element %n is present"
-msgstr "%{n:...%}: दिखाएँ \"...\" तब ही जब %n तत्त्व विद्यमान हो"
 
 #: audacious/about.c:42
 #, fuzzy, c-format
@@ -4410,13 +4362,33 @@ msgstr "प्लग-इन्स"
 msgid "Artist"
 msgstr "कलाकार"
 
+#: audacious/prefswin.c:94 libaudacious/titlestring.c:325
+msgid "Album"
+msgstr "एल्बम"
+
 #: audacious/prefswin.c:96
 msgid "Tracknumber"
 msgstr "ट्रैकसंख्या"
 
+#: audacious/prefswin.c:97 libaudacious/titlestring.c:326
+msgid "Genre"
+msgstr "प्रकार"
+
 #: audacious/prefswin.c:99
 msgid "Filepath"
 msgstr "संचिकापथ"
+
+#: audacious/prefswin.c:100 libaudacious/titlestring.c:332
+msgid "Date"
+msgstr "दिनांक"
+
+#: audacious/prefswin.c:101 libaudacious/titlestring.c:333
+msgid "Year"
+msgstr "वर्ष"
+
+#: audacious/prefswin.c:102 libaudacious/titlestring.c:334
+msgid "Comment"
+msgstr "टिप्पणी"
 
 #: audacious/prefswin.c:417 audacious/prefswin.c:504 audacious/prefswin.c:593
 #: audacious/prefswin.c:689
@@ -4459,6 +4431,18 @@ msgstr "जोड़ने पर बन्द संवाद"
 #: audacious/util.c:1187
 msgid "  (invalid UTF-8)"
 msgstr "   (अवैध यूटीएफ़-८)"
+
+#: audacious/glade/addfiles.glade:77
+msgid "Close Dialog on Add"
+msgstr "जोड़ने पर बन्द संवाद"
+
+#: audacious/glade/addfiles.glade:105
+msgid "Select All"
+msgstr "सभी का चयन करें"
+
+#: audacious/glade/addfiles.glade:116
+msgid "Deselect All"
+msgstr "सभी का अचयन करें"
 
 #: audacious/glade/prefswin.glade:8
 #, fuzzy
@@ -4709,17 +4693,33 @@ msgstr "संचिका प्रीसेट उपनाम:"
 msgid "Available _Presets:"
 msgstr "उपलब्ध प्रीसेट (_P):"
 
-#: audacious/glade/addfiles.glade:77
-msgid "Close Dialog on Add"
-msgstr "जोड़ने पर बन्द संवाद"
+#: libaudacious/titlestring.c:324
+msgid "Performer/Artist"
+msgstr "नट/कलाकार"
 
-#: audacious/glade/addfiles.glade:105
-msgid "Select All"
-msgstr "सभी का चयन करें"
+#: libaudacious/titlestring.c:327
+msgid "File name"
+msgstr "संचिका का नाम"
 
-#: audacious/glade/addfiles.glade:116
-msgid "Deselect All"
-msgstr "सभी का अचयन करें"
+#: libaudacious/titlestring.c:328
+msgid "File path"
+msgstr "संचिका पथ"
+
+#: libaudacious/titlestring.c:329
+msgid "File extension"
+msgstr "संचिका उपनाम"
+
+#: libaudacious/titlestring.c:330
+msgid "Track name"
+msgstr "ट्रैक का नाम"
+
+#: libaudacious/titlestring.c:331
+msgid "Track number"
+msgstr "ट्रैक की संख्या"
+
+#: libaudacious/titlestring.c:385
+msgid "%{n:...%}: Display \"...\" only if element %n is present"
+msgstr "%{n:...%}: दिखाएँ \"...\" तब ही जब %n तत्त्व विद्यमान हो"
 
 #~ msgid "Decoder:"
 #~ msgstr "कूटवाचक:"

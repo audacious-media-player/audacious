@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp cvs20041231\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-27 11:51-0800\n"
+"POT-Creation-Date: 2005-12-09 18:03-0800\n"
 "PO-Revision-Date: 2004-12-31 13:17MSK\n"
 "Last-Translator: Vitaly Lipatov <lav@altlinux.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -342,7 +342,7 @@ msgstr ""
 #: Plugins/Input/mpg123/mpg123.c:1152 Plugins/Input/tonegen/tonegen.c:54
 #: Plugins/Input/vorbis/fileinfo.c:212 Plugins/Input/vorbis/http.c:218
 #: Plugins/Input/vorbis/vorbis.c:802 Plugins/Input/wav/wav-sndfile.c:260
-#: Plugins/Output/esd/about.c:49 Plugins/Output/OSS/about.c:54
+#: Plugins/Output/OSS/about.c:54 Plugins/Output/esd/about.c:49
 msgid "Ok"
 msgstr "ОК"
 
@@ -787,8 +787,8 @@ msgid "Output"
 msgstr ""
 
 #: Plugins/Input/flac/configure.c:617 Plugins/Input/mpg123/configure.c:464
-#: Plugins/Input/vorbis/configure.c:287 Plugins/Output/esd/configure.c:171
-#: Plugins/Output/OSS/configure.c:302
+#: Plugins/Input/vorbis/configure.c:287 Plugins/Output/OSS/configure.c:302
+#: Plugins/Output/esd/configure.c:171
 msgid "Buffering:"
 msgstr "Буферизация:"
 
@@ -798,8 +798,8 @@ msgid "Buffer size (kb):"
 msgstr "Размер буфера (Кб):"
 
 #: Plugins/Input/flac/configure.c:638 Plugins/Input/mpg123/configure.c:492
-#: Plugins/Input/vorbis/configure.c:313 Plugins/Output/esd/configure.c:198
-#: Plugins/Output/OSS/configure.c:329
+#: Plugins/Input/vorbis/configure.c:313 Plugins/Output/OSS/configure.c:329
+#: Plugins/Output/esd/configure.c:198
 msgid "Pre-buffer (percent):"
 msgstr "Пребуферизация (%):"
 
@@ -2364,10 +2364,6 @@ msgstr ""
 "\n"
 "Посетите фонд Xiph.org по адресу http://www.xiph.org/\n"
 
-#: Plugins/Input/wav/wav.c:67
-msgid "WAV Audio Plugin"
-msgstr "Модуль поддержки WAV"
-
 #: Plugins/Input/wav/wav-sndfile.c:243
 msgid "About sndfile WAV support"
 msgstr ""
@@ -2418,6 +2414,106 @@ msgstr ""
 #: Plugins/Input/wav/wav-sndfile.c:268
 msgid "sndfile WAV plugin"
 msgstr ""
+
+#: Plugins/Input/wav/wav.c:67
+msgid "WAV Audio Plugin"
+msgstr "Модуль поддержки WAV"
+
+#: Plugins/Output/OSS/OSS.c:50
+msgid "OSS Output Plugin"
+msgstr "Модуль вывода звука OSS"
+
+#: Plugins/Output/OSS/about.c:39
+msgid "About OSS Driver"
+msgstr "О модуле вывода звука OSS"
+
+#: Plugins/Output/OSS/about.c:40
+msgid ""
+"XMMS OSS Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+"XMMS OSS драйвер\n"
+"\n"
+" Эта программа - бесплатное программное обеспечение; вы можете "
+"распространять и/или модифицировать ее\n"
+"в соответствии с условиями Лицензии GNU, опубликованную\n"
+"Организацией Бесплатного Программного Обеспечения; вы можете пользоваться "
+"версией 2 Лицензии или\n"
+"(по вашему желанию) любой более поздней версией.\n"
+"\n"
+"Эта программа распространяется в надежде, что она будет полезна,\n"
+"но БЕЗ ВСЯКОЙ ГАРАНТИИ; даже без гарании подразумеваемой\n"
+"РАБОТОСПОСОБНОСТИ или ПРИГОДНОСТИ ДЛЯ КАКОЙ-ЛИБО ЦЕЛИ. Пожалуйста,\n"
+"за подробностями обратитесь к Лицензии GNU.\n"
+"\n"
+"Вы должны были получить копию Лицензии GNU\n"
+"вместе с этой программой; если же нет, то напишите об этом по адресу: \n"
+"Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA "
+"02111-1307,\n"
+"USA."
+
+#: Plugins/Output/OSS/configure.c:149
+#, c-format
+msgid "Default (%s)"
+msgstr "По умолчанию (%s)"
+
+#: Plugins/Output/OSS/configure.c:167
+msgid "Default"
+msgstr "По умолчанию"
+
+#: Plugins/Output/OSS/configure.c:199
+msgid "OSS Driver configuration"
+msgstr "Настройка драйвера OSS"
+
+#: Plugins/Output/OSS/configure.c:215 Plugins/Output/alsa/configure.c:288
+msgid "Audio device:"
+msgstr "Аудиоустройство:"
+
+#: Plugins/Output/OSS/configure.c:237 Plugins/Output/OSS/configure.c:278
+msgid "Use alternate device:"
+msgstr "Использовать альтернативное устройство:"
+
+#: Plugins/Output/OSS/configure.c:258 Plugins/Output/alsa/configure.c:333
+msgid "Mixer device:"
+msgstr "Устройство микшера:"
+
+#: Plugins/Output/OSS/configure.c:300
+msgid "Devices"
+msgstr "Устройства"
+
+#: Plugins/Output/OSS/configure.c:315 Plugins/Output/esd/configure.c:184
+msgid "Buffer size (ms):"
+msgstr "Размер буфера (мс):"
+
+#: Plugins/Output/OSS/configure.c:340 Plugins/Output/esd/configure.c:209
+msgid "Buffering"
+msgstr "Буферизация"
+
+#: Plugins/Output/OSS/configure.c:341
+msgid "Mixer Settings:"
+msgstr "Настройки микшера:"
+
+#: Plugins/Output/OSS/configure.c:347
+msgid "Volume controls Master not PCM"
+msgstr "Громкость регулирует Мастер, а не PCM"
+
+#: Plugins/Output/OSS/configure.c:353
+msgid "Mixer"
+msgstr "Микшер"
 
 #: Plugins/Output/alsa/about.c:30
 msgid "About ALSA Driver"
@@ -2481,10 +2577,6 @@ msgstr "Устройство PCM по умолчанию (%s)"
 msgid "ALSA Driver configuration"
 msgstr "Изменение настроек модуля вывода ALSA"
 
-#: Plugins/Output/alsa/configure.c:288 Plugins/Output/OSS/configure.c:215
-msgid "Audio device:"
-msgstr "Аудиоустройство:"
-
 #: Plugins/Output/alsa/configure.c:302
 msgid "Mixer:"
 msgstr "Микшер:"
@@ -2496,10 +2588,6 @@ msgstr "Использовать программный регулятор гр�
 #: Plugins/Output/alsa/configure.c:320
 msgid "Mixer card:"
 msgstr "Карта микшера:"
-
-#: Plugins/Output/alsa/configure.c:333 Plugins/Output/OSS/configure.c:258
-msgid "Mixer device:"
-msgstr "Устройство микшера:"
 
 #: Plugins/Output/alsa/configure.c:353
 msgid "Device settings"
@@ -2610,97 +2698,9 @@ msgstr "Громкость регулирет OSS микшер"
 msgid "Server"
 msgstr "Сервер"
 
-#: Plugins/Output/esd/configure.c:184 Plugins/Output/OSS/configure.c:315
-msgid "Buffer size (ms):"
-msgstr "Размер буфера (мс):"
-
-#: Plugins/Output/esd/configure.c:209 Plugins/Output/OSS/configure.c:340
-msgid "Buffering"
-msgstr "Буферизация"
-
 #: Plugins/Output/esd/esd.c:47
 msgid "eSound Output Plugin"
 msgstr "Модуль вывода звука eSound"
-
-#: Plugins/Output/OSS/about.c:39
-msgid "About OSS Driver"
-msgstr "О модуле вывода звука OSS"
-
-#: Plugins/Output/OSS/about.c:40
-msgid ""
-"XMMS OSS Driver\n"
-"\n"
-" This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"GNU General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-"USA."
-msgstr ""
-"XMMS OSS драйвер\n"
-"\n"
-" Эта программа - бесплатное программное обеспечение; вы можете "
-"распространять и/или модифицировать ее\n"
-"в соответствии с условиями Лицензии GNU, опубликованную\n"
-"Организацией Бесплатного Программного Обеспечения; вы можете пользоваться "
-"версией 2 Лицензии или\n"
-"(по вашему желанию) любой более поздней версией.\n"
-"\n"
-"Эта программа распространяется в надежде, что она будет полезна,\n"
-"но БЕЗ ВСЯКОЙ ГАРАНТИИ; даже без гарании подразумеваемой\n"
-"РАБОТОСПОСОБНОСТИ или ПРИГОДНОСТИ ДЛЯ КАКОЙ-ЛИБО ЦЕЛИ. Пожалуйста,\n"
-"за подробностями обратитесь к Лицензии GNU.\n"
-"\n"
-"Вы должны были получить копию Лицензии GNU\n"
-"вместе с этой программой; если же нет, то напишите об этом по адресу: \n"
-"Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA "
-"02111-1307,\n"
-"USA."
-
-#: Plugins/Output/OSS/configure.c:149
-#, c-format
-msgid "Default (%s)"
-msgstr "По умолчанию (%s)"
-
-#: Plugins/Output/OSS/configure.c:167
-msgid "Default"
-msgstr "По умолчанию"
-
-#: Plugins/Output/OSS/configure.c:199
-msgid "OSS Driver configuration"
-msgstr "Настройка драйвера OSS"
-
-#: Plugins/Output/OSS/configure.c:237 Plugins/Output/OSS/configure.c:278
-msgid "Use alternate device:"
-msgstr "Использовать альтернативное устройство:"
-
-#: Plugins/Output/OSS/configure.c:300
-msgid "Devices"
-msgstr "Устройства"
-
-#: Plugins/Output/OSS/configure.c:341
-msgid "Mixer Settings:"
-msgstr "Настройки микшера:"
-
-#: Plugins/Output/OSS/configure.c:347
-msgid "Volume controls Master not PCM"
-msgstr "Громкость регулирует Мастер, а не PCM"
-
-#: Plugins/Output/OSS/configure.c:353
-msgid "Mixer"
-msgstr "Микшер"
-
-#: Plugins/Output/OSS/OSS.c:50
-msgid "OSS Output Plugin"
-msgstr "Модуль вывода звука OSS"
 
 #: Plugins/Visualization/blur_scope/blur_scope.c:57
 msgid "/Toggle Decorations"
@@ -3026,54 +3026,6 @@ msgstr ""
 #: Plugins/Visualization/libvisual-proxy/main.c:445
 msgid "Cannot initialize plugin's visual stuff"
 msgstr ""
-
-#: libaudacious/titlestring.c:324
-msgid "Performer/Artist"
-msgstr "Исполнитель"
-
-#: libaudacious/titlestring.c:325 audacious/prefswin.c:94
-msgid "Album"
-msgstr "Альбом"
-
-#: libaudacious/titlestring.c:326 audacious/prefswin.c:97
-msgid "Genre"
-msgstr "Стиль"
-
-#: libaudacious/titlestring.c:327
-msgid "File name"
-msgstr "Имя файла"
-
-#: libaudacious/titlestring.c:328
-msgid "File path"
-msgstr "Путь к файлу"
-
-#: libaudacious/titlestring.c:329
-msgid "File extension"
-msgstr "Расширение файла"
-
-#: libaudacious/titlestring.c:330
-msgid "Track name"
-msgstr "Имя дорожки"
-
-#: libaudacious/titlestring.c:331
-msgid "Track number"
-msgstr "Номер дорожки"
-
-#: libaudacious/titlestring.c:332 audacious/prefswin.c:100
-msgid "Date"
-msgstr "Дата"
-
-#: libaudacious/titlestring.c:333 audacious/prefswin.c:101
-msgid "Year"
-msgstr "Год"
-
-#: libaudacious/titlestring.c:334 audacious/prefswin.c:102
-msgid "Comment"
-msgstr "Комментарий"
-
-#: libaudacious/titlestring.c:385
-msgid "%{n:...%}: Display \"...\" only if element %n is present"
-msgstr "%{n:...%}: Отображать \"...\", когда элемент %n присутствует"
 
 #: audacious/about.c:42
 #, fuzzy, c-format
@@ -4444,13 +4396,33 @@ msgstr "Модули"
 msgid "Artist"
 msgstr "Исполнитель"
 
+#: audacious/prefswin.c:94 libaudacious/titlestring.c:325
+msgid "Album"
+msgstr "Альбом"
+
 #: audacious/prefswin.c:96
 msgid "Tracknumber"
 msgstr "Номер дорожки"
 
+#: audacious/prefswin.c:97 libaudacious/titlestring.c:326
+msgid "Genre"
+msgstr "Стиль"
+
 #: audacious/prefswin.c:99
 msgid "Filepath"
 msgstr "Путь к файлу"
+
+#: audacious/prefswin.c:100 libaudacious/titlestring.c:332
+msgid "Date"
+msgstr "Дата"
+
+#: audacious/prefswin.c:101 libaudacious/titlestring.c:333
+msgid "Year"
+msgstr "Год"
+
+#: audacious/prefswin.c:102 libaudacious/titlestring.c:334
+msgid "Comment"
+msgstr "Комментарий"
 
 #: audacious/prefswin.c:417 audacious/prefswin.c:504 audacious/prefswin.c:593
 #: audacious/prefswin.c:689
@@ -4495,6 +4467,18 @@ msgstr ""
 #: audacious/util.c:1187
 msgid "  (invalid UTF-8)"
 msgstr "  (недопустимая последовательность Юникод)"
+
+#: audacious/glade/addfiles.glade:77
+msgid "Close Dialog on Add"
+msgstr ""
+
+#: audacious/glade/addfiles.glade:105
+msgid "Select All"
+msgstr "Выделить все"
+
+#: audacious/glade/addfiles.glade:116
+msgid "Deselect All"
+msgstr "Снять выделение"
 
 #: audacious/glade/prefswin.glade:8
 #, fuzzy
@@ -4750,17 +4734,33 @@ msgstr "Файл расширений для предустановок:"
 msgid "Available _Presets:"
 msgstr "Доступные _предустановки:"
 
-#: audacious/glade/addfiles.glade:77
-msgid "Close Dialog on Add"
-msgstr ""
+#: libaudacious/titlestring.c:324
+msgid "Performer/Artist"
+msgstr "Исполнитель"
 
-#: audacious/glade/addfiles.glade:105
-msgid "Select All"
-msgstr "Выделить все"
+#: libaudacious/titlestring.c:327
+msgid "File name"
+msgstr "Имя файла"
 
-#: audacious/glade/addfiles.glade:116
-msgid "Deselect All"
-msgstr "Снять выделение"
+#: libaudacious/titlestring.c:328
+msgid "File path"
+msgstr "Путь к файлу"
+
+#: libaudacious/titlestring.c:329
+msgid "File extension"
+msgstr "Расширение файла"
+
+#: libaudacious/titlestring.c:330
+msgid "Track name"
+msgstr "Имя дорожки"
+
+#: libaudacious/titlestring.c:331
+msgid "Track number"
+msgstr "Номер дорожки"
+
+#: libaudacious/titlestring.c:385
+msgid "%{n:...%}: Display \"...\" only if element %n is present"
+msgstr "%{n:...%}: Отображать \"...\", когда элемент %n присутствует"
 
 #~ msgid "Decoder:"
 #~ msgstr "Декодер:"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-27 11:51-0800\n"
+"POT-Creation-Date: 2005-12-09 18:03-0800\n"
 "PO-Revision-Date: 2004-12-04 17:15+0100\n"
 "Last-Translator: Jan Nárovec <finn@sendmail.cz>\n"
 "Language-Team: Czech\n"
@@ -336,7 +336,7 @@ msgstr ""
 #: Plugins/Input/mpg123/mpg123.c:1152 Plugins/Input/tonegen/tonegen.c:54
 #: Plugins/Input/vorbis/fileinfo.c:212 Plugins/Input/vorbis/http.c:218
 #: Plugins/Input/vorbis/vorbis.c:802 Plugins/Input/wav/wav-sndfile.c:260
-#: Plugins/Output/esd/about.c:49 Plugins/Output/OSS/about.c:54
+#: Plugins/Output/OSS/about.c:54 Plugins/Output/esd/about.c:49
 msgid "Ok"
 msgstr "OK"
 
@@ -781,8 +781,8 @@ msgid "Output"
 msgstr ""
 
 #: Plugins/Input/flac/configure.c:617 Plugins/Input/mpg123/configure.c:464
-#: Plugins/Input/vorbis/configure.c:287 Plugins/Output/esd/configure.c:171
-#: Plugins/Output/OSS/configure.c:302
+#: Plugins/Input/vorbis/configure.c:287 Plugins/Output/OSS/configure.c:302
+#: Plugins/Output/esd/configure.c:171
 msgid "Buffering:"
 msgstr "Přednačítání"
 
@@ -792,8 +792,8 @@ msgid "Buffer size (kb):"
 msgstr "Velikost vyrovnávací paměti (kB):"
 
 #: Plugins/Input/flac/configure.c:638 Plugins/Input/mpg123/configure.c:492
-#: Plugins/Input/vorbis/configure.c:313 Plugins/Output/esd/configure.c:198
-#: Plugins/Output/OSS/configure.c:329
+#: Plugins/Input/vorbis/configure.c:313 Plugins/Output/OSS/configure.c:329
+#: Plugins/Output/esd/configure.c:198
 msgid "Pre-buffer (percent):"
 msgstr "Načíst předem (v procentech):"
 
@@ -2356,10 +2356,6 @@ msgstr ""
 "\n"
 "Navštivte stránky \"the Xiph.org Foundation\": http://www.xiph.org/\n"
 
-#: Plugins/Input/wav/wav.c:67
-msgid "WAV Audio Plugin"
-msgstr "Modul WAV Audio"
-
 #: Plugins/Input/wav/wav-sndfile.c:243
 msgid "About sndfile WAV support"
 msgstr ""
@@ -2407,6 +2403,103 @@ msgstr ""
 #: Plugins/Input/wav/wav-sndfile.c:268
 msgid "sndfile WAV plugin"
 msgstr ""
+
+#: Plugins/Input/wav/wav.c:67
+msgid "WAV Audio Plugin"
+msgstr "Modul WAV Audio"
+
+#: Plugins/Output/OSS/OSS.c:50
+msgid "OSS Output Plugin"
+msgstr "OSS výstupní modul"
+
+#: Plugins/Output/OSS/about.c:39
+msgid "About OSS Driver"
+msgstr "O modulu OSS"
+
+#: Plugins/Output/OSS/about.c:40
+msgid ""
+"XMMS OSS Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+"XMMS OSS ovladač\n"
+"\n"
+"  Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
+"pokud dodržíte podmínky GNU General Public License (GPL) vydané\n"
+"Free Software Foundation a to buď ve verzi 2 nebo (dle vaší volby)\n"
+"libovolné novější.\n"
+"\n"
+"Program je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLIV\n"
+"ZÁRUKY a to ani záruky obchodovatelnosti nebo vhodnosti pro\n"
+"JAKÝKOLIV účel. Více informací najdete v GNU GPL.\n"
+"\n"
+"S tímto programem byste měli obdržet kopii GNU GPL. Pokud se\n"
+"tak nestalo, obraťte se na Free Software Foundation,\n"
+"Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA. Český překlad naleznete na webové adrese\n"
+"http://www.gnu.cz/licence.html."
+
+#: Plugins/Output/OSS/configure.c:149
+#, c-format
+msgid "Default (%s)"
+msgstr "Standardně (%s)"
+
+#: Plugins/Output/OSS/configure.c:167
+msgid "Default"
+msgstr "Standardně"
+
+#: Plugins/Output/OSS/configure.c:199
+msgid "OSS Driver configuration"
+msgstr "Nastavení ovaldače OSS"
+
+#: Plugins/Output/OSS/configure.c:215 Plugins/Output/alsa/configure.c:288
+msgid "Audio device:"
+msgstr "Zvukové zařízení:"
+
+#: Plugins/Output/OSS/configure.c:237 Plugins/Output/OSS/configure.c:278
+msgid "Use alternate device:"
+msgstr "Použít jiné zařízení:"
+
+#: Plugins/Output/OSS/configure.c:258 Plugins/Output/alsa/configure.c:333
+msgid "Mixer device:"
+msgstr "Mixér:"
+
+#: Plugins/Output/OSS/configure.c:300
+msgid "Devices"
+msgstr "Zařízení"
+
+#: Plugins/Output/OSS/configure.c:315 Plugins/Output/esd/configure.c:184
+msgid "Buffer size (ms):"
+msgstr "Velikost vyrovnávací paměti (ms):"
+
+#: Plugins/Output/OSS/configure.c:340 Plugins/Output/esd/configure.c:209
+msgid "Buffering"
+msgstr "Přednačítání"
+
+#: Plugins/Output/OSS/configure.c:341
+msgid "Mixer Settings:"
+msgstr "Nastavení mixéru:"
+
+#: Plugins/Output/OSS/configure.c:347
+msgid "Volume controls Master not PCM"
+msgstr "Hlasitost ovládána Master kanálem místo PCM"
+
+#: Plugins/Output/OSS/configure.c:353
+msgid "Mixer"
+msgstr "Mixér"
 
 #: Plugins/Output/alsa/about.c:30
 msgid "About ALSA Driver"
@@ -2468,10 +2561,6 @@ msgstr "Implicitní PCM zařízení (%s)"
 msgid "ALSA Driver configuration"
 msgstr "Nastavení ovladače ALSA"
 
-#: Plugins/Output/alsa/configure.c:288 Plugins/Output/OSS/configure.c:215
-msgid "Audio device:"
-msgstr "Zvukové zařízení:"
-
 #: Plugins/Output/alsa/configure.c:302
 msgid "Mixer:"
 msgstr "Mixér:"
@@ -2483,10 +2572,6 @@ msgstr "Hlasitost nastavit softwarově"
 #: Plugins/Output/alsa/configure.c:320
 msgid "Mixer card:"
 msgstr "Mixovací zařízení:"
-
-#: Plugins/Output/alsa/configure.c:333 Plugins/Output/OSS/configure.c:258
-msgid "Mixer device:"
-msgstr "Mixér:"
 
 #: Plugins/Output/alsa/configure.c:353
 msgid "Device settings"
@@ -2594,94 +2679,9 @@ msgstr "Hlasitost ovládána OO mixérem"
 msgid "Server"
 msgstr "Server"
 
-#: Plugins/Output/esd/configure.c:184 Plugins/Output/OSS/configure.c:315
-msgid "Buffer size (ms):"
-msgstr "Velikost vyrovnávací paměti (ms):"
-
-#: Plugins/Output/esd/configure.c:209 Plugins/Output/OSS/configure.c:340
-msgid "Buffering"
-msgstr "Přednačítání"
-
 #: Plugins/Output/esd/esd.c:47
 msgid "eSound Output Plugin"
 msgstr "Výstupní modul  eSound"
-
-#: Plugins/Output/OSS/about.c:39
-msgid "About OSS Driver"
-msgstr "O modulu OSS"
-
-#: Plugins/Output/OSS/about.c:40
-msgid ""
-"XMMS OSS Driver\n"
-"\n"
-" This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"GNU General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-"USA."
-msgstr ""
-"XMMS OSS ovladač\n"
-"\n"
-"  Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
-"pokud dodržíte podmínky GNU General Public License (GPL) vydané\n"
-"Free Software Foundation a to buď ve verzi 2 nebo (dle vaší volby)\n"
-"libovolné novější.\n"
-"\n"
-"Program je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLIV\n"
-"ZÁRUKY a to ani záruky obchodovatelnosti nebo vhodnosti pro\n"
-"JAKÝKOLIV účel. Více informací najdete v GNU GPL.\n"
-"\n"
-"S tímto programem byste měli obdržet kopii GNU GPL. Pokud se\n"
-"tak nestalo, obraťte se na Free Software Foundation,\n"
-"Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-"USA. Český překlad naleznete na webové adrese\n"
-"http://www.gnu.cz/licence.html."
-
-#: Plugins/Output/OSS/configure.c:149
-#, c-format
-msgid "Default (%s)"
-msgstr "Standardně (%s)"
-
-#: Plugins/Output/OSS/configure.c:167
-msgid "Default"
-msgstr "Standardně"
-
-#: Plugins/Output/OSS/configure.c:199
-msgid "OSS Driver configuration"
-msgstr "Nastavení ovaldače OSS"
-
-#: Plugins/Output/OSS/configure.c:237 Plugins/Output/OSS/configure.c:278
-msgid "Use alternate device:"
-msgstr "Použít jiné zařízení:"
-
-#: Plugins/Output/OSS/configure.c:300
-msgid "Devices"
-msgstr "Zařízení"
-
-#: Plugins/Output/OSS/configure.c:341
-msgid "Mixer Settings:"
-msgstr "Nastavení mixéru:"
-
-#: Plugins/Output/OSS/configure.c:347
-msgid "Volume controls Master not PCM"
-msgstr "Hlasitost ovládána Master kanálem místo PCM"
-
-#: Plugins/Output/OSS/configure.c:353
-msgid "Mixer"
-msgstr "Mixér"
-
-#: Plugins/Output/OSS/OSS.c:50
-msgid "OSS Output Plugin"
-msgstr "OSS výstupní modul"
 
 #: Plugins/Visualization/blur_scope/blur_scope.c:57
 msgid "/Toggle Decorations"
@@ -3006,54 +3006,6 @@ msgstr ""
 #: Plugins/Visualization/libvisual-proxy/main.c:445
 msgid "Cannot initialize plugin's visual stuff"
 msgstr ""
-
-#: libaudacious/titlestring.c:324
-msgid "Performer/Artist"
-msgstr "Interpret/umělec"
-
-#: libaudacious/titlestring.c:325 audacious/prefswin.c:94
-msgid "Album"
-msgstr "Album"
-
-#: libaudacious/titlestring.c:326 audacious/prefswin.c:97
-msgid "Genre"
-msgstr "Žánr"
-
-#: libaudacious/titlestring.c:327
-msgid "File name"
-msgstr "Jméno souboru"
-
-#: libaudacious/titlestring.c:328
-msgid "File path"
-msgstr "Cesta k souboru"
-
-#: libaudacious/titlestring.c:329
-msgid "File extension"
-msgstr "Přípona souboru"
-
-#: libaudacious/titlestring.c:330
-msgid "Track name"
-msgstr "Název stopy"
-
-#: libaudacious/titlestring.c:331
-msgid "Track number"
-msgstr "Číslo stopy"
-
-#: libaudacious/titlestring.c:332 audacious/prefswin.c:100
-msgid "Date"
-msgstr "Datum"
-
-#: libaudacious/titlestring.c:333 audacious/prefswin.c:101
-msgid "Year"
-msgstr "Rok"
-
-#: libaudacious/titlestring.c:334 audacious/prefswin.c:102
-msgid "Comment"
-msgstr "Komentář"
-
-#: libaudacious/titlestring.c:385
-msgid "%{n:...%}: Display \"...\" only if element %n is present"
-msgstr "%{n:...%}: Zobraz \"...\" pouze pokud %n nechybí"
 
 #: audacious/about.c:42
 #, fuzzy, c-format
@@ -4406,13 +4358,33 @@ msgstr "Moduly"
 msgid "Artist"
 msgstr "Umělec"
 
+#: audacious/prefswin.c:94 libaudacious/titlestring.c:325
+msgid "Album"
+msgstr "Album"
+
 #: audacious/prefswin.c:96
 msgid "Tracknumber"
 msgstr "Číslo stopy"
 
+#: audacious/prefswin.c:97 libaudacious/titlestring.c:326
+msgid "Genre"
+msgstr "Žánr"
+
 #: audacious/prefswin.c:99
 msgid "Filepath"
 msgstr "Cesta k souboru"
+
+#: audacious/prefswin.c:100 libaudacious/titlestring.c:332
+msgid "Date"
+msgstr "Datum"
+
+#: audacious/prefswin.c:101 libaudacious/titlestring.c:333
+msgid "Year"
+msgstr "Rok"
+
+#: audacious/prefswin.c:102 libaudacious/titlestring.c:334
+msgid "Comment"
+msgstr "Komentář"
 
 #: audacious/prefswin.c:417 audacious/prefswin.c:504 audacious/prefswin.c:593
 #: audacious/prefswin.c:689
@@ -4455,6 +4427,18 @@ msgstr "Zavřít dialog při přidání"
 #: audacious/util.c:1187
 msgid "  (invalid UTF-8)"
 msgstr "  (neplatné UTF8)"
+
+#: audacious/glade/addfiles.glade:77
+msgid "Close Dialog on Add"
+msgstr "Zavřít dialog při přidání"
+
+#: audacious/glade/addfiles.glade:105
+msgid "Select All"
+msgstr "Vybrat vše"
+
+#: audacious/glade/addfiles.glade:116
+msgid "Deselect All"
+msgstr "Odebrat vše"
 
 #: audacious/glade/prefswin.glade:8
 #, fuzzy
@@ -4703,17 +4687,33 @@ msgstr "Přípony souborů s předvolbami:"
 msgid "Available _Presets:"
 msgstr "Dostupné _předvolby:"
 
-#: audacious/glade/addfiles.glade:77
-msgid "Close Dialog on Add"
-msgstr "Zavřít dialog při přidání"
+#: libaudacious/titlestring.c:324
+msgid "Performer/Artist"
+msgstr "Interpret/umělec"
 
-#: audacious/glade/addfiles.glade:105
-msgid "Select All"
-msgstr "Vybrat vše"
+#: libaudacious/titlestring.c:327
+msgid "File name"
+msgstr "Jméno souboru"
 
-#: audacious/glade/addfiles.glade:116
-msgid "Deselect All"
-msgstr "Odebrat vše"
+#: libaudacious/titlestring.c:328
+msgid "File path"
+msgstr "Cesta k souboru"
+
+#: libaudacious/titlestring.c:329
+msgid "File extension"
+msgstr "Přípona souboru"
+
+#: libaudacious/titlestring.c:330
+msgid "Track name"
+msgstr "Název stopy"
+
+#: libaudacious/titlestring.c:331
+msgid "Track number"
+msgstr "Číslo stopy"
+
+#: libaudacious/titlestring.c:385
+msgid "%{n:...%}: Display \"...\" only if element %n is present"
+msgstr "%{n:...%}: Zobraz \"...\" pouze pokud %n nechybí"
 
 #~ msgid "Decoder:"
 #~ msgstr "Dekodér:"

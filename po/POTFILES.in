@@ -1,125 +1,92 @@
-# Song Change general plugin
+# Song Change general plugin.
 Plugins/General/song_change/song_change.c
 
-# CD Audio input plugin
+# CD Audio input plugin.
 Plugins/Input/cdaudio/cdaudio.c
 Plugins/Input/cdaudio/cdinfo.c
 Plugins/Input/cdaudio/configure.c
 
-# Console Music Decoder input plugin
+# Console Music Decoder input plugin.
 Plugins/Input/console/Audacious_Driver.cpp
 
-# FLAC input plugin
+# FLAC input plugin.
 Plugins/Input/flac/charset.c
 Plugins/Input/flac/configure.c
 Plugins/Input/flac/fileinfo.c
 Plugins/Input/flac/http.c
 
-# MikMod input plugin
+# MikMod input plugin.
 Plugins/Input/mikmod/plugin.c
 
-# MP3 input plugin
+# MP3 input plugin.
 Plugins/Input/mpg123/configure.c
 Plugins/Input/mpg123/fileinfo.c
 Plugins/Input/mpg123/http.c
 Plugins/Input/mpg123/id3_frame_content.c
 Plugins/Input/mpg123/mpg123.c
 
-# Tone Generator input plugin
+# Tone Generator input plugin.
 Plugins/Input/tonegen/tonegen.c
 
-# Ogg Vorbis input plugin
+# Ogg Vorbis input plugin.
 Plugins/Input/vorbis/configure.c
 Plugins/Input/vorbis/fileinfo.c
 Plugins/Input/vorbis/http.c
 Plugins/Input/vorbis/vorbis.c
 
-# WAV input plugin
-Plugins/Input/wav/wav.c
+# WAV input plugin.
 Plugins/Input/wav/wav-sndfile.c
+Plugins/Input/wav/wav.c
 
-# WMA input plugin
+# WMA input plugin.
 Plugins/Input/wma/libffwma/bswap.h
 
-# ALSA output plugin
+# OSS output plugin.
+Plugins/Output/OSS/OSS.c
+Plugins/Output/OSS/about.c
+Plugins/Output/OSS/configure.c
+
+# ALSA output plugin.
 Plugins/Output/alsa/about.c
 Plugins/Output/alsa/alsa.c
 Plugins/Output/alsa/configure.c
 
-# Disk Writer output plugin
+# Disk Writer output plugin.
 Plugins/Output/disk_writer/disk_writer.c
 
-# ESD output plugin
+# ESD output plugin.
 Plugins/Output/esd/about.c
 Plugins/Output/esd/configure.c
 Plugins/Output/esd/esd.c
 
-# OSS output plugin
-Plugins/Output/OSS/about.c
-Plugins/Output/OSS/configure.c
-Plugins/Output/OSS/OSS.c
-
-# Blur Scope visualization plugin
+# Blur Scope visualization plugin.
 Plugins/Visualization/blur_scope/blur_scope.c
 Plugins/Visualization/blur_scope/config.c
 
-# Libvisual visualization plugin
+# Libvisual visualization plugin.
 Plugins/Visualization/libvisual-proxy/about.c
 Plugins/Visualization/libvisual-proxy/config_gui.c
 Plugins/Visualization/libvisual-proxy/lv_bmp_config.c
 Plugins/Visualization/libvisual-proxy/main.c
 
-# libaudacious
-libaudacious/dirbrowser.c
-libaudacious/titlestring.c
-libaudacious/util.c
-libaudacious/beepctrl.c
-
-# Audacious
+# Audacious.
 audacious/about.c
-audacious/controlsocket.c
-audacious/dock.c
-audacious/effect.c
-audacious/eq_graph.c
 audacious/eq_slider.c
 audacious/equalizer.c
-audacious/fft.c
-audacious/fullscreen.c
-audacious/general.c
 audacious/getopt.c
-audacious/getopt1.c
 audacious/glade.c
-audacious/hints.c
-audacious/hslider.c
 audacious/input.c
 audacious/logger.c
 audacious/main.c
 audacious/mainwin.c
-audacious/menurow.c
-audacious/monostereo.c
-audacious/number.c
-audacious/output.c
-audacious/pbutton.c
 audacious/playback.c
-audacious/playlist.c
-audacious/playlist_list.c
-audacious/playlist_popup.c
-audacious/playlist_slider.c
 audacious/playlistwin.c
-audacious/playstatus.c
-audacious/pluginenum.c
 audacious/prefswin.c
-audacious/sbutton.c
-audacious/skin.c
-audacious/skinwin.c
-audacious/svis.c
-audacious/tbutton.c
-audacious/textbox.c
 audacious/util.c
-audacious/vis.c
-audacious/visualization.c
-audacious/widget.c
 
-# Glade files
-audacious/glade/prefswin.glade
+# Glade files.
 audacious/glade/addfiles.glade
+audacious/glade/prefswin.glade
+
+# libaudacious.
+libaudacious/titlestring.c

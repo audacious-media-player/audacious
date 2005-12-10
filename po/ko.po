@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-27 11:51-0800\n"
+"POT-Creation-Date: 2005-12-09 18:03-0800\n"
 "PO-Revision-Date: 2004-06-29 19:02+0900\n"
 "Last-Translator: DongCheon Park <dcpark@kaist.ac.kr>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -341,7 +341,7 @@ msgstr ""
 #: Plugins/Input/mpg123/mpg123.c:1152 Plugins/Input/tonegen/tonegen.c:54
 #: Plugins/Input/vorbis/fileinfo.c:212 Plugins/Input/vorbis/http.c:218
 #: Plugins/Input/vorbis/vorbis.c:802 Plugins/Input/wav/wav-sndfile.c:260
-#: Plugins/Output/esd/about.c:49 Plugins/Output/OSS/about.c:54
+#: Plugins/Output/OSS/about.c:54 Plugins/Output/esd/about.c:49
 msgid "Ok"
 msgstr "확인"
 
@@ -785,8 +785,8 @@ msgid "Output"
 msgstr ""
 
 #: Plugins/Input/flac/configure.c:617 Plugins/Input/mpg123/configure.c:464
-#: Plugins/Input/vorbis/configure.c:287 Plugins/Output/esd/configure.c:171
-#: Plugins/Output/OSS/configure.c:302
+#: Plugins/Input/vorbis/configure.c:287 Plugins/Output/OSS/configure.c:302
+#: Plugins/Output/esd/configure.c:171
 msgid "Buffering:"
 msgstr "버퍼링:"
 
@@ -796,8 +796,8 @@ msgid "Buffer size (kb):"
 msgstr "버퍼 크기 (kb):"
 
 #: Plugins/Input/flac/configure.c:638 Plugins/Input/mpg123/configure.c:492
-#: Plugins/Input/vorbis/configure.c:313 Plugins/Output/esd/configure.c:198
-#: Plugins/Output/OSS/configure.c:329
+#: Plugins/Input/vorbis/configure.c:313 Plugins/Output/OSS/configure.c:329
+#: Plugins/Output/esd/configure.c:198
 msgid "Pre-buffer (percent):"
 msgstr "사전 버퍼 (퍼센트):"
 
@@ -2362,10 +2362,6 @@ msgstr ""
 "\n"
 "Xiph.org 재단 주소 - http://www.xiph.org/\n"
 
-#: Plugins/Input/wav/wav.c:67
-msgid "WAV Audio Plugin"
-msgstr "WAV 오디오 플러그인"
-
 #: Plugins/Input/wav/wav-sndfile.c:243
 msgid "About sndfile WAV support"
 msgstr ""
@@ -2413,6 +2409,103 @@ msgstr ""
 #: Plugins/Input/wav/wav-sndfile.c:268
 msgid "sndfile WAV plugin"
 msgstr ""
+
+#: Plugins/Input/wav/wav.c:67
+msgid "WAV Audio Plugin"
+msgstr "WAV 오디오 플러그인"
+
+#: Plugins/Output/OSS/OSS.c:50
+msgid "OSS Output Plugin"
+msgstr "OSS 출력 플러그인"
+
+#: Plugins/Output/OSS/about.c:39
+msgid "About OSS Driver"
+msgstr "OSS 드라이버 정보"
+
+#: Plugins/Output/OSS/about.c:40
+msgid ""
+"XMMS OSS Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+"XMMS OSS 드라이버\n"
+"\n"
+"본 프로그램은 공개 소프트웨어입니다; 자유 소프트웨어 재단(Free Software\n"
+"Foundation)의 GNU General Public License에 따라 본 프로그램을 수정하거나\n"
+"GPL의 두번째 버전, 혹은 (선택에 따라) 그 이후의 임의의 버전으로 재배포할\n"
+"수도 있습니다.\n"
+"\n"
+"본 프로그램이 유용하게 배포되길 바랍니다. 하지만 본 프로그램은\n"
+"상품성 또는 특정 목적에의 사용 가능성에 대한 보증이나 기타\n"
+"어떤한 보증도 하지 않습니다. 보다 자세한 사항은 GNU General\n"
+"Public License를 참고하시기 바랍니다.\n"
+"\n"
+"여러분께서는 GNU General Public License를 본 프로그램과 함께\n"
+"받으셨습니다; 만약 그렇지 않다면, Free Software\n"
+"Foundation, Inc,, 59 Template Place - Suite 330, Boston, NA 02111-1307,\n"
+"USA로 연락하시기 바랍니다."
+
+#: Plugins/Output/OSS/configure.c:149
+#, c-format
+msgid "Default (%s)"
+msgstr "기본값 (%s)"
+
+#: Plugins/Output/OSS/configure.c:167
+msgid "Default"
+msgstr "기본값"
+
+#: Plugins/Output/OSS/configure.c:199
+msgid "OSS Driver configuration"
+msgstr "OSS 드라이버 설정"
+
+#: Plugins/Output/OSS/configure.c:215 Plugins/Output/alsa/configure.c:288
+msgid "Audio device:"
+msgstr "오디오 장치:"
+
+#: Plugins/Output/OSS/configure.c:237 Plugins/Output/OSS/configure.c:278
+msgid "Use alternate device:"
+msgstr "다른 장치 사용하기:"
+
+#: Plugins/Output/OSS/configure.c:258 Plugins/Output/alsa/configure.c:333
+msgid "Mixer device:"
+msgstr "믹서 장치:"
+
+#: Plugins/Output/OSS/configure.c:300
+msgid "Devices"
+msgstr "장치"
+
+#: Plugins/Output/OSS/configure.c:315 Plugins/Output/esd/configure.c:184
+msgid "Buffer size (ms):"
+msgstr "버퍼 크기 (ms):"
+
+#: Plugins/Output/OSS/configure.c:340 Plugins/Output/esd/configure.c:209
+msgid "Buffering"
+msgstr "버퍼링"
+
+#: Plugins/Output/OSS/configure.c:341
+msgid "Mixer Settings:"
+msgstr "믹서 설정:"
+
+#: Plugins/Output/OSS/configure.c:347
+msgid "Volume controls Master not PCM"
+msgstr "음량 제어를 PCM으로 하지 않음"
+
+#: Plugins/Output/OSS/configure.c:353
+msgid "Mixer"
+msgstr "믹서"
 
 #: Plugins/Output/alsa/about.c:30
 msgid "About ALSA Driver"
@@ -2474,10 +2567,6 @@ msgstr "기본 PCM 장치 (%s)"
 msgid "ALSA Driver configuration"
 msgstr "ALSA 드라이버 설정"
 
-#: Plugins/Output/alsa/configure.c:288 Plugins/Output/OSS/configure.c:215
-msgid "Audio device:"
-msgstr "오디오 장치:"
-
 #: Plugins/Output/alsa/configure.c:302
 msgid "Mixer:"
 msgstr "믹서:"
@@ -2489,10 +2578,6 @@ msgstr "소프트웨어 음량 조절 사용"
 #: Plugins/Output/alsa/configure.c:320
 msgid "Mixer card:"
 msgstr "믹서 카드:"
-
-#: Plugins/Output/alsa/configure.c:333 Plugins/Output/OSS/configure.c:258
-msgid "Mixer device:"
-msgstr "믹서 장치:"
 
 #: Plugins/Output/alsa/configure.c:353
 msgid "Device settings"
@@ -2600,94 +2685,9 @@ msgstr "음량 제어 OSS 믹서"
 msgid "Server"
 msgstr "서버"
 
-#: Plugins/Output/esd/configure.c:184 Plugins/Output/OSS/configure.c:315
-msgid "Buffer size (ms):"
-msgstr "버퍼 크기 (ms):"
-
-#: Plugins/Output/esd/configure.c:209 Plugins/Output/OSS/configure.c:340
-msgid "Buffering"
-msgstr "버퍼링"
-
 #: Plugins/Output/esd/esd.c:47
 msgid "eSound Output Plugin"
 msgstr "eSound 출력 플러그인"
-
-#: Plugins/Output/OSS/about.c:39
-msgid "About OSS Driver"
-msgstr "OSS 드라이버 정보"
-
-#: Plugins/Output/OSS/about.c:40
-msgid ""
-"XMMS OSS Driver\n"
-"\n"
-" This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"GNU General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-"USA."
-msgstr ""
-"XMMS OSS 드라이버\n"
-"\n"
-"본 프로그램은 공개 소프트웨어입니다; 자유 소프트웨어 재단(Free Software\n"
-"Foundation)의 GNU General Public License에 따라 본 프로그램을 수정하거나\n"
-"GPL의 두번째 버전, 혹은 (선택에 따라) 그 이후의 임의의 버전으로 재배포할\n"
-"수도 있습니다.\n"
-"\n"
-"본 프로그램이 유용하게 배포되길 바랍니다. 하지만 본 프로그램은\n"
-"상품성 또는 특정 목적에의 사용 가능성에 대한 보증이나 기타\n"
-"어떤한 보증도 하지 않습니다. 보다 자세한 사항은 GNU General\n"
-"Public License를 참고하시기 바랍니다.\n"
-"\n"
-"여러분께서는 GNU General Public License를 본 프로그램과 함께\n"
-"받으셨습니다; 만약 그렇지 않다면, Free Software\n"
-"Foundation, Inc,, 59 Template Place - Suite 330, Boston, NA 02111-1307,\n"
-"USA로 연락하시기 바랍니다."
-
-#: Plugins/Output/OSS/configure.c:149
-#, c-format
-msgid "Default (%s)"
-msgstr "기본값 (%s)"
-
-#: Plugins/Output/OSS/configure.c:167
-msgid "Default"
-msgstr "기본값"
-
-#: Plugins/Output/OSS/configure.c:199
-msgid "OSS Driver configuration"
-msgstr "OSS 드라이버 설정"
-
-#: Plugins/Output/OSS/configure.c:237 Plugins/Output/OSS/configure.c:278
-msgid "Use alternate device:"
-msgstr "다른 장치 사용하기:"
-
-#: Plugins/Output/OSS/configure.c:300
-msgid "Devices"
-msgstr "장치"
-
-#: Plugins/Output/OSS/configure.c:341
-msgid "Mixer Settings:"
-msgstr "믹서 설정:"
-
-#: Plugins/Output/OSS/configure.c:347
-msgid "Volume controls Master not PCM"
-msgstr "음량 제어를 PCM으로 하지 않음"
-
-#: Plugins/Output/OSS/configure.c:353
-msgid "Mixer"
-msgstr "믹서"
-
-#: Plugins/Output/OSS/OSS.c:50
-msgid "OSS Output Plugin"
-msgstr "OSS 출력 플러그인"
 
 #: Plugins/Visualization/blur_scope/blur_scope.c:57
 msgid "/Toggle Decorations"
@@ -3015,54 +3015,6 @@ msgstr ""
 #: Plugins/Visualization/libvisual-proxy/main.c:445
 msgid "Cannot initialize plugin's visual stuff"
 msgstr ""
-
-#: libaudacious/titlestring.c:324
-msgid "Performer/Artist"
-msgstr "연주자/가수"
-
-#: libaudacious/titlestring.c:325 audacious/prefswin.c:94
-msgid "Album"
-msgstr "앨범"
-
-#: libaudacious/titlestring.c:326 audacious/prefswin.c:97
-msgid "Genre"
-msgstr "장르"
-
-#: libaudacious/titlestring.c:327
-msgid "File name"
-msgstr "파일 이름"
-
-#: libaudacious/titlestring.c:328
-msgid "File path"
-msgstr "파일 경로"
-
-#: libaudacious/titlestring.c:329
-msgid "File extension"
-msgstr "파일 확장자"
-
-#: libaudacious/titlestring.c:330
-msgid "Track name"
-msgstr "트랙 이름"
-
-#: libaudacious/titlestring.c:331
-msgid "Track number"
-msgstr "트랙 번호"
-
-#: libaudacious/titlestring.c:332 audacious/prefswin.c:100
-msgid "Date"
-msgstr "날짜"
-
-#: libaudacious/titlestring.c:333 audacious/prefswin.c:101
-msgid "Year"
-msgstr "연도"
-
-#: libaudacious/titlestring.c:334 audacious/prefswin.c:102
-msgid "Comment"
-msgstr "설명"
-
-#: libaudacious/titlestring.c:385
-msgid "%{n:...%}: Display \"...\" only if element %n is present"
-msgstr "%{n:...%}: 표시 \"...\" %n 항목이 있는 경우만"
 
 #: audacious/about.c:42
 #, fuzzy, c-format
@@ -4432,15 +4384,35 @@ msgstr "플러그인"
 msgid "Artist"
 msgstr "가수:"
 
+#: audacious/prefswin.c:94 libaudacious/titlestring.c:325
+msgid "Album"
+msgstr "앨범"
+
 #: audacious/prefswin.c:96
 #, fuzzy
 msgid "Tracknumber"
 msgstr "트랙 번호"
 
+#: audacious/prefswin.c:97 libaudacious/titlestring.c:326
+msgid "Genre"
+msgstr "장르"
+
 #: audacious/prefswin.c:99
 #, fuzzy
 msgid "Filepath"
 msgstr "파일 경로"
+
+#: audacious/prefswin.c:100 libaudacious/titlestring.c:332
+msgid "Date"
+msgstr "날짜"
+
+#: audacious/prefswin.c:101 libaudacious/titlestring.c:333
+msgid "Year"
+msgstr "연도"
+
+#: audacious/prefswin.c:102 libaudacious/titlestring.c:334
+msgid "Comment"
+msgstr "설명"
 
 #: audacious/prefswin.c:417 audacious/prefswin.c:504 audacious/prefswin.c:593
 #: audacious/prefswin.c:689
@@ -4485,6 +4457,18 @@ msgstr ""
 #: audacious/util.c:1187
 msgid "  (invalid UTF-8)"
 msgstr "  (유효하지 않은 UTF-8)"
+
+#: audacious/glade/addfiles.glade:77
+msgid "Close Dialog on Add"
+msgstr ""
+
+#: audacious/glade/addfiles.glade:105
+msgid "Select All"
+msgstr "모두 선택"
+
+#: audacious/glade/addfiles.glade:116
+msgid "Deselect All"
+msgstr "선택 해제"
 
 #: audacious/glade/prefswin.glade:8
 #, fuzzy
@@ -4732,17 +4716,33 @@ msgstr "설정값 파일 확장자:"
 msgid "Available _Presets:"
 msgstr "가능한 설정값(_P):"
 
-#: audacious/glade/addfiles.glade:77
-msgid "Close Dialog on Add"
-msgstr ""
+#: libaudacious/titlestring.c:324
+msgid "Performer/Artist"
+msgstr "연주자/가수"
 
-#: audacious/glade/addfiles.glade:105
-msgid "Select All"
-msgstr "모두 선택"
+#: libaudacious/titlestring.c:327
+msgid "File name"
+msgstr "파일 이름"
 
-#: audacious/glade/addfiles.glade:116
-msgid "Deselect All"
-msgstr "선택 해제"
+#: libaudacious/titlestring.c:328
+msgid "File path"
+msgstr "파일 경로"
+
+#: libaudacious/titlestring.c:329
+msgid "File extension"
+msgstr "파일 확장자"
+
+#: libaudacious/titlestring.c:330
+msgid "Track name"
+msgstr "트랙 이름"
+
+#: libaudacious/titlestring.c:331
+msgid "Track number"
+msgstr "트랙 번호"
+
+#: libaudacious/titlestring.c:385
+msgid "%{n:...%}: Display \"...\" only if element %n is present"
+msgstr "%{n:...%}: 표시 \"...\" %n 항목이 있는 경우만"
 
 #~ msgid "Decoder:"
 #~ msgstr "디코더:"

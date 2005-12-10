@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-27 11:51-0800\n"
+"POT-Creation-Date: 2005-12-09 18:03-0800\n"
 "PO-Revision-Date: 2004-07-28 21:35+0800\n"
 "Last-Translator: Chao-Hsiung Liao <pesder.liao@msa.hinet.net>\n"
 "Language-Team: chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -336,7 +336,7 @@ msgstr ""
 #: Plugins/Input/mpg123/mpg123.c:1152 Plugins/Input/tonegen/tonegen.c:54
 #: Plugins/Input/vorbis/fileinfo.c:212 Plugins/Input/vorbis/http.c:218
 #: Plugins/Input/vorbis/vorbis.c:802 Plugins/Input/wav/wav-sndfile.c:260
-#: Plugins/Output/esd/about.c:49 Plugins/Output/OSS/about.c:54
+#: Plugins/Output/OSS/about.c:54 Plugins/Output/esd/about.c:49
 msgid "Ok"
 msgstr "確定"
 
@@ -782,8 +782,8 @@ msgid "Output"
 msgstr ""
 
 #: Plugins/Input/flac/configure.c:617 Plugins/Input/mpg123/configure.c:464
-#: Plugins/Input/vorbis/configure.c:287 Plugins/Output/esd/configure.c:171
-#: Plugins/Output/OSS/configure.c:302
+#: Plugins/Input/vorbis/configure.c:287 Plugins/Output/OSS/configure.c:302
+#: Plugins/Output/esd/configure.c:171
 msgid "Buffering:"
 msgstr "緩衝:"
 
@@ -793,8 +793,8 @@ msgid "Buffer size (kb):"
 msgstr "緩衝區大小(kb):"
 
 #: Plugins/Input/flac/configure.c:638 Plugins/Input/mpg123/configure.c:492
-#: Plugins/Input/vorbis/configure.c:313 Plugins/Output/esd/configure.c:198
-#: Plugins/Output/OSS/configure.c:329
+#: Plugins/Input/vorbis/configure.c:313 Plugins/Output/OSS/configure.c:329
+#: Plugins/Output/esd/configure.c:198
 msgid "Pre-buffer (percent):"
 msgstr "預先緩衝(百分比):"
 
@@ -2403,10 +2403,6 @@ msgstr ""
 "\n"
 "您可以到 http://www.xiph.org/ 參觀 Xiph.org\n"
 
-#: Plugins/Input/wav/wav.c:67
-msgid "WAV Audio Plugin"
-msgstr "WAV 音效外掛程式"
-
 #: Plugins/Input/wav/wav-sndfile.c:243
 msgid "About sndfile WAV support"
 msgstr ""
@@ -2454,6 +2450,103 @@ msgstr ""
 #: Plugins/Input/wav/wav-sndfile.c:268
 msgid "sndfile WAV plugin"
 msgstr ""
+
+#: Plugins/Input/wav/wav.c:67
+msgid "WAV Audio Plugin"
+msgstr "WAV 音效外掛程式"
+
+#: Plugins/Output/OSS/OSS.c:50
+msgid "OSS Output Plugin"
+msgstr "OSS 輸出外掛程式"
+
+#: Plugins/Output/OSS/about.c:39
+msgid "About OSS Driver"
+msgstr "關於 OSS 驅動程式"
+
+#: Plugins/Output/OSS/about.c:40
+msgid ""
+"XMMS OSS Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+"XMMS OSS 驅動程式\n"
+"\n"
+" 本程式是自由軟體，您可以遵照自由軟體基金會 (Free Software Foundation) \n"
+"出版的 GNU 通用公共許可證條款(GNU General Public License) 第二版\n"
+"來修改和重新發佈這一程式，或者自由選擇使用任何更新的\n"
+"版本。\n"
+"\n"
+"發佈這一程式的目的是希望它有用，\n"
+"但沒有任何擔保。甚至沒有適合特定目的\n"
+"而隱含的擔保。更詳細的情況請參閱\n"
+"GNU 通用公共許可證。\n"
+"\n"
+"您應該已經和程式一起收到一份 GNU\n"
+"通用公共許可證的副本。如果還沒有，寫信給： Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+
+#: Plugins/Output/OSS/configure.c:149
+#, c-format
+msgid "Default (%s)"
+msgstr "預設值(%s)"
+
+#: Plugins/Output/OSS/configure.c:167
+msgid "Default"
+msgstr "預設值"
+
+#: Plugins/Output/OSS/configure.c:199
+msgid "OSS Driver configuration"
+msgstr "OSS 驅動程式組態"
+
+#: Plugins/Output/OSS/configure.c:215 Plugins/Output/alsa/configure.c:288
+msgid "Audio device:"
+msgstr "音效裝置:"
+
+#: Plugins/Output/OSS/configure.c:237 Plugins/Output/OSS/configure.c:278
+msgid "Use alternate device:"
+msgstr "使用替代裝置:"
+
+#: Plugins/Output/OSS/configure.c:258 Plugins/Output/alsa/configure.c:333
+msgid "Mixer device:"
+msgstr "混音裝置:"
+
+#: Plugins/Output/OSS/configure.c:300
+msgid "Devices"
+msgstr "裝置"
+
+#: Plugins/Output/OSS/configure.c:315 Plugins/Output/esd/configure.c:184
+msgid "Buffer size (ms):"
+msgstr "緩衝區大小(ms):"
+
+#: Plugins/Output/OSS/configure.c:340 Plugins/Output/esd/configure.c:209
+msgid "Buffering"
+msgstr "緩衝區"
+
+#: Plugins/Output/OSS/configure.c:341
+msgid "Mixer Settings:"
+msgstr "混音程式設定值:"
+
+#: Plugins/Output/OSS/configure.c:347
+msgid "Volume controls Master not PCM"
+msgstr "主音量控制不是 PCM"
+
+#: Plugins/Output/OSS/configure.c:353
+msgid "Mixer"
+msgstr "混音程式"
 
 #: Plugins/Output/alsa/about.c:30
 msgid "About ALSA Driver"
@@ -2514,10 +2607,6 @@ msgstr "預設的 PCM 裝置 (%s)"
 msgid "ALSA Driver configuration"
 msgstr "ALSA 驅動程式組態"
 
-#: Plugins/Output/alsa/configure.c:288 Plugins/Output/OSS/configure.c:215
-msgid "Audio device:"
-msgstr "音效裝置:"
-
 #: Plugins/Output/alsa/configure.c:302
 msgid "Mixer:"
 msgstr "混音程式:"
@@ -2529,10 +2618,6 @@ msgstr "使用軟體音量控制"
 #: Plugins/Output/alsa/configure.c:320
 msgid "Mixer card:"
 msgstr "混音卡:"
-
-#: Plugins/Output/alsa/configure.c:333 Plugins/Output/OSS/configure.c:258
-msgid "Mixer device:"
-msgstr "混音裝置:"
 
 #: Plugins/Output/alsa/configure.c:353
 msgid "Device settings"
@@ -2640,94 +2725,9 @@ msgstr "音量控制 OSS 混音程式"
 msgid "Server"
 msgstr "伺服器"
 
-#: Plugins/Output/esd/configure.c:184 Plugins/Output/OSS/configure.c:315
-msgid "Buffer size (ms):"
-msgstr "緩衝區大小(ms):"
-
-#: Plugins/Output/esd/configure.c:209 Plugins/Output/OSS/configure.c:340
-msgid "Buffering"
-msgstr "緩衝區"
-
 #: Plugins/Output/esd/esd.c:47
 msgid "eSound Output Plugin"
 msgstr "eSound 輸出外掛程式"
-
-#: Plugins/Output/OSS/about.c:39
-msgid "About OSS Driver"
-msgstr "關於 OSS 驅動程式"
-
-#: Plugins/Output/OSS/about.c:40
-msgid ""
-"XMMS OSS Driver\n"
-"\n"
-" This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"GNU General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-"USA."
-msgstr ""
-"XMMS OSS 驅動程式\n"
-"\n"
-" 本程式是自由軟體，您可以遵照自由軟體基金會 (Free Software Foundation) \n"
-"出版的 GNU 通用公共許可證條款(GNU General Public License) 第二版\n"
-"來修改和重新發佈這一程式，或者自由選擇使用任何更新的\n"
-"版本。\n"
-"\n"
-"發佈這一程式的目的是希望它有用，\n"
-"但沒有任何擔保。甚至沒有適合特定目的\n"
-"而隱含的擔保。更詳細的情況請參閱\n"
-"GNU 通用公共許可證。\n"
-"\n"
-"您應該已經和程式一起收到一份 GNU\n"
-"通用公共許可證的副本。如果還沒有，寫信給： Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-"USA."
-
-#: Plugins/Output/OSS/configure.c:149
-#, c-format
-msgid "Default (%s)"
-msgstr "預設值(%s)"
-
-#: Plugins/Output/OSS/configure.c:167
-msgid "Default"
-msgstr "預設值"
-
-#: Plugins/Output/OSS/configure.c:199
-msgid "OSS Driver configuration"
-msgstr "OSS 驅動程式組態"
-
-#: Plugins/Output/OSS/configure.c:237 Plugins/Output/OSS/configure.c:278
-msgid "Use alternate device:"
-msgstr "使用替代裝置:"
-
-#: Plugins/Output/OSS/configure.c:300
-msgid "Devices"
-msgstr "裝置"
-
-#: Plugins/Output/OSS/configure.c:341
-msgid "Mixer Settings:"
-msgstr "混音程式設定值:"
-
-#: Plugins/Output/OSS/configure.c:347
-msgid "Volume controls Master not PCM"
-msgstr "主音量控制不是 PCM"
-
-#: Plugins/Output/OSS/configure.c:353
-msgid "Mixer"
-msgstr "混音程式"
-
-#: Plugins/Output/OSS/OSS.c:50
-msgid "OSS Output Plugin"
-msgstr "OSS 輸出外掛程式"
 
 #: Plugins/Visualization/blur_scope/blur_scope.c:57
 msgid "/Toggle Decorations"
@@ -3052,54 +3052,6 @@ msgstr ""
 #: Plugins/Visualization/libvisual-proxy/main.c:445
 msgid "Cannot initialize plugin's visual stuff"
 msgstr ""
-
-#: libaudacious/titlestring.c:324
-msgid "Performer/Artist"
-msgstr "演出者/藝人"
-
-#: libaudacious/titlestring.c:325 audacious/prefswin.c:94
-msgid "Album"
-msgstr "專輯"
-
-#: libaudacious/titlestring.c:326 audacious/prefswin.c:97
-msgid "Genre"
-msgstr "樂曲類型"
-
-#: libaudacious/titlestring.c:327
-msgid "File name"
-msgstr "檔案名稱"
-
-#: libaudacious/titlestring.c:328
-msgid "File path"
-msgstr "檔案的路徑"
-
-#: libaudacious/titlestring.c:329
-msgid "File extension"
-msgstr "延伸檔名"
-
-#: libaudacious/titlestring.c:330
-msgid "Track name"
-msgstr "音軌名稱"
-
-#: libaudacious/titlestring.c:331
-msgid "Track number"
-msgstr "音軌編號"
-
-#: libaudacious/titlestring.c:332 audacious/prefswin.c:100
-msgid "Date"
-msgstr "日期"
-
-#: libaudacious/titlestring.c:333 audacious/prefswin.c:101
-msgid "Year"
-msgstr "年份"
-
-#: libaudacious/titlestring.c:334 audacious/prefswin.c:102
-msgid "Comment"
-msgstr "註解"
-
-#: libaudacious/titlestring.c:385
-msgid "%{n:...%}: Display \"...\" only if element %n is present"
-msgstr "%{n:...%}: 如果出現元素 %n 時只顯示 \"...\""
 
 #: audacious/about.c:42
 #, fuzzy, c-format
@@ -4450,13 +4402,33 @@ msgstr "外掛程式"
 msgid "Artist"
 msgstr "藝人"
 
+#: audacious/prefswin.c:94 libaudacious/titlestring.c:325
+msgid "Album"
+msgstr "專輯"
+
 #: audacious/prefswin.c:96
 msgid "Tracknumber"
 msgstr "音軌編號"
 
+#: audacious/prefswin.c:97 libaudacious/titlestring.c:326
+msgid "Genre"
+msgstr "樂曲類型"
+
 #: audacious/prefswin.c:99
 msgid "Filepath"
 msgstr "檔案路徑"
+
+#: audacious/prefswin.c:100 libaudacious/titlestring.c:332
+msgid "Date"
+msgstr "日期"
+
+#: audacious/prefswin.c:101 libaudacious/titlestring.c:333
+msgid "Year"
+msgstr "年份"
+
+#: audacious/prefswin.c:102 libaudacious/titlestring.c:334
+msgid "Comment"
+msgstr "註解"
 
 #: audacious/prefswin.c:417 audacious/prefswin.c:504 audacious/prefswin.c:593
 #: audacious/prefswin.c:689
@@ -4499,6 +4471,18 @@ msgstr "關閉加入對話方塊"
 #: audacious/util.c:1187
 msgid "  (invalid UTF-8)"
 msgstr "  (無效的 UTF-8)"
+
+#: audacious/glade/addfiles.glade:77
+msgid "Close Dialog on Add"
+msgstr "關閉加入對話方塊"
+
+#: audacious/glade/addfiles.glade:105
+msgid "Select All"
+msgstr "選擇全部"
+
+#: audacious/glade/addfiles.glade:116
+msgid "Deselect All"
+msgstr "取消全選"
 
 #: audacious/glade/prefswin.glade:8
 #, fuzzy
@@ -4745,17 +4729,33 @@ msgstr "設定組合延伸檔名:"
 msgid "Available _Presets:"
 msgstr "可選用的設定組合(_P):"
 
-#: audacious/glade/addfiles.glade:77
-msgid "Close Dialog on Add"
-msgstr "關閉加入對話方塊"
+#: libaudacious/titlestring.c:324
+msgid "Performer/Artist"
+msgstr "演出者/藝人"
 
-#: audacious/glade/addfiles.glade:105
-msgid "Select All"
-msgstr "選擇全部"
+#: libaudacious/titlestring.c:327
+msgid "File name"
+msgstr "檔案名稱"
 
-#: audacious/glade/addfiles.glade:116
-msgid "Deselect All"
-msgstr "取消全選"
+#: libaudacious/titlestring.c:328
+msgid "File path"
+msgstr "檔案的路徑"
+
+#: libaudacious/titlestring.c:329
+msgid "File extension"
+msgstr "延伸檔名"
+
+#: libaudacious/titlestring.c:330
+msgid "Track name"
+msgstr "音軌名稱"
+
+#: libaudacious/titlestring.c:331
+msgid "Track number"
+msgstr "音軌編號"
+
+#: libaudacious/titlestring.c:385
+msgid "%{n:...%}: Display \"...\" only if element %n is present"
+msgstr "%{n:...%}: 如果出現元素 %n 時只顯示 \"...\""
 
 #~ msgid "Decoder:"
 #~ msgstr "解碼器:"

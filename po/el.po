@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-27 11:51-0800\n"
+"POT-Creation-Date: 2005-12-09 18:03-0800\n"
 "PO-Revision-Date: 2005-11-27 00:25+0200\n"
 "Last-Translator: Stavros Giannouris <stavrosg2002@freemail.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -339,7 +339,7 @@ msgstr ""
 #: Plugins/Input/mpg123/mpg123.c:1152 Plugins/Input/tonegen/tonegen.c:54
 #: Plugins/Input/vorbis/fileinfo.c:212 Plugins/Input/vorbis/http.c:218
 #: Plugins/Input/vorbis/vorbis.c:802 Plugins/Input/wav/wav-sndfile.c:260
-#: Plugins/Output/esd/about.c:49 Plugins/Output/OSS/about.c:54
+#: Plugins/Output/OSS/about.c:54 Plugins/Output/esd/about.c:49
 msgid "Ok"
 msgstr "Εντάξει"
 
@@ -783,8 +783,8 @@ msgid "Output"
 msgstr ""
 
 #: Plugins/Input/flac/configure.c:617 Plugins/Input/mpg123/configure.c:464
-#: Plugins/Input/vorbis/configure.c:287 Plugins/Output/esd/configure.c:171
-#: Plugins/Output/OSS/configure.c:302
+#: Plugins/Input/vorbis/configure.c:287 Plugins/Output/OSS/configure.c:302
+#: Plugins/Output/esd/configure.c:171
 msgid "Buffering:"
 msgstr "Φόρτωμα:"
 
@@ -794,8 +794,8 @@ msgid "Buffer size (kb):"
 msgstr "Μέγεθος buffer (kb):"
 
 #: Plugins/Input/flac/configure.c:638 Plugins/Input/mpg123/configure.c:492
-#: Plugins/Input/vorbis/configure.c:313 Plugins/Output/esd/configure.c:198
-#: Plugins/Output/OSS/configure.c:329
+#: Plugins/Input/vorbis/configure.c:313 Plugins/Output/OSS/configure.c:329
+#: Plugins/Output/esd/configure.c:198
 msgid "Pre-buffer (percent):"
 msgstr "Προ-φόρτωμα (ποσοστό):"
 
@@ -2365,10 +2365,6 @@ msgstr ""
 "\n"
 "Επισκεφτείτε το Xiph.org Foundation στο http://www.xiph.org/\n"
 
-#: Plugins/Input/wav/wav.c:67
-msgid "WAV Audio Plugin"
-msgstr "Πρόσθετο Ήχου Wav"
-
 #: Plugins/Input/wav/wav-sndfile.c:243
 msgid "About sndfile WAV support"
 msgstr ""
@@ -2417,6 +2413,103 @@ msgstr ""
 msgid "sndfile WAV plugin"
 msgstr ""
 
+#: Plugins/Input/wav/wav.c:67
+msgid "WAV Audio Plugin"
+msgstr "Πρόσθετο Ήχου Wav"
+
+#: Plugins/Output/OSS/OSS.c:50
+msgid "OSS Output Plugin"
+msgstr "Άρθρωμα Εξόδου OSS"
+
+#: Plugins/Output/OSS/about.c:39
+msgid "About OSS Driver"
+msgstr "Περί του οδηγού OSS"
+
+#: Plugins/Output/OSS/about.c:40
+msgid ""
+"XMMS OSS Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+"XMMS OSS Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+
+#: Plugins/Output/OSS/configure.c:149
+#, c-format
+msgid "Default (%s)"
+msgstr "Προκαθορισμένο (%s)"
+
+#: Plugins/Output/OSS/configure.c:167
+msgid "Default"
+msgstr "Προκαθορισμένο"
+
+#: Plugins/Output/OSS/configure.c:199
+msgid "OSS Driver configuration"
+msgstr "Ρύθμιση Oδηγού OSS"
+
+#: Plugins/Output/OSS/configure.c:215 Plugins/Output/alsa/configure.c:288
+msgid "Audio device:"
+msgstr "Συσκευή ήχου:"
+
+#: Plugins/Output/OSS/configure.c:237 Plugins/Output/OSS/configure.c:278
+msgid "Use alternate device:"
+msgstr "Χρήση εναλλακτικής συσκευής:"
+
+#: Plugins/Output/OSS/configure.c:258 Plugins/Output/alsa/configure.c:333
+msgid "Mixer device:"
+msgstr "Συσκευή μείκτη"
+
+#: Plugins/Output/OSS/configure.c:300
+msgid "Devices"
+msgstr "Συσκευές"
+
+#: Plugins/Output/OSS/configure.c:315 Plugins/Output/esd/configure.c:184
+msgid "Buffer size (ms):"
+msgstr "Μέγεθος buffer (ms):"
+
+#: Plugins/Output/OSS/configure.c:340 Plugins/Output/esd/configure.c:209
+msgid "Buffering"
+msgstr "Φόρτωμα"
+
+#: Plugins/Output/OSS/configure.c:341
+msgid "Mixer Settings:"
+msgstr "Παράμετροι Μείκτη:"
+
+#: Plugins/Output/OSS/configure.c:347
+msgid "Volume controls Master not PCM"
+msgstr ""
+
+#: Plugins/Output/OSS/configure.c:353
+msgid "Mixer"
+msgstr "Μείκτης"
+
 #: Plugins/Output/alsa/about.c:30
 msgid "About ALSA Driver"
 msgstr "Περί του οδηγού ALSA"
@@ -2460,10 +2553,6 @@ msgstr "Προεπιλεγμένη συσκευή PCM (%s)"
 msgid "ALSA Driver configuration"
 msgstr "Ρύθμιση οδηγού ALSA"
 
-#: Plugins/Output/alsa/configure.c:288 Plugins/Output/OSS/configure.c:215
-msgid "Audio device:"
-msgstr "Συσκευή ήχου:"
-
 #: Plugins/Output/alsa/configure.c:302
 msgid "Mixer:"
 msgstr "Μείκτης:"
@@ -2475,10 +2564,6 @@ msgstr "Χρήση ελεγκτή ήχου λογισμικού"
 #: Plugins/Output/alsa/configure.c:320
 msgid "Mixer card:"
 msgstr "Κάρτα Μείκτη:"
-
-#: Plugins/Output/alsa/configure.c:333 Plugins/Output/OSS/configure.c:258
-msgid "Mixer device:"
-msgstr "Συσκευή μείκτη"
 
 #: Plugins/Output/alsa/configure.c:353
 msgid "Device settings"
@@ -2586,94 +2671,9 @@ msgstr ""
 msgid "Server"
 msgstr "Διακομιστής"
 
-#: Plugins/Output/esd/configure.c:184 Plugins/Output/OSS/configure.c:315
-msgid "Buffer size (ms):"
-msgstr "Μέγεθος buffer (ms):"
-
-#: Plugins/Output/esd/configure.c:209 Plugins/Output/OSS/configure.c:340
-msgid "Buffering"
-msgstr "Φόρτωμα"
-
 #: Plugins/Output/esd/esd.c:47
 msgid "eSound Output Plugin"
 msgstr "Άρθρωμα εξόδου eSound"
-
-#: Plugins/Output/OSS/about.c:39
-msgid "About OSS Driver"
-msgstr "Περί του οδηγού OSS"
-
-#: Plugins/Output/OSS/about.c:40
-msgid ""
-"XMMS OSS Driver\n"
-"\n"
-" This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"GNU General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-"USA."
-msgstr ""
-"XMMS OSS Driver\n"
-"\n"
-" This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"GNU General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-"USA."
-
-#: Plugins/Output/OSS/configure.c:149
-#, c-format
-msgid "Default (%s)"
-msgstr "Προκαθορισμένο (%s)"
-
-#: Plugins/Output/OSS/configure.c:167
-msgid "Default"
-msgstr "Προκαθορισμένο"
-
-#: Plugins/Output/OSS/configure.c:199
-msgid "OSS Driver configuration"
-msgstr "Ρύθμιση Oδηγού OSS"
-
-#: Plugins/Output/OSS/configure.c:237 Plugins/Output/OSS/configure.c:278
-msgid "Use alternate device:"
-msgstr "Χρήση εναλλακτικής συσκευής:"
-
-#: Plugins/Output/OSS/configure.c:300
-msgid "Devices"
-msgstr "Συσκευές"
-
-#: Plugins/Output/OSS/configure.c:341
-msgid "Mixer Settings:"
-msgstr "Παράμετροι Μείκτη:"
-
-#: Plugins/Output/OSS/configure.c:347
-msgid "Volume controls Master not PCM"
-msgstr ""
-
-#: Plugins/Output/OSS/configure.c:353
-msgid "Mixer"
-msgstr "Μείκτης"
-
-#: Plugins/Output/OSS/OSS.c:50
-msgid "OSS Output Plugin"
-msgstr "Άρθρωμα Εξόδου OSS"
 
 #: Plugins/Visualization/blur_scope/blur_scope.c:57
 #, fuzzy
@@ -2999,54 +2999,6 @@ msgstr ""
 #: Plugins/Visualization/libvisual-proxy/main.c:445
 msgid "Cannot initialize plugin's visual stuff"
 msgstr ""
-
-#: libaudacious/titlestring.c:324
-msgid "Performer/Artist"
-msgstr "Καλλιτέχνης"
-
-#: libaudacious/titlestring.c:325 audacious/prefswin.c:94
-msgid "Album"
-msgstr "Album"
-
-#: libaudacious/titlestring.c:326 audacious/prefswin.c:97
-msgid "Genre"
-msgstr "Γένος"
-
-#: libaudacious/titlestring.c:327
-msgid "File name"
-msgstr "Όνομα αρχείου"
-
-#: libaudacious/titlestring.c:328
-msgid "File path"
-msgstr "Διαδρομή αρχείου"
-
-#: libaudacious/titlestring.c:329
-msgid "File extension"
-msgstr "Επέκταση αρχείου"
-
-#: libaudacious/titlestring.c:330
-msgid "Track name"
-msgstr "Όνομα κομματιού"
-
-#: libaudacious/titlestring.c:331
-msgid "Track number"
-msgstr "Νούμερο κομματιού"
-
-#: libaudacious/titlestring.c:332 audacious/prefswin.c:100
-msgid "Date"
-msgstr "Ημερομηνία"
-
-#: libaudacious/titlestring.c:333 audacious/prefswin.c:101
-msgid "Year"
-msgstr "Έτος"
-
-#: libaudacious/titlestring.c:334 audacious/prefswin.c:102
-msgid "Comment"
-msgstr "Σχόλιο"
-
-#: libaudacious/titlestring.c:385
-msgid "%{n:...%}: Display \"...\" only if element %n is present"
-msgstr "%{n:...%}: Απεικόνιση \"...\" μόνο εάν το στοιχείο %n υπάρχει"
 
 #: audacious/about.c:42
 #, fuzzy, c-format
@@ -4376,13 +4328,33 @@ msgstr "Πρόσθετα"
 msgid "Artist"
 msgstr "Καλλιτέχνης"
 
+#: audacious/prefswin.c:94 libaudacious/titlestring.c:325
+msgid "Album"
+msgstr "Album"
+
 #: audacious/prefswin.c:96
 msgid "Tracknumber"
 msgstr "Νούμερο Αρχείου"
 
+#: audacious/prefswin.c:97 libaudacious/titlestring.c:326
+msgid "Genre"
+msgstr "Γένος"
+
 #: audacious/prefswin.c:99
 msgid "Filepath"
 msgstr "Διαδρομή αρχείου"
+
+#: audacious/prefswin.c:100 libaudacious/titlestring.c:332
+msgid "Date"
+msgstr "Ημερομηνία"
+
+#: audacious/prefswin.c:101 libaudacious/titlestring.c:333
+msgid "Year"
+msgstr "Έτος"
+
+#: audacious/prefswin.c:102 libaudacious/titlestring.c:334
+msgid "Comment"
+msgstr "Σχόλιο"
 
 #: audacious/prefswin.c:417 audacious/prefswin.c:504 audacious/prefswin.c:593
 #: audacious/prefswin.c:689
@@ -4425,6 +4397,18 @@ msgstr "Κλείσιμο του διαλόγου κατά την Προσθήκ�
 #: audacious/util.c:1187
 msgid "  (invalid UTF-8)"
 msgstr "  (Μη έγκυρο UTF-8)"
+
+#: audacious/glade/addfiles.glade:77
+msgid "Close Dialog on Add"
+msgstr "Κλείσιμο του διαλόγου κατά την Πρόσθεση"
+
+#: audacious/glade/addfiles.glade:105
+msgid "Select All"
+msgstr "Επιλογή Όλων"
+
+#: audacious/glade/addfiles.glade:116
+msgid "Deselect All"
+msgstr "Αποεπιλογή Όλων"
 
 #: audacious/glade/prefswin.glade:8
 msgid "Audacious Preferences"
@@ -4664,17 +4648,33 @@ msgstr "Επέκταση αρχείου ρυθμήσεων:"
 msgid "Available _Presets:"
 msgstr "Διαθέσιμες _Ρυθμήσεις:  "
 
-#: audacious/glade/addfiles.glade:77
-msgid "Close Dialog on Add"
-msgstr "Κλείσιμο του διαλόγου κατά την Πρόσθεση"
+#: libaudacious/titlestring.c:324
+msgid "Performer/Artist"
+msgstr "Καλλιτέχνης"
 
-#: audacious/glade/addfiles.glade:105
-msgid "Select All"
-msgstr "Επιλογή Όλων"
+#: libaudacious/titlestring.c:327
+msgid "File name"
+msgstr "Όνομα αρχείου"
 
-#: audacious/glade/addfiles.glade:116
-msgid "Deselect All"
-msgstr "Αποεπιλογή Όλων"
+#: libaudacious/titlestring.c:328
+msgid "File path"
+msgstr "Διαδρομή αρχείου"
+
+#: libaudacious/titlestring.c:329
+msgid "File extension"
+msgstr "Επέκταση αρχείου"
+
+#: libaudacious/titlestring.c:330
+msgid "Track name"
+msgstr "Όνομα κομματιού"
+
+#: libaudacious/titlestring.c:331
+msgid "Track number"
+msgstr "Νούμερο κομματιού"
+
+#: libaudacious/titlestring.c:385
+msgid "%{n:...%}: Display \"...\" only if element %n is present"
+msgstr "%{n:...%}: Απεικόνιση \"...\" μόνο εάν το στοιχείο %n υπάρχει"
 
 #~ msgid "Takeshi Aihana"
 #~ msgstr "Takeshi Aihana"

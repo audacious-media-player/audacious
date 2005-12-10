@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-27 11:51-0800\n"
+"POT-Creation-Date: 2005-12-09 18:03-0800\n"
 "PO-Revision-Date: 2005-10-21 18:43+0200\n"
 "Last-Translator: Laszlo Dvornik <dvornik@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
@@ -338,7 +338,7 @@ msgstr ""
 #: Plugins/Input/mpg123/mpg123.c:1152 Plugins/Input/tonegen/tonegen.c:54
 #: Plugins/Input/vorbis/fileinfo.c:212 Plugins/Input/vorbis/http.c:218
 #: Plugins/Input/vorbis/vorbis.c:802 Plugins/Input/wav/wav-sndfile.c:260
-#: Plugins/Output/esd/about.c:49 Plugins/Output/OSS/about.c:54
+#: Plugins/Output/OSS/about.c:54 Plugins/Output/esd/about.c:49
 msgid "Ok"
 msgstr "OK"
 
@@ -786,8 +786,8 @@ msgid "Output"
 msgstr ""
 
 #: Plugins/Input/flac/configure.c:617 Plugins/Input/mpg123/configure.c:464
-#: Plugins/Input/vorbis/configure.c:287 Plugins/Output/esd/configure.c:171
-#: Plugins/Output/OSS/configure.c:302
+#: Plugins/Input/vorbis/configure.c:287 Plugins/Output/OSS/configure.c:302
+#: Plugins/Output/esd/configure.c:171
 msgid "Buffering:"
 msgstr "Pufferelés:"
 
@@ -797,8 +797,8 @@ msgid "Buffer size (kb):"
 msgstr "Pufferméret (kb):"
 
 #: Plugins/Input/flac/configure.c:638 Plugins/Input/mpg123/configure.c:492
-#: Plugins/Input/vorbis/configure.c:313 Plugins/Output/esd/configure.c:198
-#: Plugins/Output/OSS/configure.c:329
+#: Plugins/Input/vorbis/configure.c:313 Plugins/Output/OSS/configure.c:329
+#: Plugins/Output/esd/configure.c:198
 msgid "Pre-buffer (percent):"
 msgstr "Elő-pufferelés (százalék):"
 
@@ -2377,10 +2377,6 @@ msgstr ""
 "\n"
 "Látogassa meg a Xiph.org Alapítványt: http://www.xiph.org/\n"
 
-#: Plugins/Input/wav/wav.c:67
-msgid "WAV Audio Plugin"
-msgstr "WAV-audiobővítmény"
-
 #: Plugins/Input/wav/wav-sndfile.c:243
 msgid "About sndfile WAV support"
 msgstr ""
@@ -2427,6 +2423,102 @@ msgstr ""
 #: Plugins/Input/wav/wav-sndfile.c:268
 msgid "sndfile WAV plugin"
 msgstr ""
+
+#: Plugins/Input/wav/wav.c:67
+msgid "WAV Audio Plugin"
+msgstr "WAV-audiobővítmény"
+
+#: Plugins/Output/OSS/OSS.c:50
+msgid "OSS Output Plugin"
+msgstr "OSS kimeneti bővítmény"
+
+#: Plugins/Output/OSS/about.c:39
+msgid "About OSS Driver"
+msgstr "OSS-meghajtó névjegye"
+
+#: Plugins/Output/OSS/about.c:40
+msgid ""
+"XMMS OSS Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+"XMMS OSS-meghajtó\n"
+"\n"
+"Ez a program szabad szoftver; terjeszthető és/vagy módosítható\n"
+"a Free Software Foundation által publikált GNU General Public\n"
+"License 2. vagy annál újabb verziója alapján.\n"
+"\n"
+"A program annak reményében kerül terjesztésre, hogy hasznosnak\n"
+"bizonyul, de GARANCIA NÉLKÜL; még a PIACKÉPESSÉG illetve\n"
+"egy BIZONYOS CÉLRA VALÓ ALKALMASSÁG sincs garantálva. További\n"
+"részletek a GNU General Public License-ben.\n"
+"\n"
+"A programmal együtt Önnek kapnia kellett egy példányt a GNU General\n"
+"Public License-ből; ha nem így történt, írjon a következő címre:\n"
+"Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
+"MA 02111-1307, USA."
+
+#: Plugins/Output/OSS/configure.c:149
+#, c-format
+msgid "Default (%s)"
+msgstr "Alapértelmezett (%s)"
+
+#: Plugins/Output/OSS/configure.c:167
+msgid "Default"
+msgstr "Alapértelmezett"
+
+#: Plugins/Output/OSS/configure.c:199
+msgid "OSS Driver configuration"
+msgstr "OSS-meghajtó beállítása"
+
+#: Plugins/Output/OSS/configure.c:215 Plugins/Output/alsa/configure.c:288
+msgid "Audio device:"
+msgstr "Hangeszköz:"
+
+#: Plugins/Output/OSS/configure.c:237 Plugins/Output/OSS/configure.c:278
+msgid "Use alternate device:"
+msgstr "Alternatív eszköz használata:"
+
+#: Plugins/Output/OSS/configure.c:258 Plugins/Output/alsa/configure.c:333
+msgid "Mixer device:"
+msgstr "Keverőeszköz:"
+
+#: Plugins/Output/OSS/configure.c:300
+msgid "Devices"
+msgstr "Eszközök"
+
+#: Plugins/Output/OSS/configure.c:315 Plugins/Output/esd/configure.c:184
+msgid "Buffer size (ms):"
+msgstr "Pufferméret (ms):"
+
+#: Plugins/Output/OSS/configure.c:340 Plugins/Output/esd/configure.c:209
+msgid "Buffering"
+msgstr "Pufferelés"
+
+#: Plugins/Output/OSS/configure.c:341
+msgid "Mixer Settings:"
+msgstr "Keverő beállításai:"
+
+#: Plugins/Output/OSS/configure.c:347
+msgid "Volume controls Master not PCM"
+msgstr "Hangerőszabályozás: Master, nem PCM"
+
+#: Plugins/Output/OSS/configure.c:353
+msgid "Mixer"
+msgstr "Keverő"
 
 #: Plugins/Output/alsa/about.c:30
 msgid "About ALSA Driver"
@@ -2487,10 +2579,6 @@ msgstr "Alapértelmezett PCM-eszköz (%s)"
 msgid "ALSA Driver configuration"
 msgstr "ALSA-meghajtó beállítása"
 
-#: Plugins/Output/alsa/configure.c:288 Plugins/Output/OSS/configure.c:215
-msgid "Audio device:"
-msgstr "Hangeszköz:"
-
 #: Plugins/Output/alsa/configure.c:302
 msgid "Mixer:"
 msgstr "Keverő:"
@@ -2502,10 +2590,6 @@ msgstr "Szoftveres hangerőszabályozó használata"
 #: Plugins/Output/alsa/configure.c:320
 msgid "Mixer card:"
 msgstr "Keverőkártya:"
-
-#: Plugins/Output/alsa/configure.c:333 Plugins/Output/OSS/configure.c:258
-msgid "Mixer device:"
-msgstr "Keverőeszköz:"
 
 #: Plugins/Output/alsa/configure.c:353
 msgid "Device settings"
@@ -2612,93 +2696,9 @@ msgstr "A hangerő az OSS-keverőt szabályozza"
 msgid "Server"
 msgstr "Kiszolgáló"
 
-#: Plugins/Output/esd/configure.c:184 Plugins/Output/OSS/configure.c:315
-msgid "Buffer size (ms):"
-msgstr "Pufferméret (ms):"
-
-#: Plugins/Output/esd/configure.c:209 Plugins/Output/OSS/configure.c:340
-msgid "Buffering"
-msgstr "Pufferelés"
-
 #: Plugins/Output/esd/esd.c:47
 msgid "eSound Output Plugin"
 msgstr "eSound kimeneti bővítmény"
-
-#: Plugins/Output/OSS/about.c:39
-msgid "About OSS Driver"
-msgstr "OSS-meghajtó névjegye"
-
-#: Plugins/Output/OSS/about.c:40
-msgid ""
-"XMMS OSS Driver\n"
-"\n"
-" This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"GNU General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-"USA."
-msgstr ""
-"XMMS OSS-meghajtó\n"
-"\n"
-"Ez a program szabad szoftver; terjeszthető és/vagy módosítható\n"
-"a Free Software Foundation által publikált GNU General Public\n"
-"License 2. vagy annál újabb verziója alapján.\n"
-"\n"
-"A program annak reményében kerül terjesztésre, hogy hasznosnak\n"
-"bizonyul, de GARANCIA NÉLKÜL; még a PIACKÉPESSÉG illetve\n"
-"egy BIZONYOS CÉLRA VALÓ ALKALMASSÁG sincs garantálva. További\n"
-"részletek a GNU General Public License-ben.\n"
-"\n"
-"A programmal együtt Önnek kapnia kellett egy példányt a GNU General\n"
-"Public License-ből; ha nem így történt, írjon a következő címre:\n"
-"Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
-"MA 02111-1307, USA."
-
-#: Plugins/Output/OSS/configure.c:149
-#, c-format
-msgid "Default (%s)"
-msgstr "Alapértelmezett (%s)"
-
-#: Plugins/Output/OSS/configure.c:167
-msgid "Default"
-msgstr "Alapértelmezett"
-
-#: Plugins/Output/OSS/configure.c:199
-msgid "OSS Driver configuration"
-msgstr "OSS-meghajtó beállítása"
-
-#: Plugins/Output/OSS/configure.c:237 Plugins/Output/OSS/configure.c:278
-msgid "Use alternate device:"
-msgstr "Alternatív eszköz használata:"
-
-#: Plugins/Output/OSS/configure.c:300
-msgid "Devices"
-msgstr "Eszközök"
-
-#: Plugins/Output/OSS/configure.c:341
-msgid "Mixer Settings:"
-msgstr "Keverő beállításai:"
-
-#: Plugins/Output/OSS/configure.c:347
-msgid "Volume controls Master not PCM"
-msgstr "Hangerőszabályozás: Master, nem PCM"
-
-#: Plugins/Output/OSS/configure.c:353
-msgid "Mixer"
-msgstr "Keverő"
-
-#: Plugins/Output/OSS/OSS.c:50
-msgid "OSS Output Plugin"
-msgstr "OSS kimeneti bővítmény"
 
 #: Plugins/Visualization/blur_scope/blur_scope.c:57
 msgid "/Toggle Decorations"
@@ -3022,54 +3022,6 @@ msgstr ""
 #: Plugins/Visualization/libvisual-proxy/main.c:445
 msgid "Cannot initialize plugin's visual stuff"
 msgstr ""
-
-#: libaudacious/titlestring.c:324
-msgid "Performer/Artist"
-msgstr "Előadó/szerző"
-
-#: libaudacious/titlestring.c:325 audacious/prefswin.c:94
-msgid "Album"
-msgstr "Album"
-
-#: libaudacious/titlestring.c:326 audacious/prefswin.c:97
-msgid "Genre"
-msgstr "Műfaj"
-
-#: libaudacious/titlestring.c:327
-msgid "File name"
-msgstr "Fájlnév"
-
-#: libaudacious/titlestring.c:328
-msgid "File path"
-msgstr "Fájlútvonal"
-
-#: libaudacious/titlestring.c:329
-msgid "File extension"
-msgstr "Fájlkiterjesztés"
-
-#: libaudacious/titlestring.c:330
-msgid "Track name"
-msgstr "Szám neve"
-
-#: libaudacious/titlestring.c:331
-msgid "Track number"
-msgstr "Szám sorszáma"
-
-#: libaudacious/titlestring.c:332 audacious/prefswin.c:100
-msgid "Date"
-msgstr "Dátum"
-
-#: libaudacious/titlestring.c:333 audacious/prefswin.c:101
-msgid "Year"
-msgstr "Év"
-
-#: libaudacious/titlestring.c:334 audacious/prefswin.c:102
-msgid "Comment"
-msgstr "Megjegyzés"
-
-#: libaudacious/titlestring.c:385
-msgid "%{n:...%}: Display \"...\" only if element %n is present"
-msgstr "%{n:...%}: \"...\" csak akkor legyen megjelenítve, ha van %n elem"
 
 #: audacious/about.c:42
 #, fuzzy, c-format
@@ -4417,13 +4369,33 @@ msgstr "Bővítmények"
 msgid "Artist"
 msgstr "Előadó"
 
+#: audacious/prefswin.c:94 libaudacious/titlestring.c:325
+msgid "Album"
+msgstr "Album"
+
 #: audacious/prefswin.c:96
 msgid "Tracknumber"
 msgstr "Szám sorszáma"
 
+#: audacious/prefswin.c:97 libaudacious/titlestring.c:326
+msgid "Genre"
+msgstr "Műfaj"
+
 #: audacious/prefswin.c:99
 msgid "Filepath"
 msgstr "Fájlútvonal"
+
+#: audacious/prefswin.c:100 libaudacious/titlestring.c:332
+msgid "Date"
+msgstr "Dátum"
+
+#: audacious/prefswin.c:101 libaudacious/titlestring.c:333
+msgid "Year"
+msgstr "Év"
+
+#: audacious/prefswin.c:102 libaudacious/titlestring.c:334
+msgid "Comment"
+msgstr "Megjegyzés"
 
 #: audacious/prefswin.c:417 audacious/prefswin.c:504 audacious/prefswin.c:593
 #: audacious/prefswin.c:689
@@ -4466,6 +4438,18 @@ msgstr "Párbeszédablak bezárása hozzáadás után"
 #: audacious/util.c:1187
 msgid "  (invalid UTF-8)"
 msgstr "  (érvénytelen UTF-8)"
+
+#: audacious/glade/addfiles.glade:77
+msgid "Close Dialog on Add"
+msgstr "Párbeszédablak bezárása hozzáadás után"
+
+#: audacious/glade/addfiles.glade:105
+msgid "Select All"
+msgstr "Mindent kijelöl"
+
+#: audacious/glade/addfiles.glade:116
+msgid "Deselect All"
+msgstr "Kijelölés megszüntetése"
 
 #: audacious/glade/prefswin.glade:8
 #, fuzzy
@@ -4715,17 +4699,33 @@ msgstr "Fájlbeállítás kiterjesztése:"
 msgid "Available _Presets:"
 msgstr "Elérhető _beállítások:"
 
-#: audacious/glade/addfiles.glade:77
-msgid "Close Dialog on Add"
-msgstr "Párbeszédablak bezárása hozzáadás után"
+#: libaudacious/titlestring.c:324
+msgid "Performer/Artist"
+msgstr "Előadó/szerző"
 
-#: audacious/glade/addfiles.glade:105
-msgid "Select All"
-msgstr "Mindent kijelöl"
+#: libaudacious/titlestring.c:327
+msgid "File name"
+msgstr "Fájlnév"
 
-#: audacious/glade/addfiles.glade:116
-msgid "Deselect All"
-msgstr "Kijelölés megszüntetése"
+#: libaudacious/titlestring.c:328
+msgid "File path"
+msgstr "Fájlútvonal"
+
+#: libaudacious/titlestring.c:329
+msgid "File extension"
+msgstr "Fájlkiterjesztés"
+
+#: libaudacious/titlestring.c:330
+msgid "Track name"
+msgstr "Szám neve"
+
+#: libaudacious/titlestring.c:331
+msgid "Track number"
+msgstr "Szám sorszáma"
+
+#: libaudacious/titlestring.c:385
+msgid "%{n:...%}: Display \"...\" only if element %n is present"
+msgstr "%{n:...%}: \"...\" csak akkor legyen megjelenítve, ha van %n elem"
 
 #~ msgid "Decoder:"
 #~ msgstr "Dekódoló:"

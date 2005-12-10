@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.9.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-27 11:51-0800\n"
+"POT-Creation-Date: 2005-12-09 18:03-0800\n"
 "PO-Revision-Date: 2004-08-28 07:46+0800\n"
 "Last-Translator: Liviu Danicel\n"
 "Language-Team:  <ro@li.org>\n"
@@ -337,7 +337,7 @@ msgstr ""
 #: Plugins/Input/mpg123/mpg123.c:1152 Plugins/Input/tonegen/tonegen.c:54
 #: Plugins/Input/vorbis/fileinfo.c:212 Plugins/Input/vorbis/http.c:218
 #: Plugins/Input/vorbis/vorbis.c:802 Plugins/Input/wav/wav-sndfile.c:260
-#: Plugins/Output/esd/about.c:49 Plugins/Output/OSS/about.c:54
+#: Plugins/Output/OSS/about.c:54 Plugins/Output/esd/about.c:49
 msgid "Ok"
 msgstr ""
 
@@ -771,8 +771,8 @@ msgid "Output"
 msgstr ""
 
 #: Plugins/Input/flac/configure.c:617 Plugins/Input/mpg123/configure.c:464
-#: Plugins/Input/vorbis/configure.c:287 Plugins/Output/esd/configure.c:171
-#: Plugins/Output/OSS/configure.c:302
+#: Plugins/Input/vorbis/configure.c:287 Plugins/Output/OSS/configure.c:302
+#: Plugins/Output/esd/configure.c:171
 msgid "Buffering:"
 msgstr ""
 
@@ -782,8 +782,8 @@ msgid "Buffer size (kb):"
 msgstr "Marime buffer (kb):"
 
 #: Plugins/Input/flac/configure.c:638 Plugins/Input/mpg123/configure.c:492
-#: Plugins/Input/vorbis/configure.c:313 Plugins/Output/esd/configure.c:198
-#: Plugins/Output/OSS/configure.c:329
+#: Plugins/Input/vorbis/configure.c:313 Plugins/Output/OSS/configure.c:329
+#: Plugins/Output/esd/configure.c:198
 msgid "Pre-buffer (percent):"
 msgstr ""
 
@@ -2327,10 +2327,6 @@ msgid ""
 "Visit the Xiph.org Foundation at http://www.xiph.org/\n"
 msgstr ""
 
-#: Plugins/Input/wav/wav.c:67
-msgid "WAV Audio Plugin"
-msgstr "Plugin Audio WAV"
-
 #: Plugins/Input/wav/wav-sndfile.c:243
 msgid "About sndfile WAV support"
 msgstr ""
@@ -2360,6 +2356,87 @@ msgstr ""
 
 #: Plugins/Input/wav/wav-sndfile.c:268
 msgid "sndfile WAV plugin"
+msgstr ""
+
+#: Plugins/Input/wav/wav.c:67
+msgid "WAV Audio Plugin"
+msgstr "Plugin Audio WAV"
+
+#: Plugins/Output/OSS/OSS.c:50
+msgid "OSS Output Plugin"
+msgstr ""
+
+#: Plugins/Output/OSS/about.c:39
+msgid "About OSS Driver"
+msgstr "Despre Driver-ul OSS"
+
+#: Plugins/Output/OSS/about.c:40
+msgid ""
+"XMMS OSS Driver\n"
+"\n"
+" This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"USA."
+msgstr ""
+
+#: Plugins/Output/OSS/configure.c:149
+#, c-format
+msgid "Default (%s)"
+msgstr ""
+
+#: Plugins/Output/OSS/configure.c:167
+msgid "Default"
+msgstr ""
+
+#: Plugins/Output/OSS/configure.c:199
+msgid "OSS Driver configuration"
+msgstr "Configurarea Driver-ului OSS"
+
+#: Plugins/Output/OSS/configure.c:215 Plugins/Output/alsa/configure.c:288
+msgid "Audio device:"
+msgstr ""
+
+#: Plugins/Output/OSS/configure.c:237 Plugins/Output/OSS/configure.c:278
+msgid "Use alternate device:"
+msgstr "Foloseste device alternativ:"
+
+#: Plugins/Output/OSS/configure.c:258 Plugins/Output/alsa/configure.c:333
+msgid "Mixer device:"
+msgstr ""
+
+#: Plugins/Output/OSS/configure.c:300
+msgid "Devices"
+msgstr ""
+
+#: Plugins/Output/OSS/configure.c:315 Plugins/Output/esd/configure.c:184
+msgid "Buffer size (ms):"
+msgstr ""
+
+#: Plugins/Output/OSS/configure.c:340 Plugins/Output/esd/configure.c:209
+msgid "Buffering"
+msgstr ""
+
+#: Plugins/Output/OSS/configure.c:341
+msgid "Mixer Settings:"
+msgstr "Setari Mixer:"
+
+#: Plugins/Output/OSS/configure.c:347
+msgid "Volume controls Master not PCM"
+msgstr "Volumul controleaza Master si nu PCM"
+
+#: Plugins/Output/OSS/configure.c:353
+msgid "Mixer"
 msgstr ""
 
 #: Plugins/Output/alsa/about.c:30
@@ -2405,10 +2482,6 @@ msgstr ""
 msgid "ALSA Driver configuration"
 msgstr "Configurare Driver ALSA"
 
-#: Plugins/Output/alsa/configure.c:288 Plugins/Output/OSS/configure.c:215
-msgid "Audio device:"
-msgstr ""
-
 #: Plugins/Output/alsa/configure.c:302
 msgid "Mixer:"
 msgstr ""
@@ -2419,10 +2492,6 @@ msgstr ""
 
 #: Plugins/Output/alsa/configure.c:320
 msgid "Mixer card:"
-msgstr ""
-
-#: Plugins/Output/alsa/configure.c:333 Plugins/Output/OSS/configure.c:258
-msgid "Mixer device:"
 msgstr ""
 
 #: Plugins/Output/alsa/configure.c:353
@@ -2514,77 +2583,8 @@ msgstr "Volumul controleaza mixerul OSS"
 msgid "Server"
 msgstr ""
 
-#: Plugins/Output/esd/configure.c:184 Plugins/Output/OSS/configure.c:315
-msgid "Buffer size (ms):"
-msgstr ""
-
-#: Plugins/Output/esd/configure.c:209 Plugins/Output/OSS/configure.c:340
-msgid "Buffering"
-msgstr ""
-
 #: Plugins/Output/esd/esd.c:47
 msgid "eSound Output Plugin"
-msgstr ""
-
-#: Plugins/Output/OSS/about.c:39
-msgid "About OSS Driver"
-msgstr "Despre Driver-ul OSS"
-
-#: Plugins/Output/OSS/about.c:40
-msgid ""
-"XMMS OSS Driver\n"
-"\n"
-" This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"GNU General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-"USA."
-msgstr ""
-
-#: Plugins/Output/OSS/configure.c:149
-#, c-format
-msgid "Default (%s)"
-msgstr ""
-
-#: Plugins/Output/OSS/configure.c:167
-msgid "Default"
-msgstr ""
-
-#: Plugins/Output/OSS/configure.c:199
-msgid "OSS Driver configuration"
-msgstr "Configurarea Driver-ului OSS"
-
-#: Plugins/Output/OSS/configure.c:237 Plugins/Output/OSS/configure.c:278
-msgid "Use alternate device:"
-msgstr "Foloseste device alternativ:"
-
-#: Plugins/Output/OSS/configure.c:300
-msgid "Devices"
-msgstr ""
-
-#: Plugins/Output/OSS/configure.c:341
-msgid "Mixer Settings:"
-msgstr "Setari Mixer:"
-
-#: Plugins/Output/OSS/configure.c:347
-msgid "Volume controls Master not PCM"
-msgstr "Volumul controleaza Master si nu PCM"
-
-#: Plugins/Output/OSS/configure.c:353
-msgid "Mixer"
-msgstr ""
-
-#: Plugins/Output/OSS/OSS.c:50
-msgid "OSS Output Plugin"
 msgstr ""
 
 #: Plugins/Visualization/blur_scope/blur_scope.c:57
@@ -2905,54 +2905,6 @@ msgstr ""
 
 #: Plugins/Visualization/libvisual-proxy/main.c:445
 msgid "Cannot initialize plugin's visual stuff"
-msgstr ""
-
-#: libaudacious/titlestring.c:324
-msgid "Performer/Artist"
-msgstr ""
-
-#: libaudacious/titlestring.c:325 audacious/prefswin.c:94
-msgid "Album"
-msgstr ""
-
-#: libaudacious/titlestring.c:326 audacious/prefswin.c:97
-msgid "Genre"
-msgstr ""
-
-#: libaudacious/titlestring.c:327
-msgid "File name"
-msgstr "Nume fisier"
-
-#: libaudacious/titlestring.c:328
-msgid "File path"
-msgstr ""
-
-#: libaudacious/titlestring.c:329
-msgid "File extension"
-msgstr "Extensie fisier"
-
-#: libaudacious/titlestring.c:330
-msgid "Track name"
-msgstr "Nume track"
-
-#: libaudacious/titlestring.c:331
-msgid "Track number"
-msgstr "Numar track"
-
-#: libaudacious/titlestring.c:332 audacious/prefswin.c:100
-msgid "Date"
-msgstr "Data"
-
-#: libaudacious/titlestring.c:333 audacious/prefswin.c:101
-msgid "Year"
-msgstr "An"
-
-#: libaudacious/titlestring.c:334 audacious/prefswin.c:102
-msgid "Comment"
-msgstr "Nota"
-
-#: libaudacious/titlestring.c:385
-msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr ""
 
 #: audacious/about.c:42
@@ -4299,13 +4251,33 @@ msgstr ""
 msgid "Artist"
 msgstr ""
 
+#: audacious/prefswin.c:94 libaudacious/titlestring.c:325
+msgid "Album"
+msgstr ""
+
 #: audacious/prefswin.c:96
 msgid "Tracknumber"
+msgstr ""
+
+#: audacious/prefswin.c:97 libaudacious/titlestring.c:326
+msgid "Genre"
 msgstr ""
 
 #: audacious/prefswin.c:99
 msgid "Filepath"
 msgstr ""
+
+#: audacious/prefswin.c:100 libaudacious/titlestring.c:332
+msgid "Date"
+msgstr "Data"
+
+#: audacious/prefswin.c:101 libaudacious/titlestring.c:333
+msgid "Year"
+msgstr "An"
+
+#: audacious/prefswin.c:102 libaudacious/titlestring.c:334
+msgid "Comment"
+msgstr "Nota"
 
 #: audacious/prefswin.c:417 audacious/prefswin.c:504 audacious/prefswin.c:593
 #: audacious/prefswin.c:689
@@ -4350,6 +4322,18 @@ msgstr ""
 #: audacious/util.c:1187
 msgid "  (invalid UTF-8)"
 msgstr ""
+
+#: audacious/glade/addfiles.glade:77
+msgid "Close Dialog on Add"
+msgstr ""
+
+#: audacious/glade/addfiles.glade:105
+msgid "Select All"
+msgstr "Selecteaza tot"
+
+#: audacious/glade/addfiles.glade:116
+msgid "Deselect All"
+msgstr "Deselecteaza tot"
 
 #: audacious/glade/prefswin.glade:8
 #, fuzzy
@@ -4591,17 +4575,33 @@ msgstr ""
 msgid "Available _Presets:"
 msgstr ""
 
-#: audacious/glade/addfiles.glade:77
-msgid "Close Dialog on Add"
+#: libaudacious/titlestring.c:324
+msgid "Performer/Artist"
 msgstr ""
 
-#: audacious/glade/addfiles.glade:105
-msgid "Select All"
-msgstr "Selecteaza tot"
+#: libaudacious/titlestring.c:327
+msgid "File name"
+msgstr "Nume fisier"
 
-#: audacious/glade/addfiles.glade:116
-msgid "Deselect All"
-msgstr "Deselecteaza tot"
+#: libaudacious/titlestring.c:328
+msgid "File path"
+msgstr ""
+
+#: libaudacious/titlestring.c:329
+msgid "File extension"
+msgstr "Extensie fisier"
+
+#: libaudacious/titlestring.c:330
+msgid "Track name"
+msgstr "Nume track"
+
+#: libaudacious/titlestring.c:331
+msgid "Track number"
+msgstr "Numar track"
+
+#: libaudacious/titlestring.c:385
+msgid "%{n:...%}: Display \"...\" only if element %n is present"
+msgstr ""
 
 #~ msgid "Decoder:"
 #~ msgstr "Decodor:"
