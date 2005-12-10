@@ -1,6 +1,9 @@
 /*
  * WMA compatible decoder
  * Copyright (c) 2002 The FFmpeg Project.
+ * This decoder handles Microsoft Windows Media Audio data, versions 1 & 2.
+ * WMA v1 is identified by audio format 0x160 in Microsoft media files
+ * (ASF/AVI/WAV). WMA v2 is identified by audio format 0x161.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -38,7 +41,7 @@
 #define NB_LSP_COEFS 10
 
 /* XXX: is it a suitable value ? */
-#define MAX_CODED_SUPERFRAME_SIZE 4096
+#define MAX_CODED_SUPERFRAME_SIZE 16384
 
 #define MAX_CHANNELS 2
 
@@ -199,7 +202,8 @@ static int wma_decode_init(AVCodecContext * avctx)
     int i, flags1, flags2;
     float *window;
     uint8_t *extradata;
-    float bps1, high_freq, bps;
+    float bps1, high_freq;
+    volatile float bps;
     int sample_rate1;
     int coef_vlc_table;
     
@@ -694,7 +698,12 @@ static int wma_decode_block(WMADecodeContext *s)
     int n, v, a, ch, code, bsize;
     int coef_nb_bits, total_gain, parse_exponents;
     float window[BLOCK_MAX_SIZE * 2];
+// XXX: FIXME!! there's a bug somewhere which makes this mandatory under altivec
+#ifdef HAVE_ALTIVEC
+    volatile int nb_coefs[MAX_CHANNELS] __attribute__((aligned(16)));
+#else
     int nb_coefs[MAX_CHANNELS];
+#endif
     float mdct_norm;
 
 #ifdef TRACE
@@ -1155,7 +1164,7 @@ static int wma_decode_frame(WMADecodeContext *s, int16_t *samples)
         iptr = s->frame_out[ch];
 
         for(i=0;i<n;i++) {
-            a = rintf(*iptr++);
+            a = lrintf(*iptr++);
             if (a > 32767)
                 a = 32767;
             else if (a < -32768)
@@ -1272,52 +1281,52 @@ static int wma_decode_superframe(AVCodecContext *avctx,
 
 static int wma_decode_end(AVCodecContext *avctx)
 {
-	WMADecodeContext *s = avctx->priv_data;
-    	int i;
+    WMADecodeContext *s = avctx->priv_data;
+    int i;
 
-    	for (i = 0; i < s->nb_block_sizes; i++)
-        	ff_mdct_end(&s->mdct_ctx[i]);
+    for (i = 0; i < s->nb_block_sizes; i++)
+       	ff_mdct_end(&s->mdct_ctx[i]);
 	
-    	for (i = 0; i < s->nb_block_sizes; i++)
-        	free(s->windows[i]);
+    for (i = 0; i < s->nb_block_sizes; i++)
+       	free(s->windows[i]);
 
-    	if (s->use_exp_vlc) {
-        	free_vlc(&s->exp_vlc);
-    	}
+    if (s->use_exp_vlc) {
+       	free_vlc(&s->exp_vlc);
+    }
     
-	if (s->use_noise_coding) {
-        	free_vlc(&s->hgain_vlc);
-    	}
+    if (s->use_noise_coding) {
+       	free_vlc(&s->hgain_vlc);
+    }
     
-	for (i = 0; i < 2; i++) {
-        	free_vlc(&s->coef_vlc[i]);
-        	free(s->run_table[i]);
-        	free(s->level_table[i]);
-    	}
+    for (i = 0; i < 2; i++) {
+       	free_vlc(&s->coef_vlc[i]);
+       	free(s->run_table[i]);
+       	free(s->level_table[i]);
+    }
     
-    	return 0;
+    return 0;
 }
 
 AVCodec wmav1_decoder =
 {
-	"wmav1",
-    	CODEC_TYPE_AUDIO,
-    	CODEC_ID_WMAV1,
-    	sizeof(WMADecodeContext),
-    	wma_decode_init,
-    	NULL,
-    	wma_decode_end,
-    	wma_decode_superframe,
+    "wmav1",
+    CODEC_TYPE_AUDIO,
+    CODEC_ID_WMAV1,
+    sizeof(WMADecodeContext),
+    wma_decode_init,
+    NULL,
+    wma_decode_end,
+    wma_decode_superframe,
 };
 
 AVCodec wmav2_decoder =
 {
-	"wmav2",
-    	CODEC_TYPE_AUDIO,
-    	CODEC_ID_WMAV2,
-    	sizeof(WMADecodeContext),
-    	wma_decode_init,
-    	NULL,
-    	wma_decode_end,
-    	wma_decode_superframe,
+    "wmav2",
+    CODEC_TYPE_AUDIO,
+    CODEC_ID_WMAV2,
+    sizeof(WMADecodeContext),
+    wma_decode_init,
+    NULL,
+    wma_decode_end,
+    wma_decode_superframe,
 };
