@@ -28,7 +28,7 @@
 #include <gtk/gtk.h>
 
 #include <audacious/plugin.h>
-#include <audacious/configfile.h>
+#include <libaudacious/configfile.h>
 
 #include "../../../config.h"
 #include "ladspa.h"
@@ -985,11 +985,7 @@ static void configure(void)
 
   gtk_container_add(GTK_CONTAINER(config_window), vbox);
 
-  #ifdef BUILD_FOR_BMP
-    gtk_window_set_title(GTK_WINDOW(config_window), "BMP " PLUGIN_NAME );
-  #else
-    gtk_window_set_title(GTK_WINDOW(config_window), "XMMS " PLUGIN_NAME );
-  #endif
+  gtk_window_set_title(GTK_WINDOW(config_window), "LADSPA Plugin Catalog");
   gtk_widget_set_usize(config_window, 380, 400);
   gtk_signal_connect (GTK_OBJECT (config_window), "delete_event",
                       GTK_SIGNAL_FUNC (gtk_widget_hide_on_delete), NULL);
