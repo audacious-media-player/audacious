@@ -30,6 +30,8 @@ typedef struct {
     gboolean use_replaygain;
     gint replaygain_mode;
     gboolean use_booster;
+    gboolean title_encoding_enabled;
+    gchar *title_encoding;        
 } vorbis_config_t;
 
 enum {
@@ -37,5 +39,7 @@ enum {
     REPLAYGAIN_MODE_ALBUM,
     REPLAYGAIN_MODE_LAST
 };
+
+#define         ENCODING_SEPARATOR      " ,:;|/"
 
 #endif                          /* __VORBIS_H__ */

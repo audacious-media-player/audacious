@@ -127,6 +127,7 @@ static int samplerate, channels;
 GMutex *vf_mutex;
 static gboolean output_error;
 
+gchar **vorbis_tag_encoding_list = NULL;
 
 InputPlugin *
 get_iplugin_info(void)
@@ -547,6 +548,30 @@ vorbis_time(void)
     return vorbis_ip.output->output_time();
 }
 
+static gchar *
+convert_tag_title(gchar * title)
+{
+    gchar **encoding = vorbis_tag_encoding_list;
+    gchar *new_title = NULL;
+
+    if (g_utf8_validate(title, -1, NULL))
+        return title;
+
+    while (*encoding && !new_title) {
+        new_title = g_convert(title, strlen(title), "UTF-8", *encoding++,
+                              NULL, NULL, NULL);
+    }
+
+    if (new_title) {
+        g_free(title);
+        return new_title;
+    }
+
+    /* FIXME: We're relying on BMP core to provide fallback
+     * conversion */
+    return title;
+}
+
 static void
 vorbis_seek(int time)
 {
@@ -586,7 +611,6 @@ vorbis_get_song_info(char *filename, char **title, int *length)
 
         *title = NULL;
         *title = vorbis_generate_title(&vf, filename);
-
         /*
          * once the ov_open succeeds, the stream belongs to
          * vorbisfile.a.  ov_clear will fclose it
@@ -598,6 +622,10 @@ vorbis_get_song_info(char *filename, char **title, int *length)
         /* streaming song info */
         *length = -1;
         *title = (char *) vorbis_http_get_title(filename);
+/* Encoding patch */
+        if (vorbis_cfg.title_encoding_enabled)
+            *title = convert_tag_title(*title);
+/* Encoding patch */
     }
 }
 
@@ -769,6 +797,10 @@ vorbis_generate_title(OggVorbis_File * vorbisfile, const gchar * filename)
     g_free(input->genre);
     g_free(input->comment);
     g_free(input);
+/* Encoding patch */
+    if (vorbis_cfg.title_encoding_enabled)
+        displaytitle = convert_tag_title(displaytitle);
+/* Encoding patch */    
 
     return displaytitle;
 }
@@ -823,6 +855,10 @@ vorbis_init(void)
     vorbis_cfg.use_replaygain = FALSE;
     vorbis_cfg.replaygain_mode = REPLAYGAIN_MODE_TRACK;
     vorbis_cfg.use_booster = FALSE;
+/* Encoding patch */
+    vorbis_cfg.title_encoding_enabled = FALSE;
+    vorbis_cfg.title_encoding = NULL;
+/* Encoding patch */
 
     db = bmp_cfg_db_open();
     bmp_cfg_db_get_int(db, "vorbis", "http_buffer_size",
@@ -856,6 +892,13 @@ vorbis_init(void)
     bmp_cfg_db_get_int(db, "vorbis", "replaygain_mode",
                        &vorbis_cfg.replaygain_mode);
     bmp_cfg_db_get_bool(db, "vorbis", "use_booster", &vorbis_cfg.use_booster);
+    /* Encoding patch */
+    bmp_cfg_db_get_bool(db, "vorbis", "title_encoding_enabled", &vorbis_cfg.title_encoding_enabled);
+    bmp_cfg_db_get_string(db, "vorbis", "title_encoding", &vorbis_cfg.title_encoding);
+    if (vorbis_cfg.title_encoding_enabled)
+        vorbis_tag_encoding_list = g_strsplit_set(vorbis_cfg.title_encoding, ENCODING_SEPARATOR, 0);
+    
+    /* Encoding patch */
     bmp_cfg_db_close(db);
 
     vf_mutex = g_mutex_new();
@@ -864,6 +907,7 @@ vorbis_init(void)
 static void
 vorbis_cleanup(void)
 {
+    g_strfreev(vorbis_tag_encoding_list);
     g_mutex_free(vf_mutex);
 }
 
