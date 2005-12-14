@@ -10,7 +10,8 @@ audacious_LDADD = \
 	$(GTK_LIBS)      \
 	$(LIBGLADE_LIBS) \
 	$(LTLIBINTL)     \
-	$(top_builddir)/libaudacious/libaudacious.la
+	$(top_builddir)/libaudacious/libaudacious.la \
+	$(top_builddir)/libaudcore/libaudcore.la
 
 audacious_CFLAGS = \
 	$(X_CFLAGS)        \
@@ -47,7 +48,6 @@ audacious_SOURCES = \
 	vis.c vis.h \
 	svis.c svis.h \
 	number.c number.h \
-	playback.c playback.h \
 	playstatus.c playstatus.h \
 	playlist_list.c playlist_list.h \
 	playlist_slider.c playlist_slider.h \

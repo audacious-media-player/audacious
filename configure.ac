@@ -719,6 +719,7 @@ AC_CONFIG_FILES([
         audacious/glade/Makefile
 	audacious/images/Makefile
         libaudacious/Makefile
+	libaudcore/Makefile
 	Plugins/Makefile
         Plugins/Output/Makefile
         Plugins/Output/OSS/Makefile
