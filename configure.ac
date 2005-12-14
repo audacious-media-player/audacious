@@ -417,6 +417,16 @@ AC_ARG_ENABLE(wma,
 
 AM_CONDITIONAL(ENABLE_WMA, test "$enable_wma" = "yes")
 
+dnl *** TiMidity
+
+AC_ARG_ENABLE(timidity,
+    [  --disable-timidity      disable timidity plugin. [default=enabled] ],
+    [enable_timidity=$enableval],
+    [enable_timidity=yes]
+)
+
+AM_CONDITIONAL(ENABLE_TIMIDITY, test "$enable_timidity" = "yes")
+
 dnl *** Crossfader
 
 AC_ARG_ENABLE(crossfade,
@@ -746,6 +756,9 @@ AC_CONFIG_FILES([
 	Plugins/Input/console/Makefile
 	Plugins/Input/wma/Makefile
 	Plugins/Input/wma/libffwma/Makefile
+	Plugins/Input/timidity/Makefile
+	Plugins/Input/timidity/libtimidity/Makefile
+	Plugins/Input/timidity/src/Makefile
         Plugins/Visualization/Makefile
         Plugins/Visualization/blur_scope/Makefile
 	Plugins/Visualization/libvisual-proxy/Makefile
@@ -801,6 +814,7 @@ echo "    + id3v2 editing:                      $have_id3lib"
 echo "  MPEG 4 Audio (AAC):                     $enable_aac"
 echo "  Windows Media Audio (wma):              $enable_wma"
 echo "  Module decoder (modplug):               $enable_modplug"
+echo "  MIDI to WAVE converter (timidity):      $enable_timidity"
 echo "  CD Digital Audio (cdda):                yes"
 echo "  Microsoft WAV (wav):                    yes"
 echo "    + sndfile extensions:                 $enable_sndfile"
