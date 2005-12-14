@@ -18,7 +18,7 @@ extern "C" {
 #include "libaudacious/titlestring.h"
 #include "audacious/input.h"
 #include "audacious/output.h"
-#include "audacious/playback.h"
+#include "libaudcore/playback.h"
 
 };
 
