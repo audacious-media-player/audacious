@@ -63,7 +63,7 @@
 #include "logger.h"
 #include "mainwin.h"
 #include "output.h"
-#include "playback.h"
+#include "libaudcore/playback.h"
 #include "playlist.h"
 #include "playlistwin.h"
 #include "pluginenum.h"

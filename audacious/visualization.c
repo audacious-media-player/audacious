@@ -29,7 +29,7 @@
 #include "fft.h"
 #include "input.h"
 #include "main.h"
-#include "playback.h"
+#include "libaudcore/playback.h"
 #include "plugin.h"
 #include "prefswin.h"
 #include "svis.h"

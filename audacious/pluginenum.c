@@ -32,7 +32,7 @@
 
 #include "controlsocket.h"
 #include "main.h"
-#include "playback.h"
+#include "libaudcore/playback.h"
 #include "playlist.h"
 #include "util.h"
 

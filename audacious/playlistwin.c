@@ -43,7 +43,7 @@
 #include "input.h"
 #include "main.h"
 #include "mainwin.h"
-#include "playback.h"
+#include "libaudcore/playback.h"
 #include "playlist.h"
 #include "playlist_list.h"
 #include "playlist_slider.h"

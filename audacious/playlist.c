@@ -47,7 +47,7 @@
 #include "libaudacious/configdb.h"
 #include "libaudacious/vfs.h"
 #include "equalizer.h"
-#include "playback.h"
+#include "libaudcore/playback.h"
 #include "playlist.h"
 #include "playlistwin.h"
 #include "playlist_list.h"
