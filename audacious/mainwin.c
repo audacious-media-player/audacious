@@ -1816,7 +1816,7 @@ mainwin_drag_data_received(GtkWidget * widget,
                            guint time,
                            gpointer user_data)
 {
-    gchar **sourcelist, *path;
+    gchar **iter, **sourcelist, *path;
     gchar *decoded;
     gboolean not_font = FALSE;
     
@@ -1826,9 +1826,9 @@ mainwin_drag_data_received(GtkWidget * widget,
         return;
     }
 
-    sourcelist = g_strsplit((gchar *)(selection_data->data),"\r\n",-1);
+    iter = sourcelist = g_strsplit((gchar *)(selection_data->data),"\r\n",-1);
 
-    for (path = *sourcelist; *path; path = *(++sourcelist))
+    for (path = *sourcelist; path, *path; path = *(++sourcelist))
     {
 	if (str_has_prefix_nocase(path, "fonts:///"))
 	{
@@ -1859,10 +1859,9 @@ mainwin_drag_data_received(GtkWidget * widget,
 	    }	
     	    playlist_add_url(path);
 	}
-	
     }
     
-    g_strfreev(sourcelist);
+    g_strfreev(iter);
     
     if (not_font)
 	bmp_playback_initiate();
