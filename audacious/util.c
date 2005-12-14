@@ -41,7 +41,7 @@
 #include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
 #include <X11/Xlib.h>
-#include <sys/ipc.h>
+//#include <sys/ipc.h>
 #include <unistd.h>
 #include <errno.h>
 
