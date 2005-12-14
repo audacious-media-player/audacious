@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-12-09 18:03-0800\n"
-"PO-Revision-Date: 2005-10-28 18:46+0900\n"
+"PO-Revision-Date: 2005-12-12 15:12+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,17 +22,19 @@ msgstr ""
 #: Plugins/General/song_change/song_change.c:53
 #, c-format
 msgid "Song Change %s"
-msgstr ""
+msgstr "Song Change %s"
 
 #: Plugins/General/song_change/song_change.c:139
 msgid "Warning"
-msgstr ""
+msgstr "警告"
 
 #: Plugins/General/song_change/song_change.c:150
 msgid ""
 "Filename and song title tags should be inside double quotes (\").  Not doing "
 "so might be a security risk.  Continue anyway?"
 msgstr ""
+"ファイル名と曲タイトルのタグはダブルクォート(\")でくくられているべきです。そ"
+"うしなければセキュリティリスクとなりうるでしょう。それでも続けますか？"
 
 #: Plugins/General/song_change/song_change.c:163
 #: Plugins/Input/mpg123/fileinfo.c:644
@@ -45,33 +47,30 @@ msgid "No"
 msgstr "いいえ"
 
 #: Plugins/General/song_change/song_change.c:236
-#, fuzzy
 msgid "Song Change Configuration"
-msgstr "CD オーディオ・プレイヤの設定"
+msgstr "Song Change の設定"
 
 #: Plugins/General/song_change/song_change.c:243
-#, fuzzy
 msgid "Commands"
-msgstr "コメント"
+msgstr "コマンド"
 
 #: Plugins/General/song_change/song_change.c:250
 msgid "Shell-command to run when Audacious starts a new song."
-msgstr ""
+msgstr "Audacious が新しい曲を開始したときに実行するシェルコマンド"
 
 #: Plugins/General/song_change/song_change.c:259
 #: Plugins/General/song_change/song_change.c:282
 #: Plugins/General/song_change/song_change.c:305
-#, fuzzy
 msgid "Command:"
-msgstr "コメント:"
+msgstr "コマンド:"
 
 #: Plugins/General/song_change/song_change.c:273
 msgid "Shell-command to run toward the end of a song."
-msgstr ""
+msgstr "曲の終わりで実行するシェルコマンド"
 
 #: Plugins/General/song_change/song_change.c:295
 msgid "Shell-command to run when Audacious reaches the end of the playlist."
-msgstr ""
+msgstr "Audacious が演奏一覧の最後に到達したときに実行するシェルコマンド"
 
 #: Plugins/General/song_change/song_change.c:318
 #, c-format
@@ -88,22 +87,32 @@ msgid ""
 "%%t: Playlist position (%%02d)\n"
 "%%p: Currently playing (1 or 0)"
 msgstr ""
+"コマンドを呼び出す前に置換される以下のフォーマット文字列を利用できます(演奏一"
+"覧の最後のコマンドにはすべてが有効ではありせん)。\n"
+"\n"
+"%%F: 周波数 (ヘルツ)\n"
+"%%c: チャンネル数\n"
+"%%f: ファイル名 (フルパス)\n"
+"%%l: 長さ (ミリ秒)\n"
+"%%n または %%s: 曲名\n"
+"%%r: bps (ビット毎秒)\n"
+"%%t: 演奏一覧の位置 (%%02d)\n"
+"%%p: 現在演奏中か (1 or 0)"
 
 #: Plugins/General/song_change/song_change.c:345
 #: Plugins/Output/alsa/about.c:46 Plugins/Output/alsa/configure.c:436
 #: Plugins/Output/disk_writer/disk_writer.c:137
 #: Plugins/Output/disk_writer/disk_writer.c:406
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: Plugins/General/song_change/song_change.c:351
 #: Plugins/Input/flac/configure.c:773 Plugins/Input/flac/fileinfo.c:353
 #: Plugins/Input/mikmod/plugin.c:605 Plugins/Output/alsa/configure.c:442
 #: Plugins/Output/disk_writer/disk_writer.c:413
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:298
-#, fuzzy
 msgid "Cancel"
-msgstr "ダンス"
+msgstr "キャンセル"
 
 #: Plugins/Input/cdaudio/cdaudio.c:180
 msgid "CD Audio Plugin"
@@ -194,18 +203,18 @@ msgid ""
 "Failed to check directory %s\n"
 "Error: %s"
 msgstr ""
-"フォルダ %s のチェックに失敗しました。\n"
+"ディレクトリ %s のチェックに失敗しました。\n"
 "[ERROR] %s"
 
 #: Plugins/Input/cdaudio/configure.c:322
 #, c-format
 msgid "Error: %s exist, but is not a directory"
-msgstr "[ERROR] %s は存在していますが、フォルダではありません。"
+msgstr "[ERROR] %s は存在していますが、ディレクトリではありません。"
 
 #: Plugins/Input/cdaudio/configure.c:325
 #, c-format
 msgid "Directory %s OK."
-msgstr "フォルダ %s: OK"
+msgstr "ディレクトリ %s: OK"
 
 #: Plugins/Input/cdaudio/configure.c:369
 msgid "Device:"
@@ -217,7 +226,7 @@ msgstr "デバイス(_D):"
 
 #: Plugins/Input/cdaudio/configure.c:387
 msgid "Dir_ectory:"
-msgstr "フォルダ(_E):"
+msgstr "ディレクトリ(_E):"
 
 #: Plugins/Input/cdaudio/configure.c:399
 msgid "Play mode:"
@@ -318,17 +327,20 @@ msgstr "CD の情報"
 
 #: Plugins/Input/console/Audacious_Driver.cpp:328
 msgid "SPC, GYM, NSF, VGM and GBS module decoder"
-msgstr ""
+msgstr "SPC, GYM, NSF, VGM, GBS モジュール・デコーダ"
 
 #: Plugins/Input/console/Audacious_Driver.cpp:459
 msgid "About the Console Music Decoder"
-msgstr ""
+msgstr "コンソールミュージックデコーダについて"
 
 #: Plugins/Input/console/Audacious_Driver.cpp:460
 msgid ""
 "Console music decoder engine based on Game_Music_Emu 0.2.4.\n"
 "Audacious implementation by: William Pitcock <nenolod@nenolod.net>"
 msgstr ""
+"Game_Music_Emu 0.2.4 をベースにしたコンソールミュージックデコーダエンジンで"
+"す。\n"
+"Audacious の実装は William Pitcock <nenolod@nenolod.net> によります。"
 
 #: Plugins/Input/console/Audacious_Driver.cpp:462
 #: Plugins/Input/flac/configure.c:767 Plugins/Input/flac/configure.c:797
@@ -344,343 +356,339 @@ msgstr "OK"
 
 #: Plugins/Input/flac/charset.c:40
 msgid "Arabic (IBM-864)"
-msgstr ""
+msgstr "アラビア語 (IBM-864)"
 
 #: Plugins/Input/flac/charset.c:41
 msgid "Arabic (ISO-8859-6)"
-msgstr ""
+msgstr "アラビア語 (ISO-8859-6)"
 
 #: Plugins/Input/flac/charset.c:42
 msgid "Arabic (Windows-1256)"
-msgstr ""
+msgstr "アラビア語 (Windows-1256)"
 
 #: Plugins/Input/flac/charset.c:43
 msgid "Baltic (ISO-8859-13)"
-msgstr ""
+msgstr "バルト語 (ISO-8859-13)"
 
 #: Plugins/Input/flac/charset.c:44
 msgid "Baltic (ISO-8859-4)"
-msgstr ""
+msgstr "バルト語 (ISO-8859-4)"
 
 #: Plugins/Input/flac/charset.c:45
 msgid "Baltic (Windows-1257)"
-msgstr ""
+msgstr "バルト語 (Windows-1257)"
 
 #: Plugins/Input/flac/charset.c:46
 msgid "Celtic (ISO-8859-14)"
-msgstr ""
+msgstr "ケルト語 (ISO-8859-14)"
 
 #: Plugins/Input/flac/charset.c:47
 msgid "Central European (IBM-852)"
-msgstr ""
+msgstr "中欧諸語 (IBM-852)"
 
 #: Plugins/Input/flac/charset.c:48
 msgid "Central European (ISO-8859-2)"
-msgstr ""
+msgstr "中欧諸語 (ISO-8859-2)"
 
 #: Plugins/Input/flac/charset.c:49
 msgid "Central European (Windows-1250)"
-msgstr ""
+msgstr "中欧諸語 (Windows-1250)"
 
 #: Plugins/Input/flac/charset.c:50
 msgid "Chinese Simplified (GB18030)"
-msgstr ""
+msgstr "簡体中国語 (GB18030)"
 
 #: Plugins/Input/flac/charset.c:51
 msgid "Chinese Simplified (GB2312)"
-msgstr ""
+msgstr "簡体中国語 (GB2312)"
 
 #: Plugins/Input/flac/charset.c:52
 msgid "Chinese Traditional (Big5)"
-msgstr ""
+msgstr "繁体中国語 (Big5)"
 
 #: Plugins/Input/flac/charset.c:53
 msgid "Chinese Traditional (Big5-HKSCS)"
-msgstr ""
+msgstr "繁体中国語 (Big5-HKSCS)"
 
 #: Plugins/Input/flac/charset.c:54
 msgid "Cyrillic (IBM-855)"
-msgstr ""
+msgstr "キリル語 (IBM-855)"
 
 #: Plugins/Input/flac/charset.c:55
 msgid "Cyrillic (ISO-8859-5)"
-msgstr ""
+msgstr "キリル語 (ISO-8859-5)"
 
 #: Plugins/Input/flac/charset.c:56
 msgid "Cyrillic (ISO-IR-111)"
-msgstr ""
+msgstr "キリル語 (ISO-IR-111)"
 
 #: Plugins/Input/flac/charset.c:57
 msgid "Cyrillic (KOI8-R)"
-msgstr ""
+msgstr "キリル語 (KOI8-R)"
 
 #: Plugins/Input/flac/charset.c:58
 msgid "Cyrillic (Windows-1251)"
-msgstr ""
+msgstr "キリル語 (Windows-1251)"
 
 #: Plugins/Input/flac/charset.c:59
 msgid "Cyrillic/Russian (CP-866)"
-msgstr ""
+msgstr "キリル語/ロシア語 (CP-866)"
 
 #: Plugins/Input/flac/charset.c:60
 msgid "Cyrillic/Ukrainian (KOI8-U)"
-msgstr ""
+msgstr "キリル語/ウクライナ語 (KOI8-U)"
 
 #: Plugins/Input/flac/charset.c:61
 msgid "English (US-ASCII)"
-msgstr ""
+msgstr "英語 (US-ASCII)"
 
 #: Plugins/Input/flac/charset.c:62
 msgid "Greek (ISO-8859-7)"
-msgstr ""
+msgstr "ギリシャ語 (ISO-8859-7)"
 
 #: Plugins/Input/flac/charset.c:63
 msgid "Greek (Windows-1253)"
-msgstr ""
+msgstr "ギリシャ語 (Windows-1253)"
 
 #: Plugins/Input/flac/charset.c:64
 msgid "Hebrew (IBM-862)"
-msgstr ""
+msgstr "ヘブライ語 (IBM-862)"
 
 #: Plugins/Input/flac/charset.c:65
 msgid "Hebrew (Windows-1255)"
-msgstr ""
+msgstr "ヘブライ語 (Windows-1255)"
 
 #: Plugins/Input/flac/charset.c:66
-#, fuzzy
 msgid "Japanese (EUC-JP)"
-msgstr "日本語:"
+msgstr "日本語 (EUC-JP)"
 
 #: Plugins/Input/flac/charset.c:67
 msgid "Japanese (ISO-2022-JP)"
-msgstr ""
+msgstr "日本語 (ISO-2022-JP)"
 
 #: Plugins/Input/flac/charset.c:68
 msgid "Japanese (Shift_JIS)"
-msgstr ""
+msgstr "日本語 (Shift_JIS)"
 
 #: Plugins/Input/flac/charset.c:69
 msgid "Korean (EUC-KR)"
-msgstr ""
+msgstr "韓国語 (EUC-KR)"
 
 #: Plugins/Input/flac/charset.c:70
 msgid "Nordic (ISO-8859-10)"
-msgstr ""
+msgstr "北欧諸語 (ISO-8859-10)"
 
 #: Plugins/Input/flac/charset.c:71
 msgid "South European (ISO-8859-3)"
-msgstr ""
+msgstr "南欧諸語 (ISO-8859-3)"
 
 #: Plugins/Input/flac/charset.c:72
 msgid "Thai (TIS-620)"
-msgstr ""
+msgstr "タイ語 (TIS-620)"
 
 #: Plugins/Input/flac/charset.c:73
 msgid "Turkish (IBM-857)"
-msgstr ""
+msgstr "トルコ語 (IBM-857)"
 
 #: Plugins/Input/flac/charset.c:74
 msgid "Turkish (ISO-8859-9)"
-msgstr ""
+msgstr "トルコ語 (ISO-8859-9)"
 
 #: Plugins/Input/flac/charset.c:75
 msgid "Turkish (Windows-1254)"
-msgstr ""
+msgstr "トルコ語 (Windows-1254)"
 
 #: Plugins/Input/flac/charset.c:76
 msgid "Unicode (UTF-7)"
-msgstr ""
+msgstr "ユニコード (UTF-7)"
 
 #: Plugins/Input/flac/charset.c:77
-#, fuzzy
 msgid "Unicode (UTF-8)"
-msgstr "  (不正な UTF-8)"
+msgstr "ユニコード (UTF-8)"
 
 #: Plugins/Input/flac/charset.c:78
 msgid "Unicode (UTF-16BE)"
-msgstr ""
+msgstr "ユニコード (UTF-16BE)"
 
 #: Plugins/Input/flac/charset.c:79
 msgid "Unicode (UTF-16LE)"
-msgstr ""
+msgstr "ユニコード (UTF-16LE)"
 
 #: Plugins/Input/flac/charset.c:80
 msgid "Unicode (UTF-32BE)"
-msgstr ""
+msgstr "ユニコード (UTF-32BE)"
 
 #: Plugins/Input/flac/charset.c:81
 msgid "Unicode (UTF-32LE)"
-msgstr ""
+msgstr "ユニコード (UTF-32LE)"
 
 #: Plugins/Input/flac/charset.c:82
 msgid "Vietnamese (VISCII)"
-msgstr ""
+msgstr "ヴェトナム語 (VISCII)"
 
 #: Plugins/Input/flac/charset.c:83
 msgid "Vietnamese (Windows-1258)"
-msgstr ""
+msgstr "ヴェトナム語 (Windows-1258)"
 
 #: Plugins/Input/flac/charset.c:84
 msgid "Visual Hebrew (ISO-8859-8)"
-msgstr ""
+msgstr "視覚芸術向けヘブライ語 (ISO-8859-8)"
 
 #: Plugins/Input/flac/charset.c:85
 msgid "Western (IBM-850)"
-msgstr ""
+msgstr "西洋 (IBM-850)"
 
 #: Plugins/Input/flac/charset.c:86
 msgid "Western (ISO-8859-1)"
-msgstr ""
+msgstr "西洋 (ISO-8859-1)"
 
 #: Plugins/Input/flac/charset.c:87
 msgid "Western (ISO-8859-15)"
-msgstr ""
+msgstr "西洋 (ISO-8859-15)"
 
 #: Plugins/Input/flac/charset.c:88
 msgid "Western (Windows-1252)"
-msgstr ""
+msgstr "西洋 (Windows-1252)"
 
 #: Plugins/Input/flac/charset.c:94
 msgid "Arabic (IBM-864-I)"
-msgstr ""
+msgstr "アラビア語 (IBM-864-I)"
 
 #: Plugins/Input/flac/charset.c:95
 msgid "Arabic (ISO-8859-6-E)"
-msgstr ""
+msgstr "アラビア語 (ISO-8859-6-E)"
 
 #: Plugins/Input/flac/charset.c:96
 msgid "Arabic (ISO-8859-6-I)"
-msgstr ""
+msgstr "アラビア語 (ISO-8859-6-I)"
 
 #: Plugins/Input/flac/charset.c:97
 msgid "Arabic (MacArabic)"
-msgstr ""
+msgstr "アラビア語 (MacArabic)"
 
 #: Plugins/Input/flac/charset.c:98
 msgid "Armenian (ARMSCII-8)"
-msgstr ""
+msgstr "米語 (ARMSCII-8)"
 
 #: Plugins/Input/flac/charset.c:99
 msgid "Central European (MacCE)"
-msgstr ""
+msgstr "中欧諸語 (MacCE)"
 
 #: Plugins/Input/flac/charset.c:100
 msgid "Chinese Simplified (GBK)"
-msgstr ""
+msgstr "簡体中国語 (GBK)"
 
 #: Plugins/Input/flac/charset.c:101
 msgid "Chinese Simplified (HZ)"
-msgstr ""
+msgstr "簡体中国語 (HZ)"
 
 #: Plugins/Input/flac/charset.c:102
 msgid "Chinese Traditional (EUC-TW)"
-msgstr ""
+msgstr "繁体中国語 (EUC-TW)"
 
 #: Plugins/Input/flac/charset.c:103
 msgid "Croatian (MacCroatian)"
-msgstr ""
+msgstr "クロアチア語 (MacCroatian)"
 
 #: Plugins/Input/flac/charset.c:104
 msgid "Cyrillic (MacCyrillic)"
-msgstr ""
+msgstr "キリル語 (MacCyrillic)"
 
 #: Plugins/Input/flac/charset.c:105
 msgid "Cyrillic/Ukrainian (MacUkrainian)"
-msgstr ""
+msgstr "キリル語/ウクライナ語 (MacUkrainian)"
 
 #: Plugins/Input/flac/charset.c:106
 msgid "Farsi (MacFarsi)"
-msgstr ""
+msgstr "ペルシア語 (MacFarsi)"
 
 #: Plugins/Input/flac/charset.c:107
 msgid "Greek (MacGreek)"
-msgstr ""
+msgstr "ギリシャ語 (MacGreek)"
 
 #: Plugins/Input/flac/charset.c:108
 msgid "Gujarati (MacGujarati)"
-msgstr ""
+msgstr "グジャラート語 (MacGujarati)"
 
 #: Plugins/Input/flac/charset.c:109
 msgid "Gurmukhi (MacGurmukhi)"
-msgstr ""
+msgstr "グルムキー語 (MacGurmukhi)"
 
 #: Plugins/Input/flac/charset.c:110
 msgid "Hebrew (ISO-8859-8-E)"
-msgstr ""
+msgstr "ヘブライ語 (ISO-8859-8-E)"
 
 #: Plugins/Input/flac/charset.c:111
 msgid "Hebrew (ISO-8859-8-I)"
-msgstr ""
+msgstr "ヘブライ語 (ISO-8859-8-I)"
 
 #: Plugins/Input/flac/charset.c:112
 msgid "Hebrew (MacHebrew)"
-msgstr ""
+msgstr "ヘブライ語 (MacHebrew)"
 
 #: Plugins/Input/flac/charset.c:113
 msgid "Hindi (MacDevanagari)"
-msgstr ""
+msgstr "ヒンディー語 (MacDevanagari)"
 
 #: Plugins/Input/flac/charset.c:114
 msgid "Icelandic (MacIcelandic)"
-msgstr ""
+msgstr "アイスランド語 (MacIcelandic)"
 
 #: Plugins/Input/flac/charset.c:115
 msgid "Korean (JOHAB)"
-msgstr ""
+msgstr "韓国語 (JOHAB)"
 
 #: Plugins/Input/flac/charset.c:116
-#, fuzzy
 msgid "Korean (UHC)"
-msgstr "韓国語:"
+msgstr "韓国語 (UHC)"
 
 #: Plugins/Input/flac/charset.c:117
 msgid "Romanian (MacRomanian)"
-msgstr ""
+msgstr "ルーマニア語 (MacRomanian)"
 
 #: Plugins/Input/flac/charset.c:118
 msgid "Turkish (MacTurkish)"
-msgstr ""
+msgstr "トルコ語 (MacTurkish)"
 
 #: Plugins/Input/flac/charset.c:119
 msgid "User Defined"
-msgstr ""
+msgstr "ユーザ定義"
 
 #: Plugins/Input/flac/charset.c:120
 msgid "Vietnamese (TCVN)"
-msgstr ""
+msgstr "ヴェトナム語 (TCVN)"
 
 #: Plugins/Input/flac/charset.c:121
 msgid "Vietnamese (VPS)"
-msgstr ""
+msgstr "ヴェトナム語 (VPS)"
 
 #: Plugins/Input/flac/charset.c:122
 msgid "Western (MacRoman)"
-msgstr ""
+msgstr "西洋 (MacRoman)"
 
 #: Plugins/Input/flac/configure.c:346 Plugins/Input/mpg123/configure.c:227
 msgid "Select the directory where you want to store the MPEG streams:"
-msgstr "MPEG ストリームを格納するフォルダを選択して下さい:"
+msgstr "MPEG ストリームを格納するディレクトリを選択して下さい:"
 
 #: Plugins/Input/flac/configure.c:398
-#, fuzzy
 msgid "Flac Configuration"
-msgstr "CD オーディオ・プレイヤの設定"
+msgstr "Flac の設定"
 
 #: Plugins/Input/flac/configure.c:410
 msgid "Tag Handling"
-msgstr ""
+msgstr "タグの取り扱い"
 
 #: Plugins/Input/flac/configure.c:419
 msgid "Convert Character Set"
-msgstr ""
+msgstr "キャラクタ・セットを変換"
 
 #: Plugins/Input/flac/configure.c:426
 msgid "Convert character set from :"
-msgstr ""
+msgstr "キャラクタ・セットを変換。変換前:"
 
 #: Plugins/Input/flac/configure.c:431
 msgid "to :"
-msgstr ""
+msgstr "変換後:"
 
 #: Plugins/Input/flac/configure.c:459 Plugins/Input/vorbis/configure.c:485
 #: audacious/glade/prefswin.glade:2461
@@ -694,93 +702,83 @@ msgstr "タイトル"
 
 #: Plugins/Input/flac/configure.c:479 Plugins/Input/vorbis/configure.c:560
 msgid "ReplayGain"
-msgstr "リプレイゲイン"
+msgstr "リプレイ・ゲイン"
 
 #: Plugins/Input/flac/configure.c:487
-#, fuzzy
 msgid "Enable ReplayGain processing"
-msgstr "リプレイゲインを有効にする"
+msgstr "リプレイ・ゲイン処理を有効にする"
 
 #: Plugins/Input/flac/configure.c:492
-#, fuzzy
 msgid "Album mode"
-msgstr "アルバム名"
+msgstr "アルバム・モード"
 
 #: Plugins/Input/flac/configure.c:499
-#, fuzzy
 msgid "Preamp:"
-msgstr "ドリーム"
+msgstr "プリアンプ:"
 
 #: Plugins/Input/flac/configure.c:506
 msgid "0 dB"
-msgstr ""
+msgstr "0 dB"
 
 #: Plugins/Input/flac/configure.c:510
-#, fuzzy
 msgid "6dB hard limiting"
-msgstr "6dB ブースト + ハード・リミットを有効にする"
+msgstr "6dB  ハード・リミットを有効にする"
 
 #: Plugins/Input/flac/configure.c:519
-#, fuzzy
 msgid "Resolution"
-msgstr "解像度:"
+msgstr "解像度"
 
 #: Plugins/Input/flac/configure.c:527
-#, fuzzy
 msgid "Without ReplayGain"
-msgstr "リプレイゲイン"
+msgstr "リプレイ・ゲインなし"
 
 #: Plugins/Input/flac/configure.c:535
 msgid "Dither 24bps to 16bps"
-msgstr ""
+msgstr "24bps から 16bps にディザリング"
 
 #: Plugins/Input/flac/configure.c:540
-#, fuzzy
 msgid "With ReplayGain"
-msgstr "リプレイゲイン"
+msgstr "リプレイ・ゲインあり"
 
 #: Plugins/Input/flac/configure.c:548
-#, fuzzy
 msgid "Enable dithering"
-msgstr "有効"
+msgstr "ディザリングを有効にする"
 
 #: Plugins/Input/flac/configure.c:557
 msgid "Noise shaping"
-msgstr ""
+msgstr "ノイズ・シェイピング"
 
 #: Plugins/Input/flac/configure.c:565
-#, fuzzy
 msgid "none"
 msgstr "なし"
 
 #: Plugins/Input/flac/configure.c:571
 msgid "low"
-msgstr ""
+msgstr "低"
 
 #: Plugins/Input/flac/configure.c:577
 msgid "medium"
-msgstr ""
+msgstr "中"
 
 #: Plugins/Input/flac/configure.c:583
 msgid "high"
-msgstr ""
+msgstr "高"
 
 #: Plugins/Input/flac/configure.c:589
 msgid "Dither to"
-msgstr ""
+msgstr "ディザリング"
 
 #: Plugins/Input/flac/configure.c:597
-#, fuzzy
 msgid "16 bps"
-msgstr "16ビット"
+msgstr "16 bps"
 
 #: Plugins/Input/flac/configure.c:603
 msgid "24 bps"
-msgstr ""
+msgstr "24 bps"
 
 #: Plugins/Input/flac/configure.c:611
 msgid "Output"
-msgstr ""
+msgstr "出力"
 
 #: Plugins/Input/flac/configure.c:617 Plugins/Input/mpg123/configure.c:464
 #: Plugins/Input/vorbis/configure.c:287 Plugins/Output/OSS/configure.c:302
@@ -863,7 +861,7 @@ msgstr "SHOUT/Icecast:"
 
 #: Plugins/Input/flac/configure.c:749
 msgid "Enable SHOUT/Icecast title streaming"
-msgstr ""
+msgstr "SHOUT/Icecast タイトル・ストリーミングを有効にする"
 
 #: Plugins/Input/flac/configure.c:753 Plugins/Input/mpg123/configure.c:652
 msgid "Enable Icecast Metadata UDP Channel"
@@ -875,9 +873,8 @@ msgid "Streaming"
 msgstr "ストリーミング"
 
 #: Plugins/Input/flac/configure.c:789
-#, fuzzy
 msgid "About Flac Plugin"
-msgstr "ESounD プラグインについて"
+msgstr "Flac プラグインについて"
 
 #: Plugins/Input/flac/configure.c:790
 msgid ""
@@ -889,6 +886,13 @@ msgid ""
 "Daisuke Shimamura\n"
 "Visit http://flac.sourceforge.net/"
 msgstr ""
+"Josh Coalson による Flac プラグイン\n"
+"貢献者\n"
+"......\n"
+"......\n"
+"そして\n"
+"Daisuke Shimamura\n"
+"http://flac.sourceforge.net/ を訪れてください"
 
 #: Plugins/Input/flac/fileinfo.c:47 Plugins/Input/mpg123/mpg123.c:35
 #: Plugins/Input/vorbis/fileinfo.c:83
@@ -1092,7 +1096,7 @@ msgstr "ノイズ"
 
 #: Plugins/Input/flac/fileinfo.c:56
 msgid "Alt"
-msgstr ""
+msgstr "アルト"
 
 #: Plugins/Input/flac/fileinfo.c:57 Plugins/Input/mpg123/mpg123.c:45
 #: Plugins/Input/vorbis/fileinfo.c:93
@@ -1212,7 +1216,7 @@ msgstr "ジャングル"
 #: Plugins/Input/flac/fileinfo.c:64 Plugins/Input/mpg123/mpg123.c:52
 #: Plugins/Input/vorbis/fileinfo.c:100
 msgid "Native American"
-msgstr "ネィテイブ・アメリカン"
+msgstr "ネイティヴ・アメリカン"
 
 #: Plugins/Input/flac/fileinfo.c:65 Plugins/Input/mpg123/mpg123.c:53
 #: Plugins/Input/vorbis/fileinfo.c:101
@@ -1630,24 +1634,24 @@ msgid "Synthpop"
 msgstr "シンセポップ"
 
 #: Plugins/Input/flac/fileinfo.c:209
-#, fuzzy, c-format
+#, c-format
 msgid "Samplerate: %d Hz"
-msgstr "サンプリング・レート:"
+msgstr "サンプリング・レート: %d Hz"
 
 #: Plugins/Input/flac/fileinfo.c:210
-#, fuzzy, c-format
+#, c-format
 msgid "Channels: %d"
-msgstr "チャンネル数:"
+msgstr "チャンネル数: %d"
 
 #: Plugins/Input/flac/fileinfo.c:211
 #, c-format
 msgid "Bits/Sample: %d"
-msgstr ""
+msgstr "ビット/サンプル: %d"
 
 #: Plugins/Input/flac/fileinfo.c:213
 #, c-format
 msgid "Blocksize: %d"
-msgstr ""
+msgstr "ブロック・サイズ: %d"
 
 #: Plugins/Input/flac/fileinfo.c:215
 #, c-format
@@ -1655,20 +1659,22 @@ msgid ""
 "Blocksize: variable\n"
 "  min/max: %d/%d"
 msgstr ""
+"ブロック・サイズ: 可変\n"
+"       最小/最大: %d/%d"
 
 #: Plugins/Input/flac/fileinfo.c:218
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Samples: %llu\n"
 "Length: %d:%.2d"
 msgstr ""
-"\n"
-"演奏時間の合計: %d:%d\n"
+"サンプル: %llu\n"
+"長さ: %d:%.2d"
 
 #: Plugins/Input/flac/fileinfo.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "Filesize: %ld B"
-msgstr "ファイル・サイズ:"
+msgstr "ファイル・サイズ: %ld B"
 
 #: Plugins/Input/flac/fileinfo.c:226
 #, c-format
@@ -1676,15 +1682,16 @@ msgid ""
 "Avg. bitrate: %.1f kb/s\n"
 "Compression ratio: %.1f%%"
 msgstr ""
+"平均ビットレート: %.1f kb/s\n"
+"圧縮率: %.1f%%"
 
 #: Plugins/Input/flac/fileinfo.c:256 audacious/input.c:505
 msgid "Filename:"
 msgstr "ファイル名:"
 
 #: Plugins/Input/flac/fileinfo.c:268
-#, fuzzy
 msgid "Tag:"
-msgstr "タンゴ"
+msgstr "タグ:"
 
 #: Plugins/Input/flac/fileinfo.c:275 Plugins/Input/mpg123/fileinfo.c:859
 #: Plugins/Input/vorbis/fileinfo.c:580
@@ -1721,24 +1728,21 @@ msgid "Genre:"
 msgstr "ジャンル:"
 
 #: Plugins/Input/flac/fileinfo.c:342
-#, fuzzy
 msgid "Save"
-msgstr "/保存"
+msgstr "保存"
 
 #: Plugins/Input/flac/fileinfo.c:348
-#, fuzzy
 msgid "Remove Tag"
-msgstr "/全て削除"
+msgstr "タグを削除"
 
 #: Plugins/Input/flac/fileinfo.c:358
-#, fuzzy
 msgid "FLAC Info:"
-msgstr "CD の情報"
+msgstr "FLAC の情報:"
 
 #: Plugins/Input/flac/fileinfo.c:409
-#, fuzzy, c-format
+#, c-format
 msgid "File Info - %s"
-msgstr "ファイル情報"
+msgstr "ファイル情報 - %s"
 
 #: Plugins/Input/flac/http.c:219 Plugins/Input/mpg123/http.c:220
 #: Plugins/Input/vorbis/http.c:218
@@ -1793,9 +1797,8 @@ msgid "PRE-BUFFERING: %dKB/%dKB"
 msgstr "プレ・バッファリング中: %d/%d Kバイト"
 
 #: Plugins/Input/mikmod/plugin.c:87
-#, fuzzy
 msgid "About mikmod plugin"
-msgstr "ESounD プラグインについて"
+msgstr "mikmod プラグインについて"
 
 #: Plugins/Input/mikmod/plugin.c:111
 msgid ""
@@ -1803,21 +1806,22 @@ msgid ""
 "http://www.multimania.com/miodrag/mikmod/\n"
 "Ported to xmms by J. Nick Koston"
 msgstr ""
+"Mikmod プラグイン\n"
+"http://www.multimania.com/miodrag/mikmod/\n"
+"J. Nick Koston による xmms ポート"
 
 #: Plugins/Input/mikmod/plugin.c:180
 #, c-format
 msgid "MikMod Player %s"
-msgstr ""
+msgstr "MikMod プレイヤー %s"
 
 #: Plugins/Input/mikmod/plugin.c:366
-#, fuzzy
 msgid "Couldn't load mod"
-msgstr "ホスト %s を見つけられませんでした"
+msgstr "mod を読み込めません"
 
 #: Plugins/Input/mikmod/plugin.c:425
-#, fuzzy
 msgid "MikMod Configuration"
-msgstr "MPEG オーディオ・プラグインの設定"
+msgstr "MikMod の設定"
 
 #: Plugins/Input/mikmod/plugin.c:449 Plugins/Input/mpg123/configure.c:328
 msgid "Resolution:"
@@ -1845,7 +1849,6 @@ msgid "Mono"
 msgstr "モノラル"
 
 #: Plugins/Input/mikmod/plugin.c:503
-#, fuzzy
 msgid "Downsample:"
 msgstr "ダウン・サンプル:"
 
@@ -1863,29 +1866,27 @@ msgstr "1:4 (11 kHz)"
 
 #: Plugins/Input/mikmod/plugin.c:543
 msgid "Look for hidden patterns in modules "
-msgstr ""
+msgstr "モジュールの隠しパターンを探す"
 
 #: Plugins/Input/mikmod/plugin.c:550
 msgid "Use surround mixing"
-msgstr ""
+msgstr "サラウンド・ミクシングを使う"
 
 #: Plugins/Input/mikmod/plugin.c:557
 msgid "Force volume fade at the end of the module"
-msgstr ""
+msgstr "モジュールの最後でボリューム・フェイドを強制する"
 
 #: Plugins/Input/mikmod/plugin.c:564
-#, fuzzy
 msgid "Use interpolation"
-msgstr "認証を行う"
+msgstr "インターポーレーションを使う"
 
 #: Plugins/Input/mikmod/plugin.c:571
 msgid "Default panning separation"
-msgstr ""
+msgstr "デフォルトのパンニング・セパレーション"
 
 #: Plugins/Input/mikmod/plugin.c:583
-#, fuzzy
 msgid "Quality"
-msgstr "/終了(_Q)"
+msgstr "品質"
 
 #: Plugins/Input/mikmod/plugin.c:588 Plugins/Input/mpg123/configure.c:417
 msgid "Options"
@@ -2127,11 +2128,11 @@ msgstr "%lu バイト"
 
 #: Plugins/Input/mpg123/id3_frame_content.c:81
 msgid " (Remix)"
-msgstr ""
+msgstr " (リミックス)"
 
 #: Plugins/Input/mpg123/id3_frame_content.c:88
 msgid " (Cover)"
-msgstr ""
+msgstr " (カヴァー)"
 
 #: Plugins/Input/mpg123/mpg123.c:44 Plugins/Input/vorbis/fileinfo.c:92
 msgid "AlternRock"
@@ -2149,6 +2150,11 @@ msgid ""
 "Derived partially from mpg123 0.59s.mc3 as well.\n"
 "Based on the original XMMS plugin."
 msgstr ""
+"William Pitcock <nenolod@nenolod.net> による Audacious デコーディングエンジ"
+"ン。\n"
+"Michael Hipp <mh@mpg123.de> による mpg123 デコーディングエンジンから派生。\n"
+"同様に mpg123 0.59s.mc3 から部分的に派生。\n"
+"オリジナルの XMMS プラグインをベースとする。"
 
 #: Plugins/Input/mpg123/mpg123.c:1186
 msgid "MPEG Audio Plugin"
@@ -2156,7 +2162,7 @@ msgstr "MPEG オーディオ・プラグイン"
 
 #: Plugins/Input/tonegen/tonegen.c:48
 msgid "About Tone Generator"
-msgstr ""
+msgstr "トーン・ジェネレータについて"
 
 #: Plugins/Input/tonegen/tonegen.c:50
 msgid ""
@@ -2166,19 +2172,24 @@ msgid ""
 "To use it, add a URL: tone://frequency1;frequency2;frequency3;...\n"
 "e.g. tone://2000;2005 to play a 2000Hz tone and a 2005Hz tone"
 msgstr ""
+"Haavard Kvaalen <havardk@xmms.org> によるサイン・トーン・ジェネーレータ\n"
+"Daniel J. Peng <danielpeng@bigfoot.com> による修正\n"
+"\n"
+"URLに tone://frequency1;frequency2;frequency3;... と追加して使用します\n"
+"例 tone://2000;2005 は 2000Hz トーンと 2005Hz トーンを演奏します"
 
 #: Plugins/Input/tonegen/tonegen.c:164
 msgid "Tone Generator: "
-msgstr ""
+msgstr "トーン・ジェネレータ: "
 
 #: Plugins/Input/tonegen/tonegen.c:264
 #, c-format
 msgid "Tone Generator %s"
-msgstr ""
+msgstr "トーン・ジェネレータ %s"
 
 #: Plugins/Input/vorbis/configure.c:192
 msgid "Select the directory where you want to store the Ogg Vorbis streams:"
-msgstr "Ogg Vorbis ストリームを格納するフォルダの選択:"
+msgstr "Ogg Vorbis ストリームを格納するディレクトリの選択:"
 
 #: Plugins/Input/vorbis/configure.c:275
 msgid "Ogg Vorbis Audio Plugin Configuration"
@@ -2190,7 +2201,7 @@ msgstr "Ogg Vorbis タグ:"
 
 #: Plugins/Input/vorbis/configure.c:503
 msgid "ReplayGain Settings:"
-msgstr "リプレイゲインの設定:"
+msgstr "リプレイ・ゲインの設定:"
 
 #: Plugins/Input/vorbis/configure.c:511
 msgid "Enable Clipping Prevention"
@@ -2198,7 +2209,7 @@ msgstr "クリッピング回避機能を有効にする"
 
 #: Plugins/Input/vorbis/configure.c:516
 msgid "Enable ReplayGain"
-msgstr "リプレイゲインを有効にする"
+msgstr "リプレイ・ゲインを有効にする"
 
 #: Plugins/Input/vorbis/configure.c:521
 msgid "ReplayGain Type:"
@@ -2360,10 +2371,9 @@ msgstr ""
 
 #: Plugins/Input/wav/wav-sndfile.c:243
 msgid "About sndfile WAV support"
-msgstr ""
+msgstr "sndfile WAV サポートについて"
 
 #: Plugins/Input/wav/wav-sndfile.c:244
-#, fuzzy
 msgid ""
 "Adapted for audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
 "from the xmms_sndfile plugin which is:\n"
@@ -2385,7 +2395,9 @@ msgid ""
 "59 Temple Place, Suite 330, \n"
 "Boston, MA  02111-1307  USA"
 msgstr ""
-"XMMS ESounD プラグイン\n"
+"Tony Vroon <chainsaw@gentoo.org> による xmms_sndfile プラグインの\n"
+"audacious への適応:\n"
+"Copyright (C) 2000, 2002 Erik de Castro Lopo\n"
 "\n"
 "このプログラムはフリーソフトウェアです;\n"
 "フリーソフトウェア財団が提供する GNU 一般公有使用許諾契約書\n"
@@ -2405,7 +2417,7 @@ msgstr ""
 
 #: Plugins/Input/wav/wav-sndfile.c:268
 msgid "sndfile WAV plugin"
-msgstr ""
+msgstr "sndfile WAV プラグイン"
 
 #: Plugins/Input/wav/wav.c:67
 msgid "WAV Audio Plugin"
@@ -2583,9 +2595,8 @@ msgid "Device settings"
 msgstr "デバイスの設定"
 
 #: Plugins/Output/alsa/configure.c:359
-#, fuzzy
 msgid "Soundcard:"
-msgstr "サウンドトラック"
+msgstr "サウンドカード:"
 
 #: Plugins/Output/alsa/configure.c:372 Plugins/Output/alsa/configure.c:414
 msgid "Buffer time (ms):"
@@ -2597,7 +2608,7 @@ msgstr "ピリオド時間 (ms):"
 
 #: Plugins/Output/alsa/configure.c:401
 msgid "XMMS:"
-msgstr ""
+msgstr "XMMS:"
 
 #: Plugins/Output/alsa/configure.c:429
 msgid "Advanced settings"
@@ -2606,27 +2617,27 @@ msgstr "拡張設定"
 #: Plugins/Output/disk_writer/disk_writer.c:104
 #, c-format
 msgid "Disk Writer Plugin %s"
-msgstr ""
+msgstr "ディスク・ライター・プラグイン %s"
 
 #: Plugins/Output/disk_writer/disk_writer.c:135
 msgid ""
 "You cannot use the Disk Writer plugin\n"
 "when you're running in realtime mode."
 msgstr ""
+"リアルタイム・モードで実行しているとき\n"
+"ディスク・ライター・プラグインは利用できません。"
 
 #: Plugins/Output/disk_writer/disk_writer.c:312
-#, fuzzy
 msgid "Select the directory where you want to store the output files:"
-msgstr "MPEG ストリームを格納するフォルダを選択して下さい:"
+msgstr "出力ファイルを格納するディレクトリを選択して下さい:"
 
 #: Plugins/Output/disk_writer/disk_writer.c:360
-#, fuzzy
 msgid "Disk Writer Configuration"
-msgstr "OSS ドライバの設定"
+msgstr "ディスク・ライターの設定"
 
 #: Plugins/Output/disk_writer/disk_writer.c:389
 msgid "Don't strip file name extension"
-msgstr ""
+msgstr "ファイル名の拡張子を取り除かない"
 
 #: Plugins/Output/esd/about.c:34
 msgid "About ESounD Plugin"
@@ -2714,9 +2725,8 @@ msgid "Options:"
 msgstr "オプション:"
 
 #: Plugins/Visualization/libvisual-proxy/about.c:54
-#, fuzzy
 msgid "About Libvisual XMMS Plugin"
-msgstr "ESounD プラグインについて"
+msgstr "Libvisual XMMS プラグインについて"
 
 #: Plugins/Visualization/libvisual-proxy/about.c:88
 msgid ""
@@ -2728,6 +2738,13 @@ msgid ""
 "The Libvisual XMMS Plugin, more information about Libvisual can be found at\n"
 "http://libvisual.sf.net\n"
 msgstr ""
+"Libvisual XMMS プラグイン\n"
+"\n"
+"Copyright (C) 2004, Duilio Protti <dprotti@users.sourceforge.net>\n"
+"Dennis Smit <ds@nerds-incorporated.org>\n"
+"\n"
+"Libvisual XMMS プラグイン、Libvisual についてのより多くの情報は\n"
+"http://libvisual.sf.net にあります。\n"
 
 #: Plugins/Visualization/libvisual-proxy/about.c:90 audacious/about.c:310
 msgid "Credits"
@@ -2740,80 +2757,83 @@ msgid ""
 "French: Jean-Christophe Hoelt\n"
 "Spanish: Duilio Protti\n"
 msgstr ""
+"ブラジル系ポルトガル語: Gustavo Sverzut Barbieri\n"
+"オランダ語: Dennis Smit\n"
+"フランス語: Jean-Christophe Hoelt\n"
+"スペイン語: Duilio Protti\n"
 
 #: Plugins/Visualization/libvisual-proxy/about.c:114 audacious/about.c:314
 msgid "Translators"
 msgstr "翻訳者"
 
 #: Plugins/Visualization/libvisual-proxy/about.c:135
-#, fuzzy
 msgid "Close"
-msgstr "/閉じる"
+msgstr "閉じる"
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:66
 msgid "LibVisual XMMS Plugin"
-msgstr ""
+msgstr "LibVisual XMMS プラグイン"
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:78
-#, fuzzy
 msgid "Visualization Plugins"
-msgstr "視覚化プラグインの一覧(_V):"
+msgstr "視覚化プラグイン"
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:132
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:252
 msgid "Configure"
-msgstr ""
+msgstr "設定"
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:140
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:260
-#, fuzzy
 msgid "About"
-msgstr "BMP について"
+msgstr "libvisual proxy プラグインについて"
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:148
 msgid "Enable/Disable"
-msgstr ""
+msgstr "有効/無効"
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:156
 msgid "Fullscreen"
-msgstr ""
+msgstr "フルスクリーン"
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:162
 msgid ""
 "You can toggle between normal and fullscreen mode pressing key TAB or F11"
 msgstr ""
+"TAB キーまたは F11 キーでノーマルモードとフルスクリーンモードを切り替えること"
+"ができます"
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:164
-#, fuzzy
 msgid "All plugins"
-msgstr "プラグイン"
+msgstr "すべてのプラグイン"
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:172
 msgid "Only non GL plugins"
-msgstr ""
+msgstr "GL でないプラグインのみ"
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:180
 msgid "Only GL plugins"
-msgstr ""
+msgstr "GL プラグインのみ"
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:196
 msgid "Maximum Frames Per Second:"
-msgstr ""
+msgstr "最大フレーム毎秒:"
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:212
-#, fuzzy
 msgid "Morph Plugin"
-msgstr "プラグイン"
+msgstr "モーフィングプラグイン"
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:233
 msgid ""
 "Select the kind of morph that will be applied when switching from one "
 "visualization plugin to another "
 msgstr ""
+"ある視覚化プラグインが別のものに切り替わるときに使われるモーフィングの種類の"
+"選択 "
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:268
 msgid "Select one morph plugin randomly"
-msgstr ""
+msgstr "モーフィングプラグインをランダムに選択"
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:282
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:174
@@ -2825,25 +2845,25 @@ msgstr ""
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:1053
 #: Plugins/Visualization/libvisual-proxy/main.c:145
 msgid "Accept"
-msgstr ""
+msgstr "承認"
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:290
 msgid "Apply"
-msgstr ""
+msgstr "適用"
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:356
 msgid "Couldn't create replacement pixmap."
-msgstr ""
+msgstr "代替ピックスマップを生成できません。"
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:401
 #, c-format
 msgid "Couldn't find pixmap file: %s"
-msgstr ""
+msgstr "ピックスマップファイル %s が見つかりません。"
 
 #: Plugins/Visualization/libvisual-proxy/config_gui.c:410
 #, c-format
 msgid "Error loading pixmap file: %s"
-msgstr ""
+msgstr "ピックスマップファイル %s の読み込みエラー。"
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:168
 msgid ""
@@ -2851,6 +2871,9 @@ msgid ""
 "file is not a valid morph plugin.\n"
 "We will use "
 msgstr ""
+"コンフィグファイルで指定されたモーフィングプラグインは\n"
+"有効なモーフィングプラグインではありません。\n"
+"代わりに "
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:171
 msgid ""
@@ -2858,60 +2881,62 @@ msgid ""
 "If you want another one, please choose it\n"
 "on the configure dialog."
 msgstr ""
+" モーフィングプラグインを使います。\n"
+"別のものを使いたい場合、コンフィグダイアログで\n"
+"選択してください。"
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:189
 msgid "GL plugins only"
-msgstr ""
+msgstr "GL プラグインのみ"
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:191
 msgid "non GL plugins only"
-msgstr ""
+msgstr "GL でないプラグインのみ"
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:193
 msgid "All plugins enabled"
-msgstr ""
+msgstr "すべての有効なプラグイン"
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:198
 msgid "LibVisual BMP plugin: config file contain errors, fixing..."
 msgstr ""
+"LibVisual BMP プラグイン: コンフィグファイルにエラーがあります。修正中..."
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:201
 msgid "LibVisual BMP plugin: config file is from old version, updating..."
 msgstr ""
+"LibVisual BMP プラグイン: コンフィグファイルが古いヴァージョンです。更新中..."
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:204
 msgid "LibVisual BMP plugin: adding entry to config file..."
-msgstr ""
+msgstr "LibVisual BMP プラグイン: コンフィグファイルにエントリを追加中..."
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:553
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:774
-#, fuzzy
 msgid " (enabled)"
-msgstr "有効"
+msgstr " (有効)"
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:616
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:944
-#, fuzzy
 msgid "Version: "
-msgstr "バージョン:"
+msgstr "バージョン: "
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:618
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:946
 msgid "Author: "
-msgstr ""
+msgstr "作者: "
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:671
 msgid "The list of actor plugins is empty."
-msgstr ""
+msgstr "動作プラグインの一覧が空です。"
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:678
-#, fuzzy
 msgid " error"
-msgstr "テラー"
+msgstr " エラー"
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:679
 msgid "There are no actor plugins installed.\n"
-msgstr ""
+msgstr "インストールされた動作プラグインがありません。\n"
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:680
 msgid ""
@@ -2919,11 +2944,14 @@ msgid ""
 "Please visit http://libvisual.sf.net to\n"
 "to get some nice plugins."
 msgstr ""
+" を初期化できません。\n"
+"何かよいプラグインを取得するために\n"
+"http://libvisual.sf.net を訪れてください。"
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:842
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:896
 msgid "The list of morph plugins is empty."
-msgstr ""
+msgstr "モーフィングプラグインの一覧が空です。"
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:850
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:904
@@ -2932,86 +2960,90 @@ msgid ""
 "between visualization plugins will be do it\n"
 "without any morphing."
 msgstr ""
+"モーフィングプラグインがありません。\n"
+"モーフィングなしで視覚化プラグインの切り替えを行います。\n"
+"."
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:860
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:913
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:939
 msgid "There is no info for this plugin"
-msgstr ""
+msgstr "このプラグインの情報がありません。"
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:932
 msgid "The list of input plugins is empty."
-msgstr ""
+msgstr "入力プラグインの一覧が空です。"
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:1051
 msgid ""
 "We cannot initialize Libvisual library.\n"
 "Libvisual is necessary for this plugin to work."
 msgstr ""
+"Libvisual ライブラリを初期化できません。\n"
+"このプラグインが動作するには Libvisual が必要です。"
 
 #: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:1142
 msgid "Invalid value for 'enabled_plugins' option"
-msgstr ""
+msgstr "'enabled_plugins' オプションが無効な値です"
 
 #: Plugins/Visualization/libvisual-proxy/main.c:116
 msgid "XMMS plugin"
-msgstr ""
+msgstr "XMMS プラグイン"
 
 #: Plugins/Visualization/libvisual-proxy/main.c:134
 msgid "Cannot get options"
-msgstr ""
+msgstr "オプションを取得できません。"
 
 #: Plugins/Visualization/libvisual-proxy/main.c:141
-#, fuzzy
 msgid "Cannot initialize SDL!\n"
-msgstr "gnome-vfs を初期化できませんでした。\n"
+msgstr "SDL を初期化できませんでした!\n"
 
 #: Plugins/Visualization/libvisual-proxy/main.c:144
 msgid " will not be loaded."
-msgstr ""
+msgstr " は読み込まれません。"
 
 #: Plugins/Visualization/libvisual-proxy/main.c:155
 #, c-format
 msgid "Cannot not load icon: %s"
-msgstr ""
+msgstr "アイコン %s を読み込めません。"
 
 #: Plugins/Visualization/libvisual-proxy/main.c:160
 msgid "Last plugin: (none)"
-msgstr ""
+msgstr "前回のプラグイン: (なし)"
 
 #: Plugins/Visualization/libvisual-proxy/main.c:162
-#, fuzzy, c-format
+#, c-format
 msgid "Last plugin: %s"
-msgstr "入力プラグイン: %s"
+msgstr "前回のプラグイン: %s"
 
 #: Plugins/Visualization/libvisual-proxy/main.c:167
 #, c-format
 msgid "%s is not a valid actor plugin"
-msgstr ""
+msgstr "%s は有効な動作プラグインではありません"
 
 #: Plugins/Visualization/libvisual-proxy/main.c:174
 msgid "Could not get actor plugin"
-msgstr ""
+msgstr "動作プラグインを取得できません"
 
 #: Plugins/Visualization/libvisual-proxy/main.c:305
 msgid "Could not get video info"
-msgstr ""
+msgstr "色情報を取得できません"
 
 #: Plugins/Visualization/libvisual-proxy/main.c:358
 msgid "Cannot set video depth"
-msgstr ""
+msgstr "色深度を取得できません"
 
 #: Plugins/Visualization/libvisual-proxy/main.c:365
 msgid "Cannot set video"
-msgstr ""
+msgstr "色をセットできません"
 
 #: Plugins/Visualization/libvisual-proxy/main.c:390
 msgid "Cannot set input plugin callback"
-msgstr ""
+msgstr "入力プラグインのコールバックをセットできません"
 
 #: Plugins/Visualization/libvisual-proxy/main.c:445
 msgid "Cannot initialize plugin's visual stuff"
-msgstr ""
+msgstr "プラグインの視覚素材を初期化できません"
 
 #: audacious/about.c:42
 #, c-format
@@ -3036,11 +3068,11 @@ msgstr "William Pitcock"
 
 #: audacious/about.c:50
 msgid "Mohammed Sameer"
-msgstr ""
+msgstr "Mohammed Sameer"
 
 #: audacious/about.c:51
 msgid "Tony Vroon"
-msgstr ""
+msgstr "Tony Vroon"
 
 #: audacious/about.c:54
 msgid "Special thanks to:"
@@ -3051,9 +3083,8 @@ msgid "irc.atheme.org #audacious"
 msgstr "irc.atheme.org #audacious"
 
 #: audacious/about.c:56
-#, fuzzy
 msgid "irc.freenode.net #audacious"
-msgstr "irc.atheme.org #audacious"
+msgstr "irc.freenode.net #audacious"
 
 #: audacious/about.c:59
 msgid "BMP Developers:"
@@ -3273,7 +3304,7 @@ msgstr "日本語:"
 
 #: audacious/about.c:133
 msgid "Dai"
-msgstr ""
+msgstr "Dai"
 
 #: audacious/about.c:135
 msgid "Korean:"
@@ -3480,9 +3511,8 @@ msgid "/Delete/Auto-load preset"
 msgstr "/削除/自動読み込みのプリセット"
 
 #: audacious/equalizer.c:740
-#, fuzzy
 msgid "Audacious Equalizer"
-msgstr "/イコライザを巻き上げる"
+msgstr "Audacious イコライザ"
 
 #: audacious/equalizer.c:1365
 msgid "Preset"
@@ -3587,6 +3617,9 @@ msgid ""
 "\n"
 "Could not open glade file (%s). Please check your installation.\n"
 msgstr ""
+"<b><big>%s を作成できません。</big></b>\n"
+"\n"
+"glade ファイル (%s) を開けません。インストール手順を確認してください。\n"
 
 #: audacious/input.c:299
 msgid ""
@@ -3642,7 +3675,7 @@ msgstr "Audacious"
 #: audacious/main.c:377
 #, c-format
 msgid "Could not create directory (%s): %s"
-msgstr "フォルダ (%s) を作成できませんでした: %s"
+msgstr "ディレクトリ (%s) を作成できませんでした: %s"
 
 #: audacious/main.c:638
 msgid ""
@@ -3706,7 +3739,7 @@ msgstr "以前のセッション ID を指定する"
 
 #: audacious/main.c:679
 msgid "Headless operation [experimental]"
-msgstr ""
+msgstr "ヘッドレス動作 [実験的]"
 
 #: audacious/main.c:682
 msgid "Print version number and exit\n"
@@ -3918,9 +3951,8 @@ msgid "/Peaks Falloff/Fastest"
 msgstr "/ピーク・フォールオフ/最高速"
 
 #: audacious/mainwin.c:322
-#, fuzzy
 msgid "/Play CD"
-msgstr "/演奏"
+msgstr "/CD の演奏"
 
 #: audacious/mainwin.c:325
 msgid "/Repeat"
@@ -3931,9 +3963,8 @@ msgid "/Shuffle"
 msgstr "/シャッフル"
 
 #: audacious/mainwin.c:329
-#, fuzzy
 msgid "/No Playlist Advance"
-msgstr "/演奏一覧エディタを表示する"
+msgstr "/演奏一覧アドバンスなし"
 
 #: audacious/mainwin.c:332
 msgid "/Play"
@@ -3972,29 +4003,24 @@ msgid "/About Audacious"
 msgstr "/Audacious について"
 
 #: audacious/mainwin.c:364
-#, fuzzy
 msgid "/Play File"
-msgstr "/演奏"
+msgstr "/ファイルを演奏"
 
 #: audacious/mainwin.c:366
-#, fuzzy
 msgid "/Play Directory"
-msgstr "フォルダ(_E):"
+msgstr "/ディレクトリを演奏"
 
 #: audacious/mainwin.c:368
-#, fuzzy
 msgid "/Play Location"
-msgstr "場所:"
+msgstr "/場所を演奏"
 
 #: audacious/mainwin.c:371
-#, fuzzy
 msgid "/V_isualization"
-msgstr "/視覚化モード"
+msgstr "/視覚化モード(_V)"
 
 #: audacious/mainwin.c:372
-#, fuzzy
 msgid "/_Playback"
-msgstr "/演奏"
+msgstr "/演奏(_P)"
 
 #: audacious/mainwin.c:373
 msgid "/_View"
@@ -4090,7 +4116,7 @@ msgstr "フォルダの追加"
 
 #: audacious/mainwin.c:1979
 msgid "Enter location to play:"
-msgstr ""
+msgstr "演奏する位置の入力:"
 
 #: audacious/mainwin.c:2108
 #, c-format
@@ -4179,6 +4205,8 @@ msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
 msgstr ""
+"<b><big>出力プラグインが選択されていません。</big></b>\n"
+"出力プラグインを選択していません。"
 
 #: audacious/playlistwin.c:130 audacious/playlistwin.c:191
 msgid "/Remove Selected"
@@ -4326,9 +4354,8 @@ msgid "Save Playlist"
 msgstr "演奏一覧の保存"
 
 #: audacious/playlistwin.c:1693
-#, fuzzy
 msgid "Audacious Playlist Editor"
-msgstr "/演奏一覧エディタを表示する"
+msgstr "Audacious 演奏一覧エディタ"
 
 #: audacious/prefswin.c:83 audacious/glade/prefswin.glade:1519
 msgid "Appearance"
@@ -4526,9 +4553,8 @@ msgid "Select playlist font:"
 msgstr "演奏一覧で使用するフォントの選択:"
 
 #: audacious/glade/prefswin.glade:1321
-#, fuzzy
 msgid "Use Bitmap fonts if available"
-msgstr "ステレオ (可能ならば)"
+msgstr "可能ならばビットマップフォントを使用"
 
 #: audacious/glade/prefswin.glade:1367
 msgid "<b>_Miscellaneous</b>"
@@ -4576,7 +4602,7 @@ msgstr "<b>ファイル名</b>"
 
 #: audacious/glade/prefswin.glade:1969
 msgid "Convert underscores to blanks"
-msgstr "アンダースコア (_) をスペースに変換する"
+msgstr "アンダースコア (__) をスペースに変換する"
 
 #: audacious/glade/prefswin.glade:2004
 msgid "Convert %20 to blanks"
@@ -4671,7 +4697,7 @@ msgstr "<b>プリセット</b>"
 
 #: audacious/glade/prefswin.glade:2809
 msgid "Directory preset file:"
-msgstr "フォルダのプリセット:"
+msgstr "ディレクトリのプリセット:"
 
 #: audacious/glade/prefswin.glade:2837
 msgid "File preset extension:"
@@ -4691,7 +4717,7 @@ msgstr "ファイル名"
 
 #: libaudacious/titlestring.c:328
 msgid "File path"
-msgstr "フォルダ"
+msgstr "ファイルパス"
 
 #: libaudacious/titlestring.c:329
 msgid "File extension"
