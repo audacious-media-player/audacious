@@ -48,13 +48,13 @@ extern "C" {
 /* #define to enable spurious debugging messages for development
  * purposes. Output goes to stderr. See also DEBUG_NP below.
  */
-#define DEBUG
+#undef DEBUG
 
 /* Define to ISO C99 macro for debugging instead of varargs function.
  * This provides more useful information, but is incompatible with
  * older standards. If #undef'd, a varargs function is used instead.
  */
-#define DEBUG_NP
+#undef DEBUG_NP
 
 /* Define to enable non-portable thread and mutex debugging code.
  * You need to #define DEBUG also to make this useful.
