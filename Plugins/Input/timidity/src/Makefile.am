@@ -12,4 +12,4 @@ libtimidity_la_SOURCES = \
 	xmms-timidity.c \
 	xmms-timidity.h
 
-INCLUDES = $(GTK_CFLAGS) -I$(top_srcdir) -I../libtimidity
+INCLUDES = $(GTK_CFLAGS) -I$(top_builddir)/intl -I$(top_srcdir) -I../libtimidity

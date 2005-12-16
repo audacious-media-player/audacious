@@ -21,8 +21,9 @@
 #include <config.h>
 #endif
 
-#include <audacious/configfile.h>
-#include <audacious/titlestring.h>
+#include "libaudacious/util.h"
+#include "libaudacious/configfile.h"
+#include "libaudacious/titlestring.h"
 #include <gtk/gtk.h>
 #include <string.h>
 #include <timidity.h>
@@ -66,7 +67,7 @@ static struct {
 } xmmstimid_cfg;
 
 static gboolean xmmstimid_initialized = FALSE;
-static pthread_t xmmstimid_decode_thread;
+static GThread *xmmstimid_decode_thread;
 static gboolean xmmstimid_audio_error = FALSE;
 static MidSongOptions xmmstimid_opts;
 static MidSong *xmmstimid_song;
@@ -267,7 +268,7 @@ static void *xmmstimid_play_loop(void *arg) {
 			xmmstimid_opts.buffer_size;
 
 	buffer = g_malloc(buffer_size);
-	if (buffer == NULL) pthread_exit(NULL);
+	if (buffer == NULL) g_thread_exit(NULL);
 
 	fmt = (xmmstimid_opts.format == MID_AUDIO_S16LSB) ? FMT_S16_LE : FMT_S8;
 
@@ -300,7 +301,7 @@ static void *xmmstimid_play_loop(void *arg) {
 
 	g_free(buffer);
 
-	pthread_exit(NULL);
+	g_thread_exit(NULL);
 }
 
 static gchar *xmmstimid_get_title(gchar *filename) {
@@ -387,8 +388,8 @@ void xmmstimid_play_file(char *filename) {
 	xmmstimid_eof = FALSE;
 	xmmstimid_seek_to = -1;
 
-	if (pthread_create(&xmmstimid_decode_thread,
-				NULL, xmmstimid_play_loop, NULL) != 0) {
+	xmmstimid_decode_thread = g_thread_create(xmmstimid_play_loop, NULL, TRUE, NULL);
+	if (xmmstimid_decode_thread == NULL) {
 		mid_song_free(xmmstimid_song);
 		xmmstimid_stop();
 	}
@@ -397,7 +398,7 @@ void xmmstimid_play_file(char *filename) {
 void xmmstimid_stop(void) {
 	if (xmmstimid_song != NULL && xmmstimid_going) {
 		xmmstimid_going = FALSE;
-		pthread_join(xmmstimid_decode_thread, NULL);
+		g_thread_join(xmmstimid_decode_thread);
 		xmmstimid_ip.output->close_audio();
 		mid_song_free(xmmstimid_song);
 		xmmstimid_song = NULL;
