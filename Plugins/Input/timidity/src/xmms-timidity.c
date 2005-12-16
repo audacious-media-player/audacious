@@ -27,6 +27,7 @@
 #include <gtk/gtk.h>
 #include <string.h>
 #include <timidity.h>
+#include <stdio.h>
 
 #include "xmms-timidity.h"
 #include "interface.h"
@@ -118,7 +119,7 @@ void xmmstimid_init(void) {
 	}
 
 	if (xmmstimid_cfg.config_file == NULL)
-		xmmstimid_cfg.config_file = g_strdup("/etc/timidity/timidity.cfg");
+		xmmstimid_cfg.config_file = g_strdup("/etc/timidity.cfg");
 
 	if (mid_init(xmmstimid_cfg.config_file) != 0) {
 		xmmstimid_initialized = FALSE;
@@ -388,7 +389,7 @@ void xmmstimid_play_file(char *filename) {
 	xmmstimid_eof = FALSE;
 	xmmstimid_seek_to = -1;
 
-	xmmstimid_decode_thread = g_thread_create(xmmstimid_play_loop, NULL, TRUE, NULL);
+	xmmstimid_decode_thread = g_thread_create((GThreadFunc)xmmstimid_play_loop, NULL, TRUE, NULL);
 	if (xmmstimid_decode_thread == NULL) {
 		mid_song_free(xmmstimid_song);
 		xmmstimid_stop();
