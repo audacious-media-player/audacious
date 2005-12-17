@@ -146,11 +146,7 @@ static void restore (void)
   gchar *filename;
   gint k, plugins= 0;
 
-  #ifdef BUILD_FOR_BMP
-    filename= g_strdup_printf("%s/%s", g_get_home_dir(), "/.bmp/ladsparc");
-  #else
-    filename= g_strdup_printf("%s/%s", g_get_home_dir(), "/.xmms/ladsparc");
-  #endif
+  filename= g_strdup_printf("%s/%s", g_get_home_dir(), "/.audacious/ladsparc");
   cfg = xmms_cfg_open_file(filename);
   if (cfg == NULL) {
     state.initialised = TRUE;

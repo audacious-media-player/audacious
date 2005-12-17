@@ -135,7 +135,7 @@ static void flac_configurewin_ok(GtkWidget * widget, gpointer data)
 	flac_cfg.title.tag_format = g_strdup(gtk_entry_get_text(GTK_ENTRY(title_tag_entry)));
 	flac_cfg.title.user_char_set = Charset_Get_Name_From_Title(gtk_entry_get_text_1(userCharacterSetEntry));
 
-	filename = g_strconcat(g_get_home_dir(), "/.xmms/config", NULL);
+	filename = g_strconcat(g_get_home_dir(), "/.audacious/config", NULL);
 	cfg = xmms_cfg_open_file(filename);
 	if (!cfg)
 		cfg = xmms_cfg_new();

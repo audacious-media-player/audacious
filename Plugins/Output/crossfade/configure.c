@@ -342,7 +342,7 @@ xfade_load_config()
     DEBUG(("[crossfade] load_config: error loading config, using defaults\n"));
 
 #ifdef PRESET_SUPPORT
-  filename = g_strconcat(g_get_home_dir(), "/.xmms/xmms-crossfade-presets", NULL);
+  filename = g_strconcat(g_get_home_dir(), "/.audacious/xmms-crossfade-presets", NULL);
   scan_presets(filename);
   g_free(filename);
 #endif
