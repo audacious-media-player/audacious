@@ -22,6 +22,8 @@
 
 /* IIR filter coefficients */
 #include "iir.h"
+#include <math.h>
+#include <tgmath.h>
 
 /* History for two filters */
 static sXYData data_history[EQ_MAX_BANDS][EQ_CHANNELS] __attribute__((aligned));
@@ -33,6 +35,20 @@ static sIIRCoefficients *iir_cf;
 /* Config EQ */
 static int band_num = 10;       /* Set num band: 10 - default in XMMS */ 
 static int extra_filtering = 1; /* Set extra filtering: 0 - OFF, 1 - ON */
+
+/* BETA, ALPHA, GAMMA */
+static sIIRCoefficients iir_cforiginal10[] __attribute__((aligned)) = {
+    { (9.9421504945e-01), (2.8924752745e-03), (1.9941421835e+00) },    /*    60.0 Hz */
+    { (9.8335039428e-01), (8.3248028618e-03), (1.9827686547e+00) },    /*   170.0 Hz */
+    { (9.6958094144e-01), (1.5209529281e-02), (1.9676601546e+00) },    /*   310.0 Hz */
+    { (9.4163923306e-01), (2.9180383468e-02), (1.9345490229e+00) },    /*   600.0 Hz */
+    { (9.0450844499e-01), (4.7745777504e-02), (1.8852109613e+00) },    /*  1000.0 Hz */
+    { (7.3940088234e-01), (1.3029955883e-01), (1.5829158753e+00) },    /*  3000.0 Hz */
+    { (5.4697667908e-01), (2.2651166046e-01), (1.0153238114e+00) },    /*  6000.0 Hz */
+    { (3.1023210589e-01), (3.4488394706e-01), (-1.8142472036e-01) },    /* 12000.0 Hz */
+    { (2.6718639778e-01), (3.6640680111e-01), (-5.2117742267e-01) },    /* 14000.0 Hz */
+    { (2.4201241845e-01), (3.7899379077e-01), (-8.0847117831e-01) },    /* 16000.0 Hz */
+};
 
 int round_trick(float floatvalue_to_round);
 
