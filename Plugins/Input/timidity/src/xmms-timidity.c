@@ -205,7 +205,7 @@ void xmmstimid_configure(void) {
 }
 
 void xmmstimid_conf_ok(GtkButton *button, gpointer user_data) {
-	gchar *config_file, *filename;
+	gchar *filename;
 	ConfigFile *cf;
 
 	g_free(xmmstimid_cfg.config_file);
@@ -301,8 +301,8 @@ static void *xmmstimid_play_loop(void *arg) {
 	}
 
 	g_free(buffer);
-
 	g_thread_exit(NULL);
+	return(NULL);
 }
 
 static gchar *xmmstimid_get_title(gchar *filename) {
@@ -320,7 +320,7 @@ static gchar *xmmstimid_get_title(gchar *filename) {
 	if (temp2)
 		*temp2 = '\0';
 
-	input->file_name = g_basename(filename);
+	input->file_name = g_path_get_basename(filename);
 	input->file_ext = ext ? ext+1 : NULL;
 	input->file_path = g_strdup_printf("%s/", path);
 
