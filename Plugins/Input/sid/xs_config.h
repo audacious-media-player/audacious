@@ -115,8 +115,6 @@ extern struct t_xs_cfg {
 	gint		subAutoMinTime;
 } xs_cfg;
 
-XS_MUTEX_H(xs_cfg);
-
 /*
  * Configuration-file
  */

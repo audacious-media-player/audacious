@@ -528,18 +528,19 @@ t_xs_sldb_node *xs_sldb_get(t_xs_sldb * db, gchar * pcFilename)
  * These should be moved out of this module some day ...
  */
 static t_xs_sldb *xs_sldb_db = NULL;
-XS_MUTEX(xs_sldb_db);
+extern GStaticMutex xs_cfg_mutex;
+GStaticMutex xs_sldb_db_mutex = G_STATIC_MUTEX_INIT;
 
 gint xs_songlen_init(void)
 {
-	XS_MUTEX_LOCK(xs_cfg);
+	g_static_mutex_lock(&xs_cfg_mutex);
 
 	if (!xs_cfg.songlenDBPath) {
-		XS_MUTEX_UNLOCK(xs_cfg);
+		g_static_mutex_unlock(&xs_cfg_mutex);
 		return -1;
 	}
 
-	XS_MUTEX_LOCK(xs_sldb_db);
+	g_static_mutex_lock(&xs_sldb_db_mutex);
 
 	/* Check if already initialized */
 	if (xs_sldb_db)
@@ -548,8 +549,8 @@ gint xs_songlen_init(void)
 	/* Allocate database */
 	xs_sldb_db = (t_xs_sldb *) g_malloc0(sizeof(t_xs_sldb));
 	if (!xs_sldb_db) {
-		XS_MUTEX_UNLOCK(xs_cfg);
-		XS_MUTEX_UNLOCK(xs_sldb_db);
+		g_static_mutex_unlock(&xs_cfg_mutex);
+		g_static_mutex_unlock(&xs_sldb_db_mutex);
 		return -2;
 	}
 
@@ -557,8 +558,8 @@ gint xs_songlen_init(void)
 	if (xs_sldb_read(xs_sldb_db, xs_cfg.songlenDBPath) != 0) {
 		xs_sldb_free(xs_sldb_db);
 		xs_sldb_db = NULL;
-		XS_MUTEX_UNLOCK(xs_cfg);
-		XS_MUTEX_UNLOCK(xs_sldb_db);
+		g_static_mutex_unlock(&xs_cfg_mutex);
+		g_static_mutex_unlock(&xs_sldb_db_mutex);
 		return -3;
 	}
 
@@ -566,23 +567,23 @@ gint xs_songlen_init(void)
 	if (xs_sldb_index(xs_sldb_db) != 0) {
 		xs_sldb_free(xs_sldb_db);
 		xs_sldb_db = NULL;
-		XS_MUTEX_UNLOCK(xs_cfg);
-		XS_MUTEX_UNLOCK(xs_sldb_db);
+		g_static_mutex_unlock(&xs_cfg_mutex);
+		g_static_mutex_unlock(&xs_sldb_db_mutex);
 		return -4;
 	}
 
-	XS_MUTEX_UNLOCK(xs_cfg);
-	XS_MUTEX_UNLOCK(xs_sldb_db);
+	g_static_mutex_unlock(&xs_cfg_mutex);
+	g_static_mutex_unlock(&xs_sldb_db_mutex);
 	return 0;
 }
 
 
 void xs_songlen_close(void)
 {
-	XS_MUTEX_LOCK(xs_sldb_db);
+	g_static_mutex_lock(&xs_sldb_db_mutex);
 	xs_sldb_free(xs_sldb_db);
 	xs_sldb_db = NULL;
-	XS_MUTEX_UNLOCK(xs_sldb_db);
+	g_static_mutex_unlock(&xs_sldb_db_mutex);
 }
 
 
@@ -590,14 +591,14 @@ t_xs_sldb_node *xs_songlen_get(gchar * pcFilename)
 {
 	t_xs_sldb_node *pResult;
 
-	XS_MUTEX_LOCK(xs_sldb_db);
+	g_static_mutex_lock(&xs_sldb_db_mutex);
 
 	if (xs_cfg.songlenDBEnable && xs_sldb_db)
 		pResult = xs_sldb_get(xs_sldb_db, pcFilename);
 	else
 		pResult = NULL;
 
-	XS_MUTEX_UNLOCK(xs_sldb_db);
+	g_static_mutex_unlock(&xs_sldb_db_mutex);
 
 	return pResult;
 }

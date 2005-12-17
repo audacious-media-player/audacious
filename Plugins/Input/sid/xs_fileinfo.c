@@ -32,7 +32,9 @@
 
 static GtkWidget *xs_fileinfowin = NULL;
 static t_xs_stil_node *xs_fileinfostil = NULL;
-XS_MUTEX(xs_fileinfowin);
+GStaticMutex xs_fileinfowin_mutex = G_STATIC_MUTEX_INIT;
+GStaticMutex xs_status_mutex = G_STATIC_MUTEX_INIT;
+extern t_xs_status      xs_status;
 
 #define LUW(x)	lookup_widget(xs_fileinfowin, x)
 
@@ -42,8 +44,8 @@ void xs_fileinfo_update(void)
 	gboolean isEnabled;
 	GtkAdjustment *tmpAdj;
 
-	XS_MUTEX_LOCK(xs_status);
-	XS_MUTEX_LOCK(xs_fileinfowin);
+	g_static_mutex_lock(&xs_status_mutex);
+	g_static_mutex_lock(&xs_fileinfowin_mutex);
 
 	/* Check if control window exists, we are currently playing and have a tune */
 	if (xs_fileinfowin) {
@@ -53,11 +55,11 @@ void xs_fileinfo_update(void)
 			tmpAdj->value = xs_status.currSong;
 			tmpAdj->lower = 1;
 			tmpAdj->upper = xs_status.tuneInfo->nsubTunes;
-			XS_MUTEX_UNLOCK(xs_status);
-			XS_MUTEX_UNLOCK(xs_fileinfowin);
+			g_static_mutex_unlock(&xs_status_mutex);
+			g_static_mutex_unlock(&xs_fileinfowin_mutex);
 			gtk_adjustment_value_changed(tmpAdj);
-			XS_MUTEX_LOCK(xs_status);
-			XS_MUTEX_LOCK(xs_fileinfowin);
+			g_static_mutex_lock(&xs_status_mutex);
+			g_static_mutex_lock(&xs_fileinfowin_mutex);
 			isEnabled = TRUE;
 		} else
 			isEnabled = FALSE;
@@ -68,8 +70,8 @@ void xs_fileinfo_update(void)
 		gtk_widget_set_sensitive(LUW("fileinfo_subctrl_next"), isEnabled);
 	}
 
-	XS_MUTEX_UNLOCK(xs_status);
-	XS_MUTEX_UNLOCK(xs_fileinfowin);
+	g_static_mutex_unlock(&xs_status_mutex);
+	g_static_mutex_unlock(&xs_fileinfowin_mutex);
 }
 
 
@@ -77,8 +79,8 @@ void xs_fileinfo_setsong(void)
 {
 	gint n;
 
-	XS_MUTEX_LOCK(xs_status);
-	XS_MUTEX_LOCK(xs_fileinfowin);
+	g_static_mutex_lock(&xs_status_mutex);
+	g_static_mutex_lock(&xs_fileinfowin_mutex);
 
 	if (xs_status.tuneInfo && xs_status.isPlaying) {
 		n = (gint) gtk_range_get_adjustment(GTK_RANGE(LUW("fileinfo_subctrl_adj")))->value;
@@ -86,19 +88,19 @@ void xs_fileinfo_setsong(void)
 			xs_status.currSong = n;
 	}
 
-	XS_MUTEX_UNLOCK(xs_fileinfowin);
-	XS_MUTEX_UNLOCK(xs_status);
+	g_static_mutex_unlock(&xs_fileinfowin_mutex);
+	g_static_mutex_unlock(&xs_status_mutex);
 }
 
 
 void xs_fileinfo_ok(void)
 {
-	XS_MUTEX_LOCK(xs_fileinfowin);
+	g_static_mutex_lock(&xs_fileinfowin_mutex);
 	if (xs_fileinfowin) {
 		gtk_widget_destroy(xs_fileinfowin);
 		xs_fileinfowin = NULL;
 	}
-	XS_MUTEX_UNLOCK(xs_fileinfowin);
+	g_static_mutex_unlock(&xs_fileinfowin_mutex);
 }
 
 
@@ -170,14 +172,14 @@ void xs_fileinfo(gchar * pcFilename)
 	 */
 
 	/* Get new tune information */
-	XS_MUTEX_LOCK(xs_fileinfowin);
-	XS_MUTEX_LOCK(xs_status);
+	g_static_mutex_lock(&xs_fileinfowin_mutex);
+	g_static_mutex_lock(&xs_status_mutex);
 	if ((tmpInfo = xs_status.sidPlayer->plrGetSIDInfo(pcFilename)) == NULL) {
-		XS_MUTEX_UNLOCK(xs_fileinfowin);
-		XS_MUTEX_UNLOCK(xs_status);
+		g_static_mutex_unlock(&xs_fileinfowin_mutex);
+		g_static_mutex_unlock(&xs_status_mutex);
 		return;
 	}
-	XS_MUTEX_UNLOCK(xs_status);
+	g_static_mutex_unlock(&xs_status_mutex);
 
 	xs_fileinfostil = xs_stil_get(pcFilename);
 
@@ -246,7 +248,7 @@ void xs_fileinfo(gchar * pcFilename)
 	/* Show the window */
 	gtk_widget_show(xs_fileinfowin);
 
-	XS_MUTEX_UNLOCK(xs_fileinfowin);
+	g_static_mutex_unlock(&xs_fileinfowin_mutex);
 
 	xs_fileinfo_update();
 }

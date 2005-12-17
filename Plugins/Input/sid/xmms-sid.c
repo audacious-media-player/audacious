@@ -20,6 +20,7 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 */
+
 #include "xmms-sid.h"
 #include "xs_support.h"
 
@@ -85,12 +86,14 @@ const gint xs_nplayerlist = (sizeof(xs_playerlist) / sizeof(t_xs_player));
  * Global variables
  */
 t_xs_status xs_status;
-XS_MUTEX(xs_status);
-static pthread_t xs_decode_thread;
+extern GStaticMutex xs_status_mutex;
+extern GStaticMutex xs_cfg_mutex;
+GStaticMutex xs_subctrl_mutex = G_STATIC_MUTEX_INIT;
+
+static GThread *xs_decode_thread;
 
 static GtkWidget *xs_subctrl = NULL;
 static GtkObject *xs_subctrl_adj = NULL;
-XS_MUTEX(xs_subctrl);
 
 void xs_subctrl_close(void);
 void xs_subctrl_update(void);
@@ -130,12 +133,12 @@ void xs_reinit(void)
 	gboolean isInitialized;
 
 	/* Stop playing, if we are */
-	XS_MUTEX_LOCK(xs_status);
+	g_static_mutex_lock(&xs_status_mutex);
 	if (xs_status.isPlaying) {
-		XS_MUTEX_UNLOCK(xs_status);
+		g_static_mutex_unlock(&xs_status_mutex);
 		xs_stop();
 	} else {
-		XS_MUTEX_UNLOCK(xs_status);
+		g_static_mutex_unlock(&xs_status_mutex);
 	}
 
 	/* Initialize status and sanitize configuration */
@@ -306,10 +309,10 @@ void *xs_playthread(void *argPointer)
 
 	/* Initialize */
 	XSDEBUG("entering player thread\n");
-	XS_MUTEX_LOCK(xs_status);
+	g_static_mutex_lock(&xs_status_mutex);
 	memcpy(&myStatus, &xs_status, sizeof(t_xs_status));
 	myTune = xs_status.tuneInfo;
-	XS_MUTEX_UNLOCK(xs_status);
+	g_static_mutex_unlock(&xs_status_mutex);
 
 	xs_memset(&playedTune, 0, sizeof(playedTune));
 
@@ -335,8 +338,8 @@ void *xs_playthread(void *argPointer)
 	doPlay = TRUE;
 	while (xs_status.isPlaying && doPlay) {
 		/* Automatic sub-tune change logic */
-		XS_MUTEX_LOCK(xs_cfg);
-		XS_MUTEX_LOCK(xs_status);
+		g_static_mutex_lock(&xs_cfg_mutex);
+		g_static_mutex_lock(&xs_status_mutex);
 		assert(xs_status.currSong >= 1);
 		assert(xs_status.currSong <= XS_STIL_MAXENTRY);
 		myStatus.isPlaying = TRUE;
@@ -369,8 +372,8 @@ void *xs_playthread(void *argPointer)
 					/* This is the end */
 					doPlay = FALSE;
 
-				XS_MUTEX_UNLOCK(xs_status);
-				XS_MUTEX_UNLOCK(xs_cfg);
+				g_static_mutex_unlock(&xs_status_mutex);
+				g_static_mutex_unlock(&xs_cfg_mutex);
 				continue;	/* This is ugly, but ... */
 			}
 		}
@@ -378,8 +381,8 @@ void *xs_playthread(void *argPointer)
 		/* Tell that we are initializing, update sub-tune controls */
 		myStatus.currSong = xs_status.currSong;
 		playedTune[myStatus.currSong] = TRUE;
-		XS_MUTEX_UNLOCK(xs_status);
-		XS_MUTEX_UNLOCK(xs_cfg);
+		g_static_mutex_unlock(&xs_status_mutex);
+		g_static_mutex_unlock(&xs_cfg_mutex);
 
 		XSDEBUG("subtune #%i selected, initializing...\n", myStatus.currSong);
 
@@ -408,9 +411,9 @@ void *xs_playthread(void *argPointer)
 			XSERR("Couldn't open XMMS audio output (fmt=%x, freq=%i, nchan=%i)!\n", myStatus.audioFormat,
 			      myStatus.audioFrequency, myStatus.audioChannels);
 
-			XS_MUTEX_LOCK(xs_status);
+			g_static_mutex_lock(&xs_status_mutex);
 			xs_status.isError = TRUE;
-			XS_MUTEX_UNLOCK(xs_status);
+			g_static_mutex_unlock(&xs_status_mutex);
 			goto xs_err_exit;
 		}
 
@@ -444,9 +447,9 @@ void *xs_playthread(void *argPointer)
 				if (xs_filter_rateconv(audioBuffer, oversampleBuffer,
 						       myStatus.audioFormat, myStatus.oversampleFactor, audioGot) < 0) {
 					XSERR("Oversampling rate-conversion pass failed.\n");
-					XS_MUTEX_LOCK(xs_status);
+					g_static_mutex_lock(&xs_status_mutex);
 					xs_status.isError = TRUE;
-					XS_MUTEX_UNLOCK(xs_status);
+					g_static_mutex_unlock(&xs_status_mutex);
 					goto xs_err_exit;
 				}
 			} else
@@ -513,13 +516,14 @@ void *xs_playthread(void *argPointer)
 	 * value "not playing" status and XMMS knows to move to
 	 * next entry in the playlist .. or whatever it wishes.
 	 */
-	XS_MUTEX_LOCK(xs_status);
+	g_static_mutex_lock(&xs_status_mutex);
 	xs_status.isPlaying = FALSE;
-	XS_MUTEX_UNLOCK(xs_status);
+	g_static_mutex_unlock(&xs_status_mutex);
 
 	/* Exit the playing thread */
 	XSDEBUG("exiting thread, bye.\n");
-	pthread_exit(NULL);
+	g_thread_exit(NULL);
+	return(NULL);
 }
 
 
@@ -554,7 +558,8 @@ void xs_play_file(gchar * pcFilename)
 	xs_status.currSong = xs_status.tuneInfo->startTune;
 
 	/* Start the playing thread! */
-	if (pthread_create(&xs_decode_thread, NULL, xs_playthread, NULL) < 0) {
+	xs_decode_thread = g_thread_create((GThreadFunc)xs_playthread, NULL, TRUE, NULL);
+	if (xs_decode_thread == NULL) {
 		XSERR("Couldn't start playing thread!\n");
 		xs_tuneinfo_free(xs_status.tuneInfo);
 		xs_status.tuneInfo = NULL;
@@ -587,15 +592,15 @@ void xs_stop(void)
 	xs_subctrl_close();
 
 	/* Lock xs_status and stop playing thread */
-	XS_MUTEX_LOCK(xs_status);
+	g_static_mutex_lock(&xs_status_mutex);
 	if (xs_status.isPlaying) {
 		/* Stop playing */
 		XSDEBUG("stopping...\n");
 		xs_status.isPlaying = FALSE;
-		XS_MUTEX_UNLOCK(xs_status);
-		pthread_join(xs_decode_thread, NULL);
+		g_static_mutex_unlock(&xs_status_mutex);
+		g_thread_join(xs_decode_thread);
 	} else {
-		XS_MUTEX_UNLOCK(xs_status);
+		g_static_mutex_unlock(&xs_status_mutex);
 	}
 
 	/* Status is now stopped, update the sub-tune
@@ -615,9 +620,9 @@ void xs_stop(void)
  */
 void xs_pause(short pauseState)
 {
-	XS_MUTEX_LOCK(xs_status);
+	g_static_mutex_lock(&xs_status_mutex);
 	/* FIXME FIX ME todo: pause should disable sub-tune controls */
-	XS_MUTEX_UNLOCK(xs_status);
+	g_static_mutex_unlock(&xs_status_mutex);
 
 	xs_subctrl_close();
 	xs_fileinfo_update();
@@ -632,8 +637,8 @@ void xs_subctrl_setsong(void)
 {
 	gint n;
 
-	XS_MUTEX_LOCK(xs_status);
-	XS_MUTEX_LOCK(xs_subctrl);
+	g_static_mutex_lock(&xs_status_mutex);
+	g_static_mutex_lock(&xs_subctrl_mutex);
 
 	if (xs_status.tuneInfo && xs_status.isPlaying) {
 		n = (gint) GTK_ADJUSTMENT(xs_subctrl_adj)->value;
@@ -641,21 +646,21 @@ void xs_subctrl_setsong(void)
 			xs_status.currSong = n;
 	}
 
-	XS_MUTEX_UNLOCK(xs_subctrl);
-	XS_MUTEX_UNLOCK(xs_status);
+	g_static_mutex_unlock(&xs_subctrl_mutex);
+	g_static_mutex_unlock(&xs_status_mutex);
 }
 
 
 void xs_subctrl_prevsong(void)
 {
-	XS_MUTEX_LOCK(xs_status);
+	g_static_mutex_lock(&xs_status_mutex);
 
 	if (xs_status.tuneInfo && xs_status.isPlaying) {
 		if (xs_status.currSong > 1)
 			xs_status.currSong--;
 	}
 
-	XS_MUTEX_UNLOCK(xs_status);
+	g_static_mutex_unlock(&xs_status_mutex);
 
 	xs_subctrl_update();
 }
@@ -663,14 +668,14 @@ void xs_subctrl_prevsong(void)
 
 void xs_subctrl_nextsong(void)
 {
-	XS_MUTEX_LOCK(xs_status);
+	g_static_mutex_lock(&xs_status_mutex);
 
 	if (xs_status.tuneInfo && xs_status.isPlaying) {
 		if (xs_status.currSong < xs_status.tuneInfo->nsubTunes)
 			xs_status.currSong++;
 	}
 
-	XS_MUTEX_UNLOCK(xs_status);
+	g_static_mutex_unlock(&xs_status_mutex);
 
 	xs_subctrl_update();
 }
@@ -680,8 +685,8 @@ void xs_subctrl_update(void)
 {
 	GtkAdjustment *tmpAdj;
 
-	XS_MUTEX_LOCK(xs_status);
-	XS_MUTEX_LOCK(xs_subctrl);
+	g_static_mutex_lock(&xs_status_mutex);
+	g_static_mutex_lock(&xs_subctrl_mutex);
 
 	/* Check if control window exists, we are currently playing and have a tune */
 	if (xs_subctrl) {
@@ -691,17 +696,17 @@ void xs_subctrl_update(void)
 			tmpAdj->value = xs_status.currSong;
 			tmpAdj->lower = 1;
 			tmpAdj->upper = xs_status.tuneInfo->nsubTunes;
-			XS_MUTEX_UNLOCK(xs_status);
-			XS_MUTEX_UNLOCK(xs_subctrl);
+			g_static_mutex_unlock(&xs_status_mutex);
+			g_static_mutex_unlock(&xs_subctrl_mutex);
 			gtk_adjustment_value_changed(tmpAdj);
 		} else {
-			XS_MUTEX_UNLOCK(xs_status);
-			XS_MUTEX_UNLOCK(xs_subctrl);
+			g_static_mutex_unlock(&xs_status_mutex);
+			g_static_mutex_unlock(&xs_subctrl_mutex);
 			xs_subctrl_close();
 		}
 	} else {
-		XS_MUTEX_UNLOCK(xs_subctrl);
-		XS_MUTEX_UNLOCK(xs_status);
+		g_static_mutex_unlock(&xs_subctrl_mutex);
+		g_static_mutex_unlock(&xs_status_mutex);
 	}
 
 	xs_fileinfo_update();
@@ -710,14 +715,14 @@ void xs_subctrl_update(void)
 
 void xs_subctrl_close(void)
 {
-	XS_MUTEX_LOCK(xs_subctrl);
+	g_static_mutex_lock(&xs_subctrl_mutex);
 
 	if (xs_subctrl) {
 		gtk_widget_destroy(xs_subctrl);
 		xs_subctrl = NULL;
 	}
 
-	XS_MUTEX_UNLOCK(xs_subctrl);
+	g_static_mutex_unlock(&xs_subctrl_mutex);
 }
 
 
@@ -736,9 +741,9 @@ void xs_subctrl_open(void)
 {
 	GtkWidget *frame25, *hbox15, *subctrl_prev, *subctrl_current, *subctrl_next;
 
-	XS_MUTEX_LOCK(xs_subctrl);
+	g_static_mutex_lock(&xs_subctrl_mutex);
 	if (!xs_status.tuneInfo || !xs_status.isPlaying || xs_subctrl || (xs_status.tuneInfo->nsubTunes <= 1)) {
-		XS_MUTEX_UNLOCK(xs_subctrl);
+		g_static_mutex_unlock(&xs_subctrl_mutex);
 		return;
 	}
 
@@ -796,7 +801,7 @@ void xs_subctrl_open(void)
 
 	gtk_widget_show_all(xs_subctrl);
 
-	XS_MUTEX_UNLOCK(xs_subctrl);
+	g_static_mutex_unlock(&xs_subctrl_mutex);
 }
 
 
@@ -812,9 +817,9 @@ void xs_subctrl_open(void)
 void xs_seek(gint iTime)
 {
 	/* Check status */
-	XS_MUTEX_LOCK(xs_status);
+	g_static_mutex_lock(&xs_status_mutex);
 	if (!xs_status.tuneInfo || !xs_status.isPlaying) {
-		XS_MUTEX_UNLOCK(xs_status);
+		g_static_mutex_unlock(&xs_status_mutex);
 		return;
 	}
 
@@ -843,7 +848,7 @@ void xs_seek(gint iTime)
 #endif
 	}
 
-	XS_MUTEX_UNLOCK(xs_status);
+	g_static_mutex_unlock(&xs_status_mutex);
 }
 
 
@@ -857,21 +862,21 @@ void xs_seek(gint iTime)
 gint xs_get_time(void)
 {
 	/* If errorflag is set, return -2 to signal it to XMMS's idle callback */
-	XS_MUTEX_LOCK(xs_status);
+	g_static_mutex_lock(&xs_status_mutex);
 	if (xs_status.isError) {
-		XS_MUTEX_UNLOCK(xs_status);
+		g_static_mutex_unlock(&xs_status_mutex);
 		return -2;
 	}
 
 	/* If there is no tune, return -1 */
 	if (!xs_status.tuneInfo) {
-		XS_MUTEX_UNLOCK(xs_status);
+		g_static_mutex_unlock(&xs_status_mutex);
 		return -1;
 	}
 
 	/* If tune has ended, return -1 */
 	if (!xs_status.isPlaying) {
-		XS_MUTEX_UNLOCK(xs_status);
+		g_static_mutex_unlock(&xs_status_mutex);
 		return -1;
 	}
 
@@ -888,7 +893,7 @@ gint xs_get_time(void)
 #endif
 	}
 
-	XS_MUTEX_UNLOCK(xs_status);
+	g_static_mutex_unlock(&xs_status_mutex);
 
 	/* Return output time reported by audio output plugin */
 	return xs_plugin_ip.output->output_time();

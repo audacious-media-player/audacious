@@ -34,7 +34,6 @@
 #endif
 
 #include <glib.h>
-#include <pthread.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -55,12 +54,6 @@ extern "C" {
  * older standards. If #undef'd, a varargs function is used instead.
  */
 #undef DEBUG_NP
-
-/* Define to enable non-portable thread and mutex debugging code.
- * You need to #define DEBUG also to make this useful.
- * (Works probably with GNU/Linux pthreads implementation only)
- */
-#undef XS_MUTEX_DEBUG
 
 /* HardSID-support is not working and is untested, thus we disable it here.
  */
@@ -98,28 +91,11 @@ extern "C" {
 #define XS_STIL_MAXENTRY	(128)	/* Max number of sub-songs in STIL/SLDB node */
 
 
-#define XS_CONFIG_IDENT		"XMMS-SID"	/* Configuration file identifier */
-#define XS_CONFIG_FILE		"/.bmp/xmms-sid"	/* Use this configfile if autocyrpe fails */
+#define XS_CONFIG_IDENT		"sid"		/* Configuration file identifier */
 
 #define XS_MIN_OVERSAMPLE	(2)		/* Minimum oversampling factor */
 #define XS_MAX_OVERSAMPLE	(8)		/* Maximum oversampling factor */
 
-
-/* Macros for mutexes and threads. These exist to be able to
- * easily change from pthreads to glib threads, etc, if necessary.
- */
-#define XS_MPP(M)	M ## _mutex
-#if XS_MUTEX_DEBUG
-#define XS_MUTEX(M)		pthread_mutex_t	XS_MPP(M) = PTHREAD_ERRORCHECK_MUTEX_INITIALIZER_NP; int M ## _qq;
-#define XS_MUTEX_H(M)		extern pthread_mutex_t XS_MPP(M); extern int M ## _qq
-#define XS_MUTEX_LOCK(M)	{ M ## _qq = pthread_mutex_lock(&XS_MPP(M)); if (M ## _qq) XSDEBUG("XS_MUTEX_LOCK(" #M ") == %i\n", M ## _qq); }
-#define XS_MUTEX_UNLOCK(M)	{ M ## _qq = pthread_mutex_unlock(&XS_MPP(M)); if (M ## _qq) XSDEBUG("XS_MUTEX_UNLOCK(" #M ") == %i\n", M ## _qq); }
-#else
-#define XS_MUTEX(M)		pthread_mutex_t	XS_MPP(M) = PTHREAD_MUTEX_INITIALIZER
-#define XS_MUTEX_H(M)		extern pthread_mutex_t XS_MPP(M)
-#define XS_MUTEX_LOCK(M)	pthread_mutex_lock(&XS_MPP(M))
-#define XS_MUTEX_UNLOCK(M)	pthread_mutex_unlock(&XS_MPP(M))
-#endif
 
 /* Shorthands for linked lists
  */
@@ -188,11 +164,7 @@ typedef struct t_xs_status {
 /* Global variables
  */
 extern InputPlugin	xs_plugin_ip;
-
 extern t_xs_status	xs_status;
-XS_MUTEX_H(xs_status);
-
-
 
 /* Plugin function prototypes
  */

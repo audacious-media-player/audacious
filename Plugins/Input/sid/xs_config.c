@@ -21,7 +21,7 @@
    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 */
 #include "xs_config.h"
-#include "libaudacious/configfile.h"
+#include "libaudacious/configdb.h"
 #include <stdio.h>
 #include "xs_glade.h"
 #include "xs_interface.h"
@@ -41,7 +41,7 @@ static GtkWidget *xs_configwin = NULL,
 /*
  * Configuration specific stuff
  */
-XS_MUTEX(xs_cfg);
+GStaticMutex xs_cfg_mutex = G_STATIC_MUTEX_INIT;
 struct t_xs_cfg xs_cfg;
 
 t_xs_cfg_item xs_cfgtable[] = {
@@ -162,7 +162,7 @@ void xs_init_configuration(void)
 {
 	/* Lock configuration mutex */
 	XSDEBUG("initializing configuration ...\n");
-	XS_MUTEX_LOCK(xs_cfg);
+	g_static_mutex_lock(&xs_cfg_mutex);
 
 	/* Initialize values with sensible defaults */
 	xs_cfg.audioBitsPerSample = XS_RES_16BIT;
@@ -244,7 +244,7 @@ void xs_init_configuration(void)
 
 
 	/* Unlock the configuration */
-	XS_MUTEX_UNLOCK(xs_cfg);
+	g_static_mutex_unlock(&xs_cfg_mutex);
 }
 
 
@@ -253,52 +253,36 @@ void xs_init_configuration(void)
  */
 void xs_read_configuration(void)
 {
-#ifdef HAVE_NODEFAULTCFG
-	gchar *cfgFilename;
-#endif
 	gchar *tmpStr;
-	ConfigFile *cfgFile;
+	ConfigDb *db;
 	gint i;
 
-	/* Try to open the XMMS configuration file  */
-	XS_MUTEX_LOCK(xs_cfg);
+	/* Try to open the configuration database */
+	g_static_mutex_lock(&xs_cfg_mutex);
 	XSDEBUG("loading from config-file ...\n");
+	db = bmp_cfg_db_open();
 
-#ifdef HAVE_NODEFAULTCFG
-	cfgFilename = g_strconcat(g_get_home_dir(), XS_CONFIG_FILE, NULL);
-	cfgFile = xmms_cfg_open_file(cfgFilename);
-	g_free(cfgFilename);
-#else
-	cfgFile = xmms_cfg_open_default_file();
-#endif
-
-	if (cfgFile == NULL) {
-		XSDEBUG("could not open configuration file, trying to write defaults...\n");
-		xs_write_configuration();
-		return;
-	}
-
-	/* Read the new settings from XMMS configuration file */
+	/* Read the new settings from configuration database */
 	for (i = 0; i < xs_cfgtable_max; i++) {
 		switch (xs_cfgtable[i].itemType) {
 		case CTYPE_INT:
-			xmms_cfg_read_int(cfgFile, XS_CONFIG_IDENT, xs_cfgtable[i].itemName,
+			bmp_cfg_db_get_int(db, XS_CONFIG_IDENT, xs_cfgtable[i].itemName,
 					  (gint *) xs_cfgtable[i].itemData);
 			break;
 
 		case CTYPE_BOOL:
-			xmms_cfg_read_boolean(cfgFile, XS_CONFIG_IDENT, xs_cfgtable[i].itemName,
+			bmp_cfg_db_get_bool(db, XS_CONFIG_IDENT, xs_cfgtable[i].itemName,
 					      (gboolean *) xs_cfgtable[i].itemData);
 			break;
 
 		case CTYPE_FLOAT:
-			xmms_cfg_read_float(cfgFile, XS_CONFIG_IDENT, xs_cfgtable[i].itemName,
+			bmp_cfg_db_get_float(db, XS_CONFIG_IDENT, xs_cfgtable[i].itemName,
 					    (gfloat *) xs_cfgtable[i].itemData);
 			break;
 
 		case CTYPE_STR:
-			if (xmms_cfg_read_string
-			    (cfgFile, XS_CONFIG_IDENT, xs_cfgtable[i].itemName, (gchar **) & tmpStr)) {
+			if (bmp_cfg_db_get_string
+			    (db, XS_CONFIG_IDENT, xs_cfgtable[i].itemName, (gchar **) & tmpStr)) {
 				/* Read was successfull */
 				xs_pstrcpy((gchar **) xs_cfgtable[i].itemData, tmpStr);
 				g_free(tmpStr);
@@ -312,11 +296,9 @@ void xs_read_configuration(void)
 		}
 	}
 
+	bmp_cfg_db_close(db);
 
-	/* Free the config file */
-	xmms_cfg_free(cfgFile);
-
-	XS_MUTEX_UNLOCK(xs_cfg);
+	g_static_mutex_unlock(&xs_cfg_mutex);
 	XSDEBUG("OK\n");
 }
 
@@ -327,46 +309,33 @@ void xs_read_configuration(void)
  */
 gint xs_write_configuration(void)
 {
-#ifdef HAVE_NODEFAULTCFG
-	gchar *cfgFilename;
-#endif
-	ConfigFile *cfgFile;
+	ConfigDb *db;
 	gint i;
 
 	XSDEBUG("writing configuration ...\n");
-	XS_MUTEX_LOCK(xs_cfg);
+	g_static_mutex_lock(&xs_cfg_mutex);
+	db = bmp_cfg_db_open();
 
-	/* Try to open the XMMS configuration file  */
-#ifdef HAVE_NODEFAULTCFG
-	cfgFilename = g_strconcat(g_get_home_dir(), XS_CONFIG_FILE, NULL);
-	cfgFile = xmms_cfg_open_file(cfgFilename);
-#else
-	cfgFile = xmms_cfg_open_default_file();
-#endif
-
-	if (!cfgFile)
-		cfgFile = xmms_cfg_new();
-
-	/* Write the new settings to XMMS configuration file */
+	/* Write the new settings to configuration database */
 	for (i = 0; i < xs_cfgtable_max; i++) {
 		switch (xs_cfgtable[i].itemType) {
 		case CTYPE_INT:
-			xmms_cfg_write_int(cfgFile, XS_CONFIG_IDENT, xs_cfgtable[i].itemName,
+			bmp_cfg_db_set_int(db, XS_CONFIG_IDENT, xs_cfgtable[i].itemName,
 					   *(gint *) xs_cfgtable[i].itemData);
 			break;
 
 		case CTYPE_BOOL:
-			xmms_cfg_write_boolean(cfgFile, XS_CONFIG_IDENT, xs_cfgtable[i].itemName,
+			bmp_cfg_db_set_bool(db, XS_CONFIG_IDENT, xs_cfgtable[i].itemName,
 					       *(gboolean *) xs_cfgtable[i].itemData);
 			break;
 
 		case CTYPE_FLOAT:
-			xmms_cfg_write_float(cfgFile, XS_CONFIG_IDENT, xs_cfgtable[i].itemName,
+			bmp_cfg_db_set_float(db, XS_CONFIG_IDENT, xs_cfgtable[i].itemName,
 					     *(gfloat *) xs_cfgtable[i].itemData);
 			break;
 
 		case CTYPE_STR:
-			xmms_cfg_write_string(cfgFile, XS_CONFIG_IDENT, xs_cfgtable[i].itemName,
+			bmp_cfg_db_set_string(db, XS_CONFIG_IDENT, xs_cfgtable[i].itemName,
 					      *(gchar **) xs_cfgtable[i].itemData);
 			break;
 
@@ -377,18 +346,9 @@ gint xs_write_configuration(void)
 		}
 	}
 
-	/* Flush the file */
-#ifdef HAVE_NODEFAULTCFG
-	xmms_cfg_write_file(cfgFile, cfgFilename);
-	g_free(cfgFilename);
-#else
-	xmms_cfg_write_default_file(cfgFile);
-#endif
+	bmp_cfg_db_close(db);
 
-	/* Free the memory areas */
-	xmms_cfg_free(cfgFile);
-
-	XS_MUTEX_UNLOCK(xs_cfg);
+	g_static_mutex_unlock(&xs_cfg_mutex);
 
 	return 0;
 }
@@ -510,9 +470,9 @@ void xs_cfg_sld_dbbrowse(GtkButton * button, gpointer user_data)
 	}
 
 	xs_sldb_fileselector = create_xs_sldbfileselector();
-	XS_MUTEX_LOCK(xs_cfg);
+	g_static_mutex_lock(&xs_cfg_mutex);
 	gtk_file_selection_set_filename(GTK_FILE_SELECTION(xs_sldb_fileselector), xs_cfg.songlenDBPath);
-	XS_MUTEX_UNLOCK(xs_cfg);
+	g_static_mutex_unlock(&xs_cfg_mutex);
 	gtk_widget_show(xs_sldb_fileselector);
 }
 
@@ -551,9 +511,9 @@ void xs_cfg_stil_browse(GtkButton * button, gpointer user_data)
 	}
 
 	xs_stil_fileselector = create_xs_stilfileselector();
-	XS_MUTEX_LOCK(xs_cfg);
+	g_static_mutex_lock(&xs_cfg_mutex);
 	gtk_file_selection_set_filename(GTK_FILE_SELECTION(xs_stil_fileselector), xs_cfg.stilDBPath);
-	XS_MUTEX_UNLOCK(xs_cfg);
+	g_static_mutex_unlock(&xs_cfg_mutex);
 	gtk_widget_show(xs_stil_fileselector);
 }
 
@@ -592,9 +552,9 @@ void xs_cfg_hvsc_browse(GtkButton * button, gpointer user_data)
 	}
 
 	xs_hvsc_pathselector = create_xs_hvscpathselector();
-	XS_MUTEX_LOCK(xs_cfg);
+	g_static_mutex_lock(&xs_cfg_mutex);
 	gtk_file_selection_set_filename(GTK_FILE_SELECTION(xs_hvsc_pathselector), xs_cfg.hvscPath);
-	XS_MUTEX_UNLOCK(xs_cfg);
+	g_static_mutex_unlock(&xs_cfg_mutex);
 	gtk_widget_show(xs_hvsc_pathselector);
 }
 
@@ -821,7 +781,7 @@ void xs_configure(void)
 	xs_configwin = create_xs_configwin();
 
 	/* Get lock on configuration */
-	XS_MUTEX_LOCK(xs_cfg);
+	g_static_mutex_lock(&xs_cfg_mutex);
 
 	/* Based on available optional parts, gray out options */
 #ifndef HAVE_SIDPLAY1
@@ -916,7 +876,7 @@ void xs_configure(void)
 	}
 
 	/* Release the configuration */
-	XS_MUTEX_UNLOCK(xs_cfg);
+	g_static_mutex_unlock(&xs_cfg_mutex);
 
 	/* Show the widget */
 	gtk_widget_show(xs_configwin);

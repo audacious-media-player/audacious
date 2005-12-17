@@ -368,18 +368,19 @@ static t_xs_stil_node *xs_stildb_get_node(t_xs_stildb * db, gchar * pcFilename)
  * These should be moved out of this module some day ...
  */
 static t_xs_stildb *xs_stildb_db = NULL;
-XS_MUTEX(xs_stildb_db);
+GStaticMutex xs_stildb_db_mutex = G_STATIC_MUTEX_INIT;
+extern GStaticMutex xs_cfg_mutex;
 
 gint xs_stil_init(void)
 {
-	XS_MUTEX_LOCK(xs_cfg);
+	g_static_mutex_lock(&xs_cfg_mutex);
 
 	if (!xs_cfg.stilDBPath) {
-		XS_MUTEX_UNLOCK(xs_cfg);
+		g_static_mutex_unlock(&xs_cfg_mutex);
 		return -1;
 	}
 
-	XS_MUTEX_LOCK(xs_stildb_db);
+	g_static_mutex_lock(&xs_stildb_db_mutex);
 
 	/* Check if already initialized */
 	if (xs_stildb_db)
@@ -388,8 +389,8 @@ gint xs_stil_init(void)
 	/* Allocate database */
 	xs_stildb_db = (t_xs_stildb *) g_malloc0(sizeof(t_xs_stildb));
 	if (!xs_stildb_db) {
-		XS_MUTEX_UNLOCK(xs_cfg);
-		XS_MUTEX_UNLOCK(xs_stildb_db);
+		g_static_mutex_unlock(&xs_cfg_mutex);
+		g_static_mutex_unlock(&xs_stildb_db_mutex);
 		return -2;
 	}
 
@@ -397,8 +398,8 @@ gint xs_stil_init(void)
 	if (xs_stildb_read(xs_stildb_db, xs_cfg.stilDBPath) != 0) {
 		xs_stildb_free(xs_stildb_db);
 		xs_stildb_db = NULL;
-		XS_MUTEX_UNLOCK(xs_cfg);
-		XS_MUTEX_UNLOCK(xs_stildb_db);
+		g_static_mutex_unlock(&xs_cfg_mutex);
+		g_static_mutex_unlock(&xs_stildb_db_mutex);
 		return -3;
 	}
 
@@ -406,23 +407,23 @@ gint xs_stil_init(void)
 	if (xs_stildb_index(xs_stildb_db) != 0) {
 		xs_stildb_free(xs_stildb_db);
 		xs_stildb_db = NULL;
-		XS_MUTEX_UNLOCK(xs_cfg);
-		XS_MUTEX_UNLOCK(xs_stildb_db);
+		g_static_mutex_unlock(&xs_cfg_mutex);
+		g_static_mutex_unlock(&xs_stildb_db_mutex);
 		return -4;
 	}
 
-	XS_MUTEX_UNLOCK(xs_cfg);
-	XS_MUTEX_UNLOCK(xs_stildb_db);
+	g_static_mutex_unlock(&xs_cfg_mutex);
+	g_static_mutex_unlock(&xs_stildb_db_mutex);
 	return 0;
 }
 
 
 void xs_stil_close(void)
 {
-	XS_MUTEX_LOCK(xs_stildb_db);
+	g_static_mutex_lock(&xs_stildb_db_mutex);
 	xs_stildb_free(xs_stildb_db);
 	xs_stildb_db = NULL;
-	XS_MUTEX_UNLOCK(xs_stildb_db);
+	g_static_mutex_unlock(&xs_stildb_db_mutex);
 }
 
 
@@ -431,8 +432,8 @@ t_xs_stil_node *xs_stil_get(gchar * pcFilename)
 	t_xs_stil_node *pResult;
 	gchar *tmpFilename;
 
-	XS_MUTEX_LOCK(xs_stildb_db);
-	XS_MUTEX_LOCK(xs_cfg);
+	g_static_mutex_lock(&xs_stildb_db_mutex);
+	g_static_mutex_lock(&xs_cfg_mutex);
 
 	if (xs_cfg.stilDBEnable && xs_stildb_db) {
 		if (xs_cfg.hvscPath) {
@@ -454,8 +455,8 @@ t_xs_stil_node *xs_stil_get(gchar * pcFilename)
 	} else
 		pResult = NULL;
 
-	XS_MUTEX_UNLOCK(xs_stildb_db);
-	XS_MUTEX_UNLOCK(xs_cfg);
+	g_static_mutex_unlock(&xs_stildb_db_mutex);
+	g_static_mutex_unlock(&xs_cfg_mutex);
 
 	return pResult;
 }
