@@ -17,7 +17,7 @@
 #include <string.h>
 
 #include "audacious/plugin.h"
-#include "libaudacious/configfile.h"
+#include "libaudacious/configdb.h"
 #include "libaudacious/beepctrl.h"
 #include "libaudacious/formatter.h"
 
@@ -56,28 +56,17 @@ GeneralPlugin *get_gplugin_info(void)
 
 static void read_config(void)
 {
-	ConfigFile *cfgfile;
+	ConfigDb *db;
 
-	g_free(cmd_line);
-	g_free(cmd_line_after);
-	g_free(cmd_line_end);
-	cmd_line = NULL;
-	cmd_line_after = NULL;
-	cmd_line_end = NULL;
+	cmd_line = g_strdup("");
+	cmd_line_after = g_strdup("");
+	cmd_line_end = g_strdup("");
 
-	if ((cfgfile = xmms_cfg_open_default_file()) != NULL)
-	{
-		xmms_cfg_read_string(cfgfile, "song_change", "cmd_line", &cmd_line);
-		xmms_cfg_read_string(cfgfile, "song_change", "cmd_line_after", &cmd_line_after);
-		xmms_cfg_read_string(cfgfile, "song_change", "cmd_line_end", &cmd_line_end);
-		xmms_cfg_free(cfgfile);
-	}
-	if (!cmd_line)
-		cmd_line = g_strdup("");
-	if (!cmd_line_after)
-		cmd_line_after = g_strdup("");
-	if (!cmd_line_end)
-		cmd_line_end = g_strdup("");
+	db = bmp_cfg_db_open();
+	bmp_cfg_db_get_string(db, "song_change", "cmd_line", &cmd_line);
+	bmp_cfg_db_get_string(db, "song_change", "cmd_line_after", &cmd_line_after);
+	bmp_cfg_db_get_string(db, "song_change", "cmd_line_end", &cmd_line_end);
+	bmp_cfg_db_close(db);
 }
 
 static void init(void)
@@ -105,18 +94,18 @@ static void cleanup(void)
 
 static void save_and_close(GtkWidget *w, gpointer data)
 {
+	ConfigDb *db;
 	char *cmd, *cmd_after, *cmd_end;
-	ConfigFile *cfgfile = xmms_cfg_open_default_file();
 
 	cmd = g_strdup(gtk_entry_get_text(GTK_ENTRY(cmd_entry)));
 	cmd_after = g_strdup(gtk_entry_get_text(GTK_ENTRY(cmd_after_entry)));
 	cmd_end = g_strdup(gtk_entry_get_text(GTK_ENTRY(cmd_end_entry)));
 
-	xmms_cfg_write_string(cfgfile, "song_change", "cmd_line", cmd);
-	xmms_cfg_write_string(cfgfile, "song_change", "cmd_line_after", cmd_after);
-	xmms_cfg_write_string(cfgfile, "song_change", "cmd_line_end", cmd_end);
-	xmms_cfg_write_default_file(cfgfile);
-	xmms_cfg_free(cfgfile);
+	db = bmp_cfg_db_open();
+	bmp_cfg_db_set_string(db, "song_change", "cmd_line", cmd);
+	bmp_cfg_db_set_string(db, "song_change", "cmd_line_after", cmd_after);
+	bmp_cfg_db_set_string(db, "song_change", "cmd_line_end", cmd_end);
+	bmp_cfg_db_close(db);
 	g_free(cmd);
 	g_free(cmd_after);
 	g_free(cmd_end);
