@@ -455,6 +455,36 @@ else
 fi
 AM_CONDITIONAL(HAVE_SIDPLAY,test "x$have_sidplay" = xyes)
 
+dnl *** Musepack
+
+AC_ARG_ENABLE(musepack,
+    [  --disable-musepack        disable musepack input plugin (default=enabled)],
+    [enable_musepack=$enableval],
+    [enable_musepack="yes"]
+)
+
+if test "$enable_musepack" = "yes"; then
+    AC_CHECK_HEADERS(mpcdec/config_types.h,,
+        [AC_MSG_ERROR([libmpcdec not installed])
+	 enable_musepack=no]
+    )
+
+    AC_PATH_PROG(TAGLIB_CONFIG, taglib-config, [no], [$PATH:$prefix/bin])
+    if test "x$TAGLIB_CONFIG" = "xno" ; then
+	enable_musepack=no
+    else
+        TAGLIB_CFLAGS=[`$TAGLIB_CONFIG --cflags`]
+        TAGLIB_LIBS=[`$TAGLIB_CONFIG --libs`]
+    fi
+    AC_SUBST(TAGLIB_CFLAGS)
+    AC_SUBST(TAGLIB_LIBS)
+else
+    AC_MSG_RESULT([*** Musepack plugin disabled per user request ***])
+    enable_musepack=no
+fi
+
+AM_CONDITIONAL(ENABLE_MUSEPACK, [test "$enable_musepack" = "yes"])
+
 dnl *** OSS output
 
 AC_ARG_ENABLE(oss,
@@ -746,6 +776,7 @@ AC_CONFIG_FILES([
 	Plugins/Input/modplug/Makefile
 	Plugins/Input/modplug/archive/Makefile
 	Plugins/Input/modplug/gui/Makefile
+	Plugins/Input/musepack/Makefile
 	Plugins/Input/tonegen/Makefile
         Plugins/Input/vorbis/Makefile
         Plugins/Input/cdaudio/Makefile
@@ -813,6 +844,7 @@ echo "  MPEG 1/2/3 (mpg123):                    $enable_mp3"
 echo "    + id3v2 editing:                      $have_id3lib"
 echo "  MPEG 4 Audio (AAC):                     $enable_aac"
 echo "  Windows Media Audio (wma):              $enable_wma"
+echo "  .mpc playback (musepack):               $enable_musepack"
 echo "  Module decoder (modplug):               $enable_modplug"
 echo "  MIDI to WAVE converter (timidity):      $enable_timidity"
 echo "  CD Digital Audio (cdda):                yes"
