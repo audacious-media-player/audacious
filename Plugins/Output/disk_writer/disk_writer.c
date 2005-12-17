@@ -31,7 +31,7 @@
 #include "audacious/plugin.h"
 #include "libaudacious/beepctrl.h"
 #include "libaudacious/dirbrowser.h"
-#include "libaudacious/configfile.h"
+#include "libaudacious/configdb.h"
 #include "libaudacious/util.h"
 
 struct wavhead
@@ -108,15 +108,12 @@ OutputPlugin *get_oplugin_info(void)
 
 static void disk_init(void)
 {
-	ConfigFile *cfgfile;
+	ConfigDb *db;
 
-	cfgfile = xmms_cfg_open_default_file();
-	if (cfgfile)
-	{
-		xmms_cfg_read_string(cfgfile, "disk_writer", "file_path", &file_path);
-		xmms_cfg_read_boolean(cfgfile, "disk_writer", "use_suffix", &use_suffix);
-		xmms_cfg_free(cfgfile);
-	}
+	db = bmp_cfg_db_open();
+	bmp_cfg_db_get_string(db, "disk_writer", "file_path", &file_path);
+	bmp_cfg_db_get_bool(db, "disk_writer", "use_suffix", &use_suffix);
+	bmp_cfg_db_close(db);
 
 	if (!file_path)
 		file_path = g_strdup(g_get_home_dir());
@@ -319,7 +316,7 @@ static void path_browse_cb(GtkWidget * w, gpointer data)
 
 static void configure_ok_cb(gpointer data)
 {
-	ConfigFile *cfgfile;
+	ConfigDb *db;
 
 	if (file_path)
 		g_free(file_path);
@@ -328,14 +325,10 @@ static void configure_ok_cb(gpointer data)
 	use_suffix =
 		gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(use_suffix_toggle));
 
-	cfgfile = xmms_cfg_open_default_file();
-	if (!cfgfile)
-		cfgfile = xmms_cfg_new();
-
-	xmms_cfg_write_string(cfgfile, "disk_writer", "file_path", file_path);
-	xmms_cfg_write_boolean(cfgfile, "disk_writer", "use_suffix", use_suffix);
-	xmms_cfg_write_default_file(cfgfile);
-	xmms_cfg_free(cfgfile);
+	db = bmp_cfg_db_open();
+	bmp_cfg_db_set_string(db, "disk_writer", "file_path", file_path);
+	bmp_cfg_db_set_bool(db, "disk_writer", "use_suffix", use_suffix);
+	bmp_cfg_db_close(db);
 
 	gtk_widget_destroy(configure_win);
 	if (path_dirbrowser)
