@@ -22,7 +22,7 @@
 #endif
 
 #include "libaudacious/util.h"
-#include "libaudacious/configfile.h"
+#include "libaudacious/configdb.h"
 #include "libaudacious/titlestring.h"
 #include <gtk/gtk.h>
 #include <string.h>
@@ -97,29 +97,21 @@ InputPlugin *get_iplugin_info(void) {
 }
 
 void xmmstimid_init(void) {
-	ConfigFile *cf;
+	ConfigDb *db;
 
-	xmmstimid_cfg.config_file = NULL;
+	xmmstimid_cfg.config_file = g_strdup("/etc/timidity.cfg");
 	xmmstimid_cfg.rate = 44100;
 	xmmstimid_cfg.bits = 16;
 	xmmstimid_cfg.channels = 2;
 	xmmstimid_cfg.buffer_size = 512;
 
-	cf = xmms_cfg_open_default_file();
-	if (cf != NULL) {
-		xmms_cfg_read_string(cf, "TIMIDITY", "config_file",
-				&xmmstimid_cfg.config_file);
-		xmms_cfg_read_int(cf, "TIMIDITY", "rate",
-				&xmmstimid_cfg.rate);
-		xmms_cfg_read_int(cf, "TIMIDITY", "bits",
-				&xmmstimid_cfg.bits);
-		xmms_cfg_read_int(cf, "TIMIDITY", "channels",
-				&xmmstimid_cfg.channels);
-		xmms_cfg_free(cf);
-	}
+	db = bmp_cfg_db_open();
 
-	if (xmmstimid_cfg.config_file == NULL)
-		xmmstimid_cfg.config_file = g_strdup("/etc/timidity.cfg");
+	bmp_cfg_db_get_string(db, "timidity", "config_file", &xmmstimid_cfg.config_file);
+	bmp_cfg_db_get_int(db, "timidity", "samplerate", &xmmstimid_cfg.rate);
+	bmp_cfg_db_get_int(db, "timidity", "bits", &xmmstimid_cfg.bits);
+	bmp_cfg_db_get_int(db, "timidity", "channels", &xmmstimid_cfg.channels);
+	bmp_cfg_db_close(db);
 
 	if (mid_init(xmmstimid_cfg.config_file) != 0) {
 		xmmstimid_initialized = FALSE;
@@ -205,8 +197,7 @@ void xmmstimid_configure(void) {
 }
 
 void xmmstimid_conf_ok(GtkButton *button, gpointer user_data) {
-	gchar *filename;
-	ConfigFile *cf;
+	ConfigDb *db;
 
 	g_free(xmmstimid_cfg.config_file);
 	xmmstimid_cfg.config_file = g_strdup(
@@ -227,22 +218,13 @@ void xmmstimid_conf_ok(GtkButton *button, gpointer user_data) {
 	else if (gtk_toggle_button_get_active(xmmstimid_conf_channels_2))
 		xmmstimid_cfg.channels = 2;
 
-	filename = g_strconcat(g_get_home_dir(), "/.audacious/config", NULL);
-	cf = xmms_cfg_open_file(filename);
-	if (cf == NULL) cf = xmms_cfg_new();
+	db = bmp_cfg_db_open();
 
-	xmms_cfg_write_string(cf, "TIMIDITY", "config_file",
-			xmmstimid_cfg.config_file);
-	xmms_cfg_write_int(cf, "TIMIDITY", "rate",
-			xmmstimid_cfg.rate);
-	xmms_cfg_write_int(cf, "TIMIDITY", "bits",
-			xmmstimid_cfg.bits);
-	xmms_cfg_write_int(cf, "TIMIDITY", "channels",
-			xmmstimid_cfg.channels);
-
-	xmms_cfg_write_file(cf, filename);
-	xmms_cfg_free(cf);
-	g_free(filename);
+	bmp_cfg_db_set_string(db, "timidity", "config_file", xmmstimid_cfg.config_file);
+	bmp_cfg_db_set_int(db, "timidity", "samplerate", xmmstimid_cfg.rate);
+	bmp_cfg_db_set_int(db, "timidity", "bits", xmmstimid_cfg.bits);
+	bmp_cfg_db_set_int(db, "timidity", "channels", xmmstimid_cfg.channels);
+	bmp_cfg_db_close(db);
 
 	gtk_widget_hide(xmmstimid_conf_wnd);
 }
@@ -464,4 +446,3 @@ void xmmstimid_get_song_info(char *filename, char **title, int *length) {
 
 	mid_song_free(song);
 }
-
