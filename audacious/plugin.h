@@ -81,6 +81,7 @@ struct _OutputPlugin {
     gchar *description;
 
     void (*init) (void);
+    void (*cleanup) (void);
     void (*about) (void);
     void (*configure) (void);
     void (*get_volume) (gint * l, gint * r);

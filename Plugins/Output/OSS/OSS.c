@@ -29,6 +29,7 @@ OutputPlugin oss_op = {
     NULL,
     NULL,                       /* Description */
     oss_init,
+    NULL,
     oss_about,
     oss_configure,
     oss_get_volume,

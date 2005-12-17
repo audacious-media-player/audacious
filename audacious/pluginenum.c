@@ -378,6 +378,12 @@ plugin_system_cleanup(void)
 
     for (node = get_output_list(); node; node = g_list_next(node)) {
         op = OUTPUT_PLUGIN(node->data);
+        if (op && op->cleanup) {
+            op->cleanup();
+            GDK_THREADS_LEAVE();
+            while (g_main_iteration(FALSE));
+            GDK_THREADS_ENTER();
+        }
         g_module_close(op->handle);
     }
     

@@ -75,6 +75,7 @@ static OutputPlugin xfade_op =
   NULL,
   "Crossfade Plugin " VERSION,
   xfade_init,
+  NULL,
   xfade_about,
   xfade_configure,
   xfade_get_volume,

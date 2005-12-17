@@ -26,6 +26,7 @@ OutputPlugin esd_op = {
     NULL,
     NULL,                       /* Description */
     esdout_init,
+    NULL,
     esdout_about,
     esdout_configure,
     esdout_get_volume,

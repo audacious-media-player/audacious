@@ -24,6 +24,7 @@ OutputPlugin alsa_op =
 	NULL,
 	NULL,
 	alsa_init,
+	NULL,
 	alsa_about,
 	alsa_configure,
 	alsa_get_volume,

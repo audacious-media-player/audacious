@@ -84,6 +84,7 @@ OutputPlugin disk_op =
 	NULL,
 	NULL,			/* Description */
 	disk_init,
+	NULL,
 	NULL,			/* about */
 	disk_configure,		/* configure */
 	NULL,			/* get_volume */
