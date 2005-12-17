@@ -193,14 +193,14 @@ scan_presets(gchar *filename)
 #endif
 
 static void
-read_fade_config(ConfigFile *cfgfile, gchar *section, gchar *key, fade_config_t *fc)
+read_fade_config(ConfigDb *db, gchar *section, gchar *key, fade_config_t *fc)
 {
   gchar *s = NULL;
   gint n;
   
-  if(!cfgfile || !section || !key || !fc) return;
+  if(!db || !section || !key || !fc) return;
 
-  xmms_cfg_read_string(cfgfile, section, key, &s);
+  bmp_cfg_db_get_string(db, section, key, &s);
   if(!s) return;
 
   n = sscanf(s,
@@ -228,11 +228,11 @@ read_fade_config(ConfigFile *cfgfile, gchar *section, gchar *key, fade_config_t 
 }
 
 static void
-write_fade_config(ConfigFile *cfgfile, gchar *section, gchar *key, fade_config_t *fc)
+write_fade_config(ConfigDb *db, gchar *section, gchar *key, fade_config_t *fc)
 {
   gchar *s;
   
-  if(!cfgfile || !section || !key || !fc) return;
+  if(!db || !section || !key || !fc) return;
 
   s = g_strdup_printf("%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
 		      fc->type,
@@ -256,7 +256,7 @@ write_fade_config(ConfigFile *cfgfile, gchar *section, gchar *key, fade_config_t
 
   if(!s) return;
 
-  xmms_cfg_write_string(cfgfile, section, key, s);
+  bmp_cfg_db_set_string(db, section, key, s);
   g_free(s);
 }
 
@@ -267,79 +267,76 @@ xfade_load_config()
   gchar      *filename;
 #endif
   gchar      *section = "Crossfade";
-  ConfigFile *cfgfile;
+  ConfigDb *db;
 
-  if((cfgfile = xmms_cfg_open_default_file())) {
-    /* config items used in v0.1 */
-    xmms_cfg_read_string (cfgfile, section, "output_plugin",        &config->op_name);
-    xmms_cfg_read_string (cfgfile, section, "op_config_string",     &config->op_config_string);
-    xmms_cfg_read_int    (cfgfile, section, "buffer_size",          &config->mix_size_ms);
-    xmms_cfg_read_int    (cfgfile, section, "sync_size",            &config->sync_size_ms);
-    xmms_cfg_read_int    (cfgfile, section, "preload_size",         &config->preload_size_ms);
-    xmms_cfg_read_int    (cfgfile, section, "songchange_timeout",   &config->songchange_timeout);
-    xmms_cfg_read_boolean(cfgfile, section, "enable_mixer",         &config->enable_mixer);
-    xmms_cfg_read_boolean(cfgfile, section, "mixer_reverse",        &config->mixer_reverse);
-    xmms_cfg_read_boolean(cfgfile, section, "enable_debug",         &config->enable_debug);
-    xmms_cfg_read_boolean(cfgfile, section, "enable_monitor",       &config->enable_monitor);
+  db = bmp_cfg_db_open();
 
-    /* config items introduced by v0.2 */
-    xmms_cfg_read_boolean(cfgfile, section, "gap_lead_enable",      &config->gap_lead_enable);
-    xmms_cfg_read_int    (cfgfile, section, "gap_lead_len_ms",      &config->gap_lead_len_ms);
-    xmms_cfg_read_int    (cfgfile, section, "gap_lead_level",       &config->gap_lead_level);
-    xmms_cfg_read_boolean(cfgfile, section, "gap_trail_enable",     &config->gap_trail_enable);
-    xmms_cfg_read_int    (cfgfile, section, "gap_trail_len_ms",     &config->gap_trail_len_ms);
-    xmms_cfg_read_int    (cfgfile, section, "gap_trail_level",      &config->gap_trail_level);
-    xmms_cfg_read_int    (cfgfile, section, "gap_trail_locked",     &config->gap_trail_locked);
+  /* config items used in v0.1 */
+  bmp_cfg_db_get_string(db, section, "output_plugin",          &config->op_name);
+  bmp_cfg_db_get_string(db, section, "op_config_string",       &config->op_config_string);
+  bmp_cfg_db_get_int(db, section, "buffer_size",               &config->mix_size_ms);
+  bmp_cfg_db_get_int(db, section, "sync_size",                 &config->sync_size_ms);
+  bmp_cfg_db_get_int(db, section, "preload_size",              &config->preload_size_ms);
+  bmp_cfg_db_get_int(db, section, "songchange_timeout",        &config->songchange_timeout);
+  bmp_cfg_db_get_bool(db, section, "enable_mixer",             &config->enable_mixer);
+  bmp_cfg_db_get_bool(db, section, "mixer_reverse",            &config->mixer_reverse);
+  bmp_cfg_db_get_bool(db, section, "enable_debug",             &config->enable_debug);
+  bmp_cfg_db_get_bool(db, section, "enable_monitor",           &config->enable_monitor);
+
+  /* config items introduced by v0.2 */
+  bmp_cfg_db_get_bool(db, section, "gap_lead_enable",          &config->gap_lead_enable);
+  bmp_cfg_db_get_int(db, section, "gap_lead_len_ms",           &config->gap_lead_len_ms);
+  bmp_cfg_db_get_int(db, section, "gap_lead_level",            &config->gap_lead_level);
+  bmp_cfg_db_get_bool(db, section, "gap_trail_enable",         &config->gap_trail_enable);
+  bmp_cfg_db_get_int(db, section, "gap_trail_len_ms",          &config->gap_trail_len_ms);
+  bmp_cfg_db_get_int(db, section, "gap_trail_level",           &config->gap_trail_level);
+  bmp_cfg_db_get_int(db, section, "gap_trail_locked",          &config->gap_trail_locked);
     
-    /* config items introduced by v0.2.1 */
-    xmms_cfg_read_boolean(cfgfile, section, "buffer_size_auto",     &config->mix_size_auto);
+  /* config items introduced by v0.2.1 */
+  bmp_cfg_db_get_bool(db, section, "buffer_size_auto",         &config->mix_size_auto);
     
-    /* config items introduced by v0.2.3 */
-    xmms_cfg_read_boolean(cfgfile, section, "album_detection",      &config->album_detection);
+  /* config items introduced by v0.2.3 */
+  bmp_cfg_db_get_bool(db, section, "album_detection",          &config->album_detection);
       
-    /* config items introduced by v0.2.4 */
-    xmms_cfg_read_boolean(cfgfile, section, "http_workaround",      &config->enable_http_workaround);
-    xmms_cfg_read_boolean(cfgfile, section, "enable_op_max_used",   &config->enable_op_max_used);
-    xmms_cfg_read_int    (cfgfile, section, "op_max_used_ms",       &config->op_max_used_ms);
+  /* config items introduced by v0.2.4 */
+  bmp_cfg_db_get_bool(db, section, "http_workaround",          &config->enable_http_workaround);
+  bmp_cfg_db_get_bool(db, section, "enable_op_max_used",       &config->enable_op_max_used);
+  bmp_cfg_db_get_int(db, section, "op_max_used_ms",            &config->op_max_used_ms);
+  
+  /* config items introduced by v0.2.6 */
+  bmp_cfg_db_get_string(db, section, "effect_plugin",          &config->ep_name);
+  bmp_cfg_db_get_bool(db, section, "effect_enable",            &config->ep_enable);
+  bmp_cfg_db_get_int(db, section, "output_rate",               &config->output_rate);
     
-    /* config items introduced by v0.2.6 */
-    xmms_cfg_read_string (cfgfile, section, "effect_plugin",        &config->ep_name);
-    xmms_cfg_read_boolean(cfgfile, section, "effect_enable",        &config->ep_enable);
-    xmms_cfg_read_int    (cfgfile, section, "output_rate",          &config->output_rate);
+  /* config items introduced by v0.3.0 */
+  bmp_cfg_db_get_bool(db, section, "volnorm_enable",           &config->volnorm_enable);
+  bmp_cfg_db_get_bool(db, section, "volnorm_use_qa",           &config->volnorm_use_qa);
+  bmp_cfg_db_get_int(db, section, "volnorm_target",            &config->volnorm_target);
+  bmp_cfg_db_get_bool(db, section, "output_keep_opened",       &config->output_keep_opened);
+  bmp_cfg_db_get_bool(db, section, "mixer_software",           &config->mixer_software);
+  bmp_cfg_db_get_int(db, section, "mixer_vol_left",            &config->mixer_vol_left);
+  bmp_cfg_db_get_int(db, section, "mixer_vol_right",           &config->mixer_vol_right);
     
-    /* config items introduced by v0.3.0 */
-    xmms_cfg_read_boolean(cfgfile, section, "volnorm_enable",       &config->volnorm_enable);
-    xmms_cfg_read_boolean(cfgfile, section, "volnorm_use_qa",       &config->volnorm_use_qa);
-    xmms_cfg_read_int    (cfgfile, section, "volnorm_target",       &config->volnorm_target);
-    xmms_cfg_read_boolean(cfgfile, section, "output_keep_opened",   &config->output_keep_opened);
-    xmms_cfg_read_boolean(cfgfile, section, "mixer_software",       &config->mixer_software);
-    xmms_cfg_read_int    (cfgfile, section, "mixer_vol_left",       &config->mixer_vol_left);
-    xmms_cfg_read_int    (cfgfile, section, "mixer_vol_right",      &config->mixer_vol_right);
-    
-    /* config items introduced by v0.3.2 */
-    xmms_cfg_read_boolean(cfgfile, section, "no_xfade_if_same_file",&config->no_xfade_if_same_file);
+  /* config items introduced by v0.3.2 */
+  bmp_cfg_db_get_bool(db, section, "no_xfade_if_same_file",    &config->no_xfade_if_same_file);
 
-    /* config items introduced by v0.3.3 */
-    xmms_cfg_read_boolean(cfgfile, section, "gap_crossing",         &config->gap_crossing);
+  /* config items introduced by v0.3.3 */
+  bmp_cfg_db_get_bool(db, section, "gap_crossing",             &config->gap_crossing);
 
-    /* config items introduced by v0.3.6 */
-    xmms_cfg_read_int    (cfgfile, section, "output_quality",       &config->output_quality);
+  /* config items introduced by v0.3.6 */
+  bmp_cfg_db_get_int(db, section, "output_quality",            &config->output_quality);
 
-    /* fade configs */
-    read_fade_config(cfgfile, section, "fc_xfade",   &config->fc[FADE_CONFIG_XFADE]);
-    read_fade_config(cfgfile, section, "fc_manual",  &config->fc[FADE_CONFIG_MANUAL]);
-    read_fade_config(cfgfile, section, "fc_album",   &config->fc[FADE_CONFIG_ALBUM]);
-    read_fade_config(cfgfile, section, "fc_start",   &config->fc[FADE_CONFIG_START]);
-    read_fade_config(cfgfile, section, "fc_stop",    &config->fc[FADE_CONFIG_STOP]);
-    read_fade_config(cfgfile, section, "fc_eop",     &config->fc[FADE_CONFIG_EOP]);
-    read_fade_config(cfgfile, section, "fc_seek",    &config->fc[FADE_CONFIG_SEEK]);
-    read_fade_config(cfgfile, section, "fc_pause",   &config->fc[FADE_CONFIG_PAUSE]);
-    
-    xmms_cfg_free(cfgfile);
-    DEBUG(("[crossfade] load_config: configuration loaded\n"));
-  }
-  else
-    DEBUG(("[crossfade] load_config: error loading config, using defaults\n"));
+  /* fade configs */
+  read_fade_config(db, section, "fc_xfade",   &config->fc[FADE_CONFIG_XFADE]);
+  read_fade_config(db, section, "fc_manual",  &config->fc[FADE_CONFIG_MANUAL]);
+  read_fade_config(db, section, "fc_album",   &config->fc[FADE_CONFIG_ALBUM]);
+  read_fade_config(db, section, "fc_start",   &config->fc[FADE_CONFIG_START]);
+  read_fade_config(db, section, "fc_stop",    &config->fc[FADE_CONFIG_STOP]);
+  read_fade_config(db, section, "fc_eop",     &config->fc[FADE_CONFIG_EOP]);
+  read_fade_config(db, section, "fc_seek",    &config->fc[FADE_CONFIG_SEEK]);
+  read_fade_config(db, section, "fc_pause",   &config->fc[FADE_CONFIG_PAUSE]);
+
+  bmp_cfg_db_close(db);
 
 #ifdef PRESET_SUPPORT
   filename = g_strconcat(g_get_home_dir(), "/.audacious/xmms-crossfade-presets", NULL);
@@ -352,90 +349,86 @@ void
 xfade_save_config()
 {
   gchar      *section = "Crossfade";
-  ConfigFile *cfgfile;
+  ConfigDb *db;
 
-  if((cfgfile = xmms_cfg_open_default_file())) {
-    /* obsolete config items */
-    xmms_cfg_remove_key(cfgfile, section, "underrun_pct");
-    xmms_cfg_remove_key(cfgfile, section, "enable_crossfade");
-    xmms_cfg_remove_key(cfgfile, section, "enable_gapkiller");
-    xmms_cfg_remove_key(cfgfile, section, "mixer_use_master");
-    xmms_cfg_remove_key(cfgfile, section, "late_effect");
-    xmms_cfg_remove_key(cfgfile, section, "gap_lead_length");
+  db = bmp_cfg_db_open();
+
+  /* obsolete config items */
+  bmp_cfg_db_unset_key(db, section, "underrun_pct");
+  bmp_cfg_db_unset_key(db, section, "enable_crossfade");
+  bmp_cfg_db_unset_key(db, section, "enable_gapkiller");
+  bmp_cfg_db_unset_key(db, section, "mixer_use_master");
+  bmp_cfg_db_unset_key(db, section, "late_effect");
+  bmp_cfg_db_unset_key(db, section, "gap_lead_length");
       
-    /* config items used in v0.1 */
-    xmms_cfg_write_string (cfgfile, section, "output_plugin",        config->op_name ? config->op_name : DEFAULT_OP_NAME);
-    xmms_cfg_write_string (cfgfile, section, "op_config_string",     config->op_config_string ? config->op_config_string : DEFAULT_OP_CONFIG_STRING);
-    xmms_cfg_write_int    (cfgfile, section, "buffer_size",          config->mix_size_ms);
-    xmms_cfg_write_int    (cfgfile, section, "sync_size",            config->sync_size_ms);
-    xmms_cfg_write_int    (cfgfile, section, "preload_size",         config->preload_size_ms);
-    xmms_cfg_write_int    (cfgfile, section, "songchange_timeout",   config->songchange_timeout);
-    xmms_cfg_write_boolean(cfgfile, section, "enable_mixer",         config->enable_mixer);
-    xmms_cfg_write_boolean(cfgfile, section, "mixer_reverse",        config->mixer_reverse);
-    xmms_cfg_write_boolean(cfgfile, section, "enable_debug",         config->enable_debug);
-    xmms_cfg_write_boolean(cfgfile, section, "enable_monitor",       config->enable_monitor);
+  /* config items used in v0.1 */
+  bmp_cfg_db_set_string(db, section, "output_plugin",        config->op_name ? config->op_name : DEFAULT_OP_NAME);
+  bmp_cfg_db_set_string(db, section, "op_config_string",     config->op_config_string ? config->op_config_string : DEFAULT_OP_CONFIG_STRING);
+  bmp_cfg_db_set_int(db, section, "buffer_size",          config->mix_size_ms);
+  bmp_cfg_db_set_int(db, section, "sync_size",            config->sync_size_ms);
+  bmp_cfg_db_set_int(db, section, "preload_size",         config->preload_size_ms);
+  bmp_cfg_db_set_int(db, section, "songchange_timeout",   config->songchange_timeout);
+  bmp_cfg_db_set_bool(db, section, "enable_mixer",         config->enable_mixer);
+  bmp_cfg_db_set_bool(db, section, "mixer_reverse",        config->mixer_reverse);
+  bmp_cfg_db_set_bool(db, section, "enable_debug",         config->enable_debug);
+  bmp_cfg_db_set_bool(db, section, "enable_monitor",       config->enable_monitor);
     
-    /* config items introduced by v0.2 */
-    xmms_cfg_write_boolean(cfgfile, section, "gap_lead_enable",      config->gap_lead_enable);
-    xmms_cfg_write_int    (cfgfile, section, "gap_lead_len_ms",      config->gap_lead_len_ms);
-    xmms_cfg_write_int    (cfgfile, section, "gap_lead_level",       config->gap_lead_level);
-    xmms_cfg_write_boolean(cfgfile, section, "gap_trail_enable",     config->gap_trail_enable);
-    xmms_cfg_write_int    (cfgfile, section, "gap_trail_len_ms",     config->gap_trail_len_ms);
-    xmms_cfg_write_int    (cfgfile, section, "gap_trail_level",      config->gap_trail_level);
-    xmms_cfg_write_int    (cfgfile, section, "gap_trail_locked",     config->gap_trail_locked);
+  /* config items introduced by v0.2 */
+  bmp_cfg_db_set_bool(db, section, "gap_lead_enable",      config->gap_lead_enable);
+  bmp_cfg_db_set_int(db, section, "gap_lead_len_ms",      config->gap_lead_len_ms);
+  bmp_cfg_db_set_int(db, section, "gap_lead_level",       config->gap_lead_level);
+  bmp_cfg_db_set_bool(db, section, "gap_trail_enable",     config->gap_trail_enable);
+  bmp_cfg_db_set_int(db, section, "gap_trail_len_ms",     config->gap_trail_len_ms);
+  bmp_cfg_db_set_int(db, section, "gap_trail_level",      config->gap_trail_level);
+  bmp_cfg_db_set_int(db, section, "gap_trail_locked",     config->gap_trail_locked);
     
-    /* config items introduced by v0.2.1 */
-    xmms_cfg_write_boolean(cfgfile, section, "buffer_size_auto",     config->mix_size_auto);
+  /* config items introduced by v0.2.1 */
+  bmp_cfg_db_set_bool(db, section, "buffer_size_auto",     config->mix_size_auto);
     
-    /* config items introduced by v0.2.3 */
-    xmms_cfg_write_boolean(cfgfile, section, "album_detection",      config->album_detection);
+  /* config items introduced by v0.2.3 */
+  bmp_cfg_db_set_bool(db, section, "album_detection",      config->album_detection);
     
-    /* config items introduced by v0.2.4 */
-    xmms_cfg_write_boolean(cfgfile, section, "http_workaround",      config->enable_http_workaround);
-    xmms_cfg_write_boolean(cfgfile, section, "enable_op_max_used",   config->enable_op_max_used);
-    xmms_cfg_write_int    (cfgfile, section, "op_max_used_ms",       config->op_max_used_ms);
+  /* config items introduced by v0.2.4 */
+  bmp_cfg_db_set_bool(db, section, "http_workaround",      config->enable_http_workaround);
+  bmp_cfg_db_set_bool(db, section, "enable_op_max_used",   config->enable_op_max_used);
+  bmp_cfg_db_set_int(db, section, "op_max_used_ms",       config->op_max_used_ms);
     
-    /* config items introduced by v0.2.6 */
-    xmms_cfg_write_string (cfgfile, section, "effect_plugin",        config->ep_name ? config->ep_name : DEFAULT_EP_NAME);
-    xmms_cfg_write_boolean(cfgfile, section, "effect_enable",        config->ep_enable);
-    xmms_cfg_write_int    (cfgfile, section, "output_rate",          config->output_rate);
+  /* config items introduced by v0.2.6 */
+  bmp_cfg_db_set_string(db, section, "effect_plugin",        config->ep_name ? config->ep_name : DEFAULT_EP_NAME);
+  bmp_cfg_db_set_bool(db, section, "effect_enable",        config->ep_enable);
+  bmp_cfg_db_set_int(db, section, "output_rate",          config->output_rate);
    
-    /* config items introduced by v0.3.0 */
+  /* config items introduced by v0.3.0 */
 #ifdef VOLUME_NORMALIZER
-    xmms_cfg_write_boolean(cfgfile, section, "volnorm_enable",       config->volnorm_enable);
-    xmms_cfg_write_boolean(cfgfile, section, "volnorm_use_qa",       config->volnorm_use_qa);
-    xmms_cfg_write_int    (cfgfile, section, "volnorm_target",       config->volnorm_target);
+  bmp_cfg_db_set_bool(db, section, "volnorm_enable",       config->volnorm_enable);
+  bmp_cfg_db_set_bool(db, section, "volnorm_use_qa",       config->volnorm_use_qa);
+  bmp_cfg_db_set_int(db, section, "volnorm_target",       config->volnorm_target);
 #endif
-    xmms_cfg_write_boolean(cfgfile, section, "output_keep_opened",   config->output_keep_opened);
-    xmms_cfg_write_boolean(cfgfile, section, "mixer_software",       config->mixer_software);
-    xmms_cfg_write_int    (cfgfile, section, "mixer_vol_left",       config->mixer_vol_left);
-    xmms_cfg_write_int    (cfgfile, section, "mixer_vol_right",      config->mixer_vol_right);
+  bmp_cfg_db_set_bool(db, section, "output_keep_opened",   config->output_keep_opened);
+  bmp_cfg_db_set_bool(db, section, "mixer_software",       config->mixer_software);
+  bmp_cfg_db_set_int(db, section, "mixer_vol_left",       config->mixer_vol_left);
+  bmp_cfg_db_set_int(db, section, "mixer_vol_right",      config->mixer_vol_right);
 
-    /* config items introduced by v0.3.2 */
-    xmms_cfg_write_boolean(cfgfile, section, "no_xfade_if_same_file",config->no_xfade_if_same_file);
+  /* config items introduced by v0.3.2 */
+  bmp_cfg_db_set_bool(db, section, "no_xfade_if_same_file",config->no_xfade_if_same_file);
 
-    /* config items introduced by v0.3.2 */
-    xmms_cfg_write_boolean(cfgfile, section, "gap_crossing",         config->gap_crossing);
+  /* config items introduced by v0.3.2 */
+  bmp_cfg_db_set_bool(db, section, "gap_crossing",         config->gap_crossing);
 
-    /* config items introduced by v0.3.6 */
-    xmms_cfg_write_int    (cfgfile, section, "output_quality",       config->output_quality);
+  /* config items introduced by v0.3.6 */
+  bmp_cfg_db_set_int(db, section, "output_quality",       config->output_quality);
 
-    /* fade configs */
-    write_fade_config(cfgfile, section, "fc_xfade",   &config->fc[FADE_CONFIG_XFADE]);
-    write_fade_config(cfgfile, section, "fc_manual",  &config->fc[FADE_CONFIG_MANUAL]);
-    write_fade_config(cfgfile, section, "fc_album",   &config->fc[FADE_CONFIG_ALBUM]);
-    write_fade_config(cfgfile, section, "fc_start",   &config->fc[FADE_CONFIG_START]);
-    write_fade_config(cfgfile, section, "fc_stop",    &config->fc[FADE_CONFIG_STOP]);
-    write_fade_config(cfgfile, section, "fc_eop",     &config->fc[FADE_CONFIG_EOP]);
-    write_fade_config(cfgfile, section, "fc_seek",    &config->fc[FADE_CONFIG_SEEK]);
-    write_fade_config(cfgfile, section, "fc_pause",   &config->fc[FADE_CONFIG_PAUSE]);
-    
-    xmms_cfg_write_default_file(cfgfile);
-    xmms_cfg_free              (cfgfile);
-    DEBUG(("[crossfade] save_config: configuration saved\n"));
-  }
-  else
-    DEBUG(("[crossfade] save_config: error saving configuration!\n"));
+  /* fade configs */
+  write_fade_config(db, section, "fc_xfade",   &config->fc[FADE_CONFIG_XFADE]);
+  write_fade_config(db, section, "fc_manual",  &config->fc[FADE_CONFIG_MANUAL]);
+  write_fade_config(db, section, "fc_album",   &config->fc[FADE_CONFIG_ALBUM]);
+  write_fade_config(db, section, "fc_start",   &config->fc[FADE_CONFIG_START]);
+  write_fade_config(db, section, "fc_stop",    &config->fc[FADE_CONFIG_STOP]);
+  write_fade_config(db, section, "fc_eop",     &config->fc[FADE_CONFIG_EOP]);
+  write_fade_config(db, section, "fc_seek",    &config->fc[FADE_CONFIG_SEEK]);
+  write_fade_config(db, section, "fc_pause",   &config->fc[FADE_CONFIG_PAUSE]);
+
+  bmp_cfg_db_close(db);    
 }
 
 #define SAFE_FREE(x) if(x) { g_free(x); x = NULL; }

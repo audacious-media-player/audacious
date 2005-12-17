@@ -33,7 +33,7 @@
 
 #include "audacious/plugin.h"
 #include "libaudacious/beepctrl.h"
-#include "libaudacious/configfile.h"
+#include "libaudacious/configdb.h"
 #include "libaudacious/util.h"
 
 #include "debug.h"
