@@ -28,6 +28,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#include <strings.h>
 
 #include <audacious/plugin.h>
 #include <libaudacious/configfile.h>

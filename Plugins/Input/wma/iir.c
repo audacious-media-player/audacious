@@ -23,7 +23,7 @@
 /* IIR filter coefficients */
 #include "iir.h"
 #include <math.h>
-#include <tgmath.h>
+#include <strings.h>
 
 /* History for two filters */
 static sXYData data_history[EQ_MAX_BANDS][EQ_CHANNELS] __attribute__((aligned));
@@ -49,24 +49,6 @@ static sIIRCoefficients iir_cforiginal10[] __attribute__((aligned)) = {
     { (2.6718639778e-01), (3.6640680111e-01), (-5.2117742267e-01) },    /* 14000.0 Hz */
     { (2.4201241845e-01), (3.7899379077e-01), (-8.0847117831e-01) },    /* 16000.0 Hz */
 };
-
-int round_trick(float floatvalue_to_round);
-
-/* Round function provided by Frank Klemm which saves around 100K
- * CPU cycles in my PIII for each call to the IIR function
- */
-__inline__ int round_trick(float floatvalue_to_round)
-{
-	float    floattmp ;
-	int  rounded_value ;
-                                                                                
-        floattmp      = (int) 0x00FD8000L + (floatvalue_to_round);
-        rounded_value = *(int*)(&floattmp) - (int)0x4B7D8000L;
-                                                                                
-        if ( rounded_value != (short) rounded_value )
-            rounded_value = ( rounded_value >> 31 ) ^ 0x7FFF;
-		return rounded_value;
-}
 
 /* Init the filter */
 void init_iir()
@@ -170,11 +152,7 @@ __inline__ int iir(gpointer * d, gint length)
 			out[channel] += (data[index+channel]>>2);
 
 			/* Round and convert to integer */
-#ifdef __i386__
-                        tempgint = round_trick(out[channel]);
-#else
 			tempgint = (int)lroundf(out[channel]);
-#endif
 
 			/* Limit the output */
 			if (tempgint < -32768)
@@ -197,5 +175,3 @@ __inline__ int iir(gpointer * d, gint length)
 
 	return length;
 }
-
-
