@@ -41,7 +41,7 @@
 #include <glib.h>
 
 #include "audacious/plugin.h"
-#include "libaudacious/configfile.h"
+#include "libaudacious/configdb.h"
 #include "libaudacious/beepctrl.h"
 
 #include <lirc/lirc_client.h>
@@ -490,7 +490,7 @@ gint remove_select_popup(GtkWidget **select_popup)
 void init(void)
 {
 	int flags;
-	ConfigFile *cfg;
+	ConfigDb *db;
 	
 	if((lirc_fd=lirc_init("audacious",1))==-1)
 	{
@@ -517,12 +517,9 @@ void init(void)
 		fcntl(lirc_fd,F_SETFL,flags|O_NONBLOCK);
 	}
 	fflush(stdout);
-	cfg=xmms_cfg_open_default_file();
-	if(cfg)
-	{
-		xmms_cfg_read_string(cfg,"LIRC","font",&fontname);
-		xmms_cfg_free(cfg);
-	}
+	db = bmp_cfg_db_open();
+	bmp_cfg_db_get_string(db,"LIRC","font",&fontname);
+	bmp_cfg_db_close(db);
 	popup_style=gtk_style_new();
 }
 
@@ -963,7 +960,7 @@ void font_selection_ok(GtkWidget *button,gpointer *data)
 
 void cleanup()
 {
-	ConfigFile *cfg;
+	ConfigDb *db;
 	
 	if(config)
 	{
@@ -979,13 +976,9 @@ void cleanup()
 	clear_select_list(&select_list);
 	if(fontname)
 	{
-		cfg=xmms_cfg_open_default_file();
-		if(cfg)
-		{
-			xmms_cfg_write_string(cfg,"LIRC","font",fontname);
-			xmms_cfg_write_default_file(cfg);
-			xmms_cfg_free(cfg);
-		}
+		db = bmp_cfg_db_open();
+		bmp_cfg_db_set_string(db,"LIRC","font",fontname);
+		bmp_cfg_db_close(db);
 		free(fontname);
 	}
 }
