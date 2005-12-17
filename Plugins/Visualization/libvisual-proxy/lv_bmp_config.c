@@ -2,7 +2,7 @@
 #include <string.h>
 #include <gtk/gtk.h>
 #include <libaudacious/configfile.h>
-#include <audacious/util.h>
+#include <libaudacious/util.h>
 #include <libvisual/libvisual.h>
 #include <glib/gi18n.h>
 
@@ -171,7 +171,7 @@ int lv_bmp_config_load_prefs ()
 					" morph plugin instead.\n"
 					"If you want another one, please choose it\n"
 					"on the configure dialog."),
-					_("Accept"), TRUE, dummy, NULL);
+					_("Accept"), TRUE, GTK_SIGNAL_FUNC(dummy), NULL);
 		gtk_widget_show (msg);
 		strcpy (morph_plugin_buffer, CONFIG_DEFAULT_MORPH_PLUGIN);
 	}
@@ -243,7 +243,7 @@ int lv_bmp_config_save_prefs ()
 	xmms_cfg_write_string (f, "libvisual_bmp", "version", VERSION);
 
 	if (options.last_plugin != NULL && (strlen(options.last_plugin) > 0))
-		xmms_cfg_write_string (f, "libvisual_bmp", "last_plugin", options.last_plugin);
+		xmms_cfg_write_string (f, "libvisual_bmp", "last_plugin", GTK_SIGNAL_FUNC(options.last_plugin));
 	else
 		xmms_cfg_write_string (f, "libvisual_bmp", "last_plugin", CONFIG_DEFAULT_ACTOR_PLUGIN);
 
@@ -516,7 +516,7 @@ static void on_actor_plugin_selected (GtkListItem *item, VisPluginRef *actor)
 	visual_log_return_if_fail (enabled != NULL);
 
 	gtk_signal_disconnect_by_func (GTK_OBJECT (config_win->checkbutton_vis_plugin),
-					on_checkbutton_vis_plugin_toggled, NULL);
+					GTK_SIGNAL_FUNC(on_checkbutton_vis_plugin_toggled), NULL);
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (config_win->checkbutton_vis_plugin), *enabled);	
 
@@ -617,7 +617,7 @@ static void on_button_vis_plugin_about_clicked (GtkButton *button, gpointer data
 				current_actor->info->about, "\n",
 				_("Author: "), current_actor->info->author, "\n\n",
 				current_actor->info->help, 0);
-	msgwin = xmms_show_message (PACKAGE_NAME, msg, _("Accept"), TRUE, dummy, NULL);
+	msgwin = xmms_show_message (PACKAGE_NAME, msg, _("Accept"), TRUE, GTK_SIGNAL_FUNC(dummy), NULL);
 	gtk_widget_show (msgwin);
 	g_free (msg);
 }
@@ -680,7 +680,7 @@ static int load_actor_plugin_list ()
 					PACKAGE_NAME " cannot be initialized.\n"
 					"Please visit http://libvisual.sf.net to\n"
 					"to get some nice plugins."),
-					_("Accept"), TRUE, dummy, NULL);
+					_("Accept"), TRUE, GTK_SIGNAL_FUNC(dummy), NULL);
 		return -1;
 	}
 
@@ -850,7 +850,7 @@ static int config_win_load_morph_plugin_list ()
 					_("There are no morph plugins, so switching\n"
 					"between visualization plugins will be do it\n"
 					"without any morphing."),
-					_("Accept"), TRUE, dummy, NULL);
+					_("Accept"), TRUE, GTK_SIGNAL_FUNC(dummy), NULL);
 		return -1;
 	}
 	index = 0;
@@ -904,7 +904,7 @@ static int load_morph_plugin_list ()
 					_("There are no morph plugins, so switching\n"
 					"between visualization plugins will be do it\n"
 					"without any morphing."),
-					_("Accept"), TRUE, dummy, NULL);
+					_("Accept"), TRUE, GTK_SIGNAL_FUNC(dummy), NULL);
 		return -1;
 	}
 	item = NULL;
@@ -946,7 +946,7 @@ static void on_button_morph_plugin_about_clicked (GtkButton *button, gpointer da
 					_("Author: "), morph->info->author, "\n\n",
 					morph->info->help, 0);
 			msgwin = xmms_show_message (PACKAGE_NAME, msg,
-					_("Accept"), TRUE, dummy, NULL);
+					_("Accept"), TRUE, GTK_SIGNAL_FUNC(dummy), NULL);
 			gtk_widget_show (msgwin);
 			g_free (msg);
 			break;
@@ -1050,7 +1050,7 @@ static void config_visual_initialize ()
 			msg = xmms_show_message (PACKAGE_NAME,
 					_("We cannot initialize Libvisual library.\n"
 					"Libvisual is necessary for this plugin to work."),
-					_("Accept"), TRUE, dummy, NULL);
+					_("Accept"), TRUE, GTK_SIGNAL_FUNC(dummy), NULL);
 			gtk_widget_show (msg);
         		g_free (argv[0]);
 		        g_free (argv);

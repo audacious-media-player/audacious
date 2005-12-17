@@ -4,7 +4,7 @@
 #include <string.h>
 
 #include <audacious/plugin.h>
-#include <audacious/util.h>
+#include <libaudacious/util.h>
 #include <libaudacious/beepctrl.h>
 
 #include <SDL.h>
@@ -107,7 +107,6 @@ static void lv_bmp_init ()
 {
         char **argv;
         int argc;
-	int ret;
 	gchar *msg;
 	GtkWidget *msgwin;
 
@@ -142,7 +141,7 @@ static void lv_bmp_init ()
 					SDL_GetError(),
 					"\n\n", PACKAGE_NAME,
 					_(" will not be loaded."), 0);
-		msgwin = xmms_show_message ("libvisual-proxy", msg, _("Accept"), TRUE, dummy, NULL);
+		msgwin = xmms_show_message ("libvisual-proxy", msg, _("Accept"), TRUE, GTK_SIGNAL_FUNC(dummy), NULL);
 		gtk_widget_show (msgwin);
 		g_free (msg);
 		return;
