@@ -276,7 +276,7 @@ static void stop (void)
   state.running = FALSE;
   G_LOCK (running_plugins);
   for (list= running_plugins; list != NULL; list = g_slist_next(list)) {
-    const plugin_instance *instance = (plugin_instance *) list->data;
+    plugin_instance *instance = (plugin_instance *) list->data;
     gchar *section = g_strdup_printf("plugin%d", plugins++);
     int port, ports= 0;
 
@@ -299,11 +299,7 @@ static void stop (void)
   G_UNLOCK (running_plugins);
 
   xmms_cfg_write_int(cfg, "session", "plugins", plugins);
-  #ifdef BUILD_FOR_BMP
-    filename= g_strdup_printf("%s/%s", g_get_home_dir(), "/.bmp/ladsparc");
-  #else
-    filename= g_strdup_printf("%s/%s", g_get_home_dir(), "/.xmms/ladsparc");
-  #endif
+  filename= g_strdup_printf("%s/%s", g_get_home_dir(), "/.audacious/ladsparc");
   xmms_cfg_write_file(cfg, filename);
   g_free(filename);
   xmms_cfg_free(cfg);
@@ -631,7 +627,7 @@ static void draw_plugin(plugin_instance *instance)
     if (LADSPA_IS_HINT_TOGGLED(hints[k].HintDescriptor)) {
       widget = gtk_toggle_button_new_with_label("Press");
       gtk_signal_connect(GTK_OBJECT(widget), "toggled",
-                       toggled, &(instance->knobs[k]));
+                       GTK_SIGNAL_FUNC(toggled), &(instance->knobs[k]));
       gtk_container_add(GTK_CONTAINER(hbox), widget);
       gtk_container_add(GTK_CONTAINER(vbox), hbox);
       continue;
