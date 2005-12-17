@@ -14,7 +14,6 @@ extern "C"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
 #include <unistd.h>
 #include <math.h>
 
@@ -108,7 +107,6 @@ static void       mpcPause(short);
 static void       mpcSeek(int);
 static void       mpcSetEq(int, float, float*);
 static int        mpcGetTime();
-static void       mpcClosePlugin();
 static void       mpcGetSongInfo(char*, char**, int*);
 static void       freeTags(MpcInfo&);
 static MpcInfo    getTags(const char*);

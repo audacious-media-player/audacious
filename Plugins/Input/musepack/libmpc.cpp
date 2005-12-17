@@ -25,7 +25,7 @@ InputPlugin MpcPlugin = {
     mpcGetTime,     //Get Time                  [CALLBACK]
     NULL,           //Get Volume                [UNUSED]
     NULL,           //Set Volume                [UNUSED]
-    mpcClosePlugin, //Close Plugin              [CALLBACK]
+    NULL,           //Close Plugin              [UNUSED]
     NULL,           //Obsolete                  [UNUSED]
     NULL,           //Visual plugins            add_vis_pcm(int time, AFormat fmt, int nch, int length, void *ptr)
     NULL,           //Set Info Settings         set_info(char *title, int length, int rate, int freq, int nch)
@@ -47,18 +47,11 @@ static Widgets      widgets      = {0};
 static MpcDecoder   mpcDecoder   = {0};
 static TrackInfo    track        = {0};
 
-static pthread_t           threadHandle;
-static pthread_attr_t      threadAttr;
-static pthread_mutex_t     threadMutex;
-static pthread_mutexattr_t threadMutexAttr;
+static GThread            *threadHandle;
+GStaticMutex threadMutex = G_STATIC_MUTEX_INIT;
 
 static void mpcOpenPlugin()
 {
-    pthread_mutexattr_init(&threadMutexAttr);
-    pthread_mutex_init(&threadMutex, &threadMutexAttr);
-    pthread_attr_init(&threadAttr);
-    pthread_attr_setstacksize(&threadAttr, FORCED_THREAD_STACKSIZE);
-
     ConfigDb *cfg;
     cfg = bmp_cfg_db_open();
     bmp_cfg_db_get_bool(cfg, "musepack", "clipPrevention", &pluginConfig.clipPrevention);
@@ -222,7 +215,7 @@ static void mpcPlay(char* p_Filename)
     mpcDecoder.isAlive  = true;
     mpcDecoder.isOutput = false;
     mpcDecoder.isPause  = false;
-    pthread_create(&threadHandle, &threadAttr, decodeStream, (void *) g_strdup(p_Filename));
+    threadHandle = g_thread_create(GThreadFunc(decodeStream), (void *) g_strdup(p_Filename), TRUE, NULL);
 }
 
 static void mpcStop()
@@ -230,7 +223,7 @@ static void mpcStop()
     setAlive(false);
     if (threadHandle)
     {
-        pthread_join(threadHandle, NULL);
+        g_thread_join(threadHandle);
         if (mpcDecoder.isOutput)
         {
             MpcPlugin.output->buffer_free();
@@ -267,13 +260,6 @@ static int mpcGetTime()
     if(!isAlive())
         return -1;
     return MpcPlugin.output->output_time();
-}
-
-static void mpcClosePlugin()
-{
-    pthread_mutex_destroy(&threadMutex);
-    pthread_mutexattr_destroy(&threadMutexAttr);
-    pthread_attr_destroy(&threadAttr);
 }
 
 static void mpcGetSongInfo(char* p_Filename, char** p_Title, int* p_Length)
@@ -667,7 +653,7 @@ static void* endThread(char* p_FileName, FILE* p_FileHandle, bool release)
         free(track.display);
         track.display = NULL;
     }
-    pthread_exit(NULL);
+    g_thread_exit(NULL);
     return 0;
 }
 
@@ -823,12 +809,12 @@ static void setReplaygain(mpc_streaminfo& info, mpc_decoder& decoder)
 
 inline static void lockAcquire()
 {
-    pthread_mutex_lock(&threadMutex);
+    g_static_mutex_lock(&threadMutex);
 }
 
 inline static void lockRelease()
 {
-    pthread_mutex_unlock(&threadMutex);
+    g_static_mutex_unlock(&threadMutex);
 }
 
 inline static bool isAlive()
