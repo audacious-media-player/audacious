@@ -28,7 +28,7 @@
 #include <gtk/gtk.h>
 
 #include <audacious/plugin.h>
-#include <libaudacious/configfile.h>
+#include <libaudacious/configdb.h>
 
 #include "../../../config.h"
 #include "ladspa.h"
@@ -142,39 +142,32 @@ static void start (void)
 
 static void restore (void)
 {
-  ConfigFile *cfg;
-  gchar *filename;
+  ConfigDb *db;
   gint k, plugins= 0;
 
-  filename= g_strdup_printf("%s/%s", g_get_home_dir(), "/.audacious/ladsparc");
-  cfg = xmms_cfg_open_file(filename);
-  if (cfg == NULL) {
-    state.initialised = TRUE;
-    return;
-  }
+  db = bmp_cfg_db_open();
 
-  xmms_cfg_read_int(cfg, "session", "plugins", &plugins);
+  bmp_cfg_db_get_int(db, "ladspa", "plugins", &plugins);
   for (k= 0; k < plugins; ++k) {
     gint id;
     int port, ports= 0;
     plugin_instance *instance;
-    gchar *section = g_strdup_printf("plugin%d", k);
+    gchar *section = g_strdup_printf("ladspa_plugin%d", k);
 
-    xmms_cfg_read_int(cfg, section, "id", &id);
+    bmp_cfg_db_get_int(db, section, "id", &id);
     instance = add_plugin(get_plugin_by_id(id));
     if (!instance) continue; /* couldn't load this plugin */
-    xmms_cfg_read_int(cfg, section, "ports", &ports);
+    bmp_cfg_db_get_int(db, section, "ports", &ports);
     for (port= 0; port < ports && port < MAX_KNOBS; ++port) {
       gchar *key = g_strdup_printf("port%d", port);
-      xmms_cfg_read_float(cfg, section, key, &(instance->knobs[port]));
+      bmp_cfg_db_get_float(db, section, key, &(instance->knobs[port]));
     }
     instance->restored = TRUE;
     g_free(section);
   }
 
   state.initialised = TRUE;
-  xmms_cfg_free(cfg);
-  g_free(filename);
+  bmp_cfg_db_close(db);
 }
 
 static ladspa_plugin *get_plugin_by_id(unsigned long id)
@@ -262,43 +255,40 @@ static void unload (plugin_instance * instance)
 static void stop (void)
 {
   GSList *list;
-  ConfigFile *cfg = xmms_cfg_new();
-  gchar *filename;
+  ConfigDb *db;
   gint plugins = 0;
 
   if (state.running == FALSE) {
     return;
   }
   state.running = FALSE;
+  db = bmp_cfg_db_open();
   G_LOCK (running_plugins);
   for (list= running_plugins; list != NULL; list = g_slist_next(list)) {
     plugin_instance *instance = (plugin_instance *) list->data;
-    gchar *section = g_strdup_printf("plugin%d", plugins++);
+    gchar *section = g_strdup_printf("ladspa_plugin%d", plugins++);
     int port, ports= 0;
 
-    xmms_cfg_write_int(cfg, section, "id", instance->descriptor->UniqueID);
-    xmms_cfg_write_string(cfg, section, "file", instance->filename);
-    xmms_cfg_write_string(cfg, section, "label", (gchar *)
+    bmp_cfg_db_set_int(db, section, "id", instance->descriptor->UniqueID);
+    bmp_cfg_db_set_string(db, section, "file", instance->filename);
+    bmp_cfg_db_set_string(db, section, "label", (gchar *)
                                               instance->descriptor->Label);
 
     ports = instance->descriptor->PortCount;
     if (ports > MAX_KNOBS) ports = MAX_KNOBS;
     for (port= 0; port < ports; ++port) {
       gchar *key = g_strdup_printf("port%d", port);
-      xmms_cfg_write_float(cfg, section, key, instance->knobs[port]);
+      bmp_cfg_db_set_float(db, section, key, instance->knobs[port]);
       g_free(key);
     }
-    xmms_cfg_write_int(cfg, section, "ports", ports);
+    bmp_cfg_db_set_int(db, section, "ports", ports);
     g_free(section);
     shutdown (instance);
   }
   G_UNLOCK (running_plugins);
 
-  xmms_cfg_write_int(cfg, "session", "plugins", plugins);
-  filename= g_strdup_printf("%s/%s", g_get_home_dir(), "/.audacious/ladsparc");
-  xmms_cfg_write_file(cfg, filename);
-  g_free(filename);
-  xmms_cfg_free(cfg);
+  bmp_cfg_db_set_int(db, "ladspa", "plugins", plugins);
+  bmp_cfg_db_close(db);
 }
 
 static void shutdown (plugin_instance *instance)
