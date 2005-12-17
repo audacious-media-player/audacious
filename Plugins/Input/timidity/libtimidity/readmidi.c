@@ -69,9 +69,6 @@ static int read_meta_data(MidIStream *stream, sint32 len, uint8 type, MidSong *s
 {
   char *s=safe_malloc(len+1);
   MidSongMetaId id;
-  static char *label[] = {
-    "Text event: ", "Text: ", "Copyright: ", "Track name: ",
-    "Instrument: ", "Lyric: ", "Marker: ", "Cue point: "};
 
   if (len != (sint32) mid_istream_read(stream, s, 1, len))
     {
@@ -84,7 +81,6 @@ static int read_meta_data(MidIStream *stream, sint32 len, uint8 type, MidSong *s
       if (((unsigned char)s[len])<32)
 	s[len]='.';
     }
-  DEBUG_MSG("%s%s\n", label[(type > 7) ? 0 : type], s);
 
   switch (type)
   {
