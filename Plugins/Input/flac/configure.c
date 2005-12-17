@@ -27,7 +27,7 @@
 #include <gtk/gtk.h>
 #include <math.h>
 
-#include <libaudacious/configfile.h>
+#include <libaudacious/configdb.h>
 #include <libaudacious/dirbrowser.h>
 #include <libaudacious/titlestring.h>
 #include <libaudacious/util.h>
@@ -127,32 +127,28 @@ static void configure_destroy(GtkWidget * w, gpointer data);
 
 static void flac_configurewin_ok(GtkWidget * widget, gpointer data)
 {
-	ConfigFile *cfg;
-	gchar *filename;
+	ConfigDb *db;
 
 	(void)widget, (void)data; /* unused arguments */
 	g_free(flac_cfg.title.tag_format);
 	flac_cfg.title.tag_format = g_strdup(gtk_entry_get_text(GTK_ENTRY(title_tag_entry)));
 	flac_cfg.title.user_char_set = Charset_Get_Name_From_Title(gtk_entry_get_text_1(userCharacterSetEntry));
 
-	filename = g_strconcat(g_get_home_dir(), "/.audacious/config", NULL);
-	cfg = xmms_cfg_open_file(filename);
-	if (!cfg)
-		cfg = xmms_cfg_new();
+	db = bmp_cfg_db_open();
 	/* title */
-	xmms_cfg_write_boolean(cfg, "flac", "title.tag_override", flac_cfg.title.tag_override);
-	xmms_cfg_write_string(cfg, "flac", "title.tag_format", flac_cfg.title.tag_format);
-	xmms_cfg_write_boolean(cfg, "flac", "title.convert_char_set", flac_cfg.title.convert_char_set);
-	xmms_cfg_write_string(cfg, "flac", "title.user_char_set", flac_cfg.title.user_char_set);
+	bmp_cfg_db_set_bool(db, "flac", "title.tag_override", flac_cfg.title.tag_override);
+	bmp_cfg_db_set_string(db, "flac", "title.tag_format", flac_cfg.title.tag_format);
+	bmp_cfg_db_set_bool(db, "flac", "title.convert_char_set", flac_cfg.title.convert_char_set);
+	bmp_cfg_db_set_string(db, "flac", "title.user_char_set", flac_cfg.title.user_char_set);
 	/* output */
-	xmms_cfg_write_boolean(cfg, "flac", "output.replaygain.enable", flac_cfg.output.replaygain.enable);
-	xmms_cfg_write_boolean(cfg, "flac", "output.replaygain.album_mode", flac_cfg.output.replaygain.album_mode);
-	xmms_cfg_write_int(cfg, "flac", "output.replaygain.preamp", flac_cfg.output.replaygain.preamp);
-	xmms_cfg_write_boolean(cfg, "flac", "output.replaygain.hard_limit", flac_cfg.output.replaygain.hard_limit);
-	xmms_cfg_write_boolean(cfg, "flac", "output.resolution.normal.dither_24_to_16", flac_cfg.output.resolution.normal.dither_24_to_16);
-	xmms_cfg_write_boolean(cfg, "flac", "output.resolution.replaygain.dither", flac_cfg.output.resolution.replaygain.dither);
-	xmms_cfg_write_int(cfg, "flac", "output.resolution.replaygain.noise_shaping", flac_cfg.output.resolution.replaygain.noise_shaping);
-	xmms_cfg_write_int(cfg, "flac", "output.resolution.replaygain.bps_out", flac_cfg.output.resolution.replaygain.bps_out);
+	bmp_cfg_db_set_bool(db, "flac", "output.replaygain.enable", flac_cfg.output.replaygain.enable);
+	bmp_cfg_db_set_bool(db, "flac", "output.replaygain.album_mode", flac_cfg.output.replaygain.album_mode);
+	bmp_cfg_db_set_int(db, "flac", "output.replaygain.preamp", flac_cfg.output.replaygain.preamp);
+	bmp_cfg_db_set_bool(db, "flac", "output.replaygain.hard_limit", flac_cfg.output.replaygain.hard_limit);
+	bmp_cfg_db_set_bool(db, "flac", "output.resolution.normal.dither_24_to_16", flac_cfg.output.resolution.normal.dither_24_to_16);
+	bmp_cfg_db_set_bool(db, "flac", "output.resolution.replaygain.dither", flac_cfg.output.resolution.replaygain.dither);
+	bmp_cfg_db_set_int(db, "flac", "output.resolution.replaygain.noise_shaping", flac_cfg.output.resolution.replaygain.noise_shaping);
+	bmp_cfg_db_set_int(db, "flac", "output.resolution.replaygain.bps_out", flac_cfg.output.resolution.replaygain.bps_out);
 	/* streaming */
 	flac_cfg.stream.http_buffer_size = (gint) GTK_ADJUSTMENT(streaming_size_adj)->value;
 	flac_cfg.stream.http_prebuffer = (gint) GTK_ADJUSTMENT(streaming_pre_adj)->value;
@@ -187,30 +183,28 @@ static void flac_configurewin_ok(GtkWidget * widget, gpointer data)
 	flac_cfg.stream.use_udp_channel = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(streaming_udp_title));
 #endif
 
-	xmms_cfg_write_int(cfg, "flac", "stream.http_buffer_size", flac_cfg.stream.http_buffer_size);
-	xmms_cfg_write_int(cfg, "flac", "stream.http_prebuffer", flac_cfg.stream.http_prebuffer);
-	xmms_cfg_write_boolean(cfg, "flac", "stream.use_proxy", flac_cfg.stream.use_proxy);
-	xmms_cfg_write_string(cfg, "flac", "stream.proxy_host", flac_cfg.stream.proxy_host);
-	xmms_cfg_write_int(cfg, "flac", "stream.proxy_port", flac_cfg.stream.proxy_port);
-	xmms_cfg_write_boolean(cfg, "flac", "stream.proxy_use_auth", flac_cfg.stream.proxy_use_auth);
+	bmp_cfg_db_set_int(db, "flac", "stream.http_buffer_size", flac_cfg.stream.http_buffer_size);
+	bmp_cfg_db_set_int(db, "flac", "stream.http_prebuffer", flac_cfg.stream.http_prebuffer);
+	bmp_cfg_db_set_bool(db, "flac", "stream.use_proxy", flac_cfg.stream.use_proxy);
+	bmp_cfg_db_set_string(db, "flac", "stream.proxy_host", flac_cfg.stream.proxy_host);
+	bmp_cfg_db_set_int(db, "flac", "stream.proxy_port", flac_cfg.stream.proxy_port);
+	bmp_cfg_db_set_bool(db, "flac", "stream.proxy_use_auth", flac_cfg.stream.proxy_use_auth);
 	if(flac_cfg.stream.proxy_user)
-		xmms_cfg_write_string(cfg, "flac", "stream.proxy_user", flac_cfg.stream.proxy_user);
+		bmp_cfg_db_set_string(db, "flac", "stream.proxy_user", flac_cfg.stream.proxy_user);
 	else
-		xmms_cfg_remove_key(cfg, "flac", "stream.proxy_user");
+		bmp_cfg_db_unset_key(db, "flac", "stream.proxy_user");
 	if(flac_cfg.stream.proxy_pass)
-		xmms_cfg_write_string(cfg, "flac", "stream.proxy_pass", flac_cfg.stream.proxy_pass);
+		bmp_cfg_db_set_string(db, "flac", "stream.proxy_pass", flac_cfg.stream.proxy_pass);
 	else
-		xmms_cfg_remove_key(cfg, "flac", "stream.proxy_pass");
-	xmms_cfg_write_boolean(cfg, "flac", "stream.save_http_stream", flac_cfg.stream.save_http_stream);
-	xmms_cfg_write_string(cfg, "flac", "stream.save_http_path", flac_cfg.stream.save_http_path);
+		bmp_cfg_db_unset_key(db, "flac", "stream.proxy_pass");
+	bmp_cfg_db_set_bool(db, "flac", "stream.save_http_stream", flac_cfg.stream.save_http_stream);
+	bmp_cfg_db_set_string(db, "flac", "stream.save_http_path", flac_cfg.stream.save_http_path);
 #ifdef FLAC_ICECAST
-	xmms_cfg_write_boolean(cfg, "flac", "stream.cast_title_streaming", flac_cfg.stream.cast_title_streaming);
-	xmms_cfg_write_boolean(cfg, "flac", "stream.use_udp_channel", flac_cfg.stream.use_udp_channel);
+	bmp_cfg_db_set_bool(db, "flac", "stream.cast_title_streaming", flac_cfg.stream.cast_title_streaming);
+	bmp_cfg_db_set_bool(db, "flac", "stream.use_udp_channel", flac_cfg.stream.use_udp_channel);
 #endif
 
-	xmms_cfg_write_file(cfg, filename);
-	xmms_cfg_free(cfg);
-	g_free(filename);
+	bmp_cfg_db_close(db);
 	gtk_widget_destroy(flac_configurewin);
 }
 

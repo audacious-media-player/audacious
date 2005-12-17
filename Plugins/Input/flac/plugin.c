@@ -26,7 +26,7 @@
 
 #include <audacious/plugin.h>
 #include <libaudacious/util.h>
-#include <libaudacious/configfile.h>
+#include <libaudacious/configdb.h>
 #include <libaudacious/titlestring.h>
 
 #ifdef HAVE_CONFIG_H
@@ -213,7 +213,7 @@ static gchar* homedir()
 
 void FLAC_XMMS__init()
 {
-	ConfigFile *cfg;
+	ConfigDb *db;
 	FLAC__uint32 test = 1;
 
 	is_big_endian_host_ = (*((FLAC__byte*)(&test)))? false : true;
@@ -222,52 +222,52 @@ void FLAC_XMMS__init()
 	g_free(flac_cfg.title.tag_format);
 	flac_cfg.title.convert_char_set = FALSE;
 
-	cfg = xmms_cfg_open_default_file();
+	db = bmp_cfg_db_open();
 
 	/* title */
 
-	xmms_cfg_read_boolean(cfg, "flac", "title.tag_override", &flac_cfg.title.tag_override);
+	bmp_cfg_db_get_bool(db, "flac", "title.tag_override", &flac_cfg.title.tag_override);
 
-	if(!xmms_cfg_read_string(cfg, "flac", "title.tag_format", &flac_cfg.title.tag_format))
+	if(!bmp_cfg_db_get_string(db, "flac", "title.tag_format", &flac_cfg.title.tag_format))
 		flac_cfg.title.tag_format = g_strdup("%p - %t");
 
-	xmms_cfg_read_boolean(cfg, "flac", "title.convert_char_set", &flac_cfg.title.convert_char_set);
+	bmp_cfg_db_get_bool(db, "flac", "title.convert_char_set", &flac_cfg.title.convert_char_set);
 
-	if(!xmms_cfg_read_string(cfg, "flac", "title.user_char_set", &flac_cfg.title.user_char_set))
+	if(!bmp_cfg_db_get_string(db, "flac", "title.user_char_set", &flac_cfg.title.user_char_set))
 		flac_cfg.title.user_char_set = FLAC_plugin__charset_get_current();
 
 	/* replaygain */
 
-	xmms_cfg_read_boolean(cfg, "flac", "output.replaygain.enable", &flac_cfg.output.replaygain.enable);
+	bmp_cfg_db_get_bool(db, "flac", "output.replaygain.enable", &flac_cfg.output.replaygain.enable);
 
-	xmms_cfg_read_boolean(cfg, "flac", "output.replaygain.album_mode", &flac_cfg.output.replaygain.album_mode);
+	bmp_cfg_db_get_bool(db, "flac", "output.replaygain.album_mode", &flac_cfg.output.replaygain.album_mode);
 
-	if(!xmms_cfg_read_int(cfg, "flac", "output.replaygain.preamp", &flac_cfg.output.replaygain.preamp))
+	if(!bmp_cfg_db_get_int(db, "flac", "output.replaygain.preamp", &flac_cfg.output.replaygain.preamp))
 		flac_cfg.output.replaygain.preamp = 0;
 
-	xmms_cfg_read_boolean(cfg, "flac", "output.replaygain.hard_limit", &flac_cfg.output.replaygain.hard_limit);
+	bmp_cfg_db_get_bool(db, "flac", "output.replaygain.hard_limit", &flac_cfg.output.replaygain.hard_limit);
 
-	xmms_cfg_read_boolean(cfg, "flac", "output.resolution.normal.dither_24_to_16", &flac_cfg.output.resolution.normal.dither_24_to_16);
-	xmms_cfg_read_boolean(cfg, "flac", "output.resolution.replaygain.dither", &flac_cfg.output.resolution.replaygain.dither);
+	bmp_cfg_db_get_bool(db, "flac", "output.resolution.normal.dither_24_to_16", &flac_cfg.output.resolution.normal.dither_24_to_16);
+	bmp_cfg_db_get_bool(db, "flac", "output.resolution.replaygain.dither", &flac_cfg.output.resolution.replaygain.dither);
 
-	if(!xmms_cfg_read_int(cfg, "flac", "output.resolution.replaygain.noise_shaping", &flac_cfg.output.resolution.replaygain.noise_shaping))
+	if(!bmp_cfg_db_get_int(db, "flac", "output.resolution.replaygain.noise_shaping", &flac_cfg.output.resolution.replaygain.noise_shaping))
 		flac_cfg.output.resolution.replaygain.noise_shaping = 1;
 
-	if(!xmms_cfg_read_int(cfg, "flac", "output.resolution.replaygain.bps_out", &flac_cfg.output.resolution.replaygain.bps_out))
+	if(!bmp_cfg_db_get_int(db, "flac", "output.resolution.replaygain.bps_out", &flac_cfg.output.resolution.replaygain.bps_out))
 		flac_cfg.output.resolution.replaygain.bps_out = 16;
 
 	/* stream */
 
-	xmms_cfg_read_int(cfg, "flac", "stream.http_buffer_size", &flac_cfg.stream.http_buffer_size);
-	xmms_cfg_read_int(cfg, "flac", "stream.http_prebuffer", &flac_cfg.stream.http_prebuffer);
-	xmms_cfg_read_boolean(cfg, "flac", "stream.use_proxy", &flac_cfg.stream.use_proxy);
-	xmms_cfg_read_string(cfg, "flac", "stream.proxy_host", &flac_cfg.stream.proxy_host);
-	xmms_cfg_read_int(cfg, "flac", "stream.proxy_port", &flac_cfg.stream.proxy_port);
-	xmms_cfg_read_boolean(cfg, "flac", "stream.proxy_use_auth", &flac_cfg.stream.proxy_use_auth);
-	xmms_cfg_read_string(cfg, "flac", "stream.proxy_user", &flac_cfg.stream.proxy_user);
-	xmms_cfg_read_string(cfg, "flac", "stream.proxy_pass", &flac_cfg.stream.proxy_pass);
-	xmms_cfg_read_boolean(cfg, "flac", "stream.save_http_stream", &flac_cfg.stream.save_http_stream);
-	if (!xmms_cfg_read_string(cfg, "flac", "stream.save_http_path", &flac_cfg.stream.save_http_path) ||
+	bmp_cfg_db_get_int(db, "flac", "stream.http_buffer_size", &flac_cfg.stream.http_buffer_size);
+	bmp_cfg_db_get_int(db, "flac", "stream.http_prebuffer", &flac_cfg.stream.http_prebuffer);
+	bmp_cfg_db_get_bool(db, "flac", "stream.use_proxy", &flac_cfg.stream.use_proxy);
+	bmp_cfg_db_get_string(db, "flac", "stream.proxy_host", &flac_cfg.stream.proxy_host);
+	bmp_cfg_db_get_int(db, "flac", "stream.proxy_port", &flac_cfg.stream.proxy_port);
+	bmp_cfg_db_get_bool(db, "flac", "stream.proxy_use_auth", &flac_cfg.stream.proxy_use_auth);
+	bmp_cfg_db_get_string(db, "flac", "stream.proxy_user", &flac_cfg.stream.proxy_user);
+	bmp_cfg_db_get_string(db, "flac", "stream.proxy_pass", &flac_cfg.stream.proxy_pass);
+	bmp_cfg_db_get_bool(db, "flac", "stream.save_http_stream", &flac_cfg.stream.save_http_stream);
+	if (!bmp_cfg_db_get_string(db, "flac", "stream.save_http_path", &flac_cfg.stream.save_http_path) ||
 		 ! *flac_cfg.stream.save_http_path) {
 	  /* TODO: Is this a memory leak ?? */
 	  /*
@@ -276,14 +276,14 @@ void FLAC_XMMS__init()
 	  */
 		flac_cfg.stream.save_http_path = homedir();
 	}
-	xmms_cfg_read_boolean(cfg, "flac", "stream.cast_title_streaming", &flac_cfg.stream.cast_title_streaming);
-	xmms_cfg_read_boolean(cfg, "flac", "stream.use_udp_channel", &flac_cfg.stream.use_udp_channel);
+	bmp_cfg_db_get_bool(db, "flac", "stream.cast_title_streaming", &flac_cfg.stream.cast_title_streaming);
+	bmp_cfg_db_get_bool(db, "flac", "stream.use_udp_channel", &flac_cfg.stream.use_udp_channel);
 
 	init_decoder_func_tables();
  	decoder_func_table_ = DECODER_FUNCS [DECODER_FILE];
 	decoder_ = decoder_func_table_ -> new_decoder();
 
-	xmms_cfg_free(cfg);
+	bmp_cfg_db_close(db);
 }
 
 int FLAC_XMMS__is_our_file(char *filename)

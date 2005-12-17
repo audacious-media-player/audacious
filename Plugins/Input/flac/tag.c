@@ -25,7 +25,6 @@
 #include <glib.h>
 #include <audacious/plugin.h>
 #include <audacious/util.h>
-#include <libaudacious/configfile.h>
 #include <libaudacious/titlestring.h>
 
 #include "FLAC/metadata.h"
