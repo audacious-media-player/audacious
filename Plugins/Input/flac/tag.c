@@ -122,7 +122,7 @@ char *flac_format_song_title(char *filename)
 	input->genre = local__getstr(genre);
 	input->comment = local__getstr(description);
 
-	input->file_name = g_basename(filename);
+	input->file_name = g_path_get_basename(filename);
 	input->file_path = filename;
 	input->file_ext = local__extname(filename);
 	ret = xmms_get_titlestring(flac_cfg.title.tag_override ? flac_cfg.title.tag_format : xmms_get_gentitle_format(), input);
