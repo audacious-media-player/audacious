@@ -84,7 +84,7 @@ VisPlugin lv_bmp_vp =
 	lv_bmp_init,			/* init */
 	lv_bmp_cleanup,			/* cleanup */
 	NULL,				/* about */
-	lv_bmp_config_window,		/* configure */
+	NULL,				/* configure */
 	lv_bmp_disable,			/* disable plugin */
 	lv_bmp_playback_start,		/* playback start */
 	lv_bmp_playback_stop,		/* playback stop */

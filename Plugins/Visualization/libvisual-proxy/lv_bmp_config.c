@@ -12,7 +12,7 @@
 #include "config_gui.h"
 
 #define CONFIG_DEFAULT_ACTOR_PLUGIN "infinite"
-#define CONFIG_DEFAULT_INPUT_PLUGIN "esd"
+#define CONFIG_DEFAULT_INPUT_PLUGIN "alsa"
 #define CONFIG_DEFAULT_MORPH_PLUGIN "alphablend"
 
 static Options default_options = { NULL, NULL, NULL, 320, 200, 30, 24, FALSE, FALSE, FALSE, TRUE, FALSE };
@@ -66,9 +66,6 @@ static void config_visual_initialize (void);
 static gboolean read_config_db (ConfigDb *db);
 
 static void dummy (GtkWidget *widget, gpointer data);
-
-static void set_defaults (void);
-
 
 Options *lv_bmp_config_open ()
 {
@@ -124,34 +121,17 @@ int lv_bmp_config_close ()
 
 int lv_bmp_config_load_prefs ()
 {
-	gchar *vstr;
 	ConfigDb *db;
 	gboolean errors;
-	gboolean must_create_entry;
-	gboolean must_update;
 	GtkWidget *msg;
 
 	db = bmp_cfg_db_open();
 
 	errors = FALSE;
-	must_create_entry = FALSE;
-	must_update = FALSE;
-	if (bmp_cfg_db_get_string (db, "libvisual", "version", &vstr)) {
-		if (strcmp (vstr, VERSION) == 0) {
-			errors = read_config_db (db);
-			if (errors)
-				visual_log (VISUAL_LOG_INFO, "There are errors on config file");
-		}
-		else
-			must_update = TRUE;
-		g_free (vstr);
-	} else {
-		must_create_entry = TRUE;
-	}
+	errors = read_config_db (db);
+	if (errors)
+		printf("Error reported in config read\n");
 	
-	if (must_update || must_create_entry)
-		set_defaults ();
-
 	load_actor_plugin_enable_table (db);
 
 	bmp_cfg_db_close(db);
@@ -191,13 +171,7 @@ int lv_bmp_config_load_prefs ()
 		visual_log (VISUAL_LOG_WARNING, "Cannot determine which kind of plugin to show");
 
 	if (errors) {
-		visual_log (VISUAL_LOG_INFO, _("LibVisual Audacious plugin: config file contain errors, fixing..."));
-		lv_bmp_config_save_prefs ();
-	} else if (must_update) {
-		visual_log (VISUAL_LOG_INFO, _("LibVisual Audacious plugin: config file is from old version, updating..."));
-		lv_bmp_config_save_prefs ();
-	} else if (must_create_entry) {
-		visual_log (VISUAL_LOG_INFO, _("LibVisual Audacious plugin: adding entry to config file..."));
+		visual_log (VISUAL_LOG_INFO, _("LibVisual: configuration is missing or corrupt, saving defaults"));
 		lv_bmp_config_save_prefs ();
 	}
 
@@ -1004,24 +978,6 @@ static void config_win_connect_callbacks (void)
 	gtk_signal_connect (GTK_OBJECT (config_win->checkbutton_morph_random), "toggled",
                       GTK_SIGNAL_FUNC (on_checkbutton_morph_random_toggled),
                       NULL);
-}
-
-static void set_defaults (void)
-{
-	strcpy (actor_plugin_buffer, CONFIG_DEFAULT_ACTOR_PLUGIN);
-	options.last_plugin = actor_plugin_buffer;
-	strcpy (morph_plugin_buffer, CONFIG_DEFAULT_MORPH_PLUGIN);
-	options.morph_plugin = morph_plugin_buffer;
-
-	options.width = default_options.width;
-	options.height = default_options.height;
-	options.depth = default_options.depth;
-	options.fps = default_options.fps;
-	options.fullscreen = default_options.fullscreen;
-	options.gl_plugins_only = default_options.gl_plugins_only;
-	options.non_gl_plugins_only = default_options.non_gl_plugins_only;
-	options.all_plugins_enabled = default_options.all_plugins_enabled;
-	options.random_morph = default_options.random_morph;
 }
 
 static void config_visual_initialize ()
