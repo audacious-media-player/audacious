@@ -359,7 +359,7 @@ out:
     }
     xmmstitle = xmms_get_titlestring(xmms_get_gentitle_format(), input);
     if(xmmstitle == NULL)
-      xmmstitle = g_strdup(input->file_name);
+      xmmstitle = g_path_get_basename(input->file_name);
     if(temp) g_free(temp);
     if(input->performer) g_free(input->performer);
     if(input->album_name) g_free(input->album_name);

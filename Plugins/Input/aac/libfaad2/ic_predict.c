@@ -39,7 +39,11 @@ static void flt_round(float32_t *pf)
 {
     int32_t flg;
     uint32_t tmp, tmp1, tmp2;
-
+    uint32_t *tmp3, *tmp4, *tmp5;
+    tmp3 = &tmp;
+    tmp4 = &tmp1;
+    tmp5 = &tmp2;
+ 
     tmp = *(uint32_t*)pf;
     flg = tmp & (uint32_t)0x00008000;
     tmp &= (uint32_t)0xffff0000;
@@ -51,17 +55,18 @@ static void flt_round(float32_t *pf)
         tmp |= (uint32_t)0x00010000;       /* insert 1 lsb */
         tmp2 = tmp;                             /* add 1 lsb and elided one */
         tmp &= (uint32_t)0xff800000;       /* extract exponent and sign */
-        
-        *pf = *(float32_t*)&tmp1 + *(float32_t*)&tmp2 - *(float32_t*)&tmp;
+ 
+        *pf = *(float32_t*)tmp4 + *(float32_t*)tmp4 - *(float32_t*)tmp5;
     } else {
-        *pf = *(float32_t*)&tmp;
+        *pf = *(float32_t*)tmp3;
     }
 }
 
 static int16_t quant_pred(float32_t x)
 {
     int16_t q;
-    uint32_t *tmp = (uint32_t*)&x;
+    float32_t *tmp1 = &x;
+    uint32_t *tmp = (uint32_t*)tmp1;
 
     q = (int16_t)(*tmp>>16);
 
@@ -71,7 +76,8 @@ static int16_t quant_pred(float32_t x)
 static float32_t inv_quant_pred(int16_t q)
 {
     float32_t x;
-    uint32_t *tmp = (uint32_t*)&x;
+    float32_t *tmp1 = &x;
+    uint32_t *tmp = (uint32_t*)tmp1;
     *tmp = ((uint32_t)q)<<16;
 
     return x;
