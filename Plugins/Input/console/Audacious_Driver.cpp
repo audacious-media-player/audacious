@@ -13,7 +13,7 @@ extern "C" {
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include "libaudacious/configfile.h"
+#include "libaudacious/configdb.h"
 #include "libaudacious/util.h"
 #include "libaudacious/titlestring.h"
 #include "audacious/input.h"
@@ -443,15 +443,15 @@ static int get_time(void)
 
 static void console_init(void)
 {
-	ConfigFile *cfg;
+	ConfigDb *db;
 
-	cfg = xmms_cfg_open_default_file();
+	db = bmp_cfg_db_open();
 
-	xmms_cfg_read_int(cfg, "console", "loop_length", &audcfg.loop_length);
-	xmms_cfg_read_boolean(cfg, "console", "resample", &audcfg.resample);
-	xmms_cfg_read_int(cfg, "console", "resample_rate", &audcfg.resample_rate);
+	bmp_cfg_db_get_int(db, "console", "loop_length", &audcfg.loop_length);
+	bmp_cfg_db_get_bool(db, "console", "resample", &audcfg.resample);
+	bmp_cfg_db_get_int(db, "console", "resample_rate", &audcfg.resample_rate);
 
-	xmms_cfg_free(cfg);
+	bmp_cfg_db_close(db);
 }
 
 extern "C" void console_aboutbox(void)

@@ -17,7 +17,6 @@
 
 #include <audacious/plugin.h>
 #include <libaudacious/util.h>
-#include <libaudacious/configfile.h>
 #include <libaudacious/titlestring.h>
 
 #define MP4_DESCRIPTION	"MP4 & MPEG2/4-AAC for bmp-0.9.7"

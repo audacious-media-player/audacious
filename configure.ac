@@ -465,8 +465,7 @@ AC_ARG_ENABLE(musepack,
 
 if test "$enable_musepack" = "yes"; then
     AC_CHECK_HEADERS(mpcdec/config_types.h,,
-        [AC_MSG_ERROR([libmpcdec not installed])
-	 enable_musepack=no]
+        enable_musepack=no
     )
 
     AC_PATH_PROG(TAGLIB_CONFIG, taglib-config, [no], [$PATH:$prefix/bin])
