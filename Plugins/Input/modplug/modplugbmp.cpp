@@ -256,8 +256,6 @@ bool ModplugXMMS::CanPlayFile(const string& aFilename)
 	
 	if (lExt == ".zip")
 		return ContainsMod(aFilename);
-	if (lExt == ".rar")
-		return ContainsMod(aFilename);
 	if (lExt == ".gz")
 		return ContainsMod(aFilename);
 	if (lExt == ".bz2")
