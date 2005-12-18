@@ -674,7 +674,7 @@ display_usage(void)
     g_print("\n-i, --sm-client-id     ");
     /* -i, --sm-client-id switch */
     g_print(_("Previous session ID"));
-    g_print("\n-H, --headless       ");
+    g_print("\n-H, --headless         ");
     /* -h, --headless switch */
     g_print(_("Headless operation [experimental]"));
     g_print("\n-v, --version          ");
