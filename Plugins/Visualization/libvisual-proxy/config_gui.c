@@ -11,14 +11,6 @@
 
 #include "config_gui.h"
 
-#if 0
-static gchar *check_file_exists (const gchar *directory, const gchar *filename);
-static GtkWidget *create_pixmap (GtkWidget *widget, const gchar *filename);
-static GtkWidget *create_dummy_pixmap (GtkWidget *widget);
-static GtkWidget* lookup_widget (GtkWidget *widget, const gchar *widget_name);
-static void add_pixmap_directory (const gchar *directory);
-#endif
-
 ConfigWin *lv_bmp_config_gui_new (void)
 {
   ConfigWin *config_gui;
@@ -61,10 +53,6 @@ ConfigWin *lv_bmp_config_gui_new (void)
 
   tooltips = gtk_tooltips_new ();
 
-#if 0
-  add_pixmap_directory (PACKAGE_DATADIR);
-#endif
-  
   window_main = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_object_set_data (GTK_OBJECT (window_main), "window_main", window_main);
   gtk_window_set_title (GTK_WINDOW (window_main), _("LibVisual Audacious Plugin"));
@@ -336,139 +324,3 @@ ConfigWin *lv_bmp_config_gui_new (void)
 
   return config_gui;
 }
-
-#if 0
-/* This is a dummy pixmap we use when a pixmap can't be found. */
-static char *dummy_pixmap_xpm[] = {
-/* columns rows colors chars-per-pixel */
-"1 1 1 1",
-"  c None",
-/* pixels */
-" "
-};
-
-static GtkWidget *create_dummy_pixmap (GtkWidget *widget)
-{
-  GdkColormap *colormap;
-  GdkPixmap *gdkpixmap;
-  GdkBitmap *mask;
-  GtkWidget *pixmap;
-
-  colormap = gtk_widget_get_colormap (widget);
-  gdkpixmap = gdk_pixmap_colormap_create_from_xpm_d (NULL, colormap, &mask,
-                                                     NULL, dummy_pixmap_xpm);
-  if (gdkpixmap == NULL)
-    g_error (_("Couldn't create replacement pixmap."));
-  pixmap = gtk_pixmap_new (gdkpixmap, mask);
-  gdk_pixmap_unref (gdkpixmap);
-  gdk_bitmap_unref (mask);
-  return pixmap;
-}
-#endif
-
-#if 0
-static GList *pixmaps_directories = NULL;
-
-static void add_pixmap_directory (const gchar *directory)
-{
-  pixmaps_directories = g_list_prepend (pixmaps_directories,
-                                        g_strdup (directory));
-}
-#endif
-
-#if 0
-static GtkWidget *create_pixmap (GtkWidget *widget, const gchar *filename)
-{
-  gchar *found_filename = NULL;
-  GdkColormap *colormap;
-  GdkPixmap *gdkpixmap;
-  GdkBitmap *mask;
-  GtkWidget *pixmap;
-  GList *elem;
-
-  if (!filename || !filename[0])
-      return create_dummy_pixmap (widget);
-
-  /* We first try any pixmaps directories set by the application. */
-  elem = pixmaps_directories;
-  while (elem)
-    {
-      found_filename = check_file_exists ((gchar*)elem->data, filename);
-      if (found_filename)
-        break;
-      elem = elem->next;
-    }
-
-  /* If we haven't found the pixmap, try the source directory. */
-  if (!found_filename)
-    {
-      found_filename = check_file_exists ("../pixmaps", filename);
-    }
-
-  if (!found_filename)
-    {
-      g_warning (_("Couldn't find pixmap file: %s"), filename);
-      return create_dummy_pixmap (widget);
-    }
-
-  colormap = gtk_widget_get_colormap (widget);
-  gdkpixmap = gdk_pixmap_colormap_create_from_xpm (NULL, colormap, &mask,
-                                                   NULL, found_filename);
-  if (gdkpixmap == NULL)
-    {
-      g_warning (_("Error loading pixmap file: %s"), found_filename);
-      g_free (found_filename);
-      return create_dummy_pixmap (widget);
-    }
-  g_free (found_filename);
-  pixmap = gtk_pixmap_new (gdkpixmap, mask);
-  gdk_pixmap_unref (gdkpixmap);
-  gdk_bitmap_unref (mask);
-  return pixmap;
-}
-#endif
-
-#if 0
-static gchar *check_file_exists (const gchar *directory, const gchar *filename)
-{
-  gchar *full_filename;
-  struct stat s;
-  gint status;
-
-  full_filename = (gchar*) g_malloc (strlen (directory) + 1
-                                     + strlen (filename) + 1);
-  strcpy (full_filename, directory);
-  strcat (full_filename, G_DIR_SEPARATOR_S);
-  strcat (full_filename, filename);
-
-  status = stat (full_filename, &s);
-  if (status == 0 && S_ISREG (s.st_mode))
-    return full_filename;
-  g_free (full_filename);
-  return NULL;
-}
-#endif
-
-#if 0
-static GtkWidget* lookup_widget (GtkWidget *widget, const gchar *widget_name)
-{
-  GtkWidget *parent, *found_widget;
-
-  for (;;)
-    {
-      if (GTK_IS_MENU (widget))
-        parent = gtk_menu_get_attach_widget (GTK_MENU (widget));
-      else
-        parent = widget->parent;
-      if (parent == NULL)
-        break;
-      widget = parent;
-    }
-
-  found_widget = (GtkWidget*) gtk_object_get_data (GTK_OBJECT (widget),
-                                                   widget_name);
-  if (!found_widget)
-    g_warning ("Widget not found: %s", widget_name);
-  return found_widget;
-}
-#endif

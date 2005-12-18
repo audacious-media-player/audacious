@@ -20,21 +20,21 @@
 #include "lv_bmp_config.h"
 #include "about.h"
 
-#define LV_XMMS_DEFAULT_INPUT_PLUGIN "esd"
+#define LV_XMMS_DEFAULT_INPUT_PLUGIN "alsa"
+#undef LV_XMMS_ENABLE_DEBUG
 
 /* SDL variables */
 static SDL_Surface *screen = NULL;
 static SDL_Color sdlpal[256];
 static SDL_Thread *render_thread;
 static SDL_mutex *pcm_mutex;
-static SDL_Surface *icon;
 
 /* Libvisual and visualisation variables */
 static VisVideo *video;
 static VisPalette *pal;
 
 static char song_name[1024];
-static const char *cur_lv_plugin = NULL;
+static char *cur_lv_plugin = NULL;
 
 static VisBin *bin = NULL;
 
@@ -121,12 +121,11 @@ static void lv_bmp_init ()
 	        g_free (argv);
 	}
 
-#if LV_XMMS_ENABLE_DEBUG
+#ifdef LV_XMMS_ENABLE_DEBUG
 	visual_log_set_verboseness (VISUAL_LOG_VERBOSENESS_HIGH);
+#else
+	visual_log_set_verboseness (VISUAL_LOG_VERBOSENESS_NONE);
 #endif
-	/*g_print ("Trying to set verboseness\n");
-	visual_log_set_verboseness (VISUAL_LOG_VERBOSENESS_LOW);
-	g_print ("Verboseness done\n");*/
 
 	options = lv_bmp_config_open ();
 	if (!options) {
@@ -147,12 +146,6 @@ static void lv_bmp_init ()
 		return;
 	}
 
-	icon = SDL_LoadBMP (options->icon_file);
-	if (icon)
-		SDL_WM_SetIcon (icon, NULL);
-	else
-		visual_log (VISUAL_LOG_WARNING, _("Cannot not load icon: %s"), SDL_GetError());
-	
 	pcm_mutex = SDL_CreateMutex ();
 	
 	if (strlen (options->last_plugin) <= 0 ) {
@@ -208,9 +201,6 @@ static void lv_bmp_cleanup ()
 
 	visual_log (VISUAL_LOG_DEBUG, "closing config file");
 	lv_bmp_config_close ();
-
-	if (icon != NULL)
-		SDL_FreeSurface (icon);
 
 	visual_log (VISUAL_LOG_DEBUG, "destroying VisBin...");
 	visual_object_unref (VISUAL_OBJECT (bin));
@@ -522,7 +512,7 @@ static int sdl_event_handle ()
 {
 	SDL_Event event;
 	VisEventQueue *vevent;
-	const char *next_plugin;
+	char *next_plugin;
 
 	while (SDL_PollEvent (&event)) {
 		vevent = visual_plugin_get_eventqueue (visual_actor_get_plugin (visual_bin_get_actor (bin)));

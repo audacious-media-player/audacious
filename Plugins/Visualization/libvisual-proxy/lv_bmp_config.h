@@ -14,7 +14,7 @@
  */
 typedef struct {
 
-	const gchar *last_plugin;	/**< Name of the last plugin runned,
+	char *last_plugin;	/**< Name of the last plugin runned,
 					  with length < OPTIONS_MAX_NAME_LEN. */
 
 	gchar *morph_plugin; /**< */
@@ -45,11 +45,11 @@ int lv_bmp_config_save_prefs (void);
 
 void lv_bmp_config_toggle_fullscreen (void);
 
-const char *lv_bmp_config_get_next_actor (void);
-const char *lv_bmp_config_get_prev_actor (void);
-void lv_bmp_config_set_current_actor (const char *name);
+char *lv_bmp_config_get_next_actor (void);
+char *lv_bmp_config_get_prev_actor (void);
+void lv_bmp_config_set_current_actor (char *name);
 
-const char *lv_bmp_config_morph_plugin (void);
+char *lv_bmp_config_morph_plugin (void);
 
 #endif /* __LV_BMP_CONFIG__ */
 

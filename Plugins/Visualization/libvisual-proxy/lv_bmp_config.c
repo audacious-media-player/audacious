@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <gtk/gtk.h>
-#include <libaudacious/configfile.h>
+#include <libaudacious/configdb.h>
 #include <libaudacious/util.h>
 #include <libvisual/libvisual.h>
 #include <glib/gi18n.h>
@@ -15,7 +15,7 @@
 #define CONFIG_DEFAULT_INPUT_PLUGIN "esd"
 #define CONFIG_DEFAULT_MORPH_PLUGIN "alphablend"
 
-static const Options default_options = { NULL, NULL, NULL, 320, 200, 30, 24, FALSE, FALSE, FALSE, TRUE, FALSE };
+static Options default_options = { NULL, NULL, NULL, 320, 200, 30, 24, FALSE, FALSE, FALSE, TRUE, FALSE };
 static Options options = { NULL, NULL, NULL, -1, -1, -1, -1, FALSE, FALSE, FALSE, TRUE, FALSE };
 static ConfigWin *config_win = NULL;
 
@@ -55,7 +55,7 @@ static int config_win_load_morph_plugin_list (void);
 static int load_actor_plugin_list (void);
 static int load_morph_plugin_list (void);
 	
-static void load_actor_plugin_enable_table (ConfigFile *f);
+static void load_actor_plugin_enable_table (ConfigDb *db);
 
 static void remove_boolean (gpointer key, gpointer value, gpointer data);
 
@@ -63,7 +63,7 @@ static void config_win_set_defaults (void);
 static void config_win_connect_callbacks (void);
 static void config_visual_initialize (void);
 
-static gboolean read_config_file (ConfigFile *f);
+static gboolean read_config_db (ConfigDb *db);
 
 static void dummy (GtkWidget *widget, gpointer data);
 
@@ -75,7 +75,6 @@ Options *lv_bmp_config_open ()
 	actor_plugin_buffer = g_malloc0 (OPTIONS_MAX_NAME_LEN);
 	options.last_plugin = actor_plugin_buffer;
 	morph_plugin_buffer = g_malloc0 (OPTIONS_MAX_NAME_LEN);
-	options.icon_file = g_malloc0 (OPTIONS_MAX_ICON_PATH_LEN);
 
 	config_visual_initialize ();
 
@@ -94,8 +93,6 @@ int lv_bmp_config_close ()
 		g_free (actor_plugin_buffer);
 	if (morph_plugin_buffer != NULL)
 		g_free (morph_plugin_buffer);
-	if (options.icon_file != NULL)
-		g_free (options.icon_file);
 
 	if (actor_plugin_table) {
 		g_hash_table_destroy (actor_plugin_table);
@@ -128,21 +125,20 @@ int lv_bmp_config_close ()
 int lv_bmp_config_load_prefs ()
 {
 	gchar *vstr;
-	ConfigFile *f;
+	ConfigDb *db;
 	gboolean errors;
 	gboolean must_create_entry;
 	gboolean must_update;
 	GtkWidget *msg;
 
-	if ((f = xmms_cfg_open_default_file ()) == NULL)
-		return -1;
+	db = bmp_cfg_db_open();
 
 	errors = FALSE;
 	must_create_entry = FALSE;
 	must_update = FALSE;
-	if (xmms_cfg_read_string (f, "libvisual_bmp", "version", &vstr)) {
+	if (bmp_cfg_db_get_string (db, "libvisual", "version", &vstr)) {
 		if (strcmp (vstr, VERSION) == 0) {
-			errors = read_config_file (f);
+			errors = read_config_db (db);
 			if (errors)
 				visual_log (VISUAL_LOG_INFO, "There are errors on config file");
 		}
@@ -156,9 +152,9 @@ int lv_bmp_config_load_prefs ()
 	if (must_update || must_create_entry)
 		set_defaults ();
 
-	load_actor_plugin_enable_table (f);
+	load_actor_plugin_enable_table (db);
 
-	xmms_cfg_free (f);
+	bmp_cfg_db_close(db);
 
 	/*
 	 * Set our local copies
@@ -213,70 +209,63 @@ int lv_bmp_config_load_prefs ()
 static void save_actor_enable_state (gpointer data, gpointer user_data)
 {
 	VisPluginRef *actor;
-	ConfigFile *f;
+	ConfigDb *db;
 	gboolean *enable;
 
 	actor = data;
-	f = user_data;
+	db = user_data;
 
 	visual_log_return_if_fail (actor != NULL);
 	visual_log_return_if_fail (actor->info != NULL);
-	visual_log_return_if_fail (f != NULL);
+	visual_log_return_if_fail (db != NULL);
 
 	enable = g_hash_table_lookup (actor_plugin_enable_table, actor->info->plugname);
 	if (!enable) {
 		visual_log (VISUAL_LOG_DEBUG, "enable == NULL for %s", actor->info->plugname);
 		return;
 	}
-	xmms_cfg_write_boolean (f, "libvisual_bmp", actor->info->plugname, *enable);
+	bmp_cfg_db_set_bool (db, "libvisual", actor->info->plugname, *enable);
 }
 
 int lv_bmp_config_save_prefs ()
 {
-	ConfigFile *f;
+	ConfigDb *db;
 
-	if((f = xmms_cfg_open_default_file ()) == NULL)
-		f = xmms_cfg_new ();
-	if (f == NULL)
-		return -1;
+	db = bmp_cfg_db_open();
 
-	xmms_cfg_write_string (f, "libvisual_bmp", "version", VERSION);
+	bmp_cfg_db_set_string (db, "libvisual", "version", VERSION);
 
 	if (options.last_plugin != NULL && (strlen(options.last_plugin) > 0))
-		xmms_cfg_write_string (f, "libvisual_bmp", "last_plugin", GTK_SIGNAL_FUNC(options.last_plugin));
+		bmp_cfg_db_set_string (db, "libvisual", "last_plugin", options.last_plugin);
 	else
-		xmms_cfg_write_string (f, "libvisual_bmp", "last_plugin", CONFIG_DEFAULT_ACTOR_PLUGIN);
+		bmp_cfg_db_set_string (db, "libvisual", "last_plugin", CONFIG_DEFAULT_ACTOR_PLUGIN);
 
 	if (options.morph_plugin != NULL && (strlen(options.morph_plugin) > 0))
-		xmms_cfg_write_string (f, "libvisual_bmp", "morph_plugin", options.morph_plugin);
+		bmp_cfg_db_set_string (db, "libvisual", "morph_plugin", options.morph_plugin);
 	else
-		xmms_cfg_write_string (f, "libvisual_bmp", "morph_plugin", CONFIG_DEFAULT_MORPH_PLUGIN);
-	xmms_cfg_write_boolean (f, "libvisual_bmp", "random_morph", options.random_morph);
+		bmp_cfg_db_set_string (db, "libvisual", "morph_plugin", CONFIG_DEFAULT_MORPH_PLUGIN);
+	bmp_cfg_db_set_bool (db, "libvisual", "random_morph", options.random_morph);
 		
-	if (options.icon_file != NULL && (strlen(options.icon_file) > 0))
-		xmms_cfg_write_string (f, "libvisual_bmp", "icon", options.icon_file);
-
-	xmms_cfg_write_int (f, "libvisual_bmp", "width", options.width);
-	xmms_cfg_write_int (f, "libvisual_bmp", "height", options.height);
-	xmms_cfg_write_int (f, "libvisual_bmp", "color_depth", options.depth);
-	xmms_cfg_write_int (f, "libvisual_bmp", "fps", options.fps);
-	xmms_cfg_write_boolean (f, "libvisual_bmp", "fullscreen", options.fullscreen);
+	bmp_cfg_db_set_int (db, "libvisual", "width", options.width);
+	bmp_cfg_db_set_int (db, "libvisual", "height", options.height);
+	bmp_cfg_db_set_int (db, "libvisual", "color_depth", options.depth);
+	bmp_cfg_db_set_int (db, "libvisual", "fps", options.fps);
+	bmp_cfg_db_set_bool (db, "libvisual", "fullscreen", options.fullscreen);
 	if (options.gl_plugins_only)
-		xmms_cfg_write_string (f, "libvisual_bmp", "enabled_plugins", "gl_only");
+		bmp_cfg_db_set_string (db, "libvisual", "enabled_plugins", "gl_only");
 	else if (options.non_gl_plugins_only)
-		xmms_cfg_write_string (f, "libvisual_bmp", "enabled_plugins", "non_gl_only");
+		bmp_cfg_db_set_string (db, "libvisual", "enabled_plugins", "non_gl_only");
 	else if (options.all_plugins_enabled)
-		xmms_cfg_write_string (f, "libvisual_bmp", "enabled_plugins", "all");
+		bmp_cfg_db_set_string (db, "libvisual", "enabled_plugins", "all");
 	else
 		g_warning ("Inconsistency on config module");
 
 	visual_log_return_val_if_fail (actor_plugins_gl != NULL, -1);
 
-	g_slist_foreach (actor_plugins_gl, save_actor_enable_state, f);
-	g_slist_foreach (actor_plugins_nongl, save_actor_enable_state, f);
+	g_slist_foreach (actor_plugins_gl, save_actor_enable_state, db);
+	g_slist_foreach (actor_plugins_nongl, save_actor_enable_state, db);
 
-	xmms_cfg_write_default_file (f);
-	xmms_cfg_free (f);
+	bmp_cfg_db_close(db);
 
 	return 0;
 }
@@ -290,7 +279,7 @@ void lv_bmp_config_toggle_fullscreen (void)
 							fullscreen);
 }
 
-const char *lv_bmp_config_get_prev_actor (void)
+char *lv_bmp_config_get_prev_actor (void)
 {
 	const gchar *prev_plugin;
 	gboolean *plugin_enabled;
@@ -314,7 +303,7 @@ const char *lv_bmp_config_get_prev_actor (void)
 	return NULL;
 }
 
-const char *lv_bmp_config_get_next_actor (void)
+char *lv_bmp_config_get_next_actor (void)
 {
 	const gchar *next_plugin;
 	gboolean *plugin_enabled;
@@ -338,14 +327,14 @@ const char *lv_bmp_config_get_next_actor (void)
 	return NULL;
 }
 
-void lv_bmp_config_set_current_actor (const char *name)
+void lv_bmp_config_set_current_actor (char *name)
 {
 	visual_log_return_if_fail (name != NULL);
 
 	options.last_plugin = name;
 }
 
-const char *lv_bmp_config_morph_plugin (void)
+char *lv_bmp_config_morph_plugin (void)
 {
 	GSList *l;
 	int i, pos;
@@ -712,18 +701,18 @@ static gint hash_compare (gconstpointer s1, gconstpointer s2)
 
 static void load_actor_enable_state (gpointer data, gpointer user_data)
 {
-	ConfigFile *config_file;
+	ConfigDb *db;
 	VisPluginRef *actor;
 	gboolean enabled, *b;
 
 	actor = data;
-	config_file = user_data;
+	db = user_data;
 
 	visual_log_return_if_fail (actor != NULL);
 	visual_log_return_if_fail (actor->info != NULL);
-	visual_log_return_if_fail (config_file != NULL);
+	visual_log_return_if_fail (db != NULL);
 
-	if (!xmms_cfg_read_boolean (config_file, "libvisual_bmp", actor->info->plugname, &enabled))
+	if (!bmp_cfg_db_get_bool (db, "libvisual", actor->info->plugname, &enabled))
 		enabled = TRUE;
 
 	b = g_malloc (sizeof(gboolean));
@@ -731,16 +720,17 @@ static void load_actor_enable_state (gpointer data, gpointer user_data)
 	g_hash_table_insert (actor_plugin_enable_table, actor->info->plugname, b);
 }
 
-static void load_actor_plugin_enable_table (ConfigFile *f)
+static void load_actor_plugin_enable_table (ConfigDb *db)
 {
 	visual_log_return_if_fail (actor_plugins_nongl != NULL);
 	visual_log_return_if_fail (actor_plugins_gl != NULL);
+	visual_log_return_if_fail (db != NULL);
 
 	if (!actor_plugin_enable_table)
 		actor_plugin_enable_table = g_hash_table_new (hash_function, hash_compare);
 
-	g_slist_foreach (actor_plugins_nongl, load_actor_enable_state, f);
-	g_slist_foreach (actor_plugins_gl, load_actor_enable_state, f);
+	g_slist_foreach (actor_plugins_nongl, load_actor_enable_state, db);
+	g_slist_foreach (actor_plugins_gl, load_actor_enable_state, db);
 }
 
 static void remove_boolean (gpointer key, gpointer value, gpointer data)
@@ -754,7 +744,7 @@ static void new_actor_item (gpointer data, gpointer user_data)
 	GtkWidget *item/*, *olditem*/;
 	VisPluginRef *actor;
 	gchar *name;
-	const gchar *plugname;
+	gchar *plugname;
 	gboolean *enabled;
 
 	actor = data;
@@ -1042,7 +1032,7 @@ static void config_visual_initialize ()
 
 	if (!visual_is_initialized ()) {
 	        argv = g_malloc (sizeof(char*));
-	        argv[0] = g_strdup ("BMP plugin");
+	        argv[0] = g_strdup ("Libvisual");
         	argc = 1;
 		if (visual_init (&argc, &argv) < 0) {
 			msg = xmms_show_message (PACKAGE_NAME,
@@ -1063,19 +1053,19 @@ static void dummy (GtkWidget *widget, gpointer data)
 {
 }
 
-static gboolean read_config_file (ConfigFile *f)
+static gboolean read_config_db (ConfigDb *db)
 {
 	gchar *enabled_plugins;
 	gboolean errors = FALSE;
 
-	if (!xmms_cfg_read_string (f, "libvisual_bmp", "last_plugin", &actor_plugin_buffer)
+	if (!bmp_cfg_db_get_string (db, "libvisual", "last_plugin", &actor_plugin_buffer)
  		|| (strlen (actor_plugin_buffer) <= 0)) {
 		visual_log (VISUAL_LOG_DEBUG, "Error on last_plugin option");
 		strcpy (actor_plugin_buffer, CONFIG_DEFAULT_ACTOR_PLUGIN);
 		errors = TRUE;
 	}
 	options.last_plugin = actor_plugin_buffer;
-	if (!xmms_cfg_read_string (f, "libvisual_bmp", "morph_plugin", &morph_plugin_buffer)
+	if (!bmp_cfg_db_get_string (db, "libvisual", "morph_plugin", &morph_plugin_buffer)
 		|| (strlen (morph_plugin_buffer) <= 0)) {
 		visual_log (VISUAL_LOG_DEBUG, "Error on morph_plugin option");
 		strcpy (morph_plugin_buffer, CONFIG_DEFAULT_MORPH_PLUGIN);
@@ -1083,43 +1073,38 @@ static gboolean read_config_file (ConfigFile *f)
 	}
 	morph_plugin = morph_plugin_buffer;
 	options.morph_plugin = morph_plugin;
-	if (!xmms_cfg_read_boolean (f, "libvisual_bmp", "random_morph", &options.random_morph)) {
+	if (!bmp_cfg_db_get_bool (db, "libvisual", "random_morph", &options.random_morph)) {
 		visual_log (VISUAL_LOG_DEBUG, "Error on random_morph option");
 		options.random_morph = default_options.random_morph;
 		errors = TRUE;
 	}
-	if (!xmms_cfg_read_string (f, "libvisual_bmp", "icon", &options.icon_file)
-		|| (strlen (options.icon_file) <= 0)) {
-		visual_log (VISUAL_LOG_DEBUG, "Error on icon option");
-		errors = TRUE;
-	}
-	if (!xmms_cfg_read_int (f, "libvisual_bmp", "width", &options.width) || options.width <= 0) {
+	if (!bmp_cfg_db_get_int (db, "libvisual", "width", &options.width) || options.width <= 0) {
 		visual_log (VISUAL_LOG_DEBUG, "Error on width option");
 		options.width = default_options.width;
 		errors = TRUE;
 	}
-	if (!xmms_cfg_read_int (f, "libvisual_bmp", "height", &options.height)	|| options.height <= 0) {
+	if (!bmp_cfg_db_get_int (db, "libvisual", "height", &options.height)	|| options.height <= 0) {
 		visual_log (VISUAL_LOG_DEBUG, "Error on height option");
 		options.height = default_options.height;
 		errors = TRUE;
 	}
-	if (!xmms_cfg_read_int (f, "libvisual_bmp", "fps", &options.fps) || options.fps <= 0) {
+	if (!bmp_cfg_db_get_int (db, "libvisual", "fps", &options.fps) || options.fps <= 0) {
 		visual_log (VISUAL_LOG_DEBUG, "Error on fps option");
 		options.fps = default_options.fps;
 		errors = TRUE;
 	}
-	if (!xmms_cfg_read_int (f, "libvisual_bmp", "color_depth", &options.depth) || options.depth <= 0) {
+	if (!bmp_cfg_db_get_int (db, "libvisual", "color_depth", &options.depth) || options.depth <= 0) {
 		visual_log (VISUAL_LOG_DEBUG, "Error on color_depth option");
 		options.depth = default_options.depth;
 		errors = TRUE;
 	}
-	if (!xmms_cfg_read_boolean (f, "libvisual_bmp", "fullscreen", &options.fullscreen)) {
+	if (!bmp_cfg_db_get_bool (db, "libvisual", "fullscreen", &options.fullscreen)) {
 		visual_log (VISUAL_LOG_DEBUG, "Error on fullscreen option");
 		options.fullscreen = default_options.fullscreen;
 		errors = TRUE;
 	}
 	enabled_plugins = g_malloc0 (OPTIONS_MAX_NAME_LEN);
-	if (!xmms_cfg_read_string (f, "libvisual_bmp", "enabled_plugins", &enabled_plugins)
+	if (!bmp_cfg_db_get_string (db, "libvisual", "enabled_plugins", &enabled_plugins)
 		|| (strlen (enabled_plugins) <= 0)) {
 		visual_log (VISUAL_LOG_DEBUG, "Error on enabled_plugins option: %s", enabled_plugins);
 		options.gl_plugins_only = default_options.gl_plugins_only;
