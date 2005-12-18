@@ -82,10 +82,10 @@ VisPlugin lv_bmp_vp =
 	2,				/* Numbers of PCM channels wanted in the call to render_pcm */
 	0,				/* Numbers of freq channels wanted in the call to render_freq */
 	lv_bmp_init,			/* init */
-	lv_bmp_cleanup,		/* cleanup */
+	lv_bmp_cleanup,			/* cleanup */
 	NULL,				/* about */
-	NULL,				/* configure */
-	lv_bmp_disable,		/* disable plugin */
+	lv_bmp_config_window,		/* configure */
+	lv_bmp_disable,			/* disable plugin */
 	lv_bmp_playback_start,		/* playback start */
 	lv_bmp_playback_stop,		/* playback stop */
 	lv_bmp_render_pcm,		/* render pcm */

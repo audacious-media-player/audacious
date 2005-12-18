@@ -1,5 +1,7 @@
-#include <gtk/gtk.h>
+#ifndef __LV_CONFIG_GUI_H__
+#define __LV_CONFIG_GUI_H__
 
+#include <gtk/gtk.h>
 
 typedef struct {
 	GtkWidget *window_main;
@@ -26,6 +28,6 @@ typedef struct {
 	GtkWidget *button_cancel;
 } ConfigWin;
 
+ConfigWin *lv_bmp_config_gui_new (void);
 
-ConfigWin *lv_xmms_config_gui_new (void);
-
+#endif /* __LV_CONFIG_GUI_H__ */

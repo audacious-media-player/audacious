@@ -8,7 +8,7 @@ endif
 
 libdir = $(plugindir)/$(VISUALIZATION_PLUGIN_DIR)
 
-INCLUDES = $(GTK_CFLAGS) $(LIBVISUAL_CFLAGS) $(SDL_CFLAGS) $(all_includes)
+INCLUDES = $(GTK_CFLAGS) $(LIBVISUAL_CFLAGS) $(SDL_CFLAGS) $(all_includes) -I$(top_builddir)/intl 
 
 libvisual_proxy_la_LDFLAGS = $(PLUGIN_LDFLAGS) $(GTK_LDFLAGS) $(LIBVISUAL_LDFLAGS) $(SDL_LDFLAGS)
 libvisual_proxy_la_LIBADD = $(GTK_LIBS) $(LIBVISUAL_LIBS) $(SDL_LIBS) -lGL

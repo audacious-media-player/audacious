@@ -5,6 +5,7 @@
 
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
+#include <glib/gi18n.h>
 
 #include "config.h"
 
@@ -14,10 +15,11 @@
 static gchar *check_file_exists (const gchar *directory, const gchar *filename);
 static GtkWidget *create_pixmap (GtkWidget *widget, const gchar *filename);
 static GtkWidget *create_dummy_pixmap (GtkWidget *widget);
-/*static GtkWidget* lookup_widget (GtkWidget *widget, const gchar *widget_name);*/
+static GtkWidget* lookup_widget (GtkWidget *widget, const gchar *widget_name);
 static void add_pixmap_directory (const gchar *directory);
+#endif
 
-ConfigWin *lv_xmms_config_gui_new (void)
+ConfigWin *lv_bmp_config_gui_new (void)
 {
   ConfigWin *config_gui;
 
@@ -59,9 +61,11 @@ ConfigWin *lv_xmms_config_gui_new (void)
 
   tooltips = gtk_tooltips_new ();
 
+#if 0
   add_pixmap_directory (PACKAGE_DATADIR);
+#endif
   
-  window_main = gtk_window_new (GTK_WINDOW_DIALOG);
+  window_main = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_object_set_data (GTK_OBJECT (window_main), "window_main", window_main);
   gtk_window_set_title (GTK_WINDOW (window_main), _("LibVisual Audacious Plugin"));
   gtk_window_set_position (GTK_WINDOW (window_main), GTK_WIN_POS_CENTER);
@@ -333,6 +337,7 @@ ConfigWin *lv_xmms_config_gui_new (void)
   return config_gui;
 }
 
+#if 0
 /* This is a dummy pixmap we use when a pixmap can't be found. */
 static char *dummy_pixmap_xpm[] = {
 /* columns rows colors chars-per-pixel */
@@ -359,7 +364,9 @@ static GtkWidget *create_dummy_pixmap (GtkWidget *widget)
   gdk_bitmap_unref (mask);
   return pixmap;
 }
+#endif
 
+#if 0
 static GList *pixmaps_directories = NULL;
 
 static void add_pixmap_directory (const gchar *directory)
@@ -367,7 +374,9 @@ static void add_pixmap_directory (const gchar *directory)
   pixmaps_directories = g_list_prepend (pixmaps_directories,
                                         g_strdup (directory));
 }
+#endif
 
+#if 0
 static GtkWidget *create_pixmap (GtkWidget *widget, const gchar *filename)
 {
   gchar *found_filename = NULL;
@@ -417,7 +426,9 @@ static GtkWidget *create_pixmap (GtkWidget *widget, const gchar *filename)
   gdk_bitmap_unref (mask);
   return pixmap;
 }
+#endif
 
+#if 0
 static gchar *check_file_exists (const gchar *directory, const gchar *filename)
 {
   gchar *full_filename;
@@ -436,8 +447,10 @@ static gchar *check_file_exists (const gchar *directory, const gchar *filename)
   g_free (full_filename);
   return NULL;
 }
+#endif
 
-/*static GtkWidget* lookup_widget (GtkWidget *widget, const gchar *widget_name)
+#if 0
+static GtkWidget* lookup_widget (GtkWidget *widget, const gchar *widget_name)
 {
   GtkWidget *parent, *found_widget;
 
@@ -457,6 +470,5 @@ static gchar *check_file_exists (const gchar *directory, const gchar *filename)
   if (!found_widget)
     g_warning ("Widget not found: %s", widget_name);
   return found_widget;
-}*/
-
+}
 #endif
