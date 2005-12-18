@@ -777,9 +777,9 @@ size_t mid_song_read_wave(MidSong *song, void *ptr, size_t size)
       song->current_event++;
     }
     if (song->current_event->time > end_sample)
-      compute_data(song, (sint8 **)&ptr, end_sample-song->current_sample);
+      compute_data(song, (sint8 **)ptr, end_sample-song->current_sample);
     else
-      compute_data(song, (sint8 **)&ptr, song->current_event->time-song->current_sample);
+      compute_data(song, (sint8 **)ptr, song->current_event->time-song->current_sample);
   }
   return samples * song->bytes_per_sample;
 }
