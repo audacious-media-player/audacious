@@ -293,28 +293,14 @@ playlist_list_draw_string(PlayList_List * pl,
                           const gchar * text,
                           guint ppos)
 {
-
     gint len;
-    gint len_pixmap;
     guint plist_length_int;
-    PangoLayout *layout;
+
     gchar *text_clipped;
+    PangoLayout *layout;
+    PangoRectangle rect;
 
     REQUIRE_STATIC_LOCK(playlist);
-
-    len = g_utf8_strlen(text, -1);
-    len_pixmap = (width_approx_letters * len);
-
-    while (len_pixmap > width && len > 4) {
-        len--;
-        len_pixmap -= width_approx_letters;
-    }
-
-    /* FIXME: Is it possible to overflow text_clipped when text is non
-       UTF-8? - descender */
-
-    text_clipped = g_new0(gchar, strlen(text)+1);
-    g_utf8_strncpy(text_clipped, text, len);
 
     if (cfg.show_numbers_in_pl) {
         gchar *pos_string = g_strdup_printf("%d", ppos);
@@ -341,6 +327,42 @@ playlist_list_draw_string(PlayList_List * pl,
     }
     else {
         padding = 3;
+    }
+
+    /* FIXME: Is it possible to overflow text_clipped when text is non
+       UTF-8? - descender */
+    text_clipped = g_new0(gchar, strlen(text)+1);
+    len = g_utf8_strlen(text, -1);
+    g_utf8_strncpy(text_clipped, text, len);
+
+    width -= padding;
+    layout = gtk_widget_create_pango_layout(playlistwin, text);
+    pango_layout_set_font_description(layout, playlist_list_font);
+    pango_layout_get_pixel_extents(layout, &rect, NULL);
+    if (rect.width > width)
+    {
+      while (rect.width > width && len > 4) {
+	len--;
+	g_utf8_strncpy(text_clipped, text_clipped, len); 
+
+	layout = gtk_widget_create_pango_layout(playlistwin, text_clipped);
+	pango_layout_set_font_description(layout, playlist_list_font);
+	pango_layout_get_pixel_extents(layout, &rect, NULL);
+      }
+
+      /* Add dots */
+      layout = gtk_widget_create_pango_layout(playlistwin, " ...");
+      pango_layout_set_font_description(layout, playlist_list_font);
+      pango_layout_get_pixel_extents(layout, &rect, NULL);
+
+      g_utf8_strncpy(text_clipped, text, len - (rect.width / width_approx_letters));
+
+      /* If we have whitespace on the end strip off some more... */
+      while (text_clipped[len] == ' ' && len > 4) {
+	len--;
+	g_utf8_strncpy(text_clipped, text_clipped, len);
+      }
+      text_clipped = g_strconcat(text_clipped, "...", NULL);
     }
 
     layout = gtk_widget_create_pango_layout(playlistwin, text_clipped);
@@ -486,9 +508,7 @@ playlist_list_draw(Widget * w)
             /* FIXME: This is just an approximate alignment, maybe
                something still fast, but exact could be done */
 
-            tail_width = width - (tail_len * width_approx_digits) +
-                (width_approx_digits_half) - 3;
-
+            tail_width = width - (width_approx_digits * 6) - 5;
             if (i == playlist_get_position_nolock())
                 gdk_gc_set_foreground(gc,
                                       skin_get_color(bmp_active_skin,
