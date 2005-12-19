@@ -442,6 +442,19 @@ fi
 AM_CONDITIONAL(ENABLE_CROSSFADE, test "$enable_crossfade" = "yes")
 AM_CONDITIONAL(HAVE_LIBSAMPLERATE, test "$have_libsamplerate" = "yes")
 
+dnl *** jack output plugin
+AC_ARG_ENABLE( jack,
+[  --disable-jack          disable jack output plugin [default=enabled]],,
+                enable_jack="yes")
+
+if test "x$enable_jack" = xyes; then
+        AM_PATH_JACK(have_jack=yes, have_jack=no)
+else
+        AC_MSG_RESULT([*** jack plugin disabled per user request ***])
+        have_jack=no
+fi
+AM_CONDITIONAL(HAVE_JACK,test "x$have_jack" = xyes)
+
 dnl *** sid
 AC_ARG_ENABLE( sid,
 [  --disable-sid           disable sid input plugin [default=enabled]],,
@@ -764,6 +777,7 @@ AC_CONFIG_FILES([
         Plugins/Output/OSS/Makefile
         Plugins/Output/esd/Makefile
         Plugins/Output/alsa/Makefile
+	Plugins/Output/jack/Makefile
 	Plugins/Output/crossfade/Makefile
 	Plugins/Output/disk_writer/Makefile
         Plugins/Input/Makefile
@@ -834,6 +848,7 @@ echo "  --------------"
 echo "  Open Sound System (oss):                $have_oss"
 echo "  Advanced Linux Sound Arch. (alsa):      $have_alsa"
 echo "  Enlightenment Sound Daemon (esd):       $have_esd"
+echo "  Jack Audio Connection Kit (jack):       $have_jack"
 echo "  Crossfading (crossfade):                $enable_crossfade"
 echo "    + libsamplerate support               $have_libsamplerate"
 echo

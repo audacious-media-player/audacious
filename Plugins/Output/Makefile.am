@@ -1,2 +1,2 @@
-ALL_PLUGINS = crossfade OSS esd alsa disk_writer
+ALL_PLUGINS = crossfade OSS jack esd alsa disk_writer
 SUBDIRS = $(OUTPUT_PLUGINS)
