@@ -293,12 +293,9 @@ playlist_list_draw_string(PlayList_List * pl,
                           const gchar * text,
                           guint ppos)
 {
-    gint len;
     guint plist_length_int;
 
-    gchar *text_clipped;
     PangoLayout *layout;
-    PangoRectangle rect;
 
     REQUIRE_STATIC_LOCK(playlist);
 
@@ -329,52 +326,20 @@ playlist_list_draw_string(PlayList_List * pl,
         padding = 3;
     }
 
-    /* FIXME: Is it possible to overflow text_clipped when text is non
-       UTF-8? - descender */
-    text_clipped = g_new0(gchar, strlen(text)+1);
-    len = g_utf8_strlen(text, -1);
-    g_utf8_strncpy(text_clipped, text, len);
-
     width -= padding;
+
     layout = gtk_widget_create_pango_layout(playlistwin, text);
-    pango_layout_set_font_description(layout, playlist_list_font);
-    pango_layout_get_pixel_extents(layout, &rect, NULL);
-    if (rect.width > width)
-    {
-      while (rect.width > width && len > 4) {
-	len--;
-	g_utf8_strncpy(text_clipped, text_clipped, len); 
-
-	layout = gtk_widget_create_pango_layout(playlistwin, text_clipped);
-	pango_layout_set_font_description(layout, playlist_list_font);
-	pango_layout_get_pixel_extents(layout, &rect, NULL);
-      }
-
-      /* Add dots */
-      layout = gtk_widget_create_pango_layout(playlistwin, " ...");
-      pango_layout_set_font_description(layout, playlist_list_font);
-      pango_layout_get_pixel_extents(layout, &rect, NULL);
-
-      g_utf8_strncpy(text_clipped, text, len - (rect.width / width_approx_letters));
-
-      /* If we have whitespace on the end strip off some more... */
-      while (text_clipped[len] == ' ' && len > 4) {
-	len--;
-	g_utf8_strncpy(text_clipped, text_clipped, len);
-      }
-      text_clipped = g_strconcat(text_clipped, "...", NULL);
-    }
-
-    layout = gtk_widget_create_pango_layout(playlistwin, text_clipped);
 
     pango_layout_set_font_description(layout, playlist_list_font);
+    pango_layout_set_width(layout, width * PANGO_SCALE);
+    pango_layout_set_single_paragraph_mode(layout, TRUE);
+    pango_layout_set_ellipsize(layout, PANGO_ELLIPSIZE_END);
     gdk_draw_layout(pl->pl_widget.parent, pl->pl_widget.gc,
                     pl->pl_widget.x + padding + (width_approx_letters / 4),
                     pl->pl_widget.y + (line - 1) * pl->pl_fheight +
                     ascent + abs(descent), layout);
 
     g_object_unref(layout);
-    g_free(text_clipped);
 }
 
 void
