@@ -803,6 +803,7 @@ AC_CONFIG_FILES([
 	Plugins/Input/timidity/Makefile
 	Plugins/Input/timidity/libtimidity/Makefile
 	Plugins/Input/timidity/src/Makefile
+	Plugins/Input/sexypsf/Makefile
         Plugins/Visualization/Makefile
         Plugins/Visualization/blur_scope/Makefile
 	Plugins/Visualization/libvisual-proxy/Makefile
@@ -869,6 +870,7 @@ echo "  Ogg Vorbis (vorbis):                    $have_oggvorbis"
 echo "  Free Lossless Audio Codec (flac):       $have_flac"
 echo "  Commodore 64 audio (sid):               $have_sidplay"
 echo "  Game music (spc, nsf & gbs):            yes"
+echo "  PlayStation audio (sexypsf):		yes"
 echo
 echo "  General"
 echo "  -------"
