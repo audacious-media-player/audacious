@@ -363,8 +363,6 @@ GtkItemFactoryEntry mainwin_general_menu_entries[] = {
     {"/-", NULL, NULL, 0, "<Separator>"},
     {N_("/Play File"), "L", mainwin_general_menu_callback,
      MAINWIN_GENERAL_PLAYFILE, "<StockItem>", GTK_STOCK_OPEN},
-    {N_("/Play Directory"), "<shift>L", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_PLAYDIRECTORY, "<Item>"},
     {N_("/Play Location"), "<control>L", mainwin_general_menu_callback,
      MAINWIN_GENERAL_PLAYLOCATION, "<StockItem>", GTK_STOCK_NETWORK},
     {"/-", NULL, NULL, 0, "<Separator>"},
@@ -386,11 +384,6 @@ static const gint mainwin_general_menu_entries_num =
 GtkItemFactoryEntry mainwin_add_menu_entries[] = {
     {N_("/Files..."), "f", mainwin_general_menu_callback,
      MAINWIN_GENERAL_PLAYFILE, "<StockItem>", GTK_STOCK_OPEN},
-/*
-    {N_("/Folders..."), "d",
-     mainwin_general_menu_callback,
-     MAINWIN_GENERAL_PLAYDIRECTORY, "<StockItem>", GTK_STOCK_OPEN},
-*/
     {N_("/Internet location..."), "<control>h", mainwin_general_menu_callback,
      MAINWIN_GENERAL_PLAYLOCATION, "<StockItem>", GTK_STOCK_NETWORK},
 };
@@ -1921,24 +1914,6 @@ dirbrowser_new(const gchar * path)
     return dialog;
 }
 
-void
-mainwin_run_dirbrowser(void)
-{
-    static GtkWidget *browser = NULL;
-
-    if (!browser) {
-        browser = dirbrowser_new(cfg.filesel_path);
-
-        g_signal_connect(browser, "destroy",
-                         G_CALLBACK(gtk_widget_destroyed),
-                         &browser);
-
-        gtk_widget_show(GTK_WIDGET(browser));
-    }
-
-    gtk_window_present(GTK_WINDOW(browser));
-}
-
 static void
 on_add_url_add_clicked(GtkWidget * widget,
                        GtkWidget * entry)
@@ -2499,9 +2474,6 @@ mainwin_general_menu_callback(gpointer data,
         break;
     case MAINWIN_GENERAL_PLAYFILE:
         util_run_filebrowser(NO_PLAY_BUTTON);
-        break;
-    case MAINWIN_GENERAL_PLAYDIRECTORY:
-        mainwin_run_dirbrowser();
         break;
     case MAINWIN_GENERAL_PLAYCD:
         play_medium();

@@ -155,13 +155,6 @@ static GtkItemFactoryEntry pladd_menu_entries[] = {
      mainwin_general_menu_callback,
      MAINWIN_GENERAL_PLAYLOCATION, "<StockItem>", GTK_STOCK_NETWORK},
 
-    /* GtkFileChooser in SELECT_FOLDER mode is currently BROKEN! */
-#if 0
-    {N_("/Add Folders..."), "d",
-     mainwin_general_menu_callback,
-     MAINWIN_GENERAL_PLAYDIRECTORY, "<StockItem>", GTK_STOCK_OPEN},
-#endif
-
     {N_("/Add Files..."), "f",
      mainwin_general_menu_callback,
      MAINWIN_GENERAL_PLAYFILE, "<StockItem>", GTK_STOCK_OPEN},
@@ -956,12 +949,6 @@ playlistwin_select_playlist_to_save(const gchar * default_filename)
     }
 }
 
-static void
-playlistwin_run_dirbrowser(void)
-{
-    mainwin_run_dirbrowser();
-}
-
 static gboolean
 inside_sensitive_widgets(gint x, gint y)
 {
@@ -1352,9 +1339,7 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
             playlist_delete(FALSE);
         break;
     case GDK_Insert:
-        if (event->state & GDK_SHIFT_MASK)
-            playlistwin_run_dirbrowser();
-        else if (event->state & GDK_MOD1_MASK)
+        if (event->state & GDK_MOD1_MASK)
             mainwin_show_add_url_window();
         else
             playlistwin_show_filebrowser();
@@ -1963,9 +1948,6 @@ playlistwin_popup_menu_callback(gpointer data,
     switch (action) {
     case ADD_FILES:
         playlistwin_show_filebrowser();
-        break;
-    case ADD_DIR:
-        playlistwin_run_dirbrowser();
         break;
     case CLOSE_PL_WINDOW:
         playlistwin_hide();
