@@ -13,6 +13,7 @@
 #include <libmodplug/sndfile.h>
 #include "stddefs.h"
 #include "archive/open.h"
+#include "libaudacious/configdb.h"
 
 // ModplugXMMS member functions ===============================
 
@@ -57,115 +58,33 @@ ModplugXMMS::Settings::Settings()
 
 void ModplugXMMS::Init(void)
 {
-	fstream lConfigFile;
-	string lField, lValue;
-	string lConfigFilename;
-	bool lValueB;
-	char junk;
+	ConfigDb *db;
 	
-	//I chose to use a separate config file to avoid conflicts
-	lConfigFilename = g_get_home_dir();
-	lConfigFilename += "/.audacious/modplug-bmp.conf";
-	lConfigFile.open(lConfigFilename.c_str(), ios::in);
+	db = bmp_cfg_db_open();
 
-	if(!lConfigFile.is_open())
-		return;
+	bmp_cfg_db_get_bool(db,"modplug","Surround", &mModProps.mSurround);
+        bmp_cfg_db_get_bool(db,"modplug","Oversampling", &mModProps.mOversamp);
+        bmp_cfg_db_get_bool(db,"modplug","Megabass", &mModProps.mMegabass);
+        bmp_cfg_db_get_bool(db,"modplug","NoiseReduction", &mModProps.mNoiseReduction);
+        bmp_cfg_db_get_bool(db,"modplug","VolumeRamp", &mModProps.mVolumeRamp);
+        bmp_cfg_db_get_bool(db,"modplug","Reverb", &mModProps.mReverb);
+        bmp_cfg_db_get_bool(db,"modplug","FastInfo", &mModProps.mFastinfo);
+        bmp_cfg_db_get_bool(db,"modplug","UseFileName", &mModProps.mUseFilename);
+        bmp_cfg_db_get_bool(db,"modplug","PreAmp", &mModProps.mPreamp);
+        bmp_cfg_db_get_float(db,"modplug","PreAmpLevel", &mModProps.mPreampLevel);
+        bmp_cfg_db_get_int(db,"modplug", "Channels", &mModProps.mChannels);
+        bmp_cfg_db_get_int(db,"modplug", "Bits", &mModProps.mBits);
+        bmp_cfg_db_get_int(db,"modplug", "Frequency", &mModProps.mFrequency);
+        bmp_cfg_db_get_int(db,"modplug", "ResamplineMode", &mModProps.mResamplingMode);
+        bmp_cfg_db_get_int(db,"modplug", "ReverbDepth", &mModProps.mReverbDepth);
+        bmp_cfg_db_get_int(db,"modplug", "ReverbDelay", &mModProps.mReverbDelay);
+        bmp_cfg_db_get_int(db,"modplug", "BassAmount", &mModProps.mBassAmount);
+        bmp_cfg_db_get_int(db,"modplug", "BassRange", &mModProps.mBassRange);
+        bmp_cfg_db_get_int(db,"modplug", "SurroundDepth", &mModProps.mSurroundDepth);
+        bmp_cfg_db_get_int(db,"modplug", "SurroundDelay", &mModProps.mSurroundDelay);
+        bmp_cfg_db_get_int(db,"modplug", "LoopCount", &mModProps.mLoopCount);
 
-	while(!lConfigFile.eof())
-	{
-		lConfigFile >> lField;
-		if(lField[0] == '#')      //allow comments
-		{
-			do
-			{
-				lConfigFile.read(&junk, 1);
-			}
-			while(junk != '\n');
-		}
-		else
-		{
-			if(lField == "reverb_depth")
-				lConfigFile >> mModProps.mReverbDepth;
-			else if(lField == "reverb_delay")
-				lConfigFile >> mModProps.mReverbDelay;
-			else if(lField == "megabass_amount")
-				lConfigFile >> mModProps.mBassAmount;
-			else if(lField == "megabass_range")
-				lConfigFile >> mModProps.mBassRange;
-			else if(lField == "surround_depth")
-				lConfigFile >> mModProps.mSurroundDepth;
-			else if(lField == "surround_delay")
-				lConfigFile >> mModProps.mSurroundDelay;
-			else if(lField == "preamp_volume")
-				lConfigFile >> mModProps.mPreampLevel;
-			else if(lField == "loop_count")
-				lConfigFile >> mModProps.mLoopCount;
-      else
-			{
-				lConfigFile >> lValue;
-				if(lValue == "on")
-					lValueB = true;
-				else
-					lValueB = false;
-
-				if(lField == "surround")
-					mModProps.mSurround         = lValueB;
-				else if(lField == "oversampling")
-					mModProps.mOversamp         = lValueB;
-				else if(lField == "reverb")
-					mModProps.mReverb           = lValueB;
-				else if(lField == "megabass")
-					mModProps.mMegabass         = lValueB;
-				else if(lField == "noisereduction")
-					mModProps.mNoiseReduction   = lValueB;
-				else if(lField == "volumeramping")
-					mModProps.mVolumeRamp       = lValueB;
-				else if(lField == "fastinfo")
-					mModProps.mFastinfo         = lValueB;
-				else if(lField == "use_filename")
-					mModProps.mUseFilename      = lValueB;
-				else if(lField == "preamp")
-					mModProps.mPreamp           = lValueB;
-
-				else if(lField == "channels")
-				{
-					if(lValue == "mono")
-						mModProps.mChannels       = 1;
-					else
-						mModProps.mChannels       = 2;
-				}
-				else if(lField == "frequency")
-				{
-						if(lValue == "22050")
-					mModProps.mFrequency        = 22050;
-					else if(lValue == "11025")
-						mModProps.mFrequency      = 11025;
-					else
-						mModProps.mFrequency      = 44100;
-				}
-				else if(lField == "bits")
-				{
-					if(lValue == "8")
-						mModProps.mBits           = 8;
-					else
-						mModProps.mBits           = 16;
-				}
-				else if(lField == "resampling")
-				{
-					if(lValue == "nearest")
-						mModProps.mResamplingMode = SRCMODE_NEAREST;
-					else if(lValue == "linear")
-						mModProps.mResamplingMode = SRCMODE_LINEAR;
-					else if(lValue == "spline")
-						mModProps.mResamplingMode = SRCMODE_SPLINE;
-					else
-						mModProps.mResamplingMode = SRCMODE_POLYPHASE;
-				}
-			} //if(numerical value) else
-		}   //if(comment) else
-	}     //while(!eof)
-
-	lConfigFile.close();
+	bmp_cfg_db_close(db);
 }
 
 bool ModplugXMMS::CanPlayFile(const string& aFilename)
@@ -719,9 +638,7 @@ const char* ModplugXMMS::Bool2OnOff(bool aValue)
 
 void ModplugXMMS::SetModProps(const Settings& aModProps)
 {
-	fstream lConfigFile;
-	string lConfigFilename;
-	
+	ConfigDb *db;
 	mModProps = aModProps;
 
 	// [Reverb level 0(quiet)-100(loud)], [delay in ms, usually 40-200ms]
@@ -772,66 +689,31 @@ void ModplugXMMS::SetModProps(const Settings& aModProps)
 	CSoundFile::SetResamplingMode(mModProps.mResamplingMode);
 	mPreampFactor = exp(mModProps.mPreampLevel);
 
-	lConfigFilename = g_get_home_dir();
-	lConfigFilename += "/.audacious/modplug-bmp.conf";
-	lConfigFile.open(lConfigFilename.c_str(), ios::out);
+	db = bmp_cfg_db_open();
 
-	lConfigFile << "# Modplug BMP plugin config file\n"
-	            << "# Modplug (C) 1999 Olivier Lapicque\n"
-	            << "# XMMS port (C) 1999 Kenton Varda\n" 
-		    << "# BMP port (C) 2004 Theofilos Intzoglou" << endl;
+	bmp_cfg_db_set_bool(db,"modplug","Surround", mModProps.mSurround);
+        bmp_cfg_db_set_bool(db,"modplug","Oversampling", mModProps.mOversamp);
+        bmp_cfg_db_set_bool(db,"modplug","Megabass", mModProps.mMegabass);
+        bmp_cfg_db_set_bool(db,"modplug","NoiseReduction", mModProps.mNoiseReduction);
+        bmp_cfg_db_set_bool(db,"modplug","VolumeRamp", mModProps.mVolumeRamp);
+        bmp_cfg_db_set_bool(db,"modplug","Reverb", mModProps.mReverb);
+        bmp_cfg_db_set_bool(db,"modplug","FastInfo", mModProps.mFastinfo);
+        bmp_cfg_db_set_bool(db,"modplug","UseFileName", mModProps.mUseFilename);
+        bmp_cfg_db_set_bool(db,"modplug","PreAmp", mModProps.mPreamp);
+        bmp_cfg_db_set_float(db,"modplug","PreAmpLevel", mModProps.mPreampLevel);
+        bmp_cfg_db_set_int(db,"modplug", "Channels", mModProps.mChannels);
+        bmp_cfg_db_set_int(db,"modplug", "Bits", mModProps.mBits);
+        bmp_cfg_db_set_int(db,"modplug", "Frequency", mModProps.mFrequency);
+        bmp_cfg_db_set_int(db,"modplug", "ResamplineMode", mModProps.mResamplingMode);
+        bmp_cfg_db_set_int(db,"modplug", "ReverbDepth", mModProps.mReverbDepth);
+        bmp_cfg_db_set_int(db,"modplug", "ReverbDelay", mModProps.mReverbDelay);
+        bmp_cfg_db_set_int(db,"modplug", "BassAmount", mModProps.mBassAmount);
+        bmp_cfg_db_set_int(db,"modplug", "BassRange", mModProps.mBassRange);
+        bmp_cfg_db_set_int(db,"modplug", "SurroundDepth", mModProps.mSurroundDepth);
+        bmp_cfg_db_set_int(db,"modplug", "SurroundDelay", mModProps.mSurroundDelay);
+        bmp_cfg_db_set_int(db,"modplug", "LoopCount", mModProps.mLoopCount);
 
-	lConfigFile << "# ---Effects---"  << endl;
-	lConfigFile << "reverb          " << Bool2OnOff(mModProps.mReverb)         << endl;
-	lConfigFile << "reverb_depth    " << mModProps.mReverbDepth                << endl;
-	lConfigFile << "reverb_delay    " << mModProps.mReverbDelay                << endl;
-	lConfigFile << endl;
-	lConfigFile << "surround        " << Bool2OnOff(mModProps.mSurround)       << endl;
-	lConfigFile << "surround_depth  " << mModProps.mSurroundDepth              << endl;
-	lConfigFile << "surround_delay  " << mModProps.mSurroundDelay              << endl;
-	lConfigFile << endl;
-	lConfigFile << "megabass        " << Bool2OnOff(mModProps.mMegabass)       << endl;
-	lConfigFile << "megabass_amount " << mModProps.mBassAmount                 << endl;
-	lConfigFile << "megabass_range  " << mModProps.mBassRange                  << endl;
-	lConfigFile << endl;
-	lConfigFile << "oversampling    " << Bool2OnOff(mModProps.mOversamp)       << endl;
-	lConfigFile << "noisereduction  " << Bool2OnOff(mModProps.mNoiseReduction) << endl;
-	lConfigFile << "volumeramping   " << Bool2OnOff(mModProps.mVolumeRamp)     << endl;
-	lConfigFile << "fastinfo        " << Bool2OnOff(mModProps.mFastinfo)       << endl;
-	lConfigFile << "use_filename    " << Bool2OnOff(mModProps.mUseFilename)    << endl;
-	lConfigFile << "loop_count      " << mModProps.mLoopCount                  << endl;
-	lConfigFile << endl;
-	lConfigFile << "preamp          " << Bool2OnOff(mModProps.mPreamp)         << endl;
-	lConfigFile << "preamp_volume   " << mModProps.mPreampLevel                << endl;
-	lConfigFile << endl;
-
-	lConfigFile << "# ---Quality---" << endl;
-	lConfigFile << "channels        ";
-	if(mModProps.mChannels == 1)
-		lConfigFile << "mono" << endl;
-	else
-		lConfigFile << "stereo" << endl;
-	lConfigFile << "bits            " << (int)mModProps.mBits << endl;
-	lConfigFile << "frequency       " << mModProps.mFrequency << endl;
-	lConfigFile << "resampling      ";
-	switch(mModProps.mResamplingMode)
-	{
-	case SRCMODE_NEAREST:
-		lConfigFile << "nearest" << endl;
-		break;
-	case SRCMODE_LINEAR:
-		lConfigFile << "linear" << endl;
-		break;
-	case SRCMODE_SPLINE:
-		lConfigFile << "spline" << endl;
-		break;
-	default:
-	case SRCMODE_POLYPHASE:
-		lConfigFile << "fir" << endl;
-		break;
-	};
-
-	lConfigFile.close();
+	bmp_cfg_db_close(db);
 }
 
 ModplugXMMS gModplugXMMS;

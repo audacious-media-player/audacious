@@ -8,6 +8,7 @@
 #define __MODPLUGXMMS_CMODPLUGXMMS_H_INCLUDED__
 
 #include <string>
+#include <glib.h>
 
 #ifndef __MODPLUGXMMS_STDDEFS_H__INCLUDED__
 #include "stddefs.h"
@@ -25,29 +26,29 @@ class ModplugXMMS
 public:
 	struct Settings
 	{
-		bool   mSurround;
-		bool   mOversamp;
-		bool   mMegabass;
-		bool   mNoiseReduction;
-		bool   mVolumeRamp;
-		bool   mReverb;
-		bool   mFastinfo;
-		bool   mUseFilename;
-		bool   mPreamp;
+		gboolean   mSurround;
+		gboolean   mOversamp;
+		gboolean   mMegabass;
+		gboolean   mNoiseReduction;
+		gboolean   mVolumeRamp;
+		gboolean   mReverb;
+		gboolean   mFastinfo;
+		gboolean   mUseFilename;
+		gboolean   mPreamp;
 	
-		uint8  mChannels;
-		uint8  mBits;
-		uint32 mFrequency;
-		uint32 mResamplingMode;
+		gint       mChannels;
+		gint       mBits;
+		gint       mFrequency;
+		gint       mResamplingMode;
 	
-		uint32 mReverbDepth;
-		uint32 mReverbDelay;
-		uint32 mBassAmount;
-		uint32 mBassRange;
-		uint32 mSurroundDepth;
-		uint32 mSurroundDelay;
-		float  mPreampLevel;
-		int32  mLoopCount;
+		gint       mReverbDepth;
+		gint       mReverbDelay;
+		gint       mBassAmount;
+		gint       mBassRange;
+		gint       mSurroundDepth;
+		gint       mSurroundDelay;
+		gfloat     mPreampLevel;
+		gint       mLoopCount;
 		
 		Settings();
 	};
