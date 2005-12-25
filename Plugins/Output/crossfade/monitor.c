@@ -31,7 +31,7 @@
 #include "monitor.h"
 #include "crossfade.h"
 
-#include "interface.h"
+#include "interface-2.0.h"
 #include "support.h"
 
 

@@ -30,7 +30,7 @@
 
 #include "crossfade.h"
 #include "configure.h"
-#include "interface.h"
+#include "interface-2.0.h"
 #include "monitor.h"
 #include "support.h"
 
