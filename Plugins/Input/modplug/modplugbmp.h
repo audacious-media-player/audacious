@@ -13,7 +13,7 @@
 #include "stddefs.h"
 #endif
 
-#include "plugin.h"
+#include "audacious/plugin.h"
 
 using namespace std;
 

@@ -1,7 +1,7 @@
 INCLUDES = -I../../..
 
 noinst_LTLIBRARIES = libarchive.la
-libarchive_la_LDFLAGS = -module -avoid-version
+libarchive_la_LDFLAGS = $(PLUGIN_LDFLAGS)
 libarchive_la_SOURCES = archive.cpp     \
                         open.cpp        \
                         arch_raw.cpp    \

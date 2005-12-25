@@ -4,7 +4,7 @@
  * This source code is public domain.
  */
 
-#include "plugin.h"
+#include "audacious/plugin.h"
 #include <libmodplug/modplug.h>
 #include "gui/main.h"
 
