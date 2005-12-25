@@ -11,4 +11,4 @@ INCLUDES = @GTK_CFLAGS@ -I.. -I$(top_srcdir) -I$(top_builddir)/intl
 libmodplug_la_LDFLAGS  = $(PLUGIN_LDFLAGS) $(GTK_LIBS) -lstdc++ -lmodplug ./archive/libarchive.la ./gui/libgui.la
 libmodplug_la_SOURCES  = plugin.cpp modplugbmp.cpp
 
-noinst_HEADERS = modplugbmp.h plugin.h stddefs.h
+noinst_HEADERS = modplugbmp.h stddefs.h

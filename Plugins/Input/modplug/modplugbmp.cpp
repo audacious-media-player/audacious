@@ -65,7 +65,7 @@ void ModplugXMMS::Init(void)
 	
 	//I chose to use a separate config file to avoid conflicts
 	lConfigFilename = g_get_home_dir();
-	lConfigFilename += "/.bmp/modplug-bmp.conf";
+	lConfigFilename += "/.audacious/modplug-bmp.conf";
 	lConfigFile.open(lConfigFilename.c_str(), ios::in);
 
 	if(!lConfigFile.is_open())
@@ -773,7 +773,7 @@ void ModplugXMMS::SetModProps(const Settings& aModProps)
 	mPreampFactor = exp(mModProps.mPreampLevel);
 
 	lConfigFilename = g_get_home_dir();
-	lConfigFilename += "/.bmp/modplug-bmp.conf";
+	lConfigFilename += "/.audacious/modplug-bmp.conf";
 	lConfigFile.open(lConfigFilename.c_str(), ios::out);
 
 	lConfigFile << "# Modplug BMP plugin config file\n"
