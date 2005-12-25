@@ -87,11 +87,22 @@ void psxMemReset() {
 }
 
 void psxMemShutdown() {
-	free(psxM);
-	free(psxP);
-	free(psxH);
-	free(psxR);
-	free(psxMemLUT);
+	if (psxM)
+		free(psxM);
+
+	if (psxP)
+		free(psxP);
+
+	if (psxH)
+		free(psxH);
+
+	if (psxR)
+		free(psxR);
+
+	if (psxMemLUT)
+		free(psxMemLUT);
+
+	psxM = psxP = psxH = psxR = psxMemLUT = NULL;
 }
 
 u8 psxMemRead8(u32 mem) {

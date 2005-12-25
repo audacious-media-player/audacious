@@ -235,9 +235,9 @@ static PSFINFO *LoadPSF(char *path, int level, int type) // Type==1 for just inf
 	PSFINFO *psfi;
 	PSFINFO *tmpi;
 
-	//printf("Loading: %s\n",path);
         if(!(fp=fopen(path,"rb")))
  	{
+         printf("path %s failed to load\n", path);
 	 return(0);
 	}
  
