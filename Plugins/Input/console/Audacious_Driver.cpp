@@ -36,12 +36,14 @@ struct AudaciousConsoleConfig audcfg = { 180, FALSE, 32000 };
 static Spc_Emu *spc = NULL;
 static Nsf_Emu *nsf = NULL;
 static Gbs_Emu *gbs = NULL;
+static Gym_Emu *gym = NULL;
 static GThread *decode_thread;
 GStaticMutex playback_mutex = G_STATIC_MUTEX_INIT;
 
 static void *play_loop_spc(gpointer arg);
 static void *play_loop_nsf(gpointer arg);
 static void *play_loop_gbs(gpointer arg);
+static void *play_loop_gym(gpointer arg);
 static void console_init(void);
 extern "C" void console_aboutbox(void);
 static void console_stop(void);
@@ -65,6 +67,8 @@ static int is_our_file(gchar *filename)
 			return PLAY_TYPE_NSF;
 		if (!strcasecmp(ext, ".gbs"))
 			return PLAY_TYPE_GBS;
+		if (!strcasecmp(ext, ".gym"))
+			return PLAY_TYPE_GYM;
 	}
 
 	return 0;
@@ -117,6 +121,13 @@ static gchar *get_title_gbs(gchar *filename)
 	return title;
 }
 
+static gchar *get_title_gym(gchar *filename)
+{
+	gchar *title;
+	title = g_path_get_basename(filename);
+	return title;
+}
+
 static gchar *get_title(gchar *filename)
 {
 	switch (is_our_file(filename))
@@ -129,6 +140,9 @@ static gchar *get_title(gchar *filename)
 			break;
 		case PLAY_TYPE_GBS:
 			return get_title_gbs(filename);
+			break;
+		case PLAY_TYPE_GYM:
+			return get_title_gym(filename);
 			break;
 	}
 
@@ -255,7 +269,7 @@ static void play_file_gbs(char *filename)
 		console_ip.set_info(name, audcfg.loop_length * 1000, 
 			gbs->voice_count() * 1000, samplerate, 2);
 	else
-		console_ip.set_info(name, -1, nsf->voice_count() * 1000,
+		console_ip.set_info(name, -1, gbs->voice_count() * 1000,
 			samplerate, 2);
 
 	g_free(name);
@@ -266,6 +280,47 @@ static void play_file_gbs(char *filename)
 	playing_type = PLAY_TYPE_GBS;
 
 	decode_thread = g_thread_create(play_loop_gbs, gbs, TRUE, NULL);
+}
+
+static void play_file_gym(char *filename)
+{
+	gchar *name;
+	Emu_Std_Reader reader;
+	Gym_Emu::header_t header;
+	gint samplerate;
+
+	if (audcfg.resample == TRUE)
+		samplerate = audcfg.resample_rate;
+	else
+		samplerate = 44100;
+
+	reader.open(filename);
+	reader.read(&header, sizeof(header));
+
+	gym = new Gym_Emu;
+	gym->init(samplerate);
+	gym->load(header, reader);
+	gym->start_track(0);
+
+	console_ip_is_going = TRUE;
+
+	name = get_title(filename);
+
+	if (audcfg.loop_length)
+		console_ip.set_info(name, audcfg.loop_length * 1000, 
+			gym->voice_count() * 1000, samplerate, 2);
+	else
+		console_ip.set_info(name, -1, gym->voice_count() * 1000,
+			samplerate, 2);
+
+	g_free(name);
+
+        if (!console_ip.output->open_audio(MY_FMT, samplerate, 2))
+                 return;
+
+	playing_type = PLAY_TYPE_GYM;
+
+	decode_thread = g_thread_create(play_loop_gym, gym, TRUE, NULL);
 }
 
 static void play_file(char *filename)
@@ -280,6 +335,9 @@ static void play_file(char *filename)
 			break;
 		case PLAY_TYPE_GBS:
 			play_file_gbs(filename);
+			break;
+		case PLAY_TYPE_GYM:
+			play_file_gym(filename);
 			break;
 	}
 }
@@ -424,6 +482,39 @@ static void *play_loop_gbs(gpointer arg)
 	}
 
         delete gbs;
+        console_ip.output->close_audio();
+	console_ip_is_going = FALSE;
+	playing_type = PLAY_TYPE_NONE;
+	g_static_mutex_unlock(&playback_mutex);
+        g_thread_exit(NULL);
+
+        return NULL;
+}
+
+static void *play_loop_gym(gpointer arg)
+{
+	g_static_mutex_lock(&playback_mutex);
+	Gym_Emu *my_gym = (Gym_Emu *) arg;
+        Music_Emu::sample_t buf[1024];
+
+	for (;;)
+	{
+		if (!console_ip_is_going)
+			break;
+
+		my_gym->play(1024, buf);
+
+		if ((console_ip.output->output_time() / 1000) > 
+			audcfg.loop_length && audcfg.loop_length != 0)
+			break;
+		console_ip.add_vis_pcm(console_ip.output->written_time(),
+			MY_FMT, 1, 2048, buf);
+	        while(console_ip.output->buffer_free() < 2048)
+			xmms_usleep(10000);
+		console_ip.output->write_audio(buf, 2048);
+	}
+
+        delete gym;
         console_ip.output->close_audio();
 	console_ip_is_going = FALSE;
 	playing_type = PLAY_TYPE_NONE;
