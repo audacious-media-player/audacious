@@ -327,10 +327,8 @@ static void wma_playbuff(int out_size)
 	    sst_buff = wma_st_buff;
 	if(wma_pause) memset(wma_s_outbuf, 0, sst_buff);	
     	while(wma_ip.output->buffer_free() < wma_st_buff) xmms_usleep(20000);
-	if(wma_seekpos == -1)
-	    wma_ip.add_vis_pcm(wma_ip.output->written_time(), FMT_S16_NE,
-            			    c->channels, sst_buff, (short *)wma_s_outbuf);
-	wma_ip.output->write_audio((short *)wma_s_outbuf, sst_buff);
+	produce_audio(wma_ip.output->written_time(), FMT_S16_NE,
+    			    c->channels, sst_buff, (short *)wma_s_outbuf, NULL);
 	memset(wma_s_outbuf, 0, sst_buff);
     }
     fifo_free(&f);
