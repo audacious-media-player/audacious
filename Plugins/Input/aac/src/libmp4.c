@@ -22,7 +22,6 @@
 #include <libaudacious/util.h>
 #include <libaudacious/titlestring.h>
 
-#define MP4_DESCRIPTION	"MP4 & MPEG2/4-AAC for bmp-0.9.7"
 #define MP4_VERSION	"ver.- 15 December 2004"
 #define LIBMP4V2_VERSION "1.2.0"
 #define MP4_ABOUT	"Written by ciberfred"
@@ -45,7 +44,7 @@ InputPlugin mp4_ip =
   {
     0,	// handle
     0,	// filename
-    MP4_DESCRIPTION,
+    "MP4 Audio Plugin",
     mp4_init,
     mp4_about,
     0,	// configuration
@@ -279,7 +278,7 @@ static void *mp4Decode(void *args)
       guint		bufferSize = 0;
       gulong		samplerate;
       guchar		channels;
-      //guint		avgBitrate;
+      guint		avgBitrate;
       MP4Duration	duration;
       gulong		msDuration;
       MP4SampleId	numSamples;
@@ -304,7 +303,8 @@ static void *mp4Decode(void *args)
       mp4_ip.output->open_audio(FMT_S16_NE, samplerate, channels);
       mp4_ip.output->flush(0);
       title = mp4_get_song_title(args);
-      mp4_ip.set_info(title, msDuration, -1, samplerate/1000, channels);
+      avgBitrate = MP4GetTrackBitRate(mp4file, mp4track);
+      mp4_ip.set_info(title, msDuration, avgBitrate, samplerate/1000, channels);
 
       while(bPlaying){
 	void*			sampleBuffer;
