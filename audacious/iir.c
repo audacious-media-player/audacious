@@ -93,34 +93,19 @@ int
 iir(gpointer * d, gint length)
 {
     gint16 *data = (gint16 *) * d;
-    /* Indexes for the history arrays
-     * These have to be kept between calls to this function
-     * hence they are static */
     static gint i = 0, j = 2, k = 1;
 
     gint index, band, channel;
     gint tempgint, halflength;
     float out[EQ_CHANNELS], pcm[EQ_CHANNELS];
 
-    /**
-	 * IIR filter equation is
-	 * y[n] = 2 * (alpha*(x[n]-x[n-2]) + gamma*y[n-1] - beta*y[n-2])
-	 *
-	 * NOTE: The 2 factor was introduced in the coefficients to save
-	 * 			a multiplication
-	 *
-	 * This algorithm cascades two filters to get nice filtering
-	 * at the expense of extra CPU cycles
-	 */
-    /* 16bit, 2 bytes per sample, so divide by two the length of
-     * the buffer (length is in bytes)
-     */
     halflength = (length >> 1);
     for (index = 0; index < halflength; index += 2) {
         /* For each channel */
         for (channel = 0; channel < EQ_CHANNELS; channel++) {
             /* No need to scale when processing the PCM with the filter */
             pcm[channel] = data[index + channel];
+
             /* Preamp gain */
             pcm[channel] *= preamp;
 
@@ -134,13 +119,12 @@ iir(gpointer * d, gint length)
                     (iir_cf[band].alpha * (data_history[band][channel].x[i]
                                            - data_history[band][channel].x[k])
                      + iir_cf[band].gamma * data_history[band][channel].y[j]
-                     - iir_cf[band].beta * data_history[band][channel].y[k]
-                    );
+                     - iir_cf[band].beta * data_history[band][channel].y[k]);
                 /*
                  * The multiplication by 2.0 was 'moved' into the coefficients to save
                  * CPU cycles here */
                 /* Apply the gain  */
-                out[channel] += data_history[band][channel].y[i] * gain[band];  // * 2.0;
+                out[channel] += data_history[band][channel].y[i] * gain[band];
             }                   /* For each band */
 
             if (cfg.eq_extra_filtering) {
@@ -170,33 +154,16 @@ iir(gpointer * d, gint length)
                output. This substitutes the multiplication by 0.25
              */
 
-            out[channel] += (data[index + channel] >> 2);
-
-            //printf("out[channel] = %f\n", out[channel]);
-            /* Round and convert to integer */
-#if 0
-#ifdef PPC
-            tempgint = round_ppc(out[channel]);
-#else
-# ifdef X86
-            tempgint = round_trick(out[channel]);
-# else
-            tempgint = (int) lroundf(out[channel]);
-# endif
-#endif
-#endif
-            //tempgint = (int) lroundf(out[channel]);
+            out[channel] += (data[index + channel]);
             tempgint = (int) out[channel];
 
-            //printf("iir: old=%d new=%d\n", data[index+channel], tempgint);
-            /* Limit the output */
             if (tempgint < -32768)
                 data[index + channel] = -32768;
             else if (tempgint > 32767)
                 data[index + channel] = 32767;
             else
                 data[index + channel] = tempgint;
-        }                       /* For each channel */
+        }
 
         i++;
         j++;
@@ -209,9 +176,7 @@ iir(gpointer * d, gint length)
             j = 0;
         else
             k = 0;
-
-
-    }                           /* For each pair of samples */
+    }
 
     return length;
 }
