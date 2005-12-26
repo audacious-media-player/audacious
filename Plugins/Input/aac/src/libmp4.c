@@ -19,6 +19,7 @@
 #include "mp4.h"
 
 #include <audacious/plugin.h>
+#include <audacious/output.h>
 #include <libaudacious/util.h>
 #include <libaudacious/titlestring.h>
 
@@ -35,10 +36,11 @@ static void	mp4_pause(short);
 static void	mp4_seek(int);
 static int	mp4_getTime(void);
 static void	mp4_cleanup(void);
-static void     audmp4_file_info_box(gchar *);
 static int	mp4_isFile(char *);
 static void	mp4_getSongTitle(char *filename, char **, int *);
 static void*	mp4Decode(void *);
+
+void     audmp4_file_info_box(gchar *);
 
 InputPlugin mp4_ip =
   {
@@ -347,12 +349,11 @@ static void *mp4Decode(void *args)
 	  while(bPlaying && mp4_ip.output->buffer_free()<frameInfo.samples<<1)
 	    xmms_usleep(30000);
 	}
-	mp4_ip.add_vis_pcm(mp4_ip.output->written_time(),
-			   FMT_S16_NE,
-			   channels,
-			   frameInfo.samples<<1,
-			   sampleBuffer);
-	mp4_ip.output->write_audio(sampleBuffer, frameInfo.samples<<1);
+	produce_audio(mp4_ip.output->written_time(),
+		   FMT_S16_NE,
+		   channels,
+		   frameInfo.samples<<1,
+		   sampleBuffer, &bPlaying);
       }
       while(bPlaying && mp4_ip.output->buffer_free()){
 	xmms_usleep(10000);
