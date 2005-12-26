@@ -31,6 +31,7 @@
 #include <strings.h>
 
 #include <audacious/plugin.h>
+#include <audacious/output.h>
 #include <libaudacious/util.h>
 #include <libaudacious/titlestring.h>
 

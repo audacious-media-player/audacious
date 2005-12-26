@@ -5,6 +5,7 @@
 extern "C"
 {
 #include "audacious/plugin.h"
+#include "audacious/output.h"
 #include "libaudacious/util.h"
 #include "libaudacious/configdb.h"
 #include "libaudacious/titlestring.h"

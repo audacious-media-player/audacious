@@ -601,7 +601,7 @@ int SPUopen(void)
  memset((void *)s_chan,0,(MAXCHAN+1)*sizeof(SPUCHAN));
  pSpuIrq=0;
 
- iVolume=128; //85;
+ iVolume=192; //85;
  SetupStreams();                                       // prepare streaming
 
  bSPUIsOpen=1;

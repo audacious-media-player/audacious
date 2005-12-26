@@ -444,8 +444,6 @@ get_id3_genre(unsigned char genre_code)
 
 guint
 mpg123_strip_spaces(char *src, size_t n)
-/* strips trailing spaces from string of length n
-   returns length of adjusted string */
 {
     gchar *space = NULL,        /* last space in src */
         *start = src;

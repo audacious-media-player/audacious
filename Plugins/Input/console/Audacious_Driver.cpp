@@ -409,7 +409,7 @@ static void *play_loop_spc(gpointer arg)
 			audcfg.loop_length && audcfg.loop_length != 0)
 			break;
 		produce_audio(console_ip.output->written_time(),
-			MY_FMT, 1, 2048, buf, console_ip_is_going);
+			MY_FMT, 1, 2048, buf, NULL);
 	        while(console_ip.output->buffer_free() < 2048)
 			xmms_usleep(10000);
 	}
@@ -441,7 +441,7 @@ static void *play_loop_nsf(gpointer arg)
 			audcfg.loop_length && audcfg.loop_length != 0)
 			break;
 		produce_audio(console_ip.output->written_time(),
-			MY_FMT, 1, 2048, buf, console_ip_is_going);
+			MY_FMT, 1, 2048, buf, NULL);
 	        while(console_ip.output->buffer_free() < 2048)
 			xmms_usleep(10000);
 	}
@@ -473,7 +473,7 @@ static void *play_loop_gbs(gpointer arg)
 			audcfg.loop_length && audcfg.loop_length != 0)
 			break;
 		produce_audio(console_ip.output->written_time(),
-			MY_FMT, 1, 2048, buf, console_ip_is_going);
+			MY_FMT, 1, 2048, buf, NULL);
 	        while(console_ip.output->buffer_free() < 2048)
 			xmms_usleep(10000);
 	}
@@ -505,7 +505,7 @@ static void *play_loop_gym(gpointer arg)
 			audcfg.loop_length && audcfg.loop_length != 0)
 			break;
 		produce_audio(console_ip.output->written_time(),
-			MY_FMT, 1, 2048, buf, console_ip_is_going);
+			MY_FMT, 1, 2048, buf, NULL);
 	        while(console_ip.output->buffer_free() < 2048)
 			xmms_usleep(10000);
 	}

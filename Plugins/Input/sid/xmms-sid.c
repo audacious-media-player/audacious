@@ -31,6 +31,7 @@
 #include <stdarg.h>
 
 #include <audacious/plugin.h>
+#include <audacious/output.h>
 #include <libaudacious/util.h>
 
 #include <gdk/gdkkeysyms.h>

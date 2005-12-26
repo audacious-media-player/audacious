@@ -165,19 +165,6 @@ iir(char *d, gint length)
             out[channel] += (data[index + channel] >> 2);
 
             //printf("out[channel] = %f\n", out[channel]);
-            /* Round and convert to integer */
-#if 0
-#ifdef PPC
-            tempgint = round_ppc(out[channel]);
-#else
-# ifdef X86
-            tempgint = round_trick(out[channel]);
-# else
-            tempgint = (int) lroundf(out[channel]);
-# endif
-#endif
-#endif
-            //tempgint = (int) lroundf(out[channel]);
             tempgint = (int) out[channel];
 
             //printf("iir: old=%d new=%d\n", data[index+channel], tempgint);
