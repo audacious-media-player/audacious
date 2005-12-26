@@ -36,7 +36,7 @@ static void	mp4_pause(short);
 static void	mp4_seek(int);
 static int	mp4_getTime(void);
 static void	mp4_cleanup(void);
-static void	mp4_getSongInfo(char *);
+static void     audmp4_file_info_box(gchar *);
 static int	mp4_isFile(char *);
 static void	mp4_getSongTitle(char *filename, char **, int *);
 static void*	mp4Decode(void *);
@@ -65,7 +65,7 @@ InputPlugin mp4_ip =
     0,	// set player window info
     0,	// set song title text
     mp4_getSongTitle,	// get song title text
-    mp4_getSongInfo, // info box
+    audmp4_file_info_box, // info box
     0,	// to output plugin
   };
 
