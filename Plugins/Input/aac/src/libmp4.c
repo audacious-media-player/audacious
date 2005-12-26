@@ -300,11 +300,12 @@ static void *mp4Decode(void *args)
       msDuration = MP4ConvertFromTrackDuration(mp4file, mp4track, duration,
 					       MP4_MSECS_TIME_SCALE);
       numSamples = MP4GetTrackNumberOfSamples(mp4file, mp4track);
+      samplerate = MP4GetTrackTimeScale(mp4file, mp4track);
       mp4_ip.output->open_audio(FMT_S16_NE, samplerate, channels);
       mp4_ip.output->flush(0);
       title = mp4_get_song_title(args);
       avgBitrate = MP4GetTrackBitRate(mp4file, mp4track);
-      mp4_ip.set_info(title, msDuration, avgBitrate, samplerate/1000, channels);
+      mp4_ip.set_info(title, msDuration, avgBitrate, samplerate, channels);
 
       while(bPlaying){
 	void*			sampleBuffer;
