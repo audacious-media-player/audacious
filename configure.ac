@@ -870,7 +870,7 @@ echo "  Ogg Vorbis (vorbis):                    $have_oggvorbis"
 echo "  Free Lossless Audio Codec (flac):       $have_flac"
 echo "  Commodore 64 audio (sid):               $have_sidplay"
 echo "  Game music (spc, nsf & gbs):            yes"
-echo "  PlayStation audio (sexypsf):		yes"
+echo "  PlayStation audio (sexypsf):            yes"
 echo
 echo "  General"
 echo "  -------"
