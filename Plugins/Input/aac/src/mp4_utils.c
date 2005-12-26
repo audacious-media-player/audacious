@@ -56,7 +56,6 @@ int getAACTrack(MP4FileHandle file)
 
     if(!strcmp(trackType, MP4_AUDIO_TRACK_TYPE)){//we found audio track !
       u_int8_t audiotype = MP4GetTrackAudioMpeg4Type(file, trackID);
-      g_print("%s\n", mpeg4AudioNames[audiotype]);
       if(audiotype !=0)
 	return(trackID);
       else
@@ -102,12 +101,20 @@ void getMP4info(char* file)
   //MP4Duration	trackDuration;
   int numTracks;
   int i=0;
+  char *value;
 
   if(!(mp4file = MP4Read(file,0)))
     return;
   //MP4Dump(mp4file, 0, 0);
   numTracks = MP4GetNumberOfTracks(mp4file, NULL, 0);
   g_print("there are %d track(s)\n", numTracks);
+
+  MP4GetMetadataName(mp4file, &value);
+  g_print(" name : %s\n", value);
+
+  MP4GetMetadataArtist(mp4file, &value);
+  g_print(" artist : %s\n", value);
+
   for(i=0;i<numTracks;i++){
     MP4TrackId trackID = MP4FindTrackId(mp4file, i, NULL, 0);
     const char *trackType = MP4GetTrackType(mp4file, trackID);

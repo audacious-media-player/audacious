@@ -11,7 +11,10 @@
  * libid3 (3.8.x - www.id3.org)
 */
 
+#include <glib.h>
 #include <gtk/gtk.h>
+#include <string.h>
+#include <stdlib.h>
 #include "faad.h"
 #include "mp4.h"
 
@@ -35,6 +38,7 @@ static int	mp4_getTime(void);
 static void	mp4_cleanup(void);
 static void	mp4_getSongInfo(char *);
 static int	mp4_isFile(char *);
+static void	mp4_getSongTitle(char *filename, char **, int *);
 static void*	mp4Decode(void *);
 
 InputPlugin mp4_ip =
@@ -60,7 +64,7 @@ InputPlugin mp4_ip =
     0,	// send visualisation data
     0,	// set player window info
     0,	// set song title text
-    0,	// get song title text
+    mp4_getSongTitle,	// get song title text
     mp4_getSongInfo, // info box
     0,	// to output plugin
   };
@@ -81,6 +85,23 @@ static int		seekPosition = -1;
 void getMP4info(char*);
 int getAACTrack(MP4FileHandle);
 
+/*
+ * Function extname (filename)
+ *
+ *    Return pointer within filename to its extenstion, or NULL if
+ *    filename has no extension.
+ *
+ */
+static gchar *
+extname(const char *filename)
+{   
+    gchar *ext = strrchr(filename, '.');
+
+    if (ext != NULL)
+        ++ext;
+
+    return ext;
+}
 
 InputPlugin *get_iplugin_info(void)
 {
@@ -176,6 +197,54 @@ static void	mp4_getSongInfo(char *filename)
     ;
 }
 
+static gchar   *mp4_get_song_title(char *filename)
+{
+	MP4FileHandle mp4file;
+	gchar *title = NULL;
+
+	if (!(mp4file = MP4Read(filename, 0))) {
+		MP4Close(mp4file);
+	} else {
+		TitleInput *input;
+		gchar *tmpval;
+
+		input = bmp_title_input_new();
+
+		MP4GetMetadataName(mp4file, &input->track_name);
+		MP4GetMetadataAlbum(mp4file, &input->album_name);
+		MP4GetMetadataArtist(mp4file, &input->performer);
+		MP4GetMetadataYear(mp4file, &tmpval);
+		MP4GetMetadataGenre(mp4file, &input->genre);
+
+		input->year = atoi(tmpval);
+
+		input->file_name = g_path_get_basename(filename);
+		input->file_path = g_path_get_dirname(filename);
+		input->file_ext = extname(filename);
+
+		title = xmms_get_titlestring(xmms_get_gentitle_format(), input);
+
+		free (input->file_name);
+		free (input->file_path);
+		free (input);
+	}
+
+	if (!title)
+	{
+		title = g_path_get_basename(filename);
+		if (extname(title))
+			*(extname(title) - 1) = '\0';
+	}
+
+	return title;
+}
+
+static void	mp4_getSongTitle(char *filename, char **title_real, int *len_real)
+{
+	(*title_real) = mp4_get_song_title(filename);
+	(*len_real) = -1;
+}
+
 static void *mp4Decode(void *args)
 {
   MP4FileHandle mp4file;
@@ -214,6 +283,7 @@ static void *mp4Decode(void *args)
       gulong		msDuration;
       MP4SampleId	numSamples;
       MP4SampleId	sampleID = 1;
+      gchar            *title;
 
       decoder = faacDecOpen();
       MP4GetTrackESConfiguration(mp4file, mp4track, &buffer, &bufferSize);
@@ -232,8 +302,8 @@ static void *mp4Decode(void *args)
       numSamples = MP4GetTrackNumberOfSamples(mp4file, mp4track);
       mp4_ip.output->open_audio(FMT_S16_NE, samplerate, channels);
       mp4_ip.output->flush(0);
-      mp4_ip.set_info(args, msDuration, -1, samplerate/1000, channels);
-      g_print("MP4 - %d channels @ %d Hz\n", channels, (int)samplerate);
+      title = mp4_get_song_title(args);
+      mp4_ip.set_info(title, msDuration, -1, samplerate/1000, channels);
 
       while(bPlaying){
 	void*			sampleBuffer;
@@ -256,7 +326,6 @@ static void *mp4Decode(void *args)
 	}
 	rc = MP4ReadSample(mp4file, mp4track, sampleID++, &buffer, &bufferSize,
 			   NULL, NULL, NULL, NULL);
-	//g_print("%d/%d\n", sampleID-1, numSamples);
 	if((rc==0) || (buffer== NULL)){
 	  g_print("MP4: read error\n");
 	  sampleBuffer = NULL;
