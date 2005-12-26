@@ -456,18 +456,14 @@ void *xs_playthread(void *argPointer)
 				audioGot = myStatus.sidPlayer->plrFillBuffer(&myStatus, audioBuffer, XS_AUDIOBUF_SIZE);
 
 			/* I <3 visualice/haujobb */
-			xs_plugin_ip.add_vis_pcm(xs_plugin_ip.output->written_time(),
-						 myStatus.audioFormat, myStatus.audioChannels, audioGot, audioBuffer);
+			produce_audio(xs_plugin_ip.output->written_time(),
+				 myStatus.audioFormat, myStatus.audioChannels, audioGot, audioBuffer, NULL);
 
 			/* Wait a little */
 			while (xs_status.isPlaying &&
 			       (xs_status.currSong == myStatus.currSong) &&
 			       (xs_plugin_ip.output->buffer_free() < audioGot))
 				xmms_usleep(500);
-
-			/* Output audio */
-			if (xs_status.isPlaying && (xs_status.currSong == myStatus.currSong))
-				xs_plugin_ip.output->write_audio(audioBuffer, audioGot);
 
 			/* Check if we have played enough */
 			if (xs_cfg.playMaxTimeEnable) {
