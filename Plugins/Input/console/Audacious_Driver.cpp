@@ -408,11 +408,10 @@ static void *play_loop_spc(gpointer arg)
 		if ((console_ip.output->output_time() / 1000) > 
 			audcfg.loop_length && audcfg.loop_length != 0)
 			break;
-		console_ip.add_vis_pcm(console_ip.output->written_time(),
-			MY_FMT, 1, 2048, buf);
+		produce_audio(console_ip.output->written_time(),
+			MY_FMT, 1, 2048, buf, console_ip_is_going);
 	        while(console_ip.output->buffer_free() < 2048)
 			xmms_usleep(10000);
-		console_ip.output->write_audio(buf, 2048);
 	}
 
         delete spc;
@@ -441,11 +440,10 @@ static void *play_loop_nsf(gpointer arg)
 		if ((console_ip.output->output_time() / 1000) > 
 			audcfg.loop_length && audcfg.loop_length != 0)
 			break;
-		console_ip.add_vis_pcm(console_ip.output->written_time(),
-			MY_FMT, 1, 2048, buf);
+		produce_audio(console_ip.output->written_time(),
+			MY_FMT, 1, 2048, buf, console_ip_is_going);
 	        while(console_ip.output->buffer_free() < 2048)
 			xmms_usleep(10000);
-		console_ip.output->write_audio(buf, 2048);
 	}
 
         delete nsf;
@@ -474,11 +472,10 @@ static void *play_loop_gbs(gpointer arg)
 		if ((console_ip.output->output_time() / 1000) > 
 			audcfg.loop_length && audcfg.loop_length != 0)
 			break;
-		console_ip.add_vis_pcm(console_ip.output->written_time(),
-			MY_FMT, 1, 2048, buf);
+		produce_audio(console_ip.output->written_time(),
+			MY_FMT, 1, 2048, buf, console_ip_is_going);
 	        while(console_ip.output->buffer_free() < 2048)
 			xmms_usleep(10000);
-		console_ip.output->write_audio(buf, 2048);
 	}
 
         delete gbs;
@@ -507,11 +504,10 @@ static void *play_loop_gym(gpointer arg)
 		if ((console_ip.output->output_time() / 1000) > 
 			audcfg.loop_length && audcfg.loop_length != 0)
 			break;
-		console_ip.add_vis_pcm(console_ip.output->written_time(),
-			MY_FMT, 1, 2048, buf);
+		produce_audio(console_ip.output->written_time(),
+			MY_FMT, 1, 2048, buf, console_ip_is_going);
 	        while(console_ip.output->buffer_free() < 2048)
 			xmms_usleep(10000);
-		console_ip.output->write_audio(buf, 2048);
 	}
 
         delete gym;
