@@ -216,7 +216,8 @@ static gchar   *mp4_get_song_title(char *filename)
 		MP4GetMetadataYear(mp4file, &tmpval);
 		MP4GetMetadataGenre(mp4file, &input->genre);
 
-		input->year = atoi(tmpval);
+		if (tmpval)
+			input->year = atoi(tmpval);
 
 		input->file_name = g_path_get_basename(filename);
 		input->file_path = g_path_get_dirname(filename);
