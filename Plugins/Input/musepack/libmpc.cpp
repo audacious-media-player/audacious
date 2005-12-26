@@ -772,13 +772,7 @@ static int processBuffer(MPC_SAMPLE_FORMAT* sampleBuffer, char* xmmsBuffer, mpc_
         track.bitrate = static_cast<int> (vbrUpd * track.sampleFreq / 1152);
     }
 
-    if (pluginConfig.isEq)
-    {
-        iir(xmmsBuffer, 4 * status);
-    }
-
-    MpcPlugin.add_vis_pcm(MpcPlugin.output->written_time(), FMT_S16_LE, track.channels, status * 4, xmmsBuffer);
-    MpcPlugin.output->write_audio(xmmsBuffer, status * 4);
+    produce_audio(MpcPlugin.output->written_time(), FMT_S16_LE, track.channels, status * 4, xmmsBuffer, NULL);
     return status;
 }
 
