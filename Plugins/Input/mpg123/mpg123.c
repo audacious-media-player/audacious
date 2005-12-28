@@ -398,7 +398,7 @@ is_our_file(char *filename)
 
     ext = strrchr(filename, '.');
     if (ext) {
-        if (!strncasecmp(ext, ".mp2", 4) || !strncasecmp(ext, ".mp3", 4)) {
+        if (!strncasecmp(ext, ".mp2", 4) || !strncasecmp(ext, ".mp3", 4) || !strncasecmp((ext - 4), ".mp3.part", 9) ) {
             return TRUE;
         }
         if (!strncasecmp(ext, ".wav", 4)) {
