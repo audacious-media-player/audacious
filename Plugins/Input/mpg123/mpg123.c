@@ -1,10 +1,22 @@
 #include "mpg123.h"
+#include "common.h"
 
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+
+#include <fcntl.h>
+#include <unistd.h>
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/time.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
 
 #include <libaudacious/util.h>
 #include <libaudacious/configdb.h>
@@ -14,6 +26,8 @@
 #include "audacious/util.h"
 
 static const long outscale = 32768;
+
+#define BUFSIZE_X	2048
 
 static struct frame fr, temp_fr;
 
@@ -371,6 +385,81 @@ mpg123_detect_by_content(char *filename)
     return ret;
 }
 
+static gboolean
+mpg123_detect_by_content_stream(gchar *url)
+{
+	gchar *buf, inbuf[BUFSIZE_X];
+	struct hostent *hp;
+	struct sockaddr_in sa;
+	gint s, i, y = 0;
+	gchar *user, *pass, *host, *filename;
+	gint port;
+
+	g_strstrip(url);
+
+	parse_url(url, &user, &pass, &host, &port, &filename);
+
+	if (!(s = socket(AF_INET, SOCK_STREAM, 0)))
+	{
+		perror("socket");
+		return FALSE;
+	}
+
+	if ((hp = gethostbyname(host)) == NULL)
+	{
+		g_print("[stream detect] Unable to resolve %s\n", host);
+		close(s);
+		return FALSE;
+	}
+
+	memset(&sa, '\0', sizeof(sa));
+	sa.sin_family = AF_INET;
+	sa.sin_port = htons(port);
+	memcpy(&sa.sin_addr, hp->h_addr, hp->h_length);
+
+	if (connect(s, (struct sockaddr *)&sa, sizeof(sa)) < 0)
+	{
+		perror("connect");
+		return FALSE;
+	}
+
+	g_print("[stream detect] connected to %s, port %d\n", host, port);
+
+	buf = g_strdup_printf("GET /%s HTTP/1.0\r\nUser-Agent: " PACKAGE "/" PACKAGE_VERSION "\r\n\r\n", filename ? filename : "");
+	i = write(s, buf, strlen(buf));
+	g_free(buf);
+
+	if (i == -1)
+	{
+		perror("write");
+		return FALSE;
+	}
+
+	/* don't ask. --nenolod */
+	while ((i = read(s, inbuf + y, BUFSIZE_X - y)) != 0 && y < BUFSIZE_X)
+	{
+		inbuf[y + i] = '\0';
+		y += i;
+	}
+
+	close(s);
+
+	buf = strtok(inbuf, "\n");
+	while ((buf = strtok(NULL, "\n")) != NULL)
+	{
+		if (!g_strncasecmp("content-type:audio/mpeg", buf, 23) ||
+			!g_strncasecmp("icy-br:", buf, 7) || 			/* XXX ShoutCAST sometimes doesnt send the content-type header */
+			!g_strncasecmp("Content-Type: audio/mpeg", buf, 24))
+		{
+			g_print("[stream detect] server is providing audio/mpeg stream\n");
+			return TRUE;
+		}
+	}
+
+	g_print("[stream detect] server is NOT providing audio/mpeg stream\n");
+	return FALSE;
+}
+
 static int
 is_our_file(char *filename)
 {
@@ -381,6 +470,7 @@ is_our_file(char *filename)
     /* We assume all http:// (except those ending in .ogg) are mpeg --
      * why do we do that? */
     if (!strncasecmp(filename, "http://", 7)) { 
+#ifdef NOTYET
         ext = strrchr(filename, '.');
         if (ext) {
             if (!strncasecmp(ext, ".ogg", 4))
@@ -392,6 +482,9 @@ is_our_file(char *filename)
                 return FALSE;
         }
         return TRUE;
+#else
+	return mpg123_detect_by_content_stream(filename);
+#endif
     }
     if (mpg123_cfg.detect_by == DETECT_CONTENT)
         return (mpg123_detect_by_content(filename));

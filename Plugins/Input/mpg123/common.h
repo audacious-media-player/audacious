@@ -15,4 +15,6 @@ struct bitstream_info {
 };
 */
 
+extern void parse_url(const gchar * url, gchar ** user, gchar ** pass,
+          gchar ** host, gint * port, gchar ** filename);
 

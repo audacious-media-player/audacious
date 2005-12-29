@@ -126,7 +126,7 @@ basic_authentication_encode(const gchar * user,
     return res;
 }
 
-static void
+void
 parse_url(const gchar * url, gchar ** user, gchar ** pass,
           gchar ** host, gint * port, gchar ** filename)
 {
