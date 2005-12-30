@@ -1821,7 +1821,7 @@ mainwin_drag_data_received(GtkWidget * widget,
 
     iter = sourcelist = g_strsplit((gchar *)(selection_data->data),"\r\n",-1);
 
-    for (path = *sourcelist; path, *path; path = *(++sourcelist))
+    for (path = *sourcelist; *path; path = *(++sourcelist))
     {
 	if (str_has_prefix_nocase(path, "fonts:///"))
 	{
@@ -1852,6 +1852,9 @@ mainwin_drag_data_received(GtkWidget * widget,
 	    }	
     	    playlist_add_url(path);
 	}
+
+	if (path == NULL)	/* damn konqueror */
+	    break;
     }
     
     g_strfreev(iter);
