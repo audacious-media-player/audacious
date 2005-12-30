@@ -21,7 +21,7 @@
 #define PLAYLIST_H
 
 #include <glib.h>
-
+#include "input.h"
 
 typedef enum {
     PLAYLIST_SORT_PATH,
@@ -44,12 +44,14 @@ struct _PlaylistEntry {
     gchar *title;
     gint length;
     gboolean selected;
+    InputPlugin *decoder;
 };
 
 typedef struct _PlaylistEntry PlaylistEntry;
 
 PlaylistEntry *playlist_entry_new(const gchar * filename,
-                                  const gchar * title, const gint len);
+                                  const gchar * title, const gint len,
+				  InputPlugin * dec);
 void playlist_entry_free(PlaylistEntry * entry);
 
 void playlist_init(void);

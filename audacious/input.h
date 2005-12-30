@@ -39,7 +39,7 @@ InputPlugin *get_current_input_plugin(void);
 void set_current_input_plugin(InputPlugin * ip);
 InputVisType input_get_vis_type();
 void free_vis_data(void);
-gboolean input_check_file(const gchar * filename, gboolean show_warning);
+InputPlugin *input_check_file(const gchar * filename, gboolean show_warning);
 void input_play(gchar * filename);
 void input_stop(void);
 void input_pause(void);

@@ -120,7 +120,8 @@ static void playlist_recalc_total_time(void);
 PlaylistEntry *
 playlist_entry_new(const gchar * filename,
                    const gchar * title,
-                   const gint length)
+                   const gint length,
+		   InputPlugin * dec)
 {
     PlaylistEntry *entry;
 
@@ -129,6 +130,7 @@ playlist_entry_new(const gchar * filename,
     entry->title = str_to_utf8(title);
     entry->length = length;
     entry->selected = FALSE;
+    entry->decoder = dec;
 
     return entry;
 }
@@ -152,7 +154,11 @@ playlist_entry_get_info(PlaylistEntry * entry)
 
     g_return_val_if_fail(entry != NULL, FALSE);
 
-    input_get_song_info(entry->filename, &title, &length);
+    if (entry->decoder == NULL)
+        input_get_song_info(entry->filename, &title, &length);
+    else
+        entry->decoder->get_song_info(entry->filename, &title, &length);
+
     if (!title && length == -1)
         return FALSE;
 
@@ -419,13 +425,14 @@ static void
 __playlist_ins_with_info(const gchar * filename,
                          gint pos,
                          const gchar * title,
-                         gint len)
+                         gint len,
+			 InputPlugin * dec)
 {
     g_return_if_fail(filename != NULL);
 
     PLAYLIST_LOCK();
     playlist = g_list_insert(playlist,
-                             playlist_entry_new(filename, title, len),
+                             playlist_entry_new(filename, title, len, dec),
                              pos);
     PLAYLIST_UNLOCK();
 
@@ -433,9 +440,9 @@ __playlist_ins_with_info(const gchar * filename,
 }
 
 static void
-__playlist_ins(const gchar * filename, gint pos)
+__playlist_ins(const gchar * filename, gint pos, InputPlugin *dec)
 {
-    __playlist_ins_with_info(filename, pos, NULL, -1);
+    __playlist_ins_with_info(filename, pos, NULL, -1, dec);
     playlist_recalc_total_time();
 }
 
@@ -461,21 +468,21 @@ is_playlist_name(const gchar * filename)
     return playlist_format_get_from_name(filename) != PLAYLIST_FORMAT_UNKNOWN;
 }
 
-
 gboolean
 playlist_ins(const gchar * filename, gint pos)
 {
     gchar buf[64], *p;
     gint r;
     VFSFile *file;
+    InputPlugin *dec;
 
     if (is_playlist_name(filename)) {
         playlist_load_ins(filename, pos);
         return TRUE;
     }
 
-    if (input_check_file(filename, TRUE)) {
-        __playlist_ins(filename, pos);
+    if ((dec = input_check_file(filename, TRUE)) != NULL) {
+        __playlist_ins(filename, pos, dec);
         playlist_generate_shuffle_list();
         playlistwin_update_list();
         return TRUE;
@@ -668,7 +675,7 @@ playlist_ins_dir(const gchar * path,
     g_hash_table_foreach_remove(htab, devino_destroy, NULL);
 
     for (node = list; node; node = g_list_next(node)) {
-        __playlist_ins(node->data, pos);
+        __playlist_ins(node->data, pos, NULL);
         g_free(node->data);
         entries++;
         if (pos >= 0)
@@ -1269,6 +1276,7 @@ playlist_load_ins_file(const gchar * filename_p,
 {
     gchar *filename;
     gchar *tmp, *path;
+    InputPlugin *dec;		/* for decoder cache */
 
     g_return_if_fail(filename_p != NULL);
     g_return_if_fail(playlist_name != NULL);
@@ -1285,16 +1293,21 @@ playlist_load_ins_file(const gchar * filename_p,
         if ((tmp = strrchr(path, '/')))
             *tmp = '\0';
         else {
-            __playlist_ins_with_info(filename, pos, title, len);
+            dec = input_check_file(filename, FALSE);
+            __playlist_ins_with_info(filename, pos, title, len, dec);
             return;
         }
         tmp = g_build_filename(path, filename, NULL);
-        __playlist_ins_with_info(tmp, pos, title, len);
+        dec = input_check_file(filename, FALSE);
+        __playlist_ins_with_info(tmp, pos, title, len, dec);
         g_free(tmp);
         g_free(path);
     }
     else
-        __playlist_ins_with_info(filename, pos, title, len);
+    {
+        dec = input_check_file(filename, FALSE);
+        __playlist_ins_with_info(filename, pos, title, len, dec);
+    }
 
     g_free(filename);
 }

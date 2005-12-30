@@ -375,8 +375,27 @@ input_file_not_playable(const gchar * filename)
         input_show_unplayable_files(filename);
 }
 
-
-gboolean
+/*
+ * input_check_file()
+ *
+ * Inputs:
+ *       filename to check recursively against input plugins
+ *       whether or not to show an error
+ *
+ * Outputs:
+ *       pointer to input plugin which can handle this file
+ *       otherwise, NULL
+ *
+ *       (the previous code returned a boolean of whether or not we can
+ *        play the file... even WORSE for performance)
+ *
+ * Side Effects:
+ *       various input plugins open the file and probe it
+ *       -- this can have very ugly effects performance wise on streams
+ *
+ * --nenolod, Dec 31 2005
+ */
+InputPlugin *
 input_check_file(const gchar * filename, gboolean show_warning)
 {
     GList *node;
@@ -390,7 +409,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
         if (ip && input_is_enabled(ip->filename) &&
             ip->is_our_file(filename_proxy)) {
             g_free(filename_proxy);
-            return TRUE;
+            return ip;
         }
     }
 
@@ -400,7 +419,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
         input_file_not_playable(filename);
     }
 
-    return FALSE;
+    return NULL;
 }
 
 
