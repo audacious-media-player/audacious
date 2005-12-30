@@ -37,7 +37,6 @@ typedef enum {
     PLAYLIST_FORMAT_COUNT
 } PlaylistFormat;
 
-
 #define PLAYLIST_ENTRY(x)  ((PlaylistEntry*)(x))
 struct _PlaylistEntry {
     gchar *filename;
@@ -109,7 +108,11 @@ void playlist_fileinfo(guint pos);
 void playlist_delete_index(guint pos);
 void playlist_delete_filenames(GList * filenames);
 
+const PlaylistEntry *playlist_get_entry_to_play();
+
+/* XXX this is for reverse compatibility --nenolod */
 const gchar *playlist_get_filename_to_play();
+
 gchar *playlist_get_filename(guint pos);
 gchar *playlist_get_songtitle(guint pos);
 gint playlist_get_songtime(guint pos);
@@ -146,5 +149,7 @@ gboolean is_playlist_name(const gchar * filename);
 #define PLAYLIST_UNLOCK()  G_UNLOCK(playlist)
 
 G_LOCK_EXTERN(playlist);
+
+extern PlaylistEntry *playlist_position;
 
 #endif

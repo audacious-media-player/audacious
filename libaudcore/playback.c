@@ -83,7 +83,7 @@ bmp_playback_get_time(void)
 void
 bmp_playback_initiate(void)
 {
-    const gchar *filename = NULL;
+    const PlaylistEntry *entry;
 
     if (playlist_get_length() == 0)
         return;
@@ -96,16 +96,16 @@ bmp_playback_initiate(void)
     svis_clear_data(mainwin_svis);
     mainwin_disable_seekbar();
 
-    filename = playlist_get_filename_to_play();
+    entry = playlist_get_entry_to_play();
 
-    if (!filename)
+    if (!entry)
         return;
 
-    if (!bmp_playback_play_file(filename))
+    if (!bmp_playback_play_file(entry))
         return;
 
     if (bmp_playback_get_time() != -1) {
-        equalizerwin_load_auto_preset(filename);
+        equalizerwin_load_auto_preset(entry->filename);
         input_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
                      cfg.equalizer_bands);
         output_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
@@ -201,13 +201,9 @@ run_no_output_plugin_dialog(void)
 }
 
 gboolean
-bmp_playback_play_file(const gchar * filename)
+bmp_playback_play_file(const PlaylistEntry *entry)
 {
-    GList *node;
-    InputPlugin *ip;
-    gchar *filename_proxy;
-
-    g_return_val_if_fail(filename != NULL, FALSE);
+    g_return_val_if_fail(entry != NULL, FALSE);
 
     if (!get_current_output_plugin()) {
         run_no_output_plugin_dialog();
@@ -218,43 +214,23 @@ bmp_playback_play_file(const gchar * filename)
     if (cfg.random_skin_on_play)
         bmp_playback_set_random_skin();
 
-    filename_proxy = g_strdup(filename);
+    if (!entry->decoder || !input_is_enabled(entry->decoder->filename))
+    {
+        input_file_not_playable(entry->filename);
 
-    node = get_input_list();
-    node = g_list_first(node);
+        set_current_input_plugin(NULL);
+        mainwin_set_info_text();
 
-    while (node) {
-
-        ip = node->data;
-
-        if (!ip)
-            break;
-
-        if (ip && input_is_enabled(ip->filename) &&
-            ip->is_our_file(filename_proxy)) {
-
-
-            set_current_input_plugin(ip);
-            ip->output = get_current_output_plugin();
-            ip->play_file(filename_proxy);
-
-            /* FIXME: Why the hell (yes,hell!) doesn't the input
-               plugin set this itself????  -mderezynski */
-            ip_data.playing = TRUE;
-
-            g_free(filename_proxy);
-            return TRUE;
-        }
-        node = g_list_next(node);
+        return FALSE;
     }
 
-    input_file_not_playable(filename);
-    set_current_input_plugin(NULL);
-    mainwin_set_info_text();
+    set_current_input_plugin(entry->decoder);
+    entry->decoder->output = get_current_output_plugin();
+    entry->decoder->play_file(entry->filename);
 
-    g_free(filename_proxy);
+    ip_data.playing = TRUE;
 
-    return FALSE;
+    return TRUE;
 }
 
 gboolean

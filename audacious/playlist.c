@@ -2392,3 +2392,22 @@ playlist_get_filename_to_play(void)
 
     return filename;
 }
+
+const PlaylistEntry *
+playlist_get_entry_to_play(void)
+{
+    PLAYLIST_LOCK();
+
+    if (playlist) {
+        if (!playlist_position) {
+            if (cfg.shuffle)
+                playlist_position = shuffle_list->data;
+            else
+                playlist_position = playlist->data;
+        }
+    }
+
+    PLAYLIST_UNLOCK();
+
+    return playlist_position;
+}
