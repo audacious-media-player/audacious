@@ -37,6 +37,7 @@ static Spc_Emu *spc = NULL;
 static Nsf_Emu *nsf = NULL;
 static Gbs_Emu *gbs = NULL;
 static Gym_Emu *gym = NULL;
+static Vgm_Emu *vgm = NULL;
 static GThread *decode_thread;
 GStaticMutex playback_mutex = G_STATIC_MUTEX_INIT;
 
@@ -44,6 +45,7 @@ static void *play_loop_spc(gpointer arg);
 static void *play_loop_nsf(gpointer arg);
 static void *play_loop_gbs(gpointer arg);
 static void *play_loop_gym(gpointer arg);
+static void *play_loop_vgm(gpointer arg);
 static void console_init(void);
 extern "C" void console_aboutbox(void);
 static void console_stop(void);
@@ -69,6 +71,8 @@ static int is_our_file(gchar *filename)
 			return PLAY_TYPE_GBS;
 		if (!strcasecmp(ext, ".gym"))
 			return PLAY_TYPE_GYM;
+		if (!strcasecmp(ext, ".vgm"))
+			return PLAY_TYPE_VGM;
 	}
 
 	return 0;
@@ -128,6 +132,13 @@ static gchar *get_title_gym(gchar *filename)
 	return title;
 }
 
+static gchar *get_title_vgm(gchar *filename)
+{
+	gchar *title;
+	title = g_path_get_basename(filename);
+	return title;
+}
+
 static gchar *get_title(gchar *filename)
 {
 	switch (is_our_file(filename))
@@ -143,6 +154,9 @@ static gchar *get_title(gchar *filename)
 			break;
 		case PLAY_TYPE_GYM:
 			return get_title_gym(filename);
+			break;
+		case PLAY_TYPE_VGM:
+			return get_title_vgm(filename);
 			break;
 	}
 
@@ -326,6 +340,47 @@ static void play_file_gym(char *filename)
 	decode_thread = g_thread_create(play_loop_gym, gym, TRUE, NULL);
 }
 
+static void play_file_vgm(char *filename)
+{
+	gchar *name;
+	Emu_Std_Reader reader;
+	Vgm_Emu::header_t header;
+	gint samplerate;
+
+	if (audcfg.resample == TRUE)
+		samplerate = audcfg.resample_rate;
+	else
+		samplerate = 44100;
+
+	reader.open(filename);
+	reader.read(&header, sizeof(header));
+
+	vgm = new Vgm_Emu;
+	vgm->init(samplerate);
+	vgm->load(header, reader);
+	vgm->start_track(0);
+
+	console_ip_is_going = TRUE;
+
+	name = get_title(filename);
+
+	if (audcfg.loop_length)
+		console_ip.set_info(name, audcfg.loop_length * 1000, 
+			vgm->voice_count() * 1000, samplerate, 2);
+	else
+		console_ip.set_info(name, -1, vgm->voice_count() * 1000,
+			samplerate, 2);
+
+	g_free(name);
+
+        if (!console_ip.output->open_audio(MY_FMT, samplerate, 2))
+                 return;
+
+	playing_type = PLAY_TYPE_VGM;
+
+	decode_thread = g_thread_create(play_loop_vgm, vgm, TRUE, NULL);
+}
+
 static void play_file(char *filename)
 {
 	switch (is_our_file(filename))
@@ -341,6 +396,9 @@ static void play_file(char *filename)
 			break;
 		case PLAY_TYPE_GYM:
 			play_file_gym(filename);
+			break;
+		case PLAY_TYPE_VGM:
+			play_file_vgm(filename);
 			break;
 	}
 }
@@ -514,6 +572,38 @@ static void *play_loop_gym(gpointer arg)
 	}
 
         delete gym;
+        console_ip.output->close_audio();
+	console_ip_is_going = FALSE;
+	playing_type = PLAY_TYPE_NONE;
+	g_static_mutex_unlock(&playback_mutex);
+        g_thread_exit(NULL);
+
+        return NULL;
+}
+
+static void *play_loop_vgm(gpointer arg)
+{
+	g_static_mutex_lock(&playback_mutex);
+	Vgm_Emu *my_vgm = (Vgm_Emu *) arg;
+        Music_Emu::sample_t buf[1024];
+
+	for (;;)
+	{
+		if (!console_ip_is_going)
+			break;
+
+		my_vgm->play(1024, buf);
+
+		if ((console_ip.output->output_time() / 1000) > 
+			audcfg.loop_length && audcfg.loop_length != 0)
+			break;
+		produce_audio(console_ip.output->written_time(),
+			MY_FMT, 1, 2048, buf, NULL);
+	        while(console_ip.output->buffer_free() < 2048)
+			xmms_usleep(10000);
+	}
+
+        delete vgm;
         console_ip.output->close_audio();
 	console_ip_is_going = FALSE;
 	playing_type = PLAY_TYPE_NONE;
