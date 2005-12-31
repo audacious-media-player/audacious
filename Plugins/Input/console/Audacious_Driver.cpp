@@ -16,6 +16,7 @@ extern "C" {
 #include "libaudacious/configdb.h"
 #include "libaudacious/util.h"
 #include "libaudacious/titlestring.h"
+#include "libaudacious/vfs.h"
 #include "audacious/input.h"
 #include "audacious/output.h"
 #include "libaudcore/playback.h"
@@ -57,24 +58,36 @@ static int playing_type;
 
 static int is_our_file(gchar *filename)
 {
-	gchar *ext;
-
-	ext = strrchr(filename, '.');
-
-	if (ext)
-	{
-		if (!strcasecmp(ext, ".spc"))
+	VFSFile *file;
+	gchar magic[4];
+	if (file = vfs_fopen(filename, "rb")) {
+        	vfs_fread(magic, 1, 4, file);
+		if (!strncmp(magic, "SNES", 4)) {
+			vfs_fclose(file);
 			return PLAY_TYPE_SPC;
-		if (!strcasecmp(ext, ".nsf"))
+		}
+		if (!strncmp(magic, "NESM", 4)) {
+			vfs_fclose(file);
 			return PLAY_TYPE_NSF;
-		if (!strcasecmp(ext, ".gbs"))
-			return PLAY_TYPE_GBS;
-		if (!strcasecmp(ext, ".gym"))
+		}
+		if (!strncmp(magic, "GYMX", 4)) {
+			vfs_fclose(file);
 			return PLAY_TYPE_GYM;
-		if (!strcasecmp(ext, ".vgm"))
-			return PLAY_TYPE_VGM;
+		}
+		vfs_fclose(file);
 	}
-
+	if (file = vfs_fopen(filename, "rb")) {
+        	vfs_fread(magic, 1, 3, file);
+		if (!strncmp(magic, "GBS", 3)) {
+			vfs_fclose(file);
+			return PLAY_TYPE_GBS;
+		}
+		if (!strncmp(magic, "Vgm", 3)) {
+			vfs_fclose(file);
+			return PLAY_TYPE_VGM;
+		}
+		vfs_fclose(file);
+	}
 	return 0;
 }
 
