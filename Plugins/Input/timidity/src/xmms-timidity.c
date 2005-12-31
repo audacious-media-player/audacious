@@ -24,6 +24,7 @@
 #include "libaudacious/util.h"
 #include "libaudacious/configdb.h"
 #include "libaudacious/titlestring.h"
+#include "libaudacious/vfs.h"
 #include <gtk/gtk.h>
 #include <string.h>
 #include <timidity.h>
@@ -230,13 +231,16 @@ void xmmstimid_conf_ok(GtkButton *button, gpointer user_data) {
 }
 
 int xmmstimid_is_our_file(char *filename) {
-	gchar *ext;
-
-	ext = strrchr(filename, '.');
-	if (ext && !(
-	    strcasecmp(ext, ".mid") &&
-	    strcasecmp(ext, ".midi"))) return 1;
-
+	VFSFile *file;
+	gchar magic[4];
+	if (file = vfs_fopen(filename, "rb")) {
+		vfs_fread(magic, 1, 4, file);
+		if (!strncmp(magic, "MThd", 4)) {
+			vfs_fclose(file);
+			return 1;
+		}
+		vfs_fclose(file);
+        }
 	return 0;
 }
 
