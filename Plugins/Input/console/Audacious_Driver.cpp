@@ -306,7 +306,10 @@ static void play_file_gym(char *filename)
 
 	name = get_title(filename);
 
-	if (audcfg.loop_length)
+	if (gym->track_length() > 0)
+		console_ip.set_info(name, gym->track_length() * 1000, 
+			gym->voice_count() * 1000, samplerate, 2);
+	else if (audcfg.loop_length)
 		console_ip.set_info(name, audcfg.loop_length * 1000, 
 			gym->voice_count() * 1000, samplerate, 2);
 	else
