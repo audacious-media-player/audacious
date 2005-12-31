@@ -40,20 +40,20 @@ enum {
 
 static const gchar *bmp_brief =
     N_("<big><b>Audacious %s</b></big>\n"
-       "A media player based on BMP and XMMS\n"
+       "The future of UNIX multimedia.\n"
        "\n"
-       "Copyright (C) 2005 Audacious Development Team\n");
+       "Copyright (C) 2005-2006 Audacious Development Team\n");
 
 static const gchar *credit_text[] = {
     N_("Developers:"),
     N_("William Pitcock"),
-    N_("Mohammed Sameer"),
     N_("Tony Vroon"),
     NULL,
 
-    N_("Special thanks to:"),
-    N_("irc.atheme.org #audacious"),
-    N_("irc.freenode.net #audacious"),
+    N_("0.1.x developers:"),
+    N_("William Pitcock"),
+    N_("Mohammed Sameer"),
+    N_("Tony Vroon"),
     NULL,
 
     N_("BMP Developers:"),
