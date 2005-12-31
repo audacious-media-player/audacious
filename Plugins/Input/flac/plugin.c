@@ -28,6 +28,7 @@
 #include <libaudacious/util.h>
 #include <libaudacious/configdb.h>
 #include <libaudacious/titlestring.h>
+#include <libaudacious/vfs.h>
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -288,12 +289,16 @@ void FLAC_XMMS__init()
 
 int FLAC_XMMS__is_our_file(char *filename)
 {
-	char *ext;
-
-	ext = strrchr(filename, '.');
-	if(ext)
-		if(!strcasecmp(ext, ".flac") || !strcasecmp(ext, ".fla"))
+	VFSFile *file;
+	gchar magic[4];
+	if (file = vfs_fopen(filename, "rb")) {
+		vfs_fread(magic, 1, 4, file);
+		if (!strncmp(magic, "fLaC", 4)) {
+			vfs_fclose(file);
 			return 1;
+		}
+		vfs_fclose(file);
+	}
 	return 0;
 }
 
