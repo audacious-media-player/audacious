@@ -265,30 +265,8 @@ gint xs_is_our_file(gchar * pcFilename)
 	if (pcFilename == NULL)
 		return FALSE;
 
-	/* Try to detect via detection routine, if required */
-	if (xs_cfg.detectMagic && xs_status.sidPlayer->plrIsOurFile(pcFilename))
+	if (xs_status.sidPlayer->plrIsOurFile(pcFilename))
 		return TRUE;
-
-	/* Detect just by checking filename extension */
-	pcExt = xs_strrchr(pcFilename, '.');
-	if (pcExt) {
-		pcExt++;
-		switch (xs_cfg.playerEngine) {
-		case XS_ENG_SIDPLAY1:
-		case XS_ENG_SIDPLAY2:
-			if (!g_strcasecmp(pcExt, "psid"))
-				return TRUE;
-			if (!g_strcasecmp(pcExt, "sid"))
-				return TRUE;
-			if (!g_strcasecmp(pcExt, "dat"))
-				return TRUE;
-			if (!g_strcasecmp(pcExt, "inf"))
-				return TRUE;
-			if (!g_strcasecmp(pcExt, "info"))
-				return TRUE;
-			break;
-		}
-	}
 
 	return FALSE;
 }
