@@ -602,6 +602,9 @@ static void *play_loop_gym(gpointer arg)
 		my_gym->play(1024, buf);
 
 		if ((console_ip.output->output_time() / 1000) > 
+			gym->track_length() && gym->track_length() != 0)
+			break;
+		if ((console_ip.output->output_time() / 1000) > 
 			audcfg.loop_length && audcfg.loop_length != 0)
 			break;
 		produce_audio(console_ip.output->written_time(),
