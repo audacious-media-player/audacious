@@ -326,6 +326,22 @@ else
 fi
 AM_CONDITIONAL([HAVE_LIRC], test "$have_lirc" = "yes")
 
+dnl *** AdPlug requirement (libbinio) _ZN8binfbase3posEv
+
+AC_ARG_ENABLE(adplug,
+    [  --disable-adplug        disable AdPlug plugin (default=enabled)],
+    [enable_adplug=$enableval],
+    [enable_adplug="yes"]
+)
+
+if test "$enable_lirc" = "yes"; then
+    AC_CHECK_LIB([binio],[_ZN8binfbase3posEv],[have_adplug=yes],[have_adplug=no])
+else
+    AC_MSG_RESULT([*** AdPlug plugin disabled per user request ***])
+    have_adplug="no"
+fi
+AM_CONDITIONAL([HAVE_ADPLUG], test "$have_lirc" = "yes")
+
 dnl *** Ogg Vorbis
 
 AC_ARG_ENABLE(vorbis,
@@ -804,6 +820,8 @@ AC_CONFIG_FILES([
 	Plugins/Input/timidity/libtimidity/Makefile
 	Plugins/Input/timidity/src/Makefile
 	Plugins/Input/sexypsf/Makefile
+	Plugins/Input/adplug/Makefile
+	Plugins/Input/adplug/core/Makefile
         Plugins/Visualization/Makefile
         Plugins/Visualization/blur_scope/Makefile
 	Plugins/Visualization/libvisual-proxy/Makefile
@@ -871,6 +889,7 @@ echo "  Free Lossless Audio Codec (flac):       $have_flac"
 echo "  Commodore 64 audio (sid):               $have_sidplay"
 echo "  Game music (spc, nsf & gbs):            yes"
 echo "  PlayStation audio (sexypsf):            yes"
+echo "  AdLib synthesizer (adplug):             $have_adplug"
 echo
 echo "  General"
 echo "  -------"
