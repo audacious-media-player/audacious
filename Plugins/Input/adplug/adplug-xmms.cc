@@ -57,9 +57,9 @@ static gboolean		audio_error = FALSE;
 // Configuration (and defaults)
 static struct {
   gint		freq;
-  gboolean	bit16, stereo, endless, quickdetect;
+  gboolean	bit16, stereo, endless;
   CPlayers	players;
-} cfg = { 44100l, true, false, false, true, CAdPlug::players };
+} cfg = { 44100l, true, false, false, CAdPlug::players };
 
 // Player variables
 static struct {
@@ -159,17 +159,16 @@ static void close_config_box_ok(GtkButton *button, GPtrArray *rblist)
   if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(g_ptr_array_index(rblist, 5)))) cfg.freq = 48000;
 
   cfg.endless = !gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(g_ptr_array_index(rblist, 6)));
-  cfg.quickdetect = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(g_ptr_array_index(rblist, 7)));
 
-  cfg.players = *(CPlayers *)g_ptr_array_index(rblist, 8);
-  delete (CPlayers *)g_ptr_array_index(rblist, 8);
+  cfg.players = *(CPlayers *)g_ptr_array_index(rblist, 7);
+  delete (CPlayers *)g_ptr_array_index(rblist, 7);
 
   g_ptr_array_free(rblist, FALSE);
 }
 
 static void close_config_box_cancel(GtkButton *button, GPtrArray *rblist)
 {
-  delete (CPlayers *)g_ptr_array_index(rblist, 8);
+  delete (CPlayers *)g_ptr_array_index(rblist, 7);
   g_ptr_array_free(rblist, FALSE);
 }
 
@@ -306,17 +305,6 @@ static void adplug_config(void)
 			 "won't take notice of a song's ending and loop it all "
 			 "over again and again.", NULL);
     g_ptr_array_add(rblist, (gpointer)cb);
-
-    cb = GTK_CHECK_BUTTON(gtk_check_button_new_with_label("Quick file detection"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cb), cfg.quickdetect);
-    gtk_container_add(GTK_CONTAINER(vb), GTK_WIDGET(cb));
-    gtk_tooltips_set_tip(tooltips, GTK_WIDGET(cb),
-			 "If enabled, we'll try to determine a file's type by "
-			 "only looking at the file extension, instead of "
-			 "processing the file's contents. This speeds up the "
-			 "load time of files a lot, but can be inaccurate if "
-			 "the file has the wrong extension.", NULL);
-    g_ptr_array_add(rblist, (gpointer)cb);
   }
 
   /***** Page 2: Formats *****/
@@ -389,32 +377,13 @@ static void add_instlist(GtkCList *instlist, const char *t1, const char *t2)
 }
 
 static CPlayer *factory(const std::string &filename, Copl *newopl)
-/* Wrapper factory method that implements the "quick detect" feature. */
 {
   CPlayer			*p;
   CPlayers::const_iterator	i;
   unsigned int			j;
 
   dbg_printf("factory(\"%s\",opl): ", filename.c_str());
-  if(cfg.quickdetect) {
-    // Quick detect! Just check according to file extensions.
-    dbg_printf("quick detect: ");
-    for(i = cfg.players.begin(); i != cfg.players.end(); i++)
-      for(j = 0; (*i)->get_extension(j); j++)
-	if(CFileProvider::extension(filename, (*i)->get_extension(j)))
-	  if((p = (*i)->factory(newopl)))
-	    if(p->load(filename)) {
-	      dbg_printf("%s\n", (*i)->filetype.c_str());
-	      return p;
-	    } else
-	      delete p;
-
-    dbg_printf("failed!\n");
-    return 0;	// quick detect failed.
-  } else {	// just call AdPlug's original factory()
-    dbg_printf("asking AdPlug...\n");
-    return CAdPlug::factory(filename, newopl, cfg.players);
-  }
+  return CAdPlug::factory(filename, newopl, cfg.players);
 }
 
 static void adplug_stop(void);
@@ -828,7 +797,6 @@ static void adplug_init(void)
   bmp_cfg_db_get_bool(db, CFG_VERSION, "Stereo", (gboolean *)&cfg.stereo);
   bmp_cfg_db_get_int(db, CFG_VERSION, "Frequency", (gint *)&cfg.freq);
   bmp_cfg_db_get_bool(db, CFG_VERSION, "Endless", (gboolean *)&cfg.endless);
-  bmp_cfg_db_get_bool(db, CFG_VERSION, "QuickDetect", (gboolean *)&cfg.quickdetect);
 
   // Read file type exclusion list
   dbg_printf("exclusion, ");
@@ -882,7 +850,6 @@ static void adplug_quit(void)
   bmp_cfg_db_set_bool(db, CFG_VERSION, "Stereo", cfg.stereo);
   bmp_cfg_db_set_int(db, CFG_VERSION, "Frequency", cfg.freq);
   bmp_cfg_db_set_bool(db, CFG_VERSION, "Endless", cfg.endless);
-  bmp_cfg_db_set_bool(db, CFG_VERSION, "QuickDetect", cfg.quickdetect);
 
   dbg_printf("exclude, ");
   std::string exclude;
