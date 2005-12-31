@@ -83,7 +83,7 @@ static gchar *get_title_spc(gchar *filename)
 	reader.open(filename);
 	reader.read(&header, sizeof(header));
 
-	if (header.song)
+	if (header.version > 10)
 	{
 		TitleInput *tinput;
 
