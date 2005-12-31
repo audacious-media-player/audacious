@@ -9,6 +9,7 @@ extern "C"
 #include "libaudacious/util.h"
 #include "libaudacious/configdb.h"
 #include "libaudacious/titlestring.h"
+#include "libaudacious/vfs.h"
 }
 
 //stdlib headers

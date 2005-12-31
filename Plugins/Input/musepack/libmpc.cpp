@@ -202,11 +202,17 @@ static void saveConfigBox(GtkWidget* p_Widget, gpointer p_Data)
 
 static int mpcIsOurFile(char* p_Filename)
 {
-    char* ext;
-    ext = strrchr(p_Filename, '.');
-    if(ext)
-        return !(strcasecmp(ext, ".mpc") && strcasecmp(ext, ".mpp") && strcasecmp(ext, ".mp+"));
-    return FALSE;
+   VFSFile *file;
+   gchar magic[3];
+   if (file = vfs_fopen(p_Filename, "rb")) {
+       vfs_fread(magic, 1, 3, file);
+       if (!strncmp(magic, "MP+", 3)) {
+            vfs_fclose(file);
+            return 1;
+       }
+       vfs_fclose(file);
+   }
+   return 0;
 }
 
 static void mpcPlay(char* p_Filename)
