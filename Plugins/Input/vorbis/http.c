@@ -294,7 +294,8 @@ http_buffer_loop(gpointer arg)
     gchar line[1024], *user, *pass, *host, *filename,
         *status, *url, *temp, *file;
     gchar *chost;
-    gint cnt, written, error, err_len, port, cport;
+    gint cnt, written, error, port, cport;
+    guint err_len;
     gboolean redirect;
     fd_set set;
     struct hostent *hp;

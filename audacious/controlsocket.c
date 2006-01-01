@@ -288,7 +288,7 @@ ctrlsocket_func(gpointer arg)
     struct timeval tv;
     struct sockaddr_un saddr;
     gint fd, b, i;
-    guint32 info[3];
+    gint info[3];
     gint32 v[2];
     PacketNode *pkt;
     socklen_t len;

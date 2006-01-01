@@ -347,7 +347,8 @@ static int http_connect (gchar *url_, gboolean head, guint64 offset)
 	gchar line[1024], *user, *pass, *host, *filename,
 	     *status, *url, *temp, *file;
 	gchar *chost;
-	gint cnt, error, err_len, port, cport;
+	gint cnt, error, port, cport;
+	guint err_len;
 	gboolean redirect;
 	int udp_sock = 0;
 	fd_set set;

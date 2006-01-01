@@ -51,9 +51,9 @@ void	checkADTSForSeeking(FILE *fd,
 {
   unsigned long	originPosition;
   unsigned long	position;
-  unsigned char	header[ADTS_HEADER_SIZE];
   unsigned int	frameCount, frameLength, frameInsec;
   unsigned int	id=0, seconds=0;
+  char header[ADTS_HEADER_SIZE];
 
   originPosition = ftell(fd);
 
