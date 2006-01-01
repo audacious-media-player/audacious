@@ -291,7 +291,7 @@ int FLAC_XMMS__is_our_file(char *filename)
 {
 	VFSFile *file;
 	gchar magic[4];
-	if (file = vfs_fopen(filename, "rb")) {
+	if ((file = vfs_fopen(filename, "rb"))) {
 		vfs_fread(magic, 1, 4, file);
 		if (!strncmp(magic, "fLaC", 4)) {
 			vfs_fclose(file);
