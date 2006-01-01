@@ -258,7 +258,6 @@ void xs_close(void)
  */
 gint xs_is_our_file(gchar * pcFilename)
 {
-	gchar *pcExt;
 	assert(xs_status.sidPlayer);
 
 	/* Check the filename */
