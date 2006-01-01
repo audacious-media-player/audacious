@@ -1321,7 +1321,7 @@ make_filebrowser(const gchar * title,
     g_return_val_if_fail(title != NULL, NULL);
 
     dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(mainwin),
-                                         GTK_FILE_CHOOSER_ACTION_OPEN, NULL);
+                                         GTK_FILE_CHOOSER_ACTION_OPEN, NULL, NULL);
     if (save)
         gtk_file_chooser_set_action(GTK_FILE_CHOOSER(dialog),
                                     GTK_FILE_CHOOSER_ACTION_SAVE);

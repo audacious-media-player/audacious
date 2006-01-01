@@ -889,7 +889,7 @@ playlist_file_selection(const gchar * title,
 
     dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(mainwin),
                                          save ? GTK_FILE_CHOOSER_ACTION_SAVE :
-                                         GTK_FILE_CHOOSER_ACTION_OPEN, NULL);
+                                         GTK_FILE_CHOOSER_ACTION_OPEN, NULL, NULL);
     if (default_filename)
         gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog),
                                       default_filename);
