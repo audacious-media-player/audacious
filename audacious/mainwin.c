@@ -1864,60 +1864,6 @@ mainwin_drag_data_received(GtkWidget * widget,
 }
 
 static void
-dirbrowser_add_dir(const gchar * dir)
-{
-    g_free(cfg.filesel_path);
-    cfg.filesel_path = g_strdup(dir);
-    playlist_add_dir(dir);
-}
-
-static void
-dirbrowser_on_response(GtkFileChooserDialog * dialog,
-                       gint result,
-                       gpointer data)
-{
-
-    gchar *pathname;
-
-//    gtk_widget_hide(GTK_WIDGET(dialog));
-
-    switch (result) {
-    case GTK_RESPONSE_ACCEPT:
-        pathname = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
-        dirbrowser_add_dir(pathname);
-        g_free(pathname);
-        break;
-
-    case GTK_RESPONSE_CLOSE:
-        break;
-    }
-
-}
-
-
-static GtkWidget *
-dirbrowser_new(const gchar * path)
-{
-    GtkWidget *dialog;
-
-    dialog = gtk_file_chooser_dialog_new(_("Add Folders"),
-                                         GTK_WINDOW(mainwin),
-                                         GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
-                                         GTK_STOCK_ADD, GTK_RESPONSE_OK,
-                                         GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-                                         NULL);
-    gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
-
-    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog),
-                                        path);
-    g_signal_connect(dialog, "response",
-                     G_CALLBACK(dirbrowser_on_response),
-                     NULL);
-
-    return dialog;
-}
-
-static void
 on_add_url_add_clicked(GtkWidget * widget,
                        GtkWidget * entry)
 {
