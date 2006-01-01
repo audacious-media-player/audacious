@@ -511,7 +511,7 @@ static void on_checkbutton_vis_plugin_toggled (GtkToggleButton *togglebutton, gp
 		g_list_free (items);
 
 		/* Create a new item marked as enabled */
-		name = g_strconcat (current_actor->info->name, _(" (enabled)"), 0);
+		name = g_strconcat (current_actor->info->name, _(" (enabled)"), NULL);
 		item = gtk_list_item_new_with_label (name);
 		g_free (name);
 		/*gtk_list_select_item (GTK_LIST(config_win->list_vis_plugins), pos);*/
@@ -577,7 +577,7 @@ static void on_button_vis_plugin_about_clicked (GtkButton *button, gpointer data
 				_("Version: "), current_actor->info->version, "\n",
 				current_actor->info->about, "\n",
 				_("Author: "), current_actor->info->author, "\n\n",
-				current_actor->info->help, 0);
+				current_actor->info->help, NULL);
 	msgwin = xmms_show_message (PACKAGE_NAME, msg, _("Accept"), TRUE, GTK_SIGNAL_FUNC(dummy), NULL);
 	gtk_widget_show (msgwin);
 	g_free (msg);
@@ -733,7 +733,7 @@ static void new_actor_item (gpointer data, gpointer user_data)
 
 	/* Create the new item */
 	if (*enabled) {
-		name = g_strconcat (actor->info->name, _(" (enabled)"), 0);
+		name = g_strconcat (actor->info->name, _(" (enabled)"), NULL);
 		item = gtk_list_item_new_with_label (name);
 		g_free (name);
 	} else {
@@ -906,7 +906,7 @@ static void on_button_morph_plugin_about_clicked (GtkButton *button, gpointer da
 					_("Version: "), morph->info->version, "\n",
 					morph->info->about, "\n",
 					_("Author: "), morph->info->author, "\n\n",
-					morph->info->help, 0);
+					morph->info->help, NULL);
 			msgwin = xmms_show_message (PACKAGE_NAME, msg,
 					_("Accept"), TRUE, GTK_SIGNAL_FUNC(dummy), NULL);
 			gtk_widget_show (msgwin);
