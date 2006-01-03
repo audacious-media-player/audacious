@@ -26,7 +26,7 @@
 */
 
 #include <string.h>
-#include <libbinio/binstr.h>
+#include <binstr.h>
 
 #include "dmo.h"
 #include "debug.h"

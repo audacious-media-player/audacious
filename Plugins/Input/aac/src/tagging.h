@@ -25,6 +25,7 @@
 #include <unistd.h>
 
 #include <mp4.h>
+#include "xmms-id3.h"
 
 /* XXX: We will need the same for AAC eventually */
 extern gchar *audmp4_get_artist(MP4FileHandle);
@@ -32,5 +33,8 @@ extern gchar *audmp4_get_title(MP4FileHandle);
 extern gchar *audmp4_get_album(MP4FileHandle);
 extern gchar *audmp4_get_genre(MP4FileHandle);
 extern gint   audmp4_get_year(MP4FileHandle);
+
+#define GENRE_MAX 0x94
+extern const char *audmp4_id3_genres[GENRE_MAX];
 
 #endif

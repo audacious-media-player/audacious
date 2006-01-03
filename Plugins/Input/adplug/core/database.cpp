@@ -21,8 +21,8 @@
  * Copyright (c) 2002, 2003 Simon Peter <dn.tlp@gmx.net>
  */
 
-#include <libbinio/binio.h>
-#include <libbinio/binfile.h>
+#include <binio.h>
+#include <binfile.h>
 #include <string.h>
 
 #include "database.h"

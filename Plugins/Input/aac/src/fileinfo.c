@@ -91,6 +91,7 @@ audmp4_strip_spaces(char *src, size_t n)
     return src - start;
 }
 
+#if 0
 static void
 set_entry_tag(GtkEntry * entry, gchar * tag, gint length)
 {
@@ -124,6 +125,7 @@ press_save(GtkWidget * w, gpointer data)
 {
     gtk_button_clicked(GTK_BUTTON(save));
 }
+#endif
 
 static gint
 genre_comp_func(gconstpointer a, gconstpointer b)
@@ -150,6 +152,7 @@ fileinfo_keypress_cb(GtkWidget * widget,
     return TRUE;
 }
 
+#if 0
 static void
 label_set_text(GtkWidget * label, gchar * str, ...)
 {
@@ -162,6 +165,7 @@ label_set_text(GtkWidget * label, gchar * str, ...)
 
     gtk_label_set_text(GTK_LABEL(label), tempstr);
 }
+#endif
 
 static void
 change_buttons(GtkObject * object)
@@ -312,7 +316,6 @@ audmp4_file_info_box(gchar * filename)
 
         pango_attr_list_unref(attrs);
 
-#if 0
         label = gtk_label_new(_("Genre:"));
         gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
         gtk_label_set_attributes(GTK_LABEL(label), attrs);
@@ -326,7 +329,7 @@ audmp4_file_info_box(gchar * filename)
             for (i = 0; i < GENRE_MAX; i++)
                 genre_list =
                     g_list_prepend(genre_list,
-                                   (gchar *) mpg123_id3_genres[i]);
+                                   (gchar *) audmp4_id3_genres[i]);
             genre_list = g_list_prepend(genre_list, "");
             genre_list = g_list_sort(genre_list, genre_comp_func);
         }
@@ -335,7 +338,6 @@ audmp4_file_info_box(gchar * filename)
         gtk_table_attach(GTK_TABLE(table), genre_combo, 1, 6, 5, 6,
                          GTK_FILL | GTK_EXPAND | GTK_SHRINK,
                          GTK_FILL | GTK_EXPAND | GTK_SHRINK, 0, 5);
-#endif
 
         boxx = gtk_hbutton_box_new();
         gtk_hbutton_box_set_layout_default(GTK_BUTTONBOX_SPREAD);
@@ -369,10 +371,8 @@ audmp4_file_info_box(gchar * filename)
                                  G_CALLBACK(change_buttons), save);
         g_signal_connect_swapped(G_OBJECT(tracknum_entry), "changed",
                                  G_CALLBACK(change_buttons), save);
-#if 0
         g_signal_connect_swapped(G_OBJECT(GTK_COMBO(genre_combo)->entry), "changed",
                                  G_CALLBACK(change_buttons), save);
-#endif
         g_signal_connect(G_OBJECT(window), "key_press_event",
                          G_CALLBACK(fileinfo_keypress_cb), NULL);
     }
@@ -397,10 +397,8 @@ audmp4_file_info_box(gchar * filename)
     gtk_entry_set_text(GTK_ENTRY(tracknum_entry), "");
     gtk_entry_set_text(GTK_ENTRY(comment_entry), "");
 
-#if 0
     gtk_list_select_item(GTK_LIST(GTK_COMBO(genre_combo)->list),
                          g_list_index(genre_list, ""));
-#endif
 
     gtk_widget_set_sensitive(id3_frame,
                              vfs_is_writeable(filename));

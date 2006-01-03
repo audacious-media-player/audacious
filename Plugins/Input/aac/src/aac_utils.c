@@ -65,10 +65,6 @@ void	checkADTSForSeeking(FILE *fd,
     if(!g_strncasecmp(header, "ID3", 3)){
       break;
     }
-    if(!((header[0]==0xFF)&&((header[1]& 0xF6)==0xF0))){
-      printf("error : Bad 1st header, file may be corrupt !\n");
-      break;
-    }
     if(!frameCount){
       id=header[1]&0x08;
       if(((*seekTable) = malloc(SEEK_TABLE_CHUNK * sizeof(unsigned long)))==0){

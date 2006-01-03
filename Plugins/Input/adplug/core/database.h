@@ -26,7 +26,7 @@
 
 #include <iostream>
 #include <string>
-#include <libbinio/binio.h>
+#include <binio.h>
 
 class CAdPlugDatabase
 {
