@@ -1,4 +1,4 @@
-#pixmapsdir = $(datadir)/pixmaps
-#pixmaps_DATA = bmp.png
+pixmapsdir = $(datadir)/pixmaps
+pixmaps_DATA = audacious.png
 
-#EXTRA_DIST = $(pixmaps_DATA)
+EXTRA_DIST = $(pixmaps_DATA)

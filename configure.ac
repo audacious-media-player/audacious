@@ -181,24 +181,6 @@ PKG_CHECK_MODULES(LIBGLADE, [libglade-2.0 >= 2.3.1],
     [AC_MSG_ERROR([Cannot find libglade])]
 )
 
-
-dnl x86 SIMD(3DNow!/MMX) instructions support
-dnl ========================
-
-AC_ARG_ENABLE(simd,
-   [  --enable-simd           build with x86 SIMD(3DNow!/MMX) instructions support (default=no)],
-   [USE_SIMD=$enableval],
-   [USE_SIMD=no]
-)
-
-if test "$USE_SIMD" = "yes"; then
-    AC_DEFINE(USE_SIMD, , [Define if building with ia32 SIMD support])
-fi
-
-AM_CONDITIONAL(USE_SIMD, test "$USE_SIMD" = "yes")
-AC_SUBST(USE_SIMD_TRUE)
-
-
 # Check if socklen_t is defined
 
 AC_CACHE_CHECK(for socklen_t, beep_cv_type_socklen_t,

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Audacious
 Comment=Play music
+Comment[hu]=Zene lejátszása
 Exec=audacious
 Icon=audacious.png
 MimeType=audio/x-scpls;audio/x-mpegurl;audio/mpegurl;audio/mp3;audio/x-mp3;audio/mpeg;audio/x-mpeg;audio/x-wav;application/x-ogg;
