@@ -20,7 +20,7 @@
  */
 
 #include <string>
-#include <binfile.h>
+#include <libbinio/binfile.h>
 
 #include "adplug.h"
 #include "debug.h"
