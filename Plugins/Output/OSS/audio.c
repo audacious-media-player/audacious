@@ -254,7 +254,7 @@ write_all(int fd, const void *buf, size_t count)
 {
     ssize_t done = 0;
     do {
-        ssize_t n = write(fd, buf, count - done);
+        ssize_t n = write(fd, (gchar *) buf + done, count - done);
         if (n == -1) {
             if (errno == EINTR)
                 continue;
