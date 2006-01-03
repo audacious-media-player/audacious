@@ -60,7 +60,7 @@ audacious_SOURCES = \
 	mainwin.c mainwin.h \
 	skinwin.c skinwin.h \
 	prefswin.c prefswin.h \
-	playlistwin.c playlistwin.h \
+	ui_playlist.c ui_playlist.h \
 	equalizer.c equalizer.h \
 	glade.c glade.h \
 	hints.c hints.h \

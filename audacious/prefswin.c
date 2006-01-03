@@ -44,7 +44,7 @@
 #include "libaudacious/configdb.h"
 
 #include "mainwin.h"
-#include "playlistwin.h"
+#include "ui_playlist.h"
 #include "skinwin.h"
 #include "playlist_list.h"
 

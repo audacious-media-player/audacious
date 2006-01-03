@@ -54,7 +54,7 @@
 #include "main.h"
 #include "libaudcore/playback.h"
 #include "playlist.h"
-#include "playlistwin.h"
+#include "ui_playlist.h"
 
 
 static GQuark quark_popup_data;

@@ -38,7 +38,7 @@
 #include "input.h"
 #include "libaudcore/playback.h"
 #include "playlist.h"
-#include "playlistwin.h"
+#include "ui_playlist.h"
 #include "prefswin.h"
 #include "skin.h"
 #include "libaudacious/beepctrl.h"

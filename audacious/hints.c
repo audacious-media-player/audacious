@@ -26,7 +26,7 @@
 
 #include "equalizer.h"
 #include "mainwin.h"
-#include "playlistwin.h"
+#include "ui_playlist.h"
 
 #include <gdk/gdkx.h>
 #include <gdk/gdkprivate.h>

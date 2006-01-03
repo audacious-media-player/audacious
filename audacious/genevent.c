@@ -65,7 +65,7 @@
 #include "output.h"
 #include "libaudcore/playback.h"
 #include "playlist.h"
-#include "playlistwin.h"
+#include "ui_playlist.h"
 #include "pluginenum.h"
 #include "prefswin.h"
 #include "skin.h"

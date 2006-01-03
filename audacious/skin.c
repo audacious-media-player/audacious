@@ -33,7 +33,7 @@
 
 #include "equalizer.h"
 #include "main.h"
-#include "playlistwin.h"
+#include "ui_playlist.h"
 #include "skin.h"
 #include "skinwin.h"
 #include "util.h"

@@ -49,7 +49,7 @@
 #include "equalizer.h"
 #include "libaudcore/playback.h"
 #include "playlist.h"
-#include "playlistwin.h"
+#include "ui_playlist.h"
 #include "playlist_list.h"
 #include "skin.h"
 #include "urldecode.h"

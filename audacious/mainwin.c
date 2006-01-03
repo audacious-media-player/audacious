@@ -52,7 +52,7 @@
 #include "equalizer.h"
 #include "hints.h"
 #include "input.h"
-#include "playlistwin.h"
+#include "ui_playlist.h"
 #include "prefswin.h"
 #include "skinwin.h"
 #include "genevent.h"

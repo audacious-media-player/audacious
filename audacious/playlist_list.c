@@ -42,7 +42,7 @@
 #include "input.h"
 #include "libaudcore/playback.h"
 #include "playlist.h"
-#include "playlistwin.h"
+#include "ui_playlist.h"
 #include "util.h"
 
 #include "debug.h"

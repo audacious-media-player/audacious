@@ -24,7 +24,7 @@
 #include <glib.h>
 
 #include "playlist.h"
-#include "playlistwin.h"
+#include "ui_playlist.h"
 #include "skin.h"
 #include "widget.h"
 

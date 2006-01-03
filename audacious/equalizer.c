@@ -46,7 +46,7 @@
 #include "main.h"
 #include "pbutton.h"
 #include "playlist.h"
-#include "playlistwin.h"
+#include "ui_playlist.h"
 #include "skin.h"
 #include "tbutton.h"
 #include "util.h"
