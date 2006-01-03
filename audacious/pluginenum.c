@@ -213,7 +213,6 @@ add_plugin(const gchar * filename)
             plugin->filename = g_strdup(filename);
             type->init(PLUGIN_GET_INFO(func));
 
-            printf("Loaded %s plugin (%s)\n", type->name, filename);
             return;
         }
     }
