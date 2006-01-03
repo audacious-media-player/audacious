@@ -308,7 +308,7 @@ else
 fi
 AM_CONDITIONAL([HAVE_LIRC], test "$have_lirc" = "yes")
 
-dnl *** AdPlug requirement (libbinio) _ZN8binfbase3posEv
+dnl *** AdPlug requirement (libbinio)
 
 AC_ARG_ENABLE(adplug,
     [  --disable-adplug        disable AdPlug plugin (default=enabled)],
@@ -316,8 +316,8 @@ AC_ARG_ENABLE(adplug,
     [enable_adplug="yes"]
 )
 
-if test "$enable_lirc" = "yes"; then
-    AC_CHECK_LIB([binio],[_ZN8binfbase3posEv],[have_adplug=yes],[have_adplug=no])
+if test "$enable_adplug" = "yes"; then
+    AC_CHECK_LIB([binio],[main],[have_adplug=yes],[have_adplug=no])
 else
     AC_MSG_RESULT([*** AdPlug plugin disabled per user request ***])
     have_adplug="no"
