@@ -1,6 +1,9 @@
 # Song Change general plugin.
 Plugins/General/song_change/song_change.c
 
+# AAC input plugin.
+Plugins/Input/aac/src/fileinfo.c
+
 # CD Audio input plugin.
 Plugins/Input/cdaudio/cdaudio.c
 Plugins/Input/cdaudio/cdinfo.c
@@ -15,8 +18,9 @@ Plugins/Input/flac/configure.c
 Plugins/Input/flac/fileinfo.c
 Plugins/Input/flac/http.c
 
-# MikMod input plugin.
-Plugins/Input/mikmod/plugin.c
+# ModPlug input plugin.
+Plugins/Input/modplug/gui/interface.cpp
+Plugins/Input/modplug/gui/support.cpp
 
 # MP3 input plugin.
 Plugins/Input/mpg123/configure.c
@@ -51,6 +55,10 @@ Plugins/Output/alsa/about.c
 Plugins/Output/alsa/alsa.c
 Plugins/Output/alsa/configure.c
 
+# Crossfade output plugin.
+Plugins/Output/crossfade/configure.c
+Plugins/Output/crossfade/interface-2.0.glade
+
 # Disk Writer output plugin.
 Plugins/Output/disk_writer/disk_writer.c
 
@@ -79,7 +87,6 @@ audacious/input.c
 audacious/logger.c
 audacious/main.c
 audacious/mainwin.c
-audacious/playback.c
 audacious/playlistwin.c
 audacious/prefswin.c
 audacious/util.c
@@ -90,3 +97,6 @@ audacious/glade/prefswin.glade
 
 # libaudacious.
 libaudacious/titlestring.c
+
+# libaudcore.
+libaudcore/playback.c
