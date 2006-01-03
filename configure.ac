@@ -318,7 +318,7 @@ AC_ARG_ENABLE(adplug,
 
 if test "$enable_adplug" = "yes"; then
     AC_CHECK_LIB([binio],[main],[have_adplug=yes],[have_adplug=no])
-    AC_CHECK_HEADER(<binio.h>,,[have_adplug=no])
+    AC_CHECK_HEADER(binio.h,,[have_adplug=no])
 else
     AC_MSG_RESULT([*** AdPlug plugin disabled per user request ***])
     have_adplug="no"
