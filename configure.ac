@@ -323,7 +323,7 @@ else
     AC_MSG_RESULT([*** AdPlug plugin disabled per user request ***])
     have_adplug="no"
 fi
-AM_CONDITIONAL([HAVE_ADPLUG], test "$have_lirc" = "yes")
+AM_CONDITIONAL([HAVE_ADPLUG], test "$have_adplug" = "yes")
 
 dnl *** Ogg Vorbis
 
