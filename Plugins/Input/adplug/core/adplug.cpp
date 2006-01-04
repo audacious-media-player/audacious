@@ -39,11 +39,8 @@
 #include "hsp.h"
 #include "ksm.h"
 #include "mad.h"
-#include "mid.h"
 #include "mkj.h"
 #include "cff.h"
-#include "dmo.h"
-#include "s3m.h"
 #include "dtm.h"
 #include "fmc.h"
 #include "mtk.h"
@@ -82,11 +79,8 @@ const CPlayerDesc CAdPlug::allplayers[] = {
   CPlayerDesc(ChspLoader::factory, "HSC Packed", ".hsp\0"),
   CPlayerDesc(CksmPlayer::factory, "Ken Silverman Music", ".ksm\0"),
   CPlayerDesc(CmadLoader::factory, "Mlat Adlib Tracker", ".mad\0"),
-  CPlayerDesc(CmidPlayer::factory, "MIDI", ".mid\0.cmf\0.sci\0.laa\0"),
   CPlayerDesc(CmkjPlayer::factory, "MKJamz", ".mkj\0"),
   CPlayerDesc(CcffLoader::factory, "Boomtracker", ".cff\0"),
-  CPlayerDesc(CdmoLoader::factory, "TwinTeam", ".dmo\0"),
-  CPlayerDesc(Cs3mPlayer::factory, "Scream Tracker 3", ".s3m\0"),
   CPlayerDesc(CdtmLoader::factory, "DeFy Adlib Tracker", ".dtm\0"),
   CPlayerDesc(CfmcLoader::factory, "Faust Music Creator", ".sng\0"),
   CPlayerDesc(CmtkLoader::factory, "MPU-401 Trakker", ".mtk\0"),
