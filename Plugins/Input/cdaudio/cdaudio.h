@@ -56,7 +56,7 @@
 #include <sys/cdio.h>
 #endif
 
-#if defined(CDROMREADAUDIO) || defined(CDIOCREADAUDIO) || defined(CDROMCDDA)
+#if defined(CDROMREADAUDIO) || defined(CDIOCREADAUDIO) || defined(CDROMCDDA) || defined(CDRIOCSETBLOCKSIZE)
 # define CDDA_HAS_READAUDIO
 #endif
 

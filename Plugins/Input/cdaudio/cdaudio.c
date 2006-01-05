@@ -71,8 +71,10 @@
 
 #ifndef CDDA_DEVICE
 # ifdef HAVE_SYS_CDIO_H
-#  ifdef __FreeBSD__
+#  if defined(__FreeBSD__) && !defined(CDIOCREADAUDIO)
 #   define CDDA_DEVICE "/dev/acd0c"
+#  elif defined __FreeBSD__
+#   define CDDA_DEVICE "/dev/acd0"
 #  elif defined __OpenBSD__
 #   define CDDA_DEVICE "/dev/cd0c"
 #  else
@@ -411,9 +413,22 @@ drive_set_volume(int l, int r)
     }
 }
 
+#if defined(__FreeBSD__) && !defined(CDIOCREADAUDIO)
+int
+read_audio_data(int fd, int pos, int num, void *buf)
+{
+    int bs = CD_FRAMESIZE_RAW;
+
+    if (ioctl(fd, CDRIOCSETBLOCKSIZE, &bs) == -1)
+	return -1;
+    if (pread(fd, buf, num * bs, (pos - 150) * bs) != num * bs)
+	return -1;
+
+    return num;
+}
+#endif
 
 #if defined(CDIOCREADAUDIO)
-#ifdef __FreeBSD__
 int
 read_audio_data(int fd, int pos, int num, void *buf)
 {
@@ -429,9 +444,6 @@ read_audio_data(int fd, int pos, int num, void *buf)
 
     return cdra.nframes;
 }
-#else
-#error Please test on other <sys/cdio.h> platforms.
-#endif
 #endif                          /* CDIOCREADAUDIO */
 
 #ifdef BEEP_CDROM_BSD_NETBSD    /* NetBSD, OpenBSD */
