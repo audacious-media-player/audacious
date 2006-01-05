@@ -11,4 +11,4 @@ libadplug_la_LDFLAGS = -lstdc++ -lbinio $(PLUGIN_LDFLAGS) ./core/libadplugcore.l
 
 libadplug_la_SOURCES = adplug-xmms.cc
 
-INCLUDES = $(GTK_CFLAGS) -I$(top_builddir)/intl -I$(top_srcdir) -I./core
+INCLUDES = $(GTK_CFLAGS) -I$(top_builddir)/intl -I$(top_srcdir) -I./core -I/usr/include/libbinio
