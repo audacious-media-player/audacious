@@ -46,6 +46,7 @@ static const gchar *bmp_brief =
 
 static const gchar *credit_text[] = {
     N_("Developers:"),
+    N_("Giacomo Lozito"),
     N_("William Pitcock"),
     N_("Tony Vroon"),
     NULL,
