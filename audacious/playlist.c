@@ -72,6 +72,24 @@ static GList *playlist = NULL;
 static GList *shuffle_list = NULL;
 static GList *queued_list = NULL;
 
+/* If this is set to TRUE, we do not probe upon playlist add.
+ *
+ * Under Audacious 0.1.x, this was not a big deal because we used 
+ * file extension introspection instead of looking for file format magic
+ * strings.
+ *
+ * Because we use file magic strings, we have to fstat a file being added
+ * to a playlist up to 1 * <number of input plugins installed> times.
+ *
+ * This can get really slow now that we're looking for files to add to a
+ * playlist. (Up to 5 minutes for 5000 songs, etcetera.)
+ *
+ * So, we obviously don't want to probe while opening a large playlist 
+ * up. Hince the boolean below.
+ *
+ * January 7, 2006, William Pitcock <nenolod@nenolod.net>
+ */
+static gboolean loading_playlist = FALSE;
 
 G_LOCK_DEFINE(playlist_get_info_going);
 
@@ -481,10 +499,16 @@ playlist_ins(const gchar * filename, gint pos)
         return TRUE;
     }
 
-    if ((dec = input_check_file(filename, TRUE)) != NULL) {
-        __playlist_ins(filename, pos, dec);
-        playlist_generate_shuffle_list();
-        playlistwin_update_list();
+    if (loading_playlist == TRUE)
+	dec = NULL;
+    else
+	dec = input_check_file(filename, TRUE);
+
+    if (loading_playlist == TRUE || (loading_playlist == FALSE && dec != NULL))
+    {
+	__playlist_ins(filename, pos, dec);
+	playlist_generate_shuffle_list();
+	playlistwin_update_list();
         return TRUE;
     }
 
@@ -1265,7 +1289,13 @@ playlist_save(const gchar * filename,
 gboolean
 playlist_load(const gchar * filename)
 {
-    return playlist_load_ins(filename, -1);
+    gboolean ret = FALSE;
+
+    loading_playlist = TRUE;
+    ret = playlist_load_ins(filename, -1);
+    loading_playlist = FALSE;
+
+    return ret;
 }
 
 
@@ -1293,19 +1323,32 @@ playlist_load_ins_file(const gchar * filename_p,
         if ((tmp = strrchr(path, '/')))
             *tmp = '\0';
         else {
-            dec = input_check_file(filename, FALSE);
+	    if (loading_playlist != TRUE)
+	        dec = input_check_file(filename, FALSE);
+	    else
+		dec = NULL;
+
             __playlist_ins_with_info(filename, pos, title, len, dec);
             return;
         }
         tmp = g_build_filename(path, filename, NULL);
-        dec = input_check_file(filename, FALSE);
+
+	if (loading_playlist != TRUE)
+	    dec = input_check_file(tmp, FALSE);
+	else
+	    dec = NULL;
+
         __playlist_ins_with_info(tmp, pos, title, len, dec);
         g_free(tmp);
         g_free(path);
     }
     else
     {
-        dec = input_check_file(filename, FALSE);
+	if (loading_playlist != TRUE)
+	    dec = input_check_file(filename, FALSE);
+	else
+	    dec = NULL;
+
         __playlist_ins_with_info(filename, pos, title, len, dec);
     }
 
