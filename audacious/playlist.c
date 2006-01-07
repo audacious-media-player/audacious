@@ -2436,7 +2436,7 @@ playlist_get_filename_to_play(void)
     return filename;
 }
 
-const PlaylistEntry *
+PlaylistEntry *
 playlist_get_entry_to_play(void)
 {
     PLAYLIST_LOCK();

@@ -29,7 +29,7 @@ void bmp_playback_initiate(void);
 void bmp_playback_pause(void);
 void bmp_playback_stop(void);
 void bmp_playback_stop_reentrant(void);
-gboolean bmp_playback_play_file(const PlaylistEntry *entry);
+gboolean bmp_playback_play_file(PlaylistEntry *entry);
 gboolean bmp_playback_get_playing(void);
 gboolean bmp_playback_get_paused(void);
 void bmp_playback_seek(gint time);

@@ -83,7 +83,7 @@ bmp_playback_get_time(void)
 void
 bmp_playback_initiate(void)
 {
-    const PlaylistEntry *entry;
+    PlaylistEntry *entry;
 
     if (playlist_get_length() == 0)
         return;
@@ -201,7 +201,7 @@ run_no_output_plugin_dialog(void)
 }
 
 gboolean
-bmp_playback_play_file(const PlaylistEntry *entry)
+bmp_playback_play_file(PlaylistEntry *entry)
 {
     g_return_val_if_fail(entry != NULL, FALSE);
 
@@ -213,6 +213,9 @@ bmp_playback_play_file(const PlaylistEntry *entry)
 
     if (cfg.random_skin_on_play)
         bmp_playback_set_random_skin();
+
+    if (!entry->decoder)
+	entry->decoder = input_check_file(entry->filename, FALSE);
 
     if (!entry->decoder || !input_is_enabled(entry->decoder->filename))
     {

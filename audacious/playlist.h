@@ -108,7 +108,7 @@ void playlist_fileinfo(guint pos);
 void playlist_delete_index(guint pos);
 void playlist_delete_filenames(GList * filenames);
 
-const PlaylistEntry *playlist_get_entry_to_play();
+PlaylistEntry *playlist_get_entry_to_play();
 
 /* XXX this is for reverse compatibility --nenolod */
 const gchar *playlist_get_filename_to_play();
