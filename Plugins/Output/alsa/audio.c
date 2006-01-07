@@ -948,7 +948,7 @@ static int alsa_setup(struct snd_format *f)
 	int err;
 	snd_pcm_hw_params_t *hwparams;
 	snd_pcm_sw_params_t *swparams;
-	int alsa_buffer_time;
+	uint alsa_buffer_time;
 	unsigned int alsa_period_time;
 	snd_pcm_uframes_t alsa_buffer_size, alsa_period_size;
 
