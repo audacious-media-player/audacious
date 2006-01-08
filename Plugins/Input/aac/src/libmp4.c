@@ -471,7 +471,7 @@ out:
     input->file_name = (char*)g_basename(temp);
     input->file_ext = ext ? ext+1 : NULL;
     input->file_path = temp;
-    if(!strncmp(buffer, "ID3", 3)){
+    if(!g_ascii_strncasecmp((gchar*)buffer, "ID3", 3)){
       gint size = 0;
 
       fseek(file, 0, SEEK_SET);
