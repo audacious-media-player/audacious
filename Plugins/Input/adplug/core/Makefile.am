@@ -18,3 +18,5 @@ a2m.h amd.h bam.h d00.h dfm.h hsc.h hsp.h imf.h ksm.h lds.h mkj.h mtk.h \
 protrack.h rad.h raw.h sa2.h sng.h u6m.h player.h fmc.h mad.h xad.h bmf.h \
 flash.h hyp.h psi.h rat.h hybrid.h rol.h adtrack.h cff.h dtm.h fprovide.h \
 database.h players.h xsm.h adlibemu.h kemuopl.h dro.h dmo.h s3m.h
+
+INCLUDES = $(BINIO_CFLAGS) -I$(top_builddir)/intl -I$(top_srcdir)
