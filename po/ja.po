@@ -5,14 +5,14 @@
 # -----------------------------------------------------
 # Takeshi AIHANA <aihana@gnome.gr.jp>, 2004. (bmp)
 # -----------------------------------------------------
-# dai <d+po@vdr.jp>, 2005.
+# dai <d+po@vdr.jp>, 2005-2006.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-01-03 11:45-0600\n"
-"PO-Revision-Date: 2005-12-12 15:12+0900\n"
+"PO-Revision-Date: 2006-01-05 13:41+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -145,9 +145,8 @@ msgstr "名前:"
 
 #. tagging information
 #: ../Plugins/Input/aac/src/fileinfo.c:238
-#, fuzzy
 msgid "Song Metadata"
-msgstr "ソナタ"
+msgstr "曲のメタデータ"
 
 #: ../Plugins/Input/aac/src/fileinfo.c:245
 #: ../Plugins/Input/flac/fileinfo.c:278 ../Plugins/Input/mpg123/fileinfo.c:859
@@ -1899,13 +1898,12 @@ msgid "PRE-BUFFERING: %dKB/%dKB"
 msgstr "プレ・バッファリング中: %d/%d Kバイト"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:33
-#, fuzzy
 msgid "About Modplug"
-msgstr "mikmod プラグインについて"
+msgstr "Modplug プラグインについて"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:43
 msgid "Modplug Input Plugin for BMP ver"
-msgstr ""
+msgstr "BMP 用 Modplug 入力プラグイン ver"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:45
 msgid ""
@@ -1916,6 +1914,12 @@ msgid ""
 "Updates and Maintainance by Konstanty Bialkowski.\n"
 "Ported to BMP by Theofilos Intzoglou."
 msgstr ""
+"\n"
+"Olivier Lapicque によって書かれた Modplug サウンドエンジンです。\n"
+"Modplug 用 XMMS インタフェイスは Kenton Varda によります。\n"
+"(c)2000 Olivier Lapicque and Kenton Varda.\n"
+"更新と保守は Konstanty Bialkowski によります。\n"
+"BMP 移植は Theofilos Intzoglou によります。"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:68
 #: ../Plugins/Input/modplug/gui/interface.cpp:992
@@ -1925,9 +1929,8 @@ msgid "Close"
 msgstr "閉じる"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:180
-#, fuzzy
 msgid "ModPlug Configuration"
-msgstr "MikMod の設定"
+msgstr "ModPlug の設定"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:227
 #: ../Plugins/Input/mpg123/configure.c:336
@@ -1940,9 +1943,8 @@ msgid "8 bit"
 msgstr " 8ビット"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:243
-#, fuzzy
 msgid "Channels"
-msgstr "チャンネル数:"
+msgstr "チャンネル数"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:257
 #: ../Plugins/Input/mpg123/fileinfo.c:602
@@ -1951,49 +1953,44 @@ msgstr "ステレオ"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:265
 msgid "Mono (downmix)"
-msgstr ""
+msgstr "モノラル (downmix)"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:280
-#, fuzzy
 msgid "Sampling Rate"
-msgstr "サンプリング・レート:"
+msgstr "サンプリング・レート"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:294
-#, fuzzy
 msgid "44 kHz"
-msgstr "1:1 (44 kHz)"
+msgstr "44 kHz"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:302
-#, fuzzy
 msgid "22 kHz"
-msgstr "1:2 (22 kHz)"
+msgstr "22 kHz"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:310
-#, fuzzy
 msgid "11 kHz"
-msgstr "1:1 (44 kHz)"
+msgstr "11 kHz"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:318
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:103
-#, fuzzy
 msgid "Resampling"
-msgstr "ストリーミング"
+msgstr "リサンプリング"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:332
 msgid "Nearest (fastest)"
-msgstr ""
+msgstr "最近傍 (最も早い)"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:340
 msgid "Linear (fast)"
-msgstr ""
+msgstr "線形 (早い)"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:348
 msgid "Spline (good quality)"
-msgstr ""
+msgstr "スプライン (良品質)"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:356
 msgid "8-tap Fir (extremely high quality)"
-msgstr ""
+msgstr "8 タップ FIR (非常に高品質)"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:364
 msgid "Quality"
@@ -2001,106 +1998,99 @@ msgstr "品質"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:379
 #: ../Plugins/Input/modplug/gui/interface.cpp:879
-#, fuzzy
 msgid "General"
-msgstr "ジャンル"
+msgstr "一般"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:400
 msgid "Use Filename as Song Title"
-msgstr ""
+msgstr "曲タイトルをファイル名として使用"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:407
-#, fuzzy
 msgid "Fast Playlist Info"
-msgstr "演奏一覧の読み込み"
+msgstr "演奏一覧の高速読み込み"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:422
 msgid "Noise Reduction"
-msgstr ""
+msgstr "ノイズ・リダクション"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:430
-#, fuzzy
 msgid "Reverb"
-msgstr "サーバ"
+msgstr "リバーブ"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:444
 #: ../Plugins/Input/modplug/gui/interface.cpp:516
 #: ../Plugins/Input/modplug/gui/interface.cpp:588
 #: ../Plugins/Input/modplug/gui/interface.cpp:674
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:36
-#, fuzzy
 msgid "Enable"
 msgstr "有効"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:484
 #: ../Plugins/Input/modplug/gui/interface.cpp:628
-#, fuzzy
 msgid "Depth"
-msgstr "デュエット"
+msgstr "深度"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:493
 #: ../Plugins/Input/modplug/gui/interface.cpp:637
 msgid "Delay"
-msgstr ""
+msgstr "遅延"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:502
 msgid "Bass Boost"
-msgstr ""
+msgstr "ベース・ブースト"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:556
-#, fuzzy
 msgid "Amount"
-msgstr "libvisual proxy プラグインについて"
+msgstr "量"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:565
-#, fuzzy
 msgid "Range"
-msgstr "レイブ"
+msgstr "範囲"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:574
 msgid "Surround"
-msgstr ""
+msgstr "サラウンド"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:646
-#, fuzzy
 msgid "Preamp"
-msgstr "プリアンプ:"
+msgstr "プリアンプ"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:660
 msgid ""
 "Note:  Setting the preamp too high may cause\n"
 "clipping / distortion!"
 msgstr ""
+"注意:  プリアンプを高くしすぎると\n"
+"クリッピングやディストーションの原因になります!"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:681
 msgid "Volume"
-msgstr ""
+msgstr "音量"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:695
 msgid "Looping"
-msgstr ""
+msgstr "ループ"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:709
 msgid "Don't loop"
-msgstr ""
+msgstr "ループしない"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:724
 msgid "Loop"
-msgstr ""
+msgstr "ループ"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:740
 msgid "time(s)"
-msgstr ""
+msgstr "回"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:747
 msgid "Loop forever"
-msgstr ""
+msgstr "永遠にループ"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:755
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:35
-#, fuzzy
 msgid "Effects"
-msgstr "<b>エフェクト</b>"
+msgstr "エフェクト"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:779
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:17
@@ -2109,9 +2099,8 @@ msgid "Apply"
 msgstr "適用"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:839
-#, fuzzy
 msgid "MOD Info"
-msgstr "CD の情報"
+msgstr "MOD 情報"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:863
 msgid ""
@@ -2126,6 +2115,16 @@ msgid ""
 "Patterns:\n"
 "Channels:"
 msgstr ""
+"ファイル名:\n"
+"曲名:\n"
+"タイプ:\n"
+"長さ:\n"
+"早さ:\n"
+"テンポ:\n"
+"サンプル数:\n"
+"楽器数:\n"
+"パターン数:\n"
+"チャンネル数:"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:871
 msgid ""
@@ -2140,20 +2139,28 @@ msgid ""
 "---\n"
 "---"
 msgstr ""
+"---\n"
+"---\n"
+"---\n"
+"---\n"
+"---\n"
+"---\n"
+"---\n"
+"---\n"
+"---\n"
+"---"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:912
-#, fuzzy
 msgid "Samples"
-msgstr "サルサ"
+msgstr "サンプル数"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:945
-#, fuzzy
 msgid "Instruments"
-msgstr "インストゥルメンタル"
+msgstr "楽器数"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:978
 msgid "Message"
-msgstr ""
+msgstr "メッセージ"
 
 #: ../Plugins/Input/modplug/gui/support.cpp:118
 #, c-format
@@ -2513,14 +2520,12 @@ msgid "Ogg Vorbis Tags:"
 msgstr "Ogg Vorbis タグ:"
 
 #: ../Plugins/Input/vorbis/configure.c:494
-#, fuzzy
 msgid "Convert non-UTF8 Vorbis tags to UTF8"
-msgstr "UTF-8 ではない ID3 タグを UTF-8 に変換する"
+msgstr "UTF-8 ではない Vorbis タグを UTF-8 に変換する"
 
 #: ../Plugins/Input/vorbis/configure.c:507
-#, fuzzy
 msgid "Vorbis encoding:"
-msgstr "ID3 のエンコーディング:"
+msgstr "Vorbis のエンコーディング:"
 
 #. Replay Gain..
 #: ../Plugins/Input/vorbis/configure.c:549
@@ -2695,7 +2700,6 @@ msgid "About sndfile WAV support"
 msgstr "sndfile WAV サポートについて"
 
 #: ../Plugins/Input/wav/wav-sndfile.c:246
-#, fuzzy
 msgid ""
 "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
 "from the xmms_sndfile plugin which is:\n"
@@ -2718,7 +2722,7 @@ msgid ""
 "Boston, MA  02111-1307  USA"
 msgstr ""
 "Tony Vroon <chainsaw@gentoo.org> による xmms_sndfile プラグインの\n"
-"audacious への適応:\n"
+"Audacious への適応:\n"
 "Copyright (C) 2000, 2002 Erik de Castro Lopo\n"
 "\n"
 "このプログラムはフリーソフトウェアです;\n"
@@ -2754,7 +2758,6 @@ msgid "About OSS Driver"
 msgstr "OSS ドライバについて"
 
 #: ../Plugins/Output/OSS/about.c:40
-#, fuzzy
 msgid ""
 "Audacious OSS Driver\n"
 "\n"
@@ -2773,7 +2776,7 @@ msgid ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
 "USA."
 msgstr ""
-"XMMS OSS ドライバ\n"
+"Audacious OSS ドライバ\n"
 "\n"
 "このプログラムはフリーソフトウェアです;\n"
 "フリーソフトウェア財団が提供する GNU 一般公有使用許諾契約書\n"
@@ -2824,7 +2827,7 @@ msgstr "デバイス"
 
 #: ../Plugins/Output/OSS/configure.c:315 ../Plugins/Output/esd/configure.c:184
 msgid "Buffer size (ms):"
-msgstr "バッファのサイズ (ms):"
+msgstr "バッファのサイズ (ミリ秒):"
 
 #: ../Plugins/Output/OSS/configure.c:340 ../Plugins/Output/esd/configure.c:209
 msgid "Buffering"
@@ -2926,16 +2929,15 @@ msgstr "サウンドカード:"
 #: ../Plugins/Output/alsa/configure.c:372
 #: ../Plugins/Output/alsa/configure.c:414
 msgid "Buffer time (ms):"
-msgstr "バッファ時間 (ms):"
+msgstr "バッファ時間 (ミリ秒):"
 
 #: ../Plugins/Output/alsa/configure.c:386
 msgid "Period time (ms):"
-msgstr "ピリオド時間 (ms):"
+msgstr "ピリオド時間 (ミリ秒):"
 
 #: ../Plugins/Output/alsa/configure.c:401
-#, fuzzy
 msgid "Audacious:"
-msgstr "Audacious"
+msgstr "Audacious:"
 
 #: ../Plugins/Output/alsa/configure.c:429
 msgid "Advanced settings"
@@ -2943,7 +2945,7 @@ msgstr "拡張設定"
 
 #: ../Plugins/Output/crossfade/configure.c:1832
 msgid "About crossfade"
-msgstr ""
+msgstr "クロスフェイドについて"
 
 #: ../Plugins/Output/crossfade/configure.c:1833
 msgid ""
@@ -2951,9 +2953,11 @@ msgid ""
 "Code adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org> from:\n"
 "XMMS Crossfade Plugin "
 msgstr ""
+"Audacious クロスフェイディング プラグイン\n"
+"Tony Vroon <chainsaw@gentoo.org> による XMMS クロスフェイドプラグインの\n"
+"Audacious 使用への適応:"
 
 #: ../Plugins/Output/crossfade/configure.c:1835
-#, fuzzy
 msgid ""
 "\n"
 "Copyright (C) 2000-2004  Peter Eisenlohr <peter@eisenlohr.org>\n"
@@ -2976,7 +2980,11 @@ msgid ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
 "USA."
 msgstr ""
-"XMMS ESounD プラグイン\n"
+"\n"
+"Copyright (C) 2000-2004  Peter Eisenlohr <peter@eisenlohr.org>\n"
+"\n"
+"Copyright (C) 1998-2000 Peter Alm, Mikael Alm, Olle Hallnas, Thomas Nilsson"
+"と 4Front Technologie によるオリジナル OSS 出力プラグインをベースとする。\n"
 "\n"
 "このプログラムはフリーソフトウェアです;\n"
 "フリーソフトウェア財団が提供する GNU 一般公有使用許諾契約書\n"
@@ -2996,77 +3004,73 @@ msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:1
 msgid " / "
-msgstr ""
+msgstr " / "
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:2
-#, fuzzy
 msgid " Enable"
-msgstr "有効"
+msgstr " 有効"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:3
 msgid " left"
-msgstr ""
+msgstr " 残り"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:4
 msgid " total, "
-msgstr ""
+msgstr " 合計. "
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:5
 msgid "-:--"
-msgstr ""
+msgstr "-:--"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:6
 msgid "-:--.-"
-msgstr ""
+msgstr "-:--.-"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:7
 msgid "-:--.---"
-msgstr ""
+msgstr "-:--.---"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:8
 msgid "-:--:--.-"
-msgstr ""
+msgstr "-:--:--.-"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:9
 msgid "<dummy>\n"
-msgstr ""
+msgstr "<dummy>\n"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:11
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:132
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:252
 msgid "About"
-msgstr "libvisual proxy プラグインについて"
+msgstr "プラグインについて"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:12
-#, fuzzy
 msgid "About XMMS Crossfade Plugin"
-msgstr "ESounD プラグインについて"
+msgstr "XMMS クロスフェイドプラグインについて"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:13
-#, fuzzy
 msgid "Additional silence"
-msgstr "With Additional Help:"
+msgstr "追加静寂時間"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:14
-#, fuzzy
 msgid "Advanced"
-msgstr "拡張設定"
+msgstr "拡張"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:15
-#, fuzzy
 msgid "Advanced XF"
-msgstr "拡張設定"
+msgstr "拡張 XF"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:16
-#, fuzzy
 msgid "Advanced options"
-msgstr "拡張設定"
+msgstr "拡張オプション"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:18
 msgid ""
 "Automatically calculate an optimal buffer size.\n"
 "Default: On"
 msgstr ""
+"最適のバッファサイズを自動的に計算する。\n"
+"デフォルト: オン"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:20
 msgid ""
@@ -3074,6 +3078,8 @@ msgid ""
 "underruns.\n"
 "Default: 250"
 msgstr ""
+"この値の設定が低すぎるとバッファアンダーランの危険が増加することに注意。\n"
+"デフォルト: 250"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:24
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:124
@@ -3082,61 +3088,60 @@ msgid "Configure"
 msgstr "設定"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:25
-#, fuzzy
 msgid "Crossfade"
-msgstr "クロスオーバー"
+msgstr "クロスフェイド"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:26
 msgid "Crossfade Buffer Monitor"
-msgstr ""
+msgstr "クロスフェイド バッファモニタ"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:27
-#, fuzzy
 msgid "Crossfade Configuration"
-msgstr "MikMod の設定"
+msgstr "クロスフェイドの設定"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:28
 msgid "Crossfade/Transition type:"
-msgstr ""
+msgstr "クロスフェイド/移行のタイプ:"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:29
-#, fuzzy
 msgid "Crossfader"
-msgstr "クロスオーバー"
+msgstr "クロスフェイダー"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:30
-#, fuzzy
 msgid "Custom (ms):"
-msgstr "タイトルの文字:"
+msgstr "カスタム (ミリ秒):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:31
 msgid "Debug options"
-msgstr ""
+msgstr "デバグ用オプション"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:32
-#, fuzzy
 msgid "Delete"
-msgstr "/削除"
+msgstr "削除"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:33
 msgid "Don't  crossfade"
-msgstr ""
+msgstr "クロスフェイドしない"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:34
 msgid ""
 "Don't overlap the two songs. The next song will start immediatelly after the "
 "previous has ended."
 msgstr ""
+"2曲を重ねない。次の曲は前の曲が終わった後すぐ開始される。"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:37
 msgid "Enable HTTP buffer underrun workaround"
-msgstr ""
+msgstr "HTTP バッファアンダーランの予備回避策を有効にする"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:38
 msgid ""
 "Enable software mixer. Usefull for output plugins without mixer support.\n"
 "Default: Off"
 msgstr ""
+"ソフトウェアミキサを有効にする。出力プラグインがミキササポートを持ってない"
+"場合に有効。\n"
+"デフォルト: オフ"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:40
 msgid ""
@@ -3144,6 +3149,9 @@ msgid ""
 "while until you can hear the effect, since it is applied before the audio "
 "data goes into the buffer."
 msgstr ""
+"選択されたプラグインを有効にする。オーディオデータがバッファに入る間に"
+"適用されるので、'適用'ボタンを押してからエフェクトが聞こえるまで"
+"しばらくかかることに注意。"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:41
 msgid ""
@@ -3151,11 +3159,13 @@ msgid ""
 "Unfortunatelly, it also breaks crossfading.\n"
 "Default: Off"
 msgstr ""
+"インターネット HTTP オーディオストリームの再生で問題があるときにこれを"
+"有効にする。あいにく、クロスフェイディングが壊れてしまうが。\n"
+"デフォルト: オフ"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:43
-#, fuzzy
 msgid "Enable volume control"
-msgstr "音量コントロール:"
+msgstr "音量コントロールを有効"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:44
 msgid ""
@@ -3164,53 +3174,59 @@ msgid ""
 "shows how much data is being buffered by the output plugin.\n"
 "Default: Off"
 msgstr ""
+"バッファモニタを有効にする。これはバッファ内にどれだけデータがあるか"
+"表示する小さなウィンドウである。上はミキシングバッファで、"
+"下は出力プラグインにバッファされるデータの量を表示する。\n"
+"デフォルト: オフ"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:46
 msgid ""
 "Enables/disables XMMS volume and balance controls.\n"
 "Default: On"
 msgstr ""
+"XMMS 音量とバランスコントロールを有効/無効にする。\n"
+"デフォルト: オン"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:49
 #, no-c-format
 msgid "End volume (%):"
-msgstr ""
+msgstr "終了音量 (%):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:50
 msgid "Fade in"
-msgstr ""
+msgstr "フェイドイン"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:51
 msgid "Fade in (ms):"
-msgstr ""
+msgstr "フェイドイン (ミリ秒):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:52
 msgid "Fade out"
-msgstr ""
+msgstr "フェイドアウト"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:53
 msgid "Fade out (ms):"
-msgstr ""
+msgstr "フェイドアウト (ミリ秒):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:54
 msgid "Fade out / Fade in"
-msgstr ""
+msgstr "フェイドアウト / フェイドイン"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:55
 msgid "Flush"
-msgstr ""
+msgstr "フラッシュ"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:56
 msgid "Force close/reopen on songchange"
-msgstr ""
+msgstr "曲変更でのクローズ/再オープンを強制"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:57
 msgid "Gap Killer"
-msgstr ""
+msgstr "ギャップキラー"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:58
 msgid "Help"
-msgstr ""
+msgstr "ヘルプ"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:59
 msgid ""
@@ -3220,10 +3236,14 @@ msgid ""
 "the sample values.\n"
 "Default: On"
 msgstr ""
+"有効であれば、XMMS-クロスフェイドはプリフェイドされた(ギャップレス)の"
+"トラックによる雑音を避けるのに付加的な注意を払う。XMMS-クロスフェイドは"
+"先の曲の終わり(次の曲の始まり)をサンプル値のゼロ交差だけカットする。\n"
+"デフォルト: オン"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:61
 msgid "Keep output opened"
-msgstr ""
+msgstr "出力を開いたままにする"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:62
 msgid ""
@@ -3232,66 +3252,66 @@ msgid ""
 "or closed\n"
 "Default: Off"
 msgstr ""
+"XMMS が停止されたとしても、出力デバイスをずっと開いたままにする。"
+"これによって、デバイスが開かれるか閉じられるかしたときの"
+"サウンドカードによる雑音を避けることができる。\n"
+"デフォルト: オフ"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:64
 msgid "Leading gap killer"
-msgstr ""
+msgstr "ギャップキラーの先導"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:65
-#, fuzzy
 msgid "Length (ms):"
-msgstr "演奏時間:"
+msgstr "長さ (ミリ秒):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:66
-#, fuzzy
 msgid "Limit OP buffer usage (ms):"
-msgstr "バッファのサイズ (ms):"
+msgstr "OP バッファ使用の制限 (ミリ秒):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:67
-#, fuzzy
 msgid "Load"
-msgstr "/読み込み"
+msgstr "読み込み"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:68
 msgid "Lock to Fade-out"
-msgstr ""
+msgstr "フェイドアウトに固定"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:69
 msgid "Lock to Leading"
-msgstr ""
+msgstr "先導に固定"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:70
 msgid "Lock to fadein length"
-msgstr ""
+msgstr "フェイドインの長さに固定"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:71
 msgid "Lock to fadeout length"
-msgstr ""
+msgstr "フェイドアウトの長さに固定"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:72
 msgid "Max block size (bytes):"
-msgstr ""
+msgstr "最大ブロックサイズ (バイト):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:73
 msgid "Max. length (ms):"
-msgstr ""
+msgstr "最大長さ (ミリ秒):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:74
 msgid "Max. level (16bit sample):"
-msgstr ""
+msgstr "最大レベル (16ビットサンプル):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:75
 msgid "Mixing Buffer:"
-msgstr ""
+msgstr "ミキシングバッファ:"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:76
 msgid "Mixing buffer preload (ms):"
-msgstr ""
+msgstr "ミキシングバッファのプリロード (ミリ秒):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:77
-#, fuzzy
 msgid "Mixing buffer size (ms):"
-msgstr "バッファのサイズ (ms):"
+msgstr "ミキシングバッファのサイズ (ミリ秒):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:78
 msgid ""
@@ -3302,61 +3322,64 @@ msgid ""
 "captured from <stderr>.\n"
 "Default: Off"
 msgstr ""
+"XMMS-crossfade の状態を表示する。XMMS-crossfade のバグを見つけたと"
+"思われるときは、このオプションを有効にして出力を送ってください。\n"
+"Netscape 内で XMMS を起動した場合はデバグ出力を無効にすべきであることに注意。"
+"Netscape は <stderr> から捕捉したデバグ出力を含むダイアログを"
+"大量に表示するだろう。\n"
+"デフォルト: オフ"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:81
 msgid "New"
-msgstr ""
+msgstr "新規"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:83
 msgid "None (0 ms)"
-msgstr ""
+msgstr "なし (0 ミリ秒)"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:85
 msgid "Offset"
-msgstr ""
+msgstr "オフセット"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:86
 msgid "Open the about dialog of the plugin selected above."
-msgstr ""
+msgstr "上で選択したプラグインについてのダイアログを開く。"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:87
 msgid "Open the configuration dialog of the plugin selected above."
-msgstr ""
+msgstr "上で選択したプラグインの設定ダイアログを開く。"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:89
 msgid "Output Buffer:"
-msgstr ""
+msgstr "出力バッファ:"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:90
-#, fuzzy
 msgid "Output plugin"
-msgstr "OSS 出力プラグイン"
+msgstr "出力プラグイン"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:91
 msgid "Overlap by the fadein duration specified below.."
-msgstr ""
+msgstr "下で指定したフェイドイン持続時間で重ねる。"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:92
 msgid "Overlap by the fadeout duration specified above."
-msgstr ""
+msgstr "上で指定したフェイドアウト持続時間で重ねる。"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:93
-#, fuzzy
 msgid "Pause"
-msgstr "/一時停止"
+msgstr "一時停止"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:94
 msgid "Plugin compatibility options"
-msgstr ""
+msgstr "プラグイン互換オプション"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:95
-#, fuzzy
 msgid "Position:"
-msgstr "詳細:"
+msgstr "位置:"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:96
 msgid "Pre-mixing effect plugin"
-msgstr ""
+msgstr "プレミキシング・エフェクト・プラグイン"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:97
 #: ../audacious/equalizer.c:1408
@@ -3364,43 +3387,44 @@ msgid "Presets"
 msgstr "プリセット"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:98
-#, fuzzy
 msgid "Quality:"
-msgstr "品質"
+msgstr "品質:"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:99
-#, fuzzy
 msgid "Rate:"
-msgstr "日付:"
+msgstr "レート:"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:100
 msgid "Read ID3V2 RVA2 Tag"
-msgstr ""
+msgstr "ID3V2 RVA2 タグを読む"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:101
 msgid "Read Quantaudio comment field"
-msgstr ""
+msgstr "Quantaudio コメントフィールドを読む"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:102
-#, fuzzy
 msgid "Reopen"
-msgstr "/リピート"
+msgstr "再オープン"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:104
 msgid "Reverse balance"
-msgstr ""
+msgstr "バランスを逆にする"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:105
 msgid ""
 "Reverses left and right with the balance control.\n"
 "Default: Off"
 msgstr ""
+"左右のバランスコントロールを逆にする。\n"
+"デフォルト: オフ"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:108
 msgid ""
 "Select an effect plugin. Take care not to use the same plugin as selected in "
 "XMMS' configuration dialog."
 msgstr ""
+"エフェクトプラグインを選択する。XMMS 設定ダイアログで選択された"
+"同じプラグインは使われないことに注意。"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:109
 msgid ""
@@ -3419,6 +3443,18 @@ msgid ""
 "* Advanced crossfade: Allows you to configure the crossfade in more detail.\n"
 "* Fade-out: Fade-out at 'Manual stop' or 'End of playlist'."
 msgstr ""
+"上で選択された曲変更タイプで使われる移行タイプを選択する:\n"
+"* フェイドイン: '再生の始め'でフェイドインする。\n"
+"* 出力デバイスを再オープン: 出力プラグインでクローズ/オープンを強制する。"
+"これはギャップや雑音をほぼ確実に再度引き起こすが、"
+"あるプラグインでは有効かもしれない。\n"
+"* 出力デバイスをフラッシュ: 出力プラグインをオープンしたままにするが、"
+"バッファはフラッシュする。NEXT/PREV を押したときに瞬時に反応する。\n"
+"* なし (ギャップレス/オフ): ギャップレスモード。"
+"デバイスを開いたままにするが、フェイディングは行わない。\n"
+"* 単純なクロスフェイド: 先と次の曲の間で単純なクロスフェイドを行う。\n"
+"* 高度なクロスフェイド: より詳細なクロスフェイド設定を行える。\n"
+"* フェイドアウト: '手動停止'か'曲一覧の終わり'でフェイドアウトする。"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:117
 msgid ""
@@ -3432,10 +3468,16 @@ msgid ""
 "* End of playlist: After the last song in the playlist has been played\n"
 "* Seeking: When seeking within the current song"
 msgstr ""
+"設定したい曲変更タイプを選択する:\n"
+"* 再生の始め: PLAY を押して再生が始まったとき\n"
+"* 自動曲変更: 曲の終わりに到達、曲一覧で次の曲に進むとき\n"
+"* 手動曲変更: 例えば NEXT/PREV を押すように、手動で別の曲を選択したとき\n"
+"* 手動停止: STOP ボタンを押したとき\n"
+"* シーク: 現在の曲中でシークしたとき"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:124
 msgid "Set a custom offset."
-msgstr ""
+msgstr "カスタムオフセットをセット"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:125
 msgid ""
@@ -3443,6 +3485,9 @@ msgid ""
 "you can avoid the clicks some soundcards produce when entering pause.\n"
 "Default: 100"
 msgstr ""
+"一時停止後に再生されるべき追加静寂時間の量をセット。これによって、"
+"一時停止による、あるサウンドカードが出す雑音を避けることができる。\n"
+"デフォルト: 100"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:127
 msgid ""
@@ -3451,6 +3496,9 @@ msgid ""
 "shut down during playback.\n"
 "Default: 500"
 msgstr ""
+"最後の曲の終わりの後に再生されるべき追加静寂時間の量をセット。これによって、"
+"再生中の終了による、あるサウンドカードが出す雑音を避けることができる。\n"
+"デフォルト: 500"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:129
 msgid ""
@@ -3461,38 +3509,46 @@ msgid ""
 "* A value of 0 means that the songs are concatenated seamlessly.\n"
 "* Positive values will yield insert silence inbetween.."
 msgstr ""
+"先の曲の終わりと次の曲の始めに重なるべき量をセット。\n"
+"* 負の値は、先の曲が終わりに到達する前に次の曲が演奏されることを示す。\n"
+"* 0 は、曲が継ぎ目なく連結されることを示す。\n"
+"* 正の値は、間に静寂を挿入する。"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:133
 msgid "Set parameters for:"
-msgstr ""
+msgstr "パラメータをセット:"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:134
 msgid "Set the duration for the fadein of the next song."
-msgstr ""
+msgstr "次の曲のフェイドイン持続時間をセット。"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:135
 msgid "Set the duration for the fadein when starting playback."
-msgstr ""
+msgstr "再生開始時のフェイドイン持続時間をセット。"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:136
 msgid ""
 "Set the duration for the fadein when unpausing.\n"
 "Default: 100"
 msgstr ""
+"一時停止復帰時のフェイドイン持続時間をセット。\n"
+"デフォルト: 100"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:138
 msgid "Set the duration for the fadeout of the last song."
-msgstr ""
+msgstr "最終曲のフェイドアウト持続時間をセット。"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:139
 msgid "Set the duration for the fadeout of the previous song."
-msgstr ""
+msgstr "前の曲のフェイドアウト持続時間をセット。"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:140
 msgid ""
 "Set the duration for the fadeout when pausing.\n"
 "Default: 100\n"
 msgstr ""
+"一時停止時のフェイドアウト持続時間をセット。\n"
+"デフォルト: 100\n"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:144
 #, no-c-format
@@ -3501,18 +3557,25 @@ msgid ""
 "the time specified above.\n"
 "Default: 0"
 msgstr ""
+"終わりの音量をセット。XMMS-crossfade は上で指定した時間中、"
+"100% からこの音量までフェイドする。\n"
+"デフォルト: 0"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:146
 msgid ""
 "Set the maximum length for gaps at the beginning of a stream.\n"
 "Default: 500"
 msgstr ""
+"ストリームの始まりのギャップの最大長さをセット。\n"
+"デフォルト: 500"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:148
 msgid ""
 "Set the maximum length for gaps at the end of a stream.\n"
 "Default: 500"
 msgstr ""
+"ストリームの終わりのギャップの最大長さをセット。\n"
+"デフォルト: 500"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:150
 msgid ""
@@ -3520,6 +3583,9 @@ msgid ""
 "below this value are considered as silent.\n"
 "Default: 512"
 msgstr ""
+"ストリームの始まりのギャップの最大音量をセット。"
+"全て下の値を静寂と見なしてサンプリングされる。\n"
+"デフォルト: 512"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:152
 msgid ""
@@ -3527,6 +3593,9 @@ msgid ""
 "this value are considered as silent.\n"
 "Default: 512"
 msgstr ""
+"ストリームの終わりのギャップの最大音量をセット。"
+"全て下の値を静寂と見なしてサンプリングされる。\n"
+"デフォルト: 512"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:155
 #, no-c-format
@@ -3535,42 +3604,49 @@ msgid ""
 "during the time specified above.\n"
 "Default: 0"
 msgstr ""
+"開始音量をセット。XMMS-crossfade は上で指定した時間中、"
+"100% からこの音量までフェイドする。\n"
+"デフォルト: 0"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:157
 msgid "Show Buffer Monitor"
-msgstr ""
+msgstr "バッファモニタを表示"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:158
 msgid "Silence (ms):"
-msgstr ""
+msgstr "静寂 (ミリ秒):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:159
 msgid "Simple XF"
-msgstr ""
+msgstr "単純な XF"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:160
 msgid "Skip to next zero crossing"
-msgstr ""
+msgstr "次のゼロ交差までスキップ"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:161
 msgid "Software Mixer"
-msgstr ""
+msgstr "ソフトウェアミキサ"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:162
 msgid "Songchange timeout (ms):"
-msgstr ""
+msgstr "曲変更のタイムアウト (ミリ秒):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:163
 msgid ""
 "Specify the length of the crosssfade.\n"
 "Default: depends on songchange type"
 msgstr ""
+"クロスフェイドの長さを指定する。\n"
+"デフォルト: 曲変更タイプに依存"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:165
 msgid ""
 "Specify the length of the silence to be inserted between the tracks.\n"
 "Default: 2000"
 msgstr ""
+"トラック間に挿入される静寂の長さを指定する。\n"
+"デフォルト: 2000"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:167
 msgid ""
@@ -3580,15 +3656,20 @@ msgid ""
 "done on-the-fly and do not depend on mixing buffer space.\n"
 "Default: n/a - calculated automatically"
 msgstr ""
+"ミキシングバッファのサイズを指定する。ミキシングバッファ空間は一時停止、"
+"フェイドアウト、オフセット(すなわち2曲の終わりと始まりのインターリーブ)、"
+"後のギャップを消すために要求される。フェイドインと先のギャップを消すことは"
+"オン・ザ・フライで行われ、ミキシングバッファ空間に依存しない。\n"
+"デフォルト: n/a - 自動的に計算される"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:170
 #, no-c-format
 msgid "Start volume (%):"
-msgstr ""
+msgstr "開始音量 (%):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:171
 msgid "Target RMS:"
-msgstr ""
+msgstr "ターゲット RMS:"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:172
 msgid ""
@@ -3597,6 +3678,10 @@ msgid ""
 "the output plugin does preloading on its own.\n"
 "Default: 0"
 msgstr ""
+"XMMS-crossfade に出力プラグイン/デバイスに書き出す前にどれだけデータを"
+"バッファするか伝える。通例、出力プラグインはそれ自身でプリロードするため、"
+"この値は 0 にセットされる。\n"
+"デフォルト: 0"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:174
 msgid ""
@@ -3604,6 +3689,9 @@ msgid ""
 "song. If this timeout is exceeded, the output plugin/device is closed.\n"
 "Default: 500"
 msgstr ""
+"曲変更タイムアウトは XMMS-crossfade が次の曲を待つ最大時間である。"
+"もしタイムアウトした場合、出力プラグイン/デバイスはクローズされる。\n"
+"デフォルト: 500"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:176
 msgid ""
@@ -3611,6 +3699,9 @@ msgid ""
 "you have only one file in the playlist and 'repeat' turned on.\n"
 "Default: Off"
 msgstr ""
+"このオプションは同じファイル間のクロスフェイディングを無効にする。"
+"曲一覧にファイルが1つだけで'repeat'がオンの場合に有効だろう。\n"
+"デフォルト: オフ"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:178
 msgid ""
@@ -3620,47 +3711,51 @@ msgid ""
 "enabled) will be used for the songchange.\n"
 "Default: On"
 msgstr ""
+"このオプションは、コンピレーションアルバムやライヴアルバムのような、"
+"プリフェイドされたかギャップレスのトラックの自動検出を有効にする。"
+"このようなトラックが検出された場合、クロスフェイディングは無効になり、"
+"(有効であれば)ギャップキラーのみが曲変更に用いられる。\n"
+"デフォルト: オン"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:180
 msgid "Throttle Output"
-msgstr ""
+msgstr "出力を絞る"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:181
 msgid "Trailing gap killer"
-msgstr ""
+msgstr "後ギャップキラー"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:182
 msgid "Use Quantaudio timing comments"
-msgstr ""
+msgstr "Quantaudio タイミングコメントを使用"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:183
-#, fuzzy
 msgid "Use plugin"
-msgstr "すべてのプラグイン"
+msgstr "プラグインを使用"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:184
 msgid "Use the same settings as above."
-msgstr ""
+msgstr "上と同じ設定を使用する。"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:185
 msgid "Use the same settings as fade-out."
-msgstr ""
+msgstr "フェイドアウトと同じ設定を使用する。"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:186
-#, fuzzy
 msgid "Volume control options"
-msgstr "音量コントロール:"
+msgstr "音量コントロールのオプション"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:187
-#, fuzzy
 msgid "Volume normalizer"
-msgstr "音量コントロール:"
+msgstr "音量ノーマライザ"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:188
 msgid ""
 "When modifying the Output Options or the Mixing buffer size, you need to "
 "stop/restart playback for the settings to take effect."
 msgstr ""
+"出力オプションかミキシングバッファサイズが変更されたとき、"
+"エフェクトを得るために演奏を停止/再スタートする必要がある。"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:189
 msgid ""
@@ -3669,10 +3764,14 @@ msgid ""
 "between pressing STOP/NEXT/PREV and the new song actually being played. \n"
 "Default: Off"
 msgstr ""
+"このオプションを有効にすると、XMMS-crossfade は出力プラグインによって"
+"バッファされるデータ量を制限する。これにより、STOP/NEXT/PREV 間の遅延を"
+"減らすことができ、新しい曲が実際に演奏される。\n"
+"デフォルト: オフ"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:191
 msgid "Write debug output to <stderr>"
-msgstr ""
+msgstr "デバグ出力を <stderr> に書き出す"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:192
 msgid ""
@@ -3680,27 +3779,29 @@ msgid ""
 "settings. It may take a while though until you can hear the change, since "
 "the plugin is applied before the mixing buffer."
 msgstr ""
+"エフェクトプラグイン設定の変更後に'適用'を押す必要はない。"
+"ミキシングバッファの前にプラグインが適用されるため、"
+"変更を聞くまでにしばらくかかる。"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:193
 msgid "auto"
-msgstr ""
+msgstr "自動"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:194
 msgid "dummy"
-msgstr ""
+msgstr "ダミー"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:195
 msgid "ms"
-msgstr ""
+msgstr "ミリ秒"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:196
-#, fuzzy
 msgid "same file"
-msgstr "/保存/ファイル"
+msgstr "同じファイル"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:197
 msgid "successive tracks"
-msgstr ""
+msgstr "次のトラック"
 
 #: ../Plugins/Output/disk_writer/disk_writer.c:105
 #, c-format
@@ -3732,7 +3833,6 @@ msgid "About ESounD Plugin"
 msgstr "ESounD プラグインについて"
 
 #: ../Plugins/Output/esd/about.c:35
-#, fuzzy
 msgid ""
 "Audacious ESounD Plugin\n"
 "\n"
@@ -3751,7 +3851,7 @@ msgid ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
 "USA."
 msgstr ""
-"XMMS ESounD プラグイン\n"
+"Audacious ESounD プラグイン\n"
 "\n"
 "このプログラムはフリーソフトウェアです;\n"
 "フリーソフトウェア財団が提供する GNU 一般公有使用許諾契約書\n"
@@ -3814,12 +3914,10 @@ msgid "Options:"
 msgstr "オプション:"
 
 #: ../Plugins/Visualization/libvisual-proxy/about.c:54
-#, fuzzy
 msgid "About Libvisual Audacious Plugin"
-msgstr "Libvisual XMMS プラグインについて"
+msgstr "Libvisual Audacious プラグインについて"
 
 #: ../Plugins/Visualization/libvisual-proxy/about.c:88
-#, fuzzy
 msgid ""
 "Libvisual Audacious Plugin\n"
 "\n"
@@ -3830,12 +3928,12 @@ msgid ""
 "found at\n"
 "http://libvisual.sf.net\n"
 msgstr ""
-"Libvisual XMMS プラグイン\n"
+"Libvisual Audacious プラグイン\n"
 "\n"
 "Copyright (C) 2004, Duilio Protti <dprotti@users.sourceforge.net>\n"
 "Dennis Smit <ds@nerds-incorporated.org>\n"
 "\n"
-"Libvisual XMMS プラグイン、Libvisual についてのより多くの情報は\n"
+"Libvisual Audacious プラグイン、Libvisual についてのより多くの情報は\n"
 "http://libvisual.sf.net にあります。\n"
 
 #: ../Plugins/Visualization/libvisual-proxy/about.c:90
@@ -3861,9 +3959,8 @@ msgid "Translators"
 msgstr "翻訳者"
 
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:58
-#, fuzzy
 msgid "LibVisual Audacious Plugin"
-msgstr "LibVisual XMMS プラグイン"
+msgstr "LibVisual Audacious プラグイン"
 
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:70
 msgid "Visualization Plugins"
@@ -3962,7 +4059,7 @@ msgstr "すべての有効なプラグイン"
 
 #: ../Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:174
 msgid "LibVisual: configuration is missing or corrupt, saving defaults"
-msgstr ""
+msgstr "LibVisual: 設定がないか壊れています。デフォルトを保存します。"
 
 #. Create a new item marked as enabled
 #: ../Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:514
@@ -4041,9 +4138,8 @@ msgid "Invalid value for 'enabled_plugins' option"
 msgstr "'enabled_plugins' オプションが無効な値です"
 
 #: ../Plugins/Visualization/libvisual-proxy/main.c:115
-#, fuzzy
 msgid "Audacious plugin"
-msgstr "Audacious"
+msgstr "Audacious プラグイン"
 
 #: ../Plugins/Visualization/libvisual-proxy/main.c:132
 msgid "Cannot get options"
@@ -4096,7 +4192,7 @@ msgid "Cannot initialize plugin's visual stuff"
 msgstr "プラグインの視覚素材を初期化できません"
 
 #: ../audacious/about.c:42
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "The future of UNIX multimedia.\n"
@@ -4104,9 +4200,9 @@ msgid ""
 "Copyright (C) 2005-2006 Audacious Development Team\n"
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
-"BMP と XMMS をベースにしたメディア・プレイヤーです。\n"
+"The future of UNIX multimedia.\n"
 "\n"
-"Copyright (C) 2005 Audacious 開発チーム\n"
+"Copyright (C) 2005-2006 Audacious 開発チーム\n"
 
 #: ../audacious/about.c:48
 msgid "Developers:"
@@ -4121,9 +4217,8 @@ msgid "Tony Vroon"
 msgstr "Tony Vroon"
 
 #: ../audacious/about.c:53
-#, fuzzy
 msgid "0.1.x developers:"
-msgstr "開発者:"
+msgstr "0.1.x 開発者:"
 
 #: ../audacious/about.c:55
 msgid "Mohammed Sameer"
@@ -4692,9 +4787,9 @@ msgid "Filename"
 msgstr "ファイル名"
 
 #: ../audacious/input.c:508
-#, fuzzy, c-format
+#, c-format
 msgid "audacious: %s"
-msgstr "Audacious"
+msgstr "audacious: %s"
 
 #: ../audacious/input.c:542
 msgid "No input plugin recognized this file"
@@ -4740,9 +4835,8 @@ msgstr "このメッセージを表示して終了する"
 
 #. -n, --session switch
 #: ../audacious/main.c:646
-#, fuzzy
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-msgstr "audacious/BMP/XMMS セッションを選択する (デフォルト: 0)"
+msgstr "Audacious/BMP/XMMS セッションを選択する (デフォルト: 0)"
 
 #. -r, --rew switch
 #: ../audacious/main.c:649
@@ -4786,9 +4880,8 @@ msgstr "メイン・ウィンドウを表示する"
 
 #. -a, --activate switch
 #: ../audacious/main.c:673
-#, fuzzy
 msgid "Activate Audacious"
-msgstr "audacious をアクティブにする"
+msgstr "Audacious をアクティブにする"
 
 #. -i, --sm-client-id switch
 #: ../audacious/main.c:676
@@ -4835,12 +4928,12 @@ msgstr ""
 "デフォルトのスキンはおそらく '%s' にインストールされています。\n"
 
 #: ../audacious/main.c:920
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
 "Please use GTK+ %s or newer.\n"
 msgstr ""
-"すみませんが、audacious ではお使いの GTK+ のバージョン (%d.%d.%d) をサポート"
+"すみませんが、Audacious ではお使いの GTK+ のバージョン (%d.%d.%d) をサポート"
 "していません。\n"
 "GTK+ %s またはそれ以降のバージョンをお使い下さい。\n"
 
@@ -5691,15 +5784,14 @@ msgstr ""
 "カスタム"
 
 #: ../audacious/glade/prefswin.glade.h:53
-#, fuzzy
 msgid ""
 "The change is now effective in Audacious' configuration database, but won't "
 "take effect for playback until the next song!\n"
 "\n"
 "Optionally, you can stop and restart playback for the change to take effect."
 msgstr ""
-"変更が BMP の設定データベース内で今から有効になりますが、演奏に対する変更は次"
-"の曲まで適用されません！\n"
+"変更が Audacious の設定データベース内で今から有効になりますが、"
+"演奏に対する変更は次の曲まで適用されません！\n"
 "\n"
 "演奏に対する適用を有効にするために、いったん演奏を中止して再開することをお奨"
 "めします。"
