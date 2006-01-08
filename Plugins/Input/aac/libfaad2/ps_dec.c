@@ -1438,6 +1438,20 @@ static void ps_mix_phase(ps_info *ps, qmf_t X_left[38][64], qmf_t X_right[38][64
     const real_t *sf_iid;
     uint8_t no_iid_steps;
 
+    /* These could otherwise be used uninitialized, according to GCC 4.0.2 */
+    H22[1] = 0;
+    H21[1] = 0;
+    H12[1] = 0;
+    H11[1] = 0;
+    deltaH22[1] = 0;
+    deltaH21[1] = 0;
+    deltaH12[1] = 0;
+    deltaH11[1] = 0;
+    h22[1] = 0;
+    h21[1] = 0;
+    h12[1] = 0;
+    h11[1] = 0;
+
     if (ps->iid_mode >= 3)
     {
         no_iid_steps = 15;
