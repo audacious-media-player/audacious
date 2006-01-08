@@ -19,7 +19,7 @@ msgstr ""
 #: Plugins/General/song_change/song_change.c:53
 #, c-format
 msgid "Song Change %s"
-msgstr "Зміна пісні"
+msgstr "Зміна пісні %s"
 
 #: Plugins/General/song_change/song_change.c:139
 msgid "Warning"
