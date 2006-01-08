@@ -62,6 +62,7 @@ static gchar *current_filename = NULL;
 
 #define MAX_STR_LEN 100
 
+#if 0
 static guint
 audmp4_strip_spaces(char *src, size_t n)
 {   
@@ -91,7 +92,6 @@ audmp4_strip_spaces(char *src, size_t n)
     return src - start;
 }
 
-#if 0
 static void
 set_entry_tag(GtkEntry * entry, gchar * tag, gint length)
 {
