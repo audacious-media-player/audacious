@@ -1075,17 +1075,10 @@ static void III_i_stereo(real xr_buf[2][SBLIMIT][SSLIMIT],int *scalefac,
              }
            }
 
-#if 1
-/* in the original: copy 10 to 11 , here: copy 11 to 12 
-maybe still wrong??? (copy 12 to 13?) */
-           is_p = scalefac[11*3+lwin-gr_info->mixed_block_flag]; /* scale: 0-15 */
-           sb   = bi->shortDiff[12];
-           idx  = bi->shortIdx[12] + lwin;
-#else
-           is_p = scalefac[10*3+lwin-gr_info->mixed_block_flag]; /* scale: 0-15 */
-           sb   = bi->shortDiff[11];
-           idx  = bi->shortIdx[11] + lwin;
-#endif
+           is_p = scalefac[12*3+lwin-gr_info->mixed_block_flag]; /* scale: 0-15 */
+           sb   = bi->shortDiff[13];
+           idx  = bi->shortIdx[13] + lwin;
+
            if(is_p != 7) {
              real t1,t2;
              t1 = tab1[is_p]; t2 = tab2[is_p];
