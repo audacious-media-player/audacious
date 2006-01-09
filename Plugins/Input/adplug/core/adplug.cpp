@@ -39,6 +39,7 @@
 #include "hsp.h"
 #include "ksm.h"
 #include "mad.h"
+#include "mid.h"
 #include "mkj.h"
 #include "cff.h"
 #include "dmo.h" 	 
@@ -81,6 +82,7 @@ const CPlayerDesc CAdPlug::allplayers[] = {
   CPlayerDesc(ChspLoader::factory, "HSC Packed", ".hsp\0"),
   CPlayerDesc(CksmPlayer::factory, "Ken Silverman Music", ".ksm\0"),
   CPlayerDesc(CmadLoader::factory, "Mlat Adlib Tracker", ".mad\0"),
+  CPlayerDesc(CmidPlayer::factory, "MIDI", ".cmf\0.sci\0.laa\0"),
   CPlayerDesc(CmkjPlayer::factory, "MKJamz", ".mkj\0"),
   CPlayerDesc(CcffLoader::factory, "Boomtracker", ".cff\0"),
   CPlayerDesc(CdmoLoader::factory, "TwinTeam", ".dmo\0"),
