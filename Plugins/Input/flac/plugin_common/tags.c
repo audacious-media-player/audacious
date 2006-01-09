@@ -73,7 +73,7 @@ static FLAC__uint16 *local__convert_utf8_to_ucs2(const char *src, unsigned lengt
 	{
 		const char *s, *end;
 		for (s=src, end=src+length; s<end; chars++) {
-			const unsigned n = local__utf8len(s);
+			const unsigned n = local__utf8len((unsigned char*)s);
 			if (n == 0)
 				return 0;
 			s += n;
@@ -92,7 +92,7 @@ static FLAC__uint16 *local__convert_utf8_to_ucs2(const char *src, unsigned lengt
 	{
 		FLAC__uint16 *u = out;
 		for ( ; chars; chars--)
-			src += local__utf8_to_ucs2(src, u++);
+			src += local__utf8_to_ucs2((const unsigned char*)src, u++);
 	}
 
 	return out;
@@ -148,7 +148,7 @@ static char *local__convert_ucs2_to_utf8(const FLAC__uint16 *src, unsigned lengt
 
 	/* convert */
 	{
-		char *u = out;
+		unsigned char *u = (unsigned char*) out;
 		for ( ; *src; src++)
 			u += local__ucs2_to_utf8(*src, u);
 		local__ucs2_to_utf8(*src, u);
@@ -226,7 +226,7 @@ void FLAC_plugin__tags_destroy(FLAC__StreamMetadata **tags)
 const char *FLAC_plugin__tags_get_tag_utf8(const FLAC__StreamMetadata *tags, const char *name)
 {
 	const int i = FLAC__metadata_object_vorbiscomment_find_entry_from(tags, /*offset=*/0, name);
-	return (i < 0? 0 : strchr(tags->data.vorbis_comment.comments[i].entry, '=')+1);
+	return (i < 0? 0 : strchr((const char*)tags->data.vorbis_comment.comments[i].entry, '=')+1);
 }
 
 FLAC__uint16 *FLAC_plugin__tags_get_tag_ucs2(const FLAC__StreamMetadata *tags, const char *name)
