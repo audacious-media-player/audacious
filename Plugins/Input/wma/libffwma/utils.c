@@ -40,7 +40,7 @@ void *av_mallocz(unsigned int size)
 /**
  * realloc which does nothing if the block is large enough
  */
-void *av_fast_realloc(void *ptr, unsigned int *size, unsigned int min_size)
+void *av_fast_realloc(void *ptr, int *size, unsigned int min_size)
 {
 	if(min_size < *size) 
         	return ptr;

@@ -2211,7 +2211,7 @@ int av_read_image(ByteIOContext *pb, const char *filename,
                   AVImageFormat *fmt,
                   int (*alloc_cb)(void *, AVImageInfo *info), void *opaque)
 {
-    char buf[PROBE_BUF_SIZE];
+    unsigned char buf[PROBE_BUF_SIZE];
     AVProbeData probe_data, *pd = &probe_data;
     offset_t pos;
     int ret;

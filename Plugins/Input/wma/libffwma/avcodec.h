@@ -1760,7 +1760,7 @@ extern AVCodecParser ac3_parser;
 /*char *av_strdup(const char *s);*/
 void __av_freep(void **ptr);
 #define av_freep(p) __av_freep((void **)(p))
-void *av_fast_realloc(void *ptr, unsigned int *size, unsigned int min_size);
+void *av_fast_realloc(void *ptr, int *size, unsigned int min_size);
 /* for static data only */
 /* call av_free_static to release all staticaly allocated tables */
 void av_free_static(void);
