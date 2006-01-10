@@ -24,11 +24,12 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <audacious/plugin.h>
-#include <libaudacious/util.h>
-#include <libaudacious/configdb.h>
-#include <libaudacious/titlestring.h>
-#include <libaudacious/vfs.h>
+#include "audacious/plugin.h"
+#include "audacious/output.h"
+#include "libaudacious/util.h"
+#include "libaudacious/configdb.h"
+#include "libaudacious/titlestring.h"
+#include "libaudacious/vfs.h"
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -490,11 +491,11 @@ void *play_loop_(void *arg)
 				FLAC__uint64 decode_position;
 
 				sample_buffer_first_ += n;
-				flac_ip.add_vis_pcm(flac_ip.output->written_time(), file_info_.sample_format, file_info_.channels, bytes, sample_buffer_start);
 				while(flac_ip.output->buffer_free() < (int)bytes && file_info_.is_playing && file_info_.seek_to_in_sec == -1)
 					xmms_usleep(10000);
 				if(file_info_.is_playing && file_info_.seek_to_in_sec == -1)
-					flac_ip.output->write_audio(sample_buffer_start, bytes);
+					produce_audio(flac_ip.output->written_time(), file_info_.sample_format,
+						file_info_.channels, bytes, sample_buffer_start, NULL);
 
 				/* compute current bitrate */
 

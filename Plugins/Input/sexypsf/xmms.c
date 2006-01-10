@@ -17,6 +17,7 @@
 */
 
 #include "audacious/plugin.h"
+#include "audacious/output.h"
 #include "libaudacious/util.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -102,20 +103,18 @@ static GThread *dethread;
 void sexypsf_update(unsigned char *Buffer, long count)
 {
  int mask = ~((((16 / 8) * 2)) - 1);
- if(count)
-  sexypsf_ip.add_vis_pcm(sexypsf_ip.output->written_time(), FMT_S16_NE, 2, count/4, Buffer);
 
  while(count>0)
  {
   int t=sexypsf_ip.output->buffer_free() & mask;
   if(t>count)
   {
-   sexypsf_ip.output->write_audio(Buffer,count);
+   produce_audio(sexypsf_ip.output->written_time(), FMT_S16_NE, 2, count, Buffer, NULL);
   }
   else
   {
    if(t)
-    sexypsf_ip.output->write_audio(Buffer,t);
+    produce_audio(sexypsf_ip.output->written_time(), FMT_S16_NE, 2, t, Buffer, NULL);
    usleep((count-t)*1000*5/441/2);
   }
   count-=t;

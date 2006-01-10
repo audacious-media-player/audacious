@@ -14,6 +14,9 @@
 #include "stddefs.h"
 #include "archive/open.h"
 #include "libaudacious/configdb.h"
+extern "C" {
+#include "audacious/output.h"
+}
 
 // ModplugXMMS member functions ===============================
 
@@ -250,18 +253,14 @@ void ModplugXMMS::PlayLoop()
 		if(mStopped)
 			break;
 		
-		mOutPlug->write_audio
-		(
-			mBuffer,
-			mBufSize
-		);
-		mInPlug->add_vis_pcm
+		produce_audio
 		(
 			mPlayed,
 			mFormat,
 			lChannels,
 			mBufSize,
-			mBuffer
+			mBuffer,
+			NULL
 		);
 
 		mPlayed += mBufTime;

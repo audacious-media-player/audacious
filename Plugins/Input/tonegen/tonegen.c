@@ -18,6 +18,7 @@
  */
 
 #include "audacious/plugin.h"
+#include "audacious/output.h"
 #include "libaudacious/util.h"
 #include "config.h"
 #include <glib.h>
@@ -104,12 +105,9 @@ static void* play_loop(void *arg)
 			data[i] = rint(((1 << 15) - 1) *
 				       (sum_sines / frequencies->len));
 		}
-		tone_ip.add_vis_pcm(tone_ip.output->written_time(),
-				    FMT_S16_NE, 1, BUF_BYTES, data);
 		while (tone_ip.output->buffer_free() < BUF_BYTES && going)
 			xmms_usleep(30000);
-		if (going)
-			tone_ip.output->write_audio(data, BUF_BYTES);
+		produce_audio(tone_ip.output->written_time(), FMT_S16_NE, 1, BUF_BYTES, data, &going);
 	}
 
 	g_array_free(frequencies, TRUE);

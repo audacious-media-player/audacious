@@ -30,6 +30,10 @@
 #include "audacious/plugin.h"
 #include "libaudacious/util.h"
 #include "libaudacious/configdb.h"
+extern "C" {
+#include "audacious/output.h"
+}
+
 
 /***** Defines *****/
 
@@ -641,12 +645,11 @@ static void *play_loop(void *filename)
       toadd -= (long)(plr.p->getrefresh() * i);
     }
 
-    // write sound buffer and update vis
-    adplug_ip.add_vis_pcm(adplug_ip.output->written_time(),
-			  bit16 ? FORMAT_16 : FORMAT_8,
-			  stereo ? 2 : 1, SNDBUFSIZE * sampsize, sndbuf);
+    // write sound buffer
     while(adplug_ip.output->buffer_free() < SNDBUFSIZE * sampsize) xmms_usleep(10000);
-    adplug_ip.output->write_audio(sndbuf, SNDBUFSIZE * sampsize);
+    produce_audio(adplug_ip.output->written_time(),
+			  bit16 ? FORMAT_16 : FORMAT_8,
+			  stereo ? 2 : 1, SNDBUFSIZE * sampsize, sndbuf, NULL);
 
 #if 0
     // update infobox, if necessary
