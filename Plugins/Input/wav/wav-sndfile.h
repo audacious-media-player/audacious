@@ -25,12 +25,6 @@
 #define BUFFER_SIZE 			8192
 #define	TITLE_LEN			64
 
-#ifdef WORDS_BIGENDIAN
-# define	HOST_SIGNED_SHORT	FMT_S16_BE
-#else
-# define	HOST_SIGNED_SHORT	FMT_S16_LE
-#endif
-
 static	void 	plugin_init (void);
 static	int	is_our_file (char *filename);
 static	void 	play_start (char *filename);

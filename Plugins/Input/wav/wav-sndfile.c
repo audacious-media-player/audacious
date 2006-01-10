@@ -131,7 +131,7 @@ play_loop (void *arg)
 		samples = sf_read_short (sndfile, buffer, BUFFER_SIZE);
 
 		if (samples > 0 && decoding)
-		{	wav_ip.add_vis_pcm (wav_ip.output->written_time (), HOST_SIGNED_SHORT, sfinfo.channels, samples * sizeof (short), buffer);
+		{	wav_ip.add_vis_pcm (wav_ip.output->written_time (), FMT_S16_NE, sfinfo.channels, samples * sizeof (short), buffer);
 
 			while ((wav_ip.output->buffer_free () < (samples * sizeof (short))) && decoding)
 				xmms_usleep (10000);
@@ -178,7 +178,7 @@ play_start (char *filename)
 	else
 		song_length = 0;
 
-	if (! wav_ip.output->open_audio (HOST_SIGNED_SHORT, sfinfo.samplerate, sfinfo.channels))
+	if (! wav_ip.output->open_audio (FMT_S16_NE, sfinfo.samplerate, sfinfo.channels))
 	{	sf_close (sndfile);
 		sndfile = NULL;
 		return;
