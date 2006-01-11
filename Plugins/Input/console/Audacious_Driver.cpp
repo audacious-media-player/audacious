@@ -28,12 +28,6 @@ struct AudaciousConsoleConfig audcfg = { 180, FALSE, 32000 };
 #include <cstring>
 #include <stdio.h>
 
-#ifdef WORDS_BIGENDIAN
-# define MY_FMT FMT_S16_BE
-#else
-# define MY_FMT FMT_S16_LE
-#endif
-
 static Spc_Emu *spc = NULL;
 static Nsf_Emu *nsf = NULL;
 static Gbs_Emu *gbs = NULL;
@@ -245,7 +239,7 @@ static void play_file_spc(char *filename)
 
 	g_free(name);
 
-        if (!console_ip.output->open_audio(MY_FMT, samplerate, 2))
+        if (!console_ip.output->open_audio(FMT_S16_NE, samplerate, 2))
                  return;
 
 	playing_type = PLAY_TYPE_SPC;
@@ -286,7 +280,7 @@ static void play_file_nsf(char *filename)
 
 	g_free(name);
 
-        if (!console_ip.output->open_audio(MY_FMT, samplerate, 2))
+        if (!console_ip.output->open_audio(FMT_S16_NE, samplerate, 2))
                  return;
 
 	playing_type = PLAY_TYPE_NSF;
@@ -327,7 +321,7 @@ static void play_file_gbs(char *filename)
 
 	g_free(name);
 
-        if (!console_ip.output->open_audio(MY_FMT, samplerate, 2))
+        if (!console_ip.output->open_audio(FMT_S16_NE, samplerate, 2))
                  return;
 
 	playing_type = PLAY_TYPE_GBS;
@@ -371,7 +365,7 @@ static void play_file_gym(char *filename)
 
 	g_free(name);
 
-        if (!console_ip.output->open_audio(MY_FMT, samplerate, 2))
+        if (!console_ip.output->open_audio(FMT_S16_NE, samplerate, 2))
                  return;
 
 	playing_type = PLAY_TYPE_GYM;
@@ -412,7 +406,7 @@ static void play_file_vgm(char *filename)
 
 	g_free(name);
 
-        if (!console_ip.output->open_audio(MY_FMT, samplerate, 2))
+        if (!console_ip.output->open_audio(FMT_S16_NE, samplerate, 2))
                  return;
 
 	playing_type = PLAY_TYPE_VGM;
@@ -509,7 +503,7 @@ static void *play_loop_spc(gpointer arg)
 			audcfg.loop_length && audcfg.loop_length != 0)
 			break;
 		produce_audio(console_ip.output->written_time(),
-			MY_FMT, 1, 2048, buf, NULL);
+			FMT_S16_NE, 1, 2048, buf, NULL);
 	        while(console_ip.output->buffer_free() < 2048)
 			xmms_usleep(10000);
 	}
@@ -541,7 +535,7 @@ static void *play_loop_nsf(gpointer arg)
 			audcfg.loop_length && audcfg.loop_length != 0)
 			break;
 		produce_audio(console_ip.output->written_time(),
-			MY_FMT, 1, 2048, buf, NULL);
+			FMT_S16_NE, 1, 2048, buf, NULL);
 	        while(console_ip.output->buffer_free() < 2048)
 			xmms_usleep(10000);
 	}
@@ -573,7 +567,7 @@ static void *play_loop_gbs(gpointer arg)
 			audcfg.loop_length && audcfg.loop_length != 0)
 			break;
 		produce_audio(console_ip.output->written_time(),
-			MY_FMT, 1, 2048, buf, NULL);
+			FMT_S16_NE, 1, 2048, buf, NULL);
 	        while(console_ip.output->buffer_free() < 2048)
 			xmms_usleep(10000);
 	}
@@ -608,7 +602,7 @@ static void *play_loop_gym(gpointer arg)
 			audcfg.loop_length && audcfg.loop_length != 0)
 			break;
 		produce_audio(console_ip.output->written_time(),
-			MY_FMT, 1, 2048, buf, NULL);
+			FMT_S16_NE, 1, 2048, buf, NULL);
 	        while(console_ip.output->buffer_free() < 2048)
 			xmms_usleep(10000);
 	}
@@ -640,7 +634,7 @@ static void *play_loop_vgm(gpointer arg)
 			audcfg.loop_length && audcfg.loop_length != 0)
 			break;
 		produce_audio(console_ip.output->written_time(),
-			MY_FMT, 1, 2048, buf, NULL);
+			FMT_S16_NE, 1, 2048, buf, NULL);
 	        while(console_ip.output->buffer_free() < 2048)
 			xmms_usleep(10000);
 	}
