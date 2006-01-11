@@ -174,7 +174,7 @@ playlist_entry_get_info(PlaylistEntry * entry)
 
     if (entry->decoder == NULL)
         input_get_song_info(entry->filename, &title, &length);
-    else
+    else if (entry->decoder->get_song_info != NULL)
         entry->decoder->get_song_info(entry->filename, &title, &length);
 
     if (!title && length == -1)
