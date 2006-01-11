@@ -131,15 +131,14 @@ play_loop (void *arg)
 		samples = sf_read_short (sndfile, buffer, BUFFER_SIZE);
 
 		if (samples > 0 && decoding)
-		{	wav_ip.add_vis_pcm (wav_ip.output->written_time (), FMT_S16_NE, sfinfo.channels, samples * sizeof (short), buffer);
-
-			while ((wav_ip.output->buffer_free () < (samples * sizeof (short))) && decoding)
+		{	while ((wav_ip.output->buffer_free () < (samples * sizeof (short))) && decoding)
 				xmms_usleep (10000);
-			
-			wav_ip.output->write_audio (buffer, samples * sizeof (short));
-   			}
+
+			produce_audio (wav_ip.output->written_time (), FMT_S16_NE, sfinfo.channels, 
+				samples * sizeof (short), buffer, &decoding);
+		}
 		else
-			xmms_usleep (80000);
+			xmms_usleep (10000);
 
 		/* Do seek if seek_time is valid. */
 		if (seek_time > 0)
