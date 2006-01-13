@@ -10,6 +10,6 @@ libdir = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
 libwma_la_LDFLAGS = $(PLUGIN_LDFLAGS) ./libffwma/libffwma.la
 
-libwma_la_SOURCES = wma.c iir.c
+libwma_la_SOURCES = wma.c
 
 INCLUDES = $(GTK_CFLAGS) -I$(top_builddir)/intl -I$(top_srcdir) -I./libffwma -std=c99
