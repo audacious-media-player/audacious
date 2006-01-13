@@ -100,7 +100,7 @@ static gchar *get_title_spc(gchar *filename)
 
 		tinput = bmp_title_input_new();
 
-		tinput->performer = g_strdup(header.game);
+		tinput->performer = g_strdup(header.author);
 		tinput->album_name = g_strdup(header.game);
 		tinput->track_name = g_strdup(header.song);		
 
