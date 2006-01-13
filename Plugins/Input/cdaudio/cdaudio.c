@@ -617,7 +617,7 @@ is_mounted(const char *device_name)
 #elif defined(HAVE_GETMNTINFO)
     entries = getmntinfo(&fsp, MNT_NOWAIT);
     if (entries < 0)
-        return NULL;
+        return FALSE;
 
     while (entries-- > 0) {
         if (!strcmp(fsp->f_mntfromname, devname))
