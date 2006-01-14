@@ -29,6 +29,7 @@
 #include <string.h>
 #include <timidity.h>
 #include <stdio.h>
+#include "audacious/output.h"
 
 #include "xmms-timidity.h"
 #include "interface.h"
@@ -264,10 +265,9 @@ static void *xmmstimid_play_loop(void *arg) {
 				buffer, buffer_size);
 
 		if (bytes_read != 0)
-			xmmstimid_ip.add_vis_pcm(
-					mid_song_get_time(xmmstimid_song),
+			produce_audio(mid_song_get_time(xmmstimid_song),
 					fmt, xmmstimid_opts.channels,
-					bytes_read, buffer);
+					bytes_read, buffer, NULL);
 		else xmmstimid_eof = TRUE;
 
 		while (xmmstimid_going && xmmstimid_seek_to == -1 &&

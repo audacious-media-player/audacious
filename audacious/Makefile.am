@@ -32,7 +32,6 @@ audacious_SOURCES = \
 	effect.c effect.h \
 	general.c general.h \
 	visualization.c visualization.h \
-	fullscreen.c fullscreen.h \
 	pluginenum.c pluginenum.h \
 	playlist.c playlist.h \
 	controlsocket.c controlsocket.h \
@@ -76,7 +75,7 @@ audacious_SOURCES = \
 	iir.c iir.h \
 	na.xpm beep_logo.xpm
 
-beepinclude_HEADERS = plugin.h fullscreen.h output.h input.h
+beepinclude_HEADERS = plugin.h output.h input.h
 
 desktop_DATA = audacious.desktop
 desktopdir = $(datadir)/applications
