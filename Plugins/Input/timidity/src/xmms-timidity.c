@@ -270,20 +270,12 @@ static void *xmmstimid_play_loop(void *arg) {
 					bytes_read, buffer, NULL);
 		else xmmstimid_eof = TRUE;
 
-		while (xmmstimid_going && xmmstimid_seek_to == -1 &&
-				(bytes_read == 0 ||
-				 xmmstimid_ip.output->buffer_free() < bytes_read))
-			xmms_usleep(10000);
-
 		if (xmmstimid_seek_to != -1) {
 			mid_song_seek(xmmstimid_song, xmmstimid_seek_to * 1000);
 			xmmstimid_ip.output->flush(xmmstimid_seek_to * 1000);
 			xmmstimid_seek_to = -1;
 			bytes_read = 0;
 		}
-		
-		if (xmmstimid_going && bytes_read != 0)
-			xmmstimid_ip.output->write_audio(buffer, bytes_read);
 	}
 
 	g_free(buffer);
