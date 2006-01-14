@@ -69,6 +69,8 @@ pbutton_button_press_cb(GtkWidget * widget,
         button->pb_pressed = 1;
         button->pb_inside = 1;
         widget_draw(WIDGET(button));
+        if (button->pb_push_cb)
+            button->pb_push_cb();
     }
 }
 
@@ -82,8 +84,8 @@ pbutton_button_release_cb(GtkWidget * widget,
     if (button->pb_inside && button->pb_pressed) {
         button->pb_inside = 0;
         widget_draw(WIDGET(button));
-        if (button->pb_push_cb)
-            button->pb_push_cb();
+	if (button->pb_release_cb)
+	    button->pb_release_cb();
     }
     if (button->pb_pressed)
         button->pb_pressed = 0;
@@ -141,7 +143,8 @@ pbutton_set_button_data(PButton * b, gint nx, gint ny, gint px, gint py)
 PButton *
 create_pbutton_ex(GList ** wlist, GdkPixmap * parent, GdkGC * gc,
                   gint x, gint y, gint w, gint h, gint nx,
-                  gint ny, gint px, gint py, void (*cb) (void),
+                  gint ny, gint px, gint py, void (*push_cb) (void),
+		  void (*release_cb) (void),
                   SkinPixmapId si1, SkinPixmapId si2)
 {
     PButton *b;
@@ -163,7 +166,8 @@ create_pbutton_ex(GList ** wlist, GdkPixmap * parent, GdkGC * gc,
     b->pb_ny = ny;
     b->pb_px = px;
     b->pb_py = py;
-    b->pb_push_cb = cb;
+    b->pb_push_cb = push_cb;
+    b->pb_release_cb = release_cb;
     b->pb_skin_index1 = si1;
     b->pb_skin_index2 = si2;
     b->pb_allow_draw = TRUE;
@@ -179,7 +183,7 @@ create_pbutton(GList ** wlist, GdkPixmap * parent, GdkGC * gc,
                gint px, gint py, void (*cb) (void), SkinPixmapId si)
 {
     return create_pbutton_ex(wlist, parent, gc, x, y, w, h, nx, ny, px, py,
-                             cb, si, si);
+                             cb, NULL, si, si);
 }
 
 void

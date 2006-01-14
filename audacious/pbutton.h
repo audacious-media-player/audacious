@@ -36,6 +36,7 @@ struct _PButton {
     gboolean pb_inside;
     gboolean pb_allow_draw;
     void (*pb_push_cb) (void);
+    void (*pb_release_cb) (void);
     SkinPixmapId pb_skin_index1, pb_skin_index2;
 };
 
@@ -43,11 +44,12 @@ typedef struct _PButton PButton;
 
 PButton *create_pbutton(GList ** wlist, GdkPixmap * parent, GdkGC * gc,
                         gint x, gint y, gint w, gint h, gint nx, gint ny,
-                        gint px, gint py, void (*cb) (void), SkinPixmapId si);
+                        gint px, gint py, void (*push_cb) (void), SkinPixmapId si);
 PButton *create_pbutton_ex(GList ** wlist, GdkPixmap * parent, GdkGC * gc,
                            gint x, gint y, gint w, gint h, gint nx,
-                           gint ny, gint px, gint py, void (*cb) (void),
-                           SkinPixmapId si1, SkinPixmapId si2);
+                           gint ny, gint px, gint py, void (*push_cb) (void),
+			   void (*release_cb) (void), SkinPixmapId si1,
+			   SkinPixmapId si2);
 void free_pbutton(PButton * b);
 void pbutton_set_skin_index(PButton * b, SkinPixmapId si);
 void pbutton_set_skin_index1(PButton * b, SkinPixmapId si);

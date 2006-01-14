@@ -687,7 +687,7 @@ equalizerwin_create_widgets(void)
     equalizerwin_shade =
         create_pbutton_ex(&equalizerwin_wlist, equalizerwin_bg,
                           equalizerwin_gc, 254, 3, 9, 9, 254, 137, 1, 38,
-                          equalizerwin_shade_toggle, SKIN_EQMAIN, SKIN_EQ_EX);
+                          equalizerwin_shade_toggle, NULL, SKIN_EQMAIN, SKIN_EQ_EX);
     equalizerwin_shade->pb_allow_draw = FALSE;
 
     equalizerwin_graph =
