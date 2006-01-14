@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2003 Simon Peter <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2005 Simon Peter <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -90,7 +90,7 @@ bool CimfPlayer::load(const std::string &filename, const CFileProvider &fp)
       f->seek(-4, binio::Add);
     else
       f->seek(-2, binio::Add);
-    size = flsize / 4;
+    size = (flsize - mfsize) / 4;
   } else		// file has got a footer
     size = fsize / 4;
 
@@ -101,13 +101,20 @@ bool CimfPlayer::load(const std::string &filename, const CFileProvider &fp)
   }
 
   // read footer, if any
-  if(fsize && (fsize < flsize - 2 - mfsize)) {
-    unsigned long footerlen = flsize - fsize - 2 - mfsize;
+  if(fsize && (fsize < flsize - 2 - mfsize))
+    if(f->readInt(1) == 0x1a) {
+      // Adam Nielsen's footer format
+      track_name = f->readString();
+      author_name = f->readString();
+      remarks = f->readString();
+    } else {
+      // Generic footer
+      unsigned long footerlen = flsize - fsize - 2 - mfsize;
 
-    footer = new char[footerlen + 1];
-    f->readString(footer, footerlen);
-    footer[footerlen] = '\0';	// Make ASCIIZ string
-  }
+      footer = new char[footerlen + 1];
+      f->readString(footer, footerlen);
+      footer[footerlen] = '\0';	// Make ASCIIZ string
+    }
 
   rate = getrate(f);
   fp.close(f);
@@ -150,6 +157,21 @@ std::string CimfPlayer::gettitle()
   title += game_name;
 
   return title;
+}
+
+std::string CimfPlayer::getdesc()
+{
+  std::string	desc;
+
+  if(footer)
+    desc = std::string(footer);
+
+  if(!remarks.empty() && footer)
+    desc += "\n\n";
+
+  desc += remarks;
+
+  return desc;
 }
 
 /*** private methods *************************************/

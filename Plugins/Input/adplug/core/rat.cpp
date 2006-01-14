@@ -72,7 +72,8 @@ bool CxadratPlayer::xadplayer_load()
   rat.inst = (rat_instrument *)&tune[0x140];
 
   // load pattern data
-  unsigned char *event_ptr = &tune[rat.hdr.patseg << 4];
+  unsigned short patseg = (rat.hdr.patseg[1] << 8) + rat.hdr.patseg[0];
+  unsigned char *event_ptr = &tune[patseg << 4];
 
   for(int i=0;i<rat.hdr.numpat;i++)
     for(int j=0;j<64;j++)
@@ -181,7 +182,8 @@ void CxadratPlayer::xadplayer_update()
         opl_write(0xE0+rat_adlib_bases[i+9], rat.inst[ins].car_wave);
 
         // octave/frequency
-        unsigned short freq = rat.inst[ins].freq * rat_notes[event.note & 0x0F] / 0x20AB;
+	unsigned short insfreq = (rat.inst[ins].freq[1] << 8) + rat.inst[ins].freq[0];
+        unsigned short freq = insfreq * rat_notes[event.note & 0x0F] / 0x20AB;
 
         opl_write(0xA0+i, freq & 0xFF);
         opl_write(0xB0+i, (freq >> 8) | ((event.note & 0xF0) >> 2) | 0x20);

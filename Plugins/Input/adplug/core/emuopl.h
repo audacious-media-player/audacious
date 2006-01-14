@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2004 Simon Peter, <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2005 Simon Peter, <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -29,19 +29,21 @@ extern "C" {
 
 class CEmuopl: public Copl
 {
-public:
-	CEmuopl(int rate, bool bit16, bool usestereo);	// rate = sample rate
-	virtual ~CEmuopl();
+ public:
+  CEmuopl(int rate, bool bit16, bool usestereo);	// rate = sample rate
+  virtual ~CEmuopl();
 
-	void update(short *buf, int samples);	// fill buffer
+  void update(short *buf, int samples);			// fill buffer
+  void write(int reg, int val);
 
-	// template methods
-	void write(int reg, int val);
-	void init();
+  void init();
+  void settype(ChipType type);
 
-private:
-	bool	use16bit,stereo;
-	FM_OPL	*opl;				// holds emulator data
+ private:
+  bool		use16bit, stereo;
+  FM_OPL	*opl[2];				// OPL2 emulator data
+  short		*mixbuf0, *mixbuf1;
+  int		mixbufSamples;
 };
 
 #endif

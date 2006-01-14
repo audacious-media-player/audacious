@@ -50,7 +50,7 @@ protected:
     unsigned char   volume;
     unsigned char   speed;
     unsigned char   reserved_32[12];
-    unsigned short  patseg;
+    unsigned char   patseg[2];
   };
 
   struct rat_event
@@ -64,7 +64,7 @@ protected:
 
   struct rat_instrument
   {
-    unsigned short  freq;
+    unsigned char   freq[2];
     unsigned char   reserved_2[2];
     unsigned char   mod_ctrl;
     unsigned char   car_ctrl;

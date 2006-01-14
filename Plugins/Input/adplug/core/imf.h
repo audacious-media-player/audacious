@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2003 Simon Peter <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2005 Simon Peter <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -31,29 +31,30 @@ public:
 
 	CimfPlayer(Copl *newopl)
 	  : CPlayer(newopl), footer(0), data(0)
-	{ }
+	  { }
 	~CimfPlayer()
-	{ if(data) delete [] data; if(footer) delete [] footer; };
+	  { if(data) delete [] data; if(footer) delete [] footer; };
 
 	bool load(const std::string &filename, const CFileProvider &fp);
 	bool update();
 	void rewind(int subsong);
 	float getrefresh()
-	{ return timer; };
+	  { return timer; };
 
 	std::string gettype()
-	{ return std::string("IMF File Format"); }
+	  { return std::string("IMF File Format"); }
 	std::string gettitle();
-	std::string getdesc()
-	{ if(footer) return std::string(footer); else return std::string(); }
+	std::string getauthor()
+	  { return author_name; }
+	std::string getdesc();
 
 protected:
-	unsigned long	pos,size;
+	unsigned long	pos, size;
 	unsigned short	del;
 	bool		songend;
-	float		rate,timer;
+	float		rate, timer;
 	char		*footer;
-	std::string	track_name, game_name;
+	std::string	track_name, game_name, author_name, remarks;
 
 	struct Sdata {
 		unsigned char	reg, val;

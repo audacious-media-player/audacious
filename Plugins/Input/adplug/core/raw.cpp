@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2004 Simon Peter, <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2005 Simon Peter, <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,9 +17,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * raw.c - RAW Player by Simon Peter <dn.tlp@gmx.net>
- *
- * NOTES:
- * OPL3 register writes are ignored (not possible with AdLib).
  */
 
 #include "raw.h"
@@ -76,7 +73,7 @@ bool CrawPlayer::update()
 	speed = data[pos].param + (data[pos].command << 8);
 	setspeed = true;
       } else
-	opl3 = data[pos].param - 1;
+	opl->setchip(data[pos].param - 1);
       break;
     case 0xff:
       if(data[pos].param == 0xff) {
@@ -86,8 +83,7 @@ bool CrawPlayer::update()
       }
       break;
     default:
-      if(!opl3)
-	opl->write(data[pos].command,data[pos].param);
+      opl->write(data[pos].command,data[pos].param);
       break;
     }
   } while(data[pos++].command || setspeed);
@@ -97,8 +93,8 @@ bool CrawPlayer::update()
 
 void CrawPlayer::rewind(int subsong)
 {
-  pos = del = opl3 = 0; speed = clock; songend = false;
-  opl->init(); opl->write(1,32);	// go to OPL2 mode
+  pos = del = 0; speed = clock; songend = false;
+  opl->init(); opl->write(1, 32);	// go to 9 channel mode
 }
 
 float CrawPlayer::getrefresh()

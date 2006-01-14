@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999, 2000, 2001 Simon Peter, <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2005 Simon Peter, <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16,7 +16,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *
  * diskopl.h - Disk Writer OPL, by Simon Peter <dn.tlp@gmx.net>
  */
 
@@ -27,23 +26,27 @@
 
 class CDiskopl: public Copl
 {
-public:
-	CDiskopl(std::string filename);
-	virtual ~CDiskopl();
+ public:
+  CDiskopl(std::string filename);
+  virtual ~CDiskopl();
 
-	void update(CPlayer *p);			// write to file
-	void setnowrite(bool nw = true)		// set file write status
-	{ nowrite = nw; };
+  void update(CPlayer *p);			// write to file
+  void setnowrite(bool nw = true)		// set file write status
+    { nowrite = nw; };
 
-	// template methods
-	void write(int reg, int val);
-	void init();
+  void setchip(int n);
 
-private:
-	void diskwrite(int reg, int val);
+  // template methods
+  void write(int reg, int val);
+  void init();
 
-	FILE			*f;
-	float			old_freq;
-	unsigned char	del;
-	bool			nowrite;			// don't write to file, if true
+ private:
+  static const unsigned char	op_table[9];
+
+  FILE		*f;
+  float		old_freq;
+  unsigned char	del;
+  bool		nowrite;			// don't write to file, if true
+
+  void diskwrite(int reg, int val);
 };

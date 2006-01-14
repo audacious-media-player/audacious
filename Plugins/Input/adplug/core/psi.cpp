@@ -69,13 +69,20 @@ void CxadpsiPlayer::xadplayer_rewind(int subsong)
   opl_write(0x08, 0x00);
   opl_write(0xBD, 0x00);
 
+  // get header
+  header.instr_ptr = (tune[1] << 8) + tune[0];
+  header.seq_ptr = (tune[3] << 8) + tune[2];
+
   // define instruments
-  psi.instr_table = (unsigned short *)&tune[((psi_header *)&tune[0])->instr_ptr];
+  psi.instr_table = &tune[header.instr_ptr];
 
   for(int i=0; i<8; i++)
   {
-    for(int j=0; j<11; j++)
-      opl_write(psi_adlib_registers[i*11 + j],tune[psi.instr_table[i] + j]);
+    for(int j=0; j<11; j++) {
+      unsigned short inspos = (psi.instr_table[i * 2 + 1] << 8) + psi.instr_table[i * 2];
+
+      opl_write(psi_adlib_registers[i*11 + j],tune[inspos + j]);
+    }
 
     opl_write(0xA0+i, 0x00);
     opl_write(0xB0+i, 0x00);
@@ -86,7 +93,7 @@ void CxadpsiPlayer::xadplayer_rewind(int subsong)
   }
 
   // calculate sequence pointer
-  psi.seq_table = (unsigned short *)&tune[((psi_header *)&tune[0])->seq_ptr];
+  psi.seq_table = &tune[header.seq_ptr];
 }
 
 void CxadpsiPlayer::xadplayer_update()
@@ -95,7 +102,7 @@ void CxadpsiPlayer::xadplayer_update()
 
   for(int i=0; i<8; i++)
   {
-    ptr = psi.seq_table[i<<1];
+    ptr = (psi.seq_table[(i<<1) * 2 + 1] << 8) + psi.seq_table[(i<<1) * 2];
 
     psi.note_curdelay[i]--;
 
@@ -112,7 +119,7 @@ void CxadpsiPlayer::xadplayer_update()
       // end of sequence ?
       if (!event)
       {
-        ptr = psi.seq_table[(i<<1) + 1];
+	ptr = (psi.seq_table[(i<<1) * 2 + 3] << 8) + psi.seq_table[(i<<1) * 2 + 2];
 
         event = tune[ptr++];
 #ifdef DEBUG
@@ -148,7 +155,8 @@ void CxadpsiPlayer::xadplayer_update()
       opl_write(0xB0+i, (note >> 8) + ((event >> 2) & 0xFC));
 
       // save position
-      psi.seq_table[i<<1] = ptr;
+      psi.seq_table[(i<<1) * 2] = ptr & 0xff;
+      psi.seq_table[(i<<1) * 2 + 1] = ptr >> 8;
     }
   }
 }

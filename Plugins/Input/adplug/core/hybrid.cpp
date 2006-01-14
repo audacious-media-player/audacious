@@ -132,8 +132,9 @@ void CxadhybridPlayer::xadplayer_update()
   // process channels
   for(i=0;i<9;i++)
   {
+    unsigned char *pos = &tune[0xADE + (hyb.order[hyb.order_pos*9 + i] * 64 * 2) + (patpos * 2)];
     // read event
-    unsigned short event = *(unsigned short *)&tune[0xADE + (hyb.order[hyb.order_pos*9 + i] * 64 * 2) + (patpos * 2)];
+    unsigned short event = (pos[1] << 8) + pos[0];
 
 #ifdef DEBUG
    AdPlug_LogWrite("track %02X, channel %02X, event %04X:\n", hyb.order[hyb.order_pos*9 + i], i, event );

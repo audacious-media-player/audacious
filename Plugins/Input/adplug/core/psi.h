@@ -34,12 +34,12 @@ protected:
   {
     unsigned short  instr_ptr;
     unsigned short  seq_ptr;
-  };
+  } header;
 
   struct
   {
-    unsigned short  *instr_table;
-    unsigned short  *seq_table;
+    unsigned char   *instr_table;
+    unsigned char   *seq_table;
     unsigned char   note_delay[9];
     unsigned char   note_curdelay[9];
     unsigned char   looping[9];

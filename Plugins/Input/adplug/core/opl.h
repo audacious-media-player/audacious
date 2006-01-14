@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2004 Simon Peter, <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2005 Simon Peter, <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16,7 +16,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * opl.h - OPL base class declaration, by Simon Peter <dn.tlp@gmx.net>
+ * opl.h - OPL base class, by Simon Peter <dn.tlp@gmx.net>
  */
 
 #ifndef H_ADPLUG_OPL
@@ -24,11 +24,37 @@
 
 class Copl
 {
-public:
-	virtual void write(int reg, int val) = 0;		// combined register select + data write
-	virtual void init(void) = 0;				// reinitialize OPL chip
+ public:
+  typedef enum {
+    TYPE_OPL2, TYPE_OPL3, TYPE_DUAL_OPL2
+  } ChipType;
 
-	virtual void update(short *buf, int samples) {};	// Emulation only: fill buffer
+  Copl()
+    : currChip(0), currType(TYPE_OPL2)
+    {
+    }
+
+  virtual void write(int reg, int val) = 0;	// combined register select + data write
+  virtual void setchip(int n)			// select OPL chip
+    {
+      if(n < 2)
+	currChip = n;
+    }
+
+  virtual void init(void) = 0;			// reinitialize OPL chip(s)
+
+  // return this OPL chip's type
+  ChipType gettype()
+    {
+      return currType;
+    }
+
+  // Emulation only: fill buffer
+  virtual void update(short *buf, int samples) {}
+
+ protected:
+  int		currChip;		// currently selected OPL chip number
+  ChipType	currType;		// this OPL chip's type
 };
 
 #endif

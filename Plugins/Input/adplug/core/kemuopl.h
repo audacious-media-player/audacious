@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2004 Simon Peter, <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2005 Simon Peter, <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -35,6 +35,7 @@ public:
     : use16bit(bit16), stereo(usestereo)
     {
       adlibinit(rate, usestereo ? 2 : 1, bit16 ? 2 : 1);
+      currType = TYPE_OPL2;
     };
 
   void update(short *buf, int samples)
@@ -47,7 +48,8 @@ public:
   // template methods
   void write(int reg, int val)
     {
-      adlib0(reg, val);
+      if(currChip == 0)
+	adlib0(reg, val);
     };
 
   void init() {};

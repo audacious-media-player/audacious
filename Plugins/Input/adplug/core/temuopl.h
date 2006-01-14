@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2005 Simon Peter, <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2004 Simon Peter, <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16,37 +16,32 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * dro.h - DOSBox Raw OPL Player by Sjoerd van der Berg <harekiet@zophar.net>
+ * temuopl.h - Tatsuyuki Satoh's OPL2 emulator, by Simon Peter <dn.tlp@gmx.net>
  */
 
-#include "player.h"
+#ifndef H_ADPLUG_TEMUOPL
+#define H_ADPLUG_TEMUOPL
 
-class CdroPlayer: public CPlayer
+#include "opl.h"
+extern "C" {
+#include "fmopl.h"
+}
+
+class CTemuopl: public Copl
 {
  public:
-  static CPlayer *factory(Copl *newopl);
+  CTemuopl(int rate, bool bit16, bool usestereo);	// rate = sample rate
+  virtual ~CTemuopl();
 
-  CdroPlayer(Copl *newopl);
-  ~CdroPlayer()
-    {
-      if(data)
-	delete [] data;
-    }
+  void update(short *buf, int samples);	// fill buffer
 
-  bool load(const std::string &filename, const CFileProvider &fp);
-  bool update();
-  void rewind(int subsong);
-  float getrefresh();
+  // template methods
+  void write(int reg, int val);
+  void init();
 
-  std::string gettype()
-    {
-      return std::string("DOSBox Raw OPL");
-    }
-
- protected:
-  unsigned char *data;
-  unsigned long pos,length;
-  unsigned long msdone,mstotal;
-  unsigned short delay;
-  unsigned char index, opl3_mode;
+ private:
+  bool		use16bit,stereo;
+  FM_OPL	*opl;			// holds emulator data
 };
+
+#endif

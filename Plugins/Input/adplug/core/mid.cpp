@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2003 Simon Peter, <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2005 Simon Peter, <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  *
- * MIDI & MIDI-like file player - Last Update: 8/16/2000
+ * MIDI & MIDI-like file player - Last Update: 10/15/2005
  *                  by Phil Hassey - www.imitationpickles.org
  *                                   philhassey@hotmail.com
  *
@@ -57,8 +57,11 @@
  *                               I think some of them are supposed to be
  *                               played at the same time, but I'm not sure
  *                               when.
- *  8/16/200:
+ * 8/16/2000:
  *      Status:  LAA: now EGA and VGA lucas games work pretty well
+ *
+ * 10/15/2005: Changes by Simon Peter
+ *	Added rhythm mode support for CMF format.
  *
  * Other acknowledgements:
  *  Allegro - for the midi instruments and the midi volume table
@@ -75,13 +78,57 @@
 #include "mid.h"
 #include "mididata.h"
 
+/*#define TESTING*/
+#ifdef TESTING
+#define midiprintf printf
+#else
 void CmidPlayer::midiprintf(char *format, ...)
     {
     }
+#endif
+
+#define LUCAS_STYLE   1
+#define CMF_STYLE     2
+#define MIDI_STYLE    4
+#define SIERRA_STYLE  8
+
+// AdLib melodic and rhythm mode defines
+#define ADLIB_MELODIC	0
+#define ADLIB_RYTHM	1
+
+// File types
+#define FILE_LUCAS      1
+#define FILE_MIDI       2
+#define FILE_CMF        3
+#define FILE_SIERRA     4
+#define FILE_ADVSIERRA  5
+#define FILE_OLDLUCAS   6
+
+// AdLib standard operator table
+const unsigned char CmidPlayer::adlib_opadd[] = {0x00  ,0x01 ,0x02  ,0x08  ,0x09  ,0x0A  ,0x10 ,0x11  ,0x12};
+
+// dunno
+const int CmidPlayer::ops[] = {0x20,0x20,0x40,0x40,0x60,0x60,0x80,0x80,0xe0,0xe0,0xc0};
+
+// map CMF drum channels 12 - 15 to corresponding AdLib drum operators
+// bass drum (channel 11) not mapped, cause it's handled like a normal instrument
+const int CmidPlayer::map_chan[] = { 0x14, 0x12, 0x15, 0x11 };
+
+// Standard AdLib frequency table
+const int CmidPlayer::fnums[] = { 0x16b,0x181,0x198,0x1b0,0x1ca,0x1e5,0x202,0x220,0x241,0x263,0x287,0x2ae };
+
+// Map CMF drum channels 11 - 15 to corresponding AdLib drum channels
+const int CmidPlayer::percussion_map[] = { 6, 7, 8, 8, 7 };
 
 CPlayer *CmidPlayer::factory(Copl *newopl)
 {
   return new CmidPlayer(newopl);
+}
+
+CmidPlayer::CmidPlayer(Copl *newopl)
+  : CPlayer(newopl), author(&emptystr), title(&emptystr), remarks(&emptystr),
+    emptystr('\0'), flen(0), data(0)
+{
 }
 
 unsigned char CmidPlayer::datalook(long pos)
@@ -129,14 +176,6 @@ unsigned long CmidPlayer::getval()
 		}
 	return(v);
 }
-
-#define LUCAS_STYLE   1
-#define CMF_STYLE     2
-#define MIDI_STYLE    4
-#define SIERRA_STYLE  8
-
-#define ADLIB_MELODIC	0
-#define ADLIB_RYTHM	1
 
 bool CmidPlayer::load_sierra_ins(const std::string &fname, const CFileProvider &fp)
 {
@@ -241,13 +280,6 @@ void CmidPlayer::sierra_next_section()
     doing=1;
 }
 
-#define FILE_LUCAS      1
-#define FILE_MIDI       2
-#define FILE_CMF        3
-#define FILE_SIERRA     4
-#define FILE_ADVSIERRA  5
-#define FILE_OLDLUCAS   6
-
 bool CmidPlayer::load(const std::string &filename, const CFileProvider &fp)
 {
     binistream *f = fp.open(filename); if(!f) return false;
@@ -297,12 +329,9 @@ bool CmidPlayer::load(const std::string &filename, const CFileProvider &fp)
 
 void CmidPlayer::midi_write_adlib(unsigned int r, unsigned char v)
 {
-	opl->write(r,v);
-    adlib_data[r]=v;
+  opl->write(r,v);
+  adlib_data[r]=v;
 }
-
-unsigned char adlib_opadd[] = {0x00  ,0x01 ,0x02  ,0x08  ,0x09  ,0x0A  ,0x10 ,0x11  ,0x12};
-int ops[] = {0x20,0x20,0x40,0x40,0x60,0x60,0x80,0x80,0xe0,0xe0,0xc0};
 
 void CmidPlayer::midi_fm_instrument(int voice, unsigned char *inst)
 {
@@ -350,6 +379,18 @@ void CmidPlayer::midi_fm_instrument(int voice, unsigned char *inst)
     midi_write_adlib(0xc0+voice,inst[10]);
 }
 
+void CmidPlayer::midi_fm_percussion(int ch, unsigned char *inst)
+{
+  int	opadd = map_chan[ch - 12];
+
+  midi_write_adlib(0x20 + opadd, inst[0]);
+  midi_write_adlib(0x40 + opadd, inst[2]);
+  midi_write_adlib(0x60 + opadd, inst[4]);
+  midi_write_adlib(0x80 + opadd, inst[6]);
+  midi_write_adlib(0xe0 + opadd, inst[8]);
+  midi_write_adlib(0xc0 + opadd, inst[10]);
+}
+
 void CmidPlayer::midi_fm_volume(int voice, int volume)
 {
     int vol;
@@ -361,8 +402,7 @@ void CmidPlayer::midi_fm_volume(int voice, int volume)
     if ((adlib_style&LUCAS_STYLE)!=0)
         {
         if ((adlib_data[0xc0+voice]&1)==1)
-            midi_write_adlib(0x40+adlib_opadd[voice], (unsigned 
-char)((63-vol) |
+            midi_write_adlib(0x40+adlib_opadd[voice], (unsigned char)((63-vol) |
             (adlib_data[0x40+adlib_opadd[voice]]&0xc0)));
         midi_write_adlib(0x43+adlib_opadd[voice], (unsigned char)((63-vol) |
             (adlib_data[0x43+adlib_opadd[voice]]&0xc0)));
@@ -370,19 +410,13 @@ char)((63-vol) |
         else
         {
         if ((adlib_data[0xc0+voice]&1)==1)
-            midi_write_adlib(0x40+adlib_opadd[voice], (unsigned 
-char)((63-vol) |
+            midi_write_adlib(0x40+adlib_opadd[voice], (unsigned char)((63-vol) |
             (adlib_data[0x40+adlib_opadd[voice]]&0xc0)));
         midi_write_adlib(0x43+adlib_opadd[voice], (unsigned char)((63-vol) |
            (adlib_data[0x43+adlib_opadd[voice]]&0xc0)));
         }
     }
 }
-
-
-int fnums[] = {
-0x16b,0x181,0x198,0x1b0,0x1ca,0x1e5,0x202,0x220,0x241,0x263,0x287,0x2ae
-		  };
 
 void CmidPlayer::midi_fm_playnote(int voice, int note, int volume)
 {
@@ -393,7 +427,7 @@ void CmidPlayer::midi_fm_playnote(int voice, int note, int volume)
     midi_fm_volume(voice,volume);
     midi_write_adlib(0xa0+voice,(unsigned char)(freq&0xff));
 
-	c=((freq&0x300) >> 8)+(oct<<2) + (1<<5);
+	c=((freq&0x300) >> 8)+(oct<<2) + (adlib_mode == ADLIB_MELODIC || voice < 6 ? (1<<5) : 0);
     midi_write_adlib(0xb0+voice,(unsigned char)c);
 }
 
@@ -408,6 +442,9 @@ void CmidPlayer::midi_fm_endnote(int voice)
 void CmidPlayer::midi_fm_reset()
 {
     int i;
+
+    opl->init();
+
     for (i=0; i<256; i++)
         midi_write_adlib(i,0);
 
@@ -419,7 +456,7 @@ bool CmidPlayer::update()
 {
     long w,v,note,vel,ctrl,nv,x,l,lnum;
     int i=0,j,c;
-    int on,onl;
+    int on,onl,numchan;
     unsigned char ins[11];
     int ret;
 
@@ -473,44 +510,42 @@ bool CmidPlayer::update()
               //  doing=0;
                 note=getnext(1); vel=getnext(1);
 
+		if(adlib_mode == ADLIB_RYTHM)
+		  numchan = 6;
+		else
+		  numchan = 9;
+
                 if (ch[c].on!=0)
                 {
-                for (i=0; i<9; i++)
+		  for (i=0; i<18; i++)
                     chp[i][2]++;
 
-                j=0;
-                on=-1;onl=0;
-                for (i=0; i<9; i++)
-                    if (chp[i][0]==-1 && chp[i][2]>onl)
-                        { onl=chp[i][2]; on=i; j=1; }
+		  if(c < 11 || adlib_mode == ADLIB_MELODIC) {
+		    j=0;
+		    on=-1;onl=0;
+		    for (i=0; i<numchan; i++)
+		      if (chp[i][0]==-1 && chp[i][2]>onl)
+			{ onl=chp[i][2]; on=i; j=1; }
 
-                if (on==-1)
-                    {
-                    onl=0;
-                    for (i=0; i<9; i++)
-                        if (chp[i][2]>onl)
-                            { onl=chp[i][2]; on=i; }
-                    }
+		    if (on==-1)
+		      {
+			onl=0;
+			for (i=0; i<numchan; i++)
+			  if (chp[i][2]>onl)
+			    { onl=chp[i][2]; on=i; }
+		      }
 
-                 if (j==0)
-                    midi_fm_endnote(on);
+		    if (j==0)
+		      midi_fm_endnote(on);
+		  } else
+		    on = percussion_map[c - 11];
 
                  if (vel!=0 && ch[c].inum>=0 && ch[c].inum<128)
                     {
                     if (adlib_mode == ADLIB_MELODIC || c < 12)
-                        midi_fm_instrument(on,ch[c].ins);
-                        else
-                        {
-                        //the following fails to be effective
-                        //at doing rythm sounds .. (cmf blah)
-                        ins[0]=ins[1]=ch[c].ins[0];
-                        ins[2]=ins[3]=ch[c].ins[2];
-                        ins[4]=ins[5]=ch[c].ins[4];
-                        ins[6]=ins[7]=ch[c].ins[6];
-                        ins[8]=ins[9]=ch[c].ins[8];
-                        ins[10]=ch[c].ins[10]|1;
-                        midi_fm_instrument(on,ins);
-                        }
+		      midi_fm_instrument(on,ch[c].ins);
+		    else
+ 		      midi_fm_percussion(c, ch[c].ins);
 
                     if ((adlib_style&MIDI_STYLE)!=0)
                         {
@@ -527,10 +562,16 @@ bool CmidPlayer::update()
                         nv=vel;
                         }
 
-                    midi_fm_playnote(on,note+ch[c].nshift,nv*2);
+		    midi_fm_playnote(on,note+ch[c].nshift,nv*2);
                     chp[on][0]=c;
                     chp[on][1]=note;
                     chp[on][2]=0;
+
+		    if(adlib_mode == ADLIB_RYTHM && c >= 11) {
+		      midi_write_adlib(0xbd, adlib_data[0xbd] & ~(0x10 >> (c - 11)));
+		      midi_write_adlib(0xbd, adlib_data[0xbd] | (0x10 >> (c - 11)));
+		    }
+
                     }
                     else
                     {
@@ -576,17 +617,22 @@ midi_fm_playnote(i,note+cnote[c],my_midi_fm_vol_table[(cvols[c]*vel)/128]*2);
                         break;
                     case 0x67:
                         midiprintf ("\n\nhere:%d\n\n",vel);
-                        if ((adlib_style&CMF_STYLE)!=0)
-                            adlib_mode=vel;  // this gets faked - no mode change
+                        if ((adlib_style&CMF_STYLE)!=0) {
+			  adlib_mode=vel;
+			  if(adlib_mode == ADLIB_RYTHM)
+			    midi_write_adlib(0xbd, adlib_data[0xbd] | (1 << 5));
+			  else
+			    midi_write_adlib(0xbd, adlib_data[0xbd] & ~(1 << 5));
+			}
                         break;
                     }
                 break;
             case 0xc0: /*patch change*/
-				x=getnext(1);
-                ch[c].inum=x;
-                for (j=0; j<11; j++)
-                    ch[c].ins[j]=myinsbank[ch[c].inum][j];
-                break;
+	      x=getnext(1);
+	      ch[c].inum=x;
+	      for (j=0; j<11; j++)
+		ch[c].ins[j]=myinsbank[ch[c].inum][j];
+	      break;
             case 0xd0: /*chanel touch*/
                 x=getnext(1);
                 break;
@@ -599,11 +645,11 @@ midi_fm_playnote(i,note+cnote[c],my_midi_fm_vol_table[(cvols[c]*vel)/128]*2);
                     {
                     case 0xf0:
                     case 0xf7: /*sysex*/
-						l=getval();
-                        if (datalook(pos+l)==0xf7)
-							i=1;
-                        midiprintf("{%d}",l);
-                        midiprintf("\n");
+		      l=getval();
+		      if (datalook(pos+l)==0xf7)
+			i=1;
+		      midiprintf("{%d}",l);
+		      midiprintf("\n");
 
                         if (datalook(pos)==0x7d &&
                             datalook(pos+1)==0x10 &&
@@ -1019,7 +1065,7 @@ void CmidPlayer::rewind(int subsong)
                 }
 
     doing=1;
-	opl->init();
+    midi_fm_reset();
 }
 
 std::string CmidPlayer::gettype()

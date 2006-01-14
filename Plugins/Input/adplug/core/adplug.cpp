@@ -42,7 +42,7 @@
 #include "mid.h"
 #include "mkj.h"
 #include "cff.h"
-#include "dmo.h" 	 
+#include "dmo.h"
 #include "s3m.h"
 #include "dtm.h"
 #include "fmc.h"
@@ -61,10 +61,12 @@
 #include "rol.h"
 #include "xsm.h"
 #include "dro.h"
+#include "msc.h"
+#include "rix.h"
 
 /***** Defines *****/
 
-#define VERSION		"1.5.1"		// AdPlug library version string
+#define VERSION		"1.6"		// AdPlug library version string
 
 /***** CAdPlug *****/
 
@@ -104,6 +106,8 @@ const CPlayerDesc CAdPlug::allplayers[] = {
   CPlayerDesc(CrolPlayer::factory, "Adlib Visual Composer", ".rol\0"),
   CPlayerDesc(CxsmPlayer::factory, "eXtra Simple Music", ".xsm\0"),
   CPlayerDesc(CdroPlayer::factory, "DOSBox Raw OPL", ".dro\0"),
+  CPlayerDesc(CmscPlayer::factory, "Adlib MSC Player", ".msc\0"),
+  CPlayerDesc(CrixPlayer::factory, "Softstar RIX OPL Music", ".rix\0"),
   CPlayerDesc()
 };
 

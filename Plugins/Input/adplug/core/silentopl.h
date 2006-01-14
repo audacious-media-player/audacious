@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999, 2000, 2001 Simon Peter, <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2005 Simon Peter, <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16,7 +16,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *
  * silentopl.h - Silent OPL device, by Simon Peter (dn.tlp@gmx.net)
  */
 
@@ -25,6 +24,6 @@
 class CSilentopl: public Copl
 {
 public:
-	void write(int reg, int val) { };
-	void init() { };
+	void write(int reg, int val) {}
+	void init() {}
 };
