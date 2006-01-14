@@ -76,7 +76,7 @@ audacious_SOURCES = \
 	iir.c iir.h \
 	na.xpm beep_logo.xpm
 
-beepinclude_HEADERS = plugin.h fullscreen.h
+beepinclude_HEADERS = plugin.h fullscreen.h output.h input.h
 
 desktop_DATA = audacious.desktop
 desktopdir = $(datadir)/applications
