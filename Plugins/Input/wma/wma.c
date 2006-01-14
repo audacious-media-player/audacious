@@ -78,7 +78,6 @@ static void wma_do_pause(short p);
 static int wma_get_time(void);
 static void wma_get_song_info(char *filename, char **title, int *length);
 static void wma_file_info_box(char *filename); 
-static void wma_set_eq(int q_on, float q_preamp, float *q_bands);
 static char *wsong_title;
 static int wsong_time;
 
@@ -299,6 +298,7 @@ static void wma_playbuff(int out_size)
     fifo_write(&f, wma_outbuf, out_size, &f.wptr);
     while(!fifo_read(&f, wma_s_outbuf, wma_st_buff, &f.rptr) && wma_decode)
     {
+	sst_buff = wma_st_buff;
 	if(wma_pause) memset(wma_s_outbuf, 0, sst_buff);	
     	while(wma_ip.output->buffer_free() < wma_st_buff) xmms_usleep(20000);
 	produce_audio(wma_ip.output->written_time(), FMT_S16_NE,
