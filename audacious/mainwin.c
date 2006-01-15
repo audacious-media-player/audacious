@@ -1939,6 +1939,9 @@ mainwin_rev_release(void)
 
     g_get_current_time(&now_time);
 
+    now_time.tv_usec *= now_time.tv_sec;
+    cb_time.tv_usec *= cb_time.tv_sec;
+
     now_dur = (now_time.tv_usec - cb_time.tv_usec) / 1000;
 
     if (now_dur <= 150 && now_dur >= -150)
@@ -1962,6 +1965,9 @@ mainwin_fwd_release(void)
     glong now_dur;
 
     g_get_current_time(&now_time);
+
+    now_time.tv_usec *= now_time.tv_sec;
+    cb_time.tv_usec *= cb_time.tv_sec;
 
     now_dur = (now_time.tv_usec - cb_time.tv_usec) / 1000;
 
