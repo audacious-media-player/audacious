@@ -152,9 +152,14 @@ void
 output_set_eq(gboolean active, gfloat pre, gfloat * bands)
 {
     int i;
-    preamp = 1.0 + 0.0932471 * pre + 0.00279033 * pre * pre;
+    preamp[0] = 1.0 + 0.0932471 * pre + 0.00279033 * pre * pre;
+    preamp[1] = 1.0 + 0.0932471 * pre + 0.00279033 * pre * pre;
+
     for (i = 0; i < 10; ++i)
-        gain[i] = 0.03 * bands[i] + 0.000999999 * bands[i] * bands[i];
+    {
+	set_gain(i, 0, 0.03 * bands[i] + 0.000999999 * bands[i] * bands[i]);
+	set_gain(i, 1, 0.03 * bands[i] + 0.000999999 * bands[i] * bands[i]);
+    }
 }
 
 /* this should be in BYTES, NOT gint16s */
@@ -224,7 +229,7 @@ produce_audio(gint time,        /* position             */
             ++init;
         }
 
-        iir(&ptr, length);      /*  do iir                  */
+        iir(&ptr, length, nch);
 
         if (swapped)               /* if was swapped          */
             byteswap(length, ptr); /*  swap back for output   */

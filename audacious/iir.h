@@ -1,7 +1,7 @@
 /*
  *   PCM time-domain equalizer
  *
- *   Copyright (C) 2002  Felipe Rivera <liebremx at users.sourceforge.net>
+ *   Copyright (C) 2002-2005  Felipe Rivera <liebremx at users.sourceforge.net>
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,19 +17,68 @@
  *   along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *   $Id: iir.h,v 1.5 2004/06/20 18:48:54 mderezynski Exp $
+ *   $Id: iir.h,v 1.12 2005/10/17 01:57:59 liebremx Exp $
  */
 #ifndef IIR_H
 #define IIR_H
 
-#define EQ_MAX_BANDS 10
-#define EQ_CHANNELS 2
+#include <glib.h>
+#include "main.h"
+#include "iir_cfs.h"
 
-extern float gain[10];
-extern float preamp;
+/*
+ * Flush-to-zero to avoid flooding the CPU with underflow exceptions 
+ */
+#ifdef SSE_MATH
+#define FTZ 0x8000
+#define FTZ_ON { \
+    unsigned int mxcsr; \
+  __asm__  __volatile__ ("stmxcsr %0" : "=m" (*&mxcsr)); \
+  mxcsr |= FTZ; \
+  __asm__  __volatile__ ("ldmxcsr %0" : : "m" (*&mxcsr)); \
+}
+#define FTZ_OFF { \
+    unsigned int mxcsr; \
+  __asm__  __volatile__ ("stmxcsr %0" : "=m" (*&mxcsr)); \
+  mxcsr &= ~FTZ; \
+  __asm__  __volatile__ ("ldmxcsr %0" : : "m" (*&mxcsr)); \
+}
+#else
+#define FTZ_ON
+#define FTZ_OFF
+#endif
 
-int iir(gpointer * d, gint length);
+/*
+ * Function prototypes
+ */
 void init_iir();
+void clean_history();
+void set_gain(gint index, gint chn, float val);
+void set_preamp(gint chn, float val);
 
 
-#endif                          /* #define IIR_H */
+__inline__ int iir(gpointer * d, gint length, gint nch);
+
+#ifdef ARCH_X86
+__inline__ int round_trick(float floatvalue_to_round);
+#endif
+#ifdef ARCH_PPC
+__inline__ int round_ppc(float x);
+#endif
+
+#define EQ_CHANNELS 2
+#define EQ_MAX_BANDS 10
+
+extern float preamp[EQ_CHANNELS];
+extern sIIRCoefficients *iir_cf;
+extern gint rate;
+extern gint band_count;
+
+#ifdef BENCHMARK
+extern double timex;
+extern int count;
+extern unsigned int blength;
+#endif
+
+#endif /* #define IIR_H */
+

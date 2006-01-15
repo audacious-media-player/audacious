@@ -73,6 +73,8 @@ audacious_SOURCES = \
 	mkdtemp.c \
 	pixmaps.h \
 	iir.c iir.h \
+	iir_cfs.c iir_cfs.h \
+	iir_fpu.c iir_fpu.h \
 	na.xpm beep_logo.xpm
 
 beepinclude_HEADERS = plugin.h output.h input.h
