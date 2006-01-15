@@ -1349,7 +1349,7 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
     case GDK_KP_7:
         if (playlist_get_current_length() != -1)
             bmp_playback_seek(CLAMP
-                              (bmp_playback_get_time() - 5000, 0,
+                              (bmp_playback_get_time() - 1000, 0,
                               playlist_get_current_length()) / 1000);
         break;
     case GDK_Right:
@@ -1357,7 +1357,7 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
     case GDK_KP_9:
         if (playlist_get_current_length() != -1)
             bmp_playback_seek(CLAMP
-                              (bmp_playback_get_time() + 5000, 0,
+                              (bmp_playback_get_time() + 1000, 0,
                               playlist_get_current_length()) / 1000);
         break;
 
