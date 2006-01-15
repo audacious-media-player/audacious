@@ -1190,7 +1190,7 @@ mainwin_keypress(GtkWidget * grab_widget,
     case GDK_KP_7:
         if (playlist_get_current_length() != -1)
             bmp_playback_seek(CLAMP
-                              (bmp_playback_get_time() - 5000, 0,
+                              (bmp_playback_get_time() - 1000, 0,
                                playlist_get_current_length()) / 1000);
         break;
     case GDK_Right:
@@ -1198,7 +1198,7 @@ mainwin_keypress(GtkWidget * grab_widget,
     case GDK_KP_9:
         if (playlist_get_current_length() != -1)
             bmp_playback_seek(CLAMP
-                              (bmp_playback_get_time() + 5000, 0,
+                              (bmp_playback_get_time() + 1000, 0,
                                playlist_get_current_length()) / 1000);
         break;
     case GDK_KP_4:
@@ -3353,6 +3353,13 @@ mainwin_idle_func(gpointer data)
     }
 
     GDK_THREADS_LEAVE();
+
+    if (seek_state == MAINWIN_SEEK_REV)
+        bmp_playback_seek(CLAMP(bmp_playback_get_time() - 1000, 0,
+                                playlist_get_current_length()) / 1000);
+    else if (seek_state == MAINWIN_SEEK_FWD)
+        bmp_playback_seek(CLAMP(bmp_playback_get_time() + 1000, 0,
+                                playlist_get_current_length()) / 1000);
 
     return TRUE;
 }
