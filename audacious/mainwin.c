@@ -73,6 +73,8 @@
 #include "visualization.h"
 #include "libaudacious/configdb.h"
 
+static GTimeVal cb_time; /* 150ms click delay for tristate --nenolod */
+
 #define ITEM_SEPARATOR {"/-", NULL, NULL, 0, "<Separator>"}
 
 /*
@@ -100,7 +102,8 @@
 #define VOLSET_DISP_TIMES 5
 
 enum {
-    MAINWIN_SEEK_REV,
+    MAINWIN_SEEK_REV = -1,
+    MAINWIN_SEEK_NIL,
     MAINWIN_SEEK_FWD
 };
 
@@ -168,6 +171,7 @@ GtkItemFactory *mainwin_songname_menu, *mainwin_vis_menu;
 GtkItemFactory *mainwin_general_menu, *mainwin_play_menu, *mainwin_add_menu;
 GtkItemFactory *mainwin_view_menu;
 
+gint seek_state = MAINWIN_SEEK_NIL;
 
 GdkGC *mainwin_gc;
 static GdkPixmap *mainwin_bg = NULL;
@@ -393,10 +397,6 @@ GtkItemFactoryEntry mainwin_add_menu_entries[] = {
 
 static const gint mainwin_add_menu_entries_num =
     G_N_ELEMENTS(mainwin_add_menu_entries);
-
-
-/*
-*/
 
 /* View submenu */
 
@@ -1926,27 +1926,49 @@ mainwin_eject_pushed(void)
 void
 mainwin_rev_pushed(void)
 {
-    printf("mainwin rev button pushed\n");
+    g_get_current_time(&cb_time);
+
+    seek_state = MAINWIN_SEEK_REV;
 }
 
 void
 mainwin_rev_release(void)
 {
-    playlist_prev();
-    printf("mainwin rev button released\n");
+    GTimeVal now_time;
+    glong now_dur;
+
+    g_get_current_time(&now_time);
+
+    now_dur = (now_time.tv_usec - cb_time.tv_usec) / 1000;
+
+    if (now_dur <= 150 && now_dur >= -150)
+	playlist_prev();
+
+    seek_state = MAINWIN_SEEK_NIL;
 }
 
 void
 mainwin_fwd_pushed(void)
 {
-    printf("mainwin fwd button pushed\n");
+    g_get_current_time(&cb_time);
+
+    seek_state = MAINWIN_SEEK_FWD;
 }
 
 void
 mainwin_fwd_release(void)
 {
-    playlist_next();
-    printf("mainwin fwd button released\n");
+    GTimeVal now_time;
+    glong now_dur;
+
+    g_get_current_time(&now_time);
+
+    now_dur = (now_time.tv_usec - cb_time.tv_usec) / 1000;
+
+    if (now_dur <= 150 && now_dur >= -150)
+	playlist_next();
+
+    seek_state = MAINWIN_SEEK_NIL;
 }
 
 void
