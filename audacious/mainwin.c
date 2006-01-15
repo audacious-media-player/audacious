@@ -73,7 +73,6 @@
 #include "visualization.h"
 #include "libaudacious/configdb.h"
 
-
 #define ITEM_SEPARATOR {"/-", NULL, NULL, 0, "<Separator>"}
 
 /*
@@ -100,6 +99,10 @@
 
 #define VOLSET_DISP_TIMES 5
 
+enum {
+    MAINWIN_SEEK_REV,
+    MAINWIN_SEEK_FWD
+};
 
 enum {
     MAINWIN_SONGNAME_FILEINFO,
@@ -1921,6 +1924,32 @@ mainwin_eject_pushed(void)
 }
 
 void
+mainwin_rev_pushed(void)
+{
+    printf("mainwin rev button pushed\n");
+}
+
+void
+mainwin_rev_release(void)
+{
+    playlist_prev();
+    printf("mainwin rev button released\n");
+}
+
+void
+mainwin_fwd_pushed(void)
+{
+    printf("mainwin fwd button pushed\n");
+}
+
+void
+mainwin_fwd_release(void)
+{
+    playlist_next();
+    printf("mainwin fwd button released\n");
+}
+
+void
 mainwin_play_pushed(void)
 {
     if (bmp_playback_get_paused()) {
@@ -2882,8 +2911,9 @@ mainwin_create_widgets(void)
     mainwin_close->pb_allow_draw = FALSE;
 
     mainwin_rew =
-        create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 16, 88, 23,
-                       18, 0, 0, 0, 18, playlist_prev, SKIN_CBUTTONS);
+        create_pbutton_ex(&mainwin_wlist, mainwin_bg, mainwin_gc, 16, 88, 23,
+                       18, 0, 0, 0, 18, mainwin_rev_pushed, mainwin_rev_release,
+		       SKIN_CBUTTONS, SKIN_CBUTTONS);
     mainwin_play =
         create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 39, 88, 23,
                        18, 23, 0, 23, 18, mainwin_play_pushed, SKIN_CBUTTONS);
@@ -2893,9 +2923,16 @@ mainwin_create_widgets(void)
     mainwin_stop =
         create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 85, 88, 23,
                        18, 69, 0, 69, 18, mainwin_stop_pushed, SKIN_CBUTTONS);
+#if 0
     mainwin_fwd =
         create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 108, 88, 22,
                        18, 92, 0, 92, 18, playlist_next, SKIN_CBUTTONS);
+#endif
+    mainwin_fwd =
+        create_pbutton_ex(&mainwin_wlist, mainwin_bg, mainwin_gc, 108, 88, 23,
+                       18, 92, 0, 92, 18, mainwin_fwd_pushed, mainwin_fwd_release,
+		       SKIN_CBUTTONS, SKIN_CBUTTONS);
+
     mainwin_eject =
         create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 136, 89, 22,
                        16, 114, 0, 114, 16, mainwin_eject_pushed,

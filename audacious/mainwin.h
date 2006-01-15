@@ -135,6 +135,11 @@ void mainwin_play_pushed(void);
 void mainwin_stop_pushed(void);
 void mainwin_eject_pushed(void);
 
+void mainwin_rev_pushed(void);
+void mainwin_rev_release(void);
+void mainwin_fwd_pushed(void);
+void mainwin_fwd_release(void);
+
 void mainwin_set_back_pixmap(void);
 
 void mainwin_adjust_volume_motion(gint v);
