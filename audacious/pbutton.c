@@ -174,6 +174,7 @@ create_pbutton_ex(GList ** wlist, GdkPixmap * parent, GdkGC * gc,
     b->pb_inside = 0;
     b->pb_pressed = 0;
     widget_list_add(wlist, WIDGET(b));
+
     return b;
 }
 
@@ -183,7 +184,7 @@ create_pbutton(GList ** wlist, GdkPixmap * parent, GdkGC * gc,
                gint px, gint py, void (*cb) (void), SkinPixmapId si)
 {
     return create_pbutton_ex(wlist, parent, gc, x, y, w, h, nx, ny, px, py,
-                             cb, NULL, si, si);
+                             NULL, cb, si, si);
 }
 
 void
