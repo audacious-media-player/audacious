@@ -1087,6 +1087,20 @@ equalizerwin_load_ok(GtkWidget * widget, gpointer data)
 }
 
 static void
+equalizerwin_load_apply(GtkWidget * widget, gpointer data)
+{
+    gchar *text;
+    GtkCList *clist = GTK_CLIST(data);
+
+    if (clist && clist->selection) {
+        gtk_clist_get_text(clist, GPOINTER_TO_INT(clist->selection->data),
+                           0, &text);
+        equalizerwin_load_preset(equalizer_presets, text);
+    }
+}
+
+
+static void
 equalizerwin_load_select(GtkCList * widget, gint row,
                          gint column, GdkEventButton * event, gpointer data)
 {
@@ -1379,11 +1393,13 @@ equalizerwin_create_list_window(GList * preset_list,
                                 GtkSelectionMode sel_mode,
                                 GtkWidget ** entry,
                                 const gchar * btn2_stock_name,
+				const gchar * btn3_stock_name,
                                 const gchar * btn1_stock_name,
                                 GCallback btn2_func,
+				GCallback btn3_func,
                                 GCallback select_row_func)
 {
-    GtkWidget *vbox, *scrolled_window, *bbox, *btn1, *btn2, *clist;
+    GtkWidget *vbox, *scrolled_window, *bbox, *btn1, *btn2, *btn3, *clist;
     gchar *preset_text[1];
     GList *node;
 
@@ -1440,11 +1456,16 @@ equalizerwin_create_list_window(GList * preset_list,
                              GTK_OBJECT(*window));
     gtk_box_pack_start(GTK_BOX(bbox), btn1, TRUE, TRUE, 0);
 
+    if (btn3_stock_name) {
+        btn3 = gtk_button_new_from_stock(btn3_stock_name);
+        g_signal_connect(btn3, "clicked", G_CALLBACK(btn3_func), clist);
+        gtk_box_pack_start(GTK_BOX(bbox), btn3, TRUE, TRUE, 0);
+    }
+
     btn2 = gtk_button_new_from_stock(btn2_stock_name);
     g_signal_connect(btn2, "clicked", G_CALLBACK(btn2_func), clist);
     GTK_WIDGET_SET_FLAGS(btn2, GTK_CAN_DEFAULT);
-
-
+        
     gtk_box_pack_start(GTK_BOX(bbox), btn2, TRUE, TRUE, 0);
 
     gtk_widget_grab_default(btn2);
@@ -1467,9 +1488,11 @@ equalizerwin_presets_menu_cb(gpointer cb_data, guint action, GtkWidget * w)
                                             _("Load preset"),
                                             &equalizerwin_load_window,
                                             GTK_SELECTION_SINGLE, NULL,
-                                            GTK_STOCK_OK, GTK_STOCK_CANCEL,
+                                            GTK_STOCK_OK, GTK_STOCK_APPLY, GTK_STOCK_CANCEL,
                                             G_CALLBACK
                                             (equalizerwin_load_ok),
+					    G_CALLBACK
+					    (equalizerwin_load_apply),
                                             G_CALLBACK
                                             (equalizerwin_load_select));
         else
@@ -1481,9 +1504,10 @@ equalizerwin_presets_menu_cb(gpointer cb_data, guint action, GtkWidget * w)
                                             _("Load auto-preset"),
                                             &equalizerwin_load_auto_window,
                                             GTK_SELECTION_SINGLE, NULL,
-                                            GTK_STOCK_OK, GTK_STOCK_CANCEL,
+                                            GTK_STOCK_OK, NULL, GTK_STOCK_CANCEL,
                                             G_CALLBACK
                                             (equalizerwin_load_auto_ok),
+					    NULL,
                                             G_CALLBACK
                                             (equalizerwin_load_auto_select));
         else
@@ -1529,9 +1553,10 @@ equalizerwin_presets_menu_cb(gpointer cb_data, guint action, GtkWidget * w)
                                             &equalizerwin_save_window,
                                             GTK_SELECTION_SINGLE,
                                             &equalizerwin_save_entry,
-                                            GTK_STOCK_OK, GTK_STOCK_CANCEL,
+                                            GTK_STOCK_OK, NULL, GTK_STOCK_CANCEL, 
                                             G_CALLBACK
                                             (equalizerwin_save_ok),
+					    NULL,
                                             G_CALLBACK
                                             (equalizerwin_save_select));
         else
@@ -1549,9 +1574,11 @@ equalizerwin_presets_menu_cb(gpointer cb_data, guint action, GtkWidget * w)
                                                 GTK_SELECTION_SINGLE,
                                                 &equalizerwin_save_auto_entry,
                                                 GTK_STOCK_OK,
+						NULL,
                                                 GTK_STOCK_CANCEL,
                                                 G_CALLBACK
                                                 (equalizerwin_save_auto_ok),
+						NULL,
                                                 G_CALLBACK
                                                 (equalizerwin_save_auto_select));
             else
@@ -1609,9 +1636,11 @@ equalizerwin_presets_menu_cb(gpointer cb_data, guint action, GtkWidget * w)
                                             &equalizerwin_delete_window,
                                             GTK_SELECTION_EXTENDED, NULL,
                                             GTK_STOCK_DELETE,
+					    NULL,
                                             GTK_STOCK_CLOSE,
                                             G_CALLBACK
                                             (equalizerwin_delete_delete),
+					    NULL,
                                             NULL);
         else
             gtk_window_present(GTK_WINDOW(equalizerwin_delete_window));
@@ -1625,9 +1654,11 @@ equalizerwin_presets_menu_cb(gpointer cb_data, guint action, GtkWidget * w)
                                             &equalizerwin_delete_auto_window,
                                             GTK_SELECTION_EXTENDED, NULL,
                                             GTK_STOCK_DELETE,
+					    NULL,
                                             GTK_STOCK_CLOSE,
                                             G_CALLBACK
                                             (equalizerwin_delete_auto_delete),
+					    NULL,
                                             NULL);
         else
             gtk_window_present(GTK_WINDOW(equalizerwin_delete_auto_window));
