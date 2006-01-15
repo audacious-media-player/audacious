@@ -20,6 +20,8 @@
  *   $Id: iir_fpu.c,v 1.3 2005/11/13 20:02:58 lisanet Exp $
  */
 
+#include <strings.h>
+#include <stdlib.h>
 #include <glib.h>
 #include "iir.h"
 #include "iir_fpu.h"
