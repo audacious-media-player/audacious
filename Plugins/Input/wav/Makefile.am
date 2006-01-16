@@ -8,7 +8,7 @@ libwav_la_SOURCES =	\
 	wav-sndfile.c	\
 	wav-sndfile.h
 
-libwav_la_LDFLAGS = $(PLUGIN_LDFLAGS) -lsndfile
+libwav_la_LDFLAGS = $(PLUGIN_LDFLAGS) -L/usr/local/lib -lsndfile
 
 else
 
