@@ -273,11 +273,7 @@ skin_pixmap_locate(const gchar * dirname, gchar ** basenames)
 
     for (i = 0; basenames[i]; i++)
 	if (!(filename = find_file_recursively(dirname, basenames[i]))) 
-	{
-	    g_warning(G_STRLOC ": couldn't locate %s in directory %s",
-                  basenames[i], dirname);
             g_free(filename);
-        }
         else
             return filename;
 
