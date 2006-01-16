@@ -43,6 +43,10 @@
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 
+#define EXTENSION_TARGETS 7
+
+gchar *ext_targets[EXTENSION_TARGETS] = { "bmp", "xpm", "png", "svg", 
+	"gif", "jpg", "jpeg" };
 
 struct _SkinPixmapIdMapping {
     SkinPixmapId id;
@@ -252,24 +256,33 @@ skin_set_default_vis_color(Skin * skin)
            sizeof(skin_default_viscolor));
 }
 
+/*
+ * I have rewritten this to take an array of possible targets,
+ * once we find a matching target we now return, instead of loop
+ * recursively. This allows for us to support many possible format
+ * targets for our skinning engine than just the original winamp 
+ * formats.
+ *
+ *    -- nenolod, 16 January 2006
+ */
 gchar *
-skin_pixmap_locate(const gchar * dirname, const gchar * basename,
-                   const gchar * alt_basename)
+skin_pixmap_locate(const gchar * dirname, gchar ** basenames)
 {
     gchar *filename;
+    gint i;
 
-    if (!(filename = find_file_recursively(dirname, basename))) {
-        g_warning(G_STRLOC ": couldn't locate %s in directory %s",
-                  basename, dirname);
-        g_free(filename);
-
-        if (alt_basename) {
-            g_message(G_STRLOC ": trying %s instead", alt_basename);
-            return skin_pixmap_locate(dirname, alt_basename, NULL);
+    for (i = 0; basenames[i]; i++)
+	if (!(filename = find_file_recursively(dirname, basenames[i]))) 
+	{
+	    g_warning(G_STRLOC ": couldn't locate %s in directory %s",
+                  basenames[i], dirname);
+            g_free(filename);
         }
-    }
+        else
+            return filename;
 
-    return filename;
+    /* can't find any targets -- sorry */
+    return NULL;
 }
 
 /* FIXME: this function is temporary. It will be removed when the skinning system
@@ -305,12 +318,13 @@ static gboolean
 skin_load_pixmap_id(Skin * skin, SkinPixmapId id, const gchar * path_p)
 {
     const gchar *path;
-    gchar *basename = NULL, *alt_basename = NULL;
     gchar *filename;
     gint width, height;
     const SkinPixmapIdMapping *pixmap_id_mapping;
     GdkPixmap *gpm;
     SkinPixmap *pm = NULL;
+    gchar *basenames[EXTENSION_TARGETS * 2 + 1]; /* alternate basenames */
+    gint i, y;
 
     g_return_val_if_fail(skin != NULL, FALSE);
     g_return_val_if_fail(id < SKIN_PIXMAP_COUNT, FALSE);
@@ -318,14 +332,26 @@ skin_load_pixmap_id(Skin * skin, SkinPixmapId id, const gchar * path_p)
     pixmap_id_mapping = skin_pixmap_id_lookup(id);
     g_return_val_if_fail(pixmap_id_mapping != NULL, FALSE);
 
-    basename = g_strdup_printf("%s.bmp", pixmap_id_mapping->name);
-    if (pixmap_id_mapping->alt_name)
-        alt_basename = g_strdup_printf("%s.bmp", pixmap_id_mapping->alt_name);
+    memset(&basenames, 0, sizeof(basenames));
+
+    for (i = 0, y = 0; ext_targets[i]; i++, y++)
+    {
+        basenames[y] = g_strdup_printf("%s.%s", pixmap_id_mapping->name,
+			ext_targets[i]);
+
+        if (pixmap_id_mapping->alt_name)
+            basenames[++y] = g_strdup_printf("%s.%s", 
+			pixmap_id_mapping->alt_name, ext_targets[i]);
+    }
 
     path = path_p ? path_p : skin->path;
-    filename = skin_pixmap_locate(path, basename, alt_basename);
-    g_free(basename);
-    g_free(alt_basename);
+    filename = skin_pixmap_locate(path, basenames);
+
+    for (i = 0; basenames[i] != NULL; i++)
+    {
+         g_free(basenames[i]);
+         basenames[i] = NULL;
+    }
 
     if (!(gpm = pixmap_new_from_file(filename))) {
         g_warning("loading of %s failed", filename);
