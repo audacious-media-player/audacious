@@ -1,19 +1,19 @@
 skindir = $(pkgdatadir)/Skins/Default
 skin_DATA = \
-	balance.bmp		\
-	cbuttons.bmp		\
-	eq_ex.bmp		\
-	eqmain.bmp		\
-	main.bmp		\
-	monoster.bmp		\
-	nums_ex.bmp		\
-	playpaus.bmp		\
-	pledit.bmp		\
-	posbar.bmp		\
-	shufrep.bmp		\
-	text.bmp		\
-	titlebar.bmp		\
-	volume.bmp		\
+	balance.png		\
+	cbuttons.png		\
+	eq_ex.png		\
+	eqmain.png		\
+	main.png		\
+	monoster.png		\
+	nums_ex.png		\
+	playpaus.png		\
+	pledit.png		\
+	posbar.png		\
+	shufrep.png		\
+	text.png		\
+	titlebar.png		\
+	volume.png		\
 	pledit.txt		\
 	viscolor.txt
 
