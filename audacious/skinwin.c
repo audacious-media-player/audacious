@@ -319,14 +319,22 @@ skin_view_on_cursor_changed(GtkTreeView * treeview,
     GtkTreeIter iter;
 
     GList *node;
-    gchar *name;
+    gchar *sel, name[512], desc[512], *tmp;
     gchar *comp = NULL;
 
     selection = gtk_tree_view_get_selection(treeview);
     if (!gtk_tree_selection_get_selected(selection, &model, &iter))
         return;
 
-    gtk_tree_model_get(model, &iter, SKIN_VIEW_COL_NAME, &name, -1);
+    gtk_tree_model_get(model, &iter, SKIN_VIEW_COL_NAME, &sel, -1);
+
+    /* XXX: This is icky hack because we do not store the skin name
+     * in the skinlist. My attempts at doing that cause a blank skin 
+     * window. Must be doing something wrong.
+     */
+    sscanf(sel, "<big><b>%s</b></big>\n<i>%s</i>", name, desc);
+    tmp = strchr(name, '<');
+    *tmp = '\0';
 
     /* FIXME: store name in skinlist */
     for (node = skinlist; node; node = g_list_next(node)) {
@@ -335,7 +343,7 @@ skin_view_on_cursor_changed(GtkTreeView * treeview,
             break;
     }
 
-    g_free(name);
+    g_free(sel);
 
     bmp_active_skin_load(comp);
 }
