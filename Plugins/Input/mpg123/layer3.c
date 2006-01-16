@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <glib.h>
+#include "libaudcore/playback.h"
 #include "audacious/output.h"
 #include "mpg123.h"
 #include "huffman.h"
@@ -1864,7 +1865,7 @@ mpg123_do_layer3(struct frame *fr)
             }
         }
 
-        if (mpg123_info->output_audio && mpg123_info->jump_to_time == -1) {
+        if (!bmp_playback_get_paused() && mpg123_info->output_audio && mpg123_info->jump_to_time == -1) {
             produce_audio(mpg123_ip.output->written_time(),
                           mpg123_cfg.resolution ==
                           16 ? FMT_S16_NE : FMT_U8,
