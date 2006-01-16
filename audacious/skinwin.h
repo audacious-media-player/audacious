@@ -28,6 +28,7 @@
 #define SKIN_NODE(x)  ((SkinNode *)(x))
 struct _SkinNode {
     gchar *name;
+    gchar *desc;
     gchar *path;
     GTime *time;
 };

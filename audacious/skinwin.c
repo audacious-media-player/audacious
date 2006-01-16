@@ -158,10 +158,12 @@ skinlist_add(const gchar * filename)
 
     if (file_is_archive(filename)) {
         node->name = archive_basename(basename);
+	node->desc = "Archived Winamp 2.x skin";
         g_free(basename);
     }
     else {
         node->name = basename;
+	node->desc = "Unarchived Winamp 2.x skin";
     }
 
     skinlist = g_list_prepend(skinlist, node);
@@ -279,7 +281,8 @@ skin_view_update(GtkTreeView * treeview)
         if (!thumbnail)
             continue;
 
-        name = SKIN_NODE(entry->data)->name;
+        name = g_strdup_printf("<big><b>%s</b></big>\n<i>%s</i>",
+		SKIN_NODE(entry->data)->name, SKIN_NODE(entry->data)->desc);
 
         gtk_list_store_append(store, &iter);
         gtk_list_store_set(store, &iter,
@@ -368,7 +371,7 @@ skin_view_realize(GtkTreeView * treeview)
 
     renderer = gtk_cell_renderer_text_new();
     gtk_tree_view_column_pack_start(column, renderer, TRUE);
-    gtk_tree_view_column_set_attributes(column, renderer, "text",
+    gtk_tree_view_column_set_attributes(column, renderer, "markup",
                                         SKIN_VIEW_COL_NAME, NULL);
 
     selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
