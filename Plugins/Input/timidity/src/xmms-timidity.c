@@ -265,7 +265,7 @@ static void *xmmstimid_play_loop(void *arg) {
 				buffer, buffer_size);
 
 		if (bytes_read != 0)
-			produce_audio(xmmstimid_ip.output->output_time(),
+			produce_audio(mid_song_get_time(xmmstimid_song),
 					fmt, xmmstimid_opts.channels,
 					bytes_read, buffer, &xmmstimid_going);
 		else xmmstimid_eof = TRUE;
