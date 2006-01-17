@@ -3336,11 +3336,9 @@ mainwin_idle_func(gpointer data)
     else
         count--;
 
-    draw_playlist_window(mainwin_force_redraw);
-    draw_equalizer_window(mainwin_force_redraw);
-
-    /* what is this for? see below. --nenolod */
     mainwin_force_redraw = FALSE;
+    draw_playlist_window(FALSE);
+    draw_equalizer_window(FALSE);
 
     if (mainwin_title_text) {
         G_LOCK(mainwin_title);
@@ -3351,13 +3349,6 @@ mainwin_idle_func(gpointer data)
 
         mainwin_set_info_text();
         playlistwin_update_list();
-
-	/* set mainwin_force_redraw so that the windows are redrawn
-	 * when the title_text has changed. (new song), this should
-	 * enforce updates of the playlist window. --nenolod
-	 */
-	mainwin_force_redraw = TRUE;
-        draw_playlist_window(mainwin_force_redraw);
     }
 
     GDK_THREADS_LEAVE();
