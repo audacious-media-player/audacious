@@ -1928,8 +1928,6 @@ mainwin_rev_pushed(void)
 {
     g_get_current_time(&cb_time);
 
-    bmp_playback_pause();
-
     seek_state = MAINWIN_SEEK_REV;
 }
 
@@ -1951,16 +1949,12 @@ mainwin_rev_release(void)
 	playlist_prev();
 
     seek_state = MAINWIN_SEEK_NIL;
-
-    bmp_playback_pause();
 }
 
 void
 mainwin_fwd_pushed(void)
 {
     g_get_current_time(&cb_time);
-
-    bmp_playback_pause();
 
     seek_state = MAINWIN_SEEK_FWD;
 }
@@ -1983,8 +1977,6 @@ mainwin_fwd_release(void)
 	playlist_next();
 
     seek_state = MAINWIN_SEEK_NIL;
-
-    bmp_playback_pause();
 }
 
 void
