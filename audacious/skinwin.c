@@ -46,6 +46,7 @@
 
 enum SkinViewCols {
     SKIN_VIEW_COL_PREVIEW,
+    SKIN_VIEW_COL_FORMATTEDNAME,
     SKIN_VIEW_COL_NAME,
     SKIN_VIEW_N_COLS
 };
@@ -265,6 +266,7 @@ skin_view_update(GtkTreeView * treeview)
     GtkTreePath *path;
 
     GdkPixbuf *thumbnail;
+    gchar *formattedname;
     gchar *name;
     GList *entry;
 
@@ -282,19 +284,20 @@ skin_view_update(GtkTreeView * treeview)
         if (!thumbnail)
             continue;
 
-        name = g_strdup_printf("<big><b>%s</b></big>\n<i>%s</i>",
+        formattedname = g_strdup_printf("<big><b>%s</b></big>\n<i>%s</i>",
 		SKIN_NODE(entry->data)->name, SKIN_NODE(entry->data)->desc);
+        name = SKIN_NODE(entry->data)->name;
 
         gtk_list_store_append(store, &iter);
         gtk_list_store_set(store, &iter,
                            SKIN_VIEW_COL_PREVIEW, thumbnail,
+                           SKIN_VIEW_COL_FORMATTEDNAME, formattedname,
                            SKIN_VIEW_COL_NAME, name, -1);
-	g_object_set_data(G_OBJECT(thumbnail), "skinpath", 
-		SKIN_NODE(entry->data)->name);
         g_object_unref(thumbnail);
+        g_free(formattedname);
 
         if (g_strstr_len(bmp_active_skin->path,
-                         strlen(bmp_active_skin->path), name)) {
+                         strlen(bmp_active_skin->path), name) ) {
 	    iter_current_skin = iter;
 	}
 
@@ -320,29 +323,24 @@ skin_view_on_cursor_changed(GtkTreeView * treeview,
     GtkTreeModel *model;
     GtkTreeSelection *selection;
     GtkTreeIter iter;
-    GdkPixbuf *thumbnail;
 
     GList *node;
-    gchar *sel, *name;
+    gchar *name;
     gchar *comp = NULL;
 
     selection = gtk_tree_view_get_selection(treeview);
     if (!gtk_tree_selection_get_selected(selection, &model, &iter))
         return;
 
-    gtk_tree_model_get(model, &iter, SKIN_VIEW_COL_PREVIEW, &thumbnail, -1);
-    gtk_tree_model_get(model, &iter, SKIN_VIEW_COL_NAME, &sel, -1);
+    gtk_tree_model_get(model, &iter, SKIN_VIEW_COL_NAME, &name, -1);
 
-    name = g_object_get_data(G_OBJECT(thumbnail), "skinpath");
-
-    /* FIXME: store name in skinlist */
     for (node = skinlist; node; node = g_list_next(node)) {
         comp = SKIN_NODE(node->data)->path;
         if (g_strrstr(comp, name))
             break;
     }
 
-    g_free(sel);
+    g_free(name);
 
     bmp_active_skin_load(comp);
 }
@@ -362,7 +360,7 @@ skin_view_realize(GtkTreeView * treeview)
     gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeview), FALSE);
 
     store = gtk_list_store_new(SKIN_VIEW_N_COLS, GDK_TYPE_PIXBUF,
-                               G_TYPE_STRING);
+                               G_TYPE_STRING , G_TYPE_STRING);
     gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(store));
 
     column = gtk_tree_view_column_new();
@@ -379,7 +377,7 @@ skin_view_realize(GtkTreeView * treeview)
     renderer = gtk_cell_renderer_text_new();
     gtk_tree_view_column_pack_start(column, renderer, TRUE);
     gtk_tree_view_column_set_attributes(column, renderer, "markup",
-                                        SKIN_VIEW_COL_NAME, NULL);
+                                        SKIN_VIEW_COL_FORMATTEDNAME, NULL);
 
     selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
     gtk_tree_selection_set_mode(selection, GTK_SELECTION_BROWSE);
