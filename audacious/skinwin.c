@@ -26,6 +26,7 @@
 #include "skinwin.h"
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>
@@ -158,12 +159,12 @@ skinlist_add(const gchar * filename)
 
     if (file_is_archive(filename)) {
         node->name = archive_basename(basename);
-	node->desc = "Archived Winamp 2.x skin";
+	node->desc = _("Archived Winamp 2.x skin");
         g_free(basename);
     }
     else {
         node->name = basename;
-	node->desc = "Unarchived Winamp 2.x skin";
+	node->desc = _("Unarchived Winamp 2.x skin");
     }
 
     skinlist = g_list_prepend(skinlist, node);
