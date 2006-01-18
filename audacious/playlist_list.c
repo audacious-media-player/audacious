@@ -678,17 +678,14 @@ playlist_list_draw(Widget * w)
                                                      SKIN_PLEDIT_CURRENT));
 
                 gdk_draw_line(obj, gc, pl->pl_widget.x,
-/*	pl->pl_widget.x + lpadding + (width_approx_letters / 4), */
-                              pl->pl_widget.y +
-                              ((pos - pl->pl_first) * pl->pl_fheight),
+			      pl->pl_widget.x + lpadding + 
+			      (width_approx_letters / 4),
                               pl->pl_widget.width + pl->pl_widget.x - 1,
                               pl->pl_widget.y +
                               ((pos - pl->pl_first) * pl->pl_fheight));
 
             }
         }
-
-
     }
 
     gdk_gc_set_foreground(gc,
