@@ -78,7 +78,6 @@ static void wma_do_pause(short p);
 static int wma_get_time(void);
 static void wma_get_song_info(char *filename, char **title, int *length);
 static void wma_file_info_box(char *filename); 
-static void wma_set_eq(int q_on, float q_preamp, float *q_bands);
 static char *wsong_title;
 static int wsong_time;
 
@@ -218,13 +217,6 @@ static gchar *extname(const char *filename)
     gchar *ext = strrchr(filename, '.');
     if(ext != NULL) ++ext;
     return ext;
-}
-
-static char *slashkill(gchar *fullname)
-{
-    gchar *splitname = strrchr(fullname, '/');
-    if(splitname != NULL) ++splitname;
-    return splitname;
 }
 
 static char* w_getstr(char* str)

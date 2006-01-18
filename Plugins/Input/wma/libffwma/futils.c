@@ -149,7 +149,7 @@ int av_new_packet(AVPacket *pkt, int size)
     void *data = malloc(size + FF_INPUT_BUFFER_PADDING_SIZE);
     if (!data)
         return AVERROR_NOMEM;
-    memset((int *)data + size, 0, FF_INPUT_BUFFER_PADDING_SIZE);
+    memset(data + size, 0, FF_INPUT_BUFFER_PADDING_SIZE);
 
     av_init_packet(pkt);
     pkt->data = data; 
