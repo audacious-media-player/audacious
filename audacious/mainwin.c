@@ -172,6 +172,7 @@ GtkItemFactory *mainwin_general_menu, *mainwin_play_menu, *mainwin_add_menu;
 GtkItemFactory *mainwin_view_menu;
 
 gint seek_state = MAINWIN_SEEK_NIL;
+gint seek_initial_pos = 0;
 
 GdkGC *mainwin_gc;
 static GdkPixmap *mainwin_bg = NULL;
@@ -435,6 +436,9 @@ static gint mainwin_idle_func(gpointer data);
 
 static void set_timer_mode_menu_cb(TimerMode mode);
 static void set_timer_mode(TimerMode mode);
+
+void mainwin_position_motion_cb(gint pos);
+void mainwin_position_release_cb(gint pos);
 
 
 /* FIXME: placed here for now */
@@ -1928,6 +1932,7 @@ mainwin_rev_pushed(void)
 {
     g_get_current_time(&cb_time);
 
+    seek_initial_pos = hslider_get_position(mainwin_position);
     seek_state = MAINWIN_SEEK_REV;
 }
 
@@ -1936,17 +1941,25 @@ mainwin_rev_release(void)
 {
     GTimeVal now_time;
     GTimeVal delta_time;
-    glong now_dur;
+    gulong now_dur;
 
     g_get_current_time(&now_time);
 
     delta_time.tv_usec = now_time.tv_usec - cb_time.tv_usec;
     delta_time.tv_sec = now_time.tv_sec - cb_time.tv_sec;
 
-    now_dur = (delta_time.tv_sec * 1000) + (glong) (delta_time.tv_usec / 1000);
+    now_dur = abs((delta_time.tv_sec * 1000) + (glong) (delta_time.tv_usec / 1000));
 
-    if (now_dur <= 150 && now_dur >= -150)
-	playlist_prev();
+    if ( now_dur <= 150 )
+    {
+      /* interpret as 'skip to previous song' */
+      playlist_prev();
+    }
+    else
+    {
+      /* interpret as 'seek' */
+      mainwin_position_release_cb( hslider_get_position(mainwin_position) );
+    }
 
     seek_state = MAINWIN_SEEK_NIL;
 }
@@ -1956,6 +1969,7 @@ mainwin_fwd_pushed(void)
 {
     g_get_current_time(&cb_time);
 
+    seek_initial_pos = hslider_get_position(mainwin_position);
     seek_state = MAINWIN_SEEK_FWD;
 }
 
@@ -1964,17 +1978,25 @@ mainwin_fwd_release(void)
 {
     GTimeVal now_time;
     GTimeVal delta_time;
-    glong now_dur;
+    gulong now_dur;
 
     g_get_current_time(&now_time);
 
     delta_time.tv_usec = now_time.tv_usec - cb_time.tv_usec;
     delta_time.tv_sec = now_time.tv_sec - cb_time.tv_sec;
 
-    now_dur = (delta_time.tv_sec * 1000) + (glong) (delta_time.tv_usec / 1000);
+    now_dur = abs((delta_time.tv_sec * 1000) + (glong) (delta_time.tv_usec / 1000));
 
-    if (now_dur <= 150 && now_dur >= -150)
-	playlist_next();
+    if ( now_dur <= 150 )
+    {
+      /* interpret as 'skip to previous song' */
+      playlist_next();
+    }
+    else
+    {
+      /* interpret as 'seek' */
+      mainwin_position_release_cb( hslider_get_position(mainwin_position) );
+    }
 
     seek_state = MAINWIN_SEEK_NIL;
 }
@@ -3285,7 +3307,8 @@ idle_func_update_song_info(gint time)
             hslider_set_position(mainwin_position, 219);
             hslider_set_position(mainwin_sposition, 13);
         }
-        else {
+        /* update the slider position ONLY if there is not a seek in progress */
+        else if (seek_state == MAINWIN_SEEK_NIL)  {
             hslider_set_position(mainwin_position, (time * 219) / length);
             hslider_set_position(mainwin_sposition,
                                  ((time * 12) / length) + 1);
@@ -3351,14 +3374,48 @@ mainwin_idle_func(gpointer data)
         playlistwin_update_list();
     }
 
+    /* tristate buttons seek */
+    if ( seek_state != MAINWIN_SEEK_NIL )
+    {
+      GTimeVal now_time;
+      GTimeVal delta_time;
+      glong now_dur;
+      g_get_current_time(&now_time);
+
+      delta_time.tv_usec = now_time.tv_usec - cb_time.tv_usec;
+      delta_time.tv_sec = now_time.tv_sec - cb_time.tv_sec;
+
+      now_dur = abs((delta_time.tv_sec * 1000) + (glong) (delta_time.tv_usec / 1000));
+
+      if ( now_dur > 150 )
+      {
+        gint np;
+        if (seek_state == MAINWIN_SEEK_REV)
+          np = seek_initial_pos - abs((int)(now_dur/100)); /* seek back */
+        else
+          np = seek_initial_pos + abs((int)(now_dur/100)); /* seek forward */
+
+        /* boundaries check */
+        if (np < 0 )
+          np = 0;
+        else if ( np > 219 )
+          np = 219;
+
+        hslider_set_position( mainwin_position , np );
+        mainwin_position_motion_cb( np );
+      }
+    }
+
     GDK_THREADS_LEAVE();
 
+    /*
     if (seek_state == MAINWIN_SEEK_REV)
         bmp_playback_seek(CLAMP(bmp_playback_get_time() - 1000, 0,
                                 playlist_get_current_length()) / 1000);
     else if (seek_state == MAINWIN_SEEK_FWD)
         bmp_playback_seek(CLAMP(bmp_playback_get_time() + 1000, 0,
                                 playlist_get_current_length()) / 1000);
+    */
 
     return TRUE;
 }
