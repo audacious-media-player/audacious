@@ -68,10 +68,6 @@ static int is_our_file(gchar *filename)
 			vfs_fclose(file);
 			return PLAY_TYPE_GYM;
 		}
-		vfs_fclose(file);
-	}
-	if (file = vfs_fopen(filename, "rb")) {
-        	vfs_fread(magic, 1, 3, file);
 		if (!strncmp(magic, "GBS", 3)) {
 			vfs_fclose(file);
 			return PLAY_TYPE_GBS;
@@ -148,7 +144,7 @@ static gchar *get_title_gym(gchar *filename)
 		tinput = bmp_title_input_new();
 
 		tinput->performer = g_strdup(header.game);
-		tinput->album_name = g_strdup(header.game);
+		tinput->album_name = g_strdup(header.copyright);
 		tinput->track_name = g_strdup(header.song);		
 
 		tinput->file_name = g_path_get_basename(filename);
