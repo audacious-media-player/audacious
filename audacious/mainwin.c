@@ -2959,7 +2959,7 @@ mainwin_create_widgets(void)
                        18, 92, 0, 92, 18, playlist_next, SKIN_CBUTTONS);
 #endif
     mainwin_fwd =
-        create_pbutton_ex(&mainwin_wlist, mainwin_bg, mainwin_gc, 108, 88, 23,
+        create_pbutton_ex(&mainwin_wlist, mainwin_bg, mainwin_gc, 108, 88, 22,
                        18, 92, 0, 92, 18, mainwin_fwd_pushed, mainwin_fwd_release,
 		       SKIN_CBUTTONS, SKIN_CBUTTONS);
 
