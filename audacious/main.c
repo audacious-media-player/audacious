@@ -73,7 +73,6 @@
 #include "skinwin.h"
 #include "util.h"
 #include "visualization.h"
-#include "xml_document.h"
 
 #include "pixmaps.h"
 #include "images/audacious_player.xpm"
