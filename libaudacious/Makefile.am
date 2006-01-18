@@ -42,10 +42,11 @@ libaudacious_la_SOURCES = \
 	formatter.c formatter.h \
 	titlestring.c titlestring.h \
 	xentry.c xentry.h \
-	xconvert.c xconvert.h
+	xconvert.c xconvert.h \
+	xml_document.c xml_document.h
 
 beepinclude_HEADERS = \
 	vfs.h rcfile.h configdb.h \
 	configfile.h \
 	beepctrl.h dirbrowser.h util.h \
-	formatter.h titlestring.h
+	formatter.h titlestring.h xml_document.h

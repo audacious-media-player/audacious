@@ -55,7 +55,6 @@ audacious_SOURCES = \
 	eq_slider.c eq_slider.h \
 	main.c main.h \
 	logger.c logger.h \
-	xml_document.c xml_document.h \
 	mainwin.c mainwin.h \
 	skinwin.c skinwin.h \
 	prefswin.c prefswin.h \

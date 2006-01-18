@@ -255,6 +255,7 @@ bmp_xml_doc_build_start_element(GMarkupParseContext * context,
                       bmp_xml_element_node_new(element_name));
 
     while (*attrib_names) {
+	g_print("%s = %s\n", *attrib_names, *attrib_values);
         g_node_append(document->current_node,
                       bmp_xml_attrib_node_new(*attrib_names++,
                                               *attrib_values++));
