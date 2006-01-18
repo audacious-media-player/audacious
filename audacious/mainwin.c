@@ -1948,7 +1948,7 @@ mainwin_rev_release(void)
     delta_time.tv_usec = now_time.tv_usec - cb_time.tv_usec;
     delta_time.tv_sec = now_time.tv_sec - cb_time.tv_sec;
 
-    now_dur = abs((delta_time.tv_sec * 1000) + (glong) (delta_time.tv_usec / 1000));
+    now_dur = labs((delta_time.tv_sec * 1000) + (glong) (delta_time.tv_usec / 1000));
 
     if ( now_dur <= 150 )
     {
@@ -1985,7 +1985,7 @@ mainwin_fwd_release(void)
     delta_time.tv_usec = now_time.tv_usec - cb_time.tv_usec;
     delta_time.tv_sec = now_time.tv_sec - cb_time.tv_sec;
 
-    now_dur = abs((delta_time.tv_sec * 1000) + (glong) (delta_time.tv_usec / 1000));
+    now_dur = labs((delta_time.tv_sec * 1000) + (glong) (delta_time.tv_usec / 1000));
 
     if ( now_dur <= 150 )
     {
@@ -3379,21 +3379,21 @@ mainwin_idle_func(gpointer data)
     {
       GTimeVal now_time;
       GTimeVal delta_time;
-      glong now_dur;
+      gulong now_dur;
       g_get_current_time(&now_time);
 
       delta_time.tv_usec = now_time.tv_usec - cb_time.tv_usec;
       delta_time.tv_sec = now_time.tv_sec - cb_time.tv_sec;
 
-      now_dur = abs((delta_time.tv_sec * 1000) + (glong) (delta_time.tv_usec / 1000));
+      now_dur = labs((delta_time.tv_sec * 1000) + (glong) (delta_time.tv_usec / 1000));
 
       if ( now_dur > 150 )
       {
         gint np;
         if (seek_state == MAINWIN_SEEK_REV)
-          np = seek_initial_pos - abs((int)(now_dur/100)); /* seek back */
+          np = seek_initial_pos - labs((gulong)(now_dur/100)); /* seek back */
         else
-          np = seek_initial_pos + abs((int)(now_dur/100)); /* seek forward */
+          np = seek_initial_pos + labs((gulong)(now_dur/100)); /* seek forward */
 
         /* boundaries check */
         if (np < 0 )
