@@ -36,7 +36,6 @@
 
 #include "avcodec.h"
 #include "avformat.h"
-#include "iir.h"
 
 #define ABOUT_TXT "Adapted for use in audacious by Tony Vroon (chainsaw@gentoo.org) from\n \
 the BEEP-WMA plugin which is Copyright (C) 2004,2005 Mokrushin I.V. aka McMCC (mcmcc@mail.ru)\n \
@@ -99,7 +98,7 @@ InputPlugin wma_ip =
     wma_stop,           // Stop
     wma_do_pause,       // Pause
     wma_seek,           // Seek
-    wma_set_eq,         // Set the equalizer, most plugins won't be able to do this
+    NULL,               // Set the equalizer, most plugins won't be able to do this
     wma_get_time,       // Get the time, usually returns the output plugins output time
     NULL,           	// Get volume
     NULL,           	// Set volume
@@ -181,7 +180,6 @@ static void wma_init(void)
     avcodec_init();
     avcodec_register_all();
     av_register_all();
-    init_iir();
 }
 
 static int wma_is_our_file(char *filename)
@@ -213,27 +211,6 @@ static int wma_get_time(void)
     wma_ip.output->buffer_free();
     if(wma_decode) return wma_ip.output->output_time();
     return -1;
-}
-
-static void wma_set_eq(int q_on, float q_preamp, float *q_bands)
-{
-    int chn;
-    int index;
-    float value;
-
-    wma_eq_on = q_on;
-    if(wma_eq_on)
-    {
-	q_preamp = q_preamp/1.6;
-        for(chn = 0; chn < c->channels; chn++)
-            preamp[chn] = 1.0 + 0.0932471 * q_preamp + 0.00279033 * q_preamp * q_preamp;
-        for(index = 0; index < 10; index++)
-        {
-            value = q_bands[index]/1.2;
-            for(chn = 0; chn < c->channels; chn++)
-                gain[index][chn] = 0.03 * value + 0.000999999 * value * value;
-        }
-    }
 }
 
 static gchar *extname(const char *filename)
@@ -322,10 +299,7 @@ static void wma_playbuff(int out_size)
     fifo_write(&f, wma_outbuf, out_size, &f.wptr);
     while(!fifo_read(&f, wma_s_outbuf, wma_st_buff, &f.rptr) && wma_decode)
     {
-        if(wma_eq_on)
-            sst_buff = iir((gpointer)&wma_s_outbuf, wma_st_buff);
-        else
-	    sst_buff = wma_st_buff;
+        sst_buff = wma_st_buff;
 	if(wma_pause) memset(wma_s_outbuf, 0, sst_buff);	
     	while(wma_ip.output->buffer_free() < wma_st_buff) xmms_usleep(20000);
 	produce_audio(wma_ip.output->written_time(), FMT_S16_NE,
