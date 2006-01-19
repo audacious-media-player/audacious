@@ -46,7 +46,7 @@
 #include "controlsocket.h"
 #include "pluginenum.h"
 
-#include "about.h"
+#include "credits.h"
 #include "dnd.h"
 #include "dock.h"
 #include "equalizer.h"

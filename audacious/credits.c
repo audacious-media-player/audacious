@@ -22,7 +22,7 @@
 #  include "config.h"
 #endif
 
-#include "about.h"
+#include "credits.h"
 
 #include <glib.h>
 #include <glib/gi18n.h>

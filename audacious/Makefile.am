@@ -62,7 +62,7 @@ audacious_SOURCES = \
 	equalizer.c equalizer.h \
 	glade.c glade.h \
 	hints.c hints.h \
-	about.c about.h \
+	credits.c credits.h \
 	plugin.h \
 	softvolume.c softvolume.h \
 	getopt.c getopt1.c getopt.h \
