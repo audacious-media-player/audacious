@@ -117,7 +117,33 @@ static gchar *get_title_spc(gchar *filename)
 static gchar *get_title_nsf(gchar *filename)
 {
 	gchar *title;
-	title = g_path_get_basename(filename);
+	Emu_Std_Reader reader;
+	Nsf_Emu::header_t header;
+
+	reader.open(filename);
+	reader.read(&header, sizeof(header));
+
+	if (header.game)
+	{
+		TitleInput *tinput;
+
+		tinput = bmp_title_input_new();
+
+		tinput->performer = g_strdup(header.author);
+		tinput->album_name = g_strdup(header.copyright);
+		tinput->track_name = g_strdup(header.game);		
+
+		tinput->file_name = g_path_get_basename(filename);
+		tinput->file_path = g_path_get_dirname(filename);
+
+		title = xmms_get_titlestring(xmms_get_gentitle_format(),
+				tinput);
+
+		g_free(tinput);
+	}
+	else
+		title = g_path_get_basename(filename);
+
 	return title;
 }
 
