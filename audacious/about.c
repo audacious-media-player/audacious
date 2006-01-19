@@ -35,6 +35,11 @@
 
 static GtkWidget *about_window = NULL;
 static GdkPixbuf *about_pixbuf = NULL;
+static GdkPixmap *mask_pixmap_window1 = NULL,
+        *mask_pixmap_window2 = NULL;
+static GdkBitmap *mask_bitmap_window1 = NULL,
+        *mask_bitmap_window2 = NULL;
+    
 
 enum {
     COL_LEFT,
@@ -177,6 +182,17 @@ static const gchar *translators[] = {
 };
 
 static gboolean
+on_about_window_expose(GtkWidget *widget, GdkEventExpose *expose, gpointer data)
+{
+    g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
+
+    gdk_window_set_back_pixmap(GDK_WINDOW(widget->window), mask_pixmap_window2, 0);
+    gdk_window_clear(GDK_WINDOW(widget->window));
+
+    return FALSE;
+}
+
+static gboolean
 on_about_window_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
 	g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
@@ -259,15 +275,13 @@ generate_credit_list(const gchar * text[], gboolean sec_space)
 void
 show_about_window(void)
 {
-    GdkPixmap *mask_pixmap_window1 = NULL,
-        *mask_pixmap_window2 = NULL;
-    GdkBitmap *mask_bitmap_window1 = NULL,
-        *mask_bitmap_window2 = NULL;
-    
     gchar *filename = DATA_DIR G_DIR_SEPARATOR_S "images" G_DIR_SEPARATOR_S "about-logo.png";
 
     if (about_window != NULL)
+    {
+        gtk_window_present(GTK_WINDOW(about_window));
         return;
+    }
 
     about_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_type_hint(GTK_WINDOW(about_window),
@@ -276,7 +290,7 @@ show_about_window(void)
     g_signal_connect(about_window, "destroy",
                      G_CALLBACK(gtk_widget_destroyed), &about_window);
 
-//    gtk_widget_realize(about_window);
+    gtk_widget_realize(about_window);
 
     about_pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
 
@@ -284,6 +298,7 @@ show_about_window(void)
                    gdk_pixbuf_get_width (about_pixbuf),
                    gdk_pixbuf_get_height (about_pixbuf));
 
+    gtk_widget_set_app_paintable (about_window, TRUE);
     gtk_window_set_title(GTK_WINDOW(about_window), _("About Audacious"));
     gtk_window_set_position(GTK_WINDOW(about_window), GTK_WIN_POS_CENTER);
     gtk_window_set_resizable(GTK_WINDOW(about_window), FALSE);
@@ -299,6 +314,9 @@ show_about_window(void)
                      128);
 
     gtk_widget_add_events(about_window, GDK_ALL_EVENTS_MASK);
+
+    g_signal_connect(about_window, "expose-event",
+	G_CALLBACK(on_about_window_expose), &about_window);
 
     g_signal_connect(about_window, "key-press-event",
 	G_CALLBACK(on_about_window_key_press), &about_window);
@@ -374,10 +392,7 @@ show_about_window(void)
     gtk_widget_grab_default(close_btn);
 #endif
 
-    gtk_window_present(GTK_WINDOW(about_window));
-
     gtk_widget_shape_combine_mask(GTK_WIDGET(about_window), mask_bitmap_window2, 0, 0);
 
-    gdk_draw_pixbuf(GDK_DRAWABLE(about_window->window), NULL, about_pixbuf, 0, 0, 0, 0, -1, -1,
-	GDK_RGB_DITHER_NONE, 0, 0);
+    gtk_window_present(GTK_WINDOW(about_window));
 }
