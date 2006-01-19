@@ -124,7 +124,33 @@ static gchar *get_title_nsf(gchar *filename)
 static gchar *get_title_gbs(gchar *filename)
 {
 	gchar *title;
-	title = g_path_get_basename(filename);
+	Emu_Std_Reader reader;
+	Gbs_Emu::header_t header;
+
+	reader.open(filename);
+	reader.read(&header, sizeof(header));
+
+	if (header.game)
+	{
+		TitleInput *tinput;
+
+		tinput = bmp_title_input_new();
+
+		tinput->performer = g_strdup(header.author);
+		tinput->album_name = g_strdup(header.copyright);
+		tinput->track_name = g_strdup(header.game);		
+
+		tinput->file_name = g_path_get_basename(filename);
+		tinput->file_path = g_path_get_dirname(filename);
+
+		title = xmms_get_titlestring(xmms_get_gentitle_format(),
+				tinput);
+
+		g_free(tinput);
+	}
+	else
+		title = g_path_get_basename(filename);
+
 	return title;
 }
 
@@ -393,7 +419,10 @@ static void play_file_vgm(char *filename)
 
 	name = get_title(filename);
 
-	if (audcfg.loop_length)
+	if (vgm->track_length() > 0)
+		console_ip.set_info(name, vgm->track_length() * 1000, 
+			vgm->voice_count() * 1000, samplerate, 2);
+	else if (audcfg.loop_length)
 		console_ip.set_info(name, audcfg.loop_length * 1000, 
 			vgm->voice_count() * 1000, samplerate, 2);
 	else
@@ -626,6 +655,9 @@ static void *play_loop_vgm(gpointer arg)
 
 		my_vgm->play(1024, buf);
 
+		if ((console_ip.output->output_time() / 1000) > 
+			vgm->track_length() && vgm->track_length() != 0)
+			break;
 		if ((console_ip.output->output_time() / 1000) > 
 			audcfg.loop_length && audcfg.loop_length != 0)
 			break;
