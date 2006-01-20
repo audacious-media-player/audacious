@@ -27,6 +27,8 @@ struct AudaciousConsoleConfig audcfg = { 180, FALSE, 32000 };
 
 #include <cstring>
 #include <stdio.h>
+#include <cstdlib>
+#include <cctype>
 
 static Spc_Emu *spc = NULL;
 static Nsf_Emu *nsf = NULL;
@@ -81,10 +83,21 @@ static int is_our_file(gchar *filename)
 	return 0;
 }
 
+static gint strtoi(gchar *buf,size_t len) {
+	guint num = 0;
+	while (len && isdigit(*buf)) {
+		num *= 10;
+		num += *buf - '0';
+		buf++;
+		len--;
+	}
+	return num;
+}
+
 static gchar *get_title_spc(gchar *filename)
 {
 	gchar *title;
-	Emu_Std_Reader reader;
+	Spc_Reader reader;
 	Spc_Emu::header_t header;
 
 	reader.open(filename);
@@ -257,7 +270,7 @@ static void get_song_info(char *filename, char **title, int *length)
 static void play_file_spc(char *filename)
 {
 	gchar *name;
-	Emu_Std_Reader reader;
+	Spc_Reader reader;
 	Spc_Emu::header_t header;
 	gint samplerate;
 
@@ -278,7 +291,12 @@ static void play_file_spc(char *filename)
 
 	name = get_title(filename);
 
-	if (audcfg.loop_length)
+	spc->length = strtoi(header.len_secs,3);
+
+	if (spc->length > 0)
+		console_ip.set_info(name, spc->length * 1000,
+			spc->voice_count() * 1000, samplerate, 2);
+	else if (audcfg.loop_length)
 		console_ip.set_info(name, audcfg.loop_length * 1000, 
 			spc->voice_count() * 1000, samplerate, 2);
 	else
@@ -550,6 +568,9 @@ static void *play_loop_spc(gpointer arg)
 
 		my_spc->play(1024, buf);
 
+		if ((console_ip.output->output_time() / 1000) >
+			spc->length && spc->length != 0)
+			break;
 		if ((console_ip.output->output_time() / 1000) > 
 			audcfg.loop_length && audcfg.loop_length != 0)
 			break;
