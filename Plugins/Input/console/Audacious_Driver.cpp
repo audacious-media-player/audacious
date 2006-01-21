@@ -107,6 +107,10 @@ static gchar *get_title_spc(gchar *filename)
 		TitleInput *tinput;
 
 		tinput = bmp_title_input_new();
+		
+		header.author[31] = '\0';
+		header.game[31] = '\0';
+		header.song[31] = '\0';
 
 		tinput->performer = g_strdup(header.author);
 		tinput->album_name = g_strdup(header.game);
@@ -140,6 +144,10 @@ static gchar *get_title_nsf(gchar *filename)
 		TitleInput *tinput;
 
 		tinput = bmp_title_input_new();
+		
+		header.author[31] = '\0';
+		header.copyright[31] = '\0';
+		header.game[31] = '\0';
 
 		tinput->performer = g_strdup(header.author);
 		tinput->album_name = g_strdup(header.copyright);
@@ -173,6 +181,10 @@ static gchar *get_title_gbs(gchar *filename)
 		TitleInput *tinput;
 
 		tinput = bmp_title_input_new();
+		
+		header.author[31] = '\0';
+		header.copyright[31] = '\0';
+		header.game[31] = '\0';
 
 		tinput->performer = g_strdup(header.author);
 		tinput->album_name = g_strdup(header.copyright);
@@ -206,6 +218,10 @@ static gchar *get_title_gym(gchar *filename)
 		TitleInput *tinput;
 
 		tinput = bmp_title_input_new();
+		
+		header.game[31] = '\0';
+		header.copyright[31] = '\0';
+		header.song[31] = '\0';
 
 		tinput->performer = g_strdup(header.game);
 		tinput->album_name = g_strdup(header.copyright);
