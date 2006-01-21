@@ -26,3 +26,5 @@ libtimidity_la_SOURCES = \
 	timidity.c \
 	timidity.h \
 	timidity_internal.h
+
+INCLUDES = $(GTK_CFLAGS) -I$(top_builddir)/intl -I$(top_srcdir)

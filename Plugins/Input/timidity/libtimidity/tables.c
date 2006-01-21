@@ -23,7 +23,7 @@
 #  include <config.h>
 #endif
 
-#include <stdio.h>
+#include "libaudacious/vfs.h"
 
 #include "timidity.h"
 #include "tables.h"

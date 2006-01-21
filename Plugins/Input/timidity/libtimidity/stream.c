@@ -17,14 +17,14 @@ struct _MidIStream
 
 typedef struct StdIOContext
 {
-  FILE *fp;
+  VFSFile *fp;
   int autoclose;
 } StdIOContext;
 
 size_t
 stdio_istream_read (void *ctx, void *ptr, size_t size, size_t nmemb)
 {
-  return fread (ptr, size, nmemb, ((StdIOContext *) ctx)->fp);
+  return vfs_fread (ptr, size, nmemb, ((StdIOContext *) ctx)->fp);
 }
 
 int
@@ -32,7 +32,7 @@ stdio_istream_close (void *ctx)
 {
   int ret = 0;
   if (((StdIOContext *) ctx)->autoclose)
-    ret = fclose (((StdIOContext *) ctx)->fp);
+    ret = vfs_fclose (((StdIOContext *) ctx)->fp);
   free (ctx);
   return ret;
 }
@@ -73,7 +73,7 @@ mem_istream_close (void *ctx)
 }
 
 MidIStream *
-mid_istream_open_fp (FILE * fp, int autoclose)
+mid_istream_open_fp (VFSFile * fp, int autoclose)
 {
   StdIOContext *ctx;
   MidIStream *stream;
@@ -101,9 +101,9 @@ mid_istream_open_fp (FILE * fp, int autoclose)
 MidIStream *
 mid_istream_open_file (const char *file)
 {
-  FILE *fp;
+  VFSFile *fp;
 
-  fp = fopen (file, "rb");
+  fp = vfs_fopen (file, "rb");
   if (fp == NULL)
     return NULL;
 

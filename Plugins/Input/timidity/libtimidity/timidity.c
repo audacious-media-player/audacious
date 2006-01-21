@@ -23,7 +23,7 @@
 #  include <config.h>
 #endif
 
-#include <stdio.h>
+#include "libaudacious/vfs.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -47,14 +47,14 @@ static char def_instr_name[256] = "";
 
 /* Quick-and-dirty fgets() replacement. */
 
-static char *__fgets(char *s, int size, FILE *fp)
+static char *__fgets(char *s, int size, VFSFile *fp)
 {
     int num_read = 0;
     int newline = 0;
 
     while (num_read < size && !newline)
     {
-	if (fread(&s[num_read], 1, 1, fp) != 1)
+	if (vfs_fread(&s[num_read], 1, 1, fp) != 1)
 	    break;
 
 	/* Unlike fgets(), don't store newline. Under Windows/DOS we'll
@@ -77,7 +77,7 @@ static char *__fgets(char *s, int size, FILE *fp)
 
 static int read_config_file(char *name)
 {
-  FILE *fp;
+  VFSFile *fp;
   char tmp[1024], *w[MAXWORDS], *cp;
   MidToneBank *bank=0;
   int i, j, k, line=0, words;
@@ -390,7 +390,7 @@ static int read_config_file(char *name)
       }
     }
   }
-  fclose(fp);
+  vfs_fclose(fp);
   return 0;
 }
 

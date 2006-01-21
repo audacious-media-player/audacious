@@ -25,7 +25,7 @@
 #  include <config.h>
 #endif
 
-#include <stdio.h>
+#include "libaudacious/vfs.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -41,9 +41,9 @@
 static PathList *pathlist = NULL; /* This is a linked list */
 
 /* This is meant to find and open files for reading */
-FILE *open_file(char *name)
+VFSFile *open_file(char *name)
 {
-  FILE *fp;
+  VFSFile *fp;
 
   if (!name || !(*name))
     {
@@ -54,7 +54,7 @@ FILE *open_file(char *name)
   /* First try the given name */
 
   DEBUG_MSG("Trying to open %s\n", name);
-  if ((fp = fopen(name, OPEN_MODE)))
+  if ((fp = vfs_fopen(name, OPEN_MODE)))
     return fp;
 
   if (name[0] != PATH_SEP)
@@ -78,7 +78,7 @@ FILE *open_file(char *name)
 	  }
 	strcat(current_filename, name);
 	DEBUG_MSG("Trying to open %s\n", current_filename);
-	if ((fp = fopen(current_filename, OPEN_MODE)))
+	if ((fp = vfs_fopen(current_filename, OPEN_MODE)))
 	  return fp;
 	plp = plp->next;
       }

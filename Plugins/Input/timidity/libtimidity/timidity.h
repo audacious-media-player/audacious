@@ -23,7 +23,7 @@
 #ifndef TIMIDITY_H
 #define TIMIDITY_H
 
-#include <stdio.h>
+#include "libaudacious/vfs.h"
 #include <stdlib.h>
 
 #ifdef __cplusplus
@@ -113,7 +113,7 @@ extern "C"
 
 /* Create input stream from a file pointer
  */
-  extern MidIStream *mid_istream_open_fp (FILE * fp, int autoclose);
+  extern MidIStream *mid_istream_open_fp (VFSFile *fp, int autoclose);
 
 /* Create input stream from memory
  */

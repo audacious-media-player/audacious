@@ -26,7 +26,7 @@ typedef struct {
   void *next;
 } PathList;
 
-extern FILE *open_file(char *name);
+extern VFSFile *open_file(char *name);
 extern void add_to_pathlist(char *s);
 extern void *safe_malloc(size_t count);
 extern void free_pathlist(void);

@@ -25,7 +25,7 @@
 #  include <config.h>
 #endif
 
-#include <stdio.h>
+#include "libaudacious/vfs.h"
 #include <stdlib.h>
 #include <string.h>
 
