@@ -124,7 +124,6 @@ bscope_read_config(void)
 }
 
 
-#ifndef I386_ASSEM
 void
 bscope_blur_8(guchar * ptr, gint w, gint h, gint bpl)
 {
@@ -142,9 +141,6 @@ bscope_blur_8(guchar * ptr, gint w, gint h, gint bpl)
 
 
 }
-#else
-extern void bscope_blur_8(guchar * ptr, gint w, gint h, gint bpl);
-#endif
 
 void
 generate_cmap(void)

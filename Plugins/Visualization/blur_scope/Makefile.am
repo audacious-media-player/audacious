@@ -7,13 +7,7 @@ libbscope_la_LIBADD = $(GTK_LIBS)
 
 COMMON_SRC = blur_scope.c blur_scope.h config.c
 
-if USE_X86ASM
-
-EXTRA_SRC = blur_8.s
-
-endif
-
-EXTRA_DIST = blur_8.s xmms_logo.xpm bscope_logo.xpm
+EXTRA_DIST = xmms_logo.xpm bscope_logo.xpm
 
 libbscope_la_SOURCES =  $(COMMON_SRC) $(EXTRA_SRC)
 
