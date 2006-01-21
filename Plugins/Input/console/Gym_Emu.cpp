@@ -439,3 +439,21 @@ void Gym_Emu::mix_samples( sample_t* out )
 	sn.end( blip_buf );
 }
 
+
+Gym_Reader::Gym_Reader() : file( NULL ) {
+}
+
+Gym_Reader::~Gym_Reader() {
+	close();
+}
+
+blargg_err_t Gym_Reader::read_head(Gym_Emu::header_t *header) {
+	vfs_fread(&header->tag,      1,  4,file);
+	vfs_fread(&header->song,     1, 32,file);
+	vfs_fread(&header->game,     1, 32,file);
+	vfs_fread(&header->emulator, 1, 32,file);
+	vfs_fread(&header->dumper,   1, 32,file);
+	vfs_fread(&header->comment,  1,256,file);
+	vfs_fread(&header->loop,     1,  4,file);
+	vfs_fread(&header->packed,   1,  4,file);
+}

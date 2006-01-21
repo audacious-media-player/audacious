@@ -350,3 +350,25 @@ blip_time_t Gbs_Emu::run( int msec, bool* added_stereo )
 	return cpu_time;
 }
 
+Gbs_Reader::Gbs_Reader() : file( NULL ) {
+}
+
+Gbs_Reader::~Gbs_Reader() {
+	close();
+}
+
+blargg_err_t Gbs_Reader::read_head(Gbs_Emu::header_t *header) {
+	vfs_fread(&header->tag,        1, 3,file);
+	vfs_fread(&header->vers,       1, 1,file);
+	vfs_fread(&header->track_count,1, 1,file);
+	vfs_fread(&header->first_track,1, 1,file);
+	vfs_fread(&header->load_addr,  1, 2,file);
+	vfs_fread(&header->init_addr,  1, 2,file);
+	vfs_fread(&header->play_addr,  1, 2,file);
+	vfs_fread(&header->stack_ptr,  1, 2,file);
+	vfs_fread(&header->timer_modulo,1, 1,file);
+	vfs_fread(&header->timer_mode, 1, 2,file);
+	vfs_fread(&header->game,       1,32,file);
+	vfs_fread(&header->author,     1,32,file);
+	vfs_fread(&header->copyright,  1,32,file);
+}

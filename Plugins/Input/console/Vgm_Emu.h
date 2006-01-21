@@ -71,5 +71,15 @@ private:
 	void unload();
 };
 
+class Vgm_Reader : public Std_File_Reader {
+	VFSFile* file;
+public:
+	Vgm_Reader();
+	~Vgm_Reader();
+	
+	// Custom reader for SPC headers [tempfix]
+	blargg_err_t read_head( Vgm_Emu::header_t* );
+};
+
 #endif
 

@@ -4,7 +4,7 @@
 #include "Nsf_Emu.h"
 
 #include <string.h>
-#include <stdio.h>
+#include "libaudacious/vfs.h"
 
 #include "blargg_endian.h"
 
@@ -471,3 +471,28 @@ blip_time_t Nsf_Emu::run( int msec, bool* )
 	return duration;
 }
 
+Nsf_Reader::Nsf_Reader() : file( NULL ) {
+}
+
+Nsf_Reader::~Nsf_Reader() {
+	close();
+}
+
+blargg_err_t Nsf_Reader::read_head(Nsf_Emu::header_t *header) {
+	vfs_fread(&header->tag,         1, 5,file);
+	vfs_fread(&header->vers,        1, 1,file);
+	vfs_fread(&header->track_count, 1, 1,file);
+	vfs_fread(&header->first_track, 1, 1,file);
+	vfs_fread(&header->load_addr,   1, 2,file);
+	vfs_fread(&header->init_addr,   1, 2,file);
+	vfs_fread(&header->play_addr,   1, 2,file);
+	vfs_fread(&header->game,        1,32,file);
+	vfs_fread(&header->author,      1,32,file);
+	vfs_fread(&header->copyright,   1,32,file);
+	vfs_fread(&header->ntsc_speed,  1, 2,file);
+	vfs_fread(&header->banks,       1, 3,file);
+	vfs_fread(&header->pal_speed,   1, 2,file);
+	vfs_fread(&header->speed_flags, 1, 1,file);
+	vfs_fread(&header->chip_flags,  1, 1,file);
+	vfs_fread(&header->unused,      1, 2,file);
+}

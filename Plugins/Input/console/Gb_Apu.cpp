@@ -3,7 +3,7 @@
 
 #include "Gb_Apu.h"
 
-#include <stdio.h>
+#include "libaudacious/vfs.h"
 #include <string.h>
 
 /* Copyright (C) 2003-2005 Shay Green. This module is free software; you

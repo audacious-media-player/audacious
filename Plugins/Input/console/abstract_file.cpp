@@ -137,7 +137,7 @@ Std_File_Reader::~Std_File_Reader() {
 
 error_t Std_File_Reader::open( const char* path )
 {
-	file = fopen( path, "rb" );
+	file = vfs_fopen( path, "rb" );
 	if ( !file )
 		RAISE_ERROR( "Couldn't open file" );
 	return NULL;
@@ -146,23 +146,23 @@ error_t Std_File_Reader::open( const char* path )
 long Std_File_Reader::size() const
 {
 	long pos = tell();
-	fseek( file, 0, SEEK_END );
+	vfs_fseek( file, 0, SEEK_END );
 	long result = tell();
-	fseek( file, pos, SEEK_SET );
+	vfs_fseek( file, pos, SEEK_SET );
 	return result;
 }
 
 long Std_File_Reader::read_avail( void* p, long s ) {
-	return fread( p, 1, s, file );
+	return vfs_fread( p, 1, s, file );
 }
 
 long Std_File_Reader::tell() const {
-	return ftell( file );
+	return vfs_ftell( file );
 }
 
 error_t Std_File_Reader::seek( long n )
 {
-	if ( fseek( file, n, SEEK_SET ) != 0 )
+	if ( vfs_fseek( file, n, SEEK_SET ) != 0 )
 		RAISE_ERROR( "Error seeking in file" );
 	return NULL;
 }
@@ -170,7 +170,7 @@ error_t Std_File_Reader::seek( long n )
 void Std_File_Reader::close()
 {
 	if ( file ) {
-		fclose( file );
+		vfs_fclose( file );
 		file = NULL;
 	}
 }
@@ -186,7 +186,7 @@ Std_File_Writer::~Std_File_Writer() {
 
 error_t Std_File_Writer::open( const char* path )
 {
-	file = fopen( path, "wb" );
+	file = vfs_fopen( path, "wb" );
 	if ( !file )
 		RAISE_ERROR( "Couldn't open file for writing" );
 		
@@ -198,7 +198,7 @@ error_t Std_File_Writer::open( const char* path )
 
 error_t Std_File_Writer::write( const void* p, long s )
 {
-	long result = fwrite( p, 1, s, file );
+	long result = vfs_fwrite( p, 1, s, file );
 	if ( result != s )
 		RAISE_ERROR( "Couldn't write to file" );
 	return NULL;
@@ -207,7 +207,7 @@ error_t Std_File_Writer::write( const void* p, long s )
 void Std_File_Writer::close()
 {
 	if ( file ) {
-		fclose( file );
+		vfs_fclose( file );
 		file = NULL;
 	}
 }

@@ -284,3 +284,23 @@ blip_time_t Vgm_Emu::run( int msec, bool* added_stereo )
 	return end_time;
 }
 
+Vgm_Reader::Vgm_Reader() : file( NULL ) {
+}
+
+Vgm_Reader::~Vgm_Reader() {
+	close();
+}
+
+blargg_err_t Vgm_Reader::read_head(Vgm_Emu::header_t *header) {
+	vfs_fread(&header->tag,         1, 4,file);
+	vfs_fread(&header->data_size,   1, 4,file);
+	vfs_fread(&header->vers,        1, 4,file);
+	vfs_fread(&header->psg_rate,    1, 4,file);
+	vfs_fread(&header->fm_rate,     1, 4,file);
+	vfs_fread(&header->g3d_offset,  1, 4,file);
+	vfs_fread(&header->sample_count,1, 4,file);
+	vfs_fread(&header->loop_offset, 1, 4,file);
+	vfs_fread(&header->loop_duration,1,4,file);
+	vfs_fread(&header->frame_rate,  1, 4,file);
+	vfs_fread(&header->unused,      1,0x18,file);
+}

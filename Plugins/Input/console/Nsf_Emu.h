@@ -123,5 +123,14 @@ private:
 	friend class Nsf_Remote_Emu; // hack
 };
 
+class Nsf_Reader : public Std_File_Reader {
+	VFSFile* file;
+public:
+	Nsf_Reader();
+	~Nsf_Reader();
+	
+	// Custom reader for SPC headers [tempfix]
+	blargg_err_t read_head( Nsf_Emu::header_t* );
+};
 #endif
 

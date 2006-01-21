@@ -97,5 +97,15 @@ private:
 	void unload();
 };
 
+class Gym_Reader : public Std_File_Reader {
+	VFSFile* file;
+public:
+	Gym_Reader();
+	~Gym_Reader();
+	
+	// Custom reader for SPC headers [tempfix]
+	blargg_err_t read_head( Gym_Emu::header_t* );
+};
+
 #endif
 

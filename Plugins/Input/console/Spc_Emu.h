@@ -10,9 +10,6 @@
 #include "Music_Emu.h"
 #include "Snes_Spc.h"
 
-#include "blargg_common.h"
-#include "abstract_file.h"
-
 class Spc_Emu : public Music_Emu {
 public:
 	Spc_Emu();
@@ -80,24 +77,14 @@ inline void Spc_Emu::mute_voices( int m ) {
 	apu.mute_voices( m );
 }
 
-class Spc_Reader : public File_Reader {
-	FILE* file;
+class Spc_Reader : public Std_File_Reader {
+	VFSFile* file;
 public:
 	Spc_Reader();
 	~Spc_Reader();
 	
-	error_t open( const char* );
-	
 	// Custom reader for SPC headers [tempfix]
 	blargg_err_t read_head( Spc_Emu::header_t* );
-	
-	long size() const;
-	long read_avail( void*, long );
-	
-	long tell() const;
-	error_t seek( long );
-	
-	void close();
 };
 
 #endif

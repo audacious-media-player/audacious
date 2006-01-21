@@ -4,7 +4,7 @@
 #include "ym2612.h"
 
 #include <string.h>
-#include <stdio.h>
+#include "libaudacious/vfs.h"
 #include <math.h>
 
 /* Copyright (C) 2002 Stéphane Dallongeville (gens@consolemul.com) */

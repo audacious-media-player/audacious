@@ -6,7 +6,7 @@
 #ifndef ABSTRACT_FILE_H
 #define ABSTRACT_FILE_H
 
-#include <stdio.h>
+#include "libaudacious/vfs.h"
 
 // to do: built-in buffering?
 
@@ -78,16 +78,12 @@ public:
 };
 
 class Std_File_Reader : public File_Reader {
-	FILE* file;
-	//FILE* owned_file;
+	VFSFile* file;
 public:
 	Std_File_Reader();
 	~Std_File_Reader();
 	
 	error_t open( const char* );
-	
-	// Forward read requests to file. Caller must close file later.
-	//void forward( FILE* );
 	
 	long size() const;
 	long read_avail( void*, long );
@@ -118,7 +114,7 @@ public:
 };
 
 class Std_File_Writer : public Data_Writer {
-	FILE* file;
+	VFSFile* file;
 public:
 	Std_File_Writer();
 	~Std_File_Writer();

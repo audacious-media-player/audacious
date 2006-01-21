@@ -91,5 +91,15 @@ private:
 	static void write_ram( Gbs_Emu*, gb_addr_t, int );
 };
 
+class Gbs_Reader : public Std_File_Reader {
+	VFSFile* file;
+public:
+	Gbs_Reader();
+	~Gbs_Reader();
+
+	// Custom reader for Gbs headers [tempfix]
+	blargg_err_t read_head( Gbs_Emu::header_t* );
+};
+
 #endif
 

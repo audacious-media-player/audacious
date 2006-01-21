@@ -3,7 +3,7 @@
 
 #include "Fir_Resampler.h"
 
-#include <stdio.h>
+#include "libaudacious/vfs.h"
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>

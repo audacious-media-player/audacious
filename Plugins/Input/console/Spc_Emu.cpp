@@ -19,12 +19,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
 #include BLARGG_SOURCE_BEGIN
 
-#ifndef RAISE_ERROR
-	#define RAISE_ERROR( str ) return str
-#endif
-
-typedef Spc_Reader::error_t error_t;
-
 Spc_Emu::Spc_Emu()
 {
 	resample_ratio = 1.0;
@@ -125,66 +119,26 @@ Spc_Reader::~Spc_Reader() {
 	close();
 }
 
-error_t Spc_Reader::open( const char* path )
-{
-	file = fopen( path, "rb" );
-	if ( !file )
-		RAISE_ERROR( "Couldn't open file" );
-	return NULL;
-}
-
 blargg_err_t Spc_Reader::read_head(Spc_Emu::header_t *header) {
-	fread(&header->tag,     1,35,file);
-	fread(&header->format,  1, 1,file);
-	fread(&header->version, 1, 1,file);
-	fread(&header->pc,      1, 2,file);
-	fread(&header->a,       1, 1,file);
-	fread(&header->x,       1, 1,file);
-	fread(&header->y,       1, 1,file);
-	fread(&header->psw,     1, 1,file);
-	fread(&header->sp,      1, 1,file);
-	fread(&header->unused,  1, 2,file);
-	fread(&header->song,    1,32,file);
-	fread(&header->game,    1,32,file);
-	fread(&header->dumper,  1,16,file);
-	fread(&header->comment, 1,32,file);
-	fread(&header->date,    1,11,file);
-	fread(&header->len_secs,1, 3,file);
-	fread(&header->fade_msec,1,5,file);
-	fread(&header->author,  1,32,file);
-	fread(&header->mute_mask,1,1,file);
-	fread(&header->emulator,1, 1,file);
-	fread(&header->unused2, 1,45,file);
-}
-
-long Spc_Reader::size() const
-{
-	long pos = tell();
-	fseek( file, 0, SEEK_END );
-	long result = tell();
-	fseek( file, pos, SEEK_SET );
-	return result;
-}
-
-long Spc_Reader::read_avail( void* p, long s ) {
-	return fread( p, 1, s, file );
-}
-
-long Spc_Reader::tell() const {
-	return ftell( file );
-}
-
-error_t Spc_Reader::seek( long n )
-{
-	if ( fseek( file, n, SEEK_SET ) != 0 )
-		RAISE_ERROR( "Error seeking in file" );
-	return NULL;
-}
-
-void Spc_Reader::close()
-{
-	if ( file ) {
-		fclose( file );
-		file = NULL;
-	}
+	vfs_fread(&header->tag,     1,35,file);
+	vfs_fread(&header->format,  1, 1,file);
+	vfs_fread(&header->version, 1, 1,file);
+	vfs_fread(&header->pc,      1, 2,file);
+	vfs_fread(&header->a,       1, 1,file);
+	vfs_fread(&header->x,       1, 1,file);
+	vfs_fread(&header->y,       1, 1,file);
+	vfs_fread(&header->psw,     1, 1,file);
+	vfs_fread(&header->sp,      1, 1,file);
+	vfs_fread(&header->unused,  1, 2,file);
+	vfs_fread(&header->song,    1,32,file);
+	vfs_fread(&header->game,    1,32,file);
+	vfs_fread(&header->dumper,  1,16,file);
+	vfs_fread(&header->comment, 1,32,file);
+	vfs_fread(&header->date,    1,11,file);
+	vfs_fread(&header->len_secs,1, 3,file);
+	vfs_fread(&header->fade_msec,1,5,file);
+	vfs_fread(&header->author,  1,32,file);
+	vfs_fread(&header->mute_mask,1,1,file);
+	vfs_fread(&header->emulator,1, 1,file);
+	vfs_fread(&header->unused2, 1,45,file);
 }

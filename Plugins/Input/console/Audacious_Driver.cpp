@@ -26,7 +26,6 @@ extern "C" {
 struct AudaciousConsoleConfig audcfg = { 180, FALSE, 32000 };
 
 #include <cstring>
-#include <stdio.h>
 #include <cstdlib>
 #include <cctype>
 
@@ -130,7 +129,7 @@ static gchar *get_title_spc(gchar *filename)
 static gchar *get_title_nsf(gchar *filename)
 {
 	gchar *title;
-	Emu_Std_Reader reader;
+	Nsf_Reader reader;
 	Nsf_Emu::header_t header;
 
 	reader.open(filename);
@@ -163,7 +162,7 @@ static gchar *get_title_nsf(gchar *filename)
 static gchar *get_title_gbs(gchar *filename)
 {
 	gchar *title;
-	Emu_Std_Reader reader;
+	Gbs_Reader reader;
 	Gbs_Emu::header_t header;
 
 	reader.open(filename);
@@ -196,7 +195,7 @@ static gchar *get_title_gbs(gchar *filename)
 static gchar *get_title_gym(gchar *filename)
 {
 	gchar *title;
-	Emu_Std_Reader reader;
+	Gym_Reader reader;
 	Gym_Emu::header_t header;
 
 	reader.open(filename);
@@ -316,7 +315,7 @@ static void play_file_spc(char *filename)
 static void play_file_nsf(char *filename)
 {
 	gchar *name;
-	Emu_Std_Reader reader;
+	Nsf_Reader reader;
 	Nsf_Emu::header_t header;
 	gint samplerate;
 
@@ -357,7 +356,7 @@ static void play_file_nsf(char *filename)
 static void play_file_gbs(char *filename)
 {
 	gchar *name;
-	Emu_Std_Reader reader;
+	Gbs_Reader reader;
 	Gbs_Emu::header_t header;
 	gint samplerate;
 
@@ -398,7 +397,7 @@ static void play_file_gbs(char *filename)
 static void play_file_gym(char *filename)
 {
 	gchar *name;
-	Emu_Std_Reader reader;
+	Gym_Reader reader;
 	Gym_Emu::header_t header;
 	gint samplerate;
 
@@ -442,7 +441,7 @@ static void play_file_gym(char *filename)
 static void play_file_vgm(char *filename)
 {
 	gchar *name;
-	Emu_Std_Reader reader;
+	Vgm_Reader reader;
 	Vgm_Emu::header_t header;
 	gint samplerate;
 
