@@ -158,15 +158,6 @@ if test "$use_xmms_eq" = "yes"; then
    AC_DEFINE(XMMS_EQ, , [Define if building with old XMMS equalization code.])
 fi
 
-
-dnl Check for X
-dnl FIXME: remove this dependency
-
-AC_PATH_XTRA
-if test "$no_x" = "yes" ; then
-    AC_MSG_ERROR([Cannot find X11 headers/libraries])
-fi
-
 dnl Check for GTK/GLib/GThread/Pango
 
 PKG_CHECK_MODULES(GTK, [glib-2.0 >= 2.4.0 gtk+-2.0 >= 2.4.0 gthread-2.0 pango],
