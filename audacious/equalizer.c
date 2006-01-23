@@ -421,8 +421,6 @@ static gboolean
 equalizerwin_motion(GtkWidget * widget,
                     GdkEventMotion * event, gpointer callback_data)
 {
-    XEvent ev;
-
     if (dock_is_moving(GTK_WINDOW(equalizerwin))) {
         dock_move_motion(GTK_WINDOW(equalizerwin), event);
     }
@@ -431,7 +429,6 @@ equalizerwin_motion(GtkWidget * widget,
         draw_main_window(FALSE);
     }
     gdk_flush();
-    while (XCheckMaskEvent(GDK_DISPLAY(), ButtonMotionMask, &ev));
 
     return FALSE;
 }

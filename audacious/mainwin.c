@@ -955,15 +955,26 @@ mainwin_motion(GtkWidget * widget,
                GdkEventMotion * event,
                gpointer callback_data)
 {
-    XEvent ev;
-    gint i = 0;
+    int x, y;
+    GdkModifierType state;
 
-    XSync(GDK_DISPLAY(), False);
+    if (event->is_hint != FALSE)
+    {
+        gdk_window_get_pointer(GDK_WINDOW(mainwin->window),
+		&x, &y, &state);
 
-    while (XCheckTypedEvent(GDK_DISPLAY(), MotionNotify, &ev)) {
-        event->x = ev.xmotion.x;
-        event->y = ev.xmotion.y;
-        i++;
+	/* If it's a hint, we had to query X, so override the 
+         * information we we're given... it's probably useless... --nenolod
+	 */
+        event->x = x;
+        event->y = y;
+        event->state = state;
+    }
+    else
+    {
+        x = event->x;
+        y = event->y;
+        state = event->state;
     }
 
     if (dock_is_moving(GTK_WINDOW(mainwin))) {
@@ -973,6 +984,7 @@ mainwin_motion(GtkWidget * widget,
         handle_motion_cb(mainwin_wlist, widget, event);
         draw_main_window(FALSE);
     }
+
     gdk_flush();
 
     return FALSE;

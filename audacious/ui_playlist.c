@@ -698,8 +698,6 @@ playlistwin_motion(GtkWidget * widget,
                    GdkEventMotion * event,
                    gpointer callback_data)
 {
-    XEvent ev;
-
     if (dock_is_moving(GTK_WINDOW(playlistwin))) {
         dock_move_motion(GTK_WINDOW(playlistwin), event);
     }
@@ -708,7 +706,6 @@ playlistwin_motion(GtkWidget * widget,
         draw_playlist_window(FALSE);
     }
     gdk_flush();
-    while (XCheckMaskEvent(GDK_DISPLAY(), ButtonMotionMask, &ev));
 }
 
 static void

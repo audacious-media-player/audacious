@@ -577,10 +577,8 @@ dock_move_motion(GtkWindow * w, GdkEventMotion * event)
     gint offset_x, offset_y, win_x, win_y, x, y, mx, my;
     GList *dlist;
     GList *window_list;
-    XEvent ev;
 
     gdk_flush();
-    while (XCheckTypedEvent(GDK_DISPLAY(), MotionNotify, &ev));
 
     if (!gtk_object_get_data(GTK_OBJECT(w), "is_moving"))
         return;
