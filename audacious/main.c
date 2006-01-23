@@ -312,6 +312,7 @@ GList *dock_window_list = NULL;
 
 gboolean pposition_broken = FALSE;
 
+gboolean starting_up = TRUE;
 
 static GSList *
 get_feature_list(void)
@@ -1031,11 +1032,12 @@ main(gint argc, gchar ** argv)
         if (cfg.playlist_visible)
             playlistwin_show();
 
-        /* FIXME: move this away */
         hint_set_always(cfg.always_on_top);
 
         playlist_start_get_info_thread();
         mainwin_attach_idle_func();
+
+	starting_up = FALSE;
 
         gtk_main();
 
@@ -1047,6 +1049,8 @@ main(gint argc, gchar ** argv)
     {
         mainwin_set_info_text();
         playlist_start_get_info_thread();
+
+	starting_up = FALSE;
 
         for (;;)
 	{

@@ -2429,7 +2429,10 @@ mainwin_view_menu_callback(gpointer data,
         mainwin_menurow->mr_always_selected = GTK_CHECK_MENU_ITEM(item)->active;
         cfg.always_on_top = mainwin_menurow->mr_always_selected;
         widget_draw(WIDGET(mainwin_menurow));
-        hint_set_always(cfg.always_on_top);
+
+        if (starting_up == FALSE)
+            hint_set_always(cfg.always_on_top);
+
         break;
     case MAINWIN_OPT_STICKY:
         cfg.sticky = GTK_CHECK_MENU_ITEM(item)->active;

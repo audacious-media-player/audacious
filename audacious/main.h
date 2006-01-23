@@ -135,6 +135,8 @@ extern const guint n_titlestring_presets;
 extern GList *dock_window_list;
 extern gboolean pposition_broken;
 
+extern gboolean starting_up;
+
 void bmp_config_save(void);
 void bmp_config_load(void);
 
