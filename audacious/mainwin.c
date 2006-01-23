@@ -2595,13 +2595,7 @@ mainwin_mr_change(MenuRowItem i)
         mainwin_lock_info_text(_("OPTIONS MENU"));
         break;
     case MENUROW_ALWAYS:
-        if (!hint_always_on_top_available()) {
-            if (mainwin_menurow->mr_always_selected)
-                mainwin_lock_info_text(_("DISABLE ALWAYS ON TOP (N/A)"));
-            else
-                mainwin_lock_info_text(_("ENABLE ALWAYS ON TOP (N/A)"));
-        }
-        else if (mainwin_menurow->mr_doublesize_selected)
+        if (mainwin_menurow->mr_doublesize_selected)
             mainwin_lock_info_text(_("DISABLE ALWAYS ON TOP"));
         else
             mainwin_lock_info_text(_("ENABLE ALWAYS ON TOP"));

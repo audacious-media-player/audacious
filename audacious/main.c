@@ -975,8 +975,6 @@ main(gint argc, gchar ** argv)
 
     if (options.headless != 1)
     {
-        check_wm_hints();
-
         bmp_set_default_icon();
 
         gtk_accel_map_load(bmp_paths[BMP_PATH_ACCEL_FILE]);
