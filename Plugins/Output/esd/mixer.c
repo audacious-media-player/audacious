@@ -24,7 +24,7 @@
 #include <string.h>
 #include <esd.h>
 
-#include <libbeep/configdb.h>
+#include <libaudacious/configdb.h>
 
 #include <unistd.h>
 #include <fcntl.h>
