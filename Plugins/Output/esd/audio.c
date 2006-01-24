@@ -46,6 +46,7 @@ static gint input_bps, input_format, input_frequency, input_channels;
 static GThread *buffer_thread;
 static gboolean realtime = FALSE;
 static void *(*esd_translate) (void *, gint);
+static int player_id_unique = 0;
 
 static gint
 get_latency(void)
@@ -454,7 +455,7 @@ esdout_open(AFormat fmt, gint rate, gint nch)
     paused = FALSE;
     remove_prebuffer = FALSE;
 
-    esd_cfg.playername = g_strdup_printf("xmms - plugin (%d)", getpid());
+    esd_cfg.playername = g_strdup_printf("xmms - plugin (%d) [%d]", getpid(), player_id_unique++);
 
     if (esd_cfg.hostname)
         g_free(esd_cfg.hostname);

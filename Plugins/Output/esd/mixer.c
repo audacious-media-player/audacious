@@ -24,6 +24,8 @@
 #include <string.h>
 #include <esd.h>
 
+#include <libbeep/configdb.h>
+
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/types.h>
@@ -41,7 +43,7 @@
 
 #include <libaudacious/util.h>
 
-
+#define QUERY_PLAYER_ID_ATTEMPTS 5
 
 static void esdout_get_oss_volume(int *l, int *r);
 static void esdout_set_oss_volume(int l, int r);
@@ -56,7 +58,15 @@ static int lp = 100, rp = 100;
 void
 esdout_mixer_init(void)
 {
-    esdout_fetch_volume(NULL, NULL);
+    int i;
+
+    /* reset player id */
+    player = -1;
+    
+    /* query n-time for player id */
+    for(i=0; (i<QUERY_PLAYER_ID_ATTEMPTS) && (player == (-1)) ; i++)
+	esdout_fetch_volume(NULL, NULL);
+	
     if (!(OSS_AVAILABLE && esd_cfg.use_oss_mixer && !esd_cfg.use_remote))
         esdout_set_volume(lp, rp);
 }
@@ -130,6 +140,7 @@ esdout_get_volume(int *l, int *r)
 void
 esdout_set_volume(int l, int r)
 {
+    ConfigDb *db;
     lp = l;
     rp = r;
 
@@ -143,6 +154,12 @@ esdout_set_volume(int l, int r)
             esd_close(fd);
         }
     }
+    
+    /* save volume values in db */
+    db = bmp_cfg_db_open();
+    bmp_cfg_db_set_int(db, "ESD", "volume_left", lp);
+    bmp_cfg_db_set_int(db, "ESD", "volume_right", rp);
+    bmp_cfg_db_close(db);
 }
 
 #ifdef HAVE_OSS

@@ -34,6 +34,7 @@ esdout_init(void)
 {
     ConfigDb *db;
     char *env;
+    int lp = 80 , rp = 80;
 
     memset(&esd_cfg, 0, sizeof(ESDConfig));
     esd_cfg.port = ESD_DEFAULT_PORT;
@@ -62,6 +63,12 @@ esdout_init(void)
     bmp_cfg_db_get_bool(db, "ESD", "use_oss_mixer", &esd_cfg.use_oss_mixer);
     bmp_cfg_db_get_int(db, "ESD", "buffer_size", &esd_cfg.buffer_size);
     bmp_cfg_db_get_int(db, "ESD", "prebuffer", &esd_cfg.prebuffer);
+    
+    /* restore volume levels */
+    bmp_cfg_db_get_int(db, "ESD", "volume_left", &lp);
+    bmp_cfg_db_get_int(db, "ESD", "volume_right", &rp);
+    esdout_set_volume(lp, rp);
+    
     bmp_cfg_db_close(db);
 
     if (!esd_cfg.server)
