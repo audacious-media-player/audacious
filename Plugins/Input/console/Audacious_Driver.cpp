@@ -637,7 +637,7 @@ static void console_pause(gshort p)
 
 static int get_time(void)
 {
-	return console_ip_is_going ? track_emu.tell() : -1;
+	return console_ip_is_going ? (track_emu.tell() - 3000 >= 0 ? track_emu.tell() - 3000 : 0) : -1;
 }
 
 // Setup
