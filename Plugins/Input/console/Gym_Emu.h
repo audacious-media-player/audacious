@@ -1,29 +1,22 @@
 
 // Sega Genesis GYM music file emulator
 
-// Game_Music_Emu 0.2.4. Copyright (C) 2004-2005 Shay Green. GNU LGPL license.
+// Game_Music_Emu 0.3.0
 
 #ifndef GYM_EMU_H
 #define GYM_EMU_H
 
-#include "Fir_Resampler.h"
-#include "Blip_Buffer.h"
+#include "Dual_Resampler.h"
+#include "Ym2612_Emu.h"
 #include "Music_Emu.h"
 #include "Sms_Apu.h"
-#include "ym2612.h"
 
-class Gym_Emu : public Music_Emu {
+class Gym_Emu : public Music_Emu, private Dual_Resampler {
 public:
-	Gym_Emu();
-	~Gym_Emu();
 	
-	// Initialize emulator with given sample rate, gain, and oversample. A gain of 1.0
-	// results in almost no clamping. Default gain roughly matches volume of other emulators.
-	// The FM chip is synthesized at an increased rate governed by the oversample factor,
-	// where 1.0 results in no oversampling and > 1.0 results in oversampling.
-	blargg_err_t init( long sample_rate, double gain = 1.5, double oversample = 5 / 3.0 );
-	
-	struct header_t {
+	// GYM file header
+	struct header_t
+	{
 	    char tag [4];
 	    char song [32];
 	    char game [32];
@@ -31,7 +24,7 @@ public:
 	    char emulator [32];
 	    char dumper [32];
 	    char comment [256];
-	    byte loop [4];
+	    byte loop_start [4]; // in 1/60 seconds, 0 if not looped
 	    byte packed [4];
 	    
 	    enum { track_count = 1 }; // one track per file
@@ -39,72 +32,64 @@ public:
 	};
 	BOOST_STATIC_ASSERT( sizeof (header_t) == 428 );
 	
-	// Load GYM, given its header and reader for remaining data
-	blargg_err_t load( const header_t&, Emu_Reader& );
+	// Load GYM data
+	blargg_err_t load( Data_Reader& );
 	
-	// Load GYM, given pointer to complete file data. Keeps reference
-	// to data, but doesn't free it.
-	blargg_err_t load( const void*, long size );
+	// Load GYM file using already-loaded header and remaining data
+	blargg_err_t load( header_t const&, Data_Reader& );
+	blargg_err_t load( void const* data, long size ); // keeps pointer to data
 	
-	// Length of track, in seconds (0 if looped)
-	int track_length() const;
+	// Header for currently loaded GYM (cleared to zero if GYM lacks header)
+	header_t const& header() const { return header_; }
 	
+	// Length of track in 1/60 seconds
+	enum { gym_rate = 60 }; // GYM time units (frames) per second
+	long track_length() const;
+
+public:
+	typedef Music_Emu::sample_t sample_t;
+	Gym_Emu();
+	~Gym_Emu();
+	blargg_err_t set_sample_rate( long sample_rate );
 	void mute_voices( int );
-	blargg_err_t start_track( int );
-	blargg_err_t play( long count, sample_t* );
+	void start_track( int );
+	void play( long count, sample_t* );
 	const char** voice_names() const;
-	blargg_err_t skip( long count );
-	
-// End of public interface
+	void skip( long count );
+public:
+	// deprecated
+	blargg_err_t init( long r, double gain = 1.5, double oversample = 5 / 3.0 )
+	{
+		return set_sample_rate( r );
+	}
+protected:
+	int play_frame( blip_time_t blip_time, int sample_count, sample_t* buf );
 private:
 	// sequence data begin, loop begin, current position, end
 	const byte* data;
 	const byte* loop_begin;
 	const byte* pos;
 	const byte* data_end;
-	long loop_offset;
 	long loop_remain; // frames remaining until loop beginning has been located
-	byte* mem;
+	blargg_vector<byte> mem;
+	header_t header_;
 	blargg_err_t load_( const void* file, long data_offset, long file_size );
-	
-	// frames
-	double oversample;
-	double clocks_per_sample;
-	int pairs_per_frame;
-	int oversamples_per_frame;
+	void unload();
 	void parse_frame();
-	void play_frame( sample_t* );
-	void mix_samples( sample_t* );
 	
 	// dac (pcm)
-	int last_dac;
+	int dac_amp;
 	int prev_dac_count;
 	bool dac_enabled;
-	bool dac_disabled;
+	bool dac_muted;
 	void run_dac( int );
 	
 	// sound
-	int extra_pos; // extra samples remaining from last read
 	Blip_Buffer blip_buf;
-	YM2612_Emu fm;
-	Blip_Synth<blip_med_quality,256> dac_synth;
+	Ym2612_Emu fm;
+	Blip_Synth<blip_med_quality,1> dac_synth;
 	Sms_Apu apu;
-	Fir_Resampler resampler;
 	byte dac_buf [1024];
-	enum { sample_buf_size = 4096 };
-	sample_t sample_buf [sample_buf_size];
-	
-	void unload();
-};
-
-class Gym_Reader : public Std_File_Reader {
-	VFSFile* file;
-public:
-	Gym_Reader();
-	~Gym_Reader();
-	
-	// Custom reader for SPC headers [tempfix]
-	blargg_err_t read_head( Gym_Emu::header_t* );
 };
 
 #endif

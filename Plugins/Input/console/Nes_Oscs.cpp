@@ -1,9 +1,9 @@
 
-// Nes_Snd_Emu 0.1.6. http://www.slack.net/~ant/libs/
+// Nes_Snd_Emu 0.1.7. http://www.slack.net/~ant/
 
 #include "Nes_Apu.h"
 
-/* Copyright (C) 2003-2005 Shay Green. This module is free software; you
+/* Copyright (C) 2003-2006 Shay Green. This module is free software; you
 can redistribute it and/or modify it under the terms of the GNU Lesser
 General Public License as published by the Free Software Foundation; either
 version 2.1 of the License, or (at your option) any later version. This
@@ -94,7 +94,7 @@ void Nes_Square::run( nes_time_t time, nes_time_t end_time )
 	if ( volume == 0 || period < 8 || (period + offset) >= 0x800 )
 	{
 		if ( last_amp ) {
-			synth->offset( time, -last_amp, output );
+			synth.offset( time, -last_amp, output );
 			last_amp = 0;
 		}
 		
@@ -122,13 +122,13 @@ void Nes_Square::run( nes_time_t time, nes_time_t end_time )
 		
 		int delta = update_amp( amp );
 		if ( delta )
-			synth->offset( time, delta, output );
+			synth.offset( time, delta, output );
 		
 		time += delay;
 		if ( time < end_time )
 		{
 			Blip_Buffer* const output = this->output;
-			const Synth* synth = this->synth;
+			const Synth& synth = this->synth;
 			int delta = amp * 2 - volume;
 			int phase = this->phase;
 			
@@ -136,7 +136,7 @@ void Nes_Square::run( nes_time_t time, nes_time_t end_time )
 				phase = (phase + 1) & (phase_range - 1);
 				if ( phase == 0 || phase == duty ) {
 					delta = -delta;
-					synth->offset_inline( time, delta, output );
+					synth.offset_inline( time, delta, output );
 				}
 				time += timer_period;
 			}
@@ -163,6 +163,14 @@ void Nes_Triangle::clock_linear_counter()
 		reg_written [3] = false;
 }
 
+inline int Nes_Triangle::calc_amp() const
+{
+	int amp = phase_range - phase;
+	if ( amp < 0 )
+		amp = phase - (phase_range + 1);
+	return amp;
+}
+
 void Nes_Triangle::run( nes_time_t time, nes_time_t end_time )
 {
 	if ( !output )
@@ -170,6 +178,10 @@ void Nes_Triangle::run( nes_time_t time, nes_time_t end_time )
 	
 	// to do: track phase when period < 3
 	// to do: Output 7.5 on dac when period < 2? More accurate, but results in more clicks.
+	
+	int delta = update_amp( calc_amp() );
+	if ( delta )
+		synth.offset( time, delta, output );
 	
 	time += delay;
 	const int timer_period = period() + 1;
@@ -204,6 +216,7 @@ void Nes_Triangle::run( nes_time_t time, nes_time_t end_time )
 		if ( volume < 0 )
 			phase += phase_range;
 		this->phase = phase;
+		last_amp = calc_amp();
  	}
 	delay = time - end_time;
 }
@@ -217,21 +230,21 @@ void Nes_Dmc::reset()
 	buf = 0;
 	bits_remain = 1;
 	bits = 0;
-	buf_empty = true;
+	buf_full = false;
 	silence = true;
 	next_irq = Nes_Apu::no_irq;
 	irq_flag = false;
 	irq_enabled = false;
 	
 	Nes_Osc::reset();
-	period = 0x036;
+	period = 0x1ac;
 }
 
 void Nes_Dmc::recalc_irq()
 {
 	nes_time_t irq = Nes_Apu::no_irq;
 	if ( irq_enabled && length_counter )
-		irq = apu->last_time + delay +
+		irq = apu->last_dmc_time + delay +
 				((length_counter - 1) * 8 + bits_remain - 1) * nes_time_t (period) + 1;
 	if ( irq != next_irq ) {
 		next_irq = irq;
@@ -247,7 +260,7 @@ int Nes_Dmc::count_reads( nes_time_t time, nes_time_t* last_read ) const
 	if ( length_counter == 0 )
 		return 0; // not reading
 	
-	long first_read = apu->last_time + delay + long (bits_remain - 1) * period;
+	long first_read = next_read_time();
 	long avail = time - first_read;
 	if ( avail <= 0 )
 		return 0;
@@ -267,11 +280,11 @@ int Nes_Dmc::count_reads( nes_time_t time, nes_time_t* last_read ) const
 }
 
 static const short dmc_period_table [2] [16] = {
-	0x1ac, 0x17c, 0x154, 0x140, 0x11e, 0x0fe, 0x0e2, 0x0d6, // NTSC
-	0x0be, 0x0a0, 0x08e, 0x080, 0x06a, 0x054, 0x048, 0x036,
+	{0x1ac, 0x17c, 0x154, 0x140, 0x11e, 0x0fe, 0x0e2, 0x0d6, // NTSC
+	 0x0be, 0x0a0, 0x08e, 0x080, 0x06a, 0x054, 0x048, 0x036},
 	
-	0x18e, 0x161, 0x13c, 0x129, 0x10a, 0x0ec, 0x0d2, 0x0c7, // PAL (totally untested)
-	0x0b1, 0x095, 0x084, 0x077, 0x062, 0x04e, 0x043, 0x032  // to do: verify PAL periods
+	{0x18e, 0x161, 0x13c, 0x129, 0x10a, 0x0ec, 0x0d2, 0x0c7, // PAL (totally untested)
+	 0x0b1, 0x095, 0x084, 0x077, 0x062, 0x04e, 0x043, 0x032} // to do: verify PAL periods
 };
 
 inline void Nes_Dmc::reload_sample()
@@ -280,20 +293,22 @@ inline void Nes_Dmc::reload_sample()
 	length_counter = regs [3] * 0x10 + 1;
 }
 
-static const unsigned char dac_table [128] = {
-	 0,  0,  1,  2,  2,  3,  3,  4,  5,  5,  6,  7,  7,  8,  8,  9,
-	10, 10, 11, 11, 12, 13, 13, 14, 14, 15, 15, 16, 17, 17, 18, 18,
-	19, 19, 20, 20, 21, 21, 22, 22, 23, 23, 24, 24, 25, 25, 26, 26,
-	27, 27, 28, 28, 29, 29, 30, 30, 31, 31, 32, 32, 32, 33, 33, 34,
-	34, 35, 35, 35, 36, 36, 37, 37, 38, 38, 38, 39, 39, 40, 40, 40,
-	41, 41, 42, 42, 42, 43, 43, 44, 44, 44, 45, 45, 45, 46, 46, 47,
-	47, 47, 48, 48, 48, 49, 49, 49, 50, 50, 50, 51, 51, 51, 52, 52,
-	52, 53, 53, 53, 54, 54, 54, 55, 55, 55, 56, 56, 56, 57, 57, 57
+static const unsigned char dac_table [128] =
+{
+	 0, 1, 2, 3, 4, 5, 6, 7, 7, 8, 9,10,11,12,13,14,
+	15,15,16,17,18,19,20,20,21,22,23,24,24,25,26,27,
+	27,28,29,30,31,31,32,33,33,34,35,36,36,37,38,38,
+	39,40,41,41,42,43,43,44,45,45,46,47,47,48,48,49,
+	50,50,51,52,52,53,53,54,55,55,56,56,57,58,58,59,
+	59,60,60,61,61,62,63,63,64,64,65,65,66,66,67,67,
+	68,68,69,70,70,71,71,72,72,73,73,74,74,75,75,75,
+	76,76,77,77,78,78,79,79,80,80,81,81,82,82,82,83,
 };
 
 void Nes_Dmc::write_register( int addr, int data )
 {
-	if ( addr == 0 ) {
+	if ( addr == 0 )
+	{
 		period = dmc_period_table [pal_mode] [data & 15];
 		irq_enabled = (data & 0xc0) == 0x80; // enabled only if loop disabled
 		irq_flag &= irq_enabled;
@@ -301,17 +316,14 @@ void Nes_Dmc::write_register( int addr, int data )
 	}
 	else if ( addr == 1 )
 	{
-		if ( !nonlinear )
-		{
-			// adjust last_amp so that "pop" amplitude will be properly non-linear
-			// with respect to change in dac
-			int old_amp = dac_table [dac];
-			dac = data & 0x7F;
-			int diff = dac_table [dac] - old_amp;
-			last_amp = dac - diff;
-		}
-		
+		int old_dac = dac;
 		dac = data & 0x7F;
+		
+		// adjust last_amp so that "pop" amplitude will be properly non-linear
+		// with respect to change in dac
+		int faked_nonlinear = dac - (dac_table [dac] - dac_table [old_dac]);
+		if ( !nonlinear )
+			last_amp = faked_nonlinear;
 	}
 }
 
@@ -324,12 +336,12 @@ void Nes_Dmc::start()
 
 void Nes_Dmc::fill_buffer()
 {
-	if ( buf_empty && length_counter )
+	if ( !buf_full && length_counter )
 	{
-		require( rom_reader ); // dmc_reader must be set
+		require( rom_reader ); // rom_reader must be set
 		buf = rom_reader( rom_reader_data, 0x8000u + address );
 		address = (address + 1) & 0x7FFF;
-		buf_empty = false;
+		buf_full = true;
 		if ( --length_counter == 0 )
 		{
 			if ( regs [0] & loop_flag ) {
@@ -347,18 +359,17 @@ void Nes_Dmc::fill_buffer()
 
 void Nes_Dmc::run( nes_time_t time, nes_time_t end_time )
 {
-	if ( !output )
-		return;
-	
 	int delta = update_amp( dac );
-	if ( delta )
+	if ( !output )
+		silence = true;
+	else if ( delta )
 		synth.offset( time, delta, output );
 	
 	time += delay;
 	if ( time < end_time )
 	{
 		int bits_remain = this->bits_remain;
-		if ( silence && buf_empty )
+		if ( silence && !buf_full )
 		{
 			int count = (end_time - time + period - 1) / period;
 			bits_remain = (bits_remain - 1 + 8 - (count % 8)) % 8 + 1;
@@ -375,7 +386,7 @@ void Nes_Dmc::run( nes_time_t time, nes_time_t end_time )
 			{
 				if ( !silence )
 				{
-					const int step = (bits & 1) * 4 - 2;
+					int step = (bits & 1) * 4 - 2;
 					bits >>= 1;
 					if ( unsigned (dac + step) <= 0x7F ) {
 						dac += step;
@@ -388,13 +399,15 @@ void Nes_Dmc::run( nes_time_t time, nes_time_t end_time )
 				if ( --bits_remain == 0 )
 				{
 					bits_remain = 8;
-					if ( buf_empty ) {
+					if ( !buf_full ) {
 						silence = true;
 					}
 					else {
 						silence = false;
 						bits = buf;
-						buf_empty = true;
+						buf_full = false;
+						if ( !output )
+							silence = true;
 						fill_buffer();
 					}
 				}
@@ -441,7 +454,7 @@ void Nes_Noise::run( nes_time_t time, nes_time_t end_time )
 			// round to next multiple of period
 			time += (end_time - time + period - 1) / period * period;
 			
-			// approximate noise cycling while muted, by shuffling up noise register a bit
+			// approximate noise cycling while muted, by shuffling up noise register
 			// to do: precise muted noise cycling?
 			if ( !(regs [2] & mode_flag) ) {
 				int feedback = (noise << 13) ^ (noise << 14);
@@ -453,8 +466,8 @@ void Nes_Noise::run( nes_time_t time, nes_time_t end_time )
 			Blip_Buffer* const output = this->output;
 			
 			// using resampled time avoids conversion in synth.offset()
-			Blip_Buffer::resampled_time_t rperiod = output->resampled_duration( period );
-			Blip_Buffer::resampled_time_t rtime = output->resampled_time( time );
+			blip_resampled_time_t rperiod = output->resampled_duration( period );
+			blip_resampled_time_t rtime = output->resampled_time( time );
 			
 			int noise = this->noise;
 			int delta = amp * 2 - volume;

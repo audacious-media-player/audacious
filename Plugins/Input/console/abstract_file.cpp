@@ -4,8 +4,9 @@
 #include <assert.h>
 #include <string.h>
 #include <stddef.h>
+#include <stdlib.h>
 
-/* Copyright (C) 2005 by Shay Green. Permission is hereby granted, free of
+/* Copyright (C) 2005 Shay Green. Permission is hereby granted, free of
 charge, to any person obtaining a copy of this software module and associated
 documentation files (the "Software"), to deal in the Software without
 restriction, including without limitation the rights to use, copy, modify,
@@ -20,11 +21,16 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
+// to do: remove?
 #ifndef RAISE_ERROR
 	#define RAISE_ERROR( str ) return str
 #endif
 
 typedef Data_Reader::error_t error_t;
+
+error_t Data_Writer::write( const void*, long ) { return NULL; }
+
+void Data_Writer::satisfy_lame_linker_() { }
 
 error_t Data_Reader::read( void* p, long s )
 {
@@ -40,11 +46,6 @@ error_t Data_Reader::read( void* p, long s )
 	return NULL;
 }
 
-long File_Reader::remain() const
-{
-	return size() - tell();
-}
-
 error_t Data_Reader::skip( long count )
 {
 	char buf [512];
@@ -57,6 +58,11 @@ error_t Data_Reader::skip( long count )
 		RAISE_ERROR( read( buf, n ) );
 	}
 	return NULL;
+}
+
+long File_Reader::remain() const
+{
+	return size() - tell();
 }
 
 error_t File_Reader::skip( long n )
@@ -128,7 +134,7 @@ error_t Mem_File_Reader::seek( long n )
 
 // Std_File_Reader
 
-Std_File_Reader::Std_File_Reader() : file( NULL ) {
+Std_File_Reader::Std_File_Reader() : file_( NULL ) {
 }
 
 Std_File_Reader::~Std_File_Reader() {
@@ -137,8 +143,8 @@ Std_File_Reader::~Std_File_Reader() {
 
 error_t Std_File_Reader::open( const char* path )
 {
-	file = vfs_fopen( path, "rb" );
-	if ( !file )
+	file_ = fopen( path, "rb" );
+	if ( !file_ )
 		RAISE_ERROR( "Couldn't open file" );
 	return NULL;
 }
@@ -146,38 +152,38 @@ error_t Std_File_Reader::open( const char* path )
 long Std_File_Reader::size() const
 {
 	long pos = tell();
-	vfs_fseek( file, 0, SEEK_END );
+	fseek( file_, 0, SEEK_END );
 	long result = tell();
-	vfs_fseek( file, pos, SEEK_SET );
+	fseek( file_, pos, SEEK_SET );
 	return result;
 }
 
 long Std_File_Reader::read_avail( void* p, long s ) {
-	return vfs_fread( p, 1, s, file );
+	return (long) fread( p, 1, s, file_ );
 }
 
 long Std_File_Reader::tell() const {
-	return vfs_ftell( file );
+	return ftell( file_ );
 }
 
 error_t Std_File_Reader::seek( long n )
 {
-	if ( vfs_fseek( file, n, SEEK_SET ) != 0 )
+	if ( fseek( file_, n, SEEK_SET ) != 0 )
 		RAISE_ERROR( "Error seeking in file" );
 	return NULL;
 }
 
 void Std_File_Reader::close()
 {
-	if ( file ) {
-		vfs_fclose( file );
-		file = NULL;
+	if ( file_ ) {
+		fclose( file_ );
+		file_ = NULL;
 	}
 }
 
 // Std_File_Writer
 
-Std_File_Writer::Std_File_Writer() : file( NULL ) {
+Std_File_Writer::Std_File_Writer() : file_( NULL ) {
 }
 
 Std_File_Writer::~Std_File_Writer() {
@@ -186,19 +192,19 @@ Std_File_Writer::~Std_File_Writer() {
 
 error_t Std_File_Writer::open( const char* path )
 {
-	file = vfs_fopen( path, "wb" );
-	if ( !file )
+	file_ = fopen( path, "wb" );
+	if ( !file_ )
 		RAISE_ERROR( "Couldn't open file for writing" );
 		
 	// to do: increase file buffer size
-	//setvbuf( file, NULL, _IOFBF, 32 * 1024L );
+	//setvbuf( file_, NULL, _IOFBF, 32 * 1024L );
 	
 	return NULL;
 }
 
 error_t Std_File_Writer::write( const void* p, long s )
 {
-	long result = vfs_fwrite( p, 1, s, file );
+	long result = (long) fwrite( p, 1, s, file_ );
 	if ( result != s )
 		RAISE_ERROR( "Couldn't write to file" );
 	return NULL;
@@ -206,42 +212,71 @@ error_t Std_File_Writer::write( const void* p, long s )
 
 void Std_File_Writer::close()
 {
-	if ( file ) {
-		vfs_fclose( file );
-		file = NULL;
+	if ( file_ ) {
+		fclose( file_ );
+		file_ = NULL;
 	}
 }
 
 // Mem_Writer
 
-Mem_Writer::Mem_Writer( void* p, long s, int b ) :
-	out( p ),
-	remain_( s ),
-	ignore_excess( b )
+Mem_Writer::Mem_Writer( void* p, long s, int b )
 {
+	data_ = (char*) p;
+	size_ = 0;
+	allocated = s;
+	mode = b ? ignore_excess : fixed;
+}
+
+Mem_Writer::Mem_Writer()
+{
+	data_ = NULL;
+	size_ = 0;
+	allocated = 0;
+	mode = expanding;
+}
+
+Mem_Writer::~Mem_Writer()
+{
+	if ( mode == expanding )
+		free( data_ );
 }
 
 error_t Mem_Writer::write( const void* p, long s )
 {
-	if ( s > remain_ )
+	long remain = allocated - size_;
+	if ( s > remain )
 	{
-		if ( !ignore_excess )
+		if ( mode == fixed )
 			RAISE_ERROR( "Tried to write more data than expected" );
-		s = remain_;
+		
+		if ( mode == ignore_excess )
+		{
+			s = remain;
+		}
+		else // expanding
+		{
+			long new_allocated = size_ + s;
+			new_allocated += (new_allocated >> 1) + 2048;
+			void* p = realloc( data_, new_allocated );
+			if ( !p )
+				RAISE_ERROR( "Out of memory" );
+			data_ = (char*) p;
+			allocated = new_allocated;
+		}
 	}
-	remain_ -= s;
-	memcpy( out, p, s );
-	out = (char*) out + s;
+	
+	assert( size_ + s <= allocated );
+	memcpy( data_ + size_, p, s );
+	size_ += s;
+	
 	return NULL;
-}
-
-long Mem_Writer::remain() const {
-	return remain_;
 }
 
 // Null_Writer
 
-error_t Null_Writer::write( const void*, long ) {
+error_t Null_Writer::write( const void*, long )
+{
 	return NULL;
 }
 

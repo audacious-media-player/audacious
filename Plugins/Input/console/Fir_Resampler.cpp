@@ -1,14 +1,14 @@
 
-// Game_Music_Emu 0.2.4. http://www.slack.net/~ant/libs/
+// Game_Music_Emu 0.3.0. http://www.slack.net/~ant/
 
 #include "Fir_Resampler.h"
 
-#include "libaudacious/vfs.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 
-/* Copyright (C) 2003-2005 Shay Green. This module is free software; you
+/* Copyright (C) 2004-2006 Shay Green. This module is free software; you
 can redistribute it and/or modify it under the terms of the GNU Lesser
 General Public License as published by the Free Software Foundation; either
 version 2.1 of the License, or (at your option) any later version. This
@@ -21,15 +21,20 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
 #include BLARGG_SOURCE_BEGIN
 
-static const double pi = 3.1415926535897932384626433832795029L;
+// to do: fix problems with rolloff < 0.99 or so, and rolloff == 1.0, and related problems
+
+// Sinc impulse genertor
 
 const bool show_impulse = 0;
+
+static const double pi = 3.1415926535897932384626433832795029L;
 
 class Dsf {
 	double rolloff;
 	double factor;
 public:
-	Dsf( double r ) : rolloff( r ) {
+	Dsf( double r ) : rolloff( r )
+	{
 		factor = 1.0;
 		//if ( rolloff < 1.0 )
 		//  factor = 1.0 / (*this)( 0 );
@@ -40,7 +45,7 @@ public:
 		double const n_harm = 256;
 		angle /= n_harm;
 		double pow_a_n = pow( rolloff, n_harm );
-		double rescale = 1.0 / n_harm;
+		//double rescale = 1.0 / n_harm;
 		
 		double num = 1.0 - rolloff * cos( angle ) -
 				pow_a_n * cos( n_harm * angle ) +
@@ -51,8 +56,8 @@ public:
 	}
 };
 
-template<class T,class Sinc>
-void gen_sinc( int width, double offset, double spacing, int count, double scale, T* p,
+template<class Sinc>
+void gen_sinc( int width, double offset, double spacing, int count, double scale, short* p,
 		const Sinc& sinc )
 {
 	double range = pi * (width / 2);
@@ -66,68 +71,72 @@ void gen_sinc( int width, double offset, double spacing, int count, double scale
 		double y = 0.0;
 		if ( fabs( w ) < 1.0 )
 		{
-			y = cos( pi * w ) * 0.5 + 0.5;
-			y *= sinc( a );
+			double window = cos( pi * w ) * 0.5 + 0.5;
+			y = sinc( a ) * window;
 		}
 		
-		*p++ = (T) (y * scale);
+		*p++ = (short) (y * scale);
 		a += step;
 	}
 }
 
-static double plain_sinc( double a ) {
+static double plain_sinc( double a )
+{
 	return fabs( a ) < 0.00001 ? 1.0 : sin( a ) / a;
 }
 
-Fir_Resampler::Fir_Resampler()
+// Fir_Resampler
+
+Fir_Resampler_::Fir_Resampler_( int width, sample_t* impulses_ ) :
+	width_( width ),
+	write_offset( width * stereo - stereo ),
+	impulses( impulses_ )
 {
-	res = 1;
-	skip_bits = 0;
-	step = 2;
-	buf = NULL;
 	write_pos = NULL;
-	buf_size = 0;
+	res = 1;
+	imp = 0;
+	skip_bits = 0;
+	step = stereo;
+	ratio_ = 1.0;
 }
 
-Fir_Resampler::~Fir_Resampler() {
-	free( buf );
+Fir_Resampler_::~Fir_Resampler_()
+{
 }
 
-void Fir_Resampler::clear()
+void Fir_Resampler_::clear()
 {
 	imp = 0;
-	if ( buf ) {
-		write_pos = buf + latency;
-		memset( buf, 0, (write_pos - buf) * sizeof *buf );
+	if ( buf.size() )
+	{
+		write_pos = &buf [write_offset];
+		memset( buf.begin(), 0, write_offset * sizeof buf [0] );
 	}
 }
 
-blargg_err_t Fir_Resampler::buffer_size( int new_size )
+blargg_err_t Fir_Resampler_::buffer_size( int new_size )
 {
-	new_size += latency;
-	void* new_buf = realloc( buf, new_size * sizeof *buf );
-	if ( !new_buf )
-		return "Out of memory";
-	buf = (sample_t*) new_buf;
-	buf_size = new_size;
+	BLARGG_RETURN_ERR( buf.resize( new_size + write_offset ) );
 	clear();
 	return blargg_success;
 }
 	
-double Fir_Resampler::time_ratio( double ratio, double rolloff, double volume )
+double Fir_Resampler_::time_ratio( double new_factor, double rolloff, double gain )
 {
-	this->ratio = ratio;
+	ratio_ = new_factor;
 	
 	double fstep = 0.0;
 	{
 		double least_error = 2;
 		double pos = 0;
 		res = -1;
-		for ( int r = 1; r <= max_res; r++ ) {
-			pos += ratio;
+		for ( int r = 1; r <= max_res; r++ )
+		{
+			pos += ratio_;
 			double nearest = floor( pos + 0.5 );
 			double error = fabs( pos - nearest );
-			if ( error < least_error ) {
+			if ( error < least_error )
+			{
 				res = r;
 				fstep = nearest / res;
 				least_error = error;
@@ -137,137 +146,108 @@ double Fir_Resampler::time_ratio( double ratio, double rolloff, double volume )
 	
 	skip_bits = 0;
 	
-	step = 2 * (int) floor( fstep );
+	step = stereo * (int) floor( fstep );
 	
-	ratio = fstep;
+	ratio_ = fstep;
 	fstep = fmod( fstep, 1.0 );
 	
-	double filter = (ratio < 1.0) ? 1.0 : 1.0 / ratio;
+	double filter = (ratio_ < 1.0) ? 1.0 : 1.0 / ratio_;
 	double pos = 0.0;
+	input_per_cycle = 0;
 	Dsf dsf( rolloff );
 	for ( int i = 0; i < res; i++ )
 	{
 		if ( show_impulse )
 			printf( "pos = %f\n", pos );
 		
-		gen_sinc( int (width * filter + 1) & ~1, pos, filter, (int) width,
-				double (0x7fff * volume * filter), impulses [i], dsf );
+		gen_sinc( int (width_ * filter + 1) & ~1, pos, filter, (int) width_,
+				double (0x7fff * gain * filter), impulses + i * width_, dsf );
 		
-		if ( show_impulse ) {
-			for ( int j = 0; j < width; j++ )
-				printf( "%d ", (int) impulses [i] [j] );
+		if ( show_impulse )
+		{
+			for ( int j = 0; j < width_; j++ )
+				printf( "%d ", (int) impulses [i * width_ + j] );
 			printf( "\n" );
 		}
 		
 		pos += fstep;
-		if ( pos >= 0.9999999 ) {
+		input_per_cycle += step;
+		if ( pos >= 0.9999999 )
+		{
 			pos -= 1.0;
 			skip_bits |= 1 << i;
+			input_per_cycle++;
 		}
 	}
 	
-	if ( show_impulse ) {
-		printf( "skip = %X\n", skip_bits );
+	if ( show_impulse )
+	{
+		printf( "skip = %8lX\n", (long) skip_bits );
 		printf( "step = %d\n", step );
 	}
 	
 	clear();
 	
-	return ratio;
+	return ratio_;
 }
 
-#include BLARGG_ENABLE_OPTIMIZER
-
-int Fir_Resampler::read( sample_t* out_begin, int count )
+int Fir_Resampler_::input_needed( long output_count ) const
 {
-	sample_t* out = out_begin;
-	const sample_t* in = buf;
-	sample_t* end_pos = write_pos;
+	long input_count = 0;
+	
 	unsigned long skip = skip_bits >> imp;
-	sample_t const* imp = impulses [this->imp];
-	int remain = res - this->imp;
-	int const step = this->step;
-	
-	count = (count >> 1) + 1;
-	
-	// to do: optimize loop to use a single counter rather than 'in' and 'count'
-	
-	if ( end_pos - in >= width * 2 )
+	int remain = res - imp;
+	while ( (output_count -= 2) > 0 )
 	{
-		end_pos -= width * 2;
-		do
+		input_count += step + (skip & 1) * stereo;
+		skip >>= 1;
+		if ( !--remain )
 		{
-			count--;
-			
-			// accumulate in extended precision
-			long l = 0;
-			long r = 0;
-			
-			const sample_t* i = in;
-			if ( !count )
-				break;
-			
-			for ( int n = width / 2; n--; )
-			{
-				int pt0 = imp [0];
-				int pt1 = imp [1];
-				imp += 2;
-				l += (pt0 * i [0]) + (pt1 * i [2]);
-				r += (pt0 * i [1]) + (pt1 * i [3]);
-				i += 4;
-			}
-			
-			remain--;
-			
-			l >>= 15;
-			r >>= 15;
-			
-			in += step + ((skip * 2) & 2);
-			skip >>= 1;
-			
-			if ( !remain ) {
-				imp = impulses [0];
-				skip = skip_bits;
-				remain = res;
-			}
-			
-			out [0] = l;
-			out [1] = r;
-			out += 2;
+			skip = skip_bits;
+			remain = res;
 		}
-		while ( in <= end_pos );
+		output_count -= 2;
 	}
 	
-	this->imp = res - remain;
-	
-	int left = write_pos - in;
-	write_pos = buf + left;
-	assert( unsigned (write_pos - buf) <= buf_size );
-	memmove( buf, in, left * sizeof *in );
-	
-	return out - out_begin;
+	long input_extra = input_count - (write_pos - &buf [(width_ - 1) * stereo]);
+	if ( input_extra < 0 )
+		input_extra = 0;
+	return input_extra;
 }
 
-int Fir_Resampler::skip_input( int count )
+int Fir_Resampler_::avail_( long input_count ) const
 {
-	int remain = write_pos - buf;
-	int avail = remain - width * 2;
+	int cycle_count = input_count / input_per_cycle;
+	int output_count = cycle_count * res * stereo;
+	input_count -= cycle_count * input_per_cycle;
+	
+	unsigned long skip = skip_bits >> imp;
+	int remain = res - imp;
+	while ( input_count >= 0 )
+	{
+		input_count -= step + (skip & 1) * stereo;
+		skip >>= 1;
+		if ( !--remain )
+		{
+			skip = skip_bits;
+			remain = res;
+		}
+		output_count += 2;
+	}
+	return output_count;
+}
+
+int Fir_Resampler_::skip_input( long count )
+{
+	int remain = write_pos - buf.begin();
+	int avail = remain - width_ * stereo;
 	if ( count > avail )
 		count = avail;
 	
 	remain -= count;
-	write_pos = buf + remain;
-	assert( unsigned (write_pos - buf) <= buf_size );
-	memmove( buf, buf + count, remain * sizeof *buf );
+	write_pos = &buf [remain];
+	memmove( buf.begin(), &buf [count], remain * sizeof buf [0] );
 	
 	return count;
 }
 
-/*
-int Fir_Resampler::skip( int count )
-{
-	count = int (count * ratio) & ~1;
-	count = skip_input( count );
-	return int (count / ratio) & ~1;
-}
-*/

@@ -1,13 +1,12 @@
 
-// Game_Music_Emu 0.2.4. http://www.slack.net/~ant/libs/
+// Game_Music_Emu 0.3.0. http://www.slack.net/~ant/
 
 #include "Snes_Spc.h"
 
 #include <assert.h>
 #include <string.h>
-#include <cstdio>
 
-/* Copyright (C) 2004-2005 Shay Green. This module is free software; you
+/* Copyright (C) 2004-2006 Shay Green. This module is free software; you
 can redistribute it and/or modify it under the terms of the GNU Lesser
 General Public License as published by the Free Software Foundation; either
 version 2.1 of the License, or (at your option) any later version. This
@@ -20,7 +19,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
 #include BLARGG_SOURCE_BEGIN
 
-Snes_Spc::Snes_Spc() : cpu( ram, this ), dsp( ram )
+// always in the future (CPU time can go over 0, but not by this much)
+int const timer_disabled_time = 127;
+
+Snes_Spc::Snes_Spc() : dsp( ram ), cpu( this, ram )
 {
 	timer [0].shift = 7; // 8 kHz
 	timer [1].shift = 7; // 8 kHz
@@ -32,7 +34,7 @@ Snes_Spc::Snes_Spc() : cpu( ram, this ), dsp( ram )
 
 // Load
 
-const char* Snes_Spc::load_spc( const void* data, long size, int clear_echo_ )
+blargg_err_t Snes_Spc::load_spc( const void* data, long size, bool clear_echo_ )
 {
 	struct spc_file_t {
 		char    signature [27];
@@ -88,7 +90,7 @@ void Snes_Spc::clear_echo()
 
 // Handle other file formats (emulator save states) in user code, not here.
 
-const char* Snes_Spc::load_state( const registers_t& cpu_state, const void* new_ram,
+blargg_err_t Snes_Spc::load_state( const registers_t& cpu_state, const void* new_ram,
 		const void* dsp_state )
 {
 	// cpu
@@ -120,9 +122,11 @@ const char* Snes_Spc::load_state( const registers_t& cpu_state, const void* new_
 	{
 		Timer& t = timer [i];
 		
-		t.enabled = (ram [0xf1] >> i) & 1;
-		t.count = 0;
 		t.next_tick = 0;
+		t.enabled = (ram [0xf1] >> i) & 1;
+		if ( !t.enabled )
+			t.next_tick = timer_disabled_time;
+		t.count = 0;
 		t.counter = ram [0xfd + i] & 15;
 		
 		int p = ram [0xfa + i];
@@ -158,6 +162,8 @@ inline spc_time_t Snes_Spc::time() const
 
 void Snes_Spc::Timer::run_until_( spc_time_t time )
 {
+	if ( !enabled )
+		dprintf( "next_tick: %ld, time: %ld", (long) next_tick, (long) time );
 	assert( enabled ); // when disabled, next_tick should always be in the future
 	
 	int elapsed = ((time - next_tick) >> shift) + 1;
@@ -264,9 +270,10 @@ const unsigned char Snes_Spc::boot_rom [rom_size] = { // verified
 	0x5D, 0xD0, 0xDB, 0x1F, 0x00, 0x00, 0xC0, 0xFF
 };
 
-void Snes_Spc::enable_rom( int enable )
+void Snes_Spc::enable_rom( bool enable )
 {
-	if ( rom_enabled != enable ) {
+	if ( rom_enabled != enable )
+	{
 		rom_enabled = enable;
 		memcpy( ram + rom_addr, (enable ? boot_rom : extra_ram), rom_size );
 	}
@@ -333,7 +340,7 @@ void Snes_Spc::write( spc_addr_t addr, int data )
 				Timer& t = timer [i];
 				if ( !(data & (1 << i)) ) {
 					t.enabled = 0;
-					t.next_tick = 0;
+					t.next_tick = timer_disabled_time;
 				}
 				else if ( !t.enabled ) {
 					// just enabled
@@ -424,7 +431,7 @@ blargg_err_t Snes_Spc::skip( long count )
 blargg_err_t Snes_Spc::play( long count, sample_t* out )
 {
 	require( count % 2 == 0 ); // output is always in pairs of samples
-
+	
 	// CPU time() runs from -duration to 0
 	spc_time_t duration = (count / 2) * clocks_per_sample;
 	
@@ -435,9 +442,11 @@ blargg_err_t Snes_Spc::play( long count, sample_t* out )
 	
 	// Localize timer next_tick times and run them to the present to prevent a running
 	// but ignored timer's next_tick from getting too far behind and overflowing.
-	for ( int i = 0; i < timer_count; i++ ) {
+	for ( int i = 0; i < timer_count; i++ )
+	{
 		Timer& t = timer [i];
-		if ( t.enabled ) {
+		if ( t.enabled )
+		{
 			t.next_tick -= duration;
 			t.run_until( -duration );
 		}

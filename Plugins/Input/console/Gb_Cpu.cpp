@@ -1,5 +1,5 @@
 
-// Game_Music_Emu 0.2.4. http://www.slack.net/~ant/libs/
+// Game_Music_Emu 0.3.0. http://www.slack.net/~ant/
 
 #include "Gb_Cpu.h"
 
@@ -8,7 +8,7 @@
 
 #include "blargg_endian.h"
 
-/* Copyright (C) 2003-2005 Shay Green. This module is free software; you
+/* Copyright (C) 2003-2006 Shay Green. This module is free software; you
 can redistribute it and/or modify it under the terms of the GNU Lesser
 General Public License as published by the Free Software Foundation; either
 version 2.1 of the License, or (at your option) any later version. This
@@ -41,27 +41,25 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 //  10898   CB 37   SWAP A
 //  10208   CB 66   BIT 4,(HL)
 
-static void write_unmapped( Gbs_Emu*, gb_addr_t, int )
-{
-	check( false );
-}
+#if BLARGG_NONPORTABLE
+	#define PAGE_OFFSET( addr ) (addr)
+#else
+	#define PAGE_OFFSET( addr ) ((addr) & (page_size - 1))
+#endif
 
-static int read_unmapped( Gbs_Emu*, gb_addr_t )
+Gb_Cpu::Gb_Cpu( Gbs_Emu* gbs_emu )
 {
-	check( false );
-	return 0;
-}
-
-Gb_Cpu::Gb_Cpu()
-{
+	callback_data = gbs_emu;
 	rst_base = 0;
-	callback_data = NULL;
-	data_writer [page_count] = write_unmapped;
-	data_reader [page_count] = read_unmapped;
 	reset();
 }
 
-void Gb_Cpu::reset( const void* unmapped_code_page )
+inline void Gb_Cpu::set_code_page( int i, uint8_t const* p )
+{
+	code_map [i] = p - PAGE_OFFSET( i * page_size );
+}
+
+void Gb_Cpu::reset( const void* unmapped_code_page, reader_t read, writer_t write )
 {
 	interrupts_enabled = false;
 	remain_ = 0;
@@ -78,32 +76,33 @@ void Gb_Cpu::reset( const void* unmapped_code_page )
 	r.l = 0;
 	
 	for ( int i = 0; i < page_count + 1; i++ )
-		code_map [i] = (const uint8_t*) unmapped_code_page;
-	
-	map_memory( 0, 0x10000, read_unmapped, write_unmapped );
+	{
+		set_code_page( i, (uint8_t*) unmapped_code_page );
+		data_reader [i] = read;
+		data_writer [i] = write;
+	}
 }
 
 void Gb_Cpu::map_code( gb_addr_t start, unsigned long size, const void* data )
 {
-	// start end end must fall on page bounadries
-	require( start % page_size == 0 && size % page_size == 0 );
+	// address range must begin and end on page boundaries
+	require( start % page_size == 0 );
+	require( size % page_size == 0 );
 	
 	unsigned first_page = start / page_size;
 	for ( unsigned i = size / page_size; i--; )
-		code_map [first_page + i] = (uint8_t*) data + i * page_size;
+		set_code_page( first_page + i, (uint8_t*) data + i * page_size );
 }
 
 void Gb_Cpu::map_memory( gb_addr_t start, unsigned long size, reader_t read, writer_t write )
 {
-	// start end end must fall on page bounadries
-	require( start % page_size == 0 && size % page_size == 0 );
+	// address range must begin and end on page boundaries
+	require( start % page_size == 0 );
+	require( size % page_size == 0 );
 	
-	if ( !read )
-		read = read_unmapped;
-	if ( !write )
-		write = write_unmapped;
 	unsigned first_page = start / page_size;
-	for ( unsigned i = size / page_size; i--; ) {
+	for ( unsigned i = size / page_size; i--; )
+	{
 		data_reader [first_page + i] = read;
 		data_writer [first_page + i] = write;
 	}
@@ -115,19 +114,22 @@ void Gb_Cpu::map_memory( gb_addr_t start, unsigned long size, reader_t read, wri
 #define READ( addr )        (data_reader [(addr) >> page_bits]( callback_data, addr ))
 #define WRITE( addr, data ) (data_writer [(addr) >> page_bits]( callback_data, addr, data ))
 
-#define READ_PROG( addr )   (code_map [(addr) >> page_bits] [(addr) & (page_size - 1)])
+#define READ_PROG( addr )   (code_map [(addr) >> page_bits] [PAGE_OFFSET( addr )])
 #define READ_PROG16( addr ) GET_LE16( &READ_PROG( addr ) )
 
-int Gb_Cpu::read( gb_addr_t addr ) {
+int Gb_Cpu::read( gb_addr_t addr )
+{
 	return READ( addr );
 }
 
-BOOST::uint8_t* Gb_Cpu::get_code( gb_addr_t addr ) {
-	return (uint8_t*) &READ_PROG( addr );
+void Gb_Cpu::write( gb_addr_t addr, int data )
+{
+	WRITE( addr, data );
 }
 
-void Gb_Cpu::write( gb_addr_t addr, int data ) {
-	WRITE( addr, data );
+BOOST::uint8_t* Gb_Cpu::get_code( gb_addr_t addr )
+{
+	return (uint8_t*) &READ_PROG( addr );
 }
 
 #ifndef GB_CPU_GLUE_ONLY
@@ -143,6 +145,7 @@ Gb_Cpu::result_t Gb_Cpu::run( long cycle_count )
 {
 	const int cycles_per_instruction = 4;
 	
+	// to do: use cycle table
 	remain_ = cycle_count + cycles_per_instruction;
 	
 	Gb_Cpu::result_t result = result_cycles;
@@ -161,12 +164,14 @@ Gb_Cpu::result_t Gb_Cpu::run( long cycle_count )
 			uint8_t c, b, e, d, l, h, a, unused;
 #   define R8( n ) (r8_ [(n) ^ 1]) 
 #else
-#   error "Byte order of CPU must be known."
+#   error "Byte order of CPU must be known"
 #endif
 		} rg; // registers
+		
 		struct {
 			BOOST::uint16_t bc, de, hl, unused; // pairs
 		} rp;
+		
 		uint8_t r8_ [8]; // indexed registers (use R8 macro due to endian dependence)
 		BOOST::uint16_t r16 [4]; // indexed pairs
 	};
@@ -183,53 +188,41 @@ Gb_Cpu::result_t Gb_Cpu::run( long cycle_count )
 	unsigned sp = r.sp;
 	unsigned flags = r.flags;
 	
-	goto loop;
-	
-	unsigned data;
-	
-jr_taken:
-	pc += (BOOST::int8_t) data;
-inc_pc_loop:
-	pc++;
 loop:
+	
+	int new_remain = remain_ - cycles_per_instruction;
 	
 	check( (unsigned) pc < 0x10000 );
 	check( (unsigned) sp < 0x10000 );
 	check( (flags & ~0xf0) == 0 );
 	
-	// Read opcode and first operand. Optimize if processor's byte order is known
-	// and non-portable constructs are allowed.
-#if BLARGG_NONPORTABLE && BLARGG_BIG_ENDIAN
-	data = *(BOOST::uint16_t*) &READ_PROG( pc );
-	pc++;
-	unsigned op = data >> 8;
-	data = (uint8_t) data;
-
-#elif BLARGG_NONPORTABLE && BLARGG_LITTLE_ENDIAN
-	data = *(BOOST::uint16_t*) &READ_PROG( pc );
-	pc++;
-	unsigned op = (uint8_t) data;
-	data >>= 8;
-
-#else
-	unsigned op = READ_PROG( pc );
-	pc++;
-	data = READ_PROG( pc );
+	uint8_t const* page = code_map [pc >> page_bits];
+	unsigned op = page [PAGE_OFFSET( pc )];
+	unsigned data = page [PAGE_OFFSET( pc ) + 1];
+	check( op == 0xC9 || &READ_PROG( pc + 1 ) == &page [PAGE_OFFSET( pc ) + 1] );
 	
-#endif
+	pc++;
 	
-	if ( (remain_ -= cycles_per_instruction) <= 0 )
+	remain_ = new_remain;
+	if ( new_remain <= 0 )
 		goto stop;
 	
 	switch ( op )
 	{
 
+#define BRANCH( cond )          \
+{                               \
+	pc++;                       \
+	int offset = (BOOST::int8_t) data;  \
+	if ( !(cond) ) goto loop;   \
+	pc += offset;               \
+	goto loop;                  \
+}
+
 // Most Common
 
 	case 0x20: // JR NZ
-		if ( !(flags & z_flag) )
-			goto jr_taken;
-		goto inc_pc_loop;
+		BRANCH( !(flags & z_flag) )
 	
 	case 0x21: // LD HL,IMM (common)
 		rp.hl = READ_PROG16( pc );
@@ -237,9 +230,7 @@ loop:
 		goto loop;
 	
 	case 0x28: // JR Z
-		if ( flags & z_flag )
-			goto jr_taken;
-		goto inc_pc_loop;
+		BRANCH( flags & z_flag )
 	
 	{
 		unsigned temp;
@@ -326,9 +317,9 @@ loop:
 		data = pc + 2;
 		pc = READ_PROG16( pc );
 	push:
-		sp--;
+		sp = (sp - 1) & 0xFFFF;
 		WRITE( sp, data >> 8 );
-		sp--;
+		sp = (sp - 1) & 0xFFFF;
 		WRITE( sp, data & 0xff );
 		goto loop;
 	
@@ -338,8 +329,8 @@ loop:
 	case 0xC9: // RET (most common)
 	ret:
 		pc = READ( sp );
-		pc += 0x100 * READ( sp + 1 );
-		sp += 2;
+		pc += 0x100 * READ( (sp + 1) & 0xFFFF );
+		sp = (sp + 2) & 0xFFFF;
 		goto loop;
 	
 	case 0x00: // NOP
@@ -628,35 +619,43 @@ loop:
 	
 	case 0x06: // LD B,IMM
 		rg.b = data;
-		goto inc_pc_loop;
+		pc++;
+		goto loop;
 	
 	case 0x0E: // LD C,IMM
 		rg.c = data;
-		goto inc_pc_loop;
+		pc++;
+		goto loop;
 	
 	case 0x16: // LD D,IMM
 		rg.d = data;
-		goto inc_pc_loop;
+		pc++;
+		goto loop;
 	
 	case 0x1E: // LD E,IMM
 		rg.e = data;
-		goto inc_pc_loop;
+		pc++;
+		goto loop;
 	
 	case 0x26: // LD H,IMM
 		rg.h = data;
-		goto inc_pc_loop;
+		pc++;
+		goto loop;
 	
 	case 0x2E: // LD L,IMM
 		rg.l = data;
-		goto inc_pc_loop;
+		pc++;
+		goto loop;
 	
 	case 0x36: // LD (HL),IMM
 		WRITE( rp.hl, data );
-		goto inc_pc_loop;
+		pc++;
+		goto loop;
 	
 	case 0x3E: // LD A,IMM
 		rg.a = data;
-		goto inc_pc_loop;
+		pc++;
+		goto loop;
 
 // Increment/Decrement
 
@@ -667,7 +666,7 @@ loop:
 		goto loop;
 	
 	case 0x33: // INC SP
-		sp++;
+		sp = (sp + 1) & 0xFFFF;
 		goto loop;
 
 	case 0x0B: // DEC BC
@@ -677,7 +676,7 @@ loop:
 		goto loop;
 	
 	case 0x3B: // DEC SP
-		sp--;
+		sp = (sp - 1) & 0xFFFF;
 		goto loop;
 	
 	case 0x34: // INC (HL)
@@ -731,7 +730,7 @@ loop:
 		unsigned prev;
 		
 	case 0xF8: // LD HL,SP+imm
-		temp = BOOST::int8_t (data) & 0xffff; // sign-extend to 16 bits
+		temp = BOOST::int8_t (data); // sign-extend to 16 bits
 		pc++;
 		flags = 0;
 		temp += sp;
@@ -739,12 +738,12 @@ loop:
 		goto add_16_hl;
 	
 	case 0xE8: // ADD SP,IMM
-		temp = BOOST::int8_t (data) & 0xffff; // sign-extend to 16 bits
+		temp = BOOST::int8_t (data); // sign-extend to 16 bits
 		pc++;
 		flags = 0;
 		temp += sp;
 		prev = sp;
-		sp = temp;
+		sp = temp & 0xffff;
 		goto add_16_comm;
 
 	case 0x39: // ADD HL,SP
@@ -934,15 +933,15 @@ loop:
 	case 0xD1: // POP DE
 	case 0xE1:{// POP HL (common)
 		int temp = READ( sp );
-		r16 [(op >> 4) & 3] = temp + 0x100 * READ( sp + 1 );
-		sp += 2;
+		r16 [(op >> 4) & 3] = temp + 0x100 * READ( (sp + 1) & 0xFFFF );
+		sp = (sp + 2) & 0xFFFF;
 		goto loop;
 	}
 	
 	case 0xF1: // POP FA
 		rg.a = READ( sp );
-		flags = READ( sp + 1 ) & 0xf0;
-		sp += 2;
+		flags = READ( (sp + 1) & 0xFFFF ) & 0xf0;
+		sp = (sp + 2) & 0xFFFF;
 		goto loop;
 
 	case 0xC5: // PUSH BC
@@ -1007,17 +1006,13 @@ loop:
 		goto loop;
 
 	case 0x18: // JR
-		goto jr_taken;
+		BRANCH( true )
 	
 	case 0x30: // JR NC
-		if ( !(flags & c_flag) )
-			goto jr_taken;
-		goto inc_pc_loop;
+		BRANCH( !(flags & c_flag) )
 	
 	case 0x38: // JR C
-		if ( flags & c_flag )
-			goto jr_taken;
-		goto inc_pc_loop;
+		BRANCH( flags & c_flag )
 	
 	case 0xE9: // JP_HL
 		pc = rp.hl;
@@ -1093,7 +1088,8 @@ loop:
 		goto stop;
 	}
 	
-	assert( false ); // all opcodes should end with a goto
+	// If this fails then the case above is missing an opcode
+	assert( false );
 	
 stop:
 	pc--;

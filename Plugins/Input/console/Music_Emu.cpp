@@ -1,11 +1,11 @@
 
-// Game_Music_Emu 0.2.4. http://www.slack.net/~ant/libs/
+// Game_Music_Emu 0.3.0. http://www.slack.net/~ant/
 
 #include "Music_Emu.h"
 
 #include <string.h>
 
-/* Copyright (C) 2003-2005 Shay Green. This module is free software; you
+/* Copyright (C) 2003-2006 Shay Green. This module is free software; you
 can redistribute it and/or modify it under the terms of the GNU Lesser
 General Public License as published by the Free Software Foundation; either
 version 2.1 of the License, or (at your option) any later version. This
@@ -18,11 +18,17 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
 #include BLARGG_SOURCE_BEGIN
 
+Music_Emu::equalizer_t const Music_Emu::tv_eq = { -8.0, 180 };
+
 Music_Emu::Music_Emu()
 {
+	equalizer_.treble = -1.0;
+	equalizer_.bass = 60;
+	sample_rate_ = 0;
+	voice_count_ = 0;
 	mute_mask_ = 0;
 	track_count_ = 0;
-	voice_count_ = 0;
+	error_count_ = 0;
 	track_ended_ = false;
 }
 
@@ -30,12 +36,14 @@ Music_Emu::~Music_Emu()
 {
 }
 
-void Music_Emu::mute_voices( int )
+blargg_err_t Music_Emu::load_file( const char* path )
 {
-	// empty
+	Std_File_Reader in;
+	BLARGG_RETURN_ERR( in.open( path ) );
+	return load( in );
 }
 
-blargg_err_t Music_Emu::skip( long count )
+void Music_Emu::skip( long count )
 {
 	const int buf_size = 1024;
 	sample_t buf [buf_size];
@@ -46,8 +54,9 @@ blargg_err_t Music_Emu::skip( long count )
 		int saved_mute = mute_mask_;
 		mute_voices( ~0 );
 		
-		while ( count > threshold / 2 ) {
-			BLARGG_RETURN_ERR( play( buf_size, buf ) );
+		while ( count > threshold / 2 )
+		{
+			play( buf_size, buf );
 			count -= buf_size;
 		}
 		
@@ -60,10 +69,8 @@ blargg_err_t Music_Emu::skip( long count )
 		if ( n > count )
 			n = count;
 		count -= n;
-		BLARGG_RETURN_ERR( play( n, buf ) );
+		play( n, buf );
 	}
-	
-	return blargg_success;
 }
 
 const char** Music_Emu::voice_names() const

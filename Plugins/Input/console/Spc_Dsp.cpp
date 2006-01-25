@@ -1,7 +1,7 @@
 
-// Game_Music_Emu 0.2.4. http://www.slack.net/~ant/libs/
+// Game_Music_Emu 0.3.0. http://www.slack.net/~ant/
 
-// Based on Brad Martin's OpenSPC DSP emulator.
+// Based on Brad Martin's OpenSPC DSP emulator
 
 #include "Spc_Dsp.h"
 
@@ -10,7 +10,7 @@
 #include "blargg_endian.h"
 
 /* Copyright (C) 2002 Brad Martin */
-/* Copyright (C) 2004-2005 Shay Green. This module is free software; you
+/* Copyright (C) 2004-2006 Shay Green. This module is free software; you
 can redistribute it and/or modify it under the terms of the GNU Lesser
 General Public License as published by the Free Software Foundation; either
 version 2.1 of the License, or (at your option) any later version. This
@@ -25,10 +25,17 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
 Spc_Dsp::Spc_Dsp( uint8_t* ram_ ) : ram( ram_ )
 {
-	voices_muted = 0;
 	set_gain( 1.0 );
+	mute_voices( 0 );
+	disable_surround( false );
 	
 	BOOST_STATIC_ASSERT( sizeof (g) == register_count && sizeof (voice) == register_count );
+}
+
+void Spc_Dsp::mute_voices( int mask )
+{
+	for ( int i = 0; i < voice_count; i++ )
+		voice_state [i].enabled = (mask >> i & 1) ? 31 : 7;
 }
 
 void Spc_Dsp::reset()
@@ -42,13 +49,16 @@ void Spc_Dsp::reset()
 	g.flags = 0xE0; // reset, mute, echo off
 	g.key_ons = 0;
 	
-	for ( int i = 0; i < voice_count; i++ ) {
-		voice_state [i].on_cnt = 0;
-		voice_state [i].envstate = state_release;
+	for ( int i = 0; i < voice_count; i++ )
+	{
+		voice_t& v = voice_state [i];
+		v.on_cnt = 0;
+		v.volume [0] = 0;
+		v.volume [1] = 0;
+		v.envstate = state_release;
 	}
 	
 	memset( fir_buf, 0, sizeof fir_buf );
-	memset( voice_vol, 0, sizeof voice_vol );
 }
 
 void Spc_Dsp::write( int i, int data )
@@ -62,17 +72,18 @@ void Spc_Dsp::write( int i, int data )
 		// voice volume
 		case 0:
 		case 1: {
-			int left = (int8_t) reg [i & ~1];
+			short* volume = voice_state [high].volume;
+			int left  = (int8_t) reg [i & ~1];
 			int right = (int8_t) reg [i | 1];
-			voice_vol [high] [0] = left; 
-			voice_vol [high] [1] = right; 
+			volume [0] = left;
+			volume [1] = right;
 			// kill surround only if signs of volumes differ
-			if ( left * right < 0 )
+			if ( left * right < surround_threshold )
 			{
 				if ( left < 0 )
-					voice_vol [high] [0] = -left;
+					volume [0] = -left;
 				else
-					voice_vol [high] [1] = -right;
+					volume [1] = -right;
 			}
 			break;
 		}
@@ -89,7 +100,8 @@ void Spc_Dsp::write( int i, int data )
 // The counter starts at 30720 (0x7800). Each count divides exactly into
 // 0x7800 without remainder.
 const int env_rate_init = 0x7800;
-static const short env_rates [0x20] = {
+static const short env_rates [0x20] =
+{
 	0x0000, 0x000F, 0x0014, 0x0018, 0x001E, 0x0028, 0x0030, 0x003C,
 	0x0050, 0x0060, 0x0078, 0x00A0, 0x00C0, 0x00F0, 0x0140, 0x0180,
 	0x01E0, 0x0280, 0x0300, 0x03C0, 0x0500, 0x0600, 0x0780, 0x0A00,
@@ -98,7 +110,7 @@ static const short env_rates [0x20] = {
 
 const int env_range = 0x800;
 
-int Spc_Dsp::clock_envelope( int v )
+inline int Spc_Dsp::clock_envelope( int v )
 {                               /* Return value is current 
 								 * ENVX */
 	raw_voice_t& raw_voice = this->voice [v];
@@ -116,7 +128,8 @@ int Spc_Dsp::clock_envelope( int v )
 		 * no need for a count because it always happens every update. 
 		 */
 		envx -= env_range / 256;
-		if ( envx <= 0 ) {
+		if ( envx <= 0 )
+		{
 			envx = 0;
 			keys &= ~(1 << v);
 			return -1;
@@ -135,17 +148,20 @@ int Spc_Dsp::clock_envelope( int v )
 			case state_attack: {
 				// increase envelope by 1/64 each step
 				int t = adsr1 & 15;
-				if ( t == 15 ) {
+				if ( t == 15 )
+				{
 					envx += env_range / 2;
 				}
-				else {
+				else
+				{
 					cnt -= env_rates [t * 2 + 1];
 					if ( cnt > 0 )
 						break;
 					envx += env_range / 64;
 					cnt = env_rate_init;
 				}
-				if ( envx >= env_range ) {
+				if ( envx >= env_range )
+				{
 					envx = env_range - 1;
 					voice.envstate = state_decay;
 				}
@@ -159,7 +175,8 @@ int Spc_Dsp::clock_envelope( int v )
 				// Multiplying ENVX by 255/256 every time DECAY is
 				// updated. 
 				cnt -= env_rates [((adsr1 >> 3) & 0xE) + 0x10];
-				if ( cnt <= 0 ) {
+				if ( cnt <= 0 )
+				{
 					cnt = env_rate_init;
 					envx -= ((envx - 1) >> 8) + 1;
 					voice.envx = envx;
@@ -176,11 +193,16 @@ int Spc_Dsp::clock_envelope( int v )
 				// Multiplying ENVX by 255/256 every time SUSTAIN is
 				// updated. 
 				cnt -= env_rates [raw_voice.adsr [1] & 0x1f];
-				if ( cnt <= 0 ) {
+				if ( cnt <= 0 )
+				{
 					cnt = env_rate_init;
 					envx -= ((envx - 1) >> 8) + 1;
 					voice.envx = envx;
 				}
+				break;
+			
+			case state_release:
+				// handled above
 				break;
 		}
 	}
@@ -210,7 +232,8 @@ int Spc_Dsp::clock_envelope( int v )
 				break;
 			cnt = env_rate_init;
 			envx -= env_range / 64;
-			if ( envx < 0 ) {
+			if ( envx < 0 )
+			{
 				envx = 0;
 				if ( voice.envstate == state_attack )
 					voice.envstate = state_decay;
@@ -225,7 +248,8 @@ int Spc_Dsp::clock_envelope( int v )
 				break;
 			cnt = env_rate_init;
 			envx -= ((envx - 1) >> 8) + 1;
-			if ( envx < 0 ) {
+			if ( envx < 0 )
+			{
 				envx = 0;
 				if ( voice.envstate == state_attack )
 					voice.envstate = state_decay;
@@ -275,7 +299,7 @@ inline int clamp_16( int n )
 
 void Spc_Dsp::run( long count, short* out_buf )
 {
-	// to do: make clock_envelope() inline to avoid out-of-line calls?
+	// to do: make clock_envelope() inline so that this becomes a leaf function?
 	
 	// Should we just fill the buffer with silence? Flags won't be cleared
 	// during this run so it seems it should keep resetting every sample.
@@ -289,10 +313,12 @@ void Spc_Dsp::run( long count, short* out_buf )
 	
 	const src_dir* const sd = (src_dir*) &ram [g.wave_page * 0x100];
 	
-	int const left_volume = g.left_volume * emu_gain;
-	int right_volume = g.right_volume * emu_gain;
-	if ( left_volume * right_volume < 0 )
+	int left_volume  = g.left_volume;
+	int right_volume = g.right_volume;
+	if ( left_volume * right_volume < surround_threshold )
 		right_volume = -right_volume; // kill global surround
+	left_volume  *= emu_gain;
+	right_volume *= emu_gain;
 	
 	while ( --count >= 0 )
 	{
@@ -305,15 +331,14 @@ void Spc_Dsp::run( long count, short* out_buf )
 		
 		g.wave_ended &= ~g.key_ons; // Keying on a voice resets that bit in ENDX.
 		
-		if ( g.noise_enables ) {
+		if ( g.noise_enables )
+		{
 			noise_count -= env_rates [g.flags & 0x1F];
-			if ( noise_count <= 0 ) {
+			if ( noise_count <= 0 )
+			{
 				noise_count = env_rate_init;
 				
-				if ( noise & 0x4000 )
-					noise_amp += (noise & 1) ? noise : -noise;
-				else
-					noise_amp >>= 1;
+				noise_amp = BOOST::int16_t (noise * 2);
 				
 				int feedback = (noise << 13) ^ (noise << 14);
 				noise = (feedback & 0x4000) | (noise >> 1);
@@ -356,20 +381,23 @@ void Spc_Dsp::run( long count, short* out_buf )
 				voice.envstate = state_attack;
 			}
 			
-			if ( g.key_ons & vbit & ~g.key_offs ) {
+			if ( g.key_ons & vbit & ~g.key_offs )
+			{
 				// voice doesn't come on if key off is set
 				g.key_ons &= ~vbit;
 				voice.on_cnt = 8;
 			}
 			
-			if ( keys & g.key_offs & vbit ) {
+			if ( keys & g.key_offs & vbit )
+			{
 				// key off
 				voice.envstate = state_release;
 				voice.on_cnt = 0;
 			}
 			
 			int envx;
-			if ( !(keys & vbit) || (envx = clock_envelope( vidx )) < 0 ) {
+			if ( !(keys & vbit) || (envx = clock_envelope( vidx )) < 0 )
+			{
 				raw_voice.envx = 0;
 				raw_voice.outx = 0;
 				prev_outx = 0;
@@ -385,11 +413,13 @@ void Spc_Dsp::run( long count, short* out_buf )
 					{
 						g.wave_ended |= vbit;
 					
-						if ( voice.block_header & 2 ) {
+						if ( voice.block_header & 2 )
+						{
 							// verified (played endless looping sample and ENDX was set)
 							voice.addr = GET_LE16( sd [raw_voice.waveform].loop );
 						}
-						else {
+						else
+						{
 							// first block was end block; don't play anything (verified)
 							goto sample_ended; // to do: find alternative to goto
 						}
@@ -409,7 +439,8 @@ void Spc_Dsp::run( long count, short* out_buf )
 					raw_voice.envx = 0;
 					voice.envx = 0;
 					// add silence samples to interpolation buffer
-					do {
+					do
+					{
 						voice.interp3 = voice.interp2;
 						voice.interp2 = voice.interp1;
 						voice.interp1 = voice.interp0;
@@ -420,7 +451,8 @@ void Spc_Dsp::run( long count, short* out_buf )
 				}
 				
 				int delta = ram [voice.addr];
-				if ( voice.block_remain & 1 ) {
+				if ( voice.block_remain & 1 )
+				{
 					delta <<= 4; // use lower nybble
 					voice.addr++;
 				}
@@ -474,50 +506,45 @@ void Spc_Dsp::run( long count, short* out_buf )
 			}
 			
 			// rate (with possible modulation)
-			int rate = GET_LE16( raw_voice.rate ) & 0x3fff;
+			int rate = GET_LE16( raw_voice.rate ) & 0x3FFF;
 			if ( g.pitch_mods & vbit )
 				rate = (rate * (prev_outx + 32768)) >> 15;
 			
-			// fraction
-			int fraction = voice.fraction & 0xfff;
-			voice.fraction = fraction + rate;
-			fraction >>= 4;
-			
 			// Gaussian interpolation using most recent 4 samples
-			const short* table = gauss [fraction];
-			const short* table2 = gauss [255 - fraction];
+			int index = voice.fraction >> 2 & 0x3FC;
+			voice.fraction = (voice.fraction & 0x0FFF) + rate;
+			const BOOST::int16_t* table  = (BOOST::int16_t*) ((char*) gauss + index);
+			const BOOST::int16_t* table2 = (BOOST::int16_t*) ((char*) gauss + (255*4 - index));
 			int s = ((table  [0] * voice.interp3) >> 12) +
-					((table  [1] * voice.interp2) >> 12) +
-					((table2 [1] * voice.interp1) >> 12) +
+					((table  [1] * voice.interp2) >> 12);
+			s +=    ((table2 [1] * voice.interp1) >> 12) +
+			// to do: should clamp here
 					((table2 [0] * voice.interp0) >> 12);
-			int output = noise_amp; // noise is almost never used
+			int output = noise_amp; // noise is rarely used
 			if ( !(g.noise_enables & vbit) )
 				output = clamp_16( s * 2 );
 			
-			int muted = vbit & voices_muted;
-			
 			// scale output and set outx values
-			output = ((output * envx) >> 11) & ~1;
+			output = (output * envx) >> 11 & ~1;
+			
+			// output and apply muting (by setting voice.enabled to 31)
+			// if voice is externally disabled (not a SNES feature)
+			int l = (voice.volume [0] * output) >> voice.enabled;
+			int r = (voice.volume [1] * output) >> voice.enabled;
 			prev_outx = output;
 			raw_voice.outx = output >> 8;
-			
-			// apply muting if voice is externally disabled (not a SNES feature)
-			if ( muted )
-				output = 0;
-			
-			// output
-			int l = (voice_vol [vidx] [0] * output) >> 7;
-			int r = (voice_vol [vidx] [1] * output) >> 7;
-			if ( g.echo_ons & vbit ) {
+			if ( g.echo_ons & vbit )
+			{
 				echol += l;
 				echor += r;
 			}
 			left += l;
 			right += r;
-		} // end of channel loop
+		}
+		// end of channel loop
 		
 		// main volume control
-		left = (left * left_volume) >> (7 + emu_gain_bits);
+		left  = (left  * left_volume ) >> (7 + emu_gain_bits);
 		right = (right * right_volume) >> (7 + emu_gain_bits);
 		
 		// Echo FIR filter
@@ -528,7 +555,7 @@ void Spc_Dsp::run( long count, short* out_buf )
 		echo_ptr += 4;
 		if ( echo_ptr >= (g.echo_delay & 15) * 0x800 )
 			echo_ptr = 0;
-		int fb_left = (BOOST::int16_t) GET_LE16( echo_buf ); // sign-extend
+		int fb_left  = (BOOST::int16_t) GET_LE16( echo_buf     ); // sign-extend
 		int fb_right = (BOOST::int16_t) GET_LE16( echo_buf + 2 ); // sign-extend
 		this->echo_ptr = echo_ptr;
 		
@@ -560,24 +587,23 @@ void Spc_Dsp::run( long count, short* out_buf )
 				fir_pos [6] [1] * fir_coeff [1] +
 				fir_pos [7] [1] * fir_coeff [0];
 		
-		// overlap calculations with tests
-		left += (fb_left * g.left_echo_volume) >> 14;
+		left  += (fb_left  * g.left_echo_volume ) >> 14;
+		right += (fb_right * g.right_echo_volume) >> 14;
 		
 		// echo buffer feedback
-		if ( !(g.flags & 0x20) ) {
-			echol += (fb_left * g.echo_feedback) >> 14;
+		if ( !(g.flags & 0x20) )
+		{
+			echol += (fb_left  * g.echo_feedback) >> 14;
 			echor += (fb_right * g.echo_feedback) >> 14;
-			SET_LE16( echo_buf, clamp_16( echol ) );
+			SET_LE16( echo_buf    , clamp_16( echol ) );
 			SET_LE16( echo_buf + 2, clamp_16( echor ) );
 		}
-		
-		right += (fb_right * g.right_echo_volume) >> 14;
 		
 		if ( out_buf )
 		{
 			// write final samples
 			
-			left = clamp_16( left );
+			left  = clamp_16( left  );
 			right = clamp_16( right );
 			
 			int mute = g.flags & 0x40;
@@ -587,7 +613,8 @@ void Spc_Dsp::run( long count, short* out_buf )
 			out_buf += 2;
 			
 			// muting
-			if ( mute ) {
+			if ( mute )
+			{
 				out_buf [-2] = 0;
 				out_buf [-1] = 0;
 			}
@@ -595,19 +622,14 @@ void Spc_Dsp::run( long count, short* out_buf )
 	}
 }
 
-// Base normal_gauss table is very close to the following:
-#if 0
-double e = 2.718281828;
-for ( int i = 0; i < 512; i++ ) {
-	double x = i / 511.0 * 2.31 - 0.05;
-	double y = pow( e, -x * x ) * 1305.64;
-	normal_gauss [i] = y - 16.54;
-}
-#endif
+// Base normal_gauss table is almost exactly (with an error of 0 or -1 for each entry):
+// int normal_gauss [512];
+// normal_gauss [i] = exp((i-511)*(i-511)*-9.975e-6)*pow(sin(0.00307096*i),1.7358)*1304.45
 
 // Interleved gauss table (to improve cache coherency).
-// gauss [i] [j] = normal_gauss [(1 - j) * 256 + i]
-const short Spc_Dsp::gauss [256] [2] = {
+// gauss [i * 2 + j] = normal_gauss [(1 - j) * 256 + i]
+const BOOST::int16_t Spc_Dsp::gauss [512] =
+{
  370,1305, 366,1305, 362,1304, 358,1304, 354,1304, 351,1304, 347,1304, 343,1303,
  339,1303, 336,1303, 332,1302, 328,1302, 325,1301, 321,1300, 318,1300, 314,1299,
  311,1298, 307,1297, 304,1297, 300,1296, 297,1295, 293,1294, 290,1293, 286,1292,

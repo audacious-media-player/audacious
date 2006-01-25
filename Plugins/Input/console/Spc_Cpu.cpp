@@ -1,5 +1,5 @@
 
-// Game_Music_Emu 0.2.4. http://www.slack.net/~ant/libs/
+// Game_Music_Emu 0.3.0. http://www.slack.net/~ant/
 
 #include "Spc_Cpu.h"
 
@@ -8,7 +8,7 @@
 #include "blargg_endian.h"
 #include "Snes_Spc.h"
 
-/* Copyright (C) 2004-2005 Shay Green. This module is free software; you
+/* Copyright (C) 2004-2006 Shay Green. This module is free software; you
 can redistribute it and/or modify it under the terms of the GNU Lesser
 General Public License as published by the Free Software Foundation; either
 version 2.1 of the License, or (at your option) any later version. This
@@ -39,9 +39,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 //  2%  0xF6    MOV A,abs+Y
 // (1% and below not shown)
 
-Spc_Cpu::Spc_Cpu( uint8_t* ram_, Snes_Spc* e ) :
-	ram( ram_ ),
-	emu( *e )
+Spc_Cpu::Spc_Cpu( Snes_Spc* e, uint8_t* ram_in ) : ram( ram_in ), emu( *e )
 {
 	remain_ = 0;
 	BOOST_STATIC_ASSERT( sizeof (int) >= 4 );
@@ -68,22 +66,23 @@ void Spc_Cpu::write( spc_addr_t addr, int data )
 
 // Cycle table derived from text copy of SPC-700 manual (using regular expressions)
 static const unsigned char cycle_table [0x100] = {
-	2,8,4,5,3,4,3,6,2,6,5,4,5,4,6,8,
-	2,8,4,5,4,5,5,6,5,5,6,5,2,2,4,6,
-	2,8,4,5,3,4,3,6,2,6,5,4,5,4,5,4,
-	2,8,4,5,4,5,5,6,5,5,6,5,2,2,3,8,
-	2,8,4,5,3,4,3,6,2,6,4,4,5,4,6,6,
-	2,8,4,5,4,5,5,6,5,5,4,5,2,2,4,3,
-	2,8,4,5,3,4,3,6,2,6,4,4,5,4,5,5,
-	2,8,4,5,4,5,5,6,5,5,5,5,2,2,3,6,
-	2,8,4,5,3,4,3,6,2,6,5,4,5,2,4,5,
-	2,8,4,5,4,5,5,6,5,5,5,5,2,2,12,5,
-	3,8,4,5,3,4,3,6,2,6,4,4,5,2,4,4,
-	2,8,4,5,4,5,5,6,5,5,5,5,2,2,3,4,
-	3,8,4,5,4,5,4,7,2,5,6,4,5,2,4,9,
-	2,8,4,5,5,6,6,7,4,5,4,5,2,2,6,3,
-	2,8,4,5,3,4,3,6,2,4,5,3,4,3,4,3,
-	2,8,4,5,4,5,5,6,3,4,5,4,2,2,4,3
+//  0 1 2 3 4 5 6 7 8 9 A B C D E F
+	2,8,4,5,3,4,3,6,2,6,5,4,5,4,6,8, // 0
+	2,8,4,5,4,5,5,6,5,5,6,5,2,2,4,6, // 1
+	2,8,4,5,3,4,3,6,2,6,5,4,5,4,5,4, // 2
+	2,8,4,5,4,5,5,6,5,5,6,5,2,2,3,8, // 3
+	2,8,4,5,3,4,3,6,2,6,4,4,5,4,6,6, // 4
+	2,8,4,5,4,5,5,6,5,5,4,5,2,2,4,3, // 5
+	2,8,4,5,3,4,3,6,2,6,4,4,5,4,5,5, // 6
+	2,8,4,5,4,5,5,6,5,5,5,5,2,2,3,6, // 7
+	2,8,4,5,3,4,3,6,2,6,5,4,5,2,4,5, // 8
+	2,8,4,5,4,5,5,6,5,5,5,5,2,2,12,5,// 9
+	3,8,4,5,3,4,3,6,2,6,4,4,5,2,4,4, // A
+	2,8,4,5,4,5,5,6,5,5,5,5,2,2,3,4, // B
+	3,8,4,5,4,5,4,7,2,5,6,4,5,2,4,9, // C
+	2,8,4,5,5,6,6,7,4,5,4,5,2,2,6,3, // D
+	2,8,4,5,3,4,3,6,2,4,5,3,4,3,4,3, // E
+	2,8,4,5,4,5,5,6,3,4,5,4,2,2,4,3  // F
 };
 
 // The C,mem instructions are hardly used, so a non-inline function is used for
@@ -101,9 +100,7 @@ spc_time_t Spc_Cpu::run( spc_time_t cycle_count )
 {
 	remain_ = cycle_count;
 	
-#if BLARGG_CPU_POWERPC
 	uint8_t* const ram = this->ram; // cache
-#endif
 	
 	// Stack pointer is kept one greater than usual SPC stack pointer to allow
 	// common pre-decrement and post-increment memory instructions that some
@@ -134,30 +131,27 @@ spc_time_t Spc_Cpu::run( spc_time_t cycle_count )
 	const int st_z = 0x02;
 	const int st_c = 0x01;
 	
-	// Special encoding for negative and zero being set simultaneously (by POP PSW).
-	// To do: be sure this works properly (I copied it from my NES 6502 emulator).
-	#define IS_NEG (int ((nz + 0x800) | (nz << (CHAR_BIT * sizeof (int) - 8))) < 0)
+	#define IS_NEG (nz & 0x880)
 	
 	#define CALC_STATUS( out ) do {                 \
 		out = status & ~(st_n | st_z | st_c);       \
 		out |= (c >> 8) & st_c;                     \
 		out |= (dp >> 3) & st_p;                    \
 		if ( IS_NEG ) out |= st_n;                  \
-		if ( !(uint8_t) nz ) out |= st_z;           \
+		if ( !(nz & 0xFF) ) out |= st_z;            \
 	} while ( 0 )       
 
 	#define SET_STATUS( in ) do {                   \
 		status = in & ~(st_n | st_z | st_c | st_p); \
 		c = in << 8;                                \
-		nz = in << 4;                               \
-		nz &= 0x820;                                \
-		nz ^= ~0xDF;                                \
+		nz = (in << 4) & 0x800;                     \
+		nz |= ~in & st_z;                           \
 		dp = (in << 3) & 0x100;                     \
 	} while ( 0 )
 	
 	uint8_t status;
 	int c;  // store C as 'c' & 0x100.
-	int nz; // store Z as 'nz' & 0xFF == 0 (see above for encoding of N)
+	int nz; // Z set if (nz & 0xff) == 0, N set if (nz & 0x880) != 0
 	unsigned dp; // direct page base
 	{
 		int temp = r.status;
@@ -170,42 +164,23 @@ spc_time_t Spc_Cpu::run( spc_time_t cycle_count )
 	
 	// Common endings for instructions
 cbranch_taken_loop: // compare and branch
-	data = READ_PROG( pc );
-branch_taken_loop: // taken branch (displacement already in 'data')
-	pc += (BOOST::int8_t) data; // sign-extend
+	pc += (BOOST::int8_t) READ_PROG( pc );
 	remain_ -= 2;
 inc_pc_loop: // end of instruction with an operand
 	pc++;
 loop:
 	
-	// Be sure all registers are in range. PC and SP wrap-around isn't handled so
-	// those checks might fail, but a, x, and y should always be in range.
 	check( (unsigned) pc < 0x10000 );
 	check( (unsigned) GET_SP() < 0x100 );
-	check( (unsigned) a < 0x100 );
-	check( (unsigned) x < 0x100 );
-	check( (unsigned) y < 0x100 );
 	
-	// Read opcode and first operand. Optimize if processor's byte order is known
-	// and non-portable constructs are allowed.
-#if BLARGG_NONPORTABLE && BLARGG_BIG_ENDIAN
-	data = *(BOOST::uint16_t*) &READ_PROG( pc );
-	pc++;
-	unsigned opcode = data >> 8;
-	data = (uint8_t) data;
-
-#elif BLARGG_NONPORTABLE && BLARGG_LITTLE_ENDIAN
-	data = *(BOOST::uint16_t*) &READ_PROG( pc );
-	pc++;
-	unsigned opcode = (uint8_t) data;
-	data >>= 8;
-
-#else
+	assert( (unsigned) a < 0x100 );
+	assert( (unsigned) x < 0x100 );
+	assert( (unsigned) y < 0x100 );
+	
 	unsigned opcode = READ_PROG( pc );
 	pc++;
+	// to do: if pc is at end of memory, this will get wrong byte
 	data = READ_PROG( pc );
-	
-#endif
 	
 	if ( remain_ <= 0 )
 		goto stop;
@@ -217,11 +192,16 @@ loop:
 	switch ( opcode )
 	{
 	
-	#define BRANCH( cond )      \
-		if ( cond )             \
-			goto branch_taken_loop; \
-		goto inc_pc_loop;
-
+	#define BRANCH( cond ) {        \
+		pc++;                       \
+		int offset = (BOOST::int8_t) data; \
+		if ( cond ) {               \
+			pc += offset;           \
+			remain_ -= 2;           \
+		}                           \
+		goto loop;                  \
+	}
+	
 // Most-Common
 
 	case 0xF0: // BEQ (most common)
@@ -319,7 +299,7 @@ loop:
 		nz = data;
 		goto inc_pc_loop;
 
-// 2. 8-BIT DATA TRANSMISSION COMMANDS. GROUP 2.
+// 2. 8-BIT DATA TRANSMISSION COMMANDS, GROUP 2
 
 	ADDR_MODES( 0xC8 ) // MOV addr,A
 		WRITE( data, a );
@@ -394,7 +374,7 @@ loop:
 		x++;
 		goto loop;
 	
-// 5. 8-BIT LOGIC OPERATION COMMANDS.
+// 5. 8-BIT LOGIC OPERATION COMMANDS
 	
 #define LOGICAL_OP( op, func )  \
 	ADDR_MODES( op ) /* addr */ \
@@ -425,19 +405,21 @@ loop:
 	
 	LOGICAL_OP( 0x48, ^ ); // EOR
 	
-// 4. 8-BIT ARITHMETIC OPERATION COMMANDS.
+// 4. 8-BIT ARITHMETIC OPERATION COMMANDS
 
 	ADDR_MODES( 0x68 ) // CMP addr
 		data = READ( data );
 	case 0x68: // CMP imm
 		nz = a - data;
 		c = ~nz;
+		nz &= 0xff;
 		goto inc_pc_loop;
 	
 	case 0x79: // CMP (X),(Y)
 		data = READ_DP( x );
 		nz = data - READ_DP( y );
 		c = ~nz;
+		nz &= 0xff;
 		goto loop;
 	
 	case 0x69: // CMP (dp),(dp)
@@ -446,6 +428,7 @@ loop:
 		pc++;
 		nz = READ_DP( READ_PROG( pc ) ) - data;
 		c = ~nz;
+		nz &= 0xff;
 		goto inc_pc_loop;
 	
 	case 0x3E: // CMP X,dp
@@ -459,6 +442,7 @@ loop:
 	case 0xC8: // CMP X,imm
 		nz = x - data;
 		c = ~nz;
+		nz &= 0xff;
 		goto inc_pc_loop;
 	
 	case 0x7E: // CMP Y,dp
@@ -472,6 +456,7 @@ loop:
 	case 0xAD: // CMP Y,imm
 		nz = y - data;
 		c = ~nz;
+		nz &= 0xff;
 		goto inc_pc_loop;
 	
 	{
@@ -521,7 +506,7 @@ loop:
 	
 	}
 	
-// 6. ADDITION & SUBTRACTION COMMANDS.
+// 6. ADDITION & SUBTRACTION COMMANDS
 
 #define INC_DEC_REG( reg, n )   \
 		nz = reg + n;           \
@@ -638,7 +623,7 @@ loop:
 		WRITE_DP( uint8_t (data + 1), y );
 		goto inc_pc_loop;
 	
-// 9. 16-BIT OPERATION COMMANDS.
+// 9. 16-BIT OPERATION COMMANDS
 
 	case 0x3A: // INCW dp
 	case 0x1A:{// DECW dp
@@ -685,7 +670,7 @@ loop:
 		// add high byte (Y)
 		temp >>= 8;
 		c = y + temp;
-		nz |= c;
+		nz = (nz | c) & 0xff;
 		
 		// half-carry (temporary avoids CodeWarrior optimizer bug)
 		unsigned hc = (c & 15) - (y & 15);
@@ -706,10 +691,11 @@ loop:
 		temp -= READ_DP( uint8_t (data + 1) );
 		nz |= temp;
 		c = ~temp;
+		nz &= 0xff;
 		goto inc_pc_loop;
 	}
 	
-// 10. MULTIPLICATION & DIVISON COMMANDS.
+// 10. MULTIPLICATION & DIVISON COMMANDS
 
 	case 0xCF: { // MUL YA
 		unsigned temp = y * a;
@@ -726,22 +712,22 @@ loop:
 		
 		status &= ~(st_h | st_v);
 		
-		if ( y >= x )
-			status |= st_v;
-		
 		if ( (y & 15) >= (x & 15) )
 			status |= st_h;
 		
-		unsigned temp = y * 0x100 + a;
-		if ( y < x * 2 ) {
-			a = temp / x;
-			y = temp - a * x;
+		if ( y >= x )
+			status |= st_v;
+		
+		unsigned ya = y * 0x100 + a;
+		if ( y < x * 2 )
+		{
+			a = ya / x;
+			y = ya - a * x;
 		}
-		else {
-			temp -= x * 0x200;
-			a = temp / (256 - x);
-			y = temp - a * (256 - x) + x;
-			a = 255 - a;
+		else
+		{
+			a = 255 - (ya - x * 0x200) / (256 - x);
+			y = x   + (ya - x * 0x200) % (256 - x);
 		}
 		
 		nz = (uint8_t) a;
@@ -750,16 +736,17 @@ loop:
 		goto loop;
 	}
 	
-// 11. DECIMAL COMPENSATION COMMANDS.
+// 11. DECIMAL COMPENSATION COMMANDS
 	
 	// seem unused
 	// case 0xDF: // DAA
 	// case 0xBE: // DAS
 	
-// 12. BRANCHING COMMANDS.
+// 12. BRANCHING COMMANDS
 
 	case 0x2F: // BRA rel
-		goto branch_taken_loop;
+		pc += (BOOST::int8_t) data;
+		goto inc_pc_loop;
 	
 	case 0x30: // BMI
 		BRANCH( IS_NEG )
@@ -816,9 +803,7 @@ loop:
 	
 	case 0xFE: // DBNZ Y,rel
 		y = uint8_t (y - 1);
-		if ( y )
-			goto branch_taken_loop;
-		goto inc_pc_loop;
+		BRANCH( y )
 	
 	case 0x6E: { // DBNZ dp,rel
 		pc++;
@@ -836,11 +821,10 @@ loop:
 		pc = READ_PROG16( pc );
 		goto loop;
 	
-// 13. SUB-ROUTINE CALL RETURN COMMANDS.
+// 13. SUB-ROUTINE CALL RETURN COMMANDS
 	
-	/*
-	// seems unused
 	case 0x0F: // BRK
+		check( false ); // untested
 		PUSH16( pc + 1 );
 		pc = READ_PROG16( 0xffde ); // vector address verified
 		int temp;
@@ -848,7 +832,6 @@ loop:
 		PUSH( temp );
 		status = (status | st_b) & ~st_i;
 		goto loop;
-	*/
 	
 	case 0x4F: // PCALL offset
 		pc++;
@@ -876,7 +859,7 @@ loop:
 		pc = READ_PROG16( 0xffde - (opcode >> 3) );
 		goto loop;
 	
-// 14. STACK OPERATION COMMANDS.
+// 14. STACK OPERATION COMMANDS
 
 	{
 		int temp;
@@ -923,7 +906,7 @@ loop:
 		y = POP();
 		goto loop;
 	
-// 15. BIT OPERATION COMMANDS.
+// 15. BIT OPERATION COMMANDS
 
 	case 0x02: // SET1
 	case 0x22:
@@ -967,30 +950,31 @@ loop:
 		c &= mem_bit( pc );
 		pc += 2;
 		goto loop;
-	/*
-	 // seem unused
+	
 	case 0x6A: // AND1 C,/mem.bit
+		check( false ); // untested
 		c &= ~mem_bit( pc );
 		pc += 2;
 		goto loop;
 	
 	case 0x0A: // OR1 C,mem.bit
+		check( false ); // untested
 		c |= mem_bit( pc );
 		pc += 2;
 		goto loop;
 	
 	case 0x2A: // OR1 C,/mem.bit
+		check( false ); // untested
 		c |= ~mem_bit( pc );
 		pc += 2;
 		goto loop;
-	*/
 	
 	case 0x8A: // EOR1 C,mem.bit
 		c ^= mem_bit( pc );
 		pc += 2;
 		goto loop;
 	
-	case 0xEA: { // NOT1 C,mem.bit
+	case 0xEA: { // NOT1 mem.bit
 		data = READ_PROG16( pc );
 		pc += 2;
 		unsigned temp = READ( data & 0x1fff );
@@ -1004,7 +988,7 @@ loop:
 		pc += 2;
 		unsigned temp = READ( data & 0x1fff );
 		unsigned bit = data >> 13;
-		temp = (temp & ~(1 << bit)) | ((c >> (8 - bit)) & 1);
+		temp = (temp & ~(1 << bit)) | (((c >> 8) & 1) << bit);
 		WRITE( data & 0x1fff, temp );
 		goto loop;
 	}
@@ -1014,7 +998,7 @@ loop:
 		pc += 2;
 		goto loop;
 	
-// 16. PROGRAM STATUS FLAG OPERATION COMMANDS.
+// 16. PROGRAM STATUS FLAG OPERATION COMMANDS
 
 	case 0x60: // CLRC
 		c = 0;
@@ -1040,17 +1024,17 @@ loop:
 		dp = 0x100;
 		goto loop;
 	
-	/* // seem unused
 	case 0xA0: // EI
+		check( false ); // untested
 		status |= st_i;
 		goto loop;
 	
 	case 0xC0: // DI
+		check( false ); // untested
 		status &= ~st_i;
 		goto loop;
-	*/
 	
-// 17. OTHER COMMANDS.
+// 17. OTHER COMMANDS
 
 	case 0x00: // NOP
 		goto loop;

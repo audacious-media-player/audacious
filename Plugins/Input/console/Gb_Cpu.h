@@ -1,14 +1,14 @@
 
 // Nintendo Game Boy CPU emulator
 
-// Game_Music_Emu 0.2.4. Copyright (C) 2003-2005 Shay Green. GNU LGPL license.
+// Game_Music_Emu 0.3.0
 
 #ifndef GB_CPU_H
 #define GB_CPU_H
 
 #include "blargg_common.h"
 
-typedef unsigned gb_addr_t; // 16-bit address
+typedef unsigned gb_addr_t; // 16-bit CPU address
 
 class Gbs_Emu;
 
@@ -17,19 +17,19 @@ class Gb_Cpu {
 	typedef BOOST::uint8_t uint8_t;
 	enum { page_bits = 8 };
 	enum { page_count = 0x10000 >> page_bits };
-	const uint8_t* code_map [page_count + 1];
+	uint8_t const* code_map [page_count + 1];
 	long remain_;
+	Gbs_Emu* callback_data;
 public:
-	Gb_Cpu();
 	
-	// Set all registers to 0, unmap all memory, and map all code pages
-	// to unmapped_page.
-	void reset( const void* unmapped_page = NULL );
+	Gb_Cpu( Gbs_Emu* );
 	
-	// Memory read/write function types. Memory reader return value must be 0 to 255.
-	Gbs_Emu* callback_data; // passed to memory read/write functions
-	typedef int (*reader_t)( Gbs_Emu* callback_data, gb_addr_t );
-	typedef void (*writer_t)( Gbs_Emu* callback_data, gb_addr_t, int );
+	// Memory read/write function types. Reader must return value from 0 to 255.
+	typedef int (*reader_t)( Gbs_Emu*, gb_addr_t );
+	typedef void (*writer_t)( Gbs_Emu*, gb_addr_t, int data );
+	
+	// Clear registers, unmap memory, and map code pages to unmapped_page.
+	void reset( const void* unmapped_page = NULL, reader_t read = NULL, writer_t write = NULL );
 	
 	// Memory mapping functions take a block of memory of specified 'start' address
 	// and 'size' in bytes. Both start address and size must be a multiple of page_size.
@@ -44,11 +44,14 @@ public:
 	// Access memory as the emulated CPU does.
 	int  read( gb_addr_t );
 	void write( gb_addr_t, int data );
-	uint8_t* get_code( gb_addr_t ); // for use in a debugger
+	uint8_t* get_code( gb_addr_t ); // non-const to allow debugger to modify code
+	
+	// Push a byte on the stack
+	void push_byte( int );
 	
 	// Game Boy Z80 registers. *Not* kept updated during a call to run().
 	struct registers_t {
-		BOOST::uint16_t pc;
+		long pc; // more than 16 bits to allow overflow detection
 		BOOST::uint16_t sp;
 		uint8_t flags;
 		uint8_t a;
@@ -58,12 +61,13 @@ public:
 		uint8_t e;
 		uint8_t h;
 		uint8_t l;
-	} r;
+	};
+	registers_t r;
 	
-	// Interrupt enable flag set by EI and cleared by DI.
+	// Interrupt enable flag set by EI and cleared by DI
 	bool interrupts_enabled;
 	
-	// Base address for RST vectors (normally 0).
+	// Base address for RST vectors (normally 0)
 	gb_addr_t rst_base;
 	
 	// Reasons that run() returns
@@ -74,10 +78,10 @@ public:
 	};
 	
 	// Run CPU for at least 'count' cycles, or until one of the above conditions
-	// arises. Return reason for stopping.
+	// arises. Returns reason for stopping.
 	result_t run( long count );
 	
-	// Number of clock cycles remaining for current run() call.
+	// Number of clock cycles remaining for most recent run() call
 	long remain() const;
 	
 private:
@@ -85,13 +89,15 @@ private:
 	Gb_Cpu( const Gb_Cpu& );
 	Gb_Cpu& operator = ( const Gb_Cpu& );
 	
-	reader_t data_reader [page_count + 1]; // extra entry to catch overflow addresses
+	reader_t data_reader [page_count + 1]; // extra entry catches address overflow
 	writer_t data_writer [page_count + 1];
+	void set_code_page( int, uint8_t const* );
 };
 
-	inline long Gb_Cpu::remain() const {
-		return remain_;
-	}
+inline long Gb_Cpu::remain() const
+{
+	return remain_;
+}
 
 #endif
 

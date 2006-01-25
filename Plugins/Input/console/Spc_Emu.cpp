@@ -1,12 +1,13 @@
 
-// Game_Music_Emu 0.2.4. http://www.slack.net/~ant/libs/
+// Game_Music_Emu 0.3.0. http://www.slack.net/~ant/
 
 #include "Spc_Emu.h"
 
+#include <stdlib.h>
 #include <string.h>
-#include "abstract_file.h"
+#include "blargg_endian.h"
 
-/* Copyright (C) 2004-2005 Shay Green. This module is free software; you
+/* Copyright (C) 2004-2006 Shay Green. This module is free software; you
 can redistribute it and/or modify it under the terms of the GNU Lesser
 General Public License as published by the Free Software Foundation; either
 version 2.1 of the License, or (at your option) any later version. This
@@ -19,11 +20,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
 #include BLARGG_SOURCE_BEGIN
 
-Spc_Emu::Spc_Emu()
+Spc_Emu::Spc_Emu( double gain )
 {
-	resample_ratio = 1.0;
-	use_resampler = false;
-	track_count_ = 0;
+	apu.set_gain( gain );
 }
 
 Spc_Emu::~Spc_Emu()
@@ -38,62 +37,83 @@ const char** Spc_Emu::voice_names() const
 	return names;
 }
 
-blargg_err_t Spc_Emu::init( long sample_rate, double gain )
+void Spc_Emu::mute_voices( int m )
 {
-	apu.set_gain( gain );
-	use_resampler = false;
-	resample_ratio = (double) native_sample_rate / sample_rate;
+	Music_Emu::mute_voices( m );
+	apu.mute_voices( m );
+}
+
+blargg_err_t Spc_Emu::set_sample_rate( long sample_rate )
+{
 	if ( sample_rate != native_sample_rate )
 	{
 		BLARGG_RETURN_ERR( resampler.buffer_size( native_sample_rate / 20 * 2 ) );
-		resampler.time_ratio( resample_ratio, 0.9965 );
-		use_resampler = true;
+		resampler.time_ratio( (double) native_sample_rate / sample_rate, 0.9965 );
 	}
-	
-	return blargg_success;
+	return Music_Emu::set_sample_rate( sample_rate );
 }
 
-blargg_err_t Spc_Emu::load( const header_t& h, Emu_Reader& in )
+blargg_err_t Spc_Emu::load( Data_Reader& in )
 {
-	if ( in.remain() < sizeof file.data )
+	header_t h;
+	BLARGG_RETURN_ERR( in.read( &h, sizeof h ) );
+	return load( h, in );
+}
+
+blargg_err_t Spc_Emu::load( const header_t& h, Data_Reader& in )
+{
+	if ( in.remain() < Snes_Spc::spc_file_size - (int) sizeof h )
 		return "Not an SPC file";
 	
 	if ( strncmp( h.tag, "SNES-SPC700 Sound File Data", 27 ) != 0 )
 		return "Not an SPC file";
 	
-	track_count_ = 1;
-	voice_count_ = Snes_Spc::voice_count;
+	long remain = in.remain();
+	long size = remain + sizeof h;
+	if ( size < trailer_offset )
+		size = trailer_offset;
+	BLARGG_RETURN_ERR( spc_data.resize( size ) );
 	
-	memcpy( &file.header, &h, sizeof file.header );
-	return in.read( file.data, sizeof file.data );
+	set_track_count( 1 );
+	set_voice_count( Snes_Spc::voice_count );
+	
+	memcpy( spc_data.begin(), &h, sizeof h );
+	return in.read( &spc_data [sizeof h], remain );
 }
 
-blargg_err_t Spc_Emu::start_track( int )
+void Spc_Emu::start_track( int track )
 {
+	Music_Emu::start_track( track );
+	
 	resampler.clear();
-	return apu.load_spc( &file, sizeof file );
+	if ( apu.load_spc( spc_data.begin(), spc_data.size() ) )
+		check( false );
 }
 
-blargg_err_t Spc_Emu::skip( long count )
+void Spc_Emu::skip( long count )
 {
-	count = long (count * resample_ratio) & ~1;
+	count = long (count * resampler.ratio()) & ~1;
 	
 	count -= resampler.skip_input( count );
 	if ( count > 0 )
-		BLARGG_RETURN_ERR( apu.skip( count ) );
+		apu.skip( count );
 	
 	// eliminate pop due to resampler
 	const int resampler_latency = 64;
 	sample_t buf [resampler_latency];
-	return play( resampler_latency, buf );
+	play( resampler_latency, buf );
 }
 
-blargg_err_t Spc_Emu::play( long count, sample_t* out )
+void Spc_Emu::play( long count, sample_t* out )
 {
-	require( track_count_ ); // file must be loaded
+	require( track_count() ); // file must be loaded
 	
-	if ( !use_resampler )
-		return apu.play( count, out );
+	if ( sample_rate() == native_sample_rate )
+	{
+		if ( apu.play( count, out ) )
+			log_error();
+		return;
+	}
 	
 	long remain = count;
 	while ( remain > 0 )
@@ -102,43 +122,12 @@ blargg_err_t Spc_Emu::play( long count, sample_t* out )
 		if ( remain > 0 )
 		{
 			long n = resampler.max_write();
-			BLARGG_RETURN_ERR( apu.play( n, resampler.buffer() ) );
+			if ( apu.play( n, resampler.buffer() ) )
+				log_error();
 			resampler.write( n );
 		}
 	}
 	
 	assert( remain == 0 );
-	
-	return blargg_success;
 }
 
-Spc_Reader::Spc_Reader() : file( NULL ) {
-}
-
-Spc_Reader::~Spc_Reader() {
-	close();
-}
-
-blargg_err_t Spc_Reader::read_head(Spc_Emu::header_t *header) {
-	vfs_fread(&header->tag,     1,35,file);
-	vfs_fread(&header->format,  1, 1,file);
-	vfs_fread(&header->version, 1, 1,file);
-	vfs_fread(&header->pc,      1, 2,file);
-	vfs_fread(&header->a,       1, 1,file);
-	vfs_fread(&header->x,       1, 1,file);
-	vfs_fread(&header->y,       1, 1,file);
-	vfs_fread(&header->psw,     1, 1,file);
-	vfs_fread(&header->sp,      1, 1,file);
-	vfs_fread(&header->unused,  1, 2,file);
-	vfs_fread(&header->song,    1,32,file);
-	vfs_fread(&header->game,    1,32,file);
-	vfs_fread(&header->dumper,  1,16,file);
-	vfs_fread(&header->comment, 1,32,file);
-	vfs_fread(&header->date,    1,11,file);
-	vfs_fread(&header->len_secs,1, 3,file);
-	vfs_fread(&header->fade_msec,1,5,file);
-	vfs_fread(&header->author,  1,32,file);
-	vfs_fread(&header->mute_mask,1,1,file);
-	vfs_fread(&header->emulator,1, 1,file);
-	vfs_fread(&header->unused2, 1,45,file);
-}

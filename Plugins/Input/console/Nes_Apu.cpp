@@ -1,9 +1,9 @@
 
-// Nes_Snd_Emu 0.1.6. http://www.slack.net/~ant/libs/
+// Nes_Snd_Emu 0.1.7. http://www.slack.net/~ant/
 
 #include "Nes_Apu.h"
 
-/* Copyright (C) 2003-2005 Shay Green. This module is free software; you
+/* Copyright (C) 2003-2006 Shay Green. This module is free software; you
 can redistribute it and/or modify it under the terms of the GNU Lesser
 General Public License as published by the Free Software Foundation; either
 version 2.1 of the License, or (at your option) any later version. This
@@ -16,12 +16,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
 #include BLARGG_SOURCE_BEGIN
 
-Nes_Apu::Nes_Apu()
+int const amp_range = 15;
+
+Nes_Apu::Nes_Apu() :
+	square1( &square_synth ),
+	square2( &square_synth )
 {
 	dmc.apu = this;
 	dmc.rom_reader = NULL;
-	square1.synth = &square_synth;
-	square2.synth = &square_synth;
 	irq_notifier_ = NULL;
 	
 	oscs [0] = &square1;
@@ -47,25 +49,30 @@ void Nes_Apu::treble_eq( const blip_eq_t& eq )
 	dmc.synth.treble_eq( eq );
 }
 
-void Nes_Apu::volume( double v, bool nonlinear )
+void Nes_Apu::enable_nonlinear( double v )
 {
-	dmc.nonlinear = nonlinear;
-	if ( nonlinear )
-	{
-		square_synth.volume( 0.25751258 * 0.25 * v );
-		
-		const double tnd = 1.0 / 202 * 0.48;
-		triangle.synth.volume_unit( 3 * tnd );
-		noise.synth.volume_unit( 2 * tnd );
-		dmc.synth.volume_unit( tnd );
-	}
-	else
-	{
-		square_synth.volume( 0.1128 * v );
-		triangle.synth.volume( 0.12765 * v );
-		noise.synth.volume( 0.0741 * v );
-		dmc.synth.volume( 0.42545 * v );
-	}
+	dmc.nonlinear = true;
+	square_synth.volume( 1.3 * 0.25751258 / 0.742467605 * 0.25 / amp_range * v );
+	
+	const double tnd = 0.48 / 202 * nonlinear_tnd_gain();
+	triangle.synth.volume( 3.0 * tnd );
+	noise.synth.volume( 2.0 * tnd );
+	dmc.synth.volume( tnd );
+	
+	square1 .last_amp = 0;
+	square2 .last_amp = 0;
+	triangle.last_amp = 0;
+	noise   .last_amp = 0;
+	dmc     .last_amp = 0;
+}
+
+void Nes_Apu::volume( double v )
+{
+	dmc.nonlinear = false;
+	square_synth.volume(   0.1128  / amp_range * v );
+	triangle.synth.volume( 0.12765 / amp_range * v );
+	noise.synth.volume(    0.0741  / amp_range * v );
+	dmc.synth.volume(      0.42545 / 127 * v );
 }
 
 void Nes_Apu::output( Blip_Buffer* buffer )
@@ -87,6 +94,7 @@ void Nes_Apu::reset( bool pal_mode, int initial_dmc_dac )
 	dmc.reset();
 	
 	last_time = 0;
+	last_dmc_time = 0;
 	osc_enables = 0;
 	irq_flag = false;
 	earliest_irq_ = no_irq;
@@ -98,8 +106,8 @@ void Nes_Apu::reset( bool pal_mode, int initial_dmc_dac )
 		write_register( 0, addr, (addr & 3) ? 0x00 : 0x10 );
 	
 	dmc.dac = initial_dmc_dac;
-	if ( !dmc.nonlinear )
-		dmc.last_amp = initial_dmc_dac; // prevent output transition
+	//if ( !dmc.nonlinear ) // to do: remove?
+	//  dmc.last_amp = initial_dmc_dac; // prevent output transition
 }
 
 void Nes_Apu::irq_changed()
@@ -123,10 +131,28 @@ void Nes_Apu::irq_changed()
 
 void Nes_Apu::run_until( nes_time_t end_time )
 {
+	require( end_time >= last_dmc_time );
+	if ( end_time > next_dmc_read_time() )
+	{
+		nes_time_t start = last_dmc_time;
+		last_dmc_time = end_time;
+		dmc.run( start, end_time );
+	}
+}
+
+void Nes_Apu::run_until_( nes_time_t end_time )
+{
 	require( end_time >= last_time );
 	
 	if ( end_time == last_time )
 		return;
+	
+	if ( last_dmc_time < end_time )
+	{
+		nes_time_t start = last_dmc_time;
+		last_dmc_time = end_time;
+		dmc.run( start, end_time );
+	}
 	
 	while ( true )
 	{
@@ -141,7 +167,6 @@ void Nes_Apu::run_until( nes_time_t end_time )
 		square2.run( last_time, time );
 		triangle.run( last_time, time );
 		noise.run( last_time, time );
-		dmc.run( last_time, time );
 		last_time = time;
 		
 		if ( time == end_time )
@@ -152,10 +177,9 @@ void Nes_Apu::run_until( nes_time_t end_time )
 		switch ( frame++ )
 		{
 			case 0:
-				// set interrupt in mode 0
 				if ( !(frame_mode & 0xc0) ) {
-		 			irq_flag = true;
 		 			next_irq = time + frame_period * 4 + 1;
+		 			irq_flag = true;
 		 		}
 		 		// fall through
 		 	case 2:
@@ -191,12 +215,42 @@ void Nes_Apu::run_until( nes_time_t end_time )
 	}
 }
 
+// to do: remove
+static long abs_time;
+
+template<class T>
+inline void zero_apu_osc( T* osc, nes_time_t time )
+{
+	Blip_Buffer* output = osc->output;
+	int last_amp = osc->last_amp;
+	osc->last_amp = 0;
+	if ( output && last_amp )
+		osc->synth.offset( time, -last_amp, output );
+}
+
 void Nes_Apu::end_frame( nes_time_t end_time )
 {
-	run_until( end_time );
+	if ( end_time > last_time )
+		run_until_( end_time );
+	
+	abs_time += end_time;
+	
+	if ( dmc.nonlinear )
+	{
+		zero_apu_osc( &square1,  last_time );
+		zero_apu_osc( &square2,  last_time );
+		zero_apu_osc( &triangle, last_time );
+		zero_apu_osc( &noise,    last_time );
+		zero_apu_osc( &dmc,      last_time );
+	}
 	
 	// make times relative to new frame
-	last_time = 0;
+	last_time -= end_time;
+	require( last_time >= 0 );
+	
+	last_dmc_time -= end_time;
+	require( last_dmc_time >= 0 );
+	
 	if ( next_irq != no_irq ) {
 		next_irq -= end_time;
 		assert( next_irq >= 0 );
@@ -230,7 +284,7 @@ void Nes_Apu::write_register( nes_time_t time, nes_addr_t addr, int data )
 	if ( addr < start_addr || end_addr < addr )
 		return;
 	
-	run_until( time );
+	run_until_( time );
 	
 	if ( addr < 0x4014 )
 	{
@@ -309,7 +363,7 @@ void Nes_Apu::write_register( nes_time_t time, nes_addr_t addr, int data )
 
 int Nes_Apu::read_status( nes_time_t time )
 {
-	run_until( time - 1 );
+	run_until_( time - 1 );
 	
 	int result = (dmc.irq_flag << 7) | (irq_flag << 6);
 	
@@ -317,7 +371,7 @@ int Nes_Apu::read_status( nes_time_t time )
 		if ( oscs [i]->length_counter )
 			result |= 1 << i;
 	
-	run_until( time );
+	run_until_( time );
 	
 	if ( irq_flag ) {
 		irq_flag = false;

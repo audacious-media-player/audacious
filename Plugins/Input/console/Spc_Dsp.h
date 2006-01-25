@@ -1,24 +1,20 @@
 
 // Super Nintendo (SNES) SPC DSP emulator
 
-// Game_Music_Emu 0.2.4. Copyright (C) 2004-2005 Shay Green. GNU LGPL license.
-// Copyright (C) 2002 Brad Martin
+// Game_Music_Emu 0.3.0
 
 #ifndef SPC_DSP_H
 #define SPC_DSP_H
 
 #include "blargg_common.h"
 
-// Surround effects using opposite volumes for left and right are currently removed
-// by making left and right volume positive if their signs differ.
-
 class Spc_Dsp {
 	typedef BOOST::int8_t int8_t;
 	typedef BOOST::uint8_t uint8_t;
 public:
 	
-	// Keeps pointer to ram
-	Spc_Dsp( uint8_t ram [0x10000] );
+	// Keeps pointer to 64K ram
+	Spc_Dsp( uint8_t* ram );
 	
 	// Mute voice n if bit n (1 << n) of mask is clear.
 	enum { voice_count = 8 };
@@ -30,6 +26,9 @@ public:
 	// Set gain, where 1.0 is normal. When greater than 1.0, output is clamped to
 	// the 16-bit sample range.
 	void set_gain( double );
+	
+	// If true, prevent channels and global volumes from being phase-negated
+	void disable_surround( bool disable );
 	
 	// Read/write register 'n', where n ranges from 0 to register_count - 1.
 	enum { register_count = 128 };
@@ -97,8 +96,6 @@ private:
 	short fir_buf [16] [2];
 	int fir_offset; // (0 to 7)
 	
-	short voice_vol [voice_count] [2];
-	
 	enum { emu_gain_bits = 8 };
 	int emu_gain;
 	
@@ -109,11 +106,10 @@ private:
 	int noise_amp;
 	int noise;
 	int noise_count;
-
-	int voices_muted;
-	int disable_surround_; // set to sign bit (0x80) when disabled
 	
-	static const short gauss [] [2];
+	int surround_threshold;
+	
+	static const BOOST::int16_t gauss [];
 	
 	enum state_t {
 		state_attack,
@@ -123,18 +119,21 @@ private:
 	};
 	
 	struct voice_t {
+		short volume [2];
 		short fraction;// 12-bit fractional position
-		short interp0; // most recent four decoded samples
-		short interp1;
+		short interp3; // most recent four decoded samples
 		short interp2;
-		short interp3;
+		short interp1;
+		short interp0;
 		short block_remain; // number of nybbles remaining in current block
 		unsigned short addr;
 		short block_header; // header byte from current block
 		short envcnt;
 		short envx;
 		short on_cnt;
-		state_t envstate;
+		short enabled; // 7 if enabled, 31 if disabled
+		short envstate;
+		short unused; // pad to power of 2
 	};
 	
 	voice_t voice_state [voice_count];
@@ -142,17 +141,14 @@ private:
 	int clock_envelope( int );
 };
 
-inline int Spc_Dsp::read( int i ) {
+inline void Spc_Dsp::disable_surround( bool disable ) { surround_threshold = disable ? 0 : -0x7FFF; }
+
+inline void Spc_Dsp::set_gain( double v ) { emu_gain = (int) (v * (1 << emu_gain_bits)); }
+
+inline int Spc_Dsp::read( int i )
+{
 	assert( (unsigned) i < register_count );
 	return reg [i];
-}
-
-inline void Spc_Dsp::mute_voices( int mask ) {
-	voices_muted = mask;
-}
-
-inline void Spc_Dsp::set_gain( double v ) {
-	emu_gain = (int) (v * (1 << emu_gain_bits));
 }
 
 #endif

@@ -1,12 +1,13 @@
 
-// Game_Music_Emu 0.2.4. http://www.slack.net/~ant/libs/
+// Game_Music_Emu 0.3.0. http://www.slack.net/~ant/
 
 #include "Vgm_Emu.h"
 
-#include <string.h>
 #include <math.h>
+#include <string.h>
+#include "blargg_endian.h"
 
-/* Copyright (C) 2003-2005 Shay Green. This module is free software; you
+/* Copyright (C) 2003-2006 Shay Green. This module is free software; you
 can redistribute it and/or modify it under the terms of the GNU Lesser
 General Public License as published by the Free Software Foundation; either
 version 2.1 of the License, or (at your option) any later version. This
@@ -19,16 +20,21 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
 #include BLARGG_SOURCE_BEGIN
 
-const long vgm_sample_rate = 44100;
+double const gain = 3.0; // FM emulators are internally quieter to avoid 16-bit overflow
+double const rolloff = 0.990;
+double const oversample_factor = 1.5;
 
-Vgm_Emu::Vgm_Emu( double gain )
+Vgm_Emu::Vgm_Emu( bool os, double tempo )
 {
-	data = NULL;
+	oversample = os;
 	pos = NULL;
-	apu.volume( gain );
+	data = NULL;
+	uses_fm = false;
+	vgm_rate = (long) (header_t::time_rate * tempo + 0.5);
 	
-	// to do: decide on equalization parameters
-	set_equalizer( equalizer_t( -32, 8000, 66 ) );
+	static equalizer_t const eq = { -14.0, 80 };
+	set_equalizer( eq );
+	psg.volume( 1.0 );
 }
 
 Vgm_Emu::~Vgm_Emu()
@@ -38,269 +44,255 @@ Vgm_Emu::~Vgm_Emu()
 
 void Vgm_Emu::unload()
 {
-	delete [] data;
 	data = NULL;
 	pos = NULL;
-	track_ended_ = false;
+	set_track_ended( false );
+	mem.clear();
 }
 
-const char** Vgm_Emu::voice_names() const
+blargg_err_t Vgm_Emu::set_sample_rate( long sample_rate )
 {
-	static const char* names [] = { "Square 1", "Square 2", "Square 3", "Noise" };
-	return names;
+	BLARGG_RETURN_ERR( blip_buf.set_sample_rate( sample_rate, 1000 / 30 ) );
+	return Classic_Emu::set_sample_rate( sample_rate );
 }
 
-void Vgm_Emu::set_voice( int i, Blip_Buffer* c, Blip_Buffer* l, Blip_Buffer* r )
+BOOST::uint8_t const* Vgm_Emu::gd3_data( int* size ) const
 {
-	apu.osc_output( i, c, l, r );
+	if ( size )
+		*size = 0;
+	
+	long gd3_offset = get_le32( header_.gd3_offset );
+	if ( !gd3_offset )
+		return NULL;
+	
+	gd3_offset -= 0x40 - offsetof (header_t,gd3_offset);
+	if ( gd3_offset < 0 )
+		return NULL;
+	
+	byte const* gd3 = data + gd3_offset;
+	if ( data_end - gd3 < 16 || 0 != memcmp( gd3, "Gd3 ", 4 ) || get_le32( gd3 + 4 ) >= 0x200 )
+		return NULL;
+	
+	long gd3_size = get_le32( gd3 + 8 );
+	if ( data_end - gd3 < gd3_size - 12 )
+		return NULL;
+	
+	if ( size )
+		*size = data_end - gd3;
+	return gd3;
 }
 
 void Vgm_Emu::update_eq( blip_eq_t const& eq )
 {
-	apu.treble_eq( eq );
+	psg.treble_eq( eq );
+	dac_synth.treble_eq( eq );
 }
 
-const int time_bits = 12;
-
-inline sms_time_t Vgm_Emu::clocks_from_samples( int samples ) const
+void Vgm_Emu::set_voice( int i, Blip_Buffer* c, Blip_Buffer* l, Blip_Buffer* r )
 {
-	const long round_up = 1L << (time_bits - 1);
-	return (samples * time_factor + round_up) >> time_bits;
+	if ( i < psg.osc_count )
+		psg.osc_output( i, c, l, r );
 }
 
-static long get_le32( const BOOST::uint8_t b [4] )
+const char** Vgm_Emu::voice_names() const
 {
-	return b [3] * 0x1000000L + b [2] * 0x10000L + b [1] * 0x100L + b [0];
+	static const char* fm_names [] = {
+		"FM 1", "FM 2", "FM 3", "FM 4", "FM 5", "FM 6", "PCM", "PSG"
+	};
+	if ( uses_fm )
+		return fm_names;
+	
+	static const char* psg_names [] = { "Square 1", "Square 2", "Square 3", "Noise" };
+	return psg_names;
 }
 
-blargg_err_t Vgm_Emu::load( const header_t& h, Emu_Reader& in )
+void Vgm_Emu::mute_voices( int mask )
+{
+	Classic_Emu::mute_voices( mask );
+	dac_synth.output( &blip_buf );
+	if ( uses_fm )
+	{
+		psg.output( (mask & 0x80) ? 0 : &blip_buf );
+		if ( ym2612.enabled() )
+		{
+			dac_synth.volume( (mask & 0x40) ? 0.0 : 0.1115 / 256 * gain );
+			ym2612.mute_voices( mask );
+		}
+		
+		if ( ym2413.enabled() )
+		{
+			int m = mask & 0x3f;
+			if ( mask & 0x20 )
+				m |= 0x01e0; // channels 5-8
+			if ( mask & 0x40 )
+				m |= 0x3e00;
+			ym2413.mute_voices( m );
+		}
+	}
+}
+
+blargg_err_t Vgm_Emu::load_( const header_t& h, void const* new_data, long new_size )
+{
+	header_ = h;
+	
+	// compatibility
+	if ( 0 != memcmp( header_.tag, "Vgm ", 4 ) )
+		return "Not a VGM file";
+	check( get_le32( header_.version ) <= 0x150 );
+	
+	// psg rate
+	long psg_rate = get_le32( header_.psg_rate );
+	if ( !psg_rate )
+		psg_rate = 3579545;
+	blip_time_factor = (long) floor( (double) (1L << blip_time_bits) / vgm_rate * psg_rate + 0.5 );
+	blip_buf.clock_rate( psg_rate );
+	
+	data = (byte*) new_data;
+	data_end = data + new_size;
+	
+	// get loop
+	loop_begin = data_end;
+	if ( get_le32( header_.loop_offset ) )
+		loop_begin = &data [get_le32( header_.loop_offset ) + offsetof (header_t,loop_offset) - 0x40];
+	
+	set_voice_count( psg.osc_count );
+	set_track_count( 1 );
+	
+	BLARGG_RETURN_ERR( setup_fm() );
+	
+	// do after FM in case output buffer is changed
+	BLARGG_RETURN_ERR( Classic_Emu::setup_buffer( psg_rate ) );
+	
+	return blargg_success;
+}
+
+blargg_err_t Vgm_Emu::setup_fm()
+{
+	long ym2612_rate = get_le32( header_.ym2612_rate );
+	long ym2413_rate = get_le32( header_.ym2413_rate );
+	if ( ym2413_rate && get_le32( header_.version ) < 0x110 )
+		update_fm_rates( &ym2413_rate, &ym2612_rate );
+	
+	uses_fm = false;
+	
+	double fm_rate = blip_buf.sample_rate() * oversample_factor;
+	
+	if ( ym2612_rate )
+	{
+		uses_fm = true;
+		if ( !oversample )
+			fm_rate = ym2612_rate / 144.0;
+		Dual_Resampler::setup( fm_rate / blip_buf.sample_rate(), rolloff, gain );
+		BLARGG_RETURN_ERR( ym2612.set_rate( fm_rate, ym2612_rate ) );
+		ym2612.enable( true );
+		set_voice_count( 8 );
+	}
+	
+	if ( !uses_fm && ym2413_rate )
+	{
+		uses_fm = true;
+		if ( !oversample )
+			fm_rate = ym2413_rate / 72.0;
+		Dual_Resampler::setup( fm_rate / blip_buf.sample_rate(), rolloff, gain );
+		int result = ym2413.set_rate( fm_rate, ym2413_rate );
+		if ( result == 2 )
+			return "YM2413 FM sound isn't supported";
+		BLARGG_CHECK_ALLOC( !result );
+		ym2413.enable( true );
+		set_voice_count( 8 );
+	}
+	
+	if ( uses_fm )
+	{
+		//dprintf( "fm_rate: %f\n", fm_rate );
+		fm_time_factor = 2 + (long) floor( fm_rate * (1L << fm_time_bits) / vgm_rate + 0.5 );
+		BLARGG_RETURN_ERR( Dual_Resampler::resize( blip_buf.length() * blip_buf.sample_rate() / 1000 ) );
+		psg.volume( 0.135 * gain );
+	}
+	else
+	{
+		ym2612.enable( false );
+		ym2413.enable( false );
+		psg.volume( 1.0 );
+	}
+	
+	return blargg_success;
+}
+
+blargg_err_t Vgm_Emu::load( Data_Reader& reader )
+{
+	header_t h;
+	BLARGG_RETURN_ERR( reader.read( &h, sizeof h ) );
+	return load( h, reader );
+}
+
+blargg_err_t Vgm_Emu::load( const header_t& h, Data_Reader& reader )
 {
 	unload();
 	
-	// compatibility
-	if ( 0 != memcmp( h.tag, "Vgm ", 4 ) )
-		return "Not a VGM file";
-	if ( get_le32( h.vers ) > 0x0101 )
-		return "Unsupported VGM format";
-	
-	// clock rate
-	long clock_rate = get_le32( h.psg_rate );
-	if ( !clock_rate )
-		return "Only PSG sound chip is supported";
-	time_factor = (long) floor( clock_rate * ((1L << time_bits) /
-			(double) vgm_sample_rate) + 0.5 );
-	
-	// data
-	long data_size = in.remain();
-	data = new byte [data_size + 3]; // allow pointer to go past end
-	if ( !data )
-		return "Out of memory";
-	end = data + data_size;
-	data [data_size] = 0;
-	data [data_size + 1] = 0;
-	data [data_size + 2] = 0;
-	blargg_err_t err = in.read( data, data_size );
+	// allocate and read data
+	long data_size = reader.remain();
+	int const padding = 8;
+	BLARGG_RETURN_ERR( mem.resize( data_size + padding ) );
+	blargg_err_t err = reader.read( mem.begin(), data_size );
 	if ( err ) {
 		unload();
 		return err;
 	}
-	long loop_offset = get_le32( h.loop_offset );
-	loop_begin = end;
-	loop_duration = 0;
-	if ( loop_offset )
-	{
-		loop_duration = get_le32( h.loop_duration );
-		if ( loop_duration )
-			loop_begin = &data [loop_offset + 0x1c - sizeof (header_t)];
-	}
+	memset( &mem [data_size], 0x66, padding ); // pad with end command
 	
-	voice_count_ = Sms_Apu::osc_count;
-	track_count_ = 1;
-	
-	return setup_buffer( clock_rate );
+	return load_( h, mem.begin(), data_size );
 }
 
-int Vgm_Emu::track_length( const byte** end_out, int* remain_out ) const
+void Vgm_Emu::start_track( int track )
 {
 	require( data ); // file must have been loaded
 	
-	long time = 0;
+	Classic_Emu::start_track( track );
+	psg.reset();
 	
-	if ( end_out || !loop_duration )
-	{
-		const byte* p = data;
-		while ( p < end )
-		{
-			int cmd = *p++;
-			switch ( cmd )
-			{
-				case 0x4f:
-				case 0x50:
-					p += 1;
-					break;
-				
-				case 0x61:
-					if ( p + 1 < end ) {
-						time += p [1] * 0x100L + p [0];
-						p += 2;
-					}
-					break;
-				
-				case 0x62:
-					time += 735; // ntsc frame
-					break;
-				
-				case 0x63:
-					time += 882; // pal frame
-					break;
-				
-				default:
-					if ( (p [-1] & 0xf0) == 0x50 ) {
-						p += 2;
-						break;
-					}
-					dprintf( "Bad command in VGM stream: %02X\n", (int) cmd );
-					break;
-				
-				case 0x66:
-					if ( end_out )
-						*end_out = p;
-					if ( remain_out )
-						*remain_out = end - p;
-					p = end;
-					break;
-			}
-		}
-	}
-	
-	// i.e. ceil( exact_length + 0.5 )
-	return loop_duration ? 0 :
-			(time + (vgm_sample_rate >> 1) + vgm_sample_rate - 1) / vgm_sample_rate;
-}
-
-blargg_err_t Vgm_Emu::start_track( int )
-{
-	require( data ); // file must have been loaded
-	
+	dac_disabled = -1;
+	pcm_data = data;
+	pcm_pos = data;
+	dac_amp = -1;
+	vgm_time = 0;
 	pos = data;
-	loop_remain = 0;
-	delay = 0;
-	track_ended_ = false;
-	apu.reset();
-	starting_track();
-	return blargg_success;
+	if ( get_le32( header_.version ) >= 0x150 )
+	{
+		long data_offset = get_le32( header_.data_offset );
+		check( data_offset );
+		if ( data_offset )
+			pos += data_offset + offsetof (header_t,data_offset) - 0x40;
+	}
+	
+	if ( uses_fm )
+	{
+		if ( ym2413.enabled() )
+			ym2413.reset();
+		
+		if ( ym2612.enabled() )
+			ym2612.reset();
+		
+		fm_time_offset = 0;
+		blip_buf.clear();
+		Dual_Resampler::clear();
+	}
 }
 
-blip_time_t Vgm_Emu::run( int msec, bool* added_stereo )
+long Vgm_Emu::run( int msec, bool* added_stereo )
+{
+	blip_time_t psg_end = run_commands( msec * vgm_rate / 1000 );
+	*added_stereo = psg.end_frame( psg_end );
+	return psg_end;
+}
+
+void Vgm_Emu::play( long count, sample_t* out )
 {
 	require( pos ); // track must have been started
 	
-	const int duration = vgm_sample_rate / 100 * msec / 10;
-	int time = delay;
-	while ( time < duration && pos < end )
-	{
-		if ( !loop_remain && pos >= loop_begin )
-			loop_remain = loop_duration;
-		
-		int cmd = *pos++;
-		int delay = 0;
-		switch ( cmd )
-		{
-			case 0x66:
-				pos = end; // end
-				if ( loop_duration ) {
-					pos = loop_begin;
-					loop_remain = loop_duration;
-				} 
-				break;
-			
-			case 0x62:
-				delay = 735; // ntsc frame
-				break;
-			
-			case 0x63:
-				delay = 882; // pal frame
-				break;
-			
-			case 0x4f:
-				if ( pos == end ) {
-					check( false ); // missing data
-					break;
-				}
-				apu.write_ggstereo( clocks_from_samples( time ), *pos++ );
-				break;
-			
-			case 0x50:
-				if ( pos == end ) {
-					check( false ); // missing data
-					break;
-				}
-				apu.write_data( clocks_from_samples( time ), *pos++ );
-				break;
-			
-			case 0x61:
-				if ( end - pos < 1 ) {
-					check( false ); // missing data
-					break;
-				}
-				delay = pos [1] * 0x100L + pos [0];
-				pos += 2;
-				break;
-			
-			default:
-				if ( (cmd & 0xf0) == 0x50 )
-				{
-					if ( end - pos < 1 ) {
-						check( false ); // missing data
-						break;
-					}
-					pos += 2;
-					break;
-				}
-				dprintf( "Bad command in VGM stream: %02X\n", (int) cmd );
-				break;
-			
-		}
-		time += delay;
-		if ( loop_remain && (loop_remain -= delay) <= 0 )
-		{
-			pos = loop_begin;
-			loop_remain = 0;
-		}
-	}
-	
-	blip_time_t end_time = clocks_from_samples( duration );
-	if ( pos < end )
-	{
-		delay = time - duration;
-		if ( apu.end_frame( end_time ) && added_stereo )
-			*added_stereo = true;
-	}
-	else {
-		delay = 0;
-		track_ended_ = true;
-	}
-	
-	return end_time;
+	if ( uses_fm )
+		Dual_Resampler::play( count, out, blip_buf );
+	else
+		Classic_Emu::play( count, out );
 }
 
-Vgm_Reader::Vgm_Reader() : file( NULL ) {
-}
-
-Vgm_Reader::~Vgm_Reader() {
-	close();
-}
-
-blargg_err_t Vgm_Reader::read_head(Vgm_Emu::header_t *header) {
-	vfs_fread(&header->tag,         1, 4,file);
-	vfs_fread(&header->data_size,   1, 4,file);
-	vfs_fread(&header->vers,        1, 4,file);
-	vfs_fread(&header->psg_rate,    1, 4,file);
-	vfs_fread(&header->fm_rate,     1, 4,file);
-	vfs_fread(&header->g3d_offset,  1, 4,file);
-	vfs_fread(&header->sample_count,1, 4,file);
-	vfs_fread(&header->loop_offset, 1, 4,file);
-	vfs_fread(&header->loop_duration,1,4,file);
-	vfs_fread(&header->frame_rate,  1, 4,file);
-	vfs_fread(&header->unused,      1,0x18,file);
-}

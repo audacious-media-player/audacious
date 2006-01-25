@@ -1,7 +1,7 @@
 
-// Game Boy GBS-format game music file emulator
+// Nintendo Game Boy GBS music file emulator
 
-// Game_Music_Emu 0.2.4. Copyright (C) 2003-2005 Shay Green. GNU LGPL license.
+// Game_Music_Emu 0.3.0
 
 #ifndef GBS_EMU_H
 #define GBS_EMU_H
@@ -12,12 +12,14 @@
 
 class Gbs_Emu : public Classic_Emu {
 public:
+	
 	// Sets internal gain, where 1.0 results in almost no clamping. Default gain
 	// roughly matches volume of other emulators.
-	Gbs_Emu( double gain = 1.3 );
-	~Gbs_Emu();
+	Gbs_Emu( double gain = 1.2 );
 	
-	struct header_t {
+	// GBS file header
+	struct header_t
+	{
 		char tag [3];
 		byte vers;
 		byte track_count;
@@ -36,22 +38,31 @@ public:
 	};
 	BOOST_STATIC_ASSERT( sizeof (header_t) == 112 );
 	
-	// Load GBS, given its header and reader for remaining data
-	blargg_err_t load( const header_t&, Emu_Reader& );
+	// Load GBS data
+	blargg_err_t load( Data_Reader& );
 	
+	// Load GBS using already-loaded header and remaining data
+	blargg_err_t load( header_t const&, Data_Reader& );
+	
+	// Header for currently loaded GBS
+	header_t const& header() const { return header_; }
+	
+	// Equalizer profiles for Game Boy Color speaker and headphones
+	static equalizer_t const handheld_eq;
+	static equalizer_t const headphones_eq;
+	
+public:
+	~Gbs_Emu();
 	const char** voice_names() const;
-	blargg_err_t start_track( int );
-	
-
-// End of public interface
+	void start_track( int );
 protected:
 	void set_voice( int, Blip_Buffer*, Blip_Buffer*, Blip_Buffer* );
 	void update_eq( blip_eq_t const& );
-	blip_time_t run( int, bool* );
+	blip_time_t run_clocks( blip_time_t, bool* );
 private:
 	// rom
 	const byte* rom_bank;
-	byte* rom;
+	blargg_vector<byte> rom;
 	void unload();
 	int bank_count;
 	void set_bank( int );
@@ -75,30 +86,22 @@ private:
 	
 	// hardware
 	Gb_Apu apu;
-	byte hi_page [0x100];
 	void set_timer( int tma, int tmc );
 	static int read_io( Gbs_Emu*, gb_addr_t );
 	static void write_io( Gbs_Emu*, gb_addr_t, int );
 	static int read_unmapped( Gbs_Emu*, gb_addr_t );
 	static void write_unmapped( Gbs_Emu*, gb_addr_t, int );
 	
-	// cpu and ram
+	// large objects
+	
+	header_t header_;
+	byte hi_page [0x100];
 	Gb_Cpu cpu;
 	void cpu_jsr( gb_addr_t );
 	gb_time_t clock() const;
 	byte ram [0x4000];
 	static int read_ram( Gbs_Emu*, gb_addr_t );
 	static void write_ram( Gbs_Emu*, gb_addr_t, int );
-};
-
-class Gbs_Reader : public Std_File_Reader {
-	VFSFile* file;
-public:
-	Gbs_Reader();
-	~Gbs_Reader();
-
-	// Custom reader for Gbs headers [tempfix]
-	blargg_err_t read_head( Gbs_Emu::header_t* );
 };
 
 #endif

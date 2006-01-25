@@ -1,11 +1,12 @@
 
 // Private oscillators used by Sms_Apu
 
-// Sms_Snd_Emu 0.1.3. Copyright (C) 2003-2005 Shay Green. GNU LGPL license.
+// Sms_Snd_Emu 0.1.3
 
 #ifndef SMS_OSCS_H
 #define SMS_OSCS_H
 
+#include "blargg_common.h"
 #include "Blip_Buffer.h"
 
 struct Sms_Osc
@@ -20,7 +21,6 @@ struct Sms_Osc
 	
 	Sms_Osc();
 	void reset();
-	virtual void run( sms_time_t start, sms_time_t end ) = 0;
 };
 
 struct Sms_Square : Sms_Osc
@@ -28,10 +28,9 @@ struct Sms_Square : Sms_Osc
 	int period;
 	int phase;
 	
-	typedef Blip_Synth<blip_good_quality,64 * 2> Synth;
+	typedef Blip_Synth<blip_good_quality,1> Synth;
 	const Synth* synth;
 	
-	Sms_Square();
 	void reset();
 	void run( sms_time_t, sms_time_t );
 };
@@ -42,10 +41,9 @@ struct Sms_Noise : Sms_Osc
 	unsigned shifter;
 	unsigned tap;
 	
-	typedef Blip_Synth<blip_med_quality,64 * 2> Synth;
+	typedef Blip_Synth<blip_med_quality,1> Synth;
 	Synth synth;
 	
-	Sms_Noise();
 	void reset();
 	void run( sms_time_t, sms_time_t );
 };

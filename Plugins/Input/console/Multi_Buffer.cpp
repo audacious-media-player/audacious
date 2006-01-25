@@ -1,9 +1,9 @@
 
-// Blip_Buffer 0.3.3. http://www.slack.net/~ant/libs/
+// Blip_Buffer 0.4.0. http://www.slack.net/~ant/
 
 #include "Multi_Buffer.h"
 
-/* Copyright (C) 2003-2005 Shay Green. This module is free software; you
+/* Copyright (C) 2003-2006 Shay Green. This module is free software; you
 can redistribute it and/or modify it under the terms of the GNU Lesser
 General Public License as published by the Free Software Foundation; either
 version 2.1 of the License, or (at your option) any later version. This
@@ -16,10 +16,11 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 
 #include BLARGG_SOURCE_BEGIN
 
-Multi_Buffer::Multi_Buffer()
+Multi_Buffer::Multi_Buffer( int spf ) : samples_per_frame_( spf )
 {
 	length_ = 0;
 	sample_rate_ = 0;
+	channels_changed_count_ = 1;
 }
 
 blargg_err_t Multi_Buffer::set_channel_count( int )
@@ -27,7 +28,7 @@ blargg_err_t Multi_Buffer::set_channel_count( int )
 	return blargg_success;
 }
 
-Mono_Buffer::Mono_Buffer()
+Mono_Buffer::Mono_Buffer() : Multi_Buffer( 1 )
 {
 }
 
@@ -35,15 +36,24 @@ Mono_Buffer::~Mono_Buffer()
 {
 }
 
-blargg_err_t Mono_Buffer::sample_rate( long rate, int msec )
+blargg_err_t Mono_Buffer::set_sample_rate( long rate, int msec )
 {
-	BLARGG_RETURN_ERR( buf.sample_rate( rate, msec ) );
-	length_ = buf.length();
-	sample_rate_ = buf.sample_rate();
-	return blargg_success;
+	BLARGG_RETURN_ERR( buf.set_sample_rate( rate, msec ) );
+	return Multi_Buffer::set_sample_rate( buf.sample_rate(), buf.length() );
 }
 
-Mono_Buffer::channel_t Mono_Buffer::channel( int index )
+// Silent_Buffer
+
+Silent_Buffer::Silent_Buffer() : Multi_Buffer( 1 ) // 0 channels would probably confuse
+{
+	chan.left   = NULL;
+	chan.center = NULL;
+	chan.right  = NULL;
+}
+
+// Mono_Buffer
+
+Mono_Buffer::channel_t Mono_Buffer::channel( int )
 {
 	channel_t ch;
 	ch.center = &buf;
@@ -57,7 +67,9 @@ void Mono_Buffer::end_frame( blip_time_t t, bool )
 	buf.end_frame( t );
 }
 
-Stereo_Buffer::Stereo_Buffer()
+// Stereo_Buffer
+
+Stereo_Buffer::Stereo_Buffer() : Multi_Buffer( 2 )
 {
 	chan.center = &bufs [0];
 	chan.left = &bufs [1];
@@ -68,13 +80,11 @@ Stereo_Buffer::~Stereo_Buffer()
 {
 }
 
-blargg_err_t Stereo_Buffer::sample_rate( long rate, int msec )
+blargg_err_t Stereo_Buffer::set_sample_rate( long rate, int msec )
 {
 	for ( int i = 0; i < buf_count; i++ )
-		BLARGG_RETURN_ERR( bufs [i].sample_rate( rate, msec ) );
-	length_ = msec;
-	sample_rate_ = rate;
-	return blargg_success;
+		BLARGG_RETURN_ERR( bufs [i].set_sample_rate( rate, msec ) );
+	return Multi_Buffer::set_sample_rate( bufs [0].sample_rate(), bufs [0].length() );
 }
 
 void Stereo_Buffer::clock_rate( long rate )

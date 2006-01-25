@@ -1,7 +1,7 @@
 
 // Super Nintendo (SNES) SPC music file emulator
 
-// Game_Music_Emu 0.2.4. Copyright (C) 2004 Shay Green. GNU LGPL license.
+// Game_Music_Emu 0.3.0
 
 #ifndef SPC_EMU_H
 #define SPC_EMU_H
@@ -11,19 +11,19 @@
 #include "Snes_Spc.h"
 
 class Spc_Emu : public Music_Emu {
+	enum { trailer_offset = 0x10200 };
 public:
-	Spc_Emu();
-	~Spc_Emu();
+	// A gain of 1.0 results in almost no clamping. Default gain roughly
+	// matches volume of other emulators.
+	Spc_Emu( double gain = 1.4 );
 	
-	// The Super Nintendo hardware samples at 32kHz
+	// The Super Nintendo hardware samples at 32kHz. Other sample rates are
+	// handled by resampling the 32kHz output; emulation accuracy is not affected.
 	enum { native_sample_rate = 32000 };
 	
-	// Initialize emulator with given sample rate and gain. A sample rate different than
-	// the native 32kHz results in internal resampling to the desired rate. A gain of 1.0
-	// results in almost no clamping. Default gain roughly matches volume of other emulators.
-	blargg_err_t init( long sample_rate, double gain = 1.4 );
-	
-	struct header_t {
+	// SPC file header
+	struct header_t
+	{
 		char tag [35];
 		byte format;
 		byte version;
@@ -42,50 +42,45 @@ public:
 		byte emulator;
 		byte unused2 [45];
 		
+		enum { track_count = 1 };
 		enum { copyright = 0 }; // no copyright field
 	};
-
-	int length;
+	BOOST_STATIC_ASSERT( sizeof (header_t) == 0x100 );
 	
-	// Load SPC, given its header and reader for remaining data
-	blargg_err_t load( const header_t&, Emu_Reader& );
+	// Load SPC data
+	blargg_err_t load( Data_Reader& );
 	
-	void mute_voices( int );
-	blargg_err_t start_track( int );
-	blargg_err_t play( long count, sample_t* );
-	blargg_err_t skip( long );
-	const char** voice_names() const;
-
+	// Load SPC using already-loaded header and remaining data
+	blargg_err_t load( header_t const&, Data_Reader& );
 	
-// End of public interface
-private:
-	Snes_Spc apu;
-	Fir_Resampler resampler;
-	double resample_ratio;
-	bool use_resampler;
+	// Header for currently loaded SPC
+	header_t const& header() const { return *(header_t*) spc_data.begin(); }
 	
-	struct spc_file_t {
-		header_t header;
-		char data [0x10080];
-	};
-	BOOST_STATIC_ASSERT( sizeof (spc_file_t) == 0x10180 );
+	// Pointer and size for trailer data
+	byte const* trailer() const { return &spc_data [trailer_offset]; }
+	long trailer_size() const { return spc_data.size() - trailer_offset; }
 	
-	spc_file_t file;
-};
-
-inline void Spc_Emu::mute_voices( int m ) {
-	apu.mute_voices( m );
-}
-
-class Spc_Reader : public Std_File_Reader {
-	VFSFile* file;
+	// If true, prevents channels and global volumes from being phase-negated
+	void disable_surround( bool disable = true );
+	
 public:
-	Spc_Reader();
-	~Spc_Reader();
-	
-	// Custom reader for SPC headers [tempfix]
-	blargg_err_t read_head( Spc_Emu::header_t* );
+	~Spc_Emu();
+	blargg_err_t set_sample_rate( long );
+	void mute_voices( int );
+	void start_track( int );
+	void play( long, sample_t* );
+	void skip( long );
+	const char** voice_names() const;
+public:
+	// deprecated
+	blargg_err_t init( long r, double gain = 1.4 ) { return set_sample_rate( r ); }
+private:
+	blargg_vector<byte> spc_data;
+	Fir_Resampler<24> resampler;
+	Snes_Spc apu;
 };
+
+inline void Spc_Emu::disable_surround( bool b ) { apu.disable_surround( b ); }
 
 #endif
 

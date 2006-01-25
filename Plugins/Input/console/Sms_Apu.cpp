@@ -1,9 +1,9 @@
 
-// Sms_Snd_Emu 0.1.3. http://www.slack.net/~ant/libs/
+// Sms_Snd_Emu 0.1.3. http://www.slack.net/~ant/
 
 #include "Sms_Apu.h"
 
-/* Copyright (C) 2003-2005 Shay Green. This module is free software; you
+/* Copyright (C) 2003-2006 Shay Green. This module is free software; you
 can redistribute it and/or modify it under the terms of the GNU Lesser
 General Public License as published by the Free Software Foundation; either
 version 2.1 of the License, or (at your option) any later version. This
@@ -38,10 +38,7 @@ void Sms_Osc::reset()
 
 // Sms_Square
 
-Sms_Square::Sms_Square() {
-}
-
-void Sms_Square::reset()
+inline void Sms_Square::reset()
 {
 	period = 0;
 	phase = 0;
@@ -53,15 +50,18 @@ void Sms_Square::run( sms_time_t time, sms_time_t end_time )
 	if ( !volume || period <= 128 )
 	{
 		// ignore 16kHz and higher
-		if ( last_amp ) {
+		if ( last_amp )
+		{
 			synth->offset( time, -last_amp, output );
 			last_amp = 0;
 		}
 		time += delay;
-		if ( !period ) {
+		if ( !period )
+		{
 			time = end_time;
 		}
-		else if ( time < end_time ) {
+		else if ( time < end_time )
+		{
 			// keep calculating phase
 			int count = (end_time - time + period - 1) / period;
 			phase = (phase + count) & 1;
@@ -71,19 +71,22 @@ void Sms_Square::run( sms_time_t time, sms_time_t end_time )
 	else
 	{
 		int amp = phase ? volume : -volume;
-		if ( amp != last_amp ) {
-			synth->offset( time, amp - last_amp, output );
+		int delta = amp - last_amp;
+		if ( delta )
+		{
 			last_amp = amp;
+			synth->offset( time, delta, output );
 		}
 		
 		time += delay;
 		if ( time < end_time )
 		{
 			Blip_Buffer* const output = this->output;
-			amp *= 2;
-			do {
-				amp = -amp; // amp always alternates
-				synth->offset_inline( time, amp, output );
+			int delta = amp * 2;
+			do
+			{
+				delta = -delta;
+				synth->offset_inline( time, delta, output );
 				time += period;
 				phase ^= 1;
 			}
@@ -98,9 +101,6 @@ void Sms_Square::run( sms_time_t time, sms_time_t end_time )
 
 static const int noise_periods [3] = { 0x100, 0x200, 0x400 };
 
-inline Sms_Noise::Sms_Noise() {
-}
-
 inline void Sms_Noise::reset()
 {
 	period = &noise_periods [0];
@@ -111,55 +111,55 @@ inline void Sms_Noise::reset()
 
 void Sms_Noise::run( sms_time_t time, sms_time_t end_time )
 {
-	int cur_amp = 0;
-	int period = *this->period * 2;
-	if ( !volume ) {
-		if ( last_amp ) {
-			synth.offset( time, -last_amp, output );
-			last_amp = 0;
-		}
-		delay = 0;
-	}
-	else
+	int amp = volume;
+	if ( shifter & 1 )
+		amp = -amp;
+	
+	int delta = amp - last_amp;
+	if ( delta )
 	{
-		int amp = (shifter & 1) ? -volume : volume;
+		last_amp = amp;
+		synth.offset( time, delta, output );
+	}
+	
+	time += delay;
+	if ( !volume )
+		time = end_time;
+	
+	if ( time < end_time )
+	{
+		Blip_Buffer* const output = this->output;
+		unsigned shifter = this->shifter;
+		int delta = amp * 2;
+		int period = *this->period * 2;
 		if ( !period )
 			period = 16;
-		if ( amp != last_amp ) {
-			synth.offset( time, amp - last_amp, output );
-			last_amp = amp;
-		}
 		
-		time += delay;
-		if ( time < end_time )
+		do
 		{
-			Blip_Buffer* const output = this->output;
-			unsigned shifter = this->shifter;
-			amp *= 2;
-			
-			do {
-				int changed = (shifter + 1) & 2;
-				shifter = (((shifter << 15) ^ (shifter << tap)) & 0x8000) | (shifter >> 1);
-				if ( changed ) { // prev and next bits differ
-					amp = -amp;
-					synth.offset_inline( time, amp, output );
-				}
-				time += period;
+			int changed = (shifter + 1) & 2; // set if prev and next bits differ
+			shifter = (((shifter << 15) ^ (shifter << tap)) & 0x8000) | (shifter >> 1);
+			if ( changed )
+			{
+				delta = -delta;
+				synth.offset_inline( time, delta, output );
 			}
-			while ( time < end_time );
-			
-			this->shifter = shifter;
-			this->last_amp = amp >> 1;
+			time += period;
 		}
-		delay = time - end_time;
+		while ( time < end_time );
+		
+		this->shifter = shifter;
+		this->last_amp = delta >> 1;
 	}
+	delay = time - end_time;
 }
 
 // Sms_Apu
 
 Sms_Apu::Sms_Apu()
 {
-	for ( int i = 0; i < 3; i++ ) {
+	for ( int i = 0; i < 3; i++ )
+	{
 		squares [i].synth = &square_synth;
 		oscs [i] = &squares [i];
 	}
@@ -169,7 +169,15 @@ Sms_Apu::Sms_Apu()
 	reset();
 }
 
-Sms_Apu::~Sms_Apu() {
+Sms_Apu::~Sms_Apu()
+{
+}
+
+void Sms_Apu::volume( double vol )
+{
+	vol *= 0.85 / (osc_count * 64 * 2);
+	square_synth.volume( vol );
+	noise.synth.volume( vol );
 }
 
 void Sms_Apu::treble_eq( const blip_eq_t& eq )
@@ -178,40 +186,21 @@ void Sms_Apu::treble_eq( const blip_eq_t& eq )
 	noise.synth.treble_eq( eq );
 }
 
-void Sms_Apu::volume( double vol )
+void Sms_Apu::osc_output( int index, Blip_Buffer* center, Blip_Buffer* left, Blip_Buffer* right )
 {
-	vol *= 0.85 / osc_count;
-	square_synth.volume( vol );
-	noise.synth.volume( vol );
+	require( (unsigned) index < osc_count );
+	require( (center && left && right) || (!center && !left && !right) );
+	Sms_Osc& osc = *oscs [index];
+	osc.outputs [1] = right;
+	osc.outputs [2] = left;
+	osc.outputs [3] = center;
+	osc.output = osc.outputs [osc.output_select];
 }
 
 void Sms_Apu::output( Blip_Buffer* center, Blip_Buffer* left, Blip_Buffer* right )
 {
 	for ( int i = 0; i < osc_count; i++ )
 		osc_output( i, center, left, right );
-}
-
-void Sms_Apu::osc_output( int index, Blip_Buffer* center, Blip_Buffer* left,
-		Blip_Buffer* right )
-{
-	require( (unsigned) index < osc_count );
-	
-	Sms_Osc& osc = *oscs [index];
-	if ( center && !left && !right )
-	{
-		// mono
-		left = center;
-		right = center;
-	}
-	else
-	{
-		// must be silenced or stereo
-		require( (!left && !right) || (left && right) );
-	}
-	osc.outputs [1] = right;
-	osc.outputs [2] = left;
-	osc.outputs [3] = center;
-	osc.output = osc.outputs [osc.output_select];
 }
 
 void Sms_Apu::reset()
@@ -233,12 +222,18 @@ void Sms_Apu::run_until( sms_time_t end_time )
 	if ( end_time > last_time )
 	{
 		// run oscillators
-		for ( int i = 0; i < osc_count; ++i ) {
+		for ( int i = 0; i < osc_count; ++i )
+		{
 			Sms_Osc& osc = *oscs [i];
-			if ( osc.output ) {
+			if ( osc.output )
+			{
 				if ( osc.output != osc.outputs [3] )
 					stereo_found = true; // playing on side output
-				osc.run( last_time, end_time );
+				
+				if ( i < 3 )
+					squares [i].run( last_time, end_time );
+				else
+					noise.run( last_time, end_time );
 			}
 		}
 		
@@ -248,8 +243,11 @@ void Sms_Apu::run_until( sms_time_t end_time )
 
 bool Sms_Apu::end_frame( sms_time_t end_time )
 {
-	run_until( end_time );
-	last_time = 0;
+	if ( end_time > last_time )
+		run_until( end_time );
+	
+	assert( last_time >= end_time );
+	last_time -= end_time;
 	
 	bool result = stereo_found;
 	stereo_found = false;
@@ -258,19 +256,19 @@ bool Sms_Apu::end_frame( sms_time_t end_time )
 
 void Sms_Apu::write_ggstereo( sms_time_t time, int data )
 {
-	require( (unsigned) data <= 0xff );
+	require( (unsigned) data <= 0xFF );
 	
 	run_until( time );
 	
-	// left/right assignments
 	for ( int i = 0; i < osc_count; i++ )
 	{
 		Sms_Osc& osc = *oscs [i];
 		int flags = data >> i;
 		Blip_Buffer* old_output = osc.output;
-		osc.output_select = ((flags >> 3) & 2) | (flags & 1);
+		osc.output_select = (flags >> 3 & 2) | (flags & 1);
 		osc.output = osc.outputs [osc.output_select];
-		if ( osc.output != old_output && osc.last_amp ) {
+		if ( osc.output != old_output && osc.last_amp )
+		{
 			if ( old_output )
 				square_synth.offset( time, -osc.last_amp, old_output );
 			osc.last_amp = 0;
@@ -278,14 +276,14 @@ void Sms_Apu::write_ggstereo( sms_time_t time, int data )
 	}
 }
 
-static const char volumes [16] = {
+static const unsigned char volumes [16] = {
 	// volumes [i] = 64 * pow( 1.26, 15 - i ) / pow( 1.26, 15 )
 	64, 50, 39, 31, 24, 19, 15, 12, 9, 7, 5, 4, 3, 2, 1, 0
 };
 
 void Sms_Apu::write_data( sms_time_t time, int data )
 {
-	require( (unsigned) data <= 0xff );
+	require( (unsigned) data <= 0xFF );
 	
 	run_until( time );
 	
@@ -295,28 +293,26 @@ void Sms_Apu::write_data( sms_time_t time, int data )
 	int index = (latch >> 5) & 3;
 	if ( latch & 0x10 )
 	{
-		// volume
 		oscs [index]->volume = volumes [data & 15];
 	}
 	else if ( index < 3 )
 	{
-		// square period
 		Sms_Square& sq = squares [index];
 		if ( data & 0x80 )
-			sq.period = (sq.period & ~0xff) | ((data << 4) & 0xff);
+			sq.period = (sq.period & 0xFF00) | (data << 4 & 0x00FF);
 		else
-			sq.period = (sq.period & 0xff) | ((data << 8) & 0x3f00);
+			sq.period = (sq.period & 0x00FF) | (data << 8 & 0x3F00);
 	}
 	else
 	{
-		// noise period/mode
 		int select = data & 3;
 		if ( select < 3 )
 			noise.period = &noise_periods [select];
 		else
 			noise.period = &squares [2].period;
 		
-		noise.tap = (data & 0x04) ? 12 : 16; // 16 disables tap
+		int const tap_disabled = 16;
+		noise.tap = (data & 0x04) ? 12 : tap_disabled;
 		noise.shifter = 0x8000;
 	}
 }

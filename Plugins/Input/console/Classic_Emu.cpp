@@ -1,11 +1,11 @@
 
-// Game_Music_Emu 0.2.4. http://www.slack.net/~ant/libs/
+// Game_Music_Emu 0.3.0. http://www.slack.net/~ant/
 
 #include "Classic_Emu.h"
 
 #include "Multi_Buffer.h"
 
-/* Copyright (C) 2003-2005 Shay Green. This module is free software; you
+/* Copyright (C) 2003-2006 Shay Green. This module is free software; you
 can redistribute it and/or modify it under the terms of the GNU Lesser
 General Public License as published by the Free Software Foundation; either
 version 2.1 of the License, or (at your option) any later version. This
@@ -21,82 +21,86 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA */
 Classic_Emu::Classic_Emu()
 {
 	buf = NULL;
-	std_buf = NULL;
-	set_equalizer( equalizer_t( -8.87, 8800 ) );
+	stereo_buffer = NULL;
 }
 
 Classic_Emu::~Classic_Emu()
 {
-	delete std_buf;
+	delete stereo_buffer;
 }
 
-void Classic_Emu::update_eq_()
+void Classic_Emu::set_equalizer( equalizer_t const& eq )
 {
-	update_eq( blip_eq_t( equalizer_.treble, equalizer_.cutoff, buf->sample_rate() ) );
-	buf->bass_freq( equalizer_.bass );
-}
-
-void Classic_Emu::set_equalizer( const equalizer_t& eq )
-{
-	equalizer_ = eq;
+	Music_Emu::set_equalizer( eq );
+	update_eq( eq.treble );
 	if ( buf )
-		update_eq_();
+		buf->bass_freq( equalizer().bass );
 }
 	
-blargg_err_t Classic_Emu::init( long sample_rate )
+blargg_err_t Classic_Emu::set_sample_rate( long sample_rate )
 {
-	buf = NULL;
-	delete std_buf;
-	std_buf = NULL;
+	if ( !buf )
+	{
+		if ( !stereo_buffer )
+			BLARGG_CHECK_ALLOC( stereo_buffer = BLARGG_NEW Stereo_Buffer );
+		buf = stereo_buffer;
+	}
 	
-	Stereo_Buffer* sb = new Stereo_Buffer;
-	if ( !sb )
-		return "Out of memory";
-	std_buf = sb;
-	
-	BLARGG_RETURN_ERR( sb->sample_rate( sample_rate, 1000 / 20 ) );
-
-	buf = std_buf;
-	return blargg_success;
+	BLARGG_RETURN_ERR( buf->set_sample_rate( sample_rate, 1000 / 20 ) );
+	return Music_Emu::set_sample_rate( sample_rate );
 }
 
 void Classic_Emu::mute_voices( int mask )
 {
-	require( buf ); // init() must have been called
+	require( buf ); // set_sample_rate() must have been called
 	
-	mute_mask_ = mask;
+	Music_Emu::mute_voices( mask );
 	for ( int i = voice_count(); i--; )
 	{
-		if ( mask & (1 << i) ) {
-			set_voice( i, NULL );
+		if ( mask & (1 << i) )
+		{
+			set_voice( i, NULL, NULL, NULL );
 		}
-		else {
+		else
+		{
 			Multi_Buffer::channel_t ch = buf->channel( i );
 			set_voice( i, ch.center, ch.left, ch.right );
 		}
 	}
 }
 
-blargg_err_t Classic_Emu::setup_buffer( long clock_rate )
+blargg_err_t Classic_Emu::setup_buffer( long new_clock_rate )
 {
-	require( buf ); // init() must have been called
+	require( sample_rate() ); // fails if set_sample_rate() hasn't been called yet
 	
+	clock_rate = new_clock_rate;
 	buf->clock_rate( clock_rate );
-	update_eq_();
-	return buf->set_channel_count( voice_count() );
+	BLARGG_RETURN_ERR( buf->set_channel_count( voice_count() ) );
+	set_equalizer( equalizer() );
+	remute_voices();
+	return blargg_success;
 }
 
-void Classic_Emu::starting_track()
+void Classic_Emu::start_track( int track )
 {
-	require( buf ); // init() must have been called
-	
-	mute_voices( 0 );
+	Music_Emu::start_track( track );
 	buf->clear();
 }
 
-blargg_err_t Classic_Emu::play( long count, sample_t* out )
+blip_time_t Classic_Emu::run_clocks( blip_time_t t, bool* )
 {
-	require( buf ); // init() must have been called
+	assert( false );
+	return t;
+}
+
+blip_time_t Classic_Emu::run( int msec, bool* added_stereo )
+{
+	return run_clocks( (long) msec * clock_rate / 1000, added_stereo );
+}
+
+void Classic_Emu::play( long count, sample_t* out )
+{
+	require( sample_rate() ); // fails if set_sample_rate() hasn't been called yet
 	
 	long remain = count;
 	while ( remain )
@@ -105,12 +109,9 @@ blargg_err_t Classic_Emu::play( long count, sample_t* out )
 		if ( remain )
 		{
 			bool added_stereo = false;
-			blip_time_t cyc = run( buf->length(), &added_stereo );
-			if ( !cyc )
-				return "Emulation error";
-			buf->end_frame( cyc, added_stereo );
+			blip_time_t clocks_emulated = run( buf->length(), &added_stereo );
+			buf->end_frame( clocks_emulated, added_stereo );
 		}
 	}
-	return blargg_success;
 }
 

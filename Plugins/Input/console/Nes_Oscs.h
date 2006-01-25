@@ -1,11 +1,12 @@
 
 // Private oscillators used by Nes_Apu
 
-// Nes_Snd_Emu 0.1.6. Copyright (C) 2003-2005 Shay Green. GNU LGPL license.
+// Nes_Snd_Emu 0.1.7
 
 #ifndef NES_OSCS_H
 #define NES_OSCS_H
 
+#include "blargg_common.h"
 #include "Blip_Buffer.h"
 
 class Nes_Apu;
@@ -57,8 +58,10 @@ struct Nes_Square : Nes_Envelope
 	int phase;
 	int sweep_delay;
 	
-	typedef Blip_Synth<blip_good_quality,15> Synth;
-	const Synth* synth; // shared between squares
+	typedef Blip_Synth<blip_good_quality,1> Synth;
+	Synth const& synth; // shared between squares
+	
+	Nes_Square( Synth const* s ) : synth( *s ) { }
 	
 	void clock_sweep( int adjust );
 	void run( nes_time_t, nes_time_t );
@@ -74,8 +77,9 @@ struct Nes_Triangle : Nes_Osc
 	enum { phase_range = 16 };
 	int phase;
 	int linear_counter;
-	Blip_Synth<blip_good_quality,15> synth;
+	Blip_Synth<blip_med_quality,1> synth;
 	
+	int calc_amp() const;
 	void run( nes_time_t, nes_time_t );
 	void clock_linear_counter();
 	void reset() {
@@ -89,7 +93,7 @@ struct Nes_Triangle : Nes_Osc
 struct Nes_Noise : Nes_Envelope
 {
 	int noise;
-	Blip_Synth<blip_med_quality,15> synth;
+	Blip_Synth<blip_med_quality,1> synth;
 	
 	void run( nes_time_t, nes_time_t );
 	void reset() {
@@ -107,7 +111,7 @@ struct Nes_Dmc : Nes_Osc
 	int buf;
 	int bits_remain;
 	int bits;
-	bool buf_empty;
+	bool buf_full;
 	bool silence;
 	
 	enum { loop_flag = 0x40 };
@@ -125,7 +129,7 @@ struct Nes_Dmc : Nes_Osc
 	
 	Nes_Apu* apu;
 	
-	Blip_Synth<blip_med_quality,127> synth;
+	Blip_Synth<blip_med_quality,1> synth;
 	
 	void start();
 	void write_register( int, int );
@@ -135,6 +139,7 @@ struct Nes_Dmc : Nes_Osc
 	void reload_sample();
 	void reset();
 	int count_reads( nes_time_t, nes_time_t* ) const;
+	nes_time_t next_read_time() const;
 };
 
 #endif

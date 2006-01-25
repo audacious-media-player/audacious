@@ -1,7 +1,7 @@
 
 // Super Nintendo (SNES) SPC-700 CPU emulator
 
-// Game_Music_Emu 0.2.4. Copyright (C) 2004 Shay Green. GNU LGPL license.
+// Game_Music_Emu 0.3.0
 
 #ifndef SPC_CPU_H
 #define SPC_CPU_H
@@ -9,22 +9,20 @@
 #include "blargg_common.h"
 
 typedef unsigned spc_addr_t;
-typedef long spc_time_t;
+typedef long     spc_time_t;
 
 class Snes_Spc;
 
 class Spc_Cpu {
 	typedef BOOST::uint8_t uint8_t;
 	uint8_t* const ram;
-	spc_time_t remain_;
-	Snes_Spc& emu;
 public:
-	// Keeps pointer to ram and spc
-	Spc_Cpu( uint8_t ram [0x10000], Snes_Spc* spc );
+	// Keeps pointer to 64K RAM
+	Spc_Cpu( Snes_Spc* spc, uint8_t* ram );
 	
 	// SPC-700 registers. *Not* kept updated during a call to run().
 	struct registers_t {
-		unsigned short pc;
+		long pc; // more than 16 bits to allow overflow detection
 		uint8_t a;
 		uint8_t x;
 		uint8_t y;
@@ -51,11 +49,12 @@ private:
 	Spc_Cpu( const Spc_Cpu& );
 	Spc_Cpu& operator = ( const Spc_Cpu& );
 	unsigned mem_bit( spc_addr_t );
+	
+	spc_time_t remain_;
+	Snes_Spc& emu;
 };
 
-inline spc_time_t Spc_Cpu::remain() const {
-	return remain_;
-}
+inline spc_time_t Spc_Cpu::remain() const { return remain_; }
 
 #endif
 

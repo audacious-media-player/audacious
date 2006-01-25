@@ -1,7 +1,7 @@
 
 // Super Nintendo (SNES) SPC-700 APU Emulator
 
-// Game_Music_Emu 0.2.4. Copyright (C) 2004-2005 Shay Green. GNU LGPL license.
+// Game_Music_Emu 0.3.0
 
 #ifndef SNES_SPC_H
 #define SNES_SPC_H
@@ -12,11 +12,13 @@
 
 class Snes_Spc {
 public:
+	typedef BOOST::uint8_t uint8_t;
+	
 	Snes_Spc();
 	
 	// Load copy of SPC data into emulator. Clear echo buffer if 'clear_echo' is true.
 	enum { spc_file_size = 0x10180 };
-	blargg_err_t load_spc( const void* spc, long spc_size, int clear_echo = 1 );
+	blargg_err_t load_spc( const void* spc, long spc_size, bool clear_echo = 1 );
 	
 	// Load copy of state into emulator.
 	typedef Spc_Cpu::registers_t registers_t;
@@ -42,13 +44,14 @@ public:
 	// 16-bit sample range.
 	void set_gain( double );
 	
+	// If true, prevent channels and global volumes from being phase-negated
+	void disable_surround( bool disable );
 	
 // End of public interface
 private:
-	typedef BOOST::uint8_t uint8_t;
-	
 	// timers
-	struct Timer {
+	struct Timer
+	{
 		spc_time_t next_tick;
 		int period;
 		int count;
@@ -57,7 +60,8 @@ private:
 		int enabled;
 		
 		void run_until_( spc_time_t );
-		void run_until( spc_time_t time ) {
+		void run_until( spc_time_t time )
+		{
 			if ( time >= next_tick )
 				run_until_( time );
 		}
@@ -66,20 +70,11 @@ private:
 	Timer timer [timer_count];
 
 	// hardware
-	Spc_Cpu cpu;
 	int extra_cycles;
 	spc_time_t time() const;
 	int  read( spc_addr_t );
 	void write( spc_addr_t, int );
 	friend class Spc_Cpu;
-	
-	// boot rom
-	enum { rom_size = 64 };
-	enum { rom_addr = 0xffc0 };
-	int rom_enabled;
-	uint8_t extra_ram [rom_size];
-	static const uint8_t boot_rom [rom_size];
-	void enable_rom( int );
 	
 	// dsp
 	sample_t* sample_buf;
@@ -92,20 +87,27 @@ private:
 	void run_dsp( spc_time_t );
 	void run_dsp_( spc_time_t );
 	bool echo_accessed;
-	void check_for_echo_access( spc_addr_t addr );
+	void check_for_echo_access( spc_addr_t );
 	
-	// 64KB RAM + padding filled with STOP instruction to catch PC overflow.
+	// boot rom
+	enum { rom_size = 64 };
+	enum { rom_addr = 0xffc0 };
+	bool rom_enabled;
+	uint8_t extra_ram [rom_size];
+	static const uint8_t boot_rom [rom_size];
+	void enable_rom( bool );
+	
+	// CPU and RAM (at end because it's large)
+	Spc_Cpu cpu;
 	enum { ram_size = 0x10000 };
-	uint8_t ram [ram_size + 0x100];
+	uint8_t ram [ram_size + 0x100]; // padding for catching jumps past end
 };
 
-inline void Snes_Spc::mute_voices( int mask ) {
-	dsp.mute_voices( mask );
-}
+inline void Snes_Spc::disable_surround( bool disable ) { dsp.disable_surround( disable ); }
 
-inline void Snes_Spc::set_gain( double v ) {
-	dsp.set_gain( v );
-}
+inline void Snes_Spc::mute_voices( int mask ) { dsp.mute_voices( mask ); }
+
+inline void Snes_Spc::set_gain( double v ) { dsp.set_gain( v ); }
 
 #endif
 

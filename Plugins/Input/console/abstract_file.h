@@ -1,19 +1,13 @@
 
 // Abstract file access interfaces
 
-// Copyright (C) 2005 Shay Green. MIT license.
-
 #ifndef ABSTRACT_FILE_H
 #define ABSTRACT_FILE_H
 
-#include "libaudacious/vfs.h"
+#include <stdio.h>
 
-// to do: built-in buffering?
-
+// Supports reading and finding out how many bytes are remaining
 class Data_Reader {
-	// noncopyable
-	Data_Reader( const Data_Reader& );
-	Data_Reader& operator = ( const Data_Reader& );
 public:
 	Data_Reader() { }
 	virtual ~Data_Reader() { }
@@ -21,12 +15,11 @@ public:
 	// NULL on success, otherwise error string
 	typedef const char* error_t;
 	
-	// Read at most 'n' bytes. Return number of bytes read, negative
-	// value if error.
+	// Read at most 'n' bytes. Return number of bytes read, zero or negative
+	// if error.
 	virtual long read_avail( void*, long n ) = 0;
 	
-	// Read exactly 'n' bytes (error if fewer are available). NULL on success,
-	// otherwise error string.
+	// Read exactly 'n' bytes (error if fewer are available).
 	virtual error_t read( void*, long );
 	
 	// Number of bytes remaining
@@ -36,8 +29,14 @@ public:
 	virtual error_t skip( long n );
 	
 	// to do: bytes remaining = LONG_MAX when unknown?
+	
+private:
+	// noncopyable
+	Data_Reader( const Data_Reader& );
+	Data_Reader& operator = ( const Data_Reader& );
 };
 
+// Adds seeking operations
 class File_Reader : public Data_Reader {
 public:
 	// Size of file
@@ -54,6 +53,7 @@ public:
 	error_t skip( long n );
 };
 
+// Limit access to a subset of data
 class Subset_Reader : public Data_Reader {
 	Data_Reader* in;
 	long remain_;
@@ -63,6 +63,7 @@ public:
 	long read_avail( void*, long );
 };
 
+// Treat range of memory as a file
 class Mem_File_Reader : public File_Reader {
 	const char* const begin;
 	long pos;
@@ -77,13 +78,22 @@ public:
 	error_t seek( long );
 };
 
+// File reader based on C FILE
 class Std_File_Reader : public File_Reader {
-	VFSFile* file;
+	FILE* file_;
+protected:
+	void reset( FILE* f ) { file_ = f; }
+	//FILE* owned_file;
 public:
 	Std_File_Reader();
 	~Std_File_Reader();
 	
 	error_t open( const char* );
+	
+	FILE* file() const { return file_; }
+	
+	// Forward read requests to file. Caller must close file later.
+	//void forward( FILE* );
 	
 	long size() const;
 	long read_avail( void*, long );
@@ -94,10 +104,8 @@ public:
 	void close();
 };
 
+// Supports writing
 class Data_Writer {
-	// noncopyable
-	Data_Writer( const Data_Writer& );
-	Data_Writer& operator = ( const Data_Writer& );
 public:
 	Data_Writer() { }
 	virtual ~Data_Writer() { }
@@ -106,20 +114,25 @@ public:
 	
 	// Write 'n' bytes. NULL on success, otherwise error string.
 	virtual error_t write( const void*, long n ) = 0;
-};
-
-class Null_Writer : public Data_Writer {
-public:
-	error_t write( const void*, long );
+	
+	void satisfy_lame_linker_();
+private:
+	// noncopyable
+	Data_Writer( const Data_Writer& );
+	Data_Writer& operator = ( const Data_Writer& );
 };
 
 class Std_File_Writer : public Data_Writer {
-	VFSFile* file;
+	FILE* file_;
+protected:
+	void reset( FILE* f ) { file_ = f; }
 public:
 	Std_File_Writer();
 	~Std_File_Writer();
 	
 	error_t open( const char* );
+	
+	FILE* file() const { return file_; }
 	
 	// Forward writes to file. Caller must close file later.
 	//void forward( FILE* );
@@ -129,18 +142,35 @@ public:
 	void close();
 };
 
-// to do: mem file writer
-
-// Write to block of memory
+// Write data to memory
 class Mem_Writer : public Data_Writer {
-	void* out;
-	long remain_;
-	int ignore_excess;
+	char* data_;
+	long size_;
+	long allocated;
+	enum { expanding, fixed, ignore_excess } mode;
 public:
-	// to do: automatic allocation and expansion of memory?
-	Mem_Writer( void*, long size, int ignore_excess = 1 );
+	// Keep all written data in expanding block of memory
+	Mem_Writer();
+	
+	// Write to fixed-size block of memory. If ignore_excess is false, returns
+	// error if more than 'size' data is written, otherwise ignores any excess.
+	Mem_Writer( void*, long size, int ignore_excess = 0 );
+	
 	error_t write( const void*, long );
-	long remain() const;
+	
+	// Pointer to beginning of written data
+	char* data() { return data_; }
+	
+	// Number of bytes written
+	long size() const { return size_; }
+	
+	~Mem_Writer();
+};
+
+// Written data is ignored
+class Null_Writer : public Data_Writer {
+public:
+	error_t write( const void*, long );
 };
 
 #endif
