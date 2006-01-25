@@ -65,6 +65,12 @@ void Track_Emu::seek( long time )
 	sync( pos );
 }
 
+long Track_Emu::tell() const
+{
+	long rate = emu->sample_rate() * stereo;
+	return (out_time / rate * 1000) + (out_time % rate * 1000 / rate);
+}
+
 void Track_Emu::start_track( Music_Emu* e, int t, long length, bool ds )
 {
 // to do: remove

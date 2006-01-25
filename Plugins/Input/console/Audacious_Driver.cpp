@@ -518,12 +518,12 @@ static void* play_loop_track( gpointer )
 		long s = pending_seek;
 		pending_seek = -1; // to do: use atomic swap
 		if ( s >= 0 )
-			track_emu.seek( s );
+			track_emu.seek( s * 1000 );
 		
 		// fill buffer
 		if ( track_emu.play( buf_size, buf ) )
 			console_ip_is_going = false;
-		produce_audio( console_ip.output->written_time(), FMT_S16_NE, 1, sizeof buf, buf, NULL );
+		produce_audio( track_emu.tell(), FMT_S16_NE, 1, sizeof buf, buf, NULL );
 	}
 	
 	// stop playing
@@ -637,7 +637,7 @@ static void console_pause(gshort p)
 
 static int get_time(void)
 {
-	return console_ip_is_going ? console_ip.output->output_time() : -1;
+	return console_ip_is_going ? track_emu.tell() : -1;
 }
 
 // Setup

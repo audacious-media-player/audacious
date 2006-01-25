@@ -15,6 +15,8 @@ public:
 	
 	// Seek to new time in track
 	void seek( long msec );
+
+	long tell() const;
 	
 	// Play for 'count' samples and write to output buffer. Returns true when track
 	// has ended.
