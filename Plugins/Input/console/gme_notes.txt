@@ -1,0 +1,181 @@
+Game_Music_Emu 0.3.0 Notes
+--------------------------
+Author : Shay Green <hotpop.com@blargg>
+Website: http://www.slack.net/~ant/
+Forum  : http://groups.google.com/group/blargg-sound-libs
+
+
+Overview
+--------
+This library is composed of several independent game music emulators
+derived from the common Music_Emu interface. Each emulator can load a
+game music file and play from any track. To play a game music file, do
+the following:
+
+- Determine file's type
+- Create appropriate emulator
+- Set sample rate
+- Load file into emulator
+- Start desired track
+- When samples are needed, call play()
+- When done, delete emulator
+
+See Music_Emu.h for reference.
+
+
+Information Fields
+------------------
+Game music files include text fields with information about the game and
+track. These are stored in the file's header or in an embedded block.
+Text fields in most game music formats do *not* have a nul terminator if
+the string completely fills the field. The simplest way to handle this
+is to copy the string out and manually add a nul terminator at the end.
+
+This library is currently focused only on actual emulation, so it
+doesn't provide a common interface to the different schemes each game
+music file format uses. Refer to the file's official specification for
+further information.
+
+
+Modular Construction
+--------------------
+The library is made of many fairly independent modules. If you're using
+only one music file emulator, you can eliminate many of the library
+sources from your program. Refer to the files list in readme.txt to get
+a general idea of what can be removed. Post to the forum if you'd like
+me to put together a smaller version for a particular use, as this only
+takes me a few minutes to do.
+
+If you want to use one of the individual sound chip emulators in your
+console emulator, first check the libraries page on my website since I
+have released several of them as standalone libraries with included
+documentation and examples on their use.
+
+The "classic" sound chips use my Blip_Buffer library, which greatly
+simplifies their implementation and efficiently handles band-limited
+synthesis. It is also available as a standalone library with
+documentation and many examples.
+
+
+Sound Parameters
+----------------
+All emulators support adjustable output sampling rate, set with
+Music_Emu::set_sample_rate(). A rate of 44100 should work well on most
+systems. Since band-limited synthesis is used, a sampling rate above
+48000 Hz is not necessary. 
+
+Some emulators support adjustable treble and bass frequency equalization
+(NSF, GBS, VGM) using Music_Emu::set_equalizer(). Parameters are
+specified using Music_Emu::equalizer_t eq = { treble_dB, bass_freq }.
+Treble_dB sets the treble level (in dB), where 0.0 dB gives normal
+treble; -200.0 dB is quite muffled, and 5.0 dB emphasizes treble for an
+extra crisp sound. Bass_freq sets the frequency where bass response
+starts to diminish; 15 Hz is normal, 0 Hz gives maximum bass, and 15000
+Hz removes all bass. For example, the following makes the sound
+extra-crisp but lacking bass:
+
+	Music_Emu::equalizer_t eq = { 5.0, 1000 };
+	music_emu->set_equalizer( eq );
+
+Each emulator's equalization defaults to a profile that approximates its
+particular console's sound quality; this default can be determined by
+calling Music_Emu::equalizer() just after creating the emulator. Some
+emulators include other profiles for different versions of the system.
+The Music_Emu::tv_eq profile gives sound as if coming from a TV speaker.
+For example, to use Famicom sound equalization with the NSF emulator, do
+the following:
+
+	nsf_emu->set_equalizer( Nsf_Emu::famicom_eq );
+
+
+VGM/GYM YM2413 & YM2612 FM Sound
+--------------------------------
+The library plays Sega Genesis/Mega Drive music using a YM2612 FM sound
+chip emulator based on Gens. Because this has some inaccuracies, other
+YM2612 emulators can be used in its place by reimplementing the
+interface in YM2612_Emu.h. Available on my website is a modified version
+of MAME's YM2612 emulator, which sounds better in some ways and whose
+author is still making improvements.
+
+VGM music files using the YM2413 FM sound chip are also supported, but a
+YM2413 emulator isn't included. Similar to above, I have put one of the
+available YM2413 emulators on my website that can be used directly.
+
+
+Misc
+----
+Some emulators have constructor parameters which can be specified when
+creating the object. For example, this creates a Vgm_Emu with
+oversampling off and a tempo of 83%:
+
+	Vgm_Emu* emu = new Vgm_Emu( false, 0.83 );
+
+For a full example of using Game_Music_Emu see the source code for Game
+Music Box, a full-featured game music player for Mac OS:
+
+	http://www.slack.net/~ant/game-music-box/dev.html
+
+
+Thanks
+------
+Big thanks to Chris Moeller (kode54) for help with library testing and
+feedback, for maintaining the Foobar2000 plugin foo_gep based on it, and
+for original work on openspc++ that was used when developing Spc_Emu.
+Brad Martin's excellent OpenSPC SNES DSP emulator worked well from the
+start. Also thanks to Richard Bannister, Mahendra Tallur, Shazz, and the
+Audacious team for testing and using the library in their game music
+players.
+
+
+Solving Problems
+----------------
+If you're having problems, try the following:
+
+- Enable debugging support in your environment. This enables assertions
+and other run-time checks.
+
+- Turn the compiler's optimizer is off. Sometimes an optimizer generates
+bad code.
+
+- If multiple threads are being used, ensure that only one at a time is
+accessing a given set of objects from the library. This library is not
+in general thread-safe, though independent objects can be used in
+separate threads.
+
+- If all else fails, see if the demos work.
+
+
+Error handling
+--------------
+Functions which can fail have a return type of blargg_err_t, which is a
+pointer to an error string (const char*). If the function is successful
+it returns blargg_success (NULL), otherwise it returns a pointer to an
+error string. Errors which the caller can easily detect are only checked
+with debug assertions; blargg_err_t returns values are only used for
+genuine run-time errors that can't be easily predicted in advance (out
+of memory, I/O errors, incompatible file data).
+
+To allow compatibility with older C++ compilers, no exceptions are
+thrown by any of the modules and code is generally exception-safe. Any
+exceptions thrown by the standard library or caller-supplied functions
+are allowed to propagate normally.
+
+
+Configuration
+-------------
+The header "blargg_common.h" is used to establish a common environment,
+and is #included at the beginning of all library headers and sources. It
+attempts to automatically determine the features of the environment, but
+might need help. Refer to "blargg_common.h" for descriptions of
+features.
+
+If defined HAVE_CONFIG_H in the compiler command-line, the user-provided
+"config.h" is included at the beginning of each library header file,
+allowing configuration options for the library to be set. I have
+attempted to design the library so that configuration can be done
+*without* modifying any of the library sources and header files. This
+makes it easy to upgrade to a new version without losing any
+customizations to its configuration.
+
+Post to the forum if you have problems or suggestions.
+

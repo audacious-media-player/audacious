@@ -1,0 +1,77 @@
+Audacious Console Game Music Driver
+-----------------------------------
+Contact: Shay Green <hotpop.com@blargg>
+
+Notes
+-----
+- This is a fairly rough version. I'm sending it so we can decide more
+concretely on the desired features. I don't have Unix (or even Mac OS X)
+so I've only tested this lightly with a quick framework I wrote to
+simulate the Audacious environment (as best as I could determine based
+on the limited documentation).
+
+- The most significant missing feature is a way to select the track
+number of multi-track formats (NSF, NSFE, GBS). I've implemented
+internal support for this and marked the places where the track number
+is needed from an external source.
+
+- Seeking should be tested carefully. It might be too slow for some
+formats.
+
+- Currently text fields are treated as they are already in UTF-8 format
+(which they aren't), but they should probably be converted from Windows
+charset to UTF-8. VGM files have 16-bit chars in an unknown encoding,
+currently just truncated to 8-bits.
+
+- Errors in Audacious_Driver.cpp are checked and generally result in
+exit of the current operation and no overall effect. Information about
+the cause of the error is consistently lost, so it would be difficult to
+switch over to a model of actually reporting the error so the user can
+know about it and take useful action.
+
+- Each track may contain any of the following: preferred play length,
+intro length, loop length. If play length is present, it is used as the
+track time. If not present, the default play length from the config file
+is used. A more sophisticated algorithm could be used that takes into
+account the loop length.
+
+- File opening and reading has been significantly minimized. Bytes read
+for file identification are preserved for when the rest of header is
+read. When playing a track, file information is obtained using
+already-loaded data in the emulator, eliminating extra reading.
+
+
+Change Log
+----------
+- Marked things to be addressed with "// to do:" comments
+
+- Updated to Game_Music_Emu 0.3.0 and eliminated unnecessary source
+files
+
+- Eliminated Audacious_Driver.h since it served no purpose
+
+- Added support for NSFE files
+
+- Added Vfs_File, a wrapper for the vfs_* file functions. This allows
+all the emulators to access files in this manner.
+
+- Updated Makefile.am but didn't add line to link with zlib
+
+- Added fading at end of tracks
+
+- Added end-of-track silence detection for tracks without timing
+information. Stops track when 6 seconds of silence have passed, but
+looks ahead so that the user only experiences about 1 second of silence
+before the track ends.
+
+- Added beginning-of-track silence removal, as some tracks have many
+seconds of silence (Zelda Link's Awakening.gbs track 61 has 20 seconds
+of silence, making you think it's not a music track without this
+feature).
+
+
+To Do
+-----
+- Separate track info handling from Audacious_Driver.cpp, since the
+current complexity is a good source of bugs
+
