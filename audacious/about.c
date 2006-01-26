@@ -230,7 +230,7 @@ show_about_window(void)
     credits_button = gtk_button_new();
     credits_button_hbox = gtk_hbox_new( FALSE , 0 );
     credits_button_image = gtk_image_new_from_stock( GTK_STOCK_DIALOG_INFO , GTK_ICON_SIZE_BUTTON );
-    credits_button_label = gtk_label_new( "Credits" );
+    credits_button_label = gtk_label_new( _("Credits") );
     gtk_box_pack_start( GTK_BOX(credits_button_hbox) , credits_button_image ,
                         TRUE , TRUE , 0 );
     gtk_box_pack_start( GTK_BOX(credits_button_hbox) , credits_button_label ,
