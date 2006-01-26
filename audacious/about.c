@@ -41,23 +41,43 @@ static GdkBitmap *mask_bitmap_window1 = NULL,
 static gboolean
 on_about_window_expose(GtkWidget *widget, GdkEventExpose *expose, gpointer data)
 {
-    g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
+	g_return_val_if_fail(GTK_IS_WIDGET (widget), FALSE);
 
-    gdk_window_set_back_pixmap(GDK_WINDOW(widget->window), mask_pixmap_window2, 0);
-    gdk_window_clear(GDK_WINDOW(widget->window));
+	gdk_window_set_back_pixmap(GDK_WINDOW(widget->window), mask_pixmap_window2, 0);
+	gdk_window_clear(GDK_WINDOW(widget->window));
 
-    return FALSE;
+	return FALSE;
 }
 
 static gboolean
 on_about_window_key_press (GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
-	g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
+	g_return_val_if_fail(GTK_IS_WIDGET (widget), FALSE);
 
 	if (event->keyval == GDK_Escape)
 	{      
-		gtk_widget_hide (widget);
+		gtk_widget_hide(widget);
 	}
+
+	return FALSE;
+}
+
+static gboolean
+on_close_button_clicked (GtkWidget *widget, gpointer data)
+{
+	g_return_val_if_fail(GTK_IS_WIDGET (widget), FALSE);
+
+	gtk_widget_hide(about_window);
+
+	return FALSE;
+}
+
+static gboolean
+on_credits_button_clicked (GtkWidget *widget, gpointer data)
+{
+	g_return_val_if_fail(GTK_IS_WIDGET (widget), FALSE);
+
+	show_credits_window();
 
 	return FALSE;
 }
@@ -67,6 +87,7 @@ show_about_window(void)
 {
     GtkWidget *about_fixedbox;
     GtkWidget *close_button;
+    GtkWidget *credits_button;
     gchar *filename = DATA_DIR G_DIR_SEPARATOR_S "images" G_DIR_SEPARATOR_S "about-logo.png";
 
     if (about_window != NULL)
@@ -86,11 +107,11 @@ show_about_window(void)
 
     about_pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
 
-    gtk_widget_set_size_request (GTK_WIDGET (about_window),
+    gtk_widget_set_size_request(GTK_WIDGET (about_window),
                    gdk_pixbuf_get_width (about_pixbuf),
                    gdk_pixbuf_get_height (about_pixbuf));
 
-    gtk_widget_set_app_paintable (about_window, TRUE);
+    gtk_widget_set_app_paintable(about_window, TRUE);
     gtk_window_set_title(GTK_WINDOW(about_window), _("About Audacious"));
     gtk_window_set_position(GTK_WINDOW(about_window), GTK_WIN_POS_CENTER);
     gtk_window_set_resizable(GTK_WINDOW(about_window), FALSE);
@@ -199,7 +220,22 @@ show_about_window(void)
     gtk_container_add( GTK_CONTAINER(about_window) , about_fixedbox );
 
     close_button = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
+
+    g_signal_connect(close_button, "clicked",
+	G_CALLBACK(on_close_button_clicked), NULL);
+
     gtk_fixed_put( GTK_FIXED(about_fixedbox) , close_button , 390 , 220 );
+
+    /* GTK+ won't let us override the label we set for this button without
+     * destroying our stock icon. If we want to go to GTK 2.6, that's fine,
+     * but until then, we're pretty much screwed here. --nenolod
+     */
+    credits_button = gtk_button_new_from_stock(GTK_STOCK_DIALOG_INFO);
+
+    g_signal_connect(credits_button, "clicked",
+	G_CALLBACK(on_credits_button_clicked), NULL);
+
+    gtk_fixed_put( GTK_FIXED(about_fixedbox) , credits_button , 60 , 220 );
 
     gtk_widget_show_all(about_window);
     gtk_window_present(GTK_WINDOW(about_window));

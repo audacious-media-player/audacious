@@ -56,7 +56,7 @@ static const gchar *credit_text[] = {
 
     N_("Graphics:"),
     N_("George Averill"),
-    N_("deitarion in #audacious"),
+    N_("Stephan Sokolow"),
     NULL,
 
     N_("Default skin:"),
