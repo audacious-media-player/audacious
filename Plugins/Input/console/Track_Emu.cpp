@@ -160,7 +160,8 @@ bool Track_Emu::play( int out_count, Music_Emu::sample_t* out )
 	}
 	out_time += out_count;
 	
-	if ( emu_time - silence_time > silence_max * stereo * emu->sample_rate() && silence_time )
+	if ( detect_silence && 
+		( emu_time - silence_time > silence_max * stereo * emu->sample_rate() && silence_time ) )
 		end_track();
 	
 	// fade if track is ending

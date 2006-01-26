@@ -45,7 +45,7 @@ struct AudaciousConsoleConfig {
 static AudaciousConsoleConfig audcfg = { 180, FALSE, 32000, TRUE };
 static GThread* decode_thread;
 static GStaticMutex playback_mutex = G_STATIC_MUTEX_INIT;
-static volatile gboolean console_ip_is_going;
+static int console_ip_is_going;
 static volatile long pending_seek;
 extern InputPlugin console_ip;
 static Music_Emu* emu = 0;
@@ -510,10 +510,6 @@ static void* play_loop_track( gpointer )
 		int const buf_size = 1024;
 		Music_Emu::sample_t buf [buf_size];
 		
-		// wait for free space
-		while ( console_ip.output->buffer_free() < (int) sizeof buf )
-			xmms_usleep( 10000 );
-		
 		// handle pending seek
 		long s = pending_seek;
 		pending_seek = -1; // to do: use atomic swap
@@ -525,15 +521,16 @@ static void* play_loop_track( gpointer )
 
 		// fill buffer
 		if ( track_emu.play( buf_size, buf ) )
-			console_ip_is_going = false;
+			console_ip_is_going = 0;
 		produce_audio( console_ip.output->written_time(), 
-			FMT_S16_NE, 1, sizeof buf, buf, NULL );
+			FMT_S16_NE, 1, sizeof buf, buf, 
+			&console_ip_is_going );
 	}
 	
 	// stop playing
 	unload_file();
 	console_ip.output->close_audio();
-	console_ip_is_going = FALSE;
+	console_ip_is_going = 0;
 	g_static_mutex_unlock( &playback_mutex );
 	// to do: should decode_thread be cleared here?
 	g_thread_exit( NULL );
@@ -610,8 +607,9 @@ static void play_file( char* path )
     if ( !console_ip.output->open_audio( FMT_S16_NE, sample_rate, 2 ) )
 		return;
 	pending_seek = -1;
+
 	track_emu.start_track( emu, track, length, !has_length );
-	console_ip_is_going = TRUE;
+	console_ip_is_going = 1;
 	decode_thread = g_thread_create( play_loop_track, NULL, TRUE, NULL );
 }
 
@@ -624,7 +622,7 @@ static void seek( gint time )
 
 static void console_stop(void)
 {
-	console_ip_is_going = FALSE;
+	console_ip_is_going = 0;
 	if ( decode_thread )
 	{
 		g_thread_join( decode_thread );
