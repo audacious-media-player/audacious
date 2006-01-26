@@ -173,31 +173,6 @@ byteswap(size_t size,
         *(guint16 *) it = GUINT16_SWAP_LE_BE(*(guint16 *) it);
 }
 
-static void
-output_to_plugin(gint time,
-                 AFormat format,
-                 gint n_channels,
-                 gint length,
-                 gpointer sample,
-                 int *going)
-{
-    OutputPlugin *op = get_current_output_plugin();
-
-    /* do vis plugin(s) */
-    input_add_vis_pcm(time, format, n_channels, length, sample);
-
-    while (op->buffer_free() < length) { /* wait output buf          */
-        if (going && !*going)            /*   thread stopped?        */
-            return;                      /*     so finish            */
-
-        g_usleep(10000);                 /*   else sleep for retry   */
-    }                                    
-
-    op->write_audio(sample, length);     /* do output                */
-}
-
-
-
 /* called by input plugin when data is ready */
 void
 produce_audio(gint time,        /* position             */
@@ -208,12 +183,11 @@ produce_audio(gint time,        /* position             */
               int *going        /* 0 when time to stop  */
               )
 {
-#ifndef XMMS_EQ
-
     static int init = 0;
     int swapped = 0;
     int myorder = G_BYTE_ORDER == G_LITTLE_ENDIAN ? FMT_S16_LE : FMT_S16_BE;
     int caneq = (fmt == FMT_S16_NE || fmt == myorder);
+    OutputPlugin *op = get_current_output_plugin();
 
     if (!caneq && cfg.equalizer_active) {    /* wrong byte order         */
         byteswap(length, ptr);               /*  so convert              */
@@ -235,7 +209,15 @@ produce_audio(gint time,        /* position             */
             byteswap(length, ptr); /*  swap back for output   */
     }                           
 
-#endif
+    /* do vis plugin(s) */
+    input_add_vis_pcm(time, format, nch, length, sample);
 
-    output_to_plugin(time, fmt, nch, length, ptr, going);
+    while (op->buffer_free() < length) { /* wait output buf          */
+        if (going && !*going)            /*   thread stopped?        */
+            return;                      /*     so finish            */
+
+        g_usleep(10000);                 /*   else sleep for retry   */
+    }                                    
+
+    op->write_audio(sample, length);     /* do output                */
 }
