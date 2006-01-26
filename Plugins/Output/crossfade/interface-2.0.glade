@@ -680,7 +680,7 @@
 		      <child>
 			<widget class="GtkOptionMenu" id="ep_plugin_optionmenu">
 			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">Select an effect plugin. Take care not to use the same plugin as selected in XMMS' configuration dialog.</property>
+			  <property name="tooltip" translatable="yes">Select an effect plugin. Take care not to use the same plugin as selected in Audacious' configuration dialog.</property>
 			  <property name="can_focus">True</property>
 			  <property name="history">0</property>
 
@@ -1572,7 +1572,7 @@ Default: 2000</property>
 			      <child>
 				<widget class="GtkSpinButton" id="xftffi_volume_spin">
 				  <property name="visible">True</property>
-				  <property name="tooltip" translatable="yes">Set the start volume. XMMS-crossfade will fade from this volume to 100% during the time specified above.
+				  <property name="tooltip" translatable="yes">Set the start volume. Audacious-crossfade will fade from this volume to 100% during the time specified above.
 Default: 0</property>
 				  <property name="can_focus">True</property>
 				  <property name="climb_rate">0</property>
@@ -2106,7 +2106,7 @@ Default: depends on songchange type</property>
 			      <child>
 				<widget class="GtkSpinButton" id="fadeout_volume_spin">
 				  <property name="visible">True</property>
-				  <property name="tooltip" translatable="yes">Set the end volume. XMMS-crossfade will fade from 100% to this volume during the time specified above.
+				  <property name="tooltip" translatable="yes">Set the end volume. Audacious-crossfade will fade from 100% to this volume during the time specified above.
 Default: 0</property>
 				  <property name="can_focus">True</property>
 				  <property name="climb_rate">0</property>
@@ -2548,7 +2548,7 @@ Default: 0</property>
 			      <child>
 				<widget class="GtkSpinButton" id="fadein_volume_spin">
 				  <property name="visible">True</property>
-				  <property name="tooltip" translatable="yes">Set the start volume. XMMS-crossfade will fade from this volume to 100% during the time specified above.
+				  <property name="tooltip" translatable="yes">Set the start volume. Audacious-crossfade will fade from this volume to 100% during the time specified above.
 Default: 0</property>
 				  <property name="can_focus">True</property>
 				  <property name="climb_rate">0</property>
@@ -2759,7 +2759,7 @@ Default: 0</property>
 			      <child>
 				<widget class="GtkSpinButton" id="xftfi_volume_spin">
 				  <property name="visible">True</property>
-				  <property name="tooltip" translatable="yes">Set the start volume. XMMS-crossfade will fade from this volume to 100% during the time specified above.
+				  <property name="tooltip" translatable="yes">Set the start volume. Audacious-crossfade will fade from this volume to 100% during the time specified above.
 Default: 0</property>
 				  <property name="can_focus">True</property>
 				  <property name="climb_rate">0</property>
@@ -2970,7 +2970,7 @@ Default: 0</property>
 			      <child>
 				<widget class="GtkSpinButton" id="xftfo_volume_spin">
 				  <property name="visible">True</property>
-				  <property name="tooltip" translatable="yes">Set the end volume. XMMS-crossfade will fade from 100% to this volume during the time specified above.
+				  <property name="tooltip" translatable="yes">Set the end volume. Audacious-crossfade will fade from 100% to this volume during the time specified above.
 Default: 0</property>
 				  <property name="can_focus">True</property>
 				  <property name="climb_rate">0</property>
@@ -3958,7 +3958,7 @@ Default: 512</property>
 		      <child>
 			<widget class="GtkCheckButton" id="gadv_crossing_check">
 			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">If enabled, XMMS-crossfade will take additional care to avoid clicks with pre-faded (gapless) tracks. XMMS-crossfade will cut off the end of the previous song (the beginning of the next song) only at a zero-crossing of the sample values.
+			  <property name="tooltip" translatable="yes">If enabled, Audacious-crossfade will take additional care to avoid clicks with pre-faded (gapless) tracks. Audacious-crossfade will cut off the end of the previous song (the beginning of the next song) only at a zero-crossing of the sample values.
 Default: On</property>
 			  <property name="can_focus">True</property>
 			  <property name="label" translatable="yes">Skip to next zero crossing</property>
@@ -4061,8 +4061,8 @@ Default: On</property>
 		      <child>
 			<widget class="GtkCheckButton" id="debug_stderr_check">
 			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">Monitors what is going on in XMMS-crossfade. If you think you found a bug in XMMS-crossfade, please enable this option and send me the output.
-Note that you should disable debug output if you start XMMS from within Netscape. Netscape will spam you with dialogs containing the debug output captured from &lt;stderr&gt;.
+			  <property name="tooltip" translatable="yes">Monitors what is going on in Audacious-crossfade. If you think you found a bug in Audacious-crossfade, please enable this option and send me the output.
+Note that you should disable debug output if you start Audacious from within Netscape. Netscape will spam you with dialogs containing the debug output captured from &lt;stderr&gt;.
 Default: Off</property>
 			  <property name="can_focus">True</property>
 			  <property name="label" translatable="yes">Write debug output to &lt;stderr&gt;</property>
@@ -4150,7 +4150,7 @@ Default: Off</property>
 		      <child>
 			<widget class="GtkCheckButton" id="mixopt_enable_check">
 			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">Enables/disables XMMS volume and balance controls.
+			  <property name="tooltip" translatable="yes">Enables/disables Audacious volume and balance controls.
 Default: On</property>
 			  <property name="can_focus">True</property>
 			  <property name="label" translatable="yes">Enable volume control</property>
@@ -4293,7 +4293,7 @@ Default: Off</property>
 			    <widget class="GtkSpinButton" id="moth_songchange_spin">
 			      <property name="visible">True</property>
 			      <property name="sensitive">False</property>
-			      <property name="tooltip" translatable="yes">The songchange timeout is the maximum time XMMS-crossfade waits for the next song. If this timeout is exceeded, the output plugin/device is closed.
+			      <property name="tooltip" translatable="yes">The songchange timeout is the maximum time Audacious-crossfade waits for the next song. If this timeout is exceeded, the output plugin/device is closed.
 Default: 500</property>
 			      <property name="can_focus">True</property>
 			      <property name="climb_rate">0</property>
@@ -4353,7 +4353,7 @@ Default: 500</property>
 			  <child>
 			    <widget class="GtkSpinButton" id="moth_preload_spin">
 			      <property name="visible">True</property>
-			      <property name="tooltip" translatable="yes">Tells XMMS-crossfade how much data it should buffer before it starts writing to the output plugin/device. Usually, this value can be set to 0, because the output plugin does preloading on its own.
+			      <property name="tooltip" translatable="yes">Tells Audacious-crossfade how much data it should buffer before it starts writing to the output plugin/device. Usually, this value can be set to 0, because the output plugin does preloading on its own.
 Default: 0</property>
 			      <property name="can_focus">True</property>
 			      <property name="climb_rate">0</property>
@@ -4488,7 +4488,7 @@ Default: Off</property>
 			  <child>
 			    <widget class="GtkCheckButton" id="moth_opmaxused_check">
 			      <property name="visible">True</property>
-			      <property name="tooltip" translatable="yes">With this option enabled, XMMS-crossfade will limit the amount of data being buffered by the output plugin. This way, you can decrease the latency between pressing STOP/NEXT/PREV and the new song actually being played. 
+			      <property name="tooltip" translatable="yes">With this option enabled, Audacious-crossfade will limit the amount of data being buffered by the output plugin. This way, you can decrease the latency between pressing STOP/NEXT/PREV and the new song actually being played. 
 Default: Off</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">Limit OP buffer usage (ms):</property>
@@ -4558,7 +4558,7 @@ Default: Off</property>
 		      <child>
 			<widget class="GtkCheckButton" id="moth_outputkeepopened_check">
 			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">Keep the output device opened all the time, even if XMMS is stopped. This way, you can avoid clicks caused by the soundcard when the device is opened or closed
+			  <property name="tooltip" translatable="yes">Keep the output device opened all the time, even if Audacious is stopped. This way, you can avoid clicks caused by the soundcard when the device is opened or closed
 Default: Off</property>
 			  <property name="can_focus">True</property>
 			  <property name="label" translatable="yes">Keep output opened</property>
@@ -5346,7 +5346,7 @@ Default: Off</property>
 
 <widget class="GtkDialog" id="about_win">
   <property name="visible">True</property>
-  <property name="title" translatable="yes">About XMMS Crossfade Plugin</property>
+  <property name="title" translatable="yes">About Audacious Crossfade Plugin</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
   <property name="modal">False</property>

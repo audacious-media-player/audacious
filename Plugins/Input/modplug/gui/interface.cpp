@@ -40,7 +40,7 @@ create_About (void)
   gtk_widget_show (vbox1);
   gtk_container_add (GTK_CONTAINER (About), vbox1);
 
-  label1 = gtk_label_new (_("Modplug Input Plugin for BMP ver"
+  label1 = gtk_label_new (_("Modplug Input Plugin for Audacious ver"
 			VERSION
 			"\nModplug sound engine written by Olivier Lapicque.\nXMMS interface for Modplug by Kenton Varda.\n(c)2000 Olivier Lapicque and Kenton Varda.\nUpdates and Maintainance by Konstanty Bialkowski.\nPorted to BMP by Theofilos Intzoglou."));
   gtk_widget_ref (label1);
