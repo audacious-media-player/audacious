@@ -87,7 +87,7 @@ show_about_window(void)
 {
     GtkWidget *about_fixedbox;
     GtkWidget *close_button;
-    GtkWidget *credits_button;
+    GtkWidget *credits_button , *credits_button_hbox, *credits_button_image, *credits_button_label;
     gchar *filename = DATA_DIR G_DIR_SEPARATOR_S "images" G_DIR_SEPARATOR_S "about-logo.png";
 
     if (about_window != NULL)
@@ -227,11 +227,15 @@ show_about_window(void)
 
     gtk_fixed_put( GTK_FIXED(about_fixedbox) , close_button , 390 , 220 );
 
-    /* GTK+ won't let us override the label we set for this button without
-     * destroying our stock icon. If we want to go to GTK 2.6, that's fine,
-     * but until then, we're pretty much screwed here. --nenolod
-     */
-    credits_button = gtk_button_new_from_stock(GTK_STOCK_DIALOG_INFO);
+    credits_button = gtk_button_new();
+    credits_button_hbox = gtk_hbox_new( FALSE , 0 );
+    credits_button_image = gtk_image_new_from_stock( GTK_STOCK_DIALOG_INFO , GTK_ICON_SIZE_BUTTON );
+    credits_button_label = gtk_label_new( "Credits" );
+    gtk_box_pack_start( GTK_BOX(credits_button_hbox) , credits_button_image ,
+                        TRUE , TRUE , 0 );
+    gtk_box_pack_start( GTK_BOX(credits_button_hbox) , credits_button_label ,
+                        TRUE , TRUE , 5 );
+    gtk_container_add( GTK_CONTAINER(credits_button) , credits_button_hbox );
 
     g_signal_connect(credits_button, "clicked",
 	G_CALLBACK(on_credits_button_clicked), NULL);
