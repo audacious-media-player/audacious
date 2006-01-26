@@ -275,6 +275,8 @@ generate_credit_list(const gchar * text[], gboolean sec_space)
 void
 show_about_window(void)
 {
+    GtkWidget *about_fixedbox;
+    GtkWidget *close_button;
     gchar *filename = DATA_DIR G_DIR_SEPARATOR_S "images" G_DIR_SEPARATOR_S "about-logo.png";
 
     if (about_window != NULL)
@@ -394,5 +396,21 @@ show_about_window(void)
 
     gtk_widget_shape_combine_mask(GTK_WIDGET(about_window), mask_bitmap_window2, 0, 0);
 
+    /* GtkFixed hasn't got its GdkWindow, this means that it can be used to
+       display widgets while the logo below will be displayed anyway;
+       however I don't like the fixed position cause the button sizes may (will)
+       vary depending on the gtk style used, so it's not possible to center
+       them unless I force a fixed width and heigth (and this may bring to cutted
+       text if someone, i.e., uses a big font for gtk widgets);
+       other types of container most likely have their GdkWindow, this simply
+       means that the logo must be drawn on the container widget, instead of the
+       window; otherwise, it won't be displayed correctly */
+    about_fixedbox = gtk_fixed_new();
+    gtk_container_add( GTK_CONTAINER(about_window) , about_fixedbox );
+
+    close_button = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
+    gtk_fixed_put( GTK_FIXED(about_fixedbox) , close_button , 390 , 220 );
+
+    gtk_widget_show_all(about_window);
     gtk_window_present(GTK_WINDOW(about_window));
 }
