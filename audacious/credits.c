@@ -48,7 +48,20 @@ static const gchar *bmp_brief =
        "Copyright (C) 2005-2006 Audacious Development Team\n");
 
 static const gchar *credit_text[] = {
-    N_("Developers:"),
+    N_("Audacious core developers:"),
+    N_("Giacomo Lozito"),
+    N_("William Pitcock"),
+    N_("Tony Vroon"),
+    NULL,
+
+    N_("Graphics:"),
+    N_("deitarion in #audacious"),
+    N_("NhJm in #audacious"),
+    NULL,
+
+    N_("Plugin development:"),
+    N_("Kiyoshi Aman"),
+    N_("Shay Green"),
     N_("Giacomo Lozito"),
     N_("William Pitcock"),
     N_("Tony Vroon"),
@@ -265,7 +278,7 @@ show_credits_window(void)
     gtk_window_set_type_hint(GTK_WINDOW(about_window),
                              GDK_WINDOW_TYPE_HINT_DIALOG);
 
-    gtk_window_set_default_size(GTK_WINDOW(about_window), -1, 480);
+    gtk_window_set_default_size(GTK_WINDOW(about_window), -1, 512);
     gtk_window_set_title(GTK_WINDOW(about_window), _("About Audacious"));
     gtk_window_set_position(GTK_WINDOW(about_window), GTK_WIN_POS_CENTER);
     gtk_window_set_resizable(GTK_WINDOW(about_window), TRUE);
