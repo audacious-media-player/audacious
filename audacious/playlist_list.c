@@ -356,6 +356,7 @@ playlist_list_draw(Widget * w)
     guint padding, padding_dwidth, padding_plength;
     guint max_time_len = 0;
     gint queue_tailpadding = 0;
+    gint tpadding, tpadding_dwidth = 0;
 
     gchar tail[100];
     gchar queuepos[255];         /* FIXME CRITICAL: Allows for a limited number of queue positions only */
@@ -457,8 +458,11 @@ playlist_list_draw(Widget * w)
             g_snprintf(queuepos, sizeof(queuepos), "%d", pos + 1);
 
         if (entry->length != -1)
+        {
             g_snprintf(length, sizeof(length), "%d:%-2.2d",
                        entry->length / 60000, (entry->length / 1000) % 60);
+	    tpadding_dwidth = MAX(tpadding_dwidth, strlen(length));
+        }
 
         if (pos != -1 || entry->length != -1) {
             gint x, y;
@@ -718,6 +722,21 @@ playlist_list_draw(Widget * w)
                       pl->pl_widget.y,
                       pl->pl_widget.x + padding,
                       (pl->pl_widget.y + pl->pl_widget.height));
+    }
+
+    if (tpadding_dwidth != 0)
+    {
+        tpadding = (tpadding_dwidth * width_approx_digits) + width_approx_digits;
+
+        if (has_slant)
+            tpadding += width_approx_digits_half;
+
+        gdk_draw_line(obj, gc,
+                      pl->pl_widget.x + pl->pl_widget.width - tpadding,
+                      pl->pl_widget.y,
+                      pl->pl_widget.x + pl->pl_widget.width - tpadding,
+                      (pl->pl_widget.y + pl->pl_widget.height));
+
     }
 
     playlist_rect->x = 0;
