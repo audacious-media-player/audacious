@@ -115,6 +115,7 @@ show_about_window(void)
     gtk_window_set_title(GTK_WINDOW(about_window), _("About Audacious"));
     gtk_window_set_position(GTK_WINDOW(about_window), GTK_WIN_POS_CENTER);
     gtk_window_set_resizable(GTK_WINDOW(about_window), FALSE);
+    gtk_window_set_decorated(GTK_WINDOW(about_window), FALSE);
 
     gdk_pixbuf_render_pixmap_and_mask(about_pixbuf,
                      &mask_pixmap_window1,
