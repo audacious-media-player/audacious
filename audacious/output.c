@@ -210,7 +210,7 @@ produce_audio(gint time,        /* position             */
     }                           
 
     /* do vis plugin(s) */
-    input_add_vis_pcm(time, format, nch, length, sample);
+    input_add_vis_pcm(time, fmt, nch, length, ptr);
 
     while (op->buffer_free() < length) { /* wait output buf          */
         if (going && !*going)            /*   thread stopped?        */
@@ -219,5 +219,5 @@ produce_audio(gint time,        /* position             */
         g_usleep(10000);                 /*   else sleep for retry   */
     }                                    
 
-    op->write_audio(sample, length);     /* do output                */
+    op->write_audio(ptr, length);     /* do output                */
 }
