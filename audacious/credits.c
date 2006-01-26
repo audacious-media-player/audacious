@@ -1,4 +1,7 @@
-/*  XMMS - Cross-platform multimedia player
+/*  Audacious - Cross-platform multimedia player
+ *  Copyright (C) 2005-2006  Audacious Team
+ *
+ *  XMMS - Cross-platform multimedia player
  *  Copyright (C) 1998-2003  Peter Alm, Mikael Alm, Olle Hallnas,
  *                           Thomas Nilsson and 4Front Technologies
  *  Copyright (C) 2000-2003  Haavard Kvaalen
@@ -241,7 +244,7 @@ generate_credit_list(const gchar * text[], gboolean sec_space)
 }
 
 void
-show_about_window(void)
+show_credits_window(void)
 {
     static GtkWidget *about_window = NULL;
 
