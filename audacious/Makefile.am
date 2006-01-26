@@ -6,7 +6,6 @@ bin_PROGRAMS = audacious
 
 audacious_LDFLAGS = -export-dynamic
 audacious_LDADD = \
-	$(X_LIBS) $(X_PRE_LIBS) -lX11 $(X_EXTRA_LIBS) \
 	$(GTK_LIBS)      \
 	$(LIBGLADE_LIBS) \
 	$(LTLIBINTL)     \
@@ -14,7 +13,6 @@ audacious_LDADD = \
 	$(top_builddir)/libaudcore/libaudcore.la
 
 audacious_CFLAGS = \
-	$(X_CFLAGS)        \
 	$(GTK_CFLAGS)      \
 	$(LIBGLADE_CFLAGS) \
 	$(BEEP_DEFINES)    \
