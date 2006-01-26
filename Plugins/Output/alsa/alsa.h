@@ -79,5 +79,6 @@ void alsa_pause(short p);
 int alsa_open(AFormat fmt, int rate, int nch);
 int alsa_get_output_time(void);
 int alsa_get_written_time(void);
+void alsa_tell(AFormat * fmt, gint * rate, gint * nch);
 
 #endif

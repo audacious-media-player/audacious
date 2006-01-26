@@ -98,6 +98,7 @@ OutputPlugin disk_op =
 	disk_playing,
 	disk_get_output_time,
 	disk_get_written_time,
+	NULL
 };
 
 OutputPlugin *get_oplugin_info(void)

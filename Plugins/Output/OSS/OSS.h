@@ -70,4 +70,6 @@ int (*oss_get_convert_func(int output, int input)) (void **, int);
 int (*oss_get_stereo_convert_func(int output, int input)) (void **, int,
                                                            int);
 
+void oss_tell(AFormat * fmt, gint * rate, gint * nch);
+
 #endif

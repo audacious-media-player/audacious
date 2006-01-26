@@ -40,6 +40,7 @@ OutputPlugin esd_op = {
     esdout_playing,
     esdout_get_output_time,
     esdout_get_written_time,
+    esdout_tell
 };
 
 OutputPlugin *

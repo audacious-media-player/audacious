@@ -1177,3 +1177,10 @@ static int alsa_setup(struct snd_format *f)
 
 	return 0;
 }
+
+void alsa_tell(AFormat * fmt, gint * rate, gint * nch)
+{
+	(*fmt) = inputf->xmms_format;
+	(*rate) = inputf->rate;
+	(*nch) = inputf->channels;
+}

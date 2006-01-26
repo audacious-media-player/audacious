@@ -714,3 +714,10 @@ oss_open(AFormat fmt, gint rate, gint nch)
         buffer_thread = g_thread_create(oss_loop, NULL, TRUE, NULL);
     return 1;
 }
+
+void oss_tell(AFormat * fmt, gint * rate, gint * nch)
+{
+	(*fmt) = input.format.xmms;
+	(*rate) = input.frequency;
+	(*nch) = input.channels;
+}

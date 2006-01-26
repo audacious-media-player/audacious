@@ -587,6 +587,13 @@ void jack_about(void)
 	gtk_widget_grab_focus(button);
 }
 
+static void
+jack_tell_audio(AFormat * fmt, gint * srate, gint * nch)
+{
+	(*fmt) = input.format;
+	(*srate) = input.frequency;
+	(*nch) = input.channels;
+}
 
 OutputPlugin jack_op =
 {
@@ -608,6 +615,7 @@ OutputPlugin jack_op =
 	jack_playing,
 	jack_get_output_time,
 	jack_get_written_time,
+	jack_tell_audio
 };
 
 

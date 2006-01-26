@@ -38,6 +38,7 @@ OutputPlugin alsa_op =
 	alsa_playing,
 	alsa_get_output_time,
 	alsa_get_written_time,
+	alsa_tell
 };
 
 OutputPlugin *get_oplugin_info(void)

@@ -89,6 +89,7 @@ static OutputPlugin xfade_op =
   xfade_buffer_playing,
   xfade_output_time,
   xfade_written_time,
+  NULL			/* we do not support effects on crossfade, too fragile */
 };
 
 /* internal prototypes */
