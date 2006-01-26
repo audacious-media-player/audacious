@@ -526,30 +526,28 @@ playlist_list_draw(Widget * w)
 	    frags = NULL;
 	    frag0 = NULL;
 
-	    if ( (strlen(tail)>0) && (tail != NULL) ) {
+	    if ((strlen(tail) > 0) && (tail != NULL)) {
+                frags = g_strsplit(tail, ":", 0);
+                frag0 = g_strconcat(frags[0], ":", NULL);
 
-            frags = g_strsplit(tail, ":", 0);
-            frag0 = g_strconcat(frags[0], ":", NULL);
+                layout = gtk_widget_create_pango_layout(playlistwin, frags[1]);
+       	        pango_layout_set_font_description(layout, playlist_list_font);
+                pango_layout_set_width(layout, tail_len * 100);
+                pango_layout_set_alignment(layout, PANGO_ALIGN_LEFT);
+                gdk_draw_layout(obj, gc, x - (0.5 * width_approx_digits),
+       	                        y + abs(descent), layout);
+                g_object_unref(layout);
 
-            layout = gtk_widget_create_pango_layout(playlistwin, frags[1]);
-       	    pango_layout_set_font_description(layout, playlist_list_font);
-            pango_layout_set_width(layout, tail_len * 100);
-       	    pango_layout_set_alignment(layout, PANGO_ALIGN_LEFT);
-            gdk_draw_layout(obj, gc, x - (0.5 * width_approx_digits),
-       	                    y + abs(descent), layout);
-            g_object_unref(layout);
-
-            layout = gtk_widget_create_pango_layout(playlistwin, frag0);
-            pango_layout_set_font_description(layout, playlist_list_font);
-            pango_layout_set_width(layout, tail_len * 100);
-            pango_layout_set_alignment(layout, PANGO_ALIGN_RIGHT);
-            gdk_draw_layout(obj, gc, x - (0.75 * width_approx_digits),
+                layout = gtk_widget_create_pango_layout(playlistwin, frag0);
+                pango_layout_set_font_description(layout, playlist_list_font);
+                pango_layout_set_width(layout, tail_len * 100);
+                pango_layout_set_alignment(layout, PANGO_ALIGN_RIGHT);
+                gdk_draw_layout(obj, gc, x - (0.75 * width_approx_digits),
                             y + abs(descent), layout);
-            g_object_unref(layout);
+                g_object_unref(layout);
 
-            g_free(frag0);
-            g_strfreev(frags);
-
+                g_free(frag0);
+                g_strfreev(frags);
 	    }
 
             if (pos != -1) {
