@@ -210,9 +210,9 @@ show_about_window(void)
 
     /* GtkFixed hasn't got its GdkWindow, this means that it can be used to
        display widgets while the logo below will be displayed anyway;
-       however I don't like the fixed position cause the button sizes may (will)
+       however fixed positions are not that great, cause the button sizes may (will)
        vary depending on the gtk style used, so it's not possible to center
-       them unless I force a fixed width and heigth (and this may bring to cutted
+       them unless a fixed width and heigth is forced (and this may bring to cutted
        text if someone, i.e., uses a big font for gtk widgets);
        other types of container most likely have their GdkWindow, this simply
        means that the logo must be drawn on the container widget, instead of the
@@ -225,22 +225,26 @@ show_about_window(void)
     g_signal_connect(close_button, "clicked",
 	G_CALLBACK(on_close_button_clicked), NULL);
 
-    gtk_fixed_put( GTK_FIXED(about_fixedbox) , close_button , 390 , 220 );
+    gtk_fixed_put( GTK_FIXED(about_fixedbox) , close_button , 350 , 220 );
+    gtk_widget_set_size_request( close_button , 100 , -1 );
 
     credits_button = gtk_button_new();
     credits_button_hbox = gtk_hbox_new( FALSE , 0 );
     credits_button_image = gtk_image_new_from_stock( GTK_STOCK_DIALOG_INFO , GTK_ICON_SIZE_BUTTON );
+    gtk_misc_set_alignment( GTK_MISC(credits_button_image) , 1 , 0.5 );
     credits_button_label = gtk_label_new( _("Credits") );
+    gtk_misc_set_alignment( GTK_MISC(credits_button_label) , 0 , 0.5 );
     gtk_box_pack_start( GTK_BOX(credits_button_hbox) , credits_button_image ,
-                        TRUE , TRUE , 0 );
+                        TRUE , TRUE , 2 );
     gtk_box_pack_start( GTK_BOX(credits_button_hbox) , credits_button_label ,
-                        TRUE , TRUE , 5 );
+                        TRUE , TRUE , 2 );
     gtk_container_add( GTK_CONTAINER(credits_button) , credits_button_hbox );
 
     g_signal_connect(credits_button, "clicked",
 	G_CALLBACK(on_credits_button_clicked), NULL);
 
-    gtk_fixed_put( GTK_FIXED(about_fixedbox) , credits_button , 60 , 220 );
+    gtk_fixed_put( GTK_FIXED(about_fixedbox) , credits_button , 50 , 220 );
+    gtk_widget_set_size_request( credits_button , 100 , -1 );
 
     gtk_widget_show_all(about_window);
     gtk_window_present(GTK_WINDOW(about_window));
