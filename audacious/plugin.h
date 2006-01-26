@@ -98,7 +98,7 @@ struct _OutputPlugin {
     gint (*output_time) (void);
     gint (*written_time) (void);
 
-    gint (*tell_audio) (AFormat * fmt, gint * rate, gint * nch);
+    void (*tell_audio) (AFormat * fmt, gint * rate, gint * nch);
 };
 
 struct _EffectPlugin {
