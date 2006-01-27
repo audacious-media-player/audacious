@@ -98,23 +98,19 @@ static bool is_silence( const Music_Emu::sample_t* p, int count )
 
 void Track_Emu::fill_buf( bool check_silence )
 {
-	if ( !buf_count && !track_ended &&
-			emu_time - out_time < silence_max * stereo * emu->sample_rate() )
+	emu->play( buf_size, buf );
+	emu_time += buf_size;
+	if ( (check_silence || emu_time > fade_time) && is_silence( buf, buf_size ) )
 	{
-		emu->play( buf_size, buf );
-		emu_time += buf_size;
-		if ( (check_silence || emu_time > fade_time) && is_silence( buf, buf_size ) )
-		{
-			silence_count += buf_size;
-		}
-		else
-		{
-			silence_time = emu_time;
-			buf_count = buf_size;
-		}
-		if ( emu->track_ended() || emu->error_count() )
-			track_ended = true;
+		silence_count += buf_size;
 	}
+	else
+	{
+		silence_time = emu_time;
+		buf_count = buf_size;
+	}
+	if ( emu->track_ended() || emu->error_count() )
+		track_ended = true;
 }
 
 inline void Track_Emu::end_track()
@@ -156,7 +152,12 @@ bool Track_Emu::play( int out_count, Music_Emu::sample_t* out )
 		
 		// keep internal buffer full and possibly run ahead
 		for ( int n = 6; n--; )
+		{
+			if ( buf_count || track_ended ||
+					emu_time - out_time > silence_max * stereo * emu->sample_rate() )
+				break;
 			fill_buf( detect_silence );
+		}
 	}
 	out_time += out_count;
 	
