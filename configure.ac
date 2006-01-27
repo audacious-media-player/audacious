@@ -66,7 +66,7 @@ dnl Path settings
 AC_PATH_PROG(BEEP_PATH, audacious, no)
 
 AC_ARG_WITH(rc-path,
-    [  --rc-path=path                     Resource and configuration path for bmp relative to $HOME.],
+    [  --rc-path=path                 Resource and configuration path for audacious relative to $HOME.],
     [rc_path=$withval],
     [rc_path=.audacious]
 )
@@ -88,7 +88,7 @@ AC_ARG_ENABLE(user-plugin-dir,
 )
 
 AC_ARG_WITH(dev-dsp,
-    [  --with-dev-dsp=path                Path to OSS DSP data pipe, default is /dev/dsp.],
+    [  --with-dev-dsp=path            Path to OSS DSP data pipe, default is /dev/dsp.],
     [dev_dsp=$withval],
     [dev_dsp=/dev/dsp]
 )
@@ -97,7 +97,7 @@ AC_DEFINE_UNQUOTED(DEV_DSP, "$dev_dsp",
 )
 
 AC_ARG_WITH(dev-mixer,
-    [  --with-dev-mixer=path              Path to OSS sound mixer, default is /dev/mixer.],
+    [  --with-dev-mixer=path          Path to OSS sound mixer, default is /dev/mixer.],
     [dev_mixer=$withval],
     [dev_mixer=/dev/mixer]
 )
@@ -106,7 +106,7 @@ AC_DEFINE_UNQUOTED(DEV_MIXER, "$dev_mixer",
 )
 
 AC_ARG_WITH(cdda-device,
-    [  --with-cdda-device=path            Path to default cdaudio device.],
+    [  --with-cdda-device=path        Path to default cdaudio device.],
     [AC_DEFINE_UNQUOTED(CDDA_DEVICE, "$withval",
          [Path to default cdaudio device.]
      )
@@ -114,7 +114,7 @@ AC_ARG_WITH(cdda-device,
 )
 
 AC_ARG_WITH(cdda-dir,
-    [  --with-cdda-dir=path               Path to default cdaudio directory.],
+    [  --with-cdda-dir=path           Path to default cdaudio directory.],
     [AC_DEFINE_UNQUOTED(CDDA_DIRECTORY, "$withval",
          [Path to default cdaudio directory.]
      )
@@ -149,7 +149,7 @@ dnl Option to change equalizer to the old XMMS one which only works with the mpg
 dnl plugin (or rather, only implemented within the plugin)
 
 AC_ARG_WITH(xmms-eq,
-    [  --with-xmms-eq                     Use old XMMS equalization code.],
+    [  --with-xmms-eq                 Use old XMMS equalization code.],
     [use_xmms_eq=$withval],
     [use_xmms_eq=no]
 )
@@ -256,7 +256,7 @@ AM_CONDITIONAL(HAVE_ESD, test "$have_esd" = "yes")
 dnl *** MP3
 
 AC_ARG_ENABLE(mp3,
-    [  --disable-mp3           disable mp3 plugin. [default=enabled] ],
+    [  --disable-mp3           disable mp3 plugin. (default=enabled) ],
     [enable_mp3=$enableval],
     [enable_mp3=yes]
 )
@@ -286,7 +286,7 @@ fi dnl $enable_mp3 = yes
 dnl *** LIRC client libraries
 
 AC_ARG_ENABLE(lirc,
-    [  --disable-lirc        disable LIRC plugin (default=enabled)],
+    [  --disable-lirc          disable LIRC plugin (default=enabled)],
     [enable_lirc=$enableval],
     [enable_lirc="yes"]
 )
@@ -340,12 +340,39 @@ AM_CONDITIONAL(HAVE_OGGVORBIS, [test "$have_oggvorbis" = "yes"])
 dnl *** AAC
 
 AC_ARG_ENABLE(aac,
-    [  --disable-aac           disable aac plugin. [default=enabled] ],
+    [  --disable-aac           disable aac plugin (default=enabled) ],
     [enable_aac=$enableval],
     [enable_aac=yes]
 )
 
 AM_CONDITIONAL(ENABLE_AAC, test "$enable_aac" = "yes")
+
+
+dnl *** amidi-plug
+
+AC_ARG_ENABLE(amidiplug,
+    [  --disable-amidiplug     disable amidi-plug input plugin (default=check) ],
+    [enable_amidiplug=$enableval],
+    [enable_amidiplug=check]
+)
+
+if test "x$enable_amidiplug" = "xcheck"; then
+    AM_PATH_AMIDIPLUG(enable_amidiplug=yes, enable_amidiplug=no)
+    if test "x$enable_amidiplug" = "xyes"; then
+      ap_disable_timidity=yes
+    fi
+elif test "x$enable_amidiplug" = "xyes"; then
+    PKG_CHECK_MODULES(ALSA, [alsa >= 0.9.0],
+        [enable_amidiplug=yes],
+        [enable_amidiplug=no]
+    )
+else
+    AC_MSG_RESULT([*** amidi-plug disabled per user request ***])
+    enable_amidiplug=no
+fi
+
+AM_CONDITIONAL(ENABLE_AMIDIPLUG, test "x$enable_amidiplug" = "xyes")
+
 
 dnl *** sndfile
 
@@ -370,7 +397,7 @@ AM_CONDITIONAL([HAVE_LIBSNDFILE], test "$enable_sndfile" = "yes")
 dnl *** modplug
 
 AC_ARG_ENABLE(modplug,
-    [  --disable-modplug        disable ModPlug plugin (default=enabled)],
+    [  --disable-modplug       disable ModPlug plugin (default=enabled)],
     [enable_modplug=$enableval],
     [enable_modplug="yes"]
 )
@@ -386,7 +413,7 @@ AM_CONDITIONAL([HAVE_MODPLUG], test "$have_modplug" = "yes")
 
 dnl *** flac
 AC_ARG_ENABLE( flc,
-[  --disable-flac        Disable flac input plugin [default=enabled]],,
+[  --disable-flac          disable flac input plugin (default=enabled)],,
                 enable_flac="yes")
 
 if test "x$enable_flac" = xyes; then
@@ -400,27 +427,35 @@ AM_CONDITIONAL(HAVE_FLAC,test "x$have_flac" = xyes)
 dnl *** WMA
 
 AC_ARG_ENABLE(wma,
-    [  --disable-wma           disable wma plugin. [default=enabled] ],
+    [  --disable-wma           disable wma plugin. (default=enabled)],
     [enable_wma=$enableval],
     [enable_wma=yes]
 )
 
 AM_CONDITIONAL(ENABLE_WMA, test "$enable_wma" = "yes")
 
+
 dnl *** TiMidity
 
 AC_ARG_ENABLE(timidity,
-    [  --disable-timidity      disable timidity plugin. [default=enabled] ],
-    [enable_timidity=$enableval],
-    [enable_timidity=yes]
+[  --disable-timidity      disable timidity plugin. (default=enabled)],
+[enable_timidity=$enableval],
+[
+  if test "x$ap_disable_timidity" = "xyes"; then
+    enable_timidity=no
+  else
+    enable_timidity=yes
+  fi
+]
 )
 
 AM_CONDITIONAL(ENABLE_TIMIDITY, test "$enable_timidity" = "yes")
 
+
 dnl *** Crossfader
 
 AC_ARG_ENABLE(crossfade,
-    [  --disable-crossfade     disable crossfading plugin. [default=enabled] ],
+    [  --disable-crossfade     disable crossfading plugin. (default=enabled)],
     [enable_crossfade=$enableval],
     [enable_crossfade=yes]
 )
@@ -434,7 +469,7 @@ AM_CONDITIONAL(HAVE_LIBSAMPLERATE, test "$have_libsamplerate" = "yes")
 
 dnl *** jack output plugin
 AC_ARG_ENABLE( jack,
-[  --disable-jack          disable jack output plugin [default=enabled]],,
+[  --disable-jack          disable jack output plugin (default=enabled)],,
                 enable_jack="yes")
 
 if test "x$enable_jack" = xyes; then
@@ -447,7 +482,7 @@ AM_CONDITIONAL(HAVE_JACK,test "x$have_jack" = xyes)
 
 dnl *** sid
 AC_ARG_ENABLE( sid,
-[  --disable-sid           disable sid input plugin [default=enabled]],,
+[  --disable-sid           disable sid input plugin (default=enabled)],,
                 enable_sid="yes")
 
 if test "x$enable_sid" = xyes; then
@@ -461,7 +496,7 @@ AM_CONDITIONAL(HAVE_SIDPLAY,test "x$have_sidplay" = xyes)
 dnl *** Musepack
 
 AC_ARG_ENABLE(musepack,
-    [  --disable-musepack        disable musepack input plugin (default=enabled)],
+    [  --disable-musepack      disable musepack input plugin (default=enabled)],
     [enable_musepack=$enableval],
     [enable_musepack="yes"]
 )
@@ -490,7 +525,7 @@ AM_CONDITIONAL(ENABLE_MUSEPACK, [test "$enable_musepack" = "yes"])
 dnl *** OSS output
 
 AC_ARG_ENABLE(oss,
-    [  --disable-oss           disable the OSS output plugin],
+    [  --disable-oss           disable the OSS output plugin (default=enabled)],
     [have_oss=$enableval],
     [have_oss=yes]
 )
@@ -796,6 +831,7 @@ AC_CONFIG_FILES([
 	Plugins/Input/sexypsf/Makefile
 	Plugins/Input/adplug/Makefile
 	Plugins/Input/adplug/core/Makefile
+	Plugins/Input/amidi-plug/Makefile
         Plugins/Visualization/Makefile
         Plugins/Visualization/blur_scope/Makefile
 	Plugins/Visualization/libvisual-proxy/Makefile
@@ -853,6 +889,7 @@ echo "  MPEG 4 Audio (AAC):                     $enable_aac"
 echo "  Windows Media Audio (wma):              $enable_wma"
 echo "  .mpc playback (musepack):               $enable_musepack"
 echo "  Module decoder (modplug):               $enable_modplug"
+echo "  MIDI hw synth via ALSA (amidi-plug):    $enable_amidiplug"
 echo "  MIDI to WAVE converter (timidity):      $enable_timidity"
 echo "  CD Digital Audio (cdda):                yes"
 echo "  Microsoft WAV (wav):                    yes"
@@ -897,4 +934,12 @@ if test "$BEEP_PATH" != "no" && test "$prefix/bin/audacious" != "$BEEP_PATH" ; t
     echo "If you don't want two copies of Audacious installed, rerun configure with"
     echo "the --prefix option set to the location of the old Audacious, or uninstall"
     echo "the old Audacious."
+fi
+
+if test "x$ap_disable_timidity" = "xyes" && test "x$enable_timidity" = "xno"; then
+    echo "Note: an ALSA-supported hardware midi synth was detected in configuration;"
+    echo "in order to use it, the amidi-plug (MIDI through ALSA) input plugin"
+    echo "will be compiled in place of timidity. If you wish to compile timidity"
+    echo "anyway, simply use --enable-timidity in configuration."
+    echo ""
 fi
