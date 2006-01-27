@@ -72,7 +72,7 @@ void i_configure_ev_destroy( void );
 void i_configure_ev_bcancel( void );
 void i_configure_ev_bok( void );
 void i_configure_cfg_save( void );
-void i_configure_cfg_read( gchar * );
+void i_configure_cfg_read( void );
 
 
 #endif /* !_I_CONFIGURE_H */

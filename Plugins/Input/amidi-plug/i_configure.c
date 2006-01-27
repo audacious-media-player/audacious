@@ -24,7 +24,7 @@
 /* internals */
 void i_configure_upd_portlist( void );
 void i_configure_upd_mixercardlist( void );
-gchar * i_configure_read_seq_ports_default( gchar * );
+gchar * i_configure_read_seq_ports_default( void );
 gboolean i_configure_ev_checktoggle( GtkTreeModel * , GtkTreePath * , GtkTreeIter * , gpointer );
 void i_configure_ev_changetoggle( GtkCellRendererToggle * , gchar * , gpointer );
 
@@ -330,10 +330,9 @@ void i_configure_ev_bok( void )
 }
 
 
-gchar * i_configure_read_seq_ports_default( gchar * alsaversion )
+gchar * i_configure_read_seq_ports_default( void )
 {
   FILE * fp = NULL;
-  gchar ** alsaversion_toks = NULL;
   /* first try, get seq ports from proc on card0 */
   fp = fopen( "/proc/asound/card0/wavetableD1" , "rb" );
   if ( fp )
@@ -358,32 +357,13 @@ gchar * i_configure_read_seq_ports_default( gchar * alsaversion )
     fclose( fp );
   }
 
-  /* second try, go with different "possible" defaults depending on ALSA version;
-     this is just a fallback, not expected to work all of the times; expecially
-     considering that the lib version is checked, not the driver one (even if
-     the version number is most likely the same) */
-  alsaversion_toks = g_strsplit( alsaversion , "." , 4 );
-  if ( strtol( alsaversion_toks[0] , NULL , 10 ) < 2 )
-  {
-    if ( strtol( alsaversion_toks[1] , NULL , 10 ) < 1 )
-    {
-      if ( strtol( alsaversion_toks[2] , NULL , 10 ) < 11 )
-      {
-        /* alsa version <= 1.0.10 */
-        g_strfreev( alsaversion_toks );
-        DEBUGMSG( "init, default seq port value tentatively set to 65:0 (ALSA %s)\n" , alsaversion );
-        return g_strdup( "65:0" );
-      }
-    }
-  }
-  /* alsa version > 1.0.10 */
-  g_strfreev( alsaversion_toks );
-  DEBUGMSG( "init, default seq port value tentatively set to 17:0 (ALSA %s)\n" , alsaversion );
-  return g_strdup( "17:0" );
+  /* second option: do not set ports at all, let the user
+     select the right ones in the nice preferences dialog :) */
+  return g_strdup( "" );
 }
 
 
-void i_configure_cfg_read( gchar * alsaversion )
+void i_configure_cfg_read( void )
 {
   ConfigFile *cfgfile;
   cfgfile = xmms_cfg_open_default_file();
@@ -391,7 +371,7 @@ void i_configure_cfg_read( gchar * alsaversion )
   if (!cfgfile)
   {
     /* use defaults */
-    amidiplug_cfg.seq_writable_ports = i_configure_read_seq_ports_default( alsaversion );
+    amidiplug_cfg.seq_writable_ports = i_configure_read_seq_ports_default();
     amidiplug_cfg.mixer_card_id = 0;
     amidiplug_cfg.mixer_control_name = g_strdup( "Synth" );
     amidiplug_cfg.mixer_control_id = 0;
@@ -399,7 +379,7 @@ void i_configure_cfg_read( gchar * alsaversion )
   else
   {
     if ( !xmms_cfg_read_string( cfgfile , "amidi-plug" , "writable_ports" , &amidiplug_cfg.seq_writable_ports ) )
-      amidiplug_cfg.seq_writable_ports = i_configure_read_seq_ports_default( alsaversion ); /* default value */
+      amidiplug_cfg.seq_writable_ports = i_configure_read_seq_ports_default(); /* default value */
 
     if ( !xmms_cfg_read_int( cfgfile , "amidi-plug" , "mixer_card_id" , &amidiplug_cfg.mixer_card_id ) )
       amidiplug_cfg.mixer_card_id = 0; /* default value */

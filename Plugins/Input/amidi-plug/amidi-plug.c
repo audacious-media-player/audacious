@@ -72,12 +72,10 @@ static gint amidiplug_is_our_file( gchar * filename )
 
 static void amidiplug_init( void )
 {
-  gchar * alsaversion;
   g_log_set_handler(NULL , G_LOG_LEVEL_WARNING , g_log_default_handler , NULL);
   DEBUGMSG( "init, read configuration\n" );
   /* read configuration */
-  alsaversion = (gchar *)snd_asoundlib_version(); /* get ALSA-lib version */
-  i_configure_cfg_read( alsaversion );
+  i_configure_cfg_read();
   amidiplug_playing_status = AMIDIPLUG_STOP;
 }
 
