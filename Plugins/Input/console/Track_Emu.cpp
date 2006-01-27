@@ -44,7 +44,7 @@ void Track_Emu::sync( long time )
 void Track_Emu::restart_track()
 {
 	emu->start_track( track );
-	emu_time = 0;
+	sync ( 0 );
 	
 	// skip initial silence
 	for ( int n = 40 * stereo * emu->sample_rate() / buf_size; n--; )
