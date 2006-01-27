@@ -23,7 +23,7 @@
 
 #include "i_common.h"
 #include <gtk/gtk.h>
-#include <audacious/configfile.h>
+#include "libaudacious/configfile.h"
 
 
 enum

@@ -23,7 +23,7 @@
 
 #include "i_common.h"
 #include <gtk/gtk.h>
-#include <audacious/util.h>
+#include "libaudacious/util.h"
 
 
 typedef struct

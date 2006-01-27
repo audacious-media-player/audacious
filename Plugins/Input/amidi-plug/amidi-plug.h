@@ -27,8 +27,8 @@
 #define AMIDIPLUG_ERR	3
 
 #include "i_common.h"
-#include <audacious/plugin.h>
-#include <audacious/beepctrl.h>
+#include "audacious/plugin.h"
+#include "libaudacious/beepctrl.h"
 #include <pthread.h>
 #include "i_configure.h"
 #include "i_seq.h"
