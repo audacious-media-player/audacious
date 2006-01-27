@@ -28,6 +28,8 @@ if test "x$ap_alsa_found" = "xyes"; then
       fi
     fi
   fi
+else
+  AMIDIPLUG_EVERYTHINGOK="no"
 fi
 
 if test "x$AMIDIPLUG_EVERYTHINGOK" = "xyes"; then
