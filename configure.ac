@@ -348,32 +348,6 @@ AC_ARG_ENABLE(aac,
 AM_CONDITIONAL(ENABLE_AAC, test "$enable_aac" = "yes")
 
 
-dnl *** amidi-plug
-
-AC_ARG_ENABLE(amidiplug,
-    [  --disable-amidiplug     disable amidi-plug input plugin (default=check) ],
-    [enable_amidiplug=$enableval],
-    [enable_amidiplug=check]
-)
-
-if test "x$enable_amidiplug" = "xcheck"; then
-    AM_PATH_AMIDIPLUG(enable_amidiplug=yes, enable_amidiplug=no)
-    if test "x$enable_amidiplug" = "xyes"; then
-      ap_disable_timidity=yes
-    fi
-elif test "x$enable_amidiplug" = "xyes"; then
-    PKG_CHECK_MODULES(ALSA, [alsa >= 0.9.0],
-        [enable_amidiplug=yes],
-        [enable_amidiplug=no]
-    )
-else
-    AC_MSG_RESULT([*** amidi-plug disabled per user request ***])
-    enable_amidiplug=no
-fi
-
-AM_CONDITIONAL(ENABLE_AMIDIPLUG, test "x$enable_amidiplug" = "xyes")
-
-
 dnl *** sndfile
 
 AC_ARG_ENABLE(sndfile,
@@ -433,23 +407,6 @@ AC_ARG_ENABLE(wma,
 )
 
 AM_CONDITIONAL(ENABLE_WMA, test "$enable_wma" = "yes")
-
-
-dnl *** TiMidity
-
-AC_ARG_ENABLE(timidity,
-[  --disable-timidity      disable timidity plugin. (default=enabled)],
-[enable_timidity=$enableval],
-[
-  if test "x$ap_disable_timidity" = "xyes"; then
-    enable_timidity=no
-  else
-    enable_timidity=yes
-  fi
-]
-)
-
-AM_CONDITIONAL(ENABLE_TIMIDITY, test "$enable_timidity" = "yes")
 
 
 dnl *** Crossfader
@@ -578,15 +535,73 @@ AC_ARG_ENABLE(alsa,
 
 if test "$enable_alsa" = "yes"; then
     PKG_CHECK_MODULES(ALSA, [alsa >= 1.0],
-        [have_alsa=yes],
-        [have_alsa=no]
+[
+have_alsa=yes
+alsalib_available=yes
+],
+[
+have_alsa=no
+alsalib_available=no
+]
     )
 else
     AC_MSG_RESULT([*** ALSA output plugin disabled per user request ***])
     have_alsa=no
+    alsalib_available=check
 fi
 
 AM_CONDITIONAL(HAVE_ALSA, test "$have_alsa" = "yes")
+
+
+dnl *** amidi-plug (note: should appear somewhere after the alsa ouput plugin check)
+
+AC_ARG_ENABLE(amidiplug,
+    [  --disable-amidiplug     disable amidi-plug input plugin (default=check) ],
+    [enable_amidiplug=$enableval],
+    [enable_amidiplug=check]
+)
+
+if test "x$enable_amidiplug" = "xno"; then
+  AC_MSG_RESULT([*** amidi-plug disabled per user request ***])
+  enable_amidiplug=no
+else
+  if test "x$alsalib_available" = "xcheck"; then
+    PKG_CHECK_MODULES(ALSA, [alsa >= 1.0],
+      [alsalib_available=yes],[alsalib_available=no])
+  fi
+  if test "x$alsalib_available" = "xyes"; then
+    if test "x$enable_amidiplug" = "xcheck"; then
+        AM_PATH_AMIDIPLUG(enable_amidiplug=yes, enable_amidiplug=no)
+        if test "x$enable_amidiplug" = "xyes"; then
+          ap_disable_timidity=yes
+        fi
+    else
+      enable_amidiplug=yes
+    fi
+  else
+    AC_MSG_WARN([*** ALSA not found, amidi-plug won't be compiled ***])
+    enable_amidiplug=no
+  fi
+fi
+
+AM_CONDITIONAL(ENABLE_AMIDIPLUG, test "x$enable_amidiplug" = "xyes")
+
+
+dnl *** TiMidity input plugin (note: should appear somewhere after the amidi-plug check)
+
+AC_ARG_ENABLE(timidity,
+[  --disable-timidity      disable timidity plugin. (default=enabled)],
+[enable_timidity=$enableval],
+[
+  if test "x$ap_disable_timidity" = "xyes"; then
+    enable_timidity=no
+  else
+    enable_timidity=yes
+  fi
+]
+)
+
+AM_CONDITIONAL(ENABLE_TIMIDITY, test "$enable_timidity" = "yes")
 
 
 dnl FreeBSD newpcm driver detection
