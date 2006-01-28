@@ -77,6 +77,10 @@ static gint disk_playing(void);
 static gint disk_get_written_time(void);
 static gint disk_get_output_time(void);
 static void disk_configure(void);
+static void disk_getvol(gint *, gint *);
+static void disk_setvol(gint, gint);
+
+static int lvol = 0, rvol = 0;
 
 OutputPlugin disk_op =
 {
@@ -87,8 +91,8 @@ OutputPlugin disk_op =
 	NULL,
 	NULL,			/* about */
 	disk_configure,		/* configure */
-	NULL,			/* get_volume */
-	NULL,			/* set_volume */
+	disk_getvol,		/* get_volume */
+	disk_setvol,		/* set_volume */
 	disk_open,
 	disk_write,
 	disk_close,
@@ -414,4 +418,16 @@ static void disk_configure(void)
 		gtk_widget_show(configure_vbox);
 		gtk_widget_show(configure_win);
 	}
+}
+
+static void disk_getvol(gint *l, gint *r)
+{
+	(*l) = lvol;
+	(*r) = rvol;
+}
+
+static void disk_setvol(gint l, gint r)
+{
+	lvol = l;
+	rvol = r;
 }
