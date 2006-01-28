@@ -1,14 +1,14 @@
 # Czech translation for BMP
 # Copyright (C) 2004 Jan Nárovec <finn@sendmail.cz>
-# This file is distributed under the same license as the BMP package.
+# This file is distributed under the same license as the Audacious package.
 # Jan Nárovec <finn@sendmail.cz>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: bmp 0.9.7\n"
+"Project-Id-Version: audacious 0.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-01-03 11:45-0600\n"
-"PO-Revision-Date: 2004-12-04 17:15+0100\n"
+"PO-Revision-Date: 2006-01-22 18:07+0100\n"
 "Last-Translator: Jan Nárovec <finn@sendmail.cz>\n"
 "Language-Team: Czech\n"
 "MIME-Version: 1.0\n"
@@ -25,10 +25,8 @@ msgid "Warning"
 msgstr ""
 
 #: ../Plugins/General/song_change/song_change.c:142
-msgid ""
-"Filename and song title tags should be inside double quotes (\").  Not doing "
-"so might be a security risk.  Continue anyway?"
-msgstr ""
+msgid "Filename and song title tags should be inside double quotes (\").  Not doing so might be a security risk.  Continue anyway?"
+msgstr "Jméno souboru a název skladby je lépe napsat do uvozovek (\"), jinak může být ohrožena bezpečnost počítače. Chcete přesto pokračovat?"
 
 #: ../Plugins/General/song_change/song_change.c:155
 #: ../Plugins/Input/aac/src/fileinfo.c:184
@@ -48,34 +46,31 @@ msgid "Song Change Configuration"
 msgstr "Nastavení přehrávače CD Audio"
 
 #: ../Plugins/General/song_change/song_change.c:238
-#, fuzzy
 msgid "Commands"
-msgstr "Komentář"
+msgstr "Příkazy"
 
 #: ../Plugins/General/song_change/song_change.c:245
 msgid "Shell-command to run when Audacious starts a new song."
-msgstr ""
+msgstr "Příkaz, který bude spuštěn vždy na začátku nové skladby."
 
 #: ../Plugins/General/song_change/song_change.c:254
 #: ../Plugins/General/song_change/song_change.c:277
 #: ../Plugins/General/song_change/song_change.c:300
-#, fuzzy
 msgid "Command:"
-msgstr "Komentář:"
+msgstr "Příkaz:"
 
 #: ../Plugins/General/song_change/song_change.c:268
 msgid "Shell-command to run toward the end of a song."
-msgstr ""
+msgstr "Příkaz, který bude spuštěn na konci skladby."
 
 #: ../Plugins/General/song_change/song_change.c:290
 msgid "Shell-command to run when Audacious reaches the end of the playlist."
-msgstr ""
+msgstr "Příkaz, který bude spuštěn, jakmile Audacious dosáhne konce seznamu skladeb."
 
 #: ../Plugins/General/song_change/song_change.c:313
 #, c-format
 msgid ""
-"You can use the following format strings which will be substituted before "
-"calling the command (not all are useful for the end-of-playlist command).\n"
+"You can use the following format strings which will be substituted before calling the command (not all are useful for the end-of-playlist command).\n"
 "\n"
 "%%F: Frequency (in hertz)\n"
 "%%c: Number of channels\n"
@@ -86,33 +81,44 @@ msgid ""
 "%%t: Playlist position (%%02d)\n"
 "%%p: Currently playing (1 or 0)"
 msgstr ""
+"Můžete používat následující formátovací řetězce, které budou před spuštěním příkazu nahraženy (ne všechny jsou užitečné pro příkaz spouštěný na konci seznamu skladeb).\n"
+"\n"
+"%%F: frekvence (v hertzech)\n"
+"%%c: počet kanálů\n"
+"%%f: jméno souboru\n"
+"%%l: délka (v milisekundách)\n"
+"%%n nebo %%s: název skladby\n"
+"%%r: datový tok (v bitech za sekundu)\n"
+"%%t: pozice v seznamu skladeb (%%02d)\n"
+"%%p: právě se hraje (1 nebo 0)"
 
 #: ../Plugins/General/song_change/song_change.c:340
 #: ../Plugins/Input/modplug/gui/interface.cpp:771
-#: ../Plugins/Output/alsa/about.c:46 ../Plugins/Output/alsa/configure.c:436
+#: ../Plugins/Output/alsa/about.c:46
+#: ../Plugins/Output/alsa/configure.c:436
 #: ../Plugins/Output/crossfade/configure.c:1854
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:84
 #: ../Plugins/Output/disk_writer/disk_writer.c:135
 #: ../Plugins/Output/disk_writer/disk_writer.c:400
 msgid "OK"
-msgstr ""
+msgstr "Budiž"
 
 #: ../Plugins/General/song_change/song_change.c:346
-#: ../Plugins/Input/flac/configure.c:766 ../Plugins/Input/flac/fileinfo.c:356
+#: ../Plugins/Input/flac/configure.c:766
+#: ../Plugins/Input/flac/fileinfo.c:356
 #: ../Plugins/Input/modplug/gui/interface.cpp:787
 #: ../Plugins/Output/alsa/configure.c:442
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:22
 #: ../Plugins/Output/disk_writer/disk_writer.c:407
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:290
-#, fuzzy
 msgid "Cancel"
-msgstr "Taneční"
+msgstr "Zrušit"
 
 #: ../Plugins/Input/aac/src/fileinfo.c:179
 #: ../Plugins/Input/mpg123/fileinfo.c:639
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:82
 msgid "None"
-msgstr "Žádný"
+msgstr "Žádné"
 
 #: ../Plugins/Input/aac/src/fileinfo.c:180
 #: ../Plugins/Input/mpg123/fileinfo.c:640
@@ -137,25 +143,29 @@ msgid "Song Metadata"
 msgstr "Sonáta"
 
 #: ../Plugins/Input/aac/src/fileinfo.c:245
-#: ../Plugins/Input/flac/fileinfo.c:278 ../Plugins/Input/mpg123/fileinfo.c:859
+#: ../Plugins/Input/flac/fileinfo.c:278
+#: ../Plugins/Input/mpg123/fileinfo.c:859
 #: ../Plugins/Input/vorbis/fileinfo.c:580
 msgid "Title:"
 msgstr "Název:"
 
 #: ../Plugins/Input/aac/src/fileinfo.c:256
-#: ../Plugins/Input/flac/fileinfo.c:285 ../Plugins/Input/mpg123/fileinfo.c:874
+#: ../Plugins/Input/flac/fileinfo.c:285
+#: ../Plugins/Input/mpg123/fileinfo.c:874
 #: ../Plugins/Input/vorbis/fileinfo.c:591
 msgid "Artist:"
 msgstr "Umělec:"
 
 #: ../Plugins/Input/aac/src/fileinfo.c:267
-#: ../Plugins/Input/flac/fileinfo.c:292 ../Plugins/Input/mpg123/fileinfo.c:889
+#: ../Plugins/Input/flac/fileinfo.c:292
+#: ../Plugins/Input/mpg123/fileinfo.c:889
 #: ../Plugins/Input/vorbis/fileinfo.c:602
 msgid "Album:"
 msgstr "Album:"
 
 #: ../Plugins/Input/aac/src/fileinfo.c:278
-#: ../Plugins/Input/flac/fileinfo.c:299 ../Plugins/Input/mpg123/fileinfo.c:904
+#: ../Plugins/Input/flac/fileinfo.c:299
+#: ../Plugins/Input/mpg123/fileinfo.c:904
 #: ../Plugins/Input/vorbis/fileinfo.c:613
 msgid "Comment:"
 msgstr "Komentář:"
@@ -166,23 +176,26 @@ msgid "Year:"
 msgstr "Rok:"
 
 #: ../Plugins/Input/aac/src/fileinfo.c:301
-#: ../Plugins/Input/flac/fileinfo.c:314 ../Plugins/Input/mpg123/fileinfo.c:938
+#: ../Plugins/Input/flac/fileinfo.c:314
+#: ../Plugins/Input/mpg123/fileinfo.c:938
 #: ../Plugins/Input/vorbis/fileinfo.c:636
 msgid "Track number:"
 msgstr "Číslo stopy:"
 
 #: ../Plugins/Input/aac/src/fileinfo.c:316
-#: ../Plugins/Input/flac/fileinfo.c:322 ../Plugins/Input/mpg123/fileinfo.c:970
+#: ../Plugins/Input/flac/fileinfo.c:322
+#: ../Plugins/Input/mpg123/fileinfo.c:970
 #: ../Plugins/Input/vorbis/fileinfo.c:648
 msgid "Genre:"
 msgstr "Žánr:"
 
 #: ../Plugins/Input/aac/src/fileinfo.c:385
 #: ../Plugins/Input/mpg123/fileinfo.c:1101
-#: ../Plugins/Input/vorbis/fileinfo.c:1014 ../audacious/mainwin.c:782
+#: ../Plugins/Input/vorbis/fileinfo.c:1014
+#: ../audacious/mainwin.c:782
 #, c-format
 msgid "%s - Audacious"
-msgstr ""
+msgstr "%s - Audacious"
 
 #: ../Plugins/Input/cdaudio/cdaudio.c:180
 msgid "CD Audio Plugin"
@@ -194,7 +207,8 @@ msgstr "CD Audio modul"
 msgid "CD Audio Track %02u"
 msgstr "CD audio stopa %02u"
 
-#: ../Plugins/Input/cdaudio/cdinfo.c:157 ../Plugins/Input/cdaudio/cdinfo.c:158
+#: ../Plugins/Input/cdaudio/cdinfo.c:157
+#: ../Plugins/Input/cdaudio/cdinfo.c:158
 #: ../Plugins/Input/cdaudio/cdinfo.c:159
 msgid "(unknown)"
 msgstr "(není známo)"
@@ -414,7 +428,7 @@ msgstr "Informace o CD"
 
 #: ../Plugins/Input/console/Audacious_Driver.cpp:486
 msgid "SPC, GYM, NSF, VGM and GBS module decoder"
-msgstr ""
+msgstr "Dekodér SPC, GYM, NSF, VGM a GBS"
 
 #: ../Plugins/Input/console/Audacious_Driver.cpp:681
 msgid "About the Console Music Decoder"
@@ -425,195 +439,202 @@ msgid ""
 "Console music decoder engine based on Game_Music_Emu 0.2.4.\n"
 "Audacious implementation by: William Pitcock <nenolod@nenolod.net>"
 msgstr ""
+"Konzolový hudební dekodér založený na Game_Music_Emu 0.2.4.\n"
+"Implementace v Audacious: William Pitcock <nenold@nenold.net>"
 
 #: ../Plugins/Input/console/Audacious_Driver.cpp:684
-#: ../Plugins/Input/flac/configure.c:760 ../Plugins/Input/flac/configure.c:790
-#: ../Plugins/Input/flac/http.c:219 ../Plugins/Input/mpg123/fileinfo.c:479
-#: ../Plugins/Input/mpg123/fileinfo.c:570 ../Plugins/Input/mpg123/http.c:220
-#: ../Plugins/Input/mpg123/mpg123.c:1243 ../Plugins/Input/tonegen/tonegen.c:54
-#: ../Plugins/Input/vorbis/fileinfo.c:212 ../Plugins/Input/vorbis/http.c:218
-#: ../Plugins/Input/vorbis/vorbis.c:834 ../Plugins/Input/wav/wav-sndfile.c:262
-#: ../Plugins/Output/OSS/about.c:54 ../Plugins/Output/esd/about.c:49
+#: ../Plugins/Input/flac/configure.c:760
+#: ../Plugins/Input/flac/configure.c:790
+#: ../Plugins/Input/flac/http.c:219
+#: ../Plugins/Input/mpg123/fileinfo.c:479
+#: ../Plugins/Input/mpg123/fileinfo.c:570
+#: ../Plugins/Input/mpg123/http.c:220
+#: ../Plugins/Input/mpg123/mpg123.c:1243
+#: ../Plugins/Input/tonegen/tonegen.c:54
+#: ../Plugins/Input/vorbis/fileinfo.c:212
+#: ../Plugins/Input/vorbis/http.c:218
+#: ../Plugins/Input/vorbis/vorbis.c:834
+#: ../Plugins/Input/wav/wav-sndfile.c:262
+#: ../Plugins/Output/OSS/about.c:54
+#: ../Plugins/Output/esd/about.c:49
 msgid "Ok"
 msgstr "OK"
 
 #: ../Plugins/Input/flac/charset.c:40
 msgid "Arabic (IBM-864)"
-msgstr ""
+msgstr "arabštiny (IBM-864)"
 
 #: ../Plugins/Input/flac/charset.c:41
 msgid "Arabic (ISO-8859-6)"
-msgstr ""
+msgstr "arabštiny (ISO-8859-6)"
 
 #: ../Plugins/Input/flac/charset.c:42
 msgid "Arabic (Windows-1256)"
-msgstr ""
+msgstr "arabštiny (Windows-1256)"
 
 #: ../Plugins/Input/flac/charset.c:43
 msgid "Baltic (ISO-8859-13)"
-msgstr ""
+msgstr "pobaltských jazyků (ISO-8859-13)"
 
 #: ../Plugins/Input/flac/charset.c:44
 msgid "Baltic (ISO-8859-4)"
-msgstr ""
+msgstr "pobaltských jazyků (ISO-8859-4)"
 
 #: ../Plugins/Input/flac/charset.c:45
 msgid "Baltic (Windows-1257)"
-msgstr ""
+msgstr "pobaltských jazyků (Windows-1257)"
 
 #: ../Plugins/Input/flac/charset.c:46
 msgid "Celtic (ISO-8859-14)"
-msgstr ""
+msgstr "keltských jazyků (ISO-8859-14)"
 
 #: ../Plugins/Input/flac/charset.c:47
 msgid "Central European (IBM-852)"
-msgstr ""
+msgstr "středoevropských jazyků (IBM-852)"
 
 #: ../Plugins/Input/flac/charset.c:48
 msgid "Central European (ISO-8859-2)"
-msgstr ""
+msgstr "pobaltských jazyků (ISO-8859-2)"
 
 #: ../Plugins/Input/flac/charset.c:49
 msgid "Central European (Windows-1250)"
-msgstr ""
+msgstr "pobaltských jazyků (Windows-1250)"
 
 #: ../Plugins/Input/flac/charset.c:50
 msgid "Chinese Simplified (GB18030)"
-msgstr ""
+msgstr "zjednodušené čínštiny (GB18030)"
 
 #: ../Plugins/Input/flac/charset.c:51
 msgid "Chinese Simplified (GB2312)"
-msgstr ""
+msgstr "zjednodušené čínštiny (GB2312)"
 
 #: ../Plugins/Input/flac/charset.c:52
 msgid "Chinese Traditional (Big5)"
-msgstr ""
+msgstr "tradiční čínštiny (Big5)"
 
 #: ../Plugins/Input/flac/charset.c:53
 msgid "Chinese Traditional (Big5-HKSCS)"
-msgstr ""
+msgstr "tradiční čínštiny (Big5-HKSCS)"
 
 #: ../Plugins/Input/flac/charset.c:54
 msgid "Cyrillic (IBM-855)"
-msgstr ""
+msgstr "cyrilice (IBM-855)"
 
 #: ../Plugins/Input/flac/charset.c:55
 msgid "Cyrillic (ISO-8859-5)"
-msgstr ""
+msgstr "cyrilice (ISO-8859-2)"
 
 #: ../Plugins/Input/flac/charset.c:56
 msgid "Cyrillic (ISO-IR-111)"
-msgstr ""
+msgstr "cyrilice (ISO-IR-111)"
 
 #: ../Plugins/Input/flac/charset.c:57
 msgid "Cyrillic (KOI8-R)"
-msgstr ""
+msgstr "cyrilice (KOI8-R)"
 
 #: ../Plugins/Input/flac/charset.c:58
 msgid "Cyrillic (Windows-1251)"
-msgstr ""
+msgstr "cyrilice (Windows-1251)"
 
 #: ../Plugins/Input/flac/charset.c:59
 msgid "Cyrillic/Russian (CP-866)"
-msgstr ""
+msgstr "ruské cyrilice (CP-866)"
 
 #: ../Plugins/Input/flac/charset.c:60
 msgid "Cyrillic/Ukrainian (KOI8-U)"
-msgstr ""
+msgstr "ukrajinské cyrilice (KOI8-U)"
 
 #: ../Plugins/Input/flac/charset.c:61
 msgid "English (US-ASCII)"
-msgstr ""
+msgstr "angličtiny (US-ASCII)"
 
 #: ../Plugins/Input/flac/charset.c:62
 msgid "Greek (ISO-8859-7)"
-msgstr ""
+msgstr "řečtiny (ISO-8859-7)"
 
 #: ../Plugins/Input/flac/charset.c:63
 msgid "Greek (Windows-1253)"
-msgstr ""
+msgstr "řečtiny (Windows-1253)"
 
 #: ../Plugins/Input/flac/charset.c:64
 msgid "Hebrew (IBM-862)"
-msgstr ""
+msgstr "hebrejštiny (IBM-862)"
 
 #: ../Plugins/Input/flac/charset.c:65
 msgid "Hebrew (Windows-1255)"
-msgstr ""
+msgstr "hebrejštiny (Windows-1255)"
 
 #: ../Plugins/Input/flac/charset.c:66
-#, fuzzy
 msgid "Japanese (EUC-JP)"
-msgstr "Japonský:"
+msgstr "japonštiny (EUC-JP)"
 
 #: ../Plugins/Input/flac/charset.c:67
 msgid "Japanese (ISO-2022-JP)"
-msgstr ""
+msgstr "japonštiny (ISO-2022-JP)"
 
 #: ../Plugins/Input/flac/charset.c:68
 msgid "Japanese (Shift_JIS)"
-msgstr ""
+msgstr "japonštiny (Shif_JIS)"
 
 #: ../Plugins/Input/flac/charset.c:69
 msgid "Korean (EUC-KR)"
-msgstr ""
+msgstr "korejštiny (EUC-KR)"
 
 #: ../Plugins/Input/flac/charset.c:70
 msgid "Nordic (ISO-8859-10)"
-msgstr ""
+msgstr "severských jazyků (ISO-8859-10)"
 
 #: ../Plugins/Input/flac/charset.c:71
 msgid "South European (ISO-8859-3)"
-msgstr ""
+msgstr "jihoevropských jazyků (ISO-8859-3)"
 
 #: ../Plugins/Input/flac/charset.c:72
 msgid "Thai (TIS-620)"
-msgstr ""
+msgstr "thajštiny (TIS-620)"
 
 #: ../Plugins/Input/flac/charset.c:73
 msgid "Turkish (IBM-857)"
-msgstr ""
+msgstr "turečtiny (IBM-857)"
 
 #: ../Plugins/Input/flac/charset.c:74
 msgid "Turkish (ISO-8859-9)"
-msgstr ""
+msgstr "turečtiny (ISO-8859-9)"
 
 #: ../Plugins/Input/flac/charset.c:75
 msgid "Turkish (Windows-1254)"
-msgstr ""
+msgstr "turečtiny (Windows-1254)"
 
 #: ../Plugins/Input/flac/charset.c:76
 msgid "Unicode (UTF-7)"
-msgstr ""
+msgstr "unicode (UTF-7)"
 
 #: ../Plugins/Input/flac/charset.c:77
-#, fuzzy
 msgid "Unicode (UTF-8)"
-msgstr "  (neplatné UTF8)"
+msgstr "unicode (UTF-8)"
 
 #: ../Plugins/Input/flac/charset.c:78
 msgid "Unicode (UTF-16BE)"
-msgstr ""
+msgstr "unicode (UTF-16BE)"
 
 #: ../Plugins/Input/flac/charset.c:79
 msgid "Unicode (UTF-16LE)"
-msgstr ""
+msgstr "unicode (UTF-16LE)"
 
 #: ../Plugins/Input/flac/charset.c:80
 msgid "Unicode (UTF-32BE)"
-msgstr ""
+msgstr "unicode (UTF-32BE)"
 
 #: ../Plugins/Input/flac/charset.c:81
 msgid "Unicode (UTF-32LE)"
-msgstr ""
+msgstr "unicode (UTF-32LE)"
 
 #: ../Plugins/Input/flac/charset.c:82
 msgid "Vietnamese (VISCII)"
-msgstr ""
+msgstr "vietnamštiny (VISCII)"
 
 #: ../Plugins/Input/flac/charset.c:83
 msgid "Vietnamese (Windows-1258)"
-msgstr ""
+msgstr "vietnamštiny (Windows-1258)"
 
 #: ../Plugins/Input/flac/charset.c:84
 msgid "Visual Hebrew (ISO-8859-8)"
@@ -621,136 +642,135 @@ msgstr ""
 
 #: ../Plugins/Input/flac/charset.c:85
 msgid "Western (IBM-850)"
-msgstr ""
+msgstr "západních jazyků (IBM-850)"
 
 #: ../Plugins/Input/flac/charset.c:86
 msgid "Western (ISO-8859-1)"
-msgstr ""
+msgstr "západních jazyků (ISO-8859-1)"
 
 #: ../Plugins/Input/flac/charset.c:87
 msgid "Western (ISO-8859-15)"
-msgstr ""
+msgstr "západních jazyků (ISO-8859-15)"
 
 #: ../Plugins/Input/flac/charset.c:88
 msgid "Western (Windows-1252)"
-msgstr ""
+msgstr "západních jazyků (Windows-1252)"
 
 #: ../Plugins/Input/flac/charset.c:94
 msgid "Arabic (IBM-864-I)"
-msgstr ""
+msgstr "arabštiny (IBM-864-I)"
 
 #: ../Plugins/Input/flac/charset.c:95
 msgid "Arabic (ISO-8859-6-E)"
-msgstr ""
+msgstr "arabštiny (ISO-8859-6-E)"
 
 #: ../Plugins/Input/flac/charset.c:96
 msgid "Arabic (ISO-8859-6-I)"
-msgstr ""
+msgstr "arabštiny (ISO-8859-6-I)"
 
 #: ../Plugins/Input/flac/charset.c:97
 msgid "Arabic (MacArabic)"
-msgstr ""
+msgstr "arabštiny (MacArabic)"
 
 #: ../Plugins/Input/flac/charset.c:98
 msgid "Armenian (ARMSCII-8)"
-msgstr ""
+msgstr "arménštiny (ARMSCII-8)"
 
 #: ../Plugins/Input/flac/charset.c:99
 msgid "Central European (MacCE)"
-msgstr ""
+msgstr "středoevropských jazyků (MacCE)"
 
 #: ../Plugins/Input/flac/charset.c:100
 msgid "Chinese Simplified (GBK)"
-msgstr ""
+msgstr "zjednodušené čínštiny (GBK)"
 
 #: ../Plugins/Input/flac/charset.c:101
 msgid "Chinese Simplified (HZ)"
-msgstr ""
+msgstr "zjednodušené čínštiny (HZ)"
 
 #: ../Plugins/Input/flac/charset.c:102
 msgid "Chinese Traditional (EUC-TW)"
-msgstr ""
+msgstr "tradiční čínštiny (EUC-TW)"
 
 #: ../Plugins/Input/flac/charset.c:103
 msgid "Croatian (MacCroatian)"
-msgstr ""
+msgstr "chorvatštiny (MacCroatian)"
 
 #: ../Plugins/Input/flac/charset.c:104
 msgid "Cyrillic (MacCyrillic)"
-msgstr ""
+msgstr "cyrilice (MacCyrillic)"
 
 #: ../Plugins/Input/flac/charset.c:105
 msgid "Cyrillic/Ukrainian (MacUkrainian)"
-msgstr ""
+msgstr "ukrajinské cyrilice (MacUkrainian)"
 
 #: ../Plugins/Input/flac/charset.c:106
 msgid "Farsi (MacFarsi)"
-msgstr ""
+msgstr "perštiny (MacFarsi)"
 
 #: ../Plugins/Input/flac/charset.c:107
 msgid "Greek (MacGreek)"
-msgstr ""
+msgstr "řečtiny (MacGreek)"
 
 #: ../Plugins/Input/flac/charset.c:108
 msgid "Gujarati (MacGujarati)"
-msgstr ""
+msgstr "gujarantštiny (MacGujarati)"
 
 #: ../Plugins/Input/flac/charset.c:109
 msgid "Gurmukhi (MacGurmukhi)"
-msgstr ""
+msgstr "gurmukhi (MacGurmukhi)"
 
 #: ../Plugins/Input/flac/charset.c:110
 msgid "Hebrew (ISO-8859-8-E)"
-msgstr ""
+msgstr "hebrejštiny (ISO-8859-8-E)"
 
 #: ../Plugins/Input/flac/charset.c:111
 msgid "Hebrew (ISO-8859-8-I)"
-msgstr ""
+msgstr "hebrejštiny (ISO-8859-8-I)"
 
 #: ../Plugins/Input/flac/charset.c:112
 msgid "Hebrew (MacHebrew)"
-msgstr ""
+msgstr "hebrejštiny (MacHebrew)"
 
 #: ../Plugins/Input/flac/charset.c:113
 msgid "Hindi (MacDevanagari)"
-msgstr ""
+msgstr "hindštiny (MacDevanagari)"
 
 #: ../Plugins/Input/flac/charset.c:114
 msgid "Icelandic (MacIcelandic)"
-msgstr ""
+msgstr "islandštiny (MacIcelandic)"
 
 #: ../Plugins/Input/flac/charset.c:115
 msgid "Korean (JOHAB)"
-msgstr ""
+msgstr "korejštiny (JOHAB)"
 
 #: ../Plugins/Input/flac/charset.c:116
-#, fuzzy
 msgid "Korean (UHC)"
-msgstr "Korejský:"
+msgstr "korejštiny (UHC)"
 
 #: ../Plugins/Input/flac/charset.c:117
 msgid "Romanian (MacRomanian)"
-msgstr ""
+msgstr "rumunštiny (MacRomanian)"
 
 #: ../Plugins/Input/flac/charset.c:118
 msgid "Turkish (MacTurkish)"
-msgstr ""
+msgstr "turečtiny (MacTurkish)"
 
 #: ../Plugins/Input/flac/charset.c:119
 msgid "User Defined"
-msgstr ""
+msgstr "Uživatelem definované"
 
 #: ../Plugins/Input/flac/charset.c:120
 msgid "Vietnamese (TCVN)"
-msgstr ""
+msgstr "vietnamštiny (TCVN)"
 
 #: ../Plugins/Input/flac/charset.c:121
 msgid "Vietnamese (VPS)"
-msgstr ""
+msgstr "vietnamštiny (VPS)"
 
 #: ../Plugins/Input/flac/charset.c:122
 msgid "Western (MacRoman)"
-msgstr ""
+msgstr "západních jazyků (MacRoman)"
 
 #: ../Plugins/Input/flac/configure.c:340
 #: ../Plugins/Input/mpg123/configure.c:227
@@ -758,27 +778,26 @@ msgid "Select the directory where you want to store the MPEG streams:"
 msgstr "Vyberte adresář, do něhož chcete vysílání uložit:"
 
 #: ../Plugins/Input/flac/configure.c:391
-#, fuzzy
 msgid "Flac Configuration"
-msgstr "Nastavení přehrávače CD Audio"
+msgstr "Flac - nastavení"
 
 #. Title config..
 #: ../Plugins/Input/flac/configure.c:403
 msgid "Tag Handling"
-msgstr ""
+msgstr "Zpracování tagů"
 
 #. Convert Char Set
 #: ../Plugins/Input/flac/configure.c:412
 msgid "Convert Character Set"
-msgstr ""
+msgstr "Změnit znakovou sadu"
 
 #: ../Plugins/Input/flac/configure.c:419
 msgid "Convert character set from :"
-msgstr ""
+msgstr "Změnit znakovou sadu z :"
 
 #: ../Plugins/Input/flac/configure.c:424
 msgid "to :"
-msgstr ""
+msgstr "na :"
 
 #: ../Plugins/Input/flac/configure.c:452
 #: ../Plugins/Input/vorbis/configure.c:531
@@ -788,7 +807,8 @@ msgstr "Formát názvu:"
 
 #: ../Plugins/Input/flac/configure.c:463
 #: ../Plugins/Input/mpg123/configure.c:730
-#: ../Plugins/Input/vorbis/configure.c:545 ../audacious/prefswin.c:95
+#: ../Plugins/Input/vorbis/configure.c:545
+#: ../audacious/prefswin.c:95
 msgid "Title"
 msgstr "Název:"
 
@@ -815,19 +835,17 @@ msgstr "Dream"
 
 #: ../Plugins/Input/flac/configure.c:499
 msgid "0 dB"
-msgstr ""
+msgstr "0 dB"
 
 #: ../Plugins/Input/flac/configure.c:503
-#, fuzzy
 msgid "6dB hard limiting"
-msgstr "Povolit 6 dB boost + tvrdé omezení"
+msgstr "Povolit 6dB tvrdé omezení"
 
 #. resolution
 #: ../Plugins/Input/flac/configure.c:512
 #: ../Plugins/Input/modplug/gui/interface.cpp:213
-#, fuzzy
 msgid "Resolution"
-msgstr "Rozlišení:"
+msgstr "Rozlišení"
 
 #: ../Plugins/Input/flac/configure.c:520
 #, fuzzy
@@ -836,7 +854,7 @@ msgstr "Zesílení přehrávání"
 
 #: ../Plugins/Input/flac/configure.c:528
 msgid "Dither 24bps to 16bps"
-msgstr ""
+msgstr "Ditheringem převést 24 bitů na 16"
 
 #: ../Plugins/Input/flac/configure.c:533
 #, fuzzy
@@ -844,53 +862,51 @@ msgid "With ReplayGain"
 msgstr "Zesílení přehrávání"
 
 #: ../Plugins/Input/flac/configure.c:541
-#, fuzzy
 msgid "Enable dithering"
-msgstr "Povolený"
+msgstr "Povolení ditheringu"
 
 #: ../Plugins/Input/flac/configure.c:550
 msgid "Noise shaping"
-msgstr ""
+msgstr "Tvarování šumu"
 
 #: ../Plugins/Input/flac/configure.c:558
-#, fuzzy
 msgid "none"
-msgstr "Žádný"
+msgstr "žádný"
 
 #: ../Plugins/Input/flac/configure.c:564
 msgid "low"
-msgstr ""
+msgstr "nízké"
 
 #: ../Plugins/Input/flac/configure.c:570
 msgid "medium"
-msgstr ""
+msgstr "střední"
 
 #: ../Plugins/Input/flac/configure.c:576
 msgid "high"
-msgstr ""
+msgstr "silné"
 
 #: ../Plugins/Input/flac/configure.c:582
 msgid "Dither to"
-msgstr ""
+msgstr "Dithering na"
 
 #: ../Plugins/Input/flac/configure.c:590
-#, fuzzy
 msgid "16 bps"
 msgstr "16bitové"
 
 #: ../Plugins/Input/flac/configure.c:596
 msgid "24 bps"
-msgstr ""
+msgstr "24 bitů"
 
 #: ../Plugins/Input/flac/configure.c:604
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:88
 msgid "Output"
-msgstr ""
+msgstr "Výstup"
 
 #: ../Plugins/Input/flac/configure.c:610
 #: ../Plugins/Input/mpg123/configure.c:464
 #: ../Plugins/Input/vorbis/configure.c:308
-#: ../Plugins/Output/OSS/configure.c:302 ../Plugins/Output/esd/configure.c:171
+#: ../Plugins/Output/OSS/configure.c:302
+#: ../Plugins/Output/esd/configure.c:171
 msgid "Buffering:"
 msgstr "Přednačítání"
 
@@ -903,7 +919,8 @@ msgstr "Velikost vyrovnávací paměti (kB):"
 #: ../Plugins/Input/flac/configure.c:631
 #: ../Plugins/Input/mpg123/configure.c:492
 #: ../Plugins/Input/vorbis/configure.c:334
-#: ../Plugins/Output/OSS/configure.c:329 ../Plugins/Output/esd/configure.c:198
+#: ../Plugins/Output/OSS/configure.c:329
+#: ../Plugins/Output/esd/configure.c:198
 msgid "Pre-buffer (percent):"
 msgstr "Načíst předem (v procentech):"
 
@@ -925,7 +942,8 @@ msgstr "Použít proxy"
 #: ../Plugins/Input/flac/configure.c:658
 #: ../Plugins/Input/mpg123/configure.c:529
 #: ../Plugins/Input/vorbis/configure.c:371
-#: ../Plugins/Output/esd/configure.c:114 ../Plugins/Output/esd/configure.c:144
+#: ../Plugins/Output/esd/configure.c:114
+#: ../Plugins/Output/esd/configure.c:144
 msgid "Host:"
 msgstr "Adresa:"
 
@@ -1004,9 +1022,8 @@ msgid "Streaming"
 msgstr "Vysílání"
 
 #: ../Plugins/Input/flac/configure.c:782
-#, fuzzy
 msgid "About Flac Plugin"
-msgstr "O modulu ESounD"
+msgstr "O modulu Flac"
 
 #: ../Plugins/Input/flac/configure.c:783
 msgid ""
@@ -1017,204 +1034,244 @@ msgid ""
 "and\n"
 "Daisuke Shimamura\n"
 "Visit http://flac.sourceforge.net/"
-msgstr ""
+msgstr "Flac modul "
 
-#: ../Plugins/Input/flac/fileinfo.c:47 ../Plugins/Input/mpg123/mpg123.c:49
+#: ../Plugins/Input/flac/fileinfo.c:47
+#: ../Plugins/Input/mpg123/mpg123.c:49
 #: ../Plugins/Input/vorbis/fileinfo.c:83
 msgid "Blues"
 msgstr "Blues"
 
-#: ../Plugins/Input/flac/fileinfo.c:47 ../Plugins/Input/mpg123/mpg123.c:49
+#: ../Plugins/Input/flac/fileinfo.c:47
+#: ../Plugins/Input/mpg123/mpg123.c:49
 #: ../Plugins/Input/vorbis/fileinfo.c:83
 msgid "Classic Rock"
 msgstr "Klasický rock"
 
-#: ../Plugins/Input/flac/fileinfo.c:47 ../Plugins/Input/mpg123/mpg123.c:49
+#: ../Plugins/Input/flac/fileinfo.c:47
+#: ../Plugins/Input/mpg123/mpg123.c:49
 #: ../Plugins/Input/vorbis/fileinfo.c:83
 msgid "Country"
 msgstr "Country"
 
-#: ../Plugins/Input/flac/fileinfo.c:47 ../Plugins/Input/mpg123/mpg123.c:49
+#: ../Plugins/Input/flac/fileinfo.c:47
+#: ../Plugins/Input/mpg123/mpg123.c:49
 #: ../Plugins/Input/vorbis/fileinfo.c:83
 msgid "Dance"
 msgstr "Taneční"
 
-#: ../Plugins/Input/flac/fileinfo.c:48 ../Plugins/Input/mpg123/mpg123.c:50
+#: ../Plugins/Input/flac/fileinfo.c:48
+#: ../Plugins/Input/mpg123/mpg123.c:50
 #: ../Plugins/Input/vorbis/fileinfo.c:84
 msgid "Disco"
 msgstr "Disko"
 
-#: ../Plugins/Input/flac/fileinfo.c:48 ../Plugins/Input/mpg123/mpg123.c:50
+#: ../Plugins/Input/flac/fileinfo.c:48
+#: ../Plugins/Input/mpg123/mpg123.c:50
 #: ../Plugins/Input/vorbis/fileinfo.c:84
 msgid "Funk"
 msgstr "Funk"
 
-#: ../Plugins/Input/flac/fileinfo.c:48 ../Plugins/Input/mpg123/mpg123.c:50
+#: ../Plugins/Input/flac/fileinfo.c:48
+#: ../Plugins/Input/mpg123/mpg123.c:50
 #: ../Plugins/Input/vorbis/fileinfo.c:84
 msgid "Grunge"
 msgstr "Grunge"
 
-#: ../Plugins/Input/flac/fileinfo.c:48 ../Plugins/Input/mpg123/mpg123.c:50
+#: ../Plugins/Input/flac/fileinfo.c:48
+#: ../Plugins/Input/mpg123/mpg123.c:50
 #: ../Plugins/Input/vorbis/fileinfo.c:84
 msgid "Hip-Hop"
 msgstr "Hip-hop"
 
-#: ../Plugins/Input/flac/fileinfo.c:49 ../Plugins/Input/mpg123/mpg123.c:51
+#: ../Plugins/Input/flac/fileinfo.c:49
+#: ../Plugins/Input/mpg123/mpg123.c:51
 #: ../Plugins/Input/vorbis/fileinfo.c:85
 msgid "Jazz"
 msgstr "Jazz"
 
-#: ../Plugins/Input/flac/fileinfo.c:49 ../Plugins/Input/mpg123/mpg123.c:51
+#: ../Plugins/Input/flac/fileinfo.c:49
+#: ../Plugins/Input/mpg123/mpg123.c:51
 #: ../Plugins/Input/vorbis/fileinfo.c:85
 msgid "Metal"
 msgstr "Metal"
 
-#: ../Plugins/Input/flac/fileinfo.c:49 ../Plugins/Input/mpg123/mpg123.c:51
+#: ../Plugins/Input/flac/fileinfo.c:49
+#: ../Plugins/Input/mpg123/mpg123.c:51
 #: ../Plugins/Input/vorbis/fileinfo.c:85
 msgid "New Age"
 msgstr "New Age"
 
-#: ../Plugins/Input/flac/fileinfo.c:49 ../Plugins/Input/mpg123/mpg123.c:51
+#: ../Plugins/Input/flac/fileinfo.c:49
+#: ../Plugins/Input/mpg123/mpg123.c:51
 #: ../Plugins/Input/vorbis/fileinfo.c:85
 msgid "Oldies"
 msgstr "Oldies"
 
-#: ../Plugins/Input/flac/fileinfo.c:50 ../Plugins/Input/mpg123/mpg123.c:52
+#: ../Plugins/Input/flac/fileinfo.c:50
+#: ../Plugins/Input/mpg123/mpg123.c:52
 #: ../Plugins/Input/vorbis/fileinfo.c:86
 msgid "Other"
 msgstr "Jiný"
 
-#: ../Plugins/Input/flac/fileinfo.c:50 ../Plugins/Input/mpg123/mpg123.c:52
+#: ../Plugins/Input/flac/fileinfo.c:50
+#: ../Plugins/Input/mpg123/mpg123.c:52
 #: ../Plugins/Input/vorbis/fileinfo.c:86
 msgid "Pop"
 msgstr "Pop"
 
-#: ../Plugins/Input/flac/fileinfo.c:50 ../Plugins/Input/mpg123/mpg123.c:52
+#: ../Plugins/Input/flac/fileinfo.c:50
+#: ../Plugins/Input/mpg123/mpg123.c:52
 #: ../Plugins/Input/vorbis/fileinfo.c:86
 msgid "R&B"
 msgstr "R&B"
 
-#: ../Plugins/Input/flac/fileinfo.c:50 ../Plugins/Input/mpg123/mpg123.c:52
+#: ../Plugins/Input/flac/fileinfo.c:50
+#: ../Plugins/Input/mpg123/mpg123.c:52
 #: ../Plugins/Input/vorbis/fileinfo.c:86
 msgid "Rap"
 msgstr "Rap"
 
-#: ../Plugins/Input/flac/fileinfo.c:50 ../Plugins/Input/mpg123/mpg123.c:52
+#: ../Plugins/Input/flac/fileinfo.c:50
+#: ../Plugins/Input/mpg123/mpg123.c:52
 #: ../Plugins/Input/vorbis/fileinfo.c:86
 msgid "Reggae"
 msgstr "Reggae"
 
-#: ../Plugins/Input/flac/fileinfo.c:51 ../Plugins/Input/mpg123/mpg123.c:53
+#: ../Plugins/Input/flac/fileinfo.c:51
+#: ../Plugins/Input/mpg123/mpg123.c:53
 #: ../Plugins/Input/vorbis/fileinfo.c:87
 msgid "Rock"
 msgstr "Rock"
 
-#: ../Plugins/Input/flac/fileinfo.c:51 ../Plugins/Input/mpg123/mpg123.c:53
+#: ../Plugins/Input/flac/fileinfo.c:51
+#: ../Plugins/Input/mpg123/mpg123.c:53
 #: ../Plugins/Input/vorbis/fileinfo.c:87
 msgid "Techno"
 msgstr "Techno"
 
-#: ../Plugins/Input/flac/fileinfo.c:51 ../Plugins/Input/mpg123/mpg123.c:53
+#: ../Plugins/Input/flac/fileinfo.c:51
+#: ../Plugins/Input/mpg123/mpg123.c:53
 #: ../Plugins/Input/vorbis/fileinfo.c:87
 msgid "Industrial"
 msgstr "Industrial"
 
-#: ../Plugins/Input/flac/fileinfo.c:51 ../Plugins/Input/mpg123/mpg123.c:53
+#: ../Plugins/Input/flac/fileinfo.c:51
+#: ../Plugins/Input/mpg123/mpg123.c:53
 #: ../Plugins/Input/vorbis/fileinfo.c:87
 msgid "Alternative"
 msgstr "Alternativní hudba"
 
-#: ../Plugins/Input/flac/fileinfo.c:52 ../Plugins/Input/mpg123/mpg123.c:54
+#: ../Plugins/Input/flac/fileinfo.c:52
+#: ../Plugins/Input/mpg123/mpg123.c:54
 #: ../Plugins/Input/vorbis/fileinfo.c:88
 msgid "Ska"
 msgstr "Ska"
 
-#: ../Plugins/Input/flac/fileinfo.c:52 ../Plugins/Input/mpg123/mpg123.c:54
+#: ../Plugins/Input/flac/fileinfo.c:52
+#: ../Plugins/Input/mpg123/mpg123.c:54
 #: ../Plugins/Input/vorbis/fileinfo.c:88
 msgid "Death Metal"
 msgstr "Death Metal"
 
-#: ../Plugins/Input/flac/fileinfo.c:52 ../Plugins/Input/mpg123/mpg123.c:54
+#: ../Plugins/Input/flac/fileinfo.c:52
+#: ../Plugins/Input/mpg123/mpg123.c:54
 #: ../Plugins/Input/vorbis/fileinfo.c:88
 msgid "Pranks"
 msgstr "Pranks"
 
-#: ../Plugins/Input/flac/fileinfo.c:52 ../Plugins/Input/mpg123/mpg123.c:54
+#: ../Plugins/Input/flac/fileinfo.c:52
+#: ../Plugins/Input/mpg123/mpg123.c:54
 #: ../Plugins/Input/vorbis/fileinfo.c:88
 msgid "Soundtrack"
 msgstr "Soundtrack"
 
-#: ../Plugins/Input/flac/fileinfo.c:53 ../Plugins/Input/mpg123/mpg123.c:55
+#: ../Plugins/Input/flac/fileinfo.c:53
+#: ../Plugins/Input/mpg123/mpg123.c:55
 #: ../Plugins/Input/vorbis/fileinfo.c:89
 msgid "Euro-Techno"
 msgstr "Euro-Techno"
 
-#: ../Plugins/Input/flac/fileinfo.c:53 ../Plugins/Input/mpg123/mpg123.c:55
+#: ../Plugins/Input/flac/fileinfo.c:53
+#: ../Plugins/Input/mpg123/mpg123.c:55
 #: ../Plugins/Input/vorbis/fileinfo.c:89
 msgid "Ambient"
 msgstr "Ambient"
 
-#: ../Plugins/Input/flac/fileinfo.c:53 ../Plugins/Input/mpg123/mpg123.c:55
+#: ../Plugins/Input/flac/fileinfo.c:53
+#: ../Plugins/Input/mpg123/mpg123.c:55
 #: ../Plugins/Input/vorbis/fileinfo.c:89
 msgid "Trip-Hop"
 msgstr "Trip-Hop"
 
-#: ../Plugins/Input/flac/fileinfo.c:53 ../Plugins/Input/mpg123/mpg123.c:55
+#: ../Plugins/Input/flac/fileinfo.c:53
+#: ../Plugins/Input/mpg123/mpg123.c:55
 #: ../Plugins/Input/vorbis/fileinfo.c:89
 msgid "Vocal"
 msgstr "Vokální"
 
-#: ../Plugins/Input/flac/fileinfo.c:54 ../Plugins/Input/mpg123/mpg123.c:56
+#: ../Plugins/Input/flac/fileinfo.c:54
+#: ../Plugins/Input/mpg123/mpg123.c:56
 #: ../Plugins/Input/vorbis/fileinfo.c:90
 msgid "Jazz+Funk"
 msgstr "Jazz+Funk"
 
-#: ../Plugins/Input/flac/fileinfo.c:54 ../Plugins/Input/mpg123/mpg123.c:56
+#: ../Plugins/Input/flac/fileinfo.c:54
+#: ../Plugins/Input/mpg123/mpg123.c:56
 #: ../Plugins/Input/vorbis/fileinfo.c:90
 msgid "Fusion"
 msgstr "Fúze"
 
-#: ../Plugins/Input/flac/fileinfo.c:54 ../Plugins/Input/mpg123/mpg123.c:56
+#: ../Plugins/Input/flac/fileinfo.c:54
+#: ../Plugins/Input/mpg123/mpg123.c:56
 #: ../Plugins/Input/vorbis/fileinfo.c:90
 msgid "Trance"
 msgstr "Trance"
 
-#: ../Plugins/Input/flac/fileinfo.c:54 ../Plugins/Input/mpg123/mpg123.c:56
+#: ../Plugins/Input/flac/fileinfo.c:54
+#: ../Plugins/Input/mpg123/mpg123.c:56
 #: ../Plugins/Input/vorbis/fileinfo.c:90
 msgid "Classical"
 msgstr "Klasika"
 
-#: ../Plugins/Input/flac/fileinfo.c:55 ../Plugins/Input/mpg123/mpg123.c:57
+#: ../Plugins/Input/flac/fileinfo.c:55
+#: ../Plugins/Input/mpg123/mpg123.c:57
 #: ../Plugins/Input/vorbis/fileinfo.c:91
 msgid "Instrumental"
 msgstr "Instrumentální"
 
-#: ../Plugins/Input/flac/fileinfo.c:55 ../Plugins/Input/mpg123/mpg123.c:57
+#: ../Plugins/Input/flac/fileinfo.c:55
+#: ../Plugins/Input/mpg123/mpg123.c:57
 #: ../Plugins/Input/vorbis/fileinfo.c:91
 msgid "Acid"
 msgstr "Acid"
 
-#: ../Plugins/Input/flac/fileinfo.c:55 ../Plugins/Input/mpg123/mpg123.c:57
+#: ../Plugins/Input/flac/fileinfo.c:55
+#: ../Plugins/Input/mpg123/mpg123.c:57
 #: ../Plugins/Input/vorbis/fileinfo.c:91
 msgid "House"
 msgstr "House"
 
-#: ../Plugins/Input/flac/fileinfo.c:55 ../Plugins/Input/mpg123/mpg123.c:57
+#: ../Plugins/Input/flac/fileinfo.c:55
+#: ../Plugins/Input/mpg123/mpg123.c:57
 #: ../Plugins/Input/vorbis/fileinfo.c:91
 msgid "Game"
 msgstr "Hra"
 
-#: ../Plugins/Input/flac/fileinfo.c:56 ../Plugins/Input/mpg123/mpg123.c:58
+#: ../Plugins/Input/flac/fileinfo.c:56
+#: ../Plugins/Input/mpg123/mpg123.c:58
 #: ../Plugins/Input/vorbis/fileinfo.c:92
 msgid "Sound Clip"
 msgstr "Zvukový klip"
 
-#: ../Plugins/Input/flac/fileinfo.c:56 ../Plugins/Input/mpg123/mpg123.c:58
+#: ../Plugins/Input/flac/fileinfo.c:56
+#: ../Plugins/Input/mpg123/mpg123.c:58
 #: ../Plugins/Input/vorbis/fileinfo.c:92
 msgid "Gospel"
 msgstr "Gospel"
 
-#: ../Plugins/Input/flac/fileinfo.c:56 ../Plugins/Input/mpg123/mpg123.c:58
+#: ../Plugins/Input/flac/fileinfo.c:56
+#: ../Plugins/Input/mpg123/mpg123.c:58
 #: ../Plugins/Input/vorbis/fileinfo.c:92
 msgid "Noise"
 msgstr "Šum"
@@ -1223,560 +1280,667 @@ msgstr "Šum"
 msgid "Alt"
 msgstr ""
 
-#: ../Plugins/Input/flac/fileinfo.c:57 ../Plugins/Input/mpg123/mpg123.c:59
+#: ../Plugins/Input/flac/fileinfo.c:57
+#: ../Plugins/Input/mpg123/mpg123.c:59
 #: ../Plugins/Input/vorbis/fileinfo.c:93
 msgid "Bass"
 msgstr "Bass"
 
-#: ../Plugins/Input/flac/fileinfo.c:57 ../Plugins/Input/mpg123/mpg123.c:59
+#: ../Plugins/Input/flac/fileinfo.c:57
+#: ../Plugins/Input/mpg123/mpg123.c:59
 #: ../Plugins/Input/vorbis/fileinfo.c:93
 msgid "Soul"
 msgstr "Soul"
 
-#: ../Plugins/Input/flac/fileinfo.c:57 ../Plugins/Input/mpg123/mpg123.c:59
+#: ../Plugins/Input/flac/fileinfo.c:57
+#: ../Plugins/Input/mpg123/mpg123.c:59
 #: ../Plugins/Input/vorbis/fileinfo.c:93
 msgid "Punk"
 msgstr "Punk"
 
-#: ../Plugins/Input/flac/fileinfo.c:57 ../Plugins/Input/mpg123/mpg123.c:59
+#: ../Plugins/Input/flac/fileinfo.c:57
+#: ../Plugins/Input/mpg123/mpg123.c:59
 #: ../Plugins/Input/vorbis/fileinfo.c:93
 msgid "Space"
 msgstr "Space"
 
-#: ../Plugins/Input/flac/fileinfo.c:58 ../Plugins/Input/mpg123/mpg123.c:60
+#: ../Plugins/Input/flac/fileinfo.c:58
+#: ../Plugins/Input/mpg123/mpg123.c:60
 #: ../Plugins/Input/vorbis/fileinfo.c:94
 msgid "Meditative"
 msgstr "Meditativní"
 
-#: ../Plugins/Input/flac/fileinfo.c:58 ../Plugins/Input/mpg123/mpg123.c:60
+#: ../Plugins/Input/flac/fileinfo.c:58
+#: ../Plugins/Input/mpg123/mpg123.c:60
 #: ../Plugins/Input/vorbis/fileinfo.c:94
 msgid "Instrumental Pop"
 msgstr "Instrumentální pop"
 
-#: ../Plugins/Input/flac/fileinfo.c:59 ../Plugins/Input/mpg123/mpg123.c:61
+#: ../Plugins/Input/flac/fileinfo.c:59
+#: ../Plugins/Input/mpg123/mpg123.c:61
 #: ../Plugins/Input/vorbis/fileinfo.c:95
 msgid "Instrumental Rock"
 msgstr "Instrumentální Rock"
 
-#: ../Plugins/Input/flac/fileinfo.c:59 ../Plugins/Input/mpg123/mpg123.c:61
+#: ../Plugins/Input/flac/fileinfo.c:59
+#: ../Plugins/Input/mpg123/mpg123.c:61
 #: ../Plugins/Input/vorbis/fileinfo.c:95
 msgid "Ethnic"
 msgstr "Etnická hudba"
 
-#: ../Plugins/Input/flac/fileinfo.c:59 ../Plugins/Input/mpg123/mpg123.c:61
+#: ../Plugins/Input/flac/fileinfo.c:59
+#: ../Plugins/Input/mpg123/mpg123.c:61
 #: ../Plugins/Input/vorbis/fileinfo.c:95
 msgid "Gothic"
 msgstr "Gotická hudba"
 
-#: ../Plugins/Input/flac/fileinfo.c:60 ../Plugins/Input/mpg123/mpg123.c:62
+#: ../Plugins/Input/flac/fileinfo.c:60
+#: ../Plugins/Input/mpg123/mpg123.c:62
 #: ../Plugins/Input/vorbis/fileinfo.c:96
 msgid "Darkwave"
 msgstr "Darkwave"
 
-#: ../Plugins/Input/flac/fileinfo.c:60 ../Plugins/Input/mpg123/mpg123.c:62
+#: ../Plugins/Input/flac/fileinfo.c:60
+#: ../Plugins/Input/mpg123/mpg123.c:62
 #: ../Plugins/Input/vorbis/fileinfo.c:96
 msgid "Techno-Industrial"
 msgstr "Techno-Industrial"
 
-#: ../Plugins/Input/flac/fileinfo.c:60 ../Plugins/Input/mpg123/mpg123.c:62
+#: ../Plugins/Input/flac/fileinfo.c:60
+#: ../Plugins/Input/mpg123/mpg123.c:62
 #: ../Plugins/Input/vorbis/fileinfo.c:96
 msgid "Electronic"
 msgstr "Elektronická"
 
-#: ../Plugins/Input/flac/fileinfo.c:61 ../Plugins/Input/mpg123/mpg123.c:63
+#: ../Plugins/Input/flac/fileinfo.c:61
+#: ../Plugins/Input/mpg123/mpg123.c:63
 #: ../Plugins/Input/vorbis/fileinfo.c:97
 msgid "Pop-Folk"
 msgstr "Pop-Folk"
 
-#: ../Plugins/Input/flac/fileinfo.c:61 ../Plugins/Input/mpg123/mpg123.c:63
+#: ../Plugins/Input/flac/fileinfo.c:61
+#: ../Plugins/Input/mpg123/mpg123.c:63
 #: ../Plugins/Input/vorbis/fileinfo.c:97
 msgid "Eurodance"
 msgstr "Eurodance"
 
-#: ../Plugins/Input/flac/fileinfo.c:61 ../Plugins/Input/mpg123/mpg123.c:63
+#: ../Plugins/Input/flac/fileinfo.c:61
+#: ../Plugins/Input/mpg123/mpg123.c:63
 #: ../Plugins/Input/vorbis/fileinfo.c:97
 msgid "Dream"
 msgstr "Dream"
 
-#: ../Plugins/Input/flac/fileinfo.c:62 ../Plugins/Input/mpg123/mpg123.c:64
+#: ../Plugins/Input/flac/fileinfo.c:62
+#: ../Plugins/Input/mpg123/mpg123.c:64
 #: ../Plugins/Input/vorbis/fileinfo.c:98
 msgid "Southern Rock"
 msgstr "Jižanský rock"
 
-#: ../Plugins/Input/flac/fileinfo.c:62 ../Plugins/Input/mpg123/mpg123.c:64
+#: ../Plugins/Input/flac/fileinfo.c:62
+#: ../Plugins/Input/mpg123/mpg123.c:64
 #: ../Plugins/Input/vorbis/fileinfo.c:98
 msgid "Comedy"
 msgstr "Komedie"
 
-#: ../Plugins/Input/flac/fileinfo.c:62 ../Plugins/Input/mpg123/mpg123.c:64
+#: ../Plugins/Input/flac/fileinfo.c:62
+#: ../Plugins/Input/mpg123/mpg123.c:64
 #: ../Plugins/Input/vorbis/fileinfo.c:98
 msgid "Cult"
 msgstr "Kult"
 
-#: ../Plugins/Input/flac/fileinfo.c:63 ../Plugins/Input/mpg123/mpg123.c:65
+#: ../Plugins/Input/flac/fileinfo.c:63
+#: ../Plugins/Input/mpg123/mpg123.c:65
 #: ../Plugins/Input/vorbis/fileinfo.c:99
 msgid "Gangsta Rap"
 msgstr "Gangsta Rap"
 
-#: ../Plugins/Input/flac/fileinfo.c:63 ../Plugins/Input/mpg123/mpg123.c:65
+#: ../Plugins/Input/flac/fileinfo.c:63
+#: ../Plugins/Input/mpg123/mpg123.c:65
 #: ../Plugins/Input/vorbis/fileinfo.c:99
 msgid "Top 40"
 msgstr "Top 40"
 
-#: ../Plugins/Input/flac/fileinfo.c:63 ../Plugins/Input/mpg123/mpg123.c:65
+#: ../Plugins/Input/flac/fileinfo.c:63
+#: ../Plugins/Input/mpg123/mpg123.c:65
 #: ../Plugins/Input/vorbis/fileinfo.c:99
 msgid "Christian Rap"
 msgstr "Křesťanský rap"
 
-#: ../Plugins/Input/flac/fileinfo.c:64 ../Plugins/Input/mpg123/mpg123.c:66
+#: ../Plugins/Input/flac/fileinfo.c:64
+#: ../Plugins/Input/mpg123/mpg123.c:66
 #: ../Plugins/Input/vorbis/fileinfo.c:100
 msgid "Pop/Funk"
 msgstr "Pop/Funk"
 
-#: ../Plugins/Input/flac/fileinfo.c:64 ../Plugins/Input/mpg123/mpg123.c:66
+#: ../Plugins/Input/flac/fileinfo.c:64
+#: ../Plugins/Input/mpg123/mpg123.c:66
 #: ../Plugins/Input/vorbis/fileinfo.c:100
 msgid "Jungle"
 msgstr "Jungle"
 
-#: ../Plugins/Input/flac/fileinfo.c:64 ../Plugins/Input/mpg123/mpg123.c:66
+#: ../Plugins/Input/flac/fileinfo.c:64
+#: ../Plugins/Input/mpg123/mpg123.c:66
 #: ../Plugins/Input/vorbis/fileinfo.c:100
 msgid "Native American"
 msgstr "Indiánská hudba"
 
-#: ../Plugins/Input/flac/fileinfo.c:65 ../Plugins/Input/mpg123/mpg123.c:67
+#: ../Plugins/Input/flac/fileinfo.c:65
+#: ../Plugins/Input/mpg123/mpg123.c:67
 #: ../Plugins/Input/vorbis/fileinfo.c:101
 msgid "Cabaret"
 msgstr "Kabaret"
 
-#: ../Plugins/Input/flac/fileinfo.c:65 ../Plugins/Input/mpg123/mpg123.c:67
+#: ../Plugins/Input/flac/fileinfo.c:65
+#: ../Plugins/Input/mpg123/mpg123.c:67
 #: ../Plugins/Input/vorbis/fileinfo.c:101
 msgid "New Wave"
 msgstr "Nová vlna"
 
-#: ../Plugins/Input/flac/fileinfo.c:65 ../Plugins/Input/mpg123/mpg123.c:67
+#: ../Plugins/Input/flac/fileinfo.c:65
+#: ../Plugins/Input/mpg123/mpg123.c:67
 #: ../Plugins/Input/vorbis/fileinfo.c:101
 msgid "Psychedelic"
 msgstr "Psychedelická"
 
-#: ../Plugins/Input/flac/fileinfo.c:65 ../Plugins/Input/mpg123/mpg123.c:67
+#: ../Plugins/Input/flac/fileinfo.c:65
+#: ../Plugins/Input/mpg123/mpg123.c:67
 #: ../Plugins/Input/vorbis/fileinfo.c:101
 msgid "Rave"
 msgstr "Rave"
 
-#: ../Plugins/Input/flac/fileinfo.c:66 ../Plugins/Input/mpg123/mpg123.c:68
+#: ../Plugins/Input/flac/fileinfo.c:66
+#: ../Plugins/Input/mpg123/mpg123.c:68
 #: ../Plugins/Input/vorbis/fileinfo.c:102
 msgid "Showtunes"
 msgstr "Showtunes"
 
-#: ../Plugins/Input/flac/fileinfo.c:66 ../Plugins/Input/mpg123/mpg123.c:68
+#: ../Plugins/Input/flac/fileinfo.c:66
+#: ../Plugins/Input/mpg123/mpg123.c:68
 #: ../Plugins/Input/vorbis/fileinfo.c:102
 msgid "Trailer"
 msgstr "Trailer"
 
-#: ../Plugins/Input/flac/fileinfo.c:66 ../Plugins/Input/mpg123/mpg123.c:68
+#: ../Plugins/Input/flac/fileinfo.c:66
+#: ../Plugins/Input/mpg123/mpg123.c:68
 #: ../Plugins/Input/vorbis/fileinfo.c:102
 msgid "Lo-Fi"
 msgstr "Lo-Fi"
 
-#: ../Plugins/Input/flac/fileinfo.c:66 ../Plugins/Input/mpg123/mpg123.c:68
+#: ../Plugins/Input/flac/fileinfo.c:66
+#: ../Plugins/Input/mpg123/mpg123.c:68
 #: ../Plugins/Input/vorbis/fileinfo.c:102
 msgid "Tribal"
 msgstr "Tribal"
 
-#: ../Plugins/Input/flac/fileinfo.c:67 ../Plugins/Input/mpg123/mpg123.c:69
+#: ../Plugins/Input/flac/fileinfo.c:67
+#: ../Plugins/Input/mpg123/mpg123.c:69
 #: ../Plugins/Input/vorbis/fileinfo.c:103
 msgid "Acid Punk"
 msgstr "Acid punk"
 
-#: ../Plugins/Input/flac/fileinfo.c:67 ../Plugins/Input/mpg123/mpg123.c:69
+#: ../Plugins/Input/flac/fileinfo.c:67
+#: ../Plugins/Input/mpg123/mpg123.c:69
 #: ../Plugins/Input/vorbis/fileinfo.c:103
 msgid "Acid Jazz"
 msgstr "Acid jazz"
 
-#: ../Plugins/Input/flac/fileinfo.c:67 ../Plugins/Input/mpg123/mpg123.c:69
+#: ../Plugins/Input/flac/fileinfo.c:67
+#: ../Plugins/Input/mpg123/mpg123.c:69
 #: ../Plugins/Input/vorbis/fileinfo.c:103
 msgid "Polka"
 msgstr "Polka"
 
-#: ../Plugins/Input/flac/fileinfo.c:67 ../Plugins/Input/mpg123/mpg123.c:69
+#: ../Plugins/Input/flac/fileinfo.c:67
+#: ../Plugins/Input/mpg123/mpg123.c:69
 #: ../Plugins/Input/vorbis/fileinfo.c:103
 msgid "Retro"
 msgstr "Retro"
 
-#: ../Plugins/Input/flac/fileinfo.c:68 ../Plugins/Input/mpg123/mpg123.c:70
+#: ../Plugins/Input/flac/fileinfo.c:68
+#: ../Plugins/Input/mpg123/mpg123.c:70
 #: ../Plugins/Input/vorbis/fileinfo.c:104
 msgid "Musical"
 msgstr "Muzikál"
 
-#: ../Plugins/Input/flac/fileinfo.c:68 ../Plugins/Input/mpg123/mpg123.c:70
+#: ../Plugins/Input/flac/fileinfo.c:68
+#: ../Plugins/Input/mpg123/mpg123.c:70
 #: ../Plugins/Input/vorbis/fileinfo.c:104
 msgid "Rock & Roll"
 msgstr "Rock'n roll"
 
-#: ../Plugins/Input/flac/fileinfo.c:68 ../Plugins/Input/mpg123/mpg123.c:70
+#: ../Plugins/Input/flac/fileinfo.c:68
+#: ../Plugins/Input/mpg123/mpg123.c:70
 #: ../Plugins/Input/vorbis/fileinfo.c:104
 msgid "Hard Rock"
 msgstr "Hard rock"
 
-#: ../Plugins/Input/flac/fileinfo.c:68 ../Plugins/Input/mpg123/mpg123.c:70
+#: ../Plugins/Input/flac/fileinfo.c:68
+#: ../Plugins/Input/mpg123/mpg123.c:70
 #: ../Plugins/Input/vorbis/fileinfo.c:104
 msgid "Folk"
 msgstr "Folk"
 
-#: ../Plugins/Input/flac/fileinfo.c:69 ../Plugins/Input/mpg123/mpg123.c:71
+#: ../Plugins/Input/flac/fileinfo.c:69
+#: ../Plugins/Input/mpg123/mpg123.c:71
 #: ../Plugins/Input/vorbis/fileinfo.c:105
 msgid "Folk/Rock"
 msgstr "Folk/Rock"
 
-#: ../Plugins/Input/flac/fileinfo.c:69 ../Plugins/Input/mpg123/mpg123.c:71
+#: ../Plugins/Input/flac/fileinfo.c:69
+#: ../Plugins/Input/mpg123/mpg123.c:71
 #: ../Plugins/Input/vorbis/fileinfo.c:105
 msgid "National Folk"
 msgstr "Národní lidová"
 
-#: ../Plugins/Input/flac/fileinfo.c:69 ../Plugins/Input/mpg123/mpg123.c:71
+#: ../Plugins/Input/flac/fileinfo.c:69
+#: ../Plugins/Input/mpg123/mpg123.c:71
 #: ../Plugins/Input/vorbis/fileinfo.c:105
 msgid "Swing"
 msgstr "Swing"
 
-#: ../Plugins/Input/flac/fileinfo.c:70 ../Plugins/Input/mpg123/mpg123.c:72
+#: ../Plugins/Input/flac/fileinfo.c:70
+#: ../Plugins/Input/mpg123/mpg123.c:72
 #: ../Plugins/Input/vorbis/fileinfo.c:106
 msgid "Fast-Fusion"
 msgstr "Fast-Fusion"
 
-#: ../Plugins/Input/flac/fileinfo.c:70 ../Plugins/Input/mpg123/mpg123.c:72
+#: ../Plugins/Input/flac/fileinfo.c:70
+#: ../Plugins/Input/mpg123/mpg123.c:72
 #: ../Plugins/Input/vorbis/fileinfo.c:106
 msgid "Bebob"
 msgstr "Bebob"
 
-#: ../Plugins/Input/flac/fileinfo.c:70 ../Plugins/Input/mpg123/mpg123.c:72
+#: ../Plugins/Input/flac/fileinfo.c:70
+#: ../Plugins/Input/mpg123/mpg123.c:72
 #: ../Plugins/Input/vorbis/fileinfo.c:106
 msgid "Latin"
 msgstr "Latinská"
 
-#: ../Plugins/Input/flac/fileinfo.c:70 ../Plugins/Input/mpg123/mpg123.c:72
+#: ../Plugins/Input/flac/fileinfo.c:70
+#: ../Plugins/Input/mpg123/mpg123.c:72
 #: ../Plugins/Input/vorbis/fileinfo.c:106
 msgid "Revival"
 msgstr "Revival"
 
-#: ../Plugins/Input/flac/fileinfo.c:71 ../Plugins/Input/mpg123/mpg123.c:73
+#: ../Plugins/Input/flac/fileinfo.c:71
+#: ../Plugins/Input/mpg123/mpg123.c:73
 #: ../Plugins/Input/vorbis/fileinfo.c:107
 msgid "Celtic"
 msgstr "Keltská hudba"
 
-#: ../Plugins/Input/flac/fileinfo.c:71 ../Plugins/Input/mpg123/mpg123.c:73
+#: ../Plugins/Input/flac/fileinfo.c:71
+#: ../Plugins/Input/mpg123/mpg123.c:73
 #: ../Plugins/Input/vorbis/fileinfo.c:107
 msgid "Bluegrass"
 msgstr "Bluegrass"
 
-#: ../Plugins/Input/flac/fileinfo.c:71 ../Plugins/Input/mpg123/mpg123.c:73
+#: ../Plugins/Input/flac/fileinfo.c:71
+#: ../Plugins/Input/mpg123/mpg123.c:73
 #: ../Plugins/Input/vorbis/fileinfo.c:107
 msgid "Avantgarde"
 msgstr "Avantgardní"
 
-#: ../Plugins/Input/flac/fileinfo.c:72 ../Plugins/Input/mpg123/mpg123.c:74
+#: ../Plugins/Input/flac/fileinfo.c:72
+#: ../Plugins/Input/mpg123/mpg123.c:74
 #: ../Plugins/Input/vorbis/fileinfo.c:108
 msgid "Gothic Rock"
 msgstr "Gotický rock"
 
-#: ../Plugins/Input/flac/fileinfo.c:72 ../Plugins/Input/mpg123/mpg123.c:74
+#: ../Plugins/Input/flac/fileinfo.c:72
+#: ../Plugins/Input/mpg123/mpg123.c:74
 #: ../Plugins/Input/vorbis/fileinfo.c:108
 msgid "Progressive Rock"
 msgstr "Progresivní rock"
 
-#: ../Plugins/Input/flac/fileinfo.c:73 ../Plugins/Input/mpg123/mpg123.c:75
+#: ../Plugins/Input/flac/fileinfo.c:73
+#: ../Plugins/Input/mpg123/mpg123.c:75
 #: ../Plugins/Input/vorbis/fileinfo.c:109
 msgid "Psychedelic Rock"
 msgstr "Psychedelický rock"
 
-#: ../Plugins/Input/flac/fileinfo.c:73 ../Plugins/Input/mpg123/mpg123.c:75
+#: ../Plugins/Input/flac/fileinfo.c:73
+#: ../Plugins/Input/mpg123/mpg123.c:75
 #: ../Plugins/Input/vorbis/fileinfo.c:109
 msgid "Symphonic Rock"
 msgstr "Symfonický rock"
 
-#: ../Plugins/Input/flac/fileinfo.c:73 ../Plugins/Input/mpg123/mpg123.c:75
+#: ../Plugins/Input/flac/fileinfo.c:73
+#: ../Plugins/Input/mpg123/mpg123.c:75
 #: ../Plugins/Input/vorbis/fileinfo.c:109
 msgid "Slow Rock"
 msgstr "Ploužák"
 
-#: ../Plugins/Input/flac/fileinfo.c:74 ../Plugins/Input/mpg123/mpg123.c:76
+#: ../Plugins/Input/flac/fileinfo.c:74
+#: ../Plugins/Input/mpg123/mpg123.c:76
 #: ../Plugins/Input/vorbis/fileinfo.c:110
 msgid "Big Band"
 msgstr "Big Band"
 
-#: ../Plugins/Input/flac/fileinfo.c:74 ../Plugins/Input/mpg123/mpg123.c:76
+#: ../Plugins/Input/flac/fileinfo.c:74
+#: ../Plugins/Input/mpg123/mpg123.c:76
 #: ../Plugins/Input/vorbis/fileinfo.c:110
 msgid "Chorus"
 msgstr "Chór"
 
-#: ../Plugins/Input/flac/fileinfo.c:74 ../Plugins/Input/mpg123/mpg123.c:76
+#: ../Plugins/Input/flac/fileinfo.c:74
+#: ../Plugins/Input/mpg123/mpg123.c:76
 #: ../Plugins/Input/vorbis/fileinfo.c:110
 msgid "Easy Listening"
 msgstr "Příjemné poslouchání"
 
-#: ../Plugins/Input/flac/fileinfo.c:75 ../Plugins/Input/mpg123/mpg123.c:77
+#: ../Plugins/Input/flac/fileinfo.c:75
+#: ../Plugins/Input/mpg123/mpg123.c:77
 #: ../Plugins/Input/vorbis/fileinfo.c:111
 msgid "Acoustic"
 msgstr "Akustická"
 
-#: ../Plugins/Input/flac/fileinfo.c:75 ../Plugins/Input/mpg123/mpg123.c:77
+#: ../Plugins/Input/flac/fileinfo.c:75
+#: ../Plugins/Input/mpg123/mpg123.c:77
 #: ../Plugins/Input/vorbis/fileinfo.c:111
 msgid "Humour"
 msgstr "Humor"
 
-#: ../Plugins/Input/flac/fileinfo.c:75 ../Plugins/Input/mpg123/mpg123.c:77
+#: ../Plugins/Input/flac/fileinfo.c:75
+#: ../Plugins/Input/mpg123/mpg123.c:77
 #: ../Plugins/Input/vorbis/fileinfo.c:111
 msgid "Speech"
 msgstr "Mluvené"
 
-#: ../Plugins/Input/flac/fileinfo.c:75 ../Plugins/Input/mpg123/mpg123.c:77
+#: ../Plugins/Input/flac/fileinfo.c:75
+#: ../Plugins/Input/mpg123/mpg123.c:77
 #: ../Plugins/Input/vorbis/fileinfo.c:111
 msgid "Chanson"
 msgstr "Šanson"
 
-#: ../Plugins/Input/flac/fileinfo.c:76 ../Plugins/Input/mpg123/mpg123.c:78
+#: ../Plugins/Input/flac/fileinfo.c:76
+#: ../Plugins/Input/mpg123/mpg123.c:78
 #: ../Plugins/Input/vorbis/fileinfo.c:112
 msgid "Opera"
 msgstr "Opera"
 
-#: ../Plugins/Input/flac/fileinfo.c:76 ../Plugins/Input/mpg123/mpg123.c:78
+#: ../Plugins/Input/flac/fileinfo.c:76
+#: ../Plugins/Input/mpg123/mpg123.c:78
 #: ../Plugins/Input/vorbis/fileinfo.c:112
 msgid "Chamber Music"
 msgstr "Komorní hudba"
 
-#: ../Plugins/Input/flac/fileinfo.c:76 ../Plugins/Input/mpg123/mpg123.c:78
+#: ../Plugins/Input/flac/fileinfo.c:76
+#: ../Plugins/Input/mpg123/mpg123.c:78
 #: ../Plugins/Input/vorbis/fileinfo.c:112
 msgid "Sonata"
 msgstr "Sonáta"
 
-#: ../Plugins/Input/flac/fileinfo.c:76 ../Plugins/Input/mpg123/mpg123.c:78
+#: ../Plugins/Input/flac/fileinfo.c:76
+#: ../Plugins/Input/mpg123/mpg123.c:78
 #: ../Plugins/Input/vorbis/fileinfo.c:112
 msgid "Symphony"
 msgstr "Symfonie"
 
-#: ../Plugins/Input/flac/fileinfo.c:77 ../Plugins/Input/mpg123/mpg123.c:79
+#: ../Plugins/Input/flac/fileinfo.c:77
+#: ../Plugins/Input/mpg123/mpg123.c:79
 #: ../Plugins/Input/vorbis/fileinfo.c:113
 msgid "Booty Bass"
 msgstr "Booty Bass"
 
-#: ../Plugins/Input/flac/fileinfo.c:77 ../Plugins/Input/mpg123/mpg123.c:79
+#: ../Plugins/Input/flac/fileinfo.c:77
+#: ../Plugins/Input/mpg123/mpg123.c:79
 #: ../Plugins/Input/vorbis/fileinfo.c:113
 msgid "Primus"
 msgstr "Primus"
 
-#: ../Plugins/Input/flac/fileinfo.c:77 ../Plugins/Input/mpg123/mpg123.c:79
+#: ../Plugins/Input/flac/fileinfo.c:77
+#: ../Plugins/Input/mpg123/mpg123.c:79
 #: ../Plugins/Input/vorbis/fileinfo.c:113
 msgid "Porn Groove"
 msgstr "Porn Groove"
 
-#: ../Plugins/Input/flac/fileinfo.c:78 ../Plugins/Input/mpg123/mpg123.c:80
+#: ../Plugins/Input/flac/fileinfo.c:78
+#: ../Plugins/Input/mpg123/mpg123.c:80
 #: ../Plugins/Input/vorbis/fileinfo.c:114
 msgid "Satire"
 msgstr "Satira"
 
-#: ../Plugins/Input/flac/fileinfo.c:78 ../Plugins/Input/mpg123/mpg123.c:80
+#: ../Plugins/Input/flac/fileinfo.c:78
+#: ../Plugins/Input/mpg123/mpg123.c:80
 #: ../Plugins/Input/vorbis/fileinfo.c:114
 msgid "Slow Jam"
 msgstr "Slow Jam"
 
-#: ../Plugins/Input/flac/fileinfo.c:78 ../Plugins/Input/mpg123/mpg123.c:80
+#: ../Plugins/Input/flac/fileinfo.c:78
+#: ../Plugins/Input/mpg123/mpg123.c:80
 #: ../Plugins/Input/vorbis/fileinfo.c:114
 msgid "Club"
 msgstr "Klub"
 
-#: ../Plugins/Input/flac/fileinfo.c:78 ../Plugins/Input/mpg123/mpg123.c:80
+#: ../Plugins/Input/flac/fileinfo.c:78
+#: ../Plugins/Input/mpg123/mpg123.c:80
 #: ../Plugins/Input/vorbis/fileinfo.c:114
 msgid "Tango"
 msgstr "Tango"
 
-#: ../Plugins/Input/flac/fileinfo.c:79 ../Plugins/Input/mpg123/mpg123.c:81
+#: ../Plugins/Input/flac/fileinfo.c:79
+#: ../Plugins/Input/mpg123/mpg123.c:81
 #: ../Plugins/Input/vorbis/fileinfo.c:115
 msgid "Samba"
 msgstr "Samba"
 
-#: ../Plugins/Input/flac/fileinfo.c:79 ../Plugins/Input/mpg123/mpg123.c:81
+#: ../Plugins/Input/flac/fileinfo.c:79
+#: ../Plugins/Input/mpg123/mpg123.c:81
 #: ../Plugins/Input/vorbis/fileinfo.c:115
 msgid "Folklore"
 msgstr "Folklór"
 
-#: ../Plugins/Input/flac/fileinfo.c:79 ../Plugins/Input/mpg123/mpg123.c:81
+#: ../Plugins/Input/flac/fileinfo.c:79
+#: ../Plugins/Input/mpg123/mpg123.c:81
 #: ../Plugins/Input/vorbis/fileinfo.c:115
 msgid "Ballad"
 msgstr "Balada"
 
-#: ../Plugins/Input/flac/fileinfo.c:79 ../Plugins/Input/mpg123/mpg123.c:81
+#: ../Plugins/Input/flac/fileinfo.c:79
+#: ../Plugins/Input/mpg123/mpg123.c:81
 #: ../Plugins/Input/vorbis/fileinfo.c:115
 msgid "Power Ballad"
 msgstr "Rocková balada"
 
-#: ../Plugins/Input/flac/fileinfo.c:80 ../Plugins/Input/mpg123/mpg123.c:82
+#: ../Plugins/Input/flac/fileinfo.c:80
+#: ../Plugins/Input/mpg123/mpg123.c:82
 #: ../Plugins/Input/vorbis/fileinfo.c:116
 msgid "Rhythmic Soul"
 msgstr "Rytmický soul"
 
-#: ../Plugins/Input/flac/fileinfo.c:80 ../Plugins/Input/mpg123/mpg123.c:82
+#: ../Plugins/Input/flac/fileinfo.c:80
+#: ../Plugins/Input/mpg123/mpg123.c:82
 #: ../Plugins/Input/vorbis/fileinfo.c:116
 msgid "Freestyle"
 msgstr "Freestyle"
 
-#: ../Plugins/Input/flac/fileinfo.c:80 ../Plugins/Input/mpg123/mpg123.c:82
+#: ../Plugins/Input/flac/fileinfo.c:80
+#: ../Plugins/Input/mpg123/mpg123.c:82
 #: ../Plugins/Input/vorbis/fileinfo.c:116
 msgid "Duet"
 msgstr "Duet"
 
-#: ../Plugins/Input/flac/fileinfo.c:81 ../Plugins/Input/mpg123/mpg123.c:83
+#: ../Plugins/Input/flac/fileinfo.c:81
+#: ../Plugins/Input/mpg123/mpg123.c:83
 #: ../Plugins/Input/vorbis/fileinfo.c:117
 msgid "Punk Rock"
 msgstr "Punk rock"
 
-#: ../Plugins/Input/flac/fileinfo.c:81 ../Plugins/Input/mpg123/mpg123.c:83
+#: ../Plugins/Input/flac/fileinfo.c:81
+#: ../Plugins/Input/mpg123/mpg123.c:83
 #: ../Plugins/Input/vorbis/fileinfo.c:117
 msgid "Drum Solo"
 msgstr "Drum Solo"
 
-#: ../Plugins/Input/flac/fileinfo.c:81 ../Plugins/Input/mpg123/mpg123.c:83
+#: ../Plugins/Input/flac/fileinfo.c:81
+#: ../Plugins/Input/mpg123/mpg123.c:83
 #: ../Plugins/Input/vorbis/fileinfo.c:117
 msgid "A Cappella"
 msgstr "A Cappella"
 
-#: ../Plugins/Input/flac/fileinfo.c:82 ../Plugins/Input/mpg123/mpg123.c:84
+#: ../Plugins/Input/flac/fileinfo.c:82
+#: ../Plugins/Input/mpg123/mpg123.c:84
 #: ../Plugins/Input/vorbis/fileinfo.c:118
 msgid "Euro-House"
 msgstr "Euro-House"
 
-#: ../Plugins/Input/flac/fileinfo.c:82 ../Plugins/Input/mpg123/mpg123.c:84
+#: ../Plugins/Input/flac/fileinfo.c:82
+#: ../Plugins/Input/mpg123/mpg123.c:84
 #: ../Plugins/Input/vorbis/fileinfo.c:118
 msgid "Dance Hall"
 msgstr "Dance Hall"
 
-#: ../Plugins/Input/flac/fileinfo.c:82 ../Plugins/Input/mpg123/mpg123.c:84
+#: ../Plugins/Input/flac/fileinfo.c:82
+#: ../Plugins/Input/mpg123/mpg123.c:84
 #: ../Plugins/Input/vorbis/fileinfo.c:118
 msgid "Goa"
 msgstr "Goa"
 
-#: ../Plugins/Input/flac/fileinfo.c:83 ../Plugins/Input/mpg123/mpg123.c:85
+#: ../Plugins/Input/flac/fileinfo.c:83
+#: ../Plugins/Input/mpg123/mpg123.c:85
 #: ../Plugins/Input/vorbis/fileinfo.c:119
 msgid "Drum & Bass"
 msgstr "Drum & Bass"
 
-#: ../Plugins/Input/flac/fileinfo.c:83 ../Plugins/Input/mpg123/mpg123.c:85
+#: ../Plugins/Input/flac/fileinfo.c:83
+#: ../Plugins/Input/mpg123/mpg123.c:85
 #: ../Plugins/Input/vorbis/fileinfo.c:119
 msgid "Club-House"
 msgstr "Club-House"
 
-#: ../Plugins/Input/flac/fileinfo.c:83 ../Plugins/Input/mpg123/mpg123.c:85
+#: ../Plugins/Input/flac/fileinfo.c:83
+#: ../Plugins/Input/mpg123/mpg123.c:85
 #: ../Plugins/Input/vorbis/fileinfo.c:119
 msgid "Hardcore"
 msgstr "Hardcore"
 
-#: ../Plugins/Input/flac/fileinfo.c:84 ../Plugins/Input/mpg123/mpg123.c:86
+#: ../Plugins/Input/flac/fileinfo.c:84
+#: ../Plugins/Input/mpg123/mpg123.c:86
 #: ../Plugins/Input/vorbis/fileinfo.c:120
 msgid "Terror"
 msgstr "Terror"
 
-#: ../Plugins/Input/flac/fileinfo.c:84 ../Plugins/Input/mpg123/mpg123.c:86
+#: ../Plugins/Input/flac/fileinfo.c:84
+#: ../Plugins/Input/mpg123/mpg123.c:86
 #: ../Plugins/Input/vorbis/fileinfo.c:120
 msgid "Indie"
 msgstr "Indie"
 
-#: ../Plugins/Input/flac/fileinfo.c:84 ../Plugins/Input/mpg123/mpg123.c:86
+#: ../Plugins/Input/flac/fileinfo.c:84
+#: ../Plugins/Input/mpg123/mpg123.c:86
 #: ../Plugins/Input/vorbis/fileinfo.c:120
 msgid "BritPop"
 msgstr "Britpop"
 
-#: ../Plugins/Input/flac/fileinfo.c:84 ../Plugins/Input/mpg123/mpg123.c:86
+#: ../Plugins/Input/flac/fileinfo.c:84
+#: ../Plugins/Input/mpg123/mpg123.c:86
 #: ../Plugins/Input/vorbis/fileinfo.c:120
 msgid "Negerpunk"
 msgstr "Negerpunk"
 
-#: ../Plugins/Input/flac/fileinfo.c:85 ../Plugins/Input/mpg123/mpg123.c:87
+#: ../Plugins/Input/flac/fileinfo.c:85
+#: ../Plugins/Input/mpg123/mpg123.c:87
 #: ../Plugins/Input/vorbis/fileinfo.c:121
 msgid "Polsk Punk"
 msgstr "Polsk Punk"
 
-#: ../Plugins/Input/flac/fileinfo.c:85 ../Plugins/Input/mpg123/mpg123.c:87
+#: ../Plugins/Input/flac/fileinfo.c:85
+#: ../Plugins/Input/mpg123/mpg123.c:87
 #: ../Plugins/Input/vorbis/fileinfo.c:121
 msgid "Beat"
 msgstr "Beat"
 
-#: ../Plugins/Input/flac/fileinfo.c:85 ../Plugins/Input/mpg123/mpg123.c:87
+#: ../Plugins/Input/flac/fileinfo.c:85
+#: ../Plugins/Input/mpg123/mpg123.c:87
 #: ../Plugins/Input/vorbis/fileinfo.c:121
 msgid "Christian Gangsta Rap"
 msgstr "Křesťanský Gangsta Rap"
 
-#: ../Plugins/Input/flac/fileinfo.c:86 ../Plugins/Input/mpg123/mpg123.c:88
+#: ../Plugins/Input/flac/fileinfo.c:86
+#: ../Plugins/Input/mpg123/mpg123.c:88
 #: ../Plugins/Input/vorbis/fileinfo.c:122
 msgid "Heavy Metal"
 msgstr "Heavy metal"
 
-#: ../Plugins/Input/flac/fileinfo.c:86 ../Plugins/Input/mpg123/mpg123.c:88
+#: ../Plugins/Input/flac/fileinfo.c:86
+#: ../Plugins/Input/mpg123/mpg123.c:88
 #: ../Plugins/Input/vorbis/fileinfo.c:122
 msgid "Black Metal"
 msgstr "Black metal"
 
-#: ../Plugins/Input/flac/fileinfo.c:86 ../Plugins/Input/mpg123/mpg123.c:88
+#: ../Plugins/Input/flac/fileinfo.c:86
+#: ../Plugins/Input/mpg123/mpg123.c:88
 #: ../Plugins/Input/vorbis/fileinfo.c:122
 msgid "Crossover"
 msgstr "Crossover"
 
-#: ../Plugins/Input/flac/fileinfo.c:87 ../Plugins/Input/mpg123/mpg123.c:89
+#: ../Plugins/Input/flac/fileinfo.c:87
+#: ../Plugins/Input/mpg123/mpg123.c:89
 #: ../Plugins/Input/vorbis/fileinfo.c:123
 msgid "Contemporary Christian"
 msgstr "Moderní křesťanská"
 
-#: ../Plugins/Input/flac/fileinfo.c:87 ../Plugins/Input/mpg123/mpg123.c:89
+#: ../Plugins/Input/flac/fileinfo.c:87
+#: ../Plugins/Input/mpg123/mpg123.c:89
 #: ../Plugins/Input/vorbis/fileinfo.c:123
 msgid "Christian Rock"
 msgstr "Křesťanský rock"
 
-#: ../Plugins/Input/flac/fileinfo.c:88 ../Plugins/Input/mpg123/mpg123.c:90
+#: ../Plugins/Input/flac/fileinfo.c:88
+#: ../Plugins/Input/mpg123/mpg123.c:90
 #: ../Plugins/Input/vorbis/fileinfo.c:124
 msgid "Merengue"
 msgstr "Merengue"
 
-#: ../Plugins/Input/flac/fileinfo.c:88 ../Plugins/Input/mpg123/mpg123.c:90
+#: ../Plugins/Input/flac/fileinfo.c:88
+#: ../Plugins/Input/mpg123/mpg123.c:90
 #: ../Plugins/Input/vorbis/fileinfo.c:124
 msgid "Salsa"
 msgstr "Salsa"
 
-#: ../Plugins/Input/flac/fileinfo.c:88 ../Plugins/Input/mpg123/mpg123.c:90
+#: ../Plugins/Input/flac/fileinfo.c:88
+#: ../Plugins/Input/mpg123/mpg123.c:90
 #: ../Plugins/Input/vorbis/fileinfo.c:124
 msgid "Thrash Metal"
 msgstr "Thrash metal"
 
-#: ../Plugins/Input/flac/fileinfo.c:89 ../Plugins/Input/mpg123/mpg123.c:91
+#: ../Plugins/Input/flac/fileinfo.c:89
+#: ../Plugins/Input/mpg123/mpg123.c:91
 #: ../Plugins/Input/vorbis/fileinfo.c:125
 msgid "Anime"
 msgstr "Anime"
 
-#: ../Plugins/Input/flac/fileinfo.c:89 ../Plugins/Input/mpg123/mpg123.c:91
+#: ../Plugins/Input/flac/fileinfo.c:89
+#: ../Plugins/Input/mpg123/mpg123.c:91
 #: ../Plugins/Input/vorbis/fileinfo.c:125
 msgid "JPop"
 msgstr "JPop"
 
-#: ../Plugins/Input/flac/fileinfo.c:89 ../Plugins/Input/mpg123/mpg123.c:91
+#: ../Plugins/Input/flac/fileinfo.c:89
+#: ../Plugins/Input/mpg123/mpg123.c:91
 #: ../Plugins/Input/vorbis/fileinfo.c:125
 msgid "Synthpop"
 msgstr "Synthpop"
 
 #: ../Plugins/Input/flac/fileinfo.c:213
-#, fuzzy, c-format
+#, c-format
 msgid "Samplerate: %d Hz"
-msgstr "Vzorkovací kmitočet:"
+msgstr "Vzorkovací kmitočet: %d Hz"
 
 #: ../Plugins/Input/flac/fileinfo.c:214
-#, fuzzy, c-format
+#, c-format
 msgid "Channels: %d"
-msgstr "Kanálů"
+msgstr "Kanálů: %d"
 
 #: ../Plugins/Input/flac/fileinfo.c:215
 #, c-format
 msgid "Bits/Sample: %d"
-msgstr ""
+msgstr "Bitů na vzorek: %d"
 
 #: ../Plugins/Input/flac/fileinfo.c:217
 #, c-format
 msgid "Blocksize: %d"
-msgstr ""
+msgstr "Velikost bloku: %d"
 
 #: ../Plugins/Input/flac/fileinfo.c:219
 #, c-format
@@ -1784,20 +1948,22 @@ msgid ""
 "Blocksize: variable\n"
 "  min/max: %d/%d"
 msgstr ""
+"Velikost bloku: proměnná\n"
+"  min/max: %d/%d"
 
 #: ../Plugins/Input/flac/fileinfo.c:222
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Samples: %llu\n"
 "Length: %d:%.2d"
 msgstr ""
-"\n"
-"Celková délka: %d:%d\n"
+"Vzorků: %llu\n"
+"Délka: %d:%.2d"
 
 #: ../Plugins/Input/flac/fileinfo.c:228
-#, fuzzy, c-format
+#, c-format
 msgid "Filesize: %ld B"
-msgstr "Velikost souboru:"
+msgstr "Velikost souboru: %ld B"
 
 #: ../Plugins/Input/flac/fileinfo.c:230
 #, c-format
@@ -1805,30 +1971,31 @@ msgid ""
 "Avg. bitrate: %.1f kb/s\n"
 "Compression ratio: %.1f%%"
 msgstr ""
+"Prům. datový tok: %.1f kb/s\n"
+"Kompresní poměr: %.1f%%"
 
-#: ../Plugins/Input/flac/fileinfo.c:259 ../audacious/input.c:524
+#: ../Plugins/Input/flac/fileinfo.c:259
+#: ../audacious/input.c:524
 msgid "Filename:"
 msgstr "Jméno souboru:"
 
 #: ../Plugins/Input/flac/fileinfo.c:271
-#, fuzzy
 msgid "Tag:"
-msgstr "Tango"
+msgstr "Tag:"
 
-#: ../Plugins/Input/flac/fileinfo.c:306 ../Plugins/Input/vorbis/fileinfo.c:624
+#: ../Plugins/Input/flac/fileinfo.c:306
+#: ../Plugins/Input/vorbis/fileinfo.c:624
 msgid "Date:"
 msgstr "Datum:"
 
 #: ../Plugins/Input/flac/fileinfo.c:345
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:107
-#, fuzzy
 msgid "Save"
-msgstr "/Uložit"
+msgstr "Uložit"
 
 #: ../Plugins/Input/flac/fileinfo.c:351
-#, fuzzy
 msgid "Remove Tag"
-msgstr "/Odebrat všechny"
+msgstr "Odstranit tag"
 
 #: ../Plugins/Input/flac/fileinfo.c:361
 #, fuzzy
@@ -1840,43 +2007,52 @@ msgstr "Informace o CD"
 msgid "File Info - %s"
 msgstr "Informace o souboru"
 
-#: ../Plugins/Input/flac/http.c:219 ../Plugins/Input/mpg123/http.c:220
+#: ../Plugins/Input/flac/http.c:219
+#: ../Plugins/Input/mpg123/http.c:220
 #: ../Plugins/Input/vorbis/http.c:218
 #: ../Plugins/Output/disk_writer/disk_writer.c:132
 msgid "Error"
 msgstr "Chyba"
 
-#: ../Plugins/Input/flac/http.c:383 ../Plugins/Input/mpg123/http.c:374
+#: ../Plugins/Input/flac/http.c:383
+#: ../Plugins/Input/mpg123/http.c:374
 #: ../Plugins/Input/vorbis/http.c:327
 #, c-format
 msgid "LOOKING UP %s"
 msgstr "Vyhledávám %s"
 
-#: ../Plugins/Input/flac/http.c:389 ../Plugins/Input/mpg123/http.c:379
+#: ../Plugins/Input/flac/http.c:389
+#: ../Plugins/Input/mpg123/http.c:379
 #: ../Plugins/Input/vorbis/http.c:332
 #, c-format
 msgid "Couldn't look up host %s"
 msgstr "Nelze najít server %s"
 
-#: ../Plugins/Input/flac/http.c:402 ../Plugins/Input/mpg123/http.c:392
+#: ../Plugins/Input/flac/http.c:402
+#: ../Plugins/Input/mpg123/http.c:392
 #: ../Plugins/Input/vorbis/http.c:345
 #, c-format
 msgid "CONNECTING TO %s:%d"
 msgstr "Připojuji se k %s: %d"
 
-#: ../Plugins/Input/flac/http.c:409 ../Plugins/Input/flac/http.c:429
-#: ../Plugins/Input/mpg123/http.c:400 ../Plugins/Input/mpg123/http.c:420
-#: ../Plugins/Input/vorbis/http.c:353 ../Plugins/Input/vorbis/http.c:373
+#: ../Plugins/Input/flac/http.c:409
+#: ../Plugins/Input/flac/http.c:429
+#: ../Plugins/Input/mpg123/http.c:400
+#: ../Plugins/Input/mpg123/http.c:420
+#: ../Plugins/Input/vorbis/http.c:353
+#: ../Plugins/Input/vorbis/http.c:373
 #, c-format
 msgid "Couldn't connect to host %s"
 msgstr "Nelze se připojit k %s"
 
-#: ../Plugins/Input/flac/http.c:495 ../Plugins/Input/mpg123/http.c:483
+#: ../Plugins/Input/flac/http.c:495
+#: ../Plugins/Input/mpg123/http.c:483
 #: ../Plugins/Input/vorbis/http.c:421
 msgid "CONNECTED: WAITING FOR REPLY"
 msgstr "Připojen: čekám na odpověď"
 
-#: ../Plugins/Input/flac/http.c:536 ../Plugins/Input/mpg123/http.c:520
+#: ../Plugins/Input/flac/http.c:536
+#: ../Plugins/Input/mpg123/http.c:520
 #: ../Plugins/Input/vorbis/http.c:458
 #, c-format
 msgid ""
@@ -1886,16 +2062,16 @@ msgstr ""
 "Nepodařilo se připojit k serveru %s\n"
 "Server odpověděl: %s"
 
-#: ../Plugins/Input/flac/http.c:670 ../Plugins/Input/mpg123/http.c:638
+#: ../Plugins/Input/flac/http.c:670
+#: ../Plugins/Input/mpg123/http.c:638
 #: ../Plugins/Input/vorbis/http.c:557
 #, c-format
 msgid "PRE-BUFFERING: %dKB/%dKB"
 msgstr "Přednačteno: %d kB/%d kB"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:33
-#, fuzzy
 msgid "About Modplug"
-msgstr "O modulu ESounD"
+msgstr "O modulu Modplug"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:43
 msgid "Modplug Input Plugin for BMP ver"
@@ -1915,14 +2091,12 @@ msgstr ""
 #: ../Plugins/Input/modplug/gui/interface.cpp:992
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:23
 #: ../Plugins/Visualization/libvisual-proxy/about.c:135
-#, fuzzy
 msgid "Close"
-msgstr "/Zavřít"
+msgstr "Zavřít"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:180
-#, fuzzy
 msgid "ModPlug Configuration"
-msgstr "Nastavení modulu MPEG Audio"
+msgstr "Nastavení ModPlugu"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:227
 #: ../Plugins/Input/mpg123/configure.c:336
@@ -1935,7 +2109,6 @@ msgid "8 bit"
 msgstr "8bitové"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:243
-#, fuzzy
 msgid "Channels"
 msgstr "Kanálů"
 
@@ -1949,61 +2122,54 @@ msgid "Mono (downmix)"
 msgstr ""
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:280
-#, fuzzy
 msgid "Sampling Rate"
-msgstr "Vzorkovací kmitočet:"
+msgstr "Vzorkovací kmitočet"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:294
-#, fuzzy
 msgid "44 kHz"
-msgstr "1:1 (44 kHz)"
+msgstr "44 kHz"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:302
-#, fuzzy
 msgid "22 kHz"
-msgstr "1:2 (22 kHz)"
+msgstr "22 kHz"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:310
-#, fuzzy
 msgid "11 kHz"
-msgstr "1:1 (44 kHz)"
+msgstr "11 kHz"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:318
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:103
-#, fuzzy
 msgid "Resampling"
-msgstr "Vysílání"
+msgstr "Převzorkování"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:332
 msgid "Nearest (fastest)"
-msgstr ""
+msgstr "Nejbližší (nejrychlejší)"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:340
 msgid "Linear (fast)"
-msgstr ""
+msgstr "Lineární (rychlé)"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:348
 msgid "Spline (good quality)"
-msgstr ""
+msgstr "Spline (kvalitní)"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:356
 msgid "8-tap Fir (extremely high quality)"
-msgstr ""
+msgstr "FIR filtr osmého řádu (velmi kvalitní)"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:364
-#, fuzzy
 msgid "Quality"
-msgstr "/_Konec"
+msgstr "Kvalita"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:379
 #: ../Plugins/Input/modplug/gui/interface.cpp:879
-#, fuzzy
 msgid "General"
-msgstr "Žánr"
+msgstr "Obecné"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:400
 msgid "Use Filename as Song Title"
-msgstr ""
+msgstr "Použít jméno souboru jako název skladby"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:407
 #, fuzzy
@@ -2012,7 +2178,7 @@ msgstr "Načíst seznam skladeb"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:422
 msgid "Noise Reduction"
-msgstr ""
+msgstr "Redukce šumu"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:430
 #, fuzzy
@@ -2024,9 +2190,8 @@ msgstr "Server"
 #: ../Plugins/Input/modplug/gui/interface.cpp:588
 #: ../Plugins/Input/modplug/gui/interface.cpp:674
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:36
-#, fuzzy
 msgid "Enable"
-msgstr "Povolený"
+msgstr "Povolit"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:484
 #: ../Plugins/Input/modplug/gui/interface.cpp:628
@@ -2041,12 +2206,11 @@ msgstr ""
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:502
 msgid "Bass Boost"
-msgstr ""
+msgstr "Zvýraznění hlubokých tónů"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:556
-#, fuzzy
 msgid "Amount"
-msgstr "O BMP"
+msgstr "Množství"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:565
 #, fuzzy
@@ -2070,7 +2234,7 @@ msgstr ""
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:681
 msgid "Volume"
-msgstr ""
+msgstr "Hlasitost"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:695
 msgid "Looping"
@@ -2086,7 +2250,7 @@ msgstr ""
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:740
 msgid "time(s)"
-msgstr ""
+msgstr "čas (s)"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:747
 msgid "Loop forever"
@@ -2102,7 +2266,7 @@ msgstr "<b>Efekty</b>"
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:17
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:282
 msgid "Apply"
-msgstr ""
+msgstr "Použít"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:839
 #, fuzzy
@@ -2122,6 +2286,16 @@ msgid ""
 "Patterns:\n"
 "Channels:"
 msgstr ""
+"Jméno souboru:\n"
+"Název skladby:\n"
+"Typ:\n"
+"Délka:\n"
+"Rychlost:\n"
+"Tempo:\n"
+"Vzorků:\n"
+"Nástroje:\n"
+"Vzory:\n"
+"Kanálů:"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:871
 msgid ""
@@ -2136,11 +2310,20 @@ msgid ""
 "---\n"
 "---"
 msgstr ""
+"---\n"
+"---\n"
+"---\n"
+"---\n"
+"---\n"
+"---\n"
+"---\n"
+"---\n"
+"---\n"
+"---"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:912
-#, fuzzy
 msgid "Samples"
-msgstr "Salsa"
+msgstr "Vzorky"
 
 #: ../Plugins/Input/modplug/gui/interface.cpp:945
 #, fuzzy
@@ -2221,15 +2404,15 @@ msgstr "Dekodér"
 
 #: ../Plugins/Input/mpg123/configure.c:661
 msgid "ID3 Tags:"
-msgstr "ID3 informace:"
+msgstr "ID3 tagy:"
 
 #: ../Plugins/Input/mpg123/configure.c:669
 msgid "Disable ID3V2 tags"
-msgstr "Zakázat ID3v2 informace"
+msgstr "Zakázat ID3v2 tagy"
 
 #: ../Plugins/Input/mpg123/configure.c:678
 msgid "Convert non-UTF8 ID3 tags to UTF8"
-msgstr "Převést ID3 info z jiných kódování do UTF8"
+msgstr "Převést ID3 tagy z jiných kódování do UTF-8"
 
 #: ../Plugins/Input/mpg123/configure.c:691
 msgid "ID3 encoding:"
@@ -2246,7 +2429,7 @@ msgid ""
 "Unable to write to file: %s"
 msgstr ""
 "%s\n"
-"Nelze zapsat soubor: %s"
+"Nelze zapsat do souboru: %s"
 
 #: ../Plugins/Input/mpg123/fileinfo.c:472
 #: ../Plugins/Input/mpg123/fileinfo.c:477
@@ -2441,7 +2624,8 @@ msgstr ""
 msgid " (Cover)"
 msgstr ""
 
-#: ../Plugins/Input/mpg123/mpg123.c:58 ../Plugins/Input/vorbis/fileinfo.c:92
+#: ../Plugins/Input/mpg123/mpg123.c:58
+#: ../Plugins/Input/vorbis/fileinfo.c:92
 msgid "AlternRock"
 msgstr "Alternativní rock"
 
@@ -2451,8 +2635,7 @@ msgstr "O modulu MPEG Audio"
 
 #: ../Plugins/Input/mpg123/mpg123.c:1239
 msgid ""
-"Audacious decoding engine by William Pitcock <nenolod@nenolod.net>, derived "
-"from:\n"
+"Audacious decoding engine by William Pitcock <nenolod@nenolod.net>, derived from:\n"
 "mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
 "Derived partially from mpg123 0.59s.mc3 as well.\n"
 "Based on the original XMMS plugin."
@@ -2464,7 +2647,7 @@ msgstr "Modul MPEG Audio"
 
 #: ../Plugins/Input/tonegen/tonegen.c:48
 msgid "About Tone Generator"
-msgstr ""
+msgstr "O generátoru tónů"
 
 #. I18N: UTF-8 Translation: "Haavard Kvaalen" -> "H\303\245vard Kv\303\245len"
 #: ../Plugins/Input/tonegen/tonegen.c:50
@@ -2475,15 +2658,20 @@ msgid ""
 "To use it, add a URL: tone://frequency1;frequency2;frequency3;...\n"
 "e.g. tone://2000;2005 to play a 2000Hz tone and a 2005Hz tone"
 msgstr ""
+"Generátor harmonických tónů, vytvořil Haavard Kvaalen <havardk@xmms.org>\n"
+"Upraven Danielem J. Pengem <danielpeng@bigfoot.com>\n"
+"\n"
+"Pro jeho aktivaci zadejte URL: tone://frekvence1;frekvence2;frekvence3;...\n"
+"např. tone://2000;2005 pro přehrání tónů o frekvenci 2000 a 2005 Hz."
 
 #: ../Plugins/Input/tonegen/tonegen.c:164
 msgid "Tone Generator: "
-msgstr ""
+msgstr "Generátor tónů:"
 
 #: ../Plugins/Input/tonegen/tonegen.c:264
 #, c-format
 msgid "Tone Generator %s"
-msgstr ""
+msgstr "Generátor tónů %s"
 
 #: ../Plugins/Input/vorbis/configure.c:202
 msgid "Select the directory where you want to store the Ogg Vorbis streams:"
@@ -2499,14 +2687,12 @@ msgid "Ogg Vorbis Tags:"
 msgstr "Ogg Vorbis Info:"
 
 #: ../Plugins/Input/vorbis/configure.c:494
-#, fuzzy
 msgid "Convert non-UTF8 Vorbis tags to UTF8"
-msgstr "Převést ID3 info z jiných kódování do UTF8"
+msgstr "Převést Vorbis tagy z jiných kódování do UTF-8"
 
 #: ../Plugins/Input/vorbis/configure.c:507
-#, fuzzy
 msgid "Vorbis encoding:"
-msgstr "Kódování ID3:"
+msgstr "Vorbis - kódování:"
 
 #. Replay Gain..
 #: ../Plugins/Input/vorbis/configure.c:549
@@ -2681,7 +2867,6 @@ msgid "About sndfile WAV support"
 msgstr ""
 
 #: ../Plugins/Input/wav/wav-sndfile.c:246
-#, fuzzy
 msgid ""
 "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
 "from the xmms_sndfile plugin which is:\n"
@@ -2703,7 +2888,9 @@ msgid ""
 "59 Temple Place, Suite 330, \n"
 "Boston, MA  02111-1307  USA"
 msgstr ""
-"Modul XMMS ESounD\n"
+"Pro Audacious upravil Tony Vroon <chainsaw@gentoo.org>\n"
+"z původního modulu xmms_sndfile,\n"
+"copyright (C) 2000, 2002 Erik de Castro Lopo\n"
 "\n"
 "  Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
 "pokud dodržíte podmínky GNU General Public License (GPL) vydané\n"
@@ -2737,7 +2924,6 @@ msgid "About OSS Driver"
 msgstr "O modulu OSS"
 
 #: ../Plugins/Output/OSS/about.c:40
-#, fuzzy
 msgid ""
 "Audacious OSS Driver\n"
 "\n"
@@ -2756,9 +2942,9 @@ msgid ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
 "USA."
 msgstr ""
-"XMMS OSS ovladač\n"
+"Ovladač OSS programu Audacious\n"
 "\n"
-"  Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
+" Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
 "pokud dodržíte podmínky GNU General Public License (GPL) vydané\n"
 "Free Software Foundation a to buď ve verzi 2 nebo (dle vaší volby)\n"
 "libovolné novější.\n"
@@ -2791,7 +2977,8 @@ msgstr "Nastavení ovaldače OSS"
 msgid "Audio device:"
 msgstr "Zvukové zařízení:"
 
-#: ../Plugins/Output/OSS/configure.c:237 ../Plugins/Output/OSS/configure.c:278
+#: ../Plugins/Output/OSS/configure.c:237
+#: ../Plugins/Output/OSS/configure.c:278
 msgid "Use alternate device:"
 msgstr "Použít jiné zařízení:"
 
@@ -2804,11 +2991,13 @@ msgstr "Mixér:"
 msgid "Devices"
 msgstr "Zařízení"
 
-#: ../Plugins/Output/OSS/configure.c:315 ../Plugins/Output/esd/configure.c:184
+#: ../Plugins/Output/OSS/configure.c:315
+#: ../Plugins/Output/esd/configure.c:184
 msgid "Buffer size (ms):"
 msgstr "Velikost vyrovnávací paměti (ms):"
 
-#: ../Plugins/Output/OSS/configure.c:340 ../Plugins/Output/esd/configure.c:209
+#: ../Plugins/Output/OSS/configure.c:340
+#: ../Plugins/Output/esd/configure.c:209
 msgid "Buffering"
 msgstr "Přednačítání"
 
@@ -2901,9 +3090,8 @@ msgid "Device settings"
 msgstr "Nastavení zařízení"
 
 #: ../Plugins/Output/alsa/configure.c:359
-#, fuzzy
 msgid "Soundcard:"
-msgstr "Soundtrack"
+msgstr "Zvuková karta:"
 
 #: ../Plugins/Output/alsa/configure.c:372
 #: ../Plugins/Output/alsa/configure.c:414
@@ -2915,9 +3103,8 @@ msgid "Period time (ms):"
 msgstr "Perioda (ms):"
 
 #: ../Plugins/Output/alsa/configure.c:401
-#, fuzzy
 msgid "Audacious:"
-msgstr "O modulu MPEG Audio"
+msgstr "Audacious:"
 
 #: ../Plugins/Output/alsa/configure.c:429
 msgid "Advanced settings"
@@ -2935,7 +3122,6 @@ msgid ""
 msgstr ""
 
 #: ../Plugins/Output/crossfade/configure.c:1835
-#, fuzzy
 msgid ""
 "\n"
 "Copyright (C) 2000-2004  Peter Eisenlohr <peter@eisenlohr.org>\n"
@@ -2958,7 +3144,11 @@ msgid ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
 "USA."
 msgstr ""
-"Modul XMMS ESounD\n"
+"\n"
+"Copyright (C) 2000-2004 Peter Eisenlohr <peter@eisenlohr.org>\n"
+"\n"
+"založeno na původním OSS modulu, copyright (C) 1998-2000\n"
+"Peter Alm, Mikael Alm, Olle Hallnas, Thomas Nilsson a 4Front Technologies\n"
 "\n"
 "  Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
 "pokud dodržíte podmínky GNU General Public License (GPL) vydané\n"
@@ -2980,17 +3170,16 @@ msgid " / "
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:2
-#, fuzzy
 msgid " Enable"
-msgstr "Povolený"
+msgstr "Povolit"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:3
 msgid " left"
-msgstr ""
+msgstr "zbývá"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:4
 msgid " total, "
-msgstr ""
+msgstr "celkem,"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:5
 msgid "-:--"
@@ -3015,14 +3204,12 @@ msgstr ""
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:11
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:132
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:252
-#, fuzzy
 msgid "About"
-msgstr "O BMP"
+msgstr "O programu"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:12
-#, fuzzy
 msgid "About XMMS Crossfade Plugin"
-msgstr "O modulu ESounD"
+msgstr "O modulu Crossfade"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:13
 #, fuzzy
@@ -3030,9 +3217,8 @@ msgid "Additional silence"
 msgstr "Dále pomáhali:"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:14
-#, fuzzy
 msgid "Advanced"
-msgstr "Pokročilé nastavení"
+msgstr "Pokročilé"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:15
 #, fuzzy
@@ -3040,7 +3226,6 @@ msgid "Advanced XF"
 msgstr "Pokročilé nastavení"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:16
-#, fuzzy
 msgid "Advanced options"
 msgstr "Pokročilé nastavení"
 
@@ -3049,19 +3234,22 @@ msgid ""
 "Automatically calculate an optimal buffer size.\n"
 "Default: On"
 msgstr ""
+"Automaticky určit optimální velikost vyrovnávací paměti.\n"
+"Standardně: zapnuto"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:20
 msgid ""
-"Beware that setting this value too low also increases the chance of buffer "
-"underruns.\n"
+"Beware that setting this value too low also increases the chance of buffer underruns.\n"
 "Default: 250"
 msgstr ""
+"Pozor, nastavení této hodnoty příliš nízko zvýší riziko podtečení vyrovnávací paměti.\n"
+"Standardně: 250"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:24
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:124
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:244
 msgid "Configure"
-msgstr ""
+msgstr "Nastavit"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:25
 #, fuzzy
@@ -3087,27 +3275,23 @@ msgid "Crossfader"
 msgstr "Crossover"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:30
-#, fuzzy
 msgid "Custom (ms):"
-msgstr "Vlastní řetězec:"
+msgstr "Vlastní (ms):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:31
 msgid "Debug options"
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:32
-#, fuzzy
 msgid "Delete"
-msgstr "/Smazat"
+msgstr "Smazat"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:33
 msgid "Don't  crossfade"
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:34
-msgid ""
-"Don't overlap the two songs. The next song will start immediatelly after the "
-"previous has ended."
+msgid "Don't overlap the two songs. The next song will start immediatelly after the previous has ended."
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:37
@@ -3119,33 +3303,30 @@ msgid ""
 "Enable software mixer. Usefull for output plugins without mixer support.\n"
 "Default: Off"
 msgstr ""
+"Povolit softwarový mixér. Užitečné pro výstupní moduly bez podpory mixování zvuku.\n"
+"Standardně: vypnuto"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:40
-msgid ""
-"Enable the selected plugin. Note that after pressing 'Apply' it may take a "
-"while until you can hear the effect, since it is applied before the audio "
-"data goes into the buffer."
-msgstr ""
+msgid "Enable the selected plugin. Note that after pressing 'Apply' it may take a while until you can hear the effect, since it is applied before the audio data goes into the buffer."
+msgstr "Povolí vybraný modul. Po stisknutí tlačítka ‚Použít‘ může chvilku trvat, než se změny projeví, protože nové nastavení se aplikuje na data před vyrovnávací pamětí."
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:41
 msgid ""
-"Enable this when you have problems playing internet HTTP audio streams. "
-"Unfortunatelly, it also breaks crossfading.\n"
+"Enable this when you have problems playing internet HTTP audio streams. Unfortunatelly, it also breaks crossfading.\n"
 "Default: Off"
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:43
-#, fuzzy
 msgid "Enable volume control"
-msgstr "Ovládání hlasitosti:"
+msgstr "Povolit ovládání hlasitosti:"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:44
 msgid ""
-"Enables the Buffer Monitor. This is a small window which shows how much data "
-"is in the buffers. The top display belongs to the mixing buffer, the bottom "
-"shows how much data is being buffered by the output plugin.\n"
+"Enables the Buffer Monitor. This is a small window which shows how much data is in the buffers. The top display belongs to the mixing buffer, the bottom shows how much data is being buffered by the output plugin.\n"
 "Default: Off"
 msgstr ""
+"Povolit sledování vyrovnávací paměti – otevře okno, které bude ukazovat objem dat ve vyrovnávací paměti. Vrchní ukazatel patří vyrovnávací paměti mixéru, spodní vyrovnávací paměti výstupního modulu.\n"
+"Standardně: vypnuto"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:46
 msgid ""
@@ -3156,7 +3337,7 @@ msgstr ""
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:49
 #, no-c-format
 msgid "End volume (%):"
-msgstr ""
+msgstr "Koncová hlasitost (%):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:50
 msgid "Fade in"
@@ -3192,37 +3373,33 @@ msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:58
 msgid "Help"
-msgstr ""
+msgstr "Nápověda"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:59
 msgid ""
-"If enabled, XMMS-crossfade will take additional care to avoid clicks with "
-"pre-faded (gapless) tracks. XMMS-crossfade will cut off the end of the "
-"previous song (the beginning of the next song) only at a zero-crossing of "
-"the sample values.\n"
+"If enabled, XMMS-crossfade will take additional care to avoid clicks with pre-faded (gapless) tracks. XMMS-crossfade will cut off the end of the previous song (the beginning of the next song) only at a zero-crossing of the sample values.\n"
 "Default: On"
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:61
 msgid "Keep output opened"
-msgstr ""
+msgstr "Ponechat výstup otevřený"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:62
 msgid ""
-"Keep the output device opened all the time, even if XMMS is stopped. This "
-"way, you can avoid clicks caused by the soundcard when the device is opened "
-"or closed\n"
+"Keep the output device opened all the time, even if XMMS is stopped. This way, you can avoid clicks caused by the soundcard when the device is opened or closed\n"
 "Default: Off"
 msgstr ""
+"Ponechá výstupní zařízení otevřené, i když je přehrávání pozastavené. Tak lze zabránit cvakání, které způsobují některé zvukové karty při svém spuštění/zastavení.\n"
+"Standardně: vypnuto"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:64
 msgid "Leading gap killer"
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:65
-#, fuzzy
 msgid "Length (ms):"
-msgstr "Délka:"
+msgstr "Délka (ms):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:66
 #, fuzzy
@@ -3230,9 +3407,8 @@ msgid "Limit OP buffer usage (ms):"
 msgstr "Velikost vyrovnávací paměti (ms):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:67
-#, fuzzy
 msgid "Load"
-msgstr "/Načíst"
+msgstr "Načíst"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:68
 msgid "Lock to Fade-out"
@@ -3252,11 +3428,11 @@ msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:72
 msgid "Max block size (bytes):"
-msgstr ""
+msgstr "Max. velikost bloku (v bajtech):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:73
 msgid "Max. length (ms):"
-msgstr ""
+msgstr "Max. délka (ms):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:74
 msgid "Max. level (16bit sample):"
@@ -3271,17 +3447,13 @@ msgid "Mixing buffer preload (ms):"
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:77
-#, fuzzy
 msgid "Mixing buffer size (ms):"
-msgstr "Velikost vyrovnávací paměti (ms):"
+msgstr "Velikost vyrovnávací paměti mixéru (ms):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:78
 msgid ""
-"Monitors what is going on in XMMS-crossfade. If you think you found a bug in "
-"XMMS-crossfade, please enable this option and send me the output.\n"
-"Note that you should disable debug output if you start XMMS from within "
-"Netscape. Netscape will spam you with dialogs containing the debug output "
-"captured from <stderr>.\n"
+"Monitors what is going on in XMMS-crossfade. If you think you found a bug in XMMS-crossfade, please enable this option and send me the output.\n"
+"Note that you should disable debug output if you start XMMS from within Netscape. Netscape will spam you with dialogs containing the debug output captured from <stderr>.\n"
 "Default: Off"
 msgstr ""
 
@@ -3299,20 +3471,19 @@ msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:86
 msgid "Open the about dialog of the plugin selected above."
-msgstr ""
+msgstr "Otevře okno s informacemi o výše vybraném modulu."
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:87
 msgid "Open the configuration dialog of the plugin selected above."
-msgstr ""
+msgstr "Otevře okno s nastavením výše vybraného modulu."
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:89
 msgid "Output Buffer:"
-msgstr ""
+msgstr "Výstupní vyrovnávací paměť:"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:90
-#, fuzzy
 msgid "Output plugin"
-msgstr "OSS výstupní modul"
+msgstr "Výstupní modul"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:91
 msgid "Overlap by the fadein duration specified below.."
@@ -3323,18 +3494,16 @@ msgid "Overlap by the fadeout duration specified above."
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:93
-#, fuzzy
 msgid "Pause"
-msgstr "/Pozastavit"
+msgstr "Pozastavit"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:94
 msgid "Plugin compatibility options"
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:95
-#, fuzzy
 msgid "Position:"
-msgstr "Popis:"
+msgstr "Pozice:"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:96
 msgid "Pre-mixing effect plugin"
@@ -3346,27 +3515,24 @@ msgid "Presets"
 msgstr "Předvolby"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:98
-#, fuzzy
 msgid "Quality:"
-msgstr "/_Konec"
+msgstr "Kvalita"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:99
-#, fuzzy
 msgid "Rate:"
-msgstr "Datum:"
+msgstr "Tok:"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:100
 msgid "Read ID3V2 RVA2 Tag"
-msgstr ""
+msgstr "Číst ID3V2 RVA2 tag"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:101
 msgid "Read Quantaudio comment field"
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:102
-#, fuzzy
 msgid "Reopen"
-msgstr "/Opakovat"
+msgstr "Znovu otevřít"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:104
 msgid "Reverse balance"
@@ -3379,25 +3545,17 @@ msgid ""
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:108
-msgid ""
-"Select an effect plugin. Take care not to use the same plugin as selected in "
-"XMMS' configuration dialog."
+msgid "Select an effect plugin. Take care not to use the same plugin as selected in XMMS' configuration dialog."
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:109
 msgid ""
 "Select the transition to be used for the songchange type selected above:\n"
 "* Fade-in: Fade-in at 'Start of playback'\n"
-"* Reopen output device: Force a close/open on the output plugin. This will "
-"most certainly re-introduce gaps and clicks, but might be usefull with some "
-"plugins.\n"
-"* Flush output device: Keeps the output plugin opened, but flushes its "
-"buffers. This will give you almost instant reaction when pressing NEXT/"
-"PREV.\n"
-"* None (gapless/off): Gapless mode. Keeps the device opened, but does not do "
-"any fading.\n"
-"* Simple crossfade: Does a simple crossfade between the previous and the "
-"next song.\n"
+"* Reopen output device: Force a close/open on the output plugin. This will most certainly re-introduce gaps and clicks, but might be usefull with some plugins.\n"
+"* Flush output device: Keeps the output plugin opened, but flushes its buffers. This will give you almost instant reaction when pressing NEXT/PREV.\n"
+"* None (gapless/off): Gapless mode. Keeps the device opened, but does not do any fading.\n"
+"* Simple crossfade: Does a simple crossfade between the previous and the next song.\n"
 "* Advanced crossfade: Allows you to configure the crossfade in more detail.\n"
 "* Fade-out: Fade-out at 'Manual stop' or 'End of playlist'."
 msgstr ""
@@ -3406,10 +3564,8 @@ msgstr ""
 msgid ""
 "Select the type of songchange you want to configure:\n"
 "* Start of playback: When starting playback by pressing PLAY\n"
-"* Automatic songchange: When reaching the end of a song and the playlist "
-"advances to the next song\n"
-"* Manual songchange: When manually selecting another song, for example by "
-"pressing NEXT/PREV\n"
+"* Automatic songchange: When reaching the end of a song and the playlist advances to the next song\n"
+"* Manual songchange: When manually selecting another song, for example by pressing NEXT/PREV\n"
 "* Manual stop: When pressing the STOP button\n"
 "* End of playlist: After the last song in the playlist has been played\n"
 "* Seeking: When seeking within the current song"
@@ -3421,25 +3577,20 @@ msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:125
 msgid ""
-"Set how much additional silence should be played after pausing. This way, "
-"you can avoid the clicks some soundcards produce when entering pause.\n"
+"Set how much additional silence should be played after pausing. This way, you can avoid the clicks some soundcards produce when entering pause.\n"
 "Default: 100"
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:127
 msgid ""
-"Set how much additional silence should be played after the end of the last "
-"song. This way, you can avoid the clicks some soundcards produce when being "
-"shut down during playback.\n"
+"Set how much additional silence should be played after the end of the last song. This way, you can avoid the clicks some soundcards produce when being shut down during playback.\n"
 "Default: 500"
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:129
 msgid ""
-"Set how much the end of the previous and the beginning of the next song "
-"should overlap.\n"
-"* Negative values indicate that the next song should start before the "
-"previous has reached the end.\n"
+"Set how much the end of the previous and the beginning of the next song should overlap.\n"
+"* Negative values indicate that the next song should start before the previous has reached the end.\n"
 "* A value of 0 means that the songs are concatenated seamlessly.\n"
 "* Positive values will yield insert silence inbetween.."
 msgstr ""
@@ -3479,52 +3630,60 @@ msgstr ""
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:144
 #, no-c-format
 msgid ""
-"Set the end volume. XMMS-crossfade will fade from 100% to this volume during "
-"the time specified above.\n"
+"Set the end volume. XMMS-crossfade will fade from 100% to this volume during the time specified above.\n"
 "Default: 0"
 msgstr ""
+"Zadejte koncovou hlasitost. Crossfade ztiší hudbu ze sta procent na tuto hodnotu během výše specifikované doby.\n"
+"Standardně: 0"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:146
 msgid ""
 "Set the maximum length for gaps at the beginning of a stream.\n"
 "Default: 500"
 msgstr ""
+"Zadejte maximální délku pauzy na začátku skladby.\n"
+"Standardně: 500"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:148
 msgid ""
 "Set the maximum length for gaps at the end of a stream.\n"
 "Default: 500"
 msgstr ""
+"Zadejte maximální délku pauzy na konci skladby.\n"
+"Standardně: 500"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:150
 msgid ""
-"Set the maximum volume for gaps at the beginning of a stream. All samples "
-"below this value are considered as silent.\n"
+"Set the maximum volume for gaps at the beginning of a stream. All samples below this value are considered as silent.\n"
 "Default: 512"
 msgstr ""
+"Zadejte maximální hlasitost určující mezeru na začátku skladby. Všechny vzorky pod touto hodnotou budou považovány za ticho.\n"
+"Standardně: 512"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:152
 msgid ""
-"Set the maximum volume for gaps at the end of a stream. All samples below "
-"this value are considered as silent.\n"
+"Set the maximum volume for gaps at the end of a stream. All samples below this value are considered as silent.\n"
 "Default: 512"
 msgstr ""
+"Zadejte nejvyšší hlasitost určující mezeru na konci skladby. Všechny vzorky pod touto hodnotou budou považovány za ticho.\n"
+"Standardně: 512"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:155
 #, no-c-format
 msgid ""
-"Set the start volume. XMMS-crossfade will fade from this volume to 100% "
-"during the time specified above.\n"
+"Set the start volume. XMMS-crossfade will fade from this volume to 100% during the time specified above.\n"
 "Default: 0"
 msgstr ""
+"Zadejte počáteční hlasitost. Crossfade bude hlasitost zesilovat od této hodnoty na 100% hlasitost během doby specifikované výše.\n"
+"Standardně: 0"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:157
 msgid "Show Buffer Monitor"
-msgstr ""
+msgstr "Zapnout sledování vyrovnávací paměti"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:158
 msgid "Silence (ms):"
-msgstr ""
+msgstr "Ticho (ms):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:159
 msgid "Simple XF"
@@ -3536,7 +3695,7 @@ msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:161
 msgid "Software Mixer"
-msgstr ""
+msgstr "Softwarový mixér"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:162
 msgid "Songchange timeout (ms):"
@@ -3556,17 +3715,14 @@ msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:167
 msgid ""
-"Specify the size of the mixing buffer. Mixing buffer space is required for "
-"pauses, fade-outs, offsetting (i.e. interleaving the end and beginning of "
-"two songs) and killing trailing gaps. Fade-ins and killing leading gaps are "
-"done on-the-fly and do not depend on mixing buffer space.\n"
+"Specify the size of the mixing buffer. Mixing buffer space is required for pauses, fade-outs, offsetting (i.e. interleaving the end and beginning of two songs) and killing trailing gaps. Fade-ins and killing leading gaps are done on-the-fly and do not depend on mixing buffer space.\n"
 "Default: n/a - calculated automatically"
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:170
 #, no-c-format
 msgid "Start volume (%):"
-msgstr ""
+msgstr "Počáteční hlasitost (%):"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:171
 msgid "Target RMS:"
@@ -3574,32 +3730,25 @@ msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:172
 msgid ""
-"Tells XMMS-crossfade how much data it should buffer before it starts writing "
-"to the output plugin/device. Usually, this value can be set to 0, because "
-"the output plugin does preloading on its own.\n"
+"Tells XMMS-crossfade how much data it should buffer before it starts writing to the output plugin/device. Usually, this value can be set to 0, because the output plugin does preloading on its own.\n"
 "Default: 0"
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:174
 msgid ""
-"The songchange timeout is the maximum time XMMS-crossfade waits for the next "
-"song. If this timeout is exceeded, the output plugin/device is closed.\n"
+"The songchange timeout is the maximum time XMMS-crossfade waits for the next song. If this timeout is exceeded, the output plugin/device is closed.\n"
 "Default: 500"
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:176
 msgid ""
-"This option disables crossfading between the same file. This can happen if "
-"you have only one file in the playlist and 'repeat' turned on.\n"
+"This option disables crossfading between the same file. This can happen if you have only one file in the playlist and 'repeat' turned on.\n"
 "Default: Off"
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:178
 msgid ""
-"This option enables the automatic detection of pre-faded or gapless tracks, "
-"like the tracks on some compilations or on most live albums. If such tracks "
-"are detected, crossfading will be disabled and only the gapkiller (if "
-"enabled) will be used for the songchange.\n"
+"This option enables the automatic detection of pre-faded or gapless tracks, like the tracks on some compilations or on most live albums. If such tracks are detected, crossfading will be disabled and only the gapkiller (if enabled) will be used for the songchange.\n"
 "Default: On"
 msgstr ""
 
@@ -3616,9 +3765,8 @@ msgid "Use Quantaudio timing comments"
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:183
-#, fuzzy
 msgid "Use plugin"
-msgstr "Moduly"
+msgstr "Použít modul"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:184
 msgid "Use the same settings as above."
@@ -3629,39 +3777,30 @@ msgid "Use the same settings as fade-out."
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:186
-#, fuzzy
 msgid "Volume control options"
-msgstr "Ovládání hlasitosti:"
+msgstr "Nastavení ovládání hlasitosti"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:187
-#, fuzzy
 msgid "Volume normalizer"
-msgstr "Ovládání hlasitosti:"
+msgstr "Normalizace hlasitosti"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:188
-msgid ""
-"When modifying the Output Options or the Mixing buffer size, you need to "
-"stop/restart playback for the settings to take effect."
+msgid "When modifying the Output Options or the Mixing buffer size, you need to stop/restart playback for the settings to take effect."
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:189
 msgid ""
-"With this option enabled, XMMS-crossfade will limit the amount of data being "
-"buffered by the output plugin. This way, you can decrease the latency "
-"between pressing STOP/NEXT/PREV and the new song actually being played. \n"
+"With this option enabled, XMMS-crossfade will limit the amount of data being buffered by the output plugin. This way, you can decrease the latency between pressing STOP/NEXT/PREV and the new song actually being played. \n"
 "Default: Off"
 msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:191
 msgid "Write debug output to <stderr>"
-msgstr ""
+msgstr "Vypisovat chyby na <stderr>"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:192
-msgid ""
-"You do not need to press 'Apply' after making changes to the effect plugin "
-"settings. It may take a while though until you can hear the change, since "
-"the plugin is applied before the mixing buffer."
-msgstr ""
+msgid "You do not need to press 'Apply' after making changes to the effect plugin settings. It may take a while though until you can hear the change, since the plugin is applied before the mixing buffer."
+msgstr "Změny v nastavení modulu aktivujete tlačítkem ‚Použít‘. Protože změny se projeví až na nových datech ve vyrovnávací paměti, může chvíli trvat, než je uslyšíte."
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:193
 msgid "auto"
@@ -3673,12 +3812,11 @@ msgstr ""
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:195
 msgid "ms"
-msgstr ""
+msgstr "ms"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:196
-#, fuzzy
 msgid "same file"
-msgstr "/Uložit/Do souboru"
+msgstr "shodný soubor"
 
 #: ../Plugins/Output/crossfade/interface-2.0.glade.h:197
 msgid "successive tracks"
@@ -3687,34 +3825,33 @@ msgstr ""
 #: ../Plugins/Output/disk_writer/disk_writer.c:105
 #, c-format
 msgid "Disk Writer Plugin %s"
-msgstr ""
+msgstr "Modul Disk writer %s"
 
 #: ../Plugins/Output/disk_writer/disk_writer.c:133
 msgid ""
 "You cannot use the Disk Writer plugin\n"
 "when you're running in realtime mode."
 msgstr ""
+"Disk writer nelze použít, pokud\n"
+"jste v režimu reálného času."
 
 #: ../Plugins/Output/disk_writer/disk_writer.c:310
-#, fuzzy
 msgid "Select the directory where you want to store the output files:"
-msgstr "Vyberte adresář, do něhož chcete vysílání uložit:"
+msgstr "Vyberte adresář, do něhož chcete soubory uložit:"
 
 #: ../Plugins/Output/disk_writer/disk_writer.c:354
-#, fuzzy
 msgid "Disk Writer Configuration"
-msgstr "Nastavení ovaldače OSS"
+msgstr "Nastavení Disk Writeru"
 
 #: ../Plugins/Output/disk_writer/disk_writer.c:383
 msgid "Don't strip file name extension"
-msgstr ""
+msgstr "Neodstraňovat příponu ze jména souboru"
 
 #: ../Plugins/Output/esd/about.c:34
 msgid "About ESounD Plugin"
 msgstr "O modulu ESounD"
 
 #: ../Plugins/Output/esd/about.c:35
-#, fuzzy
 msgid ""
 "Audacious ESounD Plugin\n"
 "\n"
@@ -3733,9 +3870,9 @@ msgid ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
 "USA."
 msgstr ""
-"Modul XMMS ESounD\n"
+"Modul ESounD programu Audacious\n"
 "\n"
-"  Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
+" Tento program je svobodný software; můžete jej šířit a/nebo měnit\n"
 "pokud dodržíte podmínky GNU General Public License (GPL) vydané\n"
 "Free Software Foundation a to buď ve verzi 2 nebo (dle vaší volby)\n"
 "libovolné novější.\n"
@@ -3795,9 +3932,8 @@ msgid "Options:"
 msgstr "Volby:"
 
 #: ../Plugins/Visualization/libvisual-proxy/about.c:54
-#, fuzzy
 msgid "About Libvisual Audacious Plugin"
-msgstr "O modulu ESounD"
+msgstr "O modulu Libvisual"
 
 #: ../Plugins/Visualization/libvisual-proxy/about.c:88
 msgid ""
@@ -3806,10 +3942,16 @@ msgid ""
 "Copyright (C) 2004, Duilio Protti <dprotti@users.sourceforge.net>\n"
 "Dennis Smit <ds@nerds-incorporated.org>\n"
 "\n"
-"The Libvisual Audacious Plugin, more information about Libvisual can be "
-"found at\n"
+"The Libvisual Audacious Plugin, more information about Libvisual can be found at\n"
 "http://libvisual.sf.net\n"
 msgstr ""
+"Modul Libvisual programu Audacious\n"
+"\n"
+"Copyright (C) 2004, Duilio Protti <dprotti@users.sourceforge.net>\n"
+"Dennis Smit <ds@nerds-incorporated.org>\n"
+"\n"
+"Libvisual Audacious Plugin, více informací o modulu Libvisual naleznete na\n"
+"http://libvisual.sf.net\n"
 
 #: ../Plugins/Visualization/libvisual-proxy/about.c:90
 #: ../audacious/about.c:310
@@ -3823,6 +3965,10 @@ msgid ""
 "French: Jean-Christophe Hoelt\n"
 "Spanish: Duilio Protti\n"
 msgstr ""
+"Brazilská portugalština: Gustavo Sverzut Barbieri\n"
+"Holandština: Dennis Smit\n"
+"Francouzština: Jean-Christophe Hoelt\n"
+"Španělština: Duilio Protti\n"
 
 #: ../Plugins/Visualization/libvisual-proxy/about.c:114
 #: ../audacious/about.c:314
@@ -3830,54 +3976,47 @@ msgid "Translators"
 msgstr "Překlady"
 
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:58
-#, fuzzy
 msgid "LibVisual Audacious Plugin"
-msgstr "_Seznam vizualizačních modulů"
+msgstr "Modul LibVisual"
 
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:70
-#, fuzzy
 msgid "Visualization Plugins"
-msgstr "_Seznam vizualizačních modulů"
+msgstr "Vizualizační moduly"
 
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:140
 msgid "Enable/Disable"
-msgstr ""
+msgstr "Povolit/zakázat"
 
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:148
 msgid "Fullscreen"
-msgstr ""
+msgstr "Na celou obrazovku"
 
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:154
-msgid ""
-"You can toggle between normal and fullscreen mode pressing key TAB or F11"
-msgstr ""
+msgid "You can toggle between normal and fullscreen mode pressing key TAB or F11"
+msgstr "Mezi normálním a celoobrazovkovým režimem můžete přepínat klávesami Tab nebo F11."
 
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:156
-#, fuzzy
 msgid "All plugins"
-msgstr "Moduly"
+msgstr "Všechny moduly"
 
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:164
 msgid "Only non GL plugins"
-msgstr ""
+msgstr "Jen moduly bez GL"
 
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:172
 msgid "Only GL plugins"
-msgstr ""
+msgstr "Jen GL moduly"
 
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:188
 msgid "Maximum Frames Per Second:"
-msgstr ""
+msgstr "Maximum snímků za sekundu:"
 
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:204
-#, fuzzy
 msgid "Morph Plugin"
-msgstr "Moduly"
+msgstr ""
 
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:225
-msgid ""
-"Select the kind of morph that will be applied when switching from one "
-"visualization plugin to another "
+msgid "Select the kind of morph that will be applied when switching from one visualization plugin to another "
 msgstr ""
 
 #: ../Plugins/Visualization/libvisual-proxy/config_gui.c:260
@@ -3920,7 +4059,7 @@ msgstr ""
 
 #: ../Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:169
 msgid "All plugins enabled"
-msgstr ""
+msgstr "Všechny moduly povoleny"
 
 #: ../Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:174
 msgid "LibVisual: configuration is missing or corrupt, saving defaults"
@@ -3929,29 +4068,26 @@ msgstr ""
 #. Create a new item marked as enabled
 #: ../Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:514
 #: ../Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:736
-#, fuzzy
 msgid " (enabled)"
-msgstr "Povolený"
+msgstr "(povolený)"
 
 #: ../Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:577
 #: ../Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:906
-#, fuzzy
 msgid "Version: "
 msgstr "Verze:"
 
 #: ../Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:579
 #: ../Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:908
 msgid "Author: "
-msgstr ""
+msgstr "Autor:"
 
 #: ../Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:632
 msgid "The list of actor plugins is empty."
 msgstr ""
 
 #: ../Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:639
-#, fuzzy
 msgid " error"
-msgstr "Terror"
+msgstr "chyba"
 
 #: ../Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:640
 msgid "There are no actor plugins installed.\n"
@@ -3981,7 +4117,7 @@ msgstr ""
 #: ../Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:875
 #: ../Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:901
 msgid "There is no info for this plugin"
-msgstr ""
+msgstr "K tomuto modulu nejsou žádné informace."
 
 #: ../Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:894
 msgid "The list of input plugins is empty."
@@ -3998,31 +4134,29 @@ msgid "Invalid value for 'enabled_plugins' option"
 msgstr ""
 
 #: ../Plugins/Visualization/libvisual-proxy/main.c:115
-#, fuzzy
 msgid "Audacious plugin"
-msgstr "CD Audio modul"
+msgstr "Modul Audacious"
 
 #: ../Plugins/Visualization/libvisual-proxy/main.c:132
 msgid "Cannot get options"
 msgstr ""
 
 #: ../Plugins/Visualization/libvisual-proxy/main.c:139
-#, fuzzy
 msgid "Cannot initialize SDL!\n"
-msgstr "Nepodařilo se inicializovat gnome-vfs.\n"
+msgstr "Nepodařilo se inicializovat SDL.\n"
 
 #: ../Plugins/Visualization/libvisual-proxy/main.c:142
 msgid " will not be loaded."
-msgstr ""
+msgstr " nebude načten."
 
 #: ../Plugins/Visualization/libvisual-proxy/main.c:152
 msgid "Last plugin: (none)"
 msgstr ""
 
 #: ../Plugins/Visualization/libvisual-proxy/main.c:154
-#, fuzzy, c-format
+#, c-format
 msgid "Last plugin: %s"
-msgstr "Vstupní modul: %s"
+msgstr "Poslední modul: %s"
 
 #: ../Plugins/Visualization/libvisual-proxy/main.c:159
 #, c-format
@@ -4054,53 +4188,55 @@ msgid "Cannot initialize plugin's visual stuff"
 msgstr ""
 
 #: ../audacious/about.c:42
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "The future of UNIX multimedia.\n"
 "\n"
 "Copyright (C) 2005-2006 Audacious Development Team\n"
 msgstr ""
-"<big><b>Beep Media Player %s</b></big>\n"
-"Multimediální přehrávač založený na XMMS\n"
+"<big><b>Audacious %s</b></big>\n"
+"Budoucnost multimédií v UNIXu\n"
 "\n"
-"Copyright (C) 2003-2004 BMP Development Team\n"
+"Copyright (C) 2005-2006 vývojový tým Audacious\n"
 
 #: ../audacious/about.c:48
 msgid "Developers:"
 msgstr "Vývojáři:"
 
-#: ../audacious/about.c:49 ../audacious/about.c:54
+#: ../audacious/about.c:49
+#: ../audacious/about.c:54
 msgid "William Pitcock"
-msgstr ""
+msgstr "William Pitcock"
 
-#: ../audacious/about.c:50 ../audacious/about.c:56
+#: ../audacious/about.c:50
+#: ../audacious/about.c:56
 msgid "Tony Vroon"
-msgstr ""
+msgstr "Tony Vroon"
 
 #: ../audacious/about.c:53
-#, fuzzy
 msgid "0.1.x developers:"
-msgstr "Vývojáři:"
+msgstr "Vývojáři v. 0.1.x:"
 
 #: ../audacious/about.c:55
 msgid "Mohammed Sameer"
-msgstr ""
+msgstr "Mohammed Sameer"
 
 #: ../audacious/about.c:59
-#, fuzzy
 msgid "BMP Developers:"
-msgstr "Vývojáři:"
+msgstr "Vývojáři Audacious:"
 
 #: ../audacious/about.c:60
 msgid "Artem Baguinski"
 msgstr "Artem Baguinski"
 
-#: ../audacious/about.c:61 ../audacious/about.c:168
+#: ../audacious/about.c:61
+#: ../audacious/about.c:168
 msgid "Edward Brocklesby"
 msgstr "Edward Brocklesby"
 
-#: ../audacious/about.c:62 ../audacious/about.c:98
+#: ../audacious/about.c:62
+#: ../audacious/about.c:98
 msgid "Chong Kai Xiong"
 msgstr "Chong Kai Xiong"
 
@@ -4140,7 +4276,8 @@ msgstr "Oliver Blin"
 msgid "Tomas Bzatek"
 msgstr "Tomas Bzatek"
 
-#: ../audacious/about.c:72 ../audacious/about.c:148
+#: ../audacious/about.c:72
+#: ../audacious/about.c:148
 msgid "Liviu Danicel"
 msgstr "Liviu Danicel"
 
@@ -4160,7 +4297,8 @@ msgstr "Sebastian Kapfer"
 msgid "Lukas Koberstein"
 msgstr "Lukas Koberstein"
 
-#: ../audacious/about.c:77 ../audacious/about.c:152
+#: ../audacious/about.c:77
+#: ../audacious/about.c:152
 msgid "Dan Korostelev"
 msgstr "Dan Korostelev"
 
@@ -4214,7 +4352,7 @@ msgstr "Činský:"
 
 #: ../audacious/about.c:99
 msgid "Chao-Hsiung Liao"
-msgstr ""
+msgstr "Chao-Hsiung Liao"
 
 #: ../audacious/about.c:101
 msgid "Czech:"
@@ -4233,13 +4371,12 @@ msgid "Laurens Buhler"
 msgstr "Laurens Buhler"
 
 #: ../audacious/about.c:107
-#, fuzzy
 msgid "Finnish:"
-msgstr "Španělský:"
+msgstr "Finština:"
 
 #: ../audacious/about.c:108
 msgid "Pauli Virtanen"
-msgstr ""
+msgstr "Pauli Virtanen"
 
 #: ../audacious/about.c:110
 msgid "French:"
@@ -4258,13 +4395,12 @@ msgid "Matthias Debus"
 msgstr "Matthias Debus"
 
 #: ../audacious/about.c:116
-#, fuzzy
 msgid "Georgian: "
-msgstr "Německý:"
+msgstr "Gruzínština:"
 
 #: ../audacious/about.c:117
 msgid "George Machitidze"
-msgstr ""
+msgstr "George Machitidze"
 
 #: ../audacious/about.c:119
 msgid "Greek:"
@@ -4276,15 +4412,15 @@ msgstr "Kouzinopoulos Haris"
 
 #: ../audacious/about.c:121
 msgid "Stavros Giannouris"
-msgstr ""
+msgstr "Stavros Giannouris"
 
 #: ../audacious/about.c:123
 msgid "Hindi:"
-msgstr ""
+msgstr "Hindština:"
 
 #: ../audacious/about.c:124
 msgid "Dhananjaya Sharma"
-msgstr ""
+msgstr "Dhananjaya Sharma"
 
 #: ../audacious/about.c:126
 msgid "Hungarian:"
@@ -4308,7 +4444,7 @@ msgstr "Japonský:"
 
 #: ../audacious/about.c:133
 msgid "Dai"
-msgstr ""
+msgstr "Dai"
 
 #: ../audacious/about.c:135
 msgid "Korean:"
@@ -4356,7 +4492,7 @@ msgstr "Pavlo Bohmat"
 
 #: ../audacious/about.c:153
 msgid "Vitaly Lipatov"
-msgstr ""
+msgstr "Vitalij Lipatov"
 
 #: ../audacious/about.c:155
 msgid "Slovak:"
@@ -4383,22 +4519,20 @@ msgid "Martin Persenius"
 msgstr "Martin Persenius"
 
 #: ../audacious/about.c:164
-#, fuzzy
 msgid "Ukrainian:"
-msgstr "Rumunština:"
+msgstr "Ukrajinština:"
 
 #: ../audacious/about.c:165
 msgid "Mykola Lynnyk"
-msgstr ""
+msgstr "Mykola Lynnyk"
 
 #: ../audacious/about.c:167
 msgid "Welsh:"
 msgstr "Welšský:"
 
 #: ../audacious/about.c:265
-#, fuzzy
 msgid "About Audacious"
-msgstr "O modulu MPEG Audio"
+msgstr "O Audacious"
 
 #: ../audacious/eq_slider.c:93
 msgid "PREAMP"
@@ -4517,9 +4651,8 @@ msgid "/Delete/Auto-load preset"
 msgstr "/Smazat/Souborovou předvolbu"
 
 #: ../audacious/equalizer.c:740
-#, fuzzy
 msgid "Audacious Equalizer"
-msgstr "/Sbalit ekvalizér"
+msgstr "Ekvalizér"
 
 #: ../audacious/equalizer.c:1365
 msgid "Preset"
@@ -4533,7 +4666,8 @@ msgstr "Načíst předvolby"
 msgid "Load auto-preset"
 msgstr "Načíst souborovou předvolbu"
 
-#: ../audacious/equalizer.c:1506 ../audacious/equalizer.c:1512
+#: ../audacious/equalizer.c:1506
+#: ../audacious/equalizer.c:1512
 #: ../audacious/equalizer.c:1519
 msgid "Load equalizer preset"
 msgstr "Načíst nastavení ekvalizéru"
@@ -4546,7 +4680,8 @@ msgstr "Uložit předvolbu"
 msgid "Save auto-preset"
 msgstr "Uložit souborovou předvolbu"
 
-#: ../audacious/equalizer.c:1580 ../audacious/equalizer.c:1599
+#: ../audacious/equalizer.c:1580
+#: ../audacious/equalizer.c:1599
 msgid "Save equalizer preset"
 msgstr "Uložit nastavení ekvalizéru"
 
@@ -4573,7 +4708,8 @@ msgstr "%s: volba `--%s' nemá parametr\n"
 msgid "%s: option `%c%s' doesn't allow an argument\n"
 msgstr "%s: volba `%c%s' nemá parametr\n"
 
-#: ../audacious/getopt.c:661 ../audacious/getopt.c:819
+#: ../audacious/getopt.c:661
+#: ../audacious/getopt.c:819
 #, c-format
 msgid "%s: option `%s' requires an argument\n"
 msgstr "%s: volba `%s' vyžaduje parametr\n"
@@ -4601,7 +4737,8 @@ msgstr "%s: nepřípustný parametr -- %c\n"
 msgid "%s: invalid option -- %c\n"
 msgstr "%s: neplatný parametr -- %c\n"
 
-#: ../audacious/getopt.c:745 ../audacious/getopt.c:861
+#: ../audacious/getopt.c:745
+#: ../audacious/getopt.c:861
 #, c-format
 msgid "%s: option requires an argument -- %c\n"
 msgstr "%s: volba vyžaduje parametr -- %c\n"
@@ -4623,6 +4760,9 @@ msgid ""
 "\n"
 "Could not open glade file (%s). Please check your installation.\n"
 msgstr ""
+"<b><big>Nelze vytvořit %s.</big></b>\n"
+"\n"
+"Nepodařilo se otevřít soubor %s. Zkontrolujte prosím sovou instalaci.\n"
 
 #: ../audacious/input.c:299
 msgid ""
@@ -4646,16 +4786,19 @@ msgstr "Příště již nevarovat"
 msgid "Show more _details"
 msgstr "Ukaž podrobné _informace"
 
-#: ../audacious/input.c:340 ../audacious/prefswin.c:98
-#: ../audacious/prefswin.c:447 ../audacious/prefswin.c:535
-#: ../audacious/prefswin.c:624 ../audacious/prefswin.c:720
+#: ../audacious/input.c:340
+#: ../audacious/prefswin.c:98
+#: ../audacious/prefswin.c:447
+#: ../audacious/prefswin.c:535
+#: ../audacious/prefswin.c:624
+#: ../audacious/prefswin.c:720
 msgid "Filename"
 msgstr "Jméno souboru"
 
 #: ../audacious/input.c:508
 #, c-format
 msgid "audacious: %s"
-msgstr ""
+msgstr "audacious: %s"
 
 #: ../audacious/input.c:542
 msgid "No input plugin recognized this file"
@@ -4672,10 +4815,12 @@ msgid "Unable to create log file (%s)!\n"
 msgstr "Nepodařilo se vytvořit logovací soubor (%s)!\n"
 
 #. Translatable string for beep.desktop's comment field
-#: ../audacious/main.c:82 ../audacious/main.c:84 ../audacious/mainwin.c:784
+#: ../audacious/main.c:82
+#: ../audacious/main.c:84
+#: ../audacious/mainwin.c:784
 #: ../audacious/mainwin.c:3056
 msgid "Audacious"
-msgstr ""
+msgstr "Audacious"
 
 #: ../audacious/main.c:377
 #, c-format
@@ -4683,14 +4828,13 @@ msgid "Could not create directory (%s): %s"
 msgstr "Nepodařilo se vytvořit adresář (%s): %s"
 
 #: ../audacious/main.c:638
-#, fuzzy
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
 "Options:\n"
 "--------\n"
 msgstr ""
-"Použití: beep-media-player [volby] [soubory] ...\n"
+"Použití: audacious [volby] [soubory] ...\n"
 "\n"
 "Volby:\n"
 "------\n"
@@ -4702,9 +4846,8 @@ msgstr "Zobrazí tento text a skončí"
 
 #. -n, --session switch
 #: ../audacious/main.c:646
-#, fuzzy
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-msgstr "Výběr BMP/XMMS sezení (standardně: 0)"
+msgstr "Výběr sezení Audacious/BMP/XMMS (standardně: 0)"
 
 #. -r, --rew switch
 #: ../audacious/main.c:649
@@ -4729,7 +4872,7 @@ msgstr "Zastavit přehrávanou skladbu"
 #. -t, --play-pause switch
 #: ../audacious/main.c:661
 msgid "Pause if playing, play otherwise"
-msgstr "Pozastavit při přehrávání; spustit pokud je BMP zastaven"
+msgstr "Pozastavit při přehrávání; jinak spustit"
 
 #. -f, --fwd switch
 #: ../audacious/main.c:664
@@ -4748,9 +4891,8 @@ msgstr "Zobrazit hlavní okno"
 
 #. -a, --activate switch
 #: ../audacious/main.c:673
-#, fuzzy
 msgid "Activate Audacious"
-msgstr "Aktivovat BMP"
+msgstr "Aktivovat Audacious"
 
 #. -i, --sm-client-id switch
 #: ../audacious/main.c:676
@@ -4768,20 +4910,17 @@ msgid "Print version number and exit\n"
 msgstr "Zobrazí číslo verze a skončí\n"
 
 #: ../audacious/main.c:861
-#, fuzzy
 msgid ""
 "\n"
 "Received SIGSEGV\n"
 "\n"
-"This could be a bug in Audacious. If you don't know why this happened, file "
-"a bug at http://bugs.nenolod.net/\n"
+"This could be a bug in Audacious. If you don't know why this happened, file a bug at http://bugs.nenolod.net/\n"
 "\n"
 msgstr ""
 "\n"
 "Zachycen SIGSEGV\n"
 "\n"
-"Asi jste narazili na chybu v BMP. Pokud netušíte proč, kontaktujte vývojáře "
-"(anglicky) na beepmp-devel@lists.sourceforge.net\n"
+"Asi jste narazili na chybu v programu Audacious. Pokud netušíte proč, kontaktujte vývojáře (anglicky) na http://bugs.nenold.net\n"
 "\n"
 
 #: ../audacious/main.c:884
@@ -4789,46 +4928,42 @@ msgstr ""
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
 "\n"
-"Check that skin at '%s' is usable and default skin is properly installed at "
-"'%s'\n"
+"Check that skin at '%s' is usable and default skin is properly installed at '%s'\n"
 msgstr ""
 "<b><big>Nelze načíst skin.</big></b>\n"
 "\n"
-"Zkontrolujte, zda skin v '%s' je použitelný a zda je standardní skin správně "
-"nainstalován v '%s'.\n"
+"Zkontrolujte, zda skin v '%s' je použitelný a zda je standardní skin správně nainstalován v '%s'.\n"
 
 #: ../audacious/main.c:920
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
 "Please use GTK+ %s or newer.\n"
 msgstr ""
-"Verze knihovny GTK+ (%d.%d.%d) není kompatibilní s BMP.\n"
+"Verze knihovny GTK+ (%d.%d.%d) není kompatibilní s Audacious.\n"
 "Použijte GTK+ %s nebo novější.\n"
 
 #: ../audacious/main.c:931
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
-"If you're on a libc5 based linux system and installed Glib & GTK+ before "
-"you\n"
+"If you're on a libc5 based linux system and installed Glib & GTK+ before you\n"
 "installed LinuxThreads you need to recompile Glib & GTK+.\n"
 msgstr ""
 "Bohužel, váš systém nepodporuje vlákna.\n"
 "\n"
-"Pokud máte linux založený na libc5 a knihovny Glib a GTK+ byly nainstalovány "
-"dříve\n"
+"Pokud máte linux založený na libc5 a knihovny Glib a GTK+ byly nainstalovány dříve\n"
 "než LinuxThreads, budete muset Glib a GTK+ přeložit znovu.\n"
 
 #. GTK check failed, and no arguments passed to indicate
 #. that user is intending to only remote control a running
 #. session
 #: ../audacious/main.c:948
-#, fuzzy
 msgid "audacious: Unable to open display, exiting.\n"
-msgstr "BMP: Nepodařilo se otevřít displej. Končím."
+msgstr "audacious: Nepodařilo se otevřít displej. Končím.\n"
 
-#: ../audacious/mainwin.c:236 ../audacious/mainwin.c:351
+#: ../audacious/mainwin.c:236
+#: ../audacious/mainwin.c:351
 #: ../audacious/playlistwin.c:124
 msgid "/View Track Details"
 msgstr "/Zobrazit inforamce o skladbě"
@@ -4978,9 +5113,8 @@ msgid "/Peaks Falloff/Fastest"
 msgstr "/Klesání vrcholků/Nejrychlejší"
 
 #: ../audacious/mainwin.c:322
-#, fuzzy
 msgid "/Play CD"
-msgstr "/Hrát"
+msgstr "/Přehrát CD"
 
 #: ../audacious/mainwin.c:325
 msgid "/Repeat"
@@ -5027,29 +5161,24 @@ msgid "/Jump to Time"
 msgstr "/Přejít na čas"
 
 #: ../audacious/mainwin.c:361
-#, fuzzy
 msgid "/About Audacious"
-msgstr "O modulu MPEG Audio"
+msgstr "/O Audacious"
 
 #: ../audacious/mainwin.c:364
-#, fuzzy
 msgid "/Play File"
-msgstr "/Hrát"
+msgstr "/Přehrát soubor"
 
 #: ../audacious/mainwin.c:366
-#, fuzzy
 msgid "/Play Location"
-msgstr "Umístění:"
+msgstr "/Hrát z umístění:"
 
 #: ../audacious/mainwin.c:369
-#, fuzzy
 msgid "/V_isualization"
-msgstr "/Typ zobrazení"
+msgstr "/Způsob _zobrazení"
 
 #: ../audacious/mainwin.c:370
-#, fuzzy
 msgid "/_Playback"
-msgstr "/Hrát"
+msgstr "/_Hrát"
 
 #: ../audacious/mainwin.c:371
 msgid "/_View"
@@ -5124,14 +5253,13 @@ msgid "Track length:"
 msgstr "Délka stopy:"
 
 #: ../audacious/mainwin.c:1388
-#, fuzzy
 msgid "Un_queue"
-msgstr "Fronta"
+msgstr "Ode_brat z fronty"
 
-#: ../audacious/mainwin.c:1390 ../audacious/mainwin.c:1712
-#, fuzzy
+#: ../audacious/mainwin.c:1390
+#: ../audacious/mainwin.c:1712
 msgid "_Queue"
-msgstr "Fronta"
+msgstr "_Fronta"
 
 #: ../audacious/mainwin.c:1642
 msgid "Jump to Track"
@@ -5143,30 +5271,34 @@ msgstr "Filtr:"
 
 #: ../audacious/mainwin.c:1895
 msgid "Enter location to play:"
-msgstr ""
+msgstr "Přehrát umístění:"
 
 #: ../audacious/mainwin.c:2024
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "PŘEJÍT NA %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: ../audacious/mainwin.c:2056 ../audacious/mainwin.c:2727
+#: ../audacious/mainwin.c:2056
+#: ../audacious/mainwin.c:2727
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "Hlasitost: %d%%"
 
-#: ../audacious/mainwin.c:2087 ../audacious/mainwin.c:2730
+#: ../audacious/mainwin.c:2087
+#: ../audacious/mainwin.c:2730
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "VYROVNÁNÍ: %d%% VLEVO"
 
-#: ../audacious/mainwin.c:2091 ../audacious/mainwin.c:2733
+#: ../audacious/mainwin.c:2091
+#: ../audacious/mainwin.c:2733
 msgid "BALANCE: CENTER"
 msgstr "VYROVNÁNÍ: NA STŘED"
 
 #. b > 0
 #. (vl < vr)
-#: ../audacious/mainwin.c:2095 ../audacious/mainwin.c:2735
+#: ../audacious/mainwin.c:2095
+#: ../audacious/mainwin.c:2735
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "VYROVNÁNÍ: %d%% VPRAVO"
@@ -5229,15 +5361,18 @@ msgstr ""
 "2. žádný jiný program neblokuje zvukovou kartu,\n"
 "3. vaše karta je správně nakonfigurována.\n"
 
-#: ../audacious/playlistwin.c:130 ../audacious/playlistwin.c:184
+#: ../audacious/playlistwin.c:130
+#: ../audacious/playlistwin.c:184
 msgid "/Remove Selected"
 msgstr "/Odebrat označené"
 
-#: ../audacious/playlistwin.c:134 ../audacious/playlistwin.c:180
+#: ../audacious/playlistwin.c:134
+#: ../audacious/playlistwin.c:180
 msgid "/Remove Unselected"
 msgstr "/Odebrat neoznačené"
 
-#: ../audacious/playlistwin.c:138 ../audacious/playlistwin.c:176
+#: ../audacious/playlistwin.c:138
+#: ../audacious/playlistwin.c:176
 msgid "/Remove All"
 msgstr "/Odebrat všechny"
 
@@ -5352,45 +5487,50 @@ msgid "%s already exist. Continue?"
 msgstr "%s už existuje. Pokračovat?"
 
 #: ../audacious/playlistwin.c:812
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
 "\n"
 "Unknown file type for '%s'.\n"
-msgstr "Nelze uložit seznam skladeb. Neznámý typ souboru %s"
+msgstr ""
+"<b><big>Nelze uložit seznam skladeb.</big></b>\n"
+"\n"
+"Neznámý typ souboru %s.\n"
 
 #: ../audacious/playlistwin.c:922
-#, fuzzy
 msgid "Load Playlist"
 msgstr "Načíst seznam skladeb"
 
 #: ../audacious/playlistwin.c:934
-#, fuzzy
 msgid "Save Playlist"
 msgstr "Uložit seznam skladeb"
 
 #: ../audacious/playlistwin.c:1678
-#, fuzzy
 msgid "Audacious Playlist Editor"
 msgstr "/Zobrazit editor seznamu skladeb"
 
-#: ../audacious/prefswin.c:83 ../audacious/glade/prefswin.glade.h:20
+#: ../audacious/prefswin.c:83
+#: ../audacious/glade/prefswin.glade.h:20
 msgid "Appearance"
 msgstr "Vzhled"
 
-#: ../audacious/prefswin.c:84 ../audacious/glade/prefswin.glade.h:30
+#: ../audacious/prefswin.c:84
+#: ../audacious/glade/prefswin.glade.h:30
 msgid "Equalizer"
 msgstr "Ekvalizér"
 
-#: ../audacious/prefswin.c:85 ../audacious/glade/prefswin.glade.h:36
+#: ../audacious/prefswin.c:85
+#: ../audacious/glade/prefswin.glade.h:36
 msgid "Mouse"
 msgstr "Myš"
 
-#: ../audacious/prefswin.c:86 ../audacious/glade/prefswin.glade.h:41
+#: ../audacious/prefswin.c:86
+#: ../audacious/glade/prefswin.glade.h:41
 msgid "Playlist"
 msgstr "Seznam skladeb"
 
-#: ../audacious/prefswin.c:87 ../audacious/glade/prefswin.glade.h:42
+#: ../audacious/prefswin.c:87
+#: ../audacious/glade/prefswin.glade.h:42
 msgid "Plugins"
 msgstr "Moduly"
 
@@ -5398,7 +5538,8 @@ msgstr "Moduly"
 msgid "Artist"
 msgstr "Umělec"
 
-#: ../audacious/prefswin.c:94 ../libaudacious/titlestring.c:325
+#: ../audacious/prefswin.c:94
+#: ../libaudacious/titlestring.c:325
 msgid "Album"
 msgstr "Album"
 
@@ -5406,7 +5547,8 @@ msgstr "Album"
 msgid "Tracknumber"
 msgstr "Číslo stopy"
 
-#: ../audacious/prefswin.c:97 ../libaudacious/titlestring.c:326
+#: ../audacious/prefswin.c:97
+#: ../libaudacious/titlestring.c:326
 msgid "Genre"
 msgstr "Žánr"
 
@@ -5414,25 +5556,32 @@ msgstr "Žánr"
 msgid "Filepath"
 msgstr "Cesta k souboru"
 
-#: ../audacious/prefswin.c:100 ../libaudacious/titlestring.c:332
+#: ../audacious/prefswin.c:100
+#: ../libaudacious/titlestring.c:332
 msgid "Date"
 msgstr "Datum"
 
-#: ../audacious/prefswin.c:101 ../libaudacious/titlestring.c:333
+#: ../audacious/prefswin.c:101
+#: ../libaudacious/titlestring.c:333
 msgid "Year"
 msgstr "Rok"
 
-#: ../audacious/prefswin.c:102 ../libaudacious/titlestring.c:334
+#: ../audacious/prefswin.c:102
+#: ../libaudacious/titlestring.c:334
 msgid "Comment"
 msgstr "Komentář"
 
-#: ../audacious/prefswin.c:417 ../audacious/prefswin.c:504
-#: ../audacious/prefswin.c:593 ../audacious/prefswin.c:689
+#: ../audacious/prefswin.c:417
+#: ../audacious/prefswin.c:504
+#: ../audacious/prefswin.c:593
+#: ../audacious/prefswin.c:689
 msgid "Enabled"
 msgstr "Povolený"
 
-#: ../audacious/prefswin.c:433 ../audacious/prefswin.c:520
-#: ../audacious/prefswin.c:609 ../audacious/prefswin.c:705
+#: ../audacious/prefswin.c:433
+#: ../audacious/prefswin.c:520
+#: ../audacious/prefswin.c:609
+#: ../audacious/prefswin.c:705
 msgid "Description"
 msgstr "Popis"
 
@@ -5457,7 +5606,8 @@ msgstr "Otevřít soubory"
 msgid "Close dialog on Open"
 msgstr "Zavřít dialog při otevření"
 
-#: ../audacious/util.c:996 ../audacious/glade/addfiles.glade.h:1
+#: ../audacious/util.c:996
+#: ../audacious/glade/addfiles.glade.h:1
 msgid "Add Files"
 msgstr "Přidat soubory"
 
@@ -5558,18 +5708,16 @@ msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
 msgstr "<span size=\"xx-large\"><b>Moduly</b></span>"
 
 #: ../audacious/glade/prefswin.glade.h:21
-#, fuzzy
 msgid "Audacious Preferences"
-msgstr "Nastavení BMP"
+msgstr "Nastavení programu"
 
 #: ../audacious/glade/prefswin.glade.h:22
 msgid "Available _Presets:"
 msgstr "Dostupné _předvolby:"
 
 #: ../audacious/glade/prefswin.glade.h:23
-#, fuzzy
 msgid "Changes volume by"
-msgstr "Myší kolečko změní hlasitost o"
+msgstr "změní hlasitost o"
 
 #: ../audacious/glade/prefswin.glade.h:25
 #, no-c-format
@@ -5590,7 +5738,7 @@ msgstr "Adresář s předvolbami:"
 
 #: ../audacious/glade/prefswin.glade.h:29
 msgid "Don't advance in the playlist"
-msgstr "Ne v seznamu skladeb"
+msgstr "Nepokračovat v přehrávání dle seznamu skladeb"
 
 #: ../audacious/glade/prefswin.glade.h:31
 msgid "File preset extension:"
@@ -5610,8 +5758,7 @@ msgstr "Načíst metadata na vyžádání při zobrazení souboru v seznamu skla
 
 #: ../audacious/glade/prefswin.glade.h:35
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"Načíst metadata při vložení souboru do seznamu skladeb nebo při otevření"
+msgstr "Načíst metadata při vložení souboru do seznamu skladeb nebo při otevření"
 
 #: ../audacious/glade/prefswin.glade.h:37
 msgid "On display"
@@ -5630,9 +5777,8 @@ msgid "Pause for"
 msgstr "Pozastavit na"
 
 #: ../audacious/glade/prefswin.glade.h:43
-#, fuzzy
 msgid "Scrolls playlist by"
-msgstr "Myš posune seznam skladeb o"
+msgstr "posune seznam skladeb o"
 
 #: ../audacious/glade/prefswin.glade.h:44
 msgid "Select main player window font:"
@@ -5665,22 +5811,18 @@ msgstr ""
 "Vlastní"
 
 #: ../audacious/glade/prefswin.glade.h:53
-#, fuzzy
 msgid ""
-"The change is now effective in Audacious' configuration database, but won't "
-"take effect for playback until the next song!\n"
+"The change is now effective in Audacious' configuration database, but won't take effect for playback until the next song!\n"
 "\n"
 "Optionally, you can stop and restart playback for the change to take effect."
 msgstr ""
-"Změny jsou uloženy ale projeví se až při přehrávání další skladby.\n"
+"Změny jsou uloženy, ale projeví se až při přehrávání další skladby.\n"
 "\n"
-"Po zastavení a znovuspuštění se změny samozřejmě projeví i u současné "
-"skladby."
+"Po zastavení a znovuspuštění se změny samozřejmě projeví i u současné skladby."
 
 #: ../audacious/glade/prefswin.glade.h:57
-#, fuzzy
 msgid "Use Bitmap fonts if available"
-msgstr "Stereo (pokud existuje)"
+msgstr "Pokud možno, používat bitmapové fonty"
 
 #: ../audacious/glade/prefswin.glade.h:58
 msgid "Use custom cursors"
@@ -5692,7 +5834,7 @@ msgstr "Po přehrání skladby nepřecházet automaticky na následující."
 
 #: ../audacious/glade/prefswin.glade.h:60
 msgid "_Current output plugin:"
-msgstr "_Současný výstupní modul"
+msgstr "_Aktuální výstupní modul"
 
 #: ../audacious/glade/prefswin.glade.h:61
 msgid "_Effect plugin list:"
@@ -5720,7 +5862,7 @@ msgstr "_Seznam vizualizačních modulů"
 
 #: ../audacious/glade/prefswin.glade.h:67
 msgid "lines"
-msgstr "řádek"
+msgstr "řádek."
 
 #: ../audacious/glade/prefswin.glade.h:68
 msgid "percent"
@@ -5763,6 +5905,8 @@ msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
 msgstr ""
+"<b><big>Není vybrán žádný výstupní modul.</big></b>\n"
+"Musíte vybrat výstupní modul."
 
 #, fuzzy
 #~ msgid "Couldn't load mod"
@@ -5775,88 +5919,66 @@ msgstr ""
 #, fuzzy
 #~ msgid "Use interpolation"
 #~ msgstr "Autorizovat se"
-
 #~ msgid "%s - BMP"
 #~ msgstr "%s - BMP"
-
 #~ msgid "bmp: %s"
 #~ msgstr "bmp: %s"
 
 #, fuzzy
 #~ msgid "/Play Directory"
 #~ msgstr "_Adresář:"
-
 #~ msgid "Add Folders"
 #~ msgstr "Přidat adresáře"
 
 #, fuzzy
 #~ msgid "/Add Folders..."
 #~ msgstr "/Přidat soubory..."
-
 #~ msgid "Decoder:"
 #~ msgstr "Dekodér:"
-
 #~ msgid "Automatic detection"
 #~ msgstr "Automatický výběr"
-
 #~ msgid "3DNow! optimized decoder"
 #~ msgstr "Dekodér optimalizovaný pro 3DNow!"
-
 #~ msgid "MMX optimized decoder"
 #~ msgstr "Dekodér optimalizovaný pro MMX"
-
 #~ msgid "FPU decoder"
 #~ msgstr "FPU dekodér"
-
 #~ msgid ""
 #~ "mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
 #~ "Plugin by The XMMS team"
 #~ msgstr ""
 #~ "mpg123 dekodér vytvořil Michael Hipp <mh@mpg123.de>\n"
 #~ "Modul pochází od The XMMS team"
-
 #~ msgid "Advanced settings:"
 #~ msgstr "Pokročilé nastavení:"
 
 #, fuzzy
 #~ msgid "Thread buffer time (ms):"
 #~ msgstr "Velikost vyrovnávací paměti (ms):"
-
 #~ msgid "Mmap mode"
 #~ msgstr "Mód mmap"
-
 #~ msgid "Homepage and Graphics:"
 #~ msgstr "Webové stránky a grafika:"
-
 #~ msgid "Takeshi Aihana"
 #~ msgstr "Takeshi Aihana"
-
 #~ msgid "BMP Equalizer"
 #~ msgstr "BMP ekvalizér"
-
 #~ msgid "Beep Media Player"
 #~ msgstr "Beep Media Player"
-
 #~ msgid "/About BMP"
 #~ msgstr "/O BMP"
-
 #~ msgid "BMP"
 #~ msgstr "BMP"
-
 #~ msgid "Add Internet Address"
 #~ msgstr "Přidat internetovou adresu"
-
 #~ msgid "BMP Playlist Editor"
 #~ msgstr "Editor seznamu skladeb"
-
 #~ msgid "*"
 #~ msgstr "*"
-
 #~ msgid "Default skin:"
 #~ msgstr "Standardní skin:"
-
 #~ msgid "Vlad Gerasimov"
 #~ msgstr "Vlad Gerasimov"
-
 #~ msgid "/By extension"
 #~ msgstr "/Podle přípony"
+
