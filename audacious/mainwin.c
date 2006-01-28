@@ -957,6 +957,7 @@ mainwin_motion(GtkWidget * widget,
 {
     int x, y;
     GdkModifierType state;
+    GdkEvent *gevent;
 
     if (event->is_hint != FALSE)
     {
@@ -986,6 +987,8 @@ mainwin_motion(GtkWidget * widget,
     }
 
     gdk_flush();
+
+    while ((gevent = gdk_event_get()) != NULL) gdk_event_free(gevent);
 
     return FALSE;
 }
