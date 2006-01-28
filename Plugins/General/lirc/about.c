@@ -54,6 +54,7 @@ void about(void)
 	GtkWidget *bbox,*about_credits_logo_box,*about_credits_logo_frame;
 	GtkWidget *about_credits_logo;
 	GtkWidget *button,*label;
+        GString *logo_text;
 	
 	if(dialog) return;
 	
@@ -84,17 +85,23 @@ void about(void)
 			  about_credits_logo);
 	
 	gtk_container_border_width(GTK_CONTAINER(dialog),5);
+
+        logo_text = g_string_new( "" );
+        g_string_append( logo_text , "LIRC Plugin " );
+        g_string_append( logo_text , VERSION );
+        g_string_append( logo_text , "\n"
+"A simple plugin that lets you control\n"
+"audacious using the LIRC remote control daemon\n\n"
+"Adapted for audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
+"from the XMMS LIRC plugin by:\n"
+"Carl van Schaik <carl@leg.uct.ac.za>\n"
+"Christoph Bartelmus <xmms@bartelmus.de>\n"
+"You can get LIRC information at:\n"
+"http://fsinfo.cs.uni-sb.de/~columbus/lirc/index.html" );
 	
-	label=gtk_label_new("LIRC Plugin " VERSION "\n\
-A simple plugin that lets you control\n\
-audacious using the LIRC remote control daemon\n\n\
-Adapted for audacious usage by Tony Vroon <chainsaw@gentoo.org>\n\
-from the XMMS LIRC plugin by:\n\
-Carl van Schaik <carl@leg.uct.ac.za>\n\
-Christoph Bartelmus <xmms@bartelmus.de>\n\
-You can get LIRC information at:\n\
-http://fsinfo.cs.uni-sb.de/~columbus/lirc/index.html"
-			    );
+	label=gtk_label_new( logo_text->str );
+        g_string_free( logo_text, TRUE );
+
 	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),label,
                            TRUE,TRUE,10);
 	
