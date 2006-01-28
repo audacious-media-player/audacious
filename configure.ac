@@ -71,7 +71,7 @@ AC_ARG_WITH(rc-path,
     [rc_path=.audacious]
 )
 AC_DEFINE_UNQUOTED(BMP_RCPATH, "$rc_path",
-    [Resource and configuration path for bmp relative to $HOME.]
+    [Resource and configuration path for audacious relative to $HOME.]
 )
 AC_SUBST(BMP_RCPATH)
 
@@ -160,8 +160,8 @@ fi
 
 dnl Check for GTK/GLib/GThread/Pango
 
-PKG_CHECK_MODULES(GTK, [glib-2.0 >= 2.4.0 gtk+-2.0 >= 2.4.0 gthread-2.0 pango],
-    [ADD_PC_REQUIRES([glib-2.0 >= 2.4.0, gtk+-2.0 >= 2.4.0])],
+PKG_CHECK_MODULES(GTK, [glib-2.0 >= 2.6.0 gtk+-2.0 >= 2.6.0 gthread-2.0 pango],
+    [ADD_PC_REQUIRES([glib-2.0 >= 2.6.0, gtk+-2.0 >= 2.6.0])],
     [AC_MSG_ERROR([Cannot find glib2/gtk2/pango])]
 )
 
