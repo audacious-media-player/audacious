@@ -9,8 +9,7 @@ audacious_LDADD = \
 	$(GTK_LIBS)      \
 	$(LIBGLADE_LIBS) \
 	$(LTLIBINTL)     \
-	$(top_builddir)/libaudacious/libaudacious.la \
-	$(top_builddir)/libaudcore/libaudcore.la
+	$(top_builddir)/libaudacious/libaudacious.la
 
 audacious_CFLAGS = \
 	$(GTK_CFLAGS)      \

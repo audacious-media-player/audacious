@@ -64,7 +64,7 @@
 #include "logger.h"
 #include "mainwin.h"
 #include "output.h"
-#include "libaudcore/playback.h"
+#include "playback.h"
 #include "playlist.h"
 #include "ui_playlist.h"
 #include "pluginenum.h"

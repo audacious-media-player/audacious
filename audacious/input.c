@@ -35,7 +35,7 @@
 #include "output.h"
 #include "util.h"
 #include "visualization.h"
-#include "libaudcore/playback.h"
+#include "playback.h"
 #include "playstatus.h"
 #include "pluginenum.h"
 

@@ -52,7 +52,7 @@
 #include "glade.h"
 #include "input.h"
 #include "main.h"
-#include "libaudcore/playback.h"
+#include "playback.h"
 #include "playlist.h"
 #include "ui_playlist.h"
 

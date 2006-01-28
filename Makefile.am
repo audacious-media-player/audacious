@@ -1,6 +1,6 @@
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = intl libaudacious libaudcore audacious Plugins po icons skin
+SUBDIRS = intl libaudacious audacious Plugins po icons skin
 
 man_MANS = audacious.1
 
@@ -9,7 +9,7 @@ pkgconfig_DATA = audacious.pc
 
 EXTRA_DIST = \
   FAQ \
-  bmp.spec \
+  audacious.spec \
   README.bmp \
   $(pkgconfig_DATA) \
   $(wildcard m4/*.m4)

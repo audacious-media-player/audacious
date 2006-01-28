@@ -60,7 +60,7 @@
 #include "menurow.h"
 #include "monostereo.h"
 #include "pbutton.h"
-#include "libaudcore/playback.h"
+#include "playback.h"
 #include "playlist.h"
 #include "playlist_list.h"
 #include "playstatus.h"

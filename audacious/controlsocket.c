@@ -36,7 +36,7 @@
 #include "equalizer.h"
 #include "mainwin.h"
 #include "input.h"
-#include "libaudcore/playback.h"
+#include "playback.h"
 #include "playlist.h"
 #include "ui_playlist.h"
 #include "prefswin.h"
