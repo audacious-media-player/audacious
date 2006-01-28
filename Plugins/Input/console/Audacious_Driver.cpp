@@ -50,6 +50,7 @@ static volatile long pending_seek;
 extern InputPlugin console_ip;
 static Music_Emu* emu = 0;
 static Track_Emu track_emu;
+static int track_ended;
 
 static void unload_file()
 {
@@ -520,8 +521,16 @@ static void* play_loop_track( gpointer )
 		}
 
 		// fill buffer
-		if ( track_emu.play( buf_size, buf ) )
-			console_ip_is_going = 0;
+		if ( track_ended )
+		{
+			if ( track_ended++ > emu->sample_rate() * 3 / (buf_size / 2) )
+				console_ip_is_going = false;
+			memset( buf, 0, sizeof buf );
+		}
+		else if ( track_emu.play( buf_size, buf ) )
+		{
+			track_ended = 1;
+		}
 		produce_audio( console_ip.output->written_time(), 
 			FMT_S16_NE, 1, sizeof buf, buf, 
 			&console_ip_is_going );
@@ -607,7 +616,7 @@ static void play_file( char* path )
     if ( !console_ip.output->open_audio( FMT_S16_NE, sample_rate, 2 ) )
 		return;
 	pending_seek = -1;
-
+	track_ended = 0;
 	track_emu.start_track( emu, track, length, !has_length );
 	console_ip_is_going = 1;
 	decode_thread = g_thread_create( play_loop_track, NULL, TRUE, NULL );
