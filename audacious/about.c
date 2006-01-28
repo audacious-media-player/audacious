@@ -37,6 +37,9 @@ static GdkPixmap *mask_pixmap_window1 = NULL,
         *mask_pixmap_window2 = NULL;
 static GdkBitmap *mask_bitmap_window1 = NULL,
         *mask_bitmap_window2 = NULL;
+
+static const gchar *audacious_brief = "<big><b>Audacious %s</b></big>\n\n"
+			"Copyright (c) 2005 - 2006 Audacious Development Team";
     
 static gboolean
 on_about_window_expose(GtkWidget *widget, GdkEventExpose *expose, gpointer data)
@@ -88,7 +91,11 @@ show_about_window(void)
     GtkWidget *about_fixedbox;
     GtkWidget *close_button;
     GtkWidget *credits_button , *credits_button_hbox, *credits_button_image, *credits_button_label;
+    GtkWidget *brief_label;
     gchar *filename = DATA_DIR G_DIR_SEPARATOR_S "images" G_DIR_SEPARATOR_S "about-logo.png";
+    gchar *text;
+    PangoAttrList *brief_label_attrs;
+    PangoAttribute *brief_label_foreground;
 
     if (about_window != NULL)
     {
@@ -135,77 +142,6 @@ show_about_window(void)
     g_signal_connect(about_window, "key-press-event",
 	G_CALLBACK(on_about_window_key_press), &about_window);
 
-#if 0
-    GdkPixmap *beep_logo_pmap = NULL, *beep_logo_mask = NULL;
-    GtkWidget *about_vbox;
-    GtkWidget *about_credits_logo_box, *about_credits_logo_frame;
-    GtkWidget *about_credits_logo;
-    GtkWidget *about_notebook;
-    GtkWidget *list;
-    GtkWidget *bbox, *close_btn;
-    GtkWidget *label;
-    gchar *text;
-
-    if (about_window)
-        return;
-
-    gtk_container_set_border_width(GTK_CONTAINER(about_window), 10);
-
-
-    about_vbox = gtk_vbox_new(FALSE, 5);
-    gtk_container_add(GTK_CONTAINER(about_window), about_vbox);
-
-    if (!beep_logo_pmap)
-        beep_logo_pmap =
-            gdk_pixmap_create_from_xpm_d(about_window->window,
-                                         &beep_logo_mask, NULL, audacious_logo_xpm);
-
-    about_credits_logo_box = gtk_hbox_new(TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(about_vbox), about_credits_logo_box,
-                       FALSE, FALSE, 0);
-
-    about_credits_logo_frame = gtk_frame_new(NULL);
-    gtk_frame_set_shadow_type(GTK_FRAME(about_credits_logo_frame),
-                              GTK_SHADOW_ETCHED_OUT);
-    gtk_box_pack_start(GTK_BOX(about_credits_logo_box),
-                       about_credits_logo_frame, FALSE, FALSE, 0);
-
-    about_credits_logo = gtk_pixmap_new(beep_logo_pmap, beep_logo_mask);
-    gtk_container_add(GTK_CONTAINER(about_credits_logo_frame),
-                      about_credits_logo);
-
-    label = gtk_label_new(NULL);
-    text = g_strdup_printf(_(bmp_brief), VERSION);
-    gtk_label_set_markup(GTK_LABEL(label), text);
-    gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_CENTER);
-    g_free(text);
-
-    gtk_box_pack_start(GTK_BOX(about_vbox), label, FALSE, FALSE, 0);
-
-    about_notebook = gtk_notebook_new();
-    gtk_box_pack_start(GTK_BOX(about_vbox), about_notebook, TRUE, TRUE, 0);
-
-    list = generate_credit_list(credit_text, TRUE);
-    gtk_notebook_append_page(GTK_NOTEBOOK(about_notebook), list,
-                             gtk_label_new(_("Credits")));
-
-    list = generate_credit_list(translators, FALSE);
-    gtk_notebook_append_page(GTK_NOTEBOOK(about_notebook), list,
-                             gtk_label_new(_("Translators")));
-
-    bbox = gtk_hbutton_box_new();
-    gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
-    gtk_button_box_set_spacing(GTK_BUTTON_BOX(bbox), 5);
-    gtk_box_pack_start(GTK_BOX(about_vbox), bbox, FALSE, FALSE, 0);
-
-    close_btn = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
-    g_signal_connect_swapped(close_btn, "clicked",
-                             G_CALLBACK(gtk_widget_destroy), about_window);
-    GTK_WIDGET_SET_FLAGS(close_btn, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(GTK_BOX(bbox), close_btn, TRUE, TRUE, 0);
-    gtk_widget_grab_default(close_btn);
-#endif
-
     gtk_widget_shape_combine_mask(GTK_WIDGET(about_window), mask_bitmap_window2, 0, 0);
 
     /* GtkFixed hasn't got its GdkWindow, this means that it can be used to
@@ -225,7 +161,7 @@ show_about_window(void)
     g_signal_connect(close_button, "clicked",
 	G_CALLBACK(on_close_button_clicked), NULL);
 
-    gtk_fixed_put( GTK_FIXED(about_fixedbox) , close_button , 350 , 220 );
+    gtk_fixed_put( GTK_FIXED(about_fixedbox) , close_button , 375 , 220 );
     gtk_widget_set_size_request( close_button , 100 , -1 );
 
     credits_button = gtk_button_new();
@@ -243,8 +179,22 @@ show_about_window(void)
     g_signal_connect(credits_button, "clicked",
 	G_CALLBACK(on_credits_button_clicked), NULL);
 
-    gtk_fixed_put( GTK_FIXED(about_fixedbox) , credits_button , 50 , 220 );
+    gtk_fixed_put( GTK_FIXED(about_fixedbox) , credits_button , 25 , 220 );
     gtk_widget_set_size_request( credits_button , 100 , -1 );
+
+    brief_label = gtk_label_new(NULL);
+    text = g_strdup_printf(_(audacious_brief), VERSION);
+
+    brief_label_foreground = pango_attr_foreground_new(0, 0, 0);
+    brief_label_attrs = pango_attr_list_new();
+    pango_attr_list_insert(brief_label_attrs, brief_label_foreground);
+
+    gtk_label_set_markup(GTK_LABEL(brief_label), text);
+    gtk_label_set_justify(GTK_LABEL(brief_label), GTK_JUSTIFY_CENTER);
+    gtk_label_set_attributes(GTK_LABEL(brief_label), brief_label_attrs);
+    g_free(text);
+
+    gtk_fixed_put(GTK_FIXED(about_fixedbox), brief_label, 75, 145);
 
     gtk_widget_show_all(about_window);
     gtk_window_present(GTK_WINDOW(about_window));
