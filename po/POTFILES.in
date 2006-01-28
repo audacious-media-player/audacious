@@ -3,6 +3,7 @@ Plugins/General/song_change/song_change.c
 
 # AAC input plugin.
 Plugins/Input/aac/src/fileinfo.c
+Plugins/Input/aac/src/libmp4.c
 
 # CD Audio input plugin.
 Plugins/Input/cdaudio/cdaudio.c
@@ -79,6 +80,7 @@ Plugins/Visualization/libvisual-proxy/main.c
 
 # Audacious.
 audacious/about.c
+audacious/credits.c
 audacious/eq_slider.c
 audacious/equalizer.c
 audacious/getopt.c
@@ -87,8 +89,9 @@ audacious/input.c
 audacious/logger.c
 audacious/main.c
 audacious/mainwin.c
-audacious/playlistwin.c
 audacious/prefswin.c
+audacious/skinwin.c
+audacious/ui_playlist.c
 audacious/util.c
 
 # Glade files.
