@@ -29,6 +29,7 @@
 #include "i_common.h"
 #include "audacious/plugin.h"
 #include "libaudacious/beepctrl.h"
+#include "libaudacious/vfs.h"
 #include <pthread.h>
 #include "i_configure.h"
 #include "i_seq.h"
