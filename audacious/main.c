@@ -73,6 +73,7 @@
 #include "skinwin.h"
 #include "util.h"
 #include "visualization.h"
+#include "build_stamp.h"
 
 #include "pixmaps.h"
 #include "images/audacious_player.xpm"
@@ -335,7 +336,7 @@ dump_version(void)
 {
     GSList *features;
 
-    g_printf("%s %s", _(application_name), VERSION);
+    g_printf("%s %s [%s]", _(application_name), VERSION, svn_stamp);
 
     features = get_feature_list();
 

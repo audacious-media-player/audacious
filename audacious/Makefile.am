@@ -21,6 +21,7 @@ audacious_CFLAGS = \
 	-I$(top_srcdir)/intl
 
 audacious_SOURCES = \
+	build_stamp.c build_stamp.h \
 	genevent.c genevent.h \
 	skin.c skin.h \
 	util.c util.h \
@@ -91,3 +92,17 @@ EXTRA_DIST = \
 
 pixmaps.h: $(embedded_icons)
 	gdk-pixbuf-csource --stream --build-list `cat build.list` > pixmaps.h
+
+build_stamp.c:
+	if [ -d .svn ] || [ ! -f build_stamp.h ]; then		\
+		( \
+			echo '/* SVN repository version.'; \
+			echo ' * This auto-generated file must not be included in SVN; but must'; \
+			echo ' * be included in release tarballs.'; \
+			echo ' */'; \
+			echo '#include <glib.h>'; \
+			echo -n 'const gchar *svn_stamp = "'; \
+			(cd ..; svnversion -n .); \
+			echo '";' \
+		) > build_stamp.c; \
+	fi;
