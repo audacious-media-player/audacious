@@ -45,6 +45,7 @@ audacious_SOURCES = \
 	vis.c vis.h \
 	svis.c svis.h \
 	number.c number.h \
+	playback.c playback.h \
 	playstatus.c playstatus.h \
 	playlist_list.c playlist_list.h \
 	playlist_slider.c playlist_slider.h \
