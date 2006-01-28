@@ -180,7 +180,7 @@ BmpConfig bmp_default_config = {
     FALSE,                      /* show window decorations */
     8,                          /* mouse wheel scroll step */
     FALSE,                      /* playlist transparent */
-    1,                          /* 2nd preset (ARTIST - TITLE) */
+    2,                          /* 2nd preset (ARTIST - TITLE) */
     NULL,                       /* title format */
     FALSE,                      /* software volume control enabled */
     TRUE,                       /* UNUSED (XMMS compatibility mode) */
@@ -491,7 +491,7 @@ bmp_config_load(void)
         cfg.mainwin_font = g_strdup(MAINWIN_DEFAULT_FONT);
 
     if (!cfg.gentitle_format)
-        cfg.gentitle_format = g_strdup("%p - %t");
+        cfg.gentitle_format = g_strdup("%p - %a - %t");
 
     if (!cfg.outputplugin) {
 #ifdef HAVE_OSS
