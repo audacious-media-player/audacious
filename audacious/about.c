@@ -194,7 +194,8 @@ show_about_window(void)
     gtk_label_set_attributes(GTK_LABEL(brief_label), brief_label_attrs);
     g_free(text);
 
-    gtk_fixed_put(GTK_FIXED(about_fixedbox), brief_label, 75, 145);
+    gtk_fixed_put(GTK_FIXED(about_fixedbox), brief_label, 20, 145);
+    gtk_widget_set_size_request( brief_label , 460 , -1 );
 
     gtk_widget_show_all(about_window);
     gtk_window_present(GTK_WINDOW(about_window));
