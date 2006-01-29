@@ -94,7 +94,7 @@ pixmaps.h: $(embedded_icons)
 	gdk-pixbuf-csource --stream --build-list `cat build.list` > pixmaps.h
 
 build_stamp.c:
-	if [ -d .svn ] || [ ! -f build_stamp.h ]; then		\
+	if [ -d .svn ] || [ ! -f build_stamp.c ]; then		\
 		( \
 			echo '/* SVN repository version.'; \
 			echo ' * This auto-generated file must not be included in SVN; but must'; \
