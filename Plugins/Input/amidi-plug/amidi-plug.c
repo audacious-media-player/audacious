@@ -379,7 +379,7 @@ static void amidiplug_play( gchar * filename )
 void * amidiplug_play_loop( void * arg )
 {
   snd_seq_event_t ev;
-  gint i;
+  gint i, p, c;
   gboolean rewind = FALSE;
 
   pthread_mutex_lock( &amidiplug_playing_mutex );
@@ -520,7 +520,32 @@ void * amidiplug_play_loop( void * arg )
     snd_seq_sync_output_queue(sc.seq);
   }
 
+  /* time to shutdown playback! */
+  /* send "ALL SOUNDS OFF" to all channels on all ports */
+  ev.type = SND_SEQ_EVENT_CONTROLLER;
+  ev.time.tick = 0;
+  snd_seq_ev_set_fixed(&ev);
+  ev.data.control.param = MIDI_CTL_ALL_SOUNDS_OFF;
+  ev.data.control.value = 0;
+  for ( p = 0 ; p < sc.dest_port_num ; p++)
+  {
+    ev.queue = sc.queue;
+    ev.dest = sc.dest_port[p];
+
+    for ( c = 0 ; c < 16 ; c++ )
+    {
+      ev.data.control.channel = c;
+      snd_seq_event_output(sc.seq, &ev);
+      snd_seq_drain_output(sc.seq);
+    }
+  }
+
   /* schedule queue stop at end of song */
+  snd_seq_ev_clear(&ev);
+  ev.queue = sc.queue;
+  ev.source.port = 0;
+  ev.flags = SND_SEQ_TIME_STAMP_TICK;
+
   snd_seq_ev_set_fixed(&ev);
   ev.type = SND_SEQ_EVENT_STOP;
   ev.time.tick = midifile.max_tick - midifile.skip_offset;
