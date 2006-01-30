@@ -48,6 +48,9 @@ vfs_fopen(const gchar * path,
     GnomeVFSOpenMode g_mode;
     gboolean truncate, append;
 
+    if (!path || !mode)
+	return NULL;
+
     file = g_new(VFSFile, 1);
 
     mode_to_gnome_vfs(mode, &g_mode, &truncate, &append);

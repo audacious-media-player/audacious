@@ -38,6 +38,9 @@ vfs_fopen(const gchar * path,
 {
     VFSFile *file;
 
+    if (!path || !mode)
+	return NULL;
+
     file = g_new(VFSFile, 1);
 
     file->handle = fopen(path, mode);
