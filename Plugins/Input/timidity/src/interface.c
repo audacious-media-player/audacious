@@ -11,6 +11,8 @@
 #include <unistd.h>
 #include <string.h>
 
+#include <glib.h>
+#include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
@@ -50,7 +52,7 @@ create_xmmstimid_conf_wnd (void)
 
   xmmstimid_conf_wnd = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_object_set_data (GTK_OBJECT (xmmstimid_conf_wnd), "xmmstimid_conf_wnd", xmmstimid_conf_wnd);
-  gtk_window_set_title (GTK_WINDOW (xmmstimid_conf_wnd), "TiMidity Configuration");
+  gtk_window_set_title (GTK_WINDOW (xmmstimid_conf_wnd), _("TiMidity Configuration"));
   gtk_window_set_position (GTK_WINDOW (xmmstimid_conf_wnd), GTK_WIN_POS_MOUSE);
 
   vbox4 = gtk_vbox_new (FALSE, 0);
@@ -70,7 +72,7 @@ create_xmmstimid_conf_wnd (void)
   gtk_table_set_row_spacings (GTK_TABLE (table1), 5);
   gtk_table_set_col_spacings (GTK_TABLE (table1), 5);
 
-  frame1 = gtk_frame_new ("Sampling Rate");
+  frame1 = gtk_frame_new (_("Sampling Rate"));
   gtk_widget_ref (frame1);
   gtk_object_set_data_full (GTK_OBJECT (xmmstimid_conf_wnd), "frame1", frame1,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -87,7 +89,7 @@ create_xmmstimid_conf_wnd (void)
   gtk_container_add (GTK_CONTAINER (frame1), vbox1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox1), 5);
 
-  rate_11000 = gtk_radio_button_new_with_label (rate_group, "11000 Hz");
+  rate_11000 = gtk_radio_button_new_with_label (rate_group, _("11000 Hz"));
   rate_group = gtk_radio_button_group (GTK_RADIO_BUTTON (rate_11000));
   gtk_widget_ref (rate_11000);
   gtk_object_set_data_full (GTK_OBJECT (xmmstimid_conf_wnd), "rate_11000", rate_11000,
@@ -95,7 +97,7 @@ create_xmmstimid_conf_wnd (void)
   gtk_widget_show (rate_11000);
   gtk_box_pack_start (GTK_BOX (vbox1), rate_11000, FALSE, FALSE, 0);
 
-  rate_22000 = gtk_radio_button_new_with_label (rate_group, "22000 Hz");
+  rate_22000 = gtk_radio_button_new_with_label (rate_group, _("22000 Hz"));
   rate_group = gtk_radio_button_group (GTK_RADIO_BUTTON (rate_22000));
   gtk_widget_ref (rate_22000);
   gtk_object_set_data_full (GTK_OBJECT (xmmstimid_conf_wnd), "rate_22000", rate_22000,
@@ -103,7 +105,7 @@ create_xmmstimid_conf_wnd (void)
   gtk_widget_show (rate_22000);
   gtk_box_pack_start (GTK_BOX (vbox1), rate_22000, FALSE, FALSE, 0);
 
-  rate_44100 = gtk_radio_button_new_with_label (rate_group, "44100 Hz");
+  rate_44100 = gtk_radio_button_new_with_label (rate_group, _("44100 Hz"));
   rate_group = gtk_radio_button_group (GTK_RADIO_BUTTON (rate_44100));
   gtk_widget_ref (rate_44100);
   gtk_object_set_data_full (GTK_OBJECT (xmmstimid_conf_wnd), "rate_44100", rate_44100,
@@ -111,7 +113,7 @@ create_xmmstimid_conf_wnd (void)
   gtk_widget_show (rate_44100);
   gtk_box_pack_start (GTK_BOX (vbox1), rate_44100, FALSE, FALSE, 0);
 
-  frame2 = gtk_frame_new ("Sample Width");
+  frame2 = gtk_frame_new (_("Sample Width"));
   gtk_widget_ref (frame2);
   gtk_object_set_data_full (GTK_OBJECT (xmmstimid_conf_wnd), "frame2", frame2,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -128,7 +130,7 @@ create_xmmstimid_conf_wnd (void)
   gtk_container_add (GTK_CONTAINER (frame2), vbox2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), 5);
 
-  bits_8 = gtk_radio_button_new_with_label (bits_group, "8 bit");
+  bits_8 = gtk_radio_button_new_with_label (bits_group, _("8 bit"));
   bits_group = gtk_radio_button_group (GTK_RADIO_BUTTON (bits_8));
   gtk_widget_ref (bits_8);
   gtk_object_set_data_full (GTK_OBJECT (xmmstimid_conf_wnd), "bits_8", bits_8,
@@ -136,7 +138,7 @@ create_xmmstimid_conf_wnd (void)
   gtk_widget_show (bits_8);
   gtk_box_pack_start (GTK_BOX (vbox2), bits_8, FALSE, FALSE, 0);
 
-  bits_16 = gtk_radio_button_new_with_label (bits_group, "16 bit");
+  bits_16 = gtk_radio_button_new_with_label (bits_group, _("16 bit"));
   bits_group = gtk_radio_button_group (GTK_RADIO_BUTTON (bits_16));
   gtk_widget_ref (bits_16);
   gtk_object_set_data_full (GTK_OBJECT (xmmstimid_conf_wnd), "bits_16", bits_16,
@@ -144,7 +146,7 @@ create_xmmstimid_conf_wnd (void)
   gtk_widget_show (bits_16);
   gtk_box_pack_start (GTK_BOX (vbox2), bits_16, FALSE, FALSE, 0);
 
-  frame3 = gtk_frame_new ("Channels");
+  frame3 = gtk_frame_new (_("Channels"));
   gtk_widget_ref (frame3);
   gtk_object_set_data_full (GTK_OBJECT (xmmstimid_conf_wnd), "frame3", frame3,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -161,7 +163,7 @@ create_xmmstimid_conf_wnd (void)
   gtk_container_add (GTK_CONTAINER (frame3), vbox3);
   gtk_container_set_border_width (GTK_CONTAINER (vbox3), 5);
 
-  channels_1 = gtk_radio_button_new_with_label (channels_group, "Mono");
+  channels_1 = gtk_radio_button_new_with_label (channels_group, _("Mono"));
   channels_group = gtk_radio_button_group (GTK_RADIO_BUTTON (channels_1));
   gtk_widget_ref (channels_1);
   gtk_object_set_data_full (GTK_OBJECT (xmmstimid_conf_wnd), "channels_1", channels_1,
@@ -169,7 +171,7 @@ create_xmmstimid_conf_wnd (void)
   gtk_widget_show (channels_1);
   gtk_box_pack_start (GTK_BOX (vbox3), channels_1, FALSE, FALSE, 0);
 
-  channels_2 = gtk_radio_button_new_with_label (channels_group, "Stereo");
+  channels_2 = gtk_radio_button_new_with_label (channels_group, _("Stereo"));
   channels_group = gtk_radio_button_group (GTK_RADIO_BUTTON (channels_2));
   gtk_widget_ref (channels_2);
   gtk_object_set_data_full (GTK_OBJECT (xmmstimid_conf_wnd), "channels_2", channels_2,
@@ -177,7 +179,7 @@ create_xmmstimid_conf_wnd (void)
   gtk_widget_show (channels_2);
   gtk_box_pack_start (GTK_BOX (vbox3), channels_2, FALSE, FALSE, 0);
 
-  frame4 = gtk_frame_new ("TiMidity Configuration File");
+  frame4 = gtk_frame_new (_("TiMidity Configuration File"));
   gtk_widget_ref (frame4);
   gtk_object_set_data_full (GTK_OBJECT (xmmstimid_conf_wnd), "frame4", frame4,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -218,7 +220,7 @@ create_xmmstimid_conf_wnd (void)
   gtk_button_box_set_layout (GTK_BUTTON_BOX (hbuttonbox1), GTK_BUTTONBOX_END);
   gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbuttonbox1), 10);
 
-  conf_ok = gtk_button_new_with_label ("Ok");
+  conf_ok = gtk_button_new_with_label (_("Ok"));
   gtk_widget_ref (conf_ok);
   gtk_object_set_data_full (GTK_OBJECT (xmmstimid_conf_wnd), "conf_ok", conf_ok,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -226,7 +228,7 @@ create_xmmstimid_conf_wnd (void)
   gtk_container_add (GTK_CONTAINER (hbuttonbox1), conf_ok);
   GTK_WIDGET_SET_FLAGS (conf_ok, GTK_CAN_DEFAULT);
 
-  button2 = gtk_button_new_with_label ("Cancel");
+  button2 = gtk_button_new_with_label (_("Cancel"));
   gtk_widget_ref (button2);
   gtk_object_set_data_full (GTK_OBJECT (xmmstimid_conf_wnd), "button2", button2,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -257,7 +259,7 @@ create_xmmstimid_about_wnd (void)
 
   xmmstimid_about_wnd = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_object_set_data (GTK_OBJECT (xmmstimid_about_wnd), "xmmstimid_about_wnd", xmmstimid_about_wnd);
-  gtk_window_set_title (GTK_WINDOW (xmmstimid_about_wnd), "About TiMidity Plugin");
+  gtk_window_set_title (GTK_WINDOW (xmmstimid_about_wnd), _("About TiMidity Plugin"));
   gtk_window_set_position (GTK_WINDOW (xmmstimid_about_wnd), GTK_WIN_POS_MOUSE);
 
   vbox6 = gtk_vbox_new (FALSE, 0);
@@ -275,7 +277,7 @@ create_xmmstimid_about_wnd (void)
   gtk_box_pack_start (GTK_BOX (vbox6), vbox7, TRUE, TRUE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox7), 20);
 
-  name_version = gtk_label_new ("TiMidity Plugin");
+  name_version = gtk_label_new (_("TiMidity Plugin"));
   gtk_widget_ref (name_version);
   gtk_object_set_data_full (GTK_OBJECT (xmmstimid_about_wnd), "name_version", name_version,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -283,7 +285,7 @@ create_xmmstimid_about_wnd (void)
   gtk_box_pack_start (GTK_BOX (vbox7), name_version, TRUE, TRUE, 0);
   gtk_misc_set_alignment (GTK_MISC (name_version), 0.5, 1);
 
-  label2 = gtk_label_new ("http://libtimidity.sourceforge.net\nby Konstantin Korikov");
+  label2 = gtk_label_new (_("http://libtimidity.sourceforge.net\nby Konstantin Korikov"));
   gtk_widget_ref (label2);
   gtk_object_set_data_full (GTK_OBJECT (xmmstimid_about_wnd), "label2", label2,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -307,7 +309,7 @@ create_xmmstimid_about_wnd (void)
   gtk_container_set_border_width (GTK_CONTAINER (hbuttonbox2), 5);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (hbuttonbox2), GTK_BUTTONBOX_END);
 
-  button3 = gtk_button_new_with_label ("Ok");
+  button3 = gtk_button_new_with_label (_("Ok"));
   gtk_widget_ref (button3);
   gtk_object_set_data_full (GTK_OBJECT (xmmstimid_about_wnd), "button3", button3,
                             (GtkDestroyNotify) gtk_widget_unref);

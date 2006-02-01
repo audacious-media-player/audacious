@@ -25,6 +25,8 @@
 #include "libaudacious/configdb.h"
 #include "libaudacious/titlestring.h"
 #include "libaudacious/vfs.h"
+#include <glib.h>
+#include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <string.h>
 #include <timidity.h>
@@ -94,7 +96,7 @@ static GtkToggleButton
 
 InputPlugin *get_iplugin_info(void) {
 	xmmstimid_ip.description = g_strdup_printf(
-			"TiMidity Player %s", VERSION);
+			_("TiMidity Player %s"), VERSION);
 	return &xmmstimid_ip;
 }
 
@@ -127,7 +129,7 @@ void xmmstimid_about(void) {
 		gchar *name_version;
 		xmmstimid_about_wnd = create_xmmstimid_about_wnd();
 		name_version = g_strdup_printf(
-				"TiMidity Plugin %s", VERSION);
+				_("TiMidity Plugin %s"), VERSION);
 		gtk_label_set_text(
 				GTK_LABEL(gtk_object_get_data(
 				GTK_OBJECT(xmmstimid_about_wnd),
@@ -342,7 +344,7 @@ void xmmstimid_play_file(char *filename) {
 	mid_istream_close(stream);
 
 	if (xmmstimid_song == NULL) {
-		xmmstimid_ip.set_info_text("Couldn't load MIDI file");
+		xmmstimid_ip.set_info_text(_("Couldn't load MIDI file"));
 		return;
 	}
 
