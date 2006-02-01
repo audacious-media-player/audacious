@@ -1,0 +1,2299 @@
+2006-01-30 07:44:27  William Pitcock <nenolod@nenolod.net>
+
+	* Sanity checking inside vfs_() functions.
+
+2006-01-29 16:17:45  Giacomo Lozito <james@develia.org>
+
+	* reverted changes applied in r564, the backward seek behaved strangely
+
+2006-01-29 14:38:24  Giacomo Lozito <james@develia.org>
+
+	* added support for the FluidSynth ALSA backend, by sending a MIDI_CTL_ALL_SOUNDS_OFF controller event when playback is halted
+
+2006-01-28 21:23:29  Giacomo Lozito <james@develia.org>
+
+	* centered text in audacious logo window
+
+2006-01-28 19:08:53  William Pitcock <nenolod@nenolod.net>
+
+	* Make a tweak to the build_stamp.c rule.
+
+2006-01-28 15:54:44  William Pitcock <nenolod@nenolod.net>
+
+	* *ding* fix for chainsaw
+
+2006-01-28 15:45:34  William Pitcock <nenolod@nenolod.net>
+
+	* fix giacomo's bug I think
+
+2006-01-28 13:49:45  William Pitcock <nenolod@nenolod.net>
+
+	* add disk_getvol and disk_setvol
+
+2006-01-28 13:13:12  Giacomo Lozito <james@develia.org>
+
+	* adapted the logo text for gettext translations
+
+2006-01-28 11:40:22  Tony Vroon <chainsaw@gentoo.org>
+
+	* Updated Czech translation by Jan N. <finn@sendmail.cz>
+
+2006-01-28 11:27:32  William Pitcock <nenolod@nenolod.net>
+
+	* add playback.c to build
+
+2006-01-28 11:27:01  William Pitcock <nenolod@nenolod.net>
+
+	* we don't need to build libaudcore/Makefile anymore ;)
+
+2006-01-28 11:21:21  William Pitcock <nenolod@nenolod.net>
+
+	* remove libaudcore, we never did anything with it
+
+2006-01-28 11:15:54  William Pitcock <nenolod@nenolod.net>
+
+	* update potfiles
+
+2006-01-28 11:14:54  William Pitcock <nenolod@nenolod.net>
+
+	* per laci, use stock icons in the menu
+
+2006-01-28 11:07:49  William Pitcock <nenolod@nenolod.net>
+
+	* We now require GTK+ 2.6.x.
+
+2006-01-28 11:00:25  William Pitcock <nenolod@nenolod.net>
+
+	* artist - album - title is now the default title format.
+
+2006-01-27 23:29:56  William Pitcock <nenolod@nenolod.net>
+
+	* throw out duplicate XEvents... again, for speed purposes we don't need
+	* to process every pixel the player is manipulated
+
+2006-01-27 23:20:29  William Pitcock <nenolod@nenolod.net>
+
+	* I like the rotated icon better.
+
+2006-01-27 22:55:26  William Pitcock <nenolod@nenolod.net>
+
+	* icons so far
+
+2006-01-27 22:31:53  William Pitcock <nenolod@nenolod.net>
+
+	* When running SVN, make a note of the SVN version. The SVN version is stored in build_stamp.c.
+	* ./audacious --version will display it.
+
+2006-01-27 22:09:05  William Pitcock <nenolod@nenolod.net>
+
+	* About box tweaks.
+
+2006-01-27 21:38:19  William Pitcock <nenolod@nenolod.net>
+
+	* Patch for improved GYM/VGM file support ala blargg.
+
+2006-01-27 17:10:44  Giacomo Lozito <james@develia.org>
+
+	* in configure.ac, do not check for ALSA twice if it has been already detected (both alsa output plugin and amidi-plug check its availability)
+
+2006-01-27 16:22:22  Giacomo Lozito <james@develia.org>
+
+	* do not try to compile amidi-plug if alsa is not available
+
+2006-01-27 14:00:13  Giacomo Lozito <james@develia.org>
+
+	* amidi-plug: do not try to guess the correct alsa port from alsa-lib version if there's not a wavetable hw synth available
+
+2006-01-27 01:22:49  Giacomo Lozito <james@develia.org>
+
+	* adjusted audacious headers includes in amidi-plug
+
+2006-01-26 20:45:42  Giacomo Lozito <james@develia.org>
+
+	* updated configure.ac and macros; added amidi-plug and conditions for timidity compilation
+
+2006-01-26 20:43:59  Giacomo Lozito <james@develia.org>
+
+	* amidi-plug (MIDI through ALSA seq) input plugin added, brand new and completely written from scratch :)
+
+2006-01-26 19:24:48  William Pitcock <nenolod@nenolod.net>
+
+	* fixes via blargg.
+
+2006-01-26 18:35:44  William Pitcock <nenolod@nenolod.net>
+
+	* experimental fix
+
+2006-01-26 17:21:09  William Pitcock <nenolod@nenolod.net>
+
+	* whoever wrote output_to_audio() was a crackhead.
+
+2006-01-26 13:44:29  William Pitcock <nenolod@nenolod.net>
+
+	* cleanup produce_audio() a bit.
+
+2006-01-26 13:37:48  William Pitcock <nenolod@nenolod.net>
+
+	* Add tell_audio(AFormat *, gint *, gint *), for retrieving audio
+	* format information from an output plugin. Right now, we need this
+	* inside the core to do effects processing.
+
+	* Rationale:
+
+	   - If tell_audio() is unavailable, do not do processing.
+	   - If tell_audio() is available and there is a format mismatch,
+	  do not do processing yet -- we need to reinitialize the output
+	  port before we can do anything useful.
+
+	* Disk Writer and Crossfade are too fragile to make these changes to,
+	* so they do not support tell_audio yet.
+
+2006-01-26 13:18:52  William Pitcock <nenolod@nenolod.net>
+
+	* tell_audio returns void, not gint.
+
+2006-01-26 13:11:20  William Pitcock <nenolod@nenolod.net>
+
+	* Add support for tell_audio(), an output plugin accessor which will give us the information the input plugin passed to
+	* open_audio()... XMMS design sucks and we WILL be getting rid of most of these kludges in 0.3. :P
+
+2006-01-26 13:06:40  Giacomo Lozito <james@develia.org>
+
+	* re-added an empty ChangeLog file to avoid autotool complaints
+
+2006-01-26 12:57:27  Giacomo Lozito <james@develia.org>
+
+	* about.c buttons centered and properly sized
+
+2006-01-26 12:47:47  William Pitcock <nenolod@nenolod.net>
+
+	* Indentation changes.
+
+2006-01-26 12:47:29  William Pitcock <nenolod@nenolod.net>
+
+	* make "Credits" translatable.
+
+2006-01-26 12:31:35  Giacomo Lozito <james@develia.org>
+
+	* custom label/images for about.c buttons
+
+2006-01-26 00:45:56  William Pitcock <nenolod@nenolod.net>
+
+	* sed -i s:XMMS:Audacious:g
+
+2006-01-26 00:44:32  William Pitcock <nenolod@nenolod.net>
+
+	* More doc updates.
+
+2006-01-26 00:42:38  William Pitcock <nenolod@nenolod.net>
+
+	* documentation updates.
+
+2006-01-26 00:22:45  William Pitcock <nenolod@nenolod.net>
+
+	* Add a line between the time and the track name.
+
+2006-01-26 00:15:52  William Pitcock <nenolod@nenolod.net>
+
+	* Make *sure* it's borderless.
+
+2006-01-25 21:17:49  William Pitcock <nenolod@nenolod.net>
+
+	* Credits window is back in action.
+
+2006-01-25 20:40:41  William Pitcock <nenolod@nenolod.net>
+
+	* Remove crap that is unneeded from about.c, update credits information.
+
+2006-01-25 20:37:38  Giacomo Lozito <james@develia.org>
+
+	* initial layout for buttons over the png logo
+
+2006-01-25 20:31:49  William Pitcock <nenolod@nenolod.net>
+
+	* Add credits.c to makefile, and fill in as much information as I have.
+
+2006-01-25 20:19:59  William Pitcock <nenolod@nenolod.net>
+
+	* Add show_credits_window() declaration.
+
+2006-01-25 19:39:42  William Pitcock <nenolod@nenolod.net>
+
+	* If a track has a length, then we *really* do not want silence detection,
+	* as this fucks up tracks that have been improperly tagged.
+
+2006-01-25 19:27:09  Giacomo Lozito <james@develia.org>
+
+	* removed X11 dependencies and cflags from audacious/makefile.am
+
+2006-01-25 11:31:04  William Pitcock <nenolod@nenolod.net>
+
+	* New output driver which makes use of Output objects ability to flush
+	* buffers. (seek for output timing, basically)
+
+2006-01-24 23:47:40  William Pitcock <nenolod@nenolod.net>
+
+	* Input buffers are always 3 seconds ahead of what you hear... compensate for this.
+
+2006-01-24 23:34:46  William Pitcock <nenolod@nenolod.net>
+
+	* Close enough... does some sort of speedup for 3 seconds like timidity, but close enough.
+
+2006-01-24 23:03:30  William Pitcock <nenolod@nenolod.net>
+
+	* aboutbox formatting stuffs.
+
+2006-01-24 22:19:01  William Pitcock <nenolod@nenolod.net>
+
+	* hostile merge, phase 2: reimport based on new plugin code
+
+2006-01-24 22:17:26  William Pitcock <nenolod@nenolod.net>
+
+	* Hostile merge, phase 1: remove merge target from the repository.
+
+2006-01-24 21:10:07  Tony Vroon <chainsaw@gentoo.org>
+
+	* New code drop from blargg. Needs some work.
+
+2006-01-24 15:57:22  William Pitcock <nenolod@nenolod.net>
+
+	* Whoops.
+
+2006-01-24 10:25:36  William Pitcock <nenolod@nenolod.net>
+
+	* Do not process redundant XEvents... just throw them away. Crude
+	* optimization brings us much X11 Performance.
+
+2006-01-24 09:52:28  William Pitcock <nenolod@nenolod.net>
+
+	* ESD output plugin enhancements by max_verem -at- yahoo.com.
+
+2006-01-23 16:11:40  William Pitcock <nenolod@nenolod.net>
+
+	* Remove X11 dependency. Audacious can now run anywhere where GTK is
+	* available. Please port me to your favourite operating system.
+
+2006-01-23 16:07:43  William Pitcock <nenolod@nenolod.net>
+
+	* Always on top fix.
+
+2006-01-23 15:53:26  William Pitcock <nenolod@nenolod.net>
+
+	* Convert Xlib stuff to GDK/GTK. This isn't entirely set in stone yet --
+	* (Always on Top has a minor bug remaining involving the transient
+	* windows attached to mainwin still.)
+
+2006-01-23 14:24:48  William Pitcock <nenolod@nenolod.net>
+
+	* Remove ALL Xlib stuff from the skinning engine and use GDK where
+	* applicable instead.
+
+2006-01-21 16:06:25  Tony Vroon <chainsaw@gentoo.org>
+
+	* Assembly file is now unused. Removing.
+
+2006-01-21 16:06:07  Tony Vroon <chainsaw@gentoo.org>
+
+	* Remove X86 assembler code; use of executable stacks is a problem on hardened systems.
+
+2006-01-21 12:03:15  Tony Vroon <chainsaw@gentoo.org>
+
+	* Tag length enforcement by null-terminating the strings. By Kiyoshi Aman <kiyoshi.aman -at- gmail.com>.
+
+2006-01-21 09:12:02  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use the VFS layer.
+
+2006-01-21 08:32:50  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use the VFS subsystem and delete the unused demo source.
+
+2006-01-20 09:17:03  William Pitcock <nenolod@nenolod.net>
+
+	* Reenable wma compilation.
+
+2006-01-19 21:31:32  William Pitcock <nenolod@nenolod.net>
+
+	* SPC length detection c/o Kiyoshi Aman <kiyoshi.aman -at- gmail.com>
+
+2006-01-19 17:45:42  William Pitcock <nenolod@nenolod.net>
+
+	* Updated about-logo.png.
+
+2006-01-19 17:45:01  William Pitcock <nenolod@nenolod.net>
+
+	* More progress towards the about window, no more background being overwritten... we were forgetting to tell X that the window was paintable.
+
+2006-01-18 23:21:50  William Pitcock <nenolod@nenolod.net>
+
+	* Experimental about box stuff... doesnt work right yet. Work in progress!
+
+2006-01-18 19:18:37  Tony Vroon <chainsaw@gentoo.org>
+
+	* Tag reading for NSF.
+
+2006-01-18 19:07:59  Tony Vroon <chainsaw@gentoo.org>
+
+	* Length detection for VGM; tag reading for GBS.
+
+2006-01-18 18:03:38  William Pitcock <nenolod@nenolod.net>
+
+	* Rename about.c to credits.c
+
+2006-01-18 18:01:31  William Pitcock <nenolod@nenolod.net>
+
+	* Add about-logo.png to the distribution.
+
+2006-01-18 16:34:54  Tony Vroon <chainsaw@gentoo.org>
+
+	* Simplify magic reader and get GYM tag reading right.
+
+2006-01-18 16:03:32  Giacomo Lozito <james@develia.org>
+
+	* use labs() instead of abs() for long types
+
+2006-01-18 15:55:23  Giacomo Lozito <james@develia.org>
+
+	* seek with tristate prev/next buttons now works just like the seek bar (no seek until the button is released, no seek at all if it should move to the prev/next song)
+
+2006-01-18 14:35:20  Tony Vroon <chainsaw@gentoo.org>
+
+	* Clean up after myself, reverting botched fix to ffmpeg code.
+
+2006-01-18 13:21:11  Giacomo Lozito <james@develia.org>
+
+	* fixed width of the fwd button
+
+2006-01-18 13:03:23  William Pitcock <nenolod@nenolod.net>
+
+	* Remove header that got moved. Oops.
+
+2006-01-18 12:53:34  William Pitcock <nenolod@nenolod.net>
+
+	* Fork off the rcfile backend for conversion into an XML file-based preferences option using GMarkup. This does not work
+	* yet...
+
+2006-01-18 12:38:51  William Pitcock <nenolod@nenolod.net>
+
+	* Move xml_document stuff into libaudacious.
+
+2006-01-17 20:15:15  William Pitcock <nenolod@nenolod.net>
+
+	* Remove EQ again. *grr*
+
+2006-01-17 20:12:22  William Pitcock <nenolod@nenolod.net>
+
+	* Further speedups
+
+2006-01-17 20:05:29  William Pitcock <nenolod@nenolod.net>
+
+	* Change logic used for drawing the line between the numbers and the
+	* titles in the playlist.
+
+2006-01-17 19:26:38  Tony Vroon <chainsaw@gentoo.org>
+
+	* Temporarily stop building the WMA plugin until it can be fixed.
+
+2006-01-17 19:24:38  Tony Vroon <chainsaw@gentoo.org>
+
+	* More complete title reporting and make coding style consistent with the rest of audacious. Contributed by Kiyoshi Aman <kiyoshi.aman -at- gmail.com>.
+
+2006-01-17 17:46:09  Tony Vroon <chainsaw@gentoo.org>
+
+	* Revert to revision 379, unable to fix fallout from 450, still segfaults intermittently.
+
+2006-01-17 14:39:37  William Pitcock <nenolod@nenolod.net>
+
+	* Possibly play nicer with X11 in the skinning engine's event loop.
+
+2006-01-16 23:39:45  William Pitcock <nenolod@nenolod.net>
+
+	* Revert pause on seek stuff as it did no good anyway and just caused
+	* problems.
+
+2006-01-16 20:29:49  Giacomo Lozito <james@develia.org>
+
+	* added a new column in the treeview model to store the skin name
+
+2006-01-16 18:05:02  William Pitcock <nenolod@nenolod.net>
+
+	* Make "Unarchived Winamp 2.x skin" &c translatable.
+
+2006-01-16 17:58:53  William Pitcock <nenolod@nenolod.net>
+
+	* Use g_object_(get|set)_data() on the thumbnail object to store the skin
+	* path. (This is probably considered hackish by some, but hey, it works
+	* :D)
+
+2006-01-16 17:21:41  William Pitcock <nenolod@nenolod.net>
+
+	* Dissect the pango markup using scanf and various string delimiter hacks.
+	* This could be done in a much better way, but I'd rather not sit down and
+	* figure out why GTK is not behaving the way I want it to right now.
+
+2006-01-16 16:37:05  William Pitcock <nenolod@nenolod.net>
+
+	* new pango-based skin selection sexyness.
+
+2006-01-16 15:37:00  William Pitcock <nenolod@nenolod.net>
+
+	* Revert hack that had no effect. The blips apparently occur on the output side of things.
+
+2006-01-16 15:29:32  William Pitcock <nenolod@nenolod.net>
+
+	* lets not output audio when paused. really.
+
+2006-01-16 15:24:54  William Pitcock <nenolod@nenolod.net>
+
+	* vis fixes
+
+2006-01-16 15:19:11  William Pitcock <nenolod@nenolod.net>
+
+	* Stop playing while seeking the player.
+
+2006-01-16 12:38:28  William Pitcock <nenolod@nenolod.net>
+
+	* The default skin is now distributed as a png skin, not a bmp one due to
+	* the new skinning engine's support for PNG files.
+
+2006-01-16 12:32:57  William Pitcock <nenolod@nenolod.net>
+
+	* Be less spammy in the audacious trace log about not being able to find
+	* files.
+
+2006-01-16 12:30:11  William Pitcock <nenolod@nenolod.net>
+
+	* This commit allows for the use of alternate formats to bmp in skin
+	* files.
+
+2006-01-15 18:49:42  William Pitcock <nenolod@nenolod.net>
+
+	* Add a hackhack for FreeBSD ports.
+
+2006-01-15 09:35:01  Tony Vroon <chainsaw@gentoo.org>
+
+	* Pinch nicer file info dialog from BMP-WMA.
+
+2006-01-15 02:34:41  William Pitcock <nenolod@nenolod.net>
+
+	* Add `Apply' button to the presets window. Patch via NhJm.
+
+2006-01-14 20:19:36  William Pitcock <nenolod@nenolod.net>
+
+	* Smarter algorithm for detecting differentials between button presses, now takes seconds into account.
+	* (I borrowed this from Atheme's lag detection code. :P)
+
+2006-01-14 20:12:15  William Pitcock <nenolod@nenolod.net>
+
+	* Take matters of seconds into consideration.
+
+2006-01-14 20:10:44  William Pitcock <nenolod@nenolod.net>
+
+	* Ditto for playlist window.
+
+2006-01-14 20:09:54  William Pitcock <nenolod@nenolod.net>
+
+	   - Scroll by 1000 frames when using the keypad (7 && 9) inside the player window to
+	  scroll through the song instead of 5000 frames.
+	   - Scroll by 1000 when using the tristate buttons to seek.
+
+2006-01-14 19:57:44  William Pitcock <nenolod@nenolod.net>
+
+	* Logic stuff relating to tristate-seek. Now I just need to work it into the event loop.
+
+2006-01-14 19:21:16  William Pitcock <nenolod@nenolod.net>
+
+	* Convert prev/next buttons to tristate, via create_pbutton_ex().
+
+2006-01-14 19:05:06  Tony Vroon <chainsaw@gentoo.org>
+
+	* Hello includes. Goodbye warnings.
+
+2006-01-14 18:58:03  William Pitcock <nenolod@nenolod.net>
+
+	* create_pbutton() should hook on release, not on push. My bad. :P
+
+2006-01-14 18:49:00  William Pitcock <nenolod@nenolod.net>
+
+	* This commit rips out the old equalization engine with a dynamic engine
+	* that can be extended all the way up to 128 bands.
+
+2006-01-14 13:03:49  Tony Vroon <chainsaw@gentoo.org>
+
+	* This file is not used.
+
+2006-01-14 09:27:13  Tony Vroon <chainsaw@gentoo.org>
+
+	* Sync with upstream CVS. This implements RIX playback.
+
+2006-01-14 07:40:19  Tony Vroon <chainsaw@gentoo.org>
+
+	* That removed so much that it does not play anymore. Add a line of code back.
+
+2006-01-14 02:02:06  William Pitcock <nenolod@nenolod.net>
+
+	* Reliability fixes.
+
+2006-01-13 22:48:46  William Pitcock <nenolod@nenolod.net>
+
+	* timidity fixes... remove duplicated code provided by produce_audio()
+	   -_-.
+
+2006-01-13 22:03:07  William Pitcock <nenolod@nenolod.net>
+
+	* Buttons are now tri-state, meaning they have both callbacks for push and
+	* release. This can be used for creating timers between the two points of
+	* push and release (for instance, to allow the rewind/forward buttons to
+	* seek through songs if they are not exited immediately)
+
+2006-01-13 21:18:38  William Pitcock <nenolod@nenolod.net>
+
+	   - remove fullscreen.c, fullscreen.h (I know of nothing for audacious
+	* that uses this code?)
+	   - merge timidity conversion to produce_audio(), provided by Kiyoshi Aman
+	* <kiyoshi.aman -at- gmail.com>.
+
+2006-01-13 20:36:08  William Pitcock <nenolod@nenolod.net>
+
+	* Install input.h and output.h headers.
+
+2006-01-13 16:57:57  William Pitcock <nenolod@nenolod.net>
+
+	* SPC titleinput fix. Contributed by Kiyoshi Aman <kiyoshi.aman -at- gmail.com>.
+
+2006-01-13 16:50:54  William Pitcock <nenolod@nenolod.net>
+
+	* Remove equalization code. We do this same processing in the core in 0.2.
+
+2006-01-12 20:27:22  William Pitcock <nenolod@nenolod.net>
+
+	* FreeBSD 6.x/7.x newata cdrio fixes. (I now have an ia32 box to work with ;))
+
+2006-01-11 08:11:10  William Pitcock <nenolod@nenolod.net>
+
+	* Add a sanity check for crappily written plugins in the decoder cache.
+
+2006-01-11 07:40:26  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use FMT_S16_NE instead of unnecessary #ifdef WORDS_BIGENDIAN trickery.
+
+2006-01-10 18:50:39  Tony Vroon <chainsaw@gentoo.org>
+
+	* Convert to produce_audio usage.
+
+2006-01-10 14:47:50  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use FMT_S16_NE instead of unnecessary #ifdef WORDS_BIGENDIAN trickery.
+
+2006-01-10 14:22:40  Tony Vroon <chainsaw@gentoo.org>
+
+	* Convert all input plugins (except timidity & wav-sndfile) to produce_audio.
+
+2006-01-09 17:00:10  William Pitcock <nenolod@nenolod.net>
+
+	* Change copying of scaling properties from factor 11 -> 12, to factor 12
+	   -> 13 when antialiasing -- results in a higher accuracy decode.
+
+	* It could still be wrong, we may need to do 13 -> 14 or 14 -> 15. We'll
+	* see how people like this adjustment first.
+
+2006-01-09 15:15:02  Tony Vroon <chainsaw@gentoo.org>
+
+	* Support .cmf .sci & .laa without stealing .mid from timidity.
+
+2006-01-09 14:30:26  Tony Vroon <chainsaw@gentoo.org>
+
+	* Care about pointer signedness.
+
+2006-01-08 18:49:05  Tony Vroon <chainsaw@gentoo.org>
+
+	* Experimental fix for the 56 warnings emitted by GCC4 when it encounters PsxBios.c; by an anonymous contributor. Stability to be assessed in the coming weeks.
+
+2006-01-08 18:03:37  Tony Vroon <chainsaw@gentoo.org>
+
+	* Care about pointer signedness.
+
+2006-01-08 17:14:58  Tony Vroon <chainsaw@gentoo.org>
+
+	* Disable unused function: audmp4_strip_spaces
+
+2006-01-08 17:02:54  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use glib function for glib types and care about pointer signedness.
+
+2006-01-08 16:14:06  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use the pkg-config database to link with libbinio in a portable way. Requires libbinio 1.4 (or higher).
+
+2006-01-08 15:39:07  Tony Vroon <chainsaw@gentoo.org>
+
+	* Initialize variables to zero where required.
+
+2006-01-08 15:32:21  Tony Vroon <chainsaw@gentoo.org>
+
+	* Add missing %s in translated string.
+
+2006-01-08 03:34:37  William Pitcock <nenolod@nenolod.net>
+
+	* Updated Ukranian translation.
+
+2006-01-08 03:33:29  William Pitcock <nenolod@nenolod.net>
+
+	* trivial manpage fix (spotted by dai)
+
+2006-01-08 03:26:45  William Pitcock <nenolod@nenolod.net>
+
+	* Updated japanese translation c/o Dai.
+
+2006-01-07 13:17:08  Tony Vroon <chainsaw@gentoo.org>
+
+	* Care about pointer signedness.
+
+2006-01-07 12:19:59  William Pitcock <nenolod@nenolod.net>
+
+	* Add giacomo to credits.
+
+2006-01-07 12:13:28  William Pitcock <nenolod@nenolod.net>
+
+	* Generate cache content on demand if it was not previously there.
+
+2006-01-07 12:02:25  William Pitcock <nenolod@nenolod.net>
+
+	* Do not generate a cache when loading a playlist.
+
+2006-01-07 08:18:41  Tony Vroon <chainsaw@gentoo.org>
+
+	* Really add S3M support back after receiving a convincing testcase.
+
+2006-01-07 08:18:13  Tony Vroon <chainsaw@gentoo.org>
+
+	* Add S3M support back after receiving a convincing testcase.
+
+2006-01-05 12:21:15  William Pitcock <nenolod@nenolod.net>
+
+	* FHS compatibility hacks
+
+2006-01-05 07:47:09  William Pitcock <nenolod@nenolod.net>
+
+	* Version bump to 0.2 -- we've been confusing the hell out of people.
+
+2006-01-05 02:07:44  William Pitcock <nenolod@nenolod.net>
+
+	* Support for FreeBSD 6.x CD Audio DAE.
+
+2006-01-04 14:26:59  Tony Vroon <chainsaw@gentoo.org>
+
+	* Remove support for .mid & .s3m; we have other plugins handling those formats already.
+
+2006-01-03 18:22:07  Tony Vroon <chainsaw@gentoo.org>
+
+	* AM_CONDITIONAL bug uncovered by deitarion.
+
+2006-01-03 17:03:55  Tony Vroon <chainsaw@gentoo.org>
+
+	* Upload missing file for genre handling.
+
+2006-01-03 16:29:34  Tony Vroon <chainsaw@gentoo.org>
+
+	* Autotools do not want quoting here, apparently. Fair enough.
+
+2006-01-03 16:25:32  Tony Vroon <chainsaw@gentoo.org>
+
+	* Disable adplug if the includes are missing (or in a very lame place). Stop blowing holes in my ship.
+
+2006-01-03 15:22:40  Tony Vroon <chainsaw@gentoo.org>
+
+	* Correct binio detection logic.
+
+2006-01-03 15:05:55  William Pitcock <nenolod@nenolod.net>
+
+	* WTF is this doing with UI code in it :S
+
+2006-01-03 15:05:01  William Pitcock <nenolod@nenolod.net>
+
+	   - remove unused "USE_SIMD" crap left over from BMP
+	   - add audacious icon (woohoo!)
+	   - add hungarian translation for the audacious gnome icon file (per laci)
+
+2006-01-03 14:54:18  William Pitcock <nenolod@nenolod.net>
+
+	   - Rename playlistwin stuff to ui_playlist.*
+
+2006-01-03 14:24:10  William Pitcock <nenolod@nenolod.net>
+
+	* fix audio corruption when doing a short write.
+
+2006-01-03 13:58:24  William Pitcock <nenolod@nenolod.net>
+
+	* Rebuild translation database.
+
+2006-01-03 13:51:19  William Pitcock <nenolod@nenolod.net>
+
+	* Do not print verbose "loading plugin" messages, only display errors to
+	* stdout.
+
+2006-01-03 11:47:13  William Pitcock <nenolod@nenolod.net>
+
+	* Fix adplug compilation issues (also per laci)
+
+2006-01-03 11:46:01  William Pitcock <nenolod@nenolod.net>
+
+	* Update audacious translation template (per laci)
+
+2006-01-01 08:40:46  Tony Vroon <chainsaw@gentoo.org>
+
+	* Start caring about pointer signedness.
+
+2006-01-01 07:35:17  Tony Vroon <chainsaw@gentoo.org>
+
+	* Sentinel fix; extra NULL required.
+
+2006-01-01 07:09:47  Tony Vroon <chainsaw@gentoo.org>
+
+	* We have no choice but to continue as planned. Deploy the sentinels!
+
+2006-01-01 06:57:22  Tony Vroon <chainsaw@gentoo.org>
+
+	* Remove last bits of the dirbrowser.
+
+2005-12-31 19:35:02  Tony Vroon <chainsaw@gentoo.org>
+
+	* Add parenthesis around assignment used as truth value.
+
+2005-12-31 19:31:38  Tony Vroon <chainsaw@gentoo.org>
+
+	* Kill unused var.
+
+2005-12-31 17:16:16  Tony Vroon <chainsaw@gentoo.org>
+
+	* Stop GYM playback at the right time, if the length is known.
+
+2005-12-31 17:15:42  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use file magic instead of extensions.
+
+2005-12-31 17:04:34  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use file magic instead of extensions.
+
+2005-12-31 16:47:56  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use file magic instead of extensions.
+
+2005-12-31 16:37:03  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use file magic instead of extensions.
+
+2005-12-31 16:17:51  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use file magic instead of extensions (Phase 2).
+
+2005-12-31 15:36:01  Tony Vroon <chainsaw@gentoo.org>
+
+	* Implement GYM tag reader.
+
+2005-12-31 15:14:35  Tony Vroon <chainsaw@gentoo.org>
+
+	* Implement VGM playback.
+
+2005-12-31 14:30:19  Tony Vroon <chainsaw@gentoo.org>
+
+	* Properly fall back to file name if the tag information is invalid (SPC).
+
+2005-12-31 14:04:53  Tony Vroon <chainsaw@gentoo.org>
+
+	* Length detection for GYM.
+
+2005-12-30 19:56:32  Tony Vroon <chainsaw@gentoo.org>
+
+	* Detect files by content; remove quick detect.
+
+2005-12-30 19:39:28  William Pitcock <nenolod@nenolod.net>
+
+	   - change our slogan to "The future of UNIX multimedia."
+	   - clarify who is developing on 0.2 and who developed on the 0.1 branch.
+	   - extend our copyright to 2006
+
+2005-12-30 18:31:39  Tony Vroon <chainsaw@gentoo.org>
+
+	* Adlib synthesizer (AdPlug) support.
+
+2005-12-30 16:17:35  William Pitcock <nenolod@nenolod.net>
+
+	* Checking path for NULL wont work in the for() loop, so we have to check elsewhere.
+	* It'd be nice if file managers would all obey the same standard.
+
+2005-12-30 15:52:14  William Pitcock <nenolod@nenolod.net>
+
+	* Cooler looking icons. (I stole these from BMPx, but yeah! It's GPL too. :P)
+
+2005-12-30 00:44:13  William Pitcock <nenolod@nenolod.net>
+
+	* This commit reduces the amount of times we probe a source down to ONE
+	* SINGLE TIME, using the cache I created earlier to provide all the
+	* information we need!
+
+2005-12-30 00:10:26  William Pitcock <nenolod@nenolod.net>
+
+	* Cache the decoder used for each PlaylistEntry. This reduces the amount
+	* of times we probe a resource to a strict limit of two times. (Once to
+	* detect the type, and the second time to get the stream information.)
+
+	* Something this simple should have been done to begin with...
+
+2005-12-29 04:29:29  William Pitcock <nenolod@nenolod.net>
+
+	* very rudementary http stream detection support for mpg123-clone.
+	   - i had to do a lot of stupid hackish workarounds for shoutcast (BTW, I hate you AOL and I hope you die someday.)
+
+2005-12-28 15:40:46  William Pitcock <nenolod@nenolod.net>
+
+	* mpg123-clone: Add '.mp3.part' to list of allowed extension types.
+	* (Audacious phase2)
+
+2005-12-26 16:12:35  William Pitcock <nenolod@nenolod.net>
+
+	* various fixes :(
+
+2005-12-26 15:56:03  William Pitcock <nenolod@nenolod.net>
+
+	* filterchain stuff
+
+2005-12-26 15:54:41  William Pitcock <nenolod@nenolod.net>
+
+	* filterchain stuff
+
+2005-12-26 15:52:54  William Pitcock <nenolod@nenolod.net>
+
+	* filterchain stuff
+
+2005-12-26 15:35:40  William Pitcock <nenolod@nenolod.net>
+
+	* a lot of EQ tweaks, but the preamp still does not work right
+
+2005-12-26 15:14:23  William Pitcock <nenolod@nenolod.net>
+
+	* Use the audacious filterchain for musepack. (I'm not removing the equalizer, because it looks like a better equalizer than the one we have right now.)
+
+2005-12-26 15:09:53  William Pitcock <nenolod@nenolod.net>
+
+	* Use produce_audio() to pass the audio through the new audacious filterchain stuff. (EQ support!!!)
+
+2005-12-26 15:01:04  William Pitcock <nenolod@nenolod.net>
+
+	* ditto for samplerate... we should have full plugin compatibility now
+
+2005-12-26 14:42:45  William Pitcock <nenolod@nenolod.net>
+
+	* Display the MP4/AAC+ bitrate, instead of "VBR".
+
+2005-12-26 09:19:44  Tony Vroon <chainsaw@gentoo.org>
+
+	* Replace a tab with spaces to make Mikachu happy.
+
+2005-12-26 03:16:45  William Pitcock <nenolod@nenolod.net>
+
+	* Initial fileinfo box, loosely based around the mpg123-clone one.
+
+2005-12-26 02:38:59  William Pitcock <nenolod@nenolod.net>
+
+	* Initial tagging_mp4.c code. Still need to add a class for aac tagging information (ID3)
+
+2005-12-26 01:56:55  William Pitcock <nenolod@nenolod.net>
+
+	* safety fix
+
+2005-12-26 01:22:44  William Pitcock <nenolod@nenolod.net>
+
+	* MP4 metadata retrieval support.
+
+2005-12-25 16:38:14  Tony Vroon <chainsaw@gentoo.org>
+
+	* Stop last few desperate attempts to hold on to GTK1+ includes.
+
+2005-12-25 16:25:03  Tony Vroon <chainsaw@gentoo.org>
+
+	* Delete stale GTK1+ interface code.
+
+2005-12-25 16:19:40  Tony Vroon <chainsaw@gentoo.org>
+
+	* And that concludes the story of the whacky OK button. Thank you.
+
+2005-12-25 16:10:13  William Pitcock <nenolod@nenolod.net>
+
+	* further paranoia (try to explain why the crash happened, if one happens -- as sexypsf explodes if it cant find the psflib)
+
+2005-12-25 15:31:46  Tony Vroon <chainsaw@gentoo.org>
+
+	* Implement GYM playback.
+
+2005-12-25 15:11:21  Tony Vroon <chainsaw@gentoo.org>
+
+	* Now that the build system is ready, upload the plugin code.
+
+2005-12-25 15:10:50  Tony Vroon <chainsaw@gentoo.org>
+
+	* Sexypsf input plugin; patch by dai in bug #395.
+
+2005-12-25 14:34:53  Tony Vroon <chainsaw@gentoo.org>
+
+	* Remove Add Directory option as it is broken. Patch by laci, closes bug #377.
+
+2005-12-25 10:49:09  Tony Vroon <chainsaw@gentoo.org>
+
+	* Convert to configdb usage.
+
+2005-12-24 21:30:32  Tony Vroon <chainsaw@gentoo.org>
+
+	* Change config file location, take plugin.h out of Makefile.am
+
+2005-12-24 20:31:05  Tony Vroon <chainsaw@gentoo.org>
+
+	* Remove static plugin.h trickery to cure SIGFPE and related madness.
+
+2005-12-20 15:33:42  William Pitcock <nenolod@nenolod.net>
+
+	* still gives off a warning, but will do the right thing regardless.
+
+2005-12-19 18:39:12  William Pitcock <nenolod@nenolod.net>
+
+	* playlist_list code cleanups from mikachu.
+
+2005-12-19 10:58:27  William Pitcock <nenolod@nenolod.net>
+
+	* JACKd output plugin via external contractor james@develia.org.
+
+2005-12-19 10:45:45  William Pitcock <nenolod@nenolod.net>
+
+	* playlist window truncation fixes provided by external contributor: Tim Yamin <plasmaroo -at- gentoo.org>.
+
+2005-12-18 16:17:33  Tony Vroon <chainsaw@gentoo.org>
+
+	* Squash 2 type-punned pointer warnings.
+
+2005-12-18 15:48:43  Tony Vroon <chainsaw@gentoo.org>
+
+	* Squash void pointer arithmetic warning in futils.c
+
+2005-12-18 15:30:27  Tony Vroon <chainsaw@gentoo.org>
+
+	* Okay, braindead configuration handling. Disabling config button for now.
+
+2005-12-18 13:42:07  Tony Vroon <chainsaw@gentoo.org>
+
+	* Dereferencing type-punned pointer will break strict-aliasing rules squashed by Mark Loeser <halcy0n@gentoo.org>.
+
+2005-12-18 11:06:02  Tony Vroon <chainsaw@gentoo.org>
+
+	* Do not abort if libmpc is not found, just disable musepack plugin.
+
+2005-12-18 10:56:26  Tony Vroon <chainsaw@gentoo.org>
+
+	* Convert to confdb usage. Squash most qualifier-related warnings. Remove pixmap/icon functionality. Eliminate dead code.
+
+2005-12-18 09:03:56  Tony Vroon <chainsaw@gentoo.org>
+
+	* Begin resurrecting config dialog. It compiles. Basic functionality is available, but see debug spew for TODO list.
+
+2005-12-18 08:41:22  Tony Vroon <chainsaw@gentoo.org>
+
+	* Fix spacing in --help output, patch by Mikachu.
+
+2005-12-18 07:30:29  Tony Vroon <chainsaw@gentoo.org>
+
+	* Do not try to grab .rar for unpack & module search, the specs change all the time. Has caused explosions & hangs.
+
+2005-12-17 16:59:54  Tony Vroon <chainsaw@gentoo.org>
+
+	* Squash the implicit declaration warnings by including the correct util.h
+
+2005-12-17 15:51:17  Tony Vroon <chainsaw@gentoo.org>
+
+	* Revert changes; this plugin is hard to convert to configdb. Leave it for now.
+
+2005-12-17 15:14:46  Tony Vroon <chainsaw@gentoo.org>
+
+	* Convert to configdb usage.
+
+2005-12-17 15:04:28  Tony Vroon <chainsaw@gentoo.org>
+
+	* Convert to configdb usage.
+
+2005-12-17 14:52:02  Tony Vroon <chainsaw@gentoo.org>
+
+	* Convert to configdb usage.
+
+2005-12-17 14:36:29  William Pitcock <nenolod@nenolod.net>
+
+	* Plugin cleanup functionality, via giacomo.
+
+2005-12-17 14:09:33  Tony Vroon <chainsaw@gentoo.org>
+
+	* Convert to configdb usage.
+
+2005-12-17 13:50:41  Tony Vroon <chainsaw@gentoo.org>
+
+	* Convert to configdb usage.
+
+2005-12-17 13:40:29  Tony Vroon <chainsaw@gentoo.org>
+
+	* Convert to configdb usage.
+
+2005-12-17 13:14:29  Tony Vroon <chainsaw@gentoo.org>
+
+	* Remove unnecessary configfile.h include, this plugin has no config support.
+
+2005-12-17 13:11:13  Tony Vroon <chainsaw@gentoo.org>
+
+	* Convert to configdb. GThreadify and peel off layer of threading macro madness.
+
+2005-12-17 10:42:26  Tony Vroon <chainsaw@gentoo.org>
+
+	* Convert to configdb usage.
+
+2005-12-17 10:21:58  Tony Vroon <chainsaw@gentoo.org>
+
+	* Convert to configdb usage.
+
+2005-12-16 20:40:01  Tony Vroon <chainsaw@gentoo.org>
+
+	* Config file paths should be ~/.audacious and not ~/.xmms
+
+2005-12-16 20:25:18  Tony Vroon <chainsaw@gentoo.org>
+
+	* Squash 3 warnings by compiling as C99 code. Remove round_trick kludge.
+
+2005-12-16 20:02:41  Tony Vroon <chainsaw@gentoo.org>
+
+	* Properly initialize vars before use. A debug-only message threw a warning, it had to go.
+
+2005-12-16 19:48:19  Tony Vroon <chainsaw@gentoo.org>
+
+	* Squash all 4 warnings in xmms-timidity.c
+
+2005-12-16 19:34:26  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use GTK_SIGNAL_FUNC() where needed and remove a totally random const qualifier.
+
+2005-12-16 19:20:04  Tony Vroon <chainsaw@gentoo.org>
+
+	* Juggle some declarations around to reduce warnings. Also remove one debugging statement that triggers a warning.
+
+2005-12-16 19:03:15  Tony Vroon <chainsaw@gentoo.org>
+
+	* Do not discard pointer type qualifiers.
+
+2005-12-16 18:24:33  Tony Vroon <chainsaw@gentoo.org>
+
+	* GThreadify input plugin.
+
+2005-12-16 18:08:46  Tony Vroon <chainsaw@gentoo.org>
+
+	* Add musepack input plugin & hook into build system.
+
+2005-12-16 14:17:53  Tony Vroon <chainsaw@gentoo.org>
+
+	* How about a default timidity.cfg location that actually works?
+
+2005-12-16 14:08:03  Tony Vroon <chainsaw@gentoo.org>
+
+	* Sorry, but has anyone ever told you that you talk too much?
+
+2005-12-16 13:25:47  Tony Vroon <chainsaw@gentoo.org>
+
+	* GThreadify and fix includes. And although it compiles, let us not ship this. No playback at all.
+
+2005-12-14 13:36:27  William Pitcock <nenolod@nenolod.net>
+
+	* possible DND fix for konqueror. (cleaned up version of fixed version of my cleanups...
+	* i will NOT code at 3 AM again.).
+
+2005-12-14 13:21:10  William Pitcock <nenolod@nenolod.net>
+
+	* path change
+
+2005-12-14 12:19:49  William Pitcock <nenolod@nenolod.net>
+
+	   - attach -Iaudacious to libaudcore build crap.
+	   - WTF was audacious/util.c doing including lowlevel header sys/ipc.h?!
+
+2005-12-14 10:58:13  William Pitcock <nenolod@nenolod.net>
+
+	* Updated japanese translation, via dai.
+
+2005-12-14 10:51:51  William Pitcock <nenolod@nenolod.net>
+
+	* Timidity support, via external contractor dai+audacious@cdr.jp.
+
+2005-12-14 10:35:56  William Pitcock <nenolod@nenolod.net>
+
+	* Update header locations.
+
+2005-12-14 10:20:45  William Pitcock <nenolod@nenolod.net>
+
+	* Very initial start on libaudcore.
+
+2005-12-13 21:03:19  William Pitcock <nenolod@nenolod.net>
+
+	   - Add interface plugin type (buildsystem).
+	   - Update Effect Makefile to use $EFFECT_PLUGINS vs $GENERAL_PLUGINS, even though this
+	  doesn't have any effect on anything.
+
+2005-12-13 01:11:30  William Pitcock <nenolod@nenolod.net>
+
+	* Vorbis UTF-8 tag conversion patch, via Takuo Kitame <kitame@debian.org>.
+
+2005-12-10 21:12:53  William Pitcock <nenolod@nenolod.net>
+
+	* typo fix
+
+2005-12-10 19:41:21  Tony Vroon <chainsaw@gentoo.org>
+
+	* Mikmod is obsolete. Let it die.
+
+2005-12-10 16:31:13  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use modplug instead of mikmod. Supports more formats & compressed files.
+
+2005-12-10 15:54:12  William Pitcock <nenolod@nenolod.net>
+
+	* Ladspa host module for Audacious.
+
+2005-12-10 10:42:49  Tony Vroon <chainsaw@gentoo.org>
+
+	* Raise MAX_CODED_SUPERFRAME_SIZE to 16384 in accordance with ffmpeg CVS.
+
+2005-12-10 10:14:54  Tony Vroon <chainsaw@gentoo.org>
+
+	* Add quoting to make autotools happy.
+
+2005-12-09 20:12:22  William Pitcock <nenolod@nenolod.net>
+
+	* Merge a cleaned up version of the patch included with #383. Audacious
+	* should no longer go berzerk when being the DND target from Konqueror or
+	* Nautilus.
+
+2005-12-09 20:03:16  William Pitcock <nenolod@nenolod.net>
+
+	* Update translation templates c/o of laci.
+
+2005-12-08 22:14:43  William Pitcock <nenolod@nenolod.net>
+
+	* Add missing lirc.m4.
+
+2005-12-08 22:12:44  William Pitcock <nenolod@nenolod.net>
+
+	   - Remove generated files
+	   - Add missing sidplay.m4 file.
+
+2005-12-08 17:17:54  Tony Vroon <chainsaw@gentoo.org>
+
+	* Update plugin descriptions in feature overview.
+
+2005-12-08 17:12:12  Tony Vroon <chainsaw@gentoo.org>
+
+	* Import sid plugin. Ported from XMMS by giacomo.
+
+2005-12-08 15:29:31  William Pitcock <nenolod@nenolod.net>
+
+	* We shouldn't have to close the output plugin from here. I don't know why
+	* we are...
+
+2005-12-08 13:47:13  William Pitcock <nenolod@nenolod.net>
+
+	* revert changes -- broke the plugin :/
+
+2005-12-08 13:44:32  William Pitcock <nenolod@nenolod.net>
+
+	* Kill some warnings here -- the other warnings I can't kill yet, as I've
+	* not yet been able to decipher the voodoo.
+
+2005-12-07 23:33:57  William Pitcock <nenolod@nenolod.net>
+
+	* fix breakage
+
+2005-12-07 18:54:27  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use a mutex, lower timeouts. Do not spin waiting for playback to start.
+
+2005-12-07 17:53:53  Tony Vroon <chainsaw@gentoo.org>
+
+	* Hook crossfade into build system.
+
+2005-12-07 17:37:52  Tony Vroon <chainsaw@gentoo.org>
+
+	* Remove last of the internal OSS support and default to ALSA. Squashed a few warnings but it is still messy.
+
+2005-12-06 18:09:32  Tony Vroon <chainsaw@gentoo.org>
+
+	* Still need to pry internal OSS from clenched fingers. In need of anti-warning love too, but it compiles.
+
+2005-12-06 16:02:16  Tony Vroon <chainsaw@gentoo.org>
+
+	* Made WMA support configurable, defaults to on.
+
+2005-12-04 17:58:55  Tony Vroon <chainsaw@gentoo.org>
+
+	* First attempt at porting the crossfade plugin; patches from bug #363 applied, GThreadified, includes fixed. Will most probably not compile as of yet.
+
+2005-12-04 13:22:16  Tony Vroon <chainsaw@gentoo.org>
+
+	* Last bit of cast rework by Stephen Bennett.
+
+2005-12-04 11:29:14  Tony Vroon <chainsaw@gentoo.org>
+
+	* Properly report Audacious instead of XMMS or BMP in all places. Patch by laci; closes bug #379.
+
+2005-12-04 10:49:53  Tony Vroon <chainsaw@gentoo.org>
+
+	* C++ warning fixes by external contractor Stephen Bennett.
+
+2005-12-04 09:37:06  Tony Vroon <chainsaw@gentoo.org>
+
+	* Create some proper headers and include them. No more implicit declarations.
+
+2005-12-04 08:48:27  Tony Vroon <chainsaw@gentoo.org>
+
+	* Initialize two variables before use and remove an unused one. Squashes 3 warnings.
+
+2005-12-04 08:26:12  Tony Vroon <chainsaw@gentoo.org>
+
+	* Do not discard pointer target type, and do not use deprecated g_basename function.
+
+2005-12-04 08:01:40  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use GdkAtom instead of a regular Atom. 3 characters inserted cure 3 warnings; good return on investment...
+
+2005-12-03 14:58:13  Tony Vroon <chainsaw@gentoo.org>
+
+	* These fixme warnings are no longer relevant.
+
+2005-12-03 11:27:11  Tony Vroon <chainsaw@gentoo.org>
+
+	* Reduce code duplication and add a return statement.
+
+2005-12-03 11:14:33  Tony Vroon <chainsaw@gentoo.org>
+
+	* Add two missing casts and update the player buffer description from XMMS to Audacious.
+
+2005-12-03 10:46:07  Tony Vroon <chainsaw@gentoo.org>
+
+	* Avoid discarding pointer type qualifiers.
+
+2005-12-03 10:17:14  Tony Vroon <chainsaw@gentoo.org>
+
+	* Avoid discarding pointer type qualifiers by not using the result of gtk_entry_get_text directly.
+
+2005-12-02 17:33:58  Tony Vroon <chainsaw@gentoo.org>
+
+	* Add casts to callbacks in signal handlers to avoid warning. GCC would like a return statement too.
+
+2005-11-30 16:56:57  William Pitcock <nenolod@nenolod.net>
+
+	* Convert UTF-16 (windows-1252) into something useful. Original patch by incomp@#audacious,
+	* severe cleanups by myself. :)
+
+2005-11-30 02:02:54  William Pitcock <nenolod@nenolod.net>
+
+	* C99 compliance issues inside wma.c.
+
+2005-11-29 16:44:13  William Pitcock <nenolod@nenolod.net>
+
+	* Fix AAC linkage for gcc4, which does not autolink against libstdc++.
+	* Should be harmless (I hope -- untested on FreeBSD as of yet.)
+
+2005-11-27 13:58:49  William Pitcock <nenolod@nenolod.net>
+
+	* Check for lrintf. Fixed by ahuillet.
+
+2005-11-27 13:55:31  William Pitcock <nenolod@nenolod.net>
+
+	* Update translation template, and add new audacious messages to the POTFILES.in.
+
+2005-11-27 13:43:05  William Pitcock <nenolod@nenolod.net>
+
+	* Revert unicode fixes, cause player to bomb out.
+
+2005-11-26 22:14:03  William Pitcock <nenolod@nenolod.net>
+
+	* Don't use widget_draw_quick() in playlistwin_update_list().
+
+2005-11-26 21:04:04  William Pitcock <nenolod@nenolod.net>
+
+	* Add gdk_flush() to widget_draw_quick().
+
+2005-11-26 20:28:19  William Pitcock <nenolod@nenolod.net>
+
+	   - Implement widget_draw_quick(widget_t *) for doing an immediate draw
+	  operation on a widget.
+	   - Use widget_draw_quick() to force a playlist update on unshade.
+
+2005-11-26 19:44:16  William Pitcock <nenolod@nenolod.net>
+
+	* Remove unneeded sanity check.
+
+2005-11-26 19:36:56  William Pitcock <nenolod@nenolod.net>
+
+	* Revert changes.
+
+2005-11-26 19:22:55  William Pitcock <nenolod@nenolod.net>
+
+	* Closer, but doesn't do it properly.
+
+2005-11-26 19:08:15  William Pitcock <nenolod@nenolod.net>
+
+	* Force redraw of audacious playlist window.
+
+2005-11-26 16:29:35  William Pitcock <nenolod@nenolod.net>
+
+	* Update japanese translator's name. Whoops.
+
+2005-11-26 16:27:26  William Pitcock <nenolod@nenolod.net>
+
+	* Updated greek translation, thanks to stavrosg.
+
+2005-11-26 16:11:04  William Pitcock <nenolod@nenolod.net>
+
+	* Version bump -- 0.1.2.
+
+2005-11-26 16:08:34  William Pitcock <nenolod@nenolod.net>
+
+	* Always update the playlist information, regardless of whether it is shaded or not. To ensure this happens, I've attached playlistwin_update_list() to the GUI event loop,
+	* mainwin_idle_func(). This is rather clunky, and I don't like it, but it works perfectly. So there.
+
+2005-11-26 01:14:41  William Pitcock <nenolod@nenolod.net>
+
+	* GCC2 fixes.
+
+2005-11-25 22:23:40  William Pitcock <nenolod@nenolod.net>
+
+	* Unicode support fixes, based on an XMMS patch written by Ilya Konstantinov. <ikonst@users.sourceforge.net>:
+	   - Fixes UTF16 to UTF8 down-conversion.
+	   - Fixes length management of UTF8 entities.
+	   - Doesn't break ASCII support.
+	   - Corrects several issues with the original implementation.
+
+2005-11-25 21:54:46  William Pitcock <nenolod@nenolod.net>
+
+	* Make the left and right keys work when the playlist window has focus.
+
+2005-11-25 21:29:04  William Pitcock <nenolod@nenolod.net>
+
+	* Add Winamp-style numeric keypad shortcut key support.
+
+2005-11-25 16:57:51  William Pitcock <nenolod@nenolod.net>
+
+	* WTF @ playlist window controlling fonts? o.O
+
+2005-11-25 15:26:59  William Pitcock <nenolod@nenolod.net>
+
+	* Update credits on here reflecting audacious-decoder changes.
+
+2005-11-25 14:53:16  William Pitcock <nenolod@nenolod.net>
+
+	* Glade stuff.
+
+2005-11-25 14:50:50  William Pitcock <nenolod@nenolod.net>
+
+	* Revert logic part of scrolling.
+
+2005-11-22 23:21:26  William Pitcock <nenolod@nenolod.net>
+
+	* gcc4 fixes
+
+2005-11-21 17:00:26  Tony Vroon <chainsaw@gentoo.org>
+
+	* Compile WMA by default. It works now.
+
+2005-11-21 16:59:13  Tony Vroon <chainsaw@gentoo.org>
+
+	* Working WMA support. I never said it would be pretty, neno, I should said it would play.
+
+2005-11-20 22:02:32  William Pitcock <nenolod@nenolod.net>
+
+	* Rename controlsocket to audacious, from xmms, so that xmms stuff wont crash us.
+
+2005-11-20 16:17:19  William Pitcock <nenolod@nenolod.net>
+
+	* Add ctrlsocket_check to generic event loop.
+
+2005-11-20 14:35:42  Tony Vroon <chainsaw@gentoo.org>
+
+	* GThreadify output plugin.
+
+2005-11-20 13:18:16  Tony Vroon <chainsaw@gentoo.org>
+
+	* Implement GBS playback.
+
+2005-11-20 12:57:10  Tony Vroon <chainsaw@gentoo.org>
+
+	* Implement NSF playback.
+
+2005-11-20 08:44:16  Tony Vroon <chainsaw@gentoo.org>
+
+	* Include fix, allows the plugin to compile again.
+
+2005-11-20 02:34:09  William Pitcock <nenolod@nenolod.net>
+
+	* Sync ALSA plugin with enhancements/patches from Fatal (XMMS cvs)
+
+2005-11-19 16:42:28  Tony Vroon <chainsaw@gentoo.org>
+
+	* Sync with xmms-wma instead of bmp-wma & GThreadify. Does not explode, but does not play either.
+
+2005-11-19 07:49:16  Tony Vroon <chainsaw@gentoo.org>
+
+	* Add casts to callbacks in signal handlers to avoid warning. Remove stale pause handler declaration from wav-sndfile.h
+
+2005-11-19 06:36:29  Tony Vroon <chainsaw@gentoo.org>
+
+	* Increase GCC happiness about libfaad code.
+
+2005-11-18 11:18:34  William Pitcock <nenolod@nenolod.net>
+
+	* Save the preference to enable or disable bitmap fonts.
+
+2005-11-18 02:59:16  William Pitcock <nenolod@nenolod.net>
+
+	* Lets not install libmp4v2.
+
+2005-11-18 00:10:41  William Pitcock <nenolod@nenolod.net>
+
+	* Force pango to use a sane fontsize for the playlist window.
+
+2005-11-17 23:45:35  William Pitcock <nenolod@nenolod.net>
+
+	* Fucking nero idiots suck...
+
+2005-11-17 16:57:57  Tony Vroon <chainsaw@gentoo.org>
+
+	* Verify that all files are under version control. Upload a few that were not.
+
+2005-11-17 16:37:37  Tony Vroon <chainsaw@gentoo.org>
+
+	* Unbreak my... compile
+
+2005-11-17 16:01:18  Tony Vroon <chainsaw@gentoo.org>
+
+	* libmp4v2 goes back to the future
+
+2005-11-17 14:21:04  Tony Vroon <chainsaw@gentoo.org>
+
+	* GThreadify plugin. Adds a return statement and removes a pragma statement to please GCC.
+
+2005-11-16 18:21:11  Tony Vroon <chainsaw@gentoo.org>
+
+	* Synced with bmp-mp4. Build system is fragile, but should work now.
+
+2005-11-16 03:12:05  William Pitcock <nenolod@nenolod.net>
+
+	* memory leak fix, should close #368.e
+
+2005-11-15 22:21:50  William Pitcock <nenolod@nenolod.net>
+
+	* Split up generic events into audcore_generic_events(), and client-specific stuff remains in mainwin_idle_func().
+
+2005-11-15 21:24:17  William Pitcock <nenolod@nenolod.net>
+
+	   - Fix playback-stop RPC call crash.
+	   - Fix shutdown RPC call crash.
+
+2005-11-15 02:44:39  William Pitcock <nenolod@nenolod.net>
+
+	* oops :p
+
+2005-11-15 02:15:05  William Pitcock <nenolod@nenolod.net>
+
+	* Fix an error on line 666, reported by Mikachu. Ironic that it *would* be line *666*.
+
+2005-11-15 01:48:31  William Pitcock <nenolod@nenolod.net>
+
+	* Add --headless to help listing.
+
+2005-11-15 01:43:39  William Pitcock <nenolod@nenolod.net>
+
+	* headless now working, use --headless if you wish to experiment.
+
+2005-11-15 01:13:44  William Pitcock <nenolod@nenolod.net>
+
+	* Initial headless stuff... does not yet work.
+
+2005-11-14 18:01:00  Tony Vroon <chainsaw@gentoo.org>
+
+	* GCC would prefer a return statement here.
+
+2005-11-14 17:58:21  Tony Vroon <chainsaw@gentoo.org>
+
+	* GCC would prefer a return statement here.
+
+2005-11-14 17:45:51  Tony Vroon <chainsaw@gentoo.org>
+
+	* Fix includes to avoid implicit declaration warnings.
+
+2005-11-13 20:57:54  William Pitcock <nenolod@nenolod.net>
+
+	* Titling updates.
+
+2005-11-13 20:14:56  William Pitcock <nenolod@nenolod.net>
+
+	* Fileinfo dialog adjustment.
+
+2005-11-13 19:59:06  William Pitcock <nenolod@nenolod.net>
+
+	* Fix a gcc issue, I think.
+
+2005-11-13 16:27:07  Tony Vroon <chainsaw@gentoo.org>
+
+	* List sndfile extensions in the plugin configuration table.
+
+2005-11-13 15:52:37  Tony Vroon <chainsaw@gentoo.org>
+
+	* Pthread is not used here, so do not link to it.
+
+2005-11-13 15:36:38  Tony Vroon <chainsaw@gentoo.org>
+
+	* Missed an include there.
+
+2005-11-13 15:33:03  Tony Vroon <chainsaw@gentoo.org>
+
+	* GThreadify this input plugin.
+
+2005-11-13 15:27:38  William Pitcock <nenolod@nenolod.net>
+
+	* wtf @ USE_MMX
+
+2005-11-13 15:02:22  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use GThread instead of pthread.
+
+2005-11-13 15:02:10  William Pitcock <nenolod@nenolod.net>
+
+	* Infinite loop. (oops)
+
+2005-11-13 14:59:10  William Pitcock <nenolod@nenolod.net>
+
+	* Remove stale USE_SIMD stuff.
+
+2005-11-13 14:55:07  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use GThread instead of pthread.
+
+2005-11-13 14:51:07  William Pitcock <nenolod@nenolod.net>
+
+	* Really I do.
+
+2005-11-13 14:50:12  William Pitcock <nenolod@nenolod.net>
+
+	* grr... i hate automake
+
+2005-11-13 14:43:41  William Pitcock <nenolod@nenolod.net>
+
+	* Add -lsndfile when using wav-sndfile.c
+
+2005-11-13 14:33:37  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use GThread instead of pthread.
+
+2005-11-13 14:30:00  William Pitcock <nenolod@nenolod.net>
+
+	* Remove more optimization.
+
+2005-11-13 14:28:14  William Pitcock <nenolod@nenolod.net>
+
+	* Buffer underrun fix?
+
+2005-11-13 14:24:31  William Pitcock <nenolod@nenolod.net>
+
+	* Remove assembly optimizations, we want to play nicely with any system.
+
+2005-11-13 13:37:33  William Pitcock <nenolod@nenolod.net>
+
+	* Add chainsaw to credits.
+
+2005-11-13 02:07:48  William Pitcock <nenolod@nenolod.net>
+
+	* New skin, care of NhJm, with modifications by me :)
+
+2005-11-13 01:01:56  William Pitcock <nenolod@nenolod.net>
+
+	* Add gstreamer/ for later hacking on.
+
+2005-11-12 22:49:04  William Pitcock <nenolod@nenolod.net>
+
+	* AM_CONDITIONAL fix
+
+2005-11-12 20:02:29  William Pitcock <nenolod@nenolod.net>
+
+	* sndfile checks
+
+2005-11-12 19:47:27  Tony Vroon <chainsaw@gentoo.org>
+
+	* Add quotes for AC_FIND_FILE to make aclocal-1.9 happy
+
+2005-11-12 19:27:07  William Pitcock <nenolod@nenolod.net>
+
+	* oops
+
+2005-11-12 19:26:42  William Pitcock <nenolod@nenolod.net>
+
+	* autoconf fixes for lirc, still broken
+
+2005-11-12 19:26:32  Tony Vroon <chainsaw@gentoo.org>
+
+	* Observe AM_CONDITIONAL name before committing.
+
+2005-11-12 19:20:49  Tony Vroon <chainsaw@gentoo.org>
+
+	* Do not try to build LIRC when not enabled.
+
+2005-11-12 19:19:42  William Pitcock <nenolod@nenolod.net>
+
+	* Makefile changes for sndfile.
+
+2005-11-12 19:12:53  Tony Vroon <chainsaw@gentoo.org>
+
+	* And that one last Makefile.am for lirc.
+
+2005-11-12 19:12:20  Tony Vroon <chainsaw@gentoo.org>
+
+	* Integrate LIRC plugin into build system.
+
+2005-11-12 19:11:46  Tony Vroon <chainsaw@gentoo.org>
+
+	* Add LIRC general plugin.
+
+2005-11-12 17:39:26  Tony Vroon <chainsaw@gentoo.org>
+
+	* Add sndfile version of the wav plugin. Not integrated into buildsystem yet.
+
+2005-11-12 16:38:19  William Pitcock <nenolod@nenolod.net>
+
+	* Don't crash if there's no handler for pausing.
+
+2005-11-12 16:34:04  William Pitcock <nenolod@nenolod.net>
+
+	* Do not use G_INLINE_FUNC. Reported by halcy0n@gentoo.org
+
+2005-11-12 16:15:48  William Pitcock <nenolod@nenolod.net>
+
+	* Remove the fucking mutex system that broke.
+
+2005-11-12 12:51:09  William Pitcock <nenolod@nenolod.net>
+
+	* Remove REAL_TO_SHORT from generic decoder.
+
+2005-11-10 20:25:15  William Pitcock <nenolod@nenolod.net>
+
+	* Add ability to override defaults via .audacious/config until we can get a GUI.
+
+2005-11-10 20:15:39  William Pitcock <nenolod@nenolod.net>
+
+	* basic resampling code.
+
+2005-11-10 20:07:22  William Pitcock <nenolod@nenolod.net>
+
+	* More of the same.
+
+2005-11-10 20:05:56  William Pitcock <nenolod@nenolod.net>
+
+	* Move SPC-specific code into SPC-specific routines.
+
+2005-11-10 19:52:13  William Pitcock <nenolod@nenolod.net>
+
+	* Display the amount of DSP channels in the kbps box.
+
+2005-11-10 19:51:04  William Pitcock <nenolod@nenolod.net>
+
+	* looping stuff
+
+2005-11-10 18:48:36  William Pitcock <nenolod@nenolod.net>
+
+	* More thread safety, less XMMS braindamage.
+
+2005-11-10 18:40:09  William Pitcock <nenolod@nenolod.net>
+
+	* Mutex system
+
+2005-11-10 17:56:32  William Pitcock <nenolod@nenolod.net>
+
+	* Don't build wma by default, it's not working.
+
+2005-11-10 17:15:54  William Pitcock <nenolod@nenolod.net>
+
+	* Hook it into the build.
+
+2005-11-10 17:15:36  William Pitcock <nenolod@nenolod.net>
+
+	* Make it compile. :)
+
+2005-11-10 16:59:08  William Pitcock <nenolod@nenolod.net>
+
+	* Generate makefiles for wma plugin.
+
+2005-11-10 16:57:56  William Pitcock <nenolod@nenolod.net>
+
+	* Rename bmp-wma.c to wma.c.
+
+2005-11-10 16:56:35  William Pitcock <nenolod@nenolod.net>
+
+	* Import WMA decoder into SVN.
+
+2005-11-10 08:41:14  William Pitcock <nenolod@nenolod.net>
+
+	* Whoops.
+
+2005-11-10 08:38:54  William Pitcock <nenolod@nenolod.net>
+
+	* symbol fixes
+
+2005-11-10 08:28:46  William Pitcock <nenolod@nenolod.net>
+
+	* fix capitalization
+
+2005-11-09 23:24:24  William Pitcock <nenolod@nenolod.net>
+
+	* Open the output channel before firing up the thread.
+
+2005-11-09 22:00:16  William Pitcock <nenolod@nenolod.net>
+
+	* Remove configure options that no longer have any meaning.
+
+2005-11-09 21:59:50  William Pitcock <nenolod@nenolod.net>
+
+	* Same for SDL.
+
+2005-11-09 21:57:44  William Pitcock <nenolod@nenolod.net>
+
+	* Fix libmikmod test.
+
+2005-11-09 18:49:31  William Pitcock <nenolod@nenolod.net>
+
+	* Update the credits to note the code sync that occured.
+
+2005-11-09 18:42:39  William Pitcock <nenolod@nenolod.net>
+
+	* Optimized decoders, and custom resampler. We don't use these yet.
+
+2005-11-09 18:40:03  William Pitcock <nenolod@nenolod.net>
+
+	* Synchronize mpg123 code with mpg123-0.59s.mc3. This brings us superior accuracy to libMAD, apparently.
+
+2005-11-08 14:04:15  William Pitcock <nenolod@nenolod.net>
+
+	* Fix realize function for the bitmap fonts option.
+
+2005-11-08 13:56:35  William Pitcock <nenolod@nenolod.net>
+
+	* Winorder fixes c/o of Mikachu.
+
+2005-11-08 01:26:55  William Pitcock <nenolod@nenolod.net>
+
+	* More bitmap-font related stuff, working on a scrolling implementation too. (You can now enable or disable bitmap font support in Preferences.)
+
+2005-11-08 00:13:25  William Pitcock <nenolod@nenolod.net>
+
+	* Bring back support for winamp-style bitmap fonts. :)
+
+2005-11-07 23:03:54  William Pitcock <nenolod@nenolod.net>
+
+	* New logo, care of NhJm.
+
+2005-11-07 23:01:48  William Pitcock <nenolod@nenolod.net>
+
+	* version bump to 0.1.1.
+
+2005-11-07 23:00:31  William Pitcock <nenolod@nenolod.net>
+
+	* Merge icons from NhJm.
+
+2005-11-03 23:56:07  William Pitcock <nenolod@nenolod.net>
+
+	* s/xmms/Audacious/g
+
+2005-11-03 23:53:02  William Pitcock <nenolod@nenolod.net>
+
+	* Updates :)
+
+2005-11-03 23:46:14  William Pitcock <nenolod@nenolod.net>
+
+	* Add song_change plugin, ready to go.
+
+2005-11-03 23:44:02  William Pitcock <nenolod@nenolod.net>
+
+	* New and improved configure.ac!
+
+2005-11-03 23:40:28  William Pitcock <nenolod@nenolod.net>
+
+	* Add build infrastructure for General plugins :)
+
+2005-11-03 19:43:12  William Pitcock <nenolod@nenolod.net>
+
+	* stupid glibc >_<
+
+2005-11-03 19:24:38  William Pitcock <nenolod@nenolod.net>
+
+	* Fix linux good!
+
+2005-11-03 18:08:51  William Pitcock <nenolod@nenolod.net>
+
+	* linux fix care of atheme IRC services :P
+
+2005-11-03 16:17:02  William Pitcock <nenolod@nenolod.net>
+
+	* Update configure to generate the makefile for the SPC decoder...
+
+2005-11-03 00:08:35  William Pitcock <nenolod@nenolod.net>
+
+	* Hook the console plugin into the build, it's ready for initial alphatesting.
+
+2005-11-03 00:07:17  William Pitcock <nenolod@nenolod.net>
+
+	* Add about box.
+
+2005-11-02 23:45:23  William Pitcock <nenolod@nenolod.net>
+
+	* Improved latency on the decode loop.
+
+2005-11-02 23:43:28  William Pitcock <nenolod@nenolod.net>
+
+	* Finally! Got the timing working properly on the visualization plugin :)
+
+2005-11-02 23:26:00  William Pitcock <nenolod@nenolod.net>
+
+	* Tell the player that the decoder has fired up :)
+
+2005-11-02 21:33:25  William Pitcock <nenolod@nenolod.net>
+
+	* Use header.game, over header.author, as most SPC files do not contain the composer information.
+
+2005-11-02 21:31:34  William Pitcock <nenolod@nenolod.net>
+
+	* Generate a proper title.
+
+2005-11-02 21:11:24  William Pitcock <nenolod@nenolod.net>
+
+	* Stop playback when requested to by user.
+
+2005-11-02 20:38:59  William Pitcock <nenolod@nenolod.net>
+
+	* Normal sound decoding, now to just figure out how to stop the decode_thread when we need to.
+
+2005-11-02 01:15:57  William Pitcock <nenolod@nenolod.net>
+
+	* More accurate sound reproduction, but there is warbling. Still locks up player on completion.
+
+2005-11-02 01:01:32  William Pitcock <nenolod@nenolod.net>
+
+	* More stuffness. It *decodes*, but:
+	   - locks up the player afterwards
+	   - doesn't sound right. try it and see what i mean.
+
+2005-11-01 23:53:40  William Pitcock <nenolod@nenolod.net>
+
+	* What i have right now is this.
+
+2005-11-01 23:34:11  William Pitcock <nenolod@nenolod.net>
+
+	* More progress -- now loads as an audacious module. :)
+
+2005-11-01 23:25:40  William Pitcock <nenolod@nenolod.net>
+
+	* Oops.
+
+2005-11-01 23:23:24  William Pitcock <nenolod@nenolod.net>
+
+	* More work
+
+2005-11-01 23:09:52  William Pitcock <nenolod@nenolod.net>
+
+	* Add code for decoder thread.
+
+2005-11-01 22:45:32  William Pitcock <nenolod@nenolod.net>
+
+	* Some routines here. Hehe.
+
+2005-11-01 22:20:20  William Pitcock <nenolod@nenolod.net>
+
+	* More endianness fixes.
+
+2005-11-01 22:18:19  William Pitcock <nenolod@nenolod.net>
+
+	* Pass correct endianness information to the library.
+
+2005-11-01 22:07:16  William Pitcock <nenolod@nenolod.net>
+
+	* Typo fix
+
+2005-11-01 21:57:26  William Pitcock <nenolod@nenolod.net>
+
+	* Import the initial sources for console music support.
+
+2005-11-01 16:55:04  William Pitcock <nenolod@nenolod.net>
+
+	* DragonflyBSD fixes.
+
+2005-11-01 02:11:27  William Pitcock <nenolod@nenolod.net>
+
+	* Fix the missing separator in the playback menu. (oops)
+
+2005-11-01 02:08:25  William Pitcock <nenolod@nenolod.net>
+
+	* More work on the main menu...
+
+2005-11-01 01:46:59  William Pitcock <nenolod@nenolod.net>
+
+	   - Add a few things to the main menu.
+	   - Bring back classic XMMS behaviour of ``Play Location''.
+
+2005-10-31 23:16:49  William Pitcock <nenolod@nenolod.net>
+
+	* s/static GTKItemFactoryEntry/GTKItemFactoryEntry/g.
+
+2005-10-31 23:06:43  William Pitcock <nenolod@nenolod.net>
+
+	* We wanted GTK_WINDOW_TOPLEVEL here, not GTK_WINDOW_POPUP. :P
+
+2005-10-31 22:29:31  William Pitcock <nenolod@nenolod.net>
+
+	* m4 changes: move libmikmod stuff into m4/libmikmod.m4.
+
+2005-10-31 22:27:37  William Pitcock <nenolod@nenolod.net>
+
+	* Fix build of mikmod plugin. Thanks Pelosz.
+
+2005-10-31 18:45:17  William Pitcock <nenolod@nenolod.net>
+
+	* Do not install libmp4v2.la.
+
+	* This closes gentoo bug #110987.
+
+2005-10-30 23:12:07  msameer
+
+	* Commented Work-around for bug #129
+
+2005-10-30 23:08:07  msameer
+
+	* Fix #129 by using playlistwin_set_mask() in playlistwin_set_shade()
+
+2005-10-30 17:25:52  msameer
+
+	* Call gnome_vfs_escape_path_string() before attempting to open the file.
+	* (Closes: #0000291)
+
+2005-10-30 16:02:23  msameer
+
+	* ENABLE_AAC conditional so we won't compile it if the user doesn't want.
+
+2005-10-29 20:59:02  William Pitcock <nenolod@nenolod.net>
+
+	* Updates to the AUTHORS document.
+
+2005-10-29 19:41:30  msameer
+
+	* Use the conitional HAVE_FLAC so we won't try to compile it if we shouldn't.
+
+2005-10-29 19:32:21  msameer
+
+	* use $have_flac instead of $enable_flac in the summary view.
+
+2005-10-29 19:04:27  msameer
+
+	* Added the SDL M4 Macro.
+
+2005-10-29 18:32:06  msameer
+
+	* libflac test
+
+2005-10-29 11:28:32  msameer
+
+	* Added myself to the AUTHORS file and the about box.
+
+2005-10-29 11:23:33  msameer
+
+	* blah\!
+
+2005-10-29 11:21:19  msameer
+
+	* Added README.bmp to extra dist
+
+2005-10-29 11:20:07  msameer
+
+	* README copied to README.bmp
+
+2005-10-29 11:16:31  msameer
+
+	* Added -I$(top_srcdir)/Plugins to INCLUDES to fix the compile errors because Output/OSS/soundcard.h was not found
+
+2005-10-29 11:13:49  msameer
+
+	* Added -I$(top_srcdir)/Plugins to Makefile.am - Fix compile errors.
+
+2005-10-29 01:10:22  William Pitcock <nenolod@nenolod.net>
+
+	* Include fix.
+
+2005-10-29 01:03:59  William Pitcock <nenolod@nenolod.net>
+
+	* Update headers, master Makefile.
+
+2005-10-29 01:01:56  William Pitcock <nenolod@nenolod.net>
+
+	* Makefile for Plugins/.
+
+2005-10-29 01:00:27  William Pitcock <nenolod@nenolod.net>
+
+	* configure related path changes
+
+2005-10-29 00:58:11  William Pitcock <nenolod@nenolod.net>
+
+	* Move plugins to Plugins/
+
+2005-10-28 23:36:53  William Pitcock <nenolod@nenolod.net>
+
+	* Updated japanese translation, thanks to dai.
+
+2005-10-28 23:24:36  William Pitcock <nenolod@nenolod.net>
+
+	* More header changes.
+
+2005-10-28 23:20:10  William Pitcock <nenolod@nenolod.net>
+
+	* More dragonflybsd fixes.
+
+2005-10-28 22:07:59  William Pitcock <nenolod@nenolod.net>
+
+	* dragonflybsd fixes.
+
+2005-10-28 00:42:57  William Pitcock <nenolod@nenolod.net>
+
+	* Fix compilation of FLAC plugin.
+
+2005-10-27 18:58:54  William Pitcock <nenolod@nenolod.net>
+
+	* This commit builds on the second one, improving the accuracy of the dynamic limiter.
+
+2005-10-27 18:49:50  William Pitcock <nenolod@nenolod.net>
+
+	* This commit does the following:
+
+	   - Changes out static timings for a dynamic implementation which works via actively detecting how long it takes to render a frame
+	   - Cleans up a few warnings.
+
+2005-10-27 14:54:05  msameer
+
+	* Cleaning autogenerated files
+
+2005-10-27 14:50:36  msameer
+
+	* Removing all Makefile.in's
+
+2005-10-27 14:46:45  msameer
+
+	* Removing all Makefile.in's
+
+2005-10-27 14:15:53  msameer
+
+	* flac output
+
+2005-10-27 14:02:46  msameer
+
+	* flac output, ripped from flac.sf.net
+
+2005-10-27 12:28:28  William Pitcock <nenolod@nenolod.net>
+
+	* Disk Writer is back!
+
+2005-10-27 01:57:11  William Pitcock <nenolod@nenolod.net>
+
+	* timings, take 3.
+
+2005-10-27 01:41:50  William Pitcock <nenolod@nenolod.net>
+
+	* Timings, take 2.
+
+2005-10-27 01:21:47  msameer
+
+	* Corrected the path of some includes from audacious to libaudacious to fix copmilation error
+
+2005-10-27 01:00:02  msameer
+
+	* Fixed 0000356
+
+2005-10-26 17:30:37  William Pitcock <nenolod@nenolod.net>
+
+	* timing fixes
+
+2005-10-26 17:08:53  William Pitcock <nenolod@nenolod.net>
+
+	* libvisual-proxy fixes.
+
+2005-10-26 13:32:09  William Pitcock <nenolod@nenolod.net>
+
+	* More fixes.
+
+2005-10-26 13:22:20  William Pitcock <nenolod@nenolod.net>
+
+	* Cleanups
+
+2005-10-26 13:17:30  William Pitcock <nenolod@nenolod.net>
+
+	* Add -lGL to our required libs.
+
+2005-10-26 12:57:27  William Pitcock <nenolod@nenolod.net>
+
+	* Regenerate a bunch of stuff :)
+
+2005-10-26 12:54:33  William Pitcock <nenolod@nenolod.net>
+
+	* Remove binaries.
+
+2005-10-26 12:53:58  William Pitcock <nenolod@nenolod.net>
+
+	* Merge libvisual-proxy.
+
+2005-10-26 02:46:26  William Pitcock <nenolod@nenolod.net>
+
+	* Die!
+
+2005-10-26 02:42:55  William Pitcock <nenolod@nenolod.net>
+
+	* Rebuild configure.
+
+2005-10-26 02:41:18  William Pitcock <nenolod@nenolod.net>
+
+	* Remove dead libvisual dir.
+
+2005-10-26 00:53:38  William Pitcock <nenolod@nenolod.net>
+
+	* Libmikmod.
+
+2005-10-26 00:09:36  William Pitcock <nenolod@nenolod.net>
+
+	* More AAC detection fixes c/o MSameer.
+
+2005-10-25 23:51:01  William Pitcock <nenolod@nenolod.net>
+
+	* Oops, filename should have been 'ext'.
+
+2005-10-25 23:49:17  William Pitcock <nenolod@nenolod.net>
+
+	* Fix
+
+2005-10-25 23:46:47  William Pitcock <nenolod@nenolod.net>
+
+	* Possible crash fix.
+
+2005-10-25 23:26:50  William Pitcock <nenolod@nenolod.net>
+
+	* Update SIGSEGV message, contained the BMP mailing information.
+
+2005-10-25 23:10:38  William Pitcock <nenolod@nenolod.net>
+
+	* tonegen should work now, thanks to MSameer.
+
+2005-10-25 19:50:25  William Pitcock <nenolod@nenolod.net>
+
+	* Remove queue.png from build.list. *grumble*
+
+2005-10-25 02:18:32  William Pitcock <nenolod@nenolod.net>
+
+	* Unhook libvisual from the build.
+
+2005-10-25 01:13:56  William Pitcock <nenolod@nenolod.net>
+
+	* libvisual.
+
+	* P3 detection appears to be borked. I'll work on it later.
+
+2005-10-24 22:25:00  William Pitcock <nenolod@nenolod.net>
+
+	* More GCC retardation
+
+2005-10-24 22:15:55  William Pitcock <nenolod@nenolod.net>
+
+	* I hate GCC4.
+
+2005-10-24 22:04:14  William Pitcock <nenolod@nenolod.net>
+
+	* I hate macros.
+
+2005-10-24 18:57:20  William Pitcock <nenolod@nenolod.net>
+
+	* Regenerate Makefiles, AAC fixes.
+
+2005-10-24 18:54:59  William Pitcock <nenolod@nenolod.net>
+
+	* Ha!
+
+2005-10-24 18:54:46  William Pitcock <nenolod@nenolod.net>
+
+	* Moo
+
+2005-10-24 17:33:32  William Pitcock <nenolod@nenolod.net>
+
+	* Replacement libmp4v2.
+
+2005-10-24 17:05:37  William Pitcock <nenolod@nenolod.net>
+
+	* Away with the old libmp4v2 that does not work. I have a replacement for thee.
+
+2005-10-24 16:33:12  William Pitcock <nenolod@nenolod.net>
+
+	* Makefiles
+
+2005-10-24 16:31:39  William Pitcock <nenolod@nenolod.net>
+
+	* Fixes for AAC decoder.
+
+2005-10-24 16:29:19  William Pitcock <nenolod@nenolod.net>
+
+	* Debugging notices.
+
+2005-10-24 16:19:02  William Pitcock <nenolod@nenolod.net>
+
+	   - Tone generator plugin.
+
+2005-10-24 15:59:44  William Pitcock <nenolod@nenolod.net>
+
+	* Remove tempfiles.
+
+2005-10-24 15:55:57  William Pitcock <nenolod@nenolod.net>
+
+	* Remove a stamp-po to fix a compile error.
+
+2005-10-24 13:45:02  William Pitcock <nenolod@nenolod.net>
+
+	* AAC plugin is working.
+
+2005-10-24 13:12:12  William Pitcock <nenolod@nenolod.net>
+
+	* More progress :)
+
+2005-10-24 13:07:02  William Pitcock <nenolod@nenolod.net>
+
+	* getting closer
+
+2005-10-24 13:00:33  William Pitcock <nenolod@nenolod.net>
+
+	   - libfaad fixes.
+
+2005-10-24 12:57:11  William Pitcock <nenolod@nenolod.net>
+
+	   - libmp4v2 now compiles
+
+2005-10-24 12:50:48  William Pitcock <nenolod@nenolod.net>
+
+	* Add necessary headers for facilitating the build process from mpeg4ip.
+
+2005-10-24 12:44:27  William Pitcock <nenolod@nenolod.net>
+
+	* Import AAC stuff.
+
+2005-10-24 05:12:26  William Pitcock <nenolod@nenolod.net>
+
+	* Get rid of stuff we don't want in the repository. (compiled translations/autotools cache)
+
+2005-10-24 05:06:47  William Pitcock <nenolod@nenolod.net>
+
+	* Import audacious source.
+
