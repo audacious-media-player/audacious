@@ -28,6 +28,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>
+#include <glib.h>
+#include <glib/gi18n.h>
 
 #include <audacious/plugin.h>
 #include <audacious/output.h>
@@ -114,7 +116,7 @@ InputPlugin wma_ip =
 InputPlugin *get_iplugin_info(void)
 {
     memset(description, 0, 64);
-    wma_ip.description = g_strdup_printf("WMA Player %s", VERSION);
+    wma_ip.description = g_strdup_printf(_("WMA Player %s"), VERSION);
     return &wma_ip;
 }
 
@@ -147,7 +149,7 @@ static void wma_about(void)
     memset(title, 0, 80);
     memset(message, 0, 1000);
 
-    sprintf(title, "About %s", PLUGIN_NAME);
+    sprintf(title, _("About %s"), PLUGIN_NAME);
     sprintf(message, "%s %s\n\n%s", PLUGIN_NAME, PLUGIN_VERSION, ABOUT_TXT);
 
     dialog1 = gtk_dialog_new();
@@ -160,7 +162,7 @@ static void wma_about(void)
     gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog1)->vbox), label1, TRUE, TRUE, 0);
     gtk_widget_show(label1);
 
-    button1 = gtk_button_new_with_label(" Close ");
+    button1 = gtk_button_new_with_label(_(" Close "));
     gtk_signal_connect_object(GTK_OBJECT(button1), "clicked",
 	                        GTK_SIGNAL_FUNC(gtk_widget_destroy),
     	                        GTK_OBJECT(dialog1));
@@ -452,7 +454,7 @@ static void wma_file_info_box (char *filename)
           *filesize;
     FILE *f;
     if (dialog) {
-        (void)printf("Info dialog is already opened!\n");
+        (void)printf(_("Info dialog is already opened!\n"));
         return;
     }
 
@@ -469,7 +471,7 @@ static void wma_file_info_box (char *filename)
     codec = avcodec_find_decoder(s->codec_id);
 
     /* window title */
-    title = g_strdup_printf("File Info - %s", g_basename(filename));
+    title = g_strdup_printf(_("File Info - %s"), g_basename(filename));
     /* channels */
     if (s->channels == 1)
         channels = g_strdup("MONO");
@@ -477,7 +479,7 @@ static void wma_file_info_box (char *filename)
         channels = g_strdup("STEREO");
 
     /* bitrate */
-    bitrate = g_strdup_printf("%d Kb/s", (s->bit_rate / 1000));
+    bitrate = g_strdup_printf(_("%d Kb/s"), (s->bit_rate / 1000));
 
     /* playtime */
     if (in->duration != 0) {
@@ -485,12 +487,12 @@ static void wma_file_info_box (char *filename)
         thh = tns/3600;
         tmm = (tns%3600)/60;
         tss = (tns%60);
-        playtime = g_strdup_printf("%02d:%02d:%02d", thh, tmm, tss);
+        playtime = g_strdup_printf(_("%02d:%02d:%02d"), thh, tmm, tss);
     } else
         playtime = g_strdup("N/A");
 
     /* samplerate */
-    samplerate = g_strdup_printf("%d Hz", s->sample_rate);
+    samplerate = g_strdup_printf(_("%d Hz"), s->sample_rate);
 
     /* filesize */
     f = fopen(filename, "rb");
@@ -499,7 +501,7 @@ static void wma_file_info_box (char *filename)
         return;
 
     fseek(f, 0, SEEK_END);
-    filesize = g_strdup_printf("%lu Bytes", ftell(f));
+    filesize = g_strdup_printf(_("%lu Bytes"), ftell(f));
     fclose(f);
 
     dialog = gtk_dialog_new();
@@ -522,7 +524,7 @@ static void wma_file_info_box (char *filename)
     gtk_widget_show (hbox1);
     gtk_box_pack_start(GTK_BOX(vbox1), hbox1, FALSE, FALSE, 0);
 
-    label_name = gtk_label_new("<b>Name:</b>");
+    label_name = gtk_label_new(_("<b>Name:</b>"));
     gtk_widget_show(label_name);
     gtk_box_pack_start(GTK_BOX (hbox1), label_name, FALSE, FALSE, 0);
     gtk_misc_set_alignment(GTK_MISC (label_name), 0.48, 0.51);
@@ -558,7 +560,7 @@ static void wma_file_info_box (char *filename)
     gtk_table_set_row_spacings(GTK_TABLE(table1), 3);
     gtk_table_set_col_spacings(GTK_TABLE(table1), 8);
     /* WMA Version label */
-    label_wma_version = gtk_label_new("<b>WMA Version:</b>");
+    label_wma_version = gtk_label_new(_("<b>WMA Version:</b>"));
     gtk_widget_show(label_wma_version);
     gtk_table_attach(GTK_TABLE(table1), label_wma_version, 0, 1, 0, 1,
             (GtkAttachOptions) (GTK_FILL),
@@ -567,7 +569,7 @@ static void wma_file_info_box (char *filename)
     gtk_label_set_use_markup(GTK_LABEL(label_wma_version), TRUE);
 
     /* Bitrate */
-    label_bitrate = gtk_label_new("<b>Bitrate:</b>");
+    label_bitrate = gtk_label_new(_("<b>Bitrate:</b>"));
     gtk_widget_show(label_bitrate);
     gtk_table_attach(GTK_TABLE(table1), label_bitrate, 0, 1, 1, 2,
             (GtkAttachOptions) (GTK_FILL),
@@ -576,7 +578,7 @@ static void wma_file_info_box (char *filename)
     gtk_label_set_use_markup(GTK_LABEL(label_bitrate), TRUE);
 
        /* Samplerate */
-    label_rate = gtk_label_new("<b>Samplerate:</b>");
+    label_rate = gtk_label_new(_("<b>Samplerate:</b>"));
     gtk_widget_show(label_rate);
     gtk_table_attach(GTK_TABLE(table1), label_rate, 0, 1, 2, 3,
             (GtkAttachOptions) (GTK_FILL),
@@ -585,7 +587,7 @@ static void wma_file_info_box (char *filename)
     gtk_label_set_use_markup(GTK_LABEL(label_rate), TRUE);
 
     /* Channels */
-    label_chans = gtk_label_new("<b>Channels:</b>");
+    label_chans = gtk_label_new(_("<b>Channels:</b>"));
     gtk_widget_show(label_chans);
     gtk_table_attach(GTK_TABLE (table1), label_chans, 0, 1, 3, 4,
             (GtkAttachOptions) (GTK_FILL),
@@ -594,7 +596,7 @@ static void wma_file_info_box (char *filename)
     gtk_label_set_use_markup(GTK_LABEL(label_chans), TRUE);
 
     /* Play time */
-    label_play_time = gtk_label_new("<b>Play time:</b>");
+    label_play_time = gtk_label_new(_("<b>Play time:</b>"));
     gtk_widget_show(label_play_time);
     gtk_table_attach(GTK_TABLE (table1), label_play_time, 0, 1, 4, 5,
             (GtkAttachOptions) (GTK_FILL),
@@ -603,7 +605,7 @@ static void wma_file_info_box (char *filename)
     gtk_label_set_use_markup(GTK_LABEL(label_play_time), TRUE);
 
        /* Filesize */
-    label_filesize = gtk_label_new("<b>Filesize:</b>");
+    label_filesize = gtk_label_new(_("<b>Filesize:</b>"));
     gtk_widget_show(label_filesize);
     gtk_table_attach(GTK_TABLE(table1), label_filesize, 0, 1, 5, 6,
             (GtkAttachOptions) (GTK_FILL),
@@ -654,7 +656,7 @@ static void wma_file_info_box (char *filename)
             (GtkAttachOptions) (0), 0, 0);
     gtk_misc_set_alignment(GTK_MISC(label_filesize_val), 0, 0.5);
 
-    label4 = gtk_label_new ("WMA Info");
+    label4 = gtk_label_new (_("WMA Info"));
     gtk_widget_show(label4);
     gtk_frame_set_label_widget(GTK_FRAME(frame_wma_info), label4);
     frame_tags = gtk_frame_new (NULL);
@@ -679,7 +681,7 @@ static void wma_file_info_box (char *filename)
     gtk_table_set_col_spacings(GTK_TABLE(table2), 8);
 
     /* Artist */
-    label_artist = gtk_label_new("<b>Artist:</b>");
+    label_artist = gtk_label_new(_("<b>Artist:</b>"));
     gtk_widget_show(label_artist);
     gtk_table_attach(GTK_TABLE (table2), label_artist, 0, 1, 0, 1,
             (GtkAttachOptions) (GTK_FILL),
@@ -688,7 +690,7 @@ static void wma_file_info_box (char *filename)
     gtk_label_set_use_markup(GTK_LABEL(label_artist), TRUE);
 
     /* Title */
-    label_title = gtk_label_new("<b>Title:</b>");
+    label_title = gtk_label_new(_("<b>Title:</b>"));
     gtk_widget_show(label_title);
     gtk_table_attach(GTK_TABLE (table2), label_title, 0, 1, 1, 2,
             (GtkAttachOptions) (GTK_FILL),
@@ -697,7 +699,7 @@ static void wma_file_info_box (char *filename)
     gtk_label_set_use_markup(GTK_LABEL(label_title), TRUE);
 
     /* Album */
-    label_album = gtk_label_new("<b>Album:</b>");
+    label_album = gtk_label_new(_("<b>Album:</b>"));
     gtk_widget_show(label_album);
     gtk_table_attach(GTK_TABLE (table2), label_album, 0, 1, 2, 3,
             (GtkAttachOptions) (GTK_FILL),
@@ -706,7 +708,7 @@ static void wma_file_info_box (char *filename)
     gtk_label_set_use_markup(GTK_LABEL(label_album), TRUE);
 
     /* Comments */
-    label_comments = gtk_label_new("<b>Comments:</b>");
+    label_comments = gtk_label_new(_("<b>Comments:</b>"));
     gtk_widget_show(label_comments);
     gtk_table_attach(GTK_TABLE(table2), label_comments, 0, 1, 3, 4,
             (GtkAttachOptions) (GTK_FILL),
@@ -715,7 +717,7 @@ static void wma_file_info_box (char *filename)
     gtk_label_set_use_markup(GTK_LABEL(label_comments), TRUE);
 
     /* Year */
-    label_year = gtk_label_new("<b>Year:</b>");
+    label_year = gtk_label_new(_("<b>Year:</b>"));
     gtk_widget_show(label_year);
     gtk_table_attach(GTK_TABLE (table2), label_year, 0, 1, 4, 5,
             (GtkAttachOptions) (GTK_FILL),
@@ -724,7 +726,7 @@ static void wma_file_info_box (char *filename)
     gtk_label_set_use_markup(GTK_LABEL(label_year), TRUE);
 
     /* Track */
-    label_track = gtk_label_new("<b>Track:</b>");
+    label_track = gtk_label_new(_("<b>Track:</b>"));
     gtk_widget_show(label_track);
     gtk_table_attach(GTK_TABLE (table2), label_track, 0, 1, 5, 6,
             (GtkAttachOptions) (GTK_FILL),
@@ -733,7 +735,7 @@ static void wma_file_info_box (char *filename)
     gtk_label_set_use_markup(GTK_LABEL(label_track), TRUE);
 
     /* Genre */
-    label_genre = gtk_label_new("<b>Genre:</b>");
+    label_genre = gtk_label_new(_("<b>Genre:</b>"));
     gtk_widget_show(label_genre);
     gtk_table_attach(GTK_TABLE (table2), label_genre, 0, 1, 6, 7,
             (GtkAttachOptions) (GTK_FILL),
@@ -799,7 +801,7 @@ static void wma_file_info_box (char *filename)
     gtk_entry_set_text(GTK_ENTRY(entry_genre), in->genre);
 
 
-    label5 = gtk_label_new("Tags");
+    label5 = gtk_label_new(_("Tags"));
     gtk_widget_show(label5);
     gtk_frame_set_label_widget(GTK_FRAME(frame_tags), label5);
 
