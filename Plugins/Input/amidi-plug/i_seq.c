@@ -26,17 +26,22 @@
 gint i_seq_on( gshort with_wparse , gchar * wports_str )
 {
   if ( !i_seq_open() )
+  {
+    sc.seq = NULL;
     return 0;
+  }
 
   if ( !i_seq_port_create() )
   {
     i_seq_close();
+    sc.seq = NULL;
     return 0;
   }
 
   if ( !i_seq_queue_create() )
   {
     i_seq_close();
+    sc.seq = NULL;
     return 0;
   }
 
@@ -47,6 +52,7 @@ gint i_seq_on( gshort with_wparse , gchar * wports_str )
   {
     i_seq_queue_free();
     i_seq_close();
+    sc.seq = NULL;
     return 0;
   }
 
