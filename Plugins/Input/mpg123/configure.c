@@ -22,8 +22,7 @@ static GtkWidget *decode_ch_frame, *decode_ch_vbox, *decode_ch_stereo,
     *decode_ch_mono;
 static GtkWidget *decode_freq_frame, *decode_freq_vbox, *decode_freq_1to1,
     *decode_freq_1to2, *decode_freq_1to4;
-static GtkWidget *option_frame, *option_vbox, *detect_by_content,
-    *detect_by_extension, *detect_by_both;
+static GtkWidget *option_frame, *option_vbox;
 
 static GtkObject *streaming_size_adj, *streaming_pre_adj;
 static GtkWidget *streaming_proxy_use, *streaming_proxy_host_entry;
@@ -68,14 +67,7 @@ mpg123_configurewin_ok(GtkWidget * widget, gpointer data)
     if (GTK_TOGGLE_BUTTON(decode_freq_1to4)->active)
         mpg123_cfg.downsample = 2;
 
-    if (GTK_TOGGLE_BUTTON(detect_by_content)->active)
-        mpg123_cfg.detect_by = DETECT_CONTENT;
-    else if (GTK_TOGGLE_BUTTON(detect_by_extension)->active)
-        mpg123_cfg.detect_by = DETECT_EXTENSION;
-    else if (GTK_TOGGLE_BUTTON(detect_by_both)->active)
-        mpg123_cfg.detect_by = DETECT_BOTH;
-    else
-        mpg123_cfg.detect_by = DETECT_EXTENSION;
+    mpg123_cfg.detect_by = DETECT_CONTENT;
 
     mpg123_cfg.http_buffer_size =
         (gint) GTK_ADJUSTMENT(streaming_size_adj)->value;
@@ -413,48 +405,6 @@ mpg123_configure(void)
 
     gtk_box_pack_start(GTK_BOX(decode_freq_vbox), decode_freq_1to4, FALSE,
                        FALSE, 0);
-
-    option_frame = gtk_frame_new(_("Options"));
-    gtk_box_pack_start(GTK_BOX(decode_vbox), option_frame, FALSE, FALSE, 0);
-
-    option_vbox = gtk_vbox_new(FALSE, 5);
-    gtk_container_set_border_width(GTK_CONTAINER(option_vbox), 5);
-    gtk_container_add(GTK_CONTAINER(option_frame), option_vbox);
-
-    detect_by_content = gtk_radio_button_new_with_label(NULL, _("Content"));
-
-    detect_by_extension =
-        gtk_radio_button_new_with_label(gtk_radio_button_group
-                                        (GTK_RADIO_BUTTON
-                                         (detect_by_content)),
-                                        _("Extension"));
-
-    detect_by_both =
-        gtk_radio_button_new_with_label(gtk_radio_button_group
-                                        (GTK_RADIO_BUTTON
-                                         (detect_by_content)),
-                                        _("Extension and content"));
-
-    switch (mpg123_cfg.detect_by) {
-    case DETECT_CONTENT:
-        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(detect_by_content),
-                                     TRUE);
-        break;
-    case DETECT_BOTH:
-        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(detect_by_both), TRUE);
-        break;
-    case DETECT_EXTENSION:
-    default:
-        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
-                                     (detect_by_extension), TRUE);
-        break;
-    }
-
-    gtk_box_pack_start(GTK_BOX(option_vbox), detect_by_content, FALSE,
-                       FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(option_vbox), detect_by_extension, FALSE,
-                       FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(option_vbox), detect_by_both, FALSE, FALSE, 0);
 
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), decode_vbox,
                              gtk_label_new(_("Decoder")));

@@ -1,13 +1,14 @@
-Audacious 0.2 (2006-01-??)
+Audacious 0.2 (2006-02-01)
 
 Enhancements
 * Many UI changes
 * Removed X11 dependency (only GTK is required now -- please port me to 
   your favourite operating system)
-* Updated console music input plugin to Game_Music_Emu.
+* Updated console music input plugin to Game_Music_Emu 0.3.
 * Added timidity input plugin.
-
-(many more, document before release)
+* Added ALSA midi support
+* Added musepack support
+* Cleaned up many plugins
 
 Bugfixes
 * A lot

@@ -466,44 +466,12 @@ is_our_file(char *filename)
     char *ext;
     guint16 wavid;
 
-    /* FIXME: wtf? */
-    /* We assume all http:// (except those ending in .ogg) are mpeg --
-     * why do we do that? */
     if (!strncasecmp(filename, "http://", 7)) { 
-#ifdef NOTYET
-        ext = strrchr(filename, '.');
-        if (ext) {
-            if (!strncasecmp(ext, ".ogg", 4))
-                return FALSE;
-            if (!strncasecmp(ext, ".rm", 3) ||
-                !strncasecmp(ext, ".ra", 3) ||
-                !strncasecmp(ext, ".rpm", 4) || 
-                !strncasecmp(ext, ".ram", 4))
-                return FALSE;
-        }
-        return TRUE;
-#else
 	return mpg123_detect_by_content_stream(filename);
-#endif
     }
-    if (mpg123_cfg.detect_by == DETECT_CONTENT)
+    else
         return (mpg123_detect_by_content(filename));
 
-    ext = strrchr(filename, '.');
-    if (ext) {
-        if (!strncasecmp(ext, ".mp2", 4) || !strncasecmp(ext, ".mp3", 4) || !strncasecmp((ext - 4), ".mp3.part", 9) ) {
-            return TRUE;
-        }
-        if (!strncasecmp(ext, ".wav", 4)) {
-            wavid = read_wav_id(filename);
-            if (wavid == 85 || wavid == 80) {   /* Microsoft says 80, files say 85... */
-                return TRUE;
-            }
-        }
-    }
-
-    if (mpg123_cfg.detect_by == DETECT_BOTH)
-        return (mpg123_detect_by_content(filename));
     return FALSE;
 }
 
