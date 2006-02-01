@@ -39,6 +39,7 @@
 #include <gtk/gtk.h>
 
 #include <glib.h>
+#include <glib/gi18n.h>
 
 #include "audacious/plugin.h"
 #include "libaudacious/configdb.h"
@@ -63,7 +64,7 @@ GeneralPlugin lirc_plugin = {
 
 GeneralPlugin *get_gplugin_info(void)
 {
-        lirc_plugin.description = g_strdup_printf("LIRC Plugin"); 
+        lirc_plugin.description = g_strdup_printf(_("LIRC Plugin")); 
         return(&lirc_plugin);
 }
 
@@ -494,7 +495,7 @@ void init(void)
 	
 	if((lirc_fd=lirc_init("audacious",1))==-1)
 	{
-		fprintf(stderr,"%s: could not init LIRC support\n",
+		fprintf(stderr,_("%s: could not init LIRC support\n"),
 			plugin_name);
 		return;
 	}
@@ -502,9 +503,9 @@ void init(void)
 	{
 		lirc_deinit();
 		fprintf(stderr,
-			"%s: could not read LIRC config file\n"
-			"%s: please read the documentation of LIRC \n"
-			"%s: how to create a proper config file\n",
+			_("%s: could not read LIRC config file\n"
+			"%s: please read the documentation of LIRC\n"
+			"%s: how to create a proper config file\n"),
 			plugin_name,plugin_name,plugin_name);
 		return;
 	}
@@ -896,7 +897,7 @@ void lirc_input_callback(gpointer data,gint source,
 			}
 			else
 			{
-				fprintf(stderr,"%s: unknown command \"%s\"\n",
+				fprintf(stderr,_("%s: unknown command \"%s\"\n"),
 					plugin_name,c);
 			}
 		}
@@ -906,7 +907,7 @@ void lirc_input_callback(gpointer data,gint source,
 	if(ret==-1)
 	{
 		/* something went badly wrong */
-		fprintf(stderr,"%s: disconnected from LIRC\n",plugin_name);
+		fprintf(stderr,_("%s: disconnected from LIRC\n"),plugin_name);
 		cleanup();
 		return;
 	}
@@ -919,7 +920,7 @@ void configure(void)
 		GtkWidget *window;
 		
 		window=gtk_font_selection_dialog_new
-			("Please choose font for SELECT popup.");
+			(_("Please choose font for SELECT popup."));
 		g_return_if_fail(GTK_IS_FONT_SELECTION_DIALOG(window));
 		
 		fsd=window;
