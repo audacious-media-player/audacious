@@ -1,3 +1,7 @@
+# LIRC general plugin.
+Plugins/General/lirc/about.c
+Plugins/General/lirc/lirc.c
+
 # Song Change general plugin.
 Plugins/General/song_change/song_change.c
 
@@ -18,6 +22,7 @@ Plugins/Input/flac/charset.c
 Plugins/Input/flac/configure.c
 Plugins/Input/flac/fileinfo.c
 Plugins/Input/flac/http.c
+Plugins/Input/flac/plugin.c
 
 # ModPlug input plugin.
 Plugins/Input/modplug/gui/interface.cpp
@@ -29,6 +34,10 @@ Plugins/Input/mpg123/fileinfo.c
 Plugins/Input/mpg123/http.c
 Plugins/Input/mpg123/id3_frame_content.c
 Plugins/Input/mpg123/mpg123.c
+
+# TiMidity input plugin.
+Plugins/Input/timidity/src/interface.c
+Plugins/Input/timidity/src/xmms-timidity.c
 
 # Tone Generator input plugin.
 Plugins/Input/tonegen/tonegen.c
@@ -45,6 +54,7 @@ Plugins/Input/wav/wav.c
 
 # WMA input plugin.
 Plugins/Input/wma/libffwma/bswap.h
+Plugins/Input/wma/wma.c
 
 # OSS output plugin.
 Plugins/Output/OSS/OSS.c
@@ -93,6 +103,7 @@ audacious/prefswin.c
 audacious/skinwin.c
 audacious/ui_playlist.c
 audacious/util.c
+audacious/playback.c
 
 # Glade files.
 audacious/glade/addfiles.glade
@@ -100,6 +111,3 @@ audacious/glade/prefswin.glade
 
 # libaudacious.
 libaudacious/titlestring.c
-
-# libaudcore.
-libaudcore/playback.c
