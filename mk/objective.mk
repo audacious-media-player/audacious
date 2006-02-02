@@ -1,5 +1,3 @@
-include mk/rules.mk
-
 # Shut up GNU make
 .SILENT:
 
@@ -22,10 +20,22 @@ install:
 	@done
 	$(MAKE) install-posthook
 
+clean:
+	$(MAKE) clean-prehook
+	@for i in $(SUBDIRS); do \
+		echo "[cleaning subobjective: $$i]"; \
+		cd $$i; $(MAKE) clean; cd ..; \
+	done
+	$(MAKE) clean-posthook
+
+distclean: clean
+	$(RM) mk/rules.mk
+
 build:
 	$(MAKE) build-prehook
 	@for i in $(SUBDIRS); do \
-		cd $$i; $(MAKE) build; cd .. \
+		echo "[building subobjective: $$i]"; \
+		cd $$i; $(MAKE); cd ..; \
 	done
 	@for i in $(OBJECTIVE_LIBS); do \
 		$(MAKE) $$i; \
@@ -51,3 +61,12 @@ build:
 	printf "%10s     %-20s\n" CXX $$i;
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+clean-prehook:
+clean-posthook:
+build-prehook:
+build-posthook:
+install-prehook:
+install-posthook:
+
+# compatibility with automake follows
+am--refresh:
