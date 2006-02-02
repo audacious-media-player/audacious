@@ -45,19 +45,23 @@ build:
 		for i in $(SUBDIRS); do \
 			echo "[building subobjective: $$i]"; \
 			(cd $$i; $(MAKE); cd ..); \
+			echo "[finished subobjective: $$i]"; \
 		done; \
 	fi
 	@for i in $(OBJECTIVE_LIBS); do \
 		echo "[building library objective: $$i]"; \
 		$(MAKE) $$i; \
+		echo "[finished library objective: $$i]"; \
 	done
 	@for i in $(OBJECTIVE_LIBS_NOINST); do \
 		echo "[building library dependency: $$i]"; \
 		$(MAKE) $$i; \
+		echo "[finished library dependency: $$i]"; \
 	done
 	@for i in $(OBJECTIVE_BINS); do \
 		echo "[building binary objective: $$i]"; \
 		$(MAKE) $$i; \
+		echo "[finished binary objective: $$i]"; \
 	done
 	$(MAKE) build-posthook
 	@echo "[all objectives built]"
