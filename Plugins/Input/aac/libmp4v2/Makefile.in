@@ -1,10 +1,11 @@
-INCLUDES = -I../include -I.
+include ../../../../mk/rules.mk
+include ../../../../mk/objective.mk
 
-noinst_LTLIBRARIES = libmp4v2.la 
+CXXFLAGS += $(GTK_CFLAGS) -fPIC -DPIC -I../include -I../../../.. -I.
 
-include_HEADERS = mp4.h
+OBJECTIVE_LIBS_NOINST = libmp4v2.a 
 
-libmp4v2_la_SOURCES = \
+SOURCES = \
 	3gp.cpp \
 	atom_amr.cpp \
 	atom_avc1.cpp \
@@ -32,7 +33,6 @@ libmp4v2_la_SOURCES = \
 	atom_rtp.cpp \
 	atom_s263.cpp \
 	atom_sdp.cpp \
-	atoms.h \
 	atom_smi.cpp \
 	atom_sound.cpp \
 	atom_standard.cpp \
@@ -51,41 +51,24 @@ libmp4v2_la_SOURCES = \
 	atom_video.cpp \
 	atom_vmhd.cpp \
 	descriptors.cpp \
-	descriptors.h \
 	isma.cpp \
-	mp4array.h \
 	mp4atom.cpp \
-	mp4atom.h \
-	mp4common.h \
 	mp4container.cpp \
-	mp4container.h \
 	mp4.cpp \
 	mp4descriptor.cpp \
-	mp4descriptor.h \
 	mp4file.cpp \
-	mp4file.h \
 	mp4file_io.cpp \
 	mp4info.cpp \
 	mp4meta.cpp \
 	mp4property.cpp \
-	mp4property.h \
 	mp4track.cpp \
-	mp4track.h \
 	mp4util.cpp \
-	mp4util.h \
 	ocidescriptors.cpp \
-	ocidescriptors.h \
 	odcommands.cpp \
-	odcommands.h \
 	qosqualifiers.cpp \
-	qosqualifiers.h \
-	rtphint.cpp \
-	rtphint.h 
+	rtphint.cpp
 
-libmp4v2_la_LDFLAGS = -lstdc++
+OBJECTS = ${SOURCES:.cpp=.o}
 
-EXTRA_DIST = API_CHANGES \
-	INTERNALS \
-	libmp4v260.dsp \
-	libmp4v2_st60.dsp \
-	TODO 
+libmp4v2.a: $(OBJECTS)
+	$(AR) cq $@ $(OBJECTS)
