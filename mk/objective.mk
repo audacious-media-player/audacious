@@ -1,6 +1,9 @@
 # Shut up GNU make
 .SILENT:
 
+SUBDIRS = none
+CFLAGS += -DHAVE_CONFIG_H
+
 default: all
 all: build
 
@@ -35,10 +38,12 @@ distclean: clean
 
 build:
 	$(MAKE) build-prehook
-	@for i in $(SUBDIRS); do \
-		echo "[building subobjective: $$i]"; \
-		cd $$i; $(MAKE); cd ..; \
-	done
+	@if test "$(SUBDIRS)" != "none"; then \
+		for i in $(SUBDIRS); do \
+			echo "[building subobjective: $$i]"; \
+			(cd $$i; $(MAKE); cd ..); \
+		done; \
+	fi
 	@for i in $(OBJECTIVE_LIBS); do \
 		$(MAKE) $$i; \
 	done
@@ -49,19 +54,19 @@ build:
 	@echo "[all objectives built]"
 
 .c.o:
-	printf "%10s     %-20s\n" CC $$i;
+	printf "%10s     %-20s\n" CC $<
 	$(CC) $(CFLAGS) -c $< -o $@
 
 .cc.o:
-	printf "%10s     %-20s\n" CXX $$i;
+	printf "%10s     %-20s\n" CXX $<;
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 .cpp.o:
-	printf "%10s     %-20s\n" CXX $$i;
+	printf "%10s     %-20s\n" CXX $<;
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 .cxx.o:
-	printf "%10s     %-20s\n" CXX $$i;
+	printf "%10s     %-20s\n" CXX $<;
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean-prehook:

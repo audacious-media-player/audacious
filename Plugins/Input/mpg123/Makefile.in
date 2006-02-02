@@ -1,0 +1,19 @@
+include ../../../mk/rules.mk
+include ../../../mk/objective.mk
+
+OBJECTIVE_LIBS = libmpg123.so
+
+SOURCES = mpg123.c configure.c fileinfo.c common.c \
+	decode_2to1.c decode_4to1.c \
+	layer1.c layer2.c layer3.c \
+	tabinit.c equalizer.c http.c \
+	dxhead.c \
+	id3.c id3_frame.c id3_frame_content.c id3_frame_text.c \
+	id3_frame_url.c id3_tag.c decode.c dct64.c
+
+OBJECTS = ${SOURCES:.c=.o}
+
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..
+
+libmpg123.so: $(OBJECTS)
+	$(CC) $(CFLAGS) -shared $(OBJECTS) -o $@
