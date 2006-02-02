@@ -33,6 +33,7 @@ clean:
 		done; \
 	fi
 	$(MAKE) clean-posthook
+	$(RM) *.o *.lo *.so *.a *.sl
 	@echo "[all objectives cleaned]"
 
 distclean: clean
@@ -47,9 +48,11 @@ build:
 		done; \
 	fi
 	@for i in $(OBJECTIVE_LIBS); do \
+		echo "[building library objective: $$i]"; \
 		$(MAKE) $$i; \
 	done
 	@for i in $(OBJECTIVE_BINS); do \
+		echo "[building binary objective: $$i]"; \
 		$(MAKE) $$i; \
 	done
 	$(MAKE) build-posthook
