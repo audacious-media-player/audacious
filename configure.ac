@@ -858,6 +858,7 @@ AC_CONFIG_FILES([
         intl/Makefile
         icons/Makefile
         skin/Makefile
+	mk/rules.mk
 ])
 
 AC_OUTPUT
