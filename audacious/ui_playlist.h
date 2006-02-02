@@ -67,12 +67,9 @@ void playlistwin_set_back_pixmap(void);
 void playlistwin_scroll(gint num);
 void playlistwin_scroll_up_pushed(void);
 void playlistwin_scroll_down_pushed(void);
-void playlistwin_vis_disable(void);
-void playlistwin_vis_enable(void);
 void playlistwin_select_playlist_to_load(const gchar * default_filename);
 
 extern GtkWidget *playlistwin;
-extern Vis *playlistwin_vis;
 extern PlayList_List *playlistwin_list;
 
 extern PButton *playlistwin_shade, *playlistwin_close;

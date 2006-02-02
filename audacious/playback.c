@@ -92,7 +92,6 @@ bmp_playback_initiate(void)
         bmp_playback_stop();
 
     vis_clear_data(mainwin_vis);
-    vis_clear_data(playlistwin_vis);
     svis_clear_data(mainwin_svis);
     mainwin_disable_seekbar();
 

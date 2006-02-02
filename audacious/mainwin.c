@@ -568,16 +568,7 @@ mainwin_set_shade_menu_cb(gboolean shaded)
 static void
 mainwin_vis_set_active_vis(gint new_vis)
 {
-    switch (new_vis) {
-    case MAINWIN_VIS_ACTIVE_MAINWIN:
-        playlistwin_vis_disable();
-        active_vis = mainwin_vis;
-        break;
-    case MAINWIN_VIS_ACTIVE_PLAYLISTWIN:
-        playlistwin_vis_enable();
-        active_vis = playlistwin_vis;
-        break;
-    }
+    active_vis = mainwin_vis;
 }
 
 static void
@@ -2337,10 +2328,8 @@ mainwin_real_hide(void)
     GdkGC *gc;
     GdkColor pattern;
 
-    if (cfg.player_shaded) {
+    if (cfg.player_shaded)
         svis_clear_data(mainwin_svis);
-        vis_clear_data(playlistwin_vis);
-    }
 
     if (!cfg.show_wm_decorations) {
         nullmask = gdk_pixmap_new(mainwin->window, 20, 20, 1);

@@ -85,7 +85,6 @@ GtkWidget *playlistwin;
 
 PlayList_List *playlistwin_list = NULL;
 PButton *playlistwin_shade, *playlistwin_close;
-Vis *playlistwin_vis;
 
 static gboolean playlistwin_resizing = FALSE;
 
@@ -111,7 +110,6 @@ static SButton *playlistwin_sfwd, *playlistwin_seject;
 static SButton *playlistwin_sscroll_up, *playlistwin_sscroll_down;
 
 static GList *playlistwin_wlist = NULL;
-static gboolean playlistwin_vis_enabled = FALSE;
 
 static void plsort_menu_callback(gpointer cb_data, guint action,
                                            GtkWidget * w);
@@ -664,16 +662,6 @@ playlistwin_resize(gint width, gint height)
     widget_move(WIDGET(playlistwin_sscroll_up), width - 14, height - 35);
     widget_move(WIDGET(playlistwin_sscroll_down), width - 14, height - 30);
 
-    /* decide if we should show the mini visualizer */
-    if (playlistwin_get_width() >= 350) {
-        widget_move(WIDGET(playlistwin_vis), width - 223, height - 26);
-
-        if (playlistwin_vis_enabled)
-            widget_show(WIDGET(playlistwin_vis));
-    }
-    else
-        widget_hide(WIDGET(playlistwin_vis));
-
     g_object_unref(playlistwin_bg);
     playlistwin_bg = gdk_pixmap_new(playlistwin->window, width, height, -1);
     playlistwin_set_mask();
@@ -960,7 +948,6 @@ inside_sensitive_widgets(gint x, gint y)
             widget_contains(WIDGET(playlistwin_time_min), x, y) ||
             widget_contains(WIDGET(playlistwin_time_sec), x, y) ||
             widget_contains(WIDGET(playlistwin_info), x, y) ||
-            widget_contains(WIDGET(playlistwin_vis), x, y) ||
             widget_contains(WIDGET(playlistwin_srew), x, y) ||
             widget_contains(WIDGET(playlistwin_splay), x, y) ||
             widget_contains(WIDGET(playlistwin_spause), x, y) ||
@@ -1099,22 +1086,6 @@ playlistwin_press(GtkWidget * widget,
              widget_contains(WIDGET(playlistwin_list), event->x, event->y)) {
         gtk_selection_convert(widget, GDK_SELECTION_PRIMARY,
                               GDK_TARGET_STRING, event->time);
-    }
-    else if (playlistwin_get_width() >= 350 && REGION_R(223, 151, 26, 10)) {
-        if (event->button == 1) {
-            cfg.vis_type++;
-            if (cfg.vis_type > VIS_OFF)
-                cfg.vis_type = VIS_ANALYZER;
-            mainwin_vis_set_type(cfg.vis_type);
-        }
-        else if (event->button == 3) {
-            gint mx, my;
-            GdkModifierType modmask;
-
-            gdk_window_get_pointer(NULL, &mx, &my, &modmask);
-            util_item_factory_popup(mainwin_vis_menu, mx, my, 3, event->time);
-            grab = FALSE;
-        }
     }
     else if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
              !inside_sensitive_widgets(event->x, event->y) && event->y < 14) {
@@ -1438,23 +1409,6 @@ playlistwin_hide_timer(void)
 }
 
 void
-playlistwin_vis_enable(void)
-{
-    playlistwin_vis_enabled = TRUE;
-
-    if (playlistwin_get_width() >= 350)
-        widget_show(WIDGET(playlistwin_vis));
-}
-
-void
-playlistwin_vis_disable(void)
-{
-    playlistwin_vis_enabled = FALSE;
-    widget_hide(WIDGET(playlistwin_vis));
-    draw_playlist_window(TRUE);
-}
-
-void
 playlistwin_set_time(gint time, gint length, TimerMode mode)
 {
     gchar *text, sign;
@@ -1601,13 +1555,6 @@ playlistwin_create_widgets(void)
         create_textbox(&playlistwin_wlist, playlistwin_bg, playlistwin_gc,
                        playlistwin_get_width() - 143,
                        cfg.playlist_height - 28, 85, FALSE, SKIN_TEXT);
-
-    /* mini visualizer */
-    playlistwin_vis =
-        create_vis(&playlistwin_wlist, playlistwin_bg, playlistwin->window,
-                   playlistwin_gc, playlistwin_get_width() - 223,
-                   cfg.playlist_height - 26, 72);
-    widget_hide(WIDGET(playlistwin_vis));
 
     /* mini play control buttons at right bottom corner */
 
