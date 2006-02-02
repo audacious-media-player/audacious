@@ -51,6 +51,10 @@ build:
 		echo "[building library objective: $$i]"; \
 		$(MAKE) $$i; \
 	done
+	@for i in $(OBJECTIVE_LIBS_NOINST); do \
+		echo "[building library dependency: $$i]"; \
+		$(MAKE) $$i; \
+	done
 	@for i in $(OBJECTIVE_BINS); do \
 		echo "[building binary objective: $$i]"; \
 		$(MAKE) $$i; \
