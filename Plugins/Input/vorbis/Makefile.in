@@ -1,0 +1,15 @@
+include ../../../mk/rules.mk
+include ../../../mk/objective.mk
+
+OBJECTIVE_LIBS = libvorbis.so
+
+LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
+
+SOURCES = configure.c  fileinfo.c  http.c  vcedit.c  vorbis.c
+
+OBJECTS = ${SOURCES:.c=.o}
+
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I../../../intl -I../../.. -I../..
+
+libvorbis.so: $(OBJECTS)
+	$(CC) $(CFLAGS) -shared -o $@ $(OBJECTS)
