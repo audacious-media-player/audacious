@@ -22,7 +22,6 @@ static GtkWidget *decode_ch_frame, *decode_ch_vbox, *decode_ch_stereo,
     *decode_ch_mono;
 static GtkWidget *decode_freq_frame, *decode_freq_vbox, *decode_freq_1to1,
     *decode_freq_1to2, *decode_freq_1to4;
-static GtkWidget *option_frame, *option_vbox;
 
 static GtkObject *streaming_size_adj, *streaming_pre_adj;
 static GtkWidget *streaming_proxy_use, *streaming_proxy_host_entry;

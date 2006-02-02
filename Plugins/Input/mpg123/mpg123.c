@@ -226,107 +226,12 @@ cleanup(void)
     g_strfreev(mpg123_id3_encoding_list);
 }
 
-/* needed for is_our_file() */
-static int
-read_n_bytes(VFSFile * file, guint8 * buf, int n)
-{
-
-    if (vfs_fread(buf, 1, n, file) != n) {
-        return FALSE;
-    }
-    return TRUE;
-}
-
 static guint32
 convert_to_header(guint8 * buf)
 {
-
     return (buf[0] << 24) + (buf[1] << 16) + (buf[2] << 8) + buf[3];
 }
 
-static guint32
-convert_to_long(guint8 * buf)
-{
-
-    return (buf[3] << 24) + (buf[2] << 16) + (buf[1] << 8) + buf[0];
-}
-
-static guint16
-read_wav_id(char *filename)
-{
-    VFSFile *file;
-    guint16 wavid;
-    guint8 buf[4];
-    guint32 head;
-    long seek;
-
-    if (!(file = vfs_fopen(filename, "rb"))) {  /* Could not open file */
-        return 0;
-    }
-    if (!(read_n_bytes(file, buf, 4))) {
-        vfs_fclose(file);
-        return 0;
-    }
-    head = convert_to_header(buf);
-    if (head == ('R' << 24) + ('I' << 16) + ('F' << 8) + 'F') { /* Found a riff -- maybe WAVE */
-        if (vfs_fseek(file, 4, SEEK_CUR) != 0) {    /* some error occured */
-            vfs_fclose(file);
-            return 0;
-        }
-        if (!(read_n_bytes(file, buf, 4))) {
-            vfs_fclose(file);
-            return 0;
-        }
-        head = convert_to_header(buf);
-        if (head == ('W' << 24) + ('A' << 16) + ('V' << 8) + 'E') { /* Found a WAVE */
-            seek = 0;
-            do {
-/* we'll be looking for the fmt-chunk which comes before the data-chunk */
-/* A chunk consists of an header identifier (4 bytes), the length of the chunk
-   (4 bytes), and the chunkdata itself, padded to be an even number of bytes.
-   We'll skip all chunks until we find the "data"-one which could contain
-   mpeg-data */
-                if (seek != 0) {
-                    if (vfs_fseek(file, seek, SEEK_CUR) != 0) { /* some error occured */
-                        vfs_fclose(file);
-                        return 0;
-                    }
-                }
-                if (!(read_n_bytes(file, buf, 4))) {
-                    vfs_fclose(file);
-                    return 0;
-                }
-                head = convert_to_header(buf);
-                if (!(read_n_bytes(file, buf, 4))) {
-                    vfs_fclose(file);
-                    return 0;
-                }
-                seek = convert_to_long(buf);
-                seek = seek + (seek % 2);   /* Has to be even (padding) */
-                if (seek >= 2
-                    && head == ('f' << 24) + ('m' << 16) + ('t' << 8) + ' ') {
-                    if (!(read_n_bytes(file, buf, 2))) {
-                        vfs_fclose(file);
-                        return 0;
-                    }
-                    wavid = buf[0] + 256 * buf[1];
-                    seek -= 2;
-                    /* we could go on looking for
-                       other things, but all we
-                       wanted was the wavid */
-                    vfs_fclose(file);
-                    return wavid;
-                }
-            }
-            while (head != ('d' << 24) + ('a' << 16) + ('t' << 8) + 'a');
-            /* it's RIFF WAVE */
-        }
-        /* it's RIFF */
-    }
-    /* it's not even RIFF */
-    vfs_fclose(file);
-    return 0;
-}
 
 #define DET_BUF_SIZE 1024
 
@@ -463,9 +368,6 @@ mpg123_detect_by_content_stream(gchar *url)
 static int
 is_our_file(char *filename)
 {
-    char *ext;
-    guint16 wavid;
-
     if (!strncasecmp(filename, "http://", 7)) { 
 	return mpg123_detect_by_content_stream(filename);
     }
