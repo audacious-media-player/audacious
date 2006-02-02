@@ -26,10 +26,12 @@ install:
 
 clean:
 	$(MAKE) clean-prehook
-	@for i in $(SUBDIRS); do \
-		echo "[cleaning subobjective: $$i]"; \
-		cd $$i; $(MAKE) clean; cd ..; \
-	done
+	@if test "$(SUBDIRS)" != "none"; then \
+		for i in $(SUBDIRS); do \
+			echo "[cleaning subobjective: $$i]"; \
+			(cd $$i; $(MAKE) clean; cd ..); \
+		done; \
+	fi
 	$(MAKE) clean-posthook
 	@echo "[all objectives cleaned]"
 
