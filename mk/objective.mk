@@ -19,6 +19,7 @@ install:
 		$(INSTALL) $(INSTALL_OVERRIDE) $(DESTDIR)/$(BINDIR)/$(LIB_SUFFIX)/$$i; \
 	@done
 	$(MAKE) install-posthook
+	@echo "[all objectives installed]"
 
 clean:
 	$(MAKE) clean-prehook
@@ -27,6 +28,7 @@ clean:
 		cd $$i; $(MAKE) clean; cd ..; \
 	done
 	$(MAKE) clean-posthook
+	@echo "[all objectives cleaned]"
 
 distclean: clean
 	$(RM) mk/rules.mk
@@ -44,6 +46,7 @@ build:
 		$(MAKE) $$i; \
 	done
 	$(MAKE) build-posthook
+	@echo "[all objectives built]"
 
 .c.o:
 	printf "%10s     %-20s\n" CC $$i;
