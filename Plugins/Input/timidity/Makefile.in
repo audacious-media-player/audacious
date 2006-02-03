@@ -1,0 +1,3 @@
+include ../../../mk/objective.mk
+
+SUBDIRS = libtimidity src

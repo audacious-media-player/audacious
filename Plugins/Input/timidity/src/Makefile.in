@@ -1,0 +1,18 @@
+include ../../../../mk/rules.mk
+include ../../../../mk/objective.mk
+
+OBJECTIVE_LIBS = libtimidity.so
+
+LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
+
+LIBADD = ../libtimidity/libtimidity.a
+
+SOURCES = \
+	callbacks.c \
+	interface.c \
+	xmms-timidity.c \
+
+OBJECTS = ${SOURCES:.c=.o}
+
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I../../../../intl -I../../../.. \ 
+	-I../libtimidity

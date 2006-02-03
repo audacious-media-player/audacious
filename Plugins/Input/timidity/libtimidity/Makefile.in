@@ -1,0 +1,22 @@
+include ../../../../mk/rules.mk
+include ../../../../mk/objective.mk
+
+OBJECTIVE_LIBS_NOINST = libtimidity.a
+
+SOURCES = \
+	common.c \
+	instrum.c \
+	instrum_dls.c \
+	mix.c \
+	options.h \
+	output.c \
+	playmidi.c \
+	readmidi.c \
+	resample.c \
+	stream.c \
+	tables.c \
+	timidity.c
+
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I../../../../intl -I../../../..
+
+OBJECTS = ${SOURCES:.c=.o}
