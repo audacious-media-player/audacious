@@ -1,6 +1,9 @@
 # Shut up GNU make
 .SILENT:
 
+OBJECTIVE_DIRECTORIES = none
+OBJECTIVE_LIBS = none
+OBJECTIVE_BINS = none
 SUBDIRS = none
 CFLAGS += -DHAVE_CONFIG_H
 
@@ -9,18 +12,25 @@ all: build
 
 install:
 	$(MAKE) install-prehook
-	@for i in $(OBJECTIVE_DIRECTORIES); do \
-		printf "%10s     %-20s\n" MKDIR $$i; \
-		$(INSTALL) -d -m 755 $(DESTDIR)/$$i; \
-	done
-	@for i in $(OBJECTIVE_LIBS); do \
-		printf "%10s     %-20s\n" INSTALL $$i; \
-		$(INSTALL) $(INSTALL_OVERRIDE) $(DESTDIR)/$(LIBDIR)/$(LIB_SUFFIX)/$$i; \
-	done
-	@for i in $(OBJECTIVE_BINS); do \
-		printf "%10s     %-20s\n" INSTALL $$i; \
-		$(INSTALL) $(INSTALL_OVERRIDE) $(DESTDIR)/$(BINDIR)/$(LIB_SUFFIX)/$$i; \
-	@done
+	$(INSTALL) -d -m 755 $(DESTDIR)/$(LIBDIR)
+	@if test "$(OBJECTIVE_DIRECTORIES)" != "none"; then \
+		for i in $(OBJECTIVE_DIRECTORIES); do \
+			printf "%10s     %-20s\n" MKDIR $$i; \
+			$(INSTALL) -d -m 755 $(DESTDIR)/$$i; \
+		done; \
+	fi
+	@if test "$(OBJECTIVE_LIBS)" != "none"; then \
+		for i in $(OBJECTIVE_LIBS); do \
+			printf "%10s     %-20s\n" INSTALL $$i; \
+			$(INSTALL) $(INSTALL_OVERRIDE) $$i $(DESTDIR)/$(LIBDIR)/$$i; \
+		done; \
+	fi
+	@if test "$(OBJECTIVE_BINS)" != "none"; then \
+		for i in $(OBJECTIVE_BINS); do \
+			printf "%10s     %-20s\n" INSTALL $$i; \
+			$(INSTALL) $(INSTALL_OVERRIDE) $$i $(DESTDIR)/$(BINDIR)/$$i; \
+		done; \
+	fi;
 	$(MAKE) install-posthook
 	@echo "[all objectives installed]"
 
@@ -81,6 +91,11 @@ build:
 .cxx.o:
 	printf "%10s     %-20s\n" CXX $<;
 	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+%.so: $(OBJECTS)
+	make $(OBJECTS)
+	printf "%10s     %-20s\n" LINK $@
+	$(CC) -fPIC -DPIC -shared -o $@ $(OBJECTS) $(LDFLAGS) $(LIBADD)
 
 clean-prehook:
 clean-posthook:
