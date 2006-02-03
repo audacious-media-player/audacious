@@ -6,6 +6,8 @@ OBJECTIVE_LIBS = none
 OBJECTIVE_LIBS_NOINST = none
 OBJECTIVE_BINS = none
 SUBDIRS = none
+LIBDIR = $(libdir)
+BINDIR = $(bindir)
 
 CFLAGS += -DHAVE_CONFIG_H
 
