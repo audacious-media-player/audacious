@@ -5,8 +5,6 @@ OBJECTIVE_LIBS = libsexypsf.so
 
 LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
-LDFLAGS = $(PLUGIN_LDFLAGS)
-
 SOURCES = \
 	PsxBios.c \
 	PsxCounters.c \
@@ -23,4 +21,6 @@ SOURCES = \
 
 LIBADD = -lz
 
-CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I../../../intl -I../../..
+OBJECTS = ${SOURCES:.c=.o}
+
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I../../../intl -I../../.. -Ispu/ -I.
