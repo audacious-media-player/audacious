@@ -1,5 +1,5 @@
-include ../../../rules.mk
-include ../../../objective.mk
+include ../../../mk/rules.mk
+include ../../../mk/objective.mk
 
 OBJECTIVE_LIBS = libsexypsf.so
 
