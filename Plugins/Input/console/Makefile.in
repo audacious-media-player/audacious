@@ -42,5 +42,5 @@ SOURCES = \
 
 OBJECTS = ${SOURCES:.cpp=.o}
 
-LIBADD += -lz $(GTK_LIBS)
+LIBADD += -lz $(GTK_LIBS) -lstdc++
 CXXFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..
