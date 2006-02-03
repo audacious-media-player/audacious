@@ -15,6 +15,12 @@ all: build
 install:
 	$(MAKE) install-prehook
 	$(INSTALL) -d -m 755 $(DESTDIR)/$(LIBDIR)
+	@if test "$(SUBDIRS)" != "none"; then \
+		for i in $(SUBDIRS); do \
+			echo "[installing subobjective: $$i]"; \
+			(cd $$i; $(MAKE) install; cd ..); \
+		done; \
+	fi
 	@if test "$(OBJECTIVE_DIRECTORIES)" != "none"; then \
 		for i in $(OBJECTIVE_DIRECTORIES); do \
 			printf "%10s     %-20s\n" MKDIR $$i; \
