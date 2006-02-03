@@ -36,3 +36,4 @@ SOURCES =	\
 	xs_sidplay2.cc	\
 	xmms-sid.c
 
+OBJECTS = ${SOURCES:.c=.o} ${SOURCES:.cc=.o}
