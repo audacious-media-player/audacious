@@ -97,6 +97,11 @@ build:
 	printf "%10s     %-20s\n" LINK $@
 	$(CC) -fPIC -DPIC -shared -o $@ $(OBJECTS) $(LDFLAGS) $(LIBADD)
 
+$(OBJECTIVE_BINS): $(OBJECTS)
+	make $(OBJECTS)
+	printf "%10s     %-20s\n" LINK $@
+	$(CC) -o $@ $(OBJECTS) $(LDFLAGS) $(LIBADD)
+
 clean-prehook:
 clean-posthook:
 build-prehook:
