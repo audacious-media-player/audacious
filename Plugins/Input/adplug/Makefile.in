@@ -1,0 +1,16 @@
+include ../../../rules.mk
+include ../../../objective.mk
+
+SUBDIRS = core
+OBJECTIVE_LIBS = libadplug.so
+
+LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
+
+LIBADD = -lstdc++ $(BINIO_LIBS) ./core/libadplugcore.a
+
+SOURCES = adplug-xmms.cc
+
+OBJECTS = ${SOURCES:.c=.o}
+
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(BINIO_CFLAGS) \
+	-I../../../intl -I../../.. -I./core
