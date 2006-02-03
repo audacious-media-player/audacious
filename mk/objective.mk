@@ -3,8 +3,10 @@
 
 OBJECTIVE_DIRECTORIES = none
 OBJECTIVE_LIBS = none
+OBJECTIVE_LIBS_NOINST = none
 OBJECTIVE_BINS = none
 SUBDIRS = none
+
 CFLAGS += -DHAVE_CONFIG_H
 
 default: all
@@ -58,21 +60,27 @@ build:
 			echo "[finished subobjective: $$i]"; \
 		done; \
 	fi
-	@for i in $(OBJECTIVE_LIBS); do \
-		echo "[building library objective: $$i]"; \
-		$(MAKE) $$i; \
-		echo "[finished library objective: $$i]"; \
-	done
-	@for i in $(OBJECTIVE_LIBS_NOINST); do \
-		echo "[building library dependency: $$i]"; \
-		$(MAKE) $$i; \
-		echo "[finished library dependency: $$i]"; \
-	done
-	@for i in $(OBJECTIVE_BINS); do \
-		echo "[building binary objective: $$i]"; \
-		$(MAKE) $$i; \
-		echo "[finished binary objective: $$i]"; \
-	done
+	@if test "$(OBJECTIVE_LIBS)" != "none"; then \
+		for i in $(OBJECTIVE_LIBS); do \
+			echo "[building library objective: $$i]"; \
+			$(MAKE) $$i; \
+			echo "[finished library objective: $$i]"; \
+		done; \
+	fi
+	@if test "$(OBJECTIVE_LIBS_NOINST)" != "none"; then \
+		for i in $(OBJECTIVE_LIBS_NOINST); do \
+			echo "[building library dependency: $$i]"; \
+			$(MAKE) $$i; \
+			echo "[finished library dependency: $$i]"; \
+		done; \
+	fi
+	@if test "$(OBJECTIVE_BINS)" != "none"; then \
+		for i in $(OBJECTIVE_BINS); do \
+			echo "[building binary objective: $$i]"; \
+			$(MAKE) $$i; \
+			echo "[finished binary objective: $$i]"; \
+		done; \
+	fi
 	$(MAKE) build-posthook
 	@echo "[all objectives built]"
 
