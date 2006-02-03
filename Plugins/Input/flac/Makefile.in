@@ -1,0 +1,37 @@
+include ../../../rules.mk
+include ../../../objective.mk
+
+SUBDIRS = plugin_common
+
+noinst_HEADERS = \
+	charset.h \
+	configure.h \
+	http.h \
+	plugin.h \
+	tag.h \
+	fast_float_math_hack.h \
+	replaygain_analysis.h \
+	grabbag.h \
+	replaygain_synthesis.h
+
+OBJECTIVE_LIBS = libflac.so
+
+LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
+
+LIBADD = $(LIBFLAC_LIBS)  -L./plugin_common -lplugin_common
+
+SOURCES = \
+	charset.c \
+	configure.c \
+	fileinfo.c \
+	http.c \
+	plugin.c \
+	tag.c \
+	replaygain_synthesis.c \
+	replaygain.c \
+	replaygain_analysis.c \
+	file.c
+
+OBJECTS = ${SOURCES:.c=.o}
+
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I../../../intl -I../../.. $(LIBFLAC_CFLAGS)

@@ -1,0 +1,21 @@
+include ../../../../rules.mk
+include ../../../../objective.mk
+
+CFLAGS += -fPIC -DPIC -I..
+
+OBJECTIVE_LIBS_NOINST = libplugin_common.a
+
+noinst_HEADERS = \
+	all.h \
+	charset.h \
+	defs.h \
+	dither.h \
+	locale_hack.h \
+	tags.h
+
+SOURCES = \
+	charset.c \
+	dither.c \
+	tags.c
+
+OBJECTS = ${SOURCES:.c=.o}
