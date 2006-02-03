@@ -17,7 +17,7 @@ OBJECTS = ${SOURCES:.c=.o}
 
 CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..
 
-LDFLAGS = $(GTK_LIBS)
+LIBADD = $(GTK_LIBS) $(ID3LIBS)
 
 libmpg123.so: $(OBJECTS)
 	$(CC) $(CFLAGS) $(LDFLAGS) -shared $(OBJECTS) -o $@
