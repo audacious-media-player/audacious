@@ -1,0 +1,14 @@
+include ../../../mk/rules.mk
+include ../../../mk/objective.mk
+
+OBJECTIVE_LIBS = libsong_change.so
+
+LIBDIR = $(plugindir)/$(GENERAL_PLUGIN_DIR)
+
+LIBADD = $(GTK_LIBS)
+
+SOURCES = song_change.c
+
+OBJECTS = ${SOURCES:.c=.o}
+
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I../../../intl -I../../..
