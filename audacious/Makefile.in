@@ -1,0 +1,111 @@
+include ../mk/rules.mk
+include ../mk/objective.mk
+
+SUBDIRS = glade images
+
+beepincludedir = $(includedir)/audacious
+
+OBJECTIVE_BINS = audacious
+
+LDFLAGS = -Wl,-export-dynamic
+LDADD = \
+	$(GTK_LIBS)      \
+	$(LIBGLADE_LIBS) \
+	$(LTLIBINTL)     \
+	../libaudacious/libaudacious.a
+
+CFLAGS += \
+	$(GTK_CFLAGS)      \
+	$(LIBGLADE_CFLAGS) \
+	$(BEEP_DEFINES)    \
+	$(ARCH_DEFINES)    \
+	-I..    \
+	-I../intl
+
+SOURCES = \
+	build_stamp.c \
+	genevent.c \
+	skin.c \
+	util.c \
+	output.c \
+	fft.c \
+	input.c \
+	effect.c \
+	general.c \
+	visualization.c \
+	pluginenum.c \
+	playlist.c \
+	controlsocket.c \
+	dock.c \
+	widget.c \
+	sbutton.c \
+	pbutton.c \
+	tbutton.c \
+	textbox.c \
+	menurow.c \
+	hslider.c \
+	monostereo.c \
+	vis.c \
+	svis.c \
+	number.c \
+	playback.c \
+	playstatus.c \
+	playlist_list.c \
+	playlist_slider.c \
+	playlist_popup.c \
+	eq_graph.c \
+	eq_slider.c \
+	main.c \
+	logger.c \
+	mainwin.c \
+	skinwin.c \
+	prefswin.c \
+	ui_playlist.c \
+	equalizer.c \
+	glade.c \
+	hints.c \
+	about.c credits.c \
+	softvolume.c \
+	getopt.c getopt1.c \
+	urldecode.c \
+	mkdtemp.c \
+	iir.c \
+	iir_cfs.c \
+	iir_fpu.c
+
+OBJECTS = ${SOURCES:.c=.o}
+
+beepinclude_HEADERS = plugin.h output.h input.h
+
+desktop_DATA = audacious.desktop
+desktopdir = $(datadir)/applications
+
+
+BUILT_SOURCES = pixmaps.h
+
+embedded_icons = \
+	info.png playlist.png play.png
+
+
+EXTRA_DIST = \
+	$(embedded_icons) build.list
+
+pixmaps.h: $(embedded_icons)
+	gdk-pixbuf-csource --stream --build-list `cat build.list` > pixmaps.h
+
+build_stamp.c:
+	if [ -d .svn ] || [ ! -f build_stamp.c ]; then		\
+		( \
+			echo '/* SVN repository version.'; \
+			echo ' * This auto-generated file must not be included in SVN; but must'; \
+			echo ' * be included in release tarballs.'; \
+			echo ' */'; \
+			echo '#include <glib.h>'; \
+			echo -n 'const gchar *svn_stamp = "'; \
+			(cd ..; svnversion -n .); \
+			echo '";' \
+		) > build_stamp.c; \
+	fi;
+
+audacious: $(OBJECTS)
+	$(CC) $(LDFLAGS) $(LDADD) -o $@ $(OBJECTS)
