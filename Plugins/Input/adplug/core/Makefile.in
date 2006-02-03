@@ -25,3 +25,5 @@ database.h players.h xsm.h adlibemu.h kemuopl.h dro.h dmo.h s3m.h realopl.h \
 analopl.h temuopl.h msc.h rix.h
 
 CFLAGS += -fPIC -DPIC $(BINIO_CFLAGS) -I../../../../intl -I../../../..
+
+OBJECTS = ${SOURCES:.c=.o} ${SOURCES:.cpp=.o}
