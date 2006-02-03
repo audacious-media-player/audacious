@@ -9,7 +9,6 @@ SOURCES = configure.c  fileinfo.c  http.c  vcedit.c  vorbis.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
-CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I../../../intl -I../../.. -I../..
+LIBADD = $(OGG_LIBS) $(VORBIS_LIBS)
 
-libvorbis.so: $(OBJECTS)
-	$(CC) $(CFLAGS) -shared -o $@ $(OBJECTS)
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I../../../intl -I../../.. -I../..
