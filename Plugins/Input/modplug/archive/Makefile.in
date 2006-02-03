@@ -1,0 +1,16 @@
+include ../../../../mk/rules.mk
+include ../../../../mk/objective.mk
+
+CXXFLAGS += -fPIC -DPIC -I../../..
+
+OBJECTIVE_LIBS_NOINST = libarchive.a
+
+SOURCES = archive.cpp     \
+          open.cpp        \
+          arch_raw.cpp    \
+          arch_gzip.cpp   \
+          arch_zip.cpp    \
+          arch_rar.cpp    \
+          arch_bz2.cpp
+
+OBJECTS = ${SOURCES:.cpp=.o}
