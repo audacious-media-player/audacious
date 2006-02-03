@@ -1,8 +1,11 @@
-lib_LTLIBRARIES = libconsole.la
+include ../../../mk/rules.mk
+include ../../../mk/objective.mk
 
-libdir = $(plugindir)/$(INPUT_PLUGIN_DIR)
+OBJECTIVE_LIBS = libconsole.so
 
-libconsole_la_SOURCES = \
+LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
+
+SOURCES = \
 	Blip_Buffer.cpp     \
 	Classic_Emu.cpp     \
 	Dual_Resampler.cpp  \
@@ -37,7 +40,7 @@ libconsole_la_SOURCES = \
 	Track_Emu.cpp       \
 	Audacious_Driver.cpp
 
-libconsole_la_LDFLAGS = $(PLUGIN_LDFLAGS)
-libconsole_la_LIBADD = -lz $(GTK_LIBS) $(top_builddir)/libaudacious/libaudacious.la
-INCLUDES = $(GTK_CFLAGS) $(ARCH_DEFINES) -I$(top_srcdir)/intl -I$(top_srcdir)
+OBJECTS = ${SOURCES:.cpp=.o}
 
+LIBADD += -lz $(GTK_LIBS)
+CXXFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..
