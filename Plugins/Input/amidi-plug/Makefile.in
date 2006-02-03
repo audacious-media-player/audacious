@@ -8,7 +8,6 @@ noinst_HEADERS = amidi-plug.h i_seq.h i_midi.h i_configure.h \
 
 LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
-LDFLAGS = $(PLUGIN_LDFLAGS)
 LIBADD = $(GTK_LIBS) $(ALSA_LIBS) -lpthread
 SOURCES = amidi-plug.c i_seq.c i_midi.c \
           i_configure.c i_utils.c i_fileinfo.c
