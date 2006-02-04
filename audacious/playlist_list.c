@@ -408,9 +408,28 @@ playlist_list_draw(Widget * w)
 
     PLAYLIST_LOCK();
     list = playlist_get();
+    list = g_list_nth(list, pl->pl_first);
 
-    for (i = 0; i < pl->pl_first; i++)
-        list = g_list_next(list);
+    /* It sucks having to run the iteration twice but this is the only
+       way you can reliably get the maximum width so we can get our
+       playlist nice and aligned... -- plasmaroo */
+
+    for (i = pl->pl_first;
+         list && i < pl->pl_first + pl->pl_num_visible;
+         list = g_list_next(list), i++) {
+        PlaylistEntry *entry = list->data;
+
+        if (entry->length != -1)
+        {
+            g_snprintf(length, sizeof(length), "%d:%-2.2d",
+                       entry->length / 60000, (entry->length / 1000) % 60);
+            tpadding_dwidth = MAX(tpadding_dwidth, strlen(length));
+        }
+    }
+
+    /* Reset */
+    list = playlist_get();
+    list = g_list_nth(list, pl->pl_first);
 
     for (i = pl->pl_first;
          list && i < pl->pl_first + pl->pl_num_visible;
@@ -461,7 +480,6 @@ playlist_list_draw(Widget * w)
         {
             g_snprintf(length, sizeof(length), "%d:%-2.2d",
                        entry->length / 60000, (entry->length / 1000) % 60);
-	    tpadding_dwidth = MAX(tpadding_dwidth, strlen(length));
         }
 
         if (pos != -1 || entry->length != -1) {
@@ -474,10 +492,11 @@ playlist_list_draw(Widget * w)
 
             max_time_len = MAX(max_time_len, tail_len);
 
-            /* FIXME: This is just an approximate alignment, maybe
-               something still fast, but exact could be done */
+            if (entry->length != -1)
+              tail_width = width - (width_approx_digits * (tpadding_dwidth+2));
+            else
+              tail_width = width - (width_approx_digits * 6) - 5;
 
-            tail_width = width - (width_approx_digits * 6) - 5;
             if (i == playlist_get_position_nolock())
                 gdk_gc_set_foreground(gc,
                                       skin_get_color(bmp_active_skin,
