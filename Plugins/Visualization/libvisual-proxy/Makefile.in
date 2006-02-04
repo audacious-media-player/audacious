@@ -1,0 +1,15 @@
+include ../../../mk/rules.mk
+include ../../../mk/objective.mk
+
+OBJECTIVE_LIBS = libvisual_proxy.so
+
+LIBDIR = $(plugindir)/$(VISUALIZATION_PLUGIN_DIR)
+
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(LIBVISUAL_CFLAGS) $(SDL_CFLAGS) -I../../.. -I../../../intl 
+
+LDFLAGS = $(GTK_LDFLAGS) $(LIBVISUAL_LDFLAGS) $(SDL_LDFLAGS)
+LIBADD = $(GTK_LIBS) $(LIBVISUAL_LIBS) $(SDL_LIBS) -lGL
+
+SOURCES = main.c lv_bmp_config.c config_gui.c about.c
+
+OBJECTS = ${SOURCES:.c=.o}
