@@ -2,3 +2,10 @@ include mk/rules.mk
 include mk/objective.mk
 
 SUBDIRS = Plugins libaudacious audacious po icons skin intl
+
+install-posthook:
+	@if test `whoami` = 'root'; then \
+		echo "[running ldconfig to update system library cache]"; \
+		ldconfig; \
+		echo "[system library cache updated]"; \
+	fi
