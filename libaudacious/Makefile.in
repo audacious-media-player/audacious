@@ -6,14 +6,14 @@ beepincludedir = $(includedir)/audacious
 OBJECTIVE_LIBS = libaudacious.so
 OBJECTIVE_LIBS_NOINST = libaudacious.a
 
-LDFLAGS = -Wl,-export-dynamic -Wl,-version-info $(LIBBEEP_MAJOR_VERSION):$(LIBBEEP_MINOR_VERSION):$(LIBBEEP_MICRO_VERSION)
+LDFLAGS = -Wl,-export-dynamic
 
 libaudacious_la_LIBADD = \
 	$(GTK_LIBS)      \
 	$(GCONF_LIBS)    \
 	$(GNOMEVFS_LIBS)
 
-INCLUDES = \
+CFLAGS += -fPIC -DPIC \
 	$(GTK_CFLAGS)        \
 	$(GCONF_CFLAGS)      \
 	$(GNOMEVFS_CFLAGS)   \

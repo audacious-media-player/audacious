@@ -1,7 +1,7 @@
-include ../../../../rules.mk
-include ../../../../objective.mk
+include ../../../../mk/rules.mk
+include ../../../../mk/objective.mk
 
-CFLAGS += -fPIC -DPIC -I..
+CFLAGS += -fPIC -DPIC -I.. -I../../../..
 
 OBJECTIVE_LIBS_NOINST = libplugin_common.a
 

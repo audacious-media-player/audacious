@@ -12,7 +12,7 @@ LDADD = \
 	$(GTK_LIBS)      \
 	$(LIBGLADE_LIBS) \
 	$(LTLIBINTL)     \
-	../libaudacious/libaudacious.a
+	-L../libaudacious -laudacious
 
 CFLAGS += \
 	$(GTK_CFLAGS)      \
