@@ -46,6 +46,8 @@ SOURCES = \
 	xconvert.c \
 	xml_document.c
 
+OBJECTS = ${SOURCES:.c=.o}
+
 HEADERS = \
 	vfs.h rcfile.h configdb.h \
 	configfile.h \
