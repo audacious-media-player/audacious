@@ -204,7 +204,7 @@ static int mpcIsOurFile(char* p_Filename)
 {
    VFSFile *file;
    gchar magic[3];
-   if (file = vfs_fopen(p_Filename, "rb")) {
+   if ((file = vfs_fopen(p_Filename, "rb"))) {
        vfs_fread(magic, 1, 3, file);
        if (!strncmp(magic, "MP+", 3)) {
             vfs_fclose(file);
