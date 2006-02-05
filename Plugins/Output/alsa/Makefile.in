@@ -1,0 +1,16 @@
+include ../../../mk/rules.mk
+include ../../../mk/objective.mk
+
+OBJECTIVE_LIBS = libALSA.so
+
+noinst_HEADERS = alsa.h
+
+LIBDIR = $(plugindir)/$(OUTPUT_PLUGIN_DIR)
+
+LIBADD = $(GTK_LIBS) $(ALSA_LIBS) -lpthread
+SOURCES = alsa.c about.c audio.c configure.c init.c
+
+OBJECTS = ${SOURCES:.c=.o}
+
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ALSA_CFLAGS) \
+	-I../../../intl -I../../..

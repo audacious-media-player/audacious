@@ -1,0 +1,5 @@
+include ../../mk/rules.mk
+include ../../mk/objective.mk
+
+ALL_PLUGINS = OSS alsa crossfade disk_writer esd jack
+SUBDIRS = @OUTPUT_PLUGINS@
