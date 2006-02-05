@@ -393,6 +393,7 @@ static CPlayer *factory(const std::string &filename, Copl *newopl)
 static void adplug_stop(void);
 static void adplug_play(char *filename);
 
+#if 0
 static void subsong_slider(GtkAdjustment *adj)
 {
   adplug_stop();
@@ -400,7 +401,6 @@ static void subsong_slider(GtkAdjustment *adj)
   adplug_play(plr.filename);
 }
 
-#if 0
 static void close_infobox(GtkDialog *infodlg)
 {
   // Forget our references to the instance of the "currently playing song" info
@@ -675,6 +675,7 @@ static void *play_loop(void *filename)
   plr.playing = false; // important! XMMS won't get a self-ended song without it.
   dbg_printf(".\n");
   g_thread_exit(NULL);
+  return(NULL);
 }
 
 // sampsize macro not useful anymore.

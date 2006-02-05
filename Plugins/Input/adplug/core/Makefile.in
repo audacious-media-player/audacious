@@ -11,12 +11,6 @@ sa2.cpp s3m.cpp xad.cpp flash.cpp bmf.cpp hybrid.cpp hyp.cpp psi.cpp rat.cpp u6m
 rol.cpp xsm.cpp adlibemu.c dro.cpp lds.cpp realopl.cpp analopl.cpp \
 temuopl.cpp msc.cpp rix.cpp
 
-# This is a hack. Throughout AdPlug, stricmp() is used to do caseless string
-# comparations. UNIX libc's don't support stricmp(), but do support the BSD
-# strcasecmp(), so we have to replace every occurance of stricmp() into
-# strcasecmp(). stricmp() seems to be Windows, but maybe also POSIX...
-AM_CPPFLAGS = -Dstricmp=strcasecmp
-
 noinst_HEADERS = adplug.h emuopl.h fmopl.h silentopl.h opl.h diskopl.h \
 a2m.h amd.h bam.h d00.h dfm.h hsc.h hsp.h imf.h ksm.h lds.h mid.h mkj.h mtk.h \
 protrack.h rad.h raw.h sa2.h sng.h u6m.h player.h fmc.h mad.h xad.h bmf.h \
@@ -25,5 +19,6 @@ database.h players.h xsm.h adlibemu.h kemuopl.h dro.h dmo.h s3m.h realopl.h \
 analopl.h temuopl.h msc.h rix.h
 
 CFLAGS += -fPIC -DPIC $(BINIO_CFLAGS) -I../../../../intl -I../../../..
+CXXFLAGS = $(CFLAGS) -Dstricmp=strcasecmp
 
 OBJECTS = ${SOURCES:.c=.o} ${SOURCES:.cpp=.o}

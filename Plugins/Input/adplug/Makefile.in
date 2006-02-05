@@ -1,5 +1,5 @@
-include ../../../rules.mk
-include ../../../objective.mk
+include ../../../mk/rules.mk
+include ../../../mk/objective.mk
 
 SUBDIRS = core
 OBJECTIVE_LIBS = libadplug.so
@@ -14,3 +14,4 @@ OBJECTS = ${SOURCES:.cc=.o}
 
 CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(BINIO_CFLAGS) \
 	-I../../../intl -I../../.. -I./core
+CXXFLAGS = $(CFLAGS)
