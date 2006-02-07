@@ -20,4 +20,4 @@ CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..
 LIBADD = $(GTK_LIBS) $(ID3LIBS)
 
 libmpg123.so: $(OBJECTS)
-	$(CC) $(CFLAGS) $(LDFLAGS) -shared $(OBJECTS) -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $(LIBADD) -shared $(OBJECTS) -o $@
