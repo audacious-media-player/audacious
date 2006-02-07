@@ -109,19 +109,25 @@ build:
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 %.so: $(OBJECTS)
-	make $(OBJECTS)
-	printf "%10s     %-20s\n" LINK $@
-	$(CC) -fPIC -DPIC -shared -o $@ $(OBJECTS) $(LDFLAGS) $(LIBADD)
+	if test "x$(OBJECTS)" != "x"; then \
+		make $(OBJECTS);		\
+		printf "%10s     %-20s\n" LINK $@; \
+		$(CC) -fPIC -DPIC -shared -o $@ $(OBJECTS) $(LDFLAGS) $(LIBADD); \
+	fi
 
 %.a: $(OBJECTS)
-	make $(OBJECTS)
-	printf "%10s     %-20s\n" LINK $@
-	$(AR) cq $@ $(OBJECTS)
+	if test "x$(OBJECTS)" != "x"; then \
+		make $(OBJECTS);		\
+		printf "%10s     %-20s\n" LINK $@; \
+		$(AR) cq $@ $(OBJECTS); \
+	fi
 
 $(OBJECTIVE_BINS): $(OBJECTS)
-	make $(OBJECTS)
-	printf "%10s     %-20s\n" LINK $@
-	$(CC) -o $@ $(OBJECTS) $(LDFLAGS) $(LIBADD)
+	if test "x$(OBJECTS)" != "x"; then \
+		make $(OBJECTS);		\
+		printf "%10s     %-20s\n" LINK $@; \
+		$(CC) -o $@ $(OBJECTS) $(LDFLAGS) $(LIBADD); \
+	fi
 
 clean-prehook:
 clean-posthook:
