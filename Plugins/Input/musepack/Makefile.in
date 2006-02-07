@@ -5,14 +5,12 @@ OBJECTIVE_LIBS = libmpc.so
 
 LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
-libmpc_la_LIBADD = @GTK_LIBS@ @TAGLIB_LIBS@
-
 SOURCES = equalizer.cpp libmpc.cpp
-LIBADD = -lmpcdec
-noinst_HEADERS = equalizer.h libmpc.h
+
+LIBADD = -lmpcdec $(TAGLIB_LIBS) $(GTK_LIBS)
 
 OBJECTS = ${SOURCES:.cpp=.o}
 
-CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(TAGLIB_CFLAGS) \
-	-I../../../intl -I../../..
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(TAGLIB_CFLAGS) -I../../../intl -I../../..
+
 CXXFLAGS = $(CFLAGS)
