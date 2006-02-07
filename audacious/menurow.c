@@ -149,7 +149,7 @@ menurow_button_release(GtkWidget * widget,
         if (mr->mr_selected == MENUROW_DOUBLESIZE)
             mr->mr_doublesize_selected = !mr->mr_doublesize_selected;
 
-        if (mr->mr_selected != -1 && mr->mr_release_callback)
+        if ((int)(mr->mr_selected) != -1 && mr->mr_release_callback)
             mr->mr_release_callback(mr->mr_selected);
 
         mr->mr_selected = MENUROW_NONE;

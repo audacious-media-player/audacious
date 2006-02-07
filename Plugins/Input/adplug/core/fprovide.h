@@ -28,6 +28,7 @@
 class CFileProvider
 {
 public:
+  virtual ~CFileProvider() { }
   virtual binistream *open(std::string) const = 0;
   virtual void close(binistream *) const = 0;
 
@@ -39,6 +40,7 @@ public:
 class CProvider_Filesystem: public CFileProvider
 {
 public:
+  virtual ~CProvider_Filesystem() { }
   virtual binistream *open(std::string filename) const;
   virtual void close(binistream *f) const;
 };

@@ -215,7 +215,7 @@ gtk_entry_key_press(GtkWidget * widget, GdkEventKey * event)
 
     if (return_val && (editable->current_pos != initial_pos)) {
         if (extend_selection) {
-            int cpos = gtk_editable_get_position(GTK_EDITABLE(editable));
+            size_t cpos = gtk_editable_get_position(GTK_EDITABLE(editable));
             if (cpos < sel_start_pos)
                 sel_start_pos = cpos;
             else if (cpos > sel_end_pos)

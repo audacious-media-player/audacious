@@ -29,7 +29,7 @@ xmms_convert_buffers_new(void)
 static void *
 convert_get_buffer(struct buffer *buffer, size_t size)
 {
-    if (size > 0 && size <= buffer->size)
+    if (size > 0 && size <= (size_t)buffer->size)
         return buffer->buffer;
 
     buffer->size = size;

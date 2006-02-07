@@ -359,7 +359,7 @@ dump_version(void)
 const gchar *
 xmms_get_gentitle_format(void)
 {
-    gint titlestring_preset = cfg.titlestring_preset;
+    guint titlestring_preset = cfg.titlestring_preset;
 
     if (titlestring_preset < n_titlestring_presets)
 	return bmp_titlestring_presets[titlestring_preset];

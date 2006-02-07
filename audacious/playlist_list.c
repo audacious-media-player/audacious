@@ -641,7 +641,8 @@ playlist_list_draw(Widget * w)
      */
 
     if (pl->pl_drag_motion) {
-        guint pos, x, y, plx, ply, plength, lpadding;
+        guint pos, plength, lpadding;
+	gint x, y, plx, ply;
 
         if (cfg.show_numbers_in_pl) {
             lpadding = gint_count_digits(playlist_get_length_nolock()) + 1;

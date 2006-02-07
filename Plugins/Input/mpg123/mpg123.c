@@ -575,7 +575,8 @@ mpg123_get_id3v2(struct id3_tag *id3d, struct id3tag_t *tag)
 {
     struct id3_frame *id3frm;
     gchar *txt;
-    gint tlen, num;
+    gsize tlen;
+    gint num;
 
 #define ID3_SET(_tid,_fld)                                              \
 {                                                                       \

@@ -51,9 +51,9 @@ static FILE *bmp_log_file = NULL;
 G_LOCK_DEFINE_STATIC(bmp_log_file);
 
 static LogHandler log_handlers[] = {
-    {NULL, LOG_ALL_LEVELS},
-    {"Glib", LOG_ALL_LEVELS},
-    {"Gtk", LOG_ALL_LEVELS}
+    {NULL, LOG_ALL_LEVELS, 0},
+    {"Glib", LOG_ALL_LEVELS, 0},
+    {"Gtk", LOG_ALL_LEVELS, 0}
 };
 
 static guint log_handler_count = G_N_ELEMENTS(log_handlers);

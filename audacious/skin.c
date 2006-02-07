@@ -76,20 +76,20 @@ static SkinMaskInfo skin_mask_info[] = {
 };
 
 static SkinPixmapIdMapping skin_pixmap_id_map[] = {
-    {SKIN_MAIN, "main", NULL},
-    {SKIN_CBUTTONS, "cbuttons", NULL},
-    {SKIN_SHUFREP, "shufrep", NULL},
-    {SKIN_TEXT, "text", NULL},
-    {SKIN_TITLEBAR, "titlebar", NULL},
-    {SKIN_VOLUME, "volume", NULL},
-    {SKIN_BALANCE, "balance", "volume"},
-    {SKIN_MONOSTEREO, "monoster", NULL},
-    {SKIN_PLAYPAUSE, "playpaus", NULL},
-    {SKIN_NUMBERS, "nums_ex", "numbers"},
-    {SKIN_POSBAR, "posbar", NULL},
-    {SKIN_EQMAIN, "eqmain", NULL},
-    {SKIN_PLEDIT, "pledit", NULL},
-    {SKIN_EQ_EX, "eq_ex", NULL}
+    {SKIN_MAIN, "main", NULL, 0, 0},
+    {SKIN_CBUTTONS, "cbuttons", NULL, 0, 0},
+    {SKIN_SHUFREP, "shufrep", NULL, 0, 0},
+    {SKIN_TEXT, "text", NULL, 0, 0},
+    {SKIN_TITLEBAR, "titlebar", NULL, 0, 0},
+    {SKIN_VOLUME, "volume", NULL, 0, 0},
+    {SKIN_BALANCE, "balance", "volume", 0, 0},
+    {SKIN_MONOSTEREO, "monoster", NULL, 0, 0},
+    {SKIN_PLAYPAUSE, "playpaus", NULL, 0, 0},
+    {SKIN_NUMBERS, "nums_ex", "numbers", 0, 0},
+    {SKIN_POSBAR, "posbar", NULL, 0, 0},
+    {SKIN_EQMAIN, "eqmain", NULL, 0, 0},
+    {SKIN_PLEDIT, "pledit", NULL, 0, 0},
+    {SKIN_EQ_EX, "eq_ex", NULL, 0, 0}
 };
 
 static guint skin_pixmap_id_map_size = G_N_ELEMENTS(skin_pixmap_id_map);
@@ -224,9 +224,9 @@ skin_destroy(Skin * skin)
 }
 
 const SkinPixmapIdMapping *
-skin_pixmap_id_lookup(gint id)
+skin_pixmap_id_lookup(guint id)
 {
-    gint i;
+    guint i;
 
     for (i = 0; i < skin_pixmap_id_map_size; i++) {
         if (id == skin_pixmap_id_map[i].id) {
@@ -240,7 +240,7 @@ skin_pixmap_id_lookup(gint id)
 const gchar *
 skin_pixmap_id_to_name(SkinPixmapId id)
 {
-    gint i;
+    guint i;
 
     for (i = 0; i < skin_pixmap_id_map_size; i++) {
         if (id == skin_pixmap_id_map[i].id)
@@ -418,7 +418,7 @@ create_default_mask(GdkWindow * parent, gint w, gint h)
 static void
 skin_query_color(GdkColormap * cm, GdkColor * c)
 {
-    XColor xc = { 0 };
+    XColor xc = { 0,0,0,0,0,0 };
 
     xc.pixel = c->pixel;
     XQueryColor(GDK_COLORMAP_XDISPLAY(cm), GDK_COLORMAP_XCOLORMAP(cm), &xc);
@@ -581,7 +581,8 @@ skin_create_transparent_mask(const gchar * path,
     gchar *filename = NULL;
     gboolean created_mask = FALSE;
     GArray *num, *point;
-    gint i, j, k;
+    guint i, j;
+    gint k;
 
     if (path)
         filename = find_file_recursively(path, file);
@@ -613,7 +614,7 @@ skin_create_transparent_mask(const gchar * path,
 
     j = 0;
     for (i = 0; i < num->len; i++) {
-        if ((point->len - j) >= (g_array_index(num, gint, i) * 2)) {
+        if ((int)(point->len - j) >= (g_array_index(num, gint, i) * 2)) {
             created_mask = TRUE;
             gpoints = g_new(GdkPoint, g_array_index(num, gint, i));
             for (k = 0; k < g_array_index(num, gint, i); k++) {

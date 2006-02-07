@@ -310,8 +310,8 @@ short CdmoLoader::dmo_unpacker::unpack_block(unsigned char *ibuf, long ilen, uns
 	  ax = ((code & 0x3F) << 3) + ((par1 & 0xE0) >> 5) + 1;
 	  cx = (par1 & 0x1F) + 3;
 
-	  for(int i=0;i<cx;i++)
-	    *opos++ = *(opos - ax);
+	  for(int i=0;i<cx;i++,opos++)
+	    *opos = *(opos - ax);
 
 	  continue;
 	}
@@ -327,8 +327,8 @@ short CdmoLoader::dmo_unpacker::unpack_block(unsigned char *ibuf, long ilen, uns
 	  cx = ((par1 & 0x70) >> 4) + 3;
 	  bx = par1 & 0x0F;
 
-	  for(i=0;i<cx;i++)
-	    *opos++ = *(opos - ax);
+	  for(i=0;i<cx;i++,opos++)
+	    *opos = *(opos - ax);
 
 	  for (i=0;i<bx;i++)
 	    *opos++ = *ipos++;
@@ -348,8 +348,8 @@ short CdmoLoader::dmo_unpacker::unpack_block(unsigned char *ibuf, long ilen, uns
 	  cx = ((par1 & 0x01) << 4) + (par2 >> 4) + 4;
 	  ax = par2 & 0x0F;
 
-	  for(i=0;i<cx;i++)
-	    *opos++ = *(opos - bx);
+	  for(i=0;i<cx;i++,opos++)
+	    *opos = *(opos - bx);
 
 	  for (i=0;i<ax;i++)
 	    *opos++ = *ipos++;

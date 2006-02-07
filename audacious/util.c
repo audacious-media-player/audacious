@@ -394,11 +394,11 @@ read_ini_string(const gchar * filename, const gchar * section,
                 const gchar * key)
 {
     gchar *buffer, *ret_buffer = NULL;
-    gint found_section = 0, off = 0, len = 0;
-    gsize filesize;
+    gint found_section = 0, len = 0;
+    gsize filesize, off = 0;
     gchar *outbuf;
     unsigned char x[] = { 0xff, 0xfe, 0x00 };
-    int counter;
+    guint counter;
 
     if (!filename)
         return NULL;

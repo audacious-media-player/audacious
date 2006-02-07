@@ -59,7 +59,8 @@ InputPluginData ip_data = {
     NULL,
     NULL,
     FALSE,
-    FALSE
+    FALSE,
+    NULL
 };
 
 static GList *vis_list = NULL;

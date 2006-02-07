@@ -99,7 +99,7 @@ remote_read_packet(gint fd, ServerPktHeader * pkt_hdr)
         if (pkt_hdr->data_length) {
             size_t data_length = pkt_hdr->data_length;
             data = g_malloc0(data_length);
-            if (read_all(fd, data, data_length) < data_length) {
+            if ((size_t)read_all(fd, data, data_length) < data_length) {
                 g_free(data);
                 data = NULL;
             }
@@ -129,7 +129,7 @@ remote_send_packet(gint fd, guint32 command, gpointer data,
     pkt_hdr.version = XMMS_PROTOCOL_VERSION;
     pkt_hdr.command = command;
     pkt_hdr.data_length = data_length;
-    if (write_all(fd, &pkt_hdr, sizeof(ClientPktHeader)) < sizeof(pkt_hdr))
+    if ((size_t)write_all(fd, &pkt_hdr, sizeof(ClientPktHeader)) < sizeof(pkt_hdr))
         return;
     if (data_length && data)
         write_all(fd, data, data_length);

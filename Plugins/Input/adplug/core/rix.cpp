@@ -199,7 +199,7 @@ inline void CrixPlayer::crc_trans(unsigned short index,unsigned short v)
 	buffer[index*12] = (low+4)>>3;
 	for(i=1;i<=11;i++)
 	{
-		res *= 1.06;
+		res = (unsigned int)((double)res * 1.06);
 		buffer[index*12+i] = res>>3;
 	}
 }
@@ -235,7 +235,7 @@ inline void CrixPlayer::int_08h_entry()
                 {
                         mutex++;
                         band_sus = rix_proc();
-                        if(band_sus) sustain += band_sus * 1.06;
+                        if(band_sus) sustain += (int)((double)band_sus * 1.06);
 							mstotal+=sustain;
 							dro[T++]=(sustain>=0x100?1:0);
 							dro[T++]=sustain&0xff;
@@ -504,6 +504,6 @@ inline void CrixPlayer::music_ctrl()
 /*----------------------------------------------------------------------*/
 inline unsigned int CrixPlayer::strm_and_fr(unsigned short parm)
 {
-	return ((unsigned int)parm*6+10000)*0.27461678223;
+	return (int)(((unsigned int)parm*6+10000)*0.27461678223);
 }
 

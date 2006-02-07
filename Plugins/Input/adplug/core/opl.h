@@ -25,6 +25,7 @@
 class Copl
 {
  public:
+  virtual ~Copl() { }
   typedef enum {
     TYPE_OPL2, TYPE_OPL3, TYPE_DUAL_OPL2
   } ChipType;

@@ -204,7 +204,7 @@ ctrl_write_packet(gint fd, gpointer data, gint length)
 
     pkthdr.version = XMMS_PROTOCOL_VERSION;
     pkthdr.data_length = length;
-    if (write_all(fd, &pkthdr, sizeof(ServerPktHeader)) < sizeof(pkthdr))
+    if ((size_t)write_all(fd, &pkthdr, sizeof(ServerPktHeader)) < sizeof(pkthdr))
         return;
     if (data && length > 0)
         write_all(fd, data, length);
@@ -311,7 +311,7 @@ ctrlsocket_func(gpointer arg)
             continue;
 
         pkt = g_new0(PacketNode, 1);
-        if (read_all(fd, &pkt->hdr, sizeof(ClientPktHeader))
+        if ((size_t)read_all(fd, &pkt->hdr, sizeof(ClientPktHeader))
             < sizeof(ClientPktHeader)) {
             g_free(pkt);
             continue;
@@ -320,7 +320,7 @@ ctrlsocket_func(gpointer arg)
         if (pkt->hdr.data_length) {
             size_t data_length = pkt->hdr.data_length;
             pkt->data = g_malloc0(data_length);
-            if (read_all(fd, pkt->data, data_length) < data_length) {
+            if ((size_t)read_all(fd, pkt->data, data_length) < data_length) {
                 g_free(pkt->data);
                 g_free(pkt);
                 g_warning("ctrlsocket_func(): Incomplete data packet dropped");
@@ -574,23 +574,23 @@ ctrlsocket_check(void)
             break;
         case CMD_PLAYQUEUE_ADD:
             num = *((guint32 *) data);
-            if (num < playlist_get_length())
+            if (num < (guint)playlist_get_length())
                 playlist_queue_position(num);
             break;
         case CMD_PLAYQUEUE_REMOVE:
             num = *((guint32 *) data);
-            if (num < playlist_get_length())
+            if (num < (guint)playlist_get_length())
                 playlist_queue_remove(num);
             break;
         case CMD_SET_PLAYLIST_POS:
             num = *((guint32 *) data);
-            if (num < playlist_get_length())
+            if (num < (guint)playlist_get_length())
                 playlist_set_position(num);
             break;
         case CMD_JUMP_TO_TIME:
             num = *((guint32 *) data);
             if (playlist_get_current_length() > 0 &&
-                num < playlist_get_current_length())
+                num < (guint)playlist_get_current_length())
                 bmp_playback_seek(num / 1000);
             break;
         case CMD_SET_VOLUME:

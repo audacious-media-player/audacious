@@ -58,7 +58,7 @@
 #include "images/audacious_playlist.xpm"
 
 
-#define ITEM_SEPARATOR {"/-", NULL, NULL, 0, "<Separator>"}
+#define ITEM_SEPARATOR {"/-", NULL, NULL, 0, "<Separator>", NULL}
 
 
 enum {
@@ -161,7 +161,7 @@ static GtkItemFactoryEntry pladd_menu_entries[] = {
 static GtkItemFactoryEntry pldel_menu_entries[] = {
     {N_("/Clear Queue"), "<shift>Q",
      playlistwin_popup_menu_callback,
-     PLIST_CQUEUE, "<Item>"},
+     PLIST_CQUEUE, "<Item>", NULL},
 
     ITEM_SEPARATOR,
 
@@ -224,28 +224,28 @@ static GtkItemFactoryEntry plsel_menu_entries[] = {
 
 static GtkItemFactoryEntry plsort_menu_entries[] = {
     {N_("/Randomize List"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_RANDOMIZE, "<Item>"},
+     PLAYLISTWIN_SORT_RANDOMIZE, "<Item>", NULL},
     {N_("/Reverse List"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_REVERSE, "<Item>"},
+     PLAYLISTWIN_SORT_REVERSE, "<Item>", NULL},
     ITEM_SEPARATOR,
-    {N_("/Sort List"), NULL, NULL, 0, "<Branch>"},
+    {N_("/Sort List"), NULL, NULL, 0, "<Branch>", NULL},
     {N_("/Sort List/By Title"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_BYTITLE, "<Item>"},
+     PLAYLISTWIN_SORT_BYTITLE, "<Item>", NULL},
     {N_("/Sort List/By Filename"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_BYFILENAME, "<Item>"},
+     PLAYLISTWIN_SORT_BYFILENAME, "<Item>", NULL},
     {N_("/Sort List/By Path + Filename"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_BYPATH, "<Item>"},
+     PLAYLISTWIN_SORT_BYPATH, "<Item>", NULL},
     {N_("/Sort List/By Date"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_BYDATE, "<Item>"},
-    {N_("/Sort Selection"), NULL, NULL, 0, "<Branch>"},
+     PLAYLISTWIN_SORT_BYDATE, "<Item>", NULL},
+    {N_("/Sort Selection"), NULL, NULL, 0, "<Branch>", NULL},
     {N_("/Sort Selection/By Title"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_SEL_BYTITLE, "<Item>"},
+     PLAYLISTWIN_SORT_SEL_BYTITLE, "<Item>", NULL},
     {N_("/Sort Selection/By Filename"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_SEL_BYFILENAME, "<Item>"},
+     PLAYLISTWIN_SORT_SEL_BYFILENAME, "<Item>", NULL},
     {N_("/Sort Selection/By Path + Filename"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_SEL_BYPATH, "<Item>"},
+     PLAYLISTWIN_SORT_SEL_BYPATH, "<Item>", NULL},
     {N_("/Sort Selection/By Date"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_SEL_BYDATE, "<Item>"}
+     PLAYLISTWIN_SORT_SEL_BYDATE, "<Item>", NULL}
 };
 
 
@@ -342,7 +342,8 @@ static void
 playlistwin_update_sinfo(void)
 {
     gchar *posstr, *timestr, *title, *info, *dots;
-    gint pos, time, max_len;
+    gint pos, time;
+    guint max_len;
 
     pos = playlist_get_position();
     title = playlist_get_songtitle(pos);
@@ -1467,7 +1468,7 @@ playlistwin_drag_data_received(GtkWidget * widget,
                                selection_data, guint info,
                                guint time, gpointer user_data)
 {
-    guint pos;
+    gint pos;
 
     g_return_if_fail(selection_data != NULL);
 

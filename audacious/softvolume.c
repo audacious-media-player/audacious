@@ -121,7 +121,8 @@ void
 effect_16bit(gint max, gint min, guint length, gint16 * sdata,
              SoftVolumeConfig * c)
 {
-    gint i, v;
+    guint i;
+    gint v;
 
     for (i = 0; i < (length >> 2); ++i) {   /* ie. length/4 */
         v = (gint) ((*sdata * c->volume_left) / 100);
@@ -143,7 +144,8 @@ void
 effect_8bit(gint max, gint min, guint length, gint8 * sdata,
             SoftVolumeConfig * c)
 {
-    gint i, v;
+    guint i;
+    gint v;
 
     for (i = 0; i < (length >> 1); ++i) {   /* ie. length/2 */
         v = (gint) ((*sdata * c->volume_left) / 100);

@@ -755,7 +755,7 @@ static void OPLWriteReg(FM_OPL *OPL, int r, int v)
 {
 	OPL_CH *CH;
 	int slot;
-	int block_fnum;
+	size_t block_fnum;
 
 	switch(r&0xe0)
 	{
@@ -1343,8 +1343,10 @@ unsigned char OPLRead(FM_OPL *OPL,int a)
 		{
 			if(OPL->keyboardhandler_r)
 				return OPL->keyboardhandler_r(OPL->keyboard_param);
-			else
+			else {
 				LOG(LOG_WAR,("OPL:read unmapped KEYBOARD port\n"));
+				return 0; /* Avoid warning about empty else clause */
+			}
 		}
 		return 0;
 #if 0
@@ -1356,8 +1358,10 @@ unsigned char OPLRead(FM_OPL *OPL,int a)
 		{
 			if(OPL->porthandler_r)
 				return OPL->porthandler_r(OPL->port_param);
-			else
+			else {
 				LOG(LOG_WAR,("OPL:read unmapped I/O port\n"));
+				return 0; /* Avoid warning about empty else clause */
+			}
 		}
 		return 0;
 	case 0x1a: /* PCM-DATA    */

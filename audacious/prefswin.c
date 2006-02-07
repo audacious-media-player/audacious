@@ -828,7 +828,7 @@ on_titlestring_cbox_realize(GtkWidget * cbox,
 {
     gtk_combo_box_set_active(GTK_COMBO_BOX(cbox), cfg.titlestring_preset);
     gtk_widget_set_sensitive(GTK_WIDGET(data), 
-                             (cfg.titlestring_preset == n_titlestring_presets));
+                             (cfg.titlestring_preset == (gint)n_titlestring_presets));
 }
 
 static void
@@ -1445,7 +1445,7 @@ prefswin_set_skin_update(gboolean state)
 static gboolean
 prefswin_get_skin_update(void)
 {
-    return (gboolean) g_object_get_data(G_OBJECT(prefswin), "update-skins");
+    return g_object_get_data(G_OBJECT(prefswin), "update-skins") != 0;
 }
 
 static gboolean
@@ -1645,7 +1645,7 @@ create_prefs_window(void)
     GtkWidget *widget, *widget2;
 
     GtkWidget *titlestring_tag_menu, *menu_item;
-    gint i;
+    guint i;
         
     /* load the interface */
     xml = glade_xml_new_or_die(_("Preferences Window"), glade_file, NULL,
