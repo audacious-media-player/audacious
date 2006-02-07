@@ -9,6 +9,6 @@ SOURCES = configure.c  fileinfo.c  http.c  vcedit.c  vorbis.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
-LIBADD = $(OGG_LIBS) $(VORBIS_LIBS)
+LIBADD = $(OGG_VORBIS_LIBS)
 
 CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I../../../intl -I../../.. -I../..
