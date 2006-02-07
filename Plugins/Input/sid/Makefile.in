@@ -17,7 +17,7 @@ CXXFLAGS = $(CFLAGS)
 LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
 LDFLAGS = $(BUILDERS_LDFLAGS)
-LIBADD  = $(SIDPLAY1_LDADD) $(SIDPLAY2_LDADD) $(RESID_LDADD) $(HARDSID_LDADD)
+LIBADD  = $(SIDPLAY1_LDADD) $(SIDPLAY2_LDADD) $(RESID_LDADD) $(HARDSID_LDADD) $(GTK_LIBS)
 SOURCES =	\
 	xs_init.c	\
 	xs_about.c	\
@@ -36,4 +36,9 @@ SOURCES =	\
 	xs_sidplay2.cc	\
 	xmms-sid.c
 
-OBJECTS = ${SOURCES:.c=.o} ${SOURCES:.cc=.o}
+OBJECTS1 = ${SOURCES:.c=.o}
+OBJECTS = ${OBJECTS1:.cc=.o}
+
+libsid.so: $(OBJECTS)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(LIBADD) -shared $(OBJECTS) -o $@
+
