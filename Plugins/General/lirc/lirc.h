@@ -26,13 +26,7 @@
 
 #include <gtk/gtk.h>
 
-void clear_select_list(GList **list);
-void clear_title_list(GList **list);
-gchar *get_title_postfix(gchar *title);
-void select_title(char *s,int num);
 void init(void);
-void font_selection_ok(GtkWidget *button,gpointer *data);
-void configure(void);
 void cleanup(void);
 void about(void);
 
