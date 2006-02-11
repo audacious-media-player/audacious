@@ -33,8 +33,8 @@
 
 typedef struct
 {
-  gpointer       data;
-  gint           size;
+	gpointer       data;
+	gint           size;
 }
 convert_context_t;
 

@@ -32,14 +32,14 @@
 #include "crossfade.h"
 
 typedef struct {
-  AFormat  fmt;
-  gint     rate;
-  gint     nch;
+	AFormat  fmt;
+	gint     rate;
+	gint     nch;
 
-  gint     bps;             /* format is valid if (bps > 0) */
-  gboolean is_8bit;
-  gboolean is_swapped;
-  gboolean is_unsigned;
+	gint     bps;             /* format is valid if (bps > 0) */
+	gboolean is_8bit;
+	gboolean is_swapped;
+	gboolean is_unsigned;
 }
 format_t;
 

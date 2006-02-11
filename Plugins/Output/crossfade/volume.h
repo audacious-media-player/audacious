@@ -35,13 +35,13 @@
 
 typedef struct
 {
-  gboolean active;
-  gint     target_rms;
-  gint     song_rms;
-  gfloat   factor;
+	gboolean active;
+	gint     target_rms;
+	gint     song_rms;
+	gfloat   factor;
 
-  struct timeval tv_last;
-  gint clips;
+	struct timeval tv_last;
+	gint clips;
 }
 volume_context_t;
 
@@ -54,7 +54,7 @@ void volume_set_target_rms(volume_context_t *cc, gint target_rms);
 void volume_set_song_rms  (volume_context_t *cc, gint song_rms);
 
 gfloat volume_compute_factor(gint percent, gint dB_range); /*compute factor corresponding to
-                                                             attenuations in [- dB_range, 0]
-                                                           */
+	                                                           attenuations in [- dB_range, 0]
+	                                                         */
 
 #endif  /* _VOLUME_H_ */

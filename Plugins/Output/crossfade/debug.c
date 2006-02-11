@@ -24,11 +24,12 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-void debug(char *format, ...)
+void
+debug(char *format, ...)
 {
-  va_list ap;
+	va_list ap;
 
-  va_start(ap, format);
-  vfprintf(stderr, format, ap);
-  va_end  (ap);
+	va_start(ap, format);
+	vfprintf(stderr, format, ap);
+	va_end(ap);
 }

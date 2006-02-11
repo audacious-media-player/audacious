@@ -31,7 +31,8 @@
 #include "interface-2.0.h"
 #include "support.h"
 
-void on_help_close_button_clicked(GtkButton *button, gpointer user_data)
+void
+on_help_close_button_clicked(GtkButton * button, gpointer user_data)
 {
 
 }

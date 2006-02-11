@@ -34,15 +34,15 @@
 
 typedef struct
 {
-  EffectPlugin *ep;
-  EffectPlugin *last_ep;
-  gboolean      use_xmms_plugin;
-  gboolean      is_active;
-  gboolean      is_valid;
-  format_t      format;
-  AFormat       fmt;
-  gint          rate;
-  gint          nch;
+	EffectPlugin *ep;
+	EffectPlugin *last_ep;
+	gboolean      use_xmms_plugin;
+	gboolean      is_active;
+	gboolean      is_valid;
+	format_t      format;
+	AFormat       fmt;
+	gint          rate;
+	gint          nch;
 }
 effect_context_t;
 

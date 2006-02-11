@@ -34,41 +34,41 @@
 
 typedef struct               /* private state */
 {
-  gboolean valid;            /* TRUE after the context has been set up */
-  gint     in_rate;          /* sample rate (Hz) */
-  gint     out_rate;
-  gint16  *data;             /* pointer to output buffer (16bit stereo) */
-  gint     size;             /* size in bytes */
+	gboolean valid;            /* TRUE after the context has been set up */
+	gint     in_rate;          /* sample rate (Hz) */
+	gint     out_rate;
+	gint16  *data;             /* pointer to output buffer (16bit stereo) */
+	gint     size;             /* size in bytes */
 
-  volume_context_t vc;       /* for clipping warnings */ 
+	volume_context_t vc;       /* for clipping warnings */ 
 
 #ifdef HAVE_LIBSAMPLERATE
-  int        converter_type;
-  SRC_STATE *src_state;
-  SRC_DATA   src_data;       /* struct for I/O with SRC api */
-  gint       src_in_size, src_out_size;
+	int        converter_type;
+	SRC_STATE *src_state;
+	SRC_DATA   src_data;       /* struct for I/O with SRC api */
+	gint       src_in_size, src_out_size;
 #else
-  guint32  lcm_rate;         /* lcm(in_rate, out_rate) */
-  guint32  in_skip;          /* distance to next sample (lcm-units) */
-  guint32  out_skip;         
-  guint32  in_ofs;           /* offset (lcm-units) */
-  guint32  out_ofs;
+	guint32  lcm_rate;         /* lcm(in_rate, out_rate) */
+	guint32  in_skip;          /* distance to next sample (lcm-units) */
+	guint32  out_skip;         
+	guint32  in_ofs;           /* offset (lcm-units) */
+	guint32  out_ofs;
 
-  gboolean started;          /* TRUE after the first sample has been parsed */
-  gint16   last_l;           /* last input sample */
-  gint16   last_r;
+	gboolean started;          /* TRUE after the first sample has been parsed */
+	gint16   last_l;           /* last input sample */
+	gint16   last_r;
 #endif
 }
 rate_context_t;
 
 void rate_init  (rate_context_t *rc);
 void rate_config(rate_context_t *rc,
-                 gint            in_rate,
-                 gint            out_rate,
-                 int             converter_type);
+	               gint            in_rate,
+	               gint            out_rate,
+	               int             converter_type);
 gint rate_flow  (rate_context_t *rc,
-                 gpointer       *buffer,
-                 gint            length);
+	               gpointer       *buffer,
+	               gint            length);
 void rate_free  (rate_context_t *rc);
 
 #endif  /* _RATE_H_ */

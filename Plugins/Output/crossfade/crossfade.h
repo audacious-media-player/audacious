@@ -102,7 +102,7 @@
 		       (1 << FADE_TYPE_SIMPLE_XF))
 
 #define TYPEMASK_PAUSE ((1 << FADE_TYPE_PAUSE_NONE) | \
-                        (1 << FADE_TYPE_PAUSE_ADV))
+	                      (1 << FADE_TYPE_PAUSE_ADV))
 
 #define TYPEMASK_TIMING (0)
 
@@ -120,188 +120,188 @@
 
 #define CONFIG_DEFAULT							\
 { 44100,                        /* output_rate */			\
-  2,                            /* output_quality */			\
-  NULL,                         /* op_config_string */			\
-  NULL,                         /* op_name */				\
-  NULL,                         /* ep_name */				\
-  FALSE,                        /* ep_enable */				\
-  TRUE,                         /* volnorm_enable */			\
-  8000,                         /* volnorm_target */			\
-  FALSE,                        /* volnorm_use_qa */			\
-  10000,                        /* mix_size_ms */			\
-  TRUE,                         /* mix_size_auto */			\
+	2,                            /* output_quality */			\
+	NULL,                         /* op_config_string */			\
+	NULL,                         /* op_name */				\
+	NULL,                         /* ep_name */				\
+	FALSE,                        /* ep_enable */				\
+	TRUE,                         /* volnorm_enable */			\
+	8000,                         /* volnorm_target */			\
+	FALSE,                        /* volnorm_use_qa */			\
+	10000,                        /* mix_size_ms */			\
+	TRUE,                         /* mix_size_auto */			\
 									\
-  {                             /* fc[MAX_FADE_CONFIGS] */		\
-    { FADE_CONFIG_XFADE,        /* config */				\
-      FADE_TYPE_ADVANCED_XF,    /* type */				\
-      2000,                     /* pause_len_ms */			\
-      6000,                     /* simple_len_ms */			\
-      TRUE, 4000, 0,            /* out_enable, _len_ms, _volume */	\
-      FC_OFFSET_CUSTOM,         /* ofs_type */				\
-      FC_OFFSET_CUSTOM, -6000,  /* ofs_type_wanted, ofs_custom_ms */	\
-      TRUE,                     /* in_locked */				\
-      FALSE, 4000, 33,          /* in_enable, _len_ms, _volume */	\
-      FALSE,                    /* - */					\
-      0,                        /* - */					\
-      FALSE,                    /* - */					\
-      0, 0,                     /* - */					\
-      FALSE,                    /* flush */				\
-      TYPEMASK_XFADE            /* type_mask */				\
-    },									\
-    { FADE_CONFIG_MANUAL,       /* config */				\
-      FADE_TYPE_SIMPLE_XF,      /* type */				\
-      2000,                     /* pause_len_ms */			\
-      1000,                     /* simple_len_ms */			\
-      TRUE, 500, 0,             /* out_enable, _len_ms, _volume */	\
-      FC_OFFSET_CUSTOM,         /* ofs_type */				\
-      FC_OFFSET_CUSTOM, -500,   /* ofs_type_wanted, ofs_custom_ms */	\
-      TRUE,                     /* in_locked */				\
-      FALSE, 500, 50,           /* in_enable, _len_ms, _volume */	\
-      FALSE,                    /* flush_pause_enable */		\
-      500,                      /* flush_in_len_ms */			\
-      FALSE,                    /* flush_in_enable */			\
-      500, 0,                   /* flush_in_len_ms, _volume */		\
-      TRUE,                     /* flush */				\
-      TYPEMASK_MANUAL           /* type_mask */				\
-    },									\
-    { FADE_CONFIG_ALBUM,        /* config */				\
-      FADE_TYPE_NONE,           /* type */				\
-      0,                        /* - */					\
-      0,                        /* - */					\
-      FALSE, 0, 0,              /* - */					\
-      FC_OFFSET_NONE,           /* - */					\
-      FC_OFFSET_NONE, 0,        /* - */					\
-      FALSE,                    /* - */					\
-      FALSE, 1000, 0,           /* - */					\
-      FALSE,                    /* - */					\
-      0,                        /* - */					\
-      FALSE,                    /* - */					\
-      0, 0,                     /* - */					\
-      FALSE,                    /* flush */				\
-      TYPEMASK_ALBUM            /* type_mask */				\
-    },									\
-    { FADE_CONFIG_START,        /* config */				\
-      FADE_TYPE_FADEIN,         /* type */				\
-      0,                        /* - */					\
-      0,                        /* - */					\
-      FALSE, 0, 0,              /* - */					\
-      FC_OFFSET_NONE,           /* - */					\
-      FC_OFFSET_NONE, 0,        /* - */					\
-      FALSE,                    /* - */					\
-      FALSE, 100, 0,            /* - in_len_ms, _volume */		\
-      FALSE,                    /* - */					\
-      0,                        /* - */					\
-      FALSE,                    /* - */					\
-      0, 0,                     /* - */					\
-      TRUE,                     /* flush */				\
-      TYPEMASK_START            /* type_mask */				\
-    },									\
-    { FADE_CONFIG_STOP,         /* config */				\
-      FADE_TYPE_FADEOUT,        /* type */				\
-      0,                        /* - */					\
-      0,                        /* - */					\
-      FALSE, 100, 0,            /* - out_len_ms, _volume */		\
-      FC_OFFSET_NONE,           /* - */					\
-      FC_OFFSET_NONE, 500,      /* - ofs_custom_ms */			\
-      FALSE,                    /* - */					\
-      FALSE, 0, 0,              /* - */					\
-      FALSE,                    /* - */					\
-      0,                        /* - */					\
-      FALSE,                    /* - */					\
-      0, 0,                     /* - */					\
-      TRUE,                     /* flush */				\
-      TYPEMASK_STOP             /* type_mask */				\
-    },									\
-    { FADE_CONFIG_EOP,          /* config */				\
-      FADE_TYPE_FADEOUT,        /* type */				\
-      0,                        /* - */					\
-      0,                        /* - */					\
-      FALSE, 100, 0,            /* - out_len_ms, _volume */		\
-      FC_OFFSET_NONE,           /* - */					\
-      FC_OFFSET_NONE, 500,      /* - ofs_custom_ms  */			\
-      FALSE,                    /* - */					\
-      FALSE, 0, 0,              /* - */					\
-      FALSE,                    /* - */					\
-      0,                        /* - */					\
-      FALSE,                    /* - */					\
-      0, 0,                     /* - */					\
-      FALSE,                    /* flush */				\
-      TYPEMASK_EOP              /* type_mask */				\
-    },									\
-    { FADE_CONFIG_SEEK,         /* config */				\
-      FADE_TYPE_SIMPLE_XF,      /* type */				\
-      0,                        /* - */					\
-      50,                       /* simple_len_ms */			\
-      FALSE, 0, 0,              /* - */					\
-      FC_OFFSET_NONE,           /* - */					\
-      FC_OFFSET_NONE, 0,        /* - */					\
-      FALSE,                    /* - */					\
-      FALSE, 1000, 0,           /* - */					\
-      FALSE,                    /* - */					\
-      0,                        /* - */					\
-      FALSE,                    /* - */					\
-      0, 0,                     /* - */					\
-      TRUE,                     /* flush */				\
-      TYPEMASK_SEEK             /* type_mask */				\
-    },									\
-    { FADE_CONFIG_PAUSE,        /* config */				\
-      FADE_TYPE_PAUSE_ADV,      /* type */				\
-      0,                        /* - */					\
-      0,                        /* - */					\
-      TRUE, 100, 0,             /* - out_len_ms, - */			\
-      FC_OFFSET_NONE,           /* - */					\
-      FC_OFFSET_NONE, 100,      /* - ofs_custom_ms */			\
-      FALSE,                    /* - */					\
-      TRUE, 100, 0,             /* - in_len_ms, - */			\
-      FALSE,                    /* - */					\
-      0,                        /* - */					\
-      FALSE,                    /* - */					\
-      0, 0,                     /* - */					\
-      FALSE,                    /* - */					\
-      TYPEMASK_PAUSE            /* type_mask */				\
-    },									\
-    { FADE_CONFIG_TIMING,       /* config */				\
-      FADE_TYPE_NONE,           /* type */				\
-      0,                        /* - */					\
-      0,                        /* - */					\
-      TRUE, 0, 0,               /* out_enable, _len_ms, - */		\
-      FC_OFFSET_CUSTOM,         /* - */					\
-      FC_OFFSET_CUSTOM, 0,      /* - ofs_custom_ms */			\
-      FALSE,                    /* - */					\
-      TRUE, 0, 0,               /* in_enable, _len_ms, - */		\
-      FALSE,                    /* - */					\
-      0,                        /* - */					\
-      FALSE,                    /* - */					\
-      0, 0,                     /* - */					\
-      FALSE,                    /* flush */				\
-      TYPEMASK_TIMING           /* type_mask */				\
-    }									\
-  },									\
-  TRUE,                         /* gap_lead_enable */			\
-  500,                          /* gap_lead_len_ms */			\
-  512,                          /* gap_lead_level */			\
-  TRUE,                         /* gap_trail_enable */			\
-  500,                          /* gap_trail_len_ms */			\
-  512,                          /* gap_trail_level */			\
-  TRUE,                         /* gap_trail_locked */			\
-  TRUE,                         /* gap_crossing */			\
-  FALSE,                        /* enable_debug */			\
-  FALSE,                        /* enable_monitor */			\
-  TRUE,                         /* enable_mixer */			\
-  FALSE,                        /* mixer_reverse */			\
-  FALSE,                        /* mixer_software */			\
-  75,                           /* mixer_vol_left */			\
-  75,                           /* mixer_vol_right */			\
-  500,                          /* songchange_timeout */		\
-  0,                            /* preload_size_ms */			\
-  TRUE,                         /* album detection */			\
-  FALSE,                        /* no_xfade_if_same_file */		\
-  FALSE,                        /* enable_http_workaround */		\
-  FALSE,                        /* enable_op_max_used */		\
-  250,                          /* op_max_used_ms */			\
-  FALSE,                        /* output_keep_opened */		\
-  NULL,                         /* presets */				\
-  250                           /* sync_size_ms */			\
+	{                             /* fc[MAX_FADE_CONFIGS] */		\
+	  { FADE_CONFIG_XFADE,        /* config */				\
+	    FADE_TYPE_ADVANCED_XF,    /* type */				\
+	    2000,                     /* pause_len_ms */			\
+	    6000,                     /* simple_len_ms */			\
+	    TRUE, 4000, 0,            /* out_enable, _len_ms, _volume */	\
+	    FC_OFFSET_CUSTOM,         /* ofs_type */				\
+	    FC_OFFSET_CUSTOM, -6000,  /* ofs_type_wanted, ofs_custom_ms */	\
+	    TRUE,                     /* in_locked */				\
+	    FALSE, 4000, 33,          /* in_enable, _len_ms, _volume */	\
+	    FALSE,                    /* - */					\
+	    0,                        /* - */					\
+	    FALSE,                    /* - */					\
+	    0, 0,                     /* - */					\
+	    FALSE,                    /* flush */				\
+	    TYPEMASK_XFADE            /* type_mask */				\
+	  },									\
+	  { FADE_CONFIG_MANUAL,       /* config */				\
+	    FADE_TYPE_SIMPLE_XF,      /* type */				\
+	    2000,                     /* pause_len_ms */			\
+	    1000,                     /* simple_len_ms */			\
+	    TRUE, 500, 0,             /* out_enable, _len_ms, _volume */	\
+	    FC_OFFSET_CUSTOM,         /* ofs_type */				\
+	    FC_OFFSET_CUSTOM, -500,   /* ofs_type_wanted, ofs_custom_ms */	\
+	    TRUE,                     /* in_locked */				\
+	    FALSE, 500, 50,           /* in_enable, _len_ms, _volume */	\
+	    FALSE,                    /* flush_pause_enable */		\
+	    500,                      /* flush_in_len_ms */			\
+	    FALSE,                    /* flush_in_enable */			\
+	    500, 0,                   /* flush_in_len_ms, _volume */		\
+	    TRUE,                     /* flush */				\
+	    TYPEMASK_MANUAL           /* type_mask */				\
+	  },									\
+	  { FADE_CONFIG_ALBUM,        /* config */				\
+	    FADE_TYPE_NONE,           /* type */				\
+	    0,                        /* - */					\
+	    0,                        /* - */					\
+	    FALSE, 0, 0,              /* - */					\
+	    FC_OFFSET_NONE,           /* - */					\
+	    FC_OFFSET_NONE, 0,        /* - */					\
+	    FALSE,                    /* - */					\
+	    FALSE, 1000, 0,           /* - */					\
+	    FALSE,                    /* - */					\
+	    0,                        /* - */					\
+	    FALSE,                    /* - */					\
+	    0, 0,                     /* - */					\
+	    FALSE,                    /* flush */				\
+	    TYPEMASK_ALBUM            /* type_mask */				\
+	  },									\
+	  { FADE_CONFIG_START,        /* config */				\
+	    FADE_TYPE_FADEIN,         /* type */				\
+	    0,                        /* - */					\
+	    0,                        /* - */					\
+	    FALSE, 0, 0,              /* - */					\
+	    FC_OFFSET_NONE,           /* - */					\
+	    FC_OFFSET_NONE, 0,        /* - */					\
+	    FALSE,                    /* - */					\
+	    FALSE, 100, 0,            /* - in_len_ms, _volume */		\
+	    FALSE,                    /* - */					\
+	    0,                        /* - */					\
+	    FALSE,                    /* - */					\
+	    0, 0,                     /* - */					\
+	    TRUE,                     /* flush */				\
+	    TYPEMASK_START            /* type_mask */				\
+	  },									\
+	  { FADE_CONFIG_STOP,         /* config */				\
+	    FADE_TYPE_FADEOUT,        /* type */				\
+	    0,                        /* - */					\
+	    0,                        /* - */					\
+	    FALSE, 100, 0,            /* - out_len_ms, _volume */		\
+	    FC_OFFSET_NONE,           /* - */					\
+	    FC_OFFSET_NONE, 500,      /* - ofs_custom_ms */			\
+	    FALSE,                    /* - */					\
+	    FALSE, 0, 0,              /* - */					\
+	    FALSE,                    /* - */					\
+	    0,                        /* - */					\
+	    FALSE,                    /* - */					\
+	    0, 0,                     /* - */					\
+	    TRUE,                     /* flush */				\
+	    TYPEMASK_STOP             /* type_mask */				\
+	  },									\
+	  { FADE_CONFIG_EOP,          /* config */				\
+	    FADE_TYPE_FADEOUT,        /* type */				\
+	    0,                        /* - */					\
+	    0,                        /* - */					\
+	    FALSE, 100, 0,            /* - out_len_ms, _volume */		\
+	    FC_OFFSET_NONE,           /* - */					\
+	    FC_OFFSET_NONE, 500,      /* - ofs_custom_ms  */			\
+	    FALSE,                    /* - */					\
+	    FALSE, 0, 0,              /* - */					\
+	    FALSE,                    /* - */					\
+	    0,                        /* - */					\
+	    FALSE,                    /* - */					\
+	    0, 0,                     /* - */					\
+	    FALSE,                    /* flush */				\
+	    TYPEMASK_EOP              /* type_mask */				\
+	  },									\
+	  { FADE_CONFIG_SEEK,         /* config */				\
+	    FADE_TYPE_SIMPLE_XF,      /* type */				\
+	    0,                        /* - */					\
+	    50,                       /* simple_len_ms */			\
+	    FALSE, 0, 0,              /* - */					\
+	    FC_OFFSET_NONE,           /* - */					\
+	    FC_OFFSET_NONE, 0,        /* - */					\
+	    FALSE,                    /* - */					\
+	    FALSE, 1000, 0,           /* - */					\
+	    FALSE,                    /* - */					\
+	    0,                        /* - */					\
+	    FALSE,                    /* - */					\
+	    0, 0,                     /* - */					\
+	    TRUE,                     /* flush */				\
+	    TYPEMASK_SEEK             /* type_mask */				\
+	  },									\
+	  { FADE_CONFIG_PAUSE,        /* config */				\
+	    FADE_TYPE_PAUSE_ADV,      /* type */				\
+	    0,                        /* - */					\
+	    0,                        /* - */					\
+	    TRUE, 100, 0,             /* - out_len_ms, - */			\
+	    FC_OFFSET_NONE,           /* - */					\
+	    FC_OFFSET_NONE, 100,      /* - ofs_custom_ms */			\
+	    FALSE,                    /* - */					\
+	    TRUE, 100, 0,             /* - in_len_ms, - */			\
+	    FALSE,                    /* - */					\
+	    0,                        /* - */					\
+	    FALSE,                    /* - */					\
+	    0, 0,                     /* - */					\
+	    FALSE,                    /* - */					\
+	    TYPEMASK_PAUSE            /* type_mask */				\
+	  },									\
+	  { FADE_CONFIG_TIMING,       /* config */				\
+	    FADE_TYPE_NONE,           /* type */				\
+	    0,                        /* - */					\
+	    0,                        /* - */					\
+	    TRUE, 0, 0,               /* out_enable, _len_ms, - */		\
+	    FC_OFFSET_CUSTOM,         /* - */					\
+	    FC_OFFSET_CUSTOM, 0,      /* - ofs_custom_ms */			\
+	    FALSE,                    /* - */					\
+	    TRUE, 0, 0,               /* in_enable, _len_ms, - */		\
+	    FALSE,                    /* - */					\
+	    0,                        /* - */					\
+	    FALSE,                    /* - */					\
+	    0, 0,                     /* - */					\
+	    FALSE,                    /* flush */				\
+	    TYPEMASK_TIMING           /* type_mask */				\
+	  }									\
+	},									\
+	TRUE,                         /* gap_lead_enable */			\
+	500,                          /* gap_lead_len_ms */			\
+	512,                          /* gap_lead_level */			\
+	TRUE,                         /* gap_trail_enable */			\
+	500,                          /* gap_trail_len_ms */			\
+	512,                          /* gap_trail_level */			\
+	TRUE,                         /* gap_trail_locked */			\
+	TRUE,                         /* gap_crossing */			\
+	FALSE,                        /* enable_debug */			\
+	FALSE,                        /* enable_monitor */			\
+	TRUE,                         /* enable_mixer */			\
+	FALSE,                        /* mixer_reverse */			\
+	FALSE,                        /* mixer_software */			\
+	75,                           /* mixer_vol_left */			\
+	75,                           /* mixer_vol_right */			\
+	500,                          /* songchange_timeout */		\
+	0,                            /* preload_size_ms */			\
+	TRUE,                         /* album detection */			\
+	FALSE,                        /* no_xfade_if_same_file */		\
+	FALSE,                        /* enable_http_workaround */		\
+	FALSE,                        /* enable_op_max_used */		\
+	250,                          /* op_max_used_ms */			\
+	FALSE,                        /* output_keep_opened */		\
+	NULL,                         /* presets */				\
+	250                           /* sync_size_ms */			\
 }
 
 
@@ -335,156 +335,156 @@ void xfade_realize_ep_config();
 
 typedef struct
 {
-  gint mix_size;        /* mixing buffer length */
-  gint sync_size;       /* additional buffer space for mix timing */
-  gint preload_size;    /* preload buffer length */
+	gint mix_size;        /* mixing buffer length */
+	gint sync_size;       /* additional buffer space for mix timing */
+	gint preload_size;    /* preload buffer length */
 
-  /* ---------------------------------------------------------------------- */
+	/* ---------------------------------------------------------------------- */
 
-  gpointer data;        /* buffer */
-  gint     size;        /* total buffer length */
+	gpointer data;        /* buffer */
+	gint     size;        /* total buffer length */
 
-  /* ---------------------------------------------------------------------- */
+	/* ---------------------------------------------------------------------- */
 
-  gint   used;          /* length */
-  gint   rd_index;      /* offset */
+	gint   used;          /* length */
+	gint   rd_index;      /* offset */
 
-  gint   preload;       /* > 0: preloading */
+	gint   preload;       /* > 0: preloading */
 
-  /* ---------------------------------------------------------------------- */
+	/* ---------------------------------------------------------------------- */
 
-  gint   mix;           /* > 0: mixing new data into buffer */
+	gint   mix;           /* > 0: mixing new data into buffer */
 
-  gint   fade;          /* > 0: fading in new data */
-  gint   fade_len;      /* length of fadein */
-  gfloat fade_scale;    /* 1.0f - in_level */
+	gint   fade;          /* > 0: fading in new data */
+	gint   fade_len;      /* length of fadein */
+	gfloat fade_scale;    /* 1.0f - in_level */
 
 #define GAP_SKIPPING_POSITIVE -1
 #define GAP_SKIPPING_NEGATIVE -2
 #define GAP_SKIPPING_DONE     -3
-  gint   gap;           /* > 0: removing (leading) gap */
-  gint   gap_len;       /* max. len of gap, 0=disabled */
-  gint   gap_level;     /* max. sample value+1 to be considered "silent" */
-  gint   gap_killed;    /* number of bytes that were killed last time */
-  gint   gap_skipped;   /* negative/positive samples skipped */
+	gint   gap;           /* > 0: removing (leading) gap */
+	gint   gap_len;       /* max. len of gap, 0=disabled */
+	gint   gap_level;     /* max. sample value+1 to be considered "silent" */
+	gint   gap_killed;    /* number of bytes that were killed last time */
+	gint   gap_skipped;   /* negative/positive samples skipped */
 
-  /* ---------------------------------------------------------------------- */
+	/* ---------------------------------------------------------------------- */
 
-  gint   silence;       /* > 0: delay until start of silence */
-  gint   silence_len;   /* > 0: inserting silence */
+	gint   silence;       /* > 0: delay until start of silence */
+	gint   silence_len;   /* > 0: inserting silence */
 
-  gint     reopen;      /* >= 0: countdown to reopen device (disk_writer hack) */
-  gboolean reopen_sync; /* TRUE: sync output plugin before reopening */
+	gint     reopen;      /* >= 0: countdown to reopen device (disk_writer hack) */
+	gboolean reopen_sync; /* TRUE: sync output plugin before reopening */
 
-  gint     pause;       /* >= 0: countdown to pause output plugin */
+	gint     pause;       /* >= 0: countdown to pause output plugin */
 }
 buffer_t;
 
 typedef struct
 {
-  gint     config;              // one of FADE_CONFIG_*, constant
-  gint     type;                // one of FADE_TYPE_*
+	gint     config;              // one of FADE_CONFIG_*, constant
+	gint     type;                // one of FADE_TYPE_*
 
-  gint     pause_len_ms;        // PAUSE
+	gint     pause_len_ms;        // PAUSE
 
-  gint     simple_len_ms;       // SIMPLE_XF
+	gint     simple_len_ms;       // SIMPLE_XF
 
-  gboolean out_enable;          // ADVANCED_XF
-  gint     out_len_ms;          // ADVANCED_XF, FADEOUT, PAUSE
-  gint     out_volume;          // ADVANCED_XF, FADEOUT
+	gboolean out_enable;          // ADVANCED_XF
+	gint     out_len_ms;          // ADVANCED_XF, FADEOUT, PAUSE
+	gint     out_volume;          // ADVANCED_XF, FADEOUT
 
-  gint     ofs_type;            // ADVANCED_XF
-  gint     ofs_type_wanted;     // ADVANCED_XF
-  gint     ofs_custom_ms;       // ADVANCED_XF, FADEOUT (additional silence), PAUSE
+	gint     ofs_type;            // ADVANCED_XF
+	gint     ofs_type_wanted;     // ADVANCED_XF
+	gint     ofs_custom_ms;       // ADVANCED_XF, FADEOUT (additional silence), PAUSE
 
-  gboolean in_locked;           // ADVANCED_XF
-  gboolean in_enable;           // ADVANCED_XF, FLUSH
-  gint     in_len_ms;           // ADVANCED_XF, FLUSH, FADEIN, PAUSE
-  gint     in_volume;           // ADVANCED_XF, FLUSH, FADEIN
+	gboolean in_locked;           // ADVANCED_XF
+	gboolean in_enable;           // ADVANCED_XF, FLUSH
+	gint     in_len_ms;           // ADVANCED_XF, FLUSH, FADEIN, PAUSE
+	gint     in_volume;           // ADVANCED_XF, FLUSH, FADEIN
 
-  gboolean flush_pause_enable;  // FLUSH
-  gint     flush_pause_len_ms;  // FLUSH
-  gboolean flush_in_enable;     // FLUSH
-  gint     flush_in_len_ms;     // FLUSH
-  gint     flush_in_volume;     // FLUSH
+	gboolean flush_pause_enable;  // FLUSH
+	gint     flush_pause_len_ms;  // FLUSH
+	gboolean flush_in_enable;     // FLUSH
+	gint     flush_in_len_ms;     // FLUSH
+	gint     flush_in_volume;     // FLUSH
 
-  /* additional stuff which is not configureable by the user */
-  gboolean flush;               // TRUE for manual, FALSE for xfade config
-  guint32  type_mask;           // bitmask for FADE_TYPEs
+	/* additional stuff which is not configureable by the user */
+	gboolean flush;               // TRUE for manual, FALSE for xfade config
+	guint32  type_mask;           // bitmask for FADE_TYPEs
 }
 fade_config_t;
 
 typedef struct
 {
-  gboolean  throttle_enable;
-  gboolean  max_write_enable;
-  gint      max_write_len;
-  gboolean  force_reopen;
+	gboolean  throttle_enable;
+	gboolean  max_write_enable;
+	gint      max_write_len;
+	gboolean  force_reopen;
 }
 plugin_config_t;
 
 typedef struct
 {
-  /* output: method */
-  gint output_rate;
-  gint output_quality;
+	/* output: method */
+	gint output_rate;
+	gint output_quality;
 
-  /* output: plugin */
-  gchar   *op_config_string;  /* stores configs for all plugins */
-  gchar   *op_name;           /* name of the current plugin */
+	/* output: plugin */
+	gchar   *op_config_string;  /* stores configs for all plugins */
+	gchar   *op_name;           /* name of the current plugin */
 
-  /* effects */
-  gchar   *ep_name;
-  gboolean ep_enable;
-  gboolean volnorm_enable;
-  gboolean volnorm_use_qa;
-  gint     volnorm_target;
+	/* effects */
+	gchar   *ep_name;
+	gboolean ep_enable;
+	gboolean volnorm_enable;
+	gboolean volnorm_use_qa;
+	gint     volnorm_target;
 
-  /* crossfader */
-  gint          mix_size_ms;
-  gboolean      mix_size_auto;
-  fade_config_t fc[MAX_FADE_CONFIGS];
+	/* crossfader */
+	gint          mix_size_ms;
+	gboolean      mix_size_auto;
+	fade_config_t fc[MAX_FADE_CONFIGS];
 
-  /* gap killer */
-  gboolean gap_lead_enable;
-  gint     gap_lead_len_ms;
-  gint     gap_lead_level;
+	/* gap killer */
+	gboolean gap_lead_enable;
+	gint     gap_lead_len_ms;
+	gint     gap_lead_level;
 
-  gboolean gap_trail_enable;
-  gint     gap_trail_len_ms;
-  gint     gap_trail_level;
-  gboolean gap_trail_locked;
+	gboolean gap_trail_enable;
+	gint     gap_trail_len_ms;
+	gint     gap_trail_level;
+	gboolean gap_trail_locked;
 
-  gboolean gap_crossing;
+	gboolean gap_crossing;
 
-  /* misc */
-  gboolean enable_debug;
-  gboolean enable_monitor;
+	/* misc */
+	gboolean enable_debug;
+	gboolean enable_monitor;
 
-  gboolean enable_mixer;
-  gboolean mixer_reverse;
-  gboolean mixer_software;
-  gint     mixer_vol_left;
-  gint     mixer_vol_right;
+	gboolean enable_mixer;
+	gboolean mixer_reverse;
+	gboolean mixer_software;
+	gint     mixer_vol_left;
+	gint     mixer_vol_right;
 
-  gint     songchange_timeout;
-  gint     preload_size_ms;
-  gboolean album_detection;
-  gboolean no_xfade_if_same_file;
-  gboolean enable_http_workaround;
-  gboolean enable_op_max_used;
-  gint     op_max_used_ms;
-  gboolean output_keep_opened;
+	gint     songchange_timeout;
+	gint     preload_size_ms;
+	gboolean album_detection;
+	gboolean no_xfade_if_same_file;
+	gboolean enable_http_workaround;
+	gboolean enable_op_max_used;
+	gint     op_max_used_ms;
+	gboolean output_keep_opened;
 
-  /* presets */
-  GList   *presets;
+	/* presets */
+	GList   *presets;
 
-  /* additional stuff which is not configureable by the user */
-  gint     sync_size_ms;
+	/* additional stuff which is not configureable by the user */
+	gint     sync_size_ms;
 
-  /* additional stuff which is not saved to the config file */
-  gint     page;
-  gint     xf_index;
+	/* additional stuff which is not saved to the config file */
+	gint     page;
+	gint     xf_index;
 }
 config_t;
 
