@@ -531,14 +531,21 @@ mainwin_set_shade_menu_cb(gboolean shaded)
         widget_show(WIDGET(mainwin_sfwd));
         widget_show(WIDGET(mainwin_seject));
 
-        widget_show(WIDGET(mainwin_stime_min));
-        widget_show(WIDGET(mainwin_stime_sec));
-
         textbox_set_scroll(mainwin_info, FALSE);
         if (bmp_playback_get_playing()
             && playlist_get_current_length() != -1)
-            widget_show(WIDGET(mainwin_sposition));
-
+		{
+            	widget_show(WIDGET(mainwin_sposition));
+	        widget_show(WIDGET(mainwin_stime_min));
+        	widget_show(WIDGET(mainwin_stime_sec));
+		}
+	else
+		{
+            	widget_hide(WIDGET(mainwin_sposition));
+	        widget_hide(WIDGET(mainwin_stime_min));
+        	widget_hide(WIDGET(mainwin_stime_sec));
+		}
+	
         mainwin_shade->pb_ny = mainwin_shade->pb_py = 27;
     }
     else {
@@ -825,6 +832,12 @@ mainwin_set_song_info(gint bitrate,
 
     monostereo_set_num_channels(mainwin_monostereo, n_channels);
 
+    if (cfg.player_shaded)
+    {
+	widget_show(WIDGET(mainwin_stime_min));
+	widget_show(WIDGET(mainwin_stime_sec));
+    }
+
     widget_show(WIDGET(mainwin_minus_num));
     widget_show(WIDGET(mainwin_10min_num));
     widget_show(WIDGET(mainwin_min_num));
@@ -882,8 +895,8 @@ mainwin_clear_song_info(void)
     widget_hide(WIDGET(mainwin_10sec_num));
     widget_hide(WIDGET(mainwin_sec_num));
 
-    textbox_set_text(mainwin_stime_min, "   ");
-    textbox_set_text(mainwin_stime_sec, "  ");
+    widget_hide(WIDGET(mainwin_stime_min));
+    widget_hide(WIDGET(mainwin_stime_sec));
 
     widget_hide(WIDGET(mainwin_position));
     widget_hide(WIDGET(mainwin_sposition));
