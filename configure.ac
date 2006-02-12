@@ -565,7 +565,7 @@ else
     alsalib_available=check
 fi
 
-if test "$have_oss" = "yes"; then
+if test "$have_alsa" = "yes"; then
 	OUTPUT_PLUGINS="$OUTPUT_PLUGINS alsa"
 fi
 
