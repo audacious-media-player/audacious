@@ -1,5 +1,3 @@
-if HAVE_ESD
-
 esdltlibs = libesdout.la
 esdsources = esd.c esdout.h \
 mixer.c \
@@ -7,13 +5,6 @@ about.c \
 configure.c \
 audio.c \
 init.c
-
-else
-
-esdltlibs =
-esdsources =
-
-endif
 
 EXTRA_DIST = esd.c esdout.h mixer.c about.c configure.c audio.c init.c
 

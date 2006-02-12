@@ -121,29 +121,12 @@ AC_ARG_WITH(cdda-dir,
     ]
 )
 
+dnl These plugins are always built.
 
-dnl If {type}_PLUGINS is defined, it should be a comma or space separated
-dnl list of plugins that should be built, e.g.,
-dnl INPUT_PLUGINS="mpg123,cdaudio cdin".  If variable is not defined, all
-dnl buildable plugins are compiled.  This stuff makes life easier for
-dnl automated builds that want to disable certain plugins.
-
-for class in EFFECT GENERAL INPUT OUTPUT VISUALIZATION; do
-    value=`eval echo "\\$${class}_PLUGINS"`
-    if test "${value}" = ""; then
-       eval ${class}_PLUGINS="\$\(ALL_PLUGINS\)"
-    else
-       value=`echo ${value} | sed -e 's/,/ /g'`
-       eval ${class}_PLUGINS="\${value}"
-    fi
-done
-
-AC_SUBST(EFFECT_PLUGINS)
-AC_SUBST(GENERAL_PLUGINS)
-AC_SUBST(INPUT_PLUGINS)
-AC_SUBST(OUTPUT_PLUGINS)
-AC_SUBST(VISUALIZATION_PLUGINS)
-
+INPUT_PLUGINS="cdaudio tonegen console sexypsf wav"
+EFFECT_PLUGINS="ladspa"
+GENERAL_PLUGINS="song_change"
+VISUALIZATION_PLUGINS="blur_scope"
 
 dnl Option to change equalizer to the old XMMS one which only works with the mpg123
 dnl plugin (or rather, only implemented within the plugin)
@@ -242,16 +225,14 @@ AC_ARG_ENABLE( esd,
 
 if test "$enable_esd" = "yes"; then
     PKG_CHECK_MODULES(ESD, [esound >= 0.2],
-        [have_esd=yes],
+        [have_esd=yes
+         OUTPUT_PLUGINS="$OUTPUT_PLUGINS esd"],
         [have_esd=no]
     )
 else
     AC_MSG_RESULT([*** esound plugin disabled per user request ***])
     have_esd=no
 fi
-
-AM_CONDITIONAL(HAVE_ESD, test "$have_esd" = "yes")
-
 
 dnl *** MP3
 
@@ -261,7 +242,9 @@ AC_ARG_ENABLE(mp3,
     [enable_mp3=yes]
 )
 
-AM_CONDITIONAL(ENABLE_MPG123, test "$enable_mp3" = "yes")
+if test "$enable_mp3" = "yes"; then
+	INPUT_PLUGINS="$INPUT_PLUGINS mpg123"
+fi
 
 dnl *** id3lib
 dnl only makes sence if mp3's enabled
@@ -297,7 +280,10 @@ else
     AC_MSG_RESULT([*** LIRC plugin disabled per user request ***])
     have_lirc="no"
 fi
-AM_CONDITIONAL([HAVE_LIRC], test "$have_lirc" = "yes")
+
+if test "$have_lirc" = "yes"; then
+	GENERAL_PLUGINS="$GENERAL_PLUGINS lirc"
+fi
 
 dnl *** AdPlug requirement (libbinio)
 
@@ -314,7 +300,10 @@ else
     AC_MSG_RESULT([*** AdPlug plugin disabled per user request ***])
     have_adplug="no"
 fi
-AM_CONDITIONAL([HAVE_ADPLUG], test "$have_adplug" = "yes")
+
+if test "$have_adplug" = "yes"; then
+	INPUT_PLUGINS="$INPUT_PLUGINS adplug"
+fi
 
 dnl *** Ogg Vorbis
 
@@ -335,7 +324,9 @@ else
     have_oggvorbis=no
 fi
 
-AM_CONDITIONAL(HAVE_OGGVORBIS, [test "$have_oggvorbis" = "yes"])
+if test "$have_oggvorbis" = "yes"; then
+	INPUT_PLUGINS="$INPUT_PLUGINS vorbis"
+fi
 
 dnl *** AAC
 
@@ -345,8 +336,9 @@ AC_ARG_ENABLE(aac,
     [enable_aac=yes]
 )
 
-AM_CONDITIONAL(ENABLE_AAC, test "$enable_aac" = "yes")
-
+if test "$have_aac" = "yes"; then
+	INPUT_PLUGINS="$INPUT_PLUGINS aac"
+fi
 
 dnl *** sndfile
 
@@ -366,7 +358,11 @@ else
     enable_sndfile=no
 fi
 
-AM_CONDITIONAL([HAVE_LIBSNDFILE], test "$enable_sndfile" = "yes")
+if test "$enable_sndfile" = "yes"; then
+	WAV_BACKEND="_sndfile"
+fi
+
+AC_SUBST(WAV_BACKEND)
 
 dnl *** modplug
 
@@ -383,7 +379,9 @@ else
     have_modplug="no"
 fi
 
-AM_CONDITIONAL([HAVE_MODPLUG], test "$have_modplug" = "yes")
+if test "$have_modplug" = "yes"; then
+	INPUT_PLUGINS="$INPUT_PLUGINS modplug"
+fi
 
 dnl *** flac
 AC_ARG_ENABLE( flc,
@@ -396,7 +394,10 @@ else
         AC_MSG_RESULT([*** flac plugin disabled per user request ***])
         have_flac=no
 fi
-AM_CONDITIONAL(HAVE_FLAC,test "x$have_flac" = xyes)
+
+if test "$have_flac" = "yes"; then
+	INPUT_PLUGINS="$INPUT_PLUGINS flac"
+fi
 
 dnl *** WMA
 
@@ -406,8 +407,9 @@ AC_ARG_ENABLE(wma,
     [enable_wma=yes]
 )
 
-AM_CONDITIONAL(ENABLE_WMA, test "$enable_wma" = "yes")
-
+if test "$enable_wma" = "yes"; then
+	INPUT_PLUGINS="$INPUT_PLUGINS wma"
+fi
 
 dnl *** Crossfader
 
@@ -419,7 +421,11 @@ AC_ARG_ENABLE(crossfade,
 
 if test "$enable_crossfade" = "yes"; then
     AC_CHECK_LIB([samplerate],[src_new],[have_libsamplerate=yes],[have_libsamplerate=no])
+    LIBSAMPLERATE_LIBS="-lsamplerate"
+    OUTPUT_PLUGINS="$OUTPUT_PLUGINS crossfade"
 fi
+
+AC_SUBST(LIBSAMPLERATE_LIBS)
 
 AM_CONDITIONAL(ENABLE_CROSSFADE, test "$enable_crossfade" = "yes")
 AM_CONDITIONAL(HAVE_LIBSAMPLERATE, test "$have_libsamplerate" = "yes")
@@ -435,7 +441,10 @@ else
         AC_MSG_RESULT([*** jack plugin disabled per user request ***])
         have_jack=no
 fi
-AM_CONDITIONAL(HAVE_JACK,test "x$have_jack" = xyes)
+
+if test "$have_jack" = yes; then
+	OUTPUT_PLUGINS="$OUTPUT_PLUGINS jack"
+fi
 
 dnl *** sid
 AC_ARG_ENABLE( sid,
@@ -448,7 +457,10 @@ else
         AC_MSG_RESULT([*** sid plugin disabled per user request ***])
         have_sidplay=no
 fi
-AM_CONDITIONAL(HAVE_SIDPLAY,test "x$have_sidplay" = xyes)
+
+if test "$have_sidplay" = yes; then
+	INPUT_PLUGINS="$INPUT_PLUGINS sid"
+fi
 
 dnl *** Musepack
 
@@ -477,7 +489,9 @@ else
     enable_musepack=no
 fi
 
-AM_CONDITIONAL(ENABLE_MUSEPACK, [test "$enable_musepack" = "yes"])
+if test "$enable_musepack" = "yes"; then
+	INPUT_PLUGINS="$INPUT_PLUGINS musepack"
+fi
 
 dnl *** OSS output
 
@@ -522,8 +536,9 @@ else
     have_oss=no
 fi
 
-AM_CONDITIONAL(HAVE_OSS, test "$have_oss" = "yes")
-
+if test "$have_oss" = "yes"; then
+	OUTPUT_PLUGINS="$OUTPUT_PLUGINS OSS"
+fi
 
 dnl *** ALSA output plugin
 
@@ -550,8 +565,9 @@ else
     alsalib_available=check
 fi
 
-AM_CONDITIONAL(HAVE_ALSA, test "$have_alsa" = "yes")
-
+if test "$have_oss" = "yes"; then
+	OUTPUT_PLUGINS="$OUTPUT_PLUGINS alsa"
+fi
 
 dnl *** amidi-plug (note: should appear somewhere after the alsa ouput plugin check)
 
@@ -584,8 +600,9 @@ else
   fi
 fi
 
-AM_CONDITIONAL(ENABLE_AMIDIPLUG, test "x$enable_amidiplug" = "xyes")
-
+if test "$enable_amidiplug" = "yes"; then
+	INPUT_PLUGINS="$INPUT_PLUGINS amidi-plug"
+fi
 
 dnl *** TiMidity input plugin (note: should appear somewhere after the amidi-plug check)
 
@@ -601,8 +618,9 @@ AC_ARG_ENABLE(timidity,
 ]
 )
 
-AM_CONDITIONAL(ENABLE_TIMIDITY, test "$enable_timidity" = "yes")
-
+if test "$enable_timidity" = "yes"; then
+	INPUT_PLUGINS="$INPUT_PLUGINS timidity"
+fi
 
 dnl FreeBSD newpcm driver detection
 
@@ -799,7 +817,15 @@ fi
 AC_SUBST(LIBVISUAL_LIBS)
 AC_SUBST(LIBVISUAL_CFLAGS)
 
-AM_CONDITIONAL(HAVE_LIBVISUAL, test "x$have_libvisual" = xyes)
+if test "x$have_libvisual" = xyes; then
+	VISUALIZATION_PLUGINS="$VISUALIZATION_PLUGINS libvisual_proxy";
+fi
+
+AC_SUBST(EFFECT_PLUGINS)
+AC_SUBST(GENERAL_PLUGINS)
+AC_SUBST(INPUT_PLUGINS)
+AC_SUBST(OUTPUT_PLUGINS)
+AC_SUBST(VISUALIZATION_PLUGINS)
 
 AC_CONFIG_FILES([
         Makefile

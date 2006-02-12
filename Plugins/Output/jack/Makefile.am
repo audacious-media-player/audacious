@@ -1,11 +1,9 @@
 
 libjackout_la_SOURCES = jack.c configure.c bio2jack.h bio2jack.c xconvert.h
 
-if HAVE_JACK
 
 lib_LTLIBRARIES = libjackout.la
 
-endif
 
 libdir = $(plugindir)/$(OUTPUT_PLUGIN_DIR)
 
