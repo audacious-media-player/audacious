@@ -1311,7 +1311,7 @@ playlist_load_ins_file(const gchar * filename_p,
     g_return_if_fail(filename_p != NULL);
     g_return_if_fail(playlist_name != NULL);
 
-    filename = g_strstrip(g_strdup(filename_p));
+    filename = g_strchug(g_strdup(filename_p));
 
     if (cfg.use_backslash_as_dir_delimiter) {
         while ((tmp = strchr(filename, '\\')) != NULL)
