@@ -371,9 +371,24 @@ is_our_file(char *filename)
     if (!strncasecmp(filename, "http://", 7)) { 
 	return mpg123_detect_by_content_stream(filename);
     }
-    else
+#ifdef NOTYET
+    else if (!
         return (mpg123_detect_by_content(filename));
-
+#endif
+    else
+    {
+         gchar *ext = strrchr(filename, '.'); 	 
+         if (ext) { 	 
+             if (!strncasecmp(ext, ".ogg", 4)) 	 
+                 return FALSE; 	 
+             if (!strncasecmp(ext, ".rm", 3) || 	 
+                 !strncasecmp(ext, ".ra", 3) || 	 
+                 !strncasecmp(ext, ".rpm", 4) || 	 
+                 !strncasecmp(ext, ".ram", 4)) 	 
+                 return FALSE; 	 
+         } 	 
+         return TRUE; 	 
+    }
     return FALSE;
 }
 
@@ -472,7 +487,11 @@ mpg123_id3v1_to_id3v2(struct id3v1tag_t *v1, struct id3tag_t *v2)
     g_strstrip(v2->album);
     g_strstrip(v2->comment);
     g_strstrip(v2->genre);
-    v2->year = atoi(v1->year);
+    {
+      char y[5];
+      memcpy(y, v1->year, 4); y[4]=0;
+      v2->year = atoi(y);
+    }
 
     /* Check for v1.1 tags. */
     if (v1->u.v1_1.__zero == 0)
