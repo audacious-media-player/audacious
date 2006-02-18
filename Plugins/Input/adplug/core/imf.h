@@ -62,7 +62,7 @@ protected:
 	} *data;
 
 private:
-	float getrate(binistream *f);
+	float getrate(const std::string &filename, const CFileProvider &fp, binistream *f);
 };
 
 #endif

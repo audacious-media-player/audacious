@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2005 Simon Peter <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2006 Simon Peter <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -35,6 +35,10 @@
  * type, invented by Martin Fernandez <mfernan@cnba.uba.ar>, that's got a
  * proper header to add title/game name information. After the header starts
  * the normal IMF file in one of the two above mentioned formats.
+ *
+ * This player also handles a special footer format by Adam Nielsen,
+ * which has defined fields of information about the song, the author
+ * and more.
  */
 
 #include <string.h>
@@ -116,7 +120,7 @@ bool CimfPlayer::load(const std::string &filename, const CFileProvider &fp)
       footer[footerlen] = '\0';	// Make ASCIIZ string
     }
 
-  rate = getrate(f);
+  rate = getrate(filename, fp, f);
   fp.close(f);
   rewind(0);
   return true;
@@ -176,16 +180,17 @@ std::string CimfPlayer::getdesc()
 
 /*** private methods *************************************/
 
-float CimfPlayer::getrate(binistream *f)
+float CimfPlayer::getrate(const std::string &filename, const CFileProvider &fp, binistream *f)
 {
-  if(!db) return 700.0f;	// Database offline
+  if(db) {	// Database available
+    f->seek(0, binio::Set);
+    CClockRecord *record = (CClockRecord *)db->search(CAdPlugDatabase::CKey(*f));
+    if (record && record->type == CAdPlugDatabase::CRecord::ClockSpeed)
+      return record->clock;
+  }
 
-  f->seek(0, binio::Set);
-
-  CClockRecord *record = (CClockRecord *)db->search(CAdPlugDatabase::CKey(*f));
-
-  if(!record || record->type != CAdPlugDatabase::CRecord::ClockSpeed)
-    return 700.0f;
-  else
-    return record->clock;
+  // Otherwise the database is either unavailable, or there's no entry for this file
+  if (fp.extension(filename, ".imf")) return 560.0f;
+  if (fp.extension(filename, ".wlf")) return 700.0f;
+  return 700.0f; // default speed for unknown files that aren't .IMF or .WLF
 }
