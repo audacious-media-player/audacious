@@ -330,7 +330,7 @@ skin_load_pixmap_id(Skin * skin, SkinPixmapId id, const gchar * path_p)
 
     memset(&basenames, 0, sizeof(basenames));
 
-    for (i = 0, y = 0; ext_targets[i]; i++, y++)
+    for (i = 0, y = 0; i < EXTENSION_TARGETS; i++, y++)
     {
         basenames[y] = g_strdup_printf("%s.%s", pixmap_id_mapping->name,
 			ext_targets[i]);

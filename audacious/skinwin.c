@@ -281,9 +281,6 @@ skin_view_update(GtkTreeView * treeview)
     for (entry = skinlist; entry; entry = g_list_next(entry)) {
         thumbnail = skin_get_thumbnail(SKIN_NODE(entry->data)->path);
 
-        if (!thumbnail)
-            continue;
-
         formattedname = g_strdup_printf("<big><b>%s</b></big>\n<i>%s</i>",
 		SKIN_NODE(entry->data)->name, SKIN_NODE(entry->data)->desc);
         name = SKIN_NODE(entry->data)->name;
@@ -293,7 +290,8 @@ skin_view_update(GtkTreeView * treeview)
                            SKIN_VIEW_COL_PREVIEW, thumbnail,
                            SKIN_VIEW_COL_FORMATTEDNAME, formattedname,
                            SKIN_VIEW_COL_NAME, name, -1);
-        g_object_unref(thumbnail);
+        if (thumbnail)
+            g_object_unref(thumbnail);
         g_free(formattedname);
 
         if (g_strstr_len(bmp_active_skin->path,
