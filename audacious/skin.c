@@ -838,7 +838,9 @@ skin_load(Skin * skin, const gchar * path)
     gboolean error;
 
     g_return_val_if_fail(skin != NULL, FALSE);
-    g_return_val_if_fail(path != NULL, FALSE);
+
+    if (!path)
+        return FALSE;
 
     skin_lock(skin);
     error = skin_load_nolock(skin, path, FALSE);
