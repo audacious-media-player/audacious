@@ -263,6 +263,7 @@ skin_view_update(GtkTreeView * treeview)
     GtkTreeSelection *selection = NULL;
     GtkListStore *store;
     GtkTreeIter iter, iter_current_skin;
+    gboolean have_current_skin = FALSE;
     GtkTreePath *path;
 
     GdkPixbuf *thumbnail;
@@ -296,19 +297,23 @@ skin_view_update(GtkTreeView * treeview)
 
         if (g_strstr_len(bmp_active_skin->path,
                          strlen(bmp_active_skin->path), name) ) {
-	    iter_current_skin = iter;
-	}
+            iter_current_skin = iter;
+            have_current_skin = TRUE;
+        }
 
         while (gtk_events_pending())
             gtk_main_iteration();
     }
 
-    selection = gtk_tree_view_get_selection(treeview);
-    gtk_tree_selection_select_iter(selection, &iter_current_skin);
+    if (have_current_skin) {
+        selection = gtk_tree_view_get_selection(treeview);
+        gtk_tree_selection_select_iter(selection, &iter_current_skin);
 
-    path = gtk_tree_model_get_path(GTK_TREE_MODEL(store), &iter_current_skin);
-    gtk_tree_view_scroll_to_cell(treeview, path, NULL, TRUE, 0.5, 0.5);
-    gtk_tree_path_free(path);
+        path = gtk_tree_model_get_path(GTK_TREE_MODEL(store),
+		                               &iter_current_skin);
+        gtk_tree_view_scroll_to_cell(treeview, path, NULL, TRUE, 0.5, 0.5);
+        gtk_tree_path_free(path);
+    }
 
     gtk_widget_set_sensitive(GTK_WIDGET(treeview), TRUE);
 }
