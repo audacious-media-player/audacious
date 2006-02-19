@@ -160,7 +160,6 @@ init(void)
     mpg123_cfg.use_udp_channel = TRUE;
     mpg123_cfg.title_override = FALSE;
     mpg123_cfg.disable_id3v2 = FALSE;
-    mpg123_cfg.detect_by = DETECT_EXTENSION;
     mpg123_cfg.default_synth = SYNTH_AUTO;
 
     mpg123_cfg.title_encoding_enabled = FALSE;
@@ -201,7 +200,6 @@ init(void)
     if (!bmp_cfg_db_get_string
         (db, "MPG123", "id3_format", &mpg123_cfg.id3_format))
         mpg123_cfg.id3_format = g_strdup("%p - %t");
-    bmp_cfg_db_get_int(db, "MPG123", "detect_by", &mpg123_cfg.detect_by);
     bmp_cfg_db_get_int(db, "MPG123", "default_synth",
                        &mpg123_cfg.default_synth);
 
@@ -368,8 +366,6 @@ mpg123_detect_by_content_stream(gchar *url)
 static int
 is_our_file(char *filename)
 {
-    gchar *ext = strrchr(filename, '.'); 	 
-
     if (!strncasecmp(filename, "http://", 7)) { 
 	return mpg123_detect_by_content_stream(filename);
     }

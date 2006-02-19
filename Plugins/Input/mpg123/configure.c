@@ -66,8 +66,6 @@ mpg123_configurewin_ok(GtkWidget * widget, gpointer data)
     if (GTK_TOGGLE_BUTTON(decode_freq_1to4)->active)
         mpg123_cfg.downsample = 2;
 
-    mpg123_cfg.detect_by = DETECT_CONTENT;
-
     mpg123_cfg.http_buffer_size =
         (gint) GTK_ADJUSTMENT(streaming_size_adj)->value;
     mpg123_cfg.http_prebuffer =
@@ -160,7 +158,6 @@ mpg123_configurewin_ok(GtkWidget * widget, gpointer data)
     bmp_cfg_db_set_bool(db, "MPG123", "disable_id3v2",
                         mpg123_cfg.disable_id3v2);
     bmp_cfg_db_set_string(db, "MPG123", "id3_format", mpg123_cfg.id3_format);
-    bmp_cfg_db_set_int(db, "MPG123", "detect_by", mpg123_cfg.detect_by);
 
 /* Encoding patch */
     bmp_cfg_db_set_bool(db, "MPG123", "title_encoding_enabled", mpg123_cfg.title_encoding_enabled);
