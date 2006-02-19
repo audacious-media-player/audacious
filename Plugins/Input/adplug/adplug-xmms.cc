@@ -371,6 +371,7 @@ static void adplug_config(void)
   gtk_widget_show_all(GTK_WIDGET(config_dlg));
 }
 
+#if 0
 static void add_instlist(GtkCList *instlist, const char *t1, const char *t2)
 {
   gchar *rowstr[2];
@@ -379,6 +380,7 @@ static void add_instlist(GtkCList *instlist, const char *t1, const char *t2)
   gtk_clist_append(instlist, rowstr);
   g_free(rowstr[0]); g_free(rowstr[1]);
 }
+#endif
 
 static CPlayer *factory(const std::string &filename, Copl *newopl)
 {
@@ -878,12 +880,12 @@ InputPlugin adplug_ip =
   {
     NULL,                       // handle (filled by XMMS)
     NULL,                       // filename (filled by XMMS)
-    ADPLUG_NAME,        // plugin description
+    ADPLUG_NAME,        	// plugin description
     adplug_init,                // plugin functions...
     adplug_about,
     adplug_config,
     adplug_is_our_file,
-    NULL, // scan_dir (look in Input/cdaudio/cdaudio.c)
+    NULL, 			// scan_dir (look in Input/cdaudio/cdaudio.c)
     adplug_play,
     adplug_stop,
     adplug_pause,
