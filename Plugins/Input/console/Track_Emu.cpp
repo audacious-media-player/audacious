@@ -175,7 +175,7 @@ bool Track_Emu::play( int out_count, Music_Emu::sample_t* out )
 				end_track();
 			
 			int count = min( fade_block_size, out_count - i );
-			int igain = gain * (1 << 15);
+			int igain = (unsigned int)((double)gain) * (1 << 15);
 			for ( int j = 0; j < count; j++ )
 				out [i + j] = (out [i + j] * igain) >> 15;
 		}
