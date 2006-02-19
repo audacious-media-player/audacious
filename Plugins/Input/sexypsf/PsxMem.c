@@ -21,7 +21,7 @@
 
 #include "PsxCommon.h"
 
-void LoadPSXMem(u32 address, s32 length, char *data)
+void LoadPSXMem(u32 address, s32 length, unsigned char *data)
 {
  //printf("%08x %08x\n",address,length);
  while(length>0)
@@ -72,11 +72,11 @@ int psxMemInit() {
 	memcpy(psxMemLUT + 0x8000, psxMemLUT, 0x80 * sizeof *psxMemLUT);
 	memcpy(psxMemLUT + 0xa000, psxMemLUT, 0x80 * sizeof *psxMemLUT);
 
-	for (i=0; i<0x01; i++) psxMemLUT[i + 0x1f00] = (u32)&psxP[i << 16];
+	for (i=0; i<0x01; i++) psxMemLUT[i + 0x1f00] = &psxP[i << 16];
 
-	for (i=0; i<0x01; i++) psxMemLUT[i + 0x1f80] = (u32)&psxH[i << 16];
+	for (i=0; i<0x01; i++) psxMemLUT[i + 0x1f80] = &psxH[i << 16];
 
-	for (i=0; i<0x08; i++) psxMemLUT[i + 0xbfc0] = (u32)&psxR[i << 16];
+	for (i=0; i<0x08; i++) psxMemLUT[i + 0xbfc0] = &psxR[i << 16];
 
 	return 0;
 }
@@ -102,7 +102,8 @@ void psxMemShutdown() {
 	if (psxMemLUT)
 		free(psxMemLUT);
 
-	psxM = psxP = psxH = psxR = psxMemLUT = NULL;
+	psxM = psxP = psxH = psxR = NULL;
+	psxMemLUT = NULL;
 }
 
 u8 psxMemRead8(u32 mem) {

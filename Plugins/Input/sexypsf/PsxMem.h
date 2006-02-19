@@ -41,14 +41,14 @@ static INLINE u32 BFLIP32(u32 x)
 }
 #endif
 
-s8 *psxM;
+char *psxM;
 #define psxMu32(mem)	(*(u32*)&psxM[(mem) & 0x1fffff])
 
-s8 *psxP;
-s8 *psxR;
+char *psxP;
+char *psxR;
 #define psxRu32(mem)	(*(u32*)&psxR[(mem) & 0x7ffff])
 
-s8 *psxH;
+char *psxH;
 
 #define psxHu8(mem)	(*(u8*) &psxH[(mem) & 0xffff])
 
@@ -57,7 +57,7 @@ s8 *psxH;
 
 char **psxMemLUT;
 
-#define PSXM(mem)		(psxMemLUT[(mem) >> 16] == 0 ? "" : (void*)(psxMemLUT[(mem) >> 16] + ((mem) & 0xffff)))
+#define PSXM(mem)		(psxMemLUT[(mem) >> 16] == 0 ? NULL : (void*)(psxMemLUT[(mem) >> 16] + ((mem) & 0xffff)))
 
 #define PSXMu8(mem)	(*(u8 *)PSXM(mem))
 #define PSXMu32(mem)    (*(u32*)PSXM(mem))
@@ -76,6 +76,6 @@ void psxMemWrite8 (u32 mem, u8 value);
 void psxMemWrite16(u32 mem, u16 value);
 void psxMemWrite32(u32 mem, u32 value);
 
-void LoadPSXMem(u32 address, s32 length, char *data);
+void LoadPSXMem(u32 address, s32 length, unsigned char *data);
 
 #endif /* __PSXMEMORY_H__ */

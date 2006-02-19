@@ -226,7 +226,7 @@ static PSFINFO *LoadPSF(char *path, int level, int type) // Type==1 for just inf
 {
         FILE *fp;
         EXE_HEADER tmpHead;
-        char *in,*out=0;
+        unsigned char *in,*out=0;
 	u8 head[4];
         u32 reserved;
         u32 complen;
