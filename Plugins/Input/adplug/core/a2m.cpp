@@ -70,7 +70,7 @@ bool Ca2mLoader::load(const std::string &filename, const CFileProvider &fp)
   } ch;
   int i,j,k,t;
   unsigned int l;
-  unsigned char *org, *orgptr;
+  unsigned char *org = 0, *orgptr;
   unsigned long alength;
   unsigned short len[9], *secdata, *secptr;
   const unsigned char convfx[16] = {0,1,2,23,24,3,5,4,6,9,17,13,11,19,7,14};
