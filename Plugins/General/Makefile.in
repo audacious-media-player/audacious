@@ -1,4 +1,6 @@
 include ../../mk/rules.mk
 include ../../mk/objective.mk
 
-SUBDIRS = lirc song_change
+ALL_PLUGINS = lirc song_change inetctl
+SUBDIRS = @GENERAL_PLUGINS@
+

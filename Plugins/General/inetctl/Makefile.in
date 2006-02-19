@@ -1,0 +1,12 @@
+include ../../../mk/rules.mk
+include ../../../mk/objective.mk
+
+OBJECTIVE_LIBS = libinetctl.so
+
+LIBDIR = $(plugindir)/$(GENERAL_PLUGIN_DIR)
+
+SOURCES = inetctl.c inetctl_actions.c inetctl_client.c inetctl_command.c inetctl_config.c inetctl_status.c
+
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I../../../intl -I../../..
+
+OBJECTS = ${SOURCES:.c=.o}
