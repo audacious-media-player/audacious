@@ -368,27 +368,13 @@ mpg123_detect_by_content_stream(gchar *url)
 static int
 is_our_file(char *filename)
 {
+    gchar *ext = strrchr(filename, '.'); 	 
+
     if (!strncasecmp(filename, "http://", 7)) { 
 	return mpg123_detect_by_content_stream(filename);
     }
-#ifdef NOTYET
-    else if (!
+    else if (strncasecmp(ext, ".mp3"))
         return (mpg123_detect_by_content(filename));
-#endif
-    else
-    {
-         gchar *ext = strrchr(filename, '.'); 	 
-         if (ext) { 	 
-             if (!strncasecmp(ext, ".ogg", 4)) 	 
-                 return FALSE; 	 
-             if (!strncasecmp(ext, ".rm", 3) || 	 
-                 !strncasecmp(ext, ".ra", 3) || 	 
-                 !strncasecmp(ext, ".rpm", 4) || 	 
-                 !strncasecmp(ext, ".ram", 4)) 	 
-                 return FALSE; 	 
-         } 	 
-         return TRUE; 	 
-    }
     return FALSE;
 }
 
