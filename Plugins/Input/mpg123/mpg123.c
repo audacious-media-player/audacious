@@ -373,9 +373,8 @@ is_our_file(char *filename)
     if (!strncasecmp(filename, "http://", 7)) { 
 	return mpg123_detect_by_content_stream(filename);
     }
-    else if (strncasecmp(ext, ".mp3"))
+    else
         return (mpg123_detect_by_content(filename));
-    return FALSE;
 }
 
 static void
