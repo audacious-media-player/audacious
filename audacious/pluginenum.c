@@ -417,6 +417,12 @@ plugin_system_cleanup(void)
 
     for (node = get_general_list(); node; node = g_list_next(node)) {
         gp = GENERAL_PLUGIN(node->data);
+        if (gp && gp->cleanup) {
+            gp->cleanup();
+            GDK_THREADS_LEAVE();
+            while (g_main_iteration(FALSE));
+            GDK_THREADS_ENTER();
+        }
         g_module_close(gp->handle);
     }
 
@@ -437,6 +443,12 @@ plugin_system_cleanup(void)
 
     for (node = get_vis_list(); node; node = g_list_next(node)) {
         vp = VIS_PLUGIN(node->data);
+        if (vp && vp->cleanup) {
+            vp->cleanup();
+            GDK_THREADS_LEAVE();
+            while (g_main_iteration(FALSE));
+            GDK_THREADS_ENTER();
+        }
         g_module_close(vp->handle);
     }
 
