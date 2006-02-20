@@ -39,6 +39,10 @@
 
 #include <gdk/gdkx.h>
 
+#define EXTENSION_TARGETS 7
+
+static gchar *ext_targets[EXTENSION_TARGETS] = { "bmp", "xpm", "png", "svg",
+        "gif", "jpg", "jpeg" };
 
 #define THUMBNAIL_WIDTH  90
 #define THUMBNAIL_HEIGHT 40
@@ -82,20 +86,31 @@ skin_get_preview(const gchar * path)
     GdkPixbuf *preview = NULL;
     gchar *dec_path, *preview_path;
     gboolean is_archive = FALSE;
+    gint i = 0;
+    gchar buf[60];			/* gives us lots of room */
 
-    if (file_is_archive(path)) {
+    if (file_is_archive(path))
+    {
         if (!(dec_path = archive_decompress(path)))
             return NULL;
 
         is_archive = TRUE;
     }
-    else {
+    else
+    {
         dec_path = g_strdup(path);
     }
 
-    preview_path = find_file_recursively(dec_path, "main.bmp");
+    for (i = 0; i < EXTENSION_TARGETS; i++)
+    {
+        sprintf(buf, "main.%s", ext_targets[i]);
 
-    if (preview_path) {
+        if ((preview_path = find_file_recursively(dec_path, "main.bmp")) != NULL)
+            break;
+    }
+
+    if (preview_path)
+    {
         preview = gdk_pixbuf_new_from_file(preview_path, NULL);
         g_free(preview_path);
     }

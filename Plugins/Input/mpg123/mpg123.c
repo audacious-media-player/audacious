@@ -366,11 +366,14 @@ mpg123_detect_by_content_stream(gchar *url)
 static int
 is_our_file(char *filename)
 {
-    if (!strncasecmp(filename, "http://", 7)) { 
+    gchar *ext = strrchr(filename, '.');
+
+    if (!strncasecmp(filename, "http://", 7))
 	return mpg123_detect_by_content_stream(filename);
-    }
-    else
+    else if (strncasecmp(ext, ".mp3", 7))	/* If extension ends in .mp3, let it be --nenolod */
         return (mpg123_detect_by_content(filename));
+
+    return TRUE;	/* Why? The file ends in .mp3. Lalala. */
 }
 
 static void

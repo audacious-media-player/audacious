@@ -45,7 +45,7 @@
 
 #define EXTENSION_TARGETS 7
 
-gchar *ext_targets[EXTENSION_TARGETS] = { "bmp", "xpm", "png", "svg", 
+static gchar *ext_targets[EXTENSION_TARGETS] = { "bmp", "xpm", "png", "svg", 
 	"gif", "jpg", "jpeg" };
 
 struct _SkinPixmapIdMapping {
