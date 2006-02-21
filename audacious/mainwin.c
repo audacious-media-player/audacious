@@ -532,8 +532,7 @@ mainwin_set_shade_menu_cb(gboolean shaded)
         widget_show(WIDGET(mainwin_seject));
 
         textbox_set_scroll(mainwin_info, FALSE);
-        if (bmp_playback_get_playing()
-            && playlist_get_current_length() != -1)
+        if (bmp_playback_get_playing())
 		{
             	widget_show(WIDGET(mainwin_sposition));
 	        widget_show(WIDGET(mainwin_stime_min));
