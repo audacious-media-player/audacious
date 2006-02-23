@@ -470,7 +470,7 @@ textbox_set_scroll(TextBox * tb, gboolean s)
 
     tb->tb_scroll_enabled = s;
     if (tb->tb_scroll_enabled && tb->tb_is_scrollable
-        && tb->tb_scroll_allowed) {
+        && tb->tb_scroll_allowed && !tb->tb_timeout_tag) {
         gint tag;
         tag = TEXTBOX_SCROLL_SMOOTH_TIMEOUT;
         tb->tb_timeout_tag = gtk_timeout_add(tag, textbox_scroll, tb);
@@ -548,6 +548,7 @@ create_textbox(GList ** wlist, GdkPixmap * parent, GdkGC * gc,
     tb->tb_nominal_y = y;
     tb->tb_nominal_height = tb->tb_widget.height;
     widget_list_add(wlist, WIDGET(tb));
+    tb->tb_timeout_tag = 0;
     return tb;
 }
 
