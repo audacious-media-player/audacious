@@ -6,9 +6,11 @@ OBJECTIVE_LIBS = none
 OBJECTIVE_LIBS_NOINST = none
 OBJECTIVE_BINS = none
 SUBDIRS = none
+HEADERS = none
+
 LIBDIR = $(libdir)
 BINDIR = $(bindir)
-
+INCLUDEDIR = $(includedir)
 CFLAGS += -DHAVE_CONFIG_H
 
 default: all
@@ -27,6 +29,12 @@ install:
 		for i in $(OBJECTIVE_DIRECTORIES); do \
 			printf "%10s     %-20s\n" MKDIR $$i; \
 			$(INSTALL) -d -m 755 $(DESTDIR)/$$i; \
+		done; \
+	fi
+	@if test "$(HEADERS)" != "none"; then \
+		for i in $(HEADERS); do \
+			printf "%10s     %-20s\n" INSTALL $$i; \
+			$(INSTALL) $(INSTALL_OVERRIDE) $$i $(DESTDIR)/$(INCLUDEDIR)/$$i; \
 		done; \
 	fi
 	@if test "$(OBJECTIVE_LIBS)" != "none"; then \
@@ -61,7 +69,7 @@ distclean: clean
 
 build:
 	$(MAKE) build-prehook
-	@if test "$(SUBDIRS)" != "none"; then \
+	+@if test "$(SUBDIRS)" != "none"; then \
 		for i in $(SUBDIRS); do \
 			echo "[building subobjective: $$i]"; \
 			(cd $$i; $(MAKE); cd ..); \
