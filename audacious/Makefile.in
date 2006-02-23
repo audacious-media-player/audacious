@@ -22,6 +22,12 @@ CFLAGS += \
 	-I..    \
 	-I../intl
 
+HEADERS = \
+	input.h \
+	output.h \
+	plugin.h \
+	util.h
+
 SOURCES = \
 	build_stamp.c \
 	genevent.c \
