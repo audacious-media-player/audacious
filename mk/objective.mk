@@ -18,7 +18,9 @@ all: build
 
 install:
 	$(MAKE) install-prehook
+	$(INSTALL) -d -m 755 $(DESTDIR)/$(BINDIR)
 	$(INSTALL) -d -m 755 $(DESTDIR)/$(LIBDIR)
+	$(INSTALL) -d -m 755 $(DESTDIR)/$(INCLUDEDIR)
 	@if test "$(SUBDIRS)" != "none"; then \
 		for i in $(SUBDIRS); do \
 			echo "[installing subobjective: $$i]"; \
