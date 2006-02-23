@@ -53,3 +53,10 @@ HEADERS = \
 	configfile.h \
 	beepctrl.h dirbrowser.h util.h \
 	formatter.h titlestring.h xml_document.h
+
+install-posthook:
+	@echo [adding versioning information to libaudacious]
+	@${MV} ${DESTDIR}/${LIBDIR}/libaudacious.so \
+		${DESTDIR}/${LIBDIR}/libaudacious.so.2
+	@ln -sf ${LIBDIR}/libaudacious.so.2 \
+		${LIBDIR}/libaudacious.so
