@@ -470,16 +470,26 @@ textbox_set_scroll(TextBox * tb, gboolean s)
 
     tb->tb_scroll_enabled = s;
     if (tb->tb_scroll_enabled && tb->tb_is_scrollable
-        && tb->tb_scroll_allowed && !tb->tb_timeout_tag) {
+        && tb->tb_scroll_allowed) {
         gint tag;
         tag = TEXTBOX_SCROLL_SMOOTH_TIMEOUT;
+
+	if (tb->tb_timeout_tag)
+        {
+	    gtk_timeout_remove(tb->tb_timeout_tag);
+            tb->tb_timeout_tag = 0;
+	}
+
         tb->tb_timeout_tag = gtk_timeout_add(tag, textbox_scroll, tb);
     }
-    else {
-        if (tb->tb_timeout_tag) {
+    else
+    {
+        if (tb->tb_timeout_tag)
+        {
             gtk_timeout_remove(tb->tb_timeout_tag);
             tb->tb_timeout_tag = 0;
         }
+
         tb->tb_offset = 0;
         widget_draw(WIDGET(tb));
     }
