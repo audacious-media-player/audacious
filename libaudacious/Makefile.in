@@ -56,7 +56,5 @@ HEADERS = \
 
 install-posthook:
 	@echo [adding versioning information to libaudacious]
-	@mv ${DESTDIR}/${LIBDIR}/libaudacious.so \
+	@ln -sf ${DESTDIR}/${LIBDIR}/libaudacious.so \
 		${DESTDIR}/${LIBDIR}/libaudacious.so.2
-	@ln -sf ${DESTDIR}/${LIBDIR}/libaudacious.so.2 \
-		${DESTDIR}/${LIBDIR}/libaudacious.so
