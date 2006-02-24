@@ -10,7 +10,7 @@ HEADERS = none
 
 LIBDIR = $(libdir)
 BINDIR = $(bindir)
-INCLUDEDIR = $(includedir)
+INCLUDEDIR = $(pkgincludedir)
 CFLAGS += -DHAVE_CONFIG_H
 
 default: all
@@ -36,7 +36,7 @@ install:
 	@if test "$(HEADERS)" != "none"; then \
 		for i in $(HEADERS); do \
 			printf "%10s     %-20s\n" INSTALL $$i; \
-			$(INSTALL) $(INSTALL_OVERRIDE) $$i $(DESTDIR)/$(INCLUDEDIR)/$$i; \
+			$(INSTALL_DATA) $(INSTALL_OVERRIDE) $$i $(DESTDIR)/$(INCLUDEDIR)/$$i; \
 		done; \
 	fi
 	@if test "$(OBJECTIVE_LIBS)" != "none"; then \
