@@ -12,6 +12,6 @@ install-posthook:
 	@mkdir -p $(DESTDIR)/$(LIBDIR)/pkgconfig
 	@mkdir -p $(DESTDIR)/$(mandir)/man1
 	@mkdir -p $(DESTDIR)/$(datadir)/applications
-	@$(INSTALL) audacious.pc $(DESTDIR)/$(LIBDIR)/pkgconfig/audacious.pc
-	@$(INSTALL) audacious.1 $(DESTDIR)/$(mandir)/man1/audacious.1
-	@$(INSTALL) audacious/audacious.desktop $(DESTDIR)/$(datadir)/applications/audacious.desktop
+	@$(INSTALL_DATA) audacious.pc $(DESTDIR)/$(LIBDIR)/pkgconfig/audacious.pc
+	@$(INSTALL_DATA) audacious.1 $(DESTDIR)/$(mandir)/man1/audacious.1
+	@$(INSTALL_DATA) audacious/audacious.desktop $(DESTDIR)/$(datadir)/applications/audacious.desktop
