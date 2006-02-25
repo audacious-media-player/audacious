@@ -14,10 +14,11 @@
 #include <glib.h>
 
 #define SCROBBLER_HS_URL "http://post.audioscrobbler.com"
-#define SCROBBLER_CLI_ID "xms"
+#define SCROBBLER_CLI_ID "aud"
 #define SCROBBLER_HS_WAIT 1800
 #define SCROBBLER_SB_WAIT 10
 #define SCROBBLER_VERSION "1.1"
+#define SCROBBLER_IMPLEMENTATION "0.1"		/* This is the implementation, not the player version. */
 #define CACHE_SIZE 1024
 
 /* Scrobblerbackend for xmms plugin, first draft */
@@ -233,7 +234,7 @@ static int sc_handshake(void)
 
 	snprintf(buf, sizeof(buf), "%s/?hs=true&p=%s&c=%s&v=%s&u=%s",
 			SCROBBLER_HS_URL, SCROBBLER_VERSION,
-			SCROBBLER_CLI_ID, "0.3.8.1", sc_username);
+			SCROBBLER_CLI_ID, SCROBBLER_IMPLEMENTATION, sc_username);
 
 	curl = curl_easy_init();
 	curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1);
