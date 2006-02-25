@@ -213,10 +213,14 @@ bmp_playback_play_file(PlaylistEntry *entry)
     if (cfg.random_skin_on_play)
         bmp_playback_set_random_skin();
 
-    if (!entry->decoder)
-	entry->decoder = input_check_file(entry->filename, FALSE);
-
-    if (!entry->decoder || !input_is_enabled(entry->decoder->filename))
+    /*
+     * This is slightly uglier than the original version, but should
+     * fix the "crash" issues as seen in 0.2 when dealing with this situation.
+     *  - nenolod
+     */
+    if (!entry->decoder && 
+	((entry->decoder = input_check_file(entry->filename, FALSE)) == NULL) ||
+        !input_is_enabled(entry->decoder->filename))
     {
         input_file_not_playable(entry->filename);
 
@@ -261,7 +265,8 @@ bmp_playback_seek(gint time)
 
     /* FIXME WORKAROUND...that should work with all plugins
      * mute the volume, start playback again, do the seek, then pause again
-     * -Patrick Sudowe  */
+     * -Patrick Sudowe 
+     */
     if(ip_data.paused)
     {
 	restore_pause = TRUE;
