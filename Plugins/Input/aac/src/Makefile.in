@@ -15,6 +15,3 @@ SOURCES = libmp4.c mp4_utils.c aac_utils.c tagging_mp4.c fileinfo.c
 OBJECTS = ${SOURCES:.c=.o}
 
 CFLAGS += $(GTK_CFLAGS) -I../../../../intl -I../../../.. -I../include -I../libmp4v2 -I../libfaad
-
-libaac.so: $(OBJECTS)
-	$(CC) -fPIC -DPIC -shared -o $@ $(OBJECTS) $(LDFLAGS)

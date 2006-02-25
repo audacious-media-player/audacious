@@ -38,7 +38,3 @@ SOURCES =	\
 
 OBJECTS1 = ${SOURCES:.c=.o}
 OBJECTS = ${OBJECTS1:.cc=.o}
-
-libsid.so: $(OBJECTS)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(LIBADD) -shared $(OBJECTS) -o $@
-
