@@ -154,28 +154,35 @@ static void flac_configurewin_ok(GtkWidget * widget, gpointer data)
 	flac_cfg.stream.http_prebuffer = (gint) GTK_ADJUSTMENT(streaming_pre_adj)->value;
 
 	flac_cfg.stream.use_proxy = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(streaming_proxy_use));
-	g_free(flac_cfg.stream.proxy_host);
+
+	if (flac_cfg.stream.proxy_host != NULL)
+		g_free(flac_cfg.stream.proxy_host);
+
 	flac_cfg.stream.proxy_host = g_strdup(gtk_entry_get_text(GTK_ENTRY(streaming_proxy_host_entry)));
 	flac_cfg.stream.proxy_port = atoi(gtk_entry_get_text(GTK_ENTRY(streaming_proxy_port_entry)));
 
 	flac_cfg.stream.proxy_use_auth = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(streaming_proxy_auth_use));
 
-	if(flac_cfg.stream.proxy_user)
+	if(flac_cfg.stream.proxy_user != NULL)
 		g_free(flac_cfg.stream.proxy_user);
+
 	flac_cfg.stream.proxy_user = NULL;
 	if(strlen(gtk_entry_get_text(GTK_ENTRY(streaming_proxy_auth_user_entry))) > 0)
 		flac_cfg.stream.proxy_user = g_strdup(gtk_entry_get_text(GTK_ENTRY(streaming_proxy_auth_user_entry)));
 
-	if(flac_cfg.stream.proxy_pass)
+	if(flac_cfg.stream.proxy_pass != NULL)
 		g_free(flac_cfg.stream.proxy_pass);
+
 	flac_cfg.stream.proxy_pass = NULL;
 	if(strlen(gtk_entry_get_text(GTK_ENTRY(streaming_proxy_auth_pass_entry))) > 0)
 		flac_cfg.stream.proxy_pass = g_strdup(gtk_entry_get_text(GTK_ENTRY(streaming_proxy_auth_pass_entry)));
 
 
 	flac_cfg.stream.save_http_stream = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(streaming_save_use));
-	if (flac_cfg.stream.save_http_path)
+
+	if (flac_cfg.stream.save_http_path != NULL)
 		g_free(flac_cfg.stream.save_http_path);
+
 	flac_cfg.stream.save_http_path = g_strdup(gtk_entry_get_text(GTK_ENTRY(streaming_save_entry)));
 
 #ifdef FLAC_ICECAST
