@@ -733,56 +733,7 @@ dnl *** Scrobbler ***
 scrobbler="yes"
 
 dnl Checks for libmusicbrainz
-AC_CHECK_LIB(musicbrainz, mb_GetVersion,,
-             echo "*"
-             echo "*  The MusicBrainz client library needs to be installed "
-             echo "*  to build this plugin. Please download the library from "
-             echo "*  http://www.musicbrainz.org/download "
-	     echo "*"
-	     echo "*  Scrobbler support will not be built."
-             echo "*"
-             scrobbler="no"
-             ,-lstdc++)
-
-OLD_LIBS="$LIBS"
-LIBS="-lmusicbrainz -lstdc++"
-AC_TRY_RUN([
-#include <musicbrainz/mb_c.h>
-
-int main ()
-{
-  int           major, minor, rev;
-  musicbrainz_t o;
-
-  o = mb_New();
-  mb_GetVersion(o, &major, &minor, &rev);
-  mb_Delete(o);
-  if (major >= 2)
-  {
-     return 0;
-  }
-
-  return -1;
-}
-],have_mbver=true,have_mbver=false,have_mbver=false)
-
-AC_MSG_CHECKING([for version >= 2.0.0 in -lmusicbrainz])
-if test "$have_mbver" = "false"; then
-    AC_MSG_RESULT([no])
-    echo "*"
-    echo "*  Version 2.0.0 or higher of the MusicBrainz "
-    echo "*  client library needs to be installed to build this application. "
-    echo "*  Please download the library from: "
-    echo "*  http://musicbrainz.org/products/client/download.html "
-    echo "*"
-    echo "*  Scrobbler support will not be built."
-    echo "*"
-    scrobbler="no"
-else
-    AC_MSG_RESULT([yes])
-    MUSICBRAINZ_LIBS="-lmusicbrainz -lstdc++"
-fi
-LIBS="$OLD_LIBS"
+PKG_CHECK_MODULES(MUSICBRAINZ, [libmusicbrainz >= 2.0.0], , [scrobbler="no"])
 
 dnl libcurl check
 
