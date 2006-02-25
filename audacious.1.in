@@ -6,7 +6,7 @@ Audacious \- an audio player for X.
 [\-h] [\-\-help] [\-n \fI<session>\fP] [\-\-session=\fI<session>\fP] [\-r]
 [\-\-rew] [\-p] [\-\-play] [\-u] [\-\-pause] [\-s] [\-\-stop] [\-f]
 [\-\-fwd] [\-e] [\-\-enqueue] [\-m] [\-\-show\-main\-window] [\-v]
-[\-\-version] [\fIfilename\fP]...
+[\-\-version] [\-\-headless] [\fIfilename\fP]...
 .SH DESCRIPTION
 \fIAudacious\fP is a media player, based on Beep Media Player, 
 which is in turn based on the X Multimedia System.
@@ -49,6 +49,9 @@ Show the main window.
 .TP
 .B \-v, \-\-version
 Print version number and exit.
+.TP
+.B \-H, \-\-headless
+Starts Audacious in headless mode.
 .SH SKINS
 Audacious supports Winamp Classic style skins.  Skins may be stored in either
 archived (\fI.zip\fP, \fI.wsz\fP, \fI.tgz\fP, \fI.tar.gz\fP, 
@@ -169,6 +172,14 @@ Arrow key right	Balance 4% to right
 .br
 Arrow key left	Balance 4% to left
 .in -2
+.SH HEADLESS OPERATION
+Audacious supports a headless operation mode, where Audacious does not use
+X11 and instead operates as a daemon. You should note that you cannot switch
+between daemonized mode and X11 mode, and that if you wish to switch back
+and forth, that you need to do so when starting the program.
+
+When using Audacious in headless mode, you will need a client. Clients
+compatible with Audacious are listed on the Audacious website.
 .SH FILES
 .TP \w'~/.audacious/playlist.m3uXX'u
 ~/.audacious/config
