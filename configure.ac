@@ -779,29 +779,6 @@ AC_SUBST(PLUGIN_LDFLAGS)
 AC_SUBST(beepdir)
 AC_SUBST(plugindir)
 
-have_libvisual="yes"
-
-AC_CHECK_HEADERS([GL/gl.h GL/glx.h GL/glu.h],opengl="yes",opengl="no")
-if test x"$opengl" = xno; then
-        AC_WARN([OpenGL and Glu headers not found, libvisual support cannot be built])
-	have_libvisual="no"
-fi
-
-AC_PATH_PROG(SDL_CONFIG, [sdl-config], [no])
-AM_PATH_SDL(1.2.5, , [AC_WARN([*** SDL >= 1.2.5 not installed - please install first ***])
-	have_libvisual="no"])
-
-PKG_CHECK_MODULES(LIBVISUAL, libvisual = 0.2.0, [libvis="yes"], [libvis="no"])
-if test x"$libvis" = xno; then
-	have_libvisual="no"
-fi
-AC_SUBST(LIBVISUAL_LIBS)
-AC_SUBST(LIBVISUAL_CFLAGS)
-
-if test "x$have_libvisual" = xyes; then
-	VISUALIZATION_PLUGINS="$VISUALIZATION_PLUGINS libvisual-proxy";
-fi
-
 AC_SUBST(EFFECT_PLUGINS)
 AC_SUBST(GENERAL_PLUGINS)
 AC_SUBST(INPUT_PLUGINS)
@@ -854,7 +831,6 @@ AC_CONFIG_FILES([
 	Plugins/Input/amidi-plug/Makefile
         Plugins/Visualization/Makefile
         Plugins/Visualization/blur_scope/Makefile
-	Plugins/Visualization/libvisual-proxy/Makefile
 	Plugins/General/Makefile
 	Plugins/General/song_change/Makefile
 	Plugins/General/lirc/Makefile
@@ -935,7 +911,6 @@ echo
 echo "  Visualization"
 echo "  -------------"
 echo "  Blur Scope:                             yes"
-echo "  libvisual-proxy:                        $have_libvisual"
 echo
 
 if test "$beep_cv_lib_xlibs_threadsafe" = "no"; then

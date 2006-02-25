@@ -29,6 +29,7 @@
 #include <gmodule.h>
 #include <glib/gprintf.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "controlsocket.h"
 #include "main.h"
@@ -364,6 +365,7 @@ plugin_system_cleanup(void)
     for (node = get_input_list(); node; node = g_list_next(node)) {
         ip = INPUT_PLUGIN(node->data);
         if (ip && ip->cleanup) {
+	    printf("Cleaning up input plugin %s\n", ip->filename);
             ip->cleanup();
             GDK_THREADS_LEAVE();
             while (g_main_iteration(FALSE));
@@ -378,6 +380,7 @@ plugin_system_cleanup(void)
     for (node = get_output_list(); node; node = g_list_next(node)) {
         op = OUTPUT_PLUGIN(node->data);
         if (op && op->cleanup) {
+	    printf("Cleaning up output plugin %s\n", op->filename);
             op->cleanup();
             GDK_THREADS_LEAVE();
             while (g_main_iteration(FALSE));
@@ -392,6 +395,7 @@ plugin_system_cleanup(void)
     for (node = get_effect_list(); node; node = g_list_next(node)) {
         ep = EFFECT_PLUGIN(node->data);
         if (ep && ep->cleanup) {
+	    printf("Cleaning up effect plugin %s\n", ep->filename);
             ep->cleanup();
             GDK_THREADS_LEAVE();
             while (g_main_iteration(FALSE));
@@ -418,6 +422,7 @@ plugin_system_cleanup(void)
     for (node = get_general_list(); node; node = g_list_next(node)) {
         gp = GENERAL_PLUGIN(node->data);
         if (gp && gp->cleanup) {
+	    printf("Cleaning up general plugin %s\n", gp->filename);
             gp->cleanup();
             GDK_THREADS_LEAVE();
             while (g_main_iteration(FALSE));
@@ -444,6 +449,7 @@ plugin_system_cleanup(void)
     for (node = get_vis_list(); node; node = g_list_next(node)) {
         vp = VIS_PLUGIN(node->data);
         if (vp && vp->cleanup) {
+	    printf("Cleaning up visualisation plugin %s\n", vp->filename);
             vp->cleanup();
             GDK_THREADS_LEAVE();
             while (g_main_iteration(FALSE));
