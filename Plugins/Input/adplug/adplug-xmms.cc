@@ -384,9 +384,7 @@ static void add_instlist(GtkCList *instlist, const char *t1, const char *t2)
 
 static CPlayer *factory(const std::string &filename, Copl *newopl)
 {
-  CPlayer			*p;
   CPlayers::const_iterator	i;
-  unsigned int			j;
 
   dbg_printf("factory(\"%s\",opl): ", filename.c_str());
   return CAdPlug::factory(filename, newopl, cfg.players);
