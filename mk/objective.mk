@@ -122,7 +122,7 @@ build:
 	if test "x$(OBJECTS)" != "x"; then \
 		make $(OBJECTS);		\
 		printf "%10s     %-20s\n" LINK $@; \
-		$(CC) -fPIC -DPIC -shared -o $@ $(OBJECTS) $(LDFLAGS) $(LIBADD); \
+		$(CC) -fPIC -DPIC -shared -o $@ -Wl,-soname=$@ $(OBJECTS) $(LDFLAGS) $(LIBADD); \
 	fi
 
 %.a: $(OBJECTS)
