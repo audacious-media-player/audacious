@@ -35,7 +35,6 @@
 #define BMP_PLAYLIST_BASENAME         "playlist.m3u"
 #define BMP_LOG_BASENAME              "log"
 
-
 #define PLAYER_HEIGHT \
   (cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : MAINWIN_HEIGHT)
 #define PLAYER_WIDTH  MAINWIN_WIDTH
@@ -136,6 +135,8 @@ extern GList *dock_window_list;
 extern gboolean pposition_broken;
 
 extern gboolean starting_up;
+
+extern gboolean has_x11_connection;
 
 void bmp_config_save(void);
 void bmp_config_load(void);

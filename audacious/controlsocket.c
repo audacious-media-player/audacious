@@ -603,9 +603,12 @@ ctrlsocket_check(void)
             input_set_volume(v[0], v[1]);
             break;
         case CMD_SET_SKIN:
-            bmp_active_skin_load(data);
+	    if (has_x11_connection == TRUE)
+                bmp_active_skin_load(data);
             break;
         case CMD_PL_WIN_TOGGLE:
+	    if (has_x11_connection != TRUE)
+                break;
             tbool = *((gboolean *) data);
             if (tbool)
                 playlistwin_show();
@@ -613,19 +616,27 @@ ctrlsocket_check(void)
                 playlistwin_hide();
             break;
         case CMD_EQ_WIN_TOGGLE:
+	    if (has_x11_connection != TRUE)
+                break;
             tbool = *((gboolean *) data);
             equalizerwin_show(!!tbool);
             break;
         case CMD_SHOW_PREFS_BOX:
+	    if (has_x11_connection != TRUE)
+                break;
             show_prefs_window();
             break;
         case CMD_TOGGLE_AOT:
+	    if (has_x11_connection != TRUE)
+                break;
             tbool = *((gboolean *) data);
             mainwin_set_always_on_top(tbool);
             break;
         case CMD_SHOW_ABOUT_BOX:
             break;
         case CMD_EJECT:
+	    if (has_x11_connection != TRUE)
+                break;
             mainwin_eject_pushed();
             break;
         case CMD_PLAYLIST_PREV:
@@ -644,6 +655,8 @@ ctrlsocket_check(void)
             /* FIXME: to be implemented */
             break;
         case CMD_MAIN_WIN_TOGGLE:
+	    if (has_x11_connection != TRUE)
+                break;
             tbool = *((gboolean *) data);
             mainwin_show(!!tbool);
             break;

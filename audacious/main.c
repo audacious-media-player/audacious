@@ -1,5 +1,5 @@
-/*  Audacious - Cross-platform multimedia platform.
- *  Copyright (C) 2005  Audacious development team.
+/*  Audacious - Cross-platform multimedia player
+ *  Copyright (C) 2005-2006  Audacious development team.
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team.
@@ -78,6 +78,7 @@
 #include "pixmaps.h"
 #include "images/audacious_player.xpm"
 
+gboolean has_x11_connection = FALSE; 	/* do we have an X11 connection? */
 
 /* Translatable string for beep.desktop's comment field */
 const gchar *desktop_comment = N_("Audacious");
@@ -918,11 +919,11 @@ main(gint argc, gchar ** argv)
 
     /* Check GTK version. Really, this is only needed for binary
      * distribution since configure already checks. */
-    if (!GTK_CHECK_VERSION(2, 4, 0)) {
+    if (!GTK_CHECK_VERSION(2, 6, 0)) {
         g_printerr(_("Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
                      "Please use GTK+ %s or newer.\n"),
                    gtk_major_version, gtk_minor_version, gtk_micro_version,
-                   "2.4.0");
+                   "2.6.0");
         exit(EXIT_FAILURE);
     }
 
@@ -942,7 +943,6 @@ main(gint argc, gchar ** argv)
     /* Now let's parse the command line options first. */
     parse_cmd_line(argc, argv, &options);
     if (!gtk_init_check_ok) {
-    //    if (!gtk_init_check(&argc, &argv)) {
         if (argc < 2) {
             /* GTK check failed, and no arguments passed to indicate
                that user is intending to only remote control a running
@@ -1039,6 +1039,8 @@ main(gint argc, gchar ** argv)
         mainwin_attach_idle_func();
 
 	starting_up = FALSE;
+
+	has_x11_connection = TRUE;
 
         gtk_main();
 
