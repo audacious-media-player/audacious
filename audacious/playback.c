@@ -219,8 +219,8 @@ bmp_playback_play_file(PlaylistEntry *entry)
      *  - nenolod
      */
     if (!entry->decoder && 
-	((entry->decoder = input_check_file(entry->filename, FALSE)) == NULL) ||
-        !input_is_enabled(entry->decoder->filename))
+	(((entry->decoder = input_check_file(entry->filename, FALSE)) == NULL) ||
+        !input_is_enabled(entry->decoder->filename)))
     {
         input_file_not_playable(entry->filename);
 
