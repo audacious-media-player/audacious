@@ -293,7 +293,7 @@ is_our_file(char *filename)
 {
     gchar *ext = strrchr(filename, '.');
 
-    if (!strncasecmp(filename, "http://", 7) && (!ext || !strncasecmp(ext, ".mp3", 4)))
+    if (!strncasecmp(filename, "http://", 7) && (strncasecmp(ext, ".ogg", 4)))
 	return TRUE;
     else if (strncasecmp(ext, ".mp3", 4))	/* If extension ends in .mp3, let it be --nenolod */
         return (mpg123_detect_by_content(filename));
