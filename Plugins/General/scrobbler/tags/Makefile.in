@@ -1,0 +1,13 @@
+include ../../../../mk/rules.mk
+include ../../../../mk/objective.mk
+
+OBJECTIVE_LIBS_NOINST = libmetatag.a
+
+LIBADD = $(MUSICBRAINZ_LIBS)
+
+SOURCES = ape.c cdaudio.c id3genres.c id3v1.c id3v2.c itunes.c tags.c \
+	unicode.c vorbis.c wma.c
+
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(MUSICBRAINZ_CFLAGS) -I../../../../intl -I../../../..
+
+OBJECTS = ${SOURCES:.c=.o}

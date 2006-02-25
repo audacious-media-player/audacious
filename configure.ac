@@ -728,6 +728,100 @@ case "$host" in
     ;;
 esac
 
+dnl *** Scrobbler ***
+
+scrobbler="yes"
+
+dnl Checks for libmusicbrainz
+AC_CHECK_LIB(musicbrainz, mb_GetVersion,,
+             echo "*"
+             echo "*  The MusicBrainz client library needs to be installed "
+             echo "*  to build this plugin. Please download the library from "
+             echo "*  http://www.musicbrainz.org/download "
+	     echo "*"
+	     echo "*  Scrobbler support will not be built."
+             echo "*"
+             scrobbler="no"
+             ,-lstdc++)
+
+OLD_LIBS="$LIBS"
+LIBS="-lmusicbrainz -lstdc++"
+AC_TRY_RUN([
+#include <musicbrainz/mb_c.h>
+
+int main ()
+{
+  int           major, minor, rev;
+  musicbrainz_t o;
+
+  o = mb_New();
+  mb_GetVersion(o, &major, &minor, &rev);
+  mb_Delete(o);
+  if (major >= 2)
+  {
+     return 0;
+  }
+
+  return -1;
+}
+],have_mbver=true,have_mbver=false,have_mbver=false)
+
+AC_MSG_CHECKING([for version >= 2.0.0 in -lmusicbrainz])
+if test "$have_mbver" = "false"; then
+    AC_MSG_RESULT([no])
+    echo "*"
+    echo "*  Version 2.0.0 or higher of the MusicBrainz "
+    echo "*  client library needs to be installed to build this application. "
+    echo "*  Please download the library from: "
+    echo "*  http://musicbrainz.org/products/client/download.html "
+    echo "*"
+    echo "*  Scrobbler support will not be built."
+    echo "*"
+    scrobbler="no"
+else
+    AC_MSG_RESULT([yes])
+    MUSICBRAINZ_LIBS="-lmusicbrainz -lstdc++"
+fi
+LIBS="$OLD_LIBS"
+
+dnl libcurl check
+
+my_cv_curl_vers=NONE
+dnl check is the plain-text version of the required version
+check="7.9.7"
+dnl check_hex must be UPPERCASE if any hex letters are present
+check_hex="070907"
+
+AC_MSG_CHECKING([for curl >= $check])
+
+if eval curl-config --version 2>/dev/null >/dev/null; then
+        ver=`curl-config --version | sed -e "s/libcurl //g"`
+        hex_ver=`curl-config --vernum | tr 'a-f' 'A-F'`
+        ok=`echo "ibase=16; if($hex_ver>=$check_hex) $hex_ver else 0" | bc`
+
+        if test x$ok != x0; then
+                my_cv_curl_vers="$ver"
+                AC_MSG_RESULT([$my_cv_curl_vers])
+		CURL_LIBS=`curl-config --libs`
+		CURL_CFLAGS=`curl-config --cflags`
+        else
+                AC_MSG_RESULT([no])
+                AC_MSG_WARN([$ver is too old. Need version $check or higher. Scrobbler support will not be built.])
+        fi
+else
+        AC_MSG_RESULT([no])
+        AC_MSG_WARN([curl-config was not found. Scrobbler support will not be built.])
+fi
+
+if test "x$scrobbler" = "xyes"; then
+	GENERAL_PLUGINS="$GENERAL_PLUGINS scrobbler"
+fi
+
+AC_SUBST(CURL_CFLAGS)
+AC_SUBST(CURL_LIBS)
+AC_SUBST(MUSICBRAINZ_LIBS)
+
+dnl *** End of Scrobbler checks ***
 
 AC_SUBST(ARCH_DEFINES)
 AM_CONDITIONAL(ARCH_X86, test "x$arch_type" = "xix86")
@@ -772,9 +866,6 @@ if test "$enable_user_plugin_dir" = "no"; then
 fi
 
 AC_SUBST(BEEP_DEFINES)
-
-PLUGIN_LDFLAGS='-module -avoid-version -export-symbols-regex "get_.plugin_info"'
-AC_SUBST(PLUGIN_LDFLAGS)
 
 AC_SUBST(beepdir)
 AC_SUBST(plugindir)
@@ -835,6 +926,8 @@ AC_CONFIG_FILES([
 	Plugins/General/song_change/Makefile
 	Plugins/General/lirc/Makefile
 	Plugins/General/inetctl/Makefile
+	Plugins/General/scrobbler/Makefile
+	Plugins/General/scrobbler/tags/Makefile
 	Plugins/Effect/Makefile
 	Plugins/Effect/ladspa/Makefile
         po/Makefile.in
@@ -903,6 +996,7 @@ echo "  -------"
 echo "  Song Change:                            yes"
 echo "  Internet Control:                       yes"
 echo "  LIRC:                                   $have_lirc"
+echo "  AudioScrobbler Client:                  $scrobbler"
 echo
 echo "  Effect"
 echo "  ------"

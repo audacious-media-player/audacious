@@ -23,13 +23,6 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
-DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in $(srcdir)/audacious.1.in \
-	$(srcdir)/audacious.pc.in $(srcdir)/audacious.spec.in \
-	$(srcdir)/config.h.in $(top_srcdir)/configure \
-	$(top_srcdir)/intl/Makefile.in ABOUT-NLS AUTHORS COPYING \
-	ChangeLog INSTALL NEWS compile config.guess config.rpath \
-	config.sub depcomp install-sh ltmain.sh missing mkinstalldirs
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 CONFIG_HEADER = config.h
@@ -37,12 +30,6 @@ CONFIG_CLEAN_FILES = audacious.1 audacious.spec audacious.pc \
 	intl/Makefile
 SOURCES =
 DIST_SOURCES =
-RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
-	html-recursive info-recursive install-data-recursive \
-	install-exec-recursive install-info-recursive \
-	install-recursive installcheck-recursive installdirs-recursive \
-	pdf-recursive ps-recursive uninstall-info-recursive \
-	uninstall-recursive
 man1dir = $(mandir)/man1
 am__installdirs = "$(DESTDIR)$(man1dir)" "$(DESTDIR)$(pkgconfigdir)"
 NROFF = nroff
@@ -312,14 +299,6 @@ target_alias = @target_alias@
 target_cpu = @target_cpu@
 target_os = @target_os@
 target_vendor = @target_vendor@
-ACLOCAL_AMFLAGS = -I m4
-SUBDIRS = intl libaudacious audacious Plugins po icons skin
-man_MANS = audacious.1
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = audacious.pc
-EXTRA_DIST = \
-  FAQ \
-  audacious.spec \
-  README.bmp \
-  $(pkgconfig_DATA) \
-  $(wildcard m4/*.m4)
+CURL_CFLAGS = @CURL_CFLAGS@
+CURL_LIBS = @CURL_LIBS@
+MUSICBRAINZ_LIBS = @MUSICBRAINZ_LIBS@
