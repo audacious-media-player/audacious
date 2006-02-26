@@ -336,7 +336,7 @@ AC_ARG_ENABLE(aac,
     [enable_aac=yes]
 )
 
-if test "$have_aac" = "yes"; then
+if test "$enable_aac" = "yes"; then
 	INPUT_PLUGINS="$INPUT_PLUGINS aac"
 fi
 
