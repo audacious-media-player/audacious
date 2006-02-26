@@ -13,18 +13,16 @@ BINDIR = $(bindir)
 INCLUDEDIR = $(pkgincludedir)
 CFLAGS += -DHAVE_CONFIG_H
 
-OBJ_DIRS = $(BINDIR) $(LIBDIR) $(INCLUDEDIR)
-
 default: all
 all: build
 
 install:
 	$(MAKE) install-prehook
-	@if test ! -d $(DESTDIR)/$(BINDIR); then \
-		for i in $(OBJ_DIRS); do \
+	@for i in $(BINDIR) $(LIBDIR) $(INCLUDEDIR); do \
+		if test ! -d $(DESTDIR)/$$i; then \
 			$(INSTALL) -d -m 755 $(DESTDIR)/$$i; \
-		done; \
-	fi
+		fi; \
+	done;
 	@if test "$(SUBDIRS)" != "none"; then \
 		for i in $(SUBDIRS); do \
 			echo "[installing subobjective: $$i]"; \
