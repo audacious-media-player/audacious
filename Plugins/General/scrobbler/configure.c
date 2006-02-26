@@ -75,6 +75,11 @@ static void saveconfig(GtkWidget *wid, gpointer data)
         gtk_widget_destroy(GTK_WIDGET(data));
 }
 
+static void closewin(GtkWidget *wid, gpointer data)
+{
+	gtk_widget_destroy(GTK_WIDGET(data));
+}
+
 void
 configure_dialog(void)
 {
@@ -200,7 +205,7 @@ create_cfgdlg(void)
   GTK_WIDGET_SET_FLAGS (button6, GTK_CAN_DEFAULT);
 
   gtk_signal_connect(GTK_OBJECT(button6), "clicked",
-                     GTK_SIGNAL_FUNC(gtk_widget_destroyed), GTK_OBJECT(window1));
+                     GTK_SIGNAL_FUNC(closewin), GTK_OBJECT(window1));
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
   GLADE_HOOKUP_OBJECT_NO_REF (window1, window1, "window1");
