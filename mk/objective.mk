@@ -120,21 +120,21 @@ build:
 
 %.so: $(OBJECTS)
 	if test "x$(OBJECTS)" != "x"; then \
-		make $(OBJECTS);		\
+		$(MAKE) $(OBJECTS);		\
 		printf "%10s     %-20s\n" LINK $@; \
 		$(CC) -fPIC -DPIC -shared -o $@ -Wl,-soname=$@ $(OBJECTS) $(LDFLAGS) $(LIBADD); \
 	fi
 
 %.a: $(OBJECTS)
 	if test "x$(OBJECTS)" != "x"; then \
-		make $(OBJECTS);		\
+		$(MAKE) $(OBJECTS);		\
 		printf "%10s     %-20s\n" LINK $@; \
 		$(AR) cq $@ $(OBJECTS); \
 	fi
 
 $(OBJECTIVE_BINS): $(OBJECTS)
 	if test "x$(OBJECTS)" != "x"; then \
-		make $(OBJECTS);		\
+		$(MAKE) $(OBJECTS);		\
 		printf "%10s     %-20s\n" LINK $@; \
 		$(CC) -o $@ $(OBJECTS) $(LDFLAGS) $(LIBADD); \
 	fi
