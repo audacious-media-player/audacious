@@ -11,6 +11,7 @@ LIBADD += $(GTK_LIBS) $(CURL_LIBS) $(MUSICBRAINZ_LIBS) tags/libmetatag.a
 
 SOURCES = 			\
 	fmt.c			\
+	configure.c		\
 	gtkstuff.c		\
 	md5.c			\
 	queue.c			\
