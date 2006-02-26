@@ -48,7 +48,7 @@ int url_open(URLContext **puc, const char *filename, int flags)
         /* protocols can only contain alphabetic chars */
         if (!isalpha(*p))
             goto file_proto;
-        if ((q - proto_str) < sizeof(proto_str) - 1)
+        if ((size_t)(q - proto_str) < sizeof(proto_str) - 1)
             *q++ = *p;
         p++;
     }

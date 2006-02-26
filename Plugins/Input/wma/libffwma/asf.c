@@ -196,9 +196,9 @@ const CodecTag codec_wav_tags[] = {
     { CODEC_ID_ADPCM_IMA_WAV, 0x11 },
     { CODEC_ID_ADPCM_IMA_DK4, 0x61 },  
     { CODEC_ID_ADPCM_IMA_DK3, 0x62 },*/
-    { CODEC_ID_WMAV1, 0x160 },
-    { CODEC_ID_WMAV2, 0x161 },
-    { 0, 0 },
+    { CODEC_ID_WMAV1, 0x160, 0 },
+    { CODEC_ID_WMAV2, 0x161, 0 },
+    { 0, 0, 0 },
 };
 
 enum CodecID codec_get_id(const CodecTag *tags, unsigned int tag)
@@ -927,12 +927,12 @@ static int asf_read_seek(AVFormatContext *s, int stream_index, int64_t pts)
         }
     }
 
-    if(pts_min == AV_NOPTS_VALUE){
+    if(pts_min == (int64_t)AV_NOPTS_VALUE){
         pos_min = 0;
         pts_min = asf_read_pts(s, &pos_min, stream_index);
-        if (pts_min == AV_NOPTS_VALUE) return -1;
+        if (pts_min == (int64_t)AV_NOPTS_VALUE) return -1;
     }
-    if(pts_max == AV_NOPTS_VALUE){
+    if(pts_max == (int64_t)AV_NOPTS_VALUE){
         pos_max = (url_filesize(url_fileno(&s->pb)) - 1 - s->data_offset) / asf->packet_size; //FIXME wrong
         pts_max = s->duration; //FIXME wrong
         pos_limit= pos_max;
@@ -997,6 +997,7 @@ static AVInputFormat asf_iformat = {
     asf_read_packet,
     asf_read_close,
     asf_read_seek,
+    0, NULL, 0, NULL, NULL, NULL
 };
 
 int asf_init(void)

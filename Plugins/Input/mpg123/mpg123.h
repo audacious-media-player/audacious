@@ -191,7 +191,7 @@ struct mpstr {
 /* ------ Declarations from "http.c" ------ */
 
 extern int mpg123_http_open(char *url);
-int mpg123_http_read(gpointer data, gint length);
+int mpg123_http_read(gpointer data, gsize length);
 void mpg123_http_close(void);
 char *mpg123_http_get_title(char *url);
 int mpg123_http_get_length(void);

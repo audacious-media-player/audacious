@@ -500,8 +500,6 @@ static void get_song_info( char* path, char** title, int* length )
 
 // Playback
 
-static int silence_pending;
-
 static void* play_loop_track( gpointer )
 {
 	g_static_mutex_lock( &playback_mutex );

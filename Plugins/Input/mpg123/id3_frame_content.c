@@ -74,7 +74,7 @@ id3_get_content(struct id3_frame *frame)
     ptr = buffer;
     while (text[0] == '(' && text[1] != '(' && spc > 0) {
         const char *genre;
-        int num = 0;
+        size_t num = 0;
 
         if (text[1] == 'R' && text[2] == 'X') {
             text += 4;

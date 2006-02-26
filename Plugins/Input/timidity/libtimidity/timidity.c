@@ -541,7 +541,7 @@ MidSong *mid_song_load(MidIStream *stream, MidSongOptions *options)
 
 void mid_song_free(MidSong *song)
 {
-  int i;
+  size_t i;
 
   free_instruments(song);
 

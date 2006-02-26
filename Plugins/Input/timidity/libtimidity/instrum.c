@@ -351,8 +351,10 @@ static MidInstrument *load_instrument(MidSong *song, char *name, int percussion,
 
       if (strip_envelope==1)
 	{
+#ifdef DEBUG
 	  if (sp->modes & MODES_ENVELOPE)
 	    DEBUG_MSG(" - Removing envelope\n");
+#endif
 	  sp->modes &= ~MODES_ENVELOPE;
 	}
       else if (strip_envelope != 0)

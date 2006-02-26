@@ -77,6 +77,7 @@ URLProtocol file_protocol = {
     file_write,
     file_seek,
     file_close,
+    NULL
 };
 
 /* pipe protocol */
@@ -118,4 +119,5 @@ URLProtocol pipe_protocol = {
     pipe_write,
     NULL,
     pipe_close,
+    NULL
 };

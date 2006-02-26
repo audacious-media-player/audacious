@@ -253,7 +253,7 @@ static struct id3_framedesc22 framedesc22[] = {
 static struct id3_framedesc *
 find_frame_description(guint32 id)
 {
-    int i;
+    size_t i;
     for (i = 0; i < sizeof(framedesc) / sizeof(struct id3_framedesc); i++)
         if (framedesc[i].fd_id == id)
             return &framedesc[i];
@@ -567,7 +567,7 @@ struct id3_frame *
 id3_add_frame(struct id3_tag *id3, guint32 type)
 {
     struct id3_frame *frame;
-    int i;
+    size_t i;
 
     /*
      * Allocate frame.
@@ -683,7 +683,7 @@ id3_frame_clear_data(struct id3_frame *frame)
 static guint32
 find_v24_id(guint32 v22)
 {
-    int i;
+    size_t i;
     for (i = 0; i < sizeof(framedesc22) / sizeof(framedesc22[0]); i++)
         if (framedesc22[i].fd_v22 == v22)
             return framedesc22[i].fd_v24;

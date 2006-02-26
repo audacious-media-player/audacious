@@ -475,7 +475,7 @@ vorbis_play_loop(gpointer arg)
             last_section = current_section;
         }
 
-        if (!(vi->bitrate_upper == vi->bitrate_lower == vi->bitrate_nominal)
+        if (!(vi->bitrate_upper == vi->bitrate_lower && vi->bitrate_upper == vi->bitrate_nominal)
             && (vorbis_ip.output->output_time() > timercount + 1000
                 || vorbis_ip.output->output_time() < timercount)) {
             /*

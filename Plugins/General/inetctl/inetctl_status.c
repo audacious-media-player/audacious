@@ -3,7 +3,21 @@
 #include "inetctl.h"
 
 /* Static "previous state" of player */
-playerStatus lastPlayerStatus = { FALSE, 0 };
+playerStatus lastPlayerStatus = {
+	.infoValid = FALSE,
+	.curTrackInPlaylist = 0,
+	.totalTracksInPlaylist = 0,
+	.curTrackLength = 0,
+	.curTrackTime = 0,
+	.trackTitle = {0, },
+	.trackFile = {0, },
+	.volume = 0,
+	.balance = 0,
+	.playing = FALSE,
+	.paused = FALSE,
+	.repeat = FALSE,
+	.shuffle = FALSE
+};
 
 /* Option/controls */
 Bool formattedTime = TRUE;

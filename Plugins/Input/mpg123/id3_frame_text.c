@@ -40,7 +40,7 @@ id3_utf16_to_ascii(void *utf16)
 {
     char ascii[256];
     char *uc = (char *) utf16 + 2;
-    int i;
+    size_t i;
 
     for (i = 0; *uc != 0 && i < sizeof(ascii); i++, uc += 2)
         ascii[i] = *uc;

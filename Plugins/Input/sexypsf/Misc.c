@@ -289,7 +289,7 @@ static PSFINFO *LoadPSF(char *path, int level, int type) // Type==1 for just inf
           {
            char linebuf[1024];
 
-           while(fgets(linebuf,1024,fp)>0)
+           while(fgets(linebuf,1024,fp))
            {
             int x;
 	    char *key=0,*value=0;
@@ -435,7 +435,7 @@ PSFINFO *sexypsf_getpsfinfo(char *path)
 {
 	PSFINFO *ret;
         if(!(ret=LoadPSF(path,0,1))) return(0);
-        if(ret->stop==~0) ret->fade=0;
+        if(ret->stop==(u32)~0) ret->fade=0;
         ret->length=ret->stop+ret->fade;
         return(ret);	
 }
@@ -456,7 +456,7 @@ PSFINFO *sexypsf_load(char *path)
 	 return(0);
 	}
 
-	if(ret->stop==~0) ret->fade=0; // Infinity+anything is still infinity...or is it?
+	if(ret->stop==(u32)~0) ret->fade=0; // Infinity+anything is still infinity...or is it?
 	SPUsetlength(ret->stop,ret->fade);
 	ret->length=ret->stop+ret->fade;
 

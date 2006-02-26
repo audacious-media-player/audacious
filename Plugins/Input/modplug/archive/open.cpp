@@ -17,7 +17,7 @@ Archive* OpenArchive(const string& aFileName)
 	uint32 lPos;
 
 	lPos = aFileName.find_last_of('.');
-	if(lPos < 0)
+	if(lPos > aFileName.length())
 		return NULL;
 	lExt = aFileName.substr(lPos);
 	for(uint32 i = 0; i < lExt.length(); i++)
@@ -67,7 +67,7 @@ bool ContainsMod(const string& aFileName)
 	uint32 lPos;
 
 	lPos = aFileName.find_last_of('.');
-	if(lPos < 0)
+	if(lPos > aFileName.length())
 		return false;
 	lExt = aFileName.substr(lPos);
 	for(uint32 i = 0; i < lExt.length(); i++)

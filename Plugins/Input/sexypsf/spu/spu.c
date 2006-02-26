@@ -198,7 +198,7 @@ void SPUsetlength(s32 stop, s32 fade)
  }
 }
 
-static s32 seektime;
+static u32 seektime;
 static s32 poo;
 int sexypsf_seek(u32 t)
 {
@@ -448,7 +448,7 @@ int SPUasync(u32 cycles)
   if(sampcount>=decaybegin)
   {
    s32 dmul;
-   if(decaybegin!=~0) // Is anyone REALLY going to be playing a song
+   if(decaybegin!=(u32)~0) // Is anyone REALLY going to be playing a song
 		      // for 13 hours?
    {
     if(sampcount>=decayend) return(0);
@@ -491,7 +491,7 @@ void sexypsf_stop(void)
 
 void SPUendflush(void)
 {
-   if((seektime!=~0) && seektime>sampcount)
+   if((seektime!=(u32)~0) && seektime>sampcount)
    {
     pS=(s16 *)pSpuBuffer;
     sexypsf_update(0,0);
@@ -534,7 +534,7 @@ int SPUinit(void)
  memset(spuMem,0,sizeof(spuMem));
  InitADSR();
  sampcount=poo=0;
- seektime=~0;
+ seektime=(u32)~0;
  #ifdef TIMEO
  begintime=SexyTime64();
  #endif

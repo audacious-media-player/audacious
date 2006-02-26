@@ -42,7 +42,7 @@ void *av_mallocz(unsigned int size)
  */
 void *av_fast_realloc(void *ptr, int *size, unsigned int min_size)
 {
-	if(min_size < *size) 
+	if(min_size < (unsigned int)*size) 
         	return ptr;
     
     	*size= min_size + 10*1024;
@@ -304,7 +304,7 @@ AVCodec *avcodec_find_encoder(enum CodecID id)
     AVCodec *p;
     p = first_avcodec;
     while (p) {
-        if (p->encode != NULL && p->id == id)
+        if (p->encode != NULL && (enum CodecID)p->id == id)
             return p;
         p = p->next;
     }
@@ -328,7 +328,7 @@ AVCodec *avcodec_find_decoder(enum CodecID id)
     AVCodec *p;
     p = first_avcodec;
     while (p) {
-        if (p->decode != NULL && p->id == id)
+        if (p->decode != NULL && (enum CodecID)p->id == id)
             return p;
         p = p->next;
     }
@@ -352,7 +352,7 @@ AVCodec *avcodec_find(enum CodecID id)
     AVCodec *p;
     p = first_avcodec;
     while (p) {
-        if (p->id == id)
+        if ((enum CodecID)p->id == id)
             return p;
         p = p->next;
     }

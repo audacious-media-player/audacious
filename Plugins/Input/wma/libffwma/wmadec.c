@@ -1317,6 +1317,7 @@ AVCodec wmav1_decoder =
     NULL,
     wma_decode_end,
     wma_decode_superframe,
+    0, NULL, NULL, NULL
 };
 
 AVCodec wmav2_decoder =
@@ -1329,4 +1330,5 @@ AVCodec wmav2_decoder =
     NULL,
     wma_decode_end,
     wma_decode_superframe,
+    0, NULL, NULL, NULL
 };

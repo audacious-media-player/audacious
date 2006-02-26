@@ -239,12 +239,12 @@ static INLINE void softCall2(u32 pc) {
 }
 
 static INLINE void DeliverEvent(u32 ev, u32 spec) {
-	if (Event[ev][spec].status != BFLIP32(EvStACTIVE)) return;
+	if (Event[ev][spec].status != BFLIP32S(EvStACTIVE)) return;
 
-//	Event[ev][spec].status = BFLIP32(EvStALREADY);
-	if (Event[ev][spec].mode == BFLIP32(EvMdINTR)) {
-		softCall2(BFLIP32(Event[ev][spec].fhandler));
-	} else Event[ev][spec].status = BFLIP32(EvStALREADY);
+//	Event[ev][spec].status = BFLIP32S(EvStALREADY);
+	if (Event[ev][spec].mode == BFLIP32S(EvMdINTR)) {
+		softCall2(BFLIP32S(Event[ev][spec].fhandler));
+	} else Event[ev][spec].status = BFLIP32S(EvStALREADY);
 }
 
 /*                                           *
@@ -773,7 +773,7 @@ static void bios_OpenEvent() { // 08
 	GetEv();
 	GetSpec();
 
-	Event[ev][spec].status = BFLIP32(EvStWAIT);
+	Event[ev][spec].status = BFLIP32S(EvStWAIT);
 	Event[ev][spec].mode = BFLIP32(a2);
 	Event[ev][spec].fhandler = BFLIP32(a3);
 
@@ -787,7 +787,7 @@ static void bios_CloseEvent() { // 09
 	ev   = a0 & 0xff;
 	spec = (a0 >> 8) & 0xff;
 
-	Event[ev][spec].status = BFLIP32(EvStUNUSED);
+	Event[ev][spec].status = BFLIP32S(EvStUNUSED);
 
 	v0 = 1; pc0 = ra;
 }
@@ -798,7 +798,7 @@ static void bios_WaitEvent() { // 0a
 	ev   = a0 & 0xff;
 	spec = (a0 >> 8) & 0xff;
 
-	Event[ev][spec].status = BFLIP32(EvStACTIVE);
+	Event[ev][spec].status = BFLIP32S(EvStACTIVE);
 
 	v0 = 1; pc0 = ra;
 }
@@ -809,8 +809,8 @@ static void bios_TestEvent() { // 0b
 	ev   = a0 & 0xff;
 	spec = (a0 >> 8) & 0xff;
 
-	if (Event[ev][spec].status == BFLIP32(EvStALREADY)) {
-		Event[ev][spec].status = BFLIP32(EvStACTIVE); v0 = 1;
+	if (Event[ev][spec].status == BFLIP32S(EvStALREADY)) {
+		Event[ev][spec].status = BFLIP32S(EvStACTIVE); v0 = 1;
 	} else v0 = 0;
 
 	pc0 = ra;
@@ -822,7 +822,7 @@ static void bios_EnableEvent() { // 0c
 	ev   = a0 & 0xff;
 	spec = (a0 >> 8) & 0xff;
 
-	Event[ev][spec].status = BFLIP32(EvStACTIVE);
+	Event[ev][spec].status = BFLIP32S(EvStACTIVE);
 
 	v0 = 1; pc0 = ra;
 }
@@ -833,7 +833,7 @@ static void bios_DisableEvent() { // 0d
 	ev   = a0 & 0xff;
 	spec = (a0 >> 8) & 0xff;
 
-	Event[ev][spec].status = BFLIP32(EvStWAIT);
+	Event[ev][spec].status = BFLIP32S(EvStWAIT);
 
 	v0 = 1; pc0 = ra;
 }
@@ -887,8 +887,8 @@ static void bios_ChangeTh() { // 10
 	} else {
 		v0 = 1;
 
-		if (Thread[CurThread].status == BFLIP32(2)) {
-			Thread[CurThread].status = BFLIP32(1);
+		if (Thread[CurThread].status == BFLIP32S(2)) {
+			Thread[CurThread].status = BFLIP32S(1);
 			Thread[CurThread].func = BFLIP32(ra);
 			memcpy(Thread[CurThread].reg, psxRegs.GPR.r, 32*4);
 		}
@@ -931,9 +931,9 @@ static void bios_UnDeliverEvent() { // 0x20
 	GetEv();
 	GetSpec();
 
-	if (Event[ev][spec].status == BFLIP32(EvStALREADY) &&
-		Event[ev][spec].mode == BFLIP32(EvMdNOINTR))
-			Event[ev][spec].status = BFLIP32(EvStACTIVE);
+	if (Event[ev][spec].status == BFLIP32S(EvStALREADY) &&
+		Event[ev][spec].mode == BFLIP32S(EvMdNOINTR))
+			Event[ev][spec].status = BFLIP32S(EvStACTIVE);
 
 	pc0 = ra;
 }
@@ -1271,7 +1271,7 @@ void psxBiosShutdown() {
 
 void biosInterrupt() {
 	if (BFLIP32(psxHu32(0x1070)) & 0x1) { // Vsync
-		if (RcEV[3][1].status == BFLIP32(EvStACTIVE)) {
+		if (RcEV[3][1].status == BFLIP32S(EvStACTIVE)) {
 			softCall(BFLIP32(RcEV[3][1].fhandler));
 //			hwWrite32(0x1f801070, ~(1));
 		}
@@ -1282,7 +1282,7 @@ void biosInterrupt() {
 
 		for (i=0; i<3; i++) {
 			if (BFLIP32(psxHu32(0x1070)) & (1 << (i+4))) {
-				if (RcEV[i][1].status == BFLIP32(EvStACTIVE)) {
+				if (RcEV[i][1].status == BFLIP32S(EvStACTIVE)) {
 					softCall(BFLIP32(RcEV[i][1].fhandler));
 					psxHwWrite32(0x1f801070, ~(1 << (i+4)));
 				}

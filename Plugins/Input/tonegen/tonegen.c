@@ -71,7 +71,7 @@ static void* play_loop(void *arg)
 {
 	GArray* frequencies = arg;
 	gint16 data[BUF_SAMPLES];
-	int i;
+	gsize i;
 	struct {
 		double wd;
 		unsigned int period, t;
@@ -92,7 +92,7 @@ static void* play_loop(void *arg)
 	{
 		for (i = 0; i < BUF_SAMPLES; i++)
 		{
-			int j;
+			gsize j;
 			double sum_sines;
 
 			for (sum_sines = 0, j = 0; j < frequencies->len; j++)
@@ -153,7 +153,7 @@ static char* tone_title(char *filename)
 {
 	GArray *freqs;
 	char* title;
-	int i;
+	gsize i;
 
 	freqs = tone_filename_parse(filename);
 	if (freqs == NULL)

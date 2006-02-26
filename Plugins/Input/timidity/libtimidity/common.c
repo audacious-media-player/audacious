@@ -95,8 +95,11 @@ void *safe_malloc(size_t count)
   void *p;
 
   p = malloc(count);
+
+#ifdef DEBUG
   if (p == NULL)
     DEBUG_MSG("Sorry. Couldn't malloc %d bytes.\n", count);
+#endif
 
   return p;
 }

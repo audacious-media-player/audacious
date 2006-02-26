@@ -37,10 +37,10 @@
 static gint fd = 0;
 static char *buffer;
 static gboolean going, prebuffer, paused, unpause, do_pause, remove_prebuffer;
-static gint device_buffer_used, buffer_size, prebuffer_size, blk_size;
+static gint buffer_size, prebuffer_size, blk_size;
 static gint rd_index = 0, wr_index = 0;
 static gint output_time_offset = 0;
-static guint64 written = 0, output_bytes = 0;
+static guint64 written = 0, output_bytes = 0, device_buffer_used;
 static gint flush;
 static gint fragsize, device_buffer_size;
 static gchar *device_name;
@@ -252,7 +252,7 @@ oss_free(void)
 static inline ssize_t
 write_all(int fd, const void *buf, size_t count)
 {
-    ssize_t done = 0;
+    size_t done = 0;
     do {
         ssize_t n = write(fd, (gchar *) buf + done, count - done);
         if (n == -1) {
@@ -423,7 +423,7 @@ oss_downsample(gpointer ob, guint length, guint speed, guint espeed)
 {
     guint w = 0;
     static gpointer nbuffer = NULL;
-    static gint nbuffer_size = 0;
+    static guint nbuffer_size = 0;
 
     switch (output.format.oss) {
     case AFMT_S16_BE:

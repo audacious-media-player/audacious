@@ -491,7 +491,8 @@ vorbis_file_info_box(gchar * filename)
     const gchar *rg_track_gain, *rg_track_peak;
     const gchar *rg_album_gain, *rg_album_peak;
 
-    gint time, minutes, seconds, bitrate, rate, channels, filesize, i;
+    gint time, minutes, seconds, bitrate, rate, channels, filesize;
+    gsize i;
 
     OggVorbis_File vf;
     vorbis_info *vi;

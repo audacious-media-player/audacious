@@ -79,7 +79,7 @@ static int ChunkHasSubType(uint32 magic)
     static uint32 chunk_list[] = {
         RIFF, LIST
     };
-    int i;
+    size_t i;
     for ( i = 0; i < (sizeof(chunk_list) / sizeof(uint32)); ++i ) {
         if ( magic == chunk_list[i] ) {
             return 1;
@@ -93,7 +93,7 @@ static int ChunkHasSubChunks(uint32 magic)
     static uint32 chunk_list[] = {
         RIFF, LIST
     };
-    int i;
+    size_t i;
     for ( i = 0; i < (sizeof(chunk_list) / sizeof(uint32)); ++i ) {
         if ( magic == chunk_list[i] ) {
             return 1;
@@ -547,7 +547,7 @@ static void Parse_INFO_INS(MidDLSPatches *data, RIFF_Chunk *chunk, DLS_Instrumen
         uint32 magic = (chunk->magic == FOURCC_LIST) ? chunk->subtype : chunk->magic;
         switch(magic) {
             case FOURCC_INAM: /* Name */
-                instrument->name = chunk->data;
+                instrument->name = (char*)chunk->data;
                 break;
         }
     }
@@ -663,15 +663,15 @@ static void Parse_INFO_DLS(MidDLSPatches *data, RIFF_Chunk *chunk)
             case FOURCC_IARL: /* Archival Location */
                 break;
             case FOURCC_IART: /* Artist */
-                data->artist = chunk->data;
+                data->artist = (char*)chunk->data;
                 break;
             case FOURCC_ICMS: /* Commisioned */
                 break;
             case FOURCC_ICMT: /* Comments */
-                data->comments = chunk->data;
+                data->comments = (char*)chunk->data;
                 break;
             case FOURCC_ICOP: /* Copyright */
-                data->copyright = chunk->data;
+                data->copyright = (char*)chunk->data;
                 break;
             case FOURCC_ICRD: /* Creation Date */
                 break;
@@ -684,7 +684,7 @@ static void Parse_INFO_DLS(MidDLSPatches *data, RIFF_Chunk *chunk)
             case FOURCC_IMED: /* Medium */
                 break;
             case FOURCC_INAM: /* Name */
-                data->name = chunk->data;
+                data->name = (char*)chunk->data;
                 break;
             case FOURCC_IPRD: /* Product */
                 break;
@@ -1017,7 +1017,7 @@ void PrintDLS(MidDLSPatches *data)
 /*-------------------------------------------------------------------------*/
 
 /* convert timecents to sec */
-static double to_msec(int timecent)
+static double to_msec(unsigned int timecent)
 {
   if (timecent == 0x80000000 || timecent == 0)
     return 0.0;
@@ -1152,7 +1152,7 @@ printf("%d, Rate=%d LV=%d HV=%d Low=%d Hi=%d Root=%d Pan=%d Attack=%f Hold=%f Su
   sample->loop_end <<= FRACTION_BITS;
 }
 
-MidInstrument *load_instrument_dls(MidSong *song, int drum, int bank, int instrument)
+MidInstrument *load_instrument_dls(MidSong *song, unsigned int drum, unsigned int bank, unsigned int instrument)
 {
   MidInstrument *inst;
   uint32 i;

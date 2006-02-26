@@ -688,8 +688,8 @@ static void alsa_do_write(gpointer data, int length)
 	    ep->query_format)
 		ep->query_format(&f, &new_freq, &new_chn);
 
-	if (f != effectf->xmms_format || new_freq != effectf->rate ||
-	    new_chn != effectf->channels)
+	if (f != effectf->xmms_format || (unsigned int)new_freq != effectf->rate ||
+	    (unsigned int)new_chn != effectf->channels)
 	{
 		debug("Changing audio format for effect plugin");
 		g_free(effectf);
@@ -904,7 +904,7 @@ int alsa_open(AFormat fmt, int rate, int nch)
 static struct snd_format * snd_format_from_xmms(AFormat fmt, int rate, int channels)
 {
 	struct snd_format *f = g_malloc(sizeof(struct snd_format));
-	int i;
+	size_t i;
 
 	f->xmms_format = fmt;
 	f->format = SND_PCM_FORMAT_UNKNOWN;
@@ -935,7 +935,7 @@ static struct snd_format * snd_format_from_xmms(AFormat fmt, int rate, int chann
 
 static int format_from_alsa(snd_pcm_format_t fmt)
 {
-	int i;
+	size_t i;
 	for (i = 0; i < sizeof(format_table) / sizeof(format_table[0]); i++)
 		if (format_table[i].alsa == fmt)
 			return format_table[i].xmms;
@@ -1018,7 +1018,7 @@ static int alsa_setup(struct snd_format *f)
 		snd_pcm_format_t formats[] = {SND_PCM_FORMAT_S16_LE,
 					      SND_PCM_FORMAT_S16_BE,
 					      SND_PCM_FORMAT_U8};
-		int i;
+		size_t i;
 
 		for (i = 0; i < sizeof(formats) / sizeof(formats[0]); i++)
 		{
@@ -1035,8 +1035,6 @@ static int alsa_setup(struct snd_format *f)
 				format_from_alsa(outputf->format);
 			debug("Converting format from %d to %d",
 			      f->xmms_format, outputf->xmms_format);
-			if (outputf->xmms_format < 0)
-				return -1;
 			alsa_convert_func =
 				xmms_convert_get_func(outputf->xmms_format,
 						      f->xmms_format);

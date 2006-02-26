@@ -41,6 +41,12 @@ static INLINE u32 BFLIP32(u32 x)
 }
 #endif
 
+static INLINE s32 BFLIP32S(s32 x)
+{ return (s32)BFLIP32((u32)x); }
+
+static INLINE s16 BFLIP16S(s16 x)
+{ return (s16)BFLIP16((u16)x); }
+
 char *psxM;
 #define psxMu32(mem)	(*(u32*)&psxM[(mem) & 0x1fffff])
 

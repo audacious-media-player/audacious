@@ -58,7 +58,8 @@ extern gint mpg123_bitrate, mpg123_frequency, mpg123_stereo;
 extern gboolean mpg123_stereo;
 
 static gboolean prebuffering, going, eof = FALSE;
-static gint sock, rd_index, wr_index, buffer_length, prebuffer_length;
+static gint sock;
+static gsize rd_index, wr_index, buffer_length, prebuffer_length;
 static guint64 buffer_read = 0;
 static gchar *buffer;
 static GThread *thread;
@@ -188,7 +189,7 @@ mpg123_http_close(void)
 }
 
 
-static gint
+static gsize
 http_used(void)
 {
     if (wr_index >= rd_index)
@@ -196,7 +197,7 @@ http_used(void)
     return buffer_length - (rd_index - wr_index);
 }
 
-static gint
+static gsize
 http_free(void)
 {
     if (rd_index > wr_index)
@@ -205,7 +206,7 @@ http_free(void)
 }
 
 static void
-http_wait_for_data(gint bytes)
+http_wait_for_data(gsize bytes)
 {
     while ((prebuffering || http_used() < bytes) && !eof && going
            && mpg123_info->going)
@@ -227,9 +228,9 @@ show_error_message(gchar * error)
 }
 
 int
-mpg123_http_read(gpointer data, gint length)
+mpg123_http_read(gpointer data, gsize length)
 {
-    gint len, cnt, off = 0, meta_len, meta_off = 0, i;
+    gsize len, cnt, off = 0, meta_len, meta_off = 0, i;
     gchar *meta_data, **tags;
 
     http_wait_for_data(length);
@@ -635,7 +636,7 @@ http_buffer_loop(gpointer arg)
                 }
                 else {
                     status =
-                        g_strdup_printf(_("PRE-BUFFERING: %dKB/%dKB"),
+                        g_strdup_printf(_("PRE-BUFFERING: %luKB/%luKB"),
                                         http_used() / 1024,
                                         prebuffer_length / 1024);
                     mpg123_ip.set_info_text(status);

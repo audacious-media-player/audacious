@@ -74,7 +74,7 @@ static void restore (void);
 static plugin_instance * add_plugin (ladspa_plugin *plugin);
 static void find_all_plugins(void);
 static void find_plugins(char *path_entry);
-static ladspa_plugin *get_plugin_by_id(unsigned long id);
+static ladspa_plugin *get_plugin_by_id(long id);
 static plugin_instance * load (char *filename, long int num);
 static void reboot_plugins (void);
 static void boot_plugin (plugin_instance *instance);
@@ -111,7 +111,7 @@ static struct {
   gboolean ignore;
   gboolean running;
   gboolean initialised;
-} state = { 0, 0, 0, FALSE, FALSE};
+} state = { 0, 0, 0, FALSE, FALSE, FALSE};
 
 static GtkWidget *config_window = NULL, *run_clist = NULL;
 
@@ -122,7 +122,8 @@ static EffectPlugin xmms_plugin = {
   stop,
   NULL,
   configure,
-  apply_effect
+  apply_effect,
+  NULL
 };
 
 EffectPlugin *get_eplugin_info (void)
@@ -170,7 +171,7 @@ static void restore (void)
   bmp_cfg_db_close(db);
 }
 
-static ladspa_plugin *get_plugin_by_id(unsigned long id)
+static ladspa_plugin *get_plugin_by_id(long id)
 {
   GSList *list;
   ladspa_plugin *plugin;
@@ -489,7 +490,7 @@ static void find_plugins(char *path_entry)
   DIR *dir;
   struct dirent *dirent;
   long int k;
-  long int port, input, output;
+  unsigned long int port, input, output;
   
   dir= opendir(path_entry);
   if (dir == NULL) return;

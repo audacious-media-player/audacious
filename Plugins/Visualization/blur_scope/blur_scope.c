@@ -55,8 +55,8 @@ gboolean blurscope_popup_menu(GtkWidget * widget,
 
 GtkItemFactoryEntry blurscope_menu_entries[] = {
     {N_("/Toggle Decorations"), NULL, blurscope_callback, SCOPE_TOGGLE,
-     "<Item>"},
-    {N_("/-"), NULL, NULL, 0, "<Separator>"},
+     "<Item>", 0},
+    {N_("/-"), NULL, NULL, 0, "<Separator>", 0},
     {N_("/Close"), NULL, blurscope_callback, SCOPE_CLOSE, "<StockItem>",
      GTK_STOCK_CLOSE},
 };
@@ -98,7 +98,7 @@ get_vplugin_info(void)
 static guchar rgb_buf[(WIDTH + 2) * (HEIGHT + 2)];
 static GdkRgbCmap *cmap = NULL;
 
-static void inline
+inline static void
 draw_pixel_8(guchar * buffer, gint x, gint y, guchar c)
 {
     buffer[((y + 1) * BPL) + (x + 1)] = c;

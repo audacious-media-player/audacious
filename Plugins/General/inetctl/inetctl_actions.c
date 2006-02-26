@@ -438,7 +438,7 @@ cmdTable commandTable[] = {
   REGISTER(REQUEST, FALSE),
   REGISTER(EXIT, TRUE),
   REGISTER(QUIT, FALSE),
-  { "", NULL }  /* This must be the LAST line of the table */
+  { "", NULL, FALSE }  /* This must be the LAST line of the table */
 };
 
 

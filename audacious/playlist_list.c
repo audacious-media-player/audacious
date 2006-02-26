@@ -356,7 +356,8 @@ playlist_list_draw(Widget * w)
     guint padding, padding_dwidth, padding_plength;
     guint max_time_len = 0;
     gint queue_tailpadding = 0;
-    gint tpadding, tpadding_dwidth = 0;
+    gint tpadding; 
+    gsize tpadding_dwidth = 0;
 
     gchar tail[100];
     gchar queuepos[255];         /* FIXME CRITICAL: Allows for a limited number of queue positions only */

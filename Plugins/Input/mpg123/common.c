@@ -224,7 +224,7 @@ static gboolean
 read_id3v2_tag(unsigned long head)
 {
     guchar *id3buf;
-    int hdrsize;
+    gsize hdrsize;
     struct id3_tag *id3d;
     struct id3tag_t tag;
     guchar buf[7];
@@ -250,7 +250,7 @@ read_id3v2_tag(unsigned long head)
     if (mpg123_cfg.disable_id3v2) {
         guint8 *tmp = g_malloc(hdrsize);
         gboolean ret;
-        ret = (fullread(filept, tmp, hdrsize) == hdrsize);
+        ret = ((gsize)fullread(filept, tmp, hdrsize) == hdrsize);
         g_free(tmp);
         return ret;
     }
@@ -262,7 +262,7 @@ read_id3v2_tag(unsigned long head)
     /*
      * Read ID3tag body.
      */
-    if (fullread(filept, id3buf + ID3_TAGHDR_SIZE + 3, hdrsize) != hdrsize) {
+    if ((gsize)fullread(filept, id3buf + ID3_TAGHDR_SIZE + 3, hdrsize) != hdrsize) {
         g_free(id3buf);
         return FALSE;
     }

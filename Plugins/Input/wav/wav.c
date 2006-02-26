@@ -76,7 +76,7 @@ wav_init(void)
 
 /* needed for is_our_file() */
 static gint
-read_n_bytes(VFSFile * file, guint8 * buf, gint n)
+read_n_bytes(VFSFile * file, guint8 * buf, gsize n)
 {
     if (vfs_fread(buf, 1, n, file) != n) {
         return FALSE;
@@ -245,7 +245,7 @@ static gpointer
 play_loop(gpointer arg)
 {
     gchar data[2048 * 2];
-    gint bytes, blk_size, rate;
+    gsize bytes, blk_size, rate;
     gint actual_read;
 
     blk_size = 512 * (wav_file->bits_per_sample / 8) * wav_file->channels;

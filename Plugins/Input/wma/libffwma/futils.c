@@ -146,7 +146,7 @@ static void av_destruct_packet(AVPacket *pkt)
  */
 int av_new_packet(AVPacket *pkt, int size)
 {
-    void *data = malloc(size + FF_INPUT_BUFFER_PADDING_SIZE);
+    unsigned char *data = malloc(size + FF_INPUT_BUFFER_PADDING_SIZE);
     if (!data)
         return AVERROR_NOMEM;
     memset(data + size, 0, FF_INPUT_BUFFER_PADDING_SIZE);
@@ -469,9 +469,9 @@ static inline int64_t convert_timestamp_units(AVFormatContext *s,
     int64_t delta_pts;
     int shift, pts_frac;
 
-    if (pts != AV_NOPTS_VALUE) {
+    if (pts != (int64_t)AV_NOPTS_VALUE) {
         stream_pts = pts;
-        if (*plast_pkt_stream_pts != AV_NOPTS_VALUE) {
+        if (*plast_pkt_stream_pts != (int64_t)AV_NOPTS_VALUE) {
             shift = 64 - s->pts_wrap_bits;
             delta_pts = ((stream_pts - *plast_pkt_stream_pts) << shift) >> shift;
             /* XXX: overflow possible but very unlikely as it is a delta */
@@ -575,7 +575,7 @@ static void compute_pkt_fields(AVFormatContext *s, AVStream *st,
     if (presentation_delayed) {
         /* DTS = decompression time stamp */
         /* PTS = presentation time stamp */
-        if (pkt->dts == AV_NOPTS_VALUE) {
+        if (pkt->dts == (int64_t)AV_NOPTS_VALUE) {
             pkt->dts = st->cur_dts;
         } else {
             st->cur_dts = pkt->dts;
@@ -591,7 +591,7 @@ static void compute_pkt_fields(AVFormatContext *s, AVStream *st,
            by knowing the futur */
     } else {
         /* presentation is not delayed : PTS and DTS are the same */
-        if (pkt->pts == AV_NOPTS_VALUE) {
+        if (pkt->pts == (int64_t)AV_NOPTS_VALUE) {
             pkt->pts = st->cur_dts;
             pkt->dts = st->cur_dts;
         } else {
@@ -994,8 +994,8 @@ static int av_has_timings(AVFormatContext *ic)
 
     for(i = 0;i < ic->nb_streams; i++) {
         st = ic->streams[i];
-        if (st->start_time != AV_NOPTS_VALUE &&
-            st->duration != AV_NOPTS_VALUE)
+        if (st->start_time != (int64_t)AV_NOPTS_VALUE &&
+            st->duration != (int64_t)AV_NOPTS_VALUE)
             return 1;
     }
     return 0;
@@ -1013,10 +1013,10 @@ static void av_update_stream_timings(AVFormatContext *ic)
     end_time = MININT64;
     for(i = 0;i < ic->nb_streams; i++) {
         st = ic->streams[i];
-        if (st->start_time != AV_NOPTS_VALUE) {
+        if (st->start_time != (int64_t)AV_NOPTS_VALUE) {
             if (st->start_time < start_time)
                 start_time = st->start_time;
-            if (st->duration != AV_NOPTS_VALUE) {
+            if (st->duration != (int64_t)AV_NOPTS_VALUE) {
                 end_time1 = st->start_time + st->duration;
                 if (end_time1 > end_time)
                     end_time = end_time1;
@@ -1045,7 +1045,7 @@ static void fill_all_stream_timings(AVFormatContext *ic)
     av_update_stream_timings(ic);
     for(i = 0;i < ic->nb_streams; i++) {
         st = ic->streams[i];
-        if (st->start_time == AV_NOPTS_VALUE) {
+        if (st->start_time == (int64_t)AV_NOPTS_VALUE) {
             st->start_time = ic->start_time;
             st->duration = ic->duration;
         }
@@ -1069,7 +1069,7 @@ static void av_estimate_timings_from_bit_rate(AVFormatContext *ic)
     }
 
     /* if duration is already set, we believe it */
-    if (ic->duration == AV_NOPTS_VALUE && 
+    if (ic->duration == (int64_t)AV_NOPTS_VALUE && 
         ic->bit_rate != 0 && 
         ic->file_size != 0)  {
         filesize = ic->file_size;
@@ -1077,8 +1077,8 @@ static void av_estimate_timings_from_bit_rate(AVFormatContext *ic)
             duration = (int64_t)((8 * AV_TIME_BASE * (double)filesize) / (double)ic->bit_rate);
             for(i = 0; i < ic->nb_streams; i++) {
                 st = ic->streams[i];
-                if (st->start_time == AV_NOPTS_VALUE ||
-                    st->duration == AV_NOPTS_VALUE) {
+                if (st->start_time == (int64_t)AV_NOPTS_VALUE ||
+                    st->duration == (int64_t)AV_NOPTS_VALUE) {
                     st->start_time = 0;
                     st->duration = duration;
                 }
@@ -1643,7 +1643,7 @@ void dump_format(AVFormatContext *ic,
             is_output ? "to" : "from", url);
     if (!is_output) {
         fprintf(stderr, "  Duration: ");
-        if (ic->duration != AV_NOPTS_VALUE) {
+        if (ic->duration != (int64_t)AV_NOPTS_VALUE) {
             int hours, mins, secs, us;
             secs = ic->duration / AV_TIME_BASE;
             us = ic->duration % AV_TIME_BASE;
@@ -1732,7 +1732,7 @@ int parse_image_size(int *width_ptr, int *height_ptr, const char *str)
 
 int parse_frame_rate(int *frame_rate, int *frame_rate_base, const char *arg)
 {
-    int i;
+    size_t i;
     char* cp;
    
     /* First, we check our abbreviation table */
@@ -1778,7 +1778,7 @@ int64_t parse_date(const char *datestr, int duration)
     const char *p;
     int64_t t;
     struct tm dt;
-    int i;
+    size_t i;
     static const char *date_fmt[] = {
         "%Y-%m-%d",
         "%Y%m%d",
@@ -1887,7 +1887,7 @@ int find_info_tag(char *arg, int arg_size, const char *tag1, const char *info)
     for(;;) {
         q = tag;
         while (*p != '\0' && *p != '=' && *p != '&') {
-            if ((q - tag) < sizeof(tag) - 1)
+            if ((size_t)(q - tag) < sizeof(tag) - 1)
                 *q++ = *p;
             p++;
         }
@@ -2018,13 +2018,13 @@ void av_pkt_dump(FILE *f, AVPacket *pkt, int dump_payload)
     fprintf(f, "  duration=%0.3f\n", (double)pkt->duration / AV_TIME_BASE);
     /* DTS is _always_ valid after av_read_frame() */
     fprintf(f, "  dts=");
-    if (pkt->dts == AV_NOPTS_VALUE)
+    if (pkt->dts == (int64_t)AV_NOPTS_VALUE)
         fprintf(f, "N/A");
     else
         fprintf(f, "%0.3f", (double)pkt->dts / AV_TIME_BASE);
     /* PTS may be not known if B frames are present */
     fprintf(f, "  pts=");
-    if (pkt->pts == AV_NOPTS_VALUE)
+    if (pkt->pts == (int64_t)AV_NOPTS_VALUE)
         fprintf(f, "N/A");
     else
         fprintf(f, "%0.3f", (double)pkt->pts / AV_TIME_BASE);

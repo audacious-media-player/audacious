@@ -41,10 +41,10 @@
 #endif
 #define local_max(a,b) ((a)>(b)?(a):(b))
 
-static const FLAC__byte *tag_title_gain_ = "REPLAYGAIN_TRACK_GAIN";
-static const FLAC__byte *tag_title_peak_ = "REPLAYGAIN_TRACK_PEAK";
-static const FLAC__byte *tag_album_gain_ = "REPLAYGAIN_ALBUM_GAIN";
-static const FLAC__byte *tag_album_peak_ = "REPLAYGAIN_ALBUM_PEAK";
+static const FLAC__byte *tag_title_gain_ = (FLAC__byte*)"REPLAYGAIN_TRACK_GAIN";
+static const FLAC__byte *tag_title_peak_ = (FLAC__byte*)"REPLAYGAIN_TRACK_PEAK";
+static const FLAC__byte *tag_album_gain_ = (FLAC__byte*)"REPLAYGAIN_ALBUM_GAIN";
+static const FLAC__byte *tag_album_peak_ = (FLAC__byte*)"REPLAYGAIN_ALBUM_PEAK";
 static const char *peak_format_ = "%s=%1.8f";
 static const char *gain_format_ = "%s=%+2.2f dB";
 
@@ -570,7 +570,7 @@ static FLAC__bool parse_double_(const FLAC__StreamMetadata_VorbisComment_Entry *
 		return false;
 	q++;
 	memset(s, 0, sizeof(s)-1);
-	strncpy(s, q, local_min(sizeof(s)-1, entry->length - (q-p)));
+	strncpy(s, q, local_min(sizeof(s)-1, (size_t)(entry->length - (q-p))));
 
 	v = strtod(s, &end);
 	if(end == s)

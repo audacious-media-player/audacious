@@ -31,7 +31,7 @@ void LoadPSXMem(u32 address, s32 length, unsigned char *data)
    u32 tmplen;
 
    //puts("Squishy");
-   tmplen=((65536-(address&65535))>length)?length:65536-(address&65535);
+   tmplen=((65536-(address&65535))>(u32)length)?(u32)length:65536-(address&65535);
    if(psxMemLUT[address>>16])
     memcpy((char *)(psxMemLUT[address>>16]+(address&65535)),data,tmplen);
    address+=tmplen;
