@@ -78,7 +78,6 @@ static void init(void)
 		going = 0;
 		return;
 	}
-	init_errorbox_done();
 	if ((pt_handshake = g_thread_create(hs_thread, m_scrobbler, TRUE, NULL)) == NULL) {
 		pdebug("Error creating handshake thread", DEBUG);
 		going = 0;
@@ -354,11 +353,7 @@ static void *xs_thread(void *data)
 		if(sc_catch_error())
 		{
 			errorbox_show(sc_fetch_error());
-			if(get_errorbox_done())
-			{
-				init_errorbox_done();
-				sc_clear_error();
-			}
+			sc_clear_error();
 		}
 
 		/* Check for ability to submit */
