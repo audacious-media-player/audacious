@@ -53,7 +53,8 @@ static wma_t *readAttributes(VFSFile *fp, int pos)
 	attribute_t *attribute;
 	unsigned char *tag_buffer = NULL, *bp, cToInt[8], *data = NULL;
 	int title_size, author_size, copyright_size, desc_size, rating_size,
-		size, primary_items, i;
+		size, primary_items;
+	unsigned int i;
 
 	vfs_fseek(fp, pos, SEEK_SET);
 	vfs_fread(cToInt, 1, 8, fp);
@@ -77,8 +78,7 @@ static wma_t *readAttributes(VFSFile *fp, int pos)
 		attribute = calloc(sizeof(attribute_t), 1);
 		wma->items = realloc(wma->items,
 				(wma->numitems + 1) * sizeof(attribute_t *));
-		attribute->name = malloc(6);
-		strcpy(attribute->name, "Title");
+		attribute->name = (unsigned char*)strdup("Title");
 		data = malloc(title_size);
 		memcpy(data, bp, title_size);
 		bp += title_size;
@@ -92,8 +92,7 @@ static wma_t *readAttributes(VFSFile *fp, int pos)
 		attribute = calloc(sizeof(attribute_t), 1);
 		wma->items = realloc(wma->items,
 				(wma->numitems + 1) * sizeof(attribute_t *));
-		attribute->name = malloc(7);
-		strcpy(attribute->name, "Author");
+		attribute->name = (unsigned char*)strdup("Author");
 		data = malloc(author_size);
 		memcpy(data, bp, author_size);
 		bp += author_size;
@@ -107,8 +106,7 @@ static wma_t *readAttributes(VFSFile *fp, int pos)
 		attribute = calloc(sizeof(attribute_t), 1);
 		wma->items = realloc(wma->items,
 				(wma->numitems + 1) * sizeof(attribute_t *));
-		attribute->name = malloc(10);
-		strcpy(attribute->name, "Copyright");
+		attribute->name = (unsigned char*)strdup("Copyright");
 		data = malloc(copyright_size);
 		memcpy(data, bp, copyright_size);
 		bp += copyright_size;
@@ -122,8 +120,7 @@ static wma_t *readAttributes(VFSFile *fp, int pos)
 		attribute = calloc(sizeof(attribute_t), 1);
 		wma->items = realloc(wma->items,
 				(wma->numitems + 1) * sizeof(attribute_t *));
-		attribute->name = malloc(12);
-		strcpy(attribute->name, "Description");
+		attribute->name = (unsigned char*)strdup("Description");
 		data = malloc(desc_size);
 		memcpy(data, bp, desc_size);
 		bp += desc_size;
@@ -137,8 +134,7 @@ static wma_t *readAttributes(VFSFile *fp, int pos)
 		attribute = calloc(sizeof(attribute_t), 1);
 		wma->items = realloc(wma->items,
 				(wma->numitems + 1) * sizeof(attribute_t *));
-		attribute->name = malloc(7);
-		strcpy(attribute->name, "Rating");
+		attribute->name = (unsigned char*)strdup("Rating");
 		data = malloc(rating_size);
 		memcpy(data, bp, rating_size);
 		bp += rating_size;
@@ -289,7 +285,7 @@ wma_t *readWMA(char *filename)
 
 void freeWMA(wma_t *wma)
 {
-	int i;
+	unsigned int i;
 	
 	for(i = 0; i < wma->numitems; i++)
 	{

@@ -27,18 +27,18 @@ void q_put(metatag_t *meta, int len)
 	item_t *item;
 		
 	item = malloc(sizeof(item_t));
-	item->artist = fmt_escape(meta->artist);
-	item->title = fmt_escape(meta->title);
+	item->artist = fmt_escape((char*)meta->artist);
+	item->title = fmt_escape((char*)meta->title);
 	item->utctime = fmt_escape(fmt_timestr(time(NULL), 1));
 	snprintf(item->len, sizeof(item->len), "%d", len);
 	if(meta->mb == NULL)
 		item->mb = fmt_escape("");
 	else
-		item->mb = fmt_escape(meta->mb);
+		item->mb = fmt_escape((char*)meta->mb);
 	if(meta->album == NULL)
 		item->album = fmt_escape("");
 	else
-		item->album = fmt_escape(meta->album);
+		item->album = fmt_escape((char*)meta->album);
 
 	q_nitems++;
 

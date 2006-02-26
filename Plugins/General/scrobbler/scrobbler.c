@@ -78,7 +78,7 @@ void sc_clear_error(void)
 
 static size_t sc_store_res(void *ptr, size_t size,
 		size_t nmemb,
-		void *stream)
+		void *stream __attribute__((unused)))
 {
 	int len = size * nmemb;
 
@@ -274,7 +274,7 @@ static int sc_handshake(void)
 		md5_append(&md5state, (unsigned const char *)sc_challenge_hash,
 				strlen(sc_challenge_hash));
 		md5_finish(&md5state, md5pword);
-		hexify(md5pword, sizeof(md5pword));
+		hexify((char*)md5pword, sizeof(md5pword));
 		/*pdebug(fmt_vastr("Response Hash: %s", sc_response_hash), DEBUG);*/
 	}
 

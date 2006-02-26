@@ -91,7 +91,7 @@ static itunes_t *readAtoms(VFSFile *fp)
 			bp += 16;
 			*tag_data = realloc(*tag_data, meta_size + 1);
 			*(*tag_data + meta_size) = '\0';
-			strncpy(*tag_data, bp, meta_size);
+			strncpy((char*)*tag_data, (char*)bp, meta_size);
 			bp += meta_size;
 		}
 		/*
@@ -172,7 +172,7 @@ int findiTunes(VFSFile *fp)
 	atom_size = be2int(cToInt) - 4;
 	tag_buffer = malloc(8);
 	vfs_fread(tag_buffer, 1, 8, fp);
-	if(strncmp(tag_buffer, "ftypM4A ", 8))
+	if(strncmp((char*)tag_buffer, "ftypM4A ", 8))
 	{
 		free(tag_buffer);
 		return -1;
@@ -188,7 +188,7 @@ int findiTunes(VFSFile *fp)
 		tag_buffer = realloc(tag_buffer, atom_size);
 		pos = ftell(fp);
 		vfs_fread(tag_buffer, 1, atom_size, fp);
-		if(!strncmp(tag_buffer, "moov", 4))
+		if(!strncmp((char*)tag_buffer, "moov", 4))
 			break;
 	}
 	if(feof(fp))
@@ -204,11 +204,11 @@ int findiTunes(VFSFile *fp)
 		memcpy(cToInt, bp, 4);
 		atom_size = be2int(cToInt) - 4;
 		bp += 4;
-		if(!strncmp(bp, "udta", 4))
+		if(!strncmp((char*)bp, "udta", 4))
 			break;
 		bp += atom_size;
 	}
-	if(strncmp(bp, "udta", 4))
+	if(strncmp((char*)bp, "udta", 4))
 	{
 		free(tag_buffer);
 		return -1;
@@ -222,11 +222,11 @@ int findiTunes(VFSFile *fp)
 		memcpy(cToInt, bp, 4);
 		atom_size = be2int(cToInt) - 4;
 		bp += 4;
-		if(!strncmp(bp, "meta", 4))
+		if(!strncmp((char*)bp, "meta", 4))
 			break;
 		bp += atom_size;
 	}
-	if(strncmp(bp, "meta", 4))
+	if(strncmp((char*)bp, "meta", 4))
 	{
 		free(tag_buffer);
 		return -1;
@@ -240,11 +240,11 @@ int findiTunes(VFSFile *fp)
 		memcpy(cToInt, bp, 4);
 		atom_size = be2int(cToInt) - 4;
 		bp += 4;
-		if(!strncmp(bp, "ilst", 4))
+		if(!strncmp((char*)bp, "ilst", 4))
 			break;
 		bp += atom_size;
 	}
-	if(strncmp(bp, "ilst", 4))
+	if(strncmp((char*)bp, "ilst", 4))
 	{
 		free(tag_buffer);
 		return -1;

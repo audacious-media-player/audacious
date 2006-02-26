@@ -136,11 +136,11 @@ static resync_t *checkunsync(char *syncCheck, int size)
 	
 	sync = malloc(sizeof(resync_t));
 
-	sync->check = syncCheck;
+	sync->check = (unsigned char*)syncCheck;
 	sync->count = 0;
 	
 	if(size == 0)
-		size = strlen(sync->check);
+		size = strlen((char*)sync->check);
 
 	for(i = 0; i < size; i++)
 	{
@@ -273,11 +273,11 @@ static framedata_t *parseFrame(char **bp, char *end, id3header_t *id3_data)
 		frameid[3] = 0;
 		memcpy(frameid, *bp, 3);
 		*bp += 3;
-		frameidcode = id3_lookupframe(frameid, ID3v22);
+		frameidcode = id3_lookupframe((char*)frameid, ID3v22);
 		memcpy(cToInt, *bp, 3);
 		cToInt[3] = 0;
 		if(id3_data->unsync)
-			unsync(cToInt, *bp);
+			unsync((char*)cToInt, *bp);
 		framesize = be24int(cToInt);
 		*bp += 3;
 		break;
@@ -287,10 +287,10 @@ static framedata_t *parseFrame(char **bp, char *end, id3header_t *id3_data)
 		frameid[4] = 0;
 		memcpy(frameid, *bp, 4);
 		*bp += 4;
-		frameidcode = id3_lookupframe(frameid, ID3v23);
+		frameidcode = id3_lookupframe((char*)frameid, ID3v23);
 		memcpy(cToInt, *bp, 4);
 		if(id3_data->unsync)
-			unsync(cToInt, *bp);
+			unsync((char*)cToInt, *bp);
 		framesize = be2int(cToInt);
 		*bp += 4;
 
@@ -303,7 +303,7 @@ static framedata_t *parseFrame(char **bp, char *end, id3header_t *id3_data)
 		frameid[4] = 0;
 		memcpy(frameid, *bp, 4);
 		*bp += 4;
-		frameidcode = id3_lookupframe(frameid, ID3v24);
+		frameidcode = id3_lookupframe((char*)frameid, ID3v24);
 		memcpy(cToInt, *bp, 4);
 		framesize = synchsafe2int(cToInt);
 		*bp += 4;
@@ -383,8 +383,8 @@ static framedata_t *parseFrame(char **bp, char *end, id3header_t *id3_data)
 	*bp += framesize;
 	
 	/* Parse text appropriately to UTF-8. */
-	if(frameid[0] == 'T' && strcmp(frameid, "TXXX") &&
-		strcmp(frameid, "TXX"))
+	if(frameid[0] == 'T' && strcmp((char*)frameid, "TXXX") &&
+		strcmp((char*)frameid, "TXX"))
 	{
 		unsigned char *ptr, *data = NULL, *utf = NULL;
 		int encoding;
@@ -394,7 +394,7 @@ static framedata_t *parseFrame(char **bp, char *end, id3header_t *id3_data)
 		if(framedata->len == 0)
 		{
 			framedata->data = realloc(framedata->data, 1);
-			strcpy(framedata->data, "\0");
+			framedata->data[0] = '\0';
 			return framedata;
 		}
 		
@@ -404,7 +404,7 @@ static framedata_t *parseFrame(char **bp, char *end, id3header_t *id3_data)
 		memcpy(data, ptr, framedata->len - 1);
 		if((framedata->flags[1] & 0x02) == 0x02)
 		{
-			resync_t *unsync = checkunsync(data, framedata->len);
+			resync_t *unsync = checkunsync((char*)data, framedata->len);
 			framedata->len -= unsync->count;
 			free(unsync);
 		}
@@ -429,11 +429,11 @@ static framedata_t *parseFrame(char **bp, char *end, id3header_t *id3_data)
 		else if(encoding == 0x03)
 		{
 			utf = realloc(utf, framedata->len);
-			strcpy(utf, data);
+			strcpy((char*)utf, (char*)data);
 		}
-		framedata->len = strlen(utf) + 1;
+		framedata->len = strlen((char*)utf) + 1;
 		framedata->data = realloc(framedata->data, framedata->len);
-		strcpy(framedata->data, utf);
+		strcpy((char*)framedata->data, (char*)utf);
 		framedata->data[framedata->len - 1] = '\0';
 		free(utf);
 		free(data);
@@ -450,7 +450,7 @@ static framedata_t *parseFrame(char **bp, char *end, id3header_t *id3_data)
 		memcpy(data, ptr, framedata->len);
 		if((framedata->flags[1] & 0x02) == 0x02)
 		{
-			resync_t *unsync = checkunsync(data, framedata->len);
+			resync_t *unsync = checkunsync((char*)data, framedata->len);
 			framedata->len -= unsync->count;
 			free(unsync);
 		}
@@ -558,8 +558,8 @@ int findID3v2(VFSFile *fp)
 	{
 		if(search == -1)
 		{
-			if((strncmp(bp, "ID3", 3) == 0 ||
-				strncmp(bp, "3DI", 3) == 0))
+			if((strncmp((char*)bp, "ID3", 3) == 0 ||
+				strncmp((char*)bp, "3DI", 3) == 0))
 					status = 1;
 			else
 			{
@@ -574,8 +574,8 @@ int findID3v2(VFSFile *fp)
 			{
 				bp = tag_buffer;
 				pos = vfs_ftell(fp);
-				if((strncmp(bp, "ID3", 3) == 0 ||
-					strncmp(bp, "3DI", 3) == 0)) status = 1;
+				if((strncmp((char*)bp, "ID3", 3) == 0 ||
+					strncmp((char*)bp, "3DI", 3) == 0)) status = 1;
 				search = 1;
 			}
 			if(status != 1)
@@ -590,8 +590,8 @@ int findID3v2(VFSFile *fp)
 					i++)
 				{
 					bp++;
-					if((strncmp(bp, "ID3", 3) == 0 ||
-						strncmp(bp, "3DI", 3) == 0))
+					if((strncmp((char*)bp, "ID3", 3) == 0 ||
+						strncmp((char*)bp, "3DI", 3) == 0))
 							status = 1;
 				}
 				if(status == 1)

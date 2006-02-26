@@ -33,7 +33,8 @@ static ape_t *readItems(VFSFile *fp, int version)
 {
 	ape_t *ape = calloc(sizeof(ape_t), 1);
 	unsigned char *tag_buffer = NULL, *bp, cToInt[4];
-	int size, start, i;
+	int size, start;
+	unsigned int i;
 	
 	ape->version = version;
 
@@ -63,16 +64,15 @@ static ape_t *readItems(VFSFile *fp, int version)
 	ape->items = realloc(ape->items,
 			(ape->numitems) * sizeof(apefielddata_t *));
 	
-	for(i = 0; i < ape->numitems && strncmp(bp, "APETAGEX", 8) != 0; i++)
+	for(i = 0; i < ape->numitems && strncmp((char*)bp, "APETAGEX", 8) != 0; i++)
 	{
 		apefielddata_t *field = calloc(sizeof(apefielddata_t), 1);
 		
 		memcpy(cToInt, bp, 4);		
 		bp += 8;		
 		field->len = le2int(cToInt);
-		field->name = malloc(strlen(bp) + 1);
-		strcpy(field->name, bp);
-		bp += strlen(bp) + 1;
+		field->name = (unsigned char*)strdup((char*)bp);
+		bp += strlen((char*)bp) + 1;
 		field->data = malloc(field->len + 1);
 		memcpy(field->data, bp, field->len);
 		*(field->data + field->len) = '\0';
@@ -80,7 +80,7 @@ static ape_t *readItems(VFSFile *fp, int version)
 		
 		ape->items[i] = field;		
 	}
-	if(i < ape->numitems && strncmp(bp, "APETAGEX", 8) == 0)
+	if(i < ape->numitems && strncmp((char*)bp, "APETAGEX", 8) == 0)
 	{
 		ape->numitems = i;
 		ape->items = realloc(ape->items,
@@ -107,7 +107,7 @@ int findAPE(VFSFile *fp)
 		for(i = 0; i < BUFFER_SIZE - 8 && status == 0; i++)
 		{
 			bp++;
-			if(!strncmp(bp, "APETAGEX", 8))
+			if(!strncmp((char*)bp, "APETAGEX", 8))
 				status = 1;
 		}
 		if(status == 1 || feof(fp))
@@ -171,7 +171,7 @@ ape_t *readAPE(char *filename)
 
 void freeAPE(ape_t *ape)
 {
-	int i;
+	unsigned int i;
 	
 	for(i = 0; i < ape->numitems; i++)
 	{

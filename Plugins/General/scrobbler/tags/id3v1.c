@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "include/bmp_vfs.h"
+#include <libaudacious/vfs.h>
 #include "include/id3v1.h"
 #include "include/endian.h"
 #include "../fmt.h"
@@ -90,28 +90,28 @@ id3v1_t *readID3v1(char *filename)
 		vfs_fread(data, 1, 30, fp);
 		cleanID3v1(data, 30);
 		// id3v1->title = realloc(id3v1->title, 31);
-		if(strcmp(data, ""))
-			iso88591_to_utf8(data, strlen(data), &id3v1->title);
+		if(data && *data)
+			iso88591_to_utf8(data, strlen((char*)data), &id3v1->title);
 		else
 			id3v1->title = NULL;
 		vfs_fread(data, 1, 30, fp);
 		cleanID3v1(data, 30);
-		if(strcmp(data, ""))
-			iso88591_to_utf8(data, strlen(data), &id3v1->artist);
+		if(data && *data)
+			iso88591_to_utf8(data, strlen((char*)data), &id3v1->artist);
 		else
 			id3v1->artist = NULL;
 		vfs_fread(data, 1, 30, fp);
 		cleanID3v1(data, 30);
-		if(strcmp(data, ""))
-			iso88591_to_utf8(data, strlen(data), &id3v1->album);
+		if(data && *data)
+			iso88591_to_utf8(data, strlen((char*)data), &id3v1->album);
 		else
 			id3v1->album = NULL;
 		data = realloc(data, 5);
 		*(data + 4) = '\0';
 		vfs_fread(data, 1, 4, fp);
 		cleanID3v1(data, 4);
-		if(strcmp(data, ""))
-			iso88591_to_utf8(data, strlen(data), &id3v1->year);
+		if(data && *data)
+			iso88591_to_utf8(data, strlen((char*)data), &id3v1->year);
 		else
 			id3v1->year = NULL;
 		data = realloc(data, 31);

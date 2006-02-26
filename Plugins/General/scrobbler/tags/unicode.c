@@ -26,7 +26,8 @@
 
 wchar_t *utf8_to_wchar(unsigned char *utf, size_t memsize)
 {
-	int i, j = 0;
+	size_t i;
+	int j = 0;
 	wchar_t *mem;
 
 	mem = calloc(sizeof(wchar_t) * (memsize + 1), 1);
@@ -84,7 +85,7 @@ wchar_t *utf8_to_wchar(unsigned char *utf, size_t memsize)
 
 unsigned char *wchar_to_utf8(wchar_t *wchar, size_t memsize)
 {
-	int i;
+	size_t i;
 	unsigned char *mem, *ptr;
 	
 	mem = calloc(memsize * 6 + 1, 1);
@@ -122,7 +123,7 @@ unsigned char *wchar_to_utf8(wchar_t *wchar, size_t memsize)
 			*ptr++ = 0x80 | ((wchar[i] >> 6) & 0x3F);
 			*ptr++ = 0x80 | (wchar[i] & 0x3F);
 		}
-		else if(wchar[i] < 0x80000000)
+		else if((unsigned long)wchar[i] < 0x80000000)
 		{
 			*ptr++ = 0xFC | ((wchar[i] >> 30) & 0x01);
 			*ptr++ = 0x80 | ((wchar[i] >> 24) & 0x3F);
@@ -141,7 +142,7 @@ unsigned char *wchar_to_utf8(wchar_t *wchar, size_t memsize)
 void iso88591_to_utf8(unsigned char *iso, size_t memsize,
 				unsigned char **utf)
 {
-	int i;
+	size_t i;
 	wchar_t *wchar;
 
 	wchar = calloc(sizeof(wchar_t) * (memsize + 1), 1);
@@ -155,7 +156,8 @@ void utf16bom_to_utf8(unsigned char *utf16, size_t memsize,
 {
 	wchar_t *wchar;
 	unsigned char utf16char[2];
-	int endian = 0, i;
+	int endian = 0;
+	size_t i;
 
 	wchar = calloc(sizeof(wchar_t) * memsize / 2 - 1, 1);
 	for(i = 0; i < memsize; i += 2)
@@ -182,7 +184,7 @@ void utf16be_to_utf8(unsigned char *utf16, size_t memsize,
 {
 	wchar_t *wchar;
 	unsigned char utf16char[2];
-	int i;
+	size_t i;
 
 	wchar = calloc(sizeof(wchar_t) * (memsize / 2), 1);
 	for(i = 0; i < memsize; i += 2)
@@ -200,7 +202,7 @@ void utf16le_to_utf8(unsigned char *utf16, size_t memsize,
 {
 	wchar_t *wchar;
 	unsigned char utf16char[2];
-	int i;
+	size_t i;
 
 	wchar = calloc(sizeof(wchar_t) * (memsize / 2), 1);
 	for(i = 0; i < memsize; i += 2)

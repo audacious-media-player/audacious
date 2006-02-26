@@ -341,7 +341,7 @@ static submit_t get_song_status(void)
 	return dosubmit;
 }
 
-static void *xs_thread(void *data)
+static void *xs_thread(void *data __attribute__((unused)))
 {
 	int run = 1, i;
 	char *charpos, *dirname;
@@ -457,7 +457,7 @@ static void *xs_thread(void *data)
 	return NULL;
 }
 
-static void *hs_thread(void *data)
+static void *hs_thread(void *data __attribute__((unused)))
 {
 	int run = 1;
 	

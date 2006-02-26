@@ -47,7 +47,7 @@ static char *hexify(char *pass, int len)
         return buf;
 }
 
-static void saveconfig(GtkWidget *wid, gpointer data)
+static void saveconfig(GtkWidget *wid __attribute__((unused)), gpointer data)
 {
         ConfigDb *cfgfile;
 
@@ -67,7 +67,7 @@ static void saveconfig(GtkWidget *wid, gpointer data)
                         md5_append(&md5state, (unsigned const char *)pwd, strlen(pwd));
                         md5_finish(&md5state, md5pword);
                         bmp_cfg_db_set_string(cfgfile, "audioscrobbler", "password",
-                                        (char *)hexify(md5pword, sizeof(md5pword)));
+                                        hexify((char*)md5pword, sizeof(md5pword)));
                 }
                 bmp_cfg_db_close(cfgfile);
         }
@@ -75,7 +75,7 @@ static void saveconfig(GtkWidget *wid, gpointer data)
         gtk_widget_destroy(GTK_WIDGET(data));
 }
 
-static void closewin(GtkWidget *wid, gpointer data)
+static void closewin(GtkWidget *wid __attribute__((unused)), gpointer data)
 {
 	gtk_widget_destroy(GTK_WIDGET(data));
 }

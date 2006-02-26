@@ -159,14 +159,14 @@ void metaCD(metatag_t *meta, char *filename, int track)
 	pdebug("Reading metadata into structs...", META_DEBUG);
 	meta->artist = meta->cdaudio->artist;
 	meta->title = meta->cdaudio->title;
-	meta->mb = realloc(meta->mb, strlen(meta->cdaudio->mbid) + 1);
-	strcpy(meta->mb, meta->cdaudio->mbid);
+	meta->mb = realloc(meta->mb, strlen((char*)meta->cdaudio->mbid) + 1);
+	strcpy((char*)meta->mb, (char*)meta->cdaudio->mbid);
 	meta->album = meta->cdaudio->album;
 	meta->year = NULL;
 	meta->genre = NULL;
 	/* Special track handling... Yay! */
 	meta->track = realloc(meta->track, 4);
-	tmp = snprintf(meta->track, 3, "%d", track);
+	tmp = snprintf((char*)meta->track, 3, "%d", track);
 	*(meta->track + tmp) = '\0';
 	
 	return;
@@ -184,77 +184,79 @@ static ape_t *fetchAPE(char *filename)
 
 void metaAPE(metatag_t *meta)
 {
-	int i, t = 0;
+	unsigned int i;
+	int t = 0;
+	size_t s;
 	ape_t *ape = meta->ape;
 	
 	for(i = 0; i < ape->numitems; i++)
 	{
 		apefielddata_t *item = ape->items[i];
 		
-		if(!strcmp(item->name, "Title"))
+		if(!strcmp((char*)item->name, "Title"))
 		{
 			pdebug("Found Title!", META_DEBUG);
 			meta->title = item->data;
 		}
-		else if(!strcmp(item->name, "Artist"))
+		else if(!strcmp((char*)item->name, "Artist"))
 		{
 			pdebug("Found Artist!", META_DEBUG);
 			meta->artist = item->data;
 		}
-		else if(strcmp(item->name, "Album") == 0)
+		else if(strcmp((char*)item->name, "Album") == 0)
 		{
 			pdebug("Found Album!", META_DEBUG);
 			meta->album = item->data;
 		}
-		else if(strcmp(item->name, "Year") == 0)
+		else if(strcmp((char*)item->name, "Year") == 0)
 		{
 			pdebug("Found Year!", META_DEBUG);
 			meta->year = item->data;
 		}
-		else if(strcmp(item->name, "Genre") == 0)
+		else if(strcmp((char*)item->name, "Genre") == 0)
 		{
 			pdebug("Found Genre!", META_DEBUG);
-			meta->genre = realloc(meta->genre, strlen(item->data)
-				+ 1);
-			strcpy(meta->genre, item->data);
+			s = strlen((char*)item->data) + 1;
+			meta->genre = realloc(meta->genre, s);
+			memcpy(meta->genre, item->data, s);
 		}
-		else if(strcmp(item->name, "Track") == 0)
+		else if(strcmp((char*)item->name, "Track") == 0)
 		{
 			pdebug("Found Track!", META_DEBUG);
-			meta->track = realloc(meta->track, strlen(item->data)
-				+ 1);
-			strcpy(meta->track, item->data);
+			s = strlen((char*)item->data) + 1;
+			meta->track = realloc(meta->genre, s);
+			memcpy(meta->track, item->data, s);
 		}
-		else if(strcmp(item->name, "Comment") == 0)
+		else if(strcmp((char*)item->name, "Comment") == 0)
 		{
 			unsigned char *comment_value = NULL, *eq_pos, *sep_pos,
 					*subvalue;
 
 			subvalue = item->data;
-			sep_pos = strchr(subvalue, '|');
+			sep_pos = (unsigned char*)strchr((char*)subvalue, '|');
 			while(sep_pos != NULL || t == 0)
 			{
 				t = 1;
 				if(sep_pos != NULL)
 					*sep_pos = '\0';
-				comment_value = realloc(comment_value,
-							strlen(subvalue) + 1);
-				strcpy(comment_value, subvalue);
+				s = strlen((char*)subvalue) + 1;
+				comment_value = realloc(comment_value, s);
+				memcpy(comment_value, subvalue, s);
 				if(sep_pos != NULL)
 					sep_pos++;
-				eq_pos = strchr(comment_value, '=');
+				eq_pos = (unsigned char*)strchr((char*)comment_value, '=');
 				if(eq_pos != NULL)
 				{
 					*eq_pos = '\0';
 					eq_pos++;
-					if(!strcmp(comment_value,
+					if(!strcmp((char*)comment_value,
 						"musicbrainz_trackid"))
 					{
 						/* ??? */
 						pdebug("Found MusicBrainz Track ID!", META_DEBUG);
-						meta->mb = realloc(meta->mb,
-							strlen(eq_pos) + 1);
-						strcpy(meta->mb, eq_pos);
+						s = strlen((char*)eq_pos) + 1;
+						meta->mb = realloc(meta->mb, s);
+						memcpy(meta->mb, eq_pos, s);
 						break;
 					}
 				}
@@ -262,7 +264,7 @@ void metaAPE(metatag_t *meta)
 				{
 					t = 0;
 					subvalue = sep_pos;
-					sep_pos = strchr(subvalue, '|');
+					sep_pos = (unsigned char*)strchr((char*)subvalue, '|');
 				}
 			}
 			t = 0;
@@ -305,8 +307,9 @@ static vorbis_t *fetchVorbis(char *filename, int tag_type)
 
 void metaVorbis(metatag_t *meta)
 {
-	int i;
+	unsigned int i;
 	vorbis_t *comments = NULL;
+	size_t s;
 	
 	/* I'm not expecting more than one vorbis tag */
 	if(meta->has_vorbis)
@@ -323,56 +326,54 @@ void metaVorbis(metatag_t *meta)
 	for(i = 0; i < comments->numitems; i++)
 	{
 		vorbisfielddata_t *field = comments->items[i];
-		if(!fmt_strcasecmp(field->name, "TITLE"))
+		if(!fmt_strcasecmp((char*)field->name, "TITLE"))
 		{
 			pdebug("Found Title!", META_DEBUG);
 			
 			meta->title = field->data;
 		}
 		/* Prefer PERFORMER to ARTIST */
-		else if(!fmt_strcasecmp(field->name, "PERFORMER"))
+		else if(!fmt_strcasecmp((char*)field->name, "PERFORMER"))
 		{
 			pdebug("Found Artist!", META_DEBUG);
 
 			meta->artist = field->data;
 		}
-		else if(!fmt_strcasecmp(field->name, "ARTIST") && meta->artist == NULL)
+		else if(!fmt_strcasecmp((char*)field->name, "ARTIST") && meta->artist == NULL)
 		{
 			pdebug("Found Artist!", META_DEBUG);
 
 			meta->artist = field->data;
 		}
-		else if(!fmt_strcasecmp(field->name, "ALBUM"))
+		else if(!fmt_strcasecmp((char*)field->name, "ALBUM"))
 		{
 			pdebug("Found Album!", META_DEBUG);
 			
 			meta->album = field->data;
 		}
-		else if(!fmt_strcasecmp(field->name, "MUSICBRAINZ_TRACKID"))
+		else if(!fmt_strcasecmp((char*)field->name, "MUSICBRAINZ_TRACKID"))
 		{
 			pdebug("Found MusicBrainz Track ID!", META_DEBUG);
-			
-			meta->mb = realloc(meta->mb, strlen(field->data) + 1);
-			memset(meta->mb, '\0', strlen(field->data) + 1);
-			memcpy(meta->mb, field->data, strlen(field->data));
+		
+			s = strlen((char*)field->data) + 1;
+			meta->mb = realloc(meta->mb, s);
+			memcpy(meta->mb, field->data, s);
 		}
-		else if(!fmt_strcasecmp(field->name, "GENRE"))
+		else if(!fmt_strcasecmp((char*)field->name, "GENRE"))
 		{
 			pdebug("Found Genre!", META_DEBUG);
-			
-			meta->genre = realloc(meta->genre, strlen(field->data)
-				+ 1);
-			memset(meta->genre, '\0', strlen(field->data) + 1);
-			memcpy(meta->genre, field->data, strlen(field->data));
+		
+			s = strlen((char*)field->data) + 1;
+			meta->genre = realloc(meta->genre, s);
+			memcpy(meta->genre, field->data, s);
 		}
-		else if(!fmt_strcasecmp(field->name, "TRACKNUMBER"))
+		else if(!fmt_strcasecmp((char*)field->name, "TRACKNUMBER"))
 		{
 			pdebug("Found Track!", META_DEBUG);
 			
-			meta->track = realloc(meta->track, strlen(field->data)
-				+ 1);
-			memset(meta->track, '\0', strlen(field->data) + 1);
-			memcpy(meta->track, field->data, strlen(field->data));
+			s = strlen((char*)field->data) + 1;
+			meta->track = realloc(meta->track, s);
+			memcpy(meta->track, field->data, s);
 		}
 	}
 	
@@ -459,7 +460,7 @@ void metaID3v2(metatag_t *meta)
 		{
 			data = frame->data;
 			
-			if(!strcmp(data, "http://musicbrainz.org"))
+			if(!strcmp((char*)data, "http://musicbrainz.org"))
 			{
 				pdebug("Found MusicBrainz Track ID!", META_DEBUG);
 				
@@ -512,7 +513,7 @@ void metaiTunes(metatag_t *meta)
 		pdebug("Found Track!", META_DEBUG);
 		
 		meta->track = realloc(meta->track, 4);
-		tmp = snprintf(meta->track, 3, "%d", itunes->track);
+		tmp = snprintf((char*)meta->track, 3, "%d", itunes->track);
 		*(meta->track + tmp) = '\0';
 	}
 	if(itunes->year != NULL)
@@ -536,50 +537,51 @@ static wma_t *fetchWMA(char *filename)
 void metaWMA(metatag_t *meta)
 {
 	wma_t *wma = meta->wma;
-	int i, tmp;
+	unsigned int i;
+	int tmp;
 
 	for(i = 0; i < wma->numitems; i++)
 	{
 		attribute_t *attribute = wma->items[i];
 		
-		if(!strcmp(attribute->name, "Title"))
+		if(!strcmp((char*)attribute->name, "Title"))
 		{
 			pdebug("Found Title!", META_DEBUG);
 
 			meta->title = attribute->data;
 		}
-		else if(!strcmp(attribute->name, "Author"))
+		else if(!strcmp((char*)attribute->name, "Author"))
 		{
 			pdebug("Found Artist!", META_DEBUG);
 
 			meta->artist = attribute->data;
 		}
-		else if(!strcmp(attribute->name, "WM/AlbumTitle"))
+		else if(!strcmp((char*)attribute->name, "WM/AlbumTitle"))
 		{
 			pdebug("Found Album!", META_DEBUG);
 
 			meta->album = attribute->data;
 		}
-		else if(!strcmp(attribute->name, "WM/Year"))
+		else if(!strcmp((char*)attribute->name, "WM/Year"))
 		{
 			pdebug("Found Year!", META_DEBUG);
 
 			meta->year = attribute->data;
 		}
-		else if(!strcmp(attribute->name, "WM/Genre"))
+		else if(!strcmp((char*)attribute->name, "WM/Genre"))
 		{
 			pdebug("Found Genre!", META_DEBUG);
 
-			meta->genre = realloc(meta->genre,
-						strlen(attribute->data) + 1);
-			strcpy(meta->genre, attribute->data);
+			size_t s = strlen((char*)attribute->data) + 1;
+			meta->genre = realloc(meta->genre, s);
+			memcpy(meta->genre, attribute->data, s);
 		}
-		else if(!strcmp(attribute->name, "WM/TrackNumber"))
+		else if(!strcmp((char*)attribute->name, "WM/TrackNumber"))
 		{
 			pdebug("Found Track!", META_DEBUG);
 
 			meta->track = realloc(meta->track, 4);
-			tmp = snprintf(meta->track, 3, "%d",
+			tmp = snprintf((char*)meta->track, 3, "%d",
 					le2int(attribute->data));
 			*(meta->track + tmp) = '\0';
 		}
@@ -630,7 +632,7 @@ void metaID3v1(metatag_t *meta)
 		pdebug("Found Track!", META_DEBUG);
 		
 		meta->track = realloc(meta->track, 4);
-		tmp = snprintf(meta->track, 3, "%d", id3v1->track);
+		tmp = snprintf((char*)meta->track, 3, "%d", id3v1->track);
 		*(meta->track + tmp) = '\0';
 	}
 	/* I assume unassigned genre's are 255 */
@@ -638,10 +640,10 @@ void metaID3v1(metatag_t *meta)
 		/ sizeof(char *))
 	{
 		pdebug("Found Genre!", META_DEBUG);
-		
-		meta->genre = realloc(meta->genre,
-			strlen(genre_list[id3v1->genre]) + 1);
-		strcpy(meta->genre, genre_list[id3v1->genre]);
+	
+		size_t s = strlen(genre_list[id3v1->genre]) + 1;
+		meta->genre = realloc(meta->genre, s);
+		memcpy(meta->genre, genre_list[id3v1->genre], s);
 	}
 	/*
 	 * This next one is unofficial, but maybe someone will use it.
@@ -662,12 +664,12 @@ void metaID3v1(metatag_t *meta)
 	 * "MBID: \156%g\203J\139@\150\177\005\218\218k\149\160\139"
 	 * in ASCII (with three digit decimal escape characters)
 	 */
-	if(!strncmp((id3v1->comment) + 1, "MBTRACKID=", 10))
+	if(!strncmp((char*)((id3v1->comment) + 1), "MBTRACKID=", 10))
 	{
 		pdebug("Found MusicBrainz Track ID!", META_DEBUG);
 		
 		meta->mb = realloc(meta->mb, 37);
-		tmp = sprintf(meta->mb,
+		tmp = sprintf((char*)meta->mb,
 	"%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x",
 			id3v1->comment[11],
 			id3v1->comment[12],

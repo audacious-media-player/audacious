@@ -98,8 +98,7 @@ cdaudio_t *readCDAudio(char *filename, char track)
 	}
 	else
 	{
-		musicbrainz->album = malloc(strlen(tmp) + 1);
-		strcpy(musicbrainz->album, tmp);
+		musicbrainz->album = (unsigned char*)strdup(tmp);
 	}
 	memset(tmp, '\0', BUFFER_SIZE / 4 + 1);
 	retVal = mb_GetResultData1(mb, MBE_AlbumGetArtistName, tmp, BUFFER_SIZE / 4, track);
@@ -110,8 +109,7 @@ cdaudio_t *readCDAudio(char *filename, char track)
 	}
 	else
 	{
-		musicbrainz->artist = malloc(strlen(tmp) + 1);
-		strcpy(musicbrainz->artist, tmp);
+		musicbrainz->artist = (unsigned char*)strdup(tmp);
 	}
 	memset(tmp, '\0', BUFFER_SIZE / 4 + 1);
 	retVal = mb_GetResultData1(mb, MBE_AlbumGetTrackName, tmp, BUFFER_SIZE / 4, track);
@@ -122,8 +120,7 @@ cdaudio_t *readCDAudio(char *filename, char track)
 	}
 	else
 	{
-		musicbrainz->title = malloc(strlen(tmp) + 1);
-		strcpy(musicbrainz->title, tmp);
+		musicbrainz->title = (unsigned char*)strdup(tmp);
 	}
 	memset(tmp, '\0', BUFFER_SIZE / 4 + 1);
 	retVal = mb_GetResultData1(mb, MBE_AlbumGetTrackId, tmp, BUFFER_SIZE / 4, track);
@@ -135,7 +132,7 @@ cdaudio_t *readCDAudio(char *filename, char track)
 	else
 	{
 		musicbrainz->mbid = malloc(64);
-		mb_GetIDFromURL(mb, tmp, musicbrainz->mbid, 64);
+		mb_GetIDFromURL(mb, tmp, (char*)musicbrainz->mbid, 64);
 	}
 	mb_Delete(mb);
 	free(tmp);

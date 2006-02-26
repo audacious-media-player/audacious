@@ -46,6 +46,7 @@ static vorbis_t *readComments(VFSFile *fp)
 	for(i = 0; i < lines; i++)
 	{
 		unsigned char *data, *dp;
+		size_t datalen;
 		vorbisfielddata_t *fielddata =
 			calloc(sizeof(vorbisfielddata_t), 1);
 		
@@ -53,7 +54,7 @@ static vorbis_t *readComments(VFSFile *fp)
 		fielddata->len = le2int(cToInt);
 		data = malloc(fielddata->len);
 		vfs_fread(data, 1, fielddata->len, fp);
-		dp = strchr(data, '=');
+		dp = (unsigned char*)strchr((char*)data, '=');
 		if(dp == NULL)
 		{
 			pdebug("No '=' in comment!", META_DEBUG);
@@ -63,11 +64,12 @@ static vorbis_t *readComments(VFSFile *fp)
 		}
 		*dp = '\0';
 		dp++;
-		fielddata->name = malloc(strlen(data) + 1);
-		fielddata->data = malloc(fielddata->len - strlen(data));
-		*(fielddata->data + fielddata->len - strlen(data) - 1) = '\0';
-		strcpy(fielddata->name, data);
-		strncpy(fielddata->data, dp, fielddata->len - strlen(data) - 1);
+		datalen = strlen((char*)data);
+		fielddata->name = malloc(datalen + 1);
+		fielddata->data = malloc(fielddata->len - datalen);
+		*(fielddata->data + fielddata->len - datalen - 1) = '\0';
+		strcpy((char*)fielddata->name, (char*)data);
+		strncpy((char*)fielddata->data, (char*)dp, fielddata->len - datalen - 1);
 		
 		comments->items[j++] = fielddata;
 
@@ -104,7 +106,7 @@ int findVorbis(VFSFile *fp)
 		bp = tag_buffer;
 		for(i = 0; i < segments && status == 0;)
 		{
-			if(strncmp(bp + 1, "vorbis", 6) == 0)
+			if(strncmp((char*)(bp + 1), "vorbis", 6) == 0)
 			{
 				vorbis_type = *bp;
 				if(vorbis_type == 0x03)
@@ -141,7 +143,7 @@ int findFlac(VFSFile *fp)
 	int pos;
 	
 	vfs_fread(tag_id, 1, 4, fp);
-	if(strcmp(tag_id, "fLaC"))
+	if(strcmp((char*)tag_id, "fLaC"))
 		return 0;
 	while(1)
 	{
@@ -173,7 +175,7 @@ int findOggFlac(VFSFile *fp)
 	tag_buffer = malloc(28);
 	vfs_fread(tag_buffer, 1, 28, fp);
 	bp = tag_buffer + 24;
-	if(strncmp(bp, "fLaC", 4))
+	if(strncmp((char*)bp, "fLaC", 4))
 	{
 		free(tag_buffer);
 		return -1;
@@ -248,7 +250,7 @@ int findSpeex(VFSFile *fp)
 	tag_buffer = realloc(tag_buffer, pagelen);
 	vfs_fread(tag_buffer, 1, pagelen, fp);
 	bp = tag_buffer;
-	if(strncmp(bp, "Speex   ", 8))
+	if(strncmp((char*)bp, "Speex   ", 8))
 	{
 		free(lacing);
 		free(tag_buffer);
@@ -396,7 +398,7 @@ vorbis_t *readSpeex(char *filename)
 
 void freeVorbis(vorbis_t *comments)
 {
-	int i;
+	unsigned int i;
 	
 	for(i = 0; i < comments->numitems; i++)
 	{
