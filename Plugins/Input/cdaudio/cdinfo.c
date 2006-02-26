@@ -209,8 +209,7 @@ cdda_cdinfo_write_file(guint32 cddb_discid, cdinfo_t * cdinfo)
                                     cdinfo->tracks[i].title);
         }
     }
-    if (!bmp_rcfile_write(rcfile, filename))
-        /*FIXME */ ;
+    bmp_rcfile_write(rcfile, filename);
     bmp_rcfile_free(rcfile);
     g_free(filename);
 }
