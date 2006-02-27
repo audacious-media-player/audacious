@@ -8,7 +8,7 @@ OBJECTIVE_LIBS_NOINST = libaudacious.a
 
 LDFLAGS = -Wl,-export-dynamic
 
-libaudacious_la_LIBADD = \
+LIBADD = \
 	$(GTK_LIBS)      \
 	$(GCONF_LIBS)    \
 	$(GNOMEVFS_LIBS)
