@@ -7,7 +7,7 @@ OBJECTIVE_LIBS = libjackout.so
 
 LIBDIR = $(plugindir)/$(OUTPUT_PLUGIN_DIR)
 
-CFLAGS += -fPIC -DPIC -shared $(GTK_CFLAGS) $(JACK_CFLAGS) -Wall $(SAMPLERATE_CFLAGS)
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(JACK_CFLAGS) -Wall $(SAMPLERATE_CFLAGS) -I../../../intl -I../../..
 LIBS = $(GTK_LIBS) $(JACK_LIBS) $(SAMPLERATE_LIBS) -lpthread
 
 OBJECTS = ${SOURCES:.c=.o}
