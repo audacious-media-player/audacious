@@ -191,8 +191,13 @@ if test "$enable_gconf" = "yes"; then
     )
 fi
 
-AM_CONDITIONAL(HAVE_GCONF, test "$enable_gconf" = "yes")
+if test "$enable_gconf" = "yes"; then
+	CONFIGDB_BACKEND="gconf"
+else
+	CONFIGDB_BACKEND="rcfile"
+fi
 
+AC_SUBST(CONFIGDB_BACKEND)
 
 dnl GnomeVFS support
 
@@ -217,6 +222,8 @@ if test "$enable_gnomevfs" = "yes"; then
 else
 	VFS_BACKEND="stdio"
 fi
+
+AC_SUBST(VFS_BACKEND)
 
 dnl Check for esound
 
