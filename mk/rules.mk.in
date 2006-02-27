@@ -300,6 +300,7 @@ target_cpu = @target_cpu@
 target_os = @target_os@
 target_vendor = @target_vendor@
 WAV_SNDFILE = @WAV_SNDFILE@
+VFS_BACKEND = @VFS_BACKEND@
 CURL_CFLAGS = @CURL_CFLAGS@
 CURL_LIBS = @CURL_LIBS@
 MUSICBRAINZ_LIBS = @MUSICBRAINZ_LIBS@

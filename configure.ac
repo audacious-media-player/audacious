@@ -212,8 +212,11 @@ if test "$enable_gnomevfs" = "yes"; then
     )
 fi
 
-AM_CONDITIONAL(HAVE_GNOME_VFS, test "$enable_gnomevfs" = "yes")
-
+if test "$enable_gnomevfs" = "yes"; then
+	VFS_BACKEND="gnome"
+else
+	VFS_BACKEND="stdio"
+fi
 
 dnl Check for esound
 
