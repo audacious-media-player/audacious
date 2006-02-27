@@ -27,7 +27,7 @@ struct buffer {
 static void *
 oss_get_convert_buffer(struct buffer *buffer, size_t size)
 {
-    if (size > 0 && size <= (size_t)buffer->size)
+    if (size > 0 && size <= buffer->size)
         return buffer->buffer;
 
     buffer->size = size;
