@@ -69,11 +69,23 @@ clean:
 	@echo "[all objectives cleaned]"
 
 distclean: clean
-	$(RM) mk/rules.mk
+	@if test "$(SUBDIRS)" != "none"; then \
+		for i in $(SUBDIRS); do \
+			echo "[distcleaning subobjective: $$i]"; \
+			(cd $$i; $(MAKE) distclean; cd ..); \
+			echo "[distcleaning subobjective: $$i]"; \
+		done; \
+	fi
+	@if test -f Makefile.in; then \
+		$(RM) -f Makefile; \
+	fi
+	@if test -f mk/rules.mk; then \
+		$(RM) -f mk/rules.mk; \
+	fi
 
 build:
 	$(MAKE) build-prehook
-	+@if test "$(SUBDIRS)" != "none"; then \
+	@if test "$(SUBDIRS)" != "none"; then \
 		for i in $(SUBDIRS); do \
 			echo "[building subobjective: $$i]"; \
 			(cd $$i; $(MAKE); cd ..); \
