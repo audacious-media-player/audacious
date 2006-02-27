@@ -9,7 +9,6 @@ if test ! -f $TOP_DIR/configure.ac ; then
 fi
 
 AUTOCONF=${AUTOCONF:-autoconf}
-AUTOMAKE=${AUTOMAKE:-automake-1.9}
 ACLOCAL=${ACLOCAL:-aclocal-1.9}
 AUTOHEADER=${AUTOHEADER:-autoheader}
 AUTOPOINT=${AUTOPOINT:-autopoint}
@@ -86,7 +85,6 @@ run_or_die $LIBTOOLIZE -f -c
 run_or_die $ACLOCAL -I m4
 run_or_die $AUTOHEADER
 run_or_die $AUTOCONF
-run_or_die $AUTOMAKE -a -c
 
 cd $LAST_DIR
 
