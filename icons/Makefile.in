@@ -1,0 +1,5 @@
+include ../mk/rules.mk
+include ../mk/objective.mk
+
+pixmapsdir = $(datadir)/pixmaps
+OBJECTIVE_DATA = audacious.png:$(pixmapsdir)
