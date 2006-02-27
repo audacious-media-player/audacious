@@ -355,8 +355,9 @@ void cleanup()
 {
 	if(config)
 	{
-		gtk_input_remove(input_tag);
-		lirc_freeconfig(config);
+		if(input_tag)
+			gtk_input_remove(input_tag);
+
 		config=NULL;
 	}
 	if(lirc_fd!=-1)
