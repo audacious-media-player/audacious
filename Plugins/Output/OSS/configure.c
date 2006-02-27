@@ -153,7 +153,7 @@ scan_devices(gchar * type, GtkWidget * option_menu, GtkSignalFunc sigfunc)
                 else
                     item = gtk_menu_item_new_with_label(buffer);
                 g_signal_connect(G_OBJECT(item), "activate",
-                                 G_CALLBACK(sigfunc), (gpointer) index++);
+                                 G_CALLBACK(sigfunc), (gpointer)(long)(index++));
                 gtk_widget_show(item);
                 gtk_menu_append(GTK_MENU(menu), item);
             }

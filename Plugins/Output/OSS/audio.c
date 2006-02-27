@@ -252,7 +252,7 @@ oss_free(void)
 static inline ssize_t
 write_all(int fd, const void *buf, size_t count)
 {
-    ssize_t done = 0;
+    size_t done = 0;
     do {
         ssize_t n = write(fd, (gchar *) buf + done, count - done);
         if (n == -1) {
@@ -423,7 +423,7 @@ oss_downsample(gpointer ob, guint length, guint speed, guint espeed)
 {
     guint w = 0;
     static gpointer nbuffer = NULL;
-    static gint nbuffer_size = 0;
+    static guint nbuffer_size = 0;
 
     switch (output.format.oss) {
     case AFMT_S16_BE:
