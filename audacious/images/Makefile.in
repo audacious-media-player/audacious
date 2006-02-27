@@ -1,0 +1,12 @@
+include ../../mk/rules.mk
+include ../../mk/objective.mk
+
+imagesdir = $(pkgdatadir)/images
+
+OBJECTIVE_DATA = \
+	about-logo.png:$(imagesdir) \
+	appearance.png:$(imagesdir) \
+	mouse.png:$(imagesdir) \
+	playlist.png:$(imagesdir) \
+	plugins.png:$(imagesdir) \
+	eq.png:$(imagesdir)
