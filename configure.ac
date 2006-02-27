@@ -359,10 +359,10 @@ else
 fi
 
 if test "$enable_sndfile" = "yes"; then
-	WAV_BACKEND="_sndfile"
+	WAV_SNDFILE="-sndfile"
 fi
 
-AC_SUBST(WAV_BACKEND)
+AC_SUBST(WAV_SNDFILE)
 
 dnl *** modplug
 
