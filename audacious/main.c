@@ -411,11 +411,7 @@ bmp_free_paths(void)
 static void
 bmp_init_paths(void)
 {
-    gchar *home_dir = g_get_home_dir();
-
-    bmp_paths[BMP_PATH_USER_DIR] = g_build_filename(home_dir, BMP_RCPATH, NULL);
-
-    g_free(home_dir);
+    bmp_paths[BMP_PATH_USER_DIR] = g_build_filename(g_get_home_dir(), BMP_RCPATH, NULL);
 
     bmp_paths[BMP_PATH_USER_PLUGIN_DIR] = USER_PATH(BMP_USER_PLUGIN_DIR_BASENAME);
     bmp_paths[BMP_PATH_USER_SKIN_DIR] = USER_PATH(BMP_SKIN_DIR_BASENAME);
