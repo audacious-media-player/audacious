@@ -1,0 +1,13 @@
+include ../../../mk/rules.mk
+include ../../../mk/objective.mk
+
+SOURCES = jack.c configure.c bio2jack.c
+
+OBJECTIVE_LIBS = libjackout.so
+
+LIBDIR = $(plugindir)/$(OUTPUT_PLUGIN_DIR)
+
+CFLAGS += -fPIC -DPIC -shared $(GTK_CFLAGS) $(JACK_CFLAGS) -Wall $(SAMPLERATE_CFLAGS)
+LIBS = $(GTK_LIBS) $(JACK_LIBS) $(SAMPLERATE_LIBS) -lpthread
+
+OBJECTS = ${SOURCES:.c=.o}
