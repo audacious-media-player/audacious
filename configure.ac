@@ -125,7 +125,7 @@ dnl These plugins are always built.
 
 INPUT_PLUGINS="cdaudio tonegen console sexypsf wav"
 EFFECT_PLUGINS="ladspa"
-GENERAL_PLUGINS="song_change inetctl"
+GENERAL_PLUGINS="song_change"
 VISUALIZATION_PLUGINS="blur_scope"
 
 dnl Option to change equalizer to the old XMMS one which only works with the mpg123
@@ -876,7 +876,6 @@ AC_CONFIG_FILES([
 	Plugins/General/Makefile
 	Plugins/General/song_change/Makefile
 	Plugins/General/lirc/Makefile
-	Plugins/General/inetctl/Makefile
 	Plugins/General/scrobbler/Makefile
 	Plugins/General/scrobbler/tags/Makefile
 	Plugins/Effect/Makefile
