@@ -58,6 +58,9 @@ install:
 		for i in $(OBJECTIVE_DATA); do \
 			source=`echo $$i | cut -d ":" -f1`; \
 			destination=`echo $$i | cut -d ":" -f2`; \
+			if test ! -d $(DESTDIR)/$$destination; then \
+				$(INSTALL) -d -m 755 $(DESTDIR)/$$destination; \
+			fi; \
 			printf "%10s     %-20s\n" INSTALL $$source; \
 			$(INSTALL_DATA) $(INSTALL_OVERRIDE) $$source $(DESTDIR)/$$destination; \
 		done; \
