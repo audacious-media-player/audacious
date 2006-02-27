@@ -56,8 +56,8 @@ install:
 	fi;
 	@if test "$(OBJECTIVE_DATA)" != "none"; then \
 		for i in $(OBJECTIVE_DATA); do \
-			source = `echo $$i | cut -d ":" -f1`; \
-			destination = `echo $$i | cut -d ":" -f2`; \
+			source=`echo $$i | cut -d ":" -f1`; \
+			destination=`echo $$i | cut -d ":" -f2`; \
 			printf "%10s     %-20s\n" INSTALL $$source; \
 			$(INSTALL_DATA) $(INSTALL_OVERRIDE) $$source $(DESTDIR)/$$destination; \
 		done; \
