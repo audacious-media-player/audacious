@@ -5,6 +5,7 @@ OBJECTIVE_DIRECTORIES = none
 OBJECTIVE_LIBS = none
 OBJECTIVE_LIBS_NOINST = none
 OBJECTIVE_BINS = none
+OBJECTIVE_DATA = none
 SUBDIRS = none
 HEADERS = none
 
@@ -53,6 +54,14 @@ install:
 			$(INSTALL) $(INSTALL_OVERRIDE) $$i $(DESTDIR)/$(BINDIR)/$$i; \
 		done; \
 	fi;
+	@if test "$(OBJECTIVE_DATA)" != "none"; then \
+		for i in $(OBJECTIVE_DATA); do \
+			source = `echo $$i | cut -d ":" -f1`; \
+			destination = `echo $$i | cut -d ":" -f2`; \
+			printf "%10s     %-20s\n" INSTALL $$source; \
+			$(INSTALL_DATA) $(INSTALL_OVERRIDE) $$source $(DESTDIR)/$$destination; \
+		done; \
+	fi
 	$(MAKE) install-posthook
 	@echo "[all objectives installed]"
 
