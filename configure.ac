@@ -47,18 +47,6 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
-dnl Libtool
-dnl FIXME: find a way to allow building static libbeep,
-dnl without building static plugins
-
-dnl Next four lines is a hack to prevent libtool checking for C++/F77
-m4_undefine([AC_PROG_F77])
-m4_defun([AC_PROG_F77],[])
-
-AC_DISABLE_STATIC
-AC_ENABLE_SHARED
-AC_PROG_LIBTOOL
-
 dnl Path settings
 
 AC_PATH_PROG(BEEP_PATH, audacious, no)
