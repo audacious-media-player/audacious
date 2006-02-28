@@ -49,6 +49,7 @@ gint i_seq_port_disconnect( void );
 gint i_seq_queue_create( void );
 gint i_seq_queue_free( void );
 gint i_seq_queue_set_tempo( gint , gint );
+gint i_seq_mixer_get_volume( gint * , gint * , gchar * , gchar * , gint );
 gint i_seq_mixer_set_volume( gint , gint , gchar * , gchar * , gint );
 gint i_seq_port_wparse( gchar * );
 GSList * i_seq_port_get_list( void );

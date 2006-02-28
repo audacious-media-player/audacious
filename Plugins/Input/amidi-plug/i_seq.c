@@ -384,6 +384,56 @@ void i_seq_mixctl_free_list( GSList * mixctls )
 }
 
 
+gint i_seq_mixer_get_volume( gint * left_volume , gint * right_volume ,
+                            gchar * mixer_card , gchar * mixer_control_name , gint mixer_control_id )
+{
+  snd_mixer_t * mixer_h;
+  snd_mixer_selem_id_t * mixer_selem_id;
+  snd_mixer_elem_t * mixer_elem;
+
+  snd_mixer_selem_id_alloca( &mixer_selem_id );
+  snd_mixer_selem_id_set_index( mixer_selem_id , mixer_control_id );
+  snd_mixer_selem_id_set_name( mixer_selem_id , mixer_control_name );
+
+  snd_mixer_open( &mixer_h , 0 );
+  snd_mixer_attach( mixer_h , mixer_card );
+  snd_mixer_selem_register( mixer_h , NULL , NULL);
+  snd_mixer_load( mixer_h );
+
+  mixer_elem = snd_mixer_find_selem( mixer_h , mixer_selem_id );
+
+  if ( ( mixer_elem ) && ( snd_mixer_selem_has_playback_volume( mixer_elem ) ) )
+  {
+    glong pv_min , pv_max , pv_range;
+    glong lc, rc;
+
+    snd_mixer_selem_get_playback_volume_range( mixer_elem , &pv_min , &pv_max );
+    pv_range = pv_max - pv_min;
+    if ( pv_range > 0 )
+    {
+      if ( snd_mixer_selem_has_playback_channel( mixer_elem , SND_MIXER_SCHN_FRONT_LEFT ) )
+      {
+        snd_mixer_selem_get_playback_volume( mixer_elem , SND_MIXER_SCHN_FRONT_LEFT , &lc );
+        /* convert the range to 0-100 (for the unlucky case that pv_range is not 0-100 already) */
+        *left_volume = (gint)(((lc - pv_min) * pv_range) / 100);
+        DEBUGMSG( "GET VOLUME requested, get left channel (%i)\n" , left_volume );
+      }
+      if ( snd_mixer_selem_has_playback_channel( mixer_elem , SND_MIXER_SCHN_FRONT_RIGHT ) )
+      {
+        snd_mixer_selem_get_playback_volume( mixer_elem , SND_MIXER_SCHN_FRONT_RIGHT , &rc );
+        /* convert the range to 0-100 (for the unlucky case that pv_range is not 0-100 already) */
+        *right_volume = (gint)(((rc - pv_min) * pv_range) / 100);
+        DEBUGMSG( "GET VOLUME requested, get right channel (%i)\n" , right_volume );
+      }
+    }
+  }
+
+  snd_mixer_close( mixer_h );
+  /* for now, always return 1 here */
+  return 1;
+}
+
+
 gint i_seq_mixer_set_volume( gint left_volume , gint right_volume ,
                             gchar * mixer_card , gchar * mixer_control_name , gint mixer_control_id )
 {

@@ -258,6 +258,17 @@ static gint amidiplug_get_time( void )
 }
 
 
+static void amidiplug_get_volume( gint * l , gint * r )
+{
+  gchar mixer_card[10];
+  snprintf( mixer_card , 8 , "hw:%i" , amidiplug_cfg.mixer_card_id );
+  mixer_card[9] = '\0';
+  /* get volume */
+  i_seq_mixer_get_volume( l , r , mixer_card , amidiplug_cfg.mixer_control_name ,
+                          amidiplug_cfg.mixer_control_id );
+}
+
+
 static void amidiplug_set_volume( gint  l , gint  r )
 {
   gchar mixer_card[10];

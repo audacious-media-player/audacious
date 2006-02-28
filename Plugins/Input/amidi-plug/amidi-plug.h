@@ -81,6 +81,7 @@ static void amidiplug_stop( void );
 static void amidiplug_pause( gshort );
 static void amidiplug_seek( gint );
 static gint amidiplug_get_time( void );
+static void amidiplug_get_volume( gint * , gint * );
 static void amidiplug_set_volume( gint , gint );
 static void amidiplug_get_song_info( gchar * , gchar ** , gint * );
 static void amidiplug_file_info_box( gchar * );
@@ -101,7 +102,7 @@ InputPlugin amidiplug_ip =
   amidiplug_seek,		/* seek */
   NULL,				/* set_eq */
   amidiplug_get_time,		/* get_time */
-  NULL,				/* get_volume */
+  amidiplug_get_volume,		/* get_volume */
   amidiplug_set_volume,		/* set_volume */
   amidiplug_cleanup,		/* cleanup */
   NULL,				/* get_vis_type */
