@@ -618,7 +618,7 @@ static int III_dequantize_sample(real xr[SBLIMIT][SSLIMIT],int *scf,
   int part2remain = gr_info->part2_3_length - part2bits;
   int *me;
 
-  size_t num = mpg123_getbitoffset(&bsi);
+  int num = mpg123_getbitoffset(&bsi);
   long mask;
   /* we must split this, because for num==0 the shift is undefined if you do it in one step */
   mask  = ((unsigned long) mpg123_getbits(&bsi,num))<<BITSHIFT;
@@ -1661,8 +1661,7 @@ III_hybrid(real fsIn[SBLIMIT][SSLIMIT],
 
     real *tspnt = (real *) tsOut;
     real *rawout1, *rawout2;
-    int bt;
-    size_t sb = 0;
+    int bt, sb = 0;
 
     {
         int b = blc[ch];
