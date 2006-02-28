@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-06 16:46+0900\n"
+"POT-Creation-Date: 2006-02-27 22:55-0600\n"
 "PO-Revision-Date: 2006-02-06 17:11+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -53,21 +53,19 @@ msgstr ""
 
 #: Plugins/General/lirc/about.c:116 Plugins/Input/modplug/gui/interface.cpp:68
 #: Plugins/Input/modplug/gui/interface.cpp:992
-#: Plugins/Output/crossfade/interface-2.0.glade:5495
-#: Plugins/Visualization/libvisual-proxy/about.c:135
 msgid "Close"
 msgstr "閉じる"
 
-#: Plugins/General/lirc/lirc.c:67
+#: Plugins/General/lirc/lirc.c:66
 msgid "LIRC Plugin"
 msgstr "LIRC プラグイン"
 
-#: Plugins/General/lirc/lirc.c:498
+#: Plugins/General/lirc/lirc.c:84
 #, c-format
 msgid "%s: could not init LIRC support\n"
 msgstr "%s: LIRC サポートを初期化できませんでした\n"
 
-#: Plugins/General/lirc/lirc.c:506
+#: Plugins/General/lirc/lirc.c:92
 #, c-format
 msgid ""
 "%s: could not read LIRC config file\n"
@@ -78,19 +76,15 @@ msgstr ""
 "%s: 正しい設定ファイルの作り方を知るには\n"
 "%s: LIRC のドキュメントを読んでください\n"
 
-#: Plugins/General/lirc/lirc.c:900
+#: Plugins/General/lirc/lirc.c:338
 #, c-format
 msgid "%s: unknown command \"%s\"\n"
 msgstr "%s: 不明なコマンド \"%s\"\n"
 
-#: Plugins/General/lirc/lirc.c:910
+#: Plugins/General/lirc/lirc.c:348
 #, c-format
 msgid "%s: disconnected from LIRC\n"
 msgstr "%s: LIRC から切断されました\n"
-
-#: Plugins/General/lirc/lirc.c:923
-msgid "Please choose font for SELECT popup."
-msgstr "SELECT ポップアップのフォントを選んでください。"
 
 #: Plugins/General/song_change/song_change.c:53
 #, c-format
@@ -175,28 +169,21 @@ msgstr ""
 #: Plugins/General/song_change/song_change.c:340
 #: Plugins/Input/modplug/gui/interface.cpp:771 Plugins/Output/alsa/about.c:46
 #: Plugins/Output/alsa/configure.c:436
-#: Plugins/Output/crossfade/configure.c:1854
-#: Plugins/Output/crossfade/interface-2.0.glade:4824
-#: Plugins/Output/crossfade/interface-2.0.glade:5379
 #: Plugins/Output/disk_writer/disk_writer.c:140
 #: Plugins/Output/disk_writer/disk_writer.c:405
 msgid "OK"
 msgstr "OK"
 
 #: Plugins/General/song_change/song_change.c:346
-#: Plugins/Input/flac/configure.c:766 Plugins/Input/flac/fileinfo.c:356
+#: Plugins/Input/flac/configure.c:773 Plugins/Input/flac/fileinfo.c:356
 #: Plugins/Input/modplug/gui/interface.cpp:787
 #: Plugins/Input/timidity/src/interface.c:231
 #: Plugins/Output/alsa/configure.c:442
-#: Plugins/Output/crossfade/interface-2.0.glade:4837
 #: Plugins/Output/disk_writer/disk_writer.c:412
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:290
 msgid "Cancel"
 msgstr "キャンセル"
 
 #: Plugins/Input/aac/src/fileinfo.c:183 Plugins/Input/mpg123/fileinfo.c:639
-#: Plugins/Output/crossfade/interface-2.0.glade:1664
-#: Plugins/Output/crossfade/interface-2.0.glade:3175
 msgid "None"
 msgstr "なし"
 
@@ -209,7 +196,7 @@ msgid "CCIT J.17"
 msgstr "CCIT J.17"
 
 #: Plugins/Input/aac/src/fileinfo.c:230 Plugins/Input/mpg123/fileinfo.c:691
-#: Plugins/Input/vorbis/fileinfo.c:557
+#: Plugins/Input/vorbis/fileinfo.c:558
 msgid "Name:"
 msgstr "名前:"
 
@@ -218,22 +205,22 @@ msgid "Song Metadata"
 msgstr "曲のメタデータ"
 
 #: Plugins/Input/aac/src/fileinfo.c:249 Plugins/Input/flac/fileinfo.c:278
-#: Plugins/Input/mpg123/fileinfo.c:859 Plugins/Input/vorbis/fileinfo.c:580
+#: Plugins/Input/mpg123/fileinfo.c:859 Plugins/Input/vorbis/fileinfo.c:581
 msgid "Title:"
 msgstr "タイトル:"
 
 #: Plugins/Input/aac/src/fileinfo.c:260 Plugins/Input/flac/fileinfo.c:285
-#: Plugins/Input/mpg123/fileinfo.c:874 Plugins/Input/vorbis/fileinfo.c:591
+#: Plugins/Input/mpg123/fileinfo.c:874 Plugins/Input/vorbis/fileinfo.c:592
 msgid "Artist:"
 msgstr "アーティスト:"
 
 #: Plugins/Input/aac/src/fileinfo.c:271 Plugins/Input/flac/fileinfo.c:292
-#: Plugins/Input/mpg123/fileinfo.c:889 Plugins/Input/vorbis/fileinfo.c:602
+#: Plugins/Input/mpg123/fileinfo.c:889 Plugins/Input/vorbis/fileinfo.c:603
 msgid "Album:"
 msgstr "アルバム名:"
 
 #: Plugins/Input/aac/src/fileinfo.c:282 Plugins/Input/flac/fileinfo.c:299
-#: Plugins/Input/mpg123/fileinfo.c:904 Plugins/Input/vorbis/fileinfo.c:613
+#: Plugins/Input/mpg123/fileinfo.c:904 Plugins/Input/vorbis/fileinfo.c:614
 msgid "Comment:"
 msgstr "コメント:"
 
@@ -242,17 +229,17 @@ msgid "Year:"
 msgstr "制作年:"
 
 #: Plugins/Input/aac/src/fileinfo.c:305 Plugins/Input/flac/fileinfo.c:314
-#: Plugins/Input/mpg123/fileinfo.c:938 Plugins/Input/vorbis/fileinfo.c:636
+#: Plugins/Input/mpg123/fileinfo.c:938 Plugins/Input/vorbis/fileinfo.c:637
 msgid "Track number:"
 msgstr "トラック番号:"
 
 #: Plugins/Input/aac/src/fileinfo.c:319 Plugins/Input/flac/fileinfo.c:322
-#: Plugins/Input/mpg123/fileinfo.c:970 Plugins/Input/vorbis/fileinfo.c:648
+#: Plugins/Input/mpg123/fileinfo.c:970 Plugins/Input/vorbis/fileinfo.c:649
 msgid "Genre:"
 msgstr "ジャンル:"
 
 #: Plugins/Input/aac/src/fileinfo.c:385 Plugins/Input/mpg123/fileinfo.c:1101
-#: Plugins/Input/vorbis/fileinfo.c:1014 audacious/mainwin.c:789
+#: Plugins/Input/vorbis/fileinfo.c:1015 audacious/mainwin.c:786
 #, c-format
 msgid "%s - Audacious"
 msgstr "%s - Audacious"
@@ -1195,8 +1182,8 @@ msgstr "CD インデックス・サーバ:"
 msgid "Track names:"
 msgstr "トラック名:"
 
-#: Plugins/Input/cdaudio/configure.c:652 Plugins/Input/flac/configure.c:443
-#: Plugins/Input/mpg123/configure.c:653 Plugins/Input/vorbis/configure.c:518
+#: Plugins/Input/cdaudio/configure.c:652 Plugins/Input/flac/configure.c:450
+#: Plugins/Input/mpg123/configure.c:649 Plugins/Input/vorbis/configure.c:518
 msgid "Override generic titles"
 msgstr "オリジナルのタイトルを上書きする"
 
@@ -1208,11 +1195,11 @@ msgstr "名前の書式:"
 msgid "CD Info"
 msgstr "CD の情報"
 
-#: Plugins/Input/console/Audacious_Driver.cpp:672
+#: Plugins/Input/console/Audacious_Driver.cpp:670
 msgid "About the Console Music Decoder"
 msgstr "コンソールミュージックデコーダについて"
 
-#: Plugins/Input/console/Audacious_Driver.cpp:673
+#: Plugins/Input/console/Audacious_Driver.cpp:671
 msgid ""
 "Console music decoder engine based on Game_Music_Emu 0.3.0.\n"
 "Audacious implementation by: William Pitcock <nenolod@nenolod.net>, \n"
@@ -1223,11 +1210,11 @@ msgstr ""
 "Audacious の実装は William Pitcock <nenolod@nenolod.net> と\n"
 "Shay Green <hotpop.com@blargg> によります。"
 
-#: Plugins/Input/console/Audacious_Driver.cpp:677
-#: Plugins/Input/flac/configure.c:760 Plugins/Input/flac/configure.c:790
+#: Plugins/Input/console/Audacious_Driver.cpp:675
+#: Plugins/Input/flac/configure.c:767 Plugins/Input/flac/configure.c:797
 #: Plugins/Input/flac/http.c:219 Plugins/Input/mpg123/fileinfo.c:479
-#: Plugins/Input/mpg123/fileinfo.c:570 Plugins/Input/mpg123/http.c:220
-#: Plugins/Input/mpg123/mpg123.c:1211
+#: Plugins/Input/mpg123/fileinfo.c:570 Plugins/Input/mpg123/http.c:221
+#: Plugins/Input/mpg123/mpg123.c:1042
 #: Plugins/Input/timidity/src/interface.c:223
 #: Plugins/Input/timidity/src/interface.c:312
 #: Plugins/Input/tonegen/tonegen.c:55 Plugins/Input/vorbis/fileinfo.c:212
@@ -1237,7 +1224,7 @@ msgstr ""
 msgid "Ok"
 msgstr "OK"
 
-#: Plugins/Input/console/Audacious_Driver.cpp:711
+#: Plugins/Input/console/Audacious_Driver.cpp:709
 msgid "SPC, VGM, NSF/NSFE, GBS, and GYM module decoder"
 msgstr "SPC, VGM, NSF/NSFE, GBS, GYM モジュール・デコーダ"
 
@@ -1553,219 +1540,218 @@ msgstr "ヴェトナム語 (VPS)"
 msgid "Western (MacRoman)"
 msgstr "西洋 (MacRoman)"
 
-#: Plugins/Input/flac/configure.c:340 Plugins/Input/mpg123/configure.c:219
+#: Plugins/Input/flac/configure.c:347 Plugins/Input/mpg123/configure.c:215
 msgid "Select the directory where you want to store the MPEG streams:"
 msgstr "MPEG ストリームを格納するディレクトリを選択して下さい:"
 
-#: Plugins/Input/flac/configure.c:391
+#: Plugins/Input/flac/configure.c:398
 msgid "Flac Configuration"
 msgstr "Flac の設定"
 
-#: Plugins/Input/flac/configure.c:403
+#: Plugins/Input/flac/configure.c:410
 msgid "Tag Handling"
 msgstr "タグの取り扱い"
 
-#: Plugins/Input/flac/configure.c:412
+#: Plugins/Input/flac/configure.c:419
 msgid "Convert Character Set"
 msgstr "キャラクタ・セットを変換"
 
-#: Plugins/Input/flac/configure.c:419
+#: Plugins/Input/flac/configure.c:426
 msgid "Convert character set from :"
 msgstr "キャラクタ・セットを変換。変換前:"
 
-#: Plugins/Input/flac/configure.c:424
+#: Plugins/Input/flac/configure.c:431
 msgid "to :"
 msgstr "変換後:"
 
-#: Plugins/Input/flac/configure.c:452 Plugins/Input/vorbis/configure.c:531
-#: audacious/glade/prefswin.glade:2461
+#: Plugins/Input/flac/configure.c:459 Plugins/Input/vorbis/configure.c:531
+#: audacious/glade/prefswin.glade:2390
 msgid "Title format:"
 msgstr "タイトルの書式:"
 
-#: Plugins/Input/flac/configure.c:463 Plugins/Input/mpg123/configure.c:680
+#: Plugins/Input/flac/configure.c:470 Plugins/Input/mpg123/configure.c:676
 #: Plugins/Input/vorbis/configure.c:545 audacious/prefswin.c:95
 msgid "Title"
 msgstr "タイトル"
 
-#: Plugins/Input/flac/configure.c:472 Plugins/Input/vorbis/configure.c:606
+#: Plugins/Input/flac/configure.c:479 Plugins/Input/vorbis/configure.c:606
 msgid "ReplayGain"
 msgstr "リプレイ・ゲイン"
 
-#: Plugins/Input/flac/configure.c:480
+#: Plugins/Input/flac/configure.c:487
 msgid "Enable ReplayGain processing"
 msgstr "リプレイ・ゲイン処理を有効にする"
 
-#: Plugins/Input/flac/configure.c:485
+#: Plugins/Input/flac/configure.c:492
 msgid "Album mode"
 msgstr "アルバム・モード"
 
-#: Plugins/Input/flac/configure.c:492
+#: Plugins/Input/flac/configure.c:499
 msgid "Preamp:"
 msgstr "プリアンプ:"
 
-#: Plugins/Input/flac/configure.c:499
+#: Plugins/Input/flac/configure.c:506
 msgid "0 dB"
 msgstr "0 dB"
 
-#: Plugins/Input/flac/configure.c:503
+#: Plugins/Input/flac/configure.c:510
 msgid "6dB hard limiting"
 msgstr "6dB  ハード・リミットを有効にする"
 
-#: Plugins/Input/flac/configure.c:512
+#: Plugins/Input/flac/configure.c:519
 #: Plugins/Input/modplug/gui/interface.cpp:213
 msgid "Resolution"
 msgstr "解像度"
 
-#: Plugins/Input/flac/configure.c:520
+#: Plugins/Input/flac/configure.c:527
 msgid "Without ReplayGain"
 msgstr "リプレイ・ゲインなし"
 
-#: Plugins/Input/flac/configure.c:528
+#: Plugins/Input/flac/configure.c:535
 msgid "Dither 24bps to 16bps"
 msgstr "24bps から 16bps にディザリング"
 
-#: Plugins/Input/flac/configure.c:533
+#: Plugins/Input/flac/configure.c:540
 msgid "With ReplayGain"
 msgstr "リプレイ・ゲインあり"
 
-#: Plugins/Input/flac/configure.c:541
+#: Plugins/Input/flac/configure.c:548
 msgid "Enable dithering"
 msgstr "ディザリングを有効にする"
 
-#: Plugins/Input/flac/configure.c:550
+#: Plugins/Input/flac/configure.c:557
 msgid "Noise shaping"
 msgstr "ノイズ・シェイピング"
 
-#: Plugins/Input/flac/configure.c:558
+#: Plugins/Input/flac/configure.c:565
 msgid "none"
 msgstr "なし"
 
-#: Plugins/Input/flac/configure.c:564
+#: Plugins/Input/flac/configure.c:571
 msgid "low"
 msgstr "低"
 
-#: Plugins/Input/flac/configure.c:570
+#: Plugins/Input/flac/configure.c:577
 msgid "medium"
 msgstr "中"
 
-#: Plugins/Input/flac/configure.c:576
+#: Plugins/Input/flac/configure.c:583
 msgid "high"
 msgstr "高"
 
-#: Plugins/Input/flac/configure.c:582
+#: Plugins/Input/flac/configure.c:589
 msgid "Dither to"
 msgstr "ディザリング"
 
-#: Plugins/Input/flac/configure.c:590
+#: Plugins/Input/flac/configure.c:597
 msgid "16 bps"
 msgstr "16 bps"
 
-#: Plugins/Input/flac/configure.c:596
+#: Plugins/Input/flac/configure.c:603
 msgid "24 bps"
 msgstr "24 bps"
 
-#: Plugins/Input/flac/configure.c:604
-#: Plugins/Output/crossfade/interface-2.0.glade:639
+#: Plugins/Input/flac/configure.c:611
 msgid "Output"
 msgstr "出力"
 
-#: Plugins/Input/flac/configure.c:610 Plugins/Input/mpg123/configure.c:414
+#: Plugins/Input/flac/configure.c:617 Plugins/Input/mpg123/configure.c:410
 #: Plugins/Input/vorbis/configure.c:308 Plugins/Output/OSS/configure.c:302
 #: Plugins/Output/esd/configure.c:171
 msgid "Buffering:"
 msgstr "バッファリング:"
 
-#: Plugins/Input/flac/configure.c:621 Plugins/Input/mpg123/configure.c:427
+#: Plugins/Input/flac/configure.c:628 Plugins/Input/mpg123/configure.c:423
 #: Plugins/Input/vorbis/configure.c:320
 msgid "Buffer size (kb):"
 msgstr "バッファのサイズ (Kバイト):"
 
-#: Plugins/Input/flac/configure.c:631 Plugins/Input/mpg123/configure.c:442
+#: Plugins/Input/flac/configure.c:638 Plugins/Input/mpg123/configure.c:438
 #: Plugins/Input/vorbis/configure.c:334 Plugins/Output/OSS/configure.c:329
 #: Plugins/Output/esd/configure.c:198
 msgid "Pre-buffer (percent):"
 msgstr "事前にバッファリングする割合 (％):"
 
-#: Plugins/Input/flac/configure.c:641 Plugins/Input/mpg123/configure.c:456
+#: Plugins/Input/flac/configure.c:648 Plugins/Input/mpg123/configure.c:452
 #: Plugins/Input/vorbis/configure.c:348
 msgid "Proxy:"
 msgstr "プロキシ:"
 
-#: Plugins/Input/flac/configure.c:649 Plugins/Input/mpg123/configure.c:466
+#: Plugins/Input/flac/configure.c:656 Plugins/Input/mpg123/configure.c:462
 #: Plugins/Input/vorbis/configure.c:358
 msgid "Use proxy"
 msgstr "プロキシを使う"
 
-#: Plugins/Input/flac/configure.c:658 Plugins/Input/mpg123/configure.c:479
+#: Plugins/Input/flac/configure.c:665 Plugins/Input/mpg123/configure.c:475
 #: Plugins/Input/vorbis/configure.c:371 Plugins/Output/esd/configure.c:114
 #: Plugins/Output/esd/configure.c:144
 msgid "Host:"
 msgstr "ホスト名:"
 
-#: Plugins/Input/flac/configure.c:665 Plugins/Input/mpg123/configure.c:489
+#: Plugins/Input/flac/configure.c:672 Plugins/Input/mpg123/configure.c:485
 #: Plugins/Input/vorbis/configure.c:381 Plugins/Output/esd/configure.c:153
 msgid "Port:"
 msgstr "ポート番号:"
 
-#: Plugins/Input/flac/configure.c:675 Plugins/Input/mpg123/configure.c:502
+#: Plugins/Input/flac/configure.c:682 Plugins/Input/mpg123/configure.c:498
 #: Plugins/Input/vorbis/configure.c:394
 msgid "Use authentication"
 msgstr "認証を行う"
 
-#: Plugins/Input/flac/configure.c:685 Plugins/Input/mpg123/configure.c:519
+#: Plugins/Input/flac/configure.c:692 Plugins/Input/mpg123/configure.c:515
 #: Plugins/Input/vorbis/configure.c:411
 msgid "Username:"
 msgstr "ユーザ名:"
 
-#: Plugins/Input/flac/configure.c:693 Plugins/Input/mpg123/configure.c:530
+#: Plugins/Input/flac/configure.c:700 Plugins/Input/mpg123/configure.c:526
 #: Plugins/Input/vorbis/configure.c:422
 msgid "Password:"
 msgstr "パスワード:"
 
-#: Plugins/Input/flac/configure.c:706 Plugins/Input/mpg123/configure.c:547
+#: Plugins/Input/flac/configure.c:713 Plugins/Input/mpg123/configure.c:543
 #: Plugins/Input/vorbis/configure.c:439
 msgid "Save stream to disk:"
 msgstr "ストリームの保存:"
 
-#: Plugins/Input/flac/configure.c:714 Plugins/Input/mpg123/configure.c:558
+#: Plugins/Input/flac/configure.c:721 Plugins/Input/mpg123/configure.c:554
 #: Plugins/Input/vorbis/configure.c:450
 msgid "Save stream to disk"
 msgstr "ストリームをディスクに保存する"
 
-#: Plugins/Input/flac/configure.c:723 Plugins/Input/mpg123/configure.c:572
+#: Plugins/Input/flac/configure.c:730 Plugins/Input/mpg123/configure.c:568
 #: Plugins/Input/vorbis/configure.c:464
 #: Plugins/Output/disk_writer/disk_writer.c:370
 msgid "Path:"
 msgstr "パス名:"
 
-#: Plugins/Input/flac/configure.c:730 Plugins/Input/mpg123/configure.c:582
+#: Plugins/Input/flac/configure.c:737 Plugins/Input/mpg123/configure.c:578
 #: Plugins/Input/vorbis/configure.c:474
 #: Plugins/Output/disk_writer/disk_writer.c:381
 msgid "Browse"
 msgstr "参照"
 
-#: Plugins/Input/flac/configure.c:735 Plugins/Input/mpg123/configure.c:588
+#: Plugins/Input/flac/configure.c:742 Plugins/Input/mpg123/configure.c:584
 msgid "SHOUT/Icecast:"
 msgstr "SHOUT/Icecast:"
 
-#: Plugins/Input/flac/configure.c:742
+#: Plugins/Input/flac/configure.c:749
 msgid "Enable SHOUT/Icecast title streaming"
 msgstr "SHOUT/Icecast タイトル・ストリーミングを有効にする"
 
-#: Plugins/Input/flac/configure.c:746 Plugins/Input/mpg123/configure.c:602
+#: Plugins/Input/flac/configure.c:753 Plugins/Input/mpg123/configure.c:598
 msgid "Enable Icecast Metadata UDP Channel"
 msgstr "Icecast メタデータ UDP チャンネルを有効にする"
 
-#: Plugins/Input/flac/configure.c:751 Plugins/Input/mpg123/configure.c:609
+#: Plugins/Input/flac/configure.c:758 Plugins/Input/mpg123/configure.c:605
 #: Plugins/Input/vorbis/configure.c:481
 msgid "Streaming"
 msgstr "ストリーミング"
 
-#: Plugins/Input/flac/configure.c:782
+#: Plugins/Input/flac/configure.c:789
 msgid "About Flac Plugin"
 msgstr "Flac プラグインについて"
 
-#: Plugins/Input/flac/configure.c:783
+#: Plugins/Input/flac/configure.c:790
 msgid ""
 "Flac Plugin by Josh Coalson\n"
 "contributions by\n"
@@ -1839,7 +1825,7 @@ msgstr ""
 "平均ビットレート: %.1f kb/s\n"
 "圧縮率: %.1f%%"
 
-#: Plugins/Input/flac/fileinfo.c:259 audacious/input.c:524
+#: Plugins/Input/flac/fileinfo.c:259 audacious/input.c:525
 msgid "Filename:"
 msgstr "ファイル名:"
 
@@ -1847,12 +1833,11 @@ msgstr "ファイル名:"
 msgid "Tag:"
 msgstr "タグ:"
 
-#: Plugins/Input/flac/fileinfo.c:306 Plugins/Input/vorbis/fileinfo.c:624
+#: Plugins/Input/flac/fileinfo.c:306 Plugins/Input/vorbis/fileinfo.c:625
 msgid "Date:"
 msgstr "日付:"
 
 #: Plugins/Input/flac/fileinfo.c:345
-#: Plugins/Output/crossfade/interface-2.0.glade:4763
 msgid "Save"
 msgstr "保存"
 
@@ -1869,43 +1854,43 @@ msgstr "FLAC の情報:"
 msgid "File Info - %s"
 msgstr "ファイル情報 - %s"
 
-#: Plugins/Input/flac/http.c:219 Plugins/Input/mpg123/http.c:220
+#: Plugins/Input/flac/http.c:219 Plugins/Input/mpg123/http.c:221
 #: Plugins/Input/vorbis/http.c:218
 #: Plugins/Output/disk_writer/disk_writer.c:137
 msgid "Error"
 msgstr "エラー"
 
-#: Plugins/Input/flac/http.c:383 Plugins/Input/mpg123/http.c:374
+#: Plugins/Input/flac/http.c:383 Plugins/Input/mpg123/http.c:375
 #: Plugins/Input/vorbis/http.c:327
 #, c-format
 msgid "LOOKING UP %s"
 msgstr "%s の検索中"
 
-#: Plugins/Input/flac/http.c:389 Plugins/Input/mpg123/http.c:379
+#: Plugins/Input/flac/http.c:389 Plugins/Input/mpg123/http.c:380
 #: Plugins/Input/vorbis/http.c:332
 #, c-format
 msgid "Couldn't look up host %s"
 msgstr "ホスト %s を見つけられませんでした"
 
-#: Plugins/Input/flac/http.c:402 Plugins/Input/mpg123/http.c:392
+#: Plugins/Input/flac/http.c:402 Plugins/Input/mpg123/http.c:393
 #: Plugins/Input/vorbis/http.c:345
 #, c-format
 msgid "CONNECTING TO %s:%d"
 msgstr "%s:%d へ接続中"
 
 #: Plugins/Input/flac/http.c:409 Plugins/Input/flac/http.c:429
-#: Plugins/Input/mpg123/http.c:400 Plugins/Input/mpg123/http.c:420
+#: Plugins/Input/mpg123/http.c:401 Plugins/Input/mpg123/http.c:421
 #: Plugins/Input/vorbis/http.c:353 Plugins/Input/vorbis/http.c:373
 #, c-format
 msgid "Couldn't connect to host %s"
 msgstr "ホスト %s へ接続できませんでした"
 
-#: Plugins/Input/flac/http.c:495 Plugins/Input/mpg123/http.c:483
+#: Plugins/Input/flac/http.c:495 Plugins/Input/mpg123/http.c:484
 #: Plugins/Input/vorbis/http.c:421
 msgid "CONNECTED: WAITING FOR REPLY"
 msgstr "接続完了: 応答を待っています"
 
-#: Plugins/Input/flac/http.c:536 Plugins/Input/mpg123/http.c:520
+#: Plugins/Input/flac/http.c:536 Plugins/Input/mpg123/http.c:521
 #: Plugins/Input/vorbis/http.c:458
 #, c-format
 msgid ""
@@ -1915,8 +1900,7 @@ msgstr ""
 "ホスト %s へ接続できませんでした。\n"
 "サーバからの報告: %s"
 
-#: Plugins/Input/flac/http.c:670 Plugins/Input/mpg123/http.c:638
-#: Plugins/Input/vorbis/http.c:557
+#: Plugins/Input/flac/http.c:670 Plugins/Input/vorbis/http.c:557
 #, c-format
 msgid "PRE-BUFFERING: %dKB/%dKB"
 msgstr "プレ・バッファリング中: %d/%d Kバイト"
@@ -1950,13 +1934,13 @@ msgid "ModPlug Configuration"
 msgstr "ModPlug の設定"
 
 #: Plugins/Input/modplug/gui/interface.cpp:227
-#: Plugins/Input/mpg123/configure.c:328
+#: Plugins/Input/mpg123/configure.c:324
 #: Plugins/Input/timidity/src/interface.c:141
 msgid "16 bit"
 msgstr "16ビット"
 
 #: Plugins/Input/modplug/gui/interface.cpp:235
-#: Plugins/Input/mpg123/configure.c:337
+#: Plugins/Input/mpg123/configure.c:333
 #: Plugins/Input/timidity/src/interface.c:133
 msgid "8 bit"
 msgstr " 8ビット"
@@ -1994,7 +1978,6 @@ msgid "11 kHz"
 msgstr "11 kHz"
 
 #: Plugins/Input/modplug/gui/interface.cpp:318
-#: Plugins/Output/crossfade/interface-2.0.glade:187
 msgid "Resampling"
 msgstr "リサンプリング"
 
@@ -2043,12 +2026,6 @@ msgstr "リバーブ"
 #: Plugins/Input/modplug/gui/interface.cpp:516
 #: Plugins/Input/modplug/gui/interface.cpp:588
 #: Plugins/Input/modplug/gui/interface.cpp:674
-#: Plugins/Output/crossfade/interface-2.0.glade:903
-#: Plugins/Output/crossfade/interface-2.0.glade:1379
-#: Plugins/Output/crossfade/interface-2.0.glade:1554
-#: Plugins/Output/crossfade/interface-2.0.glade:2140
-#: Plugins/Output/crossfade/interface-2.0.glade:3669
-#: Plugins/Output/crossfade/interface-2.0.glade:3893
 msgid "Enable"
 msgstr "有効"
 
@@ -2115,13 +2092,10 @@ msgid "Loop forever"
 msgstr "永遠にループ"
 
 #: Plugins/Input/modplug/gui/interface.cpp:755
-#: Plugins/Output/crossfade/interface-2.0.glade:1010
 msgid "Effects"
 msgstr "エフェクト"
 
 #: Plugins/Input/modplug/gui/interface.cpp:779
-#: Plugins/Output/crossfade/interface-2.0.glade:4850
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:282
 msgid "Apply"
 msgstr "適用"
 
@@ -2199,65 +2173,65 @@ msgstr "ピックスマップファイル %s が見つかりません。"
 msgid "Error loading pixmap file: %s"
 msgstr "ピックスマップファイル %s の読み込みエラー。"
 
-#: Plugins/Input/mpg123/configure.c:303
+#: Plugins/Input/mpg123/configure.c:299
 msgid "MPEG Audio Plugin Configuration"
 msgstr "MPEG オーディオ・プラグインの設定"
 
-#: Plugins/Input/mpg123/configure.c:320
+#: Plugins/Input/mpg123/configure.c:316
 msgid "Resolution:"
 msgstr "解像度:"
 
-#: Plugins/Input/mpg123/configure.c:344 Plugins/Input/vorbis/fileinfo.c:862
-#: Plugins/Input/vorbis/fileinfo.c:918
+#: Plugins/Input/mpg123/configure.c:340 Plugins/Input/vorbis/fileinfo.c:863
+#: Plugins/Input/vorbis/fileinfo.c:919
 msgid "Channels:"
 msgstr "チャンネル数:"
 
-#: Plugins/Input/mpg123/configure.c:352
+#: Plugins/Input/mpg123/configure.c:348
 msgid "Stereo (if available)"
 msgstr "ステレオ (可能ならば)"
 
-#: Plugins/Input/mpg123/configure.c:363
+#: Plugins/Input/mpg123/configure.c:359
 #: Plugins/Input/timidity/src/interface.c:166
 msgid "Mono"
 msgstr "モノラル"
 
-#: Plugins/Input/mpg123/configure.c:370
+#: Plugins/Input/mpg123/configure.c:366
 msgid "Down sample:"
 msgstr "ダウン・サンプル:"
 
-#: Plugins/Input/mpg123/configure.c:379
+#: Plugins/Input/mpg123/configure.c:375
 msgid "1:1 (44 kHz)"
 msgstr "1:1 (44 kHz)"
 
-#: Plugins/Input/mpg123/configure.c:390
+#: Plugins/Input/mpg123/configure.c:386
 msgid "1:2 (22 kHz)"
 msgstr "1:2 (22 kHz)"
 
-#: Plugins/Input/mpg123/configure.c:401
+#: Plugins/Input/mpg123/configure.c:397
 msgid "1:4 (11 kHz)"
 msgstr "1:4 (11 kHz)"
 
-#: Plugins/Input/mpg123/configure.c:410
+#: Plugins/Input/mpg123/configure.c:406
 msgid "Decoder"
 msgstr "デコーダ"
 
-#: Plugins/Input/mpg123/configure.c:611
+#: Plugins/Input/mpg123/configure.c:607
 msgid "ID3 Tags:"
 msgstr "ID3 タグ:"
 
-#: Plugins/Input/mpg123/configure.c:619
+#: Plugins/Input/mpg123/configure.c:615
 msgid "Disable ID3V2 tags"
 msgstr "ID3V2 のタグを無効にする"
 
-#: Plugins/Input/mpg123/configure.c:628
+#: Plugins/Input/mpg123/configure.c:624
 msgid "Convert non-UTF8 ID3 tags to UTF8"
 msgstr "UTF-8 ではない ID3 タグを UTF-8 に変換する"
 
-#: Plugins/Input/mpg123/configure.c:641
+#: Plugins/Input/mpg123/configure.c:637
 msgid "ID3 encoding:"
 msgstr "ID3 のエンコーディング:"
 
-#: Plugins/Input/mpg123/configure.c:666
+#: Plugins/Input/mpg123/configure.c:662
 msgid "ID3 format:"
 msgstr "ID3 の書式:"
 
@@ -2337,12 +2311,12 @@ msgid "MPEG Level:"
 msgstr "MPEG レベル:"
 
 #: Plugins/Input/mpg123/fileinfo.c:735 Plugins/Input/mpg123/fileinfo.c:1125
-#: Plugins/Input/vorbis/fileinfo.c:836 Plugins/Input/vorbis/fileinfo.c:912
+#: Plugins/Input/vorbis/fileinfo.c:837 Plugins/Input/vorbis/fileinfo.c:913
 msgid "Bit rate:"
 msgstr "ビット・レート:"
 
 #: Plugins/Input/mpg123/fileinfo.c:748 Plugins/Input/mpg123/fileinfo.c:1128
-#: Plugins/Input/vorbis/fileinfo.c:849 Plugins/Input/vorbis/fileinfo.c:915
+#: Plugins/Input/vorbis/fileinfo.c:850 Plugins/Input/vorbis/fileinfo.c:916
 msgid "Sample rate:"
 msgstr "サンプリング・レート:"
 
@@ -2351,7 +2325,7 @@ msgid "Frames:"
 msgstr "フレーム数:"
 
 #: Plugins/Input/mpg123/fileinfo.c:775 Plugins/Input/mpg123/fileinfo.c:1146
-#: Plugins/Input/vorbis/fileinfo.c:888 Plugins/Input/vorbis/fileinfo.c:924
+#: Plugins/Input/vorbis/fileinfo.c:889 Plugins/Input/vorbis/fileinfo.c:925
 msgid "File size:"
 msgstr "ファイル・サイズ:"
 
@@ -2360,7 +2334,7 @@ msgid "Error Protection:"
 msgstr "エラー保護:"
 
 #: Plugins/Input/mpg123/fileinfo.c:811 Plugins/Input/mpg123/fileinfo.c:1134
-#: Plugins/Input/vorbis/fileinfo.c:718
+#: Plugins/Input/vorbis/fileinfo.c:719
 msgid "Copyright:"
 msgstr "著作権:"
 
@@ -2388,9 +2362,9 @@ msgstr "アルバムのタグを貼り付ける"
 #: Plugins/Input/mpg123/fileinfo.c:1129 Plugins/Input/mpg123/fileinfo.c:1132
 #: Plugins/Input/mpg123/fileinfo.c:1135 Plugins/Input/mpg123/fileinfo.c:1138
 #: Plugins/Input/mpg123/fileinfo.c:1141 Plugins/Input/mpg123/fileinfo.c:1144
-#: Plugins/Input/mpg123/fileinfo.c:1147 Plugins/Input/vorbis/fileinfo.c:913
-#: Plugins/Input/vorbis/fileinfo.c:916 Plugins/Input/vorbis/fileinfo.c:919
-#: Plugins/Input/vorbis/fileinfo.c:922 Plugins/Input/vorbis/fileinfo.c:925
+#: Plugins/Input/mpg123/fileinfo.c:1147 Plugins/Input/vorbis/fileinfo.c:914
+#: Plugins/Input/vorbis/fileinfo.c:917 Plugins/Input/vorbis/fileinfo.c:920
+#: Plugins/Input/vorbis/fileinfo.c:923 Plugins/Input/vorbis/fileinfo.c:926
 msgid "N/A"
 msgstr "N/A"
 
@@ -2412,7 +2386,7 @@ msgid "%s"
 msgstr "%s"
 
 #: Plugins/Input/mpg123/fileinfo.c:1269 Plugins/Input/mpg123/fileinfo.c:1390
-#: Plugins/Input/vorbis/fileinfo.c:957
+#: Plugins/Input/vorbis/fileinfo.c:958
 #, c-format
 msgid "%d"
 msgstr "%d"
@@ -2423,6 +2397,11 @@ msgstr "%d"
 msgid "%lu Bytes"
 msgstr "%lu バイト"
 
+#: Plugins/Input/mpg123/http.c:639
+#, fuzzy, c-format
+msgid "PRE-BUFFERING: %luKB/%luKB"
+msgstr "プレ・バッファリング中: %d/%d Kバイト"
+
 #: Plugins/Input/mpg123/id3_frame_content.c:81
 msgid " (Remix)"
 msgstr " (リミックス)"
@@ -2431,11 +2410,11 @@ msgstr " (リミックス)"
 msgid " (Cover)"
 msgstr " (カヴァー)"
 
-#: Plugins/Input/mpg123/mpg123.c:1206
+#: Plugins/Input/mpg123/mpg123.c:1037
 msgid "About MPEG Audio Plugin"
 msgstr "MPEG オーディオ・プラグインについて"
 
-#: Plugins/Input/mpg123/mpg123.c:1207
+#: Plugins/Input/mpg123/mpg123.c:1038
 msgid ""
 "Audacious decoding engine by William Pitcock <nenolod@nenolod.net>, derived "
 "from:\n"
@@ -2449,7 +2428,7 @@ msgstr ""
 "同様に mpg123 0.59s.mc3 から部分的に派生。\n"
 "オリジナルの XMMS プラグインをベースとする。"
 
-#: Plugins/Input/mpg123/mpg123.c:1245
+#: Plugins/Input/mpg123/mpg123.c:1076
 msgid "MPEG Audio Plugin"
 msgstr "MPEG オーディオ・プラグイン"
 
@@ -2607,74 +2586,74 @@ msgstr "タグの修正に失敗しました (close)"
 msgid "Failed to modify tag"
 msgstr "タグの修正に失敗"
 
-#: Plugins/Input/vorbis/fileinfo.c:572
+#: Plugins/Input/vorbis/fileinfo.c:573
 msgid " Ogg Vorbis Tag "
 msgstr " Ogg Vorbis タグ "
 
-#: Plugins/Input/vorbis/fileinfo.c:666
+#: Plugins/Input/vorbis/fileinfo.c:667
 msgid "Description:"
 msgstr "詳細:"
 
-#: Plugins/Input/vorbis/fileinfo.c:676
+#: Plugins/Input/vorbis/fileinfo.c:677
 msgid "Location:"
 msgstr "場所:"
 
-#: Plugins/Input/vorbis/fileinfo.c:686
+#: Plugins/Input/vorbis/fileinfo.c:687
 msgid "Version:"
 msgstr "バージョン:"
 
-#: Plugins/Input/vorbis/fileinfo.c:697
+#: Plugins/Input/vorbis/fileinfo.c:698
 msgid "ISRC number:"
 msgstr "ISRC 番号:"
 
-#: Plugins/Input/vorbis/fileinfo.c:708
+#: Plugins/Input/vorbis/fileinfo.c:709
 msgid "Organization:"
 msgstr "組織:"
 
-#: Plugins/Input/vorbis/fileinfo.c:755
+#: Plugins/Input/vorbis/fileinfo.c:756
 msgid " Ogg Vorbis ReplayGain "
 msgstr " Ogg Vorbis リプレイゲイン "
 
-#: Plugins/Input/vorbis/fileinfo.c:761
+#: Plugins/Input/vorbis/fileinfo.c:762
 msgid "Track gain:"
 msgstr "トラックのゲイン:"
 
-#: Plugins/Input/vorbis/fileinfo.c:771
+#: Plugins/Input/vorbis/fileinfo.c:772
 msgid "Track peak:"
 msgstr "トラックのピーク:"
 
-#: Plugins/Input/vorbis/fileinfo.c:782
+#: Plugins/Input/vorbis/fileinfo.c:783
 msgid "Album gain:"
 msgstr "アルバムのゲイン:"
 
-#: Plugins/Input/vorbis/fileinfo.c:792
+#: Plugins/Input/vorbis/fileinfo.c:793
 msgid "Album peak:"
 msgstr "アルバムのピーク:"
 
-#: Plugins/Input/vorbis/fileinfo.c:821
+#: Plugins/Input/vorbis/fileinfo.c:822
 msgid " Ogg Vorbis Info "
 msgstr " Ogg Vorbis 情報 "
 
-#: Plugins/Input/vorbis/fileinfo.c:875 Plugins/Input/vorbis/fileinfo.c:921
+#: Plugins/Input/vorbis/fileinfo.c:876 Plugins/Input/vorbis/fileinfo.c:922
 msgid "Length:"
 msgstr "演奏時間:"
 
-#: Plugins/Input/vorbis/fileinfo.c:955
+#: Plugins/Input/vorbis/fileinfo.c:956
 #, c-format
 msgid "%d KBit/s (nominal)"
 msgstr "%d Kビット/秒 (ノーマル)"
 
-#: Plugins/Input/vorbis/fileinfo.c:956 Plugins/Input/wma/wma.c:495
+#: Plugins/Input/vorbis/fileinfo.c:957 Plugins/Input/wma/wma.c:495
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
 
-#: Plugins/Input/vorbis/fileinfo.c:959
+#: Plugins/Input/vorbis/fileinfo.c:960
 #, c-format
 msgid "%d:%.2d"
 msgstr "%d:%.2d"
 
-#: Plugins/Input/vorbis/fileinfo.c:961
+#: Plugins/Input/vorbis/fileinfo.c:962
 #, c-format
 msgid "%d Bytes"
 msgstr "%d バイト"
@@ -3057,898 +3036,6 @@ msgstr "Audacious:"
 msgid "Advanced settings"
 msgstr "拡張設定"
 
-#: Plugins/Output/crossfade/configure.c:1832
-msgid "About crossfade"
-msgstr "クロスフェイドについて"
-
-#: Plugins/Output/crossfade/configure.c:1833
-msgid ""
-"Audacious crossfading plugin\n"
-"Code adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org> from:\n"
-"XMMS Crossfade Plugin "
-msgstr ""
-"Audacious クロスフェイディング プラグイン\n"
-"Tony Vroon <chainsaw@gentoo.org> による XMMS クロスフェイドプラグインの\n"
-"Audacious 使用への適応:"
-
-#: Plugins/Output/crossfade/configure.c:1835
-msgid ""
-"\n"
-"Copyright (C) 2000-2004  Peter Eisenlohr <peter@eisenlohr.org>\n"
-"\n"
-"based on the original OSS Output Plugin  Copyright (C) 1998-2000\n"
-"Peter Alm, Mikael Alm, Olle Hallnas, Thomas Nilsson and 4Front Technologies\n"
-"\n"
-"This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
-"\n"
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"GNU General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-"USA."
-msgstr ""
-"\n"
-"Copyright (C) 2000-2004  Peter Eisenlohr <peter@eisenlohr.org>\n"
-"\n"
-"Copyright (C) 1998-2000 Peter Alm, Mikael Alm, Olle Hallnas, Thomas Nilsson"
-"と 4Front Technologie によるオリジナル OSS 出力プラグインをベースとする。\n"
-"\n"
-"このプログラムはフリーソフトウェアです;\n"
-"フリーソフトウェア財団が提供する GNU 一般公有使用許諾契約書\n"
-"の第二版、あるいはそれ以降の版が定める条項の下で\n"
-"本プログラムを再頒布または変更することができます。\n"
-"\n"
-"本プログラムは有用とは思いますが、\n"
-"頒布にあたっては、市場性及び特定目的、適合性についての\n"
-"暗黙の保証を含めて、いかなる保証も行ないません。\n"
-"詳細については GNU 一般公有使用許諾契約書をご覧下さい。\n"
-"\n"
-"あなたは、本プログラムと一緒に\n"
-"GNU 一般公有使用許諾契約書の写しを受け取っているはずです。\n"
-"そうでない場合は、Free Software Foundation, Inc., 59\n"
-"Temple Place - Suite 330, Boston, MA 02111-1307, USA へ\n"
-"手紙を書いて下さい。"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:8
-msgid "Crossfade Configuration"
-msgstr "クロスフェイドの設定"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:78
-msgid "Rate:"
-msgstr "レート:"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:118
-msgid "Quality:"
-msgstr "品質:"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:263
-#: Plugins/Output/crossfade/interface-2.0.glade:694
-#: Plugins/Output/crossfade/interface-2.0.glade:1170
-#: Plugins/Output/crossfade/interface-2.0.glade:1243
-#: Plugins/Output/crossfade/interface-2.0.glade:5400
-msgid "dummy"
-msgstr "ダミー"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:288
-#: Plugins/Output/crossfade/interface-2.0.glade:720
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:124
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:244
-msgid "Configure"
-msgstr "設定"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:301
-#: Plugins/Output/crossfade/interface-2.0.glade:734
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:132
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:252
-msgid "About"
-msgstr "プラグインについて"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:321
-msgid "Output plugin"
-msgstr "出力プラグイン"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:366
-msgid "Throttle Output"
-msgstr "出力を絞る"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:392
-msgid "Max block size (bytes):"
-msgstr "最大ブロックサイズ (バイト):"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:439
-msgid "Force close/reopen on songchange"
-msgstr "曲変更でのクローズ/再オープンを強制"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:460
-msgid "Plugin compatibility options"
-msgstr "プラグイン互換オプション"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:607
-msgid ""
-"When modifying the Output Options or the Mixing buffer size, you need to "
-"stop/restart playback for the settings to take effect."
-msgstr ""
-"出力オプションかミキシングバッファサイズが変更されたとき、エフェクトを得るた"
-"めに演奏を停止/再スタートする必要がある。"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:683
-msgid ""
-"Select an effect plugin. Take care not to use the same plugin as selected in "
-"Audacious' configuration dialog."
-msgstr ""
-"エフェクトプラグインを選択する。Audacious 設定ダイアログで選択された"
-"同じプラグインは使われないことに注意。"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:717
-msgid "Open the configuration dialog of the plugin selected above."
-msgstr "上で選択したプラグインの設定ダイアログを開く。"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:731
-msgid "Open the about dialog of the plugin selected above."
-msgstr "上で選択したプラグインについてのダイアログを開く。"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:745
-msgid ""
-"Enable the selected plugin. Note that after pressing 'Apply' it may take a "
-"while until you can hear the effect, since it is applied before the audio "
-"data goes into the buffer."
-msgstr ""
-"選択されたプラグインを有効にする。オーディオデータがバッファに入る間に適用さ"
-"れるので、'適用'ボタンを押してからエフェクトが聞こえるまでしばらくかかること"
-"に注意。"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:747
-msgid "Use plugin"
-msgstr "プラグインを使用"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:770
-msgid "Pre-mixing effect plugin"
-msgstr "プレミキシング・エフェクト・プラグイン"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:817
-msgid "Read Quantaudio comment field"
-msgstr "Quantaudio コメントフィールドを読む"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:838
-#: Plugins/Output/crossfade/interface-2.0.glade:3820
-msgid ""
-"Set the maximum length for gaps at the end of a stream.\n"
-"Default: 500"
-msgstr ""
-"ストリームの終わりのギャップの最大長さをセット。\n"
-"デフォルト: 500"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:867
-msgid "Target RMS:"
-msgstr "ターゲット RMS:"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:926
-msgid "Read ID3V2 RVA2 Tag"
-msgstr "ID3V2 RVA2 タグを読む"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:949
-msgid "Volume normalizer"
-msgstr "音量ノーマライザ"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:979
-msgid ""
-"You do not need to press 'Apply' after making changes to the effect plugin "
-"settings. It may take a while though until you can hear the change, since "
-"the plugin is applied before the mixing buffer."
-msgstr ""
-"エフェクトプラグイン設定の変更後に'適用'を押す必要はない。ミキシングバッファ"
-"の前にプラグインが適用されるため、変更を聞くまでにしばらくかかる。"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1046
-msgid "Mixing buffer size (ms):"
-msgstr "ミキシングバッファのサイズ (ミリ秒):"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1071
-msgid ""
-"Specify the size of the mixing buffer. Mixing buffer space is required for "
-"pauses, fade-outs, offsetting (i.e. interleaving the end and beginning of "
-"two songs) and killing trailing gaps. Fade-ins and killing leading gaps are "
-"done on-the-fly and do not depend on mixing buffer space.\n"
-"Default: n/a - calculated automatically"
-msgstr ""
-"ミキシングバッファのサイズを指定する。ミキシングバッファ空間は一時停止、フェ"
-"イドアウト、オフセット(すなわち2曲の終わりと始まりのインターリーブ)、後の"
-"ギャップを消すために要求される。フェイドインと先のギャップを消すことはオン・"
-"ザ・フライで行われ、ミキシングバッファ空間に依存しない。\n"
-"デフォルト: n/a - 自動的に計算される"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1093
-msgid ""
-"Automatically calculate an optimal buffer size.\n"
-"Default: On"
-msgstr ""
-"最適のバッファサイズを自動的に計算する。\n"
-"デフォルト: オン"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1096
-msgid "auto"
-msgstr "自動"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1128
-msgid "Set parameters for:"
-msgstr "パラメータをセット:"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1153
-msgid ""
-"Select the type of songchange you want to configure:\n"
-"* Start of playback: When starting playback by pressing PLAY\n"
-"* Automatic songchange: When reaching the end of a song and the playlist "
-"advances to the next song\n"
-"* Manual songchange: When manually selecting another song, for example by "
-"pressing NEXT/PREV\n"
-"* Manual stop: When pressing the STOP button\n"
-"* End of playlist: After the last song in the playlist has been played\n"
-"* Seeking: When seeking within the current song"
-msgstr ""
-"設定したい曲変更タイプを選択する:\n"
-"* 再生の始め: PLAY を押して再生が始まったとき\n"
-"* 自動曲変更: 曲の終わりに到達、曲一覧で次の曲に進むとき\n"
-"* 手動曲変更: 例えば NEXT/PREV を押すように、手動で別の曲を選択したとき\n"
-"* 手動停止: STOP ボタンを押したとき\n"
-"* シーク: 現在の曲中でシークしたとき"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1200
-msgid "Crossfade/Transition type:"
-msgstr "クロスフェイド/移行のタイプ:"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1225
-msgid ""
-"Select the transition to be used for the songchange type selected above:\n"
-"* Fade-in: Fade-in at 'Start of playback'\n"
-"* Reopen output device: Force a close/open on the output plugin. This will "
-"most certainly re-introduce gaps and clicks, but might be usefull with some "
-"plugins.\n"
-"* Flush output device: Keeps the output plugin opened, but flushes its "
-"buffers. This will give you almost instant reaction when pressing NEXT/"
-"PREV.\n"
-"* None (gapless/off): Gapless mode. Keeps the device opened, but does not do "
-"any fading.\n"
-"* Simple crossfade: Does a simple crossfade between the previous and the "
-"next song.\n"
-"* Advanced crossfade: Allows you to configure the crossfade in more detail.\n"
-"* Fade-out: Fade-out at 'Manual stop' or 'End of playlist'."
-msgstr ""
-"上で選択された曲変更タイプで使われる移行タイプを選択する:\n"
-"* フェイドイン: '再生の始め'でフェイドインする。\n"
-"* 出力デバイスを再オープン: 出力プラグインでクローズ/オープンを強制する。これ"
-"はギャップや雑音をほぼ確実に再度引き起こすが、あるプラグインでは有効かもしれ"
-"ない。\n"
-"* 出力デバイスをフラッシュ: 出力プラグインをオープンしたままにするが、バッ"
-"ファはフラッシュする。NEXT/PREV を押したときに瞬時に反応する。\n"
-"* なし (ギャップレス/オフ): ギャップレスモード。デバイスを開いたままにする"
-"が、フェイディングは行わない。\n"
-"* 単純なクロスフェイド: 先と次の曲の間で単純なクロスフェイドを行う。\n"
-"* 高度なクロスフェイド: より詳細なクロスフェイド設定を行える。\n"
-"* フェイドアウト: '手動停止'か'曲一覧の終わり'でフェイドアウトする。"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1280
-msgid "Reopen"
-msgstr "再オープン"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1326
-#: Plugins/Output/crossfade/interface-2.0.glade:1456
-#: Plugins/Output/crossfade/interface-2.0.glade:1716
-#: Plugins/Output/crossfade/interface-2.0.glade:1864
-#: Plugins/Output/crossfade/interface-2.0.glade:2012
-#: Plugins/Output/crossfade/interface-2.0.glade:2408
-#: Plugins/Output/crossfade/interface-2.0.glade:2665
-#: Plugins/Output/crossfade/interface-2.0.glade:2876
-#: Plugins/Output/crossfade/interface-2.0.glade:3052
-msgid "Length (ms):"
-msgstr "長さ (ミリ秒):"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1354
-#: Plugins/Output/crossfade/interface-2.0.glade:1750
-msgid ""
-"Specify the length of the silence to be inserted between the tracks.\n"
-"Default: 2000"
-msgstr ""
-"トラック間に挿入される静寂の長さを指定する。\n"
-"デフォルト: 2000"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1403
-#: Plugins/Output/crossfade/interface-2.0.glade:1776
-#: Plugins/Output/crossfade/interface-2.0.glade:1812
-msgid "Pause"
-msgstr "一時停止"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1496
-#: Plugins/Output/crossfade/interface-2.0.glade:2448
-#: Plugins/Output/crossfade/interface-2.0.glade:2705
-msgid "Start volume (%):"
-msgstr "開始音量 (%):"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1530
-#: Plugins/Output/crossfade/interface-2.0.glade:2482
-msgid "Set the duration for the fadein of the next song."
-msgstr "次の曲のフェイドイン持続時間をセット。"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1575
-#: Plugins/Output/crossfade/interface-2.0.glade:2551
-#: Plugins/Output/crossfade/interface-2.0.glade:2762
-msgid ""
-"Set the start volume. Audacious-crossfade will fade from this volume to 100% "
-"during the time specified above.\n"
-"Default: 0"
-msgstr ""
-"開始音量をセット。Audacious-crossfade は上で指定した時間中、100% から"
-"この音量までフェイドする。\n"
-"デフォルト: 0"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1601
-#: Plugins/Output/crossfade/interface-2.0.glade:2577
-#: Plugins/Output/crossfade/interface-2.0.glade:2788
-#: Plugins/Output/crossfade/interface-2.0.glade:2824
-msgid "Fade in"
-msgstr "フェイドイン"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1637
-msgid "Flush"
-msgstr "フラッシュ"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1898
-msgid ""
-"Specify the length of the crosssfade.\n"
-"Default: depends on songchange type"
-msgstr ""
-"クロスフェイドの長さを指定する。\n"
-"デフォルト: 曲変更タイプに依存"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1924
-msgid "Crossfade"
-msgstr "クロスフェイド"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:1960
-msgid "Simple XF"
-msgstr "単純な XF"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2046
-msgid "Set the duration for the fadeout of the previous song."
-msgstr "前の曲のフェイドアウト持続時間をセット。"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2075
-#: Plugins/Output/crossfade/interface-2.0.glade:2939
-msgid "End volume (%):"
-msgstr "終了音量 (%):"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2109
-#: Plugins/Output/crossfade/interface-2.0.glade:2973
-msgid ""
-"Set the end volume. Audacious-crossfade will fade from 100% to this volume "
-"during the time specified above.\n"
-"Default: 0"
-msgstr ""
-"終わりの音量をセット。Audacious-crossfade は上で指定した時間中、100% から"
-"この音量までフェイドする。\n"
-"デフォルト: 0"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2170
-#: Plugins/Output/crossfade/interface-2.0.glade:2999
-#: Plugins/Output/crossfade/interface-2.0.glade:3148
-msgid "Fade out"
-msgstr "フェイドアウト"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2223
-msgid "Set a custom offset."
-msgstr "カスタムオフセットをセット"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2225
-msgid "Custom (ms):"
-msgstr "カスタム (ミリ秒):"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2245
-msgid ""
-"Set how much the end of the previous and the beginning of the next song "
-"should overlap.\n"
-"* Negative values indicate that the next song should start before the "
-"previous has reached the end.\n"
-"* A value of 0 means that the songs are concatenated seamlessly.\n"
-"* Positive values will yield insert silence inbetween.."
-msgstr ""
-"先の曲の終わりと次の曲の始めに重なるべき量をセット。\n"
-"* 負の値は、先の曲が終わりに到達する前に次の曲が演奏されることを示す。\n"
-"* 0 は、曲が継ぎ目なく連結されることを示す。\n"
-"* 正の値は、間に静寂を挿入する。"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2278
-msgid ""
-"Don't overlap the two songs. The next song will start immediatelly after the "
-"previous has ended."
-msgstr "2曲を重ねない。次の曲は前の曲が終わった後すぐ開始される。"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2280
-msgid "None (0 ms)"
-msgstr "なし (0 ミリ秒)"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2303
-msgid "Overlap by the fadeout duration specified above."
-msgstr "上で指定したフェイドアウト持続時間で重ねる。"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2305
-msgid "Lock to fadeout length"
-msgstr "フェイドアウトの長さに固定"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2328
-msgid "Overlap by the fadein duration specified below.."
-msgstr "下で指定したフェイドイン持続時間で重ねる。"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2330
-msgid "Lock to fadein length"
-msgstr "フェイドインの長さに固定"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2355
-msgid "Offset"
-msgstr "オフセット"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2506
-msgid " Enable"
-msgstr " 有効"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2527
-msgid "Use the same settings as fade-out."
-msgstr "フェイドアウトと同じ設定を使用する。"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2529
-msgid "Lock to Fade-out"
-msgstr "フェイドアウトに固定"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2613
-msgid "Advanced XF"
-msgstr "拡張 XF"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2739
-msgid "Set the duration for the fadein when starting playback."
-msgstr "再生開始時のフェイドイン持続時間をセット。"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:2910
-msgid "Set the duration for the fadeout of the last song."
-msgstr "最終曲のフェイドアウト持続時間をセット。"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3086
-msgid ""
-"Set how much additional silence should be played after the end of the last "
-"song. This way, you can avoid the clicks some soundcards produce when being "
-"shut down during playback.\n"
-"Default: 500"
-msgstr ""
-"最後の曲の終わりの後に再生されるべき追加静寂時間の量をセット。これによって、"
-"再生中の終了による、あるサウンドカードが出す雑音を避けることができる。\n"
-"デフォルト: 500"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3112
-msgid "Additional silence"
-msgstr "追加静寂時間"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3221
-msgid ""
-"Set the duration for the fadeout when pausing.\n"
-"Default: 100\n"
-msgstr ""
-"一時停止時のフェイドアウト持続時間をセット。\n"
-"デフォルト: 100\n"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3246
-msgid ""
-"Set how much additional silence should be played after pausing. This way, "
-"you can avoid the clicks some soundcards produce when entering pause.\n"
-"Default: 100"
-msgstr ""
-"一時停止後に再生されるべき追加静寂時間の量をセット。これによって、一時停止に"
-"よる、あるサウンドカードが出す雑音を避けることができる。\n"
-"デフォルト: 100"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3270
-msgid ""
-"Set the duration for the fadein when unpausing.\n"
-"Default: 100"
-msgstr ""
-"一時停止復帰時のフェイドイン持続時間をセット。\n"
-"デフォルト: 100"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3300
-msgid "Fade out (ms):"
-msgstr "フェイドアウト (ミリ秒):"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3341
-msgid "Silence (ms):"
-msgstr "静寂 (ミリ秒):"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3382
-msgid "Fade in (ms):"
-msgstr "フェイドイン (ミリ秒):"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3419
-#: Plugins/Output/crossfade/interface-2.0.glade:3455
-msgid "Fade out / Fade in"
-msgstr "フェイドアウト / フェイドイン"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3491
-msgid "Crossfader"
-msgstr "クロスフェイダー"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3538
-msgid ""
-"Set the maximum length for gaps at the beginning of a stream.\n"
-"Default: 500"
-msgstr ""
-"ストリームの始まりのギャップの最大長さをセット。\n"
-"デフォルト: 500"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3562
-msgid ""
-"Set the maximum volume for gaps at the beginning of a stream. All samples "
-"below this value are considered as silent.\n"
-"Default: 512"
-msgstr ""
-"ストリームの始まりのギャップの最大音量をセット。全て下の値を静寂と見なしてサ"
-"ンプリングされる。\n"
-"デフォルト: 512"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3592
-#: Plugins/Output/crossfade/interface-2.0.glade:3746
-msgid "Max. length (ms):"
-msgstr "最大長さ (ミリ秒):"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3633
-#: Plugins/Output/crossfade/interface-2.0.glade:3786
-msgid "Max. level (16bit sample):"
-msgstr "最大レベル (16ビットサンプル):"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3693
-msgid "Leading gap killer"
-msgstr "ギャップキラーの先導"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3844
-msgid ""
-"Set the maximum volume for gaps at the end of a stream. All samples below "
-"this value are considered as silent.\n"
-"Default: 512"
-msgstr ""
-"ストリームの終わりのギャップの最大音量をセット。全て下の値を静寂と見なしてサ"
-"ンプリングされる。\n"
-"デフォルト: 512"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3868
-msgid "Use the same settings as above."
-msgstr "上と同じ設定を使用する。"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3870
-msgid "Lock to Leading"
-msgstr "先導に固定"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3917
-msgid "Trailing gap killer"
-msgstr "後ギャップキラー"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3961
-msgid ""
-"If enabled, Audacious-crossfade will take additional care to avoid clicks "
-"with pre-faded (gapless) tracks. Audacious-crossfade will cut off the end of "
-"the previous song (the beginning of the next song) only at a zero-crossing "
-"of the sample values.\n"
-"Default: On"
-msgstr ""
-"有効であれば、Audacious-クロスフェイドはプリフェイドされた(ギャップレス)の"
-"トラックによる雑音を避けるのに付加的な注意を払う。Audacious-クロスフェイドは"
-"先の曲の終わり(次の曲の始まり)をサンプル値のゼロ交差だけカットする。\n"
-"デフォルト: オン"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3964
-msgid "Skip to next zero crossing"
-msgstr "次のゼロ交差までスキップ"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:3984
-#: Plugins/Output/crossfade/interface-2.0.glade:4620
-msgid "Advanced"
-msgstr "拡張"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4020
-msgid "Gap Killer"
-msgstr "ギャップキラー"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4064
-msgid ""
-"Monitors what is going on in Audacious-crossfade. If you think you found a "
-"bug in Audacious-crossfade, please enable this option and send me the "
-"output.\n"
-"Note that you should disable debug output if you start Audacious from within "
-"Netscape. Netscape will spam you with dialogs containing the debug output "
-"captured from <stderr>.\n"
-"Default: Off"
-msgstr ""
-"Audacious-クロスフェイドの状態を表示する。Audacious-クロスフェイドのバグを"
-"見つけたと思われるときは、このオプションを有効にして出力を送ってください。\n"
-"Netscape 内で Audacious を起動した場合はデバグ出力を無効にすべきであることに"
-"注意。Netscape は <stderr> から捕捉したデバグ出力を含むダイアログを大量に"
-"表示するだろう。\n"
-"デフォルト: オフ"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4068
-msgid "Write debug output to <stderr>"
-msgstr "デバグ出力を <stderr> に書き出す"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4086
-msgid ""
-"Enables the Buffer Monitor. This is a small window which shows how much data "
-"is in the buffers. The top display belongs to the mixing buffer, the bottom "
-"shows how much data is being buffered by the output plugin.\n"
-"Default: Off"
-msgstr ""
-"バッファモニタを有効にする。これはバッファ内にどれだけデータがあるか表示する"
-"小さなウィンドウである。上はミキシングバッファで、下は出力プラグインにバッ"
-"ファされるデータの量を表示する。\n"
-"デフォルト: オフ"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4089
-msgid "Show Buffer Monitor"
-msgstr "バッファモニタを表示"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4109
-msgid "Debug options"
-msgstr "デバグ用オプション"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4153
-msgid ""
-"Enables/disables Audacious volume and balance controls.\n"
-"Default: On"
-msgstr ""
-"Audacious 音量とバランスコントロールを有効/無効にする。\n"
-"デフォルト: オン"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4156
-msgid "Enable volume control"
-msgstr "音量コントロールを有効"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4175
-msgid ""
-"Reverses left and right with the balance control.\n"
-"Default: Off"
-msgstr ""
-"左右のバランスコントロールを逆にする。\n"
-"デフォルト: オフ"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4178
-msgid "Reverse balance"
-msgstr "バランスを逆にする"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4196
-msgid ""
-"Enable software mixer. Usefull for output plugins without mixer support.\n"
-"Default: Off"
-msgstr ""
-"ソフトウェアミキサを有効にする。出力プラグインがミキササポートを持ってない場"
-"合に有効。\n"
-"デフォルト: オフ"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4199
-msgid "Software Mixer"
-msgstr "ソフトウェアミキサ"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4219
-msgid "Volume control options"
-msgstr "音量コントロールのオプション"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4270
-msgid "Songchange timeout (ms):"
-msgstr "曲変更のタイムアウト (ミリ秒):"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4296
-msgid ""
-"The songchange timeout is the maximum time Audacious-crossfade waits for the "
-"next song. If this timeout is exceeded, the output plugin/device is closed.\n"
-"Default: 500"
-msgstr ""
-"曲変更タイムアウトは Audacious-クロスフェイドが次の曲を待つ最大時間である。"
-"もしタイムアウトした場合、出力プラグイン/デバイスはクローズされる。\n"
-"デフォルト: 500"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4331
-msgid "Mixing buffer preload (ms):"
-msgstr "ミキシングバッファのプリロード (ミリ秒):"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4356
-msgid ""
-"Tells Audacious-crossfade how much data it should buffer before it starts "
-"writing to the output plugin/device. Usually, this value can be set to 0, "
-"because the output plugin does preloading on its own.\n"
-"Default: 0"
-msgstr ""
-"Audacious-クロスフェイドに出力プラグイン/デバイスに書き出す前にどれだけ"
-"データをバッファするか伝える。通例、出力プラグインはそれ自身でプリロードする"
-"ため、この値は 0 にセットされる。\n"
-"デフォルト: 0"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4390
-msgid "Don't  crossfade"
-msgstr "クロスフェイドしない"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4415
-msgid ""
-"This option enables the automatic detection of pre-faded or gapless tracks, "
-"like the tracks on some compilations or on most live albums. If such tracks "
-"are detected, crossfading will be disabled and only the gapkiller (if "
-"enabled) will be used for the songchange.\n"
-"Default: On"
-msgstr ""
-"このオプションは、コンピレーションアルバムやライヴアルバムのような、プリフェ"
-"イドされたかギャップレスのトラックの自動検出を有効にする。このようなトラック"
-"が検出された場合、クロスフェイディングは無効になり、(有効であれば)ギャップキ"
-"ラーのみが曲変更に用いられる。\n"
-"デフォルト: オン"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4418
-msgid "successive tracks"
-msgstr "次のトラック"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4436
-msgid ""
-"This option disables crossfading between the same file. This can happen if "
-"you have only one file in the playlist and 'repeat' turned on.\n"
-"Default: Off"
-msgstr ""
-"このオプションは同じファイル間のクロスフェイディングを無効にする。曲一覧に"
-"ファイルが1つだけで'repeat'がオンの場合に有効だろう。\n"
-"デフォルト: オフ"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4439
-msgid "same file"
-msgstr "同じファイル"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4464
-#: Plugins/Output/crossfade/interface-2.0.glade:4540
-msgid ""
-"Enable this when you have problems playing internet HTTP audio streams. "
-"Unfortunatelly, it also breaks crossfading.\n"
-"Default: Off"
-msgstr ""
-"インターネット HTTP オーディオストリームの再生で問題があるときにこれを有効に"
-"する。あいにく、クロスフェイディングが壊れてしまうが。\n"
-"デフォルト: オフ"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4467
-msgid "Enable HTTP buffer underrun workaround"
-msgstr "HTTP バッファアンダーランの予備回避策を有効にする"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4491
-msgid ""
-"With this option enabled, Audacious-crossfade will limit the amount of data "
-"being buffered by the output plugin. This way, you can decrease the latency "
-"between pressing STOP/NEXT/PREV and the new song actually being played. \n"
-"Default: Off"
-msgstr ""
-"このオプションを有効にすると、Audacious-クロスフェイドは出力プラグインに"
-"よってバッファされるデータ量を制限する。これにより、STOP/NEXT/PREV 間の遅延を"
-"減らすことができ、新しい曲が実際に演奏される。\n"
-"デフォルト: オフ"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4494
-msgid "Limit OP buffer usage (ms):"
-msgstr "OP バッファ使用の制限 (ミリ秒):"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4513
-msgid ""
-"Beware that setting this value too low also increases the chance of buffer "
-"underruns.\n"
-"Default: 250"
-msgstr ""
-"この値の設定が低すぎるとバッファアンダーランの危険が増加することに注意。\n"
-"デフォルト: 250"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4543
-msgid "Use Quantaudio timing comments"
-msgstr "Quantaudio タイミングコメントを使用"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4561
-msgid ""
-"Keep the output device opened all the time, even if Audacious is stopped. "
-"This way, you can avoid clicks caused by the soundcard when the device is "
-"opened or closed\n"
-"Default: Off"
-msgstr ""
-"Audacious が停止されたとしても、出力デバイスをずっと開いたままにする。"
-"これによって、デバイスが開かれるか閉じられるかしたときのサウンドカードによる"
-"雑音を避けることができる。\n"
-"デフォルト: オフ"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4564
-msgid "Keep output opened"
-msgstr "出力を開いたままにする"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4584
-msgid "Advanced options"
-msgstr "拡張オプション"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4675
-msgid "Delete"
-msgstr "削除"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4691
-msgid "New"
-msgstr "新規"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4751
-msgid "Load"
-msgstr "読み込み"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4786
-#: audacious/equalizer.c:1425
-msgid "Presets"
-msgstr "プリセット"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4870
-msgid "Crossfade Buffer Monitor"
-msgstr "クロスフェイド バッファモニタ"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4920
-msgid "ms"
-msgstr "ミリ秒"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:4961
-msgid "Mixing Buffer:"
-msgstr "ミキシングバッファ:"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:5003
-msgid "-:--.-"
-msgstr "-:--.-"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:5028
-#: Plugins/Output/crossfade/interface-2.0.glade:5179
-msgid " / "
-msgstr " / "
-
-#: Plugins/Output/crossfade/interface-2.0.glade:5053
-#: Plugins/Output/crossfade/interface-2.0.glade:5103
-msgid "-:--"
-msgstr "-:--"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:5078
-msgid " total, "
-msgstr " 合計. "
-
-#: Plugins/Output/crossfade/interface-2.0.glade:5128
-msgid " left"
-msgstr " 残り"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:5153
-msgid "-:--:--.-"
-msgstr "-:--:--.-"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:5205
-msgid "-:--.---"
-msgstr "-:--.---"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:5247
-msgid "Output Buffer:"
-msgstr "出力バッファ:"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:5289
-msgid "Position:"
-msgstr "位置:"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:5349
-msgid "About Audacious Crossfade Plugin"
-msgstr "Audacious クロスフェイドプラグインについて"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:5427
-msgid "Help"
-msgstr "ヘルプ"
-
-#: Plugins/Output/crossfade/interface-2.0.glade:5472
-msgid "<dummy>\n"
-msgstr "<dummy>\n"
-
 #: Plugins/Output/disk_writer/disk_writer.c:110
 #, c-format
 msgid "Disk Writer Plugin %s"
@@ -4059,285 +3146,13 @@ msgstr "Blur スコープ: 色の選択"
 msgid "Options:"
 msgstr "オプション:"
 
-#: Plugins/Visualization/libvisual-proxy/about.c:54
-msgid "About Libvisual Audacious Plugin"
-msgstr "Libvisual Audacious プラグインについて"
-
-#: Plugins/Visualization/libvisual-proxy/about.c:88
-msgid ""
-"Libvisual Audacious Plugin\n"
-"\n"
-"Copyright (C) 2004, Duilio Protti <dprotti@users.sourceforge.net>\n"
-"Dennis Smit <ds@nerds-incorporated.org>\n"
-"\n"
-"The Libvisual Audacious Plugin, more information about Libvisual can be "
-"found at\n"
-"http://libvisual.sf.net\n"
-msgstr ""
-"Libvisual Audacious プラグイン\n"
-"\n"
-"Copyright (C) 2004, Duilio Protti <dprotti@users.sourceforge.net>\n"
-"Dennis Smit <ds@nerds-incorporated.org>\n"
-"\n"
-"Libvisual Audacious プラグイン、Libvisual についてのより多くの情報は\n"
-"http://libvisual.sf.net にあります。\n"
-
-#: Plugins/Visualization/libvisual-proxy/about.c:90 audacious/about.c:171
-#: audacious/credits.c:332
-msgid "Credits"
-msgstr "クレジット"
-
-#: Plugins/Visualization/libvisual-proxy/about.c:112
-msgid ""
-"Brazilian Portuguese: Gustavo Sverzut Barbieri\n"
-"Dutch: Dennis Smit\n"
-"French: Jean-Christophe Hoelt\n"
-"Spanish: Duilio Protti\n"
-msgstr ""
-"ブラジル系ポルトガル語: Gustavo Sverzut Barbieri\n"
-"オランダ語: Dennis Smit\n"
-"フランス語: Jean-Christophe Hoelt\n"
-"スペイン語: Duilio Protti\n"
-
-#: Plugins/Visualization/libvisual-proxy/about.c:114 audacious/credits.c:336
-msgid "Translators"
-msgstr "翻訳者"
-
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:58
-msgid "LibVisual Audacious Plugin"
-msgstr "LibVisual Audacious プラグイン"
-
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:70
-msgid "Visualization Plugins"
-msgstr "視覚化プラグイン"
-
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:140
-msgid "Enable/Disable"
-msgstr "有効/無効"
-
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:148
-msgid "Fullscreen"
-msgstr "フルスクリーン"
-
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:154
-msgid ""
-"You can toggle between normal and fullscreen mode pressing key TAB or F11"
-msgstr ""
-"TAB キーまたは F11 キーでノーマルモードとフルスクリーンモードを切り替えること"
-"ができます"
-
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:156
-msgid "All plugins"
-msgstr "すべてのプラグイン"
-
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:164
-msgid "Only non GL plugins"
-msgstr "GL でないプラグインのみ"
-
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:172
-msgid "Only GL plugins"
-msgstr "GL プラグインのみ"
-
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:188
-msgid "Maximum Frames Per Second:"
-msgstr "最大フレーム毎秒:"
-
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:204
-msgid "Morph Plugin"
-msgstr "モーフィングプラグイン"
-
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:225
-msgid ""
-"Select the kind of morph that will be applied when switching from one "
-"visualization plugin to another "
-msgstr ""
-"ある視覚化プラグインが別のものに切り替わるときに使われるモーフィングの種類の"
-"選択 "
-
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:260
-msgid "Select one morph plugin randomly"
-msgstr "モーフィングプラグインをランダムに選択"
-
-#: Plugins/Visualization/libvisual-proxy/config_gui.c:274
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:150
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:581
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:644
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:815
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:869
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:911
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:997
-#: Plugins/Visualization/libvisual-proxy/main.c:143
-msgid "Accept"
-msgstr "承認"
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:144
-msgid ""
-"The morph plugin specified on the config\n"
-"file is not a valid morph plugin.\n"
-"We will use "
-msgstr ""
-"コンフィグファイルで指定されたモーフィングプラグインは\n"
-"有効なモーフィングプラグインではありません。\n"
-"代わりに "
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:147
-msgid ""
-" morph plugin instead.\n"
-"If you want another one, please choose it\n"
-"on the configure dialog."
-msgstr ""
-" モーフィングプラグインを使います。\n"
-"別のものを使いたい場合、コンフィグダイアログで\n"
-"選択してください。"
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:165
-msgid "GL plugins only"
-msgstr "GL プラグインのみ"
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:167
-msgid "non GL plugins only"
-msgstr "GL でないプラグインのみ"
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:169
-msgid "All plugins enabled"
-msgstr "すべての有効なプラグイン"
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:174
-msgid "LibVisual: configuration is missing or corrupt, saving defaults"
-msgstr "LibVisual: 設定がないか壊れています。デフォルトを保存します。"
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:514
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:736
-msgid " (enabled)"
-msgstr " (有効)"
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:577
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:906
-msgid "Version: "
-msgstr "バージョン: "
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:579
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:908
-msgid "Author: "
-msgstr "作者: "
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:632
-msgid "The list of actor plugins is empty."
-msgstr "動作プラグインの一覧が空です。"
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:639
-msgid " error"
-msgstr " エラー"
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:640
-msgid "There are no actor plugins installed.\n"
-msgstr "インストールされた動作プラグインがありません。\n"
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:641
-msgid ""
-" cannot be initialized.\n"
-"Please visit http://libvisual.sf.net to\n"
-"to get some nice plugins."
-msgstr ""
-" を初期化できません。\n"
-"何かよいプラグインを取得するために\n"
-"http://libvisual.sf.net を訪れてください。"
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:804
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:858
-msgid "The list of morph plugins is empty."
-msgstr "モーフィングプラグインの一覧が空です。"
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:812
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:866
-msgid ""
-"There are no morph plugins, so switching\n"
-"between visualization plugins will be do it\n"
-"without any morphing."
-msgstr ""
-"モーフィングプラグインがありません。\n"
-"モーフィングなしで視覚化プラグインの切り替えを行います。\n"
-"."
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:822
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:875
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:901
-msgid "There is no info for this plugin"
-msgstr "このプラグインの情報がありません。"
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:894
-msgid "The list of input plugins is empty."
-msgstr "入力プラグインの一覧が空です。"
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:995
-msgid ""
-"We cannot initialize Libvisual library.\n"
-"Libvisual is necessary for this plugin to work."
-msgstr ""
-"Libvisual ライブラリを初期化できません。\n"
-"このプラグインが動作するには Libvisual が必要です。"
-
-#: Plugins/Visualization/libvisual-proxy/lv_bmp_config.c:1081
-msgid "Invalid value for 'enabled_plugins' option"
-msgstr "'enabled_plugins' オプションが無効な値です"
-
-#: Plugins/Visualization/libvisual-proxy/main.c:115
-msgid "Audacious plugin"
-msgstr "Audacious プラグイン"
-
-#: Plugins/Visualization/libvisual-proxy/main.c:132
-msgid "Cannot get options"
-msgstr "オプションを取得できません。"
-
-#: Plugins/Visualization/libvisual-proxy/main.c:139
-msgid "Cannot initialize SDL!\n"
-msgstr "SDL を初期化できませんでした!\n"
-
-#: Plugins/Visualization/libvisual-proxy/main.c:142
-msgid " will not be loaded."
-msgstr " は読み込まれません。"
-
-#: Plugins/Visualization/libvisual-proxy/main.c:152
-msgid "Last plugin: (none)"
-msgstr "前回のプラグイン: (なし)"
-
-#: Plugins/Visualization/libvisual-proxy/main.c:154
-#, c-format
-msgid "Last plugin: %s"
-msgstr "前回のプラグイン: %s"
-
-#: Plugins/Visualization/libvisual-proxy/main.c:159
-#, c-format
-msgid "%s is not a valid actor plugin"
-msgstr "%s は有効な動作プラグインではありません"
-
-#: Plugins/Visualization/libvisual-proxy/main.c:166
-msgid "Could not get actor plugin"
-msgstr "動作プラグインを取得できません"
-
-#: Plugins/Visualization/libvisual-proxy/main.c:294
-msgid "Could not get video info"
-msgstr "色情報を取得できません"
-
-#: Plugins/Visualization/libvisual-proxy/main.c:347
-msgid "Cannot set video depth"
-msgstr "色深度を取得できません"
-
-#: Plugins/Visualization/libvisual-proxy/main.c:354
-msgid "Cannot set video"
-msgstr "色をセットできません"
-
-#: Plugins/Visualization/libvisual-proxy/main.c:379
-msgid "Cannot set input plugin callback"
-msgstr "入力プラグインのコールバックをセットできません"
-
-#: Plugins/Visualization/libvisual-proxy/main.c:434
-msgid "Cannot initialize plugin's visual stuff"
-msgstr "プラグインの視覚素材を初期化できません"
-
 #: audacious/about.c:122 audacious/credits.c:287
 msgid "About Audacious"
 msgstr "Audacious について"
+
+#: audacious/about.c:171 audacious/credits.c:332
+msgid "Credits"
+msgstr "クレジット"
 
 #: audacious/credits.c:45
 #, c-format
@@ -4709,6 +3524,10 @@ msgstr "Mykola Lynnyk"
 msgid "Welsh:"
 msgstr "ウェールズ語:"
 
+#: audacious/credits.c:336
+msgid "Translators"
+msgstr "翻訳者"
+
 #: audacious/eq_slider.c:93
 msgid "PREAMP"
 msgstr "PREAMP"
@@ -4833,6 +3652,10 @@ msgstr "Audacious イコライザ"
 msgid "Preset"
 msgstr "プリセット"
 
+#: audacious/equalizer.c:1425
+msgid "Presets"
+msgstr "プリセット"
+
 #: audacious/equalizer.c:1489
 msgid "Load preset"
 msgstr "プリセットの読み込み"
@@ -4932,7 +3755,7 @@ msgstr ""
 "\n"
 "glade ファイル (%s) を開けません。インストール手順を確認してください。\n"
 
-#: audacious/input.c:299
+#: audacious/input.c:300
 msgid ""
 "<b><big>Unable to play files.</big></b>\n"
 "\n"
@@ -4946,29 +3769,29 @@ msgstr ""
 "1. アクセス可能であるか。\n"
 "2. 演奏に必要なメディアのプラグインを有効にしているか。"
 
-#: audacious/input.c:324
+#: audacious/input.c:325
 msgid "Don't show this warning anymore"
 msgstr "次回からこの警告を表示しない"
 
-#: audacious/input.c:326
+#: audacious/input.c:327
 msgid "Show more _details"
 msgstr "詳細を表示する(_D)"
 
-#: audacious/input.c:340 audacious/prefswin.c:98 audacious/prefswin.c:447
+#: audacious/input.c:341 audacious/prefswin.c:98 audacious/prefswin.c:447
 #: audacious/prefswin.c:535 audacious/prefswin.c:624 audacious/prefswin.c:720
 msgid "Filename"
 msgstr "ファイル名"
 
-#: audacious/input.c:508
+#: audacious/input.c:509
 #, c-format
 msgid "audacious: %s"
 msgstr "audacious: %s"
 
-#: audacious/input.c:542
+#: audacious/input.c:543
 msgid "No input plugin recognized this file"
 msgstr "このファイルを認識する入力プラグインではありません"
 
-#: audacious/input.c:544
+#: audacious/input.c:545
 #, c-format
 msgid "Input plugin: %s"
 msgstr "入力プラグイン: %s"
@@ -4978,17 +3801,17 @@ msgstr "入力プラグイン: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "ログ・ファイル (%s) を作成できません！\n"
 
-#: audacious/main.c:83 audacious/main.c:85 audacious/mainwin.c:791
-#: audacious/mainwin.c:3154
+#: audacious/main.c:84 audacious/main.c:86 audacious/mainwin.c:788
+#: audacious/mainwin.c:3156
 msgid "Audacious"
 msgstr "Audacious"
 
-#: audacious/main.c:379
+#: audacious/main.c:380
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "ディレクトリ (%s) を作成できませんでした: %s"
 
-#: audacious/main.c:640
+#: audacious/main.c:641
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
@@ -5000,63 +3823,63 @@ msgstr ""
 "オプション:\n"
 "--------\n"
 
-#: audacious/main.c:645
+#: audacious/main.c:646
 msgid "Display this text and exit"
 msgstr "このメッセージを表示して終了する"
 
-#: audacious/main.c:648
+#: audacious/main.c:649
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Audacious/BMP/XMMS セッションを選択する (デフォルト: 0)"
 
-#: audacious/main.c:651
+#: audacious/main.c:652
 msgid "Skip backwards in playlist"
 msgstr "演奏一覧の一つ前の曲にジャンプする"
 
-#: audacious/main.c:654
+#: audacious/main.c:655
 msgid "Start playing current playlist"
 msgstr "現在の演奏一覧で演奏を開始する"
 
-#: audacious/main.c:657
+#: audacious/main.c:658
 msgid "Pause current song"
 msgstr "現在の曲を一時停止する"
 
-#: audacious/main.c:660
+#: audacious/main.c:661
 msgid "Stop current song"
 msgstr "現在の曲を停止する"
 
-#: audacious/main.c:663
+#: audacious/main.c:664
 msgid "Pause if playing, play otherwise"
 msgstr "演奏していたら一時停止し、それ以外は演奏する"
 
-#: audacious/main.c:666
+#: audacious/main.c:667
 msgid "Skip forward in playlist"
 msgstr "演奏一覧の一つ次の曲にジャンプする"
 
-#: audacious/main.c:669
+#: audacious/main.c:670
 msgid "Don't clear the playlist"
 msgstr "演奏一覧をクリアしない"
 
-#: audacious/main.c:672
+#: audacious/main.c:673
 msgid "Show the main window"
 msgstr "メイン・ウィンドウを表示する"
 
-#: audacious/main.c:675
+#: audacious/main.c:676
 msgid "Activate Audacious"
 msgstr "Audacious をアクティブにする"
 
-#: audacious/main.c:678
+#: audacious/main.c:679
 msgid "Previous session ID"
 msgstr "以前のセッション ID を指定する"
 
-#: audacious/main.c:681
+#: audacious/main.c:682
 msgid "Headless operation [experimental]"
 msgstr "ヘッドレス動作 [実験的]"
 
-#: audacious/main.c:684
+#: audacious/main.c:685
 msgid "Print version number and exit\n"
 msgstr "バージョンを表示して終了する\n"
 
-#: audacious/main.c:863
+#: audacious/main.c:864
 msgid ""
 "\n"
 "Received SIGSEGV\n"
@@ -5072,7 +3895,7 @@ msgstr ""
 "bugs.nenolod.net/ に報告して下さい。\n"
 "\n"
 
-#: audacious/main.c:886
+#: audacious/main.c:887
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -5085,7 +3908,7 @@ msgstr ""
 "'%s' にあるスキンが利用可能であるか確認して下さい。\n"
 "デフォルトのスキンはおそらく '%s' にインストールされています。\n"
 
-#: audacious/main.c:922
+#: audacious/main.c:923
 #, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -5095,7 +3918,7 @@ msgstr ""
 "していません。\n"
 "GTK+ %s またはそれ以降のバージョンをお使い下さい。\n"
 
-#: audacious/main.c:933
+#: audacious/main.c:934
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -5113,7 +3936,7 @@ msgstr ""
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "audacious: X ディスプレイを開けません。強制終了します。\n"
 
-#: audacious/mainwin.c:244 audacious/mainwin.c:359 audacious/ui_playlist.c:124
+#: audacious/mainwin.c:244 audacious/mainwin.c:359 audacious/ui_playlist.c:122
 msgid "/View Track Details"
 msgstr "/トラックの詳細"
 
@@ -5385,91 +4208,91 @@ msgstr "/演奏一覧エディタを巻き上げる"
 msgid "/Roll up Equalizer"
 msgstr "/イコライザを巻き上げる"
 
-#: audacious/mainwin.c:829
+#: audacious/mainwin.c:826
 msgid "VBR"
 msgstr "VBR"
 
-#: audacious/mainwin.c:1289
+#: audacious/mainwin.c:1293
 msgid "Jump to Time"
 msgstr "指定した時間へ移動"
 
-#: audacious/mainwin.c:1310
+#: audacious/mainwin.c:1314
 msgid "minutes:seconds"
 msgstr "分:秒"
 
-#: audacious/mainwin.c:1320
+#: audacious/mainwin.c:1324
 msgid "Track length:"
 msgstr "トラックの合計時間:"
 
-#: audacious/mainwin.c:1407
+#: audacious/mainwin.c:1411
 msgid "Un_queue"
 msgstr "キューから外す"
 
-#: audacious/mainwin.c:1409 audacious/mainwin.c:1731
+#: audacious/mainwin.c:1413 audacious/mainwin.c:1735
 msgid "_Queue"
 msgstr "キューに入れる"
 
-#: audacious/mainwin.c:1661
+#: audacious/mainwin.c:1665
 msgid "Jump to Track"
 msgstr "指定トラックへ移動"
 
-#: audacious/mainwin.c:1700
+#: audacious/mainwin.c:1704
 msgid "Filter: "
 msgstr "フィルタ:"
 
-#: audacious/mainwin.c:1914
+#: audacious/mainwin.c:1918
 msgid "Enter location to play:"
 msgstr "演奏する位置の入力:"
 
-#: audacious/mainwin.c:2117
+#: audacious/mainwin.c:2121
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "移動先: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2149 audacious/mainwin.c:2817
+#: audacious/mainwin.c:2153 audacious/mainwin.c:2819
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "音量: %d%%"
 
-#: audacious/mainwin.c:2180 audacious/mainwin.c:2820
+#: audacious/mainwin.c:2184 audacious/mainwin.c:2822
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "バランス: %d%% (左寄り)"
 
-#: audacious/mainwin.c:2184 audacious/mainwin.c:2823
+#: audacious/mainwin.c:2188 audacious/mainwin.c:2825
 msgid "BALANCE: CENTER"
 msgstr "バランス: 中央"
 
-#: audacious/mainwin.c:2188 audacious/mainwin.c:2825
+#: audacious/mainwin.c:2192 audacious/mainwin.c:2827
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "バランス: %d%% (右寄り)"
 
-#: audacious/mainwin.c:2598
+#: audacious/mainwin.c:2600
 msgid "OPTIONS MENU"
 msgstr "オプション・メニュー"
 
-#: audacious/mainwin.c:2602
+#: audacious/mainwin.c:2604
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "\"常に最前面に配置\" は無効"
 
-#: audacious/mainwin.c:2604
+#: audacious/mainwin.c:2606
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "\"常に最前面に配置\" は有効"
 
-#: audacious/mainwin.c:2607
+#: audacious/mainwin.c:2609
 msgid "FILE INFO BOX"
 msgstr "ファイル情報ボックス"
 
-#: audacious/mainwin.c:2610
+#: audacious/mainwin.c:2612
 msgid "** DOUBLESIZE HAS BEEN REMOVED **"
 msgstr "** サイズを二倍にする機能は無くなりました **"
 
-#: audacious/mainwin.c:2613
+#: audacious/mainwin.c:2615
 msgid "VISUALIZATION MENU"
 msgstr "視覚化メニュー"
 
-#: audacious/mainwin.c:2658
+#: audacious/mainwin.c:2660
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -5479,7 +4302,7 @@ msgstr ""
 "\n"
 "CD が挿入されていないか、挿入された CD はオーディオ CD ではありません。\n"
 
-#: audacious/mainwin.c:2675
+#: audacious/mainwin.c:2677
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -5495,23 +4318,23 @@ msgstr ""
 "2. お使いのサウンドカードをブロックしているアプリが他に存在しないか。\n"
 "3. お使いのサウンドカードが正しく設定されているか。\n"
 
-#: audacious/prefswin.c:83 audacious/glade/prefswin.glade:1519
+#: audacious/prefswin.c:83 audacious/glade/prefswin.glade:1480
 msgid "Appearance"
 msgstr "外観"
 
-#: audacious/prefswin.c:84 audacious/glade/prefswin.glade:3020
+#: audacious/prefswin.c:84 audacious/glade/prefswin.glade:2949
 msgid "Equalizer"
 msgstr "イコライザ"
 
-#: audacious/prefswin.c:85 audacious/glade/prefswin.glade:1837
+#: audacious/prefswin.c:85 audacious/glade/prefswin.glade:1798
 msgid "Mouse"
 msgstr "マウス"
 
-#: audacious/prefswin.c:86 audacious/glade/prefswin.glade:2613
+#: audacious/prefswin.c:86 audacious/glade/prefswin.glade:2542
 msgid "Playlist"
 msgstr "演奏一覧"
 
-#: audacious/prefswin.c:87 audacious/glade/prefswin.glade:935
+#: audacious/prefswin.c:87 audacious/glade/prefswin.glade:936
 msgid "Plugins"
 msgstr "プラグイン"
 
@@ -5565,137 +4388,137 @@ msgstr "カテゴリ"
 msgid "Preferences Window"
 msgstr "設定ウィンドウ"
 
-#: audacious/skinwin.c:163
+#: audacious/skinwin.c:178
 msgid "Archived Winamp 2.x skin"
 msgstr "Archived Winamp 2.x スキン"
 
-#: audacious/skinwin.c:168
+#: audacious/skinwin.c:183
 msgid "Unarchived Winamp 2.x skin"
 msgstr "Unarchived Winamp 2.x スキン"
 
-#: audacious/ui_playlist.c:130 audacious/ui_playlist.c:184
+#: audacious/ui_playlist.c:128 audacious/ui_playlist.c:182
 msgid "/Remove Selected"
 msgstr "/選択したエントリの削除"
 
-#: audacious/ui_playlist.c:134 audacious/ui_playlist.c:180
+#: audacious/ui_playlist.c:132 audacious/ui_playlist.c:178
 msgid "/Remove Unselected"
 msgstr "/選択していないエントリの削除"
 
-#: audacious/ui_playlist.c:138 audacious/ui_playlist.c:176
+#: audacious/ui_playlist.c:136 audacious/ui_playlist.c:174
 msgid "/Remove All"
 msgstr "/全て削除"
 
-#: audacious/ui_playlist.c:144
+#: audacious/ui_playlist.c:142
 msgid "/Queue Toggle"
 msgstr "/キューを切り替える"
 
-#: audacious/ui_playlist.c:150
+#: audacious/ui_playlist.c:148
 msgid "/Add CD..."
 msgstr "/CD の追加..."
 
-#: audacious/ui_playlist.c:154
+#: audacious/ui_playlist.c:152
 msgid "/Add Internet Address..."
 msgstr "/インターネット・アドレスの追加..."
 
-#: audacious/ui_playlist.c:158
+#: audacious/ui_playlist.c:156
 msgid "/Add Files..."
 msgstr "/ファイルの追加..."
 
-#: audacious/ui_playlist.c:164
+#: audacious/ui_playlist.c:162
 msgid "/Clear Queue"
 msgstr "/キューのクリア"
 
-#: audacious/ui_playlist.c:170
+#: audacious/ui_playlist.c:168
 msgid "/Remove Unavailable Files"
 msgstr "/利用不可ファイルの削除"
 
-#: audacious/ui_playlist.c:190
+#: audacious/ui_playlist.c:188
 msgid "/New List"
 msgstr "/新しい一覧"
 
-#: audacious/ui_playlist.c:196
+#: audacious/ui_playlist.c:194
 msgid "/Load List"
 msgstr "/演奏一覧の読み込み"
 
-#: audacious/ui_playlist.c:200
+#: audacious/ui_playlist.c:198
 msgid "/Save List"
 msgstr "/演奏一覧の保存"
 
-#: audacious/ui_playlist.c:206
+#: audacious/ui_playlist.c:204
 msgid "/Update View"
 msgstr "/表示のリフレッシュ"
 
-#: audacious/ui_playlist.c:212
+#: audacious/ui_playlist.c:210
 msgid "/Invert Selection"
 msgstr "/選択範囲の反転"
 
-#: audacious/ui_playlist.c:218
+#: audacious/ui_playlist.c:216
 msgid "/Select None"
 msgstr "/未選択にする"
 
-#: audacious/ui_playlist.c:222
+#: audacious/ui_playlist.c:220
 msgid "/Select All"
 msgstr "/全て選択"
 
-#: audacious/ui_playlist.c:228
+#: audacious/ui_playlist.c:226
 msgid "/Randomize List"
 msgstr "/順番をランダムにする"
 
-#: audacious/ui_playlist.c:230
+#: audacious/ui_playlist.c:228
 msgid "/Reverse List"
 msgstr "/逆順にする"
 
-#: audacious/ui_playlist.c:233
+#: audacious/ui_playlist.c:231
 msgid "/Sort List"
 msgstr "/演奏一覧のソート"
 
-#: audacious/ui_playlist.c:234
+#: audacious/ui_playlist.c:232
 msgid "/Sort List/By Title"
 msgstr "/演奏一覧のソート/タイトル順"
 
-#: audacious/ui_playlist.c:236
+#: audacious/ui_playlist.c:234
 msgid "/Sort List/By Filename"
 msgstr "/演奏一覧のソート/ファイル名順"
 
-#: audacious/ui_playlist.c:238
+#: audacious/ui_playlist.c:236
 msgid "/Sort List/By Path + Filename"
 msgstr "/演奏一覧のソート/パス名とファイル名順"
 
-#: audacious/ui_playlist.c:240
+#: audacious/ui_playlist.c:238
 msgid "/Sort List/By Date"
 msgstr "/演奏一覧のソート/日付順"
 
-#: audacious/ui_playlist.c:242
+#: audacious/ui_playlist.c:240
 msgid "/Sort Selection"
 msgstr "/選択範囲のソート"
 
-#: audacious/ui_playlist.c:243
+#: audacious/ui_playlist.c:241
 msgid "/Sort Selection/By Title"
 msgstr "/選択範囲のソート/タイトル順"
 
-#: audacious/ui_playlist.c:245
+#: audacious/ui_playlist.c:243
 msgid "/Sort Selection/By Filename"
 msgstr "/選択範囲のソート/ファイル名順"
 
-#: audacious/ui_playlist.c:247
+#: audacious/ui_playlist.c:245
 msgid "/Sort Selection/By Path + Filename"
 msgstr "/選択範囲のソート/パス名とファイル名順"
 
-#: audacious/ui_playlist.c:249
+#: audacious/ui_playlist.c:247
 msgid "/Sort Selection/By Date"
 msgstr "/選択範囲のソート/日付順"
 
-#: audacious/ui_playlist.c:778
+#: audacious/ui_playlist.c:767
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "演奏一覧 \"%s\" を書き込む際にエラー: %s"
 
-#: audacious/ui_playlist.c:799
+#: audacious/ui_playlist.c:788
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s は既に存在しています。続行しますか？"
 
-#: audacious/ui_playlist.c:813
+#: audacious/ui_playlist.c:802
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -5706,15 +4529,15 @@ msgstr ""
 "\n"
 "%s のファイルの種類が不明です。\n"
 
-#: audacious/ui_playlist.c:923
+#: audacious/ui_playlist.c:912
 msgid "Load Playlist"
 msgstr "演奏一覧の読み込み"
 
-#: audacious/ui_playlist.c:935
+#: audacious/ui_playlist.c:924
 msgid "Save Playlist"
 msgstr "演奏一覧の保存"
 
-#: audacious/ui_playlist.c:1679
+#: audacious/ui_playlist.c:1627
 msgid "Audacious Playlist Editor"
 msgstr "Audacious 演奏一覧エディタ"
 
@@ -5742,7 +4565,7 @@ msgstr "追加したらダイアログを閉じる"
 msgid "  (invalid UTF-8)"
 msgstr "  (不正な UTF-8)"
 
-#: audacious/playback.c:190
+#: audacious/playback.c:189
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -5766,47 +4589,47 @@ msgstr "全て選択解除"
 msgid "Audacious Preferences"
 msgstr "Audacious の設定"
 
-#: audacious/glade/prefswin.glade:89
+#: audacious/glade/prefswin.glade:90
 msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
 msgstr "<span size=\"xx-large\"><b>プラグイン</b></span>"
 
-#: audacious/glade/prefswin.glade:155
+#: audacious/glade/prefswin.glade:156
 msgid "_Media plugin list:"
 msgstr "メディア・プラグインの一覧(_M):"
 
-#: audacious/glade/prefswin.glade:259
+#: audacious/glade/prefswin.glade:260
 msgid "<span size=\"medium\"><b>Media</b></span>"
 msgstr "<span size=\"medium\"><b>メディア</b></span>"
 
-#: audacious/glade/prefswin.glade:301
+#: audacious/glade/prefswin.glade:302
 msgid "_General plugin list:"
 msgstr "全般プラグインの一覧(_G):"
 
-#: audacious/glade/prefswin.glade:405
+#: audacious/glade/prefswin.glade:406
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b>全般</b></span>"
 
-#: audacious/glade/prefswin.glade:447
+#: audacious/glade/prefswin.glade:448
 msgid "_Visualization plugin list:"
 msgstr "視覚化プラグインの一覧(_V):"
 
-#: audacious/glade/prefswin.glade:551
+#: audacious/glade/prefswin.glade:552
 msgid "<b>Visualization</b>"
 msgstr "<b>視覚化</b>"
 
-#: audacious/glade/prefswin.glade:593
+#: audacious/glade/prefswin.glade:594
 msgid "_Effect plugin list:"
 msgstr "エフェクト・プラグインの一覧(_E):"
 
-#: audacious/glade/prefswin.glade:697
+#: audacious/glade/prefswin.glade:698
 msgid "<b>Effects</b>"
 msgstr "<b>エフェクト</b>"
 
-#: audacious/glade/prefswin.glade:745
+#: audacious/glade/prefswin.glade:746
 msgid "_Current output plugin:"
 msgstr "現在の出力プラグイン(_C):"
 
-#: audacious/glade/prefswin.glade:811
+#: audacious/glade/prefswin.glade:812
 msgid ""
 "The change is now effective in Audacious' configuration database, but won't "
 "take effect for playback until the next song!\n"
@@ -5819,156 +4642,156 @@ msgstr ""
 "演奏に対する適用を有効にするために、いったん演奏を中止して再開することをお奨"
 "めします。"
 
-#: audacious/glade/prefswin.glade:897
+#: audacious/glade/prefswin.glade:898
 msgid "<span size=\"medium\"><b>Output</b></span>"
 msgstr "<span size=\"medium\"><b>出力</b></span>"
 
-#: audacious/glade/prefswin.glade:964
+#: audacious/glade/prefswin.glade:965
 msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
 msgstr "<span size=\"xx-large\"><b>外観</b></span>"
 
-#: audacious/glade/prefswin.glade:1025
+#: audacious/glade/prefswin.glade:1020
 msgid "<b>_Skin</b>"
 msgstr "<b>スキン(_S)</b>"
 
-#: audacious/glade/prefswin.glade:1120
+#: audacious/glade/prefswin.glade:1107
 msgid "<b>_Fonts</b>"
 msgstr "<b>フォント(_F)</b>"
 
-#: audacious/glade/prefswin.glade:1177
+#: audacious/glade/prefswin.glade:1162
 msgid "_Player:"
 msgstr "演奏者(_P):"
 
-#: audacious/glade/prefswin.glade:1220
+#: audacious/glade/prefswin.glade:1205
 msgid "_Playlist:"
 msgstr "演奏一覧(_P):"
 
-#: audacious/glade/prefswin.glade:1252
+#: audacious/glade/prefswin.glade:1237
 msgid "Select main player window font:"
 msgstr "メイン・ウィンドウで使用するフォントの選択"
 
-#: audacious/glade/prefswin.glade:1274
+#: audacious/glade/prefswin.glade:1259
 msgid "Select playlist font:"
 msgstr "演奏一覧で使用するフォントの選択:"
 
-#: audacious/glade/prefswin.glade:1321
+#: audacious/glade/prefswin.glade:1306
 msgid "Use Bitmap fonts if available"
 msgstr "可能ならばビットマップフォントを使用"
 
-#: audacious/glade/prefswin.glade:1367
+#: audacious/glade/prefswin.glade:1340
 msgid "<b>_Miscellaneous</b>"
 msgstr "<b>その他(_M)</b>"
 
-#: audacious/glade/prefswin.glade:1425
+#: audacious/glade/prefswin.glade:1388
 msgid "Show track numbers in playlist"
 msgstr "演奏一覧にトラック番号を表示する"
 
-#: audacious/glade/prefswin.glade:1475
+#: audacious/glade/prefswin.glade:1436
 msgid "Use custom cursors"
 msgstr "カスタム・カーソルを使用する"
 
-#: audacious/glade/prefswin.glade:1548
+#: audacious/glade/prefswin.glade:1509
 msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
 msgstr "<span size=\"xx-large\"><b>マウス</b></span>"
 
-#: audacious/glade/prefswin.glade:1603
+#: audacious/glade/prefswin.glade:1564
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>マウスのホィール</b>"
 
-#: audacious/glade/prefswin.glade:1651
+#: audacious/glade/prefswin.glade:1612
 msgid "Changes volume by"
 msgstr "音量を変更する割合: "
 
-#: audacious/glade/prefswin.glade:1679
+#: audacious/glade/prefswin.glade:1640
 msgid "percent"
 msgstr "％"
 
-#: audacious/glade/prefswin.glade:1707
+#: audacious/glade/prefswin.glade:1668
 msgid "Scrolls playlist by"
 msgstr "演奏一覧で移動する量: "
 
-#: audacious/glade/prefswin.glade:1760
+#: audacious/glade/prefswin.glade:1721
 msgid "lines"
 msgstr "行"
 
-#: audacious/glade/prefswin.glade:1866
+#: audacious/glade/prefswin.glade:1827
 msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
 msgstr "<span size=\"xx-large\"><b>演奏一覧</b></span>"
 
-#: audacious/glade/prefswin.glade:1927
+#: audacious/glade/prefswin.glade:1882
 msgid "<b>Filename</b>"
 msgstr "<b>ファイル名</b>"
 
-#: audacious/glade/prefswin.glade:1969
+#: audacious/glade/prefswin.glade:1922
 msgid "Convert underscores to blanks"
 msgstr "アンダースコア (__) をスペースに変換する"
 
-#: audacious/glade/prefswin.glade:2004
+#: audacious/glade/prefswin.glade:1957
 msgid "Convert %20 to blanks"
 msgstr "'%20' をスペースに変換する"
 
-#: audacious/glade/prefswin.glade:2044
+#: audacious/glade/prefswin.glade:1991
 msgid "<b>Metadata</b>"
 msgstr "<b>メタデータ</b>"
 
-#: audacious/glade/prefswin.glade:2085
+#: audacious/glade/prefswin.glade:2030
 msgid "Load metadata (tag information) from music files."
 msgstr "曲ファイルからタグ情報を読み込みます"
 
-#: audacious/glade/prefswin.glade:2087
+#: audacious/glade/prefswin.glade:2032
 msgid "Load metadata from playlists and files"
 msgstr "演奏一覧とファイルからメタデータを読み込む"
 
-#: audacious/glade/prefswin.glade:2125
+#: audacious/glade/prefswin.glade:2070
 msgid "Load metadata when adding the file to the playlist or opening it"
 msgstr ""
 "演奏一覧へファイルを追加するか、演奏一覧を開いたらタグ情報を読み込みます"
 
-#: audacious/glade/prefswin.glade:2127
+#: audacious/glade/prefswin.glade:2072
 msgid "On load"
 msgstr "読み込み時"
 
-#: audacious/glade/prefswin.glade:2147
+#: audacious/glade/prefswin.glade:2092
 msgid "Load metadata on demand when displaying the file in the playlist"
 msgstr "演奏一覧にファイルを表示したら、必要に応じてタグ情報を読み込みます"
 
-#: audacious/glade/prefswin.glade:2149
+#: audacious/glade/prefswin.glade:2094
 msgid "On display"
 msgstr "表示時"
 
-#: audacious/glade/prefswin.glade:2197
+#: audacious/glade/prefswin.glade:2136
 msgid "<b>Playback</b>"
 msgstr "<b>再生</b>"
 
-#: audacious/glade/prefswin.glade:2238
+#: audacious/glade/prefswin.glade:2175
 msgid "When finished playing a song, don't automatically advance to the next."
 msgstr "曲の演奏が終了したら、次の曲を自動的に演奏しません"
 
-#: audacious/glade/prefswin.glade:2240
+#: audacious/glade/prefswin.glade:2177
 msgid "Don't advance in the playlist"
 msgstr "演奏一覧の次の曲へ進めない"
 
-#: audacious/glade/prefswin.glade:2275
+#: audacious/glade/prefswin.glade:2212
 msgid "Pause between songs"
 msgstr "曲の間に一時停止する"
 
-#: audacious/glade/prefswin.glade:2313
+#: audacious/glade/prefswin.glade:2250
 msgid "Pause for"
 msgstr "一時停止の時間: "
 
-#: audacious/glade/prefswin.glade:2359
+#: audacious/glade/prefswin.glade:2296
 msgid "seconds"
 msgstr "秒"
 
-#: audacious/glade/prefswin.glade:2411
+#: audacious/glade/prefswin.glade:2342
 msgid "<b>Song display</b>"
 msgstr "<b>曲名の表示</b>"
 
-#: audacious/glade/prefswin.glade:2489
+#: audacious/glade/prefswin.glade:2418
 msgid "Custom string:"
 msgstr "タイトルの文字:"
 
-#: audacious/glade/prefswin.glade:2540
+#: audacious/glade/prefswin.glade:2469
 msgid ""
 "TITLE\n"
 "ARTIST - TITLE\n"
@@ -5982,27 +4805,27 @@ msgstr ""
 "アルバム名 - タイトル\n"
 "カスタム"
 
-#: audacious/glade/prefswin.glade:2560
+#: audacious/glade/prefswin.glade:2489
 msgid "Show information about titlestring format"
 msgstr "タイトルに使用できる書式を表示します"
 
-#: audacious/glade/prefswin.glade:2642
+#: audacious/glade/prefswin.glade:2571
 msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
 msgstr "<span size=\"xx-large\"><b>イコライザ</b></span>"
 
-#: audacious/glade/prefswin.glade:2697
+#: audacious/glade/prefswin.glade:2626
 msgid "<b>Presets</b>"
 msgstr "<b>プリセット</b>"
 
-#: audacious/glade/prefswin.glade:2809
+#: audacious/glade/prefswin.glade:2738
 msgid "Directory preset file:"
 msgstr "ディレクトリのプリセット:"
 
-#: audacious/glade/prefswin.glade:2837
+#: audacious/glade/prefswin.glade:2766
 msgid "File preset extension:"
 msgstr "プリセットの拡張子:"
 
-#: audacious/glade/prefswin.glade:2885
+#: audacious/glade/prefswin.glade:2814
 msgid "Available _Presets:"
 msgstr "利用可能なプリセット(_P):"
 
@@ -6033,6 +4856,928 @@ msgstr "トラック番号"
 #: libaudacious/titlestring.c:385
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: トラック番号 %n が存在している場合にのみ \"...\" を表示する"
+
+#~ msgid "Please choose font for SELECT popup."
+#~ msgstr "SELECT ポップアップのフォントを選んでください。"
+
+#~ msgid "About crossfade"
+#~ msgstr "クロスフェイドについて"
+
+#~ msgid ""
+#~ "Audacious crossfading plugin\n"
+#~ "Code adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org> "
+#~ "from:\n"
+#~ "XMMS Crossfade Plugin "
+#~ msgstr ""
+#~ "Audacious クロスフェイディング プラグイン\n"
+#~ "Tony Vroon <chainsaw@gentoo.org> による XMMS クロスフェイドプラグインの\n"
+#~ "Audacious 使用への適応:"
+
+#~ msgid ""
+#~ "\n"
+#~ "Copyright (C) 2000-2004  Peter Eisenlohr <peter@eisenlohr.org>\n"
+#~ "\n"
+#~ "based on the original OSS Output Plugin  Copyright (C) 1998-2000\n"
+#~ "Peter Alm, Mikael Alm, Olle Hallnas, Thomas Nilsson and 4Front "
+#~ "Technologies\n"
+#~ "\n"
+#~ "This program is free software; you can redistribute it and/or modify\n"
+#~ "it under the terms of the GNU General Public License as published by\n"
+#~ "the Free Software Foundation; either version 2 of the License, or\n"
+#~ "(at your option) any later version.\n"
+#~ "\n"
+#~ "This program is distributed in the hope that it will be useful,\n"
+#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+#~ "GNU General Public License for more details.\n"
+#~ "\n"
+#~ "You should have received a copy of the GNU General Public License\n"
+#~ "along with this program; if not, write to the Free Software\n"
+#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+#~ "USA."
+#~ msgstr ""
+#~ "\n"
+#~ "Copyright (C) 2000-2004  Peter Eisenlohr <peter@eisenlohr.org>\n"
+#~ "\n"
+#~ "Copyright (C) 1998-2000 Peter Alm, Mikael Alm, Olle Hallnas, Thomas "
+#~ "Nilssonと 4Front Technologie によるオリジナル OSS 出力プラグインをベースと"
+#~ "する。\n"
+#~ "\n"
+#~ "このプログラムはフリーソフトウェアです;\n"
+#~ "フリーソフトウェア財団が提供する GNU 一般公有使用許諾契約書\n"
+#~ "の第二版、あるいはそれ以降の版が定める条項の下で\n"
+#~ "本プログラムを再頒布または変更することができます。\n"
+#~ "\n"
+#~ "本プログラムは有用とは思いますが、\n"
+#~ "頒布にあたっては、市場性及び特定目的、適合性についての\n"
+#~ "暗黙の保証を含めて、いかなる保証も行ないません。\n"
+#~ "詳細については GNU 一般公有使用許諾契約書をご覧下さい。\n"
+#~ "\n"
+#~ "あなたは、本プログラムと一緒に\n"
+#~ "GNU 一般公有使用許諾契約書の写しを受け取っているはずです。\n"
+#~ "そうでない場合は、Free Software Foundation, Inc., 59\n"
+#~ "Temple Place - Suite 330, Boston, MA 02111-1307, USA へ\n"
+#~ "手紙を書いて下さい。"
+
+#~ msgid "Crossfade Configuration"
+#~ msgstr "クロスフェイドの設定"
+
+#~ msgid "Rate:"
+#~ msgstr "レート:"
+
+#~ msgid "Quality:"
+#~ msgstr "品質:"
+
+#~ msgid "dummy"
+#~ msgstr "ダミー"
+
+#~ msgid "Configure"
+#~ msgstr "設定"
+
+#~ msgid "About"
+#~ msgstr "プラグインについて"
+
+#~ msgid "Output plugin"
+#~ msgstr "出力プラグイン"
+
+#~ msgid "Throttle Output"
+#~ msgstr "出力を絞る"
+
+#~ msgid "Max block size (bytes):"
+#~ msgstr "最大ブロックサイズ (バイト):"
+
+#~ msgid "Force close/reopen on songchange"
+#~ msgstr "曲変更でのクローズ/再オープンを強制"
+
+#~ msgid "Plugin compatibility options"
+#~ msgstr "プラグイン互換オプション"
+
+#~ msgid ""
+#~ "When modifying the Output Options or the Mixing buffer size, you need to "
+#~ "stop/restart playback for the settings to take effect."
+#~ msgstr ""
+#~ "出力オプションかミキシングバッファサイズが変更されたとき、エフェクトを得る"
+#~ "ために演奏を停止/再スタートする必要がある。"
+
+#~ msgid ""
+#~ "Select an effect plugin. Take care not to use the same plugin as selected "
+#~ "in Audacious' configuration dialog."
+#~ msgstr ""
+#~ "エフェクトプラグインを選択する。Audacious 設定ダイアログで選択された同じプ"
+#~ "ラグインは使われないことに注意。"
+
+#~ msgid "Open the configuration dialog of the plugin selected above."
+#~ msgstr "上で選択したプラグインの設定ダイアログを開く。"
+
+#~ msgid "Open the about dialog of the plugin selected above."
+#~ msgstr "上で選択したプラグインについてのダイアログを開く。"
+
+#~ msgid ""
+#~ "Enable the selected plugin. Note that after pressing 'Apply' it may take "
+#~ "a while until you can hear the effect, since it is applied before the "
+#~ "audio data goes into the buffer."
+#~ msgstr ""
+#~ "選択されたプラグインを有効にする。オーディオデータがバッファに入る間に適用"
+#~ "されるので、'適用'ボタンを押してからエフェクトが聞こえるまでしばらくかかる"
+#~ "ことに注意。"
+
+#~ msgid "Use plugin"
+#~ msgstr "プラグインを使用"
+
+#~ msgid "Pre-mixing effect plugin"
+#~ msgstr "プレミキシング・エフェクト・プラグイン"
+
+#~ msgid "Read Quantaudio comment field"
+#~ msgstr "Quantaudio コメントフィールドを読む"
+
+#~ msgid ""
+#~ "Set the maximum length for gaps at the end of a stream.\n"
+#~ "Default: 500"
+#~ msgstr ""
+#~ "ストリームの終わりのギャップの最大長さをセット。\n"
+#~ "デフォルト: 500"
+
+#~ msgid "Target RMS:"
+#~ msgstr "ターゲット RMS:"
+
+#~ msgid "Read ID3V2 RVA2 Tag"
+#~ msgstr "ID3V2 RVA2 タグを読む"
+
+#~ msgid "Volume normalizer"
+#~ msgstr "音量ノーマライザ"
+
+#~ msgid ""
+#~ "You do not need to press 'Apply' after making changes to the effect "
+#~ "plugin settings. It may take a while though until you can hear the "
+#~ "change, since the plugin is applied before the mixing buffer."
+#~ msgstr ""
+#~ "エフェクトプラグイン設定の変更後に'適用'を押す必要はない。ミキシングバッ"
+#~ "ファの前にプラグインが適用されるため、変更を聞くまでにしばらくかかる。"
+
+#~ msgid "Mixing buffer size (ms):"
+#~ msgstr "ミキシングバッファのサイズ (ミリ秒):"
+
+#~ msgid ""
+#~ "Specify the size of the mixing buffer. Mixing buffer space is required "
+#~ "for pauses, fade-outs, offsetting (i.e. interleaving the end and "
+#~ "beginning of two songs) and killing trailing gaps. Fade-ins and killing "
+#~ "leading gaps are done on-the-fly and do not depend on mixing buffer "
+#~ "space.\n"
+#~ "Default: n/a - calculated automatically"
+#~ msgstr ""
+#~ "ミキシングバッファのサイズを指定する。ミキシングバッファ空間は一時停止、"
+#~ "フェイドアウト、オフセット(すなわち2曲の終わりと始まりのインターリーブ)、"
+#~ "後のギャップを消すために要求される。フェイドインと先のギャップを消すことは"
+#~ "オン・ザ・フライで行われ、ミキシングバッファ空間に依存しない。\n"
+#~ "デフォルト: n/a - 自動的に計算される"
+
+#~ msgid ""
+#~ "Automatically calculate an optimal buffer size.\n"
+#~ "Default: On"
+#~ msgstr ""
+#~ "最適のバッファサイズを自動的に計算する。\n"
+#~ "デフォルト: オン"
+
+#~ msgid "auto"
+#~ msgstr "自動"
+
+#~ msgid "Set parameters for:"
+#~ msgstr "パラメータをセット:"
+
+#~ msgid ""
+#~ "Select the type of songchange you want to configure:\n"
+#~ "* Start of playback: When starting playback by pressing PLAY\n"
+#~ "* Automatic songchange: When reaching the end of a song and the playlist "
+#~ "advances to the next song\n"
+#~ "* Manual songchange: When manually selecting another song, for example by "
+#~ "pressing NEXT/PREV\n"
+#~ "* Manual stop: When pressing the STOP button\n"
+#~ "* End of playlist: After the last song in the playlist has been played\n"
+#~ "* Seeking: When seeking within the current song"
+#~ msgstr ""
+#~ "設定したい曲変更タイプを選択する:\n"
+#~ "* 再生の始め: PLAY を押して再生が始まったとき\n"
+#~ "* 自動曲変更: 曲の終わりに到達、曲一覧で次の曲に進むとき\n"
+#~ "* 手動曲変更: 例えば NEXT/PREV を押すように、手動で別の曲を選択したとき\n"
+#~ "* 手動停止: STOP ボタンを押したとき\n"
+#~ "* シーク: 現在の曲中でシークしたとき"
+
+#~ msgid "Crossfade/Transition type:"
+#~ msgstr "クロスフェイド/移行のタイプ:"
+
+#~ msgid ""
+#~ "Select the transition to be used for the songchange type selected above:\n"
+#~ "* Fade-in: Fade-in at 'Start of playback'\n"
+#~ "* Reopen output device: Force a close/open on the output plugin. This "
+#~ "will most certainly re-introduce gaps and clicks, but might be usefull "
+#~ "with some plugins.\n"
+#~ "* Flush output device: Keeps the output plugin opened, but flushes its "
+#~ "buffers. This will give you almost instant reaction when pressing NEXT/"
+#~ "PREV.\n"
+#~ "* None (gapless/off): Gapless mode. Keeps the device opened, but does not "
+#~ "do any fading.\n"
+#~ "* Simple crossfade: Does a simple crossfade between the previous and the "
+#~ "next song.\n"
+#~ "* Advanced crossfade: Allows you to configure the crossfade in more "
+#~ "detail.\n"
+#~ "* Fade-out: Fade-out at 'Manual stop' or 'End of playlist'."
+#~ msgstr ""
+#~ "上で選択された曲変更タイプで使われる移行タイプを選択する:\n"
+#~ "* フェイドイン: '再生の始め'でフェイドインする。\n"
+#~ "* 出力デバイスを再オープン: 出力プラグインでクローズ/オープンを強制する。"
+#~ "これはギャップや雑音をほぼ確実に再度引き起こすが、あるプラグインでは有効か"
+#~ "もしれない。\n"
+#~ "* 出力デバイスをフラッシュ: 出力プラグインをオープンしたままにするが、バッ"
+#~ "ファはフラッシュする。NEXT/PREV を押したときに瞬時に反応する。\n"
+#~ "* なし (ギャップレス/オフ): ギャップレスモード。デバイスを開いたままにする"
+#~ "が、フェイディングは行わない。\n"
+#~ "* 単純なクロスフェイド: 先と次の曲の間で単純なクロスフェイドを行う。\n"
+#~ "* 高度なクロスフェイド: より詳細なクロスフェイド設定を行える。\n"
+#~ "* フェイドアウト: '手動停止'か'曲一覧の終わり'でフェイドアウトする。"
+
+#~ msgid "Reopen"
+#~ msgstr "再オープン"
+
+#~ msgid "Length (ms):"
+#~ msgstr "長さ (ミリ秒):"
+
+#~ msgid ""
+#~ "Specify the length of the silence to be inserted between the tracks.\n"
+#~ "Default: 2000"
+#~ msgstr ""
+#~ "トラック間に挿入される静寂の長さを指定する。\n"
+#~ "デフォルト: 2000"
+
+#~ msgid "Pause"
+#~ msgstr "一時停止"
+
+#~ msgid "Start volume (%):"
+#~ msgstr "開始音量 (%):"
+
+#~ msgid "Set the duration for the fadein of the next song."
+#~ msgstr "次の曲のフェイドイン持続時間をセット。"
+
+#~ msgid ""
+#~ "Set the start volume. Audacious-crossfade will fade from this volume to "
+#~ "100% during the time specified above.\n"
+#~ "Default: 0"
+#~ msgstr ""
+#~ "開始音量をセット。Audacious-crossfade は上で指定した時間中、100% からこの"
+#~ "音量までフェイドする。\n"
+#~ "デフォルト: 0"
+
+#~ msgid "Fade in"
+#~ msgstr "フェイドイン"
+
+#~ msgid "Flush"
+#~ msgstr "フラッシュ"
+
+#~ msgid ""
+#~ "Specify the length of the crosssfade.\n"
+#~ "Default: depends on songchange type"
+#~ msgstr ""
+#~ "クロスフェイドの長さを指定する。\n"
+#~ "デフォルト: 曲変更タイプに依存"
+
+#~ msgid "Crossfade"
+#~ msgstr "クロスフェイド"
+
+#~ msgid "Simple XF"
+#~ msgstr "単純な XF"
+
+#~ msgid "Set the duration for the fadeout of the previous song."
+#~ msgstr "前の曲のフェイドアウト持続時間をセット。"
+
+#~ msgid "End volume (%):"
+#~ msgstr "終了音量 (%):"
+
+#~ msgid ""
+#~ "Set the end volume. Audacious-crossfade will fade from 100% to this "
+#~ "volume during the time specified above.\n"
+#~ "Default: 0"
+#~ msgstr ""
+#~ "終わりの音量をセット。Audacious-crossfade は上で指定した時間中、100% から"
+#~ "この音量までフェイドする。\n"
+#~ "デフォルト: 0"
+
+#~ msgid "Fade out"
+#~ msgstr "フェイドアウト"
+
+#~ msgid "Set a custom offset."
+#~ msgstr "カスタムオフセットをセット"
+
+#~ msgid "Custom (ms):"
+#~ msgstr "カスタム (ミリ秒):"
+
+#~ msgid ""
+#~ "Set how much the end of the previous and the beginning of the next song "
+#~ "should overlap.\n"
+#~ "* Negative values indicate that the next song should start before the "
+#~ "previous has reached the end.\n"
+#~ "* A value of 0 means that the songs are concatenated seamlessly.\n"
+#~ "* Positive values will yield insert silence inbetween.."
+#~ msgstr ""
+#~ "先の曲の終わりと次の曲の始めに重なるべき量をセット。\n"
+#~ "* 負の値は、先の曲が終わりに到達する前に次の曲が演奏されることを示す。\n"
+#~ "* 0 は、曲が継ぎ目なく連結されることを示す。\n"
+#~ "* 正の値は、間に静寂を挿入する。"
+
+#~ msgid ""
+#~ "Don't overlap the two songs. The next song will start immediatelly after "
+#~ "the previous has ended."
+#~ msgstr "2曲を重ねない。次の曲は前の曲が終わった後すぐ開始される。"
+
+#~ msgid "None (0 ms)"
+#~ msgstr "なし (0 ミリ秒)"
+
+#~ msgid "Overlap by the fadeout duration specified above."
+#~ msgstr "上で指定したフェイドアウト持続時間で重ねる。"
+
+#~ msgid "Lock to fadeout length"
+#~ msgstr "フェイドアウトの長さに固定"
+
+#~ msgid "Overlap by the fadein duration specified below.."
+#~ msgstr "下で指定したフェイドイン持続時間で重ねる。"
+
+#~ msgid "Lock to fadein length"
+#~ msgstr "フェイドインの長さに固定"
+
+#~ msgid "Offset"
+#~ msgstr "オフセット"
+
+#~ msgid " Enable"
+#~ msgstr " 有効"
+
+#~ msgid "Use the same settings as fade-out."
+#~ msgstr "フェイドアウトと同じ設定を使用する。"
+
+#~ msgid "Lock to Fade-out"
+#~ msgstr "フェイドアウトに固定"
+
+#~ msgid "Advanced XF"
+#~ msgstr "拡張 XF"
+
+#~ msgid "Set the duration for the fadein when starting playback."
+#~ msgstr "再生開始時のフェイドイン持続時間をセット。"
+
+#~ msgid "Set the duration for the fadeout of the last song."
+#~ msgstr "最終曲のフェイドアウト持続時間をセット。"
+
+#~ msgid ""
+#~ "Set how much additional silence should be played after the end of the "
+#~ "last song. This way, you can avoid the clicks some soundcards produce "
+#~ "when being shut down during playback.\n"
+#~ "Default: 500"
+#~ msgstr ""
+#~ "最後の曲の終わりの後に再生されるべき追加静寂時間の量をセット。これによっ"
+#~ "て、再生中の終了による、あるサウンドカードが出す雑音を避けることができ"
+#~ "る。\n"
+#~ "デフォルト: 500"
+
+#~ msgid "Additional silence"
+#~ msgstr "追加静寂時間"
+
+#~ msgid ""
+#~ "Set the duration for the fadeout when pausing.\n"
+#~ "Default: 100\n"
+#~ msgstr ""
+#~ "一時停止時のフェイドアウト持続時間をセット。\n"
+#~ "デフォルト: 100\n"
+
+#~ msgid ""
+#~ "Set how much additional silence should be played after pausing. This way, "
+#~ "you can avoid the clicks some soundcards produce when entering pause.\n"
+#~ "Default: 100"
+#~ msgstr ""
+#~ "一時停止後に再生されるべき追加静寂時間の量をセット。これによって、一時停止"
+#~ "による、あるサウンドカードが出す雑音を避けることができる。\n"
+#~ "デフォルト: 100"
+
+#~ msgid ""
+#~ "Set the duration for the fadein when unpausing.\n"
+#~ "Default: 100"
+#~ msgstr ""
+#~ "一時停止復帰時のフェイドイン持続時間をセット。\n"
+#~ "デフォルト: 100"
+
+#~ msgid "Fade out (ms):"
+#~ msgstr "フェイドアウト (ミリ秒):"
+
+#~ msgid "Silence (ms):"
+#~ msgstr "静寂 (ミリ秒):"
+
+#~ msgid "Fade in (ms):"
+#~ msgstr "フェイドイン (ミリ秒):"
+
+#~ msgid "Fade out / Fade in"
+#~ msgstr "フェイドアウト / フェイドイン"
+
+#~ msgid "Crossfader"
+#~ msgstr "クロスフェイダー"
+
+#~ msgid ""
+#~ "Set the maximum length for gaps at the beginning of a stream.\n"
+#~ "Default: 500"
+#~ msgstr ""
+#~ "ストリームの始まりのギャップの最大長さをセット。\n"
+#~ "デフォルト: 500"
+
+#~ msgid ""
+#~ "Set the maximum volume for gaps at the beginning of a stream. All samples "
+#~ "below this value are considered as silent.\n"
+#~ "Default: 512"
+#~ msgstr ""
+#~ "ストリームの始まりのギャップの最大音量をセット。全て下の値を静寂と見なして"
+#~ "サンプリングされる。\n"
+#~ "デフォルト: 512"
+
+#~ msgid "Max. length (ms):"
+#~ msgstr "最大長さ (ミリ秒):"
+
+#~ msgid "Max. level (16bit sample):"
+#~ msgstr "最大レベル (16ビットサンプル):"
+
+#~ msgid "Leading gap killer"
+#~ msgstr "ギャップキラーの先導"
+
+#~ msgid ""
+#~ "Set the maximum volume for gaps at the end of a stream. All samples below "
+#~ "this value are considered as silent.\n"
+#~ "Default: 512"
+#~ msgstr ""
+#~ "ストリームの終わりのギャップの最大音量をセット。全て下の値を静寂と見なして"
+#~ "サンプリングされる。\n"
+#~ "デフォルト: 512"
+
+#~ msgid "Use the same settings as above."
+#~ msgstr "上と同じ設定を使用する。"
+
+#~ msgid "Lock to Leading"
+#~ msgstr "先導に固定"
+
+#~ msgid "Trailing gap killer"
+#~ msgstr "後ギャップキラー"
+
+#~ msgid ""
+#~ "If enabled, Audacious-crossfade will take additional care to avoid clicks "
+#~ "with pre-faded (gapless) tracks. Audacious-crossfade will cut off the end "
+#~ "of the previous song (the beginning of the next song) only at a zero-"
+#~ "crossing of the sample values.\n"
+#~ "Default: On"
+#~ msgstr ""
+#~ "有効であれば、Audacious-クロスフェイドはプリフェイドされた(ギャップレス)の"
+#~ "トラックによる雑音を避けるのに付加的な注意を払う。Audacious-クロスフェイド"
+#~ "は先の曲の終わり(次の曲の始まり)をサンプル値のゼロ交差だけカットする。\n"
+#~ "デフォルト: オン"
+
+#~ msgid "Skip to next zero crossing"
+#~ msgstr "次のゼロ交差までスキップ"
+
+#~ msgid "Advanced"
+#~ msgstr "拡張"
+
+#~ msgid "Gap Killer"
+#~ msgstr "ギャップキラー"
+
+#~ msgid ""
+#~ "Monitors what is going on in Audacious-crossfade. If you think you found "
+#~ "a bug in Audacious-crossfade, please enable this option and send me the "
+#~ "output.\n"
+#~ "Note that you should disable debug output if you start Audacious from "
+#~ "within Netscape. Netscape will spam you with dialogs containing the debug "
+#~ "output captured from <stderr>.\n"
+#~ "Default: Off"
+#~ msgstr ""
+#~ "Audacious-クロスフェイドの状態を表示する。Audacious-クロスフェイドのバグを"
+#~ "見つけたと思われるときは、このオプションを有効にして出力を送ってくださ"
+#~ "い。\n"
+#~ "Netscape 内で Audacious を起動した場合はデバグ出力を無効にすべきであること"
+#~ "に注意。Netscape は <stderr> から捕捉したデバグ出力を含むダイアログを大量"
+#~ "に表示するだろう。\n"
+#~ "デフォルト: オフ"
+
+#~ msgid "Write debug output to <stderr>"
+#~ msgstr "デバグ出力を <stderr> に書き出す"
+
+#~ msgid ""
+#~ "Enables the Buffer Monitor. This is a small window which shows how much "
+#~ "data is in the buffers. The top display belongs to the mixing buffer, the "
+#~ "bottom shows how much data is being buffered by the output plugin.\n"
+#~ "Default: Off"
+#~ msgstr ""
+#~ "バッファモニタを有効にする。これはバッファ内にどれだけデータがあるか表示す"
+#~ "る小さなウィンドウである。上はミキシングバッファで、下は出力プラグインに"
+#~ "バッファされるデータの量を表示する。\n"
+#~ "デフォルト: オフ"
+
+#~ msgid "Show Buffer Monitor"
+#~ msgstr "バッファモニタを表示"
+
+#~ msgid "Debug options"
+#~ msgstr "デバグ用オプション"
+
+#~ msgid ""
+#~ "Enables/disables Audacious volume and balance controls.\n"
+#~ "Default: On"
+#~ msgstr ""
+#~ "Audacious 音量とバランスコントロールを有効/無効にする。\n"
+#~ "デフォルト: オン"
+
+#~ msgid "Enable volume control"
+#~ msgstr "音量コントロールを有効"
+
+#~ msgid ""
+#~ "Reverses left and right with the balance control.\n"
+#~ "Default: Off"
+#~ msgstr ""
+#~ "左右のバランスコントロールを逆にする。\n"
+#~ "デフォルト: オフ"
+
+#~ msgid "Reverse balance"
+#~ msgstr "バランスを逆にする"
+
+#~ msgid ""
+#~ "Enable software mixer. Usefull for output plugins without mixer support.\n"
+#~ "Default: Off"
+#~ msgstr ""
+#~ "ソフトウェアミキサを有効にする。出力プラグインがミキササポートを持ってない"
+#~ "場合に有効。\n"
+#~ "デフォルト: オフ"
+
+#~ msgid "Software Mixer"
+#~ msgstr "ソフトウェアミキサ"
+
+#~ msgid "Volume control options"
+#~ msgstr "音量コントロールのオプション"
+
+#~ msgid "Songchange timeout (ms):"
+#~ msgstr "曲変更のタイムアウト (ミリ秒):"
+
+#~ msgid ""
+#~ "The songchange timeout is the maximum time Audacious-crossfade waits for "
+#~ "the next song. If this timeout is exceeded, the output plugin/device is "
+#~ "closed.\n"
+#~ "Default: 500"
+#~ msgstr ""
+#~ "曲変更タイムアウトは Audacious-クロスフェイドが次の曲を待つ最大時間であ"
+#~ "る。もしタイムアウトした場合、出力プラグイン/デバイスはクローズされる。\n"
+#~ "デフォルト: 500"
+
+#~ msgid "Mixing buffer preload (ms):"
+#~ msgstr "ミキシングバッファのプリロード (ミリ秒):"
+
+#~ msgid ""
+#~ "Tells Audacious-crossfade how much data it should buffer before it starts "
+#~ "writing to the output plugin/device. Usually, this value can be set to 0, "
+#~ "because the output plugin does preloading on its own.\n"
+#~ "Default: 0"
+#~ msgstr ""
+#~ "Audacious-クロスフェイドに出力プラグイン/デバイスに書き出す前にどれだけ"
+#~ "データをバッファするか伝える。通例、出力プラグインはそれ自身でプリロードす"
+#~ "るため、この値は 0 にセットされる。\n"
+#~ "デフォルト: 0"
+
+#~ msgid "Don't  crossfade"
+#~ msgstr "クロスフェイドしない"
+
+#~ msgid ""
+#~ "This option enables the automatic detection of pre-faded or gapless "
+#~ "tracks, like the tracks on some compilations or on most live albums. If "
+#~ "such tracks are detected, crossfading will be disabled and only the "
+#~ "gapkiller (if enabled) will be used for the songchange.\n"
+#~ "Default: On"
+#~ msgstr ""
+#~ "このオプションは、コンピレーションアルバムやライヴアルバムのような、プリ"
+#~ "フェイドされたかギャップレスのトラックの自動検出を有効にする。このようなト"
+#~ "ラックが検出された場合、クロスフェイディングは無効になり、(有効であれば)"
+#~ "ギャップキラーのみが曲変更に用いられる。\n"
+#~ "デフォルト: オン"
+
+#~ msgid "successive tracks"
+#~ msgstr "次のトラック"
+
+#~ msgid ""
+#~ "This option disables crossfading between the same file. This can happen "
+#~ "if you have only one file in the playlist and 'repeat' turned on.\n"
+#~ "Default: Off"
+#~ msgstr ""
+#~ "このオプションは同じファイル間のクロスフェイディングを無効にする。曲一覧に"
+#~ "ファイルが1つだけで'repeat'がオンの場合に有効だろう。\n"
+#~ "デフォルト: オフ"
+
+#~ msgid "same file"
+#~ msgstr "同じファイル"
+
+#~ msgid ""
+#~ "Enable this when you have problems playing internet HTTP audio streams. "
+#~ "Unfortunatelly, it also breaks crossfading.\n"
+#~ "Default: Off"
+#~ msgstr ""
+#~ "インターネット HTTP オーディオストリームの再生で問題があるときにこれを有効"
+#~ "にする。あいにく、クロスフェイディングが壊れてしまうが。\n"
+#~ "デフォルト: オフ"
+
+#~ msgid "Enable HTTP buffer underrun workaround"
+#~ msgstr "HTTP バッファアンダーランの予備回避策を有効にする"
+
+#~ msgid ""
+#~ "With this option enabled, Audacious-crossfade will limit the amount of "
+#~ "data being buffered by the output plugin. This way, you can decrease the "
+#~ "latency between pressing STOP/NEXT/PREV and the new song actually being "
+#~ "played. \n"
+#~ "Default: Off"
+#~ msgstr ""
+#~ "このオプションを有効にすると、Audacious-クロスフェイドは出力プラグインに"
+#~ "よってバッファされるデータ量を制限する。これにより、STOP/NEXT/PREV 間の遅"
+#~ "延を減らすことができ、新しい曲が実際に演奏される。\n"
+#~ "デフォルト: オフ"
+
+#~ msgid "Limit OP buffer usage (ms):"
+#~ msgstr "OP バッファ使用の制限 (ミリ秒):"
+
+#~ msgid ""
+#~ "Beware that setting this value too low also increases the chance of "
+#~ "buffer underruns.\n"
+#~ "Default: 250"
+#~ msgstr ""
+#~ "この値の設定が低すぎるとバッファアンダーランの危険が増加することに注意。\n"
+#~ "デフォルト: 250"
+
+#~ msgid "Use Quantaudio timing comments"
+#~ msgstr "Quantaudio タイミングコメントを使用"
+
+#~ msgid ""
+#~ "Keep the output device opened all the time, even if Audacious is stopped. "
+#~ "This way, you can avoid clicks caused by the soundcard when the device is "
+#~ "opened or closed\n"
+#~ "Default: Off"
+#~ msgstr ""
+#~ "Audacious が停止されたとしても、出力デバイスをずっと開いたままにする。これ"
+#~ "によって、デバイスが開かれるか閉じられるかしたときのサウンドカードによる雑"
+#~ "音を避けることができる。\n"
+#~ "デフォルト: オフ"
+
+#~ msgid "Keep output opened"
+#~ msgstr "出力を開いたままにする"
+
+#~ msgid "Advanced options"
+#~ msgstr "拡張オプション"
+
+#~ msgid "Delete"
+#~ msgstr "削除"
+
+#~ msgid "New"
+#~ msgstr "新規"
+
+#~ msgid "Load"
+#~ msgstr "読み込み"
+
+#~ msgid "Crossfade Buffer Monitor"
+#~ msgstr "クロスフェイド バッファモニタ"
+
+#~ msgid "ms"
+#~ msgstr "ミリ秒"
+
+#~ msgid "Mixing Buffer:"
+#~ msgstr "ミキシングバッファ:"
+
+#~ msgid "-:--.-"
+#~ msgstr "-:--.-"
+
+#~ msgid " / "
+#~ msgstr " / "
+
+#~ msgid "-:--"
+#~ msgstr "-:--"
+
+#~ msgid " total, "
+#~ msgstr " 合計. "
+
+#~ msgid " left"
+#~ msgstr " 残り"
+
+#~ msgid "-:--:--.-"
+#~ msgstr "-:--:--.-"
+
+#~ msgid "-:--.---"
+#~ msgstr "-:--.---"
+
+#~ msgid "Output Buffer:"
+#~ msgstr "出力バッファ:"
+
+#~ msgid "Position:"
+#~ msgstr "位置:"
+
+#~ msgid "About Audacious Crossfade Plugin"
+#~ msgstr "Audacious クロスフェイドプラグインについて"
+
+#~ msgid "Help"
+#~ msgstr "ヘルプ"
+
+#~ msgid "<dummy>\n"
+#~ msgstr "<dummy>\n"
+
+#~ msgid "About Libvisual Audacious Plugin"
+#~ msgstr "Libvisual Audacious プラグインについて"
+
+#~ msgid ""
+#~ "Libvisual Audacious Plugin\n"
+#~ "\n"
+#~ "Copyright (C) 2004, Duilio Protti <dprotti@users.sourceforge.net>\n"
+#~ "Dennis Smit <ds@nerds-incorporated.org>\n"
+#~ "\n"
+#~ "The Libvisual Audacious Plugin, more information about Libvisual can be "
+#~ "found at\n"
+#~ "http://libvisual.sf.net\n"
+#~ msgstr ""
+#~ "Libvisual Audacious プラグイン\n"
+#~ "\n"
+#~ "Copyright (C) 2004, Duilio Protti <dprotti@users.sourceforge.net>\n"
+#~ "Dennis Smit <ds@nerds-incorporated.org>\n"
+#~ "\n"
+#~ "Libvisual Audacious プラグイン、Libvisual についてのより多くの情報は\n"
+#~ "http://libvisual.sf.net にあります。\n"
+
+#~ msgid ""
+#~ "Brazilian Portuguese: Gustavo Sverzut Barbieri\n"
+#~ "Dutch: Dennis Smit\n"
+#~ "French: Jean-Christophe Hoelt\n"
+#~ "Spanish: Duilio Protti\n"
+#~ msgstr ""
+#~ "ブラジル系ポルトガル語: Gustavo Sverzut Barbieri\n"
+#~ "オランダ語: Dennis Smit\n"
+#~ "フランス語: Jean-Christophe Hoelt\n"
+#~ "スペイン語: Duilio Protti\n"
+
+#~ msgid "LibVisual Audacious Plugin"
+#~ msgstr "LibVisual Audacious プラグイン"
+
+#~ msgid "Visualization Plugins"
+#~ msgstr "視覚化プラグイン"
+
+#~ msgid "Enable/Disable"
+#~ msgstr "有効/無効"
+
+#~ msgid "Fullscreen"
+#~ msgstr "フルスクリーン"
+
+#~ msgid ""
+#~ "You can toggle between normal and fullscreen mode pressing key TAB or F11"
+#~ msgstr ""
+#~ "TAB キーまたは F11 キーでノーマルモードとフルスクリーンモードを切り替える"
+#~ "ことができます"
+
+#~ msgid "All plugins"
+#~ msgstr "すべてのプラグイン"
+
+#~ msgid "Only non GL plugins"
+#~ msgstr "GL でないプラグインのみ"
+
+#~ msgid "Only GL plugins"
+#~ msgstr "GL プラグインのみ"
+
+#~ msgid "Maximum Frames Per Second:"
+#~ msgstr "最大フレーム毎秒:"
+
+#~ msgid "Morph Plugin"
+#~ msgstr "モーフィングプラグイン"
+
+#~ msgid ""
+#~ "Select the kind of morph that will be applied when switching from one "
+#~ "visualization plugin to another "
+#~ msgstr ""
+#~ "ある視覚化プラグインが別のものに切り替わるときに使われるモーフィングの種類"
+#~ "の選択 "
+
+#~ msgid "Select one morph plugin randomly"
+#~ msgstr "モーフィングプラグインをランダムに選択"
+
+#~ msgid "Accept"
+#~ msgstr "承認"
+
+#~ msgid ""
+#~ "The morph plugin specified on the config\n"
+#~ "file is not a valid morph plugin.\n"
+#~ "We will use "
+#~ msgstr ""
+#~ "コンフィグファイルで指定されたモーフィングプラグインは\n"
+#~ "有効なモーフィングプラグインではありません。\n"
+#~ "代わりに "
+
+#~ msgid ""
+#~ " morph plugin instead.\n"
+#~ "If you want another one, please choose it\n"
+#~ "on the configure dialog."
+#~ msgstr ""
+#~ " モーフィングプラグインを使います。\n"
+#~ "別のものを使いたい場合、コンフィグダイアログで\n"
+#~ "選択してください。"
+
+#~ msgid "GL plugins only"
+#~ msgstr "GL プラグインのみ"
+
+#~ msgid "non GL plugins only"
+#~ msgstr "GL でないプラグインのみ"
+
+#~ msgid "All plugins enabled"
+#~ msgstr "すべての有効なプラグイン"
+
+#~ msgid "LibVisual: configuration is missing or corrupt, saving defaults"
+#~ msgstr "LibVisual: 設定がないか壊れています。デフォルトを保存します。"
+
+#~ msgid " (enabled)"
+#~ msgstr " (有効)"
+
+#~ msgid "Version: "
+#~ msgstr "バージョン: "
+
+#~ msgid "Author: "
+#~ msgstr "作者: "
+
+#~ msgid "The list of actor plugins is empty."
+#~ msgstr "動作プラグインの一覧が空です。"
+
+#~ msgid " error"
+#~ msgstr " エラー"
+
+#~ msgid "There are no actor plugins installed.\n"
+#~ msgstr "インストールされた動作プラグインがありません。\n"
+
+#~ msgid ""
+#~ " cannot be initialized.\n"
+#~ "Please visit http://libvisual.sf.net to\n"
+#~ "to get some nice plugins."
+#~ msgstr ""
+#~ " を初期化できません。\n"
+#~ "何かよいプラグインを取得するために\n"
+#~ "http://libvisual.sf.net を訪れてください。"
+
+#~ msgid "The list of morph plugins is empty."
+#~ msgstr "モーフィングプラグインの一覧が空です。"
+
+#~ msgid ""
+#~ "There are no morph plugins, so switching\n"
+#~ "between visualization plugins will be do it\n"
+#~ "without any morphing."
+#~ msgstr ""
+#~ "モーフィングプラグインがありません。\n"
+#~ "モーフィングなしで視覚化プラグインの切り替えを行います。\n"
+#~ "."
+
+#~ msgid "There is no info for this plugin"
+#~ msgstr "このプラグインの情報がありません。"
+
+#~ msgid "The list of input plugins is empty."
+#~ msgstr "入力プラグインの一覧が空です。"
+
+#~ msgid ""
+#~ "We cannot initialize Libvisual library.\n"
+#~ "Libvisual is necessary for this plugin to work."
+#~ msgstr ""
+#~ "Libvisual ライブラリを初期化できません。\n"
+#~ "このプラグインが動作するには Libvisual が必要です。"
+
+#~ msgid "Invalid value for 'enabled_plugins' option"
+#~ msgstr "'enabled_plugins' オプションが無効な値です"
+
+#~ msgid "Audacious plugin"
+#~ msgstr "Audacious プラグイン"
+
+#~ msgid "Cannot get options"
+#~ msgstr "オプションを取得できません。"
+
+#~ msgid "Cannot initialize SDL!\n"
+#~ msgstr "SDL を初期化できませんでした!\n"
+
+#~ msgid " will not be loaded."
+#~ msgstr " は読み込まれません。"
+
+#~ msgid "Last plugin: (none)"
+#~ msgstr "前回のプラグイン: (なし)"
+
+#~ msgid "Last plugin: %s"
+#~ msgstr "前回のプラグイン: %s"
+
+#~ msgid "%s is not a valid actor plugin"
+#~ msgstr "%s は有効な動作プラグインではありません"
+
+#~ msgid "Could not get actor plugin"
+#~ msgstr "動作プラグインを取得できません"
+
+#~ msgid "Could not get video info"
+#~ msgstr "色情報を取得できません"
+
+#~ msgid "Cannot set video depth"
+#~ msgstr "色深度を取得できません"
+
+#~ msgid "Cannot set video"
+#~ msgstr "色をセットできません"
+
+#~ msgid "Cannot set input plugin callback"
+#~ msgstr "入力プラグインのコールバックをセットできません"
+
+#~ msgid "Cannot initialize plugin's visual stuff"
+#~ msgstr "プラグインの視覚素材を初期化できません"
 
 #~ msgid "Options"
 #~ msgstr "オプション"
