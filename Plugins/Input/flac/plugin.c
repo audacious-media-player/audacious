@@ -136,7 +136,7 @@ InputPlugin flac_ip =
 {
 	NULL,
 	NULL,
-	"FLAC Player v" VERSION,
+	"FLAC Player v" PACKAGE_VERSION,
 	FLAC_XMMS__init,
 	FLAC_XMMS__aboutbox,
 	FLAC_XMMS__configure,

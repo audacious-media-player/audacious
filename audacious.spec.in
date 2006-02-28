@@ -20,8 +20,8 @@
 %{!?_with_gnomevfs: %define gnomevfs 0}
 
 Summary:        Audacious
-Name:           @PACKAGE@
-Version:        @VERSION@
+Name:           @PACKAGE_NAME@
+Version:        @PACKAGE_VERSION@
 Release:        1
 Epoch:          0
 License:        GPL

@@ -909,9 +909,9 @@ main(gint argc, gchar ** argv)
 
     /* Setup l10n early so we can print localized error messages */
     gtk_set_locale();
-    bindtextdomain(PACKAGE, LOCALEDIR);
-    bind_textdomain_codeset(PACKAGE, "UTF-8");
-    textdomain(PACKAGE);
+    bindtextdomain(PACKAGE_NAME, LOCALEDIR);
+    bind_textdomain_codeset(PACKAGE_NAME, "UTF-8");
+    textdomain(PACKAGE_NAME);
 
     bmp_init_paths();
     bmp_make_user_dir();

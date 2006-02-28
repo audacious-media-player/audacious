@@ -408,7 +408,7 @@ http_buffer_loop(gpointer arg)
                                        "Host: %s\r\n"
                                        "User-Agent: %s/%s\r\n"
                                        "%s%s\r\n",
-                                       file, host, PACKAGE, VERSION,
+                                       file, host, PACKAGE_NAME, PACKAGE_VERSION,
                                        proxy_auth ? proxy_auth : "",
                                        auth ? auth : "");
                 g_free(file);
