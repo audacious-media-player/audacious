@@ -12,7 +12,7 @@ HEADERS = none
 LIBDIR = $(libdir)
 BINDIR = $(bindir)
 INCLUDEDIR = $(pkgincludedir)
-CFLAGS += -DHAVE_CONFIG_H
+CFLAGS += -DHAVE_CONFIG_H -I/usr/pkg/include
 
 default: all
 all: build
