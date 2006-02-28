@@ -40,12 +40,17 @@ dnl Check for assembler
 
 AM_PROG_AS
 
-
 dnl Checks for various programs
 
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
+
+AC_PATH_PROG(RM, rm)
+AC_PATH_PROG(MV, mv)
+AC_PATH_PROG(CP, cp)
+AC_PATH_PROG(AR, ar)
+AC_PATH_PROG(RANLIB, ranlib)
 
 dnl Path settings
 
