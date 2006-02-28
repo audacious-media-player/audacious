@@ -259,6 +259,6 @@ static InputPlugin tone_ip =
 
 InputPlugin *get_iplugin_info(void)
 {
-	tone_ip.description = g_strdup_printf(_("Tone Generator %s"), VERSION);
+	tone_ip.description = g_strdup_printf(_("Tone Generator %s"), PACKAGE_VERSION);
 	return &tone_ip;
 }

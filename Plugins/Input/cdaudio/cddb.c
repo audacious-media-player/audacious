@@ -139,8 +139,8 @@ cddb_generate_hello_string(void)
         }
 
         if (!client || !version) {
-            client = PACKAGE;
-            version = VERSION;
+            client = PACKAGE_NAME;
+            version = PACKAGE_VERSION;
         }
 
         buffer = g_strdup_printf("&hello=nobody+localhost+%s+%s",
@@ -382,7 +382,7 @@ cddb_read(gchar * server, cddb_disc_header_t * cddb_info, cdinfo_t * cdinfo)
             command++;
         default:
             g_log(NULL, G_LOG_LEVEL_WARNING, "%s: illegal cddb-data: %s",
-                  PACKAGE, buffer);
+                  PACKAGE_NAME, buffer);
             break;
         }
 
@@ -603,7 +603,7 @@ cddb_read_file(gchar * file, cddb_disc_header_t * cddb_info,
             command++;
         default:
             g_log(NULL, G_LOG_LEVEL_WARNING, "%s: illegal cddb-data: %s",
-                  PACKAGE, buffer);
+                  PACKAGE_NAME, buffer);
             break;
         }
 
