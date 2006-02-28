@@ -11,7 +11,7 @@ LDFLAGS = -Wl,-export-dynamic
 LDADD = \
 	$(GTK_LIBS)      \
 	$(LIBGLADE_LIBS) \
-	$(LTLIBINTL)     \
+	-L.. $(LTLIBINTL)     \
 	-L../libaudacious -laudacious
 
 CFLAGS += \
