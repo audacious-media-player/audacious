@@ -96,7 +96,7 @@ static GtkToggleButton
 
 InputPlugin *get_iplugin_info(void) {
 	xmmstimid_ip.description = g_strdup_printf(
-			_("TiMidity Player %s"), VERSION);
+			_("TiMidity Player %s"), PACKAGE_VERSION);
 	return &xmmstimid_ip;
 }
 
@@ -129,7 +129,7 @@ void xmmstimid_about(void) {
 		gchar *name_version;
 		xmmstimid_about_wnd = create_xmmstimid_about_wnd();
 		name_version = g_strdup_printf(
-				_("TiMidity Plugin %s"), VERSION);
+				_("TiMidity Plugin %s"), PACKAGE_VERSION);
 		gtk_label_set_text(
 				GTK_LABEL(gtk_object_get_data(
 				GTK_OBJECT(xmmstimid_about_wnd),

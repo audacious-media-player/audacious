@@ -37,7 +37,7 @@
 #define PATH_MAX 4096
 #endif
 
-#define PLUGIN_NAME "LADSPA host " VERSION
+#define PLUGIN_NAME "LADSPA host " PACKAGE_VERSION
 
 #define MAX_SAMPLES 8192
 #define MAX_KNOBS 64

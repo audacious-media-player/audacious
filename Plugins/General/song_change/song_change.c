@@ -50,7 +50,7 @@ GeneralPlugin sc_gp =
 
 GeneralPlugin *get_gplugin_info(void)
 {
-	sc_gp.description = g_strdup_printf(_("Song Change %s"), VERSION);
+	sc_gp.description = g_strdup_printf(_("Song Change %s"), PACKAGE_VERSION);
 	return &sc_gp;
 }
 

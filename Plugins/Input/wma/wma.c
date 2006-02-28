@@ -116,7 +116,7 @@ InputPlugin wma_ip =
 InputPlugin *get_iplugin_info(void)
 {
     memset(description, 0, 64);
-    wma_ip.description = g_strdup_printf(_("WMA Player %s"), VERSION);
+    wma_ip.description = g_strdup_printf(_("WMA Player %s"), PACKAGE_VERSION);
     return &wma_ip;
 }
 

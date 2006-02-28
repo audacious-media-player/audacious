@@ -23,7 +23,7 @@
 #  include "config.h"
 #endif
 
-#define GETTEXT_PACKAGE PACKAGE
+#define GETTEXT_PACKAGE PACKAGE_NAME
 
 #include <glib.h>
 #include <glib/gi18n-lib.h>
