@@ -1,7 +1,7 @@
 include mk/rules.mk
 include mk/objective.mk
 
-SUBDIRS = Plugins libaudacious audacious po icons skin intl
+SUBDIRS = Plugins libaudacious intl audacious po icons skin
 
 install-posthook:
 	@if test `whoami` = 'root'; then \
