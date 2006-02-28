@@ -847,6 +847,7 @@ AC_CONFIG_FILES([
         Plugins/Output/alsa/Makefile
 	Plugins/Output/jack/Makefile
 	Plugins/Output/disk_writer/Makefile
+	Plugins/Output/sun/Makefile
         Plugins/Input/Makefile
         Plugins/Input/mpg123/Makefile
 	Plugins/Input/aac/Makefile
