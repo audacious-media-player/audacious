@@ -1,3 +1,17 @@
+Audacious 0.2.1 (2006-02-28)
+
+Enhancements
+* MP2 audio support
+* Scrobbler support
+* SID really works this time
+* Number of code cleanups around the tree
+
+Removals
+* Crossfade support
+
+Bugfixes
+* More than you can shake a stick at
+
 Audacious 0.2 (2006-02-01)
 
 Enhancements

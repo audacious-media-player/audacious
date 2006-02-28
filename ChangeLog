@@ -1,3 +1,768 @@
+2006-02-27 20:17:55  William Pitcock <nenolod@nenolod.net>
+
+	   - fix underwater effects, patch via Spyke @ #audacious
+
+2006-02-27 18:52:02  Giacomo Lozito <james@develia.org>
+
+	* Added a get_volume plugin function, to ensure that the player volume is properly updated when the player is remotely controlled
+
+2006-02-27 18:51:14  William Pitcock <nenolod@nenolod.net>
+
+	   - another playlist DND fix
+
+2006-02-27 18:42:12  William Pitcock <nenolod@nenolod.net>
+
+	* drag and drop line rendering fix
+
+2006-02-27 17:54:47  William Pitcock <nenolod@nenolod.net>
+
+	   - revert this
+
+2006-02-27 17:43:15  William Pitcock <nenolod@nenolod.net>
+
+	   - remerge fixed version of OSS patch. Submitted by Bren <spike -at- spykes.net>
+
+2006-02-27 17:20:52  William Pitcock <nenolod@nenolod.net>
+
+	   - crash fix at no additional charge
+
+2006-02-27 17:02:04  William Pitcock <nenolod@nenolod.net>
+
+	   - revert OSS warning squashing as the patch created more problems than it solved
+
+2006-02-27 16:34:47  William Pitcock <nenolod@nenolod.net>
+
+	   - fix gconf at no additional charge
+
+2006-02-27 10:32:57  William Pitcock <nenolod@nenolod.net>
+
+	   - memleak fix (noticed by HopeSeekr @ efnet #xmule)
+
+2006-02-27 09:29:53  William Pitcock <nenolod@nenolod.net>
+
+	   - fix my layer2 implementation by looking at the one in XMMS. MP2 support at no additional charge.
+
+2006-02-27 08:34:58  William Pitcock <nenolod@nenolod.net>
+
+	   - gconf
+
+2006-02-27 08:31:47  William Pitcock <nenolod@nenolod.net>
+
+	   - gnomevfs
+
+2006-02-27 08:28:11  William Pitcock <nenolod@nenolod.net>
+
+	   - sndfile
+
+2006-02-27 08:25:36  William Pitcock <nenolod@nenolod.net>
+
+	   - fix this stupid thing
+
+2006-02-27 00:40:13  William Pitcock <nenolod@nenolod.net>
+
+	   - create directories that aren't there in the install phase
+
+2006-02-26 22:47:43  William Pitcock <nenolod@nenolod.net>
+
+	* perhaps a fix?
+
+2006-02-26 22:38:33  William Pitcock <nenolod@nenolod.net>
+
+	   - remove automake. no longer used.
+
+2006-02-26 22:37:20  William Pitcock <nenolod@nenolod.net>
+
+	* fix?
+
+2006-02-26 22:32:47  William Pitcock <nenolod@nenolod.net>
+
+	   - convert to objective make. needs testing.
+
+2006-02-26 22:28:53  William Pitcock <nenolod@nenolod.net>
+
+	   - convert to objective make
+
+2006-02-26 22:27:45  William Pitcock <nenolod@nenolod.net>
+
+	   - convert to objective make
+
+2006-02-26 22:22:38  William Pitcock <nenolod@nenolod.net>
+
+	   - convert to objective make
+
+2006-02-26 22:20:28  William Pitcock <nenolod@nenolod.net>
+
+	   - fix data rule (whitespace)
+
+2006-02-26 22:20:17  William Pitcock <nenolod@nenolod.net>
+
+	* convert to objective make
+
+2006-02-26 22:14:08  William Pitcock <nenolod@nenolod.net>
+
+	* rule for installing data
+
+2006-02-26 22:09:32  William Pitcock <nenolod@nenolod.net>
+
+	   - distclean enhancements
+
+2006-02-26 22:06:12  William Pitcock <nenolod@nenolod.net>
+
+	   - fix version info
+
+2006-02-26 18:17:12  Tony Vroon <chainsaw@gentoo.org>
+
+	* Remove references to inetctl from the build system.
+
+2006-02-26 18:14:17  Tony Vroon <chainsaw@gentoo.org>
+
+	* Move inetctl out into the hacking zone as it needs conversion to a threading model instead of it just forking things.
+
+2006-02-26 17:50:50  William Pitcock <nenolod@nenolod.net>
+
+	   - fix
+
+2006-02-26 17:46:14  William Pitcock <nenolod@nenolod.net>
+
+	* fix a warning here, lalala.
+
+2006-02-26 17:41:10  William Pitcock <nenolod@nenolod.net>
+
+	   - fix AAC build
+
+2006-02-26 17:39:06  William Pitcock <nenolod@nenolod.net>
+
+	   - more intelligently handle directory creation
+
+2006-02-26 17:29:28  William Pitcock <nenolod@nenolod.net>
+
+	   - Add makerules.
+
+2006-02-26 17:23:50  Tony Vroon <chainsaw@gentoo.org>
+
+	* Make GCC 4.1 a bit less talkative, patch by Flameeyes from Gentoo. Fixing the warnings is possible, but would require extensive changes throughout the entire codebase.
+
+2006-02-26 17:05:40  William Pitcock <nenolod@nenolod.net>
+
+	   - fix installation i think
+
+2006-02-26 15:08:35  Tony Vroon <chainsaw@gentoo.org>
+
+	* Fixes of the remaining GCC 4.1 warnings from external contributor Diego "Flameeyes" Petteno (Gentoo).
+
+2006-02-26 12:21:49  Tony Vroon <chainsaw@gentoo.org>
+
+	* Fixes for all warnings (except 3 spurious GCC 4.0 ones, upgrade to 4.1 if you see them) and a performance increase. By external contributor Diego "FlameEyes" Petteno (Gentoo).
+
+2006-02-26 03:09:12  William Pitcock <nenolod@nenolod.net>
+
+	* experimental fix
+
+2006-02-26 00:47:48  William Pitcock <nenolod@nenolod.net>
+
+	* GUI fix
+
+2006-02-26 00:33:56  William Pitcock <nenolod@nenolod.net>
+
+	   - fix errorbox stuff some more
+
+2006-02-25 21:17:26  William Pitcock <nenolod@nenolod.net>
+
+	   - Fix error box stuff.
+
+2006-02-25 21:14:32  William Pitcock <nenolod@nenolod.net>
+
+	   - New configuration UI.
+
+2006-02-25 20:40:22  William Pitcock <nenolod@nenolod.net>
+
+	* Import new GUI code. Not yet hooked up really.
+
+2006-02-25 20:24:10  William Pitcock <nenolod@nenolod.net>
+
+	* via NhJm:
+	   - Grammatical updates to the audacious man page,
+	   - Remove unused event boxes from the preferences pane.
+
+2006-02-25 16:56:54  William Pitcock <nenolod@nenolod.net>
+
+	   - Use pkg-config to detect libmusicbrainz.
+
+2006-02-25 16:28:29  William Pitcock <nenolod@nenolod.net>
+
+	* Don't install util.h
+
+2006-02-25 15:49:41  William Pitcock <nenolod@nenolod.net>
+
+	   - Change client id from XMMS-Scrobbler to Audacious (we now have our own ID)
+
+2006-02-25 15:15:05  William Pitcock <nenolod@nenolod.net>
+
+	* Attach a SONAME to all .so's.
+
+2006-02-25 14:11:20  William Pitcock <nenolod@nenolod.net>
+
+	   - add scrobbler support
+
+2006-02-25 11:36:36  Tony Vroon <chainsaw@gentoo.org>
+
+	* Revert debug-only cleanup system verbosity.
+
+2006-02-25 11:35:27  Tony Vroon <chainsaw@gentoo.org>
+
+	* Remove libvisual-proxy. It is broken and hard to repair. A written-from-scratch replacement is planned but will be a while.
+
+2006-02-25 03:30:30  William Pitcock <nenolod@nenolod.net>
+
+	   - Ok, really revert this.
+
+2006-02-25 03:25:21  William Pitcock <nenolod@nenolod.net>
+
+	   - Roll back broken HTTP-based stream detection code.
+
+2006-02-25 02:09:42  William Pitcock <nenolod@nenolod.net>
+
+	   - Slay unused variables here.
+
+2006-02-25 02:08:27  William Pitcock <nenolod@nenolod.net>
+
+	   - Add a discussion about headless operation.
+
+2006-02-25 01:57:41  William Pitcock <nenolod@nenolod.net>
+
+	   - Slay an unused variable warning here.
+
+2006-02-25 01:56:24  William Pitcock <nenolod@nenolod.net>
+
+	   - Add some sanity checking to make sure we can't do X11 stuff when running headless.
+
+2006-02-25 01:44:27  William Pitcock <nenolod@nenolod.net>
+
+	   - Rename ALL_PLUGINS setting in Plugins/Visualization (only for reference)
+	   - Version bump: 0.2.1
+
+2006-02-25 01:32:17  William Pitcock <nenolod@nenolod.net>
+
+	* Squelch a stupid warning here.
+
+2006-02-25 01:16:06  William Pitcock <nenolod@nenolod.net>
+
+	   - Working exception handling at no extra charge. Closes bugs #408, #409.
+
+2006-02-25 00:50:55  William Pitcock <nenolod@nenolod.net>
+
+	   - Remove libblah.so: cruft from pre-autolink rule times.
+
+2006-02-25 00:47:30  William Pitcock <nenolod@nenolod.net>
+
+	   - Fix a crash relating to changing FLAC plugin settings. Closes bug #412.
+
+2006-02-25 00:05:06  William Pitcock <nenolod@nenolod.net>
+
+	   - Really fix preview generation for PNG/SVG based skins.
+
+2006-02-24 23:25:33  William Pitcock <nenolod@nenolod.net>
+
+	   - Remove pre-objective auto-linking rules for library objectives (cruft)
+
+2006-02-24 14:36:42  William Pitcock <nenolod@nenolod.net>
+
+	* change permissions here
+
+2006-02-24 14:34:42  William Pitcock <nenolod@nenolod.net>
+
+	* install HEADERS properly (oops)
+
+2006-02-23 20:56:34  William Pitcock <nenolod@nenolod.net>
+
+	* We had this backwards.
+
+2006-02-23 19:04:36  Tony Vroon <chainsaw@gentoo.org>
+
+	* This came with it. No extra charge.
+
+2006-02-23 19:03:03  Tony Vroon <chainsaw@gentoo.org>
+
+	* ESD output plugin ported to objective make by Kyoshi Aman.
+
+2006-02-23 18:36:31  William Pitcock <nenolod@nenolod.net>
+
+	* grr
+
+2006-02-23 18:09:56  William Pitcock <nenolod@nenolod.net>
+
+	* directory creation
+
+2006-02-23 10:44:06  William Pitcock <nenolod@nenolod.net>
+
+	* s/sharedir/datadir
+
+2006-02-22 20:27:55  William Pitcock <nenolod@nenolod.net>
+
+	* Install audacious.pc, audacious.1 and audacious.desktop.
+
+2006-02-22 19:31:03  William Pitcock <nenolod@nenolod.net>
+
+	* Link against libstdc++ because we're intermixing code.
+
+2006-02-22 19:23:01  William Pitcock <nenolod@nenolod.net>
+
+	* honour DESTDIR here too
+
+2006-02-22 19:17:52  William Pitcock <nenolod@nenolod.net>
+
+	* apparently GNU make doesn't like to use @${VAR}
+
+2006-02-22 19:12:10  William Pitcock <nenolod@nenolod.net>
+
+	* directory creation stuff
+
+2006-02-22 19:10:11  William Pitcock <nenolod@nenolod.net>
+
+	* add HEADERS for audacious/
+
+2006-02-22 19:07:25  William Pitcock <nenolod@nenolod.net>
+
+	* If the makefile has a HEADERS variable, then install them to the
+	* INCLUDEDIR.
+
+2006-02-22 19:04:47  William Pitcock <nenolod@nenolod.net>
+
+	* versioning for libaudacious.so
+
+2006-02-22 18:37:26  William Pitcock <nenolod@nenolod.net>
+
+	* Ok, really fix this stupid bug.
+
+2006-02-22 18:30:23  William Pitcock <nenolod@nenolod.net>
+
+	* Fix the scrolling in the audacious mainwin, by making sure a GTK Timeout
+	* is only registered once.
+
+2006-02-21 15:09:39  Tony Vroon <chainsaw@gentoo.org>
+
+	* Fix logic for shaded mode. With TIME_REMAINING and a song of unknown length, we got just the :, and not the time.
+
+2006-02-19 20:20:51  William Pitcock <nenolod@nenolod.net>
+
+	   - Fix mp3 detection properly.
+	   - Generate thumbnails for nextgen skins as well as WA2.x ones.
+
+2006-02-19 20:05:14  William Pitcock <nenolod@nenolod.net>
+
+	* fix libvisual-proxy conditional
+
+2006-02-19 17:50:50  Tony Vroon <chainsaw@gentoo.org>
+
+	* Kill the crossfader plugin. It insisted on exploding on amd64 systems and was a general pita to compile. Also, remove two unused vars from mpg123.
+
+2006-02-19 17:35:37  Tony Vroon <chainsaw@gentoo.org>
+
+	* Actually use the cleanup hooks on general & visualization plugins.
+
+2006-02-19 17:18:05  Tony Vroon <chainsaw@gentoo.org>
+
+	* Get mpg123 going. Nenolod promises to fix this properly soon.
+
+2006-02-19 17:03:06  Tony Vroon <chainsaw@gentoo.org>
+
+	* Port inetctl plugin from XMMS.
+
+2006-02-19 14:39:36  William Pitcock <nenolod@nenolod.net>
+
+	* FIX
+
+2006-02-19 10:36:35  Tony Vroon <chainsaw@gentoo.org>
+
+	* Juggle declarations around so that GCC likes the order of things.
+
+2006-02-19 08:34:25  Tony Vroon <chainsaw@gentoo.org>
+
+	* Initialize org variable before using it.
+
+2006-02-19 08:13:53  Tony Vroon <chainsaw@gentoo.org>
+
+	* Disabled unused void function add_instlist.
+
+2006-02-19 08:00:47  Tony Vroon <chainsaw@gentoo.org>
+
+	* Only build what the configure system tells us to build.
+
+2006-02-19 07:48:58  Tony Vroon <chainsaw@gentoo.org>
+
+	* Robustness fix; skinning dialog should deal with incorrect current skin setting gracefully. By external contributor Daniel Drake (Gentoo).
+
+2006-02-18 18:36:33  Tony Vroon <chainsaw@gentoo.org>
+
+	* An explicit cast a day keeps the compiler warning at bay.
+
+2006-02-18 18:15:16  Tony Vroon <chainsaw@gentoo.org>
+
+	* Addresses most of the warnings in the code, and uses a -W CFLAG to disable the non-null checks. From external contributor Harald van Dijk (Gentoo).
+
+2006-02-18 16:02:57  Tony Vroon <chainsaw@gentoo.org>
+
+	* More skin-related fixups. One segfault fix by Michael Hanselmann and a fix by Daniel Drake to also display skins that lack a thumbnail.
+
+2006-02-18 15:21:21  Tony Vroon <chainsaw@gentoo.org>
+
+	* Do not throw SIGABRT when path == NULL, g_return_val_if_fail logs a critical message and will abort. Patch courtesy of Daniel Drake from Gentoo.
+
+2006-02-18 10:23:30  Tony Vroon <chainsaw@gentoo.org>
+
+	* Sync with upstream. Drop hardware OPL2/3 support, it throws warnings and is not used on most modern machines. Added var inits where GCC 4.0 thought it was a good idea.
+
+2006-02-16 09:40:35  William Pitcock <nenolod@nenolod.net>
+
+	* id3v1 tag stuffs.
+
+2006-02-12 13:10:41  Tony Vroon <chainsaw@gentoo.org>
+
+	* Check for have_alsa to enable ALSA, and not have_oss.
+
+2006-02-12 12:24:16  William Pitcock <nenolod@nenolod.net>
+
+	* Conditionalize the buildsystem.
+
+2006-02-12 10:59:11  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use g_strchug instead of g_strstrip during playlist load. Trailing whitespace can be a valid occurance. Closes bug #282.
+
+2006-02-12 09:12:26  Tony Vroon <chainsaw@gentoo.org>
+
+	* Do not show 00:00 when stopped in shaded mode, closes bug #390.
+
+2006-02-11 11:10:33  Tony Vroon <chainsaw@gentoo.org>
+
+	* Updated japanese translation by dai, from bug #384.
+
+2006-02-11 10:25:14  Tony Vroon <chainsaw@gentoo.org>
+
+	* Update codingstyle to be more consistent with last upstream release. Stop exploding at shutdown.
+
+2006-02-08 18:08:04  Tony Vroon <chainsaw@gentoo.org>
+
+	* Trim the header a bit too.
+
+2006-02-08 18:07:34  Tony Vroon <chainsaw@gentoo.org>
+
+	* Remove config dependency, font usage and misc dead code.
+
+2006-02-07 13:54:28  William Pitcock <nenolod@nenolod.net>
+
+	* use the default rule for building library objectives here
+
+2006-02-07 08:40:04  William Pitcock <nenolod@nenolod.net>
+
+	* do not forkbomb if we have a malformed makefile
+
+2006-02-06 19:10:47  Tony Vroon <chainsaw@gentoo.org>
+
+	* GCC 4.1 warning fixes by Diego 'Flameeyes' Petteno from Gentoo.
+
+2006-02-06 18:52:28  Tony Vroon <chainsaw@gentoo.org>
+
+	* MP3 linking fixes by NhJm.
+
+2006-02-06 18:47:35  Tony Vroon <chainsaw@gentoo.org>
+
+	* Musepack build fix by NhJm.
+
+2006-02-06 18:41:01  Tony Vroon <chainsaw@gentoo.org>
+
+	* Vorbis linking fix by Kiyoshi Aman.
+
+2006-02-06 18:24:20  Tony Vroon <chainsaw@gentoo.org>
+
+	* Build fixes for SID by NhJm.
+
+2006-02-06 14:08:35  Tony Vroon <chainsaw@gentoo.org>
+
+	* Convert crossfade & disk_writer to new build system.
+
+2006-02-05 15:58:33  Tony Vroon <chainsaw@gentoo.org>
+
+	* Start building adplug.
+
+2006-02-05 15:32:51  Tony Vroon <chainsaw@gentoo.org>
+
+	* Fix building of the musepack plugin.
+
+2006-02-05 09:14:48  Tony Vroon <chainsaw@gentoo.org>
+
+	* Convert OSS & ALSA output plugins.
+
+2006-02-05 09:14:24  Tony Vroon <chainsaw@gentoo.org>
+
+	* Convert OSS & ALSA output plugins.
+
+2006-02-04 19:29:52  William Pitcock <nenolod@nenolod.net>
+
+	* buildsystem fixes, shouldn't bomb now :P
+
+2006-02-04 19:22:10  William Pitcock <nenolod@nenolod.net>
+
+	* Oops.
+
+2006-02-04 13:47:01  William Pitcock <nenolod@nenolod.net>
+
+	* Run ldconfig as an install-posthook operation, some systems need it.
+
+2006-02-04 13:44:06  William Pitcock <nenolod@nenolod.net>
+
+	* Convert Visualization plugins over.
+
+2006-02-04 13:30:06  William Pitcock <nenolod@nenolod.net>
+
+	* we never did anything here, removing for confusion
+
+2006-02-04 13:19:32  William Pitcock <nenolod@nenolod.net>
+
+	* playlist_list widget improvements via plasmaroo
+
+2006-02-03 09:26:58  William Pitcock <nenolod@nenolod.net>
+
+	* General plugins converted
+
+2006-02-03 09:15:37  William Pitcock <nenolod@nenolod.net>
+
+	* Effects conversion
+
+2006-02-03 09:11:33  William Pitcock <nenolod@nenolod.net>
+
+	* modplug conversion
+
+2006-02-03 08:51:47  William Pitcock <nenolod@nenolod.net>
+
+	* wav conversion
+
+2006-02-03 08:44:11  William Pitcock <nenolod@nenolod.net>
+
+	* wma conversion
+
+2006-02-03 08:38:16  William Pitcock <nenolod@nenolod.net>
+
+	* ditto
+
+2006-02-03 08:36:31  William Pitcock <nenolod@nenolod.net>
+
+	* fixes
+
+2006-02-03 08:34:31  William Pitcock <nenolod@nenolod.net>
+
+	* ditto
+
+2006-02-03 08:34:08  William Pitcock <nenolod@nenolod.net>
+
+	* oops
+
+2006-02-03 08:33:34  William Pitcock <nenolod@nenolod.net>
+
+	* sexypsf conversion
+
+2006-02-03 08:30:51  William Pitcock <nenolod@nenolod.net>
+
+	* sid conversion
+
+2006-02-03 08:26:41  William Pitcock <nenolod@nenolod.net>
+
+	* remove unused makefile
+
+2006-02-02 21:35:40  William Pitcock <nenolod@nenolod.net>
+
+	* vorbis linkage
+
+2006-02-02 21:32:18  William Pitcock <nenolod@nenolod.net>
+
+	* fix libconsole linkage
+
+2006-02-02 21:10:15  William Pitcock <nenolod@nenolod.net>
+
+	* fix some path issues
+
+2006-02-02 21:06:15  William Pitcock <nenolod@nenolod.net>
+
+	* link against libid3 if available
+
+2006-02-02 21:01:48  William Pitcock <nenolod@nenolod.net>
+
+	* install subobjectives
+
+2006-02-02 20:49:10  William Pitcock <nenolod@nenolod.net>
+
+	* make sure mpg123 installs correctly
+
+2006-02-02 20:47:47  William Pitcock <nenolod@nenolod.net>
+
+	* timidity conversion
+
+2006-02-02 20:33:24  William Pitcock <nenolod@nenolod.net>
+
+	* flac conversion
+
+2006-02-02 20:28:35  William Pitcock <nenolod@nenolod.net>
+
+	* remove dead code
+
+2006-02-02 20:28:19  William Pitcock <nenolod@nenolod.net>
+
+	* adplug fixes
+
+2006-02-02 20:26:59  William Pitcock <nenolod@nenolod.net>
+
+	* Musepack conversion
+
+2006-02-02 20:23:59  William Pitcock <nenolod@nenolod.net>
+
+	* Convert adplug over to build objectives...
+
+2006-02-02 20:16:36  William Pitcock <nenolod@nenolod.net>
+
+	* remove old LIBTOOL crap
+
+2006-02-02 20:16:10  William Pitcock <nenolod@nenolod.net>
+
+	* build objective for amidi-plug
+
+2006-02-02 20:13:17  William Pitcock <nenolod@nenolod.net>
+
+	* remove unused components
+
+2006-02-02 19:46:30  William Pitcock <nenolod@nenolod.net>
+
+	* libaudacious has two objectives that are evaluated, a static object and
+	* a shared object.
+
+2006-02-02 19:32:49  William Pitcock <nenolod@nenolod.net>
+
+	* Convert audacious over to a binary objective.
+
+2006-02-02 18:20:49  William Pitcock <nenolod@nenolod.net>
+
+	* more fixes
+
+2006-02-02 18:15:10  William Pitcock <nenolod@nenolod.net>
+
+	* ditto for static libraries
+
+2006-02-02 18:14:33  William Pitcock <nenolod@nenolod.net>
+
+	* try to add a "default" make rule for $(OBJECTIVE_BINS)
+
+2006-02-02 18:12:08  William Pitcock <nenolod@nenolod.net>
+
+	* buildsystem improvements
+
+2006-02-02 18:03:51  William Pitcock <nenolod@nenolod.net>
+
+	* Conversion to new system.
+
+2006-02-02 17:49:25  William Pitcock <nenolod@nenolod.net>
+
+	* Update vorbis.
+
+2006-02-02 17:44:45  William Pitcock <nenolod@nenolod.net>
+
+	* squelch warnings -- they're getting annoying seeing again and again
+
+2006-02-02 17:42:11  William Pitcock <nenolod@nenolod.net>
+
+	* Add -I../.. here to satisfy OSS header dependency (O_o)
+
+2006-02-02 17:40:33  William Pitcock <nenolod@nenolod.net>
+
+	* convert cdaudio
+
+2006-02-02 17:37:08  William Pitcock <nenolod@nenolod.net>
+
+	* update to objective make
+
+2006-02-02 17:33:01  William Pitcock <nenolod@nenolod.net>
+
+	* Convert aac over, make sure mpg123 is compiled -fPIC
+
+2006-02-02 16:52:47  William Pitcock <nenolod@nenolod.net>
+
+	* Announce objective completion.
+
+2006-02-02 16:50:05  William Pitcock <nenolod@nenolod.net>
+
+	* Add library "dependencies" care of $(OBJECTIVE_LIBS_NOINST)
+
+2006-02-02 16:47:26  William Pitcock <nenolod@nenolod.net>
+
+	* Announce when we're building a library or binary objective, not just a component objective.
+
+2006-02-02 16:43:34  William Pitcock <nenolod@nenolod.net>
+
+	* fix make clean
+
+2006-02-02 16:42:17  William Pitcock <nenolod@nenolod.net>
+
+	* convert mpg123 over... right now we don't use the "x86-optimized code", although I doubt it makes a lick of
+	* difference anyway...
+
+2006-02-02 16:21:14  William Pitcock <nenolod@nenolod.net>
+
+	* buildsystem upgrade
+
+2006-02-02 16:17:33  William Pitcock <nenolod@nenolod.net>
+
+	* Add confirmation messages.
+
+2006-02-02 16:15:36  William Pitcock <nenolod@nenolod.net>
+
+	* some buildsystem changes... nothing notable yet
+
+2006-02-02 15:57:20  William Pitcock <nenolod@nenolod.net>
+
+	* needed requirements for objective-based buildsystem (automake replacement)
+
+2006-02-01 21:42:23  William Pitcock <nenolod@nenolod.net>
+
+	* Remove the elusive playlistwin visualiser that we do not use.
+
+2006-02-01 16:04:14  William Pitcock <nenolod@nenolod.net>
+
+	* I made an error in the ChangeLog, whoops.
+
+2006-02-01 16:01:16  William Pitcock <nenolod@nenolod.net>
+
+	* ChangeLog
+
+2006-02-01 15:57:44  William Pitcock <nenolod@nenolod.net>
+
+	   - Update mpg123 configure options
+	   - Update NEWS.
+
+2006-02-01 15:36:46  Giacomo Lozito <james@develia.org>
+
+	* amidi-plug: ensure that i_seq_off() can be safely called multiple times
+
+2006-02-01 15:11:14  William Pitcock <nenolod@nenolod.net>
+
+	* Mouse icon.
+
+2006-02-01 15:10:07  William Pitcock <nenolod@nenolod.net>
+
+	* update hungarian translation
+
+2006-02-01 15:09:25  William Pitcock <nenolod@nenolod.net>
+
+	* make lirc strings translatable
+
+2006-02-01 15:09:00  William Pitcock <nenolod@nenolod.net>
+
+	* make WMA plugin strings translatable
+
+2006-02-01 15:08:39  William Pitcock <nenolod@nenolod.net>
+
+	* make timidity strings translatable
+
+2006-02-01 15:08:20  William Pitcock <nenolod@nenolod.net>
+
+	* update POTFILES.in
+
 2006-01-30 07:44:27  William Pitcock <nenolod@nenolod.net>
 
 	* Sanity checking inside vfs_() functions.
