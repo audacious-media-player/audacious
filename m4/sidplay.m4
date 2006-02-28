@@ -259,7 +259,6 @@ AC_DEFUN([SIDPLAY_TRY_LIBSIDPLAY2],
 [
     SIDPLAY_TRY_LINK_SAVE
 
-    CXX="${SHELL-/bin/sh} ${srcdir}/libtool $CXX"
     CXXFLAGS="$CXXFLAGS $xs_sidplay2_cxxflags -DHAVE_UNIX"
     LDFLAGS="$LDFLAGS $xs_sidplay2_ldadd"
 
@@ -356,7 +355,6 @@ AC_DEFUN([BUILDERS_FIND_RESID],
     AC_LANG_PUSH([C++])
     SIDPLAY_TRY_LINK_SAVE
     
-    CXX="${SHELL-/bin/sh} ${srcdir}/libtool $CXX"
     CXXFLAGS="$CXXFLAGS $BUILDERS_INCLUDES"
     LDFLAGS="$LDFLAGS $BUILDERS_LDFLAGS"
     LIBS="$LIBS -lresid-builder"
@@ -392,7 +390,6 @@ AC_DEFUN([BUILDERS_FIND_HARDSID],
     AC_LANG_PUSH([C++])
     SIDPLAY_TRY_LINK_SAVE
 
-    CXX="${SHELL-/bin/sh} ${srcdir}/libtool $CXX"
     CXXFLAGS="$CXXFLAGS $BUILDERS_INCLUDES"
     LDFLAGS="$LDFLAGS $BUILDERS_LDFLAGS"
     LIBS="$LIBS -lhardsid-builder"
