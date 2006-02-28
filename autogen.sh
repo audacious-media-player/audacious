@@ -12,7 +12,6 @@ AUTOCONF=${AUTOCONF:-autoconf}
 ACLOCAL=${ACLOCAL:-aclocal-1.9}
 AUTOHEADER=${AUTOHEADER:-autoheader}
 AUTOPOINT=${AUTOPOINT:-autopoint}
-LIBTOOLIZE=${LIBTOOLIZE:-libtoolize}
 
 dump_help_screen ()
 {
@@ -81,7 +80,6 @@ parse_options "$@"
 cd $TOP_DIR
 
 run_or_die $AUTOPOINT -f
-run_or_die $LIBTOOLIZE -f -c
 run_or_die $ACLOCAL -I m4
 run_or_die $AUTOHEADER
 run_or_die $AUTOCONF
