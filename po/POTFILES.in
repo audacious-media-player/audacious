@@ -66,10 +66,6 @@ Plugins/Output/alsa/about.c
 Plugins/Output/alsa/alsa.c
 Plugins/Output/alsa/configure.c
 
-# Crossfade output plugin.
-Plugins/Output/crossfade/configure.c
-Plugins/Output/crossfade/interface-2.0.glade
-
 # Disk Writer output plugin.
 Plugins/Output/disk_writer/disk_writer.c
 
@@ -81,12 +77,6 @@ Plugins/Output/esd/esd.c
 # Blur Scope visualization plugin.
 Plugins/Visualization/blur_scope/blur_scope.c
 Plugins/Visualization/blur_scope/config.c
-
-# Libvisual visualization plugin.
-Plugins/Visualization/libvisual-proxy/about.c
-Plugins/Visualization/libvisual-proxy/config_gui.c
-Plugins/Visualization/libvisual-proxy/lv_bmp_config.c
-Plugins/Visualization/libvisual-proxy/main.c
 
 # Audacious.
 audacious/about.c
