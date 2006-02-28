@@ -702,6 +702,7 @@ case "$host" in
         then
             AC_DEFINE(SYMBOL_PREFIX, "_", [Define to symbol prefix, if any])
         fi
+        OUTPUT_PLUGINS="$OUTPUT_PLUGINS sun"
     ;;
     *-*-darwin*)
         AC_DEFINE(SYMBOL_PREFIX, "_", [Define to symbol prefix, if any])
@@ -921,6 +922,7 @@ echo "  Open Sound System (oss):                $have_oss"
 echo "  Advanced Linux Sound Arch. (alsa):      $have_alsa"
 echo "  Enlightenment Sound Daemon (esd):       $have_esd"
 echo "  Jack Audio Connection Kit (jack):       $have_jack"
+echo "  BSD/SUN audio output (sun):             $have_sun"
 echo
 echo "  Input Plugins"
 echo "  -------------"
