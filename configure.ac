@@ -22,6 +22,8 @@ if test -d "/usr/X11R6/include"; then
 	CPPFLAGS="$CPPFLAGS -I/usr/X11R6/include"
 fi
 
+AM_INIT_AUTOMAKE
+
 dnl GNU gettext
 
 AM_GNU_GETTEXT
@@ -34,22 +36,6 @@ AC_LANG([C])
 AC_LANG([C++])
 AC_ISC_POSIX
 AC_C_BIGENDIAN
-
-dnl Automake emulation
-
-PACKAGE=$(PACKAGE_NAME)
-VERSION=$(PACKAGE_VERSION)
-
-AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE",
-    [Package name.]
-)
-
-AC_DEFINE_UNQUOTED(VERSION, "$VERSION",
-    [Package version.]
-)
-
-AC_SUBST(PACKAGE)
-AC_SUBST(VERSION)
 
 dnl Check for assembler
 
