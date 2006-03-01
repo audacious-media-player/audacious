@@ -243,6 +243,7 @@ mpg123_detect_by_content(char *filename)
     guchar buf[DET_BUF_SIZE];
     int in_buf, i;
     gboolean ret = FALSE;
+    guint cyc = 0;
 
     if ((file = vfs_fopen(filename, "rb")) == NULL)
         return FALSE;
@@ -270,6 +271,9 @@ mpg123_detect_by_content(char *filename)
                 break;
             }
         }
+
+        if (++cyc > 20)
+	    goto done;
     }
     if (mpg123_decode_header(&fr, head)) {
         /*
