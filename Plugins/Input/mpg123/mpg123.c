@@ -250,12 +250,12 @@ mpg123_detect_by_content(char *filename)
     if (vfs_fread(tmp, 1, 4, file) != 4)
         goto done;
     head = convert_to_header(tmp);
-    while (!mpg123_head_check(head) && ++cyc < 5) {
+    while (!mpg123_head_check(head) && ++cyc < 10) {
         /*
          * The mpeg-stream can start anywhere in the file,
          * so we check the entire file
 	 *
-	 * Incorrect! We give up past five iterations of this
+	 * Incorrect! We give up past ten iterations of this
 	 * code for safety's sake. Buffer overflows suck. --nenolod
          */
         /* Optimize this */
