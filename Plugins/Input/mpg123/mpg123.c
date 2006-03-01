@@ -309,7 +309,7 @@ is_our_file(char *filename)
 	|| !strncasecmp(ext, ".mpg", 4)))
         return TRUE;
 
-    return TRUE;
+    return FALSE;
 }
 
 static void
