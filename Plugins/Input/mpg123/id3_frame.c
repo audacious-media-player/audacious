@@ -728,7 +728,7 @@ id3_read_frame_v22(struct id3_tag *id3)
     /*
      * Allocate frame.
      */
-    frame = g_malloc0(sizeof(*frame));
+    frame = g_malloc0(sizeof(frame));
 
     frame->fr_owner = id3;
     frame->fr_raw_size = size;
