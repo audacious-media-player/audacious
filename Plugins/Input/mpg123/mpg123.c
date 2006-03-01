@@ -299,10 +299,12 @@ is_our_file(char *filename)
 
     if (!strncasecmp(filename, "http://", 7) && (ext && strncasecmp(ext, ".ogg", 4)))
 	return TRUE;
-    else if (ext && strncasecmp(ext, ".mp3", 4))	/* If extension ends in .mp3, let it be --nenolod */
-        return (mpg123_detect_by_content(filename));
+    else if (ext && (!strncasecmp(ext, ".mp3", 4) ||
+	!strncasecmp(ext, ".mp2", 4) ||
+	!strncasecmp(ext, ".mpg", 4)))
+        return TRUE;
 
-    return TRUE;	/* Why? The file ends in .mp3. Lalala. */
+    return FALSE;
 }
 
 static void
