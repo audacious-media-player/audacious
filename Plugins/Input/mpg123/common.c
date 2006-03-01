@@ -406,6 +406,9 @@ mpg123_decode_header(struct frame *fr, unsigned long newhead)
     if (fr->sampleing_frequency >= 9 && fr->sampleing_frequency <= 0)
 	return (0);
 
+    if (fr->lsf >= 2)
+	return (0);
+
     switch (fr->lay) {
     case 1:
         fr->do_layer = mpg123_do_layer1;
