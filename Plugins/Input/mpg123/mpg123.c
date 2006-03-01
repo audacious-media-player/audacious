@@ -299,12 +299,10 @@ is_our_file(char *filename)
 
     if (!strncasecmp(filename, "http://", 7) && (ext && strncasecmp(ext, ".ogg", 4)))
 	return TRUE;
-    else if (ext && (!strncasecmp(ext, ".mp3", 4) ||
-	!strncasecmp(ext, ".mp2", 4) ||
-	!strncasecmp(ext, ".mpg", 4)))
-        return TRUE;
+    else if (ext && !strncasecmp(ext, ".mp3", 4))
+        return mpg123_detect_by_content(filename);
 
-    return FALSE;
+    return TRUE;
 }
 
 static void
