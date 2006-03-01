@@ -403,8 +403,13 @@ mpg123_decode_header(struct frame *fr, unsigned long newhead)
     if (!fr->bitrate_index)
         return (0);
 
-    if (fr->sampleing_frequency >= 9 || fr->sampleing_frequency <= 0)
+    if (fr->sampling_frequency >= 9 || fr->sampling_frequency <= 0)
+    {
+#ifdef DEBUG
+	printf("rejecting mp3 due to sampling_frequency == %d\n");
+#endif
 	return (0);
+    }
 
     if (fr->lsf >= 2)
 	return (0);
