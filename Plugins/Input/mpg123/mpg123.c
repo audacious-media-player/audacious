@@ -231,6 +231,7 @@ convert_to_header(guint8 * buf)
 }
 
 
+#if 0
 #define DET_BUF_SIZE 1024
 
 static gboolean
@@ -294,6 +295,7 @@ mpg123_detect_by_content(char *filename)
     vfs_fclose(file);
     return ret;
 }
+#endif
 
 static int
 is_our_file(char *filename)
@@ -302,8 +304,10 @@ is_our_file(char *filename)
 
     if (!strncasecmp(filename, "http://", 7) && (ext && strncasecmp(ext, ".ogg", 4)))
 	return TRUE;
-    else if (ext && strncasecmp(ext, ".mp3", 4))
-        return mpg123_detect_by_content(filename);
+    else if (ext && (!strncasecmp(ext, ".mp3", 4)
+	|| !strncasecmp(ext, ".mp2", 4)
+	|| !strncasecmp(ext, ".mpg", 4)))
+        return TRUE;
 
     return TRUE;
 }
