@@ -243,16 +243,20 @@ mpg123_detect_by_content(char *filename)
     guchar buf[DET_BUF_SIZE];
     int in_buf, i;
     gboolean ret = FALSE;
+    guint cyc = 0;
 
     if ((file = vfs_fopen(filename, "rb")) == NULL)
         return FALSE;
     if (vfs_fread(tmp, 1, 4, file) != 4)
         goto done;
     head = convert_to_header(tmp);
-    while (!mpg123_head_check(head)) {
+    while (!mpg123_head_check(head) && ++cyc < 5) {
         /*
          * The mpeg-stream can start anywhere in the file,
          * so we check the entire file
+	 *
+	 * Incorrect! We give up past five iterations of this
+	 * code for safety's sake. Buffer overflows suck. --nenolod
          */
         /* Optimize this */
         in_buf = vfs_fread(buf, 1, DET_BUF_SIZE, file);
