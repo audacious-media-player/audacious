@@ -404,6 +404,9 @@ id3_open_fp(VFSFile * fp, int flags)
 {
     struct id3_tag *id3;
 
+    if (fp == NULL)
+	return NULL;
+
     /*
      * Allocate ID3 structure.
      */
