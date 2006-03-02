@@ -28,6 +28,7 @@
 #include <glib/gi18n.h>
 #include <glib/gprintf.h>
 #include <gtk/gtk.h>
+#include <gtk/gtkmessagedialog.h>
 #include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -160,6 +161,7 @@ struct _PlaybackInfo {
 
 
 GtkWidget *mainwin = NULL;
+GtkMessageDialog *err = NULL; /* an error dialog for miscellaneous error messages */
 
 static GdkBitmap *nullmask;
 static gint balance;
@@ -1275,9 +1277,7 @@ mainwin_jump_to_time(void)
     gchar time_str[10];
 
     if (!bmp_playback_get_playing()) {
-        /* FIXME: pop an error dialog and/or disable menu option to
-           indicate JTT can't be launched when no track is being
-           played */
+        report_error("JIT can't be launched when no track is being played.\n");
         return;
     }
 
@@ -3144,6 +3144,15 @@ mainwin_create_widgets(void)
         widget_hide(WIDGET(mainwin_stime_min));
         widget_hide(WIDGET(mainwin_stime_sec));
     }
+
+    err = gtk_message_dialog_new(GTK_WINDOW(mainwin), GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_MODAL,
+                                 GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,"Error in Audacious.");
+
+
+    gtk_window_set_position(GTK_WINDOW(err), GTK_WIN_POS_CENTER);
+    gtk_label_set_line_wrap(GTK_LABEL(err->label), TRUE);
+    /* Dang well better set an error message or you'll see this */
+    gtk_message_dialog_format_secondary_text(err,"Boo! Bad stuff! Booga Booga!");
 
 }
 

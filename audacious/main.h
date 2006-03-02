@@ -140,5 +140,6 @@ extern gboolean has_x11_connection;
 
 void bmp_config_save(void);
 void bmp_config_load(void);
+void report_error(const gchar *error_text);
 
 #endif

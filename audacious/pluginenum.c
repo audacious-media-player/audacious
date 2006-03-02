@@ -32,6 +32,7 @@
 
 #include "controlsocket.h"
 #include "main.h"
+#include "mainwin.h"
 #include "playback.h"
 #include "playlist.h"
 #include "util.h"
@@ -251,9 +252,7 @@ plugin_system_init(void)
     gint dirsel = 0, i = 0;
 
     if (!g_module_supported()) {
-        /* FIXME: We should open an error dialog for this. BMP is
-           practically useless without plugins */
-        g_warning("Module loading not supported! Plugins will not be loaded.");
+        report_error("Module loading not supported! Plugins will not be loaded.\n");
         return;
     }
 

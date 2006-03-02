@@ -98,6 +98,7 @@ struct _BmpCmdLineOpt {
 
 typedef struct _BmpCmdLineOpt BmpCmdLineOpt;
 
+BmpCmdLineOpt options;
 
 BmpConfig cfg;
 
@@ -901,10 +902,20 @@ run_load_skin_error_dialog(const gchar * skin_path)
     gtk_widget_destroy(dialog);
 }
 
+// use a format string?
+void report_error(const gchar *error_text)
+{
+    fprintf(stderr,error_text);
+	if (options.headless!=1) {
+        gtk_message_dialog_format_secondary_text(err,error_text);
+        gtk_dialog_run(GTK_DIALOG(err));
+        gtk_widget_hide(GTK_WIDGET(err));
+    }
+}
+
 gint
 main(gint argc, gchar ** argv)
 {
-    BmpCmdLineOpt options;
     gboolean gtk_init_check_ok;
 
     /* Setup l10n early so we can print localized error messages */
@@ -977,11 +988,13 @@ main(gint argc, gchar ** argv)
 
     if (options.headless != 1)
     {
+
         bmp_set_default_icon();
 
         gtk_accel_map_load(bmp_paths[BMP_PATH_ACCEL_FILE]);
 
         mainwin_create();
+
         playlistwin_create();
         equalizerwin_create();
 

@@ -1251,10 +1251,14 @@ static void
 load_winamp_file(const gchar * filename)
 {
     VFSFile *file;
+    gchar *tmp;
 
-    /* FIXME: show error dialog */
-    if (!(file = vfs_fopen(filename, "rb")))
+    if (!(file = vfs_fopen(filename, "rb"))) {
+        tmp = g_strconcat("Failed to load WinAmp file: ",filename,"\n",NULL);
+        report_error(tmp);
+        g_free(tmp);
         return;
+    }
 
     equalizerwin_read_winamp_eqf(file);
     vfs_fclose(file);
@@ -1264,10 +1268,14 @@ static void
 import_winamp_file(const gchar * filename)
 {
     VFSFile *file;
+    gchar *tmp;
 
-    /* FIXME: show error dialog */
-    if (!(file = vfs_fopen(filename, "rb")))
+    if (!(file = vfs_fopen(filename, "rb"))) {
+        tmp = g_strconcat("Failed to import WinAmp file: ",filename,"\n",NULL);
+        report_error(tmp);
+        g_free(tmp);
         return;
+    }
 
     equalizer_presets = g_list_concat(equalizer_presets,
                                       import_winamp_eqf(file));
@@ -1305,10 +1313,14 @@ save_winamp_file(const gchar * filename)
     gchar name[257];
     gint i;
     guchar bands[11];
+    gchar *tmp;
 
-    /* FIXME: show error dialog */
-    if (!(file = vfs_fopen(filename, "wb")))
+    if (!(file = vfs_fopen(filename, "wb"))) {
+        tmp = g_strconcat("Failed to save WinAmp file: ",filename,"\n",NULL);
+        report_error(tmp);
+        g_free(tmp);
         return;
+    }
 
     vfs_fwrite("Winamp EQ library file v1.1\x1a!--", 1, 31, file);
 
