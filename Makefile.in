@@ -6,7 +6,7 @@ SUBDIRS = Plugins libaudacious intl audacious po icons skin
 install-posthook:
 	@if test `whoami` = 'root'; then \
 		echo "[running ldconfig to update system library cache]"; \
-		ldconfig; \
+		/sbin/ldconfig; \
 		echo "[system library cache updated]"; \
 	fi
 	@mkdir -p $(DESTDIR)/$(LIBDIR)/pkgconfig
