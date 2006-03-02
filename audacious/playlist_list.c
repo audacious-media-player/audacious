@@ -360,7 +360,7 @@ playlist_list_draw(Widget * w)
     gsize tpadding_dwidth = 0;
 
     gchar tail[100];
-    gchar queuepos[255];         /* FIXME CRITICAL: Allows for a limited number of queue positions only */
+    gchar queuepos[255];
     gchar length[40];
 
     gchar **frags;
