@@ -300,7 +300,7 @@ id3_read_frame(struct id3_tag *id3)
     /*
      * Allocate frame.
      */
-    frame = g_malloc0(sizeof(*frame));
+    frame = g_malloc0(sizeof(struct id3_frame));
 
     frame->fr_owner = id3;
     /* FIXME v2.4.0 */
@@ -572,7 +572,7 @@ id3_add_frame(struct id3_tag *id3, guint32 type)
     /*
      * Allocate frame.
      */
-    frame = g_malloc0(sizeof(*frame));
+    frame = g_malloc0(sizeof(struct id3_frame));
 
     /*
      * Initialize frame
