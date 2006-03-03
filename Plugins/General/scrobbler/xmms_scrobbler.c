@@ -278,6 +278,12 @@ static submit_t get_song_status(void)
 			SUB_DEBUG);
 		changed = 1;
 		seeked = 0;
+
+		if (file_p != NULL)
+		{
+			g_free(file_p);
+			file_p = NULL;
+		}
 	  }else if( seeked ) { 
 		seeked = 1;
 		pdebug("*** SEEK ***", SUB_DEBUG);
@@ -330,6 +336,8 @@ static submit_t get_song_status(void)
 		}
 	  }
 	}
+
+	g_free(file_p);
 
 	/* keep current value for next iteration */
 	ps_p = ps_c;
