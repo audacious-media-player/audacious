@@ -245,6 +245,8 @@ static void mainwin_play_menu_callback(gpointer user_data,
 GtkItemFactoryEntry mainwin_songname_menu_entries[] = {
     {N_("/View Track Details"), "<alt>i", mainwin_general_menu_callback,
      MAINWIN_GENERAL_FILEINFO, "<ImageItem>", my_pixbuf},
+    {N_("/Jump to File"), "J", mainwin_songname_menu_callback,
+     MAINWIN_SONGNAME_JTF, "<StockItem>", GTK_STOCK_JUMP_TO},
     {"/-", NULL, NULL, 0, "<Separator>", NULL},
     {N_("/Autoscroll Songname"), NULL, mainwin_songname_menu_callback,
      MAINWIN_SONGNAME_SCROLL, "<ToggleItem>", NULL},
