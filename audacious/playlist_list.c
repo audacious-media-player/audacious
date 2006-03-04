@@ -598,7 +598,7 @@ playlist_list_draw(Widget * w)
                                    pl->pl_fheight - 2);
 
                 layout =
-                    gtk_widget_create_pango_layout(playlistwin, NULL);
+                    gtk_widget_create_pango_layout(playlistwin, queuepos);
                 pango_layout_set_font_description(layout, playlist_list_font);
                 pango_layout_set_alignment(layout, PANGO_ALIGN_CENTER);
 
