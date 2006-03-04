@@ -1,3 +1,250 @@
+2006-03-04 14:17:20  William Pitcock <nenolod@nenolod.net>
+
+	   - add corrected version of Aerdan's jump to file patch
+
+2006-03-04 01:39:17  William Pitcock <nenolod@nenolod.net>
+
+	   - blah, #if 0 out these g_free's until we get to 0.2.3
+
+2006-03-04 00:58:55  William Pitcock <nenolod@nenolod.net>
+
+	   - clean this up a bit
+
+2006-03-04 00:55:28  William Pitcock <nenolod@nenolod.net>
+
+	* err, actually, nevermind
+
+2006-03-04 00:53:31  William Pitcock <nenolod@nenolod.net>
+
+	   - we shouldn't pass queuepos to gtk_widget_create_pango_layout(), the only thing we will do is confuse it
+
+2006-03-04 00:50:04  William Pitcock <nenolod@nenolod.net>
+
+	   - 0.2.2
+
+2006-03-03 23:16:35  William Pitcock <nenolod@nenolod.net>
+
+	   - leak fix
+
+2006-03-03 22:57:36  William Pitcock <nenolod@nenolod.net>
+
+	   - fix a memory leak here
+
+2006-03-03 22:43:06  William Pitcock <nenolod@nenolod.net>
+
+	   - finish up here
+
+2006-03-03 22:09:52  William Pitcock <nenolod@nenolod.net>
+
+	   - more sanity checking
+
+2006-03-03 22:04:24  William Pitcock <nenolod@nenolod.net>
+
+	   - iteration pacing against id3_read_frame() since we cannot trust all tags to behave properly.
+
+2006-03-03 21:26:54  William Pitcock <nenolod@nenolod.net>
+
+	   - experimental ID32.2 fix
+
+2006-03-03 12:31:57  William Pitcock <nenolod@nenolod.net>
+
+	   - more fixes, sizeof *frame !($&($&(@!#$@#*&@!$# whoever wrote this code is an idiot
+
+2006-03-03 12:11:53  William Pitcock <nenolod@nenolod.net>
+
+	   - leak fix, take 1
+
+2006-03-02 18:07:31  William Pitcock <nenolod@nenolod.net>
+
+	   - some compilers couldn't figure the original call out, so put a struct infront of it
+
+2006-03-02 17:50:49  William Pitcock <nenolod@nenolod.net>
+
+	   - oh shit, i just found the error, we were calling malloc(0)!
+
+2006-03-02 17:01:33  William Pitcock <nenolod@nenolod.net>
+
+	   - use /sbin/ldconfig here instead of just ldconfig.
+
+2006-03-02 10:26:55  William Pitcock <nenolod@nenolod.net>
+
+	* untag a critical fixme as it was actually deadchip smoking some craq
+	* back in the days of BMP
+
+2006-03-02 10:14:36  William Pitcock <nenolod@nenolod.net>
+
+	* Add error reporting for many places, patch by external contributor Derek
+	* Pomery (nemo @ #audacious). Additional cleanups too.
+
+2006-03-02 10:00:29  William Pitcock <nenolod@nenolod.net>
+
+	   - do not operate on a non-existant fd
+
+2006-03-01 14:13:38  William Pitcock <nenolod@nenolod.net>
+
+	   - found it
+
+2006-03-01 13:34:43  William Pitcock <nenolod@nenolod.net>
+
+	* lalala
+
+2006-03-01 13:29:36  William Pitcock <nenolod@nenolod.net>
+
+	   - do not use type/magic detection here
+
+2006-03-01 13:17:23  William Pitcock <nenolod@nenolod.net>
+
+	   - fix a typo here
+
+2006-03-01 13:15:40  William Pitcock <nenolod@nenolod.net>
+
+	   - reinstate cyc-based checks intelligently
+
+2006-03-01 13:13:46  William Pitcock <nenolod@nenolod.net>
+
+	   - blah
+
+2006-03-01 13:09:13  William Pitcock <nenolod@nenolod.net>
+
+	   - remove cyc based breaking
+
+2006-03-01 12:39:35  William Pitcock <nenolod@nenolod.net>
+
+	* adjust our tolerance a bit
+
+2006-03-01 12:33:12  William Pitcock <nenolod@nenolod.net>
+
+	* ten iterations?
+
+2006-03-01 12:26:30  William Pitcock <nenolod@nenolod.net>
+
+	* blah!
+
+2006-03-01 12:25:01  William Pitcock <nenolod@nenolod.net>
+
+	   - enable debug notice
+
+2006-03-01 12:24:18  William Pitcock <nenolod@nenolod.net>
+
+	* hmm
+
+2006-03-01 12:05:28  William Pitcock <nenolod@nenolod.net>
+
+	   - typo
+
+2006-03-01 11:40:21  William Pitcock <nenolod@nenolod.net>
+
+	   - should be safe to revert now
+
+2006-03-01 11:39:18  William Pitcock <nenolod@nenolod.net>
+
+	   - more sanity checks
+
+2006-03-01 11:37:37  William Pitcock <nenolod@nenolod.net>
+
+	   - sanity checks for mpg123_decode_header
+
+2006-03-01 11:34:21  William Pitcock <nenolod@nenolod.net>
+
+	   - lets not use mpg123_detect_by_content
+
+2006-03-01 11:07:09  William Pitcock <nenolod@nenolod.net>
+
+	   - try to avoid a buffer overflow when detecting an MPEG stream
+
+2006-02-28 16:56:30  William Pitcock <nenolod@nenolod.net>
+
+	   - sanity checks here
+
+2006-02-28 16:36:33  Giacomo Lozito <james@develia.org>
+
+	* removed explicit calls to libtool from sidplay.m4, since libtool is not here anymore
+
+2006-02-28 13:33:08  William Pitcock <nenolod@nenolod.net>
+
+	   - generate makefile for BSD/Sun plugin.
+
+2006-02-28 13:32:33  William Pitcock <nenolod@nenolod.net>
+
+	   - Initial port of the bsd/sun audio output plugin from XMMS. Needs testing.
+
+2006-02-28 00:12:32  William Pitcock <nenolod@nenolod.net>
+
+	* kludge
+
+2006-02-27 23:01:17  William Pitcock <nenolod@nenolod.net>
+
+	* put AM_INIT_AUTOMAKE back
+
+2006-02-27 22:59:50  William Pitcock <nenolod@nenolod.net>
+
+	* build intl first
+
+2006-02-27 22:57:33  William Pitcock <nenolod@nenolod.net>
+
+	* add kludge for xorg on pkgsrc
+
+2006-02-27 22:54:14  William Pitcock <nenolod@nenolod.net>
+
+	* update languages
+
+2006-02-27 22:52:38  William Pitcock <nenolod@nenolod.net>
+
+	* blah
+
+2006-02-27 22:47:59  William Pitcock <nenolod@nenolod.net>
+
+	* more progress
+
+2006-02-27 22:37:43  William Pitcock <nenolod@nenolod.net>
+
+	* more stuff
+
+2006-02-27 22:32:58  William Pitcock <nenolod@nenolod.net>
+
+	* more fixing
+
+2006-02-27 22:24:11  William Pitcock <nenolod@nenolod.net>
+
+	* use PACKAGE_NAME instead of PACKAGE for autoconf compatibility
+
+2006-02-27 22:22:27  William Pitcock <nenolod@nenolod.net>
+
+	* another kludge for pkgsrc, C++ edition
+
+2006-02-27 22:18:03  William Pitcock <nenolod@nenolod.net>
+
+	* kludge for pkgsrc machines
+
+2006-02-27 22:11:58  William Pitcock <nenolod@nenolod.net>
+
+	   - remove autopoint
+
+2006-02-27 22:11:39  William Pitcock <nenolod@nenolod.net>
+
+	   - remove need for autopoint
+
+2006-02-27 20:58:22  William Pitcock <nenolod@nenolod.net>
+
+	   - remove LIBTOOL
+
+2006-02-27 20:54:39  William Pitcock <nenolod@nenolod.net>
+
+	   - add config.guess, config.sub.
+	   - remove AM_INIT_AUTOMAKE
+
+2006-02-27 20:42:14  William Pitcock <nenolod@nenolod.net>
+
+	   - wtf is this? well it's leaving at any rate.
+
+2006-02-27 20:39:30  William Pitcock <nenolod@nenolod.net>
+
+	   - remove libtoolize
+
+2006-02-27 20:35:11  William Pitcock <nenolod@nenolod.net>
+
+	* documentation updates
+
 2006-02-27 20:17:55  William Pitcock <nenolod@nenolod.net>
 
 	   - fix underwater effects, patch via Spyke @ #audacious

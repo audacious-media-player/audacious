@@ -1,3 +1,12 @@
+Audacious 0.2.2 (2006-03-04)
+
+Enhancements
+* Added JTF to the songname menu.
+
+Bugfixes
+* Fixed ID3 tagging regression
+* Removed binary code from package (oops)
+
 Audacious 0.2.1 (2006-02-28)
 
 Enhancements
