@@ -155,23 +155,29 @@ static void flac_configurewin_ok(GtkWidget * widget, gpointer data)
 
 	flac_cfg.stream.use_proxy = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(streaming_proxy_use));
 
+#if 0
 	if (flac_cfg.stream.proxy_host != NULL)
 		g_free(flac_cfg.stream.proxy_host);
+#endif
 
 	flac_cfg.stream.proxy_host = g_strdup(gtk_entry_get_text(GTK_ENTRY(streaming_proxy_host_entry)));
 	flac_cfg.stream.proxy_port = atoi(gtk_entry_get_text(GTK_ENTRY(streaming_proxy_port_entry)));
 
 	flac_cfg.stream.proxy_use_auth = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(streaming_proxy_auth_use));
 
+#if 0
 	if(flac_cfg.stream.proxy_user != NULL)
 		g_free(flac_cfg.stream.proxy_user);
+#endif
 
 	flac_cfg.stream.proxy_user = NULL;
 	if(strlen(gtk_entry_get_text(GTK_ENTRY(streaming_proxy_auth_user_entry))) > 0)
 		flac_cfg.stream.proxy_user = g_strdup(gtk_entry_get_text(GTK_ENTRY(streaming_proxy_auth_user_entry)));
 
+#if 0
 	if(flac_cfg.stream.proxy_pass != NULL)
 		g_free(flac_cfg.stream.proxy_pass);
+#endif
 
 	flac_cfg.stream.proxy_pass = NULL;
 	if(strlen(gtk_entry_get_text(GTK_ENTRY(streaming_proxy_auth_pass_entry))) > 0)
