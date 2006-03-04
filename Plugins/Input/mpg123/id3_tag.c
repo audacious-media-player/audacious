@@ -135,5 +135,8 @@ id3_read_tag(struct id3_tag *id3)
             return -1;
     }
 
+    if (id3->id3_frame == NULL)
+	return -1;
+
     return 0;
 }
