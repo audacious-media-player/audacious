@@ -608,11 +608,7 @@ playlist_list_draw(Widget * w)
                                   strlen(queuepos)) * width_approx_digits),
                                 y + abs(descent), layout);
                 g_object_unref(layout);
-
             }
-
-
-
         }
         else {
             if (i == playlist_get_position_nolock())
