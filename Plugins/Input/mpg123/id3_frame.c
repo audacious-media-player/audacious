@@ -250,11 +250,16 @@ static struct id3_framedesc22 framedesc22[] = {
     {ID3_WXX, ID3_WXXX},        /* User defined URL link frame */
 };
 
+/*
+ * These need to be signed, because otherwise this code will get wonky.
+ * BTW, I hate this code and I hope it dies someday.
+ *   --nenolod
+ */
 static struct id3_framedesc *
 find_frame_description(guint32 id)
 {
-    size_t i;
-    for (i = 0; i < sizeof(framedesc) / sizeof(struct id3_framedesc); i++)
+    int i;
+    for (i = 0; i < (int) sizeof(framedesc) / (int) sizeof(struct id3_framedesc); i++)
         if (framedesc[i].fd_id == id)
             return &framedesc[i];
     return NULL;
@@ -567,7 +572,7 @@ struct id3_frame *
 id3_add_frame(struct id3_tag *id3, guint32 type)
 {
     struct id3_frame *frame;
-    size_t i;
+    int i;
 
     /*
      * Allocate frame.
@@ -582,7 +587,7 @@ id3_add_frame(struct id3_tag *id3, guint32 type)
     /*
      * Try finding the correct frame descriptor.
      */
-    for (i = 0; i < sizeof(framedesc) / sizeof(struct id3_framedesc); i++) {
+    for (i = 0; i < (int) sizeof(framedesc) / (int) sizeof(struct id3_framedesc); i++) {
         if (framedesc[i].fd_id == type) {
             frame->fr_desc = &framedesc[i];
             break;
@@ -683,8 +688,8 @@ id3_frame_clear_data(struct id3_frame *frame)
 static guint32
 find_v24_id(guint32 v22)
 {
-    size_t i;
-    for (i = 0; i < sizeof(framedesc22) / sizeof(framedesc22[0]); i++)
+    int i;
+    for (i = 0; i < (int) sizeof(framedesc22) / (int) sizeof(struct id3_framedesc22); i++)
         if (framedesc22[i].fd_v22 == v22)
             return framedesc22[i].fd_v24;
 
