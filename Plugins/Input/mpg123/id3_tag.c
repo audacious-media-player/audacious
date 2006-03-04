@@ -71,6 +71,7 @@ int
 id3_read_tag(struct id3_tag *id3)
 {
     char *buf;
+    gint  cyc = 0;	/* deal with malformed tags gracefully through iteration pacing */
 
     /*
      * We know that the tag will be at least this big.
@@ -127,6 +128,10 @@ id3_read_tag(struct id3_tag *id3)
      */
     while (id3->id3_pos < id3->id3_tagsize) {
         if (id3_read_frame(id3) == -1)
+            return -1;
+
+	/* 100 iterations, this ID3 is definately hosed */
+	if (++cyc == 100)
             return -1;
     }
 
