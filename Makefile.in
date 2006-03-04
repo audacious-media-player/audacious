@@ -9,9 +9,8 @@ install-posthook:
 		/sbin/ldconfig; \
 		echo "[system library cache updated]"; \
 	fi
-	@mkdir -p $(DESTDIR)/$(LIBDIR)/pkgconfig
-	@mkdir -p $(DESTDIR)/$(mandir)/man1
-	@mkdir -p $(DESTDIR)/$(datadir)/applications
-	@$(INSTALL_DATA) audacious.pc $(DESTDIR)/$(LIBDIR)/pkgconfig/audacious.pc
-	@$(INSTALL_DATA) audacious.1 $(DESTDIR)/$(mandir)/man1/audacious.1
-	@$(INSTALL_DATA) audacious/audacious.desktop $(DESTDIR)/$(datadir)/applications/audacious.desktop
+
+OBJECTIVE_DATA =							\
+	audacious.pc:$(LIBDIR)/pkgconfig				\
+	audacious.1:$(mandir)/man1					\
+	audacious/audacious.desktop:$(datadir)/applications
