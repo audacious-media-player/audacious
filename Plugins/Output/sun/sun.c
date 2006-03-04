@@ -32,8 +32,8 @@ OutputPlugin sun_op =
 	NULL,
 	NULL,			/* Description */
 	sun_init,
-	sun_about,
 	sun_cleanup,
+	sun_about,
 	sun_configure,
 	sun_get_volume,
 	sun_set_volume,
@@ -45,7 +45,8 @@ OutputPlugin sun_op =
 	sun_free,
 	sun_playing,
 	sun_output_time,
-	sun_written_time
+	sun_written_time,
+	NULL
 };
 
 
