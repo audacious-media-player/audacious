@@ -7,7 +7,7 @@ beepincludedir = $(includedir)/audacious
 
 OBJECTIVE_BINS = audacious
 
-LDFLAGS = -Wl,-export-dynamic
+LDFLAGS += -Wl,-export-dynamic
 LDADD = \
 	$(GTK_LIBS)      \
 	$(LIBGLADE_LIBS) \
