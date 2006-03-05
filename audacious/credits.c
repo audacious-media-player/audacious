@@ -51,6 +51,7 @@ static const gchar *credit_text[] = {
     N_("Audacious core developers:"),
     N_("Giacomo Lozito"),
     N_("William Pitcock"),
+    N_("Derek Pomery"),
     N_("Tony Vroon"),
     NULL,
 
@@ -69,6 +70,7 @@ static const gchar *credit_text[] = {
     N_("Shay Green"),
     N_("Giacomo Lozito"),
     N_("William Pitcock"),
+    N_("Derek Pomery"),
     N_("Tony Vroon"),
     NULL,
 
