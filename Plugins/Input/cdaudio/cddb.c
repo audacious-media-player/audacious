@@ -207,7 +207,6 @@ cddb_query(gchar * server, cdda_disc_toc_t * info,
         return FALSE;
     }
 
-    http_close_connection(sock);
     response = g_strsplit(buffer, " ", 4);
 
     cddb_log("Query response: %s", buffer);
@@ -224,10 +223,28 @@ cddb_query(gchar * server, cdda_disc_toc_t * info,
         cddb_info->category = g_strdup(response[1]);
         cddb_info->discid = strtoul(response[2], NULL, 16);
         break;
+	case 211:
+		/* multiple matches - use first match */
+        g_strfreev(response);
+        if (http_read_first_line(sock, buffer, 256) < 0) {
+            http_close_connection(sock);
+            return FALSE;
+        }
+        response = g_strsplit(buffer, " ", 4);
+        for (i = 0; i < 4; i++) {
+            if (response[i] == NULL) {
+                g_strfreev(response);
+                return FALSE;
+            }
+        }
+        cddb_info->category = g_strdup(response[1]);
+        cddb_info->discid = strtoul(response[2], NULL, 16);
+        break;
     default:                   /* FIXME: Handle other 2xx */
         g_strfreev(response);
         return FALSE;
     }
+    http_close_connection(sock);
 
     g_strfreev(response);
     return TRUE;
