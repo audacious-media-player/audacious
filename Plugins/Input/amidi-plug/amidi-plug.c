@@ -289,7 +289,23 @@ static void amidiplug_get_song_info( gchar * filename , gchar ** title , gint * 
      but the file must be entirely parsed to calculate it; this could lead
      to performance loss, for now it's safer to calculate the length only
      right before playing the file */
-  *length = -1;
+
+  if ( amidiplug_cfg.length_precalc_enable )
+  {
+    /* let's calculate the midi length, using this nice helper function that
+       will return 0 if a problem occurs and the length can't be calculated */
+    midifile_t mf;
+
+    if ( i_midi_parse_from_filename( filename , &mf ) )
+      *length = (gint)(mf.length / 1000);
+    else
+      *length = -1;
+
+    i_midi_free( &mf );
+  }
+  else  
+    *length = -1;
+
   return;
 }
 

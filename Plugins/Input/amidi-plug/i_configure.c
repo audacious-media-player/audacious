@@ -34,6 +34,7 @@ void i_configure_gui( GSList * wports , GSList * scards )
   GtkWidget *configwin_vbox;
   GtkWidget *port_lv, *port_lv_sw, *port_frame;
   GtkWidget *mixer_card_cmb_evbox, *mixer_card_cmb, *mixer_vbox, *mixer_frame;
+  GtkWidget *advanced_precalc_checkbt, *advanced_vbox, *advanced_frame;
   GtkWidget *hseparator, *hbuttonbox, *button_ok, *button_cancel;
   GtkListStore *port_liststore, *mixer_card_liststore;
   GtkTreeIter iter;
@@ -133,7 +134,7 @@ void i_configure_gui( GSList * wports , GSList * scards )
   gtk_container_add( GTK_CONTAINER(port_lv_sw) , port_lv );
   gtk_container_set_border_width( GTK_CONTAINER(port_lv_sw) , 5 );
   gtk_container_add( GTK_CONTAINER(port_frame) , port_lv_sw );
-  gtk_box_pack_start( GTK_BOX(configwin_vbox) , port_frame , TRUE , TRUE , 0 );
+  gtk_box_pack_start( GTK_BOX(configwin_vbox) , port_frame , TRUE , TRUE , 2 );
 
   /**********************/
   /*** MIXER SETTINGS ***/
@@ -185,7 +186,23 @@ void i_configure_gui( GSList * wports , GSList * scards )
 
   mixer_frame = gtk_frame_new( "Mixer settings" );
   gtk_container_add( GTK_CONTAINER(mixer_frame) , mixer_vbox );
-  gtk_box_pack_start( GTK_BOX(configwin_vbox) , mixer_frame , TRUE , TRUE , 0 );
+  gtk_box_pack_start( GTK_BOX(configwin_vbox) , mixer_frame , TRUE , TRUE , 2 );
+
+  /*************************/
+  /*** ADVANCED SETTINGS ***/
+  advanced_vbox = gtk_vbox_new( FALSE , 0 );
+  gtk_container_set_border_width( GTK_CONTAINER(advanced_vbox) , 5 );
+  
+  advanced_precalc_checkbt = gtk_check_button_new_with_label( "pre-calculate length of MIDI files in playlist" );
+  amidiplug_gui_prefs.precalc_checkbt = advanced_precalc_checkbt;
+  if ( amidiplug_cfg.length_precalc_enable )
+    gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(advanced_precalc_checkbt) , TRUE );
+  gtk_box_pack_start( GTK_BOX(advanced_vbox) , advanced_precalc_checkbt , TRUE , TRUE , 0 );
+
+  advanced_frame = gtk_frame_new( "Advanced settings" );
+  gtk_container_add( GTK_CONTAINER(advanced_frame) , advanced_vbox );
+  gtk_box_pack_start( GTK_BOX(configwin_vbox) , advanced_frame , TRUE , TRUE , 2 );
+
 
   /* horizontal separator and buttons */
   hseparator = gtk_hseparator_new();
@@ -322,6 +339,13 @@ void i_configure_ev_bok( void )
   /* update amidiplug_cfg.mixer_card_id and amidiplug_cfg.mixer_control_name
      using the selected values from the card-mixer combo list */
   i_configure_upd_mixercardlist();
+  
+  /* update amidiplug_cfg.length_precalc_enable using
+     the check control in the advanced settings frame */
+  if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON(amidiplug_gui_prefs.precalc_checkbt) ) )
+    amidiplug_cfg.length_precalc_enable = 1;
+  else
+    amidiplug_cfg.length_precalc_enable = 0;
 
   /* save settings */
   i_configure_cfg_save();
@@ -375,6 +399,7 @@ void i_configure_cfg_read( void )
     amidiplug_cfg.mixer_card_id = 0;
     amidiplug_cfg.mixer_control_name = g_strdup( "Synth" );
     amidiplug_cfg.mixer_control_id = 0;
+    amidiplug_cfg.length_precalc_enable = 0;
   }
   else
   {
@@ -389,6 +414,9 @@ void i_configure_cfg_read( void )
 
     if ( !xmms_cfg_read_int( cfgfile , "amidi-plug" , "mixer_control_id" , &amidiplug_cfg.mixer_control_id ) )
       amidiplug_cfg.mixer_control_id = 0; /* default value */
+
+    if ( !xmms_cfg_read_int( cfgfile , "amidi-plug" , "length_precalc_enable" , &amidiplug_cfg.length_precalc_enable ) )
+      amidiplug_cfg.length_precalc_enable = 0; /* default value */
 
     xmms_cfg_free(cfgfile);
   }
@@ -407,6 +435,7 @@ void i_configure_cfg_save( void )
   xmms_cfg_write_int( cfgfile , "amidi-plug" , "mixer_card_id" , amidiplug_cfg.mixer_card_id );
   xmms_cfg_write_string( cfgfile , "amidi-plug" , "mixer_control_name" , amidiplug_cfg.mixer_control_name );
   xmms_cfg_write_int( cfgfile , "amidi-plug" , "mixer_control_id" , amidiplug_cfg.mixer_control_id );
+  xmms_cfg_write_int( cfgfile , "amidi-plug" , "length_precalc_enable" , amidiplug_cfg.length_precalc_enable );
 
   xmms_cfg_write_default_file(cfgfile);
   xmms_cfg_free(cfgfile);

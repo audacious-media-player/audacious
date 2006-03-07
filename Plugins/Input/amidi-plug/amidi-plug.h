@@ -66,7 +66,8 @@ amidiplug_cfg_t amidiplug_cfg =
   NULL,		/* seq_writable_ports */
   0,		/* mixer_card_id */
   NULL,		/* mixer_control_name */
-  0		/* mixer_control_id */
+  0,		/* mixer_control_id */
+  0		/* length_precalc_enable */
 };
 
 void * amidiplug_play_loop( void * );

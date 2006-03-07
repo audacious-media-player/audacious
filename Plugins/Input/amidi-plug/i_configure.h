@@ -51,6 +51,7 @@ typedef struct
   gint mixer_card_id;
   gchar * mixer_control_name;
   gint mixer_control_id;
+  gint length_precalc_enable;
 }
 amidiplug_cfg_t;
 
@@ -61,11 +62,12 @@ typedef struct
   GtkWidget * config_win;
   GtkWidget * port_treeview;
   GtkWidget * mixercard_combo;
+  GtkWidget * precalc_checkbt;
   GtkTooltips * config_tips;
 }
 amidiplug_gui_prefs_t;
 
-static amidiplug_gui_prefs_t amidiplug_gui_prefs = { NULL , NULL , NULL , NULL };
+static amidiplug_gui_prefs_t amidiplug_gui_prefs = { NULL , NULL , NULL , NULL , NULL };
 
 void i_configure_gui( GSList * , GSList * );
 void i_configure_ev_destroy( void );

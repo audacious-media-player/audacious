@@ -28,67 +28,10 @@
 static amidiplug_gui_fileinfo_t amidiplug_gui_fileinfo = { NULL };
 
 
-gint i_fileinfo_midiparse( gchar * filename , midifile_t * mf )
+void i_fileinfo_ev_destroy( GtkWidget * win , gpointer mf )
 {
-  i_midi_init( mf );
-  DEBUGMSG( "FILEINFO requested, opening file: %s\n" , filename );
-  mf->file_pointer = fopen( filename , "rb" );
-  if (!mf->file_pointer)
-  {
-    g_warning( "Cannot open %s\n" , filename );
-    return 0;
-  }
-  mf->file_name = filename;
-
-  switch( i_midi_file_read_id( mf ) )
-  {
-    case MAKE_ID('R', 'I', 'F', 'F'):
-    {
-      DEBUGMSG( "FILEINFO requested, RIFF chunk found, processing...\n" );
-      /* read riff chunk */
-      if ( !i_midi_file_parse_riff( mf ) )
-        WARNANDBREAK( "%s: invalid file format (riff parser)\n" , filename );
-
-      /* if that was read correctly, go ahead and read smf data */
-    }
-
-    case MAKE_ID('M', 'T', 'h', 'd'):
-    {
-      DEBUGMSG( "FILEINFO requested, MThd chunk found, processing...\n" );
-      /* we don't care about port count here, pass 1 */
-      if ( !i_midi_file_parse_smf( mf , 1 ) )
-        WARNANDBREAK( "%s: invalid file format (smf parser)\n" , filename );
-
-      if ( mf->time_division < 1 )
-        WARNANDBREAK( "%s: invalid time division (%i)\n" , filename , mf->time_division );
-
-      /* fill mf->ppq and mf->tempo using time_division */
-      if ( !i_midi_setget_tempo( mf ) )
-        WARNANDBREAK( "%s: invalid values while setting ppq and tempo\n" , filename );
-
-      /* fill mf->length, keeping in count tempo-changes */
-      i_midi_setget_length( mf );
-
-      /* ok, mf has been filled with information; successfully return */
-      fclose( mf->file_pointer );
-      return 1;
-    }
-
-    default:
-    {
-      g_warning( "%s is not a Standard MIDI File\n" , filename );
-      break;
-    }
-  }
-
-  /* something failed */
-  fclose( mf->file_pointer );
-  return 0;
-}
-
-
-void i_fileinfo_ev_destroy( void )
-{
+  i_midi_free( (midifile_t *)mf );
+  g_free( mf );
   amidiplug_gui_fileinfo.fileinfo_win = NULL;
 }
 
@@ -130,17 +73,17 @@ void i_fileinfo_gui( gchar * filename )
   GString *value_gstring;
   gchar *title , *filename_utf8;
   gint bpm = 0, wavg_bpm = 0;
-  midifile_t mf;
+  midifile_t * mf = g_malloc(sizeof(midifile_t));
 
   if ( amidiplug_gui_fileinfo.fileinfo_win )
     return;
 
   /****************** midifile parser ******************/
-  if ( !i_fileinfo_midiparse( filename , &mf ) )
+  if ( !i_midi_parse_from_filename( filename , mf ) )
     return;
   /* midifile is filled with information at this point,
      bpm information is needed too */
-  i_midi_get_bpm( &mf , &bpm , &wavg_bpm );
+  i_midi_get_bpm( mf , &bpm , &wavg_bpm );
   /*****************************************************/
 
   amidiplug_gui_fileinfo.fileinfo_win = gtk_window_new( GTK_WINDOW_TOPLEVEL );
@@ -148,7 +91,7 @@ void i_fileinfo_gui( gchar * filename )
   gtk_window_set_resizable( GTK_WINDOW(amidiplug_gui_fileinfo.fileinfo_win) , FALSE );
   gtk_window_set_position( GTK_WINDOW(amidiplug_gui_fileinfo.fileinfo_win) , GTK_WIN_POS_CENTER );
   g_signal_connect( G_OBJECT(amidiplug_gui_fileinfo.fileinfo_win) ,
-                    "destroy" , G_CALLBACK(i_fileinfo_ev_destroy) , NULL );
+                    "destroy" , G_CALLBACK(i_fileinfo_ev_destroy) , mf );
   gtk_container_set_border_width( GTK_CONTAINER(amidiplug_gui_fileinfo.fileinfo_win), 10 );
 
   fileinfowin_vbox = gtk_vbox_new( FALSE , 10 );
@@ -191,13 +134,13 @@ void i_fileinfo_gui( gchar * filename )
   value_gstring = g_string_new( "" );
 
   /* midi format */
-  G_STRING_PRINTF( value_gstring , "type %i" , mf.format );
+  G_STRING_PRINTF( value_gstring , "type %i" , mf->format );
   i_fileinfo_table_add_entry( _("Format:") , value_gstring->str , info_table , 0 , pangoattrlist );
   /* midi length */
-  G_STRING_PRINTF( value_gstring , "%i" , (gint)(mf.length / 1000) );
+  G_STRING_PRINTF( value_gstring , "%i" , (gint)(mf->length / 1000) );
   i_fileinfo_table_add_entry( _("Length (msec):") , value_gstring->str , info_table , 1 , pangoattrlist );
   /* midi num of tracks */
-  G_STRING_PRINTF( value_gstring , "%i" , mf.num_tracks );
+  G_STRING_PRINTF( value_gstring , "%i" , mf->num_tracks );
   i_fileinfo_table_add_entry( _("Num of Tracks:") , value_gstring->str , info_table , 2 , pangoattrlist );
   /* midi bpm */
   if ( bpm > 0 )
@@ -212,7 +155,7 @@ void i_fileinfo_gui( gchar * filename )
     G_STRING_PRINTF( value_gstring , "%i" , wavg_bpm ); /* variable bpm, display wavg_bpm */
   i_fileinfo_table_add_entry( _("BPM (wavg):") , value_gstring->str , info_table , 4 , pangoattrlist );
   /* midi time division */
-  G_STRING_PRINTF( value_gstring , "%i" , mf.time_division );
+  G_STRING_PRINTF( value_gstring , "%i" , mf->time_division );
   i_fileinfo_table_add_entry( _("Time Div:") , value_gstring->str , info_table , 5 , pangoattrlist );
 
   g_string_free( value_gstring , TRUE );

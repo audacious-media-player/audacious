@@ -669,3 +669,63 @@ void i_midi_get_bpm( midifile_t * mf , gint * bpm , gint * wavg_bpm )
 
   return;
 }
+
+
+/* helper function that parses a midi file; returns 1 on success, 0 otherwise */
+gint i_midi_parse_from_filename( gchar * filename , midifile_t * mf )
+{
+  i_midi_init( mf );
+  DEBUGMSG( "PARSE_FROM_FILENAME requested, opening file: %s\n" , filename );
+  mf->file_pointer = fopen( filename , "rb" );
+  if (!mf->file_pointer)
+  {
+    g_warning( "Cannot open %s\n" , filename );
+    return 0;
+  }
+  mf->file_name = filename;
+
+  switch( i_midi_file_read_id( mf ) )
+  {
+    case MAKE_ID('R', 'I', 'F', 'F'):
+    {
+      DEBUGMSG( "PARSE_FROM_FILENAME requested, RIFF chunk found, processing...\n" );
+      /* read riff chunk */
+      if ( !i_midi_file_parse_riff( mf ) )
+        WARNANDBREAK( "%s: invalid file format (riff parser)\n" , filename );
+
+      /* if that was read correctly, go ahead and read smf data */
+    }
+
+    case MAKE_ID('M', 'T', 'h', 'd'):
+    {
+      DEBUGMSG( "PARSE_FROM_FILENAME requested, MThd chunk found, processing...\n" );
+      /* we don't care about port count here, pass 1 */
+      if ( !i_midi_file_parse_smf( mf , 1 ) )
+        WARNANDBREAK( "%s: invalid file format (smf parser)\n" , filename );
+
+      if ( mf->time_division < 1 )
+        WARNANDBREAK( "%s: invalid time division (%i)\n" , filename , mf->time_division );
+
+      /* fill mf->ppq and mf->tempo using time_division */
+      if ( !i_midi_setget_tempo( mf ) )
+        WARNANDBREAK( "%s: invalid values while setting ppq and tempo\n" , filename );
+
+      /* fill mf->length, keeping in count tempo-changes */
+      i_midi_setget_length( mf );
+
+      /* ok, mf has been filled with information; successfully return */
+      fclose( mf->file_pointer );
+      return 1;
+    }
+
+    default:
+    {
+      g_warning( "%s is not a Standard MIDI File\n" , filename );
+      break;
+    }
+  }
+
+  /* something failed */
+  fclose( mf->file_pointer );
+  return 0;
+}

@@ -384,23 +384,38 @@ void i_seq_mixctl_free_list( GSList * mixctls )
 }
 
 
-gint i_seq_mixer_get_volume( gint * left_volume , gint * right_volume ,
-                            gchar * mixer_card , gchar * mixer_control_name , gint mixer_control_id )
+gint i_seq_mixer_find_selem( snd_mixer_t * mixer_h , gchar * mixer_card ,
+                             gchar * mixer_control_name , gint mixer_control_id ,
+                             snd_mixer_elem_t ** mixer_elem )
 {
-  snd_mixer_t * mixer_h;
-  snd_mixer_selem_id_t * mixer_selem_id;
-  snd_mixer_elem_t * mixer_elem;
+  snd_mixer_selem_id_t * mixer_selem_id = NULL;
 
   snd_mixer_selem_id_alloca( &mixer_selem_id );
   snd_mixer_selem_id_set_index( mixer_selem_id , mixer_control_id );
   snd_mixer_selem_id_set_name( mixer_selem_id , mixer_control_name );
 
-  snd_mixer_open( &mixer_h , 0 );
   snd_mixer_attach( mixer_h , mixer_card );
   snd_mixer_selem_register( mixer_h , NULL , NULL);
   snd_mixer_load( mixer_h );
 
-  mixer_elem = snd_mixer_find_selem( mixer_h , mixer_selem_id );
+  /* assign the mixer element (can be NULL if there is no such element) */
+  *mixer_elem = snd_mixer_find_selem( mixer_h , mixer_selem_id );
+
+  /* always return 1 here */
+  return 1;
+}
+
+
+gint i_seq_mixer_get_volume( gint * left_volume , gint * right_volume ,
+                            gchar * mixer_card , gchar * mixer_control_name , gint mixer_control_id )
+{
+  snd_mixer_t * mixer_h = NULL;
+  snd_mixer_elem_t * mixer_elem = NULL;
+
+  if ( snd_mixer_open( &mixer_h , 0 ) > -1 )
+    i_seq_mixer_find_selem( mixer_h , mixer_card , mixer_control_name , mixer_control_id , &mixer_elem );
+  else
+    mixer_h = NULL;
 
   if ( ( mixer_elem ) && ( snd_mixer_selem_has_playback_volume( mixer_elem ) ) )
   {
@@ -416,19 +431,21 @@ gint i_seq_mixer_get_volume( gint * left_volume , gint * right_volume ,
         snd_mixer_selem_get_playback_volume( mixer_elem , SND_MIXER_SCHN_FRONT_LEFT , &lc );
         /* convert the range to 0-100 (for the unlucky case that pv_range is not 0-100 already) */
         *left_volume = (gint)(((lc - pv_min) * pv_range) / 100);
-        DEBUGMSG( "GET VOLUME requested, get left channel (%i)\n" , left_volume );
+        DEBUGMSG( "GET VOLUME requested, get left channel (%i)\n" , *left_volume );
       }
       if ( snd_mixer_selem_has_playback_channel( mixer_elem , SND_MIXER_SCHN_FRONT_RIGHT ) )
       {
         snd_mixer_selem_get_playback_volume( mixer_elem , SND_MIXER_SCHN_FRONT_RIGHT , &rc );
         /* convert the range to 0-100 (for the unlucky case that pv_range is not 0-100 already) */
         *right_volume = (gint)(((rc - pv_min) * pv_range) / 100);
-        DEBUGMSG( "GET VOLUME requested, get right channel (%i)\n" , right_volume );
+        DEBUGMSG( "GET VOLUME requested, get right channel (%i)\n" , *right_volume );
       }
     }
   }
 
-  snd_mixer_close( mixer_h );
+  if ( mixer_h )
+    snd_mixer_close( mixer_h );
+
   /* for now, always return 1 here */
   return 1;
 }
@@ -437,20 +454,13 @@ gint i_seq_mixer_get_volume( gint * left_volume , gint * right_volume ,
 gint i_seq_mixer_set_volume( gint left_volume , gint right_volume ,
                             gchar * mixer_card , gchar * mixer_control_name , gint mixer_control_id )
 {
-  snd_mixer_t * mixer_h;
-  snd_mixer_selem_id_t * mixer_selem_id;
-  snd_mixer_elem_t * mixer_elem;
+  snd_mixer_t * mixer_h = NULL;
+  snd_mixer_elem_t * mixer_elem = NULL;
 
-  snd_mixer_selem_id_alloca( &mixer_selem_id );
-  snd_mixer_selem_id_set_index( mixer_selem_id , mixer_control_id );
-  snd_mixer_selem_id_set_name( mixer_selem_id , mixer_control_name );
-
-  snd_mixer_open( &mixer_h , 0 );
-  snd_mixer_attach( mixer_h , mixer_card );
-  snd_mixer_selem_register( mixer_h , NULL , NULL);
-  snd_mixer_load( mixer_h );
-
-  mixer_elem = snd_mixer_find_selem( mixer_h , mixer_selem_id );
+  if ( snd_mixer_open( &mixer_h , 0 ) > -1 )
+    i_seq_mixer_find_selem( mixer_h , mixer_card , mixer_control_name , mixer_control_id , &mixer_elem );
+  else
+    mixer_h = NULL;
 
   if ( ( mixer_elem ) && ( snd_mixer_selem_has_playback_volume( mixer_elem ) ) )
   {
@@ -475,7 +485,9 @@ gint i_seq_mixer_set_volume( gint left_volume , gint right_volume ,
     }
   }
 
-  snd_mixer_close( mixer_h );
+  if ( mixer_h )
+    snd_mixer_close( mixer_h );
+
   /* for now, always return 1 here */
   return 1;
 }
