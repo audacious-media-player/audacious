@@ -47,12 +47,13 @@ static PSFINFO *PSFInfo=NULL;
 
 
 InputPlugin *get_iplugin_info(void)
-      {
-         sexypsf_ip.description = "sexyPSF PSF1 Player 0.4.8";
-         return &sexypsf_ip;
-      }
+{
+        sexypsf_ip.description = "sexyPSF PSF1 Player 0.4.8";
+        return &sexypsf_ip;
+}
 
-static int is_our_file(gchar *filename) {
+static int is_our_file(gchar *filename)
+{
 	VFSFile *file;
 	gchar magic[4];
 	
@@ -73,6 +74,9 @@ static int is_our_file(gchar *filename) {
 			return 1;
 		}
 	}
+
+	vfs_fclose(file);
+
 	return 0;
 }
 
