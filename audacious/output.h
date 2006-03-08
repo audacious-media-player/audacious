@@ -43,6 +43,9 @@ void output_set_volume(gint l, gint r);
 void output_set_eq(gboolean, gfloat, gfloat *);
 void produce_audio(gint, AFormat, gint, gint, gpointer, int *);
 
+gint get_written_time(void);
+gint get_output_time(void);
+
 extern OutputPluginData op_data;
 
 #endif

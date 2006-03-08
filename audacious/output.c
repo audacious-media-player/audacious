@@ -173,6 +173,24 @@ byteswap(size_t size,
         *(guint16 *) it = GUINT16_SWAP_LE_BE(*(guint16 *) it);
 }
 
+/* called by input plugin to peek at the output plugin's write progress */
+gint
+get_written_time(void)
+{
+    OutputPlugin *op = get_current_output_plugin();
+
+    return op->written_time();
+}
+
+/* called by input plugin to peek at the output plugin's output progress */
+gint
+get_output_time(void)
+{
+    OutputPlugin *op = get_current_output_plugin();
+
+    return op->output_time();
+}
+
 /* called by input plugin when data is ready */
 void
 produce_audio(gint time,        /* position             */
