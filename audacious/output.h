@@ -46,6 +46,7 @@ void produce_audio(gint, AFormat, gint, gint, gpointer, int *);
 gint get_written_time(void);
 gint get_output_time(void);
 
+extern OutputPlugin psuedo_output_plugin;
 extern OutputPluginData op_data;
 
 #endif

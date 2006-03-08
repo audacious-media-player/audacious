@@ -36,6 +36,30 @@ OutputPluginData op_data = {
     NULL
 };
 
+OutputPlugin psuedo_output_plugin {
+    NULL,
+    NULL,
+    "XMMS reverse compatibility output plugin",
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    output_get_volume,
+    output_set_volume,
+    NULL,			/* XXX we need noop code for this */
+    NULL,
+    NULL,
+
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    get_output_time,
+    get_written_time,
+
+    NULL
+};
+
 OutputPlugin *
 get_current_output_plugin(void)
 {
