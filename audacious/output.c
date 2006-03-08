@@ -36,7 +36,7 @@ OutputPluginData op_data = {
     NULL
 };
 
-OutputPlugin psuedo_output_plugin {
+OutputPlugin psuedo_output_plugin = {
     NULL,
     NULL,
     "XMMS reverse compatibility output plugin",
