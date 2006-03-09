@@ -1,0 +1,16 @@
+include ../../../../mk/rules.mk
+include ../../../../mk/objective.mk
+
+SOURCES = arts_helper.c arts_helper.h
+
+OBJECTIVE_BINS = audacious-arts-helper
+
+LDFLAGS = -Wl,-export-dynamic
+LDADD = $(ARTSC_LIBS)
+
+CFLAGS += $(ARTSC_CFLAGS) -I../../../../intl -I../../../..
+
+OBJECTS = ${SOURCES:.c=.o}
+
+audacious-arts-helper: $(OBJECTS)
+	$(CC) $(LDFLAGS) $(LDADD) -o $@ $(OBJECTS)

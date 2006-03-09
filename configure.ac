@@ -429,6 +429,22 @@ if test "$have_jack" = yes; then
 	OUTPUT_PLUGINS="$OUTPUT_PLUGINS jack"
 fi
 
+dnl *** arts output plugin
+AC_ARG_ENABLE( arts,
+[  --disable-arts          disable arts output plugin (default=enabled)],,
+                enable_arts="yes")
+
+if test "x$enable_arts" = xyes; then
+        AM_PATH_ARTSC(0.9.5, have_arts=yes, have_arts=no)
+else
+        AC_MSG_RESULT([*** arts plugin disabled per user request ***])
+        have_arts=no
+fi
+
+if test "$have_arts" = yes; then
+	OUTPUT_PLUGINS="$OUTPUT_PLUGINS arts"
+fi
+
 dnl *** sid
 AC_ARG_ENABLE( sid,
 [  --disable-sid           disable sid input plugin (default=enabled)],,
@@ -846,6 +862,8 @@ AC_CONFIG_FILES([
         Plugins/Output/esd/Makefile
         Plugins/Output/alsa/Makefile
 	Plugins/Output/jack/Makefile
+	Plugins/Output/arts/Makefile
+	Plugins/Output/arts/arts_helper/Makefile
 	Plugins/Output/disk_writer/Makefile
 	Plugins/Output/sun/Makefile
         Plugins/Input/Makefile
@@ -923,6 +941,7 @@ echo "  Open Sound System (oss):                $have_oss"
 echo "  Advanced Linux Sound Arch. (alsa):      $have_alsa"
 echo "  Enlightenment Sound Daemon (esd):       $have_esd"
 echo "  Jack Audio Connection Kit (jack):       $have_jack"
+echo "  Analog Realtime Synthesizer (arts):     $have_arts"
 echo "  BSD/SUN audio output (sun):             $have_sun"
 echo
 echo "  Input Plugins"

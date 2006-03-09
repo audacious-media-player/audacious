@@ -1,0 +1,15 @@
+include ../../../mk/rules.mk
+include ../../../mk/objective.mk
+
+SUBDIRS = arts_helper
+
+SOURCES = arts.c configure.c audio.c convert.c
+
+OBJECTIVE_LIBS = libarts.so
+
+LIBDIR = $(plugindir)/$(OUTPUT_PLUGIN_DIR)
+
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -Wall $(ARTSC_CFLAGS) -I../../../intl -I../../..
+LIBADD = $(GTK_LIBS) $(ARTSC_LIBS) -lpthread
+
+OBJECTS = ${SOURCES:.c=.o}

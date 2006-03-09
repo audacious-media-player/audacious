@@ -1,5 +1,5 @@
 include ../../mk/rules.mk
 include ../../mk/objective.mk
 
-ALL_PLUGINS = OSS alsa disk_writer esd jack
+ALL_PLUGINS = OSS alsa disk_writer esd jack arts
 SUBDIRS = @OUTPUT_PLUGINS@
