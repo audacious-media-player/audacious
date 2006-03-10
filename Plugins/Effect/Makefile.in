@@ -1,4 +1,4 @@
 include ../../mk/rules.mk
 include ../../mk/objective.mk
 
-SUBDIRS = ladspa
+SUBDIRS = ladspa voice_removal

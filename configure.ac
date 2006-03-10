@@ -116,7 +116,7 @@ AC_ARG_WITH(cdda-dir,
 dnl These plugins are always built.
 
 INPUT_PLUGINS="cdaudio tonegen console sexypsf wav"
-EFFECT_PLUGINS="ladspa"
+EFFECT_PLUGINS="ladspa voice_removal"
 GENERAL_PLUGINS="song_change"
 VISUALIZATION_PLUGINS="blur_scope"
 
@@ -902,6 +902,7 @@ AC_CONFIG_FILES([
 	Plugins/General/scrobbler/tags/Makefile
 	Plugins/Effect/Makefile
 	Plugins/Effect/ladspa/Makefile
+	Plugins/Effect/voice_removal/Makefile
         po/Makefile.in
         intl/Makefile
         icons/Makefile
@@ -975,6 +976,7 @@ echo
 echo "  Effect"
 echo "  ------"
 echo "  LADSPA effects host (ladspa):           yes"
+echo "  Voice Removal:                          yes"
 echo
 echo "  Visualization"
 echo "  -------------"
