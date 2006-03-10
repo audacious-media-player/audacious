@@ -20,6 +20,9 @@
 
 #ifndef WMA_H
 #define WMA_H 1
+
+#include <libaudacious/vfs.h>
+
 typedef struct
 {
 	unsigned char *data, *name;

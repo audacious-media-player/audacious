@@ -20,6 +20,9 @@
 
 #ifndef ITUNES_H
 #define ITUNES_H 1
+
+#include <libaudacious/vfs.h>
+
 typedef struct
 {
 	unsigned char	*title, *artist, *album, *genre, *year, *copyright,

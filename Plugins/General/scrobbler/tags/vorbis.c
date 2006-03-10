@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "include/bmp_vfs.h"
+
 #include "include/vorbis.h"
 #include "include/endian.h"
 #include "../fmt.h"
@@ -34,7 +34,7 @@ static vorbis_t *readComments(VFSFile *fp)
 	vorbis_t *comments = calloc(sizeof(vorbis_t), 1);
 	unsigned char cToInt[4];
 	int i, lines, j = 0;
-	
+
 	vfs_fread(cToInt, 1, 4, fp);
 	comments->vendorlen = le2int(cToInt);
 	comments->vendor = malloc(comments->vendorlen);
@@ -111,14 +111,14 @@ int findVorbis(VFSFile *fp)
 				vorbis_type = *bp;
 				if(vorbis_type == 0x03)
 				{
-					pos = ftell(fp) - pagelen +
+					pos = vfs_ftell(fp) - pagelen +
 						(bp - tag_buffer);
 					status = 1;
 				}
 			}
 			bp += lacing[i++];
 		}
-		if(status == 1 || feof(fp))
+		if(status == 1 || vfs_feof(fp))
 		{
 			free(lacing);
 			break;
@@ -131,7 +131,7 @@ int findVorbis(VFSFile *fp)
 
 	free(tag_buffer);
 	
-	if(feof(fp))
+	if(vfs_feof(fp))
 		return -1;
 	else
 		return pos;
@@ -152,7 +152,7 @@ int findFlac(VFSFile *fp)
 			return 1;
 		else if((tag_id[0] & 0x80) == 0x80)
 			return 0;
-		else if(feof(fp))
+		else if(vfs_feof(fp))
 			return 0;
 		else
 		{
@@ -200,7 +200,7 @@ int findOggFlac(VFSFile *fp)
 		{
 			if((bp[0] & 0x7F) == 4)
 			{
-				pos = ftell(fp) - pagelen +
+				pos = vfs_ftell(fp) - pagelen +
 					(bp - tag_buffer);
 				status = 1;
 			}
@@ -213,7 +213,7 @@ int findOggFlac(VFSFile *fp)
 			else
 				bp += lacing[i++];
 		}
-		if(status == 1 || feof(fp))
+		if(status == 1 || vfs_feof(fp))
 			break;
 		tag_buffer = realloc(tag_buffer, 27);
 		vfs_fread(tag_buffer, 1, 27, fp);
@@ -223,7 +223,7 @@ int findOggFlac(VFSFile *fp)
 	
 	free(tag_buffer);
 	
-	if(feof(fp))
+	if(vfs_feof(fp))
 		return -1;
 	else
 		return pos;
@@ -262,12 +262,12 @@ int findSpeex(VFSFile *fp)
 	segments = *bp;
 	lacing = realloc(lacing, segments);
 	vfs_fread(lacing, 1, segments, fp);
-	pos = ftell(fp);
+	pos = vfs_ftell(fp);
 	
 	free(tag_buffer);
 	free(lacing);
 	
-	if(feof(fp))
+	if(vfs_feof(fp))
 		return -1;
 	else
 		return pos;

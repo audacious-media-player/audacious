@@ -21,6 +21,8 @@
 #ifndef VORBIS_H
 #define VORBIS_H 1
 
+#include <libaudacious/vfs.h>
+
 #define READ_VORBIS 1
 #define READ_FLAC 2
 #define READ_OGGFLAC 3

@@ -20,6 +20,10 @@
 
 #ifndef APE_H
 #define APE_H 1
+
+#include <libaudacious/vfs.h>
+
+
 typedef struct
 {
 	unsigned int len;

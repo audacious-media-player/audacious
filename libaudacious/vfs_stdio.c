@@ -107,6 +107,12 @@ vfs_ftell(VFSFile * file)
 }
 
 gboolean
+vfs_feof(VFSFile * file)
+{
+    return (gboolean)feof(file->handle);
+}
+
+gboolean
 vfs_file_test(const gchar * path, GFileTest test)
 {
     return g_file_test(path, test);

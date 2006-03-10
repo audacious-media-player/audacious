@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "include/bmp_vfs.h"
+
 #include "include/ape.h"
 #include "include/endian.h"
 #include "../fmt.h"
@@ -110,7 +110,7 @@ int findAPE(VFSFile *fp)
 			if(!strncmp((char*)bp, "APETAGEX", 8))
 				status = 1;
 		}
-		if(status == 1 || feof(fp))
+		if(status == 1 || vfs_feof(fp))
 			break;
 		memmove(tag_buffer, tag_buffer + BUFFER_SIZE - 7, 7);
 		pos += BUFFER_SIZE - 7;

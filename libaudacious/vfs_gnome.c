@@ -21,6 +21,7 @@
 struct _VFSFile
 {
     GnomeVFSHandle *handle;
+    gboolean eof;
 };
 
 
@@ -52,6 +53,7 @@ vfs_fopen(const gchar * path,
 	return NULL;
 
     file = g_new(VFSFile, 1);
+    file->eof = FALSE;
 
     mode_to_gnome_vfs(mode, &g_mode, &truncate, &append);
     gchar *escaped_file = gnome_vfs_escape_path_string(path);
@@ -119,10 +121,13 @@ vfs_fread(gpointer ptr,
     result = gnome_vfs_read(file->handle, ptr, size * nmemb, &bytes_read);
     if (result == GNOME_VFS_OK)
         return bytes_read;
-    if (result == GNOME_VFS_ERROR_EOF)
+
+    if (result == GNOME_VFS_ERROR_EOF) {
+        file->eof = TRUE;
         return 0;
-    else
-        return -1;
+    }
+
+    return -1;
 }
 
 size_t
@@ -190,6 +195,12 @@ vfs_ftell(VFSFile * file)
         return position;
     else
         return -1;
+}
+
+gboolean
+vfs_feof(VFSFile * file)
+{
+    return file->eof;
 }
 
 gboolean

@@ -21,6 +21,8 @@
 #ifndef ID3V2_H
 #define ID3V2_H 1
 
+#include <libaudacious/vfs.h>
+
 typedef struct
 {
 	int frameid, len;

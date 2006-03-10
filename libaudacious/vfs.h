@@ -29,10 +29,11 @@ gint vfs_fseek(VFSFile * file,
                gint whence);
 void vfs_rewind(VFSFile * file);
 glong vfs_ftell(VFSFile * file);
+gboolean vfs_feof(VFSFile * file);
 
 gboolean vfs_file_test(const gchar * path,
                        GFileTest test);
-                    
+
 gboolean vfs_is_writeable(const gchar * path);
 
 gboolean vfs_truncate(VFSFile * file, glong length);

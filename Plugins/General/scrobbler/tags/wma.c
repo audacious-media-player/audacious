@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "include/bmp_vfs.h"
+
 #include "include/wma.h"
 #include "include/endian.h"
 #include "../fmt.h"

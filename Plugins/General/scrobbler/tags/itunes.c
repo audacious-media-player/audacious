@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "include/bmp_vfs.h"
+
 #include "include/itunes.h"
 #include "include/endian.h"
 #include "../fmt.h"
@@ -181,17 +181,17 @@ int findiTunes(VFSFile *fp)
 	tag_buffer = realloc(tag_buffer, atom_size);
 	vfs_fread(tag_buffer, 1, atom_size, fp);
 	/* Now keep skipping until we hit a moov container atom */
-	while(!feof(fp))
+	while(!vfs_feof(fp))
 	{
 		vfs_fread(cToInt, 1, 4, fp);
 		atom_size = be2int(cToInt) - 4;
 		tag_buffer = realloc(tag_buffer, atom_size);
-		pos = ftell(fp);
+		pos = vfs_ftell(fp);
 		vfs_fread(tag_buffer, 1, atom_size, fp);
 		if(!strncmp((char*)tag_buffer, "moov", 4))
 			break;
 	}
-	if(feof(fp))
+	if(vfs_feof(fp))
 	{
 		free(tag_buffer);
 		return -1;

@@ -21,7 +21,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "include/bmp_vfs.h"
 #include "include/id3v2.h"
 #include "include/endian.h"
 #include "../fmt.h"
@@ -193,7 +192,7 @@ static id3header_t *read_header(VFSFile *fp)
 	id3header_t *id3_data = calloc(sizeof(id3header_t), 1);
 	char id3_flags, cToInt[4];
 	int bottom = 0;
-	
+
 	vfs_fread(cToInt, 1, 3, fp);
 	if(strncmp(cToInt, "3DI", 3) == 0)
 		bottom = 1;
@@ -550,11 +549,11 @@ int findID3v2(VFSFile *fp)
 {
 	unsigned char tag_buffer[BUFFER_SIZE], *bp = tag_buffer;
 	int pos, search = -1, i, status = 0, charsRead;
-	
+
 	charsRead = vfs_fread(tag_buffer, 1, 10, fp);
 	pos = 0;
 	bp = tag_buffer;
-	while(status == 0 && !feof(fp))
+	while(status == 0 && !vfs_feof(fp))
 	{
 		if(search == -1)
 		{
@@ -597,7 +596,7 @@ int findID3v2(VFSFile *fp)
 				if(status == 1)
 					pos += bp - tag_buffer;
 				pos -= BUFFER_SIZE - 9;
-				if((pos < -BUFFER_SIZE + 9 || ferror(fp)) &&
+				if((pos < -BUFFER_SIZE + 9 || vfs_feof(fp)) &&
 					status != 1)
 						status = -1;
 			}
@@ -619,7 +618,7 @@ int findID3v2(VFSFile *fp)
 		if(search == 0)
 			search = -1;
 	}
-	if(status < 0 || feof(fp))
+	if(status < 0 || vfs_feof(fp))
 		return -1;
 	else
 		return pos;
