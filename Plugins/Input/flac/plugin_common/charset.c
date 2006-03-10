@@ -52,10 +52,11 @@ char* FLAC_plugin__charset_get_current (void)
 	if (!charset)
 		charset = nl_langinfo(CODESET);
 #endif
-	if (!charset)
-		charset = "ISO-8859-1";
 
-	return charset;
+    if (charset)
+        return strdup(charset);
+
+    return strdup("ISO-8859-1");
 }
 
 

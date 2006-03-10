@@ -43,6 +43,7 @@ void
 bmp_cfg_db_close(ConfigDb * db)
 {
     g_object_unref(db->client);
+    g_free(db);
 }
 
 static gchar *

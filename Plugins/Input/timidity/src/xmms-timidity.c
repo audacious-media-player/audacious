@@ -103,7 +103,7 @@ InputPlugin *get_iplugin_info(void) {
 void xmmstimid_init(void) {
 	ConfigDb *db;
 
-	xmmstimid_cfg.config_file = g_strdup("/etc/timidity.cfg");
+	xmmstimid_cfg.config_file = NULL;
 	xmmstimid_cfg.rate = 44100;
 	xmmstimid_cfg.bits = 16;
 	xmmstimid_cfg.channels = 2;
@@ -111,7 +111,10 @@ void xmmstimid_init(void) {
 
 	db = bmp_cfg_db_open();
 
-	bmp_cfg_db_get_string(db, "timidity", "config_file", &xmmstimid_cfg.config_file);
+	if (! bmp_cfg_db_get_string(db, "timidity", "config_file",
+                                &xmmstimid_cfg.config_file))
+        xmmstimid_cfg.config_file = g_strdup("/etc/timidity.cfg");
+
 	bmp_cfg_db_get_int(db, "timidity", "samplerate", &xmmstimid_cfg.rate);
 	bmp_cfg_db_get_int(db, "timidity", "bits", &xmmstimid_cfg.bits);
 	bmp_cfg_db_get_int(db, "timidity", "channels", &xmmstimid_cfg.channels);
@@ -203,10 +206,6 @@ void xmmstimid_configure(void) {
 void xmmstimid_conf_ok(GtkButton *button, gpointer user_data) {
 	ConfigDb *db;
 
-	g_free(xmmstimid_cfg.config_file);
-	xmmstimid_cfg.config_file = g_strdup(
-			gtk_entry_get_text(xmmstimid_conf_config_file));
-
 	if (gtk_toggle_button_get_active(xmmstimid_conf_rate_11000))
 		xmmstimid_cfg.rate = 11000;
 	else if (gtk_toggle_button_get_active(xmmstimid_conf_rate_22000))
@@ -224,7 +223,12 @@ void xmmstimid_conf_ok(GtkButton *button, gpointer user_data) {
 
 	db = bmp_cfg_db_open();
 
+	g_free(xmmstimid_cfg.config_file);
+	xmmstimid_cfg.config_file = g_strdup(
+        gtk_entry_get_text(xmmstimid_conf_config_file));
+
 	bmp_cfg_db_set_string(db, "timidity", "config_file", xmmstimid_cfg.config_file);
+
 	bmp_cfg_db_set_int(db, "timidity", "samplerate", xmmstimid_cfg.rate);
 	bmp_cfg_db_set_int(db, "timidity", "bits", xmmstimid_cfg.bits);
 	bmp_cfg_db_set_int(db, "timidity", "channels", xmmstimid_cfg.channels);
@@ -411,6 +415,14 @@ int xmmstimid_get_time(void) {
 }
 
 void xmmstimid_cleanup(void) {
+	g_free(xmmstimid_ip.description);
+	xmmstimid_ip.description = NULL;
+
+	if (xmmstimid_cfg.config_file) {
+		free(xmmstimid_cfg.config_file);
+		xmmstimid_cfg.config_file = NULL;
+	}
+
 	if (xmmstimid_initialized)
 		mid_exit();
 }

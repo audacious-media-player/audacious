@@ -93,7 +93,7 @@ enum {
 };
 
 extern GtkWidget *mainwin;
-extern GtkMessageDialog *err;
+extern GtkWidget *err;
 extern GdkGC *mainwin_gc;
 
 extern GtkAccelGroup *mainwin_accel;

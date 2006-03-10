@@ -136,7 +136,7 @@ InputPlugin flac_ip =
 {
 	NULL,
 	NULL,
-	"FLAC Player v" PACKAGE_VERSION,
+	NULL,
 	FLAC_XMMS__init,
 	FLAC_XMMS__aboutbox,
 	FLAC_XMMS__configure,
@@ -220,9 +220,7 @@ void FLAC_XMMS__init()
 
 	is_big_endian_host_ = (*((FLAC__byte*)(&test)))? false : true;
 
-	flac_cfg.title.tag_override = FALSE;
-	g_free(flac_cfg.title.tag_format);
-	flac_cfg.title.convert_char_set = FALSE;
+	memset(&flac_cfg, 0, sizeof(flac_cfg));
 
 	db = bmp_cfg_db_open();
 
@@ -417,6 +415,35 @@ int FLAC_XMMS__get_time()
 
 void FLAC_XMMS__cleanup()
 {
+    g_free(flac_ip.description);
+    flac_ip.description = NULL;
+
+    if (flac_cfg.title.tag_format) {
+        free(flac_cfg.title.tag_format);
+        flac_cfg.title.tag_format = NULL;
+    }
+
+    if (flac_cfg.title.user_char_set) {
+        free(flac_cfg.title.user_char_set);
+        flac_cfg.title.user_char_set = NULL;
+    }
+
+    if (flac_cfg.stream.proxy_host) {
+        free(flac_cfg.stream.proxy_host);
+        flac_cfg.stream.proxy_host = NULL;
+    }
+
+    if (flac_cfg.stream.proxy_user) {
+        free(flac_cfg.stream.proxy_user);
+        flac_cfg.stream.proxy_user = NULL;
+
+    }
+
+    if (flac_cfg.stream.proxy_pass) {
+        free(flac_cfg.stream.proxy_pass);
+        flac_cfg.stream.proxy_pass = NULL;
+    }
+
 	decoder_func_table_ -> safe_decoder_delete(decoder_);
 	decoder_ = 0;
 }

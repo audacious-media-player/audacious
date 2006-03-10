@@ -1044,9 +1044,10 @@ util_set_cursor(GtkWidget * window)
 
     if (!window) {
         if (cursor) {
-            gdk_cursor_destroy(cursor);
+            gdk_cursor_unref(cursor);
             cursor = NULL;
         }
+
         return;
     }
 

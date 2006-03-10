@@ -907,6 +907,39 @@ vorbis_init(void)
 static void
 vorbis_cleanup(void)
 {
+    g_free(vorbis_ip.description);
+    vorbis_ip.description = NULL;
+
+    if (vorbis_cfg.save_http_path) {
+        free(vorbis_cfg.save_http_path);
+        vorbis_cfg.save_http_path = NULL;
+    }
+
+    if (vorbis_cfg.proxy_host) {
+        free(vorbis_cfg.proxy_host);
+        vorbis_cfg.proxy_host = NULL;
+    }
+
+    if (vorbis_cfg.proxy_user) {
+        free(vorbis_cfg.proxy_user);
+        vorbis_cfg.proxy_user = NULL;
+    }
+
+    if (vorbis_cfg.proxy_pass) {
+        free(vorbis_cfg.proxy_pass);
+        vorbis_cfg.proxy_pass = NULL;
+    }
+
+    if (vorbis_cfg.tag_format) {
+        free(vorbis_cfg.tag_format);
+        vorbis_cfg.tag_format = NULL;
+    }
+
+    if (vorbis_cfg.title_encoding) {
+        free(vorbis_cfg.title_encoding);
+        vorbis_cfg.title_encoding = NULL;
+    }
+
     g_strfreev(vorbis_tag_encoding_list);
     g_mutex_free(vf_mutex);
 }

@@ -28,6 +28,7 @@
 #include <glib/gi18n.h>
 #include <glib/gprintf.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include <unistd.h>
 #include <errno.h>
@@ -765,6 +766,46 @@ timeout_remove_for_device(char *device)
 static void
 cleanup(void)
 {
+    GList *node;
+    struct driveinfo *drive;
+
+    g_free(cdda_ip.description);
+    cdda_ip.description = NULL;
+
+    if (cdda_cfg.drives) {
+        for (node = g_list_first(cdda_cfg.drives); node; node = node->next) {
+            drive = (struct driveinfo *)node->data;
+            if (!drive)
+                continue;
+
+            if (drive->device)
+                free(drive->device);
+
+            if (drive->directory)
+                free(drive->directory);
+
+            free(drive);
+        }
+
+        g_list_free(cdda_cfg.drives);
+        cdda_cfg.drives = NULL;
+    }
+
+    if (cdda_cfg.name_format) {
+        free(cdda_cfg.name_format);
+        cdda_cfg.name_format = NULL;
+    }
+
+    if (cdda_cfg.cddb_server) {
+        free(cdda_cfg.cddb_server);
+        cdda_cfg.cddb_server = NULL;
+    }
+
+    if (cdda_cfg.cdin_server) {
+        free(cdda_cfg.cdin_server);
+        cdda_cfg.cdin_server = NULL;
+    }
+
     while (timeout_list) {
         struct timeout *t = timeout_list->data;
         gtk_timeout_remove(t->id);

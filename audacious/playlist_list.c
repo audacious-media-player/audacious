@@ -753,15 +753,12 @@ playlist_list_draw(Widget * w)
 
     }
 
-    playlist_rect->x = 0;
-    playlist_rect->y = 0;
-    playlist_rect->width = plw_w;
-    playlist_rect->height = plw_h;
-
     gdk_gc_set_clip_origin(gc, 0, 0);
     gdk_gc_set_clip_rectangle(gc, NULL);
 
     PLAYLIST_UNLOCK();
+    
+    g_free(playlist_rect);
 }
 
 

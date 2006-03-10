@@ -631,6 +631,7 @@ static void read_cache(void)
 		i++;
 	}
 	pdebug("Done loading cache.", DEBUG);
+	free(cache);
 }
 
 static void dump_queue(void)

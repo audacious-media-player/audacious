@@ -88,6 +88,9 @@ static void init(void)
 
 static void cleanup(void)
 {
+    g_free (xmms_scrobbler.description);
+    xmms_scrobbler.description = NULL;
+
 	if (!going)
 		return;
 	pdebug("about to lock mutex", DEBUG);

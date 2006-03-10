@@ -17,6 +17,7 @@
  */
 
 #include "alsa.h"
+#include <stdlib.h>
 
 OutputPlugin alsa_op =
 {
@@ -24,7 +25,7 @@ OutputPlugin alsa_op =
 	NULL,
 	NULL,
 	alsa_init,
-	NULL,
+	alsa_cleanup,
 	alsa_about,
 	alsa_configure,
 	alsa_get_volume,
@@ -45,4 +46,21 @@ OutputPlugin *get_oplugin_info(void)
 {
 	alsa_op.description = g_strdup_printf(_("ALSA %s output plugin"), VERSION);
 	return &alsa_op;
+}
+
+
+void alsa_cleanup(void)
+{
+	g_free(alsa_op.description);
+	alsa_op.description = NULL;
+
+	if (alsa_cfg.pcm_device) {
+		free(alsa_cfg.pcm_device);
+		alsa_cfg.pcm_device = NULL;
+	}
+
+	if (alsa_cfg.mixer_device) {
+		free(alsa_cfg.mixer_device);
+		alsa_cfg.mixer_device = NULL;
+	}
 }

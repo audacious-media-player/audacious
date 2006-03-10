@@ -148,6 +148,8 @@ init(void)
 
     mpg123_make_decode_tables(outscale);
 
+    memset(&mpg123_cfg, 0, sizeof(mpg123_cfg));
+
     mpg123_cfg.resolution = 16;
     mpg123_cfg.channels = 2;
     mpg123_cfg.downsample = 0;
@@ -221,6 +223,39 @@ init(void)
 static void
 cleanup(void)
 {
+    g_free(mpg123_ip.description);
+    mpg123_ip.description = NULL;
+
+    if (mpg123_cfg.save_http_path) {
+        free(mpg123_cfg.save_http_path);
+        mpg123_cfg.save_http_path = NULL;
+    }
+
+    if (mpg123_cfg.proxy_host) {
+        free(mpg123_cfg.proxy_host);
+        mpg123_cfg.proxy_host = NULL;
+    }
+
+    if (mpg123_cfg.proxy_user) {
+        free(mpg123_cfg.proxy_user);
+        mpg123_cfg.proxy_user = NULL;
+    }
+
+    if (mpg123_cfg.proxy_pass) {
+        free(mpg123_cfg.proxy_pass);
+        mpg123_cfg.proxy_pass = NULL;
+    }
+
+    if (mpg123_cfg.id3_format) {
+        free(mpg123_cfg.id3_format);
+        mpg123_cfg.id3_format = NULL;
+    }
+
+    if (mpg123_cfg.title_encoding) {
+        free(mpg123_cfg.title_encoding);
+        mpg123_cfg.title_encoding = NULL;
+    }
+
     g_strfreev(mpg123_id3_encoding_list);
 }
 

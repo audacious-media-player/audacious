@@ -161,7 +161,7 @@ struct _PlaybackInfo {
 
 
 GtkWidget *mainwin = NULL;
-GtkMessageDialog *err = NULL; /* an error dialog for miscellaneous error messages */
+GtkWidget *err = NULL; /* an error dialog for miscellaneous error messages */
 
 static GdkBitmap *nullmask;
 static gint balance;
@@ -1390,6 +1390,7 @@ mainwin_jump_to_file_jump(GtkTreeView * treeview)
 
     gtk_tree_model_get(model, &iter, 0, &pos_str, -1);
     pos = g_ascii_strtoull(pos_str, NULL, 10) - 1;
+    g_free(pos_str);
 
     change_song(pos);
 
@@ -1461,6 +1462,7 @@ mainwin_jump_to_file_selection_changed_cb(GtkTreeSelection *treesel,
 
     gtk_tree_model_get(model, &iter, 0, &pos_str, -1);
     pos = g_ascii_strtoull(pos_str, NULL, 10) - 1;
+    g_free(pos_str);
 
     mainwin_jump_to_file_set_queue_button_label(GTK_BUTTON(data), pos);
 }
@@ -3152,9 +3154,9 @@ mainwin_create_widgets(void)
 
 
     gtk_window_set_position(GTK_WINDOW(err), GTK_WIN_POS_CENTER);
-    gtk_label_set_line_wrap(GTK_LABEL(err->label), TRUE);
     /* Dang well better set an error message or you'll see this */
-    gtk_message_dialog_format_secondary_text(err,"Boo! Bad stuff! Booga Booga!");
+    gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(err),
+                                             "Boo! Bad stuff! Booga Booga!");
 
 }
 

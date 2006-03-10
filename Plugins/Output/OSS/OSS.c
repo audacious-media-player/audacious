@@ -23,13 +23,14 @@
 
 #include <glib.h>
 #include <glib/gi18n.h>
+#include <stdlib.h>
 
 OutputPlugin oss_op = {
     NULL,
     NULL,
     NULL,                       /* Description */
     oss_init,
-    NULL,
+    oss_cleanup,
     oss_about,
     oss_configure,
     oss_get_volume,
@@ -51,4 +52,21 @@ get_oplugin_info(void)
 {
     oss_op.description = g_strdup_printf(_("OSS Output Plugin"));
     return &oss_op;
+}
+
+
+void oss_cleanup(void)
+{
+    g_free(oss_op.description);
+    oss_op.description = NULL;
+
+    if (oss_cfg.alt_audio_device) {
+        free(oss_cfg.alt_audio_device);
+        oss_cfg.alt_audio_device = NULL;
+    }
+
+    if (oss_cfg.alt_mixer_device) {
+        free(oss_cfg.alt_mixer_device);
+        oss_cfg.alt_mixer_device = NULL;
+    }
 }

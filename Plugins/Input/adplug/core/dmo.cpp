@@ -55,11 +55,11 @@ bool CdmoLoader::load(const std::string &filename, const CFileProvider &fp)
   binistream *f;
 
   // check header
-  dmo_unpacker *unpacker = new dmo_unpacker;
-  unsigned char chkhdr[16];
-
   if(!fp.extension(filename, ".dmo")) return false;
   f = fp.open(filename); if(!f) return false;
+
+  dmo_unpacker *unpacker = new dmo_unpacker;
+  unsigned char chkhdr[16];
 
   f->readString((char *)chkhdr, 16);
 

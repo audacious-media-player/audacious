@@ -48,6 +48,7 @@ typedef struct {
 extern OSSConfig oss_cfg;
 
 void oss_init(void);
+void oss_cleanup(void);
 void oss_about(void);
 void oss_configure(void);
 

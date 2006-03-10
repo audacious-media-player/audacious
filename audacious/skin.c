@@ -726,15 +726,16 @@ skin_load_cursor(Skin * skin, const gchar * dirname)
     if (filename && cfg.custom_cursors)	{
     	cursor_animated = gdk_pixbuf_animation_new_from_file(filename, &error);
         cursor_pixbuf = gdk_pixbuf_animation_get_static_image(cursor_animated);
-	cursor_gdk = gdk_cursor_new_from_pixbuf(gdk_display_get_default(),
+        cursor_gdk = gdk_cursor_new_from_pixbuf(gdk_display_get_default(),
                                                 cursor_pixbuf, 0, 0);
     } else {
-	cursor_gdk = gdk_cursor_new(GDK_LEFT_PTR);
+        cursor_gdk = gdk_cursor_new(GDK_LEFT_PTR);
     }
 
     gdk_window_set_cursor(mainwin->window, cursor_gdk);
     gdk_window_set_cursor(playlistwin->window, cursor_gdk);
     gdk_window_set_cursor(equalizerwin->window, cursor_gdk);
+    gdk_cursor_unref(cursor_gdk);
 }
 
 static void

@@ -226,6 +226,8 @@ bscope_init(void)
 static void
 bscope_cleanup(void)
 {
+    g_free(bscope_vp.description);
+    bscope_vp.description = NULL;
     if (window)
         gtk_widget_destroy(window);
     if (bg_pixmap) {

@@ -833,6 +833,7 @@ static void adplug_init(void)
       strcat(userdb, ADPLUGDB_FILE);
       plr.db->load(userdb);		// load user's database
       dbg_printf(" (userdb=\"%s\")", userdb);
+      free(userdb);
     }
   }
   CAdPlug::set_database(plr.db);

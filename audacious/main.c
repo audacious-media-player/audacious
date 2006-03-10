@@ -907,9 +907,10 @@ void report_error(const gchar *error_text)
 {
     fprintf(stderr,error_text);
 	if (options.headless!=1) {
-        gtk_message_dialog_format_secondary_text(err,error_text);
+        gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(err),
+                                                 error_text);
         gtk_dialog_run(GTK_DIALOG(err));
-        gtk_widget_hide(GTK_WIDGET(err));
+        gtk_widget_hide(err);
     }
 }
 
