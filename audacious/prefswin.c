@@ -47,6 +47,7 @@
 #include "ui_playlist.h"
 #include "skinwin.h"
 #include "playlist_list.h"
+#include "build_stamp.h"
 
 
 enum CategoryViewCols {
@@ -1643,6 +1644,7 @@ create_prefs_window(void)
 
     GladeXML *xml;
     GtkWidget *widget, *widget2;
+    GString *aud_version_string;
 
     GtkWidget *titlestring_tag_menu, *menu_item;
     guint i;
@@ -1830,6 +1832,13 @@ create_prefs_window(void)
     g_signal_connect(widget, "clicked",
                      G_CALLBACK(on_titlestring_help_button_clicked),
                      titlestring_tag_menu);
+
+   /* audacious version label */
+   widget = glade_xml_get_widget(xml, "audversionlabel");
+   aud_version_string = g_string_new( "" );
+   g_string_printf( aud_version_string , "%s (r%s)" , "Audacious " PACKAGE_VERSION , svn_stamp );
+   gtk_label_set_text( GTK_LABEL(widget) , aud_version_string->str );
+   g_string_free( aud_version_string , TRUE );
 }
 
 void
