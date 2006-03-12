@@ -12,7 +12,7 @@ dnl Defines ARTSC_CFLAGS, ARTSC_LIBS and ARTSC_VERSION.
 dnl
 
 dnl ARTSC_TEST_VERSION(AVAILABLE-VERSION, NEEDED-VERSION [, ACTION-IF-OKAY [, ACTION-IF-NOT-OKAY]])
-AC_DEFUN(ARTSC_TEST_VERSION, [
+AC_DEFUN([ARTSC_TEST_VERSION], [
 
 # Determine which version number is greater. Prints 2 to stdout if	
 # the second number is greater, 1 if the first number is greater,	
@@ -57,7 +57,7 @@ function vercmp(ver1, ver2,    ver1arr, ver2arr,			\
     fi
 ])
 
-AC_DEFUN(AM_PATH_ARTSC,
+AC_DEFUN([AM_PATH_ARTSC],
 [
 AC_ARG_WITH(artsc-prefix,[  --with-artsc-prefix=PFX  Prefix where aRts is installed (optional)],
 	artsc_config_prefix="$withval", artsc_config_prefix="")
