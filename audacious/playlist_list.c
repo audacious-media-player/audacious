@@ -358,6 +358,9 @@ playlist_list_draw(Widget * w)
     gint queue_tailpadding = 0;
     gint tpadding; 
     gsize tpadding_dwidth = 0;
+    gint x, y;
+    guint tail_width;
+    guint tail_len;
 
     gchar tail[100];
     gchar queuepos[255];
@@ -483,134 +486,90 @@ playlist_list_draw(Widget * w)
                        entry->length / 60000, (entry->length / 1000) % 60);
         }
 
-        if (pos != -1 || entry->length != -1) {
-            gint x, y;
-            guint tail_width;
-            guint tail_len;
+        strncat(tail, length, sizeof(tail));
+        tail_len = strlen(tail);
 
-            strncat(tail, length, sizeof(tail));
-            tail_len = strlen(tail);
+        max_time_len = MAX(max_time_len, tail_len);
 
-            max_time_len = MAX(max_time_len, tail_len);
+        if (pos != -1)
+            tail_width = width - (width_approx_digits * (tpadding_dwidth + strlen(queuepos) + 4));
+        else
+            tail_width = width - (width_approx_digits * (tpadding_dwidth + 2.5));
 
-            if (entry->length != -1)
-              tail_width = width - (width_approx_digits * (tpadding_dwidth+2));
-            else
-              tail_width = width - (width_approx_digits * 6) - 5;
+        if (i == playlist_get_position_nolock())
+            gdk_gc_set_foreground(gc,
+                                  skin_get_color(bmp_active_skin,
+                                                 SKIN_PLEDIT_CURRENT));
+        else
+            gdk_gc_set_foreground(gc,
+                                  skin_get_color(bmp_active_skin,
+                                                 SKIN_PLEDIT_NORMAL));
+        playlist_list_draw_string(pl, playlist_list_font,
+                                  i - pl->pl_first, tail_width, title,
+                                  i + 1);
 
-            if (i == playlist_get_position_nolock())
-                gdk_gc_set_foreground(gc,
-                                      skin_get_color(bmp_active_skin,
-                                                     SKIN_PLEDIT_CURRENT));
-            else
-                gdk_gc_set_foreground(gc,
-                                      skin_get_color(bmp_active_skin,
-                                                     SKIN_PLEDIT_NORMAL));
-            playlist_list_draw_string(pl, playlist_list_font,
-                                      i - pl->pl_first, tail_width, title,
-                                      i + 1);
+        x = pl->pl_widget.x + width - width_approx_digits * 2;
+        y = pl->pl_widget.y + ((i - pl->pl_first) -
+                               1) * pl->pl_fheight + ascent;
 
-            x = pl->pl_widget.x + width - width_approx_digits * 2;
-            y = pl->pl_widget.y + ((i - pl->pl_first) -
-                                   1) * pl->pl_fheight + ascent;
-
-            if (entry->selected) {
-                gdk_gc_set_foreground(gc,
-                                      skin_get_color(bmp_active_skin,
-                                                     SKIN_PLEDIT_SELECTEDBG));
-            }
-            else {
-                gdk_gc_set_foreground(gc,
-                                      skin_get_color(bmp_active_skin,
-                                                     SKIN_PLEDIT_NORMALBG));
-            }
-
-            /* This isn't very cool, but i don't see a way to
-             * calculate row widths with Pango fast enough here */
-
-            gdk_draw_rectangle(obj, gc, TRUE,
-                               pl->pl_widget.x + pl->pl_widget.width -
-                               (width_approx_digits * 6), 
-				 y + abs(descent),
-                               (width_approx_digits * 6), pl->pl_fheight - 1);
-
-            if (i == playlist_get_position_nolock())
-                gdk_gc_set_foreground(gc,
-                                      skin_get_color(bmp_active_skin,
-                                                     SKIN_PLEDIT_CURRENT));
-            else
-                gdk_gc_set_foreground(gc,
-                                      skin_get_color(bmp_active_skin,
-                                                     SKIN_PLEDIT_NORMAL));
-
-	    frags = NULL;
-	    frag0 = NULL;
-
-	    if ((strlen(tail) > 0) && (tail != NULL)) {
-                frags = g_strsplit(tail, ":", 0);
-                frag0 = g_strconcat(frags[0], ":", NULL);
-
-                layout = gtk_widget_create_pango_layout(playlistwin, frags[1]);
-       	        pango_layout_set_font_description(layout, playlist_list_font);
-                pango_layout_set_width(layout, tail_len * 100);
-                pango_layout_set_alignment(layout, PANGO_ALIGN_LEFT);
-                gdk_draw_layout(obj, gc, x - (0.5 * width_approx_digits),
-       	                        y + abs(descent), layout);
-                g_object_unref(layout);
-
-                layout = gtk_widget_create_pango_layout(playlistwin, frag0);
-                pango_layout_set_font_description(layout, playlist_list_font);
-                pango_layout_set_width(layout, tail_len * 100);
-                pango_layout_set_alignment(layout, PANGO_ALIGN_RIGHT);
-                gdk_draw_layout(obj, gc, x - (0.75 * width_approx_digits),
-                            y + abs(descent), layout);
-                g_object_unref(layout);
-
-                g_free(frag0);
-                g_strfreev(frags);
-	    }
-
-            if (pos != -1) {
-
-                if (i == playlist_get_position_nolock())
-                    gdk_gc_set_foreground(gc,
-                                          skin_get_color(bmp_active_skin,
-                                                         SKIN_PLEDIT_CURRENT));
-                else
-                    gdk_gc_set_foreground(gc,
-                                          skin_get_color(bmp_active_skin,
-                                                         SKIN_PLEDIT_NORMAL));
-
-                /* DON'T remove the commented code yet please     -- Milosz */
-
-                queue_tailpadding = 5;
-
-                gdk_draw_rectangle(obj, gc, FALSE,
-                                   x -
-                                   (((queue_tailpadding +
-                                      strlen(queuepos)) *
-                                     width_approx_digits) +
-                                    (width_approx_digits / 4)),
-                                   y + abs(descent) + 1,
-                                   (strlen(queuepos)) *
-                                   width_approx_digits +
-                                   (width_approx_digits / 2),
-                                   pl->pl_fheight - 2);
-
-                layout =
-                    gtk_widget_create_pango_layout(playlistwin, queuepos);
-                pango_layout_set_font_description(layout, playlist_list_font);
-                pango_layout_set_alignment(layout, PANGO_ALIGN_CENTER);
-
-                gdk_draw_layout(obj, gc,
-                                x -
-                                ((queue_tailpadding +
-                                  strlen(queuepos)) * width_approx_digits),
-                                y + abs(descent), layout);
-                g_object_unref(layout);
-            }
+        if (entry->selected) {
+            gdk_gc_set_foreground(gc,
+                                  skin_get_color(bmp_active_skin,
+                                                 SKIN_PLEDIT_SELECTEDBG));
         }
         else {
+            gdk_gc_set_foreground(gc,
+                                  skin_get_color(bmp_active_skin,
+                                                 SKIN_PLEDIT_NORMALBG));
+        }
+
+        /* This isn't very cool, but i don't see a way to
+         * calculate row widths with Pango fast enough here */
+
+        gdk_draw_rectangle(obj, gc, TRUE,
+                           pl->pl_widget.x + pl->pl_widget.width -
+                           (width_approx_digits * 6),
+                           y + abs(descent),
+                           (width_approx_digits * 6), pl->pl_fheight - 1);
+
+        if (i == playlist_get_position_nolock())
+            gdk_gc_set_foreground(gc,
+                                  skin_get_color(bmp_active_skin,
+                                                 SKIN_PLEDIT_CURRENT));
+        else
+            gdk_gc_set_foreground(gc,
+                                  skin_get_color(bmp_active_skin,
+                                                 SKIN_PLEDIT_NORMAL));
+
+        frags = NULL;
+        frag0 = NULL;
+
+        if ((strlen(tail) > 0) && (tail != NULL)) {
+            frags = g_strsplit(tail, ":", 0);
+            frag0 = g_strconcat(frags[0], ":", NULL);
+
+            layout = gtk_widget_create_pango_layout(playlistwin, frags[1]);
+            pango_layout_set_font_description(layout, playlist_list_font);
+            pango_layout_set_width(layout, tail_len * 100);
+            pango_layout_set_alignment(layout, PANGO_ALIGN_LEFT);
+            gdk_draw_layout(obj, gc, x - (0.5 * width_approx_digits),
+                            y + abs(descent), layout);
+            g_object_unref(layout);
+
+            layout = gtk_widget_create_pango_layout(playlistwin, frag0);
+            pango_layout_set_font_description(layout, playlist_list_font);
+            pango_layout_set_width(layout, tail_len * 100);
+            pango_layout_set_alignment(layout, PANGO_ALIGN_RIGHT);
+            gdk_draw_layout(obj, gc, x - (0.75 * width_approx_digits),
+                            y + abs(descent), layout);
+            g_object_unref(layout);
+
+            g_free(frag0);
+            g_strfreev(frags);
+        }
+
+        if (pos != -1) {
+
             if (i == playlist_get_position_nolock())
                 gdk_gc_set_foreground(gc,
                                       skin_get_color(bmp_active_skin,
@@ -620,8 +579,34 @@ playlist_list_draw(Widget * w)
                                       skin_get_color(bmp_active_skin,
                                                      SKIN_PLEDIT_NORMAL));
 
-            playlist_list_draw_string(pl, playlist_list_font,
-                                      i - pl->pl_first, width, title, i + 1);
+            /* DON'T remove the commented code yet please     -- Milosz */
+
+            queue_tailpadding = 5;
+
+            gdk_draw_rectangle(obj, gc, FALSE,
+                               x -
+                               (((queue_tailpadding +
+                                  strlen(queuepos)) *
+                                 width_approx_digits) +
+                                (width_approx_digits / 4)),
+                               y + abs(descent),
+                               (strlen(queuepos)) *
+                               width_approx_digits +
+                               (width_approx_digits / 2),
+                               pl->pl_fheight - 2);
+
+            layout =
+                gtk_widget_create_pango_layout(playlistwin, queuepos);
+            pango_layout_set_font_description(layout, playlist_list_font);
+            pango_layout_set_alignment(layout, PANGO_ALIGN_CENTER);
+
+            gdk_draw_layout(obj, gc,
+                            x -
+                            ((queue_tailpadding +
+                              strlen(queuepos)) * width_approx_digits) +
+                            (width_approx_digits / 4),
+                            y + abs(descent), layout);
+            g_object_unref(layout);
         }
 
         g_free(title);
@@ -740,7 +725,7 @@ playlist_list_draw(Widget * w)
 
     if (tpadding_dwidth != 0)
     {
-        tpadding = (tpadding_dwidth * width_approx_digits) + width_approx_digits;
+        tpadding = (tpadding_dwidth * width_approx_digits) + (width_approx_digits * 1.5);
 
         if (has_slant)
             tpadding += width_approx_digits_half;
