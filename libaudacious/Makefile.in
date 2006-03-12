@@ -49,7 +49,7 @@ install-posthook:
 	@echo [adding versioning information to libaudacious]
 	@mv -f ${DESTDIR}/${LIBDIR}/libaudacious.so \
 		${DESTDIR}/${LIBDIR}/libaudacious.so.2.0.0
-	@ln -sf ${DESTDIR}/${LIBDIR}/libaudacious.so.2.0.0 \
+	@ln -sf ${LIBDIR}/libaudacious.so.2.0.0 \
 		${DESTDIR}/${LIBDIR}/libaudacious.so.2
-	@ln -sf ${DESTDIR}/${LIBDIR}/libaudacious.so.2.0.0 \
+	@ln -sf ${LIBDIR}/libaudacious.so.2.0.0 \
 		${DESTDIR}/${LIBDIR}/libaudacious.so
