@@ -62,11 +62,13 @@ static GtkWidget *dialog1, *button1, *label1;
 static int wma_decode = 0;
 static gboolean wma_pause = 0;
 static int wma_seekpos = -1;
-static int wma_st_buff, wma_idx;
+static int wma_st_buff, wma_idx, wma_idx2;
 static GThread *wma_decode_thread;
 GStaticMutex wma_mutex = G_STATIC_MUTEX_INIT;
 static AVCodecContext *c = NULL;
 static AVFormatContext *ic = NULL;
+static AVCodecContext *c2 = NULL;
+static AVFormatContext *ic2 = NULL;
 static uint8_t *wma_outbuf, *wma_s_outbuf;
 
 char description[64];
@@ -185,12 +187,26 @@ static void wma_init(void)
 
 static int wma_is_our_file(char *filename)
 {
-    gchar *ext;
-    ext = strrchr(filename, '.');
-    if(ext)
-        if(!strcasecmp(ext, ".wma"))
-            return 1;
-    return 0;
+    AVCodec *codec2;
+
+    if(av_open_input_file(&ic2, str_twenty_to_space(filename), NULL, 0, NULL) < 0) return 0;
+
+    for(wma_idx2 = 0; wma_idx2 < ic2->nb_streams; wma_idx2++) {
+        c2 = &ic2->streams[wma_idx2]->codec;
+        if(c2->codec_type == CODEC_TYPE_AUDIO) break;
+    }
+
+    av_find_stream_info(ic2);
+
+    codec2 = avcodec_find_decoder(c2->codec_id);
+
+    if(!codec2) {
+        av_close_input_file(ic2);
+	return 0;
+    }
+	
+    av_close_input_file(ic2);
+    return 1;
 }
 
 static void wma_do_pause(short p)
