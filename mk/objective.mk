@@ -1,5 +1,5 @@
 # Shut up GNU make
-.SILENT:
+#.SILENT:
 
 OBJECTIVE_DIRECTORIES = none
 OBJECTIVE_LIBS = none
