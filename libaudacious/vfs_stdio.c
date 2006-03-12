@@ -58,6 +58,9 @@ vfs_fclose(VFSFile * file)
 {
     gint ret = 0;
 
+    if (file == NULL)
+        return -1;
+
     if (file->handle) {
         if (fclose(file->handle) != 0)
             ret = -1;
@@ -74,6 +77,9 @@ vfs_fread(gpointer ptr,
           size_t nmemb,
           VFSFile * file)
 {
+    if (file == NULL)
+        return 0;
+
     return fread(ptr, size, nmemb, file->handle);
 }
 
@@ -83,6 +89,9 @@ vfs_fwrite(gconstpointer ptr,
            size_t nmemb,
            VFSFile * file)
 {
+    if (file == NULL)
+        return 0;
+
     return fwrite(ptr, size, nmemb, file->handle);
 }
 
@@ -91,25 +100,37 @@ vfs_fseek(VFSFile * file,
           glong offset,
           gint whence)
 {
+    if (file == NULL)
+        return 0;
+
     return fseek(file->handle, offset, whence);
 }
 
 void
 vfs_rewind(VFSFile * file)
 {
+    if (file == NULL)
+        return;
+
     rewind(file->handle);
 }
 
 glong
 vfs_ftell(VFSFile * file)
 {
+    if (file == NULL)
+        return 0;
+
     return ftell(file->handle);
 }
 
 gboolean
 vfs_feof(VFSFile * file)
 {
-    return (gboolean)feof(file->handle);
+    if (file == NULL)
+        return FALSE;
+
+    return (gboolean) feof(file->handle);
 }
 
 gboolean
@@ -133,5 +154,8 @@ vfs_is_writeable(const gchar * path)
 gint
 vfs_truncate(VFSFile * file, glong size)
 {
+    if (file == NULL)
+        return -1;
+
     return ftruncate(fileno(file->handle), size);
 }

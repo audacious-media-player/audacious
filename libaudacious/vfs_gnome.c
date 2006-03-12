@@ -99,6 +99,9 @@ vfs_fclose(VFSFile * file)
 {
     gint ret = 0;
 
+    if (file == NULL)
+	return 0;
+
     if (file->handle) {
         if (gnome_vfs_close(file->handle) != GNOME_VFS_OK)
             ret = -1;
@@ -117,6 +120,9 @@ vfs_fread(gpointer ptr,
 {
     GnomeVFSResult result;
     GnomeVFSFileSize bytes_read;
+
+    if (file == NULL)
+	return 0;
 
     result = gnome_vfs_read(file->handle, ptr, size * nmemb, &bytes_read);
     if (result == GNOME_VFS_OK)
@@ -139,6 +145,9 @@ vfs_fwrite(gconstpointer ptr,
     GnomeVFSResult result;
     GnomeVFSFileSize bytes_written;
 
+    if (file == NULL)
+	return 0;
+
     result = gnome_vfs_write(file->handle, ptr, size * nmemb, &bytes_written);
     if (result == GNOME_VFS_OK)
         return bytes_written;
@@ -153,6 +162,9 @@ vfs_fseek(VFSFile * file,
 {
     GnomeVFSResult result;
     GnomeVFSSeekPosition g_whence;
+
+    if (file == NULL)
+	return 0;
 
     switch (whence) {
     case SEEK_SET:
@@ -180,6 +192,9 @@ vfs_fseek(VFSFile * file,
 void
 vfs_rewind(VFSFile * file)
 {
+    if (file == NULL)
+	return;
+
     vfs_fseek(file, 0L, SEEK_SET);
 }
 
@@ -188,6 +203,9 @@ vfs_ftell(VFSFile * file)
 {
     GnomeVFSResult result;
     GnomeVFSFileSize position;
+
+    if (file == NULL)
+	return 0;
 
     result = gnome_vfs_tell(file->handle, &position);
 
@@ -200,6 +218,9 @@ vfs_ftell(VFSFile * file)
 gboolean
 vfs_feof(VFSFile * file)
 {
+    if (file == NULL)
+	return FALSE;
+
     return file->eof;
 }
 
@@ -257,6 +278,9 @@ vfs_truncate(VFSFile * file,
              glong length)
 {
     GnomeVFSResult result;
+
+    if (file == NULL)
+	return -1;
 
     result = gnome_vfs_truncate_handle(file->handle, (GnomeVFSFileSize) length);
 
