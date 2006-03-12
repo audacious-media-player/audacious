@@ -288,16 +288,8 @@ void FLAC_XMMS__init()
 
 int FLAC_XMMS__is_our_file(char *filename)
 {
-	VFSFile *file;
-	gchar magic[4];
-	if ((file = vfs_fopen(filename, "rb"))) {
-		vfs_fread(magic, 1, 4, file);
-		if (!strncmp(magic, "fLaC", 4)) {
-			vfs_fclose(file);
-			return 1;
-		}
-		vfs_fclose(file);
-	}
+	if (source_to_decoder_type (filename) == DECODER_FILE)
+		return 1;
 	return 0;
 }
 
