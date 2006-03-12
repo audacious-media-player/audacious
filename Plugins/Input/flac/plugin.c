@@ -288,9 +288,50 @@ void FLAC_XMMS__init()
 
 int FLAC_XMMS__is_our_file(char *filename)
 {
-	if (source_to_decoder_type (filename) == DECODER_FILE)
-		return 1;
-	return 0;
+	FILE *f;
+	file_info_.has_replaygain = false;
+
+	if (source_to_decoder_type (filename) == DECODER_FILE) {
+		if(0 == (f = fopen(filename, "r")))
+			return 0;
+		fclose(f);
+	}
+
+	if(decoder_ == 0)
+		return 0;
+
+	if(!safe_decoder_init_(filename, &decoder_, &decoder_func_table_))
+		return 0;
+
+	if(file_info_.has_replaygain && flac_cfg.output.replaygain.enable) {
+		if(flac_cfg.output.resolution.replaygain.bps_out == 8) {
+			file_info_.sample_format = FMT_U8;
+			file_info_.sample_format_bytes_per_sample = 1;
+		}
+		else if(flac_cfg.output.resolution.replaygain.bps_out == 16) {
+			file_info_.sample_format = (is_big_endian_host_) ? FMT_S16_BE : FMT_S16_LE;
+			file_info_.sample_format_bytes_per_sample = 2;
+		}
+		else {
+			decoder_func_table_ -> safe_decoder_finish(decoder_);
+			return 0;
+		}
+	}
+	else {
+		if(file_info_.bits_per_sample == 8) {
+			file_info_.sample_format = FMT_U8;
+			file_info_.sample_format_bytes_per_sample = 1;
+		}
+		else if(file_info_.bits_per_sample == 16 || (file_info_.bits_per_sample == 24 && flac_cfg.output.resolution.normal.dither_24_to_16)) {
+			file_info_.sample_format = (is_big_endian_host_) ? FMT_S16_BE : FMT_S16_LE;
+			file_info_.sample_format_bytes_per_sample = 2;
+		}
+		else {
+			decoder_func_table_ -> safe_decoder_finish(decoder_);
+			return 0;
+		}
+	}
+	return 1;
 }
 
 void FLAC_XMMS__play_file(char *filename)
