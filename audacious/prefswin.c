@@ -1837,7 +1837,7 @@ create_prefs_window(void)
    widget = glade_xml_get_widget(xml, "audversionlabel");
    aud_version_string = g_string_new( "" );
 
-   if (strncasecmp(svn_stamp, "exported"))
+   if (strcasecmp(svn_stamp, "exported"))
    {
        g_string_printf( aud_version_string , "%s (r%s) (%s@%s)" , "Audacious " PACKAGE_VERSION ,
                         svn_stamp , g_get_user_name() , g_get_host_name() );
