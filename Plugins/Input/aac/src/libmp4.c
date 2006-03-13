@@ -183,19 +183,32 @@ static void mp4_stop(void)
 
 static int	mp4_isFile(char *filename)
 {
-  if(filename){
-    gchar*	extention;
+  MP4FileHandle mp4file2;
+  gint		mp4track;
 
-    extention = strrchr(filename, '.');
-    if (extention &&(
-	!strcasecmp(extention, ".mp4") ||	// official extention
-	!strcasecmp(extention, ".m4a") ||	// Apple mp4 extention
-	!strcasecmp(extention, ".aac")		// old MPEG2/4-AAC extention
-	)){
-      return (1);
+  if(!filename)
+    return 0;
+
+  if((mp4file2 = MP4Read(filename, 0))){
+    if((mp4track = getAACTrack(mp4file2)) >= 0){
+      MP4Close(mp4file2);				// This is a valid MP4 file, good to go
+      return 1;
+    } else {
+      MP4Close(mp4file2);				// Corrupted MP4 file, will not try to play
+      return 0;
     }
+  } else {						// Not MP4, could be AAC, check extension
+    gchar*	extension;
+    extension = strrchr(filename, '.');
+    if (extension &&(
+	!strcasecmp(extension, ".mp4") ||	// official extension
+	!strcasecmp(extension, ".m4a") ||	// Apple mp4 extension
+	!strcasecmp(extension, ".aac")		// old MPEG2/4-AAC extension
+	))
+	  return 1;
+	else
+	  return 0;
   }
-  return(0);
 }
 
 static void	mp4_about(void)
