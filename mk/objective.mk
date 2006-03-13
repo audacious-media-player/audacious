@@ -28,7 +28,7 @@ install:
 	@if test "$(SUBDIRS)" != "none"; then \
 		for i in $(SUBDIRS); do \
 			echo "[installing subobjective: $$i]"; \
-			(cd $$i; $(MAKE) install; cd ..); \
+			(cd $$i; $(MAKE) install || exit -1; cd ..); \
 		done; \
 	fi
 	@if test "$(OBJECTIVE_DIRECTORIES)" != "none"; then \
@@ -74,7 +74,7 @@ clean:
 	@if test "$(SUBDIRS)" != "none"; then \
 		for i in $(SUBDIRS); do \
 			echo "[cleaning subobjective: $$i]"; \
-			(cd $$i; $(MAKE) clean; cd ..); \
+			(cd $$i; $(MAKE) clean || exit -1; cd ..); \
 		done; \
 	fi
 	$(MAKE) clean-posthook
@@ -85,7 +85,7 @@ distclean: clean
 	@if test "$(SUBDIRS)" != "none"; then \
 		for i in $(SUBDIRS); do \
 			echo "[distcleaning subobjective: $$i]"; \
-			(cd $$i; $(MAKE) distclean; cd ..); \
+			(cd $$i; $(MAKE) distclean || exit -1; cd ..); \
 			echo "[distcleaning subobjective: $$i]"; \
 		done; \
 	fi
@@ -101,28 +101,28 @@ build:
 	@if test "$(SUBDIRS)" != "none"; then \
 		for i in $(SUBDIRS); do \
 			echo "[building subobjective: $$i]"; \
-			(cd $$i; $(MAKE); cd ..); \
+			(cd $$i; $(MAKE) || exit -1; cd ..); \
 			echo "[finished subobjective: $$i]"; \
 		done; \
 	fi
 	@if test "$(OBJECTIVE_LIBS)" != "none"; then \
 		for i in $(OBJECTIVE_LIBS); do \
 			echo "[building library objective: $$i]"; \
-			$(MAKE) $$i; \
+			$(MAKE) $$i || exit -1; \
 			echo "[finished library objective: $$i]"; \
 		done; \
 	fi
 	@if test "$(OBJECTIVE_LIBS_NOINST)" != "none"; then \
 		for i in $(OBJECTIVE_LIBS_NOINST); do \
 			echo "[building library dependency: $$i]"; \
-			$(MAKE) $$i; \
+			$(MAKE) $$i || exit -1; \
 			echo "[finished library dependency: $$i]"; \
 		done; \
 	fi
 	@if test "$(OBJECTIVE_BINS)" != "none"; then \
 		for i in $(OBJECTIVE_BINS); do \
 			echo "[building binary objective: $$i]"; \
-			$(MAKE) $$i; \
+			$(MAKE) $$i || exit -1; \
 			echo "[finished binary objective: $$i]"; \
 		done; \
 	fi
@@ -147,21 +147,21 @@ build:
 
 %.so: $(OBJECTS)
 	if test "x$(OBJECTS)" != "x"; then \
-		$(MAKE) $(OBJECTS);		\
+		$(MAKE) $(OBJECTS) || exit -1;		\
 		printf "%10s     %-20s\n" LINK $@; \
 		$(CC) -fPIC -DPIC -shared -o $@ -Wl,-soname=$@ $(OBJECTS) $(LDFLAGS) $(LIBADD); \
 	fi
 
 %.a: $(OBJECTS)
 	if test "x$(OBJECTS)" != "x"; then \
-		$(MAKE) $(OBJECTS);		\
+		$(MAKE) $(OBJECTS) || exit -1;		\
 		printf "%10s     %-20s\n" LINK $@; \
 		$(AR) cq $@ $(OBJECTS); \
 	fi
 
 $(OBJECTIVE_BINS): $(OBJECTS)
 	if test "x$(OBJECTS)" != "x"; then \
-		$(MAKE) $(OBJECTS);		\
+		$(MAKE) $(OBJECTS) || exit -1;		\
 		printf "%10s     %-20s\n" LINK $@; \
 		$(CC) -o $@ $(OBJECTS) $(LDFLAGS) $(LIBADD); \
 	fi
