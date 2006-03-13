@@ -190,7 +190,7 @@ static int	mp4_isFile(char *filename)
     return 0;
 
   if((mp4file2 = MP4Read(filename, 0))){
-    if((mp4track = getAACTrack(mp4file2)) >= 0){
+    if((mp4track = getAACTrack(mp4file2)) > 0){
       MP4Close(mp4file2);				// This is a valid MP4 file, good to go
       return 1;
     } else {
