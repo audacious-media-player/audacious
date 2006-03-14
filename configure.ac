@@ -900,7 +900,6 @@ AC_CONFIG_FILES([
 	Plugins/General/song_change/Makefile
 	Plugins/General/lirc/Makefile
 	Plugins/General/scrobbler/Makefile
-	Plugins/General/scrobbler/tags/Makefile
 	Plugins/Effect/Makefile
 	Plugins/Effect/ladspa/Makefile
 	Plugins/Effect/voice_removal/Makefile
