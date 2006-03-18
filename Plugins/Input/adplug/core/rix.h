@@ -16,7 +16,8 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * rix.h - Dayu OPL Format Player by palxex <palxex@163.com/palxex.ys168.com> 
+ * rix.h - Softstar RIX OPL Format Player by palxex <palxex.ys168.com>
+ *                                           BSPAL <BSPAL.ys168.com>
  */
 
 #include "player.h"
@@ -42,22 +43,8 @@ class CrixPlayer: public CPlayer
     unsigned char v[14];
   } ADDT;
 
-  unsigned char dro[64000];
-  unsigned int I,T;
-  unsigned short mus_block;
-  unsigned short ins_block;
-  unsigned char rhythm;
-  unsigned char mutex;
-  unsigned char music_on;
-  unsigned char pause_flag;
-  unsigned short band;
-  unsigned char band_low;
-  unsigned short e0_reg_flag;
-  unsigned char bd_modify;
-  int sustain;
-  int dro_end;
-
-  unsigned char buf_addr[655360];  /* rix files' buffer */
+  unsigned char dro[128000];
+  unsigned char buf_addr[327680];  /* rix files' buffer */
   unsigned short buffer[300];
   unsigned short a0b0_data2[11];
   unsigned char a0b0_data3[18];
@@ -82,6 +69,19 @@ class CrixPlayer: public CPlayer
   static const unsigned char bd_reg_data[124];
   static unsigned char for40reg[18];
   static unsigned short mus_time;
+  unsigned int I,T;
+  unsigned short mus_block;
+  unsigned short ins_block;
+  unsigned char rhythm;
+  unsigned char mutex;
+  unsigned char music_on;
+  unsigned char pause_flag;
+  unsigned short band;
+  unsigned char band_low;
+  unsigned short e0_reg_flag;
+  unsigned char bd_modify;
+  int sustain;
+  int dro_end;
 
 #define ad_08_reg() ad_bop(8,0)    /**/
   inline void ad_20_reg(unsigned short);              /**/
