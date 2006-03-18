@@ -2264,27 +2264,8 @@ playlist_dupscmp_filename( const PlaylistEntry * a , const PlaylistEntry * b )
 static gint
 playlist_dupscmp_path( const PlaylistEntry * a , const PlaylistEntry * b )
 {
-    gchar *a_filename = a->filename, *b_filename = b->filename;
-    gchar *posa, *posb;
-    gint len, ret;
-
-    posa = strrchr(a_filename, '/');
-    posb = strrchr(b_filename, '/');
-
-    /* sort directories before files */
-    if (posa && posb && (posa - a_filename != posb - b_filename)) {
-        if (posa -a_filename > posb - b_filename) {
-            len = posb - b_filename;
-            ret = -1;
-        }
-        else {
-            len = posa - a_filename;
-            ret = 1;
-        }
-        if (!strncmp(a_filename, b_filename, len))
-            return ret;
-    }
-    return strcmp(a_filename, b_filename);
+    /* simply compare the entire filename string */
+    return strcmp(a->filename, b->filename);
 }
 
 void
