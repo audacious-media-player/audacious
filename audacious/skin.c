@@ -163,9 +163,6 @@ bmp_active_skin_load(const gchar * path)
     if (!skin_load(bmp_active_skin, path))
         return FALSE;
 
-    /* Parse the hints for this skin. */
-    skin_parse_hints(bmp_active_skin, NULL);
-
     skin_setup_masks(bmp_active_skin);
     draw_main_window(TRUE);
     draw_playlist_window(TRUE);
@@ -832,6 +829,10 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
     if (!file_is_archive(path)) {
         skin_load_pixmaps(skin, path);
         skin_load_cursor(skin, path);
+
+        /* Parse the hints for this skin. */
+        skin_parse_hints(skin, NULL);
+
         return TRUE;
     }
 
@@ -842,6 +843,10 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 
     skin_load_pixmaps(skin, cpath);
     skin_load_cursor(skin, cpath);
+
+    /* Parse the hints for this skin. */
+    skin_parse_hints(skin, cpath);
+
     del_directory(cpath);
     g_free(cpath);
 
