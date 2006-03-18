@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2003 Simon Peter, <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2006 Simon Peter, <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -283,6 +283,16 @@ bool Cs3mPlayer::update()
 			channel[realchan].fx = pattern[pattnr][row][chan].command;	// set command
 			if(pattern[pattnr][row][chan].info)			// set infobyte
 				channel[realchan].info = pattern[pattnr][row][chan].info;
+
+      // some commands reset the infobyte memory
+      switch(channel[realchan].fx) {
+      case 1:
+      case 2:
+      case 3:
+      case 20:
+	channel[realchan].info = pattern[pattnr][row][chan].info;
+	break;
+      }
 
 			// play note
 			if(donote)

@@ -16,7 +16,8 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * rix.c - Dayu OPL Format Player by palxex <palxex@163.com/palxex.ys168.com>
+ * rix.cpp - Softstar RIX OPL Format Player by palxex <palxex.ys168.com>
+ *                                             BSPAL <BSPAL.ys168.com>
  */
 
 #include "rix.h"
@@ -56,8 +57,8 @@ CrixPlayer::CrixPlayer(Copl *newopl)
     music_on(0),pause_flag(0),band(0),band_low(0),e0_reg_flag(0),bd_modify(0),
     sustain(0),dro_end(0), mstotal(0), opl3_mode(0)
 {
-  memset(dro, 0, 64000);
-  memset(buf_addr, 0, 655360);
+  memset(dro, 0, 128000);
+  memset(buf_addr, 0, 327680);
   memset(buffer, 0, sizeof(unsigned short) * 300);
   memset(a0b0_data2, 0, sizeof(unsigned short) * 11);
   memset(a0b0_data3, 0, 18);
@@ -261,7 +262,7 @@ inline void CrixPlayer::int_08h_entry()
 	{
 	  mutex++;
 	  band_sus = rix_proc();
-	  if(band_sus) sustain += (int)((double)band_sus * 1.06);
+	  if(band_sus) sustain += band_sus;
 	  mstotal+=sustain;
 	  dro[T++]=(sustain>=0x100?1:0);
 	  dro[T++]=sustain&0xff;
@@ -276,7 +277,7 @@ inline void CrixPlayer::int_08h_entry()
 	}
       else
 	{
-	  if(band_sus) sustain -= 14; /* aging */
+	  if(band_sus) sustain -= 1; /* aging */
 	  break;
 	}
     }
