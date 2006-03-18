@@ -24,6 +24,7 @@
 #include <audacious/output.h>
 #include <libaudacious/util.h>
 #include <libaudacious/titlestring.h>
+#include <libaudacious/vfs.h>
 
 #define MP4_VERSION	"ver.- 15 December 2004"
 #define LIBMP4V2_VERSION "1.2.0"
@@ -76,6 +77,7 @@ const char *audmp4_id3_genres[GENRE_MAX] = {
     N_("Anime"), N_("JPop"), N_("Synthpop")
 };
 
+#define AAC_MAGIC     (unsigned char [4]) { 0xFF, 0xF9, 0x5C, 0x80 }
 
 static void	mp4_init(void);
 static void	mp4_about(void);
@@ -85,7 +87,7 @@ static void	mp4_pause(short);
 static void	mp4_seek(int);
 static int	mp4_getTime(void);
 static void	mp4_cleanup(void);
-static int	mp4_isFile(char *);
+static int	mp4_IsOurFile(char *);
 static void	mp4_getSongTitle(char *filename, char **, int *);
 static void*	mp4Decode(void *);
 
@@ -99,7 +101,7 @@ InputPlugin mp4_ip =
     mp4_init,
     mp4_about,
     0,	// configuration
-    mp4_isFile,
+    mp4_IsOurFile,
     0,	//scandir
     mp4_play,
     mp4_stop,
@@ -181,34 +183,38 @@ static void mp4_stop(void)
   }
 }
 
-static int	mp4_isFile(char *filename)
+static int	mp4_IsOurFile(char *filename)
 {
-  MP4FileHandle mp4file2;
-  gint		mp4track;
+  VFSFile *file;
+  gchar* extension;
+  gchar magic[4];
 
-  if(!filename)
-    return 0;
-
-  if((mp4file2 = MP4Read(filename, 0))){
-    if((mp4track = getAACTrack(mp4file2)) > 0){
-      MP4Close(mp4file2);				// This is a valid MP4 file, good to go
-      return 1;
-    } else {
-      MP4Close(mp4file2);				// Corrupted MP4 file, will not try to play
-      return 0;
-    }
-  } else {						// Not MP4, could be AAC, check extension
-    gchar*	extension;
-    extension = strrchr(filename, '.');
-    if (extension &&(
-	!strcasecmp(extension, ".mp4") ||	// official extension
-	!strcasecmp(extension, ".m4a") ||	// Apple mp4 extension
-	!strcasecmp(extension, ".aac")		// old MPEG2/4-AAC extension
-	))
-	  return 1;
-	else
-	  return 0;
+  extension = strrchr(filename, '.');
+  if ((file = vfs_fopen(filename, "rb"))) {
+      vfs_fread(magic, 1, 4, file);
+      if (!memcmp(magic, AAC_MAGIC, 4)) {
+           vfs_fclose(file);
+           return 1;
+      }
+      if (!strncmp(magic, "ID3", 3)) {		// ID3 tag bolted to the front, obfuscated magic bytes
+           vfs_fclose(file);
+           if (extension &&(
+	      !strcasecmp(extension, ".mp4") ||	// official extension
+	      !strcasecmp(extension, ".m4a") ||	// Apple mp4 extension
+	      !strcasecmp(extension, ".aac")	// old MPEG2/4-AAC extension
+	   ))
+	      return 1;
+	   else
+	      return 0;
+      }
+      vfs_fread(magic, 1, 4, file);
+      if (!strncasecmp(magic, "ftyp", 6)) {
+           vfs_fclose(file);
+           return 1;
+      }
+      vfs_fclose(file);
   }
+  return 0;
 }
 
 static void	mp4_about(void)
