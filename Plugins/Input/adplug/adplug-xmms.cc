@@ -38,7 +38,7 @@ extern "C" {
 /***** Defines *****/
 
 // Version string
-#define ADPLUG_NAME	"AdLib synthesizer"
+#define ADPLUG_NAME	"AdPlug (AdLib Sound Player)"
 
 // Sound buffer size in samples
 #define SNDBUFSIZE	512
