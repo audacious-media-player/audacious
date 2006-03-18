@@ -127,15 +127,15 @@ static GtkItemFactoryEntry playlistwin_popup_menu_entries[] = {
 
     {N_("/Remove Selected"), "Delete",
      playlistwin_sub_menu_callback,
-     SUB_SELECTED, "<Item>", GTK_STOCK_DELETE},
+     SUB_SELECTED, "<StockItem>", GTK_STOCK_REMOVE},
 
     {N_("/Remove Unselected"), NULL,
      playlistwin_sub_menu_callback,
-     SUB_CROP, "<Item>", GTK_STOCK_CUT},
+     SUB_CROP, "<StockItem>", GTK_STOCK_REMOVE},
 
     {N_("/Remove All"), NULL,
      playlistwin_sub_menu_callback,
-     SUB_ALL, "<Item>", GTK_STOCK_DELETE},
+     SUB_ALL, "<StockItem>", GTK_STOCK_CLEAR},
 
     ITEM_SEPARATOR,
 
@@ -155,37 +155,37 @@ static GtkItemFactoryEntry pladd_menu_entries[] = {
 
     {N_("/Add Files..."), "f",
      mainwin_general_menu_callback,
-     MAINWIN_GENERAL_PLAYFILE, "<StockItem>", GTK_STOCK_OPEN},
+     MAINWIN_GENERAL_PLAYFILE, "<StockItem>", GTK_STOCK_ADD},
 };
 
 static GtkItemFactoryEntry pldel_menu_entries[] = {
     {N_("/Clear Queue"), "<shift>Q",
      playlistwin_popup_menu_callback,
-     PLIST_CQUEUE, "<Item>", NULL},
+     PLIST_CQUEUE, "<StockItem>", GTK_STOCK_CANCEL},
 
     ITEM_SEPARATOR,
 
     {N_("/Remove Unavailable Files"), NULL,
      playlistwin_sub_menu_callback,
-     PLAYLISTWIN_REMOVE_DEAD_FILES, "<Item>", GTK_STOCK_DELETE},
+     PLAYLISTWIN_REMOVE_DEAD_FILES, "<StockItem>", GTK_STOCK_ZOOM_FIT},
+
+    {N_("/Remove Duplicates"), NULL,
+     playlistwin_sub_menu_callback,
+     SUB_DUPLICATE, "<StockItem>", GTK_STOCK_ZOOM_100},
 
     ITEM_SEPARATOR,
 
     {N_("/Remove All"), NULL,
      playlistwin_sub_menu_callback,
-     SUB_ALL, "<Item>", GTK_STOCK_DELETE},
+     SUB_ALL, "<StockItem>", GTK_STOCK_CLEAR},
 
     {N_("/Remove Unselected"), NULL,
      playlistwin_sub_menu_callback,
-     SUB_CROP, "<Item>", GTK_STOCK_DELETE},
+     SUB_CROP, "<StockItem>", GTK_STOCK_REMOVE},
 
     {N_("/Remove Selected"), "Delete",
      playlistwin_sub_menu_callback,
-     SUB_SELECTED, "<Item>", GTK_STOCK_DELETE},
-
-    {N_("/Remove Duplicates"), NULL,
-     playlistwin_sub_menu_callback,
-     SUB_DUPLICATE, "<Item>", GTK_STOCK_DELETE}
+     SUB_SELECTED, "<StockItem>", GTK_STOCK_REMOVE}
 };
 
 static GtkItemFactoryEntry pllist_menu_entries[] = {
@@ -213,17 +213,17 @@ static GtkItemFactoryEntry pllist_menu_entries[] = {
 static GtkItemFactoryEntry plsel_menu_entries[] = {
     {N_("/Invert Selection"), NULL,
      playlistwin_sub_menu_callback,
-     SEL_INV, "<Item>", GTK_STOCK_NETWORK},
+     SEL_INV, "<Item>", NULL},
     
     ITEM_SEPARATOR,
 
     {N_("/Select None"),"<Ctrl><Shift>A",
      playlistwin_sub_menu_callback,
-     SEL_ZERO, "<Item>", GTK_STOCK_OPEN},
+     SEL_ZERO, "<Item>", NULL},
 
     {N_("/Select All"), "<Ctrl>A",
      playlistwin_sub_menu_callback,
-     SEL_ALL, "<Item>", GTK_STOCK_OPEN},
+     SEL_ALL, "<Item>", NULL},
 };
 
 static GtkItemFactoryEntry plsort_menu_entries[] = {
