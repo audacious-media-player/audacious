@@ -775,16 +775,6 @@ void get_tag_data(metatag_t *meta, char *filename, int track)
 
 void metatag_delete(metatag_t *meta)
 {
-	/*
-	 * Genre, track, and MBID are the exceptions and must be freed
-	 * (Thanks ID3v1)
-	 */
-	if(meta->track != NULL)
-		free(meta->track);
-	if(meta->genre != NULL)
-		free(meta->genre);
-	if(meta->mb != NULL)
-		free(meta->mb);
 	if(meta->wma != NULL)
 		freeWMA(meta->wma);
 	if(meta->id3v1 != NULL)
