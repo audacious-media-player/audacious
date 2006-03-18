@@ -399,8 +399,8 @@ void ModplugXMMS::PlayFile(const string& aFilename)
 	(
 		mModName,
 		mSoundFile->GetSongTime() * 1000,
-		mSoundFile->GetNumChannels(),
-		mModProps.mFrequency / 1000,
+		mSoundFile->GetNumChannels() * 1000,
+		mModProps.mFrequency,
 		mModProps.mChannels
 	);
 
