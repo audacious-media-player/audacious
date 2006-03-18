@@ -86,18 +86,6 @@ desktop_DATA = audacious.desktop
 desktopdir = $(datadir)/applications
 
 
-BUILT_SOURCES = pixmaps.h
-
-embedded_icons = \
-	info.png playlist.png play.png
-
-
-EXTRA_DIST = \
-	$(embedded_icons) build.list
-
-pixmaps.h: $(embedded_icons)
-	gdk-pixbuf-csource --stream --build-list `cat build.list` > pixmaps.h
-
 build_stamp.c:
 	if [ -d .svn ] || [ ! -f build_stamp.c ]; then		\
 		( \
