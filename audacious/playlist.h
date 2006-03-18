@@ -31,6 +31,12 @@ typedef enum {
 } PlaylistSortType;
 
 typedef enum {
+    PLAYLIST_DUPS_PATH,
+    PLAYLIST_DUPS_FILENAME,
+    PLAYLIST_DUPS_TITLE
+} PlaylistDupsType;
+
+typedef enum {
     PLAYLIST_FORMAT_UNKNOWN = -1,
     PLAYLIST_FORMAT_M3U,
     PLAYLIST_FORMAT_PLS,
@@ -100,7 +106,7 @@ void playlist_sort_selected(PlaylistSortType type);
 
 void playlist_reverse(void);
 void playlist_random(void);
-void playlist_remove_duplicates(void);
+void playlist_remove_duplicates(PlaylistDupsType);
 void playlist_remove_dead_files(void);
 
 void playlist_fileinfo_current(void);

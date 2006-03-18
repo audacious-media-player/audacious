@@ -63,7 +63,8 @@
 
 enum {
     ADD_URL, ADD_DIR, ADD_FILES,
-    SUB_MISC, SUB_ALL, SUB_CROP, SUB_SELECTED, SUB_DUPLICATE,
+    SUB_MISC, SUB_ALL, SUB_CROP, SUB_SELECTED,
+    SUB_DUPLICATE_BYTITLE, SUB_DUPLICATE_BYFILENAME, SUB_DUPLICATE_BYPATH,
     SEL_INV, SEL_ZERO, SEL_ALL,
     MISC_SORT, MISC_FILEINFO, MISC_MISCOPTS,
     PLIST_NEW, PLIST_SAVE_AS, PLIST_LOAD,
@@ -169,9 +170,16 @@ static GtkItemFactoryEntry pldel_menu_entries[] = {
      playlistwin_sub_menu_callback,
      PLAYLISTWIN_REMOVE_DEAD_FILES, "<ImageItem>", removeunavail_pixbuf},
 
-    {N_("/Remove Duplicates"), NULL,
+    {N_("/Remove Duplicates"), NULL, NULL, 0, "<Branch>", NULL},
+    {N_("/Remove Duplicates/By Title"), NULL,
      playlistwin_sub_menu_callback,
-     SUB_DUPLICATE, "<ImageItem>", removedups_pixbuf},
+     SUB_DUPLICATE_BYTITLE, "<ImageItem>", removedups_pixbuf},
+    {N_("/Remove Duplicates/By Filename"), NULL,
+     playlistwin_sub_menu_callback,
+     SUB_DUPLICATE_BYFILENAME, "<ImageItem>", removedups_pixbuf},
+    {N_("/Remove Duplicates/By Path + Filename"), NULL,
+     playlistwin_sub_menu_callback,
+     SUB_DUPLICATE_BYPATH, "<ImageItem>", removedups_pixbuf},
 
     ITEM_SEPARATOR,
 
@@ -1883,8 +1891,14 @@ playlistwin_sub_menu_callback(gpointer data,
     case SUB_SELECTED:
         playlist_delete(FALSE);
         break;
-    case SUB_DUPLICATE:
-        playlist_remove_duplicates();
+    case SUB_DUPLICATE_BYTITLE:
+        playlist_remove_duplicates(PLAYLIST_DUPS_TITLE);
+        break;
+    case SUB_DUPLICATE_BYFILENAME:
+        playlist_remove_duplicates(PLAYLIST_DUPS_FILENAME);
+        break;
+    case SUB_DUPLICATE_BYPATH:
+        playlist_remove_duplicates(PLAYLIST_DUPS_PATH);
         break;
     case PLAYLISTWIN_REMOVE_DEAD_FILES:
         playlist_remove_dead_files();

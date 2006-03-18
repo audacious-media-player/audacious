@@ -106,6 +106,10 @@ static gint playlist_compare_filename(const PlaylistEntry * a, const PlaylistEnt
 static gint playlist_compare_title(const PlaylistEntry * a, const PlaylistEntry * b);
 static gint playlist_compare_date(const PlaylistEntry * a, const PlaylistEntry * b);
 
+static gint playlist_dupscmp_path( const PlaylistEntry * a, const PlaylistEntry * b);
+static gint playlist_dupscmp_filename( const PlaylistEntry * a, const PlaylistEntry * b);
+static gint playlist_dupscmp_title( const PlaylistEntry * a, const PlaylistEntry * b);
+
 static PlaylistCompareFunc playlist_compare_func_table[] = {
     playlist_compare_path,
     playlist_compare_filename,
@@ -2206,11 +2210,103 @@ playlist_remove_dead_files(void)
     playlist_recalc_total_time();
 }
 
+
+static gint
+playlist_dupscmp_title( const PlaylistEntry * a , const PlaylistEntry * b )
+{
+    const gchar *a_title, *b_title;
+
+    g_return_val_if_fail(a != NULL, 0);
+    g_return_val_if_fail(b != NULL, 0);
+
+    if (a->title)
+        a_title = a->title;
+    else {
+        if (strrchr(a->filename, '/'))
+            a_title = strrchr(a->filename, '/') + 1;
+        else
+            a_title = a->filename;
+    }
+
+    if (b->title)
+        b_title = b->title;
+    else {
+        if (strrchr(a->filename, '/'))
+            b_title = strrchr(b->filename, '/') + 1;
+        else
+            b_title = b->filename;
+    }
+
+    return strcmp(a_title, b_title);
+}
+
+static gint
+playlist_dupscmp_filename( const PlaylistEntry * a , const PlaylistEntry * b )
+{
+    gchar *a_filename, *b_filename;
+
+    g_return_val_if_fail(a != NULL, 0);
+    g_return_val_if_fail(b != NULL, 0);
+
+    if (strrchr(a->filename, '/'))
+        a_filename = strrchr(a->filename, '/') + 1;
+    else
+        a_filename = a->filename;
+
+    if (strrchr(b->filename, '/'))
+        b_filename = strrchr(b->filename, '/') + 1;
+    else
+        b_filename = b->filename;
+
+    return strcmp(a_filename, b_filename);
+}
+
+static gint
+playlist_dupscmp_path( const PlaylistEntry * a , const PlaylistEntry * b )
+{
+    gchar *a_filename = a->filename, *b_filename = b->filename;
+    gchar *posa, *posb;
+    gint len, ret;
+
+    posa = strrchr(a_filename, '/');
+    posb = strrchr(b_filename, '/');
+
+    /* sort directories before files */
+    if (posa && posb && (posa - a_filename != posb - b_filename)) {
+        if (posa -a_filename > posb - b_filename) {
+            len = posb - b_filename;
+            ret = -1;
+        }
+        else {
+            len = posa - a_filename;
+            ret = 1;
+        }
+        if (!strncmp(a_filename, b_filename, len))
+            return ret;
+    }
+    return strcmp(a_filename, b_filename);
+}
+
 void
-playlist_remove_duplicates(void)
+playlist_remove_duplicates( PlaylistDupsType type )
 {
     GList *node, *next_node;
     GList *node_cmp, *next_node_cmp;
+    gint (*dups_compare_func)( const PlaylistEntry * , const PlaylistEntry * );
+
+    switch ( type )
+    {
+      case PLAYLIST_DUPS_TITLE:
+        dups_compare_func = playlist_dupscmp_title;
+        break;
+      case PLAYLIST_DUPS_PATH:
+        dups_compare_func = playlist_dupscmp_path;
+        break;
+      case PLAYLIST_DUPS_FILENAME:
+      default:
+        dups_compare_func = playlist_dupscmp_filename;
+        break;
+    }
 
     PLAYLIST_LOCK();
 
@@ -2232,8 +2328,8 @@ playlist_remove_duplicates(void)
                 continue;
             }
 
-            /* compare path+filenames, this can/should be optimized */
-            if ( !strcmp( entry->filename , entry_cmp->filename ) ) {
+            /* compare using the chosen dups_compare_func */
+            if ( !dups_compare_func( entry , entry_cmp ) ) {
 
                 if (entry_cmp == playlist_position) {
                     /* Don't remove the currently playing song */
