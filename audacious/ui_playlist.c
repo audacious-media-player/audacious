@@ -141,7 +141,7 @@ static GtkItemFactoryEntry playlistwin_popup_menu_entries[] = {
 
     {N_("/Queue Toggle"), "q",
      playlistwin_popup_menu_callback,
-     MISC_QUEUE, "<Item>", NULL},
+     MISC_QUEUE, "<ImageItem>", queuetoggle_pixbuf},
 };
 
 static GtkItemFactoryEntry pladd_menu_entries[] = {
@@ -167,11 +167,11 @@ static GtkItemFactoryEntry pldel_menu_entries[] = {
 
     {N_("/Remove Unavailable Files"), NULL,
      playlistwin_sub_menu_callback,
-     PLAYLISTWIN_REMOVE_DEAD_FILES, "<StockItem>", GTK_STOCK_ZOOM_FIT},
+     PLAYLISTWIN_REMOVE_DEAD_FILES, "<ImageItem>", removeunavail_pixbuf},
 
     {N_("/Remove Duplicates"), NULL,
      playlistwin_sub_menu_callback,
-     SUB_DUPLICATE, "<StockItem>", GTK_STOCK_ZOOM_100},
+     SUB_DUPLICATE, "<ImageItem>", removedups_pixbuf},
 
     ITEM_SEPARATOR,
 
@@ -213,43 +213,43 @@ static GtkItemFactoryEntry pllist_menu_entries[] = {
 static GtkItemFactoryEntry plsel_menu_entries[] = {
     {N_("/Invert Selection"), NULL,
      playlistwin_sub_menu_callback,
-     SEL_INV, "<Item>", NULL},
+     SEL_INV, "<ImageItem>", selectinvert_pixbuf},
     
     ITEM_SEPARATOR,
 
     {N_("/Select None"),"<Ctrl><Shift>A",
      playlistwin_sub_menu_callback,
-     SEL_ZERO, "<Item>", NULL},
+     SEL_ZERO, "<ImageItem>", selectnone_pixbuf},
 
     {N_("/Select All"), "<Ctrl>A",
      playlistwin_sub_menu_callback,
-     SEL_ALL, "<Item>", NULL},
+     SEL_ALL, "<ImageItem>", selectall_pixbuf},
 };
 
 static GtkItemFactoryEntry plsort_menu_entries[] = {
     {N_("/Randomize List"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_RANDOMIZE, "<Item>", NULL},
+     PLAYLISTWIN_SORT_RANDOMIZE, "<ImageItem>", randomizepl_pixbuf},
     {N_("/Reverse List"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_REVERSE, "<Item>", NULL},
+     PLAYLISTWIN_SORT_REVERSE, "<ImageItem>", invertpl_pixbuf},
     ITEM_SEPARATOR,
     {N_("/Sort List"), NULL, NULL, 0, "<Branch>", NULL},
     {N_("/Sort List/By Title"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_BYTITLE, "<Item>", NULL},
+     PLAYLISTWIN_SORT_BYTITLE, "<ImageItem>", sortbytitle_pixbuf},
     {N_("/Sort List/By Filename"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_BYFILENAME, "<Item>", NULL},
+     PLAYLISTWIN_SORT_BYFILENAME, "<ImageItem>", sortbyfilename_pixbuf},
     {N_("/Sort List/By Path + Filename"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_BYPATH, "<Item>", NULL},
+     PLAYLISTWIN_SORT_BYPATH, "<ImageItem>", sortbypathfile_pixbuf},
     {N_("/Sort List/By Date"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_BYDATE, "<Item>", NULL},
+     PLAYLISTWIN_SORT_BYDATE, "<ImageItem>", sortbydate_pixbuf},
     {N_("/Sort Selection"), NULL, NULL, 0, "<Branch>", NULL},
     {N_("/Sort Selection/By Title"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_SEL_BYTITLE, "<Item>", NULL},
+     PLAYLISTWIN_SORT_SEL_BYTITLE, "<ImageItem>", sortbytitle_pixbuf},
     {N_("/Sort Selection/By Filename"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_SEL_BYFILENAME, "<Item>", NULL},
+     PLAYLISTWIN_SORT_SEL_BYFILENAME, "<ImageItem>", sortbyfilename_pixbuf},
     {N_("/Sort Selection/By Path + Filename"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_SEL_BYPATH, "<Item>", NULL},
+     PLAYLISTWIN_SORT_SEL_BYPATH, "<ImageItem>", sortbypathfile_pixbuf},
     {N_("/Sort Selection/By Date"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_SEL_BYDATE, "<Item>", NULL}
+     PLAYLISTWIN_SORT_SEL_BYDATE, "<ImageItem>", sortbydate_pixbuf}
 };
 
 
