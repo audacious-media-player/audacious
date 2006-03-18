@@ -100,6 +100,7 @@ void playlist_sort_selected(PlaylistSortType type);
 
 void playlist_reverse(void);
 void playlist_random(void);
+void playlist_remove_duplicates(void);
 void playlist_remove_dead_files(void);
 
 void playlist_fileinfo_current(void);

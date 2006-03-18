@@ -63,7 +63,7 @@
 
 enum {
     ADD_URL, ADD_DIR, ADD_FILES,
-    SUB_MISC, SUB_ALL, SUB_CROP, SUB_SELECTED,
+    SUB_MISC, SUB_ALL, SUB_CROP, SUB_SELECTED, SUB_DUPLICATE,
     SEL_INV, SEL_ZERO, SEL_ALL,
     MISC_SORT, MISC_FILEINFO, MISC_MISCOPTS,
     PLIST_NEW, PLIST_SAVE_AS, PLIST_LOAD,
@@ -181,7 +181,11 @@ static GtkItemFactoryEntry pldel_menu_entries[] = {
 
     {N_("/Remove Selected"), "Delete",
      playlistwin_sub_menu_callback,
-     SUB_SELECTED, "<Item>", GTK_STOCK_DELETE}
+     SUB_SELECTED, "<Item>", GTK_STOCK_DELETE},
+
+    {N_("/Remove Duplicates"), NULL,
+     playlistwin_sub_menu_callback,
+     SUB_DUPLICATE, "<Item>", GTK_STOCK_DELETE}
 };
 
 static GtkItemFactoryEntry pllist_menu_entries[] = {
@@ -1878,6 +1882,9 @@ playlistwin_sub_menu_callback(gpointer data,
         break;
     case SUB_SELECTED:
         playlist_delete(FALSE);
+        break;
+    case SUB_DUPLICATE:
+        playlist_remove_duplicates();
         break;
     case PLAYLISTWIN_REMOVE_DEAD_FILES:
         playlist_remove_dead_files();

@@ -2206,6 +2206,63 @@ playlist_remove_dead_files(void)
     playlist_recalc_total_time();
 }
 
+void
+playlist_remove_duplicates(void)
+{
+    GList *node, *next_node;
+    GList *node_cmp, *next_node_cmp;
+
+    PLAYLIST_LOCK();
+
+    for (node = playlist; node; node = next_node) {
+        PlaylistEntry *entry = PLAYLIST_ENTRY(node->data);
+        next_node = g_list_next(node);
+
+        if (!entry || !entry->filename) {
+            g_message(G_STRLOC ": Playlist entry is invalid!");
+            continue;
+        }
+
+        for (node_cmp = next_node; node_cmp; node_cmp = next_node_cmp) {
+            PlaylistEntry *entry_cmp = PLAYLIST_ENTRY(node_cmp->data);
+            next_node_cmp = g_list_next(node_cmp);
+
+            if (!entry_cmp || !entry_cmp->filename) {
+                g_message(G_STRLOC ": Playlist entry is invalid!");
+                continue;
+            }
+
+            /* compare path+filenames, this can/should be optimized */
+            if ( !strcmp( entry->filename , entry_cmp->filename ) ) {
+
+                if (entry_cmp == playlist_position) {
+                    /* Don't remove the currently playing song */
+                    if (bmp_playback_get_playing())
+                        continue;
+
+                    if (next_node_cmp)
+                        playlist_position = PLAYLIST_ENTRY(next_node_cmp->data);
+                    else
+                        playlist_position = NULL;
+                }
+
+                /* check if this was the next item of the external
+                   loop; if true, replace it with the next of the next*/
+                if ( node_cmp == next_node )
+                    next_node = g_list_next(next_node);
+
+                playlist_entry_free(entry_cmp);
+                playlist = g_list_delete_link(playlist, node_cmp);
+            }
+        }
+    }
+
+    PLAYLIST_UNLOCK();
+
+    playlistwin_update_list();
+    playlist_recalc_total_time();
+}
+
 static gulong pl_total_time = 0, pl_selection_time = 0;
 static gboolean pl_total_more = FALSE, pl_selection_more = FALSE;
 
