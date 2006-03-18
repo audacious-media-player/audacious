@@ -99,7 +99,7 @@ __inline__ int iir(gpointer * d, gint length, gint nch)
     /* For each channel */
     for (channel = 0; channel < nch; channel++)
     {
-      pcm[channel] = data[index+channel];
+      pcm[channel] = data[index+channel] * 4;
       /* Preamp gain */
       pcm[channel] *= preamp[channel];
       
