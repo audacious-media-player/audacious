@@ -778,17 +778,7 @@ void metatag_delete(metatag_t *meta)
 	if(meta->wma != NULL)
 		freeWMA(meta->wma);
 	if(meta->id3v1 != NULL)
-	{
 		freeID3v1(meta->id3v1);
-
-		/* These only need to be freed if ID3v1 --nenolod */
-		if (meta->track != NULL)
-			free(meta->track);
-		if (meta->genre != NULL)
-			free(meta->genre);
-		if (meta->mb != NULL)
-			free(meta->mb);
-	}
 	if(meta->id3v2 != NULL)
 		freeID3v2(meta->id3v2);
 	if(meta->ape != NULL)
