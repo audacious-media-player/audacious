@@ -67,6 +67,9 @@ typedef enum {
     SKIN_COLOR_COUNT
 } SkinColorId;
 
+typedef struct _SkinProperties {
+	gboolean mainwin_othertext;
+} SkinProperties;
 
 #define SKIN_PIXMAP(x)  ((SkinPixmap *)(x))
 typedef struct _SkinPixmap {
@@ -93,8 +96,8 @@ typedef struct _Skin {
     GdkColor *colors[SKIN_COLOR_COUNT];
     guchar vis_color[24][3];
     GdkBitmap *masks[SKIN_MASK_COUNT];
+    SkinProperties properties;
 } Skin;
-
 
 extern Skin *bmp_active_skin;
 
@@ -132,6 +135,8 @@ void skin_draw_mainwin_titlebar(Skin * skin,
                                 GdkDrawable * drawable, GdkGC * gc,
                                 gboolean shaded, gboolean focus);
 
+
+void skin_parse_hints(Skin * skin, gchar *path_p);
 
 
 gboolean

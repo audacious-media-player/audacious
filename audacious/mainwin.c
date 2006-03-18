@@ -192,7 +192,8 @@ TButton *mainwin_shuffle, *mainwin_repeat, *mainwin_eq, *mainwin_pl;
 TextBox *mainwin_info;
 TextBox *mainwin_stime_min, *mainwin_stime_sec;
 
-static TextBox *mainwin_rate_text, *mainwin_freq_text;
+static TextBox *mainwin_rate_text, *mainwin_freq_text, 
+	*mainwin_othertext;
 
 PlayStatus *mainwin_playstatus;
 
@@ -440,6 +441,8 @@ static gint mainwin_idle_func(gpointer data);
 
 static void set_timer_mode_menu_cb(TimerMode mode);
 static void set_timer_mode(TimerMode mode);
+
+static void mainwin_refresh_hints(void);
 
 void mainwin_position_motion_cb(gint pos);
 void mainwin_position_release_cb(gint pos);
@@ -713,6 +716,9 @@ draw_main_window(gboolean force)
     if (!cfg.player_visible)
         return;
 
+    if (force)
+        mainwin_refresh_hints();
+
     widget_list_lock(mainwin_wlist);
 
     if (force) {
@@ -801,12 +807,31 @@ mainwin_set_song_title(const gchar * title)
     G_UNLOCK(mainwin_title);
 }
 
+static void
+mainwin_refresh_hints(void)
+{
+    if (bmp_active_skin->properties.mainwin_othertext == TRUE)
+    {
+	widget_hide(WIDGET(mainwin_rate_text));
+	widget_hide(WIDGET(mainwin_freq_text));
+	widget_hide(WIDGET(mainwin_monostereo));
+	widget_show(WIDGET(mainwin_othertext));
+    }
+    else
+    {
+	widget_show(WIDGET(mainwin_rate_text));
+	widget_show(WIDGET(mainwin_freq_text));
+	widget_show(WIDGET(mainwin_monostereo));
+	widget_hide(WIDGET(mainwin_othertext));
+    }
+}
+
 void
 mainwin_set_song_info(gint bitrate,
                       gint frequency,
                       gint n_channels)
 {
-    gchar text[10];
+    gchar text[512];
     gchar *title;
 
     playback_set_sample_params(bitrate, frequency, n_channels);
@@ -861,6 +886,27 @@ mainwin_set_song_info(gint bitrate,
         mainwin_force_redraw = TRUE;
     }
 
+    if (bmp_active_skin->properties.mainwin_othertext == TRUE)
+    {
+	g_snprintf(text, 512, "%d kbps, %0.1f khz, %s",
+		bitrate < 1000 ? bitrate : bitrate / 100,
+		(gfloat) frequency / 1000,
+		(n_channels > 1) ? _("stereo") : _("mono"));
+        textbox_set_text(mainwin_othertext, text);
+
+	widget_hide(WIDGET(mainwin_rate_text));
+	widget_hide(WIDGET(mainwin_freq_text));
+	widget_hide(WIDGET(mainwin_monostereo));
+	widget_show(WIDGET(mainwin_othertext));
+    }
+    else
+    {
+	widget_show(WIDGET(mainwin_rate_text));
+	widget_show(WIDGET(mainwin_freq_text));
+	widget_show(WIDGET(mainwin_monostereo));
+	widget_hide(WIDGET(mainwin_othertext));
+    }
+
     title = playlist_get_info_text();
     mainwin_set_song_title(title);
     g_free(title);
@@ -903,6 +949,8 @@ mainwin_clear_song_info(void)
 
     widget_hide(WIDGET(mainwin_position));
     widget_hide(WIDGET(mainwin_sposition));
+
+    widget_hide(WIDGET(mainwin_othertext));
 
     playlistwin_hide_timer();
     draw_main_window(TRUE);
@@ -3050,6 +3098,11 @@ mainwin_create_widgets(void)
                        153, 1, SKIN_TEXT);
     textbox_set_scroll(mainwin_info, cfg.autoscroll);
     textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
+
+    mainwin_othertext =
+	create_textbox(&mainwin_wlist, mainwin_bg, mainwin_gc, 112, 43, 
+			153, 1, SKIN_TEXT);
+
     mainwin_rate_text =
         create_textbox(&mainwin_wlist, mainwin_bg, mainwin_gc, 111, 43, 15,
                        0, SKIN_TEXT);

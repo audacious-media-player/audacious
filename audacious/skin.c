@@ -158,8 +158,13 @@ bmp_active_skin_load(const gchar * path)
 {
     g_return_val_if_fail(bmp_active_skin != NULL, FALSE);
 
+    memset(&bmp_active_skin->properties, 0, sizeof(SkinProperties));
+
     if (!skin_load(bmp_active_skin, path))
         return FALSE;
+
+    /* Parse the hints for this skin. */
+    skin_parse_hints(bmp_active_skin, NULL);
 
     skin_setup_masks(bmp_active_skin);
     draw_main_window(TRUE);
@@ -501,6 +506,33 @@ init_skins(const gchar * path)
     return TRUE;
 }
 
+/*
+ * Opens and parses a skin's hints file.
+ * Hints files are somewhat like "scripts" in Winamp3/5.
+ * We'll probably add scripts to it next.
+ */
+void
+skin_parse_hints(Skin * skin, gchar *path_p)
+{
+    gchar *filename, *tmp;
+
+    path_p = path_p ? path_p : skin->path;
+
+    filename = find_file_recursively(path_p, "skin.hints");
+
+    if (filename == NULL)
+        return;
+
+#if 0
+    skin->description = read_ini_string(filename, "skin", "skinDescription");
+#endif
+
+    tmp = read_ini_string(filename, "skin", "mainwinOthertext");
+
+    if (tmp != NULL)
+        skin->properties.mainwin_othertext = atoi(tmp);
+}
+
 static guint
 hex_chars_to_int(gchar hi, gchar lo)
 {
@@ -797,7 +829,6 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
 
     skin->path = g_strdup(path);
 
-    
     if (!file_is_archive(path)) {
         skin_load_pixmaps(skin, path);
         skin_load_cursor(skin, path);
