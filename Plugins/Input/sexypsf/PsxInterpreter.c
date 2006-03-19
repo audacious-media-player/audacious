@@ -718,6 +718,7 @@ static void intExecute() {
 	{
 	 if(!CounterSPURun()) 
 	 {
+	  puts("CounterSPURun fail");
 	  psxShutdown();
 	  return;
 	 }

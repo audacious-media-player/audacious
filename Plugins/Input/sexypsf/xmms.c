@@ -91,6 +91,8 @@ void sexypsf_update(unsigned char *Buffer, long count)
 {
 	int mask = ~((((16 / 8) * 2)) - 1);
 
+	g_print("sexypsf_update(%p, %d)", Buffer, count);
+
 	while(count>0)
 	{
 		int t=sexypsf_ip.output->buffer_free() & mask;
@@ -134,6 +136,8 @@ dofunky:
 
 	while(!(command&CMD_STOP)) 
 	{
+		g_print("playloop iterate\n");
+
 		if(command&CMD_SEEK)
 			{
 			int t=(command&~(CMD_SEEK|CMD_STOP))*1000;

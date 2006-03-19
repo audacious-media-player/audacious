@@ -46,6 +46,8 @@ void psxReset() {
 }
 
 void psxShutdown() {
+	puts("PsxShutdown()");
+
 	psxMemShutdown();
 	psxBiosShutdown();
 

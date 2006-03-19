@@ -452,6 +452,7 @@ PSFINFO *sexypsf_load(char *path)
 
 	if(!(ret=LoadPSF(path,0,0)))
 	{
+	 puts("PSFload fail");
 	 psxShutdown();
 	 return(0);
 	}
