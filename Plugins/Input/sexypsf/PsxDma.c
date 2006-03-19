@@ -25,13 +25,13 @@ void psxDma4(u32 madr, u32 bcr, u32 chcr) { // SPU
 		 bcr= (bcr>>16) * (bcr&0xffff) * 2;
 
 		 //printf("%08x, %08x\n",madr,bcr);
-		 SPUwriteDMAMem(madr, bcr);		
+		 SPU2writeDMA4Mem(madr, bcr);		
 		}
 		break;
 		case 0x01000200: //spu to cpu transfer
 		{
 		 //printf("%08x\n",madr);
-	  	 SPUreadDMAMem (madr, (bcr >> 16) * (bcr & 0xffff) * 2);
+	  	 SPU2readDMA4Mem (madr, (bcr >> 16) * (bcr & 0xffff) * 2);
 		}
 		break;
 	}

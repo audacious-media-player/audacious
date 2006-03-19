@@ -447,8 +447,8 @@ PSFINFO *sexypsf_load(char *path)
         psxInit();
         psxReset();
 
-        SPUinit();
-        SPUopen();
+        SPU2init();
+        SPU2open();
 
 	if(!(ret=LoadPSF(path,0,0)))
 	{

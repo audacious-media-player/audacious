@@ -21,3 +21,4 @@
 void SPUirq(void) {
 	psxHu32(0x1070)|=BFLIP32(0x200);
 }
+

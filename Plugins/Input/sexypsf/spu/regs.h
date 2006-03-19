@@ -19,16 +19,25 @@
 //*************************************************************************//
 // History of changes:
 //
+// 2004/04/04 - Pete
+// - changed plugin to emulate PS2 spu
+//
 // 2002/05/15 - Pete
 // - generic cleanup for the Peops release
 //
 //*************************************************************************//
 
 
-static void SoundOn(int start,int end,u16 val);
-static void SoundOff(int start,int end,u16 val);
-static void FModOn(int start,int end,u16 val);
-static void NoiseOn(int start,int end,u16 val);
-static void SetVolumeLR(int right, u8 ch,s16 vol);
-static void SetPitch(int ch,u16 val);
-void SPUwriteRegister(u32 reg, u16 val);
+void SoundOn(int start,int end,unsigned short val);
+void SoundOff(int start,int end,unsigned short val);
+void VolumeOn(int start,int end,unsigned short val,int iRight);
+void FModOn(int start,int end,unsigned short val);
+void NoiseOn(int start,int end,unsigned short val);
+void SetVolumeL(unsigned char ch,short vol);
+void SetVolumeR(unsigned char ch,short vol);
+void SetPitch(int ch,unsigned short val);
+void ReverbOn(int start,int end,unsigned short val,int iRight);
+void SetReverbAddr(int core);
+
+EXPORT_GCC void CALLBACK SPU2write(unsigned long reg, unsigned short val);
+

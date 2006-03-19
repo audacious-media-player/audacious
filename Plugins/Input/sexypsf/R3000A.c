@@ -50,7 +50,7 @@ void psxShutdown() {
 	psxBiosShutdown();
 
 	psxCpu->Shutdown();
-	SPUclose();
+	SPU2close();
 }
 
 void psxException(u32 code, u32 bd) {

@@ -1,5 +1,5 @@
 /***************************************************************************
-                            spu.h  -  description
+                          reverb.h  -  description
                              -------------------
     begin                : Wed May 15 2002
     copyright            : (C) 2002 by Pete Bernert
@@ -27,8 +27,7 @@
 //
 //*************************************************************************//
 
-#include "stdafx.h"
 
-void SetupTimer(void);
-void RemoveTimer(void);
-EXPORT_GCC void CALLBACK SPU2playADPCMchannel(xa_decode_t *xap);
+INLINE void StartREVERB(int ch);
+INLINE void StoreREVERB(int ch,int ns);
+

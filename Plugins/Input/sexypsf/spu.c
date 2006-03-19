@@ -171,6 +171,18 @@ static INLINE void StartSound(int ch)
  s_chan[ch].spos=0x40000L;s_chan[ch].SB[28]=0;  // -> start with more decoding
 }
 
+static unsigned long long SexyTime64(void)
+{
+ struct timeval tv;
+ unsigned long long ret;
+
+ gettimeofday(&tv,0);
+ ret=tv.tv_sec;
+ ret*=1000000;
+ ret+=tv.tv_usec;
+ return(ret);
+}
+
 ////////////////////////////////////////////////////////////////////////
 // MAIN SPU FUNCTION
 // here is the main job handler... thread, timer or direct func call

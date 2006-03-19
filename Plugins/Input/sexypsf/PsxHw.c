@@ -78,7 +78,7 @@ u16 psxHwRead16(u32 add) {
 	
 		default:
 			if (add>=0x1f801c00 && add<0x1f801e00) {
-            		  hard = SPUreadRegister(add);
+            		  hard = SPU2read(add);
 			} else {
 				hard = BFLIP16(psxHu16(add)); 
 			}
@@ -165,7 +165,7 @@ void psxHwWrite16(u32 add, u16 value) {
 
 		default:
 			if (add>=0x1f801c00 && add<0x1f801e00) {
-            			SPUwriteRegister(add, value);
+            			SPU2write(add, value);
 				return;
 			}
 

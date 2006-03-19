@@ -103,7 +103,7 @@ int CounterSPURun(void)
 
  if(cycles>=16)
  {
-  if(!SPUasync(cycles)) return(0);
+  if(!SPU2async(cycles)) return(0);
   last=psxRegs.cycle;
  }
  return(1);

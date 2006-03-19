@@ -1,5 +1,5 @@
 /***************************************************************************
-                            spu.h  -  description
+                         dsoundoss.h  -  description
                              -------------------
     begin                : Wed May 15 2002
     copyright            : (C) 2002 by Pete Bernert
@@ -19,16 +19,18 @@
 //*************************************************************************//
 // History of changes:
 //
-// 2004/04/04 - Pete
-// - changed plugin to emulate PS2 spu
-//
 // 2002/05/15 - Pete
 // - generic cleanup for the Peops release
 //
 //*************************************************************************//
 
-#include "stdafx.h"
 
-void SetupTimer(void);
-void RemoveTimer(void);
-EXPORT_GCC void CALLBACK SPU2playADPCMchannel(xa_decode_t *xap);
+void SetupSound(void);
+void RemoveSound(void);
+unsigned long SoundGetBytesBuffered(void);
+void SoundFeedStreamData(unsigned char* pSound,long lBytes);
+
+#ifndef _WINDOWS
+unsigned long timeGetTime();
+#endif
+

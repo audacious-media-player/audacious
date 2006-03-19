@@ -24,8 +24,6 @@
 //
 //*************************************************************************//
 
-
-u16 CALLBACK SPUreadDMA(void);
-void CALLBACK SPUreadDMAMem(u16 * pusPSXMem,int iSize);
-void CALLBACK SPUwriteDMA(u16 val);
-void CALLBACK SPUwriteDMAMem(u16 * pusPSXMem,int iSize);
+void InterruptDMA4(void);
+void InterruptDMA7(void); 
+ 

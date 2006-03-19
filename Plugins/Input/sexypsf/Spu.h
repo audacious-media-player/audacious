@@ -31,8 +31,8 @@
 
 
 void SPUirq(void);
-u16 SPUreadRegister(u32 reg);
-void SPUwriteRegister(u32 reg, u16 val);
+unsigned short SPUreadRegister(unsigned long reg);
+void SPUwriteRegister(unsigned long reg, unsigned short val);
 int SPUasync(u32 cycle);
 void SPUwriteDMAMem(u32 usPSXMem,int iSize);
 void SPUreadDMAMem(u32 usPSXMem,int iSize);
