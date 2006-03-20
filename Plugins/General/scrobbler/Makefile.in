@@ -7,7 +7,7 @@ OBJECTIVE_LIBS = libscrobbler.so
 
 LIBDIR = $(plugindir)/$(GENERAL_PLUGIN_DIR)
 
-LIBADD += $(GTK_LIBS) $(CURL_LIBS) $(MUSICBRAINZ_LIBS) -laudacious
+LIBADD += $(GTK_LIBS) $(CURL_LIBS) $(MUSICBRAINZ_LIBS)
 
 SOURCES = 			\
 	fmt.c			\
