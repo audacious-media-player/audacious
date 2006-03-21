@@ -23,7 +23,7 @@
 
 InputPlugin *get_iplugin_info(void)
 {
-  amidiplug_ip.description = g_strdup_printf(_("AMIDI-Plug %s (MIDI Player)"), AMIDIPLUG_VERSION);
+  amidiplug_ip.description = g_strdup_printf(N_("AMIDI-Plug %s (MIDI Player)"), AMIDIPLUG_VERSION);
   return &amidiplug_ip;
 }
 

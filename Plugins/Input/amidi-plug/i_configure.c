@@ -52,7 +52,7 @@ void i_configure_gui( GSList * wports , GSList * scards )
 
   amidiplug_gui_prefs.config_win = gtk_window_new( GTK_WINDOW_TOPLEVEL );
   gtk_window_set_type_hint( GTK_WINDOW(amidiplug_gui_prefs.config_win), GDK_WINDOW_TYPE_HINT_DIALOG );
-  gtk_window_set_title( GTK_WINDOW(amidiplug_gui_prefs.config_win), "AMIDI-Plug - configuration" );
+  gtk_window_set_title( GTK_WINDOW(amidiplug_gui_prefs.config_win), _("AMIDI-Plug - configuration") );
   gtk_container_set_border_width( GTK_CONTAINER(amidiplug_gui_prefs.config_win), 10 );
   g_signal_connect( G_OBJECT(amidiplug_gui_prefs.config_win) ,
                     "destroy" , G_CALLBACK(i_configure_ev_destroy) , NULL );
@@ -112,11 +112,11 @@ void i_configure_gui( GSList * wports , GSList * scards )
   port_lv_text_rndr = gtk_cell_renderer_text_new();
   port_lv_toggle_col = gtk_tree_view_column_new_with_attributes( "", port_lv_toggle_rndr,
                                                                  "active", LISTPORT_TOGGLE_COLUMN, NULL );
-  port_lv_portnum_col = gtk_tree_view_column_new_with_attributes( "Port", port_lv_text_rndr,
+  port_lv_portnum_col = gtk_tree_view_column_new_with_attributes( _("Port"), port_lv_text_rndr,
                                                                   "text", LISTPORT_PORTNUM_COLUMN, NULL );
-  port_lv_clientname_col = gtk_tree_view_column_new_with_attributes( "Client name", port_lv_text_rndr,
+  port_lv_clientname_col = gtk_tree_view_column_new_with_attributes( _("Client name"), port_lv_text_rndr,
                                                                      "text", LISTPORT_CLIENTNAME_COLUMN, NULL );
-  port_lv_portname_col = gtk_tree_view_column_new_with_attributes( "Port name", port_lv_text_rndr,
+  port_lv_portname_col = gtk_tree_view_column_new_with_attributes( _("Port name"), port_lv_text_rndr,
                                                                    "text", LISTPORT_PORTNAME_COLUMN, NULL );
   gtk_tree_view_append_column( GTK_TREE_VIEW(port_lv), port_lv_toggle_col );
   gtk_tree_view_append_column( GTK_TREE_VIEW(port_lv), port_lv_portnum_col );
@@ -129,7 +129,7 @@ void i_configure_gui( GSList * wports , GSList * scards )
   port_lv_sw = gtk_scrolled_window_new( NULL , NULL );
   gtk_scrolled_window_set_policy( GTK_SCROLLED_WINDOW(port_lv_sw),
                                   GTK_POLICY_NEVER, GTK_POLICY_NEVER );
-  port_frame = gtk_frame_new( "ALSA output ports" );
+  port_frame = gtk_frame_new( _("ALSA output ports") );
 
   gtk_container_add( GTK_CONTAINER(port_lv_sw) , port_lv );
   gtk_container_set_border_width( GTK_CONTAINER(port_lv_sw) , 5 );
@@ -184,7 +184,7 @@ void i_configure_gui( GSList * wports , GSList * scards )
   gtk_container_set_border_width( GTK_CONTAINER(mixer_vbox) , 5 );
   gtk_box_pack_start( GTK_BOX(mixer_vbox) , mixer_card_cmb_evbox , TRUE , TRUE , 0 );
 
-  mixer_frame = gtk_frame_new( "Mixer settings" );
+  mixer_frame = gtk_frame_new( _("Mixer settings") );
   gtk_container_add( GTK_CONTAINER(mixer_frame) , mixer_vbox );
   gtk_box_pack_start( GTK_BOX(configwin_vbox) , mixer_frame , TRUE , TRUE , 2 );
 
@@ -193,13 +193,13 @@ void i_configure_gui( GSList * wports , GSList * scards )
   advanced_vbox = gtk_vbox_new( FALSE , 0 );
   gtk_container_set_border_width( GTK_CONTAINER(advanced_vbox) , 5 );
   
-  advanced_precalc_checkbt = gtk_check_button_new_with_label( "pre-calculate length of MIDI files in playlist" );
+  advanced_precalc_checkbt = gtk_check_button_new_with_label( _("pre-calculate length of MIDI files in playlist") );
   amidiplug_gui_prefs.precalc_checkbt = advanced_precalc_checkbt;
   if ( amidiplug_cfg.length_precalc_enable )
     gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(advanced_precalc_checkbt) , TRUE );
   gtk_box_pack_start( GTK_BOX(advanced_vbox) , advanced_precalc_checkbt , TRUE , TRUE , 0 );
 
-  advanced_frame = gtk_frame_new( "Advanced settings" );
+  advanced_frame = gtk_frame_new( _("Advanced settings") );
   gtk_container_add( GTK_CONTAINER(advanced_frame) , advanced_vbox );
   gtk_box_pack_start( GTK_BOX(configwin_vbox) , advanced_frame , TRUE , TRUE , 2 );
 
@@ -220,18 +220,27 @@ void i_configure_gui( GSList * wports , GSList * scards )
   /* tooltips */
   amidiplug_gui_prefs.config_tips = gtk_tooltips_new();
   gtk_tooltips_set_tip( GTK_TOOLTIPS(amidiplug_gui_prefs.config_tips) , port_lv ,
-                        "* Select ALSA output ports *\n"
+                        _("* Select ALSA output ports *\n"
                         "MIDI events will be sent to the ports selected here. At least one "
                         "port must be selected in order to play MIDI with AMIDI-Plug. Unless "
                         "you know what you're doing, you'll probably want to use the "
-                        "wavetable synthesizer ports." , "" );
+                        "wavetable synthesizer ports.") , "" );
   gtk_tooltips_set_tip( GTK_TOOLTIPS(amidiplug_gui_prefs.config_tips) , mixer_card_cmb_evbox ,
-                        "* Select ALSA mixer control *\n"
+                        _("* Select ALSA mixer control *\n"
                         "AMIDI-Plug outputs directly through ALSA, it doesn't use effect "
                         "and ouput plugins from the player. While playing with AMIDI-Plug, "
                         "the player volume will manipulate the control you select here. "
                         "Unless you know what you're doing, you'll probably want to select "
-                        "the Synth control here." , "" );
+                        "the Synth control here.") , "" );
+  gtk_tooltips_set_tip( GTK_TOOLTIPS(amidiplug_gui_prefs.config_tips) , advanced_precalc_checkbt ,
+                        _("* Pre-calculate MIDI length *\n"
+                        "If this option is enabled, AMIDI-Plug will calculate the MIDI file "
+                        "length as soon as the player requests it, instead of doing that only "
+                        "when the the MIDI file is being played. In example, MIDI length "
+                        "will be calculated straight after adding MIDI files in a playlist. "
+                        "Disable this option if you want faster playlist loading (when a lot "
+                        "of MIDI files are added), enable it to display more information "
+                        "in the playlist straight after loading.") , "" );
 
   gtk_widget_show_all( amidiplug_gui_prefs.config_win );
 }
