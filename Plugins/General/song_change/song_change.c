@@ -494,25 +494,34 @@ static int timeout_func(gpointer data)
 	int pos;
 	gboolean playing;
 	static char *previous_file = NULL;
+	static char *previous_track = NULL;
 	static gboolean cmd_after_already_run = FALSE;
 	char *current_file;
+	char *current_track;
 
 	GDK_THREADS_ENTER();
 
 	playing = xmms_remote_is_playing(sc_gp.xmms_session);
 	pos = xmms_remote_get_playlist_pos(sc_gp.xmms_session);
 	current_file = xmms_remote_get_playlist_file(sc_gp.xmms_session, pos);
+	current_track = xmms_remote_get_playlist_title(sc_gp.xmms_session, pos);
 	
 	if ((pos != previous_song ||
 	     (!previous_file && current_file) ||
 	     (previous_file && !current_file) ||
 	     (previous_file && current_file &&
-	      strcmp(previous_file, current_file))) &&
+	      strcmp(previous_file, current_file)) ||
+	     (!previous_track && current_track) ||
+	     (previous_track && !current_track) ||
+	     (previous_track && current_track &&
+	      strcmp(previous_track, current_track))) &&
 	    xmms_remote_get_output_time(sc_gp.xmms_session) > 0)
 	{
 		do_command(cmd_line, current_file, pos);
 		g_free(previous_file);
+		g_free(previous_track);
 		previous_file = g_strdup(current_file);
+		previous_track = g_strdup(current_track);
 		previous_song = pos;
 		cmd_after_already_run = FALSE;
 	}
@@ -538,7 +547,9 @@ static int timeout_func(gpointer data)
 			do_command(cmd_line_end, current_file, pos);
 		possible_pl_end = FALSE;
 		g_free(previous_file);
+		g_free(previous_track);
 		previous_file = NULL;
+		previous_track = NULL;
 	}
 
 	g_free(current_file);
