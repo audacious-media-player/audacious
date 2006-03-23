@@ -208,7 +208,7 @@ static int	mp4_IsOurFile(char *filename)
 	      return 0;
       }
       vfs_fread(magic, 1, 4, file);
-      if (!strncasecmp(magic, "ftyp", 6)) {
+      if (!strncasecmp(magic, "ftyp", 4)) {
            vfs_fclose(file);
            return 1;
       }
