@@ -196,7 +196,7 @@ static int	mp4_IsOurFile(char *filename)
            vfs_fclose(file);
            return 1;
       }
-      if (!strncmp(magic, "ID3", 3)) {		// ID3 tag bolted to the front, obfuscated magic bytes
+      if (!memcmp(magic, "ID3", 3)) {		// ID3 tag bolted to the front, obfuscated magic bytes
            vfs_fclose(file);
            if (extension &&(
 	      !strcasecmp(extension, ".mp4") ||	// official extension
@@ -208,7 +208,7 @@ static int	mp4_IsOurFile(char *filename)
 	      return 0;
       }
       vfs_fread(magic, 1, 4, file);
-      if (!strncasecmp(magic, "ftyp", 4)) {
+      if (!memcmp(magic, "ftyp", 4)) {
            vfs_fclose(file);
            return 1;
       }
