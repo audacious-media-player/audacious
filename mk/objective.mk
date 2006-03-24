@@ -8,6 +8,7 @@ OBJECTIVE_BINS = none
 OBJECTIVE_DATA = none
 SUBDIRS = none
 HEADERS = none
+VERBOSITY = 0
 
 LIBDIR = $(libdir)
 BINDIR = $(bindir)
@@ -27,7 +28,9 @@ install:
 	done;
 	@if test "$(SUBDIRS)" != "none"; then \
 		for i in $(SUBDIRS); do \
-			echo "[installing subobjective: $$i]"; \
+			if test $(VERBOSITY) -gt 0; then \
+				echo "[installing subobjective: $$i]"; \
+			fi; \
 			(cd $$i; $(MAKE) install || exit; cd ..); \
 		done; \
 	fi
@@ -67,26 +70,33 @@ install:
 		done; \
 	fi
 	$(MAKE) install-posthook
-	@echo "[all objectives installed]"
+	@if test $(VERBOSITY) -gt 0; then \
+		echo "[all objectives installed]"; \
+	fi
 
 clean:
 	$(MAKE) clean-prehook
 	@if test "$(SUBDIRS)" != "none"; then \
 		for i in $(SUBDIRS); do \
-			echo "[cleaning subobjective: $$i]"; \
+			if test $(VERBOSITY) -gt 0; then \
+				echo "[cleaning subobjective: $$i]"; \
+			fi; \
 			(cd $$i; $(MAKE) clean || exit; cd ..); \
 		done; \
 	fi
 	$(MAKE) clean-posthook
 	$(RM) *.o *.lo *.so *.a *.sl
-	@echo "[all objectives cleaned]"
+	@if test $(VERBOSITY) -gt 0; then \
+		echo "[all objectives cleaned]"; \
+	fi
 
 distclean: clean
 	@if test "$(SUBDIRS)" != "none"; then \
 		for i in $(SUBDIRS); do \
-			echo "[distcleaning subobjective: $$i]"; \
+			if test $(VERBOSITY) -gt 0; then \
+				echo "[distcleaning subobjective: $$i]"; \
+			fi; \
 			(cd $$i; $(MAKE) distclean || exit; cd ..); \
-			echo "[distcleaning subobjective: $$i]"; \
 		done; \
 	fi
 	@if test -f Makefile.in; then \
@@ -100,34 +110,52 @@ build:
 	$(MAKE) build-prehook
 	@if test "$(SUBDIRS)" != "none"; then \
 		for i in $(SUBDIRS); do \
-			echo "[building subobjective: $$i]"; \
+			if test $(VERBOSITY) -gt 0; then \
+				echo "[building subobjective: $$i]"; \
+			fi; \
 			cd $$i; $(MAKE) || exit; cd ..; \
-			echo "[finished subobjective: $$i]"; \
+			if test $(VERBOSITY) -gt 0; then \
+				echo "[finished subobjective: $$i]"; \
+			fi; \
 		done; \
 	fi
 	@if test "$(OBJECTIVE_LIBS)" != "none"; then \
 		for i in $(OBJECTIVE_LIBS); do \
-			echo "[building library objective: $$i]"; \
+			if test $(VERBOSITY) -gt 0; then \
+				echo "[building library objective: $$i]"; \
+			fi; \
 			$(MAKE) $$i || exit; \
-			echo "[finished library objective: $$i]"; \
+			if test $(VERBOSITY) -gt 0; then \
+				echo "[finished library objective: $$i]"; \
+			fi; \
 		done; \
 	fi
 	@if test "$(OBJECTIVE_LIBS_NOINST)" != "none"; then \
 		for i in $(OBJECTIVE_LIBS_NOINST); do \
-			echo "[building library dependency: $$i]"; \
+			if test $(VERBOSITY) -gt 0; then \
+				echo "[building library dependency: $$i]"; \
+			fi; \
 			$(MAKE) $$i || exit; \
-			echo "[finished library dependency: $$i]"; \
+			if test $(VERBOSITY) -gt 0; then \
+				echo "[finished library dependency: $$i]"; \
+			fi; \
 		done; \
 	fi
 	@if test "$(OBJECTIVE_BINS)" != "none"; then \
 		for i in $(OBJECTIVE_BINS); do \
-			echo "[building binary objective: $$i]"; \
+			if test $(VERBOSITY) -gt 0; then \
+				echo "[building binary objective: $$i]"; \
+			fi; \
 			$(MAKE) $$i || exit; \
-			echo "[finished binary objective: $$i]"; \
+			if test $(VERBOSITY) -gt 0; then \
+				echo "[finished binary objective: $$i]"; \
+			fi; \
 		done; \
 	fi
 	$(MAKE) build-posthook
-	@echo "[all objectives built]"
+	@if test $(VERBOSITY) -gt 0; then \
+		echo "[all objectives built]"; \
+	fi
 
 .c.o:
 	printf "%10s     %-20s\n" CC $<
