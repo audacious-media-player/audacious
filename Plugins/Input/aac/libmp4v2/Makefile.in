@@ -69,6 +69,3 @@ SOURCES = \
 	rtphint.cpp
 
 OBJECTS = ${SOURCES:.cpp=.o}
-
-libmp4v2.a: $(OBJECTS)
-	$(AR) cq $@ $(OBJECTS)
