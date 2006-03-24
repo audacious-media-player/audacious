@@ -85,7 +85,6 @@ beepinclude_HEADERS = plugin.h output.h input.h
 desktop_DATA = audacious.desktop
 desktopdir = $(datadir)/applications
 
-
 build_stamp.c:
 	if [ -d .svn ] || [ ! -f build_stamp.c ]; then		\
 		( \
@@ -102,3 +101,4 @@ build_stamp.c:
 
 audacious: $(OBJECTS)
 	$(CC) $(LDFLAGS) $(LDADD) -o $@ $(OBJECTS)
+	@printf "%10s     %-20s\n" LINK $@
