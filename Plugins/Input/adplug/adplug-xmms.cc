@@ -58,7 +58,7 @@ extern "C" {
 
 extern "C" InputPlugin	adplug_ip;
 static gboolean		audio_error = FALSE;
-GtkWidget		*about_win  = NULL;
+GtkWidget		   *about_win  = NULL;
 
 // Configuration (and defaults)
 static struct {
@@ -381,7 +381,6 @@ static void adplug_config(void)
   gtk_widget_show_all(GTK_WIDGET(config_dlg));
 }
 
-#if 0
 static void add_instlist(GtkCList *instlist, const char *t1, const char *t2)
 {
   gchar *rowstr[2];
@@ -390,7 +389,6 @@ static void add_instlist(GtkCList *instlist, const char *t1, const char *t2)
   gtk_clist_append(instlist, rowstr);
   g_free(rowstr[0]); g_free(rowstr[1]);
 }
-#endif
 
 static CPlayer *factory(const std::string &filename, Copl *newopl)
 {
@@ -403,7 +401,6 @@ static CPlayer *factory(const std::string &filename, Copl *newopl)
 static void adplug_stop(void);
 static void adplug_play(char *filename);
 
-#if 0
 static void subsong_slider(GtkAdjustment *adj)
 {
   adplug_stop();
@@ -434,14 +431,18 @@ static void adplug_info_box(char *filename)
   unsigned int i;
   GtkDialog *infobox = GTK_DIALOG(gtk_dialog_new());
   GtkButton *okay_button = GTK_BUTTON(gtk_button_new_with_label("Ok"));
-  GtkPacker *packer = GTK_PACKER(gtk_packer_new());
+
+  GtkVBox *box = GTK_VBOX(gtk_vbox_new(TRUE,2));
   GtkHBox *hbox = GTK_HBOX(gtk_hbox_new(TRUE, 2));
 
   // Build file info box
   gtk_window_set_title(GTK_WINDOW(infobox), "AdPlug :: File Info");
   gtk_window_set_policy(GTK_WINDOW(infobox), FALSE, FALSE, TRUE); // Window is auto sized
-  gtk_container_add(GTK_CONTAINER(infobox->vbox), GTK_WIDGET(packer));
-  gtk_packer_set_default_border_width(packer, 2);
+
+  gtk_container_add(GTK_CONTAINER(infobox->vbox), GTK_WIDGET(box));
+// Former packer layout, for future reproduction
+//  gtk_packer_set_default_border_width(packer, 2);
+
   gtk_box_set_homogeneous(GTK_BOX(hbox), FALSE);
   gtk_signal_connect_object(GTK_OBJECT(okay_button), "clicked",
 			    GTK_SIGNAL_FUNC(gtk_widget_destroy),
@@ -451,8 +452,10 @@ static void adplug_info_box(char *filename)
   gtk_container_add(GTK_CONTAINER(infobox->action_area), GTK_WIDGET(okay_button));
 
   // Add filename section
-  gtk_packer_add_defaults(packer, make_framed(print_left(filename), "Filename"),
-			  GTK_SIDE_TOP, GTK_ANCHOR_CENTER, GTK_FILL_X);
+// Former packer layout, for future reproduction
+//  gtk_packer_add_defaults(packer, make_framed(print_left(filename), "Filename"),
+//			  GTK_SIDE_TOP, GTK_ANCHOR_CENTER, GTK_FILL_X);
+  gtk_box_pack_end(GTK_BOX(box), make_framed(print_left(filename), "Filename"), TRUE, TRUE, 2);
 
   // Add "Song info" section
   infotext << "Title: " << p->gettitle() << std::endl <<
@@ -477,8 +480,11 @@ static void adplug_info_box(char *filename)
     gtk_container_add(GTK_CONTAINER(hbox),
 		      make_framed(GTK_WIDGET(plr.infobox), "Playback"));
   }
-  gtk_packer_add_defaults(packer, GTK_WIDGET(hbox), GTK_SIDE_TOP,
-			  GTK_ANCHOR_CENTER, GTK_FILL_X);
+
+// Former packer layout, for future reproduction
+//  gtk_packer_add_defaults(packer, GTK_WIDGET(hbox), GTK_SIDE_TOP,
+//			  GTK_ANCHOR_CENTER, GTK_FILL_X);
+    gtk_box_pack_end(GTK_BOX(box), GTK_WIDGET(hbox), TRUE, TRUE, 2);
 
   // Add instrument names section
   if(p->getinstruments()) {
@@ -501,27 +507,29 @@ static void adplug_info_box(char *filename)
     gtk_scrolled_window_set_policy(instwnd, GTK_POLICY_AUTOMATIC,
 				   GTK_POLICY_AUTOMATIC);
     gtk_container_add(GTK_CONTAINER(instwnd), GTK_WIDGET(instnames));
-    gtk_packer_add(packer, GTK_WIDGET(instwnd), GTK_SIDE_TOP,
-		   GTK_ANCHOR_CENTER, GTK_FILL_X, 0, 0, 0, 0, 50);
+// Former packer layout, for future reproduction
+//    gtk_packer_add(packer, GTK_WIDGET(instwnd), GTK_SIDE_TOP,
+//		   GTK_ANCHOR_CENTER, GTK_FILL_X, 0, 0, 0, 0, 50);
+    gtk_box_pack_end(GTK_BOX(box), GTK_WIDGET(instwnd), TRUE, TRUE, 2);
   }
 
   // Add "Song message" section
   if(!p->getdesc().empty()) {
     GtkScrolledWindow *msgwnd = GTK_SCROLLED_WINDOW(gtk_scrolled_window_new(NULL, NULL));
-    GtkText *msg = GTK_TEXT(gtk_text_new(NULL, NULL));
-    gint pos = 0;
+    GtkTextView *msg = GTK_TEXT_VIEW(gtk_text_view_new());
 
     gtk_scrolled_window_set_policy(msgwnd, GTK_POLICY_AUTOMATIC,
 				   GTK_POLICY_AUTOMATIC);
-    gtk_text_set_editable(msg, FALSE);
-    gtk_text_set_word_wrap(msg, TRUE);
-    //    gtk_text_set_line_wrap(msg, TRUE);
-    gtk_editable_insert_text(GTK_EDITABLE(msg), p->getdesc().c_str(),
-			     p->getdesc().length(), &pos);
+    gtk_text_view_set_editable(msg, FALSE);
+    gtk_text_view_set_wrap_mode(msg, GTK_WRAP_WORD_CHAR);
 
+	gtk_text_buffer_set_text(gtk_text_view_get_buffer(msg),p->getdesc().c_str(),p->getdesc().length());
     gtk_container_add(GTK_CONTAINER(msgwnd), GTK_WIDGET(msg));
-    gtk_packer_add(packer, make_framed(GTK_WIDGET(msgwnd), "Song message"),
-		   GTK_SIDE_TOP, GTK_ANCHOR_CENTER, GTK_FILL_X, 2, 0, 0, 200, 50);
+	
+// Former packer layout, for future reproduction
+//    gtk_packer_add(packer, make_framed(GTK_WIDGET(msgwnd), "Song message"),
+//		   GTK_SIDE_TOP, GTK_ANCHOR_CENTER, GTK_FILL_X, 2, 0, 0, 200, 50);
+    gtk_box_pack_end(GTK_BOX(box), make_framed(GTK_WIDGET(msgwnd), "Song message"), TRUE, TRUE, 2);
   }
 
   // Add subsong slider section
@@ -535,8 +543,10 @@ static void adplug_info_box(char *filename)
 		       GTK_SIGNAL_FUNC(subsong_slider), NULL);
     gtk_range_set_update_policy(GTK_RANGE(slider), GTK_UPDATE_DISCONTINUOUS);
     gtk_scale_set_digits(GTK_SCALE(slider), 0);
-    gtk_packer_add_defaults(packer, make_framed(GTK_WIDGET(slider), "Subsong selection"),
-			    GTK_SIDE_TOP, GTK_ANCHOR_CENTER, GTK_FILL_X);
+// Former packer layout, for future reproduction
+//   gtk_packer_add_defaults(packer, make_framed(GTK_WIDGET(slider), "Subsong selection"),
+//			    GTK_SIDE_TOP, GTK_ANCHOR_CENTER, GTK_FILL_X);
+    gtk_box_pack_end(GTK_BOX(box), make_framed(GTK_WIDGET(slider), "Subsong selection"), TRUE, TRUE, 2);
   }
 
   // Show dialog box
@@ -564,7 +574,6 @@ static void update_infobox(void)
   gtk_label_set_text(plr.infobox, infotext.str().c_str());
   GDK_THREADS_LEAVE();
 }
-#endif
 
 // Define sampsize macro (only usable inside play_loop()!)
 #define sampsize ((bit16 ? 2 : 1) * (stereo ? 2 : 1))
@@ -661,10 +670,8 @@ static void *play_loop(void *filename)
 			  bit16 ? FORMAT_16 : FORMAT_8,
 			  stereo ? 2 : 1, SNDBUFSIZE * sampsize, sndbuf, NULL);
 
-#if 0
     // update infobox, if necessary
     if(plr.infobox && plr.playing) update_infobox();
-#endif
   }
 
   // playback finished - deinit
@@ -750,12 +757,10 @@ static void adplug_play(char *filename)
   dbg_printf("adplug_play(\"%s\"): ", filename);
   audio_error = FALSE;
 
-#if 0
   // On new song, re-open "Song info" dialog, if open
   dbg_printf("dialog, ");
   if(plr.infobox && strcmp(filename, plr.filename))
     gtk_widget_destroy(GTK_WIDGET(plr.infodlg));
-#endif
 
   // open output plugin
   dbg_printf("open, ");
@@ -909,7 +914,7 @@ InputPlugin adplug_ip =
     NULL,                       // set_info (filled by XMMS)
     NULL,                       // set_info_text (filled by XMMS)
     adplug_song_info,
-    NULL,                       // adplug_info_box was here (but it used deprecated GTK+ functions)
+    adplug_info_box,            // adplug_info_box was here (but it used deprecated GTK+ functions)
     NULL                        // output plugin (filled by XMMS)
   };
 
