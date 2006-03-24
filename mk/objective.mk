@@ -101,7 +101,7 @@ build:
 	@if test "$(SUBDIRS)" != "none"; then \
 		for i in $(SUBDIRS); do \
 			echo "[building subobjective: $$i]"; \
-			(cd $$i; $(MAKE) || exit; cd ..); \
+			cd $$i; $(MAKE) || exit; \
 			echo "[finished subobjective: $$i]"; \
 		done; \
 	fi
