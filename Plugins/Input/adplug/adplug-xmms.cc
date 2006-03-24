@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <gtk/gtk.h>
+#include <glib/gi18n.h>
 #include "adplug.h"
 #include "emuopl.h"
 #include "silentopl.h"
@@ -57,6 +58,7 @@ extern "C" {
 
 extern "C" InputPlugin	adplug_ip;
 static gboolean		audio_error = FALSE;
+GtkWidget		*about_win  = NULL;
 
 // Configuration (and defaults)
 static struct {
@@ -139,16 +141,24 @@ static void MessageBox(const char *title, const char *text, const char *button)
 
 static void adplug_about(void)
 {
-  std::ostringstream text;
-
-  text << ADPLUG_NAME "\n"
-    "Copyright (C) 2002, 2003 Simon Peter <dn.tlp@gmx.net>\n\n"
-    "This plugin is released under the terms and conditions of the GNU LGPL.\n"
-    "See http://www.gnu.org/licenses/lgpl.html for details."
-    "\n\nThis plugin uses the AdPlug library, which is copyright (C) Simon Peter, et al.\n"
-    "Linked AdPlug library version: " << CAdPlug::get_version() << std::ends;
-
-  MessageBox("About " ADPLUG_NAME, text.str().c_str(), "Ugh!");
+  if(!about_win)
+  {
+    gchar * about_title = g_strjoin( "" , _("About ") , ADPLUG_NAME , NULL );
+    const gchar * version_text = CAdPlug::get_version().c_str();
+    gchar * about_text = g_strjoin( "" , ADPLUG_NAME ,
+                              _("\nCopyright (C) 2002, 2003 Simon Peter <dn.tlp@gmx.net>\n\n"
+                              "This plugin is released under the terms and conditions of the GNU LGPL.\n"
+                              "See http://www.gnu.org/licenses/lgpl.html for details."
+                              "\n\nThis plugin uses the AdPlug library, which is copyright (C) Simon Peter, et al.\n"
+                              "Linked AdPlug library version: ") ,
+                              version_text , NULL );
+    about_win = xmms_show_message( about_title , about_text , _("Ok") , FALSE , NULL , NULL );
+    gtk_signal_connect( GTK_OBJECT(about_win) , "destroy" ,
+                        GTK_SIGNAL_FUNC(gtk_widget_destroyed), &about_win );
+    g_free( about_text );
+    g_free( about_title );
+  }
+  gtk_widget_show( about_win );
 }
 
 static void close_config_box_ok(GtkButton *button, GPtrArray *rblist)
