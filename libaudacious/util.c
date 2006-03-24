@@ -11,47 +11,51 @@ xmms_show_message(const gchar * title, const gchar * text,
                   const gchar * button_text, gboolean modal,
                   GtkSignalFunc button_action, gpointer action_data)
 {
-    /* FIXME: improper border spacing, for some reason vbox and
-     * action_area not aligned, button_text totally ignored */
+  GtkWidget *dialog;
+  GtkWidget *dialog_vbox, *dialog_hbox, *dialog_bbox;
+  GtkWidget *dialog_bbox_b1;
+  GtkWidget *dialog_textlabel;
+  GtkWidget *dialog_icon;
 
-    GtkWidget *dialog, *box, *button;
-    GtkWidget *scrolledwindow, *textview;
-    GtkTextBuffer *textbuffer;
+  dialog = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  gtk_window_set_type_hint( GTK_WINDOW(dialog) , GDK_WINDOW_TYPE_HINT_DIALOG );
+  gtk_window_set_modal( GTK_WINDOW(dialog) , modal );
+  gtk_window_set_title( GTK_WINDOW(dialog) , title );
+  gtk_container_set_border_width( GTK_CONTAINER(dialog) , 10 );
 
-    dialog = gtk_dialog_new();
-    gtk_window_set_modal(GTK_WINDOW(dialog), modal);
-    gtk_window_set_title(GTK_WINDOW(dialog), title);
-    gtk_window_set_default_size(GTK_WINDOW(dialog), 460, 400);
+  dialog_vbox = gtk_vbox_new( FALSE , 0 );
+  dialog_hbox = gtk_hbox_new( FALSE , 0 );
 
-    box = GTK_DIALOG(dialog)->vbox;
+  /* icon */
+  dialog_icon = gtk_image_new_from_stock( GTK_STOCK_DIALOG_INFO , GTK_ICON_SIZE_DIALOG );
+  gtk_box_pack_start( GTK_BOX(dialog_hbox) , dialog_icon , FALSE , FALSE , 2 );
 
-    scrolledwindow = gtk_scrolled_window_new(NULL, NULL);
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwindow),
-                                   GTK_POLICY_AUTOMATIC,
-                                   GTK_POLICY_AUTOMATIC);
-    gtk_box_pack_start(GTK_BOX(box), scrolledwindow, TRUE, TRUE, 0);
+  /* label */
+  dialog_textlabel = gtk_label_new( text );
+  /* gtk_label_set_selectable( GTK_LABEL(dialog_textlabel) , TRUE ); */
+  gtk_box_pack_start( GTK_BOX(dialog_hbox) , dialog_textlabel , TRUE , TRUE , 2 );
 
-    textview = gtk_text_view_new();
-    gtk_text_view_set_editable(GTK_TEXT_VIEW(textview), FALSE);
-    gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(scrolledwindow),
-                                          textview);
+  gtk_box_pack_start( GTK_BOX(dialog_vbox) , dialog_hbox , FALSE , FALSE , 2 );
+  gtk_box_pack_start( GTK_BOX(dialog_vbox) , gtk_hseparator_new() , FALSE , FALSE , 4 );
 
-    textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview));
-    gtk_text_buffer_set_text(GTK_TEXT_BUFFER(textbuffer), text, -1);
+  dialog_bbox = gtk_hbutton_box_new();
+  gtk_button_box_set_layout( GTK_BUTTON_BOX(dialog_bbox) , GTK_BUTTONBOX_END );
+  dialog_bbox_b1 = gtk_button_new_with_label( button_text );
+  g_signal_connect_swapped( G_OBJECT(dialog_bbox_b1) , "clicked" ,
+                            G_CALLBACK(gtk_widget_destroy) , dialog );
+  if ( button_action )
+    g_signal_connect( G_OBJECT(dialog_bbox_b1) , "clicked" ,
+                      button_action , action_data );
+  GTK_WIDGET_SET_FLAGS( dialog_bbox_b1 , GTK_CAN_DEFAULT);
+  gtk_widget_grab_default( dialog_bbox_b1 );
 
-    button = gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CLOSE,
-                                   GTK_RESPONSE_CLOSE);
-    g_signal_connect_swapped(button, "clicked",
-                             G_CALLBACK(gtk_widget_destroy), dialog);
-    if (button_action)
-        g_signal_connect(button, "clicked", button_action, action_data);
+  gtk_container_add( GTK_CONTAINER(dialog_bbox) , dialog_bbox_b1 );
+  gtk_box_pack_start( GTK_BOX(dialog_vbox) , dialog_bbox , FALSE , FALSE , 0 );
 
-    GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-    gtk_widget_grab_default(button);
+  gtk_container_add( GTK_CONTAINER(dialog) , dialog_vbox );
+  gtk_widget_show_all(dialog);
 
-    gtk_widget_show_all(dialog);
-
-    return dialog;
+  return dialog;
 }
 
 gboolean
