@@ -790,20 +790,22 @@ void FLAC_XMMS__aboutbox()
 
 	if (about_window)
 		gdk_window_raise(about_window->window);
-
-	about_window = xmms_show_message(
-		_("About Flac Plugin"),
-		_("Flac Plugin by Josh Coalson\n"
-		  "contributions by\n"
-		  "......\n"
-		  "......\n"
-		  "and\n"
-		  "Daisuke Shimamura\n"
-		  "Visit http://flac.sourceforge.net/"),
-		_("Ok"), FALSE, NULL, NULL);
-	gtk_signal_connect(GTK_OBJECT(about_window), "destroy",
-			   GTK_SIGNAL_FUNC(gtk_widget_destroyed),
-			   &about_window);
+	else
+	{
+		about_window = xmms_show_message(
+			_("About Flac Plugin"),
+			_("Flac Plugin by Josh Coalson\n"
+			  "contributions by\n"
+			  "......\n"
+			  "......\n"
+			  "and\n"
+			  "Daisuke Shimamura\n"
+			  "Visit http://flac.sourceforge.net/"),
+			_("Ok"), FALSE, NULL, NULL);
+		gtk_signal_connect(GTK_OBJECT(about_window), "destroy",
+				   GTK_SIGNAL_FUNC(gtk_widget_destroyed),
+				   &about_window);
+	}
 }
 
 /*
