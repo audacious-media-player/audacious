@@ -9,6 +9,7 @@ OBJECTIVE_DATA = none
 SUBDIRS = none
 HEADERS = none
 VERBOSITY = 0
+SHOW_CFLAGS = 0
 
 LIBDIR = $(libdir)
 BINDIR = $(bindir)
@@ -158,19 +159,19 @@ build:
 	fi
 
 .c.o:
-	printf "%10s     %-20s\n" CC $<
+	if test $(SHOW_CFLAGS) -eq 1; then	\
+		printf "%10s     %-20s (%s)\n" CC $< "${CFLAGS}";	\
+	else \
+		printf "%10s     %-20s\n" CC $<;	\
+	fi;
 	$(CC) $(CFLAGS) -c $< -o $@
 
-.cc.o:
-	printf "%10s     %-20s\n" CXX $<;
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-.cpp.o:
-	printf "%10s     %-20s\n" CXX $<;
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-.cxx.o:
-	printf "%10s     %-20s\n" CXX $<;
+.cc.o .cpp.o .cxx.o:
+	if test $(SHOW_CFLAGS) -eq 1; then	\
+		printf "%10s     %-20s (%s)\n" CXX $< "${CXXFLAGS}";	\
+	else \
+		printf "%10s     %-20s\n" CXX $<;	\
+	fi;
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 %.so: $(OBJECTS)
