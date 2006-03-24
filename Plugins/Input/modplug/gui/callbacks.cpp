@@ -21,19 +21,6 @@ hide_window                            (GtkWidget       *widget,
 	return TRUE;
 }
 
-void
-on_about_close_clicked                 (GtkButton       *button,
-                                        gpointer         user_data)
-{
-	GtkWidget* lAboutWindow;
-	
-	lAboutWindow = lookup_widget((GtkWidget*)button, "About");
-	if(!lAboutWindow)
-		cerr << "ModPlug: on_about_close_clicked: Could not find about window!" << endl;
-	else
-		gtk_widget_hide(lAboutWindow);
-}
-
 
 void
 on_config_apply_clicked                (GtkButton       *button,
