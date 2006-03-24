@@ -812,28 +812,30 @@ vorbis_aboutbox()
 
     if (about_window)
         gdk_window_raise(about_window->window);
-
-    about_window = xmms_show_message(_("About Ogg Vorbis Audio Plugin"),
-                                     /*
-                                      * I18N: UTF-8 Translation: "Haavard Kvaalen" ->
-                                      * "H\303\245vard Kv\303\245len"
-                                      */
-                                     _
-                                     ("Ogg Vorbis Plugin by the Xiph.org Foundation\n\n"
-                                      "Original code by\n"
-                                      "Tony Arcieri <bascule@inferno.tusculum.edu>\n"
-                                      "Contributions from\n"
-                                      "Chris Montgomery <monty@xiph.org>\n"
-                                      "Peter Alm <peter@xmms.org>\n"
-                                      "Michael Smith <msmith@labyrinth.edu.au>\n"
-                                      "Jack Moffitt <jack@icecast.org>\n"
-                                      "Jorn Baayen <jorn@nl.linux.org>\n"
-                                      "Haavard Kvaalen <havardk@xmms.org>\n"
-                                      "Gian-Carlo Pascutto <gcp@sjeng.org>\n\n"
-                                      "Visit the Xiph.org Foundation at http://www.xiph.org/\n"),
-                                     _("Ok"), FALSE, NULL, NULL);
-    g_signal_connect(G_OBJECT(about_window), "destroy",
-                     G_CALLBACK(gtk_widget_destroyed), &about_window);
+    else
+    {
+      about_window = xmms_show_message(_("About Ogg Vorbis Audio Plugin"),
+                                       /*
+                                        * I18N: UTF-8 Translation: "Haavard Kvaalen" ->
+                                        * "H\303\245vard Kv\303\245len"
+                                        */
+                                       _
+                                       ("Ogg Vorbis Plugin by the Xiph.org Foundation\n\n"
+                                        "Original code by\n"
+                                        "Tony Arcieri <bascule@inferno.tusculum.edu>\n"
+                                        "Contributions from\n"
+                                        "Chris Montgomery <monty@xiph.org>\n"
+                                        "Peter Alm <peter@xmms.org>\n"
+                                        "Michael Smith <msmith@labyrinth.edu.au>\n"
+                                        "Jack Moffitt <jack@icecast.org>\n"
+                                        "Jorn Baayen <jorn@nl.linux.org>\n"
+                                        "Haavard Kvaalen <havardk@xmms.org>\n"
+                                        "Gian-Carlo Pascutto <gcp@sjeng.org>\n\n"
+                                        "Visit the Xiph.org Foundation at http://www.xiph.org/\n"),
+                                       _("Ok"), FALSE, NULL, NULL);
+      g_signal_connect(G_OBJECT(about_window), "destroy",
+                       G_CALLBACK(gtk_widget_destroyed), &about_window);
+    }
 }
 
 
