@@ -434,6 +434,7 @@ static void adplug_info_box(char *filename)
 
   GtkVBox *box = GTK_VBOX(gtk_vbox_new(TRUE,2));
   GtkHBox *hbox = GTK_HBOX(gtk_hbox_new(TRUE, 2));
+  GtkHBox *hbox2 = GTK_HBOX(gtk_hbox_new(TRUE, 2));
 
   // Build file info box
   gtk_window_set_title(GTK_WINDOW(infobox), "AdPlug :: File Info");
@@ -455,6 +456,7 @@ static void adplug_info_box(char *filename)
 // Former packer layout, for future reproduction
 //  gtk_packer_add_defaults(packer, make_framed(print_left(filename), "Filename"),
 //			  GTK_SIDE_TOP, GTK_ANCHOR_CENTER, GTK_FILL_X);
+  gtk_box_pack_end(GTK_BOX(box), GTK_WIDGET(hbox2), TRUE, TRUE, 2);
   gtk_box_pack_end(GTK_BOX(box), make_framed(print_left(filename), "Filename"), TRUE, TRUE, 2);
 
   // Add "Song info" section
@@ -484,7 +486,7 @@ static void adplug_info_box(char *filename)
 // Former packer layout, for future reproduction
 //  gtk_packer_add_defaults(packer, GTK_WIDGET(hbox), GTK_SIDE_TOP,
 //			  GTK_ANCHOR_CENTER, GTK_FILL_X);
-    gtk_box_pack_end(GTK_BOX(box), GTK_WIDGET(hbox), TRUE, TRUE, 2);
+    gtk_box_pack_end(GTK_BOX(hbox2), GTK_WIDGET(hbox), TRUE, TRUE, 2);
 
   // Add instrument names section
   if(p->getinstruments()) {
@@ -510,7 +512,7 @@ static void adplug_info_box(char *filename)
 // Former packer layout, for future reproduction
 //    gtk_packer_add(packer, GTK_WIDGET(instwnd), GTK_SIDE_TOP,
 //		   GTK_ANCHOR_CENTER, GTK_FILL_X, 0, 0, 0, 0, 50);
-    gtk_box_pack_end(GTK_BOX(box), GTK_WIDGET(instwnd), TRUE, TRUE, 2);
+    gtk_box_pack_end(GTK_BOX(hbox2), GTK_WIDGET(instwnd), TRUE, TRUE, 2);
   }
 
   // Add "Song message" section
@@ -529,7 +531,7 @@ static void adplug_info_box(char *filename)
 // Former packer layout, for future reproduction
 //    gtk_packer_add(packer, make_framed(GTK_WIDGET(msgwnd), "Song message"),
 //		   GTK_SIDE_TOP, GTK_ANCHOR_CENTER, GTK_FILL_X, 2, 0, 0, 200, 50);
-    gtk_box_pack_end(GTK_BOX(box), make_framed(GTK_WIDGET(msgwnd), "Song message"), TRUE, TRUE, 2);
+    gtk_box_pack_end(GTK_BOX(hbox2), make_framed(GTK_WIDGET(msgwnd), "Song message"), TRUE, TRUE, 2);
   }
 
   // Add subsong slider section
@@ -546,7 +548,7 @@ static void adplug_info_box(char *filename)
 // Former packer layout, for future reproduction
 //   gtk_packer_add_defaults(packer, make_framed(GTK_WIDGET(slider), "Subsong selection"),
 //			    GTK_SIDE_TOP, GTK_ANCHOR_CENTER, GTK_FILL_X);
-    gtk_box_pack_end(GTK_BOX(box), make_framed(GTK_WIDGET(slider), "Subsong selection"), TRUE, TRUE, 2);
+    gtk_box_pack_end(GTK_BOX(hbox2), make_framed(GTK_WIDGET(slider), "Subsong selection"), TRUE, TRUE, 2);
   }
 
   // Show dialog box
