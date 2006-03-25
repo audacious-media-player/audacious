@@ -1,7 +1,7 @@
 include ../../../../mk/rules.mk
 include ../../../../mk/objective.mk
 
-SOURCES = arts_helper.c arts_helper.h
+SOURCES = arts_helper.c
 
 OBJECTIVE_BINS = audacious-arts-helper
 
