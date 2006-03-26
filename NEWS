@@ -1,3 +1,19 @@
+Audacious 0.2.3 (2006-03-25)
+
+Enhancements
+* Replacement icons for many of the menu elements
+* New remove duplicates option (by title, by path + filename, by filename)
+* New remove unavailable files option
+* Improved sorting abilities/speed
+* Support for new skin.hints WA2 skinning extensions (http://www.nenolod.net/misc/audacious-modern)
+* Various FLAC-related speedups and enhancements
+* Redesigned preferences pane.
+* ARTS output support
+
+Bugfixes
+* Several scrobbler related crashes have been fixed
+* Much more
+
 Audacious 0.2.2 (2006-03-04)
 
 Enhancements
