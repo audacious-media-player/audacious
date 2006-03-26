@@ -1,5 +1,5 @@
-204,221,236		// [background color 1]
-128,170,206		// [background color 2]
+0,0,0		// [background color 1]
+0,0,0		// [background color 2]
 128,170,206
 128,170,206
 128,170,206

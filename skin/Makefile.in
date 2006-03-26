@@ -18,4 +18,5 @@ OBJECTIVE_DATA = \
 	titlebar.png:$(skindir)		\
 	volume.png:$(skindir)		\
 	pledit.txt:$(skindir)		\
-	viscolor.txt:$(skindir)
+	viscolor.txt:$(skindir)		\
+	skin.hints:$(skindir)

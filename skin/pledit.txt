@@ -1,6 +1,6 @@
 [Text]
-Normal=#7ba7cd
-Current=#999999
-NormalBG=#ccddec
-SelectedBG=#eeeeee
+Normal=#c6e1ff
+Current=#eeeeee
+NormalBG=#000000
+SelectedBG=#666666
 Font=Helvetica
