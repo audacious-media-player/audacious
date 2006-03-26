@@ -1,3 +1,330 @@
+2006-03-24 23:05:42  Derek Pomery <nemo@m8y.org>
+
+	* Quick n dirty refresh.
+
+2006-03-24 21:14:03  Derek Pomery <nemo@m8y.org>
+
+	* Pending proper layout, make a little less vertical at least.
+
+2006-03-24 19:31:08  William Pitcock <nenolod@nenolod.net>
+
+	   - we should not compile arts_helper.h here.
+
+2006-03-24 16:20:04  William Pitcock <nenolod@nenolod.net>
+
+	   - rule reduction
+	   - add SHOW_CFLAGS option to show the CFLAGS used to compile each source unit
+
+2006-03-24 15:31:38  William Pitcock <nenolod@nenolod.net>
+
+	   - remove default rules override as it's no longer used here
+
+2006-03-24 15:30:29  William Pitcock <nenolod@nenolod.net>
+
+	   - cosmetic adjustment
+
+2006-03-24 15:26:21  William Pitcock <nenolod@nenolod.net>
+
+	   - do not show OMK debugging notices unless we use 'make VERBOSITY=1'
+
+2006-03-24 15:02:27  William Pitcock <nenolod@nenolod.net>
+
+	   - mistake here, we forget to pop back
+
+2006-03-24 15:01:36  William Pitcock <nenolod@nenolod.net>
+
+	   - more recursion fixes
+
+2006-03-24 14:51:05  William Pitcock <nenolod@nenolod.net>
+
+	   - properly recurse build errors
+
+2006-03-24 13:04:06  Derek Pomery <nemo@m8y.org>
+
+	* A basic reenabling of the info dialog
+
+2006-03-24 10:03:56  Giacomo Lozito <james@develia.org>
+
+	* fixed multiple spawns of wav-sndfile aboutbox
+
+2006-03-24 10:00:06  Giacomo Lozito <james@develia.org>
+
+	* fixed multiple spawns of flac aboutbox
+
+2006-03-24 09:54:14  Giacomo Lozito <james@develia.org>
+
+	* fixed multiple spawns of vorbis aboutbox
+
+2006-03-24 09:51:13  Giacomo Lozito <james@develia.org>
+
+	* fixed multiple spawns of adplug aboutbox
+
+2006-03-24 09:02:57  Giacomo Lozito <james@develia.org>
+
+	* now modplug uses xmms_show_message for its aboutbox
+
+2006-03-23 19:24:41  Giacomo Lozito <james@develia.org>
+
+	* new xmms_show_message look
+
+2006-03-23 17:32:40  Derek Pomery <nemo@m8y.org>
+
+	* memcmp since magic isn't a string
+
+2006-03-22 18:58:39  Derek Pomery <nemo@m8y.org>
+
+	* Only compare 4 bytes, unless someone had a reason.
+
+2006-03-21 13:28:00  Giacomo Lozito <james@develia.org>
+
+	* amidi-plug: completed merge with 0.2 changes
+
+2006-03-21 11:22:14  William Pitcock <nenolod@nenolod.net>
+
+	   - Also determine a change by track name, patch by nixphoeni.
+
+2006-03-20 12:57:25  William Pitcock <nenolod@nenolod.net>
+
+	   - what was that doing here?
+
+2006-03-19 15:21:35  William Pitcock <nenolod@nenolod.net>
+
+	   - revert (commit 2/2)
+
+2006-03-19 15:21:11  William Pitcock <nenolod@nenolod.net>
+
+	   - revert (commit 1/2)
+
+2006-03-19 15:12:44  William Pitcock <nenolod@nenolod.net>
+
+	   - no longer explodes. still no audio output.
+
+2006-03-19 14:51:03  William Pitcock <nenolod@nenolod.net>
+
+	   - PSF2 support (everything is BORKED right now)
+
+2006-03-18 16:48:04  Giacomo Lozito <james@develia.org>
+
+	* shortened the compare-dups-by-path function
+
+2006-03-18 16:31:38  Giacomo Lozito <james@develia.org>
+
+	* added multiple 'remove duplicates' (by title, by filename, by path+filename)
+
+2006-03-18 15:35:16  William Pitcock <nenolod@nenolod.net>
+
+	   - yeah lets try not freeing this at all
+
+2006-03-18 15:32:39  William Pitcock <nenolod@nenolod.net>
+
+	   - fix free() stuff properly
+
+2006-03-18 15:32:01  Giacomo Lozito <james@develia.org>
+
+	* changed adplug plugin name
+
+2006-03-18 15:30:56  William Pitcock <nenolod@nenolod.net>
+
+	   - we don't really need to free here, messes up on ID3v2 a *lot*
+
+2006-03-18 15:21:00  Giacomo Lozito <james@develia.org>
+
+	* do not try to autogenerate pixmaps.h; removed build.list and moved some icons in the images dir
+
+2006-03-18 14:32:41  Giacomo Lozito <james@develia.org>
+
+	* added many new icons for the playlist menus (some drawn from scratch and others derived from the gtk stock ones)
+
+2006-03-18 12:09:58  Tony Vroon <chainsaw@gentoo.org>
+
+	* Report sample rate properly. Rate is just the number of channels, but that is better then 0, right?
+
+2006-03-18 11:58:29  Tony Vroon <chainsaw@gentoo.org>
+
+	* Sync header file for rix player as well.
+
+2006-03-18 11:28:08  Tony Vroon <chainsaw@gentoo.org>
+
+	* Sync core with upstream. Also, rename plugin from AdPlug to AdLib synthesizer, by request of Giacomo.
+
+2006-03-18 10:56:03  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use magic bytes to identify AAC and MP4 as the decoder insists on reading the entire file before making a decision. This can be upsetting to users of large playlists, so reduce that to two 4-byte reads. Extension checking still needed for files that have been butchered by bad taggers, sorry.
+
+2006-03-18 10:37:21  Giacomo Lozito <james@develia.org>
+
+	* started to add more icons for the playlist menu entries; others are going to be drawn and added
+
+2006-03-18 09:34:43  Giacomo Lozito <james@develia.org>
+
+	* added a 'remove duplicates' option to the playlist removal menu
+
+2006-03-17 22:07:11  William Pitcock <nenolod@nenolod.net>
+
+	   - archive support
+
+2006-03-17 21:11:49  William Pitcock <nenolod@nenolod.net>
+
+	   - equalizer improvements
+
+2006-03-17 20:21:50  William Pitcock <nenolod@nenolod.net>
+
+	   - initial work on skin.hints support (the first step to modernizing our
+	  skin format :D)
+
+2006-03-17 12:25:25  William Pitcock <nenolod@nenolod.net>
+
+	   - reinit the visualizer for VIS_SCOPE too.
+
+2006-03-14 17:35:10  Tony Vroon <chainsaw@gentoo.org>
+
+	* Only start the decoder for FLAC detection on HTTP. We can handle files much easier, with a metadata check. Faster, less resource intensive, and does not spuriously trigger for wave files.
+
+2006-03-13 22:21:42  William Pitcock <nenolod@nenolod.net>
+
+	   - revert pluginenum change (did no good)
+	   - remove tags/Makefile reference from configure
+
+2006-03-13 21:29:55  William Pitcock <nenolod@nenolod.net>
+
+	   - improve the way the scrobbler plugin is compiled
+	   - use G_MODULE_BIND_LAZY to safely bind plugins dependant on
+	  libaudacious, some libdl implementations hate doing this otherwise
+
+2006-03-13 16:18:03  Tony Vroon <chainsaw@gentoo.org>
+
+	* Fix logic error that caused us to lock on to wav.
+
+2006-03-13 15:58:32  Tony Vroon <chainsaw@gentoo.org>
+
+	* Be smarter about spotting MP4 files, only fall back on extension for AAC.
+
+2006-03-13 13:07:18  William Pitcock <nenolod@nenolod.net>
+
+	   - use extern here (grr)
+
+2006-03-12 22:57:18  William Pitcock <nenolod@nenolod.net>
+
+	   - if make fails, exit -1 recursively
+
+2006-03-12 17:18:35  William Pitcock <nenolod@nenolod.net>
+
+	   - improvements to the playlist list control, via nhjm
+
+2006-03-12 17:05:18  Tony Vroon <chainsaw@gentoo.org>
+
+	* Okay, we need to pinch more playback code to avoid false positives.
+
+2006-03-12 16:49:19  Tony Vroon <chainsaw@gentoo.org>
+
+	* Ask the decoder whether this is a WMA file, instead of depending on file magic.
+
+2006-03-12 16:07:38  Tony Vroon <chainsaw@gentoo.org>
+
+	* Ask the decoder whether this is a FLAC file, instead of depending on file magic.
+
+2006-03-12 14:09:33  William Pitcock <nenolod@nenolod.net>
+
+	* that should have been strcasecmp
+
+2006-03-12 13:41:40  William Pitcock <nenolod@nenolod.net>
+
+	   - do not include ${DESTDIR} in the symlink target. reported by mokoshi.
+
+2006-03-12 12:27:25  William Pitcock <nenolod@nenolod.net>
+
+	   - only show the SVN revision if we know what it is
+
+2006-03-11 23:06:47  William Pitcock <nenolod@nenolod.net>
+
+	   - safety checks
+
+2006-03-11 20:13:26  William Pitcock <nenolod@nenolod.net>
+
+	   - fix disk_writer build
+
+2006-03-11 19:30:13  Giacomo Lozito <james@develia.org>
+
+	* revert erroneous change in objective.mk
+
+2006-03-11 19:25:53  Giacomo Lozito <james@develia.org>
+
+	* prefs window: added user@host info in the version label
+
+2006-03-11 19:10:26  Giacomo Lozito <james@develia.org>
+
+	* fixed quoting on arts.m4
+
+2006-03-11 18:56:50  Giacomo Lozito <james@develia.org>
+
+	* display audacious version and revision in the prefs window
+
+2006-03-11 16:20:40  Giacomo Lozito <james@develia.org>
+
+	* new icons for the preferences window
+
+2006-03-11 08:21:23  Giacomo Lozito <james@develia.org>
+
+	* made the preferences window smaller
+
+2006-03-10 10:20:15  William Pitcock <nenolod@nenolod.net>
+
+	   - Fix a ton and a half of memory leaks, via the wonderful Leonardo Boshell <leonardop -at- gentoo.org>.
+
+2006-03-09 21:09:41  William Pitcock <nenolod@nenolod.net>
+
+	   - add voice_removal plugin. Ported by: Thomas Cort <linuxgeek -at- gmail.com>, tcort @ #audacious.
+
+2006-03-09 21:03:27  William Pitcock <nenolod@nenolod.net>
+
+	   - implement vfs_feof() and vfs_ftell() and update the scrobbler plugin to reflect that,
+	  by external contributor: Leonardo Boshell <leonardop -at- gentoo.org>
+
+2006-03-09 11:55:56  Giacomo Lozito <james@develia.org>
+
+	* ported xmms-arts 0.7.1 to audacious and integrated it in the build process
+
+2006-03-08 13:16:59  William Pitcock <nenolod@nenolod.net>
+
+	   - fix typo
+
+2006-03-08 12:11:37  William Pitcock <nenolod@nenolod.net>
+
+	   - fix a FD leak here
+
+2006-03-08 08:57:02  William Pitcock <nenolod@nenolod.net>
+
+	   - add psuedo_output_plugin, a psuedo output plugin that will be used for reverse compatibility with old plugins.
+	  sort of.
+
+2006-03-08 08:47:02  William Pitcock <nenolod@nenolod.net>
+
+	   - add get_written_time(), get_output_time().
+
+2006-03-07 13:47:20  Giacomo Lozito <james@develia.org>
+
+	* update amidi-plug towards 0.2; bug fixes and a new option (midi length pre-calculation)
+
+2006-03-05 15:42:27  William Pitcock <nenolod@nenolod.net>
+
+	   - add nemo to credits
+
+2006-03-05 15:19:01  Derek Pomery <nemo@m8y.org>
+
+	* Don't override input LD_FLAGS - needed to enable profiling.
+
+2006-03-05 14:46:31  Derek Pomery <nemo@m8y.org>
+
+	* Bug #423 - Add retrieval of first entry in case of multiple matches.  Good enough to remove the FIXME?
+
+2006-03-04 16:34:04  William Pitcock <nenolod@nenolod.net>
+
+	   - use OBJECTIVE_DATA instead of a kludge in the posthook here
+
+2006-03-04 14:22:19  William Pitcock <nenolod@nenolod.net>
+
+	* documentation updates for 0.2.2
+
 2006-03-04 14:17:20  William Pitcock <nenolod@nenolod.net>
 
 	   - add corrected version of Aerdan's jump to file patch
