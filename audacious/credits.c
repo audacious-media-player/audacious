@@ -49,6 +49,7 @@ static const gchar *bmp_brief =
 
 static const gchar *credit_text[] = {
     N_("Audacious core developers:"),
+    N_("George Averill"),
     N_("Giacomo Lozito"),
     N_("William Pitcock"),
     N_("Derek Pomery"),
