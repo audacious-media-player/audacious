@@ -26,6 +26,8 @@
 #include "textbox.h"
 #include "vis.h"
 
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #define BMP_USER_PLUGIN_DIR_BASENAME  "Plugins"
 #define BMP_SKIN_DIR_BASENAME         "Skins"
@@ -140,6 +142,7 @@ extern gboolean has_x11_connection;
 
 void bmp_config_save(void);
 void bmp_config_load(void);
+void make_directory(const gchar * path, mode_t mode);
 void report_error(const gchar *error_text);
 
 #endif

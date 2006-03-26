@@ -25,6 +25,14 @@
 #include <gtk/gtk.h>
 #include <glade/glade.h>
 #include <string.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <dirent.h>
+#include <unistd.h>
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include "glade.h"
 
@@ -1435,6 +1443,23 @@ on_eq_preset_remove_clicked(GtkButton * button,
                             gpointer data)
 {}
 
+static void
+on_skin_refresh_button_clicked(GtkButton * button,
+                               gpointer data)
+{
+    GladeXML *xml;
+    GtkWidget *widget;
+
+    const mode_t mode755 = S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
+
+    del_directory(bmp_paths[BMP_PATH_SKIN_THUMB_DIR]);
+    make_directory(bmp_paths[BMP_PATH_SKIN_THUMB_DIR], mode755);
+
+    xml = prefswin_get_xml();
+
+    widget = glade_xml_get_widget(xml, "skin_view");
+    skin_view_update(GTK_TREE_VIEW(widget));
+}
 
 static void
 prefswin_set_skin_update(gboolean state)
@@ -1797,7 +1822,12 @@ create_prefs_window(void)
                      G_CALLBACK(mainwin_drag_data_received),
                      widget);
 
-    widget = glade_xml_get_widget(xml, "playlist_font_button");    
+    widget = glade_xml_get_widget(xml, "skin_refresh_button");
+    g_signal_connect(widget, "clicked",
+                     G_CALLBACK(on_skin_refresh_button_clicked),
+                     NULL);
+
+    widget = glade_xml_get_widget(xml, "playlist_font_button");
     g_signal_connect(mainwin, "drag-data-received",
                      G_CALLBACK(mainwin_drag_data_received1),
                      widget);

@@ -369,7 +369,7 @@ xmms_get_gentitle_format(void)
     return cfg.gentitle_format;
 }
 
-static void
+void
 make_directory(const gchar * path, mode_t mode)
 {
     if (mkdir(path, mode) == 0)
