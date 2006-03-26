@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT(audacious, 0.2.3)
+AC_INIT(audacious, 0.3)
 AC_PREREQ(2.5)
 
 AC_CANONICAL_HOST
