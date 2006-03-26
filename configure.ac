@@ -778,10 +778,12 @@ if eval curl-config --version 2>/dev/null >/dev/null; then
         else
                 AC_MSG_RESULT([no])
                 AC_MSG_WARN([$ver is too old. Need version $check or higher. Scrobbler support will not be built.])
+		scrobbler="no"
         fi
 else
         AC_MSG_RESULT([no])
         AC_MSG_WARN([curl-config was not found. Scrobbler support will not be built.])
+	scrobbler="no"
 fi
 
 if test "x$scrobbler" = "xyes"; then
