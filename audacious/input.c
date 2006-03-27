@@ -60,6 +60,7 @@ InputPluginData ip_data = {
     NULL,
     FALSE,
     FALSE,
+    FALSE,
     NULL
 };
 

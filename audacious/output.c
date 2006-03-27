@@ -36,6 +36,12 @@ OutputPluginData op_data = {
     NULL
 };
 
+OutputPluginState op_state = {
+    0,
+    0,
+    0
+};
+
 OutputPlugin psuedo_output_plugin = {
     NULL,
     NULL,
@@ -46,17 +52,16 @@ OutputPlugin psuedo_output_plugin = {
     NULL,
     output_get_volume,
     output_set_volume,
-    NULL,			/* XXX we need noop code for this */
-    NULL,
-    NULL,
+    output_open_audio,
+    output_write_audio,
+    output_close_audio,
 
-    NULL,
-    NULL,
-    NULL,
-    NULL,
+    output_flush,
+    output_pause,
+    output_buffer_free,
+    output_buffer_playing,
     get_output_time,
     get_written_time,
-
     NULL
 };
 
@@ -215,6 +220,127 @@ get_output_time(void)
     return op->output_time();
 }
 
+gint
+output_open_audio(AFormat fmt, gint rate, gint nch)
+{
+    gint ret;
+    OutputPlugin *op;
+    
+    op = get_current_output_plugin();
+
+    if (op == NULL)
+        return -1;
+
+    /* Is our output port already open? */
+    if ((op_state.rate != 0 && op_state.nch != 0) &&
+	(op_state.rate == rate && op_state.nch == nch))
+    {
+	/* Yes, and it's the correct sampling rate. Reset the counter and go. */
+	op->flush(0);
+        return 1;
+    }
+    else if (op_state.rate != 0 && op_state.nch != 0)
+	op->close_audio();
+
+    ret = op->open_audio(fmt, rate, nch);
+
+    if (ret == 1)			 /* Success? */
+    {
+        op_state.fmt = fmt;
+        op_state.rate = rate;
+        op_state.nch = nch;
+    }
+
+    return ret;
+}
+
+void
+output_write_audio(gpointer ptr, gint length)
+{
+    OutputPlugin *op = get_current_output_plugin();
+
+    /* Sanity check. */
+    if (op == NULL)
+        return;
+
+    op->write_audio(ptr, length);
+}
+
+void
+output_close_audio(void)
+{
+    OutputPlugin *op = get_current_output_plugin();
+
+    /* Do not close if there are still songs to play and the user has 
+     * not requested a stop.  --nenolod
+     */
+    if (ip_data.stop == FALSE && 
+	(playlist_get_position_nolock() < playlist_get_length_nolock() - 1))
+        return;
+
+    /* Sanity check. */
+    if (op == NULL)
+        return;
+
+#if 0
+    g_print("Requirements to close audio output have been met:\n"
+	"ip_data.stop = %d\n"
+	"playlist_get_position_nolock() = %d\n"
+	"playlist_get_length_nolock() - 1 = %d\n",
+	ip_data.stop, playlist_get_position_nolock(),
+	playlist_get_length_nolock() - 1);
+#endif
+
+    op->close_audio();
+
+    /* Reset the op_state. */
+    op_state.fmt = op_state.rate = op_state.nch = 0;
+}
+
+void
+output_flush(gint time)
+{
+    OutputPlugin *op = get_current_output_plugin();
+
+    if (op == NULL)
+        return;
+
+    op->flush(time);
+}
+
+void
+output_pause(gshort paused)
+{
+    OutputPlugin *op = get_current_output_plugin();
+
+    if (op == NULL)
+        return;
+
+    op->pause(paused);
+}
+
+gint
+output_buffer_free(void)
+{
+    OutputPlugin *op = get_current_output_plugin();
+
+    if (op == NULL)
+        return 0;
+
+    return op->buffer_free();
+}
+
+gint
+output_buffer_playing(void)
+{
+    OutputPlugin *op = get_current_output_plugin();
+
+    if (op == NULL)
+        return 0;
+
+    return op->buffer_playing();
+}
+
 /* called by input plugin when data is ready */
 void
 produce_audio(gint time,        /* position             */
@@ -261,5 +387,5 @@ produce_audio(gint time,        /* position             */
         g_usleep(10000);                 /*   else sleep for retry   */
     }                                    
 
-    op->write_audio(ptr, length);     /* do output                */
+    op->write_audio(ptr, length);        /* do output                */
 }

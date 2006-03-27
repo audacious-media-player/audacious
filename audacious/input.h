@@ -31,6 +31,7 @@ struct _InputPluginData {
     InputPlugin *current_input_plugin;
     gboolean playing;
     gboolean paused;
+    gboolean stop;
     GMutex *playback_mutex;
 };
 

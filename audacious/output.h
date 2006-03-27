@@ -33,6 +33,14 @@ struct _OutputPluginData {
     OutputPlugin *current_output_plugin;
 };
 
+typedef struct _OutputPluginState OutputPluginState;
+
+struct _OutputPluginState {
+    AFormat fmt;
+    gint rate;
+    gint nch;
+};
+
 GList *get_output_list(void);
 OutputPlugin *get_current_output_plugin(void);
 void set_current_output_plugin(gint i);
@@ -41,6 +49,15 @@ void output_configure(gint i);
 void output_get_volume(gint * l, gint * r);
 void output_set_volume(gint l, gint r);
 void output_set_eq(gboolean, gfloat, gfloat *);
+gint output_open_audio(AFormat, gint, gint);
+void output_write_audio(gpointer ptr, gint length);
+void output_close_audio(void);
+
+void output_flush(gint);
+void output_pause(gshort);
+gint output_buffer_free(void);
+gint output_buffer_playing(void);
+
 void produce_audio(gint, AFormat, gint, gint, gpointer, int *);
 
 gint get_written_time(void);

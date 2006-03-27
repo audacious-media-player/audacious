@@ -2088,8 +2088,10 @@ mainwin_play_pushed(void)
 void
 mainwin_stop_pushed(void)
 {
+    ip_data.stop = TRUE;
     mainwin_clear_song_info();
     bmp_playback_stop();
+    ip_data.stop = FALSE;
 }
 
 void

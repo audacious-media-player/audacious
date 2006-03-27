@@ -231,7 +231,7 @@ bmp_playback_play_file(PlaylistEntry *entry)
     }
 
     set_current_input_plugin(entry->decoder);
-    entry->decoder->output = get_current_output_plugin();
+    entry->decoder->output = &psuedo_output_plugin;
     entry->decoder->play_file(entry->filename);
 
     ip_data.playing = TRUE;
