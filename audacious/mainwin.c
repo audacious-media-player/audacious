@@ -810,7 +810,8 @@ mainwin_set_song_title(const gchar * title)
 static void
 mainwin_refresh_hints(void)
 {
-    if (bmp_active_skin->properties.mainwin_othertext == TRUE)
+    if (bmp_active_skin && bmp_active_skin->properties.mainwin_othertext
+	== TRUE)
     {
 	widget_hide(WIDGET(mainwin_rate_text));
 	widget_hide(WIDGET(mainwin_freq_text));
@@ -886,7 +887,8 @@ mainwin_set_song_info(gint bitrate,
         mainwin_force_redraw = TRUE;
     }
 
-    if (bmp_active_skin->properties.mainwin_othertext == TRUE)
+    if (bmp_active_skin && bmp_active_skin->properties.mainwin_othertext 
+	== TRUE)
     {
 	g_snprintf(text, 512, "%d kbps, %0.1f khz, %s",
 		bitrate < 1000 ? bitrate : bitrate / 100,
