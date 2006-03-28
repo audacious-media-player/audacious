@@ -2975,6 +2975,7 @@ mainwin_setup_menus(void)
 
     check_set(mainwin_play_menu, "/Repeat", cfg.repeat);
     check_set(mainwin_play_menu, "/Shuffle", cfg.shuffle);
+    check_set(mainwin_play_menu, "/No Playlist Advance", cfg.no_playlist_advance);
 
     /* Visualization menu */
 
