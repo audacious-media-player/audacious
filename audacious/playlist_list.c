@@ -581,7 +581,7 @@ playlist_list_draw(Widget * w)
 
             /* DON'T remove the commented code yet please     -- Milosz */
 
-            queue_tailpadding = 5;
+            queue_tailpadding = tpadding_dwidth + 1;
 
             gdk_draw_rectangle(obj, gc, FALSE,
                                x -
