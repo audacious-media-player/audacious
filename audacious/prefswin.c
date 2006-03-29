@@ -1287,6 +1287,18 @@ on_playlist_no_advance_toggled(GtkToggleButton * button, gpointer data)
 }
 
 static void
+on_refresh_file_list_realize(GtkToggleButton * button, gpointer data)
+{
+    gtk_toggle_button_set_active(button, cfg.refresh_file_list);
+}
+
+static void
+on_refresh_file_list_toggled(GtkToggleButton * button, gpointer data)
+{
+    cfg.refresh_file_list = gtk_toggle_button_get_active(button);
+}
+
+static void
 on_playlist_convert_twenty_realize(GtkToggleButton * button, gpointer data)
 {
     gtk_toggle_button_set_active(button, cfg.convert_twenty);
@@ -1650,6 +1662,8 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_playlist_font_button_font_set)
     FUNC_MAP_ENTRY(on_playlist_no_advance_realize)
     FUNC_MAP_ENTRY(on_playlist_no_advance_toggled)
+    FUNC_MAP_ENTRY(on_refresh_file_list_realize)
+    FUNC_MAP_ENTRY(on_refresh_file_list_toggled)
     FUNC_MAP_ENTRY(on_skin_view_visibility_notify)
     FUNC_MAP_ENTRY(on_titlestring_entry_realize)
     FUNC_MAP_ENTRY(on_titlestring_entry_changed)

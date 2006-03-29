@@ -141,6 +141,11 @@ BmpConfig bmp_default_config = {
     FALSE,                      /* always on top */
     FALSE,                      /* sticky */
     FALSE,                      /* no playlist advance */
+#ifdef HAVE_GNOME_VFS
+    FALSE,                      /* refresh file list - should be unneeded with VFS */
+#else
+    TRUE,                       /* refresh file list */
+#endif
     TRUE,                       /* UNUSED (smooth title scrolling) */
     TRUE,                       /* use playlist metadata */
     TRUE,                       /* warn about unplayables */
@@ -230,6 +235,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"get_info_on_load", &cfg.get_info_on_load, TRUE},
     {"get_info_on_demand", &cfg.get_info_on_demand, TRUE},
     {"no_playlist_advance", &cfg.no_playlist_advance, TRUE},
+    {"refresh_file_list", &cfg.refresh_file_list, TRUE},
     {"sort_jump_to_file", &cfg.sort_jump_to_file, TRUE},
     {"use_pl_metadata", &cfg.use_pl_metadata, TRUE},
     {"warn_about_unplayables", &cfg.warn_about_unplayables, TRUE},
