@@ -7,8 +7,10 @@
  */
 
 #include "libaudacious/configfile.h"
+#include "libaudacious/util.h"
 #include <dlfcn.h>
 #include <gtk/gtk.h>
+#include <glib/gi18n.h>
 #include <stdio.h>
 #include "config.h"
 #include "bio2jack.h" /* includes for the bio2jack library */
@@ -565,26 +567,19 @@ void jack_get_volume(int *l, int *r)
 
 void jack_about(void)
 {
-	dialog = gtk_dialog_new();
-	gtk_window_set_title(GTK_WINDOW(dialog), ("About JACK Output Plugin 0.15"));
-	gtk_container_border_width(GTK_CONTAINER(dialog), 5);
-	label = gtk_label_new((
-		"XMMS jack Driver 0.15\n\n "
-		"xmms-jack.sf.net\n"
-		"Chris Morgan<cmorgan@alum.wpi.edu>\n"
-		"\nAudacious port by\n"
-		"Giacomo Lozito from develia.org\n"));
-
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), label, TRUE, TRUE, 0);
-	gtk_widget_show(label);
-
-	button = gtk_button_new_with_label((" Close "));
-	gtk_signal_connect_object(GTK_OBJECT(button), "clicked", GTK_SIGNAL_FUNC(gtk_widget_destroy), GTK_OBJECT(dialog));
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, FALSE, FALSE, 0);
-	gtk_widget_show(button);
-
-	gtk_widget_show(dialog);
-	gtk_widget_grab_focus(button);
+	static GtkWidget *aboutbox;
+	
+	if (!aboutbox)
+	{
+		aboutbox = xmms_show_message(
+			_("About JACK Output Plugin 0.15"),
+			_("XMMS jack Driver 0.15\n\n"
+			  "xmms-jack.sf.net\nChris Morgan<cmorgan@alum.wpi.edu>\n\n"
+			  "Audacious port by\nGiacomo Lozito from develia.org"),
+			_("Ok"), FALSE, NULL, NULL);
+		g_signal_connect(GTK_OBJECT(aboutbox), "destroy",
+				   (GCallback)gtk_widget_destroyed, &aboutbox);
+	}
 }
 
 static void
