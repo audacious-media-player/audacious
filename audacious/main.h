@@ -64,6 +64,7 @@ struct _BmpConfig {
     gboolean use_eplugins;
     gboolean always_on_top, sticky;
     gboolean no_playlist_advance;
+    gboolean stopaftersong;
     gboolean refresh_file_list;
     gboolean smooth_title_scroll;
     gboolean use_pl_metadata;
