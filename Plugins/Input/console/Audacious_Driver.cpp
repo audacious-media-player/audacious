@@ -667,13 +667,20 @@ static void console_init(void)
 
 extern "C" void console_aboutbox(void)
 {
-	xmms_show_message(_("About the Console Music Decoder"),
-			_("Console music decoder engine based on Game_Music_Emu 0.3.0.\n"
-			  "Audacious implementation by: William Pitcock <nenolod@nenolod.net>, \n"
-			// Please do not put my hotpop.com address in the clear (I hate spam)
-			  "        Shay Green <hotpop.com@blargg>"),
-			_("Ok"),
-			FALSE, NULL, NULL);
+	static GtkWidget * aboutbox = NULL;
+
+	if (!aboutbox)
+	{
+		aboutbox = xmms_show_message(_("About the Console Music Decoder"),
+						_("Console music decoder engine based on Game_Music_Emu 0.3.0.\n"
+						"Audacious implementation by: William Pitcock <nenolod@nenolod.net>, \n"
+						// Please do not put my hotpop.com address in the clear (I hate spam)
+						"        Shay Green <hotpop.com@blargg>"),
+						_("Ok"),
+						FALSE, NULL, NULL);
+		gtk_signal_connect(GTK_OBJECT(aboutbox), "destroy",
+					(GCallback)gtk_widget_destroyed, &aboutbox);
+	}
 }
 
 InputPlugin console_ip =
