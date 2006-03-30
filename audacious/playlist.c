@@ -852,7 +852,9 @@ playlist_next(void)
     if (bmp_playback_get_playing()) {
         /* We need to stop before changing playlist_position */
         PLAYLIST_UNLOCK();
+        ip_data.stop = TRUE;
         bmp_playback_stop();
+        ip_data.stop = FALSE;
         PLAYLIST_LOCK();
         restart_playing = TRUE;
     }
@@ -903,7 +905,9 @@ playlist_prev(void)
     if (bmp_playback_get_playing()) {
         /* We need to stop before changing playlist_position */
         PLAYLIST_UNLOCK();
+        ip_data.stop = TRUE;
         bmp_playback_stop();
+        ip_data.stop = FALSE;
         PLAYLIST_LOCK();
         restart_playing = TRUE;
     }
