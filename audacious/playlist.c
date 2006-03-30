@@ -1099,6 +1099,13 @@ playlist_eof_reached(void)
         return;
     }
 
+    if (cfg.stopaftersong) {
+        PLAYLIST_UNLOCK();
+        mainwin_clear_song_info();
+        mainwin_set_stopaftersong(FALSE);
+        return;
+    }
+
     if (queued_list) {
         play_queued();
     }

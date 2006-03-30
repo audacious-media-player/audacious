@@ -116,6 +116,7 @@ BmpConfig bmp_default_config = {
     FALSE, FALSE,               /* shuffle, repeat */
     FALSE,                      /* UNUSED (double size) */
     TRUE,                       /* autoscroll */
+    FALSE,                      /* stop after current song */
     TRUE,                       /* analyzer peaks */
     FALSE,                      /* equalizer autoload */
     FALSE,                      /* easy move */
@@ -245,6 +246,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"shuffle", &cfg.shuffle, TRUE},
     {"repeat", &cfg.repeat, TRUE},
     {"autoscroll_songname", &cfg.autoscroll, TRUE},
+    {"stop_after_current_song", &cfg.stopaftersong, TRUE},
     {"playlist_shaded", &cfg.playlist_shaded, TRUE},
     {"playlist_visible", &cfg.playlist_visible, TRUE},
     {"playlist_transparent", &cfg.playlist_transparent, TRUE},

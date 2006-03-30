@@ -112,7 +112,8 @@ enum {
     MAINWIN_SONGNAME_FILEINFO,
     MAINWIN_SONGNAME_JTF,
     MAINWIN_SONGNAME_JTT,
-    MAINWIN_SONGNAME_SCROLL
+    MAINWIN_SONGNAME_SCROLL,
+    MAINWIN_SONGNAME_STOPAFTERSONG
 };
 
 enum {
@@ -251,6 +252,8 @@ GtkItemFactoryEntry mainwin_songname_menu_entries[] = {
     {"/-", NULL, NULL, 0, "<Separator>", NULL},
     {N_("/Autoscroll Songname"), NULL, mainwin_songname_menu_callback,
      MAINWIN_SONGNAME_SCROLL, "<ToggleItem>", NULL},
+    {N_("/Stop After Current Song"), "<control>M", mainwin_songname_menu_callback,
+     MAINWIN_SONGNAME_STOPAFTERSONG, "<ToggleItem>", NULL},
 };
 
 static gint mainwin_songname_menu_entries_num =
@@ -341,6 +344,8 @@ GtkItemFactoryEntry mainwin_playback_menu_entries[] = {
      MAINWIN_OPT_SHUFFLE, "<ToggleItem>", NULL},
     {N_("/No Playlist Advance"), "<control>N", mainwin_play_menu_callback,
      MAINWIN_OPT_NPA, "<ToggleItem>", NULL},
+    {N_("/Stop After Current Song"), "<control>M", mainwin_songname_menu_callback,
+     MAINWIN_SONGNAME_STOPAFTERSONG, "<ToggleItem>", NULL},
     {"/-", NULL, NULL, 0, "<Separator>", NULL},
     {N_("/Play"), "x", mainwin_general_menu_callback,
      MAINWIN_GENERAL_PLAY, "<StockItem>", GTK_STOCK_MEDIA_PLAY},
@@ -2441,7 +2446,20 @@ mainwin_songname_menu_callback(gpointer data,
         check = GTK_CHECK_MENU_ITEM(item);
         mainwin_set_title_scroll(gtk_check_menu_item_get_active(check));
         break;
+    case MAINWIN_SONGNAME_STOPAFTERSONG:
+        check = GTK_CHECK_MENU_ITEM(item);
+        cfg.stopaftersong = gtk_check_menu_item_get_active(check);
+        check_set(mainwin_songname_menu, "/Stop After Current Song", cfg.stopaftersong);
+        check_set(mainwin_play_menu, "/Stop After Current Song", cfg.stopaftersong);
+        break;
     }
+}
+
+void
+mainwin_set_stopaftersong(gboolean stop)
+{
+    cfg.stopaftersong = stop;
+    check_set(mainwin_songname_menu, "/Stop After Current Song", cfg.stopaftersong);
 }
 
 static void
@@ -2970,6 +2988,7 @@ mainwin_setup_menus(void)
     /* Songname menu */
 
     check_set(mainwin_songname_menu, "/Autoscroll Songname", cfg.autoscroll);
+    check_set(mainwin_songname_menu, "/Stop After Current Song", cfg.stopaftersong);
 
     /* Playback menu */
 
