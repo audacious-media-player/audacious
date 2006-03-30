@@ -3,4 +3,3 @@
  */
 
 GtkWidget* create_xmmstimid_conf_wnd (void);
-GtkWidget* create_xmmstimid_about_wnd (void);

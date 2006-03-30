@@ -128,20 +128,21 @@ void xmmstimid_init(void) {
 }
 
 void xmmstimid_about(void) {
-	if (xmmstimid_about_wnd == NULL) {
-		gchar *name_version;
-		xmmstimid_about_wnd = create_xmmstimid_about_wnd();
-		name_version = g_strdup_printf(
-				_("TiMidity Plugin %s"), PACKAGE_VERSION);
-		gtk_label_set_text(
-				GTK_LABEL(gtk_object_get_data(
-				GTK_OBJECT(xmmstimid_about_wnd),
-				 "name_version")), name_version);
-		g_free(name_version);
+	if (!xmmstimid_about_wnd) {
+		gchar *about_title, *about_text;
+		about_text = g_strjoin( "" ,
+			_("TiMidity Plugin\nhttp://libtimidity.sourceforge.net\nby Konstantin Korikov") , NULL );
+		about_title = g_strdup_printf( _("TiMidity Plugin %s") , PACKAGE_VERSION );
+		xmmstimid_about_wnd = xmms_show_message( about_title , about_text , _("Ok") , FALSE , NULL , NULL );
+		gtk_signal_connect(GTK_OBJECT(xmmstimid_about_wnd), "destroy",
+					(GCallback)gtk_widget_destroyed, &xmmstimid_about_wnd);
+		g_free(about_title);
+		g_free(about_text);
 	}
-
-	gtk_widget_show(xmmstimid_about_wnd);
-	gdk_window_raise(xmmstimid_about_wnd->window);
+	else
+	{
+		gdk_window_raise(xmmstimid_about_wnd->window);
+	}
 }
 
 void xmmstimid_conf_ok(GtkButton *button, gpointer user_data);
