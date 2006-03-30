@@ -39,7 +39,7 @@
 
 #include "tagging.h"
 
-#include "mp3.xpm"
+#include "m4a.xpm"
 
 static GtkWidget *window = NULL;
 static GtkWidget *filename_entry, *id3_frame;
@@ -210,7 +210,7 @@ audmp4_file_info_box(gchar * filename)
         gtk_box_pack_start(GTK_BOX(vbox), filename_vbox, FALSE, TRUE, 0);
 
         pixbuf = gdk_pixbuf_new_from_xpm_data((const gchar **)
-                                              gnome_mime_audio_xpm);
+                                              m4a_xpm);
         pixmapwid = gtk_image_new_from_pixbuf(pixbuf);
         g_object_unref(pixbuf);
         gtk_misc_set_alignment(GTK_MISC(pixmapwid), 0, 0);
