@@ -6,7 +6,7 @@ OBJECTIVE_LIBS = libadplug.so
 
 LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
-LIBADD = -lstdc++ $(BINIO_LIBS) ./core/libadplugcore.a
+LIBADD = ./core/libadplugcore.a $(BINIO_LIBS) -lstdc++
 
 SOURCES = adplug-xmms.cc
 
