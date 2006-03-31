@@ -1086,7 +1086,11 @@ playlist_eof_reached(void)
 {
     GList *plist_pos_list;
 
+    if ((cfg.no_playlist_advance && !cfg.repeat) || cfg.stopaftersong)
+      ip_data.stop = TRUE;
     bmp_playback_stop();
+    if ((cfg.no_playlist_advance && !cfg.repeat) || cfg.stopaftersong)  
+      ip_data.stop = FALSE;
 
     PLAYLIST_LOCK();
     plist_pos_list = find_playlist_position_list();
