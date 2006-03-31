@@ -563,7 +563,9 @@ ctrlsocket_check(void)
             bmp_playback_pause();
             break;
         case CMD_STOP:
+            ip_data.stop = TRUE;
             bmp_playback_stop();
+            ip_data.stop = FALSE;
             mainwin_clear_song_info();
             break;
         case CMD_PLAY_PAUSE:

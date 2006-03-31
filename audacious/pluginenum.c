@@ -357,8 +357,11 @@ plugin_system_cleanup(void)
 
     g_message("Shutting down plugin system");
 
-    if (bmp_playback_get_playing())
+    if (bmp_playback_get_playing()) {
+        ip_data.stop = TRUE;
         bmp_playback_stop();
+        ip_data.stop = FALSE;
+    }
 
     for (node = get_input_list(); node; node = g_list_next(node)) {
         ip = INPUT_PLUGIN(node->data);
