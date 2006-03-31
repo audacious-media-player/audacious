@@ -58,7 +58,7 @@ static GtkWidget *mpeg_level, *mpeg_bitrate, *mpeg_samplerate, *mpeg_flags,
     *mpeg_filesize;
 static GtkWidget *mpeg_level_val, *mpeg_bitrate_val, *mpeg_samplerate_val,
     *mpeg_error_val, *mpeg_copy_val, *mpeg_orig_val, *mpeg_emph_val,
-    *mpeg_frames_val, *mpeg_filesize_val;
+    *mpeg_frames_val, *mpeg_filesize_val, *mpeg_flags_val;
 
 GtkWidget *vbox, *hbox, *left_vbox, *table;
 GtkWidget *mpeg_frame, *mpeg_box;
@@ -648,7 +648,7 @@ mpg123_file_info_box(gchar * filename)
         GdkPixbuf *pixbuf;
         PangoAttrList *attrs;
         PangoAttribute *attr;
-        GtkWidget *test_table = gtk_table_new(2, 10, FALSE);
+        GtkWidget *test_table = gtk_table_new(2, 11, FALSE);
         GtkWidget *urk, *blark;
 #ifdef HAVE_ID3LIB
 	GtkWidget * tracknum_box, * comment_frame;
@@ -785,66 +785,79 @@ mpg123_file_info_box(gchar * filename)
         gtk_table_attach(GTK_TABLE(test_table), mpeg_filesize_val, 1, 2, 4,
                          5, GTK_FILL, GTK_FILL, 10, 2);
 
+        mpeg_flags = gtk_label_new(_("Mode:"));
+        gtk_misc_set_alignment(GTK_MISC(mpeg_flags), 1, 0.5);
+        gtk_label_set_justify(GTK_LABEL(mpeg_flags), GTK_JUSTIFY_RIGHT);
+        gtk_label_set_attributes(GTK_LABEL(mpeg_flags), attrs);
+        gtk_table_attach(GTK_TABLE(test_table), mpeg_flags, 0, 1, 5, 6,
+                         GTK_FILL, GTK_FILL, 5, 2);
+
+        mpeg_flags_val = gtk_label_new("");
+        gtk_misc_set_alignment(GTK_MISC(mpeg_flags_val), 0, 0);
+        gtk_label_set_justify(GTK_LABEL(mpeg_flags_val), GTK_JUSTIFY_LEFT);
+        gtk_table_attach(GTK_TABLE(test_table), mpeg_flags_val, 1, 2, 5,
+                         6, GTK_FILL, GTK_FILL, 10, 2);
+
         urk = gtk_label_new("");
         blark = gtk_label_new("");
         gtk_misc_set_alignment(GTK_MISC(urk), 1, 0.5);
         gtk_misc_set_alignment(GTK_MISC(blark), 0, 0);
 
-        gtk_table_attach(GTK_TABLE(test_table), urk, 0, 1, 5, 6, GTK_FILL,
+        gtk_table_attach(GTK_TABLE(test_table), urk, 0, 1, 6, 7, GTK_FILL,
                          GTK_FILL, 5, 5);
-        gtk_table_attach(GTK_TABLE(test_table), blark, 1, 2, 5, 6,
+        gtk_table_attach(GTK_TABLE(test_table), blark, 1, 2, 6, 7,
                          GTK_FILL, GTK_FILL, 10, 5);
 
         mpeg_error = gtk_label_new(_("Error Protection:"));
         gtk_misc_set_alignment(GTK_MISC(mpeg_error), 1, 0.5);
         gtk_label_set_justify(GTK_LABEL(mpeg_error), GTK_JUSTIFY_RIGHT);
         gtk_label_set_attributes(GTK_LABEL(mpeg_error), attrs);
-        gtk_table_attach(GTK_TABLE(test_table), mpeg_error, 0, 1, 6, 7,
+        gtk_table_attach(GTK_TABLE(test_table), mpeg_error, 0, 1, 7, 8,
                          GTK_FILL, GTK_FILL, 5, 0);
 
         mpeg_error_val = gtk_label_new("");
         gtk_misc_set_alignment(GTK_MISC(mpeg_error_val), 0, 0);
         gtk_label_set_justify(GTK_LABEL(mpeg_error_val), GTK_JUSTIFY_LEFT);
-        gtk_table_attach(GTK_TABLE(test_table), mpeg_error_val, 1, 2, 6, 7,
+        gtk_table_attach(GTK_TABLE(test_table), mpeg_error_val, 1, 2, 7, 8,
                          GTK_FILL, GTK_FILL, 10, 2);
 
         mpeg_copy = gtk_label_new(_("Copyright:"));
         gtk_misc_set_alignment(GTK_MISC(mpeg_copy), 1, 0.5);
         gtk_label_set_justify(GTK_LABEL(mpeg_copy), GTK_JUSTIFY_RIGHT);
         gtk_label_set_attributes(GTK_LABEL(mpeg_copy), attrs);
-        gtk_table_attach(GTK_TABLE(test_table), mpeg_copy, 0, 1, 7, 8,
+        gtk_table_attach(GTK_TABLE(test_table), mpeg_copy, 0, 1, 8, 9,
                          GTK_FILL, GTK_FILL, 5, 2);
 
         mpeg_copy_val = gtk_label_new("");
         gtk_misc_set_alignment(GTK_MISC(mpeg_copy_val), 0, 0);
         gtk_label_set_justify(GTK_LABEL(mpeg_copy_val), GTK_JUSTIFY_LEFT);
-        gtk_table_attach(GTK_TABLE(test_table), mpeg_copy_val, 1, 2, 7, 8,
+        gtk_table_attach(GTK_TABLE(test_table), mpeg_copy_val, 1, 2, 8, 9,
                          GTK_FILL, GTK_FILL, 10, 2);
 
         mpeg_orig = gtk_label_new(_("Original:"));
         gtk_misc_set_alignment(GTK_MISC(mpeg_orig), 1, 0.5);
         gtk_label_set_justify(GTK_LABEL(mpeg_orig), GTK_JUSTIFY_RIGHT);
         gtk_label_set_attributes(GTK_LABEL(mpeg_orig), attrs);
-        gtk_table_attach(GTK_TABLE(test_table), mpeg_orig, 0, 1, 8, 9,
+        gtk_table_attach(GTK_TABLE(test_table), mpeg_orig, 0, 1, 9, 10,
                          GTK_FILL, GTK_FILL, 5, 2);
 
         mpeg_orig_val = gtk_label_new("");
         gtk_misc_set_alignment(GTK_MISC(mpeg_orig_val), 0, 0);
         gtk_label_set_justify(GTK_LABEL(mpeg_orig_val), GTK_JUSTIFY_LEFT);
-        gtk_table_attach(GTK_TABLE(test_table), mpeg_orig_val, 1, 2, 8, 9,
+        gtk_table_attach(GTK_TABLE(test_table), mpeg_orig_val, 1, 2, 9, 10,
                          GTK_FILL, GTK_FILL, 10, 2);
 
         mpeg_emph = gtk_label_new(_("Emphasis:"));
         gtk_misc_set_alignment(GTK_MISC(mpeg_emph), 1, 0.5);
         gtk_label_set_justify(GTK_LABEL(mpeg_emph), GTK_JUSTIFY_RIGHT);
         gtk_label_set_attributes(GTK_LABEL(mpeg_emph), attrs);
-        gtk_table_attach(GTK_TABLE(test_table), mpeg_emph, 0, 1, 9, 10,
+        gtk_table_attach(GTK_TABLE(test_table), mpeg_emph, 0, 1, 10, 11,
                          GTK_FILL, GTK_FILL, 5, 2);
 
         mpeg_emph_val = gtk_label_new("");
         gtk_misc_set_alignment(GTK_MISC(mpeg_emph_val), 0, 0);
         gtk_label_set_justify(GTK_LABEL(mpeg_emph_val), GTK_JUSTIFY_LEFT);
-        gtk_table_attach(GTK_TABLE(test_table), mpeg_emph_val, 1, 2, 9, 10,
+        gtk_table_attach(GTK_TABLE(test_table), mpeg_emph_val, 1, 2, 10, 11,
                          GTK_FILL, GTK_FILL, 10, 2);
 
 
@@ -1146,6 +1159,9 @@ mpg123_file_info_box(gchar * filename)
     gtk_label_set_text(GTK_LABEL(mpeg_filesize), _("File size:"));
     gtk_label_set_text(GTK_LABEL(mpeg_filesize_val), _("N/A"));
 
+    gtk_label_set_text(GTK_LABEL(mpeg_flags), _("Mode:"));
+    gtk_label_set_text(GTK_LABEL(mpeg_flags_val), _("N/A"));
+
     if (str_has_prefix_nocase(filename, "http://")) {
         file_info_http(filename);
         return;
@@ -1268,6 +1284,7 @@ fill_entries(GtkWidget * w, gpointer data)
       label_set_text(mpeg_emph_val, _("%s"), emphasis[frm.emphasis]);
       label_set_text(mpeg_frames_val, _("%d"), num_frames);
       label_set_text(mpeg_filesize_val, _("%lu Bytes"), vfs_ftell(fh));
+      label_set_text(mpeg_flags_val, _("%s"), channel_mode_name(frm.mode));
       g_free(buf);
     }
     vfs_fclose(fh);
@@ -1389,6 +1406,7 @@ fill_entries(GtkWidget * w, gpointer data)
             label_set_text(mpeg_emph_val, _("%s"), emphasis[frm.emphasis]);
             label_set_text(mpeg_frames_val, _("%d"), num_frames);
             label_set_text(mpeg_filesize_val, _("%lu Bytes"), vfs_ftell(fh));
+            label_set_text(mpeg_flags_val, _("%s"), channel_mode_name(frm.mode));
             g_free(buf);
         }
         vfs_fclose(fh);
