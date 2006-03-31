@@ -245,8 +245,11 @@ play_queued(void)
 void
 playlist_clear(void)
 {
-    if (bmp_playback_get_playing())
+    if (bmp_playback_get_playing()) {
+        ip_data.stop = TRUE;
         bmp_playback_stop();
+        ip_data.stop = FALSE;
+    }
 
     PLAYLIST_LOCK();
 
@@ -287,7 +290,9 @@ playlist_delete_node(GList * node, gboolean * set_info_text,
 
         if (bmp_playback_get_playing()) {
             PLAYLIST_UNLOCK();
+            ip_data.stop = TRUE;
             bmp_playback_stop();
+            ip_data.stop = FALSE;
             PLAYLIST_LOCK();
             *restart_playing = TRUE;
         }
