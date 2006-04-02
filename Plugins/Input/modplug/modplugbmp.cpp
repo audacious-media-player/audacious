@@ -14,6 +14,7 @@
 #include "stddefs.h"
 #include "archive/open.h"
 #include "libaudacious/configdb.h"
+#include "libaudacious/vfs.h"
 extern "C" {
 #include "audacious/output.h"
 }
@@ -95,6 +96,96 @@ bool ModplugXMMS::CanPlayFile(const string& aFilename)
 	string lExt;
 	uint32 lPos;
 
+	VFSFile *file;
+	gchar magic[4];
+
+	if ((file = vfs_fopen(aFilename.c_str(), "rb"))) {
+	vfs_fread(magic, 1, 4, file);
+	if (!memcmp(magic, UMX_MAGIC, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	if (!memcmp(magic, XM_MAGIC, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	if (!memcmp(magic, M669_MAGIC, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	if (!memcmp(magic, IT_MAGIC, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	if (!memcmp(magic, MTM_MAGIC, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	if (!memcmp(magic, PSM_MAGIC, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	vfs_fseek(file, 44, SEEK_SET);
+	vfs_fread(magic, 1, 4, file);
+	if (!memcmp(magic, S3M_MAGIC, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	vfs_fseek(file, 1080, SEEK_SET);
+	vfs_fread(magic, 1, 4, file);
+	if (!memcmp(magic, MOD_MAGIC_PROTRACKER4, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	if (!memcmp(magic, MOD_MAGIC_PROTRACKER4X, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	if (!memcmp(magic, MOD_MAGIC_STARTRACKER4, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	if (!memcmp(magic, MOD_MAGIC_STARTRACKER8, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	if (!memcmp(magic, MOD_MAGIC_FASTTRACKER4, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	if (!memcmp(magic, MOD_MAGIC_FASTTRACKER6, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	if (!memcmp(magic, MOD_MAGIC_FASTTRACKER8, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	if (!memcmp(magic, MOD_MAGIC_OKTALYZER8, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	if (!memcmp(magic, MOD_MAGIC_OKTALYZER8X, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	if (!memcmp(magic, MOD_MAGIC_TAKETRACKER16, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	if (!memcmp(magic, MOD_MAGIC_TAKETRACKER32, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	if (!memcmp(magic, MOD_MAGIC_15INSTRUMENT, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+
+	/* We didn't find the magic bytes, fall back to extension check */
+	vfs_fclose(file);
+	} /* end of vfs_open main if statement */
+
 	lPos = aFilename.find_last_of('.');
 	if((int)lPos == -1)
 		return false;
@@ -102,8 +193,6 @@ bool ModplugXMMS::CanPlayFile(const string& aFilename)
 	for(uint32 i = 0; i < lExt.length(); i++)
 		lExt[i] = tolower(lExt[i]);
 
-	if (lExt == ".669")
-		return true;
 	if (lExt == ".amf")
 		return true;
 	if (lExt == ".ams")
@@ -116,35 +205,17 @@ bool ModplugXMMS::CanPlayFile(const string& aFilename)
 		return true;
 	if (lExt == ".far")
 		return true;
-	if (lExt == ".it")
-		return true;
 	if (lExt == ".mdl")
 		return true;
 	if (lExt == ".med")
-		return true;
-	if (lExt == ".mod")
-		return true;
-	if (lExt == ".mtm")
-		return true;
-	if (lExt == ".okt")
-		return true;
-	if (lExt == ".ptm")
-		return true;
-	if (lExt == ".s3m")
 		return true;
 	if (lExt == ".stm")
 		return true;
 	if (lExt == ".ult")
 		return true;
-	if (lExt == ".umx")      //Unreal rocks!
-		return true;
-	if (lExt == ".xm")
-		return true;
 	if (lExt == ".j2b")
 		return true;
 	if (lExt == ".mt2")
-		return true;
-	if (lExt == ".psm")
 		return true;
 
 	if (lExt == ".mdz")
