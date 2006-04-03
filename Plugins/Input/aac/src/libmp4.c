@@ -187,11 +187,11 @@ static int	mp4_IsOurFile(char *filename)
 {
   VFSFile *file;
   gchar* extension;
-  gchar magic[4];
+  gchar magic[8];
 
   extension = strrchr(filename, '.');
   if ((file = vfs_fopen(filename, "rb"))) {
-      vfs_fread(magic, 1, 4, file);
+      vfs_fread(magic, 1, 8, file);
       if (!memcmp(magic, AAC_MAGIC, 4)) {
            vfs_fclose(file);
            return 1;
@@ -207,8 +207,7 @@ static int	mp4_IsOurFile(char *filename)
 	   else
 	      return 0;
       }
-      vfs_fread(magic, 1, 4, file);
-      if (!memcmp(magic, "ftyp", 4)) {
+      if (!memcmp(&magic[4], "ftyp", 4)) {
            vfs_fclose(file);
            return 1;
       }
