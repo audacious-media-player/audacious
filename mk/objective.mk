@@ -87,6 +87,11 @@ clean:
 	fi
 	$(MAKE) clean-posthook
 	$(RM) *.o *.lo *.so *.a *.sl
+	@if test "$(OBJECTIVE_BINS)" != "none"; then \
+		for i in $(OBJECTIVE_BINS); do \
+			$(RM) $$i; \
+		done; \
+	fi
 	@if test $(VERBOSITY) -gt 0; then \
 		echo "[all objectives cleaned]"; \
 	fi
