@@ -25,7 +25,7 @@
 #include "avcodec.h"
 #include "avformat.h"
 
-void avcodec_register_all(void)
+void _avcodec_register_all(void)
 {
 	static int inited = 0;
     
@@ -36,11 +36,14 @@ void avcodec_register_all(void)
 	register_avcodec(&shorten_decoder);
 }
 
-void av_register_all(void)
+void _av_register_all(void)
 {
+        puts("calling avcodec_init()\n");
 	avcodec_init();
-	avcodec_register_all();
-	raw_init();
+        puts("calling avcodec_register_all()\n");
+	_avcodec_register_all();
+        puts("calling raw_init()\n");
+	_raw_init();
 
 	/* file protocols */
 	register_protocol(&file_protocol);

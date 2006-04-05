@@ -432,7 +432,7 @@ int wav_init(void);
 /* raw.c */
 int pcm_read_seek(AVFormatContext *s, 
                   int stream_index, int64_t timestamp);
-int raw_init(void);
+int _raw_init(void);
 
 /* mp3.c */
 int mp3_init(void);
@@ -504,7 +504,7 @@ AVOutputFormat *guess_format(const char *short_name,
 void av_hex_dump(FILE *f, uint8_t *buf, int size);
 void av_pkt_dump(FILE *f, AVPacket *pkt, int dump_payload);
 
-void av_register_all(void);
+void _av_register_all(void);
 
 typedef struct FifoBuffer {
     uint8_t *buffer;

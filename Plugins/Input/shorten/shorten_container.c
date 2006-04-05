@@ -76,8 +76,9 @@ AVInputFormat shorten_iformat = {
     .extensions = "shn",
 };
 
-int raw_init(void)
+int _raw_init(void)
 {
+    puts("initialized shorten container code");
     av_register_input_format(&shorten_iformat);
     return 0;
 }
