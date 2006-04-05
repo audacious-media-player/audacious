@@ -136,11 +136,6 @@ static void shn_about(void)
 
 static void shn_init(void)
 {
-    puts("init called\n");
-#if 0
-    avcodec_init();
-    avcodec_register_all();
-#endif
     _av_register_all();
 }
 
@@ -150,7 +145,6 @@ static int shn_is_our_file(char *filename)
 
     if(av_open_input_file(&ic2, str_twenty_to_space(filename), NULL, 0, NULL) < 0)
     {
-	puts("Error");
 	return 0;
     }
 

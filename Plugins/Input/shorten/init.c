@@ -38,11 +38,8 @@ void _avcodec_register_all(void)
 
 void _av_register_all(void)
 {
-        puts("calling avcodec_init()\n");
 	avcodec_init();
-        puts("calling avcodec_register_all()\n");
 	_avcodec_register_all();
-        puts("calling raw_init()\n");
 	_raw_init();
 
 	/* file protocols */
