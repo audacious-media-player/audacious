@@ -145,7 +145,11 @@ static int shn_is_our_file(char *filename)
 {
     AVCodec *codec2;
 
-    if(av_open_input_file(&ic2, str_twenty_to_space(filename), NULL, 0, NULL) < 0) return 0;
+    if(av_open_input_file(&ic2, str_twenty_to_space(filename), NULL, 0, NULL) < 0)
+    {
+	puts("Error");
+	return 0;
+    }
 
     for(shn_idx2 = 0; shn_idx2 < ic2->nb_streams; shn_idx2++) {
         c2 = &ic2->streams[shn_idx2]->codec;
@@ -155,6 +159,8 @@ static int shn_is_our_file(char *filename)
     av_find_stream_info(ic2);
 
     codec2 = avcodec_find_decoder(c2->codec_id);
+
+    printf("%d\n", c2->codec_id);
 
     if(!codec2) {
         av_close_input_file(ic2);

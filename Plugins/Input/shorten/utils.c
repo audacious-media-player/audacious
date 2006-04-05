@@ -630,4 +630,3 @@ void av_log_set_callback(void (*callback)(AVCodecContext*, int, const char*, va_
 {
     av_log_callback = callback;
 }
-

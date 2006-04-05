@@ -40,6 +40,7 @@ void av_register_all(void)
 {
 	avcodec_init();
 	avcodec_register_all();
+	raw_init();
 
 	/* file protocols */
 	register_protocol(&file_protocol);

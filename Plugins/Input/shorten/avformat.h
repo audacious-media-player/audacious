@@ -56,6 +56,7 @@ static inline void av_init_packet(AVPacket *pkt)
 }
 
 int av_new_packet(AVPacket *pkt, int size);
+int av_get_packet(ByteIOContext *s, AVPacket *pkt, int size);
 int av_dup_packet(AVPacket *pkt);
 
 /**
