@@ -904,6 +904,7 @@ AC_CONFIG_FILES([
 	Plugins/General/scrobbler/Makefile
 	Plugins/Effect/Makefile
 	Plugins/Effect/ladspa/Makefile
+	Plugins/Effect/stereo_plugin/Makefile
 	Plugins/Effect/voice_removal/Makefile
         po/Makefile.in
         intl/Makefile
