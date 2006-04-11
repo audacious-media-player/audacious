@@ -16,11 +16,14 @@
 
 #include "audacious/plugin.h"
 
-/* Module files have their magic deep inside the file, at offset 1080; source: http://www.onicos.com/staff/iz/formats/mod.html */
+/* Module files have their magic deep inside the file, at offset 1080; source: http://www.onicos.com/staff/iz/formats/mod.html and information by Michael Doering from UADE */
 #define MOD_MAGIC_PROTRACKER4	(unsigned char [4]) { 0x4D, 0x2E, 0x4B, 0x2E }  // "M.K." - Protracker 4 channel
 #define MOD_MAGIC_PROTRACKER4X	(unsigned char [4]) { 0x4D, 0x21, 0x4B, 0x21 }  // "M!K!" - Protracker 4 channel
-#define MOD_MAGIC_STARTRACKER4	(unsigned char [4]) { 0x46, 0x4C, 0x54, 0x34 }  // "FLT4" - Startracker 4 channel
-#define MOD_MAGIC_STARTRACKER8	(unsigned char [4]) { 0x46, 0x4C, 0x54, 0x38 }  // "FLT8" - Startracker 8 channel
+#define MOD_MAGIC_NOISETRACKER	(unsigned char [4]) { 0x4D, 0x26, 0x4B, 0x21 }  // "M&K!" - Noisetracker 1.3 by Kaktus & Mahoney
+#define MOD_MAGIC_STARTRACKER4	(unsigned char [4]) { 0x46, 0x4C, 0x54, 0x34 }  // "FLT4" - Startracker 4 channel (Startrekker/AudioSculpture)
+#define MOD_MAGIC_STARTRACKER8	(unsigned char [4]) { 0x46, 0x4C, 0x54, 0x38 }  // "FLT8" - Startracker 8 channel (Startrekker/AudioSculpture) 
+#define MOD_MAGIC_STARTRACKER4X	(unsigned char [4]) { 0x45, 0x58, 0x30, 0x34 }  // "EX04" - Startracker 4 channel (Startrekker/AudioSculpture)
+#define MOD_MAGIC_STARTRACKER8X	(unsigned char [4]) { 0x45, 0x58, 0x30, 0x38 }  // "EX08" - Startracker 8 channel (Startrekker/AudioSculpture) 
 #define MOD_MAGIC_FASTTRACKER4	(unsigned char [4]) { 0x34, 0x43, 0x48, 0x4E }  // "4CHN" - Fasttracker 4 channel
 #define MOD_MAGIC_FASTTRACKER6	(unsigned char [4]) { 0x36, 0x43, 0x48, 0x4E }  // "6CHN" - Fasttracker 6 channel
 #define MOD_MAGIC_FASTTRACKER8	(unsigned char [4]) { 0x38, 0x43, 0x48, 0x4E }  // "8CHN" - Fasttracker 8 channel
@@ -58,6 +61,7 @@ public:
 		gboolean   mReverb;
 		gboolean   mFastinfo;
 		gboolean   mUseFilename;
+		gboolean   mGrabAmigaMOD;
 		gboolean   mPreamp;
 	
 		gint       mChannels;

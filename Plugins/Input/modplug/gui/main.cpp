@@ -86,6 +86,11 @@ void ShowConfigureWindow(const ModplugXMMS::Settings& aProps)
 	else
 		gtk_toggle_button_set_active((GtkToggleButton*)lookup_widget(ConfigWin, "fxNR"), FALSE);
 	
+	if(aProps.mGrabAmigaMOD)
+		gtk_toggle_button_set_active((GtkToggleButton*)lookup_widget(ConfigWin, "fxAmigaMOD"), TRUE);
+	else
+		gtk_toggle_button_set_active((GtkToggleButton*)lookup_widget(ConfigWin, "fxAmigaMOD"), FALSE);
+	
 	if(aProps.mFastinfo)
 		gtk_toggle_button_set_active((GtkToggleButton*)lookup_widget(ConfigWin, "fxFastInfo"), TRUE);
 	else

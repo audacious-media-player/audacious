@@ -41,6 +41,7 @@ ModplugXMMS::Settings::Settings()
 	mVolumeRamp     = true;
 	mFastinfo       = true;
 	mUseFilename    = false;
+	mGrabAmigaMOD   = true;
 
 	mChannels       = 2;
 	mFrequency      = 44100;
@@ -74,6 +75,7 @@ void ModplugXMMS::Init(void)
         bmp_cfg_db_get_bool(db,"modplug","Reverb", &mModProps.mReverb);
         bmp_cfg_db_get_bool(db,"modplug","FastInfo", &mModProps.mFastinfo);
         bmp_cfg_db_get_bool(db,"modplug","UseFileName", &mModProps.mUseFilename);
+        bmp_cfg_db_get_bool(db,"modplug","GrabAmigaMOD", &mModProps.mGrabAmigaMOD);
         bmp_cfg_db_get_bool(db,"modplug","PreAmp", &mModProps.mPreamp);
         bmp_cfg_db_get_float(db,"modplug","PreAmpLevel", &mModProps.mPreampLevel);
         bmp_cfg_db_get_int(db,"modplug", "Channels", &mModProps.mChannels);
@@ -131,6 +133,7 @@ bool ModplugXMMS::CanPlayFile(const string& aFilename)
 		vfs_fclose(file);
 		return 1;
 	}
+	if(mModProps.mGrabAmigaMOD) {
 	vfs_fseek(file, 1080, SEEK_SET);
 	vfs_fread(magic, 1, 4, file);
 	if (!memcmp(magic, MOD_MAGIC_PROTRACKER4, 4)) {
@@ -141,11 +144,23 @@ bool ModplugXMMS::CanPlayFile(const string& aFilename)
 		vfs_fclose(file);
 		return 1;
 	}
+	if (!memcmp(magic, MOD_MAGIC_NOISETRACKER, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
 	if (!memcmp(magic, MOD_MAGIC_STARTRACKER4, 4)) {
 		vfs_fclose(file);
 		return 1;
 	}
 	if (!memcmp(magic, MOD_MAGIC_STARTRACKER8, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	if (!memcmp(magic, MOD_MAGIC_STARTRACKER4X, 4)) {
+		vfs_fclose(file);
+		return 1;
+	}
+	if (!memcmp(magic, MOD_MAGIC_STARTRACKER8X, 4)) {
 		vfs_fclose(file);
 		return 1;
 	}
@@ -181,6 +196,7 @@ bool ModplugXMMS::CanPlayFile(const string& aFilename)
 		vfs_fclose(file);
 		return 1;
 	}
+	} /* end of if(mModProps.mGrabAmigaMOD) */
 
 	/* We didn't find the magic bytes, fall back to extension check */
 	vfs_fclose(file);
@@ -206,8 +222,6 @@ bool ModplugXMMS::CanPlayFile(const string& aFilename)
 	if (lExt == ".far")
 		return true;
 	if (lExt == ".mdl")
-		return true;
-	if (lExt == ".med")
 		return true;
 	if (lExt == ".stm")
 		return true;
@@ -769,6 +783,7 @@ void ModplugXMMS::SetModProps(const Settings& aModProps)
         bmp_cfg_db_set_bool(db,"modplug","Reverb", mModProps.mReverb);
         bmp_cfg_db_set_bool(db,"modplug","FastInfo", mModProps.mFastinfo);
         bmp_cfg_db_set_bool(db,"modplug","UseFileName", mModProps.mUseFilename);
+        bmp_cfg_db_set_bool(db,"modplug","GrabAmigaMOD", mModProps.mGrabAmigaMOD);
         bmp_cfg_db_set_bool(db,"modplug","PreAmp", mModProps.mPreamp);
         bmp_cfg_db_set_float(db,"modplug","PreAmpLevel", mModProps.mPreampLevel);
         bmp_cfg_db_set_int(db,"modplug", "Channels", mModProps.mChannels);

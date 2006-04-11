@@ -58,6 +58,10 @@ on_config_apply_clicked                (GtkButton       *button,
 		lProps.mNoiseReduction = true;
 	else
 		lProps.mNoiseReduction = false;
+	if(gtk_toggle_button_get_active((GtkToggleButton*)lookup_widget((GtkWidget*)button, "fxAmigaMOD")))
+		lProps.mGrabAmigaMOD = true;
+	else
+		lProps.mGrabAmigaMOD = false;
 	if(gtk_toggle_button_get_active((GtkToggleButton*)lookup_widget((GtkWidget*)button, "fxFastInfo")))
 		lProps.mFastinfo       = true;
 	else

@@ -59,6 +59,7 @@ create_Config (void)
   GtkWidget *fxFastInfo;
   GtkWidget *vbox9;
   GtkWidget *fxNR;
+  GtkWidget *fxAmigaMOD;
   GtkWidget *frame5;
   GtkWidget *hbox4;
   GtkWidget *fxReverb;
@@ -361,6 +362,14 @@ create_Config (void)
   gtk_widget_show (fxNR);
   gtk_box_pack_start (GTK_BOX (vbox9), fxNR, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (fxNR), TRUE);
+
+  fxAmigaMOD = gtk_check_button_new_with_label (_("Play Amiga MOD"));
+  gtk_widget_ref (fxAmigaMOD);
+  gtk_object_set_data_full (GTK_OBJECT (Config), "fxAmigaMOD", fxAmigaMOD,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (fxAmigaMOD);
+  gtk_box_pack_start (GTK_BOX (vbox9), fxAmigaMOD, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (fxAmigaMOD), TRUE);
 
   frame5 = gtk_frame_new (_("Reverb"));
   gtk_widget_ref (frame5);
