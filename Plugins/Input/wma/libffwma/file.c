@@ -22,52 +22,61 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <sys/time.h>
+#include "libaudacious/vfs.h"
 
 /* standard file protocol */
 
 static int file_open(URLContext *h, const char *filename, int flags)
 {
-    int access;
-    int fd;
+    VFSFile *file;
 
     strstart(filename, "file:", &filename);
 
     if (flags & URL_WRONLY) {
-        access = O_CREAT | O_TRUNC | O_WRONLY;
+	file = vfs_fopen(filename, "wb");
     } else {
-        access = O_RDONLY;
+	file = vfs_fopen(filename, "rb");
     }
     
-    fd = open(filename, access, 0666);
-    if (fd < 0)
+    if (file == NULL)
         return -ENOENT;
-    h->priv_data = (void *)(long)fd;
+    h->priv_data = file;
     return 0;
 }
 
 static int file_read(URLContext *h, unsigned char *buf, int size)
 {
-    int fd = (int)(long)h->priv_data;
-    return read(fd, buf, size);
+    VFSFile *file;
+    file = h->priv_data;
+    return vfs_fread(buf, 1, size, file);
 }
 
 static int file_write(URLContext *h, unsigned char *buf, int size)
 {
-    int fd = (int)(long)h->priv_data;
-    return write(fd, buf, size);
+    VFSFile *file;
+    file = h->priv_data;
+    return vfs_fwrite(buf, 1, size, file);
 }
 
 /* XXX: use llseek */
 static offset_t file_seek(URLContext *h, offset_t pos, int whence)
 {
-    int fd = (int)(long)h->priv_data;
-    return lseek(fd, pos, whence);
+    int result = 0;
+    VFSFile *file;
+    file = h->priv_data;
+    result = vfs_fseek(file, pos, whence);
+    if (result == 0)
+	result = vfs_ftell(file);
+    else
+        result = -1;
+    return result;
 }
 
 static int file_close(URLContext *h)
 {
-    int fd = (int)(long)h->priv_data;
-    return close(fd);
+    VFSFile *file;
+    file = h->priv_data;
+    return vfs_fclose(file);
 }
 
 URLProtocol file_protocol = {
