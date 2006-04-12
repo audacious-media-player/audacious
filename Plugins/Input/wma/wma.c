@@ -31,10 +31,11 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 
-#include <audacious/plugin.h>
-#include <audacious/output.h>
-#include <libaudacious/util.h>
-#include <libaudacious/titlestring.h>
+#include "audacious/plugin.h"
+#include "audacious/output.h"
+#include "libaudacious/util.h"
+#include "libaudacious/titlestring.h"
+#include "libaudacious/vfs.h"
 
 #include "avcodec.h"
 #include "avformat.h"
@@ -468,7 +469,7 @@ static void wma_file_info_box (char *filename)
           *playtime,
           *samplerate,
           *filesize;
-    FILE *f;
+    VFSFile *f;
     if (dialog) {
         (void)printf(_("Info dialog is already opened!\n"));
         return;
@@ -511,14 +512,14 @@ static void wma_file_info_box (char *filename)
     samplerate = g_strdup_printf(_("%d Hz"), s->sample_rate);
 
     /* filesize */
-    f = fopen(filename, "rb");
+    f = vfs_fopen(filename, "rb");
 
     if (f == NULL)
         return;
 
-    fseek(f, 0, SEEK_END);
-    filesize = g_strdup_printf(_("%lu Bytes"), ftell(f));
-    fclose(f);
+    vfs_fseek(f, 0, SEEK_END);
+    filesize = g_strdup_printf(_("%lu Bytes"), vfs_ftell(f));
+    vfs_fclose(f);
 
     dialog = gtk_dialog_new();
 
