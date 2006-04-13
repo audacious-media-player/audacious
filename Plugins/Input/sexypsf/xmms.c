@@ -72,6 +72,7 @@ static int is_our_file(gchar *filename) {
 			vfs_fclose(file);
 			return 1;
 		}
+		vfs_fclose(file);
 	}
 	return 0;
 }
