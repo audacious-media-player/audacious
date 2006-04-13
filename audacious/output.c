@@ -356,6 +356,7 @@ produce_audio(gint time,        /* position             */
     guint myorder = G_BYTE_ORDER == G_LITTLE_ENDIAN ? FMT_S16_LE : FMT_S16_BE;
     int caneq = (fmt == FMT_S16_NE || fmt == myorder);
     OutputPlugin *op = get_current_output_plugin();
+    int writeoffs;
 
     if (!caneq && cfg.equalizer_active) {    /* wrong byte order         */
         byteswap(length, ptr);               /*  so convert              */
@@ -380,12 +381,23 @@ produce_audio(gint time,        /* position             */
     /* do vis plugin(s) */
     input_add_vis_pcm(time, fmt, nch, length, ptr);
 
-    while (op->buffer_free() < length) { /* wait output buf          */
-        if (going && !*going)            /*   thread stopped?        */
-            return;                      /*     so finish            */
+    writeoffs = 0;
+    while (writeoffs < length) {
+	int writable = length - writeoffs;
 
-        g_usleep(10000);                 /*   else sleep for retry   */
-    }                                    
+	if (writable > 2048)
+	    writable = 2048;
 
-    op->write_audio(ptr, length);        /* do output                */
+	while (op->buffer_free() < writable) { /* wait output buf          */
+	    if (going && !*going)              /*   thread stopped?        */
+		return;                        /*     so finish            */
+
+	    g_usleep(10000);                   /*   else sleep for retry   */
+	}
+
+	/* do output */
+	op->write_audio(((guint8 *) ptr) + writeoffs, writable);
+
+	writeoffs += writable;
+    }
 }
