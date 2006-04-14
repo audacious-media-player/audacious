@@ -117,6 +117,7 @@ create_Config (void)
   gtk_window_set_policy (GTK_WINDOW (Config), FALSE, FALSE, FALSE);
 
   vbox2 = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width(GTK_CONTAINER(vbox2),5);
   gtk_widget_ref (vbox2);
   gtk_object_set_data_full (GTK_OBJECT (Config), "vbox2", vbox2,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -128,8 +129,8 @@ create_Config (void)
   gtk_object_set_data_full (GTK_OBJECT (Config), "notebook1", notebook1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (notebook1);
-  gtk_box_pack_start (GTK_BOX (vbox2), notebook1, TRUE, TRUE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (notebook1), 6);
+  gtk_box_pack_start (GTK_BOX (vbox2), notebook1, TRUE, TRUE, 5);
+  gtk_container_set_border_width (GTK_CONTAINER (notebook1), 0);
 
   vbox3 = gtk_vbox_new (FALSE, 0);
   gtk_widget_ref (vbox3);
@@ -710,7 +711,7 @@ create_Config (void)
   gtk_widget_show (hbuttonbox2);
   gtk_box_pack_start (GTK_BOX (vbox2), hbuttonbox2, TRUE, TRUE, 0);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (hbuttonbox2), GTK_BUTTONBOX_END);
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbuttonbox2), 0);
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbuttonbox2), 5);
 
   config_ok = gtk_button_new_with_label (_("OK"));
   gtk_widget_ref (config_ok);
