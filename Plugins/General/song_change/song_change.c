@@ -106,9 +106,6 @@ static void save_and_close(GtkWidget *w, gpointer data)
 	bmp_cfg_db_set_string(db, "song_change", "cmd_line_after", cmd_after);
 	bmp_cfg_db_set_string(db, "song_change", "cmd_line_end", cmd_end);
 	bmp_cfg_db_close(db);
-	g_free(cmd);
-	g_free(cmd_after);
-	g_free(cmd_end);
 
 	if (timeout_tag)
 	{
@@ -120,6 +117,10 @@ static void save_and_close(GtkWidget *w, gpointer data)
 		cmd_line_end = g_strdup(cmd_end);
 	}
 	gtk_widget_destroy(configure_win);
+
+	g_free(cmd);
+	g_free(cmd_after);
+	g_free(cmd_end);
 }
 
 static void warn_user(void)
