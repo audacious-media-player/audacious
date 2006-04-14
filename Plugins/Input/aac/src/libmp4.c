@@ -361,13 +361,6 @@ static int my_decode_mp4( char *filename, MP4FileHandle mp4file )
 		MP4GetMetadataGenre(mp4file, &input->genre);
 		MP4GetMetadataComment(mp4file, &input->comment);
 
-/*
-		printf( "%s\n", input->track_name );
-		printf( "%s\n", input->performer );
-		printf( "%s\n", input->album_name );
-		printf( "%s\n", input->genre );
-		printf( "%s\n", input->comment );
-*/
 		xmmstitle = xmms_get_titlestring(xmms_get_gentitle_format(), 
 						 input);
 
@@ -672,8 +665,6 @@ static void *mp4Decode( void *args )
 #endif
 
 	strncpy( filename, url, 254 );
-
-	printf( "Opening %s.\n", filename );
 
 	g_static_mutex_lock(&mutex);
 	seekPosition= -1;

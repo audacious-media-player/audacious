@@ -118,7 +118,6 @@ void getMP4info(char* file)
   for(i=0;i<numTracks;i++){
     MP4TrackId trackID = MP4FindTrackId(mp4file, i, NULL, 0);
     const char *trackType = MP4GetTrackType(mp4file, trackID);
-    printf("Track %d, %s", trackID, trackType);
     if(!strcmp(trackType, MP4_AUDIO_TRACK_TYPE)){//we found audio track !
       int j=0;
       u_int8_t audiotype = MP4GetTrackAudioMpeg4Type(mp4file, trackID);
