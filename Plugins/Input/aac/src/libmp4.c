@@ -401,9 +401,6 @@ static int my_decode_mp4( char *filename, MP4FileHandle mp4file )
 				MP4GetTrackBitRate( mp4file, mp4track ), 
 				samplerate,channels);
 
-		g_print("MP4 - %d channels @ %d Hz\n", channels, 
-			(int)samplerate);
-
 		while ( buffer_playing ) {
 			void*			sampleBuffer;
 			faacDecFrameInfo	frameInfo;    
