@@ -117,11 +117,11 @@ void xs_about(void)
 	gtk_widget_show(about_text);
 	gtk_container_add(GTK_CONTAINER(about_scrwin), about_text);
 	gtk_widget_set_usize(about_text, -2, 100);
-	gtk_text_buffer_set_text( GTK_TEXT_BUFFER(gtk_text_view_get_buffer(GTK_TEXT_VIEW(about_text))), g_locale_to_utf8(
+	gtk_text_buffer_set_text( GTK_TEXT_BUFFER(gtk_text_view_get_buffer(GTK_TEXT_VIEW(about_text))),
 			"\n"
 			"(C) Copyright 1999-2005\n"
 			"\tTecnic Software productions (TNSP)\n"
-			"\n" "Programming and design\n" "\tMatti 'ccr' Hämäläinen\n" "\n"
+			"\n" "Programming and design\n" "\tMatti 'ccr' H\303\244m\303\244l\303\244inen\n" "\n"
 #ifdef HAVE_SIDPLAY1
 			"libSIDPlay1 created by\n" "\tMichael Schwendt\n" "\n"
 #endif
@@ -145,7 +145,7 @@ void xs_about(void)
 			"Special thanks\n"
 			"\tGerfried 'Alfie' Fuchs\n"
 			"\tAndreas 'mrsid' Varga\n" "\tAll the betatesters.\n" "\tAll the users!\n",
-			-1, NULL, NULL, NULL), -1);
+			-1);
 
 	alignment6 = gtk_alignment_new(0.5, 0.5, 0.18, 1);
 	gtk_widget_set_name(alignment6, "alignment6");
