@@ -117,7 +117,7 @@ dnl These plugins are always built.
 
 INPUT_PLUGINS="cdaudio tonegen console sexypsf wav"
 OUTPUT_PLUGINS="disk_writer"
-EFFECT_PLUGINS="ladspa voice_removal"
+EFFECT_PLUGINS="audiocompress ladspa voice_removal"
 GENERAL_PLUGINS="song_change"
 VISUALIZATION_PLUGINS="blur_scope"
 
@@ -903,6 +903,7 @@ AC_CONFIG_FILES([
 	Plugins/General/lirc/Makefile
 	Plugins/General/scrobbler/Makefile
 	Plugins/Effect/Makefile
+	Plugins/Effect/audiocompress/Makefile
 	Plugins/Effect/ladspa/Makefile
 	Plugins/Effect/stereo_plugin/Makefile
 	Plugins/Effect/voice_removal/Makefile
@@ -972,12 +973,12 @@ echo
 echo "  General"
 echo "  -------"
 echo "  Song Change:                            yes"
-echo "  Internet Control:                       yes"
 echo "  LIRC:                                   $have_lirc"
 echo "  AudioScrobbler Client:                  $scrobbler"
 echo
 echo "  Effect"
 echo "  ------"
+echo "  AudioCompressor (AGC):                  yes"
 echo "  LADSPA effects host (ladspa):           yes"
 echo "  Voice Removal:                          yes"
 echo
