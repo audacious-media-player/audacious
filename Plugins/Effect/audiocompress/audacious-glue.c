@@ -123,12 +123,6 @@ void initPrefs(CompressorPrefs * prefs)
 {
 	ConfigDb *db;
 
-	prefs->anticlip = ANTICLIP;
-	prefs->target = TARGET;
-	prefs->gainmax = GAINMAX;
-	prefs->gainsmooth = GAINSMOOTH;
-	prefs->buckets = BUCKETS;
-
 	db = bmp_cfg_db_open();
 
 	bmp_cfg_db_get_bool(db, "AudioCompress",
@@ -142,9 +136,17 @@ void initPrefs(CompressorPrefs * prefs)
 	bmp_cfg_db_get_int(db, "AudioCompress", "buckets",
 			   &prefs->buckets);
 
-	prefs->dialog = create_prefs_dialog(prefs);
-
 	bmp_cfg_db_close(db);
+
+	if ((prefs->gainmax == 0) && (prefs->gainsmooth == 0) && (prefs->buckets == 0)) {
+		prefs->anticlip = ANTICLIP;
+		prefs->target = TARGET;
+		prefs->gainmax = GAINMAX;
+		prefs->gainsmooth = GAINSMOOTH;
+		prefs->buckets = BUCKETS;
+	}
+
+	prefs->dialog = create_prefs_dialog(prefs);
 }
 
 void freePrefs(CompressorPrefs * prefs)
@@ -160,7 +162,7 @@ void savePrefs(CompressorPrefs * prefs)
 	db = bmp_cfg_db_open();
 
 	bmp_cfg_db_set_bool(db, "AudioCompress", "anticlip",
-				prefs->anticlip);
+			    prefs->anticlip);
 	bmp_cfg_db_set_int(db, "AudioCompress", "target",
 			    prefs->target);
 	bmp_cfg_db_set_int(db, "AudioCompress", "gainmax",
