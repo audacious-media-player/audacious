@@ -35,6 +35,8 @@ static void myPrefs(void);
 static int myModify(gpointer * data, gint length, AFormat fmt,
 		    gint srate, gint nch);
 
+static int inited = 0;
+
 
 static EffectPlugin xmms_plugin = {
 	NULL, NULL,
@@ -54,7 +56,6 @@ EffectPlugin *get_eplugin_info(void)
 
 void myInit(void)
 {
-	static int inited = 0;
 	if (!inited)
 	{
 		initPrefs(&prefs);
@@ -72,6 +73,7 @@ void myCleanup(void)
 	savePrefs(&prefs);
 	freePrefs(&prefs);
 	CompressFree();
+        inited = 0;
 }
 
 int myModify(gpointer * data, gint length, AFormat fmt, gint srate, gint nch)

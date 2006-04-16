@@ -44,7 +44,10 @@ void CompressCfg(int anticlip, int target, int gainmax,
 void CompressFree(void)
 {
 	if (peaks)
+        {
 		free(peaks);
+                peaks = NULL;
+        }
 }
 
 void CompressDo(void *data, unsigned int length)
