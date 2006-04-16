@@ -366,7 +366,6 @@ create_prefs_dialog(CompressorPrefs * prefs)
 	GtkWidget *preferences;
 	GtkWidget *vbox2;
 	GtkWidget *notebook1;
-	GtkWidget *vbox6;
 	GtkWidget *vbox5;
 	GtkWidget *frame1;
 	GtkWidget *clipping;
@@ -414,10 +413,6 @@ create_prefs_dialog(CompressorPrefs * prefs)
 	notebook1 = gtk_notebook_new();
 	gtk_widget_show(notebook1);
 	gtk_box_pack_start(GTK_BOX(vbox2), notebook1, TRUE, TRUE, 0);
-
-	vbox6 = gtk_vbox_new(FALSE, 0);
-	gtk_widget_show(vbox6);
-	gtk_container_add(GTK_CONTAINER(notebook1), vbox6);
 
 	vbox5 = gtk_vbox_new(FALSE, 5);
 	gtk_widget_show(vbox5);
@@ -573,7 +568,7 @@ create_prefs_dialog(CompressorPrefs * prefs)
 	gtk_notebook_set_tab_label(GTK_NOTEBOOK(notebook1),
 				    gtk_notebook_get_nth_page(GTK_NOTEBOOK
 							      (notebook1),
-							       1), label4);
+							       0), label4);
 
 	hseparator3 = gtk_hseparator_new();
 	gtk_widget_show(hseparator3);
