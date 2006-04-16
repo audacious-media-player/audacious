@@ -6,7 +6,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#include <glib/gi18n.h>
 #include "audacious/plugin.h"
+#include "libaudacious/util.h"
 #include "libaudacious/configdb.h"
 
 #include "config.h"
@@ -86,63 +88,24 @@ int myModify(gpointer * data, gint length, AFormat fmt, gint srate, gint nch)
 	return length;
 }
 
-void closeAbout(GtkWidget* wg, GtkWidget* win)
-{
-	
-	gtk_widget_destroy(GTK_WIDGET(win));
-}
-
 void myAbout(void)
 {
-	gchar *window_title = "About AudioCompress";
-	gchar *about_text =
-		"AudioCompress " ACVERSION "\n"
-                "(c)2003 trikuare studios(http://trikuare.cx)\n"
-                "Ported to Audacious by Tony Vroon (chainsaw@gentoo.org)\n\n"
-                "Simple dynamic range compressor for transparently\n"
-                "keeping the volume level more or less consistent";
+	static GtkWidget *about_xmms_compress = NULL;
+	if ( !about_xmms_compress )
+	{
+		gchar *about_text = g_strjoin( "" , _("AudioCompress ") , ACVERSION ,
+			_("\n(c)2003 trikuare studios(http://trikuare.cx)\n"
+			  "Ported to Audacious by Tony Vroon (chainsaw@gentoo.org)\n\n"
+			  "Simple dynamic range compressor for transparently\n"
+			  "keeping the volume level more or less consistent") , NULL );
 
-	GtkWidget *about_xmms_compress;
-	GtkWidget *vbox1;
-	GtkWidget *label1;
-	GtkWidget *hseparator1;
-	GtkWidget *hbuttonbox1;
-	GtkWidget *button1;
-
-	about_xmms_compress = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_container_set_border_width(GTK_CONTAINER(about_xmms_compress),
-				       10);
-	gtk_window_set_title(GTK_WINDOW(about_xmms_compress), window_title);
-	gtk_window_set_wmclass(GTK_WINDOW(about_xmms_compress), "about",
-			       "xmms");
-
-	vbox1 = gtk_vbox_new(FALSE, 12);
-	gtk_widget_show(vbox1);
-	gtk_container_add(GTK_CONTAINER(about_xmms_compress), vbox1);
-
-	label1 = gtk_label_new(about_text);
-	gtk_widget_show(label1);
-	gtk_box_pack_start(GTK_BOX(vbox1), label1, FALSE, FALSE, 0);
-
-	hseparator1 = gtk_hseparator_new();
-	gtk_widget_show(hseparator1);
-	gtk_box_pack_start(GTK_BOX(vbox1), hseparator1, TRUE, TRUE, 0);
-
-	hbuttonbox1 = gtk_hbutton_box_new();
-	gtk_widget_show(hbuttonbox1);
-	gtk_box_pack_start(GTK_BOX(vbox1), hbuttonbox1, TRUE, TRUE, 0);
-
-	button1 = gtk_button_new_with_label("Ok");
-	gtk_widget_show(button1);
-	gtk_container_add(GTK_CONTAINER(hbuttonbox1), button1);
-	GTK_WIDGET_SET_FLAGS(button1, GTK_CAN_DEFAULT);
-	gtk_widget_grab_default(button1);
-
-	gtk_signal_connect(GTK_OBJECT(button1), "clicked",
-			   GTK_SIGNAL_FUNC(closeAbout),
-			   about_xmms_compress);
-
-	gtk_widget_show(GTK_WIDGET(about_xmms_compress));
+			about_xmms_compress = xmms_show_message( _("About AudioCompress") ,
+				about_text , _("Ok") , FALSE , NULL , NULL );
+			gtk_signal_connect( GTK_OBJECT(about_xmms_compress) , "destroy" ,
+				GTK_SIGNAL_FUNC(gtk_widget_destroyed), &about_xmms_compress );
+		g_free( about_text );
+	}
+	gtk_widget_show( about_xmms_compress );
 }
 
 void myPrefs(void)
