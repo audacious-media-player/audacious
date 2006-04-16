@@ -218,6 +218,9 @@ const gchar *bmp_titlestring_presets[] = {
     "%t",
     "%p - %t",
     "%p - %a - %t",
+    "%p - %{a:%a - %}%t",
+    "%{p:%p - %}%{a:%a - %}%{n:%n. %}%t",
+    "%{p:%p %}%{a:[ %a ] %}%{p:- %}%{n:%n. %}%{t:%t%}",
     "%a - %t"
 };
 
@@ -501,7 +504,7 @@ bmp_config_load(void)
         cfg.mainwin_font = g_strdup(MAINWIN_DEFAULT_FONT);
 
     if (!cfg.gentitle_format)
-        cfg.gentitle_format = g_strdup("%p - %a - %t");
+        cfg.gentitle_format = g_strdup("%{p:%p %}%{a:[ %a ] %}%{p:- %}%{n:%n. %}%{t:%t%}");
 
     if (!cfg.outputplugin) {
 #ifdef HAVE_OSS
