@@ -847,7 +847,7 @@ on_titlestring_cbox_changed(GtkWidget * cbox,
     gint position = gtk_combo_box_get_active(GTK_COMBO_BOX(cbox));
     
     cfg.titlestring_preset = position;
-    gtk_widget_set_sensitive(GTK_WIDGET(data), (position == 4));
+    gtk_widget_set_sensitive(GTK_WIDGET(data), (position == 6));
 }
 
 static void

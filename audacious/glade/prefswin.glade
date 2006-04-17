@@ -2584,6 +2584,8 @@ Optionally, you can stop and restart playback for the change to take effect.</pr
 					  <property name="items" translatable="yes">TITLE
 ARTIST - TITLE
 ARTIST - ALBUM - TITLE
+ARTIST - ALBUM - TRACK. TITLE
+ARTIST [ ALBUM ] - TRACK. TITLE
 ALBUM - TITLE
 Custom</property>
 					  <property name="add_tearoffs">False</property>

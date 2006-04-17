@@ -188,7 +188,7 @@ BmpConfig bmp_default_config = {
     FALSE,                      /* show window decorations */
     8,                          /* mouse wheel scroll step */
     FALSE,                      /* playlist transparent */
-    2,                          /* 2nd preset (ARTIST - TITLE) */
+    4,                          /* 5th preset (ARTIST [ ALBUM ] - TRACK. TITLE) */
     NULL,                       /* title format */
     FALSE,                      /* software volume control enabled */
     TRUE,                       /* UNUSED (XMMS compatibility mode) */
@@ -216,12 +216,11 @@ typedef struct bmp_cfg_strent_t {
 
 const gchar *bmp_titlestring_presets[] = {
     "%t",
-    "%p - %t",
-    "%p - %a - %t",
-    "%p - %{a:%a - %}%t",
+    "%{p:%p - %}%t",
+    "%{p:%p - %}%{a:%a - %}%t",
     "%{p:%p - %}%{a:%a - %}%{n:%n. %}%t",
     "%{p:%p %}%{a:[ %a ] %}%{p:- %}%{n:%n. %}%{t:%t%}",
-    "%a - %t"
+    "%{a:%a - %}%t"
 };
 
 const guint n_titlestring_presets = G_N_ELEMENTS(bmp_titlestring_presets);
