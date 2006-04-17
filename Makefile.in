@@ -4,7 +4,7 @@ include mk/objective.mk
 SUBDIRS = Plugins libaudacious intl audacious po icons skin
 
 install-posthook:
-	@if test `whoami` = 'root'; then \
+	@if test `whoami` = 'root' && test -z "$(DESTDIR)"; then \
 		echo "[running ldconfig to update system library cache]"; \
 		/sbin/ldconfig; \
 		echo "[system library cache updated]"; \
