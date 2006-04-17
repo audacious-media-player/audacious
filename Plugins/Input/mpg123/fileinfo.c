@@ -304,10 +304,13 @@ static void id3v2_frame_to_entry(GtkWidget * entry,ID3Tag * tag, ID3_FrameID fra
   ID3Frame * frame = ID3Tag_FindFrameWithID(tag,frame_id);
   ID3Field * text_field;
   if (frame) {
+  	gchar *text;
     char buf[4096];
     text_field = ID3Frame_GetField(frame,ID3FN_TEXT);
     ID3Field_GetASCII(text_field,buf,4096);
-    gtk_entry_set_text(GTK_ENTRY(entry),buf);
+	text = str_to_utf8(buf);
+    gtk_entry_set_text(GTK_ENTRY(entry),text);
+	g_free(text);
   } else
     gtk_entry_set_text(GTK_ENTRY(entry),"");    
 }
