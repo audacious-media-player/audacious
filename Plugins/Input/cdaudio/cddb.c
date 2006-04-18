@@ -314,7 +314,7 @@ cddb_read(gchar * server, cddb_disc_header_t * cddb_info, cdinfo_t * cdinfo)
         ("GET /~cddb/cddb.cgi?cmd=cddb+read+%s+%08x%s&proto=%d HTTP/1.0\r\n\r\n",
          cddb_info->category, cddb_info->discid,
          cddb_generate_hello_string(), cdda_cfg.cddb_protocol_level);
-	cddb_log(getstr);
+	cddb_log(readstr);
 
     write(sock, readstr, strlen(readstr));
     g_free(readstr);
