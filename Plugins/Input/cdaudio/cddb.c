@@ -197,6 +197,7 @@ cddb_query(gchar * server, cdda_disc_toc_t * info,
          info->last_track - info->first_track + 1, offsets,
          (info->leadout.minute * 60 + info->leadout.second),
          cddb_generate_hello_string(), cdda_cfg.cddb_protocol_level);
+	cddb_log(getstr);
 
     g_free(offsets);
     write(sock, getstr, strlen(getstr));
@@ -313,6 +314,7 @@ cddb_read(gchar * server, cddb_disc_header_t * cddb_info, cdinfo_t * cdinfo)
         ("GET /~cddb/cddb.cgi?cmd=cddb+read+%s+%08x%s&proto=%d HTTP/1.0\r\n\r\n",
          cddb_info->category, cddb_info->discid,
          cddb_generate_hello_string(), cdda_cfg.cddb_protocol_level);
+	cddb_log(getstr);
 
     write(sock, readstr, strlen(readstr));
     g_free(readstr);
@@ -440,6 +442,7 @@ cddb_get_server_list(const gchar * server, gint protocol_level)
         g_strdup_printf
         ("GET /~cddb/cddb.cgi?cmd=sites%s&proto=%d HTTP/1.0\r\n\r\n",
          cddb_generate_hello_string(), protocol_level);
+	cddb_log(getstr);
 
     write(sock, getstr, strlen(getstr));
     g_free(getstr);
