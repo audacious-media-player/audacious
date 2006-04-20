@@ -44,7 +44,7 @@
 #endif /* DEBUG */
 
 
-#define AMIDIPLUG_VERSION "0.2"
+#define AMIDIPLUG_VERSION "0.2+"
 #define PLAYER_NAME "Audacious"
 #define G_PATH_GET_BASENAME(x) g_path_get_basename(x)
 #define G_STRING_PRINTF(...) g_string_printf(__VA_ARGS__)
