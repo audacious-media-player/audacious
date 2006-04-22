@@ -173,7 +173,7 @@ cddb_query(gchar * server, cdda_disc_toc_t * info,
 {
     /*
      * Query the cddb-server for the cd.
-     * Returns the *real* diskid and category.
+     * Returns the *real* discid and category.
      */
 
     gint sock;
@@ -221,8 +221,8 @@ cddb_query(gchar * server, cdda_disc_toc_t * info,
                 return FALSE;
             }
         }
-        cddb_info->category = g_strdup(response[1]);
-        cddb_info->discid = strtoul(response[2], NULL, 16);
+        cddb_info->category = g_strdup(response[0]);
+        cddb_info->discid = strtoul(response[1], NULL, 16);
         break;
 	case 211:
 		/* multiple matches - use first match */
@@ -238,8 +238,8 @@ cddb_query(gchar * server, cdda_disc_toc_t * info,
                 return FALSE;
             }
         }
-        cddb_info->category = g_strdup(response[1]);
-        cddb_info->discid = strtoul(response[2], NULL, 16);
+        cddb_info->category = g_strdup(response[0]);
+        cddb_info->discid = strtoul(response[1], NULL, 16);
         break;
     default:                   /* FIXME: Handle other 2xx */
         g_strfreev(response);
