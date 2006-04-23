@@ -1674,6 +1674,7 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_eq_preset_view_realize)
     FUNC_MAP_ENTRY(on_eq_preset_add_clicked)
     FUNC_MAP_ENTRY(on_eq_preset_remove_clicked)
+    FUNC_MAP_ENTRY(on_skin_refresh_button_clicked)
 FUNC_MAP_END
 
 void
