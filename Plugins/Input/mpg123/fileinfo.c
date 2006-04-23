@@ -21,9 +21,7 @@
 
 #include "mpg123.h"
 
-#ifdef HAVE_ID3LIB
-# include <id3.h>
-#endif
+#include <tag_c.h>
 
 #include <glib.h>
 #include <glib/gi18n.h>
@@ -39,9 +37,9 @@
 #include <errno.h>
 
 #include "audacious/util.h"
-#include <libaudacious/util.h>
-#include <libaudacious/vfs.h>
-#include <libaudacious/xentry.h>
+#include "libaudacious/util.h"
+#include "libaudacious/vfs.h"
+#include "libaudacious/xentry.h"
 
 #include "mp3.xpm"
 
@@ -50,9 +48,6 @@ static GtkWidget *filename_entry, *id3_frame;
 static GtkWidget *title_entry, *artist_entry, *album_entry, *year_entry,
     *tracknum_entry, *comment_entry;
 static GtkWidget *genre_combo;
-#ifdef HAVE_ID3LIB
-static GtkWidget * totaltracks_entry;
-#endif
 static GtkWidget *mpeg_level, *mpeg_bitrate, *mpeg_samplerate, *mpeg_flags,
     *mpeg_error, *mpeg_copy, *mpeg_orig, *mpeg_emph, *mpeg_frames,
     *mpeg_filesize;
@@ -66,15 +61,10 @@ GtkWidget *label, *filename_vbox;
 GtkWidget *bbox;
 GtkWidget *remove_id3, *cancel, *save;
 GtkWidget *boxx;
-#if 0
-GtkWidget *revert;
-#endif
 
 VFSFile *fh;
-struct id3v1tag_t tag;
 const gchar *emphasis[4];
 const gchar *bool_label[2];
-
 
 static GList *genre_list = NULL;
 static gchar *current_filename = NULL;
@@ -86,158 +76,13 @@ extern gboolean mpg123_stereo, mpg123_mpeg25;
 
 glong info_rate;
 
+static TagLib_File *taglib_file;
+static TagLib_Tag *taglib_tag;
+static const TagLib_AudioProperties *taglib_ap;
+
 void fill_entries(GtkWidget * w, gpointer data);
 
 #define MAX_STR_LEN 100
-
-#ifndef HAVE_ID3LIB
-
-static void
-set_entry_tag(GtkEntry * entry, gchar * tag, gint length)
-{
-    gint stripped_len;
-    gchar *text, *text_utf8;
-
-    stripped_len = mpg123_strip_spaces(tag, length);
-    text = g_strdup_printf("%-*.*s", stripped_len, stripped_len, tag);
-
-    if ((text_utf8 = str_to_utf8(text))) {
-        gtk_entry_set_text(entry, text_utf8);
-        g_free(text_utf8);
-    }
-    else {
-        gtk_entry_set_text(entry, "");
-    }
-
-    g_free(text);
-}
-
-static void
-get_entry_tag(GtkEntry * entry, gchar * tag, gint length)
-{
-    gchar *text = str_to_utf8(gtk_entry_get_text(entry));
-    memset(tag, ' ', length);
-    memcpy(tag, text, strlen(text) > length ? length : strlen(text));
-}
-
-static gint
-find_genre_id(const gchar * text)
-{
-    gint i;
-
-    for (i = 0; i < GENRE_MAX; i++) {
-        if (!strcmp(mpg123_id3_genres[i], text))
-            return i;
-    }
-    if (text[0] == '\0')
-        return 0xff;
-    return 0;
-}
-
-static void
-press_save(GtkWidget * w, gpointer data)
-{
-    gtk_button_clicked(GTK_BUTTON(save));
-}
-
-#else
-
-GtkWidget * copy_album_tags_but, * paste_album_tags_but;
-
-struct album_tags_t {
-  char * performer;
-  char * album;
-  char * year;
-  char * total_tracks;
-};
-
-struct album_tags_t album_tags = { NULL, NULL, NULL, NULL };
-
-#define FREE_AND_ZERO(x) do { g_free(x); x = NULL; } while (0)
-
-static void free_album_tags()
-{
-  FREE_AND_ZERO(album_tags.performer);
-  FREE_AND_ZERO(album_tags.album);
-  FREE_AND_ZERO(album_tags.year);
-  FREE_AND_ZERO(album_tags.total_tracks);
-}
-
-static inline char * entry_text_dup_or_null(GtkWidget * e)
-{
-  const char * text = gtk_entry_get_text(GTK_ENTRY(e));
-  if (strlen(text) > 0)
-    return g_strdup(text);
-  else
-    return NULL;
-}
-
-static inline void 
-update_paste_sensitive()
-{
-  gtk_widget_set_sensitive(GTK_WIDGET(paste_album_tags_but), 
-			   album_tags.performer ||
-			   album_tags.album ||
-			   album_tags.year ||
-			   album_tags.total_tracks);
-
-}
-
-static void validate_zeropad_tracknums()
-{
-  const char * tn_str, * tt_str, * end;
-  char buf[5];
-  int tn, tt;
-
-  tn_str = gtk_entry_get_text(GTK_ENTRY(tracknum_entry));
-  tt_str = gtk_entry_get_text(GTK_ENTRY(totaltracks_entry));
-
-  end = tt_str;
-  tt = strtol(tt_str,(char**)&end,10);
-  if (end != tt_str) {
-    sprintf(buf,"%02d",tt);
-    gtk_entry_set_text(GTK_ENTRY(totaltracks_entry),buf);
-  } else {
-    gtk_entry_set_text(GTK_ENTRY(totaltracks_entry),"");
-    tt = 1000; /* any tracknum is valid */
-  }
-
-  end = tn_str;
-  tn = strtol(tn_str,(char**)&end,10);
-  if (end != tn_str && tn <= tt) {
-    sprintf(buf,"%02d",tn);
-    gtk_entry_set_text(GTK_ENTRY(tracknum_entry),buf);
-  } else
-    gtk_entry_set_text(GTK_ENTRY(tracknum_entry),"");
-
-}
-
-static void 
-copy_album_tags()
-{
-  validate_zeropad_tracknums();
-  free_album_tags();
-  album_tags.performer = entry_text_dup_or_null(artist_entry);
-  album_tags.album = entry_text_dup_or_null(album_entry);
-  album_tags.year = entry_text_dup_or_null(year_entry);
-  album_tags.total_tracks = entry_text_dup_or_null(totaltracks_entry);
-  update_paste_sensitive();
-}
-
-static void 
-paste_album_tags()
-{
-  if (album_tags.performer)
-    gtk_entry_set_text(GTK_ENTRY(artist_entry),album_tags.performer);
-  if (album_tags.album)
-    gtk_entry_set_text(GTK_ENTRY(album_entry),album_tags.album);
-  if (album_tags.year)
-    gtk_entry_set_text(GTK_ENTRY(year_entry),album_tags.year);
-  if (album_tags.total_tracks)
-    gtk_entry_set_text(GTK_ENTRY(totaltracks_entry),album_tags.total_tracks);
-}
-
-#endif
 
 static gint
 genre_comp_func(gconstpointer a, gconstpointer b)
@@ -264,233 +109,34 @@ fileinfo_keypress_cb(GtkWidget * widget,
     return TRUE;
 }
 
-#ifdef HAVE_ID3LIB
-/* some helper id3(v2) functions */
-
-static void str_to_id3v2_frame(const char * str, ID3Tag * tag, ID3_FrameID frame_id)
-{
-  ID3Frame * frame = ID3Tag_FindFrameWithID(tag,frame_id);
-  ID3Field * text_field;
-  gboolean new_frame = frame?FALSE:TRUE;
-
-  if (new_frame) {
-    frame = ID3Frame_NewID(frame_id);
-  }
-
-  text_field = ID3Frame_GetField(frame,ID3FN_TEXT);
-  ID3Field_SetASCII(text_field, str);
-
-  if (new_frame) 
-    ID3Tag_AddFrame(tag,frame);
-}
-
-static void genre_combo_to_tag(GtkWidget * combo, ID3Tag * tag)
-{
-  int idx = -1, i;
-  const char * genre = gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(combo)->entry));
-  for(i=0;i<ID3_NR_OF_V1_GENRES;i++)
-    if (!strcmp(genre,ID3_v1_genre_description[i])) {
-      idx = i; break;
-    }
-  if (idx>-1) {
-    char code[7];
-    snprintf(code,7,"(%d)",idx);
-    str_to_id3v2_frame(code,tag,ID3FID_CONTENTTYPE);
-  }  
-}
-
-static void id3v2_frame_to_entry(GtkWidget * entry,ID3Tag * tag, ID3_FrameID frame_id)
-{
-  ID3Frame * frame = ID3Tag_FindFrameWithID(tag,frame_id);
-  ID3Field * text_field;
-  if (frame) {
-  	gchar *text;
-    char buf[4096];
-    text_field = ID3Frame_GetField(frame,ID3FN_TEXT);
-    ID3Field_GetASCII(text_field,buf,4096);
-	text = str_to_utf8(buf);
-    gtk_entry_set_text(GTK_ENTRY(entry),text);
-	g_free(text);
-  } else
-    gtk_entry_set_text(GTK_ENTRY(entry),"");    
-}
-
-static void id3v2_frame_to_text_view(GtkWidget * entry,ID3Tag * tag, ID3_FrameID frame_id)
-{
-  ID3Frame * frame = ID3Tag_FindFrameWithID(tag,frame_id);
-  ID3Field * text_field;
-  if (frame) {
-    char buf[4096];
-    text_field = ID3Frame_GetField(frame,ID3FN_TEXT);
-    ID3Field_GetASCII(text_field,buf,4096);
-    gtk_text_buffer_set_text(gtk_text_view_get_buffer(GTK_TEXT_VIEW(entry)),buf,-1);
-  } else
-    gtk_text_buffer_set_text(gtk_text_view_get_buffer(GTK_TEXT_VIEW(entry)),"",-1);
-}
-
-static void id3v2_tracknum_to_entries(GtkWidget * tracknum_entry,
-				      GtkWidget * totaltracks_entry,
-				      ID3Tag * tag)
-{
-  ID3Frame * frame = ID3Tag_FindFrameWithID(tag,ID3FID_TRACKNUM);
-  ID3Field * text_field;
-  if (frame) {
-    char buf[4096];
-    char * slash;
-    text_field = ID3Frame_GetField(frame,ID3FN_TEXT);
-    ID3Field_GetASCII(text_field,buf,4096);
-    slash = strchr(buf,'/');
-    if (slash) {
-      slash[0] = 0;
-      gtk_entry_set_text(GTK_ENTRY(tracknum_entry),buf);
-      gtk_entry_set_text(GTK_ENTRY(totaltracks_entry),slash+1);
-    } else {
-      gtk_entry_set_text(GTK_ENTRY(tracknum_entry),buf);
-      gtk_entry_set_text(GTK_ENTRY(totaltracks_entry),"");
-    }
-  } else {
-    gtk_entry_set_text(GTK_ENTRY(tracknum_entry),"");    
-    gtk_entry_set_text(GTK_ENTRY(totaltracks_entry),"");    
-  }
-}
-
-/* 
-   if has v2 - link with v2, if not - attempt to link with v1 
-   use this only for reading - always save v2 
-*/
-size_t ID3Tag_LinkPreferV2(ID3Tag *tag, const char *fileName)
-{
-  size_t r;
-
-  r = ID3Tag_Link(tag,fileName);
-  if (ID3Tag_HasTagType(tag,ID3TT_ID3V2)) {
-    ID3Tag_Clear(tag);
-    r = ID3Tag_LinkWithFlags(tag,fileName,ID3TT_ID3V2);
-  }
-  return r;
-}
-
-#endif /* HAVE_ID3LIB */
-
-#ifdef HAVE_ID3LIB
-
 static void
 save_cb(GtkWidget * w, gpointer data)
 {
-  ID3Tag * id3tag;
-  const char * tracks_str, * trackno_str, * endptr;
-  int trackno, tracks; 
+  int result;
 
   if (str_has_prefix_nocase(current_filename, "http://"))
     return;
 
-  validate_zeropad_tracknums();
-  
-  id3tag = ID3Tag_New();
-  ID3Tag_LinkWithFlags(id3tag, current_filename, ID3TT_ID3);
+  taglib_file = taglib_file_new(current_filename);
+  if(taglib_file) {
+    taglib_tag = taglib_file_tag(taglib_file);
+    taglib_ap = taglib_file_audioproperties(taglib_file);
+  } else return;
 
-  str_to_id3v2_frame(gtk_entry_get_text(GTK_ENTRY(title_entry)),id3tag,ID3FID_TITLE);
-  str_to_id3v2_frame(gtk_entry_get_text(GTK_ENTRY(artist_entry)),id3tag,ID3FID_LEADARTIST);
-  str_to_id3v2_frame(gtk_entry_get_text(GTK_ENTRY(album_entry)),id3tag,ID3FID_ALBUM);
-  {
-    GtkTextIter start, end;
-    GtkTextBuffer * buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(comment_entry));
-    gtk_text_buffer_get_start_iter(buffer,&start);
-    gtk_text_buffer_get_end_iter(buffer,&end);
-    str_to_id3v2_frame(gtk_text_buffer_get_text(buffer,&start,&end,FALSE),id3tag,ID3FID_COMMENT);
-  }
-  str_to_id3v2_frame(gtk_entry_get_text(GTK_ENTRY(year_entry)),id3tag,ID3FID_YEAR);
-
-  /* saving trackno -> may be with album tracks number */
-  trackno_str = gtk_entry_get_text(GTK_ENTRY(tracknum_entry));
-  endptr = trackno_str;
-  trackno = strtol(trackno_str,(char**)&endptr,10);
-  if (endptr != trackno_str) {
-    char buf[10];
-    tracks_str = gtk_entry_get_text(GTK_ENTRY(totaltracks_entry));
-    endptr = tracks_str;
-    tracks = strtol(tracks_str,(char**)&endptr,10);
-    if (endptr != tracks_str) 
-      snprintf(buf,10,"%02d/%02d",trackno,tracks);
-    else
-      snprintf(buf,10,"%02d",trackno);
-    str_to_id3v2_frame(buf,id3tag,ID3FID_TRACKNUM);
-  } else 
-    str_to_id3v2_frame("",id3tag,ID3FID_TRACKNUM);
-  
-
-  genre_combo_to_tag(genre_combo,id3tag);
+  taglib_tag_set_title(taglib_tag, gtk_entry_get_text(GTK_ENTRY(title_entry)));
+  taglib_tag_set_artist(taglib_tag, gtk_entry_get_text(GTK_ENTRY(artist_entry)));
+  taglib_tag_set_album(taglib_tag, gtk_entry_get_text(GTK_ENTRY(album_entry)));
+  taglib_tag_set_comment(taglib_tag, gtk_entry_get_text(GTK_ENTRY(comment_entry)));
+  taglib_tag_set_year(taglib_tag, atoi(gtk_entry_get_text(GTK_ENTRY(year_entry))));
+  taglib_tag_set_track(taglib_tag, atoi(gtk_entry_get_text(GTK_ENTRY(tracknum_entry))));
+  taglib_tag_set_genre(taglib_tag, gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(genre_combo)->entry)));
   gtk_widget_set_sensitive(GTK_WIDGET(w), FALSE);
+  gtk_widget_set_sensitive(GTK_WIDGET(data), FALSE);
 
-  ID3Tag_Update(id3tag);
-
-  ID3Tag_Delete(id3tag);
+  result = taglib_file_save(taglib_file);
+  taglib_file_free(taglib_file);
+  taglib_tag_free_strings();
 }
-
-#else /* ! HAVE_ID3LIB */
-
-static void
-save_cb(GtkWidget * widget,
-        gpointer data)
-{
-    VFSFile *file;
-    gchar *msg = NULL;
-
-    if (str_has_prefix_nocase(current_filename, "http://"))
-        return;
-
-    if ((file = vfs_fopen(current_filename, "r+b")) != NULL) {
-        gint tracknum;
-
-        vfs_fseek(file, -128, SEEK_END);
-        vfs_fread(&tag, 1, sizeof(struct id3v1tag_t), file);
-
-        if (g_str_has_prefix(tag.tag, "TAG"))
-            vfs_fseek(file, -128L, SEEK_END);
-        else
-            vfs_fseek(file, 0L, SEEK_END);
-
-        tag.tag[0] = 'T';
-        tag.tag[1] = 'A';
-        tag.tag[2] = 'G';
-
-        get_entry_tag(GTK_ENTRY(title_entry), tag.title, 30);
-        get_entry_tag(GTK_ENTRY(artist_entry), tag.artist, 30);
-        get_entry_tag(GTK_ENTRY(album_entry), tag.album, 30);
-        get_entry_tag(GTK_ENTRY(year_entry), tag.year, 4);
-
-        tracknum = atoi(gtk_entry_get_text(GTK_ENTRY(tracknum_entry)));
-        if (tracknum > 0) {
-            get_entry_tag(GTK_ENTRY(comment_entry), tag.u.v1_1.comment, 28);
-            tag.u.v1_1.__zero = 0;
-            tag.u.v1_1.track_number = MIN(tracknum, 255);
-        }
-        else
-            get_entry_tag(GTK_ENTRY(comment_entry), tag.u.v1_0.comment, 30);
-
-        tag.genre = find_genre_id(gtk_entry_get_text(GTK_ENTRY(GTK_COMBO
-                                                      (genre_combo)->entry)));
-        if (vfs_fwrite(&tag, 1, sizeof(tag), file) != sizeof(tag))
-            msg = g_strdup_printf(_("%s\nUnable to write to file: %s"),
-                                  _("Couldn't write tag!"), strerror(errno));
-        vfs_fclose(file);
-    }
-    else
-        msg = g_strdup_printf(_("%s\nUnable to open file: %s"),
-                              _("Couldn't write tag!"), strerror(errno));
-    if (msg) {
-        GtkWidget *mwin = xmms_show_message(_("File Info"), msg, _("Ok"),
-                                            FALSE, NULL, NULL);
-        gtk_window_set_transient_for(GTK_WINDOW(mwin), GTK_WINDOW(window));
-        g_free(msg);
-    }
-    else {
-        gtk_widget_set_sensitive(GTK_WIDGET(data), TRUE);
-        gtk_widget_set_sensitive(GTK_WIDGET(widget), FALSE);
-    }
-}
-
-#endif /* HAVE_ID3LIB */
 
 static void
 label_set_text(GtkWidget * label, gchar * str, ...)
@@ -505,90 +151,41 @@ label_set_text(GtkWidget * label, gchar * str, ...)
     gtk_label_set_text(GTK_LABEL(label), tempstr);
 }
 
-#ifdef HAVE_ID3LIB
-
 static void
 remove_id3_cb(GtkWidget * w, gpointer data)
 {
-  ID3Tag * id3tag;
+  int result;
 
   if (str_has_prefix_nocase(current_filename, "http://"))
     return;
   
-  id3tag = ID3Tag_New();
-  ID3Tag_LinkWithFlags(id3tag, current_filename, ID3TT_ID3);
+  taglib_file = taglib_file_new(current_filename);
+  if(taglib_file) {
+    taglib_tag = taglib_file_tag(taglib_file);
+    taglib_ap = taglib_file_audioproperties(taglib_file);
+  } else return;
 
-  ID3Tag_Strip(id3tag,ID3TT_ALL);
-  ID3Tag_Update(id3tag);
-
-  ID3Tag_Delete(id3tag);
+  taglib_tag_set_title(taglib_tag, "");
   gtk_entry_set_text(GTK_ENTRY(title_entry), "");
+  taglib_tag_set_artist(taglib_tag, "");
   gtk_entry_set_text(GTK_ENTRY(artist_entry), "");
+  taglib_tag_set_album(taglib_tag, "");
   gtk_entry_set_text(GTK_ENTRY(album_entry), "");
-  gtk_text_buffer_set_text(gtk_text_view_get_buffer(GTK_TEXT_VIEW(comment_entry)), "",-1);
+  taglib_tag_set_comment(taglib_tag, "");
+  gtk_entry_set_text(GTK_ENTRY(comment_entry), "");
+  taglib_tag_set_year(taglib_tag, 0);
   gtk_entry_set_text(GTK_ENTRY(year_entry), "");
-  gtk_entry_set_text(GTK_ENTRY(album_entry), "");
+  taglib_tag_set_track(taglib_tag, 0);
   gtk_entry_set_text(GTK_ENTRY(tracknum_entry), "");
-  gtk_entry_set_text(GTK_ENTRY(totaltracks_entry), "");
+  taglib_tag_set_genre(taglib_tag, "");
   gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(genre_combo)->entry), "");
   gtk_widget_set_sensitive(GTK_WIDGET(w), FALSE);
   gtk_widget_set_sensitive(GTK_WIDGET(data), FALSE);
+
+  result = taglib_file_save(taglib_file);
+  taglib_file_free(taglib_file);
+  taglib_tag_free_strings();
 }
-
-#else
-
-static void
-remove_id3_cb(GtkWidget * w, gpointer data)
-{
-    VFSFile *file;
-    gint len;
-    struct id3v1tag_t tag;
-    gchar *msg = NULL;
-
-    if (str_has_prefix_nocase(current_filename, "http://"))
-        return;
-
-    if ((file = vfs_fopen(current_filename, "rb+")) != NULL) {
-        vfs_fseek(file, -128, SEEK_END);
-        len = vfs_ftell(file);
-
-        vfs_fread(&tag, 1, sizeof(struct id3v1tag_t), file);
-
-        if (g_str_has_prefix(tag.tag, "TAG")) {
-            if (vfs_truncate(file, len))
-                msg = g_strdup_printf(_("%s\n"
-                                        "Unable to truncate file: %s"),
-                                      _("Couldn't remove tag!"),
-                                      strerror(errno));
-        }
-        else
-            msg = strdup(_("No tag to remove!"));
-
-        vfs_fclose(file);
-    }
-    else
-        msg = g_strdup_printf(_("%s\nUnable to open file: %s"),
-                              _("Couldn't remove tag!"), strerror(errno));
-    if (msg) {
-        GtkWidget *mwin = xmms_show_message(_("File Info"), msg, _("Ok"),
-                                            FALSE, NULL, NULL);
-        gtk_window_set_transient_for(GTK_WINDOW(mwin), GTK_WINDOW(window));
-        g_free(msg);
-    }
-    else {
-        gtk_entry_set_text(GTK_ENTRY(title_entry), "");
-        gtk_entry_set_text(GTK_ENTRY(artist_entry), "");
-        gtk_entry_set_text(GTK_ENTRY(album_entry), "");
-        gtk_entry_set_text(GTK_ENTRY(comment_entry), "");
-        gtk_entry_set_text(GTK_ENTRY(year_entry), "");
-        gtk_entry_set_text(GTK_ENTRY(album_entry), "");
-        gtk_entry_set_text(GTK_ENTRY(tracknum_entry), "");
-        gtk_widget_set_sensitive(GTK_WIDGET(w), FALSE);
-        gtk_widget_set_sensitive(GTK_WIDGET(data), FALSE);
-    }
-}
-
-#endif
 
 static void
 set_mpeg_level_label(gboolean mpeg25, gint lsf, gint layer)
@@ -628,9 +225,6 @@ static void
 change_buttons(GtkObject * object)
 {
     gtk_widget_set_sensitive(GTK_WIDGET(object), TRUE);
-#if 0
-    gtk_widget_set_sensitive(GTK_WIDGET(revert),TRUE);
-#endif
 }
 
 void
@@ -653,9 +247,7 @@ mpg123_file_info_box(gchar * filename)
         PangoAttribute *attr;
         GtkWidget *test_table = gtk_table_new(2, 11, FALSE);
         GtkWidget *urk, *blark;
-#ifdef HAVE_ID3LIB
-	GtkWidget * tracknum_box, * comment_frame;
-#endif
+	GtkWidget * comment_frame;
 
         window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
         gtk_window_set_type_hint(GTK_WINDOW(window),
@@ -878,11 +470,7 @@ mpg123_file_info_box(gchar * filename)
         gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL,
                          GTK_FILL, 5, 5);
 
-#ifdef HAVE_ID3LIB
 	title_entry = gtk_entry_new();
-#else
-        title_entry = gtk_entry_new_with_max_length(30);
-#endif
         gtk_table_attach(GTK_TABLE(table), title_entry, 1, 6, 0, 1,
                          GTK_FILL | GTK_EXPAND | GTK_SHRINK,
                          GTK_FILL | GTK_EXPAND | GTK_SHRINK, 0, 5);
@@ -893,11 +481,7 @@ mpg123_file_info_box(gchar * filename)
         gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL,
                          GTK_FILL, 5, 5);
 
-#ifdef HAVE_ID3LIB
 	artist_entry = gtk_entry_new();
-#else
-        artist_entry = gtk_entry_new_with_max_length(30);
-#endif
         gtk_table_attach(GTK_TABLE(table), artist_entry, 1, 6, 1, 2,
                          GTK_FILL | GTK_EXPAND | GTK_SHRINK,
                          GTK_FILL | GTK_EXPAND | GTK_SHRINK, 0, 5);
@@ -908,11 +492,7 @@ mpg123_file_info_box(gchar * filename)
         gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3, GTK_FILL,
                          GTK_FILL, 5, 5);
 
-#ifdef HAVE_ID3LIB
 	album_entry = gtk_entry_new();
-#else
-        album_entry = gtk_entry_new_with_max_length(30);
-#endif
         gtk_table_attach(GTK_TABLE(table), album_entry, 1, 6, 2, 3,
                          GTK_FILL | GTK_EXPAND | GTK_SHRINK,
                          GTK_FILL | GTK_EXPAND | GTK_SHRINK, 0, 5);
@@ -923,21 +503,13 @@ mpg123_file_info_box(gchar * filename)
         gtk_table_attach(GTK_TABLE(table), label, 0, 1, 3, 4, GTK_FILL,
                          GTK_FILL, 5, 5);
 
-#ifdef HAVE_ID3LIB
 	comment_frame = gtk_frame_new(NULL);
-	gtk_frame_set_shadow_type(GTK_FRAME(comment_frame),GTK_SHADOW_IN);
-	comment_entry = gtk_text_view_new();
-	gtk_text_view_set_accepts_tab(GTK_TEXT_VIEW(comment_entry),FALSE);
+	/* gtk_frame_set_shadow_type(GTK_FRAME(comment_frame),GTK_SHADOW_IN); */
+	comment_entry = gtk_entry_new();
 	gtk_container_add(GTK_CONTAINER(comment_frame),comment_entry);
         gtk_table_attach(GTK_TABLE(table), comment_frame, 1, 6, 3, 4,
                          GTK_FILL | GTK_EXPAND | GTK_SHRINK,
                          GTK_FILL | GTK_EXPAND | GTK_SHRINK, 0, 5);
-#else
-        comment_entry = gtk_entry_new_with_max_length(30);
-        gtk_table_attach(GTK_TABLE(table), comment_entry, 1, 6, 3, 4,
-                         GTK_FILL | GTK_EXPAND | GTK_SHRINK,
-                         GTK_FILL | GTK_EXPAND | GTK_SHRINK, 0, 5);
-#endif
 
         label = gtk_label_new(_("Year:"));
         gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
@@ -957,31 +529,11 @@ mpg123_file_info_box(gchar * filename)
         gtk_table_attach(GTK_TABLE(table), label, 2, 3, 4, 5, GTK_FILL,
                          GTK_FILL, 5, 5);
 
-#ifdef HAVE_ID3LIB
-	tracknum_box = gtk_hbox_new(FALSE,0);
-	tracknum_entry = gtk_entry_new_with_max_length(2);
-        gtk_entry_set_width_chars(GTK_ENTRY(tracknum_entry),2);
-	totaltracks_entry = gtk_entry_new_with_max_length(2);
-        gtk_entry_set_width_chars(GTK_ENTRY(totaltracks_entry),2);
-	gtk_box_pack_start(GTK_BOX(tracknum_box),
-			   tracknum_entry, TRUE, TRUE, 1);
-	gtk_box_pack_start(GTK_BOX(tracknum_box),
-			   gtk_label_new(" / "), FALSE, FALSE, 1);
-	gtk_box_pack_start(GTK_BOX(tracknum_box),
-			   totaltracks_entry, TRUE, TRUE, 1);
-        gtk_table_attach(GTK_TABLE(table), 
-			 tracknum_box,
-			 3, 4, 4, 5,
-                         GTK_FILL | GTK_EXPAND | GTK_SHRINK,
-                         GTK_FILL | GTK_EXPAND | GTK_SHRINK, 0, 5);
-	
-#else
         tracknum_entry = gtk_entry_new_with_max_length(3);
         gtk_widget_set_usize(tracknum_entry, 40, -1);
         gtk_table_attach(GTK_TABLE(table), tracknum_entry, 3, 4, 4, 5,
                          GTK_FILL | GTK_EXPAND | GTK_SHRINK,
                          GTK_FILL | GTK_EXPAND | GTK_SHRINK, 0, 5);
-#endif
 
         label = gtk_label_new(_("Genre:"));
         gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
@@ -1014,25 +566,6 @@ mpg123_file_info_box(gchar * filename)
         remove_id3 = gtk_button_new_from_stock(GTK_STOCK_DELETE);
         gtk_container_add(GTK_CONTAINER(boxx), remove_id3);
 
-#if 0
-        revert = gtk_button_new_from_stock(GTK_STOCK_REVERT_TO_SAVED);
-        gtk_container_add(GTK_CONTAINER(boxx), revert);
-#endif
-
-#ifdef HAVE_ID3LIB
-	copy_album_tags_but = gtk_button_new_with_label(_("Copy album tags"));
-	paste_album_tags_but = gtk_button_new_with_label(_("Paste album tags"));
-
-        gtk_container_add(GTK_CONTAINER(boxx), copy_album_tags_but);
-        gtk_container_add(GTK_CONTAINER(boxx), paste_album_tags_but);
-
-        g_signal_connect(G_OBJECT(copy_album_tags_but), "clicked",
-                         G_CALLBACK(copy_album_tags), NULL);
-        g_signal_connect(G_OBJECT(paste_album_tags_but), "clicked",
-                         G_CALLBACK(paste_album_tags), NULL);
-
-	gtk_widget_set_sensitive(GTK_WIDGET(paste_album_tags_but), FALSE);
-#endif
         save = gtk_button_new_from_stock(GTK_STOCK_SAVE);
         gtk_container_add(GTK_CONTAINER(boxx), save);
 
@@ -1040,11 +573,6 @@ mpg123_file_info_box(gchar * filename)
                          G_CALLBACK(remove_id3_cb), save);
         g_signal_connect(G_OBJECT(save), "clicked", G_CALLBACK(save_cb),
                          remove_id3);
-#if 0
-        g_signal_connect(G_OBJECT(revert), "clicked", G_CALLBACK(fill_entries),
-                         NULL);
-#endif
-
 
         gtk_table_attach(GTK_TABLE(table), boxx, 0, 5, 6, 7, GTK_FILL, 0,
                          0, 8);
@@ -1075,15 +603,8 @@ mpg123_file_info_box(gchar * filename)
                                  G_CALLBACK(change_buttons), save);
         g_signal_connect_swapped(G_OBJECT(year_entry), "changed",
                                  G_CALLBACK(change_buttons), save);
-#ifdef HAVE_ID3LIB
-        g_signal_connect_swapped(G_OBJECT(gtk_text_view_get_buffer(GTK_TEXT_VIEW(comment_entry))), "changed",
-                                 G_CALLBACK(change_buttons), save);
-        g_signal_connect_swapped(G_OBJECT(totaltracks_entry), "changed",
-                                 G_CALLBACK(change_buttons), save);
-#else
         g_signal_connect_swapped(G_OBJECT(comment_entry), "changed",
                                  G_CALLBACK(change_buttons), save);
-#endif
         g_signal_connect_swapped(G_OBJECT(tracknum_entry), "changed",
                                  G_CALLBACK(change_buttons), save);
         g_signal_connect_swapped(G_OBJECT(GTK_COMBO(genre_combo)->entry), "changed",
@@ -1127,11 +648,7 @@ mpg123_file_info_box(gchar * filename)
     gtk_entry_set_text(GTK_ENTRY(album_entry), "");
     gtk_entry_set_text(GTK_ENTRY(year_entry), "");
     gtk_entry_set_text(GTK_ENTRY(tracknum_entry), "");
-#ifdef HAVE_ID3LIB
-    gtk_text_buffer_set_text(gtk_text_view_get_buffer(GTK_TEXT_VIEW(comment_entry)),"",-1);
-#else
     gtk_entry_set_text(GTK_ENTRY(comment_entry), "");
-#endif
     gtk_list_select_item(GTK_LIST(GTK_COMBO(genre_combo)->list),
                          g_list_index(genre_list, ""));
 
@@ -1176,57 +693,38 @@ mpg123_file_info_box(gchar * filename)
     fill_entries(NULL, NULL);
 
     gtk_widget_set_sensitive(GTK_WIDGET(save), FALSE);
-#if 0
-    gtk_widget_set_sensitive(GTK_WIDGET(revert), FALSE);
-#endif
     gtk_widget_show_all(window);
 }
-
-#ifdef HAVE_ID3LIB
 
 void
 fill_entries(GtkWidget * w, gpointer data)
 {
   VFSFile *fh;
-  ID3Tag * id3tag;
 
   if (str_has_prefix_nocase(current_filename, "http://"))
     return;
   
-  id3tag = ID3Tag_New();
-  ID3Tag_LinkPreferV2(id3tag, current_filename);
+  taglib_file = taglib_file_new(current_filename);
+  if(taglib_file) {
+    taglib_tag = taglib_file_tag(taglib_file);
+    taglib_ap = taglib_file_audioproperties(taglib_file);
+  } else return;
 
-  id3v2_frame_to_entry(title_entry, id3tag, ID3FID_TITLE);
-  id3v2_frame_to_entry(artist_entry, id3tag, ID3FID_LEADARTIST);
-  id3v2_frame_to_entry(album_entry, id3tag, ID3FID_ALBUM);
-  id3v2_frame_to_text_view(comment_entry, id3tag, ID3FID_COMMENT);
-  id3v2_frame_to_entry(year_entry, id3tag, ID3FID_YEAR);
-  id3v2_tracknum_to_entries(tracknum_entry, totaltracks_entry, id3tag);
-  {
-    ID3Frame * frame = ID3Tag_FindFrameWithID(id3tag, ID3FID_CONTENTTYPE);
-	    
-    if (frame) {
-      int genre_idx = -1;
-      char genre[64];
-      const char * genre2;
-      ID3Field * text_field = ID3Frame_GetField(frame,ID3FN_TEXT);
-      ID3Field_GetASCII(text_field,genre,64);
+  gtk_entry_set_text(GTK_ENTRY(title_entry), taglib_tag_title(taglib_tag));
+  gtk_entry_set_text(GTK_ENTRY(artist_entry), taglib_tag_artist(taglib_tag));
+  gtk_entry_set_text(GTK_ENTRY(album_entry), taglib_tag_album(taglib_tag));
+  gtk_entry_set_text(GTK_ENTRY(comment_entry), taglib_tag_comment(taglib_tag));
+  gtk_entry_set_text(GTK_ENTRY(year_entry), (gchar*)taglib_tag_year(taglib_tag));
+  gtk_entry_set_text(GTK_ENTRY(tracknum_entry), (gchar*)taglib_tag_track(taglib_tag));
+  gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(genre_combo)->entry), taglib_tag_genre(taglib_tag));
 
-      /* attempt to find corresponding genre */
-      g_strstrip(genre);
-      sscanf(genre,"(%d)",&genre_idx);
-      if ((genre2 = ID3_V1GENRE2DESCRIPTION(genre_idx)))
-	gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(genre_combo)->entry),
-			   genre2);
-    }
-  }
+  gtk_widget_set_sensitive(GTK_WIDGET(w), FALSE);
+  gtk_widget_set_sensitive(GTK_WIDGET(data), FALSE);
 
+  taglib_file_free(taglib_file);
+  taglib_tag_free_strings();
   gtk_widget_set_sensitive(GTK_WIDGET(remove_id3), TRUE);
   gtk_widget_set_sensitive(GTK_WIDGET(save), FALSE);
-
-  update_paste_sensitive();
-
-  ID3Tag_Delete(id3tag);  
 
   if ((fh = vfs_fopen(current_filename, "rb")) != NULL) {
     guint32 head;
@@ -1295,125 +793,3 @@ fill_entries(GtkWidget * w, gpointer data)
 
 }
 
-#else /* ! HAVE_ID3LIB */
-
-void
-fill_entries(GtkWidget * w, gpointer data)
-{
-    if ((fh = vfs_fopen(current_filename, "rb")) != NULL) {
-        guint32 head;
-        guchar tmp[4];
-        struct frame frm;
-        gboolean id3_found = FALSE;
-
-        vfs_fseek(fh, -sizeof(tag), SEEK_END);
-        if (vfs_fread(&tag, 1, sizeof(tag), fh) == sizeof(tag)) {
-            if (!strncmp(tag.tag, "TAG", 3)) {
-                id3_found = TRUE;
-                set_entry_tag(GTK_ENTRY(title_entry), tag.title, 30);
-                set_entry_tag(GTK_ENTRY(artist_entry), tag.artist, 30);
-                set_entry_tag(GTK_ENTRY(album_entry), tag.album, 30);
-                set_entry_tag(GTK_ENTRY(year_entry), tag.year, 4);
-                /* Check for v1.1 tags */
-                if (tag.u.v1_1.__zero == 0) {
-                    gchar *temp =
-                        g_strdup_printf("%d", tag.u.v1_1.track_number);
-                    set_entry_tag(GTK_ENTRY(comment_entry),
-                                  tag.u.v1_1.comment, 28);
-                    gtk_entry_set_text(GTK_ENTRY(tracknum_entry), temp);
-                    g_free(temp);
-                }
-                else {
-                    set_entry_tag(GTK_ENTRY(comment_entry),
-                                  tag.u.v1_0.comment, 30);
-                    gtk_entry_set_text(GTK_ENTRY(tracknum_entry), "");
-                }
-
-                gtk_list_select_item(GTK_LIST
-                                     (GTK_COMBO(genre_combo)->list),
-                                     g_list_index(genre_list, (gchar *)
-                                                  mpg123_id3_genres[tag.
-                                                                    genre]));
-                gtk_widget_set_sensitive(GTK_WIDGET(remove_id3), TRUE);
-                gtk_widget_set_sensitive(GTK_WIDGET(save), FALSE);
-#if 0
-                gtk_widget_set_sensitive(GTK_WIDGET(revert), FALSE);
-#endif
-            }
-            else {
-                gtk_entry_set_text(GTK_ENTRY(title_entry), "");
-                gtk_entry_set_text(GTK_ENTRY(artist_entry), "");
-                gtk_entry_set_text(GTK_ENTRY(album_entry), "");
-                gtk_entry_set_text(GTK_ENTRY(comment_entry), "");
-                gtk_entry_set_text(GTK_ENTRY(year_entry), "");
-                gtk_entry_set_text(GTK_ENTRY(album_entry), "");
-                gtk_entry_set_text(GTK_ENTRY(tracknum_entry), "");
-                gtk_widget_set_sensitive(GTK_WIDGET(remove_id3), FALSE);
-                gtk_widget_set_sensitive(GTK_WIDGET(save), FALSE);
-#if 0
-                gtk_widget_set_sensitive(GTK_WIDGET(revert), FALSE);
-#endif
-            }
-        }
-        vfs_rewind(fh);
-        if (vfs_fread(tmp, 1, 4, fh) != 4) {
-            vfs_fclose(fh);
-            return;
-        }
-        head =
-            ((guint32) tmp[0] << 24) | ((guint32) tmp[1] << 16) |
-            ((guint32) tmp[2] << 8) | (guint32) tmp[3];
-        while (!mpg123_head_check(head)) {
-            head <<= 8;
-            if (vfs_fread(tmp, 1, 1, fh) != 1) {
-                vfs_fclose(fh);
-                return;
-            }
-            head |= tmp[0];
-        }
-        if (mpg123_decode_header(&frm, head)) {
-            guchar *buf;
-            gdouble tpf;
-            gint pos;
-            xing_header_t xing_header;
-            guint32 num_frames;
-
-            buf = g_malloc(frm.framesize + 4);
-            vfs_fseek(fh, -4, SEEK_CUR);
-            vfs_fread(buf, 1, frm.framesize + 4, fh);
-            tpf = mpg123_compute_tpf(&frm);
-            set_mpeg_level_label(frm.mpeg25, frm.lsf, frm.lay);
-            pos = vfs_ftell(fh);
-            vfs_fseek(fh, 0, SEEK_END);
-            if (mpg123_get_xing_header(&xing_header, buf)) {
-                num_frames = xing_header.frames;
-                label_set_text(mpeg_bitrate_val,
-                               _("Variable,\navg. bitrate: %d KBit/s"),
-                               (gint) ((xing_header.bytes * 8) /
-                                       (tpf * xing_header.frames * 1000)));
-            }
-            else {
-                num_frames =
-                    ((vfs_ftell(fh) - pos -
-                      (id3_found ? 128 : 0)) / mpg123_compute_bpf(&frm)) + 1;
-                label_set_text(mpeg_bitrate_val, _("%d KBit/s"),
-                               tabsel_123[frm.lsf][frm.lay -
-                                                   1][frm.bitrate_index]);
-            }
-            label_set_text(mpeg_samplerate_val, _("%ld Hz"),
-                           mpg123_freqs[frm.sampling_frequency]);
-            label_set_text(mpeg_error_val, _("%s"),
-                           bool_label[frm.error_protection]);
-            label_set_text(mpeg_copy_val, _("%s"), bool_label[frm.copyright]);
-            label_set_text(mpeg_orig_val, _("%s"), bool_label[frm.original]);
-            label_set_text(mpeg_emph_val, _("%s"), emphasis[frm.emphasis]);
-            label_set_text(mpeg_frames_val, _("%d"), num_frames);
-            label_set_text(mpeg_filesize_val, _("%lu Bytes"), vfs_ftell(fh));
-            label_set_text(mpeg_flags_val, _("%s"), channel_mode_name(frm.mode));
-            g_free(buf);
-        }
-        vfs_fclose(fh);
-    }
-}
-
-#endif

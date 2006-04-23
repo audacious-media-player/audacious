@@ -9,12 +9,10 @@ SOURCES = mpg123.c configure.c fileinfo.c common.c \
 	decode_2to1.c decode_4to1.c \
 	layer1.c layer2.c layer3.c \
 	tabinit.c equalizer.c http.c \
-	dxhead.c \
-	id3.c id3_frame.c id3_frame_content.c id3_frame_text.c \
-	id3_frame_url.c id3_tag.c decode.c dct64.c
+	dxhead.c decode.c dct64.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
-CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(TAGLIB_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..
 
-LIBADD = $(GTK_LIBS) $(ID3LIBS)
+LIBADD = -ltag_c $(GTK_LIBS) $(ID3LIBS)

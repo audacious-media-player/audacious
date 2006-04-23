@@ -11,7 +11,7 @@
 #endif
 
 #include <glib.h>
-
+#include <tag_c.h>
 
 enum {
     SYNTH_AUTO,
@@ -302,8 +302,7 @@ int mpg123_decode_header(struct frame *fr, unsigned long newhead);
 double mpg123_compute_bpf(struct frame *fr);
 double mpg123_compute_tpf(struct frame *fr);
 guint mpg123_strip_spaces(char *src, size_t n);
-void mpg123_get_id3v2(struct id3_tag *id3d, struct id3tag_t *tag);
-gchar *mpg123_format_song_title(struct id3tag_t *tag, gchar * filename);
+gchar *mpg123_format_song_title(TagLib_Tag *taglib_tag, gchar * filename);
 double mpg123_relative_pos(void);
 
 

@@ -8,8 +8,6 @@
 #include <fcntl.h>
 
 #include "mpg123.h"
-#include "xmms-id3.h"
-#include "id3_header.h"
 
 const int tabsel_123[2][3][16] = {
     {{0, 32, 64, 96, 128, 160, 192, 224, 256, 288, 320, 352, 384, 416,
@@ -213,84 +211,6 @@ mpg123_read_frame_init(void)
     mpg123_info->output_audio = FALSE;
 }
 
-/*
- * Function read_id3v2_tag (head)
- *
- *    Read ID3v2 tag from stream.  Return TRUE upon success, or FALSE if
- *    an error occurred.
- *
- */
-static gboolean
-read_id3v2_tag(unsigned long head)
-{
-    guchar *id3buf;
-    gsize hdrsize;
-    struct id3_tag *id3d;
-    struct id3tag_t tag;
-    guchar buf[7];
-
-    buf[0] = head & 0xff;
-    /*
-     * Read ID3tag header.
-     */
-    if (fullread(filept, buf + 1, 6) != 6)
-        return FALSE;
-
-    hdrsize = ID3_GET_SIZE28(buf[3], buf[4], buf[5], buf[6]);
-
-    /*
-     * A invalid header could fool us into requesting insane
-     * amounts of memory.  Make sure the header size is
-     * reasonable.
-     */
-    if ((mpg123_info->filesize && hdrsize > mpg123_info->filesize) ||
-        (!mpg123_info->filesize && hdrsize > 1000000))
-        return FALSE;
-
-    if (mpg123_cfg.disable_id3v2) {
-        guint8 *tmp = g_malloc(hdrsize);
-        gboolean ret;
-        ret = ((gsize)fullread(filept, tmp, hdrsize) == hdrsize);
-        g_free(tmp);
-        return ret;
-    }
-
-    id3buf = g_malloc(hdrsize + ID3_TAGHDR_SIZE + 3);
-    memcpy(id3buf, "ID3", 3);
-    memcpy(id3buf + 3, buf, ID3_TAGHDR_SIZE);
-
-    /*
-     * Read ID3tag body.
-     */
-    if ((gsize)fullread(filept, id3buf + ID3_TAGHDR_SIZE + 3, hdrsize) != hdrsize) {
-        g_free(id3buf);
-        return FALSE;
-    }
-
-    /*
-     * Get info from tag.
-     */
-    if ((id3d = id3_open_mem(id3buf, 0)) != NULL) {
-        mpg123_get_id3v2(id3d, &tag);
-        if (!mpg123_info->first_frame) {
-            char *songname = mpg123_title;
-            mpg123_title = mpg123_format_song_title(&tag, mpg123_filename);
-            mpg123_ip.set_info(mpg123_title, mpg123_length,
-                               mpg123_bitrate * 1000,
-                               mpg123_frequency, mpg123_stereo);
-            if (songname)
-                g_free(songname);
-        }
-        else {
-            mpg123_title = mpg123_format_song_title(&tag, mpg123_filename);
-        }
-        id3_close(id3d);
-    }
-    g_free(id3buf);
-
-    return TRUE;
-}
-
 int
 mpg123_head_check(unsigned long head)
 {
@@ -333,7 +253,6 @@ mpg123_read_frame(struct frame *fr)
             try++;
             if ((newhead & 0xffffff00) ==
                 ('I' << 24) + ('D' << 16) + ('3' << 8)) {
-                read_id3v2_tag(newhead);
                 if (!stream_head_read(&newhead))
                     return FALSE;
             }

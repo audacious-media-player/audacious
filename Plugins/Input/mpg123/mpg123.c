@@ -18,12 +18,12 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-#include <libaudacious/util.h>
-#include <libaudacious/configdb.h>
-#include <libaudacious/vfs.h>
-#include <libaudacious/titlestring.h>
-
+#include "libaudacious/util.h"
+#include "libaudacious/configdb.h"
+#include "libaudacious/vfs.h"
+#include "libaudacious/titlestring.h"
 #include "audacious/util.h"
+#include <tag_c.h>
 
 static const long outscale = 32768;
 
@@ -44,6 +44,10 @@ gboolean mpg123_stereo, mpg123_mpeg25;
 int mpg123_mode;
 
 gchar **mpg123_id3_encoding_list = NULL;
+
+static TagLib_File *taglib_file;
+static TagLib_Tag *taglib_tag;
+static const TagLib_AudioProperties *taglib_ap;
 
 const char *mpg123_id3_genres[GENRE_MAX] = {
     N_("Blues"), N_("Classic Rock"), N_("Country"), N_("Dance"),
@@ -455,38 +459,6 @@ mpg123_id3v1_to_id3v2(struct id3v1tag_t *v1, struct id3tag_t *v2)
         v2->track_number = 0;
 }
 
-static char *
-mpg123_getstr(char *str)
-{
-    if (str && strlen(str) > 0)
-        return str;
-    return NULL;
-}
-
-static gchar *
-convert_id3_title(gchar * title)
-{
-    gchar **encoding = mpg123_id3_encoding_list;
-    gchar *new_title = NULL;
-
-    if (g_utf8_validate(title, -1, NULL))
-        return title;
-
-    while (*encoding && !new_title) {
-        new_title = g_convert(title, strlen(title), "UTF-8", *encoding++,
-                              NULL, NULL, NULL);
-    }
-
-    if (new_title) {
-        g_free(title);
-        return new_title;
-    }
-
-    /* FIXME: We're relying on BMP core to provide fallback
-     * conversion */
-    return title;
-}
-
 /*
  * Function mpg123_format_song_title (tag, filename)
  *
@@ -495,21 +467,21 @@ convert_id3_title(gchar * title)
  *
  */
 gchar *
-mpg123_format_song_title(struct id3tag_t * tag, gchar * filename)
+mpg123_format_song_title(TagLib_Tag *taglib_tag, gchar * filename)
 {
     gchar *title = NULL;
     TitleInput *input;
 
     input = bmp_title_input_new();
 
-    if (tag) {
-        input->performer = mpg123_getstr(tag->artist);
-        input->album_name = mpg123_getstr(tag->album);
-        input->track_name = mpg123_getstr(tag->title);
-        input->year = tag->year;
-        input->track_number = tag->track_number;
-        input->genre = mpg123_getstr(tag->genre);
-        input->comment = mpg123_getstr(tag->comment);
+    if (taglib_tag) {
+        input->performer = taglib_tag_artist(taglib_tag);
+        input->album_name = taglib_tag_album(taglib_tag);
+        input->track_name = taglib_tag_title(taglib_tag);
+        input->year = taglib_tag_year(taglib_tag);
+        input->track_number = taglib_tag_track(taglib_tag);
+        input->genre = taglib_tag_genre(taglib_tag);
+        input->comment = taglib_tag_comment(taglib_tag);
     }
 
     input->file_name = g_path_get_basename(filename);
@@ -531,127 +503,27 @@ mpg123_format_song_title(struct id3tag_t * tag, gchar * filename)
     g_free(input->file_name);
     g_free(input);
 
-    if (mpg123_cfg.title_encoding_enabled)
-        title = convert_id3_title(title);
-
     return title;
 }
 
 /*
- * Function mpg123_get_id3v2 (id3d, tag)
- *
- *    Get desired contents from the indicated id3tag and store it in
- *    `tag'. 
- *
- */
-void
-mpg123_get_id3v2(struct id3_tag *id3d, struct id3tag_t *tag)
-{
-    struct id3_frame *id3frm;
-    gchar *txt;
-    gsize tlen;
-    gint num;
-
-#define ID3_SET(_tid,_fld)                                              \
-{                                                                       \
-        id3frm = id3_get_frame( id3d, _tid, 1 );                        \
-        if (id3frm) {                                                   \
-                txt = _tid == ID3_TCON ? id3_get_content(id3frm)        \
-                    : id3_get_text(id3frm);                             \
-                if(txt)                                                 \
-                {                                                       \
-                        tlen = strlen(txt);                             \
-                        if ( tlen >= sizeof(tag->_fld) )                \
-                                tlen = sizeof(tag->_fld)-1;             \
-                        strncpy( tag->_fld, txt, tlen );                \
-                        tag->_fld[tlen] = 0;                            \
-                        g_free(txt);                                    \
-                }                                                       \
-                else                                                    \
-                        tag->_fld[0] = 0;                               \
-        } else {                                                        \
-                tag->_fld[0] = 0;                                       \
-        }                                                               \
-}
-
-#define ID3_SET_NUM(_tid,_fld)                          \
-{                                                       \
-        id3frm = id3_get_frame(id3d, _tid, 1);          \
-        if (id3frm) {                                   \
-                num = id3_get_text_number(id3frm);      \
-                tag->_fld = num >= 0 ? num : 0;         \
-        } else                                          \
-                tag->_fld = 0;                          \
-}
-
-    ID3_SET(ID3_TIT2, title);
-    ID3_SET(ID3_TPE1, artist);
-    if (strlen(tag->artist) == 0)
-        ID3_SET(ID3_TPE2, artist);
-    ID3_SET(ID3_TALB, album);
-    ID3_SET_NUM(ID3_TYER, year);
-    ID3_SET_NUM(ID3_TRCK, track_number);
-    ID3_SET(ID3_COMM, comment);
-    ID3_SET(ID3_TCON, genre);
-}
-
-
-/*
- * Function get_song_title (fd, filename)
- *
- *    Get song title of file.  File position of `fd' will be
- *    clobbered.  `fd' may be NULL, in which case `filename' is opened
- *    separately.  The returned song title must be subsequently freed
- *    using g_free().
+ * Function get_song_title (filename)
  *
  */
 static gchar *
-get_song_title(VFSFile * fd, char *filename)
+get_song_title(char *filename)
 {
-    VFSFile *file = fd;
     char *ret = NULL;
-    struct id3v1tag_t id3v1tag;
-    struct id3tag_t id3tag;
-
-    if (file || (file = vfs_fopen(filename, "rb")) != 0) {
-        struct id3_tag *id3 = NULL;
-
-        /*
-         * Try reading ID3v2 tag.
-         */
-        if (!mpg123_cfg.disable_id3v2) {
-            vfs_fseek(file, 0, SEEK_SET);
-            id3 = id3_open_fp(file, 0);
-            if (id3) {
-                mpg123_get_id3v2(id3, &id3tag);
-                ret = mpg123_format_song_title(&id3tag, filename);
-                id3_close(id3);
-            }
-        }
-
-        /*
-         * Try reading ID3v1 tag.
-         */
-        if (!id3 && (vfs_fseek(file, -1 * sizeof(id3v1tag), SEEK_END) == 0) &&
-            (vfs_fread(&id3v1tag, 1, sizeof(id3v1tag), file) ==
-             sizeof(id3v1tag)) && (strncmp(id3v1tag.tag, "TAG", 3) == 0)) {
-            mpg123_id3v1_to_id3v2(&id3v1tag, &id3tag);
-            ret = mpg123_format_song_title(&id3tag, filename);
-        }
-
-        if (!fd)
-            /*
-             * File was opened in this function.
-             */
-            vfs_fclose(file);
+    taglib_file = taglib_file_new(filename);
+    if(taglib_file) {
+      taglib_tag = taglib_file_tag(taglib_file);
+      taglib_ap = taglib_file_audioproperties(taglib_file);
     }
 
-    if (ret == NULL)
-        /*
-         * Unable to get ID3 tag.
-         */
-        ret = mpg123_format_song_title(NULL, filename);
-
+    ret = mpg123_format_song_title(taglib_tag, filename);
+   
+    taglib_file_free(taglib_file);
+    taglib_tag_free_strings();
     return ret;
 }
 
@@ -729,8 +601,7 @@ get_song_info(char *filename, char **title_real, int *len_real)
 
     if ((file = vfs_fopen(filename, "rb")) != NULL) {
         (*len_real) = get_song_time(file);
-        (*title_real) = get_song_title(file, filename);
-        vfs_fclose(file);
+        (*title_real) = get_song_title(filename);
     }
 }
 
@@ -849,7 +720,7 @@ decode_loop(void *arg)
         if (strncasecmp(filename, "http://", 7)) {
             mpg123_length = mpg123_info->num_frames * mpg123_info->tpf * 1000;
             if (!mpg123_title)
-                mpg123_title = get_song_title(NULL, filename);
+                mpg123_title = get_song_title(filename);
         }
         else {
             if (!mpg123_title)
