@@ -4569,7 +4569,7 @@ msgstr "/Datei wiedergeben"
 
 #: audacious/mainwin.c:374
 msgid "/Play Location"
-msgstr "/Ort wiedergeben"
+msgstr "/Internetadresse wiedergeben"
 
 #: audacious/mainwin.c:377
 msgid "/V_isualization"
