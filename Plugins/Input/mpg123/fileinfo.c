@@ -700,6 +700,8 @@ void
 fill_entries(GtkWidget * w, gpointer data)
 {
   VFSFile *fh;
+  gchar *ptr;
+  guint32 i;
 
   if (str_has_prefix_nocase(current_filename, "http://"))
     return;
@@ -710,13 +712,49 @@ fill_entries(GtkWidget * w, gpointer data)
     taglib_ap = taglib_file_audioproperties(taglib_file);
   } else return;
 
-  gtk_entry_set_text(GTK_ENTRY(title_entry), taglib_tag_title(taglib_tag));
-  gtk_entry_set_text(GTK_ENTRY(artist_entry), taglib_tag_artist(taglib_tag));
-  gtk_entry_set_text(GTK_ENTRY(album_entry), taglib_tag_album(taglib_tag));
-  gtk_entry_set_text(GTK_ENTRY(comment_entry), taglib_tag_comment(taglib_tag));
-  gtk_entry_set_text(GTK_ENTRY(year_entry), (gchar*)taglib_tag_year(taglib_tag));
-  gtk_entry_set_text(GTK_ENTRY(tracknum_entry), (gchar*)taglib_tag_track(taglib_tag));
-  gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(genre_combo)->entry), taglib_tag_genre(taglib_tag));
+  /* be sane here, taglib_tag results may be NULL --nenolod */
+  ptr = taglib_tag_title(taglib_tag);
+
+  if (ptr != NULL)
+	gtk_entry_set_text(GTK_ENTRY(title_entry), ptr);
+
+  ptr = taglib_tag_artist(taglib_tag);
+
+  if (ptr != NULL)
+	gtk_entry_set_text(GTK_ENTRY(artist_entry), ptr);
+
+  ptr = taglib_tag_album(taglib_tag);
+
+  if (ptr != NULL)
+	gtk_entry_set_text(GTK_ENTRY(album_entry), ptr);
+
+  ptr = taglib_tag_comment(taglib_tag);
+
+  if (ptr != NULL)
+	gtk_entry_set_text(GTK_ENTRY(comment_entry), ptr);
+
+  i = taglib_tag_year(taglib_tag);
+
+  if (i != 0)
+  {
+	ptr = g_strdup_printf("%d", i);
+	gtk_entry_set_text(GTK_ENTRY(year_entry), ptr);
+	g_free(ptr);
+  }
+
+  i = taglib_tag_track(taglib_tag);
+
+  if (i != 0)
+  {
+	ptr = g_strdup_printf("%d", i);
+	gtk_entry_set_text(GTK_ENTRY(tracknum_entry), ptr);
+	g_free(ptr);
+  }
+
+  ptr = taglib_tag_genre(taglib_tag);
+
+  if (ptr != NULL)
+	gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(genre_combo)->entry), ptr);
 
   gtk_widget_set_sensitive(GTK_WIDGET(w), FALSE);
   gtk_widget_set_sensitive(GTK_WIDGET(data), FALSE);
