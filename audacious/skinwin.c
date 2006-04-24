@@ -273,7 +273,7 @@ skinlist_update(void)
 }
 
 void
-skin_view_update(GtkTreeView * treeview)
+skin_view_update(GtkTreeView * treeview, GtkWidget * refresh_button)
 {
     GtkTreeSelection *selection = NULL;
     GtkListStore *store;
@@ -287,6 +287,7 @@ skin_view_update(GtkTreeView * treeview)
     GList *entry;
 
     gtk_widget_set_sensitive(GTK_WIDGET(treeview), FALSE);
+    gtk_widget_set_sensitive(GTK_WIDGET(refresh_button), FALSE);
 
     store = GTK_LIST_STORE(gtk_tree_view_get_model(treeview));
 
@@ -331,6 +332,7 @@ skin_view_update(GtkTreeView * treeview)
     }
 
     gtk_widget_set_sensitive(GTK_WIDGET(treeview), TRUE);
+    gtk_widget_set_sensitive(GTK_WIDGET(refresh_button), TRUE);
 }
 
 

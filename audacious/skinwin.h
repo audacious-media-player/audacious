@@ -39,6 +39,6 @@ extern GList *skinlist;
 
 void skinlist_update();
 void skin_view_realize(GtkTreeView * treeview);
-void skin_view_update(GtkTreeView * treeview);
+void skin_view_update(GtkTreeView * treeview, GtkWidget * refresh_button);
 
 #endif

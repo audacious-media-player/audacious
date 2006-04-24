@@ -1460,7 +1460,7 @@ on_skin_refresh_button_clicked(GtkButton * button,
                                gpointer data)
 {
     GladeXML *xml;
-    GtkWidget *widget;
+    GtkWidget *widget, *widget2;
 
     const mode_t mode755 = S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
 
@@ -1470,7 +1470,8 @@ on_skin_refresh_button_clicked(GtkButton * button,
     xml = prefswin_get_xml();
 
     widget = glade_xml_get_widget(xml, "skin_view");
-    skin_view_update(GTK_TREE_VIEW(widget));
+    widget2 = glade_xml_get_widget(xml, "skin_refresh_button");
+    skin_view_update(GTK_TREE_VIEW(widget), GTK_WIDGET(widget2));
 }
 
 static void
@@ -1491,6 +1492,9 @@ on_skin_view_visibility_notify(GtkTreeView * treeview,
                                GdkEvent * event,
                                gpointer data)
 {
+    GladeXML *xml;
+    GtkWidget *widget;
+
     if (event->visibility.state == GDK_VISIBILITY_FULLY_OBSCURED)
         return FALSE;
 
@@ -1498,7 +1502,10 @@ on_skin_view_visibility_notify(GtkTreeView * treeview,
         return FALSE;
 
     prefswin_set_skin_update(FALSE);
-    skin_view_update(treeview);
+
+    xml = prefswin_get_xml();
+    widget = glade_xml_get_widget(xml, "skin_refresh_button");
+    skin_view_update(treeview, GTK_WIDGET(widget));
 
     return TRUE;
 }
@@ -1600,6 +1607,9 @@ on_skin_view_drag_data_received(GtkWidget * widget,
     ConfigDb *db;
     gchar *path;
 
+    GladeXML *xml;
+    GtkWidget *widget2;
+
     if (!selection_data->data) {
         g_warning("DND data string is NULL");
         return;
@@ -1620,7 +1630,9 @@ on_skin_view_drag_data_received(GtkWidget * widget,
     if (file_is_archive(path)) {
         bmp_active_skin_load(path);
         skin_install_skin(path);
-	skin_view_update(GTK_TREE_VIEW(widget));
+        xml = prefswin_get_xml();
+        widget2 = glade_xml_get_widget(xml, "skin_refresh_button");
+	skin_view_update(GTK_TREE_VIEW(widget), GTK_WIDGET(widget2));
         /* Change skin name in the config file */
         db = bmp_cfg_db_open();
         bmp_cfg_db_set_string(db, NULL, "skin", path);
