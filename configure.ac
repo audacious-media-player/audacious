@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT(audacious, 0.3)
+AC_INIT(audacious, 1.0.0)
 AC_PREREQ(2.5)
 
 AC_CANONICAL_HOST
@@ -765,26 +765,7 @@ check_hex="070907"
 
 AC_MSG_CHECKING([for curl >= $check])
 
-if eval curl-config --version 2>/dev/null >/dev/null; then
-        ver=`curl-config --version | sed -e "s/libcurl //g"`
-        hex_ver=`curl-config --vernum | tr 'a-f' 'A-F'`
-        ok=`echo "ibase=16; if($hex_ver>=$check_hex) $hex_ver else 0" | bc`
-
-        if test x$ok != x0; then
-                my_cv_curl_vers="$ver"
-                AC_MSG_RESULT([$my_cv_curl_vers])
-		CURL_LIBS=`curl-config --libs`
-		CURL_CFLAGS=`curl-config --cflags`
-        else
-                AC_MSG_RESULT([no])
-                AC_MSG_WARN([$ver is too old. Need version $check or higher. Scrobbler support will not be built.])
-		scrobbler="no"
-        fi
-else
-        AC_MSG_RESULT([no])
-        AC_MSG_WARN([curl-config was not found. Scrobbler support will not be built.])
-	scrobbler="no"
-fi
+PKG_CHECK_MODULES(CURL, [libcurl >= 7.9.7], , [scrobbler="no"])
 
 if test "x$scrobbler" = "xyes"; then
 	GENERAL_PLUGINS="$GENERAL_PLUGINS scrobbler"
