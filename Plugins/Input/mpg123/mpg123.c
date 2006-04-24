@@ -478,6 +478,9 @@ mpg123_format_song_title(TagLib_Tag *taglib_tag, gchar * filename)
         input->performer = taglib_tag_artist(taglib_tag);
         input->album_name = taglib_tag_album(taglib_tag);
         input->track_name = taglib_tag_title(taglib_tag);
+		mpg123_strip_spaces(input->performer,strlen(input->performer));
+		mpg123_strip_spaces(input->album_name,strlen(input->album_name));
+		mpg123_strip_spaces(input->track_name,strlen(input->track_name));
         input->year = taglib_tag_year(taglib_tag);
         input->track_number = taglib_tag_track(taglib_tag);
         input->genre = taglib_tag_genre(taglib_tag);
