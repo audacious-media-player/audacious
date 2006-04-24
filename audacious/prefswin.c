@@ -113,6 +113,18 @@ static TitleFieldTag title_field_tags[] = {
 
 static const guint n_title_field_tags = G_N_ELEMENTS(title_field_tags);
 
+/* GLib 2.6 compatibility */
+#if (! ((GLIB_MAJOR_VERSION > 2) || ((GLIB_MAJOR_VERSION == 2) && (GLIB_MINOR_VERSION >= 8))))
+static const char *
+g_get_host_name (void)
+{
+    static char hostname [HOST_NAME_MAX + 1];
+    if (gethostname (hostname, HOST_NAME_MAX) == -1) {
+        return _("localhost");
+    }
+    return hostname;
+}
+#endif
 
 static GladeXML *
 prefswin_get_xml(void)
