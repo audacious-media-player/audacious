@@ -492,7 +492,7 @@ mpg123_format_song_title(TagLib_Tag *taglib_tag, gchar * filename)
                                  mpg123_cfg.id3_format :
                                  xmms_get_gentitle_format(), input);
 
-    if (!title) {
+    if (!title || strlen(input->track_name) == 0) {
         /* Format according to filename.  */
         title = g_path_get_basename(filename);
         if (extname(title))
