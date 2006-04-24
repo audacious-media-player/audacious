@@ -355,7 +355,7 @@ playlist_list_draw(Widget * w)
     gint i, max_first;
     guint padding, padding_dwidth, padding_plength;
     guint max_time_len = 0;
-    gint queue_tailpadding = 0;
+    gfloat queue_tailpadding = 0;
     gint tpadding; 
     gsize tpadding_dwidth = 0;
     gint x, y;
@@ -450,14 +450,6 @@ playlist_list_draw(Widget * w)
                                ((i - pl->pl_first) * pl->pl_fheight),
                                width, pl->pl_fheight);
         }
-        if (i == playlist_get_position_nolock())
-            gdk_gc_set_foreground(gc,
-                                  skin_get_color(bmp_active_skin,
-                                                 SKIN_PLEDIT_CURRENT));
-        else
-            gdk_gc_set_foreground(gc,
-                                  skin_get_color(bmp_active_skin,
-                                                 SKIN_PLEDIT_NORMAL));
 
         /* FIXME: entry->title should NEVER be NULL, and there should
            NEVER be a need to do a UTF-8 conversion. Playlist title
@@ -491,10 +483,14 @@ playlist_list_draw(Widget * w)
 
         max_time_len = MAX(max_time_len, tail_len);
 
-        if (pos != -1)
+        if (pos != -1 && tpadding_dwidth <= 0)
+            tail_width = width - (width_approx_digits * (strlen(queuepos) + 2.25));
+        else if (pos != -1)
             tail_width = width - (width_approx_digits * (tpadding_dwidth + strlen(queuepos) + 4));
-        else
+        else if (tpadding_dwidth > 0)
             tail_width = width - (width_approx_digits * (tpadding_dwidth + 2.5));
+        else
+            tail_width = width;
 
         if (i == playlist_get_position_nolock())
             gdk_gc_set_foreground(gc,
@@ -511,35 +507,6 @@ playlist_list_draw(Widget * w)
         x = pl->pl_widget.x + width - width_approx_digits * 2;
         y = pl->pl_widget.y + ((i - pl->pl_first) -
                                1) * pl->pl_fheight + ascent;
-
-        if (entry->selected) {
-            gdk_gc_set_foreground(gc,
-                                  skin_get_color(bmp_active_skin,
-                                                 SKIN_PLEDIT_SELECTEDBG));
-        }
-        else {
-            gdk_gc_set_foreground(gc,
-                                  skin_get_color(bmp_active_skin,
-                                                 SKIN_PLEDIT_NORMALBG));
-        }
-
-        /* This isn't very cool, but i don't see a way to
-         * calculate row widths with Pango fast enough here */
-
-        gdk_draw_rectangle(obj, gc, TRUE,
-                           pl->pl_widget.x + pl->pl_widget.width -
-                           (width_approx_digits * 6),
-                           y + abs(descent),
-                           (width_approx_digits * 6), pl->pl_fheight - 1);
-
-        if (i == playlist_get_position_nolock())
-            gdk_gc_set_foreground(gc,
-                                  skin_get_color(bmp_active_skin,
-                                                 SKIN_PLEDIT_CURRENT));
-        else
-            gdk_gc_set_foreground(gc,
-                                  skin_get_color(bmp_active_skin,
-                                                 SKIN_PLEDIT_NORMAL));
 
         frags = NULL;
         frag0 = NULL;
@@ -570,18 +537,12 @@ playlist_list_draw(Widget * w)
 
         if (pos != -1) {
 
-            if (i == playlist_get_position_nolock())
-                gdk_gc_set_foreground(gc,
-                                      skin_get_color(bmp_active_skin,
-                                                     SKIN_PLEDIT_CURRENT));
-            else
-                gdk_gc_set_foreground(gc,
-                                      skin_get_color(bmp_active_skin,
-                                                     SKIN_PLEDIT_NORMAL));
-
             /* DON'T remove the commented code yet please     -- Milosz */
 
-            queue_tailpadding = tpadding_dwidth + 1;
+            if (tpadding_dwidth > 0)
+                queue_tailpadding = tpadding_dwidth + 1;
+            else
+                queue_tailpadding = -0.75;
 
             gdk_draw_rectangle(obj, gc, FALSE,
                                x -
@@ -720,7 +681,7 @@ playlist_list_draw(Widget * w)
                       pl->pl_widget.x + padding,
                       pl->pl_widget.y,
                       pl->pl_widget.x + padding,
-                      (pl->pl_widget.y + pl->pl_widget.height));
+                      pl->pl_widget.y + pl->pl_widget.height - 1);
     }
 
     if (tpadding_dwidth != 0)
@@ -734,7 +695,7 @@ playlist_list_draw(Widget * w)
                       pl->pl_widget.x + pl->pl_widget.width - tpadding,
                       pl->pl_widget.y,
                       pl->pl_widget.x + pl->pl_widget.width - tpadding,
-                      (pl->pl_widget.y + pl->pl_widget.height));
+                      pl->pl_widget.y + pl->pl_widget.height - 1);
 
     }
 
@@ -742,7 +703,7 @@ playlist_list_draw(Widget * w)
     gdk_gc_set_clip_rectangle(gc, NULL);
 
     PLAYLIST_UNLOCK();
-    
+
     g_free(playlist_rect);
 }
 
