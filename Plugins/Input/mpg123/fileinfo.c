@@ -22,6 +22,7 @@
 #include "mpg123.h"
 
 #include <tag_c.h>
+#include "tag_c_hacked.h"
 
 #include <glib.h>
 #include <glib/gi18n.h>
@@ -117,12 +118,15 @@ save_cb(GtkWidget * w, gpointer data)
   if (str_has_prefix_nocase(current_filename, "http://"))
     return;
 
+  taglib_set_strings_unicode(1);
+
   taglib_file = taglib_file_new(current_filename);
   if(taglib_file) {
     taglib_tag = taglib_file_tag(taglib_file);
     taglib_ap = taglib_file_audioproperties(taglib_file);
   } else return;
 
+  taglib_set_id3v2_default_text_encoding();
   taglib_tag_set_title(taglib_tag, gtk_entry_get_text(GTK_ENTRY(title_entry)));
   taglib_tag_set_artist(taglib_tag, gtk_entry_get_text(GTK_ENTRY(artist_entry)));
   taglib_tag_set_album(taglib_tag, gtk_entry_get_text(GTK_ENTRY(album_entry)));
