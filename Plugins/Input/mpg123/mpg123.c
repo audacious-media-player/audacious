@@ -605,6 +605,7 @@ get_song_info(char *filename, char **title_real, int *len_real)
     if ((file = vfs_fopen(filename, "rb")) != NULL) {
         (*len_real) = get_song_time(file);
         (*title_real) = get_song_title(filename);
+	vfs_fclose(file);
     }
 }
 
