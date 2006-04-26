@@ -4,9 +4,9 @@
 
 #include "mpg123.h"
 
-real mpg123_decwin[512 + 32];
-static real cos64[16], cos32[8], cos16[4], cos8[2], cos4[1];
-real *mpg123_pnts[] = { cos64, cos32, cos16, cos8, cos4 };
+mpgdec_real mpg123_decwin[512 + 32];
+static mpgdec_real cos64[16], cos32[8], cos16[4], cos8[2], cos4[1];
+mpgdec_real *mpg123_pnts[] = { cos64, cos32, cos16, cos8, cos4 };
 
 static unsigned char *mpg123_conv16to8_buf = NULL;
 unsigned char *mpg123_conv16to8;
@@ -47,7 +47,7 @@ void
 mpg123_make_decode_tables_fpu(long scaleval)
 {
     int i, j;
-    real *table, *costab;
+    mpgdec_real *table, *costab;
 
     for (i = 0; i < 5; i++) {
         int kr = 0x10 >> i;

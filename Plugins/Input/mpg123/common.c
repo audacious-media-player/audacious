@@ -79,7 +79,7 @@ mpg123_stream_close(void)
 
 /**************************************** 
  * HACK,HACK,HACK: step back <num> frames 
- * can only work if the 'stream' isn't a real stream but a file
+ * can only work if the 'stream' isn't a mpgdec_real stream but a file
 static int stream_back_bytes(int bytes)
 {
 	if (vfs_fseek(filept, -bytes, SEEK_CUR) < 0)

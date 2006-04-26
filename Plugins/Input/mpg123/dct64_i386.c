@@ -10,11 +10,11 @@
 #include "mpg123.h"
 
 static void
-mpg123_dct64_1(real * out0, real * out1, real * b1, real * b2, real * samples)
+mpg123_dct64_1(mpgdec_real * out0, mpgdec_real * out1, mpgdec_real * b1, mpgdec_real * b2, mpgdec_real * samples)
 {
 
     {
-        register real *costab = mpg123_pnts[0];
+        register mpgdec_real *costab = mpg123_pnts[0];
 
         b1[0x00] = samples[0x00] + samples[0x1F];
         b1[0x1F] = (samples[0x00] - samples[0x1F]) * costab[0x0];
@@ -66,7 +66,7 @@ mpg123_dct64_1(real * out0, real * out1, real * b1, real * b2, real * samples)
     }
 
     {
-        register real *costab = mpg123_pnts[1];
+        register mpgdec_real *costab = mpg123_pnts[1];
 
         b2[0x00] = b1[0x00] + b1[0x0F];
         b2[0x0F] = (b1[0x00] - b1[0x0F]) * costab[0];
@@ -104,7 +104,7 @@ mpg123_dct64_1(real * out0, real * out1, real * b1, real * b2, real * samples)
     }
 
     {
-        register real *costab = mpg123_pnts[2];
+        register mpgdec_real *costab = mpg123_pnts[2];
 
         b1[0x00] = b2[0x00] + b2[0x07];
         b1[0x07] = (b2[0x00] - b2[0x07]) * costab[0];
@@ -144,8 +144,8 @@ mpg123_dct64_1(real * out0, real * out1, real * b1, real * b2, real * samples)
     }
 
     {
-        register real const cos0 = mpg123_pnts[3][0];
-        register real const cos1 = mpg123_pnts[3][1];
+        register mpgdec_real const cos0 = mpg123_pnts[3][0];
+        register mpgdec_real const cos1 = mpg123_pnts[3][1];
 
         b2[0x00] = b1[0x00] + b1[0x03];
         b2[0x03] = (b1[0x00] - b1[0x03]) * cos0;
@@ -189,7 +189,7 @@ mpg123_dct64_1(real * out0, real * out1, real * b1, real * b2, real * samples)
     }
 
     {
-        register real const cos0 = mpg123_pnts[4][0];
+        register mpgdec_real const cos0 = mpg123_pnts[4][0];
 
         b1[0x00] = b2[0x00] + b2[0x01];
         b1[0x01] = (b2[0x00] - b2[0x01]) * cos0;
@@ -308,9 +308,9 @@ mpg123_dct64_1(real * out0, real * out1, real * b1, real * b2, real * samples)
  * (new) registers for the b1,b2 pointer to the bufs[xx] field
  */
 void
-mpg123_dct64(real * a, real * b, real * c)
+mpg123_dct64(mpgdec_real * a, mpgdec_real * b, mpgdec_real * c)
 {
-    real bufs[0x40];
+    mpgdec_real bufs[0x40];
 
     mpg123_dct64_1(a, b, bufs, bufs + 0x20, c);
 }

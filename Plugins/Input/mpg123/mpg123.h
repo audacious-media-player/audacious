@@ -13,6 +13,16 @@
 #include <glib.h>
 #include <tag_c.h>
 
+#ifdef INTEGER_COMPILE
+
+typedef int mpgdec_real;
+
+#else
+
+typedef float mpgdec_real;
+
+#endif
+
 enum {
     SYNTH_AUTO,
     SYNTH_FPU,
@@ -32,7 +42,7 @@ enum {
 #include "dxhead.h"
 #include "xmms-id3.h"
 
-#define real float
+#define mpgdec_real float
 
 #define         SBLIMIT                 32
 #define         SCALE_BLOCK             12
@@ -108,8 +118,8 @@ struct al_table {
 
 struct frame {
     struct al_table *alloc;
-    int (*synth) (real *, int, unsigned char *, int *);
-    int (*synth_mono) (real *, unsigned char *, int *);
+    int (*synth) (mpgdec_real *, int, unsigned char *, int *);
+    int (*synth_mono) (mpgdec_real *, unsigned char *, int *);
     int stereo;
     int jsbound;
     int single;
@@ -175,11 +185,11 @@ struct mpstr {
   struct frame fr;
  /* int (*do_layer)(struct mpstr *,struct frame *fr,int,struct audio_info_struct *); */
   unsigned char bsspace[2][MAXFRAMESIZE+512]; /* MAXFRAMESIZE */
-  real hybrid_block[2][2][SBLIMIT*SSLIMIT];
+  mpgdec_real hybrid_block[2][2][SBLIMIT*SSLIMIT];
   int  hybrid_blc[2];
   unsigned long header;
   int bsnum;
-  real synth_buffs[2][2][0x110];
+  mpgdec_real synth_buffs[2][2][0x110];
   int  synth_bo;
 
   struct bitstream_info bsi;
@@ -228,8 +238,8 @@ struct gr_info_s {
     unsigned preflag;
     unsigned scalefac_scale;
     unsigned count1table_select;
-    real *full_gain[3];
-    real *pow2gain;
+    mpgdec_real *full_gain[3];
+    mpgdec_real *pow2gain;
 };
 
 struct III_sideinfo {
@@ -255,28 +265,28 @@ extern int mpg123_do_layer3(struct frame *fr);
 extern int mpg123_do_layer2(struct frame *fr);
 extern int mpg123_do_layer1(struct frame *fr);
 
-extern int mpg123_synth_1to1(real *, int, unsigned char *, int *);
-extern int mpg123_synth_1to1_8bit(real *, int, unsigned char *, int *);
-extern int mpg123_synth_1to1_mono(real *, unsigned char *, int *);
-extern int mpg123_synth_1to1_mono2stereo(real *, unsigned char *, int *);
-extern int mpg123_synth_1to1_8bit_mono(real *, unsigned char *, int *);
-extern int mpg123_synth_1to1_8bit_mono2stereo(real *, unsigned char *,
+extern int mpg123_synth_1to1(mpgdec_real *, int, unsigned char *, int *);
+extern int mpg123_synth_1to1_8bit(mpgdec_real *, int, unsigned char *, int *);
+extern int mpg123_synth_1to1_mono(mpgdec_real *, unsigned char *, int *);
+extern int mpg123_synth_1to1_mono2stereo(mpgdec_real *, unsigned char *, int *);
+extern int mpg123_synth_1to1_8bit_mono(mpgdec_real *, unsigned char *, int *);
+extern int mpg123_synth_1to1_8bit_mono2stereo(mpgdec_real *, unsigned char *,
                                               int *);
 
-extern int mpg123_synth_2to1(real *, int, unsigned char *, int *);
-extern int mpg123_synth_2to1_8bit(real *, int, unsigned char *, int *);
-extern int mpg123_synth_2to1_mono(real *, unsigned char *, int *);
-extern int mpg123_synth_2to1_mono2stereo(real *, unsigned char *, int *);
-extern int mpg123_synth_2to1_8bit_mono(real *, unsigned char *, int *);
-extern int mpg123_synth_2to1_8bit_mono2stereo(real *, unsigned char *,
+extern int mpg123_synth_2to1(mpgdec_real *, int, unsigned char *, int *);
+extern int mpg123_synth_2to1_8bit(mpgdec_real *, int, unsigned char *, int *);
+extern int mpg123_synth_2to1_mono(mpgdec_real *, unsigned char *, int *);
+extern int mpg123_synth_2to1_mono2stereo(mpgdec_real *, unsigned char *, int *);
+extern int mpg123_synth_2to1_8bit_mono(mpgdec_real *, unsigned char *, int *);
+extern int mpg123_synth_2to1_8bit_mono2stereo(mpgdec_real *, unsigned char *,
                                               int *);
 
-extern int mpg123_synth_4to1(real *, int, unsigned char *, int *);
-extern int mpg123_synth_4to1_8bit(real *, int, unsigned char *, int *);
-extern int mpg123_synth_4to1_mono(real *, unsigned char *, int *);
-extern int mpg123_synth_4to1_mono2stereo(real *, unsigned char *, int *);
-extern int mpg123_synth_4to1_8bit_mono(real *, unsigned char *, int *);
-extern int mpg123_synth_4to1_8bit_mono2stereo(real *, unsigned char *,
+extern int mpg123_synth_4to1(mpgdec_real *, int, unsigned char *, int *);
+extern int mpg123_synth_4to1_8bit(mpgdec_real *, int, unsigned char *, int *);
+extern int mpg123_synth_4to1_mono(mpgdec_real *, unsigned char *, int *);
+extern int mpg123_synth_4to1_mono2stereo(mpgdec_real *, unsigned char *, int *);
+extern int mpg123_synth_4to1_8bit_mono(mpgdec_real *, unsigned char *, int *);
+extern int mpg123_synth_4to1_8bit_mono2stereo(mpgdec_real *, unsigned char *,
                                               int *);
 
 extern void mpg123_rewindNbits(int bits);
@@ -296,7 +306,7 @@ void mpg123_init_layer3(int);
 void mpg123_init_layer2(gboolean);
 void mpg123_make_decode_tables(long scaleval);
 void mpg123_make_conv16to8_table(void);
-void mpg123_dct64(real *, real *, real *);
+void mpg123_dct64(mpgdec_real *, mpgdec_real *, mpgdec_real *);
 
 int mpg123_decode_header(struct frame *fr, unsigned long newhead);
 double mpg123_compute_bpf(struct frame *fr);
@@ -309,9 +319,9 @@ double mpg123_relative_pos(void);
 extern gchar ** mpg123_id3_encoding_list;
 extern unsigned char *mpg123_conv16to8;
 extern const int mpg123_freqs[9];
-extern real mpg123_muls[27][64];
-extern real mpg123_decwin[512 + 32];
-extern real *mpg123_pnts[5];
+extern mpgdec_real mpg123_muls[27][64];
+extern mpgdec_real mpg123_decwin[512 + 32];
+extern mpgdec_real *mpg123_pnts[5];
 
 #define GENRE_MAX 0x94
 extern const char *mpg123_id3_genres[GENRE_MAX];

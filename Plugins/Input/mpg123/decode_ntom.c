@@ -41,7 +41,7 @@ void mpg123_synth_ntom_set_step(long m,long n)
 	ntom_val[0] = ntom_val[1] = NTOM_MUL>>1;
 }
 
-int mpg123_synth_ntom_8bit(real *bandPtr,int channel,unsigned char *samples,int *pnt)
+int mpg123_synth_ntom_8bit(mpgdec_real *bandPtr,int channel,unsigned char *samples,int *pnt)
 {
   short samples_tmp[8*64];
   short *tmp1 = samples_tmp + channel;
@@ -61,7 +61,7 @@ int mpg123_synth_ntom_8bit(real *bandPtr,int channel,unsigned char *samples,int 
   return ret;
 }
 
-int mpg123_synth_ntom_8bit_mono(real *bandPtr,unsigned char *samples,int *pnt)
+int mpg123_synth_ntom_8bit_mono(mpgdec_real *bandPtr,unsigned char *samples,int *pnt)
 {
   short samples_tmp[8*64];
   short *tmp1 = samples_tmp;
@@ -80,7 +80,7 @@ int mpg123_synth_ntom_8bit_mono(real *bandPtr,unsigned char *samples,int *pnt)
   return ret;
 }
 
-int mpg123_synth_ntom_8bit_mono2stereo(real *bandPtr,unsigned char *samples,int *pnt)
+int mpg123_synth_ntom_8bit_mono2stereo(mpgdec_real *bandPtr,unsigned char *samples,int *pnt)
 {
   short samples_tmp[8*64];
   short *tmp1 = samples_tmp;
@@ -100,7 +100,7 @@ int mpg123_synth_ntom_8bit_mono2stereo(real *bandPtr,unsigned char *samples,int 
   return ret;
 }
 
-int mpg123_synth_ntom_mono(real *bandPtr,unsigned char *samples,int *pnt)
+int mpg123_synth_ntom_mono(mpgdec_real *bandPtr,unsigned char *samples,int *pnt)
 {
   short samples_tmp[8*64];
   short *tmp1 = samples_tmp;
@@ -121,7 +121,7 @@ int mpg123_synth_ntom_mono(real *bandPtr,unsigned char *samples,int *pnt)
 }
 
 
-int mpg123_synth_ntom_mono2stereo(real *bandPtr,unsigned char *samples,int *pnt)
+int mpg123_synth_ntom_mono2stereo(mpgdec_real *bandPtr,unsigned char *samples,int *pnt)
 {
   int i,ret;
   int pnt1 = *pnt;
@@ -138,14 +138,14 @@ int mpg123_synth_ntom_mono2stereo(real *bandPtr,unsigned char *samples,int *pnt)
 }
 
 
-int mpg123_synth_ntom(real *bandPtr,int channel,unsigned char *out,int *pnt)
+int mpg123_synth_ntom(mpgdec_real *bandPtr,int channel,unsigned char *out,int *pnt)
 {
-  static real buffs[2][2][0x110];
+  static mpgdec_real buffs[2][2][0x110];
   static const int step = 2;
   static int bo = 1;
   short *samples = (short *) (out + *pnt);
 
-  real *b0,(*buf)[0x110];
+  mpgdec_real *b0,(*buf)[0x110];
   int clip = 0; 
   int bo1;
   int ntom;
@@ -177,11 +177,11 @@ int mpg123_synth_ntom(real *bandPtr,int channel,unsigned char *out,int *pnt)
 
   {
     register int j;
-    real *window = decwin + 16 - bo1;
+    mpgdec_real *window = decwin + 16 - bo1;
  
     for (j=16;j;j--,window+=0x10)
     {
-      real sum;
+      mpgdec_real sum;
 
       ntom += ntom_step;
       if(ntom < NTOM_MUL) {
@@ -217,7 +217,7 @@ int mpg123_synth_ntom(real *bandPtr,int channel,unsigned char *out,int *pnt)
     ntom += ntom_step;
     if(ntom >= NTOM_MUL)
     {
-      real sum;
+      mpgdec_real sum;
       sum  = window[0x0] * b0[0x0];
       sum += window[0x2] * b0[0x2];
       sum += window[0x4] * b0[0x4];
@@ -239,7 +239,7 @@ int mpg123_synth_ntom(real *bandPtr,int channel,unsigned char *out,int *pnt)
 
     for (j=15;j;j--,b0-=0x20,window-=0x10)
     {
-      real sum;
+      mpgdec_real sum;
 
       ntom += ntom_step;
       if(ntom < NTOM_MUL) {

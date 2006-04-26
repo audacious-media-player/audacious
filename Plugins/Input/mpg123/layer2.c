@@ -16,7 +16,7 @@ static int grp_3tab[32 * 3] = { 0, };	/* used: 27 */
 static int grp_5tab[128 * 3] = { 0, };	/* used: 125 */
 static int grp_9tab[1024 * 3] = { 0, };	/* used: 729 */
 
-real mpg123_muls[27][64];	/* also used by layer 1 */
+mpgdec_real mpg123_muls[27][64];	/* also used by layer 1 */
 
 void
 mpg123_init_layer2 (gboolean mmx)
@@ -35,7 +35,7 @@ mpg123_init_layer2 (gboolean mmx)
     {21, 1, 22, 23, 0, 24, 25, 2, 26}
   };
   int i, j, k, l, len;
-  real *table;
+  mpgdec_real *table;
   static int tablen[3] = { 3, 5, 9 };
   static int *itable, *tables[3] = { grp_3tab, grp_5tab, grp_9tab };
 
@@ -139,7 +139,7 @@ II_step_one (unsigned int *bit_alloc, int *scale, struct frame *fr)
 }
 
 void
-II_step_two (unsigned int *bit_alloc, real fraction[2][4][SBLIMIT],
+II_step_two (unsigned int *bit_alloc, mpgdec_real fraction[2][4][SBLIMIT],
 	     int *scale, struct frame *fr, int x1)
 {
   int i, j, k, ba;
@@ -160,14 +160,14 @@ II_step_two (unsigned int *bit_alloc, real fraction[2][4][SBLIMIT],
 	      k = (alloc2 = alloc1 + ba)->bits;
 	      if ((d1 = alloc2->d) < 0)
 		{
-		  real cm = mpg123_muls[k][scale[x1]];
+		  mpgdec_real cm = mpg123_muls[k][scale[x1]];
 
 		  fraction[j][0][i] =
-		    ((real) ((int) mpg123_getbits (&bsi, k) + d1)) * cm;
+		    ((mpgdec_real) ((int) mpg123_getbits (&bsi, k) + d1)) * cm;
 		  fraction[j][1][i] =
-		    ((real) ((int) mpg123_getbits (&bsi, k) + d1)) * cm;
+		    ((mpgdec_real) ((int) mpg123_getbits (&bsi, k) + d1)) * cm;
 		  fraction[j][2][i] =
-		    ((real) ((int) mpg123_getbits (&bsi, k) + d1)) * cm;
+		    ((mpgdec_real) ((int) mpg123_getbits (&bsi, k) + d1)) * cm;
 		}
 	      else
 		{
@@ -197,17 +197,17 @@ II_step_two (unsigned int *bit_alloc, real fraction[2][4][SBLIMIT],
 	  k = (alloc2 = alloc1 + ba)->bits;
 	  if ((d1 = alloc2->d) < 0)
 	    {
-	      real cm;
+	      mpgdec_real cm;
 
 	      cm = mpg123_muls[k][scale[x1 + 3]];
 	      fraction[1][0][i] = (fraction[0][0][i] =
-				   (real) ((int) mpg123_getbits (&bsi, k) +
+				   (mpgdec_real) ((int) mpg123_getbits (&bsi, k) +
 					   d1)) * cm;
 	      fraction[1][1][i] = (fraction[0][1][i] =
-				   (real) ((int) mpg123_getbits (&bsi, k) +
+				   (mpgdec_real) ((int) mpg123_getbits (&bsi, k) +
 					   d1)) * cm;
 	      fraction[1][2][i] = (fraction[0][2][i] =
-				   (real) ((int) mpg123_getbits (&bsi, k) +
+				   (mpgdec_real) ((int) mpg123_getbits (&bsi, k) +
 					   d1)) * cm;
 	      cm = mpg123_muls[k][scale[x1]];
 	      fraction[0][0][i] *= cm;
@@ -291,7 +291,7 @@ mpg123_do_layer2 (struct frame *fr)
 {
   int i, j;
   int stereo = fr->stereo;
-  real fraction[2][4][SBLIMIT];	/* pick_table clears unused subbands */
+  mpgdec_real fraction[2][4][SBLIMIT];	/* pick_table clears unused subbands */
   unsigned int bit_alloc[64];
   int scale[192];
   int single = fr->single;

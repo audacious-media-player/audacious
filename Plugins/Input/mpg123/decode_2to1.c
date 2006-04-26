@@ -18,7 +18,7 @@
   else if( (sum) < -32768.0) { *(samples) = -0x8000; (clip)++; } \
   else { *(samples) = sum; }
 
-int mpg123_synth_2to1_8bit(real *bandPtr,int channel,unsigned char *samples,int *pnt)
+int mpg123_synth_2to1_8bit(mpgdec_real *bandPtr,int channel,unsigned char *samples,int *pnt)
 {
   short samples_tmp[32];
   short *tmp1 = samples_tmp + channel;
@@ -38,7 +38,7 @@ int mpg123_synth_2to1_8bit(real *bandPtr,int channel,unsigned char *samples,int 
   return ret;
 }
 
-int mpg123_synth_2to1_8bit_mono(real *bandPtr,unsigned char *samples,int *pnt)
+int mpg123_synth_2to1_8bit_mono(mpgdec_real *bandPtr,unsigned char *samples,int *pnt)
 {
   short samples_tmp[32];
   short *tmp1 = samples_tmp;
@@ -58,7 +58,7 @@ int mpg123_synth_2to1_8bit_mono(real *bandPtr,unsigned char *samples,int *pnt)
 }
 
 
-int mpg123_synth_2to1_8bit_mono2stereo(real *bandPtr,unsigned char *samples,int *pnt)
+int mpg123_synth_2to1_8bit_mono2stereo(mpgdec_real *bandPtr,unsigned char *samples,int *pnt)
 {
   short samples_tmp[32];
   short *tmp1 = samples_tmp;
@@ -78,7 +78,7 @@ int mpg123_synth_2to1_8bit_mono2stereo(real *bandPtr,unsigned char *samples,int 
   return ret;
 }
 
-int mpg123_synth_2to1_mono(real *bandPtr,unsigned char *samples,int *pnt)
+int mpg123_synth_2to1_mono(mpgdec_real *bandPtr,unsigned char *samples,int *pnt)
 {
   short samples_tmp[32];
   short *tmp1 = samples_tmp;
@@ -98,7 +98,7 @@ int mpg123_synth_2to1_mono(real *bandPtr,unsigned char *samples,int *pnt)
   return ret;
 }
 
-int mpg123_synth_2to1_mono2stereo(real *bandPtr,unsigned char *samples,int *pnt)
+int mpg123_synth_2to1_mono2stereo(mpgdec_real *bandPtr,unsigned char *samples,int *pnt)
 {
   int i,ret;
 
@@ -113,14 +113,14 @@ int mpg123_synth_2to1_mono2stereo(real *bandPtr,unsigned char *samples,int *pnt)
   return ret;
 }
 
-int mpg123_synth_2to1(real *bandPtr,int channel,unsigned char *out,int *pnt)
+int mpg123_synth_2to1(mpgdec_real *bandPtr,int channel,unsigned char *out,int *pnt)
 {
-  static real buffs[2][2][0x110];
+  static mpgdec_real buffs[2][2][0x110];
   static const int step = 2;
   static int bo = 1;
   short *samples = (short *) (out + *pnt);
 
-  real *b0,(*buf)[0x110];
+  mpgdec_real *b0,(*buf)[0x110];
   int clip = 0; 
   int bo1;
 
@@ -147,11 +147,11 @@ int mpg123_synth_2to1(real *bandPtr,int channel,unsigned char *out,int *pnt)
 
   {
     register int j;
-    real *window = mpg123_decwin + 16 - bo1;
+    mpgdec_real *window = mpg123_decwin + 16 - bo1;
 
     for (j=8;j;j--,b0+=0x10,window+=0x30)
     {
-      real sum;
+      mpgdec_real sum;
       sum  = *window++ * *b0++;
       sum -= *window++ * *b0++;
       sum += *window++ * *b0++;
@@ -176,7 +176,7 @@ int mpg123_synth_2to1(real *bandPtr,int channel,unsigned char *out,int *pnt)
     }
 
     {
-      real sum;
+      mpgdec_real sum;
       sum  = window[0x0] * b0[0x0];
       sum += window[0x2] * b0[0x2];
       sum += window[0x4] * b0[0x4];
@@ -195,7 +195,7 @@ int mpg123_synth_2to1(real *bandPtr,int channel,unsigned char *out,int *pnt)
 
     for (j=7;j;j--,b0-=0x30,window-=0x30)
     {
-      real sum;
+      mpgdec_real sum;
       sum = -*(--window) * *b0++;
       sum -= *(--window) * *b0++;
       sum -= *(--window) * *b0++;

@@ -14,13 +14,13 @@
 #include "mpg123.h"
 
 void
-mpg123_dct64(real * out0, real * out1, real * samples)
+mpg123_dct64(mpgdec_real * out0, mpgdec_real * out1, mpgdec_real * samples)
 {
-    real bufs[64];
+    mpgdec_real bufs[64];
 
     {
         register int i, j;
-        register real *b1, *b2, *bs, *costab;
+        register mpgdec_real *b1, *b2, *bs, *costab;
 
         b1 = samples;
         bs = bufs;
@@ -87,7 +87,7 @@ mpg123_dct64(real * out0, real * out1, real * samples)
         costab = mpg123_pnts[4];
 
         for (j = 8; j; j--) {
-            real v0, v1;
+            mpgdec_real v0, v1;
 
             v0 = *b1++;
             v1 = *b1++;
@@ -102,7 +102,7 @@ mpg123_dct64(real * out0, real * out1, real * samples)
     }
 
     {
-        register real *b1;
+        register mpgdec_real *b1;
         register int i;
 
         for (b1 = bufs, i = 8; i; i--, b1 += 4)

@@ -109,9 +109,9 @@ mpg123_compute_tpf(struct frame *fr)
 static void
 set_synth_functions(struct frame *fr)
 {
-    typedef int (*func) (real *, int, unsigned char *, int *);
-    typedef int (*func_mono) (real *, unsigned char *, int *);
-    typedef void (*func_dct36) (real *, real *, real *, real *, real *);
+    typedef int (*func) (mpgdec_real *, int, unsigned char *, int *);
+    typedef int (*func_mono) (mpgdec_real *, unsigned char *, int *);
+    typedef void (*func_dct36) (mpgdec_real *, mpgdec_real *, mpgdec_real *, mpgdec_real *, mpgdec_real *);
 
     int ds = fr->down_sample;
     int p8 = 0;
