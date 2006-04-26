@@ -42,8 +42,6 @@ enum {
 #include "dxhead.h"
 #include "xmms-id3.h"
 
-#define mpgdec_real float
-
 #define         SBLIMIT                 32
 #define         SCALE_BLOCK             12
 #define         SSLIMIT                 18
