@@ -41,7 +41,13 @@ static mpgdec_real COS6_1,COS6_2;
 mpgdec_real   tfcos36[9];
 
 static mpgdec_real tfcos12[3];
-#define NEW_DCT9
+
+#ifndef INTEGER_COMPILE
+# define NEW_DCT9
+#else
+# undef NEW_DCT9
+#endif
+
 #ifdef NEW_DCT9
 static mpgdec_real cos9[3],cos18[3];
 #endif
