@@ -221,11 +221,11 @@ cddb_query(gchar * server, cdda_disc_toc_t * info,
                 return FALSE;
             }
         }
-        cddb_info->category = g_strdup(response[0]);
-        cddb_info->discid = strtoul(response[1], NULL, 16);
+        cddb_info->category = g_strdup(response[1]);
+        cddb_info->discid = strtoul(response[2], NULL, 16);
         break;
-	case 211:
-		/* multiple matches - use first match */
+    case 211:
+        /* multiple matches - use first match */
         g_strfreev(response);
         if (http_read_first_line(sock, buffer, 256) < 0) {
             http_close_connection(sock);
