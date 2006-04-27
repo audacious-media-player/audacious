@@ -852,8 +852,7 @@ mainwin_set_song_info(gint bitrate,
         }
         else {
             /* Show bitrate in 100,000s */
-            bitrate /= 100;
-            g_snprintf(text, sizeof(text), "%2dH", bitrate);
+            g_snprintf(text, sizeof(text), "%2dH", bitrate / 100);
             textbox_set_text(mainwin_rate_text, text);
         }
     }
@@ -868,8 +867,8 @@ mainwin_set_song_info(gint bitrate,
 
     if (cfg.player_shaded)
     {
-	widget_show(WIDGET(mainwin_stime_min));
-	widget_show(WIDGET(mainwin_stime_sec));
+        widget_show(WIDGET(mainwin_stime_min));
+        widget_show(WIDGET(mainwin_stime_sec));
     }
 
     widget_show(WIDGET(mainwin_minus_num));
@@ -895,23 +894,30 @@ mainwin_set_song_info(gint bitrate,
     if (bmp_active_skin && bmp_active_skin->properties.mainwin_othertext 
 	== TRUE)
     {
-	g_snprintf(text, 512, "%d kbps, %0.1f khz, %s",
-		bitrate < 1000 ? bitrate : bitrate / 100,
-		(gfloat) frequency / 1000,
-		(n_channels > 1) ? _("stereo") : _("mono"));
+        if (bitrate != -1)
+            g_snprintf(text, 512, "%d kbps, %0.1f kHz, %s",
+            //bitrate < 1000 ? bitrate : bitrate / 100,
+            bitrate,
+            (gfloat) frequency / 1000,
+            (n_channels > 1) ? _("stereo") : _("mono"));
+        else
+            g_snprintf(text, 512, "VBR, %0.1f kHz, %s",
+            (gfloat) frequency / 1000,
+            (n_channels > 1) ? _("stereo") : _("mono"));
+
         textbox_set_text(mainwin_othertext, text);
 
-	widget_hide(WIDGET(mainwin_rate_text));
-	widget_hide(WIDGET(mainwin_freq_text));
-	widget_hide(WIDGET(mainwin_monostereo));
-	widget_show(WIDGET(mainwin_othertext));
+        widget_hide(WIDGET(mainwin_rate_text));
+        widget_hide(WIDGET(mainwin_freq_text));
+        widget_hide(WIDGET(mainwin_monostereo));
+        widget_show(WIDGET(mainwin_othertext));
     }
     else
     {
-	widget_show(WIDGET(mainwin_rate_text));
-	widget_show(WIDGET(mainwin_freq_text));
-	widget_show(WIDGET(mainwin_monostereo));
-	widget_hide(WIDGET(mainwin_othertext));
+        widget_show(WIDGET(mainwin_rate_text));
+        widget_show(WIDGET(mainwin_freq_text));
+        widget_show(WIDGET(mainwin_monostereo));
+        widget_hide(WIDGET(mainwin_othertext));
     }
 
     title = playlist_get_info_text();
