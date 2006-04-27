@@ -1,5 +1,5 @@
 [Text]
-Normal=#c6e1ff
+Normal=#a6c1df
 Current=#eeeeee
 NormalBG=#000000
 SelectedBG=#666666
