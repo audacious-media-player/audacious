@@ -20,7 +20,7 @@ CXXFLAGS += -DHAVE_CONFIG_H -I/usr/pkg/include -I/usr/pkg/xorg/include
 default: all
 all: build
 
-install:
+install: build
 	$(MAKE) install-prehook
 	@for i in $(BINDIR) $(LIBDIR) $(INCLUDEDIR); do \
 		if test ! -d $(DESTDIR)/$$i; then \
