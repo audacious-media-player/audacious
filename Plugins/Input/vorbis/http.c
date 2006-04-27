@@ -298,8 +298,13 @@ http_buffer_loop(gpointer arg)
     guint err_len;
     gboolean redirect;
     fd_set set;
+#ifdef USE_IPV6
+    struct addrinfo hints, *res, *res0;
+    char service[6];
+#else
     struct hostent *hp;
     struct sockaddr_in address;
+#endif
     struct timeval tv;
 
     url = (gchar *) arg;
@@ -320,6 +325,44 @@ http_buffer_loop(gpointer arg)
         chost = vorbis_cfg.use_proxy ? vorbis_cfg.proxy_host : host;
         cport = vorbis_cfg.use_proxy ? vorbis_cfg.proxy_port : port;
 
+#ifdef USE_IPV6
+        snprintf(service, 6, "%d", cport);
+        memset(&hints, 0, sizeof(hints));
+        hints.ai_socktype = SOCK_STREAM;
+        if (! getaddrinfo(chost, service, &hints, &res0)) {
+            eof = TRUE;
+            for (res = res0; res; res = res->ai_next) {
+                if ((sock = socket (res->ai_family, res->ai_socktype, res->ai_protocol)) < 0)
+                    continue;
+                fcntl(sock, F_SETFL, O_NONBLOCK);
+                status = g_strdup_printf(_("CONNECTING TO %s:%d"), chost, cport);
+                vorbis_ip.set_info_text(status);
+                g_free(status);
+                ((struct sockaddr_in6 *)res->ai_addr)->sin6_port = htons(cport);
+                if (connect(sock, res->ai_addr, res->ai_addrlen) < 0) {
+                    if (errno != EINPROGRESS) {
+                        close(sock);
+                        continue;
+                    }
+                }
+                eof = FALSE;
+                break;
+            }
+            freeaddrinfo(res0);
+            if (eof) {
+                status = g_strdup_printf(_("Couldn't connect to host %s:%d"), chost, cport);
+                vorbis_ip.set_info_text(status);
+                g_free(status);
+                eof = TRUE;
+                break;
+            }
+        } else {
+            status = g_strdup_printf(_("Couldn't look up host %s"), chost);
+            vorbis_ip.set_info_text(status);
+            g_free(status);
+            eof = TRUE;
+        }
+#else
         sock = socket(AF_INET, SOCK_STREAM, 0);
         fcntl(sock, F_SETFL, O_NONBLOCK);
         address.sin_family = AF_INET;
@@ -336,8 +379,10 @@ http_buffer_loop(gpointer arg)
             vorbis_ip.set_info_text(NULL);
             eof = TRUE;
         }
+#endif
 
         if (!eof) {
+#ifndef USE_IPV6
             memcpy(&address.sin_addr.s_addr, *(hp->h_addr_list),
                    sizeof(address.sin_addr.s_addr));
             address.sin_port = g_htons(cport);
@@ -359,6 +404,7 @@ http_buffer_loop(gpointer arg)
                     eof = TRUE;
                 }
             }
+#endif
             while (going) {
                 tv.tv_sec = 0;
                 tv.tv_usec = 10000;

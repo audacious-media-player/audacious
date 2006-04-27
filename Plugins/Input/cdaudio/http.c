@@ -26,9 +26,45 @@ gint
 http_open_connection(const gchar * server, gint port)
 {
     gint sock;
+#ifdef USE_IPV6
+    struct addrinfo hints, *res, *res0;
+    char service[6];
+#else
     struct hostent *host;
     struct sockaddr_in address;
+#endif
 
+#ifdef USE_IPV6
+    snprintf(service, 6, "%d", port);
+    memset(&hints, 0, sizeof(hints));
+    hints.ai_socktype = SOCK_STREAM;
+
+    if (getaddrinfo(server, service, &hints, &res0))
+        return 0;
+
+    for (res = res0; res; res = res->ai_next) {
+        sock = socket (res->ai_family, res->ai_socktype, res->ai_protocol);
+        if (sock < 0) {
+            if (res->ai_next)
+                continue;
+            else {
+                freeaddrinfo(res0);
+                return 0;
+            }
+        }
+        if (connect(sock, res->ai_addr, res->ai_addrlen) < 0) {
+            if (res->ai_next) {
+                close(sock);
+                continue;
+            } else {
+                freeaddrinfo(res0);
+                return 0;
+            }
+        }
+        freeaddrinfo(res0);
+        return sock;
+    }
+#else
     sock = socket(AF_INET, SOCK_STREAM, 0);
     address.sin_family = AF_INET;
 
@@ -43,6 +79,7 @@ http_open_connection(const gchar * server, gint port)
         (sock, (struct sockaddr *) &address,
          sizeof(struct sockaddr_in)) == -1)
         return 0;
+#endif
 
     return sock;
 }

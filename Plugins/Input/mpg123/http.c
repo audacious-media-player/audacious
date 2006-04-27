@@ -346,8 +346,13 @@ http_buffer_loop(gpointer arg)
     gboolean redirect;
     gint udp_sock = 0;
     fd_set set;
+#ifdef USE_IPV6
+    struct addrinfo hints, *res, *res0;
+    char service[6];
+#else
     struct hostent *hp;
     struct sockaddr_in address;
+#endif
     struct timeval tv;
 
     url = (gchar *) arg;
@@ -368,6 +373,45 @@ http_buffer_loop(gpointer arg)
         chost = mpg123_cfg.use_proxy ? mpg123_cfg.proxy_host : host;
         cport = mpg123_cfg.use_proxy ? mpg123_cfg.proxy_port : port;
 
+#ifdef USE_IPV6
+        snprintf(service, 6, "%d", cport);
+        memset(&hints, 0, sizeof(hints));
+        hints.ai_socktype = SOCK_STREAM;
+        if (! getaddrinfo(chost, service, &hints, &res0)) {
+            eof = TRUE;
+            for (res = res0; res; res = res->ai_next) {
+                if ((sock = socket (res->ai_family, res->ai_socktype, res->ai_protocol)) < 0)
+                    continue;
+                fcntl(sock, F_SETFL, O_NONBLOCK);
+                status = g_strdup_printf(_("CONNECTING TO %s:%d"), chost, cport);
+                mpg123_ip.set_info_text(status);
+                g_free(status);
+                ((struct sockaddr_in6 *)res->ai_addr)->sin6_port = htons(cport);
+                if (connect(sock, res->ai_addr, res->ai_addrlen) < 0) {
+                    if (errno != EINPROGRESS) {
+                        close(sock);
+                        continue;
+                    }
+                }
+                eof = FALSE;
+                break;
+            }
+            freeaddrinfo(res0);
+            if (eof) {
+                status = g_strdup_printf(_("Couldn't connect to host %s:%d"), chost, cport);
+                show_error_message(status);
+                g_free(status);
+                mpg123_ip.set_info_text(NULL);
+            }
+        } else {
+            status = g_strdup_printf(_("Couldn't look up host %s"), chost);
+            show_error_message(status);
+            g_free(status);
+
+            mpg123_ip.set_info_text(NULL);
+            eof = TRUE;
+        }
+#else
         sock = socket(AF_INET, SOCK_STREAM, 0);
         fcntl(sock, F_SETFL, O_NONBLOCK);
         address.sin_family = AF_INET;
@@ -384,8 +428,10 @@ http_buffer_loop(gpointer arg)
             mpg123_ip.set_info_text(NULL);
             eof = TRUE;
         }
+#endif
 
         if (!eof) {
+#ifndef USE_IPV6
             memcpy(&address.sin_addr.s_addr, *(hp->h_addr_list),
                    sizeof(address.sin_addr.s_addr));
             address.sin_port = g_htons(cport);
@@ -407,6 +453,7 @@ http_buffer_loop(gpointer arg)
                     eof = TRUE;
                 }
             }
+#endif
             while (going) {
                 tv.tv_sec = 0;
                 tv.tv_usec = 10000;
@@ -711,22 +758,35 @@ mpg123_http_get_title(gchar * url)
 static gint
 udp_establish_listener(gint * sock)
 {
+#ifdef USE_IPV6
+    struct sockaddr_in6 sin;
+    socklen_t sinlen = sizeof(struct sockaddr_in6);
+#else
     struct sockaddr_in sin;
     socklen_t sinlen = sizeof(struct sockaddr_in);
+#endif
 
 #ifdef DEBUG_UDP
     fprintf(stderr, "Establishing udp listener\n");
 #endif
 
+#ifdef USE_IPV6
+    if ((*sock = socket(AF_INET6, SOCK_DGRAM, 0)) < 0) {
+#else
     if ((*sock = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
+#endif
         g_log(NULL, G_LOG_LEVEL_CRITICAL,
               "udp_establish_listener(): unable to create socket");
         return -1;
     }
 
     memset(&sin, 0, sinlen);
+#ifdef USE_IPV6
+    sin.sin6_family = AF_INET6;
+#else
     sin.sin_family = AF_INET;
     sin.sin_addr.s_addr = g_htonl(INADDR_ANY);
+#endif
 
     if (bind(*sock, (struct sockaddr *) &sin, sinlen) < 0) {
         g_log(NULL, G_LOG_LEVEL_CRITICAL,
@@ -756,7 +816,11 @@ udp_establish_listener(gint * sock)
             g_ntohs(sin.sin_port));
 #endif
 
+#ifdef USE_IPV6
+    return g_ntohs(sin.sin6_port);
+#else
     return g_ntohs(sin.sin_port);
+#endif
 }
 
 static int
@@ -766,10 +830,14 @@ udp_check_for_data(int sock)
     char *valptr;
     gchar *title;
     gint len, i;
+#ifdef USE_IPV6
+    struct sockaddr_in6 from;
+#else
     struct sockaddr_in from;
+#endif
     socklen_t fromlen;
 
-    fromlen = sizeof(struct sockaddr_in);
+    fromlen = sizeof from;
 
     if ((len =
          recvfrom(sock, buf, 1024, 0, (struct sockaddr *) &from,
@@ -851,8 +919,17 @@ udp_check_for_data(int sock)
 #ifdef DEBUG_UDP
             else
                 fprintf(stderr, "Sent ack: %s", obuf);
+#ifdef USE_IPV6
+            {
+                char adr[INET6_ADDRSTRLEN];
+                inet_ntop(AF_INET6, &from.sin6_addr, adr, INET6_ADDRSTRLEN);
+                fprintf(stderr, "Remote: [%s]:%d\n", adr,
+                        g_ntohs(from.sin6_port));
+            }
+#else
             fprintf(stderr, "Remote: %s:%d\n", inet_ntoa(from.sin_addr),
                     g_ntohs(from.sin_port));
+#endif
 #endif
         }
     }

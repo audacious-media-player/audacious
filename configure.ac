@@ -175,6 +175,17 @@ if test "$beep_cv_type_socklen_t" = "no"; then
     AC_DEFINE(socklen_t, int, [Define to int if the socklen_t type is missing])
 fi
 
+dnl IPv6 support
+dnl ========================
+AC_ARG_ENABLE(ipv6,
+	[  --enable-ipv6		  enable IPv6 support (default=no)],
+			enable_ipv6=$enableval, enable_ipv6=no)
+if test "x$enable_ipv6" = xyes; then
+    AC_DEFINE(USE_IPV6,, [Define if building with IPv6 support] )
+fi
+AM_CONDITIONAL(USE_IPV6,test "x$enable_ipv6" = xyes)
+AC_SUBST(USE_IPV6)
+
 
 dnl GConf support
 
