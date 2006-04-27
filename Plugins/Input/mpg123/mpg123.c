@@ -459,6 +459,8 @@ mpg123_id3v1_to_id3v2(struct id3v1tag_t *v1, struct id3tag_t *v2)
         v2->track_number = 0;
 }
 
+#define REMOVE_NONEXISTANT_TAG(x)   if (!*x) { x = NULL; }
+
 /*
  * Function mpg123_format_song_title (tag, filename)
  *
@@ -478,13 +480,22 @@ mpg123_format_song_title(TagLib_Tag *taglib_tag, gchar * filename)
         input->performer = taglib_tag_artist(taglib_tag);
         input->album_name = taglib_tag_album(taglib_tag);
         input->track_name = taglib_tag_title(taglib_tag);
-		mpg123_strip_spaces(input->performer,strlen(input->performer));
-		mpg123_strip_spaces(input->album_name,strlen(input->album_name));
-		mpg123_strip_spaces(input->track_name,strlen(input->track_name));
+
+        mpg123_strip_spaces(input->performer,strlen(input->performer));
+        mpg123_strip_spaces(input->album_name,strlen(input->album_name));
+        mpg123_strip_spaces(input->track_name,strlen(input->track_name));
+
         input->year = taglib_tag_year(taglib_tag);
         input->track_number = taglib_tag_track(taglib_tag);
         input->genre = taglib_tag_genre(taglib_tag);
         input->comment = taglib_tag_comment(taglib_tag);
+
+        /* remove any blank tags, fucking taglib */
+        REMOVE_NONEXISTANT_TAG(input->performer);
+        REMOVE_NONEXISTANT_TAG(input->album_name);
+        REMOVE_NONEXISTANT_TAG(input->track_name);
+        REMOVE_NONEXISTANT_TAG(input->genre);
+        REMOVE_NONEXISTANT_TAG(input->comment);
     }
 
     input->file_name = g_path_get_basename(filename);
@@ -495,7 +506,7 @@ mpg123_format_song_title(TagLib_Tag *taglib_tag, gchar * filename)
                                  mpg123_cfg.id3_format :
                                  xmms_get_gentitle_format(), input);
 
-    if (!title || strlen(input->track_name) == 0) {
+    if (!title /* || strlen(input->track_name) == 0 */) {
         /* Format according to filename.  */
         title = g_path_get_basename(filename);
         if (extname(title))
