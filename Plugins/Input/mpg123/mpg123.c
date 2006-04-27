@@ -494,8 +494,6 @@ mpg123_format_song_title(TagLib_Tag *taglib_tag, gchar * filename)
         REMOVE_NONEXISTANT_TAG(input->performer);
         REMOVE_NONEXISTANT_TAG(input->album_name);
         REMOVE_NONEXISTANT_TAG(input->track_name);
-        REMOVE_NONEXISTANT_TAG(input->year);
-        REMOVE_NONEXISTANT_TAG(input->track_number);
         REMOVE_NONEXISTANT_TAG(input->genre);
         REMOVE_NONEXISTANT_TAG(input->comment);
     }
