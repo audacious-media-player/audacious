@@ -1,5 +1,5 @@
-#include <taglib/tag.h>
-#include <taglib/id3v2framefactory.h>
+#include <tag.h>
+#include <id3v2framefactory.h>
 
 extern "C"
 {
