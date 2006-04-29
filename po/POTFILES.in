@@ -1,6 +1,17 @@
+# AudioCompress effect plugin.
+Plugins/Effect/audiocompress/audacious-glue.c
+
+# Extra Stereo effect plugin.
+Plugins/Effect/stereo_plugin/stereo.c
+
 # LIRC general plugin.
 Plugins/General/lirc/about.c
 Plugins/General/lirc/lirc.c
+
+# Scrobbler general plugin.
+Plugins/General/scrobbler/configure.c
+Plugins/General/scrobbler/gtkstuff.c
+Plugins/General/scrobbler/xmms_scrobbler.c
 
 # Song Change general plugin.
 Plugins/General/song_change/song_change.c
@@ -8,6 +19,14 @@ Plugins/General/song_change/song_change.c
 # AAC input plugin.
 Plugins/Input/aac/src/fileinfo.c
 Plugins/Input/aac/src/libmp4.c
+
+# AdPlug input plugin.
+Plugins/Input/adplug/adplug-xmms.cc
+
+# AMIDI-Plug input plugin.
+Plugins/Input/amidi-plug/amidi-plug.c
+Plugins/Input/amidi-plug/i_configure.c
+Plugins/Input/amidi-plug/i_fileinfo.c
 
 # CD Audio input plugin.
 Plugins/Input/cdaudio/cdaudio.c
@@ -26,13 +45,13 @@ Plugins/Input/flac/plugin.c
 
 # ModPlug input plugin.
 Plugins/Input/modplug/gui/interface.cpp
+Plugins/Input/modplug/gui/main.cpp
 Plugins/Input/modplug/gui/support.cpp
 
 # MP3 input plugin.
 Plugins/Input/mpg123/configure.c
 Plugins/Input/mpg123/fileinfo.c
 Plugins/Input/mpg123/http.c
-Plugins/Input/mpg123/id3_frame_content.c
 Plugins/Input/mpg123/mpg123.c
 
 # TiMidity input plugin.
@@ -66,6 +85,9 @@ Plugins/Output/alsa/about.c
 Plugins/Output/alsa/alsa.c
 Plugins/Output/alsa/configure.c
 
+# aRts output plugin.
+Plugins/Output/arts/configure.c
+
 # Disk Writer output plugin.
 Plugins/Output/disk_writer/disk_writer.c
 
@@ -73,6 +95,14 @@ Plugins/Output/disk_writer/disk_writer.c
 Plugins/Output/esd/about.c
 Plugins/Output/esd/configure.c
 Plugins/Output/esd/esd.c
+
+# JACK output plugin.
+Plugins/Output/jack/jack.c
+
+# BSD Sun output plugin.
+Plugins/Output/sun/about.c
+Plugins/Output/sun/configure.c
+Plugins/Output/sun/sun.c
 
 # Blur Scope visualization plugin.
 Plugins/Visualization/blur_scope/blur_scope.c
