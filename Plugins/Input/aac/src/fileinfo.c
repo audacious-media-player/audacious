@@ -412,7 +412,8 @@ audmp4_file_info_box(gchar * filename)
         gtk_entry_set_text(GTK_ENTRY(artist_entry), audmp4_get_artist(mp4file));
         gtk_entry_set_text(GTK_ENTRY(title_entry), audmp4_get_title(mp4file));
         gtk_entry_set_text(GTK_ENTRY(year_entry), g_strdup_printf("%d", audmp4_get_year(mp4file)));
-	gtk_entry_set_text(GTK_ENTRY(album_entry), audmp4_get_album(mp4file));
+        gtk_entry_set_text(GTK_ENTRY(album_entry), audmp4_get_album(mp4file));
+        MP4Close(mp4file);
     }
 
     gtk_widget_show_all(window);

@@ -305,6 +305,8 @@ static gchar   *mp4_get_song_title(char *filename)
 		free (input->file_name);
 		free (input->file_path);
 		free (input);
+
+		MP4Close(mp4file);
 	}
 
 	if (!title)
