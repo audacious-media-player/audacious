@@ -251,7 +251,6 @@ mpg123_file_info_box(gchar * filename)
         PangoAttribute *attr;
         GtkWidget *test_table = gtk_table_new(2, 11, FALSE);
         GtkWidget *urk, *blark;
-	GtkWidget * comment_frame;
 
         window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
         gtk_window_set_type_hint(GTK_WINDOW(window),
@@ -507,11 +506,8 @@ mpg123_file_info_box(gchar * filename)
         gtk_table_attach(GTK_TABLE(table), label, 0, 1, 3, 4, GTK_FILL,
                          GTK_FILL, 5, 5);
 
-	comment_frame = gtk_frame_new(NULL);
-	/* gtk_frame_set_shadow_type(GTK_FRAME(comment_frame),GTK_SHADOW_IN); */
 	comment_entry = gtk_entry_new();
-	gtk_container_add(GTK_CONTAINER(comment_frame),comment_entry);
-        gtk_table_attach(GTK_TABLE(table), comment_frame, 1, 6, 3, 4,
+        gtk_table_attach(GTK_TABLE(table), comment_entry, 1, 6, 3, 4,
                          GTK_FILL | GTK_EXPAND | GTK_SHRINK,
                          GTK_FILL | GTK_EXPAND | GTK_SHRINK, 0, 5);
 

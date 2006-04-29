@@ -1028,14 +1028,14 @@ vorbis_file_info_box(gchar * filename)
     gtk_entry_set_text(GTK_ENTRY(rg_album_peak_entry), rg_album_peak);
     gtk_editable_set_position(GTK_EDITABLE(rg_album_peak_entry), -1);
 
-    if (*rg_track_gain == '\0' && *rg_album_gain == '\0' &&
+/*    if (*rg_track_gain == '\0' && *rg_album_gain == '\0' &&
         *rg_track_peak == '\0' && *rg_album_peak == '\0') {
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(rg_show_button),
                                      FALSE);
     }
     else
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(rg_show_button),
-                                     TRUE);
+                                     TRUE);*/
 
     /* ov_clear closes the file */
     if (clear_vf) ov_clear(&vf);
