@@ -83,6 +83,8 @@ gint playlist_queue_get_length(void);
 gboolean playlist_is_position_queued(guint pos);
 void playlist_clear_queue(void);
 gint playlist_get_queue_position(PlaylistEntry * entry);
+gint playlist_get_queue_position_number(guint pos);
+gint playlist_get_queue_qposition_number(guint pos);
 void playlist_eof_reached(void);
 void playlist_set_position(guint pos);
 gint playlist_get_length(void);

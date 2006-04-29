@@ -1010,6 +1010,34 @@ playlist_is_position_queued(guint pos)
     return tmp != NULL;
 }
 
+gint
+playlist_get_queue_position_number(guint pos)
+{
+    PlaylistEntry *entry;
+    gint tmp;
+
+    PLAYLIST_LOCK();
+    entry = g_list_nth_data(playlist, pos);
+    tmp = g_list_index(queued_list, entry);
+    PLAYLIST_UNLOCK();
+
+    return tmp;
+}
+
+gint
+playlist_get_queue_qposition_number(guint pos)
+{
+    PlaylistEntry *entry;
+    gint tmp;
+
+    PLAYLIST_LOCK();
+    entry = g_list_nth_data(queued_list, pos);
+    tmp = g_list_index(playlist, entry);
+    PLAYLIST_UNLOCK();
+
+    return tmp;
+}
+
 void
 playlist_clear_queue(void)
 {

@@ -693,6 +693,12 @@ xmms_remote_show_prefs_box(gint session)
 }
 
 void
+xmms_remote_show_jtf_box(gint session)
+{
+    remote_cmd(session, CMD_SHOW_JTF_BOX);
+}
+
+void
 xmms_remote_toggle_aot(gint session, gboolean ontop)
 {
     remote_send_boolean(session, CMD_TOGGLE_AOT, ontop);
@@ -805,10 +811,79 @@ xmms_remote_playqueue_remove(gint session, gint pos)
     remote_send_guint32(session, CMD_PLAYQUEUE_REMOVE, pos);
 }
 
+void
+xmms_remote_playqueue_clear(gint session)
+{
+    remote_cmd(session, CMD_PLAYQUEUE_CLEAR);
+}
+
 gint
 xmms_remote_get_playqueue_length(gint session)
 {
     return remote_get_gint(session, CMD_GET_PLAYQUEUE_LENGTH);
+}
+
+gboolean
+xmms_remote_playqueue_is_queued(gint session, gint pos)
+{
+    ServerPktHeader pkt_hdr;
+    gpointer data;
+    gint fd, ret = 0;
+    guint32 p = pos;
+
+    if ((fd = xmms_connect_to_session(session)) == -1)
+        return ret;
+    remote_send_packet(fd, CMD_PLAYQUEUE_IS_QUEUED, &p, sizeof(guint32));
+    data = remote_read_packet(fd, &pkt_hdr);
+    if (data) {
+        ret = *((gint *) data);
+        g_free(data);
+    }
+    remote_read_ack(fd);
+    close(fd);
+    return ret;
+}
+
+gint
+xmms_remote_get_playqueue_position(gint session, gint pos)
+{
+    ServerPktHeader pkt_hdr;
+    gpointer data;
+    gint fd, ret = 0;
+    guint32 p = pos;
+
+    if ((fd = xmms_connect_to_session(session)) == -1)
+        return ret;
+    remote_send_packet(fd, CMD_PLAYQUEUE_GET_POS, &p, sizeof(guint32));
+    data = remote_read_packet(fd, &pkt_hdr);
+    if (data) {
+        ret = *((gint *) data);
+        g_free(data);
+    }
+    remote_read_ack(fd);
+    close(fd);
+    return ret;
+}
+
+gint
+xmms_remote_get_playqueue_queue_position(gint session, gint pos)
+{
+    ServerPktHeader pkt_hdr;
+    gpointer data;
+    gint fd, ret = 0;
+    guint32 p = pos;
+
+    if ((fd = xmms_connect_to_session(session)) == -1)
+        return ret;
+    remote_send_packet(fd, CMD_PLAYQUEUE_GET_QPOS, &p, sizeof(guint32));
+    data = remote_read_packet(fd, &pkt_hdr);
+    if (data) {
+        ret = *((gint *) data);
+        g_free(data);
+    }
+    remote_read_ack(fd);
+    close(fd);
+    return ret;
 }
 
 void

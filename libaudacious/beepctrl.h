@@ -101,6 +101,12 @@ extern "C" {
 /* Added in BMP 0.9.7 */
     void xmms_remote_activate(gint session);
 
+/* Added in Audacious 1.1 */
+    void xmms_remote_show_jtf_box(gint session);
+    void xmms_remote_playqueue_clear(gint session);
+    gboolean xmms_remote_playqueue_is_queued(gint session, gint pos);
+    gint xmms_remote_get_playqueue_position(gint session, gint pos);
+    gint xmms_remote_get_playqueue_queue_position(gint session, gint pos);
 
 #ifdef __cplusplus
 };

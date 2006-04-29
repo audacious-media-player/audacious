@@ -354,6 +354,33 @@ ctrlsocket_func(gpointer arg)
             ctrl_write_gint(pkt->fd, playlist_queue_get_length());
             ctrl_ack_packet(pkt);
             break;
+        case CMD_PLAYQUEUE_IS_QUEUED:
+            ctrl_write_gboolean(pkt->fd,
+                playlist_is_position_queued(*((guint32 *) pkt->data)));
+            ctrl_ack_packet(pkt);
+            break;
+        case CMD_PLAYQUEUE_GET_POS:
+            if (pkt->data)
+                ctrl_write_gint(pkt->fd,
+                                playlist_get_queue_position_number(*
+                                                      ((guint32 *) pkt->
+                                                       data)));
+            else
+                ctrl_write_gint(pkt->fd, 0);
+
+            ctrl_ack_packet(pkt);
+            break;
+        case CMD_PLAYQUEUE_GET_QPOS:
+            if (pkt->data)
+                ctrl_write_gint(pkt->fd,
+                                playlist_get_queue_qposition_number(*
+                                                      ((guint32 *) pkt->
+                                                       data)));
+            else
+                ctrl_write_gint(pkt->fd, 0);
+
+            ctrl_ack_packet(pkt);
+            break;
         case CMD_GET_OUTPUT_TIME:
             if (bmp_playback_get_playing())
                 ctrl_write_gint(pkt->fd, bmp_playback_get_time());
@@ -584,6 +611,9 @@ ctrlsocket_check(void)
             if (num < (guint)playlist_get_length())
                 playlist_queue_remove(num);
             break;
+        case CMD_PLAYQUEUE_CLEAR:
+            playlist_clear_queue();
+            break;
         case CMD_SET_PLAYLIST_POS:
             num = *((guint32 *) data);
             if (num < (guint)playlist_get_length())
@@ -627,6 +657,11 @@ ctrlsocket_check(void)
 	    if (has_x11_connection != TRUE)
                 break;
             show_prefs_window();
+            break;
+        case CMD_SHOW_JTF_BOX:
+	    if (has_x11_connection != TRUE)
+                break;
+            mainwin_jump_to_file();
             break;
         case CMD_TOGGLE_AOT:
 	    if (has_x11_connection != TRUE)
