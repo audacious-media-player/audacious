@@ -683,7 +683,7 @@ http_buffer_loop(gpointer arg)
                 }
                 else {
                     status =
-                        g_strdup_printf(_("PRE-BUFFERING: %luKB/%luKB"),
+                        g_strdup_printf(_("PRE-BUFFERING: %zuKB/%zuKB"),
                                         http_used() / 1024,
                                         prebuffer_length / 1024);
                     mpg123_ip.set_info_text(status);
