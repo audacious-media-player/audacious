@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-04-29 11:14-0500\n"
-"PO-Revision-Date: 2006-04-20 14:10+0100\n"
+"PO-Revision-Date: 2006-04-30 22:58+0100\n"
 "Last-Translator: Tony Vroon <chainsaw@gentoo.org>\n"
 "Language-Team: (not responsive)\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: Plugins/Effect/audiocompress/audacious-glue.c:96
 msgid "AudioCompress "
-msgstr ""
+msgstr "AudioCompress "
 
 #: Plugins/Effect/audiocompress/audacious-glue.c:97
 msgid ""
@@ -28,11 +28,16 @@ msgid ""
 "Simple dynamic range compressor for transparently\n"
 "keeping the volume level more or less consistent"
 msgstr ""
+"\n"
+"(c)2003 trikuare studios(http://trikuare.cx)\n"
+"Omgezet naar Audacious door Tony Vroon (chainsaw@gentoo.org)\n"
+"\n"
+"Eenvoudige dynamic range compressor welke het volume\n"
+"min of meer consistent probeert te houden"
 
 #: Plugins/Effect/audiocompress/audacious-glue.c:102
-#, fuzzy
 msgid "About AudioCompress"
-msgstr "Over Audacious"
+msgstr "Over AudioCompress"
 
 #: Plugins/Effect/audiocompress/audacious-glue.c:103
 #: Plugins/Effect/stereo_plugin/stereo.c:59
@@ -60,25 +65,26 @@ msgid ""
 "\n"
 "By Johan Levin 1999."
 msgstr ""
+"Extra Stereo Plugin\n"
+"\n"
+"Door Johan Levin 1999."
 
 #: Plugins/Effect/stereo_plugin/stereo.c:38
-#, fuzzy, c-format
+#, c-format
 msgid "Extra Stereo Plugin %s"
-msgstr "Disk-schrijver plugin %s"
+msgstr "Extra stereo plugin %s"
 
 #: Plugins/Effect/stereo_plugin/stereo.c:58
-#, fuzzy
 msgid "About Extra Stereo Plugin"
-msgstr "Over de ESounD plugin"
+msgstr "Over de extra stereo plugin"
 
 #: Plugins/Effect/stereo_plugin/stereo.c:99
 msgid "Configure Extra Stereo"
-msgstr ""
+msgstr "Extra Stereo configureren"
 
 #: Plugins/Effect/stereo_plugin/stereo.c:101
-#, fuzzy
 msgid "Effect intensity:"
-msgstr "_Effect plugin-lijst:"
+msgstr "Effect intensiteit:"
 
 #: Plugins/Effect/stereo_plugin/stereo.c:131
 #: Plugins/General/song_change/song_change.c:347
@@ -164,9 +170,8 @@ msgid "%s: disconnected from LIRC\n"
 msgstr "%s: verbinding met LIRC verbroken\n"
 
 #: Plugins/General/scrobbler/configure.c:126
-#, fuzzy
 msgid "Scrobbler Configuration"
-msgstr "MPEG geluid plugin configuratie"
+msgstr "Scrobbler configuratie"
 
 #: Plugins/General/scrobbler/configure.c:142
 #: Plugins/Input/flac/configure.c:706 Plugins/Input/mpg123/configure.c:526
@@ -176,7 +181,7 @@ msgstr "Wachtwoord:"
 
 #: Plugins/General/scrobbler/configure.c:162
 msgid "<b>Scrobbler Preferences</b>"
-msgstr ""
+msgstr "<b>Scrobbler voorkeuren</b>"
 
 #: Plugins/General/scrobbler/configure.c:170
 #: Plugins/Input/flac/configure.c:698 Plugins/Input/mpg123/configure.c:515
@@ -185,14 +190,12 @@ msgid "Username:"
 msgstr "Gebruikersnaam:"
 
 #: Plugins/General/scrobbler/gtkstuff.c:21
-#, fuzzy
 msgid "About Scrobbler Plugin"
-msgstr "Over de ESounD plugin"
+msgstr "Over de Scrobbler plugin"
 
 #: Plugins/General/scrobbler/xmms_scrobbler.c:497
-#, fuzzy
 msgid "Scrobbler Plugin"
-msgstr "Plugins"
+msgstr "Scrobbler plugin"
 
 #: Plugins/General/song_change/song_change.c:53
 #, c-format
@@ -1091,9 +1094,8 @@ msgid "Synthpop"
 msgstr "Synthpop"
 
 #: Plugins/Input/adplug/adplug-xmms.cc:146
-#, fuzzy
 msgid "About "
-msgstr "Over %s"
+msgstr "Info voor "
 
 #: Plugins/Input/adplug/adplug-xmms.cc:149
 msgid ""
@@ -1107,45 +1109,47 @@ msgid ""
 "al.\n"
 "Linked AdPlug library version: "
 msgstr ""
+"\n"
+"Copyright (C) 2002, 2003 Simon Peter <dn.tlp@gmx.net>\n"
+"\n"
+"Deze plugin is uitgebracht onder de voorwaarden van de GNU LGPL.\n"
+"Zie http://www.gnu.org/licenses/lgpl.html voor details.\n"
+"\n"
+"Deze plugin gebruikt de AdPlug bibliotheek, copyright (C) Simon Peter, et al.\n"
+"Gelinkte AdPlug-bibliotheek is versie: "
 
 #: Plugins/Input/amidi-plug/amidi-plug.c:26
 #, c-format
 msgid "AMIDI-Plug %s (MIDI Player)"
-msgstr ""
+msgstr "AMIDI-Plug %s (MIDI-speler)"
 
 #: Plugins/Input/amidi-plug/i_configure.c:55
-#, fuzzy
 msgid "AMIDI-Plug - configuration"
-msgstr "ModPlug configuratie"
+msgstr "AMIDI-Plug - configuratie"
 
 #: Plugins/Input/amidi-plug/i_configure.c:115
-#, fuzzy
 msgid "Port"
 msgstr "Poort:"
 
 #: Plugins/Input/amidi-plug/i_configure.c:117
-#, fuzzy
 msgid "Client name"
-msgstr "Bestandsnaam"
+msgstr "Klant-naam"
 
 #: Plugins/Input/amidi-plug/i_configure.c:119
-#, fuzzy
 msgid "Port name"
-msgstr "Titel"
+msgstr "Poort-naam"
 
 #: Plugins/Input/amidi-plug/i_configure.c:132
-#, fuzzy
 msgid "ALSA output ports"
-msgstr "ALSA %s uitvoer plugin"
+msgstr "ALSA uitvoerpoorten"
 
 #: Plugins/Input/amidi-plug/i_configure.c:187
-#, fuzzy
 msgid "Mixer settings"
-msgstr "Mixer instellingen:"
+msgstr "Mixer-instellingen"
 
 #: Plugins/Input/amidi-plug/i_configure.c:196
 msgid "pre-calculate length of MIDI files in playlist"
-msgstr ""
+msgstr "MIDI-bestandslengte vooraf berekenen"
 
 #: Plugins/Input/amidi-plug/i_configure.c:202
 #: Plugins/Output/alsa/configure.c:429
@@ -1159,6 +1163,10 @@ msgid ""
 "be selected in order to play MIDI with AMIDI-Plug. Unless you know what "
 "you're doing, you'll probably want to use the wavetable synthesizer ports."
 msgstr ""
+"* Selecteer ALSA uitvoerpoorten *\n"
+"MIDI-gebeurtenissen zullen naar deze poorten gestuurd worden. Er dient "
+"minimaal een poort geselecteerd te staan. Tenzij u een geavanceerde gebruiker "
+"bent kunt u er vanuit gaan dat u de wavetable synthesizer-poorten in dient te vullen."
 
 #: Plugins/Input/amidi-plug/i_configure.c:229
 msgid ""
@@ -1168,6 +1176,11 @@ msgid ""
 "will manipulate the control you select here. Unless you know what you're "
 "doing, you'll probably want to select the Synth control here."
 msgstr ""
+"* Selecteer ALSA mixer-element *\n"
+"AMIDI-Plug voert direct uit naar ALSA, zonder hierbij de effect & uitvoerplugins "
+"te passeren. Tijdens het afspelen van MIDI wordt een volumewijziging doorgegeven "
+"aan dit mixer-element. Tenzij u een geavanceerde gebruiker bent, kunt u er vanuit "
+"gaan dat hier voor Synth gekozen moet worden."
 
 #: Plugins/Input/amidi-plug/i_configure.c:236
 msgid ""
@@ -1179,42 +1192,44 @@ msgid ""
 "faster playlist loading (when a lot of MIDI files are added), enable it to "
 "display more information in the playlist straight after loading."
 msgstr ""
+"* MIDI-bestandslengte vooraf berekenen *\n"
+"Als deze optie is ingeschakeld zal AMIDI-Plug de lengte van het MIDI-bestand "
+"berekenen zodra voor het eerste om deze informatie wordt gevraagd, in plaats "
+"van dit later bij het afspelen te doen. Schakel deze optie uit als u wilt dat "
+"een afspeellijst met veel MIDI-bestanden sneller wordt geladen. Schakel deze "
+"optie in als u alle informatie direct in de afspeellijst wilt hebben staan."
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:129
-#, fuzzy
 msgid " MIDI Info "
-msgstr "MOD informatie"
+msgstr " MIDI informatie "
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:138
-#, fuzzy
 msgid "Format:"
-msgstr "ID3 formaat:"
+msgstr "Formaat:"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:141
-#, fuzzy
 msgid "Length (msec):"
-msgstr "Duur:"
+msgstr "Lengte (msec):"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:144
-#, fuzzy
 msgid "Num of Tracks:"
-msgstr "Ga naar nummer"
+msgstr "Aantal tracks:"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:149
 msgid "variable"
-msgstr ""
+msgstr "variabel"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:150
 msgid "BPM:"
-msgstr ""
+msgstr "BPM:"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:156
 msgid "BPM (wavg):"
-msgstr ""
+msgstr "BPM (gewogen gemiddelde):"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:159
 msgid "Time Div:"
-msgstr ""
+msgstr "Tijddeler:"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:184 audacious/util.c:1221
 msgid "  (invalid UTF-8)"
@@ -1247,7 +1262,7 @@ msgid ""
 "Error: %s\n"
 "\n"
 msgstr ""
-"Kon apparaat %s niet open\n"
+"Kon apparaat %s niet openen\n"
 "Foutmelding: %s\n"
 "\n"
 
@@ -2114,7 +2129,7 @@ msgid ""
 "Couldn't connect to host %s\n"
 "Server reported: %s"
 msgstr ""
-"Geen connectie mogelijk met Host %s\n"
+"Geen connectie mogelijk met host %s\n"
 "Server antwoordde: %s"
 
 #: Plugins/Input/flac/http.c:670 Plugins/Input/vorbis/http.c:557
@@ -2213,7 +2228,7 @@ msgstr "Ruisonderdrukking"
 
 #: Plugins/Input/modplug/gui/interface.cpp:367
 msgid "Play Amiga MOD"
-msgstr ""
+msgstr "Amiga MOD afspelen"
 
 #: Plugins/Input/modplug/gui/interface.cpp:375
 msgid "Reverb"
@@ -2503,9 +2518,8 @@ msgid "File size:"
 msgstr "Bestandsgrootte:"
 
 #: Plugins/Input/mpg123/fileinfo.c:383 Plugins/Input/mpg123/fileinfo.c:682
-#, fuzzy
 msgid "Mode:"
-msgstr "Decoder:"
+msgstr "Mode:"
 
 #: Plugins/Input/mpg123/fileinfo.c:406 Plugins/Input/mpg123/fileinfo.c:664
 msgid "Error Protection:"
@@ -2622,12 +2636,12 @@ msgid "TiMidity Player %s"
 msgstr "TiMidity speler %s"
 
 #: Plugins/Input/timidity/src/xmms-timidity.c:134
-#, fuzzy
 msgid ""
 "TiMidity Plugin\n"
 "http://libtimidity.sourceforge.net\n"
 "by Konstantin Korikov"
 msgstr ""
+"TiMidity Plugin\n"
 "http://libtimidity.sourceforge.net\n"
 "door Konstantin Korikov"
 
@@ -2883,19 +2897,19 @@ msgstr ""
 "vanaf de xmms_sndfile plugin:\n"
 "Copyright (C) 2000, 2002 Erik de Castro Lopo\n"
 "\n"
-"This program is free software ; you can redistribute it and/or modify \n"
-"it under the terms of the GNU General Public License as published by \n"
-"the Free Software Foundation ; either version 2 of the License, or \n"
-"(at your option) any later version. \n"
+"Dit programma is vrije software ; u mag het verspreiden en/of aanpassen \n"
+"onder de voorwaarden van de GNU General Public License zoals gepubliceerd door \n"
+"de Free Software Foundation ; ofwel versie 2 van de Licentie, of \n"
+"(naar uw goeddunken) iedere latere versie. \n"
 " \n"
-"This program is distributed in the hope that it will be useful, \n"
-"but WITHOUT ANY WARRANTY ; without even the implied warranty of \n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
-"See the GNU General Public License for more details. \n"
+"Dit programma wordt verspreid in de hoop dat het nuttig voor u is, \n"
+"maar ZONDER ENIGE GARANTIE ; zelfs zonder de geimpliceerde garantie van \n"
+"VERKOOPBAARHEID of GESCHIKTHEID VOOR EEN BEPAALD DOEL.  \n"
+"Zie de GNU General Public License voor meer details. \n"
 "\n"
-"You should have received a copy of the GNU General Public \n"
-"License along with this program ; if not, write to \n"
-"the Free Software Foundation, Inc., \n"
+"U zou een kopie van de GNU General Public \n"
+"License samen met dit programma hebben moeten ontvangen ; als dit niet het geval is, schrijf dan naar \n"
+"de Free Software Foundation, Inc., \n"
 "59 Temple Place, Suite 330, \n"
 "Boston, MA  02111-1307  USA"
 
@@ -3029,20 +3043,21 @@ msgid ""
 msgstr ""
 "Audacious OSS Driver\n"
 "\n"
-" This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
+"Dit programma is vrije software ; u mag het verspreiden en/of aanpassen \n"
+"onder de voorwaarden van de GNU General Public License zoals gepubliceerd door \n"
+"de Free Software Foundation ; ofwel versie 2 van de Licentie, of \n"
+"(naar uw goeddunken) iedere latere versie. \n"
+" \n"
+"Dit programma wordt verspreid in de hoop dat het nuttig voor u is, \n"
+"maar ZONDER ENIGE GARANTIE ; zelfs zonder de geimpliceerde garantie van \n"
+"VERKOOPBAARHEID of GESCHIKTHEID VOOR EEN BEPAALD DOEL.  \n"
+"Zie de GNU General Public License voor meer details. \n"
 "\n"
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"GNU General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-"USA."
+"U zou een kopie van de GNU General Public \n"
+"License samen met dit programma hebben moeten ontvangen ; als dit niet het geval is, schrijf dan naar \n"
+"de Free Software Foundation, Inc., \n"
+"59 Temple Place, Suite 330, \n"
+"Boston, MA  02111-1307  USA"
 
 #: Plugins/Output/OSS/configure.c:149
 #, c-format
@@ -3123,21 +3138,21 @@ msgid ""
 msgstr ""
 "Audacious ALSA Driver\n"
 "\n"
-" This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
+"Dit programma is vrije software ; u mag het verspreiden en/of aanpassen \n"
+"onder de voorwaarden van de GNU General Public License zoals gepubliceerd door \n"
+"de Free Software Foundation ; ofwel versie 2 van de Licentie, of \n"
+"(naar uw goeddunken) iedere latere versie. \n"
+" \n"
+"Dit programma wordt verspreid in de hoop dat het nuttig voor u is, \n"
+"maar ZONDER ENIGE GARANTIE ; zelfs zonder de geimpliceerde garantie van \n"
+"VERKOOPBAARHEID of GESCHIKTHEID VOOR EEN BEPAALD DOEL.  \n"
+"Zie de GNU General Public License voor meer details. \n"
 "\n"
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"GNU General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-"USA.\n"
-"Author: Matthieu Sozeau (mattam@altern.org)"
+"U zou een kopie van de GNU General Public \n"
+"License samen met dit programma hebben moeten ontvangen ; als dit niet het geval is, schrijf dan naar \n"
+"de Free Software Foundation, Inc., \n"
+"59 Temple Place, Suite 330, \n"
+"Boston, MA  02111-1307  USA"
 
 #: Plugins/Output/alsa/alsa.c:47
 #, c-format
@@ -3190,9 +3205,8 @@ msgid "Audacious:"
 msgstr "Audacious:"
 
 #: Plugins/Output/arts/configure.c:52
-#, fuzzy
 msgid "aRts Driver configuration"
-msgstr "OSS stuurprogramma configuratie"
+msgstr "aRts stuurprogramma configuratie"
 
 #: Plugins/Output/disk_writer/disk_writer.c:110
 #, c-format
@@ -3244,20 +3258,21 @@ msgid ""
 msgstr ""
 "Audacious ESounD Plugin\n"
 "\n"
-" This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
+"Dit programma is vrije software ; u mag het verspreiden en/of aanpassen \n"
+"onder de voorwaarden van de GNU General Public License zoals gepubliceerd door \n"
+"de Free Software Foundation ; ofwel versie 2 van de Licentie, of \n"
+"(naar uw goeddunken) iedere latere versie. \n"
+" \n"
+"Dit programma wordt verspreid in de hoop dat het nuttig voor u is, \n"
+"maar ZONDER ENIGE GARANTIE ; zelfs zonder de geimpliceerde garantie van \n"
+"VERKOOPBAARHEID of GESCHIKTHEID VOOR EEN BEPAALD DOEL.  \n"
+"Zie de GNU General Public License voor meer details. \n"
 "\n"
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"GNU General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-"USA."
+"U zou een kopie van de GNU General Public \n"
+"License samen met dit programma hebben moeten ontvangen ; als dit niet het geval is, schrijf dan naar \n"
+"de Free Software Foundation, Inc., \n"
+"59 Temple Place, Suite 330, \n"
+"Boston, MA  02111-1307  USA"
 
 #: Plugins/Output/esd/configure.c:102
 msgid "ESD Output Plugin configuration"
@@ -3280,9 +3295,8 @@ msgid "eSound Output Plugin"
 msgstr "eSound uitvoer plugin"
 
 #: Plugins/Output/jack/jack.c:575
-#, fuzzy
 msgid "About JACK Output Plugin 0.15"
-msgstr "eSound uitvoer plugin"
+msgstr "Over de JACK uitvoer-plugin"
 
 #: Plugins/Output/jack/jack.c:576
 msgid ""
@@ -3294,11 +3308,17 @@ msgid ""
 "Audacious port by\n"
 "Giacomo Lozito from develia.org"
 msgstr ""
+"XMMS jack stuurprogramma 0.15\n"
+"\n"
+"xmms-jack.sf.net\n"
+"Chris Morgan<cmorgan@alum.wpi.edu>\n"
+"\n"
+"Omgezet naar Audacious door\n"
+"Giacomo Lozito van develia.org"
 
 #: Plugins/Output/sun/about.c:34
-#, fuzzy
 msgid "About the Sun Driver"
-msgstr "Over het OSS stuurprogramma"
+msgstr "Over het Sun stuurprogramma"
 
 #: Plugins/Output/sun/about.c:35
 msgid ""
@@ -3307,34 +3327,35 @@ msgid ""
 "Copyright (c) 2001 CubeSoft Communications, Inc.\n"
 "Maintainer: <vedge at csoft.org>.\n"
 msgstr ""
+"XMMS BSD Sun stuurprogramma\n"
+"\n"
+"Copyright (c) 2001 CubeSoft Communications, Inc.\n"
+"Onderhouden door: <vedge at csoft.org>.\n"
 
 #: Plugins/Output/sun/configure.c:201
-#, fuzzy
 msgid "Audio control device:"
 msgstr "Geluidsapparaat:"
 
 #: Plugins/Output/sun/configure.c:350
-#, fuzzy
 msgid "Volume controls device:"
-msgstr "Volume regelaar:"
+msgstr "Volumeregeling:"
 
 #: Plugins/Output/sun/configure.c:363
 msgid "XMMS uses mixer exclusively."
-msgstr ""
+msgstr "XMMS maakt exclusief gebruik van de mixer."
 
 #: Plugins/Output/sun/configure.c:488
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: Plugins/Output/sun/configure.c:538
-#, fuzzy
 msgid "Sun driver configuration"
-msgstr "OSS stuurprogramma configuratie"
+msgstr "Sun stuurprogramma configuratie"
 
 #: Plugins/Output/sun/sun.c:55
 #, c-format
 msgid "BSD Sun Driver %s"
-msgstr ""
+msgstr "BSD Sun stuurprogramma %s"
 
 #: Plugins/Visualization/blur_scope/blur_scope.c:57
 msgid "/Toggle Decorations"
@@ -3400,7 +3421,7 @@ msgstr "William Pitcock"
 
 #: audacious/credits.c:55 audacious/credits.c:74
 msgid "Derek Pomery"
-msgstr ""
+msgstr "Derek Pomery"
 
 #: audacious/credits.c:56 audacious/credits.c:75 audacious/credits.c:81
 msgid "Tony Vroon"
@@ -4180,9 +4201,8 @@ msgstr "/Titel automatisch scrollen"
 
 #  -s, --stop switch
 #: audacious/mainwin.c:255 audacious/mainwin.c:347
-#, fuzzy
 msgid "/Stop After Current Song"
-msgstr "Stop huidig nummer"
+msgstr "/Stop na huidig nummer"
 
 #: audacious/mainwin.c:265
 msgid "/Visualization Mode"
@@ -4449,14 +4469,12 @@ msgid "VBR"
 msgstr "VBR"
 
 #: audacious/mainwin.c:901
-#, fuzzy
 msgid "stereo"
-msgstr "Stereo"
+msgstr "stereo"
 
 #: audacious/mainwin.c:901
-#, fuzzy
 msgid "mono"
-msgstr "Mono"
+msgstr "mono"
 
 #: audacious/mainwin.c:1350
 msgid "Jump to Time"
@@ -4680,24 +4698,20 @@ msgid "/Remove Unavailable Files"
 msgstr "/Ontoegankelijke bestanden wissen"
 
 #: audacious/ui_playlist.c:173
-#, fuzzy
 msgid "/Remove Duplicates"
-msgstr "/Selectie wissen"
+msgstr "/Dubbele nummers wissen"
 
 #: audacious/ui_playlist.c:174
-#, fuzzy
 msgid "/Remove Duplicates/By Title"
-msgstr "/Lijst sorteren/Op titel"
+msgstr "/Dubbele nummers wissen/Op titel"
 
 #: audacious/ui_playlist.c:177
-#, fuzzy
 msgid "/Remove Duplicates/By Filename"
-msgstr "/Lijst sorteren/Op bestandsnaam"
+msgstr "/Dubbele nummers wissen/Op bestandsnaam"
 
 #: audacious/ui_playlist.c:180
-#, fuzzy
 msgid "/Remove Duplicates/By Path + Filename"
-msgstr "/Lijst sorteren/Op locatie en bestandsnaam"
+msgstr "/Dubbele nummers wissen/Op locatie en bestandsnaam"
 
 #: audacious/ui_playlist.c:200
 msgid "/New List"
@@ -4917,9 +4931,8 @@ msgid "<b>_Skin</b>"
 msgstr "<b>S_kin</b>"
 
 #: audacious/glade/prefswin.glade:1052
-#, fuzzy
 msgid "Refresh skin list"
-msgstr "/Ververssnelheid"
+msgstr "Skin-lijst verversen"
 
 #: audacious/glade/prefswin.glade:1147
 msgid "<b>_Fonts</b>"
@@ -5032,9 +5045,7 @@ msgstr "<b>Afspelen</b>"
 
 #: audacious/glade/prefswin.glade:2215
 msgid "When finished playing a song, don't automatically advance to the next."
-msgstr ""
-"Ga niet automatisch naar het volgende nummer, wanneer het huidige nummer is "
-"afgelopen."
+msgstr "Ga niet automatisch naar het volgende nummer, wanneer het huidige nummer is afgelopen."
 
 #  -e, --enqueue switch
 #: audacious/glade/prefswin.glade:2217
@@ -5055,21 +5066,24 @@ msgid "seconds"
 msgstr "seconden"
 
 #: audacious/glade/prefswin.glade:2382
-#, fuzzy
 msgid "<b>File Dialog</b>"
-msgstr "<b>Bestandsnaam</b>"
+msgstr "<b>Bestandsvenster</b>"
 
 #: audacious/glade/prefswin.glade:2421
 msgid ""
 "Always refresh the file dialog (this will slow opening the dialog on large "
 "directories, and Gnome VFS should handle automatically)."
 msgstr ""
+"Ververs altijd het bestandsvenster (dit kan het openen van het venster "
+"vertragen voor grote mappen, en mag worden uitgeschakeld als Gnome-VFS actief is)."
 
 #: audacious/glade/prefswin.glade:2423
 msgid ""
 "Always refresh directory when opening file dialog, should be unneeded with "
 "Gnome VFS."
 msgstr ""
+"Ververs altijd de mapinhoud bij het openen van het bestandsvenster, niet noodzakelijk als "
+"Gnome VFS actief is."
 
 #: audacious/glade/prefswin.glade:2457
 msgid "<b>Song display</b>"
@@ -5080,7 +5094,6 @@ msgid "Custom string:"
 msgstr "Handmatige instelling:"
 
 #: audacious/glade/prefswin.glade:2584
-#, fuzzy
 msgid ""
 "TITLE\n"
 "ARTIST - TITLE\n"
@@ -5090,9 +5103,11 @@ msgid ""
 "ALBUM - TITLE\n"
 "Custom"
 msgstr ""
-"TITEL\n"
-"ARTIEST - TITEL\n"
+"TITLE\n"
+"ARTIEST - TITLE\n"
 "ARTIEST - ALBUM - TITEL\n"
+"ARTIEST - ALBUM - TRACKNR. TITEL\n"
+"ARTIEST [ ALBUM ] - TRACKNR. TITEL\n"
 "ALBUM - TITEL\n"
 "Aanpassen"
 
