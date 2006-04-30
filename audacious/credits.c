@@ -181,7 +181,7 @@ static const gchar *translators[] = {
     N_("Pavel Kanzelsberger"),
     NULL,
     N_("Spanish:"),
-    N_("Francisco Javier F. Serrador"),
+    N_("Gustavo D. Vranjes"),
     NULL,
     N_("Swedish:"),
     N_("Martin Persenius"),
