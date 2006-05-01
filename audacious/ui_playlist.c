@@ -197,7 +197,7 @@ static GtkItemFactoryEntry pldel_menu_entries[] = {
 };
 
 static GtkItemFactoryEntry pllist_menu_entries[] = {
-    {N_("/New List"), NULL,
+    {N_("/New List"), "<shift>N",
      playlistwin_sub_menu_callback,
      PLIST_NEW, "<StockItem>", GTK_STOCK_NEW},
 
@@ -207,7 +207,7 @@ static GtkItemFactoryEntry pllist_menu_entries[] = {
      playlistwin_sub_menu_callback,
      PLIST_LOAD, "<StockItem>", GTK_STOCK_OPEN},
 
-    {N_("/Save List"), "s",
+    {N_("/Save List"), "<shift>S",
      playlistwin_sub_menu_callback,
      PLIST_SAVE, "<StockItem>", GTK_STOCK_SAVE},
 
