@@ -1637,6 +1637,7 @@ playlistwin_create_window(void)
 
     playlistwin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(playlistwin), _("Audacious Playlist Editor"));
+    gtk_window_set_wmclass(GTK_WINDOW(playlistwin), "playlist", "Audacious");
     gtk_window_set_role(GTK_WINDOW(playlistwin), "playlist");
     gtk_window_set_default_size(GTK_WINDOW(playlistwin),
                                 playlistwin_get_width(),
