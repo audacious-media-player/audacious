@@ -104,6 +104,8 @@ struct _BmpConfig {
     gboolean xmms_compat_mode;
     gboolean eq_extra_filtering;
     gint scroll_pl_by;
+    gboolean resume_playback_on_startup;
+    gint resume_playback_on_startup_time;
 };
 
 typedef struct _BmpConfig BmpConfig;

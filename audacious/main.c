@@ -193,7 +193,9 @@ BmpConfig bmp_default_config = {
     FALSE,                      /* software volume control enabled */
     TRUE,                       /* UNUSED (XMMS compatibility mode) */
     TRUE,                       /* extra eq filtering */
-    3                          /* scroll pl by */
+    3,                          /* scroll pl by */
+    FALSE,                      /* resume playback on startup */
+    -1,                         /* resume playback on startup time */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -268,7 +270,8 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"analyzer_peaks", &cfg.analyzer_peaks, TRUE},
     {"custom_cursors", &cfg.custom_cursors, TRUE},
     {"close_dialog_open", &cfg.close_dialog_open, TRUE},
-    {"close_dialog_add", &cfg.close_dialog_add, TRUE}
+    {"close_dialog_add", &cfg.close_dialog_add, TRUE},
+    {"resume_playback_on_startup", &cfg.resume_playback_on_startup, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);
@@ -297,6 +300,7 @@ static bmp_cfg_nument bmp_numents[] = {
     {"mouse_wheel_change", &cfg.mouse_change, TRUE},
     {"scroll_pl_by", &cfg.scroll_pl_by, TRUE},
     {"titlestring_preset", &cfg.titlestring_preset, TRUE},
+    {"resume_playback_on_startup_time", &cfg.resume_playback_on_startup_time, TRUE},
 };
 
 static gint ncfgient = G_N_ELEMENTS(bmp_numents);
@@ -530,7 +534,7 @@ bmp_config_save(void)
 {
     GList *node;
     gchar *str;
-    gint i;
+    gint i, cur_pb_time;
     ConfigDb *db;
 
     cfg.disabled_iplugins = input_stringify_disabled_list();
@@ -630,6 +634,14 @@ bmp_config_save(void)
         bmp_cfg_db_set_string(db, NULL, str, node->data);
         g_free(str);
     }
+
+    if (bmp_playback_get_playing()) {
+	    cur_pb_time = bmp_playback_get_time();
+    } else
+	    cur_pb_time = -1;
+    cfg.resume_playback_on_startup_time = cur_pb_time;
+    bmp_cfg_db_set_int(db, NULL, "resume_playback_on_startup_time",
+		       cfg.resume_playback_on_startup_time);
 
     bmp_cfg_db_close(db);
 
@@ -1065,6 +1077,17 @@ main(gint argc, gchar ** argv)
 	starting_up = FALSE;
 
 	has_x11_connection = TRUE;
+
+	if (cfg.resume_playback_on_startup) {
+		if (cfg.resume_playback_on_startup_time != -1) {
+			while (gtk_events_pending()) gtk_main_iteration();
+			bmp_playback_initiate();
+			while (!ip_data.playing)
+				g_usleep(10000);
+			bmp_playback_seek(cfg.resume_playback_on_startup_time /
+					  1000);
+		}
+	}
 
         gtk_main();
 
