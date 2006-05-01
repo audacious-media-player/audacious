@@ -181,7 +181,7 @@ bool CldsPlayer::update()
 	}
       }
     } else
-      if(((allvolume + (0x100 - fadeonoff)) & 0xff) <= mainvolume)
+      if((unsigned int)((allvolume + (0x100 - fadeonoff)) & 0xff) <= mainvolume)
 	allvolume += 0x100 - fadeonoff;
       else {
 	allvolume = mainvolume;
