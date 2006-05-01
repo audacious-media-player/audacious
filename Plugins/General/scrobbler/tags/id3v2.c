@@ -339,12 +339,12 @@ static framedata_t *parseFrame(char **bp, char *end, id3header_t *id3_data)
 		}
 		if((frameflags[1] & 0x04) == 0x04)
 		{
-			*bp++;
+			(*bp)++;
 			framesize--;
 		}
 		if((frameflags[1] & 0x40) == 0x40)
 		{
-			*bp++;
+			(*bp)++;
 			framesize--;
 		}
 	}
@@ -367,12 +367,12 @@ static framedata_t *parseFrame(char **bp, char *end, id3header_t *id3_data)
 		}
 		if((frameflags[1] & 0x40) == 0x40)
 		{
-			*bp++;
+			(*bp)++;
 			framesize--;
 		}
 		if((frameflags[1] & 0x20) == 0x20)
 		{
-			*bp++;
+			(*bp)++;
 			framesize--;
 		}
 	}
