@@ -402,6 +402,7 @@ static gint xs_get_sid_hash(gchar * pcFilename, t_xs_md5hash hash)
 	t_xs_md5state inState;
 	t_xs_psidv1_header psidH;
 	t_xs_psidv2_header psidH2;
+	psidH2.flags = 0;
 #ifdef XS_BUF_DYNAMIC
 	guint8 *songData;
 #else

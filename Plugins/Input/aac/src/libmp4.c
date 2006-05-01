@@ -545,7 +545,7 @@ static void my_decode_aac( char *filename )
 	input->file_name = (char*)g_basename(temp);
 	input->file_ext = ext ? ext+1 : NULL;
 	input->file_path = temp;
-	if(!strncmp(buffer, "ID3", 3)){
+	if(!strncmp((char*)buffer, "ID3", 3)){
 		gint size = 0;
 
 		vfs_fseek(file, 0, SEEK_SET);
