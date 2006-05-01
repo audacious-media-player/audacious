@@ -46,13 +46,13 @@ extern "C" {
 
 /* used to save the prediction state */
 typedef struct {
-    int16_t r[2];
-    int16_t COR[2];
-    int16_t VAR[2];
+    signed short r[2];
+    signed short COR[2];
+    signed short VAR[2];
 } pred_state;
 
 typedef struct {
-    uint16_t N;
+    unsigned short N;
     cfft_info *cfft;
     complex_t *sincos;
 #ifdef PROFILE
@@ -81,17 +81,17 @@ typedef struct
 
 typedef struct
 {
-    uint8_t present;
+    unsigned char present;
 
-    uint8_t num_bands;
-    uint8_t pce_instance_tag;
-    uint8_t excluded_chns_present;
-    uint8_t band_top[17];
-    uint8_t prog_ref_level;
-    uint8_t dyn_rng_sgn[17];
-    uint8_t dyn_rng_ctl[17];
-    uint8_t exclude_mask[MAX_CHANNELS];
-    uint8_t additional_excluded_chns[MAX_CHANNELS];
+    unsigned char num_bands;
+    unsigned char pce_instance_tag;
+    unsigned char excluded_chns_present;
+    unsigned char band_top[17];
+    unsigned char prog_ref_level;
+    unsigned char dyn_rng_sgn[17];
+    unsigned char dyn_rng_ctl[17];
+    unsigned char exclude_mask[MAX_CHANNELS];
+    unsigned char additional_excluded_chns[MAX_CHANNELS];
 
     real_t ctrl1;
     real_t ctrl2;
@@ -99,81 +99,81 @@ typedef struct
 
 typedef struct
 {
-    uint8_t element_instance_tag;
-    uint8_t object_type;
-    uint8_t sf_index;
-    uint8_t num_front_channel_elements;
-    uint8_t num_side_channel_elements;
-    uint8_t num_back_channel_elements;
-    uint8_t num_lfe_channel_elements;
-    uint8_t num_assoc_data_elements;
-    uint8_t num_valid_cc_elements;
-    uint8_t mono_mixdown_present;
-    uint8_t mono_mixdown_element_number;
-    uint8_t stereo_mixdown_present;
-    uint8_t stereo_mixdown_element_number;
-    uint8_t matrix_mixdown_idx_present;
-    uint8_t pseudo_surround_enable;
-    uint8_t matrix_mixdown_idx;
-    uint8_t front_element_is_cpe[16];
-    uint8_t front_element_tag_select[16];
-    uint8_t side_element_is_cpe[16];
-    uint8_t side_element_tag_select[16];
-    uint8_t back_element_is_cpe[16];
-    uint8_t back_element_tag_select[16];
-    uint8_t lfe_element_tag_select[16];
-    uint8_t assoc_data_element_tag_select[16];
-    uint8_t cc_element_is_ind_sw[16];
-    uint8_t valid_cc_element_tag_select[16];
+    unsigned char element_instance_tag;
+    unsigned char object_type;
+    unsigned char sf_index;
+    unsigned char num_front_channel_elements;
+    unsigned char num_side_channel_elements;
+    unsigned char num_back_channel_elements;
+    unsigned char num_lfe_channel_elements;
+    unsigned char num_assoc_data_elements;
+    unsigned char num_valid_cc_elements;
+    unsigned char mono_mixdown_present;
+    unsigned char mono_mixdown_element_number;
+    unsigned char stereo_mixdown_present;
+    unsigned char stereo_mixdown_element_number;
+    unsigned char matrix_mixdown_idx_present;
+    unsigned char pseudo_surround_enable;
+    unsigned char matrix_mixdown_idx;
+    unsigned char front_element_is_cpe[16];
+    unsigned char front_element_tag_select[16];
+    unsigned char side_element_is_cpe[16];
+    unsigned char side_element_tag_select[16];
+    unsigned char back_element_is_cpe[16];
+    unsigned char back_element_tag_select[16];
+    unsigned char lfe_element_tag_select[16];
+    unsigned char assoc_data_element_tag_select[16];
+    unsigned char cc_element_is_ind_sw[16];
+    unsigned char valid_cc_element_tag_select[16];
 
-    uint8_t channels;
+    unsigned char channels;
 
-    uint8_t comment_field_bytes;
-    uint8_t comment_field_data[257];
+    unsigned char comment_field_bytes;
+    unsigned char comment_field_data[257];
 
     /* extra added values */
-    uint8_t num_front_channels;
-    uint8_t num_side_channels;
-    uint8_t num_back_channels;
-    uint8_t num_lfe_channels;
-    uint8_t sce_channel[16];
-    uint8_t cpe_channel[16];
+    unsigned char num_front_channels;
+    unsigned char num_side_channels;
+    unsigned char num_back_channels;
+    unsigned char num_lfe_channels;
+    unsigned char sce_channel[16];
+    unsigned char cpe_channel[16];
 } program_config;
 
 typedef struct
 {
-    uint16_t syncword;
-    uint8_t id;
-    uint8_t layer;
-    uint8_t protection_absent;
-    uint8_t profile;
-    uint8_t sf_index;
-    uint8_t private_bit;
-    uint8_t channel_configuration;
-    uint8_t original;
-    uint8_t home;
-    uint8_t emphasis;
-    uint8_t copyright_identification_bit;
-    uint8_t copyright_identification_start;
-    uint16_t aac_frame_length;
-    uint16_t adts_buffer_fullness;
-    uint8_t no_raw_data_blocks_in_frame;
-    uint16_t crc_check;
+    unsigned short syncword;
+    unsigned char id;
+    unsigned char layer;
+    unsigned char protection_absent;
+    unsigned char profile;
+    unsigned char sf_index;
+    unsigned char private_bit;
+    unsigned char channel_configuration;
+    unsigned char original;
+    unsigned char home;
+    unsigned char emphasis;
+    unsigned char copyright_identification_bit;
+    unsigned char copyright_identification_start;
+    unsigned short aac_frame_length;
+    unsigned short adts_buffer_fullness;
+    unsigned char no_raw_data_blocks_in_frame;
+    unsigned short crc_check;
 
     /* control param */
-    uint8_t old_format;
+    unsigned char old_format;
 } adts_header;
 
 typedef struct
 {
-    uint8_t copyright_id_present;
-    int8_t copyright_id[10];
-    uint8_t original_copy;
-    uint8_t home;
-    uint8_t bitstream_type;
-    uint32_t bitrate;
-    uint8_t num_program_config_elements;
-    uint32_t adif_buffer_fullness;
+    unsigned char copyright_id_present;
+    signed char copyright_id[10];
+    unsigned char original_copy;
+    unsigned char home;
+    unsigned char bitstream_type;
+    unsigned long bitrate;
+    unsigned char num_program_config_elements;
+    unsigned long adif_buffer_fullness;
 
     /* maximum of 16 PCEs */
     program_config pce[16];
@@ -182,90 +182,90 @@ typedef struct
 #ifdef LTP_DEC
 typedef struct
 {
-    uint8_t last_band;
-    uint8_t data_present;
-    uint16_t lag;
-    uint8_t lag_update;
-    uint8_t coef;
-    uint8_t long_used[MAX_SFB];
-    uint8_t short_used[8];
-    uint8_t short_lag_present[8];
-    uint8_t short_lag[8];
+    unsigned char last_band;
+    unsigned char data_present;
+    unsigned short lag;
+    unsigned char lag_update;
+    unsigned char coef;
+    unsigned char long_used[MAX_SFB];
+    unsigned char short_used[8];
+    unsigned char short_lag_present[8];
+    unsigned char short_lag[8];
 } ltp_info;
 #endif
 
 #ifdef MAIN_DEC
 typedef struct
 {
-    uint8_t limit;
-    uint8_t predictor_reset;
-    uint8_t predictor_reset_group_number;
-    uint8_t prediction_used[MAX_SFB];
+    unsigned char limit;
+    unsigned char predictor_reset;
+    unsigned char predictor_reset_group_number;
+    unsigned char prediction_used[MAX_SFB];
 } pred_info;
 #endif
 
 typedef struct
 {
-    uint8_t number_pulse;
-    uint8_t pulse_start_sfb;
-    uint8_t pulse_offset[4];
-    uint8_t pulse_amp[4];
+    unsigned char number_pulse;
+    unsigned char pulse_start_sfb;
+    unsigned char pulse_offset[4];
+    unsigned char pulse_amp[4];
 } pulse_info;
 
 typedef struct
 {
-    uint8_t n_filt[8];
-    uint8_t coef_res[8];
-    uint8_t length[8][4];
-    uint8_t order[8][4];
-    uint8_t direction[8][4];
-    uint8_t coef_compress[8][4];
-    uint8_t coef[8][4][32];
+    unsigned char n_filt[8];
+    unsigned char coef_res[8];
+    unsigned char length[8][4];
+    unsigned char order[8][4];
+    unsigned char direction[8][4];
+    unsigned char coef_compress[8][4];
+    unsigned char coef[8][4][32];
 } tns_info;
 
 #ifdef SSR_DEC
 typedef struct
 {
-    uint8_t max_band;
+    unsigned char max_band;
 
-    uint8_t adjust_num[4][8];
-    uint8_t alevcode[4][8][8];
-    uint8_t aloccode[4][8][8];
+    unsigned char adjust_num[4][8];
+    unsigned char alevcode[4][8][8];
+    unsigned char aloccode[4][8][8];
 } ssr_info;
 #endif
 
 typedef struct
 {
-    uint8_t max_sfb;
+    unsigned char max_sfb;
 
-    uint8_t num_swb;
-    uint8_t num_window_groups;
-    uint8_t num_windows;
-    uint8_t window_sequence;
-    uint8_t window_group_length[8];
-    uint8_t window_shape;
-    uint8_t scale_factor_grouping;
-    uint16_t sect_sfb_offset[8][15*8];
-    uint16_t swb_offset[52];
+    unsigned char num_swb;
+    unsigned char num_window_groups;
+    unsigned char num_windows;
+    unsigned char window_sequence;
+    unsigned char window_group_length[8];
+    unsigned char window_shape;
+    unsigned char scale_factor_grouping;
+    unsigned short sect_sfb_offset[8][15*8];
+    unsigned short swb_offset[52];
 
-    uint8_t sect_cb[8][15*8];
-    uint16_t sect_start[8][15*8];
-    uint16_t sect_end[8][15*8];
-    uint8_t sfb_cb[8][8*15];
-    uint8_t num_sec[8]; /* number of sections in a group */
+    unsigned char sect_cb[8][15*8];
+    unsigned short sect_start[8][15*8];
+    unsigned short sect_end[8][15*8];
+    unsigned char sfb_cb[8][8*15];
+    unsigned char num_sec[8]; /* number of sections in a group */
 
-    uint8_t global_gain;
-    int16_t scale_factors[8][51]; /* [0..255] */
+    unsigned char global_gain;
+    signed short scale_factors[8][51]; /* [0..255] */
 
-    uint8_t ms_mask_present;
-    uint8_t ms_used[MAX_WINDOW_GROUPS][MAX_SFB];
+    unsigned char ms_mask_present;
+    unsigned char ms_used[MAX_WINDOW_GROUPS][MAX_SFB];
 
-    uint8_t noise_used;
+    unsigned char noise_used;
 
-    uint8_t pulse_data_present;
-    uint8_t tns_data_present;
-    uint8_t gain_control_data_present;
-    uint8_t predictor_data_present;
+    unsigned char pulse_data_present;
+    unsigned char tns_data_present;
+    unsigned char gain_control_data_present;
+    unsigned char predictor_data_present;
 
     pulse_info pul;
     tns_info tns;
@@ -282,26 +282,26 @@ typedef struct
 
 #ifdef ERROR_RESILIENCE
     /* ER HCR data */
-    uint16_t length_of_reordered_spectral_data;
-    uint8_t length_of_longest_codeword;
+    unsigned short length_of_reordered_spectral_data;
+    unsigned char length_of_longest_codeword;
     /* ER RLVC data */
-    uint8_t sf_concealment;
-    uint8_t rev_global_gain;
-    uint16_t length_of_rvlc_sf;
-    uint16_t dpcm_noise_nrg;
-    uint8_t sf_escapes_present;
-    uint8_t length_of_rvlc_escapes;
-    uint16_t dpcm_noise_last_position;
+    unsigned char sf_concealment;
+    unsigned char rev_global_gain;
+    unsigned short length_of_rvlc_sf;
+    unsigned short dpcm_noise_nrg;
+    unsigned char sf_escapes_present;
+    unsigned char length_of_rvlc_escapes;
+    unsigned short dpcm_noise_last_position;
 #endif
 } ic_stream; /* individual channel stream */
 
 typedef struct
 {
-    uint8_t channel;
-    int16_t paired_channel;
+    unsigned char channel;
+    signed short paired_channel;
 
-    uint8_t element_instance_tag;
-    uint8_t common_window;
+    unsigned char element_instance_tag;
+    unsigned char common_window;
 
     ic_stream ics1;
     ic_stream ics2;
@@ -310,109 +310,109 @@ typedef struct
 typedef struct mp4AudioSpecificConfig
 {
     /* Audio Specific Info */
-    /*uint8_t*/ unsigned char objectTypeIndex;
-    /*uint8_t*/ unsigned char samplingFrequencyIndex;
-    /*uint32_t*/ unsigned long samplingFrequency;
-    /*uint8_t*/ unsigned char channelsConfiguration;
+    unsigned char objectTypeIndex;
+    unsigned char samplingFrequencyIndex;
+    unsigned long samplingFrequency;
+    unsigned char channelsConfiguration;
 
     /* GA Specific Info */
-    /*uint8_t*/ unsigned char frameLengthFlag;
-    /*uint8_t*/ unsigned char dependsOnCoreCoder;
-    /*uint16_t*/ unsigned short coreCoderDelay;
-    /*uint8_t*/ unsigned char extensionFlag;
-    /*uint8_t*/ unsigned char aacSectionDataResilienceFlag;
-    /*uint8_t*/ unsigned char aacScalefactorDataResilienceFlag;
-    /*uint8_t*/ unsigned char aacSpectralDataResilienceFlag;
-    /*uint8_t*/ unsigned char epConfig;
+    unsigned char frameLengthFlag;
+    unsigned char dependsOnCoreCoder;
+    unsigned short coreCoderDelay;
+    unsigned char extensionFlag;
+    unsigned char aacSectionDataResilienceFlag;
+    unsigned char aacScalefactorDataResilienceFlag;
+    unsigned char aacSpectralDataResilienceFlag;
+    unsigned char epConfig;
 
-    /*uint8_t*/ char sbr_present_flag;
-    /*uint8_t*/ char forceUpSampling;
-    /*uint8_t*/ char downSampledSBR;
+    signed char sbr_present_flag;
+    unsigned char forceUpSampling;
+    unsigned char downSampledSBR;
 } mp4AudioSpecificConfig;
 
 typedef struct NeAACDecConfiguration
 {
-    /*uint8_t*/ unsigned char defObjectType;
-    /*uint32_t*/ unsigned long defSampleRate;
-    /*uint8_t*/ unsigned char outputFormat;
-    /*uint8_t*/ unsigned char downMatrix;
-    /*uint8_t*/ unsigned char useOldADTSFormat;
-    /*uint8_t*/ unsigned char dontUpSampleImplicitSBR;
+    unsigned char defObjectType;
+    unsigned long defSampleRate;
+    unsigned char outputFormat;
+    unsigned char downMatrix;
+    unsigned char useOldADTSFormat;
+    unsigned char dontUpSampleImplicitSBR;
 } NeAACDecConfiguration, *NeAACDecConfigurationPtr;
 
 typedef struct NeAACDecFrameInfo
 {
-    /*uint32_t*/ unsigned long bytesconsumed;
-    /*uint32_t*/ unsigned long samples;
-    /*uint8_t*/ unsigned char channels;
-    /*uint8_t*/ unsigned char error;
-    /*uint32_t*/ unsigned long samplerate;
+    unsigned long bytesconsumed;
+    unsigned long samples;
+    unsigned char channels;
+    unsigned char error;
+    unsigned long samplerate;
 
     /* SBR: 0: off, 1: on; normal, 2: on; downsampled */
-    /*uint8_t*/ unsigned char sbr;
+    unsigned char sbr;
 
     /* MPEG-4 ObjectType */
-    /*uint8_t*/ unsigned char object_type;
+    unsigned char object_type;
 
     /* AAC header type; MP4 will be signalled as RAW also */
-    /*uint8_t*/ unsigned char header_type;
+    unsigned char header_type;
 
     /* multichannel configuration */
-    /*uint8_t*/ unsigned char num_front_channels;
-    /*uint8_t*/ unsigned char num_side_channels;
-    /*uint8_t*/ unsigned char num_back_channels;
-    /*uint8_t*/ unsigned char num_lfe_channels;
-    /*uint8_t*/ unsigned char channel_position[MAX_CHANNELS];
+    unsigned char num_front_channels;
+    unsigned char num_side_channels;
+    unsigned char num_back_channels;
+    unsigned char num_lfe_channels;
+    unsigned char channel_position[MAX_CHANNELS];
 
     /* PS: 0: off, 1: on */
-    /*uint8_t*/ unsigned char ps;
+    unsigned char ps;
 } NeAACDecFrameInfo;
 
 typedef struct
 {
-    uint8_t adts_header_present;
-    uint8_t adif_header_present;
-    uint8_t sf_index;
-    uint8_t object_type;
-    uint8_t channelConfiguration;
+    unsigned char adts_header_present;
+    unsigned char adif_header_present;
+    unsigned char sf_index;
+    unsigned char object_type;
+    unsigned char channelConfiguration;
 #ifdef ERROR_RESILIENCE
-    uint8_t aacSectionDataResilienceFlag;
-    uint8_t aacScalefactorDataResilienceFlag;
-    uint8_t aacSpectralDataResilienceFlag;
+    unsigned char aacSectionDataResilienceFlag;
+    unsigned char aacScalefactorDataResilienceFlag;
+    unsigned char aacSpectralDataResilienceFlag;
 #endif
-    uint16_t frameLength;
-    uint8_t postSeekResetFlag;
+    unsigned short frameLength;
+    unsigned char postSeekResetFlag;
 
-    uint32_t frame;
+    unsigned long frame;
 
-    uint8_t downMatrix;
-    uint8_t upMatrix;
-    uint8_t first_syn_ele;
-    uint8_t has_lfe;
+    unsigned char downMatrix;
+    unsigned char upMatrix;
+    unsigned char first_syn_ele;
+    unsigned char has_lfe;
     /* number of channels in current frame */
-    uint8_t fr_channels;
+    unsigned char fr_channels;
     /* number of elements in current frame */
-    uint8_t fr_ch_ele;
+    unsigned char fr_ch_ele;
 
     /* element_output_channels:
        determines the number of channels the element will output
     */
-    uint8_t element_output_channels[MAX_SYNTAX_ELEMENTS];
+    unsigned char element_output_channels[MAX_SYNTAX_ELEMENTS];
     /* element_alloced:
        determines whether the data needed for the element is allocated or not
     */
-    uint8_t element_alloced[MAX_SYNTAX_ELEMENTS];
+    unsigned char element_alloced[MAX_SYNTAX_ELEMENTS];
     /* alloced_channels:
        determines the number of channels where output data is allocated for
     */
-    uint8_t alloced_channels;
+    unsigned char alloced_channels;
 
     /* output data buffer */
     void *sample_buffer;
 
-    uint8_t window_shape_prev[MAX_CHANNELS];
+    unsigned char window_shape_prev[MAX_CHANNELS];
 #ifdef LTP_DEC
-    uint16_t ltp_lag[MAX_CHANNELS];
+    unsigned short ltp_lag[MAX_CHANNELS];
 #endif
     fb_info *fb;
     drc_info *drc;
@@ -421,17 +421,17 @@ typedef struct
     real_t *fb_intermed[MAX_CHANNELS];
 
 #ifdef SBR_DEC
-    int8_t sbr_present_flag;
-    int8_t forceUpSampling;
-    int8_t downSampledSBR;
+    signed char sbr_present_flag;
+    signed char forceUpSampling;
+    signed char downSampledSBR;
     /* determines whether SBR data is allocated for the gives element */
-    uint8_t sbr_alloced[MAX_SYNTAX_ELEMENTS];
+    unsigned char sbr_alloced[MAX_SYNTAX_ELEMENTS];
 
     sbr_info *sbr[MAX_SYNTAX_ELEMENTS];
 #endif
 #if (defined(PS_DEC) || defined(DRM_PS))
-    uint8_t ps_used[MAX_SYNTAX_ELEMENTS];
-    uint8_t ps_used_global;
+    unsigned char ps_used[MAX_SYNTAX_ELEMENTS];
+    unsigned char ps_used_global;
 #endif
 
 #ifdef SSR_DEC
@@ -444,14 +444,14 @@ typedef struct
     pred_state *pred_stat[MAX_CHANNELS];
 #endif
 #ifdef LTP_DEC
-    int16_t *lt_pred_stat[MAX_CHANNELS];
+    signed short *lt_pred_stat[MAX_CHANNELS];
 #endif
 
     /* Program Config Element */
-    uint8_t pce_set;
+    unsigned char pce_set;
     program_config pce;
-    uint8_t element_id[MAX_CHANNELS];
-    uint8_t internal_channel[MAX_CHANNELS];
+    unsigned char element_id[MAX_CHANNELS];
+    unsigned char internal_channel[MAX_CHANNELS];
 
     /* Configuration data */
     NeAACDecConfiguration config;
