@@ -263,13 +263,6 @@ cleanup(void)
     g_strfreev(mpg123_id3_encoding_list);
 }
 
-static guint32
-convert_to_header(guint8 * buf)
-{
-    return (buf[0] << 24) + (buf[1] << 16) + (buf[2] << 8) + buf[3];
-}
-
-
 #if 0
 #define DET_BUF_SIZE 1024
 
@@ -370,15 +363,6 @@ play_frame(struct frame *fr)
     }
 }
 
-static const char *
-get_id3_genre(unsigned char genre_code)
-{
-    if (genre_code < GENRE_MAX)
-        return gettext(mpg123_id3_genres[genre_code]);
-
-    return "";
-}
-
 guint
 mpg123_strip_spaces(char *src, size_t n)
 {
@@ -424,39 +408,6 @@ extname(const char *filename)
         ++ext;
 
     return ext;
-}
-
-/*
- * Function id3v1_to_id3v2 (v1, v2)
- *
- *    Convert ID3v1 tag `v1' to ID3v2 tag `v2'.
- *
- */
-void
-mpg123_id3v1_to_id3v2(struct id3v1tag_t *v1, struct id3tag_t *v2)
-{
-    memset(v2, 0, sizeof(struct id3tag_t));
-    strncpy(v2->title, v1->title, 30);
-    strncpy(v2->artist, v1->artist, 30);
-    strncpy(v2->album, v1->album, 30);
-    strncpy(v2->comment, v1->u.v1_0.comment, 30);
-    strncpy(v2->genre, get_id3_genre(v1->genre), sizeof(v2->genre));
-    g_strstrip(v2->title);
-    g_strstrip(v2->artist);
-    g_strstrip(v2->album);
-    g_strstrip(v2->comment);
-    g_strstrip(v2->genre);
-    {
-      char y[5];
-      memcpy(y, v1->year, 4); y[4]=0;
-      v2->year = atoi(y);
-    }
-
-    /* Check for v1.1 tags. */
-    if (v1->u.v1_1.__zero == 0)
-        v2->track_number = v1->u.v1_1.track_number;
-    else
-        v2->track_number = 0;
 }
 
 #define REMOVE_NONEXISTANT_TAG(x)   if (!*x) { x = NULL; }
@@ -541,69 +492,27 @@ get_song_title(char *filename)
     return ret;
 }
 
-static long
-get_song_length(VFSFile * file)
+static guint
+get_song_time(char *filename)
 {
     int len;
-    char tmp[4];
 
-    vfs_fseek(file, 0, SEEK_END);
-    len = vfs_ftell(file);
-    vfs_fseek(file, -128, SEEK_END);
-    vfs_fread(tmp, 1, 3, file);
-    if (!strncmp(tmp, "TAG", 3))
-        len -= 128;
+    taglib_file = taglib_file_new(filename);
+    if(taglib_file) {
+      taglib_ap = taglib_file_audioproperties(taglib_file);
+    }
+
+    len = taglib_audioproperties_length(taglib_ap);
+   
+    taglib_file_free(taglib_file);
+    taglib_tag_free_strings();
+
     return len;
-}
-
-
-static guint
-get_song_time(VFSFile * file)
-{
-    guint32 head;
-    guchar tmp[4], *buf;
-    struct frame frm;
-    xing_header_t xing_header;
-    double tpf, bpf;
-    guint32 len;
-
-    if (!file)
-        return -1;
-
-    vfs_fseek(file, 0, SEEK_SET);
-    if (vfs_fread(tmp, 1, 4, file) != 4)
-        return 0;
-    head = convert_to_header(tmp);
-    while (!mpg123_head_check(head)) {
-        head <<= 8;
-        if (vfs_fread(tmp, 1, 1, file) != 1)
-            return 0;
-        head |= tmp[0];
-    }
-    if (mpg123_decode_header(&frm, head)) {
-        buf = g_malloc(frm.framesize + 4);
-        vfs_fseek(file, -4, SEEK_CUR);
-        vfs_fread(buf, 1, frm.framesize + 4, file);
-        tpf = mpg123_compute_tpf(&frm);
-        if (mpg123_get_xing_header(&xing_header, buf)) {
-            g_free(buf);
-            if (xing_header.bytes == 0)
-                xing_header.bytes = get_song_length(file);
-            return (tpf * xing_header.frames * 1000);
-        }
-        g_free(buf);
-        bpf = mpg123_compute_bpf(&frm);
-        len = get_song_length(file);
-        return ((guint) (len / bpf) * tpf * 1000);
-    }
-    return 0;
 }
 
 static void
 get_song_info(char *filename, char **title_real, int *len_real)
 {
-    VFSFile *file;
-
     (*len_real) = -1;
     (*title_real) = NULL;
 
@@ -613,11 +522,8 @@ get_song_info(char *filename, char **title_real, int *len_real)
     if (!strncasecmp(filename, "http://", 7))
         return;
 
-    if ((file = vfs_fopen(filename, "rb")) != NULL) {
-        (*len_real) = get_song_time(file);
-        (*title_real) = get_song_title(filename);
-	vfs_fclose(file);
-    }
+    (*len_real) = get_song_time(filename);
+    (*title_real) = get_song_title(filename);
 }
 
 static int

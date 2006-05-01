@@ -50,11 +50,10 @@ static GtkWidget *title_entry, *artist_entry, *album_entry, *year_entry,
     *tracknum_entry, *comment_entry;
 static GtkWidget *genre_combo;
 static GtkWidget *mpeg_level, *mpeg_bitrate, *mpeg_samplerate, *mpeg_flags,
-    *mpeg_error, *mpeg_copy, *mpeg_orig, *mpeg_emph, *mpeg_frames,
-    *mpeg_filesize;
+    *mpeg_error, *mpeg_copy, *mpeg_orig, *mpeg_emph, *mpeg_filesize;
 static GtkWidget *mpeg_level_val, *mpeg_bitrate_val, *mpeg_samplerate_val,
     *mpeg_error_val, *mpeg_copy_val, *mpeg_orig_val, *mpeg_emph_val,
-    *mpeg_frames_val, *mpeg_filesize_val, *mpeg_flags_val;
+    *mpeg_filesize_val, *mpeg_flags_val;
 
 GtkWidget *vbox, *hbox, *left_vbox, *table;
 GtkWidget *mpeg_frame, *mpeg_box;
@@ -356,19 +355,6 @@ mpg123_file_info_box(gchar * filename)
                               GTK_JUSTIFY_LEFT);
         gtk_table_attach(GTK_TABLE(test_table), mpeg_samplerate_val, 1, 2,
                          2, 3, GTK_FILL, GTK_FILL, 10, 2);
-
-        mpeg_frames = gtk_label_new(_("Frames:"));
-        gtk_misc_set_alignment(GTK_MISC(mpeg_frames), 1, 0.5);
-        gtk_label_set_justify(GTK_LABEL(mpeg_frames), GTK_JUSTIFY_RIGHT);
-        gtk_label_set_attributes(GTK_LABEL(mpeg_frames), attrs);
-        gtk_table_attach(GTK_TABLE(test_table), mpeg_frames, 0, 1, 3, 4,
-                         GTK_FILL, GTK_FILL, 5, 2);
-
-        mpeg_frames_val = gtk_label_new("");
-        gtk_misc_set_alignment(GTK_MISC(mpeg_frames_val), 0, 0);
-        gtk_label_set_justify(GTK_LABEL(mpeg_frames_val), GTK_JUSTIFY_LEFT);
-        gtk_table_attach(GTK_TABLE(test_table), mpeg_frames_val, 1, 2, 3,
-                         4, GTK_FILL, GTK_FILL, 10, 2);
 
         mpeg_filesize = gtk_label_new(_("File size:"));
         gtk_misc_set_alignment(GTK_MISC(mpeg_filesize), 1, 0.5);
@@ -673,9 +659,6 @@ mpg123_file_info_box(gchar * filename)
     gtk_label_set_text(GTK_LABEL(mpeg_emph), _("Emphasis:"));
     gtk_label_set_text(GTK_LABEL(mpeg_emph_val), _("N/A"));
 
-    gtk_label_set_text(GTK_LABEL(mpeg_frames), _("Frames:"));
-    gtk_label_set_text(GTK_LABEL(mpeg_frames_val), _("N/A"));
-
     gtk_label_set_text(GTK_LABEL(mpeg_filesize), _("File size:"));
     gtk_label_set_text(GTK_LABEL(mpeg_filesize_val), _("N/A"));
 
@@ -751,6 +734,16 @@ fill_entries(GtkWidget * w, gpointer data)
 	g_free(ptr);
   }
 
+  i = taglib_audioproperties_samplerate(taglib_ap);
+
+  if (i != 0)
+      label_set_text(mpeg_samplerate_val, _("%ld Hz"), i);
+
+  i = taglib_audioproperties_bitrate(taglib_ap);
+
+  if (i != 0)
+      label_set_text(mpeg_bitrate_val, _("%d KBit/s"), i);
+
   ptr = taglib_tag_genre(taglib_tag);
 
   if (ptr != NULL)
@@ -768,7 +761,6 @@ fill_entries(GtkWidget * w, gpointer data)
     guint32 head;
     guchar tmp[4];
     struct frame frm;
-    gboolean id3_found = FALSE;
 
     if (vfs_fread(tmp, 1, 4, fh) != 4) {
       vfs_fclose(fh);
@@ -787,41 +779,19 @@ fill_entries(GtkWidget * w, gpointer data)
     }
     if (mpg123_decode_header(&frm, head)) {
       guchar *buf;
-      gdouble tpf;
       gint pos;
-      xing_header_t xing_header;
-      guint32 num_frames;
 
       buf = g_malloc(frm.framesize + 4);
       vfs_fseek(fh, -4, SEEK_CUR);
       vfs_fread(buf, 1, frm.framesize + 4, fh);
-      tpf = mpg123_compute_tpf(&frm);
       set_mpeg_level_label(frm.mpeg25, frm.lsf, frm.lay);
       pos = vfs_ftell(fh);
       vfs_fseek(fh, 0, SEEK_END);
-      if (mpg123_get_xing_header(&xing_header, buf)) {
-	num_frames = xing_header.frames;
-	label_set_text(mpeg_bitrate_val,
-		       _("Variable,\navg. bitrate: %d KBit/s"),
-		       (gint) ((xing_header.bytes * 8) /
-			       (tpf * xing_header.frames * 1000)));
-      }
-      else {
-	num_frames =
-	  ((vfs_ftell(fh) - pos -
-	    (id3_found ? 128 : 0)) / mpg123_compute_bpf(&frm)) + 1;
-	label_set_text(mpeg_bitrate_val, _("%d KBit/s"),
-		       tabsel_123[frm.lsf][frm.lay -
-					   1][frm.bitrate_index]);
-      }
-      label_set_text(mpeg_samplerate_val, _("%ld Hz"),
-		     mpg123_freqs[frm.sampling_frequency]);
       label_set_text(mpeg_error_val, _("%s"),
 		     bool_label[frm.error_protection]);
       label_set_text(mpeg_copy_val, _("%s"), bool_label[frm.copyright]);
       label_set_text(mpeg_orig_val, _("%s"), bool_label[frm.original]);
       label_set_text(mpeg_emph_val, _("%s"), emphasis[frm.emphasis]);
-      label_set_text(mpeg_frames_val, _("%d"), num_frames);
       label_set_text(mpeg_filesize_val, _("%lu Bytes"), vfs_ftell(fh));
       label_set_text(mpeg_flags_val, _("%s"), channel_mode_name(frm.mode));
       g_free(buf);
@@ -830,4 +800,3 @@ fill_entries(GtkWidget * w, gpointer data)
   }
 
 }
-
