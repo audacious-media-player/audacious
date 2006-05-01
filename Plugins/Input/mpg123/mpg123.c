@@ -529,6 +529,7 @@ get_song_title(char *filename)
 {
     char *ret = NULL;
     taglib_file = taglib_file_new(filename);
+    taglib_tag = NULL;
     if(taglib_file) {
       taglib_tag = taglib_file_tag(taglib_file);
       taglib_ap = taglib_file_audioproperties(taglib_file);
