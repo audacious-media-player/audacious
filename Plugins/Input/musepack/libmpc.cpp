@@ -739,11 +739,9 @@ static void* decodeStream(void* data)
                 mpcDecoder.isError = g_strdup_printf("[xmms-musepack] error from internal decoder on %s", filename);
                 return endThread(filename, input, true);
             }
-            else if (status == 0)
-            {
-                //mpcDecoder.isError = g_strdup_printf("[xmms-musepack] null output from internal decoder on %s", filename);
+            if (status == 0 && iPlaying == 0)
                 return endThread(filename, input, true);
-            }
+
             lockRelease();
 
             if(pluginConfig.dynamicBitrate)
