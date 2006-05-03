@@ -1,7 +1,7 @@
 #include "libmpc.h"
 
 #define FORCED_THREAD_STACKSIZE 1024 * 1000
-
+#define REMOVE_NONEXISTANT_TAG(x)   if (!*x) { x = NULL; }
 
 using TagLib::MPC::File;
 using TagLib::Tag;
@@ -307,10 +307,15 @@ static MpcInfo getTags(const char* p_Filename)
     Tag* poTag = oFile.tag();
     MpcInfo tags = {0};
     tags.title   = g_strdup(poTag->title().toCString(true));
+    REMOVE_NONEXISTANT_TAG(tags.title);
     tags.artist  = g_strdup(poTag->artist().toCString(true));
+    REMOVE_NONEXISTANT_TAG(tags.artist);
     tags.album   = g_strdup(poTag->album().toCString(true));
+    REMOVE_NONEXISTANT_TAG(tags.album);
     tags.genre   = g_strdup(poTag->genre().toCString(true));
+    REMOVE_NONEXISTANT_TAG(tags.genre);
     tags.comment = g_strdup(poTag->comment().toCString(true));
+    REMOVE_NONEXISTANT_TAG(tags.comment);
     tags.year    = poTag->year();
     tags.track   = poTag->track();
     TagLib::APE::Tag* ape = oFile.APETag(false);
