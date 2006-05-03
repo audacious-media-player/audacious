@@ -270,26 +270,6 @@ if test "$enable_mp3" = "yes"; then
 	INPUT_PLUGINS="$INPUT_PLUGINS mpg123"
 fi
 
-dnl *** id3lib
-dnl only makes sence if mp3's enabled
-if test "x$enable_mp3" = "xyes" ; then
-
-ID3LIBS=""
-have_id3lib="no"
-
-dnl here we assume that if libz isn't installed but id3lib is 
-dnl it's compiled without compression support
-AC_CHECK_HEADERS([id3.h],[
-  AC_CHECK_LIB([z],[compress],[ZLIB='-lz'],[ZLIB=''])
-  AC_CHECK_LIB([id3],[ID3Tag_New],
-      [have_id3lib=yes
-       AC_DEFINE(HAVE_ID3LIB,,[Define when using id3lib])
-       ID3LIBS="-lstdc++ $ZLIB -lid3"],,[-lstdc++ $ZLIB])])
-
-AC_SUBST(ID3LIBS)
-
-fi dnl $enable_mp3 = yes
-
 dnl *** LIRC client libraries
 
 AC_ARG_ENABLE(lirc,
@@ -944,7 +924,6 @@ echo
 echo "  Input Plugins"
 echo "  -------------"
 echo "  MPEG 1/2/3 (mpg123):                    $enable_mp3"
-echo "    + id3v2 editing:                      $have_id3lib"
 echo "  MPEG 4 Audio (AAC):                     $enable_aac"
 echo "  Windows Media Audio (wma):              $enable_wma"
 echo "  .mpc playback (musepack):               $enable_musepack"
