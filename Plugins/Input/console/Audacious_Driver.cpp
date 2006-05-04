@@ -41,8 +41,10 @@ struct AudaciousConsoleConfig {
 	gboolean resample;  // whether or not to resample
 	gint resample_rate; // rate to resample at
 	gboolean nsfe_playlist; // if true, use optional NSFE playlist
+	gint treble; // -100 to +100
+	gint bass;   // -100 to +100
 };
-static AudaciousConsoleConfig audcfg = { 180, FALSE, 32000, TRUE };
+static AudaciousConsoleConfig audcfg = { 180, FALSE, 32000, TRUE, 0, 0 };
 static GThread* decode_thread;
 static GStaticMutex playback_mutex = G_STATIC_MUTEX_INIT;
 static int console_ip_is_going;
@@ -610,6 +612,22 @@ static void play_file( char* path )
 		g_free( title );
 	}
 	
+	// set frequency equalization
+	if ( audcfg.treble || audcfg.bass )
+	{
+		Music_Emu::equalizer_t eq = emu->equalizer();
+		
+		// bass - logarithmic, 2 to 8194 Hz
+		double bass = 1.0 - (audcfg.bass / 200.0 + 0.5);
+		eq.bass = (long int) pow(2.0, bass * 13.0) + (long int) 2.0;
+		
+		// treble - -50 to 0 to +5 dB
+		double treble = audcfg.treble / 100.0;
+		eq.treble = treble * (treble < 0 ? 50.0 : 5.0);
+		
+		emu->set_equalizer(eq);
+	}
+	
 	// start
     if ( !console_ip.output->open_audio( FMT_S16_NE, sample_rate, 2 ) )
 		return;
@@ -661,6 +679,8 @@ static void console_init(void)
 	bmp_cfg_db_get_bool(db, "console", "resample", &audcfg.resample);
 	bmp_cfg_db_get_int(db, "console", "resample_rate", &audcfg.resample_rate);
 	bmp_cfg_db_get_bool(db, "console", "nsfe_playlist", &audcfg.nsfe_playlist);
+	bmp_cfg_db_get_int(db, "console", "treble", &audcfg.treble);
+	bmp_cfg_db_get_int(db, "console", "bass", &audcfg.bass);
 	
 	bmp_cfg_db_close(db);
 }
