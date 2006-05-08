@@ -361,6 +361,7 @@ vorbis_play_loop(gpointer arg)
     double time;
     long timercount = 0;
     vorbis_info *vi;
+    long br;
 
     int last_section = -1;
 
@@ -418,15 +419,15 @@ vorbis_play_loop(gpointer arg)
 
     title = vorbis_generate_title(&vf, filename);
     use_rg = vorbis_update_replaygain(&rg_scale);
+    br = ov_bitrate(&vf, -1);
 
-    vorbis_ip.set_info(title, time, ov_bitrate(&vf, -1), samplerate,
-                       channels);
+    g_mutex_unlock(vf_mutex);
+
+    vorbis_ip.set_info(title, time, br, samplerate, channels);
     if (!vorbis_ip.output->open_audio(FMT_S16_NE, vi->rate, vi->channels)) {
         output_error = TRUE;
-        g_mutex_unlock(vf_mutex);
         goto play_cleanup;
     }
-    g_mutex_unlock(vf_mutex);
 
     seekneeded = -1;
 
@@ -466,10 +467,11 @@ vorbis_play_loop(gpointer arg)
             else
                 time = ov_time_total(&vf, -1) * 1000;
 
-            vorbis_ip.set_info(title, time,
-                               ov_bitrate(&vf, current_section),
-                               samplerate, channels);
+	    br = ov_bitrate(&vf, current_section);
+
             g_mutex_unlock(vf_mutex);
+
+            vorbis_ip.set_info(title, time, br, samplerate, channels);
             timercount = vorbis_ip.output->output_time();
 
             last_section = current_section;
@@ -482,8 +484,6 @@ vorbis_play_loop(gpointer arg)
              * simple hack to avoid updating too
              * often
              */
-            long br;
-
             g_mutex_lock(vf_mutex);
             br = ov_bitrate_instant(&vf);
             g_mutex_unlock(vf_mutex);
