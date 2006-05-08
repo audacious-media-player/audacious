@@ -1082,6 +1082,7 @@ main(gint argc, gchar ** argv)
 		if (cfg.resume_playback_on_startup_time != -1) {
 			while (gtk_events_pending()) gtk_main_iteration();
 			bmp_playback_initiate();
+			g_usleep(10000);	/* XXX: musepack and others need this! */
 			while (!ip_data.playing)
 				g_usleep(10000);
 			bmp_playback_seek(cfg.resume_playback_on_startup_time /
