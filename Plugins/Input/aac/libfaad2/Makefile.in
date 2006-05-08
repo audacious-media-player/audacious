@@ -17,6 +17,3 @@ SOURCES = bits.c cfft.c decoder.c drc.c \
 	sbr_huff.c sbr_qmf.c sbr_syntax.c sbr_tf_grid.c sbr_dec.c
 
 OBJECTS = ${SOURCES:.c=.o}
-
-libfaad.a: $(OBJECTS)
-	$(AR) cq $@ $(OBJECTS)
