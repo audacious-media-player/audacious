@@ -101,12 +101,12 @@ __inline__ int iir(gpointer * d, gint length, gint nch)
     {
       pcm[channel] = data[index+channel] * 4;
       /* Preamp gain */
-      pcm[channel] *= preamp[channel];
+      pcm[channel] *= (preamp[channel] / 2);
       
       /* add random noise */
       pcm[channel] += dither[di];
 
-      out[channel] = 0.;
+      out[channel] = 0.0;
       /* For each band */
       for (band = 0; band < band_count; band++)
       {
