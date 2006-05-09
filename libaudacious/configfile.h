@@ -47,6 +47,31 @@ typedef struct _ConfigLine ConfigLine;
 typedef struct _ConfigSection ConfigSection;
 typedef struct _ConfigFile ConfigFile;
 
+/*
+ * Poison all of the xmms ConfigFile interfaces as we are to
+ * no longer use these anymore. They have been deprecated since 0.2,
+ * and will be REMOVED in 1.2.
+ *
+ * - nenolod, 05/09/2006
+ */
+#pragma GCC poison xmms_cfg_new
+#pragma GCC poison xmms_cfg_open_file
+#pragma GCC poison xmms_cfg_write_file
+#pragma GCC poison xmms_cfg_open_default_file
+#pragma GCC poison xmms_cfg_write_default_file
+#pragma GCC poison xmms_cfg_read_value
+#pragma GCC poison xmms_cfg_write_value
+#pragma GCC poison xmms_cfg_read_string
+#pragma GCC poison xmms_cfg_read_int
+#pragma GCC poison xmms_cfg_read_boolean
+#pragma GCC poison xmms_cfg_read_float
+#pragma GCC poison xmms_cfg_read_double
+#pragma GCC poison xmms_cfg_write_string
+#pragma GCC poison xmms_cfg_write_int
+#pragma GCC poison xmms_cfg_write_boolean
+#pragma GCC poison xmms_cfg_write_float
+#pragma GCC poison xmms_cfg_write_double
+#pragma GCC poison xmms_cfg_remove_key
 
 #ifdef __cplusplus
 extern "C" {
