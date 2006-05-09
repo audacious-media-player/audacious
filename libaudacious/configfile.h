@@ -52,8 +52,13 @@ typedef struct _ConfigFile ConfigFile;
  * no longer use these anymore. They have been deprecated since 0.2,
  * and will be REMOVED in 1.2.
  *
+ * If you are a third party developer and you need a quick fix, add
+ *   #define I_AM_A_THIRD_PARTY_DEVELOPER_WHO_NEEDS_TO_BE_KICKED_IN_THE_HEAD_BY_CHUCK_NORRIS
+ * to your code.
+ *
  * - nenolod, 05/09/2006
  */
+#ifndef I_AM_A_THIRD_PARTY_DEVELOPER_WHO_NEEDS_TO_BE_KICKED_IN_THE_HEAD_BY_CHUCK_NORRIS
 #pragma GCC poison xmms_cfg_new
 #pragma GCC poison xmms_cfg_open_file
 #pragma GCC poison xmms_cfg_write_file
@@ -72,6 +77,7 @@ typedef struct _ConfigFile ConfigFile;
 #pragma GCC poison xmms_cfg_write_float
 #pragma GCC poison xmms_cfg_write_double
 #pragma GCC poison xmms_cfg_remove_key
+#endif
 
 #ifdef __cplusplus
 extern "C" {
