@@ -22,6 +22,9 @@
 #include "../config.h"
 #endif
 
+/* bypass the poisoning of the symbols we need */
+#define I_AM_A_THIRD_PARTY_DEVELOPER_WHO_NEEDS_TO_BE_KICKED_IN_THE_HEAD_BY_CHUCK_NORRIS
+
 #include "configfile.h"
 
 #include <stdio.h>
@@ -31,7 +34,6 @@
 
 #include <unistd.h>
 #include <sys/stat.h>
-
 
 typedef gboolean(*XmmsCfgValueReadFunc) (ConfigFile * config_file,
                                          const gchar * section,
