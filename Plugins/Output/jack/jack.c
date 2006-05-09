@@ -6,7 +6,7 @@
  *	This code maps xmms calls into the jack translation library
  */
 
-#include "libaudacious/configfile.h"
+#include "libaudacious/configdb.h"
 #include "libaudacious/util.h"
 #include <dlfcn.h>
 #include <gtk/gtk.h>
@@ -199,24 +199,21 @@ void jack_set_port_connection_mode()
 void jack_init(void)
 {
   /* read the isTraceEnabled setting from the config file */
-  ConfigFile *cfgfile;
-  gchar *filename;
+  ConfigDb *cfgfile;
 
-  filename = g_strconcat(g_get_home_dir(), "/.audacious/config", NULL);
-  cfgfile = xmms_cfg_open_file(filename);
+  cfgfile = bmp_cfg_db_open();
   if (!cfgfile)
   {
       jack_cfg.isTraceEnabled = FALSE;
       jack_cfg.port_connection_mode = "CONNECT_ALL"; /* default to connect all */
   } else
   {
-      xmms_cfg_read_boolean(cfgfile, "jack", "isTraceEnabled", &jack_cfg.isTraceEnabled);
-      if(!xmms_cfg_read_string(cfgfile, "jack", "port_connection_mode", &jack_cfg.port_connection_mode))
+      bmp_cfg_db_get_bool(cfgfile, "jack", "isTraceEnabled", &jack_cfg.isTraceEnabled);
+      if(!bmp_cfg_db_get_string(cfgfile, "jack", "port_connection_mode", &jack_cfg.port_connection_mode))
           jack_cfg.port_connection_mode = "CONNECT_ALL";
   }
 
-  xmms_cfg_free(cfgfile);
-  g_free(filename);
+  bmp_cfg_db_close(cfgfile);
 
   TRACE("initializing\n");
   JACK_Init(); /* initialize the driver */

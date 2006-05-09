@@ -24,7 +24,7 @@
 
 #include "jack.h"
 
-#include "libaudacious/configfile.h"
+#include "libaudacious/configdb.h"
 
 #include <gtk/gtk.h>
 
@@ -43,26 +43,18 @@ static GtkWidget *port_connection_mode_combo;
 
 static void configure_win_ok_cb(GtkWidget * w, gpointer data)
 {
-	ConfigFile *cfgfile;
-	gchar *filename;
+	ConfigDb *cfgfile;
 
 	jack_cfg.isTraceEnabled = (gint) GTK_CHECK_BUTTON(GTK_isTraceEnabled)->toggle_button.active;
   jack_cfg.port_connection_mode = GET_CHARS(GTK_COMBO(port_connection_mode_combo)->entry);
 
   jack_set_port_connection_mode(); /* update the connection mode */
 
-	filename = g_strconcat(g_get_home_dir(), "/.audacious/config", NULL);
-	
-	cfgfile = xmms_cfg_open_file(filename);
-	if (!cfgfile)
-		cfgfile = xmms_cfg_new();
+	cfgfile = bmp_cfg_db_open();
 
-	xmms_cfg_write_boolean(cfgfile, "jack", "isTraceEnabled", jack_cfg.isTraceEnabled);
-  xmms_cfg_write_string(cfgfile, "jack", "port_connection_mode", jack_cfg.port_connection_mode);
-	xmms_cfg_write_file(cfgfile, filename);
-	xmms_cfg_free(cfgfile);
-
-	g_free(filename);
+	bmp_cfg_db_set_bool(cfgfile, "jack", "isTraceEnabled", jack_cfg.isTraceEnabled);
+	bmp_cfg_db_set_string(cfgfile, "jack", "port_connection_mode", jack_cfg.port_connection_mode);
+	bmp_cfg_db_close(cfgfile);
 
 	gtk_widget_destroy(configure_win);
 }
