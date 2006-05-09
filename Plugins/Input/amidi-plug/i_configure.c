@@ -398,8 +398,8 @@ gchar * i_configure_read_seq_ports_default( void )
 
 void i_configure_cfg_read( void )
 {
-  ConfigFile *cfgfile;
-  cfgfile = xmms_cfg_open_default_file();
+  ConfigDb *cfgfile;
+  cfgfile = bmp_cfg_db_open();
 
   if (!cfgfile)
   {
@@ -412,40 +412,36 @@ void i_configure_cfg_read( void )
   }
   else
   {
-    if ( !xmms_cfg_read_string( cfgfile , "amidi-plug" , "writable_ports" , &amidiplug_cfg.seq_writable_ports ) )
+    if ( !bmp_cfg_db_get_string( cfgfile , "amidi-plug" , "writable_ports" , &amidiplug_cfg.seq_writable_ports ) )
       amidiplug_cfg.seq_writable_ports = i_configure_read_seq_ports_default(); /* default value */
 
-    if ( !xmms_cfg_read_int( cfgfile , "amidi-plug" , "mixer_card_id" , &amidiplug_cfg.mixer_card_id ) )
+    if ( !bmp_cfg_db_get_int( cfgfile , "amidi-plug" , "mixer_card_id" , &amidiplug_cfg.mixer_card_id ) )
       amidiplug_cfg.mixer_card_id = 0; /* default value */
 
-    if ( !xmms_cfg_read_string( cfgfile , "amidi-plug" , "mixer_control_name" , &amidiplug_cfg.mixer_control_name ) )
+    if ( !bmp_cfg_db_get_string( cfgfile , "amidi-plug" , "mixer_control_name" , &amidiplug_cfg.mixer_control_name ) )
       amidiplug_cfg.mixer_control_name = g_strdup( "Synth" ); /* default value */
 
-    if ( !xmms_cfg_read_int( cfgfile , "amidi-plug" , "mixer_control_id" , &amidiplug_cfg.mixer_control_id ) )
+    if ( !bmp_cfg_db_get_int( cfgfile , "amidi-plug" , "mixer_control_id" , &amidiplug_cfg.mixer_control_id ) )
       amidiplug_cfg.mixer_control_id = 0; /* default value */
 
-    if ( !xmms_cfg_read_int( cfgfile , "amidi-plug" , "length_precalc_enable" , &amidiplug_cfg.length_precalc_enable ) )
+    if ( !bmp_cfg_db_get_int( cfgfile , "amidi-plug" , "length_precalc_enable" , &amidiplug_cfg.length_precalc_enable ) )
       amidiplug_cfg.length_precalc_enable = 0; /* default value */
 
-    xmms_cfg_free(cfgfile);
+    bmp_cfg_db_close(cfgfile);
   }
 }
 
 
 void i_configure_cfg_save( void )
 {
-  ConfigFile *cfgfile;
-  cfgfile = xmms_cfg_open_default_file();
+  ConfigDb *cfgfile;
+  cfgfile = bmp_cfg_db_open();
 
-  if (!cfgfile)
-    cfgfile = xmms_cfg_new();
+  bmp_cfg_db_set_string( cfgfile , "amidi-plug" , "writable_ports" , amidiplug_cfg.seq_writable_ports );
+  bmp_cfg_db_set_int( cfgfile , "amidi-plug" , "mixer_card_id" , amidiplug_cfg.mixer_card_id );
+  bmp_cfg_db_set_string( cfgfile , "amidi-plug" , "mixer_control_name" , amidiplug_cfg.mixer_control_name );
+  bmp_cfg_db_set_int( cfgfile , "amidi-plug" , "mixer_control_id" , amidiplug_cfg.mixer_control_id );
+  bmp_cfg_db_set_int( cfgfile , "amidi-plug" , "length_precalc_enable" , amidiplug_cfg.length_precalc_enable );
 
-  xmms_cfg_write_string( cfgfile , "amidi-plug" , "writable_ports" , amidiplug_cfg.seq_writable_ports );
-  xmms_cfg_write_int( cfgfile , "amidi-plug" , "mixer_card_id" , amidiplug_cfg.mixer_card_id );
-  xmms_cfg_write_string( cfgfile , "amidi-plug" , "mixer_control_name" , amidiplug_cfg.mixer_control_name );
-  xmms_cfg_write_int( cfgfile , "amidi-plug" , "mixer_control_id" , amidiplug_cfg.mixer_control_id );
-  xmms_cfg_write_int( cfgfile , "amidi-plug" , "length_precalc_enable" , amidiplug_cfg.length_precalc_enable );
-
-  xmms_cfg_write_default_file(cfgfile);
-  xmms_cfg_free(cfgfile);
+  bmp_cfg_db_close(cfgfile);
 }

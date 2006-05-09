@@ -23,7 +23,7 @@
 
 #include "i_common.h"
 #include <gtk/gtk.h>
-#include "libaudacious/configfile.h"
+#include "libaudacious/configdb.h"
 
 
 enum
