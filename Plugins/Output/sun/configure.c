@@ -39,7 +39,7 @@ static void configure_win_destroy();
 
 static void configure_win_ok_cb(GtkWidget *w, gpointer data)
 {
-	ConfigFile *cfgfile;
+	ConfigDb *cfgfile;
 
 	strcpy(audio.devaudio, gtk_entry_get_text(GTK_ENTRY(adevice_entry)));
 	strcpy(audio.devmixer, gtk_entry_get_text(GTK_ENTRY(mdevice_entry)));
@@ -56,27 +56,26 @@ static void configure_win_ok_cb(GtkWidget *w, gpointer data)
 		sun_mixer_close();
 	}
 
-	cfgfile = xmms_cfg_open_default_file();
+	cfgfile = bmp_cfg_db_open();
 
-	xmms_cfg_write_string(cfgfile, "sun",
+	bmp_cfg_db_set_string(cfgfile, "sun",
 			      "audio_devaudio", audio.devaudio);
-	xmms_cfg_write_string(cfgfile, "sun",
+	bmp_cfg_db_set_string(cfgfile, "sun",
 			      "audio_devaudioctl", audio.devaudioctl);
-	xmms_cfg_write_string(cfgfile, "sun",
+	bmp_cfg_db_set_string(cfgfile, "sun",
 			      "audio_devmixer", audio.devmixer);
 
-	xmms_cfg_write_string(cfgfile, "sun",
+	bmp_cfg_db_set_string(cfgfile, "sun",
 			      "mixer_voldev", audio.mixer_voldev);
-	xmms_cfg_write_boolean(cfgfile, "sun",
+	bmp_cfg_db_set_bool(cfgfile, "sun",
 			       "mixer_keepopen", audio.mixer_keepopen);
 
-	xmms_cfg_write_int(cfgfile, "sun",
+	bmp_cfg_db_set_int(cfgfile, "sun",
 			   "buffer_size", audio.req_buffer_size);
-	xmms_cfg_write_int(cfgfile, "sun",
+	bmp_cfg_db_set_int(cfgfile, "sun",
 			   "prebuffer_size", audio.req_prebuffer_size);
 
-	xmms_cfg_write_default_file(cfgfile);
-	xmms_cfg_free(cfgfile);
+	bmp_cfg_db_close(cfgfile);
 
 	configure_win_destroy();
 }
@@ -159,7 +158,7 @@ static void configure_mixer_volumedev_scan(gchar *type, GtkWidget *option_menu)
 		if (info.type == AUDIO_MIXER_VALUE)
 		{
 			item = gtk_menu_item_new_with_label(info.label.name);
-			gtk_signal_connect(GTK_OBJECT(item), "activate",
+			g_signal_connect(G_OBJECT(item), "activate",
 					   (GCallback) configure_win_mixer_volume_dev_cb,
 					   (gpointer) info.index);
 

@@ -18,7 +18,7 @@
  */
 
 #include "sun.h"
-#include "libaudacious/configfile.h"
+#include "libaudacious/configdb.h"
 
 #include <glib.h>
 #include <glib/gi18n.h>
@@ -59,30 +59,30 @@ OutputPlugin * get_oplugin_info(void)
 
 void sun_init(void)
 {
-	ConfigFile *cfgfile;
+	ConfigDb *cfgfile;
 	char *s;
 
 	memset(&audio, 0, sizeof(struct sun_audio));
 
-	cfgfile = xmms_cfg_open_default_file();
+	cfgfile = bmp_cfg_db_open();
 	/* Devices */
-	xmms_cfg_read_string(cfgfile, "sun", "audio_devaudio", &audio.devaudio);
-	xmms_cfg_read_string(cfgfile, "sun",
+	bmp_cfg_db_get_string(cfgfile, "sun", "audio_devaudio", &audio.devaudio);
+	bmp_cfg_db_get_string(cfgfile, "sun",
 			     "audio_devaudioctl", &audio.devaudioctl);
-	xmms_cfg_read_string(cfgfile, "sun", "audio_devmixer", &audio.devmixer);
+	bmp_cfg_db_get_string(cfgfile, "sun", "audio_devmixer", &audio.devmixer);
 
 	/* Buffering */
-	xmms_cfg_read_int(cfgfile, "sun",
+	bmp_cfg_db_get_int(cfgfile, "sun",
 			  "buffer_size", &audio.req_buffer_size);
-	xmms_cfg_read_int(cfgfile, "sun",
+	bmp_cfg_db_get_int(cfgfile, "sun",
 			  "prebuffer_size", &audio.req_prebuffer_size);
 
 	/* Mixer */
-	xmms_cfg_read_string(cfgfile, "sun", "mixer_voldev", &audio.mixer_voldev);
-	xmms_cfg_read_boolean(cfgfile, "sun",
+	bmp_cfg_db_get_string(cfgfile, "sun", "mixer_voldev", &audio.mixer_voldev);
+	bmp_cfg_db_get_bool(cfgfile, "sun",
 			      "mixer_keepopen", &audio.mixer_keepopen);
 
-	xmms_cfg_free(cfgfile);
+	bmp_cfg_db_close(cfgfile);
 
 	/* Audio device path */
 	if ((s = getenv("AUDIODEVICE")))
