@@ -22,7 +22,7 @@
 ** Commercial non-GPL licensing of this software is possible.
 ** For more info contact Ahead Software through Mpeg4AAClicense@nero.com.
 **
-** $Id: output.h,v 1.17 2004/01/05 14:05:12 menno Exp $
+** $Id: output.h,v 1.21 2004/09/04 14:56:28 menno Exp $
 **/
 
 #ifndef __OUTPUT_H__
@@ -32,7 +32,7 @@
 extern "C" {
 #endif
 
-void* output_to_PCM(faacDecHandle hDecoder,
+void* output_to_PCM(NeAACDecHandle hDecoder,
                     real_t **input,
                     void *samplebuffer,
                     uint8_t channels,

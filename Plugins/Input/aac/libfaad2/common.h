@@ -22,7 +22,7 @@
 ** Commercial non-GPL licensing of this software is possible.
 ** For more info contact Ahead Software through Mpeg4AAClicense@nero.com.
 **
-** $Id: common.h,v 1.50 2004/02/06 12:55:24 menno Exp $
+** $Id: common.h,v 1.65 2004/09/08 09:43:11 gcp Exp $
 **/
 
 #ifndef __COMMON_H__
@@ -32,8 +32,12 @@
 extern "C" {
 #endif
 
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
 #define INLINE __inline
-#if defined(_WIN32) && !defined(_WIN32_WCE)
+#if 0 //defined(_WIN32) && !defined(_WIN32_WCE)
 #define ALIGN __declspec(align(16))
 #else
 #define ALIGN
@@ -52,6 +56,10 @@ extern "C" {
 /* #define USE_DOUBLE_PRECISION */
 /* use fixed point reals */
 //#define FIXED_POINT
+//#define BIG_IQ_TABLE
+
+/* Use if target platform has address generators with autoincrement */
+//#define PREFER_POINTERS
 
 #ifdef _WIN32_WCE
 #define FIXED_POINT
@@ -88,9 +96,10 @@ extern "C" {
 #define ALLOW_SMALL_FRAMELENGTH
 
 
-// Define LC_ONLY_DECODER if you want a pure AAC LC decoder (independant of SBR_DEC)
+// Define LC_ONLY_DECODER if you want a pure AAC LC decoder (independant of SBR_DEC and PS_DEC)
 //#define LC_ONLY_DECODER
 #ifdef LC_ONLY_DECODER
+  #undef LD_DEC
   #undef LTP_DEC
   #undef MAIN_DEC
   #undef SSR_DEC
@@ -101,18 +110,12 @@ extern "C" {
 
 #define SBR_DEC
 //#define SBR_LOW_POWER
-//#define PS_DEC
+#define PS_DEC
 
-/* FIXED POINT: No MAIN decoding, no SBR decoding */
+/* FIXED POINT: No MAIN decoding */
 #ifdef FIXED_POINT
 # ifdef MAIN_DEC
 #  undef MAIN_DEC
-# endif
-//# ifndef SBR_LOW_POWER
-//#  define SBR_LOW_POWER
-//# endif
-# ifdef SBR_DEC
-#  undef SBR_DEC
 # endif
 #endif // FIXED_POINT
 
@@ -122,17 +125,13 @@ extern "C" {
 # endif
 #endif
 
-#if ((defined(_WIN32) && !defined(_WIN32_WCE)) /* || ((__GNUC__ >= 3) && defined(__i386__)) */ )
-#ifndef FIXED_POINT
-/* includes <xmmintrin.h> to enable SSE intrinsics */
-//#define USE_SSE
-#endif
-#endif
 
 #ifdef FIXED_POINT
-#define SBR_DIV(A, B) (((int64_t)A << REAL_BITS)/B)
+#define DIV_R(A, B) (((int64_t)A << REAL_BITS)/B)
+#define DIV_C(A, B) (((int64_t)A << COEF_BITS)/B)
 #else
-#define SBR_DIV(A, B) ((A)/(B))
+#define DIV_R(A, B) ((A)/(B))
+#define DIV_C(A, B) ((A)/(B))
 #endif
 
 #ifndef SBR_LOW_POWER
@@ -148,8 +147,9 @@ extern "C" {
 
 /* END COMPILE TIME DEFINITIONS */
 
-#if defined(_WIN32)
+#if defined(_WIN32) && !defined(__MINGW32__)
 
+#include <stdlib.h>
 
 typedef unsigned __int64 uint64_t;
 typedef unsigned __int32 uint32_t;
@@ -163,10 +163,6 @@ typedef float float32_t;
 
 
 #else
-
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
 
 #include <stdio.h>
 #if HAVE_SYS_TYPES_H
@@ -268,15 +264,12 @@ char *strchr(), *strrchr();
 
   #define REAL_CONST(A) ((real_t)(A))
   #define COEF_CONST(A) ((real_t)(A))
+  #define Q2_CONST(A) ((real_t)(A))
   #define FRAC_CONST(A) ((real_t)(A)) /* pure fractional part */
 
 #else /* Normal floating point operation */
 
   typedef float real_t;
-
-#ifdef USE_SSE
-# include <xmmintrin.h>
-#endif
 
   #define MUL_R(A,B) ((A)*(B))
   #define MUL_C(A,B) ((A)*(B))
@@ -284,6 +277,7 @@ char *strchr(), *strrchr();
 
   #define REAL_CONST(A) ((real_t)(A))
   #define COEF_CONST(A) ((real_t)(A))
+  #define Q2_CONST(A) ((real_t)(A))
   #define FRAC_CONST(A) ((real_t)(A)) /* pure fractional part */
 
   /* Complex multiplication */
@@ -357,6 +351,16 @@ typedef real_t complex_t[2];
 /* common functions */
 uint8_t cpu_has_sse(void);
 uint32_t random_int(void);
+uint32_t ones32(uint32_t x);
+uint32_t floor_log2(uint32_t x);
+uint32_t wl_min_lzc(uint32_t x);
+#ifdef FIXED_POINT
+#define LOG2_MIN_INF REAL_CONST(-10000)
+int32_t log2_int(uint32_t val);
+int32_t log2_fix(uint32_t val);
+int32_t pow2_int(real_t val);
+real_t pow2_fix(real_t val);
+#endif
 uint8_t get_sr_index(const uint32_t samplerate);
 uint8_t max_pred_sfb(const uint8_t sr_index);
 uint8_t max_tns_sfb(const uint8_t sr_index, const uint8_t object_type,
@@ -364,7 +368,7 @@ uint8_t max_tns_sfb(const uint8_t sr_index, const uint8_t object_type,
 uint32_t get_sample_rate(const uint8_t sr_index);
 int8_t can_decode_ot(const uint8_t object_type);
 
-void *faad_malloc(int32_t size);
+void *faad_malloc(size_t size);
 void faad_free(void *b);
 
 //#define PROFILE

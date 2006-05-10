@@ -22,7 +22,7 @@
 ** Commercial non-GPL licensing of this software is possible.
 ** For more info contact Ahead Software through Mpeg4AAClicense@nero.com.
 **
-** $Id: sbr_hfadj.h,v 1.9 2004/01/05 14:05:12 menno Exp $
+** $Id: sbr_hfadj.h,v 1.15 2004/09/04 14:56:28 menno Exp $
 **/
 
 #ifndef __SBR_HFADJ_H__
@@ -32,17 +32,11 @@
 extern "C" {
 #endif
 
-typedef struct {
-
-    real_t Q_mapped[64][5];
-
-    uint8_t S_index_mapped[64][5];
-    uint8_t S_mapped[64][5];
-
-    real_t G_lim_boost[5][64];
-    real_t Q_M_lim_boost[5][64];
-    real_t S_M_boost[5][64];
-
+typedef struct
+{
+    real_t G_lim_boost[MAX_L_E][MAX_M];
+    real_t Q_M_lim_boost[MAX_L_E][MAX_M];
+    real_t S_M_boost[MAX_L_E][MAX_M];
 } sbr_hfadj_info;
 
 
