@@ -1,4 +1,4 @@
 include ../../../mk/rules.mk
 include ../../../mk/objective.mk
 
-SUBDIRS = libmp4v2 libfaad2 src
+SUBDIRS = mp4ff libmp4v2 libfaad2 src

@@ -8,10 +8,10 @@ CFLAGS += -fPIC -DPIC
 # override objective make's LIBDIR
 LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
-LDFLAGS += ../libmp4v2/libmp4v2.a ../libfaad2/libfaad.a -lstdc++
+LDFLAGS += ../libmp4v2/libmp4v2.a ../libfaad2/libfaad.a ../mp4ff/libmp4ff.a -lstdc++
 
 SOURCES = libmp4.c mp4_utils.c aac_utils.c tagging_mp4.c fileinfo.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
-CFLAGS += $(GTK_CFLAGS) -I../../../../intl -I../../../.. -I../include -I../libmp4v2 -I../libfaad
+CFLAGS += $(GTK_CFLAGS) -I../../../../intl -I../../../.. -I../include -I../libmp4v2 -I../libfaad -I../mp4ff

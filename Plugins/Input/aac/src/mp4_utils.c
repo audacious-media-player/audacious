@@ -1,9 +1,17 @@
 /*
-** some function for MP4 file based on libmp4v2 from mpeg4ip project
+ * some functions for MP4 files
 */
-#include <gtk/gtk.h>
-#include "mp4.h"
+
+#include "mp4ff.h"
 #include "faad.h"
+
+#include <gtk/gtk.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "audacious/plugin.h"
+#include "libaudacious/titlestring.h"
+#include "libaudacious/util.h"
 
 const char *mp4AudioNames[]=
   {
@@ -13,17 +21,6 @@ const char *mp4AudioNames[]=
     "MPEG-2 AAC Low Complexity profile",
     "MPEG-2 AAC SSR profile",
     "MPEG-4 audio (MPEG-4 AAC)",
-    0
-  };
-
-const u_int8_t mp4AudioTypes[] =
-  {
-    MP4_MPEG1_AUDIO_TYPE,		// 0x6B
-    MP4_MPEG2_AUDIO_TYPE,		// 0x69
-    MP4_MPEG2_AAC_MAIN_AUDIO_TYPE,	// 0x66
-    MP4_MPEG2_AAC_LC_AUDIO_TYPE,	// 0x67
-    MP4_MPEG2_AAC_SSR_AUDIO_TYPE,	// 0x68
-    MP4_MPEG4_AUDIO_TYPE,		// 0x40
     0
   };
 
@@ -45,101 +42,78 @@ const char *mpeg4AudioNames[]=
     "MPEG-4 Algorithmic Synthesis and Audio FX profile"
   };
 
-int getAACTrack(MP4FileHandle file)
+/*
+ * find AAC track
+ */
+
+int getAACTrack(mp4ff_t *infile)
 {
-  int numTracks = MP4GetNumberOfTracks(file, NULL, 0);
-  int i=0;
+  int i, rc;
+  int numTracks = mp4ff_total_tracks(infile);
 
-  for(i=0;i<numTracks;i++){
-    MP4TrackId trackID = MP4FindTrackId(file, i, NULL, 0);
-    const char *trackType = MP4GetTrackType(file, trackID);
+  printf("total-tracks: %d\n", numTracks);
+  for(i=0; i<numTracks; i++){
+    unsigned char*	buff = 0;
+    int			buff_size = 0;
+    mp4AudioSpecificConfig mp4ASC;
 
-    if(!strcmp(trackType, MP4_AUDIO_TRACK_TYPE)){//we found audio track !
-      u_int8_t audiotype = MP4GetTrackAudioMpeg4Type(file, trackID);
-      if(audiotype !=0)
-	return(trackID);
-      else
-	return(-1);
-    }
-  }
-    return(-1);
-}
-
-int getAudioTrack(MP4FileHandle file)
-{
-  int numTracks = MP4GetNumberOfTracks(file, NULL,0);
-  int i=0;
-
-  for(i=0;i<numTracks;i++){
-    MP4TrackId trackID = MP4FindTrackId(file, i, NULL, 0);
-    const char *trackType = MP4GetTrackType(file, trackID);
-    if(!strcmp(trackType, MP4_AUDIO_TRACK_TYPE)){
-      return(trackID);
+    printf("testing-track: %d\n", i);
+    mp4ff_get_decoder_config(infile, i, &buff, &buff_size);
+    if(buff){
+      rc = AudioSpecificConfig(buff, buff_size, &mp4ASC);
+      g_free(buff);
+      if(rc < 0)
+	continue;
+      return(i);
     }
   }
   return(-1);
 }
 
-int getVideoTrack(MP4FileHandle file)
-{
-  int numTracks = MP4GetNumberOfTracks(file, NULL, 0);
-  int i=0;
+char *getMP4title(mp4ff_t *infile, char *filename) {
+	char *ret=NULL;
+	gchar *value, *path, *temp;
 
-  for(i=0;i<numTracks; i++){
-    MP4TrackId trackID = MP4FindTrackId(file, i, NULL, 0);
-    const char *trackType = MP4GetTrackType(file, trackID);
-    if(!strcmp(trackType, MP4_VIDEO_TRACK_TYPE)){
-      return (trackID);
-    }
-  }
-  return(-1);
-}
+	TitleInput *input;
+	XMMS_NEW_TITLEINPUT(input);
 
-void getMP4info(char* file)
-{
-  MP4FileHandle	mp4file;
-  //MP4Duration	trackDuration;
-  int numTracks;
-  int i=0;
-  char *value;
-
-  if(!(mp4file = MP4Read(file,0)))
-    return;
-  //MP4Dump(mp4file, 0, 0);
-  numTracks = MP4GetNumberOfTracks(mp4file, NULL, 0);
-  g_print("there are %d track(s)\n", numTracks);
-
-  MP4GetMetadataName(mp4file, &value);
-  g_print(" name : %s\n", value);
-
-  MP4GetMetadataArtist(mp4file, &value);
-  g_print(" artist : %s\n", value);
-
-  for(i=0;i<numTracks;i++){
-    MP4TrackId trackID = MP4FindTrackId(mp4file, i, NULL, 0);
-    const char *trackType = MP4GetTrackType(mp4file, trackID);
-    if(!strcmp(trackType, MP4_AUDIO_TRACK_TYPE)){//we found audio track !
-      int j=0;
-      u_int8_t audiotype = MP4GetTrackAudioMpeg4Type(mp4file, trackID);
-      while(mp4AudioTypes[j]){ // what kind of audio is ?
-	if(mp4AudioTypes[j] == audiotype){
-	  if(mp4AudioTypes[j] == MP4_MPEG4_AUDIO_TYPE){
-	    audiotype = MP4GetTrackAudioMpeg4Type(mp4file, trackID);
-	    g_print(" %s", mpeg4AudioNames[audiotype]);
-	  }
-	  else{
-	    g_print(" %s", mp4AudioNames[j]);
-	  }
-	  g_print(" duration : %d",
-		  (int)MP4ConvertFromTrackDuration(mp4file, trackID,
-					      MP4GetTrackDuration(mp4file,
-								  trackID),
-					      MP4_MSECS_TIME_SCALE));
+	// Fill in the TitleInput with the relevant data
+	// from the mp4 file that can be used to display the title.
+	mp4ff_meta_get_title(infile, &input->track_name);
+        mp4ff_meta_get_artist(infile, &input->performer);
+	mp4ff_meta_get_album(infile, &input->album_name);
+	if (mp4ff_meta_get_track(infile, &value) && value != NULL) {
+		input->track_number = atoi(value);
+		g_free(value);
 	}
-	j++;
-      }
-    }
-    g_print("\n");
-  }
-  MP4Close(mp4file);
+	if (mp4ff_meta_get_date(infile, &value) && value != NULL) {
+		input->year = atoi(value);
+		g_free(value);
+	}
+	mp4ff_meta_get_genre(infile, &input->genre);
+	mp4ff_meta_get_comment(infile, &input->comment);
+	input->file_name = g_strdup(g_basename(filename));
+	path = g_strdup(filename);
+	temp = strrchr(path, '.');
+	if (temp != NULL) {++temp;}
+	input->file_ext = g_strdup_printf("%s", temp);
+	temp = strrchr(path, '/');
+	if (temp) {*temp = '\0';}
+	input->file_path = g_strdup_printf("%s/", path);
+
+	// Use the default xmms title format to format the
+	// title from the above info.
+	ret = xmms_get_titlestring(xmms_get_gentitle_format(), input);
+
+        g_free(input->track_name);
+        g_free(input->performer);
+        g_free(input->album_name);
+        g_free(input->genre);
+        g_free(input->comment);
+        g_free(input->file_name);
+        g_free(input->file_path);
+	g_free(input);
+	g_free(path);
+
+	return ret;
 }

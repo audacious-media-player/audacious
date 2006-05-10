@@ -24,7 +24,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <mp4.h>
+#include "mp4ff.h"
 #include "xmms-id3.h"
 
 /* XXX: We will need the same for AAC eventually */

@@ -1,23 +1,10 @@
-/*
- * MP4/AAC decoder for xmms
- *
- * This decoding source code is completly independent of the faad2
- * package.
- * This package exist for people who don't want to install
- * faad2 and mpeg4ip project files.
- *
- * OPTIONNAL need
- * --------------
- * libid3 (3.8.x - www.id3.org)
-*/
-
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <string.h>
 #include <stdlib.h>
 #include "faad.h"
-#include "mp4.h"
+#include "mp4ff.h"
 #include "tagging.h"
 
 #include <audacious/plugin.h>
@@ -134,6 +121,22 @@ static int		seekPosition = -1;
 
 void getMP4info(char*);
 int getAACTrack(MP4FileHandle);
+
+uint32_t mp4_read_callback(void *data, void *buffer, uint32_t len)
+{
+	if (data == NULL)
+		return -1;
+
+	return vfs_fread(buffer, 1, len, (VFSFile *) data);
+}
+
+uint32_t mp4_seek_callback(void *data, uint64_t pos)
+{
+	if (data == NULL)
+		return -1;
+
+	return vfs_fseek((VFSFile *) data, pos, SEEK_SET);
+}
 
 /*
  * Function extname (filename)
@@ -265,22 +268,30 @@ static void	mp4_getSongInfo(char *filename)
 
 static gchar   *mp4_get_song_title(char *filename)
 {
-	MP4FileHandle mp4file;
+	mp4ff_callback_t *mp4cb = g_malloc0(sizeof(mp4ff_callback_t));
+	VFSFile *mp4fh;
+	mp4ff_t *mp4file;
 	gchar *title = NULL;
 
-	if (!(mp4file = MP4Read(filename, 0))) {
-		MP4Close(mp4file);
+	mp4fh = vfs_fopen(filename, "rb");
+	mp4cb->read = mp4_read_callback;
+	mp4cb->seek = mp4_seek_callback;
+	mp4cb->user_data = mp4fh;	
+
+	if (!(mp4file = mp4ff_open_read(mp4cb))) {
+		g_free(mp4cb);
+		vfs_fclose(mp4fh);
 	} else {
 		TitleInput *input;
 		gchar *tmpval;
 
 		input = bmp_title_input_new();
 
-		MP4GetMetadataName(mp4file, &input->track_name);
-		MP4GetMetadataAlbum(mp4file, &input->album_name);
-		MP4GetMetadataArtist(mp4file, &input->performer);
-		MP4GetMetadataYear(mp4file, &tmpval);
-		MP4GetMetadataGenre(mp4file, &input->genre);
+		mp4ff_meta_get_title(mp4file, &input->track_name);
+		mp4ff_meta_get_album(mp4file, &input->album_name);
+		mp4ff_meta_get_artist(mp4file, &input->performer);
+		mp4ff_meta_get_date(mp4file, &tmpval);
+		mp4ff_meta_get_genre(mp4file, &input->genre);
 
 		if (tmpval)
 		{
@@ -302,7 +313,8 @@ static gchar   *mp4_get_song_title(char *filename)
 		free (input->file_path);
 		free (input);
 
-		MP4Close(mp4file);
+		free (mp4cb);
+		vfs_fclose(mp4fh);
 	}
 
 	if (!title)
@@ -321,7 +333,7 @@ static void	mp4_getSongTitle(char *filename, char **title_real, int *len_real)
 	(*len_real) = -1;
 }
 
-static int my_decode_mp4( char *filename, MP4FileHandle mp4file )
+static int my_decode_mp4( char *filename, mp4ff_t *mp4file )
 {
 	// We are reading a MP4 file
 	gint mp4track= getAACTrack(mp4file);
@@ -337,38 +349,25 @@ static int my_decode_mp4( char *filename, MP4FileHandle mp4file )
 		gulong		samplerate;
 		guchar		channels;
 		//guint		avgBitrate;
-		MP4Duration	duration;
+		gulong		duration;
 		gulong		msDuration;
-		MP4SampleId	numSamples;
-		MP4SampleId	sampleID = 1;
+		gulong		numSamples;
+		gulong		sampleID = 1;
+		unsigned int	framesize = 1024;
+		mp4AudioSpecificConfig mp4ASC;
 
-		TitleInput *input;
 		gchar	     *xmmstitle = NULL;
-		XMMS_NEW_TITLEINPUT(input);
-
 		gchar	     *ext = strrchr(filename, '.');
 
-		input->file_name = g_filename_display_basename(filename);
-		input->file_ext = ext ? ext+1 : NULL;
-		input->file_path = filename;
+		xmmstitle = getMP4title(mp4file, filename);
 
-		MP4GetMetadataName(mp4file, &input->track_name);
-		MP4GetMetadataArtist(mp4file, &input->performer);
-		MP4GetMetadataAlbum(mp4file, &input->album_name);
-		/*MP4GetMetadataTrack(mp4file, &input->track_number, NULL);*/
-		MP4GetMetadataGenre(mp4file, &input->genre);
-		MP4GetMetadataComment(mp4file, &input->comment);
-
-		xmmstitle = xmms_get_titlestring(xmms_get_gentitle_format(), 
-						 input);
+		if(xmmstitle == NULL)
+			xmmstitle = g_strdup(filename);
 
 		mp4_ip.set_info(xmmstitle, -1, -1, samplerate, channels);
 
-		if(xmmstitle == NULL)
-			xmmstitle = g_strdup(input->file_name);
-
 		decoder = faacDecOpen();
-		MP4GetTrackESConfiguration(mp4file, mp4track, &buffer, &bufferSize);
+		mp4ff_get_decoder_config(mp4file, mp4track, &buffer, &bufferSize);
 		if ( !buffer ) {
 			faacDecClose(decoder);
 			return FALSE;
@@ -379,6 +378,13 @@ static int my_decode_mp4( char *filename, MP4FileHandle mp4file )
 
 			return FALSE;
 		}
+
+		/* Add some hacks for SBR profile */
+		if (AudioSpecificConfig(buffer, bufferSize, &mp4ASC) >= 0) {
+			if (mp4ASC.frameLengthFlag == 1) framesize = 960;
+			if (mp4ASC.sbr_present_flag == 1) framesize *= 2;
+		}
+			
 		g_free(buffer);
 		if( !channels ) {
 			g_print("Number of Channels not supported\n");
@@ -386,17 +392,14 @@ static int my_decode_mp4( char *filename, MP4FileHandle mp4file )
 
 			return FALSE;
 		}
-		duration= MP4GetTrackDuration(mp4file, mp4track);
-		msDuration= MP4ConvertFromTrackDuration(mp4file, 
-							mp4track, 
-							duration,
-							MP4_MSECS_TIME_SCALE);
-		numSamples = MP4GetTrackNumberOfSamples(mp4file, mp4track);
+		duration= mp4ff_get_track_duration(mp4file, mp4track);
+		msDuration = duration * 1000;
+		numSamples = mp4ff_num_samples(mp4file, mp4track);
 		mp4_ip.output->open_audio(FMT_S16_NE, samplerate, channels);
 		mp4_ip.output->flush(0);
 
 		mp4_ip.set_info(xmmstitle, msDuration, 
-				MP4GetTrackBitRate( mp4file, mp4track ), 
+				mp4ff_get_avg_bitrate( mp4file, mp4track ), 
 				samplerate,channels);
 
 		while ( buffer_playing ) {
@@ -406,14 +409,7 @@ static int my_decode_mp4( char *filename, MP4FileHandle mp4file )
 
 			/* Seek if seek position has changed */
 			if ( seekPosition!=-1 ) {
-				duration= MP4ConvertToTrackDuration(mp4file,
-								    mp4track,
-								    seekPosition*1000,
-								    MP4_MSECS_TIME_SCALE);
-				sampleID= MP4GetSampleIdFromTime(mp4file,
-								 mp4track,
-								 duration,
-								 0);
+				sampleID =  (float)seekPosition*(float)samplerate/(float)(framesize - 1.0);
 				mp4_ip.output->flush(seekPosition*1000);
 				seekPosition = -1;
 			}
@@ -436,9 +432,8 @@ static int my_decode_mp4( char *filename, MP4FileHandle mp4file )
 
 				return FALSE;
 			}
-			rc= MP4ReadSample(mp4file, mp4track, 
-					  sampleID++, &buffer, &bufferSize,
-					  NULL, NULL, NULL, NULL);
+			rc= mp4ff_read_sample(mp4file, mp4track, 
+					  sampleID++, &buffer, &bufferSize);
 
 			/*g_print(":: %d/%d\n", sampleID-1, numSamples);*/
 
@@ -461,6 +456,7 @@ static int my_decode_mp4( char *filename, MP4FileHandle mp4file )
 						    bufferSize);
 
 			/* If there was an error decoding, we're done. */
+			/*
 			if(frameInfo.error > 0){
 				g_print("MP4: %s\n",
 					faacDecGetErrorMessage(frameInfo.error));
@@ -469,6 +465,7 @@ static int my_decode_mp4( char *filename, MP4FileHandle mp4file )
 
 				return FALSE;
 			}
+			*/
 			if(buffer){
 				g_free(buffer);
 				buffer=NULL;
@@ -638,7 +635,9 @@ static void my_decode_aac( char *filename )
 
 static void *mp4Decode( void *args )
 {
-	MP4FileHandle mp4file;
+	mp4ff_callback_t *mp4cb = g_malloc0(sizeof(mp4ff_callback_t));
+	VFSFile *mp4fh;
+	mp4ff_t *mp4file;
 
 	char* url= (char*)args;
 	char filename[255];
@@ -661,14 +660,20 @@ static void *mp4Decode( void *args )
 
 	strncpy( filename, url, 254 );
 
+	mp4fh = vfs_fopen(filename, "rb");
+	mp4cb->read = mp4_read_callback;
+	mp4cb->seek = mp4_seek_callback;
+	mp4cb->user_data = mp4fh;
+
 	g_static_mutex_lock(&mutex);
 	seekPosition= -1;
 	buffer_playing= TRUE;
 
-	mp4file= MP4Read(filename, 0);
+	mp4file= mp4ff_open_read(mp4cb);
 	if( !mp4file ) {
 		mp4cfg.file_type = FILE_AAC;
-		MP4Close(mp4file);
+		vfs_fclose(mp4fh);
+		g_free(mp4cb);
 	}
 	else {
 		mp4cfg.file_type = FILE_MP4;
@@ -678,7 +683,7 @@ static void *mp4Decode( void *args )
 		my_decode_mp4( filename, mp4file );
 
 		g_free(args);
-		MP4Close(mp4file);
+		vfs_fclose(mp4fh);
 		buffer_playing = FALSE;
 		g_static_mutex_unlock(&mutex);
 		g_thread_exit(NULL);

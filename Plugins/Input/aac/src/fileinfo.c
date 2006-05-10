@@ -36,7 +36,7 @@
 #include <libaudacious/util.h>
 #include <libaudacious/vfs.h>
 #include <libaudacious/xentry.h>
-
+#include <mp4.h>
 #include "tagging.h"
 
 #include "m4a.xpm"
