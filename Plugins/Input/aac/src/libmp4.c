@@ -392,9 +392,9 @@ static int my_decode_mp4( char *filename, mp4ff_t *mp4file )
 
 			return FALSE;
 		}
-		duration= mp4ff_get_track_duration(mp4file, mp4track);
-		msDuration = duration * 1000;
+//		duration= mp4ff_get_track_duration(mp4file, mp4track);
 		numSamples = mp4ff_num_samples(mp4file, mp4track);
+		msDuration = ((float)numSamples * (float)(framesize - 1.0)/(float)samplerate) * 1000;
 		mp4_ip.output->open_audio(FMT_S16_NE, samplerate, channels);
 		mp4_ip.output->flush(0);
 
