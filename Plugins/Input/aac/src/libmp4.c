@@ -26,9 +26,7 @@
 #include <libaudacious/titlestring.h>
 #include <libaudacious/vfs.h>
 
-#define MP4_VERSION	"ver.- 15 December 2004"
-#define LIBMP4V2_VERSION "1.2.0"
-#define MP4_ABOUT	"Written by ciberfred"
+#define MP4_VERSION	VERSION
 #define BUFFER_SIZE	FAAD_MIN_STREAMSIZE*64
 
 const char *audmp4_id3_genres[GENRE_MAX] = {
@@ -223,10 +221,8 @@ static void	mp4_about(void)
   if(aboutbox!=NULL)
     return;
   aboutbox = xmms_show_message("About MP4 AAC player plugin",
-			       "libfaad2-" FAAD2_VERSION "\n"
-			       "libmp4v2-" LIBMP4V2_VERSION "\n"
-			       "plugin version: " MP4_VERSION "\n"
-			       MP4_ABOUT,
+			       "Using libfaad2-" FAAD2_VERSION " for decoding.\n"
+			       "Copyright (c) 2005-2006 Audacious team",
 			       "Ok", FALSE, NULL, NULL);
   gtk_signal_connect(GTK_OBJECT(aboutbox), "destroy",
                      GTK_SIGNAL_FUNC(gtk_widget_destroyed),
