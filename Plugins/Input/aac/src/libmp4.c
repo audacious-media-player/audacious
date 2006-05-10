@@ -456,7 +456,6 @@ static int my_decode_mp4( char *filename, mp4ff_t *mp4file )
 						    bufferSize);
 
 			/* If there was an error decoding, we're done. */
-			/*
 			if(frameInfo.error > 0){
 				g_print("MP4: %s\n",
 					faacDecGetErrorMessage(frameInfo.error));
@@ -465,7 +464,6 @@ static int my_decode_mp4( char *filename, mp4ff_t *mp4file )
 
 				return FALSE;
 			}
-			*/
 			if(buffer){
 				g_free(buffer);
 				buffer=NULL;
