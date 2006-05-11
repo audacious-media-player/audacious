@@ -845,7 +845,7 @@ AC_CONFIG_FILES([
         Plugins/Input/mpg123/Makefile
 	Plugins/Input/aac/Makefile
 	Plugins/Input/aac/libmp4v2/Makefile
-	Plugins/Input/aac/libmp4ff/Makefile
+	Plugins/Input/aac/mp4ff/Makefile
 	Plugins/Input/aac/libfaad2/Makefile
 	Plugins/Input/aac/src/Makefile
 	Plugins/Input/modplug/Makefile

@@ -124,8 +124,10 @@ int getAACTrack(MP4FileHandle);
 
 uint32_t mp4_read_callback(void *data, void *buffer, uint32_t len)
 {
-	if (data == NULL)
+	if (data == NULL || buffer == NULL)
 		return -1;
+
+//	printf("%p\n", data);
 
 	return vfs_fread(buffer, 1, len, (VFSFile *) data);
 }
