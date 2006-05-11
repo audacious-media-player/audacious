@@ -849,7 +849,7 @@ playlist_next(void)
 
     plist_pos_list = find_playlist_position_list();
 
-    if (!cfg.repeat && !g_list_next(plist_pos_list)) {
+    if (!cfg.repeat && !g_list_next(plist_pos_list) && !queued_list) {
         PLAYLIST_UNLOCK();
         return;
     }
