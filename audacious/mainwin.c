@@ -1760,6 +1760,8 @@ mainwin_jump_to_file(void)
     gtk_tree_view_column_set_spacing(column, 4);
     gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
 
+    gtk_tree_view_set_search_column(GTK_TREE_VIEW(treeview), 1);
+
     g_signal_connect(treeview, "row-activated",
                      G_CALLBACK(mainwin_jump_to_file_jump), NULL);
 
