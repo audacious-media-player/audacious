@@ -120,19 +120,18 @@ GStaticMutex 		mutex = G_STATIC_MUTEX_INIT;
 static int		seekPosition = -1;
 
 void getMP4info(char*);
-int getAACTrack(MP4FileHandle);
+int getAACTrack(mp4ff_t *);
+char *getMP4title(mp4ff_t *, char *);
 
-uint32_t mp4_read_callback(void *data, void *buffer, uint32_t len)
+static uint32_t mp4_read_callback(void *data, void *buffer, uint32_t len)
 {
 	if (data == NULL || buffer == NULL)
 		return -1;
 
-//	printf("%p\n", data);
-
 	return vfs_fread(buffer, 1, len, (VFSFile *) data);
 }
 
-uint32_t mp4_seek_callback(void *data, uint64_t pos)
+static uint32_t mp4_seek_callback(void *data, uint64_t pos)
 {
 	if (data == NULL)
 		return -1;
@@ -351,7 +350,6 @@ static int my_decode_mp4( char *filename, mp4ff_t *mp4file )
 		gulong		samplerate;
 		guchar		channels;
 		//guint		avgBitrate;
-		gulong		duration;
 		gulong		msDuration;
 		gulong		numSamples;
 		gulong		sampleID = 1;
@@ -359,7 +357,6 @@ static int my_decode_mp4( char *filename, mp4ff_t *mp4file )
 		mp4AudioSpecificConfig mp4ASC;
 
 		gchar	     *xmmstitle = NULL;
-		gchar	     *ext = strrchr(filename, '.');
 
 		xmmstitle = getMP4title(mp4file, filename);
 

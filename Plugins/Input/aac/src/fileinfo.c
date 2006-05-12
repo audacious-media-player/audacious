@@ -36,7 +36,7 @@
 #include <libaudacious/util.h>
 #include <libaudacious/vfs.h>
 #include <libaudacious/xentry.h>
-#include <mp4.h>
+#include "mp4ff.h"
 #include "tagging.h"
 
 #include "m4a.xpm"
@@ -61,6 +61,22 @@ static GList *genre_list = NULL;
 static gchar *current_filename = NULL;
 
 #define MAX_STR_LEN 100
+
+static uint32_t mp4_read_callback(void *data, void *buffer, uint32_t len)
+{
+        if (data == NULL || buffer == NULL)
+                return -1;
+
+        return vfs_fread(buffer, 1, len, (VFSFile *) data);
+}
+
+static uint32_t mp4_seek_callback(void *data, uint64_t pos)
+{
+        if (data == NULL)
+                return -1;
+
+        return vfs_fseek((VFSFile *) data, pos, SEEK_SET);
+}
 
 #if 0
 static guint
@@ -178,7 +194,9 @@ audmp4_file_info_box(gchar * filename)
 {
     gint i;
     gchar *title, *filename_utf8;
-    MP4FileHandle mp4file;
+    VFSFile *mp4fh;
+    mp4ff_callback_t *mp4cb;
+    mp4ff_t *mp4file;
 
     emphasis[0] = _("None");
     emphasis[1] = _("50/15 ms");
@@ -407,13 +425,24 @@ audmp4_file_info_box(gchar * filename)
 
     /* Ok! Lets set the information now. */
 
-    if ((mp4file = MP4Read(filename, 0)) != NULL)
+    if ((mp4fh = vfs_fopen(filename, "rb")) != NULL)
     {
-        gtk_entry_set_text(GTK_ENTRY(artist_entry), audmp4_get_artist(mp4file));
-        gtk_entry_set_text(GTK_ENTRY(title_entry), audmp4_get_title(mp4file));
-        gtk_entry_set_text(GTK_ENTRY(year_entry), g_strdup_printf("%d", audmp4_get_year(mp4file)));
-        gtk_entry_set_text(GTK_ENTRY(album_entry), audmp4_get_album(mp4file));
-        MP4Close(mp4file);
+	mp4cb = g_malloc0(sizeof(mp4ff_callback_t));
+	mp4cb->read = mp4_read_callback;
+	mp4cb->seek = mp4_seek_callback;
+	mp4cb->user_data = mp4fh;
+
+	if ((mp4file = mp4ff_open_read(mp4cb)) != NULL)
+	{
+	    gtk_entry_set_text(GTK_ENTRY(artist_entry), audmp4_get_artist(mp4file));
+ 	    gtk_entry_set_text(GTK_ENTRY(title_entry), audmp4_get_title(mp4file));
+	    gtk_entry_set_text(GTK_ENTRY(year_entry), g_strdup_printf("%d", audmp4_get_year(mp4file)));
+	    gtk_entry_set_text(GTK_ENTRY(album_entry), audmp4_get_album(mp4file));
+	    mp4ff_close(mp4file);
+	}
+
+	g_free(mp4cb);
+	vfs_fclose(mp4fh);
     }
 
     gtk_widget_show_all(window);

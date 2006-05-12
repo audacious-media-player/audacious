@@ -1,6 +1,6 @@
 /*
  * Audacious -- Cross-platform Multimedia Player
- * Copyright (c) 2005 William Pitcock <nenolod@nenolod.net>
+ * Copyright (c) 2005-2006 William Pitcock <nenolod@nenolod.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,52 +20,51 @@
 #include <glib.h>
 #include <string.h>
 #include <unistd.h>
-
-#include <mp4.h>
+#include <stdlib.h>
 
 #include "tagging.h"
 
-gchar *audmp4_get_artist(MP4FileHandle file)
+gchar *audmp4_get_artist(mp4ff_t *file)
 {
 	gchar *value;
 
-	MP4GetMetadataArtist(file, &value);
+	mp4ff_meta_get_artist(file, &value);
 
 	return value;
 }
 
-gchar *audmp4_get_title(MP4FileHandle file)
+gchar *audmp4_get_title(mp4ff_t *file)
 {
 	gchar *value;
 
-	MP4GetMetadataName(file, &value);
+	mp4ff_meta_get_title(file, &value);
 
 	return value;
 }
 
-gchar *audmp4_get_album(MP4FileHandle file)
+gchar *audmp4_get_album(mp4ff_t *file)
 {
 	gchar *value;
 
-	MP4GetMetadataAlbum(file, &value);
+	mp4ff_meta_get_album(file, &value);
 
 	return value;
 }
 
-gchar *audmp4_get_genre(MP4FileHandle file)
+gchar *audmp4_get_genre(mp4ff_t *file)
 {
 	gchar *value;
 
-	MP4GetMetadataGenre(file, &value);
+	mp4ff_meta_get_genre(file, &value);
 
 	return value;
 }
 
-gint audmp4_get_year(MP4FileHandle file)
+gint audmp4_get_year(mp4ff_t *file)
 {
 	gchar *value;
 
-	MP4GetMetadataYear(file, &value);
+	mp4ff_meta_get_date(file, &value);
 
 	if (!value)
 		return 0;
