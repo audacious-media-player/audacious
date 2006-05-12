@@ -555,16 +555,13 @@ static void sc_handlequeue(GMutex *mutex)
 static void read_cache(void)
 {
 	FILE *fd;
-	char *home, buf[PATH_MAX], *cache = NULL, *ptr1, *ptr2;
+	char buf[PATH_MAX], *cache = NULL, *ptr1, *ptr2;
 	int cachesize, written, i = 0;
 	item_t *item;
 
 	cachesize = written = 0;
 
-	if(!(home = getenv("HOME")))
-		return;
-
-	snprintf(buf, sizeof(buf), "%s/.audacious/scrobblerqueue.txt", home);
+	snprintf(buf, sizeof(buf), "%s/.audacious/scrobblerqueue.txt", g_get_home_dir());
 
 	if (!(fd = fopen(buf, "r")))
 		return;
