@@ -180,7 +180,6 @@ static void mp4_stop(void)
 {
   if(buffer_playing){
     buffer_playing = FALSE;
-    g_thread_join(decodeThread);
     mp4_ip.output->close_audio();
   }
 }
@@ -428,7 +427,10 @@ static int my_decode_mp4( char *filename, mp4ff_t *mp4file )
 				mp4_ip.output->close_audio();
 				faacDecClose(decoder);
 
+				g_static_mutex_lock(&mutex);
 				buffer_playing = FALSE;
+				g_static_mutex_unlock(&mutex);
+				g_thread_exit(NULL);
 
 				return FALSE;
 			}
@@ -666,6 +668,7 @@ static void *mp4Decode( void *args )
 	g_static_mutex_lock(&mutex);
 	seekPosition= -1;
 	buffer_playing= TRUE;
+	g_static_mutex_unlock(&mutex);
 
 	mp4file= mp4ff_open_read(mp4cb);
 	if( !mp4file ) {
@@ -682,6 +685,7 @@ static void *mp4Decode( void *args )
 
 		g_free(args);
 		vfs_fclose(mp4fh);
+		g_static_mutex_lock(&mutex);
 		buffer_playing = FALSE;
 		g_static_mutex_unlock(&mutex);
 		g_thread_exit(NULL);
