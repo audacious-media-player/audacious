@@ -388,11 +388,14 @@ produce_audio(gint time,        /* position             */
 	if (writable > 2048)
 	    writable = 2048;
 
-	while (op->buffer_free() < writable) { /* wait output buf          */
-	    if (going && !*going)              /*   thread stopped?        */
-		return;                        /*     so finish            */
+	while (op->buffer_free() < writable) { /* wait output buf            */
+	    if (going && !*going)              /*   thread stopped?          */
+		return;                        /*     so finish              */
 
-	    g_usleep(10000);                   /*   else sleep for retry   */
+            if (ip_data.stop)                  /* has a stop been requested? */
+	        return;                        /*     yes, so finish         */
+
+	    g_usleep(10000);                   /*   else sleep for retry     */
 	}
 
 	/* do output */
