@@ -896,7 +896,6 @@ mainwin_set_song_info(gint bitrate,
     {
         if (bitrate != -1)
             g_snprintf(text, 512, "%d kbps, %0.1f kHz, %s",
-            //bitrate < 1000 ? bitrate : bitrate / 100,
             bitrate,
             (gfloat) frequency / 1000,
             (n_channels > 1) ? _("stereo") : _("mono"));
