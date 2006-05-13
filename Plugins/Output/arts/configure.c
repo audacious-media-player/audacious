@@ -19,15 +19,14 @@ static GtkWidget *buffer_size_spin;
 
 static void configure_win_ok_cb(GtkWidget * w, gpointer data)
 {
-	ConfigFile *cfgfile;
+	ConfigDb *db;
 
 	artsxmms_cfg.buffer_size =
 		gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(buffer_size_spin));
 	
-	cfgfile = xmms_cfg_open_default_file();
-	xmms_cfg_write_int(cfgfile, "arts", "buffer_size", artsxmms_cfg.buffer_size);
-	xmms_cfg_write_default_file(cfgfile);
-	xmms_cfg_free(cfgfile);
+	db = bmp_cfg_db_open();
+	bmp_cfg_db_set_int(db, "arts", "buffer_size", artsxmms_cfg.buffer_size);
+	bmp_cfg_db_close(db);
 
 	gtk_widget_destroy(configure_win);
 }

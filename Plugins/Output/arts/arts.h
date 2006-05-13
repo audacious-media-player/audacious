@@ -25,7 +25,7 @@
 #include <string.h>
 
 #include "audacious/plugin.h"
-#include "libaudacious/configfile.h"
+#include "libaudacious/configdb.h"
 
 struct arts_config
 {

@@ -56,16 +56,16 @@ void artsxmms_tell_audio(AFormat * fmt, gint * srate, gint * nch)
 
 void artsxmms_init(void)
 {
-	ConfigFile *cfgfile;
+	ConfigDb *db;
 
 	memset(&artsxmms_cfg, 0, sizeof (artsxmms_cfg));
 
 	artsxmms_cfg.buffer_size = 400;
 	
-	cfgfile = xmms_cfg_open_default_file();
-	xmms_cfg_read_int(cfgfile, "arts", "buffer_size",
+	db = bmp_cfg_db_open();
+	bmp_cfg_db_get_int(db, "arts", "buffer_size",
 			  &artsxmms_cfg.buffer_size);
-	xmms_cfg_free(cfgfile);
+	bmp_cfg_db_close(db);
 }
 
 

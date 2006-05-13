@@ -10,7 +10,6 @@
  */
 
 #include "arts.h"
-#include "libaudacious/configfile.h"
 #include "libaudacious/util.h"
 
 static void about(void)
