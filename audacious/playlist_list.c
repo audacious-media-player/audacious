@@ -1,4 +1,7 @@
-/*  BMP - Cross-platform multimedia player
+/*  Audacious - Cross-platform multimedia player
+ *  Copyright (C) 2005-2006  Audacious development team.
+ *
+ *  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
  *
  *  Based on XMMS:
@@ -57,6 +60,58 @@ static gint width_approx_letters;
 static gint width_colon, width_colon_third;
 static gint width_approx_digits, width_approx_digits_half;
 
+GdkPixmap *rootpix;
+
+/* Sort of stolen from XChat, but not really, as theres uses Xlib */
+static void
+shade_gdkimage_generic (GdkVisual *visual, GdkImage *ximg, int bpl, int w, int h, int rm, int gm, int bm, int bg)
+{
+	int x, y;
+	int bgr = (256 - rm) * (bg & visual->red_mask);
+	int bgg = (256 - gm) * (bg & visual->green_mask);
+	int bgb = (256 - bm) * (bg & visual->blue_mask);
+
+	for (x = 0; x < w; x++)
+	{
+		for (y = 0; y < h; y++)
+		{
+			unsigned long pixel = gdk_image_get_pixel (ximg, x, y);
+			int r, g, b;
+
+			r = rm * (pixel & visual->red_mask) + bgr;
+			g = gm * (pixel & visual->green_mask) + bgg;
+			b = bm * (pixel & visual->blue_mask) + bgb;
+
+			gdk_image_put_pixel (ximg, x, y,
+							((r >> 8) & visual->red_mask) |
+							((g >> 8) & visual->green_mask) |
+							((b >> 8) & visual->blue_mask));
+		}
+	}
+}
+
+/* and this is definately mine... -nenolod */
+GdkPixmap *
+shade_pixmap(GdkPixmap *in, gint x, gint y, gint x_offset, gint y_offset, gint w, gint h, GdkColor *shade_color)
+{
+	GdkImage *ximg;
+	GdkPixmap *p = gdk_pixmap_new(in, w, h, -1);
+	GdkGC *gc = gdk_gc_new(p);
+
+        gdk_draw_pixmap(p, gc, in, x, y, 0, 0, w, h);
+
+	ximg = gdk_drawable_copy_to_image(in, NULL, x, y, 0, 0, w, h);	/* copy */
+
+	shade_gdkimage_generic(gdk_drawable_get_visual(GDK_WINDOW(playlistwin->window)),
+		ximg, ximg->bpl, w, h, 60, 60, 60, shade_color->pixel);
+
+	gdk_draw_image(p, gc, ximg, 0, 0, x, y, w, h);
+
+	g_object_unref(gc);
+
+	return p;
+}
+
 #ifdef GDK_WINDOWING_X11
 
 #include <gdk/gdkx.h>
@@ -86,6 +141,7 @@ static GdkPixmap *get_transparency_pixmap(void)
 
     return retval;
 }
+
 
 #else
 
@@ -441,7 +497,9 @@ playlist_list_draw(Widget * w)
     }
     else
     {
-        GdkPixmap *rootpix = get_transparency_pixmap();
+	if (!rootpix)
+           rootpix = shade_pixmap(get_transparency_pixmap(), 0, 0, 0, 0, gdk_screen_width(), gdk_screen_height(), 
+    			    skin_get_color(bmp_active_skin, SKIN_PLEDIT_NORMALBG));
         gdk_draw_pixmap(obj, gc, rootpix, cfg.playlist_x + pl->pl_widget.x,
                     cfg.playlist_y + pl->pl_widget.y, pl->pl_widget.x, pl->pl_widget.y,
                     width, height);
