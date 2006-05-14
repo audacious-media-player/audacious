@@ -37,6 +37,8 @@ on_config_apply_clicked                (GtkButton       *button,
 		lProps.mFrequency = 11025;
 	else if (gtk_toggle_button_get_active((GtkToggleButton*)lookup_widget((GtkWidget*)button, "samp22")))
 		lProps.mFrequency = 22050;
+	else if (gtk_toggle_button_get_active((GtkToggleButton*)lookup_widget((GtkWidget*)button, "samp48")))
+		lProps.mFrequency = 48000;
 	else
 		lProps.mFrequency = 44100;
 	

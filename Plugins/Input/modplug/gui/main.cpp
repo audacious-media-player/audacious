@@ -64,6 +64,8 @@ void ShowConfigureWindow(const ModplugXMMS::Settings& aProps)
 		gtk_toggle_button_set_active((GtkToggleButton*)lookup_widget(ConfigWin, "samp11"), TRUE);
 	else if (aProps.mFrequency == 22050)
 		gtk_toggle_button_set_active((GtkToggleButton*)lookup_widget(ConfigWin, "samp22"), TRUE);
+	else if (aProps.mFrequency == 48000)
+		gtk_toggle_button_set_active((GtkToggleButton*)lookup_widget(ConfigWin, "samp48"), TRUE);
 	else
 		gtk_toggle_button_set_active((GtkToggleButton*)lookup_widget(ConfigWin, "samp44"), TRUE);
 	

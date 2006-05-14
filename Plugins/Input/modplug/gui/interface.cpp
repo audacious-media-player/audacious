@@ -40,6 +40,7 @@ create_Config (void)
   GtkWidget *frame3;
   GtkWidget *vbox6;
   GSList *vbox6_group = NULL;
+  GtkWidget *samp48;
   GtkWidget *samp44;
   GtkWidget *samp22;
   GtkWidget *samp11;
@@ -227,6 +228,14 @@ create_Config (void)
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox6);
   gtk_container_add (GTK_CONTAINER (frame3), vbox6);
+
+  samp48 = gtk_radio_button_new_with_label (vbox6_group, _("48 kHz"));
+  vbox6_group = gtk_radio_button_group (GTK_RADIO_BUTTON (samp48));
+  gtk_widget_ref (samp48);
+  gtk_object_set_data_full (GTK_OBJECT (Config), "samp48", samp48,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (samp48);
+  gtk_box_pack_start (GTK_BOX (vbox6), samp48, FALSE, FALSE, 0);
 
   samp44 = gtk_radio_button_new_with_label (vbox6_group, _("44 kHz"));
   vbox6_group = gtk_radio_button_group (GTK_RADIO_BUTTON (samp44));
