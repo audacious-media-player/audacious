@@ -118,7 +118,7 @@ shade_pixmap(GdkPixmap *in, gint x, gint y, gint x_offset, gint y_offset, gint w
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
-static GdkPixmap *get_transparency_pixmap(void)
+GdkPixmap *get_transparency_pixmap(void)
 {
     Atom prop, type;
     int format;
@@ -145,7 +145,7 @@ static GdkPixmap *get_transparency_pixmap(void)
 
 #else
 
-static GdkPixmap *get_transparency_pixmap(void)
+GdkPixmap *get_transparency_pixmap(void)
 {
     return NULL;
 }

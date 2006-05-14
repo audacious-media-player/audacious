@@ -50,6 +50,6 @@ int playlist_list_get_playlist_position(PlayList_List * pl, gint x, gint y);
 void playlist_list_set_font(const gchar * font);
 GdkPixmap *rootpix;
 GdkPixmap *shade_pixmap(GdkPixmap *in, gint x, gint y, gint x_offset, gint y_offset, gint w, gint h, GdkColor *shade_color);
-
+GdkPixmap *get_transparency_pixmap(void);
 
 #endif
