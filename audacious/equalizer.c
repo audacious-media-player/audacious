@@ -373,7 +373,14 @@ equalizerwin_press(GtkWidget * widget, GdkEventButton * event,
             grab = FALSE;
         }
         else {
+            gint mx, my;
             equalizerwin_raise();
+
+            gdk_window_get_pointer(GDK_WINDOW(equalizerwin->window), &mx, &my, NULL);
+            gtk_object_set_data(GTK_OBJECT(equalizerwin), "offset_x", GINT_TO_POINTER(mx));
+            gtk_object_set_data(GTK_OBJECT(equalizerwin), "offset_y", GINT_TO_POINTER(my));
+
+            gtk_object_set_data(GTK_OBJECT(equalizerwin), "is_moving", GINT_TO_POINTER(1));
         }
     }
     else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS
@@ -416,8 +423,25 @@ equalizerwin_motion(GtkWidget * widget,
 {
     GdkEvent *gevent;
 
-    handle_motion_cb(equalizerwin_wlist, widget, event);
-    draw_main_window(FALSE);
+    if (gtk_object_get_data(GTK_OBJECT(equalizerwin), "is_moving"))
+    {
+        gint offset_x, offset_y, mx, my, x, y;
+
+        offset_x = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(equalizerwin), "offset_x"));
+        offset_y = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(equalizerwin), "offset_y"));
+
+        gdk_window_get_pointer(NULL, &mx, &my, NULL);
+
+        x = mx - offset_x;
+        y = my - offset_y;
+
+        gtk_window_move(GTK_WINDOW(equalizerwin), x, y);
+    }
+    else
+    {
+        handle_motion_cb(equalizerwin_wlist, widget, event);
+        draw_main_window(FALSE); /* XXX: shouldn't this be draw_equalizer_window()? */
+    }
 
     gdk_flush();
 
@@ -432,6 +456,10 @@ equalizerwin_release(GtkWidget * widget,
 {
     gdk_pointer_ungrab(GDK_CURRENT_TIME);
     gdk_flush();
+
+    gtk_object_remove_data(GTK_OBJECT(equalizerwin), "is_moving");
+    gtk_object_remove_data(GTK_OBJECT(equalizerwin), "offset_x");
+    gtk_object_remove_data(GTK_OBJECT(equalizerwin), "offset_y");
 
     handle_release_cb(equalizerwin_wlist, widget, event);
     draw_equalizer_window(FALSE);
