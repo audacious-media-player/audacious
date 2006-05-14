@@ -998,10 +998,9 @@ mainwin_mouse_button_release(GtkWidget * widget,
 
     gdk_flush();
 
-    if (mainwin_menurow->mr_doublesize_selected) {
-        event->x /= 2;
-        event->y /= 2;
-    }
+    gtk_object_remove_data(GTK_OBJECT(mainwin), "is_moving");
+    gtk_object_remove_data(GTK_OBJECT(mainwin), "offset_x");
+    gtk_object_remove_data(GTK_OBJECT(mainwin), "offset_y");
 
     handle_release_cb(mainwin_wlist, widget, event);
 
@@ -1037,8 +1036,25 @@ mainwin_motion(GtkWidget * widget,
         state = event->state;
     }
 
-    handle_motion_cb(mainwin_wlist, widget, event);
-    draw_main_window(FALSE);
+    if (gtk_object_get_data(GTK_OBJECT(mainwin), "is_moving"))
+    {
+	gint offset_x, offset_y, mx, my;
+
+	offset_x = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(mainwin), "offset_x"));
+	offset_y = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(mainwin), "offset_y"));
+
+        gdk_window_get_pointer(NULL, &x, &y, NULL);
+
+	mx = x - offset_x;
+	my = y - offset_y;
+
+        gtk_window_move(GTK_WINDOW(mainwin), mx, my);
+    }
+    else
+    {    
+        handle_motion_cb(mainwin_wlist, widget, event);
+        draw_main_window(FALSE);
+    }
 
     gdk_flush();
 
@@ -1118,7 +1134,16 @@ mainwin_mouse_button_press(GtkWidget * widget,
             grab = FALSE;
         }
         else
+        {
+	    gint mx, my;
+
+	    gdk_window_get_pointer(GDK_WINDOW(mainwin->window), &mx, &my, NULL);
+	    gtk_object_set_data(GTK_OBJECT(mainwin), "offset_x", GINT_TO_POINTER(mx));
+	    gtk_object_set_data(GTK_OBJECT(mainwin), "offset_y", GINT_TO_POINTER(my));
+
+            gtk_object_set_data(GTK_OBJECT(mainwin), "is_moving", GINT_TO_POINTER(1));
             gtk_window_present(GTK_WINDOW(mainwin));
+        }
     }
     else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS &&
              event->y < 14 && !inside_sensitive_widgets(event->x, event->y)) {
