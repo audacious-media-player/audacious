@@ -2681,7 +2681,7 @@ mainwin_mr_change(MenuRowItem i)
         mainwin_lock_info_text(_("OPTIONS MENU"));
         break;
     case MENUROW_ALWAYS:
-        if (mainwin_menurow->mr_doublesize_selected)
+        if (mainwin_menurow->mr_always_selected)
             mainwin_lock_info_text(_("DISABLE ALWAYS ON TOP"));
         else
             mainwin_lock_info_text(_("ENABLE ALWAYS ON TOP"));
@@ -3365,7 +3365,10 @@ idle_func_update_song_info(gint time)
     gchar stime_prefix;
 
     length = playlist_get_current_length();
-    playlistwin_set_time(time, length, cfg.timer_mode);
+    if (bmp_playback_get_playing())
+        playlistwin_set_time(time, length, cfg.timer_mode);
+    else
+        playlistwin_hide_timer();
     input_update_vis(time);
 
     if (cfg.timer_mode == TIMER_REMAINING) {

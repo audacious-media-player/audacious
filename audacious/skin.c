@@ -548,14 +548,22 @@ hex_chars_to_int(gchar hi, gchar lo)
 
 GdkColor *
 skin_load_color(const gchar * path, const gchar * file,
-                const gchar * section, const gchar * key)
+                const gchar * section, const gchar * key,
+                gchar * default_hex)
 {
     gchar *filename, *value;
     GdkColor *color = NULL;
 
     filename = find_file_recursively(path, file);
-    if (filename) {
-        value = read_ini_string(filename, section, key);
+    if (filename || default_hex) {
+        if (filename) {
+            value = read_ini_string(filename, section, key);
+            if (value == NULL) {
+                value = g_strdup(default_hex);
+            }
+        } else {
+            value = g_strdup(default_hex);
+        }
         if (value) {
             gchar *ptr = value;
             gint len;
@@ -566,7 +574,6 @@ skin_load_color(const gchar * path, const gchar * file,
             if (value[0] == '#')
                 ptr++;
             len = strlen(ptr);
-
             /*
              * The handling of incomplete values is done this way
              * to maximize winamp compatibility
@@ -582,12 +589,12 @@ skin_load_color(const gchar * path, const gchar * file,
             if (len >= 2)
                 color->blue = hex_chars_to_int(*ptr, *(ptr + 1));
 
-
             gdk_color_alloc(gdk_window_get_colormap(playlistwin->window),
                             color);
             g_free(value);
         }
-        g_free(filename);
+        if (filename)
+            g_free(filename);
     }
     return color;
 }
@@ -787,13 +794,13 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
 #endif
 
     skin->colors[SKIN_PLEDIT_NORMAL] =
-        skin_load_color(path, "pledit.txt", "text", "normal");
+        skin_load_color(path, "pledit.txt", "text", "normal", "#2499ff");
     skin->colors[SKIN_PLEDIT_CURRENT] =
-        skin_load_color(path, "pledit.txt", "text", "current");
+        skin_load_color(path, "pledit.txt", "text", "current", "#ffeeff");
     skin->colors[SKIN_PLEDIT_NORMALBG] =
-        skin_load_color(path, "pledit.txt", "text", "normalbg");
+        skin_load_color(path, "pledit.txt", "text", "normalbg", "#0a120a");
     skin->colors[SKIN_PLEDIT_SELECTEDBG] =
-        skin_load_color(path, "pledit.txt", "text", "selectedbg");
+        skin_load_color(path, "pledit.txt", "text", "selectedbg", "#0a124a");
 
     skin_mask_create(skin, path, SKIN_MASK_MAIN, mainwin->window);
     skin_mask_create(skin, path, SKIN_MASK_MAIN_SHADE, mainwin->window);

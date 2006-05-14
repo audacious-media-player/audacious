@@ -1567,7 +1567,7 @@ playlistwin_create_widgets(void)
     playlistwin_info =
         create_textbox(&playlistwin_wlist, playlistwin_bg, playlistwin_gc,
                        playlistwin_get_width() - 143,
-                       cfg.playlist_height - 28, 85, FALSE, SKIN_TEXT);
+                       cfg.playlist_height - 28, 90, FALSE, SKIN_TEXT);
 
     /* mini play control buttons at right bottom corner */
 
