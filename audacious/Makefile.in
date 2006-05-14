@@ -41,7 +41,6 @@ SOURCES = \
 	pluginenum.c \
 	playlist.c \
 	controlsocket.c \
-	dock.c \
 	widget.c \
 	sbutton.c \
 	pbutton.c \

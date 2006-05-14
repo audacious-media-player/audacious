@@ -37,7 +37,6 @@
 #include "libaudacious/util.h"
 
 #include "dnd.h"
-#include "dock.h"
 #include "equalizer.h"
 #include "hints.h"
 #include "input.h"
@@ -526,9 +525,6 @@ playlistwin_set_shade(gboolean shaded)
         playlistwin_close->pb_ny = 3;
     }
 
-    dock_shade(dock_window_list, GTK_WINDOW(playlistwin),
-               playlistwin_get_height());
-
     playlistwin_set_geometry_hints(cfg.playlist_shaded);
 
     gtk_window_resize(GTK_WINDOW(playlistwin),
@@ -573,18 +569,13 @@ playlistwin_release(GtkWidget * widget,
     playlistwin_resizing = FALSE;
     gdk_flush();
 
-    if (dock_is_moving(GTK_WINDOW(playlistwin))) {
-        dock_move_release(GTK_WINDOW(playlistwin));
 #if 0
         if (cfg.playlist_transparent)
             playlistwin_update_list();
 #endif
-    }
-    else {
-        handle_release_cb(playlistwin_wlist, widget, event);
-        playlist_popup_destroy();
-        draw_playlist_window(FALSE);
-    }
+    handle_release_cb(playlistwin_wlist, widget, event);
+    playlist_popup_destroy();
+    draw_playlist_window(FALSE);
 }
 
 void
@@ -701,13 +692,9 @@ playlistwin_motion(GtkWidget * widget,
 {
     GdkEvent *gevent;
 
-    if (dock_is_moving(GTK_WINDOW(playlistwin))) {
-        dock_move_motion(GTK_WINDOW(playlistwin), event);
-    }
-    else {
-        handle_motion_cb(playlistwin_wlist, widget, event);
-        draw_playlist_window(FALSE);
-    }
+    handle_motion_cb(playlistwin_wlist, widget, event);
+    draw_playlist_window(FALSE);
+
     gdk_flush();
 
     while ((gevent = gdk_event_get()) != NULL) gdk_event_free(gevent);
@@ -1103,16 +1090,12 @@ playlistwin_press(GtkWidget * widget,
     else if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
              !inside_sensitive_widgets(event->x, event->y) && event->y < 14) {
         gdk_window_raise(playlistwin->window);
-        dock_move_press(dock_window_list, GTK_WINDOW(playlistwin), event,
-                        FALSE);
     }
     else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS &&
              !inside_sensitive_widgets(event->x, event->y)
              && event->y < 14) {
         /* double click on title bar */
         playlistwin_shade_toggle();
-        if (dock_is_moving(GTK_WINDOW(playlistwin)))
-            dock_move_release(GTK_WINDOW(playlistwin));
         return TRUE;
     }
     else if (event->button == 3 &&
@@ -1644,9 +1627,6 @@ playlistwin_create_window(void)
                                 playlistwin_get_height());
     gtk_window_set_resizable(GTK_WINDOW(playlistwin), TRUE);
     playlistwin_set_geometry_hints(cfg.playlist_shaded);
-    dock_window_list = dock_window_set_decorated(dock_window_list,
-                                                 GTK_WINDOW(playlistwin),
-                                                 cfg.show_wm_decorations);
 
     gtk_window_set_transient_for(GTK_WINDOW(playlistwin),
                                  GTK_WINDOW(mainwin));

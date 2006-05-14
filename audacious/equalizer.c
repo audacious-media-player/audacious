@@ -37,7 +37,6 @@
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 
-#include "dock.h"
 #include "eq_graph.h"
 #include "eq_slider.h"
 #include "hints.h"
@@ -204,7 +203,6 @@ equalizerwin_set_shade_menu_cb(gboolean shaded)
     equalizerwin_set_shape_mask();
 
     if (shaded) {
-        dock_shade(dock_window_list, GTK_WINDOW(equalizerwin), 14);
         pbutton_set_button_data(equalizerwin_shade, -1, 3, -1, 47);
         pbutton_set_skin_index1(equalizerwin_shade, SKIN_EQ_EX);
         pbutton_set_button_data(equalizerwin_close, 11, 38, 11, 47);
@@ -213,7 +211,6 @@ equalizerwin_set_shade_menu_cb(gboolean shaded)
         widget_show(WIDGET(equalizerwin_balance));
     }
     else {
-        dock_shade(dock_window_list, GTK_WINDOW(equalizerwin), 116);
         pbutton_set_button_data(equalizerwin_shade, -1, 137, -1, 38);
         pbutton_set_skin_index1(equalizerwin_shade, SKIN_EQMAIN);
         pbutton_set_button_data(equalizerwin_close, 0, 116, 0, 125);
@@ -377,15 +374,11 @@ equalizerwin_press(GtkWidget * widget, GdkEventButton * event,
         }
         else {
             equalizerwin_raise();
-            dock_move_press(dock_window_list, GTK_WINDOW(equalizerwin), event,
-                            FALSE);
         }
     }
     else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS
              && event->y < 14) {
         equalizerwin_set_shade(!cfg.equalizer_shaded);
-        if (dock_is_moving(GTK_WINDOW(equalizerwin)))
-            dock_move_release(GTK_WINDOW(equalizerwin));
     }
     else if (event->button == 3 &&
              !(widget_contains(WIDGET(equalizerwin_on), event->x, event->y) ||
@@ -423,13 +416,9 @@ equalizerwin_motion(GtkWidget * widget,
 {
     GdkEvent *gevent;
 
-    if (dock_is_moving(GTK_WINDOW(equalizerwin))) {
-        dock_move_motion(GTK_WINDOW(equalizerwin), event);
-    }
-    else {
-        handle_motion_cb(equalizerwin_wlist, widget, event);
-        draw_main_window(FALSE);
-    }
+    handle_motion_cb(equalizerwin_wlist, widget, event);
+    draw_main_window(FALSE);
+
     gdk_flush();
 
     while ((gevent = gdk_event_get()) != NULL) gdk_event_free(gevent);
@@ -443,13 +432,9 @@ equalizerwin_release(GtkWidget * widget,
 {
     gdk_pointer_ungrab(GDK_CURRENT_TIME);
     gdk_flush();
-    if (dock_is_moving(GTK_WINDOW(equalizerwin))) {
-        dock_move_release(GTK_WINDOW(equalizerwin));
-    }
-    else {
-        handle_release_cb(equalizerwin_wlist, widget, event);
-        draw_equalizer_window(FALSE);
-    }
+
+    handle_release_cb(equalizerwin_wlist, widget, event);
+    draw_equalizer_window(FALSE);
 
     return FALSE;
 }
@@ -747,9 +732,6 @@ equalizerwin_create_window(void)
 
     gtk_window_set_default_size(GTK_WINDOW(equalizerwin), width, height);
     gtk_window_set_resizable(GTK_WINDOW(equalizerwin), FALSE);
-    dock_window_list = dock_window_set_decorated(dock_window_list,
-                                                 GTK_WINDOW(equalizerwin),
-                                                 cfg.show_wm_decorations);
 
     gtk_window_set_transient_for(GTK_WINDOW(equalizerwin),
                                  GTK_WINDOW(mainwin));
