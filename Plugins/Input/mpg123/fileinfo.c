@@ -695,6 +695,9 @@ fill_entries(GtkWidget * w, gpointer data)
     taglib_ap = taglib_file_audioproperties(taglib_file);
   } else return;
 
+  if (!taglib_tag)
+      return;
+
   /* be sane here, taglib_tag results may be NULL --nenolod */
   ptr = taglib_tag_title(taglib_tag);
 
