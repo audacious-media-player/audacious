@@ -760,6 +760,7 @@ equalizerwin_create_window(void)
 
     gtk_window_set_default_size(GTK_WINDOW(equalizerwin), width, height);
     gtk_window_set_resizable(GTK_WINDOW(equalizerwin), FALSE);
+    gtk_window_set_decorated(GTK_WINDOW(equalizerwin), cfg.show_wm_decorations);
 
     gtk_window_set_transient_for(GTK_WINDOW(equalizerwin),
                                  GTK_WINDOW(mainwin));

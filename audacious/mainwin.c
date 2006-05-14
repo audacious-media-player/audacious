@@ -3261,6 +3261,7 @@ mainwin_create_window(void)
     gtk_window_set_title(GTK_WINDOW(mainwin), _("Audacious"));
     gtk_window_set_role(GTK_WINDOW(mainwin), "player");
     gtk_window_set_resizable(GTK_WINDOW(mainwin), FALSE);
+    gtk_window_set_decorated(GTK_WINDOW(mainwin), cfg.show_wm_decorations);
 
     width = MAINWIN_WIDTH;
     height = cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : MAINWIN_HEIGHT;

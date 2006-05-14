@@ -1657,6 +1657,7 @@ playlistwin_create_window(void)
                                 playlistwin_get_height());
     gtk_window_set_resizable(GTK_WINDOW(playlistwin), TRUE);
     playlistwin_set_geometry_hints(cfg.playlist_shaded);
+    gtk_window_set_decorated(GTK_WINDOW(playlistwin), cfg.show_wm_decorations);
 
     gtk_window_set_transient_for(GTK_WINDOW(playlistwin),
                                  GTK_WINDOW(mainwin));
