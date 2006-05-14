@@ -569,10 +569,9 @@ playlistwin_release(GtkWidget * widget,
     playlistwin_resizing = FALSE;
     gdk_flush();
 
-#if 0
-        if (cfg.playlist_transparent)
-            playlistwin_update_list();
-#endif
+    if (cfg.playlist_transparent)
+        playlistwin_update_list();
+
     gtk_object_remove_data(GTK_OBJECT(playlistwin), "is_moving");
     gtk_object_remove_data(GTK_OBJECT(playlistwin), "offset_x");
     gtk_object_remove_data(GTK_OBJECT(playlistwin), "offset_y");

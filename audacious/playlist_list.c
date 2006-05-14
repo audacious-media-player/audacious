@@ -57,6 +57,45 @@ static gint width_approx_letters;
 static gint width_colon, width_colon_third;
 static gint width_approx_digits, width_approx_digits_half;
 
+#ifdef GDK_WINDOWING_X11
+
+#include <gdk/gdkx.h>
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+
+static GdkPixmap *get_transparency_pixmap(void)
+{
+    Atom prop, type;
+    int format;
+    unsigned long length, after;
+    unsigned char *data;
+    static GdkPixmap *retval = NULL;
+
+    if(retval)
+        return retval;
+
+    prop = XInternAtom(GDK_DISPLAY(), "_XROOTPMAP_ID", True);
+
+    if(prop == None)
+        return NULL;
+
+    XGetWindowProperty(GDK_DISPLAY(), GDK_ROOT_WINDOW(), prop, 0L, 1L, False, AnyPropertyType, &type, &format, &length, &after, &data);
+
+    if(type == XA_PIXMAP)
+        retval = gdk_pixmap_foreign_new(*((Pixmap *)data));
+
+    return retval;
+}
+
+#else
+
+static GdkPixmap *get_transparency_pixmap(void)
+{
+    return NULL;
+}
+
+#endif
+
 static gboolean
 playlist_list_auto_drag_down_func(gpointer data)
 {
@@ -391,11 +430,22 @@ playlist_list_draw(Widget * w)
 
     gdk_gc_set_clip_origin(gc, 31, 58);
     gdk_gc_set_clip_rectangle(gc, playlist_rect);
-    gdk_gc_set_foreground(gc,
-                          skin_get_color(bmp_active_skin,
-                                         SKIN_PLEDIT_NORMALBG));
-    gdk_draw_rectangle(obj, gc, TRUE, pl->pl_widget.x, pl->pl_widget.y,
-                       width, height);
+
+    if (cfg.playlist_transparent == FALSE)
+    {
+        gdk_gc_set_foreground(gc,
+                              skin_get_color(bmp_active_skin,
+                                             SKIN_PLEDIT_NORMALBG));
+        gdk_draw_rectangle(obj, gc, TRUE, pl->pl_widget.x, pl->pl_widget.y,
+                              width, height);
+    }
+    else
+    {
+        GdkPixmap *rootpix = get_transparency_pixmap();
+        gdk_draw_pixmap(obj, gc, rootpix, cfg.playlist_x + pl->pl_widget.x,
+                    cfg.playlist_y + pl->pl_widget.y, pl->pl_widget.x, pl->pl_widget.y,
+                    width, height);
+    }
 
     if (!playlist_list_font) {
         g_critical("Couldn't open playlist font");
