@@ -45,10 +45,6 @@ HEADERS = \
 	beepctrl.h dirbrowser.h util.h \
 	formatter.h titlestring.h xml_document.h
 
-build-posthook:
-	@ln -sf libaudacious.so.2.0.0 libaudacious.so.2
-	@ln -sf libaudacious.so.2 libaudacious.so
-
 install-posthook:
 	@ln -sf ${LIBDIR}/libaudacious.so.2.0.0 \
 		${DESTDIR}/${LIBDIR}/libaudacious.so.2
