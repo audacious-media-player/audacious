@@ -401,6 +401,9 @@ produce_audio(gint time,        /* position             */
 	    g_usleep(10000);                   /*   else sleep for retry     */
 	}
 
+	if (ip_data.stop)
+	    return;
+
 	/* do output */
 	op->write_audio(((guint8 *) ptr) + writeoffs, writable);
 
