@@ -92,6 +92,16 @@ clean:
 			$(RM) $$i; \
 		done; \
 	fi
+	@if test "$(OBJECTIVE_LIBS)" != "none"; then \
+		for i in $(OBJECTIVE_LIBS); do \
+			$(RM) $$i; \
+		done; \
+	fi
+	@if test "$(OBJECTIVE_LIBS_NOINST)" != "none"; then \
+		for i in $(OBJECTIVE_LIBS_NOINST); do \
+			$(RM) $$i; \
+		done; \
+	fi
 	@if test $(VERBOSITY) -gt 0; then \
 		echo "[all objectives cleaned]"; \
 	fi
@@ -183,7 +193,12 @@ build:
 	if test "x$(OBJECTS)" != "x"; then \
 		$(MAKE) $(OBJECTS) || exit;		\
 		printf "%10s     %-20s\n" LINK $@; \
-		$(CC) -fPIC -DPIC -shared -o $@ -Wl,-soname=$@ $(OBJECTS) $(LDFLAGS) $(LIBADD); \
+		printf "%s\n" $(OBJECTIVE_SONAME_SUFFIX); \
+		(if test "x$(OBJECTIVE_SONAME_SUFFIX)" != "x"; then \
+			$(CC) -fPIC -DPIC -shared -o $@ -Wl,-soname=$@.$(OBJECTIVE_SONAME_SUFFIX) $(OBJECTS) $(LDFLAGS) $(LIBADD); \
+		else \
+			$(CC) -fPIC -DPIC -shared -o $@ -Wl,-soname=$@ $(OBJECTS) $(LDFLAGS) $(LIBADD); \
+		fi;) \
 	fi
 
 %.a: $(OBJECTS)
