@@ -193,7 +193,6 @@ build:
 	if test "x$(OBJECTS)" != "x"; then \
 		$(MAKE) $(OBJECTS) || exit;		\
 		printf "%10s     %-20s\n" LINK $@; \
-		printf "%s\n" $(OBJECTIVE_SONAME_SUFFIX); \
 		(if test "x$(OBJECTIVE_SONAME_SUFFIX)" != "x"; then \
 			$(CC) -fPIC -DPIC -shared -o $@ -Wl,-soname=$@.$(OBJECTIVE_SONAME_SUFFIX) $(OBJECTS) $(LDFLAGS) $(LIBADD); \
 		else \
