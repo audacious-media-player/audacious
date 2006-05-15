@@ -165,11 +165,14 @@ bmp_active_skin_load(const gchar * path)
 
     skin_setup_masks(bmp_active_skin);
 
-    if (rootpix != NULL)
-        g_object_unref(rootpix);
+    if (cfg.playlist_transparent)
+    {
+        if (rootpix != NULL)
+            g_object_unref(rootpix);
 
-    rootpix = shade_pixmap(get_transparency_pixmap(), 0, 0, 0, 0, gdk_screen_width(), gdk_screen_height(),
-                           skin_get_color(bmp_active_skin, SKIN_PLEDIT_NORMALBG));
+        rootpix = shade_pixmap(get_transparency_pixmap(), 0, 0, 0, 0, gdk_screen_width(), gdk_screen_height(),
+                               skin_get_color(bmp_active_skin, SKIN_PLEDIT_NORMALBG));
+    }
 
     draw_main_window(TRUE);
     draw_playlist_window(TRUE);
