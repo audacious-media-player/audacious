@@ -233,6 +233,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"convert_underscore", &cfg.convert_underscore, TRUE},
     {"convert_twenty", &cfg.convert_twenty, TRUE},
     {"show_numbers_in_pl", &cfg.show_numbers_in_pl, TRUE},
+    {"show_separator_in_pl", &cfg.show_separator_in_pl, TRUE},
     {"snap_windows", &cfg.snap_windows, TRUE},
     {"save_window_positions", &cfg.save_window_position, TRUE},
     {"dim_titlebar", &cfg.dim_titlebar, TRUE},

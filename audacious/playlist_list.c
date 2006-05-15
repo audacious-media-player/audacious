@@ -785,11 +785,13 @@ playlist_list_draw(Widget * w)
         if (has_slant)
             padding += width_approx_digits_half;
 
-        gdk_draw_line(obj, gc,
-                      pl->pl_widget.x + padding,
-                      pl->pl_widget.y,
-                      pl->pl_widget.x + padding,
-                      pl->pl_widget.y + pl->pl_widget.height - 1);
+        if (cfg.show_separator_in_pl) {
+            gdk_draw_line(obj, gc,
+                          pl->pl_widget.x + padding,
+                          pl->pl_widget.y,
+                          pl->pl_widget.x + padding,
+                          pl->pl_widget.y + pl->pl_widget.height - 1);
+        }
     }
 
     if (tpadding_dwidth != 0)
@@ -799,12 +801,13 @@ playlist_list_draw(Widget * w)
         if (has_slant)
             tpadding += width_approx_digits_half;
 
-        gdk_draw_line(obj, gc,
-                      pl->pl_widget.x + pl->pl_widget.width - tpadding,
-                      pl->pl_widget.y,
-                      pl->pl_widget.x + pl->pl_widget.width - tpadding,
-                      pl->pl_widget.y + pl->pl_widget.height - 1);
-
+        if (cfg.show_separator_in_pl) {
+            gdk_draw_line(obj, gc,
+                          pl->pl_widget.x + pl->pl_widget.width - tpadding,
+                          pl->pl_widget.y,
+                          pl->pl_widget.x + pl->pl_widget.width - tpadding,
+                          pl->pl_widget.y + pl->pl_widget.height - 1);
+        }
     }
 
     gdk_gc_set_clip_origin(gc, 0, 0);

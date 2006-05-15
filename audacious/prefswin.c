@@ -936,6 +936,22 @@ on_playlist_show_pl_numbers_toggled(GtkToggleButton * button,
 }
 
 static void
+on_playlist_show_pl_separator_realize(GtkToggleButton * button,
+                                    gpointer data)
+{
+    gtk_toggle_button_set_active(button, cfg.show_separator_in_pl);
+}
+
+static void
+on_playlist_show_pl_separator_toggled(GtkToggleButton * button,
+                                    gpointer data)
+{
+    cfg.show_separator_in_pl = gtk_toggle_button_get_active(button);
+    playlistwin_update_list();
+    draw_playlist_window(TRUE);
+}
+
+static void
 input_plugin_enable_prefs(GtkTreeView * treeview,
                           GtkButton * button)
 {
@@ -1678,6 +1694,8 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_pl_metadata_on_display_toggled)
     FUNC_MAP_ENTRY(on_playlist_show_pl_numbers_realize)
     FUNC_MAP_ENTRY(on_playlist_show_pl_numbers_toggled)
+    FUNC_MAP_ENTRY(on_playlist_show_pl_separator_realize)
+    FUNC_MAP_ENTRY(on_playlist_show_pl_separator_toggled)
     FUNC_MAP_ENTRY(on_playlist_convert_twenty_realize)
     FUNC_MAP_ENTRY(on_playlist_convert_twenty_toggled)
     FUNC_MAP_ENTRY(on_playlist_convert_underscore_realize)

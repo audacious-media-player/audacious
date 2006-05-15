@@ -106,6 +106,7 @@ struct _BmpConfig {
     gint scroll_pl_by;
     gboolean resume_playback_on_startup;
     gint resume_playback_on_startup_time;
+    gboolean show_separator_in_pl;
 };
 
 typedef struct _BmpConfig BmpConfig;
