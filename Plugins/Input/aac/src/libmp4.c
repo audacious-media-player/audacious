@@ -182,6 +182,7 @@ static void mp4_stop(void)
 {
   if(buffer_playing){
     buffer_playing = FALSE;
+    g_thread_join(decodeThread);
     mp4_ip.output->close_audio();
   }
 
