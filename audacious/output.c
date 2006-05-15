@@ -388,6 +388,9 @@ produce_audio(gint time,        /* position             */
 	if (writable > 2048)
 	    writable = 2048;
 
+        if (writable == 0)
+	    return;
+
 	while (op->buffer_free() < writable) { /* wait output buf            */
 	    if (going && !*going)              /*   thread stopped?          */
 		return;                        /*     so finish              */
