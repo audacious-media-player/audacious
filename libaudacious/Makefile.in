@@ -46,7 +46,7 @@ HEADERS = \
 	formatter.h titlestring.h xml_document.h
 
 install-posthook:
-	@mv ${LIBDIR}/libaudacious.so ${LIBDIR}/libaudacious.so.2.0.0
+	@mv ${DESTDIR}/${LIBDIR}/libaudacious.so ${DESTDIR}/${LIBDIR}/libaudacious.so.2.0.0
 	@ln -sf ${LIBDIR}/libaudacious.so.2.0.0 \
 		${DESTDIR}/${LIBDIR}/libaudacious.so.2
 	@ln -sf ${LIBDIR}/libaudacious.so.2 \
