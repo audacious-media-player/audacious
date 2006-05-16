@@ -70,7 +70,7 @@ enum {
     SEL_LOOKUP, CLOSE_PL_WINDOW, MOVE_UP, PLIST_SAVE,
     MISC_QUEUE, PLIST_CQUEUE, PLIST_JTF, PLIST_JTT,
     PLAYLISTWIN_REMOVE_DEAD_FILES,
-    PLAYLISTWIN_REFRESH
+    PLAYLISTWIN_REFRESH, PLIST_DEFAULTSAVE
 };
 
 enum {
@@ -209,6 +209,10 @@ static GtkItemFactoryEntry pllist_menu_entries[] = {
     {N_("/Save List"), "<shift>S",
      playlistwin_sub_menu_callback,
      PLIST_SAVE, "<StockItem>", GTK_STOCK_SAVE},
+
+    {N_("/Save Default List"), "<alt>S",
+     playlistwin_sub_menu_callback,
+     PLIST_DEFAULTSAVE, "<StockItem>", GTK_STOCK_SAVE},
 
     ITEM_SEPARATOR,
 
@@ -1875,6 +1879,9 @@ playlistwin_sub_menu_callback(gpointer data,
         break;
     case PLIST_SAVE:
         playlistwin_select_playlist_to_save(playlist_get_current_name());
+        break;
+    case PLIST_DEFAULTSAVE:
+        playlist_save(bmp_paths[BMP_PATH_PLAYLIST_FILE], FALSE);
         break;
     case PLIST_SAVE_AS:
         playlistwin_select_playlist_to_save(playlist_get_current_name());
