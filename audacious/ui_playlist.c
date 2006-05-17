@@ -1104,6 +1104,8 @@ playlistwin_press(GtkWidget * widget,
     else if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
              !inside_sensitive_widgets(event->x, event->y) && event->y < 14)
     {
+        dock_move_press(dock_window_list, GTK_WINDOW(playlistwin), event,
+                        FALSE);
         gtk_window_present(GTK_WINDOW(playlistwin));
     }
     else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS &&
