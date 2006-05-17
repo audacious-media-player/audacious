@@ -576,10 +576,6 @@ playlistwin_release(GtkWidget * widget,
     if (cfg.playlist_transparent)
         playlistwin_update_list();
 
-    gtk_object_remove_data(GTK_OBJECT(playlistwin), "is_moving");
-    gtk_object_remove_data(GTK_OBJECT(playlistwin), "offset_x");
-    gtk_object_remove_data(GTK_OBJECT(playlistwin), "offset_y");
-
     handle_release_cb(playlistwin_wlist, widget, event);
     playlist_popup_destroy();
     draw_playlist_window(FALSE);
@@ -699,25 +695,8 @@ playlistwin_motion(GtkWidget * widget,
 {
     GdkEvent *gevent;
 
-    if (gtk_object_get_data(GTK_OBJECT(playlistwin), "is_moving"))
-    {
-        gint offset_x, offset_y, mx, my, x, y;
-
-        offset_x = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(playlistwin), "offset_x"));
-        offset_y = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(playlistwin), "offset_y"));
-
-        gdk_window_get_pointer(NULL, &mx, &my, NULL);
-
-        x = mx - offset_x;
-        y = my - offset_y;
-
-        gtk_window_move(GTK_WINDOW(playlistwin), x, y);
-    }
-    else
-    {
-        handle_motion_cb(playlistwin_wlist, widget, event);
-        draw_playlist_window(FALSE);
-    }
+    handle_motion_cb(playlistwin_wlist, widget, event);
+    draw_playlist_window(FALSE);
 
     gdk_flush();
 
@@ -1114,14 +1093,6 @@ playlistwin_press(GtkWidget * widget,
     else if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
              !inside_sensitive_widgets(event->x, event->y) && event->y < 14)
     {
-        gint mx, my;
-
-        gdk_window_get_pointer(GDK_WINDOW(playlistwin->window), &mx, &my, NULL);
-
-        gtk_object_set_data(GTK_OBJECT(playlistwin), "offset_x", GINT_TO_POINTER(mx));
-        gtk_object_set_data(GTK_OBJECT(playlistwin), "offset_y", GINT_TO_POINTER(my));
-
-        gtk_object_set_data(GTK_OBJECT(playlistwin), "is_moving", GINT_TO_POINTER(1));
         gtk_window_present(GTK_WINDOW(playlistwin));
     }
     else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS &&
