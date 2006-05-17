@@ -1,7 +1,4 @@
-/*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2006  Audacious development team.
- *
- *  BMP - Cross-platform multimedia player
+/*  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
  *
  *  Based on XMMS:
@@ -52,6 +49,7 @@
 
 #include "credits.h"
 #include "dnd.h"
+#include "dock.h"
 #include "equalizer.h"
 #include "hints.h"
 #include "input.h"
@@ -532,6 +530,9 @@ mainwin_set_shade_menu_cb(gboolean shaded)
     mainwin_set_shape_mask();
 
     if (shaded) {
+        dock_shade(dock_window_list, GTK_WINDOW(mainwin),
+                   MAINWIN_SHADED_HEIGHT);
+
         widget_show(WIDGET(mainwin_svis));
         vis_clear_data(mainwin_vis);
 
@@ -559,6 +560,8 @@ mainwin_set_shade_menu_cb(gboolean shaded)
         mainwin_shade->pb_ny = mainwin_shade->pb_py = 27;
     }
     else {
+        dock_shade(dock_window_list, GTK_WINDOW(mainwin), MAINWIN_HEIGHT);
+
         widget_hide(WIDGET(mainwin_svis));
         svis_clear_data(mainwin_svis);
 
@@ -998,6 +1001,10 @@ mainwin_mouse_button_release(GtkWidget * widget,
 
     gdk_flush();
 
+    if (dock_is_moving(GTK_WINDOW(mainwin))) {
+        dock_move_release(GTK_WINDOW(mainwin));
+    }
+
     if (mainwin_menurow->mr_doublesize_selected) {
         event->x /= 2;
         event->y /= 2;
@@ -1037,8 +1044,13 @@ mainwin_motion(GtkWidget * widget,
         state = event->state;
     }
 
-    handle_motion_cb(mainwin_wlist, widget, event);
-    draw_main_window(FALSE);
+    if (dock_is_moving(GTK_WINDOW(mainwin))) {
+        dock_move_motion(GTK_WINDOW(mainwin), event);
+    }
+    else {
+        handle_motion_cb(mainwin_wlist, widget, event);
+        draw_main_window(FALSE);
+    }
 
     gdk_flush();
 
@@ -1117,12 +1129,17 @@ mainwin_mouse_button_press(GtkWidget * widget,
             hint_move_resize(mainwin, event->x_root, event->y_root, TRUE);
             grab = FALSE;
         }
-        else
+        else {
             gtk_window_present(GTK_WINDOW(mainwin));
+            dock_move_press(dock_window_list, GTK_WINDOW(mainwin), event,
+                            TRUE);
+        }
     }
     else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS &&
              event->y < 14 && !inside_sensitive_widgets(event->x, event->y)) {
         mainwin_set_shade(!cfg.player_shaded);
+        if (dock_is_moving(GTK_WINDOW(mainwin)))
+            dock_move_release(GTK_WINDOW(mainwin));
     }
     else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS &&
              widget_contains(WIDGET(mainwin_info), event->x, event->y)) {
@@ -3243,6 +3260,14 @@ mainwin_create_window(void)
 
     gtk_widget_set_size_request(mainwin, width, height);
     gtk_widget_set_app_paintable(mainwin, TRUE);
+
+    dock_window_list = dock_window_set_decorated(dock_window_list,
+                                                 GTK_WINDOW(mainwin),
+                                                 cfg.show_wm_decorations);
+
+    dock_window_list = dock_window_set_decorated(dock_window_list,
+                                                 GTK_WINDOW(mainwin),
+                                                 cfg.show_wm_decorations);
 
     if (cfg.player_x != -1 && cfg.save_window_position)
         gtk_window_move(GTK_WINDOW(mainwin), cfg.player_x, cfg.player_y);

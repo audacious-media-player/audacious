@@ -37,6 +37,7 @@
 #include "libaudacious/util.h"
 
 #include "dnd.h"
+#include "dock.h"
 #include "equalizer.h"
 #include "hints.h"
 #include "input.h"
@@ -529,6 +530,12 @@ playlistwin_set_shade(gboolean shaded)
         playlistwin_close->pb_ny = 3;
     }
 
+    dock_shade(dock_window_list, GTK_WINDOW(playlistwin),
+               playlistwin_get_height());
+
+    dock_shade(dock_window_list, GTK_WINDOW(playlistwin),
+               playlistwin_get_height());
+
     playlistwin_set_geometry_hints(cfg.playlist_shaded);
 
     gtk_window_resize(GTK_WINDOW(playlistwin),
@@ -695,9 +702,13 @@ playlistwin_motion(GtkWidget * widget,
 {
     GdkEvent *gevent;
 
-    handle_motion_cb(playlistwin_wlist, widget, event);
-    draw_playlist_window(FALSE);
-
+    if (dock_is_moving(GTK_WINDOW(playlistwin))) {
+        dock_move_motion(GTK_WINDOW(playlistwin), event);
+    }
+    else {
+        handle_motion_cb(playlistwin_wlist, widget, event);
+        draw_playlist_window(FALSE);
+    }
     gdk_flush();
 
     while ((gevent = gdk_event_get()) != NULL) gdk_event_free(gevent);
