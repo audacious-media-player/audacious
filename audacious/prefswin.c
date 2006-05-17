@@ -1,4 +1,7 @@
-/*  BMP - Cross-platform multimedia player
+/*  Audacious - Cross-platform multimedia player
+ *  Copyright (C) 2005-2006  Audacious development team.
+ *
+ *  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -961,10 +964,11 @@ on_proxy_use_realize(GtkToggleButton * button,
     gboolean ret;
 
     db = bmp_cfg_db_open();
-    bmp_cfg_db_get_bool(db, NULL, "use_proxy", &ret);
-    bmp_cfg_db_close(db);
 
-    gtk_toggle_button_set_active(button, ret);
+    if (bmp_cfg_db_get_bool(db, NULL, "use_proxy", &ret) != FALSE)
+        gtk_toggle_button_set_active(button, ret);
+
+    bmp_cfg_db_close(db);
 }
 
 static void
@@ -987,10 +991,11 @@ on_proxy_auth_realize(GtkToggleButton * button,
     gboolean ret;
 
     db = bmp_cfg_db_open();
-    bmp_cfg_db_get_bool(db, NULL, "proxy_use_auth", &ret);
-    bmp_cfg_db_close(db);
 
-    gtk_toggle_button_set_active(button, ret);
+    if (bmp_cfg_db_get_bool(db, NULL, "proxy_use_auth", &ret) != FALSE)
+        gtk_toggle_button_set_active(button, ret);
+
+    bmp_cfg_db_close(db);
 }
 
 static void
@@ -1013,11 +1018,11 @@ on_proxy_host_realize(GtkEntry * entry,
     gchar *ret;
 
     db = bmp_cfg_db_open();
-    bmp_cfg_db_get_string(db, NULL, "proxy_host", &ret);
-    bmp_cfg_db_close(db);
 
-    if (ret != NULL && *ret != '\0')
+    if (bmp_cfg_db_get_string(db, NULL, "proxy_host", &ret) != FALSE)
         gtk_entry_set_text(entry, ret);
+
+    bmp_cfg_db_close(db);
 }
 
 static void
@@ -1042,11 +1047,11 @@ on_proxy_port_realize(GtkEntry * entry,
     gchar *ret;
 
     db = bmp_cfg_db_open();
-    bmp_cfg_db_get_string(db, NULL, "proxy_port", &ret);
-    bmp_cfg_db_close(db);
 
-    if (ret != NULL && *ret != '\0')
+    if (bmp_cfg_db_get_string(db, NULL, "proxy_port", &ret) != FALSE)
         gtk_entry_set_text(entry, ret);
+
+    bmp_cfg_db_close(db);
 }
 
 static void
@@ -1071,11 +1076,11 @@ on_proxy_user_realize(GtkEntry * entry,
     gchar *ret;
 
     db = bmp_cfg_db_open();
-    bmp_cfg_db_get_string(db, NULL, "proxy_user", &ret);
-    bmp_cfg_db_close(db);
 
-    if (ret != NULL && *ret != '\0')
+    if (bmp_cfg_db_get_string(db, NULL, "proxy_user", &ret) != FALSE)
         gtk_entry_set_text(entry, ret);
+
+    bmp_cfg_db_close(db);
 }
 
 static void
@@ -1100,11 +1105,11 @@ on_proxy_pass_realize(GtkEntry * entry,
     gchar *ret;
 
     db = bmp_cfg_db_open();
-    bmp_cfg_db_get_string(db, NULL, "proxy_pass", &ret);
-    bmp_cfg_db_close(db);
 
-    if (ret != NULL && *ret != '\0')
+    if (bmp_cfg_db_get_string(db, NULL, "proxy_pass", &ret) != FALSE)
         gtk_entry_set_text(entry, ret);
+
+    bmp_cfg_db_close(db);
 }
 
 static void
