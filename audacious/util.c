@@ -979,8 +979,6 @@ util_run_filebrowser(gboolean play_button)
     }
     
     if (play_button) {
-        cfg.close_dialog_open = TRUE;
-        
         gtk_window_set_title(GTK_WINDOW(dialog), _("Open Files"));
 
         gtk_button_set_label(GTK_BUTTON(button_add), GTK_STOCK_OPEN);
@@ -995,8 +993,6 @@ util_run_filebrowser(gboolean play_button)
         handlerid_do_activate = g_signal_connect_after(chooser,"file_activated", G_CALLBACK(_filebrowser_do_hide_open), dialog);
     }
     else {
-        cfg.close_dialog_add = TRUE;
-
         gtk_window_set_title(GTK_WINDOW(dialog), _("Add Files"));
 
         gtk_button_set_label(GTK_BUTTON(button_add), GTK_STOCK_ADD);
