@@ -90,6 +90,7 @@ static GtkWidget *prefswin = NULL;
 
 static Category categories[] = {
     {DATA_DIR "/images/appearance.png", N_("Appearance"), 1},
+    {DATA_DIR "/images/plugins.png",    N_("Connectivity"), 5},	/* XXX: need art */
     {DATA_DIR "/images/eq.png",         N_("Equalizer"), 4},
     {DATA_DIR "/images/mouse.png",      N_("Mouse"), 2},
     {DATA_DIR "/images/playlist.png",   N_("Playlist"), 3},
@@ -951,6 +952,175 @@ on_playlist_show_pl_separator_toggled(GtkToggleButton * button,
     draw_playlist_window(TRUE);
 }
 
+/* proxy */
+static void
+on_proxy_use_realize(GtkToggleButton * button,
+                     gpointer data)
+{
+    ConfigDb *db;
+    gboolean ret;
+
+    db = bmp_cfg_db_open();
+    bmp_cfg_db_get_bool(db, NULL, "use_proxy", &ret);
+    bmp_cfg_db_close(db);
+
+    gtk_toggle_button_set_active(button, ret);
+}
+
+static void
+on_proxy_use_toggled(GtkToggleButton * button,
+                     gpointer data)
+{
+    ConfigDb *db;
+    gboolean ret = gtk_toggle_button_get_active(button);
+
+    db = bmp_cfg_db_open();
+    bmp_cfg_db_set_bool(db, NULL, "use_proxy", ret);
+    bmp_cfg_db_close(db);
+}
+
+static void
+on_proxy_auth_realize(GtkToggleButton * button,
+                     gpointer data)
+{
+    ConfigDb *db;
+    gboolean ret;
+
+    db = bmp_cfg_db_open();
+    bmp_cfg_db_get_bool(db, NULL, "proxy_use_auth", &ret);
+    bmp_cfg_db_close(db);
+
+    gtk_toggle_button_set_active(button, ret);
+}
+
+static void
+on_proxy_auth_toggled(GtkToggleButton * button,
+                     gpointer data)
+{
+    ConfigDb *db;
+    gboolean ret = gtk_toggle_button_get_active(button);
+
+    db = bmp_cfg_db_open();
+    bmp_cfg_db_set_bool(db, NULL, "proxy_use_auth", ret);
+    bmp_cfg_db_close(db);
+}
+
+static void
+on_proxy_host_realize(GtkEntry * entry,
+                     gpointer data)
+{
+    ConfigDb *db;
+    gchar *ret;
+
+    db = bmp_cfg_db_open();
+    bmp_cfg_db_get_string(db, NULL, "proxy_host", &ret);
+    bmp_cfg_db_close(db);
+
+    if (ret != NULL && *ret != '\0')
+        gtk_entry_set_text(entry, ret);
+}
+
+static void
+on_proxy_host_changed(GtkEntry * entry,
+                     gpointer data)
+{
+    ConfigDb *db;
+    gchar *ret = g_strdup(gtk_entry_get_text(entry));
+
+    db = bmp_cfg_db_open();
+    bmp_cfg_db_set_string(db, NULL, "proxy_host", ret);
+    bmp_cfg_db_close(db);
+
+    g_free(ret);
+}
+
+static void
+on_proxy_port_realize(GtkEntry * entry,
+                     gpointer data)
+{
+    ConfigDb *db;
+    gchar *ret;
+
+    db = bmp_cfg_db_open();
+    bmp_cfg_db_get_string(db, NULL, "proxy_port", &ret);
+    bmp_cfg_db_close(db);
+
+    if (ret != NULL && *ret != '\0')
+        gtk_entry_set_text(entry, ret);
+}
+
+static void
+on_proxy_port_changed(GtkEntry * entry,
+                     gpointer data)
+{
+    ConfigDb *db;
+    gchar *ret = g_strdup(gtk_entry_get_text(entry));
+
+    db = bmp_cfg_db_open();
+    bmp_cfg_db_set_string(db, NULL, "proxy_port", ret);
+    bmp_cfg_db_close(db);
+
+    g_free(ret);
+}
+
+static void
+on_proxy_user_realize(GtkEntry * entry,
+                     gpointer data)
+{
+    ConfigDb *db;
+    gchar *ret;
+
+    db = bmp_cfg_db_open();
+    bmp_cfg_db_get_string(db, NULL, "proxy_user", &ret);
+    bmp_cfg_db_close(db);
+
+    if (ret != NULL && *ret != '\0')
+        gtk_entry_set_text(entry, ret);
+}
+
+static void
+on_proxy_user_changed(GtkEntry * entry,
+                     gpointer data)
+{
+    ConfigDb *db;
+    gchar *ret = g_strdup(gtk_entry_get_text(entry));
+
+    db = bmp_cfg_db_open();
+    bmp_cfg_db_set_string(db, NULL, "proxy_user", ret);
+    bmp_cfg_db_close(db);
+
+    g_free(ret);
+}
+
+static void
+on_proxy_pass_realize(GtkEntry * entry,
+                     gpointer data)
+{
+    ConfigDb *db;
+    gchar *ret;
+
+    db = bmp_cfg_db_open();
+    bmp_cfg_db_get_string(db, NULL, "proxy_pass", &ret);
+    bmp_cfg_db_close(db);
+
+    if (ret != NULL && *ret != '\0')
+        gtk_entry_set_text(entry, ret);
+}
+
+static void
+on_proxy_pass_changed(GtkEntry * entry,
+                     gpointer data)
+{
+    ConfigDb *db;
+    gchar *ret = g_strdup(gtk_entry_get_text(entry));
+
+    db = bmp_cfg_db_open();
+    bmp_cfg_db_set_string(db, NULL, "proxy_pass", ret);
+    bmp_cfg_db_close(db);
+
+    g_free(ret);
+}
+
 static void
 input_plugin_enable_prefs(GtkTreeView * treeview,
                           GtkButton * button)
@@ -1717,6 +1887,18 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_eq_preset_add_clicked)
     FUNC_MAP_ENTRY(on_eq_preset_remove_clicked)
     FUNC_MAP_ENTRY(on_skin_refresh_button_clicked)
+    FUNC_MAP_ENTRY(on_proxy_use_toggled)
+    FUNC_MAP_ENTRY(on_proxy_use_realize)
+    FUNC_MAP_ENTRY(on_proxy_auth_toggled)
+    FUNC_MAP_ENTRY(on_proxy_auth_realize)
+    FUNC_MAP_ENTRY(on_proxy_host_realize)
+    FUNC_MAP_ENTRY(on_proxy_host_changed)
+    FUNC_MAP_ENTRY(on_proxy_port_realize)
+    FUNC_MAP_ENTRY(on_proxy_port_changed)
+    FUNC_MAP_ENTRY(on_proxy_user_realize)
+    FUNC_MAP_ENTRY(on_proxy_user_changed)
+    FUNC_MAP_ENTRY(on_proxy_pass_realize)
+    FUNC_MAP_ENTRY(on_proxy_pass_changed)
 FUNC_MAP_END
 
 void
