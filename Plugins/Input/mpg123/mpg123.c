@@ -189,16 +189,6 @@ init(void)
     bmp_cfg_db_get_bool(db, "MPG123", "use_udp_channel",
                         &mpg123_cfg.use_udp_channel);
 
-    bmp_cfg_db_get_bool(db, "MPG123", "use_proxy", &mpg123_cfg.use_proxy);
-    if (!bmp_cfg_db_get_string
-        (db, "MPG123", "proxy_host", &mpg123_cfg.proxy_host))
-        mpg123_cfg.proxy_host = g_strdup("localhost");
-    bmp_cfg_db_get_int(db, "MPG123", "proxy_port", &mpg123_cfg.proxy_port);
-    bmp_cfg_db_get_bool(db, "MPG123", "proxy_use_auth",
-                        &mpg123_cfg.proxy_use_auth);
-    bmp_cfg_db_get_string(db, "MPG123", "proxy_user", &mpg123_cfg.proxy_user);
-    bmp_cfg_db_get_string(db, "MPG123", "proxy_pass", &mpg123_cfg.proxy_pass);
-
     bmp_cfg_db_get_bool(db, "MPG123", "title_override",
                         &mpg123_cfg.title_override);
     bmp_cfg_db_get_bool(db, "MPG123", "disable_id3v2",
@@ -213,6 +203,13 @@ init(void)
     bmp_cfg_db_get_string(db, "MPG123", "title_encoding", &mpg123_cfg.title_encoding);
     if (mpg123_cfg.title_encoding_enabled)
         mpg123_id3_encoding_list = g_strsplit_set(mpg123_cfg.title_encoding, ENCODING_SEPARATOR, 0);
+
+    bmp_cfg_db_get_bool(db, NULL, "use_proxy", &mpg123_cfg.use_proxy);
+    bmp_cfg_db_get_string(db, NULL, "proxy_host", &mpg123_cfg.proxy_host);
+    bmp_cfg_db_get_int(db, NULL, "proxy_port", &mpg123_cfg.proxy_port);
+    bmp_cfg_db_get_bool(db, NULL, "proxy_use_auth", &mpg123_cfg.proxy_use_auth);
+    bmp_cfg_db_get_string(db, NULL, "proxy_user", &mpg123_cfg.proxy_user);
+    bmp_cfg_db_get_string(db, NULL, "proxy_pass", &mpg123_cfg.proxy_pass);
 
     bmp_cfg_db_close(db);
 

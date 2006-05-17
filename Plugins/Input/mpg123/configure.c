@@ -24,17 +24,9 @@ static GtkWidget *decode_freq_frame, *decode_freq_vbox, *decode_freq_1to1,
     *decode_freq_1to2, *decode_freq_1to4;
 
 static GtkObject *streaming_size_adj, *streaming_pre_adj;
-static GtkWidget *streaming_proxy_use, *streaming_proxy_host_entry;
-static GtkWidget *streaming_proxy_port_entry, *streaming_save_use,
-    *streaming_save_entry;
-static GtkWidget *streaming_proxy_auth_use;
-static GtkWidget *streaming_proxy_auth_pass_entry,
-    *streaming_proxy_auth_user_entry;
-static GtkWidget *streaming_proxy_auth_user_label,
-    *streaming_proxy_auth_pass_label;
+static GtkWidget *streaming_save_use, *streaming_save_entry;
 static GtkWidget *streaming_cast_title, *streaming_udp_title;
-static GtkWidget *streaming_proxy_hbox, *streaming_proxy_auth_hbox,
-    *streaming_save_dirbrowser;
+static GtkWidget *streaming_save_dirbrowser;
 static GtkWidget *streaming_save_hbox, *title_id3_box, *title_tag_desc;
 static GtkWidget *title_override, *title_id3_entry, *title_id3v2_disable;
 
@@ -71,37 +63,6 @@ mpg123_configurewin_ok(GtkWidget * widget, gpointer data)
     mpg123_cfg.http_prebuffer =
         (gint) GTK_ADJUSTMENT(streaming_pre_adj)->value;
 
-    mpg123_cfg.use_proxy =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(streaming_proxy_use));
-    g_free(mpg123_cfg.proxy_host);
-    mpg123_cfg.proxy_host =
-        g_strdup(gtk_entry_get_text(GTK_ENTRY(streaming_proxy_host_entry)));
-    mpg123_cfg.proxy_port =
-        atoi(gtk_entry_get_text(GTK_ENTRY(streaming_proxy_port_entry)));
-
-    mpg123_cfg.proxy_use_auth =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
-                                     (streaming_proxy_auth_use));
-
-    if (mpg123_cfg.proxy_user)
-        g_free(mpg123_cfg.proxy_user);
-    mpg123_cfg.proxy_user = NULL;
-    if (strlen
-        (gtk_entry_get_text(GTK_ENTRY(streaming_proxy_auth_user_entry))) > 0)
-        mpg123_cfg.proxy_user =
-            g_strdup(gtk_entry_get_text
-                     (GTK_ENTRY(streaming_proxy_auth_user_entry)));
-
-    if (mpg123_cfg.proxy_pass)
-        g_free(mpg123_cfg.proxy_pass);
-    mpg123_cfg.proxy_pass = NULL;
-    if (strlen
-        (gtk_entry_get_text(GTK_ENTRY(streaming_proxy_auth_pass_entry))) > 0)
-        mpg123_cfg.proxy_pass =
-            g_strdup(gtk_entry_get_text
-                     (GTK_ENTRY(streaming_proxy_auth_pass_entry)));
-
-
     mpg123_cfg.save_http_stream =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(streaming_save_use));
     if (mpg123_cfg.save_http_path)
@@ -132,21 +93,6 @@ mpg123_configurewin_ok(GtkWidget * widget, gpointer data)
                        mpg123_cfg.http_buffer_size);
     bmp_cfg_db_set_int(db, "MPG123", "http_prebuffer",
                        mpg123_cfg.http_prebuffer);
-    bmp_cfg_db_set_bool(db, "MPG123", "use_proxy", mpg123_cfg.use_proxy);
-    bmp_cfg_db_set_string(db, "MPG123", "proxy_host", mpg123_cfg.proxy_host);
-    bmp_cfg_db_set_int(db, "MPG123", "proxy_port", mpg123_cfg.proxy_port);
-    bmp_cfg_db_set_bool(db, "MPG123", "proxy_use_auth",
-                        mpg123_cfg.proxy_use_auth);
-    if (mpg123_cfg.proxy_user)
-        bmp_cfg_db_set_string(db, "MPG123", "proxy_user",
-                              mpg123_cfg.proxy_user);
-    else
-        bmp_cfg_db_unset_key(db, "MPG123", "proxy_user");
-    if (mpg123_cfg.proxy_pass)
-        bmp_cfg_db_set_string(db, "MPG123", "proxy_pass",
-                              mpg123_cfg.proxy_pass);
-    else
-        bmp_cfg_db_unset_key(db, "MPG123", "proxy_pass");
     bmp_cfg_db_set_bool(db, "MPG123", "save_http_stream",
                         mpg123_cfg.save_http_stream);
     bmp_cfg_db_set_string(db, "MPG123", "save_http_path",
@@ -166,38 +112,6 @@ mpg123_configurewin_ok(GtkWidget * widget, gpointer data)
 
     bmp_cfg_db_close(db);
     gtk_widget_destroy(mpg123_configurewin);
-}
-
-static void
-proxy_use_cb(GtkWidget * w, gpointer data)
-{
-    gboolean use_proxy, use_proxy_auth;
-
-    use_proxy =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(streaming_proxy_use));
-    use_proxy_auth =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
-                                     (streaming_proxy_auth_use));
-
-    gtk_widget_set_sensitive(streaming_proxy_hbox, use_proxy);
-    gtk_widget_set_sensitive(streaming_proxy_auth_use, use_proxy);
-    gtk_widget_set_sensitive(streaming_proxy_auth_hbox, use_proxy
-                             && use_proxy_auth);
-}
-
-static void
-proxy_auth_use_cb(GtkWidget * w, gpointer data)
-{
-    gboolean use_proxy, use_proxy_auth;
-
-    use_proxy =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(streaming_proxy_use));
-    use_proxy_auth =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
-                                     (streaming_proxy_auth_use));
-
-    gtk_widget_set_sensitive(streaming_proxy_auth_hbox, use_proxy
-                             && use_proxy_auth);
 }
 
 static void
@@ -272,15 +186,11 @@ mpg123_configure(void)
     GtkWidget *streaming_size_box, *streaming_size_label,
         *streaming_size_spin;
     GtkWidget *streaming_pre_box, *streaming_pre_label, *streaming_pre_spin;
-    GtkWidget *streaming_proxy_frame, *streaming_proxy_vbox;
-    GtkWidget *streaming_proxy_port_label, *streaming_proxy_host_label;
     GtkWidget *streaming_save_frame, *streaming_save_vbox;
     GtkWidget *streaming_save_label, *streaming_save_browse;
     GtkWidget *streaming_cast_frame, *streaming_cast_vbox;
     GtkWidget *title_frame, *title_id3_vbox, *title_id3_label;
     GtkWidget *bbox, *ok, *cancel;
-
-    char *temp;
 
     if (mpg123_configurewin != NULL) {
         gtk_window_present(GTK_WINDOW(mpg123_configurewin));
@@ -445,97 +355,6 @@ mpg123_configure(void)
     gtk_widget_set_usize(streaming_pre_spin, 60, -1);
     gtk_box_pack_start(GTK_BOX(streaming_pre_box), streaming_pre_spin,
                        FALSE, FALSE, 0);
-
-    /*
-     * Proxy config.
-     */
-    streaming_proxy_frame = gtk_frame_new(_("Proxy:"));
-    gtk_container_set_border_width(GTK_CONTAINER(streaming_proxy_frame), 5);
-    gtk_box_pack_start(GTK_BOX(streaming_vbox), streaming_proxy_frame,
-                       FALSE, FALSE, 0);
-
-    streaming_proxy_vbox = gtk_vbox_new(FALSE, 5);
-    gtk_container_set_border_width(GTK_CONTAINER(streaming_proxy_vbox), 5);
-    gtk_container_add(GTK_CONTAINER(streaming_proxy_frame),
-                      streaming_proxy_vbox);
-
-    streaming_proxy_use = gtk_check_button_new_with_label(_("Use proxy"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(streaming_proxy_use),
-                                 mpg123_cfg.use_proxy);
-    g_signal_connect(G_OBJECT(streaming_proxy_use), "clicked",
-                     G_CALLBACK(proxy_use_cb), NULL);
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_vbox), streaming_proxy_use,
-                       FALSE, FALSE, 0);
-
-    streaming_proxy_hbox = gtk_hbox_new(FALSE, 5);
-    gtk_widget_set_sensitive(streaming_proxy_hbox, mpg123_cfg.use_proxy);
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_vbox), streaming_proxy_hbox,
-                       FALSE, FALSE, 0);
-
-    streaming_proxy_host_label = gtk_label_new(_("Host:"));
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_hbox),
-                       streaming_proxy_host_label, FALSE, FALSE, 0);
-
-    streaming_proxy_host_entry = gtk_entry_new();
-    gtk_entry_set_text(GTK_ENTRY(streaming_proxy_host_entry),
-                       mpg123_cfg.proxy_host);
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_hbox),
-                       streaming_proxy_host_entry, TRUE, TRUE, 0);
-
-    streaming_proxy_port_label = gtk_label_new(_("Port:"));
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_hbox),
-                       streaming_proxy_port_label, FALSE, FALSE, 0);
-
-    streaming_proxy_port_entry = gtk_entry_new();
-    gtk_widget_set_usize(streaming_proxy_port_entry, 50, -1);
-    temp = g_strdup_printf("%d", mpg123_cfg.proxy_port);
-    gtk_entry_set_text(GTK_ENTRY(streaming_proxy_port_entry), temp);
-    g_free(temp);
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_hbox),
-                       streaming_proxy_port_entry, FALSE, FALSE, 0);
-
-    streaming_proxy_auth_use =
-        gtk_check_button_new_with_label(_("Use authentication"));
-    gtk_widget_set_sensitive(streaming_proxy_auth_use, mpg123_cfg.use_proxy);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
-                                 (streaming_proxy_auth_use),
-                                 mpg123_cfg.proxy_use_auth);
-    g_signal_connect(G_OBJECT(streaming_proxy_auth_use), "clicked",
-                     G_CALLBACK(proxy_auth_use_cb), NULL);
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_vbox),
-                       streaming_proxy_auth_use, FALSE, FALSE, 0);
-
-    streaming_proxy_auth_hbox = gtk_hbox_new(FALSE, 5);
-    gtk_widget_set_sensitive(streaming_proxy_auth_hbox,
-                             mpg123_cfg.use_proxy
-                             && mpg123_cfg.proxy_use_auth);
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_vbox),
-                       streaming_proxy_auth_hbox, FALSE, FALSE, 0);
-
-    streaming_proxy_auth_user_label = gtk_label_new(_("Username:"));
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_auth_hbox),
-                       streaming_proxy_auth_user_label, FALSE, FALSE, 0);
-
-    streaming_proxy_auth_user_entry = gtk_entry_new();
-    if (mpg123_cfg.proxy_user)
-        gtk_entry_set_text(GTK_ENTRY(streaming_proxy_auth_user_entry),
-                           mpg123_cfg.proxy_user);
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_auth_hbox),
-                       streaming_proxy_auth_user_entry, TRUE, TRUE, 0);
-
-    streaming_proxy_auth_pass_label = gtk_label_new(_("Password:"));
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_auth_hbox),
-                       streaming_proxy_auth_pass_label, FALSE, FALSE, 0);
-
-    streaming_proxy_auth_pass_entry = gtk_entry_new();
-    if (mpg123_cfg.proxy_pass)
-        gtk_entry_set_text(GTK_ENTRY(streaming_proxy_auth_pass_entry),
-                           mpg123_cfg.proxy_pass);
-    gtk_entry_set_visibility(GTK_ENTRY(streaming_proxy_auth_pass_entry),
-                             FALSE);
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_auth_hbox),
-                       streaming_proxy_auth_pass_entry, TRUE, TRUE, 0);
-
 
     /*
      * Save to disk config.

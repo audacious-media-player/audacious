@@ -873,15 +873,6 @@ vorbis_init(void)
                                &vorbis_cfg.save_http_path))
         vorbis_cfg.save_http_path = g_strdup(g_get_home_dir());
 
-    bmp_cfg_db_get_bool(db, "vorbis", "use_proxy", &vorbis_cfg.use_proxy);
-    if (!bmp_cfg_db_get_string
-        (db, "vorbis", "proxy_host", &vorbis_cfg.proxy_host))
-        vorbis_cfg.proxy_host = g_strdup("localhost");
-    bmp_cfg_db_get_int(db, "vorbis", "proxy_port", &vorbis_cfg.proxy_port);
-    bmp_cfg_db_get_bool(db, "vorbis", "proxy_use_auth",
-                        &vorbis_cfg.proxy_use_auth);
-    bmp_cfg_db_get_string(db, "vorbis", "proxy_user", &vorbis_cfg.proxy_user);
-    bmp_cfg_db_get_string(db, "vorbis", "proxy_pass", &vorbis_cfg.proxy_pass);
     bmp_cfg_db_get_bool(db, "vorbis", "tag_override",
                         &vorbis_cfg.tag_override);
     if (!bmp_cfg_db_get_string(db, "vorbis", "tag_format",
@@ -901,6 +892,14 @@ vorbis_init(void)
         vorbis_tag_encoding_list = g_strsplit_set(vorbis_cfg.title_encoding, ENCODING_SEPARATOR, 0);
     
     /* Encoding patch */
+
+    bmp_cfg_db_get_bool(db, NULL, "use_proxy", &vorbis_cfg.use_proxy);
+    bmp_cfg_db_get_string(db, NULL, "proxy_host", &vorbis_cfg.proxy_host);
+    bmp_cfg_db_get_int(db, NULL, "proxy_port", &vorbis_cfg.proxy_port);
+    bmp_cfg_db_get_bool(db, NULL, "proxy_use_auth", &vorbis_cfg.proxy_use_auth);
+    bmp_cfg_db_get_string(db, NULL, "proxy_user", &vorbis_cfg.proxy_user);
+    bmp_cfg_db_get_string(db, NULL, "proxy_pass", &vorbis_cfg.proxy_pass);
+
     bmp_cfg_db_close(db);
 
     vf_mutex = g_mutex_new();

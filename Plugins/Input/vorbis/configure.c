@@ -21,16 +21,9 @@ extern GMutex *vf_mutex;
 static GtkWidget *vorbis_configurewin = NULL;
 static GtkWidget *vbox, *notebook;
 
-static GtkWidget *streaming_proxy_use, *streaming_proxy_host_entry;
-static GtkWidget *streaming_proxy_port_entry, *streaming_save_entry;
+static GtkWidget *streaming_save_entry;
 static GtkWidget *streaming_save_use, *streaming_size_spin,
     *streaming_pre_spin;
-static GtkWidget *streaming_proxy_auth_use;
-static GtkWidget *streaming_proxy_auth_pass_entry,
-    *streaming_proxy_auth_user_entry;
-static GtkWidget *streaming_proxy_auth_user_label,
-    *streaming_proxy_auth_pass_label;
-static GtkWidget *streaming_proxy_hbox, *streaming_proxy_auth_hbox;
 static GtkWidget *streaming_save_dirbrowser, *streaming_save_hbox;
 static GtkWidget *title_tag_override, *title_tag_box, *title_tag_entry,
     *title_desc;
@@ -53,35 +46,6 @@ vorbis_configurewin_ok(GtkWidget * widget, gpointer data)
                                          (streaming_size_spin));
     vorbis_cfg.http_prebuffer =
         gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(streaming_pre_spin));
-
-    vorbis_cfg.use_proxy =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(streaming_proxy_use));
-    g_free(vorbis_cfg.proxy_host);
-    vorbis_cfg.proxy_host =
-        g_strdup(gtk_entry_get_text(GTK_ENTRY(streaming_proxy_host_entry)));
-    vorbis_cfg.proxy_port =
-        atoi(gtk_entry_get_text(GTK_ENTRY(streaming_proxy_port_entry)));
-
-    vorbis_cfg.proxy_use_auth =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
-                                     (streaming_proxy_auth_use));
-
-    g_free(vorbis_cfg.proxy_user);
-    vorbis_cfg.proxy_user = NULL;
-    if (strlen
-        (gtk_entry_get_text(GTK_ENTRY(streaming_proxy_auth_user_entry))) > 0)
-        vorbis_cfg.proxy_user =
-            g_strdup(gtk_entry_get_text
-                     (GTK_ENTRY(streaming_proxy_auth_user_entry)));
-
-    g_free(vorbis_cfg.proxy_pass);
-    vorbis_cfg.proxy_pass = NULL;
-    if (strlen
-        (gtk_entry_get_text(GTK_ENTRY(streaming_proxy_auth_pass_entry))) > 0)
-        vorbis_cfg.proxy_pass =
-            g_strdup(gtk_entry_get_text
-                     (GTK_ENTRY(streaming_proxy_auth_pass_entry)));
-
 
     vorbis_cfg.save_http_stream =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(streaming_save_use));
@@ -116,8 +80,6 @@ vorbis_configurewin_ok(GtkWidget * widget, gpointer data)
                        vorbis_cfg.http_buffer_size);
     bmp_cfg_db_set_int(db, "vorbis", "http_prebuffer",
                        vorbis_cfg.http_prebuffer);
-    bmp_cfg_db_set_bool(db, "vorbis", "use_proxy", vorbis_cfg.use_proxy);
-    bmp_cfg_db_set_string(db, "vorbis", "proxy_host", vorbis_cfg.proxy_host);
     bmp_cfg_db_set_bool(db, "vorbis", "save_http_stream",
                         vorbis_cfg.save_http_stream);
     bmp_cfg_db_set_string(db, "vorbis", "save_http_path",
@@ -125,20 +87,6 @@ vorbis_configurewin_ok(GtkWidget * widget, gpointer data)
     bmp_cfg_db_set_bool(db, "vorbis", "tag_override",
                         vorbis_cfg.tag_override);
     bmp_cfg_db_set_string(db, "vorbis", "tag_format", vorbis_cfg.tag_format);
-    bmp_cfg_db_set_int(db, "vorbis", "proxy_port", vorbis_cfg.proxy_port);
-    bmp_cfg_db_set_bool(db, "vorbis", "proxy_use_auth",
-                        vorbis_cfg.proxy_use_auth);
-    if (vorbis_cfg.proxy_user)
-        bmp_cfg_db_set_string(db, "vorbis", "proxy_user",
-                              vorbis_cfg.proxy_user);
-    else
-        bmp_cfg_db_unset_key(db, "vorbis", "proxy_user");
-
-    if (vorbis_cfg.proxy_pass)
-        bmp_cfg_db_set_string(db, "vorbis", "proxy_pass",
-                              vorbis_cfg.proxy_pass);
-    else
-        bmp_cfg_db_unset_key(db, "vorbis", "proxy_pass");
     bmp_cfg_db_set_bool(db, "vorbis", "use_anticlip",
                         vorbis_cfg.use_anticlip);
     bmp_cfg_db_set_bool(db, "vorbis", "use_replaygain",
@@ -152,38 +100,6 @@ vorbis_configurewin_ok(GtkWidget * widget, gpointer data)
     /* Encoding patch */
     bmp_cfg_db_close(db);
     gtk_widget_destroy(vorbis_configurewin);
-}
-
-static void
-proxy_use_cb(GtkWidget * w, gpointer data)
-{
-    gboolean use_proxy, use_proxy_auth;
-
-    use_proxy =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(streaming_proxy_use));
-    use_proxy_auth =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
-                                     (streaming_proxy_auth_use));
-
-    gtk_widget_set_sensitive(streaming_proxy_hbox, use_proxy);
-    gtk_widget_set_sensitive(streaming_proxy_auth_use, use_proxy);
-    gtk_widget_set_sensitive(streaming_proxy_auth_hbox, use_proxy
-                             && use_proxy_auth);
-}
-
-static void
-proxy_auth_use_cb(GtkWidget * w, gpointer data)
-{
-    gboolean use_proxy, use_proxy_auth;
-
-    use_proxy =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(streaming_proxy_use));
-    use_proxy_auth =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
-                                     (streaming_proxy_auth_use));
-
-    gtk_widget_set_sensitive(streaming_proxy_auth_hbox, use_proxy
-                             && use_proxy_auth);
 }
 
 static void
@@ -266,8 +182,6 @@ vorbis_configure(void)
     GtkWidget *streaming_buf_frame, *streaming_buf_hbox;
     GtkWidget *streaming_size_box, *streaming_size_label;
     GtkWidget *streaming_pre_box, *streaming_pre_label;
-    GtkWidget *streaming_proxy_frame, *streaming_proxy_vbox;
-    GtkWidget *streaming_proxy_port_label, *streaming_proxy_host_label;
     GtkWidget *streaming_save_frame, *streaming_save_vbox;
     GtkWidget *streaming_save_label, *streaming_save_browse;
     GtkWidget *title_frame, *title_tag_vbox, *title_tag_label;
@@ -275,8 +189,6 @@ vorbis_configure(void)
     GtkWidget *bbox, *ok, *cancel;
     GtkWidget *rg_type_frame, *rg_type_vbox, *rg_album_gain;
     GtkObject *streaming_size_adj, *streaming_pre_adj;
-
-    char *temp;
 
     if (vorbis_configurewin != NULL) {
         gtk_window_present(GTK_WINDOW(vorbis_configurewin));
@@ -341,97 +253,6 @@ vorbis_configure(void)
     gtk_widget_set_usize(streaming_pre_spin, 60, -1);
     gtk_box_pack_start(GTK_BOX(streaming_pre_box), streaming_pre_spin,
                        FALSE, FALSE, 0);
-
-    /*
-     * Proxy config.
-     */
-    streaming_proxy_frame = gtk_frame_new(_("Proxy:"));
-    gtk_container_set_border_width(GTK_CONTAINER(streaming_proxy_frame), 5);
-    gtk_box_pack_start(GTK_BOX(streaming_vbox), streaming_proxy_frame,
-                       FALSE, FALSE, 0);
-
-    streaming_proxy_vbox = gtk_vbox_new(FALSE, 5);
-    gtk_container_set_border_width(GTK_CONTAINER(streaming_proxy_vbox), 5);
-    gtk_container_add(GTK_CONTAINER(streaming_proxy_frame),
-                      streaming_proxy_vbox);
-
-    streaming_proxy_use = gtk_check_button_new_with_label(_("Use proxy"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(streaming_proxy_use),
-                                 vorbis_cfg.use_proxy);
-    g_signal_connect(G_OBJECT(streaming_proxy_use), "clicked",
-                     G_CALLBACK(proxy_use_cb), NULL);
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_vbox), streaming_proxy_use,
-                       FALSE, FALSE, 0);
-
-    streaming_proxy_hbox = gtk_hbox_new(FALSE, 5);
-    gtk_widget_set_sensitive(streaming_proxy_hbox, vorbis_cfg.use_proxy);
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_vbox), streaming_proxy_hbox,
-                       FALSE, FALSE, 0);
-
-    streaming_proxy_host_label = gtk_label_new(_("Host:"));
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_hbox),
-                       streaming_proxy_host_label, FALSE, FALSE, 0);
-
-    streaming_proxy_host_entry = gtk_entry_new();
-    gtk_entry_set_text(GTK_ENTRY(streaming_proxy_host_entry),
-                       vorbis_cfg.proxy_host);
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_hbox),
-                       streaming_proxy_host_entry, TRUE, TRUE, 0);
-
-    streaming_proxy_port_label = gtk_label_new(_("Port:"));
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_hbox),
-                       streaming_proxy_port_label, FALSE, FALSE, 0);
-
-    streaming_proxy_port_entry = gtk_entry_new();
-    gtk_widget_set_usize(streaming_proxy_port_entry, 50, -1);
-    temp = g_strdup_printf("%d", vorbis_cfg.proxy_port);
-    gtk_entry_set_text(GTK_ENTRY(streaming_proxy_port_entry), temp);
-    g_free(temp);
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_hbox),
-                       streaming_proxy_port_entry, FALSE, FALSE, 0);
-
-    streaming_proxy_auth_use =
-        gtk_check_button_new_with_label(_("Use authentication"));
-    gtk_widget_set_sensitive(streaming_proxy_auth_use, vorbis_cfg.use_proxy);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
-                                 (streaming_proxy_auth_use),
-                                 vorbis_cfg.proxy_use_auth);
-    g_signal_connect(G_OBJECT(streaming_proxy_auth_use), "clicked",
-                     G_CALLBACK(proxy_auth_use_cb), NULL);
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_vbox),
-                       streaming_proxy_auth_use, FALSE, FALSE, 0);
-
-    streaming_proxy_auth_hbox = gtk_hbox_new(FALSE, 5);
-    gtk_widget_set_sensitive(streaming_proxy_auth_hbox,
-                             vorbis_cfg.use_proxy
-                             && vorbis_cfg.proxy_use_auth);
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_vbox),
-                       streaming_proxy_auth_hbox, FALSE, FALSE, 0);
-
-    streaming_proxy_auth_user_label = gtk_label_new(_("Username:"));
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_auth_hbox),
-                       streaming_proxy_auth_user_label, FALSE, FALSE, 0);
-
-    streaming_proxy_auth_user_entry = gtk_entry_new();
-    if (vorbis_cfg.proxy_user)
-        gtk_entry_set_text(GTK_ENTRY(streaming_proxy_auth_user_entry),
-                           vorbis_cfg.proxy_user);
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_auth_hbox),
-                       streaming_proxy_auth_user_entry, TRUE, TRUE, 0);
-
-    streaming_proxy_auth_pass_label = gtk_label_new(_("Password:"));
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_auth_hbox),
-                       streaming_proxy_auth_pass_label, FALSE, FALSE, 0);
-
-    streaming_proxy_auth_pass_entry = gtk_entry_new();
-    if (vorbis_cfg.proxy_pass)
-        gtk_entry_set_text(GTK_ENTRY(streaming_proxy_auth_pass_entry),
-                           vorbis_cfg.proxy_pass);
-    gtk_entry_set_visibility(GTK_ENTRY(streaming_proxy_auth_pass_entry),
-                             FALSE);
-    gtk_box_pack_start(GTK_BOX(streaming_proxy_auth_hbox),
-                       streaming_proxy_auth_pass_entry, TRUE, TRUE, 0);
-
 
     /*
      * Save to disk config.

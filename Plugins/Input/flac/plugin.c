@@ -260,12 +260,6 @@ void FLAC_XMMS__init()
 
 	bmp_cfg_db_get_int(db, "flac", "stream.http_buffer_size", &flac_cfg.stream.http_buffer_size);
 	bmp_cfg_db_get_int(db, "flac", "stream.http_prebuffer", &flac_cfg.stream.http_prebuffer);
-	bmp_cfg_db_get_bool(db, "flac", "stream.use_proxy", &flac_cfg.stream.use_proxy);
-	bmp_cfg_db_get_string(db, "flac", "stream.proxy_host", &flac_cfg.stream.proxy_host);
-	bmp_cfg_db_get_int(db, "flac", "stream.proxy_port", &flac_cfg.stream.proxy_port);
-	bmp_cfg_db_get_bool(db, "flac", "stream.proxy_use_auth", &flac_cfg.stream.proxy_use_auth);
-	bmp_cfg_db_get_string(db, "flac", "stream.proxy_user", &flac_cfg.stream.proxy_user);
-	bmp_cfg_db_get_string(db, "flac", "stream.proxy_pass", &flac_cfg.stream.proxy_pass);
 	bmp_cfg_db_get_bool(db, "flac", "stream.save_http_stream", &flac_cfg.stream.save_http_stream);
 	if (!bmp_cfg_db_get_string(db, "flac", "stream.save_http_path", &flac_cfg.stream.save_http_path) ||
 		 ! *flac_cfg.stream.save_http_path) {
@@ -282,6 +276,13 @@ void FLAC_XMMS__init()
 	init_decoder_func_tables();
  	decoder_func_table_ = DECODER_FUNCS [DECODER_FILE];
 	decoder_ = decoder_func_table_ -> new_decoder();
+
+	bmp_cfg_db_get_bool(db, NULL, "use_proxy", &flac_cfg.stream.use_proxy);
+	bmp_cfg_db_get_string(db, NULL, "proxy_host", &flac_cfg.stream.proxy_host);
+	bmp_cfg_db_get_int(db, NULL, "proxy_port", &flac_cfg.stream.proxy_port);
+	bmp_cfg_db_get_bool(db, NULL, "proxy_use_auth", &flac_cfg.stream.proxy_use_auth);
+	bmp_cfg_db_get_string(db, NULL, "proxy_user", &flac_cfg.stream.proxy_user);
+	bmp_cfg_db_get_string(db, NULL, "proxy_pass", &flac_cfg.stream.proxy_pass);
 
 	bmp_cfg_db_close(db);
 }
