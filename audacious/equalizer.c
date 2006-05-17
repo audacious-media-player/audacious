@@ -433,7 +433,7 @@ equalizerwin_motion(GtkWidget * widget,
     else 
     {
         handle_motion_cb(equalizerwin_wlist, widget, event);
-        draw_main_window(FALSE); /* XXX: shouldn't this be draw_equalizer_window()? */
+        draw_equalizer_window(FALSE);
     }
 
     gdk_flush();

@@ -1656,7 +1656,7 @@ playlistwin_create_window(void)
     dock_window_list = dock_window_set_decorated(dock_window_list,
                                                  GTK_WINDOW(playlistwin),
                                                  cfg.show_wm_decorations);
-    
+
     gtk_window_set_transient_for(GTK_WINDOW(playlistwin),
                                  GTK_WINDOW(mainwin));
     gtk_window_set_skip_taskbar_hint(GTK_WINDOW(playlistwin), TRUE);
