@@ -1,4 +1,7 @@
-/*  BMP - Cross-platform multimedia player
+/*  Audacious - Cross-platform multimedia player
+ *  Copyright (C) 2005-2006  Audacious development team.
+ *
+ *  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
  *
  *  Based on XMMS:
@@ -3260,10 +3263,6 @@ mainwin_create_window(void)
 
     gtk_widget_set_size_request(mainwin, width, height);
     gtk_widget_set_app_paintable(mainwin, TRUE);
-
-    dock_window_list = dock_window_set_decorated(dock_window_list,
-                                                 GTK_WINDOW(mainwin),
-                                                 cfg.show_wm_decorations);
 
     dock_window_list = dock_window_set_decorated(dock_window_list,
                                                  GTK_WINDOW(mainwin),

@@ -1,4 +1,7 @@
-/*  BMP - Cross-platform multimedia player
+/*  Audacious - Cross-platform multimedia player
+ *  Copyright (C) 2005-2006  Audacious development team.
+ *
+ *  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
  *
  *  Based on XMMS:
@@ -533,9 +536,6 @@ playlistwin_set_shade(gboolean shaded)
     dock_shade(dock_window_list, GTK_WINDOW(playlistwin),
                playlistwin_get_height());
 
-    dock_shade(dock_window_list, GTK_WINDOW(playlistwin),
-               playlistwin_get_height());
-
     playlistwin_set_geometry_hints(cfg.playlist_shaded);
 
     gtk_window_resize(GTK_WINDOW(playlistwin),
@@ -579,13 +579,20 @@ playlistwin_release(GtkWidget * widget,
     gdk_pointer_ungrab(GDK_CURRENT_TIME);
     playlistwin_resizing = FALSE;
     gdk_flush();
+ 
+    if (dock_is_moving(GTK_WINDOW(playlistwin)))
+    {
+       dock_move_release(GTK_WINDOW(playlistwin));
 
-    if (cfg.playlist_transparent)
-        playlistwin_update_list();
-
-    handle_release_cb(playlistwin_wlist, widget, event);
-    playlist_popup_destroy();
-    draw_playlist_window(FALSE);
+       if (cfg.playlist_transparent)
+           playlistwin_update_list();
+    }
+    else
+    {
+       handle_release_cb(playlistwin_wlist, widget, event);
+       playlist_popup_destroy();
+       draw_playlist_window(FALSE);
+    }
 }
 
 void
@@ -1113,6 +1120,8 @@ playlistwin_press(GtkWidget * widget,
              && event->y < 14) {
         /* double click on title bar */
         playlistwin_shade_toggle();
+        if (dock_is_moving(GTK_WINDOW(playlistwin)))
+            dock_move_release(GTK_WINDOW(playlistwin));
         return TRUE;
     }
     else if (event->button == 3 &&
@@ -1644,8 +1653,10 @@ playlistwin_create_window(void)
                                 playlistwin_get_height());
     gtk_window_set_resizable(GTK_WINDOW(playlistwin), TRUE);
     playlistwin_set_geometry_hints(cfg.playlist_shaded);
-    gtk_window_set_decorated(GTK_WINDOW(playlistwin), cfg.show_wm_decorations);
-
+    dock_window_list = dock_window_set_decorated(dock_window_list,
+                                                 GTK_WINDOW(playlistwin),
+                                                 cfg.show_wm_decorations);
+    
     gtk_window_set_transient_for(GTK_WINDOW(playlistwin),
                                  GTK_WINDOW(mainwin));
     gtk_window_set_skip_taskbar_hint(GTK_WINDOW(playlistwin), TRUE);

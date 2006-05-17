@@ -1,4 +1,7 @@
-/*  BMP - Cross-platform multimedia player
+/*  Audacious - Cross-platform multimedia player
+ *  Copyright (C) 2005-2006  Audacious development team.
+ *
+ *  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
  *
  *  Based on XMMS:
@@ -423,8 +426,15 @@ equalizerwin_motion(GtkWidget * widget,
 {
     GdkEvent *gevent;
 
-    handle_motion_cb(equalizerwin_wlist, widget, event);
-    draw_main_window(FALSE); /* XXX: shouldn't this be draw_equalizer_window()? */
+    if (dock_is_moving(GTK_WINDOW(equalizerwin)))
+    {
+        dock_move_motion(GTK_WINDOW(equalizerwin), event);
+    }
+    else 
+    {
+        handle_motion_cb(equalizerwin_wlist, widget, event);
+        draw_main_window(FALSE); /* XXX: shouldn't this be draw_equalizer_window()? */
+    }
 
     gdk_flush();
 
@@ -439,6 +449,7 @@ equalizerwin_release(GtkWidget * widget,
 {
     gdk_pointer_ungrab(GDK_CURRENT_TIME);
     gdk_flush();
+
     if (dock_is_moving(GTK_WINDOW(equalizerwin))) {
         dock_move_release(GTK_WINDOW(equalizerwin));
     }
@@ -743,7 +754,10 @@ equalizerwin_create_window(void)
 
     gtk_window_set_default_size(GTK_WINDOW(equalizerwin), width, height);
     gtk_window_set_resizable(GTK_WINDOW(equalizerwin), FALSE);
-    gtk_window_set_decorated(GTK_WINDOW(equalizerwin), cfg.show_wm_decorations);
+
+    dock_window_list = dock_window_set_decorated(dock_window_list,
+                                                 GTK_WINDOW(equalizerwin),
+                                                 cfg.show_wm_decorations);
 
     gtk_window_set_transient_for(GTK_WINDOW(equalizerwin),
                                  GTK_WINDOW(mainwin));

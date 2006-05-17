@@ -54,7 +54,6 @@
 
 #include "controlsocket.h"
 #include "dnd.h"
-#include "dock.h"
 #include "effect.h"
 #include "equalizer.h"
 #include "general.h"
