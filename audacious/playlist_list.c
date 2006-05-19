@@ -395,9 +395,9 @@ playlist_list_draw_string(PlayList_List * pl,
     REQUIRE_STATIC_LOCK(playlist);
 
     if (cfg.show_numbers_in_pl) {
-        gchar *pos_string = g_strdup_printf("%d", ppos);
+        gchar *pos_string = g_strdup_printf(cfg.show_separator_in_pl == TRUE ? "%d" : "%d.", ppos);
         plist_length_int =
-            gint_count_digits(playlist_get_length_nolock()) + 1;
+            gint_count_digits(playlist_get_length_nolock()) + !cfg.show_separator_in_pl + 1; /* cf.show_separator_in_pl will be 0 if false */
 
         padding = plist_length_int;
         padding = ((padding + 1) * width_approx_digits);
@@ -416,6 +416,9 @@ playlist_list_draw_string(PlayList_List * pl,
                         ascent + abs(descent), layout);
         g_free(pos_string);
         g_object_unref(layout);
+
+        if (!cfg.show_separator_in_pl)
+            padding -= (width_approx_digits * 1.5);
     }
     else {
         padding = 3;
