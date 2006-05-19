@@ -1657,8 +1657,6 @@ playlistwin_create_window(void)
                                                  GTK_WINDOW(playlistwin),
                                                  cfg.show_wm_decorations);
 
-    gtk_window_set_skip_taskbar_hint(GTK_WINDOW(playlistwin), TRUE);
-
     icon = gdk_pixbuf_new_from_xpm_data((const gchar **) bmp_playlist_icon);
     gtk_window_set_icon(GTK_WINDOW(playlistwin), icon);
     g_object_unref(icon);
