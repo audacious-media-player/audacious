@@ -164,7 +164,10 @@ root_event_cb (GdkXEvent *xev, GdkEventProperty *event, gpointer data)
                             skin_get_color(bmp_active_skin, SKIN_PLEDIT_NORMALBG));
 
 			if (cfg.playlist_transparent)
-				playlist_list_draw(WIDGET(data));
+			{
+				playlistwin_update_list();
+				draw_playlist_window(TRUE);
+			}
 		}
         }
 
