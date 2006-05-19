@@ -759,6 +759,10 @@ equalizerwin_create_window(void)
                                                  GTK_WINDOW(equalizerwin),
                                                  cfg.show_wm_decorations);
 
+    gtk_window_set_transient_for(GTK_WINDOW(equalizerwin),
+                                 GTK_WINDOW(mainwin));
+    gtk_window_set_skip_taskbar_hint(GTK_WINDOW(equalizerwin), TRUE);
+
     icon = gdk_pixbuf_new_from_xpm_data((const gchar **) bmp_eq_icon);
     gtk_window_set_icon(GTK_WINDOW(equalizerwin), icon);
     g_object_unref(icon);
