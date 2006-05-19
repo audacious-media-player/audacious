@@ -62,6 +62,8 @@ static gint width_approx_digits, width_approx_digits_half;
 
 GdkPixmap *rootpix;
 
+void playlist_list_draw(Widget * w);
+
 /* Sort of stolen from XChat, but not really, as theres uses Xlib */
 static void
 shade_gdkimage_generic (GdkVisual *visual, GdkImage *ximg, int bpl, int w, int h, int rm, int gm, int bm, int bg)
@@ -143,6 +145,30 @@ GdkPixmap *get_transparency_pixmap(void)
     }
 
     return retval;
+}
+
+static GdkFilterReturn
+root_event_cb (GdkXEvent *xev, GdkEventProperty *event, gpointer data)
+{
+        static Atom at = None;
+        XEvent *xevent = (XEvent *)xev;
+
+        if (xevent->type == PropertyNotify)
+        {
+                if (at == None)
+                        at = XInternAtom (xevent->xproperty.display, "_XROOTPMAP_ID", True);
+
+                if (at == xevent->xproperty.atom)
+		{
+                        rootpix = shade_pixmap(get_transparency_pixmap(), 0, 0, 0, 0, gdk_screen_width(), gdk_screen_height(),
+                            skin_get_color(bmp_active_skin, SKIN_PLEDIT_NORMALBG));
+
+			if (cfg.playlist_transparent)
+				playlist_list_draw(WIDGET(data));
+		}
+        }
+
+        return GDK_FILTER_CONTINUE;
 }
 
 #else
@@ -848,6 +874,11 @@ create_playlist_list(GList ** wlist,
     pl->pl_prev_max = -1;
 
     widget_list_add(wlist, WIDGET(pl));
+
+#ifdef GDK_WINDOWING_X11
+    gdk_window_set_events (gdk_get_default_root_window(), GDK_PROPERTY_CHANGE_MASK);
+    gdk_window_add_filter (gdk_get_default_root_window(), (GdkFilterFunc)root_event_cb, pl);
+#endif
 
     return pl;
 }
