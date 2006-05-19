@@ -846,6 +846,8 @@ playlist_list_draw(Widget * w)
 
     PLAYLIST_UNLOCK();
 
+    gdk_flush();
+
     g_free(playlist_rect);
 }
 

@@ -940,6 +940,22 @@ on_playlist_show_pl_numbers_toggled(GtkToggleButton * button,
 }
 
 static void
+on_playlist_transparent_realize(GtkToggleButton * button,
+                                    gpointer data)
+{
+    gtk_toggle_button_set_active(button, cfg.playlist_transparent);
+}
+
+static void
+on_playlist_transparent_toggled(GtkToggleButton * button,
+                                    gpointer data)
+{
+    cfg.playlist_transparent = gtk_toggle_button_get_active(button);
+    playlistwin_update_list();
+    draw_playlist_window(TRUE);
+}
+
+static void
 on_playlist_show_pl_separator_realize(GtkToggleButton * button,
                                     gpointer data)
 {
@@ -1871,6 +1887,8 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_playlist_show_pl_numbers_toggled)
     FUNC_MAP_ENTRY(on_playlist_show_pl_separator_realize)
     FUNC_MAP_ENTRY(on_playlist_show_pl_separator_toggled)
+    FUNC_MAP_ENTRY(on_playlist_transparent_realize)
+    FUNC_MAP_ENTRY(on_playlist_transparent_toggled)
     FUNC_MAP_ENTRY(on_playlist_convert_twenty_realize)
     FUNC_MAP_ENTRY(on_playlist_convert_twenty_toggled)
     FUNC_MAP_ENTRY(on_playlist_convert_underscore_realize)

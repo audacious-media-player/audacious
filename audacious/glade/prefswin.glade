@@ -1342,6 +1342,7 @@ Optionally, you can stop and restart playback for the change to take effect.</pr
 					  <child>
 					    <widget class="GtkCheckButton" id="checkbutton1">
 					      <property name="visible">True</property>
+					      <property name="tooltip" translatable="yes">Use bitmap fonts if they are available. Bitmap fonts do not support Unicode strings.</property>
 					      <property name="can_focus">True</property>
 					      <property name="label" translatable="yes">Use Bitmap fonts if available</property>
 					      <property name="use_underline">True</property>
@@ -1518,6 +1519,95 @@ Optionally, you can stop and restart playback for the change to take effect.</pr
 				  <property name="padding">0</property>
 				  <property name="expand">False</property>
 				  <property name="fill">False</property>
+				</packing>
+			      </child>
+
+			      <child>
+				<widget class="GtkVBox" id="vbox31">
+				  <property name="visible">True</property>
+				  <property name="homogeneous">False</property>
+				  <property name="spacing">0</property>
+
+				  <child>
+				    <widget class="GtkAlignment" id="alignment70">
+				      <property name="visible">True</property>
+				      <property name="xalign">0.5</property>
+				      <property name="yalign">0.5</property>
+				      <property name="xscale">1</property>
+				      <property name="yscale">1</property>
+				      <property name="top_padding">12</property>
+				      <property name="bottom_padding">12</property>
+				      <property name="left_padding">0</property>
+				      <property name="right_padding">0</property>
+
+				      <child>
+					<widget class="GtkLabel" id="label72">
+					  <property name="visible">True</property>
+					  <property name="label" translatable="yes">&lt;b&gt;_Transparency&lt;/b&gt;</property>
+					  <property name="use_underline">True</property>
+					  <property name="use_markup">True</property>
+					  <property name="justify">GTK_JUSTIFY_LEFT</property>
+					  <property name="wrap">False</property>
+					  <property name="selectable">False</property>
+					  <property name="xalign">0</property>
+					  <property name="yalign">0.5</property>
+					  <property name="xpad">0</property>
+					  <property name="ypad">0</property>
+					  <property name="mnemonic_widget">category_notebook</property>
+					  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+					  <property name="width_chars">-1</property>
+					  <property name="single_line_mode">False</property>
+					  <property name="angle">0</property>
+					</widget>
+				      </child>
+				    </widget>
+				    <packing>
+				      <property name="padding">0</property>
+				      <property name="expand">True</property>
+				      <property name="fill">True</property>
+				    </packing>
+				  </child>
+
+				  <child>
+				    <widget class="GtkAlignment" id="alignment71">
+				      <property name="visible">True</property>
+				      <property name="xalign">0.5</property>
+				      <property name="yalign">0.5</property>
+				      <property name="xscale">1</property>
+				      <property name="yscale">1</property>
+				      <property name="top_padding">2</property>
+				      <property name="bottom_padding">0</property>
+				      <property name="left_padding">12</property>
+				      <property name="right_padding">0</property>
+
+				      <child>
+					<widget class="GtkCheckButton" id="checkbutton3">
+					  <property name="visible">True</property>
+					  <property name="tooltip" translatable="yes">Enables playlist transparency. This is not recommended for slower machines as it requires some CPU time to create and cache the pixmaps used for the transparency.</property>
+					  <property name="can_focus">True</property>
+					  <property name="label" translatable="yes">Enable playlist transparency</property>
+					  <property name="use_underline">True</property>
+					  <property name="relief">GTK_RELIEF_NORMAL</property>
+					  <property name="focus_on_click">True</property>
+					  <property name="active">False</property>
+					  <property name="inconsistent">False</property>
+					  <property name="draw_indicator">True</property>
+					  <signal name="toggled" handler="on_playlist_transparent_toggled" last_modification_time="Fri, 19 May 2006 20:05:16 GMT"/>
+					  <signal name="realize" handler="on_playlist_transparent_realize" after="yes" last_modification_time="Fri, 19 May 2006 20:05:10 GMT"/>
+					</widget>
+				      </child>
+				    </widget>
+				    <packing>
+				      <property name="padding">0</property>
+				      <property name="expand">False</property>
+				      <property name="fill">False</property>
+				    </packing>
+				  </child>
+				</widget>
+				<packing>
+				  <property name="padding">0</property>
+				  <property name="expand">True</property>
+				  <property name="fill">True</property>
 				</packing>
 			      </child>
 			    </widget>
