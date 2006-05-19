@@ -120,28 +120,30 @@ shade_pixmap(GdkPixmap *in, gint x, gint y, gint x_offset, gint y_offset, gint w
 
 GdkPixmap *get_transparency_pixmap(void)
 {
-    Atom prop, type;
+    Atom type;
+    static Atom prop = None;
     int format;
     unsigned long length, after;
     unsigned char *data;
-    static GdkPixmap *retval = NULL;
+    GdkPixmap *retval = NULL;
 
-    if(retval)
-        return retval;
-
-    prop = XInternAtom(GDK_DISPLAY(), "_XROOTPMAP_ID", True);
-
+    if(prop == None)
+        prop = XInternAtom(GDK_DISPLAY(), "_XROOTPMAP_ID", True);
     if(prop == None)
         return NULL;
 
     XGetWindowProperty(GDK_DISPLAY(), GDK_ROOT_WINDOW(), prop, 0L, 1L, False, AnyPropertyType, &type, &format, &length, &after, &data);
 
-    if(type == XA_PIXMAP)
-        retval = gdk_pixmap_foreign_new(*((Pixmap *)data));
+    if (data)
+    {
+        if(type == XA_PIXMAP)
+           retval = gdk_pixmap_foreign_new(*((Pixmap *)data));
+
+        XFree(data);
+    }
 
     return retval;
 }
-
 
 #else
 
