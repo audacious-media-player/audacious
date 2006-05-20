@@ -129,6 +129,7 @@ static const gchar *translators[] = {
     NULL,
     N_("Dutch:"),
     N_("Laurens Buhler"),
+    N_("Tony Vroon"),
     NULL,
     N_("Finnish:"),
     N_("Pauli Virtanen"),
