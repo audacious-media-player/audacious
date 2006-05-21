@@ -148,6 +148,9 @@ mpg123_do_layer1(struct frame *fr)
             (fr->synth) ((mpgdec_real *) fraction[1], 1, mpg123_pcm_sample,
                          &mpg123_pcm_point);
         }
+#ifdef PSYCHO
+	psycho_process(mpg123_pcm_sample, mpg123_pcm_point, mpg123_cfg.channels == 2 ? fr->stereo : 1);
+#endif
         if (mpg123_info->output_audio && mpg123_info->jump_to_time == -1) {
             produce_audio(mpg123_ip.output->written_time(),
                           mpg123_cfg.resolution ==

@@ -341,4 +341,8 @@ extern mpgdec_real *mpg123_pnts[5];
 extern const char *mpg123_id3_genres[GENRE_MAX];
 extern const int tabsel_123[2][3][16];
 
+/* psycho.c defines */
+void psycho_init(void);
+int psycho_process(void *data, int length, int nch);
+
 #endif

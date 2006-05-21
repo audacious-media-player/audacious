@@ -330,6 +330,9 @@ mpg123_do_layer2 (struct frame *fr)
 	     audio_flush(outmode,ai); */
 	}
     }
+#ifdef PSYCHO
+   psycho_process(mpg123_pcm_sample, mpg123_pcm_point, mpg123_cfg.channels == 2 ? fr->stereo : 1);
+#endif
   if (mpg123_info->output_audio)
     {
       produce_audio (mpg123_ip.output->written_time (),

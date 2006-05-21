@@ -219,6 +219,8 @@ init(void)
     mpg123_cfg.channels = CLAMP(mpg123_cfg.channels, 0, 2);
     mpg123_cfg.downsample = CLAMP(mpg123_cfg.downsample, 0, 2);
     mpg123_getcpuflags(&cpu_fflags, &cpu_efflags);
+
+    psycho_init();
 }
 
 static void
