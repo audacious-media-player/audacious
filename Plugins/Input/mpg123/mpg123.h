@@ -185,12 +185,18 @@ typedef struct {
 
 extern MPG123Config mpg123_cfg;
 
+struct mpgdec_instance {
+    void (*dump_audio)(struct frame *fr);
+};
+
 struct bitstream_info {
     int bitindex;
     unsigned char *wordpointer;
 };
 
 extern struct bitstream_info bsi;
+
+typedef struct mpgdec_instance mpgdec_t;
 
 struct mpstr {
   int bsize;
