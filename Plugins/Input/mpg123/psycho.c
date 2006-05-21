@@ -52,7 +52,7 @@ void psycho_init(void)
 
     bext_level = 28;
     echo_level = echo_sfactor = 6;
-    stereo_level = stereo_sfactor = 20;
+    stereo_level = stereo_sfactor = 16;
     filter_level = 3;
     feedback_level = 30;
     harmonics_level = harmonics_sfactor = 43;
