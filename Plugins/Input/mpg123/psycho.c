@@ -439,10 +439,18 @@ static void bandext(gint16 *data, const int datasize)
 	lprev2 = left2;
 	rprev2 = right2;
 
+#if 0
 	if (left < -32768) left = -32768;
        	else if (left > 32767) left = 32767;
        	if (right < -32768) right = -32768;
        	else if (right > 32767) right = 32767;
+#endif
+	/* if we're going to clip, just throw back the original data */
+	if (left < -32768 || left > 32767 || right < -32768 || right > 32767)
+	{
+		dataptr += 2;
+		continue;
+	}
 
 	dataptr[0] = left;
        	dataptr[1] = right;
