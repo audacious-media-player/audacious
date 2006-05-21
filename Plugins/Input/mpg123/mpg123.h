@@ -15,12 +15,38 @@
 
 #ifdef INTEGER_COMPILE
 
-typedef int mpgdec_real;
+typedef long mpgdec_real;
+
+# define REAL_RADIX             15
+# define REAL_FACTOR            (32.0 * 1024.0)
+
+# define REAL_PLUS_32767        ( 32767 << REAL_RADIX )
+# define REAL_MINUS_32768       ( -32768 << REAL_RADIX )
+
+# define DOUBLE_TO_REAL(x)      ((int)((x) * REAL_FACTOR))
+# define REAL_TO_SHORT(x)       ((x) >> REAL_RADIX)
+# define REAL_MUL(x, y)         (((long long)(x) * (long long)(y)) >> REAL_RADIX)
 
 #else
 
 typedef float mpgdec_real;
 
+#endif
+
+#ifndef DOUBLE_TO_REAL
+# define DOUBLE_TO_REAL(x)      (x)
+#endif
+#ifndef REAL_TO_SHORT
+# define REAL_TO_SHORT(x)       (x)
+#endif
+#ifndef REAL_PLUS_32767
+# define REAL_PLUS_32767        32767.0
+#endif
+#ifndef REAL_MINUS_32768
+# define REAL_MINUS_32768       -32768.0
+#endif
+#ifndef REAL_MUL
+# define REAL_MUL(x, y)         ((x) * (y))
 #endif
 
 enum {
@@ -54,16 +80,6 @@ enum {
 #define         ENCODING_SEPARATOR      " ,:;|/"
 
 #define		MAXFRAMESIZE		4096
-
-#define		DOUBLE_TO_REAL(x)	(x)
-#define		REAL_MUL(x, y)		(x * y)
-
-#ifndef REAL_PLUS_32767
-# define REAL_PLUS_32767        32767.0
-#endif
-#ifndef REAL_MINUS_32768
-# define REAL_MINUS_32768       -32768.0
-#endif
 
 struct id3v1tag_t {
     char tag[3];                /* always "TAG": defines ID3v1 tag 128 bytes before EOF */
