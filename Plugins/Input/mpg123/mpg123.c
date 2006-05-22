@@ -667,7 +667,7 @@ static void *
 decode_loop(void *arg)
 {
     gboolean have_xing_header = FALSE, vbr = FALSE;
-    int disp_count = 0, temp_time;
+    int disp_count = 0;
     char *filename = arg;
     xing_header_t xing_header;
 
@@ -786,51 +786,6 @@ decode_loop(void *arg)
                             continue;
                         }
 
-                    }
-                }
-                if (mpg123_freqs[fr.sampling_frequency] != mpg123_frequency
-                    || mpg123_stereo != fr.stereo) {
-                    memcpy(&temp_fr, &fr, sizeof(struct frame));
-                    if (mpg123_read_frame(&temp_fr) != 0) {
-                        if (fr.sampling_frequency ==
-                            temp_fr.sampling_frequency
-                            && temp_fr.stereo == fr.stereo) {
-                            mpg123_ip.output->buffer_free();
-                            mpg123_ip.output->buffer_free();
-                            while (mpg123_ip.output->buffer_playing()
-                                   && mpg123_info->going
-                                   && mpg123_info->jump_to_time == -1)
-                                xmms_usleep(20000);
-                            if (!mpg123_info->going)
-                                break;
-                            temp_time = mpg123_ip.output->output_time();
-                            mpg123_ip.output->close_audio();
-                            mpg123_frequency =
-                                mpg123_freqs[fr.sampling_frequency];
-                            mpg123_stereo = fr.stereo;
-                            if (!mpg123_ip.output->
-                                open_audio(mpg123_cfg.resolution ==
-                                           16 ? FMT_S16_NE : FMT_U8,
-                                           mpg123_freqs[fr.sampling_frequency]
-                                           >> mpg123_cfg.downsample,
-                                           mpg123_cfg.channels ==
-                                           2 ? fr.stereo : 1)) {
-                                audio_error = TRUE;
-                                mpg123_info->eof = TRUE;
-                            }
-                            mpg123_ip.output->flush(temp_time);
-                            mpg123_ip.set_info(mpg123_title, mpg123_length,
-                                               mpg123_bitrate * 1000,
-                                               mpg123_frequency,
-                                               mpg123_stereo);
-                            memcpy(&fr, &temp_fr, sizeof(struct frame));
-                        }
-                        else {
-                            memcpy(&fr, &temp_fr, sizeof(struct frame));
-                            skip_frames = 2;
-                            mpg123_info->output_audio = FALSE;
-                            continue;
-                        }
                     }
                 }
 
