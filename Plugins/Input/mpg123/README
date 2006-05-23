@@ -1,0 +1,54 @@
+libmpgdec - version 1.1
+=======================
+
+Copyright (c) 2005 - 2006 William Pitcock <nenolod@nenolod.net>
+Portions copyright (c) 2001 Rafal Bosak <gyver@fanthom.irc.pl>
+Portions copyright (c) 1999 Michael Hipp
+
+What is libmpgdec?
+==================
+
+libmpgdec is a fully compliant ISO MPEG 1/2 Layer 1/2/3 decoder,
+which shares no code with the `dist10' package. Instead, libmpgdec
+is an extensively refactored version of the mpg123 sources included
+with XMMS, which were released under the GPL.
+
+Due to the fact that the mpg123 source in XMMS were incomplete, several
+components have been recreated and enhanced, including the synthesis
+algorithms.
+
+Unlike it's predecessor, libmpgdec performs band-limited synthesis in order
+to try to correct many of the shortcomings of the MPEG format. Also unlike
+it's predecessor, useless assembly-based routines have been removed.
+
+Additionally, libmpgdec 1.1 includes new psychoaccoustic modeling routines
+to try to enhance listening experience.
+
+libmpgdec 1.1 is the first "public" release, i.e. a release seperate from
+Audacious with extra portability components added to improve adaptability
+in other players and encoders/decoders. Versions of Audacious after 1.1
+will use this library package instead of using a statically linked decoder.
+
+How do I compile libmpgdec?
+===========================
+
+./configure
+make
+make install
+
+libmpgdec makes use of Autotools, and requires Glib 2.x.
+
+Why does an MP3 decoder library require Glib?
+=============================================
+
+Simple. Glib lets us conveniently do things we would be able to not as cleanly
+do otherwise.
+
+How do I program with libmpgdec?
+================================
+
+libmpgdec typically uses it's own thread for decoding. This is usually not a
+major issue; however if it is, a lowlevel API (mainly undocumented) is provided
+to allow for the implementation of custom event loops.
+
+  -- William Pitcock <nenolod@nenolod.net>, May 23 2006
