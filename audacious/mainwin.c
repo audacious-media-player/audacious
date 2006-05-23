@@ -1006,6 +1006,7 @@ mainwin_mouse_button_release(GtkWidget * widget,
 
     if (dock_is_moving(GTK_WINDOW(mainwin))) {
         dock_move_release(GTK_WINDOW(mainwin));
+		draw_playlist_window(TRUE);
     }
 
     if (mainwin_menurow->mr_doublesize_selected) {
