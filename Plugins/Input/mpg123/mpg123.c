@@ -832,11 +832,11 @@ decode_loop(void *arg)
                 mpg123_ip.output->buffer_free();
                 mpg123_ip.output->buffer_free();
                 mpg123_info->eof = TRUE;
-                xmms_usleep(10000);
+                g_usleep(10000);
             }
         }
         else {
-            xmms_usleep(10000);
+            g_usleep(10000);
         }
     }
     g_free(mpg123_title);
@@ -888,7 +888,7 @@ seek(int time)
     mpg123_info->jump_to_time = time;
 
     while (mpg123_info->jump_to_time != -1)
-        xmms_usleep(10000);
+        g_usleep(10000);
 }
 
 static void

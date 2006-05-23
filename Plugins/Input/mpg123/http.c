@@ -210,7 +210,7 @@ http_wait_for_data(gsize bytes)
 {
     while ((prebuffering || http_used() < bytes) && !eof && going
            && mpg123_info->going)
-        xmms_usleep(10000);
+        g_usleep(10000);
 }
 
 static void
@@ -693,7 +693,7 @@ http_buffer_loop(gpointer arg)
             }
         }
         else
-            xmms_usleep(10000);
+            g_usleep(10000);
 
         if (mpg123_cfg.use_udp_channel && udp_sock != 0)
             if (udp_check_for_data(udp_sock) < 0) {
