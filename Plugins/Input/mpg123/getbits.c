@@ -1,19 +1,19 @@
 #include "mpg123.h"
 #include "common.h"
 
-void mpg123_backbits(struct bitstream_info *bitbuf,int number_of_bits)
+void mpgdec_backbits(struct bitstream_info *bitbuf,int number_of_bits)
 {
   bitbuf->bitindex    -= number_of_bits;
   bitbuf->wordpointer += (bitbuf->bitindex>>3);
   bitbuf->bitindex    &= 0x7;
 }
 
-int mpg123_getbitoffset(struct bitstream_info *bitbuf) 
+int mpgdec_getbitoffset(struct bitstream_info *bitbuf) 
 {
   return (-bitbuf->bitindex)&0x7;
 }
 
-int mpg123_getbyte(struct bitstream_info *bitbuf)
+int mpgdec_getbyte(struct bitstream_info *bitbuf)
 {
 #ifdef DEBUG_GETBITS
   if(bitbuf->bitindex) 
@@ -22,7 +22,7 @@ int mpg123_getbyte(struct bitstream_info *bitbuf)
   return *bitbuf->wordpointer++;
 }
 
-unsigned int mpg123_getbits(struct bitstream_info *bitbuf,int number_of_bits)
+unsigned int mpgdec_getbits(struct bitstream_info *bitbuf,int number_of_bits)
 {
   unsigned long rval;
 
@@ -62,7 +62,7 @@ fprintf(stderr,":%x ",rval);
   return rval;
 }
 
-unsigned int mpg123_getbits_fast(struct bitstream_info *bitbuf,int number_of_bits)
+unsigned int mpgdec_getbits_fast(struct bitstream_info *bitbuf,int number_of_bits)
 {
   unsigned int rval;
 #ifdef DEBUG_GETBITS
@@ -89,7 +89,7 @@ fprintf(stderr,":%x ",rval);
   return rval;
 }
 
-unsigned int mpg123_get1bit(struct bitstream_info *bitbuf)
+unsigned int mpgdec_get1bit(struct bitstream_info *bitbuf)
 {
   unsigned char rval;
 

@@ -21,34 +21,34 @@ void I_step_one(unsigned int balloc[], unsigned int scale_index[2][SBLIMIT],stru
     int i;
     int jsbound = fr->jsbound;
     for (i=0;i<jsbound;i++) { 
-      *ba++ = mpg123_getbits(&bsi,4);
-      *ba++ = mpg123_getbits(&bsi,4);
+      *ba++ = mpgdec_getbits(&bsi,4);
+      *ba++ = mpgdec_getbits(&bsi,4);
     }
     for (i=jsbound;i<SBLIMIT;i++)
-      *ba++ = mpg123_getbits(&bsi,4);
+      *ba++ = mpgdec_getbits(&bsi,4);
 
     ba = balloc;
 
     for (i=0;i<jsbound;i++) {
       if ((*ba++))
-        *sca++ = mpg123_getbits(&bsi,6);
+        *sca++ = mpgdec_getbits(&bsi,6);
       if ((*ba++))
-        *sca++ = mpg123_getbits(&bsi,6);
+        *sca++ = mpgdec_getbits(&bsi,6);
     }
     for (i=jsbound;i<SBLIMIT;i++)
       if ((*ba++)) {
-        *sca++ =  mpg123_getbits(&bsi,6);
-        *sca++ =  mpg123_getbits(&bsi,6);
+        *sca++ =  mpgdec_getbits(&bsi,6);
+        *sca++ =  mpgdec_getbits(&bsi,6);
       }
   }
   else {
     int i;
     for (i=0;i<SBLIMIT;i++)
-      *ba++ = mpg123_getbits(&bsi,4);
+      *ba++ = mpgdec_getbits(&bsi,4);
     ba = balloc;
     for (i=0;i<SBLIMIT;i++)
       if ((*ba++))
-        *sca++ = mpg123_getbits(&bsi,6);
+        *sca++ = mpgdec_getbits(&bsi,6);
   }
 }
 
@@ -68,30 +68,30 @@ void I_step_two(mpgdec_real fraction[2][SBLIMIT],unsigned int balloc[2*SBLIMIT],
     ba = balloc;
     for (sample=smpb,i=0;i<jsbound;i++)  {
       if ((n = *ba++))
-        *sample++ = mpg123_getbits(&bsi,n+1);
+        *sample++ = mpgdec_getbits(&bsi,n+1);
       if ((n = *ba++))
-        *sample++ = mpg123_getbits(&bsi,n+1);
+        *sample++ = mpgdec_getbits(&bsi,n+1);
     }
     for (i=jsbound;i<SBLIMIT;i++) 
       if ((n = *ba++))
-        *sample++ = mpg123_getbits(&bsi,n+1);
+        *sample++ = mpgdec_getbits(&bsi,n+1);
 
     ba = balloc;
     for (sample=smpb,i=0;i<jsbound;i++) {
       if((n=*ba++))
-        *f0++ = (mpgdec_real) ( ((-1)<<n) + (*sample++) + 1) * mpg123_muls[n+1][*sca++];
+        *f0++ = (mpgdec_real) ( ((-1)<<n) + (*sample++) + 1) * mpgdec_muls[n+1][*sca++];
       else
         *f0++ = 0.0;
       if((n=*ba++))
-        *f1++ = (mpgdec_real) ( ((-1)<<n) + (*sample++) + 1) * mpg123_muls[n+1][*sca++];
+        *f1++ = (mpgdec_real) ( ((-1)<<n) + (*sample++) + 1) * mpgdec_muls[n+1][*sca++];
       else
         *f1++ = 0.0;
     }
     for (i=jsbound;i<SBLIMIT;i++) {
       if ((n=*ba++)) {
         mpgdec_real samp = ( ((-1)<<n) + (*sample++) + 1);
-        *f0++ = samp * mpg123_muls[n+1][*sca++];
-        *f1++ = samp * mpg123_muls[n+1][*sca++];
+        *f0++ = samp * mpgdec_muls[n+1][*sca++];
+        *f1++ = samp * mpgdec_muls[n+1][*sca++];
       }
       else
         *f0++ = *f1++ = 0.0;
@@ -104,11 +104,11 @@ void I_step_two(mpgdec_real fraction[2][SBLIMIT],unsigned int balloc[2*SBLIMIT],
     ba = balloc;
     for (sample=smpb,i=0;i<SBLIMIT;i++)
       if ((n = *ba++))
-        *sample++ = mpg123_getbits(&bsi,n+1);
+        *sample++ = mpgdec_getbits(&bsi,n+1);
     ba = balloc;
     for (sample=smpb,i=0;i<SBLIMIT;i++) {
       if((n=*ba++))
-        *f0++ = (mpgdec_real) ( ((-1)<<n) + (*sample++) + 1) * mpg123_muls[n+1][*sca++];
+        *f0++ = (mpgdec_real) ( ((-1)<<n) + (*sample++) + 1) * mpgdec_muls[n+1][*sca++];
       else
         *f0++ = 0.0;
     }
@@ -118,7 +118,7 @@ void I_step_two(mpgdec_real fraction[2][SBLIMIT],unsigned int balloc[2*SBLIMIT],
 }
 
 int
-mpg123_do_layer1(struct frame *fr)
+mpgdec_do_layer1(struct frame *fr)
 {
     int i, stereo = fr->stereo;
     unsigned int balloc[2 * SBLIMIT];
@@ -138,29 +138,29 @@ mpg123_do_layer1(struct frame *fr)
         I_step_two(fraction, balloc, scale_index, fr);
 
         if (single >= 0) {
-            (fr->synth_mono) ((mpgdec_real *) fraction[single], mpg123_pcm_sample,
-                              &mpg123_pcm_point);
+            (fr->synth_mono) ((mpgdec_real *) fraction[single], mpgdec_pcm_sample,
+                              &mpgdec_pcm_point);
         }
         else {
-            int p1 = mpg123_pcm_point;
+            int p1 = mpgdec_pcm_point;
 
-            (fr->synth) ((mpgdec_real *) fraction[0], 0, mpg123_pcm_sample, &p1);
-            (fr->synth) ((mpgdec_real *) fraction[1], 1, mpg123_pcm_sample,
-                         &mpg123_pcm_point);
+            (fr->synth) ((mpgdec_real *) fraction[0], 0, mpgdec_pcm_sample, &p1);
+            (fr->synth) ((mpgdec_real *) fraction[1], 1, mpgdec_pcm_sample,
+                         &mpgdec_pcm_point);
         }
 #ifdef PSYCHO
-	psycho_process(mpg123_pcm_sample, mpg123_pcm_point, mpg123_cfg.channels == 2 ? fr->stereo : 1);
+	psycho_process(mpgdec_pcm_sample, mpgdec_pcm_point, mpgdec_cfg.channels == 2 ? fr->stereo : 1);
 #endif
-        if (mpg123_info->output_audio && mpg123_info->jump_to_time == -1) {
-            produce_audio(mpg123_ip.output->written_time(),
-                          mpg123_cfg.resolution ==
+        if (mpgdec_info->output_audio && mpgdec_info->jump_to_time == -1) {
+            produce_audio(mpgdec_ip.output->written_time(),
+                          mpgdec_cfg.resolution ==
                           16 ? FMT_S16_NE : FMT_U8,
-                          mpg123_cfg.channels ==
-                          2 ? fr->stereo : 1, mpg123_pcm_point,
-                          mpg123_pcm_sample, &mpg123_info->going);
+                          mpgdec_cfg.channels ==
+                          2 ? fr->stereo : 1, mpgdec_pcm_point,
+                          mpgdec_pcm_sample, &mpgdec_info->going);
         }
 
-        mpg123_pcm_point = 0;
+        mpgdec_pcm_point = 0;
     }
 
     return 1;

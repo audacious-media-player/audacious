@@ -16,10 +16,10 @@ static int grp_3tab[32 * 3] = { 0, };	/* used: 27 */
 static int grp_5tab[128 * 3] = { 0, };	/* used: 125 */
 static int grp_9tab[1024 * 3] = { 0, };	/* used: 729 */
 
-mpgdec_real mpg123_muls[27][64];	/* also used by layer 1 */
+mpgdec_real mpgdec_muls[27][64];	/* also used by layer 1 */
 
 void
-mpg123_init_layer2 (gboolean mmx)
+mpgdec_init_layer2 (gboolean mmx)
 {
   static double mulmul[27] = {
     0.0, -2.0 / 3.0, 2.0 / 3.0, 2.0 / 7.0, 2.0 / 15.0,
@@ -56,7 +56,7 @@ mpg123_init_layer2 (gboolean mmx)
   for (k = 0; k < 27; k++)
     {
       double m = mulmul[k];
-      table = mpg123_muls[k];
+      table = mpgdec_muls[k];
       for (j = 3, i = 0; i < 63; i++, j--)
         *table++ = m * pow (2.0, (double) j / 3.0);
       *table++ = 0.0;
@@ -81,12 +81,12 @@ II_step_one (unsigned int *bit_alloc, int *scale, struct frame *fr)
     {
       for (i = jsbound; i > 0; i--, alloc1 += (1 << step))
 	{
-	  *bita++ = (char) mpg123_getbits (&bsi, step = alloc1->bits);
-	  *bita++ = (char) mpg123_getbits (&bsi, step);
+	  *bita++ = (char) mpgdec_getbits (&bsi, step = alloc1->bits);
+	  *bita++ = (char) mpgdec_getbits (&bsi, step);
 	}
       for (i = sblimit - jsbound; i > 0; i--, alloc1 += (1 << step))
 	{
-	  bita[0] = (char) mpg123_getbits (&bsi, step = alloc1->bits);
+	  bita[0] = (char) mpgdec_getbits (&bsi, step = alloc1->bits);
 	  bita[1] = bita[0];
 	  bita += 2;
 	}
@@ -94,18 +94,18 @@ II_step_one (unsigned int *bit_alloc, int *scale, struct frame *fr)
       scfsi = scfsi_buf;
       for (i = sblimit2; i; i--)
 	if (*bita++)
-	  *scfsi++ = (char) mpg123_getbits_fast (&bsi, 2);
+	  *scfsi++ = (char) mpgdec_getbits_fast (&bsi, 2);
     }
   else
     /* mono */
     {
       for (i = sblimit; i; i--, alloc1 += (1 << step))
-	*bita++ = (char) mpg123_getbits (&bsi, step = alloc1->bits);
+	*bita++ = (char) mpgdec_getbits (&bsi, step = alloc1->bits);
       bita = bit_alloc;
       scfsi = scfsi_buf;
       for (i = sblimit; i; i--)
 	if (*bita++)
-	  *scfsi++ = (char) mpg123_getbits_fast (&bsi, 2);
+	  *scfsi++ = (char) mpgdec_getbits_fast (&bsi, 2);
     }
 
   bita = bit_alloc;
@@ -115,23 +115,23 @@ II_step_one (unsigned int *bit_alloc, int *scale, struct frame *fr)
       switch (*scfsi++)
 	{
 	case 0:
-	  *scale++ = mpg123_getbits_fast (&bsi, 6);
-	  *scale++ = mpg123_getbits_fast (&bsi, 6);
-	  *scale++ = mpg123_getbits_fast (&bsi, 6);
+	  *scale++ = mpgdec_getbits_fast (&bsi, 6);
+	  *scale++ = mpgdec_getbits_fast (&bsi, 6);
+	  *scale++ = mpgdec_getbits_fast (&bsi, 6);
 	  break;
 	case 1:
-	  *scale++ = sc = mpg123_getbits_fast (&bsi, 6);
+	  *scale++ = sc = mpgdec_getbits_fast (&bsi, 6);
 	  *scale++ = sc;
-	  *scale++ = mpg123_getbits_fast (&bsi, 6);
+	  *scale++ = mpgdec_getbits_fast (&bsi, 6);
 	  break;
 	case 2:
-	  *scale++ = sc = mpg123_getbits_fast (&bsi, 6);
+	  *scale++ = sc = mpgdec_getbits_fast (&bsi, 6);
 	  *scale++ = sc;
 	  *scale++ = sc;
 	  break;
 	default:		/* case 3 */
-	  *scale++ = mpg123_getbits_fast (&bsi, 6);
-	  *scale++ = sc = mpg123_getbits_fast (&bsi, 6);
+	  *scale++ = mpgdec_getbits_fast (&bsi, 6);
+	  *scale++ = sc = mpgdec_getbits_fast (&bsi, 6);
 	  *scale++ = sc;
 	  break;
 	}
@@ -160,14 +160,14 @@ II_step_two (unsigned int *bit_alloc, mpgdec_real fraction[2][4][SBLIMIT],
 	      k = (alloc2 = alloc1 + ba)->bits;
 	      if ((d1 = alloc2->d) < 0)
 		{
-		  mpgdec_real cm = mpg123_muls[k][scale[x1]];
+		  mpgdec_real cm = mpgdec_muls[k][scale[x1]];
 
 		  fraction[j][0][i] =
-		    ((mpgdec_real) ((int) mpg123_getbits (&bsi, k) + d1)) * cm;
+		    ((mpgdec_real) ((int) mpgdec_getbits (&bsi, k) + d1)) * cm;
 		  fraction[j][1][i] =
-		    ((mpgdec_real) ((int) mpg123_getbits (&bsi, k) + d1)) * cm;
+		    ((mpgdec_real) ((int) mpgdec_getbits (&bsi, k) + d1)) * cm;
 		  fraction[j][2][i] =
-		    ((mpgdec_real) ((int) mpg123_getbits (&bsi, k) + d1)) * cm;
+		    ((mpgdec_real) ((int) mpgdec_getbits (&bsi, k) + d1)) * cm;
 		}
 	      else
 		{
@@ -175,11 +175,11 @@ II_step_two (unsigned int *bit_alloc, mpgdec_real fraction[2][4][SBLIMIT],
 		    { 0, 0, 0, grp_3tab, 0, grp_5tab, 0, 0, 0, grp_9tab };
 		  unsigned int idx, *tab, m = scale[x1];
 
-		  idx = (unsigned int) mpg123_getbits (&bsi, k);
+		  idx = (unsigned int) mpgdec_getbits (&bsi, k);
 		  tab = (unsigned int *) (table[d1] + idx + idx + idx);
-		  fraction[j][0][i] = mpg123_muls[*tab++][m];
-		  fraction[j][1][i] = mpg123_muls[*tab++][m];
-		  fraction[j][2][i] = mpg123_muls[*tab][m];
+		  fraction[j][0][i] = mpgdec_muls[*tab++][m];
+		  fraction[j][1][i] = mpgdec_muls[*tab++][m];
+		  fraction[j][2][i] = mpgdec_muls[*tab][m];
 		}
 	      scale += 3;
 	    }
@@ -199,17 +199,17 @@ II_step_two (unsigned int *bit_alloc, mpgdec_real fraction[2][4][SBLIMIT],
 	    {
 	      mpgdec_real cm;
 
-	      cm = mpg123_muls[k][scale[x1 + 3]];
+	      cm = mpgdec_muls[k][scale[x1 + 3]];
 	      fraction[1][0][i] = (fraction[0][0][i] =
-				   (mpgdec_real) ((int) mpg123_getbits (&bsi, k) +
+				   (mpgdec_real) ((int) mpgdec_getbits (&bsi, k) +
 					   d1)) * cm;
 	      fraction[1][1][i] = (fraction[0][1][i] =
-				   (mpgdec_real) ((int) mpg123_getbits (&bsi, k) +
+				   (mpgdec_real) ((int) mpgdec_getbits (&bsi, k) +
 					   d1)) * cm;
 	      fraction[1][2][i] = (fraction[0][2][i] =
-				   (mpgdec_real) ((int) mpg123_getbits (&bsi, k) +
+				   (mpgdec_real) ((int) mpgdec_getbits (&bsi, k) +
 					   d1)) * cm;
-	      cm = mpg123_muls[k][scale[x1]];
+	      cm = mpgdec_muls[k][scale[x1]];
 	      fraction[0][0][i] *= cm;
 	      fraction[0][1][i] *= cm;
 	      fraction[0][2][i] *= cm;
@@ -222,14 +222,14 @@ II_step_two (unsigned int *bit_alloc, mpgdec_real fraction[2][4][SBLIMIT],
 
 	      m1 = scale[x1];
 	      m2 = scale[x1 + 3];
-	      idx = (unsigned int) mpg123_getbits (&bsi, k);
+	      idx = (unsigned int) mpgdec_getbits (&bsi, k);
 	      tab = (unsigned int *) (table[d1] + idx + idx + idx);
-	      fraction[0][0][i] = mpg123_muls[*tab][m1];
-	      fraction[1][0][i] = mpg123_muls[*tab++][m2];
-	      fraction[0][1][i] = mpg123_muls[*tab][m1];
-	      fraction[1][1][i] = mpg123_muls[*tab++][m2];
-	      fraction[0][2][i] = mpg123_muls[*tab][m1];
-	      fraction[1][2][i] = mpg123_muls[*tab][m2];
+	      fraction[0][0][i] = mpgdec_muls[*tab][m1];
+	      fraction[1][0][i] = mpgdec_muls[*tab++][m2];
+	      fraction[0][1][i] = mpgdec_muls[*tab][m1];
+	      fraction[1][1][i] = mpgdec_muls[*tab++][m2];
+	      fraction[0][2][i] = mpgdec_muls[*tab][m1];
+	      fraction[1][2][i] = mpgdec_muls[*tab][m2];
 	    }
 	  scale += 6;
 	}
@@ -287,7 +287,7 @@ II_select_table (struct frame *fr)
 
 
 int
-mpg123_do_layer2 (struct frame *fr)
+mpgdec_do_layer2 (struct frame *fr)
 {
   int i, j;
   int stereo = fr->stereo;
@@ -314,33 +314,33 @@ mpg123_do_layer2 (struct frame *fr)
 	{
 	  if (single >= 0)
 	    {
-	      (fr->synth_mono) (fraction[single][j], mpg123_pcm_sample,
-				&mpg123_pcm_point);
+	      (fr->synth_mono) (fraction[single][j], mpgdec_pcm_sample,
+				&mpgdec_pcm_point);
 	    }
 	  else
 	    {
-	      int p1 = mpg123_pcm_point;
+	      int p1 = mpgdec_pcm_point;
 
-	      (fr->synth) (fraction[0][j], 0, mpg123_pcm_sample, &p1);
-	      (fr->synth) (fraction[1][j], 1, mpg123_pcm_sample,
-			   &mpg123_pcm_point);
+	      (fr->synth) (fraction[0][j], 0, mpgdec_pcm_sample, &p1);
+	      (fr->synth) (fraction[1][j], 1, mpgdec_pcm_sample,
+			   &mpgdec_pcm_point);
 	    }
 
-	  /*    if(mpg123_pcm_point >= audiobufsize)
+	  /*    if(mpgdec_pcm_point >= audiobufsize)
 	     audio_flush(outmode,ai); */
 	}
     }
 #ifdef PSYCHO
-   psycho_process(mpg123_pcm_sample, mpg123_pcm_point, mpg123_cfg.channels == 2 ? fr->stereo : 1);
+   psycho_process(mpgdec_pcm_sample, mpgdec_pcm_point, mpgdec_cfg.channels == 2 ? fr->stereo : 1);
 #endif
-  if (mpg123_info->output_audio)
+  if (mpgdec_info->output_audio)
     {
-      produce_audio (mpg123_ip.output->written_time (),
-		     mpg123_cfg.resolution == 16 ? FMT_S16_NE : FMT_U8,
-		     mpg123_cfg.channels == 2 ? fr->stereo : 1,
-		     mpg123_pcm_point, mpg123_pcm_sample, &mpg123_pcm_point);
+      produce_audio (mpgdec_ip.output->written_time (),
+		     mpgdec_cfg.resolution == 16 ? FMT_S16_NE : FMT_U8,
+		     mpgdec_cfg.channels == 2 ? fr->stereo : 1,
+		     mpgdec_pcm_point, mpgdec_pcm_sample, &mpgdec_pcm_point);
     }
-  mpg123_pcm_point = 0;
+  mpgdec_pcm_point = 0;
 
   return 1;
 }

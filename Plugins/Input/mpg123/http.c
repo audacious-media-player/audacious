@@ -54,8 +54,8 @@ static gint icy_metaint = 0;
 static gint udp_establish_listener(gint * sock);
 static gint udp_check_for_data(gint sock);
 
-extern gint mpg123_bitrate, mpg123_frequency, mpg123_stereo;
-extern gboolean mpg123_stereo;
+extern gint mpgdec_bitrate, mpgdec_frequency, mpgdec_stereo;
+extern gboolean mpgdec_stereo;
 
 static gboolean prebuffering, going, eof = FALSE;
 static gint sock;
@@ -179,7 +179,7 @@ parse_url(const gchar * url, gchar ** user, gchar ** pass,
 }
 
 void
-mpg123_http_close(void)
+mpgdec_http_close(void)
 {
     going = FALSE;
 
@@ -209,7 +209,7 @@ static void
 http_wait_for_data(gsize bytes)
 {
     while ((prebuffering || http_used() < bytes) && !eof && going
-           && mpg123_info->going)
+           && mpgdec_info->going)
         g_usleep(10000);
 }
 
@@ -228,14 +228,14 @@ show_error_message(gchar * error)
 }
 
 int
-mpg123_http_read(gpointer data, gsize length)
+mpgdec_http_read(gpointer data, gsize length)
 {
     gsize len, cnt, off = 0, meta_len, meta_off = 0, i;
     gchar *meta_data, **tags;
 
     http_wait_for_data(length);
 
-    if (!going && !mpg123_info->going)
+    if (!going && !mpgdec_info->going)
         return 0;
     len = min(http_used(), length);
 
@@ -262,10 +262,10 @@ mpg123_http_read(gpointer data, gsize length)
                             gchar *temp = tags[i] + 13;
                             gchar *title =
                                 g_strdup_printf("%s (%s)", temp, icy_name);
-                            mpg123_ip.set_info(title, -1,
-                                               mpg123_bitrate * 1000,
-                                               mpg123_frequency,
-                                               mpg123_stereo);
+                            mpgdec_ip.set_info(title, -1,
+                                               mpgdec_bitrate * 1000,
+                                               mpgdec_frequency,
+                                               mpgdec_stereo);
                             g_free(title);
                         }
 
@@ -315,7 +315,7 @@ http_check_for_data(void)
 }
 
 gint
-mpg123_http_read_line(gchar * buf, gint size)
+mpgdec_http_read_line(gchar * buf, gint size)
 {
     gint i = 0;
 
@@ -370,8 +370,8 @@ http_buffer_loop(gpointer arg)
         g_free(url);
         url = temp;
 
-        chost = mpg123_cfg.use_proxy ? mpg123_cfg.proxy_host : host;
-        cport = mpg123_cfg.use_proxy ? mpg123_cfg.proxy_port : port;
+        chost = mpgdec_cfg.use_proxy ? mpgdec_cfg.proxy_host : host;
+        cport = mpgdec_cfg.use_proxy ? mpgdec_cfg.proxy_port : port;
 
 #ifdef USE_IPV6
         snprintf(service, 6, "%d", cport);
@@ -384,7 +384,7 @@ http_buffer_loop(gpointer arg)
                     continue;
                 fcntl(sock, F_SETFL, O_NONBLOCK);
                 status = g_strdup_printf(_("CONNECTING TO %s:%d"), chost, cport);
-                mpg123_ip.set_info_text(status);
+                mpgdec_ip.set_info_text(status);
                 g_free(status);
                 ((struct sockaddr_in6 *)res->ai_addr)->sin6_port = htons(cport);
                 if (connect(sock, res->ai_addr, res->ai_addrlen) < 0) {
@@ -401,14 +401,14 @@ http_buffer_loop(gpointer arg)
                 status = g_strdup_printf(_("Couldn't connect to host %s:%d"), chost, cport);
                 show_error_message(status);
                 g_free(status);
-                mpg123_ip.set_info_text(NULL);
+                mpgdec_ip.set_info_text(NULL);
             }
         } else {
             status = g_strdup_printf(_("Couldn't look up host %s"), chost);
             show_error_message(status);
             g_free(status);
 
-            mpg123_ip.set_info_text(NULL);
+            mpgdec_ip.set_info_text(NULL);
             eof = TRUE;
         }
 #else
@@ -417,7 +417,7 @@ http_buffer_loop(gpointer arg)
         address.sin_family = AF_INET;
 
         status = g_strdup_printf(_("LOOKING UP %s"), chost);
-        mpg123_ip.set_info_text(status);
+        mpgdec_ip.set_info_text(status);
         g_free(status);
 
         if (!(hp = gethostbyname(chost))) {
@@ -425,7 +425,7 @@ http_buffer_loop(gpointer arg)
             show_error_message(status);
             g_free(status);
 
-            mpg123_ip.set_info_text(NULL);
+            mpgdec_ip.set_info_text(NULL);
             eof = TRUE;
         }
 #endif
@@ -437,7 +437,7 @@ http_buffer_loop(gpointer arg)
             address.sin_port = g_htons(cport);
 
             status = g_strdup_printf(_("CONNECTING TO %s:%d"), chost, cport);
-            mpg123_ip.set_info_text(status);
+            mpgdec_ip.set_info_text(status);
             g_free(status);
             if (connect
                 (sock, (struct sockaddr *) &address,
@@ -449,7 +449,7 @@ http_buffer_loop(gpointer arg)
                     show_error_message(status);
                     g_free(status);
 
-                    mpg123_ip.set_info_text(NULL);
+                    mpgdec_ip.set_info_text(NULL);
                     eof = TRUE;
                 }
             }
@@ -470,7 +470,7 @@ http_buffer_loop(gpointer arg)
                         show_error_message(status);
                         g_free(status);
 
-                        mpg123_ip.set_info_text(NULL);
+                        mpgdec_ip.set_info_text(NULL);
                         eof = TRUE;
 
                     }
@@ -482,7 +482,7 @@ http_buffer_loop(gpointer arg)
                 gchar udpspace[30];
                 gint udp_port;
 
-                if (mpg123_cfg.use_udp_channel) {
+                if (mpgdec_cfg.use_udp_channel) {
                     udp_port = udp_establish_listener(&udp_sock);
                     if (udp_port > 0)
                         sprintf(udpspace, "x-audiocast-udpport: %d\r\n",
@@ -496,14 +496,14 @@ http_buffer_loop(gpointer arg)
                         basic_authentication_encode(user, pass,
                                                     "Authorization");
 
-                if (mpg123_cfg.use_proxy) {
+                if (mpgdec_cfg.use_proxy) {
                     file = g_strdup(url);
-                    if (mpg123_cfg.proxy_use_auth && mpg123_cfg.proxy_user
-                        && mpg123_cfg.proxy_pass) {
+                    if (mpgdec_cfg.proxy_use_auth && mpgdec_cfg.proxy_user
+                        && mpgdec_cfg.proxy_pass) {
                         proxy_auth =
-                            basic_authentication_encode(mpg123_cfg.
+                            basic_authentication_encode(mpgdec_cfg.
                                                         proxy_user,
-                                                        mpg123_cfg.
+                                                        mpgdec_cfg.
                                                         proxy_pass,
                                                         "Proxy-Authorization");
                     }
@@ -518,7 +518,7 @@ http_buffer_loop(gpointer arg)
                                        proxy_auth ? proxy_auth : "",
                                        auth ? auth : "",
                                        "Icy-MetaData:1\r\n",
-                                       mpg123_cfg.
+                                       mpgdec_cfg.
                                        use_udp_channel ? udpspace : "");
 
                 g_free(file);
@@ -528,10 +528,10 @@ http_buffer_loop(gpointer arg)
                     g_free(auth);
                 write(sock, temp, strlen(temp));
                 g_free(temp);
-                mpg123_ip.set_info_text(_("CONNECTED: WAITING FOR REPLY"));
+                mpgdec_ip.set_info_text(_("CONNECTED: WAITING FOR REPLY"));
                 while (going && !eof) {
                     if (http_check_for_data()) {
-                        if (mpg123_http_read_line(line, 1024)) {
+                        if (mpgdec_http_read_line(line, 1024)) {
                             status = strchr(line, ' ');
                             if (status) {
                                 if (status[1] == '2')
@@ -542,7 +542,7 @@ http_buffer_loop(gpointer arg)
                                     while (going) {
                                         if (http_check_for_data()) {
                                             if ((cnt =
-                                                 mpg123_http_read_line
+                                                 mpgdec_http_read_line
                                                  (line, 1024)) != -1) {
                                                 if (!cnt)
                                                     break;
@@ -554,7 +554,7 @@ http_buffer_loop(gpointer arg)
                                             }
                                             else {
                                                 eof = TRUE;
-                                                mpg123_ip.set_info_text(NULL);
+                                                mpgdec_ip.set_info_text(NULL);
                                                 break;
                                             }
                                         }
@@ -575,14 +575,14 @@ http_buffer_loop(gpointer arg)
                         }
                         else {
                             eof = TRUE;
-                            mpg123_ip.set_info_text(NULL);
+                            mpgdec_ip.set_info_text(NULL);
                         }
                     }
                 }
 
                 while (going && !redirect) {
                     if (http_check_for_data()) {
-                        if ((cnt = mpg123_http_read_line(line, 1024)) != -1) {
+                        if ((cnt = mpgdec_http_read_line(line, 1024)) != -1) {
                             if (!cnt)
                                 break;
                             if (!strncmp(line, "icy-name:", 9))
@@ -603,7 +603,7 @@ http_buffer_loop(gpointer arg)
                         }
                         else {
                             eof = TRUE;
-                            mpg123_ip.set_info_text(NULL);
+                            mpgdec_ip.set_info_text(NULL);
                             break;
                         }
                     }
@@ -624,11 +624,11 @@ http_buffer_loop(gpointer arg)
         }
     } while (redirect);
 
-    if (mpg123_cfg.save_http_stream) {
+    if (mpgdec_cfg.save_http_stream) {
         gchar *output_name;
         gint i = 1;
 
-        file = mpg123_http_get_title(url);
+        file = mpgdec_http_get_title(url);
         output_name = file;
         if (!strncasecmp(output_name, "http://", 7))
             output_name += 7;
@@ -639,11 +639,11 @@ http_buffer_loop(gpointer arg)
         while ((temp = strchr(output_name, '/')))
             *temp = '_';
         output_name = g_strdup_printf("%s/%s.mp3",
-                                      mpg123_cfg.save_http_path, output_name);
+                                      mpgdec_cfg.save_http_path, output_name);
         while (!access(output_name, F_OK) && i < 100000) {
             g_free(output_name);
             output_name = g_strdup_printf("%s/%s-%d.mp3",
-                                          mpg123_cfg.save_http_path,
+                                          mpgdec_cfg.save_http_path,
                                           output_name, i++);
         }
 
@@ -655,7 +655,7 @@ http_buffer_loop(gpointer arg)
 
     while (going) {
 
-        if (!http_used() && !mpg123_ip.output->buffer_playing())
+        if (!http_used() && !mpgdec_ip.output->buffer_playing())
             prebuffering = TRUE;
         if (http_free() > 0 && !eof) {
             if (http_check_for_data()) {
@@ -668,7 +668,7 @@ http_buffer_loop(gpointer arg)
                     if (prebuffering) {
                         prebuffering = FALSE;
 
-                        mpg123_ip.set_info_text(NULL);
+                        mpgdec_ip.set_info_text(NULL);
                     }
 
                 }
@@ -679,14 +679,14 @@ http_buffer_loop(gpointer arg)
             if (prebuffering) {
                 if (http_used() > prebuffer_length) {
                     prebuffering = FALSE;
-                    mpg123_ip.set_info_text(NULL);
+                    mpgdec_ip.set_info_text(NULL);
                 }
                 else {
                     status =
                         g_strdup_printf(_("PRE-BUFFERING: %zuKB/%zuKB"),
                                         http_used() / 1024,
                                         prebuffer_length / 1024);
-                    mpg123_ip.set_info_text(status);
+                    mpgdec_ip.set_info_text(status);
                     g_free(status);
                 }
 
@@ -695,7 +695,7 @@ http_buffer_loop(gpointer arg)
         else
             g_usleep(10000);
 
-        if (mpg123_cfg.use_udp_channel && udp_sock != 0)
+        if (mpgdec_cfg.use_udp_channel && udp_sock != 0)
             if (udp_check_for_data(udp_sock) < 0) {
                 close(udp_sock);
                 udp_sock = 0;
@@ -720,7 +720,7 @@ http_buffer_loop(gpointer arg)
 }
 
 int
-mpg123_http_open(gchar * _url)
+mpgdec_http_open(gchar * _url)
 {
     gchar *url;
 
@@ -728,8 +728,8 @@ mpg123_http_open(gchar * _url)
 
     rd_index = 0;
     wr_index = 0;
-    buffer_length = mpg123_cfg.http_buffer_size * 1024;
-    prebuffer_length = (buffer_length * mpg123_cfg.http_prebuffer) / 100;
+    buffer_length = mpgdec_cfg.http_buffer_size * 1024;
+    prebuffer_length = (buffer_length * mpgdec_cfg.http_prebuffer) / 100;
     buffer_read = 0;
     icy_metaint = 0;
     prebuffering = TRUE;
@@ -743,7 +743,7 @@ mpg123_http_open(gchar * _url)
 }
 
 char *
-mpg123_http_get_title(gchar * url)
+mpgdec_http_get_title(gchar * url)
 {
     if (icy_name)
         return g_strdup(icy_name);
@@ -877,21 +877,21 @@ udp_check_for_data(int sock)
         if (strstr(lines[i], "x-audiocast-streamtitle") != NULL) {
             title = g_strdup_printf("%s (%s)", valptr, icy_name);
             if (going)
-                mpg123_ip.set_info(title, -1, mpg123_bitrate * 1000,
-                                   mpg123_frequency, mpg123_stereo);
+                mpgdec_ip.set_info(title, -1, mpgdec_bitrate * 1000,
+                                   mpgdec_frequency, mpgdec_stereo);
             g_free(title);
         }
 #if 0
         else if (strstr(lines[i], "x-audiocast-streamlength") != NULL) {
             if (atoi(valptr) != -1)
-                mpg123_ip.set_info(NULL, atoi(valptr),
-                                   mpg123_bitrate * 1000, mpg123_frequency,
-                                   mpg123_stereo);
+                mpgdec_ip.set_info(NULL, atoi(valptr),
+                                   mpgdec_bitrate * 1000, mpgdec_frequency,
+                                   mpgdec_stereo);
         }
 #endif
 
         else if (strstr(lines[i], "x-audiocast-streammsg") != NULL) {
-            /*  mpg123_ip.set_info(title, -1, mpg123_bitrate * 1000, mpg123_frequency, mpg123_stereo); */
+            /*  mpgdec_ip.set_info(title, -1, mpgdec_bitrate * 1000, mpgdec_frequency, mpgdec_stereo); */
 /*  			xmms_show_message(_("Message"), valptr, _("Ok"), */
 /*  					  FALSE, NULL, NULL); */
             g_message("Stream_message: %s", valptr);

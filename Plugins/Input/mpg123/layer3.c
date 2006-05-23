@@ -127,7 +127,7 @@ static mpgdec_real tan1_1[16],tan2_1[16],tan1_2[16],tan2_2[16];
 static mpgdec_real pow1_1[2][16],pow2_1[2][16],pow1_2[2][16],pow2_2[2][16];
 
 void
-mpg123_init_layer3(int down_sample_sblimit)
+mpgdec_init_layer3(int down_sample_sblimit)
 {
     int i, j, k, l;
 
@@ -375,16 +375,16 @@ static int III_get_side_info(struct III_sideinfo *si,int stereo,
    static const int tabs[2][5] = { { 2,9,5,3,4 } , { 1,8,1,2,9 } };
    const int *tab = tabs[lsf];
    
-   si->main_data_begin = mpg123_getbits(&bsi,tab[1]);
+   si->main_data_begin = mpgdec_getbits(&bsi,tab[1]);
    if (stereo == 1)
-     si->private_bits = mpg123_getbits_fast(&bsi,tab[2]);
+     si->private_bits = mpgdec_getbits_fast(&bsi,tab[2]);
    else 
-     si->private_bits = mpg123_getbits_fast(&bsi,tab[3]);
+     si->private_bits = mpgdec_getbits_fast(&bsi,tab[3]);
 
    if(!lsf) {
      for (ch=0; ch<stereo; ch++) {
          si->ch[ch].gr[0].scfsi = -1;
-         si->ch[ch].gr[1].scfsi = mpg123_getbits_fast(&bsi,4);
+         si->ch[ch].gr[1].scfsi = mpgdec_getbits_fast(&bsi,4);
      }
    }
 
@@ -392,34 +392,34 @@ static int III_get_side_info(struct III_sideinfo *si,int stereo,
      for (ch=0; ch<stereo; ch++) {
        register struct gr_info_s *gr_info = &(si->ch[ch].gr[gr]);
 
-       gr_info->part2_3_length = mpg123_getbits(&bsi,12);
-       gr_info->big_values = mpg123_getbits(&bsi,9);
+       gr_info->part2_3_length = mpgdec_getbits(&bsi,12);
+       gr_info->big_values = mpgdec_getbits(&bsi,9);
        if(gr_info->big_values > 288) {
           gr_info->big_values = 288;
        }
-       gr_info->pow2gain = gainpow2+256 - mpg123_getbits_fast(&bsi,8) + powdiff;
+       gr_info->pow2gain = gainpow2+256 - mpgdec_getbits_fast(&bsi,8) + powdiff;
        if(ms_stereo)
          gr_info->pow2gain += 2;
-       gr_info->scalefac_compress = mpg123_getbits(&bsi,tab[4]);
+       gr_info->scalefac_compress = mpgdec_getbits(&bsi,tab[4]);
 
-       if(mpg123_get1bit(&bsi)) { /* window switch flag  */
+       if(mpgdec_get1bit(&bsi)) { /* window switch flag  */
          int i;
 #ifdef L3_DEBUG
 if(2*gr_info->big_values > bandInfo[sfreq].shortIdx[12])
   fprintf(stderr,"L3: BigValues too large, doesn't make sense %d %d\n",2*gr_info->big_values,bandInfo[sfreq].shortIdx[12]);
 #endif
 
-         gr_info->block_type       = mpg123_getbits_fast(&bsi,2);
-         gr_info->mixed_block_flag = mpg123_get1bit(&bsi);
-         gr_info->table_select[0]  = mpg123_getbits_fast(&bsi,5);
-         gr_info->table_select[1]  = mpg123_getbits_fast(&bsi,5);
+         gr_info->block_type       = mpgdec_getbits_fast(&bsi,2);
+         gr_info->mixed_block_flag = mpgdec_get1bit(&bsi);
+         gr_info->table_select[0]  = mpgdec_getbits_fast(&bsi,5);
+         gr_info->table_select[1]  = mpgdec_getbits_fast(&bsi,5);
          /*
           * table_select[2] not needed, because there is no region2,
           * but to satisfy some verifications tools we set it either.
           */
          gr_info->table_select[2] = 0;
          for(i=0;i<3;i++)
-           gr_info->full_gain[i] = gr_info->pow2gain + (mpg123_getbits_fast(&bsi,3)<<3);
+           gr_info->full_gain[i] = gr_info->pow2gain + (mpgdec_getbits_fast(&bsi,3)<<3);
 
          if(gr_info->block_type == 0) {
            return 0;
@@ -444,9 +444,9 @@ if(2*gr_info->big_values > bandInfo[sfreq].longIdx[21])
   fprintf(stderr,"L3: BigValues too large, doesn't make sense %d %d\n",2*gr_info->big_values,bandInfo[sfreq].longIdx[21]);
 #endif
          for (i=0; i<3; i++)
-           gr_info->table_select[i] = mpg123_getbits_fast(&bsi,5);
-         r0c = mpg123_getbits_fast(&bsi,4);
-         r1c = mpg123_getbits_fast(&bsi,3);
+           gr_info->table_select[i] = mpgdec_getbits_fast(&bsi,5);
+         r0c = mpgdec_getbits_fast(&bsi,4);
+         r1c = mpgdec_getbits_fast(&bsi,3);
          gr_info->region1start = bandInfo[sfreq].longIdx[r0c+1] >> 1 ;
          if(r0c + r1c + 2 > 22)
            gr_info->region2start = 576>>1;
@@ -456,9 +456,9 @@ if(2*gr_info->big_values > bandInfo[sfreq].longIdx[21])
          gr_info->mixed_block_flag = 0;
        }
        if(!lsf)
-         gr_info->preflag = mpg123_get1bit(&bsi);
-       gr_info->scalefac_scale = mpg123_get1bit(&bsi);
-       gr_info->count1table_select = mpg123_get1bit(&bsi);
+         gr_info->preflag = mpgdec_get1bit(&bsi);
+       gr_info->scalefac_scale = mpgdec_get1bit(&bsi);
+       gr_info->count1table_select = mpgdec_get1bit(&bsi);
      }
    }
 
@@ -484,15 +484,15 @@ static int III_get_scale_factors_1(int *scf,struct gr_info_s *gr_info)
 
       if (gr_info->mixed_block_flag) {
          for (i=8;i;i--)
-           *scf++ = mpg123_getbits_fast(&bsi,num0);
+           *scf++ = mpgdec_getbits_fast(&bsi,num0);
          i = 9;
          numbits -= num0; /* num0 * 17 + num1 * 18 */
       }
 
       for (;i;i--)
-        *scf++ = mpg123_getbits_fast(&bsi,num0);
+        *scf++ = mpgdec_getbits_fast(&bsi,num0);
       for (i = 18; i; i--)
-        *scf++ = mpg123_getbits_fast(&bsi,num1);
+        *scf++ = mpgdec_getbits_fast(&bsi,num1);
       *scf++ = 0; *scf++ = 0; *scf++ = 0; /* short[13][0..2] = 0 */
     }
     else {
@@ -501,9 +501,9 @@ static int III_get_scale_factors_1(int *scf,struct gr_info_s *gr_info)
 
       if(scfsi < 0) { /* scfsi < 0 => granule == 0 */
          for(i=11;i;i--)
-           *scf++ = mpg123_getbits_fast(&bsi,num0);
+           *scf++ = mpgdec_getbits_fast(&bsi,num0);
          for(i=10;i;i--)
-           *scf++ = mpg123_getbits_fast(&bsi,num1);
+           *scf++ = mpgdec_getbits_fast(&bsi,num1);
          numbits = (num0 + num1) * 10 + num0;
          *scf++ = 0;
       }
@@ -511,7 +511,7 @@ static int III_get_scale_factors_1(int *scf,struct gr_info_s *gr_info)
         numbits = 0;
         if(!(scfsi & 0x8)) {
           for (i=0;i<6;i++)
-            *scf++ = mpg123_getbits_fast(&bsi,num0);
+            *scf++ = mpgdec_getbits_fast(&bsi,num0);
           numbits += num0 * 6;
         }
         else {
@@ -520,7 +520,7 @@ static int III_get_scale_factors_1(int *scf,struct gr_info_s *gr_info)
 
         if(!(scfsi & 0x4)) {
           for (i=0;i<5;i++)
-            *scf++ = mpg123_getbits_fast(&bsi,num0);
+            *scf++ = mpgdec_getbits_fast(&bsi,num0);
           numbits += num0 * 5;
         }
         else {
@@ -529,7 +529,7 @@ static int III_get_scale_factors_1(int *scf,struct gr_info_s *gr_info)
 
         if(!(scfsi & 0x2)) {
           for(i=0;i<5;i++)
-            *scf++ = mpg123_getbits_fast(&bsi,num1);
+            *scf++ = mpgdec_getbits_fast(&bsi,num1);
           numbits += num1 * 5;
         }
         else {
@@ -538,7 +538,7 @@ static int III_get_scale_factors_1(int *scf,struct gr_info_s *gr_info)
 
         if(!(scfsi & 0x1)) {
           for (i=0;i<5;i++)
-            *scf++ = mpg123_getbits_fast(&bsi,num1);
+            *scf++ = mpgdec_getbits_fast(&bsi,num1);
           numbits += num1 * 5;
         }
         else {
@@ -585,7 +585,7 @@ static int III_get_scale_factors_2(int *scf,struct gr_info_s *gr_info,int i_ster
     slen >>= 3;
     if(num) {
       for(j=0;j<(int)(pnt[i]);j++)
-        *scf++ = mpg123_getbits_fast(&bsi,num);
+        *scf++ = mpgdec_getbits_fast(&bsi,num);
       numbits += pnt[i] * num;
     }
     else {
@@ -611,7 +611,7 @@ static int pretab2[22] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 #define BITSHIFT ((sizeof(long)-1)*8)
 #define REFRESH_MASK \
   while(num < BITSHIFT) { \
-    mask |= ((unsigned long)mpg123_getbyte(&bsi))<<(BITSHIFT-num); \
+    mask |= ((unsigned long)mpgdec_getbyte(&bsi))<<(BITSHIFT-num); \
     num += 8; \
     part2remain -= 8; }
 
@@ -624,10 +624,10 @@ static int III_dequantize_sample(mpgdec_real xr[SBLIMIT][SSLIMIT],int *scf,
   int part2remain = gr_info->part2_3_length - part2bits;
   int *me;
 
-  int num = mpg123_getbitoffset(&bsi);
+  int num = mpgdec_getbitoffset(&bsi);
   long mask;
   /* we must split this, because for num==0 the shift is undefined if you do it in one step */
-  mask  = ((unsigned long) mpg123_getbits(&bsi,num))<<BITSHIFT;
+  mask  = ((unsigned long) mpgdec_getbits(&bsi,num))<<BITSHIFT;
   mask <<= 8-num;
   part2remain -= num;
 
@@ -994,18 +994,18 @@ static int III_dequantize_sample(mpgdec_real xr[SBLIMIT][SSLIMIT],int *scf,
   }
 
   part2remain += num;
-  mpg123_backbits(&bsi,num);
+  mpgdec_backbits(&bsi,num);
   num = 0;
 
   while(xrpnt < &xr[SBLIMIT][0]) 
     *xrpnt++ = DOUBLE_TO_REAL(0.0);
 
   while( part2remain > 16 ) {
-    mpg123_getbits(&bsi,16); /* Dismiss stuffing Bits */
+    mpgdec_getbits(&bsi,16); /* Dismiss stuffing Bits */
     part2remain -= 16;
   }
   if(part2remain > 0)
-    mpg123_getbits(&bsi,part2remain);
+    mpgdec_getbits(&bsi,part2remain);
 #if 0
   else if(part2remain < 0) {
     g_warn("Can't rewind stream by %d bits!\n",-part2remain);
@@ -1713,7 +1713,7 @@ III_hybrid(mpgdec_real fsIn[SBLIMIT][SSLIMIT],
     }
 }
 int
-mpg123_do_layer3(struct frame *fr)
+mpgdec_do_layer3(struct frame *fr)
 {
     int gr, ch, ss;
     int scalefacs[2][39];       /* max 39 for short[13][3] mode, mixed: 38, long: 22 */
@@ -1745,7 +1745,7 @@ mpg123_do_layer3(struct frame *fr)
         (&sideinfo, stereo, ms_stereo, sfreq, single, fr->lsf))
         return 0;
 
-    mpg123_set_pointer(sideinfo.main_data_begin);
+    mpgdec_set_pointer(sideinfo.main_data_begin);
 
     for (gr = 0; gr < granules; gr++) {
         mpgdec_real hybridIn[2][SBLIMIT][SSLIMIT];
@@ -1826,21 +1826,21 @@ mpg123_do_layer3(struct frame *fr)
         }
 
 #ifdef XMMS_EQ
-        if (mpg123_info->eq_active) {
+        if (mpgdec_info->eq_active) {
             int i, sb;
             
             if (single < 0) {
                 for (sb = 0, i = 0; sb < SBLIMIT; sb++) {
                     for (ss = 0; ss < SSLIMIT; ss++) {
-                        hybridIn[0][sb][ss] *= mpg123_info->eq_mul[i];
-                        hybridIn[1][sb][ss] *= mpg123_info->eq_mul[i++];
+                        hybridIn[0][sb][ss] *= mpgdec_info->eq_mul[i];
+                        hybridIn[1][sb][ss] *= mpgdec_info->eq_mul[i++];
                     }
                 }
             }
             else {
                 for (sb = 0, i = 0; sb < SBLIMIT; sb++) {
                     for (ss = 0; ss < SSLIMIT; ss++)
-                        hybridIn[0][sb][ss] *= mpg123_info->eq_mul[i++];
+                        hybridIn[0][sb][ss] *= mpgdec_info->eq_mul[i++];
                 }
             }
         }
@@ -1857,32 +1857,32 @@ mpg123_do_layer3(struct frame *fr)
 
         for (ss = 0; ss < SSLIMIT; ss++) {
             if (single >= 0) {
-                (fr->synth_mono) (hybridOut[0][ss], mpg123_pcm_sample,
-                                  &mpg123_pcm_point);
+                (fr->synth_mono) (hybridOut[0][ss], mpgdec_pcm_sample,
+                                  &mpgdec_pcm_point);
             }
             else {
-                int p1 = mpg123_pcm_point;
+                int p1 = mpgdec_pcm_point;
 
-                (fr->synth) (hybridOut[0][ss], 0, mpg123_pcm_sample, &p1);
-                (fr->synth) (hybridOut[1][ss], 1, mpg123_pcm_sample,
-                             &mpg123_pcm_point);
+                (fr->synth) (hybridOut[0][ss], 0, mpgdec_pcm_sample, &p1);
+                (fr->synth) (hybridOut[1][ss], 1, mpgdec_pcm_sample,
+                             &mpgdec_pcm_point);
             }
         }
 
 #ifdef PSYCHO
-        psycho_process(mpg123_pcm_sample, mpg123_pcm_point, mpg123_cfg.channels == 2 ? fr->stereo : 1);
+        psycho_process(mpgdec_pcm_sample, mpgdec_pcm_point, mpgdec_cfg.channels == 2 ? fr->stereo : 1);
 #endif
 
-        if (mpg123_info->output_audio && mpg123_info->jump_to_time == -1) {
-            produce_audio(mpg123_ip.output->written_time(),
-                          mpg123_cfg.resolution ==
+        if (mpgdec_info->output_audio && mpgdec_info->jump_to_time == -1) {
+            produce_audio(mpgdec_ip.output->written_time(),
+                          mpgdec_cfg.resolution ==
                           16 ? FMT_S16_NE : FMT_U8,
-                          mpg123_cfg.channels ==
-                          2 ? fr->stereo : 1, mpg123_pcm_point,
-                          mpg123_pcm_sample, &mpg123_info->going);
+                          mpgdec_cfg.channels ==
+                          2 ? fr->stereo : 1, mpgdec_pcm_point,
+                          mpgdec_pcm_sample, &mpgdec_info->going);
         }
 
-        mpg123_pcm_point = 0;
+        mpgdec_pcm_point = 0;
     }
     return 1;
 }

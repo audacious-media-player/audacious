@@ -23,7 +23,7 @@ static unsigned long ntom_val[2] = { NTOM_MUL>>1,NTOM_MUL>>1 };
 static unsigned long ntom_step = NTOM_MUL;
 
 
-void mpg123_synth_ntom_set_step(long m,long n)
+void mpgdec_synth_ntom_set_step(long m,long n)
 {
 	if(n >= 96000 || m >= 96000 || m == 0 || n == 0) {
 		fprintf(stderr,"NtoM converter: illegal rates\n");
@@ -41,18 +41,18 @@ void mpg123_synth_ntom_set_step(long m,long n)
 	ntom_val[0] = ntom_val[1] = NTOM_MUL>>1;
 }
 
-int mpg123_synth_ntom_8bit(mpgdec_real *bandPtr,int channel,unsigned char *samples,int *pnt)
+int mpgdec_synth_ntom_8bit(mpgdec_real *bandPtr,int channel,unsigned char *samples,int *pnt)
 {
   short samples_tmp[8*64];
   short *tmp1 = samples_tmp + channel;
   int i,ret;
   int pnt1 = 0;
 
-  ret = mpg123_synth_ntom(bandPtr,channel,(unsigned char *) samples_tmp,&pnt1);
+  ret = mpgdec_synth_ntom(bandPtr,channel,(unsigned char *) samples_tmp,&pnt1);
   samples += channel + *pnt;
 
   for(i=0;i<(pnt1>>2);i++) {
-    *samples = mpg123_conv16to8[*tmp1>>AUSHIFT];
+    *samples = mpgdec_conv16to8[*tmp1>>AUSHIFT];
     samples += 2;
     tmp1 += 2;
   }
@@ -61,18 +61,18 @@ int mpg123_synth_ntom_8bit(mpgdec_real *bandPtr,int channel,unsigned char *sampl
   return ret;
 }
 
-int mpg123_synth_ntom_8bit_mono(mpgdec_real *bandPtr,unsigned char *samples,int *pnt)
+int mpgdec_synth_ntom_8bit_mono(mpgdec_real *bandPtr,unsigned char *samples,int *pnt)
 {
   short samples_tmp[8*64];
   short *tmp1 = samples_tmp;
   int i,ret;
   int pnt1 = 0;
 
-  ret = mpg123_synth_ntom(bandPtr,0,(unsigned char *) samples_tmp,&pnt1);
+  ret = mpgdec_synth_ntom(bandPtr,0,(unsigned char *) samples_tmp,&pnt1);
   samples += *pnt;
 
   for(i=0;i<(pnt1>>2);i++) {
-    *samples++ = mpg123_conv16to8[*tmp1>>AUSHIFT];
+    *samples++ = mpgdec_conv16to8[*tmp1>>AUSHIFT];
     tmp1 += 2;
   }
   *pnt += pnt1 >> 2;
@@ -80,19 +80,19 @@ int mpg123_synth_ntom_8bit_mono(mpgdec_real *bandPtr,unsigned char *samples,int 
   return ret;
 }
 
-int mpg123_synth_ntom_8bit_mono2stereo(mpgdec_real *bandPtr,unsigned char *samples,int *pnt)
+int mpgdec_synth_ntom_8bit_mono2stereo(mpgdec_real *bandPtr,unsigned char *samples,int *pnt)
 {
   short samples_tmp[8*64];
   short *tmp1 = samples_tmp;
   int i,ret;
   int pnt1 = 0;
 
-  ret = mpg123_synth_ntom(bandPtr,0,(unsigned char *) samples_tmp,&pnt1);
+  ret = mpgdec_synth_ntom(bandPtr,0,(unsigned char *) samples_tmp,&pnt1);
   samples += *pnt;
 
   for(i=0;i<(pnt1>>2);i++) {
-    *samples++ = mpg123_conv16to8[*tmp1>>AUSHIFT];
-    *samples++ = mpg123_conv16to8[*tmp1>>AUSHIFT];
+    *samples++ = mpgdec_conv16to8[*tmp1>>AUSHIFT];
+    *samples++ = mpgdec_conv16to8[*tmp1>>AUSHIFT];
     tmp1 += 2;
   }
   *pnt += pnt1 >> 1;
@@ -100,14 +100,14 @@ int mpg123_synth_ntom_8bit_mono2stereo(mpgdec_real *bandPtr,unsigned char *sampl
   return ret;
 }
 
-int mpg123_synth_ntom_mono(mpgdec_real *bandPtr,unsigned char *samples,int *pnt)
+int mpgdec_synth_ntom_mono(mpgdec_real *bandPtr,unsigned char *samples,int *pnt)
 {
   short samples_tmp[8*64];
   short *tmp1 = samples_tmp;
   int i,ret;
   int pnt1 = 0;
 
-  ret = mpg123_synth_ntom(bandPtr,0,(unsigned char *) samples_tmp,&pnt1);
+  ret = mpgdec_synth_ntom(bandPtr,0,(unsigned char *) samples_tmp,&pnt1);
   samples += *pnt;
 
   for(i=0;i<(pnt1>>2);i++) {
@@ -121,12 +121,12 @@ int mpg123_synth_ntom_mono(mpgdec_real *bandPtr,unsigned char *samples,int *pnt)
 }
 
 
-int mpg123_synth_ntom_mono2stereo(mpgdec_real *bandPtr,unsigned char *samples,int *pnt)
+int mpgdec_synth_ntom_mono2stereo(mpgdec_real *bandPtr,unsigned char *samples,int *pnt)
 {
   int i,ret;
   int pnt1 = *pnt;
 
-  ret = mpg123_synth_ntom(bandPtr,0,samples,pnt);
+  ret = mpgdec_synth_ntom(bandPtr,0,samples,pnt);
   samples += pnt1;
   
   for(i=0;i<((*pnt-pnt1)>>2);i++) {
@@ -138,7 +138,7 @@ int mpg123_synth_ntom_mono2stereo(mpgdec_real *bandPtr,unsigned char *samples,in
 }
 
 
-int mpg123_synth_ntom(mpgdec_real *bandPtr,int channel,unsigned char *out,int *pnt)
+int mpgdec_synth_ntom(mpgdec_real *bandPtr,int channel,unsigned char *out,int *pnt)
 {
   static mpgdec_real buffs[2][2][0x110];
   static const int step = 2;
@@ -166,12 +166,12 @@ int mpg123_synth_ntom(mpgdec_real *bandPtr,int channel,unsigned char *out,int *p
   if(bo & 0x1) {
     b0 = buf[0];
     bo1 = bo;
-    mpg123_dct64(buf[1]+((bo+1)&0xf),buf[0]+bo,bandPtr);
+    mpgdec_dct64(buf[1]+((bo+1)&0xf),buf[0]+bo,bandPtr);
   }
   else {
     b0 = buf[1];
     bo1 = bo+1;
-    mpg123_dct64(buf[0]+bo,buf[1]+bo+1,bandPtr);
+    mpgdec_dct64(buf[0]+bo,buf[1]+bo+1,bandPtr);
   }
 
 

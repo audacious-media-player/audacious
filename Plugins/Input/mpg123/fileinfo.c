@@ -69,10 +69,10 @@ const gchar *bool_label[2];
 static GList *genre_list = NULL;
 static gchar *current_filename = NULL;
 
-extern gchar *mpg123_filename;
-extern gint mpg123_bitrate, mpg123_frequency, mpg123_layer, mpg123_lsf,
-    mpg123_mode;
-extern gboolean mpg123_stereo, mpg123_mpeg25;
+extern gchar *mpgdec_filename;
+extern gint mpgdec_bitrate, mpgdec_frequency, mpgdec_layer, mpgdec_lsf,
+    mpgdec_mode;
+extern gboolean mpgdec_stereo, mpgdec_mpeg25;
 
 glong info_rate;
 
@@ -215,12 +215,12 @@ static void
 file_info_http(gchar * filename)
 {
     gtk_widget_set_sensitive(id3_frame, FALSE);
-    if (mpg123_filename && !strcmp(filename, mpg123_filename) &&
-        mpg123_bitrate != 0) {
-        set_mpeg_level_label(mpg123_mpeg25, mpg123_lsf, mpg123_layer);
-        label_set_text(mpeg_bitrate_val, _("%d KBit/s"), mpg123_bitrate);
-        label_set_text(mpeg_samplerate_val, _("%ld Hz"), mpg123_frequency);
-        label_set_text(mpeg_flags, "%s", channel_mode_name(mpg123_mode));
+    if (mpgdec_filename && !strcmp(filename, mpgdec_filename) &&
+        mpgdec_bitrate != 0) {
+        set_mpeg_level_label(mpgdec_mpeg25, mpgdec_lsf, mpgdec_layer);
+        label_set_text(mpeg_bitrate_val, _("%d KBit/s"), mpgdec_bitrate);
+        label_set_text(mpeg_samplerate_val, _("%ld Hz"), mpgdec_frequency);
+        label_set_text(mpeg_flags, "%s", channel_mode_name(mpgdec_mode));
     }
 }
 
@@ -231,7 +231,7 @@ change_buttons(GtkObject * object)
 }
 
 void
-mpg123_file_info_box(gchar * filename)
+mpgdec_file_info_box(gchar * filename)
 {
     gint i;
     gchar *title, *filename_utf8;
@@ -536,7 +536,7 @@ mpg123_file_info_box(gchar * filename)
             for (i = 0; i < GENRE_MAX; i++)
                 genre_list =
                     g_list_prepend(genre_list,
-                                   (gchar *) mpg123_id3_genres[i]);
+                                   (gchar *) mpgdec_id3_genres[i]);
             genre_list = g_list_prepend(genre_list, "");
             genre_list = g_list_sort(genre_list, genre_comp_func);
         }
@@ -772,7 +772,7 @@ fill_entries(GtkWidget * w, gpointer data)
     head =
       ((guint32) tmp[0] << 24) | ((guint32) tmp[1] << 16) |
       ((guint32) tmp[2] << 8) | (guint32) tmp[3];
-    while (!mpg123_head_check(head)) {
+    while (!mpgdec_head_check(head)) {
       head <<= 8;
       if (vfs_fread(tmp, 1, 1, fh) != 1) {
 	vfs_fclose(fh);
@@ -780,7 +780,7 @@ fill_entries(GtkWidget * w, gpointer data)
       }
       head |= tmp[0];
     }
-    if (mpg123_decode_header(&frm, head)) {
+    if (mpgdec_decode_header(&frm, head)) {
       guchar *buf;
       gint pos;
 

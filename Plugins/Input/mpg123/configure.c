@@ -13,7 +13,7 @@
 #include <libaudacious/titlestring.h>
 
 
-static GtkWidget *mpg123_configurewin = NULL;
+static GtkWidget *mpgdec_configurewin = NULL;
 static GtkWidget *vbox, *notebook;
 static GtkWidget *decode_vbox, *decode_hbox1;
 static GtkWidget *decode_res_frame, *decode_res_vbox, *decode_res_16,
@@ -34,84 +34,84 @@ static GtkWidget *title_override, *title_id3_entry, *title_id3v2_disable;
 static GtkWidget *title_encoding_hbox, *title_encoding_enabled, *title_encoding, *title_encoding_label;
 /* Encoding patch */
 
-MPG123Config mpg123_cfg;
+MPG123Config mpgdec_cfg;
 
 static void
-mpg123_configurewin_ok(GtkWidget * widget, gpointer data)
+mpgdec_configurewin_ok(GtkWidget * widget, gpointer data)
 {
     ConfigDb *db;
 
     if (GTK_TOGGLE_BUTTON(decode_res_16)->active)
-        mpg123_cfg.resolution = 16;
+        mpgdec_cfg.resolution = 16;
     else if (GTK_TOGGLE_BUTTON(decode_res_8)->active)
-        mpg123_cfg.resolution = 8;
+        mpgdec_cfg.resolution = 8;
 
     if (GTK_TOGGLE_BUTTON(decode_ch_stereo)->active)
-        mpg123_cfg.channels = 2;
+        mpgdec_cfg.channels = 2;
     else if (GTK_TOGGLE_BUTTON(decode_ch_mono)->active)
-        mpg123_cfg.channels = 1;
+        mpgdec_cfg.channels = 1;
 
     if (GTK_TOGGLE_BUTTON(decode_freq_1to1)->active)
-        mpg123_cfg.downsample = 0;
+        mpgdec_cfg.downsample = 0;
     else if (GTK_TOGGLE_BUTTON(decode_freq_1to2)->active)
-        mpg123_cfg.downsample = 1;
+        mpgdec_cfg.downsample = 1;
     if (GTK_TOGGLE_BUTTON(decode_freq_1to4)->active)
-        mpg123_cfg.downsample = 2;
+        mpgdec_cfg.downsample = 2;
 
-    mpg123_cfg.http_buffer_size =
+    mpgdec_cfg.http_buffer_size =
         (gint) GTK_ADJUSTMENT(streaming_size_adj)->value;
-    mpg123_cfg.http_prebuffer =
+    mpgdec_cfg.http_prebuffer =
         (gint) GTK_ADJUSTMENT(streaming_pre_adj)->value;
 
-    mpg123_cfg.save_http_stream =
+    mpgdec_cfg.save_http_stream =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(streaming_save_use));
-    if (mpg123_cfg.save_http_path)
-        g_free(mpg123_cfg.save_http_path);
-    mpg123_cfg.save_http_path =
+    if (mpgdec_cfg.save_http_path)
+        g_free(mpgdec_cfg.save_http_path);
+    mpgdec_cfg.save_http_path =
         g_strdup(gtk_entry_get_text(GTK_ENTRY(streaming_save_entry)));
 
-    mpg123_cfg.use_udp_channel =
+    mpgdec_cfg.use_udp_channel =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(streaming_udp_title));
 
-    mpg123_cfg.title_override =
+    mpgdec_cfg.title_override =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(title_override));
-    mpg123_cfg.disable_id3v2 =
+    mpgdec_cfg.disable_id3v2 =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(title_id3v2_disable));
-    g_free(mpg123_cfg.id3_format);
-    mpg123_cfg.id3_format =
+    g_free(mpgdec_cfg.id3_format);
+    mpgdec_cfg.id3_format =
         g_strdup(gtk_entry_get_text(GTK_ENTRY(title_id3_entry)));
 
-    mpg123_cfg.title_encoding_enabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(title_encoding_enabled));
-    mpg123_cfg.title_encoding = g_strdup(gtk_entry_get_text(GTK_ENTRY(title_encoding)));
-    if (mpg123_cfg.title_encoding_enabled)
-        mpg123_id3_encoding_list = g_strsplit_set(mpg123_cfg.title_encoding, ENCODING_SEPARATOR, 0);
+    mpgdec_cfg.title_encoding_enabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(title_encoding_enabled));
+    mpgdec_cfg.title_encoding = g_strdup(gtk_entry_get_text(GTK_ENTRY(title_encoding)));
+    if (mpgdec_cfg.title_encoding_enabled)
+        mpgdec_id3_encoding_list = g_strsplit_set(mpgdec_cfg.title_encoding, ENCODING_SEPARATOR, 0);
     db = bmp_cfg_db_open();
-    bmp_cfg_db_set_int(db, "MPG123", "resolution", mpg123_cfg.resolution);
-    bmp_cfg_db_set_int(db, "MPG123", "channels", mpg123_cfg.channels);
-    bmp_cfg_db_set_int(db, "MPG123", "downsample", mpg123_cfg.downsample);
+    bmp_cfg_db_set_int(db, "MPG123", "resolution", mpgdec_cfg.resolution);
+    bmp_cfg_db_set_int(db, "MPG123", "channels", mpgdec_cfg.channels);
+    bmp_cfg_db_set_int(db, "MPG123", "downsample", mpgdec_cfg.downsample);
     bmp_cfg_db_set_int(db, "MPG123", "http_buffer_size",
-                       mpg123_cfg.http_buffer_size);
+                       mpgdec_cfg.http_buffer_size);
     bmp_cfg_db_set_int(db, "MPG123", "http_prebuffer",
-                       mpg123_cfg.http_prebuffer);
+                       mpgdec_cfg.http_prebuffer);
     bmp_cfg_db_set_bool(db, "MPG123", "save_http_stream",
-                        mpg123_cfg.save_http_stream);
+                        mpgdec_cfg.save_http_stream);
     bmp_cfg_db_set_string(db, "MPG123", "save_http_path",
-                          mpg123_cfg.save_http_path);
+                          mpgdec_cfg.save_http_path);
     bmp_cfg_db_set_bool(db, "MPG123", "use_udp_channel",
-                        mpg123_cfg.use_udp_channel);
+                        mpgdec_cfg.use_udp_channel);
     bmp_cfg_db_set_bool(db, "MPG123", "title_override",
-                        mpg123_cfg.title_override);
+                        mpgdec_cfg.title_override);
     bmp_cfg_db_set_bool(db, "MPG123", "disable_id3v2",
-                        mpg123_cfg.disable_id3v2);
-    bmp_cfg_db_set_string(db, "MPG123", "id3_format", mpg123_cfg.id3_format);
+                        mpgdec_cfg.disable_id3v2);
+    bmp_cfg_db_set_string(db, "MPG123", "id3_format", mpgdec_cfg.id3_format);
 
 /* Encoding patch */
-    bmp_cfg_db_set_bool(db, "MPG123", "title_encoding_enabled", mpg123_cfg.title_encoding_enabled);
-    bmp_cfg_db_set_string(db, "MPG123", "title_encoding", mpg123_cfg.title_encoding);
+    bmp_cfg_db_set_bool(db, "MPG123", "title_encoding_enabled", mpgdec_cfg.title_encoding_enabled);
+    bmp_cfg_db_set_string(db, "MPG123", "title_encoding", mpgdec_cfg.title_encoding);
 /* Encoding patch */
 
     bmp_cfg_db_close(db);
-    gtk_widget_destroy(mpg123_configurewin);
+    gtk_widget_destroy(mpgdec_configurewin);
 }
 
 static void
@@ -127,14 +127,14 @@ streaming_save_browse_cb(GtkWidget * w, gpointer data)
         streaming_save_dirbrowser =
             xmms_create_dir_browser(_
                                     ("Select the directory where you want to store the MPEG streams:"),
-                                    mpg123_cfg.save_http_path,
+                                    mpgdec_cfg.save_http_path,
                                     GTK_SELECTION_SINGLE,
                                     streaming_save_dirbrowser_cb);
         g_signal_connect(G_OBJECT(streaming_save_dirbrowser), "destroy",
                          G_CALLBACK(gtk_widget_destroyed),
                          &streaming_save_dirbrowser);
         gtk_window_set_transient_for(GTK_WINDOW(streaming_save_dirbrowser),
-                                     GTK_WINDOW(mpg123_configurewin));
+                                     GTK_WINDOW(mpgdec_configurewin));
         gtk_widget_show(streaming_save_dirbrowser);
     }
 }
@@ -179,7 +179,7 @@ configure_destroy(GtkWidget * w, gpointer data)
 }
 
 void
-mpg123_configure(void)
+mpgdec_configure(void)
 {
     GtkWidget *streaming_vbox;
     GtkWidget *streaming_buf_frame, *streaming_buf_hbox;
@@ -192,27 +192,27 @@ mpg123_configure(void)
     GtkWidget *title_frame, *title_id3_vbox, *title_id3_label;
     GtkWidget *bbox, *ok, *cancel;
 
-    if (mpg123_configurewin != NULL) {
-        gtk_window_present(GTK_WINDOW(mpg123_configurewin));
+    if (mpgdec_configurewin != NULL) {
+        gtk_window_present(GTK_WINDOW(mpgdec_configurewin));
         return;
     }
-    mpg123_configurewin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_type_hint(GTK_WINDOW(mpg123_configurewin),
+    mpgdec_configurewin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_type_hint(GTK_WINDOW(mpgdec_configurewin),
                              GDK_WINDOW_TYPE_HINT_DIALOG);
-    gtk_window_set_position(GTK_WINDOW(mpg123_configurewin),
+    gtk_window_set_position(GTK_WINDOW(mpgdec_configurewin),
                             GTK_WIN_POS_CENTER);
-    g_signal_connect(G_OBJECT(mpg123_configurewin), "destroy",
-                     G_CALLBACK(gtk_widget_destroyed), &mpg123_configurewin);
-    g_signal_connect(G_OBJECT(mpg123_configurewin), "destroy",
-                     G_CALLBACK(configure_destroy), &mpg123_configurewin);
-    gtk_window_set_title(GTK_WINDOW(mpg123_configurewin),
+    g_signal_connect(G_OBJECT(mpgdec_configurewin), "destroy",
+                     G_CALLBACK(gtk_widget_destroyed), &mpgdec_configurewin);
+    g_signal_connect(G_OBJECT(mpgdec_configurewin), "destroy",
+                     G_CALLBACK(configure_destroy), &mpgdec_configurewin);
+    gtk_window_set_title(GTK_WINDOW(mpgdec_configurewin),
                          _("MPEG Audio Plugin Configuration"));
-    gtk_window_set_resizable(GTK_WINDOW(mpg123_configurewin), FALSE);
-    /*  gtk_window_set_position(GTK_WINDOW(mpg123_configurewin), GTK_WIN_POS_MOUSE); */
-    gtk_container_border_width(GTK_CONTAINER(mpg123_configurewin), 10);
+    gtk_window_set_resizable(GTK_WINDOW(mpgdec_configurewin), FALSE);
+    /*  gtk_window_set_position(GTK_WINDOW(mpgdec_configurewin), GTK_WIN_POS_MOUSE); */
+    gtk_container_border_width(GTK_CONTAINER(mpgdec_configurewin), 10);
 
     vbox = gtk_vbox_new(FALSE, 10);
-    gtk_container_add(GTK_CONTAINER(mpg123_configurewin), vbox);
+    gtk_container_add(GTK_CONTAINER(mpgdec_configurewin), vbox);
 
     notebook = gtk_notebook_new();
     gtk_box_pack_start(GTK_BOX(vbox), notebook, TRUE, TRUE, 0);
@@ -232,7 +232,7 @@ mpg123_configure(void)
     gtk_container_add(GTK_CONTAINER(decode_res_frame), decode_res_vbox);
 
     decode_res_16 = gtk_radio_button_new_with_label(NULL, _("16 bit"));
-    if (mpg123_cfg.resolution == 16)
+    if (mpgdec_cfg.resolution == 16)
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(decode_res_16), TRUE);
     gtk_box_pack_start(GTK_BOX(decode_res_vbox), decode_res_16, FALSE,
                        FALSE, 0);
@@ -241,7 +241,7 @@ mpg123_configure(void)
         gtk_radio_button_new_with_label(gtk_radio_button_group
                                         (GTK_RADIO_BUTTON(decode_res_16)),
                                         _("8 bit"));
-    if (mpg123_cfg.resolution == 8)
+    if (mpgdec_cfg.resolution == 8)
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(decode_res_8), TRUE);
 
     gtk_box_pack_start(GTK_BOX(decode_res_vbox), decode_res_8, FALSE,
@@ -256,7 +256,7 @@ mpg123_configure(void)
 
     decode_ch_stereo =
         gtk_radio_button_new_with_label(NULL, _("Stereo (if available)"));
-    if (mpg123_cfg.channels == 2)
+    if (mpgdec_cfg.channels == 2)
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(decode_ch_stereo),
                                      TRUE);
 
@@ -267,7 +267,7 @@ mpg123_configure(void)
         gtk_radio_button_new_with_label(gtk_radio_button_group
                                         (GTK_RADIO_BUTTON
                                          (decode_ch_stereo)), _("Mono"));
-    if (mpg123_cfg.channels == 1)
+    if (mpgdec_cfg.channels == 1)
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(decode_ch_mono), TRUE);
 
     gtk_box_pack_start(GTK_BOX(decode_ch_vbox), decode_ch_mono, FALSE,
@@ -283,7 +283,7 @@ mpg123_configure(void)
 
     decode_freq_1to1 =
         gtk_radio_button_new_with_label(NULL, _("1:1 (44 kHz)"));
-    if (mpg123_cfg.downsample == 0)
+    if (mpgdec_cfg.downsample == 0)
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(decode_freq_1to1),
                                      TRUE);
     gtk_box_pack_start(GTK_BOX(decode_freq_vbox), decode_freq_1to1, FALSE,
@@ -294,7 +294,7 @@ mpg123_configure(void)
                                         (GTK_RADIO_BUTTON
                                          (decode_freq_1to1)),
                                         _("1:2 (22 kHz)"));
-    if (mpg123_cfg.downsample == 1)
+    if (mpgdec_cfg.downsample == 1)
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(decode_freq_1to2),
                                      TRUE);
     gtk_box_pack_start(GTK_BOX(decode_freq_vbox), decode_freq_1to2, FALSE,
@@ -305,7 +305,7 @@ mpg123_configure(void)
                                         (GTK_RADIO_BUTTON
                                          (decode_freq_1to1)),
                                         _("1:4 (11 kHz)"));
-    if (mpg123_cfg.downsample == 2)
+    if (mpgdec_cfg.downsample == 2)
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(decode_freq_1to4),
                                      TRUE);
 
@@ -334,7 +334,7 @@ mpg123_configure(void)
     gtk_box_pack_start(GTK_BOX(streaming_size_box), streaming_size_label,
                        FALSE, FALSE, 0);
     streaming_size_adj =
-        gtk_adjustment_new(mpg123_cfg.http_buffer_size, 4, 4096, 4, 4, 4);
+        gtk_adjustment_new(mpgdec_cfg.http_buffer_size, 4, 4096, 4, 4, 4);
     streaming_size_spin =
         gtk_spin_button_new(GTK_ADJUSTMENT(streaming_size_adj), 8, 0);
     gtk_widget_set_usize(streaming_size_spin, 60, -1);
@@ -349,7 +349,7 @@ mpg123_configure(void)
     gtk_box_pack_start(GTK_BOX(streaming_pre_box), streaming_pre_label,
                        FALSE, FALSE, 0);
     streaming_pre_adj =
-        gtk_adjustment_new(mpg123_cfg.http_prebuffer, 0, 90, 1, 1, 1);
+        gtk_adjustment_new(mpgdec_cfg.http_prebuffer, 0, 90, 1, 1, 1);
     streaming_pre_spin =
         gtk_spin_button_new(GTK_ADJUSTMENT(streaming_pre_adj), 1, 0);
     gtk_widget_set_usize(streaming_pre_spin, 60, -1);
@@ -372,7 +372,7 @@ mpg123_configure(void)
     streaming_save_use =
         gtk_check_button_new_with_label(_("Save stream to disk"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(streaming_save_use),
-                                 mpg123_cfg.save_http_stream);
+                                 mpgdec_cfg.save_http_stream);
     g_signal_connect(G_OBJECT(streaming_save_use), "clicked",
                      G_CALLBACK(streaming_save_use_cb), NULL);
     gtk_box_pack_start(GTK_BOX(streaming_save_vbox), streaming_save_use,
@@ -380,7 +380,7 @@ mpg123_configure(void)
 
     streaming_save_hbox = gtk_hbox_new(FALSE, 5);
     gtk_widget_set_sensitive(streaming_save_hbox,
-                             mpg123_cfg.save_http_stream);
+                             mpgdec_cfg.save_http_stream);
     gtk_box_pack_start(GTK_BOX(streaming_save_vbox), streaming_save_hbox,
                        FALSE, FALSE, 0);
 
@@ -390,7 +390,7 @@ mpg123_configure(void)
 
     streaming_save_entry = gtk_entry_new();
     gtk_entry_set_text(GTK_ENTRY(streaming_save_entry),
-                       mpg123_cfg.save_http_path);
+                       mpgdec_cfg.save_http_path);
     gtk_box_pack_start(GTK_BOX(streaming_save_hbox), streaming_save_entry,
                        TRUE, TRUE, 0);
 
@@ -416,7 +416,7 @@ mpg123_configure(void)
         gtk_check_button_new_with_label(_
                                         ("Enable Icecast Metadata UDP Channel"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(streaming_udp_title),
-                                 mpg123_cfg.use_udp_channel);
+                                 mpgdec_cfg.use_udp_channel);
     gtk_box_pack_start(GTK_BOX(streaming_cast_vbox), streaming_udp_title,
                        FALSE, FALSE, 0);
 
@@ -433,7 +433,7 @@ mpg123_configure(void)
     title_id3v2_disable =
         gtk_check_button_new_with_label(_("Disable ID3V2 tags"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(title_id3v2_disable),
-                                 mpg123_cfg.disable_id3v2);
+                                 mpgdec_cfg.disable_id3v2);
     gtk_box_pack_start(GTK_BOX(title_id3_vbox), title_id3v2_disable, FALSE,
                        FALSE, 0);
 
@@ -442,14 +442,14 @@ mpg123_configure(void)
     title_encoding_enabled =
         gtk_check_button_new_with_label(_("Convert non-UTF8 ID3 tags to UTF8"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(title_encoding_enabled),
-                                 mpg123_cfg.title_encoding_enabled);
+                                 mpgdec_cfg.title_encoding_enabled);
     g_signal_connect(G_OBJECT(title_encoding_enabled), "clicked",
                      G_CALLBACK(title_encoding_enabled_cb), NULL);
     gtk_box_pack_start(GTK_BOX(title_id3_vbox), title_encoding_enabled, FALSE,
                        FALSE, 0);
 
     title_encoding_hbox = gtk_hbox_new(FALSE, 5);
-    gtk_widget_set_sensitive(title_encoding_hbox, mpg123_cfg.title_encoding_enabled);
+    gtk_widget_set_sensitive(title_encoding_hbox, mpgdec_cfg.title_encoding_enabled);
     gtk_box_pack_start(GTK_BOX(title_id3_vbox), title_encoding_hbox, FALSE,
                        FALSE, 0);
 
@@ -458,7 +458,7 @@ mpg123_configure(void)
                        FALSE, 0);
 
     title_encoding = gtk_entry_new();
-    gtk_entry_set_text(GTK_ENTRY(title_encoding), mpg123_cfg.title_encoding);
+    gtk_entry_set_text(GTK_ENTRY(title_encoding), mpgdec_cfg.title_encoding);
     gtk_box_pack_start(GTK_BOX(title_encoding_hbox), title_encoding, TRUE, TRUE,
                        0);
 /* Encoding patch */
@@ -467,14 +467,14 @@ mpg123_configure(void)
     title_override =
         gtk_check_button_new_with_label(_("Override generic titles"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(title_override),
-                                 mpg123_cfg.title_override);
+                                 mpgdec_cfg.title_override);
     g_signal_connect(G_OBJECT(title_override), "clicked",
                      G_CALLBACK(title_override_cb), NULL);
     gtk_box_pack_start(GTK_BOX(title_id3_vbox), title_override, FALSE,
                        FALSE, 0);
 
     title_id3_box = gtk_hbox_new(FALSE, 5);
-    gtk_widget_set_sensitive(title_id3_box, mpg123_cfg.title_override);
+    gtk_widget_set_sensitive(title_id3_box, mpgdec_cfg.title_override);
     gtk_box_pack_start(GTK_BOX(title_id3_vbox), title_id3_box, FALSE,
                        FALSE, 0);
 
@@ -483,12 +483,12 @@ mpg123_configure(void)
                        FALSE, 0);
 
     title_id3_entry = gtk_entry_new();
-    gtk_entry_set_text(GTK_ENTRY(title_id3_entry), mpg123_cfg.id3_format);
+    gtk_entry_set_text(GTK_ENTRY(title_id3_entry), mpgdec_cfg.id3_format);
     gtk_box_pack_start(GTK_BOX(title_id3_box), title_id3_entry, TRUE, TRUE,
                        0);
 
     title_tag_desc = xmms_titlestring_descriptions("pafFetnygc", 2);
-    gtk_widget_set_sensitive(title_tag_desc, mpg123_cfg.title_override);
+    gtk_widget_set_sensitive(title_tag_desc, mpgdec_cfg.title_override);
     gtk_box_pack_start(GTK_BOX(title_id3_vbox), title_tag_desc, FALSE,
                        FALSE, 0);
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), title_frame,
@@ -502,17 +502,17 @@ mpg123_configure(void)
     cancel = gtk_button_new_from_stock(GTK_STOCK_CANCEL);
     g_signal_connect_swapped(G_OBJECT(cancel), "clicked",
                              G_CALLBACK(gtk_widget_destroy),
-                             GTK_OBJECT(mpg123_configurewin));
+                             GTK_OBJECT(mpgdec_configurewin));
     GTK_WIDGET_SET_FLAGS(cancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(bbox), cancel, TRUE, TRUE, 0);
 
 
     ok = gtk_button_new_from_stock(GTK_STOCK_OK);
     g_signal_connect(G_OBJECT(ok), "clicked",
-                     G_CALLBACK(mpg123_configurewin_ok), NULL);
+                     G_CALLBACK(mpgdec_configurewin_ok), NULL);
     GTK_WIDGET_SET_FLAGS(ok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(bbox), ok, TRUE, TRUE, 0);
     gtk_widget_grab_default(ok);
 
-    gtk_widget_show_all(mpg123_configurewin);
+    gtk_widget_show_all(mpgdec_configurewin);
 }

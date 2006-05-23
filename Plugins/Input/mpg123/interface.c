@@ -22,6 +22,8 @@
 
 #include "common.h"
 
+static const long outscale = 32768;
+
 mpgdec_t *global_ins;
 
 mpgdec_t *mpgdec_new(void)
@@ -30,4 +32,9 @@ mpgdec_t *mpgdec_new(void)
 
 	/* yeah i know this is cheating */
 	global_ins = ins;
+
+	mpgdec_make_decode_tables(outscale);
+	psycho_init();
+
+	return ins;
 }

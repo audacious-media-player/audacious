@@ -33,11 +33,11 @@ typedef struct {
  * xing structure to receive header data (output)
  * buf bitstream input
  */
-int mpg123_get_xing_header(xing_header_t * xing, unsigned char *buf);
+int mpgdec_get_xing_header(xing_header_t * xing, unsigned char *buf);
 
 
 /*
  * Returns seekpoint in bytes (may be at eof if percent=100.0)
  * percent: play time percentage of total playtime. May be fractional.
  */
-int mpg123_seek_point(xing_header_t * xing, float percent);
+int mpgdec_seek_point(xing_header_t * xing, float percent);

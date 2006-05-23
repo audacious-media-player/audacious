@@ -54,14 +54,14 @@ eval_spline(float xa[], float ya[], float y2a[], int n, float x)
 }
 
 void
-mpg123_set_eq(int on, float preamp, float *b)
+mpgdec_set_eq(int on, float preamp, float *b)
 {
     float x[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, yf[10], val, band[10];
     int bands[] = { 0, 4, 8, 16, 26, 78, 157, 313, 366, 418 };
     int i, j;
 
-    mpg123_info->eq_active = on;
-    if (mpg123_info->eq_active) {
+    mpgdec_info->eq_active = on;
+    if (mpgdec_info->eq_active) {
         for (i = 0; i < 10; i++) {
             band[i] = b[i] + preamp;
         }
@@ -74,10 +74,10 @@ mpg123_set_eq(int on, float preamp, float *b)
                                 i +
                                 ((float) (j - bands[i]) *
                                  (1.0 / (bands[i + 1] - bands[i]))));
-                mpg123_info->eq_mul[j] = pow(2, val / 10.0);
+                mpgdec_info->eq_mul[j] = pow(2, val / 10.0);
             }
         }
         for (i = bands[9]; i < 576; i++)
-            mpg123_info->eq_mul[i] = mpg123_info->eq_mul[bands[9] - 1];
+            mpgdec_info->eq_mul[i] = mpgdec_info->eq_mul[bands[9] - 1];
     }
 }

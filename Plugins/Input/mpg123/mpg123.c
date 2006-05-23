@@ -25,31 +25,31 @@
 #include "audacious/util.h"
 #include <tag_c.h>
 
-static const long outscale = 32768;
-
 #define BUFSIZE_X	2048
 
 static struct frame fr, temp_fr;
 
-PlayerInfo *mpg123_info = NULL;
+PlayerInfo *mpgdec_info = NULL;
 static GThread *decode_thread;
 
 static gboolean audio_error = FALSE, output_opened = FALSE, dopause = FALSE;
-gint mpg123_bitrate, mpg123_frequency, mpg123_length, mpg123_layer,
-    mpg123_lsf;
-gchar *mpg123_title = NULL, *mpg123_filename = NULL;
+gint mpgdec_bitrate, mpgdec_frequency, mpgdec_length, mpgdec_layer,
+    mpgdec_lsf;
+gchar *mpgdec_title = NULL, *mpgdec_filename = NULL;
 static int disp_bitrate, skip_frames = 0;
 static int cpu_fflags, cpu_efflags;
-gboolean mpg123_stereo, mpg123_mpeg25;
-int mpg123_mode;
+gboolean mpgdec_stereo, mpgdec_mpeg25;
+int mpgdec_mode;
 
-gchar **mpg123_id3_encoding_list = NULL;
+mpgdec_t *ins;
+
+gchar **mpgdec_id3_encoding_list = NULL;
 
 static TagLib_File *taglib_file;
 static TagLib_Tag *taglib_tag;
 static const TagLib_AudioProperties *taglib_ap;
 
-const char *mpg123_id3_genres[GENRE_MAX] = {
+const char *mpgdec_id3_genres[GENRE_MAX] = {
     N_("Blues"), N_("Classic Rock"), N_("Country"), N_("Dance"),
     N_("Disco"), N_("Funk"), N_("Grunge"), N_("Hip-Hop"),
     N_("Jazz"), N_("Metal"), N_("New Age"), N_("Oldies"),
@@ -96,13 +96,13 @@ const char *mpg123_id3_genres[GENRE_MAX] = {
 };
 
 double
-mpg123_compute_tpf(struct frame *fr)
+mpgdec_compute_tpf(struct frame *fr)
 {
     const int bs[4] = { 0, 384, 1152, 1152 };
     double tpf;
 
     tpf = bs[fr->lay];
-    tpf /= mpg123_freqs[fr->sampling_frequency] << (fr->lsf);
+    tpf /= mpgdec_freqs[fr->sampling_frequency] << (fr->lsf);
     return tpf;
 }
 
@@ -117,31 +117,31 @@ set_synth_functions(struct frame *fr)
     int p8 = 0;
 
     static func funcs[][3] = {
-        {mpg123_synth_1to1,
-         mpg123_synth_2to1,
-         mpg123_synth_4to1},
-        {mpg123_synth_1to1_8bit,
-         mpg123_synth_2to1_8bit,
-         mpg123_synth_4to1_8bit},
+        {mpgdec_synth_1to1,
+         mpgdec_synth_2to1,
+         mpgdec_synth_4to1},
+        {mpgdec_synth_1to1_8bit,
+         mpgdec_synth_2to1_8bit,
+         mpgdec_synth_4to1_8bit},
     };
 
     static func_mono funcs_mono[2][4] = {
-        {mpg123_synth_1to1_mono,
-         mpg123_synth_2to1_mono,
-         mpg123_synth_4to1_mono},
-        {mpg123_synth_1to1_8bit_mono,
-         mpg123_synth_2to1_8bit_mono,
-         mpg123_synth_4to1_8bit_mono}
+        {mpgdec_synth_1to1_mono,
+         mpgdec_synth_2to1_mono,
+         mpgdec_synth_4to1_mono},
+        {mpgdec_synth_1to1_8bit_mono,
+         mpgdec_synth_2to1_8bit_mono,
+         mpgdec_synth_4to1_8bit_mono}
     };
 
-    if (mpg123_cfg.resolution == 8)
+    if (mpgdec_cfg.resolution == 8)
         p8 = 1;
     fr->synth = funcs[p8][ds];
     fr->synth_mono = funcs_mono[p8][ds];
     fr->synth_type = SYNTH_FPU;
 
     if (p8) {
-        mpg123_make_conv16to8_table();
+        mpgdec_make_conv16to8_table();
     }
 }
 
@@ -150,116 +150,114 @@ init(void)
 {
     ConfigDb *db;
 
-    mpg123_make_decode_tables(outscale);
+    ins = mpgdec_new();
 
-    memset(&mpg123_cfg, 0, sizeof(mpg123_cfg));
+    memset(&mpgdec_cfg, 0, sizeof(mpgdec_cfg));
 
-    mpg123_cfg.resolution = 16;
-    mpg123_cfg.channels = 2;
-    mpg123_cfg.downsample = 0;
-    mpg123_cfg.http_buffer_size = 128;
-    mpg123_cfg.http_prebuffer = 25;
-    mpg123_cfg.proxy_port = 8080;
-    mpg123_cfg.proxy_use_auth = FALSE;
-    mpg123_cfg.proxy_user = NULL;
-    mpg123_cfg.proxy_pass = NULL;
-    mpg123_cfg.use_udp_channel = TRUE;
-    mpg123_cfg.title_override = FALSE;
-    mpg123_cfg.disable_id3v2 = FALSE;
-    mpg123_cfg.default_synth = SYNTH_AUTO;
+    mpgdec_cfg.resolution = 16;
+    mpgdec_cfg.channels = 2;
+    mpgdec_cfg.downsample = 0;
+    mpgdec_cfg.http_buffer_size = 128;
+    mpgdec_cfg.http_prebuffer = 25;
+    mpgdec_cfg.proxy_port = 8080;
+    mpgdec_cfg.proxy_use_auth = FALSE;
+    mpgdec_cfg.proxy_user = NULL;
+    mpgdec_cfg.proxy_pass = NULL;
+    mpgdec_cfg.use_udp_channel = TRUE;
+    mpgdec_cfg.title_override = FALSE;
+    mpgdec_cfg.disable_id3v2 = FALSE;
+    mpgdec_cfg.default_synth = SYNTH_AUTO;
 
-    mpg123_cfg.title_encoding_enabled = FALSE;
-    mpg123_cfg.title_encoding = NULL;
+    mpgdec_cfg.title_encoding_enabled = FALSE;
+    mpgdec_cfg.title_encoding = NULL;
 
     db = bmp_cfg_db_open();
 
-    bmp_cfg_db_get_int(db, "MPG123", "resolution", &mpg123_cfg.resolution);
-    bmp_cfg_db_get_int(db, "MPG123", "channels", &mpg123_cfg.channels);
-    bmp_cfg_db_get_int(db, "MPG123", "downsample", &mpg123_cfg.downsample);
+    bmp_cfg_db_get_int(db, "MPG123", "resolution", &mpgdec_cfg.resolution);
+    bmp_cfg_db_get_int(db, "MPG123", "channels", &mpgdec_cfg.channels);
+    bmp_cfg_db_get_int(db, "MPG123", "downsample", &mpgdec_cfg.downsample);
     bmp_cfg_db_get_int(db, "MPG123", "http_buffer_size",
-                       &mpg123_cfg.http_buffer_size);
+                       &mpgdec_cfg.http_buffer_size);
     bmp_cfg_db_get_int(db, "MPG123", "http_prebuffer",
-                       &mpg123_cfg.http_prebuffer);
+                       &mpgdec_cfg.http_prebuffer);
     bmp_cfg_db_get_bool(db, "MPG123", "save_http_stream",
-                        &mpg123_cfg.save_http_stream);
+                        &mpgdec_cfg.save_http_stream);
     if (!bmp_cfg_db_get_string
-        (db, "MPG123", "save_http_path", &mpg123_cfg.save_http_path))
-        mpg123_cfg.save_http_path = g_strdup(g_get_home_dir());
+        (db, "MPG123", "save_http_path", &mpgdec_cfg.save_http_path))
+        mpgdec_cfg.save_http_path = g_strdup(g_get_home_dir());
 
     bmp_cfg_db_get_bool(db, "MPG123", "use_udp_channel",
-                        &mpg123_cfg.use_udp_channel);
+                        &mpgdec_cfg.use_udp_channel);
 
     bmp_cfg_db_get_bool(db, "MPG123", "title_override",
-                        &mpg123_cfg.title_override);
+                        &mpgdec_cfg.title_override);
     bmp_cfg_db_get_bool(db, "MPG123", "disable_id3v2",
-                        &mpg123_cfg.disable_id3v2);
+                        &mpgdec_cfg.disable_id3v2);
     if (!bmp_cfg_db_get_string
-        (db, "MPG123", "id3_format", &mpg123_cfg.id3_format))
-        mpg123_cfg.id3_format = g_strdup("%p - %t");
+        (db, "MPG123", "id3_format", &mpgdec_cfg.id3_format))
+        mpgdec_cfg.id3_format = g_strdup("%p - %t");
     bmp_cfg_db_get_int(db, "MPG123", "default_synth",
-                       &mpg123_cfg.default_synth);
+                       &mpgdec_cfg.default_synth);
 
-    bmp_cfg_db_get_bool(db, "MPG123", "title_encoding_enabled", &mpg123_cfg.title_encoding_enabled);
-    bmp_cfg_db_get_string(db, "MPG123", "title_encoding", &mpg123_cfg.title_encoding);
-    if (mpg123_cfg.title_encoding_enabled)
-        mpg123_id3_encoding_list = g_strsplit_set(mpg123_cfg.title_encoding, ENCODING_SEPARATOR, 0);
+    bmp_cfg_db_get_bool(db, "MPG123", "title_encoding_enabled", &mpgdec_cfg.title_encoding_enabled);
+    bmp_cfg_db_get_string(db, "MPG123", "title_encoding", &mpgdec_cfg.title_encoding);
+    if (mpgdec_cfg.title_encoding_enabled)
+        mpgdec_id3_encoding_list = g_strsplit_set(mpgdec_cfg.title_encoding, ENCODING_SEPARATOR, 0);
 
-    bmp_cfg_db_get_bool(db, NULL, "use_proxy", &mpg123_cfg.use_proxy);
-    bmp_cfg_db_get_string(db, NULL, "proxy_host", &mpg123_cfg.proxy_host);
-    bmp_cfg_db_get_int(db, NULL, "proxy_port", &mpg123_cfg.proxy_port);
-    bmp_cfg_db_get_bool(db, NULL, "proxy_use_auth", &mpg123_cfg.proxy_use_auth);
-    bmp_cfg_db_get_string(db, NULL, "proxy_user", &mpg123_cfg.proxy_user);
-    bmp_cfg_db_get_string(db, NULL, "proxy_pass", &mpg123_cfg.proxy_pass);
+    bmp_cfg_db_get_bool(db, NULL, "use_proxy", &mpgdec_cfg.use_proxy);
+    bmp_cfg_db_get_string(db, NULL, "proxy_host", &mpgdec_cfg.proxy_host);
+    bmp_cfg_db_get_int(db, NULL, "proxy_port", &mpgdec_cfg.proxy_port);
+    bmp_cfg_db_get_bool(db, NULL, "proxy_use_auth", &mpgdec_cfg.proxy_use_auth);
+    bmp_cfg_db_get_string(db, NULL, "proxy_user", &mpgdec_cfg.proxy_user);
+    bmp_cfg_db_get_string(db, NULL, "proxy_pass", &mpgdec_cfg.proxy_pass);
 
     bmp_cfg_db_close(db);
 
-    if (mpg123_cfg.resolution != 16 && mpg123_cfg.resolution != 8)
-        mpg123_cfg.resolution = 16;
+    if (mpgdec_cfg.resolution != 16 && mpgdec_cfg.resolution != 8)
+        mpgdec_cfg.resolution = 16;
 
-    mpg123_cfg.channels = CLAMP(mpg123_cfg.channels, 0, 2);
-    mpg123_cfg.downsample = CLAMP(mpg123_cfg.downsample, 0, 2);
-    mpg123_getcpuflags(&cpu_fflags, &cpu_efflags);
-
-    psycho_init();
+    mpgdec_cfg.channels = CLAMP(mpgdec_cfg.channels, 0, 2);
+    mpgdec_cfg.downsample = CLAMP(mpgdec_cfg.downsample, 0, 2);
+    mpgdec_getcpuflags(&cpu_fflags, &cpu_efflags);
 }
 
 static void
 cleanup(void)
 {
-    g_free(mpg123_ip.description);
-    mpg123_ip.description = NULL;
+    g_free(mpgdec_ip.description);
+    mpgdec_ip.description = NULL;
 
-    if (mpg123_cfg.save_http_path) {
-        free(mpg123_cfg.save_http_path);
-        mpg123_cfg.save_http_path = NULL;
+    if (mpgdec_cfg.save_http_path) {
+        free(mpgdec_cfg.save_http_path);
+        mpgdec_cfg.save_http_path = NULL;
     }
 
-    if (mpg123_cfg.proxy_host) {
-        free(mpg123_cfg.proxy_host);
-        mpg123_cfg.proxy_host = NULL;
+    if (mpgdec_cfg.proxy_host) {
+        free(mpgdec_cfg.proxy_host);
+        mpgdec_cfg.proxy_host = NULL;
     }
 
-    if (mpg123_cfg.proxy_user) {
-        free(mpg123_cfg.proxy_user);
-        mpg123_cfg.proxy_user = NULL;
+    if (mpgdec_cfg.proxy_user) {
+        free(mpgdec_cfg.proxy_user);
+        mpgdec_cfg.proxy_user = NULL;
     }
 
-    if (mpg123_cfg.proxy_pass) {
-        free(mpg123_cfg.proxy_pass);
-        mpg123_cfg.proxy_pass = NULL;
+    if (mpgdec_cfg.proxy_pass) {
+        free(mpgdec_cfg.proxy_pass);
+        mpgdec_cfg.proxy_pass = NULL;
     }
 
-    if (mpg123_cfg.id3_format) {
-        free(mpg123_cfg.id3_format);
-        mpg123_cfg.id3_format = NULL;
+    if (mpgdec_cfg.id3_format) {
+        free(mpgdec_cfg.id3_format);
+        mpgdec_cfg.id3_format = NULL;
     }
 
-    if (mpg123_cfg.title_encoding) {
-        free(mpg123_cfg.title_encoding);
-        mpg123_cfg.title_encoding = NULL;
+    if (mpgdec_cfg.title_encoding) {
+        free(mpgdec_cfg.title_encoding);
+        mpgdec_cfg.title_encoding = NULL;
     }
 
-    g_strfreev(mpg123_id3_encoding_list);
+    g_strfreev(mpgdec_id3_encoding_list);
 }
 
 static guint32
@@ -273,7 +271,7 @@ convert_to_header(guint8 * buf)
 #define DET_BUF_SIZE 1024
 
 static gboolean
-mpg123_detect_by_content(char *filename)
+mpgdec_detect_by_content(char *filename)
 {
     VFSFile *file;
     guchar tmp[4];
@@ -289,7 +287,7 @@ mpg123_detect_by_content(char *filename)
     if (vfs_fread(tmp, 1, 4, file) != 4)
         goto done;
     head = convert_to_header(tmp);
-    while (!mpg123_head_check(head)) {
+    while (!mpgdec_head_check(head)) {
         /*
          * The mpeg-stream can start anywhere in the file,
          * so we check the entire file
@@ -305,7 +303,7 @@ mpg123_detect_by_content(char *filename)
         for (i = 0; i < in_buf; i++) {
             head <<= 8;
             head |= buf[i];
-            if (mpg123_head_check(head)) {
+            if (mpgdec_head_check(head)) {
                 vfs_fseek(file, i + 1 - in_buf, SEEK_CUR);
                 break;
             }
@@ -314,7 +312,7 @@ mpg123_detect_by_content(char *filename)
         if (++cyc > 20)
 	    goto done;
     }
-    if (mpg123_decode_header(&fr, head)) {
+    if (mpgdec_decode_header(&fr, head)) {
         /*
          * We found something which looks like a MPEG-header.
          * We check the next frame too, to be sure
@@ -325,7 +323,7 @@ mpg123_detect_by_content(char *filename)
         if (vfs_fread(tmp, 1, 4, file) != 4)
             goto done;
         head = convert_to_header(tmp);
-        if (mpg123_head_check(head) && mpg123_decode_header(&fr, head))
+        if (mpgdec_head_check(head) && mpgdec_decode_header(&fr, head))
             ret = TRUE;
     }
 
@@ -355,15 +353,15 @@ play_frame(struct frame *fr)
 {
     if (fr->error_protection) {
         bsi.wordpointer += 2;
-        /*  mpg123_getbits(16); *//* skip crc */
+        /*  mpgdec_getbits(16); *//* skip crc */
     }
     if (!fr->do_layer(fr)) {
         skip_frames = 2;
-        mpg123_info->output_audio = FALSE;
+        mpgdec_info->output_audio = FALSE;
     }
     else {
         if (!skip_frames)
-            mpg123_info->output_audio = TRUE;
+            mpgdec_info->output_audio = TRUE;
         else
             skip_frames--;
     }
@@ -373,13 +371,13 @@ static const char *
 get_id3_genre(unsigned char genre_code)
 {
     if (genre_code < GENRE_MAX)
-        return gettext(mpg123_id3_genres[genre_code]);
+        return gettext(mpgdec_id3_genres[genre_code]);
 
     return "";
 }
 
 guint
-mpg123_strip_spaces(char *src, size_t n)
+mpgdec_strip_spaces(char *src, size_t n)
 {
     gchar *space = NULL,        /* last space in src */
         *start = src;
@@ -432,7 +430,7 @@ extname(const char *filename)
  *
  */
 void
-mpg123_id3v1_to_id3v2(struct id3v1tag_t *v1, struct id3tag_t *v2)
+mpgdec_id3v1_to_id3v2(struct id3v1tag_t *v1, struct id3tag_t *v2)
 {
     memset(v2, 0, sizeof(struct id3tag_t));
     strncpy(v2->title, v1->title, 30);
@@ -461,14 +459,14 @@ mpg123_id3v1_to_id3v2(struct id3v1tag_t *v1, struct id3tag_t *v2)
 #define REMOVE_NONEXISTANT_TAG(x)   if (!*x) { x = NULL; }
 
 /*
- * Function mpg123_format_song_title (tag, filename)
+ * Function mpgdec_format_song_title (tag, filename)
  *
  *    Create song title according to `tag' and/or `filename' and
  *    return it.  The title must be subsequently freed using g_free().
  *
  */
 gchar *
-mpg123_format_song_title(TagLib_Tag *taglib_tag, gchar * filename)
+mpgdec_format_song_title(TagLib_Tag *taglib_tag, gchar * filename)
 {
     gchar *title = NULL;
     TitleInput *input;
@@ -480,9 +478,9 @@ mpg123_format_song_title(TagLib_Tag *taglib_tag, gchar * filename)
         input->album_name = taglib_tag_album(taglib_tag);
         input->track_name = taglib_tag_title(taglib_tag);
 
-        mpg123_strip_spaces(input->performer,strlen(input->performer));
-        mpg123_strip_spaces(input->album_name,strlen(input->album_name));
-        mpg123_strip_spaces(input->track_name,strlen(input->track_name));
+        mpgdec_strip_spaces(input->performer,strlen(input->performer));
+        mpgdec_strip_spaces(input->album_name,strlen(input->album_name));
+        mpgdec_strip_spaces(input->track_name,strlen(input->track_name));
 
         input->year = taglib_tag_year(taglib_tag);
         input->track_number = taglib_tag_track(taglib_tag);
@@ -501,8 +499,8 @@ mpg123_format_song_title(TagLib_Tag *taglib_tag, gchar * filename)
     input->file_path = g_path_get_dirname(filename);
     input->file_ext = extname(filename);
 
-    title = xmms_get_titlestring(mpg123_cfg.title_override ?
-                                 mpg123_cfg.id3_format :
+    title = xmms_get_titlestring(mpgdec_cfg.title_override ?
+                                 mpgdec_cfg.id3_format :
                                  xmms_get_gentitle_format(), input);
 
     if (!title /* || strlen(input->track_name) == 0 */) {
@@ -534,7 +532,7 @@ get_song_title(char *filename)
       taglib_ap = taglib_file_audioproperties(taglib_file);
     }
 
-    ret = mpg123_format_song_title(taglib_tag, filename);
+    ret = mpgdec_format_song_title(taglib_tag, filename);
    
     taglib_file_free(taglib_file);
     taglib_tag_free_strings();
@@ -574,25 +572,25 @@ get_song_time(VFSFile * file)
     if (vfs_fread(tmp, 1, 4, file) != 4)
         return 0;
     head = convert_to_header(tmp);
-    while (!mpg123_head_check(head)) {
+    while (!mpgdec_head_check(head)) {
         head <<= 8;
         if (vfs_fread(tmp, 1, 1, file) != 1)
             return 0;
         head |= tmp[0];
     }
-    if (mpg123_decode_header(&frm, head)) {
+    if (mpgdec_decode_header(&frm, head)) {
         buf = g_malloc(frm.framesize + 4);
         vfs_fseek(file, -4, SEEK_CUR);
         vfs_fread(buf, 1, frm.framesize + 4, file);
-        tpf = mpg123_compute_tpf(&frm);
-        if (mpg123_get_xing_header(&xing_header, buf)) {
+        tpf = mpgdec_compute_tpf(&frm);
+        if (mpgdec_get_xing_header(&xing_header, buf)) {
             g_free(buf);
             if (xing_header.bytes == 0)
                 xing_header.bytes = get_song_length(file);
             return (tpf * xing_header.frames * 1000);
         }
         g_free(buf);
-        bpf = mpg123_compute_bpf(&frm);
+        bpf = mpgdec_compute_bpf(&frm);
         len = get_song_length(file);
         return ((guint) (len / bpf) * tpf * 1000);
     }
@@ -624,13 +622,13 @@ static int
 open_output(void)
 {
     int r;
-    AFormat fmt = mpg123_cfg.resolution == 16 ? FMT_S16_NE : FMT_U8;
-    int freq = mpg123_freqs[fr.sampling_frequency] >> mpg123_cfg.downsample;
-    int channels = mpg123_cfg.channels == 2 ? fr.stereo : 1;
-    r = mpg123_ip.output->open_audio(fmt, freq, channels);
+    AFormat fmt = mpgdec_cfg.resolution == 16 ? FMT_S16_NE : FMT_U8;
+    int freq = mpgdec_freqs[fr.sampling_frequency] >> mpgdec_cfg.downsample;
+    int channels = mpgdec_cfg.channels == 2 ? fr.stereo : 1;
+    r = mpgdec_ip.output->open_audio(fmt, freq, channels);
 
     if (r && dopause) {
-        mpg123_ip.output->pause(TRUE);
+        mpgdec_ip.output->pause(TRUE);
         dopause = FALSE;
     }
 
@@ -639,24 +637,24 @@ open_output(void)
 
 
 static int
-mpg123_seek(struct frame *fr, xing_header_t * xh, gboolean vbr, int time)
+mpgdec_seek(struct frame *fr, xing_header_t * xh, gboolean vbr, int time)
 {
     int jumped = -1;
 
     if (xh) {
         int percent = ((double) time * 100.0) /
-            (mpg123_info->num_frames * mpg123_info->tpf);
-        int byte = mpg123_seek_point(xh, percent);
-        jumped = mpg123_stream_jump_to_byte(fr, byte);
+            (mpgdec_info->num_frames * mpgdec_info->tpf);
+        int byte = mpgdec_seek_point(xh, percent);
+        jumped = mpgdec_stream_jump_to_byte(fr, byte);
     }
-    else if (vbr && mpg123_length > 0) {
-        int byte = ((guint64) time * 1000 * mpg123_info->filesize) /
-            mpg123_length;
-        jumped = mpg123_stream_jump_to_byte(fr, byte);
+    else if (vbr && mpgdec_length > 0) {
+        int byte = ((guint64) time * 1000 * mpgdec_info->filesize) /
+            mpgdec_length;
+        jumped = mpgdec_stream_jump_to_byte(fr, byte);
     }
     else {
-        int frame = time / mpg123_info->tpf;
-        jumped = mpg123_stream_jump_to_frame(fr, frame);
+        int frame = time / mpgdec_info->tpf;
+        jumped = mpgdec_stream_jump_to_frame(fr, frame);
     }
 
     return jumped;
@@ -672,43 +670,43 @@ decode_loop(void *arg)
     xing_header_t xing_header;
 
     /* This is used by fileinfo on http streams */
-    mpg123_bitrate = 0;
+    mpgdec_bitrate = 0;
 
-    mpg123_pcm_sample = g_malloc0(32768);
-    mpg123_pcm_point = 0;
-    mpg123_filename = filename;
+    mpgdec_pcm_sample = g_malloc0(32768);
+    mpgdec_pcm_point = 0;
+    mpgdec_filename = filename;
 
-    mpg123_read_frame_init();
+    mpgdec_read_frame_init();
 
-    mpg123_open_stream(filename, -1);
+    mpgdec_open_stream(filename, -1);
 
-    if (mpg123_info->eof || !mpg123_read_frame(&fr))
-        mpg123_info->eof = TRUE;
+    if (mpgdec_info->eof || !mpgdec_read_frame(&fr))
+        mpgdec_info->eof = TRUE;
 
-    if (!mpg123_info->eof && mpg123_info->going) {
-        if (mpg123_cfg.channels == 2)
+    if (!mpgdec_info->eof && mpgdec_info->going) {
+        if (mpgdec_cfg.channels == 2)
             fr.single = -1;
         else
             fr.single = 3;
 
-        fr.down_sample = mpg123_cfg.downsample;
-        fr.down_sample_sblimit = SBLIMIT >> mpg123_cfg.downsample;
+        fr.down_sample = mpgdec_cfg.downsample;
+        fr.down_sample_sblimit = SBLIMIT >> mpgdec_cfg.downsample;
         set_synth_functions(&fr);
-        mpg123_init_layer3(fr.down_sample_sblimit);
+        mpgdec_init_layer3(fr.down_sample_sblimit);
 
-        mpg123_info->tpf = mpg123_compute_tpf(&fr);
+        mpgdec_info->tpf = mpgdec_compute_tpf(&fr);
         if (strncasecmp(filename, "http://", 7)) {
-            if (mpg123_stream_check_for_xing_header(&fr, &xing_header)) {
-                mpg123_info->num_frames = xing_header.frames;
+            if (mpgdec_stream_check_for_xing_header(&fr, &xing_header)) {
+                mpgdec_info->num_frames = xing_header.frames;
                 have_xing_header = TRUE;
-                mpg123_read_frame(&fr);
+                mpgdec_read_frame(&fr);
             }
         }
 
         for (;;) {
             memcpy(&temp_fr, &fr, sizeof(struct frame));
-            if (!mpg123_read_frame(&temp_fr)) {
-                mpg123_info->eof = TRUE;
+            if (!mpgdec_read_frame(&temp_fr)) {
+                mpgdec_info->eof = TRUE;
                 break;
             }
             if (fr.lay != temp_fr.lay ||
@@ -720,69 +718,69 @@ decode_loop(void *arg)
         }
 
         if (!have_xing_header && strncasecmp(filename, "http://", 7))
-            mpg123_info->num_frames = mpg123_calc_numframes(&fr);
+            mpgdec_info->num_frames = mpgdec_calc_numframes(&fr);
 
         memcpy(&fr, &temp_fr, sizeof(struct frame));
-        mpg123_bitrate = tabsel_123[fr.lsf][fr.lay - 1][fr.bitrate_index];
-        disp_bitrate = mpg123_bitrate;
-        mpg123_frequency = mpg123_freqs[fr.sampling_frequency];
-        mpg123_stereo = fr.stereo;
-        mpg123_layer = fr.lay;
-        mpg123_lsf = fr.lsf;
-        mpg123_mpeg25 = fr.mpeg25;
-        mpg123_mode = fr.mode;
+        mpgdec_bitrate = tabsel_123[fr.lsf][fr.lay - 1][fr.bitrate_index];
+        disp_bitrate = mpgdec_bitrate;
+        mpgdec_frequency = mpgdec_freqs[fr.sampling_frequency];
+        mpgdec_stereo = fr.stereo;
+        mpgdec_layer = fr.lay;
+        mpgdec_lsf = fr.lsf;
+        mpgdec_mpeg25 = fr.mpeg25;
+        mpgdec_mode = fr.mode;
 
         if (strncasecmp(filename, "http://", 7)) {
-            mpg123_length = mpg123_info->num_frames * mpg123_info->tpf * 1000;
-            if (!mpg123_title)
-                mpg123_title = get_song_title(filename);
+            mpgdec_length = mpgdec_info->num_frames * mpgdec_info->tpf * 1000;
+            if (!mpgdec_title)
+                mpgdec_title = get_song_title(filename);
         }
         else {
-            if (!mpg123_title)
-                mpg123_title = mpg123_http_get_title(filename);
-            mpg123_length = -1;
+            if (!mpgdec_title)
+                mpgdec_title = mpgdec_http_get_title(filename);
+            mpgdec_length = -1;
         }
 
-        mpg123_ip.set_info(mpg123_title, mpg123_length,
-                           mpg123_bitrate * 1000,
-                           mpg123_freqs[fr.sampling_frequency], fr.stereo);
+        mpgdec_ip.set_info(mpgdec_title, mpgdec_length,
+                           mpgdec_bitrate * 1000,
+                           mpgdec_freqs[fr.sampling_frequency], fr.stereo);
 
         output_opened = TRUE;
 
         if (!open_output()) {
             audio_error = TRUE;
-            mpg123_info->eof = TRUE;
+            mpgdec_info->eof = TRUE;
         }
         else
             play_frame(&fr);
     }
 
-    mpg123_info->first_frame = FALSE;
-    while (mpg123_info->going) {
-        if (mpg123_info->jump_to_time != -1) {
+    mpgdec_info->first_frame = FALSE;
+    while (mpgdec_info->going) {
+        if (mpgdec_info->jump_to_time != -1) {
             void *xp = NULL;
             if (have_xing_header)
                 xp = &xing_header;
-            if (mpg123_seek(&fr, xp, vbr, mpg123_info->jump_to_time) > -1) {
-                mpg123_ip.output->flush(mpg123_info->jump_to_time * 1000);
-                mpg123_info->eof = FALSE;
+            if (mpgdec_seek(&fr, xp, vbr, mpgdec_info->jump_to_time) > -1) {
+                mpgdec_ip.output->flush(mpgdec_info->jump_to_time * 1000);
+                mpgdec_info->eof = FALSE;
             }
-            mpg123_info->jump_to_time = -1;
+            mpgdec_info->jump_to_time = -1;
         }
-        if (!mpg123_info->eof) {
-            if (mpg123_read_frame(&fr) != 0) {
-                if (fr.lay != mpg123_layer || fr.lsf != mpg123_lsf) {
+        if (!mpgdec_info->eof) {
+            if (mpgdec_read_frame(&fr) != 0) {
+                if (fr.lay != mpgdec_layer || fr.lsf != mpgdec_lsf) {
                     memcpy(&temp_fr, &fr, sizeof(struct frame));
-                    if (mpg123_read_frame(&temp_fr) != 0) {
+                    if (mpgdec_read_frame(&temp_fr) != 0) {
                         if (fr.lay == temp_fr.lay && fr.lsf == temp_fr.lsf) {
-                            mpg123_layer = fr.lay;
-                            mpg123_lsf = fr.lsf;
+                            mpgdec_layer = fr.lay;
+                            mpgdec_lsf = fr.lsf;
                             memcpy(&fr, &temp_fr, sizeof(struct frame));
                         }
                         else {
                             memcpy(&fr, &temp_fr, sizeof(struct frame));
                             skip_frames = 2;
-                            mpg123_info->output_audio = FALSE;
+                            mpgdec_info->output_audio = FALSE;
                             continue;
                         }
 
@@ -790,38 +788,38 @@ decode_loop(void *arg)
                 }
 
                 if (tabsel_123[fr.lsf][fr.lay - 1][fr.bitrate_index] !=
-                    mpg123_bitrate)
-                    mpg123_bitrate =
+                    mpgdec_bitrate)
+                    mpgdec_bitrate =
                         tabsel_123[fr.lsf][fr.lay - 1][fr.bitrate_index];
 
                 if (!disp_count) {
                     disp_count = 20;
-                    if (mpg123_bitrate != disp_bitrate) {
+                    if (mpgdec_bitrate != disp_bitrate) {
                         /* FIXME networks streams */
-                        disp_bitrate = mpg123_bitrate;
+                        disp_bitrate = mpgdec_bitrate;
                         if (!have_xing_header
                             && strncasecmp(filename, "http://", 7)) {
-                            double rel = mpg123_relative_pos();
+                            double rel = mpgdec_relative_pos();
                             if (rel) {
-                                mpg123_length =
-                                    mpg123_ip.output->written_time() / rel;
+                                mpgdec_length =
+                                    mpgdec_ip.output->written_time() / rel;
                                 vbr = TRUE;
                             }
 
-                            if (rel == 0 || !(mpg123_length > 0)) {
-                                mpg123_info->num_frames =
-                                    mpg123_calc_numframes(&fr);
-                                mpg123_info->tpf = mpg123_compute_tpf(&fr);
-                                mpg123_length =
-                                    mpg123_info->num_frames *
-                                    mpg123_info->tpf * 1000;
+                            if (rel == 0 || !(mpgdec_length > 0)) {
+                                mpgdec_info->num_frames =
+                                    mpgdec_calc_numframes(&fr);
+                                mpgdec_info->tpf = mpgdec_compute_tpf(&fr);
+                                mpgdec_length =
+                                    mpgdec_info->num_frames *
+                                    mpgdec_info->tpf * 1000;
                             }
 
 
                         }
-                        mpg123_ip.set_info(mpg123_title, mpg123_length,
-                                           mpg123_bitrate * 1000,
-                                           mpg123_frequency, mpg123_stereo);
+                        mpgdec_ip.set_info(mpgdec_title, mpgdec_length,
+                                           mpgdec_bitrate * 1000,
+                                           mpgdec_frequency, mpgdec_stereo);
                     }
                 }
                 else
@@ -829,9 +827,9 @@ decode_loop(void *arg)
                 play_frame(&fr);
             }
             else {
-                mpg123_ip.output->buffer_free();
-                mpg123_ip.output->buffer_free();
-                mpg123_info->eof = TRUE;
+                mpgdec_ip.output->buffer_free();
+                mpgdec_ip.output->buffer_free();
+                mpgdec_info->eof = TRUE;
                 g_usleep(10000);
             }
         }
@@ -839,13 +837,13 @@ decode_loop(void *arg)
             g_usleep(10000);
         }
     }
-    g_free(mpg123_title);
-    mpg123_title = NULL;
-    mpg123_stream_close();
+    g_free(mpgdec_title);
+    mpgdec_title = NULL;
+    mpgdec_stream_close();
     if (output_opened && !audio_error)
-        mpg123_ip.output->close_audio();
-    g_free(mpg123_pcm_sample);
-    mpg123_filename = NULL;
+        mpgdec_ip.output->close_audio();
+    g_free(mpgdec_pcm_sample);
+    mpgdec_filename = NULL;
     g_free(filename);
 
     return NULL;
@@ -857,11 +855,11 @@ play_file(char *filename)
     memset(&fr, 0, sizeof(struct frame));
     memset(&temp_fr, 0, sizeof(struct frame));
 
-    mpg123_info = g_malloc0(sizeof(PlayerInfo));
-    mpg123_info->going = 1;
-    mpg123_info->first_frame = TRUE;
-    mpg123_info->output_audio = TRUE;
-    mpg123_info->jump_to_time = -1;
+    mpgdec_info = g_malloc0(sizeof(PlayerInfo));
+    mpgdec_info->going = 1;
+    mpgdec_info->first_frame = TRUE;
+    mpgdec_info->output_audio = TRUE;
+    mpgdec_info->jump_to_time = -1;
     skip_frames = 0;
     audio_error = FALSE;
     output_opened = FALSE;
@@ -874,20 +872,20 @@ play_file(char *filename)
 static void
 stop(void)
 {
-    if (mpg123_info && mpg123_info->going) {
-        mpg123_info->going = FALSE;
+    if (mpgdec_info && mpgdec_info->going) {
+        mpgdec_info->going = FALSE;
         g_thread_join(decode_thread);
-        g_free(mpg123_info);
-        mpg123_info = NULL;
+        g_free(mpgdec_info);
+        mpgdec_info = NULL;
     }
 }
 
 static void
 seek(int time)
 {
-    mpg123_info->jump_to_time = time;
+    mpgdec_info->jump_to_time = time;
 
-    while (mpg123_info->jump_to_time != -1)
+    while (mpgdec_info->jump_to_time != -1)
         g_usleep(10000);
 }
 
@@ -895,7 +893,7 @@ static void
 do_pause(short p)
 {
     if (output_opened)
-        mpg123_ip.output->pause(p);
+        mpgdec_ip.output->pause(p);
     else
         dopause = p;
 }
@@ -905,12 +903,12 @@ get_time(void)
 {
     if (audio_error)
         return -2;
-    if (!mpg123_info)
+    if (!mpgdec_info)
         return -1;
-    if (!mpg123_info->going
-        || (mpg123_info->eof && !mpg123_ip.output->buffer_playing()))
+    if (!mpgdec_info->going
+        || (mpgdec_info->eof && !mpgdec_ip.output->buffer_playing()))
         return -1;
-    return mpg123_ip.output->output_time();
+    return mpgdec_ip.output->output_time();
 }
 
 static void
@@ -933,33 +931,33 @@ aboutbox(void)
                      G_CALLBACK(gtk_widget_destroyed), &aboutbox);
 }
 
-InputPlugin mpg123_ip = {
+InputPlugin mpgdec_ip = {
     NULL,
     NULL,
     NULL,                       /* Description */
     init,
     aboutbox,
-    mpg123_configure,
+    mpgdec_configure,
     is_our_file,
     NULL,
     play_file,
     stop,
     do_pause,
     seek,
-    mpg123_set_eq,
+    mpgdec_set_eq,
     get_time,
     NULL, NULL,
     cleanup,
     NULL,
     NULL, NULL, NULL,
     get_song_info,
-    mpg123_file_info_box,       /* file_info_box */
+    mpgdec_file_info_box,       /* file_info_box */
     NULL
 };
 
 InputPlugin *
 get_iplugin_info(void)
 {
-    mpg123_ip.description = g_strdup_printf(_("MPEG Audio Plugin"));
-    return &mpg123_ip;
+    mpgdec_ip.description = g_strdup_printf(_("MPEG Audio Plugin"));
+    return &mpgdec_ip;
 }

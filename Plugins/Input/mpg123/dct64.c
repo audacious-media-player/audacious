@@ -14,7 +14,7 @@
 #include "mpg123.h"
 
 void
-mpg123_dct64(mpgdec_real * out0, mpgdec_real * out1, mpgdec_real * samples)
+mpgdec_dct64(mpgdec_real * out0, mpgdec_real * out1, mpgdec_real * samples)
 {
     mpgdec_real bufs[64];
 
@@ -24,7 +24,7 @@ mpg123_dct64(mpgdec_real * out0, mpgdec_real * out1, mpgdec_real * samples)
 
         b1 = samples;
         bs = bufs;
-        costab = mpg123_pnts[0] + 16;
+        costab = mpgdec_pnts[0] + 16;
         b2 = b1 + 32;
 
         for (i = 15; i >= 0; i--)
@@ -33,7 +33,7 @@ mpg123_dct64(mpgdec_real * out0, mpgdec_real * out1, mpgdec_real * samples)
             *bs++ = (*--b2 - *b1++) * *--costab;
 
         b1 = bufs;
-        costab = mpg123_pnts[1] + 8;
+        costab = mpgdec_pnts[1] + 8;
         b2 = b1 + 16;
 
         {
@@ -51,7 +51,7 @@ mpg123_dct64(mpgdec_real * out0, mpgdec_real * out1, mpgdec_real * samples)
         }
 
         bs = bufs;
-        costab = mpg123_pnts[2];
+        costab = mpgdec_pnts[2];
         b2 = b1 + 8;
 
         for (j = 2; j; j--) {
@@ -68,7 +68,7 @@ mpg123_dct64(mpgdec_real * out0, mpgdec_real * out1, mpgdec_real * samples)
         }
 
         b1 = bufs;
-        costab = mpg123_pnts[3];
+        costab = mpgdec_pnts[3];
         b2 = b1 + 4;
 
         for (j = 4; j; j--) {
@@ -84,7 +84,7 @@ mpg123_dct64(mpgdec_real * out0, mpgdec_real * out1, mpgdec_real * samples)
             b2 += 8;
         }
         bs = bufs;
-        costab = mpg123_pnts[4];
+        costab = mpgdec_pnts[4];
 
         for (j = 8; j; j--) {
             mpgdec_real v0, v1;

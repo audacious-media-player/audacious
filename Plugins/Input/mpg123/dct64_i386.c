@@ -3,18 +3,18 @@
  * Discrete Cosine Tansform (DCT) for subband synthesis
  * optimized for machines with no auto-increment. 
  * The performance is highly compiler dependend. Maybe
- * the mpg123_dct64.c version for 'normal' processor may be faster
+ * the mpgdec_dct64.c version for 'normal' processor may be faster
  * even for Intel processors.
  */
 
 #include "mpg123.h"
 
 static void
-mpg123_dct64_1(mpgdec_real * out0, mpgdec_real * out1, mpgdec_real * b1, mpgdec_real * b2, mpgdec_real * samples)
+mpgdec_dct64_1(mpgdec_real * out0, mpgdec_real * out1, mpgdec_real * b1, mpgdec_real * b2, mpgdec_real * samples)
 {
 
     {
-        register mpgdec_real *costab = mpg123_pnts[0];
+        register mpgdec_real *costab = mpgdec_pnts[0];
 
         b1[0x00] = samples[0x00] + samples[0x1F];
         b1[0x1F] = (samples[0x00] - samples[0x1F]) * costab[0x0];
@@ -66,7 +66,7 @@ mpg123_dct64_1(mpgdec_real * out0, mpgdec_real * out1, mpgdec_real * b1, mpgdec_
     }
 
     {
-        register mpgdec_real *costab = mpg123_pnts[1];
+        register mpgdec_real *costab = mpgdec_pnts[1];
 
         b2[0x00] = b1[0x00] + b1[0x0F];
         b2[0x0F] = (b1[0x00] - b1[0x0F]) * costab[0];
@@ -104,7 +104,7 @@ mpg123_dct64_1(mpgdec_real * out0, mpgdec_real * out1, mpgdec_real * b1, mpgdec_
     }
 
     {
-        register mpgdec_real *costab = mpg123_pnts[2];
+        register mpgdec_real *costab = mpgdec_pnts[2];
 
         b1[0x00] = b2[0x00] + b2[0x07];
         b1[0x07] = (b2[0x00] - b2[0x07]) * costab[0];
@@ -144,8 +144,8 @@ mpg123_dct64_1(mpgdec_real * out0, mpgdec_real * out1, mpgdec_real * b1, mpgdec_
     }
 
     {
-        register mpgdec_real const cos0 = mpg123_pnts[3][0];
-        register mpgdec_real const cos1 = mpg123_pnts[3][1];
+        register mpgdec_real const cos0 = mpgdec_pnts[3][0];
+        register mpgdec_real const cos1 = mpgdec_pnts[3][1];
 
         b2[0x00] = b1[0x00] + b1[0x03];
         b2[0x03] = (b1[0x00] - b1[0x03]) * cos0;
@@ -189,7 +189,7 @@ mpg123_dct64_1(mpgdec_real * out0, mpgdec_real * out1, mpgdec_real * b1, mpgdec_
     }
 
     {
-        register mpgdec_real const cos0 = mpg123_pnts[4][0];
+        register mpgdec_real const cos0 = mpgdec_pnts[4][0];
 
         b1[0x00] = b2[0x00] + b2[0x01];
         b1[0x01] = (b2[0x00] - b2[0x01]) * cos0;
@@ -304,13 +304,13 @@ mpg123_dct64_1(mpgdec_real * out0, mpgdec_real * out1, mpgdec_real * b1, mpgdec_
 }
 
 /*
- * the call via mpg123_dct64 is a trick to force GCC to use
+ * the call via mpgdec_dct64 is a trick to force GCC to use
  * (new) registers for the b1,b2 pointer to the bufs[xx] field
  */
 void
-mpg123_dct64(mpgdec_real * a, mpgdec_real * b, mpgdec_real * c)
+mpgdec_dct64(mpgdec_real * a, mpgdec_real * b, mpgdec_real * c)
 {
     mpgdec_real bufs[0x40];
 
-    mpg123_dct64_1(a, b, bufs, bufs + 0x20, c);
+    mpgdec_dct64_1(a, b, bufs, bufs + 0x20, c);
 }

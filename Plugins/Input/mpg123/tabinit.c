@@ -4,12 +4,12 @@
 
 #include "mpg123.h"
 
-mpgdec_real mpg123_decwin[512 + 32];
+mpgdec_real mpgdec_decwin[512 + 32];
 static mpgdec_real cos64[16], cos32[8], cos16[4], cos8[2], cos4[1];
-mpgdec_real *mpg123_pnts[] = { cos64, cos32, cos16, cos8, cos4 };
+mpgdec_real *mpgdec_pnts[] = { cos64, cos32, cos16, cos8, cos4 };
 
-static unsigned char *mpg123_conv16to8_buf = NULL;
-unsigned char *mpg123_conv16to8;
+static unsigned char *mpgdec_conv16to8_buf = NULL;
+unsigned char *mpgdec_conv16to8;
 
 static long intwinbase[] = {
     0, -1, -1, -1, -1, -1, -1, -2, -2, -2,
@@ -40,11 +40,11 @@ static long intwinbase[] = {
     73415, 73908, 74313, 74630, 74856, 74992, 75038
 };
 
-void mpg123_make_decode_tables_fpu(long scaleval);
-void mpg123_make_decode_tables_mmx(long scaleval);
+void mpgdec_make_decode_tables_fpu(long scaleval);
+void mpgdec_make_decode_tables_mmx(long scaleval);
 
 void
-mpg123_make_decode_tables_fpu(long scaleval)
+mpgdec_make_decode_tables_fpu(long scaleval)
 {
     int i, j;
     mpgdec_real *table, *costab;
@@ -52,17 +52,17 @@ mpg123_make_decode_tables_fpu(long scaleval)
     for (i = 0; i < 5; i++) {
         int kr = 0x10 >> i;
         int divv = 0x40 >> i;
-        costab = mpg123_pnts[i];
+        costab = mpgdec_pnts[i];
         for (j = 0; j < kr; j++)
             costab[j] =
                 1.0 / (2.0 *
                        cos(M_PI * ((double) j * 2.0 + 1.0) / (double) divv));
     }
 
-    table = mpg123_decwin;
+    table = mpgdec_decwin;
     scaleval = -scaleval;
     for (i = 0, j = 0; i < 256; i++, j++, table += 32) {
-        if (table < mpg123_decwin + 512 + 16)
+        if (table < mpgdec_decwin + 512 + 16)
             table[16] = table[0] =
                 (double) intwinbase[j] / 65536.0 * (double) scaleval;
         if (i % 32 == 31)
@@ -72,7 +72,7 @@ mpg123_make_decode_tables_fpu(long scaleval)
     }
 
     for ( /* i=256 */ ; i < 512; i++, j--, table += 32) {
-        if (table < mpg123_decwin + 512 + 16)
+        if (table < mpgdec_decwin + 512 + 16)
             table[16] = table[0] =
                 (double) intwinbase[j] / 65536.0 * (double) scaleval;
         if (i % 32 == 31)
@@ -83,22 +83,22 @@ mpg123_make_decode_tables_fpu(long scaleval)
 }
 
 void
-mpg123_make_decode_tables_mmx(long scaleval)
+mpgdec_make_decode_tables_mmx(long scaleval)
 {
 }
 
 void
-mpg123_make_decode_tables(long scaleval)
+mpgdec_make_decode_tables(long scaleval)
 {
-    mpg123_make_decode_tables_fpu(scaleval);
-    mpg123_make_decode_tables_mmx(scaleval);
+    mpgdec_make_decode_tables_fpu(scaleval);
+    mpgdec_make_decode_tables_mmx(scaleval);
 }
 
 
 
 
 void
-mpg123_make_conv16to8_table(void)
+mpgdec_make_conv16to8_table(void)
 {
     int i;
 
@@ -106,12 +106,12 @@ mpg123_make_conv16to8_table(void)
      * ????: 8.0 is right but on SB cards '2.0' is a better value ???
      */
 
-    if (!mpg123_conv16to8_buf) {
-        mpg123_conv16to8_buf = g_malloc(8192);
-        mpg123_conv16to8 = mpg123_conv16to8_buf + 4096;
+    if (!mpgdec_conv16to8_buf) {
+        mpgdec_conv16to8_buf = g_malloc(8192);
+        mpgdec_conv16to8 = mpgdec_conv16to8_buf + 4096;
     }
 
     for (i = -4096; i < 4096; i++) {
-        mpg123_conv16to8[i] = (i >> 5) + 128;
+        mpgdec_conv16to8[i] = (i >> 5) + 128;
     }
 }

@@ -19,22 +19,22 @@ const int tabsel_123[2][3][16] = {
      {0, 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 128, 144, 160,}}
 };
 
-const int mpg123_freqs[9] =
+const int mpgdec_freqs[9] =
     { 44100, 48000, 32000, 22050, 24000, 16000, 11025, 12000, 8000 };
 
 struct bitstream_info bsi;
 
-extern gint mpg123_bitrate, mpg123_frequency, mpg123_length;
-extern gchar *mpg123_title, *mpg123_filename;
-extern gboolean mpg123_stereo;
+extern gint mpgdec_bitrate, mpgdec_frequency, mpgdec_length;
+extern gchar *mpgdec_title, *mpgdec_filename;
+extern gboolean mpgdec_stereo;
 
 static int fsizeold = 0, ssize;
 static unsigned char bsspace[2][MAXFRAMESIZE + 512];    /* MAXFRAMESIZE */
 static unsigned char *bsbuf = bsspace[1], *bsbufold;
 static int bsnum = 0;
 
-unsigned char *mpg123_pcm_sample;
-int mpg123_pcm_point = 0;
+unsigned char *mpgdec_pcm_sample;
+int mpgdec_pcm_point = 0;
 
 static VFSFile *filept;
 static int filept_opened;
@@ -50,7 +50,7 @@ fullread(VFSFile * fd, unsigned char *buf, int count)
         if (fd)
             ret = vfs_fread(buf + cnt, 1, count - cnt, fd);
         else
-            ret = mpg123_http_read(buf + cnt, count - cnt);
+            ret = mpgdec_http_read(buf + cnt, count - cnt);
         if (ret < 0)
             return ret;
         if (ret == 0)
@@ -69,12 +69,12 @@ stream_init(void)
 }
 
 void
-mpg123_stream_close(void)
+mpgdec_stream_close(void)
 {
     if (filept)
         vfs_fclose(filept);
-    else if (mpg123_info->network_stream)
-        mpg123_http_close();
+    else if (mpgdec_info->network_stream)
+        mpgdec_http_close();
 }
 
 /**************************************** 
@@ -117,7 +117,7 @@ stream_head_shift(unsigned long *head)
 }
 
 static int
-stream_mpg123_read_frame_body(unsigned char *buf, int size)
+stream_mpgdec_read_frame_body(unsigned char *buf, int size)
 {
     long l;
 
@@ -143,28 +143,28 @@ static void stream_rewind(void)
 */
 
 int
-mpg123_stream_jump_to_frame(struct frame *fr, int frame)
+mpgdec_stream_jump_to_frame(struct frame *fr, int frame)
 {
     if (!filept)
         return -1;
-    mpg123_read_frame_init();
+    mpgdec_read_frame_init();
     vfs_fseek(filept, frame * (fr->framesize + 4), SEEK_SET);
-    mpg123_read_frame(fr);
+    mpgdec_read_frame(fr);
     return 0;
 }
 
 int
-mpg123_stream_jump_to_byte(struct frame *fr, int byte)
+mpgdec_stream_jump_to_byte(struct frame *fr, int byte)
 {
     if (!filept)
         return -1;
     vfs_fseek(filept, byte, SEEK_SET);
-    mpg123_read_frame(fr);
+    mpgdec_read_frame(fr);
     return 0;
 }
 
 int
-mpg123_stream_check_for_xing_header(struct frame *fr, xing_header_t * xhead)
+mpgdec_stream_check_for_xing_header(struct frame *fr, xing_header_t * xhead)
 {
     unsigned char *head_data;
     int ret;
@@ -172,7 +172,7 @@ mpg123_stream_check_for_xing_header(struct frame *fr, xing_header_t * xhead)
     vfs_fseek(filept, -(fr->framesize + 4), SEEK_CUR);
     head_data = g_malloc(fr->framesize + 4);
     vfs_fread(head_data, 1, fr->framesize + 4, filept);
-    ret = mpg123_get_xing_header(xhead, head_data);
+    ret = mpgdec_get_xing_header(xhead, head_data);
     g_free(head_data);
     return ret;
 }
@@ -187,32 +187,32 @@ get_fileinfo(void)
     if (vfs_fseek(filept, 0, SEEK_END) < 0)
         return -1;
 
-    mpg123_info->filesize = vfs_ftell(filept);
+    mpgdec_info->filesize = vfs_ftell(filept);
     if (vfs_fseek(filept, -128, SEEK_END) < 0)
         return -1;
     if (fullread(filept, buf, 3) != 3)
         return -1;
     if (!strncmp((char *) buf, "TAG", 3))
-        mpg123_info->filesize -= 128;
+        mpgdec_info->filesize -= 128;
     if (vfs_fseek(filept, 0, SEEK_SET) < 0)
         return -1;
 
-    if (mpg123_info->filesize <= 0)
+    if (mpgdec_info->filesize <= 0)
         return -1;
 
-    return mpg123_info->filesize;
+    return mpgdec_info->filesize;
 }
 
 void
-mpg123_read_frame_init(void)
+mpgdec_read_frame_init(void)
 {
     memset(bsspace[0], 0, MAXFRAMESIZE + 512);
     memset(bsspace[1], 0, MAXFRAMESIZE + 512);
-    mpg123_info->output_audio = FALSE;
+    mpgdec_info->output_audio = FALSE;
 }
 
 int
-mpg123_head_check(unsigned long head)
+mpgdec_head_check(unsigned long head)
 {
     if ((head & 0xffe00000) != 0xffe00000)
         return FALSE;
@@ -237,7 +237,7 @@ mpg123_head_check(unsigned long head)
  * read next frame
  */
 int
-mpg123_read_frame(struct frame *fr)
+mpgdec_read_frame(struct frame *fr)
 {
     unsigned long newhead;
 
@@ -246,7 +246,7 @@ mpg123_read_frame(struct frame *fr)
     if (!stream_head_read(&newhead))
         return FALSE;
 
-    if (!mpg123_head_check(newhead) || !mpg123_decode_header(fr, newhead)) {
+    if (!mpgdec_head_check(newhead) || !mpgdec_decode_header(fr, newhead)) {
         int try = 0;
 
         do {
@@ -260,19 +260,19 @@ mpg123_read_frame(struct frame *fr)
                 return 0;
 
         }
-        while ((!mpg123_head_check(newhead) ||
-                !mpg123_decode_header(fr, newhead)) && try < (256 * 1024));
+        while ((!mpgdec_head_check(newhead) ||
+                !mpgdec_decode_header(fr, newhead)) && try < (256 * 1024));
         if (try >= (256 * 1024))
             return FALSE;
 
-        mpg123_info->filesize -= try;
+        mpgdec_info->filesize -= try;
     }
     /* flip/init buffer for Layer 3 */
     bsbufold = bsbuf;
     bsbuf = bsspace[bsnum] + 512;
     bsnum = (bsnum + 1) & 1;
 
-    if (!stream_mpg123_read_frame_body(bsbuf, fr->framesize))
+    if (!stream_mpgdec_read_frame_body(bsbuf, fr->framesize))
         return 0;
 
     bsi.bitindex = 0;
@@ -288,7 +288,7 @@ mpg123_read_frame(struct frame *fr)
  * into the frame structure
  */
 int
-mpg123_decode_header(struct frame *fr, unsigned long newhead)
+mpgdec_decode_header(struct frame *fr, unsigned long newhead)
 {
     if (newhead & (1 << 20)) {
         fr->lsf = (newhead & (1 << 19)) ? 0x0 : 0x1;
@@ -324,25 +324,25 @@ mpg123_decode_header(struct frame *fr, unsigned long newhead)
 
     switch (fr->lay) {
     case 1:
-        fr->do_layer = mpg123_do_layer1;
+        fr->do_layer = mpgdec_do_layer1;
         /* inits also shared tables with layer1 */
-        mpg123_init_layer2(fr->synth_type == SYNTH_MMX);
+        mpgdec_init_layer2(fr->synth_type == SYNTH_MMX);
         fr->framesize =
             (long) tabsel_123[fr->lsf][0][fr->bitrate_index] * 12000;
-        fr->framesize /= mpg123_freqs[fr->sampling_frequency];
+        fr->framesize /= mpgdec_freqs[fr->sampling_frequency];
         fr->framesize = ((fr->framesize + fr->padding) << 2) - 4;
         break;
     case 2:
-        fr->do_layer = mpg123_do_layer2;
+        fr->do_layer = mpgdec_do_layer2;
         /* inits also shared tables with layer1 */
-        mpg123_init_layer2(fr->synth_type == SYNTH_MMX);
+        mpgdec_init_layer2(fr->synth_type == SYNTH_MMX);
         fr->framesize =
             (long) tabsel_123[fr->lsf][1][fr->bitrate_index] * 144000;
-        fr->framesize /= mpg123_freqs[fr->sampling_frequency];
+        fr->framesize /= mpgdec_freqs[fr->sampling_frequency];
         fr->framesize += fr->padding - 4;
         break;
     case 3:
-        fr->do_layer = mpg123_do_layer3;
+        fr->do_layer = mpgdec_do_layer3;
         if (fr->lsf)
             ssize = (fr->stereo == 1) ? 9 : 17;
         else
@@ -351,7 +351,7 @@ mpg123_decode_header(struct frame *fr, unsigned long newhead)
             ssize += 2;
         fr->framesize =
             (long) tabsel_123[fr->lsf][2][fr->bitrate_index] * 144000;
-        fr->framesize /= mpg123_freqs[fr->sampling_frequency] << (fr->lsf);
+        fr->framesize /= mpgdec_freqs[fr->sampling_frequency] << (fr->lsf);
         fr->framesize = fr->framesize + fr->padding - 4;
         break;
     default:
@@ -363,25 +363,25 @@ mpg123_decode_header(struct frame *fr, unsigned long newhead)
 }
 
 void
-mpg123_open_stream(char *bs_filenam, int fd)
+mpgdec_open_stream(char *bs_filenam, int fd)
 {
     filept_opened = 1;
     if (!strncasecmp(bs_filenam, "http://", 7)) {
         filept = NULL;
-        mpg123_http_open(bs_filenam);
-        mpg123_info->filesize = 0;
-        mpg123_info->network_stream = TRUE;
+        mpgdec_http_open(bs_filenam);
+        mpgdec_info->filesize = 0;
+        mpgdec_info->network_stream = TRUE;
     }
     else {
         if ((filept = vfs_fopen(bs_filenam, "rb")) == NULL ||
             stream_init() == -1)
-            mpg123_info->eof = TRUE;
+            mpgdec_info->eof = TRUE;
     }
 
 }
 
 void
-mpg123_set_pointer(long backstep)
+mpgdec_set_pointer(long backstep)
 {
     bsi.wordpointer = bsbuf + ssize - backstep;
     if (backstep)
@@ -390,7 +390,7 @@ mpg123_set_pointer(long backstep)
 }
 
 double
-mpg123_compute_bpf(struct frame *fr)
+mpgdec_compute_bpf(struct frame *fr)
 {
     double bpf;
 
@@ -398,13 +398,13 @@ mpg123_compute_bpf(struct frame *fr)
     case 1:
         bpf = tabsel_123[fr->lsf][0][fr->bitrate_index];
         bpf *= 12000.0 * 4.0;
-        bpf /= mpg123_freqs[fr->sampling_frequency] << (fr->lsf);
+        bpf /= mpgdec_freqs[fr->sampling_frequency] << (fr->lsf);
         break;
     case 2:
     case 3:
         bpf = tabsel_123[fr->lsf][fr->lay - 1][fr->bitrate_index];
         bpf *= 144000;
-        bpf /= mpg123_freqs[fr->sampling_frequency] << (fr->lsf);
+        bpf /= mpgdec_freqs[fr->sampling_frequency] << (fr->lsf);
         break;
     default:
         bpf = 1.0;
@@ -414,15 +414,15 @@ mpg123_compute_bpf(struct frame *fr)
 }
 
 int
-mpg123_calc_numframes(struct frame *fr)
+mpgdec_calc_numframes(struct frame *fr)
 {
-    return (int) (mpg123_info->filesize / mpg123_compute_bpf(fr));
+    return (int) (mpgdec_info->filesize / mpgdec_compute_bpf(fr));
 }
 
 double
-mpg123_relative_pos(void)
+mpgdec_relative_pos(void)
 {
-    if (!filept || !mpg123_info->filesize)
+    if (!filept || !mpgdec_info->filesize)
         return 0;
-    return ((double) stream_tell()) / mpg123_info->filesize;
+    return ((double) stream_tell()) / mpgdec_info->filesize;
 }

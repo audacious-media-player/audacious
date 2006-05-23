@@ -13,7 +13,7 @@
 (i = (b[0] << 24) | (b[1] << 16) | b[2] << 8 | b[3], b += 4, i)
 
 int
-mpg123_get_xing_header(xing_header_t * xing, unsigned char *buf)
+mpgdec_get_xing_header(xing_header_t * xing, unsigned char *buf)
 {
     int i, head_flags;
     int id, mode;
@@ -80,7 +80,7 @@ mpg123_get_xing_header(xing_header_t * xing, unsigned char *buf)
 }
 
 int
-mpg123_seek_point(xing_header_t * xing, float percent)
+mpgdec_seek_point(xing_header_t * xing, float percent)
 {
     /* interpolate in TOC to get file seek point in bytes */
     int a, seekpoint;
