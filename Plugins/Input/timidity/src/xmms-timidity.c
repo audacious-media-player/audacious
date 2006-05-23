@@ -134,7 +134,7 @@ void xmmstimid_about(void) {
 			_("TiMidity Plugin\nhttp://libtimidity.sourceforge.net\nby Konstantin Korikov") , NULL );
 		about_title = g_strdup_printf( _("TiMidity Plugin %s") , PACKAGE_VERSION );
 		xmmstimid_about_wnd = xmms_show_message( about_title , about_text , _("Ok") , FALSE , NULL , NULL );
-		gtk_signal_connect(GTK_OBJECT(xmmstimid_about_wnd), "destroy",
+		g_signal_connect(G_OBJECT(xmmstimid_about_wnd), "destroy",
 					(GCallback)gtk_widget_destroyed, &xmmstimid_about_wnd);
 		g_free(about_title);
 		g_free(about_text);
@@ -153,7 +153,7 @@ void xmmstimid_configure(void) {
 		xmmstimid_conf_wnd = create_xmmstimid_conf_wnd();
 
 #define get_conf_wnd_item(type, name) \
-	type (gtk_object_get_data(GTK_OBJECT(xmmstimid_conf_wnd), name))
+	type (g_object_get_data(G_OBJECT(xmmstimid_conf_wnd), name))
 	
 		xmmstimid_conf_config_file = get_conf_wnd_item(
 				GTK_ENTRY, "config_file");
@@ -174,7 +174,7 @@ void xmmstimid_configure(void) {
 
 		gtk_signal_connect_object(
 				get_conf_wnd_item(GTK_OBJECT, "conf_ok"),
-				"clicked", GTK_SIGNAL_FUNC(xmmstimid_conf_ok),
+				"clicked", G_CALLBACK(xmmstimid_conf_ok),
 				NULL);
 	}
 

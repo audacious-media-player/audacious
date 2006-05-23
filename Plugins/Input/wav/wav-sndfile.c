@@ -261,7 +261,7 @@ static void wav_about(void)
 			  "59 Temple Place, Suite 330, \n"
 			  "Boston, MA  02111-1307  USA"),
 			_("Ok"), FALSE, NULL, NULL);
-		gtk_signal_connect(GTK_OBJECT(box), "destroy",
+		g_signal_connect(G_OBJECT(box), "destroy",
 			(GCallback)gtk_widget_destroyed, &box);
 	}
 }

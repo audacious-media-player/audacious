@@ -240,8 +240,8 @@ static void	mp4_about(void)
 			       "Using libfaad2-" FAAD2_VERSION " for decoding.\n"
 			       "Copyright (c) 2005-2006 Audacious team",
 			       "Ok", FALSE, NULL, NULL);
-  gtk_signal_connect(GTK_OBJECT(aboutbox), "destroy",
-                     GTK_SIGNAL_FUNC(gtk_widget_destroyed),
+  g_signal_connect(G_OBJECT(aboutbox), "destroy",
+                     G_CALLBACK(gtk_widget_destroyed),
                      &aboutbox);
 }
 

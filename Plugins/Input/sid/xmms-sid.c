@@ -725,16 +725,16 @@ void xs_subctrl_open(void)
 	xs_subctrl = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_type_hint (GTK_WINDOW(xs_subctrl), GDK_WINDOW_TYPE_HINT_DIALOG);
 	gtk_widget_set_name(xs_subctrl, "xs_subctrl");
-	gtk_object_set_data(GTK_OBJECT(xs_subctrl), "xs_subctrl", xs_subctrl);
+	g_object_set_data(G_OBJECT(xs_subctrl), "xs_subctrl", xs_subctrl);
 
 	gtk_window_set_title(GTK_WINDOW(xs_subctrl), "Subtune Control");
 	gtk_window_set_position(GTK_WINDOW(xs_subctrl), GTK_WIN_POS_MOUSE);
 	gtk_container_set_border_width(GTK_CONTAINER(xs_subctrl), 0);
 	gtk_window_set_policy(GTK_WINDOW(xs_subctrl), FALSE, FALSE, FALSE);
 
-	gtk_signal_connect(GTK_OBJECT(xs_subctrl), "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroyed), &xs_subctrl);
+	g_signal_connect(G_OBJECT(xs_subctrl), "destroy", G_CALLBACK(gtk_widget_destroyed), &xs_subctrl);
 
-	gtk_signal_connect(GTK_OBJECT(xs_subctrl), "focus_out_event", GTK_SIGNAL_FUNC(xs_subctrl_close), NULL);
+	g_signal_connect(G_OBJECT(xs_subctrl), "focus_out_event", G_CALLBACK(xs_subctrl_close), NULL);
 
 	gtk_widget_realize(xs_subctrl);
 	gdk_window_set_decorations(xs_subctrl->window, (GdkWMDecoration) 0);
@@ -754,7 +754,7 @@ void xs_subctrl_open(void)
 	gtk_box_pack_start(GTK_BOX(hbox15), subctrl_prev, FALSE, FALSE, 0);
 
 	xs_subctrl_adj = gtk_adjustment_new(xs_status.currSong, 1, xs_status.tuneInfo->nsubTunes, 1, 1, 0);
-	gtk_signal_connect(GTK_OBJECT(xs_subctrl_adj), "value_changed", GTK_SIGNAL_FUNC(xs_subctrl_setsong), NULL);
+	g_signal_connect(G_OBJECT(xs_subctrl_adj), "value_changed", G_CALLBACK(xs_subctrl_setsong), NULL);
 
 	subctrl_current = gtk_hscale_new(GTK_ADJUSTMENT(xs_subctrl_adj));
 	gtk_widget_set_name(subctrl_current, "subctrl_current");
@@ -768,11 +768,11 @@ void xs_subctrl_open(void)
 	gtk_widget_set_name(subctrl_next, "subctrl_next");
 	gtk_box_pack_start(GTK_BOX(hbox15), subctrl_next, FALSE, FALSE, 0);
 
-	gtk_signal_connect(GTK_OBJECT(subctrl_prev), "clicked", GTK_SIGNAL_FUNC(xs_subctrl_prevsong), NULL);
+	g_signal_connect(G_OBJECT(subctrl_prev), "clicked", G_CALLBACK(xs_subctrl_prevsong), NULL);
 
-	gtk_signal_connect(GTK_OBJECT(subctrl_next), "clicked", GTK_SIGNAL_FUNC(xs_subctrl_nextsong), NULL);
+	g_signal_connect(G_OBJECT(subctrl_next), "clicked", G_CALLBACK(xs_subctrl_nextsong), NULL);
 
-	gtk_signal_connect(GTK_OBJECT(xs_subctrl), "key_press_event", GTK_SIGNAL_FUNC(xs_subctrl_keypress), NULL);
+	g_signal_connect(G_OBJECT(xs_subctrl), "key_press_event", G_CALLBACK(xs_subctrl_keypress), NULL);
 
 	gtk_widget_show_all(xs_subctrl);
 

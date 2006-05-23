@@ -156,8 +156,8 @@ static void wma_about(void)
     sprintf(message, "%s %s\n\n%s", PLUGIN_NAME, PLUGIN_VERSION, ABOUT_TXT);
 
     dialog1 = gtk_dialog_new();
-    gtk_signal_connect(GTK_OBJECT(dialog1), "destroy",
-                        GTK_SIGNAL_FUNC(gtk_widget_destroyed), &dialog1);
+    g_signal_connect(G_OBJECT(dialog1), "destroy",
+                        G_CALLBACK(gtk_widget_destroyed), &dialog1);
     gtk_window_set_title(GTK_WINDOW(dialog1), title);
     gtk_window_set_policy(GTK_WINDOW(dialog1), FALSE, FALSE, FALSE);
     gtk_container_border_width(GTK_CONTAINER(dialog1), 5);
@@ -166,8 +166,8 @@ static void wma_about(void)
     gtk_widget_show(label1);
 
     button1 = gtk_button_new_with_label(_(" Close "));
-    gtk_signal_connect_object(GTK_OBJECT(button1), "clicked",
-	                        GTK_SIGNAL_FUNC(gtk_widget_destroy),
+    g_signal_connect_swapped(G_OBJECT(button1), "clicked",
+	                        G_CALLBACK(gtk_widget_destroy),
     	                        GTK_OBJECT(dialog1));
     gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog1)->action_area), button1,
                      FALSE, FALSE, 0);
@@ -523,8 +523,8 @@ static void wma_file_info_box (char *filename)
 
     dialog = gtk_dialog_new();
 
-    gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
-        GTK_SIGNAL_FUNC(gtk_widget_destroyed), &dialog);
+    g_signal_connect(G_OBJECT(dialog), "destroy",
+        G_CALLBACK(gtk_widget_destroyed), &dialog);
 
     gtk_window_set_title(GTK_WINDOW(dialog), title);
     gtk_window_set_type_hint(GTK_WINDOW(dialog), GDK_WINDOW_TYPE_HINT_DIALOG);
@@ -832,8 +832,8 @@ static void wma_file_info_box (char *filename)
     gtk_dialog_add_action_widget(GTK_DIALOG(dialog), okbutton, GTK_RESPONSE_OK);
     GTK_WIDGET_SET_FLAGS(okbutton, GTK_CAN_DEFAULT);
 
-    gtk_signal_connect_object(GTK_OBJECT(okbutton), "clicked",
-            GTK_SIGNAL_FUNC(gtk_widget_destroy), GTK_OBJECT(dialog));
+    g_signal_connect_swapped(G_OBJECT(okbutton), "clicked",
+            G_CALLBACK(gtk_widget_destroy), GTK_OBJECT(dialog));
 
     gtk_widget_show(dialog);
 

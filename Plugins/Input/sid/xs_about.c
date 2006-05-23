@@ -60,14 +60,14 @@ void xs_about(void)
 	xs_aboutwin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_type_hint (GTK_WINDOW(xs_aboutwin), GDK_WINDOW_TYPE_HINT_DIALOG);
 	gtk_widget_set_name(xs_aboutwin, "xs_aboutwin");
-	gtk_object_set_data(GTK_OBJECT(xs_aboutwin), "xs_aboutwin", xs_aboutwin);
+	g_object_set_data(G_OBJECT(xs_aboutwin), "xs_aboutwin", xs_aboutwin);
 	gtk_window_set_title(GTK_WINDOW(xs_aboutwin), "About " PACKAGE_STRING);
 	gtk_window_set_default_size(GTK_WINDOW(xs_aboutwin), 300, -1);
 
 	about_vbox1 = gtk_vbox_new(FALSE, 0);
 	gtk_widget_set_name(about_vbox1, "about_vbox1");
 	gtk_widget_ref(about_vbox1);
-	gtk_object_set_data_full(GTK_OBJECT(xs_aboutwin), "about_vbox1", about_vbox1,
+	g_object_set_data_full(G_OBJECT(xs_aboutwin), "about_vbox1", about_vbox1,
 				 (GtkDestroyNotify) gtk_widget_unref);
 	gtk_widget_show(about_vbox1);
 	gtk_container_add(GTK_CONTAINER(xs_aboutwin), about_vbox1);
@@ -75,7 +75,7 @@ void xs_about(void)
 	about_frame = gtk_frame_new(NULL);
 	gtk_widget_set_name(about_frame, "about_frame");
 	gtk_widget_ref(about_frame);
-	gtk_object_set_data_full(GTK_OBJECT(xs_aboutwin), "about_frame", about_frame,
+	g_object_set_data_full(G_OBJECT(xs_aboutwin), "about_frame", about_frame,
 				 (GtkDestroyNotify) gtk_widget_unref);
 	gtk_widget_show(about_frame);
 	gtk_box_pack_start(GTK_BOX(about_vbox1), about_frame, FALSE, FALSE, 0);
@@ -93,7 +93,7 @@ void xs_about(void)
 	/* Create logo widget */
 	gtk_widget_set_name(about_logo, "about_logo");
 	gtk_widget_ref(about_logo);
-	gtk_object_set_data_full(GTK_OBJECT(xs_aboutwin), "about_logo", about_logo,
+	g_object_set_data_full(G_OBJECT(xs_aboutwin), "about_logo", about_logo,
 				 (GtkDestroyNotify) gtk_widget_unref);
 	gtk_widget_show(about_logo);
 	gtk_container_add(GTK_CONTAINER(about_frame), about_logo);
@@ -102,7 +102,7 @@ void xs_about(void)
 	about_scrwin = gtk_scrolled_window_new(NULL, NULL);
 	gtk_widget_set_name(about_scrwin, "about_scrwin");
 	gtk_widget_ref(about_scrwin);
-	gtk_object_set_data_full(GTK_OBJECT(xs_aboutwin), "about_scrwin", about_scrwin,
+	g_object_set_data_full(G_OBJECT(xs_aboutwin), "about_scrwin", about_scrwin,
 				 (GtkDestroyNotify) gtk_widget_unref);
 	gtk_widget_show(about_scrwin);
 	gtk_box_pack_start(GTK_BOX(about_vbox1), about_scrwin, TRUE, TRUE, 0);
@@ -112,7 +112,7 @@ void xs_about(void)
 	about_text = gtk_text_view_new();
 	gtk_widget_set_name(about_text, "about_text");
 	gtk_widget_ref(about_text);
-	gtk_object_set_data_full(GTK_OBJECT(xs_aboutwin), "about_text", about_text,
+	g_object_set_data_full(G_OBJECT(xs_aboutwin), "about_text", about_text,
 				 (GtkDestroyNotify) gtk_widget_unref);
 	gtk_widget_show(about_text);
 	gtk_container_add(GTK_CONTAINER(about_scrwin), about_text);
@@ -150,7 +150,7 @@ void xs_about(void)
 	alignment6 = gtk_alignment_new(0.5, 0.5, 0.18, 1);
 	gtk_widget_set_name(alignment6, "alignment6");
 	gtk_widget_ref(alignment6);
-	gtk_object_set_data_full(GTK_OBJECT(xs_aboutwin), "alignment6", alignment6,
+	g_object_set_data_full(G_OBJECT(xs_aboutwin), "alignment6", alignment6,
 				 (GtkDestroyNotify) gtk_widget_unref);
 	gtk_widget_show(alignment6);
 	gtk_box_pack_start(GTK_BOX(about_vbox1), alignment6, FALSE, TRUE, 0);
@@ -159,7 +159,7 @@ void xs_about(void)
 	about_close = gtk_button_new_with_label("Close");
 	gtk_widget_set_name(about_close, "about_close");
 	gtk_widget_ref(about_close);
-	gtk_object_set_data_full(GTK_OBJECT(xs_aboutwin), "about_close", about_close,
+	g_object_set_data_full(G_OBJECT(xs_aboutwin), "about_close", about_close,
 				 (GtkDestroyNotify) gtk_widget_unref);
 	gtk_widget_show(about_close);
 	gtk_container_add(GTK_CONTAINER(alignment6), about_close);

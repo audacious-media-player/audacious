@@ -192,14 +192,14 @@ create_xs_configwin (void)
   xs_configwin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_type_hint (GTK_WINDOW(xs_configwin), GDK_WINDOW_TYPE_HINT_DIALOG);
   gtk_widget_set_name (xs_configwin, "xs_configwin");
-  gtk_object_set_data (GTK_OBJECT (xs_configwin), "xs_configwin", xs_configwin);
+  g_object_set_data (G_OBJECT (xs_configwin), "xs_configwin", xs_configwin);
   gtk_window_set_title (GTK_WINDOW (xs_configwin), "XMMS-SID configuration");
   gtk_window_set_policy (GTK_WINDOW (xs_configwin), FALSE, FALSE, FALSE);
 
   vbox1 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox1, "vbox1");
   gtk_widget_ref (vbox1);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox1", vbox1,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox1", vbox1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox1);
   gtk_container_add (GTK_CONTAINER (xs_configwin), vbox1);
@@ -208,7 +208,7 @@ create_xs_configwin (void)
   cfg_notebook = gtk_notebook_new ();
   gtk_widget_set_name (cfg_notebook, "cfg_notebook");
   gtk_widget_ref (cfg_notebook);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_notebook", cfg_notebook,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_notebook", cfg_notebook,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_notebook);
   gtk_box_pack_start (GTK_BOX (vbox1), cfg_notebook, TRUE, TRUE, 0);
@@ -217,7 +217,7 @@ create_xs_configwin (void)
   vbox6 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox6, "vbox6");
   gtk_widget_ref (vbox6);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox6", vbox6,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox6", vbox6,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox6);
   gtk_container_add (GTK_CONTAINER (cfg_notebook), vbox6);
@@ -225,7 +225,7 @@ create_xs_configwin (void)
   hbox2 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (hbox2, "hbox2");
   gtk_widget_ref (hbox2);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "hbox2", hbox2,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "hbox2", hbox2,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (hbox2);
   gtk_box_pack_start (GTK_BOX (vbox6), hbox2, FALSE, TRUE, 0);
@@ -233,7 +233,7 @@ create_xs_configwin (void)
   frame4 = gtk_frame_new ("Resolution:");
   gtk_widget_set_name (frame4, "frame4");
   gtk_widget_ref (frame4);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "frame4", frame4,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "frame4", frame4,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (frame4);
   gtk_box_pack_start (GTK_BOX (hbox2), frame4, TRUE, TRUE, 0);
@@ -242,7 +242,7 @@ create_xs_configwin (void)
   vbox9 = gtk_vbox_new (FALSE, 2);
   gtk_widget_set_name (vbox9, "vbox9");
   gtk_widget_ref (vbox9);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox9", vbox9,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox9", vbox9,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox9);
   gtk_container_add (GTK_CONTAINER (frame4), vbox9);
@@ -252,7 +252,7 @@ create_xs_configwin (void)
   resolution_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_res_8bit));
   gtk_widget_set_name (cfg_res_8bit, "cfg_res_8bit");
   gtk_widget_ref (cfg_res_8bit);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_res_8bit", cfg_res_8bit,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_res_8bit", cfg_res_8bit,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_res_8bit);
   gtk_box_pack_start (GTK_BOX (vbox9), cfg_res_8bit, FALSE, FALSE, 0);
@@ -261,7 +261,7 @@ create_xs_configwin (void)
   resolution_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_res_16bit));
   gtk_widget_set_name (cfg_res_16bit, "cfg_res_16bit");
   gtk_widget_ref (cfg_res_16bit);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_res_16bit", cfg_res_16bit,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_res_16bit", cfg_res_16bit,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_res_16bit);
   gtk_box_pack_start (GTK_BOX (vbox9), cfg_res_16bit, FALSE, FALSE, 0);
@@ -269,7 +269,7 @@ create_xs_configwin (void)
   frame5 = gtk_frame_new ("Channels:");
   gtk_widget_set_name (frame5, "frame5");
   gtk_widget_ref (frame5);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "frame5", frame5,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "frame5", frame5,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (frame5);
   gtk_box_pack_start (GTK_BOX (hbox2), frame5, TRUE, TRUE, 0);
@@ -278,7 +278,7 @@ create_xs_configwin (void)
   vbox10 = gtk_vbox_new (FALSE, 2);
   gtk_widget_set_name (vbox10, "vbox10");
   gtk_widget_ref (vbox10);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox10", vbox10,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox10", vbox10,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox10);
   gtk_container_add (GTK_CONTAINER (frame5), vbox10);
@@ -288,7 +288,7 @@ create_xs_configwin (void)
   channels_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_chn_mono));
   gtk_widget_set_name (cfg_chn_mono, "cfg_chn_mono");
   gtk_widget_ref (cfg_chn_mono);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_chn_mono", cfg_chn_mono,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_chn_mono", cfg_chn_mono,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_chn_mono);
   gtk_box_pack_start (GTK_BOX (vbox10), cfg_chn_mono, FALSE, FALSE, 0);
@@ -297,7 +297,7 @@ create_xs_configwin (void)
   channels_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_chn_stereo));
   gtk_widget_set_name (cfg_chn_stereo, "cfg_chn_stereo");
   gtk_widget_ref (cfg_chn_stereo);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_chn_stereo", cfg_chn_stereo,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_chn_stereo", cfg_chn_stereo,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_chn_stereo);
   gtk_box_pack_start (GTK_BOX (vbox10), cfg_chn_stereo, FALSE, FALSE, 0);
@@ -306,7 +306,7 @@ create_xs_configwin (void)
   channels_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_chn_autopan));
   gtk_widget_set_name (cfg_chn_autopan, "cfg_chn_autopan");
   gtk_widget_ref (cfg_chn_autopan);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_chn_autopan", cfg_chn_autopan,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_chn_autopan", cfg_chn_autopan,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_chn_autopan);
   gtk_box_pack_start (GTK_BOX (vbox10), cfg_chn_autopan, FALSE, FALSE, 0);
@@ -314,7 +314,7 @@ create_xs_configwin (void)
   frame8 = gtk_frame_new ("Samplerate:");
   gtk_widget_set_name (frame8, "frame8");
   gtk_widget_ref (frame8);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "frame8", frame8,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "frame8", frame8,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (frame8);
   gtk_box_pack_start (GTK_BOX (vbox6), frame8, FALSE, TRUE, 0);
@@ -323,7 +323,7 @@ create_xs_configwin (void)
   hbox4 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (hbox4, "hbox4");
   gtk_widget_ref (hbox4);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "hbox4", hbox4,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "hbox4", hbox4,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (hbox4);
   gtk_container_add (GTK_CONTAINER (frame8), hbox4);
@@ -332,7 +332,7 @@ create_xs_configwin (void)
   cfg_samplerate_menu = gtk_option_menu_new ();
   gtk_widget_set_name (cfg_samplerate_menu, "cfg_samplerate_menu");
   gtk_widget_ref (cfg_samplerate_menu);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_samplerate_menu", cfg_samplerate_menu,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_samplerate_menu", cfg_samplerate_menu,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_samplerate_menu);
   gtk_box_pack_start (GTK_BOX (hbox4), cfg_samplerate_menu, FALSE, FALSE, 0);
@@ -364,7 +364,7 @@ create_xs_configwin (void)
   label8 = gtk_label_new ("Hz");
   gtk_widget_set_name (label8, "label8");
   gtk_widget_ref (label8);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "label8", label8,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "label8", label8,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label8);
   gtk_box_pack_start (GTK_BOX (hbox4), label8, FALSE, TRUE, 4);
@@ -372,7 +372,7 @@ create_xs_configwin (void)
   vseparator1 = gtk_vseparator_new ();
   gtk_widget_set_name (vseparator1, "vseparator1");
   gtk_widget_ref (vseparator1);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vseparator1", vseparator1,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vseparator1", vseparator1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vseparator1);
   gtk_box_pack_start (GTK_BOX (hbox4), vseparator1, TRUE, TRUE, 0);
@@ -381,7 +381,7 @@ create_xs_configwin (void)
   cfg_samplerate = gtk_spin_button_new (GTK_ADJUSTMENT (cfg_samplerate_adj), 8000, 0);
   gtk_widget_set_name (cfg_samplerate, "cfg_samplerate");
   gtk_widget_ref (cfg_samplerate);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_samplerate", cfg_samplerate,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_samplerate", cfg_samplerate,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_samplerate);
   gtk_box_pack_start (GTK_BOX (hbox4), cfg_samplerate, TRUE, TRUE, 0);
@@ -390,7 +390,7 @@ create_xs_configwin (void)
   label54 = gtk_label_new ("Hz");
   gtk_widget_set_name (label54, "label54");
   gtk_widget_ref (label54);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "label54", label54,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "label54", label54,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label54);
   gtk_box_pack_start (GTK_BOX (hbox4), label54, FALSE, TRUE, 0);
@@ -398,7 +398,7 @@ create_xs_configwin (void)
   cfg_oversample_grp = gtk_frame_new ("Oversampling:");
   gtk_widget_set_name (cfg_oversample_grp, "cfg_oversample_grp");
   gtk_widget_ref (cfg_oversample_grp);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_oversample_grp", cfg_oversample_grp,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_oversample_grp", cfg_oversample_grp,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_oversample_grp);
   gtk_box_pack_start (GTK_BOX (vbox6), cfg_oversample_grp, FALSE, TRUE, 0);
@@ -407,7 +407,7 @@ create_xs_configwin (void)
   vbox27 = gtk_vbox_new (FALSE, 2);
   gtk_widget_set_name (vbox27, "vbox27");
   gtk_widget_ref (vbox27);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox27", vbox27,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox27", vbox27,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox27);
   gtk_container_add (GTK_CONTAINER (cfg_oversample_grp), vbox27);
@@ -416,7 +416,7 @@ create_xs_configwin (void)
   cfg_oversample = gtk_check_button_new_with_label ("Use oversampling");
   gtk_widget_set_name (cfg_oversample, "cfg_oversample");
   gtk_widget_ref (cfg_oversample);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_oversample", cfg_oversample,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_oversample", cfg_oversample,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_oversample);
   gtk_box_pack_start (GTK_BOX (vbox27), cfg_oversample, FALSE, FALSE, 0);
@@ -424,7 +424,7 @@ create_xs_configwin (void)
   hbox16 = gtk_hbox_new (FALSE, 4);
   gtk_widget_set_name (hbox16, "hbox16");
   gtk_widget_ref (hbox16);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "hbox16", hbox16,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "hbox16", hbox16,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (hbox16);
   gtk_box_pack_start (GTK_BOX (vbox27), hbox16, FALSE, TRUE, 0);
@@ -433,7 +433,7 @@ create_xs_configwin (void)
   cfg_oversample_label1 = gtk_label_new ("Factor:");
   gtk_widget_set_name (cfg_oversample_label1, "cfg_oversample_label1");
   gtk_widget_ref (cfg_oversample_label1);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_oversample_label1", cfg_oversample_label1,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_oversample_label1", cfg_oversample_label1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_oversample_label1);
   gtk_box_pack_start (GTK_BOX (hbox16), cfg_oversample_label1, FALSE, FALSE, 0);
@@ -442,7 +442,7 @@ create_xs_configwin (void)
   cfg_oversample_factor = gtk_spin_button_new (GTK_ADJUSTMENT (cfg_oversample_factor_adj), 1, 0);
   gtk_widget_set_name (cfg_oversample_factor, "cfg_oversample_factor");
   gtk_widget_ref (cfg_oversample_factor);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_oversample_factor", cfg_oversample_factor,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_oversample_factor", cfg_oversample_factor,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_oversample_factor);
   gtk_box_pack_start (GTK_BOX (hbox16), cfg_oversample_factor, FALSE, TRUE, 0);
@@ -450,7 +450,7 @@ create_xs_configwin (void)
   cfg_oversample_label2 = gtk_label_new ("Large factors require more CPU-power");
   gtk_widget_set_name (cfg_oversample_label2, "cfg_oversample_label2");
   gtk_widget_ref (cfg_oversample_label2);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_oversample_label2", cfg_oversample_label2,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_oversample_label2", cfg_oversample_label2,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_oversample_label2);
   gtk_box_pack_start (GTK_BOX (hbox16), cfg_oversample_label2, FALSE, FALSE, 0);
@@ -458,7 +458,7 @@ create_xs_configwin (void)
   label1 = gtk_label_new ("Audio");
   gtk_widget_set_name (label1, "label1");
   gtk_widget_ref (label1);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "label1", label1,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "label1", label1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label1);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (cfg_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (cfg_notebook), 0), label1);
@@ -466,7 +466,7 @@ create_xs_configwin (void)
   vbox2 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox2, "vbox2");
   gtk_widget_ref (vbox2);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox2", vbox2,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox2", vbox2,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox2);
   gtk_container_add (GTK_CONTAINER (cfg_notebook), vbox2);
@@ -474,7 +474,7 @@ create_xs_configwin (void)
   frame26 = gtk_frame_new ("Emulation library selection: ");
   gtk_widget_set_name (frame26, "frame26");
   gtk_widget_ref (frame26);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "frame26", frame26,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "frame26", frame26,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (frame26);
   gtk_box_pack_start (GTK_BOX (vbox2), frame26, FALSE, FALSE, 0);
@@ -483,7 +483,7 @@ create_xs_configwin (void)
   vbox26 = gtk_vbox_new (FALSE, 2);
   gtk_widget_set_name (vbox26, "vbox26");
   gtk_widget_ref (vbox26);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox26", vbox26,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox26", vbox26,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox26);
   gtk_container_add (GTK_CONTAINER (frame26), vbox26);
@@ -493,7 +493,7 @@ create_xs_configwin (void)
   emulator_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_emu_sidplay1));
   gtk_widget_set_name (cfg_emu_sidplay1, "cfg_emu_sidplay1");
   gtk_widget_ref (cfg_emu_sidplay1);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_sidplay1", cfg_emu_sidplay1,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_sidplay1", cfg_emu_sidplay1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_sidplay1);
   gtk_box_pack_start (GTK_BOX (vbox26), cfg_emu_sidplay1, FALSE, FALSE, 0);
@@ -503,7 +503,7 @@ create_xs_configwin (void)
   emulator_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_emu_sidplay2));
   gtk_widget_set_name (cfg_emu_sidplay2, "cfg_emu_sidplay2");
   gtk_widget_ref (cfg_emu_sidplay2);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_sidplay2", cfg_emu_sidplay2,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_sidplay2", cfg_emu_sidplay2,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_sidplay2);
   gtk_box_pack_start (GTK_BOX (vbox26), cfg_emu_sidplay2, FALSE, FALSE, 0);
@@ -512,7 +512,7 @@ create_xs_configwin (void)
   frame1 = gtk_frame_new ("Memory mode:");
   gtk_widget_set_name (frame1, "frame1");
   gtk_widget_ref (frame1);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "frame1", frame1,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "frame1", frame1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (frame1);
   gtk_box_pack_start (GTK_BOX (vbox2), frame1, FALSE, FALSE, 0);
@@ -521,7 +521,7 @@ create_xs_configwin (void)
   vbox5 = gtk_vbox_new (FALSE, 2);
   gtk_widget_set_name (vbox5, "vbox5");
   gtk_widget_ref (vbox5);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox5", vbox5,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox5", vbox5,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox5);
   gtk_container_add (GTK_CONTAINER (frame1), vbox5);
@@ -531,7 +531,7 @@ create_xs_configwin (void)
   memorymode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_emu_mem_real));
   gtk_widget_set_name (cfg_emu_mem_real, "cfg_emu_mem_real");
   gtk_widget_ref (cfg_emu_mem_real);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_mem_real", cfg_emu_mem_real,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_mem_real", cfg_emu_mem_real,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_mem_real);
   gtk_box_pack_start (GTK_BOX (vbox5), cfg_emu_mem_real, FALSE, FALSE, 0);
@@ -540,7 +540,7 @@ create_xs_configwin (void)
   memorymode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_emu_mem_banksw));
   gtk_widget_set_name (cfg_emu_mem_banksw, "cfg_emu_mem_banksw");
   gtk_widget_ref (cfg_emu_mem_banksw);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_mem_banksw", cfg_emu_mem_banksw,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_mem_banksw", cfg_emu_mem_banksw,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_mem_banksw);
   gtk_box_pack_start (GTK_BOX (vbox5), cfg_emu_mem_banksw, FALSE, FALSE, 0);
@@ -549,7 +549,7 @@ create_xs_configwin (void)
   memorymode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_emu_mem_transrom));
   gtk_widget_set_name (cfg_emu_mem_transrom, "cfg_emu_mem_transrom");
   gtk_widget_ref (cfg_emu_mem_transrom);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_mem_transrom", cfg_emu_mem_transrom,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_mem_transrom", cfg_emu_mem_transrom,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_mem_transrom);
   gtk_box_pack_start (GTK_BOX (vbox5), cfg_emu_mem_transrom, FALSE, FALSE, 0);
@@ -558,7 +558,7 @@ create_xs_configwin (void)
   memorymode_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_emu_mem_playsid));
   gtk_widget_set_name (cfg_emu_mem_playsid, "cfg_emu_mem_playsid");
   gtk_widget_ref (cfg_emu_mem_playsid);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_mem_playsid", cfg_emu_mem_playsid,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_mem_playsid", cfg_emu_mem_playsid,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_mem_playsid);
   gtk_box_pack_start (GTK_BOX (vbox5), cfg_emu_mem_playsid, FALSE, FALSE, 0);
@@ -566,7 +566,7 @@ create_xs_configwin (void)
   label2 = gtk_label_new ("Emu#1");
   gtk_widget_set_name (label2, "label2");
   gtk_widget_ref (label2);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "label2", label2,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "label2", label2,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label2);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (cfg_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (cfg_notebook), 1), label2);
@@ -574,7 +574,7 @@ create_xs_configwin (void)
   vbox29 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox29, "vbox29");
   gtk_widget_ref (vbox29);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox29", vbox29,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox29", vbox29,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox29);
   gtk_container_add (GTK_CONTAINER (cfg_notebook), vbox29);
@@ -582,7 +582,7 @@ create_xs_configwin (void)
   hbox1 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (hbox1, "hbox1");
   gtk_widget_ref (hbox1);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "hbox1", hbox1,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "hbox1", hbox1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (hbox1);
   gtk_box_pack_start (GTK_BOX (vbox29), hbox1, FALSE, TRUE, 0);
@@ -590,7 +590,7 @@ create_xs_configwin (void)
   frame2 = gtk_frame_new ("Clock speed:");
   gtk_widget_set_name (frame2, "frame2");
   gtk_widget_ref (frame2);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "frame2", frame2,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "frame2", frame2,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (frame2);
   gtk_box_pack_start (GTK_BOX (hbox1), frame2, TRUE, TRUE, 0);
@@ -599,7 +599,7 @@ create_xs_configwin (void)
   vbox4 = gtk_vbox_new (FALSE, 2);
   gtk_widget_set_name (vbox4, "vbox4");
   gtk_widget_ref (vbox4);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox4", vbox4,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox4", vbox4,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox4);
   gtk_container_add (GTK_CONTAINER (frame2), vbox4);
@@ -608,7 +608,7 @@ create_xs_configwin (void)
   cfg_emu_clock_force = gtk_check_button_new_with_label ("Force speed");
   gtk_widget_set_name (cfg_emu_clock_force, "cfg_emu_clock_force");
   gtk_widget_ref (cfg_emu_clock_force);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_clock_force", cfg_emu_clock_force,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_clock_force", cfg_emu_clock_force,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_clock_force);
   gtk_box_pack_start (GTK_BOX (vbox4), cfg_emu_clock_force, FALSE, FALSE, 0);
@@ -618,7 +618,7 @@ create_xs_configwin (void)
   speed_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_emu_clock_pal));
   gtk_widget_set_name (cfg_emu_clock_pal, "cfg_emu_clock_pal");
   gtk_widget_ref (cfg_emu_clock_pal);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_clock_pal", cfg_emu_clock_pal,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_clock_pal", cfg_emu_clock_pal,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_clock_pal);
   gtk_box_pack_start (GTK_BOX (vbox4), cfg_emu_clock_pal, FALSE, FALSE, 0);
@@ -628,7 +628,7 @@ create_xs_configwin (void)
   speed_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_emu_clock_ntsc));
   gtk_widget_set_name (cfg_emu_clock_ntsc, "cfg_emu_clock_ntsc");
   gtk_widget_ref (cfg_emu_clock_ntsc);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_clock_ntsc", cfg_emu_clock_ntsc,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_clock_ntsc", cfg_emu_clock_ntsc,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_clock_ntsc);
   gtk_box_pack_start (GTK_BOX (vbox4), cfg_emu_clock_ntsc, FALSE, FALSE, 0);
@@ -637,7 +637,7 @@ create_xs_configwin (void)
   frame3 = gtk_frame_new ("SID model: ");
   gtk_widget_set_name (frame3, "frame3");
   gtk_widget_ref (frame3);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "frame3", frame3,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "frame3", frame3,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (frame3);
   gtk_box_pack_start (GTK_BOX (hbox1), frame3, TRUE, TRUE, 0);
@@ -646,7 +646,7 @@ create_xs_configwin (void)
   vbox3 = gtk_vbox_new (FALSE, 2);
   gtk_widget_set_name (vbox3, "vbox3");
   gtk_widget_ref (vbox3);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox3", vbox3,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox3", vbox3,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox3);
   gtk_container_add (GTK_CONTAINER (frame3), vbox3);
@@ -655,7 +655,7 @@ create_xs_configwin (void)
   cfg_emu_sid_force = gtk_check_button_new_with_label ("Force model");
   gtk_widget_set_name (cfg_emu_sid_force, "cfg_emu_sid_force");
   gtk_widget_ref (cfg_emu_sid_force);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_sid_force", cfg_emu_sid_force,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_sid_force", cfg_emu_sid_force,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_sid_force);
   gtk_box_pack_start (GTK_BOX (vbox3), cfg_emu_sid_force, FALSE, FALSE, 0);
@@ -665,7 +665,7 @@ create_xs_configwin (void)
   waveforms_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_emu_mos6581));
   gtk_widget_set_name (cfg_emu_mos6581, "cfg_emu_mos6581");
   gtk_widget_ref (cfg_emu_mos6581);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_mos6581", cfg_emu_mos6581,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_mos6581", cfg_emu_mos6581,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_mos6581);
   gtk_box_pack_start (GTK_BOX (vbox3), cfg_emu_mos6581, FALSE, FALSE, 0);
@@ -675,7 +675,7 @@ create_xs_configwin (void)
   waveforms_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_emu_mos8580));
   gtk_widget_set_name (cfg_emu_mos8580, "cfg_emu_mos8580");
   gtk_widget_ref (cfg_emu_mos8580);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_mos8580", cfg_emu_mos8580,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_mos8580", cfg_emu_mos8580,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_mos8580);
   gtk_box_pack_start (GTK_BOX (vbox3), cfg_emu_mos8580, FALSE, FALSE, 0);
@@ -683,7 +683,7 @@ create_xs_configwin (void)
   cfg_sidplay2_grp = gtk_frame_new ("SIDPlay 2 options: ");
   gtk_widget_set_name (cfg_sidplay2_grp, "cfg_sidplay2_grp");
   gtk_widget_ref (cfg_sidplay2_grp);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_sidplay2_grp", cfg_sidplay2_grp,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_sidplay2_grp", cfg_sidplay2_grp,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_sidplay2_grp);
   gtk_box_pack_start (GTK_BOX (vbox29), cfg_sidplay2_grp, FALSE, TRUE, 0);
@@ -692,7 +692,7 @@ create_xs_configwin (void)
   vbox30 = gtk_vbox_new (FALSE, 2);
   gtk_widget_set_name (vbox30, "vbox30");
   gtk_widget_ref (vbox30);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox30", vbox30,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox30", vbox30,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox30);
   gtk_container_add (GTK_CONTAINER (cfg_sidplay2_grp), vbox30);
@@ -701,7 +701,7 @@ create_xs_configwin (void)
   cfg_emu_sidplay2_opt = gtk_check_button_new_with_label ("Optimization mode (faster, inaccurate)");
   gtk_widget_set_name (cfg_emu_sidplay2_opt, "cfg_emu_sidplay2_opt");
   gtk_widget_ref (cfg_emu_sidplay2_opt);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_sidplay2_opt", cfg_emu_sidplay2_opt,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_sidplay2_opt", cfg_emu_sidplay2_opt,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_sidplay2_opt);
   gtk_box_pack_start (GTK_BOX (vbox30), cfg_emu_sidplay2_opt, FALSE, FALSE, 0);
@@ -711,7 +711,7 @@ create_xs_configwin (void)
   emutype_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_emu_sidplay2_resid));
   gtk_widget_set_name (cfg_emu_sidplay2_resid, "cfg_emu_sidplay2_resid");
   gtk_widget_ref (cfg_emu_sidplay2_resid);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_sidplay2_resid", cfg_emu_sidplay2_resid,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_sidplay2_resid", cfg_emu_sidplay2_resid,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_sidplay2_resid);
   gtk_box_pack_start (GTK_BOX (vbox30), cfg_emu_sidplay2_resid, FALSE, FALSE, 0);
@@ -721,7 +721,7 @@ create_xs_configwin (void)
   emutype_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_emu_sidplay2_hardsid));
   gtk_widget_set_name (cfg_emu_sidplay2_hardsid, "cfg_emu_sidplay2_hardsid");
   gtk_widget_ref (cfg_emu_sidplay2_hardsid);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_sidplay2_hardsid", cfg_emu_sidplay2_hardsid,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_sidplay2_hardsid", cfg_emu_sidplay2_hardsid,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_sidplay2_hardsid);
   gtk_box_pack_start (GTK_BOX (vbox30), cfg_emu_sidplay2_hardsid, FALSE, FALSE, 0);
@@ -730,7 +730,7 @@ create_xs_configwin (void)
   label48 = gtk_label_new ("Emu#2");
   gtk_widget_set_name (label48, "label48");
   gtk_widget_ref (label48);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "label48", label48,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "label48", label48,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label48);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (cfg_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (cfg_notebook), 2), label48);
@@ -738,7 +738,7 @@ create_xs_configwin (void)
   vbox25 = gtk_vbox_new (FALSE, 2);
   gtk_widget_set_name (vbox25, "vbox25");
   gtk_widget_ref (vbox25);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox25", vbox25,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox25", vbox25,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox25);
   gtk_container_add (GTK_CONTAINER (cfg_notebook), vbox25);
@@ -747,7 +747,7 @@ create_xs_configwin (void)
   cfg_emu_filters = gtk_check_button_new_with_label ("Emulate filters");
   gtk_widget_set_name (cfg_emu_filters, "cfg_emu_filters");
   gtk_widget_ref (cfg_emu_filters);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_filters", cfg_emu_filters,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_filters", cfg_emu_filters,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_filters);
   gtk_box_pack_start (GTK_BOX (vbox25), cfg_emu_filters, FALSE, FALSE, 0);
@@ -756,7 +756,7 @@ create_xs_configwin (void)
   cfg_filters_notebook = gtk_notebook_new ();
   gtk_widget_set_name (cfg_filters_notebook, "cfg_filters_notebook");
   gtk_widget_ref (cfg_filters_notebook);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_filters_notebook", cfg_filters_notebook,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_filters_notebook", cfg_filters_notebook,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_filters_notebook);
   gtk_box_pack_start (GTK_BOX (vbox25), cfg_filters_notebook, TRUE, TRUE, 0);
@@ -764,7 +764,7 @@ create_xs_configwin (void)
   cfg_box_sidplay1 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (cfg_box_sidplay1, "cfg_box_sidplay1");
   gtk_widget_ref (cfg_box_sidplay1);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_box_sidplay1", cfg_box_sidplay1,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_box_sidplay1", cfg_box_sidplay1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_box_sidplay1);
   gtk_container_add (GTK_CONTAINER (cfg_filters_notebook), cfg_box_sidplay1);
@@ -773,7 +773,7 @@ create_xs_configwin (void)
   cfg_frm_fs = gtk_frame_new ("FS");
   gtk_widget_set_name (cfg_frm_fs, "cfg_frm_fs");
   gtk_widget_ref (cfg_frm_fs);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_frm_fs", cfg_frm_fs,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_frm_fs", cfg_frm_fs,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_frm_fs);
   gtk_box_pack_start (GTK_BOX (cfg_box_sidplay1), cfg_frm_fs, FALSE, TRUE, 0);
@@ -783,7 +783,7 @@ create_xs_configwin (void)
   cfg_emu_filt_fs = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 1000, 1, 100, 0)));
   gtk_widget_set_name (cfg_emu_filt_fs, "cfg_emu_filt_fs");
   gtk_widget_ref (cfg_emu_filt_fs);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_filt_fs", cfg_emu_filt_fs,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_filt_fs", cfg_emu_filt_fs,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_filt_fs);
   gtk_container_add (GTK_CONTAINER (cfg_frm_fs), cfg_emu_filt_fs);
@@ -792,7 +792,7 @@ create_xs_configwin (void)
   cfg_frm_fm = gtk_frame_new ("FM");
   gtk_widget_set_name (cfg_frm_fm, "cfg_frm_fm");
   gtk_widget_ref (cfg_frm_fm);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_frm_fm", cfg_frm_fm,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_frm_fm", cfg_frm_fm,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_frm_fm);
   gtk_box_pack_start (GTK_BOX (cfg_box_sidplay1), cfg_frm_fm, FALSE, TRUE, 0);
@@ -802,7 +802,7 @@ create_xs_configwin (void)
   cfg_emu_filt_fm = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 100, 1, 10, 0)));
   gtk_widget_set_name (cfg_emu_filt_fm, "cfg_emu_filt_fm");
   gtk_widget_ref (cfg_emu_filt_fm);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_filt_fm", cfg_emu_filt_fm,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_filt_fm", cfg_emu_filt_fm,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_filt_fm);
   gtk_container_add (GTK_CONTAINER (cfg_frm_fm), cfg_emu_filt_fm);
@@ -811,7 +811,7 @@ create_xs_configwin (void)
   cfg_frm_ft = gtk_frame_new ("FT");
   gtk_widget_set_name (cfg_frm_ft, "cfg_frm_ft");
   gtk_widget_ref (cfg_frm_ft);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_frm_ft", cfg_frm_ft,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_frm_ft", cfg_frm_ft,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_frm_ft);
   gtk_box_pack_start (GTK_BOX (cfg_box_sidplay1), cfg_frm_ft, FALSE, TRUE, 0);
@@ -821,7 +821,7 @@ create_xs_configwin (void)
   cfg_emu_filt_ft = gtk_vscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 1, 0.01, 0.1, 0)));
   gtk_widget_set_name (cfg_emu_filt_ft, "cfg_emu_filt_ft");
   gtk_widget_ref (cfg_emu_filt_ft);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_emu_filt_ft", cfg_emu_filt_ft,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_emu_filt_ft", cfg_emu_filt_ft,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_emu_filt_ft);
   gtk_container_add (GTK_CONTAINER (cfg_frm_ft), cfg_emu_filt_ft);
@@ -830,7 +830,7 @@ create_xs_configwin (void)
   vbox17 = gtk_vbox_new (FALSE, 8);
   gtk_widget_set_name (vbox17, "vbox17");
   gtk_widget_ref (vbox17);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox17", vbox17,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox17", vbox17,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox17);
   gtk_box_pack_start (GTK_BOX (cfg_box_sidplay1), vbox17, TRUE, TRUE, 0);
@@ -839,7 +839,7 @@ create_xs_configwin (void)
   cfg_filter_reset = gtk_button_new_with_label ("Reset values");
   gtk_widget_set_name (cfg_filter_reset, "cfg_filter_reset");
   gtk_widget_ref (cfg_filter_reset);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_filter_reset", cfg_filter_reset,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_filter_reset", cfg_filter_reset,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_filter_reset);
   gtk_box_pack_start (GTK_BOX (vbox17), cfg_filter_reset, FALSE, FALSE, 0);
@@ -847,7 +847,7 @@ create_xs_configwin (void)
   cfg_filter_sync = gtk_button_new_with_label ("Synchronize from\nSIDPlay2");
   gtk_widget_set_name (cfg_filter_sync, "cfg_filter_sync");
   gtk_widget_ref (cfg_filter_sync);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_filter_sync", cfg_filter_sync,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_filter_sync", cfg_filter_sync,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_filter_sync);
   gtk_box_pack_start (GTK_BOX (vbox17), cfg_filter_sync, FALSE, FALSE, 0);
@@ -855,7 +855,7 @@ create_xs_configwin (void)
   label55 = gtk_label_new ("SIDPlay1");
   gtk_widget_set_name (label55, "label55");
   gtk_widget_ref (label55);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "label55", label55,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "label55", label55,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label55);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (cfg_filters_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (cfg_filters_notebook), 0), label55);
@@ -863,7 +863,7 @@ create_xs_configwin (void)
   cfg_box_sidplay2 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (cfg_box_sidplay2, "cfg_box_sidplay2");
   gtk_widget_ref (cfg_box_sidplay2);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_box_sidplay2", cfg_box_sidplay2,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_box_sidplay2", cfg_box_sidplay2,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_box_sidplay2);
   gtk_container_add (GTK_CONTAINER (cfg_filters_notebook), cfg_box_sidplay2);
@@ -872,7 +872,7 @@ create_xs_configwin (void)
   vbox36 = gtk_vbox_new (FALSE, 8);
   gtk_widget_set_name (vbox36, "vbox36");
   gtk_widget_ref (vbox36);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox36", vbox36,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox36", vbox36,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox36);
   gtk_box_pack_start (GTK_BOX (cfg_box_sidplay2), vbox36, FALSE, TRUE, 0);
@@ -881,7 +881,7 @@ create_xs_configwin (void)
   cfg_filter2_reset = gtk_button_new_with_label ("Reset values");
   gtk_widget_set_name (cfg_filter2_reset, "cfg_filter2_reset");
   gtk_widget_ref (cfg_filter2_reset);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_filter2_reset", cfg_filter2_reset,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_filter2_reset", cfg_filter2_reset,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_filter2_reset);
   gtk_box_pack_start (GTK_BOX (vbox36), cfg_filter2_reset, FALSE, FALSE, 0);
@@ -889,7 +889,7 @@ create_xs_configwin (void)
   cfg_filter2_sync = gtk_button_new_with_label ("Synchronize from\nSIDPlay1");
   gtk_widget_set_name (cfg_filter2_sync, "cfg_filter2_sync");
   gtk_widget_ref (cfg_filter2_sync);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_filter2_sync", cfg_filter2_sync,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_filter2_sync", cfg_filter2_sync,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_filter2_sync);
   gtk_box_pack_start (GTK_BOX (vbox36), cfg_filter2_sync, FALSE, FALSE, 0);
@@ -897,7 +897,7 @@ create_xs_configwin (void)
   label56 = gtk_label_new ("SIDPlay2");
   gtk_widget_set_name (label56, "label56");
   gtk_widget_ref (label56);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "label56", label56,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "label56", label56,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label56);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (cfg_filters_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (cfg_filters_notebook), 1), label56);
@@ -905,7 +905,7 @@ create_xs_configwin (void)
   label24 = gtk_label_new ("Filters");
   gtk_widget_set_name (label24, "label24");
   gtk_widget_ref (label24);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "label24", label24,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "label24", label24,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label24);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (cfg_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (cfg_notebook), 3), label24);
@@ -913,7 +913,7 @@ create_xs_configwin (void)
   vbox20 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox20, "vbox20");
   gtk_widget_ref (vbox20);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox20", vbox20,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox20", vbox20,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox20);
   gtk_container_add (GTK_CONTAINER (cfg_notebook), vbox20);
@@ -921,7 +921,7 @@ create_xs_configwin (void)
   frame29 = gtk_frame_new ("Minimum playtime: ");
   gtk_widget_set_name (frame29, "frame29");
   gtk_widget_ref (frame29);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "frame29", frame29,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "frame29", frame29,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (frame29);
   gtk_box_pack_start (GTK_BOX (vbox20), frame29, FALSE, FALSE, 0);
@@ -930,7 +930,7 @@ create_xs_configwin (void)
   vbox32 = gtk_vbox_new (FALSE, 2);
   gtk_widget_set_name (vbox32, "vbox32");
   gtk_widget_ref (vbox32);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox32", vbox32,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox32", vbox32,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox32);
   gtk_container_add (GTK_CONTAINER (frame29), vbox32);
@@ -939,7 +939,7 @@ create_xs_configwin (void)
   cfg_mintime_enable = gtk_check_button_new_with_label ("Play at least for specified time");
   gtk_widget_set_name (cfg_mintime_enable, "cfg_mintime_enable");
   gtk_widget_ref (cfg_mintime_enable);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_mintime_enable", cfg_mintime_enable,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_mintime_enable", cfg_mintime_enable,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_mintime_enable);
   gtk_box_pack_start (GTK_BOX (vbox32), cfg_mintime_enable, FALSE, FALSE, 0);
@@ -948,7 +948,7 @@ create_xs_configwin (void)
   hbox18 = gtk_hbox_new (FALSE, 2);
   gtk_widget_set_name (hbox18, "hbox18");
   gtk_widget_ref (hbox18);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "hbox18", hbox18,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "hbox18", hbox18,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (hbox18);
   gtk_box_pack_start (GTK_BOX (vbox32), hbox18, FALSE, TRUE, 2);
@@ -956,7 +956,7 @@ create_xs_configwin (void)
   cfg_mintime_label1 = gtk_label_new ("Playtime: ");
   gtk_widget_set_name (cfg_mintime_label1, "cfg_mintime_label1");
   gtk_widget_ref (cfg_mintime_label1);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_mintime_label1", cfg_mintime_label1,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_mintime_label1", cfg_mintime_label1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_mintime_label1);
   gtk_box_pack_start (GTK_BOX (hbox18), cfg_mintime_label1, FALSE, FALSE, 0);
@@ -966,7 +966,7 @@ create_xs_configwin (void)
   cfg_mintime = gtk_spin_button_new (GTK_ADJUSTMENT (cfg_mintime_adj), 1, 0);
   gtk_widget_set_name (cfg_mintime, "cfg_mintime");
   gtk_widget_ref (cfg_mintime);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_mintime", cfg_mintime,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_mintime", cfg_mintime,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_mintime);
   gtk_box_pack_start (GTK_BOX (hbox18), cfg_mintime, FALSE, TRUE, 0);
@@ -974,7 +974,7 @@ create_xs_configwin (void)
   cfg_mintime_label2 = gtk_label_new ("seconds");
   gtk_widget_set_name (cfg_mintime_label2, "cfg_mintime_label2");
   gtk_widget_ref (cfg_mintime_label2);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_mintime_label2", cfg_mintime_label2,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_mintime_label2", cfg_mintime_label2,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_mintime_label2);
   gtk_box_pack_start (GTK_BOX (hbox18), cfg_mintime_label2, FALSE, FALSE, 0);
@@ -983,7 +983,7 @@ create_xs_configwin (void)
   frame21 = gtk_frame_new ("Maximum playtime: ");
   gtk_widget_set_name (frame21, "frame21");
   gtk_widget_ref (frame21);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "frame21", frame21,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "frame21", frame21,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (frame21);
   gtk_box_pack_start (GTK_BOX (vbox20), frame21, FALSE, TRUE, 0);
@@ -992,7 +992,7 @@ create_xs_configwin (void)
   vbox21 = gtk_vbox_new (FALSE, 2);
   gtk_widget_set_name (vbox21, "vbox21");
   gtk_widget_ref (vbox21);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox21", vbox21,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox21", vbox21,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox21);
   gtk_container_add (GTK_CONTAINER (frame21), vbox21);
@@ -1001,7 +1001,7 @@ create_xs_configwin (void)
   cfg_maxtime_enable = gtk_check_button_new_with_label ("Play for specified time maximum");
   gtk_widget_set_name (cfg_maxtime_enable, "cfg_maxtime_enable");
   gtk_widget_ref (cfg_maxtime_enable);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_maxtime_enable", cfg_maxtime_enable,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_maxtime_enable", cfg_maxtime_enable,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_maxtime_enable);
   gtk_box_pack_start (GTK_BOX (vbox21), cfg_maxtime_enable, FALSE, FALSE, 0);
@@ -1010,7 +1010,7 @@ create_xs_configwin (void)
   cfg_maxtime_unknown = gtk_check_button_new_with_label ("Only when song length is unknown");
   gtk_widget_set_name (cfg_maxtime_unknown, "cfg_maxtime_unknown");
   gtk_widget_ref (cfg_maxtime_unknown);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_maxtime_unknown", cfg_maxtime_unknown,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_maxtime_unknown", cfg_maxtime_unknown,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_maxtime_unknown);
   gtk_box_pack_start (GTK_BOX (vbox21), cfg_maxtime_unknown, FALSE, FALSE, 0);
@@ -1019,7 +1019,7 @@ create_xs_configwin (void)
   hbox14 = gtk_hbox_new (FALSE, 2);
   gtk_widget_set_name (hbox14, "hbox14");
   gtk_widget_ref (hbox14);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "hbox14", hbox14,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "hbox14", hbox14,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (hbox14);
   gtk_box_pack_start (GTK_BOX (vbox21), hbox14, FALSE, TRUE, 2);
@@ -1027,7 +1027,7 @@ create_xs_configwin (void)
   cfg_maxtime_label1 = gtk_label_new ("Playtime: ");
   gtk_widget_set_name (cfg_maxtime_label1, "cfg_maxtime_label1");
   gtk_widget_ref (cfg_maxtime_label1);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_maxtime_label1", cfg_maxtime_label1,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_maxtime_label1", cfg_maxtime_label1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_maxtime_label1);
   gtk_box_pack_start (GTK_BOX (hbox14), cfg_maxtime_label1, FALSE, FALSE, 0);
@@ -1037,7 +1037,7 @@ create_xs_configwin (void)
   cfg_maxtime = gtk_spin_button_new (GTK_ADJUSTMENT (cfg_maxtime_adj), 1, 0);
   gtk_widget_set_name (cfg_maxtime, "cfg_maxtime");
   gtk_widget_ref (cfg_maxtime);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_maxtime", cfg_maxtime,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_maxtime", cfg_maxtime,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_maxtime);
   gtk_box_pack_start (GTK_BOX (hbox14), cfg_maxtime, FALSE, TRUE, 0);
@@ -1045,7 +1045,7 @@ create_xs_configwin (void)
   cfg_maxtime_label2 = gtk_label_new ("seconds");
   gtk_widget_set_name (cfg_maxtime_label2, "cfg_maxtime_label2");
   gtk_widget_ref (cfg_maxtime_label2);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_maxtime_label2", cfg_maxtime_label2,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_maxtime_label2", cfg_maxtime_label2,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_maxtime_label2);
   gtk_box_pack_start (GTK_BOX (hbox14), cfg_maxtime_label2, FALSE, FALSE, 0);
@@ -1054,7 +1054,7 @@ create_xs_configwin (void)
   frame18 = gtk_frame_new ("Song length database: ");
   gtk_widget_set_name (frame18, "frame18");
   gtk_widget_ref (frame18);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "frame18", frame18,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "frame18", frame18,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (frame18);
   gtk_box_pack_start (GTK_BOX (vbox20), frame18, FALSE, TRUE, 0);
@@ -1063,7 +1063,7 @@ create_xs_configwin (void)
   vbox18 = gtk_vbox_new (FALSE, 2);
   gtk_widget_set_name (vbox18, "vbox18");
   gtk_widget_ref (vbox18);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox18", vbox18,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox18", vbox18,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox18);
   gtk_container_add (GTK_CONTAINER (frame18), vbox18);
@@ -1072,7 +1072,7 @@ create_xs_configwin (void)
   cfg_sld_enable = gtk_check_button_new_with_label ("Use XSIDPLAY-compatible database");
   gtk_widget_set_name (cfg_sld_enable, "cfg_sld_enable");
   gtk_widget_ref (cfg_sld_enable);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_sld_enable", cfg_sld_enable,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_sld_enable", cfg_sld_enable,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_sld_enable);
   gtk_box_pack_start (GTK_BOX (vbox18), cfg_sld_enable, FALSE, FALSE, 0);
@@ -1081,7 +1081,7 @@ create_xs_configwin (void)
   hbox13 = gtk_hbox_new (FALSE, 4);
   gtk_widget_set_name (hbox13, "hbox13");
   gtk_widget_ref (hbox13);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "hbox13", hbox13,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "hbox13", hbox13,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (hbox13);
   gtk_box_pack_start (GTK_BOX (vbox18), hbox13, FALSE, TRUE, 0);
@@ -1089,7 +1089,7 @@ create_xs_configwin (void)
   cfg_sld_label1 = gtk_label_new ("DB-file: ");
   gtk_widget_set_name (cfg_sld_label1, "cfg_sld_label1");
   gtk_widget_ref (cfg_sld_label1);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_sld_label1", cfg_sld_label1,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_sld_label1", cfg_sld_label1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_sld_label1);
   gtk_box_pack_start (GTK_BOX (hbox13), cfg_sld_label1, FALSE, TRUE, 0);
@@ -1097,7 +1097,7 @@ create_xs_configwin (void)
   cfg_sld_dbpath = gtk_entry_new ();
   gtk_widget_set_name (cfg_sld_dbpath, "cfg_sld_dbpath");
   gtk_widget_ref (cfg_sld_dbpath);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_sld_dbpath", cfg_sld_dbpath,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_sld_dbpath", cfg_sld_dbpath,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_sld_dbpath);
   gtk_box_pack_start (GTK_BOX (hbox13), cfg_sld_dbpath, TRUE, TRUE, 0);
@@ -1106,7 +1106,7 @@ create_xs_configwin (void)
   cfg_sld_dbbrowse = gtk_button_new_with_label ("Browse");
   gtk_widget_set_name (cfg_sld_dbbrowse, "cfg_sld_dbbrowse");
   gtk_widget_ref (cfg_sld_dbbrowse);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_sld_dbbrowse", cfg_sld_dbbrowse,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_sld_dbbrowse", cfg_sld_dbbrowse,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_sld_dbbrowse);
   gtk_box_pack_start (GTK_BOX (hbox13), cfg_sld_dbbrowse, FALSE, FALSE, 0);
@@ -1115,7 +1115,7 @@ create_xs_configwin (void)
   label26 = gtk_label_new ("Songlength");
   gtk_widget_set_name (label26, "label26");
   gtk_widget_ref (label26);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "label26", label26,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "label26", label26,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label26);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (cfg_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (cfg_notebook), 4), label26);
@@ -1123,7 +1123,7 @@ create_xs_configwin (void)
   vbox33 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox33, "vbox33");
   gtk_widget_ref (vbox33);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox33", vbox33,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox33", vbox33,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox33);
   gtk_container_add (GTK_CONTAINER (cfg_notebook), vbox33);
@@ -1131,7 +1131,7 @@ create_xs_configwin (void)
   frame7 = gtk_frame_new ("SID Tune Information List (STIL) database: ");
   gtk_widget_set_name (frame7, "frame7");
   gtk_widget_ref (frame7);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "frame7", frame7,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "frame7", frame7,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (frame7);
   gtk_box_pack_start (GTK_BOX (vbox33), frame7, FALSE, TRUE, 0);
@@ -1140,7 +1140,7 @@ create_xs_configwin (void)
   vbox8 = gtk_vbox_new (FALSE, 2);
   gtk_widget_set_name (vbox8, "vbox8");
   gtk_widget_ref (vbox8);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox8", vbox8,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox8", vbox8,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox8);
   gtk_container_add (GTK_CONTAINER (frame7), vbox8);
@@ -1149,7 +1149,7 @@ create_xs_configwin (void)
   cfg_stil_enable = gtk_check_button_new_with_label ("Use STIL database");
   gtk_widget_set_name (cfg_stil_enable, "cfg_stil_enable");
   gtk_widget_ref (cfg_stil_enable);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_stil_enable", cfg_stil_enable,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_stil_enable", cfg_stil_enable,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_stil_enable);
   gtk_box_pack_start (GTK_BOX (vbox8), cfg_stil_enable, TRUE, FALSE, 0);
@@ -1158,7 +1158,7 @@ create_xs_configwin (void)
   hbox3 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (hbox3, "hbox3");
   gtk_widget_ref (hbox3);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "hbox3", hbox3,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "hbox3", hbox3,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (hbox3);
   gtk_box_pack_start (GTK_BOX (vbox8), hbox3, TRUE, TRUE, 0);
@@ -1166,7 +1166,7 @@ create_xs_configwin (void)
   cfg_stil_label1 = gtk_label_new ("STIL file:");
   gtk_widget_set_name (cfg_stil_label1, "cfg_stil_label1");
   gtk_widget_ref (cfg_stil_label1);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_stil_label1", cfg_stil_label1,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_stil_label1", cfg_stil_label1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_stil_label1);
   gtk_box_pack_start (GTK_BOX (hbox3), cfg_stil_label1, FALSE, FALSE, 0);
@@ -1175,7 +1175,7 @@ create_xs_configwin (void)
   alignment2 = gtk_alignment_new (0.5, 0.5, 1, 1);
   gtk_widget_set_name (alignment2, "alignment2");
   gtk_widget_ref (alignment2);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "alignment2", alignment2,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "alignment2", alignment2,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (alignment2);
   gtk_box_pack_start (GTK_BOX (hbox3), alignment2, TRUE, TRUE, 4);
@@ -1183,7 +1183,7 @@ create_xs_configwin (void)
   cfg_stil_dbpath = gtk_entry_new ();
   gtk_widget_set_name (cfg_stil_dbpath, "cfg_stil_dbpath");
   gtk_widget_ref (cfg_stil_dbpath);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_stil_dbpath", cfg_stil_dbpath,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_stil_dbpath", cfg_stil_dbpath,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_stil_dbpath);
   gtk_container_add (GTK_CONTAINER (alignment2), cfg_stil_dbpath);
@@ -1192,7 +1192,7 @@ create_xs_configwin (void)
   alignment1 = gtk_alignment_new (0.5, 0.5, 1, 0.300001);
   gtk_widget_set_name (alignment1, "alignment1");
   gtk_widget_ref (alignment1);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "alignment1", alignment1,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "alignment1", alignment1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (alignment1);
   gtk_box_pack_end (GTK_BOX (hbox3), alignment1, FALSE, FALSE, 0);
@@ -1201,7 +1201,7 @@ create_xs_configwin (void)
   cfg_stil_browse = gtk_button_new_with_label ("Browse");
   gtk_widget_set_name (cfg_stil_browse, "cfg_stil_browse");
   gtk_widget_ref (cfg_stil_browse);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_stil_browse", cfg_stil_browse,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_stil_browse", cfg_stil_browse,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_stil_browse);
   gtk_container_add (GTK_CONTAINER (alignment1), cfg_stil_browse);
@@ -1210,7 +1210,7 @@ create_xs_configwin (void)
   hbox17 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (hbox17, "hbox17");
   gtk_widget_ref (hbox17);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "hbox17", hbox17,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "hbox17", hbox17,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (hbox17);
   gtk_box_pack_start (GTK_BOX (vbox8), hbox17, TRUE, TRUE, 0);
@@ -1218,7 +1218,7 @@ create_xs_configwin (void)
   cfg_hvsc_label1 = gtk_label_new ("HVSC path:");
   gtk_widget_set_name (cfg_hvsc_label1, "cfg_hvsc_label1");
   gtk_widget_ref (cfg_hvsc_label1);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_hvsc_label1", cfg_hvsc_label1,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_hvsc_label1", cfg_hvsc_label1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_hvsc_label1);
   gtk_box_pack_start (GTK_BOX (hbox17), cfg_hvsc_label1, FALSE, FALSE, 0);
@@ -1227,7 +1227,7 @@ create_xs_configwin (void)
   alignment6 = gtk_alignment_new (0.5, 0.5, 1, 1);
   gtk_widget_set_name (alignment6, "alignment6");
   gtk_widget_ref (alignment6);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "alignment6", alignment6,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "alignment6", alignment6,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (alignment6);
   gtk_box_pack_start (GTK_BOX (hbox17), alignment6, TRUE, TRUE, 4);
@@ -1235,7 +1235,7 @@ create_xs_configwin (void)
   cfg_hvsc_path = gtk_entry_new ();
   gtk_widget_set_name (cfg_hvsc_path, "cfg_hvsc_path");
   gtk_widget_ref (cfg_hvsc_path);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_hvsc_path", cfg_hvsc_path,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_hvsc_path", cfg_hvsc_path,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_hvsc_path);
   gtk_container_add (GTK_CONTAINER (alignment6), cfg_hvsc_path);
@@ -1244,7 +1244,7 @@ create_xs_configwin (void)
   alignment7 = gtk_alignment_new (0.5, 0.5, 1, 0.300001);
   gtk_widget_set_name (alignment7, "alignment7");
   gtk_widget_ref (alignment7);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "alignment7", alignment7,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "alignment7", alignment7,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (alignment7);
   gtk_box_pack_end (GTK_BOX (hbox17), alignment7, FALSE, FALSE, 0);
@@ -1253,7 +1253,7 @@ create_xs_configwin (void)
   cfg_hvsc_browse = gtk_button_new_with_label ("Browse");
   gtk_widget_set_name (cfg_hvsc_browse, "cfg_hvsc_browse");
   gtk_widget_ref (cfg_hvsc_browse);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_hvsc_browse", cfg_hvsc_browse,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_hvsc_browse", cfg_hvsc_browse,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_hvsc_browse);
   gtk_container_add (GTK_CONTAINER (alignment7), cfg_hvsc_browse);
@@ -1262,7 +1262,7 @@ create_xs_configwin (void)
   frame16 = gtk_frame_new ("Song name/title format: ");
   gtk_widget_set_name (frame16, "frame16");
   gtk_widget_ref (frame16);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "frame16", frame16,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "frame16", frame16,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (frame16);
   gtk_box_pack_start (GTK_BOX (vbox33), frame16, FALSE, TRUE, 0);
@@ -1271,7 +1271,7 @@ create_xs_configwin (void)
   vbox16 = gtk_vbox_new (FALSE, 2);
   gtk_widget_set_name (vbox16, "vbox16");
   gtk_widget_ref (vbox16);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox16", vbox16,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox16", vbox16,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox16);
   gtk_container_add (GTK_CONTAINER (frame16), vbox16);
@@ -1280,7 +1280,7 @@ create_xs_configwin (void)
   cfg_ftitle_override = gtk_check_button_new_with_label ("Override generic XMMS titles");
   gtk_widget_set_name (cfg_ftitle_override, "cfg_ftitle_override");
   gtk_widget_ref (cfg_ftitle_override);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_ftitle_override", cfg_ftitle_override,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_ftitle_override", cfg_ftitle_override,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_ftitle_override);
   gtk_box_pack_start (GTK_BOX (vbox16), cfg_ftitle_override, FALSE, FALSE, 0);
@@ -1289,7 +1289,7 @@ create_xs_configwin (void)
   cfg_ftitle_format = gtk_entry_new ();
   gtk_widget_set_name (cfg_ftitle_format, "cfg_ftitle_format");
   gtk_widget_ref (cfg_ftitle_format);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_ftitle_format", cfg_ftitle_format,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_ftitle_format", cfg_ftitle_format,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_ftitle_format);
   gtk_box_pack_start (GTK_BOX (vbox16), cfg_ftitle_format, FALSE, FALSE, 2);
@@ -1297,7 +1297,7 @@ create_xs_configwin (void)
   hbox9 = gtk_hbox_new (TRUE, 0);
   gtk_widget_set_name (hbox9, "hbox9");
   gtk_widget_ref (hbox9);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "hbox9", hbox9,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "hbox9", hbox9,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (hbox9);
   gtk_box_pack_start (GTK_BOX (vbox16), hbox9, FALSE, FALSE, 2);
@@ -1305,7 +1305,7 @@ create_xs_configwin (void)
   cfg_ftitle_desc1 = gtk_label_new ("%p - Performer/composer\n%t - Song name (title)\n%c - Copyright\n%s - File type\n%m - SID model");
   gtk_widget_set_name (cfg_ftitle_desc1, "cfg_ftitle_desc1");
   gtk_widget_ref (cfg_ftitle_desc1);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_ftitle_desc1", cfg_ftitle_desc1,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_ftitle_desc1", cfg_ftitle_desc1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_ftitle_desc1);
   gtk_box_pack_start (GTK_BOX (hbox9), cfg_ftitle_desc1, FALSE, FALSE, 0);
@@ -1315,7 +1315,7 @@ create_xs_configwin (void)
   cfg_ftitle_desc2 = gtk_label_new ("%n - Subtune\n%N - Number of subtunes\n%f - Filename\n%F - File path\n%e - File extension");
   gtk_widget_set_name (cfg_ftitle_desc2, "cfg_ftitle_desc2");
   gtk_widget_ref (cfg_ftitle_desc2);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_ftitle_desc2", cfg_ftitle_desc2,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_ftitle_desc2", cfg_ftitle_desc2,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_ftitle_desc2);
   gtk_box_pack_start (GTK_BOX (hbox9), cfg_ftitle_desc2, FALSE, FALSE, 0);
@@ -1325,7 +1325,7 @@ create_xs_configwin (void)
   label23 = gtk_label_new ("Title");
   gtk_widget_set_name (label23, "label23");
   gtk_widget_ref (label23);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "label23", label23,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "label23", label23,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label23);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (cfg_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (cfg_notebook), 5), label23);
@@ -1333,7 +1333,7 @@ create_xs_configwin (void)
   vbox19 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox19, "vbox19");
   gtk_widget_ref (vbox19);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox19", vbox19,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox19", vbox19,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox19);
   gtk_container_add (GTK_CONTAINER (cfg_notebook), vbox19);
@@ -1341,7 +1341,7 @@ create_xs_configwin (void)
   frame28 = gtk_frame_new ("Sub-tune control: ");
   gtk_widget_set_name (frame28, "frame28");
   gtk_widget_ref (frame28);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "frame28", frame28,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "frame28", frame28,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (frame28);
   gtk_box_pack_start (GTK_BOX (vbox19), frame28, FALSE, TRUE, 0);
@@ -1350,7 +1350,7 @@ create_xs_configwin (void)
   vbox31 = gtk_vbox_new (FALSE, 2);
   gtk_widget_set_name (vbox31, "vbox31");
   gtk_widget_ref (vbox31);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox31", vbox31,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox31", vbox31,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox31);
   gtk_container_add (GTK_CONTAINER (frame28), vbox31);
@@ -1360,7 +1360,7 @@ create_xs_configwin (void)
   subtune_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_subctrl_none));
   gtk_widget_set_name (cfg_subctrl_none, "cfg_subctrl_none");
   gtk_widget_ref (cfg_subctrl_none);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_subctrl_none", cfg_subctrl_none,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_subctrl_none", cfg_subctrl_none,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_subctrl_none);
   gtk_box_pack_start (GTK_BOX (vbox31), cfg_subctrl_none, FALSE, FALSE, 0);
@@ -1370,7 +1370,7 @@ create_xs_configwin (void)
   subtune_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_subctrl_seek));
   gtk_widget_set_name (cfg_subctrl_seek, "cfg_subctrl_seek");
   gtk_widget_ref (cfg_subctrl_seek);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_subctrl_seek", cfg_subctrl_seek,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_subctrl_seek", cfg_subctrl_seek,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_subctrl_seek);
   gtk_box_pack_start (GTK_BOX (vbox31), cfg_subctrl_seek, FALSE, FALSE, 0);
@@ -1380,7 +1380,7 @@ create_xs_configwin (void)
   subtune_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_subctrl_popup));
   gtk_widget_set_name (cfg_subctrl_popup, "cfg_subctrl_popup");
   gtk_widget_ref (cfg_subctrl_popup);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_subctrl_popup", cfg_subctrl_popup,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_subctrl_popup", cfg_subctrl_popup,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_subctrl_popup);
   gtk_box_pack_start (GTK_BOX (vbox31), cfg_subctrl_popup, FALSE, FALSE, 0);
@@ -1390,7 +1390,7 @@ create_xs_configwin (void)
   subtune_group = gtk_radio_button_group (GTK_RADIO_BUTTON (cfg_subctrl_patch));
   gtk_widget_set_name (cfg_subctrl_patch, "cfg_subctrl_patch");
   gtk_widget_ref (cfg_subctrl_patch);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_subctrl_patch", cfg_subctrl_patch,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_subctrl_patch", cfg_subctrl_patch,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_subctrl_patch);
   gtk_box_pack_start (GTK_BOX (vbox31), cfg_subctrl_patch, FALSE, FALSE, 0);
@@ -1399,7 +1399,7 @@ create_xs_configwin (void)
   frame31 = gtk_frame_new ("Automatic sub-tune changes: ");
   gtk_widget_set_name (frame31, "frame31");
   gtk_widget_ref (frame31);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "frame31", frame31,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "frame31", frame31,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (frame31);
   gtk_box_pack_start (GTK_BOX (vbox19), frame31, FALSE, TRUE, 0);
@@ -1408,7 +1408,7 @@ create_xs_configwin (void)
   vbox35 = gtk_vbox_new (FALSE, 2);
   gtk_widget_set_name (vbox35, "vbox35");
   gtk_widget_ref (vbox35);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox35", vbox35,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox35", vbox35,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox35);
   gtk_container_add (GTK_CONTAINER (frame31), vbox35);
@@ -1417,7 +1417,7 @@ create_xs_configwin (void)
   cfg_subauto_enable = gtk_check_button_new_with_label ("Go through all sub-tunes in file");
   gtk_widget_set_name (cfg_subauto_enable, "cfg_subauto_enable");
   gtk_widget_ref (cfg_subauto_enable);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_subauto_enable", cfg_subauto_enable,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_subauto_enable", cfg_subauto_enable,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_subauto_enable);
   gtk_box_pack_start (GTK_BOX (vbox35), cfg_subauto_enable, FALSE, FALSE, 0);
@@ -1425,7 +1425,7 @@ create_xs_configwin (void)
   cfg_subauto_min_only = gtk_check_button_new_with_label ("Only tunes with specified minimum length ");
   gtk_widget_set_name (cfg_subauto_min_only, "cfg_subauto_min_only");
   gtk_widget_ref (cfg_subauto_min_only);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_subauto_min_only", cfg_subauto_min_only,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_subauto_min_only", cfg_subauto_min_only,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_subauto_min_only);
   gtk_box_pack_start (GTK_BOX (vbox35), cfg_subauto_min_only, FALSE, FALSE, 0);
@@ -1433,7 +1433,7 @@ create_xs_configwin (void)
   hbox20 = gtk_hbox_new (FALSE, 2);
   gtk_widget_set_name (hbox20, "hbox20");
   gtk_widget_ref (hbox20);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "hbox20", hbox20,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "hbox20", hbox20,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (hbox20);
   gtk_box_pack_start (GTK_BOX (vbox35), hbox20, TRUE, TRUE, 0);
@@ -1441,7 +1441,7 @@ create_xs_configwin (void)
   label52 = gtk_label_new ("Playtime: ");
   gtk_widget_set_name (label52, "label52");
   gtk_widget_ref (label52);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "label52", label52,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "label52", label52,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label52);
   gtk_box_pack_start (GTK_BOX (hbox20), label52, FALSE, FALSE, 0);
@@ -1451,7 +1451,7 @@ create_xs_configwin (void)
   cfg_subauto_mintime = gtk_spin_button_new (GTK_ADJUSTMENT (cfg_subauto_mintime_adj), 1, 0);
   gtk_widget_set_name (cfg_subauto_mintime, "cfg_subauto_mintime");
   gtk_widget_ref (cfg_subauto_mintime);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_subauto_mintime", cfg_subauto_mintime,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_subauto_mintime", cfg_subauto_mintime,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_subauto_mintime);
   gtk_box_pack_start (GTK_BOX (hbox20), cfg_subauto_mintime, FALSE, TRUE, 0);
@@ -1459,7 +1459,7 @@ create_xs_configwin (void)
   label53 = gtk_label_new ("seconds");
   gtk_widget_set_name (label53, "label53");
   gtk_widget_ref (label53);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "label53", label53,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "label53", label53,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label53);
   gtk_box_pack_start (GTK_BOX (hbox20), label53, FALSE, FALSE, 0);
@@ -1468,7 +1468,7 @@ create_xs_configwin (void)
   frame22 = gtk_frame_new ("Miscellaneous options: ");
   gtk_widget_set_name (frame22, "frame22");
   gtk_widget_ref (frame22);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "frame22", frame22,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "frame22", frame22,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (frame22);
   gtk_box_pack_start (GTK_BOX (vbox19), frame22, FALSE, TRUE, 0);
@@ -1477,7 +1477,7 @@ create_xs_configwin (void)
   vbox22 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox22, "vbox22");
   gtk_widget_ref (vbox22);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "vbox22", vbox22,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "vbox22", vbox22,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox22);
   gtk_container_add (GTK_CONTAINER (frame22), vbox22);
@@ -1486,7 +1486,7 @@ create_xs_configwin (void)
   cfg_detectmagic = gtk_check_button_new_with_label ("Detect file by contents (slower)");
   gtk_widget_set_name (cfg_detectmagic, "cfg_detectmagic");
   gtk_widget_ref (cfg_detectmagic);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_detectmagic", cfg_detectmagic,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_detectmagic", cfg_detectmagic,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_detectmagic);
   gtk_box_pack_start (GTK_BOX (vbox22), cfg_detectmagic, FALSE, FALSE, 0);
@@ -1495,7 +1495,7 @@ create_xs_configwin (void)
   label3 = gtk_label_new ("Misc");
   gtk_widget_set_name (label3, "label3");
   gtk_widget_ref (label3);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "label3", label3,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "label3", label3,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label3);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (cfg_notebook), gtk_notebook_get_nth_page (GTK_NOTEBOOK (cfg_notebook), 6), label3);
@@ -1503,7 +1503,7 @@ create_xs_configwin (void)
   hbuttonbox1 = gtk_hbutton_box_new ();
   gtk_widget_set_name (hbuttonbox1, "hbuttonbox1");
   gtk_widget_ref (hbuttonbox1);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "hbuttonbox1", hbuttonbox1,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "hbuttonbox1", hbuttonbox1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (hbuttonbox1);
   gtk_box_pack_end (GTK_BOX (vbox1), hbuttonbox1, FALSE, FALSE, 0);
@@ -1514,7 +1514,7 @@ create_xs_configwin (void)
   cfg_ok = gtk_button_new_with_label ("OK");
   gtk_widget_set_name (cfg_ok, "cfg_ok");
   gtk_widget_ref (cfg_ok);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_ok", cfg_ok,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_ok", cfg_ok,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_ok);
   gtk_container_add (GTK_CONTAINER (hbuttonbox1), cfg_ok);
@@ -1524,84 +1524,84 @@ create_xs_configwin (void)
   cfg_cancel = gtk_button_new_with_label ("Cancel");
   gtk_widget_set_name (cfg_cancel, "cfg_cancel");
   gtk_widget_ref (cfg_cancel);
-  gtk_object_set_data_full (GTK_OBJECT (xs_configwin), "cfg_cancel", cfg_cancel,
+  g_object_set_data_full (G_OBJECT (xs_configwin), "cfg_cancel", cfg_cancel,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (cfg_cancel);
   gtk_container_add (GTK_CONTAINER (hbuttonbox1), cfg_cancel);
   GTK_WIDGET_SET_FLAGS (cfg_cancel, GTK_CAN_DEFAULT);
   gtk_tooltips_set_tip (tooltips, cfg_cancel, "Cancel any changes", NULL);
 
-  gtk_signal_connect (GTK_OBJECT (cfg_samplerate_menu), "clicked",
-                      GTK_SIGNAL_FUNC (xs_cfg_samplerate_menu_clicked),
+  g_signal_connect (G_OBJECT (cfg_samplerate_menu), "clicked",
+                      G_CALLBACK (xs_cfg_samplerate_menu_clicked),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_oversample), "toggled",
-                      GTK_SIGNAL_FUNC (xs_cfg_oversample_toggled),
+  g_signal_connect (G_OBJECT (cfg_oversample), "toggled",
+                      G_CALLBACK (xs_cfg_oversample_toggled),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_emu_sidplay1), "toggled",
-                      GTK_SIGNAL_FUNC (xs_cfg_emu_sidplay1_toggled),
+  g_signal_connect (G_OBJECT (cfg_emu_sidplay1), "toggled",
+                      G_CALLBACK (xs_cfg_emu_sidplay1_toggled),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_emu_sidplay2), "toggled",
-                      GTK_SIGNAL_FUNC (xs_cfg_emu_sidplay2_toggled),
+  g_signal_connect (G_OBJECT (cfg_emu_sidplay2), "toggled",
+                      G_CALLBACK (xs_cfg_emu_sidplay2_toggled),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_emu_filters), "toggled",
-                      GTK_SIGNAL_FUNC (xs_cfg_emu_filters_toggled),
+  g_signal_connect (G_OBJECT (cfg_emu_filters), "toggled",
+                      G_CALLBACK (xs_cfg_emu_filters_toggled),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_filter_reset), "clicked",
-                      GTK_SIGNAL_FUNC (xs_cfg_filter_reset),
+  g_signal_connect (G_OBJECT (cfg_filter_reset), "clicked",
+                      G_CALLBACK (xs_cfg_filter_reset),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_filter_sync), "clicked",
-                      GTK_SIGNAL_FUNC (xs_cfg_filter_sync_clicked),
+  g_signal_connect (G_OBJECT (cfg_filter_sync), "clicked",
+                      G_CALLBACK (xs_cfg_filter_sync_clicked),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_filter2_reset), "clicked",
-                      GTK_SIGNAL_FUNC (xs_cfg_filter2_reset),
+  g_signal_connect (G_OBJECT (cfg_filter2_reset), "clicked",
+                      G_CALLBACK (xs_cfg_filter2_reset),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_filter2_sync), "clicked",
-                      GTK_SIGNAL_FUNC (xs_cfg_filter2_sync_clicked),
+  g_signal_connect (G_OBJECT (cfg_filter2_sync), "clicked",
+                      G_CALLBACK (xs_cfg_filter2_sync_clicked),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_mintime_enable), "toggled",
-                      GTK_SIGNAL_FUNC (xs_cfg_mintime_enable_toggled),
+  g_signal_connect (G_OBJECT (cfg_mintime_enable), "toggled",
+                      G_CALLBACK (xs_cfg_mintime_enable_toggled),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_mintime), "changed",
-                      GTK_SIGNAL_FUNC (xs_cfg_mintime_changed),
+  g_signal_connect (G_OBJECT (cfg_mintime), "changed",
+                      G_CALLBACK (xs_cfg_mintime_changed),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_maxtime_enable), "toggled",
-                      GTK_SIGNAL_FUNC (xs_cfg_maxtime_enable_toggled),
+  g_signal_connect (G_OBJECT (cfg_maxtime_enable), "toggled",
+                      G_CALLBACK (xs_cfg_maxtime_enable_toggled),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_maxtime), "changed",
-                      GTK_SIGNAL_FUNC (xs_cfg_maxtime_changed),
+  g_signal_connect (G_OBJECT (cfg_maxtime), "changed",
+                      G_CALLBACK (xs_cfg_maxtime_changed),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_sld_enable), "toggled",
-                      GTK_SIGNAL_FUNC (xs_cfg_sld_enable_toggled),
+  g_signal_connect (G_OBJECT (cfg_sld_enable), "toggled",
+                      G_CALLBACK (xs_cfg_sld_enable_toggled),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_sld_dbbrowse), "clicked",
-                      GTK_SIGNAL_FUNC (xs_cfg_sld_dbbrowse),
+  g_signal_connect (G_OBJECT (cfg_sld_dbbrowse), "clicked",
+                      G_CALLBACK (xs_cfg_sld_dbbrowse),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_stil_enable), "toggled",
-                      GTK_SIGNAL_FUNC (xs_cfg_stil_enable_toggled),
+  g_signal_connect (G_OBJECT (cfg_stil_enable), "toggled",
+                      G_CALLBACK (xs_cfg_stil_enable_toggled),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_stil_browse), "clicked",
-                      GTK_SIGNAL_FUNC (xs_cfg_stil_browse),
+  g_signal_connect (G_OBJECT (cfg_stil_browse), "clicked",
+                      G_CALLBACK (xs_cfg_stil_browse),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_hvsc_browse), "clicked",
-                      GTK_SIGNAL_FUNC (xs_cfg_hvsc_browse),
+  g_signal_connect (G_OBJECT (cfg_hvsc_browse), "clicked",
+                      G_CALLBACK (xs_cfg_hvsc_browse),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_ftitle_override), "toggled",
-                      GTK_SIGNAL_FUNC (xs_cfg_ftitle_override_toggled),
+  g_signal_connect (G_OBJECT (cfg_ftitle_override), "toggled",
+                      G_CALLBACK (xs_cfg_ftitle_override_toggled),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_subauto_enable), "toggled",
-                      GTK_SIGNAL_FUNC (xs_cfg_subauto_enable_toggled),
+  g_signal_connect (G_OBJECT (cfg_subauto_enable), "toggled",
+                      G_CALLBACK (xs_cfg_subauto_enable_toggled),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_subauto_min_only), "toggled",
-                      GTK_SIGNAL_FUNC (xs_cfg_subauto_min_only_toggled),
+  g_signal_connect (G_OBJECT (cfg_subauto_min_only), "toggled",
+                      G_CALLBACK (xs_cfg_subauto_min_only_toggled),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_ok), "clicked",
-                      GTK_SIGNAL_FUNC (xs_cfg_ok),
+  g_signal_connect (G_OBJECT (cfg_ok), "clicked",
+                      G_CALLBACK (xs_cfg_ok),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cfg_cancel), "clicked",
-                      GTK_SIGNAL_FUNC (xs_cfg_cancel),
+  g_signal_connect (G_OBJECT (cfg_cancel), "clicked",
+                      G_CALLBACK (xs_cfg_cancel),
                       NULL);
 
-  gtk_object_set_data (GTK_OBJECT (xs_configwin), "tooltips", tooltips);
+  g_object_set_data (G_OBJECT (xs_configwin), "tooltips", tooltips);
 
   return xs_configwin;
 }
@@ -1645,7 +1645,7 @@ create_xs_fileinfowin (void)
   xs_fileinfowin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_type_hint (GTK_WINDOW(xs_fileinfowin), GDK_WINDOW_TYPE_HINT_DIALOG);
   gtk_widget_set_name (xs_fileinfowin, "xs_fileinfowin");
-  gtk_object_set_data (GTK_OBJECT (xs_fileinfowin), "xs_fileinfowin", xs_fileinfowin);
+  g_object_set_data (G_OBJECT (xs_fileinfowin), "xs_fileinfowin", xs_fileinfowin);
   gtk_widget_set_usize (xs_fileinfowin, 400, -2);
   gtk_window_set_title (GTK_WINDOW (xs_fileinfowin), "XMMS-SID Fileinfo");
   gtk_window_set_position (GTK_WINDOW (xs_fileinfowin), GTK_WIN_POS_MOUSE);
@@ -1653,7 +1653,7 @@ create_xs_fileinfowin (void)
   vbox14 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox14, "vbox14");
   gtk_widget_ref (vbox14);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "vbox14", vbox14,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "vbox14", vbox14,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox14);
   gtk_container_add (GTK_CONTAINER (xs_fileinfowin), vbox14);
@@ -1661,7 +1661,7 @@ create_xs_fileinfowin (void)
   alignment8 = gtk_alignment_new (0.5, 0.5, 0.1, 1);
   gtk_widget_set_name (alignment8, "alignment8");
   gtk_widget_ref (alignment8);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "alignment8", alignment8,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "alignment8", alignment8,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (alignment8);
   gtk_box_pack_start (GTK_BOX (vbox14), alignment8, FALSE, FALSE, 0);
@@ -1669,7 +1669,7 @@ create_xs_fileinfowin (void)
   frame30 = gtk_frame_new (NULL);
   gtk_widget_set_name (frame30, "frame30");
   gtk_widget_ref (frame30);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "frame30", frame30,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "frame30", frame30,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (frame30);
   gtk_container_add (GTK_CONTAINER (alignment8), frame30);
@@ -1679,7 +1679,7 @@ create_xs_fileinfowin (void)
   hbox19 = gtk_hbox_new (FALSE, 0);
   gtk_widget_set_name (hbox19, "hbox19");
   gtk_widget_ref (hbox19);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "hbox19", hbox19,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "hbox19", hbox19,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (hbox19);
   gtk_container_add (GTK_CONTAINER (frame30), hbox19);
@@ -1688,7 +1688,7 @@ create_xs_fileinfowin (void)
   fileinfo_subctrl_prev = gtk_button_new_with_label (" < ");
   gtk_widget_set_name (fileinfo_subctrl_prev, "fileinfo_subctrl_prev");
   gtk_widget_ref (fileinfo_subctrl_prev);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "fileinfo_subctrl_prev", fileinfo_subctrl_prev,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "fileinfo_subctrl_prev", fileinfo_subctrl_prev,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (fileinfo_subctrl_prev);
   gtk_box_pack_start (GTK_BOX (hbox19), fileinfo_subctrl_prev, FALSE, FALSE, 0);
@@ -1696,7 +1696,7 @@ create_xs_fileinfowin (void)
   fileinfo_subctrl_adj = gtk_hscale_new (GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, 0, 0, 0, 0)));
   gtk_widget_set_name (fileinfo_subctrl_adj, "fileinfo_subctrl_adj");
   gtk_widget_ref (fileinfo_subctrl_adj);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "fileinfo_subctrl_adj", fileinfo_subctrl_adj,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "fileinfo_subctrl_adj", fileinfo_subctrl_adj,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (fileinfo_subctrl_adj);
   gtk_box_pack_start (GTK_BOX (hbox19), fileinfo_subctrl_adj, TRUE, TRUE, 0);
@@ -1706,7 +1706,7 @@ create_xs_fileinfowin (void)
   fileinfo_subctrl_next = gtk_button_new_with_label (" > ");
   gtk_widget_set_name (fileinfo_subctrl_next, "fileinfo_subctrl_next");
   gtk_widget_ref (fileinfo_subctrl_next);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "fileinfo_subctrl_next", fileinfo_subctrl_next,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "fileinfo_subctrl_next", fileinfo_subctrl_next,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (fileinfo_subctrl_next);
   gtk_box_pack_start (GTK_BOX (hbox19), fileinfo_subctrl_next, FALSE, FALSE, 0);
@@ -1714,7 +1714,7 @@ create_xs_fileinfowin (void)
   frame14 = gtk_frame_new ("Song Information:");
   gtk_widget_set_name (frame14, "frame14");
   gtk_widget_ref (frame14);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "frame14", frame14,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "frame14", frame14,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (frame14);
   gtk_box_pack_start (GTK_BOX (vbox14), frame14, FALSE, TRUE, 0);
@@ -1723,7 +1723,7 @@ create_xs_fileinfowin (void)
   table1 = gtk_table_new (4, 2, FALSE);
   gtk_widget_set_name (table1, "table1");
   gtk_widget_ref (table1);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "table1", table1,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "table1", table1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (table1);
   gtk_container_add (GTK_CONTAINER (frame14), table1);
@@ -1734,7 +1734,7 @@ create_xs_fileinfowin (void)
   label16 = gtk_label_new ("Filename:");
   gtk_widget_set_name (label16, "label16");
   gtk_widget_ref (label16);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "label16", label16,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "label16", label16,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label16);
   gtk_table_attach (GTK_TABLE (table1), label16, 0, 1, 0, 1,
@@ -1744,7 +1744,7 @@ create_xs_fileinfowin (void)
   label17 = gtk_label_new ("Songname:");
   gtk_widget_set_name (label17, "label17");
   gtk_widget_ref (label17);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "label17", label17,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "label17", label17,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label17);
   gtk_table_attach (GTK_TABLE (table1), label17, 0, 1, 1, 2,
@@ -1754,7 +1754,7 @@ create_xs_fileinfowin (void)
   label18 = gtk_label_new ("Composer:");
   gtk_widget_set_name (label18, "label18");
   gtk_widget_ref (label18);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "label18", label18,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "label18", label18,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label18);
   gtk_table_attach (GTK_TABLE (table1), label18, 0, 1, 2, 3,
@@ -1764,7 +1764,7 @@ create_xs_fileinfowin (void)
   label19 = gtk_label_new ("Copyright:");
   gtk_widget_set_name (label19, "label19");
   gtk_widget_ref (label19);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "label19", label19,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "label19", label19,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label19);
   gtk_table_attach (GTK_TABLE (table1), label19, 0, 1, 3, 4,
@@ -1774,7 +1774,7 @@ create_xs_fileinfowin (void)
   fileinfo_filename = gtk_entry_new ();
   gtk_widget_set_name (fileinfo_filename, "fileinfo_filename");
   gtk_widget_ref (fileinfo_filename);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "fileinfo_filename", fileinfo_filename,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "fileinfo_filename", fileinfo_filename,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (fileinfo_filename);
   gtk_table_attach (GTK_TABLE (table1), fileinfo_filename, 1, 2, 0, 1,
@@ -1785,7 +1785,7 @@ create_xs_fileinfowin (void)
   fileinfo_songname = gtk_entry_new ();
   gtk_widget_set_name (fileinfo_songname, "fileinfo_songname");
   gtk_widget_ref (fileinfo_songname);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "fileinfo_songname", fileinfo_songname,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "fileinfo_songname", fileinfo_songname,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (fileinfo_songname);
   gtk_table_attach (GTK_TABLE (table1), fileinfo_songname, 1, 2, 1, 2,
@@ -1796,7 +1796,7 @@ create_xs_fileinfowin (void)
   fileinfo_composer = gtk_entry_new ();
   gtk_widget_set_name (fileinfo_composer, "fileinfo_composer");
   gtk_widget_ref (fileinfo_composer);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "fileinfo_composer", fileinfo_composer,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "fileinfo_composer", fileinfo_composer,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (fileinfo_composer);
   gtk_table_attach (GTK_TABLE (table1), fileinfo_composer, 1, 2, 2, 3,
@@ -1807,7 +1807,7 @@ create_xs_fileinfowin (void)
   fileinfo_copyright = gtk_entry_new ();
   gtk_widget_set_name (fileinfo_copyright, "fileinfo_copyright");
   gtk_widget_ref (fileinfo_copyright);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "fileinfo_copyright", fileinfo_copyright,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "fileinfo_copyright", fileinfo_copyright,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (fileinfo_copyright);
   gtk_table_attach (GTK_TABLE (table1), fileinfo_copyright, 1, 2, 3, 4,
@@ -1818,7 +1818,7 @@ create_xs_fileinfowin (void)
   frame15 = gtk_frame_new ("Sub-tune Information:");
   gtk_widget_set_name (frame15, "frame15");
   gtk_widget_ref (frame15);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "frame15", frame15,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "frame15", frame15,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (frame15);
   gtk_box_pack_start (GTK_BOX (vbox14), frame15, TRUE, TRUE, 0);
@@ -1827,7 +1827,7 @@ create_xs_fileinfowin (void)
   vbox15 = gtk_vbox_new (FALSE, 0);
   gtk_widget_set_name (vbox15, "vbox15");
   gtk_widget_ref (vbox15);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "vbox15", vbox15,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "vbox15", vbox15,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (vbox15);
   gtk_container_add (GTK_CONTAINER (frame15), vbox15);
@@ -1835,7 +1835,7 @@ create_xs_fileinfowin (void)
   fileinfo_sub_tune = gtk_option_menu_new ();
   gtk_widget_set_name (fileinfo_sub_tune, "fileinfo_sub_tune");
   gtk_widget_ref (fileinfo_sub_tune);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "fileinfo_sub_tune", fileinfo_sub_tune,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "fileinfo_sub_tune", fileinfo_sub_tune,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (fileinfo_sub_tune);
   gtk_box_pack_start (GTK_BOX (vbox15), fileinfo_sub_tune, FALSE, FALSE, 0);
@@ -1846,7 +1846,7 @@ create_xs_fileinfowin (void)
   table2 = gtk_table_new (3, 2, FALSE);
   gtk_widget_set_name (table2, "table2");
   gtk_widget_ref (table2);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "table2", table2,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "table2", table2,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (table2);
   gtk_box_pack_start (GTK_BOX (vbox15), table2, FALSE, FALSE, 0);
@@ -1857,7 +1857,7 @@ create_xs_fileinfowin (void)
   label41 = gtk_label_new ("Author:");
   gtk_widget_set_name (label41, "label41");
   gtk_widget_ref (label41);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "label41", label41,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "label41", label41,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label41);
   gtk_table_attach (GTK_TABLE (table2), label41, 0, 1, 1, 2,
@@ -1867,7 +1867,7 @@ create_xs_fileinfowin (void)
   fileinfo_sub_author = gtk_entry_new ();
   gtk_widget_set_name (fileinfo_sub_author, "fileinfo_sub_author");
   gtk_widget_ref (fileinfo_sub_author);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "fileinfo_sub_author", fileinfo_sub_author,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "fileinfo_sub_author", fileinfo_sub_author,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (fileinfo_sub_author);
   gtk_table_attach (GTK_TABLE (table2), fileinfo_sub_author, 1, 2, 1, 2,
@@ -1878,7 +1878,7 @@ create_xs_fileinfowin (void)
   label50 = gtk_label_new ("Name:");
   gtk_widget_set_name (label50, "label50");
   gtk_widget_ref (label50);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "label50", label50,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "label50", label50,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label50);
   gtk_table_attach (GTK_TABLE (table2), label50, 0, 1, 0, 1,
@@ -1888,7 +1888,7 @@ create_xs_fileinfowin (void)
   fileinfo_sub_name = gtk_entry_new ();
   gtk_widget_set_name (fileinfo_sub_name, "fileinfo_sub_name");
   gtk_widget_ref (fileinfo_sub_name);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "fileinfo_sub_name", fileinfo_sub_name,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "fileinfo_sub_name", fileinfo_sub_name,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (fileinfo_sub_name);
   gtk_table_attach (GTK_TABLE (table2), fileinfo_sub_name, 1, 2, 0, 1,
@@ -1899,7 +1899,7 @@ create_xs_fileinfowin (void)
   label51 = gtk_label_new ("Duration:");
   gtk_widget_set_name (label51, "label51");
   gtk_widget_ref (label51);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "label51", label51,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "label51", label51,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label51);
   gtk_table_attach (GTK_TABLE (table2), label51, 0, 1, 2, 3,
@@ -1910,7 +1910,7 @@ create_xs_fileinfowin (void)
   entry1 = gtk_entry_new ();
   gtk_widget_set_name (entry1, "entry1");
   gtk_widget_ref (entry1);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "entry1", entry1,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "entry1", entry1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (entry1);
   gtk_table_attach (GTK_TABLE (table2), entry1, 1, 2, 2, 3,
@@ -1921,7 +1921,7 @@ create_xs_fileinfowin (void)
   scrolledwindow2 = gtk_scrolled_window_new (NULL, NULL);
   gtk_widget_set_name (scrolledwindow2, "scrolledwindow2");
   gtk_widget_ref (scrolledwindow2);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "scrolledwindow2", scrolledwindow2,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "scrolledwindow2", scrolledwindow2,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (scrolledwindow2);
   gtk_box_pack_start (GTK_BOX (vbox15), scrolledwindow2, TRUE, TRUE, 0);
@@ -1931,7 +1931,7 @@ create_xs_fileinfowin (void)
   fileinfo_sub_info = gtk_text_view_new ();
   gtk_widget_set_name (fileinfo_sub_info, "fileinfo_sub_info");
   gtk_widget_ref (fileinfo_sub_info);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "fileinfo_sub_info", fileinfo_sub_info,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "fileinfo_sub_info", fileinfo_sub_info,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (fileinfo_sub_info);
   gtk_container_add (GTK_CONTAINER (scrolledwindow2), fileinfo_sub_info);
@@ -1939,23 +1939,23 @@ create_xs_fileinfowin (void)
   button2 = gtk_button_new_with_label ("Close");
   gtk_widget_set_name (button2, "button2");
   gtk_widget_ref (button2);
-  gtk_object_set_data_full (GTK_OBJECT (xs_fileinfowin), "button2", button2,
+  g_object_set_data_full (G_OBJECT (xs_fileinfowin), "button2", button2,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (button2);
   gtk_box_pack_start (GTK_BOX (vbox14), button2, FALSE, FALSE, 0);
   GTK_WIDGET_SET_FLAGS (button2, GTK_CAN_DEFAULT);
 
-  gtk_signal_connect (GTK_OBJECT (xs_fileinfowin), "delete_event",
-                      GTK_SIGNAL_FUNC (xs_fileinfo_delete),
+  g_signal_connect (G_OBJECT (xs_fileinfowin), "delete_event",
+                      G_CALLBACK (xs_fileinfo_delete),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (fileinfo_subctrl_prev), "clicked",
-                      GTK_SIGNAL_FUNC (xs_subctrl_prevsong),
+  g_signal_connect (G_OBJECT (fileinfo_subctrl_prev), "clicked",
+                      G_CALLBACK (xs_subctrl_prevsong),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (fileinfo_subctrl_next), "clicked",
-                      GTK_SIGNAL_FUNC (xs_subctrl_nextsong),
+  g_signal_connect (G_OBJECT (fileinfo_subctrl_next), "clicked",
+                      G_CALLBACK (xs_subctrl_nextsong),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (button2), "clicked",
-                      GTK_SIGNAL_FUNC (xs_fileinfo_ok),
+  g_signal_connect (G_OBJECT (button2), "clicked",
+                      G_CALLBACK (xs_fileinfo_ok),
                       NULL);
 
   gtk_widget_grab_focus (button2);
@@ -1972,28 +1972,28 @@ create_xs_sldbfileselector (void)
 
   xs_sldbfileselector = gtk_file_selection_new ("Select HVSC song length database");
   gtk_widget_set_name (xs_sldbfileselector, "xs_sldbfileselector");
-  gtk_object_set_data (GTK_OBJECT (xs_sldbfileselector), "xs_sldbfileselector", xs_sldbfileselector);
+  g_object_set_data (G_OBJECT (xs_sldbfileselector), "xs_sldbfileselector", xs_sldbfileselector);
   gtk_container_set_border_width (GTK_CONTAINER (xs_sldbfileselector), 10);
   gtk_window_set_modal (GTK_WINDOW (xs_sldbfileselector), TRUE);
   gtk_file_selection_hide_fileop_buttons (GTK_FILE_SELECTION (xs_sldbfileselector));
 
   ok_button2 = GTK_FILE_SELECTION (xs_sldbfileselector)->ok_button;
   gtk_widget_set_name (ok_button2, "ok_button2");
-  gtk_object_set_data (GTK_OBJECT (xs_sldbfileselector), "ok_button2", ok_button2);
+  g_object_set_data (G_OBJECT (xs_sldbfileselector), "ok_button2", ok_button2);
   gtk_widget_show (ok_button2);
   GTK_WIDGET_SET_FLAGS (ok_button2, GTK_CAN_DEFAULT);
 
   cancel_button2 = GTK_FILE_SELECTION (xs_sldbfileselector)->cancel_button;
   gtk_widget_set_name (cancel_button2, "cancel_button2");
-  gtk_object_set_data (GTK_OBJECT (xs_sldbfileselector), "cancel_button2", cancel_button2);
+  g_object_set_data (G_OBJECT (xs_sldbfileselector), "cancel_button2", cancel_button2);
   gtk_widget_show (cancel_button2);
   GTK_WIDGET_SET_FLAGS (cancel_button2, GTK_CAN_DEFAULT);
 
-  gtk_signal_connect (GTK_OBJECT (ok_button2), "clicked",
-                      GTK_SIGNAL_FUNC (xs_cfg_sldb_fs_ok),
+  g_signal_connect (G_OBJECT (ok_button2), "clicked",
+                      G_CALLBACK (xs_cfg_sldb_fs_ok),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cancel_button2), "clicked",
-                      GTK_SIGNAL_FUNC (xs_cfg_sldb_fs_cancel),
+  g_signal_connect (G_OBJECT (cancel_button2), "clicked",
+                      G_CALLBACK (xs_cfg_sldb_fs_cancel),
                       NULL);
 
   return xs_sldbfileselector;
@@ -2008,28 +2008,28 @@ create_xs_stilfileselector (void)
 
   xs_stilfileselector = gtk_file_selection_new ("Select STIL-database ");
   gtk_widget_set_name (xs_stilfileselector, "xs_stilfileselector");
-  gtk_object_set_data (GTK_OBJECT (xs_stilfileselector), "xs_stilfileselector", xs_stilfileselector);
+  g_object_set_data (G_OBJECT (xs_stilfileselector), "xs_stilfileselector", xs_stilfileselector);
   gtk_container_set_border_width (GTK_CONTAINER (xs_stilfileselector), 10);
   gtk_window_set_modal (GTK_WINDOW (xs_stilfileselector), TRUE);
   gtk_file_selection_hide_fileop_buttons (GTK_FILE_SELECTION (xs_stilfileselector));
 
   ok_button3 = GTK_FILE_SELECTION (xs_stilfileselector)->ok_button;
   gtk_widget_set_name (ok_button3, "ok_button3");
-  gtk_object_set_data (GTK_OBJECT (xs_stilfileselector), "ok_button3", ok_button3);
+  g_object_set_data (G_OBJECT (xs_stilfileselector), "ok_button3", ok_button3);
   gtk_widget_show (ok_button3);
   GTK_WIDGET_SET_FLAGS (ok_button3, GTK_CAN_DEFAULT);
 
   cancel_button3 = GTK_FILE_SELECTION (xs_stilfileselector)->cancel_button;
   gtk_widget_set_name (cancel_button3, "cancel_button3");
-  gtk_object_set_data (GTK_OBJECT (xs_stilfileselector), "cancel_button3", cancel_button3);
+  g_object_set_data (G_OBJECT (xs_stilfileselector), "cancel_button3", cancel_button3);
   gtk_widget_show (cancel_button3);
   GTK_WIDGET_SET_FLAGS (cancel_button3, GTK_CAN_DEFAULT);
 
-  gtk_signal_connect (GTK_OBJECT (ok_button3), "clicked",
-                      GTK_SIGNAL_FUNC (xs_cfg_stil_fs_ok),
+  g_signal_connect (G_OBJECT (ok_button3), "clicked",
+                      G_CALLBACK (xs_cfg_stil_fs_ok),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cancel_button3), "clicked",
-                      GTK_SIGNAL_FUNC (xs_cfg_stil_fs_cancel),
+  g_signal_connect (G_OBJECT (cancel_button3), "clicked",
+                      G_CALLBACK (xs_cfg_stil_fs_cancel),
                       NULL);
 
   return xs_stilfileselector;
@@ -2044,28 +2044,28 @@ create_xs_hvscpathselector (void)
 
   xs_hvscpathselector = gtk_file_selection_new ("Select HVSC location prefix");
   gtk_widget_set_name (xs_hvscpathselector, "xs_hvscpathselector");
-  gtk_object_set_data (GTK_OBJECT (xs_hvscpathselector), "xs_hvscpathselector", xs_hvscpathselector);
+  g_object_set_data (G_OBJECT (xs_hvscpathselector), "xs_hvscpathselector", xs_hvscpathselector);
   gtk_container_set_border_width (GTK_CONTAINER (xs_hvscpathselector), 10);
   gtk_window_set_modal (GTK_WINDOW (xs_hvscpathselector), TRUE);
   gtk_file_selection_hide_fileop_buttons (GTK_FILE_SELECTION (xs_hvscpathselector));
 
   ok_button4 = GTK_FILE_SELECTION (xs_hvscpathselector)->ok_button;
   gtk_widget_set_name (ok_button4, "ok_button4");
-  gtk_object_set_data (GTK_OBJECT (xs_hvscpathselector), "ok_button4", ok_button4);
+  g_object_set_data (G_OBJECT (xs_hvscpathselector), "ok_button4", ok_button4);
   gtk_widget_show (ok_button4);
   GTK_WIDGET_SET_FLAGS (ok_button4, GTK_CAN_DEFAULT);
 
   cancel_button4 = GTK_FILE_SELECTION (xs_hvscpathselector)->cancel_button;
   gtk_widget_set_name (cancel_button4, "cancel_button4");
-  gtk_object_set_data (GTK_OBJECT (xs_hvscpathselector), "cancel_button4", cancel_button4);
+  g_object_set_data (G_OBJECT (xs_hvscpathselector), "cancel_button4", cancel_button4);
   gtk_widget_show (cancel_button4);
   GTK_WIDGET_SET_FLAGS (cancel_button4, GTK_CAN_DEFAULT);
 
-  gtk_signal_connect (GTK_OBJECT (ok_button4), "clicked",
-                      GTK_SIGNAL_FUNC (xs_cfg_hvsc_fs_ok),
+  g_signal_connect (G_OBJECT (ok_button4), "clicked",
+                      G_CALLBACK (xs_cfg_hvsc_fs_ok),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (cancel_button4), "clicked",
-                      GTK_SIGNAL_FUNC (xs_cfg_hvsc_fs_cancel),
+  g_signal_connect (G_OBJECT (cancel_button4), "clicked",
+                      G_CALLBACK (xs_cfg_hvsc_fs_cancel),
                       NULL);
 
   return xs_hvscpathselector;

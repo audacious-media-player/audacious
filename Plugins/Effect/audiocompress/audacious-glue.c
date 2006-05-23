@@ -194,7 +194,7 @@ GtkWidget *lookup_widget(GtkWidget * widget, const gchar * widget_name)
 		widget = parent;
 	}
 
-	found_widget =(GtkWidget *)gtk_object_get_data(GTK_OBJECT(widget),
+	found_widget =(GtkWidget *)g_object_get_data(G_OBJECT(widget),
 							widget_name);
 	if (!GTK_IS_WIDGET(found_widget))
 		g_warning("Widget not found: %s", widget_name);
@@ -363,7 +363,7 @@ create_prefs_dialog(CompressorPrefs * prefs)
 	tooltips = gtk_tooltips_new();
 
 	preferences = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_object_set_data(GTK_OBJECT(preferences), "preferences",
+	g_object_set_data(G_OBJECT(preferences), "preferences",
 			     preferences);
 	gtk_container_set_border_width(GTK_CONTAINER(preferences), 10);
 	gtk_window_set_title(GTK_WINDOW(preferences),
@@ -391,7 +391,7 @@ create_prefs_dialog(CompressorPrefs * prefs)
 	clipping = gtk_check_button_new_with_label
 		(" Aggressively prevent clipping");
 	gtk_widget_ref(clipping);
-	gtk_object_set_data_full(GTK_OBJECT(preferences), "anticlip",
+	g_object_set_data_full(G_OBJECT(preferences), "anticlip",
 				  clipping,
 				 (GtkDestroyNotify)gtk_widget_unref);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(clipping),
@@ -441,7 +441,7 @@ create_prefs_dialog(CompressorPrefs * prefs)
 				   1 << (31 - GAINSHIFT), 1, 2, 5);
 	gainmax_sp = gtk_spin_button_new(GTK_ADJUSTMENT(gainmax_adj), 1, 0);
 	gtk_widget_ref(gainmax_sp);
-	gtk_object_set_data_full(GTK_OBJECT(preferences), "gainmax",
+	g_object_set_data_full(G_OBJECT(preferences), "gainmax",
 				  gainmax_sp,
 				 (GtkDestroyNotify)gtk_widget_unref);
 	gtk_widget_show(gainmax_sp);
@@ -457,7 +457,7 @@ create_prefs_dialog(CompressorPrefs * prefs)
 	gainsmooth_sp =
 		gtk_spin_button_new(GTK_ADJUSTMENT(gainsmooth_adj), 1, 0);
 	gtk_widget_ref(gainsmooth_sp);
-	gtk_object_set_data_full(GTK_OBJECT(preferences), "gainsmooth",
+	g_object_set_data_full(G_OBJECT(preferences), "gainsmooth",
 				  gainsmooth_sp,
 				 (GtkDestroyNotify)gtk_widget_unref);
 	gtk_widget_show(gainsmooth_sp);
@@ -470,7 +470,7 @@ create_prefs_dialog(CompressorPrefs * prefs)
 	target_adj = gtk_adjustment_new(prefs->target, 0, 100000, 1, 10, 10);
 	target_sp = gtk_spin_button_new(GTK_ADJUSTMENT(target_adj), 1, 0);
 	gtk_widget_ref(target_sp);
-	gtk_object_set_data_full(GTK_OBJECT(preferences), "target",
+	g_object_set_data_full(G_OBJECT(preferences), "target",
 				  target_sp,
 				 (GtkDestroyNotify)gtk_widget_unref);
 	gtk_widget_show(target_sp);
@@ -503,7 +503,7 @@ create_prefs_dialog(CompressorPrefs * prefs)
 		gtk_adjustment_new(prefs->buckets, 1, 10000, 1, 10, 10);
 	buckets_sp = gtk_spin_button_new(GTK_ADJUSTMENT(buckets_adj), 1, 0);
 	gtk_widget_ref(buckets_sp);
-	gtk_object_set_data_full(GTK_OBJECT(preferences), "buckets",
+	g_object_set_data_full(G_OBJECT(preferences), "buckets",
 				  buckets_sp,
 				 (GtkDestroyNotify)gtk_widget_unref);
 	gtk_widget_show(buckets_sp);

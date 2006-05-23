@@ -73,7 +73,7 @@ static void mpcAboutBox()
         char* buttonText  = "Nevermind";
         aboutBox = xmms_show_message(titleText, contentText, buttonText, FALSE, NULL, NULL);
         widgets.aboutBox = aboutBox;
-        gtk_signal_connect(GTK_OBJECT(aboutBox), "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroyed), &widgets.aboutBox);
+        g_signal_connect(G_OBJECT(aboutBox), "destroy", G_CALLBACK(gtk_widget_destroyed), &widgets.aboutBox);
     }
 }
 
@@ -87,7 +87,7 @@ static void mpcConfigBox()
         configBox = gtk_window_new(GTK_WINDOW_TOPLEVEL);
         gtk_window_set_type_hint(GTK_WINDOW(configBox), GDK_WINDOW_TYPE_HINT_DIALOG);
         widgets.configBox = configBox;
-        gtk_signal_connect(GTK_OBJECT(configBox), "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroyed), &widgets.configBox);
+        g_signal_connect(G_OBJECT(configBox), "destroy", G_CALLBACK(gtk_widget_destroyed), &widgets.configBox);
         gtk_window_set_title(GTK_WINDOW(configBox), "Musepack Decoder Configuration");
         gtk_window_set_policy(GTK_WINDOW(configBox), FALSE, FALSE, FALSE);
         gtk_container_border_width(GTK_CONTAINER(configBox), 10);
@@ -131,7 +131,7 @@ static void mpcConfigBox()
 
         GtkWidget* replaygainType = gtk_frame_new("ReplayGain Type");
         gtk_box_pack_start(GTK_BOX(rSVbox), replaygainType, FALSE, FALSE, 0);
-        gtk_signal_connect(GTK_OBJECT(replaygainCheck), "toggled", GTK_SIGNAL_FUNC(toggleSwitch), replaygainType);
+        g_signal_connect(G_OBJECT(replaygainCheck), "toggled", G_CALLBACK(toggleSwitch), replaygainType);
 
         GtkWidget* rgVbox = gtk_vbox_new(FALSE, 5);
         gtk_container_set_border_width(GTK_CONTAINER(rgVbox), 5);
@@ -155,12 +155,12 @@ static void mpcConfigBox()
         gtk_box_pack_start(GTK_BOX(vbox), buttonBox, FALSE, FALSE, 0);
 
         GtkWidget* okButton = gtk_button_new_with_label("Ok");
-        gtk_signal_connect(GTK_OBJECT(okButton), "clicked", GTK_SIGNAL_FUNC(saveConfigBox), NULL);
+        g_signal_connect(G_OBJECT(okButton), "clicked", G_CALLBACK(saveConfigBox), NULL);
         GTK_WIDGET_SET_FLAGS(okButton, GTK_CAN_DEFAULT);
         gtk_box_pack_start(GTK_BOX(buttonBox), okButton, TRUE, TRUE, 0);
 
         GtkWidget* cancelButton = gtk_button_new_with_label("Cancel");
-        gtk_signal_connect_object(GTK_OBJECT(cancelButton), "clicked", GTK_SIGNAL_FUNC(gtk_widget_destroy), GTK_OBJECT(widgets.configBox));
+        g_signal_connect_swapped(G_OBJECT(cancelButton), "clicked", G_CALLBACK(gtk_widget_destroy), GTK_OBJECT(widgets.configBox));
         GTK_WIDGET_SET_FLAGS(cancelButton, GTK_CAN_DEFAULT);
         gtk_widget_grab_default(cancelButton);
         gtk_box_pack_start(GTK_BOX(buttonBox), cancelButton, TRUE, TRUE, 0);
@@ -346,7 +346,7 @@ static void mpcFileInfoBox(char* p_Filename)
         gtk_window_set_type_hint(GTK_WINDOW(infoBox), GDK_WINDOW_TYPE_HINT_DIALOG);
         widgets.infoBox = infoBox;
         gtk_window_set_policy(GTK_WINDOW(infoBox), FALSE, FALSE, FALSE);
-        gtk_signal_connect(GTK_OBJECT(infoBox), "destroy", GTK_SIGNAL_FUNC(closeInfoBox), NULL);
+        g_signal_connect(G_OBJECT(infoBox), "destroy", G_CALLBACK(closeInfoBox), NULL);
         gtk_container_set_border_width(GTK_CONTAINER(infoBox), 10);
 
         GtkWidget* iVbox = gtk_vbox_new(FALSE, 10);
@@ -416,13 +416,13 @@ static void mpcFileInfoBox(char* p_Filename)
         gtk_box_pack_start(GTK_BOX(leftBox), buttonBox, FALSE, FALSE, 0);
 
         GtkWidget* saveButton = mpcGtkButton("Save", buttonBox);
-        gtk_signal_connect(GTK_OBJECT(saveButton), "clicked", GTK_SIGNAL_FUNC(saveTags), NULL);
+        g_signal_connect(G_OBJECT(saveButton), "clicked", G_CALLBACK(saveTags), NULL);
 
         GtkWidget* removeButton = mpcGtkButton("Remove Tag", buttonBox);
-        gtk_signal_connect_object(GTK_OBJECT(removeButton), "clicked", GTK_SIGNAL_FUNC(removeTags), NULL);
+        g_signal_connect_swapped(G_OBJECT(removeButton), "clicked", G_CALLBACK(removeTags), NULL);
 
         GtkWidget* cancelButton = mpcGtkButton("Cancel", buttonBox);
-        gtk_signal_connect_object(GTK_OBJECT(cancelButton), "clicked", GTK_SIGNAL_FUNC(closeInfoBox), NULL);
+        g_signal_connect_swapped(G_OBJECT(cancelButton), "clicked", G_CALLBACK(closeInfoBox), NULL);
         gtk_widget_grab_default(cancelButton);
 
         //File information

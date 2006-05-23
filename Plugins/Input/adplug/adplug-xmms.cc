@@ -132,7 +132,7 @@ static void MessageBox(const char *title, const char *text, const char *button)
   strcpy(tmptitle, title); strcpy(tmptxt, text); strcpy(tmpbutton, button);
 
   GtkWidget *msgbox = xmms_show_message(tmptitle, tmptxt, tmpbutton, FALSE,
-					GTK_SIGNAL_FUNC(gtk_widget_destroyed), &msgbox);
+					G_CALLBACK(gtk_widget_destroyed), &msgbox);
 
   free(tmptitle); free(tmptxt); free(tmpbutton);
 }
@@ -153,8 +153,8 @@ static void adplug_about(void)
                               "Linked AdPlug library version: ") ,
                               version_text , NULL );
     about_win = xmms_show_message( about_title , about_text , _("Ok") , FALSE , NULL , NULL );
-    gtk_signal_connect( GTK_OBJECT(about_win) , "destroy" ,
-                        GTK_SIGNAL_FUNC(gtk_widget_destroyed), &about_win );
+    g_signal_connect( G_OBJECT(about_win) , "destroy" ,
+                        G_CALLBACK(gtk_widget_destroyed), &about_win );
     g_free( about_text );
     g_free( about_title );
   }
@@ -217,20 +217,20 @@ static void adplug_config(void)
     GtkWidget *button;
 
     button = gtk_button_new_with_label("Ok");
-    gtk_signal_connect(GTK_OBJECT(button), "clicked",
-		       GTK_SIGNAL_FUNC(close_config_box_ok),
+    g_signal_connect(G_OBJECT(button), "clicked",
+		       G_CALLBACK(close_config_box_ok),
 		       (gpointer)rblist);
-    gtk_signal_connect_object_after(GTK_OBJECT(button), "clicked",
-				    GTK_SIGNAL_FUNC(gtk_widget_destroy),
-				    GTK_OBJECT(config_dlg));
+    g_signal_connect_data(G_OBJECT(button), "clicked",
+				    G_CALLBACK(gtk_widget_destroy),
+				    GTK_OBJECT(config_dlg),NULL,(GConnectFlags) (G_CONNECT_AFTER|G_CONNECT_SWAPPED));
     gtk_container_add(GTK_CONTAINER(config_dlg->action_area), button);
 
     button = gtk_button_new_with_label("Cancel");
-    gtk_signal_connect(GTK_OBJECT(button), "clicked",
-		       GTK_SIGNAL_FUNC(close_config_box_cancel),
+    g_signal_connect(G_OBJECT(button), "clicked",
+		       G_CALLBACK(close_config_box_cancel),
 		       (gpointer)rblist);
-    gtk_signal_connect_object(GTK_OBJECT(button), "clicked",
-			      GTK_SIGNAL_FUNC(gtk_widget_destroy),
+    g_signal_connect_swapped(G_OBJECT(button), "clicked",
+			      G_CALLBACK(gtk_widget_destroy),
 			      GTK_OBJECT(config_dlg));
     gtk_container_add(GTK_CONTAINER(config_dlg->action_area), button);
   }
@@ -361,10 +361,10 @@ static void adplug_config(void)
       gtk_scrolled_window_set_policy(formatswnd, GTK_POLICY_AUTOMATIC,
 				     GTK_POLICY_AUTOMATIC);
       gpointer pl = (gpointer)new CPlayers(cfg.players);
-      gtk_signal_connect(GTK_OBJECT(fl), "select-row",
-			 GTK_SIGNAL_FUNC(config_fl_row_select), pl);
-      gtk_signal_connect(GTK_OBJECT(fl), "unselect-row",
-			 GTK_SIGNAL_FUNC(config_fl_row_unselect), pl);
+      g_signal_connect(G_OBJECT(fl), "select-row",
+			 G_CALLBACK(config_fl_row_select), pl);
+      g_signal_connect(G_OBJECT(fl), "unselect-row",
+			 G_CALLBACK(config_fl_row_unselect), pl);
       gtk_container_add(GTK_CONTAINER(formatswnd), GTK_WIDGET(fl));
       gtk_container_add(GTK_CONTAINER(eventbox), GTK_WIDGET(formatswnd));
       gtk_container_add(GTK_CONTAINER(vb), GTK_WIDGET(eventbox));
@@ -445,11 +445,11 @@ static void adplug_info_box(char *filename)
 //  gtk_packer_set_default_border_width(packer, 2);
 
   gtk_box_set_homogeneous(GTK_BOX(hbox), FALSE);
-  gtk_signal_connect_object(GTK_OBJECT(okay_button), "clicked",
-			    GTK_SIGNAL_FUNC(gtk_widget_destroy),
+  g_signal_connect_swapped(G_OBJECT(okay_button), "clicked",
+			    G_CALLBACK(gtk_widget_destroy),
 			    GTK_OBJECT(infobox));
-  gtk_signal_connect(GTK_OBJECT(infobox), "destroy",
-		     GTK_SIGNAL_FUNC(close_infobox), 0);
+  g_signal_connect(G_OBJECT(infobox), "destroy",
+		     G_CALLBACK(close_infobox), 0);
   gtk_container_add(GTK_CONTAINER(infobox->action_area), GTK_WIDGET(okay_button));
 
   // Add filename section
@@ -541,8 +541,8 @@ static void adplug_info_box(char *filename)
 							   1, 5, 1));
     GtkHScale *slider = GTK_HSCALE(gtk_hscale_new(adj));
 
-    gtk_signal_connect(GTK_OBJECT(adj), "value_changed",
-		       GTK_SIGNAL_FUNC(subsong_slider), NULL);
+    g_signal_connect(G_OBJECT(adj), "value_changed",
+		       G_CALLBACK(subsong_slider), NULL);
     gtk_range_set_update_policy(GTK_RANGE(slider), GTK_UPDATE_DISCONTINUOUS);
     gtk_scale_set_digits(GTK_SCALE(slider), 0);
 // Former packer layout, for future reproduction

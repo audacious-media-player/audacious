@@ -613,8 +613,8 @@ static void draw_plugin(plugin_instance *instance)
 
     if (LADSPA_IS_HINT_TOGGLED(hints[k].HintDescriptor)) {
       widget = gtk_toggle_button_new_with_label("Press");
-      gtk_signal_connect(GTK_OBJECT(widget), "toggled",
-                       GTK_SIGNAL_FUNC(toggled), &(instance->knobs[k]));
+      g_signal_connect(G_OBJECT(widget), "toggled",
+                       G_CALLBACK(toggled), &(instance->knobs[k]));
       gtk_container_add(GTK_CONTAINER(hbox), widget);
       gtk_container_add(GTK_CONTAINER(vbox), hbox);
       continue;
@@ -706,8 +706,8 @@ static void draw_plugin(plugin_instance *instance)
     if (LADSPA_IS_PORT_OUTPUT(plugin->PortDescriptors[k])) {
       gtk_widget_set_sensitive(widget, FALSE);
     } else {
-      gtk_signal_connect(adjustment, "value-changed",
-                   GTK_SIGNAL_FUNC(value_changed), &(instance->knobs[k]));
+      g_signal_connect(adjustment, "value-changed",
+                   G_CALLBACK(value_changed), &(instance->knobs[k]));
     }
     gtk_container_add(GTK_CONTAINER(hbox), widget);
     widget = gtk_hscale_new(GTK_ADJUSTMENT(adjustment));
@@ -729,8 +729,8 @@ static void draw_plugin(plugin_instance *instance)
 
   gtk_container_add(GTK_CONTAINER(instance->window), vbox);
 
-  gtk_signal_connect (GTK_OBJECT (instance->window), "delete_event",
-                      GTK_SIGNAL_FUNC (gtk_widget_hide_on_delete), NULL);
+  g_signal_connect (G_OBJECT (instance->window), "delete_event",
+                      G_CALLBACK (gtk_widget_hide_on_delete), NULL);
   gtk_widget_show_all(instance->window);
 }
 
@@ -772,12 +772,12 @@ static void make_run_clist(void)
   run_clist = gtk_clist_new_with_titles(1, titles);
   gtk_clist_column_titles_passive(GTK_CLIST (run_clist));
   gtk_clist_set_reorderable(GTK_CLIST (run_clist), TRUE);
-  gtk_signal_connect(GTK_OBJECT(run_clist), "select-row",
-                     GTK_SIGNAL_FUNC(select_instance), NULL);
-  gtk_signal_connect(GTK_OBJECT(run_clist), "unselect-row",
-                     GTK_SIGNAL_FUNC(unselect_instance), NULL);
-  gtk_signal_connect(GTK_OBJECT(run_clist), "row-move",
-                     GTK_SIGNAL_FUNC(reorder_instance), NULL);
+  g_signal_connect(G_OBJECT(run_clist), "select-row",
+                     G_CALLBACK(select_instance), NULL);
+  g_signal_connect(G_OBJECT(run_clist), "unselect-row",
+                     G_CALLBACK(unselect_instance), NULL);
+  g_signal_connect(G_OBJECT(run_clist), "row-move",
+                     G_CALLBACK(reorder_instance), NULL);
 
   G_LOCK (running_plugins);
   for (list= running_plugins; list != NULL; list = g_slist_next(list)) {
@@ -873,12 +873,12 @@ static GtkWidget * make_plugin_clist(void)
   }
   gtk_clist_sort(GTK_CLIST (clist));
 
-  gtk_signal_connect(GTK_OBJECT(clist), "click-column",
-                     GTK_SIGNAL_FUNC(sort_column), NULL);
-  gtk_signal_connect(GTK_OBJECT(clist), "select-row",
-                     GTK_SIGNAL_FUNC(select_plugin), NULL);
-  gtk_signal_connect(GTK_OBJECT(clist), "unselect-row",
-                     GTK_SIGNAL_FUNC(unselect_plugin), NULL);
+  g_signal_connect(G_OBJECT(clist), "click-column",
+                     G_CALLBACK(sort_column), NULL);
+  g_signal_connect(G_OBJECT(clist), "select-row",
+                     G_CALLBACK(select_plugin), NULL);
+  g_signal_connect(G_OBJECT(clist), "unselect-row",
+                     G_CALLBACK(unselect_plugin), NULL);
 
   return clist;
 }
@@ -952,16 +952,16 @@ static void configure(void)
   bbox = gtk_hbutton_box_new();
   gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_SPREAD);
   widget = gtk_button_new_with_label("Add");
-  gtk_signal_connect(GTK_OBJECT(widget), "clicked",
-                     GTK_SIGNAL_FUNC(add_plugin_clicked), NULL);
+  g_signal_connect(G_OBJECT(widget), "clicked",
+                     G_CALLBACK(add_plugin_clicked), NULL);
   gtk_box_pack_end_defaults(GTK_BOX(bbox), widget);
   widget = gtk_button_new_with_label("Remove");
-  gtk_signal_connect(GTK_OBJECT(widget), "clicked",
-                     GTK_SIGNAL_FUNC(remove_plugin_clicked), NULL);
+  g_signal_connect(G_OBJECT(widget), "clicked",
+                     G_CALLBACK(remove_plugin_clicked), NULL);
   gtk_box_pack_end_defaults(GTK_BOX(bbox), widget);
   widget = gtk_button_new_with_label("Configure");
-  gtk_signal_connect(GTK_OBJECT(widget), "clicked",
-                     GTK_SIGNAL_FUNC(configure_plugin_clicked), NULL);
+  g_signal_connect(G_OBJECT(widget), "clicked",
+                     G_CALLBACK(configure_plugin_clicked), NULL);
   gtk_box_pack_end_defaults(GTK_BOX(bbox), widget);
 
   gtk_box_pack_end(GTK_BOX(vbox), bbox, FALSE, FALSE, 0);
@@ -970,8 +970,8 @@ static void configure(void)
 
   gtk_window_set_title(GTK_WINDOW(config_window), "LADSPA Plugin Catalog");
   gtk_widget_set_usize(config_window, 380, 400);
-  gtk_signal_connect (GTK_OBJECT (config_window), "delete_event",
-                      GTK_SIGNAL_FUNC (gtk_widget_hide_on_delete), NULL);
+  g_signal_connect (G_OBJECT (config_window), "delete_event",
+                      G_CALLBACK (gtk_widget_hide_on_delete), NULL);
 
   gtk_widget_show_all(config_window);
 }
