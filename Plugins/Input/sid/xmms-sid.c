@@ -758,6 +758,7 @@ void xs_subctrl_open(void)
 
 	subctrl_current = gtk_hscale_new(GTK_ADJUSTMENT(xs_subctrl_adj));
 	gtk_widget_set_name(subctrl_current, "subctrl_current");
+	gtk_widget_set_usize(subctrl_current, xs_status.tuneInfo->nsubTunes * 10 + 30, -1);
 	gtk_box_pack_start(GTK_BOX(hbox15), subctrl_current, FALSE, TRUE, 0);
 	gtk_scale_set_digits(GTK_SCALE(subctrl_current), 0);
 	gtk_range_set_update_policy(GTK_RANGE(subctrl_current), GTK_UPDATE_DELAYED);
