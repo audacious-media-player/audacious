@@ -23,6 +23,7 @@
 #include <string.h>
 #include "include/endian.h"
 #include "include/unicode.h"
+#include "audacious/util.h"
 
 wchar_t *utf8_to_wchar(unsigned char *utf, size_t memsize)
 {
@@ -142,6 +143,13 @@ unsigned char *wchar_to_utf8(wchar_t *wchar, size_t memsize)
 void iso88591_to_utf8(unsigned char *iso, size_t memsize,
 				unsigned char **utf)
 {
+	*utf = str_to_utf8(iso);
+}
+
+#if 0
+void iso88591_to_utf8(unsigned char *iso, size_t memsize,
+				unsigned char **utf)
+{
 	size_t i;
 	wchar_t *wchar;
 
@@ -150,6 +158,7 @@ void iso88591_to_utf8(unsigned char *iso, size_t memsize,
 	*utf = wchar_to_utf8(wchar, memsize);
 	free(wchar);
 }
+#endif
 
 void utf16bom_to_utf8(unsigned char *utf16, size_t memsize,
 				unsigned char **utf)

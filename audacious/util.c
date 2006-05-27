@@ -56,6 +56,10 @@
 #include "playlist.h"
 #include "ui_playlist.h"
 
+#ifdef USE_CHARDET
+    #include <libguess.h>
+    #include <libudet_c.h>
+#endif
 
 static GQuark quark_popup_data;
 
@@ -1244,6 +1248,10 @@ str_to_utf8(const gchar * str)
     if (!str)
         return NULL;
 
+    /* chardet encoding detector */
+    if ((out_str = chardet_to_utf8(str, strlen(str), NULL, NULL, NULL)))
+        return out_str;
+
     /* already UTF-8? */
     if (g_utf8_validate(str, -1, NULL))
         return g_strdup(str);
@@ -1386,8 +1394,80 @@ make_submenu(GtkItemFactory *menu,
 }
 
 
+gchar *chardet_to_utf8(const gchar *str, gssize len,
+                       gsize *arg_bytes_read, gsize *arg_bytes_write, GError **arg_error)
+{
+#ifdef USE_CHARDET
+	char  *det = NULL, *encoding = NULL;
+#endif
+	gchar *ret = NULL;
+	gsize *bytes_read, *bytes_write;
+	GError **error;
+	gsize my_bytes_read, my_bytes_write;
 
+	bytes_read  = arg_bytes_read ? arg_bytes_read : &my_bytes_read;
+	bytes_write = arg_bytes_write ? arg_bytes_write : &my_bytes_write;
+	error       = arg_error ? arg_error : NULL;
 
+#ifdef USE_CHARDET
+	if(cfg.chardet_detector)
+		det = cfg.chardet_detector;
 
+	if(det){
+		if(!strncasecmp("japanese", det, sizeof("japanese"))) {
+			encoding = (char *)guess_jp(str, strlen(str));
+			if (!encoding)
+				goto fallback;
+		} else if(!strncasecmp("taiwanese", det, sizeof("taiwanese"))) {
+			encoding = (char *)guess_tw(str, strlen(str));
+			if (!encoding)
+				goto fallback;
+		} else if(!strncasecmp("chinese", det, sizeof("chinese"))) {
+			encoding = (char *)guess_cn(str, strlen(str));
+			if (!encoding)
+				goto fallback;
+		} else if(!strncasecmp("korean", det, sizeof("korean"))) {
+			encoding = (char *)guess_kr(str, strlen(str));
+			if (!encoding)
+				goto fallback;
+#ifdef HAVE_UDET
+		} else if (!strncasecmp("universal", det, sizeof("universal"))) {
+			encoding = (char *)detectCharset((char *)str, strlen(str));
+			if (!encoding)
+				goto fallback;
+#endif
+		} else /* none, invalid */
+			goto fallback;
 
+		ret = g_convert(str, len, "UTF-8", encoding, bytes_read, bytes_write, error);
+	}
+#endif
 
+fallback:
+	if(!ret && cfg.chardet_fallback){
+		gchar **encs=NULL, **enc=NULL;
+		encs = g_strsplit_set(cfg.chardet_fallback, " ,:;|/", 0);
+
+		if(encs){
+			enc = encs;
+			for(enc=encs; *enc ; enc++){
+				ret = g_convert(str, len, "UTF-8", *enc, bytes_read, bytes_write, error);
+				if(len == *bytes_read){
+					break;
+				}
+			}
+			g_strfreev(encs);
+		}
+	}
+
+	if(ret){
+		if(g_utf8_validate(ret, -1, NULL))
+			return ret;
+		else {
+			g_free(ret);
+			ret = NULL;
+		}
+	}
+	
+	return NULL;	// if I have no idea, return NULL.
+}

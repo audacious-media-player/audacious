@@ -125,5 +125,7 @@ typedef struct {
     gint y;
 } MenuPos;
 
+gchar *chardet_to_utf8(const gchar *str, gssize len,
+		       gsize *arg_bytes_read, gsize *arg_bytes_write, GError **arg_error);
 
 #endif

@@ -494,7 +494,19 @@ mpgdec_format_song_title(TagLib_Tag *taglib_tag, gchar * filename)
         REMOVE_NONEXISTANT_TAG(input->genre);
         REMOVE_NONEXISTANT_TAG(input->comment);
     }
+    if(input->performer)
+	    input->performer = str_to_utf8(input->performer);
 
+    if(input->album_name)
+	    input->album_name = str_to_utf8(input->album_name);
+
+    if(input->track_name)
+	    input->track_name = str_to_utf8(input->track_name);
+
+    if(input->comment)
+	    input->comment = str_to_utf8(input->comment);
+
+	    
     input->file_name = g_path_get_basename(filename);
     input->file_path = g_path_get_dirname(filename);
     input->file_ext = extname(filename);
@@ -509,6 +521,15 @@ mpgdec_format_song_title(TagLib_Tag *taglib_tag, gchar * filename)
         if (extname(title))
             *(extname(title) - 1) = '\0';   /* removes period */
     }
+
+    if(input->performer)
+	    g_free(input->performer);
+    if(input->album_name)
+	    g_free(input->album_name);
+    if(input->track_name)
+	    g_free(input->track_name);
+    if(input->comment)
+	    g_free(input->comment);
 
     g_free(input->file_path);
     g_free(input->file_name);
@@ -525,6 +546,9 @@ static gchar *
 get_song_title(char *filename)
 {
     char *ret = NULL;
+#ifdef USE_CHARDET
+    taglib_set_strings_unicode(FALSE);
+#endif
     taglib_file = taglib_file_new(filename);
     taglib_tag = NULL;
     if(taglib_file) {

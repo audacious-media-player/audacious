@@ -226,6 +226,19 @@ const gchar *bmp_titlestring_presets[] = {
 
 const guint n_titlestring_presets = G_N_ELEMENTS(bmp_titlestring_presets);
 
+const gchar *chardet_detector_presets[] = {
+	"None",
+	"Japanese",
+	"Taiwanese (alpha test)",
+	"Chinese (alpha test)",
+	"Korean (alpha test)",
+#ifdef HAVE_UDET
+	"Universal"
+#endif
+};
+
+const guint n_chardet_detector_presets = G_N_ELEMENTS(chardet_detector_presets);	
+
 static bmp_cfg_boolent bmp_boolents[] = {
     {"allow_multiple_instances", &cfg.allow_multiple_instances, TRUE},
     {"use_realtime", &cfg.use_realtime, TRUE},
@@ -319,6 +332,8 @@ static bmp_cfg_strent bmp_strents[] = {
     {"filesel_path", &cfg.filesel_path, FALSE},
     {"playlist_path", &cfg.playlist_path, FALSE},
     {"generic_title_format", &cfg.gentitle_format, TRUE},
+    {"chardet_detector", &cfg.chardet_detector, TRUE},
+    {"chardet_fallback", &cfg.chardet_fallback, TRUE},
 };
 
 static gint ncfgsent = G_N_ELEMENTS(bmp_strents);

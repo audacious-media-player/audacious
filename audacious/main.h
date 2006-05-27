@@ -107,6 +107,8 @@ struct _BmpConfig {
     gboolean resume_playback_on_startup;
     gint resume_playback_on_startup_time;
     gboolean show_separator_in_pl;
+    gchar *chardet_detector;
+    gchar *chardet_fallback;
 };
 
 typedef struct _BmpConfig BmpConfig;
@@ -137,6 +139,9 @@ extern gchar *bmp_paths[];
 
 extern const gchar *bmp_titlestring_presets[];
 extern const guint n_titlestring_presets;
+
+extern const gchar *chardet_detector_presets[];
+extern const guint n_chardet_detector_presets;
 
 extern GList *dock_window_list;
 extern gboolean pposition_broken;

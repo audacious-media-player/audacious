@@ -1860,6 +1860,85 @@ on_skin_view_drag_data_received(GtkWidget * widget,
 			   			   
 }
 
+static void
+on_chardet_detector_cbox_changed(GtkComboBox * combobox, gpointer data)
+{
+    ConfigDb *db;
+    gint position;
+
+    position = gtk_combo_box_get_active(GTK_COMBO_BOX(combobox));
+    cfg.chardet_detector = (char *)chardet_detector_presets[position];
+
+    db = bmp_cfg_db_open();
+    bmp_cfg_db_set_string(db, NULL, "chardet_detector", cfg.chardet_detector);
+    bmp_cfg_db_close(db);
+    gtk_widget_set_sensitive(GTK_WIDGET(data), 1);
+}
+
+static void
+on_chardet_detector_cbox_realize(GtkComboBox *combobox, gpointer data)
+{
+    ConfigDb *db;
+    gchar *ret=NULL;
+    guint i=0,index=0;
+
+    db = bmp_cfg_db_open();
+    if(bmp_cfg_db_get_string(db, NULL, "chardet_detector", &ret) != FALSE) {
+        for(i=0; i<n_chardet_detector_presets; i++) {
+            gtk_combo_box_append_text(combobox, chardet_detector_presets[i]);
+            if(!strcmp(chardet_detector_presets[i], ret)) {
+                cfg.chardet_detector = (char *)chardet_detector_presets[i];
+                index = i;
+            }
+        }
+    }
+#ifdef USE_CHARDET
+    gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), index);
+    gtk_widget_set_sensitive(GTK_WIDGET(data), 1);
+    g_signal_connect(combobox, "changed",
+                     G_CALLBACK(on_chardet_detector_cbox_changed), NULL);
+#else
+    gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), -1);
+    gtk_widget_set_sensitive(GTK_WIDGET(combobox), 0);
+#endif
+    if(ret)
+        g_free(ret);
+}
+
+static void
+on_chardet_fallback_realize(GtkEntry *entry, gpointer data)
+{
+    ConfigDb *db;
+    gchar *ret;
+
+    db = bmp_cfg_db_open();
+
+    if (bmp_cfg_db_get_string(db, NULL, "chardet_fallback", &ret) != FALSE) {
+        if(cfg.chardet_fallback)
+            g_free(cfg.chardet_fallback);
+        cfg.chardet_fallback = ret;
+        gtk_entry_set_text(entry, cfg.chardet_fallback);
+    }
+    bmp_cfg_db_close(db);
+}
+
+static void
+on_chardet_fallback_changed(GtkEntry *entry, gpointer data)
+{
+    ConfigDb *db;
+    gchar *ret;
+
+    ret = g_strdup(gtk_entry_get_text(entry));
+
+    if(cfg.chardet_fallback)
+        g_free(cfg.chardet_fallback);
+    cfg.chardet_fallback = ret;
+
+    db = bmp_cfg_db_open();
+    bmp_cfg_db_set_string(db, NULL, "chardet_fallback", cfg.chardet_fallback);
+    bmp_cfg_db_close(db);
+}
+
 /* FIXME: complete the map */
 FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_input_plugin_view_realize)
@@ -1922,6 +2001,10 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_proxy_user_changed)
     FUNC_MAP_ENTRY(on_proxy_pass_realize)
     FUNC_MAP_ENTRY(on_proxy_pass_changed)
+    FUNC_MAP_ENTRY(on_chardet_detector_cbox_realize)
+    FUNC_MAP_ENTRY(on_chardet_detector_cbox_changed)
+    FUNC_MAP_ENTRY(on_chardet_fallback_realize)
+    FUNC_MAP_ENTRY(on_chardet_fallback_changed)
 FUNC_MAP_END
 
 void
@@ -2150,3 +2233,7 @@ show_prefs_window(void)
     prefswin_set_skin_update(TRUE);
     gtk_widget_show(prefswin);
 }
+
+
+
+

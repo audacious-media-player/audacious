@@ -683,12 +683,15 @@ void
 fill_entries(GtkWidget * w, gpointer data)
 {
   VFSFile *fh;
-  gchar *ptr;
+  gchar *ptr, *ptr2;
   guint32 i;
 
   if (str_has_prefix_nocase(current_filename, "http://"))
     return;
-  
+
+#ifdef USE_CHARDET
+  taglib_set_strings_unicode(FALSE);
+#endif
   taglib_file = taglib_file_new(current_filename);
   if(taglib_file) {
     taglib_tag = taglib_file_tag(taglib_file);
@@ -701,23 +704,35 @@ fill_entries(GtkWidget * w, gpointer data)
   /* be sane here, taglib_tag results may be NULL --nenolod */
   ptr = taglib_tag_title(taglib_tag);
 
-  if (ptr != NULL)
-	gtk_entry_set_text(GTK_ENTRY(title_entry), ptr);
+  if (ptr != NULL) {
+	ptr2 = str_to_utf8(ptr);
+	gtk_entry_set_text(GTK_ENTRY(title_entry), ptr2);
+	g_free(ptr2);
+  }
 
   ptr = taglib_tag_artist(taglib_tag);
 
-  if (ptr != NULL)
-	gtk_entry_set_text(GTK_ENTRY(artist_entry), ptr);
+  if (ptr != NULL) {
+	ptr2 = str_to_utf8(ptr);
+	gtk_entry_set_text(GTK_ENTRY(artist_entry), ptr2);
+	g_free(ptr2);
+  }
 
   ptr = taglib_tag_album(taglib_tag);
 
-  if (ptr != NULL)
-	gtk_entry_set_text(GTK_ENTRY(album_entry), ptr);
-
+  if (ptr != NULL) {
+	ptr2 = str_to_utf8(ptr);
+	gtk_entry_set_text(GTK_ENTRY(album_entry), ptr2);
+	g_free(ptr2);
+  }
+  
   ptr = taglib_tag_comment(taglib_tag);
 
-  if (ptr != NULL)
-	gtk_entry_set_text(GTK_ENTRY(comment_entry), ptr);
+  if (ptr != NULL) {
+	ptr2 = str_to_utf8(ptr);
+	gtk_entry_set_text(GTK_ENTRY(comment_entry), ptr2);
+	g_free(ptr2);
+  }
 
   i = taglib_tag_year(taglib_tag);
 
