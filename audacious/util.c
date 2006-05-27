@@ -57,8 +57,10 @@
 #include "ui_playlist.h"
 
 #ifdef USE_CHARDET
-    #include <libguess.h>
+    #include "../libguess/libguess.h"
+#ifdef HAVE_UDET
     #include <libudet_c.h>
+#endif
 #endif
 
 static GQuark quark_popup_data;
