@@ -146,6 +146,7 @@ static const gchar *translators[] = {
     N_("Greek:"),
     N_("Kouzinopoulos Haris"),
     N_("Stavros Giannouris"),
+    N_("Stathis Kamperis"),
     NULL,
     N_("Hindi:"),
     N_("Dhananjaya Sharma"),
