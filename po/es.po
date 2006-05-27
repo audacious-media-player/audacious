@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-29 11:14-0500\n"
+"POT-Creation-Date: 2006-05-27 15:29-0500\n"
 "PO-Revision-Date: 2006-04-18 23:05+0000\n"
 "Last-Translator: Gustavo D. Vranjes <gvranjes@nerdshack.com>\n"
 "Language-Team:  <es@li.org>\n"
@@ -42,18 +42,18 @@ msgstr "Acerca de Audacious"
 #: Plugins/Effect/stereo_plugin/stereo.c:122
 #: Plugins/General/scrobbler/gtkstuff.c:23
 #: Plugins/Input/adplug/adplug-xmms.cc:155
-#: Plugins/Input/console/Audacious_Driver.cpp:679
-#: Plugins/Input/flac/configure.c:773 Plugins/Input/flac/configure.c:804
+#: Plugins/Input/console/Audacious_Driver.cpp:699
+#: Plugins/Input/flac/configure.c:632 Plugins/Input/flac/configure.c:663
 #: Plugins/Input/flac/http.c:219 Plugins/Input/modplug/gui/main.cpp:45
-#: Plugins/Input/mpg123/http.c:221 Plugins/Input/mpg123/mpg123.c:959
+#: Plugins/Input/mpg123/http.c:221 Plugins/Input/mpg123/mpg123.c:927
 #: Plugins/Input/timidity/src/interface.c:223
 #: Plugins/Input/timidity/src/xmms-timidity.c:136
 #: Plugins/Input/tonegen/tonegen.c:57 Plugins/Input/vorbis/fileinfo.c:212
 #: Plugins/Input/vorbis/http.c:218 Plugins/Input/vorbis/vorbis.c:835
 #: Plugins/Input/wav/wav-sndfile.c:263 Plugins/Output/OSS/about.c:54
-#: Plugins/Output/arts/configure.c:92 Plugins/Output/esd/about.c:49
-#: Plugins/Output/jack/jack.c:579 Plugins/Output/sun/about.c:38
-#: Plugins/Output/sun/configure.c:559
+#: Plugins/Output/arts/configure.c:91 Plugins/Output/esd/about.c:49
+#: Plugins/Output/jack/jack.c:576 Plugins/Output/sun/about.c:38
+#: Plugins/Output/sun/configure.c:558
 msgid "Ok"
 msgstr "Aceptar"
 
@@ -85,17 +85,17 @@ msgstr "Lista de complementos con _efectos:"
 
 #: Plugins/Effect/stereo_plugin/stereo.c:131
 #: Plugins/General/song_change/song_change.c:347
-#: Plugins/Input/flac/configure.c:779 Plugins/Input/flac/fileinfo.c:356
-#: Plugins/Input/modplug/gui/interface.cpp:732
+#: Plugins/Input/flac/configure.c:638 Plugins/Input/flac/fileinfo.c:356
+#: Plugins/Input/modplug/gui/interface.cpp:741
 #: Plugins/Input/timidity/src/interface.c:231
-#: Plugins/Output/alsa/configure.c:442 Plugins/Output/arts/configure.c:93
+#: Plugins/Output/alsa/configure.c:442 Plugins/Output/arts/configure.c:92
 #: Plugins/Output/disk_writer/disk_writer.c:412
-#: Plugins/Output/sun/configure.c:567
+#: Plugins/Output/sun/configure.c:566
 msgid "Cancel"
 msgstr "Cancelar"
 
 #: Plugins/Effect/stereo_plugin/stereo.c:138
-#: Plugins/Input/modplug/gui/interface.cpp:724
+#: Plugins/Input/modplug/gui/interface.cpp:733
 msgid "Apply"
 msgstr "Aplicar"
 
@@ -132,7 +132,7 @@ msgstr ""
 "http://fsinfo.cs.uni-sb.de/~columbus/lirc/index.html"
 
 #: Plugins/General/lirc/about.c:116
-#: Plugins/Input/modplug/gui/interface.cpp:937
+#: Plugins/Input/modplug/gui/interface.cpp:946
 msgid "Close"
 msgstr "Cerrar"
 
@@ -172,8 +172,6 @@ msgid "Scrobbler Configuration"
 msgstr "Configuración Flac"
 
 #: Plugins/General/scrobbler/configure.c:142
-#: Plugins/Input/flac/configure.c:706 Plugins/Input/mpg123/configure.c:526
-#: Plugins/Input/vorbis/configure.c:422
 msgid "Password:"
 msgstr "Contraseña:"
 
@@ -182,8 +180,6 @@ msgid "<b>Scrobbler Preferences</b>"
 msgstr ""
 
 #: Plugins/General/scrobbler/configure.c:170
-#: Plugins/Input/flac/configure.c:698 Plugins/Input/mpg123/configure.c:515
-#: Plugins/Input/vorbis/configure.c:411
 msgid "Username:"
 msgstr "Usuario:"
 
@@ -215,12 +211,12 @@ msgstr ""
 "¿Continuar de cualquier forma?"
 
 #: Plugins/General/song_change/song_change.c:156
-#: Plugins/Input/aac/src/fileinfo.c:188 Plugins/Input/mpg123/fileinfo.c:241
+#: Plugins/Input/aac/src/fileinfo.c:206 Plugins/Input/mpg123/fileinfo.c:244
 msgid "Yes"
 msgstr "Sí"
 
 #: Plugins/General/song_change/song_change.c:166
-#: Plugins/Input/aac/src/fileinfo.c:187 Plugins/Input/mpg123/fileinfo.c:240
+#: Plugins/Input/aac/src/fileinfo.c:205 Plugins/Input/mpg123/fileinfo.c:243
 msgid "No"
 msgstr "No"
 
@@ -281,811 +277,811 @@ msgstr ""
 "%%p: Ejecutando actualmente (1 ó 0)"
 
 #: Plugins/General/song_change/song_change.c:341
-#: Plugins/Input/modplug/gui/interface.cpp:716 Plugins/Output/alsa/about.c:46
+#: Plugins/Input/modplug/gui/interface.cpp:725 Plugins/Output/alsa/about.c:46
 #: Plugins/Output/alsa/configure.c:436
 #: Plugins/Output/disk_writer/disk_writer.c:140
 #: Plugins/Output/disk_writer/disk_writer.c:405
 msgid "OK"
 msgstr "OK"
 
-#: Plugins/Input/aac/src/fileinfo.c:183 Plugins/Input/mpg123/fileinfo.c:236
+#: Plugins/Input/aac/src/fileinfo.c:201 Plugins/Input/mpg123/fileinfo.c:239
 msgid "None"
 msgstr "Ninguno"
 
-#: Plugins/Input/aac/src/fileinfo.c:184 Plugins/Input/mpg123/fileinfo.c:237
+#: Plugins/Input/aac/src/fileinfo.c:202 Plugins/Input/mpg123/fileinfo.c:240
 msgid "50/15 ms"
 msgstr "50/15 ms"
 
-#: Plugins/Input/aac/src/fileinfo.c:186 Plugins/Input/mpg123/fileinfo.c:239
+#: Plugins/Input/aac/src/fileinfo.c:204 Plugins/Input/mpg123/fileinfo.c:242
 msgid "CCIT J.17"
 msgstr "CCIT J.17"
 
-#: Plugins/Input/aac/src/fileinfo.c:230
+#: Plugins/Input/aac/src/fileinfo.c:248
 #: Plugins/Input/amidi-plug/i_fileinfo.c:118
-#: Plugins/Input/mpg123/fileinfo.c:286 Plugins/Input/vorbis/fileinfo.c:558
+#: Plugins/Input/mpg123/fileinfo.c:288 Plugins/Input/vorbis/fileinfo.c:558
 msgid "Name:"
 msgstr "Nombre:"
 
-#: Plugins/Input/aac/src/fileinfo.c:242
+#: Plugins/Input/aac/src/fileinfo.c:260
 msgid "Song Metadata"
 msgstr "Metadata de Canción"
 
-#: Plugins/Input/aac/src/fileinfo.c:249 Plugins/Input/flac/fileinfo.c:278
-#: Plugins/Input/mpg123/fileinfo.c:467 Plugins/Input/vorbis/fileinfo.c:581
+#: Plugins/Input/aac/src/fileinfo.c:267 Plugins/Input/flac/fileinfo.c:278
+#: Plugins/Input/mpg123/fileinfo.c:456 Plugins/Input/vorbis/fileinfo.c:581
 msgid "Title:"
 msgstr "Título:"
 
-#: Plugins/Input/aac/src/fileinfo.c:260 Plugins/Input/flac/fileinfo.c:285
-#: Plugins/Input/mpg123/fileinfo.c:478 Plugins/Input/vorbis/fileinfo.c:592
+#: Plugins/Input/aac/src/fileinfo.c:278 Plugins/Input/flac/fileinfo.c:285
+#: Plugins/Input/mpg123/fileinfo.c:467 Plugins/Input/vorbis/fileinfo.c:592
 msgid "Artist:"
 msgstr "Artista:"
 
-#: Plugins/Input/aac/src/fileinfo.c:271 Plugins/Input/flac/fileinfo.c:292
-#: Plugins/Input/mpg123/fileinfo.c:489 Plugins/Input/vorbis/fileinfo.c:603
+#: Plugins/Input/aac/src/fileinfo.c:289 Plugins/Input/flac/fileinfo.c:292
+#: Plugins/Input/mpg123/fileinfo.c:478 Plugins/Input/vorbis/fileinfo.c:603
 msgid "Album:"
 msgstr "Álbum:"
 
-#: Plugins/Input/aac/src/fileinfo.c:282 Plugins/Input/flac/fileinfo.c:299
-#: Plugins/Input/mpg123/fileinfo.c:500 Plugins/Input/vorbis/fileinfo.c:614
+#: Plugins/Input/aac/src/fileinfo.c:300 Plugins/Input/flac/fileinfo.c:299
+#: Plugins/Input/mpg123/fileinfo.c:489 Plugins/Input/vorbis/fileinfo.c:614
 msgid "Comment:"
 msgstr "Comentario:"
 
-#: Plugins/Input/aac/src/fileinfo.c:293 Plugins/Input/mpg123/fileinfo.c:514
+#: Plugins/Input/aac/src/fileinfo.c:311 Plugins/Input/mpg123/fileinfo.c:500
 msgid "Year:"
 msgstr "Año:"
 
-#: Plugins/Input/aac/src/fileinfo.c:305 Plugins/Input/flac/fileinfo.c:314
-#: Plugins/Input/mpg123/fileinfo.c:526 Plugins/Input/vorbis/fileinfo.c:637
+#: Plugins/Input/aac/src/fileinfo.c:323 Plugins/Input/flac/fileinfo.c:314
+#: Plugins/Input/mpg123/fileinfo.c:512 Plugins/Input/vorbis/fileinfo.c:637
 msgid "Track number:"
 msgstr "Número de pista:"
 
-#: Plugins/Input/aac/src/fileinfo.c:319 Plugins/Input/flac/fileinfo.c:322
-#: Plugins/Input/mpg123/fileinfo.c:538 Plugins/Input/vorbis/fileinfo.c:649
+#: Plugins/Input/aac/src/fileinfo.c:337 Plugins/Input/flac/fileinfo.c:322
+#: Plugins/Input/mpg123/fileinfo.c:524 Plugins/Input/vorbis/fileinfo.c:649
 msgid "Genre:"
 msgstr "Género:"
 
-#: Plugins/Input/aac/src/fileinfo.c:385 Plugins/Input/mpg123/fileinfo.c:638
-#: Plugins/Input/vorbis/fileinfo.c:1015 audacious/mainwin.c:801
+#: Plugins/Input/aac/src/fileinfo.c:403 Plugins/Input/mpg123/fileinfo.c:624
+#: Plugins/Input/vorbis/fileinfo.c:1015 audacious/mainwin.c:804
 #, c-format
 msgid "%s - Audacious"
 msgstr "%s - Audacious"
 
-#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:47
+#: Plugins/Input/aac/src/libmp4.c:20 Plugins/Input/flac/fileinfo.c:47
 #: Plugins/Input/mpg123/mpg123.c:53 Plugins/Input/vorbis/fileinfo.c:83
 msgid "Blues"
 msgstr "Blues"
 
-#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:47
+#: Plugins/Input/aac/src/libmp4.c:20 Plugins/Input/flac/fileinfo.c:47
 #: Plugins/Input/mpg123/mpg123.c:53 Plugins/Input/vorbis/fileinfo.c:83
 msgid "Classic Rock"
 msgstr "Rock clásico"
 
-#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:47
+#: Plugins/Input/aac/src/libmp4.c:20 Plugins/Input/flac/fileinfo.c:47
 #: Plugins/Input/mpg123/mpg123.c:53 Plugins/Input/vorbis/fileinfo.c:83
 msgid "Country"
 msgstr "Country"
 
-#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:47
+#: Plugins/Input/aac/src/libmp4.c:20 Plugins/Input/flac/fileinfo.c:47
 #: Plugins/Input/mpg123/mpg123.c:53 Plugins/Input/vorbis/fileinfo.c:83
 msgid "Dance"
 msgstr "Dance"
 
-#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:48
+#: Plugins/Input/aac/src/libmp4.c:21 Plugins/Input/flac/fileinfo.c:48
 #: Plugins/Input/mpg123/mpg123.c:54 Plugins/Input/vorbis/fileinfo.c:84
 msgid "Disco"
 msgstr "Disco"
 
-#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:48
+#: Plugins/Input/aac/src/libmp4.c:21 Plugins/Input/flac/fileinfo.c:48
 #: Plugins/Input/mpg123/mpg123.c:54 Plugins/Input/vorbis/fileinfo.c:84
 msgid "Funk"
 msgstr "Funk"
 
-#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:48
+#: Plugins/Input/aac/src/libmp4.c:21 Plugins/Input/flac/fileinfo.c:48
 #: Plugins/Input/mpg123/mpg123.c:54 Plugins/Input/vorbis/fileinfo.c:84
 msgid "Grunge"
 msgstr "Grunge"
 
-#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:48
+#: Plugins/Input/aac/src/libmp4.c:21 Plugins/Input/flac/fileinfo.c:48
 #: Plugins/Input/mpg123/mpg123.c:54 Plugins/Input/vorbis/fileinfo.c:84
 msgid "Hip-Hop"
 msgstr "Hip-Hop"
 
-#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:49
+#: Plugins/Input/aac/src/libmp4.c:22 Plugins/Input/flac/fileinfo.c:49
 #: Plugins/Input/mpg123/mpg123.c:55 Plugins/Input/vorbis/fileinfo.c:85
 msgid "Jazz"
 msgstr "Jazz"
 
-#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:49
+#: Plugins/Input/aac/src/libmp4.c:22 Plugins/Input/flac/fileinfo.c:49
 #: Plugins/Input/mpg123/mpg123.c:55 Plugins/Input/vorbis/fileinfo.c:85
 msgid "Metal"
 msgstr "Metal"
 
-#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:49
+#: Plugins/Input/aac/src/libmp4.c:22 Plugins/Input/flac/fileinfo.c:49
 #: Plugins/Input/mpg123/mpg123.c:55 Plugins/Input/vorbis/fileinfo.c:85
 msgid "New Age"
 msgstr "New age"
 
-#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:49
+#: Plugins/Input/aac/src/libmp4.c:22 Plugins/Input/flac/fileinfo.c:49
 #: Plugins/Input/mpg123/mpg123.c:55 Plugins/Input/vorbis/fileinfo.c:85
 msgid "Oldies"
 msgstr "Antiguos"
 
-#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:50
+#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
 #: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
 msgid "Other"
 msgstr "Otro"
 
-#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:50
+#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
 #: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
 msgid "Pop"
 msgstr "Pop"
 
-#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:50
+#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
 #: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
 msgid "R&B"
 msgstr "R&B"
 
-#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:50
+#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
 #: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
 msgid "Rap"
 msgstr "Rap"
 
-#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:50
+#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
 #: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
 msgid "Reggae"
 msgstr "Reggae"
 
-#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:51
+#: Plugins/Input/aac/src/libmp4.c:24 Plugins/Input/flac/fileinfo.c:51
 #: Plugins/Input/mpg123/mpg123.c:57 Plugins/Input/vorbis/fileinfo.c:87
 msgid "Rock"
 msgstr "Rock"
 
-#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:51
+#: Plugins/Input/aac/src/libmp4.c:24 Plugins/Input/flac/fileinfo.c:51
 #: Plugins/Input/mpg123/mpg123.c:57 Plugins/Input/vorbis/fileinfo.c:87
 msgid "Techno"
 msgstr "Techno"
 
-#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:51
+#: Plugins/Input/aac/src/libmp4.c:24 Plugins/Input/flac/fileinfo.c:51
 #: Plugins/Input/mpg123/mpg123.c:57 Plugins/Input/vorbis/fileinfo.c:87
 msgid "Industrial"
 msgstr "Industrial"
 
-#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:51
+#: Plugins/Input/aac/src/libmp4.c:24 Plugins/Input/flac/fileinfo.c:51
 #: Plugins/Input/mpg123/mpg123.c:57 Plugins/Input/vorbis/fileinfo.c:87
 msgid "Alternative"
 msgstr "Alternativa"
 
-#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:52
+#: Plugins/Input/aac/src/libmp4.c:25 Plugins/Input/flac/fileinfo.c:52
 #: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:88
 msgid "Ska"
 msgstr "Ska"
 
-#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:52
+#: Plugins/Input/aac/src/libmp4.c:25 Plugins/Input/flac/fileinfo.c:52
 #: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:88
 msgid "Death Metal"
 msgstr "Death Metal"
 
-#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:52
+#: Plugins/Input/aac/src/libmp4.c:25 Plugins/Input/flac/fileinfo.c:52
 #: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:88
 msgid "Pranks"
 msgstr "Pranks"
 
-#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:52
+#: Plugins/Input/aac/src/libmp4.c:25 Plugins/Input/flac/fileinfo.c:52
 #: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:88
 msgid "Soundtrack"
 msgstr "Banda Sonora"
 
-#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:53
+#: Plugins/Input/aac/src/libmp4.c:26 Plugins/Input/flac/fileinfo.c:53
 #: Plugins/Input/mpg123/mpg123.c:59 Plugins/Input/vorbis/fileinfo.c:89
 msgid "Euro-Techno"
 msgstr "Euro-Techno"
 
-#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:53
+#: Plugins/Input/aac/src/libmp4.c:26 Plugins/Input/flac/fileinfo.c:53
 #: Plugins/Input/mpg123/mpg123.c:59 Plugins/Input/vorbis/fileinfo.c:89
 msgid "Ambient"
 msgstr "Ambient"
 
-#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:53
+#: Plugins/Input/aac/src/libmp4.c:26 Plugins/Input/flac/fileinfo.c:53
 #: Plugins/Input/mpg123/mpg123.c:59 Plugins/Input/vorbis/fileinfo.c:89
 msgid "Trip-Hop"
 msgstr "Trip-Hop"
 
-#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:53
+#: Plugins/Input/aac/src/libmp4.c:26 Plugins/Input/flac/fileinfo.c:53
 #: Plugins/Input/mpg123/mpg123.c:59 Plugins/Input/vorbis/fileinfo.c:89
 msgid "Vocal"
 msgstr "Vocal"
 
-#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:54
+#: Plugins/Input/aac/src/libmp4.c:27 Plugins/Input/flac/fileinfo.c:54
 #: Plugins/Input/mpg123/mpg123.c:60 Plugins/Input/vorbis/fileinfo.c:90
 msgid "Jazz+Funk"
 msgstr "Jazz+Funk"
 
-#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:54
+#: Plugins/Input/aac/src/libmp4.c:27 Plugins/Input/flac/fileinfo.c:54
 #: Plugins/Input/mpg123/mpg123.c:60 Plugins/Input/vorbis/fileinfo.c:90
 msgid "Fusion"
 msgstr "Fusión"
 
-#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:54
+#: Plugins/Input/aac/src/libmp4.c:27 Plugins/Input/flac/fileinfo.c:54
 #: Plugins/Input/mpg123/mpg123.c:60 Plugins/Input/vorbis/fileinfo.c:90
 msgid "Trance"
 msgstr "Trance"
 
-#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:54
+#: Plugins/Input/aac/src/libmp4.c:27 Plugins/Input/flac/fileinfo.c:54
 #: Plugins/Input/mpg123/mpg123.c:60 Plugins/Input/vorbis/fileinfo.c:90
 msgid "Classical"
 msgstr "Clásica"
 
-#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:55
+#: Plugins/Input/aac/src/libmp4.c:28 Plugins/Input/flac/fileinfo.c:55
 #: Plugins/Input/mpg123/mpg123.c:61 Plugins/Input/vorbis/fileinfo.c:91
 msgid "Instrumental"
 msgstr "Instrumental"
 
-#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:55
+#: Plugins/Input/aac/src/libmp4.c:28 Plugins/Input/flac/fileinfo.c:55
 #: Plugins/Input/mpg123/mpg123.c:61 Plugins/Input/vorbis/fileinfo.c:91
 msgid "Acid"
 msgstr "Acid"
 
-#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:55
+#: Plugins/Input/aac/src/libmp4.c:28 Plugins/Input/flac/fileinfo.c:55
 #: Plugins/Input/mpg123/mpg123.c:61 Plugins/Input/vorbis/fileinfo.c:91
 msgid "House"
 msgstr "House"
 
-#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:55
+#: Plugins/Input/aac/src/libmp4.c:28 Plugins/Input/flac/fileinfo.c:55
 #: Plugins/Input/mpg123/mpg123.c:61 Plugins/Input/vorbis/fileinfo.c:91
 msgid "Game"
 msgstr "Juego"
 
-#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/flac/fileinfo.c:56
+#: Plugins/Input/aac/src/libmp4.c:29 Plugins/Input/flac/fileinfo.c:56
 #: Plugins/Input/mpg123/mpg123.c:62 Plugins/Input/vorbis/fileinfo.c:92
 msgid "Sound Clip"
 msgstr "Clip de sonido"
 
-#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/flac/fileinfo.c:56
+#: Plugins/Input/aac/src/libmp4.c:29 Plugins/Input/flac/fileinfo.c:56
 #: Plugins/Input/mpg123/mpg123.c:62 Plugins/Input/vorbis/fileinfo.c:92
 msgid "Gospel"
 msgstr "Gospel"
 
-#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/flac/fileinfo.c:56
+#: Plugins/Input/aac/src/libmp4.c:29 Plugins/Input/flac/fileinfo.c:56
 #: Plugins/Input/mpg123/mpg123.c:62 Plugins/Input/vorbis/fileinfo.c:92
 msgid "Noise"
 msgstr "Ruido"
 
-#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/mpg123/mpg123.c:62
+#: Plugins/Input/aac/src/libmp4.c:29 Plugins/Input/mpg123/mpg123.c:62
 #: Plugins/Input/vorbis/fileinfo.c:92
 msgid "AlternRock"
 msgstr "Rock alternativo"
 
-#: Plugins/Input/aac/src/libmp4.c:45 Plugins/Input/flac/fileinfo.c:57
+#: Plugins/Input/aac/src/libmp4.c:30 Plugins/Input/flac/fileinfo.c:57
 #: Plugins/Input/mpg123/mpg123.c:63 Plugins/Input/vorbis/fileinfo.c:93
 msgid "Bass"
 msgstr "Bass"
 
-#: Plugins/Input/aac/src/libmp4.c:45 Plugins/Input/flac/fileinfo.c:57
+#: Plugins/Input/aac/src/libmp4.c:30 Plugins/Input/flac/fileinfo.c:57
 #: Plugins/Input/mpg123/mpg123.c:63 Plugins/Input/vorbis/fileinfo.c:93
 msgid "Soul"
 msgstr "Soul"
 
-#: Plugins/Input/aac/src/libmp4.c:45 Plugins/Input/flac/fileinfo.c:57
+#: Plugins/Input/aac/src/libmp4.c:30 Plugins/Input/flac/fileinfo.c:57
 #: Plugins/Input/mpg123/mpg123.c:63 Plugins/Input/vorbis/fileinfo.c:93
 msgid "Punk"
 msgstr "Punk"
 
-#: Plugins/Input/aac/src/libmp4.c:45 Plugins/Input/flac/fileinfo.c:57
+#: Plugins/Input/aac/src/libmp4.c:30 Plugins/Input/flac/fileinfo.c:57
 #: Plugins/Input/mpg123/mpg123.c:63 Plugins/Input/vorbis/fileinfo.c:93
 msgid "Space"
 msgstr "Espacio"
 
-#: Plugins/Input/aac/src/libmp4.c:46 Plugins/Input/flac/fileinfo.c:58
+#: Plugins/Input/aac/src/libmp4.c:31 Plugins/Input/flac/fileinfo.c:58
 #: Plugins/Input/mpg123/mpg123.c:64 Plugins/Input/vorbis/fileinfo.c:94
 msgid "Meditative"
 msgstr "Meditativa"
 
-#: Plugins/Input/aac/src/libmp4.c:46 Plugins/Input/flac/fileinfo.c:58
+#: Plugins/Input/aac/src/libmp4.c:31 Plugins/Input/flac/fileinfo.c:58
 #: Plugins/Input/mpg123/mpg123.c:64 Plugins/Input/vorbis/fileinfo.c:94
 msgid "Instrumental Pop"
 msgstr "Pop instrumental"
 
-#: Plugins/Input/aac/src/libmp4.c:47 Plugins/Input/flac/fileinfo.c:59
+#: Plugins/Input/aac/src/libmp4.c:32 Plugins/Input/flac/fileinfo.c:59
 #: Plugins/Input/mpg123/mpg123.c:65 Plugins/Input/vorbis/fileinfo.c:95
 msgid "Instrumental Rock"
 msgstr "Rock instrumental"
 
-#: Plugins/Input/aac/src/libmp4.c:47 Plugins/Input/flac/fileinfo.c:59
+#: Plugins/Input/aac/src/libmp4.c:32 Plugins/Input/flac/fileinfo.c:59
 #: Plugins/Input/mpg123/mpg123.c:65 Plugins/Input/vorbis/fileinfo.c:95
 msgid "Ethnic"
 msgstr "Étnica"
 
-#: Plugins/Input/aac/src/libmp4.c:47 Plugins/Input/flac/fileinfo.c:59
+#: Plugins/Input/aac/src/libmp4.c:32 Plugins/Input/flac/fileinfo.c:59
 #: Plugins/Input/mpg123/mpg123.c:65 Plugins/Input/vorbis/fileinfo.c:95
 msgid "Gothic"
 msgstr "Gótica"
 
-#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:60
+#: Plugins/Input/aac/src/libmp4.c:33 Plugins/Input/flac/fileinfo.c:60
 #: Plugins/Input/mpg123/mpg123.c:66 Plugins/Input/vorbis/fileinfo.c:96
 msgid "Darkwave"
 msgstr "Darkwave"
 
-#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:60
+#: Plugins/Input/aac/src/libmp4.c:33 Plugins/Input/flac/fileinfo.c:60
 #: Plugins/Input/mpg123/mpg123.c:66 Plugins/Input/vorbis/fileinfo.c:96
 msgid "Techno-Industrial"
 msgstr "Tecno-industrial"
 
-#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:60
+#: Plugins/Input/aac/src/libmp4.c:33 Plugins/Input/flac/fileinfo.c:60
 #: Plugins/Input/mpg123/mpg123.c:66 Plugins/Input/vorbis/fileinfo.c:96
 msgid "Electronic"
 msgstr "Electrónica"
 
-#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:61
+#: Plugins/Input/aac/src/libmp4.c:34 Plugins/Input/flac/fileinfo.c:61
 #: Plugins/Input/mpg123/mpg123.c:67 Plugins/Input/vorbis/fileinfo.c:97
 msgid "Pop-Folk"
 msgstr "Pop-folk"
 
-#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:61
+#: Plugins/Input/aac/src/libmp4.c:34 Plugins/Input/flac/fileinfo.c:61
 #: Plugins/Input/mpg123/mpg123.c:67 Plugins/Input/vorbis/fileinfo.c:97
 msgid "Eurodance"
 msgstr "Eurodance"
 
-#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:61
+#: Plugins/Input/aac/src/libmp4.c:34 Plugins/Input/flac/fileinfo.c:61
 #: Plugins/Input/mpg123/mpg123.c:67 Plugins/Input/vorbis/fileinfo.c:97
 msgid "Dream"
 msgstr "Dream"
 
-#: Plugins/Input/aac/src/libmp4.c:50 Plugins/Input/flac/fileinfo.c:62
+#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:62
 #: Plugins/Input/mpg123/mpg123.c:68 Plugins/Input/vorbis/fileinfo.c:98
 msgid "Southern Rock"
 msgstr "Rock sureño"
 
-#: Plugins/Input/aac/src/libmp4.c:50 Plugins/Input/flac/fileinfo.c:62
+#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:62
 #: Plugins/Input/mpg123/mpg123.c:68 Plugins/Input/vorbis/fileinfo.c:98
 msgid "Comedy"
 msgstr "Comedia"
 
-#: Plugins/Input/aac/src/libmp4.c:50 Plugins/Input/flac/fileinfo.c:62
+#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:62
 #: Plugins/Input/mpg123/mpg123.c:68 Plugins/Input/vorbis/fileinfo.c:98
 msgid "Cult"
 msgstr "Culto"
 
-#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:63
+#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:63
 #: Plugins/Input/mpg123/mpg123.c:69 Plugins/Input/vorbis/fileinfo.c:99
 msgid "Gangsta Rap"
 msgstr "Gangsta Rap"
 
-#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:63
+#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:63
 #: Plugins/Input/mpg123/mpg123.c:69 Plugins/Input/vorbis/fileinfo.c:99
 msgid "Top 40"
 msgstr "Primeros 40"
 
-#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:63
+#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:63
 #: Plugins/Input/mpg123/mpg123.c:69 Plugins/Input/vorbis/fileinfo.c:99
 msgid "Christian Rap"
 msgstr "Rap cristiano"
 
-#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:64
+#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:64
 #: Plugins/Input/mpg123/mpg123.c:70 Plugins/Input/vorbis/fileinfo.c:100
 msgid "Pop/Funk"
 msgstr "Pop/Funk"
 
-#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:64
+#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:64
 #: Plugins/Input/mpg123/mpg123.c:70 Plugins/Input/vorbis/fileinfo.c:100
 msgid "Jungle"
 msgstr "Jungle"
 
-#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:64
+#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:64
 #: Plugins/Input/mpg123/mpg123.c:70 Plugins/Input/vorbis/fileinfo.c:100
 msgid "Native American"
 msgstr "Nativa americana"
 
-#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:65
+#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:65
 #: Plugins/Input/mpg123/mpg123.c:71 Plugins/Input/vorbis/fileinfo.c:101
 msgid "Cabaret"
 msgstr "Cabaret"
 
-#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:65
+#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:65
 #: Plugins/Input/mpg123/mpg123.c:71 Plugins/Input/vorbis/fileinfo.c:101
 msgid "New Wave"
 msgstr "New wave"
 
-#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:65
+#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:65
 #: Plugins/Input/mpg123/mpg123.c:71 Plugins/Input/vorbis/fileinfo.c:101
 msgid "Psychedelic"
 msgstr "Psicodélica"
 
-#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:65
+#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:65
 #: Plugins/Input/mpg123/mpg123.c:71 Plugins/Input/vorbis/fileinfo.c:101
 msgid "Rave"
 msgstr "Rave"
 
-#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:66
+#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:66
 #: Plugins/Input/mpg123/mpg123.c:72 Plugins/Input/vorbis/fileinfo.c:102
 msgid "Showtunes"
 msgstr "Showtunes"
 
-#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:66
+#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:66
 #: Plugins/Input/mpg123/mpg123.c:72 Plugins/Input/vorbis/fileinfo.c:102
 msgid "Trailer"
 msgstr "Trailer"
 
-#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:66
+#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:66
 #: Plugins/Input/mpg123/mpg123.c:72 Plugins/Input/vorbis/fileinfo.c:102
 msgid "Lo-Fi"
 msgstr "Lo-Fi"
 
-#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:66
+#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:66
 #: Plugins/Input/mpg123/mpg123.c:72 Plugins/Input/vorbis/fileinfo.c:102
 msgid "Tribal"
 msgstr "Tribal"
 
-#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:67
+#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:67
 #: Plugins/Input/mpg123/mpg123.c:73 Plugins/Input/vorbis/fileinfo.c:103
 msgid "Acid Punk"
 msgstr "Acid Punk"
 
-#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:67
+#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:67
 #: Plugins/Input/mpg123/mpg123.c:73 Plugins/Input/vorbis/fileinfo.c:103
 msgid "Acid Jazz"
 msgstr "Jazz ácido"
 
-#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:67
+#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:67
 #: Plugins/Input/mpg123/mpg123.c:73 Plugins/Input/vorbis/fileinfo.c:103
 msgid "Polka"
 msgstr "Polka"
 
-#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:67
+#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:67
 #: Plugins/Input/mpg123/mpg123.c:73 Plugins/Input/vorbis/fileinfo.c:103
 msgid "Retro"
 msgstr "Retro"
 
-#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:68
+#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:68
 #: Plugins/Input/mpg123/mpg123.c:74 Plugins/Input/vorbis/fileinfo.c:104
 msgid "Musical"
 msgstr "Musical"
 
-#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:68
+#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:68
 #: Plugins/Input/mpg123/mpg123.c:74 Plugins/Input/vorbis/fileinfo.c:104
 msgid "Rock & Roll"
 msgstr "Rock & Roll"
 
-#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:68
+#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:68
 #: Plugins/Input/mpg123/mpg123.c:74 Plugins/Input/vorbis/fileinfo.c:104
 msgid "Hard Rock"
 msgstr "Hard Rock"
 
-#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:68
+#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:68
 #: Plugins/Input/mpg123/mpg123.c:74 Plugins/Input/vorbis/fileinfo.c:104
 msgid "Folk"
 msgstr "Folclore"
 
-#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:69
+#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:69
 #: Plugins/Input/mpg123/mpg123.c:75 Plugins/Input/vorbis/fileinfo.c:105
 msgid "Folk/Rock"
 msgstr "Folclore/Rock"
 
-#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:69
+#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:69
 #: Plugins/Input/mpg123/mpg123.c:75 Plugins/Input/vorbis/fileinfo.c:105
 msgid "National Folk"
 msgstr "Folklore nacional"
 
-#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:69
+#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:69
 #: Plugins/Input/mpg123/mpg123.c:75 Plugins/Input/vorbis/fileinfo.c:105
 msgid "Swing"
 msgstr "Swing"
 
-#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:70
+#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:70
 #: Plugins/Input/mpg123/mpg123.c:76 Plugins/Input/vorbis/fileinfo.c:106
 msgid "Fast-Fusion"
 msgstr "Fast-Fusion"
 
-#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:70
+#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:70
 #: Plugins/Input/mpg123/mpg123.c:76 Plugins/Input/vorbis/fileinfo.c:106
 msgid "Bebob"
 msgstr "Bebob"
 
-#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:70
+#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:70
 #: Plugins/Input/mpg123/mpg123.c:76 Plugins/Input/vorbis/fileinfo.c:106
 msgid "Latin"
 msgstr "Latín"
 
-#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:70
+#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:70
 #: Plugins/Input/mpg123/mpg123.c:76 Plugins/Input/vorbis/fileinfo.c:106
 msgid "Revival"
 msgstr "Revival"
 
-#: Plugins/Input/aac/src/libmp4.c:59 Plugins/Input/flac/fileinfo.c:71
+#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/flac/fileinfo.c:71
 #: Plugins/Input/mpg123/mpg123.c:77 Plugins/Input/vorbis/fileinfo.c:107
 msgid "Celtic"
 msgstr "Celta"
 
-#: Plugins/Input/aac/src/libmp4.c:59 Plugins/Input/flac/fileinfo.c:71
+#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/flac/fileinfo.c:71
 #: Plugins/Input/mpg123/mpg123.c:77 Plugins/Input/vorbis/fileinfo.c:107
 msgid "Bluegrass"
 msgstr "Bluegrass"
 
-#: Plugins/Input/aac/src/libmp4.c:59 Plugins/Input/flac/fileinfo.c:71
+#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/flac/fileinfo.c:71
 #: Plugins/Input/mpg123/mpg123.c:77 Plugins/Input/vorbis/fileinfo.c:107
 msgid "Avantgarde"
 msgstr "Avantgarde"
 
-#: Plugins/Input/aac/src/libmp4.c:60 Plugins/Input/flac/fileinfo.c:72
+#: Plugins/Input/aac/src/libmp4.c:45 Plugins/Input/flac/fileinfo.c:72
 #: Plugins/Input/mpg123/mpg123.c:78 Plugins/Input/vorbis/fileinfo.c:108
 msgid "Gothic Rock"
 msgstr "Rock gótico"
 
-#: Plugins/Input/aac/src/libmp4.c:60 Plugins/Input/flac/fileinfo.c:72
+#: Plugins/Input/aac/src/libmp4.c:45 Plugins/Input/flac/fileinfo.c:72
 #: Plugins/Input/mpg123/mpg123.c:78 Plugins/Input/vorbis/fileinfo.c:108
 msgid "Progressive Rock"
 msgstr "Rock progresivo"
 
-#: Plugins/Input/aac/src/libmp4.c:61 Plugins/Input/flac/fileinfo.c:73
+#: Plugins/Input/aac/src/libmp4.c:46 Plugins/Input/flac/fileinfo.c:73
 #: Plugins/Input/mpg123/mpg123.c:79 Plugins/Input/vorbis/fileinfo.c:109
 msgid "Psychedelic Rock"
 msgstr "Rock Psicodélico"
 
-#: Plugins/Input/aac/src/libmp4.c:61 Plugins/Input/flac/fileinfo.c:73
+#: Plugins/Input/aac/src/libmp4.c:46 Plugins/Input/flac/fileinfo.c:73
 #: Plugins/Input/mpg123/mpg123.c:79 Plugins/Input/vorbis/fileinfo.c:109
 msgid "Symphonic Rock"
 msgstr "Rock sinfónico"
 
-#: Plugins/Input/aac/src/libmp4.c:61 Plugins/Input/flac/fileinfo.c:73
+#: Plugins/Input/aac/src/libmp4.c:46 Plugins/Input/flac/fileinfo.c:73
 #: Plugins/Input/mpg123/mpg123.c:79 Plugins/Input/vorbis/fileinfo.c:109
 msgid "Slow Rock"
 msgstr "Rock lento"
 
-#: Plugins/Input/aac/src/libmp4.c:62 Plugins/Input/flac/fileinfo.c:74
+#: Plugins/Input/aac/src/libmp4.c:47 Plugins/Input/flac/fileinfo.c:74
 #: Plugins/Input/mpg123/mpg123.c:80 Plugins/Input/vorbis/fileinfo.c:110
 msgid "Big Band"
 msgstr "Big Band"
 
-#: Plugins/Input/aac/src/libmp4.c:62 Plugins/Input/flac/fileinfo.c:74
+#: Plugins/Input/aac/src/libmp4.c:47 Plugins/Input/flac/fileinfo.c:74
 #: Plugins/Input/mpg123/mpg123.c:80 Plugins/Input/vorbis/fileinfo.c:110
 msgid "Chorus"
 msgstr "Coral"
 
-#: Plugins/Input/aac/src/libmp4.c:62 Plugins/Input/flac/fileinfo.c:74
+#: Plugins/Input/aac/src/libmp4.c:47 Plugins/Input/flac/fileinfo.c:74
 #: Plugins/Input/mpg123/mpg123.c:80 Plugins/Input/vorbis/fileinfo.c:110
 msgid "Easy Listening"
 msgstr "Escucha fácil"
 
-#: Plugins/Input/aac/src/libmp4.c:63 Plugins/Input/flac/fileinfo.c:75
+#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:75
 #: Plugins/Input/mpg123/mpg123.c:81 Plugins/Input/vorbis/fileinfo.c:111
 msgid "Acoustic"
 msgstr "Acústica"
 
-#: Plugins/Input/aac/src/libmp4.c:63 Plugins/Input/flac/fileinfo.c:75
+#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:75
 #: Plugins/Input/mpg123/mpg123.c:81 Plugins/Input/vorbis/fileinfo.c:111
 msgid "Humour"
 msgstr "Humor"
 
-#: Plugins/Input/aac/src/libmp4.c:63 Plugins/Input/flac/fileinfo.c:75
+#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:75
 #: Plugins/Input/mpg123/mpg123.c:81 Plugins/Input/vorbis/fileinfo.c:111
 msgid "Speech"
 msgstr "Discurso"
 
-#: Plugins/Input/aac/src/libmp4.c:63 Plugins/Input/flac/fileinfo.c:75
+#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:75
 #: Plugins/Input/mpg123/mpg123.c:81 Plugins/Input/vorbis/fileinfo.c:111
 msgid "Chanson"
 msgstr "Chanson"
 
-#: Plugins/Input/aac/src/libmp4.c:64 Plugins/Input/flac/fileinfo.c:76
+#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:76
 #: Plugins/Input/mpg123/mpg123.c:82 Plugins/Input/vorbis/fileinfo.c:112
 msgid "Opera"
 msgstr "Opera"
 
-#: Plugins/Input/aac/src/libmp4.c:64 Plugins/Input/flac/fileinfo.c:76
+#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:76
 #: Plugins/Input/mpg123/mpg123.c:82 Plugins/Input/vorbis/fileinfo.c:112
 msgid "Chamber Music"
 msgstr "Música de cámara"
 
-#: Plugins/Input/aac/src/libmp4.c:64 Plugins/Input/flac/fileinfo.c:76
+#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:76
 #: Plugins/Input/mpg123/mpg123.c:82 Plugins/Input/vorbis/fileinfo.c:112
 msgid "Sonata"
 msgstr "Sonata"
 
-#: Plugins/Input/aac/src/libmp4.c:64 Plugins/Input/flac/fileinfo.c:76
+#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:76
 #: Plugins/Input/mpg123/mpg123.c:82 Plugins/Input/vorbis/fileinfo.c:112
 msgid "Symphony"
 msgstr "Sinfonía"
 
-#: Plugins/Input/aac/src/libmp4.c:65 Plugins/Input/flac/fileinfo.c:77
+#: Plugins/Input/aac/src/libmp4.c:50 Plugins/Input/flac/fileinfo.c:77
 #: Plugins/Input/mpg123/mpg123.c:83 Plugins/Input/vorbis/fileinfo.c:113
 msgid "Booty Bass"
 msgstr "Booty Bass"
 
-#: Plugins/Input/aac/src/libmp4.c:65 Plugins/Input/flac/fileinfo.c:77
+#: Plugins/Input/aac/src/libmp4.c:50 Plugins/Input/flac/fileinfo.c:77
 #: Plugins/Input/mpg123/mpg123.c:83 Plugins/Input/vorbis/fileinfo.c:113
 msgid "Primus"
 msgstr "Primus"
 
-#: Plugins/Input/aac/src/libmp4.c:65 Plugins/Input/flac/fileinfo.c:77
+#: Plugins/Input/aac/src/libmp4.c:50 Plugins/Input/flac/fileinfo.c:77
 #: Plugins/Input/mpg123/mpg123.c:83 Plugins/Input/vorbis/fileinfo.c:113
 msgid "Porn Groove"
 msgstr "Porn Groove"
 
-#: Plugins/Input/aac/src/libmp4.c:66 Plugins/Input/flac/fileinfo.c:78
+#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:78
 #: Plugins/Input/mpg123/mpg123.c:84 Plugins/Input/vorbis/fileinfo.c:114
 msgid "Satire"
 msgstr "Sátira"
 
-#: Plugins/Input/aac/src/libmp4.c:66 Plugins/Input/flac/fileinfo.c:78
+#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:78
 #: Plugins/Input/mpg123/mpg123.c:84 Plugins/Input/vorbis/fileinfo.c:114
 msgid "Slow Jam"
 msgstr "Slow Jam"
 
-#: Plugins/Input/aac/src/libmp4.c:66 Plugins/Input/flac/fileinfo.c:78
+#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:78
 #: Plugins/Input/mpg123/mpg123.c:84 Plugins/Input/vorbis/fileinfo.c:114
 msgid "Club"
 msgstr "Club"
 
-#: Plugins/Input/aac/src/libmp4.c:66 Plugins/Input/flac/fileinfo.c:78
+#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:78
 #: Plugins/Input/mpg123/mpg123.c:84 Plugins/Input/vorbis/fileinfo.c:114
 msgid "Tango"
 msgstr "Tango"
 
-#: Plugins/Input/aac/src/libmp4.c:67 Plugins/Input/flac/fileinfo.c:79
+#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:79
 #: Plugins/Input/mpg123/mpg123.c:85 Plugins/Input/vorbis/fileinfo.c:115
 msgid "Samba"
 msgstr "Samba"
 
-#: Plugins/Input/aac/src/libmp4.c:67 Plugins/Input/flac/fileinfo.c:79
+#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:79
 #: Plugins/Input/mpg123/mpg123.c:85 Plugins/Input/vorbis/fileinfo.c:115
 msgid "Folklore"
 msgstr "Folclore"
 
-#: Plugins/Input/aac/src/libmp4.c:67 Plugins/Input/flac/fileinfo.c:79
+#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:79
 #: Plugins/Input/mpg123/mpg123.c:85 Plugins/Input/vorbis/fileinfo.c:115
 msgid "Ballad"
 msgstr "Balada"
 
-#: Plugins/Input/aac/src/libmp4.c:67 Plugins/Input/flac/fileinfo.c:79
+#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:79
 #: Plugins/Input/mpg123/mpg123.c:85 Plugins/Input/vorbis/fileinfo.c:115
 msgid "Power Ballad"
 msgstr "Power Ballad"
 
-#: Plugins/Input/aac/src/libmp4.c:68 Plugins/Input/flac/fileinfo.c:80
+#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:80
 #: Plugins/Input/mpg123/mpg123.c:86 Plugins/Input/vorbis/fileinfo.c:116
 msgid "Rhythmic Soul"
 msgstr "Soul rítmico"
 
-#: Plugins/Input/aac/src/libmp4.c:68 Plugins/Input/flac/fileinfo.c:80
+#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:80
 #: Plugins/Input/mpg123/mpg123.c:86 Plugins/Input/vorbis/fileinfo.c:116
 msgid "Freestyle"
 msgstr "Estilo libre"
 
-#: Plugins/Input/aac/src/libmp4.c:68 Plugins/Input/flac/fileinfo.c:80
+#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:80
 #: Plugins/Input/mpg123/mpg123.c:86 Plugins/Input/vorbis/fileinfo.c:116
 msgid "Duet"
 msgstr "Dueto"
 
-#: Plugins/Input/aac/src/libmp4.c:69 Plugins/Input/flac/fileinfo.c:81
+#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:81
 #: Plugins/Input/mpg123/mpg123.c:87 Plugins/Input/vorbis/fileinfo.c:117
 msgid "Punk Rock"
 msgstr "Rock Punk"
 
-#: Plugins/Input/aac/src/libmp4.c:69 Plugins/Input/flac/fileinfo.c:81
+#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:81
 #: Plugins/Input/mpg123/mpg123.c:87 Plugins/Input/vorbis/fileinfo.c:117
 msgid "Drum Solo"
 msgstr "Solo de batería"
 
-#: Plugins/Input/aac/src/libmp4.c:69 Plugins/Input/flac/fileinfo.c:81
+#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:81
 #: Plugins/Input/mpg123/mpg123.c:87 Plugins/Input/vorbis/fileinfo.c:117
 msgid "A Cappella"
 msgstr "A cappella"
 
-#: Plugins/Input/aac/src/libmp4.c:70 Plugins/Input/flac/fileinfo.c:82
+#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:82
 #: Plugins/Input/mpg123/mpg123.c:88 Plugins/Input/vorbis/fileinfo.c:118
 msgid "Euro-House"
 msgstr "Euro-House"
 
-#: Plugins/Input/aac/src/libmp4.c:70 Plugins/Input/flac/fileinfo.c:82
+#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:82
 #: Plugins/Input/mpg123/mpg123.c:88 Plugins/Input/vorbis/fileinfo.c:118
 msgid "Dance Hall"
 msgstr "Dance Hall"
 
-#: Plugins/Input/aac/src/libmp4.c:70 Plugins/Input/flac/fileinfo.c:82
+#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:82
 #: Plugins/Input/mpg123/mpg123.c:88 Plugins/Input/vorbis/fileinfo.c:118
 msgid "Goa"
 msgstr "Goa"
 
-#: Plugins/Input/aac/src/libmp4.c:71 Plugins/Input/flac/fileinfo.c:83
+#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:83
 #: Plugins/Input/mpg123/mpg123.c:89 Plugins/Input/vorbis/fileinfo.c:119
 msgid "Drum & Bass"
 msgstr "Bajo y batería"
 
-#: Plugins/Input/aac/src/libmp4.c:71 Plugins/Input/flac/fileinfo.c:83
+#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:83
 #: Plugins/Input/mpg123/mpg123.c:89 Plugins/Input/vorbis/fileinfo.c:119
 msgid "Club-House"
 msgstr "Club-House"
 
-#: Plugins/Input/aac/src/libmp4.c:71 Plugins/Input/flac/fileinfo.c:83
+#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:83
 #: Plugins/Input/mpg123/mpg123.c:89 Plugins/Input/vorbis/fileinfo.c:119
 msgid "Hardcore"
 msgstr "Hardcore"
 
-#: Plugins/Input/aac/src/libmp4.c:72 Plugins/Input/flac/fileinfo.c:84
+#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:84
 #: Plugins/Input/mpg123/mpg123.c:90 Plugins/Input/vorbis/fileinfo.c:120
 msgid "Terror"
 msgstr "Terror"
 
-#: Plugins/Input/aac/src/libmp4.c:72 Plugins/Input/flac/fileinfo.c:84
+#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:84
 #: Plugins/Input/mpg123/mpg123.c:90 Plugins/Input/vorbis/fileinfo.c:120
 msgid "Indie"
 msgstr "Indie"
 
-#: Plugins/Input/aac/src/libmp4.c:72 Plugins/Input/flac/fileinfo.c:84
+#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:84
 #: Plugins/Input/mpg123/mpg123.c:90 Plugins/Input/vorbis/fileinfo.c:120
 msgid "BritPop"
 msgstr "BritPop"
 
-#: Plugins/Input/aac/src/libmp4.c:72 Plugins/Input/flac/fileinfo.c:84
+#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:84
 #: Plugins/Input/mpg123/mpg123.c:90 Plugins/Input/vorbis/fileinfo.c:120
 msgid "Negerpunk"
 msgstr "Negerpunk"
 
-#: Plugins/Input/aac/src/libmp4.c:73 Plugins/Input/flac/fileinfo.c:85
+#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:85
 #: Plugins/Input/mpg123/mpg123.c:91 Plugins/Input/vorbis/fileinfo.c:121
 msgid "Polsk Punk"
 msgstr "Polsk Punk"
 
-#: Plugins/Input/aac/src/libmp4.c:73 Plugins/Input/flac/fileinfo.c:85
+#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:85
 #: Plugins/Input/mpg123/mpg123.c:91 Plugins/Input/vorbis/fileinfo.c:121
 msgid "Beat"
 msgstr "Beat"
 
-#: Plugins/Input/aac/src/libmp4.c:73 Plugins/Input/flac/fileinfo.c:85
+#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:85
 #: Plugins/Input/mpg123/mpg123.c:91 Plugins/Input/vorbis/fileinfo.c:121
 msgid "Christian Gangsta Rap"
 msgstr "Christian Gangsta Rap"
 
-#: Plugins/Input/aac/src/libmp4.c:74 Plugins/Input/flac/fileinfo.c:86
+#: Plugins/Input/aac/src/libmp4.c:59 Plugins/Input/flac/fileinfo.c:86
 #: Plugins/Input/mpg123/mpg123.c:92 Plugins/Input/vorbis/fileinfo.c:122
 msgid "Heavy Metal"
 msgstr "Heavy Metal"
 
-#: Plugins/Input/aac/src/libmp4.c:74 Plugins/Input/flac/fileinfo.c:86
+#: Plugins/Input/aac/src/libmp4.c:59 Plugins/Input/flac/fileinfo.c:86
 #: Plugins/Input/mpg123/mpg123.c:92 Plugins/Input/vorbis/fileinfo.c:122
 msgid "Black Metal"
 msgstr "Black Metal"
 
-#: Plugins/Input/aac/src/libmp4.c:74 Plugins/Input/flac/fileinfo.c:86
+#: Plugins/Input/aac/src/libmp4.c:59 Plugins/Input/flac/fileinfo.c:86
 #: Plugins/Input/mpg123/mpg123.c:92 Plugins/Input/vorbis/fileinfo.c:122
 msgid "Crossover"
 msgstr "Crossover"
 
-#: Plugins/Input/aac/src/libmp4.c:75 Plugins/Input/flac/fileinfo.c:87
+#: Plugins/Input/aac/src/libmp4.c:60 Plugins/Input/flac/fileinfo.c:87
 #: Plugins/Input/mpg123/mpg123.c:93 Plugins/Input/vorbis/fileinfo.c:123
 msgid "Contemporary Christian"
 msgstr "Cristiana contemporánea"
 
-#: Plugins/Input/aac/src/libmp4.c:75 Plugins/Input/flac/fileinfo.c:87
+#: Plugins/Input/aac/src/libmp4.c:60 Plugins/Input/flac/fileinfo.c:87
 #: Plugins/Input/mpg123/mpg123.c:93 Plugins/Input/vorbis/fileinfo.c:123
 msgid "Christian Rock"
 msgstr "Rock cristiano"
 
-#: Plugins/Input/aac/src/libmp4.c:76 Plugins/Input/flac/fileinfo.c:88
+#: Plugins/Input/aac/src/libmp4.c:61 Plugins/Input/flac/fileinfo.c:88
 #: Plugins/Input/mpg123/mpg123.c:94 Plugins/Input/vorbis/fileinfo.c:124
 msgid "Merengue"
 msgstr "Merengue"
 
-#: Plugins/Input/aac/src/libmp4.c:76 Plugins/Input/flac/fileinfo.c:88
+#: Plugins/Input/aac/src/libmp4.c:61 Plugins/Input/flac/fileinfo.c:88
 #: Plugins/Input/mpg123/mpg123.c:94 Plugins/Input/vorbis/fileinfo.c:124
 msgid "Salsa"
 msgstr "Salsa"
 
-#: Plugins/Input/aac/src/libmp4.c:76 Plugins/Input/flac/fileinfo.c:88
+#: Plugins/Input/aac/src/libmp4.c:61 Plugins/Input/flac/fileinfo.c:88
 #: Plugins/Input/mpg123/mpg123.c:94 Plugins/Input/vorbis/fileinfo.c:124
 msgid "Thrash Metal"
 msgstr "Thrash Metal"
 
-#: Plugins/Input/aac/src/libmp4.c:77 Plugins/Input/flac/fileinfo.c:89
+#: Plugins/Input/aac/src/libmp4.c:62 Plugins/Input/flac/fileinfo.c:89
 #: Plugins/Input/mpg123/mpg123.c:95 Plugins/Input/vorbis/fileinfo.c:125
 msgid "Anime"
 msgstr "Anime"
 
-#: Plugins/Input/aac/src/libmp4.c:77 Plugins/Input/flac/fileinfo.c:89
+#: Plugins/Input/aac/src/libmp4.c:62 Plugins/Input/flac/fileinfo.c:89
 #: Plugins/Input/mpg123/mpg123.c:95 Plugins/Input/vorbis/fileinfo.c:125
 msgid "JPop"
 msgstr "JPop"
 
-#: Plugins/Input/aac/src/libmp4.c:77 Plugins/Input/flac/fileinfo.c:89
+#: Plugins/Input/aac/src/libmp4.c:62 Plugins/Input/flac/fileinfo.c:89
 #: Plugins/Input/mpg123/mpg123.c:95 Plugins/Input/vorbis/fileinfo.c:125
 msgid "Synthpop"
 msgstr "Synthpop"
@@ -1216,7 +1212,7 @@ msgstr ""
 msgid "Time Div:"
 msgstr ""
 
-#: Plugins/Input/amidi-plug/i_fileinfo.c:184 audacious/util.c:1221
+#: Plugins/Input/amidi-plug/i_fileinfo.c:184 audacious/util.c:1217
 msgid "  (invalid UTF-8)"
 msgstr "  (UTF-8 inválido)"
 
@@ -1421,8 +1417,8 @@ msgstr "Servidor de índice del CD:"
 msgid "Track names:"
 msgstr "Nombres de las pistas:"
 
-#: Plugins/Input/cdaudio/configure.c:652 Plugins/Input/flac/configure.c:456
-#: Plugins/Input/mpg123/configure.c:649 Plugins/Input/vorbis/configure.c:518
+#: Plugins/Input/cdaudio/configure.c:652 Plugins/Input/flac/configure.c:380
+#: Plugins/Input/mpg123/configure.c:468 Plugins/Input/vorbis/configure.c:339
 msgid "Override generic titles"
 msgstr "Sustituir títulos genéricos"
 
@@ -1434,11 +1430,11 @@ msgstr "Formato del nombre:"
 msgid "CD Info"
 msgstr "Información sobre el CD"
 
-#: Plugins/Input/console/Audacious_Driver.cpp:674
+#: Plugins/Input/console/Audacious_Driver.cpp:694
 msgid "About the Console Music Decoder"
 msgstr "Acerca del Decodoficador de Música de Consola"
 
-#: Plugins/Input/console/Audacious_Driver.cpp:675
+#: Plugins/Input/console/Audacious_Driver.cpp:695
 msgid ""
 "Console music decoder engine based on Game_Music_Emu 0.3.0.\n"
 "Audacious implementation by: William Pitcock <nenolod@nenolod.net>, \n"
@@ -1449,7 +1445,7 @@ msgstr ""
 "Implementado en Audacious  por: William Pitcock <nenolod@nenolod.net>, \n"
 "        Shay Green <hotpop.com@blargg>"
 
-#: Plugins/Input/console/Audacious_Driver.cpp:716
+#: Plugins/Input/console/Audacious_Driver.cpp:736
 msgid "SPC, VGM, NSF/NSFE, GBS, and GYM module decoder"
 msgstr "Módulos decodificadores SPC, VGM, NSF/NSFE, GBS, y GYM "
 
@@ -1765,209 +1761,183 @@ msgstr "Vietnamese (VPS)"
 msgid "Western (MacRoman)"
 msgstr "Western (MacRoman)"
 
-#: Plugins/Input/flac/configure.c:353 Plugins/Input/mpg123/configure.c:215
+#: Plugins/Input/flac/configure.c:280 Plugins/Input/mpg123/configure.c:129
 msgid "Select the directory where you want to store the MPEG streams:"
 msgstr "Seleccione el directorio donde desea almacenar los flujos MPEG:"
 
-#: Plugins/Input/flac/configure.c:404
+#: Plugins/Input/flac/configure.c:328
 msgid "Flac Configuration"
 msgstr "Configuración Flac"
 
-#: Plugins/Input/flac/configure.c:416
+#: Plugins/Input/flac/configure.c:340
 msgid "Tag Handling"
 msgstr "Manejo de Marcas"
 
-#: Plugins/Input/flac/configure.c:425
+#: Plugins/Input/flac/configure.c:349
 msgid "Convert Character Set"
 msgstr "Convertir conjunto de caracteres"
 
-#: Plugins/Input/flac/configure.c:432
+#: Plugins/Input/flac/configure.c:356
 msgid "Convert character set from :"
 msgstr "Convertir conjunto de caracteres desde:"
 
-#: Plugins/Input/flac/configure.c:437
+#: Plugins/Input/flac/configure.c:361
 msgid "to :"
 msgstr "a:"
 
-#: Plugins/Input/flac/configure.c:465 Plugins/Input/vorbis/configure.c:531
-#: audacious/glade/prefswin.glade:2505
+#: Plugins/Input/flac/configure.c:389 Plugins/Input/vorbis/configure.c:352
+#: audacious/glade/prefswin.glade:2617
 msgid "Title format:"
 msgstr "Formato del título:"
 
-#: Plugins/Input/flac/configure.c:476 Plugins/Input/mpg123/configure.c:676
-#: Plugins/Input/vorbis/configure.c:545 audacious/prefswin.c:104
+#: Plugins/Input/flac/configure.c:400 Plugins/Input/mpg123/configure.c:495
+#: Plugins/Input/vorbis/configure.c:366 audacious/prefswin.c:108
 msgid "Title"
 msgstr "Titulación"
 
-#: Plugins/Input/flac/configure.c:485 Plugins/Input/vorbis/configure.c:606
+#: Plugins/Input/flac/configure.c:409 Plugins/Input/vorbis/configure.c:427
 msgid "ReplayGain"
 msgstr "Repetición de ganancia"
 
-#: Plugins/Input/flac/configure.c:493
+#: Plugins/Input/flac/configure.c:417
 msgid "Enable ReplayGain processing"
 msgstr "Activar proceso de ReplayGain"
 
-#: Plugins/Input/flac/configure.c:498
+#: Plugins/Input/flac/configure.c:422
 msgid "Album mode"
 msgstr "Modo de Álbum"
 
-#: Plugins/Input/flac/configure.c:505
+#: Plugins/Input/flac/configure.c:429
 msgid "Preamp:"
 msgstr "Preamplificación:"
 
-#: Plugins/Input/flac/configure.c:512
+#: Plugins/Input/flac/configure.c:436
 msgid "0 dB"
 msgstr "0 dB"
 
-#: Plugins/Input/flac/configure.c:516
+#: Plugins/Input/flac/configure.c:440
 msgid "6dB hard limiting"
 msgstr "Limitación de 6dB por hard"
 
-#: Plugins/Input/flac/configure.c:525
-#: Plugins/Input/modplug/gui/interface.cpp:150
+#: Plugins/Input/flac/configure.c:449
+#: Plugins/Input/modplug/gui/interface.cpp:151
 msgid "Resolution"
 msgstr "Resolución"
 
-#: Plugins/Input/flac/configure.c:533
+#: Plugins/Input/flac/configure.c:457
 msgid "Without ReplayGain"
 msgstr "Sin ReplayGain"
 
-#: Plugins/Input/flac/configure.c:541
+#: Plugins/Input/flac/configure.c:465
 msgid "Dither 24bps to 16bps"
 msgstr "Difuminar 24bps a 16bps"
 
-#: Plugins/Input/flac/configure.c:546
+#: Plugins/Input/flac/configure.c:470
 msgid "With ReplayGain"
 msgstr "Con ReplayGain"
 
-#: Plugins/Input/flac/configure.c:554
+#: Plugins/Input/flac/configure.c:478
 msgid "Enable dithering"
 msgstr "Activar difuminado"
 
-#: Plugins/Input/flac/configure.c:563
+#: Plugins/Input/flac/configure.c:487
 msgid "Noise shaping"
 msgstr "Forma del ruido"
 
-#: Plugins/Input/flac/configure.c:571
+#: Plugins/Input/flac/configure.c:495
 msgid "none"
 msgstr "ninguno"
 
-#: Plugins/Input/flac/configure.c:577
+#: Plugins/Input/flac/configure.c:501
 msgid "low"
 msgstr "bajo"
 
-#: Plugins/Input/flac/configure.c:583
+#: Plugins/Input/flac/configure.c:507
 msgid "medium"
 msgstr "medio"
 
-#: Plugins/Input/flac/configure.c:589
+#: Plugins/Input/flac/configure.c:513
 msgid "high"
 msgstr "alto"
 
-#: Plugins/Input/flac/configure.c:595
+#: Plugins/Input/flac/configure.c:519
 msgid "Dither to"
 msgstr "Difuminar a"
 
-#: Plugins/Input/flac/configure.c:603
+#: Plugins/Input/flac/configure.c:527
 msgid "16 bps"
 msgstr "16 bps"
 
-#: Plugins/Input/flac/configure.c:609
+#: Plugins/Input/flac/configure.c:533
 msgid "24 bps"
 msgstr "24 bps"
 
-#: Plugins/Input/flac/configure.c:617
+#: Plugins/Input/flac/configure.c:541
 msgid "Output"
 msgstr "Salida"
 
-#: Plugins/Input/flac/configure.c:623 Plugins/Input/mpg123/configure.c:410
-#: Plugins/Input/vorbis/configure.c:308 Plugins/Output/OSS/configure.c:302
-#: Plugins/Output/arts/configure.c:63 Plugins/Output/esd/configure.c:171
-#: Plugins/Output/sun/configure.c:259
+#: Plugins/Input/flac/configure.c:547 Plugins/Input/mpg123/configure.c:320
+#: Plugins/Input/vorbis/configure.c:220 Plugins/Output/OSS/configure.c:302
+#: Plugins/Output/arts/configure.c:62 Plugins/Output/esd/configure.c:171
+#: Plugins/Output/sun/configure.c:258
 msgid "Buffering:"
 msgstr "Buffering:"
 
-#: Plugins/Input/flac/configure.c:634 Plugins/Input/mpg123/configure.c:423
-#: Plugins/Input/vorbis/configure.c:320
+#: Plugins/Input/flac/configure.c:558 Plugins/Input/mpg123/configure.c:333
+#: Plugins/Input/vorbis/configure.c:232
 msgid "Buffer size (kb):"
 msgstr "Tamaño del búfer (Kib):"
 
-#: Plugins/Input/flac/configure.c:644 Plugins/Input/mpg123/configure.c:438
-#: Plugins/Input/vorbis/configure.c:334 Plugins/Output/OSS/configure.c:329
-#: Plugins/Output/esd/configure.c:198 Plugins/Output/sun/configure.c:290
+#: Plugins/Input/flac/configure.c:568 Plugins/Input/mpg123/configure.c:348
+#: Plugins/Input/vorbis/configure.c:246 Plugins/Output/OSS/configure.c:329
+#: Plugins/Output/esd/configure.c:198 Plugins/Output/sun/configure.c:289
 msgid "Pre-buffer (percent):"
 msgstr "Pre-búfer (porcentaje):"
 
-#: Plugins/Input/flac/configure.c:654 Plugins/Input/mpg123/configure.c:452
-#: Plugins/Input/vorbis/configure.c:348
-msgid "Proxy:"
-msgstr "Proxy:"
-
-#: Plugins/Input/flac/configure.c:662 Plugins/Input/mpg123/configure.c:462
-#: Plugins/Input/vorbis/configure.c:358
-msgid "Use proxy"
-msgstr "Usar proxy"
-
-#: Plugins/Input/flac/configure.c:671 Plugins/Input/mpg123/configure.c:475
-#: Plugins/Input/vorbis/configure.c:371 Plugins/Output/esd/configure.c:114
-#: Plugins/Output/esd/configure.c:144
-msgid "Host:"
-msgstr "Host:"
-
-#: Plugins/Input/flac/configure.c:678 Plugins/Input/mpg123/configure.c:485
-#: Plugins/Input/vorbis/configure.c:381 Plugins/Output/esd/configure.c:153
-msgid "Port:"
-msgstr "Puerto:"
-
-#: Plugins/Input/flac/configure.c:688 Plugins/Input/mpg123/configure.c:498
-#: Plugins/Input/vorbis/configure.c:394
-msgid "Use authentication"
-msgstr "Usar autenticación"
-
-#: Plugins/Input/flac/configure.c:719 Plugins/Input/mpg123/configure.c:543
-#: Plugins/Input/vorbis/configure.c:439
+#: Plugins/Input/flac/configure.c:578 Plugins/Input/mpg123/configure.c:362
+#: Plugins/Input/vorbis/configure.c:260
 msgid "Save stream to disk:"
 msgstr "Guardar el flujo en el disco:"
 
-#: Plugins/Input/flac/configure.c:727 Plugins/Input/mpg123/configure.c:554
-#: Plugins/Input/vorbis/configure.c:450
+#: Plugins/Input/flac/configure.c:586 Plugins/Input/mpg123/configure.c:373
+#: Plugins/Input/vorbis/configure.c:271
 msgid "Save stream to disk"
 msgstr "Guardar el flujo en el disco"
 
-#: Plugins/Input/flac/configure.c:736 Plugins/Input/mpg123/configure.c:568
-#: Plugins/Input/vorbis/configure.c:464
+#: Plugins/Input/flac/configure.c:595 Plugins/Input/mpg123/configure.c:387
+#: Plugins/Input/vorbis/configure.c:285
 #: Plugins/Output/disk_writer/disk_writer.c:370
 msgid "Path:"
 msgstr "Ruta:"
 
-#: Plugins/Input/flac/configure.c:743 Plugins/Input/mpg123/configure.c:578
-#: Plugins/Input/vorbis/configure.c:474
+#: Plugins/Input/flac/configure.c:602 Plugins/Input/mpg123/configure.c:397
+#: Plugins/Input/vorbis/configure.c:295
 #: Plugins/Output/disk_writer/disk_writer.c:381
 msgid "Browse"
 msgstr "Examinar"
 
-#: Plugins/Input/flac/configure.c:748 Plugins/Input/mpg123/configure.c:584
+#: Plugins/Input/flac/configure.c:607 Plugins/Input/mpg123/configure.c:403
 msgid "SHOUT/Icecast:"
 msgstr "SHOUT/Icecast:"
 
-#: Plugins/Input/flac/configure.c:755
+#: Plugins/Input/flac/configure.c:614
 msgid "Enable SHOUT/Icecast title streaming"
 msgstr "Activar streaming de título SHOUT/Icecast"
 
-#: Plugins/Input/flac/configure.c:759 Plugins/Input/mpg123/configure.c:598
+#: Plugins/Input/flac/configure.c:618 Plugins/Input/mpg123/configure.c:417
 msgid "Enable Icecast Metadata UDP Channel"
 msgstr "Habilitar el Canal UDP de Metadatos"
 
-#: Plugins/Input/flac/configure.c:764 Plugins/Input/mpg123/configure.c:605
-#: Plugins/Input/vorbis/configure.c:481
+#: Plugins/Input/flac/configure.c:623 Plugins/Input/mpg123/configure.c:424
+#: Plugins/Input/vorbis/configure.c:302
 msgid "Streaming"
 msgstr "Flujo"
 
-#: Plugins/Input/flac/configure.c:796
+#: Plugins/Input/flac/configure.c:655
 msgid "About Flac Plugin"
 msgstr "Acerca del complemento Flac"
 
-#: Plugins/Input/flac/configure.c:797
+#: Plugins/Input/flac/configure.c:656
 msgid ""
 "Flac Plugin by Josh Coalson\n"
 "contributions by\n"
@@ -2076,38 +2046,40 @@ msgstr "Información sobre el archivo - %s"
 msgid "Error"
 msgstr "Error"
 
-#: Plugins/Input/flac/http.c:383 Plugins/Input/mpg123/http.c:375
-#: Plugins/Input/vorbis/http.c:327
+#: Plugins/Input/flac/http.c:383 Plugins/Input/mpg123/http.c:419
+#: Plugins/Input/vorbis/http.c:370
 #, c-format
 msgid "LOOKING UP %s"
 msgstr "BUSCANDO A %s"
 
-#: Plugins/Input/flac/http.c:389 Plugins/Input/mpg123/http.c:380
-#: Plugins/Input/vorbis/http.c:332
+#: Plugins/Input/flac/http.c:389 Plugins/Input/mpg123/http.c:407
+#: Plugins/Input/mpg123/http.c:424 Plugins/Input/vorbis/http.c:360
+#: Plugins/Input/vorbis/http.c:375
 #, c-format
 msgid "Couldn't look up host %s"
 msgstr "No se pudo ubicar al servidor %s"
 
-#: Plugins/Input/flac/http.c:402 Plugins/Input/mpg123/http.c:393
-#: Plugins/Input/vorbis/http.c:345
+#: Plugins/Input/flac/http.c:402 Plugins/Input/mpg123/http.c:386
+#: Plugins/Input/mpg123/http.c:439 Plugins/Input/vorbis/http.c:338
+#: Plugins/Input/vorbis/http.c:390
 #, c-format
 msgid "CONNECTING TO %s:%d"
 msgstr "CONECTANDO A %s: %d"
 
 #: Plugins/Input/flac/http.c:409 Plugins/Input/flac/http.c:429
-#: Plugins/Input/mpg123/http.c:401 Plugins/Input/mpg123/http.c:421
-#: Plugins/Input/vorbis/http.c:353 Plugins/Input/vorbis/http.c:373
+#: Plugins/Input/mpg123/http.c:447 Plugins/Input/mpg123/http.c:468
+#: Plugins/Input/vorbis/http.c:398 Plugins/Input/vorbis/http.c:419
 #, c-format
 msgid "Couldn't connect to host %s"
 msgstr "No se pudo conectar al servidor %s"
 
-#: Plugins/Input/flac/http.c:495 Plugins/Input/mpg123/http.c:484
-#: Plugins/Input/vorbis/http.c:421
+#: Plugins/Input/flac/http.c:495 Plugins/Input/mpg123/http.c:531
+#: Plugins/Input/vorbis/http.c:467
 msgid "CONNECTED: WAITING FOR REPLY"
 msgstr "CONECTADO: ESPERANDO RESPUESTA"
 
-#: Plugins/Input/flac/http.c:536 Plugins/Input/mpg123/http.c:521
-#: Plugins/Input/vorbis/http.c:458
+#: Plugins/Input/flac/http.c:536 Plugins/Input/mpg123/http.c:568
+#: Plugins/Input/vorbis/http.c:504
 #, c-format
 msgid ""
 "Couldn't connect to host %s\n"
@@ -2116,146 +2088,151 @@ msgstr ""
 "No se pudo conectar al servidor %s\n"
 "El servidor reportó: %s"
 
-#: Plugins/Input/flac/http.c:670 Plugins/Input/vorbis/http.c:557
+#: Plugins/Input/flac/http.c:670 Plugins/Input/vorbis/http.c:603
 #, c-format
 msgid "PRE-BUFFERING: %dKB/%dKB"
 msgstr "PRE-BUFFERING: %dKB/%dKB"
 
-#: Plugins/Input/modplug/gui/interface.cpp:116
+#: Plugins/Input/modplug/gui/interface.cpp:117
 msgid "ModPlug Configuration"
 msgstr "Configuración del complemento ModPlug"
 
-#: Plugins/Input/modplug/gui/interface.cpp:164
-#: Plugins/Input/mpg123/configure.c:324
+#: Plugins/Input/modplug/gui/interface.cpp:165
+#: Plugins/Input/mpg123/configure.c:234
 #: Plugins/Input/timidity/src/interface.c:141
 msgid "16 bit"
 msgstr "16 bits"
 
-#: Plugins/Input/modplug/gui/interface.cpp:172
-#: Plugins/Input/mpg123/configure.c:333
+#: Plugins/Input/modplug/gui/interface.cpp:173
+#: Plugins/Input/mpg123/configure.c:243
 #: Plugins/Input/timidity/src/interface.c:133
 msgid "8 bit"
 msgstr "8 bits"
 
-#: Plugins/Input/modplug/gui/interface.cpp:180
+#: Plugins/Input/modplug/gui/interface.cpp:181
 #: Plugins/Input/timidity/src/interface.c:149
 msgid "Channels"
 msgstr "Canales"
 
-#: Plugins/Input/modplug/gui/interface.cpp:194
-#: Plugins/Input/mpg123/fileinfo.c:202
+#: Plugins/Input/modplug/gui/interface.cpp:195
+#: Plugins/Input/mpg123/fileinfo.c:205
 #: Plugins/Input/timidity/src/interface.c:174
 msgid "Stereo"
 msgstr "Estéreo"
 
-#: Plugins/Input/modplug/gui/interface.cpp:202
+#: Plugins/Input/modplug/gui/interface.cpp:203
 msgid "Mono (downmix)"
 msgstr "Mono (downmix)"
 
-#: Plugins/Input/modplug/gui/interface.cpp:217
+#: Plugins/Input/modplug/gui/interface.cpp:218
 #: Plugins/Input/timidity/src/interface.c:75
 msgid "Sampling Rate"
 msgstr "Tasa de muestreo"
 
-#: Plugins/Input/modplug/gui/interface.cpp:231
+#: Plugins/Input/modplug/gui/interface.cpp:232
+#, fuzzy
+msgid "48 kHz"
+msgstr "44 kHz"
+
+#: Plugins/Input/modplug/gui/interface.cpp:240
 msgid "44 kHz"
 msgstr "44 kHz"
 
-#: Plugins/Input/modplug/gui/interface.cpp:239
+#: Plugins/Input/modplug/gui/interface.cpp:248
 msgid "22 kHz"
 msgstr "22 kHz"
 
-#: Plugins/Input/modplug/gui/interface.cpp:247
+#: Plugins/Input/modplug/gui/interface.cpp:256
 msgid "11 kHz"
 msgstr "11 kHz"
 
-#: Plugins/Input/modplug/gui/interface.cpp:255
+#: Plugins/Input/modplug/gui/interface.cpp:264
 msgid "Resampling"
 msgstr "Re-muestreo"
 
-#: Plugins/Input/modplug/gui/interface.cpp:269
+#: Plugins/Input/modplug/gui/interface.cpp:278
 msgid "Nearest (fastest)"
 msgstr "Más cercano (el más rápido)"
 
-#: Plugins/Input/modplug/gui/interface.cpp:277
+#: Plugins/Input/modplug/gui/interface.cpp:286
 msgid "Linear (fast)"
 msgstr "Lineal (rápido)"
 
-#: Plugins/Input/modplug/gui/interface.cpp:285
+#: Plugins/Input/modplug/gui/interface.cpp:294
 msgid "Spline (good quality)"
 msgstr "Spline (buena calidad)"
 
-#: Plugins/Input/modplug/gui/interface.cpp:293
+#: Plugins/Input/modplug/gui/interface.cpp:302
 msgid "8-tap Fir (extremely high quality)"
 msgstr "8-tap Fir (calidad extremadamente alta)"
 
-#: Plugins/Input/modplug/gui/interface.cpp:301
+#: Plugins/Input/modplug/gui/interface.cpp:310
 msgid "Quality"
 msgstr "Calidad"
 
-#: Plugins/Input/modplug/gui/interface.cpp:316
-#: Plugins/Input/modplug/gui/interface.cpp:824
+#: Plugins/Input/modplug/gui/interface.cpp:325
+#: Plugins/Input/modplug/gui/interface.cpp:833
 msgid "General"
 msgstr "General"
 
-#: Plugins/Input/modplug/gui/interface.cpp:337
+#: Plugins/Input/modplug/gui/interface.cpp:346
 msgid "Use Filename as Song Title"
 msgstr "Use nombre del archivo como título de canción"
 
-#: Plugins/Input/modplug/gui/interface.cpp:344
+#: Plugins/Input/modplug/gui/interface.cpp:353
 msgid "Fast Playlist Info"
 msgstr "Información de lista de reproducción rápida"
 
-#: Plugins/Input/modplug/gui/interface.cpp:359
+#: Plugins/Input/modplug/gui/interface.cpp:368
 msgid "Noise Reduction"
 msgstr "Reducción de ruido"
 
-#: Plugins/Input/modplug/gui/interface.cpp:367
+#: Plugins/Input/modplug/gui/interface.cpp:376
 msgid "Play Amiga MOD"
 msgstr ""
 
-#: Plugins/Input/modplug/gui/interface.cpp:375
+#: Plugins/Input/modplug/gui/interface.cpp:384
 msgid "Reverb"
 msgstr "Reverberador"
 
-#: Plugins/Input/modplug/gui/interface.cpp:389
-#: Plugins/Input/modplug/gui/interface.cpp:461
-#: Plugins/Input/modplug/gui/interface.cpp:533
-#: Plugins/Input/modplug/gui/interface.cpp:619
+#: Plugins/Input/modplug/gui/interface.cpp:398
+#: Plugins/Input/modplug/gui/interface.cpp:470
+#: Plugins/Input/modplug/gui/interface.cpp:542
+#: Plugins/Input/modplug/gui/interface.cpp:628
 msgid "Enable"
 msgstr "Activar"
 
-#: Plugins/Input/modplug/gui/interface.cpp:429
-#: Plugins/Input/modplug/gui/interface.cpp:573
+#: Plugins/Input/modplug/gui/interface.cpp:438
+#: Plugins/Input/modplug/gui/interface.cpp:582
 msgid "Depth"
 msgstr "Profundidad"
 
-#: Plugins/Input/modplug/gui/interface.cpp:438
-#: Plugins/Input/modplug/gui/interface.cpp:582
+#: Plugins/Input/modplug/gui/interface.cpp:447
+#: Plugins/Input/modplug/gui/interface.cpp:591
 msgid "Delay"
 msgstr "Retraso"
 
-#: Plugins/Input/modplug/gui/interface.cpp:447
+#: Plugins/Input/modplug/gui/interface.cpp:456
 msgid "Bass Boost"
 msgstr "Refuerzo de graves"
 
-#: Plugins/Input/modplug/gui/interface.cpp:501
+#: Plugins/Input/modplug/gui/interface.cpp:510
 msgid "Amount"
 msgstr "Cantidad"
 
-#: Plugins/Input/modplug/gui/interface.cpp:510
+#: Plugins/Input/modplug/gui/interface.cpp:519
 msgid "Range"
 msgstr "Rango"
 
-#: Plugins/Input/modplug/gui/interface.cpp:519
+#: Plugins/Input/modplug/gui/interface.cpp:528
 msgid "Surround"
 msgstr "Surround"
 
-#: Plugins/Input/modplug/gui/interface.cpp:591
+#: Plugins/Input/modplug/gui/interface.cpp:600
 msgid "Preamp"
 msgstr "Preamplificación"
 
-#: Plugins/Input/modplug/gui/interface.cpp:605
+#: Plugins/Input/modplug/gui/interface.cpp:614
 msgid ""
 "Note:  Setting the preamp too high may cause\n"
 "clipping / distortion!"
@@ -2263,39 +2240,39 @@ msgstr ""
 "Nota: establecer la preamplificación muy alta puede causar\n"
 "recorte / distorsión!"
 
-#: Plugins/Input/modplug/gui/interface.cpp:626
+#: Plugins/Input/modplug/gui/interface.cpp:635
 msgid "Volume"
 msgstr "Volumen"
 
-#: Plugins/Input/modplug/gui/interface.cpp:640
+#: Plugins/Input/modplug/gui/interface.cpp:649
 msgid "Looping"
 msgstr "Looping"
 
-#: Plugins/Input/modplug/gui/interface.cpp:654
+#: Plugins/Input/modplug/gui/interface.cpp:663
 msgid "Don't loop"
 msgstr "No loop"
 
-#: Plugins/Input/modplug/gui/interface.cpp:669
+#: Plugins/Input/modplug/gui/interface.cpp:678
 msgid "Loop"
 msgstr "Loop"
 
-#: Plugins/Input/modplug/gui/interface.cpp:685
+#: Plugins/Input/modplug/gui/interface.cpp:694
 msgid "time(s)"
 msgstr "tiempo(s)"
 
-#: Plugins/Input/modplug/gui/interface.cpp:692
+#: Plugins/Input/modplug/gui/interface.cpp:701
 msgid "Loop forever"
 msgstr "Loop para siempre"
 
-#: Plugins/Input/modplug/gui/interface.cpp:700
+#: Plugins/Input/modplug/gui/interface.cpp:709
 msgid "Effects"
 msgstr "Efectos"
 
-#: Plugins/Input/modplug/gui/interface.cpp:784
+#: Plugins/Input/modplug/gui/interface.cpp:793
 msgid "MOD Info"
 msgstr "Información sobre MOD"
 
-#: Plugins/Input/modplug/gui/interface.cpp:808
+#: Plugins/Input/modplug/gui/interface.cpp:817
 msgid ""
 "Filename:\n"
 "Title:\n"
@@ -2319,7 +2296,7 @@ msgstr ""
 "Esquemas:\n"
 "Canales:"
 
-#: Plugins/Input/modplug/gui/interface.cpp:816
+#: Plugins/Input/modplug/gui/interface.cpp:825
 msgid ""
 "---\n"
 "---\n"
@@ -2343,15 +2320,15 @@ msgstr ""
 "---\n"
 "---"
 
-#: Plugins/Input/modplug/gui/interface.cpp:857
+#: Plugins/Input/modplug/gui/interface.cpp:866
 msgid "Samples"
 msgstr "Muestras"
 
-#: Plugins/Input/modplug/gui/interface.cpp:890
+#: Plugins/Input/modplug/gui/interface.cpp:899
 msgid "Instruments"
 msgstr "Instrumentos"
 
-#: Plugins/Input/modplug/gui/interface.cpp:923
+#: Plugins/Input/modplug/gui/interface.cpp:932
 msgid "Message"
 msgstr "Mensaje"
 
@@ -2389,190 +2366,176 @@ msgstr "No puedo encontrar archivo de pixmap: %s"
 msgid "Error loading pixmap file: %s"
 msgstr "Error cargando archivo de pixmap: %s"
 
-#: Plugins/Input/mpg123/configure.c:299
+#: Plugins/Input/mpg123/configure.c:209
 msgid "MPEG Audio Plugin Configuration"
 msgstr "Configuración del complemento MPEG Audio"
 
-#: Plugins/Input/mpg123/configure.c:316
+#: Plugins/Input/mpg123/configure.c:226
 msgid "Resolution:"
 msgstr "Resolución:"
 
-#: Plugins/Input/mpg123/configure.c:340 Plugins/Input/vorbis/fileinfo.c:863
+#: Plugins/Input/mpg123/configure.c:250 Plugins/Input/vorbis/fileinfo.c:863
 #: Plugins/Input/vorbis/fileinfo.c:919
 msgid "Channels:"
 msgstr "Canales:"
 
-#: Plugins/Input/mpg123/configure.c:348
+#: Plugins/Input/mpg123/configure.c:258
 msgid "Stereo (if available)"
 msgstr "Estéreo (si está disponible)"
 
-#: Plugins/Input/mpg123/configure.c:359
+#: Plugins/Input/mpg123/configure.c:269
 #: Plugins/Input/timidity/src/interface.c:166
 msgid "Mono"
 msgstr "Mono"
 
-#: Plugins/Input/mpg123/configure.c:366
+#: Plugins/Input/mpg123/configure.c:276
 msgid "Down sample:"
 msgstr "Reducción de muestreo:"
 
-#: Plugins/Input/mpg123/configure.c:375
+#: Plugins/Input/mpg123/configure.c:285
 msgid "1:1 (44 kHz)"
 msgstr "1:1 (44 khz)"
 
-#: Plugins/Input/mpg123/configure.c:386
+#: Plugins/Input/mpg123/configure.c:296
 msgid "1:2 (22 kHz)"
 msgstr "1:2 (22 khz)"
 
-#: Plugins/Input/mpg123/configure.c:397
+#: Plugins/Input/mpg123/configure.c:307
 msgid "1:4 (11 kHz)"
 msgstr "1:4 (11 khz)"
 
-#: Plugins/Input/mpg123/configure.c:406
+#: Plugins/Input/mpg123/configure.c:316
 msgid "Decoder"
 msgstr "Decodificador"
 
-#: Plugins/Input/mpg123/configure.c:607
+#: Plugins/Input/mpg123/configure.c:426
 msgid "ID3 Tags:"
 msgstr "Etiquetas ID3:"
 
-#: Plugins/Input/mpg123/configure.c:615
+#: Plugins/Input/mpg123/configure.c:434
 msgid "Disable ID3V2 tags"
 msgstr "Deshabilitar etiquetas ID3V2"
 
-#: Plugins/Input/mpg123/configure.c:624
+#: Plugins/Input/mpg123/configure.c:443
 msgid "Convert non-UTF8 ID3 tags to UTF8"
 msgstr "Convertir etiquetas ID3 que no sean UTF8 a UTF8"
 
-#: Plugins/Input/mpg123/configure.c:637
+#: Plugins/Input/mpg123/configure.c:456
 msgid "ID3 encoding:"
 msgstr "Codificación ID3:"
 
-#: Plugins/Input/mpg123/configure.c:662
+#: Plugins/Input/mpg123/configure.c:481
 msgid "ID3 format:"
 msgstr "Formato ID3:"
 
-#: Plugins/Input/mpg123/fileinfo.c:202
+#: Plugins/Input/mpg123/fileinfo.c:205
 msgid "Joint stereo"
 msgstr "Estéreo junto"
 
-#: Plugins/Input/mpg123/fileinfo.c:203
+#: Plugins/Input/mpg123/fileinfo.c:206
 msgid "Dual channel"
 msgstr "Canal dual"
 
-#: Plugins/Input/mpg123/fileinfo.c:203
+#: Plugins/Input/mpg123/fileinfo.c:206
 msgid "Single channel"
 msgstr "Canal único"
 
-#: Plugins/Input/mpg123/fileinfo.c:218 Plugins/Input/mpg123/fileinfo.c:813
+#: Plugins/Input/mpg123/fileinfo.c:221 Plugins/Input/mpg123/fileinfo.c:748
 #, c-format
 msgid "%d KBit/s"
 msgstr "%d KBit/s"
 
-#: Plugins/Input/mpg123/fileinfo.c:219 Plugins/Input/mpg123/fileinfo.c:817
+#: Plugins/Input/mpg123/fileinfo.c:222 Plugins/Input/mpg123/fileinfo.c:743
 #, c-format
 msgid "%ld Hz"
 msgstr "%ld Hz"
 
-#: Plugins/Input/mpg123/fileinfo.c:302
+#: Plugins/Input/mpg123/fileinfo.c:304
 msgid " MPEG Info "
 msgstr " MPEG Info "
 
-#: Plugins/Input/mpg123/fileinfo.c:317 Plugins/Input/mpg123/fileinfo.c:655
+#: Plugins/Input/mpg123/fileinfo.c:319 Plugins/Input/mpg123/fileinfo.c:641
 msgid "MPEG Level:"
 msgstr "Nivel MPEG:"
 
-#: Plugins/Input/mpg123/fileinfo.c:330 Plugins/Input/mpg123/fileinfo.c:658
+#: Plugins/Input/mpg123/fileinfo.c:332 Plugins/Input/mpg123/fileinfo.c:644
 #: Plugins/Input/vorbis/fileinfo.c:837 Plugins/Input/vorbis/fileinfo.c:913
 msgid "Bit rate:"
 msgstr "Tasa de bits:"
 
-#: Plugins/Input/mpg123/fileinfo.c:343 Plugins/Input/mpg123/fileinfo.c:661
+#: Plugins/Input/mpg123/fileinfo.c:345 Plugins/Input/mpg123/fileinfo.c:647
 #: Plugins/Input/vorbis/fileinfo.c:850 Plugins/Input/vorbis/fileinfo.c:916
 msgid "Sample rate:"
 msgstr "Tasa de muestreo:"
 
-#: Plugins/Input/mpg123/fileinfo.c:357 Plugins/Input/mpg123/fileinfo.c:676
-msgid "Frames:"
-msgstr "Fotogramas:"
-
-#: Plugins/Input/mpg123/fileinfo.c:370 Plugins/Input/mpg123/fileinfo.c:679
+#: Plugins/Input/mpg123/fileinfo.c:359 Plugins/Input/mpg123/fileinfo.c:662
 #: Plugins/Input/vorbis/fileinfo.c:889 Plugins/Input/vorbis/fileinfo.c:925
 msgid "File size:"
 msgstr "Tamaño del archivo:"
 
-#: Plugins/Input/mpg123/fileinfo.c:383 Plugins/Input/mpg123/fileinfo.c:682
+#: Plugins/Input/mpg123/fileinfo.c:372 Plugins/Input/mpg123/fileinfo.c:665
 #, fuzzy
 msgid "Mode:"
 msgstr "Ratón"
 
-#: Plugins/Input/mpg123/fileinfo.c:406 Plugins/Input/mpg123/fileinfo.c:664
+#: Plugins/Input/mpg123/fileinfo.c:395 Plugins/Input/mpg123/fileinfo.c:650
 msgid "Error Protection:"
 msgstr "Protección contra errores:"
 
-#: Plugins/Input/mpg123/fileinfo.c:419 Plugins/Input/mpg123/fileinfo.c:667
+#: Plugins/Input/mpg123/fileinfo.c:408 Plugins/Input/mpg123/fileinfo.c:653
 #: Plugins/Input/vorbis/fileinfo.c:719
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: Plugins/Input/mpg123/fileinfo.c:432 Plugins/Input/mpg123/fileinfo.c:670
+#: Plugins/Input/mpg123/fileinfo.c:421 Plugins/Input/mpg123/fileinfo.c:656
 msgid "Original:"
 msgstr "Original:"
 
-#: Plugins/Input/mpg123/fileinfo.c:445 Plugins/Input/mpg123/fileinfo.c:673
+#: Plugins/Input/mpg123/fileinfo.c:434 Plugins/Input/mpg123/fileinfo.c:659
 msgid "Emphasis:"
 msgstr "Énfasis:"
 
-#: Plugins/Input/mpg123/fileinfo.c:459
+#: Plugins/Input/mpg123/fileinfo.c:448
 msgid " ID3 Tag "
 msgstr "Etiqueta ID3"
 
-#: Plugins/Input/mpg123/fileinfo.c:656 Plugins/Input/mpg123/fileinfo.c:659
-#: Plugins/Input/mpg123/fileinfo.c:662 Plugins/Input/mpg123/fileinfo.c:665
-#: Plugins/Input/mpg123/fileinfo.c:668 Plugins/Input/mpg123/fileinfo.c:671
-#: Plugins/Input/mpg123/fileinfo.c:674 Plugins/Input/mpg123/fileinfo.c:677
-#: Plugins/Input/mpg123/fileinfo.c:680 Plugins/Input/mpg123/fileinfo.c:683
-#: Plugins/Input/vorbis/fileinfo.c:914 Plugins/Input/vorbis/fileinfo.c:917
-#: Plugins/Input/vorbis/fileinfo.c:920 Plugins/Input/vorbis/fileinfo.c:923
-#: Plugins/Input/vorbis/fileinfo.c:926
+#: Plugins/Input/mpg123/fileinfo.c:642 Plugins/Input/mpg123/fileinfo.c:645
+#: Plugins/Input/mpg123/fileinfo.c:648 Plugins/Input/mpg123/fileinfo.c:651
+#: Plugins/Input/mpg123/fileinfo.c:654 Plugins/Input/mpg123/fileinfo.c:657
+#: Plugins/Input/mpg123/fileinfo.c:660 Plugins/Input/mpg123/fileinfo.c:663
+#: Plugins/Input/mpg123/fileinfo.c:666 Plugins/Input/vorbis/fileinfo.c:914
+#: Plugins/Input/vorbis/fileinfo.c:917 Plugins/Input/vorbis/fileinfo.c:920
+#: Plugins/Input/vorbis/fileinfo.c:923 Plugins/Input/vorbis/fileinfo.c:926
 msgid "N/A"
 msgstr "No disponible"
 
-#: Plugins/Input/mpg123/fileinfo.c:805
-#, c-format
-msgid ""
-"Variable,\n"
-"avg. bitrate: %d KBit/s"
-msgstr ""
-"Tasa de bits\n"
-"media variable: %d KBit/s"
-
-#: Plugins/Input/mpg123/fileinfo.c:819 Plugins/Input/mpg123/fileinfo.c:821
-#: Plugins/Input/mpg123/fileinfo.c:822 Plugins/Input/mpg123/fileinfo.c:823
-#: Plugins/Input/mpg123/fileinfo.c:826
+#: Plugins/Input/mpg123/fileinfo.c:793 Plugins/Input/mpg123/fileinfo.c:795
+#: Plugins/Input/mpg123/fileinfo.c:796 Plugins/Input/mpg123/fileinfo.c:797
+#: Plugins/Input/mpg123/fileinfo.c:799
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: Plugins/Input/mpg123/fileinfo.c:824 Plugins/Input/vorbis/fileinfo.c:958
-#, c-format
-msgid "%d"
-msgstr "%d"
-
-#: Plugins/Input/mpg123/fileinfo.c:825 Plugins/Input/wma/wma.c:521
+#: Plugins/Input/mpg123/fileinfo.c:798 Plugins/Input/wma/wma.c:521
 #, c-format
 msgid "%lu Bytes"
 msgstr "%lu Bytes"
 
-#: Plugins/Input/mpg123/http.c:639
+#: Plugins/Input/mpg123/http.c:401 Plugins/Input/vorbis/http.c:353
 #, fuzzy, c-format
-msgid "PRE-BUFFERING: %luKB/%luKB"
+msgid "Couldn't connect to host %s:%d"
+msgstr "No se pudo conectar al servidor %s"
+
+#: Plugins/Input/mpg123/http.c:686
+#, fuzzy, c-format
+msgid "PRE-BUFFERING: %zuKB/%zuKB"
 msgstr "PRE-BUFFERING: %dKB/%dKB"
 
-#: Plugins/Input/mpg123/mpg123.c:954
+#: Plugins/Input/mpg123/mpg123.c:922
 msgid "About MPEG Audio Plugin"
 msgstr "Acerca del complemento MPEG Audio"
 
-#: Plugins/Input/mpg123/mpg123.c:955
+#: Plugins/Input/mpg123/mpg123.c:923
 msgid ""
 "Audacious decoding engine by William Pitcock <nenolod@nenolod.net>, derived "
 "from:\n"
@@ -2586,7 +2549,7 @@ msgstr ""
 "Derivedo parcialmente de mpg123 0.59s.mc3 también.\n"
 "Basado en el complemento original XMMS."
 
-#: Plugins/Input/mpg123/mpg123.c:993
+#: Plugins/Input/mpg123/mpg123.c:961
 msgid "MPEG Audio Plugin"
 msgstr "Complemento MPEG Audio"
 
@@ -2665,51 +2628,51 @@ msgstr "Generador de Tonos"
 msgid "Tone Generator %s"
 msgstr "Generador de Tonos %s"
 
-#: Plugins/Input/vorbis/configure.c:202
+#: Plugins/Input/vorbis/configure.c:118
 msgid "Select the directory where you want to store the Ogg Vorbis streams:"
 msgstr "Seleccione el directorio donde desea almacenar los flujos Ogg Vorbis:"
 
-#: Plugins/Input/vorbis/configure.c:296
+#: Plugins/Input/vorbis/configure.c:208
 msgid "Ogg Vorbis Audio Plugin Configuration"
 msgstr "Configuración del complemento Ogg Vorbis"
 
-#: Plugins/Input/vorbis/configure.c:485
+#: Plugins/Input/vorbis/configure.c:306
 msgid "Ogg Vorbis Tags:"
 msgstr "Etiquetas Ogg Vorbis"
 
-#: Plugins/Input/vorbis/configure.c:494
+#: Plugins/Input/vorbis/configure.c:315
 msgid "Convert non-UTF8 Vorbis tags to UTF8"
 msgstr "Convertir etiquetas Vorbis que no sean UTF8 a UTF8"
 
-#: Plugins/Input/vorbis/configure.c:507
+#: Plugins/Input/vorbis/configure.c:328
 msgid "Vorbis encoding:"
 msgstr "Codificación Vorbis:"
 
-#: Plugins/Input/vorbis/configure.c:549
+#: Plugins/Input/vorbis/configure.c:370
 msgid "ReplayGain Settings:"
 msgstr "Configuraciones de repetición de ganancia:"
 
-#: Plugins/Input/vorbis/configure.c:557
+#: Plugins/Input/vorbis/configure.c:378
 msgid "Enable Clipping Prevention"
 msgstr "Activar prevención de sujeción"
 
-#: Plugins/Input/vorbis/configure.c:562
+#: Plugins/Input/vorbis/configure.c:383
 msgid "Enable ReplayGain"
 msgstr "Activar repetición de ganancia"
 
-#: Plugins/Input/vorbis/configure.c:567
+#: Plugins/Input/vorbis/configure.c:388
 msgid "ReplayGain Type:"
 msgstr "Tipo de repetición de ganancia"
 
-#: Plugins/Input/vorbis/configure.c:578
+#: Plugins/Input/vorbis/configure.c:399
 msgid "use Track Gain/Peak"
 msgstr "usar ganancia de pista/pico"
 
-#: Plugins/Input/vorbis/configure.c:588
+#: Plugins/Input/vorbis/configure.c:409
 msgid "use Album Gain/Peak"
 msgstr "usar ganancia de álbum/pico"
 
-#: Plugins/Input/vorbis/configure.c:600
+#: Plugins/Input/vorbis/configure.c:421
 msgid "Enable 6dB Boost + Hard Limiting"
 msgstr "Activar refuerzo de 6dB + limitación dura"
 
@@ -2799,6 +2762,11 @@ msgstr "%d KBit/s (nominal)"
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
+
+#: Plugins/Input/vorbis/fileinfo.c:958
+#, c-format
+msgid "%d"
+msgstr "%d"
 
 #: Plugins/Input/vorbis/fileinfo.c:960
 #, c-format
@@ -3056,7 +3024,7 @@ msgid "OSS Driver configuration"
 msgstr "Configuración del controlador OSS"
 
 #: Plugins/Output/OSS/configure.c:215 Plugins/Output/alsa/configure.c:288
-#: Plugins/Output/sun/configure.c:183
+#: Plugins/Output/sun/configure.c:182
 msgid "Audio device:"
 msgstr "Dispositivo de audio:"
 
@@ -3065,21 +3033,21 @@ msgid "Use alternate device:"
 msgstr "Usar dispositivo alternativo:"
 
 #: Plugins/Output/OSS/configure.c:258 Plugins/Output/alsa/configure.c:333
-#: Plugins/Output/sun/configure.c:220
+#: Plugins/Output/sun/configure.c:219
 msgid "Mixer device:"
 msgstr "Dispositivo mezclador"
 
-#: Plugins/Output/OSS/configure.c:300 Plugins/Output/sun/configure.c:248
+#: Plugins/Output/OSS/configure.c:300 Plugins/Output/sun/configure.c:247
 msgid "Devices"
 msgstr "Dispositivos"
 
-#: Plugins/Output/OSS/configure.c:315 Plugins/Output/arts/configure.c:75
-#: Plugins/Output/esd/configure.c:184 Plugins/Output/sun/configure.c:272
+#: Plugins/Output/OSS/configure.c:315 Plugins/Output/arts/configure.c:74
+#: Plugins/Output/esd/configure.c:184 Plugins/Output/sun/configure.c:271
 msgid "Buffer size (ms):"
 msgstr "Tamaño del búfer (ms):"
 
-#: Plugins/Output/OSS/configure.c:340 Plugins/Output/arts/configure.c:85
-#: Plugins/Output/esd/configure.c:209 Plugins/Output/sun/configure.c:304
+#: Plugins/Output/OSS/configure.c:340 Plugins/Output/arts/configure.c:84
+#: Plugins/Output/esd/configure.c:209 Plugins/Output/sun/configure.c:303
 msgid "Buffering"
 msgstr "Buffering"
 
@@ -3091,7 +3059,7 @@ msgstr "Configuraciones del mezclador:"
 msgid "Volume controls Master not PCM"
 msgstr "El volumen controla al Maestro no al PCM"
 
-#: Plugins/Output/OSS/configure.c:353 Plugins/Output/sun/configure.c:394
+#: Plugins/Output/OSS/configure.c:353 Plugins/Output/sun/configure.c:393
 msgid "Mixer"
 msgstr "Mezclador"
 
@@ -3187,7 +3155,7 @@ msgstr "Perídodo del búfer (ms):"
 msgid "Audacious:"
 msgstr "Audacious:"
 
-#: Plugins/Output/arts/configure.c:52
+#: Plugins/Output/arts/configure.c:51
 #, fuzzy
 msgid "aRts Driver configuration"
 msgstr "Configuración del controlador OSS"
@@ -3262,6 +3230,10 @@ msgstr ""
 msgid "ESD Output Plugin configuration"
 msgstr "Configuración del complemento de salida ESD"
 
+#: Plugins/Output/esd/configure.c:114 Plugins/Output/esd/configure.c:144
+msgid "Host:"
+msgstr "Host:"
+
 #: Plugins/Output/esd/configure.c:125
 msgid "Use remote host"
 msgstr "Usar servidor remoto"
@@ -3269,6 +3241,10 @@ msgstr "Usar servidor remoto"
 #: Plugins/Output/esd/configure.c:132
 msgid "Volume controls OSS mixer"
 msgstr "El volumen controla al mezclador OSS"
+
+#: Plugins/Output/esd/configure.c:153
+msgid "Port:"
+msgstr "Puerto:"
 
 #: Plugins/Output/esd/configure.c:169
 msgid "Server"
@@ -3278,12 +3254,12 @@ msgstr "Servidor"
 msgid "eSound Output Plugin"
 msgstr "Complemento de salida eSound"
 
-#: Plugins/Output/jack/jack.c:575
+#: Plugins/Output/jack/jack.c:572
 #, fuzzy
 msgid "About JACK Output Plugin 0.15"
 msgstr "Complemento de salida eSound"
 
-#: Plugins/Output/jack/jack.c:576
+#: Plugins/Output/jack/jack.c:573
 msgid ""
 "XMMS jack Driver 0.15\n"
 "\n"
@@ -3307,25 +3283,25 @@ msgid ""
 "Maintainer: <vedge at csoft.org>.\n"
 msgstr ""
 
-#: Plugins/Output/sun/configure.c:201
+#: Plugins/Output/sun/configure.c:200
 #, fuzzy
 msgid "Audio control device:"
 msgstr "Dispositivo de audio:"
 
-#: Plugins/Output/sun/configure.c:350
+#: Plugins/Output/sun/configure.c:349
 #, fuzzy
 msgid "Volume controls device:"
 msgstr "Control de volumen:"
 
-#: Plugins/Output/sun/configure.c:363
+#: Plugins/Output/sun/configure.c:362
 msgid "XMMS uses mixer exclusively."
 msgstr ""
 
-#: Plugins/Output/sun/configure.c:488
+#: Plugins/Output/sun/configure.c:487
 msgid "Status"
 msgstr ""
 
-#: Plugins/Output/sun/configure.c:538
+#: Plugins/Output/sun/configure.c:537
 #, fuzzy
 msgid "Sun driver configuration"
 msgstr "Configuración del controlador OSS"
@@ -3359,11 +3335,11 @@ msgstr "Seleccionar color del osciloscopio borroso"
 msgid "Options:"
 msgstr "Opciones:"
 
-#: audacious/about.c:122 audacious/credits.c:290
+#: audacious/about.c:125 audacious/credits.c:292
 msgid "About Audacious"
 msgstr "Acerca de Audacious"
 
-#: audacious/about.c:171 audacious/credits.c:335
+#: audacious/about.c:174 audacious/credits.c:337
 msgid "Credits"
 msgstr "Créditos:"
 
@@ -3384,366 +3360,369 @@ msgstr ""
 msgid "Audacious core developers:"
 msgstr "Desarrolladores del núcleo de Audacious:"
 
-#: audacious/credits.c:52 audacious/credits.c:60 audacious/credits.c:65
+#: audacious/credits.c:52 audacious/credits.c:61 audacious/credits.c:66
 msgid "George Averill"
 msgstr "George Averill"
 
-#: audacious/credits.c:53 audacious/credits.c:72
+#: audacious/credits.c:53 audacious/credits.c:73
 msgid "Giacomo Lozito"
 msgstr "Giacomo Lozito"
 
-#: audacious/credits.c:54 audacious/credits.c:66 audacious/credits.c:73
-#: audacious/credits.c:79
+#: audacious/credits.c:54 audacious/credits.c:67 audacious/credits.c:74
+#: audacious/credits.c:80
 msgid "William Pitcock"
 msgstr "William Pitcock"
 
-#: audacious/credits.c:55 audacious/credits.c:74
+#: audacious/credits.c:55 audacious/credits.c:75
 msgid "Derek Pomery"
 msgstr ""
 
-#: audacious/credits.c:56 audacious/credits.c:75 audacious/credits.c:81
+#: audacious/credits.c:56 audacious/credits.c:76 audacious/credits.c:82
+#: audacious/credits.c:132
 msgid "Tony Vroon"
 msgstr "Tony Vroon"
 
-#: audacious/credits.c:59
+#: audacious/credits.c:57
+msgid "Yoshiki Yazawa"
+msgstr ""
+
+#: audacious/credits.c:60
 msgid "Graphics:"
 msgstr "Gráficos:"
 
-#: audacious/credits.c:61
+#: audacious/credits.c:62
 msgid "Stephan Sokolow"
 msgstr "Stephan Sokolow"
 
-#: audacious/credits.c:64
+#: audacious/credits.c:65
 msgid "Default skin:"
 msgstr "Piel por defecto:"
 
-#: audacious/credits.c:69
+#: audacious/credits.c:70
 msgid "Plugin development:"
 msgstr "Desarrollo de complementos:"
 
-#: audacious/credits.c:70
+#: audacious/credits.c:71
 msgid "Kiyoshi Aman"
 msgstr "Kiyoshi Aman"
 
-#: audacious/credits.c:71
+#: audacious/credits.c:72
 msgid "Shay Green"
 msgstr "Shay Green"
 
-#: audacious/credits.c:78
+#: audacious/credits.c:79
 msgid "0.1.x developers:"
 msgstr "Desarrolladores 0.1.x:"
 
-#: audacious/credits.c:80
+#: audacious/credits.c:81
 msgid "Mohammed Sameer"
 msgstr "Mohammed Sameer"
 
-#: audacious/credits.c:84
+#: audacious/credits.c:85
 msgid "BMP Developers:"
 msgstr "Desarrolladores BMP:"
 
-#: audacious/credits.c:85
+#: audacious/credits.c:86
 msgid "Artem Baguinski"
 msgstr "Artem Baguinski"
 
-#: audacious/credits.c:86 audacious/credits.c:193
+#: audacious/credits.c:87 audacious/credits.c:195
 msgid "Edward Brocklesby"
 msgstr "Edward Brocklesby"
 
-#: audacious/credits.c:87 audacious/credits.c:123
+#: audacious/credits.c:88 audacious/credits.c:124
 msgid "Chong Kai Xiong"
 msgstr "Chong Kai Xiong"
 
-#: audacious/credits.c:88
+#: audacious/credits.c:89
 msgid "Milosz Derezynski"
 msgstr "Milosz Derezynski"
 
-#: audacious/credits.c:89
+#: audacious/credits.c:90
 msgid "David Lau"
 msgstr "David Lau"
 
-#: audacious/credits.c:90
+#: audacious/credits.c:91
 msgid "Ole Andre Vadla Ravnaas"
 msgstr "Ole Andre Vadla Ravnaas"
 
-#: audacious/credits.c:91
+#: audacious/credits.c:92
 msgid "Michiel Sikkes"
 msgstr "Michiel Sikkes"
 
-#: audacious/credits.c:92
+#: audacious/credits.c:93
 msgid "Andrei Badea"
 msgstr "Andrei Badea"
 
-#: audacious/credits.c:93
+#: audacious/credits.c:94
 msgid "Peter Behroozi"
 msgstr "Peter Behroozi"
 
-#: audacious/credits.c:94
+#: audacious/credits.c:95
 msgid "Bernard Blackham"
 msgstr "Bernard Blackham"
 
-#: audacious/credits.c:95
+#: audacious/credits.c:96
 msgid "Oliver Blin"
 msgstr "Oliver Blin"
 
-#: audacious/credits.c:96
+#: audacious/credits.c:97
 msgid "Tomas Bzatek"
 msgstr "Tomas Bzatek"
 
-#: audacious/credits.c:97 audacious/credits.c:173
+#: audacious/credits.c:98 audacious/credits.c:175
 msgid "Liviu Danicel"
 msgstr "Liviu Danicel"
 
-#: audacious/credits.c:98
+#: audacious/credits.c:99
 msgid "Jon Dowland"
 msgstr "Jon Dowland"
 
-#: audacious/credits.c:99
+#: audacious/credits.c:100
 msgid "Artur Frysiak"
 msgstr "Artur Frysiak"
 
-#: audacious/credits.c:100
+#: audacious/credits.c:101
 msgid "Sebastian Kapfer"
 msgstr "Sebastian Kapfer"
 
-#: audacious/credits.c:101
+#: audacious/credits.c:102
 msgid "Lukas Koberstein"
 msgstr "Lukas Koberstein"
 
-#: audacious/credits.c:102 audacious/credits.c:177
+#: audacious/credits.c:103 audacious/credits.c:179
 msgid "Dan Korostelev"
 msgstr "Dan Korostelev"
 
-#: audacious/credits.c:103
+#: audacious/credits.c:104
 msgid "Jolan Luff"
 msgstr "Jolan Luff"
 
-#: audacious/credits.c:104
+#: audacious/credits.c:105
 msgid "Michael Marineau"
 msgstr "Michael Marineau"
 
-#: audacious/credits.c:105
+#: audacious/credits.c:106
 msgid "Tim-Philipp Muller"
 msgstr "Tim-Philipp Muller"
 
-#: audacious/credits.c:106
+#: audacious/credits.c:107
 msgid "Julien Portalier"
 msgstr "Julien Portalier"
 
-#: audacious/credits.c:107
+#: audacious/credits.c:108
 msgid "Andrew Ruder"
 msgstr "Andrew Ruder"
 
-#: audacious/credits.c:108
+#: audacious/credits.c:109
 msgid "Olivier Samyn"
 msgstr "Olivier Samyn"
 
-#: audacious/credits.c:109
+#: audacious/credits.c:110
 msgid "Martijn Vernooij"
 msgstr "Martijn Vernooij"
 
-#: audacious/credits.c:116
+#: audacious/credits.c:117
 msgid "Brazilian Portuguese:"
 msgstr "Brazilian Portuguese:"
 
-#: audacious/credits.c:117
+#: audacious/credits.c:118
 msgid "Philipi Pinto"
 msgstr "Philipi Pinto"
 
-#: audacious/credits.c:119
+#: audacious/credits.c:120
 msgid "Breton:"
 msgstr "Bretón:"
 
-#: audacious/credits.c:120
+#: audacious/credits.c:121
 msgid "Thierry Vignaud"
 msgstr "Thierry Vignaud"
 
-#: audacious/credits.c:122
+#: audacious/credits.c:123
 msgid "Chinese:"
 msgstr "Chino:"
 
-#: audacious/credits.c:124
+#: audacious/credits.c:125
 msgid "Chao-Hsiung Liao"
 msgstr "Chao-Hsiung Liao"
 
-#: audacious/credits.c:126
+#: audacious/credits.c:127
 msgid "Czech:"
 msgstr "Checo:"
 
-#: audacious/credits.c:127
+#: audacious/credits.c:128
 msgid "Jan Narovec"
 msgstr "Jan Narovec"
 
-#: audacious/credits.c:129
+#: audacious/credits.c:130
 msgid "Dutch:"
 msgstr "Holandés:"
 
-#: audacious/credits.c:130
+#: audacious/credits.c:131
 msgid "Laurens Buhler"
 msgstr "Laurens Buhler"
 
-#: audacious/credits.c:132
+#: audacious/credits.c:134
 msgid "Finnish:"
 msgstr "Finlandeses:"
 
-#: audacious/credits.c:133
+#: audacious/credits.c:135
 msgid "Pauli Virtanen"
 msgstr "Pauli Virtanen"
 
-#: audacious/credits.c:135
+#: audacious/credits.c:137
 msgid "French:"
 msgstr "Francés:"
 
-#: audacious/credits.c:136
+#: audacious/credits.c:138
 msgid "David Le Brun"
 msgstr "David Le Brun"
 
-#: audacious/credits.c:138
+#: audacious/credits.c:140
 msgid "German:"
 msgstr "Alemán:"
 
-#: audacious/credits.c:139
+#: audacious/credits.c:141
 msgid "Matthias Debus"
 msgstr "Matthias Debus"
 
-#: audacious/credits.c:141
+#: audacious/credits.c:143
 msgid "Georgian: "
 msgstr "Georgianos: "
 
-#: audacious/credits.c:142
+#: audacious/credits.c:144
 msgid "George Machitidze"
 msgstr "George Machitidze"
 
-#: audacious/credits.c:144
+#: audacious/credits.c:146
 msgid "Greek:"
 msgstr "Griego:"
 
-#: audacious/credits.c:145
+#: audacious/credits.c:147
 msgid "Kouzinopoulos Haris"
 msgstr "Kouzinopoulos Haris"
 
-#: audacious/credits.c:146
+#: audacious/credits.c:148
 msgid "Stavros Giannouris"
 msgstr "Stavros Giannouris"
 
-#: audacious/credits.c:148
+#: audacious/credits.c:150
 msgid "Hindi:"
 msgstr "Hindúes:"
 
-#: audacious/credits.c:149
+#: audacious/credits.c:151
 msgid "Dhananjaya Sharma"
 msgstr "Dhananjaya Sharma"
 
-#: audacious/credits.c:151
+#: audacious/credits.c:153
 msgid "Hungarian:"
 msgstr "Húngaro:"
 
-#: audacious/credits.c:152
+#: audacious/credits.c:154
 msgid "Laszlo Dvornik"
 msgstr "Laszlo Dvornik"
 
-#: audacious/credits.c:154
+#: audacious/credits.c:156
 msgid "Italian:"
 msgstr "Italiano:"
 
-#: audacious/credits.c:155
+#: audacious/credits.c:157
 msgid "Alessio D'Ascanio"
 msgstr "Alessio D'Ascanio"
 
-#: audacious/credits.c:157
+#: audacious/credits.c:159
 msgid "Japanese:"
 msgstr "Japonés:"
 
-#: audacious/credits.c:158
+#: audacious/credits.c:160
 msgid "Dai"
 msgstr "Dai"
 
-#: audacious/credits.c:160
+#: audacious/credits.c:162
 msgid "Korean:"
 msgstr "Coreano:"
 
-#: audacious/credits.c:161
+#: audacious/credits.c:163
 msgid "DongCheon Park"
 msgstr "DongCheon Park"
 
-#: audacious/credits.c:163
+#: audacious/credits.c:165
 msgid "Lithuanian:"
 msgstr "Lituano:"
 
-#: audacious/credits.c:164
+#: audacious/credits.c:166
 msgid "Rimas Kudelis"
 msgstr "Rimas Kudelis"
 
-#: audacious/credits.c:166
+#: audacious/credits.c:168
 msgid "Macedonian:"
 msgstr "Macedonio:"
 
-#: audacious/credits.c:167
+#: audacious/credits.c:169
 msgid "Arangel Angov"
 msgstr "Arangel Angov"
 
-#: audacious/credits.c:169
+#: audacious/credits.c:171
 msgid "Polish:"
 msgstr "Polaco:"
 
-#: audacious/credits.c:170
+#: audacious/credits.c:172
 msgid "Jacek Wolszczak"
 msgstr "Jacek Wolszczak"
 
-#: audacious/credits.c:172
+#: audacious/credits.c:174
 msgid "Romanian:"
 msgstr "Rumano:"
 
-#: audacious/credits.c:175
+#: audacious/credits.c:177
 msgid "Russian:"
 msgstr "Ruso:"
 
-#: audacious/credits.c:176
+#: audacious/credits.c:178
 msgid "Pavlo Bohmat"
 msgstr "Pavlo Bohmat"
 
-#: audacious/credits.c:178
+#: audacious/credits.c:180
 msgid "Vitaly Lipatov"
 msgstr "Vitaly Lipatov"
 
-#: audacious/credits.c:180
+#: audacious/credits.c:182
 msgid "Slovak:"
 msgstr "Eslovaco:"
 
-#: audacious/credits.c:181
+#: audacious/credits.c:183
 msgid "Pavel Kanzelsberger"
 msgstr "Pavel Kanzelsberger"
 
-#: audacious/credits.c:183
+#: audacious/credits.c:185
 msgid "Spanish:"
 msgstr "Español:"
 
-#: audacious/credits.c:184
-msgid "Francisco Javier F. Serrador"
-msgstr ""
-"Francisco Javier F. Serrador\n"
-"Carlos Fenollosa Bielsa"
-
 #: audacious/credits.c:186
+msgid "Gustavo D. Vranjes"
+msgstr ""
+
+#: audacious/credits.c:188
 msgid "Swedish:"
 msgstr "Sueco:"
 
-#: audacious/credits.c:187
+#: audacious/credits.c:189
 msgid "Martin Persenius"
 msgstr "Martin Persenius"
 
-#: audacious/credits.c:189
+#: audacious/credits.c:191
 msgid "Ukrainian:"
 msgstr "Ucranianos:"
 
-#: audacious/credits.c:190
+#: audacious/credits.c:192
 msgid "Mykola Lynnyk"
 msgstr "Mykola Lynnyk"
 
-#: audacious/credits.c:192
+#: audacious/credits.c:194
 msgid "Welsh:"
 msgstr "Galés:"
 
-#: audacious/credits.c:339
+#: audacious/credits.c:341
 msgid "Translators"
 msgstr "Traductores"
 
@@ -3791,120 +3770,120 @@ msgstr "14KHZ"
 msgid "16KHZ"
 msgstr "16KHZ"
 
-#: audacious/equalizer.c:126
+#: audacious/equalizer.c:129
 msgid "/Load"
 msgstr "/Cargar"
 
-#: audacious/equalizer.c:127
+#: audacious/equalizer.c:130
 msgid "/Load/Preset"
 msgstr "/Cargar/Preconfigurado"
 
-#: audacious/equalizer.c:129
+#: audacious/equalizer.c:132
 msgid "/Load/Auto-load preset"
 msgstr "/Cargar/Autocargar preconfigurado"
 
-#: audacious/equalizer.c:131
+#: audacious/equalizer.c:134
 msgid "/Load/Default"
 msgstr "/Cargar/Predeterminado"
 
-#: audacious/equalizer.c:134
+#: audacious/equalizer.c:137
 msgid "/Load/Zero"
 msgstr "/Cargar/Cero"
 
-#: audacious/equalizer.c:137
+#: audacious/equalizer.c:140
 msgid "/Load/From file"
 msgstr "/Cargar/Desde archivo"
 
-#: audacious/equalizer.c:139
+#: audacious/equalizer.c:142
 msgid "/Load/From WinAMP EQF file"
 msgstr "/Cargar/Desde archivo EQF de WinAMP"
 
-#: audacious/equalizer.c:141
+#: audacious/equalizer.c:144
 msgid "/Import"
 msgstr "/Importar"
 
-#: audacious/equalizer.c:142
+#: audacious/equalizer.c:145
 msgid "/Import/WinAMP Presets"
 msgstr "/Importar/Preconfigurado de WinAMP"
 
-#: audacious/equalizer.c:144
+#: audacious/equalizer.c:147
 msgid "/Save"
 msgstr "/Guardar"
 
-#: audacious/equalizer.c:145
+#: audacious/equalizer.c:148
 msgid "/Save/Preset"
 msgstr "/Guardar/Preconfigurado"
 
-#: audacious/equalizer.c:147
+#: audacious/equalizer.c:150
 msgid "/Save/Auto-load preset"
 msgstr "/Guardar/Preconfigurado autocargado"
 
-#: audacious/equalizer.c:149
+#: audacious/equalizer.c:152
 msgid "/Save/Default"
 msgstr "/Guardar/Predeterminado"
 
-#: audacious/equalizer.c:152
+#: audacious/equalizer.c:155
 msgid "/Save/To file"
 msgstr "/Guardar/En archivo"
 
-#: audacious/equalizer.c:154
+#: audacious/equalizer.c:157
 msgid "/Save/To WinAMP EQF file"
 msgstr "/Guardar/En archivo EQF de WinAMP"
 
-#: audacious/equalizer.c:156
+#: audacious/equalizer.c:159
 msgid "/Delete"
 msgstr "/Borrar"
 
-#: audacious/equalizer.c:157
+#: audacious/equalizer.c:160
 msgid "/Delete/Preset"
 msgstr "/Borrar/Preconfigurado"
 
-#: audacious/equalizer.c:159
+#: audacious/equalizer.c:162
 msgid "/Delete/Auto-load preset"
 msgstr "/Borrar/Preconfigurado autocargado"
 
-#: audacious/equalizer.c:741
+#: audacious/equalizer.c:748
 msgid "Audacious Equalizer"
 msgstr "Ecualizador Audacious"
 
-#: audacious/equalizer.c:1392
+#: audacious/equalizer.c:1401
 msgid "Preset"
 msgstr "Preconfigurado"
 
-#: audacious/equalizer.c:1437
+#: audacious/equalizer.c:1446
 msgid "Presets"
 msgstr "Preconfigurados"
 
-#: audacious/equalizer.c:1501
+#: audacious/equalizer.c:1510
 msgid "Load preset"
 msgstr "Cargar preconfigurado"
 
-#: audacious/equalizer.c:1517
+#: audacious/equalizer.c:1526
 msgid "Load auto-preset"
 msgstr "Cargar auto-preconfigurado"
 
-#: audacious/equalizer.c:1543 audacious/equalizer.c:1549
-#: audacious/equalizer.c:1556
+#: audacious/equalizer.c:1552 audacious/equalizer.c:1558
+#: audacious/equalizer.c:1565
 msgid "Load equalizer preset"
 msgstr "Cargar preconfigurado del ecualizador"
 
-#: audacious/equalizer.c:1565
+#: audacious/equalizer.c:1574
 msgid "Save preset"
 msgstr "Guardar preconfigurado"
 
-#: audacious/equalizer.c:1585
+#: audacious/equalizer.c:1594
 msgid "Save auto-preset"
 msgstr "Guardar auto-preconfigurado"
 
-#: audacious/equalizer.c:1620 audacious/equalizer.c:1639
+#: audacious/equalizer.c:1629 audacious/equalizer.c:1648
 msgid "Save equalizer preset"
 msgstr "Guardar preconfigurado del ecualizador"
 
-#: audacious/equalizer.c:1648
+#: audacious/equalizer.c:1657
 msgid "Delete preset"
 msgstr "Borrar preconfigurado"
 
-#: audacious/equalizer.c:1666
+#: audacious/equalizer.c:1675
 msgid "Delete auto-preset"
 msgstr "Borrar auto-preconfigurado"
 
@@ -3996,8 +3975,8 @@ msgstr "No mostrar más esta advertencia"
 msgid "Show more _details"
 msgstr "Ver más _detalles"
 
-#: audacious/input.c:342 audacious/prefswin.c:107 audacious/prefswin.c:456
-#: audacious/prefswin.c:544 audacious/prefswin.c:633 audacious/prefswin.c:729
+#: audacious/input.c:342 audacious/prefswin.c:111 audacious/prefswin.c:472
+#: audacious/prefswin.c:560 audacious/prefswin.c:649 audacious/prefswin.c:745
 msgid "Filename"
 msgstr "Nombre de archivo"
 
@@ -4020,17 +3999,17 @@ msgstr "Complemento de entrada: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "No se pudo crear el archivo log (%s)\n"
 
-#: audacious/main.c:84 audacious/main.c:86 audacious/mainwin.c:803
-#: audacious/mainwin.c:3246
+#: audacious/main.c:83 audacious/main.c:85 audacious/mainwin.c:806
+#: audacious/mainwin.c:3256
 msgid "Audacious"
 msgstr "Audacious"
 
-#: audacious/main.c:391
+#: audacious/main.c:395
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "No se pudo crear el directorio «%s»: %s"
 
-#: audacious/main.c:652
+#: audacious/main.c:664
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
@@ -4042,63 +4021,63 @@ msgstr ""
 "Opciones:\n"
 "--------\n"
 
-#: audacious/main.c:657
+#: audacious/main.c:669
 msgid "Display this text and exit"
 msgstr "Mostrar este texto y salir"
 
-#: audacious/main.c:660
+#: audacious/main.c:672
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Seleccionar la sesión de Audacious/BMP/XMMS (Por defecto: 0)"
 
-#: audacious/main.c:663
+#: audacious/main.c:675
 msgid "Skip backwards in playlist"
 msgstr "Saltar hacia atrás en la lista de reproducción"
 
-#: audacious/main.c:666
+#: audacious/main.c:678
 msgid "Start playing current playlist"
 msgstr "Empezar la reproducción de la lista de reproducción actual"
 
-#: audacious/main.c:669
+#: audacious/main.c:681
 msgid "Pause current song"
 msgstr "Pausar la canción actual"
 
-#: audacious/main.c:672
+#: audacious/main.c:684
 msgid "Stop current song"
 msgstr "Parar la canción actual"
 
-#: audacious/main.c:675
+#: audacious/main.c:687
 msgid "Pause if playing, play otherwise"
 msgstr "Pausar si se está reproduciendo, o reproducir"
 
-#: audacious/main.c:678
+#: audacious/main.c:690
 msgid "Skip forward in playlist"
 msgstr "Saltar hacia adelante en la lista de reproducción"
 
-#: audacious/main.c:681
+#: audacious/main.c:693
 msgid "Don't clear the playlist"
 msgstr "No limpiar la lista de reproducción"
 
-#: audacious/main.c:684
+#: audacious/main.c:696
 msgid "Show the main window"
 msgstr "Mostrar la ventana principal"
 
-#: audacious/main.c:687
+#: audacious/main.c:699
 msgid "Activate Audacious"
 msgstr "Activar Audacious"
 
-#: audacious/main.c:690
+#: audacious/main.c:702
 msgid "Previous session ID"
 msgstr "ID de sesión previa"
 
-#: audacious/main.c:693
+#: audacious/main.c:705
 msgid "Headless operation [experimental]"
 msgstr "Operación sin cabecera [experimental]"
 
-#: audacious/main.c:696
+#: audacious/main.c:708
 msgid "Print version number and exit\n"
 msgstr "Imprimir el número de versión y salir.\n"
 
-#: audacious/main.c:875
+#: audacious/main.c:887
 msgid ""
 "\n"
 "Received SIGSEGV\n"
@@ -4114,7 +4093,7 @@ msgstr ""
 "envíe un correo-e a http://bugs.nenolod.net/\n"
 "\n"
 
-#: audacious/main.c:898
+#: audacious/main.c:910
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -4127,7 +4106,7 @@ msgstr ""
 "Por favor, comprueba que la piel «%s» sea válida y que la piel por defecto "
 "esté instalada correctamente en «%s»\n"
 
-#: audacious/main.c:945
+#: audacious/main.c:957
 #, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -4136,7 +4115,7 @@ msgstr ""
 "Lo siento, su versión de GTK (%d.%d.%d) no funciona con Audacious.\n"
 "Por favor, use GTK+ %s o más nuevo.\n"
 
-#: audacious/main.c:956
+#: audacious/main.c:968
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -4149,382 +4128,382 @@ msgstr ""
 "Si está en un sistema linux basado en libc5 e instaló Glib & GTK+ antes de "
 "instalar LinuxThreads, necesita recompilar GLIB y GTK+\n"
 
-#: audacious/main.c:972
+#: audacious/main.c:984
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "Audacious: No se pudo abrir la pantalla, abortando\n"
 
-#: audacious/mainwin.c:248 audacious/mainwin.c:369 audacious/ui_playlist.c:123
+#: audacious/mainwin.c:251 audacious/mainwin.c:372 audacious/ui_playlist.c:126
 msgid "/View Track Details"
 msgstr "/Ver detalles de pista"
 
-#: audacious/mainwin.c:250 audacious/mainwin.c:364
+#: audacious/mainwin.c:253 audacious/mainwin.c:367
 msgid "/Jump to File"
 msgstr "/Saltar al archivo"
 
-#: audacious/mainwin.c:253
+#: audacious/mainwin.c:256
 msgid "/Autoscroll Songname"
 msgstr "/Desplazar Nombre de canción"
 
-#: audacious/mainwin.c:255 audacious/mainwin.c:347
+#: audacious/mainwin.c:258 audacious/mainwin.c:350
 #, fuzzy
 msgid "/Stop After Current Song"
 msgstr "Parar la canción actual"
 
-#: audacious/mainwin.c:265
+#: audacious/mainwin.c:268
 msgid "/Visualization Mode"
 msgstr "/Modo de visualización"
 
-#: audacious/mainwin.c:266
+#: audacious/mainwin.c:269
 msgid "/Visualization Mode/Analyzer"
 msgstr "/Modo de visualización/Analizador"
 
-#: audacious/mainwin.c:268
+#: audacious/mainwin.c:271
 msgid "/Visualization Mode/Scope"
 msgstr "/Modo de visualización/Osciloscopio"
 
-#: audacious/mainwin.c:270
+#: audacious/mainwin.c:273
 msgid "/Visualization Mode/Off"
 msgstr "/Modo de visualización/Apagado"
 
-#: audacious/mainwin.c:272
+#: audacious/mainwin.c:275
 msgid "/Analyzer Mode"
 msgstr "/Modo del analizador"
 
-#: audacious/mainwin.c:273
+#: audacious/mainwin.c:276
 msgid "/Analyzer Mode/Normal"
 msgstr "/Modo del analizador/Normal"
 
-#: audacious/mainwin.c:275
+#: audacious/mainwin.c:278
 msgid "/Analyzer Mode/Fire"
 msgstr "/Modo del analizador/Fuego"
 
-#: audacious/mainwin.c:277
+#: audacious/mainwin.c:280
 msgid "/Analyzer Mode/Vertical Lines"
 msgstr "/Modo del analizador/Líneas verticales"
 
-#: audacious/mainwin.c:280
+#: audacious/mainwin.c:283
 msgid "/Analyzer Mode/Lines"
 msgstr "/Modo del analizador/Líneas"
 
-#: audacious/mainwin.c:282
+#: audacious/mainwin.c:285
 msgid "/Analyzer Mode/Bars"
 msgstr "/Modo del analizador/Barras"
 
-#: audacious/mainwin.c:285
+#: audacious/mainwin.c:288
 msgid "/Analyzer Mode/Peaks"
 msgstr "/Modo del analizador/Picos"
 
-#: audacious/mainwin.c:287
+#: audacious/mainwin.c:290
 msgid "/Scope Mode"
 msgstr "/Modo del osciloscopio"
 
-#: audacious/mainwin.c:288
+#: audacious/mainwin.c:291
 msgid "/Scope Mode/Dot Scope"
 msgstr "/Modo del osciloscopio/Puntos"
 
-#: audacious/mainwin.c:290
+#: audacious/mainwin.c:293
 msgid "/Scope Mode/Line Scope"
 msgstr "/Modo del osciloscopio/Líneas"
 
-#: audacious/mainwin.c:292
+#: audacious/mainwin.c:295
 msgid "/Scope Mode/Solid Scope"
 msgstr "/Modo del osciloscopio/Sólido"
 
-#: audacious/mainwin.c:294
+#: audacious/mainwin.c:297
 msgid "/WindowShade VU Mode"
 msgstr "/Modo de sombreado de ventana"
 
-#: audacious/mainwin.c:295
+#: audacious/mainwin.c:298
 msgid "/WindowShade VU Mode/Normal"
 msgstr "/Modo de sombreado de ventana/Normal"
 
-#: audacious/mainwin.c:297
+#: audacious/mainwin.c:300
 msgid "/WindowShade VU Mode/Smooth"
 msgstr "/Modo de sombreado de ventana/Suave"
 
-#: audacious/mainwin.c:299
+#: audacious/mainwin.c:302
 msgid "/Refresh Rate"
 msgstr "/Frecuencia de refresco"
 
-#: audacious/mainwin.c:300
+#: audacious/mainwin.c:303
 msgid "/Refresh Rate/Full (~50 fps)"
 msgstr "/Frecuencia de refresco/Completa (~50 fps)"
 
-#: audacious/mainwin.c:302
+#: audacious/mainwin.c:305
 msgid "/Refresh Rate/Half (~25 fps)"
 msgstr "/Frecuencia de refresco/Media (~25 fps)"
 
-#: audacious/mainwin.c:304
+#: audacious/mainwin.c:307
 msgid "/Refresh Rate/Quarter (~13 fps)"
 msgstr "/Frecuencia de refresco/Cuarta parte (~13 fps)"
 
-#: audacious/mainwin.c:306
+#: audacious/mainwin.c:309
 msgid "/Refresh Rate/Eighth (~6 fps)"
 msgstr "/Frecuencia de refresco/Octava parte (~6 fps)"
 
-#: audacious/mainwin.c:308
+#: audacious/mainwin.c:311
 msgid "/Analyzer Falloff"
 msgstr "/Caída del analizador"
 
-#: audacious/mainwin.c:309
+#: audacious/mainwin.c:312
 msgid "/Analyzer Falloff/Slowest"
 msgstr "/Caída del analizador/Lentísima"
 
-#: audacious/mainwin.c:311
+#: audacious/mainwin.c:314
 msgid "/Analyzer Falloff/Slow"
 msgstr "/Caída del analizador/Lenta"
 
-#: audacious/mainwin.c:313
+#: audacious/mainwin.c:316
 msgid "/Analyzer Falloff/Medium"
 msgstr "/Caída del analizador/Media"
 
-#: audacious/mainwin.c:315
+#: audacious/mainwin.c:318
 msgid "/Analyzer Falloff/Fast"
 msgstr "/Caída del analizador/Rápida"
 
-#: audacious/mainwin.c:317
+#: audacious/mainwin.c:320
 msgid "/Analyzer Falloff/Fastest"
 msgstr "/Caída del analizador/Rapidísima"
 
-#: audacious/mainwin.c:319
+#: audacious/mainwin.c:322
 msgid "/Peaks Falloff"
 msgstr "/Caída de los picos"
 
-#: audacious/mainwin.c:320
+#: audacious/mainwin.c:323
 msgid "/Peaks Falloff/Slowest"
 msgstr "/Caída de los picos/Lentísima"
 
-#: audacious/mainwin.c:322
+#: audacious/mainwin.c:325
 msgid "/Peaks Falloff/Slow"
 msgstr "/Caída de los picos/Lenta"
 
-#: audacious/mainwin.c:324
+#: audacious/mainwin.c:327
 msgid "/Peaks Falloff/Medium"
 msgstr "/Caída de los picos/Media"
 
-#: audacious/mainwin.c:326
+#: audacious/mainwin.c:329
 msgid "/Peaks Falloff/Fast"
 msgstr "/Caída de los picos/Rápida"
 
-#: audacious/mainwin.c:328
+#: audacious/mainwin.c:331
 msgid "/Peaks Falloff/Fastest"
 msgstr "/Caída de los picos/Rapidísima"
 
-#: audacious/mainwin.c:338
+#: audacious/mainwin.c:341
 msgid "/Play CD"
 msgstr "/Reproducir CD"
 
-#: audacious/mainwin.c:341
+#: audacious/mainwin.c:344
 msgid "/Repeat"
 msgstr "/Repetir"
 
-#: audacious/mainwin.c:343
+#: audacious/mainwin.c:346
 msgid "/Shuffle"
 msgstr "/Orden aleatorio"
 
-#: audacious/mainwin.c:345
+#: audacious/mainwin.c:348
 msgid "/No Playlist Advance"
 msgstr "/No avanzar en la lista de reproducción"
 
-#: audacious/mainwin.c:350
+#: audacious/mainwin.c:353
 msgid "/Play"
 msgstr "/Reproducir"
 
-#: audacious/mainwin.c:352
+#: audacious/mainwin.c:355
 msgid "/Pause"
 msgstr "/Pausa"
 
-#: audacious/mainwin.c:354
+#: audacious/mainwin.c:357
 msgid "/Stop"
 msgstr "/Parar"
 
-#: audacious/mainwin.c:356
+#: audacious/mainwin.c:359
 msgid "/Previous"
 msgstr "/Anterior"
 
-#: audacious/mainwin.c:358
+#: audacious/mainwin.c:361
 msgid "/Next"
 msgstr "/Siguiente"
 
-#: audacious/mainwin.c:361
+#: audacious/mainwin.c:364
 msgid "/Jump to Playlist Start"
 msgstr "/Saltar al inicio de la lista de reproducción"
 
-#: audacious/mainwin.c:366
+#: audacious/mainwin.c:369
 msgid "/Jump to Time"
 msgstr "/Saltar al tiempo"
 
-#: audacious/mainwin.c:379
+#: audacious/mainwin.c:382
 msgid "/About Audacious"
 msgstr "/Acerca de Audacious"
 
-#: audacious/mainwin.c:382
+#: audacious/mainwin.c:385
 msgid "/Play File"
 msgstr "/Reproducir archivo"
 
-#: audacious/mainwin.c:384
+#: audacious/mainwin.c:387
 msgid "/Play Location"
 msgstr "/ Reproducir Lugar"
 
-#: audacious/mainwin.c:387
+#: audacious/mainwin.c:390
 msgid "/V_isualization"
 msgstr "/V_isualización"
 
-#: audacious/mainwin.c:388
+#: audacious/mainwin.c:391
 msgid "/_Playback"
 msgstr "/_Reproducción"
 
-#: audacious/mainwin.c:389
+#: audacious/mainwin.c:392
 msgid "/_View"
 msgstr "/_Ver"
 
-#: audacious/mainwin.c:391
+#: audacious/mainwin.c:394
 msgid "/Preferences"
 msgstr "/Preferencias"
 
-#: audacious/mainwin.c:393
+#: audacious/mainwin.c:396
 msgid "/_Quit"
 msgstr "/_Salir"
 
-#: audacious/mainwin.c:403
+#: audacious/mainwin.c:406
 msgid "/Files..."
 msgstr "/Archivos..."
 
-#: audacious/mainwin.c:405
+#: audacious/mainwin.c:408
 msgid "/Internet location..."
 msgstr "/Dirección de internet..."
 
-#: audacious/mainwin.c:415
+#: audacious/mainwin.c:418
 msgid "/Show Playlist Editor"
 msgstr "/Mostrar el editor de listas de reproducción"
 
-#: audacious/mainwin.c:417
+#: audacious/mainwin.c:420
 msgid "/Show Equalizer"
 msgstr "/Mostrar ecualizador"
 
-#: audacious/mainwin.c:420
+#: audacious/mainwin.c:423
 msgid "/Time Elapsed"
 msgstr "/Tiempo corrido"
 
-#: audacious/mainwin.c:422
+#: audacious/mainwin.c:425
 msgid "/Time Remaining"
 msgstr "/Tiempo restante"
 
-#: audacious/mainwin.c:425
+#: audacious/mainwin.c:428
 msgid "/Always On Top"
 msgstr "/Siempre encima"
 
-#: audacious/mainwin.c:427
+#: audacious/mainwin.c:430
 msgid "/Put on All Workspaces"
 msgstr "/Mostrar en todos los espacios de trabajo"
 
-#: audacious/mainwin.c:430
+#: audacious/mainwin.c:433
 msgid "/Roll up Player"
 msgstr "/Enrollar reproductor"
 
-#: audacious/mainwin.c:432
+#: audacious/mainwin.c:435
 msgid "/Roll up Playlist Editor"
 msgstr "/Enrollar lista de reproducción"
 
-#: audacious/mainwin.c:434
+#: audacious/mainwin.c:437
 msgid "/Roll up Equalizer"
 msgstr "/Enrollar ecualizador"
 
-#: audacious/mainwin.c:861
+#: audacious/mainwin.c:863
 msgid "VBR"
 msgstr "VBR"
 
-#: audacious/mainwin.c:901
+#: audacious/mainwin.c:904 audacious/mainwin.c:908
 #, fuzzy
 msgid "stereo"
 msgstr "Estéreo"
 
-#: audacious/mainwin.c:901
+#: audacious/mainwin.c:904 audacious/mainwin.c:908
 #, fuzzy
 msgid "mono"
 msgstr "Mono"
 
-#: audacious/mainwin.c:1350
+#: audacious/mainwin.c:1358
 msgid "Jump to Time"
 msgstr "Saltar al tiempo"
 
-#: audacious/mainwin.c:1371
+#: audacious/mainwin.c:1379
 msgid "minutes:seconds"
 msgstr "minutos:segundos"
 
-#: audacious/mainwin.c:1381
+#: audacious/mainwin.c:1389
 msgid "Track length:"
 msgstr "Longitud de pista:"
 
-#: audacious/mainwin.c:1469
+#: audacious/mainwin.c:1477
 msgid "Un_queue"
 msgstr "_Remover de la Cola"
 
-#: audacious/mainwin.c:1471 audacious/mainwin.c:1794
+#: audacious/mainwin.c:1479 audacious/mainwin.c:1804
 msgid "_Queue"
 msgstr "_Cola"
 
-#: audacious/mainwin.c:1724
+#: audacious/mainwin.c:1732
 msgid "Jump to Track"
 msgstr "Saltar a la pista"
 
-#: audacious/mainwin.c:1763
+#: audacious/mainwin.c:1773
 msgid "Filter: "
 msgstr "filtro:"
 
-#: audacious/mainwin.c:1977
+#: audacious/mainwin.c:1987
 msgid "Enter location to play:"
 msgstr "Ingrese lugar a ejecutar:"
 
-#: audacious/mainwin.c:2182
+#: audacious/mainwin.c:2192
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "BUSCAR HASTA: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2214 audacious/mainwin.c:2893
+#: audacious/mainwin.c:2224 audacious/mainwin.c:2903
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "VOLUMEN: %d%%"
 
-#: audacious/mainwin.c:2245 audacious/mainwin.c:2896
+#: audacious/mainwin.c:2255 audacious/mainwin.c:2906
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "BALANCE: %d%% IZQUIERDO"
 
-#: audacious/mainwin.c:2249 audacious/mainwin.c:2899
+#: audacious/mainwin.c:2259 audacious/mainwin.c:2909
 msgid "BALANCE: CENTER"
 msgstr "BALANCE: CENTRO"
 
-#: audacious/mainwin.c:2253 audacious/mainwin.c:2901
+#: audacious/mainwin.c:2263 audacious/mainwin.c:2911
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "BALANCE: %d%% DERECHO"
 
-#: audacious/mainwin.c:2674
+#: audacious/mainwin.c:2684
 msgid "OPTIONS MENU"
 msgstr "MENÚ DE OPCIONES"
 
-#: audacious/mainwin.c:2678
+#: audacious/mainwin.c:2688
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "DESACTIVAR «SIEMPRE ENCIMA»"
 
-#: audacious/mainwin.c:2680
+#: audacious/mainwin.c:2690
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "ACTIVAR «SIEMPRE ENCIMA»"
 
-#: audacious/mainwin.c:2683
+#: audacious/mainwin.c:2693
 msgid "FILE INFO BOX"
 msgstr "INFORMACIÓN DEL ARCHIVO"
 
-#: audacious/mainwin.c:2686
+#: audacious/mainwin.c:2696
 msgid "** DOUBLESIZE HAS BEEN REMOVED **"
 msgstr "SE HA DESACTIVADO EL TAMAÑO DOBLE"
 
-#: audacious/mainwin.c:2689
+#: audacious/mainwin.c:2699
 msgid "VISUALIZATION MENU"
 msgstr "MENÚ DE VISUALIZACIÓN"
 
-#: audacious/mainwin.c:2734
+#: audacious/mainwin.c:2744
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -4534,7 +4513,7 @@ msgstr ""
 "\n"
 "No se insertó ningún CD, o el CD insertado no es de audio\n"
 
-#: audacious/mainwin.c:2751
+#: audacious/mainwin.c:2761
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -4550,73 +4529,81 @@ msgstr ""
 "2. Ningún programa está bloqueando la tarjeta de sonido\n"
 "3. La tarjeta de sonido esté bien configurada\n"
 
-#: audacious/prefswin.c:92 audacious/glade/prefswin.glade:1520
+#: audacious/prefswin.c:95 audacious/glade/prefswin.glade:1632
 msgid "Appearance"
 msgstr "Apariencia"
 
-#: audacious/prefswin.c:93 audacious/glade/prefswin.glade:3066
+#: audacious/prefswin.c:96
+msgid "Connectivity"
+msgstr ""
+
+#: audacious/prefswin.c:97 audacious/glade/prefswin.glade:3178
 msgid "Equalizer"
 msgstr "Ecualizador"
 
-#: audacious/prefswin.c:94 audacious/glade/prefswin.glade:1838
+#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1950
 msgid "Mouse"
 msgstr "Ratón"
 
-#: audacious/prefswin.c:95 audacious/glade/prefswin.glade:2659
+#: audacious/prefswin.c:99 audacious/glade/prefswin.glade:2771
 msgid "Playlist"
 msgstr "Lista de reproducción"
 
-#: audacious/prefswin.c:96 audacious/glade/prefswin.glade:936
+#: audacious/prefswin.c:100 audacious/glade/prefswin.glade:936
 msgid "Plugins"
 msgstr "Complementos"
 
-#: audacious/prefswin.c:102
+#: audacious/prefswin.c:106
 msgid "Artist"
 msgstr "Artista"
 
-#: audacious/prefswin.c:103 libaudacious/titlestring.c:325
+#: audacious/prefswin.c:107 libaudacious/titlestring.c:325
 msgid "Album"
 msgstr "Álbum"
 
-#: audacious/prefswin.c:105
+#: audacious/prefswin.c:109
 msgid "Tracknumber"
 msgstr "Número de pista"
 
-#: audacious/prefswin.c:106 libaudacious/titlestring.c:326
+#: audacious/prefswin.c:110 libaudacious/titlestring.c:326
 msgid "Genre"
 msgstr "Género"
 
-#: audacious/prefswin.c:108
+#: audacious/prefswin.c:112
 msgid "Filepath"
 msgstr "Ruta hasta el archivo"
 
-#: audacious/prefswin.c:109 libaudacious/titlestring.c:332
+#: audacious/prefswin.c:113 libaudacious/titlestring.c:332
 msgid "Date"
 msgstr "Fecha"
 
-#: audacious/prefswin.c:110 libaudacious/titlestring.c:333
+#: audacious/prefswin.c:114 libaudacious/titlestring.c:333
 msgid "Year"
 msgstr "Año"
 
-#: audacious/prefswin.c:111 libaudacious/titlestring.c:334
+#: audacious/prefswin.c:115 libaudacious/titlestring.c:334
 msgid "Comment"
 msgstr "Comentario"
 
-#: audacious/prefswin.c:426 audacious/prefswin.c:513 audacious/prefswin.c:602
-#: audacious/prefswin.c:698
-msgid "Enabled"
-msgstr "Activado"
+#: audacious/prefswin.c:127
+msgid "localhost"
+msgstr ""
 
 #: audacious/prefswin.c:442 audacious/prefswin.c:529 audacious/prefswin.c:618
 #: audacious/prefswin.c:714
+msgid "Enabled"
+msgstr "Activado"
+
+#: audacious/prefswin.c:458 audacious/prefswin.c:545 audacious/prefswin.c:634
+#: audacious/prefswin.c:730
 msgid "Description"
 msgstr "Descripción"
 
-#: audacious/prefswin.c:1519
+#: audacious/prefswin.c:1745
 msgid "Category"
 msgstr "Categoría"
 
-#: audacious/prefswin.c:1693
+#: audacious/prefswin.c:1940
 msgid "Preferences Window"
 msgstr "Ventana de preferencias"
 
@@ -4628,149 +4615,154 @@ msgstr "Piel Winamp 2.x archivada"
 msgid "Unarchived Winamp 2.x skin"
 msgstr "Piel Winamp 2.x sin archivar"
 
-#: audacious/ui_playlist.c:129 audacious/ui_playlist.c:194
+#: audacious/ui_playlist.c:132 audacious/ui_playlist.c:197
 msgid "/Remove Selected"
 msgstr "/Eliminar los seleccionados"
 
-#: audacious/ui_playlist.c:133 audacious/ui_playlist.c:190
+#: audacious/ui_playlist.c:136 audacious/ui_playlist.c:193
 msgid "/Remove Unselected"
 msgstr "/Eliminar los no-seleccionados"
 
-#: audacious/ui_playlist.c:137 audacious/ui_playlist.c:186
+#: audacious/ui_playlist.c:140 audacious/ui_playlist.c:189
 msgid "/Remove All"
 msgstr "/Eliminar todos"
 
-#: audacious/ui_playlist.c:143
+#: audacious/ui_playlist.c:146
 msgid "/Queue Toggle"
 msgstr "/Activar cola"
 
-#: audacious/ui_playlist.c:149
+#: audacious/ui_playlist.c:152
 msgid "/Add CD..."
 msgstr "/Añadir CD..."
 
-#: audacious/ui_playlist.c:153
+#: audacious/ui_playlist.c:156
 msgid "/Add Internet Address..."
 msgstr "/Añadir dirección de Internet..."
 
-#: audacious/ui_playlist.c:157
+#: audacious/ui_playlist.c:160
 msgid "/Add Files..."
 msgstr "/Añadir archivos..."
 
-#: audacious/ui_playlist.c:163
+#: audacious/ui_playlist.c:166
 msgid "/Clear Queue"
 msgstr "/Vaciar cola"
 
-#: audacious/ui_playlist.c:169
+#: audacious/ui_playlist.c:172
 msgid "/Remove Unavailable Files"
 msgstr "/Eliminar archivos no disponibles "
 
-#: audacious/ui_playlist.c:173
+#: audacious/ui_playlist.c:176
 #, fuzzy
 msgid "/Remove Duplicates"
 msgstr "/Eliminar los seleccionados"
 
-#: audacious/ui_playlist.c:174
+#: audacious/ui_playlist.c:177
 #, fuzzy
 msgid "/Remove Duplicates/By Title"
 msgstr "/Ordenar lista/Por título"
 
-#: audacious/ui_playlist.c:177
+#: audacious/ui_playlist.c:180
 #, fuzzy
 msgid "/Remove Duplicates/By Filename"
 msgstr "/Ordenar lista/Por nombre de archivo"
 
-#: audacious/ui_playlist.c:180
+#: audacious/ui_playlist.c:183
 #, fuzzy
 msgid "/Remove Duplicates/By Path + Filename"
 msgstr "/Ordenar lista/por ruta + nombre de archivo"
 
-#: audacious/ui_playlist.c:200
+#: audacious/ui_playlist.c:203
 msgid "/New List"
 msgstr "/Lista nueva"
 
-#: audacious/ui_playlist.c:206
+#: audacious/ui_playlist.c:209
 msgid "/Load List"
 msgstr "/Cargar lista"
 
-#: audacious/ui_playlist.c:210
+#: audacious/ui_playlist.c:213
 msgid "/Save List"
 msgstr "/Guardar lista"
 
-#: audacious/ui_playlist.c:216
+#: audacious/ui_playlist.c:217
+#, fuzzy
+msgid "/Save Default List"
+msgstr "/Guardar/Predeterminado"
+
+#: audacious/ui_playlist.c:223
 msgid "/Update View"
 msgstr "/Actualizar vista"
 
-#: audacious/ui_playlist.c:222
+#: audacious/ui_playlist.c:229
 msgid "/Invert Selection"
 msgstr "/Invertir selección"
 
-#: audacious/ui_playlist.c:228
+#: audacious/ui_playlist.c:235
 msgid "/Select None"
 msgstr "/Deseleccionar todo"
 
-#: audacious/ui_playlist.c:232
+#: audacious/ui_playlist.c:239
 msgid "/Select All"
 msgstr "/Seleccionar todo"
 
-#: audacious/ui_playlist.c:238
+#: audacious/ui_playlist.c:245
 msgid "/Randomize List"
 msgstr "/Mezclar lista"
 
-#: audacious/ui_playlist.c:240
+#: audacious/ui_playlist.c:247
 msgid "/Reverse List"
 msgstr "/Invertir lista"
 
-#: audacious/ui_playlist.c:243
+#: audacious/ui_playlist.c:250
 msgid "/Sort List"
 msgstr "/Ordenar lista"
 
-#: audacious/ui_playlist.c:244
+#: audacious/ui_playlist.c:251
 msgid "/Sort List/By Title"
 msgstr "/Ordenar lista/Por título"
 
-#: audacious/ui_playlist.c:246
+#: audacious/ui_playlist.c:253
 msgid "/Sort List/By Filename"
 msgstr "/Ordenar lista/Por nombre de archivo"
 
-#: audacious/ui_playlist.c:248
+#: audacious/ui_playlist.c:255
 msgid "/Sort List/By Path + Filename"
 msgstr "/Ordenar lista/por ruta + nombre de archivo"
 
-#: audacious/ui_playlist.c:250
+#: audacious/ui_playlist.c:257
 msgid "/Sort List/By Date"
 msgstr "/Ordenar lista/Por Fecha"
 
-#: audacious/ui_playlist.c:252
+#: audacious/ui_playlist.c:259
 msgid "/Sort Selection"
 msgstr "/Ordenar selección"
 
-#: audacious/ui_playlist.c:253
+#: audacious/ui_playlist.c:260
 msgid "/Sort Selection/By Title"
 msgstr "/Ordenar selección/Por título"
 
-#: audacious/ui_playlist.c:255
+#: audacious/ui_playlist.c:262
 msgid "/Sort Selection/By Filename"
 msgstr "/Ordenar selección/Por nombre de archivo"
 
-#: audacious/ui_playlist.c:257
+#: audacious/ui_playlist.c:264
 msgid "/Sort Selection/By Path + Filename"
 msgstr "/Ordenar selección/Por ruta + nombre de archivo"
 
-#: audacious/ui_playlist.c:259
+#: audacious/ui_playlist.c:266
 msgid "/Sort Selection/By Date"
 msgstr "/Ordenar selección/Por fecha"
 
-#: audacious/ui_playlist.c:779
+#: audacious/ui_playlist.c:787
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "Error escribiendo lista de reproducción«%s»: %s"
 
-#: audacious/ui_playlist.c:800
+#: audacious/ui_playlist.c:808
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s ya existe. Continuar?"
 
-#: audacious/ui_playlist.c:814
+#: audacious/ui_playlist.c:822
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -4781,15 +4773,15 @@ msgstr ""
 "\n"
 "Tipo de archivo desconocido para '%s'.\n"
 
-#: audacious/ui_playlist.c:924
+#: audacious/ui_playlist.c:932
 msgid "Load Playlist"
 msgstr "Cargar lista de reproducción"
 
-#: audacious/ui_playlist.c:936
+#: audacious/ui_playlist.c:944
 msgid "Save Playlist"
 msgstr "Guardar lista de reproducción"
 
-#: audacious/ui_playlist.c:1639
+#: audacious/ui_playlist.c:1648
 msgid "Audacious Playlist Editor"
 msgstr "Editor de listas de reproducción de Audacious"
 
@@ -4797,19 +4789,19 @@ msgstr "Editor de listas de reproducción de Audacious"
 msgid "Add/Open Files dialog"
 msgstr "Añadir/Abrir diálogo de selección de archivos..."
 
-#: audacious/util.c:984
+#: audacious/util.c:982
 msgid "Open Files"
 msgstr "Abrir archivos"
 
-#: audacious/util.c:988
+#: audacious/util.c:986
 msgid "Close dialog on Open"
 msgstr "Cerrar diálogo al abrir"
 
-#: audacious/util.c:1000 audacious/glade/addfiles.glade:8
+#: audacious/util.c:996 audacious/glade/addfiles.glade:8
 msgid "Add Files"
 msgstr "Añadir archivos..."
 
-#: audacious/util.c:1004
+#: audacious/util.c:1000
 msgid "Close dialog on Add"
 msgstr "Cerrar diálogo al añadir"
 
@@ -4928,143 +4920,171 @@ msgstr "Seleccione la tipografía de la ventana principal:"
 msgid "Select playlist font:"
 msgstr "Seleccione la tipografía de la lista de reproducción:"
 
-#: audacious/glade/prefswin.glade:1346
+#: audacious/glade/prefswin.glade:1345
+msgid ""
+"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
+"strings."
+msgstr ""
+
+#: audacious/glade/prefswin.glade:1347
 msgid "Use Bitmap fonts if available"
 msgstr "Usar fuentes de Bitmap si están disponibles"
 
-#: audacious/glade/prefswin.glade:1380
+#: audacious/glade/prefswin.glade:1381
 msgid "<b>_Miscellaneous</b>"
 msgstr "<b>_Varios</b>"
 
-#: audacious/glade/prefswin.glade:1428
+#: audacious/glade/prefswin.glade:1429
 msgid "Show track numbers in playlist"
 msgstr "Mostrar números en la lista de reproducción"
 
-#: audacious/glade/prefswin.glade:1476
+#: audacious/glade/prefswin.glade:1464
+#, fuzzy
+msgid "Show separators in playlist"
+msgstr "Mostrar números en la lista de reproducción"
+
+#: audacious/glade/prefswin.glade:1499
 msgid "Use custom cursors"
 msgstr "Usar cursores personalizados"
 
-#: audacious/glade/prefswin.glade:1549
+#: audacious/glade/prefswin.glade:1546
+#, fuzzy
+msgid "<b>_Transparency</b>"
+msgstr "<b>Pista:</b>"
+
+#: audacious/glade/prefswin.glade:1586
+msgid ""
+"Enables playlist transparency. This is not recommended for slower machines "
+"as it requires some CPU time to create and cache the pixmaps used for the "
+"transparency."
+msgstr ""
+
+#: audacious/glade/prefswin.glade:1588
+#, fuzzy
+msgid "Enable playlist transparency"
+msgstr "Activar proceso de ReplayGain"
+
+#: audacious/glade/prefswin.glade:1661
 msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
 msgstr "<span size=\"xx-large\"><b>Ratón</b></span>"
 
-#: audacious/glade/prefswin.glade:1604
+#: audacious/glade/prefswin.glade:1716
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>Rueda del ratón</b>"
 
-#: audacious/glade/prefswin.glade:1652
+#: audacious/glade/prefswin.glade:1764
 msgid "Changes volume by"
 msgstr "Cambia el volumen un"
 
-#: audacious/glade/prefswin.glade:1680
+#: audacious/glade/prefswin.glade:1792
 msgid "percent"
 msgstr "porcentaje"
 
-#: audacious/glade/prefswin.glade:1708
+#: audacious/glade/prefswin.glade:1820
 msgid "Scrolls playlist by"
 msgstr "Desplaza la lista un"
 
-#: audacious/glade/prefswin.glade:1761
+#: audacious/glade/prefswin.glade:1873
 msgid "lines"
 msgstr "líneas"
 
-#: audacious/glade/prefswin.glade:1867
+#: audacious/glade/prefswin.glade:1979
 msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
 msgstr "<span size=\"xx-large\"><b>Lista de reproducción</b></span>"
 
-#: audacious/glade/prefswin.glade:1922
+#: audacious/glade/prefswin.glade:2034
 msgid "<b>Filename</b>"
 msgstr "<b>Nombre de archivo</b>"
 
-#: audacious/glade/prefswin.glade:1962
+#: audacious/glade/prefswin.glade:2074
 msgid "Convert underscores to blanks"
 msgstr "Convertir el guión bajo a espacios"
 
-#: audacious/glade/prefswin.glade:1997
+#: audacious/glade/prefswin.glade:2109
 msgid "Convert %20 to blanks"
 msgstr "Convertir %20 a espacios"
 
-#: audacious/glade/prefswin.glade:2031
+#: audacious/glade/prefswin.glade:2143
 msgid "<b>Metadata</b>"
 msgstr "<b>Metadatos</b>"
 
-#: audacious/glade/prefswin.glade:2070
+#: audacious/glade/prefswin.glade:2182
 msgid "Load metadata (tag information) from music files."
 msgstr "Leer información de etiqueta desde los archivos."
 
-#: audacious/glade/prefswin.glade:2072
+#: audacious/glade/prefswin.glade:2184
 msgid "Load metadata from playlists and files"
 msgstr "Cargar metadatos de las listas de reproducción y archivos"
 
-#: audacious/glade/prefswin.glade:2110
+#: audacious/glade/prefswin.glade:2222
 msgid "Load metadata when adding the file to the playlist or opening it"
 msgstr "Cargar metadatos al añadir el archivo a la lista o al abrirlo"
 
-#: audacious/glade/prefswin.glade:2112
+#: audacious/glade/prefswin.glade:2224
 msgid "On load"
 msgstr "Al cargar"
 
-#: audacious/glade/prefswin.glade:2132
+#: audacious/glade/prefswin.glade:2244
 msgid "Load metadata on demand when displaying the file in the playlist"
 msgstr ""
 "Leer título y duración de la canción cuando la misma se vea en la lista de "
 "reproducción"
 
-#: audacious/glade/prefswin.glade:2134
+#: audacious/glade/prefswin.glade:2246
 msgid "On display"
 msgstr "Al mostrar"
 
-#: audacious/glade/prefswin.glade:2176
+#: audacious/glade/prefswin.glade:2288
 msgid "<b>Playback</b>"
 msgstr "<b>Reproducción</b>"
 
-#: audacious/glade/prefswin.glade:2215
+#: audacious/glade/prefswin.glade:2327
 msgid "When finished playing a song, don't automatically advance to the next."
 msgstr ""
 "Al acabar de reproducir una canción, no saltar a la siguiente automáticamente"
 
-#: audacious/glade/prefswin.glade:2217
+#: audacious/glade/prefswin.glade:2329
 msgid "Don't advance in the playlist"
 msgstr "No avanzar en la lista de reproducción"
 
-#: audacious/glade/prefswin.glade:2252
+#: audacious/glade/prefswin.glade:2364
 msgid "Pause between songs"
 msgstr "Pausa entre canciones de"
 
-#: audacious/glade/prefswin.glade:2290
+#: audacious/glade/prefswin.glade:2402
 msgid "Pause for"
 msgstr "Pausa de"
 
-#: audacious/glade/prefswin.glade:2336
+#: audacious/glade/prefswin.glade:2448
 msgid "seconds"
 msgstr "Segundos"
 
-#: audacious/glade/prefswin.glade:2382
+#: audacious/glade/prefswin.glade:2494
 #, fuzzy
 msgid "<b>File Dialog</b>"
 msgstr "<b>Nombre de archivo</b>"
 
-#: audacious/glade/prefswin.glade:2421
+#: audacious/glade/prefswin.glade:2533
 msgid ""
 "Always refresh the file dialog (this will slow opening the dialog on large "
 "directories, and Gnome VFS should handle automatically)."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2423
+#: audacious/glade/prefswin.glade:2535
 msgid ""
 "Always refresh directory when opening file dialog, should be unneeded with "
 "Gnome VFS."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2457
+#: audacious/glade/prefswin.glade:2569
 msgid "<b>Song display</b>"
 msgstr "<b>Mostrar canción</b>"
 
-#: audacious/glade/prefswin.glade:2533
+#: audacious/glade/prefswin.glade:2645
 msgid "Custom string:"
 msgstr "Cadena personalizada:"
 
-#: audacious/glade/prefswin.glade:2584
+#: audacious/glade/prefswin.glade:2696
 #, fuzzy
 msgid ""
 "TITLE\n"
@@ -5081,29 +5101,71 @@ msgstr ""
 "ÁLBUM - TÍTULO\n"
 "Personalizado"
 
-#: audacious/glade/prefswin.glade:2606
+#: audacious/glade/prefswin.glade:2718
 msgid "Show information about titlestring format"
 msgstr "Mostrar información acerca del formato del título"
 
-#: audacious/glade/prefswin.glade:2688
+#: audacious/glade/prefswin.glade:2800
 msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
 msgstr "<span size=\"xx-large\"><b>Ecualizador</b></span>"
 
-#: audacious/glade/prefswin.glade:2743
+#: audacious/glade/prefswin.glade:2855
 msgid "<b>Presets</b>"
 msgstr "<b>Preconfigurados</b>"
 
-#: audacious/glade/prefswin.glade:2855
+#: audacious/glade/prefswin.glade:2967
 msgid "Directory preset file:"
 msgstr "Directorio de archivos de preconfiguración:"
 
-#: audacious/glade/prefswin.glade:2883
+#: audacious/glade/prefswin.glade:2995
 msgid "File preset extension:"
 msgstr "Extensión de archivos de preconfiguración:"
 
-#: audacious/glade/prefswin.glade:2931
+#: audacious/glade/prefswin.glade:3043
 msgid "Available _Presets:"
 msgstr "_Preconfigurados disponibles:"
+
+#: audacious/glade/prefswin.glade:3207
+#, fuzzy
+msgid "<span size=\"xx-large\"><b>Connectivity</b></span>"
+msgstr "<span size=\"xx-large\"><b>Ratón</b></span>"
+
+#: audacious/glade/prefswin.glade:3262
+#, fuzzy
+msgid "<b>Proxy Configuration</b>"
+msgstr "Configuración Flac"
+
+#: audacious/glade/prefswin.glade:3320
+msgid "Enable proxy usage"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:3351
+msgid "Proxy hostname:"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:3379
+#, fuzzy
+msgid "Proxy port:"
+msgstr "Proxy:"
+
+#: audacious/glade/prefswin.glade:3473
+#, fuzzy
+msgid "Use authentication with proxy"
+msgstr "Usar autenticación"
+
+#: audacious/glade/prefswin.glade:3504
+#, fuzzy
+msgid "Proxy username:"
+msgstr "Usuario:"
+
+#: audacious/glade/prefswin.glade:3532
+#, fuzzy
+msgid "Proxy password:"
+msgstr "Contraseña:"
+
+#: audacious/glade/prefswin.glade:3637
+msgid "label65"
+msgstr ""
 
 #: libaudacious/titlestring.c:324
 msgid "Performer/Artist"
@@ -5132,6 +5194,24 @@ msgstr "Número de pista"
 #: libaudacious/titlestring.c:385
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: Mostrar «...» solamente si aparece el elemento %n"
+
+#~ msgid "Use proxy"
+#~ msgstr "Usar proxy"
+
+#~ msgid "Frames:"
+#~ msgstr "Fotogramas:"
+
+#~ msgid ""
+#~ "Variable,\n"
+#~ "avg. bitrate: %d KBit/s"
+#~ msgstr ""
+#~ "Tasa de bits\n"
+#~ "media variable: %d KBit/s"
+
+#~ msgid "Francisco Javier F. Serrador"
+#~ msgstr ""
+#~ "Francisco Javier F. Serrador\n"
+#~ "Carlos Fenollosa Bielsa"
 
 #~ msgid ""
 #~ "%s\n"

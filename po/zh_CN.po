@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-29 11:14-0500\n"
+"POT-Creation-Date: 2006-05-27 15:29-0500\n"
 "PO-Revision-Date: 2005-10-22 14:34+0800\n"
 "Last-Translator: Chong Kai Xiong <descender@phreaker.net>\n"
 "Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
@@ -45,18 +45,18 @@ msgstr "关于 MPEG 插件"
 #: Plugins/Effect/stereo_plugin/stereo.c:122
 #: Plugins/General/scrobbler/gtkstuff.c:23
 #: Plugins/Input/adplug/adplug-xmms.cc:155
-#: Plugins/Input/console/Audacious_Driver.cpp:679
-#: Plugins/Input/flac/configure.c:773 Plugins/Input/flac/configure.c:804
+#: Plugins/Input/console/Audacious_Driver.cpp:699
+#: Plugins/Input/flac/configure.c:632 Plugins/Input/flac/configure.c:663
 #: Plugins/Input/flac/http.c:219 Plugins/Input/modplug/gui/main.cpp:45
-#: Plugins/Input/mpg123/http.c:221 Plugins/Input/mpg123/mpg123.c:959
+#: Plugins/Input/mpg123/http.c:221 Plugins/Input/mpg123/mpg123.c:927
 #: Plugins/Input/timidity/src/interface.c:223
 #: Plugins/Input/timidity/src/xmms-timidity.c:136
 #: Plugins/Input/tonegen/tonegen.c:57 Plugins/Input/vorbis/fileinfo.c:212
 #: Plugins/Input/vorbis/http.c:218 Plugins/Input/vorbis/vorbis.c:835
 #: Plugins/Input/wav/wav-sndfile.c:263 Plugins/Output/OSS/about.c:54
-#: Plugins/Output/arts/configure.c:92 Plugins/Output/esd/about.c:49
-#: Plugins/Output/jack/jack.c:579 Plugins/Output/sun/about.c:38
-#: Plugins/Output/sun/configure.c:559
+#: Plugins/Output/arts/configure.c:91 Plugins/Output/esd/about.c:49
+#: Plugins/Output/jack/jack.c:576 Plugins/Output/sun/about.c:38
+#: Plugins/Output/sun/configure.c:558
 msgid "Ok"
 msgstr "确定"
 
@@ -89,17 +89,17 @@ msgstr "效果强度："
 
 #: Plugins/Effect/stereo_plugin/stereo.c:131
 #: Plugins/General/song_change/song_change.c:347
-#: Plugins/Input/flac/configure.c:779 Plugins/Input/flac/fileinfo.c:356
-#: Plugins/Input/modplug/gui/interface.cpp:732
+#: Plugins/Input/flac/configure.c:638 Plugins/Input/flac/fileinfo.c:356
+#: Plugins/Input/modplug/gui/interface.cpp:741
 #: Plugins/Input/timidity/src/interface.c:231
-#: Plugins/Output/alsa/configure.c:442 Plugins/Output/arts/configure.c:93
+#: Plugins/Output/alsa/configure.c:442 Plugins/Output/arts/configure.c:92
 #: Plugins/Output/disk_writer/disk_writer.c:412
-#: Plugins/Output/sun/configure.c:567
+#: Plugins/Output/sun/configure.c:566
 msgid "Cancel"
 msgstr "取消"
 
 #: Plugins/Effect/stereo_plugin/stereo.c:138
-#: Plugins/Input/modplug/gui/interface.cpp:724
+#: Plugins/Input/modplug/gui/interface.cpp:733
 msgid "Apply"
 msgstr "应用"
 
@@ -128,7 +128,7 @@ msgid ""
 msgstr ""
 
 #: Plugins/General/lirc/about.c:116
-#: Plugins/Input/modplug/gui/interface.cpp:937
+#: Plugins/Input/modplug/gui/interface.cpp:946
 msgid "Close"
 msgstr "关闭"
 
@@ -166,8 +166,6 @@ msgid "Scrobbler Configuration"
 msgstr "MikMod 配置"
 
 #: Plugins/General/scrobbler/configure.c:142
-#: Plugins/Input/flac/configure.c:706 Plugins/Input/mpg123/configure.c:526
-#: Plugins/Input/vorbis/configure.c:422
 msgid "Password:"
 msgstr "口令："
 
@@ -176,8 +174,6 @@ msgid "<b>Scrobbler Preferences</b>"
 msgstr ""
 
 #: Plugins/General/scrobbler/configure.c:170
-#: Plugins/Input/flac/configure.c:698 Plugins/Input/mpg123/configure.c:515
-#: Plugins/Input/vorbis/configure.c:411
 msgid "Username:"
 msgstr "使用者名称："
 
@@ -207,12 +203,12 @@ msgid ""
 msgstr ""
 
 #: Plugins/General/song_change/song_change.c:156
-#: Plugins/Input/aac/src/fileinfo.c:188 Plugins/Input/mpg123/fileinfo.c:241
+#: Plugins/Input/aac/src/fileinfo.c:206 Plugins/Input/mpg123/fileinfo.c:244
 msgid "Yes"
 msgstr "是"
 
 #: Plugins/General/song_change/song_change.c:166
-#: Plugins/Input/aac/src/fileinfo.c:187 Plugins/Input/mpg123/fileinfo.c:240
+#: Plugins/Input/aac/src/fileinfo.c:205 Plugins/Input/mpg123/fileinfo.c:243
 msgid "No"
 msgstr "否"
 
@@ -263,812 +259,812 @@ msgid ""
 msgstr ""
 
 #: Plugins/General/song_change/song_change.c:341
-#: Plugins/Input/modplug/gui/interface.cpp:716 Plugins/Output/alsa/about.c:46
+#: Plugins/Input/modplug/gui/interface.cpp:725 Plugins/Output/alsa/about.c:46
 #: Plugins/Output/alsa/configure.c:436
 #: Plugins/Output/disk_writer/disk_writer.c:140
 #: Plugins/Output/disk_writer/disk_writer.c:405
 msgid "OK"
 msgstr ""
 
-#: Plugins/Input/aac/src/fileinfo.c:183 Plugins/Input/mpg123/fileinfo.c:236
+#: Plugins/Input/aac/src/fileinfo.c:201 Plugins/Input/mpg123/fileinfo.c:239
 msgid "None"
 msgstr "无"
 
-#: Plugins/Input/aac/src/fileinfo.c:184 Plugins/Input/mpg123/fileinfo.c:237
+#: Plugins/Input/aac/src/fileinfo.c:202 Plugins/Input/mpg123/fileinfo.c:240
 msgid "50/15 ms"
 msgstr "50/15 ms"
 
-#: Plugins/Input/aac/src/fileinfo.c:186 Plugins/Input/mpg123/fileinfo.c:239
+#: Plugins/Input/aac/src/fileinfo.c:204 Plugins/Input/mpg123/fileinfo.c:242
 msgid "CCIT J.17"
 msgstr "CCIT J.17"
 
-#: Plugins/Input/aac/src/fileinfo.c:230
+#: Plugins/Input/aac/src/fileinfo.c:248
 #: Plugins/Input/amidi-plug/i_fileinfo.c:118
-#: Plugins/Input/mpg123/fileinfo.c:286 Plugins/Input/vorbis/fileinfo.c:558
+#: Plugins/Input/mpg123/fileinfo.c:288 Plugins/Input/vorbis/fileinfo.c:558
 msgid "Name:"
 msgstr "曲名："
 
-#: Plugins/Input/aac/src/fileinfo.c:242
+#: Plugins/Input/aac/src/fileinfo.c:260
 #, fuzzy
 msgid "Song Metadata"
 msgstr "Sonata 奏鸣曲"
 
-#: Plugins/Input/aac/src/fileinfo.c:249 Plugins/Input/flac/fileinfo.c:278
-#: Plugins/Input/mpg123/fileinfo.c:467 Plugins/Input/vorbis/fileinfo.c:581
+#: Plugins/Input/aac/src/fileinfo.c:267 Plugins/Input/flac/fileinfo.c:278
+#: Plugins/Input/mpg123/fileinfo.c:456 Plugins/Input/vorbis/fileinfo.c:581
 msgid "Title:"
 msgstr "曲名："
 
-#: Plugins/Input/aac/src/fileinfo.c:260 Plugins/Input/flac/fileinfo.c:285
-#: Plugins/Input/mpg123/fileinfo.c:478 Plugins/Input/vorbis/fileinfo.c:592
+#: Plugins/Input/aac/src/fileinfo.c:278 Plugins/Input/flac/fileinfo.c:285
+#: Plugins/Input/mpg123/fileinfo.c:467 Plugins/Input/vorbis/fileinfo.c:592
 msgid "Artist:"
 msgstr "艺术家："
 
-#: Plugins/Input/aac/src/fileinfo.c:271 Plugins/Input/flac/fileinfo.c:292
-#: Plugins/Input/mpg123/fileinfo.c:489 Plugins/Input/vorbis/fileinfo.c:603
+#: Plugins/Input/aac/src/fileinfo.c:289 Plugins/Input/flac/fileinfo.c:292
+#: Plugins/Input/mpg123/fileinfo.c:478 Plugins/Input/vorbis/fileinfo.c:603
 msgid "Album:"
 msgstr "专辑："
 
-#: Plugins/Input/aac/src/fileinfo.c:282 Plugins/Input/flac/fileinfo.c:299
-#: Plugins/Input/mpg123/fileinfo.c:500 Plugins/Input/vorbis/fileinfo.c:614
+#: Plugins/Input/aac/src/fileinfo.c:300 Plugins/Input/flac/fileinfo.c:299
+#: Plugins/Input/mpg123/fileinfo.c:489 Plugins/Input/vorbis/fileinfo.c:614
 msgid "Comment:"
 msgstr "备注："
 
-#: Plugins/Input/aac/src/fileinfo.c:293 Plugins/Input/mpg123/fileinfo.c:514
+#: Plugins/Input/aac/src/fileinfo.c:311 Plugins/Input/mpg123/fileinfo.c:500
 msgid "Year:"
 msgstr "年份："
 
-#: Plugins/Input/aac/src/fileinfo.c:305 Plugins/Input/flac/fileinfo.c:314
-#: Plugins/Input/mpg123/fileinfo.c:526 Plugins/Input/vorbis/fileinfo.c:637
+#: Plugins/Input/aac/src/fileinfo.c:323 Plugins/Input/flac/fileinfo.c:314
+#: Plugins/Input/mpg123/fileinfo.c:512 Plugins/Input/vorbis/fileinfo.c:637
 msgid "Track number:"
 msgstr "音轨号："
 
-#: Plugins/Input/aac/src/fileinfo.c:319 Plugins/Input/flac/fileinfo.c:322
-#: Plugins/Input/mpg123/fileinfo.c:538 Plugins/Input/vorbis/fileinfo.c:649
+#: Plugins/Input/aac/src/fileinfo.c:337 Plugins/Input/flac/fileinfo.c:322
+#: Plugins/Input/mpg123/fileinfo.c:524 Plugins/Input/vorbis/fileinfo.c:649
 msgid "Genre:"
 msgstr "风格："
 
-#: Plugins/Input/aac/src/fileinfo.c:385 Plugins/Input/mpg123/fileinfo.c:638
-#: Plugins/Input/vorbis/fileinfo.c:1015 audacious/mainwin.c:801
+#: Plugins/Input/aac/src/fileinfo.c:403 Plugins/Input/mpg123/fileinfo.c:624
+#: Plugins/Input/vorbis/fileinfo.c:1015 audacious/mainwin.c:804
 #, c-format
 msgid "%s - Audacious"
 msgstr ""
 
-#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:47
+#: Plugins/Input/aac/src/libmp4.c:20 Plugins/Input/flac/fileinfo.c:47
 #: Plugins/Input/mpg123/mpg123.c:53 Plugins/Input/vorbis/fileinfo.c:83
 msgid "Blues"
 msgstr "Blues 蓝调"
 
-#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:47
+#: Plugins/Input/aac/src/libmp4.c:20 Plugins/Input/flac/fileinfo.c:47
 #: Plugins/Input/mpg123/mpg123.c:53 Plugins/Input/vorbis/fileinfo.c:83
 msgid "Classic Rock"
 msgstr "Classic Rock 古典摇滚"
 
-#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:47
+#: Plugins/Input/aac/src/libmp4.c:20 Plugins/Input/flac/fileinfo.c:47
 #: Plugins/Input/mpg123/mpg123.c:53 Plugins/Input/vorbis/fileinfo.c:83
 msgid "Country"
 msgstr "Country 乡村"
 
-#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:47
+#: Plugins/Input/aac/src/libmp4.c:20 Plugins/Input/flac/fileinfo.c:47
 #: Plugins/Input/mpg123/mpg123.c:53 Plugins/Input/vorbis/fileinfo.c:83
 msgid "Dance"
 msgstr "Dance 舞蹈"
 
-#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:48
+#: Plugins/Input/aac/src/libmp4.c:21 Plugins/Input/flac/fileinfo.c:48
 #: Plugins/Input/mpg123/mpg123.c:54 Plugins/Input/vorbis/fileinfo.c:84
 msgid "Disco"
 msgstr "Disco 迪斯科"
 
-#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:48
+#: Plugins/Input/aac/src/libmp4.c:21 Plugins/Input/flac/fileinfo.c:48
 #: Plugins/Input/mpg123/mpg123.c:54 Plugins/Input/vorbis/fileinfo.c:84
 msgid "Funk"
 msgstr "Funk 乡土乐"
 
-#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:48
+#: Plugins/Input/aac/src/libmp4.c:21 Plugins/Input/flac/fileinfo.c:48
 #: Plugins/Input/mpg123/mpg123.c:54 Plugins/Input/vorbis/fileinfo.c:84
 msgid "Grunge"
 msgstr "Grunge"
 
-#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:48
+#: Plugins/Input/aac/src/libmp4.c:21 Plugins/Input/flac/fileinfo.c:48
 #: Plugins/Input/mpg123/mpg123.c:54 Plugins/Input/vorbis/fileinfo.c:84
 msgid "Hip-Hop"
 msgstr "Hip-Hop"
 
-#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:49
+#: Plugins/Input/aac/src/libmp4.c:22 Plugins/Input/flac/fileinfo.c:49
 #: Plugins/Input/mpg123/mpg123.c:55 Plugins/Input/vorbis/fileinfo.c:85
 msgid "Jazz"
 msgstr "Jazz 爵士"
 
-#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:49
+#: Plugins/Input/aac/src/libmp4.c:22 Plugins/Input/flac/fileinfo.c:49
 #: Plugins/Input/mpg123/mpg123.c:55 Plugins/Input/vorbis/fileinfo.c:85
 msgid "Metal"
 msgstr "Metal 金属"
 
-#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:49
+#: Plugins/Input/aac/src/libmp4.c:22 Plugins/Input/flac/fileinfo.c:49
 #: Plugins/Input/mpg123/mpg123.c:55 Plugins/Input/vorbis/fileinfo.c:85
 msgid "New Age"
 msgstr "New Age 新时代"
 
-#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:49
+#: Plugins/Input/aac/src/libmp4.c:22 Plugins/Input/flac/fileinfo.c:49
 #: Plugins/Input/mpg123/mpg123.c:55 Plugins/Input/vorbis/fileinfo.c:85
 msgid "Oldies"
 msgstr "Oldies 怀旧"
 
-#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:50
+#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
 #: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
 msgid "Other"
 msgstr "其它"
 
-#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:50
+#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
 #: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
 msgid "Pop"
 msgstr "Pop 流行"
 
-#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:50
+#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
 #: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
 msgid "R&B"
 msgstr "R&B 节拍与蓝调"
 
-#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:50
+#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
 #: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
 msgid "Rap"
 msgstr "Rap 敲击乐"
 
-#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:50
+#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
 #: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
 msgid "Reggae"
 msgstr "Reggae 瑞格舞"
 
-#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:51
+#: Plugins/Input/aac/src/libmp4.c:24 Plugins/Input/flac/fileinfo.c:51
 #: Plugins/Input/mpg123/mpg123.c:57 Plugins/Input/vorbis/fileinfo.c:87
 msgid "Rock"
 msgstr "Rock 摇滚"
 
-#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:51
+#: Plugins/Input/aac/src/libmp4.c:24 Plugins/Input/flac/fileinfo.c:51
 #: Plugins/Input/mpg123/mpg123.c:57 Plugins/Input/vorbis/fileinfo.c:87
 msgid "Techno"
 msgstr "Techno"
 
-#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:51
+#: Plugins/Input/aac/src/libmp4.c:24 Plugins/Input/flac/fileinfo.c:51
 #: Plugins/Input/mpg123/mpg123.c:57 Plugins/Input/vorbis/fileinfo.c:87
 msgid "Industrial"
 msgstr "Industrial 工业时代"
 
-#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:51
+#: Plugins/Input/aac/src/libmp4.c:24 Plugins/Input/flac/fileinfo.c:51
 #: Plugins/Input/mpg123/mpg123.c:57 Plugins/Input/vorbis/fileinfo.c:87
 msgid "Alternative"
 msgstr "Alternative"
 
-#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:52
+#: Plugins/Input/aac/src/libmp4.c:25 Plugins/Input/flac/fileinfo.c:52
 #: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:88
 msgid "Ska"
 msgstr "Ska 斯卡"
 
-#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:52
+#: Plugins/Input/aac/src/libmp4.c:25 Plugins/Input/flac/fileinfo.c:52
 #: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:88
 msgid "Death Metal"
 msgstr "Death Metal 重金属"
 
-#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:52
+#: Plugins/Input/aac/src/libmp4.c:25 Plugins/Input/flac/fileinfo.c:52
 #: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:88
 msgid "Pranks"
 msgstr "Pranks"
 
-#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:52
+#: Plugins/Input/aac/src/libmp4.c:25 Plugins/Input/flac/fileinfo.c:52
 #: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:88
 msgid "Soundtrack"
 msgstr "Soundtrack 电影配乐"
 
-#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:53
+#: Plugins/Input/aac/src/libmp4.c:26 Plugins/Input/flac/fileinfo.c:53
 #: Plugins/Input/mpg123/mpg123.c:59 Plugins/Input/vorbis/fileinfo.c:89
 msgid "Euro-Techno"
 msgstr "Euro-Techno"
 
-#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:53
+#: Plugins/Input/aac/src/libmp4.c:26 Plugins/Input/flac/fileinfo.c:53
 #: Plugins/Input/mpg123/mpg123.c:59 Plugins/Input/vorbis/fileinfo.c:89
 msgid "Ambient"
 msgstr "Ambient 环境"
 
-#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:53
+#: Plugins/Input/aac/src/libmp4.c:26 Plugins/Input/flac/fileinfo.c:53
 #: Plugins/Input/mpg123/mpg123.c:59 Plugins/Input/vorbis/fileinfo.c:89
 msgid "Trip-Hop"
 msgstr "Trip-Hop"
 
-#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:53
+#: Plugins/Input/aac/src/libmp4.c:26 Plugins/Input/flac/fileinfo.c:53
 #: Plugins/Input/mpg123/mpg123.c:59 Plugins/Input/vorbis/fileinfo.c:89
 msgid "Vocal"
 msgstr "Vocal 声乐"
 
-#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:54
+#: Plugins/Input/aac/src/libmp4.c:27 Plugins/Input/flac/fileinfo.c:54
 #: Plugins/Input/mpg123/mpg123.c:60 Plugins/Input/vorbis/fileinfo.c:90
 msgid "Jazz+Funk"
 msgstr "Jazz+Funk 爵士乐+乡土乐"
 
-#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:54
+#: Plugins/Input/aac/src/libmp4.c:27 Plugins/Input/flac/fileinfo.c:54
 #: Plugins/Input/mpg123/mpg123.c:60 Plugins/Input/vorbis/fileinfo.c:90
 msgid "Fusion"
 msgstr "Fusion 融合"
 
-#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:54
+#: Plugins/Input/aac/src/libmp4.c:27 Plugins/Input/flac/fileinfo.c:54
 #: Plugins/Input/mpg123/mpg123.c:60 Plugins/Input/vorbis/fileinfo.c:90
 msgid "Trance"
 msgstr "Trance 迷魂乐"
 
-#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:54
+#: Plugins/Input/aac/src/libmp4.c:27 Plugins/Input/flac/fileinfo.c:54
 #: Plugins/Input/mpg123/mpg123.c:60 Plugins/Input/vorbis/fileinfo.c:90
 msgid "Classical"
 msgstr "Classical 古典音乐"
 
-#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:55
+#: Plugins/Input/aac/src/libmp4.c:28 Plugins/Input/flac/fileinfo.c:55
 #: Plugins/Input/mpg123/mpg123.c:61 Plugins/Input/vorbis/fileinfo.c:91
 msgid "Instrumental"
 msgstr "Instrumental 古典"
 
-#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:55
+#: Plugins/Input/aac/src/libmp4.c:28 Plugins/Input/flac/fileinfo.c:55
 #: Plugins/Input/mpg123/mpg123.c:61 Plugins/Input/vorbis/fileinfo.c:91
 msgid "Acid"
 msgstr "Acid 迷幻"
 
-#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:55
+#: Plugins/Input/aac/src/libmp4.c:28 Plugins/Input/flac/fileinfo.c:55
 #: Plugins/Input/mpg123/mpg123.c:61 Plugins/Input/vorbis/fileinfo.c:91
 msgid "House"
 msgstr "House 旅店"
 
-#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:55
+#: Plugins/Input/aac/src/libmp4.c:28 Plugins/Input/flac/fileinfo.c:55
 #: Plugins/Input/mpg123/mpg123.c:61 Plugins/Input/vorbis/fileinfo.c:91
 msgid "Game"
 msgstr "Game 游戏"
 
-#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/flac/fileinfo.c:56
+#: Plugins/Input/aac/src/libmp4.c:29 Plugins/Input/flac/fileinfo.c:56
 #: Plugins/Input/mpg123/mpg123.c:62 Plugins/Input/vorbis/fileinfo.c:92
 msgid "Sound Clip"
 msgstr "Sound Clip"
 
-#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/flac/fileinfo.c:56
+#: Plugins/Input/aac/src/libmp4.c:29 Plugins/Input/flac/fileinfo.c:56
 #: Plugins/Input/mpg123/mpg123.c:62 Plugins/Input/vorbis/fileinfo.c:92
 msgid "Gospel"
 msgstr "Gospel 福音"
 
-#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/flac/fileinfo.c:56
+#: Plugins/Input/aac/src/libmp4.c:29 Plugins/Input/flac/fileinfo.c:56
 #: Plugins/Input/mpg123/mpg123.c:62 Plugins/Input/vorbis/fileinfo.c:92
 msgid "Noise"
 msgstr "Noise 噪音"
 
-#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/mpg123/mpg123.c:62
+#: Plugins/Input/aac/src/libmp4.c:29 Plugins/Input/mpg123/mpg123.c:62
 #: Plugins/Input/vorbis/fileinfo.c:92
 msgid "AlternRock"
 msgstr "AlternRock"
 
-#: Plugins/Input/aac/src/libmp4.c:45 Plugins/Input/flac/fileinfo.c:57
+#: Plugins/Input/aac/src/libmp4.c:30 Plugins/Input/flac/fileinfo.c:57
 #: Plugins/Input/mpg123/mpg123.c:63 Plugins/Input/vorbis/fileinfo.c:93
 msgid "Bass"
 msgstr "Bass 低音"
 
-#: Plugins/Input/aac/src/libmp4.c:45 Plugins/Input/flac/fileinfo.c:57
+#: Plugins/Input/aac/src/libmp4.c:30 Plugins/Input/flac/fileinfo.c:57
 #: Plugins/Input/mpg123/mpg123.c:63 Plugins/Input/vorbis/fileinfo.c:93
 msgid "Soul"
 msgstr "Soul 灵歌"
 
-#: Plugins/Input/aac/src/libmp4.c:45 Plugins/Input/flac/fileinfo.c:57
+#: Plugins/Input/aac/src/libmp4.c:30 Plugins/Input/flac/fileinfo.c:57
 #: Plugins/Input/mpg123/mpg123.c:63 Plugins/Input/vorbis/fileinfo.c:93
 msgid "Punk"
 msgstr "Punk 朋克"
 
-#: Plugins/Input/aac/src/libmp4.c:45 Plugins/Input/flac/fileinfo.c:57
+#: Plugins/Input/aac/src/libmp4.c:30 Plugins/Input/flac/fileinfo.c:57
 #: Plugins/Input/mpg123/mpg123.c:63 Plugins/Input/vorbis/fileinfo.c:93
 msgid "Space"
 msgstr "Space 空间"
 
-#: Plugins/Input/aac/src/libmp4.c:46 Plugins/Input/flac/fileinfo.c:58
+#: Plugins/Input/aac/src/libmp4.c:31 Plugins/Input/flac/fileinfo.c:58
 #: Plugins/Input/mpg123/mpg123.c:64 Plugins/Input/vorbis/fileinfo.c:94
 msgid "Meditative"
 msgstr "Meditative 沉思"
 
-#: Plugins/Input/aac/src/libmp4.c:46 Plugins/Input/flac/fileinfo.c:58
+#: Plugins/Input/aac/src/libmp4.c:31 Plugins/Input/flac/fileinfo.c:58
 #: Plugins/Input/mpg123/mpg123.c:64 Plugins/Input/vorbis/fileinfo.c:94
 msgid "Instrumental Pop"
 msgstr "Instrumental Pop 金属流行"
 
-#: Plugins/Input/aac/src/libmp4.c:47 Plugins/Input/flac/fileinfo.c:59
+#: Plugins/Input/aac/src/libmp4.c:32 Plugins/Input/flac/fileinfo.c:59
 #: Plugins/Input/mpg123/mpg123.c:65 Plugins/Input/vorbis/fileinfo.c:95
 msgid "Instrumental Rock"
 msgstr "Instrumental Rock 金属摇滚"
 
-#: Plugins/Input/aac/src/libmp4.c:47 Plugins/Input/flac/fileinfo.c:59
+#: Plugins/Input/aac/src/libmp4.c:32 Plugins/Input/flac/fileinfo.c:59
 #: Plugins/Input/mpg123/mpg123.c:65 Plugins/Input/vorbis/fileinfo.c:95
 msgid "Ethnic"
 msgstr "Ethnic 异教徒"
 
-#: Plugins/Input/aac/src/libmp4.c:47 Plugins/Input/flac/fileinfo.c:59
+#: Plugins/Input/aac/src/libmp4.c:32 Plugins/Input/flac/fileinfo.c:59
 #: Plugins/Input/mpg123/mpg123.c:65 Plugins/Input/vorbis/fileinfo.c:95
 msgid "Gothic"
 msgstr "Gothic 哥特式"
 
-#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:60
+#: Plugins/Input/aac/src/libmp4.c:33 Plugins/Input/flac/fileinfo.c:60
 #: Plugins/Input/mpg123/mpg123.c:66 Plugins/Input/vorbis/fileinfo.c:96
 msgid "Darkwave"
 msgstr "Darkwave"
 
-#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:60
+#: Plugins/Input/aac/src/libmp4.c:33 Plugins/Input/flac/fileinfo.c:60
 #: Plugins/Input/mpg123/mpg123.c:66 Plugins/Input/vorbis/fileinfo.c:96
 msgid "Techno-Industrial"
 msgstr "Techno-Industrial"
 
-#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:60
+#: Plugins/Input/aac/src/libmp4.c:33 Plugins/Input/flac/fileinfo.c:60
 #: Plugins/Input/mpg123/mpg123.c:66 Plugins/Input/vorbis/fileinfo.c:96
 msgid "Electronic"
 msgstr "Electronic 电声"
 
-#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:61
+#: Plugins/Input/aac/src/libmp4.c:34 Plugins/Input/flac/fileinfo.c:61
 #: Plugins/Input/mpg123/mpg123.c:67 Plugins/Input/vorbis/fileinfo.c:97
 msgid "Pop-Folk"
 msgstr "Pop-Folk 流行民歌"
 
-#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:61
+#: Plugins/Input/aac/src/libmp4.c:34 Plugins/Input/flac/fileinfo.c:61
 #: Plugins/Input/mpg123/mpg123.c:67 Plugins/Input/vorbis/fileinfo.c:97
 msgid "Eurodance"
 msgstr "Eurodance 欧洲舞蹈"
 
-#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:61
+#: Plugins/Input/aac/src/libmp4.c:34 Plugins/Input/flac/fileinfo.c:61
 #: Plugins/Input/mpg123/mpg123.c:67 Plugins/Input/vorbis/fileinfo.c:97
 msgid "Dream"
 msgstr "Dream 梦幻"
 
-#: Plugins/Input/aac/src/libmp4.c:50 Plugins/Input/flac/fileinfo.c:62
+#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:62
 #: Plugins/Input/mpg123/mpg123.c:68 Plugins/Input/vorbis/fileinfo.c:98
 msgid "Southern Rock"
 msgstr "Southern Rock 南方摇滚"
 
-#: Plugins/Input/aac/src/libmp4.c:50 Plugins/Input/flac/fileinfo.c:62
+#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:62
 #: Plugins/Input/mpg123/mpg123.c:68 Plugins/Input/vorbis/fileinfo.c:98
 msgid "Comedy"
 msgstr "Comedy 喜剧"
 
-#: Plugins/Input/aac/src/libmp4.c:50 Plugins/Input/flac/fileinfo.c:62
+#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:62
 #: Plugins/Input/mpg123/mpg123.c:68 Plugins/Input/vorbis/fileinfo.c:98
 msgid "Cult"
 msgstr "Cult 祭仪"
 
-#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:63
+#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:63
 #: Plugins/Input/mpg123/mpg123.c:69 Plugins/Input/vorbis/fileinfo.c:99
 msgid "Gangsta Rap"
 msgstr "Gangsta Rap"
 
-#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:63
+#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:63
 #: Plugins/Input/mpg123/mpg123.c:69 Plugins/Input/vorbis/fileinfo.c:99
 msgid "Top 40"
 msgstr "Top 40"
 
-#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:63
+#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:63
 #: Plugins/Input/mpg123/mpg123.c:69 Plugins/Input/vorbis/fileinfo.c:99
 msgid "Christian Rap"
 msgstr "Christian Rap"
 
-#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:64
+#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:64
 #: Plugins/Input/mpg123/mpg123.c:70 Plugins/Input/vorbis/fileinfo.c:100
 msgid "Pop/Funk"
 msgstr "Pop/Funk 流行/乡土乐"
 
-#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:64
+#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:64
 #: Plugins/Input/mpg123/mpg123.c:70 Plugins/Input/vorbis/fileinfo.c:100
 msgid "Jungle"
 msgstr "Jungle 丛林"
 
-#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:64
+#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:64
 #: Plugins/Input/mpg123/mpg123.c:70 Plugins/Input/vorbis/fileinfo.c:100
 msgid "Native American"
 msgstr "Native American 美洲土著"
 
-#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:65
+#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:65
 #: Plugins/Input/mpg123/mpg123.c:71 Plugins/Input/vorbis/fileinfo.c:101
 msgid "Cabaret"
 msgstr "Cabaret 卡巴莱酒馆乐"
 
-#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:65
+#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:65
 #: Plugins/Input/mpg123/mpg123.c:71 Plugins/Input/vorbis/fileinfo.c:101
 msgid "New Wave"
 msgstr "New Wave"
 
-#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:65
+#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:65
 #: Plugins/Input/mpg123/mpg123.c:71 Plugins/Input/vorbis/fileinfo.c:101
 msgid "Psychedelic"
 msgstr "Psychedelic 迷幻乐"
 
-#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:65
+#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:65
 #: Plugins/Input/mpg123/mpg123.c:71 Plugins/Input/vorbis/fileinfo.c:101
 msgid "Rave"
 msgstr "Rave 狂欢"
 
-#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:66
+#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:66
 #: Plugins/Input/mpg123/mpg123.c:72 Plugins/Input/vorbis/fileinfo.c:102
 msgid "Showtunes"
 msgstr "Showtunes"
 
-#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:66
+#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:66
 #: Plugins/Input/mpg123/mpg123.c:72 Plugins/Input/vorbis/fileinfo.c:102
 msgid "Trailer"
 msgstr "Trailer"
 
-#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:66
+#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:66
 #: Plugins/Input/mpg123/mpg123.c:72 Plugins/Input/vorbis/fileinfo.c:102
 msgid "Lo-Fi"
 msgstr "Lo-Fi"
 
-#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:66
+#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:66
 #: Plugins/Input/mpg123/mpg123.c:72 Plugins/Input/vorbis/fileinfo.c:102
 msgid "Tribal"
 msgstr "Tribal 部落"
 
-#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:67
+#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:67
 #: Plugins/Input/mpg123/mpg123.c:73 Plugins/Input/vorbis/fileinfo.c:103
 msgid "Acid Punk"
 msgstr "Acid Punk 迷幻朋克"
 
-#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:67
+#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:67
 #: Plugins/Input/mpg123/mpg123.c:73 Plugins/Input/vorbis/fileinfo.c:103
 msgid "Acid Jazz"
 msgstr "Acid Jazz 迷幻爵士"
 
-#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:67
+#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:67
 #: Plugins/Input/mpg123/mpg123.c:73 Plugins/Input/vorbis/fileinfo.c:103
 msgid "Polka"
 msgstr "Polka 波尔卡舞曲"
 
-#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:67
+#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:67
 #: Plugins/Input/mpg123/mpg123.c:73 Plugins/Input/vorbis/fileinfo.c:103
 msgid "Retro"
 msgstr "Retro 怀旧"
 
-#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:68
+#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:68
 #: Plugins/Input/mpg123/mpg123.c:74 Plugins/Input/vorbis/fileinfo.c:104
 msgid "Musical"
 msgstr "Musical 音乐剧"
 
-#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:68
+#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:68
 #: Plugins/Input/mpg123/mpg123.c:74 Plugins/Input/vorbis/fileinfo.c:104
 msgid "Rock & Roll"
 msgstr "Rock & Roll 摇滚"
 
-#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:68
+#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:68
 #: Plugins/Input/mpg123/mpg123.c:74 Plugins/Input/vorbis/fileinfo.c:104
 msgid "Hard Rock"
 msgstr "Hard Rock"
 
-#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:68
+#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:68
 #: Plugins/Input/mpg123/mpg123.c:74 Plugins/Input/vorbis/fileinfo.c:104
 msgid "Folk"
 msgstr "Folk 民乐"
 
-#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:69
+#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:69
 #: Plugins/Input/mpg123/mpg123.c:75 Plugins/Input/vorbis/fileinfo.c:105
 msgid "Folk/Rock"
 msgstr "Folk/Rock 民乐/摇滚"
 
-#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:69
+#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:69
 #: Plugins/Input/mpg123/mpg123.c:75 Plugins/Input/vorbis/fileinfo.c:105
 msgid "National Folk"
 msgstr "National Folk 民族音乐"
 
-#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:69
+#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:69
 #: Plugins/Input/mpg123/mpg123.c:75 Plugins/Input/vorbis/fileinfo.c:105
 msgid "Swing"
 msgstr "Swing 摇摆乐"
 
-#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:70
+#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:70
 #: Plugins/Input/mpg123/mpg123.c:76 Plugins/Input/vorbis/fileinfo.c:106
 msgid "Fast-Fusion"
 msgstr "Fast-Fusion"
 
-#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:70
+#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:70
 #: Plugins/Input/mpg123/mpg123.c:76 Plugins/Input/vorbis/fileinfo.c:106
 msgid "Bebob"
 msgstr "Bebob 博普爵士乐"
 
-#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:70
+#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:70
 #: Plugins/Input/mpg123/mpg123.c:76 Plugins/Input/vorbis/fileinfo.c:106
 msgid "Latin"
 msgstr "Latin 拉丁乐"
 
-#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:70
+#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:70
 #: Plugins/Input/mpg123/mpg123.c:76 Plugins/Input/vorbis/fileinfo.c:106
 msgid "Revival"
 msgstr "Revival 苏醒"
 
-#: Plugins/Input/aac/src/libmp4.c:59 Plugins/Input/flac/fileinfo.c:71
+#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/flac/fileinfo.c:71
 #: Plugins/Input/mpg123/mpg123.c:77 Plugins/Input/vorbis/fileinfo.c:107
 msgid "Celtic"
 msgstr "Celtic 凯尔特人"
 
-#: Plugins/Input/aac/src/libmp4.c:59 Plugins/Input/flac/fileinfo.c:71
+#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/flac/fileinfo.c:71
 #: Plugins/Input/mpg123/mpg123.c:77 Plugins/Input/vorbis/fileinfo.c:107
 msgid "Bluegrass"
 msgstr "Bluegrass 蓝草音乐"
 
-#: Plugins/Input/aac/src/libmp4.c:59 Plugins/Input/flac/fileinfo.c:71
+#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/flac/fileinfo.c:71
 #: Plugins/Input/mpg123/mpg123.c:77 Plugins/Input/vorbis/fileinfo.c:107
 msgid "Avantgarde"
 msgstr "Avantgarde"
 
-#: Plugins/Input/aac/src/libmp4.c:60 Plugins/Input/flac/fileinfo.c:72
+#: Plugins/Input/aac/src/libmp4.c:45 Plugins/Input/flac/fileinfo.c:72
 #: Plugins/Input/mpg123/mpg123.c:78 Plugins/Input/vorbis/fileinfo.c:108
 msgid "Gothic Rock"
 msgstr "Gothic Rock 哥特式摇滚"
 
-#: Plugins/Input/aac/src/libmp4.c:60 Plugins/Input/flac/fileinfo.c:72
+#: Plugins/Input/aac/src/libmp4.c:45 Plugins/Input/flac/fileinfo.c:72
 #: Plugins/Input/mpg123/mpg123.c:78 Plugins/Input/vorbis/fileinfo.c:108
 msgid "Progressive Rock"
 msgstr "Progressive Rock 渐进式摇滚"
 
-#: Plugins/Input/aac/src/libmp4.c:61 Plugins/Input/flac/fileinfo.c:73
+#: Plugins/Input/aac/src/libmp4.c:46 Plugins/Input/flac/fileinfo.c:73
 #: Plugins/Input/mpg123/mpg123.c:79 Plugins/Input/vorbis/fileinfo.c:109
 msgid "Psychedelic Rock"
 msgstr "Psychedelic Rock 迷幻式摇滚"
 
-#: Plugins/Input/aac/src/libmp4.c:61 Plugins/Input/flac/fileinfo.c:73
+#: Plugins/Input/aac/src/libmp4.c:46 Plugins/Input/flac/fileinfo.c:73
 #: Plugins/Input/mpg123/mpg123.c:79 Plugins/Input/vorbis/fileinfo.c:109
 msgid "Symphonic Rock"
 msgstr "Symphonic Rock 交响乐式摇滚"
 
-#: Plugins/Input/aac/src/libmp4.c:61 Plugins/Input/flac/fileinfo.c:73
+#: Plugins/Input/aac/src/libmp4.c:46 Plugins/Input/flac/fileinfo.c:73
 #: Plugins/Input/mpg123/mpg123.c:79 Plugins/Input/vorbis/fileinfo.c:109
 msgid "Slow Rock"
 msgstr "Slow Rock 慢速摇滚"
 
-#: Plugins/Input/aac/src/libmp4.c:62 Plugins/Input/flac/fileinfo.c:74
+#: Plugins/Input/aac/src/libmp4.c:47 Plugins/Input/flac/fileinfo.c:74
 #: Plugins/Input/mpg123/mpg123.c:80 Plugins/Input/vorbis/fileinfo.c:110
 msgid "Big Band"
 msgstr "Big Band 爵士乐团"
 
-#: Plugins/Input/aac/src/libmp4.c:62 Plugins/Input/flac/fileinfo.c:74
+#: Plugins/Input/aac/src/libmp4.c:47 Plugins/Input/flac/fileinfo.c:74
 #: Plugins/Input/mpg123/mpg123.c:80 Plugins/Input/vorbis/fileinfo.c:110
 msgid "Chorus"
 msgstr "Chorus 合唱"
 
-#: Plugins/Input/aac/src/libmp4.c:62 Plugins/Input/flac/fileinfo.c:74
+#: Plugins/Input/aac/src/libmp4.c:47 Plugins/Input/flac/fileinfo.c:74
 #: Plugins/Input/mpg123/mpg123.c:80 Plugins/Input/vorbis/fileinfo.c:110
 msgid "Easy Listening"
 msgstr "Easy Listening"
 
-#: Plugins/Input/aac/src/libmp4.c:63 Plugins/Input/flac/fileinfo.c:75
+#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:75
 #: Plugins/Input/mpg123/mpg123.c:81 Plugins/Input/vorbis/fileinfo.c:111
 msgid "Acoustic"
 msgstr "Acoustic 非电声乐器"
 
-#: Plugins/Input/aac/src/libmp4.c:63 Plugins/Input/flac/fileinfo.c:75
+#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:75
 #: Plugins/Input/mpg123/mpg123.c:81 Plugins/Input/vorbis/fileinfo.c:111
 msgid "Humour"
 msgstr "Humour 幽默"
 
-#: Plugins/Input/aac/src/libmp4.c:63 Plugins/Input/flac/fileinfo.c:75
+#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:75
 #: Plugins/Input/mpg123/mpg123.c:81 Plugins/Input/vorbis/fileinfo.c:111
 msgid "Speech"
 msgstr "Speech 讲话"
 
-#: Plugins/Input/aac/src/libmp4.c:63 Plugins/Input/flac/fileinfo.c:75
+#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:75
 #: Plugins/Input/mpg123/mpg123.c:81 Plugins/Input/vorbis/fileinfo.c:111
 msgid "Chanson"
 msgstr "Chanson 小调"
 
-#: Plugins/Input/aac/src/libmp4.c:64 Plugins/Input/flac/fileinfo.c:76
+#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:76
 #: Plugins/Input/mpg123/mpg123.c:82 Plugins/Input/vorbis/fileinfo.c:112
 msgid "Opera"
 msgstr "Opera 歌剧"
 
-#: Plugins/Input/aac/src/libmp4.c:64 Plugins/Input/flac/fileinfo.c:76
+#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:76
 #: Plugins/Input/mpg123/mpg123.c:82 Plugins/Input/vorbis/fileinfo.c:112
 msgid "Chamber Music"
 msgstr "Chamber Music 室内乐"
 
-#: Plugins/Input/aac/src/libmp4.c:64 Plugins/Input/flac/fileinfo.c:76
+#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:76
 #: Plugins/Input/mpg123/mpg123.c:82 Plugins/Input/vorbis/fileinfo.c:112
 msgid "Sonata"
 msgstr "Sonata 奏鸣曲"
 
-#: Plugins/Input/aac/src/libmp4.c:64 Plugins/Input/flac/fileinfo.c:76
+#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:76
 #: Plugins/Input/mpg123/mpg123.c:82 Plugins/Input/vorbis/fileinfo.c:112
 msgid "Symphony"
 msgstr "Symphony 交响乐"
 
-#: Plugins/Input/aac/src/libmp4.c:65 Plugins/Input/flac/fileinfo.c:77
+#: Plugins/Input/aac/src/libmp4.c:50 Plugins/Input/flac/fileinfo.c:77
 #: Plugins/Input/mpg123/mpg123.c:83 Plugins/Input/vorbis/fileinfo.c:113
 msgid "Booty Bass"
 msgstr "Booty Bass"
 
-#: Plugins/Input/aac/src/libmp4.c:65 Plugins/Input/flac/fileinfo.c:77
+#: Plugins/Input/aac/src/libmp4.c:50 Plugins/Input/flac/fileinfo.c:77
 #: Plugins/Input/mpg123/mpg123.c:83 Plugins/Input/vorbis/fileinfo.c:113
 msgid "Primus"
 msgstr "Primus"
 
-#: Plugins/Input/aac/src/libmp4.c:65 Plugins/Input/flac/fileinfo.c:77
+#: Plugins/Input/aac/src/libmp4.c:50 Plugins/Input/flac/fileinfo.c:77
 #: Plugins/Input/mpg123/mpg123.c:83 Plugins/Input/vorbis/fileinfo.c:113
 msgid "Porn Groove"
 msgstr "Porn Groove"
 
-#: Plugins/Input/aac/src/libmp4.c:66 Plugins/Input/flac/fileinfo.c:78
+#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:78
 #: Plugins/Input/mpg123/mpg123.c:84 Plugins/Input/vorbis/fileinfo.c:114
 msgid "Satire"
 msgstr "Satire 讽刺"
 
-#: Plugins/Input/aac/src/libmp4.c:66 Plugins/Input/flac/fileinfo.c:78
+#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:78
 #: Plugins/Input/mpg123/mpg123.c:84 Plugins/Input/vorbis/fileinfo.c:114
 msgid "Slow Jam"
 msgstr "Slow Jam"
 
-#: Plugins/Input/aac/src/libmp4.c:66 Plugins/Input/flac/fileinfo.c:78
+#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:78
 #: Plugins/Input/mpg123/mpg123.c:84 Plugins/Input/vorbis/fileinfo.c:114
 msgid "Club"
 msgstr "Club"
 
-#: Plugins/Input/aac/src/libmp4.c:66 Plugins/Input/flac/fileinfo.c:78
+#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:78
 #: Plugins/Input/mpg123/mpg123.c:84 Plugins/Input/vorbis/fileinfo.c:114
 msgid "Tango"
 msgstr "Tango 探戈"
 
-#: Plugins/Input/aac/src/libmp4.c:67 Plugins/Input/flac/fileinfo.c:79
+#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:79
 #: Plugins/Input/mpg123/mpg123.c:85 Plugins/Input/vorbis/fileinfo.c:115
 msgid "Samba"
 msgstr "Samba 桑巴"
 
-#: Plugins/Input/aac/src/libmp4.c:67 Plugins/Input/flac/fileinfo.c:79
+#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:79
 #: Plugins/Input/mpg123/mpg123.c:85 Plugins/Input/vorbis/fileinfo.c:115
 msgid "Folklore"
 msgstr "Folklore 民间传说"
 
-#: Plugins/Input/aac/src/libmp4.c:67 Plugins/Input/flac/fileinfo.c:79
+#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:79
 #: Plugins/Input/mpg123/mpg123.c:85 Plugins/Input/vorbis/fileinfo.c:115
 msgid "Ballad"
 msgstr "Ballad 叙事歌"
 
-#: Plugins/Input/aac/src/libmp4.c:67 Plugins/Input/flac/fileinfo.c:79
+#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:79
 #: Plugins/Input/mpg123/mpg123.c:85 Plugins/Input/vorbis/fileinfo.c:115
 msgid "Power Ballad"
 msgstr "Power Ballad 强烈的叙事歌"
 
-#: Plugins/Input/aac/src/libmp4.c:68 Plugins/Input/flac/fileinfo.c:80
+#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:80
 #: Plugins/Input/mpg123/mpg123.c:86 Plugins/Input/vorbis/fileinfo.c:116
 msgid "Rhythmic Soul"
 msgstr "Rhythmic Soul 节拍灵乐"
 
-#: Plugins/Input/aac/src/libmp4.c:68 Plugins/Input/flac/fileinfo.c:80
+#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:80
 #: Plugins/Input/mpg123/mpg123.c:86 Plugins/Input/vorbis/fileinfo.c:116
 msgid "Freestyle"
 msgstr "Freestyle 自由式"
 
-#: Plugins/Input/aac/src/libmp4.c:68 Plugins/Input/flac/fileinfo.c:80
+#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:80
 #: Plugins/Input/mpg123/mpg123.c:86 Plugins/Input/vorbis/fileinfo.c:116
 msgid "Duet"
 msgstr "Duet 二重奏"
 
-#: Plugins/Input/aac/src/libmp4.c:69 Plugins/Input/flac/fileinfo.c:81
+#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:81
 #: Plugins/Input/mpg123/mpg123.c:87 Plugins/Input/vorbis/fileinfo.c:117
 msgid "Punk Rock"
 msgstr "Punk Rock 朋客摇滚"
 
-#: Plugins/Input/aac/src/libmp4.c:69 Plugins/Input/flac/fileinfo.c:81
+#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:81
 #: Plugins/Input/mpg123/mpg123.c:87 Plugins/Input/vorbis/fileinfo.c:117
 msgid "Drum Solo"
 msgstr "Drum Solo 单独鼓奏"
 
-#: Plugins/Input/aac/src/libmp4.c:69 Plugins/Input/flac/fileinfo.c:81
+#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:81
 #: Plugins/Input/mpg123/mpg123.c:87 Plugins/Input/vorbis/fileinfo.c:117
 msgid "A Cappella"
 msgstr "A Cappella"
 
-#: Plugins/Input/aac/src/libmp4.c:70 Plugins/Input/flac/fileinfo.c:82
+#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:82
 #: Plugins/Input/mpg123/mpg123.c:88 Plugins/Input/vorbis/fileinfo.c:118
 msgid "Euro-House"
 msgstr "Euro-House"
 
-#: Plugins/Input/aac/src/libmp4.c:70 Plugins/Input/flac/fileinfo.c:82
+#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:82
 #: Plugins/Input/mpg123/mpg123.c:88 Plugins/Input/vorbis/fileinfo.c:118
 msgid "Dance Hall"
 msgstr "Dance Hall 舞厅"
 
-#: Plugins/Input/aac/src/libmp4.c:70 Plugins/Input/flac/fileinfo.c:82
+#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:82
 #: Plugins/Input/mpg123/mpg123.c:88 Plugins/Input/vorbis/fileinfo.c:118
 msgid "Goa"
 msgstr "Goa 果阿"
 
-#: Plugins/Input/aac/src/libmp4.c:71 Plugins/Input/flac/fileinfo.c:83
+#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:83
 #: Plugins/Input/mpg123/mpg123.c:89 Plugins/Input/vorbis/fileinfo.c:119
 msgid "Drum & Bass"
 msgstr "Drum & Bass 击鼓和低音"
 
-#: Plugins/Input/aac/src/libmp4.c:71 Plugins/Input/flac/fileinfo.c:83
+#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:83
 #: Plugins/Input/mpg123/mpg123.c:89 Plugins/Input/vorbis/fileinfo.c:119
 msgid "Club-House"
 msgstr "Club-House 俱乐部"
 
-#: Plugins/Input/aac/src/libmp4.c:71 Plugins/Input/flac/fileinfo.c:83
+#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:83
 #: Plugins/Input/mpg123/mpg123.c:89 Plugins/Input/vorbis/fileinfo.c:119
 msgid "Hardcore"
 msgstr "Hardcore"
 
-#: Plugins/Input/aac/src/libmp4.c:72 Plugins/Input/flac/fileinfo.c:84
+#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:84
 #: Plugins/Input/mpg123/mpg123.c:90 Plugins/Input/vorbis/fileinfo.c:120
 msgid "Terror"
 msgstr "Terror 恐怖"
 
-#: Plugins/Input/aac/src/libmp4.c:72 Plugins/Input/flac/fileinfo.c:84
+#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:84
 #: Plugins/Input/mpg123/mpg123.c:90 Plugins/Input/vorbis/fileinfo.c:120
 msgid "Indie"
 msgstr "Indie"
 
-#: Plugins/Input/aac/src/libmp4.c:72 Plugins/Input/flac/fileinfo.c:84
+#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:84
 #: Plugins/Input/mpg123/mpg123.c:90 Plugins/Input/vorbis/fileinfo.c:120
 msgid "BritPop"
 msgstr "BritPop"
 
-#: Plugins/Input/aac/src/libmp4.c:72 Plugins/Input/flac/fileinfo.c:84
+#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:84
 #: Plugins/Input/mpg123/mpg123.c:90 Plugins/Input/vorbis/fileinfo.c:120
 msgid "Negerpunk"
 msgstr "Negerpunk"
 
-#: Plugins/Input/aac/src/libmp4.c:73 Plugins/Input/flac/fileinfo.c:85
+#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:85
 #: Plugins/Input/mpg123/mpg123.c:91 Plugins/Input/vorbis/fileinfo.c:121
 msgid "Polsk Punk"
 msgstr "Polsk Punk"
 
-#: Plugins/Input/aac/src/libmp4.c:73 Plugins/Input/flac/fileinfo.c:85
+#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:85
 #: Plugins/Input/mpg123/mpg123.c:91 Plugins/Input/vorbis/fileinfo.c:121
 msgid "Beat"
 msgstr "Beat"
 
-#: Plugins/Input/aac/src/libmp4.c:73 Plugins/Input/flac/fileinfo.c:85
+#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:85
 #: Plugins/Input/mpg123/mpg123.c:91 Plugins/Input/vorbis/fileinfo.c:121
 msgid "Christian Gangsta Rap"
 msgstr "Christian Gangsta Rap"
 
-#: Plugins/Input/aac/src/libmp4.c:74 Plugins/Input/flac/fileinfo.c:86
+#: Plugins/Input/aac/src/libmp4.c:59 Plugins/Input/flac/fileinfo.c:86
 #: Plugins/Input/mpg123/mpg123.c:92 Plugins/Input/vorbis/fileinfo.c:122
 msgid "Heavy Metal"
 msgstr "Heavy Metal 重金属"
 
-#: Plugins/Input/aac/src/libmp4.c:74 Plugins/Input/flac/fileinfo.c:86
+#: Plugins/Input/aac/src/libmp4.c:59 Plugins/Input/flac/fileinfo.c:86
 #: Plugins/Input/mpg123/mpg123.c:92 Plugins/Input/vorbis/fileinfo.c:122
 msgid "Black Metal"
 msgstr "Black Metal 黑色金属"
 
-#: Plugins/Input/aac/src/libmp4.c:74 Plugins/Input/flac/fileinfo.c:86
+#: Plugins/Input/aac/src/libmp4.c:59 Plugins/Input/flac/fileinfo.c:86
 #: Plugins/Input/mpg123/mpg123.c:92 Plugins/Input/vorbis/fileinfo.c:122
 msgid "Crossover"
 msgstr "Crossover 混合音乐"
 
-#: Plugins/Input/aac/src/libmp4.c:75 Plugins/Input/flac/fileinfo.c:87
+#: Plugins/Input/aac/src/libmp4.c:60 Plugins/Input/flac/fileinfo.c:87
 #: Plugins/Input/mpg123/mpg123.c:93 Plugins/Input/vorbis/fileinfo.c:123
 msgid "Contemporary Christian"
 msgstr "Contemporary Christian"
 
-#: Plugins/Input/aac/src/libmp4.c:75 Plugins/Input/flac/fileinfo.c:87
+#: Plugins/Input/aac/src/libmp4.c:60 Plugins/Input/flac/fileinfo.c:87
 #: Plugins/Input/mpg123/mpg123.c:93 Plugins/Input/vorbis/fileinfo.c:123
 msgid "Christian Rock"
 msgstr "Christian Rock"
 
-#: Plugins/Input/aac/src/libmp4.c:76 Plugins/Input/flac/fileinfo.c:88
+#: Plugins/Input/aac/src/libmp4.c:61 Plugins/Input/flac/fileinfo.c:88
 #: Plugins/Input/mpg123/mpg123.c:94 Plugins/Input/vorbis/fileinfo.c:124
 msgid "Merengue"
 msgstr "Merengue"
 
-#: Plugins/Input/aac/src/libmp4.c:76 Plugins/Input/flac/fileinfo.c:88
+#: Plugins/Input/aac/src/libmp4.c:61 Plugins/Input/flac/fileinfo.c:88
 #: Plugins/Input/mpg123/mpg123.c:94 Plugins/Input/vorbis/fileinfo.c:124
 msgid "Salsa"
 msgstr "Salsa"
 
-#: Plugins/Input/aac/src/libmp4.c:76 Plugins/Input/flac/fileinfo.c:88
+#: Plugins/Input/aac/src/libmp4.c:61 Plugins/Input/flac/fileinfo.c:88
 #: Plugins/Input/mpg123/mpg123.c:94 Plugins/Input/vorbis/fileinfo.c:124
 msgid "Thrash Metal"
 msgstr "Thrash Metal 金属打击乐"
 
-#: Plugins/Input/aac/src/libmp4.c:77 Plugins/Input/flac/fileinfo.c:89
+#: Plugins/Input/aac/src/libmp4.c:62 Plugins/Input/flac/fileinfo.c:89
 #: Plugins/Input/mpg123/mpg123.c:95 Plugins/Input/vorbis/fileinfo.c:125
 msgid "Anime"
 msgstr "Anime 日本动画"
 
-#: Plugins/Input/aac/src/libmp4.c:77 Plugins/Input/flac/fileinfo.c:89
+#: Plugins/Input/aac/src/libmp4.c:62 Plugins/Input/flac/fileinfo.c:89
 #: Plugins/Input/mpg123/mpg123.c:95 Plugins/Input/vorbis/fileinfo.c:125
 msgid "JPop"
 msgstr "JPop 日本流行曲"
 
-#: Plugins/Input/aac/src/libmp4.c:77 Plugins/Input/flac/fileinfo.c:89
+#: Plugins/Input/aac/src/libmp4.c:62 Plugins/Input/flac/fileinfo.c:89
 #: Plugins/Input/mpg123/mpg123.c:95 Plugins/Input/vorbis/fileinfo.c:125
 msgid "Synthpop"
 msgstr "Synthpop"
@@ -1199,7 +1195,7 @@ msgstr ""
 msgid "Time Div:"
 msgstr ""
 
-#: Plugins/Input/amidi-plug/i_fileinfo.c:184 audacious/util.c:1221
+#: Plugins/Input/amidi-plug/i_fileinfo.c:184 audacious/util.c:1217
 msgid "  (invalid UTF-8)"
 msgstr "  (非 UTF-8)"
 
@@ -1402,8 +1398,8 @@ msgstr "CD 索引服务器："
 msgid "Track names:"
 msgstr "音轨名称："
 
-#: Plugins/Input/cdaudio/configure.c:652 Plugins/Input/flac/configure.c:456
-#: Plugins/Input/mpg123/configure.c:649 Plugins/Input/vorbis/configure.c:518
+#: Plugins/Input/cdaudio/configure.c:652 Plugins/Input/flac/configure.c:380
+#: Plugins/Input/mpg123/configure.c:468 Plugins/Input/vorbis/configure.c:339
 msgid "Override generic titles"
 msgstr "覆盖通常标题"
 
@@ -1415,18 +1411,18 @@ msgstr "名称格式："
 msgid "CD Info"
 msgstr "光盘信息"
 
-#: Plugins/Input/console/Audacious_Driver.cpp:674
+#: Plugins/Input/console/Audacious_Driver.cpp:694
 msgid "About the Console Music Decoder"
 msgstr ""
 
-#: Plugins/Input/console/Audacious_Driver.cpp:675
+#: Plugins/Input/console/Audacious_Driver.cpp:695
 msgid ""
 "Console music decoder engine based on Game_Music_Emu 0.3.0.\n"
 "Audacious implementation by: William Pitcock <nenolod@nenolod.net>, \n"
 "        Shay Green <hotpop.com@blargg>"
 msgstr ""
 
-#: Plugins/Input/console/Audacious_Driver.cpp:716
+#: Plugins/Input/console/Audacious_Driver.cpp:736
 msgid "SPC, VGM, NSF/NSFE, GBS, and GYM module decoder"
 msgstr ""
 
@@ -1749,223 +1745,197 @@ msgstr "越南语："
 msgid "Western (MacRoman)"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:353 Plugins/Input/mpg123/configure.c:215
+#: Plugins/Input/flac/configure.c:280 Plugins/Input/mpg123/configure.c:129
 msgid "Select the directory where you want to store the MPEG streams:"
 msgstr "请选择你想要保存 MPEG 流的目录："
 
-#: Plugins/Input/flac/configure.c:404
+#: Plugins/Input/flac/configure.c:328
 #, fuzzy
 msgid "Flac Configuration"
 msgstr "MPG123 配置"
 
-#: Plugins/Input/flac/configure.c:416
+#: Plugins/Input/flac/configure.c:340
 msgid "Tag Handling"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:425
+#: Plugins/Input/flac/configure.c:349
 msgid "Convert Character Set"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:432
+#: Plugins/Input/flac/configure.c:356
 msgid "Convert character set from :"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:437
+#: Plugins/Input/flac/configure.c:361
 msgid "to :"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:465 Plugins/Input/vorbis/configure.c:531
-#: audacious/glade/prefswin.glade:2505
+#: Plugins/Input/flac/configure.c:389 Plugins/Input/vorbis/configure.c:352
+#: audacious/glade/prefswin.glade:2617
 msgid "Title format:"
 msgstr "标题格式："
 
-#: Plugins/Input/flac/configure.c:476 Plugins/Input/mpg123/configure.c:676
-#: Plugins/Input/vorbis/configure.c:545 audacious/prefswin.c:104
+#: Plugins/Input/flac/configure.c:400 Plugins/Input/mpg123/configure.c:495
+#: Plugins/Input/vorbis/configure.c:366 audacious/prefswin.c:108
 msgid "Title"
 msgstr "标题"
 
-#: Plugins/Input/flac/configure.c:485 Plugins/Input/vorbis/configure.c:606
+#: Plugins/Input/flac/configure.c:409 Plugins/Input/vorbis/configure.c:427
 msgid "ReplayGain"
 msgstr "ReplayGain"
 
-#: Plugins/Input/flac/configure.c:493
+#: Plugins/Input/flac/configure.c:417
 #, fuzzy
 msgid "Enable ReplayGain processing"
 msgstr "启动 ReplayGain"
 
-#: Plugins/Input/flac/configure.c:498
+#: Plugins/Input/flac/configure.c:422
 #, fuzzy
 msgid "Album mode"
 msgstr "专辑"
 
-#: Plugins/Input/flac/configure.c:505
+#: Plugins/Input/flac/configure.c:429
 #, fuzzy
 msgid "Preamp:"
 msgstr "Dream 梦幻"
 
-#: Plugins/Input/flac/configure.c:512
+#: Plugins/Input/flac/configure.c:436
 msgid "0 dB"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:516
+#: Plugins/Input/flac/configure.c:440
 #, fuzzy
 msgid "6dB hard limiting"
 msgstr "启用 6 dB 推进 + 硬极限"
 
-#: Plugins/Input/flac/configure.c:525
-#: Plugins/Input/modplug/gui/interface.cpp:150
+#: Plugins/Input/flac/configure.c:449
+#: Plugins/Input/modplug/gui/interface.cpp:151
 #, fuzzy
 msgid "Resolution"
 msgstr "分辨率："
 
-#: Plugins/Input/flac/configure.c:533
+#: Plugins/Input/flac/configure.c:457
 #, fuzzy
 msgid "Without ReplayGain"
 msgstr "ReplayGain"
 
-#: Plugins/Input/flac/configure.c:541
+#: Plugins/Input/flac/configure.c:465
 msgid "Dither 24bps to 16bps"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:546
+#: Plugins/Input/flac/configure.c:470
 #, fuzzy
 msgid "With ReplayGain"
 msgstr "ReplayGain"
 
-#: Plugins/Input/flac/configure.c:554
+#: Plugins/Input/flac/configure.c:478
 #, fuzzy
 msgid "Enable dithering"
 msgstr "启用插件"
 
-#: Plugins/Input/flac/configure.c:563
+#: Plugins/Input/flac/configure.c:487
 #, fuzzy
 msgid "Noise shaping"
 msgstr "无"
 
-#: Plugins/Input/flac/configure.c:571
+#: Plugins/Input/flac/configure.c:495
 #, fuzzy
 msgid "none"
 msgstr "(无)"
 
-#: Plugins/Input/flac/configure.c:577
+#: Plugins/Input/flac/configure.c:501
 msgid "low"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:583
+#: Plugins/Input/flac/configure.c:507
 msgid "medium"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:589
+#: Plugins/Input/flac/configure.c:513
 msgid "high"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:595
+#: Plugins/Input/flac/configure.c:519
 msgid "Dither to"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:603
+#: Plugins/Input/flac/configure.c:527
 #, fuzzy
 msgid "16 bps"
 msgstr "16 位"
 
-#: Plugins/Input/flac/configure.c:609
+#: Plugins/Input/flac/configure.c:533
 msgid "24 bps"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:617
+#: Plugins/Input/flac/configure.c:541
 #, fuzzy
 msgid "Output"
 msgstr "输出端口："
 
-#: Plugins/Input/flac/configure.c:623 Plugins/Input/mpg123/configure.c:410
-#: Plugins/Input/vorbis/configure.c:308 Plugins/Output/OSS/configure.c:302
-#: Plugins/Output/arts/configure.c:63 Plugins/Output/esd/configure.c:171
-#: Plugins/Output/sun/configure.c:259
+#: Plugins/Input/flac/configure.c:547 Plugins/Input/mpg123/configure.c:320
+#: Plugins/Input/vorbis/configure.c:220 Plugins/Output/OSS/configure.c:302
+#: Plugins/Output/arts/configure.c:62 Plugins/Output/esd/configure.c:171
+#: Plugins/Output/sun/configure.c:258
 msgid "Buffering:"
 msgstr "缓冲："
 
-#: Plugins/Input/flac/configure.c:634 Plugins/Input/mpg123/configure.c:423
-#: Plugins/Input/vorbis/configure.c:320
+#: Plugins/Input/flac/configure.c:558 Plugins/Input/mpg123/configure.c:333
+#: Plugins/Input/vorbis/configure.c:232
 msgid "Buffer size (kb):"
 msgstr "缓冲区大小 (Kb)："
 
-#: Plugins/Input/flac/configure.c:644 Plugins/Input/mpg123/configure.c:438
-#: Plugins/Input/vorbis/configure.c:334 Plugins/Output/OSS/configure.c:329
-#: Plugins/Output/esd/configure.c:198 Plugins/Output/sun/configure.c:290
+#: Plugins/Input/flac/configure.c:568 Plugins/Input/mpg123/configure.c:348
+#: Plugins/Input/vorbis/configure.c:246 Plugins/Output/OSS/configure.c:329
+#: Plugins/Output/esd/configure.c:198 Plugins/Output/sun/configure.c:289
 msgid "Pre-buffer (percent):"
 msgstr "前期缓冲区 (%)："
 
-#: Plugins/Input/flac/configure.c:654 Plugins/Input/mpg123/configure.c:452
-#: Plugins/Input/vorbis/configure.c:348
-msgid "Proxy:"
-msgstr "代理服务器："
-
-#: Plugins/Input/flac/configure.c:662 Plugins/Input/mpg123/configure.c:462
-#: Plugins/Input/vorbis/configure.c:358
-msgid "Use proxy"
-msgstr "使用代理服务器"
-
-#: Plugins/Input/flac/configure.c:671 Plugins/Input/mpg123/configure.c:475
-#: Plugins/Input/vorbis/configure.c:371 Plugins/Output/esd/configure.c:114
-#: Plugins/Output/esd/configure.c:144
-msgid "Host:"
-msgstr "主机名："
-
-#: Plugins/Input/flac/configure.c:678 Plugins/Input/mpg123/configure.c:485
-#: Plugins/Input/vorbis/configure.c:381 Plugins/Output/esd/configure.c:153
-msgid "Port:"
-msgstr "端口："
-
-#: Plugins/Input/flac/configure.c:688 Plugins/Input/mpg123/configure.c:498
-#: Plugins/Input/vorbis/configure.c:394
-msgid "Use authentication"
-msgstr "使用身份验证"
-
-#: Plugins/Input/flac/configure.c:719 Plugins/Input/mpg123/configure.c:543
-#: Plugins/Input/vorbis/configure.c:439
+#: Plugins/Input/flac/configure.c:578 Plugins/Input/mpg123/configure.c:362
+#: Plugins/Input/vorbis/configure.c:260
 msgid "Save stream to disk:"
 msgstr "将流存入磁盘："
 
-#: Plugins/Input/flac/configure.c:727 Plugins/Input/mpg123/configure.c:554
-#: Plugins/Input/vorbis/configure.c:450
+#: Plugins/Input/flac/configure.c:586 Plugins/Input/mpg123/configure.c:373
+#: Plugins/Input/vorbis/configure.c:271
 msgid "Save stream to disk"
 msgstr "将流存入磁盘"
 
-#: Plugins/Input/flac/configure.c:736 Plugins/Input/mpg123/configure.c:568
-#: Plugins/Input/vorbis/configure.c:464
+#: Plugins/Input/flac/configure.c:595 Plugins/Input/mpg123/configure.c:387
+#: Plugins/Input/vorbis/configure.c:285
 #: Plugins/Output/disk_writer/disk_writer.c:370
 msgid "Path:"
 msgstr "路径："
 
-#: Plugins/Input/flac/configure.c:743 Plugins/Input/mpg123/configure.c:578
-#: Plugins/Input/vorbis/configure.c:474
+#: Plugins/Input/flac/configure.c:602 Plugins/Input/mpg123/configure.c:397
+#: Plugins/Input/vorbis/configure.c:295
 #: Plugins/Output/disk_writer/disk_writer.c:381
 msgid "Browse"
 msgstr "浏览"
 
-#: Plugins/Input/flac/configure.c:748 Plugins/Input/mpg123/configure.c:584
+#: Plugins/Input/flac/configure.c:607 Plugins/Input/mpg123/configure.c:403
 msgid "SHOUT/Icecast:"
 msgstr "SHOUT/Icecast:"
 
-#: Plugins/Input/flac/configure.c:755
+#: Plugins/Input/flac/configure.c:614
 msgid "Enable SHOUT/Icecast title streaming"
 msgstr "启用 SHOUT/Icecast 曲名流"
 
-#: Plugins/Input/flac/configure.c:759 Plugins/Input/mpg123/configure.c:598
+#: Plugins/Input/flac/configure.c:618 Plugins/Input/mpg123/configure.c:417
 msgid "Enable Icecast Metadata UDP Channel"
 msgstr "启用 Icecast Metadata UDP 通道"
 
-#: Plugins/Input/flac/configure.c:764 Plugins/Input/mpg123/configure.c:605
-#: Plugins/Input/vorbis/configure.c:481
+#: Plugins/Input/flac/configure.c:623 Plugins/Input/mpg123/configure.c:424
+#: Plugins/Input/vorbis/configure.c:302
 msgid "Streaming"
 msgstr "流"
 
-#: Plugins/Input/flac/configure.c:796
+#: Plugins/Input/flac/configure.c:655
 #, fuzzy
 msgid "About Flac Plugin"
 msgstr "关于 ESounD 插件"
 
-#: Plugins/Input/flac/configure.c:797
+#: Plugins/Input/flac/configure.c:656
 msgid ""
 "Flac Plugin by Josh Coalson\n"
 "contributions by\n"
@@ -2065,38 +2035,40 @@ msgstr "文件信息 - %s"
 msgid "Error"
 msgstr "错误"
 
-#: Plugins/Input/flac/http.c:383 Plugins/Input/mpg123/http.c:375
-#: Plugins/Input/vorbis/http.c:327
+#: Plugins/Input/flac/http.c:383 Plugins/Input/mpg123/http.c:419
+#: Plugins/Input/vorbis/http.c:370
 #, c-format
 msgid "LOOKING UP %s"
 msgstr "正在寻找 %s"
 
-#: Plugins/Input/flac/http.c:389 Plugins/Input/mpg123/http.c:380
-#: Plugins/Input/vorbis/http.c:332
+#: Plugins/Input/flac/http.c:389 Plugins/Input/mpg123/http.c:407
+#: Plugins/Input/mpg123/http.c:424 Plugins/Input/vorbis/http.c:360
+#: Plugins/Input/vorbis/http.c:375
 #, c-format
 msgid "Couldn't look up host %s"
 msgstr "无法找到主机 %s"
 
-#: Plugins/Input/flac/http.c:402 Plugins/Input/mpg123/http.c:393
-#: Plugins/Input/vorbis/http.c:345
+#: Plugins/Input/flac/http.c:402 Plugins/Input/mpg123/http.c:386
+#: Plugins/Input/mpg123/http.c:439 Plugins/Input/vorbis/http.c:338
+#: Plugins/Input/vorbis/http.c:390
 #, c-format
 msgid "CONNECTING TO %s:%d"
 msgstr "正在连接到主机 %s:%d"
 
 #: Plugins/Input/flac/http.c:409 Plugins/Input/flac/http.c:429
-#: Plugins/Input/mpg123/http.c:401 Plugins/Input/mpg123/http.c:421
-#: Plugins/Input/vorbis/http.c:353 Plugins/Input/vorbis/http.c:373
+#: Plugins/Input/mpg123/http.c:447 Plugins/Input/mpg123/http.c:468
+#: Plugins/Input/vorbis/http.c:398 Plugins/Input/vorbis/http.c:419
 #, c-format
 msgid "Couldn't connect to host %s"
 msgstr "无法连接到主机 %s"
 
-#: Plugins/Input/flac/http.c:495 Plugins/Input/mpg123/http.c:484
-#: Plugins/Input/vorbis/http.c:421
+#: Plugins/Input/flac/http.c:495 Plugins/Input/mpg123/http.c:531
+#: Plugins/Input/vorbis/http.c:467
 msgid "CONNECTED: WAITING FOR REPLY"
 msgstr "已连接：正等待回应"
 
-#: Plugins/Input/flac/http.c:536 Plugins/Input/mpg123/http.c:521
-#: Plugins/Input/vorbis/http.c:458
+#: Plugins/Input/flac/http.c:536 Plugins/Input/mpg123/http.c:568
+#: Plugins/Input/vorbis/http.c:504
 #, c-format
 msgid ""
 "Couldn't connect to host %s\n"
@@ -2105,204 +2077,209 @@ msgstr ""
 "无法连接到主机 %s\n"
 "服务器报告：%s"
 
-#: Plugins/Input/flac/http.c:670 Plugins/Input/vorbis/http.c:557
+#: Plugins/Input/flac/http.c:670 Plugins/Input/vorbis/http.c:603
 #, c-format
 msgid "PRE-BUFFERING: %dKB/%dKB"
 msgstr "前期缓冲：%dKB/%dKB"
 
-#: Plugins/Input/modplug/gui/interface.cpp:116
+#: Plugins/Input/modplug/gui/interface.cpp:117
 #, fuzzy
 msgid "ModPlug Configuration"
 msgstr "MikMod 配置"
 
-#: Plugins/Input/modplug/gui/interface.cpp:164
-#: Plugins/Input/mpg123/configure.c:324
+#: Plugins/Input/modplug/gui/interface.cpp:165
+#: Plugins/Input/mpg123/configure.c:234
 #: Plugins/Input/timidity/src/interface.c:141
 msgid "16 bit"
 msgstr "16 位"
 
-#: Plugins/Input/modplug/gui/interface.cpp:172
-#: Plugins/Input/mpg123/configure.c:333
+#: Plugins/Input/modplug/gui/interface.cpp:173
+#: Plugins/Input/mpg123/configure.c:243
 #: Plugins/Input/timidity/src/interface.c:133
 msgid "8 bit"
 msgstr "8 位"
 
-#: Plugins/Input/modplug/gui/interface.cpp:180
+#: Plugins/Input/modplug/gui/interface.cpp:181
 #: Plugins/Input/timidity/src/interface.c:149
 #, fuzzy
 msgid "Channels"
 msgstr "声道："
 
-#: Plugins/Input/modplug/gui/interface.cpp:194
-#: Plugins/Input/mpg123/fileinfo.c:202
+#: Plugins/Input/modplug/gui/interface.cpp:195
+#: Plugins/Input/mpg123/fileinfo.c:205
 #: Plugins/Input/timidity/src/interface.c:174
 msgid "Stereo"
 msgstr "立体声"
 
-#: Plugins/Input/modplug/gui/interface.cpp:202
+#: Plugins/Input/modplug/gui/interface.cpp:203
 msgid "Mono (downmix)"
 msgstr ""
 
-#: Plugins/Input/modplug/gui/interface.cpp:217
+#: Plugins/Input/modplug/gui/interface.cpp:218
 #: Plugins/Input/timidity/src/interface.c:75
 #, fuzzy
 msgid "Sampling Rate"
 msgstr "采样率："
 
-#: Plugins/Input/modplug/gui/interface.cpp:231
+#: Plugins/Input/modplug/gui/interface.cpp:232
+#, fuzzy
+msgid "48 kHz"
+msgstr "1:1 (44 kHz)"
+
+#: Plugins/Input/modplug/gui/interface.cpp:240
 #, fuzzy
 msgid "44 kHz"
 msgstr "1:1 (44 kHz)"
 
-#: Plugins/Input/modplug/gui/interface.cpp:239
+#: Plugins/Input/modplug/gui/interface.cpp:248
 #, fuzzy
 msgid "22 kHz"
 msgstr "1:2 (22 kHz)"
 
-#: Plugins/Input/modplug/gui/interface.cpp:247
+#: Plugins/Input/modplug/gui/interface.cpp:256
 #, fuzzy
 msgid "11 kHz"
 msgstr "1:1 (44 kHz)"
 
-#: Plugins/Input/modplug/gui/interface.cpp:255
+#: Plugins/Input/modplug/gui/interface.cpp:264
 #, fuzzy
 msgid "Resampling"
 msgstr "流"
 
-#: Plugins/Input/modplug/gui/interface.cpp:269
+#: Plugins/Input/modplug/gui/interface.cpp:278
 msgid "Nearest (fastest)"
 msgstr ""
 
-#: Plugins/Input/modplug/gui/interface.cpp:277
+#: Plugins/Input/modplug/gui/interface.cpp:286
 msgid "Linear (fast)"
 msgstr ""
 
-#: Plugins/Input/modplug/gui/interface.cpp:285
+#: Plugins/Input/modplug/gui/interface.cpp:294
 msgid "Spline (good quality)"
 msgstr ""
 
-#: Plugins/Input/modplug/gui/interface.cpp:293
+#: Plugins/Input/modplug/gui/interface.cpp:302
 msgid "8-tap Fir (extremely high quality)"
 msgstr ""
 
-#: Plugins/Input/modplug/gui/interface.cpp:301
+#: Plugins/Input/modplug/gui/interface.cpp:310
 #, fuzzy
 msgid "Quality"
 msgstr "/退出(_Q)"
 
-#: Plugins/Input/modplug/gui/interface.cpp:316
-#: Plugins/Input/modplug/gui/interface.cpp:824
+#: Plugins/Input/modplug/gui/interface.cpp:325
+#: Plugins/Input/modplug/gui/interface.cpp:833
 msgid "General"
 msgstr "一般"
 
-#: Plugins/Input/modplug/gui/interface.cpp:337
+#: Plugins/Input/modplug/gui/interface.cpp:346
 msgid "Use Filename as Song Title"
 msgstr ""
 
-#: Plugins/Input/modplug/gui/interface.cpp:344
+#: Plugins/Input/modplug/gui/interface.cpp:353
 #, fuzzy
 msgid "Fast Playlist Info"
 msgstr "装入播放列表"
 
-#: Plugins/Input/modplug/gui/interface.cpp:359
+#: Plugins/Input/modplug/gui/interface.cpp:368
 msgid "Noise Reduction"
 msgstr ""
 
-#: Plugins/Input/modplug/gui/interface.cpp:367
+#: Plugins/Input/modplug/gui/interface.cpp:376
 msgid "Play Amiga MOD"
 msgstr ""
 
-#: Plugins/Input/modplug/gui/interface.cpp:375
+#: Plugins/Input/modplug/gui/interface.cpp:384
 #, fuzzy
 msgid "Reverb"
 msgstr "服务器"
 
-#: Plugins/Input/modplug/gui/interface.cpp:389
-#: Plugins/Input/modplug/gui/interface.cpp:461
-#: Plugins/Input/modplug/gui/interface.cpp:533
-#: Plugins/Input/modplug/gui/interface.cpp:619
+#: Plugins/Input/modplug/gui/interface.cpp:398
+#: Plugins/Input/modplug/gui/interface.cpp:470
+#: Plugins/Input/modplug/gui/interface.cpp:542
+#: Plugins/Input/modplug/gui/interface.cpp:628
 #, fuzzy
 msgid "Enable"
 msgstr "启用"
 
-#: Plugins/Input/modplug/gui/interface.cpp:429
-#: Plugins/Input/modplug/gui/interface.cpp:573
+#: Plugins/Input/modplug/gui/interface.cpp:438
+#: Plugins/Input/modplug/gui/interface.cpp:582
 #, fuzzy
 msgid "Depth"
 msgstr "Duet 二重奏"
 
-#: Plugins/Input/modplug/gui/interface.cpp:438
-#: Plugins/Input/modplug/gui/interface.cpp:582
+#: Plugins/Input/modplug/gui/interface.cpp:447
+#: Plugins/Input/modplug/gui/interface.cpp:591
 #, fuzzy
 msgid "Delay"
 msgstr "播放"
 
-#: Plugins/Input/modplug/gui/interface.cpp:447
+#: Plugins/Input/modplug/gui/interface.cpp:456
 msgid "Bass Boost"
 msgstr ""
 
-#: Plugins/Input/modplug/gui/interface.cpp:501
+#: Plugins/Input/modplug/gui/interface.cpp:510
 #, fuzzy
 msgid "Amount"
 msgstr "关于"
 
-#: Plugins/Input/modplug/gui/interface.cpp:510
+#: Plugins/Input/modplug/gui/interface.cpp:519
 #, fuzzy
 msgid "Range"
 msgstr "Rave 狂欢"
 
-#: Plugins/Input/modplug/gui/interface.cpp:519
+#: Plugins/Input/modplug/gui/interface.cpp:528
 #, fuzzy
 msgid "Surround"
 msgstr "环绕回音"
 
-#: Plugins/Input/modplug/gui/interface.cpp:591
+#: Plugins/Input/modplug/gui/interface.cpp:600
 #, fuzzy
 msgid "Preamp"
 msgstr "Dream 梦幻"
 
-#: Plugins/Input/modplug/gui/interface.cpp:605
+#: Plugins/Input/modplug/gui/interface.cpp:614
 msgid ""
 "Note:  Setting the preamp too high may cause\n"
 "clipping / distortion!"
 msgstr ""
 
-#: Plugins/Input/modplug/gui/interface.cpp:626
+#: Plugins/Input/modplug/gui/interface.cpp:635
 #, fuzzy
 msgid "Volume"
 msgstr "音量加大"
 
-#: Plugins/Input/modplug/gui/interface.cpp:640
+#: Plugins/Input/modplug/gui/interface.cpp:649
 msgid "Looping"
 msgstr ""
 
-#: Plugins/Input/modplug/gui/interface.cpp:654
+#: Plugins/Input/modplug/gui/interface.cpp:663
 msgid "Don't loop"
 msgstr ""
 
-#: Plugins/Input/modplug/gui/interface.cpp:669
+#: Plugins/Input/modplug/gui/interface.cpp:678
 msgid "Loop"
 msgstr ""
 
-#: Plugins/Input/modplug/gui/interface.cpp:685
+#: Plugins/Input/modplug/gui/interface.cpp:694
 msgid "time(s)"
 msgstr ""
 
-#: Plugins/Input/modplug/gui/interface.cpp:692
+#: Plugins/Input/modplug/gui/interface.cpp:701
 msgid "Loop forever"
 msgstr ""
 
-#: Plugins/Input/modplug/gui/interface.cpp:700
+#: Plugins/Input/modplug/gui/interface.cpp:709
 #, fuzzy
 msgid "Effects"
 msgstr "<b>效果</b>"
 
-#: Plugins/Input/modplug/gui/interface.cpp:784
+#: Plugins/Input/modplug/gui/interface.cpp:793
 #, fuzzy
 msgid "MOD Info"
 msgstr "光盘信息"
 
-#: Plugins/Input/modplug/gui/interface.cpp:808
+#: Plugins/Input/modplug/gui/interface.cpp:817
 msgid ""
 "Filename:\n"
 "Title:\n"
@@ -2316,7 +2293,7 @@ msgid ""
 "Channels:"
 msgstr ""
 
-#: Plugins/Input/modplug/gui/interface.cpp:816
+#: Plugins/Input/modplug/gui/interface.cpp:825
 msgid ""
 "---\n"
 "---\n"
@@ -2330,17 +2307,17 @@ msgid ""
 "---"
 msgstr ""
 
-#: Plugins/Input/modplug/gui/interface.cpp:857
+#: Plugins/Input/modplug/gui/interface.cpp:866
 #, fuzzy
 msgid "Samples"
 msgstr "Salsa"
 
-#: Plugins/Input/modplug/gui/interface.cpp:890
+#: Plugins/Input/modplug/gui/interface.cpp:899
 #, fuzzy
 msgid "Instruments"
 msgstr "Instrumental 古典"
 
-#: Plugins/Input/modplug/gui/interface.cpp:923
+#: Plugins/Input/modplug/gui/interface.cpp:932
 msgid "Message"
 msgstr ""
 
@@ -2373,190 +2350,176 @@ msgstr "错误：无法找到 %s\n"
 msgid "Error loading pixmap file: %s"
 msgstr ""
 
-#: Plugins/Input/mpg123/configure.c:299
+#: Plugins/Input/mpg123/configure.c:209
 msgid "MPEG Audio Plugin Configuration"
 msgstr "MPEG 音频插件配置"
 
-#: Plugins/Input/mpg123/configure.c:316
+#: Plugins/Input/mpg123/configure.c:226
 msgid "Resolution:"
 msgstr "分辨率："
 
-#: Plugins/Input/mpg123/configure.c:340 Plugins/Input/vorbis/fileinfo.c:863
+#: Plugins/Input/mpg123/configure.c:250 Plugins/Input/vorbis/fileinfo.c:863
 #: Plugins/Input/vorbis/fileinfo.c:919
 msgid "Channels:"
 msgstr "声道："
 
-#: Plugins/Input/mpg123/configure.c:348
+#: Plugins/Input/mpg123/configure.c:258
 msgid "Stereo (if available)"
 msgstr "立体声（如果有的话）"
 
-#: Plugins/Input/mpg123/configure.c:359
+#: Plugins/Input/mpg123/configure.c:269
 #: Plugins/Input/timidity/src/interface.c:166
 msgid "Mono"
 msgstr "单声"
 
-#: Plugins/Input/mpg123/configure.c:366
+#: Plugins/Input/mpg123/configure.c:276
 msgid "Down sample:"
 msgstr "降低取样："
 
-#: Plugins/Input/mpg123/configure.c:375
+#: Plugins/Input/mpg123/configure.c:285
 msgid "1:1 (44 kHz)"
 msgstr "1:1 (44 kHz)"
 
-#: Plugins/Input/mpg123/configure.c:386
+#: Plugins/Input/mpg123/configure.c:296
 msgid "1:2 (22 kHz)"
 msgstr "1:2 (22 kHz)"
 
-#: Plugins/Input/mpg123/configure.c:397
+#: Plugins/Input/mpg123/configure.c:307
 msgid "1:4 (11 kHz)"
 msgstr "1:4 (11 kHz)"
 
-#: Plugins/Input/mpg123/configure.c:406
+#: Plugins/Input/mpg123/configure.c:316
 msgid "Decoder"
 msgstr "解码器"
 
-#: Plugins/Input/mpg123/configure.c:607
+#: Plugins/Input/mpg123/configure.c:426
 msgid "ID3 Tags:"
 msgstr "ID3 标签："
 
-#: Plugins/Input/mpg123/configure.c:615
+#: Plugins/Input/mpg123/configure.c:434
 msgid "Disable ID3V2 tags"
 msgstr "禁用 ID3v2 标签"
 
-#: Plugins/Input/mpg123/configure.c:624
+#: Plugins/Input/mpg123/configure.c:443
 msgid "Convert non-UTF8 ID3 tags to UTF8"
 msgstr "将非 UTF-8 ID3 标签转换成 UTF-8"
 
-#: Plugins/Input/mpg123/configure.c:637
+#: Plugins/Input/mpg123/configure.c:456
 msgid "ID3 encoding:"
 msgstr "ID3 编码："
 
-#: Plugins/Input/mpg123/configure.c:662
+#: Plugins/Input/mpg123/configure.c:481
 msgid "ID3 format:"
 msgstr "ID3 格式："
 
-#: Plugins/Input/mpg123/fileinfo.c:202
+#: Plugins/Input/mpg123/fileinfo.c:205
 msgid "Joint stereo"
 msgstr "联合立体声"
 
-#: Plugins/Input/mpg123/fileinfo.c:203
+#: Plugins/Input/mpg123/fileinfo.c:206
 msgid "Dual channel"
 msgstr "双声道"
 
-#: Plugins/Input/mpg123/fileinfo.c:203
+#: Plugins/Input/mpg123/fileinfo.c:206
 msgid "Single channel"
 msgstr "单声道"
 
-#: Plugins/Input/mpg123/fileinfo.c:218 Plugins/Input/mpg123/fileinfo.c:813
+#: Plugins/Input/mpg123/fileinfo.c:221 Plugins/Input/mpg123/fileinfo.c:748
 #, c-format
 msgid "%d KBit/s"
 msgstr "%d KBit/s"
 
-#: Plugins/Input/mpg123/fileinfo.c:219 Plugins/Input/mpg123/fileinfo.c:817
+#: Plugins/Input/mpg123/fileinfo.c:222 Plugins/Input/mpg123/fileinfo.c:743
 #, c-format
 msgid "%ld Hz"
 msgstr "%ld-Hz"
 
-#: Plugins/Input/mpg123/fileinfo.c:302
+#: Plugins/Input/mpg123/fileinfo.c:304
 msgid " MPEG Info "
 msgstr " MPEG 信息 "
 
-#: Plugins/Input/mpg123/fileinfo.c:317 Plugins/Input/mpg123/fileinfo.c:655
+#: Plugins/Input/mpg123/fileinfo.c:319 Plugins/Input/mpg123/fileinfo.c:641
 msgid "MPEG Level:"
 msgstr "MPEG Level："
 
-#: Plugins/Input/mpg123/fileinfo.c:330 Plugins/Input/mpg123/fileinfo.c:658
+#: Plugins/Input/mpg123/fileinfo.c:332 Plugins/Input/mpg123/fileinfo.c:644
 #: Plugins/Input/vorbis/fileinfo.c:837 Plugins/Input/vorbis/fileinfo.c:913
 msgid "Bit rate:"
 msgstr "位速率："
 
-#: Plugins/Input/mpg123/fileinfo.c:343 Plugins/Input/mpg123/fileinfo.c:661
+#: Plugins/Input/mpg123/fileinfo.c:345 Plugins/Input/mpg123/fileinfo.c:647
 #: Plugins/Input/vorbis/fileinfo.c:850 Plugins/Input/vorbis/fileinfo.c:916
 msgid "Sample rate:"
 msgstr "采样率："
 
-#: Plugins/Input/mpg123/fileinfo.c:357 Plugins/Input/mpg123/fileinfo.c:676
-msgid "Frames:"
-msgstr "帧数："
-
-#: Plugins/Input/mpg123/fileinfo.c:370 Plugins/Input/mpg123/fileinfo.c:679
+#: Plugins/Input/mpg123/fileinfo.c:359 Plugins/Input/mpg123/fileinfo.c:662
 #: Plugins/Input/vorbis/fileinfo.c:889 Plugins/Input/vorbis/fileinfo.c:925
 msgid "File size:"
 msgstr "文件大小："
 
-#: Plugins/Input/mpg123/fileinfo.c:383 Plugins/Input/mpg123/fileinfo.c:682
+#: Plugins/Input/mpg123/fileinfo.c:372 Plugins/Input/mpg123/fileinfo.c:665
 #, fuzzy
 msgid "Mode:"
 msgstr "解码器："
 
-#: Plugins/Input/mpg123/fileinfo.c:406 Plugins/Input/mpg123/fileinfo.c:664
+#: Plugins/Input/mpg123/fileinfo.c:395 Plugins/Input/mpg123/fileinfo.c:650
 msgid "Error Protection:"
 msgstr "Error Protection："
 
-#: Plugins/Input/mpg123/fileinfo.c:419 Plugins/Input/mpg123/fileinfo.c:667
+#: Plugins/Input/mpg123/fileinfo.c:408 Plugins/Input/mpg123/fileinfo.c:653
 #: Plugins/Input/vorbis/fileinfo.c:719
 msgid "Copyright:"
 msgstr "版权："
 
-#: Plugins/Input/mpg123/fileinfo.c:432 Plugins/Input/mpg123/fileinfo.c:670
+#: Plugins/Input/mpg123/fileinfo.c:421 Plugins/Input/mpg123/fileinfo.c:656
 msgid "Original:"
 msgstr "Original："
 
-#: Plugins/Input/mpg123/fileinfo.c:445 Plugins/Input/mpg123/fileinfo.c:673
+#: Plugins/Input/mpg123/fileinfo.c:434 Plugins/Input/mpg123/fileinfo.c:659
 msgid "Emphasis:"
 msgstr "Emphasis："
 
-#: Plugins/Input/mpg123/fileinfo.c:459
+#: Plugins/Input/mpg123/fileinfo.c:448
 msgid " ID3 Tag "
 msgstr " ID3 标签 "
 
-#: Plugins/Input/mpg123/fileinfo.c:656 Plugins/Input/mpg123/fileinfo.c:659
-#: Plugins/Input/mpg123/fileinfo.c:662 Plugins/Input/mpg123/fileinfo.c:665
-#: Plugins/Input/mpg123/fileinfo.c:668 Plugins/Input/mpg123/fileinfo.c:671
-#: Plugins/Input/mpg123/fileinfo.c:674 Plugins/Input/mpg123/fileinfo.c:677
-#: Plugins/Input/mpg123/fileinfo.c:680 Plugins/Input/mpg123/fileinfo.c:683
-#: Plugins/Input/vorbis/fileinfo.c:914 Plugins/Input/vorbis/fileinfo.c:917
-#: Plugins/Input/vorbis/fileinfo.c:920 Plugins/Input/vorbis/fileinfo.c:923
-#: Plugins/Input/vorbis/fileinfo.c:926
+#: Plugins/Input/mpg123/fileinfo.c:642 Plugins/Input/mpg123/fileinfo.c:645
+#: Plugins/Input/mpg123/fileinfo.c:648 Plugins/Input/mpg123/fileinfo.c:651
+#: Plugins/Input/mpg123/fileinfo.c:654 Plugins/Input/mpg123/fileinfo.c:657
+#: Plugins/Input/mpg123/fileinfo.c:660 Plugins/Input/mpg123/fileinfo.c:663
+#: Plugins/Input/mpg123/fileinfo.c:666 Plugins/Input/vorbis/fileinfo.c:914
+#: Plugins/Input/vorbis/fileinfo.c:917 Plugins/Input/vorbis/fileinfo.c:920
+#: Plugins/Input/vorbis/fileinfo.c:923 Plugins/Input/vorbis/fileinfo.c:926
 msgid "N/A"
 msgstr "不可用"
 
-#: Plugins/Input/mpg123/fileinfo.c:805
-#, c-format
-msgid ""
-"Variable,\n"
-"avg. bitrate: %d KBit/s"
-msgstr ""
-"位速率：可变，\n"
-"平均位速率：%d kb/s"
-
-#: Plugins/Input/mpg123/fileinfo.c:819 Plugins/Input/mpg123/fileinfo.c:821
-#: Plugins/Input/mpg123/fileinfo.c:822 Plugins/Input/mpg123/fileinfo.c:823
-#: Plugins/Input/mpg123/fileinfo.c:826
+#: Plugins/Input/mpg123/fileinfo.c:793 Plugins/Input/mpg123/fileinfo.c:795
+#: Plugins/Input/mpg123/fileinfo.c:796 Plugins/Input/mpg123/fileinfo.c:797
+#: Plugins/Input/mpg123/fileinfo.c:799
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: Plugins/Input/mpg123/fileinfo.c:824 Plugins/Input/vorbis/fileinfo.c:958
-#, c-format
-msgid "%d"
-msgstr "%d"
-
-#: Plugins/Input/mpg123/fileinfo.c:825 Plugins/Input/wma/wma.c:521
+#: Plugins/Input/mpg123/fileinfo.c:798 Plugins/Input/wma/wma.c:521
 #, c-format
 msgid "%lu Bytes"
 msgstr "%lu·Bytes"
 
-#: Plugins/Input/mpg123/http.c:639
+#: Plugins/Input/mpg123/http.c:401 Plugins/Input/vorbis/http.c:353
+#, c-format
+msgid "Couldn't connect to host %s:%d"
+msgstr "无法连结到主机 %s:%d"
+
+#: Plugins/Input/mpg123/http.c:686
 #, fuzzy, c-format
-msgid "PRE-BUFFERING: %luKB/%luKB"
+msgid "PRE-BUFFERING: %zuKB/%zuKB"
 msgstr "前期缓冲：%dKB/%dKB"
 
-#: Plugins/Input/mpg123/mpg123.c:954
+#: Plugins/Input/mpg123/mpg123.c:922
 msgid "About MPEG Audio Plugin"
 msgstr "关于 MPEG 插件"
 
-#: Plugins/Input/mpg123/mpg123.c:955
+#: Plugins/Input/mpg123/mpg123.c:923
 msgid ""
 "Audacious decoding engine by William Pitcock <nenolod@nenolod.net>, derived "
 "from:\n"
@@ -2565,7 +2528,7 @@ msgid ""
 "Based on the original XMMS plugin."
 msgstr ""
 
-#: Plugins/Input/mpg123/mpg123.c:993
+#: Plugins/Input/mpg123/mpg123.c:961
 msgid "MPEG Audio Plugin"
 msgstr "MPEG 音频插件"
 
@@ -2648,53 +2611,53 @@ msgstr "音调生成器："
 msgid "Tone Generator %s"
 msgstr "音调生成器 %s"
 
-#: Plugins/Input/vorbis/configure.c:202
+#: Plugins/Input/vorbis/configure.c:118
 msgid "Select the directory where you want to store the Ogg Vorbis streams:"
 msgstr "请选择一个目录用来存放您的 Ogg Vorbis 流文件："
 
-#: Plugins/Input/vorbis/configure.c:296
+#: Plugins/Input/vorbis/configure.c:208
 msgid "Ogg Vorbis Audio Plugin Configuration"
 msgstr "Ogg Vorbis 音频插件配置"
 
-#: Plugins/Input/vorbis/configure.c:485
+#: Plugins/Input/vorbis/configure.c:306
 msgid "Ogg Vorbis Tags:"
 msgstr "Ogg Vorbis 标记："
 
-#: Plugins/Input/vorbis/configure.c:494
+#: Plugins/Input/vorbis/configure.c:315
 #, fuzzy
 msgid "Convert non-UTF8 Vorbis tags to UTF8"
 msgstr "将非 UTF-8 ID3 标签转换成 UTF-8"
 
-#: Plugins/Input/vorbis/configure.c:507
+#: Plugins/Input/vorbis/configure.c:328
 #, fuzzy
 msgid "Vorbis encoding:"
 msgstr "ID3 编码："
 
-#: Plugins/Input/vorbis/configure.c:549
+#: Plugins/Input/vorbis/configure.c:370
 msgid "ReplayGain Settings:"
 msgstr "ReplayGain 设定："
 
-#: Plugins/Input/vorbis/configure.c:557
+#: Plugins/Input/vorbis/configure.c:378
 msgid "Enable Clipping Prevention"
 msgstr "启用爆音防护"
 
-#: Plugins/Input/vorbis/configure.c:562
+#: Plugins/Input/vorbis/configure.c:383
 msgid "Enable ReplayGain"
 msgstr "启动 ReplayGain"
 
-#: Plugins/Input/vorbis/configure.c:567
+#: Plugins/Input/vorbis/configure.c:388
 msgid "ReplayGain Type:"
 msgstr "ReplayGain 类型："
 
-#: Plugins/Input/vorbis/configure.c:578
+#: Plugins/Input/vorbis/configure.c:399
 msgid "use Track Gain/Peak"
 msgstr "使用音轨增益/峰值"
 
-#: Plugins/Input/vorbis/configure.c:588
+#: Plugins/Input/vorbis/configure.c:409
 msgid "use Album Gain/Peak"
 msgstr "使用专辑增益/峰值"
 
-#: Plugins/Input/vorbis/configure.c:600
+#: Plugins/Input/vorbis/configure.c:421
 msgid "Enable 6dB Boost + Hard Limiting"
 msgstr "启用 6 dB 推进 + 硬极限"
 
@@ -2784,6 +2747,11 @@ msgstr "%d Kbit/s (额定)"
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
+
+#: Plugins/Input/vorbis/fileinfo.c:958
+#, c-format
+msgid "%d"
+msgstr "%d"
 
 #: Plugins/Input/vorbis/fileinfo.c:960
 #, c-format
@@ -3053,7 +3021,7 @@ msgid "OSS Driver configuration"
 msgstr "OSS 驱动程序配置"
 
 #: Plugins/Output/OSS/configure.c:215 Plugins/Output/alsa/configure.c:288
-#: Plugins/Output/sun/configure.c:183
+#: Plugins/Output/sun/configure.c:182
 msgid "Audio device:"
 msgstr "音频设备："
 
@@ -3062,21 +3030,21 @@ msgid "Use alternate device:"
 msgstr "使用替代设备："
 
 #: Plugins/Output/OSS/configure.c:258 Plugins/Output/alsa/configure.c:333
-#: Plugins/Output/sun/configure.c:220
+#: Plugins/Output/sun/configure.c:219
 msgid "Mixer device:"
 msgstr "混音设备："
 
-#: Plugins/Output/OSS/configure.c:300 Plugins/Output/sun/configure.c:248
+#: Plugins/Output/OSS/configure.c:300 Plugins/Output/sun/configure.c:247
 msgid "Devices"
 msgstr "设备"
 
-#: Plugins/Output/OSS/configure.c:315 Plugins/Output/arts/configure.c:75
-#: Plugins/Output/esd/configure.c:184 Plugins/Output/sun/configure.c:272
+#: Plugins/Output/OSS/configure.c:315 Plugins/Output/arts/configure.c:74
+#: Plugins/Output/esd/configure.c:184 Plugins/Output/sun/configure.c:271
 msgid "Buffer size (ms):"
 msgstr "缓冲区大小 (ms)："
 
-#: Plugins/Output/OSS/configure.c:340 Plugins/Output/arts/configure.c:85
-#: Plugins/Output/esd/configure.c:209 Plugins/Output/sun/configure.c:304
+#: Plugins/Output/OSS/configure.c:340 Plugins/Output/arts/configure.c:84
+#: Plugins/Output/esd/configure.c:209 Plugins/Output/sun/configure.c:303
 msgid "Buffering"
 msgstr "缓冲"
 
@@ -3088,7 +3056,7 @@ msgstr "混音器设定："
 msgid "Volume controls Master not PCM"
 msgstr "主音量控制不是 PCM"
 
-#: Plugins/Output/OSS/configure.c:353 Plugins/Output/sun/configure.c:394
+#: Plugins/Output/OSS/configure.c:353 Plugins/Output/sun/configure.c:393
 msgid "Mixer"
 msgstr "混音器"
 
@@ -3184,7 +3152,7 @@ msgstr "周期大小 (ms)："
 msgid "Audacious:"
 msgstr "关于 MPEG 插件"
 
-#: Plugins/Output/arts/configure.c:52
+#: Plugins/Output/arts/configure.c:51
 #, fuzzy
 msgid "aRts Driver configuration"
 msgstr "OSS 驱动程序配置"
@@ -3257,6 +3225,10 @@ msgstr ""
 msgid "ESD Output Plugin configuration"
 msgstr "ESD 输出插件配置"
 
+#: Plugins/Output/esd/configure.c:114 Plugins/Output/esd/configure.c:144
+msgid "Host:"
+msgstr "主机名："
+
 #: Plugins/Output/esd/configure.c:125
 msgid "Use remote host"
 msgstr "使用远程主机"
@@ -3264,6 +3236,10 @@ msgstr "使用远程主机"
 #: Plugins/Output/esd/configure.c:132
 msgid "Volume controls OSS mixer"
 msgstr "音量控制 OSS 混音器"
+
+#: Plugins/Output/esd/configure.c:153
+msgid "Port:"
+msgstr "端口："
 
 #: Plugins/Output/esd/configure.c:169
 msgid "Server"
@@ -3273,12 +3249,12 @@ msgstr "服务器"
 msgid "eSound Output Plugin"
 msgstr "eSound 输出插件"
 
-#: Plugins/Output/jack/jack.c:575
+#: Plugins/Output/jack/jack.c:572
 #, fuzzy
 msgid "About JACK Output Plugin 0.15"
 msgstr "ALSA 输出插件 %s"
 
-#: Plugins/Output/jack/jack.c:576
+#: Plugins/Output/jack/jack.c:573
 msgid ""
 "XMMS jack Driver 0.15\n"
 "\n"
@@ -3306,23 +3282,23 @@ msgstr ""
 " 版权所有 (c) 2001 CubeSoft Communications, Inc.\n"
 "维护者：<vedge at csoft.org>.\n"
 
-#: Plugins/Output/sun/configure.c:201
+#: Plugins/Output/sun/configure.c:200
 msgid "Audio control device:"
 msgstr "音频控制设备："
 
-#: Plugins/Output/sun/configure.c:350
+#: Plugins/Output/sun/configure.c:349
 msgid "Volume controls device:"
 msgstr "音量控制设备："
 
-#: Plugins/Output/sun/configure.c:363
+#: Plugins/Output/sun/configure.c:362
 msgid "XMMS uses mixer exclusively."
 msgstr "XMMS 用户专有混音器"
 
-#: Plugins/Output/sun/configure.c:488
+#: Plugins/Output/sun/configure.c:487
 msgid "Status"
 msgstr "状况"
 
-#: Plugins/Output/sun/configure.c:538
+#: Plugins/Output/sun/configure.c:537
 msgid "Sun driver configuration"
 msgstr "Sun 驱动程序配置"
 
@@ -3355,12 +3331,12 @@ msgstr "柔化范围： 颜色选择"
 msgid "Options:"
 msgstr "选项："
 
-#: audacious/about.c:122 audacious/credits.c:290
+#: audacious/about.c:125 audacious/credits.c:292
 #, fuzzy
 msgid "About Audacious"
 msgstr "关于 MPEG 插件"
 
-#: audacious/about.c:171 audacious/credits.c:335
+#: audacious/about.c:174 audacious/credits.c:337
 msgid "Credits"
 msgstr "致谢"
 
@@ -3382,367 +3358,372 @@ msgstr ""
 msgid "Audacious core developers:"
 msgstr "BMP 首选项"
 
-#: audacious/credits.c:52 audacious/credits.c:60 audacious/credits.c:65
+#: audacious/credits.c:52 audacious/credits.c:61 audacious/credits.c:66
 msgid "George Averill"
 msgstr ""
 
-#: audacious/credits.c:53 audacious/credits.c:72
+#: audacious/credits.c:53 audacious/credits.c:73
 msgid "Giacomo Lozito"
 msgstr ""
 
-#: audacious/credits.c:54 audacious/credits.c:66 audacious/credits.c:73
-#: audacious/credits.c:79
+#: audacious/credits.c:54 audacious/credits.c:67 audacious/credits.c:74
+#: audacious/credits.c:80
 msgid "William Pitcock"
 msgstr ""
 
-#: audacious/credits.c:55 audacious/credits.c:74
+#: audacious/credits.c:55 audacious/credits.c:75
 msgid "Derek Pomery"
 msgstr ""
 
-#: audacious/credits.c:56 audacious/credits.c:75 audacious/credits.c:81
+#: audacious/credits.c:56 audacious/credits.c:76 audacious/credits.c:82
+#: audacious/credits.c:132
 msgid "Tony Vroon"
 msgstr ""
 
-#: audacious/credits.c:59
+#: audacious/credits.c:57
+msgid "Yoshiki Yazawa"
+msgstr ""
+
+#: audacious/credits.c:60
 msgid "Graphics:"
 msgstr ""
 
-#: audacious/credits.c:61
+#: audacious/credits.c:62
 msgid "Stephan Sokolow"
 msgstr ""
 
-#: audacious/credits.c:64
+#: audacious/credits.c:65
 msgid "Default skin:"
 msgstr "默认皮肤："
 
-#: audacious/credits.c:69
+#: audacious/credits.c:70
 msgid "Plugin development:"
 msgstr ""
 
-#: audacious/credits.c:70
+#: audacious/credits.c:71
 msgid "Kiyoshi Aman"
 msgstr ""
 
-#: audacious/credits.c:71
+#: audacious/credits.c:72
 msgid "Shay Green"
 msgstr ""
 
-#: audacious/credits.c:78
+#: audacious/credits.c:79
 #, fuzzy
 msgid "0.1.x developers:"
 msgstr "开发者："
 
-#: audacious/credits.c:80
+#: audacious/credits.c:81
 msgid "Mohammed Sameer"
 msgstr ""
 
-#: audacious/credits.c:84
+#: audacious/credits.c:85
 #, fuzzy
 msgid "BMP Developers:"
 msgstr "开发者："
 
-#: audacious/credits.c:85
+#: audacious/credits.c:86
 msgid "Artem Baguinski"
 msgstr ""
 
-#: audacious/credits.c:86 audacious/credits.c:193
+#: audacious/credits.c:87 audacious/credits.c:195
 msgid "Edward Brocklesby"
 msgstr ""
 
-#: audacious/credits.c:87 audacious/credits.c:123
+#: audacious/credits.c:88 audacious/credits.c:124
 msgid "Chong Kai Xiong"
 msgstr "Chong Kai Xiong 张凯雄"
 
-#: audacious/credits.c:88
+#: audacious/credits.c:89
 msgid "Milosz Derezynski"
 msgstr ""
 
-#: audacious/credits.c:89
+#: audacious/credits.c:90
 msgid "David Lau"
 msgstr ""
 
-#: audacious/credits.c:90
+#: audacious/credits.c:91
 msgid "Ole Andre Vadla Ravnaas"
 msgstr ""
 
-#: audacious/credits.c:91
+#: audacious/credits.c:92
 msgid "Michiel Sikkes"
 msgstr ""
 
-#: audacious/credits.c:92
+#: audacious/credits.c:93
 msgid "Andrei Badea"
 msgstr ""
 
-#: audacious/credits.c:93
+#: audacious/credits.c:94
 msgid "Peter Behroozi"
 msgstr ""
 
-#: audacious/credits.c:94
+#: audacious/credits.c:95
 msgid "Bernard Blackham"
 msgstr ""
 
-#: audacious/credits.c:95
+#: audacious/credits.c:96
 msgid "Oliver Blin"
 msgstr ""
 
-#: audacious/credits.c:96
+#: audacious/credits.c:97
 msgid "Tomas Bzatek"
 msgstr ""
 
-#: audacious/credits.c:97 audacious/credits.c:173
+#: audacious/credits.c:98 audacious/credits.c:175
 msgid "Liviu Danicel"
 msgstr ""
 
-#: audacious/credits.c:98
+#: audacious/credits.c:99
 msgid "Jon Dowland"
 msgstr ""
 
-#: audacious/credits.c:99
+#: audacious/credits.c:100
 msgid "Artur Frysiak"
 msgstr ""
 
-#: audacious/credits.c:100
+#: audacious/credits.c:101
 msgid "Sebastian Kapfer"
 msgstr ""
 
-#: audacious/credits.c:101
+#: audacious/credits.c:102
 msgid "Lukas Koberstein"
 msgstr ""
 
-#: audacious/credits.c:102 audacious/credits.c:177
+#: audacious/credits.c:103 audacious/credits.c:179
 msgid "Dan Korostelev"
 msgstr ""
 
-#: audacious/credits.c:103
+#: audacious/credits.c:104
 msgid "Jolan Luff"
 msgstr ""
 
-#: audacious/credits.c:104
+#: audacious/credits.c:105
 msgid "Michael Marineau"
 msgstr ""
 
-#: audacious/credits.c:105
+#: audacious/credits.c:106
 msgid "Tim-Philipp Muller"
 msgstr ""
 
-#: audacious/credits.c:106
+#: audacious/credits.c:107
 msgid "Julien Portalier"
 msgstr ""
 
-#: audacious/credits.c:107
+#: audacious/credits.c:108
 msgid "Andrew Ruder"
 msgstr ""
 
-#: audacious/credits.c:108
+#: audacious/credits.c:109
 msgid "Olivier Samyn"
 msgstr ""
 
-#: audacious/credits.c:109
+#: audacious/credits.c:110
 msgid "Martijn Vernooij"
 msgstr ""
 
-#: audacious/credits.c:116
+#: audacious/credits.c:117
 msgid "Brazilian Portuguese:"
 msgstr "巴西葡萄牙语："
 
-#: audacious/credits.c:117
+#: audacious/credits.c:118
 msgid "Philipi Pinto"
 msgstr ""
 
-#: audacious/credits.c:119
+#: audacious/credits.c:120
 msgid "Breton:"
 msgstr "布列塔尼语："
 
-#: audacious/credits.c:120
+#: audacious/credits.c:121
 msgid "Thierry Vignaud"
 msgstr ""
 
-#: audacious/credits.c:122
+#: audacious/credits.c:123
 msgid "Chinese:"
 msgstr "中文："
 
-#: audacious/credits.c:124
+#: audacious/credits.c:125
 msgid "Chao-Hsiung Liao"
 msgstr ""
 
-#: audacious/credits.c:126
+#: audacious/credits.c:127
 msgid "Czech:"
 msgstr "捷克语："
 
-#: audacious/credits.c:127
+#: audacious/credits.c:128
 msgid "Jan Narovec"
 msgstr ""
 
-#: audacious/credits.c:129
+#: audacious/credits.c:130
 msgid "Dutch:"
 msgstr "荷兰语："
 
-#: audacious/credits.c:130
+#: audacious/credits.c:131
 msgid "Laurens Buhler"
 msgstr ""
 
-#: audacious/credits.c:132
+#: audacious/credits.c:134
 msgid "Finnish:"
 msgstr "芬兰语："
 
-#: audacious/credits.c:133
+#: audacious/credits.c:135
 msgid "Pauli Virtanen"
 msgstr ""
 
-#: audacious/credits.c:135
+#: audacious/credits.c:137
 msgid "French:"
 msgstr "法语："
 
-#: audacious/credits.c:136
+#: audacious/credits.c:138
 msgid "David Le Brun"
 msgstr ""
 
-#: audacious/credits.c:138
+#: audacious/credits.c:140
 msgid "German:"
 msgstr "德语："
 
-#: audacious/credits.c:139
+#: audacious/credits.c:141
 msgid "Matthias Debus"
 msgstr ""
 
-#: audacious/credits.c:141
+#: audacious/credits.c:143
 msgid "Georgian: "
 msgstr "乔治亚语："
 
-#: audacious/credits.c:142
+#: audacious/credits.c:144
 msgid "George Machitidze"
 msgstr ""
 
-#: audacious/credits.c:144
+#: audacious/credits.c:146
 msgid "Greek:"
 msgstr "希腊语："
 
-#: audacious/credits.c:145
+#: audacious/credits.c:147
 msgid "Kouzinopoulos Haris"
 msgstr ""
 
-#: audacious/credits.c:146
+#: audacious/credits.c:148
 msgid "Stavros Giannouris"
 msgstr ""
 
-#: audacious/credits.c:148
+#: audacious/credits.c:150
 msgid "Hindi:"
 msgstr ""
 
-#: audacious/credits.c:149
+#: audacious/credits.c:151
 msgid "Dhananjaya Sharma"
 msgstr ""
 
-#: audacious/credits.c:151
+#: audacious/credits.c:153
 msgid "Hungarian:"
 msgstr "匈牙利语："
 
-#: audacious/credits.c:152
+#: audacious/credits.c:154
 msgid "Laszlo Dvornik"
 msgstr ""
 
-#: audacious/credits.c:154
+#: audacious/credits.c:156
 msgid "Italian:"
 msgstr "意大利语："
 
-#: audacious/credits.c:155
+#: audacious/credits.c:157
 msgid "Alessio D'Ascanio"
 msgstr ""
 
-#: audacious/credits.c:157
+#: audacious/credits.c:159
 msgid "Japanese:"
 msgstr "日语："
 
-#: audacious/credits.c:158
+#: audacious/credits.c:160
 #, fuzzy
 msgid "Dai"
 msgstr "丹麦语："
 
-#: audacious/credits.c:160
+#: audacious/credits.c:162
 msgid "Korean:"
 msgstr "朝语："
 
-#: audacious/credits.c:161
+#: audacious/credits.c:163
 msgid "DongCheon Park"
 msgstr ""
 
-#: audacious/credits.c:163
+#: audacious/credits.c:165
 msgid "Lithuanian:"
 msgstr "立陶宛语："
 
-#: audacious/credits.c:164
+#: audacious/credits.c:166
 msgid "Rimas Kudelis"
 msgstr ""
 
-#: audacious/credits.c:166
+#: audacious/credits.c:168
 msgid "Macedonian:"
 msgstr "马其顿语："
 
-#: audacious/credits.c:167
+#: audacious/credits.c:169
 msgid "Arangel Angov"
 msgstr ""
 
-#: audacious/credits.c:169
+#: audacious/credits.c:171
 msgid "Polish:"
 msgstr "波兰语："
 
-#: audacious/credits.c:170
+#: audacious/credits.c:172
 msgid "Jacek Wolszczak"
 msgstr ""
 
-#: audacious/credits.c:172
+#: audacious/credits.c:174
 msgid "Romanian:"
 msgstr "罗马尼亚语："
 
-#: audacious/credits.c:175
+#: audacious/credits.c:177
 msgid "Russian:"
 msgstr "俄语："
 
-#: audacious/credits.c:176
+#: audacious/credits.c:178
 msgid "Pavlo Bohmat"
 msgstr ""
 
-#: audacious/credits.c:178
+#: audacious/credits.c:180
 msgid "Vitaly Lipatov"
 msgstr ""
 
-#: audacious/credits.c:180
+#: audacious/credits.c:182
 msgid "Slovak:"
 msgstr "斯洛伐克语："
 
-#: audacious/credits.c:181
+#: audacious/credits.c:183
 msgid "Pavel Kanzelsberger"
 msgstr ""
 
-#: audacious/credits.c:183
+#: audacious/credits.c:185
 msgid "Spanish:"
 msgstr "西班牙语："
 
-#: audacious/credits.c:184
-msgid "Francisco Javier F. Serrador"
+#: audacious/credits.c:186
+msgid "Gustavo D. Vranjes"
 msgstr ""
 
-#: audacious/credits.c:186
+#: audacious/credits.c:188
 msgid "Swedish:"
 msgstr "瑞典语："
 
-#: audacious/credits.c:187
+#: audacious/credits.c:189
 msgid "Martin Persenius"
 msgstr ""
 
-#: audacious/credits.c:189
+#: audacious/credits.c:191
 msgid "Ukrainian:"
 msgstr "乌克兰语："
 
-#: audacious/credits.c:190
+#: audacious/credits.c:192
 msgid "Mykola Lynnyk"
 msgstr ""
 
-#: audacious/credits.c:192
+#: audacious/credits.c:194
 msgid "Welsh:"
 msgstr "威尔斯语："
 
-#: audacious/credits.c:339
+#: audacious/credits.c:341
 msgid "Translators"
 msgstr "翻译者"
 
@@ -3790,121 +3771,121 @@ msgstr "14KHz"
 msgid "16KHZ"
 msgstr "16KHz"
 
-#: audacious/equalizer.c:126
+#: audacious/equalizer.c:129
 msgid "/Load"
 msgstr "/装入"
 
-#: audacious/equalizer.c:127
+#: audacious/equalizer.c:130
 msgid "/Load/Preset"
 msgstr "/装入/预设"
 
-#: audacious/equalizer.c:129
+#: audacious/equalizer.c:132
 msgid "/Load/Auto-load preset"
 msgstr "/装入/自动装入预设"
 
-#: audacious/equalizer.c:131
+#: audacious/equalizer.c:134
 msgid "/Load/Default"
 msgstr "/装入/默认"
 
-#: audacious/equalizer.c:134
+#: audacious/equalizer.c:137
 msgid "/Load/Zero"
 msgstr "/装入/归零"
 
-#: audacious/equalizer.c:137
+#: audacious/equalizer.c:140
 msgid "/Load/From file"
 msgstr "/装入/从文件"
 
-#: audacious/equalizer.c:139
+#: audacious/equalizer.c:142
 msgid "/Load/From WinAMP EQF file"
 msgstr "/装入/从 WinAMP EQF 文件"
 
-#: audacious/equalizer.c:141
+#: audacious/equalizer.c:144
 msgid "/Import"
 msgstr "/导入"
 
-#: audacious/equalizer.c:142
+#: audacious/equalizer.c:145
 msgid "/Import/WinAMP Presets"
 msgstr "/导入/WinAMP 预设"
 
-#: audacious/equalizer.c:144
+#: audacious/equalizer.c:147
 msgid "/Save"
 msgstr "/保存"
 
-#: audacious/equalizer.c:145
+#: audacious/equalizer.c:148
 msgid "/Save/Preset"
 msgstr "/保存/预设"
 
-#: audacious/equalizer.c:147
+#: audacious/equalizer.c:150
 msgid "/Save/Auto-load preset"
 msgstr "/保存/自动读取预设"
 
-#: audacious/equalizer.c:149
+#: audacious/equalizer.c:152
 msgid "/Save/Default"
 msgstr "/保存/默认"
 
-#: audacious/equalizer.c:152
+#: audacious/equalizer.c:155
 msgid "/Save/To file"
 msgstr "/保存/到文件"
 
-#: audacious/equalizer.c:154
+#: audacious/equalizer.c:157
 msgid "/Save/To WinAMP EQF file"
 msgstr "/保存/到 WinAMP EQF 文件"
 
-#: audacious/equalizer.c:156
+#: audacious/equalizer.c:159
 msgid "/Delete"
 msgstr "/删除"
 
-#: audacious/equalizer.c:157
+#: audacious/equalizer.c:160
 msgid "/Delete/Preset"
 msgstr "/删除/预设"
 
-#: audacious/equalizer.c:159
+#: audacious/equalizer.c:162
 msgid "/Delete/Auto-load preset"
 msgstr "/删除/自动读取预设"
 
-#: audacious/equalizer.c:741
+#: audacious/equalizer.c:748
 #, fuzzy
 msgid "Audacious Equalizer"
 msgstr "/卷起均衡器"
 
-#: audacious/equalizer.c:1392
+#: audacious/equalizer.c:1401
 msgid "Preset"
 msgstr "预设"
 
-#: audacious/equalizer.c:1437
+#: audacious/equalizer.c:1446
 msgid "Presets"
 msgstr "预设"
 
-#: audacious/equalizer.c:1501
+#: audacious/equalizer.c:1510
 msgid "Load preset"
 msgstr "读取预设"
 
-#: audacious/equalizer.c:1517
+#: audacious/equalizer.c:1526
 msgid "Load auto-preset"
 msgstr "读取自动预设"
 
-#: audacious/equalizer.c:1543 audacious/equalizer.c:1549
-#: audacious/equalizer.c:1556
+#: audacious/equalizer.c:1552 audacious/equalizer.c:1558
+#: audacious/equalizer.c:1565
 msgid "Load equalizer preset"
 msgstr "读取均衡器预设"
 
-#: audacious/equalizer.c:1565
+#: audacious/equalizer.c:1574
 msgid "Save preset"
 msgstr "保存预设"
 
-#: audacious/equalizer.c:1585
+#: audacious/equalizer.c:1594
 msgid "Save auto-preset"
 msgstr "保存自动预设"
 
-#: audacious/equalizer.c:1620 audacious/equalizer.c:1639
+#: audacious/equalizer.c:1629 audacious/equalizer.c:1648
 msgid "Save equalizer preset"
 msgstr "保存均衡器预设"
 
-#: audacious/equalizer.c:1648
+#: audacious/equalizer.c:1657
 msgid "Delete preset"
 msgstr "删除预设"
 
-#: audacious/equalizer.c:1666
+#: audacious/equalizer.c:1675
 msgid "Delete auto-preset"
 msgstr "删除自动预设"
 
@@ -3991,8 +3972,8 @@ msgstr "不要再显示这警告"
 msgid "Show more _details"
 msgstr "显示更多细节(_d)"
 
-#: audacious/input.c:342 audacious/prefswin.c:107 audacious/prefswin.c:456
-#: audacious/prefswin.c:544 audacious/prefswin.c:633 audacious/prefswin.c:729
+#: audacious/input.c:342 audacious/prefswin.c:111 audacious/prefswin.c:472
+#: audacious/prefswin.c:560 audacious/prefswin.c:649 audacious/prefswin.c:745
 msgid "Filename"
 msgstr "文件名"
 
@@ -4015,19 +3996,19 @@ msgstr "输入插件：%s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "无法创建日志文件 (%s)！\n"
 
-#: audacious/main.c:84 audacious/main.c:86 audacious/mainwin.c:803
-#: audacious/mainwin.c:3246
+#: audacious/main.c:83 audacious/main.c:85 audacious/mainwin.c:806
+#: audacious/mainwin.c:3256
 msgid "Audacious"
 msgstr ""
 
-#: audacious/main.c:391
+#: audacious/main.c:395
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr ""
 "新建目录 %s 失败\n"
 "错误：%s"
 
-#: audacious/main.c:652
+#: audacious/main.c:664
 #, fuzzy
 msgid ""
 "Usage: audacious [options] [files] ...\n"
@@ -4040,65 +4021,65 @@ msgstr ""
 "选项：\n"
 "———\n"
 
-#: audacious/main.c:657
+#: audacious/main.c:669
 msgid "Display this text and exit"
 msgstr "显示文字并退出"
 
-#: audacious/main.c:660
+#: audacious/main.c:672
 #, fuzzy
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "选择 BMP/XMMS 会话 (默认：0)"
 
-#: audacious/main.c:663
+#: audacious/main.c:675
 msgid "Skip backwards in playlist"
 msgstr "在播放列表中向后跳"
 
-#: audacious/main.c:666
+#: audacious/main.c:678
 msgid "Start playing current playlist"
 msgstr "开始播放现有列表"
 
-#: audacious/main.c:669
+#: audacious/main.c:681
 msgid "Pause current song"
 msgstr "暂停当前歌曲"
 
-#: audacious/main.c:672
+#: audacious/main.c:684
 msgid "Stop current song"
 msgstr "停止当前歌曲"
 
-#: audacious/main.c:675
+#: audacious/main.c:687
 msgid "Pause if playing, play otherwise"
 msgstr "如正播放则暂停，否则播放"
 
-#: audacious/main.c:678
+#: audacious/main.c:690
 msgid "Skip forward in playlist"
 msgstr "在播放列表中向前跳"
 
-#: audacious/main.c:681
+#: audacious/main.c:693
 msgid "Don't clear the playlist"
 msgstr "不要清除播放列表"
 
-#: audacious/main.c:684
+#: audacious/main.c:696
 msgid "Show the main window"
 msgstr "显示主窗口"
 
-#: audacious/main.c:687
+#: audacious/main.c:699
 #, fuzzy
 msgid "Activate Audacious"
 msgstr "激活 BMP"
 
-#: audacious/main.c:690
+#: audacious/main.c:702
 msgid "Previous session ID"
 msgstr "以往连接 ID"
 
-#: audacious/main.c:693
+#: audacious/main.c:705
 msgid "Headless operation [experimental]"
 msgstr ""
 
-#: audacious/main.c:696
+#: audacious/main.c:708
 msgid "Print version number and exit\n"
 msgstr "显示版本号并退出\n"
 
-#: audacious/main.c:875
+#: audacious/main.c:887
 #, fuzzy
 msgid ""
 "\n"
@@ -4115,7 +4096,7 @@ msgstr ""
 "址是：beepmp-devel@lists.sourceforge.net\n"
 "\n"
 
-#: audacious/main.c:898
+#: audacious/main.c:910
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -4127,7 +4108,7 @@ msgstr ""
 "\n"
 "请检查设在'%s'的皮肤是可用的，并且确保默认皮肤也已正确安装到'%s'。\n"
 
-#: audacious/main.c:945
+#: audacious/main.c:957
 #, fuzzy, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -4136,7 +4117,7 @@ msgstr ""
 "抱歉，您的 GTK+ 版本(%d.%d.%d)不能和BMP 一起工作。\n"
 "请使用 GTK+ %s 或以后的版本。\n"
 
-#: audacious/main.c:956
+#: audacious/main.c:968
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -4149,387 +4130,387 @@ msgstr ""
 "如果你原本使用 libc5 的 Linux 并且装了 GLIB & GTK+ \n"
 "之后又安装了 LinuxThreads，请重新编译 GLIB & GTK+。\n"
 
-#: audacious/main.c:972
+#: audacious/main.c:984
 #, fuzzy
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "BMP: 无法打开显示器，即将退出。"
 
-#: audacious/mainwin.c:248 audacious/mainwin.c:369 audacious/ui_playlist.c:123
+#: audacious/mainwin.c:251 audacious/mainwin.c:372 audacious/ui_playlist.c:126
 msgid "/View Track Details"
 msgstr "/查看音轨信息"
 
-#: audacious/mainwin.c:250 audacious/mainwin.c:364
+#: audacious/mainwin.c:253 audacious/mainwin.c:367
 msgid "/Jump to File"
 msgstr "/跳到文件"
 
-#: audacious/mainwin.c:253
+#: audacious/mainwin.c:256
 msgid "/Autoscroll Songname"
 msgstr "/自动卷动歌名"
 
-#: audacious/mainwin.c:255 audacious/mainwin.c:347
+#: audacious/mainwin.c:258 audacious/mainwin.c:350
 #, fuzzy
 msgid "/Stop After Current Song"
 msgstr "停止当前歌曲"
 
-#: audacious/mainwin.c:265
+#: audacious/mainwin.c:268
 msgid "/Visualization Mode"
 msgstr "/视觉化模式"
 
-#: audacious/mainwin.c:266
+#: audacious/mainwin.c:269
 msgid "/Visualization Mode/Analyzer"
 msgstr "/视觉化模式/分析器"
 
-#: audacious/mainwin.c:268
+#: audacious/mainwin.c:271
 msgid "/Visualization Mode/Scope"
 msgstr "/视觉化模式/示波器"
 
-#: audacious/mainwin.c:270
+#: audacious/mainwin.c:273
 msgid "/Visualization Mode/Off"
 msgstr "/视觉化模式/关闭"
 
-#: audacious/mainwin.c:272
+#: audacious/mainwin.c:275
 msgid "/Analyzer Mode"
 msgstr "/分析器模式"
 
-#: audacious/mainwin.c:273
+#: audacious/mainwin.c:276
 msgid "/Analyzer Mode/Normal"
 msgstr "/分析器模式/正常"
 
-#: audacious/mainwin.c:275
+#: audacious/mainwin.c:278
 msgid "/Analyzer Mode/Fire"
 msgstr "/分析器模式/火焰"
 
-#: audacious/mainwin.c:277
+#: audacious/mainwin.c:280
 msgid "/Analyzer Mode/Vertical Lines"
 msgstr "/分析器模式/垂直线"
 
-#: audacious/mainwin.c:280
+#: audacious/mainwin.c:283
 msgid "/Analyzer Mode/Lines"
 msgstr "/分析器模式/线段"
 
-#: audacious/mainwin.c:282
+#: audacious/mainwin.c:285
 msgid "/Analyzer Mode/Bars"
 msgstr "/分析器模式/条状"
 
-#: audacious/mainwin.c:285
+#: audacious/mainwin.c:288
 msgid "/Analyzer Mode/Peaks"
 msgstr "/分析器模式/山峰"
 
-#: audacious/mainwin.c:287
+#: audacious/mainwin.c:290
 msgid "/Scope Mode"
 msgstr "/示波器模式"
 
-#: audacious/mainwin.c:288
+#: audacious/mainwin.c:291
 msgid "/Scope Mode/Dot Scope"
 msgstr "/示波器模式/点检查器"
 
-#: audacious/mainwin.c:290
+#: audacious/mainwin.c:293
 msgid "/Scope Mode/Line Scope"
 msgstr "/示波器模式/现检查器"
 
-#: audacious/mainwin.c:292
+#: audacious/mainwin.c:295
 msgid "/Scope Mode/Solid Scope"
 msgstr "/示波器模式/固体检查器"
 
-#: audacious/mainwin.c:294
+#: audacious/mainwin.c:297
 msgid "/WindowShade VU Mode"
 msgstr "/窗口阴影 VU 模式"
 
-#: audacious/mainwin.c:295
+#: audacious/mainwin.c:298
 msgid "/WindowShade VU Mode/Normal"
 msgstr "/窗口阴影 VU 模式/正常"
 
-#: audacious/mainwin.c:297
+#: audacious/mainwin.c:300
 msgid "/WindowShade VU Mode/Smooth"
 msgstr "/窗口阴影 VU 模式/平滑"
 
-#: audacious/mainwin.c:299
+#: audacious/mainwin.c:302
 msgid "/Refresh Rate"
 msgstr "/刷新率"
 
-#: audacious/mainwin.c:300
+#: audacious/mainwin.c:303
 msgid "/Refresh Rate/Full (~50 fps)"
 msgstr "/刷新率/全速(约 50 fps)"
 
-#: audacious/mainwin.c:302
+#: audacious/mainwin.c:305
 msgid "/Refresh Rate/Half (~25 fps)"
 msgstr "/刷新率/一半(约 25 fps)"
 
-#: audacious/mainwin.c:304
+#: audacious/mainwin.c:307
 msgid "/Refresh Rate/Quarter (~13 fps)"
 msgstr "/刷新率/四分之一(约 13 fps)"
 
-#: audacious/mainwin.c:306
+#: audacious/mainwin.c:309
 msgid "/Refresh Rate/Eighth (~6 fps)"
 msgstr "/刷新率/八分之一(约 6 fps)"
 
-#: audacious/mainwin.c:308
+#: audacious/mainwin.c:311
 msgid "/Analyzer Falloff"
 msgstr "/分析器消散"
 
-#: audacious/mainwin.c:309
+#: audacious/mainwin.c:312
 msgid "/Analyzer Falloff/Slowest"
 msgstr "/分析器消散/最慢"
 
-#: audacious/mainwin.c:311
+#: audacious/mainwin.c:314
 msgid "/Analyzer Falloff/Slow"
 msgstr "/分析器消散/慢"
 
-#: audacious/mainwin.c:313
+#: audacious/mainwin.c:316
 msgid "/Analyzer Falloff/Medium"
 msgstr "/分析器消散/中等"
 
-#: audacious/mainwin.c:315
+#: audacious/mainwin.c:318
 msgid "/Analyzer Falloff/Fast"
 msgstr "/分析器消散/快"
 
-#: audacious/mainwin.c:317
+#: audacious/mainwin.c:320
 msgid "/Analyzer Falloff/Fastest"
 msgstr "/分析器消散/最快"
 
-#: audacious/mainwin.c:319
+#: audacious/mainwin.c:322
 msgid "/Peaks Falloff"
 msgstr "/顶点消散"
 
-#: audacious/mainwin.c:320
+#: audacious/mainwin.c:323
 msgid "/Peaks Falloff/Slowest"
 msgstr "/顶点消散/最慢"
 
-#: audacious/mainwin.c:322
+#: audacious/mainwin.c:325
 msgid "/Peaks Falloff/Slow"
 msgstr "/顶点消散/慢"
 
-#: audacious/mainwin.c:324
+#: audacious/mainwin.c:327
 msgid "/Peaks Falloff/Medium"
 msgstr "/顶点消散/不温不火"
 
-#: audacious/mainwin.c:326
+#: audacious/mainwin.c:329
 msgid "/Peaks Falloff/Fast"
 msgstr "/顶点消散/快"
 
-#: audacious/mainwin.c:328
+#: audacious/mainwin.c:331
 msgid "/Peaks Falloff/Fastest"
 msgstr "/顶点消散/最快"
 
-#: audacious/mainwin.c:338
+#: audacious/mainwin.c:341
 msgid "/Play CD"
 msgstr "/播放 CD"
 
-#: audacious/mainwin.c:341
+#: audacious/mainwin.c:344
 msgid "/Repeat"
 msgstr "/重复播放"
 
-#: audacious/mainwin.c:343
+#: audacious/mainwin.c:346
 msgid "/Shuffle"
 msgstr "/乱序播放"
 
-#: audacious/mainwin.c:345
+#: audacious/mainwin.c:348
 msgid "/No Playlist Advance"
 msgstr "/不允许播放列表快进"
 
-#: audacious/mainwin.c:350
+#: audacious/mainwin.c:353
 msgid "/Play"
 msgstr "/播放"
 
-#: audacious/mainwin.c:352
+#: audacious/mainwin.c:355
 msgid "/Pause"
 msgstr "/暂停"
 
-#: audacious/mainwin.c:354
+#: audacious/mainwin.c:357
 msgid "/Stop"
 msgstr "/停止"
 
-#: audacious/mainwin.c:356
+#: audacious/mainwin.c:359
 msgid "/Previous"
 msgstr "/前一首"
 
-#: audacious/mainwin.c:358
+#: audacious/mainwin.c:361
 msgid "/Next"
 msgstr "/下一曲"
 
-#: audacious/mainwin.c:361
+#: audacious/mainwin.c:364
 msgid "/Jump to Playlist Start"
 msgstr "/跳到列表最前"
 
-#: audacious/mainwin.c:366
+#: audacious/mainwin.c:369
 msgid "/Jump to Time"
 msgstr "/跳到特定时间"
 
-#: audacious/mainwin.c:379
+#: audacious/mainwin.c:382
 #, fuzzy
 msgid "/About Audacious"
 msgstr "关于 MPEG 插件"
 
-#: audacious/mainwin.c:382
+#: audacious/mainwin.c:385
 #, fuzzy
 msgid "/Play File"
 msgstr "播放文件"
 
-#: audacious/mainwin.c:384
+#: audacious/mainwin.c:387
 msgid "/Play Location"
 msgstr "/播放位置"
 
-#: audacious/mainwin.c:387
+#: audacious/mainwin.c:390
 #, fuzzy
 msgid "/V_isualization"
 msgstr "/视觉化模式"
 
-#: audacious/mainwin.c:388
+#: audacious/mainwin.c:391
 #, fuzzy
 msgid "/_Playback"
 msgstr "/播放"
 
-#: audacious/mainwin.c:389
+#: audacious/mainwin.c:392
 msgid "/_View"
 msgstr "/显示(_V)"
 
-#: audacious/mainwin.c:391
+#: audacious/mainwin.c:394
 msgid "/Preferences"
 msgstr "/首选项"
 
-#: audacious/mainwin.c:393
+#: audacious/mainwin.c:396
 msgid "/_Quit"
 msgstr "/退出(_Q)"
 
-#: audacious/mainwin.c:403
+#: audacious/mainwin.c:406
 msgid "/Files..."
 msgstr "/文件..."
 
-#: audacious/mainwin.c:405
+#: audacious/mainwin.c:408
 msgid "/Internet location..."
 msgstr "/网址..."
 
-#: audacious/mainwin.c:415
+#: audacious/mainwin.c:418
 msgid "/Show Playlist Editor"
 msgstr "/显示播放列表"
 
-#: audacious/mainwin.c:417
+#: audacious/mainwin.c:420
 msgid "/Show Equalizer"
 msgstr "/显示均衡器"
 
-#: audacious/mainwin.c:420
+#: audacious/mainwin.c:423
 msgid "/Time Elapsed"
 msgstr "/已过时间"
 
-#: audacious/mainwin.c:422
+#: audacious/mainwin.c:425
 msgid "/Time Remaining"
 msgstr "/剩余时间"
 
-#: audacious/mainwin.c:425
+#: audacious/mainwin.c:428
 msgid "/Always On Top"
 msgstr "/永远在上层"
 
-#: audacious/mainwin.c:427
+#: audacious/mainwin.c:430
 msgid "/Put on All Workspaces"
 msgstr "/放在全部工作区上"
 
-#: audacious/mainwin.c:430
+#: audacious/mainwin.c:433
 msgid "/Roll up Player"
 msgstr "/卷起播放机"
 
-#: audacious/mainwin.c:432
+#: audacious/mainwin.c:435
 msgid "/Roll up Playlist Editor"
 msgstr "/卷起播放列表"
 
-#: audacious/mainwin.c:434
+#: audacious/mainwin.c:437
 msgid "/Roll up Equalizer"
 msgstr "/卷起均衡器"
 
-#: audacious/mainwin.c:861
+#: audacious/mainwin.c:863
 msgid "VBR"
 msgstr "可变位数率"
 
-#: audacious/mainwin.c:901
+#: audacious/mainwin.c:904 audacious/mainwin.c:908
 #, fuzzy
 msgid "stereo"
 msgstr "立体声"
 
-#: audacious/mainwin.c:901
+#: audacious/mainwin.c:904 audacious/mainwin.c:908
 #, fuzzy
 msgid "mono"
 msgstr "单声"
 
-#: audacious/mainwin.c:1350
+#: audacious/mainwin.c:1358
 msgid "Jump to Time"
 msgstr "跳到特定时间"
 
-#: audacious/mainwin.c:1371
+#: audacious/mainwin.c:1379
 msgid "minutes:seconds"
 msgstr "分:秒"
 
-#: audacious/mainwin.c:1381
+#: audacious/mainwin.c:1389
 msgid "Track length:"
 msgstr "音轨长度："
 
-#: audacious/mainwin.c:1469
+#: audacious/mainwin.c:1477
 msgid "Un_queue"
 msgstr "不排队(_q)"
 
-#: audacious/mainwin.c:1471 audacious/mainwin.c:1794
+#: audacious/mainwin.c:1479 audacious/mainwin.c:1804
 msgid "_Queue"
 msgstr "排队(_Q)"
 
-#: audacious/mainwin.c:1724
+#: audacious/mainwin.c:1732
 msgid "Jump to Track"
 msgstr "跳到音轨"
 
-#: audacious/mainwin.c:1763
+#: audacious/mainwin.c:1773
 msgid "Filter: "
 msgstr "过滤: "
 
-#: audacious/mainwin.c:1977
+#: audacious/mainwin.c:1987
 msgid "Enter location to play:"
 msgstr "输入要播放的位置："
 
-#: audacious/mainwin.c:2182
+#: audacious/mainwin.c:2192
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "搜寻：%d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2214 audacious/mainwin.c:2893
+#: audacious/mainwin.c:2224 audacious/mainwin.c:2903
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "音量：%d%%"
 
-#: audacious/mainwin.c:2245 audacious/mainwin.c:2896
+#: audacious/mainwin.c:2255 audacious/mainwin.c:2906
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "平衡：%d%% 左"
 
-#: audacious/mainwin.c:2249 audacious/mainwin.c:2899
+#: audacious/mainwin.c:2259 audacious/mainwin.c:2909
 msgid "BALANCE: CENTER"
 msgstr "平衡：中心"
 
-#: audacious/mainwin.c:2253 audacious/mainwin.c:2901
+#: audacious/mainwin.c:2263 audacious/mainwin.c:2911
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "平衡：%d%% 右"
 
-#: audacious/mainwin.c:2674
+#: audacious/mainwin.c:2684
 msgid "OPTIONS MENU"
 msgstr "选项菜单"
 
-#: audacious/mainwin.c:2678
+#: audacious/mainwin.c:2688
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "取消永远在最上层"
 
-#: audacious/mainwin.c:2680
+#: audacious/mainwin.c:2690
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "永远在最上层"
 
-#: audacious/mainwin.c:2683
+#: audacious/mainwin.c:2693
 msgid "FILE INFO BOX"
 msgstr "文件信息框"
 
-#: audacious/mainwin.c:2686
+#: audacious/mainwin.c:2696
 msgid "** DOUBLESIZE HAS BEEN REMOVED **"
 msgstr "＊＊双倍大小功能已经被删除＊＊"
 
-#: audacious/mainwin.c:2689
+#: audacious/mainwin.c:2699
 msgid "VISUALIZATION MENU"
 msgstr "可视效果菜单"
 
-#: audacious/mainwin.c:2734
+#: audacious/mainwin.c:2744
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -4539,7 +4520,7 @@ msgstr ""
 "\n"
 "没有放入 CD，或者放入的不是音频·CD。\n"
 
-#: audacious/mainwin.c:2751
+#: audacious/mainwin.c:2761
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -4554,73 +4535,81 @@ msgstr ""
 "2. 没有其他的程式正在使用音效卡。\n"
 "3. 您的音效卡有正常驱动。\n"
 
-#: audacious/prefswin.c:92 audacious/glade/prefswin.glade:1520
+#: audacious/prefswin.c:95 audacious/glade/prefswin.glade:1632
 msgid "Appearance"
 msgstr "外观"
 
-#: audacious/prefswin.c:93 audacious/glade/prefswin.glade:3066
+#: audacious/prefswin.c:96
+msgid "Connectivity"
+msgstr ""
+
+#: audacious/prefswin.c:97 audacious/glade/prefswin.glade:3178
 msgid "Equalizer"
 msgstr "均衡器"
 
-#: audacious/prefswin.c:94 audacious/glade/prefswin.glade:1838
+#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1950
 msgid "Mouse"
 msgstr "鼠标"
 
-#: audacious/prefswin.c:95 audacious/glade/prefswin.glade:2659
+#: audacious/prefswin.c:99 audacious/glade/prefswin.glade:2771
 msgid "Playlist"
 msgstr "播放列表"
 
-#: audacious/prefswin.c:96 audacious/glade/prefswin.glade:936
+#: audacious/prefswin.c:100 audacious/glade/prefswin.glade:936
 msgid "Plugins"
 msgstr "插件"
 
-#: audacious/prefswin.c:102
+#: audacious/prefswin.c:106
 msgid "Artist"
 msgstr "艺术家"
 
-#: audacious/prefswin.c:103 libaudacious/titlestring.c:325
+#: audacious/prefswin.c:107 libaudacious/titlestring.c:325
 msgid "Album"
 msgstr "专辑"
 
-#: audacious/prefswin.c:105
+#: audacious/prefswin.c:109
 msgid "Tracknumber"
 msgstr "音轨编号"
 
-#: audacious/prefswin.c:106 libaudacious/titlestring.c:326
+#: audacious/prefswin.c:110 libaudacious/titlestring.c:326
 msgid "Genre"
 msgstr "风格"
 
-#: audacious/prefswin.c:108
+#: audacious/prefswin.c:112
 msgid "Filepath"
 msgstr "文件路径"
 
-#: audacious/prefswin.c:109 libaudacious/titlestring.c:332
+#: audacious/prefswin.c:113 libaudacious/titlestring.c:332
 msgid "Date"
 msgstr "日期"
 
-#: audacious/prefswin.c:110 libaudacious/titlestring.c:333
+#: audacious/prefswin.c:114 libaudacious/titlestring.c:333
 msgid "Year"
 msgstr "年份"
 
-#: audacious/prefswin.c:111 libaudacious/titlestring.c:334
+#: audacious/prefswin.c:115 libaudacious/titlestring.c:334
 msgid "Comment"
 msgstr "备注"
 
-#: audacious/prefswin.c:426 audacious/prefswin.c:513 audacious/prefswin.c:602
-#: audacious/prefswin.c:698
-msgid "Enabled"
-msgstr "启用"
+#: audacious/prefswin.c:127
+msgid "localhost"
+msgstr ""
 
 #: audacious/prefswin.c:442 audacious/prefswin.c:529 audacious/prefswin.c:618
 #: audacious/prefswin.c:714
+msgid "Enabled"
+msgstr "启用"
+
+#: audacious/prefswin.c:458 audacious/prefswin.c:545 audacious/prefswin.c:634
+#: audacious/prefswin.c:730
 msgid "Description"
 msgstr "描述"
 
-#: audacious/prefswin.c:1519
+#: audacious/prefswin.c:1745
 msgid "Category"
 msgstr "项目"
 
-#: audacious/prefswin.c:1693
+#: audacious/prefswin.c:1940
 msgid "Preferences Window"
 msgstr "首选项"
 
@@ -4632,149 +4621,154 @@ msgstr ""
 msgid "Unarchived Winamp 2.x skin"
 msgstr ""
 
-#: audacious/ui_playlist.c:129 audacious/ui_playlist.c:194
+#: audacious/ui_playlist.c:132 audacious/ui_playlist.c:197
 msgid "/Remove Selected"
 msgstr "/删除选中"
 
-#: audacious/ui_playlist.c:133 audacious/ui_playlist.c:190
+#: audacious/ui_playlist.c:136 audacious/ui_playlist.c:193
 msgid "/Remove Unselected"
 msgstr "/删除选择以外"
 
-#: audacious/ui_playlist.c:137 audacious/ui_playlist.c:186
+#: audacious/ui_playlist.c:140 audacious/ui_playlist.c:189
 msgid "/Remove All"
 msgstr "/删除全部"
 
-#: audacious/ui_playlist.c:143
+#: audacious/ui_playlist.c:146
 msgid "/Queue Toggle"
 msgstr "/排队切换"
 
-#: audacious/ui_playlist.c:149
+#: audacious/ui_playlist.c:152
 msgid "/Add CD..."
 msgstr "/添加 CD。。。"
 
-#: audacious/ui_playlist.c:153
+#: audacious/ui_playlist.c:156
 msgid "/Add Internet Address..."
 msgstr "/添加网址。。。"
 
-#: audacious/ui_playlist.c:157
+#: audacious/ui_playlist.c:160
 msgid "/Add Files..."
 msgstr "/添加文件。。。"
 
-#: audacious/ui_playlist.c:163
+#: audacious/ui_playlist.c:166
 msgid "/Clear Queue"
 msgstr "/清除队列"
 
-#: audacious/ui_playlist.c:169
+#: audacious/ui_playlist.c:172
 msgid "/Remove Unavailable Files"
 msgstr "/移除不存在的文件"
 
-#: audacious/ui_playlist.c:173
+#: audacious/ui_playlist.c:176
 #, fuzzy
 msgid "/Remove Duplicates"
 msgstr "/删除选中"
 
-#: audacious/ui_playlist.c:174
+#: audacious/ui_playlist.c:177
 #, fuzzy
 msgid "/Remove Duplicates/By Title"
 msgstr "/排序列表/按曲名排序"
 
-#: audacious/ui_playlist.c:177
+#: audacious/ui_playlist.c:180
 #, fuzzy
 msgid "/Remove Duplicates/By Filename"
 msgstr "/排序列表/按文件名排序"
 
-#: audacious/ui_playlist.c:180
+#: audacious/ui_playlist.c:183
 #, fuzzy
 msgid "/Remove Duplicates/By Path + Filename"
 msgstr "/排序列表/按路径+文件名排序"
 
-#: audacious/ui_playlist.c:200
+#: audacious/ui_playlist.c:203
 msgid "/New List"
 msgstr "/新建列表"
 
-#: audacious/ui_playlist.c:206
+#: audacious/ui_playlist.c:209
 msgid "/Load List"
 msgstr "/打开列表"
 
-#: audacious/ui_playlist.c:210
+#: audacious/ui_playlist.c:213
 msgid "/Save List"
 msgstr "/保存列表"
 
-#: audacious/ui_playlist.c:216
+#: audacious/ui_playlist.c:217
+#, fuzzy
+msgid "/Save Default List"
+msgstr "/保存/默认"
+
+#: audacious/ui_playlist.c:223
 msgid "/Update View"
 msgstr "/更新视图"
 
-#: audacious/ui_playlist.c:222
+#: audacious/ui_playlist.c:229
 msgid "/Invert Selection"
 msgstr "/反转选择"
 
-#: audacious/ui_playlist.c:228
+#: audacious/ui_playlist.c:235
 msgid "/Select None"
 msgstr "/全部不选"
 
-#: audacious/ui_playlist.c:232
+#: audacious/ui_playlist.c:239
 msgid "/Select All"
 msgstr "/全部选中"
 
-#: audacious/ui_playlist.c:238
+#: audacious/ui_playlist.c:245
 msgid "/Randomize List"
 msgstr "/打乱列表"
 
-#: audacious/ui_playlist.c:240
+#: audacious/ui_playlist.c:247
 msgid "/Reverse List"
 msgstr "/反转列表"
 
-#: audacious/ui_playlist.c:243
+#: audacious/ui_playlist.c:250
 msgid "/Sort List"
 msgstr "/排序列表"
 
-#: audacious/ui_playlist.c:244
+#: audacious/ui_playlist.c:251
 msgid "/Sort List/By Title"
 msgstr "/排序列表/按曲名排序"
 
-#: audacious/ui_playlist.c:246
+#: audacious/ui_playlist.c:253
 msgid "/Sort List/By Filename"
 msgstr "/排序列表/按文件名排序"
 
-#: audacious/ui_playlist.c:248
+#: audacious/ui_playlist.c:255
 msgid "/Sort List/By Path + Filename"
 msgstr "/排序列表/按路径+文件名排序"
 
-#: audacious/ui_playlist.c:250
+#: audacious/ui_playlist.c:257
 msgid "/Sort List/By Date"
 msgstr "/排序列表/按日期排序"
 
-#: audacious/ui_playlist.c:252
+#: audacious/ui_playlist.c:259
 msgid "/Sort Selection"
 msgstr "/排序选择"
 
-#: audacious/ui_playlist.c:253
+#: audacious/ui_playlist.c:260
 msgid "/Sort Selection/By Title"
 msgstr "/排序选择/按曲名排序"
 
-#: audacious/ui_playlist.c:255
+#: audacious/ui_playlist.c:262
 msgid "/Sort Selection/By Filename"
 msgstr "/排序选择/按文件名排序"
 
-#: audacious/ui_playlist.c:257
+#: audacious/ui_playlist.c:264
 msgid "/Sort Selection/By Path + Filename"
 msgstr "/排序选择/按路径+文件名排序"
 
-#: audacious/ui_playlist.c:259
+#: audacious/ui_playlist.c:266
 msgid "/Sort Selection/By Date"
 msgstr "/排序选择/按日期排序"
 
-#: audacious/ui_playlist.c:779
+#: audacious/ui_playlist.c:787
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "写入播放列表“%s”：%s 出错"
 
-#: audacious/ui_playlist.c:800
+#: audacious/ui_playlist.c:808
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s 已经存在。继续？"
 
-#: audacious/ui_playlist.c:814
+#: audacious/ui_playlist.c:822
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -4784,15 +4778,15 @@ msgstr ""
 "无法保存播放列表！\n"
 "未知文件类型 %s\n"
 
-#: audacious/ui_playlist.c:924
+#: audacious/ui_playlist.c:932
 msgid "Load Playlist"
 msgstr "装入播放列表"
 
-#: audacious/ui_playlist.c:936
+#: audacious/ui_playlist.c:944
 msgid "Save Playlist"
 msgstr "保存播放列表"
 
-#: audacious/ui_playlist.c:1639
+#: audacious/ui_playlist.c:1648
 #, fuzzy
 msgid "Audacious Playlist Editor"
 msgstr "/显示播放列表"
@@ -4801,19 +4795,19 @@ msgstr "/显示播放列表"
 msgid "Add/Open Files dialog"
 msgstr "打开/添加文件的会话"
 
-#: audacious/util.c:984
+#: audacious/util.c:982
 msgid "Open Files"
 msgstr "打开文件"
 
-#: audacious/util.c:988
+#: audacious/util.c:986
 msgid "Close dialog on Open"
 msgstr "打开后关闭对话"
 
-#: audacious/util.c:1000 audacious/glade/addfiles.glade:8
+#: audacious/util.c:996 audacious/glade/addfiles.glade:8
 msgid "Add Files"
 msgstr "添加文件"
 
-#: audacious/util.c:1004
+#: audacious/util.c:1000
 msgid "Close dialog on Add"
 msgstr "添加后关闭对话"
 
@@ -4926,141 +4920,169 @@ msgstr "选择主窗口字体："
 msgid "Select playlist font:"
 msgstr "选择播放列表字体："
 
-#: audacious/glade/prefswin.glade:1346
+#: audacious/glade/prefswin.glade:1345
+msgid ""
+"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
+"strings."
+msgstr ""
+
+#: audacious/glade/prefswin.glade:1347
 #, fuzzy
 msgid "Use Bitmap fonts if available"
 msgstr "立体声（如果有的话）"
 
-#: audacious/glade/prefswin.glade:1380
+#: audacious/glade/prefswin.glade:1381
 msgid "<b>_Miscellaneous</b>"
 msgstr "<b>杂项(_M)</b>"
 
-#: audacious/glade/prefswin.glade:1428
+#: audacious/glade/prefswin.glade:1429
 msgid "Show track numbers in playlist"
 msgstr "在播放列表中显示编号"
 
-#: audacious/glade/prefswin.glade:1476
+#: audacious/glade/prefswin.glade:1464
+#, fuzzy
+msgid "Show separators in playlist"
+msgstr "在播放列表中显示编号"
+
+#: audacious/glade/prefswin.glade:1499
 msgid "Use custom cursors"
 msgstr "使用自定光标"
 
-#: audacious/glade/prefswin.glade:1549
+#: audacious/glade/prefswin.glade:1546
+#, fuzzy
+msgid "<b>_Transparency</b>"
+msgstr "<b>播放</b>"
+
+#: audacious/glade/prefswin.glade:1586
+msgid ""
+"Enables playlist transparency. This is not recommended for slower machines "
+"as it requires some CPU time to create and cache the pixmaps used for the "
+"transparency."
+msgstr ""
+
+#: audacious/glade/prefswin.glade:1588
+#, fuzzy
+msgid "Enable playlist transparency"
+msgstr "启动 ReplayGain"
+
+#: audacious/glade/prefswin.glade:1661
 msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
 msgstr "<span size=\"xx-large\"><b>鼠标</b></span>"
 
-#: audacious/glade/prefswin.glade:1604
+#: audacious/glade/prefswin.glade:1716
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>鼠标滚轮</b>"
 
-#: audacious/glade/prefswin.glade:1652
+#: audacious/glade/prefswin.glade:1764
 msgid "Changes volume by"
 msgstr "调节音量"
 
-#: audacious/glade/prefswin.glade:1680
+#: audacious/glade/prefswin.glade:1792
 msgid "percent"
 msgstr "%"
 
-#: audacious/glade/prefswin.glade:1708
+#: audacious/glade/prefswin.glade:1820
 msgid "Scrolls playlist by"
 msgstr "列表滑动"
 
-#: audacious/glade/prefswin.glade:1761
+#: audacious/glade/prefswin.glade:1873
 msgid "lines"
 msgstr "行"
 
-#: audacious/glade/prefswin.glade:1867
+#: audacious/glade/prefswin.glade:1979
 msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
 msgstr "<span size=\"xx-large\"><b>播放列表</b></span>"
 
-#: audacious/glade/prefswin.glade:1922
+#: audacious/glade/prefswin.glade:2034
 msgid "<b>Filename</b>"
 msgstr "<b>文件名</b>"
 
-#: audacious/glade/prefswin.glade:1962
+#: audacious/glade/prefswin.glade:2074
 msgid "Convert underscores to blanks"
 msgstr "将下划线转换成空格"
 
-#: audacious/glade/prefswin.glade:1997
+#: audacious/glade/prefswin.glade:2109
 msgid "Convert %20 to blanks"
 msgstr "将 %20 转换成空格"
 
-#: audacious/glade/prefswin.glade:2031
+#: audacious/glade/prefswin.glade:2143
 msgid "<b>Metadata</b>"
 msgstr "<b>元数据</b>"
 
-#: audacious/glade/prefswin.glade:2070
+#: audacious/glade/prefswin.glade:2182
 msgid "Load metadata (tag information) from music files."
 msgstr "从文件中获取元素据。"
 
-#: audacious/glade/prefswin.glade:2072
+#: audacious/glade/prefswin.glade:2184
 msgid "Load metadata from playlists and files"
 msgstr "使用播放列表中的元数据"
 
-#: audacious/glade/prefswin.glade:2110
+#: audacious/glade/prefswin.glade:2222
 msgid "Load metadata when adding the file to the playlist or opening it"
 msgstr "打开文件或者把文件加入列表时加载原数据"
 
-#: audacious/glade/prefswin.glade:2112
+#: audacious/glade/prefswin.glade:2224
 msgid "On load"
 msgstr "装入时"
 
-#: audacious/glade/prefswin.glade:2132
+#: audacious/glade/prefswin.glade:2244
 msgid "Load metadata on demand when displaying the file in the playlist"
 msgstr "当歌曲在播放列表中可见时读取原数据"
 
-#: audacious/glade/prefswin.glade:2134
+#: audacious/glade/prefswin.glade:2246
 msgid "On display"
 msgstr "显示时"
 
-#: audacious/glade/prefswin.glade:2176
+#: audacious/glade/prefswin.glade:2288
 msgid "<b>Playback</b>"
 msgstr "<b>播放</b>"
 
-#: audacious/glade/prefswin.glade:2215
+#: audacious/glade/prefswin.glade:2327
 msgid "When finished playing a song, don't automatically advance to the next."
 msgstr "歌曲播完后，不要自动快进。"
 
-#: audacious/glade/prefswin.glade:2217
+#: audacious/glade/prefswin.glade:2329
 msgid "Don't advance in the playlist"
 msgstr "不允许列表快进"
 
-#: audacious/glade/prefswin.glade:2252
+#: audacious/glade/prefswin.glade:2364
 msgid "Pause between songs"
 msgstr "在歌曲之间暂停"
 
-#: audacious/glade/prefswin.glade:2290
+#: audacious/glade/prefswin.glade:2402
 msgid "Pause for"
 msgstr "暂停"
 
-#: audacious/glade/prefswin.glade:2336
+#: audacious/glade/prefswin.glade:2448
 msgid "seconds"
 msgstr "秒"
 
-#: audacious/glade/prefswin.glade:2382
+#: audacious/glade/prefswin.glade:2494
 #, fuzzy
 msgid "<b>File Dialog</b>"
 msgstr "<b>文件名</b>"
 
-#: audacious/glade/prefswin.glade:2421
+#: audacious/glade/prefswin.glade:2533
 msgid ""
 "Always refresh the file dialog (this will slow opening the dialog on large "
 "directories, and Gnome VFS should handle automatically)."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2423
+#: audacious/glade/prefswin.glade:2535
 msgid ""
 "Always refresh directory when opening file dialog, should be unneeded with "
 "Gnome VFS."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2457
+#: audacious/glade/prefswin.glade:2569
 msgid "<b>Song display</b>"
 msgstr "<b>歌曲显示</b>"
 
-#: audacious/glade/prefswin.glade:2533
+#: audacious/glade/prefswin.glade:2645
 msgid "Custom string:"
 msgstr "自定格式："
 
-#: audacious/glade/prefswin.glade:2584
+#: audacious/glade/prefswin.glade:2696
 #, fuzzy
 msgid ""
 "TITLE\n"
@@ -5077,29 +5099,71 @@ msgstr ""
 "专辑 － 曲名\n"
 "自定"
 
-#: audacious/glade/prefswin.glade:2606
+#: audacious/glade/prefswin.glade:2718
 msgid "Show information about titlestring format"
 msgstr "显示标题格式信息"
 
-#: audacious/glade/prefswin.glade:2688
+#: audacious/glade/prefswin.glade:2800
 msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
 msgstr "<span size=\"xx-large\"><b>均衡器</b></span>"
 
-#: audacious/glade/prefswin.glade:2743
+#: audacious/glade/prefswin.glade:2855
 msgid "<b>Presets</b>"
 msgstr "<b>预设</b>"
 
-#: audacious/glade/prefswin.glade:2855
+#: audacious/glade/prefswin.glade:2967
 msgid "Directory preset file:"
 msgstr "目录预设文件："
 
-#: audacious/glade/prefswin.glade:2883
+#: audacious/glade/prefswin.glade:2995
 msgid "File preset extension:"
 msgstr "文件预设扩展名："
 
-#: audacious/glade/prefswin.glade:2931
+#: audacious/glade/prefswin.glade:3043
 msgid "Available _Presets:"
 msgstr "可用预设："
+
+#: audacious/glade/prefswin.glade:3207
+#, fuzzy
+msgid "<span size=\"xx-large\"><b>Connectivity</b></span>"
+msgstr "<span size=\"xx-large\"><b>鼠标</b></span>"
+
+#: audacious/glade/prefswin.glade:3262
+#, fuzzy
+msgid "<b>Proxy Configuration</b>"
+msgstr "MikMod 配置"
+
+#: audacious/glade/prefswin.glade:3320
+msgid "Enable proxy usage"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:3351
+msgid "Proxy hostname:"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:3379
+#, fuzzy
+msgid "Proxy port:"
+msgstr "代理服务器："
+
+#: audacious/glade/prefswin.glade:3473
+#, fuzzy
+msgid "Use authentication with proxy"
+msgstr "使用身份验证"
+
+#: audacious/glade/prefswin.glade:3504
+#, fuzzy
+msgid "Proxy username:"
+msgstr "使用者名称："
+
+#: audacious/glade/prefswin.glade:3532
+#, fuzzy
+msgid "Proxy password:"
+msgstr "口令："
+
+#: audacious/glade/prefswin.glade:3637
+msgid "label65"
+msgstr ""
 
 #: libaudacious/titlestring.c:324
 msgid "Performer/Artist"
@@ -5128,6 +5192,19 @@ msgstr "音轨编号"
 #: libaudacious/titlestring.c:385
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: 如果 %n 元素存在，显示“...”"
+
+#~ msgid "Use proxy"
+#~ msgstr "使用代理服务器"
+
+#~ msgid "Frames:"
+#~ msgstr "帧数："
+
+#~ msgid ""
+#~ "Variable,\n"
+#~ "avg. bitrate: %d KBit/s"
+#~ msgstr ""
+#~ "位速率：可变，\n"
+#~ "平均位速率：%d kb/s"
 
 #~ msgid ""
 #~ "%s\n"
@@ -6159,9 +6236,6 @@ msgstr "%{n:...%}: 如果 %n 元素存在，显示“...”"
 #~ msgstr ""
 #~ "%d 帧\n"
 #~ "文件大小：%lu B"
-
-#~ msgid "Couldn't connect to host %s:%d"
-#~ msgstr "无法连结到主机 %s:%d"
 
 #~ msgid "About MPEG Layer 1/2/3 plugin"
 #~ msgstr "关于 MPEG Layer 1/2/3 播放器"
