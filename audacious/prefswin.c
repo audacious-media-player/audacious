@@ -1882,16 +1882,21 @@ on_chardet_detector_cbox_realize(GtkComboBox *combobox, gpointer data)
     gchar *ret=NULL;
     guint i=0,index=0;
 
+    for(i=0; i<n_chardet_detector_presets; i++) {
+        gtk_combo_box_append_text(combobox, chardet_detector_presets[i]);
+    }
+
     db = bmp_cfg_db_open();
     if(bmp_cfg_db_get_string(db, NULL, "chardet_detector", &ret) != FALSE) {
         for(i=0; i<n_chardet_detector_presets; i++) {
-            gtk_combo_box_append_text(combobox, chardet_detector_presets[i]);
             if(!strcmp(chardet_detector_presets[i], ret)) {
                 cfg.chardet_detector = (char *)chardet_detector_presets[i];
                 index = i;
             }
         }
     }
+    bmp_cfg_db_close(db);
+
 #ifdef USE_CHARDET
     gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), index);
     gtk_widget_set_sensitive(GTK_WIDGET(data), 1);
