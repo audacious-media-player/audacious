@@ -968,7 +968,7 @@ InputPlugin mpgdec_ip = {
     stop,
     do_pause,
     seek,
-    mpgdec_set_eq,
+    NULL,
     get_time,
     NULL, NULL,
     cleanup,
