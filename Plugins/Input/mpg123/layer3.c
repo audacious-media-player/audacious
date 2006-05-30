@@ -1825,27 +1825,6 @@ mpgdec_do_layer3(struct frame *fr)
             }
         }
 
-#ifdef XMMS_EQ
-        if (mpgdec_info->eq_active) {
-            int i, sb;
-            
-            if (single < 0) {
-                for (sb = 0, i = 0; sb < SBLIMIT; sb++) {
-                    for (ss = 0; ss < SSLIMIT; ss++) {
-                        hybridIn[0][sb][ss] *= mpgdec_info->eq_mul[i];
-                        hybridIn[1][sb][ss] *= mpgdec_info->eq_mul[i++];
-                    }
-                }
-            }
-            else {
-                for (sb = 0, i = 0; sb < SBLIMIT; sb++) {
-                    for (ss = 0; ss < SSLIMIT; ss++)
-                        hybridIn[0][sb][ss] *= mpgdec_info->eq_mul[i++];
-                }
-            }
-        }
-#endif
-        
         for (ch = 0; ch < stereo1; ch++) {
             struct gr_info_s *gr_info = &(sideinfo.ch[ch].gr[gr]);
 
