@@ -173,6 +173,9 @@ void echo3d(gint16 *data, int datasize)
     leftc = left1 / 9 + right2 /8  + left3 / 8;
     rightc = right1 / 11 + left2 / 9 + right3 / 10;
 
+    left = left0p;
+    right = right0p;
+
     l0 = leftc + left0 / 2;
     r0 = rightc + right0 / 2;
 
@@ -206,8 +209,8 @@ void echo3d(gint16 *data, int datasize)
     l1 = l0; r1 = r0;
     ls1 = ls; rs1 = rs;
 
-    left  = 0 + lharm0 - lharmb / 32768;
-    right = 0 + rharm0 - rharmb / 32768;
+    left  = 0 + lharm0 - lharmb / 32768 + left;
+    right = 0 + rharm0 - rharmb / 32768 + right;
 
     left0p = left0;
     right0p = right0;
