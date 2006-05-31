@@ -28,7 +28,7 @@
 #include "mp4ffint.h"
 #include <stdlib.h>
 
-int32_t mp4ff_read_data(mp4ff_t *f, int8_t *data, uint32_t size)
+int32_t mp4ff_read_data(mp4ff_t *f, uint8_t *data, uint32_t size)
 {
     int32_t result = 1;
 
@@ -44,7 +44,7 @@ int32_t mp4ff_truncate(mp4ff_t * f)
 	return f->stream->truncate(f->stream->user_data);
 }
 
-int32_t mp4ff_write_data(mp4ff_t *f, int8_t *data, uint32_t size)
+int32_t mp4ff_write_data(mp4ff_t *f, uint8_t *data, uint32_t size)
 {
     int32_t result = 1;
 
