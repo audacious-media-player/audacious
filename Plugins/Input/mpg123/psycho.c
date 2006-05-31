@@ -54,7 +54,7 @@ void psycho_init(void)
     echo_level = echo_sfactor = 0;
     stereo_level = stereo_sfactor = 16;
     filter_level = 3;
-    feedback_level = 30;
+    feedback_level = 15;
     harmonics_level = harmonics_sfactor = 30;
 
     bext_sfactor = (float)(((float)16384 * 10) / (float)(bext_level + 1)) + (float)(102 - bext_level) * 128;
