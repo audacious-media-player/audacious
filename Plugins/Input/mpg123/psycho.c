@@ -27,15 +27,11 @@
 #include "common.h"
 
 int bext_level;
-int echo_level;
 int stereo_level;
 int filter_level;
-int feedback_level;
 int harmonics_level;
 int bext_sfactor;
-int echo_sfactor;
 int stereo_sfactor;
-int feedback_sfactor;
 int harmonics_sfactor;
 int enable_plugin = 1;
 int lsine[65536];
@@ -51,14 +47,11 @@ void psycho_init(void)
     double rsum;
 
     bext_level = 28;
-    echo_level = echo_sfactor = 0;
     stereo_level = stereo_sfactor = 16;
     filter_level = 3;
-    feedback_level = 15;
     harmonics_level = harmonics_sfactor = 30;
 
     bext_sfactor = (float)(((float)16384 * 10) / (float)(bext_level + 1)) + (float)(102 - bext_level) * 128;
-    feedback_sfactor = (feedback_level * 3) / 2;
 
 #define COND 0
     /* calculate sinetables */
@@ -181,21 +174,11 @@ void echo3d(gint16 *data, int datasize)
     leftc = left1 / 9 + right2 /8  + left3 / 8;
     rightc = right1 / 11 + left2 / 9 + right3 / 10;
 
-    left = left0p + leftc * echo_sfactor / 16;
-    right = right0p + rightc * echo_sfactor / 16;
-
     l0 = leftc + left0 / 2;
     r0 = rightc + right0 / 2;
 
     ls = l0 + l1 + l2;	// do not reverb high frequencies (filter)
     rs = r0 + r1 + r2;  //
-
-    buf[bufPos++] = ls * feedback_sfactor / 256;
-    if (bufPos == BUF_SIZE)
-      bufPos = 0;
-    buf[bufPos++] = rs * feedback_sfactor / 256;
-    if (bufPos == BUF_SIZE)
-      bufPos = 0;
 
     // ************ add some extra even harmonics **********
     // ************ or rather specific nonlinearity
