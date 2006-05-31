@@ -46,7 +46,7 @@ void psycho_init(void)
     double lsum;
     double rsum;
 
-    bext_level = 28;
+    bext_level = 34;
     stereo_level = stereo_sfactor = 16;
     filter_level = 3;
     harmonics_level = harmonics_sfactor = 43;
