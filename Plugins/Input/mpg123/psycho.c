@@ -51,7 +51,7 @@ void psycho_init(void)
     double rsum;
 
     bext_level = 28;
-    echo_level = echo_sfactor = 6;
+    echo_level = echo_sfactor = 0;
     stereo_level = stereo_sfactor = 16;
     filter_level = 3;
     feedback_level = 30;
