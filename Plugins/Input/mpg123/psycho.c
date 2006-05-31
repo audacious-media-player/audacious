@@ -98,7 +98,6 @@ void echo3d(gint16 *data, int datasize)
   static int lharmb = 0, rharmb = 0, lhfb = 0, rhfb = 0;
   int lharm0, rharm0;
   static gint16 buf[BUF_SIZE];
-  static int bufPos = BUF_SIZE - 1;
   static int bufPos1 = 1 + BUF_SIZE - DELAY1;
   static int bufPos2 = 1 + BUF_SIZE - DELAY1 - DELAY2;
   static int bufPos3 = 1 + BUF_SIZE - DELAY1 - DELAY2 - DELAY3;
@@ -207,8 +206,8 @@ void echo3d(gint16 *data, int datasize)
     l1 = l0; r1 = r0;
     ls1 = ls; rs1 = rs;
 
-    left  = 0 + lharm0 - lharmb / 32768	+ left;
-    right = 0 + rharm0 - rharmb / 32768	+ right;
+    left  = 0 + lharm0 - lharmb / 32768;
+    right = 0 + rharm0 - rharmb / 32768;
 
     left0p = left0;
     right0p = right0;
