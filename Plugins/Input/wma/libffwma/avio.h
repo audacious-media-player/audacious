@@ -165,5 +165,7 @@ extern URLProtocol tcp_protocol;
 /* http.c */
 extern URLProtocol http_protocol;
 
+extern URLProtocol mms_protocol;
+
 #endif
 

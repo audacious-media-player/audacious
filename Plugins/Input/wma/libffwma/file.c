@@ -23,6 +23,7 @@
 #include <sys/ioctl.h>
 #include <sys/time.h>
 #include "libaudacious/vfs.h"
+#include "mms.h"
 
 /* standard file protocol */
 
@@ -128,5 +129,41 @@ URLProtocol pipe_protocol = {
     pipe_write,
     NULL,
     pipe_close,
+    NULL
+};
+
+/* new mms protocol stuff --nenolod */
+
+static int _mms_open(URLContext *h, const char *filename, int flags)
+{
+    mms_t *mms = mms_connect(filename);
+
+    if (mms == NULL)
+	return -ENOENT;
+
+    h->priv_data = (void *)mms;
+    return 0;
+}
+
+static int _mms_read(URLContext *h, unsigned char *buf, int size)
+{
+    mms_t *mms = (mms_t *) h->priv_data;
+    return mms_read(mms, buf, size);
+}
+
+static int _mms_close(URLContext *h)
+{
+    mms_t *mms = (mms_t *) h->priv_data;
+    mms_close(mms);
+    return 0;
+}
+
+URLProtocol mms_protocol = {
+    "mms",
+    _mms_open,
+    _mms_read,
+    NULL,
+    NULL,
+    _mms_close,
     NULL
 };

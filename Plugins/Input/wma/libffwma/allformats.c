@@ -28,4 +28,5 @@ void av_register_all(void)
     /* file protocols */
     register_protocol(&file_protocol);
     register_protocol(&pipe_protocol);
+    register_protocol(&mms_protocol);
 }
