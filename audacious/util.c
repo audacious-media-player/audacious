@@ -1443,9 +1443,9 @@ gchar *chardet_to_utf8(const gchar *str, gssize len,
 
 		ret = g_convert(str, len, "UTF-8", encoding, bytes_read, bytes_write, error);
 	}
-#endif
 
 fallback:
+#endif
 	if(!ret && cfg.chardet_fallback){
 		gchar **encs=NULL, **enc=NULL;
 		encs = g_strsplit_set(cfg.chardet_fallback, " ,:;|/", 0);
