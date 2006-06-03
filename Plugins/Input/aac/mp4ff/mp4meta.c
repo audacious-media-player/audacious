@@ -158,7 +158,7 @@ int32_t TrackToString(char** str, const uint16_t track, const uint16_t totalTrac
     return 0;
 }
 
-int32_t mp4ff_set_metadata_name(mp4ff_t *f, const uint8_t atom_type, char **name)
+int32_t mp4ff_set_metadata_name(mp4ff_t *f, const uint8_t atom_type, unsigned char **name)
 {
     char *tag_names[] = {
         "unknown", "title", "artist", "writer", "album",
@@ -186,7 +186,7 @@ int32_t mp4ff_set_metadata_name(mp4ff_t *f, const uint8_t atom_type, char **name
     default: tag_idx = 0; break;
     }
 
-	*name = strdup(tag_names[tag_idx]);
+	*name = (unsigned char*)strdup(tag_names[tag_idx]);
 
     return 0;
 }
@@ -196,10 +196,9 @@ int32_t mp4ff_parse_tag(mp4ff_t *f, const uint8_t parent_atom_type, const int32_
     uint8_t atom_type;
     uint8_t header_size = 0;
     uint64_t subsize, sumsize = 0;
-    char * name = NULL;
-	char * data = NULL;
-	uint32_t done = 0;
-
+    unsigned char * name = NULL;
+    unsigned char * data = NULL;
+    uint32_t done = 0;
 
     while (sumsize < size)
     {
@@ -280,7 +279,7 @@ int32_t mp4ff_parse_tag(mp4ff_t *f, const uint8_t parent_atom_type, const int32_
 		if (!done)
 		{
 			if (name == NULL) mp4ff_set_metadata_name(f, parent_atom_type, &name);
-			if (name) mp4ff_tag_add_field(&(f->tags), name, data);
+			if (name) mp4ff_tag_add_field(&(f->tags), (char*)name, (char*)data);
 		}
 
 		free(data);

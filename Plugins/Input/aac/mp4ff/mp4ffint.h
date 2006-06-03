@@ -238,10 +238,10 @@ uint32_t mp4ff_read_mp4_descr_length(mp4ff_t *f);
 int64_t mp4ff_position(const mp4ff_t *f);
 int32_t mp4ff_set_position(mp4ff_t *f, const int64_t position);
 int32_t mp4ff_truncate(mp4ff_t * f);
-char * mp4ff_read_string(mp4ff_t * f,uint32_t length);
+unsigned char * mp4ff_read_string(mp4ff_t * f,uint32_t length);
 
 /* mp4atom.c */
-int32_t mp4ff_atom_get_size(const int8_t *data);
+int32_t mp4ff_atom_get_size(const uint8_t *data);
 int32_t mp4ff_atom_compare(const int8_t a1, const int8_t b1, const int8_t c1, const int8_t d1,
                                   const int8_t a2, const int8_t b2, const int8_t c2, const int8_t d2);
 uint8_t mp4ff_atom_name_to_type(const int8_t a, const int8_t b, const int8_t c, const int8_t d);
@@ -272,7 +272,7 @@ int32_t mp4ff_set_sample_position(mp4ff_t *f, const int32_t track, const int32_t
 /* mp4meta.c */
 int32_t mp4ff_tag_add_field(mp4ff_metadata_t *tags, const char *item, const char *value);
 int32_t mp4ff_tag_set_field(mp4ff_metadata_t *tags, const char *item, const char *value);
-int32_t mp4ff_set_metadata_name(mp4ff_t *f, const uint8_t atom_type, char **name);
+int32_t mp4ff_set_metadata_name(mp4ff_t *f, const uint8_t atom_type, unsigned char **name);
 int32_t mp4ff_parse_tag(mp4ff_t *f, const uint8_t parent_atom_type, const int32_t size);
 int32_t mp4ff_meta_find_by_name(const mp4ff_t *f, const char *item, char **value);
 int32_t mp4ff_parse_metadata(mp4ff_t *f, const int32_t size);
