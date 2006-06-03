@@ -415,27 +415,6 @@ static int identify_file( gchar* path, tag_t tag )
 	return result;
 }
 
-static gint is_our_file( gchar* path )
-{
-	Audacious_Reader in;
-	tag_t tag;
-
-	printf("path: %s\n", path);
-
-	// extract the subsong id from the virtual path
-	gchar *_path = strchr(path, '?');
-
-	if (_path != NULL && *_path == '?')
-	{
-		*_path = '\0';
-		_path++;
-	}
-
-	printf("modified path: %s\n", path);
-
-	return !in.open( path ) && !in.read( tag, sizeof tag ) && identify_file( path, tag );
-}
-
 // Get info
 
 static int begin_get_info( const char* path, track_info_t* out )
@@ -567,6 +546,9 @@ void load_file( tag_t tag, Data_Reader& in, long rate, track_info_t* out, Emu* d
 	memcpy( &h, tag, tag_size );
 	if ( in.read( (char*) &h + tag_size, sizeof h - tag_size ) )
 		return;
+
+	if ( rate == 0 )
+		rate = 44100;
 	
 	Emu* local_emu = new Emu;
 	if ( !local_emu || local_emu->set_sample_rate( rate ) || local_emu->load( h, in ) )
@@ -576,7 +558,8 @@ void load_file( tag_t tag, Data_Reader& in, long rate, track_info_t* out, Emu* d
 	}
 	
 	emu = local_emu;
-	get_info_emu( *local_emu, out );
+	if (out != NULL)
+		get_info_emu( *local_emu, out );
 }
 
 static void play_file( char* path )
@@ -597,8 +580,6 @@ static void play_file( char* path )
 		_path++;
 		track = atoi(_path);
 	}
-
-	printf("path: %s\nsubsong: %d\n", path, track);
 
 	if ( in.open( path ) || in.read( tag, sizeof tag ) )
 		return;
@@ -692,6 +673,61 @@ static void console_pause(gshort p)
 static int get_time(void)
 {
 	return console_ip_is_going ? console_ip.output->output_time() : -1;
+}
+
+static gint is_our_file( gchar* path )
+{
+	Audacious_Reader in;
+	tag_t tag;
+
+	// extract the subsong id from the virtual path
+	gchar *path2 = g_strdup(path);
+	gchar *_path = strchr(path2, '?');
+	gboolean is_subsong = FALSE;
+	gint type;
+
+	if (_path != NULL && *_path == '?')
+	{
+		*_path = '\0';
+		_path++;
+		is_subsong = TRUE;
+	}
+
+	gint ret = !in.open( path2 ) && !in.read( tag, sizeof tag ) && (type = identify_file( path2, tag ));
+
+	if (ret == TRUE && is_subsong == FALSE)
+	{
+		if (type == type_spc || type == type_gym || type == type_vgm)
+		{
+			g_free(path2);
+			return ret;
+		}
+
+		// do subsong stuff here
+		ret = FALSE;			// dewire track 0 from this stuff
+
+		switch ( type )
+		{
+			case type_nsf: load_file( tag, in, 0, NULL, (Nsf_Emu*) 0 ); break;
+			case type_nsfe:load_file( tag, in, 0, NULL, (Nsfe_Emu*)0 ); break;
+			case type_gbs: load_file( tag, in, 0, NULL, (Gbs_Emu*) 0 ); break;
+			case type_gym: load_file( tag, in, 0, NULL, (Gym_Emu*) 0 ); break;
+			case type_vgm: load_file( tag, in, 0, NULL, (Vgm_Emu*) 0 ); break;
+			case type_spc: load_file( tag, in, 0, NULL, (Spc_Emu*) 0 ); break;
+		}
+
+		printf("number of tracks: %d\n", emu->track_count());
+
+		for (int i = 0; i < emu->track_count(); i++)
+		{
+			printf("path[%d]: %s?%d\n", i, path2, i);
+		}
+
+		unload_file();
+	}
+
+	g_free(path2);
+	return ret;
 }
 
 // Setup
