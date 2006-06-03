@@ -14,6 +14,7 @@
 #include "libaudacious/titlestring.h"
 extern "C" {
 #include "audacious/output.h"
+#include "audacious/playlist.h"
 }
 #include <string.h>
 #include <stdlib.h>
@@ -465,19 +466,30 @@ static void get_song_info( char* path, char** title, int* length )
 {
 	int track = 0; // to do: way to select other tracks
 	
+	// extract the subsong id from the virtual path
+	gchar *path2 = g_strdup(path);
+	gchar *_path = strchr(path2, '?');
+
+	if (_path != NULL && *_path == '?')
+	{
+		*_path = '\0';
+		_path++;
+		track = atoi(_path);
+	}
+
 	*length = -1;
 	*title = NULL;
 	Audacious_Reader in;
 	tag_t tag;
-	if ( in.open( path ) || in.read( tag, sizeof tag ) )
+	if ( in.open( path2 ) || in.read( tag, sizeof tag ) )
 		return;
 	
-	int type = identify_file( path, tag );
+	int type = identify_file( path2, tag );
 	if ( !type )
 		return;
 	
 	track_info_t info;
-	if ( begin_get_info( path, &info ) )
+	if ( begin_get_info( path2, &info ) )
 		return;
 	info.track = track;
 	
@@ -491,6 +503,8 @@ static void get_song_info( char* path, char** title, int* length )
 		case type_nsfe:get_info_t( tag, in, &info, (Nsfe_Emu::header_t*)0 ); break;
 	}
 	*title = end_get_info( info, length, 0 );
+
+	g_free(path2);
 }
 
 // Playback
@@ -572,7 +586,8 @@ static void play_file( char* path )
 	tag_t tag;
 
 	// extract the subsong id from the virtual path
-	gchar *_path = strchr(path, '?');
+	gchar *path2 = g_strdup(path);
+	gchar *_path = strchr(path2, '?');
 
 	if (_path != NULL && *_path == '?')
 	{
@@ -581,9 +596,9 @@ static void play_file( char* path )
 		track = atoi(_path);
 	}
 
-	if ( in.open( path ) || in.read( tag, sizeof tag ) )
+	if ( in.open( path2 ) || in.read( tag, sizeof tag ) )
 		return;
-	int type = identify_file( path, tag );
+	int type = identify_file( path2, tag );
 	
 	// setup info
 	long sample_rate = 44100;
@@ -593,7 +608,7 @@ static void play_file( char* path )
 		sample_rate = audcfg.resample_rate;
 	track_info_t info;
 	info.track = track;
-	if ( begin_get_info( path, &info ) )
+	if ( begin_get_info( path2, &info ) )
 		return;
 	
 	// load in emulator and get info
@@ -644,6 +659,7 @@ static void play_file( char* path )
 	track_emu.start_track( emu, track, length, !has_length );
 	console_ip_is_going = 1;
 	decode_thread = g_thread_create( play_loop_track, NULL, TRUE, NULL );
+	g_free(path2);
 }
 
 static void seek( gint time )
@@ -720,7 +736,11 @@ static gint is_our_file( gchar* path )
 
 		for (int i = 0; i < emu->track_count(); i++)
 		{
-			printf("path[%d]: %s?%d\n", i, path2, i);
+			gchar _buf[65535];
+			g_snprintf(_buf, 65535, "%s?%d", path2, i);
+
+			playlist_add_url(_buf);
+			
 		}
 
 		unload_file();
