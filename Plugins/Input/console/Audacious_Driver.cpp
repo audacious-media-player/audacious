@@ -404,7 +404,7 @@ static int identify_file( gchar* path, tag_t tag )
 	if ( g_str_has_suffix( path, ".gym" ) ) // to do: is pathname in unicode?
 		return type_gym;
 	// to do: trust suffix for all file types, avoiding having to look inside files?
-	
+
 	int result = type_none;
 	if ( !memcmp( tag, "SNES", 4 ) ) result = type_spc;
 	if ( !memcmp( tag, "NESM", 4 ) ) result = type_nsf;
@@ -419,6 +419,20 @@ static gint is_our_file( gchar* path )
 {
 	Audacious_Reader in;
 	tag_t tag;
+
+	printf("path: %s\n", path);
+
+	// extract the subsong id from the virtual path
+	gchar *_path = strchr(path, '?');
+
+	if (_path != NULL && *_path == '?')
+	{
+		*_path = '\0';
+		_path++;
+	}
+
+	printf("modified path: %s\n", path);
+
 	return !in.open( path ) && !in.read( tag, sizeof tag ) && identify_file( path, tag );
 }
 
@@ -573,6 +587,19 @@ static void play_file( char* path )
 	unload_file();
 	Audacious_Reader in;
 	tag_t tag;
+
+	// extract the subsong id from the virtual path
+	gchar *_path = strchr(path, '?');
+
+	if (_path != NULL && *_path == '?')
+	{
+		*_path = '\0';
+		_path++;
+		track = atoi(_path);
+	}
+
+	printf("path: %s\nsubsong: %d\n", path, track);
+
 	if ( in.open( path ) || in.read( tag, sizeof tag ) )
 		return;
 	int type = identify_file( path, tag );
