@@ -54,7 +54,7 @@ int getAACTrack(mp4ff_t *infile)
   printf("total-tracks: %d\n", numTracks);
   for(i=0; i<numTracks; i++){
     unsigned char*	buff = 0;
-    int			buff_size = 0;
+    unsigned int	buff_size = 0;
     mp4AudioSpecificConfig mp4ASC;
 
     printf("testing-track: %d\n", i);

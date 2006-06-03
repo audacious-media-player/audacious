@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-05-27 15:29-0500\n"
-"PO-Revision-Date: 2006-04-30 22:58+0100\n"
+"PO-Revision-Date: 2006-05-31 21:45+0100\n"
 "Last-Translator: Tony Vroon <chainsaw@gentoo.org>\n"
 "Language-Team: (not responsive)\n"
 "MIME-Version: 1.0\n"
@@ -2150,9 +2150,8 @@ msgid "Sampling Rate"
 msgstr "Sample rate:"
 
 #: Plugins/Input/modplug/gui/interface.cpp:232
-#, fuzzy
 msgid "48 kHz"
-msgstr "44 kHz"
+msgstr "48 kHz"
 
 #: Plugins/Input/modplug/gui/interface.cpp:240
 msgid "44 kHz"
@@ -2542,14 +2541,14 @@ msgid "%lu Bytes"
 msgstr "%lu bytes"
 
 #: Plugins/Input/mpg123/http.c:401 Plugins/Input/vorbis/http.c:353
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't connect to host %s:%d"
-msgstr "Geen connectie mogelijk met Host %s"
+msgstr "Geen connectie mogelijk met host %s:%d"
 
 #: Plugins/Input/mpg123/http.c:686
-#, fuzzy, c-format
+#, c-format
 msgid "PRE-BUFFERING: %zuKB/%zuKB"
-msgstr "VOORBUFFEREN: %luKB/%luKB"
+msgstr "VOORBUFFEREN: %zuKB/%zuKB"
 
 #: Plugins/Input/mpg123/mpg123.c:922
 msgid "About MPEG Audio Plugin"
@@ -3418,7 +3417,7 @@ msgstr "Tony Vroon"
 
 #: audacious/credits.c:57
 msgid "Yoshiki Yazawa"
-msgstr ""
+msgstr "Yoshiki Yazawa"
 
 #: audacious/credits.c:60
 msgid "Graphics:"
@@ -3734,7 +3733,7 @@ msgstr "Spaans:"
 
 #: audacious/credits.c:186
 msgid "Gustavo D. Vranjes"
-msgstr ""
+msgstr "Gustavo D. Vranjes"
 
 #: audacious/credits.c:188
 msgid "Swedish:"
@@ -4160,7 +4159,7 @@ msgid ""
 "Please use GTK+ %s or newer.\n"
 msgstr ""
 "Sorry, uw GTK+ versie (%d.%d.%d) werkt niet met Audacious.\n"
-"Gebruik GTK+ %s of nieuwer alstublieft.\n"
+"Gelieve GTK+ %s of nieuwer te installeren.\n"
 
 #: audacious/main.c:968
 msgid ""
@@ -4555,7 +4554,7 @@ msgid ""
 "\n"
 "No CD inserted, or inserted CD is not an audio CD.\n"
 msgstr ""
-"<b><big>Geen speelbare CD gevonden.</big></b>\n"
+"<b><big>Geen afspeelbare CD gevonden.</big></b>\n"
 "\n"
 "Geen CD aanwezig of de aanwezige CD is geen audio CD.\n"
 
@@ -4581,7 +4580,7 @@ msgstr "Uiterlijk"
 
 #: audacious/prefswin.c:96
 msgid "Connectivity"
-msgstr ""
+msgstr "Verbindingen"
 
 #: audacious/prefswin.c:97 audacious/glade/prefswin.glade:3178
 msgid "Equalizer"
@@ -4633,7 +4632,7 @@ msgstr "Opmerking"
 
 #: audacious/prefswin.c:127
 msgid "localhost"
-msgstr ""
+msgstr "locale machine"
 
 #: audacious/prefswin.c:442 audacious/prefswin.c:529 audacious/prefswin.c:618
 #: audacious/prefswin.c:714
@@ -4727,9 +4726,8 @@ msgid "/Save List"
 msgstr "/Lijst opslaan"
 
 #: audacious/ui_playlist.c:217
-#, fuzzy
 msgid "/Save Default List"
-msgstr "/Opslaan/Als standaard stand"
+msgstr "/Standaardlijst Opslaan"
 
 #: audacious/ui_playlist.c:223
 msgid "/Update View"
@@ -4965,6 +4963,8 @@ msgid ""
 "Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
 "strings."
 msgstr ""
+"Gebruik bitmap-lettertypen als deze beschikbaar zijn. Bitmaplettertypen ondersteunen "
+"geen unicode strings."
 
 #: audacious/glade/prefswin.glade:1347
 msgid "Use Bitmap fonts if available"
@@ -4981,18 +4981,16 @@ msgstr "Positienummers in de speellijst weergeven"
 
 #  -r, --rew switch
 #: audacious/glade/prefswin.glade:1464
-#, fuzzy
 msgid "Show separators in playlist"
-msgstr "Positienummers in de speellijst weergeven"
+msgstr "Scheidingslijnen in de speellijst weergeven"
 
 #: audacious/glade/prefswin.glade:1499
 msgid "Use custom cursors"
 msgstr "Gebruik muiscursors van skin"
 
 #: audacious/glade/prefswin.glade:1546
-#, fuzzy
 msgid "<b>_Transparency</b>"
-msgstr "<b>Nummer:</b>"
+msgstr "<b>_Doorzichtigheid:</b>"
 
 #: audacious/glade/prefswin.glade:1586
 msgid ""
@@ -5000,11 +4998,13 @@ msgid ""
 "as it requires some CPU time to create and cache the pixmaps used for the "
 "transparency."
 msgstr ""
+"Maakt de afspeellijst doorzichtig. Dit is niet aan te raden op langzamere "
+"machines aangezien er enige CPU-tijd nodig is om de benodigde pixmaps aan "
+"te maken en actueel te houden."
 
 #: audacious/glade/prefswin.glade:1588
-#, fuzzy
 msgid "Enable playlist transparency"
-msgstr "Gebruik Dynamisch Volume"
+msgstr "Gebruik doorzichtige speellijst"
 
 #: audacious/glade/prefswin.glade:1661
 msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
@@ -5174,46 +5174,40 @@ msgid "Available _Presets:"
 msgstr "Beschikbare _Opgeslagen instellingen:"
 
 #: audacious/glade/prefswin.glade:3207
-#, fuzzy
 msgid "<span size=\"xx-large\"><b>Connectivity</b></span>"
-msgstr "<span size=\"xx-large\"><b>Muis</b></span>"
+msgstr "<span size=\"xx-large\"><b>Verbindingen</b></span>"
 
 #: audacious/glade/prefswin.glade:3262
-#, fuzzy
 msgid "<b>Proxy Configuration</b>"
-msgstr "Scrobbler configuratie"
+msgstr "<b>Proxy-configuratie</b>"
 
 #: audacious/glade/prefswin.glade:3320
 msgid "Enable proxy usage"
-msgstr ""
+msgstr "Proxy gebruiken"
 
 #: audacious/glade/prefswin.glade:3351
 msgid "Proxy hostname:"
-msgstr ""
+msgstr "Proxy-hostnaam:"
 
 #: audacious/glade/prefswin.glade:3379
-#, fuzzy
 msgid "Proxy port:"
-msgstr "Proxy:"
+msgstr "Proxy-poort:"
 
 #: audacious/glade/prefswin.glade:3473
-#, fuzzy
 msgid "Use authentication with proxy"
-msgstr "Gebruik authenticatie"
+msgstr "Gebruik authenticatie voor proxy"
 
 #: audacious/glade/prefswin.glade:3504
-#, fuzzy
 msgid "Proxy username:"
-msgstr "Gebruikersnaam:"
+msgstr "Proxy-gebruikersnaam:"
 
 #: audacious/glade/prefswin.glade:3532
-#, fuzzy
 msgid "Proxy password:"
-msgstr "Wachtwoord:"
+msgstr "Proxy-wachtwoord:"
 
 #: audacious/glade/prefswin.glade:3637
 msgid "label65"
-msgstr ""
+msgstr "label65"
 
 #: libaudacious/titlestring.c:324
 msgid "Performer/Artist"
@@ -5243,466 +5237,3 @@ msgstr "Nummer"
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: Geef \"...\" alleen weer wanneer element %n beschikbaar is"
 
-#~ msgid "Use proxy"
-#~ msgstr "Gebruik proxy"
-
-#~ msgid "Frames:"
-#~ msgstr "Frames:"
-
-#~ msgid ""
-#~ "Variable,\n"
-#~ "avg. bitrate: %d KBit/s"
-#~ msgstr ""
-#~ "Variabel,\n"
-#~ "gem. bitniveau: %d KBit/s"
-
-#~ msgid "Francisco Javier F. Serrador"
-#~ msgstr "Francisco Javier F. Serrador"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to write to file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Schrijven naar bestand mislukt: %s"
-
-#~ msgid "Couldn't write tag!"
-#~ msgstr "Kon label niet opslaan"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to open file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Openen van bestand mislukt: %s"
-
-#~ msgid "File Info"
-#~ msgstr "Bestandsinformatie"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to truncate file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Afbreken van bestand mislukt: %s"
-
-#~ msgid "Couldn't remove tag!"
-#~ msgstr "Kon het label niet verwijderen!"
-
-#~ msgid "No tag to remove!"
-#~ msgstr "Geen label om te verwijderen!"
-
-#~ msgid "Copy album tags"
-#~ msgstr "Album label kopi벥n"
-
-#~ msgid "Paste album tags"
-#~ msgstr "Album label plakken"
-
-#~ msgid " (Remix)"
-#~ msgstr " (Remix)"
-
-#~ msgid " (Cover)"
-#~ msgstr " (Cover)"
-
-#~ msgid "About TiMidity Plugin"
-#~ msgstr "Over TiMidity Plugin"
-
-#~ msgid "TiMidity Plugin"
-#~ msgstr "TiMidity Plugin"
-
-#~ msgid "Options"
-#~ msgstr "Opties"
-
-#~ msgid "Content"
-#~ msgstr "Inhoud"
-
-#~ msgid "Extension"
-#~ msgstr "Bestandstype"
-
-#~ msgid "Extension and content"
-#~ msgstr "Bestandstype en inhoud"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Copyright (C) 2000-2004  Peter Eisenlohr <peter@eisenlohr.org>\n"
-#~ "\n"
-#~ "based on the original OSS Output Plugin  Copyright (C) 1998-2000\n"
-#~ "Peter Alm, Mikael Alm, Olle Hallnas, Thomas Nilsson and 4Front "
-#~ "Technologies\n"
-#~ "\n"
-#~ "This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "XMMS ESounD Plugin\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
-#, fuzzy
-#~ msgid " Enable"
-#~ msgstr "Actief"
-
-#, fuzzy
-#~ msgid "About XMMS Crossfade Plugin"
-#~ msgstr "Over de ESounD plugin"
-
-#, fuzzy
-#~ msgid "Additional silence"
-#~ msgstr "Met aanvullende hulp van:"
-
-#, fuzzy
-#~ msgid "Advanced"
-#~ msgstr "Geavanceerde instellingen"
-
-#, fuzzy
-#~ msgid "Advanced XF"
-#~ msgstr "Geavanceerde instellingen"
-
-#, fuzzy
-#~ msgid "Advanced options"
-#~ msgstr "Geavanceerde instellingen"
-
-#, fuzzy
-#~ msgid "Configure"
-#~ msgstr "Configureer Equalizer"
-
-#, fuzzy
-#~ msgid "Crossfade"
-#~ msgstr "Crossover"
-
-#, fuzzy
-#~ msgid "Crossfader"
-#~ msgstr "Crossover"
-
-#, fuzzy
-#~ msgid "Custom (ms):"
-#~ msgstr "Handmatige instelling:"
-
-#, fuzzy
-#~ msgid "Delete"
-#~ msgstr "/Wissen"
-
-#, fuzzy
-#~ msgid "Enable volume control"
-#~ msgstr "Volume regelaar:"
-
-#, fuzzy
-#~ msgid "Limit OP buffer usage (ms):"
-#~ msgstr "Buffergrootte (ms):"
-
-#~ msgid "Load"
-#~ msgstr "Laden"
-
-#, fuzzy
-#~ msgid "Mixing buffer size (ms):"
-#~ msgstr "Buffergrootte (ms):"
-
-#, fuzzy
-#~ msgid "Output plugin"
-#~ msgstr "OSS uitvoer plugin"
-
-#, fuzzy
-#~ msgid "Pause"
-#~ msgstr "/Pause"
-
-#  -x, --xmms switch
-#, fuzzy
-#~ msgid "Plugin compatibility options"
-#~ msgstr "XMMS compatibiliteitsmodus"
-
-#, fuzzy
-#~ msgid "Position:"
-#~ msgstr "Beschrijving:"
-
-#, fuzzy
-#~ msgid "Quality:"
-#~ msgstr "/_Afsluiten"
-
-#, fuzzy
-#~ msgid "Rate:"
-#~ msgstr "Datum:"
-
-#, fuzzy
-#~ msgid "Reopen"
-#~ msgstr "/Herhalen"
-
-#, fuzzy
-#~ msgid "Use plugin"
-#~ msgstr "Plugins"
-
-#, fuzzy
-#~ msgid "Volume control options"
-#~ msgstr "Volume regelaar:"
-
-#, fuzzy
-#~ msgid "Volume normalizer"
-#~ msgstr "Volume regelaar:"
-
-#, fuzzy
-#~ msgid "same file"
-#~ msgstr "van bestand"
-
-#, fuzzy
-#~ msgid "LibVisual Audacious Plugin"
-#~ msgstr "/Visualisatie plugins"
-
-#, fuzzy
-#~ msgid "Visualization Plugins"
-#~ msgstr "/Visualisatie plugins"
-
-#, fuzzy
-#~ msgid "All plugins"
-#~ msgstr "Plugins"
-
-#, fuzzy
-#~ msgid " (enabled)"
-#~ msgstr "Actief"
-
-#, fuzzy
-#~ msgid "Version: "
-#~ msgstr "Versie:"
-
-#, fuzzy
-#~ msgid " error"
-#~ msgstr "Terror"
-
-#, fuzzy
-#~ msgid "Audacious plugin"
-#~ msgstr "CD geluid plugin"
-
-#, fuzzy
-#~ msgid "Cannot initialize SDL!\n"
-#~ msgstr "Kon gnome-vfs niet starten.\n"
-
-#~ msgid "Developers:"
-#~ msgstr "Ontwikkelaars:"
-
-#~ msgid "DISABLE ALWAYS ON TOP (N/A)"
-#~ msgstr "ALTIJD OP VOORGROND UIT (N/A)"
-
-#~ msgid "ENABLE ALWAYS ON TOP (N/A)"
-#~ msgstr "ALTIJD OP VOORGROND AAN (N/A)"
-
-#, fuzzy
-#~ msgid "Downsample:"
-#~ msgstr "Downsamplen:"
-
-#, fuzzy
-#~ msgid "Use interpolation"
-#~ msgstr "Gebruik authenticatie"
-
-#~ msgid "%s - BMP"
-#~ msgstr "%s - BMP"
-
-#~ msgid "bmp: %s"
-#~ msgstr "bmp: %s"
-
-#, fuzzy
-#~ msgid "/Play Directory"
-#~ msgstr "Map:"
-
-#~ msgid "Add Folders"
-#~ msgstr "Mappen toevoegen"
-
-#, fuzzy
-#~ msgid "/Add Folders..."
-#~ msgstr "/Toevoegen/Mappen..."
-
-#~ msgid "Automatic detection"
-#~ msgstr "Automatische detectie"
-
-#~ msgid "3DNow! optimized decoder"
-#~ msgstr "3DNow!-geoptimaliseerde decoder"
-
-#~ msgid "MMX optimized decoder"
-#~ msgstr "MMX-geoptimaliseerde decoder"
-
-#~ msgid "FPU decoder"
-#~ msgstr "FPU decoder"
-
-#~ msgid ""
-#~ "mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
-#~ "Plugin by The XMMS team"
-#~ msgstr ""
-#~ "mpg123 decoder door Michael Hipp <mh@mpg123.de>\n"
-#~ "Plugin door het XMMS Team"
-
-#~ msgid "Advanced settings:"
-#~ msgstr "Geavanceerde instellingen:"
-
-#, fuzzy
-#~ msgid "Thread buffer time (ms):"
-#~ msgstr "Buffertijd (ms):"
-
-#~ msgid "Mmap mode"
-#~ msgstr "Mmap modus"
-
-#~ msgid "Homepage and Graphics:"
-#~ msgstr "Homepage en graphics:"
-
-#~ msgid "Takeshi Aihana"
-#~ msgstr "Takeshi Aihana"
-
-#~ msgid "BMP Equalizer"
-#~ msgstr "BMP Equalizer"
-
-#~ msgid "Beep Media Player"
-#~ msgstr "Beep Media Player"
-
-#~ msgid "/About BMP"
-#~ msgstr "/Over BMP"
-
-#  FIXME: Convert this all to GtkDrawingArea
-#~ msgid "BMP"
-#~ msgstr "BMP"
-
-#~ msgid "Add Internet Address"
-#~ msgstr "Internet adres toevoegen"
-
-#~ msgid "BMP Playlist Editor"
-#~ msgstr "BMP Speellijst editor"
-
-#~ msgid "*"
-#~ msgstr "*"
-
-#~ msgid "Vlad Gerasimov"
-#~ msgstr "Vlad Gerasimov"
-
-#~ msgid "/By extension"
-#~ msgstr "/Op bestandstype"
-
-#~ msgid "Add Folders - BMP"
-#~ msgstr "Mappen toevoegen - BMP"
-
-#~ msgid "Add URL"
-#~ msgstr "URL Toevoegen"
-
-#~ msgid "/Sort by Title"
-#~ msgstr "/Sorteren op titel"
-
-#~ msgid "/Sort by Filename"
-#~ msgstr "/Sorteren op bestandsnaam"
-
-#~ msgid "/Sort by Date"
-#~ msgstr "/Sorteren op datum"
-
-#~ msgid "Danicel Liviu Cristian"
-#~ msgstr "Danicel Liviu Cristian"
-
-#~ msgid "/5 seconds REW"
-#~ msgstr "/5 seconden terug"
-
-#~ msgid "/5 seconds FFWD"
-#~ msgstr "/5 seconden vooruit"
-
-#~ msgid "/Add"
-#~ msgstr "/Toevoegen"
-
-#~ msgid "/_Options"
-#~ msgstr "/_Opties"
-
-#~ msgid "/Playlist"
-#~ msgstr "/Speellijst"
-
-#~ msgid "/Close Window"
-#~ msgstr "/Venster sluiten"
-
-#~ msgid "Jump to:"
-#~ msgstr "Ga naar:"
-
-#~ msgid "Jump"
-#~ msgstr "Ga"
-
-#~ msgid "Failed to delete \"%s\": %s."
-#~ msgstr "Kon \"%s\" niet wissen: %s"
-
-#~ msgid "%d of %d files successfully deleted."
-#~ msgstr "%d van %d bestanden zijn correct verwijderd"
-
-#~ msgid "XMMS: Files deleted"
-#~ msgstr "bmp: Bestanden verwijderd"
-
-#~ msgid "Really delete %d files?"
-#~ msgstr "Wilt u werkelijk %d bestanden wissen?"
-
-#~ msgid "Really delete: \"%s\"?"
-#~ msgstr "Werkelijk \"%s\" wissen?"
-
-#~ msgid "Auto-load preset"
-#~ msgstr "Automatisch standen laden"
-
-#~ msgid "From WinAMP EQF file"
-#~ msgstr "van WinAMP EQF bestand"
-
-#~ msgid "Import"
-#~ msgstr "Importeer"
-
-#~ msgid "To WinAMP EQF file"
-#~ msgstr "Als WinAMP EQF bestand"
-
-#~ msgid "To file"
-#~ msgstr "Als bestand"
-
-#~ msgid "WinAMP presets"
-#~ msgstr "Opgeslagen WinAMP instellingen"
-
-#~ msgid "Zero"
-#~ msgstr "Neutrale stand"
-
-#~ msgid "/Show Graphical EQ"
-#~ msgstr "/Equalizer weergeven"
-
-#~ msgid "/Reload skin"
-#~ msgstr "/Skin herladen"
-
-#~ msgid "/Show on all desktops"
-#~ msgstr "/Op alle bureabladen weergeven"
-
-#~ msgid "/WindowShade Mode"
-#~ msgstr "/Vensterschaduw voor speler"
-
-#~ msgid "/Playlist WindowShade Mode"
-#~ msgstr "/Vensterschaduw voor speellijst"
-
-#~ msgid "/Equalizer WindowShade Mode"
-#~ msgstr "/Vensterschaduw voor equalizer"
-
-#~ msgid "/DoubleSize"
-#~ msgstr "/Dubbelformaat voor speler"
-
-#~ msgid "/Easy Move"
-#~ msgstr "/Makkelijk verplaatsen"
-
-#~ msgid "DISABLE DOUBLESIZE"
-#~ msgstr "DUBBELFORMAAT UIT"
-
-#~ msgid "ENABLE DOUBLESIZE"
-#~ msgstr "DUBBELFORMAAT AAN"
-
-#~ msgid "Smooth title scrolling in main window"
-#~ msgstr "Soepel titel scrollen in het hoofdvenster"
