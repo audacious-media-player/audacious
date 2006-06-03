@@ -607,10 +607,10 @@ static void play_file( char* path )
 	if ( audcfg.resample )
 		sample_rate = audcfg.resample_rate;
 	track_info_t info;
-	info.track = track;
 	if ( begin_get_info( path2, &info ) )
 		return;
-	
+	info.track = track;
+
 	// load in emulator and get info
 	switch ( type )
 	{
@@ -732,15 +732,12 @@ static gint is_our_file( gchar* path )
 			case type_spc: load_file( tag, in, 0, NULL, (Spc_Emu*) 0 ); break;
 		}
 
-		printf("number of tracks: %d\n", emu->track_count());
-
 		for (int i = 0; i < emu->track_count(); i++)
 		{
 			gchar _buf[65535];
 			g_snprintf(_buf, 65535, "%s?%d", path2, i);
 
 			playlist_add_url(_buf);
-			
 		}
 
 		unload_file();
