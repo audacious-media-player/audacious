@@ -149,7 +149,7 @@ static void
 init(void)
 {
     ConfigDb *db;
-    gchar *tmp;
+    gchar *tmp = NULL;
 
     ins = mpgdec_new();
 
@@ -208,7 +208,10 @@ init(void)
     bmp_cfg_db_get_bool(db, NULL, "use_proxy", &mpgdec_cfg.use_proxy);
     bmp_cfg_db_get_string(db, NULL, "proxy_host", &mpgdec_cfg.proxy_host);
     bmp_cfg_db_get_string(db, NULL, "proxy_port", &tmp);
-    mpgdec_cfg.proxy_port = atoi(tmp);
+
+    if (tmp != NULL)
+	mpgdec_cfg.proxy_port = atoi(tmp);
+
     bmp_cfg_db_get_bool(db, NULL, "proxy_use_auth", &mpgdec_cfg.proxy_use_auth);
     bmp_cfg_db_get_string(db, NULL, "proxy_user", &mpgdec_cfg.proxy_user);
     bmp_cfg_db_get_string(db, NULL, "proxy_pass", &mpgdec_cfg.proxy_pass);
