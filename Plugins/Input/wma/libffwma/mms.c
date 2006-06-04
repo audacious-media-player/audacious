@@ -164,7 +164,7 @@ static int send_data (int s, char *buf, int len) {
   return total;
 }
 
-static uint32_t get_32 (unsigned char *cmd, int offset) {
+static uint32_t get_32 (char *cmd, int offset) {
 
   uint32_t ret;
 
@@ -343,7 +343,7 @@ static int receive (int s, char *buf, size_t count) {
 
 static void get_header (mms_t *this) {
 
-  unsigned char  pre_header[8];
+  char  pre_header[8];
   int            i;
 
   this->asf_header_len = 0;
@@ -372,7 +372,7 @@ static void get_header (mms_t *this) {
 	      packet_len);
 #endif
 
-      if (!receive (this->s, &this->asf_header[this->asf_header_len], packet_len)) {
+      if (!receive (this->s, (char*)&this->asf_header[this->asf_header_len], packet_len)) {
 	printf ("libmms: header data read failed\n");
 	return;
       }
@@ -437,7 +437,7 @@ static void interp_header (mms_t *this) {
   i = 30;
   while (i<this->asf_header_len) {
     
-    uint64_t  guid_1, guid_2, length;
+    uint64_t guid_1, guid_2, length;
 
     guid_2 = (uint64_t)this->asf_header[i] | ((uint64_t)this->asf_header[i+1]<<8) 
       | ((uint64_t)this->asf_header[i+2]<<16) | ((uint64_t)this->asf_header[i+3]<<24)
@@ -468,11 +468,11 @@ static void interp_header (mms_t *this) {
       printf ("data object\n");
     } else if ((guid_1 == 0x6553200cc000e48e) && (guid_2 == 0x11cfa9478cabdca1)) {
 
-      this->packet_length = get_32(this->asf_header, i+92-24);
+      this->packet_length = get_32((char*)this->asf_header, i+92-24);
 
 #ifdef LOG    
       printf ("file object, packet length = %d (%d)\n",
-	      this->packet_length, get_32(this->asf_header, i+96-24));
+	      this->packet_length, get_32((char*)this->asf_header, i+96-24));
 #endif
 
 
@@ -653,7 +653,7 @@ mms_t *mms_connect (const char *url_) {
 
 static int get_media_packet (mms_t *this) {
 
-  unsigned char  pre_header[8];
+  char  pre_header[8];
   int            i;
 
   if (!receive (this->s, pre_header, 8)) {
