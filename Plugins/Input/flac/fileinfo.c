@@ -26,6 +26,7 @@
 #include <stdarg.h>
 #include <gtk/gtk.h>
 
+#include "audacious/util.h"
 #include "FLAC/metadata.h"
 #include "charset.h"
 #include "configure.h"
@@ -237,6 +238,7 @@ void FLAC_XMMS__file_info_box(char *filename)
 {
 	unsigned i;
 	gchar *title;
+	gchar *filename_utf8;
 
 	if (!window)
 	{
@@ -409,12 +411,15 @@ void FLAC_XMMS__file_info_box(char *filename)
 	if(!(current_filename = g_strdup(filename)))
 		return;
 
-	title = g_strdup_printf(_("File Info - %s"), g_basename(filename));
+	filename_utf8 = filename_to_utf8(current_filename);
+	title = g_strdup_printf(_("File Info - %s"), g_basename(filename_utf8));
 	gtk_window_set_title(GTK_WINDOW(window), title);
 	g_free(title);
 
-	gtk_entry_set_text(GTK_ENTRY(filename_entry), filename);
+	gtk_entry_set_text(GTK_ENTRY(filename_entry), filename_utf8);
 	gtk_editable_set_position(GTK_EDITABLE(filename_entry), -1);
+
+	g_free(filename_utf8);
 
 	if(tags_)
 		FLAC_plugin__tags_destroy(&tags_);
