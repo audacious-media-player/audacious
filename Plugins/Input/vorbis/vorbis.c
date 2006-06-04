@@ -843,6 +843,7 @@ static void
 vorbis_init(void)
 {
     ConfigDb *db;
+    gchar *tmp = NULL;
 
     memset(&vorbis_cfg, 0, sizeof(vorbis_config_t));
     vorbis_cfg.http_buffer_size = 128;
@@ -895,7 +896,8 @@ vorbis_init(void)
 
     bmp_cfg_db_get_bool(db, NULL, "use_proxy", &vorbis_cfg.use_proxy);
     bmp_cfg_db_get_string(db, NULL, "proxy_host", &vorbis_cfg.proxy_host);
-    bmp_cfg_db_get_int(db, NULL, "proxy_port", &vorbis_cfg.proxy_port);
+    bmp_cfg_db_get_string(db, NULL, "proxy_port", &tmp);
+    vorbis_cfg.proxy_port = atoi(tmp);
     bmp_cfg_db_get_bool(db, NULL, "proxy_use_auth", &vorbis_cfg.proxy_use_auth);
     bmp_cfg_db_get_string(db, NULL, "proxy_user", &vorbis_cfg.proxy_user);
     bmp_cfg_db_get_string(db, NULL, "proxy_pass", &vorbis_cfg.proxy_pass);
