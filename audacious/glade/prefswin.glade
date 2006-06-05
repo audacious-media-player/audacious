@@ -3245,7 +3245,7 @@ Custom</property>
 		      <property name="xscale">1</property>
 		      <property name="yscale">1</property>
 		      <property name="top_padding">0</property>
-		      <property name="bottom_padding">0</property>
+		      <property name="bottom_padding">6</property>
 		      <property name="left_padding">12</property>
 		      <property name="right_padding">0</property>
 
