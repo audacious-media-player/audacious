@@ -882,7 +882,7 @@ int alsa_open(AFormat fmt, int rate, int nch)
 	prebuffer = TRUE;
 	remove_prebuffer = FALSE;
 
-	thread_buffer_size = (guint64)alsa_cfg.thread_buffer_time * inputf->bps / 1000;
+	thread_buffer_size = (guint64)cfg.output_buffer_size * inputf->bps / 1000;
 	if (thread_buffer_size < hw_buffer_size)
 		thread_buffer_size = hw_buffer_size * 2;
 	if (thread_buffer_size < 8192)

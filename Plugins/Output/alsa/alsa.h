@@ -25,6 +25,7 @@
 
 #include <libaudacious/util.h>
 #include <libaudacious/configdb.h>
+#include <audacious/main.h>
 #include <audacious/plugin.h>
 #include <glib/gi18n.h>
 
@@ -50,7 +51,6 @@ struct alsa_config
 	char *mixer_device;
 	int buffer_time;
 	int period_time;
-	int thread_buffer_time;
 	gboolean debug;
 	struct
 	{

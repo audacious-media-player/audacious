@@ -21,7 +21,7 @@
 
 static GtkWidget *configure_win = NULL;
 static GtkWidget *buffer_time_spin, *period_time_spin;
-static GtkWidget *softvolume_toggle_button, *thread_buffer_time_spin;
+static GtkWidget *softvolume_toggle_button;
 
 static GtkWidget *devices_combo, *mixer_devices_combo;
 
@@ -38,7 +38,6 @@ static void configure_win_ok_cb(GtkWidget * w, gpointer data)
 	alsa_cfg.pcm_device = GET_CHARS(GTK_COMBO(devices_combo)->entry);
 	alsa_cfg.buffer_time = GET_SPIN_INT(buffer_time_spin);
 	alsa_cfg.period_time = GET_SPIN_INT(period_time_spin);
-	alsa_cfg.thread_buffer_time = GET_SPIN_INT(thread_buffer_time_spin);
 	alsa_cfg.soft_volume = GET_TOGGLE(softvolume_toggle_button);
 	alsa_cfg.mixer_card = current_mixer_card;
 	alsa_cfg.mixer_device = GET_CHARS(GTK_COMBO(mixer_devices_combo)->entry);
@@ -53,7 +52,6 @@ void alsa_save_config(void)
 
 	bmp_cfg_db_set_int(cfgfile, "ALSA", "buffer_time", alsa_cfg.buffer_time);
 	bmp_cfg_db_set_int(cfgfile, "ALSA", "period_time", alsa_cfg.period_time);
-	bmp_cfg_db_set_int(cfgfile, "ALSA", "thread_buffer_time", alsa_cfg.thread_buffer_time);
 	bmp_cfg_db_set_string(cfgfile,"ALSA","pcm_device", alsa_cfg.pcm_device);
 	bmp_cfg_db_set_int(cfgfile, "ALSA", "mixer_card", alsa_cfg.mixer_card);
 	bmp_cfg_db_set_string(cfgfile,"ALSA","mixer_device", alsa_cfg.mixer_device);
@@ -254,8 +252,7 @@ void alsa_configure(void)
 	GtkWidget *advanced_vbox, *card_vbox;
 	GtkWidget *buffer_frame, *buffer_vbox, *buffer_table;
 	GtkWidget *card_frame, *buffer_time_label, *period_time_label;
-	GtkWidget *thread_buffer_time_label;
-	GtkObject *buffer_time_adj, *period_time_adj, *thread_buffer_time_adj;
+	GtkObject *buffer_time_adj, *period_time_adj;
 	GtkWidget *bbox, *ok, *cancel;
 
 	int mset;
@@ -410,20 +407,6 @@ void alsa_configure(void)
 	gtk_table_set_row_spacings(GTK_TABLE(buffer_table), 5);
 	gtk_table_set_col_spacings(GTK_TABLE(buffer_table), 5);
 	gtk_box_pack_start_defaults(GTK_BOX(buffer_vbox), buffer_table);
-
-	thread_buffer_time_label = gtk_label_new(_("Buffer time (ms):"));
-	gtk_label_set_justify(GTK_LABEL(thread_buffer_time_label), GTK_JUSTIFY_LEFT);
-	gtk_misc_set_alignment(GTK_MISC(thread_buffer_time_label), 0, 0.5);
-	gtk_table_attach(GTK_TABLE(buffer_table), thread_buffer_time_label,
-			 0, 1, 0, 1, GTK_FILL, 0, 0, 0);
-	thread_buffer_time_adj = gtk_adjustment_new(alsa_cfg.thread_buffer_time,
-						    1000, 10000, 100, 100, 100);
-	thread_buffer_time_spin =
-		gtk_spin_button_new(GTK_ADJUSTMENT(thread_buffer_time_adj), 8, 0);
-
-	gtk_widget_set_usize(thread_buffer_time_spin, 60, -1);
-	gtk_table_attach(GTK_TABLE(buffer_table), thread_buffer_time_spin,
-			 1, 2, 0, 1, 0, 0, 0, 0);
 
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), advanced_vbox,
 				 gtk_label_new(_("Advanced settings")));
