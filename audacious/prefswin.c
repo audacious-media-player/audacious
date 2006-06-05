@@ -93,6 +93,7 @@ static GtkWidget *prefswin = NULL;
 
 static Category categories[] = {
     {DATA_DIR "/images/appearance.png", N_("Appearance"), 1},
+    {DATA_DIR "/images/audio.png", N_("Audio"), 6},
     {DATA_DIR "/images/connectivity.png",    N_("Connectivity"), 5},	
     {DATA_DIR "/images/eq.png",         N_("Equalizer"), 4},
     {DATA_DIR "/images/mouse.png",      N_("Mouse"), 2},
