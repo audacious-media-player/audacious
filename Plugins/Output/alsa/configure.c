@@ -250,7 +250,7 @@ void alsa_configure(void)
 	GtkWidget *mixer_frame, *mixer_box, *mixer_table, *mixer_card_om;
 	GtkWidget *mixer_card_label, *mixer_device_label;
 	GtkWidget *advanced_vbox, *card_vbox;
-	GtkWidget *buffer_frame, *buffer_vbox, *buffer_table;
+	GtkWidget *buffer_table;
 	GtkWidget *card_frame, *buffer_time_label, *period_time_label;
 	GtkObject *buffer_time_adj, *period_time_adj;
 	GtkWidget *bbox, *ok, *cancel;
@@ -393,20 +393,6 @@ void alsa_configure(void)
 	gtk_widget_set_usize(period_time_spin, 60, -1);
 	gtk_table_attach(GTK_TABLE(buffer_table), period_time_spin,
 			 1, 2, 1, 2, 0, 0, 0, 0);
-
-
-	buffer_frame = gtk_frame_new(_("Audacious:"));
-	gtk_box_pack_start_defaults(GTK_BOX(advanced_vbox), buffer_frame);
-
-	buffer_vbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_add(GTK_CONTAINER(buffer_frame), buffer_vbox);
-
-	gtk_container_set_border_width(GTK_CONTAINER(buffer_vbox), 5);
-
-	buffer_table = gtk_table_new(1, 2, TRUE);
-	gtk_table_set_row_spacings(GTK_TABLE(buffer_table), 5);
-	gtk_table_set_col_spacings(GTK_TABLE(buffer_table), 5);
-	gtk_box_pack_start_defaults(GTK_BOX(buffer_vbox), buffer_table);
 
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), advanced_vbox,
 				 gtk_label_new(_("Advanced settings")));
