@@ -184,7 +184,7 @@ static decoder_funcs_t const * decoder_func_table_, * decoder_func_table2;
 
 InputPlugin *get_iplugin_info()
 {
-	flac_ip.description = g_strdup_printf("Reference FLAC Player v%s", FLAC__VERSION_STRING);
+	flac_ip.description = g_strdup_printf(_("FLAC Audio Plugin"));
 	return &flac_ip;
 }
 
@@ -217,6 +217,7 @@ void FLAC_XMMS__init()
 {
 	ConfigDb *db;
 	FLAC__uint32 test = 1;
+	gchar *tmp = NULL;
 
 	is_big_endian_host_ = (*((FLAC__byte*)(&test)))? false : true;
 
@@ -279,7 +280,11 @@ void FLAC_XMMS__init()
 
 	bmp_cfg_db_get_bool(db, NULL, "use_proxy", &flac_cfg.stream.use_proxy);
 	bmp_cfg_db_get_string(db, NULL, "proxy_host", &flac_cfg.stream.proxy_host);
-	bmp_cfg_db_get_int(db, NULL, "proxy_port", &flac_cfg.stream.proxy_port);
+	bmp_cfg_db_get_string(db, NULL, "proxy_port", &tmp);
+
+	if (tmp != NULL)
+		flac_cfg.stream.proxy_port = atoi(tmp);
+
 	bmp_cfg_db_get_bool(db, NULL, "proxy_use_auth", &flac_cfg.stream.proxy_use_auth);
 	bmp_cfg_db_get_string(db, NULL, "proxy_user", &flac_cfg.stream.proxy_user);
 	bmp_cfg_db_get_string(db, NULL, "proxy_pass", &flac_cfg.stream.proxy_pass);
