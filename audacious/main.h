@@ -109,6 +109,7 @@ struct _BmpConfig {
     gboolean show_separator_in_pl;
     gchar *chardet_detector;
     gchar *chardet_fallback;
+    gint output_buffer_size;
 };
 
 typedef struct _BmpConfig BmpConfig;

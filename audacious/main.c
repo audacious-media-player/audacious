@@ -195,6 +195,9 @@ BmpConfig bmp_default_config = {
     3,                          /* scroll pl by */
     FALSE,                      /* resume playback on startup */
     -1,                         /* resume playback on startup time */
+    NULL,
+    NULL,
+    3000,
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -314,6 +317,7 @@ static bmp_cfg_nument bmp_numents[] = {
     {"scroll_pl_by", &cfg.scroll_pl_by, TRUE},
     {"titlestring_preset", &cfg.titlestring_preset, TRUE},
     {"resume_playback_on_startup_time", &cfg.resume_playback_on_startup_time, TRUE},
+    {"output_buffer_size", &cfg.output_buffer_size, TRUE},
 };
 
 static gint ncfgient = G_N_ELEMENTS(bmp_numents);
@@ -563,11 +567,6 @@ bmp_config_save(void)
                                 bmp_boolents[i].be_vname,
                                 *bmp_boolents[i].be_vloc);
 
-    /* HACK: Work-around for bug #129 */
-    /*
-    bmp_cfg_db_set_bool(db, NULL, "playlist_shaded",
-		        FALSE);
-    */
     for (i = 0; i < ncfgient; ++i)
         if (bmp_numents[i].ie_wrt)
             bmp_cfg_db_set_int(db, NULL,
