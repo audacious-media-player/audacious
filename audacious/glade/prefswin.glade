@@ -3347,7 +3347,7 @@ Custom</property>
 				  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
 				  <property name="snap_to_ticks">False</property>
 				  <property name="wrap">False</property>
-				  <property name="adjustment">0 0 100 1 10 10</property>
+				  <property name="adjustment">0 0 600000 100 1000 1000</property>
 				  <signal name="realize" handler="on_output_plugin_bufsize_realize" after="yes" last_modification_time="Mon, 05 Jun 2006 04:28:43 GMT"/>
 				  <signal name="value_changed" handler="on_output_plugin_bufsize_value_changed" last_modification_time="Mon, 05 Jun 2006 04:28:51 GMT"/>
 				</widget>
