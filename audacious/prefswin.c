@@ -1434,9 +1434,19 @@ effect_plugin_open_info(GtkTreeView * treeview,
     effect_about(id);
 }
 
+static void
+on_output_plugin_bufsize_realize(GtkSpinButton *button,
+				 gpointer data)
+{
+    gtk_spin_button_set_value(button, cfg.output_buffer_size);
+}
 
-
-
+static void
+on_output_plugin_bufsize_value_changed(GtkSpinButton *button,
+				 gpointer data)
+{
+    cfg.output_buffer_size = gtk_spin_button_get_value_as_int(button);
+}
 
 static void
 on_mouse_wheel_volume_realize(GtkSpinButton * button,
@@ -2011,6 +2021,8 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_chardet_detector_cbox_changed)
     FUNC_MAP_ENTRY(on_chardet_fallback_realize)
     FUNC_MAP_ENTRY(on_chardet_fallback_changed)
+    FUNC_MAP_ENTRY(on_output_plugin_bufsize_realize)
+    FUNC_MAP_ENTRY(on_output_plugin_bufsize_value_changed)
 FUNC_MAP_END
 
 void

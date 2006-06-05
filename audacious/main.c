@@ -195,6 +195,7 @@ BmpConfig bmp_default_config = {
     3,                          /* scroll pl by */
     FALSE,                      /* resume playback on startup */
     -1,                         /* resume playback on startup time */
+    TRUE,			/* show seperators in pl */
     NULL,
     NULL,
     3000,
