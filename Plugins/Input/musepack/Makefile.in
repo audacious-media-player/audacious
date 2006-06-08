@@ -11,6 +11,4 @@ LIBADD = -lmpcdec $(TAGLIB_LIBS) $(GTK_LIBS)
 
 OBJECTS = ${SOURCES:.cpp=.o}
 
-CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(TAGLIB_CFLAGS) -I../../../intl -I../../..
-
-CXXFLAGS = $(CFLAGS)
+CXXFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(TAGLIB_CFLAGS) -I../../../intl -I../../..
