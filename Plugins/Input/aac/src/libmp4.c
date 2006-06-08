@@ -78,7 +78,6 @@ static void*	mp4Decode(void *);
 
 void     audmp4_file_info_box(gchar *);
 gboolean buffer_playing;
-gint	 doExit;
 
 InputPlugin mp4_ip =
   {
@@ -173,7 +172,6 @@ static void mp4_init(void)
 static void mp4_play(char *filename)
 {
   buffer_playing = TRUE;
-  doExit = 0;
   decodeThread = g_thread_create((GThreadFunc)mp4Decode, g_strdup(filename), TRUE, NULL);
   return;
 }
@@ -183,18 +181,8 @@ static void mp4_stop(void)
   if(buffer_playing){
     buffer_playing = FALSE;
     mp4_ip.output->close_audio();
+    g_thread_join(decodeThread);
   }
-
-  /*
-   * The problem is, we can't just go try to reap the thread, it probably
-   * won't work. This hint gives us points where the thread can just quit.
-   * Which basically serves the same function...
-   *
-   *       - nenolod
-   */
-  g_static_mutex_lock(&mutex);
-  doExit = 1;
-  g_static_mutex_unlock(&mutex);
 }
 
 static int	mp4_IsOurFile(char *filename)
@@ -433,19 +421,7 @@ static int my_decode_mp4( char *filename, mp4ff_t *mp4file )
 				/* Finish playing before we close the
 				   output. */
 				while ( mp4_ip.output->buffer_playing() ) {
-					if (doExit)
-					{
-						doExit = 0;
-						g_thread_exit(NULL);
-					}
-
 					xmms_usleep(10000);
-				}
-
-				if (doExit)
-				{
-					doExit = 0;
-					g_thread_exit(NULL);
 				}
 
 				mp4_ip.output->flush(seekPosition*1000);
@@ -475,12 +451,6 @@ static int my_decode_mp4( char *filename, mp4ff_t *mp4file )
 				faacDecClose(decoder);
 
 				return FALSE;
-			}
-
-			if (doExit)
-			{
-				doExit = 0;
-				g_thread_exit(NULL);
 			}
 
 			sampleBuffer= faacDecDecode(decoder, 
