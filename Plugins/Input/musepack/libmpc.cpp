@@ -38,7 +38,7 @@ InputPlugin MpcPlugin = {
 extern "C"
 InputPlugin* get_iplugin_info()
 {
-    MpcPlugin.description = g_strdup_printf("Musepack Audio Plugin 1.2");
+    MpcPlugin.description = g_strdup_printf("Musepack Audio Plugin");
     return &MpcPlugin;
 }
 
