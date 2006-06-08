@@ -357,10 +357,6 @@ mpgdec_decode_header(struct frame *fr, unsigned long newhead)
     default:
         return (0);
     }
-
-    if (!fr->bitrate_index)
-        fr->framesize = 0;
-
     if (fr->framesize > MAXFRAMESIZE)
         return 0;
     return 1;
