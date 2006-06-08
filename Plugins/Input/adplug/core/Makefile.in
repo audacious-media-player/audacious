@@ -17,7 +17,6 @@ flash.h hyp.h psi.h rat.h hybrid.h rol.h adtrack.h cff.h dtm.h fprovide.h \
 database.h players.h xsm.h adlibemu.h kemuopl.h dro.h dmo.h s3m.h temuopl.h \
 msc.h rix.h
 
-CFLAGS += -fPIC -DPIC $(BINIO_CFLAGS) -I../../../../intl -I../../../..
-CXXFLAGS = $(CFLAGS) -Dstricmp=strcasecmp
+CXXFLAGS += -fPIC -DPIC $(BINIO_CFLAGS) -I../../../../intl -I../../../.. -Dstricmp=strcasecmp
 
 OBJECTS = ${SOURCES:.c=.o} ${SOURCES:.cpp=.o}
