@@ -12,5 +12,7 @@ SOURCES = adplug-xmms.cc
 
 OBJECTS = ${SOURCES:.cc=.o}
 
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(BINIO_CFLAGS) \
+	-I../../../intl -I../../.. -I./core
 CXXFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(BINIO_CFLAGS) \
 	-I../../../intl -I../../.. -I./core
