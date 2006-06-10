@@ -11,6 +11,15 @@ HEADERS = none
 VERBOSITY = 0
 SHOW_CFLAGS = 0
 
+ifeq ($(SHOW_CFLAGS),0)
+ifeq ($(V),1)
+SHOW_CFLAGS = 1
+endif
+ifeq ($(VERBOSE),1)
+SHOW_CFLAGS = 1
+endif
+endif
+
 LIBDIR = $(libdir)
 BINDIR = $(bindir)
 INCLUDEDIR = $(pkgincludedir)
