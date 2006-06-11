@@ -199,7 +199,7 @@ BmpConfig bmp_default_config = {
     NULL,
     NULL,
     3000,			/* audio buffer size */
-    TRUE,			/* whether or not to do format detection on initial add */
+    FALSE,			/* whether or not to postpone format detection on initial add */
 };
 
 typedef struct bmp_cfg_boolent_t {
