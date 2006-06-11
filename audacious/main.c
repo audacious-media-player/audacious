@@ -198,7 +198,8 @@ BmpConfig bmp_default_config = {
     TRUE,			/* show seperators in pl */
     NULL,
     NULL,
-    3000,
+    3000,			/* audio buffer size */
+    TRUE,			/* whether or not to do format detection on initial add */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -289,6 +290,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"close_dialog_open", &cfg.close_dialog_open, TRUE},
     {"close_dialog_add", &cfg.close_dialog_add, TRUE},
     {"resume_playback_on_startup", &cfg.resume_playback_on_startup, TRUE},
+    {"playlist_detect", &cfg.playlist_detect, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);

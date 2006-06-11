@@ -110,6 +110,7 @@ struct _BmpConfig {
     gchar *chardet_detector;
     gchar *chardet_fallback;
     gint output_buffer_size;
+    gboolean playlist_detect;
 };
 
 typedef struct _BmpConfig BmpConfig;

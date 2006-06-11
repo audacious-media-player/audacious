@@ -972,6 +972,21 @@ on_playlist_show_pl_separator_toggled(GtkToggleButton * button,
     draw_playlist_window(TRUE);
 }
 
+/* format detection */
+static void
+on_audio_format_det_cb_toggled(GtkToggleButton * button,
+                                    gpointer data)
+{
+    cfg.playlist_detect = gtk_toggle_button_get_active(button);
+}
+
+static void
+on_audio_format_det_cb_realize(GtkToggleButton * button,
+                                    gpointer data)
+{
+    gtk_toggle_button_set_active(button, cfg.playlist_detect);
+}
+
 /* proxy */
 static void
 on_proxy_use_realize(GtkToggleButton * button,
@@ -2023,6 +2038,8 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_chardet_fallback_changed)
     FUNC_MAP_ENTRY(on_output_plugin_bufsize_realize)
     FUNC_MAP_ENTRY(on_output_plugin_bufsize_value_changed)
+    FUNC_MAP_ENTRY(on_audio_format_det_cb_toggled)
+    FUNC_MAP_ENTRY(on_audio_format_det_cb_realize)
 FUNC_MAP_END
 
 void
