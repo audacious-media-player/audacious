@@ -399,7 +399,9 @@ gchar *
 read_ini_string(const gchar * filename, const gchar * section,
                 const gchar * key)
 {
-    gchar *buffer, *ret_buffer = NULL;
+    static gchar *buffer = NULL;
+    static gchar *open_buffer = NULL;
+    gchar *ret_buffer = NULL;
     gint found_section = 0, len = 0;
     gsize filesize, off = 0;
     gchar *outbuf;
@@ -409,8 +411,35 @@ read_ini_string(const gchar * filename, const gchar * section,
     if (!filename)
         return NULL;
 
-    if (!g_file_get_contents(filename, &buffer, &filesize, NULL))
-        return NULL;
+    /*
+     * We optimise for the condition that we may be reading from the
+     * same ini-file multiple times. This is fairly common; it happens
+     * on .pls playlist loads. To do otherwise would take entirely too
+     * long, as fstat() can be very slow when done 21,000 times too many.
+     *
+     * Therefore, we optimise by keeping the last ini file in memory.
+     * Yes, this is a memory leak, but it is not too bad, hopefully.
+     *      - nenolod
+     */
+    if (open_buffer == NULL || strcasecmp(filename, open_buffer))
+    {
+        if (buffer != NULL)
+	{
+            g_free(buffer);
+            buffer = NULL;
+        }
+
+	if (open_buffer != NULL)
+        {
+	    g_free(open_buffer);
+            open_buffer = NULL;
+        }
+
+        if (!g_file_get_contents(filename, &buffer, &filesize, NULL))
+            return NULL;
+
+        open_buffer = g_strdup(filename);
+    }
 
     /*
      * Convert UTF-16 into something useful. Original implementation
@@ -484,7 +513,6 @@ read_ini_string(const gchar * filename, const gchar * section,
             off++;
     }
 
-    g_free(buffer);
     return ret_buffer;
 }
 
