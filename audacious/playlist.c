@@ -508,12 +508,12 @@ playlist_ins(const gchar * filename, gint pos)
         return TRUE;
     }
 
-    if (loading_playlist == TRUE || cfg.playlist_detect == FALSE)
+    if (loading_playlist == TRUE || cfg.playlist_detect == TRUE)
 	dec = NULL;
     else
 	dec = input_check_file(filename, TRUE);
 
-    if (cfg.playlist_detect == FALSE || loading_playlist == TRUE || (loading_playlist == FALSE && dec != NULL))
+    if (cfg.playlist_detect == TRUE || loading_playlist == TRUE || (loading_playlist == FALSE && dec != NULL))
     {
 	__playlist_ins(filename, pos, dec);
 	playlist_generate_shuffle_list();
@@ -660,6 +660,8 @@ playlist_dir_find_files(const gchar * path,
             g_free(filename);
             list = g_list_concat(list, sub);
         }
+        else if (cfg.playlist_detect == TRUE)
+            list = g_list_prepend(list, filename);
         else if (input_check_file(filename, TRUE))
             list = g_list_prepend(list, filename);
         else
@@ -1385,7 +1387,7 @@ playlist_load_ins_file(const gchar * filename_p,
         }
         tmp = g_build_filename(path, filename, NULL);
 
-	if (loading_playlist != TRUE || cfg.playlist_detect == FALSE)
+	if (loading_playlist != TRUE && cfg.playlist_detect != TRUE)
 	    dec = input_check_file(tmp, FALSE);
 	else
 	    dec = NULL;
@@ -1396,7 +1398,7 @@ playlist_load_ins_file(const gchar * filename_p,
     }
     else
     {
-	if (loading_playlist != TRUE || cfg.playlist_detect == FALSE)
+	if (loading_playlist != TRUE && cfg.playlist_detect != TRUE)
 	    dec = input_check_file(filename, FALSE);
 	else
 	    dec = NULL;
