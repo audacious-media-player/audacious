@@ -1,3 +1,1202 @@
+2006-06-11 15:23:35  William Pitcock <nenolod@nenolod.net>
+
+	   - new audio icon (via deitarion)
+
+2006-06-11 14:10:53  William Pitcock <nenolod@nenolod.net>
+
+	   - optimise for multiple lookups of a single INI file, by caching the contents of the INI file.
+
+2006-06-10 23:44:36  William Pitcock <nenolod@nenolod.net>
+
+	   - make it work for real
+
+2006-06-10 23:29:02  William Pitcock <nenolod@nenolod.net>
+
+	   - oops
+
+2006-06-10 23:02:24  William Pitcock <nenolod@nenolod.net>
+
+	   - Allow to do format detection on demand; instead of immediately on add
+
+2006-06-10 20:47:51  William Pitcock <nenolod@nenolod.net>
+
+	   - remove Encoding patch, as it never worked properly anyway, and somebody complained about it causing stability problems
+
+2006-06-10 14:47:00  Tony Vroon <chainsaw@gentoo.org>
+
+	* Add V=1 shorthand for SHOW_CFLAGS, patch by vapier (Gentoo).
+
+2006-06-09 15:28:15  William Pitcock <nenolod@nenolod.net>
+
+	   - CFLAGS, yeah
+
+2006-06-09 09:14:32  Tony Vroon <chainsaw@gentoo.org>
+
+	* As requested by Joker; CFLAGS needs -fPIC -DPIC as well now that C/CXX flags are properly separated.
+
+2006-06-08 14:11:06  William Pitcock <nenolod@nenolod.net>
+
+	   - remove an old hack that is no longer necessary (can cause a crash (!))
+
+2006-06-08 13:34:43  William Pitcock <nenolod@nenolod.net>
+
+	   - Musepack Audio Plugin 1.2 -> Musepack Audio Plugin
+
+2006-06-08 13:29:58  William Pitcock <nenolod@nenolod.net>
+
+	   - revert r1191
+
+2006-06-08 13:15:21  William Pitcock <nenolod@nenolod.net>
+
+	   - respect CXXFLAGS
+
+2006-06-08 13:14:34  William Pitcock <nenolod@nenolod.net>
+
+	   - more fixes
+
+2006-06-08 13:09:22  William Pitcock <nenolod@nenolod.net>
+
+	   - fix improper makefile
+
+2006-06-05 01:37:21  William Pitcock <nenolod@nenolod.net>
+
+	   - crappy audio.png, somebody please improve (I made this in GIMP, in 5 minutes. We all know my GIMP skills are un-leet, thanks.)
+
+2006-06-04 23:42:56  William Pitcock <nenolod@nenolod.net>
+
+	   - cleanup the prefs box
+
+2006-06-04 23:39:41  William Pitcock <nenolod@nenolod.net>
+
+	   - use global value for buffer size
+
+2006-06-04 23:32:59  William Pitcock <nenolod@nenolod.net>
+
+	   - cosmetic improvement (6px spacing between explanation label, and output plugin buttonbox)
+
+2006-06-04 23:30:47  William Pitcock <nenolod@nenolod.net>
+
+	   - oops, give that spinbutton some sane values
+
+2006-06-04 23:28:53  William Pitcock <nenolod@nenolod.net>
+
+	   - hookup buffer size option
+
+2006-06-04 23:21:33  William Pitcock <nenolod@nenolod.net>
+
+	   - new global variable `output_buffer_size', replaces all of the per-plugin buffer sizes
+
+2006-06-04 23:01:04  William Pitcock <nenolod@nenolod.net>
+
+	   - more checkboxes than you can shake a stick at
+
+2006-06-04 22:27:39  William Pitcock <nenolod@nenolod.net>
+
+	   - hookup preferences/info buttons under dialog pane
+
+2006-06-04 22:03:13  William Pitcock <nenolod@nenolod.net>
+
+	   - some audio preferences stuff, incomplete
+
+2006-06-04 20:38:07  William Pitcock <nenolod@nenolod.net>
+
+	   - remove shorten plugin
+
+2006-06-04 20:35:49  William Pitcock <nenolod@nenolod.net>
+
+	   - "Reference FLAC Player v1.1.2" becomes "FLAC Audio Plugin"
+	   - Properly use global proxy configuration settings.
+
+2006-06-04 15:31:31  William Pitcock <nenolod@nenolod.net>
+
+	   - new connectivity icon
+
+2006-06-04 15:24:37  William Pitcock <nenolod@nenolod.net>
+
+	   - convert filenames to UTF-8, as in vorbis plugin. Patch by: Kazuki Shimura <kazuki@ma.ccnw.ne.jp>.
+
+2006-06-04 15:20:40  William Pitcock <nenolod@nenolod.net>
+
+	   - don't pass NULL to atoi().
+
+2006-06-04 04:26:39  William Pitcock <nenolod@nenolod.net>
+
+	   - further UI tweaks and mechanical simplification
+
+2006-06-04 04:15:34  William Pitcock <nenolod@nenolod.net>
+
+	   - remove unnecessary gtk hpane thingy
+
+2006-06-04 03:57:12  William Pitcock <nenolod@nenolod.net>
+
+	   - prefswin enhancements
+
+2006-06-04 03:33:41  William Pitcock <nenolod@nenolod.net>
+
+	   - proxy support hack
+
+2006-06-04 03:30:51  William Pitcock <nenolod@nenolod.net>
+
+	   - proxy support hack (stupid gconf)
+
+2006-06-03 20:21:06  Tony Vroon <chainsaw@gentoo.org>
+
+	* Updated italian translation and removal of translation tags for developer names by Diego "FlameEyes" Petteno from Gentoo.
+
+2006-06-03 19:53:50  Tony Vroon <chainsaw@gentoo.org>
+
+	* Respect pointer signedness. Compiler is still unhappy about the constants shoved into guid_1 & guid_2 somehow, though.
+
+2006-06-03 18:12:12  Tony Vroon <chainsaw@gentoo.org>
+
+	* Update dutch translation. One more pointer signedness issue in MP4.
+
+2006-06-03 17:29:45  Tony Vroon <chainsaw@gentoo.org>
+
+	* Fully respect pointer signedness in libmp4ff.
+
+2006-06-03 14:19:34  William Pitcock <nenolod@nenolod.net>
+
+	   - fix NSFE metadata
+
+2006-06-03 14:09:25  William Pitcock <nenolod@nenolod.net>
+
+	   - present subsongs as playlist entities (will be enqueued at the current position)
+
+2006-06-03 13:46:48  William Pitcock <nenolod@nenolod.net>
+
+	   - allow load_file<class Emu> to load files into the parser without reading the tag information
+	   - generate subsong path specifications on demand if we're not loading a specific subsong
+
+2006-06-03 13:13:29  William Pitcock <nenolod@nenolod.net>
+
+	   - allow paths like /home/nenolod/moo/ff3/ff3.nsf?6 to play subsong 6 from ff3.nsf.
+
+2006-06-02 11:58:51  William Pitcock <nenolod@nenolod.net>
+
+	   - initial mms stream support
+
+2006-06-02 11:08:57  Tony Vroon <chainsaw@gentoo.org>
+
+	* The fallback label is not used unless detection is defined. Move endif down to reflect that.
+
+2006-05-31 08:55:17  Tony Vroon <chainsaw@gentoo.org>
+
+	* Respect pointer signedness and delete legacy visual studio project file.
+
+2006-05-31 01:28:14  William Pitcock <nenolod@nenolod.net>
+
+	   - add section concerning the MP3 patents and commercial use
+
+2006-05-31 01:10:32  William Pitcock <nenolod@nenolod.net>
+
+	   - more bandwidth expansion
+
+2006-05-31 00:52:11  William Pitcock <nenolod@nenolod.net>
+
+	   - rename psycho.c to paranoia.c, as other stuff will be here (such as frequency locking code, to fix warble, etc.)
+
+2006-05-31 00:37:19  William Pitcock <nenolod@nenolod.net>
+
+	   - reset harmonics threshold back to original value
+
+2006-05-31 00:34:42  William Pitcock <nenolod@nenolod.net>
+
+	   - fix an oops
+
+2006-05-31 00:30:11  William Pitcock <nenolod@nenolod.net>
+
+	   - further simplification
+
+2006-05-31 00:29:00  William Pitcock <nenolod@nenolod.net>
+
+	   - simplify
+
+2006-05-31 00:20:52  William Pitcock <nenolod@nenolod.net>
+
+	   - finally the distortion bug might be killed!
+
+2006-05-31 00:09:36  William Pitcock <nenolod@nenolod.net>
+
+	   - further tuning optimisations
+
+2006-05-30 23:55:51  William Pitcock <nenolod@nenolod.net>
+
+	   - new tunings, please test
+
+2006-05-29 19:51:48  William Pitcock <nenolod@nenolod.net>
+
+	   - improve support of non-standard bitrates
+	   - remove unreached code
+
+2006-05-29 13:25:33  William Pitcock <nenolod@nenolod.net>
+
+	   - remove equalizer.c (unneeded)
+
+2006-05-28 10:27:54  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+
+	   - audacious should pick runtime library up from ${libdir}.
+	   - fix for chardet combobox bug. now combox will be drawn appropriately even if config file doesn't have chardet_detector.
+
+2006-05-27 15:26:29  William Pitcock <nenolod@nenolod.net>
+
+	   - add additional greek translator, Stathis Kamperis <ekamperi@auth.gr>
+
+2006-05-27 15:24:53  William Pitcock <nenolod@nenolod.net>
+
+	   - update PO files
+	   - update greek translation, via stavrosg
+
+2006-05-27 13:37:53  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+
+	* chardet build error fix.
+
+2006-05-27 13:02:08  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+
+	* automatic character encoding detector for id3 metadata. --enable-chardet enables this feature.
+
+2006-05-24 18:31:15  Derek Pomery <nemo@m8y.org>
+
+	* oops. wasn't going to check the XMMS updates in until it was actually working.
+
+2006-05-23 18:05:38  Derek Pomery <nemo@m8y.org>
+
+	* Updating of some deprecated GTK functions.
+
+2006-05-23 15:56:14  Derek Pomery <nemo@m8y.org>
+
+	* Make certain playlist gets redrawn after docked move. (transparent background may have changed)
+	* Should this be in dock.c?
+
+2006-05-23 12:52:15  William Pitcock <nenolod@nenolod.net>
+
+	* via Christian Birchinger:
+	   - (Plugins/Input/sid/ xmms-sid.c): fix the slider size in the subsong switcher to be something more than 1px
+
+2006-05-22 19:45:04  William Pitcock <nenolod@nenolod.net>
+
+	   - don't need this
+
+2006-05-22 19:42:44  William Pitcock <nenolod@nenolod.net>
+
+	   - update docs
+
+2006-05-22 19:22:34  William Pitcock <nenolod@nenolod.net>
+
+	   - prepare to split audacious code away from the actual decoder and use a highlevel API
+
+2006-05-22 19:02:59  William Pitcock <nenolod@nenolod.net>
+
+	* s:xmms_usleep:g_usleep:g
+
+2006-05-22 18:37:39  William Pitcock <nenolod@nenolod.net>
+
+	   - remove improper sampling rate change condition. Valid MP3s will not do this. Infact, I've never seen an MP3 that does this. Additionally, it doesn't even work with Shoutcast.
+
+2006-05-21 14:16:21  William Pitcock <nenolod@nenolod.net>
+
+	   - nevermind
+
+2006-05-21 14:13:55  William Pitcock <nenolod@nenolod.net>
+
+	   - if we're going to clip, just throw back the original data
+
+2006-05-21 00:25:31  William Pitcock <nenolod@nenolod.net>
+
+	   - stereo seperation hysterisis of 16dB vs 20dB
+
+2006-05-21 00:09:43  William Pitcock <nenolod@nenolod.net>
+
+	   - experimental tweaks to the new psychoaccoustic model
+
+2006-05-20 23:09:00  William Pitcock <nenolod@nenolod.net>
+
+	   - more stuff
+
+2006-05-20 22:36:10  William Pitcock <nenolod@nenolod.net>
+
+	* Psychoaccoustics support (to disable, temporarily add -UPSYCHO to your CFLAGS.):
+	* This commit brings psychoaccoustics support (as used in mp3surround decoders) to libmpgdec.
+	* For example, we can now almost fully compensate for lack of bandwidth in ISO compliant MP3 encodings.
+	* In addition, further inaccuracies with pitch and the lack of reverb feeling that some MP3s have are
+	* detected and automatically compensated for.
+
+2006-05-20 22:04:39  William Pitcock <nenolod@nenolod.net>
+
+	   - when using fixed integer based compile -DINTEGER_COMPILE, we want to use long type, not int (also use radixes to emulate FPU math)
+
+2006-05-20 18:24:26  Tony Vroon <chainsaw@gentoo.org>
+
+	* Add myself to translation credits for the dutch language.
+
+2006-05-20 12:47:42  William Pitcock <nenolod@nenolod.net>
+
+	   - Preferences UI tweak
+
+2006-05-19 19:53:03  George Averill <nhjm449@gmail.com>
+
+	   - About window should be set to 'always on top'
+
+2006-05-19 16:00:07  William Pitcock <nenolod@nenolod.net>
+
+	   - revert r1156, r1164
+
+2006-05-19 15:23:08  William Pitcock <nenolod@nenolod.net>
+
+	   - playlistwin and equalizerwin are their own windows, don't treat them
+	  as transient windows (ugh)
+
+2006-05-19 15:09:35  William Pitcock <nenolod@nenolod.net>
+
+	   - disable expand/fill
+
+2006-05-19 15:07:38  William Pitcock <nenolod@nenolod.net>
+
+	   - handle the redraw more effectively here
+
+2006-05-19 15:06:50  William Pitcock <nenolod@nenolod.net>
+
+	   - playlist transparency toggle
+
+2006-05-19 14:56:44  William Pitcock <nenolod@nenolod.net>
+
+	   - "Use custom cursors" does NOT require it's own vbox, kthx
+
+2006-05-19 14:48:02  William Pitcock <nenolod@nenolod.net>
+
+	   - update transparency pixmap if root window pixmap changes
+
+2006-05-19 14:24:07  William Pitcock <nenolod@nenolod.net>
+
+	   - avoid BadDrawable error
+
+2006-05-19 14:09:49  William Pitcock <nenolod@nenolod.net>
+
+	   - if cfg.show_separator_in_pl is not true, then make it look nicer (and
+	  add a dot after the playlist number, maybe galisus will be happy)
+
+2006-05-19 13:57:39  William Pitcock <nenolod@nenolod.net>
+
+	   - remove improper transience settings (these were just wrong)
+
+2006-05-17 12:15:36  William Pitcock <nenolod@nenolod.net>
+
+	   - cosmetic fix: use proper indentation on glade file in Connectivity pane
+
+2006-05-17 10:06:03  William Pitcock <nenolod@nenolod.net>
+
+	   - artwork
+
+2006-05-17 10:02:49  William Pitcock <nenolod@nenolod.net>
+
+	   - fix
+
+2006-05-16 23:57:16  William Pitcock <nenolod@nenolod.net>
+
+	   - fix snapto mainwindow
+
+2006-05-16 23:52:56  William Pitcock <nenolod@nenolod.net>
+
+	   - use global proxy configuration instead of individual configurations (chainsaw)
+
+2006-05-16 23:52:31  William Pitcock <nenolod@nenolod.net>
+
+	   - proxy auth options
+
+2006-05-16 23:00:38  George Averill <nhjm449@gmail.com>
+
+	   - super minor fixes
+
+2006-05-16 22:38:22  William Pitcock <nenolod@nenolod.net>
+
+	   - fix dock.c
+
+2006-05-16 21:56:58  George Averill <nhjm449@gmail.com>
+
+	   - Don't force cfg.close_dialog_{open,add} to TRUE when opening the filechooser...
+
+2006-05-16 19:25:58  William Pitcock <nenolod@nenolod.net>
+
+	   - fix
+
+2006-05-16 19:15:01  William Pitcock <nenolod@nenolod.net>
+
+	   - I made an oops.
+
+2006-05-16 19:12:36  William Pitcock <nenolod@nenolod.net>
+
+	   - revert back to dock.c 2/2 (hope it works)
+
+2006-05-16 19:05:47  William Pitcock <nenolod@nenolod.net>
+
+	   - revert back to dock.c, commit 1/2.
+
+2006-05-15 22:55:19  George Averill <nhjm449@gmail.com>
+
+	   - Add the ability to easily save to playlist.m3u from the list menu. (For
+	* those who hate having to restart Audacious in order to save the playlist).
+
+2006-05-15 15:45:52  William Pitcock <nenolod@nenolod.net>
+
+	   - DESTDIR fix
+
+2006-05-15 14:58:58  William Pitcock <nenolod@nenolod.net>
+
+	   - make sure libaudacious.so is picked up
+
+2006-05-15 14:27:01  William Pitcock <nenolod@nenolod.net>
+
+	   - remove unnecessary build-posthook
+
+2006-05-15 13:42:14  William Pitcock <nenolod@nenolod.net>
+
+	   - remove debug notice
+
+2006-05-15 13:31:31  William Pitcock <nenolod@nenolod.net>
+
+	   - link against 'libaudacious.so.2.0.0' instead of 'libaudacious.so'. This brings us in full compliance of debian
+	  packaging guidelines.
+
+2006-05-15 10:17:53  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+
+	* add the config option to enable/disable separator line in the playlist
+
+2006-05-15 09:47:01  William Pitcock <nenolod@nenolod.net>
+
+	   - don't blindly call shade_pixmap(). pointyhat to: me, pointed out by: yaz
+
+2006-05-14 22:48:13  William Pitcock <nenolod@nenolod.net>
+
+	   - ok, that g_thread_join() is definately hostile
+
+2006-05-14 22:40:08  William Pitcock <nenolod@nenolod.net>
+
+	   - add an additional ip_data.stop check
+
+2006-05-14 22:38:22  William Pitcock <nenolod@nenolod.net>
+
+	   - try to g_thread_join() here.
+
+2006-05-14 22:35:37  William Pitcock <nenolod@nenolod.net>
+
+	   - if writable == 0 then bail out of produce_audio() instead of segfault
+
+2006-05-14 18:24:39  William Pitcock <nenolod@nenolod.net>
+
+	   - performance boost
+
+2006-05-14 18:08:07  William Pitcock <nenolod@nenolod.net>
+
+	   - add prototype for shade_pixmap() to be used on skin redraw (TRUE)
+
+2006-05-14 18:05:32  William Pitcock <nenolod@nenolod.net>
+
+	   - self-caching transparency generator (right now we have a blend constant of 60%)
+
+2006-05-14 15:35:06  William Pitcock <nenolod@nenolod.net>
+
+	   - initial playlist_transparent patch. (you will need to edit your audacious config manually, either by gconf or texteditor to enable)
+
+2006-05-14 13:45:51  William Pitcock <nenolod@nenolod.net>
+
+	   - gtk_window_set_decorated()
+
+2006-05-14 13:35:41  William Pitcock <nenolod@nenolod.net>
+
+	   - make playlist moveable again
+
+2006-05-14 13:23:22  William Pitcock <nenolod@nenolod.net>
+
+	   - same for equalizerwin
+
+2006-05-14 13:10:01  William Pitcock <nenolod@nenolod.net>
+
+	   - make mainwin moveable again
+
+2006-05-14 12:31:46  William Pitcock <nenolod@nenolod.net>
+
+	   - remove X11-incompliant dock.c, dock.h (sorry)
+
+2006-05-14 10:38:23  Tony Vroon <chainsaw@gentoo.org>
+
+	* 48kHz sampling rate selection for ModPlug by Christian Birchinger (Joker) from Gentoo.
+
+2006-05-14 03:20:40  George Averill <nhjm449@gmail.com>
+
+	* mainwin.c:
+	   - always on top fix
+	   - playlistwin_time fix
+
+	* skin.c:
+	   - set default text colors in case of missing pledit.txt
+
+	* ui_playlist.c
+	   - playlistwin_info width fix
+
+2006-05-14 01:28:57  William Pitcock <nenolod@nenolod.net>
+
+	   - if taglib_tag == NULL, then return instead of crash
+
+2006-05-14 00:59:15  William Pitcock <nenolod@nenolod.net>
+
+	   - this stuff hasn't applied since audacious 0.1.1
+
+2006-05-14 00:56:35  William Pitcock <nenolod@nenolod.net>
+
+	   - add some notes to myself about getting from here to there
+
+2006-05-13 13:20:38  William Pitcock <nenolod@nenolod.net>
+
+	   - abort out of produce_audio if a stop has been requested
+
+2006-05-13 13:20:11  William Pitcock <nenolod@nenolod.net>
+
+	   - remove comment
+
+2006-05-13 05:58:16  Tony Vroon <chainsaw@gentoo.org>
+
+	* Convert from deprecated configfile interace to configdb, closes bug #494.
+
+2006-05-12 16:18:48  Tony Vroon <chainsaw@gentoo.org>
+
+	* This code assumes that char is signed by default. This is not true on PPC. Extending CFLAGS so that the assumption is met.
+
+2006-05-12 16:12:17  William Pitcock <nenolod@nenolod.net>
+
+	   - hackhackhack workaround for the fact that joins will fail at times, inspired by the hackhack in WMA
+
+2006-05-12 16:03:50  William Pitcock <nenolod@nenolod.net>
+
+	   - threading cleanups, we no longer need to be mutexlocked 90% of the time, and we shouldn't have been joining in stop(), as the thread will likely already be joined, and if not, it will be reaped later
+
+2006-05-12 15:47:25  William Pitcock <nenolod@nenolod.net>
+
+	   - fix g_thread_join() spurious call error (also effects 1.0 -- yuck!)
+
+2006-05-12 08:48:55  William Pitcock <nenolod@nenolod.net>
+
+	   - src/tagging_mp4.c, fileinfo.c, libmp4.c: Finish conversion to internal container code.
+	   - include/mpeg4ip.h, mpeg4ip_version.h, systems.h: Remove libmp4v2.
+	   - libmp4v2/: Remove libmp4v2.
+	   - Makefile.in: Remove references to libmp4v2.
+	   - configure.ac: Remove references to libmp4v2.
+
+2006-05-12 08:29:11  William Pitcock <nenolod@nenolod.net>
+
+	   - Use g_get_home_dir() instead of getenv ugliness here.
+
+2006-05-11 22:58:33  George Averill <nhjm449@gmail.com>
+
+	   - If GTK is going to show its own search box for the JTF treeview, at least make it search the correct column
+
+2006-05-10 21:13:49  George Averill <nhjm449@gmail.com>
+
+	   - Queue fix from ircubic (bug #490)
+
+2006-05-10 19:54:49  William Pitcock <nenolod@nenolod.net>
+
+	   - fix a potential crash in our read callback (for VFS)
+	   - typo fix
+
+2006-05-10 18:01:35  William Pitcock <nenolod@nenolod.net>
+
+	   - fix infinite loop issue
+
+2006-05-10 17:56:52  William Pitcock <nenolod@nenolod.net>
+
+	   - add makefile to configure.ac
+
+2006-05-10 17:00:19  William Pitcock <nenolod@nenolod.net>
+
+	   - resync headers
+	   - libmp4ff based container management code working (has a few bugs to
+	  work out still though.)
+
+2006-05-10 16:44:20  William Pitcock <nenolod@nenolod.net>
+
+	   - 2.1 beta
+
+2006-05-10 16:41:23  William Pitcock <nenolod@nenolod.net>
+
+	   - stuff
+
+2006-05-10 09:55:22  William Pitcock <nenolod@nenolod.net>
+
+	   - about box cleanups
+
+2006-05-09 13:08:29  William Pitcock <nenolod@nenolod.net>
+
+	   - ConfigDb goodness
+
+2006-05-09 12:05:03  William Pitcock <nenolod@nenolod.net>
+
+	   - bypass poisoning on configfile.c
+
+2006-05-09 12:02:09  William Pitcock <nenolod@nenolod.net>
+
+	   - configdb stuff
+
+2006-05-09 11:52:49  William Pitcock <nenolod@nenolod.net>
+
+	   - don't use XMMS ConfigFile interface here
+
+2006-05-09 11:04:44  William Pitcock <nenolod@nenolod.net>
+
+	* (a quick way to reenable configfile):
+	 * If you are a third party developer and you need a quick fix, add
+	 *   #define I_AM_A_THIRD_PARTY_DEVELOPER_WHO_NEEDS_TO_BE_KICKED_IN_THE_HEAD_BY_CHUCK_NORRIS
+	 * to your code.
+
+2006-05-09 10:57:40  William Pitcock <nenolod@nenolod.net>
+
+	* Poison the XMMS ConfigFile routines. The rationale for this decision,
+	* is that the configdb code has been deprecated by us since 0.2, and that
+	* anybody still using it needs a swift kick in the head (by chuck norris?).
+
+	* This action has been taken after IRC discussions with both nemo and Chainsaw.
+
+2006-05-09 10:48:01  William Pitcock <nenolod@nenolod.net>
+
+	   - fix overcompression in the modified iir routines
+
+2006-05-08 23:05:33  William Pitcock <nenolod@nenolod.net>
+
+	   - yes this lrintf stuff needs to go
+
+2006-05-08 08:56:47  William Pitcock <nenolod@nenolod.net>
+
+	   - synchronize audacious-faad with FAAD2 CVS.
+
+2006-05-08 08:00:19  William Pitcock <nenolod@nenolod.net>
+
+	   - add an additional usleep to the playback resume code per Chainsaw
+
+2006-05-08 00:36:14  William Pitcock <nenolod@nenolod.net>
+
+	   - version bump: 1.1.0 (since we're getting close to releasing the reference package)
+
+2006-05-07 23:47:02  William Pitcock <nenolod@nenolod.net>
+
+	   - Make vorbisfile/vorbisinfo code threadsafe and reenterant by properly respecting vf_mutex. Patch by Johan Tavelin <d00jota -at- dtek.chalmers.se>.
+
+2006-05-04 11:54:53  William Pitcock <nenolod@nenolod.net>
+
+	* via Shay Green:
+	   - add frequency response modifier options for GBS/VGM/GYM to Music_Emu::equalizer_t.
+
+2006-05-04 00:44:03  George Averill <nhjm449@gmail.com>
+
+	   - ID3LIBS no longer needed!
+
+2006-05-03 14:44:25  Derek Pomery <nemo@m8y.org>
+
+	* Oh right. Strip id3lib check
+
+2006-05-02 19:04:52  Tony Vroon <chainsaw@gentoo.org>
+
+	* Add an empty tag obliterator(TM) as designed by nenolod for mpg123.
+
+2006-05-02 18:37:38  Tony Vroon <chainsaw@gentoo.org>
+
+	* Now the world can finally hear the last few seconds of the Atomic Betty song. Rejoice!
+
+2006-05-01 17:33:32  Tony Vroon <chainsaw@gentoo.org>
+
+	* Assign new shortcuts that no longer conflict. Patch by mokoshi, closes bug #478.
+
+2006-05-01 17:08:28  Tony Vroon <chainsaw@gentoo.org>
+
+	* A GCC warning pointed out that the *bp++ statement did not actually do anything useful, quite certain that the author intended \(*bp\)++ or *bp += 1 here.
+
+2006-05-01 16:20:50  Tony Vroon <chainsaw@gentoo.org>
+
+	* Add wmclass information to the playlist and equalizer. Patch by cha0smaster, closes bug #481.
+
+2006-05-01 15:53:20  Tony Vroon <chainsaw@gentoo.org>
+
+	* Support for saving the playback state, and resuming playback after restart. Patch by cha0smaster, closes bug #479.
+
+2006-05-01 10:38:43  Tony Vroon <chainsaw@gentoo.org>
+
+	* Properly nullify the tag pointer or we could be passing a stale one.
+
+2006-05-01 09:46:17  Tony Vroon <chainsaw@gentoo.org>
+
+	* Stop assuming that a char is signed by default. Stop trying to store negative values in an unsigned char. Remove some fragments of the Windows build system that were still present.
+
+2006-05-01 07:57:13  Tony Vroon <chainsaw@gentoo.org>
+
+	* Reduce amount of emitted GCC 4.1 warnings to 6. For that boring rainy afternoon, remove the two -Wno statements in CFLAGS (configure.ac) and you will see the actual amount.
+
+2006-04-30 20:04:43  Tony Vroon <chainsaw@gentoo.org>
+
+	* Taglib length determination veto by nenolod, reverting. Leaving fileinfo optimizations in place, though.
+
+2006-04-30 19:59:55  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use taglib for length determination. Simpler code, might also deal better with some VBR MP3s if they have length info in their tags.
+
+2006-04-30 19:00:48  Tony Vroon <chainsaw@gentoo.org>
+
+	* Add a missing cast.
+
+2006-04-30 18:48:20  Tony Vroon <chainsaw@gentoo.org>
+
+	* Declare variables in a different order, as GCC feels that the current order was wrong.
+
+2006-04-30 18:32:42  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use correct format string; gsize != long unsigned int.
+
+2006-04-30 17:46:01  Tony Vroon <chainsaw@gentoo.org>
+
+	* Updated dutch translation. 1043 translated messages, no more fuzzy (read: wrong) or untranslated messages.
+
+2006-04-30 10:10:06  William Pitcock <nenolod@nenolod.net>
+
+	   - Denote Gustavo D. Vranjes as current Spanish translator
+	   - Update spanish translation per Gustavo.
+
+2006-04-29 14:29:59  Derek Pomery <nemo@m8y.org>
+
+	* Not a CVS repo
+
+2006-04-29 14:21:27  Derek Pomery <nemo@m8y.org>
+
+	* Not a CVS repo
+
+2006-04-29 10:59:35  William Pitcock <nenolod@nenolod.net>
+
+	* Per Laszlo Dvornik:
+	   - Update POTFILES.in
+	   - Update hungarian translation
+
+2006-04-29 00:46:00  George Averill <nhjm449@gmail.com>
+
+	   - jumptofile and queue support fun
+
+2006-04-29 00:44:06  George Averill <nhjm449@gmail.com>
+
+	   - Fun fileinfo fixes
+
+2006-04-29 00:43:09  George Averill <nhjm449@gmail.com>
+
+	   - Let's not leave mp4 files open after reading their tags :P
+
+2006-04-28 13:21:33  Tony Vroon <chainsaw@gentoo.org>
+
+	* Correct includes, should not have taglib/ in there.
+
+2006-04-27 17:52:06  George Averill <nhjm449@gmail.com>
+
+	   - Another CDDB fix! :/
+
+2006-04-27 10:06:57  William Pitcock <nenolod@nenolod.net>
+
+	   - contrast improvements
+
+2006-04-27 08:52:47  William Pitcock <nenolod@nenolod.net>
+
+	   - IPv6 support
+
+2006-04-26 23:26:03  George Averill <nhjm449@gmail.com>
+
+	   - Revert: Okay, I'm a fool. There was a reason they weren't included.
+
+2006-04-26 23:14:48  George Averill <nhjm449@gmail.com>
+
+	   - Let's not forget the year and track number!
+
+2006-04-26 23:06:14  George Averill <nhjm449@gmail.com>
+
+	   - Correctly display >1000 kbps bitrates when using modern skins
+
+2006-04-26 22:12:05  William Pitcock <nenolod@nenolod.net>
+
+	* Remove nonexistant tags from TitleInput.
+
+2006-04-26 21:14:25  William Pitcock <nenolod@nenolod.net>
+
+	   - compile objectives before installing them (oops)
+
+2006-04-26 13:38:41  William Pitcock <nenolod@nenolod.net>
+
+	   - don't use dct9 in integer mode
+
+2006-04-26 13:21:33  William Pitcock <nenolod@nenolod.net>
+
+	   - remove #define mpgdec_real
+
+2006-04-26 12:54:58  William Pitcock <nenolod@nenolod.net>
+
+	   - integer-mode decoding accuracy improvements
+
+2006-04-24 23:41:50  William Pitcock <nenolod@nenolod.net>
+
+	   - fix FD leak (pointed out by: Mikachu)
+
+2006-04-24 16:29:36  Derek Pomery <nemo@m8y.org>
+
+	* Adding back trim for deitarion.
+
+2006-04-24 16:03:16  Derek Pomery <nemo@m8y.org>
+
+	* Force dependance on taglib now used by mpg123 and musepack.
+
+2006-04-24 15:07:42  William Pitcock <nenolod@nenolod.net>
+
+	   - display filename if no tag is available
+
+2006-04-24 14:58:25  William Pitcock <nenolod@nenolod.net>
+
+	   - remove unused file
+
+2006-04-24 14:49:51  Derek Pomery <nemo@m8y.org>
+
+	* Quick n dirty unicode hack pending taglib-1.5.
+	* See http://bugs.kde.org/show_bug.cgi?id=126192
+
+2006-04-24 14:46:47  William Pitcock <nenolod@nenolod.net>
+
+	   - GLib 2.6 compatibility wrapper, per bug #469
+
+2006-04-24 02:40:43  George Averill <nhjm449@gmail.com>
+
+	   - Let's not let the user press the skin refresh button while already refreshing ;)
+
+2006-04-24 01:50:37  George Averill <nhjm449@gmail.com>
+
+	   - Reposition the 9
+
+2006-04-23 22:17:11  William Pitcock <nenolod@nenolod.net>
+
+	   - sync configure.ac with stable
+
+2006-04-23 19:46:20  William Pitcock <nenolod@nenolod.net>
+
+	   - fix crashing with taglib
+
+2006-04-23 19:11:06  George Averill <nhjm449@gmail.com>
+
+	   - Assorted playlist fixes ;)
+
+2006-04-23 17:50:33  Tony Vroon <chainsaw@gentoo.org>
+
+	* First attempt at introducing taglib here. Very rough, needs polishing. Please wear protective goggles before opening the file dialog. It *will* explode.
+
+2006-04-23 17:11:43  Tony Vroon <chainsaw@gentoo.org>
+
+	* Small update to the german translation (by a friend of Michael Hanselmann).
+
+2006-04-23 11:45:18  Tony Vroon <chainsaw@gentoo.org>
+
+	* Updated german translation by Michael Hanselmann (Gentoo).
+
+2006-04-22 20:52:47  George Averill <nhjm449@gmail.com>
+
+	   - fix signal handler error
+
+2006-04-22 01:13:19  George Averill <nhjm449@gmail.com>
+
+	   - CDDB query fix
+
+2006-04-20 16:07:57  Tony Vroon <chainsaw@gentoo.org>
+
+	* Update dutch translation. Apparently nobody else cares about this (sent several mails).
+
+2006-04-20 12:25:02  Giacomo Lozito <james@develia.org>
+
+	* fixed incorrect range conversion in volume functions
+
+2006-04-18 09:00:25  Derek Pomery <nemo@m8y.org>
+
+	* Moral, always compile before checking in.
+
+2006-04-18 08:50:23  Derek Pomery <nemo@m8y.org>
+
+	* Bug #463 - Adding a little noise to the log to help in debugging.
+
+2006-04-17 14:19:04  Derek Pomery <nemo@m8y.org>
+
+	* Experiment with catching invalid utf-8 so the dialog sees it,
+	* and it can be fixed properly in dialog.
+
+2006-04-17 08:41:26  William Pitcock <nenolod@nenolod.net>
+
+	   - don't run ldconfig when DESTDIR is not /. Closes bug #464.
+
+2006-04-16 20:34:59  George Averill <nhjm449@gmail.com>
+
+	   - Forgot a few things regarding titlestrings!
+
+2006-04-16 19:51:07  George Averill <nhjm449@gmail.com>
+
+	   - Tiny fix
+
+2006-04-16 18:38:46  Tony Vroon <chainsaw@gentoo.org>
+
+	* Convert \ path separators to /. Support was already present, but was not enabled before. Closes bug #461.
+
+2006-04-16 16:37:40  George Averill <nhjm449@gmail.com>
+
+	   - New default titlestring
+
+2006-04-15 22:12:29  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use default settings when no valid config exists.
+
+2006-04-15 20:49:50  Giacomo Lozito <james@develia.org>
+
+	* rewritten audiocompress aboutbox
+
+2006-04-15 20:35:01  Giacomo Lozito <james@develia.org>
+
+	* removed empty tab from audiocompress configuration window
+
+2006-04-15 20:05:57  Giacomo Lozito <james@develia.org>
+
+	* prevent audiocompress from fulfilling its suicidal tendencies
+
+2006-04-15 11:08:23  Giacomo Lozito <james@develia.org>
+
+	* fixed locale problem in sid about box
+
+2006-04-15 10:05:03  Tony Vroon <chainsaw@gentoo.org>
+
+	* Port AudioCompress (AGC) effect plugin from XMMS, as requested by Junics on SorceryNet.
+
+2006-04-14 19:21:21  George Averill <nhjm449@gmail.com>
+
+	   - oops, minor fix
+
+2006-04-14 13:25:08  William Pitcock <nenolod@nenolod.net>
+
+	   - more debugging
+
+2006-04-14 13:22:15  William Pitcock <nenolod@nenolod.net>
+
+	   - remove debugging printfs
+
+2006-04-14 13:21:02  William Pitcock <nenolod@nenolod.net>
+
+	   - remove declarations that we don't need to have
+
+2006-04-14 13:20:38  William Pitcock <nenolod@nenolod.net>
+
+	   - new decode loop from updated BMP-MP4 plugin
+
+2006-04-14 12:38:26  Derek Pomery <nemo@m8y.org>
+
+	* Moved the free, based on Joker's report of string corruptions.
+
+2006-04-14 12:11:18  Derek Pomery <nemo@m8y.org>
+
+	* For Joker, adds some padding around the buttons
+
+2006-04-13 10:32:17  William Pitcock <nenolod@nenolod.net>
+
+	   - experimental produce-audio changes via shd of the UADE team
+
+2006-04-12 21:53:19  William Pitcock <nenolod@nenolod.net>
+
+	   - fix FD leak
+
+2006-04-12 17:17:39  Tony Vroon <chainsaw@gentoo.org>
+
+	* Look, you missed a spot.
+
+2006-04-12 15:35:24  Tony Vroon <chainsaw@gentoo.org>
+
+	* Conversion of file operations to VFS. Needs stress testing, especially on Gnome-VFS.
+
+2006-04-12 13:07:10  William Pitcock <nenolod@nenolod.net>
+
+	   - konqueror hack was breaking standards here, fix a crash
+
+2006-04-11 16:33:16  Tony Vroon <chainsaw@gentoo.org>
+
+	* Allow to disable grabbing Amiga MOD files so a diferent plugin such as UADE gets a chance. Adds a few extra magic strings for Amiga files. Amiga MOD grabbing defaults to on for that Just Works(TM) feeling.
+
+2006-04-10 19:18:44  George Averill <nhjm449@gmail.com>
+
+	   - Fix playlist_set_position when paused
+
+2006-04-10 01:36:13  George Averill <nhjm449@gmail.com>
+
+	   - Skin update!
+
+2006-04-09 14:17:02  Tony Vroon <chainsaw@gentoo.org>
+
+	* Updated german translation by Tarsonis, closes bug #459.
+
+2006-04-08 21:44:43  Tony Vroon <chainsaw@gentoo.org>
+
+	* Extra_stereo effect plugin ported by deitarion. Some last pointer-related touchups by nemo & me.
+
+2006-04-06 13:03:26  William Pitcock <nenolod@nenolod.net>
+
+	   - fading fix
+
+2006-04-05 13:15:06  William Pitcock <nenolod@nenolod.net>
+
+	   - remove debugging notices
+
+2006-04-05 13:13:52  William Pitcock <nenolod@nenolod.net>
+
+	   - more progress
+
+2006-04-05 13:07:10  William Pitcock <nenolod@nenolod.net>
+
+	   - more work here
+
+2006-04-05 09:50:49  William Pitcock <nenolod@nenolod.net>
+
+	   - input proposed shorten input plugin for hacking
+
+2006-04-02 20:04:14  Giacomo Lozito <james@develia.org>
+
+	* objects in Plugins/Input/sexypsf/spu/ should be deleted too on make clean requests
+
+2006-04-02 19:53:30  Giacomo Lozito <james@develia.org>
+
+	* object files in Plugins/General/scrobbler/tags/ should be deleted too on clean requests
+
+2006-04-02 19:42:32  Giacomo Lozito <james@develia.org>
+
+	* binaries (audacious,audacious-arts-helper) should be deleted on clean requests
+
+2006-04-02 19:08:11  Tony Vroon <chainsaw@gentoo.org>
+
+	* Use a single 8-byte read instead of two 4-byte ones. The common path would nearly always result in two reads, so this should be faster.
+
+2006-04-02 13:32:31  Tony Vroon <chainsaw@gentoo.org>
+
+	* Detection of modules by magic bytes instead of by extension. Please let me know of false positives, if any. I would appreciate examples for any of the extensions still listed in the fallback that are not archives.
+
+2006-03-31 16:55:11  Tony Vroon <chainsaw@gentoo.org>
+
+	* Linking fix for --as-needed LDFLAG, thanks to Diego "Flameeyes" Petteno.
+
+2006-03-31 14:38:59  Tony Vroon <chainsaw@gentoo.org>
+
+	* Report mode from mpg123. Patch by spike, closes bug #457.
+
+2006-03-31 13:10:09  Tony Vroon <chainsaw@gentoo.org>
+
+	* Build fixes for --as-needed LDFLAG, provided by lav. Closes bug #454.
+
+2006-03-30 23:16:35  George Averill <nhjm449@gmail.com>
+
+	   - this should be it for now
+
+2006-03-30 23:10:03  George Averill <nhjm449@gmail.com>
+
+	   - more output-stopping fun!
+
+2006-03-30 23:04:21  George Averill <nhjm449@gmail.com>
+
+	   - stop the psuedo output plugin when using 'no playlist advance' or 'stop after current song'
+
+2006-03-30 16:12:18  Giacomo Lozito <james@develia.org>
+
+	* prevent jack o.p. aboutbox from spawning multiple times
+
+2006-03-30 16:03:48  Giacomo Lozito <james@develia.org>
+
+	* prevent tonegen aboutbox from spawning multiple times
+
+2006-03-30 15:55:46  Giacomo Lozito <james@develia.org>
+
+	* prevent timidity aboutbox from spawning multiple times
+
+2006-03-30 15:47:45  Giacomo Lozito <james@develia.org>
+
+	* prevent libconsole aboutbox from spawning multiple times
+
+2006-03-30 01:22:58  George Averill <nhjm449@gmail.com>
+
+	   - Forgot something
+
+2006-03-30 01:22:03  George Averill <nhjm449@gmail.com>
+
+	   - 'stop after current song' feature
+
+2006-03-30 00:17:26  George Averill <nhjm449@gmail.com>
+
+	   - icons woohoo
+
+2006-03-30 00:15:02  George Averill <nhjm449@gmail.com>
+
+	   - correct icon
+
+2006-03-29 21:57:35  George Averill <nhjm449@gmail.com>
+
+	   - should fix the ability to change songs while paused
+
+2006-03-29 09:37:10  Derek Pomery <nemo@m8y.org>
+
+	* If the pref is still going to appear, suppose one should allow it to do something.
+
+2006-03-29 09:35:54  Derek Pomery <nemo@m8y.org>
+
+	* Make refreshing optional, default to disabled if Gnome VFS available.
+
+2006-03-28 22:11:34  George Averill <nhjm449@gmail.com>
+
+	   - whoever made the song queue number a fixed distance from the edge of the playlist was insane
+
+2006-03-27 19:23:36  George Averill <nhjm449@gmail.com>
+
+	* * No Playlist Advance context menu checkmark fix (bug #456)
+
+2006-03-27 15:05:09  William Pitcock <nenolod@nenolod.net>
+
+	* Gapless support. This comes with a few caveats, that I will mention here:
+	* 1) It is not really gapless, it just removes any delays caused by
+	   resetting the output device. Mileage depends on source performance.
+	* However, this commit reduces any gaps I have to a period of time that is
+	* unnoticable to me. (Of course, I have a 15k RPM SATA drive too.)
+
+2006-03-27 13:02:35  William Pitcock <nenolod@nenolod.net>
+
+	   - Unbreak headless support. This probably needs to be backported to 0.2.4.
+
+2006-03-26 16:17:03  William Pitcock <nenolod@nenolod.net>
+
+	   - nhjm is now on core so lets make a note of that in the credits
+
+2006-03-26 15:51:07  George Averill <nhjm449@gmail.com>
+
+	* * Skin thumbnails are refreshable!
+
+2006-03-26 01:14:27  William Pitcock <nenolod@nenolod.net>
+
+	   - add missing skin hints data
+
+2006-03-25 22:05:46  William Pitcock <nenolod@nenolod.net>
+
+	   - version bump
+
+2006-03-25 22:05:15  William Pitcock <nenolod@nenolod.net>
+
+	   - modern skin for 0.3
+
+2006-03-25 19:27:49  William Pitcock <nenolod@nenolod.net>
+
+	   - disable the scrobbler plugin if curl isn't there (for real)
+
+2006-03-25 19:10:10  William Pitcock <nenolod@nenolod.net>
+
+	   - version bump
+
+2006-03-25 19:07:37  William Pitcock <nenolod@nenolod.net>
+
+	   - Update NEWS
+
+2006-03-25 18:58:38  William Pitcock <nenolod@nenolod.net>
+
+	   - Update ChangeLog
+
 2006-03-24 23:05:42  Derek Pomery <nemo@m8y.org>
 
 	* Quick n dirty refresh.
