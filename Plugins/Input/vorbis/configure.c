@@ -29,9 +29,6 @@ static GtkWidget *title_tag_override, *title_tag_box, *title_tag_entry,
     *title_desc;
 static GtkWidget *rg_switch, *rg_clip_switch, *rg_booster_switch,
     *rg_track_gain;
-/* Encoding patch */
-static GtkWidget *title_encoding_hbox, *title_encoding_enabled, *title_encoding, *title_encoding_label;
-/* Encoding patch */
 
 vorbis_config_t vorbis_cfg;
 
@@ -69,10 +66,6 @@ vorbis_configurewin_ok(GtkWidget * widget, gpointer data)
         vorbis_cfg.replaygain_mode = REPLAYGAIN_MODE_TRACK;
     else
         vorbis_cfg.replaygain_mode = REPLAYGAIN_MODE_ALBUM;
-    /* Encoding patch */
-    vorbis_cfg.title_encoding_enabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(title_encoding_enabled));
-    vorbis_cfg.title_encoding = g_strdup(gtk_entry_get_text(GTK_ENTRY(title_encoding)));
-    /* Encoding patch */
 
     db = bmp_cfg_db_open();
 
@@ -94,10 +87,6 @@ vorbis_configurewin_ok(GtkWidget * widget, gpointer data)
     bmp_cfg_db_set_int(db, "vorbis", "replaygain_mode",
                        vorbis_cfg.replaygain_mode);
     bmp_cfg_db_set_bool(db, "vorbis", "use_booster", vorbis_cfg.use_booster);
-    /* Encoding patch */
-    bmp_cfg_db_set_bool(db, "vorbis", "title_encoding_enabled", vorbis_cfg.title_encoding_enabled);
-    bmp_cfg_db_set_string(db, "vorbis", "title_encoding", vorbis_cfg.title_encoding);
-    /* Encoding patch */
     bmp_cfg_db_close(db);
     gtk_widget_destroy(vorbis_configurewin);
 }
@@ -155,17 +144,6 @@ title_tag_override_cb(GtkWidget * w, gpointer data)
     gtk_widget_set_sensitive(title_tag_box, override);
     gtk_widget_set_sensitive(title_desc, override);
 }
-
-/* Encoding patch */
-static void
-title_encoding_enabled_cb(GtkWidget * w, gpointer data)
-{
-    gboolean encoding_enabled;
-    encoding_enabled =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(title_encoding_enabled));
-    gtk_widget_set_sensitive(title_encoding_hbox, encoding_enabled);
-}
-/* Encoding patch */
 
 static void
 rg_switch_cb(GtkWidget * w, gpointer data)
@@ -310,31 +288,6 @@ vorbis_configure(void)
     gtk_container_border_width(GTK_CONTAINER(title_tag_vbox), 5);
     gtk_container_add(GTK_CONTAINER(title_frame), title_tag_vbox);
 
-    /* Encoding patch */
-    title_encoding_enabled =
-        gtk_check_button_new_with_label(_("Convert non-UTF8 Vorbis tags to UTF8"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(title_encoding_enabled),
-                                 vorbis_cfg.title_encoding_enabled);
-    g_signal_connect(G_OBJECT(title_encoding_enabled), "clicked",
-                     G_CALLBACK(title_encoding_enabled_cb), NULL);
-    gtk_box_pack_start(GTK_BOX(title_tag_vbox), title_encoding_enabled, FALSE,
-                       FALSE, 0);
-    
-    title_encoding_hbox = gtk_hbox_new(FALSE, 5);
-    gtk_widget_set_sensitive(title_encoding_hbox, vorbis_cfg.title_encoding_enabled);
-    gtk_box_pack_start(GTK_BOX(title_tag_vbox), title_encoding_hbox, FALSE,
-                       FALSE, 0);
-    
-    title_encoding_label = gtk_label_new(_("Vorbis encoding:"));
-    gtk_box_pack_start(GTK_BOX(title_encoding_hbox), title_encoding_label, FALSE,
-                       FALSE, 0);
-    
-    title_encoding = gtk_entry_new();
-    gtk_entry_set_text(GTK_ENTRY(title_encoding), vorbis_cfg.title_encoding);
-    gtk_box_pack_start(GTK_BOX(title_encoding_hbox), title_encoding, TRUE, TRUE,
-                       0);
-    /* Encoding patch */
-    
     title_tag_override =
         gtk_check_button_new_with_label(_("Override generic titles"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(title_tag_override),

@@ -622,10 +622,6 @@ vorbis_get_song_info(char *filename, char **title, int *length)
         /* streaming song info */
         *length = -1;
         *title = (char *) vorbis_http_get_title(filename);
-/* Encoding patch */
-        if (vorbis_cfg.title_encoding_enabled)
-            *title = convert_tag_title(*title);
-/* Encoding patch */
     }
 }
 
@@ -797,10 +793,6 @@ vorbis_generate_title(OggVorbis_File * vorbisfile, const gchar * filename)
     g_free(input->genre);
     g_free(input->comment);
     g_free(input);
-/* Encoding patch */
-    if (vorbis_cfg.title_encoding_enabled)
-        displaytitle = convert_tag_title(displaytitle);
-/* Encoding patch */    
 
     return displaytitle;
 }
@@ -858,10 +850,6 @@ vorbis_init(void)
     vorbis_cfg.use_replaygain = FALSE;
     vorbis_cfg.replaygain_mode = REPLAYGAIN_MODE_TRACK;
     vorbis_cfg.use_booster = FALSE;
-/* Encoding patch */
-    vorbis_cfg.title_encoding_enabled = FALSE;
-    vorbis_cfg.title_encoding = NULL;
-/* Encoding patch */
 
     db = bmp_cfg_db_open();
     bmp_cfg_db_get_int(db, "vorbis", "http_buffer_size",
@@ -886,13 +874,6 @@ vorbis_init(void)
     bmp_cfg_db_get_int(db, "vorbis", "replaygain_mode",
                        &vorbis_cfg.replaygain_mode);
     bmp_cfg_db_get_bool(db, "vorbis", "use_booster", &vorbis_cfg.use_booster);
-    /* Encoding patch */
-    bmp_cfg_db_get_bool(db, "vorbis", "title_encoding_enabled", &vorbis_cfg.title_encoding_enabled);
-    bmp_cfg_db_get_string(db, "vorbis", "title_encoding", &vorbis_cfg.title_encoding);
-    if (vorbis_cfg.title_encoding_enabled)
-        vorbis_tag_encoding_list = g_strsplit_set(vorbis_cfg.title_encoding, ENCODING_SEPARATOR, 0);
-    
-    /* Encoding patch */
 
     bmp_cfg_db_get_bool(db, NULL, "use_proxy", &vorbis_cfg.use_proxy);
     bmp_cfg_db_get_string(db, NULL, "proxy_host", &vorbis_cfg.proxy_host);
