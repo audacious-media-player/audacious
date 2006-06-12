@@ -1,3 +1,13 @@
+2006-06-12 06:51:02 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1286]
+  - another API change [sorry!]
+  
+
+  Changes:        Modified:
+  +8 -2           trunk/audacious/prefswin.c  
+  +1 -1           trunk/audacious/prefswin.h  
+
+
 2006-06-12 06:38:50 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1284]
   - remove the preferences UI on unload
