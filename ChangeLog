@@ -1,3 +1,14 @@
+2006-06-12 03:29:00 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1262]
+  - grr
+  
+
+  Changes:        Modified:
+  +0 -14          trunk/Plugins/General/scrobbler/config.h  
+  +19 -37         trunk/Plugins/General/scrobbler/configure.c  
+  +11 -4          trunk/Plugins/General/scrobbler/xmms_scrobbler.c  
+
+
 2006-06-12 03:11:40 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1260]
   prefswin_page_new():
