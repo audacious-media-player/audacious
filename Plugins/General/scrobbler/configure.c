@@ -21,13 +21,6 @@
 
 #include "configure.h"
 
-#define GLADE_HOOKUP_OBJECT(component,widget,name) \
-  g_object_set_data_full (G_OBJECT (component), name, \
-    gtk_widget_ref (widget), (GDestroyNotify) gtk_widget_unref)
-
-#define GLADE_HOOKUP_OBJECT_NO_REF(component,widget,name) \
-  g_object_set_data (G_OBJECT (component), name, widget)
-
 GtkWidget *entry1, *entry2, *cfgdlg;
 
 static char *hexify(char *pass, int len)
@@ -78,7 +71,6 @@ GtkWidget *
 create_cfgdlg(void)
 {
   ConfigDb *db;
-  GtkWidget *window1;
   GtkWidget *vbox2;
   GtkWidget *table1;
   GtkWidget *label3;
@@ -91,14 +83,7 @@ create_cfgdlg(void)
   GtkWidget *button5;
   GtkWidget *button6;
 
-  window1 = gtk_alignment_new (12, 12, 0, 0);
-
-/* gtk_container_set_border_width (GTK_CONTAINER (window1), 12); */
-/* gtk_window_set_title (GTK_WINDOW (window1), _("Scrobbler Configuration")); */
-
   vbox2 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_show (vbox2);
-  gtk_container_add (GTK_CONTAINER (window1), vbox2);
 
   table1 = gtk_table_new (4, 2, FALSE);
   gtk_widget_show (table1);
@@ -168,28 +153,12 @@ create_cfgdlg(void)
   GTK_WIDGET_SET_FLAGS (button5, GTK_CAN_DEFAULT);
 
   gtk_signal_connect(GTK_OBJECT(button5), "clicked",
-                     GTK_SIGNAL_FUNC(saveconfig), GTK_OBJECT(window1));
+                     GTK_SIGNAL_FUNC(saveconfig), NULL);
 
   button6 = gtk_button_new_from_stock ("gtk-close");
   gtk_widget_show (button6);
   gtk_container_add (GTK_CONTAINER (hbuttonbox1), button6);
   GTK_WIDGET_SET_FLAGS (button6, GTK_CAN_DEFAULT);
-
-  /* Store pointers to all widgets, for use by lookup_widget(). */
-  GLADE_HOOKUP_OBJECT_NO_REF (window1, window1, "window1");
-  GLADE_HOOKUP_OBJECT (window1, vbox2, "vbox2");
-  GLADE_HOOKUP_OBJECT (window1, table1, "table1");
-  GLADE_HOOKUP_OBJECT (window1, entry2, "entry2");
-  GLADE_HOOKUP_OBJECT (window1, label3, "label3");
-  GLADE_HOOKUP_OBJECT (window1, hseparator2, "hseparator2");
-  GLADE_HOOKUP_OBJECT (window1, hseparator3, "hseparator3");
-  GLADE_HOOKUP_OBJECT (window1, label1, "label1");
-  GLADE_HOOKUP_OBJECT (window1, label2, "label2");
-  GLADE_HOOKUP_OBJECT (window1, entry1, "entry1");
-  GLADE_HOOKUP_OBJECT (window1, hseparator1, "hseparator1");
-  GLADE_HOOKUP_OBJECT (window1, hbuttonbox1, "hbuttonbox1");
-  GLADE_HOOKUP_OBJECT (window1, button5, "button5");
-  GLADE_HOOKUP_OBJECT (window1, button6, "button6");
 
 	gtk_entry_set_text(GTK_ENTRY(entry1), "");
 	gtk_entry_set_text(GTK_ENTRY(entry2), "");
@@ -205,6 +174,6 @@ create_cfgdlg(void)
                 bmp_cfg_db_close(db);
         }
 
-  return window1;
+  return vbox2;
 }
 
