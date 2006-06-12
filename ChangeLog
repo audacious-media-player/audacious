@@ -1,3 +1,14 @@
+2006-06-12 07:56:00 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1290]
+  - new UI for scrobbler configuration UI
+  
+
+  Changes:        Modified:
+  +2 -1           trunk/Plugins/General/scrobbler/Makefile.in  
+  +0 -0           trunk/Plugins/General/scrobbler/audioscrobbler_badge.png  
+  +32 -65         trunk/Plugins/General/scrobbler/configure.c  
+
+
 2006-06-12 06:51:55 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1288]
   - update this
