@@ -1,3 +1,16 @@
+2006-06-12 03:11:40 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1260]
+  prefswin_page_new():
+  This commit allows third party plugins to register directly into the preferences panel.
+  This concept originates from Winamp3/Wasabi.Player (I always thought it was cool, myself, so here it is.)
+  
+
+  Changes:        Modified:
+  +2 -1           trunk/audacious/Makefile.in  
+  +51 -0          trunk/audacious/prefswin.c  
+  +2 -0           trunk/audacious/prefswin.h  
+
+
 2006-06-12 00:28:56 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1258]
   - update README a bit

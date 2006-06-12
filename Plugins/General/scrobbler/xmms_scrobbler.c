@@ -1,9 +1,13 @@
-#include <audacious/plugin.h>
-#include <libaudacious/configdb.h>
-#include <libaudacious/beepctrl.h>
-
 #include <glib.h>
 #include <glib/gi18n.h>
+
+#include <gdk/gdkkeysyms.h>
+#include <gtk/gtk.h>
+
+#include <audacious/plugin.h>
+#include <audacious/prefswin.h>
+#include <libaudacious/configdb.h>
+#include <libaudacious/beepctrl.h>
 
 #include <unistd.h>
 #include <stdio.h>
@@ -45,7 +49,7 @@ static GeneralPlugin xmms_scrobbler =
 	NULL,
 	init,
 	about_show,
-	configure_dialog,
+	NULL,
 	cleanup
 };
 
@@ -55,6 +59,9 @@ static void init(void)
 	ConfigDb *cfgfile;
 	going = 1;
 	GError **moo = NULL;
+	GtkDialog *cfgdlg = create_cfgdlg();
+
+        prefswin_page_new(cfgdlg, "Last.FM Client", IMAGES_DIR "audioscrobbler.png");
 
 	if ((cfgfile = bmp_cfg_db_open()) != NULL) {
 		bmp_cfg_db_get_string(cfgfile, "audioscrobbler", "username",
