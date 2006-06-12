@@ -5,6 +5,8 @@ SUBDIRS =
 
 OBJECTIVE_LIBS = libscrobbler.so
 
+OBJECTIVE_DATA = audioscrobbler.png:$(DATA_DIR)/icons
+
 LIBDIR = $(plugindir)/$(GENERAL_PLUGIN_DIR)
 
 LIBADD += $(GTK_LIBS) $(CURL_LIBS) $(MUSICBRAINZ_LIBS)
