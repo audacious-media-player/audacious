@@ -1,3 +1,13 @@
+2006-06-12 06:35:05 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1282]
+  - prefswin_page_destroy() code, example will be added to the scrobbler plugin momentarily
+  
+
+  Changes:        Modified:
+  +34 -0          trunk/audacious/prefswin.c  
+  +1 -0           trunk/audacious/prefswin.h  
+
+
 2006-06-12 06:19:33 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1280]
   - API change, please move along

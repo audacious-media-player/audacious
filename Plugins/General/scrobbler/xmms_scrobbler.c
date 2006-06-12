@@ -39,6 +39,7 @@ static void cleanup(void);
 static void *xs_thread(void *);
 static void *hs_thread(void *);
 static int going;
+static gint sc_id;
 
 static GThread *pt_scrobbler;
 static GMutex *m_scrobbler;
@@ -64,7 +65,7 @@ static void init(void)
 	GError **moo = NULL;
 	GtkWidget *cfgdlg = create_cfgdlg();
 
-        prefswin_page_new(cfgdlg, "Last.FM Client", DATA_DIR "/images/audioscrobbler.png");
+        sc_id = prefswin_page_new(cfgdlg, "Last.FM", DATA_DIR "/images/audioscrobbler.png");
 
 	if ((cfgfile = bmp_cfg_db_open()) != NULL) {
 		bmp_cfg_db_get_string(cfgfile, "audioscrobbler", "username",
@@ -112,6 +113,8 @@ static void cleanup(void)
 	g_thread_join(pt_scrobbler);
 
 	g_thread_join(pt_handshake);
+
+        prefswin_page_destroy(sc_id);
 
 	sc_cleaner();
 }
