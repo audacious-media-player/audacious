@@ -2078,6 +2078,7 @@ create_prefs_window(void)
                            G_CALLBACK(on_category_view_realize),
                            widget2);
 
+    category_treeview = GTK_WIDGET(widget);
     category_notebook = GTK_WIDGET(widget2);
 
     /* plugin->input page */
@@ -2267,6 +2268,8 @@ create_prefs_window(void)
 
    gtk_label_set_markup( GTK_LABEL(widget) , aud_version_string->str );
    g_string_free( aud_version_string , TRUE );
+
+   gtk_widget_realize(prefswin);
 }
 
 void
@@ -2297,13 +2300,14 @@ prefswin_page_new(GtkWidget *container, gchar *name, gchar *imgurl)
     gint id;
 
     if (treeview == NULL || container == NULL || category_notebook == NULL)
-	return FALSE;
+        return FALSE;
 
     model = gtk_tree_view_get_model(treeview);
 
     if (model == NULL)
         return FALSE;
 
+    gtk_widget_show(container);
     id = gtk_notebook_append_page(GTK_NOTEBOOK(category_notebook), container, NULL);
 
     if (id == -1)
