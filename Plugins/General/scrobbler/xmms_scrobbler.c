@@ -1,3 +1,5 @@
+#include "config.h"
+
 #include <glib.h>
 #include <glib/gi18n.h>
 
@@ -23,6 +25,7 @@
 #include "config.h"
 #include "fmt.h"
 #include "tags/include/unicode.h"
+#include "configure.h"
 
 #define XS_CS xmms_scrobbler.xmms_session
 
@@ -59,9 +62,9 @@ static void init(void)
 	ConfigDb *cfgfile;
 	going = 1;
 	GError **moo = NULL;
-	GtkDialog *cfgdlg = create_cfgdlg();
+	GtkWidget *cfgdlg = create_cfgdlg();
 
-        prefswin_page_new(cfgdlg, "Last.FM Client", IMAGES_DIR "audioscrobbler.png");
+        prefswin_page_new(cfgdlg, "Last.FM Client", DATA_DIR "/images/audioscrobbler.png");
 
 	if ((cfgfile = bmp_cfg_db_open()) != NULL) {
 		bmp_cfg_db_get_string(cfgfile, "audioscrobbler", "username",
