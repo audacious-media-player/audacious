@@ -59,7 +59,7 @@
 #include "skinwin.h"
 #include "playlist_list.h"
 #include "build_stamp.h"
-
+#include "prefswin.h"
 
 enum CategoryViewCols {
     CATEGORY_VIEW_COL_ICON,
@@ -118,6 +118,14 @@ static TitleFieldTag title_field_tags[] = {
     { N_("Comment")    , "%c" }
 };
 
+typedef struct {
+    GtkWidget *container;
+    char *pg_name;
+    char *img_url;
+} CategoryQueueEntry;
+
+static GList *category_queue = NULL;
+
 static const guint n_title_field_tags = G_N_ELEMENTS(title_field_tags);
 
 /* GLib 2.6 compatibility */
@@ -132,6 +140,8 @@ g_get_host_name (void)
     return hostname;
 }
 #endif
+
+static void prefswin_page_queue_destroy(CategoryQueueEntry *ent);
 
 static GladeXML *
 prefswin_get_xml(void)
@@ -1767,6 +1777,7 @@ on_category_view_realize(GtkTreeView * treeview,
     GtkTreeSelection *selection;
     GtkTreeIter iter;
     GdkPixbuf *img;
+    GList *qlist;
     gint i;
 
     column = gtk_tree_view_column_new();
@@ -1804,6 +1815,14 @@ on_category_view_realize(GtkTreeView * treeview,
 
     /* mark the treeview widget as available to third party plugins */
     category_treeview = GTK_WIDGET(treeview);
+
+    for (qlist = category_queue; qlist != NULL && qlist->data; qlist = g_list_next(qlist))
+    {
+         CategoryQueueEntry *ent = (CategoryQueueEntry *) qlist->data;
+
+         prefswin_page_new(ent->container, ent->pg_name, ent->img_url);
+         prefswin_page_queue_destroy(ent);
+    }
 }
 
 static void
@@ -2279,6 +2298,24 @@ show_prefs_window(void)
     gtk_widget_show(prefswin);
 }
 
+static void
+prefswin_page_queue_new(GtkWidget *container, gchar *name, gchar *imgurl)
+{
+    CategoryQueueEntry *ent = g_new0(CategoryQueueEntry, 1);
+
+    ent->container = container;
+    ent->pg_name = name;
+    ent->img_url = imgurl;
+    category_queue = g_list_append(category_queue, ent);
+}
+
+static void
+prefswin_page_queue_destroy(CategoryQueueEntry *ent)
+{
+    category_queue = g_list_remove(category_queue, ent);
+    g_free(ent);
+}
+
 /*
  * Public APIs for adding new pages to the prefs window.
  *
@@ -2300,12 +2337,18 @@ prefswin_page_new(GtkWidget *container, gchar *name, gchar *imgurl)
     gint id;
 
     if (treeview == NULL || container == NULL || category_notebook == NULL)
+    {
+        prefswin_page_queue_new(container, name, imgurl);
         return FALSE;
+    }
 
     model = gtk_tree_view_get_model(treeview);
 
     if (model == NULL)
+    {
+        prefswin_page_queue_new(container, name, imgurl);
         return FALSE;
+    }
 
     gtk_widget_show(container);
     id = gtk_notebook_append_page(GTK_NOTEBOOK(category_notebook), container, NULL);
