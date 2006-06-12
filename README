@@ -5,8 +5,8 @@ Audacious Development Team (see AUTHORS)
 
 Based on:
   BMP - Beep Media Player.
-   Which was based on.
 
+  Which was based on:
   XMMS - X Multimedia System (c)1997-2001
 
   A Cross platform Multimedia Player
@@ -15,7 +15,7 @@ Based on:
 
 
 NOTE: This document is hardly maintained. Please check the Users' Guide on
-the BMP website.
+the Audacious website.
 
 
 TABLE OF CONTENTS
@@ -27,7 +27,7 @@ TABLE OF CONTENTS
    2.2 Border less Installation
    2.3 Skin Installation
 3. Documentation
-   3.1 Controlling BMP
+   3.1 Controlling Audacious
        3.1.1 Key bindings
    3.2 Playlist Editor
    3.3 Equalizer
@@ -57,7 +57,7 @@ TABLE OF CONTENTS
 5. Features
    5.1 Supported File formats
    5.2 Supported Features
-6. Obtaining BMP
+6. Obtaining Audacious
 7. Misc
    7.1 Shoutcast support
    7.2 Tips and tricks
@@ -72,14 +72,15 @@ TABLE OF CONTENTS
 
 We are not liable for any damage caused by the use of this program.
 
-BMP is NOT a port of WinAmp (http://www.winamp.com). BMP is a fork of
-XMMS (http://xmms.org) which borrowed the WinAmp GUI.
+Audacious is NOT a port of WinAmp (http://www.winamp.com). Audacious is a fork of
+XMMS (http://xmms.org) and BMP (http://beep-media-player.org) which borrowed the
+WinAmp GUI.
 
 
 2. Installation
 ---------------
 
-BMP requires the following libraries and their development
+Audacious requires the following libraries and their development
 packages installed:
 
   Glib 2.4
@@ -113,7 +114,7 @@ The following packages are required for optional features:
     GConf >= 2.6.0  
     (http://ftp.gnome.org/pub/GNOME/desktop/2.6/2.6.0/sources/)
 
-If you compile BMP from a fresh CVS checkout, you will also need
+If you compile Audacious from a fresh CVS checkout, you will also need
 the following tools:
 
   automake >= 1.7
@@ -128,13 +129,13 @@ third-party repositories for them.
 2.1 Basic Installation
 ----------------------
 
-cd bmp-0.9.7
+cd audacious-1.1.0
 ./configure
 make
 make install
 
 This will put the binary in /usr/local/bin and plugins in
-/usr/local/lib/bmp/
+/usr/local/lib/audacious/
 
 Note for packagers: The gnome-vfs option is VERY EXPERIMENTAL. We suggest you
 do not use it in your official distribution packages.
@@ -175,23 +176,23 @@ NoBorder {
 2.3 Skin Installation
 ---------------------
 
-BMP will create a directory called ~/.bmp/Skins/. You can unarchive
+Audacious will create a directory called ~/.audacious/Skins/. You can unarchive
 the skins the same way as you do for WinAmp.
 
-However, you don't need to as BMP supports archived skins. BMP
+However, you don't need to as Audacious supports archived skins. Audacious
 currently reads the following formats: zip, wsz, tar, tar.gz and
 tar.bz2
 
-Just copy the archive to one of the skin path's and BMP will take care
+Just copy the archive to one of the skin path's and Audacious will take care
 of the rest.
 
 In order to support zipped skins you will need to have unzip. Unzip
 is bundled with most Linux distributions.
 
-BMP looks for skins in these directories (in listing order):
+Audacious looks for skins in these directories (in listing order):
 
-<prefix>/share/bmp/Skins
-~/.bmp/Skins
+<prefix>/share/audacious/Skins
+~/.audacious/Skins
 
 You can set the environment variable SKINSDIR to another location of
 your choice:
@@ -206,19 +207,19 @@ For CSH:
 3. Documentation
 ----------------
 
-This file or http://beepmp.sf.net
+This file or http://audacious-media-player.org
 
 
-3.1 Controlling BMP
+3.1 Controlling Audacious
 --------------------
 
-When you start up BMP, you will get a console very similar to that of
+When you start up Audacious, you will get a console very similar to that of
 WinAmp.
 
 - On the top is the window title bar. To the right you will see 3 buttons,
-   Left button will minimize BMP.
-   Middle button will make BMP only display the title bar.
-   Right button will end the BMP session.
+   Left button will minimize Audacious.
+   Middle button will make Audacious only display the title bar.
+   Right button will end the Audacious session.
 
 - The area in the upper left part displays the following:
    - Play state: Paused, Stopped, or Playing
@@ -261,7 +262,7 @@ WinAmp.
 
    - The eject button doesn't REALLY eject, of course. :) It opens up the
      file requester. The File Requester builds a playlist for the current
-     BMP session. You can use it to load files, add files to the list, or
+     Audacious session. You can use it to load files, add files to the list, or
      load all mp3s in a directory.
 
    - The shuffle button randomizes the sequence of the playlist.
@@ -335,7 +336,7 @@ Equalizer shade mode:
 -------------------
 
 To access the Playlist editor, select the button labeled "PL" on the right
-side of the BMP console.
+side of the Audacious console.
 
 This will bring up the actual playlist window, here you'll find 5 buttons.
 All of these buttons can be held down to bring up an extra menu.
@@ -376,17 +377,17 @@ wheel, you can use this to scroll up and down.
 --------------
 
 To access the Equalizer, select the button labeled "EQ" on the right
-side of the BMP console.
+side of the Audacious console.
 
 That will bring up the Equalizer window. It looks like an equalizer on a stereo
 and behaves like one as well. Press the button labeled ON to enable the use of
 the equalizer, once you turned it on you use it as a normal equalizer.
 
-EQ presets will be saved in ~/.bmp/config when you close BMP. You can also
-have your own presets for different song using the "Preset" button, BMP can
+EQ presets will be saved in ~/.audacious/config when you close Audacious. You can also
+have your own presets for different song using the "Preset" button, Audacious can
 also import/export from WinAmp's preset files.
 
-If 'Auto' is enabled, BMP will try to load equalizer presets like this:
+If 'Auto' is enabled, Audacious will try to load equalizer presets like this:
 
 1: Look for a preset file in the directory of the file we are about to play.
 2: Look for a directory preset file in the same directory.
@@ -427,7 +428,7 @@ Configure Equalizer     : Change the default names of directory based
 3.4. Menu
 ---------
 
-There are several menu hot spots on the BMP window. One place is at the left
+There are several menu hot spots on the Audacious window. One place is at the left
 hand side of the visual window described in sections 3.1 If you click the right
 mouse button in the main window, the menus will also pop up (same as clicking
 the button on the top left corner).
@@ -459,7 +460,7 @@ Use custom cursors             - Enable/disable custom cursors set by the skin.
 ------------
 
 Mouse wheel
-Change how BMP handles scroll behaviours.
+Change how Audacious handles scroll behaviours.
 
 3.5.3. Playlist
 ---------------
@@ -498,12 +499,12 @@ Choose a tab to list one of the types of plugins:
 
 3.6 Plugins
 -----------
-Plugins is what makes BMP work, by moving most of the code out of BMP and
-into a plugin architecture it's possible to change almost everything in BMP.
+Plugins is what makes Audacious work, by moving most of the code out of Audacious and
+into a plugin architecture it's possible to change almost everything in Audacious.
 There are today 5 different types of plugins. Only a few plugins are
-distributed with BMP, you can find information on more of them at:
+distributed with Audacious, you can find information on more of them at:
 
-  http://beepmp.sf.net
+  http://audacious-media-player.org
 
 
 3.6.1 Input plugins
@@ -514,7 +515,7 @@ The input plugins is what you use to play mp3, mod, wav and even movies with.
 3.6.1.1 Cd Audio Player
 -----------------------
 Plays audio cd's on Linux, FreeBSD and Solaris. This plugin does not pass
-the sound through BMP, so no visualization can be made nor will the
+the sound through Audacious, so no visualization can be made nor will the
 equalizer settings have any effect.
 
 Before I explain the usage we better have a look on the configuration
@@ -522,7 +523,7 @@ first.
 
 In the device tab you should set Device to your cdrom unit. /dev/cdrom
 is generally a good choice on Linux systems. Set 'Directory' to where a
-directory which will be used by BMP to present the available cd tracks in.
+directory which will be used by Audacious to present the available cd tracks in.
 Using the normal mount point for the cdrom is recommended unless the
 cdrom is automounted if it contains a data track.
 
@@ -567,14 +568,14 @@ Now to add your CDROM tracks to the playlist. Insert an audio cd into the
 CDROM drive and press the Eject button. Go to the directory which you defined
 earlier ( /mnt/cdrom ) and you should see a list of tracks. They will be named
 Track XX.cda, select the tracks you want to play and press OK. If you had
-choosed an Internet database and the CD exists in it, BMP will now display
+choosed an Internet database and the CD exists in it, Audacious will now display
 the tracks you have chosen with their names according to the 'Name format'
 configuration.
 
 Now, that wasn't hard now was it?
 
-If you want BMP to identify as something else when speaking with servers, you
-can set the environmental variable "XMMS_CDDB_CLIENT_NAME", and BMP will use
+If you want Audacious to identify as something else when speaking with servers, you
+can set the environmental variable "XMMS_CDDB_CLIENT_NAME", and Audacious will use
 that instead.
 
 
@@ -591,15 +592,15 @@ have an older soundcard and the music is going half speed, change the
 'Resolution' setting.
 
 If you have mp3 files named something else than .mp3, you might want to enable
-'Detect files by content' so BMP will know that they are supported. Although
+'Detect files by content' so Audacious will know that they are supported. Although
 I'd recommend that you rename the files (or just beat the person who burned his
 high-school bands music with in proper file extensions into giving you a new
 cd) since this is rather slow.
 
-In the streaming tab you can choose a 'Buffer size' in kilobytes which BMP
+In the streaming tab you can choose a 'Buffer size' in kilobytes which Audacious
 will keep while streaming. This ranges from 4 -> 4096kb (which should be
 sufficient for most people. The 'Pre-buffer' value is how much of the buffer
-BMP should fill before starting to play the stream. (0%-90%)
+Audacious should fill before starting to play the stream. (0%-90%)
 
 I'll let Chad Armstrong describe the two following options.
 
@@ -617,15 +618,15 @@ provided it in a side channel (via UDP)."
 
 You're better off having both these options enabled. :)
 
-In the 'Title' tab you can change the way BMP presents the mp3 files to the
+In the 'Title' tab you can change the way Audacious presents the mp3 files to the
 playlist.
 
 ID3 is data stored in the mp3 file and can include Artist, Album etc. If you
-uncheck 'Use ID3 tags' BMP will display the filename instead of the ID3
+uncheck 'Use ID3 tags' Audacious will display the filename instead of the ID3
 information.
 
 ID3V2 allows for a lot of extra data to be stored in the mp3 file, and don't
-suffer from the limitations of ID3V1, BMP supports the same data that are
+suffer from the limitations of ID3V1, Audacious supports the same data that are
 available in ID3V1 but not the extra data. If a mp3 file contains both ID3V1
 and ID3V2 tags, you might see something different that the 'file info' editor
 displays. If this happens, you might want to turn on 'Disable ID3V2 tags'.
@@ -680,8 +681,8 @@ with the OpenSoundSystem (www.opensound.com) drivers or compatible.
 Compatible drivers are ALSA with their OSS emulation, and Linux kernel sound
 drivers.
 
-In the 'Devices' tab you can change the soundcard which BMP is going to use.
-If your driver have more than one dsp, you can change the one BMP uses by
+In the 'Devices' tab you can change the soundcard which Audacious is going to use.
+If your driver have more than one dsp, you can change the one Audacious uses by
 enabling 'Use alternate device' and changing the '/dev/dsp' to suit your needs.
 
 If you have changed your Audio Device to another soundcard (if you for some
@@ -693,16 +694,16 @@ The 'Buffer size' ranges from 200 - 10000ms. If you want the plugin to wait for
 the buffer to be filled before it starts playing the music change the 'Pre-
 buffer' value, this ranges from 0% - 90% of the 'Buffer size' value.
 
-In the 'Mixer' tab you can change which volume setting BMP should change when
-you alter the volume from BMP. Enable 'Volume controls Master not PCM' if you
-want BMP to change the volume of all sounds instead of only PCM/wave sound.
+In the 'Mixer' tab you can change which volume setting Audacious should change when
+you alter the volume from Audacious. Enable 'Volume controls Master not PCM' if you
+want Audacious to change the volume of all sounds instead of only PCM/wave sound.
 
 
 3.6.2.2 eSound Output
 ---------------------
 The 'ESD' plugin will use the 'Enlightened Sound Daemon' to playback the audio.
 It's useful if you want to be able to have sound effects in your programs and
-still be able to listen to music with BMP.
+still be able to listen to music with Audacious.
 
 In the 'Server' tab of the configuration, you can tell the plugin where to send
 the audio data. Enable 'Use remote host' and enter the name/ip of the server
@@ -721,7 +722,7 @@ The $AUDIODEVICE and $MIXERDEVICE environment variables will override the
 current configuration settings. Defaults are /dev/audio and /dev/mixer.
 
 In the 'Devices' tab you can change the audio, audioctl and mixer devices
-BMP is going to use. The audioctl device is used for ioctl(2) calls
+Audacious is going to use. The audioctl device is used for ioctl(2) calls
 independent of audio data I/O.
 
 In the 'Buffering' tab you can change how much data the Sun plugin will
@@ -731,7 +732,7 @@ change the 'Pre-buffer' value, this ranges from 0% - 90% of the 'Buffer size'
 value.
 
 In the 'Mixer' tab you can select the volume device to be affected when you
-alter the volume from BMP. `BMP uses mixer exclusively' causes BMP to
+alter the volume from Audacious. `Audacious uses mixer exclusively' causes Audacious to
 keep the mixer device open instead of re-opening it for each operation.
 
 There may also be some more options depending on what your audio mixer
@@ -748,7 +749,7 @@ Effect plugins can alter the sound of the music you are listening to.
 
 3.6.4 General plugins
 ---------------------
-Mostly used for controlling BMP and passing data to other programs.
+Mostly used for controlling Audacious and passing data to other programs.
 
 
 3.6.5 Visualization plugins
@@ -773,7 +774,7 @@ Options:
 --------
 
 -h, --help              Display this text and exit.
--n, --session           Select BMP/XMMS session (Default: 0)
+-n, --session           Select Audacious/XMMS session (Default: 0)
 -r, --rew               Skip backwards in playlist
 -p, --play              Start playing current playlist
 -u, --pause             Pause current song
@@ -790,7 +791,7 @@ You can specify files on the command line, e.g:
   beep-media-player *.mp3
   beep-media-player playlist.m3u (note: playlists must be named .m3u)
 
-If you do this while BMP is running the current playlist
+If you do this while Audacious is running the current playlist
 will be cleared and the files/playlist specified on the command
 line will be used instead.
 
@@ -841,31 +842,30 @@ Compiles and works on other Unixes
 Proxy authentication support
 
 
-6. Obtaining BMP
+6. Obtaining Audacious
 -------------------
 
 Currently, we only provide source tarballs at:
 
-   http://sourceforge.net/project/showfiles.php?group_id=95272
+   http://audacious-media-player.org/Downloads
 
-The CVS snapshots listed are not regularly updated. We encourage you
-to download BMP straight from CVS:
+The Subversion snapshots listed are not regularly updated. We
+encourage you to download Audacious straight from our SVN repository:
 
-  cvs -z3 -d:pserver:anonymous@cvs.sf.net:/cvsroot/beepmp login
-  cvs -z3 -d:pserver:anonymous@cvs.sf.net:/cvsroot/beepmp co bmp
+   svn co http://svn.atheme.org/audacious/trunk audacious-devel
  
-
-
-FIXME: add links to user made packages
-
 
 6.1 Obtaining Skins
 -------------------
 
-You can find BMP/XMMS skins made by BMP/XMMS users at:
+You can find Audacious/XMMS skins made by Audacious/XMMS users at:
 
    http://www.xmms.org/skins.html
    http://themes.org/skins/xmms
+
+You can find more places on our website, at:
+
+   http://audacious-media-player.org/Skins
 
 
 7. Misc
@@ -877,12 +877,12 @@ You can find BMP/XMMS skins made by BMP/XMMS users at:
 If you have a windows partition with WinAmp installed, a good idea would be to
 set the SKINSDIR variable to that dir.
 
-BMP features some command line options like next/previous songs, those
+Audacious features some command line options like next/previous songs, those
 things can be binded to a key. I use AfterStep and the useless window keys
 for this. Here is an example from my .steprc:
 
-Key     Meta_R  A       N       Exec "bmp" beep-media-player -r
-Key     Menu    A       N       Exec "bmp" beep-media-player -f
+Key     Meta_R  A       N       Exec "Audacious" audacious -r
+Key     Menu    A       N       Exec "Audacious" audacious -f
 
 If you want all your mp3's in one playlist an easy way is:
 locate .mp3 > /path/to/playlistname
@@ -894,29 +894,21 @@ find the file you downloaded 3 minutes ago)
 8. Bugs
 -------
 
-BMP is under heavy development and as such, has quite a number of
+Audacious is under heavy development and as such, has quite a number of
 bugs. Our bug tracker page is maintained at:
 
-  http://www.sosdg.org/~larne/bugs/
+  http://bugs.audacious-media-player.org/
 
 It will continue to have bugs as we fix and introduce new ones through
 rewriting and enhancement. Help us along by reporting new bugs, and
 verifying existing ones.
 
-If you have a fix for any of the bugs, please let us know using the
-tracker or posting to our development mailing list at:
 
-  beepmp-devel@lists.sourceforge.net
-
-
-9. Contact Email's
-------------------
+9. Contact Emails
+-----------------
 
 Project Admins:
 
-  Milosz Derezynski     email: mderezynski at users sourceforge net
-  Chong Kai Xiong       email: descender at phreaker net
+  William Pitcock       email: nenolod at nenolod.net
+  Tony Vroon            email: chainsaw at gentoo.org
 
-You can more information about the BMP team from this page:
-
-  http://sourceforge.net/project/memberlist.php?group_id=95272

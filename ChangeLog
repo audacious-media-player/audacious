@@ -1,3 +1,12 @@
+2006-06-11 21:57:36 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1256]
+  - fix spelling
+  
+
+  Changes:        Modified:
+  +2 -2           trunk/README  
+
+
 2006-06-11 20:46:37 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1253]
   - cleanup ChangeLog
