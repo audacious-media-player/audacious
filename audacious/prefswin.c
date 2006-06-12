@@ -2350,6 +2350,7 @@ prefswin_page_new(GtkWidget *container, gchar *name, gchar *imgurl)
         return -1;
     }
 
+    /* Make sure the widgets are visible. */
     gtk_widget_show(container);
     id = gtk_notebook_append_page(GTK_NOTEBOOK(category_notebook), container, NULL);
 
@@ -2369,4 +2370,37 @@ prefswin_page_new(GtkWidget *container, gchar *name, gchar *imgurl)
         g_object_unref(img);
 
     return id;
+}
+
+void
+prefswin_page_destroy(gint id)
+{
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    GtkTreeView *treeview = GTK_TREE_VIEW(category_treeview);
+    gboolean ret;
+
+    if (category_notebook == NULL || treeview == NULL)
+        return;
+
+    gtk_notebook_remove_page(GTK_NOTEBOOK(category_notebook), id);
+
+    model = gtk_tree_view_get_model(treeview);
+
+    if (model == NULL)
+        return;
+
+    ret = gtk_tree_model_get_iter_first(model, &iter);
+
+    while (ret == TRUE)
+    {
+        gint index = -1;
+
+        gtk_tree_model_get(model, &iter, CATEGORY_VIEW_COL_ID, &index, -1);
+
+        if (index == id)
+            gtk_list_store_remove(GTK_LIST_STORE(model), &iter);
+
+        ret = gtk_tree_model_iter_next(model, &iter);
+    }
 }

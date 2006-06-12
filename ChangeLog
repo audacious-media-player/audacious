@@ -1,3 +1,13 @@
+2006-06-12 06:19:33 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1280]
+  - API change, please move along
+  
+
+  Changes:        Modified:
+  +5 -5           trunk/audacious/prefswin.c  
+  +1 -1           trunk/audacious/prefswin.h  
+
+
 2006-06-12 05:50:31 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1278]
   - place plugins we cannot register UIs for right now in a queue and register them later
