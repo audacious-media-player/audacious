@@ -2288,7 +2288,7 @@ show_prefs_window(void)
  *    - nenolod
  */
 gboolean
-prefswin_pane_new(GtkWidget *container, gchar *name, gchar *imgurl)
+prefswin_page_new(GtkWidget *container, gchar *name, gchar *imgurl)
 {
     GtkTreeModel *model;
     GtkTreeIter iter;
