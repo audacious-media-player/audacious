@@ -2373,14 +2373,20 @@ prefswin_page_new(GtkWidget *container, gchar *name, gchar *imgurl)
 }
 
 void
-prefswin_page_destroy(gint id)
+prefswin_page_destroy(GtkWidget *container)
 {
     GtkTreeModel *model;
     GtkTreeIter iter;
     GtkTreeView *treeview = GTK_TREE_VIEW(category_treeview);
     gboolean ret;
+    gint id;
 
-    if (category_notebook == NULL || treeview == NULL)
+    if (category_notebook == NULL || treeview == NULL || container == NULL)
+        return;
+
+    id = gtk_notebook_page_num(GTK_NOTEBOOK(category_notebook), container);
+
+    if (id == -1)
         return;
 
     gtk_notebook_remove_page(GTK_NOTEBOOK(category_notebook), id);

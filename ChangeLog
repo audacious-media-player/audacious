@@ -1,3 +1,12 @@
+2006-06-12 06:38:50 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1284]
+  - remove the preferences UI on unload
+  
+
+  Changes:        Modified:
+  +4 -1           trunk/Plugins/General/scrobbler/xmms_scrobbler.c  
+
+
 2006-06-12 06:35:05 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1282]
   - prefswin_page_destroy() code, example will be added to the scrobbler plugin momentarily
