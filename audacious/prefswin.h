@@ -22,6 +22,6 @@
 void create_prefs_window(void);
 void show_prefs_window(void);
 
-gboolean prefswin_page_new(GtkWidget *container, gchar *name, gchar *imgurl);
+gint prefswin_page_new(GtkWidget *container, gchar *name, gchar *imgurl);
 
 #endif

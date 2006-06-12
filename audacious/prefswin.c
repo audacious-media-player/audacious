@@ -2327,7 +2327,7 @@ prefswin_page_queue_destroy(CategoryQueueEntry *ent)
  *
  *    - nenolod
  */
-gboolean
+gint
 prefswin_page_new(GtkWidget *container, gchar *name, gchar *imgurl)
 {
     GtkTreeModel *model;
@@ -2339,7 +2339,7 @@ prefswin_page_new(GtkWidget *container, gchar *name, gchar *imgurl)
     if (treeview == NULL || container == NULL || category_notebook == NULL)
     {
         prefswin_page_queue_new(container, name, imgurl);
-        return FALSE;
+        return -1;
     }
 
     model = gtk_tree_view_get_model(treeview);
@@ -2347,14 +2347,14 @@ prefswin_page_new(GtkWidget *container, gchar *name, gchar *imgurl)
     if (model == NULL)
     {
         prefswin_page_queue_new(container, name, imgurl);
-        return FALSE;
+        return -1;
     }
 
     gtk_widget_show(container);
     id = gtk_notebook_append_page(GTK_NOTEBOOK(category_notebook), container, NULL);
 
     if (id == -1)
-        return FALSE;
+        return -1;
 
     if (imgurl != NULL)
         img = gdk_pixbuf_new_from_file(imgurl, NULL);
@@ -2368,5 +2368,5 @@ prefswin_page_new(GtkWidget *container, gchar *name, gchar *imgurl)
     if (img != NULL)
         g_object_unref(img);
 
-    return TRUE;
+    return id;
 }

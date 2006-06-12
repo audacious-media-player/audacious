@@ -1,3 +1,12 @@
+2006-06-12 05:50:31 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1278]
+  - place plugins we cannot register UIs for right now in a queue and register them later
+  
+
+  Changes:        Modified:
+  +44 -1          trunk/audacious/prefswin.c  
+
+
 2006-06-12 05:10:48 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1276]
   - ok...
