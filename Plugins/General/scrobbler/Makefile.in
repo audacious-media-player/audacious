@@ -7,7 +7,8 @@ OBJECTIVE_LIBS = libscrobbler.so
 
 imagesdir = $(pkgdatadir)/images
 
-OBJECTIVE_DATA = audioscrobbler.png:$(imagesdir)
+OBJECTIVE_DATA = audioscrobbler.png:$(imagesdir)	\
+	   audioscrobbler_badge.png:$(imagesdir)
 
 LIBDIR = $(plugindir)/$(GENERAL_PLUGIN_DIR)
 

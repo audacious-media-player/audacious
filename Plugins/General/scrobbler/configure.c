@@ -74,26 +74,36 @@ create_cfgdlg(void)
   GtkWidget *vbox2;
   GtkWidget *table1;
   GtkWidget *label3;
-  GtkWidget *hseparator2;
-  GtkWidget *hseparator3;
   GtkWidget *label1;
   GtkWidget *label2;
-  GtkWidget *hseparator1;
-  GtkWidget *hbuttonbox1;
-  GtkWidget *button5;
-  GtkWidget *button6;
+  GtkWidget *himage1;
+  GtkWidget *align1;
 
   vbox2 = gtk_vbox_new (FALSE, 0);
 
-  table1 = gtk_table_new (4, 2, FALSE);
-  gtk_widget_show (table1);
-  gtk_box_pack_start (GTK_BOX (vbox2), table1, FALSE, FALSE, 0);
+  label1 = gtk_label_new (_("<b>Scrobbler Preferences</b>"));
+  gtk_widget_show (label1);
+  gtk_label_set_use_markup (GTK_LABEL (label1), TRUE);
+  gtk_misc_set_alignment (GTK_MISC (label1), 0, 0.5);
 
-  entry2 = gtk_entry_new ();
-  gtk_widget_show (entry2);
-  gtk_table_attach (GTK_TABLE (table1), entry2, 1, 2, 3, 4,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), label1, FALSE, FALSE, 0);
+
+  align1 = gtk_alignment_new(0, 0, 0, 0);
+  gtk_widget_show (align1);
+  gtk_alignment_set_padding(GTK_ALIGNMENT(align1), 0, 0, 12, 0);
+
+  table1 = gtk_table_new (2, 2, FALSE);
+  gtk_widget_show (table1);
+  gtk_container_add(GTK_CONTAINER(align1), table1);
+  gtk_box_pack_start (GTK_BOX (vbox2), align1, TRUE, TRUE, 0);
+  gtk_table_set_row_spacings (GTK_TABLE(table1), 6);
+  gtk_table_set_col_spacings (GTK_TABLE(table1), 6);
+
+  label2 = gtk_label_new (_("Username:"));
+  gtk_widget_show (label2);
+  gtk_table_attach_defaults (GTK_TABLE (table1), label2, 0, 1, 2, 3);
+  gtk_label_set_justify (GTK_LABEL (label2), GTK_JUSTIFY_RIGHT);
+  gtk_misc_set_alignment (GTK_MISC (label2), 1, 0.5);
 
   label3 = gtk_label_new (_("Password:"));
   gtk_widget_show (label3);
@@ -103,62 +113,19 @@ create_cfgdlg(void)
   gtk_label_set_justify (GTK_LABEL (label3), GTK_JUSTIFY_RIGHT);
   gtk_misc_set_alignment (GTK_MISC (label3), 1, 0.5);
 
-  hseparator2 = gtk_hseparator_new ();
-  gtk_widget_show (hseparator2);
-  gtk_table_attach (GTK_TABLE (table1), hseparator2, 0, 1, 1, 2,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-
-  hseparator3 = gtk_hseparator_new ();
-  gtk_widget_show (hseparator3);
-  gtk_table_attach (GTK_TABLE (table1), hseparator3, 1, 2, 1, 2,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-
-  label1 = gtk_label_new (_("<b>Scrobbler Preferences</b>"));
-  gtk_widget_show (label1);
-  gtk_table_attach (GTK_TABLE (table1), label1, 0, 1, 0, 1,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_label_set_use_markup (GTK_LABEL (label1), TRUE);
-  gtk_misc_set_alignment (GTK_MISC (label1), 0, 0.5);
-
-  label2 = gtk_label_new (_("Username:"));
-  gtk_widget_show (label2);
-  gtk_table_attach (GTK_TABLE (table1), label2, 0, 1, 2, 3,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_label_set_justify (GTK_LABEL (label2), GTK_JUSTIFY_RIGHT);
-  gtk_misc_set_alignment (GTK_MISC (label2), 1, 0.5);
-
   entry1 = gtk_entry_new ();
   gtk_widget_show (entry1);
-  gtk_table_attach (GTK_TABLE (table1), entry1, 1, 2, 2, 3,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table1), entry1, 1, 2, 2, 3);
 
-  hseparator1 = gtk_hseparator_new ();
-  gtk_widget_show (hseparator1);
-  gtk_box_pack_start (GTK_BOX (vbox2), hseparator1, FALSE, FALSE, 0);
+  entry2 = gtk_entry_new ();
+  gtk_widget_show (entry2);
+  gtk_table_attach_defaults (GTK_TABLE (table1), entry2, 1, 2, 3, 4);
+  g_signal_connect(entry2, "changed", (GCallback) saveconfig, NULL);
 
-  hbuttonbox1 = gtk_hbutton_box_new ();
-  gtk_widget_show (hbuttonbox1);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbuttonbox1, FALSE, FALSE, 0);
-  gtk_button_box_set_layout (GTK_BUTTON_BOX (hbuttonbox1), GTK_BUTTONBOX_END);
-  gtk_box_set_spacing (GTK_BOX (hbuttonbox1), 5);
-
-  button5 = gtk_button_new_from_stock ("gtk-ok");
-  gtk_widget_show (button5);
-  gtk_container_add (GTK_CONTAINER (hbuttonbox1), button5);
-  GTK_WIDGET_SET_FLAGS (button5, GTK_CAN_DEFAULT);
-
-  gtk_signal_connect(GTK_OBJECT(button5), "clicked",
-                     GTK_SIGNAL_FUNC(saveconfig), NULL);
-
-  button6 = gtk_button_new_from_stock ("gtk-close");
-  gtk_widget_show (button6);
-  gtk_container_add (GTK_CONTAINER (hbuttonbox1), button6);
-  GTK_WIDGET_SET_FLAGS (button6, GTK_CAN_DEFAULT);
+  himage1 = gtk_image_new_from_file (DATA_DIR "/images/audioscrobbler_badge.png");
+  gtk_widget_show (himage1);
+  gtk_box_pack_start (GTK_BOX (vbox2), himage1, FALSE, FALSE, 0);
+  gtk_misc_set_alignment (GTK_MISC (himage1), 1, 0.5);
 
 	gtk_entry_set_text(GTK_ENTRY(entry1), "");
 	gtk_entry_set_text(GTK_ENTRY(entry2), "");

@@ -1,3 +1,12 @@
+2006-06-12 06:51:55 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1288]
+  - update this
+  
+
+  Changes:        Modified:
+  +4 -4           trunk/Plugins/General/scrobbler/xmms_scrobbler.c  
+
+
 2006-06-12 06:51:02 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1286]
   - another API change [sorry!]
