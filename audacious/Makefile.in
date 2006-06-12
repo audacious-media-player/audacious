@@ -26,7 +26,8 @@ CFLAGS += \
 HEADERS = \
 	input.h \
 	output.h \
-	plugin.h
+	plugin.h \
+	prefswin.h
 
 SOURCES = \
 	build_stamp.c \

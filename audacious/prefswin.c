@@ -90,6 +90,8 @@ typedef struct {
 TitleFieldTag;
 
 static GtkWidget *prefswin = NULL;
+static GtkWidget *category_treeview = NULL;
+static GtkWidget *category_notebook = NULL;
 
 static Category categories[] = {
     {DATA_DIR "/images/appearance.png", N_("Appearance"), 1},
@@ -1799,6 +1801,9 @@ on_category_view_realize(GtkTreeView * treeview,
 
     g_signal_connect_swapped(selection, "changed",
                              G_CALLBACK(change_category), notebook);
+
+    /* mark the treeview widget as available to third party plugins */
+    category_treeview = GTK_WIDGET(treeview);
 }
 
 static void
@@ -2073,6 +2078,8 @@ create_prefs_window(void)
                            G_CALLBACK(on_category_view_realize),
                            widget2);
 
+    category_notebook = GTK_WIDGET(widget2);
+
     /* plugin->input page */
 
     widget = glade_xml_get_widget(xml, "input_plugin_view");
@@ -2269,6 +2276,50 @@ show_prefs_window(void)
     gtk_widget_show(prefswin);
 }
 
+/*
+ * Public APIs for adding new pages to the prefs window.
+ *
+ * Basically, the concept here is that third party components can register themselves in the root
+ * preferences window.
+ *
+ * From a usability standpoint this makes the application look more "united", instead of cluttered
+ * and malorganised. Hopefully this option will be used further in the future.
+ *
+ *    - nenolod
+ */
+gboolean
+prefswin_pane_new(GtkWidget *container, gchar *name, gchar *imgurl)
+{
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    GdkPixbuf *img = NULL;
+    GtkTreeView *treeview = GTK_TREE_VIEW(category_treeview);
+    gint id;
 
+    if (treeview == NULL || container == NULL || category_notebook == NULL)
+	return FALSE;
 
+    model = gtk_tree_view_get_model(treeview);
 
+    if (model == NULL)
+        return FALSE;
+
+    id = gtk_notebook_append_page(GTK_NOTEBOOK(category_notebook), container, NULL);
+
+    if (id == -1)
+        return FALSE;
+
+    if (imgurl != NULL)
+        img = gdk_pixbuf_new_from_file(imgurl, NULL);
+
+    gtk_list_store_append(GTK_LIST_STORE(model), &iter);
+    gtk_list_store_set(GTK_LIST_STORE(model), &iter, 
+                       CATEGORY_VIEW_COL_ICON, img,
+                       CATEGORY_VIEW_COL_NAME,
+                       name, CATEGORY_VIEW_COL_ID, id, -1);
+
+    if (img != NULL)
+        g_object_unref(img);
+
+    return TRUE;
+}
