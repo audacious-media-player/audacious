@@ -1,3 +1,13 @@
+2006-06-13 08:59:28 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1294]
+  - fix potential crashing on malformed ID3v2 tags
+  
+
+  Changes:        Modified:
+  +4 -0           trunk/Plugins/General/scrobbler/tags/id3v2.c  
+  +6 -0           trunk/Plugins/General/scrobbler/tags/unicode.c  
+
+
 2006-06-12 10:25:29 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1292]
   Updated japanese translation by dai, closes bug #384.
