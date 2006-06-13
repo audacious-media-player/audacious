@@ -430,6 +430,10 @@ static framedata_t *parseFrame(char **bp, char *end, id3header_t *id3_data)
 			utf = realloc(utf, framedata->len);
 			strcpy((char*)utf, (char*)data);
 		}
+
+		if (utf == NULL)
+			return framedata;
+
 		framedata->len = strlen((char*)utf) + 1;
 		framedata->data = realloc(framedata->data, framedata->len);
 		strcpy((char*)framedata->data, (char*)utf);

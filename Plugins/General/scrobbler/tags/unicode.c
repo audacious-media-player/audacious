@@ -31,6 +31,9 @@ wchar_t *utf8_to_wchar(unsigned char *utf, size_t memsize)
 	int j = 0;
 	wchar_t *mem;
 
+	if (utf == NULL)
+		return NULL;
+
 	mem = calloc(sizeof(wchar_t) * (memsize + 1), 1);
 
 	for(i = 0; i < memsize;)
@@ -88,6 +91,9 @@ unsigned char *wchar_to_utf8(wchar_t *wchar, size_t memsize)
 {
 	size_t i;
 	unsigned char *mem, *ptr;
+
+	if (wchar == NULL)
+		return NULL;
 	
 	mem = calloc(memsize * 6 + 1, 1);
 	ptr = mem;

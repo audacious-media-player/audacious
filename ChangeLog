@@ -1,3 +1,11 @@
+2006-06-12 10:25:29 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1292]
+  Updated japanese translation by dai, closes bug #384.
+
+  Changes:        Modified:
+  +826 -811       trunk/po/ja.po  
+
+
 2006-06-12 07:56:00 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1290]
   - new UI for scrobbler configuration UI
