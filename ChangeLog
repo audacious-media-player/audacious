@@ -1,3 +1,14 @@
+2006-06-14 07:27:49 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1334]
+  - boom
+  
+
+  Changes:        Modified:
+  +29 -0          trunk/audtool/Makefile  
+  +0 -29          trunk/audtool/Makefile.in  
+  +0 -43          trunk/audtool/Makefile.in.standalone  
+
+
 2006-06-14 07:16:06 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1332]
   - make it prettier
