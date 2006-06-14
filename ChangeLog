@@ -1,3 +1,12 @@
+2006-06-14 08:12:01 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1348]
+  - tell users to use GNU make
+  
+
+  Changes:        Modified:
+  +8 -10          trunk/mk/objective.mk  
+
+
 2006-06-14 07:52:27 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1346]
   - chase $(RM) change
