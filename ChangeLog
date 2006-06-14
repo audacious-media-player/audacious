@@ -1,3 +1,13 @@
+2006-06-14 07:16:06 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1332]
+  - make it prettier
+  
+
+  Changes:        Modified:
+  +0 -5           trunk/Makefile  
+  +8 -0           trunk/mk/objective.mk  
+
+
 2006-06-14 07:14:13 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1330]
   - shut a make error up by using sinclude instead of normal include when rules.mk doesn't exist yet
