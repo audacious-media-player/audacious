@@ -1,3 +1,12 @@
+2006-06-14 07:46:51 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1340]
+  - no more "none"
+  
+
+  Changes:        Modified:
+  +22 -22         trunk/mk/objective.mk  
+
+
 2006-06-14 07:44:16 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1338]
   - typo, sorry

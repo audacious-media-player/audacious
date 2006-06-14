@@ -11,14 +11,14 @@ HEADERS =
 VERBOSITY = 0
 SHOW_CFLAGS = 0
 
-ifeq ($(SHOW_CFLAGS),0)
-ifeq ($(V),1)
-SHOW_CFLAGS = 1
-endif
-ifeq ($(VERBOSE),1)
-SHOW_CFLAGS = 1
-endif
-endif
+#ifeq ($(SHOW_CFLAGS),0)
+#ifeq ($(V),1)
+#SHOW_CFLAGS = 1
+#endif
+#ifeq ($(VERBOSE),1)
+#SHOW_CFLAGS = 1
+#endif
+#endif
 
 LIBDIR = $(libdir)
 BINDIR = $(bindir)
@@ -95,20 +95,20 @@ clean:
 		done; \
 	fi
 	$(MAKE) clean-posthook
-	$(RM) *.o *.lo *.so *.a *.sl
+	rm *.o *.lo *.so *.a *.sl
 	@if test "x$(OBJECTIVE_BINS)" != "x"; then \
 		for i in $(OBJECTIVE_BINS); do \
-			$(RM) $$i; \
+			rm $$i; \
 		done; \
 	fi
 	@if test "x$(OBJECTIVE_LIBS)" != "x"; then \
 		for i in $(OBJECTIVE_LIBS); do \
-			$(RM) $$i; \
+			rm $$i; \
 		done; \
 	fi
 	@if test "x$(OBJECTIVE_LIBS_NOINST)" != "x"; then \
 		for i in $(OBJECTIVE_LIBS_NOINST); do \
-			$(RM) $$i; \
+			rm $$i; \
 		done; \
 	fi
 	@if test $(VERBOSITY) -gt 0; then \
@@ -125,10 +125,10 @@ distclean: clean
 		done; \
 	fi
 	@if test -f Makefile.in; then \
-		$(RM) -f Makefile; \
+		rm -f Makefile; \
 	fi
 	@if test -f mk/rules.mk; then \
-		$(RM) -f mk/rules.mk; \
+		rm -f mk/rules.mk; \
 	fi
 
 build:
@@ -198,7 +198,7 @@ build:
 	fi;
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-%.so: $(OBJECTS)
+%.so $(OBJECTIVE_LIBS): $(OBJECTS)
 	if test "x$(OBJECTS)" != "x"; then \
 		$(MAKE) $(OBJECTS) || exit;		\
 		printf "%10s     %-20s\n" LINK $@; \
