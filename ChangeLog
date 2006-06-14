@@ -1,3 +1,11 @@
+2006-06-14 06:57:16 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1318]
+  - temporal: copy the original Makefile as a template for OMKizing.
+  
+
+  Changes:        Modified:
+
+
 2006-06-14 06:56:06 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1316]
   - remove build environment

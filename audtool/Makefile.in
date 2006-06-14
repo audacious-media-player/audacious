@@ -1,43 +1,29 @@
-CC		= @CC@
-RM		= @RM@
-MV		= @MV@
-CP		= @CP@
-INSTALL		= @INSTALL@
-PREFIX		= @prefix@
-BIN		= audtool
-LDFLAGS		= @LDFLAGS@
-CPPFLAGS	= @CPPFLAGS@
+include ../mk/rules.mk
+include ../mk/objective.mk
 
-# enforce -pthread on systems for now, some systems seem not to pick
-# it up automatically. --nenolod
-LIBS		= -pthread @LIBS@ @AUDACIOUS_LIBS@
-CFLAGS		= -pthread @CFLAGS@ @AUDACIOUS_CFLAGS@
+beepincludedir = $(includedir)/audacious
 
-default: all
+OBJECTIVE_BINS = audtool
 
-BASE_SRCS = audtool.c
+LDFLAGS += -Wl,-export-dynamic
+LDADD = \
+	$(GTK_LIBS)      \
+	$(LIBGLADE_LIBS) \
+	-L.. $(LTLIBINTL)     \
+	-L../libaudacious -laudacious
 
-SRCS = ${BASE_SRCS}
+CFLAGS += \
+	$(GTK_CFLAGS)      \
+	$(LIBGLADE_CFLAGS) \
+	$(BEEP_DEFINES)    \
+	$(ARCH_DEFINES)    \
+	-I..    \
+	-I../intl
 
-OBJS = ${SRCS:.c=.o}
+SOURCES = audtool.c
 
-all: audtool
+OBJECTS = ${SOURCES:.c=.o}
 
-build: all
-
-audtool: $(OBJS)
-	${CC} ${CFLAGS} -o $@ ${OBJS} ${LIBS}
-
-install:
-	$(INSTALL) -m 755 -d $(DESTDIR)$(PREFIX)
-	$(INSTALL) -m 755 -d $(DESTDIR)$(PREFIX)/bin
-	$(INSTALL) -m 755 -c $(BIN) $(DESTDIR)$(PREFIX)/bin
-
-.c.o:
-	${CC} ${CPPFLAGS} ${CFLAGS} -c $< -o $@
-
-clean:
-	${RM} -f *.o audtool.core core audtool
-
-distclean: clean
-	${RM} -f Makefile config.h config.status config.log
+audtool: $(OBJECTS)
+	$(CC) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@ -Wl,-rpath,${libdir}
+	@printf "%10s     %-20s\n" LINK $@

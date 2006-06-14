@@ -96,8 +96,8 @@ gint main(gint argc, gchar **argv)
 		exit(0);
 	}
 
-	if (!xmms_remote_is_running(0) && strcasecmp("help", argv[1])
-		&& strcasecmp("list-handlers", argv[1]))
+	if (!xmms_remote_is_running(0) && g_strcasecmp("help", argv[1])
+		&& g_strcasecmp("list-handlers", argv[1]))
 	{
 		g_print("%s: audacious server is not running!\n", argv[0]);
 		exit(0);
@@ -105,9 +105,9 @@ gint main(gint argc, gchar **argv)
 
 	for (i = 0; handlers[i].name != NULL; i++)
 	{
-		if ((!strcasecmp(handlers[i].name, argv[1]) ||
-		     !strcasecmp(g_strconcat("--", handlers[i].name, NULL), argv[1]))
-		    && strcasecmp("<sep>", handlers[i].name))
+		if ((!g_strcasecmp(handlers[i].name, argv[1]) ||
+		     !g_strcasecmp(g_strconcat("--", handlers[i].name, NULL), argv[1]))
+		    && g_strcasecmp("<sep>", handlers[i].name))
   		{
  			handlers[i].handler(0, argc, argv);
 			exit(0);
@@ -775,7 +775,7 @@ void get_handlers_list(gint session, gint argc, gchar **argv)
 
 	for (i = 0; handlers[i].name != NULL; i++)
 	{
-		if (!strcasecmp("<sep>", handlers[i].name))
+		if (!g_strcasecmp("<sep>", handlers[i].name))
 			g_print("\n");
 		else
 			g_print("   %-34s - %s\n", handlers[i].name, handlers[i].desc);
