@@ -17,6 +17,7 @@ SOURCES = \
 	Gb_Oscs.cpp     \
 	Gbs_Emu.cpp     \
 	Gym_Emu.cpp     \
+	Jma_File.cpp	\
 	Multi_Buffer.cpp    \
 	Music_Emu.cpp       \
 	Nes_Apu.cpp     \

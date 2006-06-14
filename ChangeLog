@@ -1,3 +1,39 @@
+2006-06-14 03:37:25 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1298]
+  - add libjma (a hopefully portable snapshot of the ZSNES JMA implementation)
+  
+
+  Changes:        Modified:
+  +3 -1           trunk/Plugins/Input/console/Makefile.in  
+  +28 -0          trunk/Plugins/Input/console/libjma/7z.h  
+  +50 -0          trunk/Plugins/Input/console/libjma/7zlzma.cpp  
+  +19 -0          trunk/Plugins/Input/console/libjma/Makefile  
+  +6 -0           trunk/Plugins/Input/console/libjma/README  
+  +73 -0          trunk/Plugins/Input/console/libjma/aribitcd.h  
+  +29 -0          trunk/Plugins/Input/console/libjma/ariconst.h  
+  +12 -0          trunk/Plugins/Input/console/libjma/ariprice.h  
+  +126 -0         trunk/Plugins/Input/console/libjma/btreecd.h  
+  +80 -0          trunk/Plugins/Input/console/libjma/crc32.cpp  
+  +26 -0          trunk/Plugins/Input/console/libjma/crc32.h  
+  +132 -0         trunk/Plugins/Input/console/libjma/iiostrm.cpp  
+  +210 -0         trunk/Plugins/Input/console/libjma/iiostrm.h  
+  +60 -0          trunk/Plugins/Input/console/libjma/inbyte.cpp  
+  +76 -0          trunk/Plugins/Input/console/libjma/inbyte.h  
+  +550 -0         trunk/Plugins/Input/console/libjma/jma.cpp  
+  +88 -0          trunk/Plugins/Input/console/libjma/jma.h  
+  +93 -0          trunk/Plugins/Input/console/libjma/lencoder.h  
+  +122 -0         trunk/Plugins/Input/console/libjma/litcoder.h  
+  +41 -0          trunk/Plugins/Input/console/libjma/lzma.cpp  
+  +124 -0         trunk/Plugins/Input/console/libjma/lzma.h  
+  +298 -0         trunk/Plugins/Input/console/libjma/lzmadec.cpp  
+  +82 -0          trunk/Plugins/Input/console/libjma/lzmadec.h  
+  +83 -0          trunk/Plugins/Input/console/libjma/portable.h  
+  +60 -0          trunk/Plugins/Input/console/libjma/rcdefs.h  
+  +143 -0         trunk/Plugins/Input/console/libjma/rngcoder.h  
+  +89 -0          trunk/Plugins/Input/console/libjma/winout.cpp  
+  +89 -0          trunk/Plugins/Input/console/libjma/winout.h  
+
+
 2006-06-13 15:36:56 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [1296]
   filesize must be cached, otherwise lookup loop will crash.
