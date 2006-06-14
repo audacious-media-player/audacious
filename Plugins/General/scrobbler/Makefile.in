@@ -38,4 +38,4 @@ CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(BEEP_DEFINES) $(CURL_CFLAGS) -I../../../in
 OBJECTS = ${SOURCES:.c=.o}
 
 clean-posthook:
-	@$(RM) tags/*.o
+	@rm -f tags/*.o
