@@ -30,6 +30,8 @@
 
 Jma_File_Reader::Jma_File_Reader()
 {
+	buf_ = NULL;
+	jma_ = NULL;
 }
 
 Jma_File_Reader::~Jma_File_Reader()
@@ -105,8 +107,11 @@ Jma_File_Reader::error_t Jma_File_Reader::seek( long n )
 
 void Jma_File_Reader::close()
 {
-	delete buf_;
-	delete jma_;
+	if (buf_ != NULL)
+		delete buf_;
+
+	if (jma_ != NULL)
+		delete jma_;
 
 	size_ = 0;
 	bufptr_ = NULL;

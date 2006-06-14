@@ -1,3 +1,14 @@
+2006-06-14 05:16:47 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1302]
+  - some JMA stuff
+  
+
+  Changes:        Modified:
+  +19 -3          trunk/Plugins/Input/console/Audacious_Driver.cpp  
+  +5 -3           trunk/Plugins/Input/console/Jma_File.cpp  
+  +2 -1           trunk/Plugins/Input/console/Jma_File.h  
+
+
 2006-06-14 04:23:52 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1300]
   - Jma_File_Reader class
