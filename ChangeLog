@@ -1,3 +1,15 @@
+2006-06-14 06:19:04 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1306]
+  - yeah, JMA sucks -- i don't have the time for this
+  
+
+  Changes:        Modified:
+  +3 -19          trunk/Plugins/Input/console/Audacious_Driver.cpp  
+  +0 -119         trunk/Plugins/Input/console/Jma_File.cpp  
+  +0 -55          trunk/Plugins/Input/console/Jma_File.h  
+  +0 -1           trunk/Plugins/Input/console/Makefile.in  
+
+
 2006-06-14 06:15:31 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1304]
   - lets avoid crashing shall we?
