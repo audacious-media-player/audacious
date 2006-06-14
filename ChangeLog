@@ -1,3 +1,12 @@
+2006-06-14 07:44:16 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1338]
+  - typo, sorry
+  
+
+  Changes:        Modified:
+  +299 -299       trunk/mk/rules.mk.in  
+
+
 2006-06-14 07:43:13 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1336]
   switch rules.mk.in to ?=

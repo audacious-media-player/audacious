@@ -1,13 +1,13 @@
 # Shut up GNU make
 .SILENT:
 
-OBJECTIVE_DIRECTORIES = none
-OBJECTIVE_LIBS = none
-OBJECTIVE_LIBS_NOINST = none
-OBJECTIVE_BINS = none
-OBJECTIVE_DATA = none
-SUBDIRS = none
-HEADERS = none
+OBJECTIVE_DIRECTORIES = 
+OBJECTIVE_LIBS = 
+OBJECTIVE_LIBS_NOINST = 
+OBJECTIVE_BINS = 
+OBJECTIVE_DATA = 
+SUBDIRS = 
+HEADERS = 
 VERBOSITY = 0
 SHOW_CFLAGS = 0
 
@@ -36,7 +36,7 @@ install: build
 			$(INSTALL) -d -m 755 $(DESTDIR)/$$i; \
 		fi; \
 	done;
-	@if test "$(SUBDIRS)" != "none"; then \
+	@if test "x$(SUBDIRS)" != "x"; then \
 		for i in $(SUBDIRS); do \
 			if test $(VERBOSITY) -gt 0; then \
 				echo "[installing subobjective: $$i]"; \
@@ -44,31 +44,31 @@ install: build
 			(cd $$i; $(MAKE) install || exit; cd ..); \
 		done; \
 	fi
-	@if test "$(OBJECTIVE_DIRECTORIES)" != "none"; then \
+	@if test "x$(OBJECTIVE_DIRECTORIES)" != "x"; then \
 		for i in $(OBJECTIVE_DIRECTORIES); do \
 			printf "%10s     %-20s\n" MKDIR $$i; \
 			$(INSTALL) -d -m 755 $(DESTDIR)/$$i; \
 		done; \
 	fi
-	@if test "$(HEADERS)" != "none"; then \
+	@if test "x$(HEADERS)" != "x"; then \
 		for i in $(HEADERS); do \
 			printf "%10s     %-20s\n" INSTALL $$i; \
 			$(INSTALL_DATA) $(INSTALL_OVERRIDE) $$i $(DESTDIR)/$(INCLUDEDIR)/$$i; \
 		done; \
 	fi
-	@if test "$(OBJECTIVE_LIBS)" != "none"; then \
+	@if test "x$(OBJECTIVE_LIBS)" != "x"; then \
 		for i in $(OBJECTIVE_LIBS); do \
 			printf "%10s     %-20s\n" INSTALL $$i; \
 			$(INSTALL) $(INSTALL_OVERRIDE) $$i $(DESTDIR)/$(LIBDIR)/$$i; \
 		done; \
 	fi
-	@if test "$(OBJECTIVE_BINS)" != "none"; then \
+	@if test "x$(OBJECTIVE_BINS)" != "x"; then \
 		for i in $(OBJECTIVE_BINS); do \
 			printf "%10s     %-20s\n" INSTALL $$i; \
 			$(INSTALL) $(INSTALL_OVERRIDE) $$i $(DESTDIR)/$(BINDIR)/$$i; \
 		done; \
 	fi;
-	@if test "$(OBJECTIVE_DATA)" != "none"; then \
+	@if test "x$(OBJECTIVE_DATA)" != "x"; then \
 		for i in $(OBJECTIVE_DATA); do \
 			source=`echo $$i | cut -d ":" -f1`; \
 			destination=`echo $$i | cut -d ":" -f2`; \
@@ -86,7 +86,7 @@ install: build
 
 clean:
 	$(MAKE) clean-prehook
-	@if test "$(SUBDIRS)" != "none"; then \
+	@if test "x$(SUBDIRS)" != "x"; then \
 		for i in $(SUBDIRS); do \
 			if test $(VERBOSITY) -gt 0; then \
 				echo "[cleaning subobjective: $$i]"; \
@@ -96,17 +96,17 @@ clean:
 	fi
 	$(MAKE) clean-posthook
 	$(RM) *.o *.lo *.so *.a *.sl
-	@if test "$(OBJECTIVE_BINS)" != "none"; then \
+	@if test "x$(OBJECTIVE_BINS)" != "x"; then \
 		for i in $(OBJECTIVE_BINS); do \
 			$(RM) $$i; \
 		done; \
 	fi
-	@if test "$(OBJECTIVE_LIBS)" != "none"; then \
+	@if test "x$(OBJECTIVE_LIBS)" != "x"; then \
 		for i in $(OBJECTIVE_LIBS); do \
 			$(RM) $$i; \
 		done; \
 	fi
-	@if test "$(OBJECTIVE_LIBS_NOINST)" != "none"; then \
+	@if test "x$(OBJECTIVE_LIBS_NOINST)" != "x"; then \
 		for i in $(OBJECTIVE_LIBS_NOINST); do \
 			$(RM) $$i; \
 		done; \
@@ -116,7 +116,7 @@ clean:
 	fi
 
 distclean: clean
-	@if test "$(SUBDIRS)" != "none"; then \
+	@if test "x$(SUBDIRS)" != "x"; then \
 		for i in $(SUBDIRS); do \
 			if test $(VERBOSITY) -gt 0; then \
 				echo "[distcleaning subobjective: $$i]"; \
@@ -133,7 +133,7 @@ distclean: clean
 
 build:
 	$(MAKE) build-prehook
-	@if test "$(SUBDIRS)" != "none"; then \
+	@if test "x$(SUBDIRS)" != "x"; then \
 		for i in $(SUBDIRS); do \
 			if test $(VERBOSITY) -gt 0; then \
 				echo "[building subobjective: $$i]"; \
@@ -144,7 +144,7 @@ build:
 			fi; \
 		done; \
 	fi
-	@if test "$(OBJECTIVE_LIBS)" != "none"; then \
+	@if test "x$(OBJECTIVE_LIBS)" != "x"; then \
 		for i in $(OBJECTIVE_LIBS); do \
 			if test $(VERBOSITY) -gt 0; then \
 				echo "[building library objective: $$i]"; \
@@ -155,7 +155,7 @@ build:
 			fi; \
 		done; \
 	fi
-	@if test "$(OBJECTIVE_LIBS_NOINST)" != "none"; then \
+	@if test "x$(OBJECTIVE_LIBS_NOINST)" != "x"; then \
 		for i in $(OBJECTIVE_LIBS_NOINST); do \
 			if test $(VERBOSITY) -gt 0; then \
 				echo "[building library dependency: $$i]"; \
@@ -166,7 +166,7 @@ build:
 			fi; \
 		done; \
 	fi
-	@if test "$(OBJECTIVE_BINS)" != "none"; then \
+	@if test "x$(OBJECTIVE_BINS)" != "x"; then \
 		for i in $(OBJECTIVE_BINS); do \
 			if test $(VERBOSITY) -gt 0; then \
 				echo "[building binary objective: $$i]"; \
