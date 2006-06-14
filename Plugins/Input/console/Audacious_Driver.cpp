@@ -730,7 +730,11 @@ static gint is_our_file( gchar* path )
 			case type_gym: load_file( tag, in, 0, NULL, (Gym_Emu*) 0 ); break;
 			case type_vgm: load_file( tag, in, 0, NULL, (Vgm_Emu*) 0 ); break;
 			case type_spc: load_file( tag, in, 0, NULL, (Spc_Emu*) 0 ); break;
+			default: return FALSE;
 		}
+
+		if (emu == NULL)
+			return FALSE;
 
 		for (int i = 0; i < emu->track_count(); i++)
 		{
