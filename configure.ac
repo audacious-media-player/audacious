@@ -837,7 +837,6 @@ AC_SUBST(OUTPUT_PLUGINS)
 AC_SUBST(VISUALIZATION_PLUGINS)
 
 AC_CONFIG_FILES([
-        Makefile
         audacious.1
         audacious.spec
         audacious.pc
