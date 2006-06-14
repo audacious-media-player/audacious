@@ -1,3 +1,14 @@
+2006-06-14 07:04:06 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1326]
+  - core makefile
+  
+
+  Changes:        Modified:
+  +16 -0          trunk/Makefile  
+  +0 -16          trunk/Makefile.in  
+  +0 -1           trunk/configure.ac  
+
+
 2006-06-14 07:02:18 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1324]
   - hookup buildsystem

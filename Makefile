@@ -1,7 +1,14 @@
+.SILENT:
+
 include mk/rules.mk
 include mk/objective.mk
 
 SUBDIRS = Plugins libaudacious intl $(SUBDIR_GUESS) audacious audtool po icons skin
+
+mk/rules.mk:
+	@echo "[building rules.mk for posix target, run configure manually if you do not want this]"
+	@sh configure
+	@echo "[complete]"
 
 install-posthook:
 	@if test `whoami` = 'root' && test -z "$(DESTDIR)"; then \
