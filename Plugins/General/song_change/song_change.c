@@ -17,13 +17,14 @@
 #include <string.h>
 
 #include "audacious/plugin.h"
+#include "audacious/prefswin.h"
 #include "libaudacious/configdb.h"
 #include "libaudacious/beepctrl.h"
 #include "libaudacious/formatter.h"
 
 static void init(void);
 static void cleanup(void);
-static void configure(void);
+static GtkWidget *configure(void);
 static int timeout_func(gpointer);
 
 static int timeout_tag = 0;
@@ -44,7 +45,7 @@ GeneralPlugin sc_gp =
 	NULL,			/* Description */
 	init,
 	NULL,
-	configure,
+	NULL,
 	cleanup,
 };
 
@@ -69,14 +70,6 @@ static void read_config(void)
 	bmp_cfg_db_close(db);
 }
 
-static void init(void)
-{
-	read_config();
-
-	previous_song = -1;
-	timeout_tag = gtk_timeout_add(100, timeout_func, NULL);
-}
-
 static void cleanup(void)
 {
 	if (timeout_tag)
@@ -90,6 +83,8 @@ static void cleanup(void)
 	cmd_line_after = NULL;
 	cmd_line_end = NULL;
 	signal(SIGCHLD, SIG_DFL);
+
+	prefswin_page_destroy(configure_vbox);
 }
 
 static void save_and_close(GtkWidget *w, gpointer data)
@@ -123,6 +118,7 @@ static void save_and_close(GtkWidget *w, gpointer data)
 	g_free(cmd_end);
 }
 
+#if 0
 static void warn_user(void)
 {
 	GtkWidget *warn_win, *warn_vbox, *warn_desc;
@@ -172,6 +168,7 @@ static void warn_user(void)
 
 	gtk_widget_show_all(warn_win);
 }
+#endif
 
 static int check_command(char *command)
 {
@@ -197,10 +194,12 @@ static void configure_ok_cb(GtkWidget *w, gpointer data)
 	cmd_after = g_strdup(gtk_entry_get_text(GTK_ENTRY(cmd_after_entry)));
 	cmd_end = g_strdup(gtk_entry_get_text(GTK_ENTRY(cmd_end_entry)));
 
+#if 0
 	if (check_command(cmd) < 0 || check_command(cmd_after) < 0
 	                           || check_command(cmd_end) < 0)
 		warn_user();
 	else
+#endif
 		save_and_close(NULL, NULL);
 	g_free(cmd);
 	g_free(cmd_after);
@@ -208,30 +207,18 @@ static void configure_ok_cb(GtkWidget *w, gpointer data)
 }
 
 
-static void configure(void)
+static GtkWidget *configure(void)
 {
 	GtkWidget *sep1, *sep2, *sep3;
 	GtkWidget *cmd_hbox, *cmd_label;
 	GtkWidget *cmd_after_hbox, *cmd_after_label;
 	GtkWidget *cmd_end_hbox, *cmd_end_label;
 	GtkWidget *cmd_desc, *cmd_after_desc, *cmd_end_desc, *f_desc;
-	GtkWidget *configure_bbox, *configure_ok, *configure_cancel;
+	GtkWidget *configure_bbox, *configure_ok;
 	GtkWidget *song_frame, *song_vbox;
 	char *temp;
 	
-	if (configure_win)
-		return;
-
 	read_config();
-
-	configure_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_signal_connect(GTK_OBJECT(configure_win), "destroy",
-			   GTK_SIGNAL_FUNC(gtk_widget_destroyed),
-			   &configure_win);
-	gtk_window_set_title(GTK_WINDOW(configure_win),
-			     _("Song Change Configuration"));
-	
-	gtk_container_set_border_width(GTK_CONTAINER(configure_win), 10);
 
 	configure_vbox = gtk_vbox_new(FALSE, 10);
 	gtk_container_add(GTK_CONTAINER(configure_win), configure_vbox);
@@ -309,7 +296,6 @@ static void configure(void)
 	sep3 = gtk_hseparator_new();
 	gtk_box_pack_start(GTK_BOX(song_vbox), sep3, TRUE, TRUE, 0);
 
-
 	temp = g_strdup_printf(
 		_("You can use the following format strings which "
 		  "will be substituted before calling the command "
@@ -330,27 +316,33 @@ static void configure(void)
 	gtk_box_pack_start(GTK_BOX(song_vbox), f_desc, FALSE, FALSE, 0);
 	gtk_label_set_line_wrap(GTK_LABEL(f_desc), TRUE);
 
-
-
-
 	configure_bbox = gtk_hbutton_box_new();
 	gtk_button_box_set_layout(GTK_BUTTON_BOX(configure_bbox), GTK_BUTTONBOX_END);
 	gtk_button_box_set_spacing(GTK_BUTTON_BOX(configure_bbox), 5);
 	gtk_box_pack_start(GTK_BOX(configure_vbox), configure_bbox, FALSE, FALSE, 0);
 
-	configure_ok = gtk_button_new_with_label(_("OK"));
+	configure_ok = gtk_button_new_from_stock(_("gtk-apply"));
 	gtk_signal_connect(GTK_OBJECT(configure_ok), "clicked", GTK_SIGNAL_FUNC(configure_ok_cb), NULL);
 	GTK_WIDGET_SET_FLAGS(configure_ok, GTK_CAN_DEFAULT);
 	gtk_box_pack_start(GTK_BOX(configure_bbox), configure_ok, TRUE, TRUE, 0);
 	gtk_widget_grab_default(configure_ok);
 
-	configure_cancel = gtk_button_new_with_label(_("Cancel"));
-	gtk_signal_connect_object(GTK_OBJECT(configure_cancel), "clicked", GTK_SIGNAL_FUNC(gtk_widget_destroy), GTK_OBJECT(configure_win));
-	GTK_WIDGET_SET_FLAGS(configure_cancel, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(configure_bbox), configure_cancel, TRUE, TRUE, 0);
+	gtk_widget_show_all(configure_vbox);
 
-	gtk_widget_show_all(configure_win);
+	return configure_vbox;
 }
+
+static void init(void)
+{
+	read_config();
+
+	previous_song = -1;
+	timeout_tag = gtk_timeout_add(100, timeout_func, NULL);
+
+	configure_vbox = configure();
+	prefswin_page_new(configure_vbox, "Song Change", DATA_DIR "/images/songchange.png");
+}
+
 
 static void bury_child(int signal)
 {
