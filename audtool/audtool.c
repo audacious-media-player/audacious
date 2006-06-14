@@ -557,7 +557,7 @@ void playlist_shuffle_toggle(gint session, gint argc, gchar **argv)
 
 void playqueue_add(gint session, gint argc, gchar **argv)
 {
-	gint length, i;
+	gint i;
 
 	if (argc < 3)
 	{
@@ -580,7 +580,7 @@ void playqueue_add(gint session, gint argc, gchar **argv)
 
 void playqueue_remove(gint session, gint argc, gchar **argv)
 {
-	gint length, i;
+	gint i;
 
 	if (argc < 3)
 	{
