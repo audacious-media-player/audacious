@@ -26,6 +26,7 @@
 #ifndef JMA_FILE_H
 #define JMA_FILE_H
 
+#include "libjma/jma.h"
 #include "abstract_file.h"
 
 class Jma_File_Reader : public File_Reader {
@@ -42,7 +43,7 @@ public:
 	error_t open( const char *, const char* );
 	
 	long size() const;
-	long read_avail( unsigned char*, long );
+	long read_avail( void*, long );
 	
 	long tell() const;
 	error_t seek( long );

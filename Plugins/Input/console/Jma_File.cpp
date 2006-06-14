@@ -73,12 +73,14 @@ long Jma_File_Reader::size() const
 	return size_;
 }
 
-long Jma_File_Reader::read_avail( unsigned char* p, long s )
+long Jma_File_Reader::read_avail( void* p, long s )
 {
-	p = new unsigned char[s];
+	unsigned char *n = new unsigned char[s];
 
 	for (long i = 0; i < s; i++)
-		p[i] = *bufptr_++;
+		n[i] = *bufptr_++;
+
+	p = (void *) n;
 
 	return s;
 }

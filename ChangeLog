@@ -1,3 +1,12 @@
+2006-06-14 04:23:52 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1300]
+  - Jma_File_Reader class
+  
+
+  Changes:        Modified:
+  +1 -0           trunk/Plugins/Input/console/Makefile.in  
+
+
 2006-06-14 03:37:25 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1298]
   - add libjma (a hopefully portable snapshot of the ZSNES JMA implementation)
