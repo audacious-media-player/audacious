@@ -95,20 +95,20 @@ clean:
 		done; \
 	fi
 	$(MAKE) clean-posthook
-	rm *.o *.lo *.so *.a *.sl
+	rm -f *.o *.lo *.so *.a *.sl
 	@if test "x$(OBJECTIVE_BINS)" != "x"; then \
 		for i in $(OBJECTIVE_BINS); do \
-			rm $$i; \
+			rm -f $$i; \
 		done; \
 	fi
 	@if test "x$(OBJECTIVE_LIBS)" != "x"; then \
 		for i in $(OBJECTIVE_LIBS); do \
-			rm $$i; \
+			rm -f $$i; \
 		done; \
 	fi
 	@if test "x$(OBJECTIVE_LIBS_NOINST)" != "x"; then \
 		for i in $(OBJECTIVE_LIBS_NOINST); do \
-			rm $$i; \
+			rm -f $$i; \
 		done; \
 	fi
 	@if test $(VERBOSITY) -gt 0; then \
@@ -125,10 +125,10 @@ distclean: clean
 		done; \
 	fi
 	@if test -f Makefile.in; then \
-		rm -f Makefile; \
+		rm -f -f Makefile; \
 	fi
 	@if test -f mk/rules.mk; then \
-		rm -f mk/rules.mk; \
+		rm -f -f mk/rules.mk; \
 	fi
 
 build:

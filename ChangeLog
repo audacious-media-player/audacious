@@ -1,3 +1,12 @@
+2006-06-14 07:49:07 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1342]
+  s/$(RM)/rm/ (wtf)
+  
+
+  Changes:        Modified:
+  +15 -15         trunk/mk/objective.mk  
+
+
 2006-06-14 07:46:51 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1340]
   - no more "none"
