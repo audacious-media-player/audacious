@@ -232,3 +232,11 @@ install-posthook:
 
 # compatibility with automake follows
 am--refresh:
+
+mk/rules.mk:
+	@if [ -f "configure" ]; then \
+		echo "[building rules.mk for posix target, run configure manually if you do not want this]"; \
+		sh configure; \
+		echo "[complete]"; \
+	fi
+
