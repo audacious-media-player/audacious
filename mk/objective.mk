@@ -234,7 +234,7 @@ am--refresh:
 mk/rules.mk:
 	@if [ -f "configure" ]; then \
 		echo "[building rules.mk for posix target, run configure manually if you do not want this]"; \
-		sh configure; \
+		sh configure $(CONFIG_OPTS); \
 		echo "[complete]"; \
 	fi
 
