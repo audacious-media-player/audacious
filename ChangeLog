@@ -1,3 +1,12 @@
+2006-06-14 06:15:31 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1304]
+  - lets avoid crashing shall we?
+  
+
+  Changes:        Modified:
+  +7 -2           trunk/Plugins/Input/console/Jma_File.cpp  
+
+
 2006-06-14 05:16:47 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1302]
   - some JMA stuff

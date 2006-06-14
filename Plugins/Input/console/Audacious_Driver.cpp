@@ -32,7 +32,6 @@ extern "C" {
 #include "Track_Emu.h"
 #include "Vfs_File.h"
 #include "Gzip_File.h"
-#include "Jma_File.h"
 #include "blargg_endian.h"
 
 //typedef Vfs_File_Reader Audacious_Reader; // will use VFS once it handles gzip transparently
@@ -74,7 +73,6 @@ struct track_info_t
 	int length; // in msec, -1 = unknown
 	int loop;   // in msec, -1 = unknown, 0 = not looped
 	int intro;  // in msec, -1 = unknown
-	gchar *jma_spec;
 	
 	TitleInput* ti;
 };
@@ -396,7 +394,7 @@ inline void get_file_info( Vgm_Emu::header_t const& vgm_h, Data_Reader& in, trac
 
 // File identification
 
-enum { type_none = 0, type_spc, type_nsf, type_nsfe, type_vgm, type_gbs, type_gym, type_jma };
+enum { type_none = 0, type_spc, type_nsf, type_nsfe, type_vgm, type_gbs, type_gym };
 
 int const tag_size = 4;
 typedef char tag_t [tag_size];
@@ -415,7 +413,6 @@ static int identify_file( gchar* path, tag_t tag )
 	if ( !memcmp( tag, "GYMX", 4 ) ) result = type_gym;
 	if ( !memcmp( tag, "GBS" , 3 ) ) result = type_gbs;
 	if ( !memcmp( tag, "Vgm ", 4 ) ) result = type_vgm;
-	if ( !memcmp( tag, "JMA" , 3 ) ) result = type_jma;
 	return result;
 }
 
@@ -586,34 +583,22 @@ static void play_file( char* path )
 	// open and identify file
 	unload_file();
 	Audacious_Reader in;
-	Jma_File_Reader in_jma;		// to do: integrate somehow into Audacious_Reader (?)
 	tag_t tag;
 
 	// extract the subsong id from the virtual path
 	gchar *path2 = g_strdup(path);
 	gchar *_path = strchr(path2, '?');
-	gchar *jmaspec = NULL;
 
 	if (_path != NULL && *_path == '?')
 	{
 		*_path = '\0';
 		_path++;
 		track = atoi(_path);
-		jmaspec = _path;
 	}
 
+	if ( in.open( path2 ) || in.read( tag, sizeof tag ) )
+		return;
 	int type = identify_file( path2, tag );
-
-	if ( type != type_jma )
-	{
-		if ( in.open( path2 ) || in.read( tag, sizeof tag ) )
-			return;
-	}
-	else
-	{
-		if ( in_jma.open( path2, jmaspec ) || in.read( tag, sizeof tag ) )
-			return;
-	}
 	
 	// setup info
 	long sample_rate = 44100;
@@ -635,7 +620,6 @@ static void play_file( char* path )
 		case type_gym: load_file( tag, in, sample_rate, &info, (Gym_Emu*) 0 ); break;
 		case type_vgm: load_file( tag, in, sample_rate, &info, (Vgm_Emu*) 0 ); break;
 		case type_spc: load_file( tag, in, sample_rate, &info, (Spc_Emu*) 0 ); break;
-		case type_jma: load_file( tag, in_jma, sample_rate, &info, (Spc_Emu*) 0 ); break;
 	}
 	in.close();
 	if ( !emu )
