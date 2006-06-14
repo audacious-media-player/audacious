@@ -8,17 +8,10 @@ OBJECTIVE_BINS =
 OBJECTIVE_DATA = 
 SUBDIRS = 
 HEADERS = 
+V = 0
+VERBOSE ?= $(V)
 VERBOSITY = 0
-SHOW_CFLAGS = 0
-
-#ifeq ($(SHOW_CFLAGS),0)
-#ifeq ($(V),1)
-#SHOW_CFLAGS = 1
-#endif
-#ifeq ($(VERBOSE),1)
-#SHOW_CFLAGS = 1
-#endif
-#endif
+SHOW_CFLAGS ?= $(VERBOSE)
 
 LIBDIR = $(libdir)
 BINDIR = $(bindir)
@@ -132,6 +125,11 @@ distclean: clean
 	fi
 
 build:
+	# test for GNU make
+	@if test "x$(MAKE_VERSION)" == "x"; then \
+		echo "[Your make is not properly supported, please use GNU make.]"; \
+		exit 1; \
+	fi;
 	$(MAKE) build-prehook
 	@if test "x$(SUBDIRS)" != "x"; then \
 		for i in $(SUBDIRS); do \

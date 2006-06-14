@@ -1,3 +1,12 @@
+2006-06-14 07:52:27 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1346]
+  - chase $(RM) change
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/General/scrobbler/Makefile.in  
+
+
 2006-06-14 07:51:53 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1344]
   - improvements
