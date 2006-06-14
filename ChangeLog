@@ -1,3 +1,11 @@
+2006-06-14 06:54:53 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1314]
+  - prepare to ship audtool with audacious SVN
+  
+
+  Changes:        Modified:
+
+
 2006-06-14 06:19:57 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1308]
   - Makefile update
