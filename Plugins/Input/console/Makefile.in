@@ -3,6 +3,8 @@ include ../../../mk/objective.mk
 
 OBJECTIVE_LIBS = libconsole.so
 
+SUBDIRS = libjma
+
 LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
 SOURCES = \
@@ -42,5 +44,5 @@ SOURCES = \
 
 OBJECTS = ${SOURCES:.cpp=.o}
 
-LIBADD += -lz $(GTK_LIBS) -lstdc++
+LIBADD += -lz $(GTK_LIBS) -lstdc++ ./libjma/libjma.a
 CXXFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..

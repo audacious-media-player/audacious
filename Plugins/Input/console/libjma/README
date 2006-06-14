@@ -1,0 +1,6 @@
+This is a snapshot of the JMA code taken from ZSNES. However, do not
+blame them if it does not work -- instead file a bug against the
+libjma component in our Mantis, at:
+
+   http://bugs.audacious-media-player.org
+

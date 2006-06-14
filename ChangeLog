@@ -1,3 +1,12 @@
+2006-06-13 15:36:56 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [1296]
+  filesize must be cached, otherwise lookup loop will crash.
+  
+
+  Changes:        Modified:
+  +2 -1           trunk/audacious/util.c  
+
+
 2006-06-13 08:59:28 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1294]
   - fix potential crashing on malformed ID3v2 tags
