@@ -244,6 +244,10 @@ textbox_handle_special_char(gchar c, gint * x, gint * y)
         *x = 130;
         *y = 0;
         break;
+    case '\r':
+        *x = 50;
+        *y = 6;
+        break;
     case ':':
         *x = 60;
         *y = 6;

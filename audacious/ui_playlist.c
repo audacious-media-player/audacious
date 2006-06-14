@@ -391,8 +391,10 @@ playlistwin_update_sinfo(void)
     convert_title_text(title);
 
     if (strlen(title) > max_len) {
-        max_len -= 3;
-        dots = "...";
+        max_len -= 1;
+        dots = "\r";
+        /* textbox.c interprets \r as the ellipsis character, as there 
+           is none in ASCII. */
     }
     else
         dots = "";
