@@ -1,3 +1,12 @@
+2006-06-15 05:41:05 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1390]
+  - remove metatag entirely
+  
+
+  Changes:        Modified:
+  +1 -14          trunk/Plugins/General/scrobbler/Makefile.in  
+
+
 2006-06-15 05:39:13 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1388]
   - if a PlaylistEntry does not have a cached tuple, generate it on demand.

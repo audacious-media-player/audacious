@@ -20,12 +20,10 @@
 #include <wchar.h>
 #include <sys/time.h>
 
-#include "tags/include/tags.h"
 #include "scrobbler.h"
 #include "gtkstuff.h"
 #include "config.h"
 #include "fmt.h"
-#include "tags/include/unicode.h"
 #include "configure.h"
 
 #define XS_CS xmms_scrobbler.xmms_session

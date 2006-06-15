@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include "fmt.h"
 #include "md5.h"
-#include "tags/include/tags.h"
 #include "queue.h"
 #include "scrobbler.h"
 #include "config.h"

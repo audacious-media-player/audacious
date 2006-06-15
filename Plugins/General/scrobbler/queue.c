@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <curl/curl.h>
-#include "tags/include/tags.h"
 #include "queue.h"
 #include "fmt.h"
 
