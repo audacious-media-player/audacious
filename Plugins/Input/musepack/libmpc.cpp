@@ -268,6 +268,51 @@ static int mpcGetTime()
     return MpcPlugin.output->output_time();
 }
 
+static TitleInput *mpcGetSongTuple(char* p_Filename)
+{
+    FILE* input = fopen(p_Filename, "rb");
+    TitleInput *tuple = NULL;
+
+    if(input)
+    {
+        tuple = bmp_title_input_new();
+        gchar *filename_proxy = g_strdup(p_Filename);
+
+        tuple->file_name = g_path_get_basename(filename_proxy);
+        tuple->file_path = g_path_get_dirname(filename_proxy);
+        tuple->file_ext = "mpc";		// XXX: I can't be assed. -nenolod
+
+        MpcInfo tags = getTags(p_Filename);
+
+        tuple->date         = g_strdup(tags.date);
+        tuple->track_name   = g_strdup(tags.title);
+        tuple->performer    = g_strdup(tags.artist);
+        tuple->album_name   = g_strdup(tags.album);
+        tuple->track_number = tags.track;
+        tuple->year         = tags.year;
+        tuple->genre        = g_strdup(tags.genre);
+        tuple->comment      = g_strdup(tags.comment);
+
+        freeTags(tags);
+
+        mpc_streaminfo info;
+        mpc_reader_file reader;
+        mpc_reader_setup_file_reader(&reader, input);
+        mpc_streaminfo_read(&info, &reader.reader);
+
+        tuple->length = static_cast<int> (1000 * mpc_streaminfo_get_length(&info));
+        fclose(input);
+    }
+    else
+    {
+        char* temp = g_strdup_printf("[xmms-musepack] mpcGetSongInfo is unable to open %s\n", p_Filename);
+        perror(temp);
+        free(temp);
+    }
+
+    return tuple;
+}
+
 static void mpcGetSongInfo(char* p_Filename, char** p_Title, int* p_Length)
 {
     FILE* input = fopen(p_Filename, "rb");
@@ -606,42 +651,17 @@ static void closeInfoBox(GtkWidget* w, gpointer data)
     widgets.infoBox = NULL;
 }
 
-static char* mpcGenerateTitle(const MpcInfo& p_Tags, const char* p_Filename)
+static char* mpcGenerateTitle(const MpcInfo& p_Tags, char* p_Filename)
 {
-    TitleInput* input;
-    //From titlestring.h
-    input            = g_new0(TitleInput, 1);
-    input->__size    = XMMS_TITLEINPUT_SIZE;
-    input->__version = XMMS_TITLEINPUT_VERSION;
-    //end
+    TitleInput* tuple = mpcGetSongTuple(p_Filename);
 
-    input->file_name    = g_filename_display_basename(p_Filename);
-    input->file_path    = g_path_get_dirname(p_Filename);
-    input->file_ext     = "mpc";
-    input->date         = g_strdup(p_Tags.date);
-    input->track_name   = g_strdup(p_Tags.title);
-    input->performer    = g_strdup(p_Tags.artist);
-    input->album_name   = g_strdup(p_Tags.album);
-    input->track_number = p_Tags.track;
-    input->year         = p_Tags.year;
-    input->genre        = g_strdup(p_Tags.genre);
-    input->comment      = g_strdup(p_Tags.comment);
-
-    char* title = xmms_get_titlestring (xmms_get_gentitle_format(), input);
+    char* title = xmms_get_titlestring (xmms_get_gentitle_format(), tuple);
     if(!title)
-        title = g_strdup(input->file_name);
+        title = g_strdup(tuple->file_name);
     else if (!*title)
-        title = g_strdup(input->file_name);
+        title = g_strdup(tuple->file_name);
 
-    free(input->file_name);
-    free(input->file_path);
-    free(input->track_name);
-    free(input->performer);
-    free(input->album_name);
-    free(input->genre);
-    free(input->comment);
-    free(input->date);
-    g_free(input);
+    bmp_title_input_free(tuple);
     return title;
 }
 

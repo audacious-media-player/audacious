@@ -121,7 +121,7 @@ static GtkWidget* mpcGtkButton(char*, GtkWidget*);
 static void       removeTags(GtkWidget*, gpointer);
 static void       saveTags(GtkWidget*, gpointer);
 static void       closeInfoBox(GtkWidget*, gpointer);
-static char*      mpcGenerateTitle(const MpcInfo&, const char*);
+static char*      mpcGenerateTitle(const MpcInfo&, char*);
 static void       lockAcquire();
 static void       lockRelease();
 static void*      decodeStream(void*);
@@ -133,6 +133,7 @@ static double     getOffset();
 static void       setOffset(double);
 static bool       isPause();
 static void       setReplaygain(mpc_streaminfo&, mpc_decoder&);
+static TitleInput* mpcGetSongTuple(char *);
 
 #ifdef MPC_FIXED_POINT
 inline static int shiftSigned(MPC_SAMPLE_FORMAT val, int shift)
