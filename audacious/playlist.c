@@ -1701,6 +1701,12 @@ playlist_get_tuple(guint pos)
 
     tuple = entry->tuple;
 
+    if (tuple == NULL)
+    {
+        playlist_entry_get_info(entry);
+        tuple = entry->tuple;
+    }
+
     PLAYLIST_UNLOCK();
 
     return tuple;

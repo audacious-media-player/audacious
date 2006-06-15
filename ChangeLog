@@ -1,3 +1,16 @@
+2006-06-15 05:30:04 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1386]
+  - disconnect the scrobbler client from metatag logically
+  
+
+  Changes:        Modified:
+  +15 -8          trunk/Plugins/General/scrobbler/queue.c  
+  +3 -1           trunk/Plugins/General/scrobbler/queue.h  
+  +2 -2           trunk/Plugins/General/scrobbler/scrobbler.c  
+  +3 -1           trunk/Plugins/General/scrobbler/scrobbler.h  
+  +26 -2          trunk/Plugins/General/scrobbler/xmms_scrobbler.c  
+
+
 2006-06-15 05:17:20 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1384]
   - more sanity for input_get_song_tuple()
