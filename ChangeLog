@@ -1,3 +1,12 @@
+2006-06-15 11:54:42 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1414]
+  - use tuplecache to optimise title sorts
+  
+
+  Changes:        Modified:
+  +11 -3          trunk/audacious/playlist.c  
+
+
 2006-06-15 11:05:23 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1412]
   - tuple builder for wma

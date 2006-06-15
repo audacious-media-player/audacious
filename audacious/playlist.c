@@ -57,7 +57,7 @@
 
 #include "debug.h"
 
-typedef gint (*PlaylistCompareFunc) (const PlaylistEntry * a, const PlaylistEntry * b);
+typedef gint (*PlaylistCompareFunc) (PlaylistEntry * a, PlaylistEntry * b);
 typedef void (*PlaylistSaveFunc) (FILE * file);
 
 PlaylistEntry *playlist_position;
@@ -101,19 +101,21 @@ static GThread *playlist_get_info_thread;
 
 
 static gint path_compare(const gchar * a, const gchar * b);
-static gint playlist_compare_path(const PlaylistEntry * a, const PlaylistEntry * b);
-static gint playlist_compare_filename(const PlaylistEntry * a, const PlaylistEntry * b);
-static gint playlist_compare_title(const PlaylistEntry * a, const PlaylistEntry * b);
-static gint playlist_compare_date(const PlaylistEntry * a, const PlaylistEntry * b);
+static gint playlist_compare_path(PlaylistEntry * a, PlaylistEntry * b);
+static gint playlist_compare_filename(PlaylistEntry * a, PlaylistEntry * b);
+static gint playlist_compare_title(PlaylistEntry * a, PlaylistEntry * b);
+static gint playlist_compare_artist(PlaylistEntry * a, PlaylistEntry * b);
+static gint playlist_compare_date(PlaylistEntry * a, PlaylistEntry * b);
 
-static gint playlist_dupscmp_path( const PlaylistEntry * a, const PlaylistEntry * b);
-static gint playlist_dupscmp_filename( const PlaylistEntry * a, const PlaylistEntry * b);
-static gint playlist_dupscmp_title( const PlaylistEntry * a, const PlaylistEntry * b);
+static gint playlist_dupscmp_path(PlaylistEntry * a, PlaylistEntry * b);
+static gint playlist_dupscmp_filename(PlaylistEntry * a, PlaylistEntry * b);
+static gint playlist_dupscmp_title(PlaylistEntry * a, PlaylistEntry * b);
 
 static PlaylistCompareFunc playlist_compare_func_table[] = {
     playlist_compare_path,
     playlist_compare_filename,
     playlist_compare_title,
+    playlist_compare_artist,
     playlist_compare_date
 };
 
@@ -1748,8 +1750,8 @@ playlist_get_songtime(guint pos)
 }
 
 static gint
-playlist_compare_title(const PlaylistEntry * a,
-                       const PlaylistEntry * b)
+playlist_compare_title(PlaylistEntry * a,
+                       PlaylistEntry * b)
 {
     const gchar *a_title = NULL, *b_title = NULL;
 
@@ -1761,7 +1763,7 @@ playlist_compare_title(const PlaylistEntry * a,
     if (b->tuple != NULL && b->tuple->track_name != NULL)
         b_title = b->tuple->track_name;
 
-    if (a->title != NULL && b->title != NULL)
+    if (a_title != NULL && b_title != NULL)
         return strcasecmp(a_title, b_title);
 
     if (a->title != NULL)
@@ -1786,8 +1788,34 @@ playlist_compare_title(const PlaylistEntry * a,
 }
 
 static gint
-playlist_compare_filename(const PlaylistEntry * a,
-                          const PlaylistEntry * b)
+playlist_compare_artist(PlaylistEntry * a,
+                        PlaylistEntry * b)
+{
+    const gchar *a_artist = NULL, *b_artist = NULL;
+
+    g_return_val_if_fail(a != NULL, 0);
+    g_return_val_if_fail(b != NULL, 0);
+
+    if (a->tuple != NULL)
+        playlist_entry_get_info(a);
+
+    if (b->tuple != NULL)
+        playlist_entry_get_info(b);
+
+    if (a->tuple->performer != NULL)
+        a_artist = a->tuple->performer;
+    if (b->tuple->performer != NULL)
+        b_artist = b->tuple->performer;
+
+    if (a_artist != NULL && b_artist != NULL)
+        return strcasecmp(a_artist, b_artist);
+
+    return -1;
+}
+
+static gint
+playlist_compare_filename(PlaylistEntry * a,
+                          PlaylistEntry * b)
 {
     gchar *a_filename, *b_filename;
 
@@ -1836,15 +1864,15 @@ path_compare(const gchar * a, const gchar * b)
 }
 
 static gint
-playlist_compare_path(const PlaylistEntry * a,
-                      const PlaylistEntry * b)
+playlist_compare_path(PlaylistEntry * a,
+                      PlaylistEntry * b)
 {
     return path_compare(a->filename, b->filename);
 }
 
 static gint
-playlist_compare_date(const PlaylistEntry * a,
-                      const PlaylistEntry * b)
+playlist_compare_date(PlaylistEntry * a,
+                      PlaylistEntry * b)
 {
     struct stat buf;
     time_t modtime;
@@ -2310,7 +2338,8 @@ playlist_remove_dead_files(void)
 
 
 static gint
-playlist_dupscmp_title( const PlaylistEntry * a , const PlaylistEntry * b )
+playlist_dupscmp_title(PlaylistEntry * a,
+                       PlaylistEntry * b)
 {
     const gchar *a_title, *b_title;
 
@@ -2339,7 +2368,8 @@ playlist_dupscmp_title( const PlaylistEntry * a , const PlaylistEntry * b )
 }
 
 static gint
-playlist_dupscmp_filename( const PlaylistEntry * a , const PlaylistEntry * b )
+playlist_dupscmp_filename(PlaylistEntry * a,
+                          PlaylistEntry * b )
 {
     gchar *a_filename, *b_filename;
 
@@ -2360,7 +2390,8 @@ playlist_dupscmp_filename( const PlaylistEntry * a , const PlaylistEntry * b )
 }
 
 static gint
-playlist_dupscmp_path( const PlaylistEntry * a , const PlaylistEntry * b )
+playlist_dupscmp_path(PlaylistEntry * a,
+                      PlaylistEntry * b)
 {
     /* simply compare the entire filename string */
     return strcmp(a->filename, b->filename);
@@ -2371,7 +2402,7 @@ playlist_remove_duplicates( PlaylistDupsType type )
 {
     GList *node, *next_node;
     GList *node_cmp, *next_node_cmp;
-    gint (*dups_compare_func)( const PlaylistEntry * , const PlaylistEntry * );
+    gint (*dups_compare_func)(PlaylistEntry * , PlaylistEntry *);
 
     switch ( type )
     {

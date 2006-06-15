@@ -80,6 +80,7 @@ enum {
 enum {
     PLAYLISTWIN_SORT_BYTITLE, PLAYLISTWIN_SORT_BYFILENAME,
     PLAYLISTWIN_SORT_BYPATH, PLAYLISTWIN_SORT_BYDATE,
+    PLAYLISTWIN_SORT_BYARTIST, PLAYLISTWIN_SORT_SEL_BYARTIST,
     PLAYLISTWIN_SORT_SEL_BYTITLE, PLAYLISTWIN_SORT_SEL_BYFILENAME,
     PLAYLISTWIN_SORT_SEL_BYPATH, PLAYLISTWIN_SORT_SEL_BYDATE,
     PLAYLISTWIN_SORT_RANDOMIZE, PLAYLISTWIN_SORT_REVERSE
@@ -250,6 +251,8 @@ static GtkItemFactoryEntry plsort_menu_entries[] = {
     {N_("/Sort List"), NULL, NULL, 0, "<Branch>", NULL},
     {N_("/Sort List/By Title"), NULL, plsort_menu_callback,
      PLAYLISTWIN_SORT_BYTITLE, "<ImageItem>", sortbytitle_pixbuf},
+    {N_("/Sort List/By Artist"), NULL, plsort_menu_callback,
+     PLAYLISTWIN_SORT_BYARTIST, "<ImageItem>", sortbytitle_pixbuf},
     {N_("/Sort List/By Filename"), NULL, plsort_menu_callback,
      PLAYLISTWIN_SORT_BYFILENAME, "<ImageItem>", sortbyfilename_pixbuf},
     {N_("/Sort List/By Path + Filename"), NULL, plsort_menu_callback,
@@ -259,6 +262,8 @@ static GtkItemFactoryEntry plsort_menu_entries[] = {
     {N_("/Sort Selection"), NULL, NULL, 0, "<Branch>", NULL},
     {N_("/Sort Selection/By Title"), NULL, plsort_menu_callback,
      PLAYLISTWIN_SORT_SEL_BYTITLE, "<ImageItem>", sortbytitle_pixbuf},
+    {N_("/Sort Selection/By Artist"), NULL, plsort_menu_callback,
+     PLAYLISTWIN_SORT_SEL_BYARTIST, "<ImageItem>", sortbytitle_pixbuf},
     {N_("/Sort Selection/By Filename"), NULL, plsort_menu_callback,
      PLAYLISTWIN_SORT_SEL_BYFILENAME, "<ImageItem>", sortbyfilename_pixbuf},
     {N_("/Sort Selection/By Path + Filename"), NULL, plsort_menu_callback,
@@ -1823,6 +1828,10 @@ plsort_menu_callback(gpointer data,
         playlist_sort(PLAYLIST_SORT_TITLE);
         playlistwin_update_list();
         break;
+    case PLAYLISTWIN_SORT_BYARTIST:
+        playlist_sort(PLAYLIST_SORT_ARTIST);
+        playlistwin_update_list();
+        break;
     case PLAYLISTWIN_SORT_BYPATH:
         playlist_sort(PLAYLIST_SORT_PATH);
         playlistwin_update_list();
@@ -1837,6 +1846,10 @@ plsort_menu_callback(gpointer data,
         break;
     case PLAYLISTWIN_SORT_SEL_BYTITLE:
         playlist_sort_selected(PLAYLIST_SORT_TITLE);
+        playlistwin_update_list();
+        break;
+    case PLAYLISTWIN_SORT_SEL_BYARTIST:
+        playlist_sort_selected(PLAYLIST_SORT_ARTIST);
         playlistwin_update_list();
         break;
     case PLAYLISTWIN_SORT_SEL_BYFILENAME:
