@@ -1,3 +1,12 @@
+2006-06-15 06:24:23 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1400]
+  - fill in the length part of the tuple (oops)
+  
+
+  Changes:        Modified:
+  +5 -0           trunk/Plugins/Input/console/Audacious_Driver.cpp  
+
+
 2006-06-15 06:19:56 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1398]
   - get_song_tuple() implementation (scrobblerific!)

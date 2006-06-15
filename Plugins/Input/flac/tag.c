@@ -52,7 +52,7 @@ static char *local__extname(const char *filename)
 static char *local__getstr(char* str)
 {
 	if (str && strlen(str) > 0)
-		return str;
+		return g_strdup(str);
 	return NULL;
 }
 
@@ -90,8 +90,9 @@ TitleInput *flac_get_tuple(char *filename)
 	TitleInput *input = NULL;
 	FLAC__StreamMetadata *tags;
 	char *title, *artist, *performer, *album, *date, *tracknumber, *genre, *description;
+	gchar *filename_proxy = g_strdup(filename);
 
-	FLAC_plugin__tags_get(filename, &tags);
+	FLAC_plugin__tags_get(filename_proxy, &tags);
 
 	title       = local__getfield(tags, "TITLE");
 	artist      = local__getfield(tags, "ARTIST");
@@ -114,9 +115,9 @@ TitleInput *flac_get_tuple(char *filename)
 	input->genre = local__getstr(genre);
 	input->comment = local__getstr(description);
 
-	input->file_name = g_path_get_basename(filename);
-	input->file_path = filename;
-	input->file_ext = local__extname(filename);
+	input->file_name = g_path_get_basename(filename_proxy);
+	input->file_path = filename_proxy;
+	input->file_ext = local__extname(filename_proxy);
 
 	return input;
 }
