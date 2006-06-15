@@ -82,6 +82,7 @@ static void wma_seek(int time);
 static void wma_do_pause(short p);
 static int wma_get_time(void);
 static void wma_get_song_info(char *filename, char **title, int *length);
+static TitleInput *wma_get_song_tuple(char *filename);
 static void wma_file_info_box(char *filename); 
 static char *wsong_title;
 static int wsong_time;
@@ -113,7 +114,8 @@ InputPlugin wma_ip =
     NULL,           	// Show some text in the song title box. Filled in by xmms
     wma_get_song_info,  // Function to grab the title string
     wma_file_info_box,  // Bring up an info window for the filename passed in
-    NULL            	// Handle to the current output plugin. Filled in by xmms
+    NULL,           	// Handle to the current output plugin. Filled in by xmms
+    wma_get_song_tuple, // Tuple builder
 };
 
 InputPlugin *get_iplugin_info(void)
@@ -240,8 +242,45 @@ static gchar *extname(const char *filename)
 
 static char* w_getstr(char* str)
 {
-    if(str && strlen(str) > 0) return str;
+    if(str && strlen(str) > 0) return g_strdup(str);
     return NULL;
+}
+
+static TitleInput *wma_get_song_tuple(gchar * filename)
+{
+    TitleInput *tuple = NULL;
+    AVFormatContext *in = NULL;
+    gchar *filename_proxy = g_strdup(filename);
+
+    if (av_open_input_file(&in, str_twenty_to_space(filename), NULL, 0, NULL) < 0)
+	return NULL;
+
+    tuple = bmp_title_input_new();
+
+    tuple->file_name = g_path_get_basename(filename_proxy);
+    tuple->file_path = g_path_get_dirname(filename_proxy);
+    tuple->file_ext = extname(filename_proxy);
+	
+    av_find_stream_info(in);
+
+    if((in->title[0] != '\0') || (in->author[0] != '\0') || (in->album[0] != '\0') ||
+       (in->comment[0] != '\0') || (in->genre[0] != '\0') || (in->year != 0) || (in->track != 0))
+    {	
+	tuple->performer = w_getstr(in->author);
+	tuple->album_name = w_getstr(in->album);
+	tuple->track_name = w_getstr(in->title);
+	tuple->year = in->year;
+	tuple->track_number = in->track;
+	tuple->genre = w_getstr(in->genre);
+	tuple->comment = w_getstr(in->comment);
+    }
+
+    if (in->duration)
+        tuple->length = in->duration / 1000;
+
+    av_close_input_file(in);
+
+    return tuple;
 }
 
 static gchar *get_song_title(AVFormatContext *in, gchar * filename)
@@ -287,18 +326,13 @@ static guint get_song_time(AVFormatContext *in)
 
 static void wma_get_song_info(char *filename, char **title_real, int *len_real)
 {
-    AVFormatContext *in = NULL;
-    
-    (*len_real) = -1;
-    (*title_real) = NULL;
+    TitleInput *tuple = wma_get_song_tuple(filename);
 
-    if (av_open_input_file(&in, str_twenty_to_space(filename), NULL, 0, NULL) < 0)
-	return;
-	
-    av_find_stream_info(in);
-    (*len_real) = get_song_time(in);
-    (*title_real) = get_song_title(in, filename);
-    av_close_input_file(in);
+    if (tuple == NULL)
+        return;
+
+    (*len_real) = tuple->length;
+    (*title_real) = xmms_get_titlestring(xmms_get_gentitle_format(), tuple);
 }
 
 static void wma_playbuff(int out_size)

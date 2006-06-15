@@ -1,3 +1,12 @@
+2006-06-15 10:37:59 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1410]
+  - this is a hack until I find a better solution
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/audacious/plugin.h  
+
+
 2006-06-15 08:22:24 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1408]
   - tuple builder for mp4 files (not AAC, sorry but nobody uses that crap anymore)
