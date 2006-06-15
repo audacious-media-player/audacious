@@ -45,7 +45,7 @@
 
 	      <child>
 		<widget class="GtkTreeView" id="category_view">
-		  <property name="width_request">170</property>
+		  <property name="width_request">172</property>
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>
 		  <property name="headers_visible">False</property>
