@@ -67,8 +67,7 @@ static void vorbis_pause(short p);
 static void vorbis_seek(int time);
 static int vorbis_time(void);
 static void vorbis_get_song_info(char *filename, char **title, int *length);
-static gchar *vorbis_generate_title(OggVorbis_File * vorbisfile,
-                                    gchar * fn);
+static gchar *vorbis_generate_title(gchar * fn);
 static void vorbis_aboutbox(void);
 static void vorbis_init(void);
 static void vorbis_cleanup(void);
@@ -419,7 +418,7 @@ vorbis_play_loop(gpointer arg)
     samplerate = vi->rate;
     channels = vi->channels;
 
-    title = vorbis_generate_title(&vf, filename);
+    title = vorbis_generate_title(filename);
     use_rg = vorbis_update_replaygain(&rg_scale);
     br = ov_bitrate(&vf, -1);
 
@@ -461,7 +460,7 @@ vorbis_play_loop(gpointer arg)
             if (title)
                 g_free(title);
             g_mutex_lock(vf_mutex);
-            title = vorbis_generate_title(&vf, filename);
+            title = vorbis_generate_title(filename);
             use_rg = vorbis_update_replaygain(&rg_scale);
 
             if (vorbis_is_streaming)
@@ -565,42 +564,15 @@ vorbis_seek(int time)
 static void
 vorbis_get_song_info(char *filename, char **title, int *length)
 {
-    VFSFile *stream;
-    OggVorbis_File vf;          /* avoid thread interaction */
+    TitleInput *tuple = get_song_tuple(filename);
 
-    if (strncasecmp(filename, "http://", 7)) {
-        if ((stream = vfs_fopen(filename, "r")) == NULL)
-            return;
+    *length = tuple->length;
+    *title = xmms_get_titlestring(vorbis_cfg.tag_override ?
+                                  vorbis_cfg.tag_format :
+                                  xmms_get_gentitle_format(),
+                                  tuple);
 
-        /*
-         * The open function performs full stream detection and
-         * machine initialization.  If it returns zero, the stream
-         * *is* Vorbis and we're fully ready to decode.
-         */
-        g_mutex_lock(vf_mutex);
-        if (ov_open_callbacks(stream, &vf, NULL, 0, vorbis_callbacks) < 0) {
-            g_mutex_unlock(vf_mutex);
-            vfs_fclose(stream);
-            return;
-        }
-
-        /* Retrieve the length */
-        *length = ov_time_total(&vf, -1) * 1000;
-
-        *title = NULL;
-        *title = vorbis_generate_title(&vf, filename);
-        /*
-         * once the ov_open succeeds, the stream belongs to
-         * vorbisfile.a.  ov_clear will fclose it
-         */
-        ov_clear(&vf);
-        g_mutex_unlock(vf_mutex);
-    }
-    else {
-        /* streaming song info */
-        *length = -1;
-        *title = (char *) vorbis_http_get_title(filename);
-    }
+    bmp_title_input_free(tuple);
 }
 
 static const gchar *
@@ -736,9 +708,7 @@ get_song_tuple(gchar *filename)
          * machine initialization.  If it returns zero, the stream
          * *is* Vorbis and we're fully ready to decode.
          */
-        g_mutex_lock(vf_mutex);
         if (ov_open_callbacks(stream, &vf, NULL, 0, vorbis_callbacks) < 0) {
-            g_mutex_unlock(vf_mutex);
             vfs_fclose(stream);
             return NULL;
         }
@@ -775,7 +745,6 @@ get_song_tuple(gchar *filename)
          * vorbisfile.a.  ov_clear will fclose it
          */
         ov_clear(&vf);
-        g_mutex_unlock(vf_mutex);
     }
     else {
 	tuple = bmp_title_input_new();
@@ -787,7 +756,7 @@ get_song_tuple(gchar *filename)
 }
 
 static gchar *
-vorbis_generate_title(OggVorbis_File * vorbisfile, gchar * filename)
+vorbis_generate_title(gchar * filename)
 {
     /* Caller should hold vf_mutex */
     gchar *displaytitle = NULL;
