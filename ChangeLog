@@ -1,3 +1,12 @@
+2006-06-15 02:03:23 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1374]
+  - attach a TitleInput tuple to the PlaylistEntry class.
+  
+
+  Changes:        Modified:
+  +7 -1           trunk/audacious/playlist.h  
+
+
 2006-06-15 01:46:43 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1372]
   - Add TitleInput.length member.

@@ -491,6 +491,43 @@ input_get_song_info(const gchar * filename, gchar ** title, gint * length)
     g_free(filename_proxy);
 }
 
+TitleInput *
+input_get_song_tuple(const gchar * filename)
+{
+    InputPlugin *ip = NULL;
+    TitleInput *input;
+    GList *node;
+    gchar *tmp = NULL, *ext;
+    gchar *filename_proxy;
+
+    if (filename == NULL)
+	return NULL;
+
+    filename_proxy = g_strdup(filename);
+
+    for (node = get_input_list(); node != NULL; node = g_list_next(node)) {
+        ip = INPUT_PLUGIN(node->data);
+        if (input_is_enabled(ip->filename) && ip->is_our_file(filename_proxy))
+            break;
+    }
+
+    if (ip && node && ip->get_song_tuple)
+        input = ip->get_song_tuple(filename_proxy);
+    else {
+        input = bmp_title_input_new();
+
+        tmp = g_strdup(filename);
+        if ((ext = strrchr(tmp, '.')))
+            *ext = '\0';
+
+        input->file_name = g_path_get_basename(tmp);
+        input->file_ext = ext ? ext + 1 : NULL;
+        input->file_path = tmp;
+    }
+
+    return input;
+}
+
 static void
 input_general_file_info_box(const gchar * filename, InputPlugin * ip)
 {

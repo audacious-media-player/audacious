@@ -32,7 +32,7 @@
 
 
 #include <glib.h>
-
+#include "libaudacious/titlestring.h"
 
 #define INPUT_PLUGIN(x)   ((InputPlugin *)(x))
 #define OUTPUT_PLUGIN(x)  ((OutputPlugin *)(x))
@@ -152,6 +152,9 @@ struct _InputPlugin {
     void (*file_info_box) (gchar * filename);
 
     OutputPlugin *output;
+
+    TitleInput *(*get_song_tuple) (gchar * filename);
+    void (*set_song_tuple) (TitleInput * tuple);
 };
 
 struct _GeneralPlugin {
