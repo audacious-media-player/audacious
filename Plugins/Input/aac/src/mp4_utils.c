@@ -70,12 +70,11 @@ int getAACTrack(mp4ff_t *infile)
   return(-1);
 }
 
-char *getMP4title(mp4ff_t *infile, char *filename) {
-	char *ret=NULL;
+TitleInput *getMP4tuple(mp4ff_t *infile, char *filename)
+{
 	gchar *value, *path, *temp;
 
-	TitleInput *input;
-	XMMS_NEW_TITLEINPUT(input);
+	TitleInput *input = bmp_title_input_new();
 
 	// Fill in the TitleInput with the relevant data
 	// from the mp4 file that can be used to display the title.
@@ -101,19 +100,18 @@ char *getMP4title(mp4ff_t *infile, char *filename) {
 	if (temp) {*temp = '\0';}
 	input->file_path = g_strdup_printf("%s/", path);
 
-	// Use the default xmms title format to format the
-	// title from the above info.
+	return input;
+}
+
+char *getMP4title(mp4ff_t *infile, char *filename)
+{
+	char *ret=NULL;
+
+	TitleInput *input = getMP4tuple(infile, filename);
+
 	ret = xmms_get_titlestring(xmms_get_gentitle_format(), input);
 
-        g_free(input->track_name);
-        g_free(input->performer);
-        g_free(input->album_name);
-        g_free(input->genre);
-        g_free(input->comment);
-        g_free(input->file_name);
-        g_free(input->file_path);
-	g_free(input);
-	g_free(path);
+	bmp_title_input_free(input);
 
 	return ret;
 }

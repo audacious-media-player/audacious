@@ -1,3 +1,13 @@
+2006-06-15 08:04:41 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1406]
+  - tuple builder for musepack files
+  
+
+  Changes:        Modified:
+  +51 -31         trunk/Plugins/Input/musepack/libmpc.cpp  
+  +2 -1           trunk/Plugins/Input/musepack/libmpc.h  
+
+
 2006-06-15 07:18:29 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1404]
   - remove some left over #if 0'd out pipian code

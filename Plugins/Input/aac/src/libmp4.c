@@ -75,6 +75,7 @@ static void	mp4_cleanup(void);
 static int	mp4_IsOurFile(char *);
 static void	mp4_getSongTitle(char *filename, char **, int *);
 static void*	mp4Decode(void *);
+static TitleInput *mp4_get_song_tuple(char *);
 
 void     audmp4_file_info_box(gchar *);
 gboolean buffer_playing;
@@ -105,6 +106,7 @@ InputPlugin mp4_ip =
     mp4_getSongTitle,	// get song title text
     audmp4_file_info_box, // info box
     0,	// to output plugin
+    mp4_get_song_tuple,
   };
 
 typedef struct  _mp4cfg{
@@ -266,6 +268,50 @@ static void	mp4_getSongInfo(char *filename)
     ;
 }
 #endif
+
+static TitleInput   *mp4_get_song_tuple(char *fn)
+{
+	mp4ff_callback_t *mp4cb = g_malloc0(sizeof(mp4ff_callback_t));
+	VFSFile *mp4fh;
+	mp4ff_t *mp4file;
+	TitleInput *input = NULL;
+	gchar *filename = g_strdup(fn);
+
+	mp4fh = vfs_fopen(filename, "rb");
+	mp4cb->read = mp4_read_callback;
+	mp4cb->seek = mp4_seek_callback;
+	mp4cb->user_data = mp4fh;	
+
+	if (!(mp4file = mp4ff_open_read(mp4cb))) {
+		g_free(mp4cb);
+		vfs_fclose(mp4fh);
+	} else {
+		gchar *tmpval;
+
+		input = bmp_title_input_new();
+
+		mp4ff_meta_get_title(mp4file, &input->track_name);
+		mp4ff_meta_get_album(mp4file, &input->album_name);
+		mp4ff_meta_get_artist(mp4file, &input->performer);
+		mp4ff_meta_get_date(mp4file, &tmpval);
+		mp4ff_meta_get_genre(mp4file, &input->genre);
+
+		if (tmpval)
+		{
+			input->year = atoi(tmpval);
+			free(tmpval);
+		}
+
+		input->file_name = g_path_get_basename(filename);
+		input->file_path = g_path_get_dirname(filename);
+		input->file_ext = extname(filename);
+
+		free (mp4cb);
+		vfs_fclose(mp4fh);
+	}
+
+	return input;
+}
 
 static gchar   *mp4_get_song_title(char *filename)
 {
