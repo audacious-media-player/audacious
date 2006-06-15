@@ -1,3 +1,17 @@
+2006-06-15 03:49:47 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1376]
+  - InputPlugin class:
+  + get_song_tuple(gchar *filename);
+  + set_song_tuple(TitleInput *tuple);
+  - input_get_song_tuple() utility function to retrieve a songtuple/generic tuple
+  
+
+  Changes:        Modified:
+  +37 -0          trunk/audacious/input.c  
+  +1 -0           trunk/audacious/input.h  
+  +4 -1           trunk/audacious/plugin.h  
+
+
 2006-06-15 02:03:23 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1374]
   - attach a TitleInput tuple to the PlaylistEntry class.

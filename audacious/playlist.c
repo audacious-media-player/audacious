@@ -163,34 +163,40 @@ playlist_entry_free(PlaylistEntry * entry)
     if (!entry)
         return;
 
-    g_free(entry->filename);
-    g_free(entry->title);
+    if (entry->tuple != NULL)
+        bmp_title_input_free(entry->tuple);
+
+    if (entry->filename != NULL)
+        g_free(entry->filename);
+
+    if (entry->title != NULL)
+        g_free(entry->title);
+
     g_free(entry);
 }
 
 static gboolean
 playlist_entry_get_info(PlaylistEntry * entry)
 {
-    gchar *title = NULL;
-    gint length = -1;
+    TitleInput *tuple;
 
     g_return_val_if_fail(entry != NULL, FALSE);
 
-    if (entry->decoder == NULL)
-        input_get_song_info(entry->filename, &title, &length);
-    else if (entry->decoder->get_song_info != NULL)
-        entry->decoder->get_song_info(entry->filename, &title, &length);
+    if (entry->decoder == NULL || entry->decoder->get_song_tuple == NULL)
+        tuple = input_get_song_tuple(entry->filename);
+    else
+        tuple = entry->decoder->get_song_tuple(entry->filename);
 
-    if (!title && length == -1)
+    if (tuple == NULL)
         return FALSE;
 
     /* entry is still around */
-    entry->title = title;
-    entry->length = length;
+    entry->title = xmms_get_titlestring(xmms_get_gentitle_format(), tuple);
+    entry->length = tuple->length;
+    entry->tuple = tuple;
 
     return TRUE;
 }
-
 
 const gchar *
 playlist_get_current_name(void)
