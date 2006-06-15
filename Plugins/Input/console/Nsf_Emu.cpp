@@ -387,7 +387,7 @@ blargg_err_t Nsf_Emu::load( const header_t& h, Data_Reader& in )
 	
 	// sound and memory
 	exp_flags = header_.chip_flags;
-\	blargg_err_t err = init_sound();
+	blargg_err_t err = init_sound();
 	if ( err )
 		return err;
 	
