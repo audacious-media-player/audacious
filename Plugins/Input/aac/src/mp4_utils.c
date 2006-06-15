@@ -51,13 +51,11 @@ int getAACTrack(mp4ff_t *infile)
   int i, rc;
   int numTracks = mp4ff_total_tracks(infile);
 
-  printf("total-tracks: %d\n", numTracks);
   for(i=0; i<numTracks; i++){
     unsigned char*	buff = 0;
     unsigned int	buff_size = 0;
     mp4AudioSpecificConfig mp4ASC;
 
-    printf("testing-track: %d\n", i);
     mp4ff_get_decoder_config(infile, i, &buff, &buff_size);
     if(buff){
       rc = AudioSpecificConfig(buff, buff_size, &mp4ASC);
@@ -68,50 +66,4 @@ int getAACTrack(mp4ff_t *infile)
     }
   }
   return(-1);
-}
-
-TitleInput *getMP4tuple(mp4ff_t *infile, char *filename)
-{
-	gchar *value, *path, *temp;
-
-	TitleInput *input = bmp_title_input_new();
-
-	// Fill in the TitleInput with the relevant data
-	// from the mp4 file that can be used to display the title.
-	mp4ff_meta_get_title(infile, &input->track_name);
-        mp4ff_meta_get_artist(infile, &input->performer);
-	mp4ff_meta_get_album(infile, &input->album_name);
-	if (mp4ff_meta_get_track(infile, &value) && value != NULL) {
-		input->track_number = atoi(value);
-		g_free(value);
-	}
-	if (mp4ff_meta_get_date(infile, &value) && value != NULL) {
-		input->year = atoi(value);
-		g_free(value);
-	}
-	mp4ff_meta_get_genre(infile, &input->genre);
-	mp4ff_meta_get_comment(infile, &input->comment);
-	input->file_name = g_strdup(g_basename(filename));
-	path = g_strdup(filename);
-	temp = strrchr(path, '.');
-	if (temp != NULL) {++temp;}
-	input->file_ext = g_strdup_printf("%s", temp);
-	temp = strrchr(path, '/');
-	if (temp) {*temp = '\0';}
-	input->file_path = g_strdup_printf("%s/", path);
-
-	return input;
-}
-
-char *getMP4title(mp4ff_t *infile, char *filename)
-{
-	char *ret=NULL;
-
-	TitleInput *input = getMP4tuple(infile, filename);
-
-	ret = xmms_get_titlestring(xmms_get_gentitle_format(), input);
-
-	bmp_title_input_free(input);
-
-	return ret;
 }

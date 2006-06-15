@@ -1,3 +1,12 @@
+2006-06-15 12:50:10 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1420]
+  - playlist_compare_artist(): more sanity checking.
+  
+
+  Changes:        Modified:
+  +3 -3           trunk/audacious/playlist.c  
+
+
 2006-06-15 12:17:49 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1418]
   - we don't really have to unwire track 0 this way, as 0 will be selected by default if no subsong URI is given
