@@ -44,6 +44,7 @@ const nes_addr_t exram_addr = bank_select_addr - (bank_select_addr % Nes_Cpu::pa
 const int master_clock_divisor = 12;
 
 const int vrc6_flag = 0x01;
+const int fds_flag = 0x04;
 const int namco_flag = 0x10;
 const int fme7_flag = 0x20;
 
@@ -271,7 +272,7 @@ const char** Nsf_Emu::voice_names() const
 
 blargg_err_t Nsf_Emu::init_sound()
 {
-	if ( exp_flags & ~(namco_flag | vrc6_flag | fme7_flag) )
+	if ( exp_flags & ~(namco_flag | vrc6_flag | fme7_flag | fds_flag) )
 		return "NSF requires unsupported expansion audio hardware";
 	
 	// map memory
@@ -386,6 +387,7 @@ blargg_err_t Nsf_Emu::load( const header_t& h, Data_Reader& in )
 	
 	// sound and memory
 	exp_flags = header_.chip_flags;
+	printf("%x\n", header_.chip_flags);
 	blargg_err_t err = init_sound();
 	if ( err )
 		return err;
