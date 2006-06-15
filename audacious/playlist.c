@@ -1751,12 +1751,20 @@ static gint
 playlist_compare_title(const PlaylistEntry * a,
                        const PlaylistEntry * b)
 {
-    const gchar *a_title, *b_title;
+    const gchar *a_title = NULL, *b_title = NULL;
 
     g_return_val_if_fail(a != NULL, 0);
     g_return_val_if_fail(b != NULL, 0);
 
-    if (a->title)
+    if (a->tuple != NULL && a->tuple->track_name != NULL)
+        a_title = a->tuple->track_name;
+    if (b->tuple != NULL && b->tuple->track_name != NULL)
+        b_title = b->tuple->track_name;
+
+    if (a->title != NULL && b->title != NULL)
+        return strcasecmp(a_title, b_title);
+
+    if (a->title != NULL)
         a_title = a->title;
     else {
         if (strrchr(a->filename, '/'))
@@ -1765,7 +1773,7 @@ playlist_compare_title(const PlaylistEntry * a,
             a_title = a->filename;
     }
 
-    if (b->title)
+    if (b->title != NULL)
         b_title = b->title;
     else {
         if (strrchr(a->filename, '/'))

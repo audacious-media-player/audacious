@@ -1,3 +1,12 @@
+2006-06-15 11:05:23 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1412]
+  - tuple builder for wma
+  
+
+  Changes:        Modified:
+  +47 -13         trunk/Plugins/Input/wma/wma.c  
+
+
 2006-06-15 10:37:59 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1410]
   - this is a hack until I find a better solution
