@@ -1,3 +1,12 @@
+2006-06-15 13:18:58 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1422]
+  - remove unreached code, (now) irrelevant debugging printf's
+  
+
+  Changes:        Modified:
+  +0 -48          trunk/Plugins/Input/aac/src/mp4_utils.c  
+
+
 2006-06-15 12:50:10 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1420]
   - playlist_compare_artist(): more sanity checking.

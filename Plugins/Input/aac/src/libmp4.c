@@ -123,7 +123,6 @@ static int		seekPosition = -1;
 
 void getMP4info(char*);
 int getAACTrack(mp4ff_t *);
-char *getMP4title(mp4ff_t *, char *);
 
 static uint32_t mp4_read_callback(void *data, void *buffer, uint32_t len)
 {
@@ -404,7 +403,7 @@ static int my_decode_mp4( char *filename, mp4ff_t *mp4file )
 
 		gchar	     *xmmstitle = NULL;
 
-		xmmstitle = getMP4title(mp4file, filename);
+		xmmstitle = mp4_get_song_title(filename);
 
 		if(xmmstitle == NULL)
 			xmmstitle = g_strdup(filename);
