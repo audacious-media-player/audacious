@@ -1,3 +1,12 @@
+2006-06-15 12:17:49 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1418]
+  - we don't really have to unwire track 0 this way, as 0 will be selected by default if no subsong URI is given
+  
+
+  Changes:        Modified:
+  +1 -4           trunk/Plugins/Input/console/Audacious_Driver.cpp  
+
+
 2006-06-15 12:07:23 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1416]
   - sort by Artist

@@ -1802,15 +1802,15 @@ playlist_compare_artist(PlaylistEntry * a,
     if (b->tuple != NULL)
         playlist_entry_get_info(b);
 
-    if (a->tuple->performer != NULL)
+    if (a->tuple != NULL && a->tuple->performer != NULL)
         a_artist = a->tuple->performer;
-    if (b->tuple->performer != NULL)
+    if (b->tuple != NULL && b->tuple->performer != NULL)
         b_artist = b->tuple->performer;
 
     if (a_artist != NULL && b_artist != NULL)
         return strcasecmp(a_artist, b_artist);
 
-    return -1;
+    return 0;
 }
 
 static gint
