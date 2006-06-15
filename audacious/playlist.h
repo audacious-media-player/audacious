@@ -1,4 +1,8 @@
-/*  XMMS - Cross-platform multimedia player
+/*  Audacious - Cross-platform multimedia player
+ *  Copyright (C) 2005-2006  William Pitcock, Tony Vroon, George Averill,
+ *                           Giacomo Lozito, Derek Pomery and Yoshiki Yazawa.
+ *
+ *  XMMS - Cross-platform multimedia player
  *  Copyright (C) 1998-2003  Peter Alm, Mikael Alm, Olle Hallnas,
  *                           Thomas Nilsson and 4Front Technologies
  *  Copyright (C) 1999-2003  Haavard Kvaalen
@@ -21,6 +25,7 @@
 #define PLAYLIST_H
 
 #include <glib.h>
+#include "libaudacious/titlestring.h"
 #include "input.h"
 
 typedef enum {
@@ -50,6 +55,7 @@ struct _PlaylistEntry {
     gint length;
     gboolean selected;
     InputPlugin *decoder;
+    TitleInput *tuple;		/* cached entry tuple, if available */
 };
 
 typedef struct _PlaylistEntry PlaylistEntry;
