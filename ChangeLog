@@ -1,3 +1,15 @@
+2006-06-15 05:17:20 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1384]
+  - more sanity for input_get_song_tuple()
+  - playlist_get_tuple(gint pos)
+  
+
+  Changes:        Modified:
+  +3 -0           trunk/audacious/input.c  
+  +28 -0          trunk/audacious/playlist.c  
+  +1 -0           trunk/audacious/playlist.h  
+
+
 2006-06-15 05:08:37 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1382]
   - get_song_tuple implementation

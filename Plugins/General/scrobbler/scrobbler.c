@@ -737,10 +737,10 @@ void sc_init(char *uname, char *pwd)
 	pdebug("scrobbler starting up", DEBUG);
 }
 
-void sc_addentry(GMutex *mutex, metatag_t *meta, int len)
+void sc_addentry(GMutex *mutex, TitleInput *tuple, int len)
 {
 	g_mutex_lock(mutex);
-	q_put(meta, len);
+	q_put(tuple, len);
 	/*
 	 * This will help make sure the queue will be saved on a nasty
 	 * segfault...

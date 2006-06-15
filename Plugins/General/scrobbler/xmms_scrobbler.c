@@ -8,6 +8,7 @@
 
 #include <audacious/plugin.h>
 #include <audacious/prefswin.h>
+#include <audacious/playlist.h>
 #include <libaudacious/configdb.h>
 #include <libaudacious/beepctrl.h>
 
@@ -367,9 +368,12 @@ static submit_t get_song_status(void)
 
 static void *xs_thread(void *data __attribute__((unused)))
 {
-	int run = 1, i;
+	int run = 1;
+#if 0
+	int i;
 	char *charpos, *dirname;
 	gboolean direxists;
+#endif
 	submit_t dosubmit;
 	
 	while (run) {
@@ -384,12 +388,31 @@ static void *xs_thread(void *data __attribute__((unused)))
 		dosubmit = get_song_status();
 
 		if(dosubmit.dosubmit) {
+#if 0
 			char *fname, /**title, *artist,*/ *tmp = NULL; /**sep*/
 			int track = 0;
 			metatag_t *meta;
+#endif
+			TitleInput *tuple;
 
 			pdebug("Submitting song.", DEBUG);
-			
+
+			tuple = playlist_get_tuple(dosubmit.pos_c);
+
+			if (ishttp(tuple->file_name))
+				continue;
+
+			if(tuple->performer != NULL && tuple->track_name != NULL)
+			{
+				pdebug(fmt_vastr(
+					"submitting artist: %s, title: %s",
+					tuple->performer, tuple->track_name), DEBUG);
+				sc_addentry(m_scrobbler, tuple,
+					dosubmit.len/1000);
+			}
+			else
+				pdebug("tuple does not contain an artist or a title, not submitting.", DEBUG);
+#if 0			
 			meta = metatag_new();
 
 			fname = xmms_remote_get_playlist_file(0,dosubmit.pos_c);
@@ -469,6 +492,7 @@ static void *xs_thread(void *data __attribute__((unused)))
 			/* g_free(tmp); */
 			g_free(fname);
 			metatag_delete(meta);
+#endif
 		}
 		g_mutex_lock(m_scrobbler);
 		run = going;

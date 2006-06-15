@@ -22,23 +22,30 @@ static void q_item_free(item_t *item)
 	free(item);
 }
 
-void q_put(metatag_t *meta, int len)
+void q_put(TitleInput *tuple, int len)
 {
 	item_t *item;
-		
+
 	item = malloc(sizeof(item_t));
-	item->artist = fmt_escape((char*)meta->artist);
-	item->title = fmt_escape((char*)meta->title);
+
+	item->artist = fmt_escape(tuple->performer);
+	item->title = fmt_escape(tuple->track_name);
 	item->utctime = fmt_escape(fmt_timestr(time(NULL), 1));
 	snprintf(item->len, sizeof(item->len), "%d", len);
-	if(meta->mb == NULL)
+
+#ifdef NOTYET
+	if(tuple->mb == NULL)
+#endif
 		item->mb = fmt_escape("");
+#ifdef NOTYET
 	else
-		item->mb = fmt_escape((char*)meta->mb);
-	if(meta->album == NULL)
+		item->mb = fmt_escape((char*)tuple->mb);
+#endif
+
+	if(tuple->album_name == NULL)
 		item->album = fmt_escape("");
 	else
-		item->album = fmt_escape((char*)meta->album);
+		item->album = fmt_escape((char*)tuple->album_name);
 
 	q_nitems++;
 

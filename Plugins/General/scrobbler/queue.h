@@ -1,6 +1,8 @@
 #ifndef QUEUE_H
 #define QUEUE_H 1
 
+#include "libaudacious/titlestring.h"
+
 #define I_ARTIST(i) i->artist
 #define I_TITLE(i) i->title
 #define I_TIME(i) i->utctime
@@ -18,7 +20,7 @@ typedef struct {
 	int numtries;
 	void *next;
 } item_t;
-void q_put(metatag_t *, int);
+void q_put(TitleInput *, int);
 item_t *q_put2(char *, char *, char *, char *, char *, char *);
 item_t *q_peek(void);
 item_t *q_peekall(int);
