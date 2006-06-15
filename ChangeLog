@@ -1,3 +1,13 @@
+2006-06-15 04:47:23 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1380]
+  - get_song_tuple() implementation
+  
+
+  Changes:        Modified:
+  +87 -112        trunk/Plugins/Input/mpg123/mpg123.c  
+  +0 -1           trunk/Plugins/Input/mpg123/mpg123.h  
+
+
 2006-06-15 03:58:37 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1378]
   - use tuples internally

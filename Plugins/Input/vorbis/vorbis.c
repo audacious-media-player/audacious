@@ -59,6 +59,7 @@
 
 extern vorbis_config_t vorbis_cfg;
 
+static TitleInput *get_song_tuple(gchar *filename);
 static int vorbis_check_file(char *filename);
 static void vorbis_play(char *filename);
 static void vorbis_stop(void);
@@ -67,7 +68,7 @@ static void vorbis_seek(int time);
 static int vorbis_time(void);
 static void vorbis_get_song_info(char *filename, char **title, int *length);
 static gchar *vorbis_generate_title(OggVorbis_File * vorbisfile,
-                                    const gchar * fn);
+                                    gchar * fn);
 static void vorbis_aboutbox(void);
 static void vorbis_init(void);
 static void vorbis_cleanup(void);
@@ -113,6 +114,7 @@ InputPlugin vorbis_ip = {
     vorbis_get_song_info,
     vorbis_file_info_box,       /* file info box, tag editing */
     NULL,
+    get_song_tuple
 };
 
 static OggVorbis_File vf;
@@ -548,30 +550,6 @@ vorbis_time(void)
     return vorbis_ip.output->output_time();
 }
 
-static gchar *
-convert_tag_title(gchar * title)
-{
-    gchar **encoding = vorbis_tag_encoding_list;
-    gchar *new_title = NULL;
-
-    if (g_utf8_validate(title, -1, NULL))
-        return title;
-
-    while (*encoding && !new_title) {
-        new_title = g_convert(title, strlen(title), "UTF-8", *encoding++,
-                              NULL, NULL, NULL);
-    }
-
-    if (new_title) {
-        g_free(title);
-        return new_title;
-    }
-
-    /* FIXME: We're relying on BMP core to provide fallback
-     * conversion */
-    return title;
-}
-
 static void
 vorbis_seek(int time)
 {
@@ -741,38 +719,81 @@ vorbis_process_replaygain(float **pcm, int samples, int ch,
     return 2 * ch * samples;
 }
 
+static TitleInput *
+get_song_tuple(gchar *filename)
+{
+    VFSFile *stream;
+    OggVorbis_File vf;          /* avoid thread interaction */
+    TitleInput *tuple = NULL;
+    vorbis_comment *comment;
+
+    if (strncasecmp(filename, "http://", 7)) {
+        if ((stream = vfs_fopen(filename, "r")) == NULL)
+            return NULL;
+
+        /*
+         * The open function performs full stream detection and
+         * machine initialization.  If it returns zero, the stream
+         * *is* Vorbis and we're fully ready to decode.
+         */
+        g_mutex_lock(vf_mutex);
+        if (ov_open_callbacks(stream, &vf, NULL, 0, vorbis_callbacks) < 0) {
+            g_mutex_unlock(vf_mutex);
+            vfs_fclose(stream);
+            return NULL;
+        }
+
+        tuple = bmp_title_input_new();
+
+	tuple->file_name = g_path_get_basename(filename);
+	tuple->file_ext = get_extension(filename);
+	tuple->file_path = g_path_get_dirname(filename);
+
+        /* Retrieve the length */
+        tuple->length = ov_time_total(&vf, -1) * 1000;
+
+        if ((comment = ov_comment(&vf, -1))) {
+            tuple->track_name =
+                g_strdup(vorbis_comment_query(comment, "title", 0));
+            tuple->performer =
+                g_strdup(vorbis_comment_query(comment, "artist", 0));
+            tuple->album_name =
+                g_strdup(vorbis_comment_query(comment, "album", 0));
+
+            if (vorbis_comment_query(comment, "tracknumber", 0) != NULL)
+                tuple->track_number =
+                    atoi(vorbis_comment_query(comment, "tracknumber", 0));
+
+            tuple->date = g_strdup(vorbis_comment_query(comment, "date", 0));
+            tuple->genre = g_strdup(vorbis_comment_query(comment, "genre", 0));
+            tuple->comment =
+                g_strdup(vorbis_comment_query(comment, "comment", 0));
+        }
+
+        /*
+         * once the ov_open succeeds, the stream belongs to
+         * vorbisfile.a.  ov_clear will fclose it
+         */
+        ov_clear(&vf);
+        g_mutex_unlock(vf_mutex);
+    }
+    else {
+	tuple = bmp_title_input_new();
+        tuple->length = -1;
+        tuple->track_name = (char *) vorbis_http_get_title(filename);
+    }
+
+    return tuple;
+}
 
 static gchar *
-vorbis_generate_title(OggVorbis_File * vorbisfile, const gchar * filename)
+vorbis_generate_title(OggVorbis_File * vorbisfile, gchar * filename)
 {
     /* Caller should hold vf_mutex */
     gchar *displaytitle = NULL;
-    vorbis_comment *comment;
     TitleInput *input;
 
-    input = bmp_title_input_new();
-
-    input->file_name = g_path_get_basename(filename);
-    input->file_ext = get_extension(filename);
-    input->file_path = g_path_get_dirname(filename);
-
-    if ((comment = ov_comment(vorbisfile, -1))) {
-        input->track_name =
-            g_strdup(vorbis_comment_query(comment, "title", 0));
-        input->performer =
-            g_strdup(vorbis_comment_query(comment, "artist", 0));
-        input->album_name =
-            g_strdup(vorbis_comment_query(comment, "album", 0));
-
-        if (vorbis_comment_query(comment, "tracknumber", 0))
-            input->track_number =
-                atoi(vorbis_comment_query(comment, "tracknumber", 0));
-
-        input->date = g_strdup(vorbis_comment_query(comment, "date", 0));
-        input->genre = g_strdup(vorbis_comment_query(comment, "genre", 0));
-        input->comment =
-            g_strdup(vorbis_comment_query(comment, "comment", 0));
-    }
+    input = get_song_tuple(filename);
 
     if (!(displaytitle = xmms_get_titlestring(vorbis_cfg.tag_override ?
                                               vorbis_cfg.tag_format :
@@ -784,15 +805,7 @@ vorbis_generate_title(OggVorbis_File * vorbisfile, const gchar * filename)
             displaytitle = vorbis_http_get_title(filename);
     }
 
-    g_free(input->file_name);
-    g_free(input->file_path);
-    g_free(input->track_name);
-    g_free(input->performer);
-    g_free(input->album_name);
-    g_free(input->date);
-    g_free(input->genre);
-    g_free(input->comment);
-    g_free(input);
+    bmp_title_input_free(input);
 
     return displaytitle;
 }
