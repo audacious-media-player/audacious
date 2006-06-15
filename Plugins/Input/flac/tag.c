@@ -78,12 +78,6 @@ static char *local__getfield(const FLAC__StreamMetadata *tags, const char *name)
 	return 0;
 }
 
-static void local__safe_free(char *s)
-{
-	if (0 != s)
-		free(s);
-}
-
 /*
  * Function flac_format_song_title (tag, filename)
  *
@@ -91,9 +85,8 @@ static void local__safe_free(char *s)
  *    return it.  The title must be subsequently freed using g_free().
  *
  */
-char *flac_format_song_title(char *filename)
+TitleInput *flac_get_tuple(char *filename)
 {
-	char *ret = NULL;
 	TitleInput *input = NULL;
 	FLAC__StreamMetadata *tags;
 	char *title, *artist, *performer, *album, *date, *tracknumber, *genre, *description;
@@ -109,7 +102,7 @@ char *flac_format_song_title(char *filename)
 	genre       = local__getfield(tags, "GENRE");
 	description = local__getfield(tags, "DESCRIPTION");
 
-	XMMS_NEW_TITLEINPUT(input);
+	input = bmp_title_input_new();
 
 	input->performer = local__getstr(performer);
 	if(!input->performer)
@@ -124,8 +117,16 @@ char *flac_format_song_title(char *filename)
 	input->file_name = g_path_get_basename(filename);
 	input->file_path = filename;
 	input->file_ext = local__extname(filename);
-	ret = xmms_get_titlestring(flac_cfg.title.tag_override ? flac_cfg.title.tag_format : xmms_get_gentitle_format(), input);
-	g_free(input);
+
+	return input;
+}
+
+gchar *flac_format_song_title(gchar *filename)
+{
+	gchar *ret = NULL;
+	TitleInput *tuple = flac_get_tuple(filename);
+
+	ret = xmms_get_titlestring(flac_cfg.title.tag_override ? flac_cfg.title.tag_format : xmms_get_gentitle_format(), tuple);
 
 	if (!ret) {
 		/*
@@ -136,14 +137,7 @@ char *flac_format_song_title(char *filename)
 			*(local__extname(ret) - 1) = '\0';	/* removes period */
 	}
 
-	FLAC_plugin__tags_destroy(&tags);
-	local__safe_free(title);
-	local__safe_free(artist);
-	local__safe_free(performer);
-	local__safe_free(album);
-	local__safe_free(date);
-	local__safe_free(tracknumber);
-	local__safe_free(genre);
-	local__safe_free(description);
+	bmp_title_input_free(tuple);
+
 	return ret;
 }

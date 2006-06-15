@@ -1,3 +1,12 @@
+2006-06-15 06:01:39 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1394]
+  - some fixes
+  
+
+  Changes:        Modified:
+  +11 -42         trunk/Plugins/Input/vorbis/vorbis.c  
+
+
 2006-06-15 05:41:42 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1392]
   - remove metatag references

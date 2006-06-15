@@ -19,6 +19,7 @@
 #ifndef __FLAC__PLUGIN_XMMS__TAG_H__
 #define __FLAC__PLUGIN_XMMS__TAG_H__
 
+TitleInput *flac_get_tuple(gchar * filename);
 gchar *flac_format_song_title(gchar * filename);
 
 #endif
