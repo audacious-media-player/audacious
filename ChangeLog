@@ -1,3 +1,12 @@
+2006-06-15 05:39:13 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1388]
+  - if a PlaylistEntry does not have a cached tuple, generate it on demand.
+  
+
+  Changes:        Modified:
+  +6 -0           trunk/audacious/playlist.c  
+
+
 2006-06-15 05:30:04 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1386]
   - disconnect the scrobbler client from metatag logically

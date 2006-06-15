@@ -21,21 +21,8 @@ SOURCES = 			\
 	md5.c			\
 	queue.c			\
 	scrobbler.c		\
-	xmms_scrobbler.c	\
-	tags/tags.c		\
-	tags/id3v1.c		\
-	tags/id3v2.c		\
-	tags/id3genres.c	\
-	tags/ape.c		\
-	tags/cdaudio.c		\
-	tags/itunes.c		\
-	tags/unicode.c		\
-	tags/vorbis.c		\
-	tags/wma.c
+	xmms_scrobbler.c
 
 CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(BEEP_DEFINES) $(CURL_CFLAGS) -I../../../intl -I../../..
 
 OBJECTS = ${SOURCES:.c=.o}
-
-clean-posthook:
-	@rm -f tags/*.o
