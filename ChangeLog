@@ -1,3 +1,12 @@
+2006-06-15 00:21:25 +0000  George Averill <nhjm449@gmail.com>
+  revision [1362]
+  - Make the category_view slightly wider to get rid of the horizontal scrollbar caused by the word "Connectivity" being so damned big.
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/audacious/glade/prefswin.glade  
+
+
 2006-06-14 23:59:24 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1360]
   - Don't crash when we encounter an unsupported NSF/NSFE type

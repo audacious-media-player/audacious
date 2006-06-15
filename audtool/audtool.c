@@ -18,7 +18,7 @@
 
 #include <stdlib.h>
 #include <glib.h>
-#include <audacious/beepctrl.h>
+#include "libaudacious/beepctrl.h"
 #include "audtool.h"
 
 struct commandhandler handlers[] = {
