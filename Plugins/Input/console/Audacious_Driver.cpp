@@ -548,6 +548,11 @@ static TitleInput *get_song_tuple( char *path )
 		case type_nsfe:get_info_t( tag, in, &info, (Nsfe_Emu::header_t*)0 ); break;
 	}
 
+	info.ti->length = info.length;
+	
+	if ( info.ti->length <= 0 )
+		info.ti->length = audcfg.loop_length * 1000;
+
 	return info.ti;
 }
 

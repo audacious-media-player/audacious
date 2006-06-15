@@ -1,3 +1,12 @@
+2006-06-15 06:19:56 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1398]
+  - get_song_tuple() implementation (scrobblerific!)
+  
+
+  Changes:        Modified:
+  +46 -1          trunk/Plugins/Input/console/Audacious_Driver.cpp  
+
+
 2006-06-15 06:08:51 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1396]
   - flac_get_tuple()
