@@ -1678,6 +1678,34 @@ playlist_get_songtitle(guint pos)
     return str_to_utf8(title);
 }
 
+TitleInput *
+playlist_get_tuple(guint pos)
+{
+    PlaylistEntry *entry;
+    TitleInput *tuple = NULL;
+    GList *node;
+
+    PLAYLIST_LOCK();
+
+    if (!playlist) {
+        PLAYLIST_UNLOCK();
+        return NULL;
+    }
+
+    if (!(node = g_list_nth(playlist, pos))) {
+        PLAYLIST_UNLOCK();
+        return NULL;
+    }
+
+    entry = (PlaylistEntry *) node->data;
+
+    tuple = entry->tuple;
+
+    PLAYLIST_UNLOCK();
+
+    return tuple;
+}
+
 gint
 playlist_get_songtime(guint pos)
 {

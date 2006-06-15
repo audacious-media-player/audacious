@@ -520,6 +520,9 @@ input_get_song_tuple(const gchar * filename)
         if ((ext = strrchr(tmp, '.')))
             *ext = '\0';
 
+	input->track_name = NULL;
+	input->length = -1;
+	input_get_song_info(filename, &input->track_name, &input->length);
         input->file_name = g_path_get_basename(tmp);
         input->file_ext = ext ? ext + 1 : NULL;
         input->file_path = tmp;

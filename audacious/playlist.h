@@ -130,6 +130,7 @@ const gchar *playlist_get_filename_to_play();
 
 gchar *playlist_get_filename(guint pos);
 gchar *playlist_get_songtitle(guint pos);
+TitleInput *playlist_get_tuple(guint pos);
 gint playlist_get_songtime(guint pos);
 
 GList *playlist_get_selected(void);
