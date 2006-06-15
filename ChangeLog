@@ -1,3 +1,14 @@
+2006-06-15 06:08:51 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1396]
+  - flac_get_tuple()
+  
+
+  Changes:        Modified:
+  +2 -1           trunk/Plugins/Input/flac/plugin.c  
+  +14 -20         trunk/Plugins/Input/flac/tag.c  
+  +1 -0           trunk/Plugins/Input/flac/tag.h  
+
+
 2006-06-15 06:01:39 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1394]
   - some fixes

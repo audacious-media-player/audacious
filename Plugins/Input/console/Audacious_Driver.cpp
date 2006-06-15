@@ -507,6 +507,50 @@ static void get_song_info( char* path, char** title, int* length )
 	g_free(path2);
 }
 
+// Get tuple
+
+static TitleInput *get_song_tuple( char *path )
+{
+	int track = 0; // to do: way to select other tracks
+	
+	// extract the subsong id from the virtual path
+	gchar *path2 = g_strdup(path);
+	gchar *_path = strchr(path2, '?');
+
+	if (_path != NULL && *_path == '?')
+	{
+		*_path = '\0';
+		_path++;
+		track = atoi(_path);
+	}	
+
+	Audacious_Reader in;
+	tag_t tag;
+	if ( in.open( path2 ) || in.read( tag, sizeof tag ) )
+		return NULL;
+	
+	int type = identify_file( path2, tag );
+	if ( !type )
+		return NULL;
+	
+	track_info_t info;
+	if ( begin_get_info( path2, &info ) )
+		return NULL;
+	info.track = track;
+	
+	switch ( type )
+	{
+		case type_nsf: get_info_t( tag, in, &info, (Nsf_Emu::header_t*) 0 ); break;
+		case type_gbs: get_info_t( tag, in, &info, (Gbs_Emu::header_t*) 0 ); break;
+		case type_gym: get_info_t( tag, in, &info, (Gym_Emu::header_t*) 0 ); break;
+		case type_vgm: get_info_t( tag, in, &info, (Vgm_Emu::header_t*) 0 ); break;
+		case type_spc: get_info_t( tag, in, &info, (Spc_Emu::header_t*) 0 ); break;
+		case type_nsfe:get_info_t( tag, in, &info, (Nsfe_Emu::header_t*)0 ); break;
+	}
+
+	return info.ti;
+}
+
 // Playback
 
 static void* play_loop_track( gpointer )
@@ -812,7 +856,8 @@ InputPlugin console_ip =
 	NULL,
 	get_song_info,
 	NULL,
-	NULL
+	NULL,
+	get_song_tuple,
 };
 
 extern "C" InputPlugin *get_iplugin_info(void)
