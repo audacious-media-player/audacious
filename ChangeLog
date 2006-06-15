@@ -1,3 +1,13 @@
+2006-06-15 08:22:24 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1408]
+  - tuple builder for mp4 files (not AAC, sorry but nobody uses that crap anymore)
+  
+
+  Changes:        Modified:
+  +46 -0          trunk/Plugins/Input/aac/src/libmp4.c  
+  +13 -15         trunk/Plugins/Input/aac/src/mp4_utils.c  
+
+
 2006-06-15 08:04:41 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1406]
   - tuple builder for musepack files

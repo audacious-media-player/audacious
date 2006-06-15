@@ -32,7 +32,7 @@
 
 
 #include <glib.h>
-#include "libaudacious/titlestring.h"
+#include "audacious/titlestring.h"
 
 #define INPUT_PLUGIN(x)   ((InputPlugin *)(x))
 #define OUTPUT_PLUGIN(x)  ((OutputPlugin *)(x))
