@@ -1,3 +1,12 @@
+2006-06-15 06:58:18 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1402]
+  - fix some possible segmentation violations
+  
+
+  Changes:        Modified:
+  +6 -5           trunk/Plugins/Input/flac/tag.c  
+
+
 2006-06-15 06:24:23 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1400]
   - fill in the length part of the tuple (oops)

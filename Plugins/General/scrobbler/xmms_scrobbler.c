@@ -367,11 +367,6 @@ static submit_t get_song_status(void)
 static void *xs_thread(void *data __attribute__((unused)))
 {
 	int run = 1;
-#if 0
-	int i;
-	char *charpos, *dirname;
-	gboolean direxists;
-#endif
 	submit_t dosubmit;
 	
 	while (run) {
@@ -386,11 +381,6 @@ static void *xs_thread(void *data __attribute__((unused)))
 		dosubmit = get_song_status();
 
 		if(dosubmit.dosubmit) {
-#if 0
-			char *fname, /**title, *artist,*/ *tmp = NULL; /**sep*/
-			int track = 0;
-			metatag_t *meta;
-#endif
 			TitleInput *tuple;
 
 			pdebug("Submitting song.", DEBUG);
@@ -410,87 +400,6 @@ static void *xs_thread(void *data __attribute__((unused)))
 			}
 			else
 				pdebug("tuple does not contain an artist or a title, not submitting.", DEBUG);
-#if 0			
-			meta = metatag_new();
-
-			fname = xmms_remote_get_playlist_file(0,dosubmit.pos_c);
-			if (ishttp(fname)) {
-				g_free(fname);
-				continue;
-			}
-			charpos = strrchr(fname, '.');
-			if(charpos != NULL &&
-				!fmt_strncasecmp(charpos + 1, "cda", 3))
-			{
-				ConfigDb *cfgfile;
-
-				if ((cfgfile = bmp_cfg_db_open())
-					!= NULL)
-				{
-					char *direntry = calloc(32, 1);
-
-					dirname = fname;
-					tmp = strrchr(fname, '.');
-					*tmp = '\0';
-					track = (char)atoi(tmp - 2);
-					pdebug(fmt_vastr("Track: %d", track),
-						DEBUG);
-					tmp = strrchr(dirname, '/');
-					*(tmp + 1) = '\0';
-					direxists = bmp_cfg_db_get_string(
-						cfgfile, "CDDA",
-						"directory", &fname);
-					for(i = 0; direxists == TRUE
-						&& strcmp(dirname, fname) == 0;)
-					{
-						i++;
-						snprintf(direntry, 31,
-							"directory%d", i);
-						g_free(fname);
-						direxists =
-							bmp_cfg_db_get_string(
-							  cfgfile, "CDDA",
-							  direntry, &fname);
-					}
-					if(i > 0)
-					{
-						snprintf(direntry, 31,
-							"device%d", i);
-					}
-					else
-					{
-						snprintf(direntry, 31,
-							"device");
-					}
-					g_free(fname);
-					bmp_cfg_db_get_string(cfgfile, "CDDA",
-						direntry, &fname);
-					bmp_cfg_db_close(cfgfile);
-					free(direntry);
-					pdebug(fmt_vastr("CD Device: %s",
-						fname), DEBUG);
-				}
-			}
-
-			pdebug(fmt_vastr("get_tag_data, %s", fname), DEBUG);
-			get_tag_data(meta, fname, track);
-
-			if(meta->artist != NULL && meta->title != NULL)
-			{
-				pdebug(fmt_vastr(
-					"submitting artist: %s, title: %s",
-					meta->artist, meta->title), DEBUG);
-				sc_addentry(m_scrobbler, meta,
-					dosubmit.len/1000);
-			}
-			else
-				pdebug("couldn't determine artist - "
-						"title, not submitting",
-						DEBUG);
-			/* g_free(tmp); */
-			g_free(fname);
-			metatag_delete(meta);
-#endif
 		}
 		g_mutex_lock(m_scrobbler);
 		run = going;
