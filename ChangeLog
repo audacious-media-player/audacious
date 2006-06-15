@@ -1,3 +1,12 @@
+2006-06-15 14:28:48 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1424]
+  - getMP4title removal.
+  
+
+  Changes:        Modified:
+  +1 -2           trunk/Plugins/Input/aac/src/libmp4.c  
+
+
 2006-06-15 13:18:58 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1422]
   - remove unreached code, (now) irrelevant debugging printf's

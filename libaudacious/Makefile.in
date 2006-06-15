@@ -4,7 +4,7 @@ include ../mk/objective.mk
 beepincludedir = $(includedir)/audacious
 
 OBJECTIVE_LIBS = libaudacious.so
-OBJECTIVE_SONAME_SUFFIX = 2.0.0
+OBJECTIVE_SONAME_SUFFIX = 3.0.0
 
 LDFLAGS += -Wl,-export-dynamic
 
@@ -46,8 +46,8 @@ HEADERS = \
 	formatter.h titlestring.h xml_document.h
 
 install-posthook:
-	@mv ${DESTDIR}/${LIBDIR}/libaudacious.so ${DESTDIR}/${LIBDIR}/libaudacious.so.2.0.0
-	@ln -sf ${LIBDIR}/libaudacious.so.2.0.0 \
-		${DESTDIR}/${LIBDIR}/libaudacious.so.2
-	@ln -sf ${LIBDIR}/libaudacious.so.2 \
+	@mv ${DESTDIR}/${LIBDIR}/libaudacious.so ${DESTDIR}/${LIBDIR}/libaudacious.so.3.0.0
+	@ln -sf ${LIBDIR}/libaudacious.so.3.0.0 \
+		${DESTDIR}/${LIBDIR}/libaudacious.so.3
+	@ln -sf ${LIBDIR}/libaudacious.so.3 \
 		${DESTDIR}/${LIBDIR}/libaudacious.so
