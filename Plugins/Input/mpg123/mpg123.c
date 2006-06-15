@@ -463,111 +463,6 @@ mpgdec_id3v1_to_id3v2(struct id3v1tag_t *v1, struct id3tag_t *v2)
 
 #define REMOVE_NONEXISTANT_TAG(x)   if (!*x) { x = NULL; }
 
-/*
- * Function mpgdec_format_song_title (tag, filename)
- *
- *    Create song title according to `tag' and/or `filename' and
- *    return it.  The title must be subsequently freed using g_free().
- *
- */
-gchar *
-mpgdec_format_song_title(TagLib_Tag *taglib_tag, gchar * filename)
-{
-    gchar *title = NULL;
-    TitleInput *input;
-
-    input = bmp_title_input_new();
-
-    if (taglib_tag) {
-        input->performer = taglib_tag_artist(taglib_tag);
-        input->album_name = taglib_tag_album(taglib_tag);
-        input->track_name = taglib_tag_title(taglib_tag);
-
-        mpgdec_strip_spaces(input->performer,strlen(input->performer));
-        mpgdec_strip_spaces(input->album_name,strlen(input->album_name));
-        mpgdec_strip_spaces(input->track_name,strlen(input->track_name));
-
-        input->year = taglib_tag_year(taglib_tag);
-        input->track_number = taglib_tag_track(taglib_tag);
-        input->genre = taglib_tag_genre(taglib_tag);
-        input->comment = taglib_tag_comment(taglib_tag);
-
-        /* remove any blank tags, fucking taglib */
-        REMOVE_NONEXISTANT_TAG(input->performer);
-        REMOVE_NONEXISTANT_TAG(input->album_name);
-        REMOVE_NONEXISTANT_TAG(input->track_name);
-        REMOVE_NONEXISTANT_TAG(input->genre);
-        REMOVE_NONEXISTANT_TAG(input->comment);
-    }
-    if(input->performer)
-	    input->performer = str_to_utf8(input->performer);
-
-    if(input->album_name)
-	    input->album_name = str_to_utf8(input->album_name);
-
-    if(input->track_name)
-	    input->track_name = str_to_utf8(input->track_name);
-
-    if(input->comment)
-	    input->comment = str_to_utf8(input->comment);
-
-	    
-    input->file_name = g_path_get_basename(filename);
-    input->file_path = g_path_get_dirname(filename);
-    input->file_ext = extname(filename);
-
-    title = xmms_get_titlestring(mpgdec_cfg.title_override ?
-                                 mpgdec_cfg.id3_format :
-                                 xmms_get_gentitle_format(), input);
-
-    if (!title /* || strlen(input->track_name) == 0 */) {
-        /* Format according to filename.  */
-        title = g_path_get_basename(filename);
-        if (extname(title))
-            *(extname(title) - 1) = '\0';   /* removes period */
-    }
-
-    if(input->performer)
-	    g_free(input->performer);
-    if(input->album_name)
-	    g_free(input->album_name);
-    if(input->track_name)
-	    g_free(input->track_name);
-    if(input->comment)
-	    g_free(input->comment);
-
-    g_free(input->file_path);
-    g_free(input->file_name);
-    g_free(input);
-
-    return title;
-}
-
-/*
- * Function get_song_title (filename)
- *
- */
-static gchar *
-get_song_title(char *filename)
-{
-    char *ret = NULL;
-#ifdef USE_CHARDET
-    taglib_set_strings_unicode(FALSE);
-#endif
-    taglib_file = taglib_file_new(filename);
-    taglib_tag = NULL;
-    if(taglib_file) {
-      taglib_tag = taglib_file_tag(taglib_file);
-      taglib_ap = taglib_file_audioproperties(taglib_file);
-    }
-
-    ret = mpgdec_format_song_title(taglib_tag, filename);
-   
-    taglib_file_free(taglib_file);
-    taglib_tag_free_strings();
-    return ret;
-}
-
 static long
 get_song_length(VFSFile * file)
 {
@@ -626,10 +521,88 @@ get_song_time(VFSFile * file)
     return 0;
 }
 
+static TitleInput *
+get_song_tuple(char *filename)
+{
+    VFSFile *file;
+    TitleInput *tuple = NULL;
+
+#ifdef USE_CHARDET
+    taglib_set_strings_unicode(FALSE);
+#endif
+
+    if ((file = vfs_fopen(filename, "rb")) != NULL)
+    {
+        tuple = bmp_title_input_new();
+
+        taglib_file = taglib_file_new(filename);
+        taglib_tag = NULL;
+
+        if (taglib_file != NULL)
+        {
+            taglib_tag = taglib_file_tag(taglib_file);
+            taglib_ap = taglib_file_audioproperties(taglib_file); /* XXX: chainsaw, what is this for? -nenolod */
+        }
+
+	if (taglib_tag != NULL)
+	{
+	    tuple->performer = g_strdup(taglib_tag_artist(taglib_tag));
+            tuple->album_name = g_strdup(taglib_tag_album(taglib_tag));
+            tuple->track_name = g_strdup(taglib_tag_title(taglib_tag));
+
+            mpgdec_strip_spaces(tuple->performer, strlen(tuple->performer));
+            mpgdec_strip_spaces(tuple->album_name, strlen(tuple->album_name));
+            mpgdec_strip_spaces(tuple->track_name, strlen(tuple->track_name));
+
+            tuple->year = taglib_tag_year(taglib_tag);
+            tuple->track_number = taglib_tag_track(taglib_tag);
+            tuple->genre = g_strdup(taglib_tag_genre(taglib_tag));
+            tuple->comment = g_strdup(taglib_tag_comment(taglib_tag));
+
+            /* remove any blank tags, fucking taglib */
+            REMOVE_NONEXISTANT_TAG(tuple->performer);
+            REMOVE_NONEXISTANT_TAG(tuple->album_name);
+            REMOVE_NONEXISTANT_TAG(tuple->track_name);
+            REMOVE_NONEXISTANT_TAG(tuple->genre);
+            REMOVE_NONEXISTANT_TAG(tuple->comment);
+        }
+
+	if (tuple->performer != NULL)
+	    tuple->performer = str_to_utf8(tuple->performer);
+
+	if (tuple->album_name != NULL)
+	    tuple->album_name = str_to_utf8(tuple->album_name);
+
+	if (tuple->track_name != NULL)
+	    tuple->track_name = str_to_utf8(tuple->track_name);
+
+	if (tuple->comment != NULL)
+	    tuple->comment = str_to_utf8(tuple->comment);
+
+	tuple->file_name = g_path_get_basename(filename);
+	tuple->file_path = g_path_get_dirname(filename);
+	tuple->file_ext = extname(filename);
+        tuple->length = get_song_time(file);
+
+        taglib_file_free(taglib_file);
+        taglib_tag_free_strings();
+    }
+
+    return tuple;
+}
+
+static gchar *
+get_song_title(TitleInput *tuple)
+{
+    return xmms_get_titlestring(mpgdec_cfg.title_override ?
+                                mpgdec_cfg.id3_format :
+                                xmms_get_gentitle_format(), tuple);
+}
+
 static void
 get_song_info(char *filename, char **title_real, int *len_real)
 {
-    VFSFile *file;
+    TitleInput *tuple;
 
     (*len_real) = -1;
     (*title_real) = NULL;
@@ -640,11 +613,12 @@ get_song_info(char *filename, char **title_real, int *len_real)
     if (!strncasecmp(filename, "http://", 7))
         return;
 
-    if ((file = vfs_fopen(filename, "rb")) != NULL) {
-        (*len_real) = get_song_time(file);
-        (*title_real) = get_song_title(filename);
-	vfs_fclose(file);
+    if ((tuple = get_song_tuple(filename)) != NULL) {
+        (*len_real) = tuple->length;
+        (*title_real) = get_song_title(tuple);
     }
+
+    bmp_title_input_free(tuple);
 }
 
 static int
@@ -762,7 +736,7 @@ decode_loop(void *arg)
         if (strncasecmp(filename, "http://", 7)) {
             mpgdec_length = mpgdec_info->num_frames * mpgdec_info->tpf * 1000;
             if (!mpgdec_title)
-                mpgdec_title = get_song_title(filename);
+                mpgdec_title = get_song_title(get_song_tuple(filename));
         }
         else {
             if (!mpgdec_title)
@@ -981,7 +955,8 @@ InputPlugin mpgdec_ip = {
     NULL, NULL, NULL,
     get_song_info,
     mpgdec_file_info_box,       /* file_info_box */
-    NULL
+    NULL,
+    get_song_tuple
 };
 
 InputPlugin *

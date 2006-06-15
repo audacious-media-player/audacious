@@ -332,7 +332,6 @@ int mpgdec_decode_header(struct frame *fr, unsigned long newhead);
 double mpgdec_compute_bpf(struct frame *fr);
 double mpgdec_compute_tpf(struct frame *fr);
 guint mpgdec_strip_spaces(char *src, size_t n);
-gchar *mpgdec_format_song_title(TagLib_Tag *taglib_tag, gchar * filename);
 double mpgdec_relative_pos(void);
 
 

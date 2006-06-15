@@ -1,3 +1,12 @@
+2006-06-15 03:58:37 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1378]
+  - use tuples internally
+  
+
+  Changes:        Modified:
+  +18 -12         trunk/audacious/playlist.c  
+
+
 2006-06-15 03:49:47 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1376]
   - InputPlugin class:
