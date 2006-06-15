@@ -768,9 +768,6 @@ static gint is_our_file( gchar* path )
 			return ret;
 		}
 
-		// do subsong stuff here
-		ret = FALSE;			// dewire track 0 from this stuff
-
 		switch ( type )
 		{
 			case type_nsf: load_file( tag, in, 0, NULL, (Nsf_Emu*) 0 ); break;
@@ -785,7 +782,7 @@ static gint is_our_file( gchar* path )
 		if (emu == NULL)
 			return FALSE;
 
-		for (int i = 0; i < emu->track_count(); i++)
+		for (int i = 1; i < emu->track_count(); i++)
 		{
 			gchar _buf[65535];
 			g_snprintf(_buf, 65535, "%s?%d", path2, i);

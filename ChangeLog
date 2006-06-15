@@ -1,3 +1,14 @@
+2006-06-15 12:07:23 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1416]
+  - sort by Artist
+  
+
+  Changes:        Modified:
+  +52 -21         trunk/audacious/playlist.c  
+  +1 -0           trunk/audacious/playlist.h  
+  +13 -0          trunk/audacious/ui_playlist.c  
+
+
 2006-06-15 11:54:42 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1414]
   - use tuplecache to optimise title sorts
