@@ -92,7 +92,7 @@ fileinfo_entry_set_text_free(const char *entry, char *text)
 void
 create_fileinfo_window(void)
 {
-	const gchar *glade_file = DATA_DIR "/glade/fileinfo.xml";
+	const gchar *glade_file = DATA_DIR "/glade/fileinfo.glade";
 	GladeXML *xml;
 	GtkWidget *widget;
 

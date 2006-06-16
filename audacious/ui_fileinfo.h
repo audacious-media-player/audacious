@@ -21,4 +21,6 @@
 #ifndef _UI_FILEINFO_H_
 #define _UI_FILEINFO_H_
 
+void create_fileinfo_window(void);
+
 #endif

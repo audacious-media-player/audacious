@@ -1,3 +1,16 @@
+2006-06-16 04:54:44 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1438]
+  - ui_fileinfo goodness (not hooked up yet)
+  
+
+  Changes:        Modified:
+  +1 -0           trunk/audacious/Makefile  
+  +1 -0           trunk/audacious/glade/Makefile.in  
+  +599 -0         trunk/audacious/glade/fileinfo.xml  
+  +132 -0         trunk/audacious/ui_fileinfo.c  
+  +24 -0          trunk/audacious/ui_fileinfo.h  
+
+
 2006-06-16 02:55:29 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1436]
   - complete tuple for AAC files (tuple->length)
