@@ -2134,13 +2134,18 @@ playlist_fileinfo(guint pos)
     {
         if (entry->decoder != NULL && entry->decoder->file_info_box == NULL)
             fileinfo_show_for_tuple(tuple);
+        else if (entry->decoder != NULL && entry->decoder->file_info_box != NULL)
+            entry->decoder->file_info_box(path);
         else
             fileinfo_show_for_path(path);
         g_free(path);
     }
     else if (path != NULL)
     {
-        fileinfo_show_for_path(path);
+        if (entry != NULL && entry->decoder != NULL && entry->decoder->file_info_box != NULL)
+            entry->decoder->file_info_box(path);
+        else
+            fileinfo_show_for_path(path);
         g_free(path);
     }
 }
@@ -2165,13 +2170,18 @@ playlist_fileinfo_current(void)
     {
         if (playlist_position->decoder != NULL && playlist_position->decoder->file_info_box == NULL)
             fileinfo_show_for_tuple(tuple);
+        else if (playlist_position->decoder != NULL && playlist_position->decoder->file_info_box != NULL)
+            playlist_position->decoder->file_info_box(path);
         else
             fileinfo_show_for_path(path);
         g_free(path);
     }
     else if (path != NULL)
     {
-        fileinfo_show_for_path(path);
+        if (playlist_position != NULL && playlist_position->decoder != NULL && playlist_position->decoder->file_info_box != NULL)
+            playlist_position->decoder->file_info_box(path);
+        else
+            fileinfo_show_for_path(path);
         g_free(path);
     }
 }

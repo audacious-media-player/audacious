@@ -139,7 +139,7 @@ fileinfo_show_for_tuple(TitleInput *tuple)
 	fileinfo_entry_set_text("entry_album", tuple->album_name);
 	fileinfo_entry_set_text("entry_comment", tuple->comment);
 	fileinfo_entry_set_text("entry_genre", tuple->genre);
-	fileinfo_entry_set_text("entry_location", tuple->file_path);
+	fileinfo_entry_set_text_free("entry_location", g_strdup_printf("%s/%s", tuple->file_path, tuple->file_name));
 
 	if (tuple->year != 0)
 		fileinfo_entry_set_text_free("entry_year", g_strdup_printf("%d", tuple->year));
