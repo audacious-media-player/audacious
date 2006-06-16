@@ -1,3 +1,12 @@
+2006-06-16 02:55:29 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1436]
+  - complete tuple for AAC files (tuple->length)
+  
+
+  Changes:        Modified:
+  +37 -3          trunk/Plugins/Input/aac/src/libmp4.c  
+
+
 2006-06-16 02:06:40 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1434]
   - remove unused code (causes a crash on some GTKs, eww!)

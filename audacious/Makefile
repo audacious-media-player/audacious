@@ -67,6 +67,7 @@ SOURCES = \
 	mainwin.c \
 	skinwin.c \
 	prefswin.c \
+	ui_fileinfo.c \
 	ui_playlist.c \
 	equalizer.c \
 	glade.c \

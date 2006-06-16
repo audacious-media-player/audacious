@@ -4,5 +4,6 @@ include ../../mk/objective.mk
 gladexmldir = $(pkgdatadir)/glade
 
 OBJECTIVE_DATA = \
+	fileinfo.xml:$(gladexmldir) \
 	prefswin.glade:$(gladexmldir) \
 	addfiles.glade:$(gladexmldir)
