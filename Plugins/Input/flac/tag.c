@@ -118,6 +118,7 @@ TitleInput *flac_get_tuple(char *filename)
 	input->file_name = g_path_get_basename(filename_proxy);
 	input->file_path = filename_proxy;
 	input->file_ext = local__extname(filename_proxy);
+	input->length = (unsigned)((double)tags->data.stream_info.total_samples / (double)tags->data.stream_info.sample_rate * 1000.0 + 0.5);
 
 	return input;
 }
