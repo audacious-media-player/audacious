@@ -22,5 +22,7 @@
 #define _UI_FILEINFO_H_
 
 void create_fileinfo_window(void);
+void fileinfo_show_for_tuple(TitleInput *tuple);
+void fileinfo_show_for_path(gchar *path);
 
 #endif

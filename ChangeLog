@@ -1,3 +1,12 @@
+2006-06-16 05:01:34 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1446]
+  - the fileinfo window is not visible by default
+  
+
+  Changes:        Modified:
+  +0 -1           trunk/audacious/glade/fileinfo.glade  
+
+
 2006-06-16 05:00:30 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1444]
   - hookup musepack tuple builder (oopsies)

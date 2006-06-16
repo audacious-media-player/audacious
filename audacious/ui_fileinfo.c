@@ -89,6 +89,21 @@ fileinfo_entry_set_text_free(const char *entry, char *text)
 	g_free(text);
 }
 
+void fileinfo_hide(gpointer unused)
+{
+	gtk_widget_hide(fileinfo_win);
+
+	/* Clear it out. */
+	fileinfo_entry_set_text("entry_title", "");
+	fileinfo_entry_set_text("entry_artist", "");
+	fileinfo_entry_set_text("entry_album", "");
+	fileinfo_entry_set_text("entry_comment", "");
+	fileinfo_entry_set_text("entry_genre", "");
+	fileinfo_entry_set_text("entry_year", "");
+	fileinfo_entry_set_text("entry_track", "");
+	fileinfo_entry_set_text("entry_location", "");
+}
+
 void
 create_fileinfo_window(void)
 {
@@ -106,6 +121,9 @@ create_fileinfo_window(void)
 
 	widget = glade_xml_get_widget(xml, "image_artwork");
 	gtk_image_set_from_file(GTK_IMAGE(widget), DATA_DIR "/images/audio.png");
+
+	widget = glade_xml_get_widget(xml, "btn_close");
+	g_signal_connect(G_OBJECT(widget), "clicked", (GCallback) fileinfo_hide, NULL);
 }
 
 void
@@ -121,6 +139,7 @@ fileinfo_show_for_tuple(TitleInput *tuple)
 	fileinfo_entry_set_text("entry_album", tuple->album_name);
 	fileinfo_entry_set_text("entry_comment", tuple->comment);
 	fileinfo_entry_set_text("entry_genre", tuple->genre);
+	fileinfo_entry_set_text("entry_location", tuple->file_path);
 
 	if (tuple->year != 0)
 		fileinfo_entry_set_text_free("entry_year", g_strdup_printf("%d", tuple->year));
@@ -129,4 +148,18 @@ fileinfo_show_for_tuple(TitleInput *tuple)
 		fileinfo_entry_set_text_free("entry_track", g_strdup_printf("%d", tuple->track_number));
 
 	gtk_widget_show(fileinfo_win);
+}
+
+void
+fileinfo_show_for_filepath(const gchar *path)
+{
+	TitleInput *tuple = input_get_song_tuple(path);
+
+	/* FIXME: what to do here? */
+	if (tuple == NULL)
+		return;
+
+	fileinfo_show_for_tuple(tuple);
+
+	bmp_title_input_free(tuple);
 }
