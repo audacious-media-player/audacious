@@ -54,6 +54,7 @@
 #include "skin.h"
 #include "urldecode.h"
 #include "util.h"
+#include "ui_fileinfo.h"
 
 #include "debug.h"
 
@@ -2116,15 +2117,30 @@ playlist_fileinfo(guint pos)
 {
     gchar *path = NULL;
     GList *node;
+    PlaylistEntry *entry = NULL;
+    TitleInput *tuple = NULL;
 
     PLAYLIST_LOCK();
-    if ((node = g_list_nth(playlist_get(), pos))) {
-        PlaylistEntry *entry = node->data;
-        path = g_strdup(entry->filename);
+
+    if ((node = g_list_nth(playlist_get(), pos)))
+    {
+        entry = node->data;
+        tuple = entry->tuple;
+	path = g_strdup(entry->filename);
     }
+
     PLAYLIST_UNLOCK();
-    if (path) {
-        input_file_info_box(path);
+    if (tuple != NULL)
+    {
+        if (entry->decoder != NULL && entry->decoder->file_info_box == NULL)
+            fileinfo_show_for_tuple(tuple);
+        else
+            fileinfo_show_for_path(path);
+        g_free(path);
+    }
+    else if (path != NULL)
+    {
+        fileinfo_show_for_path(path);
         g_free(path);
     }
 }
@@ -2133,14 +2149,29 @@ void
 playlist_fileinfo_current(void)
 {
     gchar *path = NULL;
+    TitleInput *tuple = NULL;
 
     PLAYLIST_LOCK();
+
     if (playlist_get() && playlist_position)
+    {
         path = g_strdup(playlist_position->filename);
+	tuple = playlist_position->tuple;
+    }
+
     PLAYLIST_UNLOCK();
 
-    if (path) {
-        input_file_info_box(path);
+    if (tuple != NULL)
+    {
+        if (playlist_position->decoder != NULL && playlist_position->decoder->file_info_box == NULL)
+            fileinfo_show_for_tuple(tuple);
+        else
+            fileinfo_show_for_path(path);
+        g_free(path);
+    }
+    else if (path != NULL)
+    {
+        fileinfo_show_for_path(path);
         g_free(path);
     }
 }

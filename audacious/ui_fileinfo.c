@@ -151,7 +151,7 @@ fileinfo_show_for_tuple(TitleInput *tuple)
 }
 
 void
-fileinfo_show_for_filepath(const gchar *path)
+fileinfo_show_for_path(gchar *path)
 {
 	TitleInput *tuple = input_get_song_tuple(path);
 
