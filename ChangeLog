@@ -1,3 +1,13 @@
+2006-06-16 05:58:15 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1454]
+  - improvements
+  
+
+  Changes:        Modified:
+  +12 -2          trunk/audacious/playlist.c  
+  +1 -1           trunk/audacious/ui_fileinfo.c  
+
+
 2006-06-16 05:23:39 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1452]
   - hook up fileinfo box stuff
