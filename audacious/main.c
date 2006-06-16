@@ -73,6 +73,7 @@
 #include "util.h"
 #include "visualization.h"
 #include "build_stamp.h"
+#include "ui_fileinfo.h"
 
 #include "pixmaps.h"
 #include "images/audacious_player.xpm"
@@ -1074,6 +1075,8 @@ main(gint argc, gchar ** argv)
         /* FIXME: delayed, because it deals directly with the plugin
          * interface to set menu items */
         create_prefs_window();
+
+	create_fileinfo_window();
 
         if (cfg.player_visible)
             mainwin_show(TRUE);

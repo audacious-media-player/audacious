@@ -1,3 +1,15 @@
+2006-06-16 04:55:45 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1440]
+  some minor tweaks
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/audacious/glade/Makefile.in  
+  +0 -599         trunk/audacious/glade/fileinfo.xml  
+  +1 -1           trunk/audacious/ui_fileinfo.c  
+  +2 -0           trunk/audacious/ui_fileinfo.h  
+
+
 2006-06-16 04:54:44 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1438]
   - ui_fileinfo goodness (not hooked up yet)
