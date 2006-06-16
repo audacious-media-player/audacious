@@ -59,4 +59,6 @@ void alsa_init(void)
 		g_message("Cannot load alsa library: %s", dlerror());
 		/* FIXME, this plugin wont work... */
 	}
+
+	alsa_mutex = g_mutex_new();
 }

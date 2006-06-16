@@ -1,3 +1,12 @@
+2006-06-16 09:24:10 +0000  George Averill <nhjm449@gmail.com>
+  revision [1462]
+  - Buffer indicator support for vorbis.
+  
+
+  Changes:        Modified:
+  +6 -1           trunk/Plugins/Input/vorbis/http.c  
+
+
 2006-06-16 09:17:33 +0000  George Averill <nhjm449@gmail.com>
   revision [1460]
   - Support for the buffer indicator in playpaus.png that was apparently 

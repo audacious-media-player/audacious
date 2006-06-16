@@ -64,6 +64,7 @@ static int rd_index, wr_index;	 /* current read/write position in int-buffer */
 static gboolean pause_request;	 /* pause status currently requested */
 static int flush_request;	 /* flush status (time) currently requested */
 static int prebuffer_size;
+static GMutex *alsa_mutex;
 
 static guint mixer_timeout;
 
@@ -256,6 +257,8 @@ void alsa_close(void)
 	if (!going)
 		return;
 
+	g_mutex_lock(alsa_mutex);
+
 	debug("Closing device");
 
 	going = 0;
@@ -278,6 +281,8 @@ void alsa_close(void)
 	if (alsa_cfg.debug)
 		snd_output_close(logs);
 	debug("Device closed");
+
+	g_mutex_unlock(alsa_mutex);
 }
 
 /* reopen ALSA PCM */
@@ -802,6 +807,8 @@ static void *alsa_loop(void *arg)
 	struct pollfd *pfds;
 	unsigned short *revents;
 
+	g_mutex_lock(alsa_mutex);
+
 	if (npfds <= 0)
 		goto _error;
 	pfds = alloca(sizeof(*pfds) * npfds);
@@ -847,6 +854,7 @@ static void *alsa_loop(void *arg)
 	}
 
  _error:
+	g_mutex_unlock(alsa_mutex);
 	alsa_close_pcm();
 	g_free(thread_buffer);
 	thread_buffer = NULL;
@@ -869,6 +877,8 @@ int alsa_open(AFormat fmt, int rate, int nch)
 		alsa_close();
 		return 0;
 	}
+
+	g_mutex_lock(alsa_mutex);
 
 	if (!mixer)
 		alsa_setup_mixer();
@@ -896,6 +906,8 @@ int alsa_open(AFormat fmt, int rate, int nch)
 	wr_index = rd_index = 0;
 	pause_request = FALSE;
 	flush_request = -1;
+
+	g_mutex_unlock(alsa_mutex);
 	
 	audio_thread = g_thread_create((GThreadFunc)alsa_loop, NULL, TRUE, NULL);
 	return 1;
