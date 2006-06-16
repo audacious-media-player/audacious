@@ -1,3 +1,13 @@
+2006-06-16 05:13:55 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1448]
+  - more fun
+  
+
+  Changes:        Modified:
+  +33 -0          trunk/audacious/ui_fileinfo.c  
+  +2 -0           trunk/audacious/ui_fileinfo.h  
+
+
 2006-06-16 05:01:34 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1446]
   - the fileinfo window is not visible by default

@@ -155,9 +155,8 @@ fileinfo_show_for_filepath(const gchar *path)
 {
 	TitleInput *tuple = input_get_song_tuple(path);
 
-	/* FIXME: what to do here? */
 	if (tuple == NULL)
-		return;
+		return input_file_info_box(path);
 
 	fileinfo_show_for_tuple(tuple);
 
