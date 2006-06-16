@@ -841,7 +841,6 @@ AC_CONFIG_FILES([
         audacious.spec
         audacious.pc
         audacious/audacious.desktop
-        audacious/glade/Makefile
 	audacious/images/Makefile
         libaudacious/Makefile
         libguess/Makefile

@@ -1,3 +1,12 @@
+2006-06-16 04:57:35 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1442]
+  - create fileinfo window
+  
+
+  Changes:        Modified:
+  +3 -0           trunk/audacious/main.c  
+
+
 2006-06-16 04:55:45 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1440]
   some minor tweaks

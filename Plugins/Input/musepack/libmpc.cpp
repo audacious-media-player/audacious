@@ -33,6 +33,7 @@ InputPlugin MpcPlugin = {
     mpcGetSongInfo, //Get Title String callback [CALLBACK]
     mpcFileInfoBox, //Show File Info Box        [CALLBACK]
     NULL,           //Output Plugin Handle      OutputPlugin output
+    mpcGetSongTuple,
 };
 
 extern "C"
