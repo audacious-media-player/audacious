@@ -586,6 +586,7 @@ get_song_tuple(char *filename)
 
         taglib_file_free(taglib_file);
         taglib_tag_free_strings();
+        vfs_fclose(file);
     }
 
     return tuple;
