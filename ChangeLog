@@ -1,3 +1,12 @@
+2006-06-16 06:02:11 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1456]
+  - remove file_info_box code, it sucked.
+  
+
+  Changes:        Modified:
+  +3 -437         trunk/Plugins/Input/wma/wma.c  
+
+
 2006-06-16 05:58:15 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1454]
   - improvements

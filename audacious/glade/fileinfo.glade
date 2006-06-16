@@ -415,7 +415,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkEntry" id="entry6">
+			    <widget class="GtkEntry" id="entry_year">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="editable">True</property>
@@ -464,7 +464,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkEntry" id="entry7">
+			    <widget class="GtkEntry" id="entry_track">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="editable">True</property>
