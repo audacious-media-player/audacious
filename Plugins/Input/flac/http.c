@@ -634,7 +634,10 @@ static void *http_buffer_loop(void *arg)
 	{
 
 		if (!http_used() && !flac_ip.output->buffer_playing())
+		{
 			prebuffering = TRUE;
+			flac_ip.set_status_buffering(TRUE);
+		}
 		if (http_free() > 0 && !eof)
 		{
 			if (http_check_for_data())
@@ -649,6 +652,7 @@ static void *http_buffer_loop(void *arg)
 					if (prebuffering)
 					{
 						prebuffering = FALSE;
+						flac_ip.set_status_buffering(FALSE);
 
 						flac_ip.set_info_text(NULL);
 					}
@@ -663,6 +667,7 @@ static void *http_buffer_loop(void *arg)
 				if (http_used() > prebuffer_length)
 				{
 					prebuffering = FALSE;
+					flac_ip.set_status_buffering(FALSE);
 					flac_ip.set_info_text(NULL);
 				}
 				else
@@ -715,6 +720,7 @@ int flac_http_open(gchar * _url, guint64 _offset)
 	buffer_read = 0;
 	icy_metaint = 0;
 	prebuffering = TRUE;
+	flac_ip.set_status_buffering(TRUE);
 	going = TRUE;
 	eof = FALSE;
 	buffer = g_malloc(buffer_length);
