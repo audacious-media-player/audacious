@@ -285,7 +285,43 @@ static TitleInput   *mp4_get_song_tuple(char *fn)
 		g_free(mp4cb);
 		vfs_fclose(mp4fh);
 	} else {
+		gint mp4track= getAACTrack(mp4file);
+		gint numSamples = mp4ff_num_samples(mp4file, mp4track);
+		guint framesize = 1024;
+		gulong samplerate;
+		gchar channels;
+		gint msDuration;
+		mp4AudioSpecificConfig mp4ASC;
 		gchar *tmpval;
+		guchar *buffer = NULL;
+		guint bufferSize = 0;
+		faacDecHandle decoder;
+
+		decoder = faacDecOpen();
+		mp4ff_get_decoder_config(mp4file, mp4track, &buffer, &bufferSize);
+
+		if ( !buffer ) {
+			faacDecClose(decoder);
+			return FALSE;
+		}
+		if ( faacDecInit2(decoder, buffer, bufferSize, 
+				  &samplerate, &channels) < 0 ) {
+			faacDecClose(decoder);
+
+			return FALSE;
+		}
+
+		/* Add some hacks for SBR profile */
+		if (AudioSpecificConfig(buffer, bufferSize, &mp4ASC) >= 0) {
+			if (mp4ASC.frameLengthFlag == 1) framesize = 960;
+			if (mp4ASC.sbr_present_flag == 1) framesize *= 2;
+		}
+			
+		g_free(buffer);
+
+		faacDecClose(decoder);
+
+		msDuration = ((float)numSamples * (float)(framesize - 1.0)/(float)samplerate) * 1000;
 
 		input = bmp_title_input_new();
 
@@ -304,6 +340,7 @@ static TitleInput   *mp4_get_song_tuple(char *fn)
 		input->file_name = g_path_get_basename(filename);
 		input->file_path = g_path_get_dirname(filename);
 		input->file_ext = extname(filename);
+		input->length = msDuration;
 
 		free (mp4cb);
 		vfs_fclose(mp4fh);
@@ -408,8 +445,6 @@ static int my_decode_mp4( char *filename, mp4ff_t *mp4file )
 		if(xmmstitle == NULL)
 			xmmstitle = g_strdup(filename);
 
-		mp4_ip.set_info(xmmstitle, -1, -1, samplerate, channels);
-
 		decoder = faacDecOpen();
 		mp4ff_get_decoder_config(mp4file, mp4track, &buffer, &bufferSize);
 		if ( !buffer ) {
@@ -431,7 +466,6 @@ static int my_decode_mp4( char *filename, mp4ff_t *mp4file )
 			
 		g_free(buffer);
 		if( !channels ) {
-			g_print("Number of Channels not supported\n");
 			faacDecClose(decoder);
 
 			return FALSE;

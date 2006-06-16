@@ -1,3 +1,12 @@
+2006-06-16 02:06:40 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1434]
+  - remove unused code (causes a crash on some GTKs, eww!)
+  
+
+  Changes:        Modified:
+  +1 -4           trunk/Plugins/Input/mpg123/configure.c  
+
+
 2006-06-16 01:41:54 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1432]
   - I hate libflac's inconsistent API!
