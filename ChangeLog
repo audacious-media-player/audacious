@@ -1,3 +1,12 @@
+2006-06-16 10:50:38 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1468]
+  - if entry->tuple == NULL, then probe the file for a decoder and build the appropriate tuple for that entry
+  
+
+  Changes:        Modified:
+  +11 -0          trunk/audacious/playlist.c  
+
+
 2006-06-16 09:58:33 +0000  George Averill <nhjm449@gmail.com>
   revision [1466]
   - Buffer indicator support for anyone crazy enough to stream flac.

@@ -64,7 +64,7 @@ static int rd_index, wr_index;	 /* current read/write position in int-buffer */
 static gboolean pause_request;	 /* pause status currently requested */
 static int flush_request;	 /* flush status (time) currently requested */
 static int prebuffer_size;
-static GMutex *alsa_mutex;
+GMutex *alsa_mutex;
 
 static guint mixer_timeout;
 
@@ -257,13 +257,13 @@ void alsa_close(void)
 	if (!going)
 		return;
 
-	g_mutex_lock(alsa_mutex);
-
 	debug("Closing device");
 
 	going = 0;
 
 	g_thread_join(audio_thread);
+
+	g_mutex_lock(alsa_mutex); /* alsa_loop locks alsa_mutex! */
 
 	alsa_cleanup_mixer();
 
