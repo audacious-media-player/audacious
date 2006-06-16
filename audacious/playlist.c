@@ -185,6 +185,9 @@ playlist_entry_get_info(PlaylistEntry * entry)
 
     g_return_val_if_fail(entry != NULL, FALSE);
 
+    if (entry->decoder == NULL)
+        entry->decoder = input_check_file(entry->filename, FALSE);
+
     if (entry->decoder == NULL || entry->decoder->get_song_tuple == NULL)
         tuple = input_get_song_tuple(entry->filename);
     else
@@ -2130,6 +2133,14 @@ playlist_fileinfo(guint pos)
     }
 
     PLAYLIST_UNLOCK();
+
+    /* No tuple? Try to set this entry up properly. --nenolod */
+    if (entry->tuple == NULL)
+    {
+        playlist_entry_get_info(entry);
+        tuple = entry->tuple;
+    }
+
     if (tuple != NULL)
     {
         if (entry->decoder != NULL && entry->decoder->file_info_box == NULL)

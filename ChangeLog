@@ -1,3 +1,12 @@
+2006-06-16 09:58:33 +0000  George Averill <nhjm449@gmail.com>
+  revision [1466]
+  - Buffer indicator support for anyone crazy enough to stream flac.
+  
+
+  Changes:        Modified:
+  +6 -0           trunk/Plugins/Input/flac/http.c  
+
+
 2006-06-16 09:35:49 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1464]
   - use mutex locking to make alsa stay happy with dmix
