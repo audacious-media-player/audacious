@@ -1,3 +1,15 @@
+2006-06-16 05:00:30 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1444]
+  - hookup musepack tuple builder (oopsies)
+  - rename glade/Makefile.in to glade/Makefile
+  
+
+  Changes:        Modified:
+  +1 -0           trunk/Plugins/Input/musepack/libmpc.cpp  
+  +0 -9           trunk/audacious/glade/Makefile.in  
+  +0 -1           trunk/configure.ac  
+
+
 2006-06-16 04:57:35 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1442]
   - create fileinfo window
