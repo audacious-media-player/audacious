@@ -28,11 +28,13 @@ typedef enum {
 struct _PlayStatus {
     Widget ps_widget;
     PStatus ps_status;
+    gboolean ps_status_buffering;
 };
 
 typedef struct _PlayStatus PlayStatus;
 
 void playstatus_set_status(PlayStatus * ps, PStatus status);
+void playstatus_set_status_buffering(PlayStatus * ps, gboolean status);
 PlayStatus *create_playstatus(GList ** wlist, GdkPixmap * parent,
                               GdkGC * gc, gint x, gint y);
 

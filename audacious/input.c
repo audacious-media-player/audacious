@@ -61,6 +61,7 @@ InputPluginData ip_data = {
     FALSE,
     FALSE,
     FALSE,
+    FALSE,
     NULL
 };
 
@@ -744,6 +745,22 @@ input_set_info_text(const gchar * text)
     g_free(input_info_text);
     input_info_text = g_strdup(text);
     mainwin_set_info_text();
+}
+
+void
+input_set_status_buffering(gboolean status)
+{
+    if (!bmp_playback_get_playing())
+        return;
+
+    if (!get_current_input_plugin())
+        return;
+
+    ip_data.buffering = status;
+
+    if (ip_data.buffering == TRUE && mainwin_playstatus->ps_status == STATUS_STOP)
+        mainwin_playstatus->ps_status = STATUS_PLAY;
+    playstatus_set_status_buffering(mainwin_playstatus, ip_data.buffering);
 }
 
 void

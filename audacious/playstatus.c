@@ -34,8 +34,13 @@ playstatus_draw(Widget * w)
         return;
 
     obj = ps->ps_widget.parent;
-
-    if (ps->ps_status == STATUS_PLAY)
+    if (ps->ps_status == STATUS_STOP && ps->ps_status_buffering == TRUE)
+        ps->ps_status_buffering = FALSE;
+    if (ps->ps_status == STATUS_PLAY && ps->ps_status_buffering == TRUE)
+        skin_draw_pixmap(bmp_active_skin, obj, ps->ps_widget.gc,
+                         SKIN_PLAYPAUSE, 39, 0, ps->ps_widget.x,
+                         ps->ps_widget.y, 3, 9);
+    else if (ps->ps_status == STATUS_PLAY)
         skin_draw_pixmap(bmp_active_skin, obj, ps->ps_widget.gc,
                          SKIN_PLAYPAUSE, 36, 0, ps->ps_widget.x,
                          ps->ps_widget.y, 3, 9);
@@ -69,6 +74,16 @@ playstatus_set_status(PlayStatus * ps, PStatus status)
         return;
 
     ps->ps_status = status;
+    widget_draw(WIDGET(ps));
+}
+
+void
+playstatus_set_status_buffering(PlayStatus * ps, gboolean status)
+{
+    if (!ps)
+        return;
+
+    ps->ps_status_buffering = status;
     widget_draw(WIDGET(ps));
 }
 

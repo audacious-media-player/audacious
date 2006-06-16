@@ -157,6 +157,8 @@ bmp_playback_stop(void)
         }
     }
 
+    ip_data.buffering = FALSE;
+    playstatus_set_status_buffering(mainwin_playstatus, FALSE);
     ip_data.playing = FALSE;
 }
 
@@ -179,6 +181,7 @@ bmp_playback_stop_reentrant(void)
         }
     }
 
+    ip_data.buffering = FALSE;
     ip_data.playing = FALSE;
 }
 

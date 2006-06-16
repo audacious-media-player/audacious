@@ -133,7 +133,8 @@ input_plugin_init(Plugin * plugin)
        - descender */
     p->set_info = (void (*)(gchar *, gint, gint, gint, gint)) playlist_set_info;
     p->set_info_text = (void (*)(gchar *)) input_set_info_text;
-    
+    p->set_status_buffering = (void (*)(gboolean)) input_set_status_buffering;     
+
     ip_data.input_list = g_list_append(ip_data.input_list, p);
     
     g_hash_table_replace(plugin_matrix, g_path_get_basename(p->filename),

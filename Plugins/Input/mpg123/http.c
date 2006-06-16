@@ -655,8 +655,10 @@ http_buffer_loop(gpointer arg)
 
     while (going) {
 
-        if (!http_used() && !mpgdec_ip.output->buffer_playing())
+        if (!http_used() && !mpgdec_ip.output->buffer_playing()) {
             prebuffering = TRUE;
+            mpgdec_ip.set_status_buffering(TRUE);
+        }
         if (http_free() > 0 && !eof) {
             if (http_check_for_data()) {
                 cnt = min(http_free(), buffer_length - wr_index);
@@ -667,6 +669,7 @@ http_buffer_loop(gpointer arg)
                     eof = TRUE;
                     if (prebuffering) {
                         prebuffering = FALSE;
+                        mpgdec_ip.set_status_buffering(FALSE);
 
                         mpgdec_ip.set_info_text(NULL);
                     }
@@ -679,6 +682,7 @@ http_buffer_loop(gpointer arg)
             if (prebuffering) {
                 if (http_used() > prebuffer_length) {
                     prebuffering = FALSE;
+                    mpgdec_ip.set_status_buffering(FALSE);
                     mpgdec_ip.set_info_text(NULL);
                 }
                 else {
@@ -733,6 +737,7 @@ mpgdec_http_open(gchar * _url)
     buffer_read = 0;
     icy_metaint = 0;
     prebuffering = TRUE;
+    mpgdec_ip.set_status_buffering(TRUE);
     going = TRUE;
     eof = FALSE;
     buffer = g_malloc(buffer_length);

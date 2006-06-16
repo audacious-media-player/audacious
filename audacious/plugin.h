@@ -155,6 +155,7 @@ struct _InputPlugin {
 
     TitleInput *(*get_song_tuple) (gchar * filename);
     void (*set_song_tuple) (TitleInput * tuple);
+    void (*set_status_buffering) (gboolean status);
 };
 
 struct _GeneralPlugin {

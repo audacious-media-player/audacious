@@ -1,3 +1,12 @@
+2006-06-16 08:45:08 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1458]
+  - fix ui_fileinfo problem
+  
+
+  Changes:        Modified:
+  +2 -2           trunk/audacious/glade/fileinfo.glade  
+
+
 2006-06-16 06:02:11 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1456]
   - remove file_info_box code, it sucked.
