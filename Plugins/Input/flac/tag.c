@@ -89,6 +89,7 @@ TitleInput *flac_get_tuple(char *filename)
 {
 	TitleInput *input = NULL;
 	FLAC__StreamMetadata *tags;
+	FLAC__StreamMetadata info;
 	char *title, *artist, *performer, *album, *date, *tracknumber, *genre, *description;
 	gchar *filename_proxy = g_strdup(filename);
 
@@ -118,7 +119,10 @@ TitleInput *flac_get_tuple(char *filename)
 	input->file_name = g_path_get_basename(filename_proxy);
 	input->file_path = filename_proxy;
 	input->file_ext = local__extname(filename_proxy);
-	input->length = (unsigned)((double)tags->data.stream_info.total_samples / (double)tags->data.stream_info.sample_rate * 1000.0 + 0.5);
+
+        FLAC__metadata_get_streaminfo(filename, &info);
+
+	input->length = (unsigned)((double)info.data.stream_info.total_samples / (double)info.data.stream_info.sample_rate * 1000.0 + 0.5);
 
 	return input;
 }
