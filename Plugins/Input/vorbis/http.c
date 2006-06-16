@@ -572,8 +572,10 @@ http_buffer_loop(gpointer arg)
 
     while (going) {
 
-        if (!http_used() && !vorbis_ip.output->buffer_playing())
+        if (!http_used() && !vorbis_ip.output->buffer_playing()) {
             prebuffering = TRUE;
+            vorbis_ip.set_status_buffering(TRUE);
+        }
         if (http_free() > 0 && !eof) {
             if (http_check_for_data()) {
                 cnt = min(http_free(), buffer_length - wr_index);
@@ -584,6 +586,7 @@ http_buffer_loop(gpointer arg)
                     eof = TRUE;
                     if (prebuffering) {
                         prebuffering = FALSE;
+                        vorbis_ip.set_status_buffering(FALSE);
 
                         vorbis_ip.set_info_text(NULL);
                     }
@@ -596,6 +599,7 @@ http_buffer_loop(gpointer arg)
             if (prebuffering) {
                 if (http_used() > prebuffer_length) {
                     prebuffering = FALSE;
+                    vorbis_ip.set_status_buffering(FALSE);
                     vorbis_ip.set_info_text(NULL);
                 }
                 else {
@@ -643,6 +647,7 @@ vorbis_http_open(const gchar * _url)
     prebuffer_length = (buffer_length * vorbis_cfg.http_prebuffer) / 100;
     buffer_read = 0;
     prebuffering = TRUE;
+    vorbis_ip.set_status_buffering(TRUE);
     going = TRUE;
     eof = FALSE;
     buffer = g_malloc(buffer_length);

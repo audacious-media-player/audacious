@@ -1,3 +1,21 @@
+2006-06-16 09:17:33 +0000  George Averill <nhjm449@gmail.com>
+  revision [1460]
+  - Support for the buffer indicator in playpaus.png that was apparently 
+  ignored by XMMS devs. Supports mp3 streams only, at the moment.
+  
+
+  Changes:        Modified:
+  +6 -1           trunk/Plugins/Input/mpg123/http.c  
+  +17 -0          trunk/audacious/input.c  
+  +2 -0           trunk/audacious/input.h  
+  +3 -0           trunk/audacious/playback.c  
+  +17 -2          trunk/audacious/playstatus.c  
+  +2 -0           trunk/audacious/playstatus.h  
+  +1 -0           trunk/audacious/plugin.h  
+  +2 -1           trunk/audacious/pluginenum.c  
+  +0 -0           trunk/skin/playpaus.png  
+
+
 2006-06-16 08:45:08 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1458]
   - fix ui_fileinfo problem
