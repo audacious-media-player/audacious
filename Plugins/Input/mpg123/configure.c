@@ -25,7 +25,7 @@ static GtkWidget *decode_freq_frame, *decode_freq_vbox, *decode_freq_1to1,
 
 static GtkObject *streaming_size_adj, *streaming_pre_adj;
 static GtkWidget *streaming_save_use, *streaming_save_entry;
-static GtkWidget *streaming_cast_title, *streaming_udp_title;
+static GtkWidget *streaming_udp_title;
 static GtkWidget *streaming_save_dirbrowser;
 static GtkWidget *streaming_save_hbox, *title_id3_box, *title_tag_desc;
 static GtkWidget *title_override, *title_id3_entry, *title_id3v2_disable;
@@ -408,9 +408,6 @@ mpgdec_configure(void)
     streaming_cast_vbox = gtk_vbox_new(5, FALSE);
     gtk_container_add(GTK_CONTAINER(streaming_cast_frame),
                       streaming_cast_vbox);
-
-    gtk_box_pack_start(GTK_BOX(streaming_cast_vbox), streaming_cast_title,
-                       FALSE, FALSE, 0);
 
     streaming_udp_title =
         gtk_check_button_new_with_label(_
