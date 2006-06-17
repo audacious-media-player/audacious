@@ -104,7 +104,7 @@ InputPlugin mp4_ip =
     0,	// set player window info
     0,	// set song title text
     mp4_getSongTitle,	// get song title text
-    audmp4_file_info_box, // info box
+    0,  // info box
     0,	// to output plugin
     mp4_get_song_tuple,
   };

@@ -10,7 +10,7 @@ LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
 LDFLAGS += ../libfaad2/libfaad.a ../mp4ff/libmp4ff.a -lstdc++
 
-SOURCES = libmp4.c mp4_utils.c aac_utils.c tagging_mp4.c fileinfo.c
+SOURCES = libmp4.c mp4_utils.c aac_utils.c tagging_mp4.c
 
 OBJECTS = ${SOURCES:.c=.o}
 

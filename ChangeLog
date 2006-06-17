@@ -1,3 +1,13 @@
+2006-06-16 13:13:21 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [1470]
+  - fix for alsa_mutex deadlock
+  - fix for alsa_mutex scope
+  
+
+  Changes:        Modified:
+  +3 -3           trunk/Plugins/Output/alsa/audio.c  
+
+
 2006-06-16 10:50:38 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1468]
   - if entry->tuple == NULL, then probe the file for a decoder and build the appropriate tuple for that entry
