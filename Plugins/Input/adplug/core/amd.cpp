@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2003 Simon Peter, <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2006 Simon Peter, <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -36,7 +36,7 @@ bool CamdLoader::load(const std::string &filename, const CFileProvider &fp)
 		char id[9];
 		unsigned char version;
 	} header;
-	int i, j, k, t, numtrax;
+	int i, j, k, t, numtrax, maxi = 0;
 	unsigned char buf, buf2, buf3;
 	const unsigned char convfx[10] = {0,1,2,9,17,11,13,18,3,14};
 
@@ -60,6 +60,7 @@ bool CamdLoader::load(const std::string &filename, const CFileProvider &fp)
 	for(i=0;i<128;i++) order[i] = f->readInt(1);
 	f->seek(10, binio::Add);
 	if(header.version == 0x10) {	// unpacked module
+	maxi = nop * 9;
 		for(i=0;i<64*9;i++)
 			trackord[i/9][i%9] = i+1;
 		t = 0;
@@ -89,6 +90,7 @@ bool CamdLoader::load(const std::string &filename, const CFileProvider &fp)
 		for(k=0;k<numtrax;k++) {
 			i = f->readInt(2);
 			if(i > 575) i = 575;	// fix corrupted modules
+			maxi = (i + 1 > maxi ? i + 1 : maxi);
 			j = 0;
 			do {
 				buf = f->readInt(1);
@@ -144,15 +146,17 @@ bool CamdLoader::load(const std::string &filename, const CFileProvider &fp)
 			if(instname[i][j] == '\xff')
 				instname[i][j] = '\x20';
 	}
-	for(i=0;i<nop*9;i++)	// convert patterns
+  for(i=0;i<maxi;i++)	// convert patterns
 		for(j=0;j<64;j++) {
 			tracks[i][j].command = convfx[tracks[i][j].command];
+			// extended command
 			if(tracks[i][j].command == 14) {
 				if(tracks[i][j].param1 == 2) {
 					tracks[i][j].command = 10;
 					tracks[i][j].param1 = tracks[i][j].param2;
 					tracks[i][j].param2 = 0;
 				}
+
 				if(tracks[i][j].param1 == 3) {
 					tracks[i][j].command = 10;
 					tracks[i][j].param1 = 0;

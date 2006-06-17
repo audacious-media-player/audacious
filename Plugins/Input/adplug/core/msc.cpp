@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2005 Simon Peter, <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2006 Simon Peter, <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,30 +22,28 @@
 #include <stdio.h>
 
 #include "msc.h"
+#include "debug.h"
 
 const unsigned char CmscPlayer::msc_signature [MSC_SIGN_LEN] = {
 	'C', 'e', 'r', 'e', 's', ' ', '\x13', ' ',
 	'M', 'S', 'C', 'p', 'l', 'a', 'y', ' ' };
 
-
 /*** public methods *************************************/
 
-CPlayer *
-CmscPlayer::factory (Copl * newopl)
+CPlayer *CmscPlayer::factory (Copl * newopl)
 {
 	return new CmscPlayer (newopl);
 }
 
-	
-CmscPlayer::CmscPlayer (Copl * newopl) : CPlayer (newopl) {
+CmscPlayer::CmscPlayer(Copl * newopl) : CPlayer (newopl)
+{
 	desc = NULL;
 	msc_data = NULL;
 	raw_data = NULL;
 	nr_blocks = 0;
 }
 
-
-CmscPlayer::~CmscPlayer ()
+CmscPlayer::~CmscPlayer()
 {
 	if (raw_data != NULL)
 		delete [] raw_data;
@@ -64,9 +62,7 @@ CmscPlayer::~CmscPlayer ()
 		delete [] desc;
 }
 
-
-bool 
-CmscPlayer::load (const std::string & filename, const CFileProvider & fp)
+bool CmscPlayer::load(const std::string & filename, const CFileProvider & fp)
 {
 	binistream * 	bf;
 	msc_header	hdr;
@@ -115,9 +111,7 @@ CmscPlayer::load (const std::string & filename, const CFileProvider & fp)
 	return true;	
 }
 
-
-bool 
-CmscPlayer::update ()
+bool CmscPlayer::update()
 {
 	// output data
 	while (! delay) {
@@ -156,9 +150,7 @@ CmscPlayer::update ()
 	return true;
 }
 
-
-void 
-CmscPlayer::rewind (int subsong)
+void CmscPlayer::rewind(int subsong)
 {
 	// reset state
 	dec_prefix = 0;
@@ -169,32 +161,27 @@ CmscPlayer::rewind (int subsong)
 	delay = 0;
 	
 	// init the OPL chip and go to OPL2 mode
-	opl->init (); 
-	opl->write (1, 32);
+  opl->init();
+  opl->write(1, 32);
 }
 
-
-float 
-CmscPlayer::getrefresh ()
+float CmscPlayer::getrefresh()
 {
 	// PC timer oscillator frequency / wait register
 	return 1193180 / (float) (timer_div ? timer_div : 0xffff);
 }
 
-std::string
-CmscPlayer::gettype ()
+std::string CmscPlayer::gettype()
 {
 	char vstr [40];
 	
-	snprintf (vstr, sizeof (vstr), "AdLib MSCplay (version %d)", version);
+  sprintf(vstr, "AdLib MSCplay (version %d)", version);
 	return std::string (vstr);
 }
 
-
 /*** private methods *************************************/
 
-bool 
-CmscPlayer::load_header (binistream * bf, msc_header * hdr)
+bool CmscPlayer::load_header(binistream * bf, msc_header * hdr)
 {
 	// check signature
 	bf->readString ((char *) hdr->mh_sign, sizeof (hdr->mh_sign));
@@ -213,9 +200,7 @@ CmscPlayer::load_header (binistream * bf, msc_header * hdr)
 	return true;
 }
 
-
-bool
-CmscPlayer::decode_octet (u8 * output)
+bool CmscPlayer::decode_octet(u8 * output)
 {
 	msc_block blk;			// compressed data block
 	
@@ -225,7 +210,7 @@ CmscPlayer::decode_octet (u8 * output)
 	blk = msc_data [block_num];
 	while (1) {
 		u8 	octet;		// decoded octet
-		u8	len_corr = 0;	// length correction
+    u8	len_corr;	// length correction
 		
 		// advance to next block if necessary
 		if (block_pos >= blk.mb_length && dec_len == 0) {
@@ -288,7 +273,12 @@ CmscPlayer::decode_octet (u8 * output)
 			
 		// prefix copy mode
 		case 255:
+      if((int)raw_pos >= dec_dist)
 			octet = raw_data [raw_pos - dec_dist];
+      else {
+	AdPlug_LogWrite("error! read before raw_data buffer.\n");
+	octet = 0;
+      }
 			
 			dec_len--;
 			if (dec_len == 0) {

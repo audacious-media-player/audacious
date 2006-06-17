@@ -1,3 +1,14 @@
+2006-06-17 03:55:52 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1472]
+  - libaac: use unified fileinfo requester, since functionality is adequate (cannot save data, only read it at present)
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/aac/src/Makefile.in  
+  +0 -449         trunk/Plugins/Input/aac/src/fileinfo.c  
+  +1 -1           trunk/Plugins/Input/aac/src/libmp4.c  
+
+
 2006-06-16 13:13:21 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [1470]
   - fix for alsa_mutex deadlock

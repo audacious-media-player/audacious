@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2003 Simon Peter, <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2003, 2006 Simon Peter, <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -251,7 +251,9 @@ void CxadbmfPlayer::xadplayer_update()
 	  {
         memcpy(&event, &bmf.streams[i][bmf.channel[i].stream_position], sizeof(bmf_event));
 #ifdef DEBUG
-   AdPlug_LogWrite("%02X %02X %02X %02X %02X %02X\n",event.note,event.delay,event.volume,event.instrument,event.cmd,event.cmd_data );
+   AdPlug_LogWrite("%02X %02X %02X %02X %02X %02X\n",
+		   event.note,event.delay,event.volume,event.instrument,
+		   event.cmd,event.cmd_data);
 #endif
 
         if (event.cmd == 0xFF)

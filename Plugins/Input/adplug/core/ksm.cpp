@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2003 Simon Peter, <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2006 Simon Peter, <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -50,7 +50,6 @@ bool CksmPlayer::load(const std::string &filename, const CFileProvider &fp)
   if(!fp.extension(filename, ".ksm")) {
     AdPlug_LogWrite("CksmPlayer::load(,\"%s\"): File doesn't have '.ksm' "
 		    "extension! Rejected!\n", filename.c_str());
-    delete [] fn;
     return false;
   }
   AdPlug_LogWrite("*** CksmPlayer::load(,\"%s\") ***\n", filename.c_str());
@@ -98,7 +97,7 @@ bool CksmPlayer::load(const std::string &filename, const CFileProvider &fp)
 
 bool CksmPlayer::update()
 {
-	int quanter,chan=0,drumnum=0,freq,track,volevel,volval;
+  int quanter,chan,drumnum,freq,track,volevel,volval;
 	unsigned int i,j,bufnum;
 	unsigned long temp,templong;
 
@@ -113,7 +112,10 @@ bool CksmPlayer::update()
 			if ((templong&192) == 0)
 			{
 				i = 0;
-				while (((chanfreq[i] != (templong&63)) || (chantrack[i] != ((templong>>8)&15))) && (i < numchans))
+
+	      while ((i < numchans) &&
+		     ((chanfreq[i] != (templong&63)) ||
+		      (chantrack[i] != ((templong>>8)&15))))
 					i++;
 				if (i < numchans)
 				{

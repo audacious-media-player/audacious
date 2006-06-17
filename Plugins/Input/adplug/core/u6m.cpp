@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2003 Simon Peter, <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2006 Simon Peter, <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -60,7 +60,7 @@ bool Cu6mPlayer::load(const std::string &filename, const CFileProvider &fp)
 
     // load section
     song_data = new unsigned char[decompressed_filesize];
-    unsigned char* compressed_song_data = new unsigned char[filesize-4];
+    unsigned char* compressed_song_data = new unsigned char[filesize-3];
 
     f->seek(4);
     f->readString((char *)compressed_song_data, filesize - 4);
@@ -890,6 +890,11 @@ Cu6mPlayer::MyDict::MyDict(int max_size)
     contains = 0x102;
 }
 
+
+Cu6mPlayer::MyDict::~MyDict()
+{
+  delete [] dictionary;
+}
 
 // re-initializes the dictionary
 void Cu6mPlayer::MyDict::reset()

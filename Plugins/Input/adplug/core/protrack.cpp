@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2002 Simon Peter, <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2006 Simon Peter, <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -17,16 +17,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * protrack.cpp - Generic Protracker Player
- * Copyright (C) 2000 - 2002 Simon Peter <dn.tlp@gmx.net>
  *
  * NOTES:
  * This is a generic Protracker-based formats player. It offers all Protracker
  * features, plus a good set of extensions to be compatible to other Protracker
  * derivatives. It is derived from the original SA2 player by me. If you got a
  * Protracker-like format, this is most certainly the player you want to use.
- *
- * USAGE:
- * Read the file 'Protracker.txt' in the 'doc' subdirectory.
  */
 
 #include "protrack.h"
@@ -37,11 +33,11 @@
 
 // SA2 compatible adlib note table
 const unsigned short CmodPlayer::sa2_notetable[12] =
-{340,363,385,408,432,458,485,514,544,577,611,647};
+  {340,363,385,408,432,458,485,514,544,577,611,647};
 
 // SA2 compatible vibrato rate table
 const unsigned char CmodPlayer::vibratotab[32] =
-{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1};
+  {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1};
 
 /*** public methods *************************************/
 
@@ -337,6 +333,7 @@ bool CmodPlayer::update()
 	 			if(channel[chan].vol2 > 63)
 					channel[chan].vol2 = 63;
 			}
+
 			setvolume(chan);
 			break;
 		case 18: // AMD set speed
