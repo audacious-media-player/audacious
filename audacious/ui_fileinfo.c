@@ -105,7 +105,6 @@ filepopup_entry_set_text(const char *entry, const char *text)
 	gtk_label_set_text(GTK_LABEL(widget), text);
 }
 
-#if 0
 static void
 filepopup_entry_set_text_free(const char *entry, char *text)
 {
@@ -119,7 +118,6 @@ filepopup_entry_set_text_free(const char *entry, char *text)
 
 	g_free(text);
 }
-#endif
 
 static gboolean
 filepopup_pointer_check_iter(gpointer unused)
@@ -218,9 +216,8 @@ create_filepopup_window(void)
 {
 	const gchar *glade_file = DATA_DIR "/glade/fileinfo_popup.glade";
 	GladeXML *xml;
-#if 0
 	GtkWidget *widget;
-#endif
+
 	xml = glade_xml_new_or_die(_("Track Information Popup"), glade_file, NULL, NULL);
 
 	glade_xml_signal_autoconnect(xml);
@@ -229,10 +226,8 @@ create_filepopup_window(void)
 	g_object_set_data(G_OBJECT(filepopup_win), "glade-xml", xml);
 	gtk_window_set_transient_for(GTK_WINDOW(filepopup_win), GTK_WINDOW(mainwin));
 
-#if 0
 	widget = glade_xml_get_widget(xml, "image_artwork");
 	gtk_image_set_from_file(GTK_IMAGE(widget), DATA_DIR "/images/audio.png");
-#endif
 
 	g_timeout_add(50, filepopup_pointer_check_iter, NULL);
 }
@@ -272,6 +267,14 @@ filepopup_show_for_tuple(TitleInput *tuple)
 	filepopup_entry_set_text("label_title", tuple->track_name);
 	filepopup_entry_set_text("label_artist", tuple->performer);
 	filepopup_entry_set_text("label_album", tuple->album_name);
+	filepopup_entry_set_text("label_genre", tuple->genre);
+	filepopup_entry_set_text_free("label_location", g_strdup_printf("%s/%s", tuple->file_path, tuple->file_name));
+
+	if (tuple->year != 0)
+		filepopup_entry_set_text_free("label_year", g_strdup_printf("%d", tuple->year));
+
+	if (tuple->track_number != 0)
+		filepopup_entry_set_text_free("label_track", g_strdup_printf("%d", tuple->track_number));
 
 	gtk_widget_show(filepopup_win);
 }
