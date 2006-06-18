@@ -59,7 +59,6 @@ SOURCES = \
 	playstatus.c \
 	playlist_list.c \
 	playlist_slider.c \
-	playlist_popup.c \
 	eq_graph.c \
 	eq_slider.c \
 	main.c \
