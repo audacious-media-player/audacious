@@ -1,3 +1,12 @@
+2006-06-18 07:40:44 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1482]
+  - complete fix
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/audacious/ui_fileinfo.c  
+
+
 2006-06-18 07:28:12 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1480]
   - kludge

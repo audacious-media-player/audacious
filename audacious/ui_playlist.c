@@ -727,6 +727,22 @@ playlistwin_motion(GtkWidget * widget,
 }
 
 static void
+playlistwin_enter(GtkWidget * widget,
+                   GdkEventMotion * event,
+                   gpointer callback_data)
+{
+    playlistwin_list->pl_tooltips = TRUE;
+}
+
+static void
+playlistwin_leave(GtkWidget * widget,
+                   GdkEventMotion * event,
+                   gpointer callback_data)
+{
+    playlistwin_list->pl_tooltips = FALSE;
+}
+
+static void
 playlistwin_show_filebrowser(void)
 {
     util_run_filebrowser(NO_PLAY_BUTTON);
@@ -1676,7 +1692,7 @@ playlistwin_create_window(void)
         gtk_window_move(GTK_WINDOW(playlistwin),
                         cfg.playlist_x, cfg.playlist_y);
 
-    gtk_widget_add_events(playlistwin,
+    gtk_widget_add_events(playlistwin, GDK_POINTER_MOTION_MASK |
                           GDK_FOCUS_CHANGE_MASK | GDK_BUTTON_MOTION_MASK |
                           GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
                           GDK_SCROLL_MASK | GDK_VISIBILITY_NOTIFY_MASK);
@@ -1694,6 +1710,10 @@ playlistwin_create_window(void)
                      G_CALLBACK(playlistwin_scrolled), NULL);
     g_signal_connect(playlistwin, "motion_notify_event",
                      G_CALLBACK(playlistwin_motion), NULL);
+    g_signal_connect(playlistwin, "enter_notify_event",
+                     G_CALLBACK(playlistwin_enter), NULL);
+    g_signal_connect(playlistwin, "leave_notify_event",
+                     G_CALLBACK(playlistwin_leave), NULL);
     g_signal_connect_after(playlistwin, "focus_in_event",
                            G_CALLBACK(playlistwin_focus_in), NULL);
     g_signal_connect_after(playlistwin, "focus_out_event",

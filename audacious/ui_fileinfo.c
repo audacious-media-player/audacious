@@ -128,13 +128,13 @@ filepopup_pointer_check_iter(gpointer unused)
 	TitleInput *tuple;
 	static gint prev_x = 0, prev_y = 0, ctr = 0;
 
-	gdk_window_get_pointer(playlistwin->window, &x, &y, NULL);
-
-	if (playlistwin_is_shaded() || playlistwin_shade->pb_allow_draw == FALSE)
+	if (playlistwin_list->pl_tooltips == FALSE)
 	{
 		ctr = 0;
 		return TRUE;
 	}
+
+	gdk_window_get_pointer(playlistwin->window, &x, &y, NULL);
 
 	if (prev_x == x && prev_y == y)
 		ctr++;

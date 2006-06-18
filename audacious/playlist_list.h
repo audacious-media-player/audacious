@@ -37,6 +37,7 @@ struct _PlayList_List {
     gint pl_auto_drag_up_tag, pl_auto_drag_down_tag;
     gboolean pl_drag_motion;
     gint drag_motion_x, drag_motion_y;
+    gboolean pl_tooltips;
 };
 
 typedef struct _PlayList_List PlayList_List;
