@@ -1,3 +1,12 @@
+2006-06-18 09:08:13 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1492]
+  - fix several difftables (fixes via me)
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/mpg123/layer3.c  
+
+
 2006-06-18 09:00:00 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1490]
   - ISO spec says we should use 330 not 332 in the 19th bandInfo slot (fix via flump3dec)
