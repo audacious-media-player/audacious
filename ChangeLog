@@ -1,3 +1,12 @@
+2006-06-18 09:58:34 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1500]
+  - that didn't work to plan
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/mpg123/layer3.c  
+
+
 2006-06-18 09:55:11 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1498]
   - this should be the last set of math corrections
