@@ -1,3 +1,12 @@
+2006-06-18 09:47:03 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1496]
+  - entirely unwire tooltips if the playlist is shaded
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/audacious/ui_fileinfo.c  
+
+
 2006-06-18 09:45:57 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1494]
   - more difftable corrections
