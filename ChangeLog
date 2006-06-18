@@ -1,3 +1,16 @@
+2006-06-18 03:30:31 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1478]
+  - when hovering over a playlist tuple, describe the tuple via a tooltip-like popup
+  
+
+  Changes:        Modified:
+  +1 -0           trunk/audacious/glade/Makefile  
+  +202 -0         trunk/audacious/glade/fileinfo_popup.glade  
+  +1 -0           trunk/audacious/main.c  
+  +119 -0         trunk/audacious/ui_fileinfo.c  
+  +4 -0           trunk/audacious/ui_fileinfo.h  
+
+
 2006-06-17 23:17:51 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1474]
   Sync with upstream. This adds Westwood ADL format support.

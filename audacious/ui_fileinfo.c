@@ -62,6 +62,7 @@
 #include "playlist_list.h"
 #include "build_stamp.h"
 #include "ui_fileinfo.h"
+#include "ui_playlist.h"
 
 GtkWidget *fileinfo_win;
 GtkWidget *filepopup_win;
@@ -128,6 +129,12 @@ filepopup_pointer_check_iter(gpointer unused)
 	static gint prev_x = 0, prev_y = 0, ctr = 0;
 
 	gdk_window_get_pointer(playlistwin->window, &x, &y, NULL);
+
+	if (playlistwin_is_shaded())
+	{
+		ctr = 0;
+		return TRUE;
+	}
 
 	if (prev_x == x && prev_y == y)
 		ctr++;
