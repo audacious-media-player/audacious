@@ -1,3 +1,13 @@
+2006-06-18 07:28:12 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1480]
+  - kludge
+  
+
+  Changes:        Modified:
+  +7 -0           trunk/audacious/ui_fileinfo.c  
+  +1 -0           trunk/audacious/ui_playlist.h  
+
+
 2006-06-18 03:30:31 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1478]
   - when hovering over a playlist tuple, describe the tuple via a tooltip-like popup

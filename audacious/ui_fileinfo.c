@@ -130,7 +130,7 @@ filepopup_pointer_check_iter(gpointer unused)
 
 	gdk_window_get_pointer(playlistwin->window, &x, &y, NULL);
 
-	if (playlistwin_is_shaded())
+	if (playlistwin_is_shaded() || playlistwin_shade->pb_allow_draw == FALSE)
 	{
 		ctr = 0;
 		return TRUE;
