@@ -126,7 +126,7 @@ filepopup_pointer_check_iter(gpointer unused)
 	TitleInput *tuple;
 	static gint prev_x = 0, prev_y = 0, ctr = 0;
 
-	if (playlistwin_list->pl_tooltips == FALSE)
+	if (playlistwin_is_shaded() || playlistwin_list->pl_tooltips == FALSE)
 	{
 		ctr = 0;
 		return TRUE;
