@@ -50,7 +50,6 @@
 #include "playlist.h"
 #include "playlist_list.h"
 #include "playlist_slider.h"
-#include "playlist_popup.h"
 #include "pbutton.h"
 #include "sbutton.h"
 #include "skin.h"
@@ -597,7 +596,6 @@ playlistwin_release(GtkWidget * widget,
     else
     {
        handle_release_cb(playlistwin_wlist, widget, event);
-       playlist_popup_destroy();
        draw_playlist_window(FALSE);
     }
 }

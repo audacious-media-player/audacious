@@ -1,3 +1,25 @@
+2006-06-17 23:17:51 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1474]
+  Sync with upstream. This adds Westwood ADL format support.
+
+  Changes:        Modified:
+  +3 -2           trunk/Plugins/Input/adplug/core/Makefile.in  
+  +2422 -0        trunk/Plugins/Input/adplug/core/adl.cpp  
+  +79 -0          trunk/Plugins/Input/adplug/core/adl.h  
+  +2 -0           trunk/Plugins/Input/adplug/core/adplug.cpp  
+  +7 -3           trunk/Plugins/Input/adplug/core/amd.cpp  
+  +4 -2           trunk/Plugins/Input/adplug/core/bmf.cpp  
+  +422 -411       trunk/Plugins/Input/adplug/core/d00.cpp  
+  +4 -4           trunk/Plugins/Input/adplug/core/d00.h  
+  +6 -4           trunk/Plugins/Input/adplug/core/ksm.cpp  
+  +22 -32         trunk/Plugins/Input/adplug/core/msc.cpp  
+  +4 -7           trunk/Plugins/Input/adplug/core/protrack.cpp  
+  +58 -80         trunk/Plugins/Input/adplug/core/rix.cpp  
+  +3 -7           trunk/Plugins/Input/adplug/core/rix.h  
+  +7 -2           trunk/Plugins/Input/adplug/core/u6m.cpp  
+  +2 -2           trunk/Plugins/Input/adplug/core/u6m.h  
+
+
 2006-06-17 03:55:52 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1472]
   - libaac: use unified fileinfo requester, since functionality is adequate (cannot save data, only read it at present)
