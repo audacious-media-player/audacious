@@ -1077,6 +1077,7 @@ main(gint argc, gchar ** argv)
         create_prefs_window();
 
 	create_fileinfo_window();
+	create_filepopup_window();
 
         if (cfg.player_visible)
             mainwin_show(TRUE);
