@@ -1,3 +1,12 @@
+2006-06-19 06:58:36 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1524]
+  - not sure what all of that cur_dir stuff was, but I think somebody was smoking crack
+  
+
+  Changes:        Modified:
+  +30 -40         trunk/audacious/ui_fileinfo.c  
+
+
 2006-06-19 06:53:16 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1522]
   - fix tuple building for FLAC files

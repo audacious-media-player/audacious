@@ -235,6 +235,8 @@ void fileinfo_hide(gpointer unused)
 	fileinfo_entry_set_text("entry_year", "");
 	fileinfo_entry_set_text("entry_track", "");
 	fileinfo_entry_set_text("entry_location", "");
+
+	fileinfo_entry_set_image("image_artwork", DATA_DIR "/images/audio.png");
 }
 
 void filepopup_hide(gpointer unused)
@@ -248,6 +250,8 @@ void filepopup_hide(gpointer unused)
 	filepopup_entry_set_text("label_track", "");
 	filepopup_entry_set_text("label_year", "");
 	filepopup_entry_set_text("label_length", "");
+
+	filepopup_entry_set_image("image_artwork", DATA_DIR "/images/audio.png");
 
 	gtk_window_resize(GTK_WINDOW(filepopup_win), 1, 1);
 }
