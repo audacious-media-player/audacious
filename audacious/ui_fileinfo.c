@@ -324,7 +324,7 @@ fileinfo_show_for_tuple(TitleInput *tuple)
 		while(f)
 		{
 			/* ok. why did I not have strcasestr, thought glib had that one */
-			if (strstr(f,".jpg") || strstr(f,".jpeg") || strstr(f,".png") || strstr(f,".JPG") || strstr(f,".JPEG") || strstr(f,".PNG"))
+			if ((strstr(f,".jpg") || strstr(f,".jpeg") || strstr(f,".png") || strstr(f,".JPG") || strstr(f,".JPEG") || strstr(f,".PNG")) && !strstr(f,"back") && !strstr(f,"Back") && !strstr(f,"BACK")==-1)
 			{
 				tmp = g_strdup_printf("%s/%s", tuple->file_path, f);
 				fileinfo_entry_set_image("image_artwork", tmp);
@@ -374,7 +374,7 @@ filepopup_show_for_tuple(TitleInput *tuple)
 		while(f)
 		{
 			/* ok. why did I not have strcasestr, thought glib had that one */
-			if (strstr(f,".jpg") || strstr(f,".jpeg") || strstr(f,".png") || strstr(f,".JPG") || strstr(f,".JPEG") || strstr(f,".PNG"))
+			if ((strstr(f,".jpg") || strstr(f,".jpeg") || strstr(f,".png") || strstr(f,".JPG") || strstr(f,".JPEG") || strstr(f,".PNG")) && !strstr(f,"back") && !strstr(f,"Back") && !strstr(f,"BACK")==-1)
 			{
 				tmp = g_strdup_printf("%s/%s", tuple->file_path, f);
 				filepopup_entry_set_image("image_artwork", tmp);

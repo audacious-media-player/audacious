@@ -1,3 +1,12 @@
+2006-06-19 21:06:54 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1536]
+  - solve the blink issue
+  
+
+  Changes:        Modified:
+  +8 -7           trunk/audacious/ui_fileinfo.c  
+
+
 2006-06-19 17:52:13 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1534]
   RMI support for timidity by nemo, for which he would like to credit giacomos amidi-plug detection code.
