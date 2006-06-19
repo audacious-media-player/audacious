@@ -101,11 +101,24 @@ fileinfo_entry_set_image(const char *entry, const char *text)
 {
 	GladeXML *xml = g_object_get_data(G_OBJECT(fileinfo_win), "glade-xml");
 	GtkWidget *widget = glade_xml_get_widget(xml, entry);
+	GdkPixbuf *pixbuf;
 
 	if (xml == NULL || widget == NULL)
 		return;
 
-	gtk_image_set_from_file(GTK_IMAGE(widget), text);
+	pixbuf = gdk_pixbuf_new_from_file(text, NULL);
+
+	if (pixbuf == NULL)
+		return;
+
+	if (gdk_pixbuf_get_height(GDK_PIXBUF(pixbuf)) > 150)
+	{
+		GdkPixbuf *pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), 150, 150, GDK_INTERP_BILINEAR);
+		g_object_unref(G_OBJECT(pixbuf));
+		pixbuf = pixbuf2;
+	}
+
+	gtk_image_set_from_pixbuf(GTK_IMAGE(widget), GDK_PIXBUF(pixbuf));
 }
 
 static void
@@ -125,11 +138,24 @@ filepopup_entry_set_image(const char *entry, const char *text)
 {
 	GladeXML *xml = g_object_get_data(G_OBJECT(filepopup_win), "glade-xml");
 	GtkWidget *widget = glade_xml_get_widget(xml, entry);
+	GdkPixbuf *pixbuf;
 
 	if (xml == NULL || widget == NULL)
 		return;
 
-	gtk_image_set_from_file(GTK_IMAGE(widget), text);
+	pixbuf = gdk_pixbuf_new_from_file(text, NULL);
+
+	if (pixbuf == NULL)
+		return;
+
+	if (gdk_pixbuf_get_height(GDK_PIXBUF(pixbuf)) > 150)
+	{
+		GdkPixbuf *pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), 150, 150, GDK_INTERP_BILINEAR);
+		g_object_unref(G_OBJECT(pixbuf));
+		pixbuf = pixbuf2;
+	}
+
+	gtk_image_set_from_pixbuf(GTK_IMAGE(widget), GDK_PIXBUF(pixbuf));
 }
 
 static void

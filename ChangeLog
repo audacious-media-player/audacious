@@ -1,3 +1,12 @@
+2006-06-19 04:52:46 +0000  Derek Pomery <nemo@m8y.org>
+  revision [1508]
+  nitpicks, whee! just so I can see the popup when snapped against screen edge.
+  
+
+  Changes:        Modified:
+  +5 -2           trunk/audacious/ui_fileinfo.c  
+
+
 2006-06-19 04:45:20 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1506]
   - la la la, resize
