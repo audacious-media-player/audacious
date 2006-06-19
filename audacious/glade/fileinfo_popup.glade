@@ -61,7 +61,7 @@
 	  <property name="column_spacing">6</property>
 
 	  <child>
-	    <widget class="GtkLabel" id="label1">
+	    <widget class="GtkLabel" id="d_label_title">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">&lt;i&gt;Title&lt;/i&gt;</property>
 	      <property name="use_underline">False</property>
@@ -89,7 +89,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkLabel" id="label2">
+	    <widget class="GtkLabel" id="d_label_artist">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">&lt;i&gt;Artist&lt;/i&gt;</property>
 	      <property name="use_underline">False</property>
@@ -117,7 +117,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkLabel" id="label3">
+	    <widget class="GtkLabel" id="d_label_album">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">&lt;i&gt;Album&lt;/i&gt;</property>
 	      <property name="use_underline">False</property>
@@ -229,7 +229,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkLabel" id="label4">
+	    <widget class="GtkLabel" id="d_label_genre">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">&lt;i&gt;Genre&lt;/i&gt;</property>
 	      <property name="use_underline">False</property>
@@ -285,7 +285,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkLabel" id="label6">
+	    <widget class="GtkLabel" id="d_label_year">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">&lt;i&gt;Year&lt;/i&gt;</property>
 	      <property name="use_underline">False</property>
@@ -313,7 +313,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkLabel" id="label7">
+	    <widget class="GtkLabel" id="d_label_track">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">&lt;i&gt;Track Number&lt;/i&gt;</property>
 	      <property name="use_underline">False</property>
@@ -341,7 +341,7 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkLabel" id="label8">
+	    <widget class="GtkLabel" id="d_label_length">
 	      <property name="visible">True</property>
 	      <property name="label" translatable="yes">&lt;i&gt;Track Length&lt;/i&gt;</property>
 	      <property name="use_underline">False</property>
