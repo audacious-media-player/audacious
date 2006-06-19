@@ -1,3 +1,12 @@
+2006-06-19 09:29:23 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1532]
+  - title streaming works again, but we aren't pushing back to the playlist quite yet
+  
+
+  Changes:        Modified:
+  +65 -50         trunk/Plugins/Input/vorbis/vorbis.c  
+
+
 2006-06-19 08:51:01 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1530]
   - if tuple->length == -1 then don't show a length

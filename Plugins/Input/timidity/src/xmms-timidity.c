@@ -238,18 +238,38 @@ void xmmstimid_conf_ok(GtkButton *button, gpointer user_data) {
 	gtk_widget_hide(xmmstimid_conf_wnd);
 }
 
-int xmmstimid_is_our_file(char *filename) {
-	VFSFile *file;
-	gchar magic[4];
-	if ((file = vfs_fopen(filename, "rb"))) {
-		vfs_fread(magic, 1, 4, file);
-		if (!strncmp(magic, "MThd", 4)) {
-			vfs_fclose(file);
-			return 1;
-		}
-		vfs_fclose(file);
-        }
-	return 0;
+static gint xmmstimid_is_our_file( gchar * filename )
+{
+    VFSFile * fp;
+    gchar magic_bytes[4];
+
+    fp = vfs_fopen( filename , "rb" );
+
+    if (fp == NULL)
+	return FALSE;
+
+    vfs_fread( magic_bytes , 1 , 4 , fp );
+
+    if ( !strncmp( magic_bytes , "MThd" , 4 ) )
+    {
+      vfs_fclose( fp );
+      return TRUE;
+    }
+
+    if ( !strncmp( magic_bytes , "RIFF" , 4 ) )
+    {
+      /* skip the four bytes after RIFF,
+         then read the next four */
+      vfs_fseek( fp , 4 , SEEK_CUR );
+      vfs_fread( magic_bytes , 1 , 4 , fp );
+      if ( !strncmp( magic_bytes , "RMID" , 4 ) )
+      {
+        vfs_fclose( fp );
+        return TRUE;
+      }
+    }
+    vfs_fclose( fp );
+  return FALSE;
 }
 
 static void *xmmstimid_play_loop(void *arg) {

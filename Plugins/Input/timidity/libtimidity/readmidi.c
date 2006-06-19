@@ -519,7 +519,32 @@ MidEvent *read_midi_file(MidIStream *stream, MidSong *song, sint32 *count, sint3
       return 0;
     }
   len=SWAPBE32(len);
-  if (memcmp(tmp, "MThd", 4) || len < 6)
+  if (strncmp(tmp, "MThd", 4) != 0)
+    {
+      if ( !strncmp( tmp , "RIFF" , 4 ) )
+        {
+          mid_istream_read(stream, tmp, 1, 4);
+          if ( strncmp( tmp , "RMID" , 4 ) != 0)
+            {
+              DEBUG_MSG("Not a MIDI file!\n");
+              return 0;
+            }
+          else
+            {
+              mid_istream_read(stream, tmp, 1, 4);
+              mid_istream_read(stream, tmp, 1, 4);
+              mid_istream_read(stream, tmp, 1, 4);
+              mid_istream_read(stream, &len, 4, 1);
+              len=SWAPBE32(len);
+            }
+        }
+        else
+        {
+          DEBUG_MSG("Not a MIDI file!\n");
+          return 0;
+        }
+    }
+  if (len < 6)
     {
       DEBUG_MSG("Not a MIDI file!\n");
       return 0;
