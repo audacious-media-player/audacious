@@ -1,3 +1,12 @@
+2006-06-19 08:51:01 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1530]
+  - if tuple->length == -1 then don't show a length
+  
+
+  Changes:        Modified:
+  +3 -1           trunk/audacious/ui_fileinfo.c  
+
+
 2006-06-19 08:33:30 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1528]
   - give the labels on the left proper identifiers
