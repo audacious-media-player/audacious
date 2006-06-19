@@ -1,3 +1,12 @@
+2006-06-19 04:35:32 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1504]
+  - initial album art support
+  
+
+  Changes:        Modified:
+  +58 -0          trunk/audacious/ui_fileinfo.c  
+
+
 2006-06-18 10:03:40 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1502]
   - roll back difftable changes (apparently we had them mathematically wrong for a reason)
