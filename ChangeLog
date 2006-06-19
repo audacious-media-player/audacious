@@ -1,3 +1,12 @@
+2006-06-19 08:33:30 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1528]
+  - give the labels on the left proper identifiers
+  
+
+  Changes:        Modified:
+  +7 -7           trunk/audacious/glade/fileinfo_popup.glade  
+
+
 2006-06-19 08:00:51 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1526]
   - reset the album art back to the default icon

@@ -362,7 +362,9 @@ filepopup_show_for_tuple(TitleInput *tuple)
 	filepopup_entry_set_text("label_artist", tuple->performer);
 	filepopup_entry_set_text("label_album", tuple->album_name);
 	filepopup_entry_set_text("label_genre", tuple->genre);
-	filepopup_entry_set_text_free("label_length", g_strdup_printf("%d:%02d", tuple->length / 60000, (tuple->length / 1000) % 60));
+
+	if (tuple->length != -1)
+		filepopup_entry_set_text_free("label_length", g_strdup_printf("%d:%02d", tuple->length / 60000, (tuple->length / 1000) % 60));
 
 	if (tuple->year != 0)
 		filepopup_entry_set_text_free("label_year", g_strdup_printf("%d", tuple->year));
