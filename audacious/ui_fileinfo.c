@@ -178,6 +178,7 @@ filepopup_pointer_check_iter(gpointer unused)
 	gint x, y, x_off = 3, y_off = 3, h, w, pos;
 	TitleInput *tuple;
 	static gint prev_x = 0, prev_y = 0, ctr = 0;
+	gboolean skip = FALSE;
 
 	if (playlistwin_is_shaded() || playlistwin_list->pl_tooltips == FALSE)
 	{
@@ -198,7 +199,10 @@ filepopup_pointer_check_iter(gpointer unused)
 		return TRUE;
 	}
 
-        if (ctr >= 20)
+	if (filepopup_win->window == NULL)
+		skip = TRUE;
+
+        if (ctr >= 20 && (skip == TRUE || gdk_window_is_viewable(GDK_WINDOW(filepopup_win->window)) != TRUE))
         {
 		pos = playlist_list_get_playlist_position(playlistwin_list, x, y);
 

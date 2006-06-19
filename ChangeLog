@@ -1,3 +1,12 @@
+2006-06-19 05:14:56 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1510]
+  - downsize images larger than 150px
+  
+
+  Changes:        Modified:
+  +28 -2          trunk/audacious/ui_fileinfo.c  
+
+
 2006-06-19 04:52:46 +0000  Derek Pomery <nemo@m8y.org>
   revision [1508]
   nitpicks, whee! just so I can see the popup when snapped against screen edge.
