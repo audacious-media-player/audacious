@@ -149,7 +149,7 @@ filepopup_entry_set_text_free(const char *entry, char *text)
 static gboolean
 filepopup_pointer_check_iter(gpointer unused)
 {
-	gint x, y, pos;
+	gint x, y, x_off = 3, y_off = 3, h, w, pos;
 	TitleInput *tuple;
 	static gint prev_x = 0, prev_y = 0, ctr = 0;
 
@@ -186,7 +186,10 @@ filepopup_pointer_check_iter(gpointer unused)
 
 		gdk_window_get_pointer(NULL, &x, &y, NULL);
 		filepopup_show_for_tuple(tuple);
-		gtk_window_move(GTK_WINDOW(filepopup_win), x + 3, y + 3);
+		gtk_window_get_size(GTK_WINDOW(filepopup_win), &w, &h);
+		if (gdk_screen_width()-(w+3) < x) x_off = (w*-1)-3;
+		if (gdk_screen_height()-(h+3) < y) y_off = (h*-1)-3;
+		gtk_window_move(GTK_WINDOW(filepopup_win), x + x_off, y + y_off);
 	}
 
 	return TRUE;
