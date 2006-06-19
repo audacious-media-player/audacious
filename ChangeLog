@@ -1,3 +1,12 @@
+2006-06-18 10:03:40 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1502]
+  - roll back difftable changes (apparently we had them mathematically wrong for a reason)
+  
+
+  Changes:        Modified:
+  +3 -2           trunk/Plugins/Input/mpg123/layer3.c  
+
+
 2006-06-18 09:58:34 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1500]
   - that didn't work to plan

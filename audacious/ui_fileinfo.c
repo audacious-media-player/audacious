@@ -67,6 +67,9 @@
 GtkWidget *fileinfo_win;
 GtkWidget *filepopup_win;
 
+/* XXX: possible cover names, we need a better solution than this */
+static gchar *artwork_fn[] = { "cover.jpg", "Cover.jpg", "cover.JPG", "Cover.JPG", NULL };
+
 static void
 fileinfo_entry_set_text(const char *entry, const char *text)
 {
@@ -94,6 +97,18 @@ fileinfo_entry_set_text_free(const char *entry, char *text)
 }
 
 static void
+fileinfo_entry_set_image(const char *entry, const char *text)
+{
+	GladeXML *xml = g_object_get_data(G_OBJECT(fileinfo_win), "glade-xml");
+	GtkWidget *widget = glade_xml_get_widget(xml, entry);
+
+	if (xml == NULL || widget == NULL)
+		return;
+
+	gtk_image_set_from_file(GTK_IMAGE(widget), text);
+}
+
+static void
 filepopup_entry_set_text(const char *entry, const char *text)
 {
 	GladeXML *xml = g_object_get_data(G_OBJECT(filepopup_win), "glade-xml");
@@ -103,6 +118,18 @@ filepopup_entry_set_text(const char *entry, const char *text)
 		return;
 
 	gtk_label_set_text(GTK_LABEL(widget), text);
+}
+
+static void
+filepopup_entry_set_image(const char *entry, const char *text)
+{
+	GladeXML *xml = g_object_get_data(G_OBJECT(filepopup_win), "glade-xml");
+	GtkWidget *widget = glade_xml_get_widget(xml, entry);
+
+	if (xml == NULL || widget == NULL)
+		return;
+
+	gtk_image_set_from_file(GTK_IMAGE(widget), text);
 }
 
 static void
@@ -187,6 +214,11 @@ void filepopup_hide(gpointer unused)
 	filepopup_entry_set_text("label_title", "");
 	filepopup_entry_set_text("label_artist", "");
 	filepopup_entry_set_text("label_album", "");
+	filepopup_entry_set_text("label_genre", "");
+	filepopup_entry_set_text("label_track", "");
+	filepopup_entry_set_text("label_year", "");
+	filepopup_entry_set_text("label_length", "");
+	filepopup_entry_set_image("image_artwork", DATA_DIR "/images/audio.png");
 }
 
 void
@@ -235,6 +267,9 @@ create_filepopup_window(void)
 void
 fileinfo_show_for_tuple(TitleInput *tuple)
 {
+	gchar *tmp;
+	gint i;
+
 	if (tuple == NULL)
 		return;
 
@@ -253,12 +288,25 @@ fileinfo_show_for_tuple(TitleInput *tuple)
 	if (tuple->track_number != 0)
 		fileinfo_entry_set_text_free("entry_track", g_strdup_printf("%d", tuple->track_number));
 
+	for (i = 0; artwork_fn[i] != NULL; i++)
+	{
+		tmp = g_strdup_printf("%s/%s", tuple->file_path, artwork_fn[i]);
+
+		if (g_file_test(tmp, G_FILE_TEST_EXISTS))
+			fileinfo_entry_set_image("image_artwork", tmp);
+
+		g_free(tmp);
+	}
+
 	gtk_widget_show(fileinfo_win);
 }
 
 void
 filepopup_show_for_tuple(TitleInput *tuple)
 {
+	gchar *tmp;
+	gint i;
+
 	if (tuple == NULL)
 		return;
 
@@ -275,6 +323,16 @@ filepopup_show_for_tuple(TitleInput *tuple)
 
 	if (tuple->track_number != 0)
 		filepopup_entry_set_text_free("label_track", g_strdup_printf("%d", tuple->track_number));
+
+	for (i = 0; artwork_fn[i] != NULL; i++)
+	{
+		tmp = g_strdup_printf("%s/%s", tuple->file_path, artwork_fn[i]);
+
+		if (g_file_test(tmp, G_FILE_TEST_EXISTS))
+			filepopup_entry_set_image("image_artwork", tmp);
+
+		g_free(tmp);
+	}
 
 	gtk_widget_show(filepopup_win);
 }
