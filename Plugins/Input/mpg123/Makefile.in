@@ -13,7 +13,7 @@ SOURCES = mpg123.c configure.c fileinfo.c common.c \
 
 OBJECTS = ${SOURCES:.c=.o} tag_c_hacked.o
 
-CFLAGS += -DPSYCHO -fPIC -DPIC $(GTK_CFLAGS) $(TAGLIB_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..
+CFLAGS += -UPSYCHO -fPIC -DPIC $(GTK_CFLAGS) $(TAGLIB_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..
 
 CXXFLAGS = $(CFLAGS)
 

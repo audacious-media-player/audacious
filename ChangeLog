@@ -1,3 +1,12 @@
+2006-06-19 05:28:47 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1512]
+  - don't call filepopup_show_for_tuple() more than once
+  
+
+  Changes:        Modified:
+  +5 -1           trunk/audacious/ui_fileinfo.c  
+
+
 2006-06-19 05:14:56 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1510]
   - downsize images larger than 150px
