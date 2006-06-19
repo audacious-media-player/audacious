@@ -67,7 +67,6 @@
 GtkWidget *fileinfo_win;
 GtkWidget *filepopup_win;
 
-void *p;  /* not as useful now that check on popup window is done */
 gchar *cur_dir;  /* only one album image per directory, no need to look again */
 
 static void
@@ -361,12 +360,6 @@ filepopup_show_for_tuple(TitleInput *tuple)
 
 	gtk_widget_realize(filepopup_win);
 
-	if (p == tuple)
-	{
-		gtk_widget_show(filepopup_win);
-		return;
-	}
-
 	filepopup_entry_set_text("label_title", tuple->track_name);
 	filepopup_entry_set_text("label_artist", tuple->performer);
 	filepopup_entry_set_text("label_album", tuple->album_name);
@@ -405,7 +398,6 @@ filepopup_show_for_tuple(TitleInput *tuple)
 	}
 
 	gtk_widget_show(filepopup_win);
-	p = tuple;
 }
 
 void
