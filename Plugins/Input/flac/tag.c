@@ -117,7 +117,7 @@ TitleInput *flac_get_tuple(char *filename)
 	input->comment = local__getstr(description);
 
 	input->file_name = g_path_get_basename(filename_proxy);
-	input->file_path = filename_proxy;
+	input->file_path = g_path_get_dirname(filename_proxy);
 	input->file_ext = local__extname(filename_proxy);
 
         FLAC__metadata_get_streaminfo(filename, &info);

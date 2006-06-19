@@ -1,3 +1,12 @@
+2006-06-19 06:26:41 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1520]
+  - this p == tuple check really fucks things up if you move back to the previous tuple after the popup has gone away
+  
+
+  Changes:        Modified:
+  +0 -8           trunk/audacious/ui_fileinfo.c  
+
+
 2006-06-19 06:19:46 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1518]
   - nemo's patch applied to fileinfo
