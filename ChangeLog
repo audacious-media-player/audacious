@@ -1,3 +1,12 @@
+2006-06-19 06:53:16 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1522]
+  - fix tuple building for FLAC files
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/flac/tag.c  
+
+
 2006-06-19 06:26:41 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1520]
   - this p == tuple check really fucks things up if you move back to the previous tuple after the popup has gone away

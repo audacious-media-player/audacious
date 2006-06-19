@@ -67,8 +67,6 @@
 GtkWidget *fileinfo_win;
 GtkWidget *filepopup_win;
 
-gchar *cur_dir;  /* only one album image per directory, no need to look again */
-
 static void
 fileinfo_entry_set_text(const char *entry, const char *text)
 {
@@ -321,29 +319,25 @@ fileinfo_show_for_tuple(TitleInput *tuple)
 	if (tuple->track_number != 0)
 		fileinfo_entry_set_text_free("entry_track", g_strdup_printf("%d", tuple->track_number));
 
-	if (!cur_dir || strcmp(cur_dir,tuple->file_path) != 0)
+	d = g_dir_open(tuple->file_path, 0, NULL);
+	if (d)
 	{	
-		cur_dir = tuple->file_path;
-		d = g_dir_open(cur_dir,0,NULL);
-		if (d)
-		{	
-			const gchar *f = g_dir_read_name(d);
-			while(f)
+		const gchar *f = g_dir_read_name(d);
+		while(f)
+		{
+			/* ok. why did I not have strcasestr, thought glib had that one */
+			if (strstr(f,".jpg") || strstr(f,".jpeg") || strstr(f,".png") || strstr(f,".JPG") || strstr(f,".JPEG") || strstr(f,".PNG"))
 			{
-				/* ok. why did I not have strcasestr, thought glib had that one */
-				if (strstr(f,".jpg") || strstr(f,".jpeg") || strstr(f,".png") || strstr(f,".JPG") || strstr(f,".JPEG") || strstr(f,".PNG"))
-				{
-					tmp = g_strdup_printf("%s/%s", cur_dir, f);
-					fileinfo_entry_set_image("image_artwork", tmp);
-					f = NULL;
-				}
-				else
-				{
-					f = g_dir_read_name(d);
-				}
+				tmp = g_strdup_printf("%s/%s", tuple->file_path, f);
+				fileinfo_entry_set_image("image_artwork", tmp);
+				f = NULL;
 			}
-			g_dir_close(d);
+			else
+			{
+				f = g_dir_read_name(d);
+			}
 		}
+		g_dir_close(d);
 	}
 
 	gtk_widget_show(fileinfo_win);
@@ -372,29 +366,25 @@ filepopup_show_for_tuple(TitleInput *tuple)
 	if (tuple->track_number != 0)
 		filepopup_entry_set_text_free("label_track", g_strdup_printf("%d", tuple->track_number));
 
-	if (!cur_dir || strcmp(cur_dir,tuple->file_path)!=0)
+	d = g_dir_open(tuple->file_path, 0, NULL);
+	if (d)
 	{	
-		cur_dir = tuple->file_path;
-		d = g_dir_open(cur_dir,0,NULL);
-		if (d)
-		{	
-			const gchar *f = g_dir_read_name(d);
-			while(f)
+		const gchar *f = g_dir_read_name(d);
+		while(f)
+		{
+			/* ok. why did I not have strcasestr, thought glib had that one */
+			if (strstr(f,".jpg") || strstr(f,".jpeg") || strstr(f,".png") || strstr(f,".JPG") || strstr(f,".JPEG") || strstr(f,".PNG"))
 			{
-				/* ok. why did I not have strcasestr, thought glib had that one */
-				if (strstr(f,".jpg") || strstr(f,".jpeg") || strstr(f,".png") || strstr(f,".JPG") || strstr(f,".JPEG") || strstr(f,".PNG"))
-				{
-					tmp = g_strdup_printf("%s/%s", cur_dir, f);
-					filepopup_entry_set_image("image_artwork", tmp);
-					f = NULL;
-				}
-				else
-				{
-					f = g_dir_read_name(d);
-				}
+				tmp = g_strdup_printf("%s/%s", tuple->file_path, f);
+				filepopup_entry_set_image("image_artwork", tmp);
+				f = NULL;
 			}
-			g_dir_close(d);
+			else
+			{
+				f = g_dir_read_name(d);
+			}
 		}
+		g_dir_close(d);
 	}
 
 	gtk_widget_show(filepopup_win);
