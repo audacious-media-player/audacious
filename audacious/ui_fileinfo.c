@@ -70,9 +70,6 @@ GtkWidget *filepopup_win;
 void *p;  /* not as useful now that check on popup window is done */
 gchar *cur_dir;  /* only one album image per directory, no need to look again */
 
-/* XXX: possible cover names, we need a better solution than this */
-static gchar *artwork_fn[] = { "cover.jpg", "Cover.jpg", "cover.JPG", "Cover.JPG", NULL };
-
 static void
 fileinfo_entry_set_text(const char *entry, const char *text)
 {
@@ -305,7 +302,7 @@ void
 fileinfo_show_for_tuple(TitleInput *tuple)
 {
 	gchar *tmp;
-	gint i;
+	GDir *d;
 
 	if (tuple == NULL)
 		return;
@@ -325,14 +322,29 @@ fileinfo_show_for_tuple(TitleInput *tuple)
 	if (tuple->track_number != 0)
 		fileinfo_entry_set_text_free("entry_track", g_strdup_printf("%d", tuple->track_number));
 
-	for (i = 0; artwork_fn[i] != NULL; i++)
-	{
-		tmp = g_strdup_printf("%s/%s", tuple->file_path, artwork_fn[i]);
-
-		if (g_file_test(tmp, G_FILE_TEST_EXISTS))
-			fileinfo_entry_set_image("image_artwork", tmp);
-
-		g_free(tmp);
+	if (!cur_dir || strcmp(cur_dir,tuple->file_path) != 0)
+	{	
+		cur_dir = tuple->file_path;
+		d = g_dir_open(cur_dir,0,NULL);
+		if (d)
+		{	
+			const gchar *f = g_dir_read_name(d);
+			while(f)
+			{
+				/* ok. why did I not have strcasestr, thought glib had that one */
+				if (strstr(f,".jpg") || strstr(f,".jpeg") || strstr(f,".png") || strstr(f,".JPG") || strstr(f,".JPEG") || strstr(f,".PNG"))
+				{
+					tmp = g_strdup_printf("%s/%s", cur_dir, f);
+					fileinfo_entry_set_image("image_artwork", tmp);
+					f = NULL;
+				}
+				else
+				{
+					f = g_dir_read_name(d);
+				}
+			}
+			g_dir_close(d);
+		}
 	}
 
 	gtk_widget_show(fileinfo_win);

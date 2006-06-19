@@ -1,3 +1,12 @@
+2006-06-19 06:06:45 +0000  Derek Pomery <nemo@m8y.org>
+  revision [1516]
+  fetch first jpeg/png in directory, hopefully is album image.. merged again, still needs fileinfo, maybe, and undoubtedly tweaking.  but bedtime dammit.
+  
+
+  Changes:        Modified:
+  +34 -10         trunk/audacious/ui_fileinfo.c  
+
+
 2006-06-19 05:36:26 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1514]
   - disable the psychoaccoustic modeller as it is too screwy right now, and I don't wish to fix it at this point
