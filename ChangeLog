@@ -1,3 +1,12 @@
+2006-06-19 05:36:26 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1514]
+  - disable the psychoaccoustic modeller as it is too screwy right now, and I don't wish to fix it at this point
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/mpg123/Makefile.in  
+
+
 2006-06-19 05:28:47 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1512]
   - don't call filepopup_show_for_tuple() more than once
