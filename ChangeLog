@@ -1,3 +1,12 @@
+2006-06-19 17:52:13 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1534]
+  RMI support for timidity by nemo, for which he would like to credit giacomos amidi-plug detection code.
+
+  Changes:        Modified:
+  +26 -1          trunk/Plugins/Input/timidity/libtimidity/readmidi.c  
+  +32 -12         trunk/Plugins/Input/timidity/src/xmms-timidity.c  
+
+
 2006-06-19 09:29:23 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1532]
   - title streaming works again, but we aren't pushing back to the playlist quite yet
