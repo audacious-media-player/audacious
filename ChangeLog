@@ -1,3 +1,12 @@
+2006-06-20 06:00:03 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1542]
+  - chase encoding patch removal
+  
+
+  Changes:        Modified:
+  +0 -51          trunk/Plugins/Input/mpg123/configure.c  
+
+
 2006-06-19 21:41:51 +0000  Derek Pomery <nemo@m8y.org>
   revision [1540]
   

@@ -22,6 +22,7 @@
 #include "audtool.h"
 
 struct commandhandler handlers[] = {
+	{"<sep>", NULL, "Vital information"},
 	{"current-song", get_current_song, "returns current song title"},
 	{"current-song-filename", get_current_song_filename, "returns current song filename"},
 	{"current-song-length", get_current_song_length, "returns current song length"},
@@ -35,7 +36,7 @@ struct commandhandler handlers[] = {
 	{"current-song-frequency", get_current_song_frequency, "returns current song frequency in hertz"},
 	{"current-song-frequency-khz", get_current_song_frequency_khz, "returns current song frequency in kilohertz"},
 	{"current-song-channels", get_current_song_channels, "returns current song channels"},
-	{"<sep>", NULL, NULL},
+	{"<sep>", NULL, "Playlist manipulation"},
 	{"playlist-advance", playlist_advance, "go to the next song in the playlist"},
 	{"playlist-reverse", playlist_reverse, "go to the previous song in the playlist"},
 	{"playlist-addurl", playlist_add_url_string, "adds a url to the playlist"},
@@ -53,7 +54,7 @@ struct commandhandler handlers[] = {
 	{"playlist-repeat-toggle", playlist_repeat_toggle, "toggles playlist repeat"},
 	{"playlist-shuffle-status", playlist_shuffle_status, "returns the status of playlist shuffle"},
 	{"playlist-shuffle-toggle", playlist_shuffle_toggle, "toggles playlist shuffle"},
-	{"<sep>", NULL, NULL},
+	{"<sep>", NULL, "Playqueue manipulation"},
 	{"playqueue-add", playqueue_add, "adds a song to the playqueue"},
 	{"playqueue-remove", playqueue_remove, "removes a song from the playqueue"},
 	{"playqueue-is-queued", playqueue_is_queued, "returns OK if a song is queued"},
@@ -62,7 +63,7 @@ struct commandhandler handlers[] = {
 	{"playqueue-length", playqueue_length, "returns the length of the playqueue"},
 	{"playqueue-display", playqueue_display, "returns a list of currently-queued songs"},
 	{"playqueue-clear", playqueue_clear, "clears the playqueue"},
-	{"<sep>", NULL, NULL},
+	{"<sep>", NULL, "Playback manipulation"},
 	{"playback-play", playback_play, "starts/unpauses song playback"},
 	{"playback-pause", playback_pause, "(un)pauses song playback"},
 	{"playback-playpause", playback_playpause, "plays/(un)pauses song playback"},
@@ -71,14 +72,14 @@ struct commandhandler handlers[] = {
 	{"playback-paused", playback_paused, "returns OK if audacious is paused"},
 	{"playback-stopped", playback_stopped, "returns OK if audacious is stopped"},
 	{"playback-status", playback_status, "returns the playback status"},
-	{"<sep>", NULL, NULL},
+	{"<sep>", NULL, "Volume control"},
 	{"get-volume", get_volume, "returns the current volume level in percent"},
 	{"set-volume", set_volume, "sets the current volume level in percent"},
-	{"<sep>", NULL, NULL},
+	{"<sep>", NULL, "Miscillaneous"},
 	{"preferences", show_preferences_window, "shows/hides the preferences window"},
 	{"jumptofile", show_jtf_window, "shows the jump to file window"},
 	{"shutdown", shutdown_audacious_server, "shuts down audacious"},
-	{"<sep>", NULL, NULL},
+	{"<sep>", NULL, "Help system"},
 	{"list-handlers", get_handlers_list, "shows handlers list"},
 	{"help", get_handlers_list, "shows handlers list"},
 	{NULL, NULL, NULL}
@@ -771,12 +772,10 @@ void get_handlers_list(gint session, gint argc, gchar **argv)
 {
 	gint i;
 
-	g_print("Available handlers:\n\n");
-
 	for (i = 0; handlers[i].name != NULL; i++)
 	{
 		if (!g_strcasecmp("<sep>", handlers[i].name))
-			g_print("\n");
+			g_print("%s%s:\n", i == 0 ? "" : "\n", handlers[i].desc);
 		else
 			g_print("   %-34s - %s\n", handlers[i].name, handlers[i].desc);
 	}
