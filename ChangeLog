@@ -1,3 +1,12 @@
+2006-06-20 07:05:04 +0000  George Averill <nhjm449@gmail.com>
+  revision [1548]
+  - cdaudio playlist tuple support; needs some fixing
+  
+
+  Changes:        Modified:
+  +72 -26         trunk/Plugins/Input/cdaudio/cdaudio.c  
+
+
 2006-06-20 06:39:11 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1546]
   - libaac: potential buffer overflow vulnerability fix

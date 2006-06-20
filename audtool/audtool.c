@@ -75,7 +75,7 @@ struct commandhandler handlers[] = {
 	{"<sep>", NULL, "Volume control"},
 	{"get-volume", get_volume, "returns the current volume level in percent"},
 	{"set-volume", set_volume, "sets the current volume level in percent"},
-	{"<sep>", NULL, "Miscillaneous"},
+	{"<sep>", NULL, "Miscellaneous"},
 	{"preferences", show_preferences_window, "shows/hides the preferences window"},
 	{"jumptofile", show_jtf_window, "shows the jump to file window"},
 	{"shutdown", shutdown_audacious_server, "shuts down audacious"},
