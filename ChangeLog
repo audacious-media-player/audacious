@@ -1,3 +1,16 @@
+2006-06-20 06:39:11 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1546]
+  - libaac: potential buffer overflow vulnerability fix
+  - libguess: build as a static library instead of installing as a shared object (via dai+audacious -at- vdr.jp)
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/aac/src/libmp4.c  
+  +1 -1           trunk/audacious/Makefile  
+  +1 -2           trunk/configure.ac  
+  +3 -10          trunk/libguess/Makefile.in  
+
+
 2006-06-20 06:19:46 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1544]
   - category titles

@@ -103,7 +103,8 @@
 
 
 
-static char *cdda_get_title(cdda_disc_toc_t * toc, int track);
+static TitleInput *cdda_get_tuple(cdda_disc_toc_t * toc, int track);
+static gchar *get_song_title(TitleInput *tuple);
 static gboolean stop_timeout(gpointer data);
 
 static void cdda_init(void);
@@ -115,6 +116,7 @@ static void cdda_pause(short p);
 static void seek(int time);
 static int get_time(void);
 static void get_song_info(char *filename, char **title, int *length);
+static TitleInput *get_song_tuple(char *filename);
 static void get_volume(int *l, int *r);
 static void set_volume(int l, int r);
 static void cleanup(void);
@@ -144,7 +146,8 @@ InputPlugin cdda_ip = {
     NULL,                       /* set_info_text, filled in by xmms */
     get_song_info,
     NULL,                       /*  cdda_fileinfo, *//* file_info_box */
-    NULL                        /* output plugin handle */
+    NULL,                        /* output plugin handle */
+    get_song_tuple
 };
 
 CDDAConfig cdda_cfg;
@@ -991,7 +994,7 @@ play_file(char *filename)
         return;
     }
     track_len = cdda_calculate_track_length(&cdda_playing.cd_toc, track);
-    cdda_ip.set_info(cdda_get_title(&cdda_playing.cd_toc, track),
+    cdda_ip.set_info(get_song_title(cdda_get_tuple(&cdda_playing.cd_toc, track)),
                      (track_len * 1000) / 75, 44100 * 2 * 2 * 8, 44100, 2);
 
     memcpy(&cdda_playing.drive, drive, sizeof(struct driveinfo));
@@ -1011,16 +1014,16 @@ play_file(char *filename)
         seek(0);
 }
 
-static char *
-cdda_get_title(cdda_disc_toc_t * toc, int track)
+static TitleInput *
+cdda_get_tuple(cdda_disc_toc_t * toc, int track)
 {
-    G_LOCK_DEFINE_STATIC(title);
+    G_LOCK_DEFINE_STATIC(tuple);
 
     static guint32 cached_id;
     static cdinfo_t cdinfo;
-    TitleInput *input;
+    static gchar *performer, *album_name, *track_name;
+    TitleInput *tuple = NULL;
     guint32 disc_id;
-    char *title;
 
     disc_id = cdda_cddb_compute_discid(toc);
 
@@ -1030,7 +1033,7 @@ cdda_get_title(cdda_disc_toc_t * toc, int track)
      * from the playlist-thread.
      */
 
-    G_LOCK(title);
+    G_LOCK(tuple);
     if (!(disc_id == cached_id && cdinfo.is_valid)) {
         /*
          * We try to look up the disc again if the info is not
@@ -1047,24 +1050,31 @@ cdda_get_title(cdda_disc_toc_t * toc, int track)
                 cdda_cdinfo_write_file(disc_id, &cdinfo);
         }
     }
-    XMMS_NEW_TITLEINPUT(input);
-    cdda_cdinfo_get(&cdinfo, track, &input->performer, &input->album_name,
-                    &input->track_name);
-    G_UNLOCK(title);
 
-    input->track_number = track;
-    input->file_name = input->file_path =
+    tuple = bmp_title_input_new();
+    cdda_cdinfo_get(&cdinfo, track, &performer, &album_name, &track_name);
+    G_UNLOCK(tuple);
+
+    tuple->performer = g_strdup(performer);
+    tuple->album_name = g_strdup(album_name);
+    tuple->track_name = g_strdup(track_name);
+    tuple->track_number = (track);
+    tuple->file_name = tuple->file_path =
         g_strdup_printf(_("CD Audio Track %02u"), track);
-    input->file_ext = "cda";
-    title = xmms_get_titlestring(cdda_cfg.title_override ?
-                                 cdda_cfg.name_format :
-                                 xmms_get_gentitle_format(), input);
-    g_free(input->file_name);
-    g_free(input);
+    tuple->file_ext = "cda";
+    tuple->length = ((cdda_calculate_track_length(toc, track) * 1000) / 75);
 
-    if (!title)
-        title = g_strdup_printf(_("CD Audio Track %02u"), track);
-    return title;
+    if (!tuple->track_name)
+        tuple->track_name = g_strdup_printf(_("CD Audio Track %02u"), track);
+    return tuple;
+}
+
+static gchar *
+get_song_title(TitleInput *tuple)
+{
+    return xmms_get_titlestring(cdda_cfg.title_override ?
+                                cdda_cfg.name_format :
+                                xmms_get_gentitle_format(), tuple);
 }
 
 static gboolean
@@ -1214,6 +1224,7 @@ get_song_info(char *filename, char **title, int *len)
     int t;
     char *tmp;
     struct driveinfo *drive;
+    TitleInput *tuple;
 
     *title = NULL;
     *len = -1;
@@ -1237,8 +1248,43 @@ get_song_info(char *filename, char **title, int *len)
         || toc.track[t].flags.data_track)
         return;
 
-    *len = (cdda_calculate_track_length(&toc, t) * 1000) / 75;
-    *title = cdda_get_title(&toc, t);
+    if ((tuple = cdda_get_tuple(&toc, t)) != NULL) {
+        *len = tuple->length;
+        *title = get_song_title(tuple);
+    }
+    bmp_title_input_free(tuple);
+}
+
+static TitleInput *
+get_song_tuple(char *filename)
+{
+    cdda_disc_toc_t toc;
+    int t;
+    char *tmp;
+    struct driveinfo *drive;
+    TitleInput *tuple = NULL;
+
+//      g_message("** CD_AUDIO: getting song info");
+
+    if ((drive = cdda_find_drive(filename)) == NULL)
+        return tuple;
+
+    tmp = strrchr(filename, '/');
+    if (tmp)
+        tmp++;
+    else
+        tmp = filename;
+
+    if (!sscanf(tmp, "Track %d.cda", &t))
+        return tuple;
+    if (!cdda_get_toc(&toc, drive->device))
+        return tuple;
+    if (t < toc.first_track || t > toc.last_track
+        || toc.track[t].flags.data_track)
+        return tuple;
+
+    tuple = cdda_get_tuple(&toc, t);
+    return tuple;
 }
 
 #ifdef HAVE_OSS
