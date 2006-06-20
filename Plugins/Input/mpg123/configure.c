@@ -30,10 +30,6 @@ static GtkWidget *streaming_save_dirbrowser;
 static GtkWidget *streaming_save_hbox, *title_id3_box, *title_tag_desc;
 static GtkWidget *title_override, *title_id3_entry, *title_id3v2_disable;
 
-/* Encoding patch */
-static GtkWidget *title_encoding_hbox, *title_encoding_enabled, *title_encoding, *title_encoding_label;
-/* Encoding patch */
-
 MPG123Config mpgdec_cfg;
 
 static void
@@ -81,10 +77,6 @@ mpgdec_configurewin_ok(GtkWidget * widget, gpointer data)
     mpgdec_cfg.id3_format =
         g_strdup(gtk_entry_get_text(GTK_ENTRY(title_id3_entry)));
 
-    mpgdec_cfg.title_encoding_enabled = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(title_encoding_enabled));
-    mpgdec_cfg.title_encoding = g_strdup(gtk_entry_get_text(GTK_ENTRY(title_encoding)));
-    if (mpgdec_cfg.title_encoding_enabled)
-        mpgdec_id3_encoding_list = g_strsplit_set(mpgdec_cfg.title_encoding, ENCODING_SEPARATOR, 0);
     db = bmp_cfg_db_open();
     bmp_cfg_db_set_int(db, "MPG123", "resolution", mpgdec_cfg.resolution);
     bmp_cfg_db_set_int(db, "MPG123", "channels", mpgdec_cfg.channels);
@@ -104,11 +96,6 @@ mpgdec_configurewin_ok(GtkWidget * widget, gpointer data)
     bmp_cfg_db_set_bool(db, "MPG123", "disable_id3v2",
                         mpgdec_cfg.disable_id3v2);
     bmp_cfg_db_set_string(db, "MPG123", "id3_format", mpgdec_cfg.id3_format);
-
-/* Encoding patch */
-    bmp_cfg_db_set_bool(db, "MPG123", "title_encoding_enabled", mpgdec_cfg.title_encoding_enabled);
-    bmp_cfg_db_set_string(db, "MPG123", "title_encoding", mpgdec_cfg.title_encoding);
-/* Encoding patch */
 
     bmp_cfg_db_close(db);
     gtk_widget_destroy(mpgdec_configurewin);
@@ -159,17 +146,6 @@ title_override_cb(GtkWidget * w, gpointer data)
     gtk_widget_set_sensitive(title_id3_box, override);
     gtk_widget_set_sensitive(title_tag_desc, override);
 }
-
-/* Encoding patch */
-static void
-title_encoding_enabled_cb(GtkWidget * w, gpointer data)
-{
-    gboolean encoding_enabled;
-    encoding_enabled =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(title_encoding_enabled));
-    gtk_widget_set_sensitive(title_encoding_hbox, encoding_enabled);
-}
-/* Encoding patch */
 
 static void
 configure_destroy(GtkWidget * w, gpointer data)
@@ -433,33 +409,6 @@ mpgdec_configure(void)
                                  mpgdec_cfg.disable_id3v2);
     gtk_box_pack_start(GTK_BOX(title_id3_vbox), title_id3v2_disable, FALSE,
                        FALSE, 0);
-
-
-/* Encoding patch */
-    title_encoding_enabled =
-        gtk_check_button_new_with_label(_("Convert non-UTF8 ID3 tags to UTF8"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(title_encoding_enabled),
-                                 mpgdec_cfg.title_encoding_enabled);
-    g_signal_connect(G_OBJECT(title_encoding_enabled), "clicked",
-                     G_CALLBACK(title_encoding_enabled_cb), NULL);
-    gtk_box_pack_start(GTK_BOX(title_id3_vbox), title_encoding_enabled, FALSE,
-                       FALSE, 0);
-
-    title_encoding_hbox = gtk_hbox_new(FALSE, 5);
-    gtk_widget_set_sensitive(title_encoding_hbox, mpgdec_cfg.title_encoding_enabled);
-    gtk_box_pack_start(GTK_BOX(title_id3_vbox), title_encoding_hbox, FALSE,
-                       FALSE, 0);
-
-    title_encoding_label = gtk_label_new(_("ID3 encoding:"));
-    gtk_box_pack_start(GTK_BOX(title_encoding_hbox), title_encoding_label, FALSE,
-                       FALSE, 0);
-
-    title_encoding = gtk_entry_new();
-    gtk_entry_set_text(GTK_ENTRY(title_encoding), mpgdec_cfg.title_encoding);
-    gtk_box_pack_start(GTK_BOX(title_encoding_hbox), title_encoding, TRUE, TRUE,
-                       0);
-/* Encoding patch */
-
 
     title_override =
         gtk_check_button_new_with_label(_("Override generic titles"));
