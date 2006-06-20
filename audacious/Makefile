@@ -13,7 +13,7 @@ LDADD = \
 	$(LIBGLADE_LIBS) \
 	-L.. $(LTLIBINTL)     \
 	-L../libaudacious -laudacious \
-        -L../libguess $(CHARDET_LIBS)
+	$(CHARDET_LIBS)
 
 CFLAGS += \
 	$(GTK_CFLAGS)      \

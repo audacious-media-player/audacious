@@ -496,7 +496,7 @@ static int my_decode_mp4( char *filename, mp4ff_t *mp4file )
 			bufferSize=0;
 
 			/* If we've run to the end of the file, we're done. */
-			if(sampleID > numSamples){
+			if(sampleID >= numSamples){
 				/* Finish playing before we close the
 				   output. */
 				while ( mp4_ip.output->buffer_playing() ) {

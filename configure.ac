@@ -193,8 +193,7 @@ AC_ARG_ENABLE(chardet,
 			enable_chardet=$enableval, enable_chardet=no)
 if test "x$enable_chardet" = xyes; then
     AC_DEFINE(USE_CHARDET, 1, [Define if character set detection enabled] )
-    AC_CHECK_LIB(guess, guess_jp, [SUBDIR_GUESS=['']], [SUBDIR_GUESS=['libguess']])
-    CHARDET_LIBS=['-lguess']
+    AC_CHECK_LIB(guess, guess_jp, [SUBDIR_GUESS=[''] CHARDET_LIBS=['-lguess']], [SUBDIR_GUESS=['libguess'] CHARDET_LIBS=['../libguess/libguess.a']])
     AC_CHECK_LIB(udet_c, detectCharset, [AC_DEFINE(HAVE_UDET, 1,[Define if the system has Mozilla universal character detector library]) CHARDET_LIBS=["$CHARDET_LIBS -ludet -ludet_c"]])
 fi
 AM_CONDITIONAL(USE_CHARDET,test "x$enable_chardet" = xyes)
