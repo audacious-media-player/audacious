@@ -1,3 +1,12 @@
+2006-06-20 07:16:02 +0000  George Averill <nhjm449@gmail.com>
+  revision [1550]
+  - s/Miscillaneous/Miscellaneous/ in audtool.c
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/audtool/audtool.c  
+
+
 2006-06-20 07:05:04 +0000  George Averill <nhjm449@gmail.com>
   revision [1548]
   - cdaudio playlist tuple support; needs some fixing

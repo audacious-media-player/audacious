@@ -127,7 +127,6 @@ inline blargg_err_t Music_Emu::set_sample_rate( long r )
 
 inline void Music_Emu::start_track( int track )
 {
-	assert( (unsigned) track <= (unsigned) track_count() );
 	assert( sample_rate_ ); // set_sample_rate() must have been called first
 	track_ended_ = false;
 	error_count_ = 0;
