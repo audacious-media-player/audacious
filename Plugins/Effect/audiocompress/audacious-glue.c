@@ -151,8 +151,11 @@ void initPrefs(CompressorPrefs * prefs)
 
 void freePrefs(CompressorPrefs * prefs)
 {
-	gtk_widget_destroy(prefs->dialog);
+	/* this shouldn't happen, but... */
+	if (prefs == NULL || prefs->dialog == NULL)
+		return;
 
+	gtk_widget_destroy(prefs->dialog);
 }
 
 void savePrefs(CompressorPrefs * prefs)

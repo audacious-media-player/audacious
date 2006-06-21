@@ -1,3 +1,12 @@
+2006-06-20 07:38:31 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1552]
+  - some NSFEs are fucked in the head apparently
+  
+
+  Changes:        Modified:
+  +0 -1           trunk/Plugins/Input/console/Music_Emu.h  
+
+
 2006-06-20 07:16:02 +0000  George Averill <nhjm449@gmail.com>
   revision [1550]
   - s/Miscillaneous/Miscellaneous/ in audtool.c
