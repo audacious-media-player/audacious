@@ -1279,13 +1279,21 @@ str_to_utf8(const gchar * str)
     if (!str)
         return NULL;
 
-    /* chardet encoding detector */
-    if ((out_str = chardet_to_utf8(str, strlen(str), NULL, NULL, NULL)))
-        return out_str;
-
+    /* Note: Currently, playlist calls this function repeatedly, even
+     * if the string is already converted into utf-8.
+     * chardet_to_utf8() would convert a valid utf-8 string into a
+     * different utf-8 string, if fallback encodings were supplied and
+     * the given string could be treated as a string in one of fallback
+     * encodings. To avoid this, the order of evaluation has been
+     * changed. (It might cause a drawback?)
+     */
     /* already UTF-8? */
     if (g_utf8_validate(str, -1, NULL))
         return g_strdup(str);
+
+    /* chardet encoding detector */
+    if ((out_str = chardet_to_utf8(str, strlen(str), NULL, NULL, NULL)))
+        return out_str;
 
     /* assume encoding associated with locale */
     if ((out_str = g_locale_to_utf8(str, -1, NULL, NULL, NULL)))
@@ -1491,6 +1499,16 @@ fallback:
 		}
 	}
 
+#ifdef USE_CHARDET
+	/* many tag libraries return 2byte latin1 utf8 character as
+	   converted 8bit iso-8859-1 character, if they are asked to return
+	   latin1 string.
+	 */
+	if(!ret){
+		ret = g_convert(str, len, "UTF-8", "ISO-8859-1", bytes_read, bytes_write, error);
+	}
+#endif
+
 	if(ret){
 		if(g_utf8_validate(ret, -1, NULL))
 			return ret;
@@ -1500,5 +1518,5 @@ fallback:
 		}
 	}
 	
-	return NULL;	// if I have no idea, return NULL.
+	return NULL;	/* if I have no idea, return NULL. */
 }

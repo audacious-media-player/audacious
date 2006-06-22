@@ -1,3 +1,12 @@
+2006-06-22 10:01:46 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1558]
+  - smarter way to detect gmake
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/mk/objective.mk  
+
+
 2006-06-22 09:35:01 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1556]
   - avoid system /bin/test in Makefiles as it may not behave as expected
