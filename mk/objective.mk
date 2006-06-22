@@ -126,7 +126,7 @@ distclean: clean
 
 build:
 	# test for GNU make
-	@if [ "x$(MAKE_VERSION)" == "x" ]; then \
+	@if [ ! "$(MAKE_VERSION)" ]; then \
 		echo "[Your make is not properly supported, please use GNU make.]"; \
 		exit 1; \
 	fi;

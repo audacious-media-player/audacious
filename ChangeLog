@@ -1,3 +1,12 @@
+2006-06-22 09:35:01 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1556]
+  - avoid system /bin/test in Makefiles as it may not behave as expected
+  
+
+  Changes:        Modified:
+  +41 -41         trunk/mk/objective.mk  
+
+
 2006-06-21 09:23:25 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1554]
   - sanity checks (don't send NULL pointers off to GTK)
