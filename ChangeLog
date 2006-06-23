@@ -1,3 +1,12 @@
+2006-06-22 14:04:25 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [1560]
+  try to avoid malconversion of latin1 character when chardet has been enabled.
+  
+
+  Changes:        Modified:
+  +23 -5          trunk/audacious/util.c  
+
+
 2006-06-22 10:01:46 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1558]
   - smarter way to detect gmake

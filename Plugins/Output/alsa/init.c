@@ -29,7 +29,7 @@ void alsa_init(void)
 
 	memset(&alsa_cfg, 0, sizeof (alsa_cfg));
 	alsa_cfg.buffer_time = 500;
-	alsa_cfg.period_time = 50;
+	alsa_cfg.period_time = 100;
 	alsa_cfg.debug = 0;
 	alsa_cfg.vol.left = 100;
 	alsa_cfg.vol.right = 100;
