@@ -104,6 +104,7 @@ bmp_rcfile_open(const gchar * filename)
                 if (strlen(frags[1]) > 0) {
                     bmp_rcfile_create_string(section, frags[0], frags[1]);
                 };
+		g_strfreev(frags);
             }
         }
         i++;

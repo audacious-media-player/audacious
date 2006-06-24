@@ -1,3 +1,12 @@
+2006-06-24 09:43:36 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1564]
+  - avoid a memory leak with images
+  
+
+  Changes:        Modified:
+  +2 -0           trunk/audacious/ui_fileinfo.c  
+
+
 2006-06-23 20:34:05 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1562]
   Have period time default to 100ms to keep snd-aoa on PPC from going all clickety-click on us.
