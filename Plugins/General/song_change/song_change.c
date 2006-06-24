@@ -170,6 +170,7 @@ static void warn_user(void)
 }
 #endif
 
+#if 0
 static int check_command(char *command)
 {
 	const char *dangerous = "fns";
@@ -185,6 +186,7 @@ static int check_command(char *command)
 	}
 	return 0;
 }
+#endif
 
 static void configure_ok_cb(GtkWidget *w, gpointer data)
 {
