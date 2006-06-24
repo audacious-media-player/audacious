@@ -1,3 +1,11 @@
+2006-06-23 20:34:05 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1562]
+  Have period time default to 100ms to keep snd-aoa on PPC from going all clickety-click on us.
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Output/alsa/init.c  
+
+
 2006-06-22 14:04:25 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [1560]
   try to avoid malconversion of latin1 character when chardet has been enabled.

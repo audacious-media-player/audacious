@@ -116,6 +116,7 @@ fileinfo_entry_set_image(const char *entry, const char *text)
 	}
 
 	gtk_image_set_from_pixbuf(GTK_IMAGE(widget), GDK_PIXBUF(pixbuf));
+	g_object_unref(G_OBJECT(pixbuf));
 }
 
 static void
@@ -153,6 +154,7 @@ filepopup_entry_set_image(const char *entry, const char *text)
 	}
 
 	gtk_image_set_from_pixbuf(GTK_IMAGE(widget), GDK_PIXBUF(pixbuf));
+	g_object_unref(G_OBJECT(pixbuf));
 }
 
 static void
