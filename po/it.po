@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-05-27 15:29-0500\n"
-"PO-Revision-Date: 2006-06-04 03:10+0200\n"
+"PO-Revision-Date: 2006-06-25 03:54+0200\n"
 "Last-Translator: Diego 'Flameeyes' Pettenò <flameeyes@gentoo.org>\n"
 "Language-Team: Italian\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr ""
 
 #: Plugins/Effect/audiocompress/audacious-glue.c:96
 msgid "AudioCompress "
-msgstr ""
+msgstr "AudioCompress "
 
 #: Plugins/Effect/audiocompress/audacious-glue.c:97
 msgid ""
@@ -205,7 +205,7 @@ msgstr "Plugin Scrobbler"
 #: Plugins/General/song_change/song_change.c:53
 #, c-format
 msgid "Song Change %s"
-msgstr ""
+msgstr "Cambio canzone %s"
 
 #: Plugins/General/song_change/song_change.c:132
 msgid "Warning"
@@ -285,7 +285,7 @@ msgstr ""
 #: Plugins/Output/disk_writer/disk_writer.c:140
 #: Plugins/Output/disk_writer/disk_writer.c:405
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: Plugins/Input/aac/src/fileinfo.c:201 Plugins/Input/mpg123/fileinfo.c:239
 msgid "None"
@@ -347,7 +347,7 @@ msgstr "Genere:"
 #: Plugins/Input/vorbis/fileinfo.c:1015 audacious/mainwin.c:804
 #, c-format
 msgid "%s - Audacious"
-msgstr ""
+msgstr "%s - Audacious"
 
 #: Plugins/Input/aac/src/libmp4.c:20 Plugins/Input/flac/fileinfo.c:47
 #: Plugins/Input/mpg123/mpg123.c:53 Plugins/Input/vorbis/fileinfo.c:83
@@ -1139,9 +1139,8 @@ msgid "ALSA output ports"
 msgstr "Porte di uscita ALSA"
 
 #: Plugins/Input/amidi-plug/i_configure.c:187
-#, fuzzy
 msgid "Mixer settings"
-msgstr "Impostazioni Mixer:"
+msgstr "Impostazioni Mixer"
 
 #: Plugins/Input/amidi-plug/i_configure.c:196
 msgid "pre-calculate length of MIDI files in playlist"
@@ -1599,39 +1598,39 @@ msgstr "Turco (Windows-1254)"
 
 #: Plugins/Input/flac/charset.c:76
 msgid "Unicode (UTF-7)"
-msgstr ""
+msgstr "Unicode (UTF-7)"
 
 #: Plugins/Input/flac/charset.c:77
 msgid "Unicode (UTF-8)"
-msgstr ""
+msgstr "Unicode (UTF-8)"
 
 #: Plugins/Input/flac/charset.c:78
 msgid "Unicode (UTF-16BE)"
-msgstr ""
+msgstr "Unicode (UTF-16BE)"
 
 #: Plugins/Input/flac/charset.c:79
 msgid "Unicode (UTF-16LE)"
-msgstr ""
+msgstr "Unicode (UTF-16LE)"
 
 #: Plugins/Input/flac/charset.c:80
 msgid "Unicode (UTF-32BE)"
-msgstr ""
+msgstr "Unicode (UTF-32BE)"
 
 #: Plugins/Input/flac/charset.c:81
 msgid "Unicode (UTF-32LE)"
-msgstr ""
+msgstr "Unicode (UTF-32LE)"
 
 #: Plugins/Input/flac/charset.c:82
 msgid "Vietnamese (VISCII)"
-msgstr ""
+msgstr "Vietnamese (VISCII)"
 
 #: Plugins/Input/flac/charset.c:83
 msgid "Vietnamese (Windows-1258)"
-msgstr ""
+msgstr "Vietnamese (Windows-1258)"
 
 #: Plugins/Input/flac/charset.c:84
 msgid "Visual Hebrew (ISO-8859-8)"
-msgstr "Ebraico visuale (ISO-8859-8)"
+msgstr "Ebraico visivo (ISO-8859-8)"
 
 #: Plugins/Input/flac/charset.c:85
 msgid "Western (IBM-850)"
@@ -1707,11 +1706,11 @@ msgstr "Greco (MacGreek)"
 
 #: Plugins/Input/flac/charset.c:108
 msgid "Gujarati (MacGujarati)"
-msgstr ""
+msgstr "Gujarati (MacGujarati)"
 
 #: Plugins/Input/flac/charset.c:109
 msgid "Gurmukhi (MacGurmukhi)"
-msgstr ""
+msgstr "Gurmukhi (MacGurmukhi)"
 
 #: Plugins/Input/flac/charset.c:110
 msgid "Hebrew (ISO-8859-8-E)"
@@ -1727,7 +1726,7 @@ msgstr "Ebraico (MacHebrew)"
 
 #: Plugins/Input/flac/charset.c:113
 msgid "Hindi (MacDevanagari)"
-msgstr ""
+msgstr "Hindi (MacDevanagari)"
 
 #: Plugins/Input/flac/charset.c:114
 msgid "Icelandic (MacIcelandic)"
@@ -1755,11 +1754,11 @@ msgstr "Definito dall'utente"
 
 #: Plugins/Input/flac/charset.c:120
 msgid "Vietnamese (TCVN)"
-msgstr ""
+msgstr "Vietnamese (TCVN)"
 
 #: Plugins/Input/flac/charset.c:121
 msgid "Vietnamese (VPS)"
-msgstr ""
+msgstr "Vietnamese (VPS)"
 
 #: Plugins/Input/flac/charset.c:122
 msgid "Western (MacRoman)"
@@ -1804,9 +1803,8 @@ msgid "ReplayGain"
 msgstr "ReplayGain"
 
 #: Plugins/Input/flac/configure.c:417
-#, fuzzy
 msgid "Enable ReplayGain processing"
-msgstr "Abilita ReplayGain"
+msgstr "Abilita elaborazione ReplayGain"
 
 #: Plugins/Input/flac/configure.c:422
 msgid "Album mode"
@@ -1818,7 +1816,7 @@ msgstr "Pre-amplificazione:"
 
 #: Plugins/Input/flac/configure.c:436
 msgid "0 dB"
-msgstr ""
+msgstr "0 dB"
 
 #: Plugins/Input/flac/configure.c:440
 msgid "6dB hard limiting"
@@ -1847,7 +1845,7 @@ msgstr "Abilita approssimazione"
 
 #: Plugins/Input/flac/configure.c:487
 msgid "Noise shaping"
-msgstr ""
+msgstr "Conformazione del rumore"
 
 #: Plugins/Input/flac/configure.c:495
 msgid "none"
@@ -1962,7 +1960,7 @@ msgstr ""
 
 #: Plugins/Input/flac/fileinfo.c:56
 msgid "Alt"
-msgstr ""
+msgstr "Alternativa"
 
 #: Plugins/Input/flac/fileinfo.c:213
 #, c-format
@@ -2218,7 +2216,7 @@ msgstr "Ritardo"
 
 #: Plugins/Input/modplug/gui/interface.cpp:456
 msgid "Bass Boost"
-msgstr ""
+msgstr "Miglioramento bassi"
 
 #: Plugins/Input/modplug/gui/interface.cpp:510
 msgid "Amount"
@@ -2230,7 +2228,7 @@ msgstr "Spazio"
 
 #: Plugins/Input/modplug/gui/interface.cpp:528
 msgid "Surround"
-msgstr ""
+msgstr "Surround"
 
 #: Plugins/Input/modplug/gui/interface.cpp:600
 msgid "Preamp"
@@ -2313,6 +2311,16 @@ msgid ""
 "---\n"
 "---"
 msgstr ""
+"---\n"
+"---\n"
+"---\n"
+"---\n"
+"---\n"
+"---\n"
+"---\n"
+"---\n"
+"---\n"
+"---"
 
 #: Plugins/Input/modplug/gui/interface.cpp:866
 msgid "Samples"
@@ -2468,9 +2476,8 @@ msgid "File size:"
 msgstr "Dimensione file:"
 
 #: Plugins/Input/mpg123/fileinfo.c:372 Plugins/Input/mpg123/fileinfo.c:665
-#, fuzzy
 msgid "Mode:"
-msgstr "Decoder:"
+msgstr "Modalità:"
 
 #: Plugins/Input/mpg123/fileinfo.c:395 Plugins/Input/mpg123/fileinfo.c:650
 msgid "Error Protection:"
@@ -2516,14 +2523,14 @@ msgid "%lu Bytes"
 msgstr "%lu Bytes"
 
 #: Plugins/Input/mpg123/http.c:401 Plugins/Input/vorbis/http.c:353
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't connect to host %s:%d"
-msgstr "Impossibile connettersi all'host %s"
+msgstr "Impossibile connettersi all'host %s:%d"
 
 #: Plugins/Input/mpg123/http.c:686
-#, fuzzy, c-format
+#, c-format
 msgid "PRE-BUFFERING: %zuKB/%zuKB"
-msgstr "PRE-BUFFERING: %dKB/%dKB"
+msgstr "PRE-BUFFERING: %zuKB/%zuKB"
 
 #: Plugins/Input/mpg123/mpg123.c:922
 msgid "About MPEG Audio Plugin"
@@ -2551,24 +2558,20 @@ msgid "TiMidity Configuration"
 msgstr "Configurazione TiMidity"
 
 #: Plugins/Input/timidity/src/interface.c:92
-#, fuzzy
 msgid "11000 Hz"
-msgstr "1:1 (44 kHz)"
+msgstr "11000 Hz"
 
 #: Plugins/Input/timidity/src/interface.c:100
-#, fuzzy
 msgid "22000 Hz"
-msgstr "1:2 (22 kHz)"
+msgstr "22000 Hz"
 
 #: Plugins/Input/timidity/src/interface.c:108
-#, fuzzy
 msgid "44100 Hz"
-msgstr "1:1 (44 kHz)"
+msgstr "44100 Hz"
 
 #: Plugins/Input/timidity/src/interface.c:116
-#, fuzzy
 msgid "Sample Width"
-msgstr "Sample rate:"
+msgstr "Larghezza campione"
 
 #: Plugins/Input/timidity/src/interface.c:182
 msgid "TiMidity Configuration File"
@@ -2899,9 +2902,8 @@ msgid "%02d:%02d:%02d"
 msgstr "%02d:%02d:%02d"
 
 #: Plugins/Input/wma/wma.c:544
-#, fuzzy
 msgid "<b>Name:</b>"
-msgstr "<b>Nome del file</b>"
+msgstr "<b>Nome: </b>"
 
 #: Plugins/Input/wma/wma.c:580
 msgid "<b>WMA Version:</b>"
@@ -2972,7 +2974,6 @@ msgid "About OSS Driver"
 msgstr "Informazioni sui driver OSS"
 
 #: Plugins/Output/OSS/about.c:40
-#, fuzzy
 msgid ""
 "Audacious OSS Driver\n"
 "\n"
@@ -2991,7 +2992,7 @@ msgid ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
 "USA."
 msgstr ""
-"XMMS OSS Driver\n"
+"OSS Driver di Audacious\n"
 "\n"
 " This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -3293,9 +3294,8 @@ msgid "Audio control device:"
 msgstr "Dispositivo di controllo audio:"
 
 #: Plugins/Output/sun/configure.c:349
-#, fuzzy
 msgid "Volume controls device:"
-msgstr "Controllo del volume:"
+msgstr "Dispositivo controlli del volume:"
 
 #: Plugins/Output/sun/configure.c:362
 msgid "XMMS uses mixer exclusively."
@@ -3566,9 +3566,8 @@ msgid "Laurens Buhler"
 msgstr "Laurens Buhler"
 
 #: audacious/credits.c:134
-#, fuzzy
 msgid "Finnish:"
-msgstr "Spagnolo:"
+msgstr "Finlandese:"
 
 #: audacious/credits.c:135
 msgid "Pauli Virtanen"
@@ -3591,9 +3590,8 @@ msgid "Matthias Debus"
 msgstr "Matthias Debus"
 
 #: audacious/credits.c:143
-#, fuzzy
 msgid "Georgian: "
-msgstr "Tedesco:"
+msgstr "Georgiano:"
 
 #: audacious/credits.c:144
 msgid "George Machitidze"
@@ -3848,9 +3846,8 @@ msgid "/Delete/Auto-load preset"
 msgstr "/Cancella/Preset caricato automaticamente"
 
 #: audacious/equalizer.c:748
-#, fuzzy
 msgid "Audacious Equalizer"
-msgstr "/Arrotola Equalizzatore"
+msgstr "Equalizzatore di Audacious"
 
 #: audacious/equalizer.c:1401
 msgid "Preset"
@@ -4112,13 +4109,13 @@ msgstr ""
 "installata in '%s'\n"
 
 #: audacious/main.c:957
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
 "Please use GTK+ %s or newer.\n"
 msgstr ""
-"La tua versione di GTK+ (%d.%d.%d) non è compatibile con BMP.\n"
-"Usare GTK+ %s o maggiori.\n"
+"La tua versione di GTK+ (%d.%d.%d) non è compatibile con Audacious.\n"
+"Si usi GTK+ %s o superiore.\n"
 
 #: audacious/main.c:968
 msgid ""
@@ -4295,9 +4292,8 @@ msgid "/Peaks Falloff/Fastest"
 msgstr "/Discesa Picchi/Molto veloce"
 
 #: audacious/mainwin.c:341
-#, fuzzy
 msgid "/Play CD"
-msgstr "/Play"
+msgstr "/Riproduci CD"
 
 #: audacious/mainwin.c:344
 msgid "/Repeat"
@@ -4340,9 +4336,8 @@ msgid "/Jump to Time"
 msgstr "/Salta alla posizione"
 
 #: audacious/mainwin.c:382
-#, fuzzy
 msgid "/About Audacious"
-msgstr "Informazioni sul Plugin MPEG Audio"
+msgstr "/Informazioni su Audacious"
 
 #: audacious/mainwin.c:385
 msgid "/Play File"
@@ -4353,14 +4348,12 @@ msgid "/Play Location"
 msgstr "/Riproduci posizione"
 
 #: audacious/mainwin.c:390
-#, fuzzy
 msgid "/V_isualization"
-msgstr "/Modo Visualizzazione"
+msgstr "/V_isualizzazione"
 
 #: audacious/mainwin.c:391
-#, fuzzy
 msgid "/_Playback"
-msgstr "/Play"
+msgstr "/_Riproduzione"
 
 #: audacious/mainwin.c:392
 msgid "/_View"
@@ -4423,14 +4416,12 @@ msgid "VBR"
 msgstr "VBR"
 
 #: audacious/mainwin.c:904 audacious/mainwin.c:908
-#, fuzzy
 msgid "stereo"
-msgstr "Stereo"
+msgstr "stereo"
 
 #: audacious/mainwin.c:904 audacious/mainwin.c:908
-#, fuzzy
 msgid "mono"
-msgstr "Mono"
+msgstr "mono"
 
 #: audacious/mainwin.c:1358
 msgid "Jump to Time"
@@ -4449,9 +4440,8 @@ msgid "Un_queue"
 msgstr "Rimuvoi dalla coda"
 
 #: audacious/mainwin.c:1479 audacious/mainwin.c:1804
-#, fuzzy
 msgid "_Queue"
-msgstr "Coda"
+msgstr "_Coda"
 
 #: audacious/mainwin.c:1732
 msgid "Jump to Track"
@@ -4597,12 +4587,12 @@ msgstr "Commento"
 
 #: audacious/prefswin.c:127
 msgid "localhost"
-msgstr ""
+msgstr "localhost"
 
 #: audacious/prefswin.c:442 audacious/prefswin.c:529 audacious/prefswin.c:618
 #: audacious/prefswin.c:714
 msgid "Enabled"
-msgstr "S/N"
+msgstr "Abilitato"
 
 #: audacious/prefswin.c:458 audacious/prefswin.c:545 audacious/prefswin.c:634
 #: audacious/prefswin.c:730
@@ -4690,9 +4680,8 @@ msgid "/Save List"
 msgstr "/Salva lista"
 
 #: audacious/ui_playlist.c:217
-#, fuzzy
 msgid "/Save Default List"
-msgstr "/Salva/Default"
+msgstr "/Salva lista predefinita"
 
 #: audacious/ui_playlist.c:223
 msgid "/Update View"
@@ -4788,9 +4777,8 @@ msgid "Save Playlist"
 msgstr "Salva playlist"
 
 #: audacious/ui_playlist.c:1648
-#, fuzzy
 msgid "Audacious Playlist Editor"
-msgstr "/Mostra editor playlist"
+msgstr "Editor di lista di Audacious"
 
 #: audacious/util.c:922
 msgid "Add/Open Files dialog"
@@ -5083,7 +5071,6 @@ msgid "Custom string:"
 msgstr "Stringa personalizzata:"
 
 #: audacious/glade/prefswin.glade:2696
-#, fuzzy
 msgid ""
 "TITLE\n"
 "ARTIST - TITLE\n"
@@ -5096,6 +5083,8 @@ msgstr ""
 "TITOLO\n"
 "ARTISTA - TITOLO\n"
 "ARTISTA - ALBUM - TITOLO\n"
+"ARTISTA - ALBUM - TRACCIA. TITOLO\n"
+"ARTISTA [ ALBUM ] - TRACCIA. TITOLO\n"
 "ALBUM - TITOLO\n"
 "Personalizzato"
 
@@ -5157,7 +5146,7 @@ msgstr "Password proxy:"
 
 #: audacious/glade/prefswin.glade:3637
 msgid "label65"
-msgstr ""
+msgstr "label65"
 
 #: libaudacious/titlestring.c:324
 msgid "Performer/Artist"

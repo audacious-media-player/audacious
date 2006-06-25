@@ -822,7 +822,7 @@ create_Info (void)
   gtk_box_pack_start (GTK_BOX (hbox9), label11, FALSE, FALSE, 4);
   gtk_label_set_justify (GTK_LABEL (label11), GTK_JUSTIFY_LEFT);
 
-  info_general = gtk_label_new (_("---\n---\n---\n---\n---\n---\n---\n---\n---\n---"));
+  info_general = gtk_label_new ("---\n---\n---\n---\n---\n---\n---\n---\n---\n---");
   gtk_widget_ref (info_general);
   gtk_object_set_data_full (GTK_OBJECT (Info), "info_general", info_general,
                             (GtkDestroyNotify) gtk_widget_unref);
