@@ -1,3 +1,12 @@
+2006-06-27 05:35:54 +0000  George Averill <nhjm449@gmail.com>
+  revision [1574]
+  - Don't show popups if the pointer isn't even in the playlist window.
+  
+
+  Changes:        Modified:
+  +3 -1           trunk/audacious/ui_fileinfo.c  
+
+
 2006-06-27 04:28:56 +0000  Derek Pomery <nemo@m8y.org>
   revision [1572]
   added free
