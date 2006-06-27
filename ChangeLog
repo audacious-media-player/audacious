@@ -1,3 +1,12 @@
+2006-06-27 05:36:52 +0000  George Averill <nhjm449@gmail.com>
+  revision [1576]
+  - Show bitmap text for ";"
+  
+
+  Changes:        Modified:
+  +1 -0           trunk/audacious/textbox.c  
+
+
 2006-06-27 05:35:54 +0000  George Averill <nhjm449@gmail.com>
   revision [1574]
   - Don't show popups if the pointer isn't even in the playlist window.
