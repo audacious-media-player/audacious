@@ -1,3 +1,11 @@
+2006-06-27 09:47:29 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1578]
+  Updated Polish translation by Wojciech Myrda <vojcek@tlen.pl>.
+
+  Changes:        Modified:
+  +657 -660       trunk/po/pl.po  
+
+
 2006-06-27 05:36:52 +0000  George Averill <nhjm449@gmail.com>
   revision [1576]
   - Show bitmap text for ";"
