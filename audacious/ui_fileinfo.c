@@ -330,6 +330,7 @@ fileinfo_show_for_tuple(TitleInput *tuple)
 			{
 				tmp = g_strdup_printf("%s/%s", tuple->file_path, f);
 				fileinfo_entry_set_image("image_artwork", tmp);
+				g_free(tmp);
 				f = NULL;
 			}
 			else
@@ -380,6 +381,7 @@ filepopup_show_for_tuple(TitleInput *tuple)
 			{
 				tmp = g_strdup_printf("%s/%s", tuple->file_path, f);
 				filepopup_entry_set_image("image_artwork", tmp);
+				g_free(tmp);
 				f = NULL;
 			}
 			else
