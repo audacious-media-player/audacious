@@ -179,7 +179,9 @@ filepopup_pointer_check_iter(gpointer unused)
 	static gint prev_x = 0, prev_y = 0, ctr = 0;
 	gboolean skip = FALSE;
 
-	if (playlistwin_is_shaded() || playlistwin_list->pl_tooltips == FALSE)
+	if (playlistwin_is_shaded() || playlistwin_list->pl_tooltips == FALSE
+		|| gdk_window_at_pointer(NULL, NULL) != playlistwin->window
+		|| gdk_window_at_pointer(NULL, NULL) == NULL)
 	{
 		ctr = 0;
 		return TRUE;
