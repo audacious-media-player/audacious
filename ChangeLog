@@ -1,3 +1,17 @@
+2006-06-28 02:39:52 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1582]
+  - dynamic resampler with interpolation, no special GUI options for it yet though (this replaces the mpg123 "way" of doing it)
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/mpg123/Makefile.in  
+  +0 -228         trunk/Plugins/Input/mpg123/decode_2to1.c  
+  +0 -235         trunk/Plugins/Input/mpg123/decode_4to1.c  
+  +0 -282         trunk/Plugins/Input/mpg123/decode_ntom.c  
+  +25 -12         trunk/Plugins/Input/mpg123/mpg123.c  
+  +302 -14        trunk/Plugins/Input/mpg123/mpg123.h  
+
+
 2006-06-27 10:00:41 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1580]
   Update translation credits for German (hansmi) & Polish (vojcek).
