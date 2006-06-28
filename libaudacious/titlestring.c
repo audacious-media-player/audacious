@@ -53,17 +53,33 @@ bmp_title_input_new()
 void
 bmp_title_input_free(BmpTitleInput * input)
 {
-    if (!input)
+    if (input == NULL)
         return;
 
-    g_free(input->performer);
-    g_free(input->album_name);
-    g_free(input->track_name);
-    g_free(input->date);
-    g_free(input->genre);
-    g_free(input->comment);
-    g_free(input->file_name);
-    g_free(input->file_path);
+    if (input->performer != NULL)
+        g_free(input->performer);
+
+    if (input->album_name != NULL)
+        g_free(input->album_name);
+
+    if (input->track_name != NULL)
+        g_free(input->track_name);
+
+    if (input->date != NULL)
+        g_free(input->date);
+
+    if (input->genre != NULL)
+        g_free(input->genre);
+
+    if (input->comment != NULL)
+        g_free(input->comment);
+
+    if (input->file_name != NULL)
+        g_free(input->file_name);
+
+    if (input->file_path != NULL)
+        g_free(input->file_path);
+
     g_free(input);
 }
 
