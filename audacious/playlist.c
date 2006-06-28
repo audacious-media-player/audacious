@@ -1215,7 +1215,6 @@ playlist_queue_get_length(void)
 gint
 playlist_get_length_nolock(void)
 {
-    REQUIRE_STATIC_LOCK(playlist);
     return g_list_length(playlist);
 }
 
@@ -1600,8 +1599,6 @@ playlist_get(void)
 gint
 playlist_get_position_nolock(void)
 {
-    REQUIRE_STATIC_LOCK(playlist);
-
     if (playlist && playlist_position)
         return g_list_index(playlist, playlist_position);
     return 0;
