@@ -93,6 +93,7 @@ struct _BmpCmdLineOpt {
     gboolean enqueue, mainwin, remote, activate;
     gboolean load_skins;
     gboolean headless;
+    gboolean no_log;
     gchar *previous_session_id;
 };
 
@@ -721,6 +722,9 @@ display_usage(void)
     g_print("\n-H, --headless         ");
     /* -h, --headless switch */
     g_print(_("Headless operation [experimental]"));
+    g_print("\n-N, --no-log           ");
+    /* -N, --no-log switch */
+    g_print(_("Disable error/warning interception (logging)"));
     g_print("\n-v, --version          ");
     /* -v, --version switch */
     g_print(_("Print version number and exit\n"));
@@ -749,6 +753,7 @@ parse_cmd_line(gint argc,
         {"sm-client-id", 1, NULL, 'i'},
         {"xmms", 0, NULL, 'x'},
         {"headless", 0, NULL, 'H'},
+        {"no-log", 0, NULL, 'N'},
         {0, 0, 0, 0}
     };
 
@@ -809,6 +814,9 @@ parse_cmd_line(gint argc,
             break;
         case 'S':
             options->load_skins = TRUE;
+            break;
+	case 'N':
+	    options->no_log = TRUE;
             break;
         }
     }
@@ -967,7 +975,6 @@ main(gint argc, gchar ** argv)
 
     bmp_init_paths();
     bmp_make_user_dir();
-    bmp_setup_logger();
 
     /* Check GTK version. Really, this is only needed for binary
      * distribution since configure already checks. */
@@ -1009,6 +1016,9 @@ main(gint argc, gchar ** argv)
         if (options.headless != 1)
           exit(EXIT_SUCCESS);
     }
+
+    if (options.no_log == FALSE)
+        bmp_setup_logger();
 
     if (!vfs_init()) {
         g_printerr(Q_("Could not initialize VFS.\n"));
