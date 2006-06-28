@@ -1,3 +1,14 @@
+2006-06-28 03:32:51 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1590]
+  - improve resampling rate detection algorithm
+  - remove debugging code
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/mpg123/mpg123.c  
+  +0 -2           trunk/Plugins/Input/mpg123/resample.c  
+
+
 2006-06-28 02:52:20 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1588]
   - add a note explaining that this algorithm sucks and will be discarded before 1.1 release

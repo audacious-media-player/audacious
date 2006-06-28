@@ -18,6 +18,7 @@
 #define SCROBBLER_SB_WAIT 10
 #define SCROBBLER_VERSION "1.1"
 #define SCROBBLER_IMPLEMENTATION "0.1"		/* This is the implementation, not the player version. */
+#define SCROBBLER_SB_MAXLEN 1024
 #define CACHE_SIZE 1024
 
 /* Scrobblerbackend for xmms plugin, first draft */
@@ -382,8 +383,8 @@ static int sc_parse_sb_res(void)
 
 static gchar *sc_itemtag(char c, int n, char *str)
 {
-    static char buf[256]; 
-    snprintf(buf, 256, "&%c[%d]=%s", c, n, str);
+    static char buf[SCROBBLER_SB_MAXLEN]; 
+    snprintf(buf, SCROBBLER_SB_MAXLEN, "&%c[%d]=%s", c, n, str);
     return buf;
 }
 
