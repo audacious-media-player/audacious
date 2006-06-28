@@ -116,23 +116,23 @@ set_synth_functions(struct frame *fr)
     int ds = fr->down_sample;
     int p8 = 0;
 
-    static func funcs[][3] = {
+    static func funcs[2][2] = {
         {mpgdec_synth_1to1,
-         mpgdec_synth_2to1,
-         mpgdec_synth_4to1},
+         mpgdec_synth_ntom},
         {mpgdec_synth_1to1_8bit,
-         mpgdec_synth_2to1_8bit,
-         mpgdec_synth_4to1_8bit},
+	 mpgdec_synth_ntom_8bit}
     };
 
-    static func_mono funcs_mono[2][4] = {
+    static func_mono funcs_mono[2][2] = {
         {mpgdec_synth_1to1_mono,
-         mpgdec_synth_2to1_mono,
-         mpgdec_synth_4to1_mono},
+         mpgdec_synth_ntom_mono},
         {mpgdec_synth_1to1_8bit_mono,
-         mpgdec_synth_2to1_8bit_mono,
-         mpgdec_synth_4to1_8bit_mono}
+         mpgdec_synth_ntom_8bit_mono}
     };
+
+    /* Compatibility with older configs. */
+    if (ds > 1)
+	ds = 1;
 
     if (mpgdec_cfg.resolution == 8)
         p8 = 1;
@@ -627,7 +627,8 @@ open_output(void)
 {
     int r;
     AFormat fmt = mpgdec_cfg.resolution == 16 ? FMT_S16_NE : FMT_U8;
-    int freq = mpgdec_freqs[fr.sampling_frequency] >> mpgdec_cfg.downsample;
+/*    int freq = mpgdec_freqs[fr.sampling_frequency] >> mpgdec_cfg.downsample; */
+    int freq = mpgdec_frequency;
     int channels = mpgdec_cfg.channels == 2 ? fr.stereo : 1;
     r = mpgdec_ip.output->open_audio(fmt, freq, channels);
 
@@ -696,7 +697,6 @@ decode_loop(void *arg)
         fr.down_sample = mpgdec_cfg.downsample;
         fr.down_sample_sblimit = SBLIMIT >> mpgdec_cfg.downsample;
         set_synth_functions(&fr);
-        mpgdec_init_layer3(fr.down_sample_sblimit);
 
         mpgdec_info->tpf = mpgdec_compute_tpf(&fr);
         if (strncasecmp(filename, "http://", 7)) {
@@ -734,6 +734,16 @@ decode_loop(void *arg)
         mpgdec_mpeg25 = fr.mpeg25;
         mpgdec_mode = fr.mode;
 
+	if (fr.down_sample)
+	{
+	    long n = mpgdec_freqs[fr.sampling_frequency];
+	    long m = n / fr.down_sample;
+
+	    mpgdec_synth_ntom_set_step(n, m);
+
+	    mpgdec_frequency = (gint) m;
+	}
+
         if (strncasecmp(filename, "http://", 7)) {
             mpgdec_length = mpgdec_info->num_frames * mpgdec_info->tpf * 1000;
             if (!mpgdec_title)
@@ -744,6 +754,9 @@ decode_loop(void *arg)
                 mpgdec_title = mpgdec_http_get_title(filename);
             mpgdec_length = -1;
         }
+
+        set_synth_functions(&fr);
+        mpgdec_init_layer3(fr.down_sample_sblimit);
 
         mpgdec_ip.set_info(mpgdec_title, mpgdec_length,
                            mpgdec_bitrate * 1000,

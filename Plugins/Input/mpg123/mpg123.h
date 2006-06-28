@@ -293,20 +293,12 @@ extern int mpgdec_synth_1to1_8bit_mono(mpgdec_real *, unsigned char *, int *);
 extern int mpgdec_synth_1to1_8bit_mono2stereo(mpgdec_real *, unsigned char *,
                                               int *);
 
-extern int mpgdec_synth_2to1(mpgdec_real *, int, unsigned char *, int *);
-extern int mpgdec_synth_2to1_8bit(mpgdec_real *, int, unsigned char *, int *);
-extern int mpgdec_synth_2to1_mono(mpgdec_real *, unsigned char *, int *);
-extern int mpgdec_synth_2to1_mono2stereo(mpgdec_real *, unsigned char *, int *);
-extern int mpgdec_synth_2to1_8bit_mono(mpgdec_real *, unsigned char *, int *);
-extern int mpgdec_synth_2to1_8bit_mono2stereo(mpgdec_real *, unsigned char *,
-                                              int *);
-
-extern int mpgdec_synth_4to1(mpgdec_real *, int, unsigned char *, int *);
-extern int mpgdec_synth_4to1_8bit(mpgdec_real *, int, unsigned char *, int *);
-extern int mpgdec_synth_4to1_mono(mpgdec_real *, unsigned char *, int *);
-extern int mpgdec_synth_4to1_mono2stereo(mpgdec_real *, unsigned char *, int *);
-extern int mpgdec_synth_4to1_8bit_mono(mpgdec_real *, unsigned char *, int *);
-extern int mpgdec_synth_4to1_8bit_mono2stereo(mpgdec_real *, unsigned char *,
+extern int mpgdec_synth_ntom(mpgdec_real *, int, unsigned char *, int *);
+extern int mpgdec_synth_ntom_8bit(mpgdec_real *, int, unsigned char *, int *);
+extern int mpgdec_synth_ntom_mono(mpgdec_real *, unsigned char *, int *);
+extern int mpgdec_synth_ntom_mono2stereo(mpgdec_real *, unsigned char *, int *);
+extern int mpgdec_synth_ntom_8bit_mono(mpgdec_real *, unsigned char *, int *);
+extern int mpgdec_synth_ntom_8bit_mono2stereo(mpgdec_real *, unsigned char *,
                                               int *);
 
 extern void mpgdec_rewindNbits(int bits);

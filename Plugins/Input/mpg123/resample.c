@@ -1,10 +1,22 @@
-/* 
- * Mpeg Layer-1,2,3 audio decoder 
- * ------------------------------
- * copyright (c) 1995,1996,1997 by Michael Hipp, All rights reserved.
- * See also 'README'
+/* libmpgdec: An advanced MPEG layer 1/2/3 decoder.
+ * resample.c: A dynamic resampler.
  *
- * N->M down/up sampling. Not optimized for speed.
+ * Copyright (C) 2005-2006 William Pitcock <nenolod@nenolod.net>
+ * Portions copyright (C) 1995-1999 Michael Hipp
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 #include <stdlib.h>
@@ -26,12 +38,14 @@ static unsigned long ntom_step = NTOM_MUL;
 void mpgdec_synth_ntom_set_step(long m,long n)
 {
 	if(n >= 96000 || m >= 96000 || m == 0 || n == 0) {
-		fprintf(stderr,"NtoM converter: illegal rates\n");
+		fprintf(stderr,"resampler: illegal rates\n");
 		exit(1);
 	}
 
 	n *= NTOM_MUL;
 	ntom_step = n / m;
+
+	printf("mpgdec_synth_to_ntom_set_step: calculated step: %ld skip-samples\n", ntom_step);
 
 	if(ntom_step > 8*NTOM_MUL) {
 		fprintf(stderr,"max. 1:8 conversion allowed!\n");
@@ -177,7 +191,7 @@ int mpgdec_synth_ntom(mpgdec_real *bandPtr,int channel,unsigned char *out,int *p
 
   {
     register int j;
-    mpgdec_real *window = decwin + 16 - bo1;
+    mpgdec_real *window = mpgdec_decwin + 16 - bo1;
  
     for (j=16;j;j--,window+=0x10)
     {

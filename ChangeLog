@@ -1,3 +1,11 @@
+2006-06-27 10:00:41 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1580]
+  Update translation credits for German (hansmi) & Polish (vojcek).
+
+  Changes:        Modified:
+  +2 -0           trunk/audacious/credits.c  
+
+
 2006-06-27 09:47:29 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1578]
   Updated Polish translation by Wojciech Myrda <vojcek@tlen.pl>.
