@@ -45,8 +45,6 @@ void mpgdec_synth_ntom_set_step(long m,long n)
 	n *= NTOM_MUL;
 	ntom_step = n / m;
 
-	printf("mpgdec_synth_to_ntom_set_step: calculated step: %ld skip-samples\n", ntom_step);
-
 	if(ntom_step > 8*NTOM_MUL) {
 		fprintf(stderr,"max. 1:8 conversion allowed!\n");
 		exit(1);

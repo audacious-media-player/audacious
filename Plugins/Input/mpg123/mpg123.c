@@ -740,7 +740,7 @@ decode_loop(void *arg)
 	if (fr.down_sample)
 	{
 	    long n = mpgdec_freqs[fr.sampling_frequency];
-	    long m = n / fr.down_sample + 1;
+	    long m = n / (fr.down_sample * 2);
 
 	    mpgdec_synth_ntom_set_step(n, m);
 

@@ -1,3 +1,12 @@
+2006-06-28 02:52:20 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1588]
+  - add a note explaining that this algorithm sucks and will be discarded before 1.1 release
+  
+
+  Changes:        Modified:
+  +3 -0           trunk/Plugins/Input/mpg123/mpg123.c  
+
+
 2006-06-28 02:46:46 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1586]
   - add missing declaration
