@@ -1,3 +1,11 @@
+2006-06-28 14:01:29 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1600]
+  Thanks to fluxinator this botched submission is now fixed.
+
+  Changes:        Modified:
+  +1 -1           trunk/po/de.po  
+
+
 2006-06-28 13:29:38 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1598]
   User did not test his submission. Fix based on reports by fluxinator on #audacious.

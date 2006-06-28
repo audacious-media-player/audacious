@@ -14,54 +14,17 @@
 #include <libaudacious/vfs.h>
 
 #define MP4_VERSION	VERSION
+
+/*
+ * BUFFER_SIZE is the highest amount of memory that can be pulled.
+ * We use this for sanity checks, among other things, as mp4ff needs
+ * a labotomy sometimes.
+ */
 #define BUFFER_SIZE	FAAD_MIN_STREAMSIZE*64
 
-const char *audmp4_id3_genres[GENRE_MAX] = {
-    N_("Blues"), N_("Classic Rock"), N_("Country"), N_("Dance"),
-    N_("Disco"), N_("Funk"), N_("Grunge"), N_("Hip-Hop"),
-    N_("Jazz"), N_("Metal"), N_("New Age"), N_("Oldies"),
-    N_("Other"), N_("Pop"), N_("R&B"), N_("Rap"), N_("Reggae"),
-    N_("Rock"), N_("Techno"), N_("Industrial"), N_("Alternative"),
-    N_("Ska"), N_("Death Metal"), N_("Pranks"), N_("Soundtrack"),
-    N_("Euro-Techno"), N_("Ambient"), N_("Trip-Hop"), N_("Vocal"),
-    N_("Jazz+Funk"), N_("Fusion"), N_("Trance"), N_("Classical"),
-    N_("Instrumental"), N_("Acid"), N_("House"), N_("Game"),
-    N_("Sound Clip"), N_("Gospel"), N_("Noise"), N_("AlternRock"),
-    N_("Bass"), N_("Soul"), N_("Punk"), N_("Space"),
-    N_("Meditative"), N_("Instrumental Pop"),
-    N_("Instrumental Rock"), N_("Ethnic"), N_("Gothic"),
-    N_("Darkwave"), N_("Techno-Industrial"), N_("Electronic"),
-    N_("Pop-Folk"), N_("Eurodance"), N_("Dream"),
-    N_("Southern Rock"), N_("Comedy"), N_("Cult"),
-    N_("Gangsta Rap"), N_("Top 40"), N_("Christian Rap"),
-    N_("Pop/Funk"), N_("Jungle"), N_("Native American"),
-    N_("Cabaret"), N_("New Wave"), N_("Psychedelic"), N_("Rave"),
-    N_("Showtunes"), N_("Trailer"), N_("Lo-Fi"), N_("Tribal"),
-    N_("Acid Punk"), N_("Acid Jazz"), N_("Polka"), N_("Retro"),
-    N_("Musical"), N_("Rock & Roll"), N_("Hard Rock"), N_("Folk"),
-    N_("Folk/Rock"), N_("National Folk"), N_("Swing"),
-    N_("Fast-Fusion"), N_("Bebob"), N_("Latin"), N_("Revival"),
-    N_("Celtic"), N_("Bluegrass"), N_("Avantgarde"),
-    N_("Gothic Rock"), N_("Progressive Rock"),
-    N_("Psychedelic Rock"), N_("Symphonic Rock"), N_("Slow Rock"),
-    N_("Big Band"), N_("Chorus"), N_("Easy Listening"),
-    N_("Acoustic"), N_("Humour"), N_("Speech"), N_("Chanson"),
-    N_("Opera"), N_("Chamber Music"), N_("Sonata"), N_("Symphony"),
-    N_("Booty Bass"), N_("Primus"), N_("Porn Groove"),
-    N_("Satire"), N_("Slow Jam"), N_("Club"), N_("Tango"),
-    N_("Samba"), N_("Folklore"), N_("Ballad"), N_("Power Ballad"),
-    N_("Rhythmic Soul"), N_("Freestyle"), N_("Duet"),
-    N_("Punk Rock"), N_("Drum Solo"), N_("A Cappella"),
-    N_("Euro-House"), N_("Dance Hall"), N_("Goa"),
-    N_("Drum & Bass"), N_("Club-House"), N_("Hardcore"),
-    N_("Terror"), N_("Indie"), N_("BritPop"), N_("Negerpunk"),
-    N_("Polsk Punk"), N_("Beat"), N_("Christian Gangsta Rap"),
-    N_("Heavy Metal"), N_("Black Metal"), N_("Crossover"),
-    N_("Contemporary Christian"), N_("Christian Rock"),
-    N_("Merengue"), N_("Salsa"), N_("Thrash Metal"),
-    N_("Anime"), N_("JPop"), N_("Synthpop")
-};
-
+/*
+ * AAC_MAGIC is the pattern that marks the beginning of an MP4 container.
+ */
 #define AAC_MAGIC     (unsigned char [4]) { 0xFF, 0xF9, 0x5C, 0x80 }
 
 static void	mp4_init(void);
@@ -257,16 +220,6 @@ static int	mp4_getTime(void)
 static void	mp4_cleanup(void)
 {
 }
-
-#if 0
-static void	mp4_getSongInfo(char *filename)
-{
-  if(mp4cfg.file_type == FILE_MP4)
-    getMP4info(filename);
-  else if(mp4cfg.file_type == FILE_AAC)
-    ;
-}
-#endif
 
 static TitleInput   *mp4_get_song_tuple(char *fn)
 {
@@ -520,7 +473,7 @@ static int my_decode_mp4( char *filename, mp4ff_t *mp4file )
 			/*g_print(":: %d/%d\n", sampleID-1, numSamples);*/
 
 			/* If we can't read the file, we're done. */
-			if((rc == 0) || (buffer== NULL)){
+			if((rc == 0) || (buffer== NULL) || (bufferSize == 0) || (bufferSize > BUFFER_SIZE)){
 				g_print("MP4: read error\n");
 				sampleBuffer = NULL;
 				sampleID=0;
@@ -531,6 +484,8 @@ static int my_decode_mp4( char *filename, mp4ff_t *mp4file )
 
 				return FALSE;
 			}
+
+/*			g_print(" :: %d/%d\n", bufferSize, BUFFER_SIZE); */
 
 			sampleBuffer= faacDecDecode(decoder, 
 						    &frameInfo, 
