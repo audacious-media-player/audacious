@@ -1,3 +1,12 @@
+2006-06-28 02:44:29 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1584]
+  - math was buggy here, sorry!
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/mpg123/mpg123.c  
+
+
 2006-06-28 02:39:52 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1582]
   - dynamic resampler with interpolation, no special GUI options for it yet though (this replaces the mpg123 "way" of doing it)

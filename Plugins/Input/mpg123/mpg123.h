@@ -300,6 +300,7 @@ extern int mpgdec_synth_ntom_mono2stereo(mpgdec_real *, unsigned char *, int *);
 extern int mpgdec_synth_ntom_8bit_mono(mpgdec_real *, unsigned char *, int *);
 extern int mpgdec_synth_ntom_8bit_mono2stereo(mpgdec_real *, unsigned char *,
                                               int *);
+extern void mpgdec_synth_ntom_set_step(long, long);
 
 extern void mpgdec_rewindNbits(int bits);
 extern int mpgdec_hsstell(void);
