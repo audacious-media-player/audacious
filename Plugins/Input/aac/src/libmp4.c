@@ -250,6 +250,9 @@ static TitleInput   *mp4_get_song_tuple(char *fn)
 		guint bufferSize = 0;
 		faacDecHandle decoder;
 
+		if (mp4track == -1)
+			return NULL;
+
 		decoder = faacDecOpen();
 		mp4ff_get_decoder_config(mp4file, mp4track, &buffer, &bufferSize);
 

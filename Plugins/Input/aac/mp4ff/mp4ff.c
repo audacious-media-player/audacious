@@ -177,7 +177,7 @@ int32_t parse_atoms(mp4ff_t *f)
 int32_t mp4ff_get_decoder_config(const mp4ff_t *f, const int32_t track,
                                  uint8_t** ppBuf, uint32_t* pBufSize)
 {
-    if (track >= f->total_tracks)
+    if (track < 0 || track >= f->total_tracks)
     {
         *ppBuf = NULL;
         *pBufSize = 0;
@@ -204,7 +204,10 @@ int32_t mp4ff_get_decoder_config(const mp4ff_t *f, const int32_t track,
 
 int32_t mp4ff_get_track_type(const mp4ff_t *f, const int track)
 {
-	return f->track[track]->type;
+    if (track < 0)
+	return -1;
+
+    return f->track[track]->type;
 }
 
 int32_t mp4ff_total_tracks(const mp4ff_t *f)
@@ -214,22 +217,34 @@ int32_t mp4ff_total_tracks(const mp4ff_t *f)
 
 int32_t mp4ff_time_scale(const mp4ff_t *f, const int32_t track)
 {
+    if (track < 0)
+	return -1;
+
     return f->track[track]->timeScale;
 }
 
 uint32_t mp4ff_get_avg_bitrate(const mp4ff_t *f, const int32_t track)
 {
+    if (track < 0)
+	return -1;
+
 	return f->track[track]->avgBitrate;
 }
 
 uint32_t mp4ff_get_max_bitrate(const mp4ff_t *f, const int32_t track)
 {
+    if (track < 0)
+	return -1;
+
 	return f->track[track]->maxBitrate;
 }
 
 int64_t mp4ff_get_track_duration(const mp4ff_t *f, const int32_t track)
 {
-	return f->track[track]->duration;
+    if (track < 0)
+	return -1;
+
+    return f->track[track]->duration;
 }
 
 int64_t mp4ff_get_track_duration_use_offsets(const mp4ff_t *f, const int32_t track)
@@ -249,6 +264,9 @@ int32_t mp4ff_num_samples(const mp4ff_t *f, const int32_t track)
 {
     int32_t i;
     int32_t total = 0;
+
+    if (track < 0)
+	return -1;
 
     for (i = 0; i < f->track[track]->stts_entry_count; i++)
     {
