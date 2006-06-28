@@ -1,3 +1,11 @@
+2006-06-28 13:29:38 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1598]
+  User did not test his submission. Fix based on reports by fluxinator on #audacious.
+
+  Changes:        Modified:
+  +2 -2           trunk/po/pl.po  
+
+
 2006-06-28 10:35:52 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1596]
   German translation update by hansmi from Gentoo.

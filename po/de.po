@@ -3323,7 +3323,7 @@ msgstr "Sun-Treiber-Konfiguration"
 #: Plugins/Output/sun/sun.c:55
 #, c-format
 msgid "BSD Sun Driver %s"
-msgstr "BSD-SUN-Treiber"
+msgstr "BSD-SUN-Treiber %s"
 
 #: Plugins/Visualization/blur_scope/blur_scope.c:57
 msgid "/Toggle Decorations"
