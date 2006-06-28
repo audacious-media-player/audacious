@@ -1,3 +1,12 @@
+2006-06-28 06:14:47 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [1592]
+  - itemtag buffer was too short. e.g. 256 bytes could hold only 28 url encoded kanji characters.
+  
+
+  Changes:        Modified:
+  +3 -2           trunk/Plugins/General/scrobbler/scrobbler.c  
+
+
 2006-06-28 03:32:51 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1590]
   - improve resampling rate detection algorithm

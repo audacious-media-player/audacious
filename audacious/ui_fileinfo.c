@@ -66,6 +66,7 @@
 
 GtkWidget *fileinfo_win;
 GtkWidget *filepopup_win;
+GdkPixbuf *filepopup_pixbuf;
 
 static void
 fileinfo_entry_set_text(const char *entry, const char *text)
@@ -180,7 +181,7 @@ filepopup_pointer_check_iter(gpointer unused)
 	gboolean skip = FALSE;
 
 	if (playlistwin_is_shaded() || playlistwin_list->pl_tooltips == FALSE
-		|| gdk_window_at_pointer(NULL, NULL) != playlistwin->window
+		|| gdk_window_at_pointer(NULL, NULL) != GDK_WINDOW(playlistwin->window)
 		|| gdk_window_at_pointer(NULL, NULL) == NULL)
 	{
 		ctr = 0;
