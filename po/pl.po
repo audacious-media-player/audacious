@@ -2038,7 +2038,7 @@ msgid ""
 "Length: %d:%.2d"
 msgstr ""
 "Sample: %llu\\n"
-"Długość: %d:%d\n"
+"Długość: %d:%d"
 
 #: Plugins/Input/flac/fileinfo.c:228
 #, c-format
@@ -4960,7 +4960,7 @@ msgstr "_Lista odtwarzania:"
 
 #: audacious/glade/prefswin.glade:1277
 msgid "Select main player window font:"
-msgstr "Wybór czcionki okna głównego":
+msgstr "Wybór czcionki okna głównego:"
 
 #: audacious/glade/prefswin.glade:1299
 msgid "Select playlist font:"

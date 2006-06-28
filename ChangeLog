@@ -1,3 +1,11 @@
+2006-06-28 10:35:52 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1596]
+  German translation update by hansmi from Gentoo.
+
+  Changes:        Modified:
+  +126 -125       trunk/po/de.po  
+
+
 2006-06-28 08:31:31 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1594]
   - properly cast the GDK_WINDOW()
