@@ -1,3 +1,12 @@
+2006-06-28 19:51:43 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1608]
+  - add --no-log switch to disable the system logger (and instead dump to stdout)
+  
+
+  Changes:        Modified:
+  +11 -1          trunk/audacious/main.c  
+
+
 2006-06-28 19:46:09 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1606]
   - use a more standard-looking default title format
