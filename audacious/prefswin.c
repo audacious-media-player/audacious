@@ -119,12 +119,13 @@ static TitleFieldTag title_field_tags[] = {
 };
 
 typedef struct {
+    void *next;
     GtkWidget *container;
     char *pg_name;
     char *img_url;
 } CategoryQueueEntry;
 
-static GList *category_queue = NULL;
+CategoryQueueEntry *category_queue = NULL;
 
 static const guint n_title_field_tags = G_N_ELEMENTS(title_field_tags);
 
@@ -1777,7 +1778,7 @@ on_category_view_realize(GtkTreeView * treeview,
     GtkTreeSelection *selection;
     GtkTreeIter iter;
     GdkPixbuf *img;
-    GList *qlist;
+    CategoryQueueEntry *qlist;
     gint i;
 
     column = gtk_tree_view_column_new();
@@ -1816,9 +1817,10 @@ on_category_view_realize(GtkTreeView * treeview,
     /* mark the treeview widget as available to third party plugins */
     category_treeview = GTK_WIDGET(treeview);
 
-    for (qlist = category_queue; qlist != NULL && qlist->data; qlist = g_list_next(qlist))
+    /* prefswin_page_queue_destroy already pops the queue forward for us. */
+    for (qlist = category_queue; qlist != NULL; qlist = category_queue)
     {
-         CategoryQueueEntry *ent = (CategoryQueueEntry *) qlist->data;
+         CategoryQueueEntry *ent = (CategoryQueueEntry *) qlist;
 
          prefswin_page_new(ent->container, ent->pg_name, ent->img_url);
          prefswin_page_queue_destroy(ent);
@@ -2301,18 +2303,22 @@ show_prefs_window(void)
 static void
 prefswin_page_queue_new(GtkWidget *container, gchar *name, gchar *imgurl)
 {
-    CategoryQueueEntry *ent = g_new0(CategoryQueueEntry, 1);
+    CategoryQueueEntry *ent = g_malloc0(sizeof(CategoryQueueEntry));
 
     ent->container = container;
     ent->pg_name = name;
     ent->img_url = imgurl;
-    category_queue = g_list_append(category_queue, ent);
+
+    if (category_queue)
+        ent->next = category_queue;
+
+    category_queue = ent;
 }
 
 static void
 prefswin_page_queue_destroy(CategoryQueueEntry *ent)
 {
-    category_queue = g_list_remove(category_queue, ent);
+    category_queue = ent->next;
     g_free(ent);
 }
 
@@ -2336,7 +2342,7 @@ prefswin_page_new(GtkWidget *container, gchar *name, gchar *imgurl)
     GtkTreeView *treeview = GTK_TREE_VIEW(category_treeview);
     gint id;
 
-    if (treeview == NULL || container == NULL || category_notebook == NULL)
+    if (treeview == NULL || category_notebook == NULL)
     {
         prefswin_page_queue_new(container, name, imgurl);
         return -1;
