@@ -1,3 +1,12 @@
+2006-06-28 08:31:31 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1594]
+  - properly cast the GDK_WINDOW()
+  
+
+  Changes:        Modified:
+  +2 -1           trunk/audacious/ui_fileinfo.c  
+
+
 2006-06-28 06:14:47 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [1592]
   - itemtag buffer was too short. e.g. 256 bytes could hold only 28 url encoded kanji characters.

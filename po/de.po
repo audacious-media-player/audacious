@@ -13,7 +13,7 @@ msgstr ""
 
 #: Plugins/Effect/audiocompress/audacious-glue.c:96
 msgid "AudioCompress "
-msgstr ""
+msgstr "AudioCompress "
 
 #: Plugins/Effect/audiocompress/audacious-glue.c:97
 msgid ""
@@ -26,9 +26,8 @@ msgid ""
 msgstr ""
 
 #: Plugins/Effect/audiocompress/audacious-glue.c:102
-#, fuzzy
 msgid "About AudioCompress"
-msgstr "Über Audacious"
+msgstr "Über AudioCompress"
 
 #: Plugins/Effect/audiocompress/audacious-glue.c:103
 #: Plugins/Effect/stereo_plugin/stereo.c:59
@@ -56,25 +55,26 @@ msgid ""
 "\n"
 "By Johan Levin 1999."
 msgstr ""
+"Extra-Stereo-Plugin\n"
+"\n"
+"von Johan Levin, 1999."
 
 #: Plugins/Effect/stereo_plugin/stereo.c:38
-#, fuzzy, c-format
+#, c-format
 msgid "Extra Stereo Plugin %s"
-msgstr "Disk-Writer-Plugin %s"
+msgstr "Extra-Stereo-Plugin %s"
 
 #: Plugins/Effect/stereo_plugin/stereo.c:58
-#, fuzzy
 msgid "About Extra Stereo Plugin"
-msgstr "Über ESounD-Plugin"
+msgstr "Über Extra-Stereo-Plugin"
 
 #: Plugins/Effect/stereo_plugin/stereo.c:99
 msgid "Configure Extra Stereo"
-msgstr ""
+msgstr "Extra-Stereo konfigurieren"
 
 #: Plugins/Effect/stereo_plugin/stereo.c:101
-#, fuzzy
 msgid "Effect intensity:"
-msgstr "_Effekt-Plugin-Liste:"
+msgstr "Effektintensität:"
 
 #: Plugins/Effect/stereo_plugin/stereo.c:131
 #: Plugins/General/song_change/song_change.c:347
@@ -160,9 +160,8 @@ msgid "%s: disconnected from LIRC\n"
 msgstr "%s: wurde von LIRC getrennt\n"
 
 #: Plugins/General/scrobbler/configure.c:126
-#, fuzzy
 msgid "Scrobbler Configuration"
-msgstr "MPEG Audio-Plugin-Konfiguration"
+msgstr "Scrobbler-Konfiguration"
 
 #: Plugins/General/scrobbler/configure.c:142
 msgid "Password:"
@@ -170,21 +169,19 @@ msgstr "Passwort:"
 
 #: Plugins/General/scrobbler/configure.c:162
 msgid "<b>Scrobbler Preferences</b>"
-msgstr ""
+msgstr "<b>Scrobbler-Einstellungen</b>"
 
 #: Plugins/General/scrobbler/configure.c:170
 msgid "Username:"
 msgstr "Benutzername:"
 
 #: Plugins/General/scrobbler/gtkstuff.c:21
-#, fuzzy
 msgid "About Scrobbler Plugin"
-msgstr "Über ESounD-Plugin"
+msgstr "Über Scrobbler-Plugin"
 
 #: Plugins/General/scrobbler/xmms_scrobbler.c:497
-#, fuzzy
 msgid "Scrobbler Plugin"
-msgstr "Plugins"
+msgstr "Scrobbler-Plugin"
 
 #: Plugins/General/song_change/song_change.c:53
 #, c-format
@@ -1082,9 +1079,8 @@ msgid "Synthpop"
 msgstr "Synthpop"
 
 #: Plugins/Input/adplug/adplug-xmms.cc:146
-#, fuzzy
 msgid "About "
-msgstr "Über %s"
+msgstr "Über "
 
 #: Plugins/Input/adplug/adplug-xmms.cc:149
 msgid ""
@@ -1098,45 +1094,48 @@ msgid ""
 "al.\n"
 "Linked AdPlug library version: "
 msgstr ""
+"\n"
+"Copyright (C) 2002, 2003 Simon Peter <dn.tlp@gmx.net>\n"
+"\n"
+"This plugin is released under the terms and conditions of the GNU LGPL.\n"
+"See http://www.gnu.org/licenses/lgpl.html for details.\n"
+"\n"
+"Dieses Plugin benutzt die AdPlug-Bibliothek, copyright (C) Simon Peter, "
+"et al.\n"
+"Gelinkte AdPlug-Version: "
 
 #: Plugins/Input/amidi-plug/amidi-plug.c:26
 #, c-format
 msgid "AMIDI-Plug %s (MIDI Player)"
-msgstr ""
+msgstr "AMINI-Plug %s (MIDI-Player)"
 
 #: Plugins/Input/amidi-plug/i_configure.c:55
-#, fuzzy
 msgid "AMIDI-Plug - configuration"
-msgstr "ModPlug Konfiguration"
+msgstr "AMIDI-Plug-Konfiguration"
 
 #: Plugins/Input/amidi-plug/i_configure.c:115
-#, fuzzy
 msgid "Port"
-msgstr "Port:"
+msgstr "Port"
 
 #: Plugins/Input/amidi-plug/i_configure.c:117
-#, fuzzy
 msgid "Client name"
-msgstr "Dateiname"
+msgstr "Client-Name"
 
 #: Plugins/Input/amidi-plug/i_configure.c:119
-#, fuzzy
 msgid "Port name"
-msgstr "Titelname"
+msgstr "Port-Name"
 
 #: Plugins/Input/amidi-plug/i_configure.c:132
-#, fuzzy
 msgid "ALSA output ports"
-msgstr "ALSA %s Output-Plugin"
+msgstr "ALSA Ausgabe-Ports"
 
 #: Plugins/Input/amidi-plug/i_configure.c:187
-#, fuzzy
 msgid "Mixer settings"
 msgstr "Mixereinstellungen"
 
 #: Plugins/Input/amidi-plug/i_configure.c:196
 msgid "pre-calculate length of MIDI files in playlist"
-msgstr ""
+msgstr "Länge der MIDI-Dateien in der Wiedergabeliste vorberechnen"
 
 #: Plugins/Input/amidi-plug/i_configure.c:202
 #: Plugins/Output/alsa/configure.c:429
@@ -1150,6 +1149,10 @@ msgid ""
 "be selected in order to play MIDI with AMIDI-Plug. Unless you know what "
 "you're doing, you'll probably want to use the wavetable synthesizer ports."
 msgstr ""
+"* ALSA-Ausgabe-Ports auswählen *\n"
+"MIDI-Ereignisse werden an die hier selektierten Ports gesendet. Es muss "
+"mindestens ein Port ausgewählt werden. Im Zweifelsfalle sollte der “Wavetable "
+"synthesizer“-Port verwendet werden."
 
 #: Plugins/Input/amidi-plug/i_configure.c:229
 msgid ""
@@ -1159,6 +1162,11 @@ msgid ""
 "will manipulate the control you select here. Unless you know what you're "
 "doing, you'll probably want to select the Synth control here."
 msgstr ""
+"* ALSA-Mixer-Steuerelement auswählen *\n"
+"AMIDI-Plug macht die Ausgabe direkt durch ALSA und benutzt keine Effekt- "
+"oder Ausgabe-Plugins von Audacious. Während AMIDI-PLug abgespielt, wird "
+"die Lautstärke des hier ausgewählten Steuerelements kontrolliert. "
+"Normalerweise ist das “Synth”-Element richtig."
 
 #: Plugins/Input/amidi-plug/i_configure.c:236
 msgid ""
@@ -1170,42 +1178,44 @@ msgid ""
 "faster playlist loading (when a lot of MIDI files are added), enable it to "
 "display more information in the playlist straight after loading."
 msgstr ""
+"* MIDI-Länge vorberechnen *\n"
+"Wenn diese Option aktiviert ist, wird AMIDI-Plug die Länge der MIDI-Datei "
+"berechnen, sobald Audacious sie anfordert, anstatt dies nur zu machen, wenn "
+"die Datei abgespielt wird. Beispielsweise wird die Länge der MIDI-Dateien "
+"direkt nach dem Hinzufügen zur Wiedergabeliste berechnet. Die Option kann "
+"deaktiviert werden, um Wiedergabelisten schneller zu laden."
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:129
-#, fuzzy
 msgid " MIDI Info "
-msgstr "MOD-Info"
+msgstr " MIDI-Info "
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:138
-#, fuzzy
 msgid "Format:"
-msgstr "ID3-Format:"
+msgstr "Format:"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:141
-#, fuzzy
 msgid "Length (msec):"
-msgstr "Länge:"
+msgstr "Länge (msec):"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:144
-#, fuzzy
 msgid "Num of Tracks:"
-msgstr "Zu Titel springen"
+msgstr "Anzahl Titel:"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:149
 msgid "variable"
-msgstr ""
+msgstr "Variable"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:150
 msgid "BPM:"
-msgstr ""
+msgstr "BPM:"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:156
 msgid "BPM (wavg):"
-msgstr ""
+msgstr "BPM (wavg):"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:159
 msgid "Time Div:"
-msgstr ""
+msgstr "Zeitteiler:"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:184 audacious/util.c:1217
 msgid "  (invalid UTF-8)"
@@ -2128,9 +2138,8 @@ msgid "Sampling Rate"
 msgstr "Abtastfrequenz"
 
 #: Plugins/Input/modplug/gui/interface.cpp:232
-#, fuzzy
 msgid "48 kHz"
-msgstr "1:1 (44 kHz)"
+msgstr "48 kHz"
 
 #: Plugins/Input/modplug/gui/interface.cpp:240
 msgid "44 kHz"
@@ -2187,7 +2196,7 @@ msgstr "Geräuschverringerung"
 
 #: Plugins/Input/modplug/gui/interface.cpp:376
 msgid "Play Amiga MOD"
-msgstr ""
+msgstr "Amiga-MOD abspielen"
 
 #: Plugins/Input/modplug/gui/interface.cpp:384
 msgid "Reverb"
@@ -2236,7 +2245,7 @@ msgid ""
 "clipping / distortion!"
 msgstr ""
 "Anmerkung: Ein zu hoch eingestellter Vorverstärker führt zu\n"
-"abgeschnittenen oder verzögerten Liedern!"
+"verzerrten oder verstümmelten Liedern!"
 
 #: Plugins/Input/modplug/gui/interface.cpp:635
 msgid "Volume"
@@ -2473,9 +2482,8 @@ msgid "File size:"
 msgstr "Dateigröße:"
 
 #: Plugins/Input/mpg123/fileinfo.c:372 Plugins/Input/mpg123/fileinfo.c:665
-#, fuzzy
 msgid "Mode:"
-msgstr "Dekoder:"
+msgstr "Modus:"
 
 #: Plugins/Input/mpg123/fileinfo.c:395 Plugins/Input/mpg123/fileinfo.c:650
 msgid "Error Protection:"
@@ -2521,14 +2529,14 @@ msgid "%lu Bytes"
 msgstr "%lu Bytes"
 
 #: Plugins/Input/mpg123/http.c:401 Plugins/Input/vorbis/http.c:353
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't connect to host %s:%d"
-msgstr "Konnte nicht mit Host %s verbinden"
+msgstr "Konnte nicht mit Host %s:%d verbinden"
 
 #: Plugins/Input/mpg123/http.c:686
-#, fuzzy, c-format
+#, c-format
 msgid "PRE-BUFFERING: %zuKB/%zuKB"
-msgstr "ZWISCHENSPEICHERN: %luKB/%luKB"
+msgstr "ZWISCHENSPEICHERN: %zuKB/%zuKB"
 
 #: Plugins/Input/mpg123/mpg123.c:922
 msgid "About MPEG Audio Plugin"
@@ -2582,12 +2590,12 @@ msgid "TiMidity Player %s"
 msgstr "TiMidity-Player %s"
 
 #: Plugins/Input/timidity/src/xmms-timidity.c:134
-#, fuzzy
 msgid ""
 "TiMidity Plugin\n"
 "http://libtimidity.sourceforge.net\n"
 "by Konstantin Korikov"
 msgstr ""
+"TiMidity-Plugin\n"
 "http://libtimidity.sourceforge.net\n"
 "von Konstantin Korikov"
 
@@ -2684,7 +2692,7 @@ msgid ""
 "An error occured:\n"
 "%s"
 msgstr ""
-"Ein Fehler trat auf:\n"
+"Es ist ein Fehler aufgetreten:\n"
 "%s"
 
 #: Plugins/Input/vorbis/fileinfo.c:212
@@ -2825,7 +2833,6 @@ msgid "About sndfile WAV support"
 msgstr "Über die snd WAV unterstützung"
 
 #: Plugins/Input/wav/wav-sndfile.c:247
-#, fuzzy
 msgid ""
 "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
 "from the xmms_sndfile plugin which is:\n"
@@ -2847,8 +2854,8 @@ msgid ""
 "59 Temple Place, Suite 330, \n"
 "Boston, MA  02111-1307  USA"
 msgstr ""
-"Angepasst für Audaciousbenutzung von Tony Vroon <chainsaw@gentoo.org>\n"
-"rom the xmms_sndfile plugin which is:\n"
+"Angepasst für Audacious durch Tony Vroon <chainsaw@gentoo.org>\n"
+"abgeleitet von xmms_sndfile::\n"
 "Copyright (C) 2000, 2002 Erik de Castro Lopo\n"
 "\n"
 "This program is free software ; you can redistribute it and/or modify \n"
@@ -2977,7 +2984,6 @@ msgid "About OSS Driver"
 msgstr "Über OSS-Treiber"
 
 #: Plugins/Output/OSS/about.c:40
-#, fuzzy
 msgid ""
 "Audacious OSS Driver\n"
 "\n"
@@ -2996,7 +3002,7 @@ msgid ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
 "USA."
 msgstr ""
-"Audacious OSS Driver\n"
+"OSS-Treiber für Audacious\n"
 "\n"
 " This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -3071,7 +3077,6 @@ msgid "About ALSA Driver"
 msgstr "Über ALSA-Treiber"
 
 #: Plugins/Output/alsa/about.c:31
-#, fuzzy
 msgid ""
 "Audacious ALSA Driver\n"
 "\n"
@@ -3091,7 +3096,7 @@ msgid ""
 "USA.\n"
 "Author: Matthieu Sozeau (mattam@altern.org)"
 msgstr ""
-"Audacious ALSA Driver\n"
+"ALSA-Treiber für Audacious\n"
 "\n"
 " This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -3160,9 +3165,8 @@ msgid "Audacious:"
 msgstr "Audacious:"
 
 #: Plugins/Output/arts/configure.c:51
-#, fuzzy
 msgid "aRts Driver configuration"
-msgstr "OSS-Treiber-Konfiguration"
+msgstr "aRts-Treiber-Konfiguration"
 
 #: Plugins/Output/disk_writer/disk_writer.c:110
 #, c-format
@@ -3259,9 +3263,8 @@ msgid "eSound Output Plugin"
 msgstr "eSound-Output-Plugin"
 
 #: Plugins/Output/jack/jack.c:572
-#, fuzzy
 msgid "About JACK Output Plugin 0.15"
-msgstr "eSound-Output-Plugin"
+msgstr "Über JACK-Ausgabe-Plugin"
 
 #: Plugins/Output/jack/jack.c:573
 msgid ""
@@ -3273,11 +3276,17 @@ msgid ""
 "Audacious port by\n"
 "Giacomo Lozito from develia.org"
 msgstr ""
+"XMMS jack Treiber 0.15\n"
+"\n"
+"xmms-jack.sf.net\n"
+"Chris Morgan<cmorgan@alum.wpi.edu>\n"
+"\n"
+"Nach Audacious portiert durch\n"
+"Giacomo Lozito von develia.org"
 
 #: Plugins/Output/sun/about.c:34
-#, fuzzy
 msgid "About the Sun Driver"
-msgstr "Über OSS-Treiber"
+msgstr "Über den Sun-Treiber"
 
 #: Plugins/Output/sun/about.c:35
 msgid ""
@@ -3286,34 +3295,35 @@ msgid ""
 "Copyright (c) 2001 CubeSoft Communications, Inc.\n"
 "Maintainer: <vedge at csoft.org>.\n"
 msgstr ""
+"XMMS-BSD-Sun-Treiber\n"
+"\n"
+"Copyright (c) 2001 CubeSoft Communications, Inc.\n"
+"Betreuer: <vedge at csoft.org>.\n"
 
 #: Plugins/Output/sun/configure.c:200
-#, fuzzy
 msgid "Audio control device:"
-msgstr "Audiogerät:"
+msgstr "Steuerungsgerät für Audio:"
 
 #: Plugins/Output/sun/configure.c:349
-#, fuzzy
 msgid "Volume controls device:"
-msgstr "Lautstärke anpassen:"
+msgstr "Gerät, dessen Lautstärke kontrolliert wird:"
 
 #: Plugins/Output/sun/configure.c:362
 msgid "XMMS uses mixer exclusively."
-msgstr ""
+msgstr "Mixer exklusiv durch XMMS benutzt."
 
 #: Plugins/Output/sun/configure.c:487
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: Plugins/Output/sun/configure.c:537
-#, fuzzy
 msgid "Sun driver configuration"
-msgstr "OSS-Treiber-Konfiguration"
+msgstr "Sun-Treiber-Konfiguration"
 
 #: Plugins/Output/sun/sun.c:55
 #, c-format
 msgid "BSD Sun Driver %s"
-msgstr ""
+msgstr "BSD-SUN-Treiber"
 
 #: Plugins/Visualization/blur_scope/blur_scope.c:57
 msgid "/Toggle Decorations"
@@ -3379,7 +3389,7 @@ msgstr "William Pitcock"
 
 #: audacious/credits.c:55 audacious/credits.c:75
 msgid "Derek Pomery"
-msgstr ""
+msgstr "Derek Pomery"
 
 #: audacious/credits.c:56 audacious/credits.c:76 audacious/credits.c:82
 #: audacious/credits.c:132
@@ -3388,7 +3398,7 @@ msgstr "Tony Vroon"
 
 #: audacious/credits.c:57
 msgid "Yoshiki Yazawa"
-msgstr ""
+msgstr "Yoshiki Yazawa"
 
 #: audacious/credits.c:60
 msgid "Graphics:"
@@ -3704,7 +3714,7 @@ msgstr "Spanisch:"
 
 #: audacious/credits.c:186
 msgid "Gustavo D. Vranjes"
-msgstr ""
+msgstr "Gustavo D. Vranjes"
 
 #: audacious/credits.c:188
 msgid "Swedish:"
@@ -4167,9 +4177,8 @@ msgstr "/Songname automatisch scrollen"
 
 #  -s, --stop switch
 #: audacious/mainwin.c:258 audacious/mainwin.c:350
-#, fuzzy
 msgid "/Stop After Current Song"
-msgstr "Aktuellen Song stoppen"
+msgstr "Nach aktuellen Song stoppen"
 
 #: audacious/mainwin.c:268
 msgid "/Visualization Mode"
@@ -4436,14 +4445,12 @@ msgid "VBR"
 msgstr "VBR"
 
 #: audacious/mainwin.c:904 audacious/mainwin.c:908
-#, fuzzy
 msgid "stereo"
-msgstr "Stereo"
+msgstr "stereo"
 
 #: audacious/mainwin.c:904 audacious/mainwin.c:908
-#, fuzzy
 msgid "mono"
-msgstr "Mono"
+msgstr "mono"
 
 #: audacious/mainwin.c:1358
 msgid "Jump to Time"
@@ -4557,7 +4564,7 @@ msgstr "Aussehen"
 
 #: audacious/prefswin.c:96
 msgid "Connectivity"
-msgstr ""
+msgstr "Verbindung"
 
 #: audacious/prefswin.c:97 audacious/glade/prefswin.glade:3178
 msgid "Equalizer"
@@ -4609,12 +4616,12 @@ msgstr "Kommentar"
 
 #: audacious/prefswin.c:127
 msgid "localhost"
-msgstr ""
+msgstr "localhost"
 
 #: audacious/prefswin.c:442 audacious/prefswin.c:529 audacious/prefswin.c:618
 #: audacious/prefswin.c:714
 msgid "Enabled"
-msgstr "Aktiv"
+msgstr "Aktiviert"
 
 #: audacious/prefswin.c:458 audacious/prefswin.c:545 audacious/prefswin.c:634
 #: audacious/prefswin.c:730
@@ -4675,24 +4682,20 @@ msgid "/Remove Unavailable Files"
 msgstr "/Nicht verfügbare Dateien entfernen"
 
 #: audacious/ui_playlist.c:176
-#, fuzzy
 msgid "/Remove Duplicates"
-msgstr "/Ausgewählte entfernen"
+msgstr "/Duplikate entfernen"
 
 #: audacious/ui_playlist.c:177
-#, fuzzy
 msgid "/Remove Duplicates/By Title"
-msgstr "/Liste sortieren/Nach Titel"
+msgstr "/Duplikate entfernen/Nach Titel"
 
 #: audacious/ui_playlist.c:180
-#, fuzzy
 msgid "/Remove Duplicates/By Filename"
-msgstr "/Liste sortieren/Nach Dateiname"
+msgstr "/Duplikate entfernen/Nach Dateiname"
 
 #: audacious/ui_playlist.c:183
-#, fuzzy
 msgid "/Remove Duplicates/By Path + Filename"
-msgstr "/Liste sortieren/Nach Pfad & Dateinamen"
+msgstr "/Duplikate entfernen/Nach Pfad & Dateinamen"
 
 #: audacious/ui_playlist.c:203
 msgid "/New List"
@@ -4707,9 +4710,8 @@ msgid "/Save List"
 msgstr "/Liste speichern"
 
 #: audacious/ui_playlist.c:217
-#, fuzzy
 msgid "/Save Default List"
-msgstr "/Speichern/Standard"
+msgstr "/Standardliste speichern"
 
 #: audacious/ui_playlist.c:223
 msgid "/Update View"
@@ -4918,9 +4920,8 @@ msgid "<b>_Skin</b>"
 msgstr "<b>_Skin</b>"
 
 #: audacious/glade/prefswin.glade:1052
-#, fuzzy
 msgid "Refresh skin list"
-msgstr "/Wiederholrate"
+msgstr "Skin-Liste erneuern"
 
 #: audacious/glade/prefswin.glade:1147
 msgid "<b>_Fonts</b>"
@@ -4947,6 +4948,8 @@ msgid ""
 "Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
 "strings."
 msgstr ""
+"Bitmap-Schriftarten benutzen, sofern vorhanden. Bitmap-Schriften unterstützen "
+"kein Unicode."
 
 #: audacious/glade/prefswin.glade:1347
 msgid "Use Bitmap fonts if available"
@@ -4961,18 +4964,16 @@ msgid "Show track numbers in playlist"
 msgstr "Nummern in der Wiedergabeliste zeigen"
 
 #: audacious/glade/prefswin.glade:1464
-#, fuzzy
 msgid "Show separators in playlist"
-msgstr "Nummern in der Wiedergabeliste zeigen"
+msgstr "Trennzeichen in Wiedergabeliste zeigen"
 
 #: audacious/glade/prefswin.glade:1499
 msgid "Use custom cursors"
 msgstr "Eigenen Cursor benutzen"
 
 #: audacious/glade/prefswin.glade:1546
-#, fuzzy
 msgid "<b>_Transparency</b>"
-msgstr "<b>Lied:</b>"
+msgstr "<b>_Transparenz</b>"
 
 #: audacious/glade/prefswin.glade:1586
 msgid ""
@@ -4980,11 +4981,12 @@ msgid ""
 "as it requires some CPU time to create and cache the pixmaps used for the "
 "transparency."
 msgstr ""
+"Wiedergabelistentransparenz aktivieren. Für langsamere Maschinen wird dies "
+"nicht empfohlen, da es aufwändige Berechnungen gemacht werden müssen."
 
 #: audacious/glade/prefswin.glade:1588
-#, fuzzy
 msgid "Enable playlist transparency"
-msgstr "ReplayGain aktivieren"
+msgstr "Wiedergabelistentransparenz aktivieren"
 
 #: audacious/glade/prefswin.glade:1661
 msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
@@ -5085,21 +5087,25 @@ msgid "seconds"
 msgstr "Sekunden"
 
 #: audacious/glade/prefswin.glade:2494
-#, fuzzy
 msgid "<b>File Dialog</b>"
-msgstr "<b>Dateiname</b>"
+msgstr "<b>Datei-Dialog</b>"
 
 #: audacious/glade/prefswin.glade:2533
 msgid ""
 "Always refresh the file dialog (this will slow opening the dialog on large "
 "directories, and Gnome VFS should handle automatically)."
 msgstr ""
+"Dateidialog immer aktualisieren (dies wird das Öffnen des Dialogs mit "
+"grossen Verzeichnissen langsamer machen, sollte Gnome VFS sollte es automatisch "
+"aktiviert sein)"
 
 #: audacious/glade/prefswin.glade:2535
 msgid ""
 "Always refresh directory when opening file dialog, should be unneeded with "
 "Gnome VFS."
 msgstr ""
+"Verzeichnis beim Öffnen von Dateidialogen immer aktualisieren, sollte mit "
+"Gnome VFS nicht benötigt werden."
 
 #: audacious/glade/prefswin.glade:2569
 msgid "<b>Song display</b>"
@@ -5110,7 +5116,6 @@ msgid "Custom string:"
 msgstr "Eigene Zeichenkette:"
 
 #: audacious/glade/prefswin.glade:2696
-#, fuzzy
 msgid ""
 "TITLE\n"
 "ARTIST - TITLE\n"
@@ -5123,6 +5128,8 @@ msgstr ""
 "TITEL\n"
 "ARTIST - TITEL\n"
 "ARTIST - ALBUM - TITEL\n"
+"ARTIST - ALBUM - TRACK. TITEL\n"
+"ARTIST [ ALBUM ] - TRACK. TITEL\n"
 "ALBUM - TITEL\n"
 "Eigene"
 
@@ -5151,42 +5158,36 @@ msgid "Available _Presets:"
 msgstr "Verfügbare _Voreinstellungen:"
 
 #: audacious/glade/prefswin.glade:3207
-#, fuzzy
 msgid "<span size=\"xx-large\"><b>Connectivity</b></span>"
-msgstr "<span size=\"xx-large\"><b>Maus</b></span>"
+msgstr "<span size=\"xx-large\"><b>Verbindung</b></span>"
 
 #: audacious/glade/prefswin.glade:3262
-#, fuzzy
 msgid "<b>Proxy Configuration</b>"
-msgstr "MPEG Audio-Plugin-Konfiguration"
+msgstr "<b>Proxy-Konfiguration</b>"
 
 #: audacious/glade/prefswin.glade:3320
 msgid "Enable proxy usage"
-msgstr ""
+msgstr "Proxy aktivieren"
 
 #: audacious/glade/prefswin.glade:3351
 msgid "Proxy hostname:"
-msgstr ""
+msgstr "Proxy-Host:"
 
 #: audacious/glade/prefswin.glade:3379
-#, fuzzy
 msgid "Proxy port:"
-msgstr "Proxy:"
+msgstr "Proxy-Port:"
 
 #: audacious/glade/prefswin.glade:3473
-#, fuzzy
 msgid "Use authentication with proxy"
-msgstr "Authentisierung benutzen"
+msgstr "Benutze Authentisierung mit Proxy"
 
 #: audacious/glade/prefswin.glade:3504
-#, fuzzy
 msgid "Proxy username:"
-msgstr "Benutzername:"
+msgstr "Benutzername für Proxy:"
 
 #: audacious/glade/prefswin.glade:3532
-#, fuzzy
 msgid "Proxy password:"
-msgstr "Passwort:"
+msgstr "Passwort für Proxy:"
 
 #: audacious/glade/prefswin.glade:3637
 msgid "label65"
