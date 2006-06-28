@@ -734,6 +734,9 @@ decode_loop(void *arg)
         mpgdec_mpeg25 = fr.mpeg25;
         mpgdec_mode = fr.mode;
 
+	/* XXX: note that this is temporary, until custom resampling is implemented
+	 * in prefs.
+	 */
 	if (fr.down_sample)
 	{
 	    long n = mpgdec_freqs[fr.sampling_frequency];
