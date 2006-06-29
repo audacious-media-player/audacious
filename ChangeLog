@@ -1,3 +1,12 @@
+2006-06-29 07:38:22 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [1626]
+  - m3u file should be written in locale encoding.
+  
+
+  Changes:        Modified:
+  +9 -1           trunk/audacious/playlist.c  
+
+
 2006-06-29 02:24:02 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1624]
   - hookup tuple->formatter

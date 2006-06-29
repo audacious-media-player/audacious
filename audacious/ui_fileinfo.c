@@ -215,7 +215,9 @@ filepopup_pointer_check_iter(gpointer unused)
 	    	}
 
 		tuple = playlist_get_tuple(pos);
-		filepopup_show_for_tuple(tuple);
+		if(cfg.show_filepopup_for_tuple){
+			filepopup_show_for_tuple(tuple);
+		}
 	}
 
 	return TRUE;

@@ -202,6 +202,7 @@ BmpConfig bmp_default_config = {
     NULL,
     3000,			/* audio buffer size */
     FALSE,			/* whether or not to postpone format detection on initial add */
+    TRUE,			/* show filepopup for tuple */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -293,6 +294,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"close_dialog_add", &cfg.close_dialog_add, TRUE},
     {"resume_playback_on_startup", &cfg.resume_playback_on_startup, TRUE},
     {"playlist_detect", &cfg.playlist_detect, TRUE},
+    {"show_filepopup_for_tuple", &cfg.show_filepopup_for_tuple, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);

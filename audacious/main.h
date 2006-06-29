@@ -111,6 +111,7 @@ struct _BmpConfig {
     gchar *chardet_fallback;
     gint output_buffer_size;
     gboolean playlist_detect;
+    gboolean show_filepopup_for_tuple;
 };
 
 typedef struct _BmpConfig BmpConfig;

@@ -1996,6 +1996,18 @@ on_chardet_fallback_changed(GtkEntry *entry, gpointer data)
     bmp_cfg_db_close(db);
 }
 
+static void
+on_show_filepopup_for_tuple_realize(GtkToggleButton * button, gpointer data)
+{
+    gtk_toggle_button_set_active(button, cfg.show_filepopup_for_tuple);
+}
+
+static void
+on_show_filepopup_for_tuple_toggled(GtkToggleButton * button, gpointer data)
+{
+    cfg.show_filepopup_for_tuple = gtk_toggle_button_get_active(button);
+}
+
 /* FIXME: complete the map */
 FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_input_plugin_view_realize)
@@ -2066,6 +2078,8 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_output_plugin_bufsize_value_changed)
     FUNC_MAP_ENTRY(on_audio_format_det_cb_toggled)
     FUNC_MAP_ENTRY(on_audio_format_det_cb_realize)
+    FUNC_MAP_ENTRY(on_show_filepopup_for_tuple_realize)
+    FUNC_MAP_ENTRY(on_show_filepopup_for_tuple_toggled)
 FUNC_MAP_END
 
 void
