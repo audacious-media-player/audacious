@@ -1285,6 +1285,7 @@ static void
 playlist_save_m3u(FILE * file)
 {
     GList *node;
+    gchar *outstr = NULL;
 
     g_return_if_fail(file != NULL);
 
@@ -1304,7 +1305,14 @@ playlist_save_m3u(FILE * file)
             else
                 seconds = -1;
 
-            g_fprintf(file, "#EXTINF:%d,%s\n", seconds, entry->title);
+            outstr = g_locale_from_utf8(entry->title, -1, NULL, NULL, NULL);
+            if(outstr) {
+                g_fprintf(file, "#EXTINF:%d,%s\n", seconds, outstr);
+                g_free(outstr);
+                outstr = NULL;
+            } else {
+                g_fprintf(file, "#EXTINF:%d,%s\n", seconds, entry->title);
+            }
         }
 
         g_fprintf(file, "%s\n", entry->filename);

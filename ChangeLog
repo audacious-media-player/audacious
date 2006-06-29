@@ -1,3 +1,12 @@
+2006-06-29 02:24:02 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1624]
+  - hookup tuple->formatter
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/audacious/playlist.c  
+
+
 2006-06-29 02:06:06 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1622]
   - add tuple->formatter to tuplespace
