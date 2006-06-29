@@ -32,8 +32,8 @@ AM_GNU_GETTEXT_VERSION([0.12.1])
 
 dnl Check for C compiler
 
-AC_LANG([C])
-AC_LANG([C++])
+AC_PROG_CC
+AC_PROG_CXX
 AC_ISC_POSIX
 AC_C_BIGENDIAN
 
@@ -271,6 +271,16 @@ else
     AC_MSG_RESULT([*** esound plugin disabled per user request ***])
     have_esd=no
 fi
+
+dnl *** AltiVec
+
+AC_CHECK_HEADERS(altivec.h,
+    [AC_DEFINE(HAVE_ALTIVEC, 1, [Define to 1 if your system has AltiVec.])
+     AC_DEFINE(ARCH_POWERPC, 1, [Define to 1 if your system is a PowerPC.])
+     DCT64=dct64_altivec.c],
+    [DCT64=dct64.c]
+)    
+AC_SUBST(DCT64)
 
 dnl *** MP3
 

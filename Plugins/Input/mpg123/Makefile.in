@@ -9,7 +9,7 @@ SOURCES = mpg123.c configure.c fileinfo.c common.c \
 	resample.c \
 	layer1.c layer2.c layer3.c \
 	tabinit.c http.c \
-	dxhead.c decode.c dct64.c paranoia.c interface.c
+	dxhead.c decode.c $(DCT64) paranoia.c interface.c
 
 OBJECTS = ${SOURCES:.c=.o} tag_c_hacked.o
 
