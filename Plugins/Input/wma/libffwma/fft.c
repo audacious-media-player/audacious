@@ -56,14 +56,14 @@ int fft_inits(FFTContext *s, int nbits, int inverse)
     s->fft_calc = fft_calc_c;
     s->exptab1 = NULL;
     /* compute constant table for HAVE_SSE version */
-#if (defined(HAVE_MMX) && defined(HAVE_BUILTIN_VECTOR)) || defined(HAVE_ALTIVEC)
+#if (defined(HAVE_MMX) && defined(HAVE_BUILTIN_VECTOR)) || defined(BLAH_NO_ALTIVEC)
     {
         int has_vectors = 0;
 
 #if defined(HAVE_MMX)
         has_vectors = mm_support() & MM_SSE;
 #endif
-#if defined(HAVE_ALTIVEC) && !defined(ALTIVEC_USE_REFERENCE_C_CODE)
+#if defined(BLAH_NO_ALTIVEC) && !defined(ALTIVEC_USE_REFERENCE_C_CODE)
         has_vectors = mm_support() & MM_ALTIVEC;
 #endif
         if (has_vectors) {

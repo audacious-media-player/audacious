@@ -385,7 +385,7 @@ void dsputil_init_alpha(DSPContext* c, AVCodecContext *avctx);
 
 extern int mm_flags;
 
-#if defined(HAVE_ALTIVEC) && !defined(CONFIG_DARWIN)
+#if defined(BLAH_NO_ALTIVEC) && !defined(CONFIG_DARWIN)
 #define pixel altivec_pixel
 #include <altivec.h>
 #undef pixel
@@ -508,15 +508,5 @@ static int name16(void /*MpegEncContext*/ *s, uint8_t *dst, uint8_t *src, int st
     }\
     return score;\
 }
-
-#ifndef HAVE_LRINTF
-/* XXX: add ISOC specific test to avoid specific BSD testing. */
-/* better than nothing implementation. */
-/* btw, rintf() is existing on fbsd too -- alex */
-static inline long int lrintf(float x)
-{
-    return (int)(rint(x));
-}
-#endif
 
 #endif

@@ -699,7 +699,7 @@ static int wma_decode_block(WMADecodeContext *s)
     int coef_nb_bits, total_gain, parse_exponents;
     float window[BLOCK_MAX_SIZE * 2];
 // XXX: FIXME!! there's a bug somewhere which makes this mandatory under altivec
-#ifdef HAVE_ALTIVEC
+#ifdef BLAH_NO_ALTIVEC
     volatile int nb_coefs[MAX_CHANNELS] __attribute__((aligned(16)));
 #else
     int nb_coefs[MAX_CHANNELS];
