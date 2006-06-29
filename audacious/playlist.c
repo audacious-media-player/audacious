@@ -197,7 +197,7 @@ playlist_entry_get_info(PlaylistEntry * entry)
         return FALSE;
 
     /* entry is still around */
-    entry->title = xmms_get_titlestring(xmms_get_gentitle_format(), tuple);
+    entry->title = xmms_get_titlestring(tuple->formatter != NULL ? tuple->formatter : xmms_get_gentitle_format(), tuple);
     entry->length = tuple->length;
     entry->tuple = tuple;
 
