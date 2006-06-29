@@ -127,9 +127,9 @@ static GtkItemFactoryEntry playlistwin_popup_menu_entries[] = {
      playlistwin_popup_menu_callback,
      MISC_FILEINFO, "<ImageItem>", my_pixbuf},
 
-    {N_("/Popup Info Toggle"), NULL,
+    {N_("/Show Popup Info"), NULL,
      playlistwin_popup_menu_callback,
-     MISC_FILEPOPUP, NULL, NULL},
+     MISC_FILEPOPUP, "<ToggleItem>", NULL},
 
     ITEM_SEPARATOR,
 
@@ -1171,6 +1171,10 @@ playlistwin_press(GtkWidget * widget,
              widget_contains(WIDGET(playlistwin_list), event->x, event->y)) {
         /* popup menu */
         playlistwin_set_sensitive_sortmenu();
+        {
+            GtkWidget *item = gtk_item_factory_get_widget(playlistwin_popup_menu, "/Show Popup Info");
+            gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item), cfg.show_filepopup_for_tuple);
+        }
         gtk_item_factory_popup(playlistwin_popup_menu,
                                event->x_root, event->y_root + 5,
                                3, event->time);
@@ -1991,7 +1995,7 @@ playlistwin_popup_menu_callback(gpointer data,
         mainwin_jump_to_file();
         break;
     case MISC_FILEPOPUP:
-        cfg.show_filepopup_for_tuple ^= 1;
+        cfg.show_filepopup_for_tuple = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(widget));
         break;
 
     }

@@ -1,3 +1,12 @@
+2006-06-29 10:42:13 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [1630]
+  - add a menu item that toggles filepopup to the playlist popup menu.
+  
+
+  Changes:        Modified:
+  +9 -1           trunk/audacious/ui_playlist.c  
+
+
 2006-06-29 09:57:27 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [1628]
   - add toggle option for filepopup window
