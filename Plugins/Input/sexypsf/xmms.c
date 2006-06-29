@@ -48,7 +48,7 @@ static PSFINFO *PSFInfo=NULL;
 
 InputPlugin *get_iplugin_info(void)
       {
-         sexypsf_ip.description = "sexyPSF PSF1 Player 0.4.8";
+         sexypsf_ip.description = "PSF Module Decoder";
          return &sexypsf_ip;
       }
 
@@ -230,24 +230,31 @@ static void sexypsf_xmms_getsonginfo(char *fn, char **title, int *length)
 	}
 }
 
+static TitleInput *get_tuple_psf(gchar *fn) {
+	TitleInput *tuple = NULL;
+	PSFINFO *tmp = sexypsf_getpsfinfo(fn);
+
+	if (tmp->length) {
+		tuple = bmp_title_input_new();
+		tuple->length = tmp->length;
+		tuple->performer = g_strdup(tmp->artist);
+		tuple->album_name = g_strdup(tmp->game);
+		tuple->track_name = g_strdup(tmp->title);
+		tuple->file_name = g_path_get_basename(fn);
+		tuple->file_path = g_path_get_dirname(fn);
+	}
+
+	return tuple;
+}	
+
 static gchar *get_title_psf(gchar *fn) {
 	gchar *title;
-	PSFINFO *tmp = sexypsf_getpsfinfo(fn);
-	
-	if (tmp->length) {
-		TitleInput *tinput;
-		
-		tinput = bmp_title_input_new();
-		
-		tinput->performer = g_strdup(tmp->artist);
-		tinput->album_name = g_strdup(tmp->game);
-		tinput->track_name = g_strdup(tmp->title);
-		tinput->file_name = g_path_get_basename(fn);
-		tinput->file_path = g_path_get_dirname(fn);
-		
+	TitleInput *tinput = get_tuple_psf(fn);
+
+	if (tinput != NULL) {
 		title = xmms_get_titlestring(xmms_get_gentitle_format(),
 				tinput);
-		g_free(tinput);
+		bmp_title_input_free(tinput);
 	}
 	else
 		title = g_path_get_basename(fn);
@@ -280,5 +287,6 @@ InputPlugin sexypsf_ip =
 	0,
 	sexypsf_xmms_getsonginfo,
 	0,
-	0
+	0,
+	get_tuple_psf
 };
