@@ -73,7 +73,7 @@ enum {
     SEL_LOOKUP, CLOSE_PL_WINDOW, MOVE_UP, PLIST_SAVE,
     MISC_QUEUE, PLIST_CQUEUE, PLIST_JTF, PLIST_JTT,
     PLAYLISTWIN_REMOVE_DEAD_FILES,
-    PLAYLISTWIN_REFRESH, PLIST_DEFAULTSAVE
+    PLAYLISTWIN_REFRESH, PLIST_DEFAULTSAVE, MISC_FILEPOPUP
 };
 
 enum {
@@ -126,6 +126,10 @@ static GtkItemFactoryEntry playlistwin_popup_menu_entries[] = {
     {N_("/View Track Details"), NULL,
      playlistwin_popup_menu_callback,
      MISC_FILEINFO, "<ImageItem>", my_pixbuf},
+
+    {N_("/Popup Info Toggle"), NULL,
+     playlistwin_popup_menu_callback,
+     MISC_FILEPOPUP, NULL, NULL},
 
     ITEM_SEPARATOR,
 
@@ -1986,5 +1990,9 @@ playlistwin_popup_menu_callback(gpointer data,
     case PLIST_JTF:
         mainwin_jump_to_file();
         break;
+    case MISC_FILEPOPUP:
+        cfg.show_filepopup_for_tuple ^= 1;
+        break;
+
     }
 }

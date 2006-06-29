@@ -1,3 +1,16 @@
+2006-06-29 09:57:27 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [1628]
+  - add toggle option for filepopup window
+  
+
+  Changes:        Modified:
+  +77 -0          trunk/audacious/glade/prefswin.glade  
+  +2 -0           trunk/audacious/main.c  
+  +1 -0           trunk/audacious/main.h  
+  +14 -0          trunk/audacious/prefswin.c  
+  +3 -1           trunk/audacious/ui_fileinfo.c  
+
+
 2006-06-29 07:38:22 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [1626]
   - m3u file should be written in locale encoding.
