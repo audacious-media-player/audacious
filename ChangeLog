@@ -1,3 +1,12 @@
+2006-06-29 01:53:47 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1620]
+  - tuple builder for PSF files
+  
+
+  Changes:        Modified:
+  +24 -16         trunk/Plugins/Input/sexypsf/xmms.c  
+
+
 2006-06-29 01:21:25 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1618]
   Hook up Altivec-enabled DCT64 for MP3. WMA throws a tantrum on Altivec machines. Submit a patch, or wait for me to fix it.
