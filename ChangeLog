@@ -1,3 +1,13 @@
+2006-06-29 23:46:01 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1634]
+  Forcibly disabled Altivec ifdefs. The code that it wants to call is not actually present. ffmpeg SVN (libavcodec/ppc) has code you could pinch, but that needs to be integrated in proper style. I have given up on this. If you get it working, submit me a patch.
+
+  Changes:        Modified:
+  +1 -11          trunk/Plugins/Input/wma/libffwma/dsputil.h  
+  +2 -2           trunk/Plugins/Input/wma/libffwma/fft.c  
+  +1 -1           trunk/Plugins/Input/wma/libffwma/wmadec.c  
+
+
 2006-06-29 12:58:34 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [1632]
   - now filepopup menu shows its state through checkbox.

@@ -97,7 +97,7 @@ void sexypsf_update(unsigned char *Buffer, long count)
 		{
 			if(t)
 				produce_audio(sexypsf_ip.output->written_time(), FMT_S16_NE, 2, t, Buffer, NULL);
-			usleep((count-t)*1000*5/441/2);
+			g_usleep((count-t)*1000*5/441/2);
 		}
 		count-=t;
 		Buffer+=t;

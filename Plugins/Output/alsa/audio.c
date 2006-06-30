@@ -154,7 +154,7 @@ static int suspend_recover(void)
 
 	while ((err = snd_pcm_resume(alsa_pcm)) == -EAGAIN)
 		/* wait until suspend flag is released */
-		sleep(1);
+		xmms_usleep(1000000);
 	if (err < 0)
 	{
 		g_warning("alsa_handle_error(): "

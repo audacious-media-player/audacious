@@ -404,7 +404,7 @@ static void *xs_thread(void *data __attribute__((unused)))
 		g_mutex_lock(m_scrobbler);
 		run = going;
 		g_mutex_unlock(m_scrobbler);
-		usleep(100000);
+		g_usleep(100000);
 	}
 	pdebug("scrobbler thread: exiting", DEBUG);
 	g_thread_exit(NULL);
@@ -428,7 +428,7 @@ static void *hs_thread(void *data __attribute__((unused)))
 		g_mutex_lock(m_scrobbler);
 		run = going;
 		g_mutex_unlock(m_scrobbler);
-		sleep(1);
+		g_usleep(1000000);
 	}
 	pdebug("handshake thread: exiting", DEBUG);
 	g_thread_exit(NULL);
