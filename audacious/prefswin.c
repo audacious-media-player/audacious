@@ -2303,8 +2303,6 @@ create_prefs_window(void)
 
    gtk_label_set_markup( GTK_LABEL(widget) , aud_version_string->str );
    g_string_free( aud_version_string , TRUE );
-
-   gtk_widget_realize(prefswin);
 }
 
 void
