@@ -1,3 +1,12 @@
+2006-07-01 10:11:13 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1638]
+  - fix the skinwin realisation bug
+  
+
+  Changes:        Modified:
+  +0 -2           trunk/audacious/prefswin.c  
+
+
 2006-06-30 11:18:20 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [1636]
   - use of sleep() or usleep() in multi-thread program may cause 100% CPU usage because of signal distribution.

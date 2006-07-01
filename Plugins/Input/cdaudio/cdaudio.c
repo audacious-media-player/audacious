@@ -1059,13 +1059,14 @@ cdda_get_tuple(cdda_disc_toc_t * toc, int track)
     tuple->album_name = g_strdup(album_name);
     tuple->track_name = g_strdup(track_name);
     tuple->track_number = (track);
-    tuple->file_name = tuple->file_path =
-        g_strdup_printf(_("CD Audio Track %02u"), track);
+    tuple->file_name = g_strdup(tuple->file_path);
+    tuple->file_path = g_strdup_printf(_("CD Audio Track %02u"), track);
     tuple->file_ext = "cda";
     tuple->length = ((cdda_calculate_track_length(toc, track) * 1000) / 75);
 
     if (!tuple->track_name)
         tuple->track_name = g_strdup_printf(_("CD Audio Track %02u"), track);
+
     return tuple;
 }
 
