@@ -40,6 +40,7 @@ struct commandhandler handlers[] = {
 	{"playlist-advance", playlist_advance, "go to the next song in the playlist"},
 	{"playlist-reverse", playlist_reverse, "go to the previous song in the playlist"},
 	{"playlist-addurl", playlist_add_url_string, "adds a url to the playlist"},
+	{"playlist-delete", playlist_delete, "deletes a song from the playlist"},
 	{"playlist-length", playlist_length, "returns the total length of the playlist"},
 	{"playlist-song", playlist_song, "returns the title of a song in the playlist"},
 	{"playlist-song-filename", playlist_song_filename, "returns the filename of a song in the playlist"},
@@ -333,6 +334,26 @@ void playlist_add_url_string(gint session, gint argc, gchar **argv)
 	}
 
 	xmms_remote_playlist_add_url_string(session, argv[2]);
+}
+
+void playlist_delete(gint session, gint argc, gchar **argv)
+{
+	if (argc < 3)
+	{
+		g_print("%s: invalid parameters for playlist-delete.\n", argv[0]);
+		g_print("%s: syntax: %s playlist-delete <position>\n", argv[0], argv[0]);
+		return;
+	}
+
+	gint playpos = atoi(argv[2]);
+
+	if (playpos < 1 || playpos > xmms_remote_get_playlist_length(session))
+	{
+		g_print("%s: invalid playlist position %d\n", argv[0], playpos);
+		return;
+	}
+
+	xmms_remote_playlist_delete(session, playpos - 1);
 }
 
 void playlist_length(gint session, gint argc, gchar **argv)

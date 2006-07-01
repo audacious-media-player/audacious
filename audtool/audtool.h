@@ -54,6 +54,7 @@ extern void playlist_display(gint, gint, gchar **);
 extern void playlist_position(gint, gint, gchar **);
 extern void playlist_jump(gint, gint, gchar **);
 extern void playlist_add_url_string(gint, gint, gchar **);
+extern void playlist_delete(gint, gint, gchar **);
 extern void playlist_clear(gint, gint, gchar **);
 extern void playlist_repeat_status(gint, gint, gchar **);
 extern void playlist_repeat_toggle(gint, gint, gchar **);

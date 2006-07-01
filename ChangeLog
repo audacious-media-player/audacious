@@ -1,3 +1,12 @@
+2006-07-01 11:01:26 +0000  George Averill <nhjm449@gmail.com>
+  revision [1640]
+  - No more cdaudio crashy.
+  
+
+  Changes:        Modified:
+  +3 -2           trunk/Plugins/Input/cdaudio/cdaudio.c  
+
+
 2006-07-01 10:11:13 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1638]
   - fix the skinwin realisation bug
