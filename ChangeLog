@@ -1,3 +1,13 @@
+2006-07-01 11:24:23 +0000  George Averill <nhjm449@gmail.com>
+  revision [1642]
+  - Added playlist-delete command.
+  
+
+  Changes:        Modified:
+  +21 -0          trunk/audtool/audtool.c  
+  +1 -0           trunk/audtool/audtool.h  
+
+
 2006-07-01 11:01:26 +0000  George Averill <nhjm449@gmail.com>
   revision [1640]
   - No more cdaudio crashy.
