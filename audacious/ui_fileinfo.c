@@ -304,7 +304,6 @@ void
 fileinfo_show_for_tuple(TitleInput *tuple)
 {
 	gchar *tmp;
-	GDir *d;
 
 	if (tuple == NULL)
 		return;
@@ -324,36 +323,72 @@ fileinfo_show_for_tuple(TitleInput *tuple)
 	if (tuple->track_number != 0)
 		fileinfo_entry_set_text_free("entry_track", g_strdup_printf("%d", tuple->track_number));
 
-	d = g_dir_open(tuple->file_path, 0, NULL);
+	tmp = fileinfo_recursive_get_image(tuple->file_path, 0);
+	
+	if(tmp)
+	{
+		fileinfo_entry_set_image("image_artwork", tmp);
+		g_free(tmp);
+	}
+	
+	gtk_widget_show(fileinfo_win);
+}
+
+gchar*
+fileinfo_recursive_get_image(const gchar* path, gint depth)
+{
+	GDir *d;
+
+	if(depth > 3)
+		return NULL;
+	
+	d = g_dir_open(path, 0, NULL);
+
 	if (d)
 	{	
 		const gchar *f = g_dir_read_name(d);
-		while(f)
+		
+		while (f)
 		{
+			gchar *newpath = g_strdup_printf("%s/%s", path, f);
+			
 			/* ok. why did I not have strcasestr, thought glib had that one */
 			if ((strstr(f,".jpg") || strstr(f,".jpeg") || strstr(f,".png") || strstr(f,".JPG") || strstr(f,".JPEG") || strstr(f,".PNG")) && !strstr(f,"back") && !strstr(f,"Back") && !strstr(f,"BACK"))
 			{
-				tmp = g_strdup_printf("%s/%s", tuple->file_path, f);
-				fileinfo_entry_set_image("image_artwork", tmp);
-				g_free(tmp);
-				f = NULL;
+				/* We found a suitable file in the current directory, use that. The string will be freed by the caller */
+				return newpath;
 			}
 			else
 			{
-				f = g_dir_read_name(d);
+				/* File/directory wasn't suitable, try and recurse into it.
+				 * This should either return a filename for a image file, 
+				 * or NULL if there was no suitable file, or 'f' wasn't a dir.
+				 */
+				gchar *tmp = fileinfo_recursive_get_image(newpath, depth+1);
+				
+				if(tmp)
+				{
+					g_free(newpath);
+					return tmp;
+				}
+				else
+				{
+					/* Not got anything, move onto the next item in the directory */
+					f = g_dir_read_name(d);
+				}
 			}
 		}
+		
 		g_dir_close(d);
 	}
-
-	gtk_widget_show(fileinfo_win);
+	
+	return NULL;
 }
 
 void
 filepopup_show_for_tuple(TitleInput *tuple)
 {
 	gchar *tmp;
-	GDir *d;
 	gint x, y, x_off = 3, y_off = 3, h, w;
 
 	if (tuple == NULL)
@@ -375,28 +410,14 @@ filepopup_show_for_tuple(TitleInput *tuple)
 	if (tuple->track_number != 0)
 		filepopup_entry_set_text_free("label_track", g_strdup_printf("%d", tuple->track_number));
 
-	d = g_dir_open(tuple->file_path, 0, NULL);
-	if (d)
-	{	
-		const gchar *f = g_dir_read_name(d);
-		while(f)
-		{
-			/* ok. why did I not have strcasestr, thought glib had that one */
-			if ((strstr(f,".jpg") || strstr(f,".jpeg") || strstr(f,".png") || strstr(f,".JPG") || strstr(f,".JPEG") || strstr(f,".PNG")) && !strstr(f,"back") && !strstr(f,"Back") && !strstr(f,"BACK"))
-			{
-				tmp = g_strdup_printf("%s/%s", tuple->file_path, f);
-				filepopup_entry_set_image("image_artwork", tmp);
-				g_free(tmp);
-				f = NULL;
-			}
-			else
-			{
-				f = g_dir_read_name(d);
-			}
-		}
-		g_dir_close(d);
+	tmp = fileinfo_recursive_get_image(tuple->file_path, 0);
+	
+	if(tmp)
+	{
+		filepopup_entry_set_image("image_artwork", tmp);
+		g_free(tmp);
 	}
-
+	
 	gdk_window_get_pointer(NULL, &x, &y, NULL);
 	gtk_window_get_size(GTK_WINDOW(filepopup_win), &w, &h);
 	if (gdk_screen_width()-(w+3) < x) x_off = (w*-1)-3;
