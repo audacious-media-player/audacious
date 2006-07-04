@@ -1,3 +1,11 @@
+2006-07-01 23:19:46 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1644]
+  Show whether modplug will actually be built (wrong var was being displayed).
+
+  Changes:        Modified:
+  +1 -1           trunk/configure.ac  
+
+
 2006-07-01 11:24:23 +0000  George Averill <nhjm449@gmail.com>
   revision [1642]
   - Added playlist-delete command.

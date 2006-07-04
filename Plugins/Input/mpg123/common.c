@@ -251,19 +251,15 @@ mpgdec_read_frame(struct frame *fr)
 
         do {
             try++;
-            if ((newhead & 0xffffff00) ==
-                ('I' << 24) + ('D' << 16) + ('3' << 8)) {
-                if (!stream_head_read(&newhead))
-                    return FALSE;
-            }
-            else if (!stream_head_shift(&newhead))
+            if (!stream_head_shift(&newhead))
                 return 0;
-
         }
         while ((!mpgdec_head_check(newhead) ||
-                !mpgdec_decode_header(fr, newhead)) && try < (256 * 1024));
-        if (try >= (256 * 1024))
+                !mpgdec_decode_header(fr, newhead)) && try < (1024 * 1024));
+        if (try >= (1024 * 1024))
             return FALSE;
+	if (try >= 0)
+	    g_print("mpgdec: illegal bitstream in the middle of the MPEG stream, skipped %d bytes\n", try);
 
         mpgdec_info->filesize -= try;
     }
