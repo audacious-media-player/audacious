@@ -259,7 +259,7 @@ mpgdec_read_frame(struct frame *fr)
         if (try >= (1024 * 1024))
             return FALSE;
 	if (try >= 0)
-	    g_print("mpgdec: illegal bitstream in the middle of the MPEG stream, skipped %d bytes\n", try);
+	    g_log("mpgdec", G_LOG_LEVEL_WARNING, "mpgdec: illegal bitstream in the middle of the MPEG stream, skipped %d bytes", try);
 
         mpgdec_info->filesize -= try;
     }

@@ -1,3 +1,12 @@
+2006-07-04 07:37:37 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1650]
+  - having taglib_file, taglib_tag in the global namespace is not thread safe, and unnecessary.
+  
+
+  Changes:        Modified:
+  +11 -7          trunk/Plugins/Input/mpg123/mpg123.c  
+
+
 2006-07-04 07:25:25 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1648]
   - fix a regression involving large ID3 tags being bolted right in the middle of a fraunhofer VBRX TOC (iTunes fucking fails)
