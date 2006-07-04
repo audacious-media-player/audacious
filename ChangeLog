@@ -1,3 +1,12 @@
+2006-07-04 07:46:20 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1652]
+  - bitch about invalid bitstreams right in the middle of our stream
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/mpg123/common.c  
+
+
 2006-07-04 07:37:37 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1650]
   - having taglib_file, taglib_tag in the global namespace is not thread safe, and unnecessary.

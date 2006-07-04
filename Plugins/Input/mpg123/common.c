@@ -258,9 +258,10 @@ mpgdec_read_frame(struct frame *fr)
                 !mpgdec_decode_header(fr, newhead)) && try < (1024 * 1024));
         if (try >= (1024 * 1024))
             return FALSE;
+#ifdef MPGDEC_INVBITSTREAM_NOTIFY
 	if (try >= 0)
 	    g_log("mpgdec", G_LOG_LEVEL_WARNING, "mpgdec: illegal bitstream in the middle of the MPEG stream, skipped %d bytes", try);
-
+#endif
         mpgdec_info->filesize -= try;
     }
     /* flip/init buffer for Layer 3 */
