@@ -45,10 +45,6 @@ mpgdec_t *ins;
 
 gchar **mpgdec_id3_encoding_list = NULL;
 
-static TagLib_File *taglib_file;
-static TagLib_Tag *taglib_tag;
-static const TagLib_AudioProperties *taglib_ap;
-
 const char *mpgdec_id3_genres[GENRE_MAX] = {
     N_("Blues"), N_("Classic Rock"), N_("Country"), N_("Dance"),
     N_("Disco"), N_("Funk"), N_("Grunge"), N_("Hip-Hop"),
@@ -526,6 +522,8 @@ get_song_tuple(char *filename)
 {
     VFSFile *file;
     TitleInput *tuple = NULL;
+    TagLib_File *taglib_file;
+    TagLib_Tag *taglib_tag;
 
 #ifdef USE_CHARDET
     taglib_set_strings_unicode(FALSE);
@@ -541,7 +539,6 @@ get_song_tuple(char *filename)
         if (taglib_file != NULL)
         {
             taglib_tag = taglib_file_tag(taglib_file);
-            taglib_ap = taglib_file_audioproperties(taglib_file); /* XXX: chainsaw, what is this for? -nenolod */
         }
 
 	if (taglib_tag != NULL)
@@ -584,7 +581,9 @@ get_song_tuple(char *filename)
 	tuple->file_ext = extname(filename);
         tuple->length = get_song_time(file);
 
-        taglib_file_free(taglib_file);
+	if (taglib_file != NULL)
+	        taglib_file_free(taglib_file);
+
         taglib_tag_free_strings();
         vfs_fclose(file);
     }
@@ -748,9 +747,14 @@ decode_loop(void *arg)
 	}
 
         if (strncasecmp(filename, "http://", 7)) {
+	    TitleInput *tuple = NULL;
             mpgdec_length = mpgdec_info->num_frames * mpgdec_info->tpf * 1000;
             if (!mpgdec_title)
-                mpgdec_title = get_song_title(get_song_tuple(filename));
+	    {
+	        tuple = get_song_tuple(filename);
+                mpgdec_title = get_song_title(tuple);
+		bmp_title_input_free(tuple);
+	    }
         }
         else {
             if (!mpgdec_title)

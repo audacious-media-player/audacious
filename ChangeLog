@@ -1,3 +1,12 @@
+2006-07-04 07:25:25 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1648]
+  - fix a regression involving large ID3 tags being bolted right in the middle of a fraunhofer VBRX TOC (iTunes fucking fails)
+  
+
+  Changes:        Modified:
+  +5 -9           trunk/Plugins/Input/mpg123/common.c  
+
+
 2006-07-01 23:19:46 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1644]
   Show whether modplug will actually be built (wrong var was being displayed).
