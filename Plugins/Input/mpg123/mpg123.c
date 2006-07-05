@@ -268,8 +268,7 @@ convert_to_header(guint8 * buf)
 }
 
 
-#if 0
-#define DET_BUF_SIZE 1024
+#define DET_BUF_SIZE 4096
 
 static gboolean
 mpgdec_detect_by_content(char *filename)
@@ -293,7 +292,7 @@ mpgdec_detect_by_content(char *filename)
          * The mpeg-stream can start anywhere in the file,
          * so we check the entire file
 	 *
-	 * Incorrect! We give up past ten iterations of this
+	 * Incorrect! We give up past twenty iterations of this
 	 * code for safety's sake. Buffer overflows suck. --nenolod
          */
         /* Optimize this */
@@ -310,7 +309,7 @@ mpgdec_detect_by_content(char *filename)
             }
         }
 
-        if (++cyc > 20)
+        if (++cyc > 1024)
 	    goto done;
     }
     if (mpgdec_decode_header(&fr, head)) {
@@ -332,19 +331,22 @@ mpgdec_detect_by_content(char *filename)
     vfs_fclose(file);
     return ret;
 }
-#endif
 
 static int
 is_our_file(char *filename)
 {
     gchar *ext = strrchr(filename, '.');
 
-    if (!strncasecmp(filename, "http://", 7) && (ext && strncasecmp(ext, ".ogg", 4)))
+    if (!strncasecmp(filename, "http://", 7) && (ext && strncasecmp(ext, ".ogg", 4)) && (ext && strncasecmp(ext, ".flac", 5)))
 	return TRUE;
+    else if (mpgdec_detect_by_content(filename))
+        return TRUE;
+#if 0
     else if (ext && (!strncasecmp(ext, ".mp3", 4)
 	|| !strncasecmp(ext, ".mp2", 4)
 	|| !strncasecmp(ext, ".mpg", 4)))
         return TRUE;
+#endif
 
     return FALSE;
 }

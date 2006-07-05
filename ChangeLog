@@ -1,3 +1,13 @@
+2006-07-04 11:59:27 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1656]
+  - recursively locate album art, by external contributor Oliver Lumpton.
+  
+
+  Changes:        Modified:
+  +53 -32         trunk/audacious/ui_fileinfo.c  
+  +1 -0           trunk/audacious/ui_fileinfo.h  
+
+
 2006-07-04 07:48:43 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1654]
   - make this a compile-time define
