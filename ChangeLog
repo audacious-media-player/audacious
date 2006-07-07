@@ -1,3 +1,15 @@
+2006-07-05 00:29:40 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1658]
+  mpgdec:
+  - fix smart detection of MPEG streams/Xiph containers/MP3X containers/Fraunhofer VBRX containers
+  - use smart detection instead of extension checking
+  - avoid grabbing FLAC streams if mpgdec is loaded before libflac is.
+  
+
+  Changes:        Modified:
+  +8 -6           trunk/Plugins/Input/mpg123/mpg123.c  
+
+
 2006-07-04 11:59:27 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1656]
   - recursively locate album art, by external contributor Oliver Lumpton.

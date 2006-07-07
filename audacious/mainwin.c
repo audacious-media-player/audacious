@@ -77,9 +77,10 @@
 #include "visualization.h"
 #include "libaudacious/configdb.h"
 
-static GTimeVal cb_time; /* 150ms click delay for tristate --nenolod */
+static GTimeVal cb_time; /* click delay for tristate is defined by TRISTATE_THRESHOLD */
 
 #define ITEM_SEPARATOR {"/-", NULL, NULL, 0, "<Separator>"}
+#define TRISTATE_THRESHOLD 200
 
 /*
  * If you change the menu above change these defines also
@@ -2036,7 +2037,7 @@ mainwin_rev_release(void)
 
     now_dur = labs((delta_time.tv_sec * 1000) + (glong) (delta_time.tv_usec / 1000));
 
-    if ( now_dur <= 150 )
+    if ( now_dur <= TRISTATE_THRESHOLD )
     {
       /* interpret as 'skip to previous song' */
       playlist_prev();
@@ -2073,7 +2074,7 @@ mainwin_fwd_release(void)
 
     now_dur = labs((delta_time.tv_sec * 1000) + (glong) (delta_time.tv_usec / 1000));
 
-    if ( now_dur <= 150 )
+    if ( now_dur <= TRISTATE_THRESHOLD )
     {
       /* interpret as 'skip to previous song' */
       playlist_next();
@@ -3502,7 +3503,7 @@ mainwin_idle_func(gpointer data)
 
       now_dur = labs((delta_time.tv_sec * 1000) + (glong) (delta_time.tv_usec / 1000));
 
-      if ( now_dur > 150 )
+      if ( now_dur > TRISTATE_THRESHOLD )
       {
         gint np;
         if (seek_state == MAINWIN_SEEK_REV)
