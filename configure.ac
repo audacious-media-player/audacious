@@ -401,7 +401,7 @@ AC_ARG_ENABLE(modplug,
 )
 
 if test "$enable_modplug" = "yes"; then
-    AC_CHECK_LIB([modplug],[XMLinearTable],[have_modplug=yes],[have_modplug=no])
+    AC_CHECK_LIB([modplug],[XMLinearTable],[have_modplug=yes],[have_modplug=no],[-lstdc++])
 else
     AC_MSG_RESULT([*** ModPlug plugin disabled per user request ***])
     have_modplug="no"

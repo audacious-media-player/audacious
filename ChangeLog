@@ -1,3 +1,12 @@
+2006-07-07 15:37:38 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [1662]
+  - libguess/Makefile is not necessary.
+  
+
+  Changes:        Modified:
+  +0 -24          trunk/libguess/Makefile  
+
+
 2006-07-07 15:33:43 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [1660]
   - next/previous button failed to work in some environments. 150ms seems little bit too short.
