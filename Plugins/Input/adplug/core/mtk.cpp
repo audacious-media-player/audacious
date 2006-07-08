@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2003 Simon Peter, <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2006 Simon Peter, <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -68,6 +68,9 @@ bool CmtkLoader::load(const std::string &filename, const CFileProvider &fp)
 			ctrlmask = 0x8000;
 		}
 		if(!(ctrlbits & ctrlmask)) {	// uncompressed data
+      if(orgptr >= header.size)
+	goto err;
+
 			org[orgptr] = cmp[cmpptr];
 			orgptr++; cmpptr++;
 			continue;
@@ -78,11 +81,34 @@ bool CmtkLoader::load(const std::string &filename, const CFileProvider &fp)
 		cnt = cmp[cmpptr] & 0x0f;
 		cmpptr++;
 		switch(cmd) {
-		case 0: cnt += 3; memset(&org[orgptr],cmp[cmpptr],cnt); cmpptr++; orgptr += cnt; break;
-		case 1: cnt += (cmp[cmpptr] << 4) + 19; memset(&org[orgptr],cmp[++cmpptr],cnt); cmpptr++; orgptr += cnt; break;
-		case 2: offs = (cnt+3) + (cmp[cmpptr] << 4); cnt = cmp[++cmpptr] + 16; cmpptr++;
-				memcpy(&org[orgptr],&org[orgptr - offs],cnt); orgptr += cnt; break;
-		default: offs = (cnt+3) + (cmp[cmpptr++] << 4); memcpy(&org[orgptr],&org[orgptr-offs],cmd); orgptr += cmd; break;
+    case 0:
+      if(orgptr + cnt > header.size) goto err;
+      cnt += 3;
+      memset(&org[orgptr],cmp[cmpptr],cnt);
+      cmpptr++; orgptr += cnt;
+      break;
+
+    case 1:
+      if(orgptr + cnt > header.size) goto err;
+      cnt += (cmp[cmpptr] << 4) + 19;
+      memset(&org[orgptr],cmp[++cmpptr],cnt);
+      cmpptr++; orgptr += cnt;
+      break;
+
+    case 2:
+      if(orgptr + cnt > header.size) goto err;
+      offs = (cnt+3) + (cmp[cmpptr] << 4);
+      cnt = cmp[++cmpptr] + 16; cmpptr++;
+      memcpy(&org[orgptr],&org[orgptr - offs],cnt);
+      orgptr += cnt;
+      break;
+
+    default:
+      if(orgptr + cmd > header.size) goto err;
+      offs = (cnt+3) + (cmp[cmpptr++] << 4);
+      memcpy(&org[orgptr],&org[orgptr-offs],cmd);
+      orgptr += cmd;
+      break;
 		}
 	}
 	delete [] cmp;
@@ -106,4 +132,9 @@ bool CmtkLoader::load(const std::string &filename, const CFileProvider &fp)
 	delete [] org;
 	rewind(0);
 	return true;
+
+ err:
+  delete [] cmp;
+  delete [] org;
+  return false;
 }

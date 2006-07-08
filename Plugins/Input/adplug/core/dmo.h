@@ -1,6 +1,6 @@
 /*
   Adplug - Replayer for many OPL2/OPL3 audio file formats.
-  Copyright (C) 1999 - 2003 Simon Peter, <dn.tlp@gmx.net>, et al.
+  Copyright (C) 1999 - 2006 Simon Peter, <dn.tlp@gmx.net>, et al.
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -38,11 +38,14 @@ class CdmoLoader: public Cs3mPlayer
   class dmo_unpacker {
   public:
     bool decrypt(unsigned char *buf, long len);
-    long unpack(unsigned char *ibuf, unsigned char *obuf);
+    long unpack(unsigned char *ibuf, unsigned char *obuf,
+		unsigned long outputsize);
 
   private:
     unsigned short brand(unsigned short range);
     short unpack_block(unsigned char *ibuf, long ilen, unsigned char *obuf);
+
     unsigned long bseed;
+    unsigned char *oend;
   };
 };

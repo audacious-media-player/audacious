@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2002 Simon Peter, <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2006 Simon Peter, <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -28,7 +28,10 @@
 class CFileProvider
 {
 public:
-  virtual ~CFileProvider() { }
+  virtual ~CFileProvider()
+    {
+    }
+
   virtual binistream *open(std::string) const = 0;
   virtual void close(binistream *) const = 0;
 
@@ -40,7 +43,6 @@ public:
 class CProvider_Filesystem: public CFileProvider
 {
 public:
-  virtual ~CProvider_Filesystem() { }
   virtual binistream *open(std::string filename) const;
   virtual void close(binistream *f) const;
 };

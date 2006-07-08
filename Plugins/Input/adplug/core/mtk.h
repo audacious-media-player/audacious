@@ -1,6 +1,6 @@
 /*
  * Adplug - Replayer for many OPL2/OPL3 audio file formats.
- * Copyright (C) 1999 - 2003 Simon Peter, <dn.tlp@gmx.net>, et al.
+ * Copyright (C) 1999 - 2006 Simon Peter, <dn.tlp@gmx.net>, et al.
  * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,7 +23,7 @@
 
 class CmtkLoader: public ChscPlayer
 {
-public:
+ public:
   static CPlayer *factory(Copl *newopl);
 
 	CmtkLoader(Copl *newopl)
@@ -45,6 +45,6 @@ public:
 	std::string getinstrument(unsigned int n)
 	{ return std::string(instname[n]); };
 
-private:
+ private:
 	char title[34],composer[34],instname[0x80][34];
 };

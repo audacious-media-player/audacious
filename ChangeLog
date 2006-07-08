@@ -1,3 +1,11 @@
+2006-07-07 19:42:32 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1664]
+  Modplug conftest fix by Christian "Joker" Birchinger from Gentoo.
+
+  Changes:        Modified:
+  +1 -1           trunk/configure.ac  
+
+
 2006-07-07 15:37:38 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [1662]
   - libguess/Makefile is not necessary.

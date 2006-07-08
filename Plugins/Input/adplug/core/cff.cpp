@@ -1,6 +1,6 @@
 /*
   AdPlug - Replayer for many OPL2/OPL3 audio file formats.
-  Copyright (C) 1999 - 2002 Simon Peter <dn.tlp@gmx.net>, et al.
+  Copyright (C) 1999 - 2006 Simon Peter <dn.tlp@gmx.net>, et al.
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -328,7 +328,8 @@ long CcffLoader::cff_unpacker::unpack(unsigned char *ibuf, unsigned char *obuf)
 	memset(dictionary,0,0x8000);
 
 	cleanup();
-	startup();
+  if(!startup())
+    goto out;
 
 	// LZW
 	while (1)
@@ -343,7 +344,8 @@ long CcffLoader::cff_unpacker::unpack(unsigned char *ibuf, unsigned char *obuf)
 		if (new_code == 1)
 		{
 			cleanup();
-			startup();
+			if(!startup())
+				goto out;
 
 			continue;
 		}
@@ -369,12 +371,18 @@ long CcffLoader::cff_unpacker::unpack(unsigned char *ibuf, unsigned char *obuf)
 
 			unsigned long repeat_counter = get_code();
 
+			if(output_length + repeat_counter * repeat_length > 0x10000) {
+				output_length = 0;
+				goto out;
+			}
+
 			for (unsigned int i=0;i<repeat_counter*repeat_length;i++)
 				output[output_length++] = output[output_length - repeat_length];
 
 			code_length = old_code_length;
 
-			startup();
+			if(!startup())
+				goto out;
 
 			continue;
 		}
@@ -399,15 +407,20 @@ long CcffLoader::cff_unpacker::unpack(unsigned char *ibuf, unsigned char *obuf)
 		// output <- new.code.string
 		translate_code(new_code,the_string);
 
+			if(output_length + the_string[0] > 0x10000) {
+				output_length = 0;
+				goto out;
+			}
+
 		for (int i=0;i<the_string[0];i++)
 			output[output_length++] = the_string[i+1];
 
 		old_code = new_code;
 	}
 
+ out:
 	free(heap);
 	free(dictionary);
-
 	return output_length;
 }
 
@@ -457,14 +470,21 @@ void CcffLoader::cff_unpacker::cleanup()
 	dictionary_length = 0;
 }
 
-void CcffLoader::cff_unpacker::startup()
+int CcffLoader::cff_unpacker::startup()
 {
 	old_code = get_code();
 
 	translate_code(old_code,the_string);
 
+  if(output_length + the_string[0] > 0x10000) {
+    output_length = 0;
+    return 0;
+  }
+
 	for (int i=0;i<the_string[0];i++)
 		output[output_length++] = the_string[i+1];
+
+  return 1;
 }
 
 void CcffLoader::cff_unpacker::expand_dictionary(unsigned char *string)

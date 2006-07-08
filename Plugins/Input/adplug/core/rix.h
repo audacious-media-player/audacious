@@ -34,6 +34,7 @@ class CrixPlayer: public CPlayer
   bool update();
   void rewind(int subsong);
   float getrefresh();
+  unsigned int getsubsongs();
 
   std::string gettype()
     { return std::string("Softstar RIX OPL Music Format"); };
@@ -43,7 +44,28 @@ class CrixPlayer: public CPlayer
     unsigned char v[14];
   } ADDT;
 
-  unsigned char dro[128000];
+  int flag_mkf;
+  unsigned char *file_buffer;
+  unsigned char *buf_addr;  /* rix files' buffer */
+  unsigned short buffer[300];
+  unsigned short a0b0_data2[11];
+  unsigned char a0b0_data3[18];
+  unsigned char a0b0_data4[18];
+  unsigned char a0b0_data5[96];
+  unsigned char addrs_head[96];
+  unsigned short insbuf[28];
+  unsigned short displace[11];
+  ADDT reg_bufs[18];
+  unsigned long pos,length;
+  unsigned char index;
+
+  static const unsigned char adflag[18];
+  static const unsigned char reg_data[18];
+  static const unsigned char ad_C0_offs[18];
+  static const unsigned char modify[28];
+  static const unsigned char bd_reg_data[124];
+  static unsigned char for40reg[18];
+  static unsigned short mus_time;
   unsigned int I,T;
   unsigned short mus_block;
   unsigned short ins_block;
@@ -57,27 +79,6 @@ class CrixPlayer: public CPlayer
   unsigned char bd_modify;
   int sustain;
   int dro_end;
-  unsigned char *buf_addr;  /* rix files' buffer */
-  unsigned short buffer[300];
-  unsigned short a0b0_data2[11];
-  unsigned char a0b0_data3[18];
-  unsigned char a0b0_data4[18];
-  unsigned char a0b0_data5[96];
-  unsigned char addrs_head[96];
-  unsigned short insbuf[28];
-  unsigned short displace[11];
-  ADDT reg_bufs[18];
-  unsigned long pos,length;
-  unsigned char index;
-  unsigned short delay;
-
-  static const unsigned char adflag[18];
-  static const unsigned char reg_data[18];
-  static const unsigned char ad_C0_offs[18];
-  static const unsigned char modify[28];
-  static const unsigned char bd_reg_data[124];
-  static unsigned char for40reg[18];
-  static unsigned short mus_time;
 
 #define ad_08_reg() ad_bop(8,0)    /**/
   inline void ad_20_reg(unsigned short);              /**/

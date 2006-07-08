@@ -68,7 +68,8 @@ bool Cs3mPlayer::load(const std::string &filename, const CFileProvider &fp)
 	// file validation section
 	checkhead = new s3mheader;
 	load_header(f, checkhead);
-	if((checkhead->kennung != 0x1a) || (checkhead->typ != 16)) {
+  if(checkhead->kennung != 0x1a || checkhead->typ != 16
+     || checkhead->insnum > 99) {
 		delete checkhead; fp.close(f); return false;
 	} else
 		if(strncmp(checkhead->scrm,"SCRM",4)) {
@@ -91,6 +92,13 @@ bool Cs3mPlayer::load(const std::string &filename, const CFileProvider &fp)
 	// load section
 	f->seek(0);	// rewind for load
 	load_header(f, &header);			// read header
+
+  // security check
+  if(header.ordnum > 256 || header.insnum > 99 || header.patnum > 99) {
+    fp.close(f);
+    return false;
+  }
+
 	for(i = 0; i < header.ordnum; i++) orders[i] = f->readInt(1);	// read orders
 	for(i = 0; i < header.insnum; i++) insptr[i] = f->readInt(2);	// instrument parapointers
 	for(i = 0; i < header.patnum; i++) pattptr[i] = f->readInt(2);	// pattern parapointers
@@ -363,7 +371,7 @@ bool Cs3mPlayer::update()
 	}
 
 	if(!del)
-		del = speed - 1;// speed compensation
+    del = speed - 1;		// speed compensation
 	if(!pattbreak) {			// next row (only if no manual advance)
 		crow++;
 		if(crow > 63) {

@@ -53,14 +53,14 @@ CPlayer *CrixPlayer::factory(Copl *newopl)
 }
 
 CrixPlayer::CrixPlayer(Copl *newopl)
-  : CPlayer(newopl), buf_addr(0)
+  : CPlayer(newopl), flag_mkf(0), file_buffer(0), buf_addr(0)
 {
 }
 
 CrixPlayer::~CrixPlayer()
 {
-  if(buf_addr)
-    delete [] buf_addr;
+  if(file_buffer)
+    delete [] file_buffer;
 }
 
 bool CrixPlayer::load(const std::string &filename, const CFileProvider &fp)
@@ -68,25 +68,28 @@ bool CrixPlayer::load(const std::string &filename, const CFileProvider &fp)
   binistream *f = fp.open(filename); if(!f) return false;
   unsigned long i=0;
 
-  if(f->readInt(2)!=0x55aa) { fp.close(f);return false; }
-  buf_addr = new unsigned char [fp.filesize(f) + 1];
-  buf_addr[i++]=0xaa;buf_addr[i++]=0x55;
+  if(stricmp(filename.substr(filename.length()-4,4).c_str(),".mkf")==0)
+  {
+	  flag_mkf=1;
+	  f->seek(0);
+	  int offset=f->readInt(4);
+	  f->seek(offset);
+  }
+  if(f->readInt(4)!=0x55aa){ fp.close(f);return false; }
+  file_buffer = new unsigned char [fp.filesize(f) + 1];
+  f->seek(0);
   while(!f->eof())
-    buf_addr[i++]=f->readInt(1);
+	file_buffer[i++]=f->readInt(1);
   length=i;
   fp.close(f);
-
+  if(!flag_mkf)
+	  buf_addr=file_buffer;
   rewind(0);
   return true;
 }
 
 bool CrixPlayer::update()
 {
-	if (delay>100) {
-		delay-=100;   
-    return true;
-  } else delay=1;
-
 	int_08h_entry();
 	return !dro_end;
 }
@@ -104,7 +107,6 @@ void CrixPlayer::rewind(int subsong)
   band_low = 0;
   e0_reg_flag = 0;
   bd_modify = 0;
-  delay = 1;
   sustain = 0;
   dro_end = 0;
   pos = index = 0; 
@@ -119,16 +121,37 @@ void CrixPlayer::rewind(int subsong)
   memset(displace, 0, 11 * sizeof(unsigned short));
   memset(reg_bufs, 0, 18 * sizeof(ADDT));
 
+  if(flag_mkf)
+  {
+	  unsigned int *buf_index=(unsigned int *)file_buffer;
+	  int offset1=buf_index[subsong],offset2;
+	  while((offset2=buf_index[++subsong])==offset1);
+	  length=offset2-offset1+1;
+	  buf_addr=file_buffer+offset1;
+  }
   opl->init(); 
   opl->write(1,32);	// go to OPL2 mode
   set_new_int();
   data_initial();
 }
+unsigned int CrixPlayer::getsubsongs()
+{
+	if(flag_mkf)
+	{
+		unsigned int *buf_index=(unsigned int *)file_buffer;
+		int songs=buf_index[0]/4,i=0;
+		for(i=0;i<songs;i++)
+			if(buf_index[i+1]==buf_index[i])
+				songs--;
+		return songs;
+	}
+	else
+		return 1;
+}
 
 float CrixPlayer::getrefresh()
 {
-  if (delay > 100) return 1000 / 100;
-  else return 1000.0 / (double)delay;
+	return 70.0f;
 }
 
 /*------------------Implemention----------------------------*/
@@ -239,7 +262,6 @@ inline void CrixPlayer::int_08h_entry()
 	  mutex++;
 	  band_sus = rix_proc();
 	  if(band_sus) sustain += band_sus;
-			delay=sustain;
 	  mutex--;
 	  if(band_sus == 0)
 	    {
@@ -249,7 +271,7 @@ inline void CrixPlayer::int_08h_entry()
 	}
       else
 	{
-            if(band_sus) sustain -= 9; /* aging */   
+            if(band_sus) sustain -= 14; /* aging */   
 	  break;
 	}
     }

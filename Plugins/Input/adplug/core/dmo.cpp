@@ -1,6 +1,6 @@
 /*
   Adplug - Replayer for many OPL2/OPL3 audio file formats.
-  Copyright (C) 1999 - 2004 Simon Peter, <dn.tlp@gmx.net>, et al.
+  Copyright (C) 1999 - 2004, 2006 Simon Peter, <dn.tlp@gmx.net>, et al.
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -55,11 +55,11 @@ bool CdmoLoader::load(const std::string &filename, const CFileProvider &fp)
   binistream *f;
 
   // check header
-  if(!fp.extension(filename, ".dmo")) return false;
-  f = fp.open(filename); if(!f) return false;
-
   dmo_unpacker *unpacker = new dmo_unpacker;
   unsigned char chkhdr[16];
+
+  if(!fp.extension(filename, ".dmo")) return false;
+  f = fp.open(filename); if(!f) return false;
 
   f->readString((char *)chkhdr, 16);
 
@@ -87,7 +87,7 @@ bool CdmoLoader::load(const std::string &filename, const CFileProvider &fp)
   unsigned char *module = new unsigned char [unpacked_length];
 
   // unpack
-  if (!unpacker->unpack(packed_module+12,module))
+  if (!unpacker->unpack(packed_module+12,module,unpacked_length))
     {
       delete unpacker;
       delete [] packed_module;
@@ -296,6 +296,9 @@ short CdmoLoader::dmo_unpacker::unpack_block(unsigned char *ibuf, long ilen, uns
 	{
 	  cx = (code & 0x3F) + 1;
 
+	  if(opos + cx >= oend)
+	    return -1;
+
 	  for (int i=0;i<cx;i++)
 	    *opos++ = *ipos++;
 
@@ -310,8 +313,11 @@ short CdmoLoader::dmo_unpacker::unpack_block(unsigned char *ibuf, long ilen, uns
 	  ax = ((code & 0x3F) << 3) + ((par1 & 0xE0) >> 5) + 1;
 	  cx = (par1 & 0x1F) + 3;
 
-	  for(int i=0;i<cx;i++,opos++)
-	    *opos = *(opos - ax);
+	  if(opos + cx >= oend)
+	    return -1;
+
+	  for(int i=0;i<cx;i++)
+	    *opos++ = *(opos - ax);
 
 	  continue;
 	}
@@ -327,8 +333,11 @@ short CdmoLoader::dmo_unpacker::unpack_block(unsigned char *ibuf, long ilen, uns
 	  cx = ((par1 & 0x70) >> 4) + 3;
 	  bx = par1 & 0x0F;
 
-	  for(i=0;i<cx;i++,opos++)
-	    *opos = *(opos - ax);
+	  if(opos + bx + cx >= oend)
+	    return -1;
+
+	  for(i=0;i<cx;i++)
+	    *opos++ = *(opos - ax);
 
 	  for (i=0;i<bx;i++)
 	    *opos++ = *ipos++;
@@ -348,8 +357,11 @@ short CdmoLoader::dmo_unpacker::unpack_block(unsigned char *ibuf, long ilen, uns
 	  cx = ((par1 & 0x01) << 4) + (par2 >> 4) + 4;
 	  ax = par2 & 0x0F;
 
-	  for(i=0;i<cx;i++,opos++)
-	    *opos = *(opos - bx);
+	  if(opos + ax + cx >= oend)
+	    return -1;
+
+	  for(i=0;i<cx;i++)
+	    *opos++ = *(opos - bx);
 
 	  for (i=0;i<ax;i++)
 	    *opos++ = *ipos++;
@@ -361,23 +373,23 @@ short CdmoLoader::dmo_unpacker::unpack_block(unsigned char *ibuf, long ilen, uns
   return opos - obuf;
 }
 
-long CdmoLoader::dmo_unpacker::unpack(unsigned char *ibuf, unsigned char *obuf)
+long CdmoLoader::dmo_unpacker::unpack(unsigned char *ibuf, unsigned char *obuf,
+				      unsigned long outputsize)
 {
   long olen = 0;
-
   unsigned short block_count = CHARP_AS_WORD(ibuf);
 
   ibuf += 2;
-
   unsigned char *block_length = ibuf;
-
   ibuf += 2 * block_count;
+
+  oend = obuf + outputsize;
 
   for (int i=0;i<block_count;i++)
     {
       unsigned short bul = CHARP_AS_WORD(ibuf);
 
-      if (unpack_block(ibuf + 2,CHARP_AS_WORD(block_length) - 2,obuf) != bul)
+      if(unpack_block(ibuf + 2,CHARP_AS_WORD(block_length) - 2,obuf) != bul)
 	return 0;
 
       obuf += bul;
