@@ -1545,6 +1545,18 @@ on_playlist_no_advance_toggled(GtkToggleButton * button, gpointer data)
 }
 
 static void
+on_continue_playback_on_startup_realize(GtkToggleButton * button, gpointer data)
+{
+    gtk_toggle_button_set_active(button, cfg.resume_playback_on_startup);
+}
+
+static void
+on_continue_playback_on_startup_toggled(GtkToggleButton * button, gpointer data)
+{
+    cfg.resume_playback_on_startup = gtk_toggle_button_get_active(button);
+}
+
+static void
 on_refresh_file_list_realize(GtkToggleButton * button, gpointer data)
 {
     gtk_toggle_button_set_active(button, cfg.refresh_file_list);
@@ -2080,6 +2092,8 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_audio_format_det_cb_realize)
     FUNC_MAP_ENTRY(on_show_filepopup_for_tuple_realize)
     FUNC_MAP_ENTRY(on_show_filepopup_for_tuple_toggled)
+    FUNC_MAP_ENTRY(on_continue_playback_on_startup_realize)
+    FUNC_MAP_ENTRY(on_continue_playback_on_startup_toggled)
 FUNC_MAP_END
 
 void

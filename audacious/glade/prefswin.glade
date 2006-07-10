@@ -112,7 +112,7 @@
 			      <child>
 				<widget class="GtkLabel" id="input_plugin_list_label">
 				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">_Media plugin list:</property>
+				  <property name="label" translatable="yes">_Decoder list:</property>
 				  <property name="use_underline">True</property>
 				  <property name="use_markup">True</property>
 				  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -216,7 +216,7 @@
 		      <child>
 			<widget class="GtkLabel" id="plugin_input_label">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">&lt;span size=&quot;medium&quot;&gt;&lt;b&gt;Media&lt;/b&gt;&lt;/span&gt;</property>
+			  <property name="label" translatable="yes">&lt;span size=&quot;medium&quot;&gt;&lt;b&gt;Decoders&lt;/b&gt;&lt;/span&gt;</property>
 			  <property name="use_underline">False</property>
 			  <property name="use_markup">True</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -2362,8 +2362,6 @@ Custom</property>
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
-			      <accessibility>
-			      </accessibility>
 			      <signal name="realize" handler="on_show_filepopup_for_tuple_realize" after="yes" last_modification_time="Thu, 29 Jun 2006 08:45:52 GMT"/>
 			      <signal name="toggled" handler="on_show_filepopup_for_tuple_toggled" last_modification_time="Thu, 29 Jun 2006 08:46:11 GMT"/>
 			    </widget>
@@ -3806,9 +3804,9 @@ Please note however, that high values will result in Audacious performing poorly
 		      <property name="right_padding">0</property>
 
 		      <child>
-			<widget class="GtkCheckButton" id="checkbutton8">
+			<widget class="GtkCheckButton" id="continue_playback_on_startup">
 			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">When finished playing a song, don't automatically advance to the next.</property>
+			  <property name="tooltip" translatable="yes">When Audacious starts, automatically begin playing from the point where we stopped before.</property>
 			  <property name="can_focus">True</property>
 			  <property name="label" translatable="yes">Continue playback on startup</property>
 			  <property name="use_underline">True</property>
@@ -3817,40 +3815,8 @@ Please note however, that high values will result in Audacious performing poorly
 			  <property name="active">False</property>
 			  <property name="inconsistent">False</property>
 			  <property name="draw_indicator">True</property>
-			</widget>
-		      </child>
-		    </widget>
-		    <packing>
-		      <property name="padding">0</property>
-		      <property name="expand">False</property>
-		      <property name="fill">False</property>
-		    </packing>
-		  </child>
-
-		  <child>
-		    <widget class="GtkAlignment" id="alignment81">
-		      <property name="visible">True</property>
-		      <property name="xalign">0.5</property>
-		      <property name="yalign">0.5</property>
-		      <property name="xscale">1</property>
-		      <property name="yscale">1</property>
-		      <property name="top_padding">0</property>
-		      <property name="bottom_padding">0</property>
-		      <property name="left_padding">12</property>
-		      <property name="right_padding">0</property>
-
-		      <child>
-			<widget class="GtkCheckButton" id="gapless_playback">
-			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">When finished playing a song, don't automatically advance to the next.</property>
-			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">Enable gapless playback system (experimental)</property>
-			  <property name="use_underline">True</property>
-			  <property name="relief">GTK_RELIEF_NORMAL</property>
-			  <property name="focus_on_click">True</property>
-			  <property name="active">False</property>
-			  <property name="inconsistent">False</property>
-			  <property name="draw_indicator">True</property>
+			  <signal name="realize" handler="on_continue_playback_on_startup_realize" last_modification_time="Mon, 10 Jul 2006 10:15:54 GMT"/>
+			  <signal name="toggled" handler="on_continue_playback_on_startup_toggled" last_modification_time="Mon, 10 Jul 2006 10:15:58 GMT"/>
 			</widget>
 		      </child>
 		    </widget>
@@ -3874,7 +3840,7 @@ Please note however, that high values will result in Audacious performing poorly
 		      <property name="right_padding">0</property>
 
 		      <child>
-			<widget class="GtkCheckButton" id="checkbutton5">
+			<widget class="GtkCheckButton" id="playlist_no_advance">
 			  <property name="visible">True</property>
 			  <property name="tooltip" translatable="yes">When finished playing a song, don't automatically advance to the next.</property>
 			  <property name="can_focus">True</property>

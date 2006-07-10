@@ -1,3 +1,12 @@
+2006-07-10 09:44:30 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1676]
+  - fix compilation
+  
+
+  Changes:        Modified:
+  +1 -0           trunk/Plugins/Output/jack/jack.c  
+
+
 2006-07-10 09:37:04 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1674]
   - provide some additional debugging hints with gdk_error_trap_push/pop.
