@@ -1969,6 +1969,8 @@ playlistwin_popup_menu_callback(gpointer data,
                                 guint action,
                                 GtkWidget * widget)
 {
+    extern GtkWidget *filepopupbutton;
+
     switch (action) {
     case ADD_FILES:
         playlistwin_show_filebrowser();
@@ -1996,6 +1998,9 @@ playlistwin_popup_menu_callback(gpointer data,
         break;
     case MISC_FILEPOPUP:
         cfg.show_filepopup_for_tuple = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(widget));
+        if(filepopupbutton != NULL){
+            gtk_signal_emit_by_name(GTK_OBJECT(filepopupbutton), "realize");
+        }
         break;
 
     }

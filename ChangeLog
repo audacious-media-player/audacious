@@ -1,3 +1,57 @@
+2006-07-10 11:52:51 +0000  Giacomo Lozito <james@develia.org>
+  revision [1688]
+  import amidi-plug 0.5
+
+  Changes:        Modified:
+  +14 -9          trunk/Plugins/Input/amidi-plug/Makefile.in  
+  +398 -0         trunk/Plugins/Input/amidi-plug/amidi-plug-icon.xpm  
+  +234 -234       trunk/Plugins/Input/amidi-plug/amidi-plug.c  
+  +12 -16         trunk/Plugins/Input/amidi-plug/amidi-plug.h  
+  +15 -0          trunk/Plugins/Input/amidi-plug/backend-alsa/Makefile.in  
+  +35 -0          trunk/Plugins/Input/amidi-plug/backend-alsa/b-alsa-config.h  
+  +875 -0         trunk/Plugins/Input/amidi-plug/backend-alsa/b-alsa.c  
+  +63 -0          trunk/Plugins/Input/amidi-plug/backend-alsa/b-alsa.h  
+  +444 -0         trunk/Plugins/Input/amidi-plug/backend-alsa/backend-alsa-icon.xpm  
+  +15 -0          trunk/Plugins/Input/amidi-plug/backend-dummy/Makefile.in  
+  +36 -0          trunk/Plugins/Input/amidi-plug/backend-dummy/b-dummy-config.h  
+  +392 -0         trunk/Plugins/Input/amidi-plug/backend-dummy/b-dummy.c  
+  +49 -0          trunk/Plugins/Input/amidi-plug/backend-dummy/b-dummy.h  
+  +852 -0         trunk/Plugins/Input/amidi-plug/backend-dummy/backend-dummy-icon.xpm  
+  +15 -0          trunk/Plugins/Input/amidi-plug/backend-fluidsynth/Makefile.in  
+  +41 -0          trunk/Plugins/Input/amidi-plug/backend-fluidsynth/b-fluidsynth-config.h  
+  +455 -0         trunk/Plugins/Input/amidi-plug/backend-fluidsynth/b-fluidsynth.c  
+  +56 -0          trunk/Plugins/Input/amidi-plug/backend-fluidsynth/b-fluidsynth.h  
+  +1408 -0        trunk/Plugins/Input/amidi-plug/backend-fluidsynth/backend-fluidsynth-icon.xpm  
+  +174 -0         trunk/Plugins/Input/amidi-plug/i_backend.c  
+  +82 -0          trunk/Plugins/Input/amidi-plug/i_backend.h  
+  +5 -2           trunk/Plugins/Input/amidi-plug/i_common.h  
+  +555 -0         trunk/Plugins/Input/amidi-plug/i_configure-alsa.c  
+  +36 -0          trunk/Plugins/Input/amidi-plug/i_configure-alsa.h  
+  +279 -0         trunk/Plugins/Input/amidi-plug/i_configure-ap.c  
+  +33 -0          trunk/Plugins/Input/amidi-plug/i_configure-ap.h  
+  +410 -0         trunk/Plugins/Input/amidi-plug/i_configure-dummy.c  
+  +36 -0          trunk/Plugins/Input/amidi-plug/i_configure-dummy.h  
+  +843 -0         trunk/Plugins/Input/amidi-plug/i_configure-fluidsynth.c  
+  +36 -0          trunk/Plugins/Input/amidi-plug/i_configure-fluidsynth.h  
+  +241 -336       trunk/Plugins/Input/amidi-plug/i_configure.c  
+  +7 -44          trunk/Plugins/Input/amidi-plug/i_configure.h  
+  +42 -0          trunk/Plugins/Input/amidi-plug/i_configure_private.h  
+  +19 -18         trunk/Plugins/Input/amidi-plug/i_fileinfo.c  
+  +0 -8           trunk/Plugins/Input/amidi-plug/i_fileinfo.h  
+  +189 -23        trunk/Plugins/Input/amidi-plug/i_midi.h  
+  +40 -0          trunk/Plugins/Input/amidi-plug/i_midievent.h  
+  +0 -493         trunk/Plugins/Input/amidi-plug/i_seq.c  
+  +0 -62          trunk/Plugins/Input/amidi-plug/i_seq.h  
+  +37 -39         trunk/Plugins/Input/amidi-plug/i_utils.c  
+  +4 -8           trunk/Plugins/Input/amidi-plug/i_utils.h  
+  +12 -0          trunk/Plugins/Input/amidi-plug/pcfg/Makefile.in  
+  +158 -0         trunk/Plugins/Input/amidi-plug/pcfg/i_pcfg.c  
+  +39 -0          trunk/Plugins/Input/amidi-plug/pcfg/i_pcfg.h  
+  +114 -15        trunk/configure.ac  
+  +3 -3           trunk/m4/amidi-plug.m4  
+  +7 -0           trunk/mk/rules.mk.in  
+
+
 2006-07-10 11:42:53 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1686]
   - disconnect mms code

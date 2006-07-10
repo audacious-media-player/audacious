@@ -92,6 +92,7 @@ TitleFieldTag;
 static GtkWidget *prefswin = NULL;
 static GtkWidget *category_treeview = NULL;
 static GtkWidget *category_notebook = NULL;
+GtkWidget *filepopupbutton = NULL;
 
 static Category categories[] = {
     {DATA_DIR "/images/appearance.png", N_("Appearance"), 1},
@@ -2012,6 +2013,7 @@ static void
 on_show_filepopup_for_tuple_realize(GtkToggleButton * button, gpointer data)
 {
     gtk_toggle_button_set_active(button, cfg.show_filepopup_for_tuple);
+    filepopupbutton = (GtkWidget *)button;
 }
 
 static void
