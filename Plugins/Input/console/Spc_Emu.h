@@ -35,7 +35,7 @@ public:
 		char dumper [16];
 		char comment [32];
 		byte date [11];
-		char len_secs [3];
+		unsigned char len_secs [3];
 		byte fade_msec [5];
 		char author [32];
 		byte mute_mask;

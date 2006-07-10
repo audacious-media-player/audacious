@@ -1,3 +1,25 @@
+2006-07-08 15:29:18 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1666]
+  Security fixes from AdPlug CVS (their July 7 commit shortly before the secunia announcement).
+
+  Changes:        Modified:
+  +26 -6          trunk/Plugins/Input/adplug/core/cff.cpp  
+  +2 -2           trunk/Plugins/Input/adplug/core/cff.h  
+  +28 -16         trunk/Plugins/Input/adplug/core/dmo.cpp  
+  +5 -2           trunk/Plugins/Input/adplug/core/dmo.h  
+  +6 -1           trunk/Plugins/Input/adplug/core/dtm.cpp  
+  +1 -1           trunk/Plugins/Input/adplug/core/dtm.h  
+  +3 -7           trunk/Plugins/Input/adplug/core/fmopl.c  
+  +5 -3           trunk/Plugins/Input/adplug/core/fprovide.h  
+  +37 -6          trunk/Plugins/Input/adplug/core/mtk.cpp  
+  +3 -3           trunk/Plugins/Input/adplug/core/mtk.h  
+  +5 -2           trunk/Plugins/Input/adplug/core/opl.h  
+  +40 -18         trunk/Plugins/Input/adplug/core/rix.cpp  
+  +16 -15         trunk/Plugins/Input/adplug/core/rix.h  
+  +10 -2          trunk/Plugins/Input/adplug/core/s3m.cpp  
+  +13 -6          trunk/Plugins/Input/adplug/core/u6m.cpp  
+
+
 2006-07-07 19:42:32 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1664]
   Modplug conftest fix by Christian "Joker" Birchinger from Gentoo.
