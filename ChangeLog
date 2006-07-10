@@ -1,3 +1,15 @@
+2006-07-10 08:18:38 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1670]
+  - some improvements to song_change, still sucky
+  - jackd volume saving stuff (via galiyosha)
+  
+
+  Changes:        Modified:
+  +4 -9           trunk/Plugins/General/song_change/song_change.c  
+  +20 -2          trunk/Plugins/Output/jack/jack.c  
+  +1 -0           trunk/Plugins/Output/jack/jack.h  
+
+
 2006-07-10 05:59:20 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1668]
   - properly respect signedness in get_spc_info_().

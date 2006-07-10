@@ -85,9 +85,9 @@ shade_gdkimage_generic (GdkVisual *visual, GdkImage *ximg, int bpl, int w, int h
 			b = bm * (pixel & visual->blue_mask) + bgb;
 
 			gdk_image_put_pixel (ximg, x, y,
-							((r >> 8) & visual->red_mask) |
-							((g >> 8) & visual->green_mask) |
-							((b >> 8) & visual->blue_mask));
+				((r >> 8) & visual->red_mask) |
+				((g >> 8) & visual->green_mask) |
+				((b >> 8) & visual->blue_mask));
 		}
 	}
 }
@@ -120,31 +120,40 @@ shade_pixmap(GdkPixmap *in, gint x, gint y, gint x_offset, gint y_offset, gint w
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
-GdkPixmap *get_transparency_pixmap(void)
+GdkDrawable *get_transparency_pixmap(void)
 {
-    Atom type;
-    static Atom prop = None;
-    int format;
-    unsigned long length, after;
-    unsigned char *data;
-    GdkPixmap *retval = NULL;
+	GdkDrawable *root;
+	XID *pixmaps;
+	GdkAtom prop_type;
+	gint prop_size;
+	GdkPixmap *pixmap;
+	gboolean ret;
 
-    if(prop == None)
-        prop = XInternAtom(GDK_DISPLAY(), "_XROOTPMAP_ID", True);
-    if(prop == None)
-        return NULL;
+	root = gdk_get_default_root_window();
 
-    XGetWindowProperty(GDK_DISPLAY(), GDK_ROOT_WINDOW(), prop, 0L, 1L, False, AnyPropertyType, &type, &format, &length, &after, &data);
+	pixmap = NULL;
+	pixmaps = NULL;
 
-    if (data)
-    {
-        if(type == XA_PIXMAP)
-           retval = gdk_pixmap_foreign_new(*((Pixmap *)data));
+	gdk_error_trap_push();
 
-        XFree(data);
-    }
+	ret = gdk_property_get(root, gdk_atom_intern("_XROOTPMAP_ID", TRUE),
+			0, 0, INT_MAX - 3,
+			FALSE,
+			&prop_type, NULL, &prop_size,
+			(guchar **) &pixmaps);
 
-    return retval;
+	gdk_error_trap_pop();
+
+	if ((ret == TRUE) && (prop_type == GDK_TARGET_PIXMAP) && (prop_size >= sizeof(XID)) && (pixmaps != NULL))
+	{
+		pixmap = gdk_pixmap_foreign_new_for_display(gdk_drawable_get_display(root),
+			pixmaps[0]);
+
+		if (pixmaps != NULL)
+			g_free(pixmaps);
+	}
+
+	return GDK_DRAWABLE(pixmap);
 }
 
 static GdkFilterReturn
