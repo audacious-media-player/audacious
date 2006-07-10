@@ -185,6 +185,9 @@ filepopup_pointer_check_iter(gpointer unused)
 		|| gdk_window_at_pointer(NULL, NULL) == NULL)
 	{
 		ctr = 0;
+                if ( filepopup_win->window != NULL &&
+                     gdk_window_is_viewable(GDK_WINDOW(filepopup_win->window)) )
+                  filepopup_hide(NULL);
 		return TRUE;
 	}
 

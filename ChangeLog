@@ -1,3 +1,15 @@
+2006-07-10 13:41:11 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [1690]
+  - when the playlist page of the preferences window is shown, the checkbox for filepopup follows the popup menu now.
+  - tweaks descriptions (s/song/entry/).
+  
+
+  Changes:        Modified:
+  +2 -2           trunk/audacious/glade/prefswin.glade  
+  +2 -0           trunk/audacious/prefswin.c  
+  +5 -0           trunk/audacious/ui_playlist.c  
+
+
 2006-07-10 11:52:51 +0000  Giacomo Lozito <james@develia.org>
   revision [1688]
   import amidi-plug 0.5
