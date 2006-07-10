@@ -1,3 +1,12 @@
+2006-07-10 21:04:49 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1694]
+  - use default 'plugins' icon for now.
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/General/song_change/song_change.c  
+
+
 2006-07-10 15:40:14 +0000  Giacomo Lozito <james@develia.org>
   revision [1692]
   ensure that the fileinfo popup in playlist disappears when the cursor is moved again
