@@ -102,7 +102,11 @@ shade_pixmap(GdkPixmap *in, gint x, gint y, gint x_offset, gint y_offset, gint w
 
         gdk_draw_pixmap(p, gc, in, x, y, 0, 0, w, h);
 
+	gdk_error_trap_push();
+
 	ximg = gdk_drawable_copy_to_image(in, NULL, x, y, 0, 0, w, h);	/* copy */
+
+	gdk_error_trap_pop();
 
 	shade_gdkimage_generic(gdk_drawable_get_visual(GDK_WINDOW(playlistwin->window)),
 		ximg, ximg->bpl, w, h, 60, 60, 60, shade_color->pixel);

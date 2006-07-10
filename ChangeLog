@@ -1,3 +1,13 @@
+2006-07-10 09:34:37 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1672]
+  - do transparency the X11 way
+  
+
+  Changes:        Modified:
+  +31 -22         trunk/audacious/playlist_list.c  
+  +2 -2           trunk/audacious/playlist_list.h  
+
+
 2006-07-10 08:18:38 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1670]
   - some improvements to song_change, still sucky
