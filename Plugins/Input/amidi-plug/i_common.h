@@ -21,7 +21,6 @@
 #ifndef _I_COMMON_H
 #define _I_COMMON_H 1
 
-
 #include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,10 +43,14 @@
 #endif /* DEBUG */
 
 
-#define AMIDIPLUG_VERSION "0.2+"
+#define AMIDIPLUG_VERSION "0.5"
 #define PLAYER_NAME "Audacious"
+#define PLAYER_LOCALRCDIR ".audacious"
 #define G_PATH_GET_BASENAME(x) g_path_get_basename(x)
 #define G_STRING_PRINTF(...) g_string_printf(__VA_ARGS__)
+#define G_USLEEP(x) g_usleep(x)
+#define G_VFPRINTF(x,y,z) g_vfprintf(x,y,z)
+
 
 /* multi-purpose data bucket */
 typedef struct

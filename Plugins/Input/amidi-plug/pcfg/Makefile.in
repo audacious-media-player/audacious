@@ -1,0 +1,12 @@
+include ../../../../mk/rules.mk
+include ../../../../mk/objective.mk
+
+noinst_HEADERS = i_pcfg.h
+
+CFLAGS += -fPIC -DPIC $(GLIB_CFLAGS) -I../../../../intl -I../../../..
+
+OBJECTIVE_LIBS_NOINST = libpcfg.a
+
+SOURCES = i_pcfg.c
+
+OBJECTS = ${SOURCES:.c=.o}

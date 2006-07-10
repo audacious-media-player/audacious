@@ -20,31 +20,13 @@
 
 
 #include "i_utils.h"
+#include <gtk/gtk.h>
 #include "amidi-plug.logo.xpm"
-
-static amidiplug_gui_about_t amidiplug_gui_about = { NULL };
-
-void i_about_ev_destroy( void );
-void i_about_ev_bok( void );
-
-
-/* count the number of occurrencies of a specific character 'c'
-   in the string 'string' (it must be a null-terminated string) */
-gint i_util_str_count( gchar * string , gchar c )
-{
-  gint i = 0 , count = 0;
-  while ( string[i] != '\0' )
-  {
-    if ( string[i] == c )
-      ++count;
-    ++i;
-  }
-  return count;
-}
 
 
 void i_about_gui( void )
 {
+  static GtkWidget * aboutwin = NULL;
   GtkWidget *logoandinfo_vbox , *aboutwin_vbox;
   GtkWidget *logo_image , *logo_frame;
   GtkWidget *info_frame , *info_scrolledwin , *info_textview;
@@ -52,21 +34,20 @@ void i_about_gui( void )
   GtkTextBuffer *info_textbuffer;
   GdkPixbuf *logo_pixbuf;
 
-  if ( amidiplug_gui_about.about_win )
+  if ( aboutwin != NULL )
     return;
 
-  amidiplug_gui_about.about_win = gtk_window_new( GTK_WINDOW_TOPLEVEL );
-  gtk_window_set_type_hint( GTK_WINDOW(amidiplug_gui_about.about_win), GDK_WINDOW_TYPE_HINT_DIALOG );
-  gtk_window_set_title( GTK_WINDOW(amidiplug_gui_about.about_win), "AMIDI-Plug - about" );
-  gtk_window_set_resizable( GTK_WINDOW(amidiplug_gui_about.about_win) , FALSE );
-  gtk_container_set_border_width( GTK_CONTAINER(amidiplug_gui_about.about_win), 10 );
-  g_signal_connect( G_OBJECT(amidiplug_gui_about.about_win) ,
-                    "destroy" , G_CALLBACK(i_about_ev_destroy) , NULL );
+  aboutwin = gtk_window_new( GTK_WINDOW_TOPLEVEL );
+  gtk_window_set_type_hint( GTK_WINDOW(aboutwin), GDK_WINDOW_TYPE_HINT_DIALOG );
+  gtk_window_set_title( GTK_WINDOW(aboutwin), "AMIDI-Plug - about" );
+  gtk_window_set_resizable( GTK_WINDOW(aboutwin) , FALSE );
+  gtk_container_set_border_width( GTK_CONTAINER(aboutwin), 10 );
+  g_signal_connect( G_OBJECT(aboutwin) , "destroy" , G_CALLBACK(gtk_widget_destroyed) , &aboutwin );
 
   aboutwin_vbox = gtk_vbox_new( FALSE , 0 );
 
   logoandinfo_vbox = gtk_vbox_new( TRUE , 2 );
-  gtk_container_add( GTK_CONTAINER(amidiplug_gui_about.about_win) , aboutwin_vbox );
+  gtk_container_add( GTK_CONTAINER(aboutwin) , aboutwin_vbox );
 
   logo_pixbuf = gdk_pixbuf_new_from_xpm_data( (const gchar **)amidiplug_xpm_logo );
   logo_image = gtk_image_new_from_pixbuf( logo_pixbuf );
@@ -84,8 +65,8 @@ void i_about_gui( void )
   gtk_text_view_set_left_margin( GTK_TEXT_VIEW(info_textview) , 10 );
 
   gtk_text_buffer_set_text( info_textbuffer ,
-                            "\nAMIDI-Plug " AMIDIPLUG_VERSION
-                            "\nplay MIDI music through the ALSA sequencer\n"
+                            "\nAMIDI-Plug " VERSION
+                            "\nmodular MIDI music player\n"
                             "http://www.develia.org/projects.php?p=amidiplug\n\n"
                             "written by Giacomo Lozito\n"
                             "< james@develia.org >\n\n\n"
@@ -117,21 +98,38 @@ void i_about_gui( void )
   hbuttonbox = gtk_hbutton_box_new();
   gtk_button_box_set_layout( GTK_BUTTON_BOX(hbuttonbox) , GTK_BUTTONBOX_END );
   button_ok = gtk_button_new_from_stock( GTK_STOCK_OK );
-  g_signal_connect( G_OBJECT(button_ok) , "clicked" , G_CALLBACK(i_about_ev_bok) , NULL );
+  g_signal_connect_swapped( G_OBJECT(button_ok) , "clicked" , G_CALLBACK(gtk_widget_destroy) , aboutwin );
   gtk_container_add( GTK_CONTAINER(hbuttonbox) , button_ok );
   gtk_box_pack_start( GTK_BOX(aboutwin_vbox) , hbuttonbox , FALSE , FALSE , 0 );
 
-  gtk_widget_show_all( amidiplug_gui_about.about_win );
+  gtk_widget_show_all( aboutwin );
 }
 
 
-void i_about_ev_destroy( void )
+gpointer i_message_gui( gchar * title , gchar * message ,
+                        gint type , gpointer parent_win )
 {
-  amidiplug_gui_about.about_win = NULL;
-}
+  GtkWidget *win;
+  GtkMessageType mtype = GTK_MESSAGE_INFO;
 
+  switch ( type )
+  {
+    case AMIDIPLUG_MESSAGE_INFO:
+      mtype = GTK_MESSAGE_INFO; break;
+    case AMIDIPLUG_MESSAGE_WARN:
+      mtype = GTK_MESSAGE_WARNING; break;
+    case AMIDIPLUG_MESSAGE_ERR:
+      mtype = GTK_MESSAGE_ERROR; break;
+  }
 
-void i_about_ev_bok( void )
-{
-  gtk_widget_destroy(amidiplug_gui_about.about_win);
+  if ( parent_win != NULL )
+    win = gtk_message_dialog_new( GTK_WINDOW(parent_win) , GTK_DIALOG_DESTROY_WITH_PARENT ,
+                                  mtype , GTK_BUTTONS_OK , message );
+  else
+    win = gtk_message_dialog_new( NULL , 0 , mtype , GTK_BUTTONS_OK , message );
+
+  gtk_window_set_title( GTK_WINDOW(win) , title );
+  g_signal_connect_swapped( G_OBJECT(win) , "response" , G_CALLBACK(gtk_widget_destroy) , win );
+
+  return win;
 }

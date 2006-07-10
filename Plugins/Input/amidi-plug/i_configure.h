@@ -22,59 +22,22 @@
 #define _I_CONFIGURE_H 1
 
 #include "i_common.h"
-#include <gtk/gtk.h>
-#include "libaudacious/configdb.h"
 
-
-enum
-{
-  LISTPORT_TOGGLE_COLUMN,
-  LISTPORT_PORTNUM_COLUMN,
-  LISTPORT_CLIENTNAME_COLUMN,
-  LISTPORT_PORTNAME_COLUMN,
-  LISTPORT_POINTER_COLUMN,
-  LISTPORT_N_COLUMNS
-};
-
-enum
-{
-  LISTMIXER_DESC_COLUMN,
-  LISTMIXER_CARDID_COLUMN,
-  LISTMIXER_MIXCTLID_COLUMN,
-  LISTMIXER_MIXCTLNAME_COLUMN,
-  LISTMIXER_N_COLUMNS
-};
 
 typedef struct
 {
-  gchar * seq_writable_ports;
-  gint mixer_card_id;
-  gchar * mixer_control_name;
-  gint mixer_control_id;
-  gint length_precalc_enable;
+  gchar *	ap_seq_backend;
+  gint		ap_opts_length_precalc;
 }
-amidiplug_cfg_t;
+amidiplug_cfg_ap_t;
 
-extern amidiplug_cfg_t amidiplug_cfg;
 
-typedef struct
-{
-  GtkWidget * config_win;
-  GtkWidget * port_treeview;
-  GtkWidget * mixercard_combo;
-  GtkWidget * precalc_checkbt;
-  GtkTooltips * config_tips;
-}
-amidiplug_gui_prefs_t;
+extern amidiplug_cfg_ap_t amidiplug_cfg_ap;
 
-static amidiplug_gui_prefs_t amidiplug_gui_prefs = { NULL , NULL , NULL , NULL , NULL };
 
-void i_configure_gui( GSList * , GSList * );
-void i_configure_ev_destroy( void );
-void i_configure_ev_bcancel( void );
-void i_configure_ev_bok( void );
-void i_configure_cfg_save( void );
-void i_configure_cfg_read( void );
+void i_configure_gui( void );
+void i_configure_cfg_ap_read( void );
+void i_configure_cfg_ap_save( void );
 
 
 #endif /* !_I_CONFIGURE_H */

@@ -18,13 +18,25 @@
 *
 */
 
-#ifndef _I_FILEINFO_H
-#define _I_FILEINFO_H 1
+#ifndef _I_CONFIGURE_PRIVATE_H
+#define _I_CONFIGURE_PRIVATE_H 1
 
 #include "i_common.h"
+#include "i_backend.h"
+#include "pcfg/i_pcfg.h"
+#include <gtk/gtk.h>
 
 
-void i_fileinfo_gui( gchar * );
+typedef struct
+{
+  gpointer alsa; /* advanced linux sound architecture */
+  gpointer fsyn; /* fluidsynth */
+  gpointer dumm; /* dummy */
+}
+amidiplug_cfg_backend_t;
 
 
-#endif /* !_I_FILEINFO_H */
+GtkWidget * i_configure_gui_draw_title( gchar * );
+void i_configure_ev_browse_for_entry( GtkWidget * );
+
+#endif /* !_I_CONFIGURE_PRIVATE_H */

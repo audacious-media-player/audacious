@@ -18,13 +18,19 @@
 *
 */
 
-#ifndef _I_FILEINFO_H
-#define _I_FILEINFO_H 1
+#ifndef _I_CONFIGURE_DUMMY_H
+#define _I_CONFIGURE_DUMMY_H 1
 
-#include "i_common.h"
-
-
-void i_fileinfo_gui( gchar * );
+#include "i_configure_private.h"
 
 
-#endif /* !_I_FILEINFO_H */
+extern amidiplug_cfg_backend_t * amidiplug_cfg_backend;
+
+void i_configure_gui_tab_dumm( GtkWidget * , gpointer , gpointer );
+void i_configure_gui_tablabel_dumm( GtkWidget * , gpointer , gpointer );
+void i_configure_cfg_dumm_alloc( void );
+void i_configure_cfg_dumm_free( void );
+void i_configure_cfg_dumm_read( pcfg_t * );
+void i_configure_cfg_dumm_save( pcfg_t * );
+
+#endif /* !_I_CONFIGURE_DUMMY_H */

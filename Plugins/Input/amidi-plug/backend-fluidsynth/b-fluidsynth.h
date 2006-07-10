@@ -18,13 +18,39 @@
 *
 */
 
-#ifndef _I_FILEINFO_H
-#define _I_FILEINFO_H 1
+#ifndef _B_FLUIDSYNTH_H
+#define _B_FLUIDSYNTH_H 1
 
-#include "i_common.h"
+#include <fluidsynth.h>
+#include <math.h>
+#include "../i_common.h"
+#include "../pcfg/i_pcfg.h"
+#include "../i_midievent.h"
 
 
-void i_fileinfo_gui( gchar * );
+typedef struct
+{
+  fluid_settings_t * settings;
+  fluid_synth_t * synth;
+
+  gint soundfont_id;
+
+  gint ppq;
+  gdouble cur_microsec_per_tick;
+  guint tick_offset;
+
+  GTimer * timer_seq;
+  GTimer * timer_sample;
+
+  guint sample_rate;
+  gdouble last_sample_time;
+}
+sequencer_client_t;
 
 
-#endif /* !_I_FILEINFO_H */
+void i_sleep( guint );
+void i_soundfont_load( void );
+void i_cfg_read( void );
+void i_cfg_free( void );
+
+#endif /* !_B_FLUIDSYNTH_H */

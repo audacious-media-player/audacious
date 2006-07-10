@@ -18,13 +18,19 @@
 *
 */
 
-#ifndef _I_FILEINFO_H
-#define _I_FILEINFO_H 1
-
-#include "i_common.h"
+#ifndef _B_DUMMY_CONFIG_H
+#define _B_DUMMY_CONFIG_H 1
 
 
-void i_fileinfo_gui( gchar * );
+typedef struct
+{
+  gint		dumm_logger_enable;
+  gint		dumm_logger_lfstyle;
+  gint		dumm_playback_speed;
+  gchar *	dumm_logger_logfile;
+  gchar *	dumm_logger_logdir;
+}
+amidiplug_cfg_dumm_t;
 
 
-#endif /* !_I_FILEINFO_H */
+#endif /* !_B_DUMMY_CONFIG_H */

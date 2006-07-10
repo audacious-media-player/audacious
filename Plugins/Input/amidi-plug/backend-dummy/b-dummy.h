@@ -18,13 +18,32 @@
 *
 */
 
-#ifndef _I_FILEINFO_H
-#define _I_FILEINFO_H 1
-
-#include "i_common.h"
+#ifndef _B_DUMMY_H
+#define _B_DUMMY_H 1
 
 
-void i_fileinfo_gui( gchar * );
+#include "../i_common.h"
+#include <glib/gprintf.h>
+#include "../pcfg/i_pcfg.h"
+#include "../i_midievent.h"
 
 
-#endif /* !_I_FILEINFO_H */
+typedef struct
+{
+  FILE * file;
+
+  gint ppq;
+  gdouble usec_per_tick;
+  guint tick_offset;
+
+  GTimer * timer_seq;
+}
+sequencer_client_t;
+
+
+void i_sleep( guint );
+void i_printf( FILE * , const gchar * , ... );
+void i_cfg_read( void );
+void i_cfg_free( void );
+
+#endif /* !_B_DUMMY_H */

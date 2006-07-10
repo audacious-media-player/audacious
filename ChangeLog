@@ -1,3 +1,12 @@
+2006-07-10 11:42:53 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1686]
+  - disconnect mms code
+  
+
+  Changes:        Modified:
+  +3 -0           trunk/Plugins/Input/wma/libffwma/allformats.c  
+
+
 2006-07-10 11:39:43 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1684]
   - vast improvements to the songchange plugin

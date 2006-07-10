@@ -18,13 +18,19 @@
 *
 */
 
-#ifndef _I_FILEINFO_H
-#define _I_FILEINFO_H 1
+#ifndef _I_CONFIGURE_ALSA_H
+#define _I_CONFIGURE_ALSA_H 1
 
-#include "i_common.h"
-
-
-void i_fileinfo_gui( gchar * );
+#include "i_configure_private.h"
 
 
-#endif /* !_I_FILEINFO_H */
+extern amidiplug_cfg_backend_t * amidiplug_cfg_backend;
+
+void i_configure_gui_tab_alsa( GtkWidget * , gpointer , gpointer );
+void i_configure_gui_tablabel_alsa( GtkWidget * , gpointer , gpointer );
+void i_configure_cfg_alsa_alloc( void );
+void i_configure_cfg_alsa_free( void );
+void i_configure_cfg_alsa_read( pcfg_t * );
+void i_configure_cfg_alsa_save( pcfg_t * );
+
+#endif /* !_I_CONFIGURE_ALSA_H */

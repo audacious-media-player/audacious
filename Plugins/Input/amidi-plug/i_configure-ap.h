@@ -18,13 +18,16 @@
 *
 */
 
-#ifndef _I_FILEINFO_H
-#define _I_FILEINFO_H 1
+#ifndef _I_CONFIGURE_AP_H
+#define _I_CONFIGURE_AP_H 1
 
-#include "i_common.h"
-
-
-void i_fileinfo_gui( gchar * );
+#include "i_configure.h"
+#include "i_configure_private.h"
 
 
-#endif /* !_I_FILEINFO_H */
+extern amidiplug_cfg_ap_t amidiplug_cfg_ap;
+
+void i_configure_gui_tab_ap( GtkWidget * , gpointer , gpointer );
+void i_configure_gui_tablabel_ap( GtkWidget * , gpointer , gpointer );
+
+#endif /* !_I_CONFIGURE_AP_H */

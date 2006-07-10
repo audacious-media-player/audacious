@@ -18,11 +18,14 @@
 *
 */
 
-#ifndef _I_SEQ_H
-#define _I_SEQ_H 1
+#ifndef _B_ALSA_H
+#define _B_ALSA_H 1
 
-#include "i_common.h"
 #include <alsa/asoundlib.h>
+#include "../i_common.h"
+#include "../pcfg/i_pcfg.h"
+#include "../i_midievent.h"
+
 
 typedef struct
 {
@@ -34,29 +37,27 @@ typedef struct
   gint dest_port_num;
 
   snd_seq_queue_tempo_t * queue_tempo;
+
+  snd_seq_event_t ev;
+
+  gboolean is_start;
 }
 sequencer_client_t;
 
-extern sequencer_client_t sc;
-
-gint i_seq_on( gshort , gchar * );
-gint i_seq_off( void );
 gint i_seq_open( void );
 gint i_seq_close( void );
+gint i_seq_queue_create( void );
+gint i_seq_queue_free( void );
 gint i_seq_port_create( void );
 gint i_seq_port_connect( void );
 gint i_seq_port_disconnect( void );
-gint i_seq_queue_create( void );
-gint i_seq_queue_free( void );
-gint i_seq_queue_set_tempo( gint , gint );
-gint i_seq_mixer_get_volume( gint * , gint * , gchar * , gchar * , gint );
-gint i_seq_mixer_set_volume( gint , gint , gchar * , gchar * , gint );
 gint i_seq_port_wparse( gchar * );
-GSList * i_seq_port_get_list( void );
-GSList * i_seq_card_get_list( void );
+gint i_seq_event_common_init( midievent_t * );
 GSList * i_seq_mixctl_get_list( gint );
-void i_seq_port_free_list( GSList * );
-void i_seq_card_free_list( GSList * );
 void i_seq_mixctl_free_list( GSList * );
+gint i_seq_mixer_find_selem( snd_mixer_t * , gchar * , gchar * , gint , snd_mixer_elem_t ** );
+void i_cfg_read( void );
+void i_cfg_free( void );
+gint i_util_str_count( gchar * , gchar );
 
-#endif /* !_I_SEQ_H */
+#endif /* !_B_ALSA_H */

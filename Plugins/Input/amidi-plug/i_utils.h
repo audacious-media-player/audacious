@@ -22,17 +22,13 @@
 #define _I_UTILS_H 1
 
 #include "i_common.h"
-#include <gtk/gtk.h>
 
+#define AMIDIPLUG_MESSAGE_INFO	0
+#define AMIDIPLUG_MESSAGE_WARN	1
+#define AMIDIPLUG_MESSAGE_ERR	2
 
-typedef struct
-{
-  GtkWidget * about_win;
-}
-amidiplug_gui_about_t;
 
 void i_about_gui( void );
-gint i_util_str_count( gchar * , gchar );
-
+gpointer i_message_gui( gchar * , gchar * , gint , gpointer );
 
 #endif /* !_I_UTILS_H */

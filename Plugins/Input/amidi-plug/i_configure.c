@@ -20,189 +20,158 @@
 
 
 #include "i_configure.h"
+#include "i_configure_private.h"
+#include "i_backend.h"
+#include "i_configure-ap.h"
+#include "i_configure-alsa.h"
+#include "i_configure-fluidsynth.h"
+#include "i_configure-dummy.h"
+#include "i_utils.h"
+#include "libaudacious/beepctrl.h"
 
-/* internals */
-void i_configure_upd_portlist( void );
-void i_configure_upd_mixercardlist( void );
-gchar * i_configure_read_seq_ports_default( void );
-gboolean i_configure_ev_checktoggle( GtkTreeModel * , GtkTreePath * , GtkTreeIter * , gpointer );
-void i_configure_ev_changetoggle( GtkCellRendererToggle * , gchar * , gpointer );
+
+amidiplug_cfg_backend_t * amidiplug_cfg_backend;
 
 
-void i_configure_gui( GSList * wports , GSList * scards )
+void i_configure_ev_bcancel( gpointer );
+void i_configure_ev_bok( gpointer );
+void i_configure_cfg_backend_alloc( void );
+void i_configure_cfg_backend_free( void );
+void i_configure_cfg_backend_save( void );
+void i_configure_cfg_backend_read( void );
+void i_configure_cfg_ap_save( void );
+void i_configure_cfg_ap_read( void );
+
+
+GtkWidget * i_configure_gui_draw_title( gchar * title_string )
 {
+  GtkWidget *title_label, *title_evbox, *title_frame;
+  GtkStyle * style = gtk_widget_get_default_style();
+  GdkColor title_fgcol = style->fg[GTK_STATE_SELECTED];
+  GdkColor title_bgcol = style->bg[GTK_STATE_SELECTED];
+  title_label = gtk_label_new( title_string );
+  title_evbox = gtk_event_box_new();
+  title_frame = gtk_frame_new( NULL );
+  gtk_frame_set_shadow_type( GTK_FRAME(title_frame) , GTK_SHADOW_OUT );
+  gtk_container_add( GTK_CONTAINER(title_evbox) , title_label );
+  gtk_container_set_border_width( GTK_CONTAINER(title_evbox) , 5 );
+  gtk_container_add( GTK_CONTAINER(title_frame) , title_evbox );
+  gtk_widget_modify_fg( GTK_WIDGET(title_label) , GTK_STATE_NORMAL , &title_fgcol );
+  gtk_widget_modify_bg( GTK_WIDGET(title_evbox) , GTK_STATE_NORMAL , &title_bgcol );
+  return title_frame;
+}
+
+
+void i_configure_ev_browse_for_entry( GtkWidget * target_entry )
+{
+  GtkWidget *parent_window = gtk_widget_get_toplevel( target_entry );
+  GtkFileChooserAction act = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(target_entry),"fc-act"));
+  if ( GTK_WIDGET_TOPLEVEL(parent_window) )
+  {
+    GtkWidget *browse_dialog = gtk_file_chooser_dialog_new( _("AMIDI-Plug - select file") ,
+                                                            GTK_WINDOW(parent_window) , act ,
+                                                            GTK_STOCK_CANCEL , GTK_RESPONSE_CANCEL ,
+                                                            GTK_STOCK_OPEN , GTK_RESPONSE_ACCEPT , NULL );
+    if ( strcmp( gtk_entry_get_text(GTK_ENTRY(target_entry)) , "" ) )
+      gtk_file_chooser_set_filename( GTK_FILE_CHOOSER(browse_dialog) ,
+                                     gtk_entry_get_text(GTK_ENTRY(target_entry)) );
+    if ( gtk_dialog_run(GTK_DIALOG(browse_dialog)) == GTK_RESPONSE_ACCEPT )
+    {
+      gchar *filename = gtk_file_chooser_get_filename( GTK_FILE_CHOOSER(browse_dialog) );
+      gtk_entry_set_text( GTK_ENTRY(target_entry) , filename );
+      DEBUGMSG( "selected file: %s\n" , filename );
+      g_free( filename );
+    }
+    gtk_widget_destroy( browse_dialog );
+  }
+}
+
+
+void i_configure_gui( void )
+{
+  static GtkWidget *configwin = NULL;
+  GdkGeometry cw_hints;
   GtkWidget *configwin_vbox;
-  GtkWidget *port_lv, *port_lv_sw, *port_frame;
-  GtkWidget *mixer_card_cmb_evbox, *mixer_card_cmb, *mixer_vbox, *mixer_frame;
-  GtkWidget *advanced_precalc_checkbt, *advanced_vbox, *advanced_frame;
   GtkWidget *hseparator, *hbuttonbox, *button_ok, *button_cancel;
-  GtkListStore *port_liststore, *mixer_card_liststore;
-  GtkTreeIter iter;
-  GtkTreeSelection *port_lv_sel;
-  GtkCellRenderer *port_lv_toggle_rndr, *port_lv_text_rndr, *mixer_card_cmb_text_rndr;
-  GtkTreeViewColumn *port_lv_toggle_col, *port_lv_portnum_col;
-  GtkTreeViewColumn *port_lv_clientname_col, *port_lv_portname_col;
-  gchar **portstring_from_cfg = NULL;
 
-  if ( amidiplug_gui_prefs.config_win )
+  GtkWidget *configwin_notebook;
+
+  GtkWidget *ap_page_alignment, *ap_pagelabel_alignment; /* amidi-plug */
+  GtkWidget *alsa_page_alignment, *alsa_pagelabel_alignment; /* alsa */
+  GtkWidget *dumm_page_alignment, *dumm_pagelabel_alignment; /* dummy */
+  GtkWidget *fsyn_page_alignment, *fsyn_pagelabel_alignment; /* fluidsynth */
+
+  GSList *backend_list = NULL, *backend_list_h = NULL;
+
+  if ( configwin != NULL )
+  {
+    DEBUGMSG( "config window is already open!\n" );
     return;
+  }
 
-  if ( strlen( amidiplug_cfg.seq_writable_ports ) > 0 )
-    portstring_from_cfg = g_strsplit( amidiplug_cfg.seq_writable_ports , "," , 0 );
+  /* get configuration information for backends */
+  i_configure_cfg_backend_alloc();
+  i_configure_cfg_backend_read();
 
-  amidiplug_gui_prefs.config_win = gtk_window_new( GTK_WINDOW_TOPLEVEL );
-  gtk_window_set_type_hint( GTK_WINDOW(amidiplug_gui_prefs.config_win), GDK_WINDOW_TYPE_HINT_DIALOG );
-  gtk_window_set_title( GTK_WINDOW(amidiplug_gui_prefs.config_win), _("AMIDI-Plug - configuration") );
-  gtk_container_set_border_width( GTK_CONTAINER(amidiplug_gui_prefs.config_win), 10 );
-  g_signal_connect( G_OBJECT(amidiplug_gui_prefs.config_win) ,
-                    "destroy" , G_CALLBACK(i_configure_ev_destroy) , NULL );
+  configwin = gtk_window_new( GTK_WINDOW_TOPLEVEL );
+  gtk_window_set_type_hint( GTK_WINDOW(configwin), GDK_WINDOW_TYPE_HINT_DIALOG );
+  gtk_window_set_title( GTK_WINDOW(configwin), _("AMIDI-Plug - configuration") );
+  gtk_container_set_border_width( GTK_CONTAINER(configwin), 10 );
+  g_signal_connect( G_OBJECT(configwin) , "destroy" ,
+                    G_CALLBACK(gtk_widget_destroyed) , &configwin );
+  button_ok = gtk_button_new_from_stock( GTK_STOCK_OK );
+  cw_hints.min_width = 480; cw_hints.min_height = -1;
+  gtk_window_set_geometry_hints( GTK_WINDOW(configwin) , GTK_WIDGET(configwin) ,
+                                 &cw_hints , GDK_HINT_MIN_SIZE );
 
   configwin_vbox = gtk_vbox_new( FALSE , 0 );
-  gtk_container_add( GTK_CONTAINER(amidiplug_gui_prefs.config_win) , configwin_vbox );
+  gtk_container_add( GTK_CONTAINER(configwin) , configwin_vbox );
 
-  port_liststore = gtk_list_store_new( LISTPORT_N_COLUMNS, G_TYPE_BOOLEAN, G_TYPE_STRING ,
-                                       G_TYPE_STRING , G_TYPE_STRING , G_TYPE_POINTER );
+  configwin_notebook = gtk_notebook_new();
+  gtk_notebook_set_tab_pos( GTK_NOTEBOOK(configwin_notebook) , GTK_POS_LEFT );
+  gtk_box_pack_start( GTK_BOX(configwin_vbox) , configwin_notebook , TRUE , TRUE , 2 );
 
-  /* append ALSA MIDI ports */
-  while ( wports != NULL )
-  {
-    gint i = 0;
-    gboolean toggled = FALSE;
-    data_bucket_t * portinfo = (data_bucket_t *)wports->data;
-    GString * portstring = g_string_new("");
-    G_STRING_PRINTF( portstring , "%i:%i" ,
-                     portinfo->bint[0] , portinfo->bint[1] );
-    gtk_list_store_append( port_liststore , &iter );
+  /* GET A LIST OF BACKENDS */
+  backend_list = i_backend_list_lookup(); /* get a list of available backends */;
+  backend_list_h = backend_list;
 
-    /* in the existing configuration there may be previously selected ports */
-    if ( portstring_from_cfg )
-    {
-      /* check if current row contains a port selected by user */
-      for ( i = 0 ; portstring_from_cfg[i] != NULL ; i++ )
-      {
-        /* if it's one of the selected ports, toggle its checkbox */
-        if ( !strcmp( portstring->str, portstring_from_cfg[i] ) )
-          toggled = TRUE;
-      }
-    }
+  /* AMIDI-PLUG PREFERENCES TAB */
+  ap_pagelabel_alignment = gtk_alignment_new( 0.5 , 0.5 , 1 , 1 );
+  ap_page_alignment = gtk_alignment_new( 0.5 , 0.5 , 1 , 1 );
+  gtk_alignment_set_padding( GTK_ALIGNMENT(ap_page_alignment) , 3 , 3 , 8 , 3 );
+  i_configure_gui_tab_ap( ap_page_alignment , backend_list , button_ok );
+  i_configure_gui_tablabel_ap( ap_pagelabel_alignment , backend_list , button_ok );
+  gtk_notebook_append_page( GTK_NOTEBOOK(configwin_notebook) ,
+                            ap_page_alignment , ap_pagelabel_alignment );
 
-    gtk_list_store_set( port_liststore , &iter ,
-                        LISTPORT_TOGGLE_COLUMN , toggled ,
-                        LISTPORT_PORTNUM_COLUMN , portstring->str ,
-                        LISTPORT_CLIENTNAME_COLUMN , portinfo->bcharp[0] ,
-                        LISTPORT_PORTNAME_COLUMN , portinfo->bcharp[1] ,
-                        LISTPORT_POINTER_COLUMN , portinfo , -1 );
+  /* ALSA BACKEND CONFIGURATION TAB */
+  alsa_pagelabel_alignment = gtk_alignment_new( 0.5 , 0.5 , 1 , 1 );
+  alsa_page_alignment = gtk_alignment_new( 0.5 , 0.5 , 1 , 1 );
+  gtk_alignment_set_padding( GTK_ALIGNMENT(alsa_page_alignment) , 3 , 3 , 8 , 3 );
+  i_configure_gui_tab_alsa( alsa_page_alignment , backend_list , button_ok );
+  i_configure_gui_tablabel_alsa( alsa_pagelabel_alignment , backend_list , button_ok );
+  gtk_notebook_append_page( GTK_NOTEBOOK(configwin_notebook) ,
+                            alsa_page_alignment , alsa_pagelabel_alignment );
 
-    g_string_free( portstring , TRUE );
-    /* on with next */
-    wports = wports->next;
-  }
+  /* FLUIDSYNTH BACKEND CONFIGURATION TAB */
+  fsyn_pagelabel_alignment = gtk_alignment_new( 0.5 , 0.5 , 1 , 1 );
+  fsyn_page_alignment = gtk_alignment_new( 0.5 , 0.5 , 1 , 1 );
+  gtk_alignment_set_padding( GTK_ALIGNMENT(fsyn_page_alignment) , 3 , 3 , 8 , 3 );
+  i_configure_gui_tab_fsyn( fsyn_page_alignment , backend_list , button_ok );
+  i_configure_gui_tablabel_fsyn( fsyn_pagelabel_alignment , backend_list , button_ok );
+  gtk_notebook_append_page( GTK_NOTEBOOK(configwin_notebook) ,
+                            fsyn_page_alignment , fsyn_pagelabel_alignment );
 
-  /* this string array is not needed anymore */
-  g_strfreev( portstring_from_cfg );
+  /* DUMMY BACKEND CONFIGURATION TAB */
+  dumm_pagelabel_alignment = gtk_alignment_new( 0.5 , 0.5 , 1 , 1 );
+  dumm_page_alignment = gtk_alignment_new( 0.5 , 0.5 , 1 , 1 );
+  gtk_alignment_set_padding( GTK_ALIGNMENT(dumm_page_alignment) , 3 , 3 , 8 , 3 );
+  i_configure_gui_tab_dumm( dumm_page_alignment , backend_list , button_ok );
+  i_configure_gui_tablabel_dumm( dumm_pagelabel_alignment , backend_list , button_ok );
+  gtk_notebook_append_page( GTK_NOTEBOOK(configwin_notebook) ,
+                            dumm_page_alignment , dumm_pagelabel_alignment );
 
-  port_lv = gtk_tree_view_new_with_model( GTK_TREE_MODEL(port_liststore) );
-  amidiplug_gui_prefs.port_treeview = port_lv;
-  g_object_unref( port_liststore );
-  port_lv_toggle_rndr = gtk_cell_renderer_toggle_new();
-  gtk_cell_renderer_toggle_set_radio( GTK_CELL_RENDERER_TOGGLE(port_lv_toggle_rndr) , FALSE );
-  gtk_cell_renderer_toggle_set_active( GTK_CELL_RENDERER_TOGGLE(port_lv_toggle_rndr) , TRUE );
-  g_signal_connect( port_lv_toggle_rndr , "toggled" ,
-                    G_CALLBACK(i_configure_ev_changetoggle) , port_liststore );
-  port_lv_text_rndr = gtk_cell_renderer_text_new();
-  port_lv_toggle_col = gtk_tree_view_column_new_with_attributes( "", port_lv_toggle_rndr,
-                                                                 "active", LISTPORT_TOGGLE_COLUMN, NULL );
-  port_lv_portnum_col = gtk_tree_view_column_new_with_attributes( _("Port"), port_lv_text_rndr,
-                                                                  "text", LISTPORT_PORTNUM_COLUMN, NULL );
-  port_lv_clientname_col = gtk_tree_view_column_new_with_attributes( _("Client name"), port_lv_text_rndr,
-                                                                     "text", LISTPORT_CLIENTNAME_COLUMN, NULL );
-  port_lv_portname_col = gtk_tree_view_column_new_with_attributes( _("Port name"), port_lv_text_rndr,
-                                                                   "text", LISTPORT_PORTNAME_COLUMN, NULL );
-  gtk_tree_view_append_column( GTK_TREE_VIEW(port_lv), port_lv_toggle_col );
-  gtk_tree_view_append_column( GTK_TREE_VIEW(port_lv), port_lv_portnum_col );
-  gtk_tree_view_append_column( GTK_TREE_VIEW(port_lv), port_lv_clientname_col );
-  gtk_tree_view_append_column( GTK_TREE_VIEW(port_lv), port_lv_portname_col );
-
-  port_lv_sel = gtk_tree_view_get_selection( GTK_TREE_VIEW(port_lv) );
-  gtk_tree_selection_set_mode( GTK_TREE_SELECTION(port_lv_sel) , GTK_SELECTION_SINGLE );
-
-  port_lv_sw = gtk_scrolled_window_new( NULL , NULL );
-  gtk_scrolled_window_set_policy( GTK_SCROLLED_WINDOW(port_lv_sw),
-                                  GTK_POLICY_NEVER, GTK_POLICY_NEVER );
-  port_frame = gtk_frame_new( _("ALSA output ports") );
-
-  gtk_container_add( GTK_CONTAINER(port_lv_sw) , port_lv );
-  gtk_container_set_border_width( GTK_CONTAINER(port_lv_sw) , 5 );
-  gtk_container_add( GTK_CONTAINER(port_frame) , port_lv_sw );
-  gtk_box_pack_start( GTK_BOX(configwin_vbox) , port_frame , TRUE , TRUE , 2 );
-
-  /**********************/
-  /*** MIXER SETTINGS ***/
-  mixer_card_liststore = gtk_list_store_new( LISTMIXER_N_COLUMNS , G_TYPE_STRING , G_TYPE_INT ,
-                                             G_TYPE_INT , G_TYPE_STRING );
-  mixer_card_cmb = gtk_combo_box_new_with_model( GTK_TREE_MODEL(mixer_card_liststore) );
-  amidiplug_gui_prefs.mixercard_combo = mixer_card_cmb;
-  /* fill models with sound cards and relative mixer controls */
-  while ( scards != NULL )
-  {
-    data_bucket_t * cardinfo = (data_bucket_t *)scards->data;
-    GString * desc_cardmix_string = g_string_new( "" );
-    GSList * mixctl_list = cardinfo->bpointer[0];
-    while ( mixctl_list != NULL )
-    {
-      data_bucket_t * mixctlinfo = (data_bucket_t *)mixctl_list->data;
-      G_STRING_PRINTF( desc_cardmix_string , "%s - ctl: %s (ID %i)" , cardinfo->bcharp[0] ,
-                       mixctlinfo->bcharp[0] , mixctlinfo->bint[0] );
-      gtk_list_store_append( mixer_card_liststore , &iter );
-      gtk_list_store_set( mixer_card_liststore , &iter ,
-                          LISTMIXER_DESC_COLUMN , desc_cardmix_string->str ,
-                          LISTMIXER_CARDID_COLUMN , cardinfo->bint[0] ,
-                          LISTMIXER_MIXCTLID_COLUMN , mixctlinfo->bint[0] ,
-                          LISTMIXER_MIXCTLNAME_COLUMN , mixctlinfo->bcharp[0] , -1 );
-      /* check if this corresponds to the value previously selected by user */
-      if ( ( cardinfo->bint[0] == amidiplug_cfg.mixer_card_id ) &&
-           ( !strcasecmp( mixctlinfo->bcharp[0] , amidiplug_cfg.mixer_control_name ) ) &&
-           ( mixctlinfo->bint[0] == amidiplug_cfg.mixer_control_id ) )
-        gtk_combo_box_set_active_iter( GTK_COMBO_BOX(mixer_card_cmb) , &iter );
-      mixctl_list = mixctl_list->next;
-    }
-    g_string_free( desc_cardmix_string , TRUE );
-    /* on with next */
-    scards = scards->next;
-  }
-  /* free the instance of liststore, we already have one in the combo box */
-  g_object_unref( mixer_card_liststore );
-  /* create renderer to display text in the mixer combo box */
-  mixer_card_cmb_text_rndr = gtk_cell_renderer_text_new();
-  gtk_cell_layout_pack_start( GTK_CELL_LAYOUT(mixer_card_cmb) , mixer_card_cmb_text_rndr , TRUE );
-  gtk_cell_layout_add_attribute( GTK_CELL_LAYOUT(mixer_card_cmb) , mixer_card_cmb_text_rndr , "text" , 0 );
-
-  /* the event box is needed to display a tooltip for the mixer combo box */
-  mixer_card_cmb_evbox = gtk_event_box_new();
-  gtk_container_add( GTK_CONTAINER(mixer_card_cmb_evbox) , mixer_card_cmb );
-  mixer_vbox = gtk_vbox_new( FALSE , 0 );
-  gtk_container_set_border_width( GTK_CONTAINER(mixer_vbox) , 5 );
-  gtk_box_pack_start( GTK_BOX(mixer_vbox) , mixer_card_cmb_evbox , TRUE , TRUE , 0 );
-
-  mixer_frame = gtk_frame_new( _("Mixer settings") );
-  gtk_container_add( GTK_CONTAINER(mixer_frame) , mixer_vbox );
-  gtk_box_pack_start( GTK_BOX(configwin_vbox) , mixer_frame , TRUE , TRUE , 2 );
-
-  /*************************/
-  /*** ADVANCED SETTINGS ***/
-  advanced_vbox = gtk_vbox_new( FALSE , 0 );
-  gtk_container_set_border_width( GTK_CONTAINER(advanced_vbox) , 5 );
-  
-  advanced_precalc_checkbt = gtk_check_button_new_with_label( _("pre-calculate length of MIDI files in playlist") );
-  amidiplug_gui_prefs.precalc_checkbt = advanced_precalc_checkbt;
-  if ( amidiplug_cfg.length_precalc_enable )
-    gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(advanced_precalc_checkbt) , TRUE );
-  gtk_box_pack_start( GTK_BOX(advanced_vbox) , advanced_precalc_checkbt , TRUE , TRUE , 0 );
-
-  advanced_frame = gtk_frame_new( _("Advanced settings") );
-  gtk_container_add( GTK_CONTAINER(advanced_frame) , advanced_vbox );
-  gtk_box_pack_start( GTK_BOX(configwin_vbox) , advanced_frame , TRUE , TRUE , 2 );
-
+  i_backend_list_free( backend_list_h ); /* done, free the list of available backends */
 
   /* horizontal separator and buttons */
   hseparator = gtk_hseparator_new();
@@ -210,238 +179,174 @@ void i_configure_gui( GSList * wports , GSList * scards )
   hbuttonbox = gtk_hbutton_box_new();
   gtk_button_box_set_layout( GTK_BUTTON_BOX(hbuttonbox) , GTK_BUTTONBOX_END );
   button_cancel = gtk_button_new_from_stock( GTK_STOCK_CANCEL );
-  g_signal_connect( G_OBJECT(button_cancel) , "clicked" , G_CALLBACK(i_configure_ev_bcancel) , NULL );
+  g_signal_connect_swapped( G_OBJECT(button_cancel) , "clicked" ,
+                            G_CALLBACK(i_configure_ev_bcancel) , configwin );
   gtk_container_add( GTK_CONTAINER(hbuttonbox) , button_cancel );
-  button_ok = gtk_button_new_from_stock( GTK_STOCK_OK );
-  g_signal_connect( G_OBJECT(button_ok) , "clicked" , G_CALLBACK(i_configure_ev_bok) , NULL );
+  /* button_ok = gtk_button_new_from_stock( GTK_STOCK_OK ); created above */
+  g_signal_connect_swapped( G_OBJECT(button_ok) , "clicked" ,
+                            G_CALLBACK(i_configure_ev_bok) , configwin );
   gtk_container_add( GTK_CONTAINER(hbuttonbox) , button_ok );
   gtk_box_pack_start( GTK_BOX(configwin_vbox) , hbuttonbox , FALSE , FALSE , 0 );
 
-  /* tooltips */
-  amidiplug_gui_prefs.config_tips = gtk_tooltips_new();
-  gtk_tooltips_set_tip( GTK_TOOLTIPS(amidiplug_gui_prefs.config_tips) , port_lv ,
-                        _("* Select ALSA output ports *\n"
-                        "MIDI events will be sent to the ports selected here. At least one "
-                        "port must be selected in order to play MIDI with AMIDI-Plug. Unless "
-                        "you know what you're doing, you'll probably want to use the "
-                        "wavetable synthesizer ports.") , "" );
-  gtk_tooltips_set_tip( GTK_TOOLTIPS(amidiplug_gui_prefs.config_tips) , mixer_card_cmb_evbox ,
-                        _("* Select ALSA mixer control *\n"
-                        "AMIDI-Plug outputs directly through ALSA, it doesn't use effect "
-                        "and ouput plugins from the player. While playing with AMIDI-Plug, "
-                        "the player volume will manipulate the control you select here. "
-                        "Unless you know what you're doing, you'll probably want to select "
-                        "the Synth control here.") , "" );
-  gtk_tooltips_set_tip( GTK_TOOLTIPS(amidiplug_gui_prefs.config_tips) , advanced_precalc_checkbt ,
-                        _("* Pre-calculate MIDI length *\n"
-                        "If this option is enabled, AMIDI-Plug will calculate the MIDI file "
-                        "length as soon as the player requests it, instead of doing that only "
-                        "when the the MIDI file is being played. In example, MIDI length "
-                        "will be calculated straight after adding MIDI files in a playlist. "
-                        "Disable this option if you want faster playlist loading (when a lot "
-                        "of MIDI files are added), enable it to display more information "
-                        "in the playlist straight after loading.") , "" );
-
-  gtk_widget_show_all( amidiplug_gui_prefs.config_win );
+  gtk_widget_show_all( configwin );
 }
 
 
-void i_configure_upd_portlist( void )
+void i_configure_ev_bcancel( gpointer configwin )
 {
-  GtkTreeModel * liststore;
-  GString *wp = g_string_new( "" );
-  /* get the model of the port list control */
-  liststore = gtk_tree_view_get_model( GTK_TREE_VIEW(amidiplug_gui_prefs.port_treeview) );
-  /* after the following foreach, wp contains a comma-separated list of selected ports */
-  gtk_tree_model_foreach( liststore , i_configure_ev_checktoggle , wp );
-  /* free previous */
-  g_free( amidiplug_cfg.seq_writable_ports );
-  /* update point amidiplug_cfg.seq_writable_ports
-     so it points to the new list of ports */
-  amidiplug_cfg.seq_writable_ports = g_strdup( wp->str );
-  /* not needed anymore */
-  g_string_free( wp , TRUE );
-  return;
+  i_configure_cfg_backend_free();
+  gtk_widget_destroy(GTK_WIDGET(configwin));
 }
 
 
-void i_configure_upd_mixercardlist( void )
+void i_configure_ev_bok( gpointer configwin )
 {
-  GtkTreeModel * liststore;
-  GtkTreeIter iter;
-  /* get the model of the card-mixer list control */
-  liststore = gtk_combo_box_get_model( GTK_COMBO_BOX(amidiplug_gui_prefs.mixercard_combo) );
-  /* get the selected item */
-  if ( gtk_combo_box_get_active_iter( GTK_COMBO_BOX(amidiplug_gui_prefs.mixercard_combo) , &iter ) )
+  if ( xmms_remote_is_playing(0) || xmms_remote_is_paused(0) )
   {
-    /* free previous */
-    g_free( amidiplug_cfg.mixer_control_name );
-    /* update amidiplug_cfg.mixer_card_id and amidiplug_cfg.mixer_control_name */
-    gtk_tree_model_get( GTK_TREE_MODEL(liststore) , &iter ,
-                        LISTMIXER_CARDID_COLUMN , &amidiplug_cfg.mixer_card_id ,
-                        LISTMIXER_MIXCTLID_COLUMN , &amidiplug_cfg.mixer_control_id ,
-                        LISTMIXER_MIXCTLNAME_COLUMN , &amidiplug_cfg.mixer_control_name , -1 );
-  }
-  return;
-}
-
-
-gboolean i_configure_ev_checktoggle( GtkTreeModel * model , GtkTreePath * path ,
-                                     GtkTreeIter * iter , gpointer wpp )
-{
-  gboolean toggled = FALSE;
-  gchar * portstring;
-  GString * wps = wpp;
-  gtk_tree_model_get ( model , iter ,
-                       LISTPORT_TOGGLE_COLUMN , &toggled ,
-                       LISTPORT_PORTNUM_COLUMN , &portstring , -1 );
-  /* check if the row points to an enabled port */
-  if ( toggled )
-  {
-    /* if this is not the first port added to wp, use comma as separator */
-    if ( wps->str[0] != '\0' ) g_string_append_c( wps , ',' );
-    g_string_append( wps , portstring );
-  }
-  g_free( portstring );
-  return FALSE;
-}
-
-
-void i_configure_ev_changetoggle( GtkCellRendererToggle * rdtoggle ,
-                                  gchar * path_str , gpointer data )
-{
-  GtkTreeModel *model = (GtkTreeModel *)data;
-  GtkTreeIter iter;
-  GtkTreePath *path = gtk_tree_path_new_from_string( path_str );
-  gboolean toggled;
-
-  gtk_tree_model_get_iter( model , &iter , path );
-  gtk_tree_model_get( model , &iter , LISTPORT_TOGGLE_COLUMN , &toggled , -1);
-
-  toggled ^= 1;
-  gtk_list_store_set( GTK_LIST_STORE(model), &iter , LISTPORT_TOGGLE_COLUMN , toggled , -1);
-
-  gtk_tree_path_free (path);
-}
-
-
-void i_configure_ev_destroy( void )
-{
-  g_object_unref( amidiplug_gui_prefs.config_tips );
-  amidiplug_gui_prefs.config_tips = NULL;
-  amidiplug_gui_prefs.config_win = NULL;
-}
-
-
-void i_configure_ev_bcancel( void )
-{
-  gtk_widget_destroy(amidiplug_gui_prefs.config_win);
-}
-
-
-void i_configure_ev_bok( void )
-{
-  /* update amidiplug_cfg.seq_writable_ports
-     using the selected values from the port list */
-  i_configure_upd_portlist();
-
-  /* update amidiplug_cfg.mixer_card_id and amidiplug_cfg.mixer_control_name
-     using the selected values from the card-mixer combo list */
-  i_configure_upd_mixercardlist();
-  
-  /* update amidiplug_cfg.length_precalc_enable using
-     the check control in the advanced settings frame */
-  if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON(amidiplug_gui_prefs.precalc_checkbt) ) )
-    amidiplug_cfg.length_precalc_enable = 1;
-  else
-    amidiplug_cfg.length_precalc_enable = 0;
-
-  /* save settings */
-  i_configure_cfg_save();
-
-  gtk_widget_destroy(amidiplug_gui_prefs.config_win);
-}
-
-
-gchar * i_configure_read_seq_ports_default( void )
-{
-  FILE * fp = NULL;
-  /* first try, get seq ports from proc on card0 */
-  fp = fopen( "/proc/asound/card0/wavetableD1" , "rb" );
-  if ( fp )
-  {
-    gchar buffer[100];
-    while ( !feof( fp ) )
+    /* we can't change settings while a song is being played */
+    static GtkWidget * configwin_warnmsg = NULL;
+    if ( configwin_warnmsg != NULL )
     {
-      fgets( buffer , 100 , fp );
-      if (( strlen( buffer ) > 11 ) && ( !strncasecmp( buffer , "addresses: " , 11 ) ))
-      {
-        /* change spaces between ports (65:0 65:1 65:2 ...)
-           into commas (65:0,65:1,65:2,...) */
-        g_strdelimit( &buffer[11] , " " , ',' );
-        /* remove lf and cr from the end of the string */
-        g_strdelimit( &buffer[11] , "\r\n" , '\0' );
-        /* ready to go */
-        DEBUGMSG( "init, default values for seq ports detected: %s\n" , &buffer[11] );
-        fclose( fp );
-        return g_strdup( &buffer[11] );
-      }
+      gdk_window_raise( configwin_warnmsg->window );
     }
-    fclose( fp );
+    else
+    {
+      configwin_warnmsg = (GtkWidget*)i_message_gui( _("AMIDI-Plug message") ,
+                                        _("Please stop the player before changing AMIDI-Plug settings.") ,
+                                        AMIDIPLUG_MESSAGE_WARN , configwin );
+      g_signal_connect( G_OBJECT(configwin_warnmsg) , "destroy" ,
+                        G_CALLBACK(gtk_widget_destroyed) , &configwin_warnmsg );
+      gtk_widget_show_all( configwin_warnmsg );
+    }
   }
+  else
+  {
+    DEBUGMSG( "saving configuration...\n" );
+    i_configure_cfg_ap_save(); /* save amidiplug settings */
+    i_configure_cfg_backend_save(); /* save backend settings */
+    i_configure_cfg_backend_free(); /* free backend settings */
+    DEBUGMSG( "configuration saved\n" );
 
-  /* second option: do not set ports at all, let the user
-     select the right ones in the nice preferences dialog :) */
-  return g_strdup( "" );
+    /* check if a different backend has been selected */
+    if ( strcmp( amidiplug_cfg_ap.ap_seq_backend , backend.name ) )
+    {
+      DEBUGMSG( "a new backend has been selected, unloading previous and loading the new one\n" );
+      i_backend_unload(); /* unload previous backend */
+      i_backend_load( amidiplug_cfg_ap.ap_seq_backend ); /* load new backend */
+    }
+    else /* same backend, just reload updated configuration */
+    {
+      DEBUGMSG( "the selected backend is already loaded, so just perform backend cleanup and reinit\n" );
+      backend.cleanup();
+      backend.init();
+    }
+
+    gtk_widget_destroy(GTK_WIDGET(configwin));
+  }
 }
 
 
-void i_configure_cfg_read( void )
+void i_configure_cfg_backend_alloc( void )
 {
-  ConfigDb *cfgfile;
-  cfgfile = bmp_cfg_db_open();
+  amidiplug_cfg_backend = g_malloc(sizeof(amidiplug_cfg_backend));
+
+  i_configure_cfg_alsa_alloc(); /* alloc alsa backend configuration */
+  i_configure_cfg_fsyn_alloc(); /* alloc fluidsynth backend configuration */
+  i_configure_cfg_dumm_alloc(); /* alloc dummy backend configuration */
+}
+
+
+void i_configure_cfg_backend_free( void )
+{
+  i_configure_cfg_alsa_free(); /* free alsa backend configuration */
+  i_configure_cfg_fsyn_free(); /* free fluidsynth backend configuration */
+  i_configure_cfg_dumm_free(); /* free dummy backend configuration */
+
+  g_free( amidiplug_cfg_backend );
+}
+
+
+void i_configure_cfg_backend_read( void )
+{
+  pcfg_t *cfgfile;
+
+  gchar * config_pathfilename = g_strjoin( "" , g_get_home_dir() , "/" ,
+                                           PLAYER_LOCALRCDIR , "/amidi-plug.conf" , NULL );
+  cfgfile = i_pcfg_new_from_file( config_pathfilename );
+
+  i_configure_cfg_alsa_read( cfgfile ); /* get alsa backend configuration */
+  i_configure_cfg_fsyn_read( cfgfile ); /* get fluidsynth backend configuration */
+  i_configure_cfg_dumm_read( cfgfile ); /* get dummy backend configuration */
+
+  if ( cfgfile != NULL )
+    i_pcfg_free(cfgfile);
+
+  g_free( config_pathfilename );
+}
+
+
+void i_configure_cfg_backend_save( void )
+{
+  pcfg_t *cfgfile;
+  gchar * config_pathfilename = g_strjoin( "" , g_get_home_dir() , "/" ,
+                                           PLAYER_LOCALRCDIR , "/amidi-plug.conf" , NULL );
+  cfgfile = i_pcfg_new_from_file( config_pathfilename );
+
+  if (!cfgfile)
+    cfgfile = i_pcfg_new();
+
+  i_configure_cfg_alsa_save( cfgfile ); /* save alsa backend configuration */
+  i_configure_cfg_fsyn_save( cfgfile ); /* save fluidsynth backend configuration */
+  i_configure_cfg_dumm_save( cfgfile ); /* save dummy backend configuration */
+
+  i_pcfg_write_to_file( cfgfile , config_pathfilename );
+  i_pcfg_free( cfgfile );
+  g_free( config_pathfilename );
+}
+
+
+/* read only the amidi-plug part of configuration */
+void i_configure_cfg_ap_read( void )
+{
+  pcfg_t *cfgfile;
+  gchar * config_pathfilename = g_strjoin( "" , g_get_home_dir() , "/" ,
+                                           PLAYER_LOCALRCDIR , "/amidi-plug.conf" , NULL );
+  cfgfile = i_pcfg_new_from_file( config_pathfilename );
 
   if (!cfgfile)
   {
-    /* use defaults */
-    amidiplug_cfg.seq_writable_ports = i_configure_read_seq_ports_default();
-    amidiplug_cfg.mixer_card_id = 0;
-    amidiplug_cfg.mixer_control_name = g_strdup( "Synth" );
-    amidiplug_cfg.mixer_control_id = 0;
-    amidiplug_cfg.length_precalc_enable = 0;
+    /* amidi-plug defaults */
+    amidiplug_cfg_ap.ap_seq_backend = g_strdup( "alsa" );
+    amidiplug_cfg_ap.ap_opts_length_precalc = 0;
   }
   else
   {
-    if ( !bmp_cfg_db_get_string( cfgfile , "amidi-plug" , "writable_ports" , &amidiplug_cfg.seq_writable_ports ) )
-      amidiplug_cfg.seq_writable_ports = i_configure_read_seq_ports_default(); /* default value */
-
-    if ( !bmp_cfg_db_get_int( cfgfile , "amidi-plug" , "mixer_card_id" , &amidiplug_cfg.mixer_card_id ) )
-      amidiplug_cfg.mixer_card_id = 0; /* default value */
-
-    if ( !bmp_cfg_db_get_string( cfgfile , "amidi-plug" , "mixer_control_name" , &amidiplug_cfg.mixer_control_name ) )
-      amidiplug_cfg.mixer_control_name = g_strdup( "Synth" ); /* default value */
-
-    if ( !bmp_cfg_db_get_int( cfgfile , "amidi-plug" , "mixer_control_id" , &amidiplug_cfg.mixer_control_id ) )
-      amidiplug_cfg.mixer_control_id = 0; /* default value */
-
-    if ( !bmp_cfg_db_get_int( cfgfile , "amidi-plug" , "length_precalc_enable" , &amidiplug_cfg.length_precalc_enable ) )
-      amidiplug_cfg.length_precalc_enable = 0; /* default value */
-
-    bmp_cfg_db_close(cfgfile);
+    i_pcfg_read_string( cfgfile , "general" , "ap_seq_backend" ,
+                        &amidiplug_cfg_ap.ap_seq_backend , "alsa" );
+    i_pcfg_read_integer( cfgfile , "general" , "ap_opts_length_precalc" ,
+                         &amidiplug_cfg_ap.ap_opts_length_precalc , 0 );
+    i_pcfg_free( cfgfile );
   }
+
+  g_free( config_pathfilename );
 }
 
 
-void i_configure_cfg_save( void )
+void i_configure_cfg_ap_save( void )
 {
-  ConfigDb *cfgfile;
-  cfgfile = bmp_cfg_db_open();
+  pcfg_t *cfgfile;
+  gchar * config_pathfilename = g_strjoin( "" , g_get_home_dir() , "/" ,
+                                           PLAYER_LOCALRCDIR , "/amidi-plug.conf" , NULL );
+  cfgfile = i_pcfg_new_from_file( config_pathfilename );
 
-  bmp_cfg_db_set_string( cfgfile , "amidi-plug" , "writable_ports" , amidiplug_cfg.seq_writable_ports );
-  bmp_cfg_db_set_int( cfgfile , "amidi-plug" , "mixer_card_id" , amidiplug_cfg.mixer_card_id );
-  bmp_cfg_db_set_string( cfgfile , "amidi-plug" , "mixer_control_name" , amidiplug_cfg.mixer_control_name );
-  bmp_cfg_db_set_int( cfgfile , "amidi-plug" , "mixer_control_id" , amidiplug_cfg.mixer_control_id );
-  bmp_cfg_db_set_int( cfgfile , "amidi-plug" , "length_precalc_enable" , amidiplug_cfg.length_precalc_enable );
+  if (!cfgfile)
+    cfgfile = i_pcfg_new();
 
-  bmp_cfg_db_close(cfgfile);
+  /* save amidi-plug config information */
+  i_pcfg_write_string( cfgfile , "general" , "ap_seq_backend" , amidiplug_cfg_ap.ap_seq_backend );
+  i_pcfg_write_integer( cfgfile , "general" , "ap_opts_length_precalc" , amidiplug_cfg_ap.ap_opts_length_precalc );
+
+  i_pcfg_write_to_file( cfgfile , config_pathfilename );
+  i_pcfg_free( cfgfile );
+  g_free( config_pathfilename );
 }

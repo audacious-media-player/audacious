@@ -28,11 +28,12 @@
 
 #include "i_common.h"
 #include "audacious/plugin.h"
+#include "audacious/output.h"
 #include "libaudacious/beepctrl.h"
 #include "libaudacious/vfs.h"
 #include <pthread.h>
+#include "i_backend.h"
 #include "i_configure.h"
-#include "i_seq.h"
 #include "i_midi.h"
 #include "i_fileinfo.h"
 #include "i_utils.h"
@@ -45,6 +46,7 @@
 
 
 static pthread_t amidiplug_play_thread;
+static pthread_t amidiplug_audio_thread;
 static pthread_mutex_t amidiplug_gettime_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t amidiplug_playing_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t amidiplug_playing_cond = PTHREAD_COND_INITIALIZER;
@@ -52,25 +54,18 @@ static pthread_cond_t amidiplug_playing_cond = PTHREAD_COND_INITIALIZER;
 gint amidiplug_playing_status = AMIDIPLUG_STOP;
 
 midifile_t midifile;
-sequencer_client_t sc =
+
+amidiplug_sequencer_backend_t backend;
+
+amidiplug_cfg_ap_t amidiplug_cfg_ap =
 {
-  NULL,		/* seq */
-  0,		/* client_port */
-  0,		/* queue */
-  NULL,		/* dest_port */
-  0		/* dest_port_num */
+  NULL,		/* ap_seq_backend */
+  0		/* ap_opts_length_precalc */
 };
 
-amidiplug_cfg_t amidiplug_cfg =
-{
-  NULL,		/* seq_writable_ports */
-  0,		/* mixer_card_id */
-  NULL,		/* mixer_control_name */
-  0,		/* mixer_control_id */
-  0		/* length_precalc_enable */
-};
 
 void * amidiplug_play_loop( void * );
+void * amidiplug_audio_loop( void * );
 void amidiplug_skipto( gint );
 static void amidiplug_init( void );
 static void amidiplug_cleanup( void );
@@ -112,7 +107,8 @@ InputPlugin amidiplug_ip =
   NULL,				/* set_info_text */
   amidiplug_get_song_info,	/* get_song_info */
   amidiplug_file_info_box,	/* file_info_box */
-  NULL				/* output */
+  NULL,				/* output */
+  NULL				/* get_song_tuple */
 };
 
 #endif /* !_I_AMIDIPLUG_H */

@@ -584,7 +584,8 @@ if test "$have_alsa" = "yes"; then
 	OUTPUT_PLUGINS="$OUTPUT_PLUGINS alsa"
 fi
 
-dnl *** amidi-plug (note: should appear somewhere after the alsa ouput plugin check)
+
+dnl *** amidi-plug (note: to avoid checking twice ALSA, this should appear somewhere after the alsa ouput plugin check)
 
 AC_ARG_ENABLE(amidiplug,
     [  --disable-amidiplug     disable amidi-plug input plugin (default=check) ],
@@ -592,32 +593,123 @@ AC_ARG_ENABLE(amidiplug,
     [enable_amidiplug=check]
 )
 
+AC_ARG_ENABLE(amidiplug-alsa,
+    [  --disable-amidiplug-alsa    disable amidi-plug ALSA backend (default=enabled) ],
+    [enable_amidiplug_alsa=$enableval],
+    [enable_amidiplug_alsa=auto]
+)
+
+AC_ARG_ENABLE(amidiplug-flsyn,
+    [  --disable-amidiplug-flsyn   disable amidi-plug FluidSynth backend (default=enabled) ],
+    [enable_amidiplug_fluidsynth=$enableval],
+    [enable_amidiplug_fluidsynth=auto]
+)
+
+AC_ARG_ENABLE(amidiplug-dummy,
+    [  --disable-amidiplug-dummy   disable amidi-plug dummy backend (default=enabled) ],
+    [enable_amidiplug_dummy=$enableval],
+    [enable_amidiplug_dummy=auto]
+)
+
+
 if test "x$enable_amidiplug" = "xno"; then
   AC_MSG_RESULT([*** amidi-plug disabled per user request ***])
   enable_amidiplug=no
 else
+  if test "x$enable_amidiplug_alsa" != "xauto"; then
+    enable_amidiplug=yes
+  elif test "x$enable_amidiplug_fluidsynth" != "xauto"; then
+    enable_amidiplug=yes
+  elif test "x$enable_amidiplug_dummy" != "xauto"; then
+    enable_amidiplug=yes
+  fi
+fi
+
+if test "x$enable_amidiplug" = "xcheck"; then
   if test "x$alsalib_available" = "xcheck"; then
     PKG_CHECK_MODULES(ALSA, [alsa >= 1.0],
       [alsalib_available=yes],[alsalib_available=no])
   fi
   if test "x$alsalib_available" = "xyes"; then
-    if test "x$enable_amidiplug" = "xcheck"; then
-        AM_PATH_AMIDIPLUG(enable_amidiplug=yes, enable_amidiplug=no)
-        if test "x$enable_amidiplug" = "xyes"; then
-          ap_disable_timidity=yes
-        fi
-    else
+    AM_PATH_AMIDIPLUG_HWSYNTH(ap_have_hwsynth=yes, ap_have_hwsynth=no)
+    if test "x$ap_have_hwsynth" = "xyes"; then
       enable_amidiplug=yes
+      ap_disable_timidity=yes
+    else
+      PKG_CHECK_MODULES(FLUIDSYNTH, [fluidsynth >= 1.0.6],
+        [fluidsynth_available=yes],[fluidsynth_available=no])
+      if test "x$fluidsynth_available" = "xyes"; then
+        enable_amidiplug=yes
+        ap_disable_timidity=yes
+      else
+        enable_amidiplug=no
+        AC_MSG_WARN([*** Neither an ALSA-supported hardware synth or FluidSynth software synth (>= 1.0.6) have been found (even if ALSA was detected), so amidi-plug won't be compiled unless you explicitly request it with --enable-amidiplug ***])
+      fi
     fi
   else
-    AC_MSG_WARN([*** ALSA not found, amidi-plug won't be compiled ***])
-    enable_amidiplug=no
+    PKG_CHECK_MODULES(FLUIDSYNTH, [fluidsynth >= 1.0.6],
+      [fluidsynth_available=yes],[fluidsynth_available=no])
+    if test "x$fluidsynth_available" = "xyes"; then
+      enable_amidiplug=yes
+      ap_disable_timidity=yes
+    else
+      enable_amidiplug=no
+      AC_MSG_WARN([*** Neither ALSA or FluidSynth software synth (>= 1.0.6) have been found, so amidi-plug won't be compiled unless you explicitly request it with --enable-amidiplug ***])
+    fi
   fi
 fi
 
-if test "$enable_amidiplug" = "yes"; then
-	INPUT_PLUGINS="$INPUT_PLUGINS amidi-plug"
+if test "x$enable_amidiplug" = "xyes"; then
+  INPUT_PLUGINS="$INPUT_PLUGINS amidi-plug"
+  PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.6.0],,)
+  PKG_CHECK_MODULES(GMODULE, [gmodule-2.0 >= 2.6.0],,)
+  AMIDIPLUGDATADIR=${datadir}/amidi-plug/audacious
+  AC_SUBST(AMIDIPLUGDATADIR)
+  if test "x$enable_amidiplug_alsa" = "xauto" -o "x$enable_amidiplug_alsa" = "xyes"; then
+    if test "x$alsalib_available" = "xcheck"; then
+      PKG_CHECK_MODULES(ALSA, [alsa >= 1.0],
+        [alsalib_available=yes],[alsalib_available=no])
+    fi
+    if test "x$alsalib_available" = "xyes"; then
+      AMIDIPLUG_BACKENDS="$AMIDIPLUG_BACKENDS backend-alsa"
+      enable_amidiplug_alsa=yes
+    else
+      if test "x$enable_amidiplug_alsa" = "xyes"; then
+        AC_MSG_ERROR([Cannot find ALSA development files (ver >= 1.0), but compilation of AMIDI-Plug ALSA backend has been explicitly requested; please install ALSA dev files and run configure again])
+        enable_amidiplug_alsa=no
+      else
+        enable_amidiplug_alsa=no
+      fi
+    fi
+  fi
+  if test "x$enable_amidiplug_fluidsynth" = "xauto" -o "x$enable_amidiplug_fluidsynth" = "xyes"; then
+    if test "x$fluidsynth_available" != "xyes" -a "x$fluidsynth_available" != "xno"; then
+      PKG_CHECK_MODULES(FLUIDSYNTH, [fluidsynth >= 1.0.6],
+        [fluidsynth_available=yes],[fluidsynth_available=no])
+    fi
+    if test "x$fluidsynth_available" = "xyes"; then
+      AMIDIPLUG_BACKENDS="$AMIDIPLUG_BACKENDS backend-fluidsynth"
+      enable_amidiplug_fluidsynth=yes
+    else
+      if test "x$enable_amidiplug_fluidsynth" = "xyes"; then
+        AC_MSG_ERROR([Cannot find FluidSynth development files (ver >= 1.0.6), but compilation of AMIDI-Plug FluidSynth backend has been explicitly requested; please install FluidSynth dev files and run configure again])
+        enable_amidiplug_fluidsynth=no
+      else
+        enable_amidiplug_fluidsynth=no
+      fi
+    fi
+  fi
+  if test "x$enable_amidiplug_dummy" = "xauto" -o "x$enable_amidiplug_dummy" = "xyes"; then
+    AMIDIPLUG_BACKENDS="$AMIDIPLUG_BACKENDS backend-dummy"
+    enable_amidiplug_dummy=yes
+  fi
+  AC_SUBST(AMIDIPLUG_BACKENDS)
 fi
+
+if test "x$enable_amidiplug" = "xyes"; then
+  INPUT_PLUGINS="$INPUT_PLUGINS amidi-plug"
+fi
+
 
 dnl *** TiMidity input plugin (note: should appear somewhere after the amidi-plug check)
 
@@ -890,6 +982,10 @@ AC_CONFIG_FILES([
 	Plugins/Input/adplug/Makefile
 	Plugins/Input/adplug/core/Makefile
 	Plugins/Input/amidi-plug/Makefile
+	Plugins/Input/amidi-plug/pcfg/Makefile
+	Plugins/Input/amidi-plug/backend-alsa/Makefile
+	Plugins/Input/amidi-plug/backend-fluidsynth/Makefile
+	Plugins/Input/amidi-plug/backend-dummy/Makefile
         Plugins/Visualization/Makefile
         Plugins/Visualization/blur_scope/Makefile
 	Plugins/General/Makefile
@@ -950,7 +1046,10 @@ echo "  MPEG 4 Audio (AAC):                     $enable_aac"
 echo "  Windows Media Audio (wma):              $enable_wma"
 echo "  .mpc playback (musepack):               $enable_musepack"
 echo "  Module decoder (modplug):               $have_modplug"
-echo "  MIDI hw synth via ALSA (amidi-plug):    $enable_amidiplug"
+echo "  MIDI modular plugin (amidi-plug):       $enable_amidiplug"
+echo "    -> ALSA backend:                      $enable_amidiplug_alsa"
+echo "    -> FluidSynth backend:                $enable_amidiplug_fluidsynth"
+echo "    -> dummy backend:                     $enable_amidiplug_dummy"
 echo "  MIDI to WAVE converter (timidity):      $enable_timidity"
 echo "  CD Digital Audio (cdda):                yes"
 echo "  Microsoft WAV (wav):                    yes"
@@ -1000,9 +1099,9 @@ if test "$BEEP_PATH" != "no" && test "$prefix/bin/audacious" != "$BEEP_PATH" ; t
 fi
 
 if test "x$ap_disable_timidity" = "xyes" && test "x$enable_timidity" = "xno"; then
-    echo "Note: an ALSA-supported hardware midi synth was detected in configuration;"
-    echo "in order to use it, the amidi-plug (MIDI through ALSA) input plugin"
-    echo "will be compiled in place of timidity. If you wish to compile timidity"
+    echo "Note: an ALSA-supported hardware midi synth or a FluidSynth software synth"
+    echo "was detected in configuration; in order to use it, the amidi-plug input"
+    echo "plugin will be compiled in place of timidity. If you wish to compile timidity"
     echo "anyway, simply use --enable-timidity in configuration."
     echo ""
 fi

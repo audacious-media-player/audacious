@@ -2,19 +2,24 @@ include ../../../mk/rules.mk
 include ../../../mk/objective.mk
 
 OBJECTIVE_LIBS = libamidi-plug.so
+SUBDIRS = pcfg @AMIDIPLUG_BACKENDS@
 
-noinst_HEADERS = amidi-plug.h i_seq.h i_midi.h i_configure.h \
-                 i_fileinfo.h i_utils.h i_common.h
+noinst_HEADERS = amidi-plug.h i_backend.h i_midi.h i_midievent.h \
+                 i_configure.h i_configure-ap.h i_configure-alsa.h \
+                 i_configure-fluidsynth.h i_configure-dummy.h \
+                 i_fileinfo.h i_utils.h i_common.h \
+                 amidi-plug-icon.xpm amidi-plug.logo.xpm \
+                 amidi-plug.midiicon.xpm
 
 LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
-LIBADD = $(GTK_LIBS) $(ALSA_LIBS) -lpthread
-SOURCES = amidi-plug.c i_seq.c i_midi.c \
-          i_configure.c i_utils.c i_fileinfo.c
-
-DATA = amidi-plug.logo.xpm amidi-plug.midiicon.xpm
+LIBADD = $(GTK_LIBS) $(GMODULE_LIBS) -lpthread ./pcfg/libpcfg.a
+SOURCES = amidi-plug.c i_midi.c i_backend.c \
+          i_configure.c i_configure-ap.c i_configure-alsa.c \
+          i_configure-fluidsynth.c i_configure-dummy.c \
+          i_utils.c i_fileinfo.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
-CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ALSA_CFLAGS) \
-	-I../../../intl -I../../..
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(GMODULE_CFLAGS) -DAMIDIPLUGDATADIR=\"$(AMIDIPLUGDATADIR)\" \
+          -I../../../intl -I../../..

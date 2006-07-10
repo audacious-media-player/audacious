@@ -19,26 +19,24 @@
 */
 
 
+#include <gtk/gtk.h>
 #include "i_fileinfo.h"
 /* this is needed to retrieve information */
 #include "i_midi.h"
 /* icon from gnome-mime-audio-midi.png of the GNOME ICON SET */
 #include "amidi-plug.midiicon.xpm"
 
-static amidiplug_gui_fileinfo_t amidiplug_gui_fileinfo = { NULL };
-
 
 void i_fileinfo_ev_destroy( GtkWidget * win , gpointer mf )
 {
   i_midi_free( (midifile_t *)mf );
   g_free( mf );
-  amidiplug_gui_fileinfo.fileinfo_win = NULL;
 }
 
 
-void i_fileinfo_ev_close( void )
+void i_fileinfo_ev_close( GtkWidget * button , gpointer fileinfowin )
 {
-  gtk_widget_destroy( amidiplug_gui_fileinfo.fileinfo_win );
+  gtk_widget_destroy( GTK_WIDGET(fileinfowin) );
 }
 
 
@@ -63,6 +61,7 @@ void i_fileinfo_table_add_entry( gchar * field_text , gchar * value_text ,
 
 void i_fileinfo_gui( gchar * filename )
 {
+  static GtkWidget *fileinfowin = NULL;
   GtkWidget *fileinfowin_vbox;
   GtkWidget *title_hbox , *title_icon_image , *title_name_f_label , *title_name_v_entry;
   GtkWidget *info_frame , *info_table;
@@ -73,10 +72,12 @@ void i_fileinfo_gui( gchar * filename )
   GString *value_gstring;
   gchar *title , *filename_utf8;
   gint bpm = 0, wavg_bpm = 0;
-  midifile_t * mf = g_malloc(sizeof(midifile_t));
+  midifile_t *mf;
 
-  if ( amidiplug_gui_fileinfo.fileinfo_win )
+  if ( fileinfowin )
     return;
+
+  mf = g_malloc(sizeof(midifile_t));
 
   /****************** midifile parser ******************/
   if ( !i_midi_parse_from_filename( filename , mf ) )
@@ -86,16 +87,16 @@ void i_fileinfo_gui( gchar * filename )
   i_midi_get_bpm( mf , &bpm , &wavg_bpm );
   /*****************************************************/
 
-  amidiplug_gui_fileinfo.fileinfo_win = gtk_window_new( GTK_WINDOW_TOPLEVEL );
-  gtk_window_set_type_hint( GTK_WINDOW(amidiplug_gui_fileinfo.fileinfo_win), GDK_WINDOW_TYPE_HINT_DIALOG );
-  gtk_window_set_resizable( GTK_WINDOW(amidiplug_gui_fileinfo.fileinfo_win) , FALSE );
-  gtk_window_set_position( GTK_WINDOW(amidiplug_gui_fileinfo.fileinfo_win) , GTK_WIN_POS_CENTER );
-  g_signal_connect( G_OBJECT(amidiplug_gui_fileinfo.fileinfo_win) ,
-                    "destroy" , G_CALLBACK(i_fileinfo_ev_destroy) , mf );
-  gtk_container_set_border_width( GTK_CONTAINER(amidiplug_gui_fileinfo.fileinfo_win), 10 );
+  fileinfowin = gtk_window_new( GTK_WINDOW_TOPLEVEL );
+  gtk_window_set_type_hint( GTK_WINDOW(fileinfowin), GDK_WINDOW_TYPE_HINT_DIALOG );
+  gtk_window_set_resizable( GTK_WINDOW(fileinfowin) , FALSE );
+  gtk_window_set_position( GTK_WINDOW(fileinfowin) , GTK_WIN_POS_CENTER );
+  g_signal_connect( G_OBJECT(fileinfowin) , "destroy" , G_CALLBACK(i_fileinfo_ev_destroy) , mf );
+  g_signal_connect( G_OBJECT(fileinfowin) , "destroy" , G_CALLBACK(gtk_widget_destroyed) , &fileinfowin );
+  gtk_container_set_border_width( GTK_CONTAINER(fileinfowin), 10 );
 
   fileinfowin_vbox = gtk_vbox_new( FALSE , 10 );
-  gtk_container_add( GTK_CONTAINER(amidiplug_gui_fileinfo.fileinfo_win) , fileinfowin_vbox );
+  gtk_container_add( GTK_CONTAINER(fileinfowin) , fileinfowin_vbox );
 
   /* pango attributes */
   pangoattrlist = pango_attr_list_new();
@@ -165,7 +166,7 @@ void i_fileinfo_gui( gchar * filename )
   footer_hbbox = gtk_hbutton_box_new();
   gtk_button_box_set_layout( GTK_BUTTON_BOX(footer_hbbox) , GTK_BUTTONBOX_END );
   footer_bclose = gtk_button_new_from_stock( GTK_STOCK_CLOSE );
-  g_signal_connect( G_OBJECT(footer_bclose) , "clicked" , G_CALLBACK(i_fileinfo_ev_close) , NULL );
+  g_signal_connect( G_OBJECT(footer_bclose) , "clicked" , G_CALLBACK(i_fileinfo_ev_close) , fileinfowin );
   gtk_container_add( GTK_CONTAINER(footer_hbbox) , footer_bclose );
   gtk_box_pack_start( GTK_BOX(fileinfowin_vbox) , footer_hbbox , FALSE , FALSE , 0 );
 
@@ -185,7 +186,7 @@ void i_fileinfo_gui( gchar * filename )
     g_free(convert_str);
   }
   title = g_strdup_printf( "%s - " PLAYER_NAME , g_basename(filename_utf8));
-  gtk_window_set_title( GTK_WINDOW(amidiplug_gui_fileinfo.fileinfo_win) , title);
+  gtk_window_set_title( GTK_WINDOW(fileinfowin) , title);
   g_free(title);
   /* set the text for the filename header too */
   gtk_entry_set_text( GTK_ENTRY(title_name_v_entry) , filename_utf8 );
@@ -193,5 +194,5 @@ void i_fileinfo_gui( gchar * filename )
   g_free(filename_utf8);
 
   gtk_widget_grab_focus( GTK_WIDGET(footer_bclose) );
-  gtk_widget_show_all( amidiplug_gui_fileinfo.fileinfo_win );
+  gtk_widget_show_all( fileinfowin );
 }

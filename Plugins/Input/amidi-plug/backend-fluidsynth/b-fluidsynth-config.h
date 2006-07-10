@@ -18,13 +18,24 @@
 *
 */
 
-#ifndef _I_FILEINFO_H
-#define _I_FILEINFO_H 1
-
-#include "i_common.h"
+#ifndef _B_FLUIDSYNTH_CONFIG_H
+#define _B_FLUIDSYNTH_CONFIG_H 1
 
 
-void i_fileinfo_gui( gchar * );
+typedef struct
+{
+  gchar *	fsyn_soundfont_file;
+  gint		fsyn_soundfont_load;
+  gint		fsyn_synth_samplerate;
+  gint		fsyn_synth_gain;
+  gint		fsyn_synth_poliphony;
+  gint		fsyn_synth_reverb;
+  gint		fsyn_synth_chorus;
+  gint		fsyn_buffer_size;
+  gint		fsyn_buffer_margin;
+  gint		fsyn_buffer_increment;
+}
+amidiplug_cfg_fsyn_t;
 
 
-#endif /* !_I_FILEINFO_H */
+#endif /* !_B_FLUIDSYNTH_CONFIG_H */

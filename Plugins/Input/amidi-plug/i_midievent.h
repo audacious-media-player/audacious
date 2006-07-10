@@ -18,13 +18,23 @@
 *
 */
 
-#ifndef _I_FILEINFO_H
-#define _I_FILEINFO_H 1
+#ifndef _I_MIDIEVENT_H
+#define _I_MIDIEVENT_H 1
 
-#include "i_common.h"
+struct midievent_stru {
+  struct midievent_stru * next;		/* linked list */
+  guchar type;				/* SND_SEQ_EVENT_xxx */
+  guchar port;				/* port index */
+  guint tick;
+  guint tick_real;			/* tick with custom offset */
+  union {
+    guchar d[3];			/* channel and data bytes */
+    gint tempo;
+    guint length;			/* length of sysex data */
+  } data;
+  guchar sysex[0];
+};
 
+typedef struct midievent_stru midievent_t;
 
-void i_fileinfo_gui( gchar * );
-
-
-#endif /* !_I_FILEINFO_H */
+#endif /* !_I_MIDIEVENT_H */

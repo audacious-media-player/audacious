@@ -1,0 +1,15 @@
+include ../../../../mk/rules.mk
+include ../../../../mk/objective.mk
+
+noinst_HEADERS = b-dummy.h b-dummy-config.h backend-dummy-icon.xpm
+
+CFLAGS += -fPIC -DPIC $(GLIB_CFLAGS) -I../../../../intl -I../../../..
+
+libdir = $(AMIDIPLUGDATADIR)
+
+OBJECTIVE_LIBS = ap-dummy.so
+
+LIBADD = $(GLIB_LIBS) ../pcfg/libpcfg.a
+SOURCES = b-dummy.c
+
+OBJECTS = ${SOURCES:.c=.o}

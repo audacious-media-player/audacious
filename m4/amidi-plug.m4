@@ -1,9 +1,9 @@
 # Checks for amidi-plug
 
-dnl AM_PATH_AMIDIPLUG([ACTION-IF-FOUND , ACTION-IF-NOT-FOUND])
-dnl Test for AMIDI-Plug and ALSA-supported hardware synth
+dnl AM_PATH_AMIDIPLUG_HWSYNTH([ACTION-IF-FOUND , ACTION-IF-NOT-FOUND])
+dnl Test for ALSA-supported hardware synth
 dnl
-AC_DEFUN([AM_PATH_AMIDIPLUG],
+AC_DEFUN([AM_PATH_AMIDIPLUG_HWSYNTH],
 [
 
 AMIDIPLUG_EVERYTHINGOK="yes"

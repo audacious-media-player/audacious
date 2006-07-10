@@ -18,13 +18,18 @@
 *
 */
 
-#ifndef _I_FILEINFO_H
-#define _I_FILEINFO_H 1
-
-#include "i_common.h"
+#ifndef _B_ALSA_CONFIG_H
+#define _B_ALSA_CONFIG_H 1
 
 
-void i_fileinfo_gui( gchar * );
+typedef struct
+{
+  gchar *	alsa_seq_wports;
+  gint		alsa_mixer_card_id;
+  gchar *	alsa_mixer_ctl_name;
+  gint		alsa_mixer_ctl_id;
+}
+amidiplug_cfg_alsa_t;
 
 
-#endif /* !_I_FILEINFO_H */
+#endif /* !_B_ALSA_CONFIG_H */
