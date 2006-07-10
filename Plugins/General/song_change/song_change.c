@@ -294,7 +294,7 @@ static void init(void)
 	timeout_tag = gtk_timeout_add(100, timeout_func, NULL);
 
 	configure_vbox = configure();
-	prefswin_page_new(configure_vbox, "Song Change", DATA_DIR "/images/songchange.png");
+	prefswin_page_new(configure_vbox, "Song Change", DATA_DIR "/images/plugins.png");
 
 	configure_ok_cb(NULL, NULL);
 }

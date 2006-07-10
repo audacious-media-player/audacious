@@ -1,3 +1,11 @@
+2006-07-10 15:40:14 +0000  Giacomo Lozito <james@develia.org>
+  revision [1692]
+  ensure that the fileinfo popup in playlist disappears when the cursor is moved again
+
+  Changes:        Modified:
+  +3 -0           trunk/audacious/ui_fileinfo.c  
+
+
 2006-07-10 13:41:11 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [1690]
   - when the playlist page of the preferences window is shown, the checkbox for filepopup follows the popup menu now.
