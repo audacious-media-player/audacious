@@ -34,8 +34,9 @@ static char *cmd_line_after = NULL;
 static char *cmd_line_end = NULL;
 static gboolean possible_pl_end;
 
-static GtkWidget *configure_win = NULL, *configure_vbox;
+static GtkWidget *configure_vbox = NULL;
 static GtkWidget *cmd_entry, *cmd_after_entry, *cmd_end_entry;
+static GtkWidget *cmd_warn_label, *cmd_warn_img;
 
 GeneralPlugin sc_gp =
 {
@@ -111,64 +112,11 @@ static void save_and_close(GtkWidget *w, gpointer data)
 		g_free(cmd_line_end);
 		cmd_line_end = g_strdup(cmd_end);
 	}
-	gtk_widget_destroy(configure_win);
 
 	g_free(cmd);
 	g_free(cmd_after);
 	g_free(cmd_end);
 }
-
-#if 0
-static void warn_user(void)
-{
-	GtkWidget *warn_win, *warn_vbox, *warn_desc;
-	GtkWidget *warn_bbox, *warn_yes, *warn_no;
-
-	warn_win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_title(GTK_WINDOW(warn_win), _("Warning"));
-	gtk_window_set_transient_for(GTK_WINDOW(warn_win),
-				     GTK_WINDOW(configure_win));
-	gtk_window_set_modal(GTK_WINDOW(warn_win), TRUE);
-
-	gtk_container_set_border_width(GTK_CONTAINER(warn_win), 10);
-
-	warn_vbox = gtk_vbox_new(FALSE, 10);
-	gtk_container_add(GTK_CONTAINER(warn_win), warn_vbox);
-
-	warn_desc = gtk_label_new(_(
-		"Filename and song title tags should be inside "
-		"double quotes (\").  Not doing so might be a "
-		"security risk.  Continue anyway?"));
-	gtk_label_set_justify(GTK_LABEL(warn_desc), GTK_JUSTIFY_LEFT);
-	gtk_misc_set_alignment(GTK_MISC(warn_desc), 0, 0.5);
-	gtk_box_pack_start(GTK_BOX(warn_vbox), warn_desc, FALSE, FALSE, 0);
-	gtk_label_set_line_wrap(GTK_LABEL(warn_desc), TRUE);
-
-	warn_bbox = gtk_hbutton_box_new();
-	gtk_button_box_set_layout(GTK_BUTTON_BOX(warn_bbox), GTK_BUTTONBOX_END);
-	gtk_button_box_set_spacing(GTK_BUTTON_BOX(warn_bbox), 5);
-	gtk_box_pack_start(GTK_BOX(warn_vbox), warn_bbox, FALSE, FALSE, 0);
-
-	warn_yes = gtk_button_new_with_label(_("Yes"));
-	gtk_signal_connect(GTK_OBJECT(warn_yes), "clicked",
-			   GTK_SIGNAL_FUNC(save_and_close), NULL);
-	gtk_signal_connect_object(GTK_OBJECT(warn_yes), "clicked",
-				  GTK_SIGNAL_FUNC(gtk_widget_destroy),
-				  GTK_OBJECT(warn_win));
-	GTK_WIDGET_SET_FLAGS(warn_yes, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(warn_bbox), warn_yes, TRUE, TRUE, 0);
-	gtk_widget_grab_default(warn_yes);
-
-	warn_no = gtk_button_new_with_label(_("No"));
-	gtk_signal_connect_object(GTK_OBJECT(warn_no), "clicked",
-				  GTK_SIGNAL_FUNC(gtk_widget_destroy),
-				  GTK_OBJECT(warn_win));
-	GTK_WIDGET_SET_FLAGS(warn_no, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(warn_bbox), warn_no, TRUE, TRUE, 0);
-
-	gtk_widget_show_all(warn_win);
-}
-#endif
 
 static int check_command(char *command)
 {
@@ -196,9 +144,17 @@ static void configure_ok_cb(GtkWidget *w, gpointer data)
 
 	if (check_command(cmd) < 0 || check_command(cmd_after) < 0
 	                           || check_command(cmd_end) < 0)
-		;
+	{
+		gtk_widget_show(cmd_warn_img);
+		gtk_widget_show(cmd_warn_label);
+	}
 	else
+	{
+		gtk_widget_hide(cmd_warn_img);
+		gtk_widget_hide(cmd_warn_label);
 		save_and_close(NULL, NULL);
+	}
+
 	g_free(cmd);
 	g_free(cmd_after);
 	g_free(cmd_end);
@@ -212,18 +168,18 @@ static GtkWidget *configure(void)
 	GtkWidget *cmd_after_hbox, *cmd_after_label;
 	GtkWidget *cmd_end_hbox, *cmd_end_label;
 	GtkWidget *cmd_desc, *cmd_after_desc, *cmd_end_desc, *f_desc;
-	GtkWidget *configure_bbox, *configure_ok;
 	GtkWidget *song_frame, *song_vbox;
+        GtkWidget *bbox_hbox;
 	char *temp;
 	
 	read_config();
 
-	configure_vbox = gtk_vbox_new(FALSE, 10);
+	configure_vbox = gtk_vbox_new(FALSE, 12);
 
 	song_frame = gtk_frame_new(_("Commands"));
 	gtk_box_pack_start(GTK_BOX(configure_vbox), song_frame, FALSE, FALSE, 0);
-	song_vbox = gtk_vbox_new(FALSE, 10);
-	gtk_container_set_border_width(GTK_CONTAINER(song_vbox), 5);
+	song_vbox = gtk_vbox_new(FALSE, 12);
+	gtk_container_set_border_width(GTK_CONTAINER(song_vbox), 6);
 	gtk_container_add(GTK_CONTAINER(song_frame), song_vbox);
 	
 	cmd_desc = gtk_label_new(_(
@@ -233,7 +189,7 @@ static GtkWidget *configure(void)
 	gtk_box_pack_start(GTK_BOX(song_vbox), cmd_desc, FALSE, FALSE, 0);
 	gtk_label_set_line_wrap(GTK_LABEL(cmd_desc), TRUE);
 
-	cmd_hbox = gtk_hbox_new(FALSE, 5);
+	cmd_hbox = gtk_hbox_new(FALSE, 6);
 	gtk_box_pack_start(GTK_BOX(song_vbox), cmd_hbox, FALSE, FALSE, 0);
 
 	cmd_label = gtk_label_new(_("Command:"));
@@ -254,9 +210,8 @@ static GtkWidget *configure(void)
 	gtk_label_set_justify(GTK_LABEL(cmd_after_desc), GTK_JUSTIFY_LEFT);
 	gtk_misc_set_alignment(GTK_MISC(cmd_after_desc), 0, 0.5);
 	gtk_box_pack_start(GTK_BOX(song_vbox), cmd_after_desc, FALSE, FALSE, 0);
-	gtk_label_set_line_wrap(GTK_LABEL(cmd_after_desc), TRUE);
 
-	cmd_after_hbox = gtk_hbox_new(FALSE, 5);
+	cmd_after_hbox = gtk_hbox_new(FALSE, 6);
 	gtk_box_pack_start(GTK_BOX(song_vbox), cmd_after_hbox, FALSE, FALSE, 0);
 
 	cmd_after_label = gtk_label_new(_("Command:"));
@@ -270,16 +225,14 @@ static GtkWidget *configure(void)
 	sep2 = gtk_hseparator_new();
 	gtk_box_pack_start(GTK_BOX(song_vbox), sep2, TRUE, TRUE, 0);
 
-
 	cmd_end_desc = gtk_label_new(_(
 		"Command to run when Audacious reaches the end "
 		"of the playlist."));
 	gtk_label_set_justify(GTK_LABEL(cmd_end_desc), GTK_JUSTIFY_LEFT);
 	gtk_misc_set_alignment(GTK_MISC(cmd_end_desc), 0, 0.5);
 	gtk_box_pack_start(GTK_BOX(song_vbox), cmd_end_desc, FALSE, FALSE, 0);
-	gtk_label_set_line_wrap(GTK_LABEL(cmd_end_desc), TRUE);
 
-	cmd_end_hbox = gtk_hbox_new(FALSE, 5);
+	cmd_end_hbox = gtk_hbox_new(FALSE, 6);
 	gtk_box_pack_start(GTK_BOX(song_vbox), cmd_end_hbox, FALSE, FALSE, 0);
 
 	cmd_end_label = gtk_label_new(_("Command:"));
@@ -294,8 +247,8 @@ static GtkWidget *configure(void)
 	gtk_box_pack_start(GTK_BOX(song_vbox), sep3, TRUE, TRUE, 0);
 
 	temp = g_strdup_printf(
-		_("You can use the following format strings which "
-		  "will be substituted before calling the command "
+		_("You can use the following format strings which\n"
+		  "will be substituted before calling the command\n"
 		  "(not all are useful for the end-of-playlist command).\n\n"
 		  "%%F: Frequency (in hertz)\n"
 		  "%%c: Number of channels\n"
@@ -311,18 +264,22 @@ static GtkWidget *configure(void)
 	gtk_label_set_justify(GTK_LABEL(f_desc), GTK_JUSTIFY_LEFT);
 	gtk_misc_set_alignment(GTK_MISC(f_desc), 0, 0.5);
 	gtk_box_pack_start(GTK_BOX(song_vbox), f_desc, FALSE, FALSE, 0);
-	gtk_label_set_line_wrap(GTK_LABEL(f_desc), TRUE);
 
-	configure_bbox = gtk_hbutton_box_new();
-	gtk_button_box_set_layout(GTK_BUTTON_BOX(configure_bbox), GTK_BUTTONBOX_END);
-	gtk_button_box_set_spacing(GTK_BUTTON_BOX(configure_bbox), 5);
-	gtk_box_pack_start(GTK_BOX(configure_vbox), configure_bbox, FALSE, FALSE, 0);
+	bbox_hbox = gtk_hbox_new(FALSE, 6);
+	gtk_box_pack_start(GTK_BOX(configure_vbox), bbox_hbox, FALSE, FALSE, 0);
 
-	configure_ok = gtk_button_new_from_stock(_("gtk-apply"));
-	gtk_signal_connect(GTK_OBJECT(configure_ok), "clicked", GTK_SIGNAL_FUNC(configure_ok_cb), NULL);
-	GTK_WIDGET_SET_FLAGS(configure_ok, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(configure_bbox), configure_ok, TRUE, TRUE, 0);
-	gtk_widget_grab_default(configure_ok);
+	cmd_warn_img = gtk_image_new_from_stock("gtk-dialog-warning", GTK_ICON_SIZE_MENU);
+	gtk_box_pack_start(GTK_BOX(bbox_hbox), cmd_warn_img, FALSE, FALSE, 0);
+
+	temp = g_strdup_printf(
+		_("<span size='small'>Parameters passed to the shell should be encapsulated in quotes. Doing otherwise is a security risk.</span>"));
+	cmd_warn_label = gtk_label_new(temp);
+	gtk_label_set_markup(GTK_LABEL(cmd_warn_label), temp);
+	gtk_box_pack_start(GTK_BOX(bbox_hbox), cmd_warn_label, FALSE, FALSE, 0);
+
+	g_signal_connect(GTK_OBJECT(cmd_entry), "changed", GTK_SIGNAL_FUNC(configure_ok_cb), NULL);
+	g_signal_connect(GTK_OBJECT(cmd_after_entry), "changed", GTK_SIGNAL_FUNC(configure_ok_cb), NULL);
+	g_signal_connect(GTK_OBJECT(cmd_end_entry), "changed", GTK_SIGNAL_FUNC(configure_ok_cb), NULL);
 
 	gtk_widget_show_all(configure_vbox);
 
@@ -338,6 +295,8 @@ static void init(void)
 
 	configure_vbox = configure();
 	prefswin_page_new(configure_vbox, "Song Change", DATA_DIR "/images/songchange.png");
+
+	configure_ok_cb(NULL, NULL);
 }
 
 

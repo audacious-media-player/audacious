@@ -1,3 +1,13 @@
+2006-07-10 11:02:23 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1682]
+  - fix GTK+ assertions
+  - reorder category IDs if required
+  
+
+  Changes:        Modified:
+  +10 -2          trunk/audacious/prefswin.c  
+
+
 2006-07-10 10:15:09 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1680]
   - further cleanups
