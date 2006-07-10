@@ -1,3 +1,12 @@
+2006-07-10 11:39:43 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1684]
+  - vast improvements to the songchange plugin
+  
+
+  Changes:        Modified:
+  +36 -77         trunk/Plugins/General/song_change/song_change.c  
+
+
 2006-07-10 11:02:23 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1682]
   - fix GTK+ assertions
