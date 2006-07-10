@@ -1,3 +1,12 @@
+2006-07-10 10:15:09 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1680]
+  - further cleanups
+  
+
+  Changes:        Modified:
+  +2 -2           trunk/audacious/glade/prefswin.glade  
+
+
 2006-07-10 10:12:58 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1678]
   - preferences window cleanups

@@ -2412,6 +2412,7 @@ prefswin_page_destroy(GtkWidget *container)
     GtkTreeView *treeview = GTK_TREE_VIEW(category_treeview);
     gboolean ret;
     gint id;
+    gint index = -1;
 
     if (category_notebook == NULL || treeview == NULL || container == NULL)
         return;
@@ -2432,12 +2433,19 @@ prefswin_page_destroy(GtkWidget *container)
 
     while (ret == TRUE)
     {
-        gint index = -1;
-
         gtk_tree_model_get(model, &iter, CATEGORY_VIEW_COL_ID, &index, -1);
 
         if (index == id)
+	{
             gtk_list_store_remove(GTK_LIST_STORE(model), &iter);
+	    ret = gtk_tree_model_get_iter_first(model, &iter);
+	}
+
+	if (index > id)
+	{
+	    index--;
+	    gtk_list_store_set(GTK_LIST_STORE(model), &iter, CATEGORY_VIEW_COL_ID, index, -1);
+	}
 
         ret = gtk_tree_model_iter_next(model, &iter);
     }
