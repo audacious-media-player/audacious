@@ -206,11 +206,17 @@ void jack_init(void)
   {
       jack_cfg.isTraceEnabled = FALSE;
       jack_cfg.port_connection_mode = "CONNECT_ALL"; /* default to connect all */
+      jack_cfg.volume_left = 25; /* set default volume to 25 % */
+      jack_cfg.volume_right = 25;
   } else
   {
       bmp_cfg_db_get_bool(cfgfile, "jack", "isTraceEnabled", &jack_cfg.isTraceEnabled);
       if(!bmp_cfg_db_get_string(cfgfile, "jack", "port_connection_mode", &jack_cfg.port_connection_mode))
           jack_cfg.port_connection_mode = "CONNECT_ALL";
+      if(!bmp_cfg_db_get_int(cfgfile, "jack", "volume_left", &jack_cfg.volume_left))
+          jack_cfg.volume_left = 25;
+      if(!bmp_cfg_db_get_int(cfgfile, "jack", "volume_right", &jack_cfg.volume_right))
+          jack_cfg.volume_right = 25;
   }
 
   bmp_cfg_db_close(cfgfile);
@@ -308,6 +314,13 @@ gint jack_free(void)
 /* Close the device */
 void jack_close(void)
 {
+  ConfigDb *cfgfile;
+
+  cfgfile = bmp_cfg_db_open();
+  bmp_cfg_db_set_int(cfgfile, "jack", "volume_left", jack_cfg.volume_left); /* stores the volume setting */
+  bmp_cfg_db_set_int(cfgfile, "jack", "volume_right", jack_cfg.volume_right);
+  bmp_cfg_db_close(cfgfile);
+
   TRACE("\n");
 
   JACK_Reset(driver); /* flush buffers, reset position and set state to STOPPED */
@@ -401,6 +414,7 @@ gint jack_open(AFormat fmt, gint sample_rate, gint num_channels)
     return 0;
   }
 
+  jack_set_volume(jack_cfg.volume_left, jack_cfg.volume_right); /* sets the volume to stored value */
   output_opened = TRUE;
 
   return 1;
@@ -530,10 +544,14 @@ void jack_set_volume(int l, int r)
     TRACE("l(%d), r(%d)\n", l, r);
   }
 
-  if(output.channels > 0)
+  if(output.channels > 0) {
       JACK_SetVolumeForChannel(driver, 0, l);
-  if(output.channels > 1)
+      jack_cfg.volume_left = l;
+  }
+  if(output.channels > 1) {
       JACK_SetVolumeForChannel(driver, 1, r);
+      jack_cfg.volume_right = r;
+  }
 }
 
 

@@ -170,7 +170,6 @@ static void warn_user(void)
 }
 #endif
 
-#if 0
 static int check_command(char *command)
 {
 	const char *dangerous = "fns";
@@ -186,7 +185,6 @@ static int check_command(char *command)
 	}
 	return 0;
 }
-#endif
 
 static void configure_ok_cb(GtkWidget *w, gpointer data)
 {
@@ -196,12 +194,10 @@ static void configure_ok_cb(GtkWidget *w, gpointer data)
 	cmd_after = g_strdup(gtk_entry_get_text(GTK_ENTRY(cmd_after_entry)));
 	cmd_end = g_strdup(gtk_entry_get_text(GTK_ENTRY(cmd_end_entry)));
 
-#if 0
 	if (check_command(cmd) < 0 || check_command(cmd_after) < 0
 	                           || check_command(cmd_end) < 0)
-		warn_user();
+		;
 	else
-#endif
 		save_and_close(NULL, NULL);
 	g_free(cmd);
 	g_free(cmd_after);
@@ -223,7 +219,6 @@ static GtkWidget *configure(void)
 	read_config();
 
 	configure_vbox = gtk_vbox_new(FALSE, 10);
-	gtk_container_add(GTK_CONTAINER(configure_win), configure_vbox);
 
 	song_frame = gtk_frame_new(_("Commands"));
 	gtk_box_pack_start(GTK_BOX(configure_vbox), song_frame, FALSE, FALSE, 0);
@@ -232,7 +227,7 @@ static GtkWidget *configure(void)
 	gtk_container_add(GTK_CONTAINER(song_frame), song_vbox);
 	
 	cmd_desc = gtk_label_new(_(
-		   "Shell-command to run when Audacious starts a new song."));
+		   "Command to run when Audacious starts a new song."));
 	gtk_label_set_justify(GTK_LABEL(cmd_desc), GTK_JUSTIFY_LEFT);
 	gtk_misc_set_alignment(GTK_MISC(cmd_desc), 0, 0.5);
 	gtk_box_pack_start(GTK_BOX(song_vbox), cmd_desc, FALSE, FALSE, 0);
@@ -255,7 +250,7 @@ static GtkWidget *configure(void)
 
 
 	cmd_after_desc = gtk_label_new(_(
-		   "Shell-command to run toward the end of a song."));
+		   "Command to run toward the end of a song."));
 	gtk_label_set_justify(GTK_LABEL(cmd_after_desc), GTK_JUSTIFY_LEFT);
 	gtk_misc_set_alignment(GTK_MISC(cmd_after_desc), 0, 0.5);
 	gtk_box_pack_start(GTK_BOX(song_vbox), cmd_after_desc, FALSE, FALSE, 0);
@@ -277,7 +272,7 @@ static GtkWidget *configure(void)
 
 
 	cmd_end_desc = gtk_label_new(_(
-		"Shell-command to run when Audacious reaches the end "
+		"Command to run when Audacious reaches the end "
 		"of the playlist."));
 	gtk_label_set_justify(GTK_LABEL(cmd_end_desc), GTK_JUSTIFY_LEFT);
 	gtk_misc_set_alignment(GTK_MISC(cmd_end_desc), 0, 0.5);

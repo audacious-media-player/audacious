@@ -1,3 +1,13 @@
+2006-07-10 05:59:20 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1668]
+  - properly respect signedness in get_spc_info_().
+  
+
+  Changes:        Modified:
+  +2 -3           trunk/Plugins/Input/console/Audacious_Driver.cpp  
+  +1 -1           trunk/Plugins/Input/console/Spc_Emu.h  
+
+
 2006-07-08 15:29:18 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1666]
   Security fixes from AdPlug CVS (their July 7 commit shortly before the secunia announcement).
