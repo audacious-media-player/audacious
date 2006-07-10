@@ -70,6 +70,7 @@ static gboolean output_opened; /* true if we have a connection to jack */
 
 static GtkWidget *dialog, *button, *label;
 
+void jack_set_volume(int l, int r);
 
 /* Giacomo's note: removed the destructor from the original xmms-jack, cause
    destructors + thread join + NPTL currently leads to problems; solved this

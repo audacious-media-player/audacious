@@ -1,3 +1,12 @@
+2006-07-10 09:37:04 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1674]
+  - provide some additional debugging hints with gdk_error_trap_push/pop.
+  
+
+  Changes:        Modified:
+  +4 -0           trunk/audacious/playlist_list.c  
+
+
 2006-07-10 09:34:37 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1672]
   - do transparency the X11 way
