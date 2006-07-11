@@ -467,8 +467,11 @@ gboolean audio_check_autonomous( void )
    bpointer[0] = (not used) , bpointer[1] = (not used) */
 GSList * sequencer_port_get_list( void )
 {
+  gint err;
   snd_seq_t * pseq;
-  snd_seq_open( &pseq , "default" , SND_SEQ_OPEN_DUPLEX , 0 );
+  err = snd_seq_open( &pseq , "default" , SND_SEQ_OPEN_DUPLEX , 0 );
+  if ( err < 0 )
+    return NULL;
 
   GSList * wports = NULL;
   snd_seq_client_info_t *cinfo;
