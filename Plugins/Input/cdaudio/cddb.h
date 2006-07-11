@@ -28,7 +28,7 @@ typedef struct {
     guint32 discid;
 } cddb_disc_header_t;
 
-#define CDDB_MAX_PROTOCOL_LEVEL 3
+#define CDDB_MAX_PROTOCOL_LEVEL 6
 #define CDDB_HOSTNAME_LEN 100
 #define CDDB_LOG_MAX 100
 

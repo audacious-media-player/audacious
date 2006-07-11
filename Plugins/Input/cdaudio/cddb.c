@@ -362,6 +362,16 @@ cddb_read(gchar * server, cddb_disc_header_t * cddb_info, cdinfo_t * cdinfo)
             }
             command++;
         case 3:
+            if (!strncmp(buffer, "DYEAR", 5)) {
+                break;
+            }
+            command++;
+        case 4:
+            if (!strncmp(buffer, "DGENRE", 6)) {
+                break;
+            }
+            command++;
+        case 5:
             if (!strncmp(buffer, "TTITLE", 6)) {
                 num = atoi(buffer + 6);
                 if (oldnum < 0 || num == oldnum) {
@@ -384,17 +394,17 @@ cddb_read(gchar * server, cddb_disc_header_t * cddb_info, cdinfo_t * cdinfo)
             bufs = 0;
             oldnum = -1;
             command++;
-        case 4:
+        case 6:
             if (!strncmp(buffer, "EXTD", 4)) {
                 break;
             }
             command++;
-        case 5:
+        case 7:
             if (!strncmp(buffer, "EXTT", 4)) {
                 break;
             }
             command++;
-        case 6:
+        case 8:
             if (!strncmp(buffer, "PLAYORDER", 9)) {
                 break;
             }
@@ -584,6 +594,16 @@ cddb_read_file(gchar * file, cddb_disc_header_t * cddb_info,
             }
             command++;
         case 3:
+            if (!strncmp(buffer, "DYEAR", 5)) {
+                break;
+            }
+            command++;
+        case 4:
+            if (!strncmp(buffer, "DGENRE", 6)) {
+                break;
+            }
+            command++;
+        case 5:
             if (!strncmp(buffer, "TTITLE", 6)) {
                 num = atoi(buffer + 6);
                 if (oldnum < 0 || num == oldnum) {
@@ -606,17 +626,17 @@ cddb_read_file(gchar * file, cddb_disc_header_t * cddb_info,
             bufs = 0;
             oldnum = -1;
             command++;
-        case 4:
+        case 6:
             if (!strncmp(buffer, "EXTD", 4)) {
                 break;
             }
             command++;
-        case 5:
+        case 7:
             if (!strncmp(buffer, "EXTT", 4)) {
                 break;
             }
             command++;
-        case 6:
+        case 8:
             if (!strncmp(buffer, "PLAYORDER", 9)) {
                 break;
             }

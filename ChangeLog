@@ -1,3 +1,11 @@
+2006-07-11 00:37:19 +0000  Giacomo Lozito <james@develia.org>
+  revision [1698]
+  amidi-plug alsa: check if a sequencer actually exists before requesting sequencer port list
+
+  Changes:        Modified:
+  +4 -1           trunk/Plugins/Input/amidi-plug/backend-alsa/b-alsa.c  
+
+
 2006-07-10 21:09:15 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1696]
   - update NEWS
