@@ -252,9 +252,10 @@ static void get_spc_info_( Spc_Emu::header_t const& h, byte const* xid6, long xi
 		track_info_t* out )
 {
 	// decode length (can be in text or binary format)
-	unsigned const char s [4] = { h.len_secs [0], h.len_secs [1], h.len_secs [2], 0 };
+	char s [4] = { h.len_secs [0], h.len_secs [1], h.len_secs [2], 0 };
 	int len_secs = (unsigned char) s [1] * 0x100 + s [0];
-
+	if ( s [1] >= ' ' || (!s [1] && isdigit( s [0] )) )
+		len_secs = atoi( s );
 	if ( len_secs )
 		out->length = len_secs * 1000;
 	
