@@ -1,3 +1,13 @@
+2006-07-11 23:49:16 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [1700]
+  - make cdaudio access cddb via protocol level 6 for utf-8 reply.
+  
+
+  Changes:        Modified:
+  +26 -6          trunk/Plugins/Input/cdaudio/cddb.c  
+  +1 -1           trunk/Plugins/Input/cdaudio/cddb.h  
+
+
 2006-07-11 00:37:19 +0000  Giacomo Lozito <james@develia.org>
   revision [1698]
   amidi-plug alsa: check if a sequencer actually exists before requesting sequencer port list
