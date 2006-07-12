@@ -596,7 +596,7 @@ static void *play_loop(void *filename)
   dbg_printf("factory, ");
   if(!(plr.p = factory((char *)filename, &opl))) {
     dbg_printf("error!\n");
-    MessageBox("AdPlug :: Error", "File could not be opened!", "Ok");
+   // MessageBox("AdPlug :: Error", "File could not be opened!", "Ok");
     plr.playing = false;
     g_thread_exit(NULL);
   }

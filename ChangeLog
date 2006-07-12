@@ -1,3 +1,13 @@
+2006-07-12 15:19:01 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1704]
+  - revert botched patch
+  
+
+  Changes:        Modified:
+  +3 -2           trunk/Plugins/Input/console/Audacious_Driver.cpp  
+  +1 -1           trunk/Plugins/Input/console/Spc_Emu.h  
+
+
 2006-07-12 01:02:24 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1702]
   - install the amidi-plug plugins to ${libdir}/amidi-plug.
