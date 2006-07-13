@@ -1,3 +1,12 @@
+2006-07-12 18:25:26 +0000  Derek Pomery <nemo@m8y.org>
+  revision [1706]
+  This alert is uninformative and due to design, spawns repeatedly instead of using one window.  No other plugin does this, and if it is considered useful, should perhaps go to some sort of log window.
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/adplug/adplug-xmms.cc  
+
+
 2006-07-12 15:19:01 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1704]
   - revert botched patch

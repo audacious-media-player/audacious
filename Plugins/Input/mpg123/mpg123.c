@@ -286,6 +286,11 @@ mpgdec_detect_by_content(char *filename)
         return FALSE;
     if (vfs_fread(tmp, 1, 4, file) != 4)
         goto done;
+    if (!memcmp(tmp, "ID3", 3))
+    {
+	ret = TRUE;
+	goto done;
+    }
     head = convert_to_header(tmp);
     while (!mpgdec_head_check(head)) {
         /*
