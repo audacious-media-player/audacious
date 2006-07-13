@@ -1,3 +1,26 @@
+2006-07-13 23:01:57 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1710]
+  AltiVec support for WMA, by Luca "lu_zero" Barbato from Gentoo.
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/wma/libffwma/Makefile.in  
+  +1 -1           trunk/Plugins/Input/wma/libffwma/allformats.c  
+  +1 -1           trunk/Plugins/Input/wma/libffwma/asf.c  
+  +4 -0           trunk/Plugins/Input/wma/libffwma/avcodec.h  
+  +1 -1           trunk/Plugins/Input/wma/libffwma/avio.c  
+  +2 -2           trunk/Plugins/Input/wma/libffwma/aviobuf.c  
+  +3 -5           trunk/Plugins/Input/wma/libffwma/common.h  
+  +1 -1           trunk/Plugins/Input/wma/libffwma/dsputil.h  
+  +205 -13        trunk/Plugins/Input/wma/libffwma/fft.c  
+  +4 -4           trunk/Plugins/Input/wma/libffwma/futils.c  
+  +2 -2           trunk/Plugins/Input/wma/libffwma/mdct.c  
+  +2 -4           trunk/Plugins/Input/wma/libffwma/mms.c  
+  +1 -1           trunk/Plugins/Input/wma/libffwma/utils.c  
+  +5 -5           trunk/Plugins/Input/wma/libffwma/wmadec.c  
+  +3 -2           trunk/Plugins/Input/wma/wma.c  
+  +1 -0           trunk/configure.ac  
+
+
 2006-07-13 04:16:35 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1708]
   - handle a situation where ID3 tags are bolted on the front.
