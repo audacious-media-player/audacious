@@ -279,7 +279,7 @@ int url_fdopen(ByteIOContext *s, URLContext *h)
     } else {
         buffer_size = IO_BUFFER_SIZE;
     }
-    buffer = malloc(buffer_size);
+    buffer = av_malloc(buffer_size);
     if (!buffer)
         return -ENOMEM;
 
@@ -298,7 +298,7 @@ int url_fdopen(ByteIOContext *s, URLContext *h)
 int url_setbufsize(ByteIOContext *s, int buf_size)
 {
     uint8_t *buffer;
-    buffer = malloc(buf_size);
+    buffer = av_malloc(buf_size);
     if (!buffer)
         return -ENOMEM;
 

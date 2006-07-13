@@ -29,7 +29,7 @@ void av_register_all(void)
     register_protocol(&file_protocol);
     register_protocol(&pipe_protocol);
 
-#if 0
+#if 1
     register_protocol(&mms_protocol);
 #endif
 }

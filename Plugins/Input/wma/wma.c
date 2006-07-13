@@ -23,6 +23,7 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+#include <malloc.h>
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -430,8 +431,8 @@ static void wma_play_file(char *filename)
 	
     wma_ip.set_info(wsong_title, wsong_time, c->bit_rate, c->sample_rate, c->channels);
 
-    wma_s_outbuf = g_malloc0(wma_st_buff);
-    wma_outbuf = g_malloc0(AVCODEC_MAX_AUDIO_FRAME_SIZE);
+    wma_s_outbuf = memalign(16, wma_st_buff);
+    wma_outbuf = memalign(16, AVCODEC_MAX_AUDIO_FRAME_SIZE);
     wma_seekpos = -1;
     wma_decode = 1;
     wma_decode_thread = g_thread_create((GThreadFunc)wma_play_loop, NULL, TRUE, NULL);

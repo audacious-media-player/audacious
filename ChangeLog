@@ -1,3 +1,13 @@
+2006-07-13 04:16:35 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1708]
+  - handle a situation where ID3 tags are bolted on the front.
+  (BladeEnc -- I am looking at you, and I am not very happy.)
+  
+
+  Changes:        Modified:
+  +5 -0           trunk/Plugins/Input/mpg123/mpg123.c  
+
+
 2006-07-12 18:25:26 +0000  Derek Pomery <nemo@m8y.org>
   revision [1706]
   This alert is uninformative and due to design, spawns repeatedly instead of using one window.  No other plugin does this, and if it is considered useful, should perhaps go to some sort of log window.

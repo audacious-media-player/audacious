@@ -530,7 +530,7 @@ mms_t *mms_connect (const char *url_) {
     return NULL;
   }
   hostlen = hostend - url - 6;
-  host = malloc (hostlen+1);
+  host = av_malloc (hostlen+1);
   strncpy (host, &url[6], hostlen);
   host[hostlen]=0;
 
@@ -551,7 +551,7 @@ mms_t *mms_connect (const char *url_) {
     return NULL;
   }
 
-  this = (mms_t*) malloc (sizeof (mms_t));
+  this = (mms_t*) av_malloc (sizeof (mms_t));
 
   this->url             = url;
   this->host            = host;
@@ -811,5 +811,3 @@ void mms_close (mms_t *this) {
   free (this->url);
   free (this);
 }
-
-

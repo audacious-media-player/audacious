@@ -69,7 +69,7 @@ int url_open(URLContext **puc, const char *filename, int flags)
     err = -ENOENT;
     goto fail;
  found:
-    uc = malloc(sizeof(URLContext) + strlen(filename));
+    uc = av_malloc(sizeof(URLContext) + strlen(filename));
     if (!uc) {
         err = -ENOMEM;
         goto fail;

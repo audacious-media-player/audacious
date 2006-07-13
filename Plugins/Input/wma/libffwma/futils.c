@@ -146,7 +146,7 @@ static void av_destruct_packet(AVPacket *pkt)
  */
 int av_new_packet(AVPacket *pkt, int size)
 {
-    unsigned char *data = malloc(size + FF_INPUT_BUFFER_PADDING_SIZE);
+    unsigned char *data = av_malloc(size + FF_INPUT_BUFFER_PADDING_SIZE);
     if (!data)
         return AVERROR_NOMEM;
     memset(data + size, 0, FF_INPUT_BUFFER_PADDING_SIZE);
@@ -166,7 +166,7 @@ int av_dup_packet(AVPacket *pkt)
         uint8_t *data;
         /* we duplicate the packet and don't forget to put the padding
            again */
-        data = malloc(pkt->size + FF_INPUT_BUFFER_PADDING_SIZE);
+        data = av_malloc(pkt->size + FF_INPUT_BUFFER_PADDING_SIZE);
         if (!data) {
             return AVERROR_NOMEM;
         }
@@ -182,7 +182,7 @@ int av_dup_packet(AVPacket *pkt)
 
 int fifo_init(FifoBuffer *f, int size)
 {
-    f->buffer = malloc(size);
+    f->buffer = av_malloc(size);
     if (!f->buffer)
         return -1;
     f->end = f->buffer + size;
@@ -1300,7 +1300,7 @@ static int try_decode_frame(AVStream *st, const uint8_t *data, int size)
         return ret;
     switch(st->codec.codec_type) {
     	case CODEC_TYPE_AUDIO:
-        	samples = malloc(AVCODEC_MAX_AUDIO_FRAME_SIZE);
+        	samples = av_malloc(AVCODEC_MAX_AUDIO_FRAME_SIZE);
         	if (!samples)
             		goto fail;
         	

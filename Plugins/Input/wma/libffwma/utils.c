@@ -28,7 +28,7 @@ void *av_mallocz(unsigned int size)
 {
 	void *ptr;
     
-    	ptr = malloc(size);
+    	ptr = av_malloc(size);
     	if (!ptr)
         	return NULL;
     

@@ -178,8 +178,8 @@ static void init_coef_vlc(VLC *vlc,
 
     init_vlc(vlc, 9, n, table_bits, 1, 1, table_codes, 4, 4);
 
-    run_table = malloc(n * sizeof(uint16_t));
-    level_table = malloc(n * sizeof(uint16_t));
+    run_table = av_malloc(n * sizeof(uint16_t));
+    level_table = av_malloc(n * sizeof(uint16_t));
     p = levels_table;
     i = 2;
     level = 1;
@@ -453,7 +453,7 @@ static int wma_decode_init(AVCodecContext * avctx)
         int n, j;
         float alpha;
         n = 1 << (s->frame_len_bits - i);
-        window = malloc(sizeof(float) * n);
+        window = av_malloc(sizeof(float) * n);
         alpha = M_PI / (2.0 * n);
         for(j=0;j<n;j++) {
             window[n - j - 1] = sin((j + 0.5) * alpha);
@@ -698,8 +698,8 @@ static int wma_decode_block(WMADecodeContext *s)
     int n, v, a, ch, code, bsize;
     int coef_nb_bits, total_gain, parse_exponents;
     float window[BLOCK_MAX_SIZE * 2];
-// XXX: FIXME!! there's a bug somewhere which makes this mandatory under altivec
-#ifdef BLAH_NO_ALTIVEC
+
+#ifdef HAVE_ALTIVEC
     volatile int nb_coefs[MAX_CHANNELS] __attribute__((aligned(16)));
 #else
     int nb_coefs[MAX_CHANNELS];
