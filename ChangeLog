@@ -1,3 +1,14 @@
+2006-07-14 16:04:58 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [1718]
+  fileinfo_show_for_tuple() sometimes causes "Invalid UTF-8 string"
+  pango waring since tuple->file_path and tuple->file_name may contain
+  non UTF-8 characters.
+  
+
+  Changes:        Modified:
+  +8 -2           trunk/audacious/ui_fileinfo.c  
+
+
 2006-07-14 14:55:53 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [1716]
   - now filepopup_pointer_check_iter() returns immediately if cfg.show_filepopup_for_tuple is FALSE.

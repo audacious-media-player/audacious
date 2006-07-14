@@ -38,6 +38,7 @@ SOURCES = \
 	Ym2413_Emu.cpp      \
 	Ym2612_Emu.cpp      \
 	Track_Emu.cpp       \
+	Audacious_Config.cpp \
 	Audacious_Driver.cpp
 
 OBJECTS = ${SOURCES:.cpp=.o}

@@ -9,7 +9,6 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include "libaudacious/configdb.h"
 #include "libaudacious/util.h"
 #include "libaudacious/titlestring.h"
 extern "C" {
@@ -20,6 +19,9 @@ extern "C" {
 #include <stdlib.h>
 #include <ctype.h>
 #include <math.h>
+
+// configdb and prefs ui
+#include "Audacious_Config.h"
 
 // Game_Music_Emu
 #include "Nsf_Emu.h"
@@ -37,15 +39,7 @@ extern "C" {
 //typedef Vfs_File_Reader Audacious_Reader; // will use VFS once it handles gzip transparently
 typedef Gzip_File_Reader Audacious_Reader;
 
-struct AudaciousConsoleConfig {
-	gint loop_length;   // length of tracks that lack timing information
-	gboolean resample;  // whether or not to resample
-	gint resample_rate; // rate to resample at
-	gboolean nsfe_playlist; // if true, use optional NSFE playlist
-	gint treble; // -100 to +100
-	gint bass;   // -100 to +100
-};
-static AudaciousConsoleConfig audcfg = { 180, FALSE, 32000, TRUE, 0, 0 };
+AudaciousConsoleConfig audcfg = { 180, FALSE, 32000, TRUE, 0, 0 };
 static GThread* decode_thread;
 static GStaticMutex playback_mutex = G_STATIC_MUTEX_INIT;
 static int console_ip_is_going;
@@ -801,18 +795,7 @@ static gint is_our_file( gchar* path )
 
 static void console_init(void)
 {
-	ConfigDb *db;
-
-	db = bmp_cfg_db_open();
-
-	bmp_cfg_db_get_int(db, "console", "loop_length", &audcfg.loop_length);
-	bmp_cfg_db_get_bool(db, "console", "resample", &audcfg.resample);
-	bmp_cfg_db_get_int(db, "console", "resample_rate", &audcfg.resample_rate);
-	bmp_cfg_db_get_bool(db, "console", "nsfe_playlist", &audcfg.nsfe_playlist);
-	bmp_cfg_db_get_int(db, "console", "treble", &audcfg.treble);
-	bmp_cfg_db_get_int(db, "console", "bass", &audcfg.bass);
-	
-	bmp_cfg_db_close(db);
+	console_cfg_load();
 }
 
 extern "C" void console_aboutbox(void)
@@ -840,7 +823,7 @@ InputPlugin console_ip =
 	NULL,
 	console_init,
 	console_aboutbox,
-	NULL,
+	console_cfg_ui,
 	is_our_file,
 	NULL,
 	play_file,
