@@ -305,7 +305,7 @@ create_filepopup_window(void)
 void
 fileinfo_show_for_tuple(TitleInput *tuple)
 {
-	gchar *tmp;
+	gchar *tmp = NULL;
 
 	if (tuple == NULL)
 		return;
@@ -317,7 +317,13 @@ fileinfo_show_for_tuple(TitleInput *tuple)
 	fileinfo_entry_set_text("entry_album", tuple->album_name);
 	fileinfo_entry_set_text("entry_comment", tuple->comment);
 	fileinfo_entry_set_text("entry_genre", tuple->genre);
-	fileinfo_entry_set_text_free("entry_location", g_strdup_printf("%s/%s", tuple->file_path, tuple->file_name));
+
+	tmp = g_strdup_printf("%s/%s", tuple->file_path, tuple->file_name);
+	if(tmp){
+		fileinfo_entry_set_text_free("entry_location", str_to_utf8(tmp));
+		g_free(tmp);
+		tmp = NULL;
+	}
 
 	if (tuple->year != 0)
 		fileinfo_entry_set_text_free("entry_year", g_strdup_printf("%d", tuple->year));

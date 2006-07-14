@@ -1,3 +1,12 @@
+2006-07-14 14:55:53 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [1716]
+  - now filepopup_pointer_check_iter() returns immediately if cfg.show_filepopup_for_tuple is FALSE.
+  
+
+  Changes:        Modified:
+  +3 -4           trunk/audacious/ui_fileinfo.c  
+
+
 2006-07-14 14:45:57 +0000  Giacomo Lozito <james@develia.org>
   revision [1714]
   - amidi-plug: use AMIDIPLUG_VERSION instead of VERSION for about box
