@@ -1,3 +1,12 @@
+2006-07-14 20:12:45 +0000  Giacomo Lozito <james@develia.org>
+  revision [1720]
+  - preferences window for libconsole plugin
+
+  Changes:        Modified:
+  +6 -23          trunk/Plugins/Input/console/Audacious_Driver.cpp  
+  +1 -0           trunk/Plugins/Input/console/Makefile.in  
+
+
 2006-07-14 16:04:58 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [1718]
   fileinfo_show_for_tuple() sometimes causes "Invalid UTF-8 string"
