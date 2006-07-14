@@ -1,3 +1,12 @@
+2006-07-14 20:13:46 +0000  Giacomo Lozito <james@develia.org>
+  revision [1722]
+  - preferences window for libconsole plugin (added missing files)
+
+  Changes:        Modified:
+  +248 -0         trunk/Plugins/Input/console/Audacious_Config.cpp  
+  +34 -0          trunk/Plugins/Input/console/Audacious_Config.h  
+
+
 2006-07-14 20:12:45 +0000  Giacomo Lozito <james@develia.org>
   revision [1720]
   - preferences window for libconsole plugin

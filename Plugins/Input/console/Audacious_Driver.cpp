@@ -39,7 +39,7 @@ extern "C" {
 //typedef Vfs_File_Reader Audacious_Reader; // will use VFS once it handles gzip transparently
 typedef Gzip_File_Reader Audacious_Reader;
 
-AudaciousConsoleConfig audcfg = { 180, FALSE, 32000, TRUE, 0, 0 };
+AudaciousConsoleConfig audcfg = { 180, FALSE, 32000, TRUE, 0, 0, FALSE };
 static GThread* decode_thread;
 static GStaticMutex playback_mutex = G_STATIC_MUTEX_INIT;
 static int console_ip_is_going;
@@ -671,6 +671,10 @@ static void play_file( char* path )
 	// set info
 	int length = -1;
 	bool has_length = false;
+	
+	if (( type == type_spc ) && ( audcfg.ignore_spc_length == TRUE ))
+		info.length = -1;
+	
 	char* title = end_get_info( info, &length, &has_length );
 	if ( title )
 	{

@@ -20,6 +20,7 @@ typedef struct {
 	gboolean nsfe_playlist; // if true, use optional NSFE playlist
 	gint treble; // -100 to +100
 	gint bass;   // -100 to +100
+	gboolean ignore_spc_length; // if true, ignore length from SPC tags
 }
 AudaciousConsoleConfig;
 

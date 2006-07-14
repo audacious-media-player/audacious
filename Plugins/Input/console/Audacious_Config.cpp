@@ -24,6 +24,7 @@ void console_cfg_load( void )
 	bmp_cfg_db_get_bool(db, "console", "nsfe_playlist", &audcfg.nsfe_playlist);
 	bmp_cfg_db_get_int(db, "console", "treble", &audcfg.treble);
 	bmp_cfg_db_get_int(db, "console", "bass", &audcfg.bass);
+	bmp_cfg_db_get_bool(db, "console", "ignore_spc_length", &audcfg.ignore_spc_length);
 	bmp_cfg_db_close(db);
 }
 
@@ -37,6 +38,7 @@ void console_cfg_save( void )
 	bmp_cfg_db_set_bool(db, "console", "nsfe_playlist", audcfg.nsfe_playlist);
 	bmp_cfg_db_set_int(db, "console", "treble", audcfg.treble);
 	bmp_cfg_db_set_int(db, "console", "bass", audcfg.bass);
+	bmp_cfg_db_set_bool(db, "console", "ignore_spc_length", audcfg.ignore_spc_length);
 	bmp_cfg_db_close(db);
 }
 
@@ -73,6 +75,11 @@ static void i_cfg_ev_nsfeoptpl_enable_commit( gpointer cbt )
   audcfg.nsfe_playlist = gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON(cbt) );
 }
 
+static void i_cfg_ev_ignorespclen_enable_commit( gpointer cbt )
+{
+  audcfg.ignore_spc_length = gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON(cbt) );
+}
+
 static void i_cfg_ev_bok( gpointer configwin )
 {
   console_cfg_save();
@@ -90,7 +97,7 @@ void console_cfg_ui( void )
 {
 	static GtkWidget *configwin = NULL;
 	GtkWidget *configwin_vbox;
-	GtkWidget *configwin_gen_vbox, *configwin_nsf_vbox;
+	GtkWidget *configwin_gen_vbox, *configwin_nsf_vbox, *configwin_spc_vbox;
 	GtkWidget *configwin_gen_resample_frame, *configwin_gen_resample_vbox;
 	GtkWidget *configwin_gen_resample_cbt, *configwin_gen_resample_val_hbox;
 	GtkWidget *configwin_gen_resample_val_spbt;
@@ -100,6 +107,7 @@ void console_cfg_ui( void )
 	GtkWidget *configwin_gen_playback_tb_treble_hbox, *configwin_gen_playback_tb_treble_spbt;
 	GtkWidget *configwin_gen_playback_deflen_hbox, *configwin_gen_playback_deflen_spbt;
 	GtkWidget *configwin_nsf_nsfeoptpl_cbt;
+	GtkWidget *configwin_spc_ignorespclen_cbt;
 	GtkWidget *hseparator, *hbuttonbox, *button_ok, *button_cancel;
 	GtkWidget *configwin_notebook;
 	GtkTooltips *tips;
@@ -226,6 +234,18 @@ void console_cfg_ui( void )
 		G_CALLBACK(i_cfg_ev_nsfeoptpl_enable_commit) , configwin_nsf_nsfeoptpl_cbt );
 	gtk_box_pack_start( GTK_BOX(configwin_nsf_vbox) ,
 		configwin_nsf_nsfeoptpl_cbt , FALSE , FALSE , 0 );
+
+	// SPC PAGE
+	configwin_spc_vbox = gtk_vbox_new( FALSE , 3 );
+	gtk_container_set_border_width( GTK_CONTAINER(configwin_spc_vbox), 5 );
+	gtk_notebook_append_page( GTK_NOTEBOOK(configwin_notebook) ,
+		configwin_spc_vbox , gtk_label_new( _("SPC") ) );
+	configwin_spc_ignorespclen_cbt = gtk_check_button_new_with_label( _("Ignore length from SPC tags") );
+	gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(configwin_spc_ignorespclen_cbt) , audcfg.ignore_spc_length );
+	g_signal_connect_swapped( G_OBJECT(button_ok) , "clicked" ,
+		G_CALLBACK(i_cfg_ev_ignorespclen_enable_commit) , configwin_spc_ignorespclen_cbt );
+	gtk_box_pack_start( GTK_BOX(configwin_spc_vbox) ,
+		configwin_spc_ignorespclen_cbt , FALSE , FALSE , 0 );
 
 	// horizontal separator and buttons
 	hbuttonbox = gtk_hbutton_box_new();
