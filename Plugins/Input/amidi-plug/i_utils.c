@@ -65,7 +65,7 @@ void i_about_gui( void )
   gtk_text_view_set_left_margin( GTK_TEXT_VIEW(info_textview) , 10 );
 
   gtk_text_buffer_set_text( info_textbuffer ,
-                            "\nAMIDI-Plug " VERSION
+                            "\nAMIDI-Plug " AMIDIPLUG_VERSION
                             "\nmodular MIDI music player\n"
                             "http://www.develia.org/projects.php?p=amidiplug\n\n"
                             "written by Giacomo Lozito\n"

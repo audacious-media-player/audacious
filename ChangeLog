@@ -1,3 +1,11 @@
+2006-07-13 23:41:48 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1712]
+  Add missing file.
+
+  Changes:        Modified:
+  +71 -0          trunk/Plugins/Input/wma/libffwma/mem.c  
+
+
 2006-07-13 23:01:57 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1710]
   AltiVec support for WMA, by Luca "lu_zero" Barbato from Gentoo.
