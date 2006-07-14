@@ -180,7 +180,8 @@ filepopup_pointer_check_iter(gpointer unused)
 	static gint prev_x = 0, prev_y = 0, ctr = 0;
 	gboolean skip = FALSE;
 
-	if (playlistwin_is_shaded() || playlistwin_list->pl_tooltips == FALSE
+	if (!cfg.show_filepopup_for_tuple || playlistwin_is_shaded()
+		|| playlistwin_list->pl_tooltips == FALSE
 		|| gdk_window_at_pointer(NULL, NULL) != GDK_WINDOW(playlistwin->window)
 		|| gdk_window_at_pointer(NULL, NULL) == NULL)
 	{
@@ -218,9 +219,7 @@ filepopup_pointer_check_iter(gpointer unused)
 	    	}
 
 		tuple = playlist_get_tuple(pos);
-		if(cfg.show_filepopup_for_tuple){
-			filepopup_show_for_tuple(tuple);
-		}
+		filepopup_show_for_tuple(tuple);
 	}
 
 	return TRUE;
