@@ -1,3 +1,12 @@
+2006-07-15 23:47:58 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1730]
+  - bump to version 1.1.1
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/configure.ac  
+
+
 2006-07-15 23:39:37 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1728]
   Newer libmms, from their CVS. Needs to be hooked up properly as it wants more arguments to its functions.

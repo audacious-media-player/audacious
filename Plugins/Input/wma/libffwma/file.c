@@ -136,7 +136,7 @@ URLProtocol pipe_protocol = {
 
 static int _mms_open(URLContext *h, const char *filename, int flags)
 {
-    mms_t *mms = mms_connect(filename);
+    mms_t *mms = mms_connect(NULL, NULL, filename, 1);
 
     if (mms == NULL)
 	return -ENOENT;
@@ -148,7 +148,7 @@ static int _mms_open(URLContext *h, const char *filename, int flags)
 static int _mms_read(URLContext *h, unsigned char *buf, int size)
 {
     mms_t *mms = (mms_t *) h->priv_data;
-    return mms_read(mms, (char*)buf, size);
+    return mms_read(NULL, mms, (char*)buf, size);
 }
 
 static int _mms_close(URLContext *h)
