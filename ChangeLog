@@ -1,3 +1,11 @@
+2006-07-15 23:05:21 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1726]
+  Volume fix (using a lookup table) from upstream CVS.
+
+  Changes:        Modified:
+  +16 -0          trunk/Plugins/Input/adplug/core/amd.cpp  
+
+
 2006-07-14 21:07:10 +0000  Giacomo Lozito <james@develia.org>
   revision [1724]
   - libconsole: added an option to ignore length information from spc tags
