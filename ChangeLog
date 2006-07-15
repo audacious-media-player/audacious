@@ -1,3 +1,12 @@
+2006-07-15 23:52:52 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1732]
+  - properly hook up mms
+  
+
+  Changes:        Modified:
+  +2 -2           trunk/Plugins/Input/wma/libffwma/file.c  
+
+
 2006-07-15 23:47:58 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1730]
   - bump to version 1.1.1
