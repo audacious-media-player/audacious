@@ -39,6 +39,13 @@ bool CamdLoader::load(const std::string &filename, const CFileProvider &fp)
 	int i, j, k, t, numtrax, maxi = 0;
 	unsigned char buf, buf2, buf3;
 	const unsigned char convfx[10] = {0,1,2,9,17,11,13,18,3,14};
+  const unsigned char convvol[64] = {
+    0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 9, 9, 0xa, 0xa, 0xb,
+    0xc, 0xc, 0xd, 0xe, 0xe, 0xf, 0x10, 0x10, 0x11, 0x12, 0x13, 0x14, 0x14,
+    0x15, 0x16, 0x17, 0x18, 0x19, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f, 0x21,
+    0x22, 0x23, 0x25, 0x26, 0x28, 0x29, 0x2b, 0x2d, 0x2e, 0x30, 0x32, 0x35,
+    0x37, 0x3a, 0x3c, 0x3f
+  };
 
 	// file validation section
 	if(fp.filesize(f) < 1072) { fp.close(f); return false; }
@@ -162,6 +169,15 @@ bool CamdLoader::load(const std::string &filename, const CFileProvider &fp)
 					tracks[i][j].param1 = 0;
 				}
 			}
+
+      // fix volume
+      if(tracks[i][j].command == 17) {
+	int vol = convvol[tracks[i][j].param1 * 10 + tracks[i][j].param2];
+
+	if(vol > 63) vol = 63;
+	tracks[i][j].param1 = vol / 10;
+	tracks[i][j].param2 = vol % 10;
+      }
 		}
 
 	rewind(0);

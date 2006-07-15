@@ -1,3 +1,13 @@
+2006-07-14 21:07:10 +0000  Giacomo Lozito <james@develia.org>
+  revision [1724]
+  - libconsole: added an option to ignore length information from spc tags
+
+  Changes:        Modified:
+  +21 -1          trunk/Plugins/Input/console/Audacious_Config.cpp  
+  +1 -0           trunk/Plugins/Input/console/Audacious_Config.h  
+  +5 -1           trunk/Plugins/Input/console/Audacious_Driver.cpp  
+
+
 2006-07-14 20:13:46 +0000  Giacomo Lozito <james@develia.org>
   revision [1722]
   - preferences window for libconsole plugin (added missing files)
