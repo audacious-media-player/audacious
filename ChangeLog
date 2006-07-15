@@ -1,3 +1,13 @@
+2006-07-15 23:39:37 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1728]
+  Newer libmms, from their CVS. Needs to be hooked up properly as it wants more arguments to its functions.
+
+  Changes:        Modified:
+  +1257 -519      trunk/Plugins/Input/wma/libffwma/mms.c  
+  +43 -12         trunk/Plugins/Input/wma/libffwma/mms.h  
+  +80 -0          trunk/Plugins/Input/wma/libffwma/mmsio.h  
+
+
 2006-07-15 23:05:21 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1726]
   Volume fix (using a lookup table) from upstream CVS.
