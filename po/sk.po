@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-27 15:29-0500\n"
+"POT-Creation-Date: 2006-07-16 10:51-0500\n"
 "PO-Revision-Date: 2004-09-03 09:32+0800\n"
 "Last-Translator: Pavel Kanzelsberger <kanzels@zmail.sk>\n"
 "Language-Team: Slovak <kanzels@zmail.sk>\n"
@@ -39,17 +39,17 @@ msgstr "O MPEG Audio plugine"
 #: Plugins/Effect/stereo_plugin/stereo.c:122
 #: Plugins/General/scrobbler/gtkstuff.c:23
 #: Plugins/Input/adplug/adplug-xmms.cc:155
-#: Plugins/Input/console/Audacious_Driver.cpp:699
+#: Plugins/Input/console/Audacious_Driver.cpp:816
 #: Plugins/Input/flac/configure.c:632 Plugins/Input/flac/configure.c:663
 #: Plugins/Input/flac/http.c:219 Plugins/Input/modplug/gui/main.cpp:45
-#: Plugins/Input/mpg123/http.c:221 Plugins/Input/mpg123/mpg123.c:927
+#: Plugins/Input/mpg123/http.c:221 Plugins/Input/mpg123/mpg123.c:958
 #: Plugins/Input/timidity/src/interface.c:223
 #: Plugins/Input/timidity/src/xmms-timidity.c:136
 #: Plugins/Input/tonegen/tonegen.c:57 Plugins/Input/vorbis/fileinfo.c:212
-#: Plugins/Input/vorbis/http.c:218 Plugins/Input/vorbis/vorbis.c:835
+#: Plugins/Input/vorbis/http.c:218 Plugins/Input/vorbis/vorbis.c:824
 #: Plugins/Input/wav/wav-sndfile.c:263 Plugins/Output/OSS/about.c:54
 #: Plugins/Output/arts/configure.c:91 Plugins/Output/esd/about.c:49
-#: Plugins/Output/jack/jack.c:576 Plugins/Output/sun/about.c:38
+#: Plugins/Output/jack/jack.c:595 Plugins/Output/sun/about.c:38
 #: Plugins/Output/sun/configure.c:558
 msgid "Ok"
 msgstr "Ok"
@@ -81,11 +81,10 @@ msgid "Effect intensity:"
 msgstr "_Zoznam efekt pluginov:"
 
 #: Plugins/Effect/stereo_plugin/stereo.c:131
-#: Plugins/General/song_change/song_change.c:347
-#: Plugins/Input/flac/configure.c:638 Plugins/Input/flac/fileinfo.c:356
+#: Plugins/Input/flac/configure.c:638 Plugins/Input/flac/fileinfo.c:358
 #: Plugins/Input/modplug/gui/interface.cpp:741
 #: Plugins/Input/timidity/src/interface.c:231
-#: Plugins/Output/alsa/configure.c:442 Plugins/Output/arts/configure.c:92
+#: Plugins/Output/alsa/configure.c:411 Plugins/Output/arts/configure.c:92
 #: Plugins/Output/disk_writer/disk_writer.c:412
 #: Plugins/Output/sun/configure.c:566
 #, fuzzy
@@ -155,92 +154,64 @@ msgstr ""
 msgid "%s: disconnected from LIRC\n"
 msgstr ""
 
-#: Plugins/General/scrobbler/configure.c:126
-#, fuzzy
-msgid "Scrobbler Configuration"
-msgstr "Konfigurácia MPEG Audio pluginu"
-
-#: Plugins/General/scrobbler/configure.c:142
-msgid "Password:"
-msgstr "Heslo:"
-
-#: Plugins/General/scrobbler/configure.c:162
+#: Plugins/General/scrobbler/configure.c:84
 msgid "<b>Scrobbler Preferences</b>"
 msgstr ""
 
-#: Plugins/General/scrobbler/configure.c:170
+#: Plugins/General/scrobbler/configure.c:102
 msgid "Username:"
 msgstr "Používateľ:"
+
+#: Plugins/General/scrobbler/configure.c:108
+msgid "Password:"
+msgstr "Heslo:"
 
 #: Plugins/General/scrobbler/gtkstuff.c:21
 #, fuzzy
 msgid "About Scrobbler Plugin"
 msgstr "O ESounD Plugine"
 
-#: Plugins/General/scrobbler/xmms_scrobbler.c:497
+#: Plugins/General/scrobbler/xmms_scrobbler.c:441
 #, fuzzy
 msgid "Scrobbler Plugin"
 msgstr "Pluginy"
 
-#: Plugins/General/song_change/song_change.c:53
+#: Plugins/General/song_change/song_change.c:55
 #, c-format
 msgid "Song Change %s"
 msgstr ""
 
-#: Plugins/General/song_change/song_change.c:132
-msgid "Warning"
-msgstr ""
-
-#: Plugins/General/song_change/song_change.c:143
-msgid ""
-"Filename and song title tags should be inside double quotes (\").  Not doing "
-"so might be a security risk.  Continue anyway?"
-msgstr ""
-
-#: Plugins/General/song_change/song_change.c:156
-#: Plugins/Input/aac/src/fileinfo.c:206 Plugins/Input/mpg123/fileinfo.c:244
-msgid "Yes"
-msgstr "Áno"
-
-#: Plugins/General/song_change/song_change.c:166
-#: Plugins/Input/aac/src/fileinfo.c:205 Plugins/Input/mpg123/fileinfo.c:243
-msgid "No"
-msgstr "Nie"
-
-#: Plugins/General/song_change/song_change.c:232
-#, fuzzy
-msgid "Song Change Configuration"
-msgstr "Konfigurácia CD Audio prehrávača"
-
-#: Plugins/General/song_change/song_change.c:239
+#: Plugins/General/song_change/song_change.c:179
 #, fuzzy
 msgid "Commands"
 msgstr "Komentár"
 
-#: Plugins/General/song_change/song_change.c:246
-msgid "Shell-command to run when Audacious starts a new song."
+#: Plugins/General/song_change/song_change.c:186
+msgid "Command to run when Audacious starts a new song."
 msgstr ""
 
-#: Plugins/General/song_change/song_change.c:255
-#: Plugins/General/song_change/song_change.c:278
-#: Plugins/General/song_change/song_change.c:301
+#: Plugins/General/song_change/song_change.c:195
+#: Plugins/General/song_change/song_change.c:217
+#: Plugins/General/song_change/song_change.c:238
 #, fuzzy
 msgid "Command:"
 msgstr "Komentár:"
 
-#: Plugins/General/song_change/song_change.c:269
-msgid "Shell-command to run toward the end of a song."
+#: Plugins/General/song_change/song_change.c:209
+msgid "Command to run toward the end of a song."
 msgstr ""
 
-#: Plugins/General/song_change/song_change.c:291
-msgid "Shell-command to run when Audacious reaches the end of the playlist."
-msgstr ""
+#: Plugins/General/song_change/song_change.c:229
+#, fuzzy
+msgid "Command to run when Audacious reaches the end of the playlist."
+msgstr "Načítať metadáta na požiadanie pri zobrazení súboru v playliste"
 
-#: Plugins/General/song_change/song_change.c:314
+#: Plugins/General/song_change/song_change.c:250
 #, c-format
 msgid ""
-"You can use the following format strings which will be substituted before "
-"calling the command (not all are useful for the end-of-playlist command).\n"
+"You can use the following format strings which\n"
+"will be substituted before calling the command\n"
+"(not all are useful for the end-of-playlist command).\n"
 "\n"
 "%%F: Frequency (in hertz)\n"
 "%%c: Number of channels\n"
@@ -252,816 +223,11 @@ msgid ""
 "%%p: Currently playing (1 or 0)"
 msgstr ""
 
-#: Plugins/General/song_change/song_change.c:341
-#: Plugins/Input/modplug/gui/interface.cpp:725 Plugins/Output/alsa/about.c:46
-#: Plugins/Output/alsa/configure.c:436
-#: Plugins/Output/disk_writer/disk_writer.c:140
-#: Plugins/Output/disk_writer/disk_writer.c:405
-msgid "OK"
+#: Plugins/General/song_change/song_change.c:275
+msgid ""
+"<span size='small'>Parameters passed to the shell should be encapsulated in "
+"quotes. Doing otherwise is a security risk.</span>"
 msgstr ""
-
-#: Plugins/Input/aac/src/fileinfo.c:201 Plugins/Input/mpg123/fileinfo.c:239
-msgid "None"
-msgstr "Žiadny"
-
-#: Plugins/Input/aac/src/fileinfo.c:202 Plugins/Input/mpg123/fileinfo.c:240
-msgid "50/15 ms"
-msgstr "50/15 ms"
-
-#: Plugins/Input/aac/src/fileinfo.c:204 Plugins/Input/mpg123/fileinfo.c:242
-msgid "CCIT J.17"
-msgstr "CCIT J.17"
-
-#: Plugins/Input/aac/src/fileinfo.c:248
-#: Plugins/Input/amidi-plug/i_fileinfo.c:118
-#: Plugins/Input/mpg123/fileinfo.c:288 Plugins/Input/vorbis/fileinfo.c:558
-msgid "Name:"
-msgstr "Názov:"
-
-#: Plugins/Input/aac/src/fileinfo.c:260
-#, fuzzy
-msgid "Song Metadata"
-msgstr "Sonata"
-
-#: Plugins/Input/aac/src/fileinfo.c:267 Plugins/Input/flac/fileinfo.c:278
-#: Plugins/Input/mpg123/fileinfo.c:456 Plugins/Input/vorbis/fileinfo.c:581
-msgid "Title:"
-msgstr "Názov:"
-
-#: Plugins/Input/aac/src/fileinfo.c:278 Plugins/Input/flac/fileinfo.c:285
-#: Plugins/Input/mpg123/fileinfo.c:467 Plugins/Input/vorbis/fileinfo.c:592
-msgid "Artist:"
-msgstr "Interpret:"
-
-#: Plugins/Input/aac/src/fileinfo.c:289 Plugins/Input/flac/fileinfo.c:292
-#: Plugins/Input/mpg123/fileinfo.c:478 Plugins/Input/vorbis/fileinfo.c:603
-msgid "Album:"
-msgstr "Album:"
-
-#: Plugins/Input/aac/src/fileinfo.c:300 Plugins/Input/flac/fileinfo.c:299
-#: Plugins/Input/mpg123/fileinfo.c:489 Plugins/Input/vorbis/fileinfo.c:614
-msgid "Comment:"
-msgstr "Komentár:"
-
-#: Plugins/Input/aac/src/fileinfo.c:311 Plugins/Input/mpg123/fileinfo.c:500
-msgid "Year:"
-msgstr "Rok:"
-
-#: Plugins/Input/aac/src/fileinfo.c:323 Plugins/Input/flac/fileinfo.c:314
-#: Plugins/Input/mpg123/fileinfo.c:512 Plugins/Input/vorbis/fileinfo.c:637
-msgid "Track number:"
-msgstr "Číslo skladby:"
-
-#: Plugins/Input/aac/src/fileinfo.c:337 Plugins/Input/flac/fileinfo.c:322
-#: Plugins/Input/mpg123/fileinfo.c:524 Plugins/Input/vorbis/fileinfo.c:649
-msgid "Genre:"
-msgstr "Žáner:"
-
-#: Plugins/Input/aac/src/fileinfo.c:403 Plugins/Input/mpg123/fileinfo.c:624
-#: Plugins/Input/vorbis/fileinfo.c:1015 audacious/mainwin.c:804
-#, c-format
-msgid "%s - Audacious"
-msgstr ""
-
-#: Plugins/Input/aac/src/libmp4.c:20 Plugins/Input/flac/fileinfo.c:47
-#: Plugins/Input/mpg123/mpg123.c:53 Plugins/Input/vorbis/fileinfo.c:83
-msgid "Blues"
-msgstr "Blues"
-
-#: Plugins/Input/aac/src/libmp4.c:20 Plugins/Input/flac/fileinfo.c:47
-#: Plugins/Input/mpg123/mpg123.c:53 Plugins/Input/vorbis/fileinfo.c:83
-msgid "Classic Rock"
-msgstr "Klasický Rock"
-
-#: Plugins/Input/aac/src/libmp4.c:20 Plugins/Input/flac/fileinfo.c:47
-#: Plugins/Input/mpg123/mpg123.c:53 Plugins/Input/vorbis/fileinfo.c:83
-msgid "Country"
-msgstr "Country"
-
-#: Plugins/Input/aac/src/libmp4.c:20 Plugins/Input/flac/fileinfo.c:47
-#: Plugins/Input/mpg123/mpg123.c:53 Plugins/Input/vorbis/fileinfo.c:83
-msgid "Dance"
-msgstr "Tanečný"
-
-#: Plugins/Input/aac/src/libmp4.c:21 Plugins/Input/flac/fileinfo.c:48
-#: Plugins/Input/mpg123/mpg123.c:54 Plugins/Input/vorbis/fileinfo.c:84
-msgid "Disco"
-msgstr "Disko"
-
-#: Plugins/Input/aac/src/libmp4.c:21 Plugins/Input/flac/fileinfo.c:48
-#: Plugins/Input/mpg123/mpg123.c:54 Plugins/Input/vorbis/fileinfo.c:84
-msgid "Funk"
-msgstr "Funk"
-
-#: Plugins/Input/aac/src/libmp4.c:21 Plugins/Input/flac/fileinfo.c:48
-#: Plugins/Input/mpg123/mpg123.c:54 Plugins/Input/vorbis/fileinfo.c:84
-msgid "Grunge"
-msgstr "Grunge"
-
-#: Plugins/Input/aac/src/libmp4.c:21 Plugins/Input/flac/fileinfo.c:48
-#: Plugins/Input/mpg123/mpg123.c:54 Plugins/Input/vorbis/fileinfo.c:84
-msgid "Hip-Hop"
-msgstr "Hip-Hop"
-
-#: Plugins/Input/aac/src/libmp4.c:22 Plugins/Input/flac/fileinfo.c:49
-#: Plugins/Input/mpg123/mpg123.c:55 Plugins/Input/vorbis/fileinfo.c:85
-msgid "Jazz"
-msgstr "Jazz"
-
-#: Plugins/Input/aac/src/libmp4.c:22 Plugins/Input/flac/fileinfo.c:49
-#: Plugins/Input/mpg123/mpg123.c:55 Plugins/Input/vorbis/fileinfo.c:85
-msgid "Metal"
-msgstr "Metal"
-
-#: Plugins/Input/aac/src/libmp4.c:22 Plugins/Input/flac/fileinfo.c:49
-#: Plugins/Input/mpg123/mpg123.c:55 Plugins/Input/vorbis/fileinfo.c:85
-msgid "New Age"
-msgstr "Novodobý"
-
-#: Plugins/Input/aac/src/libmp4.c:22 Plugins/Input/flac/fileinfo.c:49
-#: Plugins/Input/mpg123/mpg123.c:55 Plugins/Input/vorbis/fileinfo.c:85
-msgid "Oldies"
-msgstr "Oldies"
-
-#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
-#: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
-msgid "Other"
-msgstr "Iné"
-
-#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
-#: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
-msgid "Pop"
-msgstr "Pop"
-
-#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
-#: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
-msgid "R&B"
-msgstr "R&B"
-
-#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
-#: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
-msgid "Rap"
-msgstr "Rap"
-
-#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
-#: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
-msgid "Reggae"
-msgstr "Reggae"
-
-#: Plugins/Input/aac/src/libmp4.c:24 Plugins/Input/flac/fileinfo.c:51
-#: Plugins/Input/mpg123/mpg123.c:57 Plugins/Input/vorbis/fileinfo.c:87
-msgid "Rock"
-msgstr "Rock"
-
-#: Plugins/Input/aac/src/libmp4.c:24 Plugins/Input/flac/fileinfo.c:51
-#: Plugins/Input/mpg123/mpg123.c:57 Plugins/Input/vorbis/fileinfo.c:87
-msgid "Techno"
-msgstr "Techno"
-
-#: Plugins/Input/aac/src/libmp4.c:24 Plugins/Input/flac/fileinfo.c:51
-#: Plugins/Input/mpg123/mpg123.c:57 Plugins/Input/vorbis/fileinfo.c:87
-msgid "Industrial"
-msgstr "Industriálny"
-
-#: Plugins/Input/aac/src/libmp4.c:24 Plugins/Input/flac/fileinfo.c:51
-#: Plugins/Input/mpg123/mpg123.c:57 Plugins/Input/vorbis/fileinfo.c:87
-msgid "Alternative"
-msgstr "Alternatívny"
-
-#: Plugins/Input/aac/src/libmp4.c:25 Plugins/Input/flac/fileinfo.c:52
-#: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:88
-msgid "Ska"
-msgstr "Ska"
-
-#: Plugins/Input/aac/src/libmp4.c:25 Plugins/Input/flac/fileinfo.c:52
-#: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:88
-msgid "Death Metal"
-msgstr "Death Metal"
-
-#: Plugins/Input/aac/src/libmp4.c:25 Plugins/Input/flac/fileinfo.c:52
-#: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:88
-msgid "Pranks"
-msgstr "Pranks"
-
-#: Plugins/Input/aac/src/libmp4.c:25 Plugins/Input/flac/fileinfo.c:52
-#: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:88
-msgid "Soundtrack"
-msgstr "Soundtrack"
-
-#: Plugins/Input/aac/src/libmp4.c:26 Plugins/Input/flac/fileinfo.c:53
-#: Plugins/Input/mpg123/mpg123.c:59 Plugins/Input/vorbis/fileinfo.c:89
-msgid "Euro-Techno"
-msgstr "Euro-Techno"
-
-#: Plugins/Input/aac/src/libmp4.c:26 Plugins/Input/flac/fileinfo.c:53
-#: Plugins/Input/mpg123/mpg123.c:59 Plugins/Input/vorbis/fileinfo.c:89
-msgid "Ambient"
-msgstr "Ambient"
-
-#: Plugins/Input/aac/src/libmp4.c:26 Plugins/Input/flac/fileinfo.c:53
-#: Plugins/Input/mpg123/mpg123.c:59 Plugins/Input/vorbis/fileinfo.c:89
-msgid "Trip-Hop"
-msgstr "Trip-Hop"
-
-#: Plugins/Input/aac/src/libmp4.c:26 Plugins/Input/flac/fileinfo.c:53
-#: Plugins/Input/mpg123/mpg123.c:59 Plugins/Input/vorbis/fileinfo.c:89
-msgid "Vocal"
-msgstr "Vokály"
-
-#: Plugins/Input/aac/src/libmp4.c:27 Plugins/Input/flac/fileinfo.c:54
-#: Plugins/Input/mpg123/mpg123.c:60 Plugins/Input/vorbis/fileinfo.c:90
-msgid "Jazz+Funk"
-msgstr "Jazz+Funk"
-
-#: Plugins/Input/aac/src/libmp4.c:27 Plugins/Input/flac/fileinfo.c:54
-#: Plugins/Input/mpg123/mpg123.c:60 Plugins/Input/vorbis/fileinfo.c:90
-msgid "Fusion"
-msgstr "Fusion"
-
-#: Plugins/Input/aac/src/libmp4.c:27 Plugins/Input/flac/fileinfo.c:54
-#: Plugins/Input/mpg123/mpg123.c:60 Plugins/Input/vorbis/fileinfo.c:90
-msgid "Trance"
-msgstr "Trance"
-
-#: Plugins/Input/aac/src/libmp4.c:27 Plugins/Input/flac/fileinfo.c:54
-#: Plugins/Input/mpg123/mpg123.c:60 Plugins/Input/vorbis/fileinfo.c:90
-msgid "Classical"
-msgstr "Klasický"
-
-#: Plugins/Input/aac/src/libmp4.c:28 Plugins/Input/flac/fileinfo.c:55
-#: Plugins/Input/mpg123/mpg123.c:61 Plugins/Input/vorbis/fileinfo.c:91
-msgid "Instrumental"
-msgstr "Inštrumentálny"
-
-#: Plugins/Input/aac/src/libmp4.c:28 Plugins/Input/flac/fileinfo.c:55
-#: Plugins/Input/mpg123/mpg123.c:61 Plugins/Input/vorbis/fileinfo.c:91
-msgid "Acid"
-msgstr "Acid"
-
-#: Plugins/Input/aac/src/libmp4.c:28 Plugins/Input/flac/fileinfo.c:55
-#: Plugins/Input/mpg123/mpg123.c:61 Plugins/Input/vorbis/fileinfo.c:91
-msgid "House"
-msgstr "House"
-
-#: Plugins/Input/aac/src/libmp4.c:28 Plugins/Input/flac/fileinfo.c:55
-#: Plugins/Input/mpg123/mpg123.c:61 Plugins/Input/vorbis/fileinfo.c:91
-msgid "Game"
-msgstr "Hra"
-
-#: Plugins/Input/aac/src/libmp4.c:29 Plugins/Input/flac/fileinfo.c:56
-#: Plugins/Input/mpg123/mpg123.c:62 Plugins/Input/vorbis/fileinfo.c:92
-msgid "Sound Clip"
-msgstr "Zvukový klip"
-
-#: Plugins/Input/aac/src/libmp4.c:29 Plugins/Input/flac/fileinfo.c:56
-#: Plugins/Input/mpg123/mpg123.c:62 Plugins/Input/vorbis/fileinfo.c:92
-msgid "Gospel"
-msgstr "Gospel"
-
-#: Plugins/Input/aac/src/libmp4.c:29 Plugins/Input/flac/fileinfo.c:56
-#: Plugins/Input/mpg123/mpg123.c:62 Plugins/Input/vorbis/fileinfo.c:92
-msgid "Noise"
-msgstr "Hluk"
-
-#: Plugins/Input/aac/src/libmp4.c:29 Plugins/Input/mpg123/mpg123.c:62
-#: Plugins/Input/vorbis/fileinfo.c:92
-msgid "AlternRock"
-msgstr "AlternRock"
-
-#: Plugins/Input/aac/src/libmp4.c:30 Plugins/Input/flac/fileinfo.c:57
-#: Plugins/Input/mpg123/mpg123.c:63 Plugins/Input/vorbis/fileinfo.c:93
-msgid "Bass"
-msgstr "Bass"
-
-#: Plugins/Input/aac/src/libmp4.c:30 Plugins/Input/flac/fileinfo.c:57
-#: Plugins/Input/mpg123/mpg123.c:63 Plugins/Input/vorbis/fileinfo.c:93
-msgid "Soul"
-msgstr "Soul"
-
-#: Plugins/Input/aac/src/libmp4.c:30 Plugins/Input/flac/fileinfo.c:57
-#: Plugins/Input/mpg123/mpg123.c:63 Plugins/Input/vorbis/fileinfo.c:93
-msgid "Punk"
-msgstr "Punk"
-
-#: Plugins/Input/aac/src/libmp4.c:30 Plugins/Input/flac/fileinfo.c:57
-#: Plugins/Input/mpg123/mpg123.c:63 Plugins/Input/vorbis/fileinfo.c:93
-msgid "Space"
-msgstr "Space"
-
-#: Plugins/Input/aac/src/libmp4.c:31 Plugins/Input/flac/fileinfo.c:58
-#: Plugins/Input/mpg123/mpg123.c:64 Plugins/Input/vorbis/fileinfo.c:94
-msgid "Meditative"
-msgstr "Meditačný"
-
-#: Plugins/Input/aac/src/libmp4.c:31 Plugins/Input/flac/fileinfo.c:58
-#: Plugins/Input/mpg123/mpg123.c:64 Plugins/Input/vorbis/fileinfo.c:94
-msgid "Instrumental Pop"
-msgstr "Inštrumentálny Pop"
-
-#: Plugins/Input/aac/src/libmp4.c:32 Plugins/Input/flac/fileinfo.c:59
-#: Plugins/Input/mpg123/mpg123.c:65 Plugins/Input/vorbis/fileinfo.c:95
-msgid "Instrumental Rock"
-msgstr "Inštrumentálny Rock"
-
-#: Plugins/Input/aac/src/libmp4.c:32 Plugins/Input/flac/fileinfo.c:59
-#: Plugins/Input/mpg123/mpg123.c:65 Plugins/Input/vorbis/fileinfo.c:95
-msgid "Ethnic"
-msgstr "Etnický"
-
-#: Plugins/Input/aac/src/libmp4.c:32 Plugins/Input/flac/fileinfo.c:59
-#: Plugins/Input/mpg123/mpg123.c:65 Plugins/Input/vorbis/fileinfo.c:95
-msgid "Gothic"
-msgstr "Gotický"
-
-#: Plugins/Input/aac/src/libmp4.c:33 Plugins/Input/flac/fileinfo.c:60
-#: Plugins/Input/mpg123/mpg123.c:66 Plugins/Input/vorbis/fileinfo.c:96
-msgid "Darkwave"
-msgstr "Darkwave"
-
-#: Plugins/Input/aac/src/libmp4.c:33 Plugins/Input/flac/fileinfo.c:60
-#: Plugins/Input/mpg123/mpg123.c:66 Plugins/Input/vorbis/fileinfo.c:96
-msgid "Techno-Industrial"
-msgstr "Techno-Industrial"
-
-#: Plugins/Input/aac/src/libmp4.c:33 Plugins/Input/flac/fileinfo.c:60
-#: Plugins/Input/mpg123/mpg123.c:66 Plugins/Input/vorbis/fileinfo.c:96
-msgid "Electronic"
-msgstr "Elektronický"
-
-#: Plugins/Input/aac/src/libmp4.c:34 Plugins/Input/flac/fileinfo.c:61
-#: Plugins/Input/mpg123/mpg123.c:67 Plugins/Input/vorbis/fileinfo.c:97
-msgid "Pop-Folk"
-msgstr "Pop-Folk"
-
-#: Plugins/Input/aac/src/libmp4.c:34 Plugins/Input/flac/fileinfo.c:61
-#: Plugins/Input/mpg123/mpg123.c:67 Plugins/Input/vorbis/fileinfo.c:97
-msgid "Eurodance"
-msgstr "Eurodance"
-
-#: Plugins/Input/aac/src/libmp4.c:34 Plugins/Input/flac/fileinfo.c:61
-#: Plugins/Input/mpg123/mpg123.c:67 Plugins/Input/vorbis/fileinfo.c:97
-msgid "Dream"
-msgstr "Dream"
-
-#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:62
-#: Plugins/Input/mpg123/mpg123.c:68 Plugins/Input/vorbis/fileinfo.c:98
-msgid "Southern Rock"
-msgstr "Southern Rock"
-
-#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:62
-#: Plugins/Input/mpg123/mpg123.c:68 Plugins/Input/vorbis/fileinfo.c:98
-msgid "Comedy"
-msgstr "Komédia"
-
-#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:62
-#: Plugins/Input/mpg123/mpg123.c:68 Plugins/Input/vorbis/fileinfo.c:98
-msgid "Cult"
-msgstr "Kultový"
-
-#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:63
-#: Plugins/Input/mpg123/mpg123.c:69 Plugins/Input/vorbis/fileinfo.c:99
-msgid "Gangsta Rap"
-msgstr "Gangsta Rap"
-
-#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:63
-#: Plugins/Input/mpg123/mpg123.c:69 Plugins/Input/vorbis/fileinfo.c:99
-msgid "Top 40"
-msgstr "Top 40"
-
-#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:63
-#: Plugins/Input/mpg123/mpg123.c:69 Plugins/Input/vorbis/fileinfo.c:99
-msgid "Christian Rap"
-msgstr "Kresťanský Rap"
-
-#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:64
-#: Plugins/Input/mpg123/mpg123.c:70 Plugins/Input/vorbis/fileinfo.c:100
-msgid "Pop/Funk"
-msgstr "Pop/Funk"
-
-#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:64
-#: Plugins/Input/mpg123/mpg123.c:70 Plugins/Input/vorbis/fileinfo.c:100
-msgid "Jungle"
-msgstr "Jungle"
-
-#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:64
-#: Plugins/Input/mpg123/mpg123.c:70 Plugins/Input/vorbis/fileinfo.c:100
-msgid "Native American"
-msgstr "Native American"
-
-#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:65
-#: Plugins/Input/mpg123/mpg123.c:71 Plugins/Input/vorbis/fileinfo.c:101
-msgid "Cabaret"
-msgstr "Kabaret"
-
-#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:65
-#: Plugins/Input/mpg123/mpg123.c:71 Plugins/Input/vorbis/fileinfo.c:101
-msgid "New Wave"
-msgstr "Nová vlna"
-
-#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:65
-#: Plugins/Input/mpg123/mpg123.c:71 Plugins/Input/vorbis/fileinfo.c:101
-msgid "Psychedelic"
-msgstr "Psychedelic"
-
-#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:65
-#: Plugins/Input/mpg123/mpg123.c:71 Plugins/Input/vorbis/fileinfo.c:101
-msgid "Rave"
-msgstr "Rave"
-
-#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:66
-#: Plugins/Input/mpg123/mpg123.c:72 Plugins/Input/vorbis/fileinfo.c:102
-msgid "Showtunes"
-msgstr "Showtunes"
-
-#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:66
-#: Plugins/Input/mpg123/mpg123.c:72 Plugins/Input/vorbis/fileinfo.c:102
-msgid "Trailer"
-msgstr "Trailer"
-
-#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:66
-#: Plugins/Input/mpg123/mpg123.c:72 Plugins/Input/vorbis/fileinfo.c:102
-msgid "Lo-Fi"
-msgstr "Lo-Fi"
-
-#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:66
-#: Plugins/Input/mpg123/mpg123.c:72 Plugins/Input/vorbis/fileinfo.c:102
-msgid "Tribal"
-msgstr "Tribal"
-
-#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:67
-#: Plugins/Input/mpg123/mpg123.c:73 Plugins/Input/vorbis/fileinfo.c:103
-msgid "Acid Punk"
-msgstr "Acid Punk"
-
-#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:67
-#: Plugins/Input/mpg123/mpg123.c:73 Plugins/Input/vorbis/fileinfo.c:103
-msgid "Acid Jazz"
-msgstr "Acid Jazz"
-
-#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:67
-#: Plugins/Input/mpg123/mpg123.c:73 Plugins/Input/vorbis/fileinfo.c:103
-msgid "Polka"
-msgstr "Polka"
-
-#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:67
-#: Plugins/Input/mpg123/mpg123.c:73 Plugins/Input/vorbis/fileinfo.c:103
-msgid "Retro"
-msgstr "Retro"
-
-#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:68
-#: Plugins/Input/mpg123/mpg123.c:74 Plugins/Input/vorbis/fileinfo.c:104
-msgid "Musical"
-msgstr "Muzikál"
-
-#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:68
-#: Plugins/Input/mpg123/mpg123.c:74 Plugins/Input/vorbis/fileinfo.c:104
-msgid "Rock & Roll"
-msgstr "Rock & Roll"
-
-#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:68
-#: Plugins/Input/mpg123/mpg123.c:74 Plugins/Input/vorbis/fileinfo.c:104
-msgid "Hard Rock"
-msgstr "Hard Rock"
-
-#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:68
-#: Plugins/Input/mpg123/mpg123.c:74 Plugins/Input/vorbis/fileinfo.c:104
-msgid "Folk"
-msgstr "Folklór"
-
-#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:69
-#: Plugins/Input/mpg123/mpg123.c:75 Plugins/Input/vorbis/fileinfo.c:105
-msgid "Folk/Rock"
-msgstr "Folk/Rock"
-
-#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:69
-#: Plugins/Input/mpg123/mpg123.c:75 Plugins/Input/vorbis/fileinfo.c:105
-msgid "National Folk"
-msgstr "Národný Folklór"
-
-#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:69
-#: Plugins/Input/mpg123/mpg123.c:75 Plugins/Input/vorbis/fileinfo.c:105
-msgid "Swing"
-msgstr "Swing"
-
-#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:70
-#: Plugins/Input/mpg123/mpg123.c:76 Plugins/Input/vorbis/fileinfo.c:106
-msgid "Fast-Fusion"
-msgstr "Fast-Fusion"
-
-#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:70
-#: Plugins/Input/mpg123/mpg123.c:76 Plugins/Input/vorbis/fileinfo.c:106
-msgid "Bebob"
-msgstr "Bebob"
-
-#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:70
-#: Plugins/Input/mpg123/mpg123.c:76 Plugins/Input/vorbis/fileinfo.c:106
-msgid "Latin"
-msgstr "Latino"
-
-#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:70
-#: Plugins/Input/mpg123/mpg123.c:76 Plugins/Input/vorbis/fileinfo.c:106
-msgid "Revival"
-msgstr "Revival"
-
-#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/flac/fileinfo.c:71
-#: Plugins/Input/mpg123/mpg123.c:77 Plugins/Input/vorbis/fileinfo.c:107
-msgid "Celtic"
-msgstr "Celtic"
-
-#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/flac/fileinfo.c:71
-#: Plugins/Input/mpg123/mpg123.c:77 Plugins/Input/vorbis/fileinfo.c:107
-msgid "Bluegrass"
-msgstr "Bluegrass"
-
-#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/flac/fileinfo.c:71
-#: Plugins/Input/mpg123/mpg123.c:77 Plugins/Input/vorbis/fileinfo.c:107
-msgid "Avantgarde"
-msgstr "Avantgarde"
-
-#: Plugins/Input/aac/src/libmp4.c:45 Plugins/Input/flac/fileinfo.c:72
-#: Plugins/Input/mpg123/mpg123.c:78 Plugins/Input/vorbis/fileinfo.c:108
-msgid "Gothic Rock"
-msgstr "Gotický Rock"
-
-#: Plugins/Input/aac/src/libmp4.c:45 Plugins/Input/flac/fileinfo.c:72
-#: Plugins/Input/mpg123/mpg123.c:78 Plugins/Input/vorbis/fileinfo.c:108
-msgid "Progressive Rock"
-msgstr "Progresívny Rock"
-
-#: Plugins/Input/aac/src/libmp4.c:46 Plugins/Input/flac/fileinfo.c:73
-#: Plugins/Input/mpg123/mpg123.c:79 Plugins/Input/vorbis/fileinfo.c:109
-msgid "Psychedelic Rock"
-msgstr "Psychedelic Rock"
-
-#: Plugins/Input/aac/src/libmp4.c:46 Plugins/Input/flac/fileinfo.c:73
-#: Plugins/Input/mpg123/mpg123.c:79 Plugins/Input/vorbis/fileinfo.c:109
-msgid "Symphonic Rock"
-msgstr "Symfonický Rock"
-
-#: Plugins/Input/aac/src/libmp4.c:46 Plugins/Input/flac/fileinfo.c:73
-#: Plugins/Input/mpg123/mpg123.c:79 Plugins/Input/vorbis/fileinfo.c:109
-msgid "Slow Rock"
-msgstr "Pomalý Rock"
-
-#: Plugins/Input/aac/src/libmp4.c:47 Plugins/Input/flac/fileinfo.c:74
-#: Plugins/Input/mpg123/mpg123.c:80 Plugins/Input/vorbis/fileinfo.c:110
-msgid "Big Band"
-msgstr "Big Band"
-
-#: Plugins/Input/aac/src/libmp4.c:47 Plugins/Input/flac/fileinfo.c:74
-#: Plugins/Input/mpg123/mpg123.c:80 Plugins/Input/vorbis/fileinfo.c:110
-msgid "Chorus"
-msgstr "Chorus"
-
-#: Plugins/Input/aac/src/libmp4.c:47 Plugins/Input/flac/fileinfo.c:74
-#: Plugins/Input/mpg123/mpg123.c:80 Plugins/Input/vorbis/fileinfo.c:110
-msgid "Easy Listening"
-msgstr "Ľahké počúvanie"
-
-#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:75
-#: Plugins/Input/mpg123/mpg123.c:81 Plugins/Input/vorbis/fileinfo.c:111
-msgid "Acoustic"
-msgstr "Acoustic"
-
-#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:75
-#: Plugins/Input/mpg123/mpg123.c:81 Plugins/Input/vorbis/fileinfo.c:111
-msgid "Humour"
-msgstr "Humor"
-
-#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:75
-#: Plugins/Input/mpg123/mpg123.c:81 Plugins/Input/vorbis/fileinfo.c:111
-msgid "Speech"
-msgstr "Reč"
-
-#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:75
-#: Plugins/Input/mpg123/mpg123.c:81 Plugins/Input/vorbis/fileinfo.c:111
-msgid "Chanson"
-msgstr "Chanson"
-
-#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:76
-#: Plugins/Input/mpg123/mpg123.c:82 Plugins/Input/vorbis/fileinfo.c:112
-msgid "Opera"
-msgstr "Opera"
-
-#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:76
-#: Plugins/Input/mpg123/mpg123.c:82 Plugins/Input/vorbis/fileinfo.c:112
-msgid "Chamber Music"
-msgstr "Chamber Music"
-
-#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:76
-#: Plugins/Input/mpg123/mpg123.c:82 Plugins/Input/vorbis/fileinfo.c:112
-msgid "Sonata"
-msgstr "Sonata"
-
-#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:76
-#: Plugins/Input/mpg123/mpg123.c:82 Plugins/Input/vorbis/fileinfo.c:112
-msgid "Symphony"
-msgstr "Symfónia"
-
-#: Plugins/Input/aac/src/libmp4.c:50 Plugins/Input/flac/fileinfo.c:77
-#: Plugins/Input/mpg123/mpg123.c:83 Plugins/Input/vorbis/fileinfo.c:113
-msgid "Booty Bass"
-msgstr "Booty Bass"
-
-#: Plugins/Input/aac/src/libmp4.c:50 Plugins/Input/flac/fileinfo.c:77
-#: Plugins/Input/mpg123/mpg123.c:83 Plugins/Input/vorbis/fileinfo.c:113
-msgid "Primus"
-msgstr "Primus"
-
-#: Plugins/Input/aac/src/libmp4.c:50 Plugins/Input/flac/fileinfo.c:77
-#: Plugins/Input/mpg123/mpg123.c:83 Plugins/Input/vorbis/fileinfo.c:113
-msgid "Porn Groove"
-msgstr "Porn Groove"
-
-#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:78
-#: Plugins/Input/mpg123/mpg123.c:84 Plugins/Input/vorbis/fileinfo.c:114
-msgid "Satire"
-msgstr "Satira"
-
-#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:78
-#: Plugins/Input/mpg123/mpg123.c:84 Plugins/Input/vorbis/fileinfo.c:114
-msgid "Slow Jam"
-msgstr "Slow Jam"
-
-#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:78
-#: Plugins/Input/mpg123/mpg123.c:84 Plugins/Input/vorbis/fileinfo.c:114
-msgid "Club"
-msgstr "Club"
-
-#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:78
-#: Plugins/Input/mpg123/mpg123.c:84 Plugins/Input/vorbis/fileinfo.c:114
-msgid "Tango"
-msgstr "Tango"
-
-#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:79
-#: Plugins/Input/mpg123/mpg123.c:85 Plugins/Input/vorbis/fileinfo.c:115
-msgid "Samba"
-msgstr "Samba"
-
-#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:79
-#: Plugins/Input/mpg123/mpg123.c:85 Plugins/Input/vorbis/fileinfo.c:115
-msgid "Folklore"
-msgstr "Folkór"
-
-#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:79
-#: Plugins/Input/mpg123/mpg123.c:85 Plugins/Input/vorbis/fileinfo.c:115
-msgid "Ballad"
-msgstr "Balada"
-
-#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:79
-#: Plugins/Input/mpg123/mpg123.c:85 Plugins/Input/vorbis/fileinfo.c:115
-msgid "Power Ballad"
-msgstr "Power Balada"
-
-#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:80
-#: Plugins/Input/mpg123/mpg123.c:86 Plugins/Input/vorbis/fileinfo.c:116
-msgid "Rhythmic Soul"
-msgstr "Rhythmic Soul"
-
-#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:80
-#: Plugins/Input/mpg123/mpg123.c:86 Plugins/Input/vorbis/fileinfo.c:116
-msgid "Freestyle"
-msgstr "Freestyle"
-
-#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:80
-#: Plugins/Input/mpg123/mpg123.c:86 Plugins/Input/vorbis/fileinfo.c:116
-msgid "Duet"
-msgstr "Duet"
-
-#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:81
-#: Plugins/Input/mpg123/mpg123.c:87 Plugins/Input/vorbis/fileinfo.c:117
-msgid "Punk Rock"
-msgstr "Punk Rock"
-
-#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:81
-#: Plugins/Input/mpg123/mpg123.c:87 Plugins/Input/vorbis/fileinfo.c:117
-msgid "Drum Solo"
-msgstr "Sólo bicie"
-
-#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:81
-#: Plugins/Input/mpg123/mpg123.c:87 Plugins/Input/vorbis/fileinfo.c:117
-msgid "A Cappella"
-msgstr "A Cappella"
-
-#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:82
-#: Plugins/Input/mpg123/mpg123.c:88 Plugins/Input/vorbis/fileinfo.c:118
-msgid "Euro-House"
-msgstr "Euro-House"
-
-#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:82
-#: Plugins/Input/mpg123/mpg123.c:88 Plugins/Input/vorbis/fileinfo.c:118
-msgid "Dance Hall"
-msgstr "Dance Hall"
-
-#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:82
-#: Plugins/Input/mpg123/mpg123.c:88 Plugins/Input/vorbis/fileinfo.c:118
-msgid "Goa"
-msgstr "Goa"
-
-#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:83
-#: Plugins/Input/mpg123/mpg123.c:89 Plugins/Input/vorbis/fileinfo.c:119
-msgid "Drum & Bass"
-msgstr "Drum & Bass"
-
-#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:83
-#: Plugins/Input/mpg123/mpg123.c:89 Plugins/Input/vorbis/fileinfo.c:119
-msgid "Club-House"
-msgstr "Club-HOUSE"
-
-#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:83
-#: Plugins/Input/mpg123/mpg123.c:89 Plugins/Input/vorbis/fileinfo.c:119
-msgid "Hardcore"
-msgstr "Hardcore"
-
-#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:84
-#: Plugins/Input/mpg123/mpg123.c:90 Plugins/Input/vorbis/fileinfo.c:120
-msgid "Terror"
-msgstr "Terror"
-
-#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:84
-#: Plugins/Input/mpg123/mpg123.c:90 Plugins/Input/vorbis/fileinfo.c:120
-msgid "Indie"
-msgstr "Indie"
-
-#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:84
-#: Plugins/Input/mpg123/mpg123.c:90 Plugins/Input/vorbis/fileinfo.c:120
-msgid "BritPop"
-msgstr "BritPop"
-
-#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:84
-#: Plugins/Input/mpg123/mpg123.c:90 Plugins/Input/vorbis/fileinfo.c:120
-msgid "Negerpunk"
-msgstr "Negerpunk"
-
-#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:85
-#: Plugins/Input/mpg123/mpg123.c:91 Plugins/Input/vorbis/fileinfo.c:121
-msgid "Polsk Punk"
-msgstr "Polsk Punk"
-
-#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:85
-#: Plugins/Input/mpg123/mpg123.c:91 Plugins/Input/vorbis/fileinfo.c:121
-msgid "Beat"
-msgstr "Beat"
-
-#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:85
-#: Plugins/Input/mpg123/mpg123.c:91 Plugins/Input/vorbis/fileinfo.c:121
-msgid "Christian Gangsta Rap"
-msgstr "Kresťanský Gangsta Rap"
-
-#: Plugins/Input/aac/src/libmp4.c:59 Plugins/Input/flac/fileinfo.c:86
-#: Plugins/Input/mpg123/mpg123.c:92 Plugins/Input/vorbis/fileinfo.c:122
-msgid "Heavy Metal"
-msgstr "Heavy Metal"
-
-#: Plugins/Input/aac/src/libmp4.c:59 Plugins/Input/flac/fileinfo.c:86
-#: Plugins/Input/mpg123/mpg123.c:92 Plugins/Input/vorbis/fileinfo.c:122
-msgid "Black Metal"
-msgstr "Black Metal"
-
-#: Plugins/Input/aac/src/libmp4.c:59 Plugins/Input/flac/fileinfo.c:86
-#: Plugins/Input/mpg123/mpg123.c:92 Plugins/Input/vorbis/fileinfo.c:122
-msgid "Crossover"
-msgstr "Crossover"
-
-#: Plugins/Input/aac/src/libmp4.c:60 Plugins/Input/flac/fileinfo.c:87
-#: Plugins/Input/mpg123/mpg123.c:93 Plugins/Input/vorbis/fileinfo.c:123
-msgid "Contemporary Christian"
-msgstr "Contemporary Christian"
-
-#: Plugins/Input/aac/src/libmp4.c:60 Plugins/Input/flac/fileinfo.c:87
-#: Plugins/Input/mpg123/mpg123.c:93 Plugins/Input/vorbis/fileinfo.c:123
-msgid "Christian Rock"
-msgstr "Kresťanský Rock"
-
-#: Plugins/Input/aac/src/libmp4.c:61 Plugins/Input/flac/fileinfo.c:88
-#: Plugins/Input/mpg123/mpg123.c:94 Plugins/Input/vorbis/fileinfo.c:124
-msgid "Merengue"
-msgstr "Merengue"
-
-#: Plugins/Input/aac/src/libmp4.c:61 Plugins/Input/flac/fileinfo.c:88
-#: Plugins/Input/mpg123/mpg123.c:94 Plugins/Input/vorbis/fileinfo.c:124
-msgid "Salsa"
-msgstr "Salsa"
-
-#: Plugins/Input/aac/src/libmp4.c:61 Plugins/Input/flac/fileinfo.c:88
-#: Plugins/Input/mpg123/mpg123.c:94 Plugins/Input/vorbis/fileinfo.c:124
-msgid "Thrash Metal"
-msgstr "Thrash Metal"
-
-#: Plugins/Input/aac/src/libmp4.c:62 Plugins/Input/flac/fileinfo.c:89
-#: Plugins/Input/mpg123/mpg123.c:95 Plugins/Input/vorbis/fileinfo.c:125
-msgid "Anime"
-msgstr "Anime"
-
-#: Plugins/Input/aac/src/libmp4.c:62 Plugins/Input/flac/fileinfo.c:89
-#: Plugins/Input/mpg123/mpg123.c:95 Plugins/Input/vorbis/fileinfo.c:125
-msgid "JPop"
-msgstr "JPop"
-
-#: Plugins/Input/aac/src/libmp4.c:62 Plugins/Input/flac/fileinfo.c:89
-#: Plugins/Input/mpg123/mpg123.c:95 Plugins/Input/vorbis/fileinfo.c:125
-msgid "Synthpop"
-msgstr "Synthpop"
 
 #: Plugins/Input/adplug/adplug-xmms.cc:146
 #, fuzzy
@@ -1086,118 +252,85 @@ msgstr ""
 msgid "AMIDI-Plug %s (MIDI Player)"
 msgstr ""
 
-#: Plugins/Input/amidi-plug/i_configure.c:55
+#: Plugins/Input/amidi-plug/amidi-plug.c:362
+#, fuzzy
+msgid "AMIDI-Plug - warning"
+msgstr "Konfigurácia MPEG Audio pluginu"
+
+#: Plugins/Input/amidi-plug/amidi-plug.c:363
+msgid ""
+"No sequencer backend has been selected!\n"
+"Please configure AMIDI-Plug before playing."
+msgstr ""
+
+#: Plugins/Input/amidi-plug/i_configure.c:71
+#, fuzzy
+msgid "AMIDI-Plug - select file"
+msgstr "Konfigurácia MPEG Audio pluginu"
+
+#: Plugins/Input/amidi-plug/i_configure.c:118
 #, fuzzy
 msgid "AMIDI-Plug - configuration"
 msgstr "Konfigurácia MPEG Audio pluginu"
 
-#: Plugins/Input/amidi-plug/i_configure.c:115
-#, fuzzy
-msgid "Port"
-msgstr "Port:"
-
-#: Plugins/Input/amidi-plug/i_configure.c:117
-#, fuzzy
-msgid "Client name"
-msgstr "Názov súboru"
-
-#: Plugins/Input/amidi-plug/i_configure.c:119
-#, fuzzy
-msgid "Port name"
-msgstr "Názov skladby"
-
-#: Plugins/Input/amidi-plug/i_configure.c:132
-#, fuzzy
-msgid "ALSA output ports"
-msgstr "ALSA %s výstupný plugin"
-
-#: Plugins/Input/amidi-plug/i_configure.c:187
-#, fuzzy
-msgid "Mixer settings"
-msgstr "Nastavenia mixovania:"
-
-#: Plugins/Input/amidi-plug/i_configure.c:196
-msgid "pre-calculate length of MIDI files in playlist"
+#: Plugins/Input/amidi-plug/i_configure.c:214
+msgid "AMIDI-Plug message"
 msgstr ""
 
-#: Plugins/Input/amidi-plug/i_configure.c:202
-#: Plugins/Output/alsa/configure.c:429
-msgid "Advanced settings"
-msgstr "Rozšírené možnosti"
-
-#: Plugins/Input/amidi-plug/i_configure.c:223
-msgid ""
-"* Select ALSA output ports *\n"
-"MIDI events will be sent to the ports selected here. At least one port must "
-"be selected in order to play MIDI with AMIDI-Plug. Unless you know what "
-"you're doing, you'll probably want to use the wavetable synthesizer ports."
+#: Plugins/Input/amidi-plug/i_configure.c:215
+msgid "Please stop the player before changing AMIDI-Plug settings."
 msgstr ""
 
-#: Plugins/Input/amidi-plug/i_configure.c:229
-msgid ""
-"* Select ALSA mixer control *\n"
-"AMIDI-Plug outputs directly through ALSA, it doesn't use effect and ouput "
-"plugins from the player. While playing with AMIDI-Plug, the player volume "
-"will manipulate the control you select here. Unless you know what you're "
-"doing, you'll probably want to select the Synth control here."
-msgstr ""
+#: Plugins/Input/amidi-plug/i_fileinfo.c:119
+#: Plugins/Input/mpg123/fileinfo.c:288 Plugins/Input/vorbis/fileinfo.c:558
+msgid "Name:"
+msgstr "Názov:"
 
-#: Plugins/Input/amidi-plug/i_configure.c:236
-msgid ""
-"* Pre-calculate MIDI length *\n"
-"If this option is enabled, AMIDI-Plug will calculate the MIDI file length as "
-"soon as the player requests it, instead of doing that only when the the MIDI "
-"file is being played. In example, MIDI length will be calculated straight "
-"after adding MIDI files in a playlist. Disable this option if you want "
-"faster playlist loading (when a lot of MIDI files are added), enable it to "
-"display more information in the playlist straight after loading."
-msgstr ""
-
-#: Plugins/Input/amidi-plug/i_fileinfo.c:129
+#: Plugins/Input/amidi-plug/i_fileinfo.c:130
 #, fuzzy
 msgid " MIDI Info "
 msgstr "CD Info"
 
-#: Plugins/Input/amidi-plug/i_fileinfo.c:138
+#: Plugins/Input/amidi-plug/i_fileinfo.c:139
 #, fuzzy
 msgid "Format:"
 msgstr "ID3 formát:"
 
-#: Plugins/Input/amidi-plug/i_fileinfo.c:141
+#: Plugins/Input/amidi-plug/i_fileinfo.c:142
 #, fuzzy
 msgid "Length (msec):"
 msgstr "Dĺžka:"
 
-#: Plugins/Input/amidi-plug/i_fileinfo.c:144
+#: Plugins/Input/amidi-plug/i_fileinfo.c:145
 #, fuzzy
 msgid "Num of Tracks:"
 msgstr "Preskočiť na skladbu"
 
-#: Plugins/Input/amidi-plug/i_fileinfo.c:149
+#: Plugins/Input/amidi-plug/i_fileinfo.c:150
 msgid "variable"
 msgstr ""
 
-#: Plugins/Input/amidi-plug/i_fileinfo.c:150
+#: Plugins/Input/amidi-plug/i_fileinfo.c:151
 msgid "BPM:"
 msgstr ""
 
-#: Plugins/Input/amidi-plug/i_fileinfo.c:156
+#: Plugins/Input/amidi-plug/i_fileinfo.c:157
 msgid "BPM (wavg):"
 msgstr ""
 
-#: Plugins/Input/amidi-plug/i_fileinfo.c:159
+#: Plugins/Input/amidi-plug/i_fileinfo.c:160
 msgid "Time Div:"
 msgstr ""
 
-#: Plugins/Input/amidi-plug/i_fileinfo.c:184 audacious/util.c:1217
+#: Plugins/Input/amidi-plug/i_fileinfo.c:185 audacious/util.c:1252
 msgid "  (invalid UTF-8)"
 msgstr "  (nesprávne UTF-8)"
 
-#: Plugins/Input/cdaudio/cdaudio.c:183
+#: Plugins/Input/cdaudio/cdaudio.c:186
 msgid "CD Audio Plugin"
 msgstr "CD Audio Plugin"
 
-#: Plugins/Input/cdaudio/cdaudio.c:1057 Plugins/Input/cdaudio/cdaudio.c:1066
+#: Plugins/Input/cdaudio/cdaudio.c:1063 Plugins/Input/cdaudio/cdaudio.c:1068
 #, c-format
 msgid "CD Audio Track %02u"
 msgstr "CD Audio Skladba %02u"
@@ -1395,7 +528,7 @@ msgid "Track names:"
 msgstr "Názvy skladieb:"
 
 #: Plugins/Input/cdaudio/configure.c:652 Plugins/Input/flac/configure.c:380
-#: Plugins/Input/mpg123/configure.c:468 Plugins/Input/vorbis/configure.c:339
+#: Plugins/Input/mpg123/configure.c:414 Plugins/Input/vorbis/configure.c:292
 msgid "Override generic titles"
 msgstr "Vynechať generické názvy"
 
@@ -1407,18 +540,18 @@ msgstr "Formát názvov:"
 msgid "CD Info"
 msgstr "CD Info"
 
-#: Plugins/Input/console/Audacious_Driver.cpp:694
+#: Plugins/Input/console/Audacious_Driver.cpp:811
 msgid "About the Console Music Decoder"
 msgstr ""
 
-#: Plugins/Input/console/Audacious_Driver.cpp:695
+#: Plugins/Input/console/Audacious_Driver.cpp:812
 msgid ""
 "Console music decoder engine based on Game_Music_Emu 0.3.0.\n"
 "Audacious implementation by: William Pitcock <nenolod@nenolod.net>, \n"
 "        Shay Green <hotpop.com@blargg>"
 msgstr ""
 
-#: Plugins/Input/console/Audacious_Driver.cpp:736
+#: Plugins/Input/console/Audacious_Driver.cpp:854
 msgid "SPC, VGM, NSF/NSFE, GBS, and GYM module decoder"
 msgstr ""
 
@@ -1737,7 +870,7 @@ msgstr ""
 msgid "Western (MacRoman)"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:280 Plugins/Input/mpg123/configure.c:129
+#: Plugins/Input/flac/configure.c:280 Plugins/Input/mpg123/configure.c:116
 msgid "Select the directory where you want to store the MPEG streams:"
 msgstr "Vyberte adresár kde chcete uložiť MPEG streamy:"
 
@@ -1762,17 +895,17 @@ msgstr ""
 msgid "to :"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:389 Plugins/Input/vorbis/configure.c:352
-#: audacious/glade/prefswin.glade:2617
+#: Plugins/Input/flac/configure.c:389 Plugins/Input/vorbis/configure.c:305
+#: audacious/glade/prefswin.glade:2166
 msgid "Title format:"
 msgstr "Formát titulku:"
 
-#: Plugins/Input/flac/configure.c:400 Plugins/Input/mpg123/configure.c:495
-#: Plugins/Input/vorbis/configure.c:366 audacious/prefswin.c:108
+#: Plugins/Input/flac/configure.c:400 Plugins/Input/mpg123/configure.c:441
+#: Plugins/Input/vorbis/configure.c:319 audacious/prefswin.c:113
 msgid "Title"
 msgstr "Názov"
 
-#: Plugins/Input/flac/configure.c:409 Plugins/Input/vorbis/configure.c:427
+#: Plugins/Input/flac/configure.c:409 Plugins/Input/vorbis/configure.c:380
 msgid "ReplayGain"
 msgstr "ReplayGain"
 
@@ -1863,47 +996,47 @@ msgstr ""
 msgid "Output"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:547 Plugins/Input/mpg123/configure.c:320
-#: Plugins/Input/vorbis/configure.c:220 Plugins/Output/OSS/configure.c:302
+#: Plugins/Input/flac/configure.c:547 Plugins/Input/mpg123/configure.c:296
+#: Plugins/Input/vorbis/configure.c:198 Plugins/Output/OSS/configure.c:302
 #: Plugins/Output/arts/configure.c:62 Plugins/Output/esd/configure.c:171
 #: Plugins/Output/sun/configure.c:258
 msgid "Buffering:"
 msgstr "Zásobník:"
 
-#: Plugins/Input/flac/configure.c:558 Plugins/Input/mpg123/configure.c:333
-#: Plugins/Input/vorbis/configure.c:232
+#: Plugins/Input/flac/configure.c:558 Plugins/Input/mpg123/configure.c:309
+#: Plugins/Input/vorbis/configure.c:210
 msgid "Buffer size (kb):"
 msgstr "Veľkosť zásobníka (kb):"
 
-#: Plugins/Input/flac/configure.c:568 Plugins/Input/mpg123/configure.c:348
-#: Plugins/Input/vorbis/configure.c:246 Plugins/Output/OSS/configure.c:329
+#: Plugins/Input/flac/configure.c:568 Plugins/Input/mpg123/configure.c:324
+#: Plugins/Input/vorbis/configure.c:224 Plugins/Output/OSS/configure.c:329
 #: Plugins/Output/esd/configure.c:198 Plugins/Output/sun/configure.c:289
 msgid "Pre-buffer (percent):"
 msgstr "Predzásobník (percent):"
 
-#: Plugins/Input/flac/configure.c:578 Plugins/Input/mpg123/configure.c:362
-#: Plugins/Input/vorbis/configure.c:260
+#: Plugins/Input/flac/configure.c:578 Plugins/Input/mpg123/configure.c:338
+#: Plugins/Input/vorbis/configure.c:238
 msgid "Save stream to disk:"
 msgstr "Uložiť stream na disk:"
 
-#: Plugins/Input/flac/configure.c:586 Plugins/Input/mpg123/configure.c:373
-#: Plugins/Input/vorbis/configure.c:271
+#: Plugins/Input/flac/configure.c:586 Plugins/Input/mpg123/configure.c:349
+#: Plugins/Input/vorbis/configure.c:249
 msgid "Save stream to disk"
 msgstr "Uložiť stream na disk"
 
-#: Plugins/Input/flac/configure.c:595 Plugins/Input/mpg123/configure.c:387
-#: Plugins/Input/vorbis/configure.c:285
+#: Plugins/Input/flac/configure.c:595 Plugins/Input/mpg123/configure.c:363
+#: Plugins/Input/vorbis/configure.c:263
 #: Plugins/Output/disk_writer/disk_writer.c:370
 msgid "Path:"
 msgstr "Cesta:"
 
-#: Plugins/Input/flac/configure.c:602 Plugins/Input/mpg123/configure.c:397
-#: Plugins/Input/vorbis/configure.c:295
+#: Plugins/Input/flac/configure.c:602 Plugins/Input/mpg123/configure.c:373
+#: Plugins/Input/vorbis/configure.c:273
 #: Plugins/Output/disk_writer/disk_writer.c:381
 msgid "Browse"
 msgstr "Prezrieť"
 
-#: Plugins/Input/flac/configure.c:607 Plugins/Input/mpg123/configure.c:403
+#: Plugins/Input/flac/configure.c:607 Plugins/Input/mpg123/configure.c:379
 msgid "SHOUT/Icecast:"
 msgstr "SHOUT/Icecast:"
 
@@ -1911,12 +1044,12 @@ msgstr "SHOUT/Icecast:"
 msgid "Enable SHOUT/Icecast title streaming"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:618 Plugins/Input/mpg123/configure.c:417
+#: Plugins/Input/flac/configure.c:618 Plugins/Input/mpg123/configure.c:390
 msgid "Enable Icecast Metadata UDP Channel"
 msgstr "Povoliť Icecast Metadata UDP kanál"
 
-#: Plugins/Input/flac/configure.c:623 Plugins/Input/mpg123/configure.c:424
-#: Plugins/Input/vorbis/configure.c:302
+#: Plugins/Input/flac/configure.c:623 Plugins/Input/mpg123/configure.c:397
+#: Plugins/Input/vorbis/configure.c:280
 msgid "Streaming"
 msgstr "Streamovanie"
 
@@ -1936,38 +1069,773 @@ msgid ""
 "Visit http://flac.sourceforge.net/"
 msgstr ""
 
-#: Plugins/Input/flac/fileinfo.c:56
+#: Plugins/Input/flac/fileinfo.c:48 Plugins/Input/mpg123/mpg123.c:49
+#: Plugins/Input/vorbis/fileinfo.c:83
+msgid "Blues"
+msgstr "Blues"
+
+#: Plugins/Input/flac/fileinfo.c:48 Plugins/Input/mpg123/mpg123.c:49
+#: Plugins/Input/vorbis/fileinfo.c:83
+msgid "Classic Rock"
+msgstr "Klasický Rock"
+
+#: Plugins/Input/flac/fileinfo.c:48 Plugins/Input/mpg123/mpg123.c:49
+#: Plugins/Input/vorbis/fileinfo.c:83
+msgid "Country"
+msgstr "Country"
+
+#: Plugins/Input/flac/fileinfo.c:48 Plugins/Input/mpg123/mpg123.c:49
+#: Plugins/Input/vorbis/fileinfo.c:83
+msgid "Dance"
+msgstr "Tanečný"
+
+#: Plugins/Input/flac/fileinfo.c:49 Plugins/Input/mpg123/mpg123.c:50
+#: Plugins/Input/vorbis/fileinfo.c:84
+msgid "Disco"
+msgstr "Disko"
+
+#: Plugins/Input/flac/fileinfo.c:49 Plugins/Input/mpg123/mpg123.c:50
+#: Plugins/Input/vorbis/fileinfo.c:84
+msgid "Funk"
+msgstr "Funk"
+
+#: Plugins/Input/flac/fileinfo.c:49 Plugins/Input/mpg123/mpg123.c:50
+#: Plugins/Input/vorbis/fileinfo.c:84
+msgid "Grunge"
+msgstr "Grunge"
+
+#: Plugins/Input/flac/fileinfo.c:49 Plugins/Input/mpg123/mpg123.c:50
+#: Plugins/Input/vorbis/fileinfo.c:84
+msgid "Hip-Hop"
+msgstr "Hip-Hop"
+
+#: Plugins/Input/flac/fileinfo.c:50 Plugins/Input/mpg123/mpg123.c:51
+#: Plugins/Input/vorbis/fileinfo.c:85
+msgid "Jazz"
+msgstr "Jazz"
+
+#: Plugins/Input/flac/fileinfo.c:50 Plugins/Input/mpg123/mpg123.c:51
+#: Plugins/Input/vorbis/fileinfo.c:85
+msgid "Metal"
+msgstr "Metal"
+
+#: Plugins/Input/flac/fileinfo.c:50 Plugins/Input/mpg123/mpg123.c:51
+#: Plugins/Input/vorbis/fileinfo.c:85
+msgid "New Age"
+msgstr "Novodobý"
+
+#: Plugins/Input/flac/fileinfo.c:50 Plugins/Input/mpg123/mpg123.c:51
+#: Plugins/Input/vorbis/fileinfo.c:85
+msgid "Oldies"
+msgstr "Oldies"
+
+#: Plugins/Input/flac/fileinfo.c:51 Plugins/Input/mpg123/mpg123.c:52
+#: Plugins/Input/vorbis/fileinfo.c:86
+msgid "Other"
+msgstr "Iné"
+
+#: Plugins/Input/flac/fileinfo.c:51 Plugins/Input/mpg123/mpg123.c:52
+#: Plugins/Input/vorbis/fileinfo.c:86
+msgid "Pop"
+msgstr "Pop"
+
+#: Plugins/Input/flac/fileinfo.c:51 Plugins/Input/mpg123/mpg123.c:52
+#: Plugins/Input/vorbis/fileinfo.c:86
+msgid "R&B"
+msgstr "R&B"
+
+#: Plugins/Input/flac/fileinfo.c:51 Plugins/Input/mpg123/mpg123.c:52
+#: Plugins/Input/vorbis/fileinfo.c:86
+msgid "Rap"
+msgstr "Rap"
+
+#: Plugins/Input/flac/fileinfo.c:51 Plugins/Input/mpg123/mpg123.c:52
+#: Plugins/Input/vorbis/fileinfo.c:86
+msgid "Reggae"
+msgstr "Reggae"
+
+#: Plugins/Input/flac/fileinfo.c:52 Plugins/Input/mpg123/mpg123.c:53
+#: Plugins/Input/vorbis/fileinfo.c:87
+msgid "Rock"
+msgstr "Rock"
+
+#: Plugins/Input/flac/fileinfo.c:52 Plugins/Input/mpg123/mpg123.c:53
+#: Plugins/Input/vorbis/fileinfo.c:87
+msgid "Techno"
+msgstr "Techno"
+
+#: Plugins/Input/flac/fileinfo.c:52 Plugins/Input/mpg123/mpg123.c:53
+#: Plugins/Input/vorbis/fileinfo.c:87
+msgid "Industrial"
+msgstr "Industriálny"
+
+#: Plugins/Input/flac/fileinfo.c:52 Plugins/Input/mpg123/mpg123.c:53
+#: Plugins/Input/vorbis/fileinfo.c:87
+msgid "Alternative"
+msgstr "Alternatívny"
+
+#: Plugins/Input/flac/fileinfo.c:53 Plugins/Input/mpg123/mpg123.c:54
+#: Plugins/Input/vorbis/fileinfo.c:88
+msgid "Ska"
+msgstr "Ska"
+
+#: Plugins/Input/flac/fileinfo.c:53 Plugins/Input/mpg123/mpg123.c:54
+#: Plugins/Input/vorbis/fileinfo.c:88
+msgid "Death Metal"
+msgstr "Death Metal"
+
+#: Plugins/Input/flac/fileinfo.c:53 Plugins/Input/mpg123/mpg123.c:54
+#: Plugins/Input/vorbis/fileinfo.c:88
+msgid "Pranks"
+msgstr "Pranks"
+
+#: Plugins/Input/flac/fileinfo.c:53 Plugins/Input/mpg123/mpg123.c:54
+#: Plugins/Input/vorbis/fileinfo.c:88
+msgid "Soundtrack"
+msgstr "Soundtrack"
+
+#: Plugins/Input/flac/fileinfo.c:54 Plugins/Input/mpg123/mpg123.c:55
+#: Plugins/Input/vorbis/fileinfo.c:89
+msgid "Euro-Techno"
+msgstr "Euro-Techno"
+
+#: Plugins/Input/flac/fileinfo.c:54 Plugins/Input/mpg123/mpg123.c:55
+#: Plugins/Input/vorbis/fileinfo.c:89
+msgid "Ambient"
+msgstr "Ambient"
+
+#: Plugins/Input/flac/fileinfo.c:54 Plugins/Input/mpg123/mpg123.c:55
+#: Plugins/Input/vorbis/fileinfo.c:89
+msgid "Trip-Hop"
+msgstr "Trip-Hop"
+
+#: Plugins/Input/flac/fileinfo.c:54 Plugins/Input/mpg123/mpg123.c:55
+#: Plugins/Input/vorbis/fileinfo.c:89
+msgid "Vocal"
+msgstr "Vokály"
+
+#: Plugins/Input/flac/fileinfo.c:55 Plugins/Input/mpg123/mpg123.c:56
+#: Plugins/Input/vorbis/fileinfo.c:90
+msgid "Jazz+Funk"
+msgstr "Jazz+Funk"
+
+#: Plugins/Input/flac/fileinfo.c:55 Plugins/Input/mpg123/mpg123.c:56
+#: Plugins/Input/vorbis/fileinfo.c:90
+msgid "Fusion"
+msgstr "Fusion"
+
+#: Plugins/Input/flac/fileinfo.c:55 Plugins/Input/mpg123/mpg123.c:56
+#: Plugins/Input/vorbis/fileinfo.c:90
+msgid "Trance"
+msgstr "Trance"
+
+#: Plugins/Input/flac/fileinfo.c:55 Plugins/Input/mpg123/mpg123.c:56
+#: Plugins/Input/vorbis/fileinfo.c:90
+msgid "Classical"
+msgstr "Klasický"
+
+#: Plugins/Input/flac/fileinfo.c:56 Plugins/Input/mpg123/mpg123.c:57
+#: Plugins/Input/vorbis/fileinfo.c:91
+msgid "Instrumental"
+msgstr "Inštrumentálny"
+
+#: Plugins/Input/flac/fileinfo.c:56 Plugins/Input/mpg123/mpg123.c:57
+#: Plugins/Input/vorbis/fileinfo.c:91
+msgid "Acid"
+msgstr "Acid"
+
+#: Plugins/Input/flac/fileinfo.c:56 Plugins/Input/mpg123/mpg123.c:57
+#: Plugins/Input/vorbis/fileinfo.c:91
+msgid "House"
+msgstr "House"
+
+#: Plugins/Input/flac/fileinfo.c:56 Plugins/Input/mpg123/mpg123.c:57
+#: Plugins/Input/vorbis/fileinfo.c:91
+msgid "Game"
+msgstr "Hra"
+
+#: Plugins/Input/flac/fileinfo.c:57 Plugins/Input/mpg123/mpg123.c:58
+#: Plugins/Input/vorbis/fileinfo.c:92
+msgid "Sound Clip"
+msgstr "Zvukový klip"
+
+#: Plugins/Input/flac/fileinfo.c:57 Plugins/Input/mpg123/mpg123.c:58
+#: Plugins/Input/vorbis/fileinfo.c:92
+msgid "Gospel"
+msgstr "Gospel"
+
+#: Plugins/Input/flac/fileinfo.c:57 Plugins/Input/mpg123/mpg123.c:58
+#: Plugins/Input/vorbis/fileinfo.c:92
+msgid "Noise"
+msgstr "Hluk"
+
+#: Plugins/Input/flac/fileinfo.c:57
 msgid "Alt"
 msgstr ""
 
-#: Plugins/Input/flac/fileinfo.c:213
+#: Plugins/Input/flac/fileinfo.c:58 Plugins/Input/mpg123/mpg123.c:59
+#: Plugins/Input/vorbis/fileinfo.c:93
+msgid "Bass"
+msgstr "Bass"
+
+#: Plugins/Input/flac/fileinfo.c:58 Plugins/Input/mpg123/mpg123.c:59
+#: Plugins/Input/vorbis/fileinfo.c:93
+msgid "Soul"
+msgstr "Soul"
+
+#: Plugins/Input/flac/fileinfo.c:58 Plugins/Input/mpg123/mpg123.c:59
+#: Plugins/Input/vorbis/fileinfo.c:93
+msgid "Punk"
+msgstr "Punk"
+
+#: Plugins/Input/flac/fileinfo.c:58 Plugins/Input/mpg123/mpg123.c:59
+#: Plugins/Input/vorbis/fileinfo.c:93
+msgid "Space"
+msgstr "Space"
+
+#: Plugins/Input/flac/fileinfo.c:59 Plugins/Input/mpg123/mpg123.c:60
+#: Plugins/Input/vorbis/fileinfo.c:94
+msgid "Meditative"
+msgstr "Meditačný"
+
+#: Plugins/Input/flac/fileinfo.c:59 Plugins/Input/mpg123/mpg123.c:60
+#: Plugins/Input/vorbis/fileinfo.c:94
+msgid "Instrumental Pop"
+msgstr "Inštrumentálny Pop"
+
+#: Plugins/Input/flac/fileinfo.c:60 Plugins/Input/mpg123/mpg123.c:61
+#: Plugins/Input/vorbis/fileinfo.c:95
+msgid "Instrumental Rock"
+msgstr "Inštrumentálny Rock"
+
+#: Plugins/Input/flac/fileinfo.c:60 Plugins/Input/mpg123/mpg123.c:61
+#: Plugins/Input/vorbis/fileinfo.c:95
+msgid "Ethnic"
+msgstr "Etnický"
+
+#: Plugins/Input/flac/fileinfo.c:60 Plugins/Input/mpg123/mpg123.c:61
+#: Plugins/Input/vorbis/fileinfo.c:95
+msgid "Gothic"
+msgstr "Gotický"
+
+#: Plugins/Input/flac/fileinfo.c:61 Plugins/Input/mpg123/mpg123.c:62
+#: Plugins/Input/vorbis/fileinfo.c:96
+msgid "Darkwave"
+msgstr "Darkwave"
+
+#: Plugins/Input/flac/fileinfo.c:61 Plugins/Input/mpg123/mpg123.c:62
+#: Plugins/Input/vorbis/fileinfo.c:96
+msgid "Techno-Industrial"
+msgstr "Techno-Industrial"
+
+#: Plugins/Input/flac/fileinfo.c:61 Plugins/Input/mpg123/mpg123.c:62
+#: Plugins/Input/vorbis/fileinfo.c:96
+msgid "Electronic"
+msgstr "Elektronický"
+
+#: Plugins/Input/flac/fileinfo.c:62 Plugins/Input/mpg123/mpg123.c:63
+#: Plugins/Input/vorbis/fileinfo.c:97
+msgid "Pop-Folk"
+msgstr "Pop-Folk"
+
+#: Plugins/Input/flac/fileinfo.c:62 Plugins/Input/mpg123/mpg123.c:63
+#: Plugins/Input/vorbis/fileinfo.c:97
+msgid "Eurodance"
+msgstr "Eurodance"
+
+#: Plugins/Input/flac/fileinfo.c:62 Plugins/Input/mpg123/mpg123.c:63
+#: Plugins/Input/vorbis/fileinfo.c:97
+msgid "Dream"
+msgstr "Dream"
+
+#: Plugins/Input/flac/fileinfo.c:63 Plugins/Input/mpg123/mpg123.c:64
+#: Plugins/Input/vorbis/fileinfo.c:98
+msgid "Southern Rock"
+msgstr "Southern Rock"
+
+#: Plugins/Input/flac/fileinfo.c:63 Plugins/Input/mpg123/mpg123.c:64
+#: Plugins/Input/vorbis/fileinfo.c:98
+msgid "Comedy"
+msgstr "Komédia"
+
+#: Plugins/Input/flac/fileinfo.c:63 Plugins/Input/mpg123/mpg123.c:64
+#: Plugins/Input/vorbis/fileinfo.c:98
+msgid "Cult"
+msgstr "Kultový"
+
+#: Plugins/Input/flac/fileinfo.c:64 Plugins/Input/mpg123/mpg123.c:65
+#: Plugins/Input/vorbis/fileinfo.c:99
+msgid "Gangsta Rap"
+msgstr "Gangsta Rap"
+
+#: Plugins/Input/flac/fileinfo.c:64 Plugins/Input/mpg123/mpg123.c:65
+#: Plugins/Input/vorbis/fileinfo.c:99
+msgid "Top 40"
+msgstr "Top 40"
+
+#: Plugins/Input/flac/fileinfo.c:64 Plugins/Input/mpg123/mpg123.c:65
+#: Plugins/Input/vorbis/fileinfo.c:99
+msgid "Christian Rap"
+msgstr "Kresťanský Rap"
+
+#: Plugins/Input/flac/fileinfo.c:65 Plugins/Input/mpg123/mpg123.c:66
+#: Plugins/Input/vorbis/fileinfo.c:100
+msgid "Pop/Funk"
+msgstr "Pop/Funk"
+
+#: Plugins/Input/flac/fileinfo.c:65 Plugins/Input/mpg123/mpg123.c:66
+#: Plugins/Input/vorbis/fileinfo.c:100
+msgid "Jungle"
+msgstr "Jungle"
+
+#: Plugins/Input/flac/fileinfo.c:65 Plugins/Input/mpg123/mpg123.c:66
+#: Plugins/Input/vorbis/fileinfo.c:100
+msgid "Native American"
+msgstr "Native American"
+
+#: Plugins/Input/flac/fileinfo.c:66 Plugins/Input/mpg123/mpg123.c:67
+#: Plugins/Input/vorbis/fileinfo.c:101
+msgid "Cabaret"
+msgstr "Kabaret"
+
+#: Plugins/Input/flac/fileinfo.c:66 Plugins/Input/mpg123/mpg123.c:67
+#: Plugins/Input/vorbis/fileinfo.c:101
+msgid "New Wave"
+msgstr "Nová vlna"
+
+#: Plugins/Input/flac/fileinfo.c:66 Plugins/Input/mpg123/mpg123.c:67
+#: Plugins/Input/vorbis/fileinfo.c:101
+msgid "Psychedelic"
+msgstr "Psychedelic"
+
+#: Plugins/Input/flac/fileinfo.c:66 Plugins/Input/mpg123/mpg123.c:67
+#: Plugins/Input/vorbis/fileinfo.c:101
+msgid "Rave"
+msgstr "Rave"
+
+#: Plugins/Input/flac/fileinfo.c:67 Plugins/Input/mpg123/mpg123.c:68
+#: Plugins/Input/vorbis/fileinfo.c:102
+msgid "Showtunes"
+msgstr "Showtunes"
+
+#: Plugins/Input/flac/fileinfo.c:67 Plugins/Input/mpg123/mpg123.c:68
+#: Plugins/Input/vorbis/fileinfo.c:102
+msgid "Trailer"
+msgstr "Trailer"
+
+#: Plugins/Input/flac/fileinfo.c:67 Plugins/Input/mpg123/mpg123.c:68
+#: Plugins/Input/vorbis/fileinfo.c:102
+msgid "Lo-Fi"
+msgstr "Lo-Fi"
+
+#: Plugins/Input/flac/fileinfo.c:67 Plugins/Input/mpg123/mpg123.c:68
+#: Plugins/Input/vorbis/fileinfo.c:102
+msgid "Tribal"
+msgstr "Tribal"
+
+#: Plugins/Input/flac/fileinfo.c:68 Plugins/Input/mpg123/mpg123.c:69
+#: Plugins/Input/vorbis/fileinfo.c:103
+msgid "Acid Punk"
+msgstr "Acid Punk"
+
+#: Plugins/Input/flac/fileinfo.c:68 Plugins/Input/mpg123/mpg123.c:69
+#: Plugins/Input/vorbis/fileinfo.c:103
+msgid "Acid Jazz"
+msgstr "Acid Jazz"
+
+#: Plugins/Input/flac/fileinfo.c:68 Plugins/Input/mpg123/mpg123.c:69
+#: Plugins/Input/vorbis/fileinfo.c:103
+msgid "Polka"
+msgstr "Polka"
+
+#: Plugins/Input/flac/fileinfo.c:68 Plugins/Input/mpg123/mpg123.c:69
+#: Plugins/Input/vorbis/fileinfo.c:103
+msgid "Retro"
+msgstr "Retro"
+
+#: Plugins/Input/flac/fileinfo.c:69 Plugins/Input/mpg123/mpg123.c:70
+#: Plugins/Input/vorbis/fileinfo.c:104
+msgid "Musical"
+msgstr "Muzikál"
+
+#: Plugins/Input/flac/fileinfo.c:69 Plugins/Input/mpg123/mpg123.c:70
+#: Plugins/Input/vorbis/fileinfo.c:104
+msgid "Rock & Roll"
+msgstr "Rock & Roll"
+
+#: Plugins/Input/flac/fileinfo.c:69 Plugins/Input/mpg123/mpg123.c:70
+#: Plugins/Input/vorbis/fileinfo.c:104
+msgid "Hard Rock"
+msgstr "Hard Rock"
+
+#: Plugins/Input/flac/fileinfo.c:69 Plugins/Input/mpg123/mpg123.c:70
+#: Plugins/Input/vorbis/fileinfo.c:104
+msgid "Folk"
+msgstr "Folklór"
+
+#: Plugins/Input/flac/fileinfo.c:70 Plugins/Input/mpg123/mpg123.c:71
+#: Plugins/Input/vorbis/fileinfo.c:105
+msgid "Folk/Rock"
+msgstr "Folk/Rock"
+
+#: Plugins/Input/flac/fileinfo.c:70 Plugins/Input/mpg123/mpg123.c:71
+#: Plugins/Input/vorbis/fileinfo.c:105
+msgid "National Folk"
+msgstr "Národný Folklór"
+
+#: Plugins/Input/flac/fileinfo.c:70 Plugins/Input/mpg123/mpg123.c:71
+#: Plugins/Input/vorbis/fileinfo.c:105
+msgid "Swing"
+msgstr "Swing"
+
+#: Plugins/Input/flac/fileinfo.c:71 Plugins/Input/mpg123/mpg123.c:72
+#: Plugins/Input/vorbis/fileinfo.c:106
+msgid "Fast-Fusion"
+msgstr "Fast-Fusion"
+
+#: Plugins/Input/flac/fileinfo.c:71 Plugins/Input/mpg123/mpg123.c:72
+#: Plugins/Input/vorbis/fileinfo.c:106
+msgid "Bebob"
+msgstr "Bebob"
+
+#: Plugins/Input/flac/fileinfo.c:71 Plugins/Input/mpg123/mpg123.c:72
+#: Plugins/Input/vorbis/fileinfo.c:106
+msgid "Latin"
+msgstr "Latino"
+
+#: Plugins/Input/flac/fileinfo.c:71 Plugins/Input/mpg123/mpg123.c:72
+#: Plugins/Input/vorbis/fileinfo.c:106
+msgid "Revival"
+msgstr "Revival"
+
+#: Plugins/Input/flac/fileinfo.c:72 Plugins/Input/mpg123/mpg123.c:73
+#: Plugins/Input/vorbis/fileinfo.c:107
+msgid "Celtic"
+msgstr "Celtic"
+
+#: Plugins/Input/flac/fileinfo.c:72 Plugins/Input/mpg123/mpg123.c:73
+#: Plugins/Input/vorbis/fileinfo.c:107
+msgid "Bluegrass"
+msgstr "Bluegrass"
+
+#: Plugins/Input/flac/fileinfo.c:72 Plugins/Input/mpg123/mpg123.c:73
+#: Plugins/Input/vorbis/fileinfo.c:107
+msgid "Avantgarde"
+msgstr "Avantgarde"
+
+#: Plugins/Input/flac/fileinfo.c:73 Plugins/Input/mpg123/mpg123.c:74
+#: Plugins/Input/vorbis/fileinfo.c:108
+msgid "Gothic Rock"
+msgstr "Gotický Rock"
+
+#: Plugins/Input/flac/fileinfo.c:73 Plugins/Input/mpg123/mpg123.c:74
+#: Plugins/Input/vorbis/fileinfo.c:108
+msgid "Progressive Rock"
+msgstr "Progresívny Rock"
+
+#: Plugins/Input/flac/fileinfo.c:74 Plugins/Input/mpg123/mpg123.c:75
+#: Plugins/Input/vorbis/fileinfo.c:109
+msgid "Psychedelic Rock"
+msgstr "Psychedelic Rock"
+
+#: Plugins/Input/flac/fileinfo.c:74 Plugins/Input/mpg123/mpg123.c:75
+#: Plugins/Input/vorbis/fileinfo.c:109
+msgid "Symphonic Rock"
+msgstr "Symfonický Rock"
+
+#: Plugins/Input/flac/fileinfo.c:74 Plugins/Input/mpg123/mpg123.c:75
+#: Plugins/Input/vorbis/fileinfo.c:109
+msgid "Slow Rock"
+msgstr "Pomalý Rock"
+
+#: Plugins/Input/flac/fileinfo.c:75 Plugins/Input/mpg123/mpg123.c:76
+#: Plugins/Input/vorbis/fileinfo.c:110
+msgid "Big Band"
+msgstr "Big Band"
+
+#: Plugins/Input/flac/fileinfo.c:75 Plugins/Input/mpg123/mpg123.c:76
+#: Plugins/Input/vorbis/fileinfo.c:110
+msgid "Chorus"
+msgstr "Chorus"
+
+#: Plugins/Input/flac/fileinfo.c:75 Plugins/Input/mpg123/mpg123.c:76
+#: Plugins/Input/vorbis/fileinfo.c:110
+msgid "Easy Listening"
+msgstr "Ľahké počúvanie"
+
+#: Plugins/Input/flac/fileinfo.c:76 Plugins/Input/mpg123/mpg123.c:77
+#: Plugins/Input/vorbis/fileinfo.c:111
+msgid "Acoustic"
+msgstr "Acoustic"
+
+#: Plugins/Input/flac/fileinfo.c:76 Plugins/Input/mpg123/mpg123.c:77
+#: Plugins/Input/vorbis/fileinfo.c:111
+msgid "Humour"
+msgstr "Humor"
+
+#: Plugins/Input/flac/fileinfo.c:76 Plugins/Input/mpg123/mpg123.c:77
+#: Plugins/Input/vorbis/fileinfo.c:111
+msgid "Speech"
+msgstr "Reč"
+
+#: Plugins/Input/flac/fileinfo.c:76 Plugins/Input/mpg123/mpg123.c:77
+#: Plugins/Input/vorbis/fileinfo.c:111
+msgid "Chanson"
+msgstr "Chanson"
+
+#: Plugins/Input/flac/fileinfo.c:77 Plugins/Input/mpg123/mpg123.c:78
+#: Plugins/Input/vorbis/fileinfo.c:112
+msgid "Opera"
+msgstr "Opera"
+
+#: Plugins/Input/flac/fileinfo.c:77 Plugins/Input/mpg123/mpg123.c:78
+#: Plugins/Input/vorbis/fileinfo.c:112
+msgid "Chamber Music"
+msgstr "Chamber Music"
+
+#: Plugins/Input/flac/fileinfo.c:77 Plugins/Input/mpg123/mpg123.c:78
+#: Plugins/Input/vorbis/fileinfo.c:112
+msgid "Sonata"
+msgstr "Sonata"
+
+#: Plugins/Input/flac/fileinfo.c:77 Plugins/Input/mpg123/mpg123.c:78
+#: Plugins/Input/vorbis/fileinfo.c:112
+msgid "Symphony"
+msgstr "Symfónia"
+
+#: Plugins/Input/flac/fileinfo.c:78 Plugins/Input/mpg123/mpg123.c:79
+#: Plugins/Input/vorbis/fileinfo.c:113
+msgid "Booty Bass"
+msgstr "Booty Bass"
+
+#: Plugins/Input/flac/fileinfo.c:78 Plugins/Input/mpg123/mpg123.c:79
+#: Plugins/Input/vorbis/fileinfo.c:113
+msgid "Primus"
+msgstr "Primus"
+
+#: Plugins/Input/flac/fileinfo.c:78 Plugins/Input/mpg123/mpg123.c:79
+#: Plugins/Input/vorbis/fileinfo.c:113
+msgid "Porn Groove"
+msgstr "Porn Groove"
+
+#: Plugins/Input/flac/fileinfo.c:79 Plugins/Input/mpg123/mpg123.c:80
+#: Plugins/Input/vorbis/fileinfo.c:114
+msgid "Satire"
+msgstr "Satira"
+
+#: Plugins/Input/flac/fileinfo.c:79 Plugins/Input/mpg123/mpg123.c:80
+#: Plugins/Input/vorbis/fileinfo.c:114
+msgid "Slow Jam"
+msgstr "Slow Jam"
+
+#: Plugins/Input/flac/fileinfo.c:79 Plugins/Input/mpg123/mpg123.c:80
+#: Plugins/Input/vorbis/fileinfo.c:114
+msgid "Club"
+msgstr "Club"
+
+#: Plugins/Input/flac/fileinfo.c:79 Plugins/Input/mpg123/mpg123.c:80
+#: Plugins/Input/vorbis/fileinfo.c:114
+msgid "Tango"
+msgstr "Tango"
+
+#: Plugins/Input/flac/fileinfo.c:80 Plugins/Input/mpg123/mpg123.c:81
+#: Plugins/Input/vorbis/fileinfo.c:115
+msgid "Samba"
+msgstr "Samba"
+
+#: Plugins/Input/flac/fileinfo.c:80 Plugins/Input/mpg123/mpg123.c:81
+#: Plugins/Input/vorbis/fileinfo.c:115
+msgid "Folklore"
+msgstr "Folkór"
+
+#: Plugins/Input/flac/fileinfo.c:80 Plugins/Input/mpg123/mpg123.c:81
+#: Plugins/Input/vorbis/fileinfo.c:115
+msgid "Ballad"
+msgstr "Balada"
+
+#: Plugins/Input/flac/fileinfo.c:80 Plugins/Input/mpg123/mpg123.c:81
+#: Plugins/Input/vorbis/fileinfo.c:115
+msgid "Power Ballad"
+msgstr "Power Balada"
+
+#: Plugins/Input/flac/fileinfo.c:81 Plugins/Input/mpg123/mpg123.c:82
+#: Plugins/Input/vorbis/fileinfo.c:116
+msgid "Rhythmic Soul"
+msgstr "Rhythmic Soul"
+
+#: Plugins/Input/flac/fileinfo.c:81 Plugins/Input/mpg123/mpg123.c:82
+#: Plugins/Input/vorbis/fileinfo.c:116
+msgid "Freestyle"
+msgstr "Freestyle"
+
+#: Plugins/Input/flac/fileinfo.c:81 Plugins/Input/mpg123/mpg123.c:82
+#: Plugins/Input/vorbis/fileinfo.c:116
+msgid "Duet"
+msgstr "Duet"
+
+#: Plugins/Input/flac/fileinfo.c:82 Plugins/Input/mpg123/mpg123.c:83
+#: Plugins/Input/vorbis/fileinfo.c:117
+msgid "Punk Rock"
+msgstr "Punk Rock"
+
+#: Plugins/Input/flac/fileinfo.c:82 Plugins/Input/mpg123/mpg123.c:83
+#: Plugins/Input/vorbis/fileinfo.c:117
+msgid "Drum Solo"
+msgstr "Sólo bicie"
+
+#: Plugins/Input/flac/fileinfo.c:82 Plugins/Input/mpg123/mpg123.c:83
+#: Plugins/Input/vorbis/fileinfo.c:117
+msgid "A Cappella"
+msgstr "A Cappella"
+
+#: Plugins/Input/flac/fileinfo.c:83 Plugins/Input/mpg123/mpg123.c:84
+#: Plugins/Input/vorbis/fileinfo.c:118
+msgid "Euro-House"
+msgstr "Euro-House"
+
+#: Plugins/Input/flac/fileinfo.c:83 Plugins/Input/mpg123/mpg123.c:84
+#: Plugins/Input/vorbis/fileinfo.c:118
+msgid "Dance Hall"
+msgstr "Dance Hall"
+
+#: Plugins/Input/flac/fileinfo.c:83 Plugins/Input/mpg123/mpg123.c:84
+#: Plugins/Input/vorbis/fileinfo.c:118
+msgid "Goa"
+msgstr "Goa"
+
+#: Plugins/Input/flac/fileinfo.c:84 Plugins/Input/mpg123/mpg123.c:85
+#: Plugins/Input/vorbis/fileinfo.c:119
+msgid "Drum & Bass"
+msgstr "Drum & Bass"
+
+#: Plugins/Input/flac/fileinfo.c:84 Plugins/Input/mpg123/mpg123.c:85
+#: Plugins/Input/vorbis/fileinfo.c:119
+msgid "Club-House"
+msgstr "Club-HOUSE"
+
+#: Plugins/Input/flac/fileinfo.c:84 Plugins/Input/mpg123/mpg123.c:85
+#: Plugins/Input/vorbis/fileinfo.c:119
+msgid "Hardcore"
+msgstr "Hardcore"
+
+#: Plugins/Input/flac/fileinfo.c:85 Plugins/Input/mpg123/mpg123.c:86
+#: Plugins/Input/vorbis/fileinfo.c:120
+msgid "Terror"
+msgstr "Terror"
+
+#: Plugins/Input/flac/fileinfo.c:85 Plugins/Input/mpg123/mpg123.c:86
+#: Plugins/Input/vorbis/fileinfo.c:120
+msgid "Indie"
+msgstr "Indie"
+
+#: Plugins/Input/flac/fileinfo.c:85 Plugins/Input/mpg123/mpg123.c:86
+#: Plugins/Input/vorbis/fileinfo.c:120
+msgid "BritPop"
+msgstr "BritPop"
+
+#: Plugins/Input/flac/fileinfo.c:85 Plugins/Input/mpg123/mpg123.c:86
+#: Plugins/Input/vorbis/fileinfo.c:120
+msgid "Negerpunk"
+msgstr "Negerpunk"
+
+#: Plugins/Input/flac/fileinfo.c:86 Plugins/Input/mpg123/mpg123.c:87
+#: Plugins/Input/vorbis/fileinfo.c:121
+msgid "Polsk Punk"
+msgstr "Polsk Punk"
+
+#: Plugins/Input/flac/fileinfo.c:86 Plugins/Input/mpg123/mpg123.c:87
+#: Plugins/Input/vorbis/fileinfo.c:121
+msgid "Beat"
+msgstr "Beat"
+
+#: Plugins/Input/flac/fileinfo.c:86 Plugins/Input/mpg123/mpg123.c:87
+#: Plugins/Input/vorbis/fileinfo.c:121
+msgid "Christian Gangsta Rap"
+msgstr "Kresťanský Gangsta Rap"
+
+#: Plugins/Input/flac/fileinfo.c:87 Plugins/Input/mpg123/mpg123.c:88
+#: Plugins/Input/vorbis/fileinfo.c:122
+msgid "Heavy Metal"
+msgstr "Heavy Metal"
+
+#: Plugins/Input/flac/fileinfo.c:87 Plugins/Input/mpg123/mpg123.c:88
+#: Plugins/Input/vorbis/fileinfo.c:122
+msgid "Black Metal"
+msgstr "Black Metal"
+
+#: Plugins/Input/flac/fileinfo.c:87 Plugins/Input/mpg123/mpg123.c:88
+#: Plugins/Input/vorbis/fileinfo.c:122
+msgid "Crossover"
+msgstr "Crossover"
+
+#: Plugins/Input/flac/fileinfo.c:88 Plugins/Input/mpg123/mpg123.c:89
+#: Plugins/Input/vorbis/fileinfo.c:123
+msgid "Contemporary Christian"
+msgstr "Contemporary Christian"
+
+#: Plugins/Input/flac/fileinfo.c:88 Plugins/Input/mpg123/mpg123.c:89
+#: Plugins/Input/vorbis/fileinfo.c:123
+msgid "Christian Rock"
+msgstr "Kresťanský Rock"
+
+#: Plugins/Input/flac/fileinfo.c:89 Plugins/Input/mpg123/mpg123.c:90
+#: Plugins/Input/vorbis/fileinfo.c:124
+msgid "Merengue"
+msgstr "Merengue"
+
+#: Plugins/Input/flac/fileinfo.c:89 Plugins/Input/mpg123/mpg123.c:90
+#: Plugins/Input/vorbis/fileinfo.c:124
+msgid "Salsa"
+msgstr "Salsa"
+
+#: Plugins/Input/flac/fileinfo.c:89 Plugins/Input/mpg123/mpg123.c:90
+#: Plugins/Input/vorbis/fileinfo.c:124
+msgid "Thrash Metal"
+msgstr "Thrash Metal"
+
+#: Plugins/Input/flac/fileinfo.c:90 Plugins/Input/mpg123/mpg123.c:91
+#: Plugins/Input/vorbis/fileinfo.c:125
+msgid "Anime"
+msgstr "Anime"
+
+#: Plugins/Input/flac/fileinfo.c:90 Plugins/Input/mpg123/mpg123.c:91
+#: Plugins/Input/vorbis/fileinfo.c:125
+msgid "JPop"
+msgstr "JPop"
+
+#: Plugins/Input/flac/fileinfo.c:90 Plugins/Input/mpg123/mpg123.c:91
+#: Plugins/Input/vorbis/fileinfo.c:125
+msgid "Synthpop"
+msgstr "Synthpop"
+
+#: Plugins/Input/flac/fileinfo.c:214
 #, fuzzy, c-format
 msgid "Samplerate: %d Hz"
 msgstr "Sample rate:"
 
-#: Plugins/Input/flac/fileinfo.c:214
+#: Plugins/Input/flac/fileinfo.c:215
 #, fuzzy, c-format
 msgid "Channels: %d"
 msgstr "Kanály:"
 
-#: Plugins/Input/flac/fileinfo.c:215
+#: Plugins/Input/flac/fileinfo.c:216
 #, c-format
 msgid "Bits/Sample: %d"
 msgstr ""
 
-#: Plugins/Input/flac/fileinfo.c:217
+#: Plugins/Input/flac/fileinfo.c:218
 #, c-format
 msgid "Blocksize: %d"
 msgstr ""
 
-#: Plugins/Input/flac/fileinfo.c:219
+#: Plugins/Input/flac/fileinfo.c:220
 #, c-format
 msgid ""
 "Blocksize: variable\n"
 "  min/max: %d/%d"
 msgstr ""
 
-#: Plugins/Input/flac/fileinfo.c:222
+#: Plugins/Input/flac/fileinfo.c:223
 #, fuzzy, c-format
 msgid ""
 "Samples: %llu\n"
@@ -1976,47 +1844,77 @@ msgstr ""
 "\n"
 "Celková dĺžka: %d:%d\n"
 
-#: Plugins/Input/flac/fileinfo.c:228
+#: Plugins/Input/flac/fileinfo.c:229
 #, fuzzy, c-format
 msgid "Filesize: %ld B"
 msgstr "Veľkosť súboru:"
 
-#: Plugins/Input/flac/fileinfo.c:230
+#: Plugins/Input/flac/fileinfo.c:231
 #, c-format
 msgid ""
 "Avg. bitrate: %.1f kb/s\n"
 "Compression ratio: %.1f%%"
 msgstr ""
 
-#: Plugins/Input/flac/fileinfo.c:259 audacious/input.c:526
+#: Plugins/Input/flac/fileinfo.c:261 audacious/input.c:567
 msgid "Filename:"
 msgstr "Názov súboru:"
 
-#: Plugins/Input/flac/fileinfo.c:271
+#: Plugins/Input/flac/fileinfo.c:273
 #, fuzzy
 msgid "Tag:"
 msgstr "Tango"
 
-#: Plugins/Input/flac/fileinfo.c:306 Plugins/Input/vorbis/fileinfo.c:625
+#: Plugins/Input/flac/fileinfo.c:280 Plugins/Input/mpg123/fileinfo.c:456
+#: Plugins/Input/vorbis/fileinfo.c:581
+msgid "Title:"
+msgstr "Názov:"
+
+#: Plugins/Input/flac/fileinfo.c:287 Plugins/Input/mpg123/fileinfo.c:467
+#: Plugins/Input/vorbis/fileinfo.c:592
+msgid "Artist:"
+msgstr "Interpret:"
+
+#: Plugins/Input/flac/fileinfo.c:294 Plugins/Input/mpg123/fileinfo.c:478
+#: Plugins/Input/vorbis/fileinfo.c:603
+msgid "Album:"
+msgstr "Album:"
+
+#: Plugins/Input/flac/fileinfo.c:301 Plugins/Input/mpg123/fileinfo.c:489
+#: Plugins/Input/vorbis/fileinfo.c:614
+msgid "Comment:"
+msgstr "Komentár:"
+
+#: Plugins/Input/flac/fileinfo.c:308 Plugins/Input/vorbis/fileinfo.c:625
 msgid "Date:"
 msgstr "Dátum:"
 
-#: Plugins/Input/flac/fileinfo.c:345
+#: Plugins/Input/flac/fileinfo.c:316 Plugins/Input/mpg123/fileinfo.c:512
+#: Plugins/Input/vorbis/fileinfo.c:637
+msgid "Track number:"
+msgstr "Číslo skladby:"
+
+#: Plugins/Input/flac/fileinfo.c:324 Plugins/Input/mpg123/fileinfo.c:524
+#: Plugins/Input/vorbis/fileinfo.c:649
+msgid "Genre:"
+msgstr "Žáner:"
+
+#: Plugins/Input/flac/fileinfo.c:347
 #, fuzzy
 msgid "Save"
 msgstr "/Uložiť"
 
-#: Plugins/Input/flac/fileinfo.c:351
+#: Plugins/Input/flac/fileinfo.c:353
 #, fuzzy
 msgid "Remove Tag"
 msgstr "/Odstrániť vybrané"
 
-#: Plugins/Input/flac/fileinfo.c:361
+#: Plugins/Input/flac/fileinfo.c:363
 #, fuzzy
 msgid "FLAC Info:"
 msgstr "CD Info"
 
-#: Plugins/Input/flac/fileinfo.c:412 Plugins/Input/wma/wma.c:491
+#: Plugins/Input/flac/fileinfo.c:415
 #, fuzzy, c-format
 msgid "File Info - %s"
 msgstr "Informácie o súbore"
@@ -2069,10 +1967,15 @@ msgstr ""
 "Nepodarilo sa pripojiť na %s\n"
 "Server oznámil: %s"
 
-#: Plugins/Input/flac/http.c:670 Plugins/Input/vorbis/http.c:603
+#: Plugins/Input/flac/http.c:675 Plugins/Input/vorbis/http.c:607
 #, c-format
 msgid "PRE-BUFFERING: %dKB/%dKB"
 msgstr "PREDČÍTAVAM: %dKB/%dKB"
+
+#: Plugins/Input/flac/plugin.c:188
+#, fuzzy
+msgid "FLAC Audio Plugin"
+msgstr "CD Audio Plugin"
 
 #: Plugins/Input/modplug/gui/interface.cpp:117
 #, fuzzy
@@ -2080,13 +1983,13 @@ msgid "ModPlug Configuration"
 msgstr "Konfigurácia MPEG Audio pluginu"
 
 #: Plugins/Input/modplug/gui/interface.cpp:165
-#: Plugins/Input/mpg123/configure.c:234
+#: Plugins/Input/mpg123/configure.c:210
 #: Plugins/Input/timidity/src/interface.c:141
 msgid "16 bit"
 msgstr "16 bit"
 
 #: Plugins/Input/modplug/gui/interface.cpp:173
-#: Plugins/Input/mpg123/configure.c:243
+#: Plugins/Input/mpg123/configure.c:219
 #: Plugins/Input/timidity/src/interface.c:133
 msgid "8 bit"
 msgstr "8 bit"
@@ -2264,6 +2167,13 @@ msgstr ""
 msgid "Effects"
 msgstr "<b>Efekty</b>"
 
+#: Plugins/Input/modplug/gui/interface.cpp:725 Plugins/Output/alsa/about.c:46
+#: Plugins/Output/alsa/configure.c:405
+#: Plugins/Output/disk_writer/disk_writer.c:140
+#: Plugins/Output/disk_writer/disk_writer.c:405
+msgid "OK"
+msgstr ""
+
 #: Plugins/Input/modplug/gui/interface.cpp:793
 #, fuzzy
 msgid "MOD Info"
@@ -2281,20 +2191,6 @@ msgid ""
 "Instruments:\n"
 "Patterns:\n"
 "Channels:"
-msgstr ""
-
-#: Plugins/Input/modplug/gui/interface.cpp:825
-msgid ""
-"---\n"
-"---\n"
-"---\n"
-"---\n"
-"---\n"
-"---\n"
-"---\n"
-"---\n"
-"---\n"
-"---"
 msgstr ""
 
 #: Plugins/Input/modplug/gui/interface.cpp:866
@@ -2340,65 +2236,57 @@ msgstr ""
 msgid "Error loading pixmap file: %s"
 msgstr ""
 
-#: Plugins/Input/mpg123/configure.c:209
+#: Plugins/Input/mpg123/configure.c:185
 msgid "MPEG Audio Plugin Configuration"
 msgstr "Konfigurácia MPEG Audio pluginu"
 
-#: Plugins/Input/mpg123/configure.c:226
+#: Plugins/Input/mpg123/configure.c:202
 msgid "Resolution:"
 msgstr "Rozlíšenie:"
 
-#: Plugins/Input/mpg123/configure.c:250 Plugins/Input/vorbis/fileinfo.c:863
+#: Plugins/Input/mpg123/configure.c:226 Plugins/Input/vorbis/fileinfo.c:863
 #: Plugins/Input/vorbis/fileinfo.c:919
 msgid "Channels:"
 msgstr "Kanály:"
 
-#: Plugins/Input/mpg123/configure.c:258
+#: Plugins/Input/mpg123/configure.c:234
 msgid "Stereo (if available)"
 msgstr "Stereo (ak je dostupné)"
 
-#: Plugins/Input/mpg123/configure.c:269
+#: Plugins/Input/mpg123/configure.c:245
 #: Plugins/Input/timidity/src/interface.c:166
 msgid "Mono"
 msgstr "Mono"
 
-#: Plugins/Input/mpg123/configure.c:276
+#: Plugins/Input/mpg123/configure.c:252
 msgid "Down sample:"
 msgstr "Down samplovať:"
 
-#: Plugins/Input/mpg123/configure.c:285
+#: Plugins/Input/mpg123/configure.c:261
 msgid "1:1 (44 kHz)"
 msgstr "1:1 (44kHz)"
 
-#: Plugins/Input/mpg123/configure.c:296
+#: Plugins/Input/mpg123/configure.c:272
 msgid "1:2 (22 kHz)"
 msgstr "1:2 (22kHz)"
 
-#: Plugins/Input/mpg123/configure.c:307
+#: Plugins/Input/mpg123/configure.c:283
 msgid "1:4 (11 kHz)"
 msgstr "1:4 (11 kHz)"
 
-#: Plugins/Input/mpg123/configure.c:316
+#: Plugins/Input/mpg123/configure.c:292
 msgid "Decoder"
 msgstr "Dekóder"
 
-#: Plugins/Input/mpg123/configure.c:426
+#: Plugins/Input/mpg123/configure.c:399
 msgid "ID3 Tags:"
 msgstr "ID3 Tagy:"
 
-#: Plugins/Input/mpg123/configure.c:434
+#: Plugins/Input/mpg123/configure.c:407
 msgid "Disable ID3V2 tags"
 msgstr "Zakázať ID3V2 tagy"
 
-#: Plugins/Input/mpg123/configure.c:443
-msgid "Convert non-UTF8 ID3 tags to UTF8"
-msgstr "Skonvertovať ne-UTF8 ID3 tagy na UTF8"
-
-#: Plugins/Input/mpg123/configure.c:456
-msgid "ID3 encoding:"
-msgstr "ID3 kódovanie:"
-
-#: Plugins/Input/mpg123/configure.c:481
+#: Plugins/Input/mpg123/configure.c:427
 msgid "ID3 format:"
 msgstr "ID3 formát:"
 
@@ -2414,15 +2302,35 @@ msgstr "Dva kanály"
 msgid "Single channel"
 msgstr "Jeden kanál"
 
-#: Plugins/Input/mpg123/fileinfo.c:221 Plugins/Input/mpg123/fileinfo.c:748
+#: Plugins/Input/mpg123/fileinfo.c:221 Plugins/Input/mpg123/fileinfo.c:763
 #, c-format
 msgid "%d KBit/s"
 msgstr "%d KBit/s"
 
-#: Plugins/Input/mpg123/fileinfo.c:222 Plugins/Input/mpg123/fileinfo.c:743
+#: Plugins/Input/mpg123/fileinfo.c:222 Plugins/Input/mpg123/fileinfo.c:758
 #, c-format
 msgid "%ld Hz"
 msgstr "%ld Hz"
+
+#: Plugins/Input/mpg123/fileinfo.c:239
+msgid "None"
+msgstr "Žiadny"
+
+#: Plugins/Input/mpg123/fileinfo.c:240
+msgid "50/15 ms"
+msgstr "50/15 ms"
+
+#: Plugins/Input/mpg123/fileinfo.c:242
+msgid "CCIT J.17"
+msgstr "CCIT J.17"
+
+#: Plugins/Input/mpg123/fileinfo.c:243
+msgid "No"
+msgstr "Nie"
+
+#: Plugins/Input/mpg123/fileinfo.c:244
+msgid "Yes"
+msgstr "Áno"
 
 #: Plugins/Input/mpg123/fileinfo.c:304
 msgid " MPEG Info "
@@ -2473,6 +2381,16 @@ msgstr "Zdôraznenie:"
 msgid " ID3 Tag "
 msgstr " ID3 Tag "
 
+#: Plugins/Input/mpg123/fileinfo.c:500
+msgid "Year:"
+msgstr "Rok:"
+
+#: Plugins/Input/mpg123/fileinfo.c:624 Plugins/Input/vorbis/fileinfo.c:1015
+#: audacious/mainwin.c:805
+#, c-format
+msgid "%s - Audacious"
+msgstr ""
+
 #: Plugins/Input/mpg123/fileinfo.c:642 Plugins/Input/mpg123/fileinfo.c:645
 #: Plugins/Input/mpg123/fileinfo.c:648 Plugins/Input/mpg123/fileinfo.c:651
 #: Plugins/Input/mpg123/fileinfo.c:654 Plugins/Input/mpg123/fileinfo.c:657
@@ -2483,14 +2401,14 @@ msgstr " ID3 Tag "
 msgid "N/A"
 msgstr "N/A"
 
-#: Plugins/Input/mpg123/fileinfo.c:793 Plugins/Input/mpg123/fileinfo.c:795
-#: Plugins/Input/mpg123/fileinfo.c:796 Plugins/Input/mpg123/fileinfo.c:797
-#: Plugins/Input/mpg123/fileinfo.c:799
+#: Plugins/Input/mpg123/fileinfo.c:808 Plugins/Input/mpg123/fileinfo.c:810
+#: Plugins/Input/mpg123/fileinfo.c:811 Plugins/Input/mpg123/fileinfo.c:812
+#: Plugins/Input/mpg123/fileinfo.c:814
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: Plugins/Input/mpg123/fileinfo.c:798 Plugins/Input/wma/wma.c:521
+#: Plugins/Input/mpg123/fileinfo.c:813
 #, c-format
 msgid "%lu Bytes"
 msgstr "%lu Bajtov"
@@ -2500,16 +2418,20 @@ msgstr "%lu Bajtov"
 msgid "Couldn't connect to host %s:%d"
 msgstr "Nepodarilo sa pripojiť na %s"
 
-#: Plugins/Input/mpg123/http.c:686
+#: Plugins/Input/mpg123/http.c:690
 #, fuzzy, c-format
 msgid "PRE-BUFFERING: %zuKB/%zuKB"
 msgstr "PREDČÍTAVAM: %dKB/%dKB"
 
-#: Plugins/Input/mpg123/mpg123.c:922
+#: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:92
+msgid "AlternRock"
+msgstr "AlternRock"
+
+#: Plugins/Input/mpg123/mpg123.c:953
 msgid "About MPEG Audio Plugin"
 msgstr "O MPEG Audio plugine"
 
-#: Plugins/Input/mpg123/mpg123.c:923
+#: Plugins/Input/mpg123/mpg123.c:954
 msgid ""
 "Audacious decoding engine by William Pitcock <nenolod@nenolod.net>, derived "
 "from:\n"
@@ -2518,7 +2440,7 @@ msgid ""
 "Based on the original XMMS plugin."
 msgstr ""
 
-#: Plugins/Input/mpg123/mpg123.c:961
+#: Plugins/Input/mpg123/mpg123.c:993
 msgid "MPEG Audio Plugin"
 msgstr "MPEG Audio Plugin"
 
@@ -2569,7 +2491,7 @@ msgstr ""
 msgid "TiMidity Plugin %s"
 msgstr "Vstupný plugin: %s"
 
-#: Plugins/Input/timidity/src/xmms-timidity.c:352
+#: Plugins/Input/timidity/src/xmms-timidity.c:372
 #, fuzzy
 msgid "Couldn't load MIDI file"
 msgstr "Nepodarilo sa nájsť %s"
@@ -2596,53 +2518,43 @@ msgstr ""
 msgid "Tone Generator %s"
 msgstr ""
 
-#: Plugins/Input/vorbis/configure.c:118
+#: Plugins/Input/vorbis/configure.c:107
 msgid "Select the directory where you want to store the Ogg Vorbis streams:"
 msgstr "Vyberte adresár kde chcete ukladať streamy Ogg Vorbis:"
 
-#: Plugins/Input/vorbis/configure.c:208
+#: Plugins/Input/vorbis/configure.c:186
 msgid "Ogg Vorbis Audio Plugin Configuration"
 msgstr "Konfigurácia Ogg Vorbis Audio pluginu"
 
-#: Plugins/Input/vorbis/configure.c:306
+#: Plugins/Input/vorbis/configure.c:284
 msgid "Ogg Vorbis Tags:"
 msgstr "Ogg Vorbis Tagy:"
 
-#: Plugins/Input/vorbis/configure.c:315
-#, fuzzy
-msgid "Convert non-UTF8 Vorbis tags to UTF8"
-msgstr "Skonvertovať ne-UTF8 ID3 tagy na UTF8"
-
-#: Plugins/Input/vorbis/configure.c:328
-#, fuzzy
-msgid "Vorbis encoding:"
-msgstr "ID3 kódovanie:"
-
-#: Plugins/Input/vorbis/configure.c:370
+#: Plugins/Input/vorbis/configure.c:323
 msgid "ReplayGain Settings:"
 msgstr "Nastavenie ReplayGain:"
 
-#: Plugins/Input/vorbis/configure.c:378
+#: Plugins/Input/vorbis/configure.c:331
 msgid "Enable Clipping Prevention"
 msgstr "Povoliť Clipping Prevention"
 
-#: Plugins/Input/vorbis/configure.c:383
+#: Plugins/Input/vorbis/configure.c:336
 msgid "Enable ReplayGain"
 msgstr "Povoliť ReplayGain"
 
-#: Plugins/Input/vorbis/configure.c:388
+#: Plugins/Input/vorbis/configure.c:341
 msgid "ReplayGain Type:"
 msgstr "Typ ReplayGain:"
 
-#: Plugins/Input/vorbis/configure.c:399
+#: Plugins/Input/vorbis/configure.c:352
 msgid "use Track Gain/Peak"
 msgstr "použiť Gain/Peak skladieb"
 
-#: Plugins/Input/vorbis/configure.c:409
+#: Plugins/Input/vorbis/configure.c:362
 msgid "use Album Gain/Peak"
 msgstr "použiť Gain/Peak albumov"
 
-#: Plugins/Input/vorbis/configure.c:421
+#: Plugins/Input/vorbis/configure.c:374
 msgid "Enable 6dB Boost + Hard Limiting"
 msgstr "Povoliť 6dB Boost + Hard Limiting"
 
@@ -2728,7 +2640,7 @@ msgstr "Dĺžka:"
 msgid "%d KBit/s (nominal)"
 msgstr "%d KBit/s (nominálne)"
 
-#: Plugins/Input/vorbis/fileinfo.c:957 Plugins/Input/wma/wma.c:512
+#: Plugins/Input/vorbis/fileinfo.c:957
 #, c-format
 msgid "%d Hz"
 msgstr "%d Hz"
@@ -2748,15 +2660,15 @@ msgstr "%d:%.2d"
 msgid "%d Bytes"
 msgstr "%d Bajtov"
 
-#: Plugins/Input/vorbis/vorbis.c:135
+#: Plugins/Input/vorbis/vorbis.c:136
 msgid "Ogg Vorbis Audio Plugin"
 msgstr "Ogg Vorbis Audio Plugin"
 
-#: Plugins/Input/vorbis/vorbis.c:817
+#: Plugins/Input/vorbis/vorbis.c:806
 msgid "About Ogg Vorbis Audio Plugin"
 msgstr "O Ogg Vorbis Audio plugine"
 
-#: Plugins/Input/vorbis/vorbis.c:823
+#: Plugins/Input/vorbis/vorbis.c:812
 msgid ""
 "Ogg Vorbis Plugin by the Xiph.org Foundation\n"
 "\n"
@@ -2840,115 +2752,20 @@ msgstr ""
 msgid "WAV Audio Plugin"
 msgstr "WAV Audio Plugin"
 
-#: Plugins/Input/wma/wma.c:122
+#: Plugins/Input/wma/wma.c:123
 #, c-format
 msgid "WMA Player %s"
 msgstr ""
 
-#: Plugins/Input/wma/wma.c:155
+#: Plugins/Input/wma/wma.c:156
 #, fuzzy, c-format
 msgid "About %s"
 msgstr "O BMP"
 
-#: Plugins/Input/wma/wma.c:168
+#: Plugins/Input/wma/wma.c:169
 #, fuzzy
 msgid " Close "
 msgstr "/Zavrieť"
-
-#: Plugins/Input/wma/wma.c:474
-#, c-format
-msgid "Info dialog is already opened!\n"
-msgstr ""
-
-#: Plugins/Input/wma/wma.c:499
-#, fuzzy, c-format
-msgid "%d Kb/s"
-msgstr "%d KBit/s"
-
-#: Plugins/Input/wma/wma.c:507
-#, c-format
-msgid "%02d:%02d:%02d"
-msgstr ""
-
-#: Plugins/Input/wma/wma.c:544
-#, fuzzy
-msgid "<b>Name:</b>"
-msgstr "<b><Názov súboru/b>"
-
-#: Plugins/Input/wma/wma.c:580
-#, fuzzy
-msgid "<b>WMA Version:</b>"
-msgstr "<b>Visualizácia</b>"
-
-#: Plugins/Input/wma/wma.c:589
-#, fuzzy
-msgid "<b>Bitrate:</b>"
-msgstr "Bit rate:"
-
-#: Plugins/Input/wma/wma.c:598
-#, fuzzy
-msgid "<b>Samplerate:</b>"
-msgstr "Sample rate:"
-
-#: Plugins/Input/wma/wma.c:607
-#, fuzzy
-msgid "<b>Channels:</b>"
-msgstr "Kanály:"
-
-#: Plugins/Input/wma/wma.c:616
-#, fuzzy
-msgid "<b>Play time:</b>"
-msgstr "<b><Názov súboru/b>"
-
-#: Plugins/Input/wma/wma.c:625
-#, fuzzy
-msgid "<b>Filesize:</b>"
-msgstr "<b><Názov súboru/b>"
-
-#: Plugins/Input/wma/wma.c:676
-#, fuzzy
-msgid "WMA Info"
-msgstr "CD Info"
-
-#: Plugins/Input/wma/wma.c:701
-#, fuzzy
-msgid "<b>Artist:</b>"
-msgstr "<b>Presety</b>"
-
-#: Plugins/Input/wma/wma.c:710
-#, fuzzy
-msgid "<b>Title:</b>"
-msgstr "<b><Názov súboru/b>"
-
-#: Plugins/Input/wma/wma.c:719
-#, fuzzy
-msgid "<b>Album:</b>"
-msgstr "<b><Názov súboru/b>"
-
-#: Plugins/Input/wma/wma.c:728
-#, fuzzy
-msgid "<b>Comments:</b>"
-msgstr "<b>_Fonty</b>"
-
-#: Plugins/Input/wma/wma.c:737
-#, fuzzy
-msgid "<b>Year:</b>"
-msgstr "<b><Názov súboru/b>"
-
-#: Plugins/Input/wma/wma.c:746
-#, fuzzy
-msgid "<b>Track:</b>"
-msgstr "<b>Prehrávanie</b>"
-
-#: Plugins/Input/wma/wma.c:755
-#, fuzzy
-msgid "<b>Genre:</b>"
-msgstr "<b><Názov súboru/b>"
-
-#: Plugins/Input/wma/wma.c:821
-#, fuzzy
-msgid "Tags"
-msgstr "Tango"
 
 #: Plugins/Output/OSS/OSS.c:53
 msgid "OSS Output Plugin"
@@ -3008,7 +2825,7 @@ msgstr "Štandardný"
 msgid "OSS Driver configuration"
 msgstr "Konfigurácia ovládača OSS"
 
-#: Plugins/Output/OSS/configure.c:215 Plugins/Output/alsa/configure.c:288
+#: Plugins/Output/OSS/configure.c:215 Plugins/Output/alsa/configure.c:285
 #: Plugins/Output/sun/configure.c:182
 msgid "Audio device:"
 msgstr "Audio zariadenie:"
@@ -3017,7 +2834,7 @@ msgstr "Audio zariadenie:"
 msgid "Use alternate device:"
 msgstr "Použiť alternatívne zariadenie:"
 
-#: Plugins/Output/OSS/configure.c:258 Plugins/Output/alsa/configure.c:333
+#: Plugins/Output/OSS/configure.c:258 Plugins/Output/alsa/configure.c:330
 #: Plugins/Output/sun/configure.c:219
 msgid "Mixer device:"
 msgstr "Mixovacie zariadenie:"
@@ -3096,52 +2913,51 @@ msgstr ""
 msgid "ALSA %s output plugin"
 msgstr "ALSA %s výstupný plugin"
 
-#: Plugins/Output/alsa/configure.c:152
+#: Plugins/Output/alsa/configure.c:150
 msgid "Unknown soundcard"
 msgstr "Neznáma zvuková karta"
 
-#: Plugins/Output/alsa/configure.c:207
+#: Plugins/Output/alsa/configure.c:205
 #, c-format
 msgid "Default PCM device (%s)"
 msgstr "Štandardné PCM zariadenie (%s)"
 
-#: Plugins/Output/alsa/configure.c:274
+#: Plugins/Output/alsa/configure.c:271
 msgid "ALSA Driver configuration"
 msgstr "Konfigurácia ovládača ALSA"
 
-#: Plugins/Output/alsa/configure.c:302
+#: Plugins/Output/alsa/configure.c:299
 msgid "Mixer:"
 msgstr "Mixér:"
 
-#: Plugins/Output/alsa/configure.c:310
+#: Plugins/Output/alsa/configure.c:307
 msgid "Use software volume control"
 msgstr "Použíť softwarové ovládanie hlasitosti"
 
-#: Plugins/Output/alsa/configure.c:320
+#: Plugins/Output/alsa/configure.c:317
 msgid "Mixer card:"
 msgstr "Mixovacia karta:"
 
-#: Plugins/Output/alsa/configure.c:353
+#: Plugins/Output/alsa/configure.c:350
 msgid "Device settings"
 msgstr "Nastavenia zariadenia"
 
-#: Plugins/Output/alsa/configure.c:359
+#: Plugins/Output/alsa/configure.c:356
 #, fuzzy
 msgid "Soundcard:"
 msgstr "Soundtrack"
 
-#: Plugins/Output/alsa/configure.c:372 Plugins/Output/alsa/configure.c:414
+#: Plugins/Output/alsa/configure.c:369
 msgid "Buffer time (ms):"
 msgstr "Čas zásobníka (ms):"
 
-#: Plugins/Output/alsa/configure.c:386
+#: Plugins/Output/alsa/configure.c:383
 msgid "Period time (ms):"
 msgstr "Časový úsek (ms):"
 
-#: Plugins/Output/alsa/configure.c:401
-#, fuzzy
-msgid "Audacious:"
-msgstr "O MPEG Audio plugine"
+#: Plugins/Output/alsa/configure.c:398
+msgid "Advanced settings"
+msgstr "Rozšírené možnosti"
 
 #: Plugins/Output/arts/configure.c:51
 #, fuzzy
@@ -3242,12 +3058,12 @@ msgstr "Server"
 msgid "eSound Output Plugin"
 msgstr "eSound Výstupný Plugin"
 
-#: Plugins/Output/jack/jack.c:572
+#: Plugins/Output/jack/jack.c:591
 #, fuzzy
 msgid "About JACK Output Plugin 0.15"
 msgstr "eSound Výstupný Plugin"
 
-#: Plugins/Output/jack/jack.c:573
+#: Plugins/Output/jack/jack.c:592
 msgid ""
 "XMMS jack Driver 0.15\n"
 "\n"
@@ -3323,12 +3139,12 @@ msgstr "Blur Scope: Výber farby"
 msgid "Options:"
 msgstr "Možnosti:"
 
-#: audacious/about.c:125 audacious/credits.c:292
+#: audacious/about.c:125 audacious/credits.c:296
 #, fuzzy
 msgid "About Audacious"
 msgstr "O MPEG Audio plugine"
 
-#: audacious/about.c:174 audacious/credits.c:337
+#: audacious/about.c:174 audacious/credits.c:341
 msgid "Credits"
 msgstr "Credits"
 
@@ -3350,38 +3166,8 @@ msgstr ""
 msgid "Audacious core developers:"
 msgstr "Nastavenia BMP"
 
-#: audacious/credits.c:52 audacious/credits.c:61 audacious/credits.c:66
-msgid "George Averill"
-msgstr ""
-
-#: audacious/credits.c:53 audacious/credits.c:73
-msgid "Giacomo Lozito"
-msgstr ""
-
-#: audacious/credits.c:54 audacious/credits.c:67 audacious/credits.c:74
-#: audacious/credits.c:80
-msgid "William Pitcock"
-msgstr ""
-
-#: audacious/credits.c:55 audacious/credits.c:75
-msgid "Derek Pomery"
-msgstr ""
-
-#: audacious/credits.c:56 audacious/credits.c:76 audacious/credits.c:82
-#: audacious/credits.c:132
-msgid "Tony Vroon"
-msgstr ""
-
-#: audacious/credits.c:57
-msgid "Yoshiki Yazawa"
-msgstr ""
-
 #: audacious/credits.c:60
 msgid "Graphics:"
-msgstr ""
-
-#: audacious/credits.c:62
-msgid "Stephan Sokolow"
 msgstr ""
 
 #: audacious/credits.c:65
@@ -3392,335 +3178,122 @@ msgstr "Štandardný vzhľad:"
 msgid "Plugin development:"
 msgstr ""
 
-#: audacious/credits.c:71
-msgid "Kiyoshi Aman"
-msgstr ""
-
-#: audacious/credits.c:72
-msgid "Shay Green"
-msgstr ""
-
 #: audacious/credits.c:79
 #, fuzzy
 msgid "0.1.x developers:"
 msgstr "Vývojári:"
-
-#: audacious/credits.c:81
-msgid "Mohammed Sameer"
-msgstr ""
 
 #: audacious/credits.c:85
 #, fuzzy
 msgid "BMP Developers:"
 msgstr "Vývojári:"
 
-#: audacious/credits.c:86
-msgid "Artem Baguinski"
-msgstr "Artem Baguinski"
-
-#: audacious/credits.c:87 audacious/credits.c:195
-msgid "Edward Brocklesby"
-msgstr "Edward Brocklesby"
-
-#: audacious/credits.c:88 audacious/credits.c:124
-msgid "Chong Kai Xiong"
-msgstr "Chong Kai Xiong"
-
-#: audacious/credits.c:89
-msgid "Milosz Derezynski"
-msgstr "Milosz Derezynski"
-
-#: audacious/credits.c:90
-msgid "David Lau"
-msgstr "David Lau"
-
-#: audacious/credits.c:91
-msgid "Ole Andre Vadla Ravnaas"
-msgstr "Ole Andre Vadla Ravnaas"
-
-#: audacious/credits.c:92
-msgid "Michiel Sikkes"
-msgstr "Michiel Sikkes"
-
-#: audacious/credits.c:93
-msgid "Andrei Badea"
-msgstr ""
-
-#: audacious/credits.c:94
-msgid "Peter Behroozi"
-msgstr "Peter Behroozi"
-
-#: audacious/credits.c:95
-msgid "Bernard Blackham"
-msgstr "Bernard Blackham"
-
-#: audacious/credits.c:96
-msgid "Oliver Blin"
-msgstr "Oliver Blin"
-
-#: audacious/credits.c:97
-msgid "Tomas Bzatek"
-msgstr "Tomas Bzatek"
-
-#: audacious/credits.c:98 audacious/credits.c:175
-msgid "Liviu Danicel"
-msgstr "Liviu Danicel"
-
-#: audacious/credits.c:99
-msgid "Jon Dowland"
-msgstr "Jon Dowland"
-
-#: audacious/credits.c:100
-msgid "Artur Frysiak"
-msgstr "Artur Frysiak"
-
-#: audacious/credits.c:101
-msgid "Sebastian Kapfer"
-msgstr "Sebastian Kapfer"
-
-#: audacious/credits.c:102
-msgid "Lukas Koberstein"
-msgstr "Lukas Koberstein"
-
-#: audacious/credits.c:103 audacious/credits.c:179
-msgid "Dan Korostelev"
-msgstr "Dan Korostelev"
-
-#: audacious/credits.c:104
-msgid "Jolan Luff"
-msgstr ""
-
-#: audacious/credits.c:105
-#, fuzzy
-msgid "Michael Marineau"
-msgstr "Michiel Sikkes"
-
-#: audacious/credits.c:106
-msgid "Tim-Philipp Muller"
-msgstr "Tim-Philipp Muller"
-
-#: audacious/credits.c:107
-msgid "Julien Portalier"
-msgstr "Julien Portalier"
-
-#: audacious/credits.c:108
-msgid "Andrew Ruder"
-msgstr ""
-
-#: audacious/credits.c:109
-msgid "Olivier Samyn"
-msgstr "Olivier Samyn"
-
-#: audacious/credits.c:110
-msgid "Martijn Vernooij"
-msgstr "Martijn Vernooij"
-
 #: audacious/credits.c:117
 msgid "Brazilian Portuguese:"
-msgstr ""
-
-#: audacious/credits.c:118
-msgid "Philipi Pinto"
 msgstr ""
 
 #: audacious/credits.c:120
 msgid "Breton:"
 msgstr "Bretónsky:"
 
-#: audacious/credits.c:121
-msgid "Thierry Vignaud"
-msgstr "Thierry Vignaud"
-
 #: audacious/credits.c:123
 msgid "Chinese:"
 msgstr "Čínsky:"
-
-#: audacious/credits.c:125
-msgid "Chao-Hsiung Liao"
-msgstr ""
 
 #: audacious/credits.c:127
 #, fuzzy
 msgid "Czech:"
 msgstr "Francúzsky:"
 
-#: audacious/credits.c:128
-msgid "Jan Narovec"
-msgstr ""
-
 #: audacious/credits.c:130
 msgid "Dutch:"
 msgstr "Holandsky:"
-
-#: audacious/credits.c:131
-msgid "Laurens Buhler"
-msgstr "Laurens Buhler"
 
 #: audacious/credits.c:134
 #, fuzzy
 msgid "Finnish:"
 msgstr "Španielsky:"
 
-#: audacious/credits.c:135
-msgid "Pauli Virtanen"
-msgstr ""
-
 #: audacious/credits.c:137
 msgid "French:"
 msgstr "Francúzsky:"
-
-#: audacious/credits.c:138
-msgid "David Le Brun"
-msgstr "David Le Brun"
 
 #: audacious/credits.c:140
 msgid "German:"
 msgstr "Nemecky:"
 
-#: audacious/credits.c:141
-msgid "Matthias Debus"
-msgstr "Matthias Debus"
-
-#: audacious/credits.c:143
+#: audacious/credits.c:144
 #, fuzzy
 msgid "Georgian: "
 msgstr "Nemecky:"
 
-#: audacious/credits.c:144
-msgid "George Machitidze"
-msgstr ""
-
-#: audacious/credits.c:146
+#: audacious/credits.c:147
 msgid "Greek:"
 msgstr "Grécky:"
 
-#: audacious/credits.c:147
-msgid "Kouzinopoulos Haris"
-msgstr "Kouzinopoulos Haris"
-
-#: audacious/credits.c:148
-msgid "Stavros Giannouris"
-msgstr ""
-
-#: audacious/credits.c:150
+#: audacious/credits.c:152
 msgid "Hindi:"
 msgstr ""
 
-#: audacious/credits.c:151
-msgid "Dhananjaya Sharma"
-msgstr ""
-
-#: audacious/credits.c:153
+#: audacious/credits.c:155
 msgid "Hungarian:"
 msgstr "Maďarsky:"
 
-#: audacious/credits.c:154
-msgid "Laszlo Dvornik"
-msgstr "Laszlo Dvornik"
-
-#: audacious/credits.c:156
+#: audacious/credits.c:158
 msgid "Italian:"
 msgstr "Taliansky:"
 
-#: audacious/credits.c:157
-msgid "Alessio D'Ascanio"
-msgstr "Alessio D'Ascanio"
-
-#: audacious/credits.c:159
+#: audacious/credits.c:162
 msgid "Japanese:"
 msgstr "Japonsky:"
 
-#: audacious/credits.c:160
-msgid "Dai"
-msgstr ""
-
-#: audacious/credits.c:162
+#: audacious/credits.c:165
 msgid "Korean:"
 msgstr "Kórejsky:"
 
-#: audacious/credits.c:163
-msgid "DongCheon Park"
-msgstr "DongCheon Park"
-
-#: audacious/credits.c:165
+#: audacious/credits.c:168
 msgid "Lithuanian:"
 msgstr "Litovčina:"
 
-#: audacious/credits.c:166
-msgid "Rimas Kudelis"
-msgstr "Rimas Kudelis"
-
-#: audacious/credits.c:168
+#: audacious/credits.c:171
 #, fuzzy
 msgid "Macedonian:"
 msgstr "Rumunsky:"
 
-#: audacious/credits.c:169
-msgid "Arangel Angov"
-msgstr ""
-
-#: audacious/credits.c:171
+#: audacious/credits.c:174
 msgid "Polish:"
 msgstr "Poľsky:"
 
-#: audacious/credits.c:172
-msgid "Jacek Wolszczak"
-msgstr "Jacek Wolszczak"
-
-#: audacious/credits.c:174
+#: audacious/credits.c:178
 msgid "Romanian:"
 msgstr "Rumunsky:"
 
-#: audacious/credits.c:177
+#: audacious/credits.c:181
 msgid "Russian:"
 msgstr "Rusky:"
 
-#: audacious/credits.c:178
-msgid "Pavlo Bohmat"
-msgstr "Pavlo Bohmat"
-
-#: audacious/credits.c:180
-msgid "Vitaly Lipatov"
-msgstr ""
-
-#: audacious/credits.c:182
+#: audacious/credits.c:186
 msgid "Slovak:"
 msgstr ""
 
-#: audacious/credits.c:183
-msgid "Pavel Kanzelsberger"
-msgstr ""
-
-#: audacious/credits.c:185
+#: audacious/credits.c:189
 msgid "Spanish:"
 msgstr "Španielsky:"
 
-#: audacious/credits.c:186
-msgid "Gustavo D. Vranjes"
-msgstr ""
-
-#: audacious/credits.c:188
+#: audacious/credits.c:192
 msgid "Swedish:"
 msgstr "Švédsky:"
 
-#: audacious/credits.c:189
-msgid "Martin Persenius"
-msgstr "Martin Persenius"
-
-#: audacious/credits.c:191
+#: audacious/credits.c:195
 #, fuzzy
 msgid "Ukrainian:"
 msgstr "Rumunsky:"
 
-#: audacious/credits.c:192
-msgid "Mykola Lynnyk"
-msgstr ""
-
-#: audacious/credits.c:194
+#: audacious/credits.c:198
 msgid "Welsh:"
 msgstr "Welshsky:"
 
-#: audacious/credits.c:341
+#: audacious/credits.c:345
 msgid "Translators"
 msgstr "Prekladatelia"
 
@@ -3949,7 +3522,7 @@ msgid ""
 "Could not open glade file (%s). Please check your installation.\n"
 msgstr ""
 
-#: audacious/input.c:301
+#: audacious/input.c:302
 msgid ""
 "<b><big>Unable to play files.</big></b>\n"
 "\n"
@@ -3963,29 +3536,29 @@ msgstr ""
 "1. sú prístupné.\n"
 "2. ste povolili vyžadované pluginy."
 
-#: audacious/input.c:326
+#: audacious/input.c:327
 msgid "Don't show this warning anymore"
 msgstr "Druhýkrát nezobrazovať toto varovanie"
 
-#: audacious/input.c:328
+#: audacious/input.c:329
 msgid "Show more _details"
 msgstr "Zobraziť viac _detailov"
 
-#: audacious/input.c:342 audacious/prefswin.c:111 audacious/prefswin.c:472
-#: audacious/prefswin.c:560 audacious/prefswin.c:649 audacious/prefswin.c:745
+#: audacious/input.c:343 audacious/prefswin.c:116 audacious/prefswin.c:488
+#: audacious/prefswin.c:576 audacious/prefswin.c:665 audacious/prefswin.c:761
 msgid "Filename"
 msgstr "Názov súboru"
 
-#: audacious/input.c:510
+#: audacious/input.c:551
 #, c-format
 msgid "audacious: %s"
 msgstr ""
 
-#: audacious/input.c:544
+#: audacious/input.c:585
 msgid "No input plugin recognized this file"
 msgstr "Žiadny z pluginov nerozoznal tento súbor"
 
-#: audacious/input.c:546
+#: audacious/input.c:587
 #, c-format
 msgid "Input plugin: %s"
 msgstr "Vstupný plugin: %s"
@@ -3995,17 +3568,17 @@ msgstr "Vstupný plugin: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "Nepodarilo sa vytvoriť log súbor (%s)!\n"
 
-#: audacious/main.c:83 audacious/main.c:85 audacious/mainwin.c:806
-#: audacious/mainwin.c:3256
+#: audacious/main.c:84 audacious/main.c:86 audacious/mainwin.c:807
+#: audacious/mainwin.c:3258
 msgid "Audacious"
 msgstr ""
 
-#: audacious/main.c:395
+#: audacious/main.c:425
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "Nepodarilo sa vytvoriť adresár (%s): %s"
 
-#: audacious/main.c:664
+#: audacious/main.c:695
 #, fuzzy
 msgid ""
 "Usage: audacious [options] [files] ...\n"
@@ -4018,65 +3591,69 @@ msgstr ""
 "Voľby:\n"
 "--------\n"
 
-#: audacious/main.c:669
+#: audacious/main.c:700
 msgid "Display this text and exit"
 msgstr "Zobraziť tento text a skončiť"
 
-#: audacious/main.c:672
+#: audacious/main.c:703
 #, fuzzy
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Vybrať BMP/XMMS sedenie (Štandardne: 0)"
 
-#: audacious/main.c:675
+#: audacious/main.c:706
 msgid "Skip backwards in playlist"
 msgstr "Vrátiť sa späť v playliste"
 
-#: audacious/main.c:678
+#: audacious/main.c:709
 msgid "Start playing current playlist"
 msgstr "Začať hrať aktuálny playlist"
 
-#: audacious/main.c:681
+#: audacious/main.c:712
 msgid "Pause current song"
 msgstr "Zapauzovať aktuálnu skladbu"
 
-#: audacious/main.c:684
+#: audacious/main.c:715
 msgid "Stop current song"
 msgstr "Zastaviť aktuálnu skladbu"
 
-#: audacious/main.c:687
+#: audacious/main.c:718
 msgid "Pause if playing, play otherwise"
 msgstr "Pauza ak hrá, inak prehrať"
 
-#: audacious/main.c:690
+#: audacious/main.c:721
 msgid "Skip forward in playlist"
 msgstr "Posunúť vpred v playliste"
 
-#: audacious/main.c:693
+#: audacious/main.c:724
 msgid "Don't clear the playlist"
 msgstr "Nevyčistiť playlist"
 
-#: audacious/main.c:696
+#: audacious/main.c:727
 msgid "Show the main window"
 msgstr "Zobraziť hlavné okno"
 
-#: audacious/main.c:699
+#: audacious/main.c:730
 #, fuzzy
 msgid "Activate Audacious"
 msgstr "O MPEG Audio plugine"
 
-#: audacious/main.c:702
+#: audacious/main.c:733
 msgid "Previous session ID"
 msgstr "ID predchádzajúcej session"
 
-#: audacious/main.c:705
+#: audacious/main.c:736
 msgid "Headless operation [experimental]"
 msgstr ""
 
-#: audacious/main.c:708
+#: audacious/main.c:739
+msgid "Disable error/warning interception (logging)"
+msgstr ""
+
+#: audacious/main.c:742
 msgid "Print version number and exit\n"
 msgstr "Zobraziť verziu programu a skončiť\n"
 
-#: audacious/main.c:887
+#: audacious/main.c:925
 #, fuzzy
 msgid ""
 "\n"
@@ -4093,7 +3670,7 @@ msgstr ""
 "nám mail na beepmp-devel@lists.sourceforge.net\n"
 "\n"
 
-#: audacious/main.c:910
+#: audacious/main.c:948
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -4106,7 +3683,7 @@ msgstr ""
 "Skontrolujte či je skin '%s' používateľný a či je štandardný skin "
 "nainštalovaný v '%s'\n"
 
-#: audacious/main.c:957
+#: audacious/main.c:994
 #, fuzzy, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -4115,7 +3692,7 @@ msgstr ""
 "Prepáčte, verzia GTK+ (%d.%d.%d), ktorú máte nepracuje s BMP.\n"
 "Prosím použite GTK+ verzie %s alebo novšie.\n"
 
-#: audacious/main.c:968
+#: audacious/main.c:1005
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -4128,392 +3705,392 @@ msgstr ""
 "Ak máte Linux s podporou libc5 a nainštalovali ste Glib & GTK+ predtým ako\n"
 "ste inštalovali LinuxThreads budete musiet rekompilovať Glib & GTK+.\n"
 
-#: audacious/main.c:984
+#: audacious/main.c:1021
 #, fuzzy
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "BMP: Nepodarilo sa otvoriť display, koniec."
 
-#: audacious/mainwin.c:251 audacious/mainwin.c:372 audacious/ui_playlist.c:126
+#: audacious/mainwin.c:252 audacious/mainwin.c:373 audacious/ui_playlist.c:126
 msgid "/View Track Details"
 msgstr "/Zobraziť detaily skladby"
 
-#: audacious/mainwin.c:253 audacious/mainwin.c:367
+#: audacious/mainwin.c:254 audacious/mainwin.c:368
 msgid "/Jump to File"
 msgstr "/Preskočiť na súbor"
 
-#: audacious/mainwin.c:256
+#: audacious/mainwin.c:257
 msgid "/Autoscroll Songname"
 msgstr "/Automatický posun názvu skladby"
 
-#: audacious/mainwin.c:258 audacious/mainwin.c:350
+#: audacious/mainwin.c:259 audacious/mainwin.c:351
 #, fuzzy
 msgid "/Stop After Current Song"
 msgstr "Zastaviť aktuálnu skladbu"
 
-#: audacious/mainwin.c:268
+#: audacious/mainwin.c:269
 msgid "/Visualization Mode"
 msgstr "/Vizualizačný mód"
 
-#: audacious/mainwin.c:269
+#: audacious/mainwin.c:270
 msgid "/Visualization Mode/Analyzer"
 msgstr "/Vizualizačný mód/Analyzér"
 
-#: audacious/mainwin.c:271
+#: audacious/mainwin.c:272
 msgid "/Visualization Mode/Scope"
 msgstr "/Vizualizačný mód/Osciloskop"
 
-#: audacious/mainwin.c:273
+#: audacious/mainwin.c:274
 msgid "/Visualization Mode/Off"
 msgstr "/Vizualizačný mód/Vypnúť"
 
-#: audacious/mainwin.c:275
+#: audacious/mainwin.c:276
 msgid "/Analyzer Mode"
 msgstr "/Mód analyzéru"
 
-#: audacious/mainwin.c:276
+#: audacious/mainwin.c:277
 msgid "/Analyzer Mode/Normal"
 msgstr "/Mód analyzéru/Normálny"
 
-#: audacious/mainwin.c:278
+#: audacious/mainwin.c:279
 msgid "/Analyzer Mode/Fire"
 msgstr "/Mód analyzéru/Oheň"
 
-#: audacious/mainwin.c:280
+#: audacious/mainwin.c:281
 msgid "/Analyzer Mode/Vertical Lines"
 msgstr "/Mód analyzéru/Vertikálne čiary"
 
-#: audacious/mainwin.c:283
+#: audacious/mainwin.c:284
 msgid "/Analyzer Mode/Lines"
 msgstr "/Mód analyzéru/Čiary"
 
-#: audacious/mainwin.c:285
+#: audacious/mainwin.c:286
 msgid "/Analyzer Mode/Bars"
 msgstr "/Mód analyzéru/Obdĺžniky"
 
-#: audacious/mainwin.c:288
+#: audacious/mainwin.c:289
 msgid "/Analyzer Mode/Peaks"
 msgstr "/Mód analyzéru/Stropy"
 
-#: audacious/mainwin.c:290
+#: audacious/mainwin.c:291
 msgid "/Scope Mode"
 msgstr "/Mód osciloskopu"
 
-#: audacious/mainwin.c:291
+#: audacious/mainwin.c:292
 msgid "/Scope Mode/Dot Scope"
 msgstr "/Mód osciloskopu/Bodový osciloskop"
 
-#: audacious/mainwin.c:293
+#: audacious/mainwin.c:294
 msgid "/Scope Mode/Line Scope"
 msgstr "/Mód osciloskopu/Čiarový osciloskop"
 
-#: audacious/mainwin.c:295
+#: audacious/mainwin.c:296
 msgid "/Scope Mode/Solid Scope"
 msgstr "/Mód osciloskopu/Vyplnený osciloskop"
 
-#: audacious/mainwin.c:297
+#: audacious/mainwin.c:298
 msgid "/WindowShade VU Mode"
 msgstr ""
 
-#: audacious/mainwin.c:298
+#: audacious/mainwin.c:299
 msgid "/WindowShade VU Mode/Normal"
 msgstr ""
 
-#: audacious/mainwin.c:300
+#: audacious/mainwin.c:301
 msgid "/WindowShade VU Mode/Smooth"
 msgstr ""
 
-#: audacious/mainwin.c:302
+#: audacious/mainwin.c:303
 msgid "/Refresh Rate"
 msgstr "/Obnovovací režim"
 
-#: audacious/mainwin.c:303
+#: audacious/mainwin.c:304
 msgid "/Refresh Rate/Full (~50 fps)"
 msgstr "/Obnovovací režim/Plný (~50 fps)"
 
-#: audacious/mainwin.c:305
+#: audacious/mainwin.c:306
 msgid "/Refresh Rate/Half (~25 fps)"
 msgstr "/Obnovovací režim/Polovičný (~25 fps)"
 
-#: audacious/mainwin.c:307
+#: audacious/mainwin.c:308
 msgid "/Refresh Rate/Quarter (~13 fps)"
 msgstr "/Obnovovací režim/Štvrtinový (~13 fps)"
 
-#: audacious/mainwin.c:309
+#: audacious/mainwin.c:310
 msgid "/Refresh Rate/Eighth (~6 fps)"
 msgstr "/Obnovovací režim/Osminový (~6 fps)"
 
-#: audacious/mainwin.c:311
+#: audacious/mainwin.c:312
 msgid "/Analyzer Falloff"
 msgstr "/Zaniknutie analyzéru"
 
-#: audacious/mainwin.c:312
+#: audacious/mainwin.c:313
 msgid "/Analyzer Falloff/Slowest"
 msgstr "/Zaniknutie analyzéru/Najpomalšie"
 
-#: audacious/mainwin.c:314
+#: audacious/mainwin.c:315
 msgid "/Analyzer Falloff/Slow"
 msgstr "/Zaniknutie analyzéru/Pomalé"
 
-#: audacious/mainwin.c:316
+#: audacious/mainwin.c:317
 msgid "/Analyzer Falloff/Medium"
 msgstr "/Zaniknutie analyzéru/Stredné"
 
-#: audacious/mainwin.c:318
+#: audacious/mainwin.c:319
 msgid "/Analyzer Falloff/Fast"
 msgstr "/Zaniknutie analyzéru/Rýchle"
 
-#: audacious/mainwin.c:320
+#: audacious/mainwin.c:321
 msgid "/Analyzer Falloff/Fastest"
 msgstr "/Zaniknutie analyzéru/Najrýchlejšie"
 
-#: audacious/mainwin.c:322
+#: audacious/mainwin.c:323
 msgid "/Peaks Falloff"
 msgstr "/Zaniknutie vrcholov"
 
-#: audacious/mainwin.c:323
+#: audacious/mainwin.c:324
 msgid "/Peaks Falloff/Slowest"
 msgstr "/Zaniknutie vrcholov/Najpomalšie"
 
-#: audacious/mainwin.c:325
+#: audacious/mainwin.c:326
 msgid "/Peaks Falloff/Slow"
 msgstr "/Zaniknutie vrcholov/Pomalé"
 
-#: audacious/mainwin.c:327
+#: audacious/mainwin.c:328
 msgid "/Peaks Falloff/Medium"
 msgstr "/Zaniknutie vrcholov/Stredné"
 
-#: audacious/mainwin.c:329
+#: audacious/mainwin.c:330
 msgid "/Peaks Falloff/Fast"
 msgstr "/Zaniknutie vrcholov/Rýchle"
 
-#: audacious/mainwin.c:331
+#: audacious/mainwin.c:332
 msgid "/Peaks Falloff/Fastest"
 msgstr "/Zaniknutie vrcholov/Najrýchlejšie"
 
-#: audacious/mainwin.c:341
+#: audacious/mainwin.c:342
 msgid "/Play CD"
 msgstr "/Prehrať CD"
 
-#: audacious/mainwin.c:344
+#: audacious/mainwin.c:345
 msgid "/Repeat"
 msgstr "/Opakovanie"
 
-#: audacious/mainwin.c:346
+#: audacious/mainwin.c:347
 msgid "/Shuffle"
 msgstr "/Miešanie"
 
-#: audacious/mainwin.c:348
+#: audacious/mainwin.c:349
 msgid "/No Playlist Advance"
 msgstr "/Nepokračovať v playliste"
 
-#: audacious/mainwin.c:353
+#: audacious/mainwin.c:354
 msgid "/Play"
 msgstr "/Prehrať"
 
-#: audacious/mainwin.c:355
+#: audacious/mainwin.c:356
 msgid "/Pause"
 msgstr "/Pauza"
 
-#: audacious/mainwin.c:357
+#: audacious/mainwin.c:358
 msgid "/Stop"
 msgstr "/Zastaviť"
 
-#: audacious/mainwin.c:359
+#: audacious/mainwin.c:360
 msgid "/Previous"
 msgstr "/Predchádzajúca"
 
-#: audacious/mainwin.c:361
+#: audacious/mainwin.c:362
 msgid "/Next"
 msgstr "/Ďaľšia"
 
-#: audacious/mainwin.c:364
+#: audacious/mainwin.c:365
 msgid "/Jump to Playlist Start"
 msgstr "/Skočiť na začiatok playlistu"
 
-#: audacious/mainwin.c:369
+#: audacious/mainwin.c:370
 msgid "/Jump to Time"
 msgstr "/Preskočiť na Čas"
 
-#: audacious/mainwin.c:382
+#: audacious/mainwin.c:383
 #, fuzzy
 msgid "/About Audacious"
 msgstr "O MPEG Audio plugine"
 
-#: audacious/mainwin.c:385
+#: audacious/mainwin.c:386
 #, fuzzy
 msgid "/Play File"
 msgstr "Prehrávať súbory"
 
-#: audacious/mainwin.c:387
+#: audacious/mainwin.c:388
 #, fuzzy
 msgid "/Play Location"
 msgstr "Umiestnenie:"
 
-#: audacious/mainwin.c:390
+#: audacious/mainwin.c:391
 #, fuzzy
 msgid "/V_isualization"
 msgstr "/Vizualizačný mód"
 
-#: audacious/mainwin.c:391
+#: audacious/mainwin.c:392
 #, fuzzy
 msgid "/_Playback"
 msgstr "/Prehrávanie"
 
-#: audacious/mainwin.c:392
+#: audacious/mainwin.c:393
 msgid "/_View"
 msgstr ""
 
-#: audacious/mainwin.c:394
+#: audacious/mainwin.c:395
 msgid "/Preferences"
 msgstr "/Nastavenia"
 
-#: audacious/mainwin.c:396
+#: audacious/mainwin.c:397
 msgid "/_Quit"
 msgstr "/_Koniec"
 
-#: audacious/mainwin.c:406
+#: audacious/mainwin.c:407
 #, fuzzy
 msgid "/Files..."
 msgstr "/Pridať/Súbory..."
 
-#: audacious/mainwin.c:408
+#: audacious/mainwin.c:409
 #, fuzzy
 msgid "/Internet location..."
 msgstr "/Pridať/Internetové miesto..."
 
-#: audacious/mainwin.c:418
+#: audacious/mainwin.c:419
 msgid "/Show Playlist Editor"
 msgstr "/Zobraziť editor playlistu"
 
-#: audacious/mainwin.c:420
+#: audacious/mainwin.c:421
 msgid "/Show Equalizer"
 msgstr "/Zobraziť ekvalizér"
 
-#: audacious/mainwin.c:423
+#: audacious/mainwin.c:424
 msgid "/Time Elapsed"
 msgstr "/Čas ubehnutý"
 
-#: audacious/mainwin.c:425
+#: audacious/mainwin.c:426
 msgid "/Time Remaining"
 msgstr "/Čas zostávajúci"
 
-#: audacious/mainwin.c:428
+#: audacious/mainwin.c:429
 msgid "/Always On Top"
 msgstr "/Vždy navrchu"
 
-#: audacious/mainwin.c:430
+#: audacious/mainwin.c:431
 msgid "/Put on All Workspaces"
 msgstr "/Zobraziť na všetkých plochách"
 
-#: audacious/mainwin.c:433
+#: audacious/mainwin.c:434
 msgid "/Roll up Player"
 msgstr "/Zrolovať prehrávač"
 
-#: audacious/mainwin.c:435
+#: audacious/mainwin.c:436
 msgid "/Roll up Playlist Editor"
 msgstr "/Zrolovať editor playlistu"
 
-#: audacious/mainwin.c:437
+#: audacious/mainwin.c:438
 msgid "/Roll up Equalizer"
 msgstr "/Zrolovať ekvalizér"
 
-#: audacious/mainwin.c:863
+#: audacious/mainwin.c:864
 msgid "VBR"
 msgstr ""
 
-#: audacious/mainwin.c:904 audacious/mainwin.c:908
+#: audacious/mainwin.c:905 audacious/mainwin.c:909
 #, fuzzy
 msgid "stereo"
 msgstr "Stereo"
 
-#: audacious/mainwin.c:904 audacious/mainwin.c:908
+#: audacious/mainwin.c:905 audacious/mainwin.c:909
 #, fuzzy
 msgid "mono"
 msgstr "Mono"
 
-#: audacious/mainwin.c:1358
+#: audacious/mainwin.c:1360
 msgid "Jump to Time"
 msgstr "Preskočiť na Čas"
 
-#: audacious/mainwin.c:1379
+#: audacious/mainwin.c:1381
 msgid "minutes:seconds"
 msgstr "minúty:sekundy"
 
-#: audacious/mainwin.c:1389
+#: audacious/mainwin.c:1391
 msgid "Track length:"
 msgstr "Dĺžka skladby:"
 
-#: audacious/mainwin.c:1477
+#: audacious/mainwin.c:1479
 #, fuzzy
 msgid "Un_queue"
 msgstr "Rada"
 
-#: audacious/mainwin.c:1479 audacious/mainwin.c:1804
+#: audacious/mainwin.c:1481 audacious/mainwin.c:1806
 #, fuzzy
 msgid "_Queue"
 msgstr "Rada"
 
-#: audacious/mainwin.c:1732
+#: audacious/mainwin.c:1734
 msgid "Jump to Track"
 msgstr "Preskočiť na skladbu"
 
-#: audacious/mainwin.c:1773
+#: audacious/mainwin.c:1775
 msgid "Filter: "
 msgstr "Filter: "
 
-#: audacious/mainwin.c:1987
+#: audacious/mainwin.c:1989
 msgid "Enter location to play:"
 msgstr ""
 
-#: audacious/mainwin.c:2192
+#: audacious/mainwin.c:2194
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "SKOK NA: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2224 audacious/mainwin.c:2903
+#: audacious/mainwin.c:2226 audacious/mainwin.c:2905
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "HLASITOSŤ: %d%%"
 
-#: audacious/mainwin.c:2255 audacious/mainwin.c:2906
+#: audacious/mainwin.c:2257 audacious/mainwin.c:2908
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "VYVÁŽENIE: %d%% VĽAVO"
 
-#: audacious/mainwin.c:2259 audacious/mainwin.c:2909
+#: audacious/mainwin.c:2261 audacious/mainwin.c:2911
 msgid "BALANCE: CENTER"
 msgstr "VYVÁŽENIE: STRED"
 
-#: audacious/mainwin.c:2263 audacious/mainwin.c:2911
+#: audacious/mainwin.c:2265 audacious/mainwin.c:2913
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "VYVÁŽENIE: %d%% VPRAVO"
 
-#: audacious/mainwin.c:2684
+#: audacious/mainwin.c:2686
 msgid "OPTIONS MENU"
 msgstr "MENO MOŽNOSTÍ"
 
-#: audacious/mainwin.c:2688
+#: audacious/mainwin.c:2690
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "ZAKÁZAŤ VŽDY NAVRCHU"
 
-#: audacious/mainwin.c:2690
+#: audacious/mainwin.c:2692
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "POVOLIŤ VŽDY NAVRCHU"
 
-#: audacious/mainwin.c:2693
+#: audacious/mainwin.c:2695
 msgid "FILE INFO BOX"
 msgstr ""
 
-#: audacious/mainwin.c:2696
+#: audacious/mainwin.c:2698
 msgid "** DOUBLESIZE HAS BEEN REMOVED **"
 msgstr ""
 
-#: audacious/mainwin.c:2699
+#: audacious/mainwin.c:2701
 msgid "VISUALIZATION MENU"
 msgstr ""
 
-#: audacious/mainwin.c:2744
+#: audacious/mainwin.c:2746
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -4523,7 +4100,7 @@ msgstr ""
 "\n"
 "V mechanike nie je CD, alebo vložené CD nie je audio CD.\n"
 
-#: audacious/mainwin.c:2761
+#: audacious/mainwin.c:2763
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -4539,81 +4116,86 @@ msgstr ""
 "2. či žiadne iné programy neblokuju zvukovú kartu.\n"
 "3. či je vaša zvuková karta správne nakonfigurovaná.\n"
 
-#: audacious/prefswin.c:95 audacious/glade/prefswin.glade:1632
+#: audacious/prefswin.c:99 audacious/glade/prefswin.glade:1350
 msgid "Appearance"
 msgstr "Vzhľad"
 
-#: audacious/prefswin.c:96
+#: audacious/prefswin.c:100
+#, fuzzy
+msgid "Audio"
+msgstr "O MPEG Audio plugine"
+
+#: audacious/prefswin.c:101
 msgid "Connectivity"
 msgstr ""
 
-#: audacious/prefswin.c:97 audacious/glade/prefswin.glade:3178
+#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:2814
 msgid "Equalizer"
 msgstr "Ekvalizér"
 
-#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1950
+#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:1629
 msgid "Mouse"
 msgstr "Myš"
 
-#: audacious/prefswin.c:99 audacious/glade/prefswin.glade:2771
+#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:2446
 msgid "Playlist"
 msgstr "Playlist"
 
-#: audacious/prefswin.c:100 audacious/glade/prefswin.glade:936
+#: audacious/prefswin.c:105 audacious/glade/prefswin.glade:693
 msgid "Plugins"
 msgstr "Pluginy"
 
-#: audacious/prefswin.c:106
+#: audacious/prefswin.c:111
 msgid "Artist"
 msgstr "Interpret"
 
-#: audacious/prefswin.c:107 libaudacious/titlestring.c:325
+#: audacious/prefswin.c:112 libaudacious/titlestring.c:341
 msgid "Album"
 msgstr "Album"
 
-#: audacious/prefswin.c:109
+#: audacious/prefswin.c:114
 msgid "Tracknumber"
 msgstr "Čísloskladby"
 
-#: audacious/prefswin.c:110 libaudacious/titlestring.c:326
+#: audacious/prefswin.c:115 libaudacious/titlestring.c:342
 msgid "Genre"
 msgstr "Žáner"
 
-#: audacious/prefswin.c:112
+#: audacious/prefswin.c:117
 msgid "Filepath"
 msgstr "Adresár"
 
-#: audacious/prefswin.c:113 libaudacious/titlestring.c:332
+#: audacious/prefswin.c:118 libaudacious/titlestring.c:348
 msgid "Date"
 msgstr "Dátum"
 
-#: audacious/prefswin.c:114 libaudacious/titlestring.c:333
+#: audacious/prefswin.c:119 libaudacious/titlestring.c:349
 msgid "Year"
 msgstr "Rok"
 
-#: audacious/prefswin.c:115 libaudacious/titlestring.c:334
+#: audacious/prefswin.c:120 libaudacious/titlestring.c:350
 msgid "Comment"
 msgstr "Komentár"
 
-#: audacious/prefswin.c:127
+#: audacious/prefswin.c:141
 msgid "localhost"
 msgstr ""
 
-#: audacious/prefswin.c:442 audacious/prefswin.c:529 audacious/prefswin.c:618
-#: audacious/prefswin.c:714
+#: audacious/prefswin.c:458 audacious/prefswin.c:545 audacious/prefswin.c:634
+#: audacious/prefswin.c:730
 msgid "Enabled"
 msgstr "Povolené"
 
-#: audacious/prefswin.c:458 audacious/prefswin.c:545 audacious/prefswin.c:634
-#: audacious/prefswin.c:730
+#: audacious/prefswin.c:474 audacious/prefswin.c:561 audacious/prefswin.c:650
+#: audacious/prefswin.c:746
 msgid "Description"
 msgstr "Popis"
 
-#: audacious/prefswin.c:1745
+#: audacious/prefswin.c:1799
 msgid "Category"
 msgstr "Kategória"
 
-#: audacious/prefswin.c:1940
+#: audacious/prefswin.c:2169
 msgid "Preferences Window"
 msgstr "Okno Nastavení"
 
@@ -4625,164 +4207,178 @@ msgstr ""
 msgid "Unarchived Winamp 2.x skin"
 msgstr ""
 
-#: audacious/ui_playlist.c:132 audacious/ui_playlist.c:197
+#: audacious/ui_playlist.c:130
+msgid "/Show Popup Info"
+msgstr ""
+
+#: audacious/ui_playlist.c:136 audacious/ui_playlist.c:201
 msgid "/Remove Selected"
 msgstr "/Odstrániť vybrané"
 
-#: audacious/ui_playlist.c:136 audacious/ui_playlist.c:193
+#: audacious/ui_playlist.c:140 audacious/ui_playlist.c:197
 #, fuzzy
 msgid "/Remove Unselected"
 msgstr "/Odstrániť vybrané"
 
-#: audacious/ui_playlist.c:140 audacious/ui_playlist.c:189
+#: audacious/ui_playlist.c:144 audacious/ui_playlist.c:193
 #, fuzzy
 msgid "/Remove All"
 msgstr "/Odstrániť vybrané"
 
-#: audacious/ui_playlist.c:146
+#: audacious/ui_playlist.c:150
 msgid "/Queue Toggle"
 msgstr "/Prepínač rady"
 
-#: audacious/ui_playlist.c:152
+#: audacious/ui_playlist.c:156
 #, fuzzy
 msgid "/Add CD..."
 msgstr "/Pridať/Súbory..."
 
-#: audacious/ui_playlist.c:156
+#: audacious/ui_playlist.c:160
 #, fuzzy
 msgid "/Add Internet Address..."
 msgstr "/Pridať/Internetovú adresu..."
 
-#: audacious/ui_playlist.c:160
+#: audacious/ui_playlist.c:164
 #, fuzzy
 msgid "/Add Files..."
 msgstr "/Pridať/Súbory..."
 
-#: audacious/ui_playlist.c:166
+#: audacious/ui_playlist.c:170
 msgid "/Clear Queue"
 msgstr "/Vyčistiť zoznam"
 
-#: audacious/ui_playlist.c:172
+#: audacious/ui_playlist.c:176
 msgid "/Remove Unavailable Files"
 msgstr "/Odstrániť nedostupné súbory"
 
-#: audacious/ui_playlist.c:176
+#: audacious/ui_playlist.c:180
 #, fuzzy
 msgid "/Remove Duplicates"
 msgstr "/Odstrániť vybrané"
 
-#: audacious/ui_playlist.c:177
+#: audacious/ui_playlist.c:181
 #, fuzzy
 msgid "/Remove Duplicates/By Title"
 msgstr "/Triediť zoznam/Podľa názvu"
 
-#: audacious/ui_playlist.c:180
+#: audacious/ui_playlist.c:184
 #, fuzzy
 msgid "/Remove Duplicates/By Filename"
 msgstr "/Triediť zoznam/Podľa názvu súboru"
 
-#: audacious/ui_playlist.c:183
+#: audacious/ui_playlist.c:187
 #, fuzzy
 msgid "/Remove Duplicates/By Path + Filename"
 msgstr "/Triediť zoznam/Podľa cesty a názvu súboru"
 
-#: audacious/ui_playlist.c:203
+#: audacious/ui_playlist.c:207
 msgid "/New List"
 msgstr "/Nový zoznam"
 
-#: audacious/ui_playlist.c:209
+#: audacious/ui_playlist.c:213
 #, fuzzy
 msgid "/Load List"
 msgstr "/Triediť zoznam"
 
-#: audacious/ui_playlist.c:213
+#: audacious/ui_playlist.c:217
 #, fuzzy
 msgid "/Save List"
 msgstr "/Nový zoznam"
 
-#: audacious/ui_playlist.c:217
+#: audacious/ui_playlist.c:221
 #, fuzzy
 msgid "/Save Default List"
 msgstr "/Uložiť/Štandardný"
 
-#: audacious/ui_playlist.c:223
+#: audacious/ui_playlist.c:227
 msgid "/Update View"
 msgstr "/Obnoviť zobrazenie"
 
-#: audacious/ui_playlist.c:229
+#: audacious/ui_playlist.c:233
 #, fuzzy
 msgid "/Invert Selection"
 msgstr "/Triediť výber"
 
-#: audacious/ui_playlist.c:235
+#: audacious/ui_playlist.c:239
 #, fuzzy
 msgid "/Select None"
 msgstr "/Triediť výber"
 
-#: audacious/ui_playlist.c:239
+#: audacious/ui_playlist.c:243
 #, fuzzy
 msgid "/Select All"
 msgstr "Vybrať všetky"
 
-#: audacious/ui_playlist.c:245
+#: audacious/ui_playlist.c:249
 msgid "/Randomize List"
 msgstr "/Náhodne premiešať zoznam"
 
-#: audacious/ui_playlist.c:247
+#: audacious/ui_playlist.c:251
 msgid "/Reverse List"
 msgstr "/Prevrátiť poradie"
 
-#: audacious/ui_playlist.c:250
+#: audacious/ui_playlist.c:254
 msgid "/Sort List"
 msgstr "/Triediť zoznam"
 
-#: audacious/ui_playlist.c:251
+#: audacious/ui_playlist.c:255
 msgid "/Sort List/By Title"
 msgstr "/Triediť zoznam/Podľa názvu"
 
-#: audacious/ui_playlist.c:253
+#: audacious/ui_playlist.c:257
+#, fuzzy
+msgid "/Sort List/By Artist"
+msgstr "/Triediť zoznam/Podľa názvu"
+
+#: audacious/ui_playlist.c:259
 msgid "/Sort List/By Filename"
 msgstr "/Triediť zoznam/Podľa názvu súboru"
 
-#: audacious/ui_playlist.c:255
+#: audacious/ui_playlist.c:261
 msgid "/Sort List/By Path + Filename"
 msgstr "/Triediť zoznam/Podľa cesty a názvu súboru"
 
-#: audacious/ui_playlist.c:257
+#: audacious/ui_playlist.c:263
 msgid "/Sort List/By Date"
 msgstr "/Triediť zoznam/Podľa dátumu"
 
-#: audacious/ui_playlist.c:259
+#: audacious/ui_playlist.c:265
 msgid "/Sort Selection"
 msgstr "/Triediť výber"
 
-#: audacious/ui_playlist.c:260
+#: audacious/ui_playlist.c:266
 msgid "/Sort Selection/By Title"
 msgstr "/Triediť výber/Podľa názvu"
 
-#: audacious/ui_playlist.c:262
+#: audacious/ui_playlist.c:268
+#, fuzzy
+msgid "/Sort Selection/By Artist"
+msgstr "/Triediť výber/Podľa názvu"
+
+#: audacious/ui_playlist.c:270
 msgid "/Sort Selection/By Filename"
 msgstr "/Triediť výber/Podľa názvu súboru"
 
-#: audacious/ui_playlist.c:264
+#: audacious/ui_playlist.c:272
 msgid "/Sort Selection/By Path + Filename"
 msgstr "/Triediť výber/Podľa cesty a názvu súboru"
 
-#: audacious/ui_playlist.c:266
+#: audacious/ui_playlist.c:274
 msgid "/Sort Selection/By Date"
 msgstr "/Triediť výber/Podľa dátumu"
 
-#: audacious/ui_playlist.c:787
+#: audacious/ui_playlist.c:812
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "Nepodarilo sa uložiť playlist do \"%s\": %s"
 
-#: audacious/ui_playlist.c:808
+#: audacious/ui_playlist.c:833
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s už existuje. Pokračovať?"
 
-#: audacious/ui_playlist.c:822
+#: audacious/ui_playlist.c:847
 #, fuzzy, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -4790,44 +4386,44 @@ msgid ""
 "Unknown file type for '%s'.\n"
 msgstr "Nepodarilo sa uložiť playlist! Neznámy typ súboru %s"
 
-#: audacious/ui_playlist.c:932
+#: audacious/ui_playlist.c:957
 #, fuzzy
 msgid "Load Playlist"
 msgstr "Načítať playlist"
 
-#: audacious/ui_playlist.c:944
+#: audacious/ui_playlist.c:969
 #, fuzzy
 msgid "Save Playlist"
 msgstr "Uložiť playlist"
 
-#: audacious/ui_playlist.c:1648
+#: audacious/ui_playlist.c:1677
 #, fuzzy
 msgid "Audacious Playlist Editor"
 msgstr "/Zobraziť editor playlistu"
 
-#: audacious/util.c:922
+#: audacious/util.c:957
 #, fuzzy
 msgid "Add/Open Files dialog"
 msgstr "Pridať súbory"
 
-#: audacious/util.c:982
+#: audacious/util.c:1017
 #, fuzzy
 msgid "Open Files"
 msgstr "/Vystrihnúť súbory"
 
-#: audacious/util.c:986
+#: audacious/util.c:1021
 msgid "Close dialog on Open"
 msgstr ""
 
-#: audacious/util.c:996 audacious/glade/addfiles.glade:8
+#: audacious/util.c:1031 audacious/glade/addfiles.glade:8
 msgid "Add Files"
 msgstr "Pridať súbory"
 
-#: audacious/util.c:1000
+#: audacious/util.c:1035
 msgid "Close dialog on Add"
 msgstr ""
 
-#: audacious/playback.c:189
+#: audacious/playback.c:192
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -4850,261 +4446,217 @@ msgstr "Odznačiť všetky"
 msgid "Audacious Preferences"
 msgstr "Nastavenia BMP"
 
-#: audacious/glade/prefswin.glade:90
-msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
-msgstr "<span size=\"xx-large\"><b>Pluginy</b></span>"
+#: audacious/glade/prefswin.glade:115
+#, fuzzy
+msgid "_Decoder list:"
+msgstr "Dekóder"
 
-#: audacious/glade/prefswin.glade:156
-msgid "_Media plugin list:"
-msgstr "_Zoznam prehrávacích pluginov:"
+#: audacious/glade/prefswin.glade:219
+#, fuzzy
+msgid "<span size=\"medium\"><b>Decoders</b></span>"
+msgstr "<span size=\"medium\"><b>Základné</b></span>"
 
-#: audacious/glade/prefswin.glade:260
-msgid "<span size=\"medium\"><b>Media</b></span>"
-msgstr "<span size=\"medium\"><b>Médiá</b></span>"
-
-#: audacious/glade/prefswin.glade:302
+#: audacious/glade/prefswin.glade:261
 msgid "_General plugin list:"
 msgstr "_Zoznam bežných pluginov:"
 
-#: audacious/glade/prefswin.glade:406
+#: audacious/glade/prefswin.glade:365
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b>Základné</b></span>"
 
-#: audacious/glade/prefswin.glade:448
+#: audacious/glade/prefswin.glade:407
 msgid "_Visualization plugin list:"
 msgstr "_Zoznam vizualizačných pluginov:"
 
-#: audacious/glade/prefswin.glade:552
+#: audacious/glade/prefswin.glade:511
 msgid "<b>Visualization</b>"
 msgstr "<b>Visualizácia</b>"
 
-#: audacious/glade/prefswin.glade:594
+#: audacious/glade/prefswin.glade:553
 msgid "_Effect plugin list:"
 msgstr "_Zoznam efekt pluginov:"
 
-#: audacious/glade/prefswin.glade:698
+#: audacious/glade/prefswin.glade:657
 msgid "<b>Effects</b>"
 msgstr "<b>Efekty</b>"
 
 #: audacious/glade/prefswin.glade:746
-msgid "_Current output plugin:"
-msgstr "_Aktuálny výstupný plugin:"
-
-#: audacious/glade/prefswin.glade:812
-#, fuzzy
-msgid ""
-"The change is now effective in Audacious' configuration database, but won't "
-"take effect for playback until the next song!\n"
-"\n"
-"Optionally, you can stop and restart playback for the change to take effect."
-msgstr ""
-"Zmena sa teraz prejavila v BMP databáze nastavení, ale neprejaví sa na "
-"prehrávaní až po ďaľšiu skladbu!\n"
-"\n"
-"Máte však možnosť zastaviť a znova spustiť prehrávanie aby sa prejavila."
-
-#: audacious/glade/prefswin.glade:898
-msgid "<span size=\"medium\"><b>Output</b></span>"
-msgstr "<span size=\"medium\"><b>Výstup</b></span>"
-
-#: audacious/glade/prefswin.glade:965
-msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
-msgstr "<span size=\"xx-large\"><b>Vzhľad</b></span>"
-
-#: audacious/glade/prefswin.glade:1026
 msgid "<b>_Skin</b>"
 msgstr "<b>_Skiny</b>"
 
-#: audacious/glade/prefswin.glade:1052
+#: audacious/glade/prefswin.glade:772
 #, fuzzy
 msgid "Refresh skin list"
 msgstr "/Obnovovací režim"
 
-#: audacious/glade/prefswin.glade:1147
+#: audacious/glade/prefswin.glade:867
 msgid "<b>_Fonts</b>"
 msgstr "<b>_Fonty</b>"
 
-#: audacious/glade/prefswin.glade:1202
+#: audacious/glade/prefswin.glade:922
 msgid "_Player:"
 msgstr "_Prehrávač:"
 
-#: audacious/glade/prefswin.glade:1245
+#: audacious/glade/prefswin.glade:965
 msgid "_Playlist:"
 msgstr "_Playlist:"
 
-#: audacious/glade/prefswin.glade:1277
+#: audacious/glade/prefswin.glade:997
 msgid "Select main player window font:"
 msgstr "Vyberte font hlavného okna:"
 
-#: audacious/glade/prefswin.glade:1299
+#: audacious/glade/prefswin.glade:1019
 msgid "Select playlist font:"
 msgstr "Vyberte font playlistu:"
 
-#: audacious/glade/prefswin.glade:1345
+#: audacious/glade/prefswin.glade:1065
 msgid ""
 "Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
 "strings."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1347
+#: audacious/glade/prefswin.glade:1067
 #, fuzzy
 msgid "Use Bitmap fonts if available"
 msgstr "Stereo (ak je dostupné)"
 
-#: audacious/glade/prefswin.glade:1381
+#: audacious/glade/prefswin.glade:1101
 msgid "<b>_Miscellaneous</b>"
 msgstr "<b>_Rôzne</b>"
 
-#: audacious/glade/prefswin.glade:1429
+#: audacious/glade/prefswin.glade:1149
 msgid "Show track numbers in playlist"
 msgstr "Zobrazovať čísla skladieb v playliste"
 
-#: audacious/glade/prefswin.glade:1464
+#: audacious/glade/prefswin.glade:1184
 #, fuzzy
 msgid "Show separators in playlist"
 msgstr "Zobrazovať čísla skladieb v playliste"
 
-#: audacious/glade/prefswin.glade:1499
+#: audacious/glade/prefswin.glade:1219
 msgid "Use custom cursors"
 msgstr "Používať vlastné kurzory"
 
-#: audacious/glade/prefswin.glade:1546
+#: audacious/glade/prefswin.glade:1266
 #, fuzzy
 msgid "<b>_Transparency</b>"
 msgstr "<b>Prehrávanie</b>"
 
-#: audacious/glade/prefswin.glade:1586
+#: audacious/glade/prefswin.glade:1306
 msgid ""
 "Enables playlist transparency. This is not recommended for slower machines "
 "as it requires some CPU time to create and cache the pixmaps used for the "
 "transparency."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1588
+#: audacious/glade/prefswin.glade:1308
 #, fuzzy
 msgid "Enable playlist transparency"
 msgstr "Povoliť ReplayGain"
 
-#: audacious/glade/prefswin.glade:1661
-msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
-msgstr "<span size=\"xx-large\"><b>Myš</b></span>"
-
-#: audacious/glade/prefswin.glade:1716
+#: audacious/glade/prefswin.glade:1397
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>Koliesko myši</b>"
 
-#: audacious/glade/prefswin.glade:1764
+#: audacious/glade/prefswin.glade:1445
 #, fuzzy
 msgid "Changes volume by"
 msgstr "Koliesko myši mení hlasitosť o"
 
-#: audacious/glade/prefswin.glade:1792
+#: audacious/glade/prefswin.glade:1473
 msgid "percent"
 msgstr "percent"
 
-#: audacious/glade/prefswin.glade:1820
+#: audacious/glade/prefswin.glade:1501
 #, fuzzy
 msgid "Scrolls playlist by"
 msgstr "Myš posúva playlist o"
 
-#: audacious/glade/prefswin.glade:1873
+#: audacious/glade/prefswin.glade:1554
 msgid "lines"
 msgstr "riadkov"
 
-#: audacious/glade/prefswin.glade:1979
-msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
-msgstr "<span size=\"xx-large\"><b>Playlist</b></span>"
-
-#: audacious/glade/prefswin.glade:2034
+#: audacious/glade/prefswin.glade:1676
 msgid "<b>Filename</b>"
 msgstr "<b><Názov súboru/b>"
 
-#: audacious/glade/prefswin.glade:2074
+#: audacious/glade/prefswin.glade:1716
 msgid "Convert underscores to blanks"
 msgstr "Konvertovať podtržníky na medzery"
 
-#: audacious/glade/prefswin.glade:2109
+#: audacious/glade/prefswin.glade:1751
 msgid "Convert %20 to blanks"
 msgstr "Konvertovať %20 na medzery"
 
-#: audacious/glade/prefswin.glade:2143
+#: audacious/glade/prefswin.glade:1785
 msgid "<b>Metadata</b>"
 msgstr "<b>Metadáta</b>"
 
-#: audacious/glade/prefswin.glade:2182
+#: audacious/glade/prefswin.glade:1824
 msgid "Load metadata (tag information) from music files."
 msgstr "Načítať metadáta (tag informácie) zo zvukových súborov."
 
-#: audacious/glade/prefswin.glade:2184
+#: audacious/glade/prefswin.glade:1826
 msgid "Load metadata from playlists and files"
 msgstr "Načítať metadáta z playlistov a súborov"
 
-#: audacious/glade/prefswin.glade:2222
+#: audacious/glade/prefswin.glade:1864
 msgid "Load metadata when adding the file to the playlist or opening it"
 msgstr "Načítať metadáta pri pridávaní súboru do playlistu alebo pri otváraní"
 
-#: audacious/glade/prefswin.glade:2224
+#: audacious/glade/prefswin.glade:1866
 msgid "On load"
 msgstr "Pri otváraní"
 
-#: audacious/glade/prefswin.glade:2244
+#: audacious/glade/prefswin.glade:1886
 msgid "Load metadata on demand when displaying the file in the playlist"
 msgstr "Načítať metadáta na požiadanie pri zobrazení súboru v playliste"
 
-#: audacious/glade/prefswin.glade:2246
+#: audacious/glade/prefswin.glade:1888
 msgid "On display"
 msgstr "Pri zobrazení"
 
-#: audacious/glade/prefswin.glade:2288
-msgid "<b>Playback</b>"
-msgstr "<b>Prehrávanie</b>"
+#: audacious/glade/prefswin.glade:1918
+msgid "Fallback charcter encodings:"
+msgstr ""
 
-#: audacious/glade/prefswin.glade:2327
-msgid "When finished playing a song, don't automatically advance to the next."
-msgstr "Keď skončí prehrávanie skladby, automaticky nepokračovať ďaľšou."
+#: audacious/glade/prefswin.glade:1946
+msgid ""
+"List of character encodings used for fall back conversion of metadata. If "
+"automatic character encoding detector failed or has been disabled, encodings "
+"in this list would be treated as candidates of the encoding of metadata, and "
+"fall back conversion from these encodings to UTF-8 would be attempted."
+msgstr ""
 
-#: audacious/glade/prefswin.glade:2329
-msgid "Don't advance in the playlist"
-msgstr "Nepokračovať v playliste"
+#: audacious/glade/prefswin.glade:1987
+msgid "Auto character encoding detector for:"
+msgstr ""
 
-#: audacious/glade/prefswin.glade:2364
-msgid "Pause between songs"
-msgstr "Pauza medzi skladbami"
-
-#: audacious/glade/prefswin.glade:2402
-msgid "Pause for"
-msgstr "Pauza na"
-
-#: audacious/glade/prefswin.glade:2448
-msgid "seconds"
-msgstr "sekúnd"
-
-#: audacious/glade/prefswin.glade:2494
+#: audacious/glade/prefswin.glade:2043
 #, fuzzy
 msgid "<b>File Dialog</b>"
 msgstr "<b><Názov súboru/b>"
 
-#: audacious/glade/prefswin.glade:2533
+#: audacious/glade/prefswin.glade:2082
 msgid ""
 "Always refresh the file dialog (this will slow opening the dialog on large "
 "directories, and Gnome VFS should handle automatically)."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2535
-msgid ""
-"Always refresh directory when opening file dialog, should be unneeded with "
-"Gnome VFS."
+#: audacious/glade/prefswin.glade:2084
+msgid "Always refresh directory when opening file dialog"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2569
-msgid "<b>Song display</b>"
+#: audacious/glade/prefswin.glade:2118
+#, fuzzy
+msgid "<b>Song Display</b>"
 msgstr "<b>Zobrazenie skladby</b>"
 
-#: audacious/glade/prefswin.glade:2645
+#: audacious/glade/prefswin.glade:2194
 msgid "Custom string:"
 msgstr "Vlastný text:"
 
-#: audacious/glade/prefswin.glade:2696
+#: audacious/glade/prefswin.glade:2245
 #, fuzzy
 msgid ""
 "TITLE\n"
@@ -5121,99 +4673,467 @@ msgstr ""
 "ALBUM - NÁZOV\n"
 "Vlastné"
 
-#: audacious/glade/prefswin.glade:2718
+#: audacious/glade/prefswin.glade:2267
 msgid "Show information about titlestring format"
 msgstr "Zobraziť informácie o formáte názvu"
 
-#: audacious/glade/prefswin.glade:2800
-msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
-msgstr "<span size=\"xx-large\"><b>Ekvalizér</b></span>"
+#: audacious/glade/prefswin.glade:2317
+#, fuzzy
+msgid "<b>Popup Information</b>"
+msgstr "Konfigurácia MPEG Audio pluginu"
 
-#: audacious/glade/prefswin.glade:2855
+#: audacious/glade/prefswin.glade:2368
+msgid ""
+"Toggles popup information window for the pointed entry in the playlist. The "
+"window shows title of song, name of album, genre, year of publish, track "
+"number, track length, and artwork."
+msgstr ""
+
+#: audacious/glade/prefswin.glade:2370
+msgid "Show popup information for playlist entries"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:2397
+msgid "Edit settings for popup information"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:2505
 msgid "<b>Presets</b>"
 msgstr "<b>Presety</b>"
 
-#: audacious/glade/prefswin.glade:2967
+#: audacious/glade/prefswin.glade:2605
 msgid "Directory preset file:"
 msgstr "Názov preset súboru:"
 
-#: audacious/glade/prefswin.glade:2995
+#: audacious/glade/prefswin.glade:2633
 msgid "File preset extension:"
 msgstr "Prípona preset súboru:"
 
-#: audacious/glade/prefswin.glade:3043
+#: audacious/glade/prefswin.glade:2681
 msgid "Available _Presets:"
 msgstr "Dostupné _Presety"
 
-#: audacious/glade/prefswin.glade:3207
-#, fuzzy
-msgid "<span size=\"xx-large\"><b>Connectivity</b></span>"
-msgstr "<span size=\"xx-large\"><b>Myš</b></span>"
-
-#: audacious/glade/prefswin.glade:3262
+#: audacious/glade/prefswin.glade:2861
 #, fuzzy
 msgid "<b>Proxy Configuration</b>"
 msgstr "Konfigurácia MPEG Audio pluginu"
 
-#: audacious/glade/prefswin.glade:3320
+#: audacious/glade/prefswin.glade:2919
 msgid "Enable proxy usage"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3351
+#: audacious/glade/prefswin.glade:2950
 msgid "Proxy hostname:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3379
+#: audacious/glade/prefswin.glade:2978
 #, fuzzy
 msgid "Proxy port:"
 msgstr "Proxy:"
 
-#: audacious/glade/prefswin.glade:3473
+#: audacious/glade/prefswin.glade:3072
 #, fuzzy
 msgid "Use authentication with proxy"
 msgstr "Používať autentifikáciu"
 
-#: audacious/glade/prefswin.glade:3504
+#: audacious/glade/prefswin.glade:3103
 #, fuzzy
 msgid "Proxy username:"
 msgstr "Používateľ:"
 
-#: audacious/glade/prefswin.glade:3532
+#: audacious/glade/prefswin.glade:3131
 #, fuzzy
 msgid "Proxy password:"
 msgstr "Heslo:"
 
-#: audacious/glade/prefswin.glade:3637
+#: audacious/glade/prefswin.glade:3247
+msgid ""
+"<span size=\"small\">Changing these settings will require a restart of "
+"Audacious.</span>"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:3303
 msgid "label65"
 msgstr ""
 
-#: libaudacious/titlestring.c:324
+#: audacious/glade/prefswin.glade:3344
+#, fuzzy
+msgid "<b>Audio System</b>"
+msgstr "<b>Presety</b>"
+
+#: audacious/glade/prefswin.glade:3398
+#, fuzzy
+msgid "Current output plugin:"
+msgstr "_Aktuálny výstupný plugin:"
+
+#: audacious/glade/prefswin.glade:3443
+#, fuzzy
+msgid "Buffer size:"
+msgstr "Veľkosť zásobníka (kb):"
+
+#: audacious/glade/prefswin.glade:3513
+msgid ""
+"<span size=\"small\">This is the amount of time to prebuffer audio streams "
+"by, in milliseconds.\n"
+"Increase this value if you are experiencing audio skipping. \n"
+"Please note however, that high values will result in Audacious performing "
+"poorly.</span>"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:3748
+#, fuzzy
+msgid "<b>Format Detection</b>"
+msgstr "Automatická detekcia"
+
+#: audacious/glade/prefswin.glade:3787
+msgid ""
+"When checked, Audacious will detect file formats on demand. This can result "
+"in a messier playlist, but delivers a major speed benefit."
+msgstr ""
+
+#: audacious/glade/prefswin.glade:3789
+msgid "Detect file formats on demand, instead of immediately."
+msgstr ""
+
+#: audacious/glade/prefswin.glade:3823
+msgid "<b>Playback</b>"
+msgstr "<b>Prehrávanie</b>"
+
+#: audacious/glade/prefswin.glade:3862
+msgid ""
+"When Audacious starts, automatically begin playing from the point where we "
+"stopped before."
+msgstr ""
+
+#: audacious/glade/prefswin.glade:3864
+msgid "Continue playback on startup"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:3898
+msgid "When finished playing a song, don't automatically advance to the next."
+msgstr "Keď skončí prehrávanie skladby, automaticky nepokračovať ďaľšou."
+
+#: audacious/glade/prefswin.glade:3900
+msgid "Don't advance in the playlist"
+msgstr "Nepokračovať v playliste"
+
+#: audacious/glade/prefswin.glade:3935
+msgid "Pause between songs"
+msgstr "Pauza medzi skladbami"
+
+#: audacious/glade/prefswin.glade:3973
+msgid "Pause for"
+msgstr "Pauza na"
+
+#: audacious/glade/prefswin.glade:4019
+msgid "seconds"
+msgstr "sekúnd"
+
+#: audacious/glade/prefswin.glade:4059
+msgid "label76"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:4173
+msgid "Popup Information Settings"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:4197
+msgid ""
+"While searching for the album's cover, Audacious looks for certain words in "
+"the filename. You can specify those words in the lists below, separated "
+"using commas."
+msgstr ""
+
+#: audacious/glade/prefswin.glade:4252
+#, fuzzy
+msgid "Include:"
+msgstr "Indie"
+
+#: audacious/glade/prefswin.glade:4280
+msgid "Exclude:"
+msgstr ""
+
+#: libaudacious/titlestring.c:340
 msgid "Performer/Artist"
 msgstr "Interpret/Umelec"
 
-#: libaudacious/titlestring.c:327
+#: libaudacious/titlestring.c:343
 msgid "File name"
 msgstr "Názov súboru"
 
-#: libaudacious/titlestring.c:328
+#: libaudacious/titlestring.c:344
 msgid "File path"
 msgstr "Cesta k súboru"
 
-#: libaudacious/titlestring.c:329
+#: libaudacious/titlestring.c:345
 msgid "File extension"
 msgstr "Prípona súboru"
 
-#: libaudacious/titlestring.c:330
+#: libaudacious/titlestring.c:346
 msgid "Track name"
 msgstr "Názov skladby"
 
-#: libaudacious/titlestring.c:331
+#: libaudacious/titlestring.c:347
 msgid "Track number"
 msgstr "Číslo skladby"
 
-#: libaudacious/titlestring.c:385
+#: libaudacious/titlestring.c:401
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: Zobraziť \"...\" len ak je %n prítomný"
+
+#, fuzzy
+#~ msgid "Scrobbler Configuration"
+#~ msgstr "Konfigurácia MPEG Audio pluginu"
+
+#, fuzzy
+#~ msgid "Song Change Configuration"
+#~ msgstr "Konfigurácia CD Audio prehrávača"
+
+#, fuzzy
+#~ msgid "Song Metadata"
+#~ msgstr "Sonata"
+
+#, fuzzy
+#~ msgid "Port"
+#~ msgstr "Port:"
+
+#, fuzzy
+#~ msgid "Client name"
+#~ msgstr "Názov súboru"
+
+#, fuzzy
+#~ msgid "Port name"
+#~ msgstr "Názov skladby"
+
+#, fuzzy
+#~ msgid "ALSA output ports"
+#~ msgstr "ALSA %s výstupný plugin"
+
+#, fuzzy
+#~ msgid "Mixer settings"
+#~ msgstr "Nastavenia mixovania:"
+
+#~ msgid "Convert non-UTF8 ID3 tags to UTF8"
+#~ msgstr "Skonvertovať ne-UTF8 ID3 tagy na UTF8"
+
+#~ msgid "ID3 encoding:"
+#~ msgstr "ID3 kódovanie:"
+
+#, fuzzy
+#~ msgid "Convert non-UTF8 Vorbis tags to UTF8"
+#~ msgstr "Skonvertovať ne-UTF8 ID3 tagy na UTF8"
+
+#, fuzzy
+#~ msgid "Vorbis encoding:"
+#~ msgstr "ID3 kódovanie:"
+
+#, fuzzy
+#~ msgid "%d Kb/s"
+#~ msgstr "%d KBit/s"
+
+#, fuzzy
+#~ msgid "<b>Name:</b>"
+#~ msgstr "<b><Názov súboru/b>"
+
+#, fuzzy
+#~ msgid "<b>WMA Version:</b>"
+#~ msgstr "<b>Visualizácia</b>"
+
+#, fuzzy
+#~ msgid "<b>Bitrate:</b>"
+#~ msgstr "Bit rate:"
+
+#, fuzzy
+#~ msgid "<b>Samplerate:</b>"
+#~ msgstr "Sample rate:"
+
+#, fuzzy
+#~ msgid "<b>Channels:</b>"
+#~ msgstr "Kanály:"
+
+#, fuzzy
+#~ msgid "<b>Play time:</b>"
+#~ msgstr "<b><Názov súboru/b>"
+
+#, fuzzy
+#~ msgid "<b>Filesize:</b>"
+#~ msgstr "<b><Názov súboru/b>"
+
+#, fuzzy
+#~ msgid "WMA Info"
+#~ msgstr "CD Info"
+
+#, fuzzy
+#~ msgid "<b>Title:</b>"
+#~ msgstr "<b><Názov súboru/b>"
+
+#, fuzzy
+#~ msgid "<b>Album:</b>"
+#~ msgstr "<b><Názov súboru/b>"
+
+#, fuzzy
+#~ msgid "<b>Comments:</b>"
+#~ msgstr "<b>_Fonty</b>"
+
+#, fuzzy
+#~ msgid "<b>Year:</b>"
+#~ msgstr "<b><Názov súboru/b>"
+
+#, fuzzy
+#~ msgid "<b>Track:</b>"
+#~ msgstr "<b>Prehrávanie</b>"
+
+#, fuzzy
+#~ msgid "<b>Genre:</b>"
+#~ msgstr "<b><Názov súboru/b>"
+
+#, fuzzy
+#~ msgid "Tags"
+#~ msgstr "Tango"
+
+#~ msgid "Artem Baguinski"
+#~ msgstr "Artem Baguinski"
+
+#~ msgid "Edward Brocklesby"
+#~ msgstr "Edward Brocklesby"
+
+#~ msgid "Chong Kai Xiong"
+#~ msgstr "Chong Kai Xiong"
+
+#~ msgid "Milosz Derezynski"
+#~ msgstr "Milosz Derezynski"
+
+#~ msgid "David Lau"
+#~ msgstr "David Lau"
+
+#~ msgid "Ole Andre Vadla Ravnaas"
+#~ msgstr "Ole Andre Vadla Ravnaas"
+
+#~ msgid "Michiel Sikkes"
+#~ msgstr "Michiel Sikkes"
+
+#~ msgid "Peter Behroozi"
+#~ msgstr "Peter Behroozi"
+
+#~ msgid "Bernard Blackham"
+#~ msgstr "Bernard Blackham"
+
+#~ msgid "Oliver Blin"
+#~ msgstr "Oliver Blin"
+
+#~ msgid "Tomas Bzatek"
+#~ msgstr "Tomas Bzatek"
+
+#~ msgid "Liviu Danicel"
+#~ msgstr "Liviu Danicel"
+
+#~ msgid "Jon Dowland"
+#~ msgstr "Jon Dowland"
+
+#~ msgid "Artur Frysiak"
+#~ msgstr "Artur Frysiak"
+
+#~ msgid "Sebastian Kapfer"
+#~ msgstr "Sebastian Kapfer"
+
+#~ msgid "Lukas Koberstein"
+#~ msgstr "Lukas Koberstein"
+
+#~ msgid "Dan Korostelev"
+#~ msgstr "Dan Korostelev"
+
+#, fuzzy
+#~ msgid "Michael Marineau"
+#~ msgstr "Michiel Sikkes"
+
+#~ msgid "Tim-Philipp Muller"
+#~ msgstr "Tim-Philipp Muller"
+
+#~ msgid "Julien Portalier"
+#~ msgstr "Julien Portalier"
+
+#~ msgid "Olivier Samyn"
+#~ msgstr "Olivier Samyn"
+
+#~ msgid "Martijn Vernooij"
+#~ msgstr "Martijn Vernooij"
+
+#~ msgid "Thierry Vignaud"
+#~ msgstr "Thierry Vignaud"
+
+#~ msgid "Laurens Buhler"
+#~ msgstr "Laurens Buhler"
+
+#~ msgid "David Le Brun"
+#~ msgstr "David Le Brun"
+
+#~ msgid "Matthias Debus"
+#~ msgstr "Matthias Debus"
+
+#~ msgid "Kouzinopoulos Haris"
+#~ msgstr "Kouzinopoulos Haris"
+
+#~ msgid "Laszlo Dvornik"
+#~ msgstr "Laszlo Dvornik"
+
+#~ msgid "Alessio D'Ascanio"
+#~ msgstr "Alessio D'Ascanio"
+
+#~ msgid "DongCheon Park"
+#~ msgstr "DongCheon Park"
+
+#~ msgid "Rimas Kudelis"
+#~ msgstr "Rimas Kudelis"
+
+#~ msgid "Jacek Wolszczak"
+#~ msgstr "Jacek Wolszczak"
+
+#~ msgid "Pavlo Bohmat"
+#~ msgstr "Pavlo Bohmat"
+
+#~ msgid "Martin Persenius"
+#~ msgstr "Martin Persenius"
+
+#~ msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
+#~ msgstr "<span size=\"xx-large\"><b>Pluginy</b></span>"
+
+#~ msgid "_Media plugin list:"
+#~ msgstr "_Zoznam prehrávacích pluginov:"
+
+#~ msgid "<span size=\"medium\"><b>Media</b></span>"
+#~ msgstr "<span size=\"medium\"><b>Médiá</b></span>"
+
+#, fuzzy
+#~ msgid ""
+#~ "The change is now effective in Audacious' configuration database, but "
+#~ "won't take effect for playback until the next song!\n"
+#~ "\n"
+#~ "Optionally, you can stop and restart playback for the change to take "
+#~ "effect."
+#~ msgstr ""
+#~ "Zmena sa teraz prejavila v BMP databáze nastavení, ale neprejaví sa na "
+#~ "prehrávaní až po ďaľšiu skladbu!\n"
+#~ "\n"
+#~ "Máte však možnosť zastaviť a znova spustiť prehrávanie aby sa prejavila."
+
+#~ msgid "<span size=\"medium\"><b>Output</b></span>"
+#~ msgstr "<span size=\"medium\"><b>Výstup</b></span>"
+
+#~ msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
+#~ msgstr "<span size=\"xx-large\"><b>Vzhľad</b></span>"
+
+#~ msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
+#~ msgstr "<span size=\"xx-large\"><b>Myš</b></span>"
+
+#~ msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
+#~ msgstr "<span size=\"xx-large\"><b>Playlist</b></span>"
+
+#~ msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
+#~ msgstr "<span size=\"xx-large\"><b>Ekvalizér</b></span>"
+
+#, fuzzy
+#~ msgid "<span size=\"xx-large\"><b>Connectivity</b></span>"
+#~ msgstr "<span size=\"xx-large\"><b>Myš</b></span>"
 
 #~ msgid "Use proxy"
 #~ msgstr "Používať proxy"
@@ -5492,9 +5412,6 @@ msgstr "%{n:...%}: Zobraziť \"...\" len ak je %n prítomný"
 #, fuzzy
 #~ msgid "/Add Folders..."
 #~ msgstr "/Pridať/Adresáre..."
-
-#~ msgid "Automatic detection"
-#~ msgstr "Automatická detekcia"
 
 #~ msgid "3DNow! optimized decoder"
 #~ msgstr "3DNow! optimalizovaný dekóder"

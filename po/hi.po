@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp-hi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-27 15:29-0500\n"
+"POT-Creation-Date: 2006-07-16 10:51-0500\n"
 "PO-Revision-Date: 2005-08-20 21:59+0530\n"
 "Last-Translator: धनञ्जय शर्मा (Dhananjaya Sharma) <dysxhi@yahoo.co.in>\n"
 "Language-Team: Hindi, India <dysxhi@yahoo.co.in>\n"
@@ -40,17 +40,17 @@ msgstr "एमपीईजी आडियो प्लग-इन के बा�
 #: Plugins/Effect/stereo_plugin/stereo.c:122
 #: Plugins/General/scrobbler/gtkstuff.c:23
 #: Plugins/Input/adplug/adplug-xmms.cc:155
-#: Plugins/Input/console/Audacious_Driver.cpp:699
+#: Plugins/Input/console/Audacious_Driver.cpp:816
 #: Plugins/Input/flac/configure.c:632 Plugins/Input/flac/configure.c:663
 #: Plugins/Input/flac/http.c:219 Plugins/Input/modplug/gui/main.cpp:45
-#: Plugins/Input/mpg123/http.c:221 Plugins/Input/mpg123/mpg123.c:927
+#: Plugins/Input/mpg123/http.c:221 Plugins/Input/mpg123/mpg123.c:958
 #: Plugins/Input/timidity/src/interface.c:223
 #: Plugins/Input/timidity/src/xmms-timidity.c:136
 #: Plugins/Input/tonegen/tonegen.c:57 Plugins/Input/vorbis/fileinfo.c:212
-#: Plugins/Input/vorbis/http.c:218 Plugins/Input/vorbis/vorbis.c:835
+#: Plugins/Input/vorbis/http.c:218 Plugins/Input/vorbis/vorbis.c:824
 #: Plugins/Input/wav/wav-sndfile.c:263 Plugins/Output/OSS/about.c:54
 #: Plugins/Output/arts/configure.c:91 Plugins/Output/esd/about.c:49
-#: Plugins/Output/jack/jack.c:576 Plugins/Output/sun/about.c:38
+#: Plugins/Output/jack/jack.c:595 Plugins/Output/sun/about.c:38
 #: Plugins/Output/sun/configure.c:558
 msgid "Ok"
 msgstr "ठीक"
@@ -82,11 +82,10 @@ msgid "Effect intensity:"
 msgstr "प्रभावों के प्लग-इन की सूची (_E):"
 
 #: Plugins/Effect/stereo_plugin/stereo.c:131
-#: Plugins/General/song_change/song_change.c:347
-#: Plugins/Input/flac/configure.c:638 Plugins/Input/flac/fileinfo.c:356
+#: Plugins/Input/flac/configure.c:638 Plugins/Input/flac/fileinfo.c:358
 #: Plugins/Input/modplug/gui/interface.cpp:741
 #: Plugins/Input/timidity/src/interface.c:231
-#: Plugins/Output/alsa/configure.c:442 Plugins/Output/arts/configure.c:92
+#: Plugins/Output/alsa/configure.c:411 Plugins/Output/arts/configure.c:92
 #: Plugins/Output/disk_writer/disk_writer.c:412
 #: Plugins/Output/sun/configure.c:566
 #, fuzzy
@@ -156,92 +155,64 @@ msgstr ""
 msgid "%s: disconnected from LIRC\n"
 msgstr ""
 
-#: Plugins/General/scrobbler/configure.c:126
-#, fuzzy
-msgid "Scrobbler Configuration"
-msgstr "एमपीईजी आडियो प्लग-इन संरचना"
-
-#: Plugins/General/scrobbler/configure.c:142
-msgid "Password:"
-msgstr "कूटशब्द:"
-
-#: Plugins/General/scrobbler/configure.c:162
+#: Plugins/General/scrobbler/configure.c:84
 msgid "<b>Scrobbler Preferences</b>"
 msgstr ""
 
-#: Plugins/General/scrobbler/configure.c:170
+#: Plugins/General/scrobbler/configure.c:102
 msgid "Username:"
 msgstr "उपयोगकर्ता का नाम:"
+
+#: Plugins/General/scrobbler/configure.c:108
+msgid "Password:"
+msgstr "कूटशब्द:"
 
 #: Plugins/General/scrobbler/gtkstuff.c:21
 #, fuzzy
 msgid "About Scrobbler Plugin"
 msgstr "ई-साउण्ड प्लग-इन के बारे में"
 
-#: Plugins/General/scrobbler/xmms_scrobbler.c:497
+#: Plugins/General/scrobbler/xmms_scrobbler.c:441
 #, fuzzy
 msgid "Scrobbler Plugin"
 msgstr "प्लग-इन्स"
 
-#: Plugins/General/song_change/song_change.c:53
+#: Plugins/General/song_change/song_change.c:55
 #, c-format
 msgid "Song Change %s"
 msgstr ""
 
-#: Plugins/General/song_change/song_change.c:132
-msgid "Warning"
-msgstr ""
-
-#: Plugins/General/song_change/song_change.c:143
-msgid ""
-"Filename and song title tags should be inside double quotes (\").  Not doing "
-"so might be a security risk.  Continue anyway?"
-msgstr ""
-
-#: Plugins/General/song_change/song_change.c:156
-#: Plugins/Input/aac/src/fileinfo.c:206 Plugins/Input/mpg123/fileinfo.c:244
-msgid "Yes"
-msgstr "हाँ"
-
-#: Plugins/General/song_change/song_change.c:166
-#: Plugins/Input/aac/src/fileinfo.c:205 Plugins/Input/mpg123/fileinfo.c:243
-msgid "No"
-msgstr "नहीं"
-
-#: Plugins/General/song_change/song_change.c:232
-#, fuzzy
-msgid "Song Change Configuration"
-msgstr "सीडी श्रव्य प्लेयर संरचना"
-
-#: Plugins/General/song_change/song_change.c:239
+#: Plugins/General/song_change/song_change.c:179
 #, fuzzy
 msgid "Commands"
 msgstr "टिप्पणी"
 
-#: Plugins/General/song_change/song_change.c:246
-msgid "Shell-command to run when Audacious starts a new song."
+#: Plugins/General/song_change/song_change.c:186
+msgid "Command to run when Audacious starts a new song."
 msgstr ""
 
-#: Plugins/General/song_change/song_change.c:255
-#: Plugins/General/song_change/song_change.c:278
-#: Plugins/General/song_change/song_change.c:301
+#: Plugins/General/song_change/song_change.c:195
+#: Plugins/General/song_change/song_change.c:217
+#: Plugins/General/song_change/song_change.c:238
 #, fuzzy
 msgid "Command:"
 msgstr "टिप्पणी:"
 
-#: Plugins/General/song_change/song_change.c:269
-msgid "Shell-command to run toward the end of a song."
+#: Plugins/General/song_change/song_change.c:209
+msgid "Command to run toward the end of a song."
 msgstr ""
 
-#: Plugins/General/song_change/song_change.c:291
-msgid "Shell-command to run when Audacious reaches the end of the playlist."
-msgstr ""
+#: Plugins/General/song_change/song_change.c:229
+#, fuzzy
+msgid "Command to run when Audacious reaches the end of the playlist."
+msgstr "जब प्लेसूची में यह संचिका दिखायी जा रही हो तो आग्रह करने पर मेटाडाटा को लाएँ"
 
-#: Plugins/General/song_change/song_change.c:314
+#: Plugins/General/song_change/song_change.c:250
 #, c-format
 msgid ""
-"You can use the following format strings which will be substituted before "
-"calling the command (not all are useful for the end-of-playlist command).\n"
+"You can use the following format strings which\n"
+"will be substituted before calling the command\n"
+"(not all are useful for the end-of-playlist command).\n"
 "\n"
 "%%F: Frequency (in hertz)\n"
 "%%c: Number of channels\n"
@@ -253,816 +224,11 @@ msgid ""
 "%%p: Currently playing (1 or 0)"
 msgstr ""
 
-#: Plugins/General/song_change/song_change.c:341
-#: Plugins/Input/modplug/gui/interface.cpp:725 Plugins/Output/alsa/about.c:46
-#: Plugins/Output/alsa/configure.c:436
-#: Plugins/Output/disk_writer/disk_writer.c:140
-#: Plugins/Output/disk_writer/disk_writer.c:405
-msgid "OK"
+#: Plugins/General/song_change/song_change.c:275
+msgid ""
+"<span size='small'>Parameters passed to the shell should be encapsulated in "
+"quotes. Doing otherwise is a security risk.</span>"
 msgstr ""
-
-#: Plugins/Input/aac/src/fileinfo.c:201 Plugins/Input/mpg123/fileinfo.c:239
-msgid "None"
-msgstr "कुछ नहीं"
-
-#: Plugins/Input/aac/src/fileinfo.c:202 Plugins/Input/mpg123/fileinfo.c:240
-msgid "50/15 ms"
-msgstr "५०/१५ मिलीसेकण्ड"
-
-#: Plugins/Input/aac/src/fileinfo.c:204 Plugins/Input/mpg123/fileinfo.c:242
-msgid "CCIT J.17"
-msgstr "सी०सी०आई०टी० जे.१७"
-
-#: Plugins/Input/aac/src/fileinfo.c:248
-#: Plugins/Input/amidi-plug/i_fileinfo.c:118
-#: Plugins/Input/mpg123/fileinfo.c:288 Plugins/Input/vorbis/fileinfo.c:558
-msgid "Name:"
-msgstr "नाम:"
-
-#: Plugins/Input/aac/src/fileinfo.c:260
-#, fuzzy
-msgid "Song Metadata"
-msgstr "सोनाटा"
-
-#: Plugins/Input/aac/src/fileinfo.c:267 Plugins/Input/flac/fileinfo.c:278
-#: Plugins/Input/mpg123/fileinfo.c:456 Plugins/Input/vorbis/fileinfo.c:581
-msgid "Title:"
-msgstr "शीर्षक:"
-
-#: Plugins/Input/aac/src/fileinfo.c:278 Plugins/Input/flac/fileinfo.c:285
-#: Plugins/Input/mpg123/fileinfo.c:467 Plugins/Input/vorbis/fileinfo.c:592
-msgid "Artist:"
-msgstr "कलाकार:"
-
-#: Plugins/Input/aac/src/fileinfo.c:289 Plugins/Input/flac/fileinfo.c:292
-#: Plugins/Input/mpg123/fileinfo.c:478 Plugins/Input/vorbis/fileinfo.c:603
-msgid "Album:"
-msgstr "एलबम:"
-
-#: Plugins/Input/aac/src/fileinfo.c:300 Plugins/Input/flac/fileinfo.c:299
-#: Plugins/Input/mpg123/fileinfo.c:489 Plugins/Input/vorbis/fileinfo.c:614
-msgid "Comment:"
-msgstr "टिप्पणी:"
-
-#: Plugins/Input/aac/src/fileinfo.c:311 Plugins/Input/mpg123/fileinfo.c:500
-msgid "Year:"
-msgstr "वर्ष:"
-
-#: Plugins/Input/aac/src/fileinfo.c:323 Plugins/Input/flac/fileinfo.c:314
-#: Plugins/Input/mpg123/fileinfo.c:512 Plugins/Input/vorbis/fileinfo.c:637
-msgid "Track number:"
-msgstr "ट्रैक की संख्या:"
-
-#: Plugins/Input/aac/src/fileinfo.c:337 Plugins/Input/flac/fileinfo.c:322
-#: Plugins/Input/mpg123/fileinfo.c:524 Plugins/Input/vorbis/fileinfo.c:649
-msgid "Genre:"
-msgstr "प्रकार:"
-
-#: Plugins/Input/aac/src/fileinfo.c:403 Plugins/Input/mpg123/fileinfo.c:624
-#: Plugins/Input/vorbis/fileinfo.c:1015 audacious/mainwin.c:804
-#, c-format
-msgid "%s - Audacious"
-msgstr ""
-
-#: Plugins/Input/aac/src/libmp4.c:20 Plugins/Input/flac/fileinfo.c:47
-#: Plugins/Input/mpg123/mpg123.c:53 Plugins/Input/vorbis/fileinfo.c:83
-msgid "Blues"
-msgstr "ब्लू"
-
-#: Plugins/Input/aac/src/libmp4.c:20 Plugins/Input/flac/fileinfo.c:47
-#: Plugins/Input/mpg123/mpg123.c:53 Plugins/Input/vorbis/fileinfo.c:83
-msgid "Classic Rock"
-msgstr "क्लासिक रॉक"
-
-#: Plugins/Input/aac/src/libmp4.c:20 Plugins/Input/flac/fileinfo.c:47
-#: Plugins/Input/mpg123/mpg123.c:53 Plugins/Input/vorbis/fileinfo.c:83
-msgid "Country"
-msgstr "कन्ट्री"
-
-#: Plugins/Input/aac/src/libmp4.c:20 Plugins/Input/flac/fileinfo.c:47
-#: Plugins/Input/mpg123/mpg123.c:53 Plugins/Input/vorbis/fileinfo.c:83
-msgid "Dance"
-msgstr "डान्स"
-
-#: Plugins/Input/aac/src/libmp4.c:21 Plugins/Input/flac/fileinfo.c:48
-#: Plugins/Input/mpg123/mpg123.c:54 Plugins/Input/vorbis/fileinfo.c:84
-msgid "Disco"
-msgstr "डिस्को"
-
-#: Plugins/Input/aac/src/libmp4.c:21 Plugins/Input/flac/fileinfo.c:48
-#: Plugins/Input/mpg123/mpg123.c:54 Plugins/Input/vorbis/fileinfo.c:84
-msgid "Funk"
-msgstr "फ़ंक"
-
-#: Plugins/Input/aac/src/libmp4.c:21 Plugins/Input/flac/fileinfo.c:48
-#: Plugins/Input/mpg123/mpg123.c:54 Plugins/Input/vorbis/fileinfo.c:84
-msgid "Grunge"
-msgstr "ग्रज़"
-
-#: Plugins/Input/aac/src/libmp4.c:21 Plugins/Input/flac/fileinfo.c:48
-#: Plugins/Input/mpg123/mpg123.c:54 Plugins/Input/vorbis/fileinfo.c:84
-msgid "Hip-Hop"
-msgstr "हिप-होप"
-
-#: Plugins/Input/aac/src/libmp4.c:22 Plugins/Input/flac/fileinfo.c:49
-#: Plugins/Input/mpg123/mpg123.c:55 Plugins/Input/vorbis/fileinfo.c:85
-msgid "Jazz"
-msgstr "जाज़"
-
-#: Plugins/Input/aac/src/libmp4.c:22 Plugins/Input/flac/fileinfo.c:49
-#: Plugins/Input/mpg123/mpg123.c:55 Plugins/Input/vorbis/fileinfo.c:85
-msgid "Metal"
-msgstr "मेटल"
-
-#: Plugins/Input/aac/src/libmp4.c:22 Plugins/Input/flac/fileinfo.c:49
-#: Plugins/Input/mpg123/mpg123.c:55 Plugins/Input/vorbis/fileinfo.c:85
-msgid "New Age"
-msgstr "न्य़ू ऐज"
-
-#: Plugins/Input/aac/src/libmp4.c:22 Plugins/Input/flac/fileinfo.c:49
-#: Plugins/Input/mpg123/mpg123.c:55 Plugins/Input/vorbis/fileinfo.c:85
-msgid "Oldies"
-msgstr "ओल्डी"
-
-#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
-#: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
-msgid "Other"
-msgstr "अन्य"
-
-#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
-#: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
-msgid "Pop"
-msgstr "पॉप"
-
-#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
-#: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
-msgid "R&B"
-msgstr "आर व बी"
-
-#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
-#: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
-msgid "Rap"
-msgstr "रैप"
-
-#: Plugins/Input/aac/src/libmp4.c:23 Plugins/Input/flac/fileinfo.c:50
-#: Plugins/Input/mpg123/mpg123.c:56 Plugins/Input/vorbis/fileinfo.c:86
-msgid "Reggae"
-msgstr "रेगी"
-
-#: Plugins/Input/aac/src/libmp4.c:24 Plugins/Input/flac/fileinfo.c:51
-#: Plugins/Input/mpg123/mpg123.c:57 Plugins/Input/vorbis/fileinfo.c:87
-msgid "Rock"
-msgstr "रॉक"
-
-#: Plugins/Input/aac/src/libmp4.c:24 Plugins/Input/flac/fileinfo.c:51
-#: Plugins/Input/mpg123/mpg123.c:57 Plugins/Input/vorbis/fileinfo.c:87
-msgid "Techno"
-msgstr "टेक्नो"
-
-#: Plugins/Input/aac/src/libmp4.c:24 Plugins/Input/flac/fileinfo.c:51
-#: Plugins/Input/mpg123/mpg123.c:57 Plugins/Input/vorbis/fileinfo.c:87
-msgid "Industrial"
-msgstr "इंड्रस्ट्रियल"
-
-#: Plugins/Input/aac/src/libmp4.c:24 Plugins/Input/flac/fileinfo.c:51
-#: Plugins/Input/mpg123/mpg123.c:57 Plugins/Input/vorbis/fileinfo.c:87
-msgid "Alternative"
-msgstr "वैकल्पिक"
-
-#: Plugins/Input/aac/src/libmp4.c:25 Plugins/Input/flac/fileinfo.c:52
-#: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:88
-msgid "Ska"
-msgstr "ईस्का"
-
-#: Plugins/Input/aac/src/libmp4.c:25 Plugins/Input/flac/fileinfo.c:52
-#: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:88
-msgid "Death Metal"
-msgstr "डेथ मेटल"
-
-#: Plugins/Input/aac/src/libmp4.c:25 Plugins/Input/flac/fileinfo.c:52
-#: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:88
-msgid "Pranks"
-msgstr "प्रैनक्स"
-
-#: Plugins/Input/aac/src/libmp4.c:25 Plugins/Input/flac/fileinfo.c:52
-#: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:88
-msgid "Soundtrack"
-msgstr "साउण्डट्रैक"
-
-#: Plugins/Input/aac/src/libmp4.c:26 Plugins/Input/flac/fileinfo.c:53
-#: Plugins/Input/mpg123/mpg123.c:59 Plugins/Input/vorbis/fileinfo.c:89
-msgid "Euro-Techno"
-msgstr "यूरो-टेक्नो"
-
-#: Plugins/Input/aac/src/libmp4.c:26 Plugins/Input/flac/fileinfo.c:53
-#: Plugins/Input/mpg123/mpg123.c:59 Plugins/Input/vorbis/fileinfo.c:89
-msgid "Ambient"
-msgstr "एम्बियन्ट"
-
-#: Plugins/Input/aac/src/libmp4.c:26 Plugins/Input/flac/fileinfo.c:53
-#: Plugins/Input/mpg123/mpg123.c:59 Plugins/Input/vorbis/fileinfo.c:89
-msgid "Trip-Hop"
-msgstr "ट्रिप-हॉप"
-
-#: Plugins/Input/aac/src/libmp4.c:26 Plugins/Input/flac/fileinfo.c:53
-#: Plugins/Input/mpg123/mpg123.c:59 Plugins/Input/vorbis/fileinfo.c:89
-msgid "Vocal"
-msgstr "वोकल"
-
-#: Plugins/Input/aac/src/libmp4.c:27 Plugins/Input/flac/fileinfo.c:54
-#: Plugins/Input/mpg123/mpg123.c:60 Plugins/Input/vorbis/fileinfo.c:90
-msgid "Jazz+Funk"
-msgstr "ज़ाज़+फ़ंक"
-
-#: Plugins/Input/aac/src/libmp4.c:27 Plugins/Input/flac/fileinfo.c:54
-#: Plugins/Input/mpg123/mpg123.c:60 Plugins/Input/vorbis/fileinfo.c:90
-msgid "Fusion"
-msgstr "फ़्यूज़न"
-
-#: Plugins/Input/aac/src/libmp4.c:27 Plugins/Input/flac/fileinfo.c:54
-#: Plugins/Input/mpg123/mpg123.c:60 Plugins/Input/vorbis/fileinfo.c:90
-msgid "Trance"
-msgstr "ट्रान्स"
-
-#: Plugins/Input/aac/src/libmp4.c:27 Plugins/Input/flac/fileinfo.c:54
-#: Plugins/Input/mpg123/mpg123.c:60 Plugins/Input/vorbis/fileinfo.c:90
-msgid "Classical"
-msgstr "क्लासीकल"
-
-#: Plugins/Input/aac/src/libmp4.c:28 Plugins/Input/flac/fileinfo.c:55
-#: Plugins/Input/mpg123/mpg123.c:61 Plugins/Input/vorbis/fileinfo.c:91
-msgid "Instrumental"
-msgstr "इन्सट्रुमेन्टल"
-
-#: Plugins/Input/aac/src/libmp4.c:28 Plugins/Input/flac/fileinfo.c:55
-#: Plugins/Input/mpg123/mpg123.c:61 Plugins/Input/vorbis/fileinfo.c:91
-msgid "Acid"
-msgstr "ऐसिड"
-
-#: Plugins/Input/aac/src/libmp4.c:28 Plugins/Input/flac/fileinfo.c:55
-#: Plugins/Input/mpg123/mpg123.c:61 Plugins/Input/vorbis/fileinfo.c:91
-msgid "House"
-msgstr "हाउस"
-
-#: Plugins/Input/aac/src/libmp4.c:28 Plugins/Input/flac/fileinfo.c:55
-#: Plugins/Input/mpg123/mpg123.c:61 Plugins/Input/vorbis/fileinfo.c:91
-msgid "Game"
-msgstr "गेम"
-
-#: Plugins/Input/aac/src/libmp4.c:29 Plugins/Input/flac/fileinfo.c:56
-#: Plugins/Input/mpg123/mpg123.c:62 Plugins/Input/vorbis/fileinfo.c:92
-msgid "Sound Clip"
-msgstr "साउण्ड क्लिप"
-
-#: Plugins/Input/aac/src/libmp4.c:29 Plugins/Input/flac/fileinfo.c:56
-#: Plugins/Input/mpg123/mpg123.c:62 Plugins/Input/vorbis/fileinfo.c:92
-msgid "Gospel"
-msgstr "गोस्पेल"
-
-#: Plugins/Input/aac/src/libmp4.c:29 Plugins/Input/flac/fileinfo.c:56
-#: Plugins/Input/mpg123/mpg123.c:62 Plugins/Input/vorbis/fileinfo.c:92
-msgid "Noise"
-msgstr "नॉइस्ज"
-
-#: Plugins/Input/aac/src/libmp4.c:29 Plugins/Input/mpg123/mpg123.c:62
-#: Plugins/Input/vorbis/fileinfo.c:92
-msgid "AlternRock"
-msgstr "अल्ट्रनरॉक"
-
-#: Plugins/Input/aac/src/libmp4.c:30 Plugins/Input/flac/fileinfo.c:57
-#: Plugins/Input/mpg123/mpg123.c:63 Plugins/Input/vorbis/fileinfo.c:93
-msgid "Bass"
-msgstr "बॉस"
-
-#: Plugins/Input/aac/src/libmp4.c:30 Plugins/Input/flac/fileinfo.c:57
-#: Plugins/Input/mpg123/mpg123.c:63 Plugins/Input/vorbis/fileinfo.c:93
-msgid "Soul"
-msgstr "सोल"
-
-#: Plugins/Input/aac/src/libmp4.c:30 Plugins/Input/flac/fileinfo.c:57
-#: Plugins/Input/mpg123/mpg123.c:63 Plugins/Input/vorbis/fileinfo.c:93
-msgid "Punk"
-msgstr "पंक"
-
-#: Plugins/Input/aac/src/libmp4.c:30 Plugins/Input/flac/fileinfo.c:57
-#: Plugins/Input/mpg123/mpg123.c:63 Plugins/Input/vorbis/fileinfo.c:93
-msgid "Space"
-msgstr "स्पेस"
-
-#: Plugins/Input/aac/src/libmp4.c:31 Plugins/Input/flac/fileinfo.c:58
-#: Plugins/Input/mpg123/mpg123.c:64 Plugins/Input/vorbis/fileinfo.c:94
-msgid "Meditative"
-msgstr "मेडिटेट्वि"
-
-#: Plugins/Input/aac/src/libmp4.c:31 Plugins/Input/flac/fileinfo.c:58
-#: Plugins/Input/mpg123/mpg123.c:64 Plugins/Input/vorbis/fileinfo.c:94
-msgid "Instrumental Pop"
-msgstr "इन्सट्रुमेन्टल पॉप"
-
-#: Plugins/Input/aac/src/libmp4.c:32 Plugins/Input/flac/fileinfo.c:59
-#: Plugins/Input/mpg123/mpg123.c:65 Plugins/Input/vorbis/fileinfo.c:95
-msgid "Instrumental Rock"
-msgstr "इन्सट्रुमेन्टल रॉक"
-
-#: Plugins/Input/aac/src/libmp4.c:32 Plugins/Input/flac/fileinfo.c:59
-#: Plugins/Input/mpg123/mpg123.c:65 Plugins/Input/vorbis/fileinfo.c:95
-msgid "Ethnic"
-msgstr "ऐथिक"
-
-#: Plugins/Input/aac/src/libmp4.c:32 Plugins/Input/flac/fileinfo.c:59
-#: Plugins/Input/mpg123/mpg123.c:65 Plugins/Input/vorbis/fileinfo.c:95
-msgid "Gothic"
-msgstr "गोथिक"
-
-#: Plugins/Input/aac/src/libmp4.c:33 Plugins/Input/flac/fileinfo.c:60
-#: Plugins/Input/mpg123/mpg123.c:66 Plugins/Input/vorbis/fileinfo.c:96
-msgid "Darkwave"
-msgstr "डार्कवेव"
-
-#: Plugins/Input/aac/src/libmp4.c:33 Plugins/Input/flac/fileinfo.c:60
-#: Plugins/Input/mpg123/mpg123.c:66 Plugins/Input/vorbis/fileinfo.c:96
-msgid "Techno-Industrial"
-msgstr "टेक्नो-इंड्रस्ट्रियल"
-
-#: Plugins/Input/aac/src/libmp4.c:33 Plugins/Input/flac/fileinfo.c:60
-#: Plugins/Input/mpg123/mpg123.c:66 Plugins/Input/vorbis/fileinfo.c:96
-msgid "Electronic"
-msgstr "इलेक्ट्रानिक"
-
-#: Plugins/Input/aac/src/libmp4.c:34 Plugins/Input/flac/fileinfo.c:61
-#: Plugins/Input/mpg123/mpg123.c:67 Plugins/Input/vorbis/fileinfo.c:97
-msgid "Pop-Folk"
-msgstr "पॉप-फ़ाल्क"
-
-#: Plugins/Input/aac/src/libmp4.c:34 Plugins/Input/flac/fileinfo.c:61
-#: Plugins/Input/mpg123/mpg123.c:67 Plugins/Input/vorbis/fileinfo.c:97
-msgid "Eurodance"
-msgstr "यूरोडान्स"
-
-#: Plugins/Input/aac/src/libmp4.c:34 Plugins/Input/flac/fileinfo.c:61
-#: Plugins/Input/mpg123/mpg123.c:67 Plugins/Input/vorbis/fileinfo.c:97
-msgid "Dream"
-msgstr "ड्रीम"
-
-#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:62
-#: Plugins/Input/mpg123/mpg123.c:68 Plugins/Input/vorbis/fileinfo.c:98
-msgid "Southern Rock"
-msgstr "दक्षिणी रॉक"
-
-#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:62
-#: Plugins/Input/mpg123/mpg123.c:68 Plugins/Input/vorbis/fileinfo.c:98
-msgid "Comedy"
-msgstr "कामेडी"
-
-#: Plugins/Input/aac/src/libmp4.c:35 Plugins/Input/flac/fileinfo.c:62
-#: Plugins/Input/mpg123/mpg123.c:68 Plugins/Input/vorbis/fileinfo.c:98
-msgid "Cult"
-msgstr "कल्ट"
-
-#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:63
-#: Plugins/Input/mpg123/mpg123.c:69 Plugins/Input/vorbis/fileinfo.c:99
-msgid "Gangsta Rap"
-msgstr "गैगस्टा रैप"
-
-#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:63
-#: Plugins/Input/mpg123/mpg123.c:69 Plugins/Input/vorbis/fileinfo.c:99
-msgid "Top 40"
-msgstr "टॉप ४०"
-
-#: Plugins/Input/aac/src/libmp4.c:36 Plugins/Input/flac/fileinfo.c:63
-#: Plugins/Input/mpg123/mpg123.c:69 Plugins/Input/vorbis/fileinfo.c:99
-msgid "Christian Rap"
-msgstr "क्रिस्तानी रैप"
-
-#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:64
-#: Plugins/Input/mpg123/mpg123.c:70 Plugins/Input/vorbis/fileinfo.c:100
-msgid "Pop/Funk"
-msgstr "पॉप/फ़ंक"
-
-#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:64
-#: Plugins/Input/mpg123/mpg123.c:70 Plugins/Input/vorbis/fileinfo.c:100
-msgid "Jungle"
-msgstr "जंगल"
-
-#: Plugins/Input/aac/src/libmp4.c:37 Plugins/Input/flac/fileinfo.c:64
-#: Plugins/Input/mpg123/mpg123.c:70 Plugins/Input/vorbis/fileinfo.c:100
-msgid "Native American"
-msgstr "नेटिव अमेरिकन"
-
-#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:65
-#: Plugins/Input/mpg123/mpg123.c:71 Plugins/Input/vorbis/fileinfo.c:101
-msgid "Cabaret"
-msgstr "कैबरेट"
-
-#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:65
-#: Plugins/Input/mpg123/mpg123.c:71 Plugins/Input/vorbis/fileinfo.c:101
-msgid "New Wave"
-msgstr "न्यू वेव"
-
-#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:65
-#: Plugins/Input/mpg123/mpg123.c:71 Plugins/Input/vorbis/fileinfo.c:101
-msgid "Psychedelic"
-msgstr "साइडेलिक"
-
-#: Plugins/Input/aac/src/libmp4.c:38 Plugins/Input/flac/fileinfo.c:65
-#: Plugins/Input/mpg123/mpg123.c:71 Plugins/Input/vorbis/fileinfo.c:101
-msgid "Rave"
-msgstr "रेव"
-
-#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:66
-#: Plugins/Input/mpg123/mpg123.c:72 Plugins/Input/vorbis/fileinfo.c:102
-msgid "Showtunes"
-msgstr "सोटयून्स"
-
-#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:66
-#: Plugins/Input/mpg123/mpg123.c:72 Plugins/Input/vorbis/fileinfo.c:102
-msgid "Trailer"
-msgstr "ट्रेलर"
-
-#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:66
-#: Plugins/Input/mpg123/mpg123.c:72 Plugins/Input/vorbis/fileinfo.c:102
-msgid "Lo-Fi"
-msgstr "लो-फ़ाई"
-
-#: Plugins/Input/aac/src/libmp4.c:39 Plugins/Input/flac/fileinfo.c:66
-#: Plugins/Input/mpg123/mpg123.c:72 Plugins/Input/vorbis/fileinfo.c:102
-msgid "Tribal"
-msgstr "ट्राईबल"
-
-#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:67
-#: Plugins/Input/mpg123/mpg123.c:73 Plugins/Input/vorbis/fileinfo.c:103
-msgid "Acid Punk"
-msgstr "ऐसिड पंक"
-
-#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:67
-#: Plugins/Input/mpg123/mpg123.c:73 Plugins/Input/vorbis/fileinfo.c:103
-msgid "Acid Jazz"
-msgstr "ऐसिड जाज़"
-
-#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:67
-#: Plugins/Input/mpg123/mpg123.c:73 Plugins/Input/vorbis/fileinfo.c:103
-msgid "Polka"
-msgstr "पोल्का"
-
-#: Plugins/Input/aac/src/libmp4.c:40 Plugins/Input/flac/fileinfo.c:67
-#: Plugins/Input/mpg123/mpg123.c:73 Plugins/Input/vorbis/fileinfo.c:103
-msgid "Retro"
-msgstr "रेट्रो"
-
-#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:68
-#: Plugins/Input/mpg123/mpg123.c:74 Plugins/Input/vorbis/fileinfo.c:104
-msgid "Musical"
-msgstr "म्यूजिकल"
-
-#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:68
-#: Plugins/Input/mpg123/mpg123.c:74 Plugins/Input/vorbis/fileinfo.c:104
-msgid "Rock & Roll"
-msgstr "रॉक और रोल"
-
-#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:68
-#: Plugins/Input/mpg123/mpg123.c:74 Plugins/Input/vorbis/fileinfo.c:104
-msgid "Hard Rock"
-msgstr "हार्ड रॉक"
-
-#: Plugins/Input/aac/src/libmp4.c:41 Plugins/Input/flac/fileinfo.c:68
-#: Plugins/Input/mpg123/mpg123.c:74 Plugins/Input/vorbis/fileinfo.c:104
-msgid "Folk"
-msgstr "फ़ोक"
-
-#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:69
-#: Plugins/Input/mpg123/mpg123.c:75 Plugins/Input/vorbis/fileinfo.c:105
-msgid "Folk/Rock"
-msgstr "फ़ोक/रॉक"
-
-#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:69
-#: Plugins/Input/mpg123/mpg123.c:75 Plugins/Input/vorbis/fileinfo.c:105
-msgid "National Folk"
-msgstr "नेशनल फ़ोक"
-
-#: Plugins/Input/aac/src/libmp4.c:42 Plugins/Input/flac/fileinfo.c:69
-#: Plugins/Input/mpg123/mpg123.c:75 Plugins/Input/vorbis/fileinfo.c:105
-msgid "Swing"
-msgstr "स्वींग"
-
-#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:70
-#: Plugins/Input/mpg123/mpg123.c:76 Plugins/Input/vorbis/fileinfo.c:106
-msgid "Fast-Fusion"
-msgstr "फ़ास्त-फ़्यूजन"
-
-#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:70
-#: Plugins/Input/mpg123/mpg123.c:76 Plugins/Input/vorbis/fileinfo.c:106
-msgid "Bebob"
-msgstr "बेबोब"
-
-#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:70
-#: Plugins/Input/mpg123/mpg123.c:76 Plugins/Input/vorbis/fileinfo.c:106
-msgid "Latin"
-msgstr "लैटिन"
-
-#: Plugins/Input/aac/src/libmp4.c:43 Plugins/Input/flac/fileinfo.c:70
-#: Plugins/Input/mpg123/mpg123.c:76 Plugins/Input/vorbis/fileinfo.c:106
-msgid "Revival"
-msgstr "रिवाइवल"
-
-#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/flac/fileinfo.c:71
-#: Plugins/Input/mpg123/mpg123.c:77 Plugins/Input/vorbis/fileinfo.c:107
-msgid "Celtic"
-msgstr "सेल्टिक"
-
-#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/flac/fileinfo.c:71
-#: Plugins/Input/mpg123/mpg123.c:77 Plugins/Input/vorbis/fileinfo.c:107
-msgid "Bluegrass"
-msgstr "ब्लूग्रास"
-
-#: Plugins/Input/aac/src/libmp4.c:44 Plugins/Input/flac/fileinfo.c:71
-#: Plugins/Input/mpg123/mpg123.c:77 Plugins/Input/vorbis/fileinfo.c:107
-msgid "Avantgarde"
-msgstr "अवन्तगार्डे"
-
-#: Plugins/Input/aac/src/libmp4.c:45 Plugins/Input/flac/fileinfo.c:72
-#: Plugins/Input/mpg123/mpg123.c:78 Plugins/Input/vorbis/fileinfo.c:108
-msgid "Gothic Rock"
-msgstr "गोथिक रॉक"
-
-#: Plugins/Input/aac/src/libmp4.c:45 Plugins/Input/flac/fileinfo.c:72
-#: Plugins/Input/mpg123/mpg123.c:78 Plugins/Input/vorbis/fileinfo.c:108
-msgid "Progressive Rock"
-msgstr "प्रोग्रेसिव रॉक"
-
-#: Plugins/Input/aac/src/libmp4.c:46 Plugins/Input/flac/fileinfo.c:73
-#: Plugins/Input/mpg123/mpg123.c:79 Plugins/Input/vorbis/fileinfo.c:109
-msgid "Psychedelic Rock"
-msgstr "साइकिडेलिक रॉक"
-
-#: Plugins/Input/aac/src/libmp4.c:46 Plugins/Input/flac/fileinfo.c:73
-#: Plugins/Input/mpg123/mpg123.c:79 Plugins/Input/vorbis/fileinfo.c:109
-msgid "Symphonic Rock"
-msgstr "सिम्फ़ोन्कि रॉक"
-
-#: Plugins/Input/aac/src/libmp4.c:46 Plugins/Input/flac/fileinfo.c:73
-#: Plugins/Input/mpg123/mpg123.c:79 Plugins/Input/vorbis/fileinfo.c:109
-msgid "Slow Rock"
-msgstr "स्लो रॉक"
-
-#: Plugins/Input/aac/src/libmp4.c:47 Plugins/Input/flac/fileinfo.c:74
-#: Plugins/Input/mpg123/mpg123.c:80 Plugins/Input/vorbis/fileinfo.c:110
-msgid "Big Band"
-msgstr "बिग बैन्ड"
-
-#: Plugins/Input/aac/src/libmp4.c:47 Plugins/Input/flac/fileinfo.c:74
-#: Plugins/Input/mpg123/mpg123.c:80 Plugins/Input/vorbis/fileinfo.c:110
-msgid "Chorus"
-msgstr "कोरस"
-
-#: Plugins/Input/aac/src/libmp4.c:47 Plugins/Input/flac/fileinfo.c:74
-#: Plugins/Input/mpg123/mpg123.c:80 Plugins/Input/vorbis/fileinfo.c:110
-msgid "Easy Listening"
-msgstr "ईज़ी लिस्निंग"
-
-#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:75
-#: Plugins/Input/mpg123/mpg123.c:81 Plugins/Input/vorbis/fileinfo.c:111
-msgid "Acoustic"
-msgstr "ऑकाउस्टिक"
-
-#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:75
-#: Plugins/Input/mpg123/mpg123.c:81 Plugins/Input/vorbis/fileinfo.c:111
-msgid "Humour"
-msgstr "ह्यूमर"
-
-#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:75
-#: Plugins/Input/mpg123/mpg123.c:81 Plugins/Input/vorbis/fileinfo.c:111
-msgid "Speech"
-msgstr "स्पीच"
-
-#: Plugins/Input/aac/src/libmp4.c:48 Plugins/Input/flac/fileinfo.c:75
-#: Plugins/Input/mpg123/mpg123.c:81 Plugins/Input/vorbis/fileinfo.c:111
-msgid "Chanson"
-msgstr "चान्सन"
-
-#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:76
-#: Plugins/Input/mpg123/mpg123.c:82 Plugins/Input/vorbis/fileinfo.c:112
-msgid "Opera"
-msgstr "ओपेरा"
-
-#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:76
-#: Plugins/Input/mpg123/mpg123.c:82 Plugins/Input/vorbis/fileinfo.c:112
-msgid "Chamber Music"
-msgstr "चैम्बर म्यूजिक"
-
-#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:76
-#: Plugins/Input/mpg123/mpg123.c:82 Plugins/Input/vorbis/fileinfo.c:112
-msgid "Sonata"
-msgstr "सोनाटा"
-
-#: Plugins/Input/aac/src/libmp4.c:49 Plugins/Input/flac/fileinfo.c:76
-#: Plugins/Input/mpg123/mpg123.c:82 Plugins/Input/vorbis/fileinfo.c:112
-msgid "Symphony"
-msgstr "सिम्फ़ोनी"
-
-#: Plugins/Input/aac/src/libmp4.c:50 Plugins/Input/flac/fileinfo.c:77
-#: Plugins/Input/mpg123/mpg123.c:83 Plugins/Input/vorbis/fileinfo.c:113
-msgid "Booty Bass"
-msgstr "बूटी बॉस"
-
-#: Plugins/Input/aac/src/libmp4.c:50 Plugins/Input/flac/fileinfo.c:77
-#: Plugins/Input/mpg123/mpg123.c:83 Plugins/Input/vorbis/fileinfo.c:113
-msgid "Primus"
-msgstr "प्रिमस"
-
-#: Plugins/Input/aac/src/libmp4.c:50 Plugins/Input/flac/fileinfo.c:77
-#: Plugins/Input/mpg123/mpg123.c:83 Plugins/Input/vorbis/fileinfo.c:113
-msgid "Porn Groove"
-msgstr "पोर्नो ग्रूव"
-
-#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:78
-#: Plugins/Input/mpg123/mpg123.c:84 Plugins/Input/vorbis/fileinfo.c:114
-msgid "Satire"
-msgstr "सैटायर"
-
-#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:78
-#: Plugins/Input/mpg123/mpg123.c:84 Plugins/Input/vorbis/fileinfo.c:114
-msgid "Slow Jam"
-msgstr "स्लो जैम"
-
-#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:78
-#: Plugins/Input/mpg123/mpg123.c:84 Plugins/Input/vorbis/fileinfo.c:114
-msgid "Club"
-msgstr "क्लब"
-
-#: Plugins/Input/aac/src/libmp4.c:51 Plugins/Input/flac/fileinfo.c:78
-#: Plugins/Input/mpg123/mpg123.c:84 Plugins/Input/vorbis/fileinfo.c:114
-msgid "Tango"
-msgstr "टाँगो"
-
-#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:79
-#: Plugins/Input/mpg123/mpg123.c:85 Plugins/Input/vorbis/fileinfo.c:115
-msgid "Samba"
-msgstr "सॉबा"
-
-#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:79
-#: Plugins/Input/mpg123/mpg123.c:85 Plugins/Input/vorbis/fileinfo.c:115
-msgid "Folklore"
-msgstr "फ़ाल्कलोर"
-
-#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:79
-#: Plugins/Input/mpg123/mpg123.c:85 Plugins/Input/vorbis/fileinfo.c:115
-msgid "Ballad"
-msgstr "बालाड"
-
-#: Plugins/Input/aac/src/libmp4.c:52 Plugins/Input/flac/fileinfo.c:79
-#: Plugins/Input/mpg123/mpg123.c:85 Plugins/Input/vorbis/fileinfo.c:115
-msgid "Power Ballad"
-msgstr "पावर बालाड"
-
-#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:80
-#: Plugins/Input/mpg123/mpg123.c:86 Plugins/Input/vorbis/fileinfo.c:116
-msgid "Rhythmic Soul"
-msgstr "रिद्मिक सोल"
-
-#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:80
-#: Plugins/Input/mpg123/mpg123.c:86 Plugins/Input/vorbis/fileinfo.c:116
-msgid "Freestyle"
-msgstr "फ़्रीस्टाइल"
-
-#: Plugins/Input/aac/src/libmp4.c:53 Plugins/Input/flac/fileinfo.c:80
-#: Plugins/Input/mpg123/mpg123.c:86 Plugins/Input/vorbis/fileinfo.c:116
-msgid "Duet"
-msgstr "ड्यूट"
-
-#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:81
-#: Plugins/Input/mpg123/mpg123.c:87 Plugins/Input/vorbis/fileinfo.c:117
-msgid "Punk Rock"
-msgstr "पंक रॉक"
-
-#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:81
-#: Plugins/Input/mpg123/mpg123.c:87 Plugins/Input/vorbis/fileinfo.c:117
-msgid "Drum Solo"
-msgstr "ड्र्म सोलो"
-
-#: Plugins/Input/aac/src/libmp4.c:54 Plugins/Input/flac/fileinfo.c:81
-#: Plugins/Input/mpg123/mpg123.c:87 Plugins/Input/vorbis/fileinfo.c:117
-msgid "A Cappella"
-msgstr "एक कैपेला"
-
-#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:82
-#: Plugins/Input/mpg123/mpg123.c:88 Plugins/Input/vorbis/fileinfo.c:118
-msgid "Euro-House"
-msgstr "यूरो-हाउस"
-
-#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:82
-#: Plugins/Input/mpg123/mpg123.c:88 Plugins/Input/vorbis/fileinfo.c:118
-msgid "Dance Hall"
-msgstr "डान्स हाल"
-
-#: Plugins/Input/aac/src/libmp4.c:55 Plugins/Input/flac/fileinfo.c:82
-#: Plugins/Input/mpg123/mpg123.c:88 Plugins/Input/vorbis/fileinfo.c:118
-msgid "Goa"
-msgstr "गोआ"
-
-#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:83
-#: Plugins/Input/mpg123/mpg123.c:89 Plugins/Input/vorbis/fileinfo.c:119
-msgid "Drum & Bass"
-msgstr "ड्र्म व बॉस"
-
-#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:83
-#: Plugins/Input/mpg123/mpg123.c:89 Plugins/Input/vorbis/fileinfo.c:119
-msgid "Club-House"
-msgstr "क्लब-हाउस"
-
-#: Plugins/Input/aac/src/libmp4.c:56 Plugins/Input/flac/fileinfo.c:83
-#: Plugins/Input/mpg123/mpg123.c:89 Plugins/Input/vorbis/fileinfo.c:119
-msgid "Hardcore"
-msgstr "हार्डकोर"
-
-#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:84
-#: Plugins/Input/mpg123/mpg123.c:90 Plugins/Input/vorbis/fileinfo.c:120
-msgid "Terror"
-msgstr "टेरर"
-
-#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:84
-#: Plugins/Input/mpg123/mpg123.c:90 Plugins/Input/vorbis/fileinfo.c:120
-msgid "Indie"
-msgstr "ईन्डी"
-
-#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:84
-#: Plugins/Input/mpg123/mpg123.c:90 Plugins/Input/vorbis/fileinfo.c:120
-msgid "BritPop"
-msgstr "ब्रिटपॉप"
-
-#: Plugins/Input/aac/src/libmp4.c:57 Plugins/Input/flac/fileinfo.c:84
-#: Plugins/Input/mpg123/mpg123.c:90 Plugins/Input/vorbis/fileinfo.c:120
-msgid "Negerpunk"
-msgstr "नेगेरपंक"
-
-#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:85
-#: Plugins/Input/mpg123/mpg123.c:91 Plugins/Input/vorbis/fileinfo.c:121
-msgid "Polsk Punk"
-msgstr "पोल्स्क पंक"
-
-#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:85
-#: Plugins/Input/mpg123/mpg123.c:91 Plugins/Input/vorbis/fileinfo.c:121
-msgid "Beat"
-msgstr "बीट"
-
-#: Plugins/Input/aac/src/libmp4.c:58 Plugins/Input/flac/fileinfo.c:85
-#: Plugins/Input/mpg123/mpg123.c:91 Plugins/Input/vorbis/fileinfo.c:121
-msgid "Christian Gangsta Rap"
-msgstr "क्रिस्ट्यन गैन्गस्टा रैप"
-
-#: Plugins/Input/aac/src/libmp4.c:59 Plugins/Input/flac/fileinfo.c:86
-#: Plugins/Input/mpg123/mpg123.c:92 Plugins/Input/vorbis/fileinfo.c:122
-msgid "Heavy Metal"
-msgstr "हैवी मेटल"
-
-#: Plugins/Input/aac/src/libmp4.c:59 Plugins/Input/flac/fileinfo.c:86
-#: Plugins/Input/mpg123/mpg123.c:92 Plugins/Input/vorbis/fileinfo.c:122
-msgid "Black Metal"
-msgstr "ब्लैक मेटल"
-
-#: Plugins/Input/aac/src/libmp4.c:59 Plugins/Input/flac/fileinfo.c:86
-#: Plugins/Input/mpg123/mpg123.c:92 Plugins/Input/vorbis/fileinfo.c:122
-msgid "Crossover"
-msgstr "क्रासओवर"
-
-#: Plugins/Input/aac/src/libmp4.c:60 Plugins/Input/flac/fileinfo.c:87
-#: Plugins/Input/mpg123/mpg123.c:93 Plugins/Input/vorbis/fileinfo.c:123
-msgid "Contemporary Christian"
-msgstr "क्रिस्ट्यन समकालिक"
-
-#: Plugins/Input/aac/src/libmp4.c:60 Plugins/Input/flac/fileinfo.c:87
-#: Plugins/Input/mpg123/mpg123.c:93 Plugins/Input/vorbis/fileinfo.c:123
-msgid "Christian Rock"
-msgstr "क्रिस्ट्यन रॉक"
-
-#: Plugins/Input/aac/src/libmp4.c:61 Plugins/Input/flac/fileinfo.c:88
-#: Plugins/Input/mpg123/mpg123.c:94 Plugins/Input/vorbis/fileinfo.c:124
-msgid "Merengue"
-msgstr "मीर्नग्यू"
-
-#: Plugins/Input/aac/src/libmp4.c:61 Plugins/Input/flac/fileinfo.c:88
-#: Plugins/Input/mpg123/mpg123.c:94 Plugins/Input/vorbis/fileinfo.c:124
-msgid "Salsa"
-msgstr "सेल्सा"
-
-#: Plugins/Input/aac/src/libmp4.c:61 Plugins/Input/flac/fileinfo.c:88
-#: Plugins/Input/mpg123/mpg123.c:94 Plugins/Input/vorbis/fileinfo.c:124
-msgid "Thrash Metal"
-msgstr "थ्रैस मेटल"
-
-#: Plugins/Input/aac/src/libmp4.c:62 Plugins/Input/flac/fileinfo.c:89
-#: Plugins/Input/mpg123/mpg123.c:95 Plugins/Input/vorbis/fileinfo.c:125
-msgid "Anime"
-msgstr "ऐनिमे"
-
-#: Plugins/Input/aac/src/libmp4.c:62 Plugins/Input/flac/fileinfo.c:89
-#: Plugins/Input/mpg123/mpg123.c:95 Plugins/Input/vorbis/fileinfo.c:125
-msgid "JPop"
-msgstr "ज़ेपॉप"
-
-#: Plugins/Input/aac/src/libmp4.c:62 Plugins/Input/flac/fileinfo.c:89
-#: Plugins/Input/mpg123/mpg123.c:95 Plugins/Input/vorbis/fileinfo.c:125
-msgid "Synthpop"
-msgstr "सिन्थपॉप"
 
 #: Plugins/Input/adplug/adplug-xmms.cc:146
 #, fuzzy
@@ -1087,118 +253,85 @@ msgstr ""
 msgid "AMIDI-Plug %s (MIDI Player)"
 msgstr ""
 
-#: Plugins/Input/amidi-plug/i_configure.c:55
+#: Plugins/Input/amidi-plug/amidi-plug.c:362
+#, fuzzy
+msgid "AMIDI-Plug - warning"
+msgstr "एमपीईजी आडियो प्लग-इन संरचना"
+
+#: Plugins/Input/amidi-plug/amidi-plug.c:363
+msgid ""
+"No sequencer backend has been selected!\n"
+"Please configure AMIDI-Plug before playing."
+msgstr ""
+
+#: Plugins/Input/amidi-plug/i_configure.c:71
+#, fuzzy
+msgid "AMIDI-Plug - select file"
+msgstr "एमपीईजी आडियो प्लग-इन संरचना"
+
+#: Plugins/Input/amidi-plug/i_configure.c:118
 #, fuzzy
 msgid "AMIDI-Plug - configuration"
 msgstr "एमपीईजी आडियो प्लग-इन संरचना"
 
-#: Plugins/Input/amidi-plug/i_configure.c:115
-#, fuzzy
-msgid "Port"
-msgstr "पोर्ट"
-
-#: Plugins/Input/amidi-plug/i_configure.c:117
-#, fuzzy
-msgid "Client name"
-msgstr "संचिका का नाम"
-
-#: Plugins/Input/amidi-plug/i_configure.c:119
-#, fuzzy
-msgid "Port name"
-msgstr "ट्रैक का नाम"
-
-#: Plugins/Input/amidi-plug/i_configure.c:132
-#, fuzzy
-msgid "ALSA output ports"
-msgstr "आल्सा %s आउटपुट प्लग-इन"
-
-#: Plugins/Input/amidi-plug/i_configure.c:187
-#, fuzzy
-msgid "Mixer settings"
-msgstr "मिक्सर की समायोजनायें:"
-
-#: Plugins/Input/amidi-plug/i_configure.c:196
-msgid "pre-calculate length of MIDI files in playlist"
+#: Plugins/Input/amidi-plug/i_configure.c:214
+msgid "AMIDI-Plug message"
 msgstr ""
 
-#: Plugins/Input/amidi-plug/i_configure.c:202
-#: Plugins/Output/alsa/configure.c:429
-msgid "Advanced settings"
-msgstr "उन्नत समायोजनायें"
-
-#: Plugins/Input/amidi-plug/i_configure.c:223
-msgid ""
-"* Select ALSA output ports *\n"
-"MIDI events will be sent to the ports selected here. At least one port must "
-"be selected in order to play MIDI with AMIDI-Plug. Unless you know what "
-"you're doing, you'll probably want to use the wavetable synthesizer ports."
+#: Plugins/Input/amidi-plug/i_configure.c:215
+msgid "Please stop the player before changing AMIDI-Plug settings."
 msgstr ""
 
-#: Plugins/Input/amidi-plug/i_configure.c:229
-msgid ""
-"* Select ALSA mixer control *\n"
-"AMIDI-Plug outputs directly through ALSA, it doesn't use effect and ouput "
-"plugins from the player. While playing with AMIDI-Plug, the player volume "
-"will manipulate the control you select here. Unless you know what you're "
-"doing, you'll probably want to select the Synth control here."
-msgstr ""
+#: Plugins/Input/amidi-plug/i_fileinfo.c:119
+#: Plugins/Input/mpg123/fileinfo.c:288 Plugins/Input/vorbis/fileinfo.c:558
+msgid "Name:"
+msgstr "नाम:"
 
-#: Plugins/Input/amidi-plug/i_configure.c:236
-msgid ""
-"* Pre-calculate MIDI length *\n"
-"If this option is enabled, AMIDI-Plug will calculate the MIDI file length as "
-"soon as the player requests it, instead of doing that only when the the MIDI "
-"file is being played. In example, MIDI length will be calculated straight "
-"after adding MIDI files in a playlist. Disable this option if you want "
-"faster playlist loading (when a lot of MIDI files are added), enable it to "
-"display more information in the playlist straight after loading."
-msgstr ""
-
-#: Plugins/Input/amidi-plug/i_fileinfo.c:129
+#: Plugins/Input/amidi-plug/i_fileinfo.c:130
 #, fuzzy
 msgid " MIDI Info "
 msgstr "सीडी के बारे में सूचना"
 
-#: Plugins/Input/amidi-plug/i_fileinfo.c:138
+#: Plugins/Input/amidi-plug/i_fileinfo.c:139
 #, fuzzy
 msgid "Format:"
 msgstr "आईडी-३ प्रारूप:"
 
-#: Plugins/Input/amidi-plug/i_fileinfo.c:141
+#: Plugins/Input/amidi-plug/i_fileinfo.c:142
 #, fuzzy
 msgid "Length (msec):"
 msgstr "लंबाई:"
 
-#: Plugins/Input/amidi-plug/i_fileinfo.c:144
+#: Plugins/Input/amidi-plug/i_fileinfo.c:145
 #, fuzzy
 msgid "Num of Tracks:"
 msgstr "ट्रैक पर जाएँ"
 
-#: Plugins/Input/amidi-plug/i_fileinfo.c:149
+#: Plugins/Input/amidi-plug/i_fileinfo.c:150
 msgid "variable"
 msgstr ""
 
-#: Plugins/Input/amidi-plug/i_fileinfo.c:150
+#: Plugins/Input/amidi-plug/i_fileinfo.c:151
 msgid "BPM:"
 msgstr ""
 
-#: Plugins/Input/amidi-plug/i_fileinfo.c:156
+#: Plugins/Input/amidi-plug/i_fileinfo.c:157
 msgid "BPM (wavg):"
 msgstr ""
 
-#: Plugins/Input/amidi-plug/i_fileinfo.c:159
+#: Plugins/Input/amidi-plug/i_fileinfo.c:160
 msgid "Time Div:"
 msgstr ""
 
-#: Plugins/Input/amidi-plug/i_fileinfo.c:184 audacious/util.c:1217
+#: Plugins/Input/amidi-plug/i_fileinfo.c:185 audacious/util.c:1252
 msgid "  (invalid UTF-8)"
 msgstr "   (अवैध यूटीएफ़-८)"
 
-#: Plugins/Input/cdaudio/cdaudio.c:183
+#: Plugins/Input/cdaudio/cdaudio.c:186
 msgid "CD Audio Plugin"
 msgstr "सीडी आडियो प्लग-इन"
 
-#: Plugins/Input/cdaudio/cdaudio.c:1057 Plugins/Input/cdaudio/cdaudio.c:1066
+#: Plugins/Input/cdaudio/cdaudio.c:1063 Plugins/Input/cdaudio/cdaudio.c:1068
 #, c-format
 msgid "CD Audio Track %02u"
 msgstr "सीडी आडियो ट्रैक %02u"
@@ -1396,7 +529,7 @@ msgid "Track names:"
 msgstr "ट्रैकों का नाम:"
 
 #: Plugins/Input/cdaudio/configure.c:652 Plugins/Input/flac/configure.c:380
-#: Plugins/Input/mpg123/configure.c:468 Plugins/Input/vorbis/configure.c:339
+#: Plugins/Input/mpg123/configure.c:414 Plugins/Input/vorbis/configure.c:292
 msgid "Override generic titles"
 msgstr "सामान्य शीर्षकों को अधिवहित"
 
@@ -1408,18 +541,18 @@ msgstr "नाम का प्रारूप:"
 msgid "CD Info"
 msgstr "सीडी के बारे में सूचना"
 
-#: Plugins/Input/console/Audacious_Driver.cpp:694
+#: Plugins/Input/console/Audacious_Driver.cpp:811
 msgid "About the Console Music Decoder"
 msgstr ""
 
-#: Plugins/Input/console/Audacious_Driver.cpp:695
+#: Plugins/Input/console/Audacious_Driver.cpp:812
 msgid ""
 "Console music decoder engine based on Game_Music_Emu 0.3.0.\n"
 "Audacious implementation by: William Pitcock <nenolod@nenolod.net>, \n"
 "        Shay Green <hotpop.com@blargg>"
 msgstr ""
 
-#: Plugins/Input/console/Audacious_Driver.cpp:736
+#: Plugins/Input/console/Audacious_Driver.cpp:854
 msgid "SPC, VGM, NSF/NSFE, GBS, and GYM module decoder"
 msgstr ""
 
@@ -1738,7 +871,7 @@ msgstr ""
 msgid "Western (MacRoman)"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:280 Plugins/Input/mpg123/configure.c:129
+#: Plugins/Input/flac/configure.c:280 Plugins/Input/mpg123/configure.c:116
 msgid "Select the directory where you want to store the MPEG streams:"
 msgstr "उस निर्देशिका का चयन करें जहाँ आप एम०पी०ई०जी० धाराओं को सुरक्षित करना चाहते है:"
 
@@ -1763,17 +896,17 @@ msgstr ""
 msgid "to :"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:389 Plugins/Input/vorbis/configure.c:352
-#: audacious/glade/prefswin.glade:2617
+#: Plugins/Input/flac/configure.c:389 Plugins/Input/vorbis/configure.c:305
+#: audacious/glade/prefswin.glade:2166
 msgid "Title format:"
 msgstr "शीर्षक का प्रारूप:"
 
-#: Plugins/Input/flac/configure.c:400 Plugins/Input/mpg123/configure.c:495
-#: Plugins/Input/vorbis/configure.c:366 audacious/prefswin.c:108
+#: Plugins/Input/flac/configure.c:400 Plugins/Input/mpg123/configure.c:441
+#: Plugins/Input/vorbis/configure.c:319 audacious/prefswin.c:113
 msgid "Title"
 msgstr "शीर्षक"
 
-#: Plugins/Input/flac/configure.c:409 Plugins/Input/vorbis/configure.c:427
+#: Plugins/Input/flac/configure.c:409 Plugins/Input/vorbis/configure.c:380
 msgid "ReplayGain"
 msgstr "रीप्लेगेन"
 
@@ -1864,47 +997,47 @@ msgstr ""
 msgid "Output"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:547 Plugins/Input/mpg123/configure.c:320
-#: Plugins/Input/vorbis/configure.c:220 Plugins/Output/OSS/configure.c:302
+#: Plugins/Input/flac/configure.c:547 Plugins/Input/mpg123/configure.c:296
+#: Plugins/Input/vorbis/configure.c:198 Plugins/Output/OSS/configure.c:302
 #: Plugins/Output/arts/configure.c:62 Plugins/Output/esd/configure.c:171
 #: Plugins/Output/sun/configure.c:258
 msgid "Buffering:"
 msgstr "बफ़रिंग:"
 
-#: Plugins/Input/flac/configure.c:558 Plugins/Input/mpg123/configure.c:333
-#: Plugins/Input/vorbis/configure.c:232
+#: Plugins/Input/flac/configure.c:558 Plugins/Input/mpg123/configure.c:309
+#: Plugins/Input/vorbis/configure.c:210
 msgid "Buffer size (kb):"
 msgstr "बफ़र का आकार (केबी):"
 
-#: Plugins/Input/flac/configure.c:568 Plugins/Input/mpg123/configure.c:348
-#: Plugins/Input/vorbis/configure.c:246 Plugins/Output/OSS/configure.c:329
+#: Plugins/Input/flac/configure.c:568 Plugins/Input/mpg123/configure.c:324
+#: Plugins/Input/vorbis/configure.c:224 Plugins/Output/OSS/configure.c:329
 #: Plugins/Output/esd/configure.c:198 Plugins/Output/sun/configure.c:289
 msgid "Pre-buffer (percent):"
 msgstr "प्री-बफ़र (प्रतिशत):"
 
-#: Plugins/Input/flac/configure.c:578 Plugins/Input/mpg123/configure.c:362
-#: Plugins/Input/vorbis/configure.c:260
+#: Plugins/Input/flac/configure.c:578 Plugins/Input/mpg123/configure.c:338
+#: Plugins/Input/vorbis/configure.c:238
 msgid "Save stream to disk:"
 msgstr "धारा को डिस्क पर सुरक्षित:"
 
-#: Plugins/Input/flac/configure.c:586 Plugins/Input/mpg123/configure.c:373
-#: Plugins/Input/vorbis/configure.c:271
+#: Plugins/Input/flac/configure.c:586 Plugins/Input/mpg123/configure.c:349
+#: Plugins/Input/vorbis/configure.c:249
 msgid "Save stream to disk"
 msgstr "धारा को डिस्क पर सुरक्षित"
 
-#: Plugins/Input/flac/configure.c:595 Plugins/Input/mpg123/configure.c:387
-#: Plugins/Input/vorbis/configure.c:285
+#: Plugins/Input/flac/configure.c:595 Plugins/Input/mpg123/configure.c:363
+#: Plugins/Input/vorbis/configure.c:263
 #: Plugins/Output/disk_writer/disk_writer.c:370
 msgid "Path:"
 msgstr "पथ:"
 
-#: Plugins/Input/flac/configure.c:602 Plugins/Input/mpg123/configure.c:397
-#: Plugins/Input/vorbis/configure.c:295
+#: Plugins/Input/flac/configure.c:602 Plugins/Input/mpg123/configure.c:373
+#: Plugins/Input/vorbis/configure.c:273
 #: Plugins/Output/disk_writer/disk_writer.c:381
 msgid "Browse"
 msgstr "ब्राउज"
 
-#: Plugins/Input/flac/configure.c:607 Plugins/Input/mpg123/configure.c:403
+#: Plugins/Input/flac/configure.c:607 Plugins/Input/mpg123/configure.c:379
 msgid "SHOUT/Icecast:"
 msgstr "एस०एच०ओ०यू०टी०/आईसीकास्ट:"
 
@@ -1912,12 +1045,12 @@ msgstr "एस०एच०ओ०यू०टी०/आईसीकास्ट:"
 msgid "Enable SHOUT/Icecast title streaming"
 msgstr ""
 
-#: Plugins/Input/flac/configure.c:618 Plugins/Input/mpg123/configure.c:417
+#: Plugins/Input/flac/configure.c:618 Plugins/Input/mpg123/configure.c:390
 msgid "Enable Icecast Metadata UDP Channel"
 msgstr "आईसीकास्ट मेटाडाटा यू०डी०पी० चैनल को समर्थन"
 
-#: Plugins/Input/flac/configure.c:623 Plugins/Input/mpg123/configure.c:424
-#: Plugins/Input/vorbis/configure.c:302
+#: Plugins/Input/flac/configure.c:623 Plugins/Input/mpg123/configure.c:397
+#: Plugins/Input/vorbis/configure.c:280
 msgid "Streaming"
 msgstr "स्ट्रीमिंग"
 
@@ -1937,38 +1070,773 @@ msgid ""
 "Visit http://flac.sourceforge.net/"
 msgstr ""
 
-#: Plugins/Input/flac/fileinfo.c:56
+#: Plugins/Input/flac/fileinfo.c:48 Plugins/Input/mpg123/mpg123.c:49
+#: Plugins/Input/vorbis/fileinfo.c:83
+msgid "Blues"
+msgstr "ब्लू"
+
+#: Plugins/Input/flac/fileinfo.c:48 Plugins/Input/mpg123/mpg123.c:49
+#: Plugins/Input/vorbis/fileinfo.c:83
+msgid "Classic Rock"
+msgstr "क्लासिक रॉक"
+
+#: Plugins/Input/flac/fileinfo.c:48 Plugins/Input/mpg123/mpg123.c:49
+#: Plugins/Input/vorbis/fileinfo.c:83
+msgid "Country"
+msgstr "कन्ट्री"
+
+#: Plugins/Input/flac/fileinfo.c:48 Plugins/Input/mpg123/mpg123.c:49
+#: Plugins/Input/vorbis/fileinfo.c:83
+msgid "Dance"
+msgstr "डान्स"
+
+#: Plugins/Input/flac/fileinfo.c:49 Plugins/Input/mpg123/mpg123.c:50
+#: Plugins/Input/vorbis/fileinfo.c:84
+msgid "Disco"
+msgstr "डिस्को"
+
+#: Plugins/Input/flac/fileinfo.c:49 Plugins/Input/mpg123/mpg123.c:50
+#: Plugins/Input/vorbis/fileinfo.c:84
+msgid "Funk"
+msgstr "फ़ंक"
+
+#: Plugins/Input/flac/fileinfo.c:49 Plugins/Input/mpg123/mpg123.c:50
+#: Plugins/Input/vorbis/fileinfo.c:84
+msgid "Grunge"
+msgstr "ग्रज़"
+
+#: Plugins/Input/flac/fileinfo.c:49 Plugins/Input/mpg123/mpg123.c:50
+#: Plugins/Input/vorbis/fileinfo.c:84
+msgid "Hip-Hop"
+msgstr "हिप-होप"
+
+#: Plugins/Input/flac/fileinfo.c:50 Plugins/Input/mpg123/mpg123.c:51
+#: Plugins/Input/vorbis/fileinfo.c:85
+msgid "Jazz"
+msgstr "जाज़"
+
+#: Plugins/Input/flac/fileinfo.c:50 Plugins/Input/mpg123/mpg123.c:51
+#: Plugins/Input/vorbis/fileinfo.c:85
+msgid "Metal"
+msgstr "मेटल"
+
+#: Plugins/Input/flac/fileinfo.c:50 Plugins/Input/mpg123/mpg123.c:51
+#: Plugins/Input/vorbis/fileinfo.c:85
+msgid "New Age"
+msgstr "न्य़ू ऐज"
+
+#: Plugins/Input/flac/fileinfo.c:50 Plugins/Input/mpg123/mpg123.c:51
+#: Plugins/Input/vorbis/fileinfo.c:85
+msgid "Oldies"
+msgstr "ओल्डी"
+
+#: Plugins/Input/flac/fileinfo.c:51 Plugins/Input/mpg123/mpg123.c:52
+#: Plugins/Input/vorbis/fileinfo.c:86
+msgid "Other"
+msgstr "अन्य"
+
+#: Plugins/Input/flac/fileinfo.c:51 Plugins/Input/mpg123/mpg123.c:52
+#: Plugins/Input/vorbis/fileinfo.c:86
+msgid "Pop"
+msgstr "पॉप"
+
+#: Plugins/Input/flac/fileinfo.c:51 Plugins/Input/mpg123/mpg123.c:52
+#: Plugins/Input/vorbis/fileinfo.c:86
+msgid "R&B"
+msgstr "आर व बी"
+
+#: Plugins/Input/flac/fileinfo.c:51 Plugins/Input/mpg123/mpg123.c:52
+#: Plugins/Input/vorbis/fileinfo.c:86
+msgid "Rap"
+msgstr "रैप"
+
+#: Plugins/Input/flac/fileinfo.c:51 Plugins/Input/mpg123/mpg123.c:52
+#: Plugins/Input/vorbis/fileinfo.c:86
+msgid "Reggae"
+msgstr "रेगी"
+
+#: Plugins/Input/flac/fileinfo.c:52 Plugins/Input/mpg123/mpg123.c:53
+#: Plugins/Input/vorbis/fileinfo.c:87
+msgid "Rock"
+msgstr "रॉक"
+
+#: Plugins/Input/flac/fileinfo.c:52 Plugins/Input/mpg123/mpg123.c:53
+#: Plugins/Input/vorbis/fileinfo.c:87
+msgid "Techno"
+msgstr "टेक्नो"
+
+#: Plugins/Input/flac/fileinfo.c:52 Plugins/Input/mpg123/mpg123.c:53
+#: Plugins/Input/vorbis/fileinfo.c:87
+msgid "Industrial"
+msgstr "इंड्रस्ट्रियल"
+
+#: Plugins/Input/flac/fileinfo.c:52 Plugins/Input/mpg123/mpg123.c:53
+#: Plugins/Input/vorbis/fileinfo.c:87
+msgid "Alternative"
+msgstr "वैकल्पिक"
+
+#: Plugins/Input/flac/fileinfo.c:53 Plugins/Input/mpg123/mpg123.c:54
+#: Plugins/Input/vorbis/fileinfo.c:88
+msgid "Ska"
+msgstr "ईस्का"
+
+#: Plugins/Input/flac/fileinfo.c:53 Plugins/Input/mpg123/mpg123.c:54
+#: Plugins/Input/vorbis/fileinfo.c:88
+msgid "Death Metal"
+msgstr "डेथ मेटल"
+
+#: Plugins/Input/flac/fileinfo.c:53 Plugins/Input/mpg123/mpg123.c:54
+#: Plugins/Input/vorbis/fileinfo.c:88
+msgid "Pranks"
+msgstr "प्रैनक्स"
+
+#: Plugins/Input/flac/fileinfo.c:53 Plugins/Input/mpg123/mpg123.c:54
+#: Plugins/Input/vorbis/fileinfo.c:88
+msgid "Soundtrack"
+msgstr "साउण्डट्रैक"
+
+#: Plugins/Input/flac/fileinfo.c:54 Plugins/Input/mpg123/mpg123.c:55
+#: Plugins/Input/vorbis/fileinfo.c:89
+msgid "Euro-Techno"
+msgstr "यूरो-टेक्नो"
+
+#: Plugins/Input/flac/fileinfo.c:54 Plugins/Input/mpg123/mpg123.c:55
+#: Plugins/Input/vorbis/fileinfo.c:89
+msgid "Ambient"
+msgstr "एम्बियन्ट"
+
+#: Plugins/Input/flac/fileinfo.c:54 Plugins/Input/mpg123/mpg123.c:55
+#: Plugins/Input/vorbis/fileinfo.c:89
+msgid "Trip-Hop"
+msgstr "ट्रिप-हॉप"
+
+#: Plugins/Input/flac/fileinfo.c:54 Plugins/Input/mpg123/mpg123.c:55
+#: Plugins/Input/vorbis/fileinfo.c:89
+msgid "Vocal"
+msgstr "वोकल"
+
+#: Plugins/Input/flac/fileinfo.c:55 Plugins/Input/mpg123/mpg123.c:56
+#: Plugins/Input/vorbis/fileinfo.c:90
+msgid "Jazz+Funk"
+msgstr "ज़ाज़+फ़ंक"
+
+#: Plugins/Input/flac/fileinfo.c:55 Plugins/Input/mpg123/mpg123.c:56
+#: Plugins/Input/vorbis/fileinfo.c:90
+msgid "Fusion"
+msgstr "फ़्यूज़न"
+
+#: Plugins/Input/flac/fileinfo.c:55 Plugins/Input/mpg123/mpg123.c:56
+#: Plugins/Input/vorbis/fileinfo.c:90
+msgid "Trance"
+msgstr "ट्रान्स"
+
+#: Plugins/Input/flac/fileinfo.c:55 Plugins/Input/mpg123/mpg123.c:56
+#: Plugins/Input/vorbis/fileinfo.c:90
+msgid "Classical"
+msgstr "क्लासीकल"
+
+#: Plugins/Input/flac/fileinfo.c:56 Plugins/Input/mpg123/mpg123.c:57
+#: Plugins/Input/vorbis/fileinfo.c:91
+msgid "Instrumental"
+msgstr "इन्सट्रुमेन्टल"
+
+#: Plugins/Input/flac/fileinfo.c:56 Plugins/Input/mpg123/mpg123.c:57
+#: Plugins/Input/vorbis/fileinfo.c:91
+msgid "Acid"
+msgstr "ऐसिड"
+
+#: Plugins/Input/flac/fileinfo.c:56 Plugins/Input/mpg123/mpg123.c:57
+#: Plugins/Input/vorbis/fileinfo.c:91
+msgid "House"
+msgstr "हाउस"
+
+#: Plugins/Input/flac/fileinfo.c:56 Plugins/Input/mpg123/mpg123.c:57
+#: Plugins/Input/vorbis/fileinfo.c:91
+msgid "Game"
+msgstr "गेम"
+
+#: Plugins/Input/flac/fileinfo.c:57 Plugins/Input/mpg123/mpg123.c:58
+#: Plugins/Input/vorbis/fileinfo.c:92
+msgid "Sound Clip"
+msgstr "साउण्ड क्लिप"
+
+#: Plugins/Input/flac/fileinfo.c:57 Plugins/Input/mpg123/mpg123.c:58
+#: Plugins/Input/vorbis/fileinfo.c:92
+msgid "Gospel"
+msgstr "गोस्पेल"
+
+#: Plugins/Input/flac/fileinfo.c:57 Plugins/Input/mpg123/mpg123.c:58
+#: Plugins/Input/vorbis/fileinfo.c:92
+msgid "Noise"
+msgstr "नॉइस्ज"
+
+#: Plugins/Input/flac/fileinfo.c:57
 msgid "Alt"
 msgstr ""
 
-#: Plugins/Input/flac/fileinfo.c:213
+#: Plugins/Input/flac/fileinfo.c:58 Plugins/Input/mpg123/mpg123.c:59
+#: Plugins/Input/vorbis/fileinfo.c:93
+msgid "Bass"
+msgstr "बॉस"
+
+#: Plugins/Input/flac/fileinfo.c:58 Plugins/Input/mpg123/mpg123.c:59
+#: Plugins/Input/vorbis/fileinfo.c:93
+msgid "Soul"
+msgstr "सोल"
+
+#: Plugins/Input/flac/fileinfo.c:58 Plugins/Input/mpg123/mpg123.c:59
+#: Plugins/Input/vorbis/fileinfo.c:93
+msgid "Punk"
+msgstr "पंक"
+
+#: Plugins/Input/flac/fileinfo.c:58 Plugins/Input/mpg123/mpg123.c:59
+#: Plugins/Input/vorbis/fileinfo.c:93
+msgid "Space"
+msgstr "स्पेस"
+
+#: Plugins/Input/flac/fileinfo.c:59 Plugins/Input/mpg123/mpg123.c:60
+#: Plugins/Input/vorbis/fileinfo.c:94
+msgid "Meditative"
+msgstr "मेडिटेट्वि"
+
+#: Plugins/Input/flac/fileinfo.c:59 Plugins/Input/mpg123/mpg123.c:60
+#: Plugins/Input/vorbis/fileinfo.c:94
+msgid "Instrumental Pop"
+msgstr "इन्सट्रुमेन्टल पॉप"
+
+#: Plugins/Input/flac/fileinfo.c:60 Plugins/Input/mpg123/mpg123.c:61
+#: Plugins/Input/vorbis/fileinfo.c:95
+msgid "Instrumental Rock"
+msgstr "इन्सट्रुमेन्टल रॉक"
+
+#: Plugins/Input/flac/fileinfo.c:60 Plugins/Input/mpg123/mpg123.c:61
+#: Plugins/Input/vorbis/fileinfo.c:95
+msgid "Ethnic"
+msgstr "ऐथिक"
+
+#: Plugins/Input/flac/fileinfo.c:60 Plugins/Input/mpg123/mpg123.c:61
+#: Plugins/Input/vorbis/fileinfo.c:95
+msgid "Gothic"
+msgstr "गोथिक"
+
+#: Plugins/Input/flac/fileinfo.c:61 Plugins/Input/mpg123/mpg123.c:62
+#: Plugins/Input/vorbis/fileinfo.c:96
+msgid "Darkwave"
+msgstr "डार्कवेव"
+
+#: Plugins/Input/flac/fileinfo.c:61 Plugins/Input/mpg123/mpg123.c:62
+#: Plugins/Input/vorbis/fileinfo.c:96
+msgid "Techno-Industrial"
+msgstr "टेक्नो-इंड्रस्ट्रियल"
+
+#: Plugins/Input/flac/fileinfo.c:61 Plugins/Input/mpg123/mpg123.c:62
+#: Plugins/Input/vorbis/fileinfo.c:96
+msgid "Electronic"
+msgstr "इलेक्ट्रानिक"
+
+#: Plugins/Input/flac/fileinfo.c:62 Plugins/Input/mpg123/mpg123.c:63
+#: Plugins/Input/vorbis/fileinfo.c:97
+msgid "Pop-Folk"
+msgstr "पॉप-फ़ाल्क"
+
+#: Plugins/Input/flac/fileinfo.c:62 Plugins/Input/mpg123/mpg123.c:63
+#: Plugins/Input/vorbis/fileinfo.c:97
+msgid "Eurodance"
+msgstr "यूरोडान्स"
+
+#: Plugins/Input/flac/fileinfo.c:62 Plugins/Input/mpg123/mpg123.c:63
+#: Plugins/Input/vorbis/fileinfo.c:97
+msgid "Dream"
+msgstr "ड्रीम"
+
+#: Plugins/Input/flac/fileinfo.c:63 Plugins/Input/mpg123/mpg123.c:64
+#: Plugins/Input/vorbis/fileinfo.c:98
+msgid "Southern Rock"
+msgstr "दक्षिणी रॉक"
+
+#: Plugins/Input/flac/fileinfo.c:63 Plugins/Input/mpg123/mpg123.c:64
+#: Plugins/Input/vorbis/fileinfo.c:98
+msgid "Comedy"
+msgstr "कामेडी"
+
+#: Plugins/Input/flac/fileinfo.c:63 Plugins/Input/mpg123/mpg123.c:64
+#: Plugins/Input/vorbis/fileinfo.c:98
+msgid "Cult"
+msgstr "कल्ट"
+
+#: Plugins/Input/flac/fileinfo.c:64 Plugins/Input/mpg123/mpg123.c:65
+#: Plugins/Input/vorbis/fileinfo.c:99
+msgid "Gangsta Rap"
+msgstr "गैगस्टा रैप"
+
+#: Plugins/Input/flac/fileinfo.c:64 Plugins/Input/mpg123/mpg123.c:65
+#: Plugins/Input/vorbis/fileinfo.c:99
+msgid "Top 40"
+msgstr "टॉप ४०"
+
+#: Plugins/Input/flac/fileinfo.c:64 Plugins/Input/mpg123/mpg123.c:65
+#: Plugins/Input/vorbis/fileinfo.c:99
+msgid "Christian Rap"
+msgstr "क्रिस्तानी रैप"
+
+#: Plugins/Input/flac/fileinfo.c:65 Plugins/Input/mpg123/mpg123.c:66
+#: Plugins/Input/vorbis/fileinfo.c:100
+msgid "Pop/Funk"
+msgstr "पॉप/फ़ंक"
+
+#: Plugins/Input/flac/fileinfo.c:65 Plugins/Input/mpg123/mpg123.c:66
+#: Plugins/Input/vorbis/fileinfo.c:100
+msgid "Jungle"
+msgstr "जंगल"
+
+#: Plugins/Input/flac/fileinfo.c:65 Plugins/Input/mpg123/mpg123.c:66
+#: Plugins/Input/vorbis/fileinfo.c:100
+msgid "Native American"
+msgstr "नेटिव अमेरिकन"
+
+#: Plugins/Input/flac/fileinfo.c:66 Plugins/Input/mpg123/mpg123.c:67
+#: Plugins/Input/vorbis/fileinfo.c:101
+msgid "Cabaret"
+msgstr "कैबरेट"
+
+#: Plugins/Input/flac/fileinfo.c:66 Plugins/Input/mpg123/mpg123.c:67
+#: Plugins/Input/vorbis/fileinfo.c:101
+msgid "New Wave"
+msgstr "न्यू वेव"
+
+#: Plugins/Input/flac/fileinfo.c:66 Plugins/Input/mpg123/mpg123.c:67
+#: Plugins/Input/vorbis/fileinfo.c:101
+msgid "Psychedelic"
+msgstr "साइडेलिक"
+
+#: Plugins/Input/flac/fileinfo.c:66 Plugins/Input/mpg123/mpg123.c:67
+#: Plugins/Input/vorbis/fileinfo.c:101
+msgid "Rave"
+msgstr "रेव"
+
+#: Plugins/Input/flac/fileinfo.c:67 Plugins/Input/mpg123/mpg123.c:68
+#: Plugins/Input/vorbis/fileinfo.c:102
+msgid "Showtunes"
+msgstr "सोटयून्स"
+
+#: Plugins/Input/flac/fileinfo.c:67 Plugins/Input/mpg123/mpg123.c:68
+#: Plugins/Input/vorbis/fileinfo.c:102
+msgid "Trailer"
+msgstr "ट्रेलर"
+
+#: Plugins/Input/flac/fileinfo.c:67 Plugins/Input/mpg123/mpg123.c:68
+#: Plugins/Input/vorbis/fileinfo.c:102
+msgid "Lo-Fi"
+msgstr "लो-फ़ाई"
+
+#: Plugins/Input/flac/fileinfo.c:67 Plugins/Input/mpg123/mpg123.c:68
+#: Plugins/Input/vorbis/fileinfo.c:102
+msgid "Tribal"
+msgstr "ट्राईबल"
+
+#: Plugins/Input/flac/fileinfo.c:68 Plugins/Input/mpg123/mpg123.c:69
+#: Plugins/Input/vorbis/fileinfo.c:103
+msgid "Acid Punk"
+msgstr "ऐसिड पंक"
+
+#: Plugins/Input/flac/fileinfo.c:68 Plugins/Input/mpg123/mpg123.c:69
+#: Plugins/Input/vorbis/fileinfo.c:103
+msgid "Acid Jazz"
+msgstr "ऐसिड जाज़"
+
+#: Plugins/Input/flac/fileinfo.c:68 Plugins/Input/mpg123/mpg123.c:69
+#: Plugins/Input/vorbis/fileinfo.c:103
+msgid "Polka"
+msgstr "पोल्का"
+
+#: Plugins/Input/flac/fileinfo.c:68 Plugins/Input/mpg123/mpg123.c:69
+#: Plugins/Input/vorbis/fileinfo.c:103
+msgid "Retro"
+msgstr "रेट्रो"
+
+#: Plugins/Input/flac/fileinfo.c:69 Plugins/Input/mpg123/mpg123.c:70
+#: Plugins/Input/vorbis/fileinfo.c:104
+msgid "Musical"
+msgstr "म्यूजिकल"
+
+#: Plugins/Input/flac/fileinfo.c:69 Plugins/Input/mpg123/mpg123.c:70
+#: Plugins/Input/vorbis/fileinfo.c:104
+msgid "Rock & Roll"
+msgstr "रॉक और रोल"
+
+#: Plugins/Input/flac/fileinfo.c:69 Plugins/Input/mpg123/mpg123.c:70
+#: Plugins/Input/vorbis/fileinfo.c:104
+msgid "Hard Rock"
+msgstr "हार्ड रॉक"
+
+#: Plugins/Input/flac/fileinfo.c:69 Plugins/Input/mpg123/mpg123.c:70
+#: Plugins/Input/vorbis/fileinfo.c:104
+msgid "Folk"
+msgstr "फ़ोक"
+
+#: Plugins/Input/flac/fileinfo.c:70 Plugins/Input/mpg123/mpg123.c:71
+#: Plugins/Input/vorbis/fileinfo.c:105
+msgid "Folk/Rock"
+msgstr "फ़ोक/रॉक"
+
+#: Plugins/Input/flac/fileinfo.c:70 Plugins/Input/mpg123/mpg123.c:71
+#: Plugins/Input/vorbis/fileinfo.c:105
+msgid "National Folk"
+msgstr "नेशनल फ़ोक"
+
+#: Plugins/Input/flac/fileinfo.c:70 Plugins/Input/mpg123/mpg123.c:71
+#: Plugins/Input/vorbis/fileinfo.c:105
+msgid "Swing"
+msgstr "स्वींग"
+
+#: Plugins/Input/flac/fileinfo.c:71 Plugins/Input/mpg123/mpg123.c:72
+#: Plugins/Input/vorbis/fileinfo.c:106
+msgid "Fast-Fusion"
+msgstr "फ़ास्त-फ़्यूजन"
+
+#: Plugins/Input/flac/fileinfo.c:71 Plugins/Input/mpg123/mpg123.c:72
+#: Plugins/Input/vorbis/fileinfo.c:106
+msgid "Bebob"
+msgstr "बेबोब"
+
+#: Plugins/Input/flac/fileinfo.c:71 Plugins/Input/mpg123/mpg123.c:72
+#: Plugins/Input/vorbis/fileinfo.c:106
+msgid "Latin"
+msgstr "लैटिन"
+
+#: Plugins/Input/flac/fileinfo.c:71 Plugins/Input/mpg123/mpg123.c:72
+#: Plugins/Input/vorbis/fileinfo.c:106
+msgid "Revival"
+msgstr "रिवाइवल"
+
+#: Plugins/Input/flac/fileinfo.c:72 Plugins/Input/mpg123/mpg123.c:73
+#: Plugins/Input/vorbis/fileinfo.c:107
+msgid "Celtic"
+msgstr "सेल्टिक"
+
+#: Plugins/Input/flac/fileinfo.c:72 Plugins/Input/mpg123/mpg123.c:73
+#: Plugins/Input/vorbis/fileinfo.c:107
+msgid "Bluegrass"
+msgstr "ब्लूग्रास"
+
+#: Plugins/Input/flac/fileinfo.c:72 Plugins/Input/mpg123/mpg123.c:73
+#: Plugins/Input/vorbis/fileinfo.c:107
+msgid "Avantgarde"
+msgstr "अवन्तगार्डे"
+
+#: Plugins/Input/flac/fileinfo.c:73 Plugins/Input/mpg123/mpg123.c:74
+#: Plugins/Input/vorbis/fileinfo.c:108
+msgid "Gothic Rock"
+msgstr "गोथिक रॉक"
+
+#: Plugins/Input/flac/fileinfo.c:73 Plugins/Input/mpg123/mpg123.c:74
+#: Plugins/Input/vorbis/fileinfo.c:108
+msgid "Progressive Rock"
+msgstr "प्रोग्रेसिव रॉक"
+
+#: Plugins/Input/flac/fileinfo.c:74 Plugins/Input/mpg123/mpg123.c:75
+#: Plugins/Input/vorbis/fileinfo.c:109
+msgid "Psychedelic Rock"
+msgstr "साइकिडेलिक रॉक"
+
+#: Plugins/Input/flac/fileinfo.c:74 Plugins/Input/mpg123/mpg123.c:75
+#: Plugins/Input/vorbis/fileinfo.c:109
+msgid "Symphonic Rock"
+msgstr "सिम्फ़ोन्कि रॉक"
+
+#: Plugins/Input/flac/fileinfo.c:74 Plugins/Input/mpg123/mpg123.c:75
+#: Plugins/Input/vorbis/fileinfo.c:109
+msgid "Slow Rock"
+msgstr "स्लो रॉक"
+
+#: Plugins/Input/flac/fileinfo.c:75 Plugins/Input/mpg123/mpg123.c:76
+#: Plugins/Input/vorbis/fileinfo.c:110
+msgid "Big Band"
+msgstr "बिग बैन्ड"
+
+#: Plugins/Input/flac/fileinfo.c:75 Plugins/Input/mpg123/mpg123.c:76
+#: Plugins/Input/vorbis/fileinfo.c:110
+msgid "Chorus"
+msgstr "कोरस"
+
+#: Plugins/Input/flac/fileinfo.c:75 Plugins/Input/mpg123/mpg123.c:76
+#: Plugins/Input/vorbis/fileinfo.c:110
+msgid "Easy Listening"
+msgstr "ईज़ी लिस्निंग"
+
+#: Plugins/Input/flac/fileinfo.c:76 Plugins/Input/mpg123/mpg123.c:77
+#: Plugins/Input/vorbis/fileinfo.c:111
+msgid "Acoustic"
+msgstr "ऑकाउस्टिक"
+
+#: Plugins/Input/flac/fileinfo.c:76 Plugins/Input/mpg123/mpg123.c:77
+#: Plugins/Input/vorbis/fileinfo.c:111
+msgid "Humour"
+msgstr "ह्यूमर"
+
+#: Plugins/Input/flac/fileinfo.c:76 Plugins/Input/mpg123/mpg123.c:77
+#: Plugins/Input/vorbis/fileinfo.c:111
+msgid "Speech"
+msgstr "स्पीच"
+
+#: Plugins/Input/flac/fileinfo.c:76 Plugins/Input/mpg123/mpg123.c:77
+#: Plugins/Input/vorbis/fileinfo.c:111
+msgid "Chanson"
+msgstr "चान्सन"
+
+#: Plugins/Input/flac/fileinfo.c:77 Plugins/Input/mpg123/mpg123.c:78
+#: Plugins/Input/vorbis/fileinfo.c:112
+msgid "Opera"
+msgstr "ओपेरा"
+
+#: Plugins/Input/flac/fileinfo.c:77 Plugins/Input/mpg123/mpg123.c:78
+#: Plugins/Input/vorbis/fileinfo.c:112
+msgid "Chamber Music"
+msgstr "चैम्बर म्यूजिक"
+
+#: Plugins/Input/flac/fileinfo.c:77 Plugins/Input/mpg123/mpg123.c:78
+#: Plugins/Input/vorbis/fileinfo.c:112
+msgid "Sonata"
+msgstr "सोनाटा"
+
+#: Plugins/Input/flac/fileinfo.c:77 Plugins/Input/mpg123/mpg123.c:78
+#: Plugins/Input/vorbis/fileinfo.c:112
+msgid "Symphony"
+msgstr "सिम्फ़ोनी"
+
+#: Plugins/Input/flac/fileinfo.c:78 Plugins/Input/mpg123/mpg123.c:79
+#: Plugins/Input/vorbis/fileinfo.c:113
+msgid "Booty Bass"
+msgstr "बूटी बॉस"
+
+#: Plugins/Input/flac/fileinfo.c:78 Plugins/Input/mpg123/mpg123.c:79
+#: Plugins/Input/vorbis/fileinfo.c:113
+msgid "Primus"
+msgstr "प्रिमस"
+
+#: Plugins/Input/flac/fileinfo.c:78 Plugins/Input/mpg123/mpg123.c:79
+#: Plugins/Input/vorbis/fileinfo.c:113
+msgid "Porn Groove"
+msgstr "पोर्नो ग्रूव"
+
+#: Plugins/Input/flac/fileinfo.c:79 Plugins/Input/mpg123/mpg123.c:80
+#: Plugins/Input/vorbis/fileinfo.c:114
+msgid "Satire"
+msgstr "सैटायर"
+
+#: Plugins/Input/flac/fileinfo.c:79 Plugins/Input/mpg123/mpg123.c:80
+#: Plugins/Input/vorbis/fileinfo.c:114
+msgid "Slow Jam"
+msgstr "स्लो जैम"
+
+#: Plugins/Input/flac/fileinfo.c:79 Plugins/Input/mpg123/mpg123.c:80
+#: Plugins/Input/vorbis/fileinfo.c:114
+msgid "Club"
+msgstr "क्लब"
+
+#: Plugins/Input/flac/fileinfo.c:79 Plugins/Input/mpg123/mpg123.c:80
+#: Plugins/Input/vorbis/fileinfo.c:114
+msgid "Tango"
+msgstr "टाँगो"
+
+#: Plugins/Input/flac/fileinfo.c:80 Plugins/Input/mpg123/mpg123.c:81
+#: Plugins/Input/vorbis/fileinfo.c:115
+msgid "Samba"
+msgstr "सॉबा"
+
+#: Plugins/Input/flac/fileinfo.c:80 Plugins/Input/mpg123/mpg123.c:81
+#: Plugins/Input/vorbis/fileinfo.c:115
+msgid "Folklore"
+msgstr "फ़ाल्कलोर"
+
+#: Plugins/Input/flac/fileinfo.c:80 Plugins/Input/mpg123/mpg123.c:81
+#: Plugins/Input/vorbis/fileinfo.c:115
+msgid "Ballad"
+msgstr "बालाड"
+
+#: Plugins/Input/flac/fileinfo.c:80 Plugins/Input/mpg123/mpg123.c:81
+#: Plugins/Input/vorbis/fileinfo.c:115
+msgid "Power Ballad"
+msgstr "पावर बालाड"
+
+#: Plugins/Input/flac/fileinfo.c:81 Plugins/Input/mpg123/mpg123.c:82
+#: Plugins/Input/vorbis/fileinfo.c:116
+msgid "Rhythmic Soul"
+msgstr "रिद्मिक सोल"
+
+#: Plugins/Input/flac/fileinfo.c:81 Plugins/Input/mpg123/mpg123.c:82
+#: Plugins/Input/vorbis/fileinfo.c:116
+msgid "Freestyle"
+msgstr "फ़्रीस्टाइल"
+
+#: Plugins/Input/flac/fileinfo.c:81 Plugins/Input/mpg123/mpg123.c:82
+#: Plugins/Input/vorbis/fileinfo.c:116
+msgid "Duet"
+msgstr "ड्यूट"
+
+#: Plugins/Input/flac/fileinfo.c:82 Plugins/Input/mpg123/mpg123.c:83
+#: Plugins/Input/vorbis/fileinfo.c:117
+msgid "Punk Rock"
+msgstr "पंक रॉक"
+
+#: Plugins/Input/flac/fileinfo.c:82 Plugins/Input/mpg123/mpg123.c:83
+#: Plugins/Input/vorbis/fileinfo.c:117
+msgid "Drum Solo"
+msgstr "ड्र्म सोलो"
+
+#: Plugins/Input/flac/fileinfo.c:82 Plugins/Input/mpg123/mpg123.c:83
+#: Plugins/Input/vorbis/fileinfo.c:117
+msgid "A Cappella"
+msgstr "एक कैपेला"
+
+#: Plugins/Input/flac/fileinfo.c:83 Plugins/Input/mpg123/mpg123.c:84
+#: Plugins/Input/vorbis/fileinfo.c:118
+msgid "Euro-House"
+msgstr "यूरो-हाउस"
+
+#: Plugins/Input/flac/fileinfo.c:83 Plugins/Input/mpg123/mpg123.c:84
+#: Plugins/Input/vorbis/fileinfo.c:118
+msgid "Dance Hall"
+msgstr "डान्स हाल"
+
+#: Plugins/Input/flac/fileinfo.c:83 Plugins/Input/mpg123/mpg123.c:84
+#: Plugins/Input/vorbis/fileinfo.c:118
+msgid "Goa"
+msgstr "गोआ"
+
+#: Plugins/Input/flac/fileinfo.c:84 Plugins/Input/mpg123/mpg123.c:85
+#: Plugins/Input/vorbis/fileinfo.c:119
+msgid "Drum & Bass"
+msgstr "ड्र्म व बॉस"
+
+#: Plugins/Input/flac/fileinfo.c:84 Plugins/Input/mpg123/mpg123.c:85
+#: Plugins/Input/vorbis/fileinfo.c:119
+msgid "Club-House"
+msgstr "क्लब-हाउस"
+
+#: Plugins/Input/flac/fileinfo.c:84 Plugins/Input/mpg123/mpg123.c:85
+#: Plugins/Input/vorbis/fileinfo.c:119
+msgid "Hardcore"
+msgstr "हार्डकोर"
+
+#: Plugins/Input/flac/fileinfo.c:85 Plugins/Input/mpg123/mpg123.c:86
+#: Plugins/Input/vorbis/fileinfo.c:120
+msgid "Terror"
+msgstr "टेरर"
+
+#: Plugins/Input/flac/fileinfo.c:85 Plugins/Input/mpg123/mpg123.c:86
+#: Plugins/Input/vorbis/fileinfo.c:120
+msgid "Indie"
+msgstr "ईन्डी"
+
+#: Plugins/Input/flac/fileinfo.c:85 Plugins/Input/mpg123/mpg123.c:86
+#: Plugins/Input/vorbis/fileinfo.c:120
+msgid "BritPop"
+msgstr "ब्रिटपॉप"
+
+#: Plugins/Input/flac/fileinfo.c:85 Plugins/Input/mpg123/mpg123.c:86
+#: Plugins/Input/vorbis/fileinfo.c:120
+msgid "Negerpunk"
+msgstr "नेगेरपंक"
+
+#: Plugins/Input/flac/fileinfo.c:86 Plugins/Input/mpg123/mpg123.c:87
+#: Plugins/Input/vorbis/fileinfo.c:121
+msgid "Polsk Punk"
+msgstr "पोल्स्क पंक"
+
+#: Plugins/Input/flac/fileinfo.c:86 Plugins/Input/mpg123/mpg123.c:87
+#: Plugins/Input/vorbis/fileinfo.c:121
+msgid "Beat"
+msgstr "बीट"
+
+#: Plugins/Input/flac/fileinfo.c:86 Plugins/Input/mpg123/mpg123.c:87
+#: Plugins/Input/vorbis/fileinfo.c:121
+msgid "Christian Gangsta Rap"
+msgstr "क्रिस्ट्यन गैन्गस्टा रैप"
+
+#: Plugins/Input/flac/fileinfo.c:87 Plugins/Input/mpg123/mpg123.c:88
+#: Plugins/Input/vorbis/fileinfo.c:122
+msgid "Heavy Metal"
+msgstr "हैवी मेटल"
+
+#: Plugins/Input/flac/fileinfo.c:87 Plugins/Input/mpg123/mpg123.c:88
+#: Plugins/Input/vorbis/fileinfo.c:122
+msgid "Black Metal"
+msgstr "ब्लैक मेटल"
+
+#: Plugins/Input/flac/fileinfo.c:87 Plugins/Input/mpg123/mpg123.c:88
+#: Plugins/Input/vorbis/fileinfo.c:122
+msgid "Crossover"
+msgstr "क्रासओवर"
+
+#: Plugins/Input/flac/fileinfo.c:88 Plugins/Input/mpg123/mpg123.c:89
+#: Plugins/Input/vorbis/fileinfo.c:123
+msgid "Contemporary Christian"
+msgstr "क्रिस्ट्यन समकालिक"
+
+#: Plugins/Input/flac/fileinfo.c:88 Plugins/Input/mpg123/mpg123.c:89
+#: Plugins/Input/vorbis/fileinfo.c:123
+msgid "Christian Rock"
+msgstr "क्रिस्ट्यन रॉक"
+
+#: Plugins/Input/flac/fileinfo.c:89 Plugins/Input/mpg123/mpg123.c:90
+#: Plugins/Input/vorbis/fileinfo.c:124
+msgid "Merengue"
+msgstr "मीर्नग्यू"
+
+#: Plugins/Input/flac/fileinfo.c:89 Plugins/Input/mpg123/mpg123.c:90
+#: Plugins/Input/vorbis/fileinfo.c:124
+msgid "Salsa"
+msgstr "सेल्सा"
+
+#: Plugins/Input/flac/fileinfo.c:89 Plugins/Input/mpg123/mpg123.c:90
+#: Plugins/Input/vorbis/fileinfo.c:124
+msgid "Thrash Metal"
+msgstr "थ्रैस मेटल"
+
+#: Plugins/Input/flac/fileinfo.c:90 Plugins/Input/mpg123/mpg123.c:91
+#: Plugins/Input/vorbis/fileinfo.c:125
+msgid "Anime"
+msgstr "ऐनिमे"
+
+#: Plugins/Input/flac/fileinfo.c:90 Plugins/Input/mpg123/mpg123.c:91
+#: Plugins/Input/vorbis/fileinfo.c:125
+msgid "JPop"
+msgstr "ज़ेपॉप"
+
+#: Plugins/Input/flac/fileinfo.c:90 Plugins/Input/mpg123/mpg123.c:91
+#: Plugins/Input/vorbis/fileinfo.c:125
+msgid "Synthpop"
+msgstr "सिन्थपॉप"
+
+#: Plugins/Input/flac/fileinfo.c:214
 #, fuzzy, c-format
 msgid "Samplerate: %d Hz"
 msgstr "सैम्पल की दर:"
 
-#: Plugins/Input/flac/fileinfo.c:214
+#: Plugins/Input/flac/fileinfo.c:215
 #, fuzzy, c-format
 msgid "Channels: %d"
 msgstr "अनेक चैनल:"
 
-#: Plugins/Input/flac/fileinfo.c:215
+#: Plugins/Input/flac/fileinfo.c:216
 #, c-format
 msgid "Bits/Sample: %d"
 msgstr ""
 
-#: Plugins/Input/flac/fileinfo.c:217
+#: Plugins/Input/flac/fileinfo.c:218
 #, c-format
 msgid "Blocksize: %d"
 msgstr ""
 
-#: Plugins/Input/flac/fileinfo.c:219
+#: Plugins/Input/flac/fileinfo.c:220
 #, c-format
 msgid ""
 "Blocksize: variable\n"
 "  min/max: %d/%d"
 msgstr ""
 
-#: Plugins/Input/flac/fileinfo.c:222
+#: Plugins/Input/flac/fileinfo.c:223
 #, fuzzy, c-format
 msgid ""
 "Samples: %llu\n"
@@ -1977,47 +1845,77 @@ msgstr ""
 "\n"
 "कुल लंबाई: %d:%d\n"
 
-#: Plugins/Input/flac/fileinfo.c:228
+#: Plugins/Input/flac/fileinfo.c:229
 #, fuzzy, c-format
 msgid "Filesize: %ld B"
 msgstr "संचिका का आकार:"
 
-#: Plugins/Input/flac/fileinfo.c:230
+#: Plugins/Input/flac/fileinfo.c:231
 #, c-format
 msgid ""
 "Avg. bitrate: %.1f kb/s\n"
 "Compression ratio: %.1f%%"
 msgstr ""
 
-#: Plugins/Input/flac/fileinfo.c:259 audacious/input.c:526
+#: Plugins/Input/flac/fileinfo.c:261 audacious/input.c:567
 msgid "Filename:"
 msgstr "संचिकानाम:"
 
-#: Plugins/Input/flac/fileinfo.c:271
+#: Plugins/Input/flac/fileinfo.c:273
 #, fuzzy
 msgid "Tag:"
 msgstr "टाँगो"
 
-#: Plugins/Input/flac/fileinfo.c:306 Plugins/Input/vorbis/fileinfo.c:625
+#: Plugins/Input/flac/fileinfo.c:280 Plugins/Input/mpg123/fileinfo.c:456
+#: Plugins/Input/vorbis/fileinfo.c:581
+msgid "Title:"
+msgstr "शीर्षक:"
+
+#: Plugins/Input/flac/fileinfo.c:287 Plugins/Input/mpg123/fileinfo.c:467
+#: Plugins/Input/vorbis/fileinfo.c:592
+msgid "Artist:"
+msgstr "कलाकार:"
+
+#: Plugins/Input/flac/fileinfo.c:294 Plugins/Input/mpg123/fileinfo.c:478
+#: Plugins/Input/vorbis/fileinfo.c:603
+msgid "Album:"
+msgstr "एलबम:"
+
+#: Plugins/Input/flac/fileinfo.c:301 Plugins/Input/mpg123/fileinfo.c:489
+#: Plugins/Input/vorbis/fileinfo.c:614
+msgid "Comment:"
+msgstr "टिप्पणी:"
+
+#: Plugins/Input/flac/fileinfo.c:308 Plugins/Input/vorbis/fileinfo.c:625
 msgid "Date:"
 msgstr "तिथि:"
 
-#: Plugins/Input/flac/fileinfo.c:345
+#: Plugins/Input/flac/fileinfo.c:316 Plugins/Input/mpg123/fileinfo.c:512
+#: Plugins/Input/vorbis/fileinfo.c:637
+msgid "Track number:"
+msgstr "ट्रैक की संख्या:"
+
+#: Plugins/Input/flac/fileinfo.c:324 Plugins/Input/mpg123/fileinfo.c:524
+#: Plugins/Input/vorbis/fileinfo.c:649
+msgid "Genre:"
+msgstr "प्रकार:"
+
+#: Plugins/Input/flac/fileinfo.c:347
 #, fuzzy
 msgid "Save"
 msgstr "/सुरक्षित करें"
 
-#: Plugins/Input/flac/fileinfo.c:351
+#: Plugins/Input/flac/fileinfo.c:353
 #, fuzzy
 msgid "Remove Tag"
 msgstr "/सभी को हटाएँ"
 
-#: Plugins/Input/flac/fileinfo.c:361
+#: Plugins/Input/flac/fileinfo.c:363
 #, fuzzy
 msgid "FLAC Info:"
 msgstr "सीडी के बारे में सूचना"
 
-#: Plugins/Input/flac/fileinfo.c:412 Plugins/Input/wma/wma.c:491
+#: Plugins/Input/flac/fileinfo.c:415
 #, fuzzy, c-format
 msgid "File Info - %s"
 msgstr "संचिका सूचना"
@@ -2070,10 +1968,15 @@ msgstr ""
 "%s होस्ट से जुड़ा नहीं जा सका\n"
 "सर्वर द्वारा रिपोर्ट: %s"
 
-#: Plugins/Input/flac/http.c:670 Plugins/Input/vorbis/http.c:603
+#: Plugins/Input/flac/http.c:675 Plugins/Input/vorbis/http.c:607
 #, c-format
 msgid "PRE-BUFFERING: %dKB/%dKB"
 msgstr "प्री-बफ़रिंग: %dKB/%dKB"
+
+#: Plugins/Input/flac/plugin.c:188
+#, fuzzy
+msgid "FLAC Audio Plugin"
+msgstr "सीडी आडियो प्लग-इन"
 
 #: Plugins/Input/modplug/gui/interface.cpp:117
 #, fuzzy
@@ -2081,13 +1984,13 @@ msgid "ModPlug Configuration"
 msgstr "एमपीईजी आडियो प्लग-इन संरचना"
 
 #: Plugins/Input/modplug/gui/interface.cpp:165
-#: Plugins/Input/mpg123/configure.c:234
+#: Plugins/Input/mpg123/configure.c:210
 #: Plugins/Input/timidity/src/interface.c:141
 msgid "16 bit"
 msgstr "१६ बिट"
 
 #: Plugins/Input/modplug/gui/interface.cpp:173
-#: Plugins/Input/mpg123/configure.c:243
+#: Plugins/Input/mpg123/configure.c:219
 #: Plugins/Input/timidity/src/interface.c:133
 msgid "8 bit"
 msgstr "८ बिट"
@@ -2265,6 +2168,13 @@ msgstr ""
 msgid "Effects"
 msgstr "<b>सभी प्रभाव</b>"
 
+#: Plugins/Input/modplug/gui/interface.cpp:725 Plugins/Output/alsa/about.c:46
+#: Plugins/Output/alsa/configure.c:405
+#: Plugins/Output/disk_writer/disk_writer.c:140
+#: Plugins/Output/disk_writer/disk_writer.c:405
+msgid "OK"
+msgstr ""
+
 #: Plugins/Input/modplug/gui/interface.cpp:793
 #, fuzzy
 msgid "MOD Info"
@@ -2282,20 +2192,6 @@ msgid ""
 "Instruments:\n"
 "Patterns:\n"
 "Channels:"
-msgstr ""
-
-#: Plugins/Input/modplug/gui/interface.cpp:825
-msgid ""
-"---\n"
-"---\n"
-"---\n"
-"---\n"
-"---\n"
-"---\n"
-"---\n"
-"---\n"
-"---\n"
-"---"
 msgstr ""
 
 #: Plugins/Input/modplug/gui/interface.cpp:866
@@ -2341,65 +2237,57 @@ msgstr ""
 msgid "Error loading pixmap file: %s"
 msgstr ""
 
-#: Plugins/Input/mpg123/configure.c:209
+#: Plugins/Input/mpg123/configure.c:185
 msgid "MPEG Audio Plugin Configuration"
 msgstr "एमपीईजी आडियो प्लग-इन संरचना"
 
-#: Plugins/Input/mpg123/configure.c:226
+#: Plugins/Input/mpg123/configure.c:202
 msgid "Resolution:"
 msgstr "विघटन:"
 
-#: Plugins/Input/mpg123/configure.c:250 Plugins/Input/vorbis/fileinfo.c:863
+#: Plugins/Input/mpg123/configure.c:226 Plugins/Input/vorbis/fileinfo.c:863
 #: Plugins/Input/vorbis/fileinfo.c:919
 msgid "Channels:"
 msgstr "अनेक चैनल:"
 
-#: Plugins/Input/mpg123/configure.c:258
+#: Plugins/Input/mpg123/configure.c:234
 msgid "Stereo (if available)"
 msgstr "स्टीरियो (यदि उपलब्ध है)"
 
-#: Plugins/Input/mpg123/configure.c:269
+#: Plugins/Input/mpg123/configure.c:245
 #: Plugins/Input/timidity/src/interface.c:166
 msgid "Mono"
 msgstr "मोनो"
 
-#: Plugins/Input/mpg123/configure.c:276
+#: Plugins/Input/mpg123/configure.c:252
 msgid "Down sample:"
 msgstr "डाउन उदाहरण:"
 
-#: Plugins/Input/mpg123/configure.c:285
+#: Plugins/Input/mpg123/configure.c:261
 msgid "1:1 (44 kHz)"
 msgstr "१:१ (४४ किलोहर्टज)"
 
-#: Plugins/Input/mpg123/configure.c:296
+#: Plugins/Input/mpg123/configure.c:272
 msgid "1:2 (22 kHz)"
 msgstr "१:२ (२२ किलोहर्टज)"
 
-#: Plugins/Input/mpg123/configure.c:307
+#: Plugins/Input/mpg123/configure.c:283
 msgid "1:4 (11 kHz)"
 msgstr "१:४ (११ किलोहर्टज)"
 
-#: Plugins/Input/mpg123/configure.c:316
+#: Plugins/Input/mpg123/configure.c:292
 msgid "Decoder"
 msgstr "कूटवाचक"
 
-#: Plugins/Input/mpg123/configure.c:426
+#: Plugins/Input/mpg123/configure.c:399
 msgid "ID3 Tags:"
 msgstr "आईडी-३ के टैग:"
 
-#: Plugins/Input/mpg123/configure.c:434
+#: Plugins/Input/mpg123/configure.c:407
 msgid "Disable ID3V2 tags"
 msgstr "आईडी-३वी-२ के टैगों को असमर्थन"
 
-#: Plugins/Input/mpg123/configure.c:443
-msgid "Convert non-UTF8 ID3 tags to UTF8"
-msgstr "नॉन-यूटीएफ़८ आईडी३ टैगों को यूटीएफ़८ में परिवर्तित करें"
-
-#: Plugins/Input/mpg123/configure.c:456
-msgid "ID3 encoding:"
-msgstr "आईडी३ एनकोडिंग:"
-
-#: Plugins/Input/mpg123/configure.c:481
+#: Plugins/Input/mpg123/configure.c:427
 msgid "ID3 format:"
 msgstr "आईडी-३ प्रारूप:"
 
@@ -2415,15 +2303,35 @@ msgstr "द्वि-चैनल "
 msgid "Single channel"
 msgstr "एकल चैनल"
 
-#: Plugins/Input/mpg123/fileinfo.c:221 Plugins/Input/mpg123/fileinfo.c:748
+#: Plugins/Input/mpg123/fileinfo.c:221 Plugins/Input/mpg123/fileinfo.c:763
 #, c-format
 msgid "%d KBit/s"
 msgstr "%d किलोबाइट्स प्रति सेकण्ड"
 
-#: Plugins/Input/mpg123/fileinfo.c:222 Plugins/Input/mpg123/fileinfo.c:743
+#: Plugins/Input/mpg123/fileinfo.c:222 Plugins/Input/mpg123/fileinfo.c:758
 #, c-format
 msgid "%ld Hz"
 msgstr "%ld हर्टज़"
+
+#: Plugins/Input/mpg123/fileinfo.c:239
+msgid "None"
+msgstr "कुछ नहीं"
+
+#: Plugins/Input/mpg123/fileinfo.c:240
+msgid "50/15 ms"
+msgstr "५०/१५ मिलीसेकण्ड"
+
+#: Plugins/Input/mpg123/fileinfo.c:242
+msgid "CCIT J.17"
+msgstr "सी०सी०आई०टी० जे.१७"
+
+#: Plugins/Input/mpg123/fileinfo.c:243
+msgid "No"
+msgstr "नहीं"
+
+#: Plugins/Input/mpg123/fileinfo.c:244
+msgid "Yes"
+msgstr "हाँ"
 
 #: Plugins/Input/mpg123/fileinfo.c:304
 msgid " MPEG Info "
@@ -2474,6 +2382,16 @@ msgstr "जोर:"
 msgid " ID3 Tag "
 msgstr "आईडी३ टैग "
 
+#: Plugins/Input/mpg123/fileinfo.c:500
+msgid "Year:"
+msgstr "वर्ष:"
+
+#: Plugins/Input/mpg123/fileinfo.c:624 Plugins/Input/vorbis/fileinfo.c:1015
+#: audacious/mainwin.c:805
+#, c-format
+msgid "%s - Audacious"
+msgstr ""
+
 #: Plugins/Input/mpg123/fileinfo.c:642 Plugins/Input/mpg123/fileinfo.c:645
 #: Plugins/Input/mpg123/fileinfo.c:648 Plugins/Input/mpg123/fileinfo.c:651
 #: Plugins/Input/mpg123/fileinfo.c:654 Plugins/Input/mpg123/fileinfo.c:657
@@ -2484,14 +2402,14 @@ msgstr "आईडी३ टैग "
 msgid "N/A"
 msgstr "अमान्य"
 
-#: Plugins/Input/mpg123/fileinfo.c:793 Plugins/Input/mpg123/fileinfo.c:795
-#: Plugins/Input/mpg123/fileinfo.c:796 Plugins/Input/mpg123/fileinfo.c:797
-#: Plugins/Input/mpg123/fileinfo.c:799
+#: Plugins/Input/mpg123/fileinfo.c:808 Plugins/Input/mpg123/fileinfo.c:810
+#: Plugins/Input/mpg123/fileinfo.c:811 Plugins/Input/mpg123/fileinfo.c:812
+#: Plugins/Input/mpg123/fileinfo.c:814
 #, c-format
 msgid "%s"
 msgstr "%s"
 
-#: Plugins/Input/mpg123/fileinfo.c:798 Plugins/Input/wma/wma.c:521
+#: Plugins/Input/mpg123/fileinfo.c:813
 #, c-format
 msgid "%lu Bytes"
 msgstr "%lu बाइट्स"
@@ -2501,16 +2419,20 @@ msgstr "%lu बाइट्स"
 msgid "Couldn't connect to host %s:%d"
 msgstr "%s होस्ट से जुड़ा नहीं जा सका"
 
-#: Plugins/Input/mpg123/http.c:686
+#: Plugins/Input/mpg123/http.c:690
 #, fuzzy, c-format
 msgid "PRE-BUFFERING: %zuKB/%zuKB"
 msgstr "प्री-बफ़रिंग: %dKB/%dKB"
 
-#: Plugins/Input/mpg123/mpg123.c:922
+#: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:92
+msgid "AlternRock"
+msgstr "अल्ट्रनरॉक"
+
+#: Plugins/Input/mpg123/mpg123.c:953
 msgid "About MPEG Audio Plugin"
 msgstr "एमपीईजी आडियो प्लग-इन के बारे में"
 
-#: Plugins/Input/mpg123/mpg123.c:923
+#: Plugins/Input/mpg123/mpg123.c:954
 msgid ""
 "Audacious decoding engine by William Pitcock <nenolod@nenolod.net>, derived "
 "from:\n"
@@ -2519,7 +2441,7 @@ msgid ""
 "Based on the original XMMS plugin."
 msgstr ""
 
-#: Plugins/Input/mpg123/mpg123.c:961
+#: Plugins/Input/mpg123/mpg123.c:993
 msgid "MPEG Audio Plugin"
 msgstr "एमपीईजी आडियो प्लग-इन"
 
@@ -2570,7 +2492,7 @@ msgstr ""
 msgid "TiMidity Plugin %s"
 msgstr "इन्पुट प्लग-इन: %s"
 
-#: Plugins/Input/timidity/src/xmms-timidity.c:352
+#: Plugins/Input/timidity/src/xmms-timidity.c:372
 #, fuzzy
 msgid "Couldn't load MIDI file"
 msgstr "%s को खोजा नहीं जा सका"
@@ -2597,53 +2519,43 @@ msgstr ""
 msgid "Tone Generator %s"
 msgstr ""
 
-#: Plugins/Input/vorbis/configure.c:118
+#: Plugins/Input/vorbis/configure.c:107
 msgid "Select the directory where you want to store the Ogg Vorbis streams:"
 msgstr "उस निर्देशिका का चयन करें जहाँ आप ओगी वोर्बिस धाराओं को सुरक्षित रखना चाहते है:"
 
-#: Plugins/Input/vorbis/configure.c:208
+#: Plugins/Input/vorbis/configure.c:186
 msgid "Ogg Vorbis Audio Plugin Configuration"
 msgstr "ओगी वोर्बिस आडियो प्लग-इन संरचना"
 
-#: Plugins/Input/vorbis/configure.c:306
+#: Plugins/Input/vorbis/configure.c:284
 msgid "Ogg Vorbis Tags:"
 msgstr "ओगी वोर्बिस के टैग:"
 
-#: Plugins/Input/vorbis/configure.c:315
-#, fuzzy
-msgid "Convert non-UTF8 Vorbis tags to UTF8"
-msgstr "नॉन-यूटीएफ़८ आईडी३ टैगों को यूटीएफ़८ में परिवर्तित करें"
-
-#: Plugins/Input/vorbis/configure.c:328
-#, fuzzy
-msgid "Vorbis encoding:"
-msgstr "आईडी३ एनकोडिंग:"
-
-#: Plugins/Input/vorbis/configure.c:370
+#: Plugins/Input/vorbis/configure.c:323
 msgid "ReplayGain Settings:"
 msgstr "रीप्लेगेन की समायोजनाओं:"
 
-#: Plugins/Input/vorbis/configure.c:378
+#: Plugins/Input/vorbis/configure.c:331
 msgid "Enable Clipping Prevention"
 msgstr "क्लीपिंग रोकथाम सक्रिय"
 
-#: Plugins/Input/vorbis/configure.c:383
+#: Plugins/Input/vorbis/configure.c:336
 msgid "Enable ReplayGain"
 msgstr "रीप्लेगेन सक्रिय"
 
-#: Plugins/Input/vorbis/configure.c:388
+#: Plugins/Input/vorbis/configure.c:341
 msgid "ReplayGain Type:"
 msgstr "रीप्लेगेन प्रकार:"
 
-#: Plugins/Input/vorbis/configure.c:399
+#: Plugins/Input/vorbis/configure.c:352
 msgid "use Track Gain/Peak"
 msgstr "गेन/पीक ट्रैक का उपयोग"
 
-#: Plugins/Input/vorbis/configure.c:409
+#: Plugins/Input/vorbis/configure.c:362
 msgid "use Album Gain/Peak"
 msgstr "गेन/पीक एलबम का उपयोग"
 
-#: Plugins/Input/vorbis/configure.c:421
+#: Plugins/Input/vorbis/configure.c:374
 msgid "Enable 6dB Boost + Hard Limiting"
 msgstr "६-डीबी बूस्ट + हार्ड लिमटिंग सक्रिय"
 
@@ -2729,7 +2641,7 @@ msgstr "लंबाई:"
 msgid "%d KBit/s (nominal)"
 msgstr "%d किलोबाईट्स/सेकण्ड (सामान्य)"
 
-#: Plugins/Input/vorbis/fileinfo.c:957 Plugins/Input/wma/wma.c:512
+#: Plugins/Input/vorbis/fileinfo.c:957
 #, c-format
 msgid "%d Hz"
 msgstr "%d हर्टज़"
@@ -2749,15 +2661,15 @@ msgstr "%d:%.2d"
 msgid "%d Bytes"
 msgstr "%d बाईट्स"
 
-#: Plugins/Input/vorbis/vorbis.c:135
+#: Plugins/Input/vorbis/vorbis.c:136
 msgid "Ogg Vorbis Audio Plugin"
 msgstr "ओगी वोर्बिस आडियो प्लग-इन"
 
-#: Plugins/Input/vorbis/vorbis.c:817
+#: Plugins/Input/vorbis/vorbis.c:806
 msgid "About Ogg Vorbis Audio Plugin"
 msgstr "ओगी वोर्बिस आडियो प्लग-इन के बारे में"
 
-#: Plugins/Input/vorbis/vorbis.c:823
+#: Plugins/Input/vorbis/vorbis.c:812
 msgid ""
 "Ogg Vorbis Plugin by the Xiph.org Foundation\n"
 "\n"
@@ -2841,115 +2753,20 @@ msgstr ""
 msgid "WAV Audio Plugin"
 msgstr "वेव आडियो प्लग-इन"
 
-#: Plugins/Input/wma/wma.c:122
+#: Plugins/Input/wma/wma.c:123
 #, c-format
 msgid "WMA Player %s"
 msgstr ""
 
-#: Plugins/Input/wma/wma.c:155
+#: Plugins/Input/wma/wma.c:156
 #, fuzzy, c-format
 msgid "About %s"
 msgstr "BMP के बारे में"
 
-#: Plugins/Input/wma/wma.c:168
+#: Plugins/Input/wma/wma.c:169
 #, fuzzy
 msgid " Close "
 msgstr "/बन्द"
-
-#: Plugins/Input/wma/wma.c:474
-#, c-format
-msgid "Info dialog is already opened!\n"
-msgstr ""
-
-#: Plugins/Input/wma/wma.c:499
-#, fuzzy, c-format
-msgid "%d Kb/s"
-msgstr "%d किलोबाइट्स प्रति सेकण्ड"
-
-#: Plugins/Input/wma/wma.c:507
-#, c-format
-msgid "%02d:%02d:%02d"
-msgstr ""
-
-#: Plugins/Input/wma/wma.c:544
-#, fuzzy
-msgid "<b>Name:</b>"
-msgstr "<b>संचिकानाम</b>"
-
-#: Plugins/Input/wma/wma.c:580
-#, fuzzy
-msgid "<b>WMA Version:</b>"
-msgstr "<b>कल्पना</b>"
-
-#: Plugins/Input/wma/wma.c:589
-#, fuzzy
-msgid "<b>Bitrate:</b>"
-msgstr "बिट-दर:"
-
-#: Plugins/Input/wma/wma.c:598
-#, fuzzy
-msgid "<b>Samplerate:</b>"
-msgstr "सैम्पल की दर:"
-
-#: Plugins/Input/wma/wma.c:607
-#, fuzzy
-msgid "<b>Channels:</b>"
-msgstr "अनेक चैनल:"
-
-#: Plugins/Input/wma/wma.c:616
-#, fuzzy
-msgid "<b>Play time:</b>"
-msgstr "<b>संचिकानाम</b>"
-
-#: Plugins/Input/wma/wma.c:625
-#, fuzzy
-msgid "<b>Filesize:</b>"
-msgstr "<b>संचिकानाम</b>"
-
-#: Plugins/Input/wma/wma.c:676
-#, fuzzy
-msgid "WMA Info"
-msgstr "सीडी के बारे में सूचना"
-
-#: Plugins/Input/wma/wma.c:701
-#, fuzzy
-msgid "<b>Artist:</b>"
-msgstr "<b>प्रीसेट्स</b>"
-
-#: Plugins/Input/wma/wma.c:710
-#, fuzzy
-msgid "<b>Title:</b>"
-msgstr "<b>संचिकानाम</b>"
-
-#: Plugins/Input/wma/wma.c:719
-#, fuzzy
-msgid "<b>Album:</b>"
-msgstr "<b>संचिकानाम</b>"
-
-#: Plugins/Input/wma/wma.c:728
-#, fuzzy
-msgid "<b>Comments:</b>"
-msgstr "<b>फ़ॉन्टस (_F)</b>"
-
-#: Plugins/Input/wma/wma.c:737
-#, fuzzy
-msgid "<b>Year:</b>"
-msgstr "<b>संचिकानाम</b>"
-
-#: Plugins/Input/wma/wma.c:746
-#, fuzzy
-msgid "<b>Track:</b>"
-msgstr "<b>प्लेबैक</b>"
-
-#: Plugins/Input/wma/wma.c:755
-#, fuzzy
-msgid "<b>Genre:</b>"
-msgstr "<b>संचिकानाम</b>"
-
-#: Plugins/Input/wma/wma.c:821
-#, fuzzy
-msgid "Tags"
-msgstr "टाँगो"
 
 #: Plugins/Output/OSS/OSS.c:53
 msgid "OSS Output Plugin"
@@ -3009,7 +2826,7 @@ msgstr "डिफ़ाल्ट"
 msgid "OSS Driver configuration"
 msgstr "ओएसएस चालक संरचना"
 
-#: Plugins/Output/OSS/configure.c:215 Plugins/Output/alsa/configure.c:288
+#: Plugins/Output/OSS/configure.c:215 Plugins/Output/alsa/configure.c:285
 #: Plugins/Output/sun/configure.c:182
 msgid "Audio device:"
 msgstr "आडियो उपकरण:"
@@ -3018,7 +2835,7 @@ msgstr "आडियो उपकरण:"
 msgid "Use alternate device:"
 msgstr "वैकल्पिक उपकरण का उपयोग:"
 
-#: Plugins/Output/OSS/configure.c:258 Plugins/Output/alsa/configure.c:333
+#: Plugins/Output/OSS/configure.c:258 Plugins/Output/alsa/configure.c:330
 #: Plugins/Output/sun/configure.c:219
 msgid "Mixer device:"
 msgstr "मिक्सर उपकरण:"
@@ -3097,52 +2914,51 @@ msgstr ""
 msgid "ALSA %s output plugin"
 msgstr "आल्सा %s आउटपुट प्लग-इन"
 
-#: Plugins/Output/alsa/configure.c:152
+#: Plugins/Output/alsa/configure.c:150
 msgid "Unknown soundcard"
 msgstr "अज्ञात साउण्डकार्ड"
 
-#: Plugins/Output/alsa/configure.c:207
+#: Plugins/Output/alsa/configure.c:205
 #, c-format
 msgid "Default PCM device (%s)"
 msgstr "डिफ़ाल्ट पीसीएम उपकरण (%s)"
 
-#: Plugins/Output/alsa/configure.c:274
+#: Plugins/Output/alsa/configure.c:271
 msgid "ALSA Driver configuration"
 msgstr "आल्सा चालक की संरचना"
 
-#: Plugins/Output/alsa/configure.c:302
+#: Plugins/Output/alsa/configure.c:299
 msgid "Mixer:"
 msgstr "मिश्रक:"
 
-#: Plugins/Output/alsa/configure.c:310
+#: Plugins/Output/alsa/configure.c:307
 msgid "Use software volume control"
 msgstr "सॉफ़्टवेयर वाल्यूम नियंत्रक का उपयोग"
 
-#: Plugins/Output/alsa/configure.c:320
+#: Plugins/Output/alsa/configure.c:317
 msgid "Mixer card:"
 msgstr "मिश्रक कार्ड:"
 
-#: Plugins/Output/alsa/configure.c:353
+#: Plugins/Output/alsa/configure.c:350
 msgid "Device settings"
 msgstr "उपकरण की समायोजनायें:"
 
-#: Plugins/Output/alsa/configure.c:359
+#: Plugins/Output/alsa/configure.c:356
 #, fuzzy
 msgid "Soundcard:"
 msgstr "साउण्डट्रैक"
 
-#: Plugins/Output/alsa/configure.c:372 Plugins/Output/alsa/configure.c:414
+#: Plugins/Output/alsa/configure.c:369
 msgid "Buffer time (ms):"
 msgstr "बफ़र समय (एम०एस०):"
 
-#: Plugins/Output/alsa/configure.c:386
+#: Plugins/Output/alsa/configure.c:383
 msgid "Period time (ms):"
 msgstr "अवधि समय (एम०एस०):"
 
-#: Plugins/Output/alsa/configure.c:401
-#, fuzzy
-msgid "Audacious:"
-msgstr "एमपीईजी आडियो प्लग-इन के बारे में"
+#: Plugins/Output/alsa/configure.c:398
+msgid "Advanced settings"
+msgstr "उन्नत समायोजनायें"
 
 #: Plugins/Output/arts/configure.c:51
 #, fuzzy
@@ -3243,12 +3059,12 @@ msgstr "सर्वर"
 msgid "eSound Output Plugin"
 msgstr "ई-साउण्ड आउटपुट प्लग-इन"
 
-#: Plugins/Output/jack/jack.c:572
+#: Plugins/Output/jack/jack.c:591
 #, fuzzy
 msgid "About JACK Output Plugin 0.15"
 msgstr "ई-साउण्ड आउटपुट प्लग-इन"
 
-#: Plugins/Output/jack/jack.c:573
+#: Plugins/Output/jack/jack.c:592
 msgid ""
 "XMMS jack Driver 0.15\n"
 "\n"
@@ -3324,12 +3140,12 @@ msgstr "ब्लर स्कोप: रंग का चयन"
 msgid "Options:"
 msgstr "विकल्प:"
 
-#: audacious/about.c:125 audacious/credits.c:292
+#: audacious/about.c:125 audacious/credits.c:296
 #, fuzzy
 msgid "About Audacious"
 msgstr "एमपीईजी आडियो प्लग-इन के बारे में"
 
-#: audacious/about.c:174 audacious/credits.c:337
+#: audacious/about.c:174 audacious/credits.c:341
 msgid "Credits"
 msgstr "आभार"
 
@@ -3351,38 +3167,8 @@ msgstr ""
 msgid "Audacious core developers:"
 msgstr "BMP की वरीयतायें"
 
-#: audacious/credits.c:52 audacious/credits.c:61 audacious/credits.c:66
-msgid "George Averill"
-msgstr ""
-
-#: audacious/credits.c:53 audacious/credits.c:73
-msgid "Giacomo Lozito"
-msgstr ""
-
-#: audacious/credits.c:54 audacious/credits.c:67 audacious/credits.c:74
-#: audacious/credits.c:80
-msgid "William Pitcock"
-msgstr ""
-
-#: audacious/credits.c:55 audacious/credits.c:75
-msgid "Derek Pomery"
-msgstr ""
-
-#: audacious/credits.c:56 audacious/credits.c:76 audacious/credits.c:82
-#: audacious/credits.c:132
-msgid "Tony Vroon"
-msgstr ""
-
-#: audacious/credits.c:57
-msgid "Yoshiki Yazawa"
-msgstr ""
-
 #: audacious/credits.c:60
 msgid "Graphics:"
-msgstr ""
-
-#: audacious/credits.c:62
-msgid "Stephan Sokolow"
 msgstr ""
 
 #: audacious/credits.c:65
@@ -3393,332 +3179,120 @@ msgstr "डिफ़ाल्ट स्किन:"
 msgid "Plugin development:"
 msgstr ""
 
-#: audacious/credits.c:71
-msgid "Kiyoshi Aman"
-msgstr ""
-
-#: audacious/credits.c:72
-msgid "Shay Green"
-msgstr ""
-
 #: audacious/credits.c:79
 #, fuzzy
 msgid "0.1.x developers:"
 msgstr "सभी विकासकर्ता:"
-
-#: audacious/credits.c:81
-msgid "Mohammed Sameer"
-msgstr ""
 
 #: audacious/credits.c:85
 #, fuzzy
 msgid "BMP Developers:"
 msgstr "सभी विकासकर्ता:"
 
-#: audacious/credits.c:86
-msgid "Artem Baguinski"
-msgstr "Artem Baguinski"
-
-#: audacious/credits.c:87 audacious/credits.c:195
-msgid "Edward Brocklesby"
-msgstr "Edward Brocklesby"
-
-#: audacious/credits.c:88 audacious/credits.c:124
-msgid "Chong Kai Xiong"
-msgstr "Chong Kai Xiong"
-
-#: audacious/credits.c:89
-msgid "Milosz Derezynski"
-msgstr "Milosz Derezynski"
-
-#: audacious/credits.c:90
-msgid "David Lau"
-msgstr "David Lau"
-
-#: audacious/credits.c:91
-msgid "Ole Andre Vadla Ravnaas"
-msgstr "Ole Andre Vadla Ravnaas"
-
-#: audacious/credits.c:92
-msgid "Michiel Sikkes"
-msgstr "Michiel Sikkes"
-
-#: audacious/credits.c:93
-msgid "Andrei Badea"
-msgstr "Andrew Badea"
-
-#: audacious/credits.c:94
-msgid "Peter Behroozi"
-msgstr "Peter Behroozi"
-
-#: audacious/credits.c:95
-msgid "Bernard Blackham"
-msgstr "Bernard Blackham"
-
-#: audacious/credits.c:96
-msgid "Oliver Blin"
-msgstr "Oliver Blin"
-
-#: audacious/credits.c:97
-msgid "Tomas Bzatek"
-msgstr "Thomas Bzatek"
-
-#: audacious/credits.c:98 audacious/credits.c:175
-msgid "Liviu Danicel"
-msgstr "Liviu Danicel"
-
-#: audacious/credits.c:99
-msgid "Jon Dowland"
-msgstr "Jon Dowland"
-
-#: audacious/credits.c:100
-msgid "Artur Frysiak"
-msgstr "Artur Frysiak"
-
-#: audacious/credits.c:101
-msgid "Sebastian Kapfer"
-msgstr "Sebastian Kapfer"
-
-#: audacious/credits.c:102
-msgid "Lukas Koberstein"
-msgstr "Lukas Koberstein"
-
-#: audacious/credits.c:103 audacious/credits.c:179
-msgid "Dan Korostelev"
-msgstr "Dan Korostelev"
-
-#: audacious/credits.c:104
-msgid "Jolan Luff"
-msgstr "Jolan Luff"
-
-#: audacious/credits.c:105
-msgid "Michael Marineau"
-msgstr "Michael Marineau"
-
-#: audacious/credits.c:106
-msgid "Tim-Philipp Muller"
-msgstr "Tim-Philipp Muller"
-
-#: audacious/credits.c:107
-msgid "Julien Portalier"
-msgstr "Julien Portalier"
-
-#: audacious/credits.c:108
-msgid "Andrew Ruder"
-msgstr "Andrew Ruder"
-
-#: audacious/credits.c:109
-msgid "Olivier Samyn"
-msgstr "Olivier Samyn"
-
-#: audacious/credits.c:110
-msgid "Martijn Vernooij"
-msgstr "Martijn Vernooij"
-
 #: audacious/credits.c:117
 msgid "Brazilian Portuguese:"
 msgstr "पुर्तगाली ब्राजील:"
-
-#: audacious/credits.c:118
-msgid "Philipi Pinto"
-msgstr "Philipi Pinto"
 
 #: audacious/credits.c:120
 msgid "Breton:"
 msgstr "Breton:"
 
-#: audacious/credits.c:121
-msgid "Thierry Vignaud"
-msgstr "Thierry Vignaud"
-
 #: audacious/credits.c:123
 msgid "Chinese:"
 msgstr "चीनी:"
-
-#: audacious/credits.c:125
-msgid "Chao-Hsiung Liao"
-msgstr ""
 
 #: audacious/credits.c:127
 msgid "Czech:"
 msgstr "चेक:"
 
-#: audacious/credits.c:128
-msgid "Jan Narovec"
-msgstr "Jan Narovec"
-
 #: audacious/credits.c:130
 msgid "Dutch:"
 msgstr "डच:"
-
-#: audacious/credits.c:131
-msgid "Laurens Buhler"
-msgstr "Laurens Buhler"
 
 #: audacious/credits.c:134
 #, fuzzy
 msgid "Finnish:"
 msgstr "स्पैनिस:"
 
-#: audacious/credits.c:135
-msgid "Pauli Virtanen"
-msgstr ""
-
 #: audacious/credits.c:137
 msgid "French:"
 msgstr "फ़्रेंच:"
-
-#: audacious/credits.c:138
-msgid "David Le Brun"
-msgstr "David Le Brun"
 
 #: audacious/credits.c:140
 msgid "German:"
 msgstr "जर्मन:"
 
-#: audacious/credits.c:141
-msgid "Matthias Debus"
-msgstr "Matthias Debus"
-
-#: audacious/credits.c:143
+#: audacious/credits.c:144
 #, fuzzy
 msgid "Georgian: "
 msgstr "जर्मन:"
 
-#: audacious/credits.c:144
-msgid "George Machitidze"
-msgstr ""
-
-#: audacious/credits.c:146
+#: audacious/credits.c:147
 msgid "Greek:"
 msgstr "ग्रीक:"
 
-#: audacious/credits.c:147
-msgid "Kouzinopoulos Haris"
-msgstr "Kouzinopoulos Haris"
-
-#: audacious/credits.c:148
-msgid "Stavros Giannouris"
-msgstr ""
-
-#: audacious/credits.c:150
+#: audacious/credits.c:152
 msgid "Hindi:"
 msgstr ""
 
-#: audacious/credits.c:151
-msgid "Dhananjaya Sharma"
-msgstr ""
-
-#: audacious/credits.c:153
+#: audacious/credits.c:155
 msgid "Hungarian:"
 msgstr "हंगारियन:"
 
-#: audacious/credits.c:154
-msgid "Laszlo Dvornik"
-msgstr "Laszlo Dvornik"
-
-#: audacious/credits.c:156
+#: audacious/credits.c:158
 msgid "Italian:"
 msgstr "इटैलियन:"
 
-#: audacious/credits.c:157
-msgid "Alessio D'Ascanio"
-msgstr "Alessio D'Ascanio"
-
-#: audacious/credits.c:159
+#: audacious/credits.c:162
 msgid "Japanese:"
 msgstr "जापानी:"
 
-#: audacious/credits.c:160
-msgid "Dai"
-msgstr ""
-
-#: audacious/credits.c:162
+#: audacious/credits.c:165
 msgid "Korean:"
 msgstr "कोरियन:"
 
-#: audacious/credits.c:163
-msgid "DongCheon Park"
-msgstr "DongCheon Park"
-
-#: audacious/credits.c:165
+#: audacious/credits.c:168
 msgid "Lithuanian:"
 msgstr "लिथूनियन:"
 
-#: audacious/credits.c:166
-msgid "Rimas Kudelis"
-msgstr "Rimas Kudelis"
-
-#: audacious/credits.c:168
+#: audacious/credits.c:171
 msgid "Macedonian:"
 msgstr "Macedonian:"
 
-#: audacious/credits.c:169
-msgid "Arangel Angov"
-msgstr "Arangel Angov"
-
-#: audacious/credits.c:171
+#: audacious/credits.c:174
 msgid "Polish:"
 msgstr "पोलिश:"
 
-#: audacious/credits.c:172
-msgid "Jacek Wolszczak"
-msgstr "Jacek Wolszczak"
-
-#: audacious/credits.c:174
+#: audacious/credits.c:178
 msgid "Romanian:"
 msgstr "रोमानियन:"
 
-#: audacious/credits.c:177
+#: audacious/credits.c:181
 msgid "Russian:"
 msgstr "रूसी:"
 
-#: audacious/credits.c:178
-msgid "Pavlo Bohmat"
-msgstr "Pavlo Bohmat"
-
-#: audacious/credits.c:180
-msgid "Vitaly Lipatov"
-msgstr ""
-
-#: audacious/credits.c:182
+#: audacious/credits.c:186
 msgid "Slovak:"
 msgstr "स्लोवाक:"
 
-#: audacious/credits.c:183
-msgid "Pavel Kanzelsberger"
-msgstr "Pavel Kanzelsberger"
-
-#: audacious/credits.c:185
+#: audacious/credits.c:189
 msgid "Spanish:"
 msgstr "स्पैनिस:"
 
-#: audacious/credits.c:186
-msgid "Gustavo D. Vranjes"
-msgstr ""
-
-#: audacious/credits.c:188
+#: audacious/credits.c:192
 msgid "Swedish:"
 msgstr "स्वीडिस:"
 
-#: audacious/credits.c:189
-msgid "Martin Persenius"
-msgstr "Martin Persenius"
-
-#: audacious/credits.c:191
+#: audacious/credits.c:195
 #, fuzzy
 msgid "Ukrainian:"
 msgstr "रोमानियन:"
 
-#: audacious/credits.c:192
-msgid "Mykola Lynnyk"
-msgstr ""
-
-#: audacious/credits.c:194
+#: audacious/credits.c:198
 msgid "Welsh:"
 msgstr "वाल्श:"
 
-#: audacious/credits.c:341
+#: audacious/credits.c:345
 msgid "Translators"
 msgstr "सभी अनुवादक"
 
@@ -3947,7 +3521,7 @@ msgid ""
 "Could not open glade file (%s). Please check your installation.\n"
 msgstr ""
 
-#: audacious/input.c:301
+#: audacious/input.c:302
 msgid ""
 "<b><big>Unable to play files.</big></b>\n"
 "\n"
@@ -3961,29 +3535,29 @@ msgstr ""
 "१. इन तक पहुँच प्राप्त है ।\n"
 "२. आपने आवश्यक मीडिया प्लग-इनों को सक्रिय किया हुआ है।"
 
-#: audacious/input.c:326
+#: audacious/input.c:327
 msgid "Don't show this warning anymore"
 msgstr "इस चेतावनी को फ़िर कभी ना दिखाएँ"
 
-#: audacious/input.c:328
+#: audacious/input.c:329
 msgid "Show more _details"
 msgstr "और अधिक विवरण दिखाएँ (_d)"
 
-#: audacious/input.c:342 audacious/prefswin.c:111 audacious/prefswin.c:472
-#: audacious/prefswin.c:560 audacious/prefswin.c:649 audacious/prefswin.c:745
+#: audacious/input.c:343 audacious/prefswin.c:116 audacious/prefswin.c:488
+#: audacious/prefswin.c:576 audacious/prefswin.c:665 audacious/prefswin.c:761
 msgid "Filename"
 msgstr "संचिकानाम"
 
-#: audacious/input.c:510
+#: audacious/input.c:551
 #, c-format
 msgid "audacious: %s"
 msgstr ""
 
-#: audacious/input.c:544
+#: audacious/input.c:585
 msgid "No input plugin recognized this file"
 msgstr "कोई आउटपुट प्लग-इन इस संचिका की पहचान नहीं कर पाया"
 
-#: audacious/input.c:546
+#: audacious/input.c:587
 #, c-format
 msgid "Input plugin: %s"
 msgstr "इन्पुट प्लग-इन: %s"
@@ -3993,17 +3567,17 @@ msgstr "इन्पुट प्लग-इन: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "लॉग संचिका को निर्मित करने में असमर्थ (%s)!\n"
 
-#: audacious/main.c:83 audacious/main.c:85 audacious/mainwin.c:806
-#: audacious/mainwin.c:3256
+#: audacious/main.c:84 audacious/main.c:86 audacious/mainwin.c:807
+#: audacious/mainwin.c:3258
 msgid "Audacious"
 msgstr ""
 
-#: audacious/main.c:395
+#: audacious/main.c:425
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "निर्देशिका (%s) का निर्माण करने में असफ़लता: %s"
 
-#: audacious/main.c:664
+#: audacious/main.c:695
 #, fuzzy
 msgid ""
 "Usage: audacious [options] [files] ...\n"
@@ -4016,65 +3590,69 @@ msgstr ""
 "सभी विकल्प:\n"
 "--------\n"
 
-#: audacious/main.c:669
+#: audacious/main.c:700
 msgid "Display this text and exit"
 msgstr "इस पाठ को दिखायें और बाहर निकलें"
 
-#: audacious/main.c:672
+#: audacious/main.c:703
 #, fuzzy
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "BMP/XMMS संत्र का चयन (डिफ़ाल्ट: ०)"
 
-#: audacious/main.c:675
+#: audacious/main.c:706
 msgid "Skip backwards in playlist"
 msgstr "प्लेसूची में पीछे जाना"
 
-#: audacious/main.c:678
+#: audacious/main.c:709
 msgid "Start playing current playlist"
 msgstr "वर्तमान प्लेसूची को चलाना आरम्भ करना"
 
-#: audacious/main.c:681
+#: audacious/main.c:712
 msgid "Pause current song"
 msgstr "वर्तमान गीत को ठहरना"
 
-#: audacious/main.c:684
+#: audacious/main.c:715
 msgid "Stop current song"
 msgstr "वर्तमान गीत को रोकना"
 
-#: audacious/main.c:687
+#: audacious/main.c:718
 msgid "Pause if playing, play otherwise"
 msgstr "ठहराना यदि चल रहा हो, अन्यथा चलाना"
 
-#: audacious/main.c:690
+#: audacious/main.c:721
 msgid "Skip forward in playlist"
 msgstr "प्लेसूची में आगे जाना"
 
-#: audacious/main.c:693
+#: audacious/main.c:724
 msgid "Don't clear the playlist"
 msgstr "प्लेसूची को साफ़ नहीं करना"
 
-#: audacious/main.c:696
+#: audacious/main.c:727
 msgid "Show the main window"
 msgstr "मुख्य खिड़की को दिखाना"
 
-#: audacious/main.c:699
+#: audacious/main.c:730
 #, fuzzy
 msgid "Activate Audacious"
 msgstr "BMP को सक्रिय करें"
 
-#: audacious/main.c:702
+#: audacious/main.c:733
 msgid "Previous session ID"
 msgstr "पिछले संत्र की आईडी"
 
-#: audacious/main.c:705
+#: audacious/main.c:736
 msgid "Headless operation [experimental]"
 msgstr ""
 
-#: audacious/main.c:708
+#: audacious/main.c:739
+msgid "Disable error/warning interception (logging)"
+msgstr ""
+
+#: audacious/main.c:742
 msgid "Print version number and exit\n"
 msgstr "संस्मरण संख्या को मुद्रित करें और बाहर निकलें\n"
 
-#: audacious/main.c:887
+#: audacious/main.c:925
 #, fuzzy
 msgid ""
 "\n"
@@ -4091,7 +3669,7 @@ msgstr ""
 "beepmp-devel@lists.sourceforge.net पर भेजें\n"
 "\n"
 
-#: audacious/main.c:910
+#: audacious/main.c:948
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -4104,7 +3682,7 @@ msgstr ""
 "कृपया जाँचे कि '%s' पर स्थित स्किन उपयोगी है और डिफ़ाल्ट स्किन को भली-भांति '%s' पर "
 "संसाधित है\n"
 
-#: audacious/main.c:957
+#: audacious/main.c:994
 #, fuzzy, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -4113,7 +3691,7 @@ msgstr ""
 "क्षमा करें, आपका जीटीके+ संस्मरण (%d.%d.%d) BMP के साथ कार्य नहीं करता है ।\n"
 "कृपया जीटीके+ %s या और नवीन संस्मरण का उपयोग करें ।\n"
 
-#: audacious/main.c:968
+#: audacious/main.c:1005
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -4128,391 +3706,391 @@ msgstr ""
 "लिनक्स थ्रेडों को संसाधित करने के पूर्व आपको जीलिब व जीटीके+ को पुनः कम्पाइल करने की "
 "आवश्यकता है।\n"
 
-#: audacious/main.c:984
+#: audacious/main.c:1021
 #, fuzzy
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "BMP: डिसप्ले को खोलने में असमर्थ, बाहर निकल रहा है।"
 
-#: audacious/mainwin.c:251 audacious/mainwin.c:372 audacious/ui_playlist.c:126
+#: audacious/mainwin.c:252 audacious/mainwin.c:373 audacious/ui_playlist.c:126
 msgid "/View Track Details"
 msgstr "/ट्रैक के विवरणों को देखें"
 
-#: audacious/mainwin.c:253 audacious/mainwin.c:367
+#: audacious/mainwin.c:254 audacious/mainwin.c:368
 msgid "/Jump to File"
 msgstr "/संचिका पर जाएँ"
 
-#: audacious/mainwin.c:256
+#: audacious/mainwin.c:257
 msgid "/Autoscroll Songname"
 msgstr "/आटोस्क्रोल गीतों के नाम"
 
-#: audacious/mainwin.c:258 audacious/mainwin.c:350
+#: audacious/mainwin.c:259 audacious/mainwin.c:351
 #, fuzzy
 msgid "/Stop After Current Song"
 msgstr "वर्तमान गीत को रोकना"
 
-#: audacious/mainwin.c:268
+#: audacious/mainwin.c:269
 msgid "/Visualization Mode"
 msgstr "/कल्पना विधा"
 
-#: audacious/mainwin.c:269
+#: audacious/mainwin.c:270
 msgid "/Visualization Mode/Analyzer"
 msgstr "/कल्पना विधा/विश्लेषक"
 
-#: audacious/mainwin.c:271
+#: audacious/mainwin.c:272
 msgid "/Visualization Mode/Scope"
 msgstr "/कल्पना विधा/सीमा"
 
-#: audacious/mainwin.c:273
+#: audacious/mainwin.c:274
 msgid "/Visualization Mode/Off"
 msgstr "/कल्पना विधा/बन्द"
 
-#: audacious/mainwin.c:275
+#: audacious/mainwin.c:276
 msgid "/Analyzer Mode"
 msgstr "/कल्पना विधा"
 
-#: audacious/mainwin.c:276
+#: audacious/mainwin.c:277
 msgid "/Analyzer Mode/Normal"
 msgstr "/कल्पना विधा/सामान्य"
 
-#: audacious/mainwin.c:278
+#: audacious/mainwin.c:279
 msgid "/Analyzer Mode/Fire"
 msgstr "/कल्पना विधा/अग्नि"
 
-#: audacious/mainwin.c:280
+#: audacious/mainwin.c:281
 msgid "/Analyzer Mode/Vertical Lines"
 msgstr "/कल्पना विधा/खड़ी पक्तियां"
 
-#: audacious/mainwin.c:283
+#: audacious/mainwin.c:284
 msgid "/Analyzer Mode/Lines"
 msgstr "/कल्पना विधा/पक्तियां"
 
-#: audacious/mainwin.c:285
+#: audacious/mainwin.c:286
 msgid "/Analyzer Mode/Bars"
 msgstr "/कल्पना विधा/खंबे"
 
-#: audacious/mainwin.c:288
+#: audacious/mainwin.c:289
 msgid "/Analyzer Mode/Peaks"
 msgstr "/कल्पना विधा/शिखर"
 
-#: audacious/mainwin.c:290
+#: audacious/mainwin.c:291
 msgid "/Scope Mode"
 msgstr "/स्कोप विधा"
 
-#: audacious/mainwin.c:291
+#: audacious/mainwin.c:292
 msgid "/Scope Mode/Dot Scope"
 msgstr "/स्कोप विधा/बिन्दु स्कोप"
 
-#: audacious/mainwin.c:293
+#: audacious/mainwin.c:294
 msgid "/Scope Mode/Line Scope"
 msgstr "/स्कोप विधा/पंक्ति स्कोप"
 
-#: audacious/mainwin.c:295
+#: audacious/mainwin.c:296
 msgid "/Scope Mode/Solid Scope"
 msgstr "/स्कोप विधा/घन स्कोप"
 
-#: audacious/mainwin.c:297
+#: audacious/mainwin.c:298
 msgid "/WindowShade VU Mode"
 msgstr "/विण्डोशेड वीयू विधा"
 
-#: audacious/mainwin.c:298
+#: audacious/mainwin.c:299
 msgid "/WindowShade VU Mode/Normal"
 msgstr "/विण्डोशेड वीयू विधा/सामान्य"
 
-#: audacious/mainwin.c:300
+#: audacious/mainwin.c:301
 msgid "/WindowShade VU Mode/Smooth"
 msgstr "/विण्डोशेड वीयू विधा/चौरस"
 
-#: audacious/mainwin.c:302
+#: audacious/mainwin.c:303
 msgid "/Refresh Rate"
 msgstr "/ताजा करने की दर"
 
-#: audacious/mainwin.c:303
+#: audacious/mainwin.c:304
 msgid "/Refresh Rate/Full (~50 fps)"
 msgstr "/ताजा करने की दर/पूर्ण (~५० फ़्रेम प्रति सेकण्ड)"
 
-#: audacious/mainwin.c:305
+#: audacious/mainwin.c:306
 msgid "/Refresh Rate/Half (~25 fps)"
 msgstr "/ताजा करने की दर/आधी (~२५ फ़्रेम प्रति सेकण्ड)"
 
-#: audacious/mainwin.c:307
+#: audacious/mainwin.c:308
 msgid "/Refresh Rate/Quarter (~13 fps)"
 msgstr "/ताजा करने की दर/चौथाई (~१३ फ़्रेम प्रति सेकण्ड)"
 
-#: audacious/mainwin.c:309
+#: audacious/mainwin.c:310
 msgid "/Refresh Rate/Eighth (~6 fps)"
 msgstr "/ताजा करने की दर/आठवाँ भाग (~६ फ़्रेम प्रति सेकण्ड)"
 
-#: audacious/mainwin.c:311
+#: audacious/mainwin.c:312
 msgid "/Analyzer Falloff"
 msgstr "/विश्लेषक फ़ॉलऑफ़"
 
-#: audacious/mainwin.c:312
+#: audacious/mainwin.c:313
 msgid "/Analyzer Falloff/Slowest"
 msgstr "/विश्लेषक फ़ॉलऑफ़/सबसे धीमा"
 
-#: audacious/mainwin.c:314
+#: audacious/mainwin.c:315
 msgid "/Analyzer Falloff/Slow"
 msgstr "/विश्लेषक फ़ॉलऑफ़/धीमा"
 
-#: audacious/mainwin.c:316
+#: audacious/mainwin.c:317
 msgid "/Analyzer Falloff/Medium"
 msgstr "/विश्लेषक फ़ॉलऑफ़/मध्यम"
 
-#: audacious/mainwin.c:318
+#: audacious/mainwin.c:319
 msgid "/Analyzer Falloff/Fast"
 msgstr "/विश्लेषक फ़ॉलऑफ़/तेज"
 
-#: audacious/mainwin.c:320
+#: audacious/mainwin.c:321
 msgid "/Analyzer Falloff/Fastest"
 msgstr "/विश्लेषक फ़ॉलऑफ़/सबसे तेज"
 
-#: audacious/mainwin.c:322
+#: audacious/mainwin.c:323
 msgid "/Peaks Falloff"
 msgstr "/शिखर फ़ॉलऑफ़"
 
-#: audacious/mainwin.c:323
+#: audacious/mainwin.c:324
 msgid "/Peaks Falloff/Slowest"
 msgstr "/शिखर फ़ॉलऑफ़/सबसे धीमा"
 
-#: audacious/mainwin.c:325
+#: audacious/mainwin.c:326
 msgid "/Peaks Falloff/Slow"
 msgstr "/शिखर फ़ॉलऑफ़/धीमा"
 
-#: audacious/mainwin.c:327
+#: audacious/mainwin.c:328
 msgid "/Peaks Falloff/Medium"
 msgstr "/शिखर फ़ॉलऑफ़/मध्यम"
 
-#: audacious/mainwin.c:329
+#: audacious/mainwin.c:330
 msgid "/Peaks Falloff/Fast"
 msgstr "/शिखर फ़ॉलऑफ़/तेज"
 
-#: audacious/mainwin.c:331
+#: audacious/mainwin.c:332
 msgid "/Peaks Falloff/Fastest"
 msgstr "/शिखर फ़ॉलऑफ़/सबसे तेज"
 
-#: audacious/mainwin.c:341
+#: audacious/mainwin.c:342
 #, fuzzy
 msgid "/Play CD"
 msgstr "/चलायें"
 
-#: audacious/mainwin.c:344
+#: audacious/mainwin.c:345
 msgid "/Repeat"
 msgstr "/दोहरायें"
 
-#: audacious/mainwin.c:346
+#: audacious/mainwin.c:347
 msgid "/Shuffle"
 msgstr "/फ़ेटना"
 
-#: audacious/mainwin.c:348
+#: audacious/mainwin.c:349
 msgid "/No Playlist Advance"
 msgstr "/कोई अग्रिम प्लेसूची नहीं"
 
-#: audacious/mainwin.c:353
+#: audacious/mainwin.c:354
 msgid "/Play"
 msgstr "/चलायें"
 
-#: audacious/mainwin.c:355
+#: audacious/mainwin.c:356
 msgid "/Pause"
 msgstr "/ठहरें"
 
-#: audacious/mainwin.c:357
+#: audacious/mainwin.c:358
 msgid "/Stop"
 msgstr "/रोकें"
 
-#: audacious/mainwin.c:359
+#: audacious/mainwin.c:360
 msgid "/Previous"
 msgstr "/पिछला"
 
-#: audacious/mainwin.c:361
+#: audacious/mainwin.c:362
 msgid "/Next"
 msgstr "/अगला"
 
-#: audacious/mainwin.c:364
+#: audacious/mainwin.c:365
 msgid "/Jump to Playlist Start"
 msgstr "/प्लेसूची के आरम्भ में जाएँ"
 
-#: audacious/mainwin.c:369
+#: audacious/mainwin.c:370
 msgid "/Jump to Time"
 msgstr "/समय पर जाएँ"
 
-#: audacious/mainwin.c:382
+#: audacious/mainwin.c:383
 #, fuzzy
 msgid "/About Audacious"
 msgstr "एमपीईजी आडियो प्लग-इन के बारे में"
 
-#: audacious/mainwin.c:385
+#: audacious/mainwin.c:386
 #, fuzzy
 msgid "/Play File"
 msgstr "/चलायें"
 
-#: audacious/mainwin.c:387
+#: audacious/mainwin.c:388
 #, fuzzy
 msgid "/Play Location"
 msgstr "स्थान:"
 
-#: audacious/mainwin.c:390
+#: audacious/mainwin.c:391
 #, fuzzy
 msgid "/V_isualization"
 msgstr "/कल्पना विधा"
 
-#: audacious/mainwin.c:391
+#: audacious/mainwin.c:392
 #, fuzzy
 msgid "/_Playback"
 msgstr "/चलायें"
 
-#: audacious/mainwin.c:392
+#: audacious/mainwin.c:393
 msgid "/_View"
 msgstr "/देखना (_v)"
 
-#: audacious/mainwin.c:394
+#: audacious/mainwin.c:395
 msgid "/Preferences"
 msgstr "/वरीयतायें"
 
-#: audacious/mainwin.c:396
+#: audacious/mainwin.c:397
 msgid "/_Quit"
 msgstr "/निकास (_Q)"
 
-#: audacious/mainwin.c:406
+#: audacious/mainwin.c:407
 msgid "/Files..."
 msgstr "/संचिकाऐं..."
 
-#: audacious/mainwin.c:408
+#: audacious/mainwin.c:409
 msgid "/Internet location..."
 msgstr "/इन्टरनेट स्थल..."
 
-#: audacious/mainwin.c:418
+#: audacious/mainwin.c:419
 msgid "/Show Playlist Editor"
 msgstr "/प्लेसूची संपादक दिखाएँ"
 
-#: audacious/mainwin.c:420
+#: audacious/mainwin.c:421
 msgid "/Show Equalizer"
 msgstr "/ईक्यूलाईजर दिखाएँ"
 
-#: audacious/mainwin.c:423
+#: audacious/mainwin.c:424
 msgid "/Time Elapsed"
 msgstr "/बीता हुआ समय"
 
-#: audacious/mainwin.c:425
+#: audacious/mainwin.c:426
 msgid "/Time Remaining"
 msgstr "/बचा हुआ समय"
 
-#: audacious/mainwin.c:428
+#: audacious/mainwin.c:429
 msgid "/Always On Top"
 msgstr "/हमेशा ऊपर"
 
-#: audacious/mainwin.c:430
+#: audacious/mainwin.c:431
 msgid "/Put on All Workspaces"
 msgstr "/सभी कार्यस्थलों पर रखें"
 
-#: audacious/mainwin.c:433
+#: audacious/mainwin.c:434
 msgid "/Roll up Player"
 msgstr "/प्लेयर को रोल-अप करें"
 
-#: audacious/mainwin.c:435
+#: audacious/mainwin.c:436
 msgid "/Roll up Playlist Editor"
 msgstr "/प्लेसूची संपादक को रोल-अप करें"
 
-#: audacious/mainwin.c:437
+#: audacious/mainwin.c:438
 msgid "/Roll up Equalizer"
 msgstr "/ईक्यूलाईजर को रोल-अप करें"
 
-#: audacious/mainwin.c:863
+#: audacious/mainwin.c:864
 msgid "VBR"
 msgstr "VBR"
 
-#: audacious/mainwin.c:904 audacious/mainwin.c:908
+#: audacious/mainwin.c:905 audacious/mainwin.c:909
 #, fuzzy
 msgid "stereo"
 msgstr "स्टीरियो"
 
-#: audacious/mainwin.c:904 audacious/mainwin.c:908
+#: audacious/mainwin.c:905 audacious/mainwin.c:909
 #, fuzzy
 msgid "mono"
 msgstr "मोनो"
 
-#: audacious/mainwin.c:1358
+#: audacious/mainwin.c:1360
 msgid "Jump to Time"
 msgstr "समय पर जाएँ"
 
-#: audacious/mainwin.c:1379
+#: audacious/mainwin.c:1381
 msgid "minutes:seconds"
 msgstr "क्षण:पल"
 
-#: audacious/mainwin.c:1389
+#: audacious/mainwin.c:1391
 msgid "Track length:"
 msgstr "ट्रैक की लंबाई:"
 
-#: audacious/mainwin.c:1477
+#: audacious/mainwin.c:1479
 #, fuzzy
 msgid "Un_queue"
 msgstr "कतार"
 
-#: audacious/mainwin.c:1479 audacious/mainwin.c:1804
+#: audacious/mainwin.c:1481 audacious/mainwin.c:1806
 #, fuzzy
 msgid "_Queue"
 msgstr "कतार"
 
-#: audacious/mainwin.c:1732
+#: audacious/mainwin.c:1734
 msgid "Jump to Track"
 msgstr "ट्रैक पर जाएँ"
 
-#: audacious/mainwin.c:1773
+#: audacious/mainwin.c:1775
 msgid "Filter: "
 msgstr "फ़िल्टर: "
 
-#: audacious/mainwin.c:1987
+#: audacious/mainwin.c:1989
 msgid "Enter location to play:"
 msgstr ""
 
-#: audacious/mainwin.c:2192
+#: audacious/mainwin.c:2194
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "को खोजें: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2224 audacious/mainwin.c:2903
+#: audacious/mainwin.c:2226 audacious/mainwin.c:2905
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "वाल्यूम: %d%%"
 
-#: audacious/mainwin.c:2255 audacious/mainwin.c:2906
+#: audacious/mainwin.c:2257 audacious/mainwin.c:2908
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "संतुलन:  %d%% बायाँ"
 
-#: audacious/mainwin.c:2259 audacious/mainwin.c:2909
+#: audacious/mainwin.c:2261 audacious/mainwin.c:2911
 msgid "BALANCE: CENTER"
 msgstr "संतुलन: केन्द्रिय"
 
-#: audacious/mainwin.c:2263 audacious/mainwin.c:2911
+#: audacious/mainwin.c:2265 audacious/mainwin.c:2913
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "संतुलन: %d%% दायाँ"
 
-#: audacious/mainwin.c:2684
+#: audacious/mainwin.c:2686
 msgid "OPTIONS MENU"
 msgstr "विकल्प मीनू"
 
-#: audacious/mainwin.c:2688
+#: audacious/mainwin.c:2690
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "हमेशा ऊपर निष्क्रिय"
 
-#: audacious/mainwin.c:2690
+#: audacious/mainwin.c:2692
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "हमेशा ऊपर सक्रिय़"
 
-#: audacious/mainwin.c:2693
+#: audacious/mainwin.c:2695
 msgid "FILE INFO BOX"
 msgstr "संचिका सूचना बॉक्स"
 
-#: audacious/mainwin.c:2696
+#: audacious/mainwin.c:2698
 msgid "** DOUBLESIZE HAS BEEN REMOVED **"
 msgstr "** दोहरे आकार को हटा दिया गया है **"
 
-#: audacious/mainwin.c:2699
+#: audacious/mainwin.c:2701
 msgid "VISUALIZATION MENU"
 msgstr "कल्पना मीनू"
 
-#: audacious/mainwin.c:2744
+#: audacious/mainwin.c:2746
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -4522,7 +4100,7 @@ msgstr ""
 "\n"
 "या तो कोई सीडी डाली नहीं गई है, या फ़िर डाली गयी सीडी एक आडियो सीडी नहीं है।\n"
 
-#: audacious/mainwin.c:2761
+#: audacious/mainwin.c:2763
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -4539,81 +4117,86 @@ msgstr ""
 "२। कोई अन्य कार्यक्रम साउण्ड कार्ड को रोक नहीं रहा है।\n"
 "३। आपका साउण्ड कार्ड को भली-भांति संरचित किया गया है।\n"
 
-#: audacious/prefswin.c:95 audacious/glade/prefswin.glade:1632
+#: audacious/prefswin.c:99 audacious/glade/prefswin.glade:1350
 msgid "Appearance"
 msgstr "वेश-भूषा"
 
-#: audacious/prefswin.c:96
+#: audacious/prefswin.c:100
+#, fuzzy
+msgid "Audio"
+msgstr "एमपीईजी आडियो प्लग-इन के बारे में"
+
+#: audacious/prefswin.c:101
 msgid "Connectivity"
 msgstr ""
 
-#: audacious/prefswin.c:97 audacious/glade/prefswin.glade:3178
+#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:2814
 msgid "Equalizer"
 msgstr "ईक्यूलाईजर"
 
-#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1950
+#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:1629
 msgid "Mouse"
 msgstr "माउस"
 
-#: audacious/prefswin.c:99 audacious/glade/prefswin.glade:2771
+#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:2446
 msgid "Playlist"
 msgstr "प्लेसूची"
 
-#: audacious/prefswin.c:100 audacious/glade/prefswin.glade:936
+#: audacious/prefswin.c:105 audacious/glade/prefswin.glade:693
 msgid "Plugins"
 msgstr "प्लग-इन्स"
 
-#: audacious/prefswin.c:106
+#: audacious/prefswin.c:111
 msgid "Artist"
 msgstr "कलाकार"
 
-#: audacious/prefswin.c:107 libaudacious/titlestring.c:325
+#: audacious/prefswin.c:112 libaudacious/titlestring.c:341
 msgid "Album"
 msgstr "एल्बम"
 
-#: audacious/prefswin.c:109
+#: audacious/prefswin.c:114
 msgid "Tracknumber"
 msgstr "ट्रैकसंख्या"
 
-#: audacious/prefswin.c:110 libaudacious/titlestring.c:326
+#: audacious/prefswin.c:115 libaudacious/titlestring.c:342
 msgid "Genre"
 msgstr "प्रकार"
 
-#: audacious/prefswin.c:112
+#: audacious/prefswin.c:117
 msgid "Filepath"
 msgstr "संचिकापथ"
 
-#: audacious/prefswin.c:113 libaudacious/titlestring.c:332
+#: audacious/prefswin.c:118 libaudacious/titlestring.c:348
 msgid "Date"
 msgstr "दिनांक"
 
-#: audacious/prefswin.c:114 libaudacious/titlestring.c:333
+#: audacious/prefswin.c:119 libaudacious/titlestring.c:349
 msgid "Year"
 msgstr "वर्ष"
 
-#: audacious/prefswin.c:115 libaudacious/titlestring.c:334
+#: audacious/prefswin.c:120 libaudacious/titlestring.c:350
 msgid "Comment"
 msgstr "टिप्पणी"
 
-#: audacious/prefswin.c:127
+#: audacious/prefswin.c:141
 msgid "localhost"
 msgstr ""
 
-#: audacious/prefswin.c:442 audacious/prefswin.c:529 audacious/prefswin.c:618
-#: audacious/prefswin.c:714
+#: audacious/prefswin.c:458 audacious/prefswin.c:545 audacious/prefswin.c:634
+#: audacious/prefswin.c:730
 msgid "Enabled"
 msgstr "सक्रिय किया गया"
 
-#: audacious/prefswin.c:458 audacious/prefswin.c:545 audacious/prefswin.c:634
-#: audacious/prefswin.c:730
+#: audacious/prefswin.c:474 audacious/prefswin.c:561 audacious/prefswin.c:650
+#: audacious/prefswin.c:746
 msgid "Description"
 msgstr "विवरण"
 
-#: audacious/prefswin.c:1745
+#: audacious/prefswin.c:1799
 msgid "Category"
 msgstr "वर्ग"
 
-#: audacious/prefswin.c:1940
+#: audacious/prefswin.c:2169
 msgid "Preferences Window"
 msgstr "वरीयताऐं खिड़की"
 
@@ -4625,154 +4208,168 @@ msgstr ""
 msgid "Unarchived Winamp 2.x skin"
 msgstr ""
 
-#: audacious/ui_playlist.c:132 audacious/ui_playlist.c:197
+#: audacious/ui_playlist.c:130
+msgid "/Show Popup Info"
+msgstr ""
+
+#: audacious/ui_playlist.c:136 audacious/ui_playlist.c:201
 msgid "/Remove Selected"
 msgstr "/चयनित को हटाएँ"
 
-#: audacious/ui_playlist.c:136 audacious/ui_playlist.c:193
+#: audacious/ui_playlist.c:140 audacious/ui_playlist.c:197
 msgid "/Remove Unselected"
 msgstr "/अचयनित को हटाएँ"
 
-#: audacious/ui_playlist.c:140 audacious/ui_playlist.c:189
+#: audacious/ui_playlist.c:144 audacious/ui_playlist.c:193
 msgid "/Remove All"
 msgstr "/सभी को हटाएँ"
 
-#: audacious/ui_playlist.c:146
+#: audacious/ui_playlist.c:150
 msgid "/Queue Toggle"
 msgstr "/क्यू टॉगल"
 
-#: audacious/ui_playlist.c:152
+#: audacious/ui_playlist.c:156
 msgid "/Add CD..."
 msgstr "/सीडी को जोड़ें..."
 
-#: audacious/ui_playlist.c:156
+#: audacious/ui_playlist.c:160
 msgid "/Add Internet Address..."
 msgstr "/इन्टरनेट पते को जोड़ें..."
 
-#: audacious/ui_playlist.c:160
+#: audacious/ui_playlist.c:164
 msgid "/Add Files..."
 msgstr "/संचिकाओं को जोड़ें..."
 
-#: audacious/ui_playlist.c:166
+#: audacious/ui_playlist.c:170
 msgid "/Clear Queue"
 msgstr "/कतार को साफ़ करें"
 
-#: audacious/ui_playlist.c:172
+#: audacious/ui_playlist.c:176
 msgid "/Remove Unavailable Files"
 msgstr "/अनुपलब्ध संचिकाओं को हटाएँ"
 
-#: audacious/ui_playlist.c:176
+#: audacious/ui_playlist.c:180
 #, fuzzy
 msgid "/Remove Duplicates"
 msgstr "/चयनित को हटाएँ"
 
-#: audacious/ui_playlist.c:177
+#: audacious/ui_playlist.c:181
 #, fuzzy
 msgid "/Remove Duplicates/By Title"
 msgstr "/सूची को क्रमानुसार लगायें/शीर्षक द्वारा"
 
-#: audacious/ui_playlist.c:180
+#: audacious/ui_playlist.c:184
 #, fuzzy
 msgid "/Remove Duplicates/By Filename"
 msgstr "/सूची को क्रमानुसार लगायें/संचिकानामों द्वारा"
 
-#: audacious/ui_playlist.c:183
+#: audacious/ui_playlist.c:187
 #, fuzzy
 msgid "/Remove Duplicates/By Path + Filename"
 msgstr "/सूची को क्रमानुसार लगायें/पथ और संचिकानामों द्वारा"
 
-#: audacious/ui_playlist.c:203
+#: audacious/ui_playlist.c:207
 msgid "/New List"
 msgstr "/नयी सूची"
 
-#: audacious/ui_playlist.c:209
+#: audacious/ui_playlist.c:213
 msgid "/Load List"
 msgstr "/सूची को लाएँ"
 
-#: audacious/ui_playlist.c:213
+#: audacious/ui_playlist.c:217
 msgid "/Save List"
 msgstr "/सूची को सुरक्षित करें"
 
-#: audacious/ui_playlist.c:217
+#: audacious/ui_playlist.c:221
 #, fuzzy
 msgid "/Save Default List"
 msgstr "/सुरक्षित/डिफ़ाल्ट"
 
-#: audacious/ui_playlist.c:223
+#: audacious/ui_playlist.c:227
 msgid "/Update View"
 msgstr "/व्यू को अपडेट करें"
 
-#: audacious/ui_playlist.c:229
+#: audacious/ui_playlist.c:233
 msgid "/Invert Selection"
 msgstr "/चयन को उलटा करें"
 
-#: audacious/ui_playlist.c:235
+#: audacious/ui_playlist.c:239
 msgid "/Select None"
 msgstr "/कुछ नहीं चयन करें"
 
-#: audacious/ui_playlist.c:239
+#: audacious/ui_playlist.c:243
 msgid "/Select All"
 msgstr "/सभी का चयन करें"
 
-#: audacious/ui_playlist.c:245
+#: audacious/ui_playlist.c:249
 msgid "/Randomize List"
 msgstr "/सूची को बेतरतीब ढंग से लगायें"
 
-#: audacious/ui_playlist.c:247
+#: audacious/ui_playlist.c:251
 msgid "/Reverse List"
 msgstr "/सूची को पीछे-से-आगे लगायें"
 
-#: audacious/ui_playlist.c:250
+#: audacious/ui_playlist.c:254
 msgid "/Sort List"
 msgstr "/सूची को क्रमानुसार लगायें"
 
-#: audacious/ui_playlist.c:251
+#: audacious/ui_playlist.c:255
 msgid "/Sort List/By Title"
 msgstr "/सूची को क्रमानुसार लगायें/शीर्षक द्वारा"
 
-#: audacious/ui_playlist.c:253
+#: audacious/ui_playlist.c:257
+#, fuzzy
+msgid "/Sort List/By Artist"
+msgstr "/सूची को क्रमानुसार लगायें/शीर्षक द्वारा"
+
+#: audacious/ui_playlist.c:259
 msgid "/Sort List/By Filename"
 msgstr "/सूची को क्रमानुसार लगायें/संचिकानामों द्वारा"
 
-#: audacious/ui_playlist.c:255
+#: audacious/ui_playlist.c:261
 msgid "/Sort List/By Path + Filename"
 msgstr "/सूची को क्रमानुसार लगायें/पथ और संचिकानामों द्वारा"
 
-#: audacious/ui_playlist.c:257
+#: audacious/ui_playlist.c:263
 msgid "/Sort List/By Date"
 msgstr "/सूची को क्रमानुसार लगायें/दिनांक द्वारा"
 
-#: audacious/ui_playlist.c:259
+#: audacious/ui_playlist.c:265
 msgid "/Sort Selection"
 msgstr "/चयन को क्रमानुसार लगायें"
 
-#: audacious/ui_playlist.c:260
+#: audacious/ui_playlist.c:266
 msgid "/Sort Selection/By Title"
 msgstr "/चयन को क्रमानुसार लगायें/शीर्षक द्वारा"
 
-#: audacious/ui_playlist.c:262
+#: audacious/ui_playlist.c:268
+#, fuzzy
+msgid "/Sort Selection/By Artist"
+msgstr "/चयन को क्रमानुसार लगायें/शीर्षक द्वारा"
+
+#: audacious/ui_playlist.c:270
 msgid "/Sort Selection/By Filename"
 msgstr "/चयन को क्रमानुसार लगायें/संचिकानामों द्वारा"
 
-#: audacious/ui_playlist.c:264
+#: audacious/ui_playlist.c:272
 msgid "/Sort Selection/By Path + Filename"
 msgstr "/चयन को क्रमानुसार लगायें/पथ और संचिकानामों द्वारा"
 
-#: audacious/ui_playlist.c:266
+#: audacious/ui_playlist.c:274
 msgid "/Sort Selection/By Date"
 msgstr "/चयन को क्रमानुसार लगायें/दिनांक द्वारा"
 
-#: audacious/ui_playlist.c:787
+#: audacious/ui_playlist.c:812
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "\"%s\" प्लेसूची लिखने में त्रुटि : %s"
 
-#: audacious/ui_playlist.c:808
+#: audacious/ui_playlist.c:833
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s पहिले से विद्यमान है। जारी रहा जाएँ?"
 
-#: audacious/ui_playlist.c:822
+#: audacious/ui_playlist.c:847
 #, fuzzy, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -4780,42 +4377,42 @@ msgid ""
 "Unknown file type for '%s'.\n"
 msgstr "प्लेसूची को सुरक्षित करने में असमर्थ! %s हेतु अज्ञात संचिका प्रकार"
 
-#: audacious/ui_playlist.c:932
+#: audacious/ui_playlist.c:957
 #, fuzzy
 msgid "Load Playlist"
 msgstr "प्लेसूची को लाना"
 
-#: audacious/ui_playlist.c:944
+#: audacious/ui_playlist.c:969
 #, fuzzy
 msgid "Save Playlist"
 msgstr "प्लेसूची को सुरक्षित करना"
 
-#: audacious/ui_playlist.c:1648
+#: audacious/ui_playlist.c:1677
 #, fuzzy
 msgid "Audacious Playlist Editor"
 msgstr "/प्लेसूची संपादक दिखाएँ"
 
-#: audacious/util.c:922
+#: audacious/util.c:957
 msgid "Add/Open Files dialog"
 msgstr "फ़ाइलों को जोड़ना/खोलना संवाद"
 
-#: audacious/util.c:982
+#: audacious/util.c:1017
 msgid "Open Files"
 msgstr "संचिकाओं को खोलें"
 
-#: audacious/util.c:986
+#: audacious/util.c:1021
 msgid "Close dialog on Open"
 msgstr "खोलने पर बन्द संवाद"
 
-#: audacious/util.c:996 audacious/glade/addfiles.glade:8
+#: audacious/util.c:1031 audacious/glade/addfiles.glade:8
 msgid "Add Files"
 msgstr "संचिकाओं को जोड़ें"
 
-#: audacious/util.c:1000
+#: audacious/util.c:1035
 msgid "Close dialog on Add"
 msgstr "जोड़ने पर बन्द संवाद"
 
-#: audacious/playback.c:189
+#: audacious/playback.c:192
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -4838,264 +4435,219 @@ msgstr "सभी का अचयन करें"
 msgid "Audacious Preferences"
 msgstr "BMP की वरीयतायें"
 
-#: audacious/glade/prefswin.glade:90
-msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
-msgstr "<span size=\"xx-large\"><b>प्लग-इन्स</b></span>"
+#: audacious/glade/prefswin.glade:115
+#, fuzzy
+msgid "_Decoder list:"
+msgstr "कूटवाचक"
 
-#: audacious/glade/prefswin.glade:156
-msgid "_Media plugin list:"
-msgstr "मीडिया प्लग-इनों की सूची (_M):"
+#: audacious/glade/prefswin.glade:219
+#, fuzzy
+msgid "<span size=\"medium\"><b>Decoders</b></span>"
+msgstr "<span size=\"medium\"><b>सामान्य</b></span>"
 
-#: audacious/glade/prefswin.glade:260
-msgid "<span size=\"medium\"><b>Media</b></span>"
-msgstr "<span size=\"medium\"><b>मीडिया</b></span>"
-
-#: audacious/glade/prefswin.glade:302
+#: audacious/glade/prefswin.glade:261
 msgid "_General plugin list:"
 msgstr "सामान्य प्लग-इनों की सूची (_G):"
 
-#: audacious/glade/prefswin.glade:406
+#: audacious/glade/prefswin.glade:365
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b>सामान्य</b></span>"
 
-#: audacious/glade/prefswin.glade:448
+#: audacious/glade/prefswin.glade:407
 msgid "_Visualization plugin list:"
 msgstr "काल्पनिक प्लग-इनों की सूची (_V):"
 
-#: audacious/glade/prefswin.glade:552
+#: audacious/glade/prefswin.glade:511
 msgid "<b>Visualization</b>"
 msgstr "<b>कल्पना</b>"
 
-#: audacious/glade/prefswin.glade:594
+#: audacious/glade/prefswin.glade:553
 msgid "_Effect plugin list:"
 msgstr "प्रभावों के प्लग-इन की सूची (_E):"
 
-#: audacious/glade/prefswin.glade:698
+#: audacious/glade/prefswin.glade:657
 msgid "<b>Effects</b>"
 msgstr "<b>सभी प्रभाव</b>"
 
 #: audacious/glade/prefswin.glade:746
-msgid "_Current output plugin:"
-msgstr "वर्तमान आउटपुट प्लग-इन (_C):"
-
-#: audacious/glade/prefswin.glade:812
-#, fuzzy
-msgid ""
-"The change is now effective in Audacious' configuration database, but won't "
-"take effect for playback until the next song!\n"
-"\n"
-"Optionally, you can stop and restart playback for the change to take effect."
-msgstr ""
-"इन परिवर्तनों को बीएमपी के संरचना डाटाबेस में लागू कर दिया गया है, परन्तु इन का प्रभाव "
-"चलाने के लिए अगले गीत के पहिले नहीं होगा!\n"
-"\n"
-"या वैकल्पिक रूप से, प्लेबैक को रोक कर पुनः आरम्भ कर आप इन परिवर्तनों को प्रभाव में ला सकते "
-"है।"
-
-#: audacious/glade/prefswin.glade:898
-msgid "<span size=\"medium\"><b>Output</b></span>"
-msgstr "<span size=\"medium\"><b>आउटपुट</b></span>"
-
-#: audacious/glade/prefswin.glade:965
-msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
-msgstr "<span size=\"xx-large\"><b>रूप-रंग</b></span>"
-
-#: audacious/glade/prefswin.glade:1026
 msgid "<b>_Skin</b>"
 msgstr "<b>स्किन (_S)</b>"
 
-#: audacious/glade/prefswin.glade:1052
+#: audacious/glade/prefswin.glade:772
 #, fuzzy
 msgid "Refresh skin list"
 msgstr "/ताजा करने की दर"
 
-#: audacious/glade/prefswin.glade:1147
+#: audacious/glade/prefswin.glade:867
 msgid "<b>_Fonts</b>"
 msgstr "<b>फ़ॉन्टस (_F)</b>"
 
-#: audacious/glade/prefswin.glade:1202
+#: audacious/glade/prefswin.glade:922
 msgid "_Player:"
 msgstr "प्लेयर (_P):"
 
-#: audacious/glade/prefswin.glade:1245
+#: audacious/glade/prefswin.glade:965
 msgid "_Playlist:"
 msgstr "प्लेसूची (_P):"
 
-#: audacious/glade/prefswin.glade:1277
+#: audacious/glade/prefswin.glade:997
 msgid "Select main player window font:"
 msgstr "मुख्य प्लेयर खिड़की फ़ॉन्ट का चयन:"
 
-#: audacious/glade/prefswin.glade:1299
+#: audacious/glade/prefswin.glade:1019
 msgid "Select playlist font:"
 msgstr "प्लेसूची फ़ॉन्ट का चयन:"
 
-#: audacious/glade/prefswin.glade:1345
+#: audacious/glade/prefswin.glade:1065
 msgid ""
 "Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
 "strings."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1347
+#: audacious/glade/prefswin.glade:1067
 #, fuzzy
 msgid "Use Bitmap fonts if available"
 msgstr "स्टीरियो (यदि उपलब्ध है)"
 
-#: audacious/glade/prefswin.glade:1381
+#: audacious/glade/prefswin.glade:1101
 msgid "<b>_Miscellaneous</b>"
 msgstr "<b>विविध (_M)</b>"
 
-#: audacious/glade/prefswin.glade:1429
+#: audacious/glade/prefswin.glade:1149
 msgid "Show track numbers in playlist"
 msgstr "प्लेसूची में ट्रैक संख्याओं को दिखाएँ"
 
-#: audacious/glade/prefswin.glade:1464
+#: audacious/glade/prefswin.glade:1184
 #, fuzzy
 msgid "Show separators in playlist"
 msgstr "प्लेसूची में ट्रैक संख्याओं को दिखाएँ"
 
-#: audacious/glade/prefswin.glade:1499
+#: audacious/glade/prefswin.glade:1219
 msgid "Use custom cursors"
 msgstr "कस्टम कर्सरों का उपयोग करें"
 
-#: audacious/glade/prefswin.glade:1546
+#: audacious/glade/prefswin.glade:1266
 #, fuzzy
 msgid "<b>_Transparency</b>"
 msgstr "<b>प्लेबैक</b>"
 
-#: audacious/glade/prefswin.glade:1586
+#: audacious/glade/prefswin.glade:1306
 msgid ""
 "Enables playlist transparency. This is not recommended for slower machines "
 "as it requires some CPU time to create and cache the pixmaps used for the "
 "transparency."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1588
+#: audacious/glade/prefswin.glade:1308
 #, fuzzy
 msgid "Enable playlist transparency"
 msgstr "रीप्लेगेन सक्रिय"
 
-#: audacious/glade/prefswin.glade:1661
-msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
-msgstr "<span size=\"xx-large\"><b>माउस</b></span>"
-
-#: audacious/glade/prefswin.glade:1716
+#: audacious/glade/prefswin.glade:1397
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>माउस व्हील</b>"
 
-#: audacious/glade/prefswin.glade:1764
+#: audacious/glade/prefswin.glade:1445
 #, fuzzy
 msgid "Changes volume by"
 msgstr "वाल्यूम को माउस व्हील तक परिवर्तित करती है"
 
-#: audacious/glade/prefswin.glade:1792
+#: audacious/glade/prefswin.glade:1473
 msgid "percent"
 msgstr "प्रतिशत"
 
-#: audacious/glade/prefswin.glade:1820
+#: audacious/glade/prefswin.glade:1501
 #, fuzzy
 msgid "Scrolls playlist by"
 msgstr "माउस प्लेसूची को इतने दर से स्क्रोल करता है"
 
-#: audacious/glade/prefswin.glade:1873
+#: audacious/glade/prefswin.glade:1554
 msgid "lines"
 msgstr "पंक्तियां"
 
-#: audacious/glade/prefswin.glade:1979
-msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
-msgstr "<span size=\"xx-large\"><b>प्लेसूची</b></span>"
-
-#: audacious/glade/prefswin.glade:2034
+#: audacious/glade/prefswin.glade:1676
 msgid "<b>Filename</b>"
 msgstr "<b>संचिकानाम</b>"
 
-#: audacious/glade/prefswin.glade:2074
+#: audacious/glade/prefswin.glade:1716
 msgid "Convert underscores to blanks"
 msgstr "अण्डरस्कोरों को रिक्त स्थान में बदलना"
 
-#: audacious/glade/prefswin.glade:2109
+#: audacious/glade/prefswin.glade:1751
 msgid "Convert %20 to blanks"
 msgstr "%20 को रिक्त स्थान में बदलना"
 
-#: audacious/glade/prefswin.glade:2143
+#: audacious/glade/prefswin.glade:1785
 msgid "<b>Metadata</b>"
 msgstr "<b>मेटाडाटा</b>"
 
-#: audacious/glade/prefswin.glade:2182
+#: audacious/glade/prefswin.glade:1824
 msgid "Load metadata (tag information) from music files."
 msgstr "संगीत संचिकाओं से मेटाडाटा (टैग सूचना) लाएँ।"
 
-#: audacious/glade/prefswin.glade:2184
+#: audacious/glade/prefswin.glade:1826
 msgid "Load metadata from playlists and files"
 msgstr "प्लेसूचियों और संचिकाओं से मेटा डाटा को लाएँ"
 
-#: audacious/glade/prefswin.glade:2222
+#: audacious/glade/prefswin.glade:1864
 msgid "Load metadata when adding the file to the playlist or opening it"
 msgstr ""
 "जब इस फ़ाइल को प्लेसूची में जोड़ा जा रहा हो या इसे खोला जा रहा हो तो मेटाडाटा को लोड "
 "करें"
 
-#: audacious/glade/prefswin.glade:2224
+#: audacious/glade/prefswin.glade:1866
 msgid "On load"
 msgstr "लाने पर"
 
-#: audacious/glade/prefswin.glade:2244
+#: audacious/glade/prefswin.glade:1886
 msgid "Load metadata on demand when displaying the file in the playlist"
 msgstr "जब प्लेसूची में यह संचिका दिखायी जा रही हो तो आग्रह करने पर मेटाडाटा को लाएँ"
 
-#: audacious/glade/prefswin.glade:2246
+#: audacious/glade/prefswin.glade:1888
 msgid "On display"
 msgstr "डिस्प्ले करने पर"
 
-#: audacious/glade/prefswin.glade:2288
-msgid "<b>Playback</b>"
-msgstr "<b>प्लेबैक</b>"
+#: audacious/glade/prefswin.glade:1918
+msgid "Fallback charcter encodings:"
+msgstr ""
 
-#: audacious/glade/prefswin.glade:2327
-msgid "When finished playing a song, don't automatically advance to the next."
-msgstr "जब एक गीत का चलना समाप्त हो जायें, तो अपने-आप अगले की ओर ना बढ़ें।"
+#: audacious/glade/prefswin.glade:1946
+msgid ""
+"List of character encodings used for fall back conversion of metadata. If "
+"automatic character encoding detector failed or has been disabled, encodings "
+"in this list would be treated as candidates of the encoding of metadata, and "
+"fall back conversion from these encodings to UTF-8 would be attempted."
+msgstr ""
 
-#: audacious/glade/prefswin.glade:2329
-msgid "Don't advance in the playlist"
-msgstr "प्लेसूची में आगे नहीं बढ़ें"
+#: audacious/glade/prefswin.glade:1987
+msgid "Auto character encoding detector for:"
+msgstr ""
 
-#: audacious/glade/prefswin.glade:2364
-msgid "Pause between songs"
-msgstr "गीतों के मध्य ठहरें"
-
-#: audacious/glade/prefswin.glade:2402
-msgid "Pause for"
-msgstr "के लिए ठहरें"
-
-#: audacious/glade/prefswin.glade:2448
-msgid "seconds"
-msgstr "सेकेन्डस"
-
-#: audacious/glade/prefswin.glade:2494
+#: audacious/glade/prefswin.glade:2043
 #, fuzzy
 msgid "<b>File Dialog</b>"
 msgstr "<b>संचिकानाम</b>"
 
-#: audacious/glade/prefswin.glade:2533
+#: audacious/glade/prefswin.glade:2082
 msgid ""
 "Always refresh the file dialog (this will slow opening the dialog on large "
 "directories, and Gnome VFS should handle automatically)."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2535
-msgid ""
-"Always refresh directory when opening file dialog, should be unneeded with "
-"Gnome VFS."
+#: audacious/glade/prefswin.glade:2084
+msgid "Always refresh directory when opening file dialog"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2569
-msgid "<b>Song display</b>"
+#: audacious/glade/prefswin.glade:2118
+#, fuzzy
+msgid "<b>Song Display</b>"
 msgstr "<b>गीत को दिखाना</b>"
 
-#: audacious/glade/prefswin.glade:2645
+#: audacious/glade/prefswin.glade:2194
 msgid "Custom string:"
 msgstr "कस्टम स्ट्रींग:"
 
-#: audacious/glade/prefswin.glade:2696
+#: audacious/glade/prefswin.glade:2245
 #, fuzzy
 msgid ""
 "TITLE\n"
@@ -5112,99 +4664,488 @@ msgstr ""
 "एल्बम - शीर्षक\n"
 "कस्टम"
 
-#: audacious/glade/prefswin.glade:2718
+#: audacious/glade/prefswin.glade:2267
 msgid "Show information about titlestring format"
 msgstr "शीर्षकस्ट्रिंग प्रारूप के बारे में सूचना दिखाएँ"
 
-#: audacious/glade/prefswin.glade:2800
-msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
-msgstr "<span size=\"xx-large\"><b>ईक्यूलाईज़र</b></span>"
+#: audacious/glade/prefswin.glade:2317
+#, fuzzy
+msgid "<b>Popup Information</b>"
+msgstr "एमपीईजी आडियो प्लग-इन संरचना"
 
-#: audacious/glade/prefswin.glade:2855
+#: audacious/glade/prefswin.glade:2368
+msgid ""
+"Toggles popup information window for the pointed entry in the playlist. The "
+"window shows title of song, name of album, genre, year of publish, track "
+"number, track length, and artwork."
+msgstr ""
+
+#: audacious/glade/prefswin.glade:2370
+msgid "Show popup information for playlist entries"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:2397
+msgid "Edit settings for popup information"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:2505
 msgid "<b>Presets</b>"
 msgstr "<b>प्रीसेट्स</b>"
 
-#: audacious/glade/prefswin.glade:2967
+#: audacious/glade/prefswin.glade:2605
 msgid "Directory preset file:"
 msgstr "निर्देशिका प्रीसेट संचिका:"
 
-#: audacious/glade/prefswin.glade:2995
+#: audacious/glade/prefswin.glade:2633
 msgid "File preset extension:"
 msgstr "संचिका प्रीसेट उपनाम:"
 
-#: audacious/glade/prefswin.glade:3043
+#: audacious/glade/prefswin.glade:2681
 msgid "Available _Presets:"
 msgstr "उपलब्ध प्रीसेट (_P):"
 
-#: audacious/glade/prefswin.glade:3207
-#, fuzzy
-msgid "<span size=\"xx-large\"><b>Connectivity</b></span>"
-msgstr "<span size=\"xx-large\"><b>माउस</b></span>"
-
-#: audacious/glade/prefswin.glade:3262
+#: audacious/glade/prefswin.glade:2861
 #, fuzzy
 msgid "<b>Proxy Configuration</b>"
 msgstr "एमपीईजी आडियो प्लग-इन संरचना"
 
-#: audacious/glade/prefswin.glade:3320
+#: audacious/glade/prefswin.glade:2919
 msgid "Enable proxy usage"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3351
+#: audacious/glade/prefswin.glade:2950
 msgid "Proxy hostname:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3379
+#: audacious/glade/prefswin.glade:2978
 #, fuzzy
 msgid "Proxy port:"
 msgstr "प्रोक्सी"
 
-#: audacious/glade/prefswin.glade:3473
+#: audacious/glade/prefswin.glade:3072
 #, fuzzy
 msgid "Use authentication with proxy"
 msgstr "प्रमाणीकरण का उपयोग"
 
-#: audacious/glade/prefswin.glade:3504
+#: audacious/glade/prefswin.glade:3103
 #, fuzzy
 msgid "Proxy username:"
 msgstr "उपयोगकर्ता का नाम:"
 
-#: audacious/glade/prefswin.glade:3532
+#: audacious/glade/prefswin.glade:3131
 #, fuzzy
 msgid "Proxy password:"
 msgstr "कूटशब्द:"
 
-#: audacious/glade/prefswin.glade:3637
+#: audacious/glade/prefswin.glade:3247
+msgid ""
+"<span size=\"small\">Changing these settings will require a restart of "
+"Audacious.</span>"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:3303
 msgid "label65"
 msgstr ""
 
-#: libaudacious/titlestring.c:324
+#: audacious/glade/prefswin.glade:3344
+#, fuzzy
+msgid "<b>Audio System</b>"
+msgstr "<b>प्रीसेट्स</b>"
+
+#: audacious/glade/prefswin.glade:3398
+#, fuzzy
+msgid "Current output plugin:"
+msgstr "वर्तमान आउटपुट प्लग-इन (_C):"
+
+#: audacious/glade/prefswin.glade:3443
+#, fuzzy
+msgid "Buffer size:"
+msgstr "बफ़र का आकार (केबी):"
+
+#: audacious/glade/prefswin.glade:3513
+msgid ""
+"<span size=\"small\">This is the amount of time to prebuffer audio streams "
+"by, in milliseconds.\n"
+"Increase this value if you are experiencing audio skipping. \n"
+"Please note however, that high values will result in Audacious performing "
+"poorly.</span>"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:3748
+#, fuzzy
+msgid "<b>Format Detection</b>"
+msgstr "स्वचालित पहचान"
+
+#: audacious/glade/prefswin.glade:3787
+msgid ""
+"When checked, Audacious will detect file formats on demand. This can result "
+"in a messier playlist, but delivers a major speed benefit."
+msgstr ""
+
+#: audacious/glade/prefswin.glade:3789
+msgid "Detect file formats on demand, instead of immediately."
+msgstr ""
+
+#: audacious/glade/prefswin.glade:3823
+msgid "<b>Playback</b>"
+msgstr "<b>प्लेबैक</b>"
+
+#: audacious/glade/prefswin.glade:3862
+msgid ""
+"When Audacious starts, automatically begin playing from the point where we "
+"stopped before."
+msgstr ""
+
+#: audacious/glade/prefswin.glade:3864
+msgid "Continue playback on startup"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:3898
+msgid "When finished playing a song, don't automatically advance to the next."
+msgstr "जब एक गीत का चलना समाप्त हो जायें, तो अपने-आप अगले की ओर ना बढ़ें।"
+
+#: audacious/glade/prefswin.glade:3900
+msgid "Don't advance in the playlist"
+msgstr "प्लेसूची में आगे नहीं बढ़ें"
+
+#: audacious/glade/prefswin.glade:3935
+msgid "Pause between songs"
+msgstr "गीतों के मध्य ठहरें"
+
+#: audacious/glade/prefswin.glade:3973
+msgid "Pause for"
+msgstr "के लिए ठहरें"
+
+#: audacious/glade/prefswin.glade:4019
+msgid "seconds"
+msgstr "सेकेन्डस"
+
+#: audacious/glade/prefswin.glade:4059
+msgid "label76"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:4173
+msgid "Popup Information Settings"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:4197
+msgid ""
+"While searching for the album's cover, Audacious looks for certain words in "
+"the filename. You can specify those words in the lists below, separated "
+"using commas."
+msgstr ""
+
+#: audacious/glade/prefswin.glade:4252
+#, fuzzy
+msgid "Include:"
+msgstr "ईन्डी"
+
+#: audacious/glade/prefswin.glade:4280
+msgid "Exclude:"
+msgstr ""
+
+#: libaudacious/titlestring.c:340
 msgid "Performer/Artist"
 msgstr "नट/कलाकार"
 
-#: libaudacious/titlestring.c:327
+#: libaudacious/titlestring.c:343
 msgid "File name"
 msgstr "संचिका का नाम"
 
-#: libaudacious/titlestring.c:328
+#: libaudacious/titlestring.c:344
 msgid "File path"
 msgstr "संचिका पथ"
 
-#: libaudacious/titlestring.c:329
+#: libaudacious/titlestring.c:345
 msgid "File extension"
 msgstr "संचिका उपनाम"
 
-#: libaudacious/titlestring.c:330
+#: libaudacious/titlestring.c:346
 msgid "Track name"
 msgstr "ट्रैक का नाम"
 
-#: libaudacious/titlestring.c:331
+#: libaudacious/titlestring.c:347
 msgid "Track number"
 msgstr "ट्रैक की संख्या"
 
-#: libaudacious/titlestring.c:385
+#: libaudacious/titlestring.c:401
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: दिखाएँ \"...\" तब ही जब %n तत्त्व विद्यमान हो"
+
+#, fuzzy
+#~ msgid "Scrobbler Configuration"
+#~ msgstr "एमपीईजी आडियो प्लग-इन संरचना"
+
+#, fuzzy
+#~ msgid "Song Change Configuration"
+#~ msgstr "सीडी श्रव्य प्लेयर संरचना"
+
+#, fuzzy
+#~ msgid "Song Metadata"
+#~ msgstr "सोनाटा"
+
+#, fuzzy
+#~ msgid "Port"
+#~ msgstr "पोर्ट"
+
+#, fuzzy
+#~ msgid "Client name"
+#~ msgstr "संचिका का नाम"
+
+#, fuzzy
+#~ msgid "Port name"
+#~ msgstr "ट्रैक का नाम"
+
+#, fuzzy
+#~ msgid "ALSA output ports"
+#~ msgstr "आल्सा %s आउटपुट प्लग-इन"
+
+#, fuzzy
+#~ msgid "Mixer settings"
+#~ msgstr "मिक्सर की समायोजनायें:"
+
+#~ msgid "Convert non-UTF8 ID3 tags to UTF8"
+#~ msgstr "नॉन-यूटीएफ़८ आईडी३ टैगों को यूटीएफ़८ में परिवर्तित करें"
+
+#~ msgid "ID3 encoding:"
+#~ msgstr "आईडी३ एनकोडिंग:"
+
+#, fuzzy
+#~ msgid "Convert non-UTF8 Vorbis tags to UTF8"
+#~ msgstr "नॉन-यूटीएफ़८ आईडी३ टैगों को यूटीएफ़८ में परिवर्तित करें"
+
+#, fuzzy
+#~ msgid "Vorbis encoding:"
+#~ msgstr "आईडी३ एनकोडिंग:"
+
+#, fuzzy
+#~ msgid "%d Kb/s"
+#~ msgstr "%d किलोबाइट्स प्रति सेकण्ड"
+
+#, fuzzy
+#~ msgid "<b>Name:</b>"
+#~ msgstr "<b>संचिकानाम</b>"
+
+#, fuzzy
+#~ msgid "<b>WMA Version:</b>"
+#~ msgstr "<b>कल्पना</b>"
+
+#, fuzzy
+#~ msgid "<b>Bitrate:</b>"
+#~ msgstr "बिट-दर:"
+
+#, fuzzy
+#~ msgid "<b>Samplerate:</b>"
+#~ msgstr "सैम्पल की दर:"
+
+#, fuzzy
+#~ msgid "<b>Channels:</b>"
+#~ msgstr "अनेक चैनल:"
+
+#, fuzzy
+#~ msgid "<b>Play time:</b>"
+#~ msgstr "<b>संचिकानाम</b>"
+
+#, fuzzy
+#~ msgid "<b>Filesize:</b>"
+#~ msgstr "<b>संचिकानाम</b>"
+
+#, fuzzy
+#~ msgid "WMA Info"
+#~ msgstr "सीडी के बारे में सूचना"
+
+#, fuzzy
+#~ msgid "<b>Title:</b>"
+#~ msgstr "<b>संचिकानाम</b>"
+
+#, fuzzy
+#~ msgid "<b>Album:</b>"
+#~ msgstr "<b>संचिकानाम</b>"
+
+#, fuzzy
+#~ msgid "<b>Comments:</b>"
+#~ msgstr "<b>फ़ॉन्टस (_F)</b>"
+
+#, fuzzy
+#~ msgid "<b>Year:</b>"
+#~ msgstr "<b>संचिकानाम</b>"
+
+#, fuzzy
+#~ msgid "<b>Track:</b>"
+#~ msgstr "<b>प्लेबैक</b>"
+
+#, fuzzy
+#~ msgid "<b>Genre:</b>"
+#~ msgstr "<b>संचिकानाम</b>"
+
+#, fuzzy
+#~ msgid "Tags"
+#~ msgstr "टाँगो"
+
+#~ msgid "Artem Baguinski"
+#~ msgstr "Artem Baguinski"
+
+#~ msgid "Edward Brocklesby"
+#~ msgstr "Edward Brocklesby"
+
+#~ msgid "Chong Kai Xiong"
+#~ msgstr "Chong Kai Xiong"
+
+#~ msgid "Milosz Derezynski"
+#~ msgstr "Milosz Derezynski"
+
+#~ msgid "David Lau"
+#~ msgstr "David Lau"
+
+#~ msgid "Ole Andre Vadla Ravnaas"
+#~ msgstr "Ole Andre Vadla Ravnaas"
+
+#~ msgid "Michiel Sikkes"
+#~ msgstr "Michiel Sikkes"
+
+#~ msgid "Andrei Badea"
+#~ msgstr "Andrew Badea"
+
+#~ msgid "Peter Behroozi"
+#~ msgstr "Peter Behroozi"
+
+#~ msgid "Bernard Blackham"
+#~ msgstr "Bernard Blackham"
+
+#~ msgid "Oliver Blin"
+#~ msgstr "Oliver Blin"
+
+#~ msgid "Tomas Bzatek"
+#~ msgstr "Thomas Bzatek"
+
+#~ msgid "Liviu Danicel"
+#~ msgstr "Liviu Danicel"
+
+#~ msgid "Jon Dowland"
+#~ msgstr "Jon Dowland"
+
+#~ msgid "Artur Frysiak"
+#~ msgstr "Artur Frysiak"
+
+#~ msgid "Sebastian Kapfer"
+#~ msgstr "Sebastian Kapfer"
+
+#~ msgid "Lukas Koberstein"
+#~ msgstr "Lukas Koberstein"
+
+#~ msgid "Dan Korostelev"
+#~ msgstr "Dan Korostelev"
+
+#~ msgid "Jolan Luff"
+#~ msgstr "Jolan Luff"
+
+#~ msgid "Michael Marineau"
+#~ msgstr "Michael Marineau"
+
+#~ msgid "Tim-Philipp Muller"
+#~ msgstr "Tim-Philipp Muller"
+
+#~ msgid "Julien Portalier"
+#~ msgstr "Julien Portalier"
+
+#~ msgid "Andrew Ruder"
+#~ msgstr "Andrew Ruder"
+
+#~ msgid "Olivier Samyn"
+#~ msgstr "Olivier Samyn"
+
+#~ msgid "Martijn Vernooij"
+#~ msgstr "Martijn Vernooij"
+
+#~ msgid "Philipi Pinto"
+#~ msgstr "Philipi Pinto"
+
+#~ msgid "Thierry Vignaud"
+#~ msgstr "Thierry Vignaud"
+
+#~ msgid "Jan Narovec"
+#~ msgstr "Jan Narovec"
+
+#~ msgid "Laurens Buhler"
+#~ msgstr "Laurens Buhler"
+
+#~ msgid "David Le Brun"
+#~ msgstr "David Le Brun"
+
+#~ msgid "Matthias Debus"
+#~ msgstr "Matthias Debus"
+
+#~ msgid "Kouzinopoulos Haris"
+#~ msgstr "Kouzinopoulos Haris"
+
+#~ msgid "Laszlo Dvornik"
+#~ msgstr "Laszlo Dvornik"
+
+#~ msgid "Alessio D'Ascanio"
+#~ msgstr "Alessio D'Ascanio"
+
+#~ msgid "DongCheon Park"
+#~ msgstr "DongCheon Park"
+
+#~ msgid "Rimas Kudelis"
+#~ msgstr "Rimas Kudelis"
+
+#~ msgid "Arangel Angov"
+#~ msgstr "Arangel Angov"
+
+#~ msgid "Jacek Wolszczak"
+#~ msgstr "Jacek Wolszczak"
+
+#~ msgid "Pavlo Bohmat"
+#~ msgstr "Pavlo Bohmat"
+
+#~ msgid "Pavel Kanzelsberger"
+#~ msgstr "Pavel Kanzelsberger"
+
+#~ msgid "Martin Persenius"
+#~ msgstr "Martin Persenius"
+
+#~ msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
+#~ msgstr "<span size=\"xx-large\"><b>प्लग-इन्स</b></span>"
+
+#~ msgid "_Media plugin list:"
+#~ msgstr "मीडिया प्लग-इनों की सूची (_M):"
+
+#~ msgid "<span size=\"medium\"><b>Media</b></span>"
+#~ msgstr "<span size=\"medium\"><b>मीडिया</b></span>"
+
+#, fuzzy
+#~ msgid ""
+#~ "The change is now effective in Audacious' configuration database, but "
+#~ "won't take effect for playback until the next song!\n"
+#~ "\n"
+#~ "Optionally, you can stop and restart playback for the change to take "
+#~ "effect."
+#~ msgstr ""
+#~ "इन परिवर्तनों को बीएमपी के संरचना डाटाबेस में लागू कर दिया गया है, परन्तु इन का "
+#~ "प्रभाव चलाने के लिए अगले गीत के पहिले नहीं होगा!\n"
+#~ "\n"
+#~ "या वैकल्पिक रूप से, प्लेबैक को रोक कर पुनः आरम्भ कर आप इन परिवर्तनों को प्रभाव में ला "
+#~ "सकते है।"
+
+#~ msgid "<span size=\"medium\"><b>Output</b></span>"
+#~ msgstr "<span size=\"medium\"><b>आउटपुट</b></span>"
+
+#~ msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
+#~ msgstr "<span size=\"xx-large\"><b>रूप-रंग</b></span>"
+
+#~ msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
+#~ msgstr "<span size=\"xx-large\"><b>माउस</b></span>"
+
+#~ msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
+#~ msgstr "<span size=\"xx-large\"><b>प्लेसूची</b></span>"
+
+#~ msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
+#~ msgstr "<span size=\"xx-large\"><b>ईक्यूलाईज़र</b></span>"
+
+#, fuzzy
+#~ msgid "<span size=\"xx-large\"><b>Connectivity</b></span>"
+#~ msgstr "<span size=\"xx-large\"><b>माउस</b></span>"
 
 #~ msgid "Use proxy"
 #~ msgstr "प्रोक्सी का उपयोग"
@@ -5483,9 +5424,6 @@ msgstr "%{n:...%}: दिखाएँ \"...\" तब ही जब %n तत्�
 #, fuzzy
 #~ msgid "/Add Folders..."
 #~ msgstr "/संचिकाओं को जोड़ें..."
-
-#~ msgid "Automatic detection"
-#~ msgstr "स्वचालित पहचान"
 
 #~ msgid "3DNow! optimized decoder"
 #~ msgstr "३डीनाउ! संतुलित कूटवाचक"

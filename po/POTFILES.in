@@ -17,7 +17,6 @@ Plugins/General/scrobbler/xmms_scrobbler.c
 Plugins/General/song_change/song_change.c
 
 # AAC input plugin.
-Plugins/Input/aac/src/fileinfo.c
 Plugins/Input/aac/src/libmp4.c
 
 # AdPlug input plugin.

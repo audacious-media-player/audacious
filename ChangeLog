@@ -1,3 +1,16 @@
+2006-07-16 15:14:08 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1740]
+  - filepopup albumart stuff, via hansmi
+  
+
+  Changes:        Modified:
+  +269 -12        trunk/audacious/glade/prefswin.glade  
+  +10 -0          trunk/audacious/main.c  
+  +1 -0           trunk/audacious/main.h  
+  +59 -0          trunk/audacious/prefswin.c  
+  +61 -4          trunk/audacious/ui_fileinfo.c  
+
+
 2006-07-16 00:27:49 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1738]
   - i think this works
