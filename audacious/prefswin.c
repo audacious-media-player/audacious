@@ -90,6 +90,7 @@ typedef struct {
 TitleFieldTag;
 
 static GtkWidget *prefswin = NULL;
+static GtkWidget *filepopup_settings = NULL;
 static GtkWidget *category_treeview = NULL;
 static GtkWidget *category_notebook = NULL;
 GtkWidget *filepopupbutton = NULL;
@@ -2012,14 +2013,63 @@ on_chardet_fallback_changed(GtkEntry *entry, gpointer data)
 static void
 on_show_filepopup_for_tuple_realize(GtkToggleButton * button, gpointer data)
 {
+    GladeXML *xml = prefswin_get_xml();
+    GtkWidget *settings_button = glade_xml_get_widget(xml, "filepopup_for_tuple_settings_button");
+
     gtk_toggle_button_set_active(button, cfg.show_filepopup_for_tuple);
     filepopupbutton = (GtkWidget *)button;
+
+    gtk_widget_set_sensitive(settings_button, cfg.show_filepopup_for_tuple);
 }
 
 static void
 on_show_filepopup_for_tuple_toggled(GtkToggleButton * button, gpointer data)
 {
+    GladeXML *xml = prefswin_get_xml();
+    GtkWidget *settings_button = glade_xml_get_widget(xml, "filepopup_for_tuple_settings_button");
+
     cfg.show_filepopup_for_tuple = gtk_toggle_button_get_active(button);
+
+    gtk_widget_set_sensitive(settings_button, cfg.show_filepopup_for_tuple);
+}
+
+static void
+on_filepopup_for_tuple_settings_clicked(GtkButton *button, gpointer data)
+{
+	GladeXML *xml = prefswin_get_xml();
+	GtkEntry *cover_name_include =
+		(GtkEntry*)glade_xml_get_widget(xml, "filepopup_settings_cover_name_include");
+	GtkEntry *cover_name_exclude =
+		(GtkEntry*)glade_xml_get_widget(xml, "filepopup_settings_cover_name_exclude");
+
+	gtk_entry_set_text(cover_name_include, cfg.cover_name_include);
+	gtk_entry_set_text(cover_name_exclude, cfg.cover_name_exclude);
+
+	gtk_widget_show(filepopup_settings);
+}
+
+static void
+on_filepopup_settings_ok_clicked(GtkButton *button, gpointer data)
+{
+	GladeXML *xml = prefswin_get_xml();
+	GtkEntry *cover_name_include =
+		(GtkEntry*)glade_xml_get_widget(xml, "filepopup_settings_cover_name_include");
+	GtkEntry *cover_name_exclude =
+		(GtkEntry*)glade_xml_get_widget(xml, "filepopup_settings_cover_name_exclude");
+
+	g_free(cfg.cover_name_include);
+	cfg.cover_name_include = g_strdup(gtk_entry_get_text(cover_name_include));
+
+	g_free(cfg.cover_name_exclude);
+	cfg.cover_name_exclude = g_strdup(gtk_entry_get_text(cover_name_exclude));
+
+	gtk_widget_hide(filepopup_settings);
+}
+
+static void
+on_filepopup_settings_cancel_clicked(GtkButton *button, gpointer data)
+{
+	gtk_widget_hide(filepopup_settings);
 }
 
 /* FIXME: complete the map */
@@ -2094,8 +2144,13 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_audio_format_det_cb_realize)
     FUNC_MAP_ENTRY(on_show_filepopup_for_tuple_realize)
     FUNC_MAP_ENTRY(on_show_filepopup_for_tuple_toggled)
+    FUNC_MAP_ENTRY(on_filepopup_for_tuple_settings_clicked)
     FUNC_MAP_ENTRY(on_continue_playback_on_startup_realize)
     FUNC_MAP_ENTRY(on_continue_playback_on_startup_toggled)
+
+    /* Filepopup settings */
+    FUNC_MAP_ENTRY(on_filepopup_settings_ok_clicked)
+    FUNC_MAP_ENTRY(on_filepopup_settings_cancel_clicked)
 FUNC_MAP_END
 
 void
@@ -2319,6 +2374,10 @@ create_prefs_window(void)
 
    gtk_label_set_markup( GTK_LABEL(widget) , aud_version_string->str );
    g_string_free( aud_version_string , TRUE );
+
+	/* Create window for filepopup settings */
+	filepopup_settings = glade_xml_get_widget(xml, "filepopup_for_tuple_settings");
+	gtk_window_set_transient_for(GTK_WINDOW(filepopup_settings), GTK_WINDOW(prefswin));
 }
 
 void

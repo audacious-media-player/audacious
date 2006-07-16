@@ -112,6 +112,7 @@ struct _BmpConfig {
     gint output_buffer_size;
     gboolean playlist_detect;
     gboolean show_filepopup_for_tuple;
+    gchar *cover_name_include, *cover_name_exclude;
 };
 
 typedef struct _BmpConfig BmpConfig;

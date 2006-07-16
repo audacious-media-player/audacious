@@ -1,3 +1,12 @@
+2006-07-16 00:27:49 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1738]
+  - i think this works
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/wma/libffwma/Makefile.in  
+
+
 2006-07-16 00:03:07 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1736]
   Bolt on libmms versions of byteswap macros and bring yet more files in (mmsh.c & mms.h).

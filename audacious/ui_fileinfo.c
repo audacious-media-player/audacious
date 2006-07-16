@@ -342,6 +342,62 @@ fileinfo_show_for_tuple(TitleInput *tuple)
 	gtk_widget_show(fileinfo_win);
 }
 
+static gboolean
+cover_name_filter(const gchar *name, const gchar *filter, const gboolean ret_on_empty)
+{
+	gboolean result = FALSE;
+	gchar **splitted;
+	gchar *current;
+	gchar *lname;
+	gint i;
+
+	if (!filter || strlen(filter) == 0) {
+		return ret_on_empty;
+	}
+
+	splitted = g_strsplit(filter, ",", 0);
+
+	lname = g_strdup(name);
+	g_strdown(lname);
+
+	for (i = 0; !result && (current = splitted[i]); i++) {
+		gchar *stripped = g_strstrip(g_strdup(current));
+		g_strdown(stripped);
+
+		result = result || strstr(lname, stripped);
+
+		g_free(stripped);
+	}
+
+	g_free(lname);
+	g_strfreev(splitted);
+
+	return result;
+}
+
+/* Check wether it's an image we want */
+static gboolean
+is_front_cover_image(const gchar *name)
+{
+	char *ext;
+
+	ext = strrchr(name, '.');
+	if (!ext) {
+		/* No file extension */
+		return FALSE;
+	}
+
+	if (g_strcasecmp(ext, ".jpg") != 0 &&
+	    g_strcasecmp(ext, ".jpeg") != 0 &&
+	    g_strcasecmp(ext, ".png") != 0) {
+		/* No recognized file extension */
+		return FALSE;
+	}
+
+	return cover_name_filter(name, cfg.cover_name_include, TRUE) &&
+	       !cover_name_filter(name, cfg.cover_name_exclude, FALSE);
+}
+
 gchar*
 fileinfo_recursive_get_image(const gchar* path, gint depth)
 {
@@ -359,11 +415,12 @@ fileinfo_recursive_get_image(const gchar* path, gint depth)
 		while (f)
 		{
 			gchar *newpath = g_strdup_printf("%s/%s", path, f);
-			
-			/* ok. why did I not have strcasestr, thought glib had that one */
-			if ((strstr(f,".jpg") || strstr(f,".jpeg") || strstr(f,".png") || strstr(f,".JPG") || strstr(f,".JPEG") || strstr(f,".PNG")) && !strstr(f,"back") && !strstr(f,"Back") && !strstr(f,"BACK"))
+
+			if (is_front_cover_image(f))
 			{
-				/* We found a suitable file in the current directory, use that. The string will be freed by the caller */
+				/* We found a suitable file in the current
+				 * directory, use that. The string will be
+				 * freed by the caller */
 				return newpath;
 			}
 			else

@@ -203,6 +203,8 @@ BmpConfig bmp_default_config = {
     3000,			/* audio buffer size */
     FALSE,			/* whether or not to postpone format detection on initial add */
     TRUE,			/* show filepopup for tuple */
+    NULL,			/* words identifying covers */
+    NULL,			/* words that might not show up in cover names */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -345,6 +347,8 @@ static bmp_cfg_strent bmp_strents[] = {
     {"generic_title_format", &cfg.gentitle_format, TRUE},
     {"chardet_detector", &cfg.chardet_detector, TRUE},
     {"chardet_fallback", &cfg.chardet_fallback, TRUE},
+    {"cover_name_include", &cfg.cover_name_include, TRUE},
+    {"cover_name_exclude", &cfg.cover_name_exclude, TRUE},
 };
 
 static gint ncfgsent = G_N_ELEMENTS(bmp_strents);
@@ -552,6 +556,12 @@ bmp_config_load(void)
 
     if (!cfg.eqpreset_extension)
         cfg.eqpreset_extension = g_strdup(EQUALIZER_DEFAULT_PRESET_EXT);
+
+    if (!cfg.cover_name_include)
+	    cfg.cover_name_include = g_strdup("");
+
+    if (!cfg.cover_name_exclude)
+	    cfg.cover_name_exclude = g_strdup("back");
 }
 
 
