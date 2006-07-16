@@ -1,3 +1,14 @@
+2006-07-16 16:11:31 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1744]
+  - sort by track number
+  
+
+  Changes:        Modified:
+  +16 -1          trunk/audacious/playlist.c  
+  +2 -1           trunk/audacious/playlist.h  
+  +15 -2          trunk/audacious/ui_playlist.c  
+
+
 2006-07-16 15:50:00 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1742]
   - update PO files

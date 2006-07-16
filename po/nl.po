@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-07-16 10:51-0500\n"
-"PO-Revision-Date: 2006-05-31 21:45+0100\n"
+"PO-Revision-Date: 2006-07-16 17:48+0100\n"
 "Last-Translator: Tony Vroon <chainsaw@gentoo.org>\n"
 "Language-Team: (not responsive)\n"
 "MIME-Version: 1.0\n"
@@ -198,11 +198,8 @@ msgid "Commands"
 msgstr "Opdrachten"
 
 #: Plugins/General/song_change/song_change.c:186
-#, fuzzy
 msgid "Command to run when Audacious starts a new song."
-msgstr ""
-"Shell-opdracht die uitgevoerd wordt zodra Audacious aan een nieuw nummer "
-"begint."
+msgstr "Opdracht die uitgevoerd wordt zodra Audacious aan een nieuw nummer begint."
 
 #: Plugins/General/song_change/song_change.c:195
 #: Plugins/General/song_change/song_change.c:217
@@ -211,19 +208,17 @@ msgid "Command:"
 msgstr "Opdracht:"
 
 #: Plugins/General/song_change/song_change.c:209
-#, fuzzy
 msgid "Command to run toward the end of a song."
-msgstr "Shell-opdracht die uitgevoerd wordt zodra een nummer eindigt."
+msgstr "Opdracht die uitgevoerd wordt zodra een nummer eindigt."
 
 #: Plugins/General/song_change/song_change.c:229
-#, fuzzy
 msgid "Command to run when Audacious reaches the end of the playlist."
-msgstr ""
-"Shell-opdracht die uitgevoerd wordt wanneer Audacious het einde van de "
+msgstr "
+"Opdracht die uitgevoerd wordt wanneer Audacious het einde van de "
 "afspeellijst bereikt."
 
 #: Plugins/General/song_change/song_change.c:250
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You can use the following format strings which\n"
 "will be substituted before calling the command\n"
@@ -242,7 +237,7 @@ msgstr ""
 "roepen opdracht (niet alle variabelen zijn nuttig voor de einde-afspeellijst "
 "opdracht).\n"
 "\n"
-"%%F: Frequency (in hertz)\n"
+"%%F: Frequentie (in hertz)\n"
 "%%c: Aantal kanalen (2 voor stereo, 1 voor mono)\n"
 "%%f: bestandsnaam (met volledig pad)\n"
 "%%l: lengte van het nummer (in milliseconden)\n"
@@ -256,6 +251,8 @@ msgid ""
 "<span size='small'>Parameters passed to the shell should be encapsulated in "
 "quotes. Doing otherwise is a security risk.</span>"
 msgstr ""
+"<span size='small'>Parameters die aan de shell worden doorgegeven moeten tussen "
+"aanhalingstekens geplaatst worden. Het is een veiligheidsrisico om dit niet te doen.</span>"
 
 #: Plugins/Input/adplug/adplug-xmms.cc:146
 msgid "About "
@@ -289,33 +286,32 @@ msgid "AMIDI-Plug %s (MIDI Player)"
 msgstr "AMIDI-Plug %s (MIDI-speler)"
 
 #: Plugins/Input/amidi-plug/amidi-plug.c:362
-#, fuzzy
 msgid "AMIDI-Plug - warning"
-msgstr "AMIDI-Plug - configuratie"
+msgstr "AMIDI-Plug - waarschuwing"
 
 #: Plugins/Input/amidi-plug/amidi-plug.c:363
 msgid ""
 "No sequencer backend has been selected!\n"
 "Please configure AMIDI-Plug before playing."
 msgstr ""
+"Er is geen sequencer backend geselecteerd!\n"
+"Gelieve AMIDI-Plug te configureren."
 
 #: Plugins/Input/amidi-plug/i_configure.c:71
-#, fuzzy
 msgid "AMIDI-Plug - select file"
-msgstr "AMIDI-Plug - configuratie"
+msgstr "AMIDI-Plug - selecteer bestand"
 
 #: Plugins/Input/amidi-plug/i_configure.c:118
 msgid "AMIDI-Plug - configuration"
 msgstr "AMIDI-Plug - configuratie"
 
 #: Plugins/Input/amidi-plug/i_configure.c:214
-#, fuzzy
 msgid "AMIDI-Plug message"
-msgstr "AMIDI-Plug %s (MIDI-speler)"
+msgstr "AMIDI-Plug bericht"
 
 #: Plugins/Input/amidi-plug/i_configure.c:215
 msgid "Please stop the player before changing AMIDI-Plug settings."
-msgstr ""
+msgstr "Het afspelen dient gestopt te zijn voor AMIDI-Plug instellingen aangepast kunnen worden."
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:119
 #: Plugins/Input/mpg123/fileinfo.c:288 Plugins/Input/vorbis/fileinfo.c:558
@@ -2002,9 +1998,8 @@ msgid "PRE-BUFFERING: %dKB/%dKB"
 msgstr "VOORBUFFEREN: %dKB/%dKB"
 
 #: Plugins/Input/flac/plugin.c:188
-#, fuzzy
 msgid "FLAC Audio Plugin"
-msgstr "CD geluid plugin"
+msgstr "FLAC geluid plugin"
 
 #: Plugins/Input/modplug/gui/interface.cpp:117
 msgid "ModPlug Configuration"
@@ -3691,7 +3686,7 @@ msgstr "Geen interface weergeven (headless) [experimenteel]"
 
 #: audacious/main.c:739
 msgid "Disable error/warning interception (logging)"
-msgstr ""
+msgstr "Fouten & waarschuwingen niet afvangen (logging uitschakelen)"
 
 #  -v, --version switch
 #: audacious/main.c:742
@@ -4156,9 +4151,8 @@ msgid "Appearance"
 msgstr "Uiterlijk"
 
 #: audacious/prefswin.c:100
-#, fuzzy
 msgid "Audio"
-msgstr "Audacious"
+msgstr "Geluid"
 
 #: audacious/prefswin.c:101
 msgid "Connectivity"
@@ -4245,7 +4239,7 @@ msgstr "Uitgepakte Winamp 2.x skin"
 
 #: audacious/ui_playlist.c:130
 msgid "/Show Popup Info"
-msgstr ""
+msgstr "/Popup informatie tonen"
 
 #: audacious/ui_playlist.c:136 audacious/ui_playlist.c:201
 msgid "/Remove Selected"
@@ -4348,9 +4342,8 @@ msgid "/Sort List/By Title"
 msgstr "/Lijst sorteren/Op titel"
 
 #: audacious/ui_playlist.c:257
-#, fuzzy
 msgid "/Sort List/By Artist"
-msgstr "/Lijst sorteren/Op titel"
+msgstr "/Lijst sorteren/Op artiest"
 
 #: audacious/ui_playlist.c:259
 msgid "/Sort List/By Filename"
@@ -4373,9 +4366,8 @@ msgid "/Sort Selection/By Title"
 msgstr "/Selectie sorteren/Op titel"
 
 #: audacious/ui_playlist.c:268
-#, fuzzy
 msgid "/Sort Selection/By Artist"
-msgstr "/Selectie sorteren/Op titel"
+msgstr "/Selectie sorteren/Op artiest"
 
 #: audacious/ui_playlist.c:270
 msgid "/Sort Selection/By Filename"
@@ -4467,14 +4459,12 @@ msgid "Audacious Preferences"
 msgstr "Audacious voorkeuren"
 
 #: audacious/glade/prefswin.glade:115
-#, fuzzy
 msgid "_Decoder list:"
-msgstr "Decoder"
+msgstr "_Decoder-lijst:"
 
 #: audacious/glade/prefswin.glade:219
-#, fuzzy
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
-msgstr "<span size=\"medium\"><b>Algemeen</b></span>"
+msgstr "<span size=\"medium\"><b>Decoders</b></span>"
 
 #: audacious/glade/prefswin.glade:261
 msgid "_General plugin list:"
@@ -4638,7 +4628,7 @@ msgstr "Bij weergave"
 
 #: audacious/glade/prefswin.glade:1918
 msgid "Fallback charcter encodings:"
-msgstr ""
+msgstr "Terugvallen op karakter-encodings:"
 
 #: audacious/glade/prefswin.glade:1946
 msgid ""
@@ -4647,10 +4637,13 @@ msgid ""
 "in this list would be treated as candidates of the encoding of metadata, and "
 "fall back conversion from these encodings to UTF-8 would be attempted."
 msgstr ""
+"Lijst van karakter-encodings welke voor conversie van metadata worden "
+"gebruikt (hier wordt op teruggevallen als automatische detectie faalt of "
+"is uitgeschakeld)."
 
 #: audacious/glade/prefswin.glade:1987
 msgid "Auto character encoding detector for:"
-msgstr ""
+msgstr "Automatische karakter-encoding detector ingeschakeld voor:"
 
 #: audacious/glade/prefswin.glade:2043
 msgid "<b>File Dialog</b>"
@@ -4666,14 +4659,12 @@ msgstr ""
 "actief is)."
 
 #: audacious/glade/prefswin.glade:2084
-#, fuzzy
 msgid "Always refresh directory when opening file dialog"
 msgstr ""
 "Ververs altijd de mapinhoud bij het openen van het bestandsvenster, niet "
 "noodzakelijk als Gnome VFS actief is."
 
 #: audacious/glade/prefswin.glade:2118
-#, fuzzy
 msgid "<b>Song Display</b>"
 msgstr "<b>Nummer weergave</b>"
 
@@ -4704,9 +4695,8 @@ msgid "Show information about titlestring format"
 msgstr "Geef informatie over het titelformaat"
 
 #: audacious/glade/prefswin.glade:2317
-#, fuzzy
 msgid "<b>Popup Information</b>"
-msgstr "<b>Proxy-configuratie</b>"
+msgstr "<b>Popup-informatie</b>"
 
 #: audacious/glade/prefswin.glade:2368
 msgid ""
@@ -4714,14 +4704,17 @@ msgid ""
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
 msgstr ""
+"Schakelt het tonen van een popup-venster in. Dit venster toont meer informatie "
+"over het geselecteerde item in de afspeellijst, zoals de titel, het album, "
+"het genre, het jaar van publicatie, tracknummer en eventuele cover art."
 
 #: audacious/glade/prefswin.glade:2370
 msgid "Show popup information for playlist entries"
-msgstr ""
+msgstr "Popup-informatie tonen voor items in afspeellijst"
 
 #: audacious/glade/prefswin.glade:2397
 msgid "Edit settings for popup information"
-msgstr ""
+msgstr "Instellingen aanpassen voor popup-informatie"
 
 #: audacious/glade/prefswin.glade:2505
 msgid "<b>Presets</b>"
@@ -4772,25 +4765,24 @@ msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
+"<span size=\"small\">Het aanpassen van deze instellingen vereist een "
+"herstart van Audacious.</span>"
 
 #: audacious/glade/prefswin.glade:3303
 msgid "label65"
 msgstr "label65"
 
 #: audacious/glade/prefswin.glade:3344
-#, fuzzy
 msgid "<b>Audio System</b>"
-msgstr "<b>Artiest:</b>"
+msgstr "<b>Geluidssysteem</b>"
 
 #: audacious/glade/prefswin.glade:3398
-#, fuzzy
 msgid "Current output plugin:"
-msgstr "_Huidige uitvoer-plugin:"
+msgstr "Huidige uitvoer-plugin:"
 
 #: audacious/glade/prefswin.glade:3443
-#, fuzzy
 msgid "Buffer size:"
-msgstr "Bufferomvang (kb):"
+msgstr "Bufferomvang:"
 
 #: audacious/glade/prefswin.glade:3513
 msgid ""
@@ -4800,20 +4792,27 @@ msgid ""
 "Please note however, that high values will result in Audacious performing "
 "poorly.</span>"
 msgstr ""
+"<span size=\"small\">Dit is de grootte van de prebuffer in milliseconden.\n"
+"Verhoog deze waarde als de audio klikt of overslaat.\nGelieve er rekening "
+"mee te houden dat overdreven grote waardes de prestaties van Audacious "
+"sterk kunnen verminderen.</span>"
 
 #: audacious/glade/prefswin.glade:3748
 msgid "<b>Format Detection</b>"
-msgstr ""
+msgstr "<b>Formaat-detectie</b>"
 
 #: audacious/glade/prefswin.glade:3787
 msgid ""
 "When checked, Audacious will detect file formats on demand. This can result "
 "in a messier playlist, but delivers a major speed benefit."
 msgstr ""
+"Als deze optie ingeschakeld is wordt het formaat van een bestand pas bij het "
+"afspelen bepaald. Dit kan een rommelige afspeellijst opleveren, maar versnelt "
+"het inladen van bestanden aanzienlijk."
 
 #: audacious/glade/prefswin.glade:3789
 msgid "Detect file formats on demand, instead of immediately."
-msgstr ""
+msgstr "Detecteer bestandsformaat op het laatste moment."
 
 #: audacious/glade/prefswin.glade:3823
 msgid "<b>Playback</b>"
@@ -4824,10 +4823,12 @@ msgid ""
 "When Audacious starts, automatically begin playing from the point where we "
 "stopped before."
 msgstr ""
+"Wanneer Audacious gestart wordt zal afspelen hervatten van dezelfde positie als "
+"waar het bij het afsluiten stopte."
 
 #: audacious/glade/prefswin.glade:3864
 msgid "Continue playback on startup"
-msgstr ""
+msgstr "Afspeelpositie onthouden"
 
 #: audacious/glade/prefswin.glade:3898
 msgid "When finished playing a song, don't automatically advance to the next."
@@ -4854,13 +4855,12 @@ msgid "seconds"
 msgstr "seconden"
 
 #: audacious/glade/prefswin.glade:4059
-#, fuzzy
 msgid "label76"
-msgstr "label65"
+msgstr "label76"
 
 #: audacious/glade/prefswin.glade:4173
 msgid "Popup Information Settings"
-msgstr ""
+msgstr "Instellingen van popup-informatie"
 
 #: audacious/glade/prefswin.glade:4197
 msgid ""
@@ -4868,15 +4868,16 @@ msgid ""
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
+"Tijdens het zoeken naar cover art wordt naar bepaalde woorden in de bestandsnaam "
+"gekeken. Deze woorden kunnen hier worden opgegeven, gescheiden door komma's."
 
 #: audacious/glade/prefswin.glade:4252
-#, fuzzy
 msgid "Include:"
-msgstr "Indie"
+msgstr "Zoeken naar:"
 
 #: audacious/glade/prefswin.glade:4280
 msgid "Exclude:"
-msgstr ""
+msgstr "Uitsluiten:"
 
 #: libaudacious/titlestring.c:340
 msgid "Performer/Artist"
