@@ -1,3 +1,11 @@
+2006-07-16 17:00:28 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1746]
+  Updated dutch translation.
+
+  Changes:        Modified:
+  +57 -56         trunk/po/nl.po  
+
+
 2006-07-16 16:11:31 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1744]
   - sort by track number

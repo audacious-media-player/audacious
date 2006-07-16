@@ -213,9 +213,7 @@ msgstr "Opdracht die uitgevoerd wordt zodra een nummer eindigt."
 
 #: Plugins/General/song_change/song_change.c:229
 msgid "Command to run when Audacious reaches the end of the playlist."
-msgstr "
-"Opdracht die uitgevoerd wordt wanneer Audacious het einde van de "
-"afspeellijst bereikt."
+msgstr "Opdracht die uitgevoerd wordt wanneer Audacious het einde van de afspeellijst bereikt."
 
 #: Plugins/General/song_change/song_change.c:250
 #, c-format
