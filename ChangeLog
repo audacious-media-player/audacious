@@ -1,3 +1,13 @@
+2006-07-16 00:03:07 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1736]
+  Bolt on libmms versions of byteswap macros and bring yet more files in (mmsh.c & mms.h).
+
+  Changes:        Modified:
+  +44 -0          trunk/Plugins/Input/wma/libffwma/bswap.h  
+  +1274 -0        trunk/Plugins/Input/wma/libffwma/mmsh.c  
+  +53 -0          trunk/Plugins/Input/wma/libffwma/mmsh.h  
+
+
 2006-07-15 23:55:29 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1734]
   Add more files from libmms CVS.
