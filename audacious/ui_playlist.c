@@ -82,7 +82,8 @@ enum {
     PLAYLISTWIN_SORT_BYARTIST, PLAYLISTWIN_SORT_SEL_BYARTIST,
     PLAYLISTWIN_SORT_SEL_BYTITLE, PLAYLISTWIN_SORT_SEL_BYFILENAME,
     PLAYLISTWIN_SORT_SEL_BYPATH, PLAYLISTWIN_SORT_SEL_BYDATE,
-    PLAYLISTWIN_SORT_RANDOMIZE, PLAYLISTWIN_SORT_REVERSE
+    PLAYLISTWIN_SORT_RANDOMIZE, PLAYLISTWIN_SORT_REVERSE,
+    PLAYLISTWIN_SORT_BYTRACK, PLAYLISTWIN_SORT_SEL_BYTRACK
 };
 
 GtkWidget *playlistwin;
@@ -262,6 +263,8 @@ static GtkItemFactoryEntry plsort_menu_entries[] = {
      PLAYLISTWIN_SORT_BYPATH, "<ImageItem>", sortbypathfile_pixbuf},
     {N_("/Sort List/By Date"), NULL, plsort_menu_callback,
      PLAYLISTWIN_SORT_BYDATE, "<ImageItem>", sortbydate_pixbuf},
+    {N_("/Sort List/By Track Number"), NULL, plsort_menu_callback,
+     PLAYLISTWIN_SORT_BYTRACK, "<ImageItem>", sortbytitle_pixbuf},
     {N_("/Sort Selection"), NULL, NULL, 0, "<Branch>", NULL},
     {N_("/Sort Selection/By Title"), NULL, plsort_menu_callback,
      PLAYLISTWIN_SORT_SEL_BYTITLE, "<ImageItem>", sortbytitle_pixbuf},
@@ -272,7 +275,9 @@ static GtkItemFactoryEntry plsort_menu_entries[] = {
     {N_("/Sort Selection/By Path + Filename"), NULL, plsort_menu_callback,
      PLAYLISTWIN_SORT_SEL_BYPATH, "<ImageItem>", sortbypathfile_pixbuf},
     {N_("/Sort Selection/By Date"), NULL, plsort_menu_callback,
-     PLAYLISTWIN_SORT_SEL_BYDATE, "<ImageItem>", sortbydate_pixbuf}
+     PLAYLISTWIN_SORT_SEL_BYDATE, "<ImageItem>", sortbydate_pixbuf},
+    {N_("/Sort Selection/By Track Number"), NULL, plsort_menu_callback,
+     PLAYLISTWIN_SORT_SEL_BYTRACK, "<ImageItem>", sortbytitle_pixbuf}
 };
 
 
@@ -1850,6 +1855,10 @@ plsort_menu_callback(gpointer data,
                      GtkWidget * widget)
 {
     switch (action) {
+    case PLAYLISTWIN_SORT_BYTRACK:
+        playlist_sort(PLAYLIST_SORT_TRACK);
+        playlistwin_update_list();
+        break;
     case PLAYLISTWIN_SORT_BYTITLE:
         playlist_sort(PLAYLIST_SORT_TITLE);
         playlistwin_update_list();
@@ -1868,6 +1877,10 @@ plsort_menu_callback(gpointer data,
         break;
     case PLAYLISTWIN_SORT_BYFILENAME:
         playlist_sort(PLAYLIST_SORT_FILENAME);
+        playlistwin_update_list();
+        break;
+    case PLAYLISTWIN_SORT_SEL_BYTRACK:
+        playlist_sort_selected(PLAYLIST_SORT_TRACK);
         playlistwin_update_list();
         break;
     case PLAYLISTWIN_SORT_SEL_BYTITLE:

@@ -1,3 +1,40 @@
+2006-07-16 15:50:00 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1742]
+  - update PO files
+  
+
+  Changes:        Modified:
+  +2 -0           trunk/po/Makevars  
+  +0 -1           trunk/po/POTFILES.in  
+  +1398 -1714     trunk/po/audacious.pot  
+  +1594 -1749     trunk/po/br.po  
+  +1764 -1769     trunk/po/cs.po  
+  +1525 -1754     trunk/po/cy.po  
+  +1831 -1771     trunk/po/de.po  
+  +1778 -1747     trunk/po/el.po  
+  +1772 -1751     trunk/po/es.po  
+  +1702 -1760     trunk/po/fi.po  
+  +1701 -1763     trunk/po/fr.po  
+  +1699 -1761     trunk/po/hi.po  
+  +1770 -1745     trunk/po/hu.po  
+  +1856 -1761     trunk/po/it.po  
+  +1433 -1372     trunk/po/ja.po  
+  +1555 -1753     trunk/po/ka.po  
+  +1628 -1759     trunk/po/ko.po  
+  +1699 -1761     trunk/po/lt.po  
+  +1698 -1759     trunk/po/mk.po  
+  +1832 -1770     trunk/po/nl.po  
+  +1851 -1791     trunk/po/pl.po  
+  +1649 -1762     trunk/po/pt_BR.po  
+  +1516 -1753     trunk/po/ro.po  
+  +1663 -1767     trunk/po/ru.po  
+  +1678 -1761     trunk/po/sk.po  
+  +1525 -1754     trunk/po/sv.po  
+  +1660 -1757     trunk/po/uk.po  
+  +1578 -1755     trunk/po/zh_CN.po  
+  +1737 -1798     trunk/po/zh_TW.po  
+
+
 2006-07-16 15:14:08 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1740]
   - filepopup albumart stuff, via hansmi

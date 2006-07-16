@@ -107,6 +107,7 @@ static gint playlist_compare_filename(PlaylistEntry * a, PlaylistEntry * b);
 static gint playlist_compare_title(PlaylistEntry * a, PlaylistEntry * b);
 static gint playlist_compare_artist(PlaylistEntry * a, PlaylistEntry * b);
 static gint playlist_compare_date(PlaylistEntry * a, PlaylistEntry * b);
+static gint playlist_compare_track(PlaylistEntry * a, PlaylistEntry * b);
 
 static gint playlist_dupscmp_path(PlaylistEntry * a, PlaylistEntry * b);
 static gint playlist_dupscmp_filename(PlaylistEntry * a, PlaylistEntry * b);
@@ -117,7 +118,8 @@ static PlaylistCompareFunc playlist_compare_func_table[] = {
     playlist_compare_filename,
     playlist_compare_title,
     playlist_compare_artist,
-    playlist_compare_date
+    playlist_compare_date,
+    playlist_compare_track
 };
 
 static void playlist_save_m3u(FILE * file);
@@ -1756,6 +1758,19 @@ playlist_get_songtime(guint pos)
     }
 
     return song_time;
+}
+
+static gint
+playlist_compare_track(PlaylistEntry * a,
+		       PlaylistEntry * b)
+{
+    g_return_val_if_fail(a != NULL, 0);
+    g_return_val_if_fail(b != NULL, 0);
+
+    g_return_val_if_fail(a->tuple != NULL, 0);
+    g_return_val_if_fail(b->tuple != NULL, 0);
+
+    return (a->tuple->track_number - b->tuple->track_number);
 }
 
 static gint
