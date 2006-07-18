@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
 AC_INIT(audacious, 1.1.1)
-AC_PREREQ(2.5)
+AC_PREREQ([2.59])
 
 AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
@@ -23,10 +23,6 @@ if test -d "/usr/X11R6/include"; then
 fi
 
 AM_INIT_AUTOMAKE
-
-if [ "$prefix" = "NONE" ]; then
-        prefix="${ac_default_prefix}"
-fi
 
 dnl GNU gettext
 
@@ -118,6 +114,10 @@ AC_ARG_WITH(cdda-dir,
 )
 
 dnl These plugins are always built.
+
+if [ "$prefix" = "NONE" ]; then
+        prefix="${ac_default_prefix}"
+fi
 
 INPUT_PLUGINS="cdaudio tonegen console sexypsf wav"
 OUTPUT_PLUGINS="disk_writer"
