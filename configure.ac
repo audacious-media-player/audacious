@@ -917,6 +917,11 @@ AC_SUBST(GENERAL_PLUGIN_DIR)
 AC_SUBST(VISUALIZATION_PLUGIN_DIR)
 AC_SUBST(pluginsubs)
 
+dnl XXX Work around an autoconf bug.
+if [ ! $datadir ]; then
+	datadir=${prefix}/share
+fi
+
 localedir=$datadir/locale
 AC_SUBST(localedir)
 
