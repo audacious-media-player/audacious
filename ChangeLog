@@ -1,3 +1,12 @@
+2006-07-18 19:51:22 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1758]
+  - try NOW
+  
+
+  Changes:        Modified:
+  +2 -2           trunk/configure.ac  
+
+
 2006-07-18 19:47:59 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1756]
   - try again
