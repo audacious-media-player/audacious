@@ -918,11 +918,11 @@ AC_SUBST(VISUALIZATION_PLUGIN_DIR)
 AC_SUBST(pluginsubs)
 
 dnl XXX Work around some autoconf bugs.
-if [ "$prefix" = "NONE" ]; then
+if test "$prefix" = "NONE"; then
         prefix="${ac_default_prefix}"
 fi
 
-if [ ! $datadir ]; then
+if test -z $datadir; then
 	datadir=${prefix}/share
 fi
 
