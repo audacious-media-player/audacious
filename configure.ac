@@ -115,10 +115,6 @@ AC_ARG_WITH(cdda-dir,
 
 dnl These plugins are always built.
 
-if [ "$prefix" = "NONE" ]; then
-        prefix="${ac_default_prefix}"
-fi
-
 INPUT_PLUGINS="cdaudio tonegen console sexypsf wav"
 OUTPUT_PLUGINS="disk_writer"
 EFFECT_PLUGINS="audiocompress ladspa voice_removal"
@@ -921,7 +917,11 @@ AC_SUBST(GENERAL_PLUGIN_DIR)
 AC_SUBST(VISUALIZATION_PLUGIN_DIR)
 AC_SUBST(pluginsubs)
 
-dnl XXX Work around an autoconf bug.
+dnl XXX Work around some autoconf bugs.
+if [ "$prefix" = "NONE" ]; then
+        prefix="${ac_default_prefix}"
+fi
+
 if [ ! $datadir ]; then
 	datadir=${prefix}/share
 fi
