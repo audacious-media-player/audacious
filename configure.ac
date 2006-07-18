@@ -24,6 +24,10 @@ fi
 
 AM_INIT_AUTOMAKE
 
+if [ "$prefix" = "NONE" ]; then
+        prefix="${ac_default_prefix}"
+fi
+
 dnl GNU gettext
 
 AM_GNU_GETTEXT
