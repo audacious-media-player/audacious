@@ -891,7 +891,7 @@ AM_CONDITIONAL(USE_X86ASM, test "x$x86_asm" = xyes)
 AM_CONDITIONAL(HAVE_SOLARIS, test "x$have_solaris" = xyes)
 AM_CONDITIONAL(HAVE_SUN, test "x$have_sun" = xyes)
 
-plugindir=$libdir/audacious
+plugindir="$libdir/audacious"
 AC_SUBST(plugindir)
 
 if test "x$enable_one_plugin_dir" = "xyes"; then
@@ -922,11 +922,11 @@ if test "$prefix" = "NONE"; then
         prefix="${ac_default_prefix}"
 fi
 
-if test -z $datadir; then
-	datadir=${prefix}/share
+if test -z "$datadir"; then
+	datadir="${prefix}/share"
 fi
 
-localedir=$datadir/locale
+localedir="$datadir/locale"
 AC_SUBST(localedir)
 
 BEEP_DEFINES="$CFLAGS -DDATA_DIR=\\\"$datadir/audacious\\\" -DPLUGIN_DIR=\\\"$plugindir\\\" -DPLUGINSUBS=$pluginsubs -DLOCALEDIR=\\\"$localedir\\\""

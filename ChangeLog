@@ -1,3 +1,12 @@
+2006-07-18 22:28:07 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1762]
+  - datarootdir stuff
+  
+
+  Changes:        Modified:
+  +1 -0           trunk/mk/rules.mk.in  
+
+
 2006-07-18 20:40:19 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1760]
   Updated greek translation by StavrosG.
