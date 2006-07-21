@@ -114,11 +114,14 @@ The following packages are required for optional features:
     GConf >= 2.6.0  
     (http://ftp.gnome.org/pub/GNOME/desktop/2.6/2.6.0/sources/)
 
+  Taglib:
+    Taglib >= 1.4
+
 If you compile Audacious from a fresh CVS checkout, you will also need
 the following tools:
 
-  automake >= 1.7
-  autoconf >= 2.5
+  automake >= 1.9
+  autoconf >= 2.59
 
 Note that these tools and libraries are bundled with major Linux
 distributions. Use the packages provided with them where possible. If
@@ -139,6 +142,9 @@ This will put the binary in /usr/local/bin and plugins in
 
 Note for packagers: The gnome-vfs option is VERY EXPERIMENTAL. We suggest you
 do not use it in your official distribution packages.
+
+If you want to use the automatic character detection system, then you should
+use --enable-chardet.
 
 
 2.2 Borderless Installation
@@ -514,9 +520,9 @@ The input plugins is what you use to play mp3, mod, wav and even movies with.
 
 3.6.1.1 Cd Audio Player
 -----------------------
-Plays audio cd's on Linux, FreeBSD and Solaris. This plugin does not pass
-the sound through Audacious, so no visualization can be made nor will the
-equalizer settings have any effect.
+Plays audio cd's on Linux, FreeBSD and Solaris. This plugin typically does not
+pass the sound through Audacious, so no visualization can be made nor will the
+equalizer settings have any effect. It can however, be configured to do so.
 
 Before I explain the usage we better have a look on the configuration
 first.
@@ -584,7 +590,7 @@ that instead.
 The main reason why this player exists today is mp3 files, so what could be
 better than a plugin that plays them?.
 
-It's based off the mpg123 engine and handles MPEG Layer 1/2/3 files and
+It's loosely based off the mpg123 engine and handles MPEG Layer 1/2/3 files and
 VBR (variable bit rate) MP3 files.
 
 The first configuration tab is just like the MikMod one, and again, if you
