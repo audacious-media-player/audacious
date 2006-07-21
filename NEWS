@@ -1,3 +1,14 @@
+Audacious 1.1.1 (2006-07-21)
+
+Enhancements
+* None really to speak of.
+
+Bugfixes
+* [mpgdec] Handle certain MP3s more correctly.
+* [mpgdec] Better detect and deal-with corrupted MP3 files.
+* [amidi-plug] Fix a crash if the ALSA sequencer is unavailable,
+  but the ALSA backend was compiled
+
 Audacious 1.1.0 (release) (2006-07-11)
 
 Enhancements
