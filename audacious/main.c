@@ -297,6 +297,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"resume_playback_on_startup", &cfg.resume_playback_on_startup, TRUE},
     {"playlist_detect", &cfg.playlist_detect, TRUE},
     {"show_filepopup_for_tuple", &cfg.show_filepopup_for_tuple, TRUE},
+    {"recurse_for_cover", &cfg.recurse_for_cover, TRUE}
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);
@@ -327,6 +328,7 @@ static bmp_cfg_nument bmp_numents[] = {
     {"titlestring_preset", &cfg.titlestring_preset, TRUE},
     {"resume_playback_on_startup_time", &cfg.resume_playback_on_startup_time, TRUE},
     {"output_buffer_size", &cfg.output_buffer_size, TRUE},
+    {"recurse_for_cover_depth", &cfg.recurse_for_cover_depth, TRUE}
 };
 
 static gint ncfgient = G_N_ELEMENTS(bmp_numents);

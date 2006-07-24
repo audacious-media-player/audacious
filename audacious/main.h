@@ -113,6 +113,8 @@ struct _BmpConfig {
     gboolean playlist_detect;
     gboolean show_filepopup_for_tuple;
     gchar *cover_name_include, *cover_name_exclude;
+    gboolean recurse_for_cover;
+    gint recurse_for_cover_depth;
 };
 
 typedef struct _BmpConfig BmpConfig;

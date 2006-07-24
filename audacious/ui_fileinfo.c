@@ -403,7 +403,7 @@ fileinfo_recursive_get_image(const gchar* path, gint depth)
 {
 	GDir *d;
 
-	if(depth > 3)
+	if (cfg.recurse_for_cover && depth > cfg.recurse_for_cover_depth)
 		return NULL;
 	
 	d = g_dir_open(path, 0, NULL);
@@ -425,21 +425,20 @@ fileinfo_recursive_get_image(const gchar* path, gint depth)
 			}
 			else
 			{
-				/* File/directory wasn't suitable, try and recurse into it.
-				 * This should either return a filename for a image file, 
-				 * or NULL if there was no suitable file, or 'f' wasn't a dir.
-				 */
-				gchar *tmp = fileinfo_recursive_get_image(newpath, depth+1);
-				
-				if(tmp)
+				f = g_dir_read_name(d);
+				if (cfg.recurse_for_cover)
 				{
-					g_free(newpath);
-					return tmp;
-				}
-				else
-				{
-					/* Not got anything, move onto the next item in the directory */
-					f = g_dir_read_name(d);
+					/* File/directory wasn't suitable, try and recurse into it.
+					 * This should either return a filename for a image file, 
+					 * or NULL if there was no suitable file, or 'f' wasn't a dir.
+					 */
+					gchar *tmp = fileinfo_recursive_get_image(newpath, depth+1);
+					
+					if(tmp)
+					{
+						g_free(newpath);
+						return tmp;
+					}
 				}
 			}
 		}
