@@ -34,7 +34,8 @@ typedef enum {
     PLAYLIST_SORT_TITLE,
     PLAYLIST_SORT_ARTIST,
     PLAYLIST_SORT_DATE,
-    PLAYLIST_SORT_TRACK
+    PLAYLIST_SORT_TRACK,
+    PLAYLIST_SORT_PLAYLIST
 } PlaylistSortType;
 
 typedef enum {

@@ -1,3 +1,16 @@
+2006-07-24 23:20:05 +0000  Derek Pomery <nemo@m8y.org>
+  revision [1772]
+  Make annoying recursion that consistently returns wrong art, optional.
+  
+
+  Changes:        Modified:
+  +89 -0          trunk/audacious/glade/prefswin.glade  
+  +2 -0           trunk/audacious/main.c  
+  +2 -0           trunk/audacious/main.h  
+  +42 -0          trunk/audacious/prefswin.c  
+  +14 -15         trunk/audacious/ui_fileinfo.c  
+
+
 2006-07-21 17:24:28 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1770]
   - add translators list

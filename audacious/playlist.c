@@ -108,6 +108,7 @@ static gint playlist_compare_title(PlaylistEntry * a, PlaylistEntry * b);
 static gint playlist_compare_artist(PlaylistEntry * a, PlaylistEntry * b);
 static gint playlist_compare_date(PlaylistEntry * a, PlaylistEntry * b);
 static gint playlist_compare_track(PlaylistEntry * a, PlaylistEntry * b);
+static gint playlist_compare_playlist(PlaylistEntry * a, PlaylistEntry * b);
 
 static gint playlist_dupscmp_path(PlaylistEntry * a, PlaylistEntry * b);
 static gint playlist_dupscmp_filename(PlaylistEntry * a, PlaylistEntry * b);
@@ -119,7 +120,8 @@ static PlaylistCompareFunc playlist_compare_func_table[] = {
     playlist_compare_title,
     playlist_compare_artist,
     playlist_compare_date,
-    playlist_compare_track
+    playlist_compare_track,
+    playlist_compare_playlist
 };
 
 static void playlist_save_m3u(FILE * file);
@@ -1771,6 +1773,36 @@ playlist_compare_track(PlaylistEntry * a,
     g_return_val_if_fail(b->tuple != NULL, 0);
 
     return (a->tuple->track_number - b->tuple->track_number);
+}
+
+static gint
+playlist_compare_playlist(PlaylistEntry * a,
+		          PlaylistEntry * b)
+{
+    const gchar *a_title = NULL, *b_title = NULL;
+
+    g_return_val_if_fail(a != NULL, 0);
+    g_return_val_if_fail(b != NULL, 0);
+
+    if (a->title != NULL)
+        a_title = a->title;
+    else {
+        if (strrchr(a->filename, '/'))
+            a_title = strrchr(a->filename, '/') + 1;
+        else
+            a_title = a->filename;
+    }
+
+    if (b->title != NULL)
+        b_title = b->title;
+    else {
+        if (strrchr(a->filename, '/'))
+            b_title = strrchr(b->filename, '/') + 1;
+        else
+            b_title = b->filename;
+    }
+
+    return strcasecmp(a_title, b_title);
 }
 
 static gint
