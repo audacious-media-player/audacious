@@ -1,3 +1,12 @@
+2006-07-28 06:15:43 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1784]
+  - add incomplete media library UI -- still lots to do
+  
+
+  Changes:        Modified:
+  +182 -0         trunk/audacious/library/library.glade  
+
+
 2006-07-28 05:41:31 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1782]
   - add sqlite/ directory

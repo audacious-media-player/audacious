@@ -26,6 +26,12 @@
 extern "C" {
 #endif
 
+    enum
+    {
+        AUDACIOUS_TYPE_UNIX,
+	AUDACIOUS_TYPE_TCP,
+    };
+
     /* Do NOT use this! This is only for control socket initialization now. */
     gint xmms_connect_to_session(gint session);
 

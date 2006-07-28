@@ -27,13 +27,18 @@
 #include <sys/stat.h>
 #include <sys/socket.h>
 #include <sys/un.h>
+#include <arpa/inet.h>
+#include <netdb.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "beepctrl.h"
 #include "audacious/controlsocket.h"
+#include "libaudacious/configdb.h"
 
+/* overrides audacious_get_session_uri(). */
+static gchar *session_uri = NULL;
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -292,24 +297,141 @@ remote_get_string_pos(gint session, gint cmd, guint32 pos)
     return data;
 }
 
+gchar *
+audacious_get_session_uri(gint session)
+{
+    ConfigDb *db;
+    gchar *value = NULL;
+
+    db = bmp_cfg_db_open();
+
+    if (session_uri != NULL)
+	return session_uri;
+
+    bmp_cfg_db_get_string(db, NULL, "session_uri_base", &value);
+
+    if (value == NULL)
+        return g_strdup_printf("unix://localhost/%s/%s_%s.%d", g_get_tmp_dir(),
+		CTRLSOCKET_NAME, g_get_user_name(), session);
+
+    bmp_cfg_db_close(db);
+
+    return value;
+}
+
+gint
+audacious_determine_session_type(gint session)
+{
+    gchar *uri;
+
+    uri = audacious_get_session_uri(session);
+
+    if (!g_strncasecmp(uri, "tcp://", 6))
+        return AUDACIOUS_TYPE_TCP;
+    else
+        return AUDACIOUS_TYPE_UNIX;
+
+    return AUDACIOUS_TYPE_UNIX;
+}
+
+/* tcp://192.168.100.1:5900/zyzychynxi389xvmfewqaxznvnw */
+void
+audacious_decode_tcp_uri(gint session, gchar *in, gchar **host, gint *port, gchar **key)
+{
+    gchar *workbuf = NULL, *keybuf = NULL;
+    gint iport;
+
+    /* split out the host/port and key */
+    sscanf(in, "tcp://%s/%s", workbuf, keybuf);
+
+    *key = keybuf;
+
+    if (strchr(workbuf, ':') == NULL)
+    {
+        *host = workbuf;
+        *port = 37370 + session;
+    }
+    else
+    {
+        gchar *hostbuf = NULL;
+        sscanf(workbuf, "%s:%d", hostbuf, &iport);
+
+        *port = iport + session;
+    }
+}
+
+/* unix://localhost/tmp/audacious_nenolod.0 */
+void
+audacious_decode_unix_uri(gint session, gchar *in, gchar **out)
+{
+    gchar *workbuf = NULL, *pathbuf = NULL;
+
+    /* retrieve the pathbuf */
+    sscanf(in, "unix://%s/%s", workbuf, pathbuf);
+
+    *out = pathbuf;
+}
+
 gint
 xmms_connect_to_session(gint session)
 {
     gint fd;
-    uid_t stored_uid, euid;
-    struct sockaddr_un saddr;
+    gint type = audacious_determine_session_type(session);
+    gchar *uri = audacious_get_session_uri(session);
 
-    if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) != -1) {
-        saddr.sun_family = AF_UNIX;
-        stored_uid = getuid();
-        euid = geteuid();
-        setuid(euid);
-        g_snprintf(saddr.sun_path, 108, "%s/%s_%s.%d", g_get_tmp_dir(),
-                   CTRLSOCKET_NAME, g_get_user_name(), session);
-        setreuid(stored_uid, euid);
-        if (connect(fd, (struct sockaddr *) &saddr, sizeof(saddr)) != -1)
-            return fd;
+    if (type == AUDACIOUS_TYPE_UNIX)
+    {
+        if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) != -1)
+        {
+            uid_t stored_uid, euid;
+            struct sockaddr_un saddr;
+	    gchar *path;
+
+            saddr.sun_family = AF_UNIX;
+            stored_uid = getuid();
+            euid = geteuid();
+            setuid(euid);
+	    
+	    audacious_decode_unix_uri(session, uri, &path);
+
+/*
+            g_snprintf(saddr.sun_path, 108, "%s/%s_%s.%d", g_get_tmp_dir(),
+                       CTRLSOCKET_NAME, g_get_user_name(), session);
+ */
+	    g_strlcpy(saddr.sun_path, path, 108);
+            setreuid(stored_uid, euid);
+            if (connect(fd, (struct sockaddr *) &saddr, sizeof(saddr)) != -1)
+                return fd;
+        }
     }
+    else
+    {
+        if ((fd = socket(AF_INET, SOCK_STREAM, 0)) != -1)
+        {
+	    struct hostent *hp;
+	    struct sockaddr_in saddr;
+	    gchar *host, *key;
+	    gint port;
+
+	    audacious_decode_tcp_uri(session, uri, &host, &port, &key);
+
+            /* resolve it */
+            if ((hp = gethostbyname(host)) == NULL)
+            {
+                 close(fd);
+                 return -1;
+            }
+
+	    memset(&saddr, '\0', sizeof(saddr));
+            saddr.sin_family = AF_INET;
+            saddr.sin_port = htons(port);
+            memcpy(&saddr.sin_addr, hp->h_addr, hp->h_length);
+
+            if (connect(fd, (struct sockaddr *) &saddr, sizeof(saddr)) != -1)
+                return fd;
+        }
+    }
+
     close(fd);
     return -1;
 }
