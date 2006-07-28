@@ -38,7 +38,7 @@
 #include "libaudacious/configdb.h"
 
 /* overrides audacious_get_session_uri(). */
-static gchar *session_uri = NULL;
+gchar *audacious_session_uri = NULL;
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -300,7 +300,7 @@ remote_get_string_pos(gint session, gint cmd, guint32 pos)
 void
 audacious_set_session_uri(gchar *uri)
 {
-    session_uri = uri;
+    audacious_session_uri = uri;
 }
 
 gchar *
@@ -311,8 +311,11 @@ audacious_get_session_uri(gint session)
 
     db = bmp_cfg_db_open();
 
-    if (session_uri != NULL)
-	return session_uri;
+    if (audacious_session_uri != NULL)
+    {
+        printf("%p\n", audacious_session_uri);
+	return audacious_session_uri;
+    }
 
     bmp_cfg_db_get_string(db, NULL, "session_uri_base", &value);
 
@@ -344,7 +347,7 @@ audacious_determine_session_type(gint session)
 void
 audacious_decode_tcp_uri(gint session, gchar *in, gchar **host, gint *port, gchar **key)
 {
-    gchar *workbuf = NULL, *keybuf = NULL;
+    static gchar workbuf[1024], keybuf[1024];
     gint iport;
 
     /* split out the host/port and key */
@@ -370,7 +373,7 @@ audacious_decode_tcp_uri(gint session, gchar *in, gchar **host, gint *port, gcha
 void
 audacious_decode_unix_uri(gint session, gchar *in, gchar **out)
 {
-    gchar *workbuf = NULL, *pathbuf = NULL;
+    static gchar workbuf[1024], pathbuf[1024];
 
     /* retrieve the pathbuf */
     sscanf(in, "unix://%s/%s", workbuf, pathbuf);

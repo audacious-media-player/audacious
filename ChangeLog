@@ -1,3 +1,13 @@
+2006-07-28 07:16:07 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1788]
+  - add audacious_set_session_uri().
+  
+
+  Changes:        Modified:
+  +6 -0           trunk/libaudacious/beepctrl.c  
+  +4 -0           trunk/libaudacious/beepctrl.h  
+
+
 2006-07-28 07:13:02 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1786]
   - add framework for later handling tcp:// connections
