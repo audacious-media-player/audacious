@@ -1,3 +1,69 @@
+2006-07-28 05:41:31 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1782]
+  - add sqlite/ directory
+  
+
+  Changes:        Modified:
+  +19 -0          trunk/sqlite/Makefile  
+  +562 -0         trunk/sqlite/alter.c  
+  +403 -0         trunk/sqlite/analyze.c  
+  +500 -0         trunk/sqlite/attach.c  
+  +232 -0         trunk/sqlite/auth.c  
+  +6672 -0        trunk/sqlite/btree.c  
+  +148 -0         trunk/sqlite/btree.h  
+  +3233 -0        trunk/sqlite/build.c  
+  +368 -0         trunk/sqlite/callback.c  
+  +263 -0         trunk/sqlite/complete.c  
+  +998 -0         trunk/sqlite/date.c  
+  +451 -0         trunk/sqlite/delete.c  
+  +37 -0          trunk/sqlite/experimental.c  
+  +2306 -0        trunk/sqlite/expr.c  
+  +1147 -0        trunk/sqlite/func.c  
+  +394 -0         trunk/sqlite/hash.c  
+  +111 -0         trunk/sqlite/hash.h  
+  +1123 -0        trunk/sqlite/insert.c  
+  +98 -0          trunk/sqlite/keywordhash.h  
+  +135 -0         trunk/sqlite/legacy.c  
+  +1229 -0        trunk/sqlite/main.c  
+  +147 -0         trunk/sqlite/opcodes.c  
+  +159 -0         trunk/sqlite/opcodes.h  
+  +92 -0          trunk/sqlite/os.c  
+  +478 -0         trunk/sqlite/os.h  
+  +188 -0         trunk/sqlite/os_common.h  
+  +965 -0         trunk/sqlite/os_os2.c  
+  +73 -0          trunk/sqlite/os_os2.h  
+  +1992 -0        trunk/sqlite/os_unix.c  
+  +1556 -0        trunk/sqlite/os_win.c  
+  +3853 -0        trunk/sqlite/pager.c  
+  +122 -0         trunk/sqlite/pager.h  
+  +3320 -0        trunk/sqlite/parse.c  
+  +151 -0         trunk/sqlite/parse.h  
+  +1060 -0        trunk/sqlite/parse.y  
+  +970 -0         trunk/sqlite/pragma.c  
+  +583 -0         trunk/sqlite/prepare.c  
+  +864 -0         trunk/sqlite/printf.c  
+  +100 -0         trunk/sqlite/random.c  
+  +3292 -0        trunk/sqlite/select.c  
+  +1798 -0        trunk/sqlite/shell.c  
+  +1482 -0        trunk/sqlite/sqlite.h  
+  +1774 -0        trunk/sqlite/sqliteInt.h  
+  +200 -0         trunk/sqlite/table.c  
+  +493 -0         trunk/sqlite/tokenize.c  
+  +813 -0         trunk/sqlite/trigger.c  
+  +508 -0         trunk/sqlite/update.c  
+  +596 -0         trunk/sqlite/utf.c  
+  +1485 -0        trunk/sqlite/util.c  
+  +329 -0         trunk/sqlite/vacuum.c  
+  +4650 -0        trunk/sqlite/vdbe.c  
+  +144 -0         trunk/sqlite/vdbe.h  
+  +392 -0         trunk/sqlite/vdbeInt.h  
+  +815 -0         trunk/sqlite/vdbeapi.c  
+  +1975 -0        trunk/sqlite/vdbeaux.c  
+  +114 -0         trunk/sqlite/vdbefifo.c  
+  +907 -0         trunk/sqlite/vdbemem.c  
+  +2139 -0        trunk/sqlite/where.c  
+
+
 2006-07-28 05:14:12 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1780]
   - path to file would probably be essential, huh.
