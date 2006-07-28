@@ -1,3 +1,11 @@
+2006-07-28 04:49:12 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1776]
+  - add library/ (and base Makefile for libmedialibrary.a, schema.sqlite)
+  
+
+  Changes:        Modified:
+
+
 2006-07-25 19:12:29 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1774]
   via Christian Birchinger <joker -at- netswarm.net>:
