@@ -313,7 +313,6 @@ audacious_get_session_uri(gint session)
 
     if (audacious_session_uri != NULL)
     {
-        printf("%p\n", audacious_session_uri);
 	return audacious_session_uri;
     }
 
@@ -347,11 +346,16 @@ audacious_determine_session_type(gint session)
 void
 audacious_decode_tcp_uri(gint session, gchar *in, gchar **host, gint *port, gchar **key)
 {
-    static gchar workbuf[1024], keybuf[1024];
+    static gchar *workbuf, *keybuf;
     gint iport;
+    gchar *tmp = g_strdup(in);
 
     /* split out the host/port and key */
-    sscanf(in, "tcp://%s/%s", workbuf, keybuf);
+    tmp += 6;
+    workbuf = tmp;
+
+    keybuf = strchr(tmp, '/');
+    *keybuf++ = '\0';
 
     *key = keybuf;
 
@@ -371,14 +375,19 @@ audacious_decode_tcp_uri(gint session, gchar *in, gchar **host, gint *port, gcha
 
 /* unix://localhost/tmp/audacious_nenolod.0 */
 void
-audacious_decode_unix_uri(gint session, gchar *in, gchar **out)
+audacious_decode_unix_uri(gint session, gchar *in, gchar **key)
 {
-    static gchar workbuf[1024], pathbuf[1024];
+    static gchar *workbuf, *keybuf;
+    gchar *tmp = g_strdup(in);
 
-    /* retrieve the pathbuf */
-    sscanf(in, "unix://%s/%s", workbuf, pathbuf);
+    /* split out the host/port and key */
+    tmp += 7;
+    workbuf = tmp;
 
-    *out = pathbuf;
+    keybuf = strchr(tmp, '/');
+    *keybuf++ = '\0';
+
+    *key = keybuf;
 }
 
 gint
@@ -403,10 +412,6 @@ xmms_connect_to_session(gint session)
 	    
 	    audacious_decode_unix_uri(session, uri, &path);
 
-/*
-            g_snprintf(saddr.sun_path, 108, "%s/%s_%s.%d", g_get_tmp_dir(),
-                       CTRLSOCKET_NAME, g_get_user_name(), session);
- */
 	    g_strlcpy(saddr.sun_path, path, 108);
             setreuid(stored_uid, euid);
             if (connect(fd, (struct sockaddr *) &saddr, sizeof(saddr)) != -1)
