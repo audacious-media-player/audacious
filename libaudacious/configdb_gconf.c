@@ -42,6 +42,8 @@ bmp_cfg_db_open()
 void
 bmp_cfg_db_close(ConfigDb * db)
 {
+    g_return_if_fail(db != NULL);
+
     g_object_unref(db->client);
     g_free(db);
 }
