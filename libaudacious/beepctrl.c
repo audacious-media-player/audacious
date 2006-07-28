@@ -374,7 +374,7 @@ audacious_decode_tcp_uri(gint session, gchar *in, gchar **host, gint *port, gcha
         *port = iport + session;
     }
 
-    g_free(in);
+    g_free(tmp);
 }
 
 /* unix://localhost/tmp/audacious_nenolod.0 */
@@ -393,7 +393,7 @@ audacious_decode_unix_uri(gint session, gchar *in, gchar **key)
 
     *key = g_strdup(keybuf);
 
-    g_free(in);
+    g_free(tmp);
 }
 
 gint
