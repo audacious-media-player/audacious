@@ -1,3 +1,12 @@
+2006-07-28 07:49:14 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1794]
+  - allow environment variable AUDTOOL_REMOTE_URI to influence where the client library accesses the audacious session
+  
+
+  Changes:        Modified:
+  +4 -0           trunk/audtool/audtool.c  
+
+
 2006-07-28 07:46:34 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1792]
   - i believe we've got it!

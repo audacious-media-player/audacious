@@ -357,11 +357,11 @@ audacious_decode_tcp_uri(gint session, gchar *in, gchar **host, gint *port, gcha
     keybuf = strchr(tmp, '/');
     *keybuf++ = '\0';
 
-    *key = keybuf;
+    *key = g_strdup(keybuf);
 
     if (strchr(workbuf, ':') == NULL)
     {
-        *host = workbuf;
+        *host = g_strdup(workbuf);
         *port = 37370 + session;
     }
     else
@@ -371,6 +371,8 @@ audacious_decode_tcp_uri(gint session, gchar *in, gchar **host, gint *port, gcha
 
         *port = iport + session;
     }
+
+    g_free(in);
 }
 
 /* unix://localhost/tmp/audacious_nenolod.0 */
@@ -387,7 +389,9 @@ audacious_decode_unix_uri(gint session, gchar *in, gchar **key)
     keybuf = strchr(tmp, '/');
     *keybuf++ = '\0';
 
-    *key = keybuf;
+    *key = g_strdup(keybuf);
+
+    g_free(in);
 }
 
 gint
@@ -413,6 +417,7 @@ xmms_connect_to_session(gint session)
 	    audacious_decode_unix_uri(session, uri, &path);
 
 	    g_strlcpy(saddr.sun_path, path, 108);
+            g_free(path);
             setreuid(stored_uid, euid);
             if (connect(fd, (struct sockaddr *) &saddr, sizeof(saddr)) != -1)
                 return fd;
@@ -440,6 +445,9 @@ xmms_connect_to_session(gint session)
             saddr.sin_family = AF_INET;
             saddr.sin_port = htons(port);
             memcpy(&saddr.sin_addr, hp->h_addr, hp->h_length);
+
+            g_free(host);
+            g_free(key);
 
             if (connect(fd, (struct sockaddr *) &saddr, sizeof(saddr)) != -1)
                 return fd;
