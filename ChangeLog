@@ -1,3 +1,12 @@
+2006-07-28 20:57:26 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1818]
+  - heh
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/sqlite/sqliteInt.h  
+
+
 2006-07-28 20:53:45 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1816]
   - connect sqlite to the build
