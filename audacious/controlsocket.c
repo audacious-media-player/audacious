@@ -78,6 +78,12 @@ ctrlsocket_start_thread(void)
 gboolean
 ctrlsocket_setup(void)
 {
+    return ctrlsocket_setup_unix();
+}
+
+gboolean
+ctrlsocket_setup_unix(void)
+{
     struct sockaddr_un saddr;
     gint i;
     gint fd;

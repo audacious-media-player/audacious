@@ -73,6 +73,8 @@ typedef struct {
 
 
 gboolean ctrlsocket_setup(void);
+gboolean ctrlsocket_setup_unix(void);
+gboolean ctrlsocket_setup_tcp(void);
 void ctrlsocket_start(void);
 void ctrlsocket_check(void);
 void ctrlsocket_cleanup(void);
