@@ -161,6 +161,7 @@ ctrlsocket_setup_tcp(void)
     }
 
     for (i = 0;; i++) {
+	memset(&saddr, '\0', sizeof(saddr));
         saddr.sin_family = AF_INET;
 	saddr.sin_port = htons(37370 + i);
 
