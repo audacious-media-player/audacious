@@ -13,6 +13,7 @@ LDADD = \
 	$(LIBGLADE_LIBS) \
 	-L.. $(LTLIBINTL)     \
 	-L../libaudacious -laudacious \
+	../sqlite/libsqlite.a	\
 	$(CHARDET_LIBS)
 
 CFLAGS += \
