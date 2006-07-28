@@ -1,3 +1,13 @@
+2006-07-28 14:21:20 +0000  Derek Pomery <nemo@m8y.org>
+  revision [1810]
+  Seems safer to me to free this way, assuming I'm not misreading.
+  Hey. At least it doesn't crash.
+  
+
+  Changes:        Modified:
+  +4 -4           trunk/libaudacious/beepctrl.c  
+
+
 2006-07-28 09:27:19 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1808]
   - fix invalid frees

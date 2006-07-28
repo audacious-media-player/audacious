@@ -18,19 +18,18 @@
 #include <string.h>
 #include <gconf/gconf-client.h>
 
-
 #define BMP_CONFIG_BASE_PATH "/apps/audacious"
-
 
 struct _ConfigDb {
     GConfClient *client;
 };
 
-
 ConfigDb *
 bmp_cfg_db_open()
 {
     ConfigDb *db;
+
+    g_type_init();
 
     db = g_new(ConfigDb, 1);
 
