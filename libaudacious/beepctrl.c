@@ -309,12 +309,12 @@ audacious_get_session_uri(gint session)
     ConfigDb *db;
     gchar *value = NULL;
 
-    db = bmp_cfg_db_open();
-
     if (audacious_session_uri != NULL)
     {
 	return audacious_session_uri;
     }
+
+    db = bmp_cfg_db_open();
 
     bmp_cfg_db_get_string(db, NULL, "session_uri_base", &value);
 
@@ -323,6 +323,8 @@ audacious_get_session_uri(gint session)
     if (value == NULL)
         return g_strdup_printf("unix://localhost/%s/%s_%s.%d", g_get_tmp_dir(),
 		CTRLSOCKET_NAME, g_get_user_name(), session);
+
+    audacious_session_uri = value;
 
     return value;
 }

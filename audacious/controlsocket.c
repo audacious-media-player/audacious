@@ -31,6 +31,8 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/un.h>
+#include <arpa/inet.h>
+#include <netdb.h>
 
 #include "main.h"
 #include "equalizer.h"
@@ -78,6 +80,11 @@ ctrlsocket_start_thread(void)
 gboolean
 ctrlsocket_setup(void)
 {
+    audacious_set_session_uri(cfg.session_uri_base);
+
+    if (!g_strncasecmp(cfg.session_uri_base, "tcp://", 6))
+	return ctrlsocket_setup_tcp();
+
     return ctrlsocket_setup_unix();
 }
 
@@ -137,6 +144,52 @@ ctrlsocket_setup_unix(void)
     return FALSE;
 }
 
+gboolean
+ctrlsocket_setup_tcp(void)
+{
+    struct sockaddr_in saddr;
+    gint i;
+    gint fd;
+
+    if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
+        g_critical("ctrlsocket_setup(): Failed to open socket: %s",
+                   strerror(errno));
+        return FALSE;
+    }
+
+    for (i = 0;; i++) {
+        saddr.sin_family = AF_INET;
+	saddr.sin_port = htons(37370 + i);
+
+        if (xmms_remote_is_running(i)) {
+            if (cfg.allow_multiple_instances)
+                continue;
+            break;
+        }
+
+        if (bind(fd, (struct sockaddr *) &saddr, sizeof(saddr)) == -1) {
+            g_critical
+                ("ctrlsocket_setup(): Failed to bind the socket (Error: %s)",
+                 strerror(errno));
+            break;
+        }
+
+        listen(fd, CTRLSOCKET_BACKLOG);
+
+        ctrl_fd = fd;
+        session_id = i;
+        going = TRUE;
+
+        ctrlsocket_start_thread();
+
+        return TRUE;
+    }
+
+    close(fd);
+
+    return FALSE;
+}
+
 gint
 ctrlsocket_get_session_id(void)
 {
@@ -158,8 +211,12 @@ ctrlsocket_cleanup(void)
         /* close and remove socket */
         close(ctrl_fd);
         ctrl_fd = 0;
-        unlink(socket_name);
-        g_free(socket_name);
+
+        if (socket_name != NULL)
+	{
+            unlink(socket_name);
+            g_free(socket_name);
+	}
 
         g_cond_free(start_cond);
         g_mutex_free(status_mutex);

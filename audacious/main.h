@@ -115,6 +115,7 @@ struct _BmpConfig {
     gchar *cover_name_include, *cover_name_exclude;
     gboolean recurse_for_cover;
     gint recurse_for_cover_depth;
+    gchar *session_uri_base;
 };
 
 typedef struct _BmpConfig BmpConfig;

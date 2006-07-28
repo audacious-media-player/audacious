@@ -205,6 +205,9 @@ BmpConfig bmp_default_config = {
     TRUE,			/* show filepopup for tuple */
     NULL,			/* words identifying covers */
     NULL,			/* words that might not show up in cover names */
+    FALSE,
+    0,
+    NULL,			/* default session uri base (non-NULL = custom session uri base) */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -351,6 +354,7 @@ static bmp_cfg_strent bmp_strents[] = {
     {"chardet_fallback", &cfg.chardet_fallback, TRUE},
     {"cover_name_include", &cfg.cover_name_include, TRUE},
     {"cover_name_exclude", &cfg.cover_name_exclude, TRUE},
+    {"session_uri_base", &cfg.session_uri_base, TRUE}
 };
 
 static gint ncfgsent = G_N_ELEMENTS(bmp_strents);
