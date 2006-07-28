@@ -353,10 +353,10 @@ audacious_decode_tcp_uri(gint session, gchar *in, gchar **host, gint *port, gcha
     gchar *tmp = g_strdup(in);
 
     /* split out the host/port and key */
-    tmp += 6;
     workbuf = tmp;
+    workbuf += 6;
 
-    keybuf = strchr(tmp, '/');
+    keybuf = strchr(workbuf, '/');
     *keybuf++ = '\0';
 
     *key = g_strdup(keybuf);
@@ -385,10 +385,10 @@ audacious_decode_unix_uri(gint session, gchar *in, gchar **key)
     gchar *tmp = g_strdup(in);
 
     /* split out the host/port and key */
-    tmp += 7;
     workbuf = tmp;
+    workbuf += 7;
 
-    keybuf = strchr(tmp, '/');
+    keybuf = strchr(workbuf, '/');
     *keybuf++ = '\0';
 
     *key = g_strdup(keybuf);
