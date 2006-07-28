@@ -89,6 +89,7 @@ struct commandhandler handlers[] = {
 gint main(gint argc, gchar **argv)
 {
 	gint i;
+	gchar *remote_uri;
 
 	if (argc < 2)
 	{
@@ -97,6 +98,9 @@ gint main(gint argc, gchar **argv)
 			argv[0], argv[0]);
 		exit(0);
 	}
+
+	remote_uri = getenv("AUDTOOL_REMOTE_URI");
+	audacious_set_session_uri(remote_uri);
 
 	if (!xmms_remote_is_running(0) && g_strcasecmp("help", argv[1])
 		&& g_strcasecmp("list-handlers", argv[1]))
