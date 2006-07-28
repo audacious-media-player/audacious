@@ -1,3 +1,15 @@
+2006-07-25 19:12:29 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1774]
+  via Christian Birchinger <joker -at- netswarm.net>:
+  - Add a `sort by Playlist Entry' option.
+  
+
+  Changes:        Modified:
+  +33 -1          trunk/audacious/playlist.c  
+  +2 -1           trunk/audacious/playlist.h  
+  +15 -2          trunk/audacious/ui_playlist.c  
+
+
 2006-07-24 23:20:05 +0000  Derek Pomery <nemo@m8y.org>
   revision [1772]
   Make annoying recursion that consistently returns wrong art, optional.
