@@ -316,7 +316,7 @@ audacious_get_session_uri(gint session)
 
     db = bmp_cfg_db_open();
 
-    bmp_cfg_db_get_string(db, NULL, "session_uri_base", &value);
+    bmp_cfg_db_get_string(db, NULL, "listen_uri_base", &value);
 
     bmp_cfg_db_close(db);
 
