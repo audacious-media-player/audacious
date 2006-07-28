@@ -1,3 +1,17 @@
+2006-07-28 08:31:44 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1802]
+  - libaudacious/beepctrl.c: optimise further and be more paranoid about leaks
+  - audacious/main.c, main.h: add `session_uri_base' key.
+  - audacious/controlsocket.c: TCP session code (no security yet, thus no public option)
+  
+
+  Changes:        Modified:
+  +59 -2          trunk/audacious/controlsocket.c  
+  +4 -0           trunk/audacious/main.c  
+  +1 -0           trunk/audacious/main.h  
+  +4 -2           trunk/libaudacious/beepctrl.c  
+
+
 2006-07-28 08:11:15 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1800]
   - prepare for tcp listener code

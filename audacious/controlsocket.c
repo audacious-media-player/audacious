@@ -82,7 +82,7 @@ ctrlsocket_setup(void)
 {
     audacious_set_session_uri(cfg.session_uri_base);
 
-    if (!g_strncasecmp(cfg.session_uri_base, "tcp://", 6))
+    if (cfg.session_uri_base == NULL || !g_strncasecmp(cfg.session_uri_base, "tcp://", 6))
 	return ctrlsocket_setup_tcp();
 
     return ctrlsocket_setup_unix();
