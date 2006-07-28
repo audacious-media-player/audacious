@@ -1,3 +1,13 @@
+2006-07-28 07:13:02 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1786]
+  - add framework for later handling tcp:// connections
+  
+
+  Changes:        Modified:
+  +134 -12        trunk/libaudacious/beepctrl.c  
+  +6 -0           trunk/libaudacious/beepctrl.h  
+
+
 2006-07-28 06:15:43 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1784]
   - add incomplete media library UI -- still lots to do

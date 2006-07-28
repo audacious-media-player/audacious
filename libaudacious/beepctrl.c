@@ -297,6 +297,12 @@ remote_get_string_pos(gint session, gint cmd, guint32 pos)
     return data;
 }
 
+void
+audacious_set_session_uri(gchar *uri)
+{
+    session_uri = uri;
+}
+
 gchar *
 audacious_get_session_uri(gint session)
 {

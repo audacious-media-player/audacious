@@ -114,6 +114,10 @@ extern "C" {
     gint xmms_remote_get_playqueue_position(gint session, gint pos);
     gint xmms_remote_get_playqueue_queue_position(gint session, gint pos);
 
+/* Added in Audacious 1.2 */
+    void audacious_set_session_uri(gchar *uri);
+    gchar *audacious_get_session_uri(gint session);
+
 #ifdef __cplusplus
 };
 #endif
