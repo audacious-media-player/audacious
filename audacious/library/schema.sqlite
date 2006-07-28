@@ -1,5 +1,5 @@
 --- (C) GPL 2006 Audacious Team
---- $Id: schema.sqlite 1778 2006-07-28 05:03:26Z nenolod $
+--- $Id: schema.sqlite 1780 2006-07-28 05:14:12Z nenolod $
 
 --- Artists table
 --- Albums (which songs belong to) belong to an Artist.
@@ -30,7 +30,9 @@ CREATE TABLE IF NOT EXISTS `media` (
 	`media_title` LONGTEXT NOT NULL,
 	`media_genre` LONGTEXT NOT NULL,
 	`media_length` INT NOT NULL,
-	`media_year` INT NOT NULL
+	`media_year` INT NOT NULL,
+	`media_filepath` LONGTEXT NOT NULL,
+	`media_filename` LONGTEXT NOT NULL
 );
 	
 --- Tags table
