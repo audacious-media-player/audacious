@@ -1,3 +1,12 @@
+2006-07-28 08:05:21 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1796]
+  - ok, don't eat up all the system ram (I forgot to g_free())
+  
+
+  Changes:        Modified:
+  +11 -3          trunk/libaudacious/beepctrl.c  
+
+
 2006-07-28 07:49:14 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1794]
   - allow environment variable AUDTOOL_REMOTE_URI to influence where the client library accesses the audacious session

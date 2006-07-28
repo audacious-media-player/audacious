@@ -318,11 +318,11 @@ audacious_get_session_uri(gint session)
 
     bmp_cfg_db_get_string(db, NULL, "session_uri_base", &value);
 
+    bmp_cfg_db_close(db);
+
     if (value == NULL)
         return g_strdup_printf("unix://localhost/%s/%s_%s.%d", g_get_tmp_dir(),
 		CTRLSOCKET_NAME, g_get_user_name(), session);
-
-    bmp_cfg_db_close(db);
 
     return value;
 }
