@@ -7,10 +7,10 @@ OBJECTIVE_BINS = audtool
 
 LDFLAGS += -Wl,-export-dynamic
 LDADD = \
-	$(GTK_LIBS)      \
-	$(LIBGLADE_LIBS) \
 	-L.. $(LTLIBINTL)     \
-	-L../libaudacious -laudacious
+	-L../libaudacious -laudacious \
+	$(GTK_LIBS)      \
+	$(LIBGLADE_LIBS)
 
 CFLAGS += \
 	$(GTK_CFLAGS)      \

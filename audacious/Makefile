@@ -9,12 +9,12 @@ OBJECTIVE_BINS = audacious
 
 LDFLAGS += -Wl,-export-dynamic
 LDADD = \
-	$(GTK_LIBS)      \
-	$(LIBGLADE_LIBS) \
 	-L.. $(LTLIBINTL)     \
 	-L../libaudacious -laudacious \
 	../sqlite/libsqlite.a	\
-	$(CHARDET_LIBS)
+	$(CHARDET_LIBS) \
+	$(GTK_LIBS)      \
+	$(LIBGLADE_LIBS)
 
 CFLAGS += \
 	$(GTK_CFLAGS)      \

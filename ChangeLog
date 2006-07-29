@@ -1,3 +1,12 @@
+2006-07-28 21:13:59 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1822]
+  - fix the other bug exposed by strace
+  
+
+  Changes:        Modified:
+  +1 -0           trunk/audacious/controlsocket.c  
+
+
 2006-07-28 21:12:59 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1820]
   - fix nemo's bug
