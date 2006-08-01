@@ -39,6 +39,7 @@
 
 /* overrides audacious_get_session_uri(). */
 gchar *audacious_session_uri = NULL;
+gint *audacious_session_type = NULL;
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -314,11 +315,14 @@ audacious_get_session_uri(gint session)
 	return audacious_session_uri;
     }
 
-    db = bmp_cfg_db_open();
+    if (audacious_session_type != AUDACIOUS_TYPE_UNIX)
+    {
+        db = bmp_cfg_db_open();
 
-    bmp_cfg_db_get_string(db, NULL, "listen_uri_base", &value);
+        bmp_cfg_db_get_string(db, NULL, "listen_uri_base", &value);
 
-    bmp_cfg_db_close(db);
+        bmp_cfg_db_close(db);
+    }
 
     if (value == NULL)
         return g_strdup_printf("unix://localhost/%s/%s_%s.%d", g_get_tmp_dir(),
@@ -329,19 +333,33 @@ audacious_get_session_uri(gint session)
     return value;
 }
 
-gint
+void
+audacious_set_session_type(gint *type)
+{
+   audacious_session_type = type;
+}
+
+gint *
 audacious_determine_session_type(gint session)
 {
     gchar *uri;
 
+    if (audacious_session_type != NULL)
+    {
+        return audacious_session_type;
+    }
+
     uri = audacious_get_session_uri(session);
 
     if (!g_strncasecmp(uri, "tcp://", 6))
-        return AUDACIOUS_TYPE_TCP;
+        audacious_session_type = (gint *) AUDACIOUS_TYPE_TCP;
     else
-        return AUDACIOUS_TYPE_UNIX;
+        audacious_session_type = (gint *) AUDACIOUS_TYPE_UNIX;
 
-    return AUDACIOUS_TYPE_UNIX;
+    if (audacious_session_type == NULL)
+        audacious_session_type = (gint *) AUDACIOUS_TYPE_UNIX;
+
+    return audacious_session_type;
 }
 
 /* tcp://192.168.100.1:5900/zyzychynxi389xvmfewqaxznvnw */
@@ -400,7 +418,7 @@ gint
 xmms_connect_to_session(gint session)
 {
     gint fd;
-    gint type = audacious_determine_session_type(session);
+    gint *type = audacious_determine_session_type(session);
     gchar *uri = audacious_get_session_uri(session);
 
     if (type == AUDACIOUS_TYPE_UNIX)

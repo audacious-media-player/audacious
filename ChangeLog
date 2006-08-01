@@ -1,3 +1,13 @@
+2006-07-29 23:23:16 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [1824]
+  changes link order to avoid linkage with installed library.
+  
+
+  Changes:        Modified:
+  +3 -3           trunk/audacious/Makefile  
+  +3 -3           trunk/audtool/Makefile  
+
+
 2006-07-28 21:13:59 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1822]
   - fix the other bug exposed by strace

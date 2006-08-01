@@ -98,6 +98,8 @@ ctrlsocket_setup_unix(void)
     gint i;
     gint fd;
 
+    audacious_set_session_type((gint *) AUDACIOUS_TYPE_UNIX);
+
     if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
         g_critical("ctrlsocket_setup(): Failed to open socket: %s",
                    strerror(errno));
@@ -153,6 +155,8 @@ ctrlsocket_setup_tcp(void)
     struct sockaddr_in saddr;
     gint i;
     gint fd;
+
+    audacious_set_session_type((gint *) AUDACIOUS_TYPE_TCP);
 
     if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
         g_critical("ctrlsocket_setup(): Failed to open socket: %s",
