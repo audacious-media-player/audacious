@@ -1,0 +1,14 @@
+include ../../../mk/rules.mk
+include ../../../mk/objective.mk
+
+OBJECTIVE_LIBS = librocklight.so
+
+LIBDIR = $(plugindir)/$(VISUALIZATION_PLUGIN_DIR)
+
+LIBADD = $(GTK_LIBS)
+
+SOURCES = rocklight.c thinklight.c
+
+OBJECTS = ${SOURCES:.c=.o}
+
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..

@@ -1,3 +1,14 @@
+2006-08-01 00:06:44 +0000  George Averill <nhjm449@gmail.com>
+  revision [1826]
+  - Don't poll the config database if not using TCP sockets.
+  
+
+  Changes:        Modified:
+  +4 -0           trunk/audacious/controlsocket.c  
+  +26 -8          trunk/libaudacious/beepctrl.c  
+  +1 -0           trunk/libaudacious/beepctrl.h  
+
+
 2006-07-29 23:23:16 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [1824]
   changes link order to avoid linkage with installed library.

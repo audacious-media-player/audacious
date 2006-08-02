@@ -295,6 +295,10 @@ if test "$enable_mp3" = "yes"; then
 	INPUT_PLUGINS="$INPUT_PLUGINS mpg123"
 fi
 
+dnl *** ThinkLight support
+
+AC_CHECK_FILE([/proc/acpi/ibm/light], [VISUALIZATION_PLUGINS="$VISUALIZATION_PLUGINS rocklight"])
+
 dnl *** LIRC client libraries
 
 AC_ARG_ENABLE(lirc,
@@ -996,8 +1000,9 @@ AC_CONFIG_FILES([
 	Plugins/Input/amidi-plug/backend-alsa/Makefile
 	Plugins/Input/amidi-plug/backend-fluidsynth/Makefile
 	Plugins/Input/amidi-plug/backend-dummy/Makefile
-        Plugins/Visualization/Makefile
-        Plugins/Visualization/blur_scope/Makefile
+	Plugins/Visualization/Makefile
+	Plugins/Visualization/blur_scope/Makefile
+	Plugins/Visualization/rocklight/Makefile
 	Plugins/General/Makefile
 	Plugins/General/song_change/Makefile
 	Plugins/General/lirc/Makefile
