@@ -45,7 +45,7 @@ esdout_about(void)
                                  "\n"
                                  "You should have received a copy of the GNU General Public License\n"
                                  "along with this program; if not, write to the Free Software\n"
-                                 "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1307,\n"
+                                 "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
                                  "USA."), _("Ok"), FALSE, NULL, NULL);
     g_signal_connect(G_OBJECT(dialog), "destroy",
                      G_CALLBACK(gtk_widget_destroyed), &dialog);
