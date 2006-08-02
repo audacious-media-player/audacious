@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: audacious 0.2\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-16 10:51-0500\n"
+"Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
+"POT-Creation-Date: 2006-08-02 18:22-0500\n"
 "PO-Revision-Date: 2006-01-22 18:07+0100\n"
 "Last-Translator: Jan Nárovec <finn@sendmail.cz>\n"
 "Language-Team: Czech\n"
@@ -2711,6 +2711,7 @@ msgid "About sndfile WAV support"
 msgstr ""
 
 #: Plugins/Input/wav/wav-sndfile.c:247
+#, fuzzy
 msgid ""
 "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
 "from the xmms_sndfile plugin which is:\n"
@@ -2729,8 +2730,8 @@ msgid ""
 "You should have received a copy of the GNU General Public \n"
 "License along with this program ; if not, write to \n"
 "the Free Software Foundation, Inc., \n"
-"59 Temple Place, Suite 330, \n"
-"Boston, MA  02111-1307  USA"
+"51 Franklin Street, Fifth Floor, \n"
+"Boston, MA  02110-1301  USA"
 msgstr ""
 "Pro Audacious upravil Tony Vroon <chainsaw@gentoo.org>\n"
 "z původního modulu xmms_sndfile,\n"
@@ -2783,6 +2784,7 @@ msgid "About OSS Driver"
 msgstr "O modulu OSS"
 
 #: Plugins/Output/OSS/about.c:40
+#, fuzzy
 msgid ""
 "Audacious OSS Driver\n"
 "\n"
@@ -2798,7 +2800,7 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA."
 msgstr ""
 "Ovladač OSS programu Audacious\n"
@@ -2892,7 +2894,7 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA.\n"
 "Author: Matthieu Sozeau (mattam@altern.org)"
 msgstr ""
@@ -2999,6 +3001,7 @@ msgid "About ESounD Plugin"
 msgstr "O modulu ESounD"
 
 #: Plugins/Output/esd/about.c:35
+#, fuzzy
 msgid ""
 "Audacious ESounD Plugin\n"
 "\n"
@@ -3014,7 +3017,7 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA."
 msgstr ""
 "Modul ESounD programu Audacious\n"
@@ -3571,12 +3574,12 @@ msgstr "Nepodařilo se vytvořit logovací soubor (%s)!\n"
 msgid "Audacious"
 msgstr "Audacious"
 
-#: audacious/main.c:425
+#: audacious/main.c:431
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "Nepodařilo se vytvořit adresář (%s): %s"
 
-#: audacious/main.c:695
+#: audacious/main.c:701
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
@@ -3588,67 +3591,67 @@ msgstr ""
 "Volby:\n"
 "------\n"
 
-#: audacious/main.c:700
+#: audacious/main.c:706
 msgid "Display this text and exit"
 msgstr "Zobrazí tento text a skončí"
 
-#: audacious/main.c:703
+#: audacious/main.c:709
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Výběr sezení Audacious/BMP/XMMS (standardně: 0)"
 
-#: audacious/main.c:706
+#: audacious/main.c:712
 msgid "Skip backwards in playlist"
 msgstr "Přejít zpět v seznamu skladeb"
 
-#: audacious/main.c:709
+#: audacious/main.c:715
 msgid "Start playing current playlist"
 msgstr "Přehrát skladby v aktuálním seznamu"
 
-#: audacious/main.c:712
+#: audacious/main.c:718
 msgid "Pause current song"
 msgstr "Pozastavit přehrávanou skladbu"
 
-#: audacious/main.c:715
+#: audacious/main.c:721
 msgid "Stop current song"
 msgstr "Zastavit přehrávanou skladbu"
 
-#: audacious/main.c:718
+#: audacious/main.c:724
 msgid "Pause if playing, play otherwise"
 msgstr "Pozastavit při přehrávání; jinak spustit"
 
-#: audacious/main.c:721
+#: audacious/main.c:727
 msgid "Skip forward in playlist"
 msgstr "Přejít na další skladbu"
 
-#: audacious/main.c:724
+#: audacious/main.c:730
 msgid "Don't clear the playlist"
 msgstr "Nemazat seznam skladeb"
 
-#: audacious/main.c:727
+#: audacious/main.c:733
 msgid "Show the main window"
 msgstr "Zobrazit hlavní okno"
 
-#: audacious/main.c:730
+#: audacious/main.c:736
 msgid "Activate Audacious"
 msgstr "Aktivovat Audacious"
 
-#: audacious/main.c:733
+#: audacious/main.c:739
 msgid "Previous session ID"
 msgstr "ID předchozího sezení"
 
-#: audacious/main.c:736
+#: audacious/main.c:742
 msgid "Headless operation [experimental]"
 msgstr ""
 
-#: audacious/main.c:739
+#: audacious/main.c:745
 msgid "Disable error/warning interception (logging)"
 msgstr ""
 
-#: audacious/main.c:742
+#: audacious/main.c:748
 msgid "Print version number and exit\n"
 msgstr "Zobrazí číslo verze a skončí\n"
 
-#: audacious/main.c:925
+#: audacious/main.c:931
 msgid ""
 "\n"
 "Received SIGSEGV\n"
@@ -3664,7 +3667,7 @@ msgstr ""
 "kontaktujte vývojáře (anglicky) na http://bugs.nenold.net\n"
 "\n"
 
-#: audacious/main.c:948
+#: audacious/main.c:954
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -3677,7 +3680,7 @@ msgstr ""
 "Zkontrolujte, zda skin v '%s' je použitelný a zda je standardní skin správně "
 "nainstalován v '%s'.\n"
 
-#: audacious/main.c:994
+#: audacious/main.c:1000
 #, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -3686,7 +3689,7 @@ msgstr ""
 "Verze knihovny GTK+ (%d.%d.%d) není kompatibilní s Audacious.\n"
 "Použijte GTK+ %s nebo novější.\n"
 
-#: audacious/main.c:1005
+#: audacious/main.c:1011
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -3700,11 +3703,11 @@ msgstr ""
 "dříve\n"
 "než LinuxThreads, budete muset Glib a GTK+ přeložit znovu.\n"
 
-#: audacious/main.c:1021
+#: audacious/main.c:1027
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "audacious: Nepodařilo se otevřít displej. Končím.\n"
 
-#: audacious/mainwin.c:252 audacious/mainwin.c:373 audacious/ui_playlist.c:126
+#: audacious/mainwin.c:252 audacious/mainwin.c:373 audacious/ui_playlist.c:128
 msgid "/View Track Details"
 msgstr "/Zobrazit inforamce o skladbě"
 
@@ -4180,7 +4183,7 @@ msgstr "Popis"
 msgid "Category"
 msgstr "Kategorie"
 
-#: audacious/prefswin.c:2169
+#: audacious/prefswin.c:2203
 msgid "Preferences Window"
 msgstr "Okno nastavení"
 
@@ -4192,168 +4195,188 @@ msgstr ""
 msgid "Unarchived Winamp 2.x skin"
 msgstr ""
 
-#: audacious/ui_playlist.c:130
+#: audacious/ui_playlist.c:132
 msgid "/Show Popup Info"
 msgstr ""
 
-#: audacious/ui_playlist.c:136 audacious/ui_playlist.c:201
+#: audacious/ui_playlist.c:138 audacious/ui_playlist.c:203
 msgid "/Remove Selected"
 msgstr "/Odebrat označené"
 
-#: audacious/ui_playlist.c:140 audacious/ui_playlist.c:197
+#: audacious/ui_playlist.c:142 audacious/ui_playlist.c:199
 msgid "/Remove Unselected"
 msgstr "/Odebrat neoznačené"
 
-#: audacious/ui_playlist.c:144 audacious/ui_playlist.c:193
+#: audacious/ui_playlist.c:146 audacious/ui_playlist.c:195
 msgid "/Remove All"
 msgstr "/Odebrat všechny"
 
-#: audacious/ui_playlist.c:150
+#: audacious/ui_playlist.c:152
 msgid "/Queue Toggle"
 msgstr "/Přepnout frontu"
 
-#: audacious/ui_playlist.c:156
+#: audacious/ui_playlist.c:158
 msgid "/Add CD..."
 msgstr "/Přidat CD..."
 
-#: audacious/ui_playlist.c:160
+#: audacious/ui_playlist.c:162
 msgid "/Add Internet Address..."
 msgstr "/Přidat internetovou adresu..."
 
-#: audacious/ui_playlist.c:164
+#: audacious/ui_playlist.c:166
 msgid "/Add Files..."
 msgstr "/Přidat soubory..."
 
-#: audacious/ui_playlist.c:170
+#: audacious/ui_playlist.c:172
 msgid "/Clear Queue"
 msgstr "/Vyprázdnit frontu"
 
-#: audacious/ui_playlist.c:176
+#: audacious/ui_playlist.c:178
 msgid "/Remove Unavailable Files"
 msgstr "/Odstranit nedostupné soubory"
 
-#: audacious/ui_playlist.c:180
+#: audacious/ui_playlist.c:182
 #, fuzzy
 msgid "/Remove Duplicates"
 msgstr "/Odebrat označené"
 
-#: audacious/ui_playlist.c:181
+#: audacious/ui_playlist.c:183
 #, fuzzy
 msgid "/Remove Duplicates/By Title"
 msgstr "/Řazení/Podle názvu"
 
-#: audacious/ui_playlist.c:184
+#: audacious/ui_playlist.c:186
 #, fuzzy
 msgid "/Remove Duplicates/By Filename"
 msgstr "/Řadit/Podle jména souboru"
 
-#: audacious/ui_playlist.c:187
+#: audacious/ui_playlist.c:189
 #, fuzzy
 msgid "/Remove Duplicates/By Path + Filename"
 msgstr "/Řadit/Podle cesty a jména souboru"
 
-#: audacious/ui_playlist.c:207
+#: audacious/ui_playlist.c:209
 msgid "/New List"
 msgstr "/Nový seznam"
 
-#: audacious/ui_playlist.c:213
+#: audacious/ui_playlist.c:215
 msgid "/Load List"
 msgstr "/Načíst seznam"
 
-#: audacious/ui_playlist.c:217
+#: audacious/ui_playlist.c:219
 msgid "/Save List"
 msgstr "/Uložit seznam"
 
-#: audacious/ui_playlist.c:221
+#: audacious/ui_playlist.c:223
 #, fuzzy
 msgid "/Save Default List"
 msgstr "/Uložit/Jako standardní"
 
-#: audacious/ui_playlist.c:227
+#: audacious/ui_playlist.c:229
 msgid "/Update View"
 msgstr "/Obnovit seznam"
 
-#: audacious/ui_playlist.c:233
+#: audacious/ui_playlist.c:235
 msgid "/Invert Selection"
 msgstr "/Invertovat výběr"
 
-#: audacious/ui_playlist.c:239
+#: audacious/ui_playlist.c:241
 msgid "/Select None"
 msgstr "/Nevybrat žádné"
 
-#: audacious/ui_playlist.c:243
+#: audacious/ui_playlist.c:245
 msgid "/Select All"
 msgstr "/Vybrat vše"
 
-#: audacious/ui_playlist.c:249
+#: audacious/ui_playlist.c:251
 msgid "/Randomize List"
 msgstr "/Seřadit náhodně"
 
-#: audacious/ui_playlist.c:251
+#: audacious/ui_playlist.c:253
 msgid "/Reverse List"
 msgstr "/Otočit seznam"
 
-#: audacious/ui_playlist.c:254
+#: audacious/ui_playlist.c:256
 msgid "/Sort List"
 msgstr "/Řazení"
 
-#: audacious/ui_playlist.c:255
+#: audacious/ui_playlist.c:257
 msgid "/Sort List/By Title"
 msgstr "/Řazení/Podle názvu"
 
-#: audacious/ui_playlist.c:257
+#: audacious/ui_playlist.c:259
 #, fuzzy
 msgid "/Sort List/By Artist"
 msgstr "/Řazení/Podle názvu"
 
-#: audacious/ui_playlist.c:259
+#: audacious/ui_playlist.c:261
 msgid "/Sort List/By Filename"
 msgstr "/Řadit/Podle jména souboru"
 
-#: audacious/ui_playlist.c:261
+#: audacious/ui_playlist.c:263
 msgid "/Sort List/By Path + Filename"
 msgstr "/Řadit/Podle cesty a jména souboru"
 
-#: audacious/ui_playlist.c:263
+#: audacious/ui_playlist.c:265
 msgid "/Sort List/By Date"
 msgstr "/Řadit/Podle data"
 
-#: audacious/ui_playlist.c:265
+#: audacious/ui_playlist.c:267
+#, fuzzy
+msgid "/Sort List/By Track Number"
+msgstr "/Řadit/Podle data"
+
+#: audacious/ui_playlist.c:269
+#, fuzzy
+msgid "/Sort List/By Playlist Entry"
+msgstr "/Řazení/Podle názvu"
+
+#: audacious/ui_playlist.c:271
 msgid "/Sort Selection"
 msgstr "/Setřídit vybrané"
 
-#: audacious/ui_playlist.c:266
+#: audacious/ui_playlist.c:272
 msgid "/Sort Selection/By Title"
 msgstr "/Setřídit vybrané/Podle názvu"
 
-#: audacious/ui_playlist.c:268
+#: audacious/ui_playlist.c:274
 #, fuzzy
 msgid "/Sort Selection/By Artist"
 msgstr "/Setřídit vybrané/Podle názvu"
 
-#: audacious/ui_playlist.c:270
+#: audacious/ui_playlist.c:276
 msgid "/Sort Selection/By Filename"
 msgstr "/Setřídit vybrané/Podle jména souboru"
 
-#: audacious/ui_playlist.c:272
+#: audacious/ui_playlist.c:278
 msgid "/Sort Selection/By Path + Filename"
 msgstr "/Setřídit vybrané/Podle cesty a jména souboru"
 
-#: audacious/ui_playlist.c:274
+#: audacious/ui_playlist.c:280
 msgid "/Sort Selection/By Date"
 msgstr "/Setřídit vybrané/Podle času"
 
-#: audacious/ui_playlist.c:812
+#: audacious/ui_playlist.c:282
+#, fuzzy
+msgid "/Sort Selection/By Track Number"
+msgstr "/Setřídit vybrané/Podle času"
+
+#: audacious/ui_playlist.c:284
+#, fuzzy
+msgid "/Sort Selection/By Playlist Entry"
+msgstr "/Setřídit vybrané/Podle názvu"
+
+#: audacious/ui_playlist.c:822
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "Chyba při zapisování seznamu skladeb \"%s\": %s"
 
-#: audacious/ui_playlist.c:833
+#: audacious/ui_playlist.c:843
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s už existuje. Pokračovat?"
 
-#: audacious/ui_playlist.c:847
+#: audacious/ui_playlist.c:857
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -4364,15 +4387,15 @@ msgstr ""
 "\n"
 "Neznámý typ souboru %s.\n"
 
-#: audacious/ui_playlist.c:957
+#: audacious/ui_playlist.c:967
 msgid "Load Playlist"
 msgstr "Načíst seznam skladeb"
 
-#: audacious/ui_playlist.c:969
+#: audacious/ui_playlist.c:979
 msgid "Save Playlist"
 msgstr "Uložit seznam skladeb"
 
-#: audacious/ui_playlist.c:1677
+#: audacious/ui_playlist.c:1687
 msgid "Audacious Playlist Editor"
 msgstr "/Zobrazit editor seznamu skladeb"
 
@@ -4823,6 +4846,14 @@ msgstr "Indie"
 
 #: audacious/glade/prefswin.glade:4280
 msgid "Exclude:"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:4348
+msgid "Recursively search for cover"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:4381
+msgid "Search depth: "
 msgstr ""
 
 #: libaudacious/titlestring.c:340

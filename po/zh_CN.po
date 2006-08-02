@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-16 10:51-0500\n"
+"Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
+"POT-Creation-Date: 2006-08-02 18:22-0500\n"
 "PO-Revision-Date: 2005-10-22 14:34+0800\n"
 "Last-Translator: Chong Kai Xiong <descender@phreaker.net>\n"
 "Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
@@ -2739,8 +2739,8 @@ msgid ""
 "You should have received a copy of the GNU General Public \n"
 "License along with this program ; if not, write to \n"
 "the Free Software Foundation, Inc., \n"
-"59 Temple Place, Suite 330, \n"
-"Boston, MA  02111-1307  USA"
+"51 Franklin Street, Fifth Floor, \n"
+"Boston, MA  02110-1301  USA"
 msgstr ""
 "XMMS ESounD 插件 v0.1\n"
 "\n"
@@ -2806,7 +2806,7 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA."
 msgstr ""
 "XMMS 开放音效系统驱动程序\n"
@@ -2898,7 +2898,7 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA.\n"
 "Author: Matthieu Sozeau (mattam@altern.org)"
 msgstr ""
@@ -3019,7 +3019,7 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA."
 msgstr ""
 "XMMS ESounD 插件 v0.1\n"
@@ -3574,14 +3574,14 @@ msgstr "无法创建日志文件 (%s)！\n"
 msgid "Audacious"
 msgstr ""
 
-#: audacious/main.c:425
+#: audacious/main.c:431
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr ""
 "新建目录 %s 失败\n"
 "错误：%s"
 
-#: audacious/main.c:695
+#: audacious/main.c:701
 #, fuzzy
 msgid ""
 "Usage: audacious [options] [files] ...\n"
@@ -3594,69 +3594,69 @@ msgstr ""
 "选项：\n"
 "———\n"
 
-#: audacious/main.c:700
+#: audacious/main.c:706
 msgid "Display this text and exit"
 msgstr "显示文字并退出"
 
-#: audacious/main.c:703
+#: audacious/main.c:709
 #, fuzzy
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "选择 BMP/XMMS 会话 (默认：0)"
 
-#: audacious/main.c:706
+#: audacious/main.c:712
 msgid "Skip backwards in playlist"
 msgstr "在播放列表中向后跳"
 
-#: audacious/main.c:709
+#: audacious/main.c:715
 msgid "Start playing current playlist"
 msgstr "开始播放现有列表"
 
-#: audacious/main.c:712
+#: audacious/main.c:718
 msgid "Pause current song"
 msgstr "暂停当前歌曲"
 
-#: audacious/main.c:715
+#: audacious/main.c:721
 msgid "Stop current song"
 msgstr "停止当前歌曲"
 
-#: audacious/main.c:718
+#: audacious/main.c:724
 msgid "Pause if playing, play otherwise"
 msgstr "如正播放则暂停，否则播放"
 
-#: audacious/main.c:721
+#: audacious/main.c:727
 msgid "Skip forward in playlist"
 msgstr "在播放列表中向前跳"
 
-#: audacious/main.c:724
+#: audacious/main.c:730
 msgid "Don't clear the playlist"
 msgstr "不要清除播放列表"
 
-#: audacious/main.c:727
+#: audacious/main.c:733
 msgid "Show the main window"
 msgstr "显示主窗口"
 
-#: audacious/main.c:730
+#: audacious/main.c:736
 #, fuzzy
 msgid "Activate Audacious"
 msgstr "激活 BMP"
 
-#: audacious/main.c:733
+#: audacious/main.c:739
 msgid "Previous session ID"
 msgstr "以往连接 ID"
 
-#: audacious/main.c:736
+#: audacious/main.c:742
 msgid "Headless operation [experimental]"
 msgstr ""
 
-#: audacious/main.c:739
+#: audacious/main.c:745
 msgid "Disable error/warning interception (logging)"
 msgstr ""
 
-#: audacious/main.c:742
+#: audacious/main.c:748
 msgid "Print version number and exit\n"
 msgstr "显示版本号并退出\n"
 
-#: audacious/main.c:925
+#: audacious/main.c:931
 #, fuzzy
 msgid ""
 "\n"
@@ -3673,7 +3673,7 @@ msgstr ""
 "址是：beepmp-devel@lists.sourceforge.net\n"
 "\n"
 
-#: audacious/main.c:948
+#: audacious/main.c:954
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -3685,7 +3685,7 @@ msgstr ""
 "\n"
 "请检查设在'%s'的皮肤是可用的，并且确保默认皮肤也已正确安装到'%s'。\n"
 
-#: audacious/main.c:994
+#: audacious/main.c:1000
 #, fuzzy, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -3694,7 +3694,7 @@ msgstr ""
 "抱歉，您的 GTK+ 版本(%d.%d.%d)不能和BMP 一起工作。\n"
 "请使用 GTK+ %s 或以后的版本。\n"
 
-#: audacious/main.c:1005
+#: audacious/main.c:1011
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -3707,12 +3707,12 @@ msgstr ""
 "如果你原本使用 libc5 的 Linux 并且装了 GLIB & GTK+ \n"
 "之后又安装了 LinuxThreads，请重新编译 GLIB & GTK+。\n"
 
-#: audacious/main.c:1021
+#: audacious/main.c:1027
 #, fuzzy
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "BMP: 无法打开显示器，即将退出。"
 
-#: audacious/mainwin.c:252 audacious/mainwin.c:373 audacious/ui_playlist.c:126
+#: audacious/mainwin.c:252 audacious/mainwin.c:373 audacious/ui_playlist.c:128
 msgid "/View Track Details"
 msgstr "/查看音轨信息"
 
@@ -4191,7 +4191,7 @@ msgstr "描述"
 msgid "Category"
 msgstr "项目"
 
-#: audacious/prefswin.c:2169
+#: audacious/prefswin.c:2203
 msgid "Preferences Window"
 msgstr "首选项"
 
@@ -4203,168 +4203,188 @@ msgstr ""
 msgid "Unarchived Winamp 2.x skin"
 msgstr ""
 
-#: audacious/ui_playlist.c:130
+#: audacious/ui_playlist.c:132
 msgid "/Show Popup Info"
 msgstr ""
 
-#: audacious/ui_playlist.c:136 audacious/ui_playlist.c:201
+#: audacious/ui_playlist.c:138 audacious/ui_playlist.c:203
 msgid "/Remove Selected"
 msgstr "/删除选中"
 
-#: audacious/ui_playlist.c:140 audacious/ui_playlist.c:197
+#: audacious/ui_playlist.c:142 audacious/ui_playlist.c:199
 msgid "/Remove Unselected"
 msgstr "/删除选择以外"
 
-#: audacious/ui_playlist.c:144 audacious/ui_playlist.c:193
+#: audacious/ui_playlist.c:146 audacious/ui_playlist.c:195
 msgid "/Remove All"
 msgstr "/删除全部"
 
-#: audacious/ui_playlist.c:150
+#: audacious/ui_playlist.c:152
 msgid "/Queue Toggle"
 msgstr "/排队切换"
 
-#: audacious/ui_playlist.c:156
+#: audacious/ui_playlist.c:158
 msgid "/Add CD..."
 msgstr "/添加 CD。。。"
 
-#: audacious/ui_playlist.c:160
+#: audacious/ui_playlist.c:162
 msgid "/Add Internet Address..."
 msgstr "/添加网址。。。"
 
-#: audacious/ui_playlist.c:164
+#: audacious/ui_playlist.c:166
 msgid "/Add Files..."
 msgstr "/添加文件。。。"
 
-#: audacious/ui_playlist.c:170
+#: audacious/ui_playlist.c:172
 msgid "/Clear Queue"
 msgstr "/清除队列"
 
-#: audacious/ui_playlist.c:176
+#: audacious/ui_playlist.c:178
 msgid "/Remove Unavailable Files"
 msgstr "/移除不存在的文件"
 
-#: audacious/ui_playlist.c:180
+#: audacious/ui_playlist.c:182
 #, fuzzy
 msgid "/Remove Duplicates"
 msgstr "/删除选中"
 
-#: audacious/ui_playlist.c:181
+#: audacious/ui_playlist.c:183
 #, fuzzy
 msgid "/Remove Duplicates/By Title"
 msgstr "/排序列表/按曲名排序"
 
-#: audacious/ui_playlist.c:184
+#: audacious/ui_playlist.c:186
 #, fuzzy
 msgid "/Remove Duplicates/By Filename"
 msgstr "/排序列表/按文件名排序"
 
-#: audacious/ui_playlist.c:187
+#: audacious/ui_playlist.c:189
 #, fuzzy
 msgid "/Remove Duplicates/By Path + Filename"
 msgstr "/排序列表/按路径+文件名排序"
 
-#: audacious/ui_playlist.c:207
+#: audacious/ui_playlist.c:209
 msgid "/New List"
 msgstr "/新建列表"
 
-#: audacious/ui_playlist.c:213
+#: audacious/ui_playlist.c:215
 msgid "/Load List"
 msgstr "/打开列表"
 
-#: audacious/ui_playlist.c:217
+#: audacious/ui_playlist.c:219
 msgid "/Save List"
 msgstr "/保存列表"
 
-#: audacious/ui_playlist.c:221
+#: audacious/ui_playlist.c:223
 #, fuzzy
 msgid "/Save Default List"
 msgstr "/保存/默认"
 
-#: audacious/ui_playlist.c:227
+#: audacious/ui_playlist.c:229
 msgid "/Update View"
 msgstr "/更新视图"
 
-#: audacious/ui_playlist.c:233
+#: audacious/ui_playlist.c:235
 msgid "/Invert Selection"
 msgstr "/反转选择"
 
-#: audacious/ui_playlist.c:239
+#: audacious/ui_playlist.c:241
 msgid "/Select None"
 msgstr "/全部不选"
 
-#: audacious/ui_playlist.c:243
+#: audacious/ui_playlist.c:245
 msgid "/Select All"
 msgstr "/全部选中"
 
-#: audacious/ui_playlist.c:249
+#: audacious/ui_playlist.c:251
 msgid "/Randomize List"
 msgstr "/打乱列表"
 
-#: audacious/ui_playlist.c:251
+#: audacious/ui_playlist.c:253
 msgid "/Reverse List"
 msgstr "/反转列表"
 
-#: audacious/ui_playlist.c:254
+#: audacious/ui_playlist.c:256
 msgid "/Sort List"
 msgstr "/排序列表"
 
-#: audacious/ui_playlist.c:255
+#: audacious/ui_playlist.c:257
 msgid "/Sort List/By Title"
 msgstr "/排序列表/按曲名排序"
 
-#: audacious/ui_playlist.c:257
+#: audacious/ui_playlist.c:259
 #, fuzzy
 msgid "/Sort List/By Artist"
 msgstr "/排序列表/按曲名排序"
 
-#: audacious/ui_playlist.c:259
+#: audacious/ui_playlist.c:261
 msgid "/Sort List/By Filename"
 msgstr "/排序列表/按文件名排序"
 
-#: audacious/ui_playlist.c:261
+#: audacious/ui_playlist.c:263
 msgid "/Sort List/By Path + Filename"
 msgstr "/排序列表/按路径+文件名排序"
 
-#: audacious/ui_playlist.c:263
+#: audacious/ui_playlist.c:265
 msgid "/Sort List/By Date"
 msgstr "/排序列表/按日期排序"
 
-#: audacious/ui_playlist.c:265
+#: audacious/ui_playlist.c:267
+#, fuzzy
+msgid "/Sort List/By Track Number"
+msgstr "/排序列表/按日期排序"
+
+#: audacious/ui_playlist.c:269
+#, fuzzy
+msgid "/Sort List/By Playlist Entry"
+msgstr "/排序列表/按曲名排序"
+
+#: audacious/ui_playlist.c:271
 msgid "/Sort Selection"
 msgstr "/排序选择"
 
-#: audacious/ui_playlist.c:266
+#: audacious/ui_playlist.c:272
 msgid "/Sort Selection/By Title"
 msgstr "/排序选择/按曲名排序"
 
-#: audacious/ui_playlist.c:268
+#: audacious/ui_playlist.c:274
 #, fuzzy
 msgid "/Sort Selection/By Artist"
 msgstr "/排序选择/按曲名排序"
 
-#: audacious/ui_playlist.c:270
+#: audacious/ui_playlist.c:276
 msgid "/Sort Selection/By Filename"
 msgstr "/排序选择/按文件名排序"
 
-#: audacious/ui_playlist.c:272
+#: audacious/ui_playlist.c:278
 msgid "/Sort Selection/By Path + Filename"
 msgstr "/排序选择/按路径+文件名排序"
 
-#: audacious/ui_playlist.c:274
+#: audacious/ui_playlist.c:280
 msgid "/Sort Selection/By Date"
 msgstr "/排序选择/按日期排序"
 
-#: audacious/ui_playlist.c:812
+#: audacious/ui_playlist.c:282
+#, fuzzy
+msgid "/Sort Selection/By Track Number"
+msgstr "/排序选择/按日期排序"
+
+#: audacious/ui_playlist.c:284
+#, fuzzy
+msgid "/Sort Selection/By Playlist Entry"
+msgstr "/排序选择/按曲名排序"
+
+#: audacious/ui_playlist.c:822
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "写入播放列表“%s”：%s 出错"
 
-#: audacious/ui_playlist.c:833
+#: audacious/ui_playlist.c:843
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s 已经存在。继续？"
 
-#: audacious/ui_playlist.c:847
+#: audacious/ui_playlist.c:857
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -4374,15 +4394,15 @@ msgstr ""
 "无法保存播放列表！\n"
 "未知文件类型 %s\n"
 
-#: audacious/ui_playlist.c:957
+#: audacious/ui_playlist.c:967
 msgid "Load Playlist"
 msgstr "装入播放列表"
 
-#: audacious/ui_playlist.c:969
+#: audacious/ui_playlist.c:979
 msgid "Save Playlist"
 msgstr "保存播放列表"
 
-#: audacious/ui_playlist.c:1677
+#: audacious/ui_playlist.c:1687
 #, fuzzy
 msgid "Audacious Playlist Editor"
 msgstr "/显示播放列表"
@@ -4834,6 +4854,15 @@ msgstr "Indie"
 #: audacious/glade/prefswin.glade:4280
 msgid "Exclude:"
 msgstr ""
+
+#: audacious/glade/prefswin.glade:4348
+msgid "Recursively search for cover"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:4381
+#, fuzzy
+msgid "Search depth: "
+msgstr "搜索："
 
 #: libaudacious/titlestring.c:340
 msgid "Performer/Artist"
@@ -6589,9 +6618,6 @@ msgstr "%{n:...%}: 如果 %n 元素存在，显示“...”"
 
 #~ msgid "Jump to file"
 #~ msgstr "跳到文件"
-
-#~ msgid "Search: "
-#~ msgstr "搜索："
 
 #~ msgid "Select directory to add:"
 #~ msgstr "选择要增加的目录："

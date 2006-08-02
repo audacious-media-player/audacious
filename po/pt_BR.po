@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: BMP 0.9.7\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-16 10:51-0500\n"
+"Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
+"POT-Creation-Date: 2006-08-02 18:22-0500\n"
 "PO-Revision-Date: 2004-11-15 13:42-0200\n"
 "Last-Translator: Philipi Pinto <philipi@gmx.net>\n"
 "Language-Team: Portuguese/Brazil\n"
@@ -2725,8 +2725,8 @@ msgid ""
 "You should have received a copy of the GNU General Public \n"
 "License along with this program ; if not, write to \n"
 "the Free Software Foundation, Inc., \n"
-"59 Temple Place, Suite 330, \n"
-"Boston, MA  02111-1307  USA"
+"51 Franklin Street, Fifth Floor, \n"
+"Boston, MA  02110-1301  USA"
 msgstr ""
 "XMMS ESounD Plugin\n"
 "\n"
@@ -2793,7 +2793,7 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA."
 msgstr ""
 "XMMS OSS Driver\n"
@@ -2887,7 +2887,7 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA.\n"
 "Author: Matthieu Sozeau (mattam@altern.org)"
 msgstr ""
@@ -3011,7 +3011,7 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA."
 msgstr ""
 "XMMS ESounD Plugin\n"
@@ -3577,12 +3577,12 @@ msgstr "Não foi possível criar o arquivo de log (%s)!\n"
 msgid "Audacious"
 msgstr ""
 
-#: audacious/main.c:425
+#: audacious/main.c:431
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "Não foi possível criar o diretório (%s): %s"
 
-#: audacious/main.c:695
+#: audacious/main.c:701
 #, fuzzy
 msgid ""
 "Usage: audacious [options] [files] ...\n"
@@ -3595,69 +3595,69 @@ msgstr ""
 "Opções:\n"
 "--------\n"
 
-#: audacious/main.c:700
+#: audacious/main.c:706
 msgid "Display this text and exit"
 msgstr "Mostrar este texto e sair"
 
-#: audacious/main.c:703
+#: audacious/main.c:709
 #, fuzzy
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Selecione uma sessão BMP/XMMS (Padrão: 0)"
 
-#: audacious/main.c:706
+#: audacious/main.c:712
 msgid "Skip backwards in playlist"
 msgstr "Avançar em sentido inverso na lista de reprodução"
 
-#: audacious/main.c:709
+#: audacious/main.c:715
 msgid "Start playing current playlist"
 msgstr "Começar a tocar a lista de reprodução atual"
 
-#: audacious/main.c:712
+#: audacious/main.c:718
 msgid "Pause current song"
 msgstr "Pausar a reprodução"
 
-#: audacious/main.c:715
+#: audacious/main.c:721
 msgid "Stop current song"
 msgstr "Parar a reprodução"
 
-#: audacious/main.c:718
+#: audacious/main.c:724
 msgid "Pause if playing, play otherwise"
 msgstr "Pausar ou tocar"
 
-#: audacious/main.c:721
+#: audacious/main.c:727
 msgid "Skip forward in playlist"
 msgstr "Avançar na lista de reprodução"
 
-#: audacious/main.c:724
+#: audacious/main.c:730
 msgid "Don't clear the playlist"
 msgstr "Não limpar a lista de reprodução"
 
-#: audacious/main.c:727
+#: audacious/main.c:733
 msgid "Show the main window"
 msgstr "Mostrar a janela principal"
 
-#: audacious/main.c:730
+#: audacious/main.c:736
 #, fuzzy
 msgid "Activate Audacious"
 msgstr "Sobre o Plugin de áudio MPEG"
 
-#: audacious/main.c:733
+#: audacious/main.c:739
 msgid "Previous session ID"
 msgstr "Usar a identidade da sessão anterior"
 
-#: audacious/main.c:736
+#: audacious/main.c:742
 msgid "Headless operation [experimental]"
 msgstr ""
 
-#: audacious/main.c:739
+#: audacious/main.c:745
 msgid "Disable error/warning interception (logging)"
 msgstr ""
 
-#: audacious/main.c:742
+#: audacious/main.c:748
 msgid "Print version number and exit\n"
 msgstr "Exibe o número de versão e sai\n"
 
-#: audacious/main.c:925
+#: audacious/main.c:931
 #, fuzzy
 msgid ""
 "\n"
@@ -3674,7 +3674,7 @@ msgstr ""
 "nos um e-mail em beepmp-devel@lists.sourceforge.net\n"
 "\n"
 
-#: audacious/main.c:948
+#: audacious/main.c:954
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -3687,7 +3687,7 @@ msgstr ""
 "Verifique se a skin em '%s'·é compatível e se a skin padrão está instalada "
 "em '%s'\n"
 
-#: audacious/main.c:994
+#: audacious/main.c:1000
 #, fuzzy, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -3696,7 +3696,7 @@ msgstr ""
 "Desculpe, sua versão do GTK+ (%d.%d.%d) não funciona com o BMP\n"
 "Por favor, utilize a versão %s do GTK+ou mais nova.\n"
 
-#: audacious/main.c:1005
+#: audacious/main.c:1011
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -3709,12 +3709,12 @@ msgstr ""
 "Se você usa um sistema Linux baseado em libc5 e instalou a Glib e GTK+ \n"
 "antes de instalar LinuxThreads você precisa recompilar a Glib e o GTK+.\n"
 
-#: audacious/main.c:1021
+#: audacious/main.c:1027
 #, fuzzy
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "BMP: Incapaz de abrir display, saindo."
 
-#: audacious/mainwin.c:252 audacious/mainwin.c:373 audacious/ui_playlist.c:126
+#: audacious/mainwin.c:252 audacious/mainwin.c:373 audacious/ui_playlist.c:128
 msgid "/View Track Details"
 msgstr "/Ver detalhes da faixa"
 
@@ -4202,7 +4202,7 @@ msgstr "Descrição"
 msgid "Category"
 msgstr "Categoria"
 
-#: audacious/prefswin.c:2169
+#: audacious/prefswin.c:2203
 msgid "Preferences Window"
 msgstr "Janela de preferências"
 
@@ -4214,178 +4214,198 @@ msgstr ""
 msgid "Unarchived Winamp 2.x skin"
 msgstr ""
 
-#: audacious/ui_playlist.c:130
+#: audacious/ui_playlist.c:132
 msgid "/Show Popup Info"
 msgstr ""
 
-#: audacious/ui_playlist.c:136 audacious/ui_playlist.c:201
+#: audacious/ui_playlist.c:138 audacious/ui_playlist.c:203
 msgid "/Remove Selected"
 msgstr "/Remover a seleção"
 
-#: audacious/ui_playlist.c:140 audacious/ui_playlist.c:197
+#: audacious/ui_playlist.c:142 audacious/ui_playlist.c:199
 #, fuzzy
 msgid "/Remove Unselected"
 msgstr "/Remover a seleção"
 
-#: audacious/ui_playlist.c:144 audacious/ui_playlist.c:193
+#: audacious/ui_playlist.c:146 audacious/ui_playlist.c:195
 #, fuzzy
 msgid "/Remove All"
 msgstr "/Remover a seleção"
 
-#: audacious/ui_playlist.c:150
+#: audacious/ui_playlist.c:152
 msgid "/Queue Toggle"
 msgstr "/Enfileirar"
 
-#: audacious/ui_playlist.c:156
+#: audacious/ui_playlist.c:158
 #, fuzzy
 msgid "/Add CD..."
 msgstr "/Adicionar/Arquivos..."
 
-#: audacious/ui_playlist.c:160
+#: audacious/ui_playlist.c:162
 #, fuzzy
 msgid "/Add Internet Address..."
 msgstr "/Adicionar/Endereço na Internet"
 
-#: audacious/ui_playlist.c:164
+#: audacious/ui_playlist.c:166
 #, fuzzy
 msgid "/Add Files..."
 msgstr "/Adicionar/Arquivos..."
 
-#: audacious/ui_playlist.c:170
+#: audacious/ui_playlist.c:172
 msgid "/Clear Queue"
 msgstr "/Limpar a fila"
 
-#: audacious/ui_playlist.c:176
+#: audacious/ui_playlist.c:178
 msgid "/Remove Unavailable Files"
 msgstr "/Remover arquivos indisponíveis"
 
-#: audacious/ui_playlist.c:180
+#: audacious/ui_playlist.c:182
 #, fuzzy
 msgid "/Remove Duplicates"
 msgstr "/Remover a seleção"
 
-#: audacious/ui_playlist.c:181
+#: audacious/ui_playlist.c:183
 #, fuzzy
 msgid "/Remove Duplicates/By Title"
 msgstr "/Ordenar a lista/Por título"
 
-#: audacious/ui_playlist.c:184
+#: audacious/ui_playlist.c:186
 #, fuzzy
 msgid "/Remove Duplicates/By Filename"
 msgstr "/Ordenar a lista/Pelo nome do arquivo"
 
-#: audacious/ui_playlist.c:187
+#: audacious/ui_playlist.c:189
 #, fuzzy
 msgid "/Remove Duplicates/By Path + Filename"
 msgstr "/Ordenar a lista/Pelo endereço e nome do arquivo"
 
-#: audacious/ui_playlist.c:207
+#: audacious/ui_playlist.c:209
 msgid "/New List"
 msgstr "/Nova lista"
 
-#: audacious/ui_playlist.c:213
+#: audacious/ui_playlist.c:215
 #, fuzzy
 msgid "/Load List"
 msgstr "/Ordenar a lista"
 
-#: audacious/ui_playlist.c:217
+#: audacious/ui_playlist.c:219
 #, fuzzy
 msgid "/Save List"
 msgstr "/Nova lista"
 
-#: audacious/ui_playlist.c:221
+#: audacious/ui_playlist.c:223
 #, fuzzy
 msgid "/Save Default List"
 msgstr "/Salvar/Padrão"
 
-#: audacious/ui_playlist.c:227
+#: audacious/ui_playlist.c:229
 msgid "/Update View"
 msgstr "/Atualizar a visão"
 
-#: audacious/ui_playlist.c:233
+#: audacious/ui_playlist.c:235
 #, fuzzy
 msgid "/Invert Selection"
 msgstr "/Ordenar a seleção"
 
-#: audacious/ui_playlist.c:239
+#: audacious/ui_playlist.c:241
 #, fuzzy
 msgid "/Select None"
 msgstr "/Ordenar a seleção"
 
-#: audacious/ui_playlist.c:243
+#: audacious/ui_playlist.c:245
 #, fuzzy
 msgid "/Select All"
 msgstr "Selecionar tudo"
 
-#: audacious/ui_playlist.c:249
+#: audacious/ui_playlist.c:251
 msgid "/Randomize List"
 msgstr "/Misturar aleatoriamente"
 
-#: audacious/ui_playlist.c:251
+#: audacious/ui_playlist.c:253
 msgid "/Reverse List"
 msgstr "/Inverter a lista"
 
-#: audacious/ui_playlist.c:254
+#: audacious/ui_playlist.c:256
 msgid "/Sort List"
 msgstr "/Ordenar a lista"
 
-#: audacious/ui_playlist.c:255
+#: audacious/ui_playlist.c:257
 msgid "/Sort List/By Title"
 msgstr "/Ordenar a lista/Por título"
 
-#: audacious/ui_playlist.c:257
+#: audacious/ui_playlist.c:259
 #, fuzzy
 msgid "/Sort List/By Artist"
 msgstr "/Ordenar a lista/Por título"
 
-#: audacious/ui_playlist.c:259
+#: audacious/ui_playlist.c:261
 msgid "/Sort List/By Filename"
 msgstr "/Ordenar a lista/Pelo nome do arquivo"
 
-#: audacious/ui_playlist.c:261
+#: audacious/ui_playlist.c:263
 msgid "/Sort List/By Path + Filename"
 msgstr "/Ordenar a lista/Pelo endereço e nome do arquivo"
 
-#: audacious/ui_playlist.c:263
+#: audacious/ui_playlist.c:265
 msgid "/Sort List/By Date"
 msgstr "/Ordenar a lista/Por data"
 
-#: audacious/ui_playlist.c:265
+#: audacious/ui_playlist.c:267
+#, fuzzy
+msgid "/Sort List/By Track Number"
+msgstr "/Ordenar a lista/Por data"
+
+#: audacious/ui_playlist.c:269
+#, fuzzy
+msgid "/Sort List/By Playlist Entry"
+msgstr "/Ordenar a lista/Por título"
+
+#: audacious/ui_playlist.c:271
 msgid "/Sort Selection"
 msgstr "/Ordenar a seleção"
 
-#: audacious/ui_playlist.c:266
+#: audacious/ui_playlist.c:272
 msgid "/Sort Selection/By Title"
 msgstr "/Ordenar a seleção/Por título"
 
-#: audacious/ui_playlist.c:268
+#: audacious/ui_playlist.c:274
 #, fuzzy
 msgid "/Sort Selection/By Artist"
 msgstr "/Ordenar a seleção/Por título"
 
-#: audacious/ui_playlist.c:270
+#: audacious/ui_playlist.c:276
 msgid "/Sort Selection/By Filename"
 msgstr "/Ordenar a seleção/Pelo nome do arquivo"
 
-#: audacious/ui_playlist.c:272
+#: audacious/ui_playlist.c:278
 msgid "/Sort Selection/By Path + Filename"
 msgstr "/Ordenar a seleção/Pelo endereço e nome do arquivo"
 
-#: audacious/ui_playlist.c:274
+#: audacious/ui_playlist.c:280
 msgid "/Sort Selection/By Date"
 msgstr "/Ordenar a seleção/Por data"
 
-#: audacious/ui_playlist.c:812
+#: audacious/ui_playlist.c:282
+#, fuzzy
+msgid "/Sort Selection/By Track Number"
+msgstr "/Ordenar a seleção/Por data"
+
+#: audacious/ui_playlist.c:284
+#, fuzzy
+msgid "/Sort Selection/By Playlist Entry"
+msgstr "/Ordenar a seleção/Por título"
+
+#: audacious/ui_playlist.c:822
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "Erro ao escrever a lista de reprodução \"%s\": %s"
 
-#: audacious/ui_playlist.c:833
+#: audacious/ui_playlist.c:843
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s já existe. Deseja continuar?"
 
-#: audacious/ui_playlist.c:847
+#: audacious/ui_playlist.c:857
 #, fuzzy, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -4393,17 +4413,17 @@ msgid ""
 "Unknown file type for '%s'.\n"
 msgstr "Incapaz de salvar a lista! Este tipo de arquivo não é conhecido: %s"
 
-#: audacious/ui_playlist.c:957
+#: audacious/ui_playlist.c:967
 #, fuzzy
 msgid "Load Playlist"
 msgstr "Carregar lista de reprodução"
 
-#: audacious/ui_playlist.c:969
+#: audacious/ui_playlist.c:979
 #, fuzzy
 msgid "Save Playlist"
 msgstr "Salvar lista de reprodução"
 
-#: audacious/ui_playlist.c:1677
+#: audacious/ui_playlist.c:1687
 #, fuzzy
 msgid "Audacious Playlist Editor"
 msgstr "/Mostrar Lista de reprodução"
@@ -4858,6 +4878,14 @@ msgstr "Indie"
 
 #: audacious/glade/prefswin.glade:4280
 msgid "Exclude:"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:4348
+msgid "Recursively search for cover"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:4381
+msgid "Search depth: "
 msgstr ""
 
 #: libaudacious/titlestring.c:340

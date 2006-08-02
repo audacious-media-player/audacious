@@ -10,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: audacious HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-16 10:51-0500\n"
+"Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
+"POT-Creation-Date: 2006-08-02 18:22-0500\n"
 "PO-Revision-Date: 2006-06-12 18:51+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -2729,6 +2729,7 @@ msgid "About sndfile WAV support"
 msgstr "sndfile WAV サポートについて"
 
 #: Plugins/Input/wav/wav-sndfile.c:247
+#, fuzzy
 msgid ""
 "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
 "from the xmms_sndfile plugin which is:\n"
@@ -2747,8 +2748,8 @@ msgid ""
 "You should have received a copy of the GNU General Public \n"
 "License along with this program ; if not, write to \n"
 "the Free Software Foundation, Inc., \n"
-"59 Temple Place, Suite 330, \n"
-"Boston, MA  02111-1307  USA"
+"51 Franklin Street, Fifth Floor, \n"
+"Boston, MA  02110-1301  USA"
 msgstr ""
 "Tony Vroon <chainsaw@gentoo.org> による xmms_sndfile プラグインの\n"
 "Audacious への適応:\n"
@@ -2801,6 +2802,7 @@ msgid "About OSS Driver"
 msgstr "OSS ドライバについて"
 
 #: Plugins/Output/OSS/about.c:40
+#, fuzzy
 msgid ""
 "Audacious OSS Driver\n"
 "\n"
@@ -2816,7 +2818,7 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA."
 msgstr ""
 "Audacious OSS ドライバ\n"
@@ -2895,6 +2897,7 @@ msgid "About ALSA Driver"
 msgstr "ALSA ドライバについて"
 
 #: Plugins/Output/alsa/about.c:31
+#, fuzzy
 msgid ""
 "Audacious ALSA Driver\n"
 "\n"
@@ -2910,7 +2913,7 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA.\n"
 "Author: Matthieu Sozeau (mattam@altern.org)"
 msgstr ""
@@ -3017,6 +3020,7 @@ msgid "About ESounD Plugin"
 msgstr "ESounD プラグインについて"
 
 #: Plugins/Output/esd/about.c:35
+#, fuzzy
 msgid ""
 "Audacious ESounD Plugin\n"
 "\n"
@@ -3032,7 +3036,7 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA."
 msgstr ""
 "Audacious ESounD プラグイン\n"
@@ -3595,12 +3599,12 @@ msgstr "ログ・ファイル (%s) を作成できません！\n"
 msgid "Audacious"
 msgstr "Audacious"
 
-#: audacious/main.c:425
+#: audacious/main.c:431
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "ディレクトリ (%s) を作成できませんでした: %s"
 
-#: audacious/main.c:695
+#: audacious/main.c:701
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
@@ -3612,67 +3616,67 @@ msgstr ""
 "オプション:\n"
 "--------\n"
 
-#: audacious/main.c:700
+#: audacious/main.c:706
 msgid "Display this text and exit"
 msgstr "このメッセージを表示して終了する"
 
-#: audacious/main.c:703
+#: audacious/main.c:709
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Audacious/BMP/XMMS セッションを選択する (デフォルト: 0)"
 
-#: audacious/main.c:706
+#: audacious/main.c:712
 msgid "Skip backwards in playlist"
 msgstr "演奏一覧の一つ前の曲にジャンプする"
 
-#: audacious/main.c:709
+#: audacious/main.c:715
 msgid "Start playing current playlist"
 msgstr "現在の演奏一覧で演奏を開始する"
 
-#: audacious/main.c:712
+#: audacious/main.c:718
 msgid "Pause current song"
 msgstr "現在の曲を一時停止する"
 
-#: audacious/main.c:715
+#: audacious/main.c:721
 msgid "Stop current song"
 msgstr "現在の曲を停止する"
 
-#: audacious/main.c:718
+#: audacious/main.c:724
 msgid "Pause if playing, play otherwise"
 msgstr "演奏していたら一時停止し、それ以外は演奏する"
 
-#: audacious/main.c:721
+#: audacious/main.c:727
 msgid "Skip forward in playlist"
 msgstr "演奏一覧の一つ次の曲にジャンプする"
 
-#: audacious/main.c:724
+#: audacious/main.c:730
 msgid "Don't clear the playlist"
 msgstr "演奏一覧をクリアしない"
 
-#: audacious/main.c:727
+#: audacious/main.c:733
 msgid "Show the main window"
 msgstr "メイン・ウィンドウを表示する"
 
-#: audacious/main.c:730
+#: audacious/main.c:736
 msgid "Activate Audacious"
 msgstr "Audacious をアクティブにする"
 
-#: audacious/main.c:733
+#: audacious/main.c:739
 msgid "Previous session ID"
 msgstr "以前のセッション ID を指定する"
 
-#: audacious/main.c:736
+#: audacious/main.c:742
 msgid "Headless operation [experimental]"
 msgstr "ヘッドレス動作 [実験的]"
 
-#: audacious/main.c:739
+#: audacious/main.c:745
 msgid "Disable error/warning interception (logging)"
 msgstr ""
 
-#: audacious/main.c:742
+#: audacious/main.c:748
 msgid "Print version number and exit\n"
 msgstr "バージョンを表示して終了する\n"
 
-#: audacious/main.c:925
+#: audacious/main.c:931
 msgid ""
 "\n"
 "Received SIGSEGV\n"
@@ -3688,7 +3692,7 @@ msgstr ""
 "bugs.nenolod.net/ に報告して下さい。\n"
 "\n"
 
-#: audacious/main.c:948
+#: audacious/main.c:954
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -3701,7 +3705,7 @@ msgstr ""
 "'%s' にあるスキンが利用可能であるか確認して下さい。\n"
 "デフォルトのスキンはおそらく '%s' にインストールされています。\n"
 
-#: audacious/main.c:994
+#: audacious/main.c:1000
 #, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -3711,7 +3715,7 @@ msgstr ""
 "していません。\n"
 "GTK+ %s またはそれ以降のバージョンをお使い下さい。\n"
 
-#: audacious/main.c:1005
+#: audacious/main.c:1011
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -3725,11 +3729,11 @@ msgstr ""
 "GTK+ をインストールした場合は、Glib と GTK+ を再コンパイルして再インストール"
 "する必要があります。\n"
 
-#: audacious/main.c:1021
+#: audacious/main.c:1027
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "audacious: X ディスプレイを開けません。強制終了します。\n"
 
-#: audacious/mainwin.c:252 audacious/mainwin.c:373 audacious/ui_playlist.c:126
+#: audacious/mainwin.c:252 audacious/mainwin.c:373 audacious/ui_playlist.c:128
 msgid "/View Track Details"
 msgstr "/トラックの詳細"
 
@@ -4201,7 +4205,7 @@ msgstr "説明"
 msgid "Category"
 msgstr "カテゴリ"
 
-#: audacious/prefswin.c:2169
+#: audacious/prefswin.c:2203
 msgid "Preferences Window"
 msgstr "設定ウィンドウ"
 
@@ -4213,163 +4217,183 @@ msgstr "Archived Winamp 2.x スキン"
 msgid "Unarchived Winamp 2.x skin"
 msgstr "Unarchived Winamp 2.x スキン"
 
-#: audacious/ui_playlist.c:130
+#: audacious/ui_playlist.c:132
 msgid "/Show Popup Info"
 msgstr ""
 
-#: audacious/ui_playlist.c:136 audacious/ui_playlist.c:201
+#: audacious/ui_playlist.c:138 audacious/ui_playlist.c:203
 msgid "/Remove Selected"
 msgstr "/選択したエントリの削除"
 
-#: audacious/ui_playlist.c:140 audacious/ui_playlist.c:197
+#: audacious/ui_playlist.c:142 audacious/ui_playlist.c:199
 msgid "/Remove Unselected"
 msgstr "/選択していないエントリの削除"
 
-#: audacious/ui_playlist.c:144 audacious/ui_playlist.c:193
+#: audacious/ui_playlist.c:146 audacious/ui_playlist.c:195
 msgid "/Remove All"
 msgstr "/全て削除"
 
-#: audacious/ui_playlist.c:150
+#: audacious/ui_playlist.c:152
 msgid "/Queue Toggle"
 msgstr "/キューを切り替える"
 
-#: audacious/ui_playlist.c:156
+#: audacious/ui_playlist.c:158
 msgid "/Add CD..."
 msgstr "/CD の追加..."
 
-#: audacious/ui_playlist.c:160
+#: audacious/ui_playlist.c:162
 msgid "/Add Internet Address..."
 msgstr "/インターネット・アドレスの追加..."
 
-#: audacious/ui_playlist.c:164
+#: audacious/ui_playlist.c:166
 msgid "/Add Files..."
 msgstr "/ファイルの追加..."
 
-#: audacious/ui_playlist.c:170
+#: audacious/ui_playlist.c:172
 msgid "/Clear Queue"
 msgstr "/キューのクリア"
 
-#: audacious/ui_playlist.c:176
+#: audacious/ui_playlist.c:178
 msgid "/Remove Unavailable Files"
 msgstr "/利用不可ファイルの削除"
 
-#: audacious/ui_playlist.c:180
+#: audacious/ui_playlist.c:182
 msgid "/Remove Duplicates"
 msgstr "/重複エントリの削除"
 
-#: audacious/ui_playlist.c:181
+#: audacious/ui_playlist.c:183
 msgid "/Remove Duplicates/By Title"
 msgstr "/重複エントリの削除/タイトル"
 
-#: audacious/ui_playlist.c:184
+#: audacious/ui_playlist.c:186
 msgid "/Remove Duplicates/By Filename"
 msgstr "/重複エントリの削除/ファイル名"
 
-#: audacious/ui_playlist.c:187
+#: audacious/ui_playlist.c:189
 msgid "/Remove Duplicates/By Path + Filename"
 msgstr "/重複エントリの削除/パス名とファイル名"
 
-#: audacious/ui_playlist.c:207
+#: audacious/ui_playlist.c:209
 msgid "/New List"
 msgstr "/新しい一覧"
 
-#: audacious/ui_playlist.c:213
+#: audacious/ui_playlist.c:215
 msgid "/Load List"
 msgstr "/演奏一覧の読み込み"
 
-#: audacious/ui_playlist.c:217
+#: audacious/ui_playlist.c:219
 msgid "/Save List"
 msgstr "/演奏一覧の保存"
 
-#: audacious/ui_playlist.c:221
+#: audacious/ui_playlist.c:223
 msgid "/Save Default List"
 msgstr "/デフォルトの演奏一覧の保存"
 
-#: audacious/ui_playlist.c:227
+#: audacious/ui_playlist.c:229
 msgid "/Update View"
 msgstr "/表示のリフレッシュ"
 
-#: audacious/ui_playlist.c:233
+#: audacious/ui_playlist.c:235
 msgid "/Invert Selection"
 msgstr "/選択範囲の反転"
 
-#: audacious/ui_playlist.c:239
+#: audacious/ui_playlist.c:241
 msgid "/Select None"
 msgstr "/未選択にする"
 
-#: audacious/ui_playlist.c:243
+#: audacious/ui_playlist.c:245
 msgid "/Select All"
 msgstr "/全て選択"
 
-#: audacious/ui_playlist.c:249
+#: audacious/ui_playlist.c:251
 msgid "/Randomize List"
 msgstr "/順番をランダムにする"
 
-#: audacious/ui_playlist.c:251
+#: audacious/ui_playlist.c:253
 msgid "/Reverse List"
 msgstr "/逆順にする"
 
-#: audacious/ui_playlist.c:254
+#: audacious/ui_playlist.c:256
 msgid "/Sort List"
 msgstr "/演奏一覧のソート"
 
-#: audacious/ui_playlist.c:255
+#: audacious/ui_playlist.c:257
 msgid "/Sort List/By Title"
 msgstr "/演奏一覧のソート/タイトル順"
 
-#: audacious/ui_playlist.c:257
+#: audacious/ui_playlist.c:259
 #, fuzzy
 msgid "/Sort List/By Artist"
 msgstr "/演奏一覧のソート/タイトル順"
 
-#: audacious/ui_playlist.c:259
+#: audacious/ui_playlist.c:261
 msgid "/Sort List/By Filename"
 msgstr "/演奏一覧のソート/ファイル名順"
 
-#: audacious/ui_playlist.c:261
+#: audacious/ui_playlist.c:263
 msgid "/Sort List/By Path + Filename"
 msgstr "/演奏一覧のソート/パス名とファイル名順"
 
-#: audacious/ui_playlist.c:263
+#: audacious/ui_playlist.c:265
 msgid "/Sort List/By Date"
 msgstr "/演奏一覧のソート/日付順"
 
-#: audacious/ui_playlist.c:265
+#: audacious/ui_playlist.c:267
+#, fuzzy
+msgid "/Sort List/By Track Number"
+msgstr "/演奏一覧のソート/日付順"
+
+#: audacious/ui_playlist.c:269
+#, fuzzy
+msgid "/Sort List/By Playlist Entry"
+msgstr "/演奏一覧のソート/タイトル順"
+
+#: audacious/ui_playlist.c:271
 msgid "/Sort Selection"
 msgstr "/選択範囲のソート"
 
-#: audacious/ui_playlist.c:266
+#: audacious/ui_playlist.c:272
 msgid "/Sort Selection/By Title"
 msgstr "/選択範囲のソート/タイトル順"
 
-#: audacious/ui_playlist.c:268
+#: audacious/ui_playlist.c:274
 #, fuzzy
 msgid "/Sort Selection/By Artist"
 msgstr "/選択範囲のソート/タイトル順"
 
-#: audacious/ui_playlist.c:270
+#: audacious/ui_playlist.c:276
 msgid "/Sort Selection/By Filename"
 msgstr "/選択範囲のソート/ファイル名順"
 
-#: audacious/ui_playlist.c:272
+#: audacious/ui_playlist.c:278
 msgid "/Sort Selection/By Path + Filename"
 msgstr "/選択範囲のソート/パス名とファイル名順"
 
-#: audacious/ui_playlist.c:274
+#: audacious/ui_playlist.c:280
 msgid "/Sort Selection/By Date"
 msgstr "/選択範囲のソート/日付順"
 
-#: audacious/ui_playlist.c:812
+#: audacious/ui_playlist.c:282
+#, fuzzy
+msgid "/Sort Selection/By Track Number"
+msgstr "/選択範囲のソート/日付順"
+
+#: audacious/ui_playlist.c:284
+#, fuzzy
+msgid "/Sort Selection/By Playlist Entry"
+msgstr "/選択範囲のソート/タイトル順"
+
+#: audacious/ui_playlist.c:822
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "演奏一覧 \"%s\" を書き込む際にエラー: %s"
 
-#: audacious/ui_playlist.c:833
+#: audacious/ui_playlist.c:843
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s は既に存在しています。続行しますか？"
 
-#: audacious/ui_playlist.c:847
+#: audacious/ui_playlist.c:857
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -4380,15 +4404,15 @@ msgstr ""
 "\n"
 "%s のファイルの種類が不明です。\n"
 
-#: audacious/ui_playlist.c:957
+#: audacious/ui_playlist.c:967
 msgid "Load Playlist"
 msgstr "演奏一覧の読み込み"
 
-#: audacious/ui_playlist.c:969
+#: audacious/ui_playlist.c:979
 msgid "Save Playlist"
 msgstr "演奏一覧の保存"
 
-#: audacious/ui_playlist.c:1677
+#: audacious/ui_playlist.c:1687
 msgid "Audacious Playlist Editor"
 msgstr "Audacious 演奏一覧エディタ"
 
@@ -4841,6 +4865,14 @@ msgstr "インディーズ"
 
 #: audacious/glade/prefswin.glade:4280
 msgid "Exclude:"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:4348
+msgid "Recursively search for cover"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:4381
+msgid "Search depth: "
 msgstr ""
 
 #: libaudacious/titlestring.c:340

@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.0.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-16 10:51-0500\n"
+"Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
+"POT-Creation-Date: 2006-08-02 18:22-0500\n"
 "PO-Revision-Date: 2006-04-19 12:35+0200\n"
 "Last-Translator: Laszlo Dvornik <dvornik@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
@@ -2683,6 +2683,7 @@ msgid "About sndfile WAV support"
 msgstr "sndfile WAV támogatás névjegye"
 
 #: Plugins/Input/wav/wav-sndfile.c:247
+#, fuzzy
 msgid ""
 "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
 "from the xmms_sndfile plugin which is:\n"
@@ -2701,9 +2702,24 @@ msgid ""
 "You should have received a copy of the GNU General Public \n"
 "License along with this program ; if not, write to \n"
 "the Free Software Foundation, Inc., \n"
-"59 Temple Place, Suite 330, \n"
-"Boston, MA  02111-1307  USA"
+"51 Franklin Street, Fifth Floor, \n"
+"Boston, MA  02110-1301  USA"
 msgstr ""
+"Audacious ESounD-bővítmény\n"
+"\n"
+"Ez a program szabad szoftver; terjeszthető és/vagy módosítható\n"
+"a Free Software Foundation által publikált GNU General Public\n"
+"License 2. vagy annál újabb verziója alapján.\n"
+"\n"
+"A program annak reményében kerül terjesztésre, hogy hasznosnak\n"
+"bizonyul, de GARANCIA NÉLKÜL; még a PIACKÉPESSÉG illetve\n"
+"egy BIZONYOS CÉLRA VALÓ ALKALMASSÁG sincs garantálva. További\n"
+"részletek a GNU General Public License-ben.\n"
+"\n"
+"A programmal együtt Önnek kapnia kellett egy példányt a GNU General\n"
+"Public License-ből; ha nem így történt, írjon a következő címre:\n"
+"Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
+"MA 02111-1307, USA."
 
 #: Plugins/Input/wav/wav-sndfile.c:272
 msgid "sndfile WAV plugin"
@@ -2736,6 +2752,7 @@ msgid "About OSS Driver"
 msgstr "OSS-meghajtó névjegye"
 
 #: Plugins/Output/OSS/about.c:40
+#, fuzzy
 msgid ""
 "Audacious OSS Driver\n"
 "\n"
@@ -2751,7 +2768,7 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA."
 msgstr ""
 "Audacious OSS-meghajtó\n"
@@ -2828,6 +2845,7 @@ msgid "About ALSA Driver"
 msgstr "ALSA-meghajtó névjegye"
 
 #: Plugins/Output/alsa/about.c:31
+#, fuzzy
 msgid ""
 "Audacious ALSA Driver\n"
 "\n"
@@ -2843,7 +2861,7 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA.\n"
 "Author: Matthieu Sozeau (mattam@altern.org)"
 msgstr ""
@@ -2948,6 +2966,7 @@ msgid "About ESounD Plugin"
 msgstr "ESounD-bővítmény névjegye"
 
 #: Plugins/Output/esd/about.c:35
+#, fuzzy
 msgid ""
 "Audacious ESounD Plugin\n"
 "\n"
@@ -2963,7 +2982,7 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA."
 msgstr ""
 "Audacious ESounD-bővítmény\n"
@@ -3524,12 +3543,12 @@ msgstr "Nem lehet létrehozni a naplófájlt (%s)!\n"
 msgid "Audacious"
 msgstr "Audacious"
 
-#: audacious/main.c:425
+#: audacious/main.c:431
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "Nem lehet létrehozni a könyvtárat (%s): %s"
 
-#: audacious/main.c:695
+#: audacious/main.c:701
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
@@ -3541,67 +3560,67 @@ msgstr ""
 "Opciók:\n"
 "-------\n"
 
-#: audacious/main.c:700
+#: audacious/main.c:706
 msgid "Display this text and exit"
 msgstr "Ezen szöveg megjelenítése és kilépés"
 
-#: audacious/main.c:703
+#: audacious/main.c:709
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Audacious/BMP/XMMS-munkamenet kiválasztása (Alapértelmezés: 0)"
 
-#: audacious/main.c:706
+#: audacious/main.c:712
 msgid "Skip backwards in playlist"
 msgstr "Visszalépés a lejátszólistában"
 
-#: audacious/main.c:709
+#: audacious/main.c:715
 msgid "Start playing current playlist"
 msgstr "Jelenlegi lejátszólista lejátszásának elkezdése"
 
-#: audacious/main.c:712
+#: audacious/main.c:718
 msgid "Pause current song"
 msgstr "Jelenlegi szám szüneteltetése"
 
-#: audacious/main.c:715
+#: audacious/main.c:721
 msgid "Stop current song"
 msgstr "Jelenlegi szám leállítása"
 
-#: audacious/main.c:718
+#: audacious/main.c:724
 msgid "Pause if playing, play otherwise"
 msgstr "Lejátszás esetén szüneteltetés, különben lejátszás"
 
-#: audacious/main.c:721
+#: audacious/main.c:727
 msgid "Skip forward in playlist"
 msgstr "Előrelépés a lejátszólistában"
 
-#: audacious/main.c:724
+#: audacious/main.c:730
 msgid "Don't clear the playlist"
 msgstr "Ne törölje a lejátszólistát"
 
-#: audacious/main.c:727
+#: audacious/main.c:733
 msgid "Show the main window"
 msgstr "Főablak megjelenítése"
 
-#: audacious/main.c:730
+#: audacious/main.c:736
 msgid "Activate Audacious"
 msgstr "Audacious aktiválása"
 
-#: audacious/main.c:733
+#: audacious/main.c:739
 msgid "Previous session ID"
 msgstr "Előző munkamenet-azonosító"
 
-#: audacious/main.c:736
+#: audacious/main.c:742
 msgid "Headless operation [experimental]"
 msgstr ""
 
-#: audacious/main.c:739
+#: audacious/main.c:745
 msgid "Disable error/warning interception (logging)"
 msgstr ""
 
-#: audacious/main.c:742
+#: audacious/main.c:748
 msgid "Print version number and exit\n"
 msgstr "Verziószám megjelenítése és kilépés\n"
 
-#: audacious/main.c:925
+#: audacious/main.c:931
 msgid ""
 "\n"
 "Received SIGSEGV\n"
@@ -3617,7 +3636,7 @@ msgstr ""
 "jelentse be a hibát a http://bugs.nenolod.net/ oldalon.\n"
 "\n"
 
-#: audacious/main.c:948
+#: audacious/main.c:954
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -3630,7 +3649,7 @@ msgstr ""
 "Ellenőrizze, hogy a(z) '%s' helyen található bőr használható-e és az "
 "alapértelmezett bőr megfelelően telepítve van-e itt: '%s'\n"
 
-#: audacious/main.c:994
+#: audacious/main.c:1000
 #, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -3639,7 +3658,7 @@ msgstr ""
 "Sajnos az Ön GTK+ verziója (%d.%d.%d) nem működik az Audacious-szel.\n"
 "Használjon GTK+ %s verziót vagy újabbat.\n"
 
-#: audacious/main.c:1005
+#: audacious/main.c:1011
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -3652,11 +3671,11 @@ msgstr ""
 "Ha libc5-alapú Linux-rendszere van, és a Glib-et és a GTK+-t a LinuxThreads\n"
 "előtt telepítette, akkor újra kell fordítania a Glib-et és a GTK+-t.\n"
 
-#: audacious/main.c:1021
+#: audacious/main.c:1027
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "audacious: Nem lehet megnyitni a képernyőt, kilépés.\n"
 
-#: audacious/mainwin.c:252 audacious/mainwin.c:373 audacious/ui_playlist.c:126
+#: audacious/mainwin.c:252 audacious/mainwin.c:373 audacious/ui_playlist.c:128
 msgid "/View Track Details"
 msgstr "/Szám részleteinek megtekintése"
 
@@ -4129,7 +4148,7 @@ msgstr "Leírás"
 msgid "Category"
 msgstr "Kategória"
 
-#: audacious/prefswin.c:2169
+#: audacious/prefswin.c:2203
 msgid "Preferences Window"
 msgstr "Beállítások ablak"
 
@@ -4141,164 +4160,184 @@ msgstr "Tömörített Winamp 2.x bőr"
 msgid "Unarchived Winamp 2.x skin"
 msgstr "Tömörítetlen Winamp 2.x bőr"
 
-#: audacious/ui_playlist.c:130
+#: audacious/ui_playlist.c:132
 msgid "/Show Popup Info"
 msgstr ""
 
-#: audacious/ui_playlist.c:136 audacious/ui_playlist.c:201
+#: audacious/ui_playlist.c:138 audacious/ui_playlist.c:203
 msgid "/Remove Selected"
 msgstr "/Kijelöltek eltávolítása"
 
-#: audacious/ui_playlist.c:140 audacious/ui_playlist.c:197
+#: audacious/ui_playlist.c:142 audacious/ui_playlist.c:199
 msgid "/Remove Unselected"
 msgstr "/Kijelöletlenek eltávolítása"
 
-#: audacious/ui_playlist.c:144 audacious/ui_playlist.c:193
+#: audacious/ui_playlist.c:146 audacious/ui_playlist.c:195
 msgid "/Remove All"
 msgstr "/Összes eltávolítása"
 
-#: audacious/ui_playlist.c:150
+#: audacious/ui_playlist.c:152
 msgid "/Queue Toggle"
 msgstr "/Betevés a sorba"
 
-#: audacious/ui_playlist.c:156
+#: audacious/ui_playlist.c:158
 msgid "/Add CD..."
 msgstr "/CD hozzáadása..."
 
-#: audacious/ui_playlist.c:160
+#: audacious/ui_playlist.c:162
 msgid "/Add Internet Address..."
 msgstr "/Internetcím hozzáadása..."
 
-#: audacious/ui_playlist.c:164
+#: audacious/ui_playlist.c:166
 msgid "/Add Files..."
 msgstr "/Fájlok hozzáadása..."
 
-#: audacious/ui_playlist.c:170
+#: audacious/ui_playlist.c:172
 msgid "/Clear Queue"
 msgstr "/Sor törlése"
 
-#: audacious/ui_playlist.c:176
+#: audacious/ui_playlist.c:178
 msgid "/Remove Unavailable Files"
 msgstr "/Nem elérhető fájlok eltávolítása"
 
-#: audacious/ui_playlist.c:180
+#: audacious/ui_playlist.c:182
 msgid "/Remove Duplicates"
 msgstr "/Duplikátumok eltávolítása"
 
-#: audacious/ui_playlist.c:181
+#: audacious/ui_playlist.c:183
 msgid "/Remove Duplicates/By Title"
 msgstr "/Duplikátumok eltávolítása/Cím alapján"
 
-#: audacious/ui_playlist.c:184
+#: audacious/ui_playlist.c:186
 msgid "/Remove Duplicates/By Filename"
 msgstr "/Duplikátumok eltávolítása/Fájlnév alapján"
 
-#: audacious/ui_playlist.c:187
+#: audacious/ui_playlist.c:189
 msgid "/Remove Duplicates/By Path + Filename"
 msgstr "/Duplikátumok eltávolítása/Útvonal + fájlnév alapján"
 
-#: audacious/ui_playlist.c:207
+#: audacious/ui_playlist.c:209
 msgid "/New List"
 msgstr "/Új lista"
 
-#: audacious/ui_playlist.c:213
+#: audacious/ui_playlist.c:215
 msgid "/Load List"
 msgstr "/Lista betöltése"
 
-#: audacious/ui_playlist.c:217
+#: audacious/ui_playlist.c:219
 msgid "/Save List"
 msgstr "/Lista mentése"
 
-#: audacious/ui_playlist.c:221
+#: audacious/ui_playlist.c:223
 #, fuzzy
 msgid "/Save Default List"
 msgstr "/Mentés/Alapértelmezett beállítás"
 
-#: audacious/ui_playlist.c:227
+#: audacious/ui_playlist.c:229
 msgid "/Update View"
 msgstr "/Nézet frissítése"
 
-#: audacious/ui_playlist.c:233
+#: audacious/ui_playlist.c:235
 msgid "/Invert Selection"
 msgstr "/Kijelölés megfordítása"
 
-#: audacious/ui_playlist.c:239
+#: audacious/ui_playlist.c:241
 msgid "/Select None"
 msgstr "/Kijelölés megszüntetése"
 
-#: audacious/ui_playlist.c:243
+#: audacious/ui_playlist.c:245
 msgid "/Select All"
 msgstr "/Mindent kijelöl"
 
-#: audacious/ui_playlist.c:249
+#: audacious/ui_playlist.c:251
 msgid "/Randomize List"
 msgstr "/Véletlenszerű listasorrend"
 
-#: audacious/ui_playlist.c:251
+#: audacious/ui_playlist.c:253
 msgid "/Reverse List"
 msgstr "/Lista megfordítása"
 
-#: audacious/ui_playlist.c:254
+#: audacious/ui_playlist.c:256
 msgid "/Sort List"
 msgstr "/Lista rendezése"
 
-#: audacious/ui_playlist.c:255
+#: audacious/ui_playlist.c:257
 msgid "/Sort List/By Title"
 msgstr "/Lista rendezése/Cím alapján"
 
-#: audacious/ui_playlist.c:257
+#: audacious/ui_playlist.c:259
 #, fuzzy
 msgid "/Sort List/By Artist"
 msgstr "/Lista rendezése/Cím alapján"
 
-#: audacious/ui_playlist.c:259
+#: audacious/ui_playlist.c:261
 msgid "/Sort List/By Filename"
 msgstr "/Lista rendezése/Fájlnév alapján"
 
-#: audacious/ui_playlist.c:261
+#: audacious/ui_playlist.c:263
 msgid "/Sort List/By Path + Filename"
 msgstr "/Lista rendezése/Útvonal + fájlnév alapján"
 
-#: audacious/ui_playlist.c:263
+#: audacious/ui_playlist.c:265
 msgid "/Sort List/By Date"
 msgstr "/Lista rendezése/Dátum alapján"
 
-#: audacious/ui_playlist.c:265
+#: audacious/ui_playlist.c:267
+#, fuzzy
+msgid "/Sort List/By Track Number"
+msgstr "/Lista rendezése/Dátum alapján"
+
+#: audacious/ui_playlist.c:269
+#, fuzzy
+msgid "/Sort List/By Playlist Entry"
+msgstr "/Lista rendezése/Cím alapján"
+
+#: audacious/ui_playlist.c:271
 msgid "/Sort Selection"
 msgstr "/Kijelölés rendezése"
 
-#: audacious/ui_playlist.c:266
+#: audacious/ui_playlist.c:272
 msgid "/Sort Selection/By Title"
 msgstr "/Kijelölés rendezése/Cím alapján"
 
-#: audacious/ui_playlist.c:268
+#: audacious/ui_playlist.c:274
 #, fuzzy
 msgid "/Sort Selection/By Artist"
 msgstr "/Kijelölés rendezése/Cím alapján"
 
-#: audacious/ui_playlist.c:270
+#: audacious/ui_playlist.c:276
 msgid "/Sort Selection/By Filename"
 msgstr "/Kijelölés rendezése/Fájlnév alapján"
 
-#: audacious/ui_playlist.c:272
+#: audacious/ui_playlist.c:278
 msgid "/Sort Selection/By Path + Filename"
 msgstr "/Kijelölés rendezése/Útvonal + fájlnév alapján"
 
-#: audacious/ui_playlist.c:274
+#: audacious/ui_playlist.c:280
 msgid "/Sort Selection/By Date"
 msgstr "/Kijelölés rendezése/Dátum alapján"
 
-#: audacious/ui_playlist.c:812
+#: audacious/ui_playlist.c:282
+#, fuzzy
+msgid "/Sort Selection/By Track Number"
+msgstr "/Kijelölés rendezése/Dátum alapján"
+
+#: audacious/ui_playlist.c:284
+#, fuzzy
+msgid "/Sort Selection/By Playlist Entry"
+msgstr "/Kijelölés rendezése/Cím alapján"
+
+#: audacious/ui_playlist.c:822
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "Hiba a(z) \"%s\" lejátszólista írása közben: %s"
 
-#: audacious/ui_playlist.c:833
+#: audacious/ui_playlist.c:843
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "A(z) %s már létezik. Folytatja?"
 
-#: audacious/ui_playlist.c:847
+#: audacious/ui_playlist.c:857
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -4309,15 +4348,15 @@ msgstr ""
 "\n"
 "Ismeretlen fájltípus: '%s'.\n"
 
-#: audacious/ui_playlist.c:957
+#: audacious/ui_playlist.c:967
 msgid "Load Playlist"
 msgstr "Lejátszólista betöltése"
 
-#: audacious/ui_playlist.c:969
+#: audacious/ui_playlist.c:979
 msgid "Save Playlist"
 msgstr "Lejátszólista mentése"
 
-#: audacious/ui_playlist.c:1677
+#: audacious/ui_playlist.c:1687
 msgid "Audacious Playlist Editor"
 msgstr "Audacious lejátszólista-szerkesztő"
 
@@ -4772,6 +4811,14 @@ msgstr "Indie"
 
 #: audacious/glade/prefswin.glade:4280
 msgid "Exclude:"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:4348
+msgid "Recursively search for cover"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:4381
+msgid "Search depth: "
 msgstr ""
 
 #: libaudacious/titlestring.c:340

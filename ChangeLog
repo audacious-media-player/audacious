@@ -1,3 +1,21 @@
+2006-08-02 23:06:49 +0000  Derek Pomery <nemo@m8y.org>
+  revision [1834]
+  fine
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/audacious/about.c  
+  +1 -1           trunk/audacious/credits.c  
+  +1 -1           trunk/audacious/dnd.h  
+  +1 -1           trunk/audacious/playback.c  
+  +1 -1           trunk/audacious/pluginenum.c  
+  +1 -1           trunk/audacious/prefswin.c  
+  +1 -1           trunk/audacious/urldecode.c  
+  +1 -1           trunk/audacious/urldecode.h  
+  +1 -1           trunk/libaudacious/vfs_gnome.c  
+  +1 -1           trunk/libaudacious/vfs_stdio.c  
+
+
 2006-08-02 23:00:13 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1832]
   Fix postal code.

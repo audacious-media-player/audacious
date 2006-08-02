@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-16 10:51-0500\n"
+"Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
+"POT-Creation-Date: 2006-08-02 18:22-0500\n"
 "PO-Revision-Date: 2006-07-16 17:48+0100\n"
 "Last-Translator: Tony Vroon <chainsaw@gentoo.org>\n"
 "Language-Team: (not responsive)\n"
@@ -199,7 +199,8 @@ msgstr "Opdrachten"
 
 #: Plugins/General/song_change/song_change.c:186
 msgid "Command to run when Audacious starts a new song."
-msgstr "Opdracht die uitgevoerd wordt zodra Audacious aan een nieuw nummer begint."
+msgstr ""
+"Opdracht die uitgevoerd wordt zodra Audacious aan een nieuw nummer begint."
 
 #: Plugins/General/song_change/song_change.c:195
 #: Plugins/General/song_change/song_change.c:217
@@ -213,7 +214,9 @@ msgstr "Opdracht die uitgevoerd wordt zodra een nummer eindigt."
 
 #: Plugins/General/song_change/song_change.c:229
 msgid "Command to run when Audacious reaches the end of the playlist."
-msgstr "Opdracht die uitgevoerd wordt wanneer Audacious het einde van de afspeellijst bereikt."
+msgstr ""
+"Opdracht die uitgevoerd wordt wanneer Audacious het einde van de "
+"afspeellijst bereikt."
 
 #: Plugins/General/song_change/song_change.c:250
 #, c-format
@@ -249,8 +252,9 @@ msgid ""
 "<span size='small'>Parameters passed to the shell should be encapsulated in "
 "quotes. Doing otherwise is a security risk.</span>"
 msgstr ""
-"<span size='small'>Parameters die aan de shell worden doorgegeven moeten tussen "
-"aanhalingstekens geplaatst worden. Het is een veiligheidsrisico om dit niet te doen.</span>"
+"<span size='small'>Parameters die aan de shell worden doorgegeven moeten "
+"tussen aanhalingstekens geplaatst worden. Het is een veiligheidsrisico om "
+"dit niet te doen.</span>"
 
 #: Plugins/Input/adplug/adplug-xmms.cc:146
 msgid "About "
@@ -309,7 +313,9 @@ msgstr "AMIDI-Plug bericht"
 
 #: Plugins/Input/amidi-plug/i_configure.c:215
 msgid "Please stop the player before changing AMIDI-Plug settings."
-msgstr "Het afspelen dient gestopt te zijn voor AMIDI-Plug instellingen aangepast kunnen worden."
+msgstr ""
+"Het afspelen dient gestopt te zijn voor AMIDI-Plug instellingen aangepast "
+"kunnen worden."
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:119
 #: Plugins/Input/mpg123/fileinfo.c:288 Plugins/Input/vorbis/fileinfo.c:558
@@ -2730,6 +2736,7 @@ msgid "About sndfile WAV support"
 msgstr "Over sndfile WAV ondersteuning"
 
 #: Plugins/Input/wav/wav-sndfile.c:247
+#, fuzzy
 msgid ""
 "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
 "from the xmms_sndfile plugin which is:\n"
@@ -2748,8 +2755,8 @@ msgid ""
 "You should have received a copy of the GNU General Public \n"
 "License along with this program ; if not, write to \n"
 "the Free Software Foundation, Inc., \n"
-"59 Temple Place, Suite 330, \n"
-"Boston, MA  02111-1307  USA"
+"51 Franklin Street, Fifth Floor, \n"
+"Boston, MA  02110-1301  USA"
 msgstr ""
 "Aangepast voor gebruik in Audacious door Tony Vroon <chainsaw@gentoo.org>\n"
 "vanaf de xmms_sndfile plugin:\n"
@@ -2804,6 +2811,7 @@ msgid "About OSS Driver"
 msgstr "Over het OSS stuurprogramma"
 
 #: Plugins/Output/OSS/about.c:40
+#, fuzzy
 msgid ""
 "Audacious OSS Driver\n"
 "\n"
@@ -2819,7 +2827,7 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA."
 msgstr ""
 "Audacious OSS Driver\n"
@@ -2900,6 +2908,7 @@ msgid "About ALSA Driver"
 msgstr "Over het ALSA stuurprogramma"
 
 #: Plugins/Output/alsa/about.c:31
+#, fuzzy
 msgid ""
 "Audacious ALSA Driver\n"
 "\n"
@@ -2915,7 +2924,7 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA.\n"
 "Author: Matthieu Sozeau (mattam@altern.org)"
 msgstr ""
@@ -3023,6 +3032,7 @@ msgid "About ESounD Plugin"
 msgstr "Over de ESounD plugin"
 
 #: Plugins/Output/esd/about.c:35
+#, fuzzy
 msgid ""
 "Audacious ESounD Plugin\n"
 "\n"
@@ -3038,7 +3048,7 @@ msgid ""
 "\n"
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA."
 msgstr ""
 "Audacious ESounD Plugin\n"
@@ -3603,12 +3613,12 @@ msgstr "Kon logbestand niet aanmaken (%s)!\n"
 msgid "Audacious"
 msgstr "Audacious"
 
-#: audacious/main.c:425
+#: audacious/main.c:431
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "Kon de map (%s) niet aanmaken: %s"
 
-#: audacious/main.c:695
+#: audacious/main.c:701
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
@@ -3621,77 +3631,77 @@ msgstr ""
 "--------\n"
 
 #  -h, --help switch
-#: audacious/main.c:700
+#: audacious/main.c:706
 msgid "Display this text and exit"
 msgstr "Deze tekst weergeven en stoppen"
 
 #  -n, --session switch
-#: audacious/main.c:703
+#: audacious/main.c:709
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Kies Audacious sessie (Standaard: 0)"
 
 #  -r, --rew switch
-#: audacious/main.c:706
+#: audacious/main.c:712
 msgid "Skip backwards in playlist"
 msgstr "Ga terug in de speellijst"
 
 #  -p, --play switch
-#: audacious/main.c:709
+#: audacious/main.c:715
 msgid "Start playing current playlist"
 msgstr "Begin de huidige speellijst af te spelen"
 
 #  -u, --pause switch
-#: audacious/main.c:712
+#: audacious/main.c:718
 msgid "Pause current song"
 msgstr "Pauzeer huidig nummer"
 
 #  -s, --stop switch
-#: audacious/main.c:715
+#: audacious/main.c:721
 msgid "Stop current song"
 msgstr "Stop huidig nummer"
 
 #  -t, --play-pause switch
-#: audacious/main.c:718
+#: audacious/main.c:724
 msgid "Pause if playing, play otherwise"
 msgstr "Pauzeer tijdens spelen, anders afspelen"
 
 #  -f, --fwd switch
-#: audacious/main.c:721
+#: audacious/main.c:727
 msgid "Skip forward in playlist"
 msgstr "Ga vooruit in de speellijst"
 
 #  -e, --enqueue switch
-#: audacious/main.c:724
+#: audacious/main.c:730
 msgid "Don't clear the playlist"
 msgstr "Speellijst niet wissen"
 
 #  -m, --show-main-window switch
-#: audacious/main.c:727
+#: audacious/main.c:733
 msgid "Show the main window"
 msgstr "Geef het hoofdvenster weer"
 
-#: audacious/main.c:730
+#: audacious/main.c:736
 msgid "Activate Audacious"
 msgstr "Activeer Audacious"
 
-#: audacious/main.c:733
+#: audacious/main.c:739
 msgid "Previous session ID"
 msgstr "Vorige session ID"
 
-#: audacious/main.c:736
+#: audacious/main.c:742
 msgid "Headless operation [experimental]"
 msgstr "Geen interface weergeven (headless) [experimenteel]"
 
-#: audacious/main.c:739
+#: audacious/main.c:745
 msgid "Disable error/warning interception (logging)"
 msgstr "Fouten & waarschuwingen niet afvangen (logging uitschakelen)"
 
 #  -v, --version switch
-#: audacious/main.c:742
+#: audacious/main.c:748
 msgid "Print version number and exit\n"
 msgstr "Versienummer weergeven en stoppen\n"
 
-#: audacious/main.c:925
+#: audacious/main.c:931
 msgid ""
 "\n"
 "Received SIGSEGV\n"
@@ -3709,7 +3719,7 @@ msgstr ""
 "linuxdistributie.\n"
 "\n"
 
-#: audacious/main.c:948
+#: audacious/main.c:954
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -3722,7 +3732,7 @@ msgstr ""
 "Controleer dat de skin bij '%s' bruikbaar is en de standaardskin correct "
 "geinstalleerd bij '%s'\n"
 
-#: audacious/main.c:994
+#: audacious/main.c:1000
 #, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -3731,7 +3741,7 @@ msgstr ""
 "Sorry, uw GTK+ versie (%d.%d.%d) werkt niet met Audacious.\n"
 "Gelieve GTK+ %s of nieuwer te installeren.\n"
 
-#: audacious/main.c:1005
+#: audacious/main.c:1011
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -3745,11 +3755,11 @@ msgstr ""
 "geinstalleerd voordat u\n"
 "LinuxThreads heeft geinstalleerd moet u Glib/GTK+ hercompileren.\n"
 
-#: audacious/main.c:1021
+#: audacious/main.c:1027
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "audacious: Kan het venster niet openen, het programma sluit nu af.\n"
 
-#: audacious/mainwin.c:252 audacious/mainwin.c:373 audacious/ui_playlist.c:126
+#: audacious/mainwin.c:252 audacious/mainwin.c:373 audacious/ui_playlist.c:128
 msgid "/View Track Details"
 msgstr "/Nummer details weergeven"
 
@@ -4223,7 +4233,7 @@ msgid "Category"
 msgstr "Categorie"
 
 #  load the interface
-#: audacious/prefswin.c:2169
+#: audacious/prefswin.c:2203
 msgid "Preferences Window"
 msgstr "Instellingen venster"
 
@@ -4235,161 +4245,181 @@ msgstr "Ingepakte Winamp 2.x skin"
 msgid "Unarchived Winamp 2.x skin"
 msgstr "Uitgepakte Winamp 2.x skin"
 
-#: audacious/ui_playlist.c:130
+#: audacious/ui_playlist.c:132
 msgid "/Show Popup Info"
 msgstr "/Popup informatie tonen"
 
-#: audacious/ui_playlist.c:136 audacious/ui_playlist.c:201
+#: audacious/ui_playlist.c:138 audacious/ui_playlist.c:203
 msgid "/Remove Selected"
 msgstr "/Selectie wissen"
 
-#: audacious/ui_playlist.c:140 audacious/ui_playlist.c:197
+#: audacious/ui_playlist.c:142 audacious/ui_playlist.c:199
 msgid "/Remove Unselected"
 msgstr "/Selectie behouden"
 
-#: audacious/ui_playlist.c:144 audacious/ui_playlist.c:193
+#: audacious/ui_playlist.c:146 audacious/ui_playlist.c:195
 msgid "/Remove All"
 msgstr "/Alles wissen"
 
-#: audacious/ui_playlist.c:150
+#: audacious/ui_playlist.c:152
 msgid "/Queue Toggle"
 msgstr "/In de wachtrij zetten"
 
-#: audacious/ui_playlist.c:156
+#: audacious/ui_playlist.c:158
 msgid "/Add CD..."
 msgstr "/CD toevoegen..."
 
-#: audacious/ui_playlist.c:160
+#: audacious/ui_playlist.c:162
 msgid "/Add Internet Address..."
 msgstr "/Internet adres toevoegen..."
 
-#: audacious/ui_playlist.c:164
+#: audacious/ui_playlist.c:166
 msgid "/Add Files..."
 msgstr "/Bestanden toevoegen..."
 
-#: audacious/ui_playlist.c:170
+#: audacious/ui_playlist.c:172
 msgid "/Clear Queue"
 msgstr "/Wachtrij wissen"
 
-#: audacious/ui_playlist.c:176
+#: audacious/ui_playlist.c:178
 msgid "/Remove Unavailable Files"
 msgstr "/Ontoegankelijke bestanden wissen"
 
-#: audacious/ui_playlist.c:180
+#: audacious/ui_playlist.c:182
 msgid "/Remove Duplicates"
 msgstr "/Dubbele nummers wissen"
 
-#: audacious/ui_playlist.c:181
+#: audacious/ui_playlist.c:183
 msgid "/Remove Duplicates/By Title"
 msgstr "/Dubbele nummers wissen/Op titel"
 
-#: audacious/ui_playlist.c:184
+#: audacious/ui_playlist.c:186
 msgid "/Remove Duplicates/By Filename"
 msgstr "/Dubbele nummers wissen/Op bestandsnaam"
 
-#: audacious/ui_playlist.c:187
+#: audacious/ui_playlist.c:189
 msgid "/Remove Duplicates/By Path + Filename"
 msgstr "/Dubbele nummers wissen/Op locatie en bestandsnaam"
 
-#: audacious/ui_playlist.c:207
+#: audacious/ui_playlist.c:209
 msgid "/New List"
 msgstr "/Nieuwe lijst"
 
-#: audacious/ui_playlist.c:213
+#: audacious/ui_playlist.c:215
 msgid "/Load List"
 msgstr "/Lijst laden"
 
-#: audacious/ui_playlist.c:217
+#: audacious/ui_playlist.c:219
 msgid "/Save List"
 msgstr "/Lijst opslaan"
 
-#: audacious/ui_playlist.c:221
+#: audacious/ui_playlist.c:223
 msgid "/Save Default List"
 msgstr "/Standaardlijst Opslaan"
 
-#: audacious/ui_playlist.c:227
+#: audacious/ui_playlist.c:229
 msgid "/Update View"
 msgstr "/Verversen"
 
-#: audacious/ui_playlist.c:233
+#: audacious/ui_playlist.c:235
 msgid "/Invert Selection"
 msgstr "/Selectie omkeren"
 
-#: audacious/ui_playlist.c:239
+#: audacious/ui_playlist.c:241
 msgid "/Select None"
 msgstr "/Deselecteer alles"
 
-#: audacious/ui_playlist.c:243
+#: audacious/ui_playlist.c:245
 msgid "/Select All"
 msgstr "/Selecteer alles"
 
-#: audacious/ui_playlist.c:249
+#: audacious/ui_playlist.c:251
 msgid "/Randomize List"
 msgstr "/Willekeurig verdelen"
 
-#: audacious/ui_playlist.c:251
+#: audacious/ui_playlist.c:253
 msgid "/Reverse List"
 msgstr "/Omdraaien"
 
-#: audacious/ui_playlist.c:254
+#: audacious/ui_playlist.c:256
 msgid "/Sort List"
 msgstr "/Lijst sorteren"
 
-#: audacious/ui_playlist.c:255
+#: audacious/ui_playlist.c:257
 msgid "/Sort List/By Title"
 msgstr "/Lijst sorteren/Op titel"
 
-#: audacious/ui_playlist.c:257
+#: audacious/ui_playlist.c:259
 msgid "/Sort List/By Artist"
 msgstr "/Lijst sorteren/Op artiest"
 
-#: audacious/ui_playlist.c:259
+#: audacious/ui_playlist.c:261
 msgid "/Sort List/By Filename"
 msgstr "/Lijst sorteren/Op bestandsnaam"
 
-#: audacious/ui_playlist.c:261
+#: audacious/ui_playlist.c:263
 msgid "/Sort List/By Path + Filename"
 msgstr "/Lijst sorteren/Op locatie en bestandsnaam"
 
-#: audacious/ui_playlist.c:263
+#: audacious/ui_playlist.c:265
 msgid "/Sort List/By Date"
 msgstr "/Lijst sorteren/Op datum"
 
-#: audacious/ui_playlist.c:265
+#: audacious/ui_playlist.c:267
+#, fuzzy
+msgid "/Sort List/By Track Number"
+msgstr "/Lijst sorteren/Op datum"
+
+#: audacious/ui_playlist.c:269
+#, fuzzy
+msgid "/Sort List/By Playlist Entry"
+msgstr "/Lijst sorteren/Op artiest"
+
+#: audacious/ui_playlist.c:271
 msgid "/Sort Selection"
 msgstr "/Selectie sorteren"
 
-#: audacious/ui_playlist.c:266
+#: audacious/ui_playlist.c:272
 msgid "/Sort Selection/By Title"
 msgstr "/Selectie sorteren/Op titel"
 
-#: audacious/ui_playlist.c:268
+#: audacious/ui_playlist.c:274
 msgid "/Sort Selection/By Artist"
 msgstr "/Selectie sorteren/Op artiest"
 
-#: audacious/ui_playlist.c:270
+#: audacious/ui_playlist.c:276
 msgid "/Sort Selection/By Filename"
 msgstr "/Selectie sorteren/Op bestandsnaam"
 
-#: audacious/ui_playlist.c:272
+#: audacious/ui_playlist.c:278
 msgid "/Sort Selection/By Path + Filename"
 msgstr "/Selectie sorteren/Op locatie en bestandsnaam"
 
-#: audacious/ui_playlist.c:274
+#: audacious/ui_playlist.c:280
 msgid "/Sort Selection/By Date"
 msgstr "/Selectie sorteren/Op datum"
 
-#: audacious/ui_playlist.c:812
+#: audacious/ui_playlist.c:282
+#, fuzzy
+msgid "/Sort Selection/By Track Number"
+msgstr "/Selectie sorteren/Op datum"
+
+#: audacious/ui_playlist.c:284
+#, fuzzy
+msgid "/Sort Selection/By Playlist Entry"
+msgstr "/Selectie sorteren/Op artiest"
+
+#: audacious/ui_playlist.c:822
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "Fout bij wegschrijven afspeellijst \"%s\": %s"
 
-#: audacious/ui_playlist.c:833
+#: audacious/ui_playlist.c:843
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s bestaat reeds. Wilt u doorgaan?"
 
-#: audacious/ui_playlist.c:847
+#: audacious/ui_playlist.c:857
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -4400,15 +4430,15 @@ msgstr ""
 "\n"
 "Onbekend bestandstype voor '%s'.\n"
 
-#: audacious/ui_playlist.c:957
+#: audacious/ui_playlist.c:967
 msgid "Load Playlist"
 msgstr "Afspeellijst laden"
 
-#: audacious/ui_playlist.c:969
+#: audacious/ui_playlist.c:979
 msgid "Save Playlist"
 msgstr "Afspeellijst opslaan"
 
-#: audacious/ui_playlist.c:1677
+#: audacious/ui_playlist.c:1687
 msgid "Audacious Playlist Editor"
 msgstr "Audacious afspeellijst-editor"
 
@@ -4636,8 +4666,8 @@ msgid ""
 "fall back conversion from these encodings to UTF-8 would be attempted."
 msgstr ""
 "Lijst van karakter-encodings welke voor conversie van metadata worden "
-"gebruikt (hier wordt op teruggevallen als automatische detectie faalt of "
-"is uitgeschakeld)."
+"gebruikt (hier wordt op teruggevallen als automatische detectie faalt of is "
+"uitgeschakeld)."
 
 #: audacious/glade/prefswin.glade:1987
 msgid "Auto character encoding detector for:"
@@ -4702,9 +4732,10 @@ msgid ""
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
 msgstr ""
-"Schakelt het tonen van een popup-venster in. Dit venster toont meer informatie "
-"over het geselecteerde item in de afspeellijst, zoals de titel, het album, "
-"het genre, het jaar van publicatie, tracknummer en eventuele cover art."
+"Schakelt het tonen van een popup-venster in. Dit venster toont meer "
+"informatie over het geselecteerde item in de afspeellijst, zoals de titel, "
+"het album, het genre, het jaar van publicatie, tracknummer en eventuele "
+"cover art."
 
 #: audacious/glade/prefswin.glade:2370
 msgid "Show popup information for playlist entries"
@@ -4791,9 +4822,9 @@ msgid ""
 "poorly.</span>"
 msgstr ""
 "<span size=\"small\">Dit is de grootte van de prebuffer in milliseconden.\n"
-"Verhoog deze waarde als de audio klikt of overslaat.\nGelieve er rekening "
-"mee te houden dat overdreven grote waardes de prestaties van Audacious "
-"sterk kunnen verminderen.</span>"
+"Verhoog deze waarde als de audio klikt of overslaat.\n"
+"Gelieve er rekening mee te houden dat overdreven grote waardes de prestaties "
+"van Audacious sterk kunnen verminderen.</span>"
 
 #: audacious/glade/prefswin.glade:3748
 msgid "<b>Format Detection</b>"
@@ -4805,8 +4836,8 @@ msgid ""
 "in a messier playlist, but delivers a major speed benefit."
 msgstr ""
 "Als deze optie ingeschakeld is wordt het formaat van een bestand pas bij het "
-"afspelen bepaald. Dit kan een rommelige afspeellijst opleveren, maar versnelt "
-"het inladen van bestanden aanzienlijk."
+"afspelen bepaald. Dit kan een rommelige afspeellijst opleveren, maar "
+"versnelt het inladen van bestanden aanzienlijk."
 
 #: audacious/glade/prefswin.glade:3789
 msgid "Detect file formats on demand, instead of immediately."
@@ -4821,8 +4852,8 @@ msgid ""
 "When Audacious starts, automatically begin playing from the point where we "
 "stopped before."
 msgstr ""
-"Wanneer Audacious gestart wordt zal afspelen hervatten van dezelfde positie als "
-"waar het bij het afsluiten stopte."
+"Wanneer Audacious gestart wordt zal afspelen hervatten van dezelfde positie "
+"als waar het bij het afsluiten stopte."
 
 #: audacious/glade/prefswin.glade:3864
 msgid "Continue playback on startup"
@@ -4866,8 +4897,9 @@ msgid ""
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
-"Tijdens het zoeken naar cover art wordt naar bepaalde woorden in de bestandsnaam "
-"gekeken. Deze woorden kunnen hier worden opgegeven, gescheiden door komma's."
+"Tijdens het zoeken naar cover art wordt naar bepaalde woorden in de "
+"bestandsnaam gekeken. Deze woorden kunnen hier worden opgegeven, gescheiden "
+"door komma's."
 
 #: audacious/glade/prefswin.glade:4252
 msgid "Include:"
@@ -4876,6 +4908,14 @@ msgstr "Zoeken naar:"
 #: audacious/glade/prefswin.glade:4280
 msgid "Exclude:"
 msgstr "Uitsluiten:"
+
+#: audacious/glade/prefswin.glade:4348
+msgid "Recursively search for cover"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:4381
+msgid "Search depth: "
+msgstr ""
 
 #: libaudacious/titlestring.c:340
 msgid "Performer/Artist"
