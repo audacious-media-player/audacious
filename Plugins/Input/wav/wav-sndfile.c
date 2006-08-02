@@ -16,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1307, USA.
  */
 
 #include <glib.h>
@@ -258,7 +258,7 @@ static void wav_about(void)
 			  "You should have received a copy of the GNU General Public \n"
 			  "License along with this program ; if not, write to \n"
 			  "the Free Software Foundation, Inc., \n"
-			  "59 Temple Place, Suite 330, \n"
+			  "51 Franklin Street, Fifth Floor, \n"
 			  "Boston, MA  02111-1307  USA"),
 			_("Ok"), FALSE, NULL, NULL);
 		g_signal_connect(G_OBJECT(box), "destroy",

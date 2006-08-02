@@ -7,9 +7,7 @@ LIBDIR = $(plugindir)/$(VISUALIZATION_PLUGIN_DIR)
 
 LIBADD = $(GTK_LIBS)
 
-COMMON_SRC = blur_scope.c config.c
-
-SOURCES = $(COMMON_SRC)
+SOURCES = blur_scope.c config.c
 
 OBJECTS = ${SOURCES:.c=.o}
 

@@ -13,7 +13,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1307, USA.
  */
 
 #include "alsa.h"
@@ -41,7 +41,7 @@ void alsa_about(void)
 		  "\n"
 		  "You should have received a copy of the GNU General Public License\n"
 		  "along with this program; if not, write to the Free Software\n"
-		  "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+		  "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1307,\n"
 		  "USA.\n"
 		  "Author: Matthieu Sozeau (mattam@altern.org)"), _("OK"), FALSE, NULL, NULL);
 	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
