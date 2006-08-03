@@ -1,3 +1,38 @@
+2006-08-02 23:18:16 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1836]
+  - update PO files
+  
+
+  Changes:        Modified:
+  +97 -73         trunk/po/audacious.pot  
+  +99 -73         trunk/po/br.po  
+  +104 -73        trunk/po/cs.po  
+  +101 -73        trunk/po/cy.po  
+  +105 -73        trunk/po/de.po  
+  +583 -667       trunk/po/el.po  
+  +105 -73        trunk/po/es.po  
+  +101 -73        trunk/po/fi.po  
+  +101 -73        trunk/po/fr.po  
+  +101 -73        trunk/po/hi.po  
+  +120 -73        trunk/po/hu.po  
+  +105 -73        trunk/po/it.po  
+  +105 -73        trunk/po/ja.po  
+  +101 -73        trunk/po/ka.po  
+  +101 -73        trunk/po/ko.po  
+  +101 -73        trunk/po/lt.po  
+  +101 -73        trunk/po/mk.po  
+  +132 -92        trunk/po/nl.po  
+  +101 -73        trunk/po/pl.po  
+  +101 -73        trunk/po/pt_BR.po  
+  +101 -73        trunk/po/ro.po  
+  +101 -73        trunk/po/ru.po  
+  +101 -73        trunk/po/sk.po  
+  +101 -73        trunk/po/sv.po  
+  +101 -73        trunk/po/uk.po  
+  +102 -76        trunk/po/zh_CN.po  
+  +101 -73        trunk/po/zh_TW.po  
+
+
 2006-08-02 23:06:49 +0000  Derek Pomery <nemo@m8y.org>
   revision [1834]
   fine
