@@ -1,3 +1,12 @@
+2006-08-03 07:12:56 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1872]
+  - a little more fault tolerance (stick a fork in it, it's done)
+  
+
+  Changes:        Modified:
+  +37 -6          trunk/Plugins/Input/cue/cuesheet.c  
+
+
 2006-08-03 06:44:16 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1870]
   - well not exactly, but this is :)

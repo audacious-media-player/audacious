@@ -307,7 +307,10 @@ static gint watchdog_func(gpointer unused)
 	{
 		cur_cue_track--;
 		playlist_prev();
-		finetune_seek = time;
+
+		if (time - cue_tracks[cure.cue_track].index > 1000)
+			finetune_seek = time;
+
 		dir = TRUE;
 		time = get_output_time() - 1000;
 		g_usleep(10000);
@@ -317,7 +320,10 @@ static gint watchdog_func(gpointer unused)
 	{
 		cur_cue_track++;
 		playlist_next();
-		finetune_seek = time;
+
+		if (cue_tracks[cure.cue_track].index - time > 1000)
+			finetune_seek = time;
+
 		time = get_output_time() + 1000;
 		g_usleep(10000);
 	}
