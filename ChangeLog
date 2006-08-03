@@ -1,3 +1,13 @@
+2006-08-03 05:36:48 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1860]
+  - make sure our tuples we generate our pure.
+  - in the overridden set_info() generate a tuple if one isn't already present.
+  
+
+  Changes:        Modified:
+  +16 -4          trunk/Plugins/Input/cue/cuesheet.c  
+
+
 2006-08-03 05:28:10 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1858]
   - reset real_ip<InputPlugin *> when we are done with it
