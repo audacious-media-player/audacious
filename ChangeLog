@@ -1,3 +1,12 @@
+2006-08-03 06:42:10 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1868]
+  - the other half of the equasion wrt seeking
+  
+
+  Changes:        Modified:
+  +20 -1          trunk/Plugins/Input/cue/cuesheet.c  
+
+
 2006-08-03 06:33:49 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1866]
   - support the notion of a watchdog function to keep things bound to the proper playlist entry. (half there)

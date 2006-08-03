@@ -283,15 +283,15 @@ static gint watchdog_func(gpointer unused)
 		cur_cue_track--;
 		playlist_prev();
 		watchdog_func(NULL);
+		finetune_seek = time;
 	}
 	else if (cur_cue_track != last_cue_track && (time > cue_tracks[cur_cue_track + 1].index))
 	{
 		cur_cue_track++;
 		playlist_next();
 		watchdog_func(NULL);
+		finetune_seek = time;
 	}
-
-	finetune_seek = time;
 
 	return TRUE;
 }
