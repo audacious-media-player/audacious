@@ -196,8 +196,8 @@ static TitleInput *get_tuple_uri(gchar *uri)
 
 	bmp_title_input_free(phys_tuple);
 
-	out->track_name = cue_tracks[track].title;
-	out->performer = cue_tracks[track].performer;
+	out->track_name = g_strdup(cue_tracks[track].title);
+	out->performer = g_strdup(cue_tracks[track].performer);
 
 	return out;
 }
@@ -220,9 +220,21 @@ static void stop(void)
 	real_ip = NULL;
 }
 
-static void set_info_override(gchar * title, gint length, gint rate, gint freq, gint nch)
+static void set_info_override(gchar * unused, gint length, gint rate, gint freq, gint nch)
 {
-	cue_ip.set_info(playlist_position->title, length, rate, freq, nch);
+	gchar *title;
+	(void) unused;
+
+	/* annoying. */
+	if (playlist_position->tuple == NULL)
+	{
+		gint pos = playlist_get_position();
+		playlist_get_tuple(pos);
+	}
+
+	title = g_strdup(playlist_position->title);
+
+	cue_ip.set_info(title, length, rate, freq, nch);
 }
 
 static void play_cue_uri(gchar *uri)
