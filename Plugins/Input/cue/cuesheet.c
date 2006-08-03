@@ -99,7 +99,7 @@ static gboolean is_our_file(gchar *filename)
 
 	ext = strrchr(filename, '.');
 
-	if (!strncasecmp(ext, ".cue", 4) && ext + 5 == '\0')
+	if (!strncasecmp(ext, ".cue", 4))
 	{
 		gint i;
 		FILE *f = fopen(filename, "rb");
@@ -183,7 +183,7 @@ static TitleInput *get_tuple_uri(gchar *uri)
 	if (dec == NULL)
 		return NULL;
 
-	phys_tuple = dec->get_song_tuple(path2);
+	phys_tuple = dec->get_song_tuple(cue_file);
 
 	out = bmp_title_input_new();
 
