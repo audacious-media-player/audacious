@@ -214,6 +214,10 @@ static void stop(void)
 		real_ip->stop();
 
 	free_cue_info();
+
+	real_ip->set_info = NULL;
+	real_ip->output = NULL;
+	real_ip = NULL;
 }
 
 static void set_info_override(gchar * title, gint length, gint rate, gint freq, gint nch)
