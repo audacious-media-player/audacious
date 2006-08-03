@@ -98,12 +98,12 @@ static gboolean is_our_file(gchar *filename)
 	if (!strncasecmp(ext, ".cue", 4))
 	{
 		gint i;
-		ret = TRUE;
+		ret = -1;
 
 		/* add the files, build cue urls, etc. */
 		cache_cue_file(filename);
 
-		for (i = 1; i < last_cue_track; i++)
+		for (i = 0; i < last_cue_track; i++)
 		{
 			gchar _buf[65535];
 

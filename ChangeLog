@@ -1,3 +1,12 @@
+2006-08-03 07:29:55 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1880]
+  - implement finetune seeking properly this time :)
+  
+
+  Changes:        Modified:
+  +10 -3          trunk/Plugins/Input/cue/cuesheet.c  
+
+
 2006-08-03 07:20:53 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1878]
   - remove pointless finetune_seek stuff. didn't work right anyway, and it works better without it.
