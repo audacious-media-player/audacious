@@ -1,3 +1,12 @@
+2006-08-03 07:15:58 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1876]
+  - damn typoes
+  
+
+  Changes:        Modified:
+  +2 -2           trunk/Plugins/Input/cue/cuesheet.c  
+
+
 2006-08-03 07:15:12 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1874]
   - ok, try to be less seek happy on 'natural' changes
