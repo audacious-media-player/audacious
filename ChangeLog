@@ -1,3 +1,13 @@
+2006-08-03 08:03:55 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1884]
+  use -1 to indicate "drop the original nsf/gbs/nsfe file, but silently error"
+  (not implemented in 1.1.x, but is backwards compatible -- also not yet implemented here. keyword YET)
+  
+
+  Changes:        Modified:
+  +3 -1           trunk/Plugins/Input/console/Audacious_Driver.cpp  
+
+
 2006-08-03 08:02:34 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1882]
   use -1 to indicate "drop the original cue file, but silently error"

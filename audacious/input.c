@@ -404,13 +404,14 @@ input_check_file(const gchar * filename, gboolean show_warning)
     GList *node;
     InputPlugin *ip;
     gchar *filename_proxy;
+    gint ret = 1;
 
     filename_proxy = g_strdup(filename);
 
     for (node = get_input_list(); node != NULL; node = g_list_next(node)) {
         ip = INPUT_PLUGIN(node->data);
         if (ip && input_is_enabled(ip->filename) &&
-            ip->is_our_file(filename_proxy)) {
+            (ret = ip->is_our_file(filename_proxy)) > 0) {
             g_free(filename_proxy);
             return ip;
         }
@@ -418,7 +419,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
 
     g_free(filename_proxy);
 
-    if (show_warning) {
+    if (show_warning && !(ret <= -1)) {
         input_file_not_playable(filename);
     }
 
