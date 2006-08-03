@@ -780,13 +780,15 @@ static gint is_our_file( gchar* path )
 		if (emu == NULL)
 			return FALSE;
 
-		for (int i = 1; i < emu->track_count(); i++)
+		for (int i = 0; i < emu->track_count(); i++)
 		{
 			gchar _buf[65535];
 			g_snprintf(_buf, 65535, "%s?%d", path2, i);
 
 			playlist_add_url(_buf);
 		}
+
+		ret = -1;
 
 		unload_file();
 	}
