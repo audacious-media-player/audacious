@@ -189,6 +189,9 @@ static TitleInput *get_tuple_uri(gchar *uri)
 
 	out->genre = g_strdup(phys_tuple->genre);	
 	out->album_name = g_strdup(phys_tuple->album_name);
+	out->file_path = g_strdup(phys_tuple->file_path);	
+	out->file_name = g_strdup(phys_tuple->file_name);
+	out->file_ext = g_strdup(phys_tuple->file_ext);
 	out->length = phys_tuple->length;
 
 	bmp_title_input_free(phys_tuple);
