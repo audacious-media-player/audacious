@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2006-08-02 18:22-0500\n"
-"PO-Revision-Date: 2006-07-16 17:48+0100\n"
+"PO-Revision-Date: 2006-08-02 09:39+0100\n"
 "Last-Translator: Tony Vroon <chainsaw@gentoo.org>\n"
 "Language-Team: (not responsive)\n"
 "MIME-Version: 1.0\n"
@@ -2736,7 +2736,6 @@ msgid "About sndfile WAV support"
 msgstr "Over sndfile WAV ondersteuning"
 
 #: Plugins/Input/wav/wav-sndfile.c:247
-#, fuzzy
 msgid ""
 "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
 "from the xmms_sndfile plugin which is:\n"
@@ -2777,8 +2776,8 @@ msgstr ""
 "License samen met dit programma hebben moeten ontvangen ; als dit niet het "
 "geval is, schrijf dan naar \n"
 "de Free Software Foundation, Inc., \n"
-"59 Temple Place, Suite 330, \n"
-"Boston, MA  02111-1307  USA"
+"51 Franklin Street, Fifth Floor, \n"
+"Boston, MA  02110-1301  USA"
 
 #: Plugins/Input/wav/wav-sndfile.c:272
 msgid "sndfile WAV plugin"
@@ -2811,7 +2810,6 @@ msgid "About OSS Driver"
 msgstr "Over het OSS stuurprogramma"
 
 #: Plugins/Output/OSS/about.c:40
-#, fuzzy
 msgid ""
 "Audacious OSS Driver\n"
 "\n"
@@ -2847,8 +2845,8 @@ msgstr ""
 "License samen met dit programma hebben moeten ontvangen ; als dit niet het "
 "geval is, schrijf dan naar \n"
 "de Free Software Foundation, Inc., \n"
-"59 Temple Place, Suite 330, \n"
-"Boston, MA  02111-1307  USA"
+"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
+"USA."
 
 #: Plugins/Output/OSS/configure.c:149
 #, c-format
@@ -2908,7 +2906,6 @@ msgid "About ALSA Driver"
 msgstr "Over het ALSA stuurprogramma"
 
 #: Plugins/Output/alsa/about.c:31
-#, fuzzy
 msgid ""
 "Audacious ALSA Driver\n"
 "\n"
@@ -2945,8 +2942,8 @@ msgstr ""
 "License samen met dit programma hebben moeten ontvangen ; als dit niet het "
 "geval is, schrijf dan naar \n"
 "de Free Software Foundation, Inc., \n"
-"59 Temple Place, Suite 330, \n"
-"Boston, MA  02111-1307  USA"
+"51 Franklin STreet, Fifth Floor, \n"
+"Boston, MA  02110-1301  USA"
 
 #: Plugins/Output/alsa/alsa.c:47
 #, c-format
@@ -3032,7 +3029,6 @@ msgid "About ESounD Plugin"
 msgstr "Over de ESounD plugin"
 
 #: Plugins/Output/esd/about.c:35
-#, fuzzy
 msgid ""
 "Audacious ESounD Plugin\n"
 "\n"
@@ -3068,8 +3064,8 @@ msgstr ""
 "License samen met dit programma hebben moeten ontvangen ; als dit niet het "
 "geval is, schrijf dan naar \n"
 "de Free Software Foundation, Inc., \n"
-"59 Temple Place, Suite 330, \n"
-"Boston, MA  02111-1307  USA"
+"51 Franklin Street, Fifth Floor, \n"
+"Boston, MA  02110-1301, USA"
 
 #: Plugins/Output/esd/configure.c:102
 msgid "ESD Output Plugin configuration"
@@ -4366,14 +4362,12 @@ msgid "/Sort List/By Date"
 msgstr "/Lijst sorteren/Op datum"
 
 #: audacious/ui_playlist.c:267
-#, fuzzy
 msgid "/Sort List/By Track Number"
-msgstr "/Lijst sorteren/Op datum"
+msgstr "/Lijst sorteren/Op tracknummer"
 
 #: audacious/ui_playlist.c:269
-#, fuzzy
 msgid "/Sort List/By Playlist Entry"
-msgstr "/Lijst sorteren/Op artiest"
+msgstr "/Lijst sorteren/Op volgorde afspeellijst"
 
 #: audacious/ui_playlist.c:271
 msgid "/Sort Selection"
@@ -4400,14 +4394,12 @@ msgid "/Sort Selection/By Date"
 msgstr "/Selectie sorteren/Op datum"
 
 #: audacious/ui_playlist.c:282
-#, fuzzy
 msgid "/Sort Selection/By Track Number"
-msgstr "/Selectie sorteren/Op datum"
+msgstr "/Selectie sorteren/Op tracknummer"
 
 #: audacious/ui_playlist.c:284
-#, fuzzy
 msgid "/Sort Selection/By Playlist Entry"
-msgstr "/Selectie sorteren/Op artiest"
+msgstr "/Selectie sorteren/Op volgorde afspeellijst"
 
 #: audacious/ui_playlist.c:822
 #, c-format
@@ -4710,7 +4702,7 @@ msgid ""
 "ALBUM - TITLE\n"
 "Custom"
 msgstr ""
-"TITLE\n"
+"TITEL\n"
 "ARTIEST - TITLE\n"
 "ARTIEST - ALBUM - TITEL\n"
 "ARTIEST - ALBUM - TRACKNR. TITEL\n"
@@ -4911,11 +4903,11 @@ msgstr "Uitsluiten:"
 
 #: audacious/glade/prefswin.glade:4348
 msgid "Recursively search for cover"
-msgstr ""
+msgstr "Recursief zoeken naar covers"
 
 #: audacious/glade/prefswin.glade:4381
 msgid "Search depth: "
-msgstr ""
+msgstr "Zoekdiepte: "
 
 #: libaudacious/titlestring.c:340
 msgid "Performer/Artist"
@@ -4944,397 +4936,3 @@ msgstr "Nummer"
 #: libaudacious/titlestring.c:401
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: Geef \"...\" alleen weer wanneer element %n beschikbaar is"
-
-#~ msgid "Scrobbler Configuration"
-#~ msgstr "Scrobbler configuratie"
-
-#~ msgid "Warning"
-#~ msgstr "Waarschuwing"
-
-#~ msgid ""
-#~ "Filename and song title tags should be inside double quotes (\").  Not "
-#~ "doing so might be a security risk.  Continue anyway?"
-#~ msgstr ""
-#~ "Bestandsnaam en titel tags moeten tussen aanhalingstekens staan (\").  "
-#~ "Het is een veiligheidsrisico om dit niet te doen.  Weet u zeker dat u "
-#~ "door wilt gaan?"
-
-#~ msgid "Song Change Configuration"
-#~ msgstr "Nummer-wijziging configuratie"
-
-#~ msgid "Song Metadata"
-#~ msgstr "Metadata (tags)"
-
-#~ msgid "Port"
-#~ msgstr "Poort:"
-
-#~ msgid "Client name"
-#~ msgstr "Klant-naam"
-
-#~ msgid "Port name"
-#~ msgstr "Poort-naam"
-
-#~ msgid "ALSA output ports"
-#~ msgstr "ALSA uitvoerpoorten"
-
-#~ msgid "Mixer settings"
-#~ msgstr "Mixer-instellingen"
-
-#~ msgid "pre-calculate length of MIDI files in playlist"
-#~ msgstr "MIDI-bestandslengte vooraf berekenen"
-
-#~ msgid ""
-#~ "* Select ALSA output ports *\n"
-#~ "MIDI events will be sent to the ports selected here. At least one port "
-#~ "must be selected in order to play MIDI with AMIDI-Plug. Unless you know "
-#~ "what you're doing, you'll probably want to use the wavetable synthesizer "
-#~ "ports."
-#~ msgstr ""
-#~ "* Selecteer ALSA uitvoerpoorten *\n"
-#~ "MIDI-gebeurtenissen zullen naar deze poorten gestuurd worden. Er dient "
-#~ "minimaal een poort geselecteerd te staan. Tenzij u een geavanceerde "
-#~ "gebruiker bent kunt u er vanuit gaan dat u de wavetable synthesizer-"
-#~ "poorten in dient te vullen."
-
-#~ msgid ""
-#~ "* Select ALSA mixer control *\n"
-#~ "AMIDI-Plug outputs directly through ALSA, it doesn't use effect and ouput "
-#~ "plugins from the player. While playing with AMIDI-Plug, the player volume "
-#~ "will manipulate the control you select here. Unless you know what you're "
-#~ "doing, you'll probably want to select the Synth control here."
-#~ msgstr ""
-#~ "* Selecteer ALSA mixer-element *\n"
-#~ "AMIDI-Plug voert direct uit naar ALSA, zonder hierbij de effect & "
-#~ "uitvoerplugins te passeren. Tijdens het afspelen van MIDI wordt een "
-#~ "volumewijziging doorgegeven aan dit mixer-element. Tenzij u een "
-#~ "geavanceerde gebruiker bent, kunt u er vanuit gaan dat hier voor Synth "
-#~ "gekozen moet worden."
-
-#~ msgid ""
-#~ "* Pre-calculate MIDI length *\n"
-#~ "If this option is enabled, AMIDI-Plug will calculate the MIDI file length "
-#~ "as soon as the player requests it, instead of doing that only when the "
-#~ "the MIDI file is being played. In example, MIDI length will be calculated "
-#~ "straight after adding MIDI files in a playlist. Disable this option if "
-#~ "you want faster playlist loading (when a lot of MIDI files are added), "
-#~ "enable it to display more information in the playlist straight after "
-#~ "loading."
-#~ msgstr ""
-#~ "* MIDI-bestandslengte vooraf berekenen *\n"
-#~ "Als deze optie is ingeschakeld zal AMIDI-Plug de lengte van het MIDI-"
-#~ "bestand berekenen zodra voor het eerste om deze informatie wordt "
-#~ "gevraagd, in plaats van dit later bij het afspelen te doen. Schakel deze "
-#~ "optie uit als u wilt dat een afspeellijst met veel MIDI-bestanden sneller "
-#~ "wordt geladen. Schakel deze optie in als u alle informatie direct in de "
-#~ "afspeellijst wilt hebben staan."
-
-#~ msgid ""
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---"
-#~ msgstr ""
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---\n"
-#~ "---"
-
-#~ msgid "Convert non-UTF8 ID3 tags to UTF8"
-#~ msgstr "Converteer niet-UTF8 ID3 labels naar UTF8"
-
-#~ msgid "ID3 encoding:"
-#~ msgstr "ID3 encodering:"
-
-#~ msgid "Convert non-UTF8 Vorbis tags to UTF8"
-#~ msgstr "Converteer niet-UTF8 Vorbigs tags naar UTF8"
-
-#~ msgid "Vorbis encoding:"
-#~ msgstr "Vorbis encodering:"
-
-#~ msgid "Info dialog is already opened!\n"
-#~ msgstr "Info-venster is al geopend!\n"
-
-#~ msgid "%d Kb/s"
-#~ msgstr "%d KBit/s"
-
-#~ msgid "%02d:%02d:%02d"
-#~ msgstr "%02d:%02d:%02d"
-
-#~ msgid "<b>Name:</b>"
-#~ msgstr "<b>Naam:</b>"
-
-#~ msgid "<b>WMA Version:</b>"
-#~ msgstr "<b>WMA versie:</b>"
-
-#~ msgid "<b>Bitrate:</b>"
-#~ msgstr "<b>Bitratio:</b>"
-
-#~ msgid "<b>Samplerate:</b>"
-#~ msgstr "<b>Sampleratio:</b>"
-
-#~ msgid "<b>Channels:</b>"
-#~ msgstr "<b>Kanalen:</b>"
-
-#~ msgid "<b>Play time:</b>"
-#~ msgstr "<b>Afspeeltijd:</b>"
-
-#~ msgid "<b>Filesize:</b>"
-#~ msgstr "<b>Bestandsgrootte:</b>"
-
-#~ msgid "WMA Info"
-#~ msgstr "WMA Informatie"
-
-#~ msgid "<b>Title:</b>"
-#~ msgstr "<b>Titel:</b>"
-
-#~ msgid "<b>Album:</b>"
-#~ msgstr "<b>Album:</b>"
-
-#~ msgid "<b>Comments:</b>"
-#~ msgstr "<b>Commentaar:</b>"
-
-#~ msgid "<b>Year:</b>"
-#~ msgstr "<b>Jaar:</b>"
-
-#~ msgid "<b>Track:</b>"
-#~ msgstr "<b>Nummer:</b>"
-
-#~ msgid "<b>Genre:</b>"
-#~ msgstr "<b>Genre:</b>"
-
-#~ msgid "Tags"
-#~ msgstr "Tags"
-
-#~ msgid "Audacious:"
-#~ msgstr "Audacious:"
-
-#~ msgid "George Averill"
-#~ msgstr "George Averill"
-
-#~ msgid "Giacomo Lozito"
-#~ msgstr "Giacomo Lozito"
-
-#~ msgid "William Pitcock"
-#~ msgstr "William Pitcock"
-
-#~ msgid "Derek Pomery"
-#~ msgstr "Derek Pomery"
-
-#~ msgid "Tony Vroon"
-#~ msgstr "Tony Vroon"
-
-#~ msgid "Yoshiki Yazawa"
-#~ msgstr "Yoshiki Yazawa"
-
-#~ msgid "Stephan Sokolow"
-#~ msgstr "Stephan Sokolow"
-
-#~ msgid "Kiyoshi Aman"
-#~ msgstr "Kiyoshi Aman"
-
-#~ msgid "Shay Green"
-#~ msgstr "Shay Green"
-
-#~ msgid "Mohammed Sameer"
-#~ msgstr "Mohammed Sameer"
-
-#~ msgid "Artem Baguinski"
-#~ msgstr "Artem Baguinski"
-
-#~ msgid "Edward Brocklesby"
-#~ msgstr "Edward Brocklesby"
-
-#~ msgid "Chong Kai Xiong"
-#~ msgstr "Chong Kai Xiong"
-
-#~ msgid "Milosz Derezynski"
-#~ msgstr "Milosz Derezynski"
-
-#~ msgid "David Lau"
-#~ msgstr "David Lau"
-
-#~ msgid "Ole Andre Vadla Ravnaas"
-#~ msgstr "Ole Andre Vadla Ravnaas"
-
-#~ msgid "Michiel Sikkes"
-#~ msgstr "Michiel Sikkes"
-
-#~ msgid "Andrei Badea"
-#~ msgstr "Andrei Badea"
-
-#~ msgid "Peter Behroozi"
-#~ msgstr "Peter Behroozi"
-
-#~ msgid "Bernard Blackham"
-#~ msgstr "Bernard Blackham"
-
-#~ msgid "Oliver Blin"
-#~ msgstr "Oliver Blin"
-
-#~ msgid "Tomas Bzatek"
-#~ msgstr "Tomas Bzatek"
-
-#~ msgid "Liviu Danicel"
-#~ msgstr "Liviu Danicel"
-
-#~ msgid "Jon Dowland"
-#~ msgstr "Jon Dowland"
-
-#~ msgid "Artur Frysiak"
-#~ msgstr "Artur Frysiak"
-
-#~ msgid "Sebastian Kapfer"
-#~ msgstr "Sebastian Kapfer"
-
-#~ msgid "Lukas Koberstein"
-#~ msgstr "Lukas Koberstein"
-
-#~ msgid "Dan Korostelev"
-#~ msgstr "Dan Korostelev"
-
-#~ msgid "Jolan Luff"
-#~ msgstr "Jolan Luff"
-
-#~ msgid "Michael Marineau"
-#~ msgstr "Michiel Marineau"
-
-#~ msgid "Tim-Philipp Muller"
-#~ msgstr "Tim-Philipp Muller"
-
-#~ msgid "Julien Portalier"
-#~ msgstr "Julien Portalier"
-
-#~ msgid "Andrew Ruder"
-#~ msgstr "Andrew Ruder"
-
-#~ msgid "Olivier Samyn"
-#~ msgstr "Olivier Samyn"
-
-#~ msgid "Martijn Vernooij"
-#~ msgstr "Martijn Vernooij"
-
-#~ msgid "Philipi Pinto"
-#~ msgstr "Philipi Pinto"
-
-#~ msgid "Thierry Vignaud"
-#~ msgstr "Thierry Vignaud"
-
-#~ msgid "Chao-Hsiung Liao"
-#~ msgstr "Chao-Hsiung Liao"
-
-#~ msgid "Jan Narovec"
-#~ msgstr "Jan Narovec"
-
-#~ msgid "Laurens Buhler"
-#~ msgstr "Laurens Buhler"
-
-#~ msgid "Pauli Virtanen"
-#~ msgstr "Pauli Virtanen"
-
-#~ msgid "David Le Brun"
-#~ msgstr "David Le Brun"
-
-#~ msgid "Matthias Debus"
-#~ msgstr "Matthias Debus"
-
-#~ msgid "George Machitidze"
-#~ msgstr "George Machitidze"
-
-#~ msgid "Kouzinopoulos Haris"
-#~ msgstr "Kouzinopoulos Haris"
-
-#~ msgid "Stavros Giannouris"
-#~ msgstr "Stavros Giannouris"
-
-#~ msgid "Dhananjaya Sharma"
-#~ msgstr "Dhananjaya Sharma"
-
-#~ msgid "Laszlo Dvornik"
-#~ msgstr "Laszlo Dvornik"
-
-#~ msgid "Alessio D'Ascanio"
-#~ msgstr "Alessio D'Ascanio"
-
-#~ msgid "Dai"
-#~ msgstr "Dai"
-
-#~ msgid "DongCheon Park"
-#~ msgstr "DongCheon Park"
-
-#~ msgid "Rimas Kudelis"
-#~ msgstr "Rimas Kudelis"
-
-#~ msgid "Arangel Angov"
-#~ msgstr "Arangel Angov"
-
-#~ msgid "Jacek Wolszczak"
-#~ msgstr "Jacek Wolszczak"
-
-#~ msgid "Pavlo Bohmat"
-#~ msgstr "Pavlo Bohmat"
-
-#~ msgid "Vitaly Lipatov"
-#~ msgstr "Vitaly Lipatov"
-
-#~ msgid "Pavel Kanzelsberger"
-#~ msgstr "Pavel Kanzelsberger"
-
-#~ msgid "Gustavo D. Vranjes"
-#~ msgstr "Gustavo D. Vranjes"
-
-#~ msgid "Martin Persenius"
-#~ msgstr "Martin Persenius"
-
-#~ msgid "Mykola Lynnyk"
-#~ msgstr "Mykola Lynnyk"
-
-#~ msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Plugins</b></span>"
-
-#~ msgid "_Media plugin list:"
-#~ msgstr "_Media plugin-lijst:"
-
-#~ msgid "<span size=\"medium\"><b>Media</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Media</b></span>"
-
-#~ msgid ""
-#~ "The change is now effective in Audacious' configuration database, but "
-#~ "won't take effect for playback until the next song!\n"
-#~ "\n"
-#~ "Optionally, you can stop and restart playback for the change to take "
-#~ "effect."
-#~ msgstr ""
-#~ "De veranderingen zijn nu opgeslagen in Audacious maar worden pas actief "
-#~ "bij het volgende nummer!\n"
-#~ "\n"
-#~ "U kunt het afspelen stoppen en weer starten om dit direct te activeren."
-
-#~ msgid "<span size=\"medium\"><b>Output</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Uitvoer</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Uiterlijk</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Muis</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Speellijst</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Equalizer</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Connectivity</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Verbindingen</b></span>"

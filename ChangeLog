@@ -1,3 +1,12 @@
+2006-08-03 08:05:52 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1886]
+  - do virtual playlists properly in 1.2
+  
+
+  Changes:        Modified:
+  +3 -2           trunk/audacious/input.c  
+
+
 2006-08-03 08:03:55 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1884]
   use -1 to indicate "drop the original nsf/gbs/nsfe file, but silently error"
