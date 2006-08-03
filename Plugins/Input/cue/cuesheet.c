@@ -25,7 +25,6 @@
 #define MAX_CUE_LINE_LENGTH 1000
 #define MAX_CUE_TRACKS 1000
 
-static void init(void);
 static void cache_cue_file(gchar *f);
 static void free_cue_info(void);
 static void fix_cue_argument(char *line);
@@ -38,19 +37,18 @@ static void stop(void);
 static TitleInput *get_tuple(gchar *uri);
 static TitleInput *get_tuple_uri(gchar *uri);
 
+static gint watchdog_func(gpointer unused);
+
 static gchar *cue_performer = NULL;
 static gchar *cue_title = NULL;
 static gchar *cue_file = NULL;
 static gint last_cue_track = 0;
 static gint cur_cue_track = 0;
-static gint entry_lock = 0;
 static struct {
 	gchar *performer;
 	gchar *title;
 	gint index;
 } cue_tracks[MAX_CUE_TRACKS];
-static gint previous_song = -1;
-static gint previous_length = -2;
 static gint timeout_tag = 0;
 
 static InputPlugin *real_ip = NULL;
@@ -205,6 +203,7 @@ static void stop(void)
 	if (real_ip != NULL)
 		real_ip->stop();
 
+	gtk_timeout_remove(timeout_tag);
 	free_cue_info();
 
 	real_ip->set_info = NULL;
@@ -215,7 +214,6 @@ static void stop(void)
 static void set_info_override(gchar * unused, gint length, gint rate, gint freq, gint nch)
 {
 	gchar *title;
-	(void) unused;
 
 	/* annoying. */
 	if (playlist_position->tuple == NULL)
@@ -255,12 +253,28 @@ static void play_cue_uri(gchar *uri)
 	}
 
 	cur_cue_track = track;
+
+	timeout_tag = gtk_timeout_add(100, watchdog_func, NULL);
 }
 
 InputPlugin *get_iplugin_info(void)
 {
 	cue_ip.description = g_strdup_printf("Cuesheet Container Plugin");
 	return &cue_ip;
+}
+
+/******************************************************* watchdog */
+
+static gint watchdog_func(gpointer unused)
+{
+	gint time = get_output_time();
+
+	if (time < cue_tracks[cur_cue_track].index)
+		playlist_prev();
+	else if (cur_cue_track != last_cue_track && (time > cue_tracks[cur_cue_track + 1].index))
+		playlist_next();
+
+	return TRUE;
 }
 
 /******************************************************** cuefile */

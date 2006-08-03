@@ -1,3 +1,12 @@
+2006-08-03 05:57:08 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1864]
+  - better support cuesheets outside of your directory
+  
+
+  Changes:        Modified:
+  +11 -14         trunk/Plugins/Input/cue/cuesheet.c  
+
+
 2006-08-03 05:41:00 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1862]
   - remove dependency on the client library.
