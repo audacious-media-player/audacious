@@ -38,6 +38,8 @@ static void play_cue_uri(gchar *uri);
 static gint get_time(void);
 static void seek(gint time);
 static void stop(void);
+static TitleInput *get_tuple(gchar *uri);
+static TitleInput *get_tuple_uri(gchar *uri);
 
 static gchar *cue_performer = NULL;
 static gchar *cue_title = NULL;
@@ -82,9 +84,7 @@ InputPlugin cue_ip =
 	NULL,		/* XXX get_song_info iface */
 	NULL,
 	NULL,
-#if 0
 	get_tuple,
-#endif
 	NULL
 };
 
@@ -99,16 +99,16 @@ static gboolean is_our_file(gchar *filename)
 
 	ext = strrchr(filename, '.');
 
-	if (!strncasecmp(ext, ".cue", 4))
+	if (!strncasecmp(ext, ".cue", 4) && ext + 5 == '\0')
 	{
 		gint i;
 		FILE *f = fopen(filename, "rb");
-		ret = FALSE;
+		ret = TRUE;
 
 		/* add the files, build cue urls, etc. */
 		cache_cue_file(f);
 
-		for (i = 0; i < last_cue_track; i++)
+		for (i = 1; i < last_cue_track; i++)
 		{
 			gchar _buf[65535];
 
@@ -130,7 +130,73 @@ static gint get_time(void)
 
 static void play(gchar *uri)
 {
+	/* this isn't a cue:// uri? */
+	if (strncasecmp("cue://", uri, 6))
+	{
+		gchar *tmp = g_strdup_printf("cue://%s?0", uri);
+		play_cue_uri(tmp);
+		g_free(tmp);
+		return;
+	}
+
 	play_cue_uri(uri);
+}
+
+static TitleInput *get_tuple(gchar *uri)
+{
+	TitleInput *ret;
+
+	/* this isn't a cue:// uri? */
+	if (strncasecmp("cue://", uri, 6))
+	{
+		gchar *tmp = g_strdup_printf("cue://%s?0", uri);
+		ret = get_tuple_uri(tmp);
+		g_free(tmp);
+		return ret;
+	}
+
+	return get_tuple_uri(uri);
+}
+
+static TitleInput *get_tuple_uri(gchar *uri)
+{
+        gchar *path2 = g_strdup(uri + 6);
+        gchar *_path = strchr(path2, '?');
+	gint track = 0;
+	FILE *f;
+	InputPlugin *dec;
+	TitleInput *phys_tuple, *out;
+
+        if (_path != NULL && *_path == '?')
+        {
+                *_path = '\0';
+                _path++;
+                track = atoi(_path);
+        }	
+
+	f = fopen(path2, "rb");
+	cache_cue_file(f);
+	fclose(f);
+
+	dec = input_check_file(cue_file, FALSE);
+
+	if (dec == NULL)
+		return NULL;
+
+	phys_tuple = dec->get_song_tuple(path2);
+
+	out = bmp_title_input_new();
+
+	out->genre = g_strdup(phys_tuple->genre);	
+	out->album_name = g_strdup(phys_tuple->album_name);
+	out->length = phys_tuple->length;
+
+	bmp_title_input_free(phys_tuple);
+
+	out->track_name = cue_tracks[track].title;
+	out->performer = cue_tracks[track].performer;
+
+	return out;
 }
 
 static void seek(gint time)
@@ -143,6 +209,8 @@ static void stop(void)
 {
 	if (real_ip != NULL)
 		real_ip->stop();
+
+	free_cue_info();
 }
 
 static void play_cue_uri(gchar *uri)
@@ -167,13 +235,12 @@ static void play_cue_uri(gchar *uri)
 
 	if (real_ip != NULL)
 	{
-/*		set_current_input_plugin(real_ip); */
 		real_ip->output = cue_ip.output;
 		real_ip->play_file(cue_file);
-		real_ip->seek(cue_tracks[track].index / 1000);
+		real_ip->seek(cue_tracks[track].index / 1000);	/* XXX: seek doesn't use frames? strange... -nenolod */
 	}
 
-	free_cue_info();
+	cur_cue_track = track;
 }
 
 InputPlugin *get_iplugin_info(void)
