@@ -1,3 +1,12 @@
+2006-08-03 07:20:53 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1878]
+  - remove pointless finetune_seek stuff. didn't work right anyway, and it works better without it.
+  
+
+  Changes:        Modified:
+  +1 -29          trunk/Plugins/Input/cue/cuesheet.c  
+
+
 2006-08-03 07:15:58 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1876]
   - damn typoes

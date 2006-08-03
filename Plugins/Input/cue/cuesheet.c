@@ -50,6 +50,7 @@ static struct {
 	gint index;
 } cue_tracks[MAX_CUE_TRACKS];
 static gint timeout_tag = 0;
+static gint finetune_seek = 0;
 
 static InputPlugin *real_ip = NULL;
 
@@ -249,8 +250,10 @@ static void play_cue_uri(gchar *uri)
 		real_ip->set_info = set_info_override;
 		real_ip->output = cue_ip.output;
 		real_ip->play_file(cue_file);
-		real_ip->seek(cue_tracks[track].index / 1000);	/* XXX: seek doesn't use frames? strange... -nenolod */
+		real_ip->seek(finetune_seek ? finetune_seek / 1000 : cue_tracks[track].index / 1000);
 	}
+
+	finetune_seek = 0;
 
 	cur_cue_track = track;
 
@@ -288,17 +291,21 @@ static gint watchdog_func(gpointer unused)
 	while (time < cue_tracks[cur_cue_track].index)
 	{
 		cur_cue_track--;
+		if (!(time < cue_tracks[cur_cue_track].index))
+			finetune_seek = time;
 		playlist_prev();
 		dir = TRUE;
-		time = get_output_time() - 1000;
+		time = get_output_time();
 		g_usleep(10000);
 	}
 
 	while (dir == FALSE && cur_cue_track != last_cue_track && (time > cue_tracks[cur_cue_track + 1].index))
 	{
 		cur_cue_track++;
+		if (!(time > cue_tracks[cur_cue_track].index))
+			finetune_seek = time;
 		playlist_next();
-		time = get_output_time() + 1000;
+		time = get_output_time();
 		g_usleep(10000);
 	}
 
