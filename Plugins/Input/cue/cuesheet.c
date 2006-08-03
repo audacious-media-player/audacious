@@ -167,10 +167,10 @@ static void play_cue_uri(gchar *uri)
 
 	if (real_ip != NULL)
 	{
-		set_current_input_plugin(real_ip);
+/*		set_current_input_plugin(real_ip); */
 		real_ip->output = cue_ip.output;
 		real_ip->play_file(cue_file);
-		real_ip->seek(cue_tracks[track].index);
+		real_ip->seek(cue_tracks[track].index / 1000);
 	}
 
 	free_cue_info();
