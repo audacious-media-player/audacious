@@ -51,6 +51,7 @@ static struct {
 } cue_tracks[MAX_CUE_TRACKS];
 static gint timeout_tag = 0;
 static gint finetune_seek = 0;
+static gint pl_seek = 0;
 
 static InputPlugin *real_ip = NULL;
 
@@ -197,6 +198,8 @@ static void seek(gint time)
 {
 	if (real_ip != NULL)
 		real_ip->seek(time);
+
+	pl_seek = time;
 }
 
 static void stop(void)
@@ -256,7 +259,6 @@ static void play_cue_uri(gchar *uri)
 		else
 		{
 			real_ip->seek(finetune_seek / 1000);
-			finetune_seek = 0;
 		}
 	}
 
@@ -273,25 +275,54 @@ InputPlugin *get_iplugin_info(void)
 
 /******************************************************* watchdog */
 
+/*
+ * This is fairly hard to explain.
+ *
+ * Basically we loop until we have reached the correct track.
+ * Then we set a finetune adjustment to make sure we stay in the
+ * right place.
+ *
+ * I used to recurse here (it was prettier), but that didn't work
+ * as well as I was hoping.
+ *
+ * Anyhow, yeah. The logic here isn't great, but it works, so I'm
+ * cool with it.
+ *
+ *     - nenolod
+ */
 static gint watchdog_func(gpointer unused)
 {
 	gint time = get_output_time();
+	gboolean dir = FALSE;
 
-	/* recurse until we're in the basically right place. */
-	if (time < cue_tracks[cur_cue_track].index)
+	if (finetune_seek != 0)
+	{
+		if (real_ip != NULL)
+			real_ip->seek(finetune_seek / 1000);
+
+		finetune_seek = 0;
+	}
+
+	while (time < cue_tracks[cur_cue_track].index)
 	{
 		cur_cue_track--;
 		playlist_prev();
-		watchdog_func(NULL);
 		finetune_seek = time;
+		dir = TRUE;
+		time = get_output_time() - 1000;
+		g_usleep(10000);
 	}
-	else if (cur_cue_track != last_cue_track && (time > cue_tracks[cur_cue_track + 1].index))
+
+	while (dir == FALSE && cur_cue_track != last_cue_track && (time > cue_tracks[cur_cue_track + 1].index))
 	{
 		cur_cue_track++;
 		playlist_next();
-		watchdog_func(NULL);
 		finetune_seek = time;
+		time = get_output_time() + 1000;
+		g_usleep(10000);
 	}
+
+	pl_seek = 0;
 
 	return TRUE;
 }

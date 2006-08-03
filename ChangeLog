@@ -1,3 +1,12 @@
+2006-08-03 06:44:16 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1870]
+  - well not exactly, but this is :)
+  
+
+  Changes:        Modified:
+  +2 -2           trunk/Plugins/Input/cue/cuesheet.c  
+
+
 2006-08-03 06:42:10 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1868]
   - the other half of the equasion wrt seeking
