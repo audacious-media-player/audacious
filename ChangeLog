@@ -1,3 +1,12 @@
+2006-08-03 00:52:07 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1840]
+  - ok, lets use real URIs here
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/cue/cuesheet.c  
+
+
 2006-08-03 00:44:15 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1838]
   - cuesheet plugin.

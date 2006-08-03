@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <audacious/plugin.h>
+#include <audacious/output.h>
 #include <audacious/playlist.h>
 #include <libaudacious/beepctrl.h>
 
@@ -32,6 +33,9 @@ static void cache_cue_file(FILE *file);
 static void free_cue_info(void);
 static void fix_cue_argument(char *line);
 static gboolean is_our_file(gchar *filespec);
+static void play(gchar *uri);
+static void play_cue_uri(gchar *uri);
+static gint get_time(void);
 
 static gchar *cue_performer = NULL;
 static gchar *cue_title = NULL;
@@ -60,11 +64,10 @@ InputPlugin cue_ip =
 	NULL,	  	   	/* configure */
 	is_our_file,
 	NULL,		/* audio cd */
-#if 0
 	play,
-	stop,
-	pause,
-	seek,
+	NULL,
+	NULL,
+	NULL,
 	NULL,		/* set eq */
 	get_time,
 	NULL,
@@ -77,9 +80,10 @@ InputPlugin cue_ip =
 	NULL,		/* XXX get_song_info iface */
 	NULL,
 	NULL,
+#if 0
 	get_tuple,
-	NULL
 #endif
+	NULL
 };
 
 static gboolean is_our_file(gchar *filename)
@@ -97,7 +101,7 @@ static gboolean is_our_file(gchar *filename)
 	{
 		gint i;
 		FILE *f = fopen(filename, "rb");
-		ret = TRUE;
+		ret = FALSE;
 
 		/* add the files, build cue urls, etc. */
 		cache_cue_file(f);
@@ -117,6 +121,42 @@ static gboolean is_our_file(gchar *filename)
 	return ret;
 }
 
+static gint get_time(void)
+{
+	return get_output_time();
+}
+
+static void play(gchar *uri)
+{
+	play_cue_uri(uri);
+}
+
+static void play_cue_uri(gchar *uri)
+{
+        gchar *path2 = g_strdup(uri + 6);
+        gchar *_path = strchr(path2, '?');
+	gint track;
+	FILE *f;
+
+        if (_path != NULL && *_path == '?')
+        {
+                *_path = '\0';
+                _path++;
+                track = atoi(_path);
+        }	
+
+	f = fopen(path2, "rb");
+	cache_cue_file(f);
+	fclose(f);
+
+	real_ip = input_check_file(cue_file, FALSE);
+
+	if (real_ip != NULL)
+		real_ip->play_file(cue_file);
+
+	free_cue_info();
+}
+
 InputPlugin *get_iplugin_info(void)
 {
 	cue_ip.description = g_strdup_printf("Cuesheet Container Plugin");
@@ -131,6 +171,8 @@ static void free_cue_info(void)
 	cue_performer = NULL;
 	g_free(cue_title);
 	cue_title = NULL;
+	g_free(cue_file);
+	cue_file = NULL;
 	for (; last_cue_track > 0; last_cue_track--) {
 		g_free(cue_tracks[last_cue_track-1].performer);
 		g_free(cue_tracks[last_cue_track-1].title);
