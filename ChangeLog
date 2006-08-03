@@ -1,3 +1,13 @@
+2006-08-03 01:12:58 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1842]
+  - when we play from a cuefile, start playing from the file defined in the cuefile
+  if that file can't be found, then take no action (this is how MPlayer behaves, anyway.)
+  
+
+  Changes:        Modified:
+  +48 -6          trunk/Plugins/Input/cue/cuesheet.c  
+
+
 2006-08-03 00:52:07 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1840]
   - ok, lets use real URIs here

@@ -135,7 +135,7 @@ static void play_cue_uri(gchar *uri)
 {
         gchar *path2 = g_strdup(uri + 6);
         gchar *_path = strchr(path2, '?');
-	gint track;
+	gint track = 0;
 	FILE *f;
 
         if (_path != NULL && *_path == '?')
@@ -152,7 +152,10 @@ static void play_cue_uri(gchar *uri)
 	real_ip = input_check_file(cue_file, FALSE);
 
 	if (real_ip != NULL)
+	{
 		real_ip->play_file(cue_file);
+		real_ip->seek(cue_tracks[track].index);
+	}
 
 	free_cue_info();
 }
