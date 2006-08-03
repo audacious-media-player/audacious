@@ -216,6 +216,11 @@ static void stop(void)
 	free_cue_info();
 }
 
+static void set_info_override(gchar * title, gint length, gint rate, gint freq, gint nch)
+{
+	cue_ip.set_info(playlist_position->title, length, rate, freq, nch);
+}
+
 static void play_cue_uri(gchar *uri)
 {
         gchar *path2 = g_strdup(uri + 6);
@@ -238,6 +243,7 @@ static void play_cue_uri(gchar *uri)
 
 	if (real_ip != NULL)
 	{
+		real_ip->set_info = set_info_override;
 		real_ip->output = cue_ip.output;
 		real_ip->play_file(cue_file);
 		real_ip->seek(cue_tracks[track].index / 1000);	/* XXX: seek doesn't use frames? strange... -nenolod */
