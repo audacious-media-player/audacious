@@ -1,3 +1,12 @@
+2006-08-03 06:33:49 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1866]
+  - support the notion of a watchdog function to keep things bound to the proper playlist entry. (half there)
+  
+
+  Changes:        Modified:
+  +19 -5          trunk/Plugins/Input/cue/cuesheet.c  
+
+
 2006-08-03 05:57:08 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1864]
   - better support cuesheets outside of your directory
