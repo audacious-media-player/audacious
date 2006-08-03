@@ -36,6 +36,8 @@ static gboolean is_our_file(gchar *filespec);
 static void play(gchar *uri);
 static void play_cue_uri(gchar *uri);
 static gint get_time(void);
+static void seek(gint time);
+static void stop(void);
 
 static gchar *cue_performer = NULL;
 static gchar *cue_title = NULL;
@@ -65,9 +67,9 @@ InputPlugin cue_ip =
 	is_our_file,
 	NULL,		/* audio cd */
 	play,
+	stop,
 	NULL,
-	NULL,
-	NULL,
+	seek,
 	NULL,		/* set eq */
 	get_time,
 	NULL,
@@ -131,6 +133,18 @@ static void play(gchar *uri)
 	play_cue_uri(uri);
 }
 
+static void seek(gint time)
+{
+	if (real_ip != NULL)
+		real_ip->seek(time);
+}
+
+static void stop(void)
+{
+	if (real_ip != NULL)
+		real_ip->stop();
+}
+
 static void play_cue_uri(gchar *uri)
 {
         gchar *path2 = g_strdup(uri + 6);
@@ -153,6 +167,8 @@ static void play_cue_uri(gchar *uri)
 
 	if (real_ip != NULL)
 	{
+		set_current_input_plugin(real_ip);
+		real_ip->output = cue_ip.output;
 		real_ip->play_file(cue_file);
 		real_ip->seek(cue_tracks[track].index);
 	}

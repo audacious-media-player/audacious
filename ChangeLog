@@ -1,3 +1,12 @@
+2006-08-03 01:15:47 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1844]
+  - seek by track index timestamp
+  
+
+  Changes:        Modified:
+  +4 -1           trunk/Plugins/Input/cue/cuesheet.c  
+
+
 2006-08-03 01:12:58 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1842]
   - when we play from a cuefile, start playing from the file defined in the cuefile
