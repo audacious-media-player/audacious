@@ -26,7 +26,7 @@
 #define MAX_CUE_TRACKS 1000
 
 static void init(void);
-static void cache_cue_file(FILE *file);
+static void cache_cue_file(gchar *f);
 static void free_cue_info(void);
 static void fix_cue_argument(char *line);
 static gboolean is_our_file(gchar *filespec);
@@ -99,11 +99,10 @@ static gboolean is_our_file(gchar *filename)
 	if (!strncasecmp(ext, ".cue", 4))
 	{
 		gint i;
-		FILE *f = fopen(filename, "rb");
 		ret = TRUE;
 
 		/* add the files, build cue urls, etc. */
-		cache_cue_file(f);
+		cache_cue_file(filename);
 
 		for (i = 1; i < last_cue_track; i++)
 		{
@@ -113,7 +112,6 @@ static gboolean is_our_file(gchar *filename)
 			playlist_add_url(_buf);
 		}
 
-		fclose(f);
 		free_cue_info();
 	}
 
@@ -160,7 +158,6 @@ static TitleInput *get_tuple_uri(gchar *uri)
         gchar *path2 = g_strdup(uri + 6);
         gchar *_path = strchr(path2, '?');
 	gint track = 0;
-	FILE *f;
 	InputPlugin *dec;
 	TitleInput *phys_tuple, *out;
 
@@ -171,9 +168,7 @@ static TitleInput *get_tuple_uri(gchar *uri)
                 track = atoi(_path);
         }	
 
-	f = fopen(path2, "rb");
-	cache_cue_file(f);
-	fclose(f);
+	cache_cue_file(path2);
 
 	dec = input_check_file(cue_file, FALSE);
 
@@ -239,7 +234,6 @@ static void play_cue_uri(gchar *uri)
         gchar *path2 = g_strdup(uri + 6);
         gchar *_path = strchr(path2, '?');
 	gint track = 0;
-	FILE *f;
 
         if (_path != NULL && *_path == '?')
         {
@@ -248,9 +242,7 @@ static void play_cue_uri(gchar *uri)
                 track = atoi(_path);
         }	
 
-	f = fopen(path2, "rb");
-	cache_cue_file(f);
-	fclose(f);
+	cache_cue_file(path2);
 
 	real_ip = input_check_file(cue_file, FALSE);
 
@@ -287,8 +279,9 @@ static void free_cue_info(void)
 	}
 }
 
-static void cache_cue_file(FILE *file)
+static void cache_cue_file(char *f)
 {
+	FILE *file = fopen(f, "rb");
 	gchar line[MAX_CUE_LINE_LENGTH+1];
 
 	while (TRUE) {
@@ -322,8 +315,10 @@ static void cache_cue_file(FILE *file)
 			}
 		}
 		else if (strcasecmp(line+p, "FILE") == 0) {
+			gchar *tmp = g_path_get_dirname(f);
 			fix_cue_argument(line+q);
-			cue_file = g_strdup(line+q);		/* XXX: yaz might need to UTF validate this?? -nenolod */
+			cue_file = g_strdup_printf("%s/%s", tmp, line+q);	/* XXX: yaz might need to UTF validate this?? -nenolod */
+			g_free(tmp);
 		}
 		else if (strcasecmp(line+p, "TITLE") == 0) {
 			fix_cue_argument(line+q);
@@ -370,6 +365,8 @@ static void cache_cue_file(FILE *file)
 			}
 		}
 	}
+
+	fclose(file);
 }
 
 static void fix_cue_argument(char *line)
