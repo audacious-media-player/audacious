@@ -1,3 +1,16 @@
+2006-08-03 00:44:15 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1838]
+  - cuesheet plugin.
+  Incomplete, but can do the following:
+  - load and populate a playlist from a cuesheet
+  (can't do anything else yet though, including build tuples)
+  
+
+  Changes:        Modified:
+  +16 -0          trunk/Plugins/Input/cue/Makefile  
+  +245 -0         trunk/Plugins/Input/cue/cuesheet.c  
+
+
 2006-08-02 23:18:16 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1836]
   - update PO files

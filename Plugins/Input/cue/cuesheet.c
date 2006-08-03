@@ -106,7 +106,7 @@ static gboolean is_our_file(gchar *filename)
 		{
 			gchar _buf[65535];
 
-			g_snprintf(_buf, 65535, "%s?%d", filename, i);
+			g_snprintf(_buf, 65535, "cue://%s?%d", filename, i);
 			playlist_add_url(_buf);
 		}
 
