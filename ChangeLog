@@ -1,3 +1,13 @@
+2006-08-04 19:18:23 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1918]
+  - make Unknown Track, Unknown Artist, Unknown Album translatable.
+  - Display Unknown Track if the tuple is that horribly incomplete.
+  
+
+  Changes:        Modified:
+  +3 -3           trunk/Plugins/General/notify/notify.c  
+
+
 2006-08-04 18:54:26 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1916]
   - more leak fixes

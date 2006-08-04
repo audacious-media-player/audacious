@@ -115,7 +115,7 @@ AC_ARG_WITH(cdda-dir,
 
 dnl These plugins are always built.
 
-INPUT_PLUGINS="cdaudio tonegen console sexypsf wav"
+INPUT_PLUGINS="cdaudio tonegen console sexypsf wav cue"
 OUTPUT_PLUGINS="disk_writer"
 EFFECT_PLUGINS="audiocompress ladspa voice_removal"
 GENERAL_PLUGINS="song_change"
