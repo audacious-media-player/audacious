@@ -1,3 +1,12 @@
+2006-08-04 07:49:01 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1896]
+  - don't crash if there's no available tuple
+  
+
+  Changes:        Modified:
+  +3 -0           trunk/Plugins/General/notify/notify.c  
+
+
 2006-08-04 05:54:57 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1894]
   - do things in a less hackish way

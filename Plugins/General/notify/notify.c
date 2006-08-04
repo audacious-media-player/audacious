@@ -63,7 +63,7 @@ static gboolean watchdog_func(gpointer unused)
 		tuple = playlist_get_tuple(pos);
 
 		if (tuple == NULL)
-			return;
+			return TRUE;
 
 		tmpbuf = g_strdup_printf("<b>%s</b>\n<i>%s</i>\n%s",
 			tuple->performer,
