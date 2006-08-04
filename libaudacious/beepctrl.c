@@ -359,6 +359,9 @@ audacious_determine_session_type(gint session)
     if (audacious_session_type == NULL)
         audacious_session_type = (gint *) AUDACIOUS_TYPE_UNIX;
 
+    /* memory leak! */
+    g_free(uri);
+
     return audacious_session_type;
 }
 
