@@ -9,8 +9,8 @@ SOURCES = notify.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
-CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../.. -DDATA_DIR=\"$(datadir)\"
+CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(NOTIFY_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../.. -DDATA_DIR=\"$(datadir)\"
 
 CXXFLAGS = $(CFLAGS)
 
-LIBADD = $(GTK_LIBS) -lnotify
+LIBADD = $(GTK_LIBS) $(NOTIFY_LIBS)

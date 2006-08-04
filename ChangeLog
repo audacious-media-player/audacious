@@ -1,3 +1,13 @@
+2006-08-04 07:58:45 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1900]
+  - autodetect libnotify, and if found, build the notify plugin
+  
+
+  Changes:        Modified:
+  +20 -0          trunk/configure.ac  
+  +2 -0           trunk/mk/rules.mk.in  
+
+
 2006-08-04 07:49:40 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1898]
   - oh return TRUE here (duh)
