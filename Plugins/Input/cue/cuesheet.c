@@ -207,7 +207,7 @@ static void stop(void)
 	gtk_timeout_remove(timeout_tag);
 	free_cue_info();
 
-	real_ip->set_info = NULL;
+	real_ip->set_info = cue_ip.set_info;
 	real_ip->output = NULL;
 	real_ip = NULL;
 }

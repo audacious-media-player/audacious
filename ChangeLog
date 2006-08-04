@@ -1,3 +1,12 @@
+2006-08-04 08:21:49 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1902]
+  - use $(NOTIFY_LIBS) and $(NOTIFY_CFLAGS)... not really much of difference, but yeah
+  
+
+  Changes:        Modified:
+  +2 -2           trunk/Plugins/General/notify/Makefile  
+
+
 2006-08-04 07:58:45 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1900]
   - autodetect libnotify, and if found, build the notify plugin
