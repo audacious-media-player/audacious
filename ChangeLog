@@ -1,3 +1,12 @@
+2006-08-04 18:38:37 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1914]
+  - leak fix
+  
+
+  Changes:        Modified:
+  +3 -0           trunk/libaudacious/beepctrl.c  
+
+
 2006-08-04 09:46:05 +0000  George Averill <nhjm449@gmail.com>
   revision [1912]
   - Don't show "(null)" information.

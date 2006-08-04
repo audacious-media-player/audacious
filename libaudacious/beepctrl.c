@@ -442,6 +442,9 @@ xmms_connect_to_session(gint session)
 	    g_strlcpy(saddr.sun_path, path, 108);
             g_free(path);
             setreuid(stored_uid, euid);
+
+	    g_free(uri);
+
             if (connect(fd, (struct sockaddr *) &saddr, sizeof(saddr)) != -1)
                 return fd;
         }
@@ -471,6 +474,8 @@ xmms_connect_to_session(gint session)
 
             g_free(host);
             g_free(key);
+
+	    g_free(uri);
 
             if (connect(fd, (struct sockaddr *) &saddr, sizeof(saddr)) != -1)
                 return fd;
