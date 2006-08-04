@@ -318,6 +318,25 @@ if test "$have_lirc" = "yes"; then
 	GENERAL_PLUGINS="$GENERAL_PLUGINS lirc"
 fi
 
+dnl *** libnotify requirement
+
+AC_ARG_ENABLE(notify,
+    [  --disable-notify        disable libnotify plugin (default=enabled)],
+    [enable_libnotify=$enableval],
+    [enable_libnotify="yes"]
+)
+
+if test "$enable_libnotify" = "yes"; then
+    PKG_CHECK_MODULES(LIBNOTIFY, [libnotify >= 0.4.2],
+        [have_libnotify=yes
+         GENERAL_PLUGINS="$GENERAL_PLUGINS notify"],
+        [have_libnotify=no]
+    )
+else
+    AC_MSG_RESULT([*** libnotify plugin disabled per user request ***])
+    have_libnotify="no"
+fi
+
 dnl *** AdPlug requirement (libbinio)
 
 AC_ARG_ENABLE(adplug,
@@ -1082,6 +1101,7 @@ echo "  -------"
 echo "  Song Change:                            yes"
 echo "  LIRC:                                   $have_lirc"
 echo "  AudioScrobbler Client:                  $scrobbler"
+echo "  libnotify Plugin:                       $have_libnotify"
 echo
 echo "  Effect"
 echo "  ------"
