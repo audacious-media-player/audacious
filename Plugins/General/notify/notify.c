@@ -19,6 +19,7 @@ static gboolean watchdog_func(gpointer unused);
 static gint timeout_tag = 0;
 
 static gint notify_playlist_pos = -1;
+static gchar *previous_title = NULL;
 
 /* our API. */
 static void do_notification(gchar *summary, gchar *message, gchar *icon_uri);
@@ -49,13 +50,22 @@ static void init(void)
 static void cleanup(void)
 {
 	gtk_timeout_remove(timeout_tag);
+
+	if (previous_title != NULL)
+	{
+		g_free(previous_title)
+		previous_title = NULL;
+	}
 }
 
 static gboolean watchdog_func(gpointer unused)
 {
 	gint pos = playlist_get_position();
+	gchar *title = playlist_get_songtitle(pos);
 
-	if (pos != notify_playlist_pos)
+	if (pos != notify_playlist_pos ||
+		(title != NULL && previous_title != NULL &&
+		 g_strcasecmp(title, previous_title)))
 	{
 		gchar *tmpbuf;
 		TitleInput *tuple;
@@ -75,6 +85,14 @@ static gboolean watchdog_func(gpointer unused)
 	}
 
 	notify_playlist_pos = pos;
+
+	if (previous_title != NULL)
+	{
+		g_free(previous_title)
+		previous_title = NULL;
+	}
+
+	previous_title = g_strdup(title);
 
 	return TRUE;
 }

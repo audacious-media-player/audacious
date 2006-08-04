@@ -1,3 +1,12 @@
+2006-08-04 08:24:02 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1904]
+  - fix the real_ip<InputPlugin *>.set_info mapping properly when InputPlugin cue_ip::stop() is reached.
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/cue/cuesheet.c  
+
+
 2006-08-04 08:21:49 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1902]
   - use $(NOTIFY_LIBS) and $(NOTIFY_CFLAGS)... not really much of difference, but yeah
