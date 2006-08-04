@@ -57,7 +57,18 @@ static gboolean watchdog_func(gpointer unused)
 
 	if (pos != notify_playlist_pos)
 	{
-		do_notification("Audacious", playlist_get_songtitle(pos), DATA_DIR "/pixmaps/audacious.png");
+		gchar *tmpbuf;
+
+		/* XXX: this is arguably wrong, but works -nenolod */
+		if (playlist_position->tuple == NULL)
+			playlist_get_tuple(pos);
+
+		tmpbuf = g_strdup_printf("<b>%s</b>\n<i>%s</i>\n%s",
+			playlist_position->tuple->performer,
+			playlist_position->tuple->album_name,
+			playlist_position->tuple->track_name);
+		do_notification("Audacious", tmpbuf, DATA_DIR "/pixmaps/audacious.png");
+		g_free(tmpbuf);
 	}
 
 	notify_playlist_pos = pos;
