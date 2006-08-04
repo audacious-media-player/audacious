@@ -1,3 +1,12 @@
+2006-08-04 18:54:26 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1916]
+  - more leak fixes
+  
+
+  Changes:        Modified:
+  +5 -0           trunk/libaudacious/beepctrl.c  
+
+
 2006-08-04 18:38:37 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1914]
   - leak fix

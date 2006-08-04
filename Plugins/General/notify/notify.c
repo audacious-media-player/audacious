@@ -76,9 +76,9 @@ static gboolean watchdog_func(gpointer unused)
 			return TRUE;
 
 		tmpbuf = g_strdup_printf("<b>%s</b>\n<i>%s</i>\n%s",
-			(tuple->performer ? tuple->performer : "Unknown Artist"),
-			(tuple->album_name ? tuple->album_name : "Unknown Album"),
-			tuple->track_name);
+			(tuple->performer ? tuple->performer : _("Unknown Artist")),
+			(tuple->album_name ? tuple->album_name : _("Unknown Album")),
+			(tuple->track_name ? tuple->track_name : _("Unknown Track")));
 
 		do_notification("Audacious", tmpbuf, DATA_DIR "/pixmaps/audacious.png");
 		g_free(tmpbuf);
