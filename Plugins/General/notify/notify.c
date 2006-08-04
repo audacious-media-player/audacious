@@ -53,7 +53,7 @@ static void cleanup(void)
 
 	if (previous_title != NULL)
 	{
-		g_free(previous_title)
+		g_free(previous_title);
 		previous_title = NULL;
 	}
 }
@@ -88,7 +88,7 @@ static gboolean watchdog_func(gpointer unused)
 
 	if (previous_title != NULL)
 	{
-		g_free(previous_title)
+		g_free(previous_title);
 		previous_title = NULL;
 	}
 
