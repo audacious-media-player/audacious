@@ -63,9 +63,9 @@ static gboolean watchdog_func(gpointer unused)
 	gint pos = playlist_get_position();
 	gchar *title = playlist_get_songtitle(pos);
 
-	if (pos != notify_playlist_pos ||
-		(title != NULL && previous_title != NULL &&
-		 g_strcasecmp(title, previous_title)))
+	if ((title != NULL && previous_title != NULL &&
+		    g_strcasecmp(title, previous_title)) ||
+		    (title == NULL && pos != notify_playlist_pos))
 	{
 		gchar *tmpbuf;
 		TitleInput *tuple;
