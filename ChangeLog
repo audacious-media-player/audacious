@@ -1,3 +1,11 @@
+2006-08-05 22:10:37 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1922]
+  Updated german translation by Michael Hanselmann <hansmi@gentoo.org>: 988 translated messages, 2 untranslated messages.
+
+  Changes:        Modified:
+  +92 -94         trunk/po/de.po  
+
+
 2006-08-04 23:05:41 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1920]
   - hook up cue plugin

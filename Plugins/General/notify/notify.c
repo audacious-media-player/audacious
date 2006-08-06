@@ -75,7 +75,7 @@ static gboolean watchdog_func(gpointer unused)
 		if (tuple == NULL)
 			return TRUE;
 
-		tmpbuf = g_strdup_printf("<b>%s</b>\n<i>%s</i>\n%s",
+		tmpbuf = g_markup_printf_escaped("<b>%s</b>\n<i>%s</i>\n%s",
 			(tuple->performer ? tuple->performer : _("Unknown Artist")),
 			(tuple->album_name ? tuple->album_name : _("Unknown Album")),
 			(tuple->track_name ? tuple->track_name : _("Unknown Track")));
