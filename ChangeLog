@@ -1,3 +1,76 @@
+2006-08-06 08:53:29 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1928]
+  - incomplete stuff
+  
+
+  Changes:        Modified:
+  +44 -0          trunk/Plugins/Visualization/paranormal/pn/Makefile  
+  +55 -0          trunk/Plugins/Visualization/paranormal/pn/pn.h  
+  +312 -0         trunk/Plugins/Visualization/paranormal/pn/pnactuator.c  
+  +91 -0          trunk/Plugins/Visualization/paranormal/pn/pnactuator.h  
+  +109 -0         trunk/Plugins/Visualization/paranormal/pn/pnactuatorfactory.c  
+  +33 -0          trunk/Plugins/Visualization/paranormal/pn/pnactuatorfactory.h  
+  +120 -0         trunk/Plugins/Visualization/paranormal/pn/pnactuatorlist.c  
+  +59 -0          trunk/Plugins/Visualization/paranormal/pn/pnactuatorlist.h  
+  +292 -0         trunk/Plugins/Visualization/paranormal/pn/pnaudiodata.c  
+  +101 -0         trunk/Plugins/Visualization/paranormal/pn/pnaudiodata.h  
+  +338 -0         trunk/Plugins/Visualization/paranormal/pn/pnblur.c  
+  +56 -0          trunk/Plugins/Visualization/paranormal/pn/pnblur.h  
+  +190 -0         trunk/Plugins/Visualization/paranormal/pn/pnbooleanoption.c  
+  +60 -0          trunk/Plugins/Visualization/paranormal/pn/pnbooleanoption.h  
+  +44 -0          trunk/Plugins/Visualization/paranormal/pn/pnbuiltins.c  
+  +32 -0          trunk/Plugins/Visualization/paranormal/pn/pnbuiltins.h  
+  +0 -0           trunk/Plugins/Visualization/paranormal/pn/pnconfig.h  
+  +300 -0         trunk/Plugins/Visualization/paranormal/pn/pncontainer.c  
+  +82 -0          trunk/Plugins/Visualization/paranormal/pn/pncontainer.h  
+  +95 -0          trunk/Plugins/Visualization/paranormal/pn/pncpu.c  
+  +33 -0          trunk/Plugins/Visualization/paranormal/pn/pncpu.h  
+  +423 -0         trunk/Plugins/Visualization/paranormal/pn/pndisplacement.c  
+  +71 -0          trunk/Plugins/Visualization/paranormal/pn/pndisplacement.h  
+  +440 -0         trunk/Plugins/Visualization/paranormal/pn/pndistortion.c  
+  +85 -0          trunk/Plugins/Visualization/paranormal/pn/pndistortion.h  
+  +64 -0          trunk/Plugins/Visualization/paranormal/pn/pnerror.c  
+  +30 -0          trunk/Plugins/Visualization/paranormal/pn/pnerror.h  
+  +436 -0         trunk/Plugins/Visualization/paranormal/pn/pnflip.c  
+  +61 -0          trunk/Plugins/Visualization/paranormal/pn/pnflip.h  
+  +243 -0         trunk/Plugins/Visualization/paranormal/pn/pnfloatoption.c  
+  +73 -0          trunk/Plugins/Visualization/paranormal/pn/pnfloatoption.h  
+  +29 -0          trunk/Plugins/Visualization/paranormal/pn/pngtk.h  
+  +683 -0         trunk/Plugins/Visualization/paranormal/pn/pnimage.c  
+  +136 -0         trunk/Plugins/Visualization/paranormal/pn/pnimage.h  
+  +188 -0         trunk/Plugins/Visualization/paranormal/pn/pnimagecontext.c  
+  +61 -0          trunk/Plugins/Visualization/paranormal/pn/pnimagecontext.h  
+  +43 -0          trunk/Plugins/Visualization/paranormal/pn/pninit.c  
+  +30 -0          trunk/Plugins/Visualization/paranormal/pn/pninit.h  
+  +243 -0         trunk/Plugins/Visualization/paranormal/pn/pnintegeroption.c  
+  +73 -0          trunk/Plugins/Visualization/paranormal/pn/pnintegeroption.h  
+  +207 -0         trunk/Plugins/Visualization/paranormal/pn/pnlistoption.c  
+  +61 -0          trunk/Plugins/Visualization/paranormal/pn/pnlistoption.h  
+  +210 -0         trunk/Plugins/Visualization/paranormal/pn/pnobject.c  
+  +91 -0          trunk/Plugins/Visualization/paranormal/pn/pnobject.h  
+  +112 -0         trunk/Plugins/Visualization/paranormal/pn/pnoption.c  
+  +59 -0          trunk/Plugins/Visualization/paranormal/pn/pnoption.h  
+  +26 -0          trunk/Plugins/Visualization/paranormal/pn/pnoptionwidget.h  
+  +339 -0         trunk/Plugins/Visualization/paranormal/pn/pnrotozoom.c  
+  +70 -0          trunk/Plugins/Visualization/paranormal/pn/pnrotozoom.h  
+  +316 -0         trunk/Plugins/Visualization/paranormal/pn/pnscope.c  
+  +86 -0          trunk/Plugins/Visualization/paranormal/pn/pnscope.h  
+  +278 -0         trunk/Plugins/Visualization/paranormal/pn/pnscript.c  
+  +102 -0         trunk/Plugins/Visualization/paranormal/pn/pnscript.h  
+  +551 -0         trunk/Plugins/Visualization/paranormal/pn/pnscriptparser.y  
+  +185 -0         trunk/Plugins/Visualization/paranormal/pn/pnstringoption.c  
+  +64 -0          trunk/Plugins/Visualization/paranormal/pn/pnstringoption.h  
+  +168 -0         trunk/Plugins/Visualization/paranormal/pn/pnsymboltable.c  
+  +83 -0          trunk/Plugins/Visualization/paranormal/pn/pnsymboltable.h  
+  +180 -0         trunk/Plugins/Visualization/paranormal/pn/pntestactuator.c  
+  +61 -0          trunk/Plugins/Visualization/paranormal/pn/pntestactuator.h  
+  +178 -0         trunk/Plugins/Visualization/paranormal/pn/pnuserobject.c  
+  +91 -0          trunk/Plugins/Visualization/paranormal/pn/pnuserobject.h  
+  +323 -0         trunk/Plugins/Visualization/paranormal/pn/pnvis.c  
+  +80 -0          trunk/Plugins/Visualization/paranormal/pn/pnvis.h  
+  +33 -0          trunk/Plugins/Visualization/paranormal/pn/pnxml.h  
+
+
 2006-08-06 06:43:14 +0000  Stephen Sokolow <deitarion@gmail.com>
   revision [1926]
   Fix the test for whether a notification is necessary
