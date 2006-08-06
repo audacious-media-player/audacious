@@ -31,7 +31,6 @@
 #define MOD_MAGIC_OKTALYZER8X	(unsigned char [4]) { 0x4F, 0x4B, 0x54, 0x41 }  // "OKTA" - Atari oktalyzer 8 channel
 #define MOD_MAGIC_TAKETRACKER16	(unsigned char [4]) { 0x31, 0x36, 0x43, 0x4E }  // "16CN" - Taketracker 16 channel
 #define MOD_MAGIC_TAKETRACKER32 (unsigned char [4]) { 0x33, 0x32, 0x43, 0x4E }  // "32CN" - Taketracker 32 channel
-#define MOD_MAGIC_15INSTRUMENT	(unsigned char [4]) { 0x20, 0x20, 0x20, 0x20 }  // "    " - 15-instrument 4 channel
 
 #define S3M_MAGIC	(unsigned char [4]) { 0x53, 0x43, 0x52, 0x4D }			/* This is the SCRM string at offset 44 to 47 in the S3M header */
 

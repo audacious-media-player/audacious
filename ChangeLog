@@ -1,3 +1,11 @@
+2006-08-06 12:45:48 +0000  Giacomo Lozito <james@develia.org>
+  revision [1934]
+  - a couple of fixes for notify plugin (removed some deprecated gtk+1 functions and ensure that the timeout is removed only if it actually exists)
+
+  Changes:        Modified:
+  +3 -2           trunk/Plugins/General/notify/notify.c  
+
+
 2006-08-06 09:52:27 +0000  Stephen Sokolow <deitarion@gmail.com>
   revision [1932]
   Added awareness of the difference between stopped and playing.

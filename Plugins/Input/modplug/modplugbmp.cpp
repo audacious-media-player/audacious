@@ -192,10 +192,6 @@ bool ModplugXMMS::CanPlayFile(const string& aFilename)
 		vfs_fclose(file);
 		return 1;
 	}
-	if (!memcmp(magic, MOD_MAGIC_15INSTRUMENT, 4)) {
-		vfs_fclose(file);
-		return 1;
-	}
 	} /* end of if(mModProps.mGrabAmigaMOD) */
 
 	/* We didn't find the magic bytes, fall back to extension check */
