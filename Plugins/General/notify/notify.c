@@ -35,7 +35,7 @@ GeneralPlugin notify_gp =
         init,
         NULL,
         NULL,
-        cleanup,
+        cleanup
 };
 
 GeneralPlugin *get_gplugin_info(void)
@@ -46,6 +46,9 @@ GeneralPlugin *get_gplugin_info(void)
 
 static void init(void) 
 {
+	/* Initialise libnotify */
+	notify_init(PACKAGE);
+
 	/* 
 	TODO: I assume 100 means 100ms checking interval? Why not 200? 
 	It would be twice as efficient and the user shouldn't notice any difference.
@@ -56,13 +59,20 @@ static void init(void)
 static void cleanup(void)
 {
    if ( timeout_tag > 0 )
+   {
 	  g_source_remove(timeout_tag);
+	  timeout_tag = 0;
+	}
 
 	if (previous_title != NULL)
 	{
 		g_free(previous_title);
 		previous_title = NULL;
 	}
+
+	/* Uninitialise libnotify */
+	if ( notify_is_initted() == TRUE )
+	  notify_uninit();
 }
 
 static gboolean watchdog_func(gpointer unused)
@@ -124,9 +134,6 @@ static void do_notification(gchar *summary, gchar *message, gchar *icon_uri)
 {
 	NotifyNotification *n;  
 	gint ret;
-
-	/* Initialise libnotify if we haven't done so yet. */
-	notify_init(PACKAGE);
 
 	n = notify_notification_new(summary, 
  	                            message,
