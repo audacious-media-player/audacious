@@ -50,12 +50,13 @@ static void init(void)
 	TODO: I assume 100 means 100ms checking interval? Why not 200? 
 	It would be twice as efficient and the user shouldn't notice any difference.
 	*/
-	timeout_tag = gtk_timeout_add(100, watchdog_func, NULL);
+	timeout_tag = g_timeout_add(100, watchdog_func, NULL);
 }
 
 static void cleanup(void)
 {
-	gtk_timeout_remove(timeout_tag);
+   if ( timeout_tag > 0 )
+	  g_source_remove(timeout_tag);
 
 	if (previous_title != NULL)
 	{

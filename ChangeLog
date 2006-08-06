@@ -1,3 +1,12 @@
+2006-08-06 09:52:27 +0000  Stephen Sokolow <deitarion@gmail.com>
+  revision [1932]
+  Added awareness of the difference between stopped and playing.
+  
+
+  Changes:        Modified:
+  +25 -3          trunk/Plugins/General/notify/notify.c  
+
+
 2006-08-06 08:54:32 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1930]
   - prepare to add an optional libxml2 dependency
