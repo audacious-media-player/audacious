@@ -10,6 +10,7 @@
 #include <libnotify/notify.h>
 #include "audacious/plugin.h"
 #include "audacious/playlist.h"
+#include "audacious/input.h"
 
 #include "config.h"
 
@@ -20,6 +21,7 @@ static gint timeout_tag = 0;
 
 static gint notify_playlist_pos = -1;
 static gchar *previous_title = NULL;
+static gboolean was_playing = FALSE;
 
 /* our API. */
 static void do_notification(gchar *summary, gchar *message, gchar *icon_uri);
@@ -44,6 +46,10 @@ GeneralPlugin *get_gplugin_info(void)
 
 static void init(void) 
 {
+	/* 
+	TODO: I assume 100 means 100ms checking interval? Why not 200? 
+	It would be twice as efficient and the user shouldn't notice any difference.
+	*/
 	timeout_tag = gtk_timeout_add(100, watchdog_func, NULL);
 }
 
@@ -63,9 +69,20 @@ static gboolean watchdog_func(gpointer unused)
 	gint pos = playlist_get_position();
 	gchar *title = playlist_get_songtitle(pos);
 
-	if ((title != NULL && previous_title != NULL &&
-		    g_strcasecmp(title, previous_title)) ||
-		    (title == NULL && pos != notify_playlist_pos))
+	/*
+	Trigger a notice if a song is now playing and one of the following is true:
+		1. it has a different title from the last time this ran
+		2. there is no title but it's a different playlist position
+		3. the player was stopped the last time this ran
+	(listed in the order they are checked)
+	
+	FIXME: The same song twice in a row will only get announced once.
+	Proposed Remedy: Add a check for playback progress.
+	*/
+	if (ip_data.playing && 
+		((title != NULL && previous_title != NULL &&
+		g_strcasecmp(title, previous_title)) ||
+		(title == NULL && pos != notify_playlist_pos) || (! was_playing)))
 	{
 		gchar *tmpbuf;
 		TitleInput *tuple;
@@ -75,6 +92,10 @@ static gboolean watchdog_func(gpointer unused)
 		if (tuple == NULL)
 			return TRUE;
 
+		/* 
+		FIXME: This is useless for formats without metadata.
+		Proposed Remedy: playlist_get_filename(pos) instead of _("Unknown Track")
+		*/
 		tmpbuf = g_markup_printf_escaped("<b>%s</b>\n<i>%s</i>\n%s",
 			(tuple->performer ? tuple->performer : _("Unknown Artist")),
 			(tuple->album_name ? tuple->album_name : _("Unknown Album")),
@@ -93,6 +114,7 @@ static gboolean watchdog_func(gpointer unused)
 	}
 
 	previous_title = g_strdup(title);
+	was_playing = ip_data.playing;
 
 	return TRUE;
 }

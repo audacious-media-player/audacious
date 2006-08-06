@@ -1,3 +1,13 @@
+2006-08-06 08:54:32 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1930]
+  - prepare to add an optional libxml2 dependency
+  
+
+  Changes:        Modified:
+  +188 -0         trunk/m4/libxml.m4  
+  +2 -0           trunk/mk/rules.mk.in  
+
+
 2006-08-06 08:53:29 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1928]
   - incomplete stuff
