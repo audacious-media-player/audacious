@@ -2181,7 +2181,7 @@ playlist_fileinfo(guint pos)
     {
         entry = node->data;
         tuple = entry->tuple;
-	path = g_strdup(entry->filename);
+        path = g_strdup(entry->filename);
     }
 
     PLAYLIST_UNLOCK();
@@ -2224,7 +2224,9 @@ playlist_fileinfo_current(void)
     if (playlist_get() && playlist_position)
     {
         path = g_strdup(playlist_position->filename);
-	tuple = playlist_position->tuple;
+        if ( playlist_position->tuple == NULL )
+          playlist_entry_get_info(playlist_position);
+        tuple = playlist_position->tuple;
     }
 
     PLAYLIST_UNLOCK();

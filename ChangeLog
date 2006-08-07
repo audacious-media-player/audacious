@@ -1,3 +1,11 @@
+2006-08-07 11:19:43 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [1944]
+  Endianness fix by Luca Barbato <lu_zero@gentoo.org>.
+
+  Changes:        Modified:
+  +3 -1           trunk/Plugins/Input/sexypsf/PsxMem.h  
+
+
 2006-08-07 09:26:07 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1942]
   - indentation cleanups
