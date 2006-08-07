@@ -16,10 +16,12 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include "config.h"
+
 #ifndef __PSXMEMORY_H__
 #define __PSXMEMORY_H__
 
-#ifdef MSB_FIRST
+#ifdef WORDS_BIGENDIAN
 static INLINE u16 BFLIP16(u16 x)
 {
  return( ((x>>8)&0xFF)| ((x&0xFF)<<8) );

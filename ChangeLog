@@ -1,3 +1,12 @@
+2006-08-07 09:26:07 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1942]
+  - indentation cleanups
+  
+
+  Changes:        Modified:
+  +5 -5           trunk/Plugins/General/notify/notify.c  
+
+
 2006-08-07 07:39:19 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [1940]
   - to prevent SIGSEGV
