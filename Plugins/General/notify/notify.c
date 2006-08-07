@@ -58,10 +58,10 @@ static void init(void)
 
 static void cleanup(void)
 {
-   if ( timeout_tag > 0 )
-   {
-	  g_source_remove(timeout_tag);
-	  timeout_tag = 0;
+	if ( timeout_tag > 0 )
+	{
+		g_source_remove(timeout_tag);
+		timeout_tag = 0;
 	}
 
 	if (previous_title != NULL)
@@ -72,7 +72,7 @@ static void cleanup(void)
 
 	/* Uninitialise libnotify */
 	if ( notify_is_initted() == TRUE )
-	  notify_uninit();
+		notify_uninit();
 }
 
 static gboolean watchdog_func(gpointer unused)

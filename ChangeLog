@@ -1,3 +1,12 @@
+2006-08-07 07:39:19 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [1940]
+  - to prevent SIGSEGV
+  
+
+  Changes:        Modified:
+  +6 -0           trunk/Plugins/Input/cue/cuesheet.c  
+
+
 2006-08-06 22:13:01 +0000  Giacomo Lozito <james@develia.org>
   revision [1938]
   - refinements for the notify plugin
