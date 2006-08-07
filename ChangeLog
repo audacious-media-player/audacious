@@ -1,3 +1,11 @@
+2006-08-06 22:13:01 +0000  Giacomo Lozito <james@develia.org>
+  revision [1938]
+  - refinements for the notify plugin
+
+  Changes:        Modified:
+  +11 -4          trunk/Plugins/General/notify/notify.c  
+
+
 2006-08-06 13:24:06 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1936]
   Remove 15 instrument magic at offset 1080 because of false positive resulting in decoder segfault. Closes bug #543.

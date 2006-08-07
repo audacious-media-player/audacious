@@ -95,6 +95,9 @@ static gboolean is_our_file(gchar *filename)
 
 	ext = strrchr(filename, '.');
 
+	if(!ext)
+		return FALSE;
+	
 	if (!strncasecmp(ext, ".cue", 4))
 	{
 		gint i;
@@ -333,6 +336,9 @@ static void cache_cue_file(char *f)
 	FILE *file = fopen(f, "rb");
 	gchar line[MAX_CUE_LINE_LENGTH+1];
 
+	if(!file)
+		return;
+	
 	while (TRUE) {
 		gint p;
 		gint q;
