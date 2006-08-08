@@ -173,6 +173,9 @@ pn_container_load_thyself (PnUserObject *user_object, const xmlNodePtr node)
     {
       for (actuator_node = actuators_node->xmlChildrenNode; actuator_node; actuator_node = actuator_node->next)
 	{
+	  if (!g_strcasecmp(actuator_node->name, "text"))
+	    continue;
+
 	  actuator = pn_actuator_factory_new_actuator_from_xml (actuator_node);
 	  if (actuator)
 	    /* FIXME: Should this be pn_container_real_add_actuator? */
