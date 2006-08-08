@@ -175,21 +175,24 @@ pn_vis_load_thyself (PnUserObject *user_object, const xmlNodePtr node)
     }
       
   /* get the root actuator's node */
-  actuator_node = actuators_node->xmlChildrenNode;
+  for (actuator_node = actuators_node->xmlChildrenNode; actuator_node != NULL && !g_strcasecmp(actuator_node->name, "text");
+	actuator_node = actuator_node->next);
   if (! actuator_node)
     goto done;
 
   /* Create a new actuator (reworked by nenolod) */
+#if 0
   for (tptr = actuator_node; tptr != NULL && root_actuator == NULL; tptr = tptr->next)
   {
      xmlNodePtr ttptr;
 
      for (ttptr = tptr; ttptr != NULL; ttptr = ttptr->xmlChildrenNode)
-        root_actuator = pn_actuator_factory_new_actuator_from_xml (ttptr);
   }
+#endif
 
+  root_actuator = pn_actuator_factory_new_actuator_from_xml (actuator_node);
   if (!root_actuator)
-    pn_error ("Unknown actuator \"%s\"", actuator_node->name);
+    pn_error ("Unknown actuator \"%s\" -> '%s'", actuator_node->name, actuator_node->content);
 
   pn_vis_set_root_actuator (vis, root_actuator);
 
