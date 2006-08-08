@@ -143,7 +143,7 @@ pn_vis_save_thyself (PnUserObject *user_object, xmlNodePtr node)
   xmlSetNs (node, ns);
 
   actuators_node = xmlNewChild (node, NULL, "Actuators", NULL);
-  actuator_node = xmlNewChild (actuators_node, NULL, "BUG", NULL);
+  actuator_node = xmlNewChild (actuators_node, NULL, user_object->name, NULL);
   if (vis->root_actuator)
     pn_user_object_save_thyself (PN_USER_OBJECT (vis->root_actuator), actuator_node);
 
