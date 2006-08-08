@@ -1,3 +1,12 @@
+2006-08-08 04:22:11 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1952]
+  - oh, define an actual SDL version here. :P
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/configure.ac  
+
+
 2006-08-08 04:18:20 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1950]
   - hook up paranormal -- client interface code doesn't exist yet though
