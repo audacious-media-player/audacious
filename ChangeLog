@@ -1,3 +1,12 @@
+2006-08-08 06:08:59 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1966]
+  - a minor tweak to the save function
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Visualization/paranormal/pn/pnvis.c  
+
+
 2006-08-08 05:58:22 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1964]
   - locking the mutex on audacious data upload is unnecessary.

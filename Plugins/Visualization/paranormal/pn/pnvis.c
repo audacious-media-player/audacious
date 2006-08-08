@@ -155,8 +155,8 @@ static void
 pn_vis_load_thyself (PnUserObject *user_object, const xmlNodePtr node)
 {
   PnVis *vis;
-  xmlNodePtr actuators_node, actuator_node;
-  PnActuator *root_actuator;
+  xmlNodePtr actuators_node, actuator_node, tptr;
+  PnActuator *root_actuator = NULL;
 
   g_return_if_fail (user_object != NULL);
   g_return_if_fail (PN_IS_VIS (user_object));
@@ -179,9 +179,16 @@ pn_vis_load_thyself (PnUserObject *user_object, const xmlNodePtr node)
   if (! actuator_node)
     goto done;
 
-  /* Create a new actuator */
-  root_actuator = pn_actuator_factory_new_actuator_from_xml (actuator_node);
-  if (! root_actuator)
+  /* Create a new actuator (reworked by nenolod) */
+  for (tptr = actuator_node; tptr != NULL && root_actuator == NULL; tptr = tptr->next)
+  {
+     xmlNodePtr ttptr;
+
+     for (ttptr = tptr; ttptr != NULL; ttptr = ttptr->xmlChildrenNode)
+        root_actuator = pn_actuator_factory_new_actuator_from_xml (ttptr);
+  }
+
+  if (!root_actuator)
     pn_error ("Unknown actuator \"%s\"", actuator_node->name);
 
   pn_vis_set_root_actuator (vis, root_actuator);
