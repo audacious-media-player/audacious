@@ -484,7 +484,7 @@ load_default_vis (void)
 			      "x = 2 * iteration - 1;\n"
 			      "y = value;");
   option = pn_actuator_get_option_by_name (actuator, "draw_method");
-  pn_list_option_set_value (PN_LIST_OPTION (option), "Lines");
+  pn_list_option_set_index (PN_LIST_OPTION (option), 1);
   pn_container_add_actuator (container, actuator, PN_POSITION_TAIL);
 
   /* Distortion */
