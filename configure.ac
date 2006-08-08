@@ -908,7 +908,39 @@ AC_SUBST(MUSICBRAINZ_LIBS)
 
 dnl *** End of Scrobbler checks ***
 
+dnl *** libparanormal checks
+
+AC_ARG_ENABLE(paranormal,
+[  --disable-paranormal    disable paranormal vis plugin. (default=enabled)],
+[have_paranormal=$enableval],
+[
+  if test "x$ap_disable_paranormal" = "xyes"; then
+    have_paranormal=no
+    AC_MSG_RESULT([*** paranormal plugin disabled by request ***])
+  else
+    have_paranormal=yes
+    AM_PATH_SDL(SDL, , [
+	AC_MSG_WARN([*** SDL is not installed. Paranormal will not be built. ***])
+	have_paranormal="no"
+    ])
+
+    AM_PATH_XML2(2.0.0, , [
+	AC_MSG_WARN([*** libxml2 is not installed. Paranormal will not be built. ***])
+	have_paranormal="no"
+    ])
+  fi
+]
+)
+
+if test "$have_paranormal" = "yes"; then
+	VISUALIZATION_PLUGINS="$VISUALIZATION_PLUGINS paranormal"
+fi
+
+dnl *** End of all plugin checks ***
+
 AC_SUBST(ARCH_DEFINES)
+
+dnl XXX delete ASAP -nenolod
 AM_CONDITIONAL(ARCH_X86, test "x$arch_type" = "xix86")
 AM_CONDITIONAL(USE_X86ASM, test "x$x86_asm" = xyes)
 AM_CONDITIONAL(HAVE_SOLARIS, test "x$have_solaris" = xyes)
@@ -1112,6 +1144,7 @@ echo
 echo "  Visualization"
 echo "  -------------"
 echo "  Blur Scope:                             yes"
+echo "  Paranormal Visualization Library:       $have_paranormal"
 echo
 
 if test "$beep_cv_lib_xlibs_threadsafe" = "no"; then

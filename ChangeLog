@@ -1,3 +1,11 @@
+2006-08-08 00:18:08 +0000  Giacomo Lozito <james@develia.org>
+  revision [1948]
+  - why wma tags were not converted to utf8? by the way, this made libnotify crash when wma tuple contained non-utf8 strings
+
+  Changes:        Modified:
+  +6 -5           trunk/Plugins/Input/wma/wma.c  
+
+
 2006-08-07 23:34:31 +0000  Giacomo Lozito <james@develia.org>
   revision [1946]
   - when audacious is started and track detail on current song are requested, try to check if a decoder exists before falling back to the tuple display dialog
