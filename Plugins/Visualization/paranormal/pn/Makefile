@@ -34,7 +34,7 @@ SOURCES =  \
 	pnrotozoom.c        \
 	pnscope.c           \
 	pnscript.c          \
-	pnscriptparser.y    \
+	pnscriptparser.c    \
 	pnstringoption.c    \
 	pnsymboltable.c     \
 	pntestactuator.c    \

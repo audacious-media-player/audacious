@@ -1,3 +1,12 @@
+2006-08-08 04:44:23 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1958]
+  - gah
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Visualization/paranormal/client.c  
+
+
 2006-08-08 04:41:14 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1956]
   - paranormal in theory works on audacious
