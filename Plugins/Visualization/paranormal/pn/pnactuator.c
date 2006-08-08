@@ -174,6 +174,9 @@ pn_actuator_load_thyself (PnUserObject *user_object, const xmlNodePtr node)
     {
       for (option_node = options_node->xmlChildrenNode; option_node; option_node = option_node->next)
 	{
+	  if (!g_strcasecmp(option_node->name, "text"))
+            continue;
+
 	  option = pn_actuator_get_option_by_name (actuator, option_node->name);
 	  if (option)
 	    pn_user_object_load_thyself (PN_USER_OBJECT (option), option_node);
