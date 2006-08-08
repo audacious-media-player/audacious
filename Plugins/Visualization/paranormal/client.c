@@ -366,6 +366,9 @@ render_func (void *data)
 	      break;
 	    }
 	}
+
+        /* don't lock the CPU :P */
+        g_usleep(10000);
     }
 
   return 0;
