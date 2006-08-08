@@ -36,7 +36,7 @@ typedef struct
 }
 audcfg_t;
 
-audcfg_t audcfg = { 5000 , FALSE , TRUE };
+static audcfg_t audcfg = { 5000 , FALSE , TRUE };
 
 /* our API. */
 static void do_notification(gchar *summary, gchar *message, gchar *icon_uri);
