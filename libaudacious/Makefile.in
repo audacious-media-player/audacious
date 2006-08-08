@@ -27,7 +27,6 @@ SOURCES = \
 	$(CONF_SRC) \
 	rcfile.c \
 	$(VFS_SRC) \
-	configfile.c \
 	beepctrl.c \
 	dirbrowser.c \
 	util.c \
@@ -41,7 +40,6 @@ OBJECTS = ${SOURCES:.c=.o}
 
 HEADERS = \
 	vfs.h rcfile.h configdb.h \
-	configfile.h \
 	beepctrl.h dirbrowser.h util.h \
 	formatter.h titlestring.h xml_document.h
 

@@ -1,3 +1,12 @@
+2006-08-08 09:19:55 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1978]
+  - allow configdb::pnxmms::preset to set what pn preset to load on start
+  
+
+  Changes:        Modified:
+  +5 -0           trunk/Plugins/Visualization/paranormal/client.c  
+
+
 2006-08-08 06:49:36 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1976]
   - ok, with this commit, loading now works =)
