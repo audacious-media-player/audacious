@@ -919,7 +919,7 @@ AC_ARG_ENABLE(paranormal,
     AC_MSG_RESULT([*** paranormal plugin disabled by request ***])
   else
     have_paranormal=yes
-    AM_PATH_SDL(SDL, , [
+    AM_PATH_SDL(1.2.5, , [
 	AC_MSG_WARN([*** SDL is not installed. Paranormal will not be built. ***])
 	have_paranormal="no"
     ])
