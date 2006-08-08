@@ -1,3 +1,14 @@
+2006-08-08 09:20:57 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1980]
+  - byebye XMMS configfile crap
+  
+
+  Changes:        Modified:
+  +0 -2           trunk/libaudacious/Makefile.in  
+  +0 -495         trunk/libaudacious/configfile.c  
+  +0 -132         trunk/libaudacious/configfile.h  
+
+
 2006-08-08 09:19:55 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1978]
   - allow configdb::pnxmms::preset to set what pn preset to load on start
