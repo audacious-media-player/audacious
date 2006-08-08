@@ -1,3 +1,12 @@
+2006-08-08 06:49:36 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1976]
+  - ok, with this commit, loading now works =)
+  
+
+  Changes:        Modified:
+  +6 -3           trunk/Plugins/Visualization/paranormal/pn/pnvis.c  
+
+
 2006-08-08 06:27:43 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1974]
   - don't peg the CPU

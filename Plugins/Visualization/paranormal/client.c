@@ -430,6 +430,8 @@ read_options (void)
   if (bmp_cfg_db_get_int (cfg, "pnxmms", "image_height", &i))
     image_height = i;
 
+  bmp_cfg_db_get_string (cfg, "pnxmms", "preset", &preset);
+
   bmp_cfg_db_close (cfg);
 
   return;
@@ -446,6 +448,9 @@ write_options (void)
 
   bmp_cfg_db_set_int (cfg, "pnxmms", "image_width", image_width);
   bmp_cfg_db_set_int (cfg, "pnxmms", "image_height", image_height);
+
+  if (preset)
+      bmp_cfg_db_set_string (cfg, "pnxmms", "preset", preset);
 
   bmp_cfg_db_close (cfg);
 }
