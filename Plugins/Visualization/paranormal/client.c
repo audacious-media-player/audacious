@@ -91,7 +91,7 @@ static VisPlugin pn_xmms_vp =
   NULL,    /* handle */
   NULL,    /* filename */
   0,       /* xmms_session */
-  PACKAGE " " VERSION,
+  "Paranormal Visualization Studio " VERSION,
   2,
   2,
   pn_xmms_init,
@@ -131,7 +131,7 @@ pn_xmms_init (void)
       pn_xmms_vp.disable_plugin (&pn_xmms_vp);
     }
 
-  SDL_WM_SetCaption (PACKAGE " " VERSION, PACKAGE);
+  SDL_WM_SetCaption ("Paranormal Visualization Studio " VERSION, PACKAGE);
 
   /* Initialize Paranormal */
   pn_init ();

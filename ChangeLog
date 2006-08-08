@@ -1,3 +1,13 @@
+2006-08-08 04:47:55 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1960]
+  - it might help if i actually ran bison on the script parser eh :)
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Visualization/paranormal/pn/Makefile  
+  +2009 -0        trunk/Plugins/Visualization/paranormal/pn/pnscriptparser.c  
+
+
 2006-08-08 04:44:23 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1958]
   - gah
