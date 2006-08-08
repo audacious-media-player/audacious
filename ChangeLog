@@ -1,3 +1,11 @@
+2006-08-08 17:06:12 +0000  Giacomo Lozito <james@develia.org>
+  revision [1984]
+  - fixed default values for libnotify plugin
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/General/notify/notify.c  
+
+
 2006-08-08 16:13:41 +0000  Giacomo Lozito <james@develia.org>
   revision [1982]
   - configure dialog for libnotify plugin
