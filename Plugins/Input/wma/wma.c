@@ -37,6 +37,7 @@
 #include "libaudacious/util.h"
 #include "libaudacious/titlestring.h"
 #include "libaudacious/vfs.h"
+#include "audacious/util.h"
 
 #include "avcodec.h"
 #include "avformat.h"
@@ -265,13 +266,13 @@ static TitleInput *wma_get_song_tuple(gchar * filename)
     if((in->title[0] != '\0') || (in->author[0] != '\0') || (in->album[0] != '\0') ||
        (in->comment[0] != '\0') || (in->genre[0] != '\0') || (in->year != 0) || (in->track != 0))
     {	
-	tuple->performer = w_getstr(in->author);
-	tuple->album_name = w_getstr(in->album);
-	tuple->track_name = w_getstr(in->title);
+	tuple->performer = str_to_utf8(w_getstr(in->author));
+	tuple->album_name = str_to_utf8(w_getstr(in->album));
+	tuple->track_name = str_to_utf8(w_getstr(in->title));
 	tuple->year = in->year;
 	tuple->track_number = in->track;
-	tuple->genre = w_getstr(in->genre);
-	tuple->comment = w_getstr(in->comment);
+	tuple->genre = str_to_utf8(w_getstr(in->genre));
+	tuple->comment = str_to_utf8(w_getstr(in->comment));
     }
 
     if (in->duration)

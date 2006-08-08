@@ -1,3 +1,11 @@
+2006-08-07 23:34:31 +0000  Giacomo Lozito <james@develia.org>
+  revision [1946]
+  - when audacious is started and track detail on current song are requested, try to check if a decoder exists before falling back to the tuple display dialog
+
+  Changes:        Modified:
+  +4 -2           trunk/audacious/playlist.c  
+
+
 2006-08-07 11:19:43 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [1944]
   Endianness fix by Luca Barbato <lu_zero@gentoo.org>.
