@@ -1,3 +1,12 @@
+2006-08-08 04:56:22 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1962]
+  - some cleanups
+  
+
+  Changes:        Modified:
+  +2 -2           trunk/Plugins/Visualization/paranormal/client.c  
+
+
 2006-08-08 04:47:55 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1960]
   - it might help if i actually ran bison on the script parser eh :)

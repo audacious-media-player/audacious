@@ -229,9 +229,6 @@ pn_xmms_render_pcm (gint16 data[2][512])
 {
   guint i;
 
-  /* Lock the audio data */
-  SDL_mutexP (audio_data_mutex);
-
   /* Set up the audio data */
   for (i=0; i<512; i++)
     {
@@ -240,18 +237,12 @@ pn_xmms_render_pcm (gint16 data[2][512])
       intermediate_pcm_data[PN_CHANNEL_CENTER][i] = .5 * (intermediate_pcm_data[PN_CHANNEL_LEFT][i]
 							  + intermediate_pcm_data[PN_CHANNEL_RIGHT][i]);
     }
-
-  /* Unlock the audio data */
-  SDL_mutexV (audio_data_mutex);
 }
 
 static void
 pn_xmms_render_freq (gint16 data[2][256])
 {
   guint i;
-
-  /* Lock the audio data */
-  SDL_mutexP (audio_data_mutex);
 
   /* Set up the audio data */
   for (i=0; i<256; i++)
@@ -261,9 +252,6 @@ pn_xmms_render_freq (gint16 data[2][256])
       intermediate_freq_data[PN_CHANNEL_CENTER][i] = .5 * (intermediate_freq_data[PN_CHANNEL_LEFT][i]
 							  + intermediate_freq_data[PN_CHANNEL_RIGHT][i]);
     }
-
-  /* Unlock the audio data */
-  SDL_mutexV (audio_data_mutex);
 }
 
 static gboolean
