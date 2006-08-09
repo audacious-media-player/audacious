@@ -1,3 +1,67 @@
+2006-08-09 09:47:22 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1996]
+  this massive commit does the following:
+  - seriously cleans up dependencies on the WA2-like gui code
+  - moves all of the WA2 stuff into a seperate library (libwidgets.a)
+  - makes things less icky in the player tree
+  
+
+  Changes:        Modified:
+  +3 -19          trunk/audacious/Makefile  
+  +0 -1           trunk/audacious/controlsocket.c  
+  +0 -149         trunk/audacious/eq_graph.c  
+  +0 -40          trunk/audacious/eq_graph.h  
+  +0 -235         trunk/audacious/eq_slider.c  
+  +0 -44          trunk/audacious/eq_slider.h  
+  +6 -6           trunk/audacious/equalizer.c  
+  +1 -1           trunk/audacious/equalizer.h  
+  +0 -1           trunk/audacious/genevent.c  
+  +0 -2           trunk/audacious/genevent.h  
+  +0 -203         trunk/audacious/hslider.c  
+  +0 -54          trunk/audacious/hslider.h  
+  +1 -1           trunk/audacious/input.c  
+  +0 -1           trunk/audacious/main.c  
+  +2 -2           trunk/audacious/main.h  
+  +11 -11         trunk/audacious/mainwin.c  
+  +8 -8           trunk/audacious/mainwin.h  
+  +0 -186         trunk/audacious/menurow.c  
+  +0 -56          trunk/audacious/menurow.h  
+  +0 -93          trunk/audacious/monostereo.c  
+  +0 -43          trunk/audacious/monostereo.h  
+  +0 -75          trunk/audacious/number.c  
+  +0 -43          trunk/audacious/number.h  
+  +0 -194         trunk/audacious/pbutton.c  
+  +0 -59          trunk/audacious/pbutton.h  
+  +0 -2           trunk/audacious/playback.c  
+  +0 -2           trunk/audacious/playlist.c  
+  +0 -954         trunk/audacious/playlist_list.c  
+  +0 -56          trunk/audacious/playlist_list.h  
+  +0 -168         trunk/audacious/playlist_slider.c  
+  +0 -47          trunk/audacious/playlist_slider.h  
+  +0 -102         trunk/audacious/playstatus.c  
+  +0 -41          trunk/audacious/playstatus.h  
+  +1 -2           trunk/audacious/prefswin.c  
+  +0 -99          trunk/audacious/sbutton.c  
+  +0 -43          trunk/audacious/sbutton.h  
+  +0 -1260        trunk/audacious/skin.c  
+  +0 -145         trunk/audacious/skin.h  
+  +1 -1           trunk/audacious/skinwin.c  
+  +0 -204         trunk/audacious/svis.c  
+  +0 -47          trunk/audacious/svis.h  
+  +0 -176         trunk/audacious/tbutton.c  
+  +0 -48          trunk/audacious/tbutton.h  
+  +0 -579         trunk/audacious/textbox.c  
+  +0 -64          trunk/audacious/textbox.h  
+  +0 -2           trunk/audacious/ui_fileinfo.c  
+  +6 -6           trunk/audacious/ui_playlist.c  
+  +2 -2           trunk/audacious/ui_playlist.h  
+  +0 -291         trunk/audacious/vis.c  
+  +0 -77          trunk/audacious/vis.h  
+  +3 -3           trunk/audacious/visualization.c  
+  +0 -263         trunk/audacious/widget.c  
+  +6035 -102      trunk/audacious/widget.h  
+
+
 2006-08-09 09:11:01 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1994]
   - use posix_memalign() instead of memalign().
