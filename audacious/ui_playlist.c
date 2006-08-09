@@ -298,12 +298,16 @@ playlistwin_is_shaded(void)
 gint
 playlistwin_get_width(void)
 {
+    cfg.playlist_width /= PLAYLISTWIN_WIDTH_SNAP;
+    cfg.playlist_width *= PLAYLISTWIN_WIDTH_SNAP;
     return cfg.playlist_width;
 }
 
 gint
 playlistwin_get_height_unshaded(void)
 {
+    cfg.playlist_height /= PLAYLISTWIN_HEIGHT_SNAP;
+    cfg.playlist_height *= PLAYLISTWIN_HEIGHT_SNAP;
     gint height = cfg.playlist_height;
     return height;
 }
@@ -506,7 +510,6 @@ playlistwin_set_geometry_hints(gboolean shaded)
 
     geometry.min_width = PLAYLISTWIN_MIN_WIDTH;
     geometry.max_width = G_MAXUINT16;
-    geometry.base_width = cfg.playlist_width;
 
     geometry.width_inc = PLAYLISTWIN_WIDTH_SNAP;
     geometry.height_inc = PLAYLISTWIN_HEIGHT_SNAP;
@@ -519,11 +522,9 @@ playlistwin_set_geometry_hints(gboolean shaded)
     else {
         geometry.min_height = PLAYLISTWIN_MIN_HEIGHT;
         geometry.max_height = G_MAXUINT16;
-        geometry.base_height = cfg.playlist_height;
     }
 
-    mask = GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE | GDK_HINT_RESIZE_INC |
-           GDK_HINT_BASE_SIZE;
+    mask = GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE | GDK_HINT_RESIZE_INC;
 
     gtk_window_set_geometry_hints(GTK_WINDOW(playlistwin),
                                   playlistwin, &geometry, mask);
@@ -559,7 +560,7 @@ playlistwin_set_shade(gboolean shaded)
     playlistwin_set_geometry_hints(cfg.playlist_shaded);
 
     gtk_window_resize(GTK_WINDOW(playlistwin),
-                      cfg.playlist_width,
+                      playlistwin_get_width(),
                       playlistwin_get_height());
 
     playlistwin_set_mask();
