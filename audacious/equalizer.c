@@ -41,17 +41,17 @@
 #include <X11/Xlib.h>
 
 #include "dock.h"
-#include "eq_graph.h"
-#include "eq_slider.h"
+#include "widgets/eq_graph.h"
+#include "widgets/eq_slider.h"
 #include "hints.h"
-#include "hslider.h"
+#include "widgets/hslider.h"
 #include "input.h"
 #include "main.h"
-#include "pbutton.h"
+#include "widgets/pbutton.h"
 #include "playlist.h"
 #include "ui_playlist.h"
-#include "skin.h"
-#include "tbutton.h"
+#include "widgets/skin.h"
+#include "widgets/tbutton.h"
 #include "util.h"
 #include "output.h"
 

@@ -50,8 +50,6 @@
 #include "playback.h"
 #include "playlist.h"
 #include "ui_playlist.h"
-#include "playlist_list.h"
-#include "skin.h"
 #include "urldecode.h"
 #include "util.h"
 #include "ui_fileinfo.h"

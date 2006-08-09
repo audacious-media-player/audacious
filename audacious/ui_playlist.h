@@ -25,8 +25,8 @@
 #include <glib.h>
 
 #include "mainwin.h"
-#include "pbutton.h"
-#include "playlist_list.h"
+#include "widgets/pbutton.h"
+#include "widgets/playlist_list.h"
 
 
 #define PLAYLISTWIN_FRAME_TOP_HEIGHT    20

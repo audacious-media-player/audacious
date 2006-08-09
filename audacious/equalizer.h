@@ -25,7 +25,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#include "pbutton.h"
+#include "widgets/pbutton.h"
 
 #define EQUALIZER_HEIGHT         (gint)(cfg.equalizer_shaded ? 14 : 116)
 #define EQUALIZER_WIDTH          (gint)275

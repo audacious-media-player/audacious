@@ -34,7 +34,7 @@
 #include <string.h>
 
 #include "main.h"
-#include "skin.h"
+#include "widgets/skin.h"
 #include "util.h"
 
 #include <gdk/gdkx.h>

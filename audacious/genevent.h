@@ -26,8 +26,6 @@
 #define GENEVENT_H
 
 #include "mainwin.h"
-#include "textbox.h"
-#include "vis.h"
 
 extern gboolean ev_waiting;
 

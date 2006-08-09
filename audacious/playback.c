@@ -45,8 +45,6 @@
 #include "output.h"
 #include "playlist.h"
 #include "ui_playlist.h"
-#include "playlist_list.h"
-#include "skin.h"
 #include "skinwin.h"
 #include "urldecode.h"
 #include "util.h"

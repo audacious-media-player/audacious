@@ -1,7 +1,7 @@
 include ../mk/rules.mk
 include ../mk/objective.mk
 
-SUBDIRS = glade images
+SUBDIRS = widgets glade images
 
 beepincludedir = $(includedir)/audacious
 
@@ -14,7 +14,8 @@ LDADD = \
 	../sqlite/libsqlite.a	\
 	$(CHARDET_LIBS) \
 	$(GTK_LIBS)      \
-	$(LIBGLADE_LIBS)
+	$(LIBGLADE_LIBS) \
+	./widgets/libwidgets.a
 
 CFLAGS += \
 	$(GTK_CFLAGS)      \
@@ -33,7 +34,6 @@ HEADERS = \
 SOURCES = \
 	build_stamp.c \
 	genevent.c \
-	skin.c \
 	util.c \
 	output.c \
 	fft.c \
@@ -45,23 +45,7 @@ SOURCES = \
 	playlist.c \
 	controlsocket.c \
 	dock.c \
-	widget.c \
-	sbutton.c \
-	pbutton.c \
-	tbutton.c \
-	textbox.c \
-	menurow.c \
-	hslider.c \
-	monostereo.c \
-	vis.c \
-	svis.c \
-	number.c \
 	playback.c \
-	playstatus.c \
-	playlist_list.c \
-	playlist_slider.c \
-	eq_graph.c \
-	eq_slider.c \
 	main.c \
 	logger.c \
 	mainwin.c \

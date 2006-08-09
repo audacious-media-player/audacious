@@ -1,3 +1,12 @@
+2006-08-09 09:11:01 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1994]
+  - use posix_memalign() instead of memalign().
+  
+
+  Changes:        Modified:
+  +7 -4           trunk/Plugins/Input/wma/libffwma/mem.c  
+
+
 2006-08-09 09:04:02 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1992]
   - switch to stdlib/unistd.h for malloc (all C89/C99 systems have these). fixes bug #539.

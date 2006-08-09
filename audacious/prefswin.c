@@ -48,7 +48,7 @@
 #include "visualization.h"
 
 #include "main.h"
-#include "skin.h"
+#include "widgets/skin.h"
 #include "urldecode.h"
 #include "util.h"
 #include "dnd.h"
@@ -57,7 +57,6 @@
 #include "mainwin.h"
 #include "ui_playlist.h"
 #include "skinwin.h"
-#include "playlist_list.h"
 #include "build_stamp.h"
 #include "prefswin.h"
 
