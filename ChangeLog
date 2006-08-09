@@ -1,3 +1,13 @@
+2006-08-09 06:43:33 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [1990]
+  - fix geometry hinting so that it is ICCCM compliant. patch by whereami.
+  Also fixes: composite and xgl!
+  
+
+  Changes:        Modified:
+  +6 -5           trunk/audacious/ui_playlist.c  
+
+
 2006-08-09 05:39:42 +0000  George Averill <nhjm449@gmail.com>
   revision [1988]
   - Fix misspelling of flac (bug #545)

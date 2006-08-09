@@ -20,7 +20,8 @@
 /* FIXME: #include "gnet-private.h" */
 #include <glib.h>
 #include <string.h>
-#include <malloc.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include <ctype.h>
 
 #include "uri.h"
