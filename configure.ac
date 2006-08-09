@@ -436,7 +436,7 @@ if test "$have_modplug" = "yes"; then
 fi
 
 dnl *** flac
-AC_ARG_ENABLE( flc,
+AC_ARG_ENABLE( flac,
 [  --disable-flac          disable flac input plugin (default=enabled)],,
                 enable_flac="yes")
 
