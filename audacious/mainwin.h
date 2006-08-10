@@ -24,14 +24,7 @@
 
 #include <gtk/gtk.h>
 
-#include "widgets/number.h"
-#include "widgets/pbutton.h"
-#include "widgets/playstatus.h"
-#include "widgets/tbutton.h"
-#include "widgets/textbox.h"
-#include "widgets/svis.h"
-#include "widgets/vis.h"
-#include "widgets/hslider.h"
+#include "widgets/widgetcore.h"
 
 /* yes, main window size is fixed */
 #define MAINWIN_WIDTH            (gint)275

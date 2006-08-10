@@ -40,18 +40,13 @@
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 
+#include "widgets/widgetcore.h"
 #include "dock.h"
-#include "widgets/eq_graph.h"
-#include "widgets/eq_slider.h"
 #include "hints.h"
-#include "widgets/hslider.h"
 #include "input.h"
 #include "main.h"
-#include "widgets/pbutton.h"
 #include "playlist.h"
 #include "ui_playlist.h"
-#include "widgets/skin.h"
-#include "widgets/tbutton.h"
 #include "util.h"
 #include "output.h"
 

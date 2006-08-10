@@ -48,12 +48,6 @@
 #include "mainwin.h"
 #include "playback.h"
 #include "playlist.h"
-#include "widgets/playlist_list.h"
-#include "widgets/playlist_slider.h"
-#include "widgets/pbutton.h"
-#include "widgets/sbutton.h"
-#include "widgets/skin.h"
-#include "widgets/textbox.h"
 #include "util.h"
 
 #include "pixmaps.h"

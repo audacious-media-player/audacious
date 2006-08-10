@@ -35,7 +35,7 @@
 #include "svis.h"
 #include "tbutton.h"
 #include "textbox.h"
-#incldue "vis.h"
+#include "vis.h"
 #include "widget.h"
 
 #endif

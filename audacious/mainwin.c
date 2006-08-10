@@ -41,7 +41,7 @@
 
 #include <X11/Xlib.h>
 
-#include "widgets/textbox.h"
+#include "widgets/widgetcore.h"
 #include "mainwin.h"
 #include "pixmaps.h"
 
@@ -60,17 +60,8 @@
 #include "prefswin.h"
 #include "skinwin.h"
 #include "genevent.h"
-#include "widgets/hslider.h"
-#include "widgets/menurow.h"
-#include "widgets/monostereo.h"
-#include "widgets/pbutton.h"
 #include "playback.h"
 #include "playlist.h"
-#include "widgets/playlist_list.h"
-#include "widgets/playstatus.h"
-#include "widgets/sbutton.h"
-#include "widgets/svis.h"
-#include "widgets/textbox.h"
 #include "urldecode.h"
 #include "util.h"
 #include "widgets/vis.h"

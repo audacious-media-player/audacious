@@ -1,3 +1,12 @@
+2006-08-10 20:44:27 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2004]
+  add -D_WIDGETCORE_H_ as we can use the private includes here
+  
+
+  Changes:        Modified:
+  +2 -1           trunk/audacious/widgets/Makefile  
+
+
 2006-08-10 20:42:55 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2002]
   Do not allow widgetcore private includes to be referenced directly.
