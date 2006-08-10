@@ -64,7 +64,6 @@
 #include "playlist.h"
 #include "urldecode.h"
 #include "util.h"
-#include "widgets/vis.h"
 #include "visualization.h"
 #include "libaudacious/configdb.h"
 

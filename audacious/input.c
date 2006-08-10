@@ -36,7 +36,7 @@
 #include "util.h"
 #include "visualization.h"
 #include "playback.h"
-#include "widgets/playstatus.h"
+#include "widgets/widgetcore.h"
 #include "pluginenum.h"
 
 #include "libaudacious/titlestring.h"

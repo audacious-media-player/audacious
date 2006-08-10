@@ -32,9 +32,7 @@
 #include "playback.h"
 #include "plugin.h"
 #include "prefswin.h"
-#include "widgets/svis.h"
-#include "widgets/vis.h"
-#include "widgets/widget.h"
+#include "widgets/widgetcore.h"
 
 VisPluginData vp_data = {
     NULL,

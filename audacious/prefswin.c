@@ -48,7 +48,7 @@
 #include "visualization.h"
 
 #include "main.h"
-#include "widgets/skin.h"
+#include "widgets/widgetcore.h"
 #include "urldecode.h"
 #include "util.h"
 #include "dnd.h"

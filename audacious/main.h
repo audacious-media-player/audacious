@@ -23,8 +23,7 @@
 #define MAIN_H
 
 #include "mainwin.h"
-#include "widgets/textbox.h"
-#include "widgets/vis.h"
+#include "widgets/widgetcore.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>
