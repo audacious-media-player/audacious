@@ -1,3 +1,29 @@
+2006-08-10 20:42:55 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2002]
+  Do not allow widgetcore private includes to be referenced directly.
+  This breaks SVN right now, but I will fix it in a few moments.
+  
+
+  Changes:        Modified:
+  +4 -0           trunk/audacious/widgets/eq_graph.h  
+  +5 -0           trunk/audacious/widgets/eq_slider.h  
+  +5 -0           trunk/audacious/widgets/hslider.h  
+  +5 -0           trunk/audacious/widgets/menurow.h  
+  +5 -0           trunk/audacious/widgets/monostereo.h  
+  +5 -0           trunk/audacious/widgets/number.h  
+  +5 -0           trunk/audacious/widgets/pbutton.h  
+  +4 -0           trunk/audacious/widgets/playlist_list.h  
+  +4 -0           trunk/audacious/widgets/playlist_slider.h  
+  +5 -0           trunk/audacious/widgets/playstatus.h  
+  +4 -0           trunk/audacious/widgets/sbutton.h  
+  +4 -0           trunk/audacious/widgets/skin.h  
+  +5 -0           trunk/audacious/widgets/svis.h  
+  +4 -0           trunk/audacious/widgets/tbutton.h  
+  +4 -0           trunk/audacious/widgets/textbox.h  
+  +5 -0           trunk/audacious/widgets/vis.h  
+  +5 -0           trunk/audacious/widgets/widget.h  
+
+
 2006-08-10 19:55:28 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2000]
   - add widgetcore.h (replaces directly including all of that junk)

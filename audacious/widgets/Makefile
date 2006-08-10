@@ -12,7 +12,8 @@ CFLAGS += \
 	$(ARCH_DEFINES)    \
 	-I../..    \
 	-I..	   \
-	-I../../intl
+	-I../../intl \
+	-D_WIDGETCORE_H_
 
 SOURCES = \
 	widget.c \
