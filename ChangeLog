@@ -1,3 +1,12 @@
+2006-08-10 19:55:28 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2000]
+  - add widgetcore.h (replaces directly including all of that junk)
+  
+
+  Changes:        Modified:
+  +41 -0          trunk/audacious/widgets/widgetcore.h  
+
+
 2006-08-09 10:58:43 +0000  William Pitcock <nenolod@nenolod.net>
   revision [1998]
   - these might be nice huh?
