@@ -91,12 +91,18 @@ playlist_load_xspf(const gchar * filename, gint pos)
 	for (i = 0; i < n->nodeNr && n->nodeTab[i]->children != NULL; i++)
 	{
 		char *uri = XML_GET_CONTENT(n->nodeTab[i]->children);
-
+		gchar *locale_uri = NULL;
+		
 		if (uri == NULL)
 			continue;
 
 		++pos;
-		playlist_ins(uri, pos);
+		locale_uri = g_locale_from_utf8(uri, -1, NULL, NULL, NULL);
+		if(locale_uri) {
+			playlist_ins(locale_uri, pos);
+			g_free(locale_uri);
+			locale_uri = NULL;
+		}
 		g_free(uri);
 	}
 
@@ -131,11 +137,15 @@ playlist_save_xspf(const gchar *filename, gint pos)
 	{
 		PlaylistEntry *entry = PLAYLIST_ENTRY(node->data);
 		xmlNodePtr track, location;
+		gchar *utf_filename = NULL;
 
 		track = xmlNewNode(NULL, "track");
 		location = xmlNewNode(NULL, "location");
 
-		xmlAddChild(location, xmlNewText(entry->filename));
+		utf_filename  = g_locale_to_utf8(entry->filename, -1, NULL, NULL, NULL);
+		if(!utf_filename)
+			continue;
+		xmlAddChild(location, xmlNewText(utf_filename));
 		xmlAddChild(track, location);
 		xmlAddChild(tracklist, track);
 
@@ -162,6 +172,10 @@ playlist_save_xspf(const gchar *filename, gint pos)
 				xmlAddChild(tmp, xmlNewText(entry->tuple->track_name));
 				xmlAddChild(track, tmp);
 			}
+		}
+		if(utf_filename) {
+			g_free(utf_filename);
+			utf_filename = NULL;
 		}
 	}
 

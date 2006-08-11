@@ -1,3 +1,12 @@
+2006-08-11 08:48:51 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2062]
+  - unbork
+  
+
+  Changes:        Modified:
+  +13 -1          trunk/Plugins/Container/xspf/xspf.c  
+
+
 2006-08-11 08:32:02 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2060]
   - remove unnecessary and crappy code
