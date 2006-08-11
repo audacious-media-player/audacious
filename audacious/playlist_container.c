@@ -56,20 +56,18 @@ PlaylistContainer *playlist_container_find(char *ext)
 	return NULL;
 }
 
-GList *playlist_container_read(char *filename, GList *list)
+void playlist_container_read(char *filename, gint pos)
 {
 	char *ext = strrchr(filename, '.') + 1;		/* optimization: skip past the dot -nenolod */
 	PlaylistContainer *plc = playlist_container_find(ext);
 
 	if (plc->plc_read == NULL)
-		return list;
+		return;
 
-	list = plc->plc_read(filename, list);
-
-	return list;
+	list = plc->plc_read(filename, pos);
 }
 
-void playlist_container_write(char *filename, GList *list)
+void playlist_container_write(char *filename, gint pos)
 {
 	char *ext = strrchr(filename, '.') + 1;		/* optimization: skip past the dot -nenolod */
 	PlaylistContainer *plc = playlist_container_find(ext);
@@ -77,5 +75,6 @@ void playlist_container_write(char *filename, GList *list)
 	if (plc->plc_write == NULL)
 		return;
 
-	plc->plc_write(filename, list);
+	plc->plc_write(filename, pos);
 }
+

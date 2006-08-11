@@ -1,3 +1,13 @@
+2006-08-11 01:24:11 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2012]
+  - more
+  
+
+  Changes:        Modified:
+  +42 -0          trunk/audacious/playlist_container.c  
+  +6 -1           trunk/audacious/playlist_container.h  
+
+
 2006-08-11 01:10:25 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2010]
   - incomplete PlaylistContainer implementation

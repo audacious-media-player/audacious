@@ -34,8 +34,8 @@ typedef struct _PlaylistContainer PlaylistContainer;
 
 extern void playlist_container_register(PlaylistContainer *plc);
 extern void playlist_container_unregister(PlaylistContainer *plc);
-extern GList *playlist_container_read(char *filename, GList *list);
-extern void playlist_container_write(char *filename, GList *list);
+extern void playlist_container_read(char *filename, gint pos);
+extern void playlist_container_write(char *filename, gint pos);
 
 
 #endif

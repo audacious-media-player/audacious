@@ -49,6 +49,7 @@
 #include "equalizer.h"
 #include "playback.h"
 #include "playlist.h"
+#include "playlist_container.h"
 #include "ui_playlist.h"
 #include "urldecode.h"
 #include "util.h"
@@ -485,28 +486,6 @@ __playlist_ins(const gchar * filename, gint pos, InputPlugin *dec)
 {
     __playlist_ins_with_info(filename, pos, NULL, -1, dec);
     playlist_recalc_total_time();
-}
-
-
-PlaylistFormat
-playlist_format_get_from_name(const gchar * filename)
-{
-    int i;
-
-    for (i = 0; i < PLAYLIST_FORMAT_COUNT; i++)
-    {
-        if (str_has_suffix_nocase(filename, playlist_format_suffixes[i]))
-            return i;
-    }
-
-    return PLAYLIST_FORMAT_UNKNOWN;
-}
-
-gboolean
-is_playlist_name(const gchar * filename)
-{
-    g_return_val_if_fail(filename != NULL, FALSE);
-    return playlist_format_get_from_name(filename) != PLAYLIST_FORMAT_UNKNOWN;
 }
 
 gboolean
@@ -1374,7 +1353,6 @@ playlist_load(const gchar * filename)
 
     return ret;
 }
-
 
 static void
 playlist_load_ins_file(const gchar * filename_p,
