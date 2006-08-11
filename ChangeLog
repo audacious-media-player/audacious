@@ -1,3 +1,18 @@
+2006-08-10 20:51:08 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2008]
+  - dependency cleanup part 2
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/audacious/input.c  
+  +1 -2           trunk/audacious/main.h  
+  +0 -1           trunk/audacious/mainwin.c  
+  +1 -1           trunk/audacious/prefswin.c  
+  +1 -1           trunk/audacious/skinwin.c  
+  +1 -3           trunk/audacious/ui_playlist.h  
+  +1 -3           trunk/audacious/visualization.c  
+
+
 2006-08-10 20:47:58 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2006]
   - dependency cleanup (pass 1 of many probably)

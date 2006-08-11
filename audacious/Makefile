@@ -43,6 +43,7 @@ SOURCES = \
 	visualization.c \
 	pluginenum.c \
 	playlist.c \
+	playlist_container.c \
 	controlsocket.c \
 	dock.c \
 	playback.c \
