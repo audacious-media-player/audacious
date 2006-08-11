@@ -956,13 +956,15 @@ if test "x$enable_one_plugin_dir" = "xyes"; then
     EFFECT_PLUGIN_DIR=Plugins
     GENERAL_PLUGIN_DIR=Plugins
     VISUALIZATION_PLUGIN_DIR=Plugins
+    CONTAINER_PLUGIN_DIR=Plugins
 else
-    pluginsubs="\\\"Output\\\",\\\"Input\\\",\\\"Effect\\\",\\\"General\\\",\\\"Visualization\\\""
+    pluginsubs="\\\"Output\\\",\\\"Input\\\",\\\"Effect\\\",\\\"General\\\",\\\"Visualization\\\",\\\"Container\\\""
     INPUT_PLUGIN_DIR=Input
     OUTPUT_PLUGIN_DIR=Output
     EFFECT_PLUGIN_DIR=Effect
     GENERAL_PLUGIN_DIR=General
     VISUALIZATION_PLUGIN_DIR=Visualization
+    CONTAINER_PLUGIN_DIR=Container
 fi
 
 AC_SUBST(INPUT_PLUGIN_DIR)
@@ -970,6 +972,7 @@ AC_SUBST(OUTPUT_PLUGIN_DIR)
 AC_SUBST(EFFECT_PLUGIN_DIR)
 AC_SUBST(GENERAL_PLUGIN_DIR)
 AC_SUBST(VISUALIZATION_PLUGIN_DIR)
+AC_SUBST(CONTAINER_PLUGIN_DIR)
 AC_SUBST(pluginsubs)
 
 dnl XXX Work around some autoconf bugs.
