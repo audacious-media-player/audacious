@@ -681,7 +681,7 @@ bmp_config_save(void)
 
     bmp_cfg_db_close(db);
 
-    playlist_save(bmp_paths[BMP_PATH_PLAYLIST_FILE], FALSE);
+    playlist_save(bmp_paths[BMP_PATH_PLAYLIST_FILE]);
 }
 
 static void

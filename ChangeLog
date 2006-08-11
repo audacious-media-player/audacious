@@ -1,3 +1,30 @@
+2006-08-11 02:18:20 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2026]
+  - cleanup
+  
+
+  Changes:        Modified:
+  +0 -1           trunk/audacious/widgets/Makefile  
+  +1 -1           trunk/audacious/widgets/eq_graph.c  
+  +1 -1           trunk/audacious/widgets/eq_slider.c  
+  +1 -1           trunk/audacious/widgets/hslider.c  
+  +1 -1           trunk/audacious/widgets/menurow.c  
+  +1 -1           trunk/audacious/widgets/monostereo.c  
+  +1 -1           trunk/audacious/widgets/number.c  
+  +1 -1           trunk/audacious/widgets/pbutton.c  
+  +1 -1           trunk/audacious/widgets/playlist_list.c  
+  +1 -1           trunk/audacious/widgets/playlist_slider.c  
+  +1 -1           trunk/audacious/widgets/playstatus.c  
+  +1 -1           trunk/audacious/widgets/sbutton.c  
+  +2 -1           trunk/audacious/widgets/skin.c  
+  +1 -1           trunk/audacious/widgets/svis.c  
+  +1 -1           trunk/audacious/widgets/tbutton.c  
+  +1 -1           trunk/audacious/widgets/textbox.c  
+  +1 -1           trunk/audacious/widgets/vis.c  
+  +1 -1           trunk/audacious/widgets/widget.c  
+  +1 -1           trunk/audacious/widgets/widgetcore.h  
+
+
 2006-08-11 02:04:17 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2024]
   - sanity checking for saving
