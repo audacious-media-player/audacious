@@ -1523,6 +1523,25 @@ mainwin_jump_to_file_selection_changed_cb(GtkTreeSelection *treesel,
 }
 
 static gboolean
+mainwin_jump_to_file_edit_keypress_cb(GtkWidget * object,
+			     GdkEventKey * event,
+			     gpointer data)
+{
+	switch (event->keyval) {
+	case GDK_Return:
+		if (gtk_im_context_filter_keypress (GTK_ENTRY (object)->im_context, event)) {
+			GTK_ENTRY (object)->need_im_reset = TRUE;
+			return TRUE;
+		} else {
+			mainwin_jump_to_file_jump(GTK_TREE_VIEW(data));
+			return TRUE;
+		}
+	default:
+		return FALSE;
+	}
+}
+
+static gboolean
 mainwin_jump_to_file_keypress_cb(GtkWidget * object,
                                  GdkEventKey * event,
                                  gpointer data)
@@ -1532,9 +1551,6 @@ mainwin_jump_to_file_keypress_cb(GtkWidget * object,
         /* FIXME: show only hide window */
         gtk_widget_destroy(mainwin_jtf);
         mainwin_jtf = NULL;
-        return TRUE;
-    case GDK_Return:
-        mainwin_jump_to_file_jump(GTK_TREE_VIEW(data));
         return TRUE;
     default:
         return FALSE;
@@ -1575,7 +1591,7 @@ mainwin_update_jtf(GtkWidget * widget, gpointer user_data)
      * reading */
     gint row;
     GList *playlist;
-    gchar *desc_buf;
+    gchar *desc_buf = NULL;
     gchar *row_str;
     GtkTreeIter iter;
     GtkTreeSelection *selection;
@@ -1594,17 +1610,22 @@ mainwin_update_jtf(GtkWidget * widget, gpointer user_data)
         PlaylistEntry *entry = PLAYLIST_ENTRY(playlist->data);
 
         if (entry->title)
-            desc_buf = entry->title;
+		desc_buf = g_strdup(entry->title);
         else if (strchr(entry->filename, '/'))
-            desc_buf = strrchr(entry->filename, '/') + 1;
+		desc_buf = str_to_utf8(strrchr(entry->filename, '/') + 1);
         else
-            desc_buf = entry->filename;
+		desc_buf = str_to_utf8(entry->filename);
 
         row_str = g_strdup_printf("%d", row++);
 
         gtk_list_store_append(GTK_LIST_STORE(store), &iter);
         gtk_list_store_set(GTK_LIST_STORE(store), &iter,
                            0, row_str, 1, desc_buf, -1);
+
+	if(desc_buf) {
+		g_free(desc_buf);
+		desc_buf = NULL;
+	}
 
         g_free(row_str);
     }
@@ -1643,11 +1664,12 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
          playlist = g_list_next(playlist)) {
 
         PlaylistEntry *entry = PLAYLIST_ENTRY(playlist->data);
-        const gchar *title, *filename;
+        const gchar *title;
+        gchar *filename = NULL;
 
         title = entry->title;
         if (!title) {
-            filename = entry->filename;
+		filename = str_to_utf8(entry->filename);
 
             if (strchr(filename, '/'))
                 title = strrchr(filename, '/') + 1;
@@ -1680,6 +1702,10 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
         }
 
         song_index++;
+	if (filename) {
+		g_free(filename);
+		filename = NULL;
+	}
     }
 
     PLAYLIST_UNLOCK();
@@ -1701,7 +1727,7 @@ mainwin_jump_to_file(void)
     GtkWidget *rescan, *edit;
     GtkWidget *search_label, *hbox;
     GList *playlist;
-    gchar *desc_buf;
+    gchar *desc_buf = NULL;
     gchar *row_str;
     gint row;
 
@@ -1772,6 +1798,9 @@ mainwin_jump_to_file(void)
     g_signal_connect(edit, "changed",
                      G_CALLBACK(mainwin_jump_to_file_edit_cb), treeview);
 
+    g_signal_connect(edit, "key_press_event",
+                     G_CALLBACK(mainwin_jump_to_file_edit_keypress_cb), treeview);
+
     g_signal_connect(mainwin_jtf, "key_press_event",
                      G_CALLBACK(mainwin_jump_to_file_keypress_cb), treeview);
 
@@ -1839,11 +1868,11 @@ mainwin_jump_to_file(void)
         PlaylistEntry *entry = PLAYLIST_ENTRY(playlist->data);
 
         if (entry->title)
-            desc_buf = entry->title;
+		desc_buf = g_strdup(entry->title);
         else if (strchr(entry->filename, '/'))
-            desc_buf = strrchr(entry->filename, '/') + 1;
+		desc_buf = str_to_utf8(strrchr(entry->filename, '/') + 1);
         else
-            desc_buf = entry->filename;
+		desc_buf = str_to_utf8(entry->filename);
 
         row_str = g_strdup_printf("%d", row++);
 
@@ -1851,6 +1880,10 @@ mainwin_jump_to_file(void)
         gtk_list_store_set(GTK_LIST_STORE(jtf_store), &iter,
                            0, row_str, 1, desc_buf, -1);
 
+	if (desc_buf) {
+		g_free(desc_buf);
+		desc_buf = NULL;
+	}
         g_free(row_str);
     }
 

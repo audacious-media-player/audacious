@@ -1,3 +1,12 @@
+2006-08-11 10:44:50 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2064]
+  xspf.c needs round trip encoding conversion between locale encoding and utf8.
+  
+
+  Changes:        Modified:
+  +17 -3          trunk/Plugins/Container/xspf/xspf.c  
+
+
 2006-08-11 08:48:51 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2062]
   - unbork
