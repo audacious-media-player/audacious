@@ -914,27 +914,35 @@ dnl *** libparanormal checks
 AC_ARG_ENABLE(paranormal,
 [  --disable-paranormal    disable paranormal vis plugin. (default=enabled)],
 [have_paranormal=$enableval],
-[
-  if test "x$ap_disable_paranormal" = "xyes"; then
+[have_paranormal=yes])
+
+if test "x$ap_disable_paranormal" = "xyes"; then
     have_paranormal=no
     AC_MSG_RESULT([*** paranormal plugin disabled by request ***])
-  else
+else
     have_paranormal=yes
     AM_PATH_SDL(1.2.5, , [
 	AC_MSG_WARN([*** SDL is not installed. Paranormal will not be built. ***])
 	have_paranormal="no"
     ])
+fi
 
-    AM_PATH_XML2(2.0.0, , [
-	AC_MSG_WARN([*** libxml2 is not installed. Paranormal will not be built. ***])
+AC_ARG_ENABLE(xspf,
+[  --disable-xspf          disable XSPF support. (default=enabled)],
+[have_xspf=$enableval], [have_xspf=yes])
+
+AM_PATH_XML2(2.0.0, , [
+	AC_MSG_WARN([*** libxml2 is not installed. Paranormal nor XSPF support will not be built. ***])
 	have_paranormal="no"
-    ])
-  fi
-]
-)
+	have_xspf="no"
+])
 
 if test "$have_paranormal" = "yes"; then
 	VISUALIZATION_PLUGINS="$VISUALIZATION_PLUGINS paranormal"
+fi
+
+if test "$have_xspf" = "yes"; then
+	CONTAINER_PLUGINS="$CONTAINER_PLUGINS xspf"
 fi
 
 dnl *** End of all plugin checks ***
@@ -1156,6 +1164,7 @@ echo "  Container"
 echo "  -------------"
 echo "  Winamp PLS playlist format (pls):       yes"
 echo "  M3U playlist format (m3u):              yes"
+echo "  XML Sharable Playlist Format (xspf):    $have_xspf"
 echo
 
 if test "$beep_cv_lib_xlibs_threadsafe" = "no"; then
