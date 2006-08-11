@@ -98,3 +98,9 @@ PlaylistContainer plc_pls = {
 	.plc_write = playlist_save_pls,
 };
 
+void
+temporary_pls_register(void)
+{
+	playlist_container_register(&plc_pls);
+}
+

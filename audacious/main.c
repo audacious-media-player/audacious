@@ -96,6 +96,10 @@ struct _BmpCmdLineOpt {
     gchar *previous_session_id;
 };
 
+/* XXX -nenolod */
+extern void temporary_pls_register(void);
+extern void temporary_m3u_register(void);
+
 typedef struct _BmpCmdLineOpt BmpCmdLineOpt;
 
 BmpCmdLineOpt options;
@@ -1073,6 +1077,12 @@ main(gint argc, gchar ** argv)
 
         GDK_THREADS_ENTER();
     }
+
+    temporary_pls_register();
+
+#ifdef NOTYET
+    temporary_m3u_register();
+#endif
 
     plugin_system_init();
 
