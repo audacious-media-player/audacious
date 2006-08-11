@@ -1,0 +1,7 @@
+include ../../mk/rules.mk
+include ../../mk/objective.mk
+
+ALL_PLUGINS = pls m3u
+SUBDIRS = @CONTAINER_PLUGINS@
+
+

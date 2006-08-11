@@ -1,3 +1,13 @@
+2006-08-11 03:13:57 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2036]
+  - bootstrap for ContainerPlugin dir stuff
+  
+
+  Changes:        Modified:
+  +4 -1           trunk/configure.ac  
+  +1 -0           trunk/mk/rules.mk.in  
+
+
 2006-08-11 02:45:21 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2034]
   - hmm, calling plc->load() might be a good idea!

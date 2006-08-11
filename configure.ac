@@ -120,6 +120,7 @@ OUTPUT_PLUGINS="disk_writer"
 EFFECT_PLUGINS="audiocompress ladspa voice_removal"
 GENERAL_PLUGINS="song_change"
 VISUALIZATION_PLUGINS="blur_scope"
+CONTAINER_PLUGINS="m3u pls"
 
 dnl Option to change equalizer to the old XMMS one which only works with the mpg123
 dnl plugin (or rather, only implemented within the plugin)
@@ -1004,6 +1005,7 @@ AC_SUBST(GENERAL_PLUGINS)
 AC_SUBST(INPUT_PLUGINS)
 AC_SUBST(OUTPUT_PLUGINS)
 AC_SUBST(VISUALIZATION_PLUGINS)
+AC_SUBST(CONTAINER_PLUGINS)
 
 AC_CONFIG_FILES([
         audacious.1
@@ -1066,6 +1068,7 @@ AC_CONFIG_FILES([
 	Plugins/Effect/ladspa/Makefile
 	Plugins/Effect/stereo_plugin/Makefile
 	Plugins/Effect/voice_removal/Makefile
+	Plugins/Container/Makefile
         po/Makefile.in
         intl/Makefile
         icons/Makefile
@@ -1148,6 +1151,11 @@ echo "  Visualization"
 echo "  -------------"
 echo "  Blur Scope:                             yes"
 echo "  Paranormal Visualization Library:       $have_paranormal"
+echo
+echo "  Container"
+echo "  -------------"
+echo "  Winamp PLS playlist format (pls):       yes"
+echo "  M3U playlist format (m3u):              yes"
 echo
 
 if test "$beep_cv_lib_xlibs_threadsafe" = "no"; then
