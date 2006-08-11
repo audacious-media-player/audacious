@@ -64,7 +64,7 @@ void playlist_container_read(char *filename, gint pos)
 	if (plc->plc_read == NULL)
 		return;
 
-	list = plc->plc_read(filename, pos);
+	plc->plc_read(filename, pos);
 }
 
 void playlist_container_write(char *filename, gint pos)
