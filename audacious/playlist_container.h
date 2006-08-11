@@ -24,13 +24,18 @@
 struct _PlaylistContainer {
 	char *name;					/* human-readable name */
 	char *ext;					/* extension */
-	void (*plc_load)(char *filename, GList *pl);	/* plc_load */
+	GList *(*plc_read)(char *filename, GList *pl);	/* plc_load */
 	void (*plc_write)(char *filename, GList *pl);	/* plc_write */
 };
 
 typedef struct _PlaylistContainer PlaylistContainer;
 
+#define PLAYLIST_CONTAINER(x)		((PlaylistContainer *)(x))
+
 extern void playlist_container_register(PlaylistContainer *plc);
 extern void playlist_container_unregister(PlaylistContainer *plc);
+extern GList *playlist_container_read(char *filename, GList *list);
+extern void playlist_container_write(char *filename, GList *list);
+
 
 #endif

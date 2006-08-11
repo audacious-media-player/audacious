@@ -1,3 +1,14 @@
+2006-08-11 01:10:25 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2010]
+  - incomplete PlaylistContainer implementation
+  
+
+  Changes:        Modified:
+  +1 -0           trunk/audacious/Makefile  
+  +39 -0          trunk/audacious/playlist_container.c  
+  +36 -0          trunk/audacious/playlist_container.h  
+
+
 2006-08-10 20:51:08 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2008]
   - dependency cleanup part 2

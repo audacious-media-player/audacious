@@ -19,6 +19,7 @@
  */
 
 #include <glib.h>
+#include <string.h>
 #include "playlist_container.h"
 
 /*
@@ -36,4 +37,45 @@ void playlist_container_register(PlaylistContainer *plc)
 void playlist_container_unregister(PlaylistContainer *plc)
 {
 	registered_plcs = g_list_remove(registered_plcs, plc);
+}
+
+PlaylistContainer *playlist_container_find(char *ext)
+{
+	GList *node;
+	PlaylistContainer *plc;
+
+	g_return_val_if_fail(ext != NULL, NULL);
+
+	for (node = registered_plcs; node != NULL; node = g_list_next(node)) {
+		plc = PLAYLIST_CONTAINER(node->data);
+
+		if (!g_strcasecmp(plc->ext, ext))
+			return plc;
+	}
+
+	return NULL;
+}
+
+GList *playlist_container_read(char *filename, GList *list)
+{
+	char *ext = strrchr(filename, '.') + 1;		/* optimization: skip past the dot -nenolod */
+	PlaylistContainer *plc = playlist_container_find(ext);
+
+	if (plc->plc_read == NULL)
+		return list;
+
+	list = plc->plc_read(filename, list);
+
+	return list;
+}
+
+void playlist_container_write(char *filename, GList *list)
+{
+	char *ext = strrchr(filename, '.') + 1;		/* optimization: skip past the dot -nenolod */
+	PlaylistContainer *plc = playlist_container_find(ext);
+
+	if (plc->plc_write == NULL)
+		return;
+
+	plc->plc_write(filename, list);
 }
