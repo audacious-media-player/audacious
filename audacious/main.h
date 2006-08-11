@@ -33,7 +33,11 @@
 #define BMP_SKIN_THUMB_DIR_BASENAME   ".thumbs"
 #define BMP_ACCEL_BASENAME            "accels"
 #define BMP_CONFIG_BASENAME           "config"
-#define BMP_PLAYLIST_BASENAME         "playlist.m3u"
+#ifndef HAVE_XSPF_PLAYLIST
+# define BMP_PLAYLIST_BASENAME         "playlist.m3u"
+#else
+# define BMP_PLAYLIST_BASENAME         "playlist.xspf"
+#endif
 #define BMP_LOG_BASENAME              "log"
 
 #define PLAYER_HEIGHT \

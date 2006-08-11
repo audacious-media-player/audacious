@@ -1,3 +1,12 @@
+2006-08-11 05:26:50 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2050]
+  - experimental XSPF support
+  
+
+  Changes:        Modified:
+  +18 -9          trunk/configure.ac  
+
+
 2006-08-11 04:00:59 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2048]
   - add missing $(CONTAINER_PLUGINS).

@@ -943,6 +943,7 @@ fi
 
 if test "$have_xspf" = "yes"; then
 	CONTAINER_PLUGINS="$CONTAINER_PLUGINS xspf"
+	AC_DEFINE(HAVE_XSPF_PLAYLIST, 1, [Define if XSPF playlists are available.])
 fi
 
 dnl *** End of all plugin checks ***
