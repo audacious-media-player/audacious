@@ -63,11 +63,6 @@ typedef void (*PlaylistSaveFunc) (FILE * file);
 PlaylistEntry *playlist_position;
 G_LOCK_DEFINE(playlist);
 
-/* NOTE: match the order listed in PlaylistFormat enum */
-static const gchar *playlist_format_suffixes[] = { 
-    ".m3u", ".pls", NULL 
-};
-
 static GList *playlist = NULL;
 static GList *shuffle_list = NULL;
 static GList *queued_list = NULL;
@@ -125,12 +120,6 @@ static PlaylistCompareFunc playlist_compare_func_table[] = {
 
 static void playlist_save_m3u(FILE * file);
 static void playlist_save_pls(FILE * file);
-
-static PlaylistSaveFunc playlist_save_func_table[] = {
-    playlist_save_m3u,
-    playlist_save_pls
-};
-
 
 static guint playlist_load_ins(const gchar * filename, gint pos);
 
@@ -1325,21 +1314,23 @@ playlist_save_pls(FILE * file)
 }
 
 gboolean
-playlist_save(const gchar * filename,
-              PlaylistFormat format)
+playlist_save(const gchar * filename)
 {
-    FILE *file;
+    PlaylistContainer *plc = NULL;
+    gchar *ext;
 
     g_return_val_if_fail(filename != NULL, FALSE);
 
+    ext = strrchr(filename, '.') + 1;
+
     playlist_set_current_name(filename);
 
-    if ((file = fopen(filename, "w")) == NULL)
+    if ((plc = playlist_container_find(ext)) == NULL)
         return FALSE;
 
-    playlist_save_func_table[format](file);
-    
-    return (fclose(file) == 0);
+    plc->plc_write(filename, 0);
+
+    return TRUE;
 }
 
 gboolean

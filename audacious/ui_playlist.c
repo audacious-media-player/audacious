@@ -48,6 +48,7 @@
 #include "mainwin.h"
 #include "playback.h"
 #include "playlist.h"
+#include "playlist_container.h"
 #include "util.h"
 
 #include "pixmaps.h"
@@ -871,10 +872,11 @@ show_playlist_save_format_error(GtkWindow * parent,
 static void
 playlistwin_save_playlist(const gchar * filename)
 {
-    PlaylistFormat format;
+    PlaylistContainer *plc;
+    gchar *ext = strrchr(filename, '.') + 1;
 
-    format = playlist_format_get_from_name(filename);
-    if (format == PLAYLIST_FORMAT_UNKNOWN) {
+    plc = playlist_container_find(ext);
+    if (plc == NULL) {
         show_playlist_save_format_error(GTK_WINDOW(playlistwin), filename);
         return;
     }
@@ -885,7 +887,7 @@ playlistwin_save_playlist(const gchar * filename)
         if (!show_playlist_overwrite_prompt(GTK_WINDOW(playlistwin), filename))
             return;
 
-    if (!playlist_save(filename, format))
+    if (!playlist_save(filename))
         show_playlist_save_error(GTK_WINDOW(playlistwin), filename);
 }
 
@@ -1938,7 +1940,7 @@ playlistwin_sub_menu_callback(gpointer data,
         playlistwin_select_playlist_to_save(playlist_get_current_name());
         break;
     case PLIST_DEFAULTSAVE:
-        playlist_save(bmp_paths[BMP_PATH_PLAYLIST_FILE], FALSE);
+        playlist_save(bmp_paths[BMP_PATH_PLAYLIST_FILE]);
         break;
     case PLIST_SAVE_AS:
         playlistwin_select_playlist_to_save(playlist_get_current_name());

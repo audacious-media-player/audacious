@@ -36,6 +36,6 @@ extern void playlist_container_register(PlaylistContainer *plc);
 extern void playlist_container_unregister(PlaylistContainer *plc);
 extern void playlist_container_read(char *filename, gint pos);
 extern void playlist_container_write(char *filename, gint pos);
-
+extern PlaylistContainer *playlist_container_find(char *ext);
 
 #endif

@@ -103,7 +103,7 @@ gint playlist_get_position_nolock(void);
 gchar *playlist_get_info_text(void);
 gint playlist_get_current_length(void);
 
-gboolean playlist_save(const gchar * filename, PlaylistFormat format);
+gboolean playlist_save(const gchar * filename);
 gboolean playlist_load(const gchar * filename);
 
 GList *playlist_get(void);
