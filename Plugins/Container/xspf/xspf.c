@@ -43,104 +43,13 @@
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
 
-/* Borrowed from BMPx. */
-static int
-register_namespaces (xmlXPathContextPtr xpathCtx, const xmlChar* nsList)
-{
-    xmlChar* nsListDup;
-    xmlChar* prefix;
-    xmlChar* href;
-    xmlChar* next;
-
-    nsListDup = xmlStrdup(nsList);
-    if(nsListDup == NULL)
-    {
-	g_warning (G_STRLOC ": unable to strdup namespaces list");
-	return(-1);
-    }
-
-    next = nsListDup;
-    while (next != NULL)
-    {
-	while((*next) == ' ') next++;
-	if((*next) == '\0') break;
-
-	prefix = next;
-	next = (xmlChar*)xmlStrchr(next, '=');
-
-	if (next == NULL)
-	{
-	    g_warning (G_STRLOC ": invalid namespaces list format");
-  	    xmlFree (nsListDup);
-            return(-1);
-        }
-        *(next++) = '\0';
-
-        href = next;
-        next = (xmlChar*)xmlStrchr(next, ' ');
-        if (next != NULL)
-        {
-            *(next++) = '\0';
-        }
-
-        // do register namespace
-        if(xmlXPathRegisterNs(xpathCtx, prefix, href) != 0)
-        {
-            g_warning (G_STRLOC ": unable to register NS with prefix=\"%s\" and href=\"%s\"", prefix, href);
-            xmlFree(nsListDup);
-            return(-1);
-        }
-    }
-
-    xmlFree(nsListDup);
-    return(0);
-}
-
-/* Also borrowed from BMPx. */
-xmlXPathObjectPtr
-xml_execute_xpath_expression (xmlDocPtr doc,
-                              const xmlChar * xpathExpr,
-                              const xmlChar * nsList)
-{
-    xmlXPathContextPtr xpathCtx;
-    xmlXPathObjectPtr xpathObj;
-
-    /*
-     * Create xpath evaluation context
-     */
-    xpathCtx = xmlXPathNewContext (doc);
-    if (xpathCtx == NULL)
-    {
-        return NULL;
-    }
-
-    if (nsList)
-        register_namespaces (xpathCtx, nsList);
-
-    /*
-     * Evaluate xpath expression
-     */
-    xpathObj = xmlXPathEvalExpression (xpathExpr, xpathCtx);
-    if (xpathObj == NULL)
-    {
-        xmlXPathFreeContext (xpathCtx);
-        return NULL;
-    }
-
-    /*
-     * Cleanup
-     */
-    xmlXPathFreeContext (xpathCtx);
-
-    return xpathObj;
-}
-
 static void
 playlist_load_xspf(const gchar * filename, gint pos)
 {
-	xmlDocPtr	  doc;
-	xmlXPathObjectPtr xpathObj;
-	xmlNodeSetPtr     n;
+	xmlDocPtr	   doc;
+	xmlXPathObjectPtr  xpathObj;
+        xmlXPathContextPtr xpathCtx;
+	xmlNodeSetPtr      n;
 	gint i;
 
 	g_return_if_fail(filename != NULL);
@@ -149,10 +58,19 @@ playlist_load_xspf(const gchar * filename, gint pos)
 	if (doc == NULL)
 		return;
 
+	xpathCtx = xmlXPathNewContext(doc);
+	if (xpathCtx == NULL)
+		return;
+
+	if (xmlXPathRegisterNs(xpathCtx, "xspf", "http://xspf.org/ns/0") != 0)
+		return;
+
 	/* TODO: what about xspf:artist, xspf:title, xspf:length? */
-	xpathObj = xml_execute_xpath_expression(doc, "//xspf:location", "xspf=http://xspf.org/ns/0/");
+	xpathObj = xmlXPathEvalExpression("//xspf:location", xpathCtx);
 	if (xpathObj == NULL)
 		return;
+
+	xmlXPathFreeContext(xpathCtx);
 
 	n = xpathObj->nodesetval;
 	if (n == NULL)

@@ -1,3 +1,12 @@
+2006-08-11 08:22:15 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2058]
+  - further cleanup
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Container/xspf/xspf.c  
+
+
 2006-08-11 08:17:05 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2056]
   - if uri == NULL, then continue looking for URIs in the XSPF playlist
