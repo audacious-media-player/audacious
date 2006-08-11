@@ -49,6 +49,7 @@ const gchar *plugin_dir_list[] = {
 };
 
 GHashTable *plugin_matrix = NULL;
+GList *lowlevel_list = NULL;
 
 static gint
 inputlist_compare_func(gconstpointer a, gconstpointer b)
@@ -113,6 +114,10 @@ plugin_is_duplicate(const gchar * filename)
         if (!strcmp(basename, g_basename(VIS_PLUGIN(l->data)->filename)))
             return TRUE;
 
+    for (l = lowlevel_list; l; l = g_list_next(l))
+        if (!strcmp(basename, g_basename(VIS_PLUGIN(l->data)->filename)))
+            return TRUE;
+
     return FALSE;
 }
 
@@ -172,6 +177,12 @@ vis_plugin_init(Plugin * plugin)
     vp_data.vis_list = g_list_append(vp_data.vis_list, p);
 }
 
+static void
+lowlevel_plugin_init(Plugin * plugin)
+{
+    LowlevelPlugin *p = LOWLEVEL_PLUGIN(plugin);
+    lowlevel_list = g_list_append(lowlevel_list, p);    
+}
 
 /* FIXME: Placed here (hopefully) temporarily - descender */
 
@@ -187,6 +198,7 @@ static PluginType plugin_types[] = {
     { "effect"       , "get_eplugin_info", effect_plugin_init },
     { "general"      , "get_gplugin_info", general_plugin_init },
     { "visualization", "get_vplugin_info", vis_plugin_init },
+    { "lowlevel"     , "get_lplugin_info", lowlevel_plugin_init },
     { NULL, NULL, NULL }
 };
 
@@ -354,6 +366,7 @@ plugin_system_cleanup(void)
     EffectPlugin *ep;
     GeneralPlugin *gp;
     VisPlugin *vp;
+    LowlevelPlugin *lp;
     GList *node;
 
     g_message("Shutting down plugin system");
@@ -457,4 +470,18 @@ plugin_system_cleanup(void)
 
     if (vp_data.vis_list)
         g_list_free(vp_data.vis_list);
+
+    for (node = lowlevel_list; node; node = g_list_next(node)) {
+        lp = LOWLEVEL_PLUGIN(node->data);
+        if (lp && lp->cleanup) {
+            lp->cleanup();
+            GDK_THREADS_LEAVE();
+            while (g_main_iteration(FALSE));
+            GDK_THREADS_ENTER();
+        }
+        g_module_close(lp->handle);
+    }
+
+    if (lowlevel_list)
+        g_list_free(lowlevel_list);
 }

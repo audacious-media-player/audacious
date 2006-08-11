@@ -40,6 +40,8 @@
 #define GENERAL_PLUGIN(x) ((GeneralPlugin *)(x))
 #define VIS_PLUGIN(x)     ((VisPlugin *)(x))
 
+#define LOWLEVEL_PLUGIN(x) ((LowlevelPlugin *)(x))
+
 
 typedef enum {
     FMT_U8,
@@ -67,11 +69,29 @@ typedef struct _EffectPlugin  EffectPlugin;
 typedef struct _GeneralPlugin GeneralPlugin;
 typedef struct _VisPlugin     VisPlugin;
 
+typedef struct _LowlevelPlugin LowlevelPlugin;
+
 /* Sadly, this is the most we can generalize out of the disparate
    plugin structs usable with typecasts - descender */
 struct _Plugin {
     gpointer handle;
     gchar *filename;
+};
+
+/*
+ * LowlevelPlugin is used for lowlevel system services, such as PlaylistContainers,
+ * VFSContainers and the like.
+ *
+ * They are not GUI visible at this time.
+ */
+struct _LowlevelPlugin {
+    gpointer handle;
+    gchar *filename;
+
+    gchar *description;
+
+    void (*init) (void);
+    void (*cleanup) (void);
 };
 
 struct _OutputPlugin {
