@@ -1,3 +1,12 @@
+2006-08-11 08:17:05 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2056]
+  - if uri == NULL, then continue looking for URIs in the XSPF playlist
+  
+
+  Changes:        Modified:
+  +4 -0           trunk/Plugins/Container/xspf/xspf.c  
+
+
 2006-08-11 08:14:23 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2054]
   - wma: use posix_memalign() instead of memalign() in some more spots
