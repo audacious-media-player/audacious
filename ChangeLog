@@ -1,3 +1,11 @@
+2006-08-11 03:39:18 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2042]
+  - m3u and pls plugin implementation
+  
+
+  Changes:        Modified:
+
+
 2006-08-11 03:35:10 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2040]
   - lowlevel plugin stuff
