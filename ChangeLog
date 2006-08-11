@@ -1,3 +1,15 @@
+2006-08-11 02:03:21 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2022]
+  - some experimental shit
+  
+
+  Changes:        Modified:
+  +1 -0           trunk/audacious/Makefile  
+  +12 -48         trunk/audacious/playlist.c  
+  +4 -0           trunk/audacious/playlist.h  
+  +100 -0         trunk/audacious/playlist_pls.c  
+
+
 2006-08-11 01:49:44 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2020]
   - saving now uses PlaylistContainer class.

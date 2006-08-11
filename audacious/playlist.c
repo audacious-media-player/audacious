@@ -1287,28 +1287,6 @@ playlist_save_m3u(FILE * file)
     PLAYLIST_UNLOCK();
 }
 
-static void
-playlist_save_pls(FILE * file)
-{
-    GList *node;
-
-    g_return_if_fail(file != NULL);
-
-    g_fprintf(file, "[playlist]\n");
-    g_fprintf(file, "NumberOfEntries=%d\n", playlist_get_length());
-
-    PLAYLIST_LOCK();
-    
-    for (node = playlist; node; node = g_list_next(node)) {
-        PlaylistEntry *entry = PLAYLIST_ENTRY(node->data);
-        
-        g_fprintf(file, "File%d=%s\n", g_list_position(playlist, node) + 1,
-                  entry->filename);
-    }
-    
-    PLAYLIST_UNLOCK();
-}
-
 gboolean
 playlist_save(const gchar * filename)
 {
@@ -1322,6 +1300,9 @@ playlist_save(const gchar * filename)
     playlist_set_current_name(filename);
 
     if ((plc = playlist_container_find(ext)) == NULL)
+        return FALSE;
+
+    if (plc->plc_write == NULL)
         return FALSE;
 
     plc->plc_write(filename, 0);
