@@ -20,6 +20,7 @@
 #ifndef _WIDGETCORE_H_
 #define _WIDGETCORE_H_
 
+#include "tbutton.h"
 #include "eq_graph.h"
 #include "eq_slider.h"
 #include "hslider.h"
@@ -33,7 +34,6 @@
 #include "sbutton.h"
 #include "skin.h"
 #include "svis.h"
-#include "tbutton.h"
 #include "textbox.h"
 #include "vis.h"
 #include "widget.h"

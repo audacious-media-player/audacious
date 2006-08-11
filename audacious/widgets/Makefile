@@ -13,7 +13,6 @@ CFLAGS += \
 	-I../..    \
 	-I..	   \
 	-I../../intl \
-	-D_WIDGETCORE_H_
 
 SOURCES = \
 	widget.c \

@@ -36,7 +36,7 @@
  *  number.
  */
 
-#include "playlist_list.h"
+#include "widgetcore.h"
 
 #include <stdlib.h>
 #include <string.h>

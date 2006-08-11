@@ -19,7 +19,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include "number.h"
+#include "widgetcore.h"
 
 #include <glib.h>
 #include <gdk/gdk.h>

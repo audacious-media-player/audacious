@@ -31,10 +31,11 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "widgetcore.h"
+
 #include "equalizer.h"
 #include "main.h"
 #include "ui_playlist.h"
-#include "skin.h"
 #include "skinwin.h"
 #include "util.h"
 
