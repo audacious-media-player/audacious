@@ -60,21 +60,33 @@ playlist_load_xspf(const gchar * filename, gint pos)
 
 	xpathCtx = xmlXPathNewContext(doc);
 	if (xpathCtx == NULL)
+	{
+		g_message("xpathCtx is NULL.");
 		return;
+	}
 
-	if (xmlXPathRegisterNs(xpathCtx, "xspf", "http://xspf.org/ns/0") != 0)
+	if (xmlXPathRegisterNs(xpathCtx, "xspf", "http://xspf.org/ns/0/") != 0)
+	{
+		g_message("Failed to register XSPF namespace.");
 		return;
+	}
 
 	/* TODO: what about xspf:artist, xspf:title, xspf:length? */
 	xpathObj = xmlXPathEvalExpression("//xspf:location", xpathCtx);
 	if (xpathObj == NULL)
+	{
+		g_message("XPath Expression failed to evaluate.");
 		return;
+	}
 
 	xmlXPathFreeContext(xpathCtx);
 
 	n = xpathObj->nodesetval;
 	if (n == NULL)
+	{
+		g_message("XPath Expression yielded no results.");
 		return;
+	}
 
 	for (i = 0; i < n->nodeNr && n->nodeTab[i]->children != NULL; i++)
 	{

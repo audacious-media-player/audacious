@@ -1,3 +1,12 @@
+2006-08-11 08:32:02 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2060]
+  - remove unnecessary and crappy code
+  
+
+  Changes:        Modified:
+  +14 -96         trunk/Plugins/Container/xspf/xspf.c  
+
+
 2006-08-11 08:22:15 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2058]
   - further cleanup
