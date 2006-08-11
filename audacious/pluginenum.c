@@ -262,6 +262,7 @@ plugin_system_init(void)
     GList *node;
     OutputPlugin *op;
     InputPlugin *ip;
+    LowlevelPlugin *lp;
     gint dirsel = 0, i = 0;
 
     if (!g_module_supported()) {
@@ -341,6 +342,12 @@ plugin_system_init(void)
         ip = INPUT_PLUGIN(node->data);
         if (ip->init)
             ip->init();
+    }
+
+    for (node = lowlevel_list; node; node = g_list_next(node)) {
+        lp = LOWLEVEL_PLUGIN(node->data);
+        if (lp->init)
+            lp->init();
     }
 
     if (cfg.disabled_iplugins) {
