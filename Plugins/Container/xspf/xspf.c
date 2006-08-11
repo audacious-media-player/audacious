@@ -143,6 +143,8 @@ playlist_load_xspf(const gchar * filename, gint pos)
 	xmlNodeSetPtr     n;
 	gint i;
 
+	g_return_if_fail(filename != NULL);
+
 	doc = xmlParseFile(filename);
 	if (doc == NULL)
 		return;

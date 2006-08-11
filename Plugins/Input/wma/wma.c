@@ -22,6 +22,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+#define _XOPEN_SOURCE 600
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
@@ -432,8 +433,8 @@ static void wma_play_file(char *filename)
 	
     wma_ip.set_info(wsong_title, wsong_time, c->bit_rate, c->sample_rate, c->channels);
 
-    wma_s_outbuf = memalign(16, wma_st_buff);
-    wma_outbuf = memalign(16, AVCODEC_MAX_AUDIO_FRAME_SIZE);
+    posix_memalign((void *) &wma_s_outbuf, 16, wma_st_buff);
+    posix_memalign((void *) &wma_outbuf, 16, AVCODEC_MAX_AUDIO_FRAME_SIZE);
     wma_seekpos = -1;
     wma_decode = 1;
     wma_decode_thread = g_thread_create((GThreadFunc)wma_play_loop, NULL, TRUE, NULL);

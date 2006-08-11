@@ -1,3 +1,15 @@
+2006-08-11 05:40:31 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2052]
+  - Plugins/Container/xspf/xspf.c: xspf cleanups
+  - configure.ac, audacious/main.h: If XSPF is available, use XSPF instead of m3u for storing the playlist.
+  
+
+  Changes:        Modified:
+  +2 -2           trunk/Plugins/Container/xspf/xspf.c  
+  +5 -1           trunk/audacious/main.h  
+  +1 -0           trunk/configure.ac  
+
+
 2006-08-11 05:26:50 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2050]
   - experimental XSPF support
