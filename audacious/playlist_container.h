@@ -24,8 +24,8 @@
 struct _PlaylistContainer {
 	char *name;					/* human-readable name */
 	char *ext;					/* extension */
-	GList *(*plc_read)(char *filename, GList *pl);	/* plc_load */
-	void (*plc_write)(char *filename, GList *pl);	/* plc_write */
+	GList *(*plc_read)(char *filename, gint pos);	/* plc_load */
+	void (*plc_write)(char *filename, gint pos);	/* plc_write */
 };
 
 typedef struct _PlaylistContainer PlaylistContainer;
