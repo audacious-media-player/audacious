@@ -1,3 +1,16 @@
+2006-08-11 02:35:03 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2032]
+  - m3u works again
+  
+
+  Changes:        Modified:
+  +1 -0           trunk/audacious/Makefile  
+  +0 -3           trunk/audacious/main.c  
+  +0 -152         trunk/audacious/playlist.c  
+  +197 -2         trunk/audacious/playlist_container.h  
+  +3 -2           trunk/audacious/playlist_pls.c  
+
+
 2006-08-11 02:24:55 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2030]
   - .pls playlists work again, now to do M3Us.

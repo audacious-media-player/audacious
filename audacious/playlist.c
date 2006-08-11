@@ -1347,6 +1347,8 @@ playlist_load_ins(const gchar * filename, gint pos)
     g_return_val_if_fail(plc != NULL, 0);
     g_return_val_if_fail(plc->plc_read != NULL, 0);
 
+    plc->plc_read(filename, pos);
+
     playlist_generate_shuffle_list();
     playlistwin_update_list();
 
