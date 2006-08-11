@@ -44,6 +44,7 @@ SOURCES = \
 	pluginenum.c \
 	playlist.c \
 	playlist_container.c \
+	playlist_pls.c \
 	controlsocket.c \
 	dock.c \
 	playback.c \

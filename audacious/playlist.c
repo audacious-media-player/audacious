@@ -123,10 +123,6 @@ static void playlist_save_pls(FILE * file);
 
 static guint playlist_load_ins(const gchar * filename, gint pos);
 
-static void playlist_load_ins_file(const gchar * filename,
-                                   const gchar * playlist_name, gint pos,
-                                   const gchar * title, gint len);
-
 static void playlist_generate_shuffle_list(void);
 static void playlist_generate_shuffle_list_nolock(void);
 
@@ -1345,7 +1341,7 @@ playlist_load(const gchar * filename)
     return ret;
 }
 
-static void
+void
 playlist_load_ins_file(const gchar * filename_p,
                        const gchar * playlist_name, gint pos,
                        const gchar * title, gint len)
@@ -1434,43 +1430,6 @@ parse_extm3u_info(const gchar * info, gchar ** title, gint * length)
 }
 
 static guint
-playlist_load_pls(const gchar * filename, gint pos)
-{
-    guint i, count, added_count = 0;
-    gchar key[10];
-    gchar *line;
-
-    g_return_val_if_fail(filename != NULL, 0);
-
-    if (!str_has_suffix_nocase(filename, ".pls"))
-        return 0;
-
-    if (!(line = read_ini_string(filename, "playlist", "NumberOfEntries")))
-        return 0;
-
-    count = atoi(line);
-    g_free(line);
-
-    for (i = 1; i <= count; i++) {
-        g_snprintf(key, sizeof(key), "File%d", i);
-        if ((line = read_ini_string(filename, "playlist", key))) {
-            playlist_load_ins_file(line, filename, pos, NULL, -1);
-            added_count++;
-
-            if (pos >= 0)
-                pos++;
-
-            g_free(line);
-        }
-    }
-
-    playlist_generate_shuffle_list();
-    playlistwin_update_list();
-
-    return added_count;
-}
-
-static guint
 playlist_load_m3u(const gchar * filename, gint pos)
 {
     FILE *file;
@@ -1548,16 +1507,21 @@ playlist_load_m3u(const gchar * filename, gint pos)
 static guint
 playlist_load_ins(const gchar * filename, gint pos)
 {
-    guint added_count;
+    PlaylistContainer *plc;
+    gchar *ext;
 
     g_return_val_if_fail(filename != NULL, 0);
 
-    /* .pls ? */
-    if ((added_count = playlist_load_pls(filename, pos)) > 0)
-        return added_count;
+    ext = strrchr(filename, '.') + 1;
+    plc = playlist_container_find(ext);
 
-    /* Assume .m3u */
-    return playlist_load_m3u(filename, pos);
+    g_return_val_if_fail(plc != NULL, 0);
+    g_return_val_if_fail(plc->plc_read != NULL, 0);
+
+    playlist_generate_shuffle_list();
+    playlistwin_update_list();
+
+    return 1;
 }
 
 GList *

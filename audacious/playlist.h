@@ -171,4 +171,8 @@ G_LOCK_EXTERN(playlist);
 
 extern PlaylistEntry *playlist_position;
 
+extern void playlist_load_ins_file(const gchar * filename,
+                                   const gchar * playlist_name, gint pos,
+                                   const gchar * title, gint len);
+
 #endif
