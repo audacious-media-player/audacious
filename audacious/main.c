@@ -1079,10 +1079,7 @@ main(gint argc, gchar ** argv)
     }
 
     temporary_pls_register();
-
-#ifdef NOTYET
     temporary_m3u_register();
-#endif
 
     plugin_system_init();
 

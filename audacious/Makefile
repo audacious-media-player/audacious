@@ -45,6 +45,7 @@ SOURCES = \
 	playlist.c \
 	playlist_container.c \
 	playlist_pls.c \
+	playlist_m3u.c \
 	controlsocket.c \
 	dock.c \
 	playback.c \

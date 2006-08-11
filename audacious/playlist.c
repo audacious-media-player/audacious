@@ -118,9 +118,6 @@ static PlaylistCompareFunc playlist_compare_func_table[] = {
     playlist_compare_playlist
 };
 
-static void playlist_save_m3u(FILE * file);
-static void playlist_save_pls(FILE * file);
-
 static guint playlist_load_ins(const gchar * filename, gint pos);
 
 static void playlist_generate_shuffle_list(void);
@@ -1247,46 +1244,6 @@ playlist_get_current_length(void)
     return len;
 }
 
-static void
-playlist_save_m3u(FILE * file)
-{
-    GList *node;
-    gchar *outstr = NULL;
-
-    g_return_if_fail(file != NULL);
-
-    if (cfg.use_pl_metadata)
-        g_fprintf(file, "#EXTM3U\n");
-
-    PLAYLIST_LOCK();
-
-    for (node = playlist; node; node = g_list_next(node)) {
-        PlaylistEntry *entry = PLAYLIST_ENTRY(node->data);
-
-        if (entry->title && cfg.use_pl_metadata) {
-            gint seconds;
-
-            if (entry->length > 0)
-                seconds = (entry->length) / 1000;
-            else
-                seconds = -1;
-
-            outstr = g_locale_from_utf8(entry->title, -1, NULL, NULL, NULL);
-            if(outstr) {
-                g_fprintf(file, "#EXTINF:%d,%s\n", seconds, outstr);
-                g_free(outstr);
-                outstr = NULL;
-            } else {
-                g_fprintf(file, "#EXTINF:%d,%s\n", seconds, entry->title);
-            }
-        }
-
-        g_fprintf(file, "%s\n", entry->filename);
-    }
-
-    PLAYLIST_UNLOCK();
-}
-
 gboolean
 playlist_save(const gchar * filename)
 {
@@ -1374,115 +1331,6 @@ playlist_load_ins_file(const gchar * filename_p,
     }
 
     g_free(filename);
-}
-
-static void
-parse_extm3u_info(const gchar * info, gchar ** title, gint * length)
-{
-    gchar *str;
-
-    g_return_if_fail(info != NULL);
-    g_return_if_fail(title != NULL);
-    g_return_if_fail(length != NULL);
-
-    *title = NULL;
-    *length = -1;
-
-    if (!str_has_prefix_nocase(info, "#EXTINF:")) {
-        g_message("Invalid m3u metadata (%s)", info);
-        return;
-    }
-
-    info += 8;
-
-    *length = atoi(info);
-    if (*length <= 0)
-        *length = -1;
-    else
-        *length *= 1000;
-
-    if ((str = strchr(info, ','))) {
-        *title = g_strstrip(g_strdup(str + 1));
-        if (strlen(*title) < 1) {
-            g_free(*title);
-            *title = NULL;
-        }
-    }
-}
-
-static guint
-playlist_load_m3u(const gchar * filename, gint pos)
-{
-    FILE *file;
-    gchar *line;
-    gchar *ext_info = NULL, *ext_title = NULL;
-    gsize line_len = 1024;
-    gint ext_len = -1;
-    gboolean is_extm3u = FALSE;
-    guint added_count = 0;
-
-    if (!(file = fopen(filename, "r")))
-        return 0;
-
-    line = g_malloc(line_len);
-    while (fgets(line, line_len, file)) {
-        while (strlen(line) == line_len - 1 && line[strlen(line) - 1] != '\n') {
-            line_len += 1024;
-            line = g_realloc(line, line_len);
-            fgets(&line[strlen(line)], 1024, file);
-        }
-
-        while (line[strlen(line) - 1] == '\r' ||
-               line[strlen(line) - 1] == '\n')
-            line[strlen(line) - 1] = '\0';
-
-        if (str_has_prefix_nocase(line, "#EXTM3U")) {
-            is_extm3u = TRUE;
-            continue;
-        }
-
-        if (is_extm3u && str_has_prefix_nocase(line, "#EXTINF:")) {
-            str_replace_in(&ext_info, g_strdup(line));
-            continue;
-        }
-
-        if (line[0] == '#' || strlen(line) == 0) { 
-            if (ext_info) {
-                g_free(ext_info);
-                ext_info = NULL;
-            }
-            continue;
-        }
-
-        if (is_extm3u) {
-            if (cfg.use_pl_metadata && ext_info)
-                parse_extm3u_info(ext_info, &ext_title, &ext_len);
-            g_free(ext_info);
-            ext_info = NULL;
-        }
-
-        playlist_load_ins_file(line, filename, pos, ext_title, ext_len);
-
-        str_replace_in(&ext_title, NULL);
-        ext_len = -1;
-
-        added_count++;
-        if (pos >= 0)
-            pos++;
-    }
-
-    fclose(file);
-    g_free(line);
-
-    playlist_generate_shuffle_list();
-    playlistwin_update_list();
-
-    if (g_ascii_strcasecmp(filename, BMP_PLAYLIST_BASENAME))
-        playlist_set_current_name(NULL);
-    else
-        playlist_set_current_name(filename);
-
-    return added_count;
 }
 
 static guint

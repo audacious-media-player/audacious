@@ -31,6 +31,7 @@
 #include <sys/stat.h>
 #include <sys/errno.h>
 
+#include "util.h"
 #include "playlist.h"
 #include "playlist_container.h"
 
@@ -41,7 +42,7 @@ playlist_load_pls(const gchar * filename, gint pos)
     gchar key[10];
     gchar *line;
 
-    g_return_val_if_fail(filename != NULL, 0);
+    g_return_if_fail(filename != NULL);
 
     if (!str_has_suffix_nocase(filename, ".pls"))
         return;
@@ -67,7 +68,7 @@ playlist_load_pls(const gchar * filename, gint pos)
 }
 
 static void
-playlist_save_pls(gchar *filename, gint pos)
+playlist_save_pls(const gchar *filename, gint pos)
 {
     GList *node;
     FILE *file = fopen(filename, "wb");
