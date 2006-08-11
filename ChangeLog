@@ -1,3 +1,14 @@
+2006-08-11 08:14:23 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2054]
+  - wma: use posix_memalign() instead of memalign() in some more spots
+  - xspf: return if filename is NULL
+  
+
+  Changes:        Modified:
+  +2 -0           trunk/Plugins/Container/xspf/xspf.c  
+  +3 -2           trunk/Plugins/Input/wma/wma.c  
+
+
 2006-08-11 05:40:31 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2052]
   - Plugins/Container/xspf/xspf.c: xspf cleanups

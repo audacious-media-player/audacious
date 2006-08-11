@@ -161,6 +161,10 @@ playlist_load_xspf(const gchar * filename, gint pos)
 	for (i = 0; i < n->nodeNr; i++)
 	{
 		char *uri = XML_GET_CONTENT(n->nodeTab[i]->children);
+
+		if (uri == NULL)
+			continue;
+
 		++pos;
 		playlist_ins(uri, pos);
 		g_free(uri);
