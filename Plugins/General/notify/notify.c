@@ -7,6 +7,7 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#include <string.h>
 
 #include <libnotify/notify.h>
 #include "audacious/plugin.h"
@@ -113,7 +114,7 @@ static gboolean watchdog_func(gpointer unused)
 		g_strcasecmp(title, previous_title)) ||
 		(title == NULL && pos != notify_playlist_pos) || (! was_playing)))
 	{
-		gchar *tmpbuf;
+		gchar *tmpbuf, *filename;
 		TitleInput *tuple;
 
 		tuple = playlist_get_tuple(pos);
@@ -121,14 +122,19 @@ static gboolean watchdog_func(gpointer unused)
 		if (tuple == NULL)
 			return TRUE;
 
-		/* 
-		FIXME: This is useless for formats without metadata.
-		Proposed Remedy: playlist_get_filename(pos) instead of _("Unknown Track")
-		*/
+		filename = playlist_get_filename(pos);
+
 		tmpbuf = g_markup_printf_escaped("<b>%s</b>\n<i>%s</i>\n%s",
 			(tuple->performer ? tuple->performer : ( audcfg.notif_skipnf == FALSE ? _("Unknown Artist") : "" )),
 			(tuple->album_name ? tuple->album_name : ( audcfg.notif_skipnf == FALSE ? _("Unknown Album") : "" )),
-			(tuple->track_name ? tuple->track_name : ( audcfg.notif_skipnf == FALSE ? _("Unknown Track") : "" )));
+			(tuple->track_name ?
+				tuple->track_name :
+				(filename ?
+					(strrchr(filename, '/') ? (strrchr(filename, '/') + 1) : filename) :
+					_("Unknown Track")
+				)
+			)
+		);
 
 		do_notification("Audacious", tmpbuf, DATA_DIR "/pixmaps/audacious.png");
 		g_free(tmpbuf);
