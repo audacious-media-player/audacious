@@ -1,3 +1,12 @@
+2006-08-11 12:13:11 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2066]
+  jump to file dialog now accepts multi-byte input.
+  
+
+  Changes:        Modified:
+  +46 -13         trunk/audacious/mainwin.c  
+
+
 2006-08-11 10:44:50 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2064]
   xspf.c needs round trip encoding conversion between locale encoding and utf8.

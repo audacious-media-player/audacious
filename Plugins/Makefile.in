@@ -1,4 +1,4 @@
 include ../mk/rules.mk
 include ../mk/objective.mk
 
-SUBDIRS = Input Output Effect Visualization General
+SUBDIRS = Input Output Effect Visualization General Container
