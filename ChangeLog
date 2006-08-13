@@ -1,3 +1,12 @@
+2006-08-12 23:46:09 +0000  George Averill <nhjm449@gmail.com>
+  revision [2071]
+  - Show the filename if there's no track_name
+  
+
+  Changes:        Modified:
+  +12 -6          trunk/Plugins/General/notify/notify.c  
+
+
 2006-08-12 01:41:53 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2068]
   - installing Container plugins might help!

@@ -98,6 +98,10 @@ playlist_load_xspf(const gchar * filename, gint pos)
 
 		++pos;
 		locale_uri = g_locale_from_utf8(uri, -1, NULL, NULL, NULL);
+		if(!locale_uri){
+			/* try ISO-8859-1 for last resort */
+			locale_uri = g_convert(uri, -1, "ISO-8859-1", "UTF-8", NULL, NULL, NULL);
+		}
 		if(locale_uri) {
 			playlist_ins(locale_uri, pos);
 			g_free(locale_uri);
@@ -142,9 +146,12 @@ playlist_save_xspf(const gchar *filename, gint pos)
 		track = xmlNewNode(NULL, "track");
 		location = xmlNewNode(NULL, "location");
 
-		utf_filename  = g_locale_to_utf8(entry->filename, -1, NULL, NULL, NULL);
-		if(!utf_filename)
-			continue;
+		/* try locale encoding first */
+		utf_filename = g_locale_to_utf8(entry->filename, -1, NULL, NULL, NULL);
+		if (!utf_filename) {
+			/* if above fails, try to guess */
+			utf_filename = str_to_utf8(entry->filename);
+		}
 		xmlAddChild(location, xmlNewText(utf_filename));
 		xmlAddChild(track, location);
 		xmlAddChild(tracklist, track);
