@@ -1,3 +1,12 @@
+2006-08-15 00:13:38 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2075]
+  - gcc 4.1.1 fix
+  
+
+  Changes:        Modified:
+  +1 -7           trunk/audacious/controlsocket.c  
+
+
 2006-08-13 03:00:08 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2073]
   - better handling for file name which can't be represented correctly in current locale encoding.
