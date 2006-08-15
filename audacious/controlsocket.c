@@ -242,25 +242,6 @@ ctrlsocket_start(void)
     g_mutex_unlock(status_mutex);
 }
 
-static gint
-write_all(gint fd, gconstpointer buf, size_t count)
-{
-    size_t left = count;
-    gint written;
-
-    do {
-        if ((written = write(fd, buf, left)) < 0) {
-            count = -1;
-            break;
-        }
-        left -= written;
-        buf = (gchar *) buf + written;
-    }
-    while (left > 0);
-
-    return count - left;
-}
-
 static void
 ctrl_write_packet(gint fd, gpointer data, gint length)
 {
@@ -268,10 +249,10 @@ ctrl_write_packet(gint fd, gpointer data, gint length)
 
     pkthdr.version = XMMS_PROTOCOL_VERSION;
     pkthdr.data_length = length;
-    if ((size_t)write_all(fd, &pkthdr, sizeof(ServerPktHeader)) < sizeof(pkthdr))
+    if ((size_t)write(fd, &pkthdr, sizeof(ServerPktHeader)) < sizeof(pkthdr))
         return;
     if (data && length > 0)
-        write_all(fd, data, length);
+        write(fd, data, length);
 }
 
 static void
@@ -306,31 +287,6 @@ ctrl_ack_packet(PacketNode * pkt)
     if (pkt->data)
         g_free(pkt->data);
     g_free(pkt);
-}
-
-static gint
-read_all(gint fd, gpointer buf, size_t count)
-{
-    size_t left = count;
-    GTimer *timer;
-    gulong usec;
-    gint r;
-
-    timer = g_timer_new();
-
-    do {
-        if ((r = read(fd, buf, left)) < 0) {
-            count = -1;
-            break;
-        }
-        left -= r;
-        buf = (gchar *) buf + r;
-        g_timer_elapsed(timer, &usec);
-    }
-    while (left > 0 && usec <= CTRLSOCKET_IO_TIMEOUT_USEC);
-
-    g_timer_destroy(timer);
-    return count - left;
 }
 
 static gboolean
@@ -375,7 +331,7 @@ ctrlsocket_func(gpointer arg)
             continue;
 
         pkt = g_new0(PacketNode, 1);
-        if ((size_t)read_all(fd, &pkt->hdr, sizeof(ClientPktHeader))
+        if ((size_t)read(fd, &pkt->hdr, sizeof(ClientPktHeader))
             < sizeof(ClientPktHeader)) {
             g_free(pkt);
             continue;
@@ -384,7 +340,7 @@ ctrlsocket_func(gpointer arg)
         if (pkt->hdr.data_length) {
             size_t data_length = pkt->hdr.data_length;
             pkt->data = g_malloc0(data_length);
-            if ((size_t)read_all(fd, pkt->data, data_length) < data_length) {
+            if ((size_t)read(fd, pkt->data, data_length) < data_length) {
                 g_free(pkt->data);
                 g_free(pkt);
                 g_warning("ctrlsocket_func(): Incomplete data packet dropped");

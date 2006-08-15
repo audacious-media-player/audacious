@@ -45,55 +45,17 @@ gint *audacious_session_type = NULL;
 #include <unistd.h>
 #endif
 
-static gint
-read_all(gint fd, gpointer buf, size_t count)
-{
-    size_t left = count;
-    gint r;
-
-    do {
-        if ((r = read(fd, buf, left)) < 0) {
-            count = -1;
-            break;
-        }
-        left -= r;
-        buf = (gchar *) buf + r;
-    }
-    while (left > 0);
-
-    return count - left;
-}
-
-static gint
-write_all(gint fd, gconstpointer buf, size_t count)
-{
-    size_t left = count;
-    gint written;
-
-    do {
-        if ((written = write(fd, buf, left)) < 0) {
-            count = -1;
-            break;
-        }
-        left -= written;
-        buf = (gchar *) buf + written;
-    }
-    while (left > 0);
-
-    return count - left;
-}
-
 static gpointer
 remote_read_packet(gint fd, ServerPktHeader * pkt_hdr)
 {
     gpointer data = NULL;
 
-    if (read_all(fd, pkt_hdr, sizeof(ServerPktHeader)) ==
+    if (read(fd, pkt_hdr, sizeof(ServerPktHeader)) ==
         sizeof(ServerPktHeader)) {
         if (pkt_hdr->data_length) {
             size_t data_length = pkt_hdr->data_length;
             data = g_malloc0(data_length);
-            if ((size_t)read_all(fd, data, data_length) < data_length) {
+            if ((size_t)read(fd, data, data_length) < data_length) {
                 g_free(data);
                 data = NULL;
             }
@@ -123,10 +85,10 @@ remote_send_packet(gint fd, guint32 command, gpointer data,
     pkt_hdr.version = XMMS_PROTOCOL_VERSION;
     pkt_hdr.command = command;
     pkt_hdr.data_length = data_length;
-    if ((size_t)write_all(fd, &pkt_hdr, sizeof(ClientPktHeader)) < sizeof(pkt_hdr))
+    if ((size_t)write(fd, &pkt_hdr, sizeof(ClientPktHeader)) < sizeof(pkt_hdr))
         return;
     if (data_length && data)
-        write_all(fd, data, data_length);
+        write(fd, data, data_length);
 }
 
 static void

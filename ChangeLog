@@ -1,3 +1,12 @@
+2006-08-15 00:47:24 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2077]
+  - gcc 4.1.1 fixes
+  
+
+  Changes:        Modified:
+  +2 -14          trunk/libaudacious/beepctrl.c  
+
+
 2006-08-15 00:13:38 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2075]
   - gcc 4.1.1 fix
