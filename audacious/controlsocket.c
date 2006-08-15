@@ -246,11 +246,7 @@ static gint
 write_all(gint fd, gconstpointer buf, size_t count)
 {
     size_t left = count;
-    GTimer *timer;
-    gulong usec;
     gint written;
-
-    timer = g_timer_new();
 
     do {
         if ((written = write(fd, buf, left)) < 0) {
@@ -259,11 +255,9 @@ write_all(gint fd, gconstpointer buf, size_t count)
         }
         left -= written;
         buf = (gchar *) buf + written;
-        g_timer_elapsed(timer, &usec);
     }
-    while (left > 0 && usec <= CTRLSOCKET_IO_TIMEOUT_USEC);
+    while (left > 0);
 
-    g_timer_destroy(timer);
     return count - left;
 }
 
