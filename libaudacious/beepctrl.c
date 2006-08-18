@@ -37,6 +37,17 @@
 #include "audacious/controlsocket.h"
 #include "libaudacious/configdb.h"
 
+#include <netdb.h>
+#include <netinet/in.h>
+#include <unistd.h>
+#include <grp.h>
+#include <sys/time.h>
+#include <sys/wait.h>
+#include <sys/resource.h>
+#include <sys/socket.h>
+#include <fcntl.h>
+#include <arpa/inet.h>
+
 /* overrides audacious_get_session_uri(). */
 gchar *audacious_session_uri = NULL;
 gint *audacious_session_type = NULL;

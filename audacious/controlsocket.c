@@ -33,6 +33,15 @@
 #include <sys/un.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include <netinet/in.h>
+#include <unistd.h>
+#include <grp.h>
+#include <sys/time.h>
+#include <sys/wait.h>
+#include <sys/resource.h>
+#include <sys/socket.h>
+#include <fcntl.h>
+#include <arpa/inet.h>
 
 #include "main.h"
 #include "equalizer.h"
@@ -43,7 +52,6 @@
 #include "ui_playlist.h"
 #include "prefswin.h"
 #include "libaudacious/beepctrl.h"
-
 
 #define CTRLSOCKET_BACKLOG        100
 #define CTRLSOCKET_TIMEOUT        100000

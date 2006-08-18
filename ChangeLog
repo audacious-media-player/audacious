@@ -1,3 +1,14 @@
+2006-08-15 00:55:44 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2079]
+  - gcc 4.1.0, 4.1.1, 4.1.2 tree optimization workaround:
+  Remove read_all() and write_all() routines. They had no effect nor merit here, and generally caused trouble.
+  
+
+  Changes:        Modified:
+  +4 -48          trunk/audacious/controlsocket.c  
+  +4 -42          trunk/libaudacious/beepctrl.c  
+
+
 2006-08-15 00:47:24 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2077]
   - gcc 4.1.1 fixes
