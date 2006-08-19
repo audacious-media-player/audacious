@@ -464,6 +464,50 @@ __playlist_ins_with_info(const gchar * filename,
 }
 
 static void
+__playlist_ins_with_info_tuple(const gchar * filename,
+			       gint pos,
+			       TitleInput *tuple,
+			       InputPlugin * dec)
+{
+    GList *node;
+    PlaylistEntry *entry;
+
+    g_return_if_fail(filename != NULL);
+
+    PLAYLIST_LOCK();
+    playlist = g_list_insert(playlist,
+                             playlist_entry_new(filename, tuple->track_name, tuple->length, dec),
+                             pos);
+
+    if(pos < 0 ) {
+	    pos = g_list_length(playlist) - 1; /* last element. */
+    }
+
+    node = g_list_nth(playlist, pos);
+    entry = PLAYLIST_ENTRY(node->data);
+
+    /* insufficient tuple */
+    if(!tuple->track_name || !tuple->performer || !tuple->album_name || !tuple->genre
+       || !tuple->year || !tuple->track_number || !tuple->length){
+//	    printf("tuple discarded: %s\n", filename);
+	    bmp_title_input_free(tuple);
+
+	    if (entry->decoder == NULL || entry->decoder->get_song_tuple == NULL)
+		    tuple = input_get_song_tuple(entry->filename);
+	    else
+		    tuple = entry->decoder->get_song_tuple(entry->filename);
+    }
+
+    entry->title = xmms_get_titlestring(tuple->formatter != NULL ? tuple->formatter : xmms_get_gentitle_format(), tuple);
+    entry->length = tuple->length;
+    entry->tuple = tuple;
+
+    PLAYLIST_UNLOCK();
+
+    playlist_get_info_scan_active = TRUE;
+}
+
+static void
 __playlist_ins(const gchar * filename, gint pos, InputPlugin *dec)
 {
     __playlist_ins_with_info(filename, pos, NULL, -1, dec);
@@ -1328,6 +1372,61 @@ playlist_load_ins_file(const gchar * filename_p,
 	    dec = NULL;
 
         __playlist_ins_with_info(filename, pos, title, len, dec);
+    }
+
+    g_free(filename);
+}
+
+void
+playlist_load_ins_file_tuple(const gchar * filename_p,
+			     const gchar * playlist_name, 
+			     gint pos,
+			     TitleInput *tuple)
+{
+    gchar *filename;
+    gchar *tmp, *path;
+    InputPlugin *dec;		/* for decoder cache */
+
+    g_return_if_fail(filename_p != NULL);
+    g_return_if_fail(playlist_name != NULL);
+
+    filename = g_strchug(g_strdup(filename_p));
+
+    while ((tmp = strchr(filename, '\\')) != NULL)
+        *tmp = '/';
+
+    if (filename[0] != '/' && !strstr(filename, "://")) {
+        path = g_strdup(playlist_name);
+        if ((tmp = strrchr(path, '/')))
+            *tmp = '\0';
+        else {
+	    if (loading_playlist != TRUE || cfg.playlist_detect == FALSE)
+	        dec = input_check_file(filename, FALSE);
+	    else
+		dec = NULL;
+
+            __playlist_ins_with_info_tuple(filename, pos, tuple, dec);
+            return;
+        }
+        tmp = g_build_filename(path, filename, NULL);
+
+	if (loading_playlist != TRUE && cfg.playlist_detect != TRUE)
+	    dec = input_check_file(tmp, FALSE);
+	else
+	    dec = NULL;
+
+        __playlist_ins_with_info_tuple(tmp, pos, tuple, dec);
+        g_free(tmp);
+        g_free(path);
+    }
+    else
+    {
+	if (loading_playlist != TRUE && cfg.playlist_detect != TRUE)
+	    dec = input_check_file(filename, FALSE);
+	else
+	    dec = NULL;
+
+        __playlist_ins_with_info_tuple(filename, pos, tuple, dec);
     }
 
     g_free(filename);

@@ -44,13 +44,119 @@
 #include <libxml/xpathInternals.h>
 
 static void
+add_file(xmlNode *track, const gchar *filename, gint pos)
+{
+	xmlNode *nptr;
+	TitleInput *tuple;
+	gchar *locale_uri = NULL;
+
+	XMMS_NEW_TITLEINPUT(tuple);
+
+	// creator, album, title, duration, trackNum, annotation, image, 
+	for(nptr = track->children; nptr != NULL; nptr = nptr->next){
+		if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "location")){
+			xmlChar *str = xmlNodeGetContent(nptr);
+			locale_uri = g_locale_from_utf8(str,-1,NULL,NULL,NULL);
+			if(!locale_uri){
+				/* try ISO-8859-1 for last resort */
+				locale_uri = g_convert(str, -1, "ISO-8859-1", "UTF-8", NULL, NULL, NULL);
+			}
+			xmlFree(str);
+			if(locale_uri){
+				tuple->file_name = g_path_get_basename(locale_uri);
+				tuple->file_path = g_strdup(locale_uri);
+			}
+		}
+		else if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "creator")){
+			tuple->performer = (gchar *)xmlNodeGetContent(nptr);
+		}
+		else if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "album")){
+			tuple->album_name = (gchar *)xmlNodeGetContent(nptr);
+		}
+		else if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "title")){
+			tuple->track_name = (gchar *)xmlNodeGetContent(nptr);
+		}
+		else if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "duration")){
+			xmlChar *str = xmlNodeGetContent(nptr);
+			tuple->length = atol(str);
+			xmlFree(str);
+		}
+		else if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "trackNum")){
+			xmlChar *str = xmlNodeGetContent(nptr);
+			tuple->track_number = atol(str);
+			xmlFree(str);
+		}
+
+		//
+		// additional metadata
+		//
+		// year, date, genre, comment, file_ext, file_path, formatter
+		//
+		else if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "meta")){
+			xmlChar *rel = NULL;
+			
+			rel = xmlGetProp(nptr, "rel");
+
+			if(!strcmp(rel, "year")){
+				xmlChar *cont = xmlNodeGetContent(nptr);
+				tuple->year = atol(cont);
+				xmlFree(cont);
+				continue;
+			}
+			else if(!strcmp(rel, "date")){
+				tuple->date = (gchar *)xmlNodeGetContent(nptr);
+				continue;
+			}
+			else if(!strcmp(rel, "genre")){
+				tuple->genre = (gchar *)xmlNodeGetContent(nptr);
+				continue;
+			}
+			else if(!strcmp(rel, "comment")){
+				tuple->comment = (gchar *)xmlNodeGetContent(nptr);
+				continue;
+			}
+			else if(!strcmp(rel, "file_ext")){
+				tuple->file_ext = (gchar *)xmlNodeGetContent(nptr);
+				continue;
+			}
+			else if(!strcmp(rel, "file_path")){
+				tuple->file_path = (gchar *)xmlNodeGetContent(nptr);
+				continue;
+			}
+			else if(!strcmp(rel, "formatter")){
+				tuple->formatter = (gchar *)xmlNodeGetContent(nptr);
+				continue;
+			}
+			xmlFree(rel);
+			rel = NULL;
+		}
+
+	}
+	// add file to playlist
+	playlist_load_ins_file_tuple(locale_uri, filename, pos, tuple);
+	pos++;
+	if(locale_uri) {
+		g_free(locale_uri);
+		locale_uri = NULL;
+	}
+}
+
+static void
+find_track(xmlNode *tracklist, const gchar *filename, gint pos)
+{
+	xmlNode *nptr;
+	for(nptr = tracklist->children; nptr != NULL; nptr = nptr->next){
+		if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "track")){
+			add_file(nptr, filename, pos);
+		}
+	}
+}
+
+static void
 playlist_load_xspf(const gchar * filename, gint pos)
 {
-	xmlDocPtr	   doc;
-	xmlXPathObjectPtr  xpathObj;
-        xmlXPathContextPtr xpathCtx;
-	xmlNodeSetPtr      n;
-	gint i;
+	xmlDocPtr doc;
+	xmlNode *nptr, *nptr2;
 
 	g_return_if_fail(filename != NULL);
 
@@ -58,60 +164,22 @@ playlist_load_xspf(const gchar * filename, gint pos)
 	if (doc == NULL)
 		return;
 
-	xpathCtx = xmlXPathNewContext(doc);
-	if (xpathCtx == NULL)
-	{
-		g_message("xpathCtx is NULL.");
-		return;
-	}
+	// find trackList
+	for(nptr = doc->children; nptr != NULL; nptr = nptr->next) {
+		if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "playlist")){
+			for(nptr2 = nptr->children; nptr2 != NULL; nptr2 = nptr2->next){
+				if(nptr2->type == XML_ELEMENT_NODE && !strcmp(nptr2->name, "trackList")){
+					find_track(nptr2, filename, pos);
+				}
+			}
 
-	if (xmlXPathRegisterNs(xpathCtx, "xspf", "http://xspf.org/ns/0/") != 0)
-	{
-		g_message("Failed to register XSPF namespace.");
-		return;
-	}
-
-	/* TODO: what about xspf:artist, xspf:title, xspf:length? */
-	xpathObj = xmlXPathEvalExpression("//xspf:location", xpathCtx);
-	if (xpathObj == NULL)
-	{
-		g_message("XPath Expression failed to evaluate.");
-		return;
-	}
-
-	xmlXPathFreeContext(xpathCtx);
-
-	n = xpathObj->nodesetval;
-	if (n == NULL)
-	{
-		g_message("XPath Expression yielded no results.");
-		return;
-	}
-
-	for (i = 0; i < n->nodeNr && n->nodeTab[i]->children != NULL; i++)
-	{
-		char *uri = XML_GET_CONTENT(n->nodeTab[i]->children);
-		gchar *locale_uri = NULL;
-		
-		if (uri == NULL)
-			continue;
-
-		++pos;
-		locale_uri = g_locale_from_utf8(uri, -1, NULL, NULL, NULL);
-		if(!locale_uri){
-			/* try ISO-8859-1 for last resort */
-			locale_uri = g_convert(uri, -1, "ISO-8859-1", "UTF-8", NULL, NULL, NULL);
 		}
-		if(locale_uri) {
-			playlist_ins(locale_uri, pos);
-			g_free(locale_uri);
-			locale_uri = NULL;
-		}
-		g_free(uri);
 	}
 
-	xmlXPathFreeObject(xpathObj);
+	xmlFreeDoc(doc);
+
 }
+
 
 #define XSPF_ROOT_NODE_NAME "playlist"
 #define XSPF_XMLNS "http://xspf.org/ns/0/"
@@ -148,10 +216,14 @@ playlist_save_xspf(const gchar *filename, gint pos)
 
 		/* try locale encoding first */
 		utf_filename = g_locale_to_utf8(entry->filename, -1, NULL, NULL, NULL);
+
 		if (!utf_filename) {
 			/* if above fails, try to guess */
 			utf_filename = str_to_utf8(entry->filename);
 		}
+
+		if(!g_utf8_validate(utf_filename, -1, NULL))
+			continue;
 		xmlAddChild(location, xmlNewText(utf_filename));
 		xmlAddChild(track, location);
 		xmlAddChild(tracklist, track);
@@ -159,26 +231,123 @@ playlist_save_xspf(const gchar *filename, gint pos)
 		/* do we have a tuple? */
 		if (entry->tuple != NULL)
 		{
-			if (entry->tuple->performer != NULL)
+			if (entry->tuple->performer != NULL &&
+			    g_utf8_validate(entry->tuple->performer, -1, NULL))
 			{
 				tmp = xmlNewNode(NULL, "creator");
 				xmlAddChild(tmp, xmlNewText(entry->tuple->performer));
 				xmlAddChild(track, tmp);
 			}
 
-			if (entry->tuple->album_name != NULL)
+			if (entry->tuple->album_name != NULL &&
+			    g_utf8_validate(entry->tuple->album_name, -1, NULL))
 			{
 				tmp = xmlNewNode(NULL, "album");
 				xmlAddChild(tmp, xmlNewText(entry->tuple->album_name));
 				xmlAddChild(track, tmp);
 			}
 
-			if (entry->tuple->track_name != NULL)
+			if (entry->tuple->track_name != NULL &&
+			    g_utf8_validate(entry->tuple->track_name, -1, NULL))
 			{
 				tmp = xmlNewNode(NULL, "title");
 				xmlAddChild(tmp, xmlNewText(entry->tuple->track_name));
 				xmlAddChild(track, tmp);
 			}
+
+			if (entry->tuple->length != 0)
+			{
+				gchar *str;
+				str = g_malloc(128); // XXX fix me.
+				tmp = xmlNewNode(NULL, "duration");
+				sprintf(str, "%d", entry->tuple->length);
+				xmlAddChild(tmp, xmlNewText(str));
+				g_free(str);
+				xmlAddChild(track, tmp);
+			}
+
+			if (entry->tuple->track_number != 0)
+			{
+				gchar *str;
+				str = g_malloc(128); // XXX fix me.
+				tmp = xmlNewNode(NULL, "trackNum");
+				sprintf(str, "%d", entry->tuple->track_number);
+				xmlAddChild(tmp, xmlNewText(str));
+				g_free(str);
+				xmlAddChild(track, tmp);
+			}
+
+			//
+			// additional metadata
+			//
+			// year, date, genre, comment, file_ext, file_path, formatter
+			//
+			if (entry->tuple->year != 0)
+			{
+				gchar *str;
+				str = g_malloc(128); // XXX fix me.
+				tmp = xmlNewNode(NULL, "meta");
+				xmlSetProp(tmp, "rel", "year");
+				sprintf(str, "%d", entry->tuple->year);
+				xmlAddChild(tmp, xmlNewText(str));
+				xmlAddChild(track, tmp);
+				g_free(str);
+			}
+
+			if (entry->tuple->date != NULL &&
+			    g_utf8_validate(entry->tuple->date, -1, NULL))
+			{
+				tmp = xmlNewNode(NULL, "meta");
+				xmlSetProp(tmp, "rel", "date");
+				xmlAddChild(tmp, xmlNewText(entry->tuple->date));
+				xmlAddChild(track, tmp);
+			}
+
+			if (entry->tuple->genre != NULL &&
+			    g_utf8_validate(entry->tuple->genre, -1, NULL))
+			{
+				tmp = xmlNewNode(NULL, "meta");
+				xmlSetProp(tmp, "rel", "genre");
+				xmlAddChild(tmp, xmlNewText(entry->tuple->genre));
+				xmlAddChild(track, tmp);
+			}
+
+			if (entry->tuple->comment != NULL &&
+			    g_utf8_validate(entry->tuple->comment, -1, NULL))
+			{
+				tmp = xmlNewNode(NULL, "meta");
+				xmlSetProp(tmp, "rel", "comment");
+				xmlAddChild(tmp, xmlNewText(entry->tuple->comment));
+				xmlAddChild(track, tmp);
+			}
+
+			if (entry->tuple->file_ext != NULL &&
+			    g_utf8_validate(entry->tuple->file_ext, -1, NULL))
+			{
+				tmp = xmlNewNode(NULL, "meta");
+				xmlSetProp(tmp, "rel", "file_ext");
+				xmlAddChild(tmp, xmlNewText(entry->tuple->file_ext));
+				xmlAddChild(track, tmp);
+			}
+
+			if (entry->tuple->file_path != NULL &&
+			    g_utf8_validate(entry->tuple->file_path, -1, NULL))
+			{
+				tmp = xmlNewNode(NULL, "meta");
+				xmlSetProp(tmp, "rel", "file_path");
+				xmlAddChild(tmp, xmlNewText(entry->tuple->file_path));
+				xmlAddChild(track, tmp);
+			}
+
+			if (entry->tuple->formatter != NULL &&
+			    g_utf8_validate(entry->tuple->formatter, -1, NULL))
+			{
+				tmp = xmlNewNode(NULL, "meta");
+				xmlSetProp(tmp, "rel", "formatter");
+				xmlAddChild(tmp, xmlNewText(entry->tuple->formatter));
+				xmlAddChild(track, tmp);
+			}
+
 		}
 		if(utf_filename) {
 			g_free(utf_filename);

@@ -1,3 +1,13 @@
+2006-08-18 21:56:52 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2089]
+  - freebsd compatibility
+  
+
+  Changes:        Modified:
+  +9 -1           trunk/audacious/controlsocket.c  
+  +11 -0          trunk/libaudacious/beepctrl.c  
+
+
 2006-08-15 00:55:44 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2079]
   - gcc 4.1.0, 4.1.1, 4.1.2 tree optimization workaround:

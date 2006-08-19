@@ -175,4 +175,9 @@ extern void playlist_load_ins_file(const gchar * filename,
                                    const gchar * playlist_name, gint pos,
                                    const gchar * title, gint len);
 
+extern void playlist_load_ins_file_tuple(const gchar * filename_p,
+					 const gchar * playlist_name, gint pos,
+					 TitleInput *tuple);
+
+
 #endif
