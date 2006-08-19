@@ -18,6 +18,7 @@
 
 #include <math.h>
 #include <glib.h>
+#include <string.h>
 #include "pndisplacement.h"
 #include "pnbooleanoption.h"
 #include "pnstringoption.h"

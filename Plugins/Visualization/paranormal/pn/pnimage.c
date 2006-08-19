@@ -19,6 +19,7 @@
 #include <config.h>
 
 #include <glib.h>
+#include <string.h>
 #include "pnimage.h"
 #include "pnerror.h"
 #include "pncpu.h"
