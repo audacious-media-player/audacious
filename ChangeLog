@@ -1,3 +1,12 @@
+2006-08-20 03:53:12 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2095]
+  - use bmp_title_input_new(), as XMMS_NEW_TITLEINPUT() is a deprecated and unsafe API
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Container/xspf/xspf.c  
+
+
 2006-08-19 21:51:13 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2093]
   An include a day keeps the implicit declaration at bay.

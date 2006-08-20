@@ -498,9 +498,11 @@ __playlist_ins_with_info_tuple(const gchar * filename,
 		    tuple = entry->decoder->get_song_tuple(entry->filename);
     }
 
-    entry->title = xmms_get_titlestring(tuple->formatter != NULL ? tuple->formatter : xmms_get_gentitle_format(), tuple);
-    entry->length = tuple->length;
-    entry->tuple = tuple;
+    if (tuple != NULL) {
+        entry->title = xmms_get_titlestring(tuple->formatter != NULL ? tuple->formatter : xmms_get_gentitle_format(), tuple);
+        entry->length = tuple->length;
+        entry->tuple = tuple;
+    }
 
     PLAYLIST_UNLOCK();
 
