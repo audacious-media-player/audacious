@@ -50,7 +50,7 @@ add_file(xmlNode *track, const gchar *filename, gint pos)
 	TitleInput *tuple;
 	gchar *locale_uri = NULL;
 
-	XMMS_NEW_TITLEINPUT(tuple);
+	tuple = bmp_title_input_new();
 
 	// creator, album, title, duration, trackNum, annotation, image, 
 	for(nptr = track->children; nptr != NULL; nptr = nptr->next){
