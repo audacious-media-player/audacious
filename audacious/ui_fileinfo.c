@@ -500,4 +500,5 @@ fileinfo_show_for_path(gchar *path)
 	fileinfo_show_for_tuple(tuple);
 
 	bmp_title_input_free(tuple);
+	tuple = NULL;
 }

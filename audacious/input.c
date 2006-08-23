@@ -488,6 +488,7 @@ input_get_song_info(const gchar * filename, gchar ** title, gint * length)
         (*length) = -1;
 
         bmp_title_input_free(input);
+        input = NULL;
     }
 
     g_free(filename_proxy);

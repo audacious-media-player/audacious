@@ -32,7 +32,7 @@
  */
 
 typedef struct {
-    gint __size;                /* Set by XMMS_NEW_TITLEINPUT() */
+    gint __size;                /* Set by bmp_title_input_new() */
     gint __version;             /* Ditto */
 
     gchar *performer;           /* %p */
@@ -48,6 +48,7 @@ typedef struct {
     gchar *file_path;           /* %F */
     gint length;		/* not displayable */
     gchar *formatter;		/* not displayable */
+    time_t mtime;
 } TitleInput;
 
 typedef TitleInput BmpTitleInput;

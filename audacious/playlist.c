@@ -100,6 +100,7 @@ static gint playlist_compare_path(PlaylistEntry * a, PlaylistEntry * b);
 static gint playlist_compare_filename(PlaylistEntry * a, PlaylistEntry * b);
 static gint playlist_compare_title(PlaylistEntry * a, PlaylistEntry * b);
 static gint playlist_compare_artist(PlaylistEntry * a, PlaylistEntry * b);
+static time_t playlist_get_mtime(const gchar *filename);
 static gint playlist_compare_date(PlaylistEntry * a, PlaylistEntry * b);
 static gint playlist_compare_track(PlaylistEntry * a, PlaylistEntry * b);
 static gint playlist_compare_playlist(PlaylistEntry * a, PlaylistEntry * b);
@@ -151,8 +152,10 @@ playlist_entry_free(PlaylistEntry * entry)
     if (!entry)
         return;
 
-    if (entry->tuple != NULL)
+    if (entry->tuple != NULL) {
         bmp_title_input_free(entry->tuple);
+        entry->tuple = NULL;
+    }
 
     if (entry->filename != NULL)
         g_free(entry->filename);
@@ -167,8 +170,19 @@ static gboolean
 playlist_entry_get_info(PlaylistEntry * entry)
 {
     TitleInput *tuple;
+    time_t modtime = playlist_get_mtime(entry->filename);
 
     g_return_val_if_fail(entry != NULL, FALSE);
+
+    /* renew tuple if file mtime is newer than tuple mtime. */
+    if(entry->tuple){
+        if(entry->tuple->mtime == modtime)
+            return TRUE;
+        else {
+            bmp_title_input_free(entry->tuple);
+            entry->tuple = NULL;
+        }
+    }
 
     if (entry->decoder == NULL)
         entry->decoder = input_check_file(entry->filename, FALSE);
@@ -180,6 +194,9 @@ playlist_entry_get_info(PlaylistEntry * entry)
 
     if (tuple == NULL)
         return FALSE;
+
+    /* attach mtime */
+    tuple->mtime = modtime;
 
     /* entry is still around */
     entry->title = xmms_get_titlestring(tuple->formatter != NULL ? tuple->formatter : xmms_get_gentitle_format(), tuple);
@@ -485,18 +502,6 @@ __playlist_ins_with_info_tuple(const gchar * filename,
 
     node = g_list_nth(playlist, pos);
     entry = PLAYLIST_ENTRY(node->data);
-
-    /* insufficient tuple */
-    if(!tuple->track_name || !tuple->performer || !tuple->album_name || !tuple->genre
-       || !tuple->year || !tuple->track_number || !tuple->length){
-//	    printf("tuple discarded: %s\n", filename);
-	    bmp_title_input_free(tuple);
-
-	    if (entry->decoder == NULL || entry->decoder->get_song_tuple == NULL)
-		    tuple = input_get_song_tuple(entry->filename);
-	    else
-		    tuple = entry->decoder->get_song_tuple(entry->filename);
-    }
 
     if (tuple != NULL) {
         entry->title = xmms_get_titlestring(tuple->formatter != NULL ? tuple->formatter : xmms_get_gentitle_format(), tuple);
@@ -1538,7 +1543,9 @@ playlist_get_songtitle(guint pos)
     entry = node->data;
 
     /* FIXME: simplify this logic */
-    if (!entry->title && entry->length == -1) {
+//    if (!entry->title && entry->length == -1) {
+    if ( (!entry->title && entry->length == -1) || 
+	 (entry->tuple && (entry->tuple->mtime != playlist_get_mtime(entry->filename))) ){
         if (playlist_entry_get_info(entry))
             title = entry->title;
     }
@@ -1579,8 +1586,8 @@ playlist_get_tuple(guint pos)
 
     tuple = entry->tuple;
 
-    if (tuple == NULL)
-    {
+    // if no tuple or tuple with old mtime, get new one.
+    if (!tuple || (entry->tuple->mtime != playlist_get_mtime(entry->filename))) {
         playlist_entry_get_info(entry);
         tuple = entry->tuple;
     }
@@ -1611,7 +1618,9 @@ playlist_get_songtime(guint pos)
 
     entry = node->data;
 
-    if (!entry->title && entry->length == -1) {
+//    if (!entry->title && entry->length == -1) {
+    if (!entry->tuple || (entry->tuple->mtime != playlist_get_mtime(entry->filename))){
+
         if (playlist_entry_get_info(entry))
             song_time = entry->length;
 
@@ -1788,6 +1797,24 @@ playlist_compare_path(PlaylistEntry * a,
 {
     return path_compare(a->filename, b->filename);
 }
+
+
+static time_t
+playlist_get_mtime(const gchar *filename)
+{
+	struct stat buf;
+
+    gint rv;
+
+    rv = stat(filename, &buf);
+
+    if (rv == 0) {
+        return buf.st_mtime;
+    } else {
+        return 0; //error
+    }
+}
+
 
 static gint
 playlist_compare_date(PlaylistEntry * a,
@@ -2050,7 +2077,8 @@ playlist_fileinfo(guint pos)
     PLAYLIST_UNLOCK();
 
     /* No tuple? Try to set this entry up properly. --nenolod */
-    if (entry->tuple == NULL)
+//    if (entry->tuple == NULL)
+    if (!entry->tuple || (entry->tuple->mtime != playlist_get_mtime(entry->filename)))
     {
         playlist_entry_get_info(entry);
         tuple = entry->tuple;
@@ -2145,8 +2173,13 @@ playlist_get_info_func(gpointer arg)
             for (node = playlist_get(); node; node = g_list_next(node)) {
                 entry = node->data;
 
-                if (entry->title || entry->length != -1)
-                    continue;
+                if(entry->tuple) {
+//                    printf("tuple mtime = %ld file mtime = %ld\n", entry->tuple->mtime, playlist_get_mtime(entry->filename));
+                    if(entry->tuple->mtime == playlist_get_mtime(entry->filename)) 
+                        continue;
+                    else
+                        entry->tuple->mtime = 0; /* invalidate mtime */
+                }
 
                 if (!playlist_entry_get_info(entry)) {
                     if (g_list_index(playlist_get(), entry) == -1)
@@ -2190,7 +2223,8 @@ playlist_get_info_func(gpointer arg)
                                           (playlist_get(), node));
                  node = g_list_next(node)) {
                 entry = node->data;
-                if (entry->title || entry->length != -1)
+//                if (entry->title || entry->length != -1)
+                if (entry->tuple && (entry->tuple->mtime == playlist_get_mtime(entry->filename)))
                     continue;
 
                 if (!playlist_entry_get_info(entry)) {
@@ -2588,6 +2622,9 @@ playlist_read_info_selection(void)
 
         str_replace_in(&entry->title, NULL);
         entry->length = -1;
+
+	/* invalidate mtime to reread */
+	entry->tuple->mtime = 0;
 
         if (!playlist_entry_get_info(entry)) {
             if (g_list_index(playlist_get(), entry) == -1)

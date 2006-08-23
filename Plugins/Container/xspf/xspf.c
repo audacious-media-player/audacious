@@ -127,6 +127,14 @@ add_file(xmlNode *track, const gchar *filename, gint pos)
 				tuple->formatter = (gchar *)xmlNodeGetContent(nptr);
 				continue;
 			}
+			else if(!strcmp(rel, "mtime")){
+				xmlChar *str;
+				str = xmlNodeGetContent(nptr);
+				tuple->mtime = (time_t)atoll(str);
+				if(str)
+					xmlFree(str);
+				continue;
+			}
 			xmlFree(rel);
 			rel = NULL;
 		}
@@ -347,6 +355,17 @@ playlist_save_xspf(const gchar *filename, gint pos)
 				xmlAddChild(tmp, xmlNewText(entry->tuple->formatter));
 				xmlAddChild(track, tmp);
 			}
+
+			if (entry->tuple->mtime) {
+				gchar *str;
+				str = g_malloc(128); // XXX fix me.
+				tmp = xmlNewNode(NULL, "meta");
+				xmlSetProp(tmp, "rel", "mtime");
+				sprintf(str, "%ld", entry->tuple->mtime);
+				xmlAddChild(tmp, xmlNewText(str));
+				xmlAddChild(track, tmp);
+				g_free(str);
+			}				
 
 		}
 		if(utf_filename) {
