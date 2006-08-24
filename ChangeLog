@@ -1,3 +1,14 @@
+2006-08-24 18:11:30 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2103]
+  Sync with upstream. ADL is now dual licensed, and RIX has had a pitch fixup. Free warning fix included.
+
+  Changes:        Modified:
+  +22 -17         trunk/Plugins/Input/adplug/core/adl.cpp  
+  +0 -14          trunk/Plugins/Input/adplug/core/adl.h  
+  +18 -61         trunk/Plugins/Input/adplug/core/rix.cpp  
+  +3 -8           trunk/Plugins/Input/adplug/core/rix.h  
+
+
 2006-08-24 06:09:05 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2101]
   - file_path should not contain file name.

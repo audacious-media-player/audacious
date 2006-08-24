@@ -109,9 +109,9 @@ pn_integer_option_save_thyself (PnUserObject *user_object, xmlNodePtr node)
 
   integer_option = (PnIntegerOption *) user_object;
 
-  value_node = xmlNewChild (node, NULL, "Value", NULL);
+  value_node = xmlNewChild (node, NULL, (xmlChar *) "Value", NULL);
   sprintf (str, "%i", integer_option->value);
-  xmlNodeSetContent (value_node, str);
+  xmlNodeSetContent (value_node, (xmlChar *) str);
 
   if (parent_class->save_thyself)
     parent_class->save_thyself (user_object, node);

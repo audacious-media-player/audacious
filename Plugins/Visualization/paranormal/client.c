@@ -592,7 +592,7 @@ create_config_dialog (void)
   gtk_widget_set_usize (config_dialog, 500, 300);
   gtk_container_border_width (GTK_CONTAINER (config_dialog), 8);
   gtk_signal_connect_object (GTK_OBJECT (config_dialog), "delete-event",
-			     destroy_config_dialog, NULL);
+			     GTK_SIGNAL_FUNC (destroy_config_dialog), NULL);
 
   /* OK / Cancel / Apply */
   bbox = gtk_hbutton_box_new ();

@@ -135,13 +135,13 @@ pn_actuator_save_thyself (PnUserObject *user_object, xmlNodePtr node)
 
   actuator = (PnActuator *) user_object;
 
-  options_node = xmlNewChild (node, NULL, "Options", NULL);
+  options_node = xmlNewChild (node, NULL, (xmlChar *) "Options", NULL);
 
   /* Save all the options  */
   for (i=0; i < actuator->options->len; i++)
     {
       option = g_array_index (actuator->options, PnOption *, i);
-      option_node = xmlNewChild (options_node, NULL, "BUG",  NULL);
+      option_node = xmlNewChild (options_node, NULL, (xmlChar *) "BUG",  NULL);
       pn_user_object_save_thyself (PN_USER_OBJECT (option), option_node);
     }
 

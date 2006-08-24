@@ -97,12 +97,12 @@ pn_boolean_option_save_thyself (PnUserObject *user_object, xmlNodePtr node)
 
   boolean_option = (PnBooleanOption *) user_object;
 
-  value_node = xmlNewChild (node, NULL, "Value", NULL);
+  value_node = xmlNewChild (node, NULL, (xmlChar *) "Value", NULL);
 
   if (boolean_option->value)
-    xmlNodeSetContent (value_node, "True");
+    xmlNodeSetContent (value_node, (xmlChar *) "True");
   else
-    xmlNodeSetContent (value_node, "False");
+    xmlNodeSetContent (value_node, (xmlChar *) "False");
 
   if (parent_class->save_thyself)
     parent_class->save_thyself (user_object, node);

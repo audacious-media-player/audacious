@@ -139,11 +139,11 @@ pn_vis_save_thyself (PnUserObject *user_object, xmlNodePtr node)
 
   vis = (PnVis *) user_object;
 
-  ns = xmlNewNs (node, PN_XML_NS_HREF, "pn");
+  ns = xmlNewNs (node, PN_XML_NS_HREF, (xmlChar *) "pn");
   xmlSetNs (node, ns);
 
-  actuators_node = xmlNewChild (node, NULL, "Actuators", NULL);
-  actuator_node = xmlNewChild (actuators_node, NULL, user_object->name, NULL);
+  actuators_node = xmlNewChild (node, NULL, (xmlChar *) "Actuators", NULL);
+  actuator_node = xmlNewChild (actuators_node, NULL, (xmlChar *) user_object->name, NULL);
   if (vis->root_actuator)
     pn_user_object_save_thyself (PN_USER_OBJECT (vis->root_actuator), actuator_node);
 
@@ -261,9 +261,9 @@ pn_vis_save_to_file (PnVis *vis, const gchar *fname)
 {
   xmlDocPtr doc;
 
-  doc = xmlNewDoc ("1.0");
+  doc = xmlNewDoc ((xmlChar *) "1.0");
 
-  doc->xmlRootNode = xmlNewDocNode (doc, NULL, "BUG", NULL);
+  doc->xmlRootNode = xmlNewDocNode (doc, NULL, (xmlChar *) "BUG", NULL);
 
   pn_user_object_save_thyself (PN_USER_OBJECT (vis), doc->xmlRootNode);
 

@@ -80,7 +80,7 @@ pn_user_object_real_save_thyself (PnUserObject *user_object, xmlNodePtr node)
   g_return_if_fail (PN_IS_USER_OBJECT (user_object));
   g_return_if_fail (node != NULL);
 
-  xmlNodeSetName (node, user_object->name);
+  xmlNodeSetName (node, (xmlChar *) user_object->name);
 }
 
 void

@@ -106,8 +106,8 @@ pn_list_option_save_thyself (PnUserObject *user_object, xmlNodePtr node)
 
   list_option = (PnListOption *) user_object;
 
-  value_node = xmlNewChild (node, NULL, "Value", NULL);
-  xmlNodeSetContent (value_node, g_array_index (list_option->items, const gchar *, list_option->index));
+  value_node = xmlNewChild (node, NULL, (xmlChar *) "Value", NULL);
+  xmlNodeSetContent (value_node, (xmlChar *) g_array_index (list_option->items, const gchar *, list_option->index));
 
   if (parent_class->save_thyself)
     parent_class->save_thyself (user_object, node);

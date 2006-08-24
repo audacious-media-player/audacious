@@ -20,6 +20,7 @@
 #define __PN_XML_H__
 
 #include <libxml/parser.h>
+#include <libxml/xmlstring.h>
 
 /* compatibility w/ libxml1 */
 #ifndef xmlChildrenNode
@@ -28,6 +29,6 @@
 #endif
 
 /* The namespace href */
-#define PN_XML_NS_HREF "http://paranormal.sf.net/pnvis/1.0/"
+#define PN_XML_NS_HREF (xmlChar *) "http://paranormal.sf.net/pnvis/1.0/"
 
 #endif /* __PN_XML_H__ */

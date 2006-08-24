@@ -105,8 +105,8 @@ pn_string_option_save_thyself (PnUserObject *user_object, xmlNodePtr node)
   g_return_if_fail (node != NULL);
 
   string_option = (PnStringOption *) user_object;
-  value_node = xmlNewChild (node, NULL, "Value", NULL);
-  xmlNodeSetContent (value_node, string_option->value);
+  value_node = xmlNewChild (node, NULL, (xmlChar *) "Value", NULL);
+  xmlNodeSetContent (value_node, (xmlChar *) string_option->value);
 
   if (parent_class->save_thyself)
     parent_class->save_thyself (user_object, node);

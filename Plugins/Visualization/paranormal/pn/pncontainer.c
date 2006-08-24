@@ -134,13 +134,13 @@ pn_container_save_thyself (PnUserObject *user_object, xmlNodePtr node)
 
   container = (PnContainer *) user_object;
 
-  actuators_node = xmlNewChild (node, NULL, "Actuators", NULL);
+  actuators_node = xmlNewChild (node, NULL, (xmlChar *) "Actuators", NULL);
 
   /* Save the actuators */
   for (i=0; i<container->actuators->len; i++)
     {
       actuator = g_array_index (container->actuators, PnActuator *, i);
-      actuator_node = xmlNewChild (actuators_node, NULL, "BUG", NULL);
+      actuator_node = xmlNewChild (actuators_node, NULL, (xmlChar *) "BUG", NULL);
       pn_user_object_save_thyself (PN_USER_OBJECT (actuator), actuator_node);
     }
 
