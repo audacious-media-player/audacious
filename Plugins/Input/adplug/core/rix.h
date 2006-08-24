@@ -46,8 +46,8 @@ class CrixPlayer: public CPlayer
 
   int flag_mkf;
   unsigned char *file_buffer;
-  unsigned char *buf_addr;  /* rix files' buffer */
-  unsigned short buffer[300];
+  unsigned char *buf_addr;  /* rix files' f_buffer */
+  unsigned short f_buffer[300];//9C0h-C18h
   unsigned short a0b0_data2[11];
   unsigned char a0b0_data3[18];
   unsigned char a0b0_data4[18];
@@ -70,7 +70,6 @@ class CrixPlayer: public CPlayer
   unsigned short mus_block;
   unsigned short ins_block;
   unsigned char rhythm;
-  unsigned char mutex;
   unsigned char music_on;
   unsigned char pause_flag;
   unsigned short band;
@@ -78,7 +77,7 @@ class CrixPlayer: public CPlayer
   unsigned short e0_reg_flag;
   unsigned char bd_modify;
   int sustain;
-  int dro_end;
+  int play_end;
 
 #define ad_08_reg() ad_bop(8,0)    /**/
   inline void ad_20_reg(unsigned short);              /**/
@@ -101,7 +100,6 @@ class CrixPlayer: public CPlayer
   inline void int_08h_entry();    /**/
   inline void music_ctrl();                 /**/
   inline void Pause();                      /**/
-  inline void prep_int();                   /**/
   inline void prepare_a0b0(unsigned short,unsigned short);      /**/
   inline void rix_90_pro(unsigned short);             /**/
   inline void rix_A0_pro(unsigned short,unsigned short);        /**/
@@ -110,8 +108,5 @@ class CrixPlayer: public CPlayer
   inline void rix_get_ins();                /**/
   inline unsigned short rix_proc();                   /**/
   inline void set_new_int();
-  inline void set_speed(unsigned short);              /**/
-  inline void set_time(unsigned short);               /**/
   inline void switch_ad_bd(unsigned short);           /**/
-  inline unsigned int strm_and_fr(unsigned short);               /* done */
 };

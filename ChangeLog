@@ -1,3 +1,12 @@
+2006-08-24 06:09:05 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2101]
+  - file_path should not contain file name.
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Container/xspf/xspf.c  
+
+
 2006-08-23 14:46:33 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2099]
   - modified time (mtime) has been introduced into tuple

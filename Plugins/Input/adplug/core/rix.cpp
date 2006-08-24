@@ -75,7 +75,7 @@ bool CrixPlayer::load(const std::string &filename, const CFileProvider &fp)
 	  int offset=f->readInt(4);
 	  f->seek(offset);
   }
-  if(f->readInt(4)!=0x55aa){ fp.close(f);return false; }
+  if(f->readInt(2)!=0x55aa){ fp.close(f);return false; }
   file_buffer = new unsigned char [fp.filesize(f) + 1];
   f->seek(0);
   while(!f->eof())
@@ -91,7 +91,7 @@ bool CrixPlayer::load(const std::string &filename, const CFileProvider &fp)
 bool CrixPlayer::update()
 {
 	int_08h_entry();
-	return !dro_end;
+	return !play_end;
 }
 
 void CrixPlayer::rewind(int subsong)
@@ -100,7 +100,6 @@ void CrixPlayer::rewind(int subsong)
   mus_block = 0;
   ins_block = 0;
   rhythm = 0;
-  mutex = 0;
   music_on = 0;
   pause_flag = 0;
   band = 0;
@@ -108,10 +107,10 @@ void CrixPlayer::rewind(int subsong)
   e0_reg_flag = 0;
   bd_modify = 0;
   sustain = 0;
-  dro_end = 0;
+  play_end = 0;
   pos = index = 0; 
 
-  memset(buffer, 0, sizeof(unsigned short) * 300);
+  memset(f_buffer, 0, sizeof(unsigned short) * 300);
   memset(a0b0_data2, 0, sizeof(unsigned short) * 11);
   memset(a0b0_data3, 0, 18);
   memset(a0b0_data4, 0, 18);
@@ -158,7 +157,6 @@ float CrixPlayer::getrefresh()
 inline void CrixPlayer::set_new_int()
 {
   if(!ad_initial()) exit(1);
-  prep_int();
 }
 /*----------------------------------------------------------*/
 inline void CrixPlayer::Pause()
@@ -197,7 +195,12 @@ inline void CrixPlayer::data_initial()
 inline unsigned short CrixPlayer::ad_initial()
 {
   register unsigned short i,j,k = 0;
-  for(i=0;i<25;i++) crc_trans(i,i*4);
+  for(i=0;i<25;i++) 
+  {
+  	f_buffer[i*12]=(unsigned int)((i*24+10000)*0.27461678223+4)>>3;
+  	for(int t=1;t<12;t++)
+  		f_buffer[i*12+t]=(unsigned int)((double)f_buffer[i*12+t-1]*1.06);
+  }
   for(i=0;i<8;i++)
     for(j=0;j<12;j++)
       {
@@ -214,42 +217,11 @@ inline unsigned short CrixPlayer::ad_initial()
   return 1;//ad_test();
 }
 /*----------------------------------------------------------*/
-inline void CrixPlayer::crc_trans(unsigned short index,unsigned short v)
-{
-  register unsigned short i;
-  unsigned int res; unsigned short low;
-  res = strm_and_fr(v);
-  low = res;
-  buffer[index*12] = (low+4)>>3;
-  for(i=1;i<=11;i++)
-    {
-      res = (unsigned int)((double)res * 1.06);
-      buffer[index*12+i] = res>>3;
-    }
-}
-
-/*----------------------------------------------------------*/
-inline void CrixPlayer::prep_int()
-{
-  mutex = 0;
-}
-/*----------------------------------------------------------*/
 inline void CrixPlayer::ad_bop(unsigned short reg,unsigned short value)
 {
   if(reg == 2 || reg == 3)
     AdPlug_LogWrite("switch OPL2/3 mode!\n");
   opl->write(reg & 0xff, value & 0xff);
-}
-/*------------------------------------------------------*/
-inline unsigned short CrixPlayer::ad_test()   /* Test the SoundCard */
-{
-  ad_bop(0x04,0x60);
-  ad_bop(0x04,0x80);
-  ad_bop(0x02,0xFF);
-  ad_bop(0x04,0x21);
-  ad_bop(0x04,0x60);
-  ad_bop(0x04,0x80);
-  return 1;
 }
 /*--------------------------------------------------------------*/
 inline void CrixPlayer::int_08h_entry()
@@ -257,15 +229,13 @@ inline void CrixPlayer::int_08h_entry()
   unsigned short band_sus = 1;
   while(band_sus)
     {
-      if(sustain <= 0 && mutex == 0)
+        if(sustain <= 0)   
 	{
-	  mutex++;
 	  band_sus = rix_proc();
 	  if(band_sus) sustain += band_sus;
-	  mutex--;
-	  if(band_sus == 0)
+            else
 	    {
-	      dro_end=1;
+                play_end=1;   
 	      break;
 	    }
 	}
@@ -311,8 +281,6 @@ inline void CrixPlayer::rix_get_ins()
 
   for(i = 0; i < 28; i++)
     insbuf[i] = (baddr[i * 2 + 1] << 8) + baddr[i * 2];
-
-//   memcpy(insbuf,(&buf_addr[ins_block])+(band_low<<6),56);
 }
 /*--------------------------------------------------------------*/
 inline void CrixPlayer::rix_90_pro(unsigned short ctrl_l)
@@ -323,9 +291,7 @@ inline void CrixPlayer::rix_90_pro(unsigned short ctrl_l)
       ins_to_reg(modify[ctrl_l*2+1],insbuf+13,insbuf[27]);
       return;
     }
-  else
-    {
-      if(ctrl_l > 6)
+  else if(ctrl_l > 6)
 	{
 	  ins_to_reg(modify[ctrl_l*2+6],insbuf,insbuf[26]);
 	  return;
@@ -336,7 +302,6 @@ inline void CrixPlayer::rix_90_pro(unsigned short ctrl_l)
 	  ins_to_reg(15,insbuf+13,insbuf[27]);
 	  return;
 	}
-    }
 }
 /*--------------------------------------------------------------*/
 inline void CrixPlayer::rix_A0_pro(unsigned short ctrl_l,unsigned short index)
@@ -352,11 +317,9 @@ inline void CrixPlayer::rix_A0_pro(unsigned short ctrl_l,unsigned short index)
 inline void CrixPlayer::prepare_a0b0(unsigned short index,unsigned short v)  /* important !*/
 {
   short high = 0,low = 0; unsigned int res;
-  low = ((unsigned short)(v-0x2000))*0x19;
-  high = ((short)v)<0x2000?0xFFFF:0;
-  if(low == 0xFF && high == 0) return;
-  res = ((((unsigned int)high)<<16)|low)/0x2000;
-  low = res&0xFFFF;
+  int res1 = (v-0x2000)*0x19;
+  if(res1 == (int)0xff) return;
+  low = res1/0x2000;
   if(low < 0)
     {
       low = 0x18-low; high = (signed short)low<0?0xFFFF:0;
@@ -388,7 +351,7 @@ inline void CrixPlayer::ad_a0b0l_reg(unsigned short index,unsigned short p2,unsi
   a0b0_data3[index] = p2;
   i = ((signed short)i<=0x5F?i:0x5F);
   i = ((signed short)i>=0?i:0);
-  data = buffer[addrs_head[i]+displace[index]/2];
+  data = f_buffer[addrs_head[i]+displace[index]/2];
   ad_bop(0xA0+index,data);
   data = a0b0_data5[i]*4+(p3<1?0:0x20)+((data>>8)&3);
   ad_bop(0xB0+index,data);
@@ -524,12 +487,6 @@ inline void CrixPlayer::ad_a0b0_reg(unsigned short index)
 inline void CrixPlayer::music_ctrl()
 {
   register int i;
-  music_on = 0;
   for(i=0;i<11;i++)
     switch_ad_bd(i);
-}
-/*----------------------------------------------------------------------*/
-inline unsigned int CrixPlayer::strm_and_fr(unsigned short parm)
-{
-  return (int)(((unsigned int)parm*6+10000)*0.27461678223);
 }
