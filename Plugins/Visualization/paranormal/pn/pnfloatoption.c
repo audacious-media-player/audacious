@@ -134,7 +134,7 @@ pn_float_option_load_thyself (PnUserObject *user_object, const xmlNodePtr node)
   for (float_option_node = node->xmlChildrenNode;
        float_option_node;
        float_option_node = float_option_node->next)
-    if (g_strcasecmp (float_option_node->name, "Value") == 0)
+    if (g_strcasecmp ((gchar *) float_option_node->name, "Value") == 0)
       break;
   if (! float_option_node)
     {

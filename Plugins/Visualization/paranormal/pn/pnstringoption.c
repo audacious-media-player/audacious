@@ -128,7 +128,7 @@ pn_string_option_load_thyself (PnUserObject *user_object, const xmlNodePtr node)
   for (string_option_node = node->xmlChildrenNode;
        string_option_node;
        string_option_node = string_option_node->next)
-    if (g_strcasecmp (string_option_node->name, "Value") == 0)
+    if (g_strcasecmp ((gchar *) string_option_node->name, "Value") == 0)
       break;
   if (! string_option_node)
     {

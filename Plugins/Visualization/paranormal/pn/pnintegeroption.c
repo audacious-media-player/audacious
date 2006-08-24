@@ -134,7 +134,7 @@ pn_integer_option_load_thyself (PnUserObject *user_object, const xmlNodePtr node
   for (integer_option_node = node->xmlChildrenNode;
        integer_option_node;
        integer_option_node = integer_option_node->next)
-    if (g_strcasecmp (integer_option_node->name, "Value") == 0)
+    if (g_strcasecmp ((gchar *) integer_option_node->name, "Value") == 0)
       break;
   if (! integer_option_node)
     {

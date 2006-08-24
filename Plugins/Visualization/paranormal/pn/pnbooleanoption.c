@@ -125,7 +125,7 @@ pn_boolean_option_load_thyself (PnUserObject *user_object, const xmlNodePtr node
   for (boolean_option_node = node->xmlChildrenNode;
        boolean_option_node;
        boolean_option_node = boolean_option_node->next)
-    if (g_strcasecmp (boolean_option_node->name, "Value") == 0)
+    if (g_strcasecmp ((gchar *) boolean_option_node->name, "Value") == 0)
       break;
   if (! boolean_option_node)
     {

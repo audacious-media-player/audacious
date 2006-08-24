@@ -1,3 +1,21 @@
+2006-08-24 18:40:00 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2105]
+  Cast variable to proper type before passing it into libxml2. Include necessary header to make this possible. Resolves 35 pointer signedness warnings on PPC.
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Visualization/paranormal/client.c  
+  +2 -2           trunk/Plugins/Visualization/paranormal/pn/pnactuator.c  
+  +3 -3           trunk/Plugins/Visualization/paranormal/pn/pnbooleanoption.c  
+  +2 -2           trunk/Plugins/Visualization/paranormal/pn/pncontainer.c  
+  +2 -2           trunk/Plugins/Visualization/paranormal/pn/pnfloatoption.c  
+  +2 -2           trunk/Plugins/Visualization/paranormal/pn/pnintegeroption.c  
+  +2 -2           trunk/Plugins/Visualization/paranormal/pn/pnlistoption.c  
+  +2 -2           trunk/Plugins/Visualization/paranormal/pn/pnstringoption.c  
+  +1 -1           trunk/Plugins/Visualization/paranormal/pn/pnuserobject.c  
+  +5 -5           trunk/Plugins/Visualization/paranormal/pn/pnvis.c  
+  +2 -1           trunk/Plugins/Visualization/paranormal/pn/pnxml.h  
+
+
 2006-08-24 18:11:30 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2103]
   Sync with upstream. ADL is now dual licensed, and RIX has had a pitch fixup. Free warning fix included.

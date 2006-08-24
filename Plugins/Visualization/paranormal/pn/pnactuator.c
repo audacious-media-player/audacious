@@ -166,7 +166,7 @@ pn_actuator_load_thyself (PnUserObject *user_object, const xmlNodePtr node)
 
   /* find the 'options' node */
   for (options_node = node->xmlChildrenNode; options_node; options_node = options_node->next)
-    if (g_strcasecmp (options_node->name, "Options") == 0)
+    if (g_strcasecmp ((gchar *) options_node->name, "Options") == 0)
       break;
 
   /* load each of the options */
@@ -174,7 +174,7 @@ pn_actuator_load_thyself (PnUserObject *user_object, const xmlNodePtr node)
     {
       for (option_node = options_node->xmlChildrenNode; option_node; option_node = option_node->next)
 	{
-	  if (!g_strcasecmp(option_node->name, "text"))
+	  if (!g_strcasecmp((gchar *) option_node->name, "text"))
             continue;
 
 	  option = pn_actuator_get_option_by_name (actuator, option_node->name);

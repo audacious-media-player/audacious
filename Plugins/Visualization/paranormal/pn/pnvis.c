@@ -155,7 +155,10 @@ static void
 pn_vis_load_thyself (PnUserObject *user_object, const xmlNodePtr node)
 {
   PnVis *vis;
-  xmlNodePtr actuators_node, actuator_node, tptr;
+  xmlNodePtr actuators_node, actuator_node;
+#if 0
+, tptr;
+#endif
   PnActuator *root_actuator = NULL;
 
   g_return_if_fail (user_object != NULL);
@@ -166,7 +169,7 @@ pn_vis_load_thyself (PnUserObject *user_object, const xmlNodePtr node)
 
   /* find the 'Actuators' node */
   for (actuators_node = node->xmlChildrenNode; actuators_node; actuators_node = actuators_node->next)
-    if (g_strcasecmp (actuators_node->name, "Actuators") == 0)
+    if (g_strcasecmp ((gchar *) actuators_node->name, "Actuators") == 0)
       break;
   if (! actuators_node)
     {
@@ -175,7 +178,7 @@ pn_vis_load_thyself (PnUserObject *user_object, const xmlNodePtr node)
     }
       
   /* get the root actuator's node */
-  for (actuator_node = actuators_node->xmlChildrenNode; actuator_node != NULL && !g_strcasecmp(actuator_node->name, "text");
+  for (actuator_node = actuators_node->xmlChildrenNode; actuator_node != NULL && !g_strcasecmp((gchar *) actuator_node->name, "text");
 	actuator_node = actuator_node->next);
   if (! actuator_node)
     goto done;
@@ -305,7 +308,7 @@ pn_vis_load_from_file (PnVis *vis, const gchar *fname)
       return FALSE;
     }
 
-  if (g_strcasecmp (root_node->name, pn_user_object_get_name (PN_USER_OBJECT (vis))))
+  if (g_strcasecmp ((gchar *) root_node->name, pn_user_object_get_name (PN_USER_OBJECT (vis))))
     {
       pn_error ("invalid file format: this file does not contain a Paranormal visualization");
       return FALSE;
