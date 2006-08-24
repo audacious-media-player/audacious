@@ -64,7 +64,7 @@ add_file(xmlNode *track, const gchar *filename, gint pos)
 			xmlFree(str);
 			if(locale_uri){
 				tuple->file_name = g_path_get_basename(locale_uri);
-				tuple->file_path = g_strdup(locale_uri);
+				tuple->file_path = g_path_get_dirname(locale_uri);
 			}
 		}
 		else if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "creator")){
