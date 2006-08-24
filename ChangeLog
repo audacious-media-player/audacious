@@ -1,3 +1,18 @@
+2006-08-24 19:23:54 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2107]
+  Actually cast variables to glib types before feeding them into glib compare functions. Resolves another 16 signedness warnings on PPC.
+
+  Changes:        Modified:
+  +2 -2           trunk/Plugins/Visualization/paranormal/pn/pnactuator.c  
+  +1 -1           trunk/Plugins/Visualization/paranormal/pn/pnbooleanoption.c  
+  +2 -2           trunk/Plugins/Visualization/paranormal/pn/pncontainer.c  
+  +1 -1           trunk/Plugins/Visualization/paranormal/pn/pnfloatoption.c  
+  +1 -1           trunk/Plugins/Visualization/paranormal/pn/pnintegeroption.c  
+  +1 -1           trunk/Plugins/Visualization/paranormal/pn/pnlistoption.c  
+  +1 -1           trunk/Plugins/Visualization/paranormal/pn/pnstringoption.c  
+  +7 -4           trunk/Plugins/Visualization/paranormal/pn/pnvis.c  
+
+
 2006-08-24 18:40:00 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2105]
   Cast variable to proper type before passing it into libxml2. Include necessary header to make this possible. Resolves 35 pointer signedness warnings on PPC.

@@ -133,7 +133,7 @@ pn_boolean_option_load_thyself (PnUserObject *user_object, const xmlNodePtr node
       return;
     }
 
-  val_str = xmlNodeGetContent (boolean_option_node);
+  val_str = (gchar *)xmlNodeGetContent (boolean_option_node);
   if (! val_str)
     goto done;
 

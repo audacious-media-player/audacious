@@ -142,7 +142,7 @@ pn_float_option_load_thyself (PnUserObject *user_object, const xmlNodePtr node)
       return;
     }
 
-  val_str = xmlNodeGetContent (float_option_node);
+  val_str = (gchar *)xmlNodeGetContent (float_option_node);
 
   if (val_str)
     pn_float_option_set_value (float_option, strtod (val_str, NULL));

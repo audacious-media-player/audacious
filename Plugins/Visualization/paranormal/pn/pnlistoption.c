@@ -139,7 +139,7 @@ pn_list_option_load_thyself (PnUserObject *user_object, const xmlNodePtr node)
       return;
     }
 
-  val_str = xmlNodeGetContent (list_option_node);
+  val_str = (gchar *)xmlNodeGetContent (list_option_node);
   if (! val_str)
     goto done;
 

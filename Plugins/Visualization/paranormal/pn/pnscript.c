@@ -179,6 +179,7 @@ pn_script_execute (PnScript *script)
   guint *op;
   gdouble stack[64];
   guint stack_top = 0;
+  guint temp;
 
   g_return_if_fail (script != NULL);
   g_return_if_fail (PN_IS_SCRIPT (script));
@@ -208,15 +209,21 @@ pn_script_execute (PnScript *script)
 	break;
 
       case PN_OP_ADD:
-	PEEKN (2) += POPV;
+	/* PEEKN (2) += POPV; */
+	temp = POPV;
+	PEEKN(2) += temp;
 	break;
 
       case PN_OP_SUB:
-	PEEKN (2) -= POPV;
+	/* PEEKN (2) -= POPV; */
+	temp = POPV;
+	PEEKN(2) -= temp;
 	break;
 
       case PN_OP_MUL:
-	PEEKN (2) *= POPV;
+	/* PEEKN (2) *= POPV; */
+	temp = POPV;
+	PEEKN(2) *= temp;
 	break;
 
       case PN_OP_DIV:

@@ -99,7 +99,7 @@ pn_actuator_factory_new_actuator_from_xml (xmlNodePtr node)
 {
   PnActuator *actuator;
 
-  actuator = pn_actuator_factory_new_actuator (node->name);
+  actuator = pn_actuator_factory_new_actuator ((gchar *)node->name);
   if (! actuator)
     return NULL;
 

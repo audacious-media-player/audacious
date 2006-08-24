@@ -136,7 +136,7 @@ pn_string_option_load_thyself (PnUserObject *user_object, const xmlNodePtr node)
       return;
     }
 
-  val_str = xmlNodeGetContent (string_option_node);
+  val_str = (gchar *)xmlNodeGetContent (string_option_node);
   if (val_str)
     pn_string_option_set_value (string_option, val_str);
   else

@@ -142,7 +142,7 @@ pn_integer_option_load_thyself (PnUserObject *user_object, const xmlNodePtr node
       return;
     }
 
-  val_str = xmlNodeGetContent (integer_option_node);
+  val_str = (gchar *)xmlNodeGetContent (integer_option_node);
 
   if (val_str)
     pn_integer_option_set_value (integer_option, strtol (val_str, NULL, 0));
