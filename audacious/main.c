@@ -241,9 +241,9 @@ const guint n_titlestring_presets = G_N_ELEMENTS(bmp_titlestring_presets);
 const gchar *chardet_detector_presets[] = {
 	"None",
 	"Japanese",
-	"Taiwanese (alpha test)",
-	"Chinese (alpha test)",
-	"Korean (alpha test)",
+	"Taiwanese",
+	"Chinese",
+	"Korean",
 #ifdef HAVE_UDET
 	"Universal"
 #endif

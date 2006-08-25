@@ -47,6 +47,18 @@
 #undef PREFER_GB18030
 #undef PREFER_JOHAB
 
+/* workaround for that glib's g_convert can't convert properly from UCS-2BE/LE trailing after BOM. */
+#define WITH_G_CONVERT 1
+/* #undef WITH_G_CONVERT */
+
+#ifdef WITH_G_CONVERT
+const char UCS_2BE[]="UTF-16";
+const char UCS_2LE[]="UTF-16";
+#else
+const char UCS_2BE[]="UCS-2BE";
+const char UCS_2LE[]="UCS-2LE";
+#endif
+
 /* data types */
 typedef struct guess_arc_rec {
     unsigned int next;          /* next state */
@@ -94,7 +106,7 @@ const char *guess_jp(const char *buf, int buflen)
     for (i=0; i<buflen; i++) {
         int c = (unsigned char)buf[i];
 
-        /* special treatment of jis escape sequence */
+        /* special treatment of iso-2022 escape sequence */
         if (c == 0x1b) {
             if (i < buflen-1) {
                 c = (unsigned char)buf[++i];
@@ -106,13 +118,13 @@ const char *guess_jp(const char *buf, int buflen)
         if (i==0 && c == 0xff) {
             if (i < buflen-1) {
                 c = (unsigned char)buf[i+1];
-                if (c == 0xfe) return "UCS2-LE";
+                if (c == 0xfe) return UCS_2LE;
             }
         }
         if (i==0 && c == 0xfe) {
             if (i < buflen-1) {
                 c = (unsigned char)buf[i+1];
-                if (c == 0xff) return "UCS2-BE";
+                if (c == 0xff) return UCS_2BE;
             }
         }
 
@@ -177,7 +189,7 @@ const char *guess_tw(const char *buf, int buflen)
     for (i=0; i<buflen; i++) {
         int c = (unsigned char)buf[i];
 
-        /* special treatment of jis escape sequence */
+        /* special treatment of iso-2022 escape sequence */
         if (c == 0x1b) {
             if (i < buflen-1) {
                 c = (unsigned char)buf[++i];
@@ -189,13 +201,13 @@ const char *guess_tw(const char *buf, int buflen)
         if (i==0 && c == 0xff) {
             if (i < buflen-1) {
                 c = (unsigned char)buf[i+1];
-                if (c == 0xfe) return "UCS2-LE";
+                if (c == 0xfe) return UCS_2LE;
             }
         }
         if (i==0 && c == 0xfe) {
             if (i < buflen-1) {
                 c = (unsigned char)buf[i+1];
-                if (c == 0xff) return "UCS2-BE";
+                if (c == 0xff) return UCS_2BE;
             }
         }
 
@@ -246,7 +258,7 @@ const char *guess_cn(const char *buf, int buflen)
         int c = (unsigned char)buf[i];
         int c2;
 
-        /* special treatment of jis escape sequence */
+        /* special treatment of iso-2022 escape sequence */
         if (c == 0x1b) {
             if (i < buflen-1) {
                 c = (unsigned char)buf[i+1];
@@ -255,6 +267,20 @@ const char *guess_cn(const char *buf, int buflen)
             }
         }
         
+        /* special treatment of BOM */
+        if (i==0 && c == 0xff) {
+            if (i < buflen-1) {
+                c = (unsigned char)buf[i+1];
+                if (c == 0xfe) return UCS_2LE;
+            }
+        }
+        if (i==0 && c == 0xfe) {
+            if (i < buflen-1) {
+                c = (unsigned char)buf[i+1];
+                if (c == 0xff) return UCS_2BE;
+            }
+        }
+
         if (DFA_ALIVE(gb2312)) {
             if (!DFA_ALIVE(utf8) && !DFA_ALIVE(gb18030)) return "GB2312";
             DFA_NEXT(gb2312, c);
@@ -318,7 +344,7 @@ const char *guess_kr(const char *buf, int buflen)
         int c = (unsigned char)buf[i];
 	int c2;
 
-        /* special treatment of jis escape sequence */
+        /* special treatment of iso-2022 escape sequence */
         if (c == 0x1b) {
             if (i < buflen-1) {
                 c = (unsigned char)buf[i+1];
@@ -331,13 +357,13 @@ const char *guess_kr(const char *buf, int buflen)
         if (i==0 && c == 0xff) {
             if (i < buflen-1) {
                 c = (unsigned char)buf[i+1];
-                if (c == 0xfe) return "UCS2-LE";
+                if (c == 0xfe) return UCS_2LE;
             }
         }
         if (i==0 && c == 0xfe) {
             if (i < buflen-1) {
                 c = (unsigned char)buf[i+1];
-                if (c == 0xff) return "UCS2-BE";
+                if (c == 0xff) return UCS_2BE;
             }
         }
 

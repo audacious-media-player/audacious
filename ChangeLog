@@ -1,3 +1,12 @@
+2006-08-25 06:08:22 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2111]
+  - precision in title format is regarded as character count, not byte count.
+  
+
+  Changes:        Modified:
+  +11 -2          trunk/libaudacious/titlestring.c  
+
+
 2006-08-24 21:55:06 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2109]
   Additional (PPC?) warning squashing by Joseph Jezak from Gentoo.
