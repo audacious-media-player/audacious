@@ -1,3 +1,18 @@
+2006-08-24 21:55:06 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2109]
+  Additional (PPC?) warning squashing by Joseph Jezak from Gentoo.
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Visualization/paranormal/pn/pnactuator.c  
+  +1 -1           trunk/Plugins/Visualization/paranormal/pn/pnactuatorfactory.c  
+  +1 -1           trunk/Plugins/Visualization/paranormal/pn/pnbooleanoption.c  
+  +1 -1           trunk/Plugins/Visualization/paranormal/pn/pnfloatoption.c  
+  +1 -1           trunk/Plugins/Visualization/paranormal/pn/pnintegeroption.c  
+  +1 -1           trunk/Plugins/Visualization/paranormal/pn/pnlistoption.c  
+  +10 -3          trunk/Plugins/Visualization/paranormal/pn/pnscript.c  
+  +1 -1           trunk/Plugins/Visualization/paranormal/pn/pnstringoption.c  
+
+
 2006-08-24 19:23:54 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2107]
   Actually cast variables to glib types before feeding them into glib compare functions. Resolves another 16 signedness warnings on PPC.

@@ -261,8 +261,17 @@ xmms_get_titlestring(const gchar * fmt, TitleInput * input)
 
             /* Insert string. */
             if (precision >= 0) {
-                while (precision-- > 0 && (c = *string++) != '\0')
-                    PUTCH(c);
+                glong offset_max = precision, offset;
+                gchar *uptr = NULL;
+                const gchar *tmpstring = string;
+                while (precision > 0) {
+                    offset = offset_max - precision;
+                    uptr = g_utf8_offset_to_pointer(tmpstring, offset);
+                    if (*uptr == '\0')
+                        break;
+                    g_string_append_unichar(outstr, g_utf8_get_char(uptr));
+                    precision--;
+                }
             }
             else {
                 while ((c = *string++) != '\0')
