@@ -1,3 +1,14 @@
+2006-08-26 15:09:42 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2123]
+  - now xspf writes formatted xml.
+  - strcmp is replaced with xmlStrcmp.
+  
+  
+
+  Changes:        Modified:
+  +19 -19         trunk/Plugins/Container/xspf/xspf.c  
+
+
 2006-08-25 08:02:18 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2113]
   - libguess update: workaround for that g_convert can't convert properly from UCS-2BE/LE trailing after BOM. 
