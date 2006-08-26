@@ -1,3 +1,14 @@
+2006-08-25 08:02:18 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2113]
+  - libguess update: workaround for that g_convert can't convert properly from UCS-2BE/LE trailing after BOM. 
+  - remove "alpha test" labels from language selector for encoding detector.
+  
+
+  Changes:        Modified:
+  +3 -3           trunk/audacious/main.c  
+  +36 -10         trunk/libguess/guess.c  
+
+
 2006-08-25 06:08:22 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2111]
   - precision in title format is regarded as character count, not byte count.

@@ -54,7 +54,7 @@ add_file(xmlNode *track, const gchar *filename, gint pos)
 
 	// creator, album, title, duration, trackNum, annotation, image, 
 	for(nptr = track->children; nptr != NULL; nptr = nptr->next){
-		if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "location")){
+		if(nptr->type == XML_ELEMENT_NODE && !xmlStrcmp(nptr->name, "location")){
 			xmlChar *str = xmlNodeGetContent(nptr);
 			locale_uri = g_locale_from_utf8(str,-1,NULL,NULL,NULL);
 			if(!locale_uri){
@@ -67,21 +67,21 @@ add_file(xmlNode *track, const gchar *filename, gint pos)
 				tuple->file_path = g_path_get_dirname(locale_uri);
 			}
 		}
-		else if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "creator")){
+		else if(nptr->type == XML_ELEMENT_NODE && !xmlStrcmp(nptr->name, "creator")){
 			tuple->performer = (gchar *)xmlNodeGetContent(nptr);
 		}
-		else if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "album")){
+		else if(nptr->type == XML_ELEMENT_NODE && !xmlStrcmp(nptr->name, "album")){
 			tuple->album_name = (gchar *)xmlNodeGetContent(nptr);
 		}
-		else if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "title")){
+		else if(nptr->type == XML_ELEMENT_NODE && !xmlStrcmp(nptr->name, "title")){
 			tuple->track_name = (gchar *)xmlNodeGetContent(nptr);
 		}
-		else if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "duration")){
+		else if(nptr->type == XML_ELEMENT_NODE && !xmlStrcmp(nptr->name, "duration")){
 			xmlChar *str = xmlNodeGetContent(nptr);
 			tuple->length = atol(str);
 			xmlFree(str);
 		}
-		else if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "trackNum")){
+		else if(nptr->type == XML_ELEMENT_NODE && !xmlStrcmp(nptr->name, "trackNum")){
 			xmlChar *str = xmlNodeGetContent(nptr);
 			tuple->track_number = atol(str);
 			xmlFree(str);
@@ -92,42 +92,42 @@ add_file(xmlNode *track, const gchar *filename, gint pos)
 		//
 		// year, date, genre, comment, file_ext, file_path, formatter
 		//
-		else if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "meta")){
+		else if(nptr->type == XML_ELEMENT_NODE && !xmlStrcmp(nptr->name, "meta")){
 			xmlChar *rel = NULL;
 			
 			rel = xmlGetProp(nptr, "rel");
 
-			if(!strcmp(rel, "year")){
+			if(!xmlStrcmp(rel, "year")){
 				xmlChar *cont = xmlNodeGetContent(nptr);
 				tuple->year = atol(cont);
 				xmlFree(cont);
 				continue;
 			}
-			else if(!strcmp(rel, "date")){
+			else if(!xmlStrcmp(rel, "date")){
 				tuple->date = (gchar *)xmlNodeGetContent(nptr);
 				continue;
 			}
-			else if(!strcmp(rel, "genre")){
+			else if(!xmlStrcmp(rel, "genre")){
 				tuple->genre = (gchar *)xmlNodeGetContent(nptr);
 				continue;
 			}
-			else if(!strcmp(rel, "comment")){
+			else if(!xmlStrcmp(rel, "comment")){
 				tuple->comment = (gchar *)xmlNodeGetContent(nptr);
 				continue;
 			}
-			else if(!strcmp(rel, "file_ext")){
+			else if(!xmlStrcmp(rel, "file_ext")){
 				tuple->file_ext = (gchar *)xmlNodeGetContent(nptr);
 				continue;
 			}
-			else if(!strcmp(rel, "file_path")){
+			else if(!xmlStrcmp(rel, "file_path")){
 				tuple->file_path = (gchar *)xmlNodeGetContent(nptr);
 				continue;
 			}
-			else if(!strcmp(rel, "formatter")){
+			else if(!xmlStrcmp(rel, "formatter")){
 				tuple->formatter = (gchar *)xmlNodeGetContent(nptr);
 				continue;
 			}
-			else if(!strcmp(rel, "mtime")){
+			else if(!xmlStrcmp(rel, "mtime")){
 				xmlChar *str;
 				str = xmlNodeGetContent(nptr);
 				tuple->mtime = (time_t)atoll(str);
@@ -154,7 +154,7 @@ find_track(xmlNode *tracklist, const gchar *filename, gint pos)
 {
 	xmlNode *nptr;
 	for(nptr = tracklist->children; nptr != NULL; nptr = nptr->next){
-		if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "track")){
+		if(nptr->type == XML_ELEMENT_NODE && !xmlStrcmp(nptr->name, "track")){
 			add_file(nptr, filename, pos);
 		}
 	}
@@ -174,9 +174,9 @@ playlist_load_xspf(const gchar * filename, gint pos)
 
 	// find trackList
 	for(nptr = doc->children; nptr != NULL; nptr = nptr->next) {
-		if(nptr->type == XML_ELEMENT_NODE && !strcmp(nptr->name, "playlist")){
+		if(nptr->type == XML_ELEMENT_NODE && !xmlStrcmp(nptr->name, "playlist")){
 			for(nptr2 = nptr->children; nptr2 != NULL; nptr2 = nptr2->next){
-				if(nptr2->type == XML_ELEMENT_NODE && !strcmp(nptr2->name, "trackList")){
+				if(nptr2->type == XML_ELEMENT_NODE && !xmlStrcmp(nptr2->name, "trackList")){
 					find_track(nptr2, filename, pos);
 				}
 			}
@@ -374,7 +374,7 @@ playlist_save_xspf(const gchar *filename, gint pos)
 		}
 	}
 
-	xmlSaveFile(filename, doc);
+	xmlSaveFormatFile(filename, doc, 1);
 	xmlFreeDoc(doc);
 }
 
