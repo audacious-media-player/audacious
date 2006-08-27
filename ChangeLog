@@ -1,3 +1,12 @@
+2006-08-27 06:16:53 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2133]
+  - clean up nhjm449's fix to eliminate warnings. thanks nhjm449!
+  
+
+  Changes:        Modified:
+  +2 -2           trunk/Plugins/Container/xspf/xspf.c  
+
+
 2006-08-27 04:47:26 +0000  George Averill <nhjm449@gmail.com>
   revision [2131]
   - Streamtitles are fun.
