@@ -1,3 +1,13 @@
+2006-08-26 19:00:05 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2125]
+  CXXFLAGS fixes by Mike Frysinger (Gentoo).
+
+  Changes:        Modified:
+  +2 -2           trunk/Plugins/Input/modplug/gui/Makefile.in  
+  +2 -3           trunk/Plugins/Input/mpg123/Makefile.in  
+  +1 -1           trunk/Plugins/Input/sid/Makefile.in  
+
+
 2006-08-26 15:09:42 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2123]
   - now xspf writes formatted xml.

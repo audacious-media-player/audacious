@@ -140,6 +140,9 @@ add_file(xmlNode *track, const gchar *filename, gint pos)
 		}
 
 	}
+	if (tuple->length == NULL) {
+		tuple->length = -1;
+	}
 	// add file to playlist
 	playlist_load_ins_file_tuple(locale_uri, filename, pos, tuple);
 	pos++;
