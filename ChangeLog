@@ -1,3 +1,12 @@
+2006-08-27 04:21:35 +0000  George Averill <nhjm449@gmail.com>
+  revision [2127]
+  - Tracks with unknown lengths shouldn't be considered 0 seconds long! :P
+  
+
+  Changes:        Modified:
+  +3 -0           trunk/Plugins/Container/xspf/xspf.c  
+
+
 2006-08-26 19:00:05 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2125]
   CXXFLAGS fixes by Mike Frysinger (Gentoo).

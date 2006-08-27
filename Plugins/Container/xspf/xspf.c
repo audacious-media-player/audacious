@@ -266,7 +266,7 @@ playlist_save_xspf(const gchar *filename, gint pos)
 				xmlAddChild(track, tmp);
 			}
 
-			if (entry->tuple->length != 0)
+			if (entry->tuple->length != NULL && entry->tuple->length != -1)
 			{
 				gchar *str;
 				str = g_malloc(128); // XXX fix me.
