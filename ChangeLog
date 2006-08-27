@@ -1,3 +1,12 @@
+2006-08-27 04:36:50 +0000  George Averill <nhjm449@gmail.com>
+  revision [2129]
+  - Don't save empty lengths.
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Container/xspf/xspf.c  
+
+
 2006-08-27 04:21:35 +0000  George Averill <nhjm449@gmail.com>
   revision [2127]
   - Tracks with unknown lengths shouldn't be considered 0 seconds long! :P
