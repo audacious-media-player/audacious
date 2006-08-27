@@ -1,3 +1,12 @@
+2006-08-27 14:39:25 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2137]
+  - version update
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/configure.ac  
+
+
 2006-08-27 12:30:12 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2135]
   - correct a typo that Joker pointed out. thanks Joker!
