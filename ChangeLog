@@ -1,3 +1,11 @@
+2006-08-27 16:04:05 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2139]
+  Fix up the warning fixes; by Torbj?\195?\182rn Svensson (a.k.a. Azoff on #audacious).
+
+  Changes:        Modified:
+  +4 -4           trunk/Plugins/Visualization/paranormal/pn/pnscript.c  
+
+
 2006-08-27 14:39:25 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2137]
   - version update

@@ -175,22 +175,28 @@ filepopup_pointer_check_iter(gpointer unused)
 {
 	gint x, y, pos;
 	TitleInput *tuple;
-	static gint prev_x = 0, prev_y = 0, ctr = 0;
+	static gint prev_x = 0, prev_y = 0, ctr = 0, prev_pos = -1;
 	gboolean skip = FALSE;
+	GdkWindow *win;
 
-	if (!cfg.show_filepopup_for_tuple || playlistwin_is_shaded()
+	win = gdk_window_at_pointer(NULL, NULL);
+	gdk_window_get_pointer(GDK_WINDOW(playlistwin->window), &x, &y, NULL);
+	pos = playlist_list_get_playlist_position(playlistwin_list, x, y);
+
+	if (win == NULL
+		|| cfg.show_filepopup_for_tuple == FALSE
 		|| playlistwin_list->pl_tooltips == FALSE
-		|| gdk_window_at_pointer(NULL, NULL) != GDK_WINDOW(playlistwin->window)
-		|| gdk_window_at_pointer(NULL, NULL) == NULL)
+		|| pos != prev_pos
+		|| win != GDK_WINDOW(playlistwin->window)
+		|| playlistwin_is_shaded())
 	{
+		prev_pos = pos;
 		ctr = 0;
                 if ( filepopup_win->window != NULL &&
                      gdk_window_is_viewable(GDK_WINDOW(filepopup_win->window)) )
                   filepopup_hide(NULL);
 		return TRUE;
 	}
-
-	gdk_window_get_pointer(playlistwin->window, &x, &y, NULL);
 
 	if (prev_x == x && prev_y == y)
 		ctr++;
@@ -208,13 +214,13 @@ filepopup_pointer_check_iter(gpointer unused)
 
         if (ctr >= 20 && (skip == TRUE || gdk_window_is_viewable(GDK_WINDOW(filepopup_win->window)) != TRUE))
         {
-		pos = playlist_list_get_playlist_position(playlistwin_list, x, y);
-
 		if (pos == -1)
   		{
 			filepopup_hide(NULL);
 			return TRUE;
 	    	}
+
+		prev_pos = pos;
 
 		tuple = playlist_get_tuple(pos);
 		filepopup_show_for_tuple(tuple);
