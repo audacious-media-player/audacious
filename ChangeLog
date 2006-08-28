@@ -1,3 +1,12 @@
+2006-08-28 15:51:36 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2141]
+  - filepopup follows change of pointed song, i.e. it will hide while scrolling.
+  
+
+  Changes:        Modified:
+  +14 -8          trunk/audacious/ui_fileinfo.c  
+
+
 2006-08-27 16:04:05 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2139]
   Fix up the warning fixes; by Torbj?\195?\182rn Svensson (a.k.a. Azoff on #audacious).

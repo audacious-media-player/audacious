@@ -44,7 +44,8 @@ PlaylistContainer *playlist_container_find(char *ext)
 	GList *node;
 	PlaylistContainer *plc;
 
-	g_return_val_if_fail(ext != NULL, NULL);
+	/* check ext neither is NULL nor 1 (in a consequence of optimization). */
+	g_return_val_if_fail(ext != NULL && ext != (void *)1, NULL);
 
 	for (node = registered_plcs; node != NULL; node = g_list_next(node)) {
 		plc = PLAYLIST_CONTAINER(node->data);
