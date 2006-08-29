@@ -530,7 +530,9 @@ playlist_ins(const gchar * filename, gint pos)
     InputPlugin *dec;
 
     if (is_playlist_name(filename)) {
+        loading_playlist = TRUE;
         playlist_load_ins(filename, pos);
+        loading_playlist = FALSE;
         return TRUE;
     }
 
