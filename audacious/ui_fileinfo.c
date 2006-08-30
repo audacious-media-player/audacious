@@ -425,6 +425,7 @@ fileinfo_recursive_get_image(const gchar* path, gint depth)
 				/* We found a suitable file in the current
 				 * directory, use that. The string will be
 				 * freed by the caller */
+				g_dir_close(d);
 				return newpath;
 			}
 			else
@@ -441,6 +442,7 @@ fileinfo_recursive_get_image(const gchar* path, gint depth)
 					if(tmp)
 					{
 						g_free(newpath);
+						g_dir_close(d);
 						return tmp;
 					}
 				}

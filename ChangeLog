@@ -1,3 +1,12 @@
+2006-08-30 09:37:40 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2151]
+  - same to r2149, one more window. :)
+  
+
+  Changes:        Modified:
+  +3 -2           trunk/audacious/ui_playlist.c  
+
+
 2006-08-30 06:15:43 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2149]
   - comment out some gtk_window_set_transient_for() which hide mainwin unexpectedly.
