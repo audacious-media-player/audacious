@@ -406,6 +406,8 @@ static const gint mainwin_add_menu_entries_num =
 /* View submenu */
 
 GtkItemFactoryEntry mainwin_view_menu_entries[] = {
+    {N_("/Show Player"), "<alt>M", mainwin_general_menu_callback,
+     MAINWIN_GENERAL_SHOWMWIN, "<ToggleItem>", NULL},
     {N_("/Show Playlist Editor"), "<alt>E", mainwin_general_menu_callback,
      MAINWIN_GENERAL_SHOWPLWIN, "<ToggleItem>", NULL},
     {N_("/Show Equalizer"), "<alt>G", mainwin_general_menu_callback,
@@ -2389,6 +2391,8 @@ mainwin_real_show(void)
 {
     cfg.player_visible = TRUE;
 
+    check_set(mainwin_view_menu, "/Show Player", TRUE);
+
     if (cfg.player_shaded)
         vis_clear_data(active_vis);
 
@@ -2436,6 +2440,8 @@ mainwin_real_hide(void)
 {
     GdkGC *gc;
     GdkColor pattern;
+
+    check_set(mainwin_view_menu, "/Show Player", FALSE);
 
     if (cfg.player_shaded)
         svis_clear_data(mainwin_svis);
@@ -2645,6 +2651,9 @@ mainwin_general_menu_callback(gpointer data,
         break;
     case MAINWIN_GENERAL_FOCUSPLWIN:
         gtk_window_present(GTK_WINDOW(playlistwin));
+        break;
+    case MAINWIN_GENERAL_SHOWMWIN:
+        mainwin_show(GTK_CHECK_MENU_ITEM(item)->active);
         break;
     case MAINWIN_GENERAL_SHOWPLWIN:
         if (GTK_CHECK_MENU_ITEM(item)->active)
