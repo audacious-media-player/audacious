@@ -1,3 +1,12 @@
+2006-08-30 02:55:37 +0000  George Averill <nhjm449@gmail.com>
+  revision [2147]
+  - Add ability to show/hide main player window.
+  
+
+  Changes:        Modified:
+  +9 -0           trunk/audacious/mainwin.c  
+
+
 2006-08-29 18:35:30 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2145]
   - prevents input_check_file() working on loading playlist.

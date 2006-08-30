@@ -2208,7 +2208,8 @@ create_prefs_window(void)
 
     prefswin = glade_xml_get_widget(xml, "prefswin");
     g_object_set_data(G_OBJECT(prefswin), "glade-xml", xml);
-    gtk_window_set_transient_for(GTK_WINDOW(prefswin), GTK_WINDOW(mainwin));
+    /* this will hide only mainwin. it's annoying! yaz */
+//    gtk_window_set_transient_for(GTK_WINDOW(prefswin), GTK_WINDOW(mainwin));
 
     /* create category view */
     widget = glade_xml_get_widget(xml, "category_view");
