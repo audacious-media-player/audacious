@@ -755,8 +755,8 @@ equalizerwin_create_window(void)
                                                  cfg.show_wm_decorations);
 
     /* this will hide only mainwin. it's annoying! yaz */
-//    gtk_window_set_transient_for(GTK_WINDOW(equalizerwin),
-//                                 GTK_WINDOW(mainwin));
+    gtk_window_set_transient_for(GTK_WINDOW(equalizerwin),
+                                 GTK_WINDOW(mainwin));
     gtk_window_set_skip_taskbar_hint(GTK_WINDOW(equalizerwin), TRUE);
 
     icon = gdk_pixbuf_new_from_xpm_data((const gchar **) bmp_eq_icon);
