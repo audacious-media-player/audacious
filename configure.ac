@@ -195,6 +195,7 @@ AC_ARG_ENABLE(chardet,
 if test "x$enable_chardet" = xyes; then
     AC_DEFINE(USE_CHARDET, 1, [Define if character set detection enabled] )
     AC_CHECK_LIB(guess, guess_jp, [SUBDIR_GUESS=[''] CHARDET_LIBS=['-lguess']], [SUBDIR_GUESS=['libguess'] CHARDET_LIBS=['../libguess/libguess.a']])
+    AC_CHECK_LIB(rcd, rcdGetRussianCharset, [CHARDET_LIBS=["$CHARDET_LIBS -lrcd"]], [SUBDIR_GUESS=["$SUBDIR_GUESS librcd"] CHARDET_LIBS=["$CHARDET_LIBS ../librcd/librcd.a"]])    
     AC_CHECK_LIB(udet_c, detectCharset, [AC_DEFINE(HAVE_UDET, 1,[Define if the system has Mozilla universal character detector library]) CHARDET_LIBS=["$CHARDET_LIBS -ludet -ludet_c"]])
 fi
 AM_CONDITIONAL(USE_CHARDET,test "x$enable_chardet" = xyes)
@@ -1024,6 +1025,7 @@ AC_CONFIG_FILES([
 	audacious/images/Makefile
         libaudacious/Makefile
         libguess/Makefile
+	librcd/Makefile
 	Plugins/Makefile
         Plugins/Output/Makefile
         Plugins/Output/OSS/Makefile

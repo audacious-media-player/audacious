@@ -58,6 +58,7 @@
 
 #ifdef USE_CHARDET
     #include "../libguess/libguess.h"
+    #include "../librcd/librcd.h"
 #ifdef HAVE_UDET
     #include <libudet_c.h>
 #endif
@@ -1467,6 +1468,24 @@ gchar *chardet_to_utf8(const gchar *str, gssize len,
 				goto fallback;
 		} else if(!strncasecmp("korean", det, sizeof("korean"))) {
 			encoding = (char *)guess_kr(str, strlen(str));
+			if (!encoding)
+				goto fallback;
+		} else if(!strncasecmp("russian", det, sizeof("russian"))) {
+			rcd_russian_charset res = rcdGetRussianCharset(str, strlen(str));
+			switch(res) {
+			    case RUSSIAN_CHARSET_WIN:
+				encoding = "CP1251";
+			    break;
+			    case RUSSIAN_CHARSET_ALT:
+				encoding = "CP866";
+			    break;
+			    case RUSSIAN_CHARSET_KOI:
+				encoding = "KOI8-R";
+			    break;
+			    case RUSSIAN_CHARSET_UTF8:
+				encoding = "UTF-8";
+			    break;
+			}
 			if (!encoding)
 				goto fallback;
 #ifdef HAVE_UDET

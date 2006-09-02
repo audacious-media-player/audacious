@@ -1,3 +1,13 @@
+2006-08-30 13:14:33 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2155]
+  - revert equalizer.c and ui_playlist.c. :(
+  
+
+  Changes:        Modified:
+  +2 -2           trunk/audacious/equalizer.c  
+  +2 -3           trunk/audacious/ui_playlist.c  
+
+
 2006-08-30 09:44:09 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2153]
   - fix for memory leak.
