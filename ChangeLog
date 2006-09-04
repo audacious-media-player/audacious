@@ -1,3 +1,19 @@
+2006-09-02 15:24:10 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2157]
+  - chardet patch for Russian language witten by Valentine Sinitsyn.
+  
+
+  Changes:        Modified:
+  +1 -0           trunk/audacious/main.c  
+  +19 -0          trunk/audacious/util.c  
+  +2 -0           trunk/configure.ac  
+  +17 -0          trunk/librcd/Makefile.in  
+  +4 -0           trunk/librcd/README  
+  +269 -0         trunk/librcd/librcd.c  
+  +45 -0          trunk/librcd/librcd.h  
+  +899 -0         trunk/librcd/russian_table.h  
+
+
 2006-08-30 13:14:33 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2155]
   - revert equalizer.c and ui_playlist.c. :(

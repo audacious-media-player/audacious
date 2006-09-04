@@ -108,10 +108,16 @@ shade_pixmap(GdkPixmap *in, gint x, gint y, gint x_offset, gint y_offset, gint w
 
 	gdk_error_trap_pop();
 
-	shade_gdkimage_generic(gdk_drawable_get_visual(GDK_WINDOW(playlistwin->window)),
-		ximg, ximg->bpl, w, h, 60, 60, 60, shade_color->pixel);
+	if (GDK_IS_IMAGE(ximg))
+	{
+		shade_gdkimage_generic(gdk_drawable_get_visual(GDK_WINDOW(playlistwin->window)),
+			ximg, ximg->bpl, w, h, 60, 60, 60, shade_color->pixel);
 
-	gdk_draw_image(p, gc, ximg, 0, 0, x, y, w, h);
+		gdk_draw_image(p, gc, ximg, 0, 0, x, y, w, h);
+	}
+	else {
+		cfg.playlist_transparent = FALSE;
+	}
 
 	g_object_unref(gc);
 
