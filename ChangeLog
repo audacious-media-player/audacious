@@ -1,3 +1,12 @@
+2006-09-05 15:40:08 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2167]
+  - do not show filepopup for blank region when a playlist is shorter than the playlist window. 
+  
+
+  Changes:        Modified:
+  +7 -1           trunk/audacious/widgets/playlist_list.c  
+
+
 2006-09-05 15:09:14 +0000  
   revision [2165]
   generic vfs_gets and m3u updated to use vfs
