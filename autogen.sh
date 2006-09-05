@@ -9,7 +9,7 @@ if test ! -f $TOP_DIR/configure.ac ; then
 fi
 
 AUTOCONF=${AUTOCONF:-autoconf}
-ACLOCAL=${ACLOCAL:-aclocal-1.9}
+ACLOCAL=${ACLOCAL:-aclocal}
 AUTOHEADER=${AUTOHEADER:-autoheader}
 
 dump_help_screen ()

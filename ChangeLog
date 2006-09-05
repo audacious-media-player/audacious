@@ -1,3 +1,12 @@
+2006-09-05 16:14:08 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2169]
+  - why is this here? it really fucks with my SVN client on OS X, so I am deleting it as it's unreferenced
+  
+
+  Changes:        Modified:
+  +0 -637         trunk/Plugins/Input/sexypsf/spu.c  
+
+
 2006-09-05 15:40:08 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2167]
   - do not show filepopup for blank region when a playlist is shorter than the playlist window. 
