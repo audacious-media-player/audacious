@@ -1,5 +1,5 @@
 include ../../../mk/rules.mk
-include ../../../mk/objective.mk
+include ../../../mk/init.mk
 
 OBJECTIVE_LIBS = libESD.so
 
@@ -14,3 +14,5 @@ OBJECTS = ${SOURCES:.c=.o}
 
 CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ESD_CFLAGS) \
 	-I../../../intl -I../../.. -I..
+
+include ../../../mk/objective.mk

@@ -1,5 +1,5 @@
 include ../../../../mk/rules.mk
-include ../../../../mk/objective.mk
+include ../../../../mk/init.mk
 
 noinst_HEADERS = i_pcfg.h
 
@@ -10,3 +10,5 @@ OBJECTIVE_LIBS_NOINST = libpcfg.a
 SOURCES = i_pcfg.c
 
 OBJECTS = ${SOURCES:.c=.o}
+
+include ../../../../mk/objective.mk

@@ -1,9 +1,11 @@
 .SILENT:
 
 sinclude mk/rules.mk
-include mk/objective.mk
+include mk/init.mk
 
 SUBDIRS = Plugins libaudacious intl $(SUBDIR_GUESS) sqlite audacious audtool po icons skin
+
+include mk/objective.mk
 
 install-posthook:
 	@if test `whoami` = 'root' && test -z "$(DESTDIR)"; then \
@@ -16,3 +18,4 @@ OBJECTIVE_DATA =							\
 	audacious.pc:$(LIBDIR)/pkgconfig				\
 	audacious.1:$(mandir)/man1					\
 	audacious/audacious.desktop:$(datadir)/applications
+

@@ -1,5 +1,5 @@
 include ../../mk/rules.mk
-include ../../mk/objective.mk
+include ../../mk/init.mk
 
 OBJECTIVE_LIBS_NOINST = libwidgets.a
 
@@ -35,3 +35,4 @@ SOURCES = \
 
 OBJECTS = ${SOURCES:.c=.o}
 
+include ../../mk/objective.mk

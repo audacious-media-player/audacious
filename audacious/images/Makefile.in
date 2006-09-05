@@ -1,5 +1,5 @@
 include ../../mk/rules.mk
-include ../../mk/objective.mk
+include ../../mk/init.mk
 
 imagesdir = $(pkgdatadir)/images
 
@@ -12,3 +12,5 @@ OBJECTIVE_DATA = \
 	playlist.png:$(imagesdir) \
 	plugins.png:$(imagesdir) \
 	eq.png:$(imagesdir)
+
+include ../../mk/objective.mk

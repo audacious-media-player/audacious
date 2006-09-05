@@ -1,5 +1,5 @@
 include ../../../../mk/rules.mk
-include ../../../../mk/objective.mk
+include ../../../../mk/init.mk
 
 noinst_HEADERS = b-alsa.h b-alsa-config.h backend-alsa-icon.xpm
 
@@ -13,3 +13,5 @@ LIBADD = $(GLIB_LIBS) $(ALSA_LIBS) ../pcfg/libpcfg.a
 SOURCES = b-alsa.c
 
 OBJECTS = ${SOURCES:.c=.o}
+
+include ../../../../mk/objective.mk

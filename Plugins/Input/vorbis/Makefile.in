@@ -1,5 +1,5 @@
 include ../../../mk/rules.mk
-include ../../../mk/objective.mk
+include ../../../mk/init.mk
 
 OBJECTIVE_LIBS = libvorbis.so
 
@@ -12,3 +12,5 @@ OBJECTS = ${SOURCES:.c=.o}
 LIBADD = $(OGG_VORBIS_LIBS)
 
 CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I../../../intl -I../../.. -I../..
+
+include ../../../mk/objective.mk

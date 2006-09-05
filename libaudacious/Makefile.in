@@ -1,5 +1,5 @@
 include ../mk/rules.mk
-include ../mk/objective.mk
+include ../mk/init.mk
 
 beepincludedir = $(includedir)/audacious
 
@@ -42,6 +42,8 @@ HEADERS = \
 	vfs.h rcfile.h configdb.h \
 	beepctrl.h dirbrowser.h util.h \
 	formatter.h titlestring.h xml_document.h
+
+include ../mk/objective.mk
 
 install-posthook:
 	@mv ${DESTDIR}/${LIBDIR}/libaudacious.so ${DESTDIR}/${LIBDIR}/libaudacious.so.3.0.0

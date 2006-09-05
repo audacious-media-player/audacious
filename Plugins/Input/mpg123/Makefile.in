@@ -1,5 +1,5 @@
 include ../../../mk/rules.mk
-include ../../../mk/objective.mk
+include ../../../mk/init.mk
 
 OBJECTIVE_LIBS = libmpg123.so
 
@@ -17,3 +17,5 @@ CFLAGS   += -UPSYCHO -fPIC -DPIC $(GTK_CFLAGS) $(TAGLIB_CFLAGS) $(ARCH_DEFINES) 
 CXXFLAGS += -UPSYCHO -fPIC -DPIC $(GTK_CFLAGS) $(TAGLIB_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..
 
 LIBADD = -ltag_c $(GTK_LIBS) $(TAGLIB_LIBS)
+
+include ../../../mk/objective.mk

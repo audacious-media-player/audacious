@@ -1,5 +1,5 @@
 include ../../../../mk/rules.mk
-include ../../../../mk/objective.mk
+include ../../../../mk/init.mk
 
 OBJECTIVE_LIBS_NOINST=	libffwma.a
 
@@ -16,3 +16,5 @@ SOURCES=	allcodecs.c allformats.c \
 CFLAGS+=	-fPIC -DPIC $(GTK_CFLAGS) -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_GNU_SOURCE -c -I../../../.. -I../../../../intl
 
 OBJECTS=${SOURCES:.c=.o}
+
+include ../../../../mk/objective.mk

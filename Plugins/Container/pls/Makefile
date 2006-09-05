@@ -1,5 +1,5 @@
 include ../../../mk/rules.mk
-include ../../../mk/objective.mk
+include ../../../mk/init.mk
 
 OBJECTIVE_LIBS = libpls.so
 
@@ -14,3 +14,5 @@ CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..
 CXXFLAGS = $(CFLAGS)
 
 LIBADD = $(GTK_LIBS)
+
+include ../../../mk/objective.mk

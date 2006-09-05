@@ -1,5 +1,5 @@
 include ../../../../mk/rules.mk
-include ../../../../mk/objective.mk
+include ../../../../mk/init.mk
 
 CXXFLAGS += -fPIC -DPIC -I../../..
 
@@ -14,3 +14,5 @@ SOURCES = archive.cpp     \
           arch_bz2.cpp
 
 OBJECTS = ${SOURCES:.cpp=.o}
+
+include ../../../../mk/objective.mk

@@ -1,5 +1,5 @@
 include ../../../mk/rules.mk
-include ../../../mk/objective.mk
+include ../../../mk/init.mk
 
 OBJECTIVE_LIBS = libmodplug.so
 SUBDIRS = archive gui
@@ -11,3 +11,5 @@ LIBADD  = $(GTK_LIBS) -lstdc++ -lmodplug ./archive/libarchive.a ./gui/libgui.a
 SOURCES  = plugin.cpp modplugbmp.cpp
 
 OBJECTS = ${SOURCES:.cpp=.o}
+
+include ../../../mk/objective.mk

@@ -1,5 +1,5 @@
 include ../../../../mk/rules.mk
-include ../../../../mk/objective.mk
+include ../../../../mk/init.mk
 
 SOURCES = arts_helper.c
 
@@ -11,6 +11,8 @@ LDADD = $(ARTSC_LIBS)
 CFLAGS += $(ARTSC_CFLAGS) -I../../../../intl -I../../../..
 
 OBJECTS = ${SOURCES:.c=.o}
+
+include ../../../../mk/objective.mk
 
 audacious-arts-helper: $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@

@@ -1,7 +1,7 @@
 include ../../mk/rules.mk
-include ../../mk/objective.mk
+include ../../mk/init.mk
 
 ALL_PLUGINS = pls m3u
 SUBDIRS = @CONTAINER_PLUGINS@
 
-
+include ../../mk/objective.mk

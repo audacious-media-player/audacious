@@ -1,7 +1,7 @@
 include ../../mk/rules.mk
-include ../../mk/objective.mk
+include ../../mk/init.mk
 
 ALL_PLUGINS = blur_scope libvisual-proxy
 SUBDIRS = @VISUALIZATION_PLUGINS@
 
-
+include ../../mk/objective.mk

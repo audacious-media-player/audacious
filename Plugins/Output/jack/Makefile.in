@@ -1,5 +1,5 @@
 include ../../../mk/rules.mk
-include ../../../mk/objective.mk
+include ../../../mk/init.mk
 
 SOURCES = jack.c configure.c bio2jack.c
 
@@ -11,3 +11,5 @@ CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -Wall $(SAMPLERATE_CFLAGS) -I../../../intl -
 LIBADD = $(GTK_LIBS) $(JACK_LIBS) $(SAMPLERATE_LIBS) -lpthread
 
 OBJECTS = ${SOURCES:.c=.o}
+
+include ../../../mk/objective.mk

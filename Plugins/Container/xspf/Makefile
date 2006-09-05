@@ -1,5 +1,5 @@
 include ../../../mk/rules.mk
-include ../../../mk/objective.mk
+include ../../../mk/init.mk
 
 OBJECTIVE_LIBS = libxspf.so
 
@@ -14,3 +14,5 @@ CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ARCH_DEFINES) $(XML_CPPFLAGS) -I../../../i
 CXXFLAGS = $(CFLAGS)
 
 LIBADD = $(GTK_LIBS) $(XML_LIBS)
+
+include ../../../mk/objective.mk

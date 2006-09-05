@@ -1,5 +1,5 @@
 include ../../../mk/rules.mk
-include ../../../mk/objective.mk
+include ../../../mk/init.mk
 
 OBJECTIVE_LIBS = libnotify.so
 
@@ -14,3 +14,5 @@ CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(LIBNOTIFY_CFLAGS) $(ARCH_DEFINES) -I../../
 CXXFLAGS = $(CFLAGS)
 
 LIBADD = $(GTK_LIBS) $(LIBNOTIFY_LIBS)
+
+include ../../../mk/objective.mk

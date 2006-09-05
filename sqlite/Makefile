@@ -1,5 +1,5 @@
 include ../mk/rules.mk
-include ../mk/objective.mk
+include ../mk/init.mk
 
 OBJECTIVE_LIBS_NOINST = libsqlite.a
 
@@ -17,3 +17,4 @@ SOURCES=alter.c analyze.c attach.c auth.c btree.c build.c \
 
 OBJECTS=${SOURCES:.c=.o}
 
+include ../mk/objective.mk

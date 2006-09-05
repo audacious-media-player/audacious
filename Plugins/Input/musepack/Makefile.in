@@ -1,5 +1,5 @@
 include ../../../mk/rules.mk
-include ../../../mk/objective.mk
+include ../../../mk/init.mk
 
 OBJECTIVE_LIBS = libmpc.so
 
@@ -12,3 +12,5 @@ LIBADD = -lmpcdec $(TAGLIB_LIBS) $(GTK_LIBS)
 OBJECTS = ${SOURCES:.cpp=.o}
 
 CXXFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(TAGLIB_CFLAGS) -I../../../intl -I../../..
+
+include ../../../mk/objective.mk

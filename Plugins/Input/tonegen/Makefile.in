@@ -1,5 +1,5 @@
 include ../../../mk/rules.mk
-include ../../../mk/objective.mk
+include ../../../mk/init.mk
 
 OBJECTIVE_LIBS = libtonegen.so
 
@@ -10,3 +10,5 @@ SOURCES = tonegen.c
 OBJECTS = ${SOURCES:.c=.o}
 
 CFLAGS += -fPIC -DPIC @GTK_CFLAGS@ -I../../../intl -I../../..
+
+include ../../../mk/objective.mk

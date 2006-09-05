@@ -1,5 +1,5 @@
 include ../../../../mk/rules.mk
-include ../../../../mk/objective.mk
+include ../../../../mk/init.mk
 
 OBJECTIVE_LIBS_NOINST = libadplugcore.a
 
@@ -22,3 +22,5 @@ CXXFLAGS += -fPIC -DPIC $(BINIO_CFLAGS) -I../../../../intl -I../../../.. -Dstric
 CFLAGS += -fPIC -DPIC $(BINIO_CFLAGS) -I../../../../intl -I../../../.. -Dstricmp=strcasecmp
 
 OBJECTS = ${SOURCES:.c=.o} ${SOURCES:.cpp=.o}
+
+include ../../../../mk/objective.mk

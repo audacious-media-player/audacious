@@ -1,5 +1,5 @@
 include ../../../../mk/rules.mk
-include ../../../../mk/objective.mk
+include ../../../../mk/init.mk
 
 OBJECTIVE_LIBS = libtimidity.so
 
@@ -15,3 +15,5 @@ SOURCES = \
 OBJECTS = ${SOURCES:.c=.o}
 
 CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I../../../../intl -I../../../.. -I../libtimidity
+
+include ../../../../mk/objective.mk

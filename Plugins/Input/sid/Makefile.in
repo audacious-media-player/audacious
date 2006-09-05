@@ -1,5 +1,5 @@
 include ../../../mk/rules.mk
-include ../../../mk/objective.mk
+include ../../../mk/init.mk
 
 OBJECTIVE_LIBS = libsid.so
 
@@ -38,3 +38,5 @@ SOURCES =	\
 
 OBJECTS1 = ${SOURCES:.c=.o}
 OBJECTS = ${OBJECTS1:.cc=.o}
+
+include ../../../mk/objective.mk

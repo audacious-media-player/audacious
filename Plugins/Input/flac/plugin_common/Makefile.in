@@ -1,5 +1,5 @@
 include ../../../../mk/rules.mk
-include ../../../../mk/objective.mk
+include ../../../../mk/init.mk
 
 CFLAGS += -fPIC -DPIC -I.. -I../../../..
 
@@ -19,3 +19,5 @@ SOURCES = \
 	tags.c
 
 OBJECTS = ${SOURCES:.c=.o}
+
+include ../../../../mk/objective.mk

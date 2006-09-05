@@ -1,4 +1,6 @@
 include ../../../mk/rules.mk
-include ../../../mk/objective.mk
+include ../../../mk/init.mk
 
 SUBDIRS = libtimidity src
+
+include ../../../mk/objective.mk

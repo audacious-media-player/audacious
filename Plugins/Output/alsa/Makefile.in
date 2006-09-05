@@ -1,5 +1,5 @@
 include ../../../mk/rules.mk
-include ../../../mk/objective.mk
+include ../../../mk/init.mk
 
 OBJECTIVE_LIBS = libALSA.so
 
@@ -14,3 +14,5 @@ OBJECTS = ${SOURCES:.c=.o}
 
 CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ALSA_CFLAGS) \
 	-I../../../intl -I../../..
+
+include ../../../mk/objective.mk

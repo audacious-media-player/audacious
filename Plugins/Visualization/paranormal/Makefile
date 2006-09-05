@@ -1,5 +1,5 @@
 include ../../../mk/rules.mk
-include ../../../mk/objective.mk
+include ../../../mk/init.mk
 
 CFLAGS += -fPIC -DPIC -Ipn/ -I../../.. $(ARCH_DEFINES) $(GTK_CFLAGS) $(SDL_CFLAGS) $(XML_CFLAGS) $(XML_CPPFLAGS)
 
@@ -15,3 +15,4 @@ SOURCES = client.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
+include ../../../mk/objective.mk
