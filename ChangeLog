@@ -1,3 +1,14 @@
+2006-09-05 15:09:14 +0000  
+  revision [2165]
+  generic vfs_gets and m3u updated to use vfs
+
+  Changes:        Modified:
+  +6 -5           trunk/Plugins/Container/m3u/m3u.c  
+  +2 -4           trunk/libaudacious/Makefile.in  
+  +4 -0           trunk/libaudacious/vfs.h  
+  +51 -0          trunk/libaudacious/vfs_common.c  
+
+
 2006-09-05 05:36:30 +0000  George Averill <nhjm449@gmail.com>
   revision [2163]
   - Fix audacious-arts-helper warnings.

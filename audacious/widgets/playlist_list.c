@@ -361,6 +361,7 @@ playlist_list_get_playlist_position(PlayList_List * pl,
                                     gint y)
 {
     gint iy, length;
+    gint ret;
 
     if (!widget_contains(WIDGET(pl), x, y) || !pl->pl_fheight)
         return -1;
@@ -369,7 +370,12 @@ playlist_list_get_playlist_position(PlayList_List * pl,
         return -1;
     iy = y - pl->pl_widget.y;
 
-    return (MIN((iy / pl->pl_fheight) + pl->pl_first, length - 1));
+    ret = (iy / pl->pl_fheight) + pl->pl_first;
+
+    if(ret > length-1)
+	    ret = -1;
+
+    return ret;
 }
 
 static void
