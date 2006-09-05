@@ -1,3 +1,87 @@
+2006-09-05 02:47:32 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2161]
+  - fix for the long-standing dependency oddness in our build system. now make tool surely picks up changed source files and builds required objectives.
+  
+
+  Changes:        Modified:
+  +4 -1           trunk/Makefile  
+  +2 -2           trunk/Plugins/Container/Makefile.in  
+  +3 -1           trunk/Plugins/Container/m3u/Makefile  
+  +3 -1           trunk/Plugins/Container/pls/Makefile  
+  +3 -1           trunk/Plugins/Container/xspf/Makefile  
+  +3 -1           trunk/Plugins/Effect/Makefile.in  
+  +2 -1           trunk/Plugins/Effect/audiocompress/Makefile.in  
+  +2 -1           trunk/Plugins/Effect/ladspa/Makefile.in  
+  +2 -1           trunk/Plugins/Effect/stereo_plugin/Makefile.in  
+  +2 -1           trunk/Plugins/Effect/voice_removal/Makefile.in  
+  +2 -1           trunk/Plugins/General/Makefile.in  
+  +3 -1           trunk/Plugins/General/lirc/Makefile.in  
+  +3 -1           trunk/Plugins/General/notify/Makefile  
+  +3 -1           trunk/Plugins/General/scrobbler/Makefile.in  
+  +3 -1           trunk/Plugins/General/song_change/Makefile.in  
+  +3 -1           trunk/Plugins/Input/Makefile.in  
+  +3 -1           trunk/Plugins/Input/aac/Makefile.in  
+  +3 -1           trunk/Plugins/Input/aac/libfaad2/Makefile.in  
+  +3 -1           trunk/Plugins/Input/aac/mp4ff/Makefile.in  
+  +3 -1           trunk/Plugins/Input/aac/src/Makefile.in  
+  +3 -1           trunk/Plugins/Input/adplug/Makefile.in  
+  +3 -1           trunk/Plugins/Input/adplug/core/Makefile.in  
+  +3 -1           trunk/Plugins/Input/amidi-plug/Makefile.in  
+  +3 -1           trunk/Plugins/Input/amidi-plug/backend-alsa/Makefile.in  
+  +3 -1           trunk/Plugins/Input/amidi-plug/backend-dummy/Makefile.in  
+  +3 -1           trunk/Plugins/Input/amidi-plug/backend-fluidsynth/Makefile.in  
+  +3 -1           trunk/Plugins/Input/amidi-plug/pcfg/Makefile.in  
+  +3 -1           trunk/Plugins/Input/cdaudio/Makefile.in  
+  +3 -1           trunk/Plugins/Input/console/Makefile.in  
+  +3 -1           trunk/Plugins/Input/cue/Makefile  
+  +3 -1           trunk/Plugins/Input/flac/Makefile.in  
+  +3 -1           trunk/Plugins/Input/flac/plugin_common/Makefile.in  
+  +3 -1           trunk/Plugins/Input/modplug/Makefile.in  
+  +3 -1           trunk/Plugins/Input/modplug/archive/Makefile.in  
+  +3 -1           trunk/Plugins/Input/modplug/gui/Makefile.in  
+  +3 -1           trunk/Plugins/Input/mpg123/Makefile.in  
+  +3 -1           trunk/Plugins/Input/musepack/Makefile.in  
+  +3 -1           trunk/Plugins/Input/sexypsf/Makefile.in  
+  +3 -1           trunk/Plugins/Input/sid/Makefile.in  
+  +3 -1           trunk/Plugins/Input/timidity/Makefile.in  
+  +3 -1           trunk/Plugins/Input/timidity/libtimidity/Makefile.in  
+  +3 -1           trunk/Plugins/Input/timidity/src/Makefile.in  
+  +3 -1           trunk/Plugins/Input/tonegen/Makefile.in  
+  +3 -1           trunk/Plugins/Input/vorbis/Makefile.in  
+  +3 -1           trunk/Plugins/Input/wav/Makefile.in  
+  +3 -1           trunk/Plugins/Input/wma/Makefile.in  
+  +3 -1           trunk/Plugins/Input/wma/libffwma/Makefile.in  
+  +3 -1           trunk/Plugins/Makefile.in  
+  +3 -1           trunk/Plugins/Output/Makefile.in  
+  +3 -1           trunk/Plugins/Output/OSS/Makefile.in  
+  +3 -1           trunk/Plugins/Output/alsa/Makefile.in  
+  +3 -1           trunk/Plugins/Output/arts/Makefile.in  
+  +3 -1           trunk/Plugins/Output/arts/arts_helper/Makefile.in  
+  +3 -1           trunk/Plugins/Output/disk_writer/Makefile.in  
+  +3 -1           trunk/Plugins/Output/esd/Makefile.in  
+  +3 -1           trunk/Plugins/Output/jack/Makefile.in  
+  +3 -1           trunk/Plugins/Output/sun/Makefile.in  
+  +2 -2           trunk/Plugins/Visualization/Makefile.in  
+  +3 -1           trunk/Plugins/Visualization/blur_scope/Makefile.in  
+  +2 -1           trunk/Plugins/Visualization/paranormal/Makefile  
+  +3 -1           trunk/Plugins/Visualization/paranormal/pn/Makefile  
+  +3 -1           trunk/Plugins/Visualization/rocklight/Makefile.in  
+  +1 -0           trunk/audacious/Makefile  
+  +3 -1           trunk/audacious/glade/Makefile  
+  +3 -1           trunk/audacious/images/Makefile.in  
+  +3 -1           trunk/audacious/library/Makefile  
+  +2 -1           trunk/audacious/widgets/Makefile  
+  +1 -0           trunk/audtool/Makefile  
+  +3 -1           trunk/icons/Makefile.in  
+  +3 -1           trunk/libaudacious/Makefile.in  
+  +3 -1           trunk/libguess/Makefile.in  
+  +3 -1           trunk/librcd/Makefile.in  
+  +21 -0          trunk/mk/init.mk  
+  +1 -22          trunk/mk/objective.mk  
+  +3 -1           trunk/skin/Makefile.in  
+  +2 -1           trunk/sqlite/Makefile  
+
+
 2006-09-04 05:04:17 +0000  George Averill <nhjm449@gmail.com>
   revision [2159]
   - If transparency fails, disable it.

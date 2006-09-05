@@ -6,13 +6,10 @@ SOURCES = arts_helper.c
 OBJECTIVE_BINS = audacious-arts-helper
 
 LDFLAGS = -Wl,-export-dynamic
-LDADD = $(ARTSC_LIBS)
+LIBADD = $(ARTSC_LIBS)
 
 CFLAGS += $(ARTSC_CFLAGS) -I../../../../intl -I../../../..
 
 OBJECTS = ${SOURCES:.c=.o}
 
 include ../../../../mk/objective.mk
-
-audacious-arts-helper: $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@
