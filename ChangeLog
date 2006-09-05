@@ -1,3 +1,12 @@
+2006-09-05 05:36:30 +0000  George Averill <nhjm449@gmail.com>
+  revision [2163]
+  - Fix audacious-arts-helper warnings.
+  
+
+  Changes:        Modified:
+  +1 -4           trunk/Plugins/Output/arts/arts_helper/Makefile.in  
+
+
 2006-09-05 02:47:32 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2161]
   - fix for the long-standing dependency oddness in our build system. now make tool surely picks up changed source files and builds required objectives.

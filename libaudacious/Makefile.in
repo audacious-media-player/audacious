@@ -1,5 +1,5 @@
 include ../mk/rules.mk
-include ../mk/init.mk
+include ../mk/objective.mk
 
 beepincludedir = $(includedir)/audacious
 
@@ -21,7 +21,7 @@ CFLAGS += -fPIC -DPIC \
 	-I../intl
 
 CONF_SRC = configdb_$(CONFIGDB_BACKEND).c
-VFS_SRC = vfs_$(VFS_BACKEND).c
+VFS_SRC = vfs_$(VFS_BACKEND).c vfs_common.c
 
 SOURCES = \
 	$(CONF_SRC) \
@@ -42,8 +42,6 @@ HEADERS = \
 	vfs.h rcfile.h configdb.h \
 	beepctrl.h dirbrowser.h util.h \
 	formatter.h titlestring.h xml_document.h
-
-include ../mk/objective.mk
 
 install-posthook:
 	@mv ${DESTDIR}/${LIBDIR}/libaudacious.so ${DESTDIR}/${LIBDIR}/libaudacious.so.3.0.0

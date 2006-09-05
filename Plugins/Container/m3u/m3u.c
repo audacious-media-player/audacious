@@ -31,6 +31,7 @@
 #include <sys/stat.h>
 #include <sys/errno.h>
 
+#include "libaudacious/vfs.h"
 #include "audacious/main.h"
 #include "audacious/util.h"
 #include "audacious/playlist.h"
@@ -74,22 +75,22 @@ parse_extm3u_info(const gchar * info, gchar ** title, gint * length)
 static void
 playlist_load_m3u(const gchar * filename, gint pos)
 {
-    FILE *file;
+    VFSFile *file;
     gchar *line;
     gchar *ext_info = NULL, *ext_title = NULL;
     gsize line_len = 1024;
     gint ext_len = -1;
     gboolean is_extm3u = FALSE;
 
-    if (!(file = fopen(filename, "r")))
+    if ((file = vfs_fopen(filename, "rb")) == NULL)
         return;
 
     line = g_malloc(line_len);
-    while (fgets(line, line_len, file)) {
+    while (vfs_fgets(line, line_len, file)) {
         while (strlen(line) == line_len - 1 && line[strlen(line) - 1] != '\n') {
             line_len += 1024;
             line = g_realloc(line, line_len);
-            fgets(&line[strlen(line)], 1024, file);
+            vfs_fgets(&line[strlen(line)], 1024, file);
         }
 
         while (line[strlen(line) - 1] == '\r' ||
@@ -130,7 +131,7 @@ playlist_load_m3u(const gchar * filename, gint pos)
             pos++;
     }
 
-    fclose(file);
+    vfs_fclose(file);
     g_free(line);
 }
 
