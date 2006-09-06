@@ -1,3 +1,12 @@
+2006-09-06 20:01:04 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2177]
+  - add PICLDFLAGS, PICFLAGS, SHARED_SUFFIX identifiers
+  
+
+  Changes:        Modified:
+  +3 -0           trunk/mk/rules.mk.in  
+
+
 2006-09-06 19:57:50 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2175]
   - detect what $(SHARED_SUFFIX) should be.

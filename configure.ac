@@ -195,13 +195,13 @@ AC_MSG_CHECKING([for what extension and flags to use for plugin compilation])
 case "$target" in
 	*-apple-*)
 		AC_MSG_RESULT([Mac OS X: -fPIC -bundle, .dylib])
-		PICFLAGS="-fPIC -bundle"
-		PICLDFLAGS="-fPIC -bundle"
+		PICFLAGS="-fPIC -DPIC"
+		PICLDFLAGS="-fPIC -DPIC -bundle"
 		SHARED_SUFFIX=".dylib"
 		;;
 	*)
 		AC_MSG_RESULT([libdl-compatible: -fPIC -DPIC -shared, .so])
-		PICFLAGS="-fPIC -DPIC -shared"
+		PICFLAGS="-fPIC -DPIC"
 		PICLDFLAGS="-fPIC -DPIC -shared"
 		SHARED_SUFFIX=".so"
 		;;
