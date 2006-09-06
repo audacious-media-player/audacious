@@ -187,6 +187,39 @@ fi
 AM_CONDITIONAL(USE_IPV6,test "x$enable_ipv6" = xyes)
 AC_SUBST(USE_IPV6)
 
+dnl plugin stuff
+dnl ========================
+
+dnl Ok, first we find out what flags we need to use.
+AC_MSG_CHECKING([for what extension and flags to use for plugin compilation])
+case "$target" in
+	*-apple-*)
+		AC_MSG_RESULT([Mac OS X: -fPIC -bundle, .dylib])
+		PICFLAGS="-fPIC -bundle"
+		PICLDFLAGS="-fPIC -bundle"
+		SHARED_SUFFIX=".dylib"
+		;;
+	*)
+		AC_MSG_RESULT([libdl-compatible: -fPIC -DPIC -shared, .so])
+		PICFLAGS="-fPIC -DPIC -shared"
+		PICLDFLAGS="-fPIC -DPIC -shared"
+		SHARED_SUFFIX=".so"
+		;;
+esac
+AC_SUBST(PICFLAGS)
+AC_SUBST(SHARED_SUFFIX)
+
+AC_MSG_CHECKING([if you are running Apple-GCC])
+case "$target" in
+	*-apple-*)
+		AC_MSG_RESULT([yes, sorry you poor bastard])
+		LDFLAGS="$LDFLAGS -Wl,-framework -Wl,CoreFoundation -Wl,-framework -Wl,CoreServices"
+		;;
+	*)
+		AC_MSG_RESULT([no])
+		;;
+esac
+
 dnl chardet support
 dnl ========================
 AC_ARG_ENABLE(chardet,

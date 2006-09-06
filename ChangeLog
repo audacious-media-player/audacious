@@ -1,3 +1,12 @@
+2006-09-06 02:57:18 +0000  George Averill <nhjm449@gmail.com>
+  revision [2173]
+  - Reapply r2161
+  
+
+  Changes:        Modified:
+  +3 -1           trunk/libaudacious/Makefile.in  
+
+
 2006-09-05 16:18:30 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2171]
   - don't be picky about what aclocal version we are using.
