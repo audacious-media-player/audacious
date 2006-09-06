@@ -179,11 +179,15 @@ $(OBJECTIVE_LIBS): $(OBJECTS)
 	if [ "x$(OBJECTS)" != "x" ]; then \
 		$(MAKE) $(OBJECTS) || exit;		\
 		printf "%10s     %-20s\n" LINK $@; \
-		(if [ "x$(OBJECTIVE_SONAME_SUFFIX)" != "x" ]; then \
-			$(CC) $(PICLDFLAGS) -o $@ -Wl,-soname=$@.$(OBJECTIVE_SONAME_SUFFIX) $(OBJECTS) $(LDFLAGS) $(LIBADD); \
-		else \
-			$(CC) $(PICLDFLAGS) -o $@ -Wl,-soname=$@ $(OBJECTS) $(LDFLAGS) $(LIBADD); \
-		fi;) \
+		(if [ "x$(SHARED_SUFFIX)" == "so" ]; then \
+			(if [ "x$(OBJECTIVE_SONAME_SUFFIX)" != "x" ]; then \
+				$(CC) $(PICLDFLAGS) -o $@ -Wl,-soname=$@.$(OBJECTIVE_SONAME_SUFFIX) $(OBJECTS) $(LDFLAGS) $(LIBADD); \
+			else \
+				$(CC) $(PICLDFLAGS) -o $@ -Wl,-soname=$@ $(OBJECTS) $(LDFLAGS) $(LIBADD); \
+			fi;) \
+		 else \
+			$(CC) $(PICLDFLAGS) -o $@ $(OBJECTS) $(LDFLAGS) $(LIBADD); \
+		 fi;) \
 	fi
 
 %.a: $(OBJECTS)
