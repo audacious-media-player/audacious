@@ -1,3 +1,12 @@
+2006-09-06 20:54:02 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2187]
+  -Wl,-export-dynamic isn't needed here.
+  
+
+  Changes:        Modified:
+  +0 -2           trunk/libaudacious/Makefile.in  
+
+
 2006-09-06 20:37:57 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2185]
   - handle OS X linking command
