@@ -1,3 +1,15 @@
+2006-09-06 21:46:09 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2193]
+  - make audtool build
+  - make plugins work
+  
+
+  Changes:        Modified:
+  +5 -1           trunk/audacious/pluginenum.c  
+  +2 -3           trunk/audtool/Makefile  
+  +2 -0           trunk/configure.ac  
+
+
 2006-09-06 21:21:40 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2191]
   - audacious now builds on OS X
