@@ -1,3 +1,12 @@
+2006-09-06 21:01:53 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2189]
+  - they fucking say I'm nuts
+  
+
+  Changes:        Modified:
+  +2 -2           trunk/configure.ac  
+
+
 2006-09-06 20:54:02 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2187]
   -Wl,-export-dynamic isn't needed here.

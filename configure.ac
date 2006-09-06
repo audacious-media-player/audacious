@@ -194,20 +194,26 @@ dnl Ok, first we find out what flags we need to use.
 AC_MSG_CHECKING([for what extension and flags to use for plugin compilation])
 case "$target" in
 	*-apple-*)
-		AC_MSG_RESULT([Mac OS X: -fPIC -bundle -flat_namespace -undefined suppress -dynamiclib, .dylib])
+		AC_MSG_RESULT([Mac OS X: -fPIC -bundle -flat_namespace -undefined suppress, .dylib])
 		PICFLAGS="-fPIC -DPIC"
-		PICLDFLAGS="-fPIC -DPIC -bundle -flat_namespace -undefined suppress -dynamiclib"
+		PICLDFLAGS="-fPIC -DPIC -bundle -flat_namespace -undefined suppress"
+		LIBLDFLAGS="-dynamiclib"
+		AUDLDFLAGS=""
 		SHARED_SUFFIX=".dylib"
 		;;
 	*)
 		AC_MSG_RESULT([libdl-compatible: -fPIC -DPIC -shared, .so])
 		PICFLAGS="-fPIC -DPIC"
 		PICLDFLAGS="-fPIC -DPIC -shared"
+		LIBLDFLAGS="-fPIC -DPIC -shared"
+		AUDLDFLAGS="-Wl,-export-dynamic -Wl,-rpath=\${libdir}"
 		SHARED_SUFFIX=".so"
 		;;
 esac
 AC_SUBST(PICFLAGS)
 AC_SUBST(PICLDFLAGS)
+AC_SUBST(LIBLDFLAGS)
+AC_SUBST(AUDLDFLAGS)
 AC_SUBST(SHARED_SUFFIX)
 
 AC_MSG_CHECKING([if you are running Apple-GCC])

@@ -8,7 +8,10 @@ beepincludedir = $(includedir)/audacious
 
 OBJECTIVE_BINS = audacious
 
-LDFLAGS += -Wl,-export-dynamic
+LTLIBINTL = -L../intl -lintl
+
+LDFLAGS += $(AUDLDFLAGS)
+
 LDADD = \
 	-L.. $(LTLIBINTL)     \
 	-L../libaudacious -laudacious \
@@ -89,5 +92,5 @@ build_stamp.c:
 	fi;
 
 audacious: $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@ -Wl,-rpath,${libdir}
+	$(CC) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@ 
 	@printf "%10s     %-20s\n" LINK $@
