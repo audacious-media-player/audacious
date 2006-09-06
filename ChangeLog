@@ -1,3 +1,68 @@
+2006-09-06 20:21:40 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2181]
+  - use $(SHARED_SUFFIX)
+  - use $(PICFLAGS)
+  - use $(PICLDFLAGS)
+  
+
+  Changes:        Modified:
+  +2 -2           trunk/Plugins/Container/m3u/Makefile  
+  +2 -2           trunk/Plugins/Container/pls/Makefile  
+  +2 -2           trunk/Plugins/Container/xspf/Makefile  
+  +2 -2           trunk/Plugins/Effect/audiocompress/Makefile.in  
+  +2 -2           trunk/Plugins/Effect/ladspa/Makefile.in  
+  +2 -2           trunk/Plugins/Effect/stereo_plugin/Makefile.in  
+  +2 -2           trunk/Plugins/Effect/voice_removal/Makefile.in  
+  +2 -2           trunk/Plugins/General/lirc/Makefile.in  
+  +2 -2           trunk/Plugins/General/notify/Makefile  
+  +2 -2           trunk/Plugins/General/scrobbler/Makefile.in  
+  +2 -2           trunk/Plugins/General/song_change/Makefile.in  
+  +1 -1           trunk/Plugins/Input/aac/libfaad2/Makefile.in  
+  +1 -1           trunk/Plugins/Input/aac/mp4ff/Makefile.in  
+  +2 -2           trunk/Plugins/Input/aac/src/Makefile.in  
+  +3 -3           trunk/Plugins/Input/adplug/Makefile.in  
+  +2 -2           trunk/Plugins/Input/adplug/core/Makefile.in  
+  +2 -2           trunk/Plugins/Input/amidi-plug/Makefile.in  
+  +2 -2           trunk/Plugins/Input/amidi-plug/backend-alsa/Makefile.in  
+  +2 -2           trunk/Plugins/Input/amidi-plug/backend-dummy/Makefile.in  
+  +2 -2           trunk/Plugins/Input/amidi-plug/backend-fluidsynth/Makefile.in  
+  +1 -1           trunk/Plugins/Input/amidi-plug/pcfg/Makefile.in  
+  +2 -2           trunk/Plugins/Input/cdaudio/Makefile.in  
+  +2 -2           trunk/Plugins/Input/console/Makefile.in  
+  +2 -2           trunk/Plugins/Input/cue/Makefile  
+  +2 -2           trunk/Plugins/Input/flac/Makefile.in  
+  +1 -1           trunk/Plugins/Input/flac/plugin_common/Makefile.in  
+  +2 -2           trunk/Plugins/Input/modplug/Makefile.in  
+  +1 -1           trunk/Plugins/Input/modplug/archive/Makefile.in  
+  +2 -2           trunk/Plugins/Input/modplug/gui/Makefile.in  
+  +3 -3           trunk/Plugins/Input/mpg123/Makefile.in  
+  +2 -2           trunk/Plugins/Input/musepack/Makefile.in  
+  +2 -2           trunk/Plugins/Input/sexypsf/Makefile.in  
+  +3 -3           trunk/Plugins/Input/sid/Makefile.in  
+  +1 -1           trunk/Plugins/Input/timidity/libtimidity/Makefile.in  
+  +2 -2           trunk/Plugins/Input/timidity/src/Makefile.in  
+  +2 -2           trunk/Plugins/Input/tonegen/Makefile.in  
+  +2 -2           trunk/Plugins/Input/vorbis/Makefile.in  
+  +2 -2           trunk/Plugins/Input/wav/Makefile.in  
+  +2 -2           trunk/Plugins/Input/wma/Makefile.in  
+  +1 -1           trunk/Plugins/Input/wma/libffwma/Makefile.in  
+  +2 -2           trunk/Plugins/Output/OSS/Makefile.in  
+  +2 -2           trunk/Plugins/Output/alsa/Makefile.in  
+  +2 -2           trunk/Plugins/Output/arts/Makefile.in  
+  +2 -2           trunk/Plugins/Output/disk_writer/Makefile.in  
+  +2 -2           trunk/Plugins/Output/esd/Makefile.in  
+  +2 -2           trunk/Plugins/Output/jack/Makefile.in  
+  +2 -2           trunk/Plugins/Output/sun/Makefile.in  
+  +2 -2           trunk/Plugins/Visualization/blur_scope/Makefile.in  
+  +2 -2           trunk/Plugins/Visualization/paranormal/Makefile  
+  +1 -1           trunk/Plugins/Visualization/paranormal/pn/Makefile  
+  +2 -2           trunk/Plugins/Visualization/rocklight/Makefile.in  
+  +7 -7           trunk/libaudacious/Makefile.in  
+  +1 -1           trunk/libguess/Makefile.in  
+  +1 -1           trunk/librcd/Makefile.in  
+  +2 -2           trunk/mk/objective.mk  
+
+
 2006-09-06 20:04:37 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2179]
   - PICFLAGS should not call -shared/-bundle as some versions of GCC will misinterpret that. Only PICLDFLAGS should.

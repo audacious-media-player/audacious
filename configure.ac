@@ -207,6 +207,7 @@ case "$target" in
 		;;
 esac
 AC_SUBST(PICFLAGS)
+AC_SUBST(PICLDFLAGS)
 AC_SUBST(SHARED_SUFFIX)
 
 AC_MSG_CHECKING([if you are running Apple-GCC])
