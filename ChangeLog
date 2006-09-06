@@ -1,3 +1,12 @@
+2006-09-05 16:18:30 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2171]
+  - don't be picky about what aclocal version we are using.
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/autogen.sh  
+
+
 2006-09-05 16:14:08 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2169]
   - why is this here? it really fucks with my SVN client on OS X, so I am deleting it as it's unreferenced
