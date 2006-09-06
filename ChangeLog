@@ -1,3 +1,12 @@
+2006-09-06 20:04:37 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2179]
+  - PICFLAGS should not call -shared/-bundle as some versions of GCC will misinterpret that. Only PICLDFLAGS should.
+  
+
+  Changes:        Modified:
+  +3 -3           trunk/configure.ac  
+
+
 2006-09-06 20:01:04 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2177]
   - add PICLDFLAGS, PICFLAGS, SHARED_SUFFIX identifiers

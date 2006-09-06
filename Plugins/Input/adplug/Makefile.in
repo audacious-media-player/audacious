@@ -2,7 +2,7 @@ include ../../../mk/rules.mk
 include ../../../mk/init.mk
 
 SUBDIRS = core
-OBJECTIVE_LIBS = libadplug.so
+OBJECTIVE_LIBS = libadplug$(SHARED_SUFFIX)
 
 LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
@@ -12,9 +12,9 @@ SOURCES = adplug-xmms.cc
 
 OBJECTS = ${SOURCES:.cc=.o}
 
-CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(BINIO_CFLAGS) \
+CFLAGS += $(PICFLAGS) $(GTK_CFLAGS) $(BINIO_CFLAGS) \
 	-I../../../intl -I../../.. -I./core
-CXXFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(BINIO_CFLAGS) \
+CXXFLAGS += $(PICFLAGS) $(GTK_CFLAGS) $(BINIO_CFLAGS) \
 	-I../../../intl -I../../.. -I./core
 
 include ../../../mk/objective.mk

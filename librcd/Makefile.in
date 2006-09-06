@@ -6,7 +6,7 @@ OBJECTIVE_SONAME_SUFFIX = 0.1.8
 
 LDFLAGS += -Wl,-export-dynamic
 
-CFLAGS += -fPIC -DPIC
+CFLAGS += $(PICFLAGS)
 
 SOURCES = \
 	librcd.c

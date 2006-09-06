@@ -14,7 +14,7 @@ noinst_HEADERS = \
 	grabbag.h \
 	replaygain_synthesis.h
 
-OBJECTIVE_LIBS = libflac.so
+OBJECTIVE_LIBS = libflac$(SHARED_SUFFIX)
 
 LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
@@ -34,6 +34,6 @@ SOURCES = \
 
 OBJECTS = ${SOURCES:.c=.o}
 
-CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I../../../intl -I../../.. $(LIBFLAC_CFLAGS)
+CFLAGS += $(PICFLAGS) $(GTK_CFLAGS) -I../../../intl -I../../.. $(LIBFLAC_CFLAGS)
 
 include ../../../mk/objective.mk

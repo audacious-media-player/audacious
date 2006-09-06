@@ -1,7 +1,7 @@
 include ../../../mk/rules.mk
 include ../../../mk/init.mk
 
-OBJECTIVE_LIBS = libxspf.so
+OBJECTIVE_LIBS = libxspf$(SHARED_SUFFIX)
 
 LIBDIR = $(plugindir)/$(CONTAINER_PLUGIN_DIR)
 
@@ -9,7 +9,7 @@ SOURCES = xspf.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
-CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ARCH_DEFINES) $(XML_CPPFLAGS) -I../../../intl -I../../..
+CFLAGS += $(PICFLAGS) $(GTK_CFLAGS) $(ARCH_DEFINES) $(XML_CPPFLAGS) -I../../../intl -I../../..
 
 CXXFLAGS = $(CFLAGS)
 

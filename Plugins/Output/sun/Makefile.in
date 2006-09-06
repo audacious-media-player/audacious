@@ -9,9 +9,9 @@ sunsources =	sun.c	    \
 		about.c
 
 LIBDIR = $(plugindir)/$(OUTPUT_PLUGIN_DIR)
-OBJECTIVE_LIBS = libsun.so
+OBJECTIVE_LIBS = libsun$(SHARED_SUFFIX)
 
-CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I../../../intl -I../../..
+CFLAGS += $(PICFLAGS) $(GTK_CFLAGS) -I../../../intl -I../../..
 LIBADD = $(GTK_LIBS)
 SOURCES= $(sunsources)
 OBJECTS= ${SOURCES:.c=.o}

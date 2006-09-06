@@ -180,9 +180,9 @@ $(OBJECTIVE_LIBS): $(OBJECTS)
 		$(MAKE) $(OBJECTS) || exit;		\
 		printf "%10s     %-20s\n" LINK $@; \
 		(if [ "x$(OBJECTIVE_SONAME_SUFFIX)" != "x" ]; then \
-			$(CC) -fPIC -DPIC -shared -o $@ -Wl,-soname=$@.$(OBJECTIVE_SONAME_SUFFIX) $(OBJECTS) $(LDFLAGS) $(LIBADD); \
+			$(CC) $(PICLDFLAGS) -o $@ -Wl,-soname=$@.$(OBJECTIVE_SONAME_SUFFIX) $(OBJECTS) $(LDFLAGS) $(LIBADD); \
 		else \
-			$(CC) -fPIC -DPIC -shared -o $@ -Wl,-soname=$@ $(OBJECTS) $(LDFLAGS) $(LIBADD); \
+			$(CC) $(PICLDFLAGS) -o $@ -Wl,-soname=$@ $(OBJECTS) $(LDFLAGS) $(LIBADD); \
 		fi;) \
 	fi
 

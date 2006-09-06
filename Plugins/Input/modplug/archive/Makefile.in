@@ -1,7 +1,7 @@
 include ../../../../mk/rules.mk
 include ../../../../mk/init.mk
 
-CXXFLAGS += -fPIC -DPIC -I../../..
+CXXFLAGS += $(PICFLAGS) -I../../..
 
 OBJECTIVE_LIBS_NOINST = libarchive.a
 

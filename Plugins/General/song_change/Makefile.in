@@ -1,7 +1,7 @@
 include ../../../mk/rules.mk
 include ../../../mk/init.mk
 
-OBJECTIVE_LIBS = libsong_change.so
+OBJECTIVE_LIBS = libsong_change$(SHARED_SUFFIX)
 
 LIBDIR = $(plugindir)/$(GENERAL_PLUGIN_DIR)
 
@@ -11,6 +11,6 @@ SOURCES = song_change.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
-CFLAGS += -fPIC -DPIC $(BEEP_DEFINES) $(GTK_CFLAGS) -I../../../intl -I../../..
+CFLAGS += $(PICFLAGS) $(BEEP_DEFINES) $(GTK_CFLAGS) -I../../../intl -I../../..
 
 include ../../../mk/objective.mk

@@ -1,7 +1,7 @@
 include ../../../mk/rules.mk
 include ../../../mk/init.mk
 
-OBJECTIVE_LIBS = libmpc.so
+OBJECTIVE_LIBS = libmpc$(SHARED_SUFFIX)
 
 LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
@@ -11,6 +11,6 @@ LIBADD = -lmpcdec $(TAGLIB_LIBS) $(GTK_LIBS)
 
 OBJECTS = ${SOURCES:.cpp=.o}
 
-CXXFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(TAGLIB_CFLAGS) -I../../../intl -I../../..
+CXXFLAGS += $(PICFLAGS) $(GTK_CFLAGS) $(TAGLIB_CFLAGS) -I../../../intl -I../../..
 
 include ../../../mk/objective.mk

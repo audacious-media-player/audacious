@@ -1,8 +1,8 @@
 include ../../../../mk/rules.mk
 include ../../../../mk/init.mk
 
-CFLAGS   += -fPIC -DPIC $(GTK_CFLAGS) -I../../../../intl -I../../../..
-CXXFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I../../../../intl -I../../../..
+CFLAGS   += $(PICFLAGS) $(GTK_CFLAGS) -I../../../../intl -I../../../..
+CXXFLAGS += $(PICFLAGS) $(GTK_CFLAGS) -I../../../../intl -I../../../..
 
 OBJECTIVE_LIBS_NOINST = libgui.a
 SOURCES = main.cpp support.cpp interface.cpp callbacks.cpp

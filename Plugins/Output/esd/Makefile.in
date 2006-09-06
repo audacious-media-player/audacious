@@ -1,7 +1,7 @@
 include ../../../mk/rules.mk
 include ../../../mk/init.mk
 
-OBJECTIVE_LIBS = libESD.so
+OBJECTIVE_LIBS = libESD$(SHARED_SUFFIX)
 
 noinst_HEADERS = esdout.h
 
@@ -12,7 +12,7 @@ SOURCES = esd.c mixer.c about.c configure.c audio.c init.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
-CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ESD_CFLAGS) \
+CFLAGS += $(PICFLAGS) $(GTK_CFLAGS) $(ESD_CFLAGS) \
 	-I../../../intl -I../../.. -I..
 
 include ../../../mk/objective.mk

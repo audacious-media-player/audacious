@@ -1,7 +1,7 @@
 include ../../../mk/rules.mk
 include ../../../mk/init.mk
 
-OBJECTIVE_LIBS = libALSA.so
+OBJECTIVE_LIBS = libALSA$(SHARED_SUFFIX)
 
 noinst_HEADERS = alsa.h
 
@@ -12,7 +12,7 @@ SOURCES = alsa.c about.c audio.c configure.c init.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
-CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ALSA_CFLAGS) \
+CFLAGS += $(PICFLAGS) $(GTK_CFLAGS) $(ALSA_CFLAGS) \
 	-I../../../intl -I../../..
 
 include ../../../mk/objective.mk

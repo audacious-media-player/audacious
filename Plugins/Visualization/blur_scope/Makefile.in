@@ -1,7 +1,7 @@
 include ../../../mk/rules.mk
 include ../../../mk/init.mk
 
-OBJECTIVE_LIBS = libbscope.so
+OBJECTIVE_LIBS = libbscope$(SHARED_SUFFIX)
 
 LIBDIR = $(plugindir)/$(VISUALIZATION_PLUGIN_DIR)
 
@@ -11,6 +11,6 @@ SOURCES = blur_scope.c config.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
-CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..
+CFLAGS += $(PICFLAGS) $(GTK_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..
 
 include ../../../mk/objective.mk

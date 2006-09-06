@@ -3,7 +3,7 @@ include ../../../../mk/init.mk
 
 noinst_HEADERS = i_pcfg.h
 
-CFLAGS += -fPIC -DPIC $(GLIB_CFLAGS) -I../../../../intl -I../../../..
+CFLAGS += $(PICFLAGS) $(GLIB_CFLAGS) -I../../../../intl -I../../../..
 
 OBJECTIVE_LIBS_NOINST = libpcfg.a
 

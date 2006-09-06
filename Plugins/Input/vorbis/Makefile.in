@@ -1,7 +1,7 @@
 include ../../../mk/rules.mk
 include ../../../mk/init.mk
 
-OBJECTIVE_LIBS = libvorbis.so
+OBJECTIVE_LIBS = libvorbis$(SHARED_SUFFIX)
 
 LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
@@ -11,6 +11,6 @@ OBJECTS = ${SOURCES:.c=.o}
 
 LIBADD = $(OGG_VORBIS_LIBS)
 
-CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I../../../intl -I../../.. -I../..
+CFLAGS += $(PICFLAGS) $(GTK_CFLAGS) -I../../../intl -I../../.. -I../..
 
 include ../../../mk/objective.mk

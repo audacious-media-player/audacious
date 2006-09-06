@@ -1,7 +1,7 @@
 include ../../../mk/rules.mk
 include ../../../mk/init.mk
 
-OBJECTIVE_LIBS = libconsole.so
+OBJECTIVE_LIBS = libconsole$(SHARED_SUFFIX)
 
 LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
@@ -44,6 +44,6 @@ SOURCES = \
 OBJECTS = ${SOURCES:.cpp=.o}
 
 LIBADD += -lz $(GTK_LIBS) -lstdc++
-CXXFLAGS += -fPIC -DPIC $(GTK_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..
+CXXFLAGS += $(PICFLAGS) $(GTK_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..
 
 include ../../../mk/objective.mk

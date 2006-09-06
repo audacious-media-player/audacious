@@ -6,7 +6,7 @@ OBJECTIVE_LIBS_NOINST = libparanormal.a
 OBJECT_CFLAGS   = $(GTK_CFLAGS)
 OBJECT_LIBS     = $(GTK_LIBS)
 
-CFLAGS += -fPIC -DPIC -Wall -g -I../../../.. $(OBJECT_CFLAGS) $(XML_CPPFLAGS) -I..
+CFLAGS += $(PICFLAGS) -Wall -g -I../../../.. $(OBJECT_CFLAGS) $(XML_CPPFLAGS) -I..
 LIBADD   = -lm $(OBJECT_LIBS) $(XML_LIBS)
 
 SOURCES =  \

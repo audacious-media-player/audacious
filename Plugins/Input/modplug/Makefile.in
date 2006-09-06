@@ -1,12 +1,12 @@
 include ../../../mk/rules.mk
 include ../../../mk/init.mk
 
-OBJECTIVE_LIBS = libmodplug.so
+OBJECTIVE_LIBS = libmodplug$(SHARED_SUFFIX)
 SUBDIRS = archive gui
 
 LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
-CXXFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I.. -I../../.. -I../../../intl
+CXXFLAGS += $(PICFLAGS) $(GTK_CFLAGS) -I.. -I../../.. -I../../../intl
 LIBADD  = $(GTK_LIBS) -lstdc++ -lmodplug ./archive/libarchive.a ./gui/libgui.a
 SOURCES  = plugin.cpp modplugbmp.cpp
 

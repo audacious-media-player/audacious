@@ -1,7 +1,7 @@
 include ../../../../mk/rules.mk
 include ../../../../mk/init.mk
 
-OBJECTIVE_LIBS = libtimidity.so
+OBJECTIVE_LIBS = libtimidity$(SHARED_SUFFIX)
 
 LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
@@ -14,6 +14,6 @@ SOURCES = \
 
 OBJECTS = ${SOURCES:.c=.o}
 
-CFLAGS += -fPIC -DPIC $(GTK_CFLAGS) -I../../../../intl -I../../../.. -I../libtimidity
+CFLAGS += $(PICFLAGS) $(GTK_CFLAGS) -I../../../../intl -I../../../.. -I../libtimidity
 
 include ../../../../mk/objective.mk

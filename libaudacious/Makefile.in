@@ -3,7 +3,7 @@ include ../mk/init.mk
 
 beepincludedir = $(includedir)/audacious
 
-OBJECTIVE_LIBS = libaudacious.so
+OBJECTIVE_LIBS = libaudacious$(SHARED_SUFFIX)
 OBJECTIVE_SONAME_SUFFIX = 3.0.0
 
 LDFLAGS += -Wl,-export-dynamic
@@ -13,7 +13,7 @@ LIBADD = \
 	$(GCONF_LIBS)    \
 	$(GNOMEVFS_LIBS)
 
-CFLAGS += -fPIC -DPIC \
+CFLAGS += $(PICFLAGS) \
 	$(GTK_CFLAGS)        \
 	$(GCONF_CFLAGS)      \
 	$(GNOMEVFS_CFLAGS)   \
@@ -46,8 +46,8 @@ HEADERS = \
 include ../mk/objective.mk
 
 install-posthook:
-	@mv ${DESTDIR}/${LIBDIR}/libaudacious.so ${DESTDIR}/${LIBDIR}/libaudacious.so.3.0.0
-	@ln -sf ${LIBDIR}/libaudacious.so.3.0.0 \
-		${DESTDIR}/${LIBDIR}/libaudacious.so.3
-	@ln -sf ${LIBDIR}/libaudacious.so.3 \
-		${DESTDIR}/${LIBDIR}/libaudacious.so
+	@mv ${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX) ${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX).3.0.0
+	@ln -sf ${LIBDIR}/libaudacious$(SHARED_SUFFIX).3.0.0 \
+		${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX).3
+	@ln -sf ${LIBDIR}/libaudacious$(SHARED_SUFFIX).3 \
+		${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX)
