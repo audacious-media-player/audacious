@@ -23,6 +23,10 @@
 #  include "config.h"
 #endif
 
+#ifndef SHARED_SUFFIX
+# define SHARED_SUFFIX G_MODULE_SUFFIX
+#endif
+
 #include "pluginenum.h"
 
 #include <glib.h>
@@ -238,7 +242,7 @@ add_plugin(const gchar * filename)
 static gboolean
 scan_plugin_func(const gchar * path, const gchar * basename, gpointer data)
 {
-    if (!str_has_suffix_nocase(basename, G_MODULE_SUFFIX))
+    if (!str_has_suffix_nocase(basename, SHARED_SUFFIX))
         return FALSE;
 
     if (!g_file_test(path, G_FILE_TEST_IS_REGULAR))

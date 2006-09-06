@@ -6,9 +6,8 @@ beepincludedir = $(includedir)/audacious
 
 OBJECTIVE_BINS = audtool
 
-LDFLAGS += -Wl,-export-dynamic
+LDFLAGS += $(AUDLDFLAGS)
 LDADD = \
-	-L.. $(LTLIBINTL)     \
 	-L../libaudacious -laudacious \
 	$(GTK_LIBS)      \
 	$(LIBGLADE_LIBS)
@@ -26,5 +25,5 @@ SOURCES = audtool.c
 OBJECTS = ${SOURCES:.c=.o}
 
 audtool: $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@ -Wl,-rpath,${libdir}
+	$(CC) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@
 	@printf "%10s     %-20s\n" LINK $@

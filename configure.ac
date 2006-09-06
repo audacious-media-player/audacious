@@ -215,6 +215,8 @@ AC_SUBST(PICLDFLAGS)
 AC_SUBST(LIBLDFLAGS)
 AC_SUBST(AUDLDFLAGS)
 AC_SUBST(SHARED_SUFFIX)
+AC_DEFINE(SHARED_SUFFIX, "\"$SHARED_SUFFIX\"",
+	[Define the shared module suffix extension on your platform.])
 
 AC_MSG_CHECKING([if you are running Apple-GCC])
 case "$target" in
