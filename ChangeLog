@@ -1,3 +1,14 @@
+2006-09-07 16:11:46 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2201]
+  - fork the OSS plugin for CoreAudio work
+  
+
+  Changes:        Modified:
+  +0 -17          trunk/Plugins/Output/CoreAudio/Makefile.in  
+  +30 -39         trunk/Plugins/Output/CoreAudio/OSS.h  
+  +0 -1695        trunk/Plugins/Output/CoreAudio/soundcard.h  
+
+
 2006-09-07 05:10:19 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2199]
   - kludge for libintl borkenness
