@@ -22,7 +22,8 @@
 
 #include <glib.h>
 #include <gtk/gtk.h>
-
+#include <unistd.h>
+#include <time.h>
 
 /*
  * Struct which is passed to xmms_get_titlestring().  An input struct
