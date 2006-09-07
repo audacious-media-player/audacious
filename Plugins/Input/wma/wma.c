@@ -433,8 +433,10 @@ static void wma_play_file(char *filename)
 	
     wma_ip.set_info(wsong_title, wsong_time, c->bit_rate, c->sample_rate, c->channels);
 
-    posix_memalign((void *) &wma_s_outbuf, 16, wma_st_buff);
-    posix_memalign((void *) &wma_outbuf, 16, AVCODEC_MAX_AUDIO_FRAME_SIZE);
+    /* av_malloc() will wrap posix_memalign() if necessary -nenolod */
+    wma_s_outbuf = av_malloc(wma_st_buff);
+    wma_outbuf = av_malloc(AVCODEC_MAX_AUDIO_FRAME_SIZE);
+
     wma_seekpos = -1;
     wma_decode = 1;
     wma_decode_thread = g_thread_create((GThreadFunc)wma_play_loop, NULL, TRUE, NULL);

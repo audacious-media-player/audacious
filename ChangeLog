@@ -1,3 +1,22 @@
+2006-09-07 18:32:59 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2205]
+  - fully working CoreAudio plugin, based on the OSS plugin and an incomplete xmms coreaudio plugin (fink)
+  
+
+  Changes:        Modified:
+  +17 -0          trunk/Plugins/Output/CoreAudio/Makefile  
+  +48 -0          trunk/Plugins/Output/CoreAudio/about.c  
+  +612 -0         trunk/Plugins/Output/CoreAudio/audio.c  
+  +296 -0         trunk/Plugins/Output/CoreAudio/configure.c  
+  +313 -0         trunk/Plugins/Output/CoreAudio/convert.c  
+  +51 -0          trunk/Plugins/Output/CoreAudio/coreaudio.c  
+  +106 -0         trunk/Plugins/Output/CoreAudio/coreaudio.h  
+  +231 -0         trunk/Plugins/Output/CoreAudio/dbaudiolib.h  
+  +524 -0         trunk/Plugins/Output/CoreAudio/dbconvert.c  
+  +55 -0          trunk/Plugins/Output/CoreAudio/init.c  
+  +81 -0          trunk/Plugins/Output/CoreAudio/mixer.c  
+
+
 2006-09-07 18:06:40 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2203]
   - remove CoreAudio plugin, and try again :P
