@@ -1,3 +1,11 @@
+2006-09-07 18:06:40 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2203]
+  - remove CoreAudio plugin, and try again :P
+  
+
+  Changes:        Modified:
+
+
 2006-09-07 16:11:46 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2201]
   - fork the OSS plugin for CoreAudio work
