@@ -1,3 +1,13 @@
+2006-09-07 05:10:19 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2199]
+  - kludge for libintl borkenness
+  
+
+  Changes:        Modified:
+  +0 -2           trunk/audacious/Makefile  
+  +1 -0           trunk/audacious/intl  
+
+
 2006-09-07 05:03:27 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2197]
   - include time.h
