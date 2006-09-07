@@ -8,8 +8,6 @@ beepincludedir = $(includedir)/audacious
 
 OBJECTIVE_BINS = audacious
 
-LTLIBINTL = -L../intl -lintl
-
 LDFLAGS += $(AUDLDFLAGS)
 
 LDADD = \
