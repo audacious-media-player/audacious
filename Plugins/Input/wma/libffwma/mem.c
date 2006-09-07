@@ -45,7 +45,7 @@ void *av_malloc(unsigned int size)
 {
     void *ptr;
 
-#ifdef __GLIBC__
+#ifdef linux
     posix_memalign(&ptr, 16, size);
 #else
     ptr = malloc(size);
