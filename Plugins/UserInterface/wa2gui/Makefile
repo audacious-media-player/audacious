@@ -7,7 +7,8 @@ SUBDIRS = widgets
 
 noinst_HEADERS = coreaudio.h
 
-LIBDIR = $(plugindir)/$(USERINTERFACE_PLUGIN_DIR)
+# XXX I'm lazy, so...
+LIBDIR = $(plugindir)/$(CONTAINER_PLUGIN_DIR)
 
 LIBADD = $(GTK_LIBS)
 SOURCES = mainwin.c equalizer.c playlist.c wa2gui.c

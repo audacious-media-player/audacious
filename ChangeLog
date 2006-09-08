@@ -1,3 +1,13 @@
+2006-09-08 03:41:35 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2221]
+  - new InterfacePlugin API.
+  Like the ContainerPlugin API, it extends the LowlevelPlugin API.
+  
+
+  Changes:        Modified:
+  +43 -0          trunk/audacious/interface.h  
+
+
 2006-09-08 03:27:46 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2219]
   - keep filepopup code in the core for now
