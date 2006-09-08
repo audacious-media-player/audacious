@@ -369,7 +369,7 @@ skin_load_pixmap_id(Skin * skin, SkinPixmapId id, const gchar * path_p)
 
     g_free(filename);
 
-    gdk_window_get_size(gpm, &width, &height);
+    gdk_drawable_get_size(GDK_DRAWABLE(gpm), &width, &height);
     pm = &skin->pixmaps[id];
     pm->pixmap = gpm;
     pm->width = width;
@@ -1252,13 +1252,3 @@ skin_draw_mainwin_titlebar(Skin * skin,
     skin_draw_pixmap(skin, drawable, gc, SKIN_TITLEBAR, 27, y_offset,
                      0, 0, MAINWIN_WIDTH, MAINWIN_TITLEBAR_HEIGHT);
 }
-
-#if 0
-void
-skin_draw_mainwin(Skin * skin,
-                  GdkDrawable * drawable, GdkGC gc,
-                  gboolean doublesize, gboolean shaded, gboolean focus)
-{
-
-}
-#endif

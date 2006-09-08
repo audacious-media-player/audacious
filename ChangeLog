@@ -1,3 +1,12 @@
+2006-09-08 00:27:27 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2213]
+  - use smartinclude here instead of conditional-based imports
+  
+
+  Changes:        Modified:
+  +1 -6           trunk/audacious/widgets/skin.c  
+
+
 2006-09-08 00:25:29 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2211]
   - gtkquartz compatibility, pass 1
