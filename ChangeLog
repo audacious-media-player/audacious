@@ -1,3 +1,12 @@
+2006-09-08 03:53:57 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2227]
+  - remove orphaned dependencies
+  
+
+  Changes:        Modified:
+  +2 -6           trunk/audacious/Makefile  
+
+
 2006-09-08 03:52:55 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2225]
   - remove WA2gui code

@@ -53,7 +53,6 @@
 #include "main.h"
 #include "playback.h"
 #include "playlist.h"
-#include "ui_playlist.h"
 
 #ifdef USE_CHARDET
     #include "../libguess/libguess.h"
@@ -764,6 +763,57 @@ util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
     return win;
 }
 
+/* *** TO WA2GUI *** */
+
+#if 0
+/* text_get_extents() taken from The GIMP (C) Spencer Kimball, Peter
+ * Mattis et al */
+gboolean
+text_get_extents(const gchar * fontname,
+                 const gchar * text,
+                 gint * width, gint * height, gint * ascent, gint * descent)
+{
+    PangoFontDescription *font_desc;
+    PangoLayout *layout;
+    PangoRectangle rect;
+
+    g_return_val_if_fail(fontname != NULL, FALSE);
+    g_return_val_if_fail(text != NULL, FALSE);
+
+    /* FIXME: resolution */
+    layout = gtk_widget_create_pango_layout(GTK_WIDGET(mainwin), text);
+
+    font_desc = pango_font_description_from_string(fontname);
+    pango_layout_set_font_description(layout, font_desc);
+    pango_font_description_free(font_desc);
+    pango_layout_get_pixel_extents(layout, NULL, &rect);
+
+    if (width)
+        *width = rect.width;
+    if (height)
+        *height = rect.height;
+
+    if (ascent || descent) {
+        PangoLayoutIter *iter;
+        PangoLayoutLine *line;
+
+        iter = pango_layout_get_iter(layout);
+        line = pango_layout_iter_get_line(iter);
+        pango_layout_iter_free(iter);
+
+        pango_layout_line_get_pixel_extents(line, NULL, &rect);
+
+        if (ascent)
+            *ascent = PANGO_ASCENT(rect);
+        if (descent)
+            *descent = -PANGO_DESCENT(rect);
+    }
+
+    g_object_unref(layout);
+
+    return TRUE;
+}
+
 static void
 filebrowser_add_files(GtkFileChooser * browser,
                       GSList * files)
@@ -1045,6 +1095,56 @@ util_run_filebrowser(gboolean play_button)
     gtk_window_present(GTK_WINDOW(dialog));
 }
 
+#endif
+
+/******************************************************************** keep in util.c */
+
+GtkWidget *
+make_filebrowser(const gchar * title,
+		 GtkWidget *parent,
+                 gboolean save)
+{
+    GtkWidget *dialog;
+    GtkWidget *button;
+    GtkWidget *button_close;
+
+    g_return_val_if_fail(title != NULL, NULL);
+
+    dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(parent),
+                                         GTK_FILE_CHOOSER_ACTION_OPEN, NULL, NULL);
+    if (save)
+        gtk_file_chooser_set_action(GTK_FILE_CHOOSER(dialog),
+                                    GTK_FILE_CHOOSER_ACTION_SAVE);
+
+    if (!save)
+        gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(dialog), TRUE);
+
+    g_signal_connect(dialog, "destroy",
+                     G_CALLBACK(gtk_widget_destroyed), &dialog);
+
+#ifdef HAVE_GNOME_VFS
+    gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), FALSE);
+#endif
+
+    button_close = gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CANCEL,
+                                         GTK_RESPONSE_REJECT);
+    gtk_button_set_use_stock(GTK_BUTTON(button_close), TRUE);
+    GTK_WIDGET_SET_FLAGS(button_close, GTK_CAN_DEFAULT);
+    g_signal_connect_swapped(button_close, "clicked",
+                             G_CALLBACK(gtk_widget_destroy), dialog);
+
+    button = gtk_dialog_add_button(GTK_DIALOG(dialog), save ?
+                                   GTK_STOCK_SAVE : GTK_STOCK_OPEN,
+                                   GTK_RESPONSE_ACCEPT);
+    gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
+    GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
+    gtk_window_set_default(GTK_WINDOW(dialog), button);
+
+    gtk_widget_show(dialog);
+
+    return dialog;
+}
+
 GdkFont *
 util_font_load(const gchar * name)
 {
@@ -1090,54 +1190,6 @@ util_set_cursor(GtkWidget * window)
         cursor = gdk_cursor_new(GDK_LEFT_PTR);
 
     gdk_window_set_cursor(window->window, cursor);
-}
-
-/* text_get_extents() taken from The GIMP (C) Spencer Kimball, Peter
- * Mattis et al */
-gboolean
-text_get_extents(const gchar * fontname,
-                 const gchar * text,
-                 gint * width, gint * height, gint * ascent, gint * descent)
-{
-    PangoFontDescription *font_desc;
-    PangoLayout *layout;
-    PangoRectangle rect;
-
-    g_return_val_if_fail(fontname != NULL, FALSE);
-    g_return_val_if_fail(text != NULL, FALSE);
-
-    /* FIXME: resolution */
-    layout = gtk_widget_create_pango_layout(GTK_WIDGET(mainwin), text);
-
-    font_desc = pango_font_description_from_string(fontname);
-    pango_layout_set_font_description(layout, font_desc);
-    pango_font_description_free(font_desc);
-    pango_layout_get_pixel_extents(layout, NULL, &rect);
-
-    if (width)
-        *width = rect.width;
-    if (height)
-        *height = rect.height;
-
-    if (ascent || descent) {
-        PangoLayoutIter *iter;
-        PangoLayoutLine *line;
-
-        iter = pango_layout_get_iter(layout);
-        line = pango_layout_iter_get_line(iter);
-        pango_layout_iter_free(iter);
-
-        pango_layout_line_get_pixel_extents(line, NULL, &rect);
-
-        if (ascent)
-            *ascent = PANGO_ASCENT(rect);
-        if (descent)
-            *descent = -PANGO_DESCENT(rect);
-    }
-
-    g_object_unref(layout);
-
-    return TRUE;
 }
 
 /* counts number of digits in a gint */
@@ -1357,52 +1409,6 @@ dir_foreach(const gchar * path, DirForeachFunc function,
 
     return TRUE;
 }
-
-GtkWidget *
-make_filebrowser(const gchar * title,
-                 gboolean save)
-{
-    GtkWidget *dialog;
-    GtkWidget *button;
-    GtkWidget *button_close;
-
-    g_return_val_if_fail(title != NULL, NULL);
-
-    dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(mainwin),
-                                         GTK_FILE_CHOOSER_ACTION_OPEN, NULL, NULL);
-    if (save)
-        gtk_file_chooser_set_action(GTK_FILE_CHOOSER(dialog),
-                                    GTK_FILE_CHOOSER_ACTION_SAVE);
-
-    if (!save)
-        gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(dialog), TRUE);
-
-    g_signal_connect(dialog, "destroy",
-                     G_CALLBACK(gtk_widget_destroyed), &dialog);
-
-#ifdef HAVE_GNOME_VFS
-    gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), FALSE);
-#endif
-
-    button_close = gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CANCEL,
-                                         GTK_RESPONSE_REJECT);
-    gtk_button_set_use_stock(GTK_BUTTON(button_close), TRUE);
-    GTK_WIDGET_SET_FLAGS(button_close, GTK_CAN_DEFAULT);
-    g_signal_connect_swapped(button_close, "clicked",
-                             G_CALLBACK(gtk_widget_destroy), dialog);
-
-    button = gtk_dialog_add_button(GTK_DIALOG(dialog), save ?
-                                   GTK_STOCK_SAVE : GTK_STOCK_OPEN,
-                                   GTK_RESPONSE_ACCEPT);
-    gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
-    GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-    gtk_window_set_default(GTK_WINDOW(dialog), button);
-
-    gtk_widget_show(dialog);
-
-    return dialog;
-}
-
 
 GtkItemFactory *
 create_menu(GtkItemFactoryEntry *entries,

@@ -40,31 +40,15 @@
 
 #include "input.h"
 #include "main.h"
-#include "mainwin.h"
-#include "equalizer.h"
 #include "output.h"
 #include "playlist.h"
-#include "ui_playlist.h"
 #include "skinwin.h"
 #include "urldecode.h"
 #include "util.h"
 
 
 #include "playback.h"
-
-
-/* FIXME: yuck!! this shouldn't be here... */
-void
-bmp_playback_set_random_skin(void)
-{
-    SkinNode *node;
-    guint32 randval;
-
-    /* Get a random value to select the skin to use */
-    randval = g_random_int_range(0, g_list_length(skinlist));
-    node = g_list_nth(skinlist, randval)->data;
-    bmp_active_skin_load(node->path);
-}
+#include "interface.h"
 
 gint
 bmp_playback_get_time(void)
@@ -89,9 +73,11 @@ bmp_playback_initiate(void)
     if (bmp_playback_get_playing())
         bmp_playback_stop();
 
+#if 0
     vis_clear_data(mainwin_vis);
     svis_clear_data(mainwin_svis);
     mainwin_disable_seekbar();
+#endif
 
     entry = playlist_get_entry_to_play();
 
@@ -102,7 +88,9 @@ bmp_playback_initiate(void)
         return;
 
     if (bmp_playback_get_time() != -1) {
+#if 0
         equalizerwin_load_auto_preset(entry->filename);
+#endif
         input_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
                      cfg.equalizer_bands);
         output_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
@@ -124,10 +112,12 @@ bmp_playback_pause(void)
 
     ip_data.paused = !ip_data.paused;
 
+#if 0
     if (ip_data.paused)
         playstatus_set_status(mainwin_playstatus, STATUS_PAUSE);
     else
         playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
+#endif
 
     if (get_current_input_plugin()->pause)
         get_current_input_plugin()->pause(ip_data.paused);
@@ -156,7 +146,7 @@ bmp_playback_stop(void)
     }
 
     ip_data.buffering = FALSE;
-    playstatus_set_status_buffering(mainwin_playstatus, FALSE);
+    current_interface->buffering_notify(FALSE);
     ip_data.playing = FALSE;
 }
 
@@ -191,7 +181,7 @@ run_no_output_plugin_dialog(void)
            "You have not selected an output plugin.");
 
     GtkWidget *dialog =
-        gtk_message_dialog_new_with_markup(GTK_WINDOW(mainwin),
+        gtk_message_dialog_new_with_markup(GTK_WINDOW(current_interface->parentwin),
                                            GTK_DIALOG_DESTROY_WITH_PARENT,
                                            GTK_MESSAGE_ERROR,
                                            GTK_BUTTONS_OK,

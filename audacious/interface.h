@@ -23,6 +23,8 @@
 
 struct _InterfacePlugin {
     gchar *name;
+    GtkWidget *parentwin;
+
     void (*init) (void);
     void (*cleanup) (void);
     void (*about) (void);
@@ -30,14 +32,23 @@ struct _InterfacePlugin {
     void (*disable_plugin) (struct _VisPlugin *);
     void (*playback_start) (void);
     void (*playback_stop) (void);
-    void (*dump_pcm_data) (gint16 pcm_data[2][512]);
-    void (*dump_freq_data) (gint16 freq_data[2][256]);
+    void (*clear_pcm_data) (void);
+    void (*send_pcm_data) (gint16 pcm_data[2][512], gint nch, gint length);
     void (*redraw) (void);
+    gboolean (*idle_callback) (gboolean waiting);
+    void (*playstatus_notify) (gint status);
+    void (*buffering_notify) (gint status);
+    void (*set_status_text) (gchar *text);
+    gchar *(*get_status_text) (void);
+    void (*set_song_info) (gint, gint, gint);
+    void (*present) (void);
 };
 
 typedef struct _InterfacePlugin InterfacePlugin;
 
 extern void register_interface_plugin(InterfacePlugin *);
 extern void start_interface_plugin(InterfacePlugin *);
+
+extern InterfacePlugin *current_interface;
 
 #endif

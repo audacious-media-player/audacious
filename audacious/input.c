@@ -31,13 +31,12 @@
 #include "fft.h"
 #include "input.h"
 #include "main.h"
-#include "mainwin.h"
 #include "output.h"
 #include "util.h"
 #include "visualization.h"
 #include "playback.h"
-#include "widgets/widgetcore.h"
 #include "pluginenum.h"
+#include "interface.h"
 
 #include "libaudacious/titlestring.h"
 #include "libaudacious/util.h"
@@ -315,7 +314,7 @@ input_show_unplayable_files(const gchar * filename)
         GtkCellRenderer *renderer;
 
         dialog =
-            gtk_message_dialog_new_with_markup(GTK_WINDOW(mainwin),
+            gtk_message_dialog_new_with_markup(GTK_WINDOW(current_interface->parentwin),
                                                GTK_DIALOG_DESTROY_WITH_PARENT,
                                                GTK_MESSAGE_ERROR,
                                                GTK_BUTTONS_OK,
@@ -738,15 +737,13 @@ input_update_vis(gint time)
 gchar *
 input_get_info_text(void)
 {
-    return g_strdup(input_info_text);
+    return current_interface->get_status_text();
 }
 
 void
 input_set_info_text(const gchar * text)
 {
-    g_free(input_info_text);
-    input_info_text = g_strdup(text);
-    mainwin_set_info_text();
+    current_interface->set_status_text(text);
 }
 
 void
@@ -758,11 +755,15 @@ input_set_status_buffering(gboolean status)
     if (!get_current_input_plugin())
         return;
 
+    current_interface->buffering_notify(ip_data.buffering);
+
+#if 0
     ip_data.buffering = status;
 
     if (ip_data.buffering == TRUE && mainwin_playstatus->ps_status == STATUS_STOP)
         mainwin_playstatus->ps_status = STATUS_PLAY;
     playstatus_set_status_buffering(mainwin_playstatus, ip_data.buffering);
+#endif
 }
 
 void

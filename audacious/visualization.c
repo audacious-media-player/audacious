@@ -32,7 +32,7 @@
 #include "playback.h"
 #include "plugin.h"
 #include "prefswin.h"
-#include "widgets/widgetcore.h"
+#include "interface.h"
 
 VisPluginData vp_data = {
     NULL,
@@ -280,12 +280,15 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
     gint i;
 
     if (!pcm_data || nch < 1) {
+	current_interface->send_pcm_data(pcm_data, nch, length);
+#if 0
         if (cfg.vis_type != VIS_OFF) {
             if (cfg.player_shaded && cfg.player_visible)
                 svis_timeout_func(mainwin_svis, NULL);
             else
                 vis_timeout_func(active_vis, NULL);
         }
+#endif
         return;
     }
 
@@ -326,6 +329,8 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
         node = g_list_next(node);
     }
 
+    current_interface->send_pcm_data(pcm_data, nch, length);
+#if 0
     if (cfg.vis_type == VIS_OFF)
         return;
 
@@ -434,4 +439,5 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
         svis_timeout_func(mainwin_svis, intern_vis_data);
     else
         vis_timeout_func(active_vis, intern_vis_data);
+#endif
 }

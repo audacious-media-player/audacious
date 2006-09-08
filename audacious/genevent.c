@@ -52,16 +52,13 @@
 #include "controlsocket.h"
 #include "dnd.h"
 #include "effect.h"
-#include "equalizer.h"
 #include "general.h"
 #include "hints.h"
 #include "input.h"
 #include "logger.h"
-#include "mainwin.h"
 #include "output.h"
 #include "playback.h"
 #include "playlist.h"
-#include "ui_playlist.h"
 #include "pluginenum.h"
 #include "prefswin.h"
 #include "skinwin.h"
@@ -70,6 +67,8 @@
 
 gboolean ev_waiting = FALSE;
 
+#if 0
+/* *** TO WA2GUI *** */
 static gboolean
 idle_func_change_song(gboolean waiting)
 {
@@ -121,6 +120,7 @@ idle_func_change_song(gboolean waiting)
 
     return waiting;
 }
+#endif
 
 gint
 audcore_generic_events(void)
@@ -135,7 +135,9 @@ audcore_generic_events(void)
         switch (time) {
         case -1:
             /* no song playing */
+#if 0
             ev_waiting = idle_func_change_song(ev_waiting);
+#endif
             break;
 
         default:

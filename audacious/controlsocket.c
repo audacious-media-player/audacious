@@ -44,14 +44,12 @@
 #include <arpa/inet.h>
 
 #include "main.h"
-#include "equalizer.h"
-#include "mainwin.h"
 #include "input.h"
 #include "playback.h"
 #include "playlist.h"
-#include "ui_playlist.h"
 #include "prefswin.h"
 #include "libaudacious/beepctrl.h"
+#include "interface.h"
 
 #define CTRLSOCKET_BACKLOG        100
 #define CTRLSOCKET_TIMEOUT        100000
@@ -434,10 +432,6 @@ ctrlsocket_func(gpointer arg)
             ctrl_write_gint(pkt->fd, b);
             ctrl_ack_packet(pkt);
             break;
-        case CMD_GET_SKIN:
-            ctrl_write_string(pkt->fd, bmp_active_skin->path);
-            ctrl_ack_packet(pkt);
-            break;
         case CMD_GET_PLAYLIST_FILE:
             if (pkt->data) {
                 gchar *filename;
@@ -756,7 +750,7 @@ ctrlsocket_check(void)
             mainwin_quit_cb();
             break;
 	case CMD_ACTIVATE:
-	    gtk_window_present(GTK_WINDOW(mainwin));
+	    current_interface->present();
 	    break;
         default:
             g_message("Unknown socket command received");
