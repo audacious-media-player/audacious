@@ -36,6 +36,7 @@
 
 #include "controlsocket.h"
 #include "main.h"
+#include "mainwin.h"
 #include "playback.h"
 #include "playlist.h"
 #include "util.h"

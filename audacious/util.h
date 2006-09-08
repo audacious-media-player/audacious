@@ -114,7 +114,7 @@ void make_submenu(GtkItemFactory *menu,
                   const gchar *item_path,
                   GtkItemFactory *submenu);
 
-GtkWidget *make_filebrowser(const gchar * title, GtkWidget *parent,
+GtkWidget *make_filebrowser(const gchar * title,
                             gboolean save);
 
 /* Not sure this should be here? */

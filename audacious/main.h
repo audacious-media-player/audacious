@@ -22,8 +22,8 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <glib.h>
-#include <glib/gi18n.h>
+#include "widgets/widgetcore.h"
+#include "mainwin.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>

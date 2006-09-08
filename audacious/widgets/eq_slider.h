@@ -1,7 +1,4 @@
-/*  Audacious -- Cross-platform multimedia platform
- *  Copyright (C) 2005  Audacious development team.
- *
- *  Based on BMP:
+/*  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
  *
  *  Based on XMMS:
@@ -22,13 +19,31 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef GENEVENT_H
-#define GENEVENT_H
+#ifndef _WIDGETCORE_H_
+#error Please do not include me directly! Use widgetcore.h instead!
+#endif
 
-#include "mainwin.h"
+#ifndef EQ_SLIDER_H
+#define EQ_SLIDER_H
 
-extern gboolean ev_waiting;
+#include <glib.h>
+#include <gdk/gdk.h>
 
-gint audcore_generic_events(void);
+#include "widget.h"
+
+#define EQ_SLIDER(x)  ((EqSlider *)(x))
+struct _EqSlider {
+    Widget es_widget;
+    gint es_position;
+    gboolean es_isdragging;
+    gint es_drag_y;
+};
+
+typedef struct _EqSlider EqSlider;
+
+EqSlider *create_eqslider(GList ** wlist, GdkPixmap * parent, GdkGC * gc,
+                          gint x, gint y);
+void eqslider_set_position(EqSlider * es, gfloat pos);
+gfloat eqslider_get_position(EqSlider * es);
 
 #endif

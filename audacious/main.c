@@ -54,14 +54,17 @@
 #include "controlsocket.h"
 #include "dnd.h"
 #include "effect.h"
+#include "equalizer.h"
 #include "general.h"
 #include "genevent.h"
 #include "hints.h"
 #include "input.h"
 #include "logger.h"
+#include "mainwin.h"
 #include "output.h"
 #include "playback.h"
 #include "playlist.h"
+#include "ui_playlist.h"
 #include "pluginenum.h"
 #include "prefswin.h"
 #include "skinwin.h"
@@ -79,6 +82,7 @@ gboolean has_x11_connection = FALSE; 	/* do we have an X11 connection? */
 const gchar *desktop_comment = N_("Audacious");
 
 const gchar *application_name = N_("Audacious");
+
 
 struct _BmpCmdLineOpt {
     GList *filenames;
@@ -532,10 +536,10 @@ bmp_config_load(void)
     }
 
     if (!cfg.playlist_font)
-        cfg.playlist_font = g_strdup("Sans Bold 8");
+        cfg.playlist_font = g_strdup(PLAYLISTWIN_DEFAULT_FONT);
 
     if (!cfg.mainwin_font)
-        cfg.mainwin_font = g_strdup("Sans Bold 9");
+        cfg.mainwin_font = g_strdup(MAINWIN_DEFAULT_FONT);
 
     if (!cfg.gentitle_format)
         cfg.gentitle_format = g_strdup("%{p:%p - %}%{a:%a - %}%t");
@@ -553,10 +557,10 @@ bmp_config_load(void)
     }
 
     if (!cfg.eqpreset_default_file)
-        cfg.eqpreset_default_file = g_strdup("dir_default.preset");
+        cfg.eqpreset_default_file = g_strdup(EQUALIZER_DEFAULT_DIR_PRESET);
 
     if (!cfg.eqpreset_extension)
-        cfg.eqpreset_extension = g_strdup("preset");
+        cfg.eqpreset_extension = g_strdup(EQUALIZER_DEFAULT_PRESET_EXT);
 
     if (!cfg.cover_name_include)
 	    cfg.cover_name_include = g_strdup("");
@@ -1057,14 +1061,10 @@ main(gint argc, gchar ** argv)
 
         gtk_accel_map_load(bmp_paths[BMP_PATH_ACCEL_FILE]);
 
-        current_interface->init();
-#if 0
-	/* *** TO WA2GUI *** */
         mainwin_create();
 
         playlistwin_create();
         equalizerwin_create();
-#endif
 
         if (!init_skins(cfg.skin)) {
             run_load_skin_error_dialog(cfg.skin);
@@ -1079,14 +1079,11 @@ main(gint argc, gchar ** argv)
     playlist_load(bmp_paths[BMP_PATH_PLAYLIST_FILE]);
     playlist_set_position(cfg.playlist_position);
 
-#if 0
-    /* *** TO WA2GUI *** */
     /* this needs to be called after all 3 windows are created and
      * input plugins are setup'ed 
      * but not if we're running headless --nenolod
      */
     mainwin_setup_menus();
-#endif
 
     if (options.headless != 1)
         GDK_THREADS_LEAVE();
@@ -1109,7 +1106,6 @@ main(gint argc, gchar ** argv)
 	create_fileinfo_window();
 	create_filepopup_window();
 
-#if 0
         if (cfg.player_visible)
             mainwin_show(TRUE);
         else if (!cfg.playlist_visible && !cfg.equalizer_visible)
@@ -1122,9 +1118,6 @@ main(gint argc, gchar ** argv)
             playlistwin_show();
 
         hint_set_always(cfg.always_on_top);
-#endif
-
-        current_interface->present();
 
         playlist_start_get_info_thread();
         mainwin_attach_idle_func();

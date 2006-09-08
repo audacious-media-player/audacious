@@ -1,7 +1,4 @@
-/*  Audacious -- Cross-platform multimedia platform
- *  Copyright (C) 2005  Audacious development team.
- *
- *  Based on BMP:
+/*  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
  *
  *  Based on XMMS:
@@ -22,13 +19,29 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef GENEVENT_H
-#define GENEVENT_H
+#ifndef _WIDGETCORE_H_
+#error Please do not include me directly! Use widgetcore.h instead!
+#endif
 
-#include "mainwin.h"
+#ifndef SBUTTON_H
+#define SBUTTON_H
 
-extern gboolean ev_waiting;
+#include <glib.h>
+#include <gdk/gdk.h>
 
-gint audcore_generic_events(void);
+#include "widget.h"
+
+#define SBUTTON(x)  ((SButton *)(x))
+struct _SButton {
+    Widget sb_widget;
+    gint sb_pressed, sb_inside;
+    void (*sb_push_cb) (void);
+};
+
+typedef struct _SButton SButton;
+
+SButton *create_sbutton(GList ** wlist, GdkPixmap * parent, GdkGC * gc,
+                        gint x, gint y, gint w, gint h, void (*cb) (void));
+void free_sbutton(SButton * b);
 
 #endif

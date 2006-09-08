@@ -42,16 +42,18 @@
 
 #include "input.h"
 #include "main.h"
+#include "mainwin.h"
 #include "libaudacious/util.h"
 #include "libaudacious/configdb.h"
 #include "libaudacious/vfs.h"
+#include "equalizer.h"
 #include "playback.h"
 #include "playlist.h"
 #include "playlist_container.h"
+#include "ui_playlist.h"
 #include "urldecode.h"
 #include "util.h"
 #include "ui_fileinfo.h"
-#include "interface.h"
 
 #include "debug.h"
 
@@ -835,11 +837,9 @@ playlist_set_info(const gchar * title, gint length, gint rate,
 
     playlist_recalc_total_time();
 
-    current_interface->set_song_info(rate, freq, nch);
+    mainwin_set_song_info(rate, freq, nch);
 }
 
-/* *** TO WA2GUI *** */
-#if 0
 void
 playlist_check_pos_current(void)
 {
@@ -864,7 +864,6 @@ playlist_check_pos_current(void)
     PLAYLIST_UNLOCK();
     playlistwin_set_toprow(row);
 }
-#endif
 
 void
 playlist_next(void)

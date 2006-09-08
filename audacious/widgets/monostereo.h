@@ -1,7 +1,4 @@
-/*  Audacious -- Cross-platform multimedia platform
- *  Copyright (C) 2005  Audacious development team.
- *
- *  Based on BMP:
+/*  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
  *
  *  Based on XMMS:
@@ -22,13 +19,30 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef GENEVENT_H
-#define GENEVENT_H
+#ifndef _WIDGETCORE_H_
+#error Please do not include me directly! Use widgetcore.h instead!
+#endif
 
-#include "mainwin.h"
+#ifndef MONOSTEREO_H
+#define MONOSTEREO_H
 
-extern gboolean ev_waiting;
+#include <glib.h>
+#include <gdk/gdk.h>
 
-gint audcore_generic_events(void);
+#include "skin.h"
+#include "widget.h"
+
+#define MONO_STEREO(x)  ((MonoStereo *)(x))
+struct _MonoStereo {
+    Widget ms_widget;
+    gint ms_num_channels;
+    SkinPixmapId ms_skin_index;
+};
+
+typedef struct _MonoStereo MonoStereo;
+
+MonoStereo *create_monostereo(GList ** wlist, GdkPixmap * parent,
+                              GdkGC * gc, gint x, gint y, SkinPixmapId si);
+void monostereo_set_num_channels(MonoStereo * ms, gint nch);
 
 #endif
