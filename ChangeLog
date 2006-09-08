@@ -1,3 +1,67 @@
+2006-09-08 05:26:54 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2239]
+  - revert back to r2216
+  
+
+  Changes:        Modified:
+  +6 -2           trunk/audacious/Makefile  
+  +8 -2           trunk/audacious/controlsocket.c  
+  +1753 -0        trunk/audacious/equalizer.c  
+  +60 -0          trunk/audacious/equalizer.h  
+  +3 -5           trunk/audacious/genevent.c  
+  +2 -0           trunk/audacious/genevent.h  
+  +7 -8           trunk/audacious/input.c  
+  +0 -54          trunk/audacious/interface.h  
+  +8 -15          trunk/audacious/main.c  
+  +2 -2           trunk/audacious/main.h  
+  +3570 -0        trunk/audacious/mainwin.c  
+  +193 -0         trunk/audacious/mainwin.h  
+  +19 -9          trunk/audacious/playback.c  
+  +4 -5           trunk/audacious/playlist.c  
+  +1 -0           trunk/audacious/pluginenum.c  
+  +2029 -0        trunk/audacious/ui_playlist.c  
+  +78 -0          trunk/audacious/ui_playlist.h  
+  +95 -101        trunk/audacious/util.c  
+  +1 -1           trunk/audacious/util.h  
+  +1 -7           trunk/audacious/visualization.c  
+  +38 -0          trunk/audacious/widgets/Makefile  
+  +149 -0         trunk/audacious/widgets/eq_graph.c  
+  +44 -0          trunk/audacious/widgets/eq_graph.h  
+  +235 -0         trunk/audacious/widgets/eq_slider.c  
+  +49 -0          trunk/audacious/widgets/eq_slider.h  
+  +203 -0         trunk/audacious/widgets/hslider.c  
+  +59 -0          trunk/audacious/widgets/hslider.h  
+  +186 -0         trunk/audacious/widgets/menurow.c  
+  +61 -0          trunk/audacious/widgets/menurow.h  
+  +93 -0          trunk/audacious/widgets/monostereo.c  
+  +48 -0          trunk/audacious/widgets/monostereo.h  
+  +75 -0          trunk/audacious/widgets/number.c  
+  +48 -0          trunk/audacious/widgets/number.h  
+  +194 -0         trunk/audacious/widgets/pbutton.c  
+  +64 -0          trunk/audacious/widgets/pbutton.h  
+  +966 -0         trunk/audacious/widgets/playlist_list.c  
+  +60 -0          trunk/audacious/widgets/playlist_list.h  
+  +168 -0         trunk/audacious/widgets/playlist_slider.c  
+  +51 -0          trunk/audacious/widgets/playlist_slider.h  
+  +102 -0         trunk/audacious/widgets/playstatus.c  
+  +46 -0          trunk/audacious/widgets/playstatus.h  
+  +99 -0          trunk/audacious/widgets/sbutton.c  
+  +47 -0          trunk/audacious/widgets/sbutton.h  
+  +1254 -0        trunk/audacious/widgets/skin.c  
+  +149 -0         trunk/audacious/widgets/skin.h  
+  +204 -0         trunk/audacious/widgets/svis.c  
+  +52 -0          trunk/audacious/widgets/svis.h  
+  +176 -0         trunk/audacious/widgets/tbutton.c  
+  +52 -0          trunk/audacious/widgets/tbutton.h  
+  +579 -0         trunk/audacious/widgets/textbox.c  
+  +68 -0          trunk/audacious/widgets/textbox.h  
+  +291 -0         trunk/audacious/widgets/vis.c  
+  +82 -0          trunk/audacious/widgets/vis.h  
+  +263 -0         trunk/audacious/widgets/widget.c  
+  +107 -0         trunk/audacious/widgets/widget.h  
+  +41 -0          trunk/audacious/widgets/widgetcore.h  
+
+
 2006-09-08 05:00:35 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2235]
   - more hammering
