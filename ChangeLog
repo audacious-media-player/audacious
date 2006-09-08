@@ -1,3 +1,12 @@
+2006-09-08 01:33:19 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2215]
+  - use gdk_drawable_get_size() instead
+  
+
+  Changes:        Modified:
+  +1 -11          trunk/audacious/widgets/skin.c  
+
+
 2006-09-08 00:27:27 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2213]
   - use smartinclude here instead of conditional-based imports
