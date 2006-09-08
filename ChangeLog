@@ -1,3 +1,18 @@
+2006-09-08 03:52:55 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2225]
+  - remove WA2gui code
+  - the build IS broken right now, I will fix it in the next few commits
+  
+
+  Changes:        Modified:
+  +0 -1753        trunk/audacious/equalizer.c  
+  +0 -60          trunk/audacious/equalizer.h  
+  +0 -3570        trunk/audacious/mainwin.c  
+  +0 -193         trunk/audacious/mainwin.h  
+  +0 -2029        trunk/audacious/ui_playlist.c  
+  +0 -78          trunk/audacious/ui_playlist.h  
+
+
 2006-09-08 03:50:14 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2223]
   - add Makefile
