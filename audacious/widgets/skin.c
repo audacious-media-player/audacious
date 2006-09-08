@@ -41,12 +41,7 @@
 
 #include "debug.h"
 
-#if defined(GDK_WINDOWING_X11)
-
-#include <gdk/gdkx.h>
-#include <X11/Xlib.h>
-
-#endif
+#include "platform/smartinclude.h"
 
 #define EXTENSION_TARGETS 7
 
