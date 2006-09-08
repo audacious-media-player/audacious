@@ -13,7 +13,7 @@
  
   You should have received a copy of the GNU General Public License
   along with xmms-pulse; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301
   USA.
 ***/
 
@@ -23,7 +23,6 @@
 
 #include <stdio.h>
 #include <assert.h>
-/* #include <pthread.h> */
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
@@ -184,8 +183,6 @@ static void pulse_get_volume(int *l, int *r) {
     pa_cvolume v;
     int b = 0;
 
-/*     g_message("get_volume"); */
-
     *l = *r = 100;
 
     if (connected) {
@@ -227,8 +224,6 @@ static void volume_time_cb(pa_mainloop_api *api, pa_time_event *e, const struct 
 
 static void pulse_set_volume(int l, int r) {
 
-/*     g_message("set_volume"); */
-
     if (connected) {
         pa_threaded_mainloop_lock(mainloop);
         CHECK_DEAD_GOTO(fail, 1);
@@ -260,8 +255,6 @@ static void pulse_pause(short b) {
     pa_operation *o = NULL;
     int success = 0;
 
-/*     g_message("pause"); */
-
     CHECK_CONNECTED();
 
     pa_threaded_mainloop_lock(mainloop);
@@ -291,8 +284,6 @@ fail:
 static int pulse_free(void) {
     size_t l = 0;
     pa_operation *o = NULL;
-
-/*     g_message("free"); */
 
     CHECK_CONNECTED(0);
 
@@ -337,16 +328,12 @@ fail:
 static int pulse_get_written_time(void) {
     int r = 0;
     
-/*     g_message("get_written_time"); */
-
     CHECK_CONNECTED(0);
 
     pa_threaded_mainloop_lock(mainloop);
     CHECK_DEAD_GOTO(fail, 1);
     
     r = (int) (((double) written*1000) / pa_bytes_per_second(pa_stream_get_sample_spec(stream)));
-
-/*     g_message("written_time = %i", r); */
 
 fail:
     pa_threaded_mainloop_unlock(mainloop);
@@ -358,8 +345,6 @@ static int pulse_get_output_time(void) {
     int r = 0;
     pa_usec_t t;
     
-/*     g_message("get_output_time"); */
-
     CHECK_CONNECTED(0);
 
     pa_threaded_mainloop_lock(mainloop);
@@ -387,8 +372,6 @@ static int pulse_get_output_time(void) {
 
     r += time_offset_msec;
 
-/*     g_message("output_time = %i", r); */
-    
 fail:
     pa_threaded_mainloop_unlock(mainloop);
     
@@ -401,8 +384,6 @@ static int pulse_playing(void) {
 
     CHECK_CONNECTED(0);
     
-/*     g_message("playing"); */
-
     pa_threaded_mainloop_lock(mainloop);
 
     for (;;) {
@@ -430,8 +411,6 @@ fail:
 static void pulse_flush(int time) {
     pa_operation *o = NULL;
     int success = 0;
-
-/*     g_message("flush"); */
 
     CHECK_CONNECTED();
 
@@ -464,8 +443,6 @@ fail:
 
 static void pulse_write(void* ptr, int length) {
 
-/*     g_message("write"); */
-    
     CHECK_CONNECTED();
 
     pa_threaded_mainloop_lock(mainloop);
@@ -515,8 +492,6 @@ fail:
 
 static void pulse_close(void) {
 
-/*     g_message("close"); */
-    
     drain();
 
     connected = 0;
@@ -548,8 +523,6 @@ static int pulse_open(AFormat fmt, int rate, int nch) {
     pa_sample_spec ss;
     pa_operation *o = NULL;
     int success;
-
-/*     g_message("open"); */
 
     g_assert(!mainloop);
     g_assert(!context);
@@ -694,9 +667,6 @@ fail:
     return FALSE;
 }
 
-static void pulse_init(void) {
-}
-
 static void pulse_about(void) {
     static GtkWidget *dialog;
     
@@ -718,7 +688,7 @@ static void pulse_about(void) {
             "\n"
             "You should have received a copy of the GNU General Public License\n"
             "along with this program; if not, write to the Free Software\n"
-            "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
+            "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
             "USA.",
             "OK",
             FALSE,
@@ -732,16 +702,15 @@ static void pulse_about(void) {
             &dialog);
 }
 
-
 OutputPlugin *get_oplugin_info(void) {
     static OutputPlugin pulse_plugin = {
         NULL,
         NULL,
         "PulseAudio Output Plugin",
-        pulse_init,
+        NULL,
 	NULL,                        
         pulse_about,
-        NULL,                       /* pulse_configure, */
+        NULL,
         pulse_get_volume,
         pulse_set_volume,
         pulse_open,                         

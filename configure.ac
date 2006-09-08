@@ -316,6 +316,25 @@ else
     have_esd=no
 fi
 
+dnl Check for PulseAudio
+
+AC_ARG_ENABLE( pulse,
+    [  --disable-pulse         disable PulseAudio output plugin [default=enabled]],
+    [enable_pulse=$enableval],
+    [enable_pulse="yes"]
+)
+
+if test "$enable_pulse" = "yes"; then
+    PKG_CHECK_MODULES(PULSE, [libpulse >= 0.9.3],
+         [have_pulse=yes
+          OUTPUT_PLUGINS="$OUTPUT_PLUGINS pulse_audio"],
+         [have_pulse=no]
+    )
+else
+    AC_MSG_RESULT([*** esound plugin disabled per user request ***])
+    have_pulse=no
+fi
+
 dnl *** AltiVec
 
 AC_CHECK_HEADERS(altivec.h,
@@ -1060,26 +1079,27 @@ AC_SUBST(VISUALIZATION_PLUGINS)
 AC_SUBST(CONTAINER_PLUGINS)
 
 AC_CONFIG_FILES([
-        audacious.1
-        audacious.spec
-        audacious.pc
-        audacious/audacious.desktop
+	audacious.1
+	audacious.spec
+	audacious.pc
+	audacious/audacious.desktop
 	audacious/images/Makefile
-        libaudacious/Makefile
-        libguess/Makefile
+	libaudacious/Makefile
+	libguess/Makefile
 	librcd/Makefile
 	Plugins/Makefile
-        Plugins/Output/Makefile
-        Plugins/Output/OSS/Makefile
-        Plugins/Output/esd/Makefile
-        Plugins/Output/alsa/Makefile
+	Plugins/Output/Makefile
+	Plugins/Output/OSS/Makefile
+	Plugins/Output/esd/Makefile
+	Plugins/Output/alsa/Makefile
 	Plugins/Output/jack/Makefile
 	Plugins/Output/arts/Makefile
 	Plugins/Output/arts/arts_helper/Makefile
 	Plugins/Output/disk_writer/Makefile
+	Plugins/Output/pulse_audio/Makefile
 	Plugins/Output/sun/Makefile
-        Plugins/Input/Makefile
-        Plugins/Input/mpg123/Makefile
+	Plugins/Input/Makefile
+	Plugins/Input/mpg123/Makefile
 	Plugins/Input/aac/Makefile
 	Plugins/Input/aac/mp4ff/Makefile
 	Plugins/Input/aac/libfaad2/Makefile
@@ -1122,10 +1142,10 @@ AC_CONFIG_FILES([
 	Plugins/Effect/stereo_plugin/Makefile
 	Plugins/Effect/voice_removal/Makefile
 	Plugins/Container/Makefile
-        po/Makefile.in
-        intl/Makefile
-        icons/Makefile
-        skin/Makefile
+	po/Makefile.in
+	intl/Makefile
+	icons/Makefile
+	skin/Makefile
 	mk/rules.mk
 ])
 
@@ -1163,6 +1183,7 @@ echo "  Enlightenment Sound Daemon (esd):       $have_esd"
 echo "  Jack Audio Connection Kit (jack):       $have_jack"
 echo "  Analog Realtime Synthesizer (arts):     $have_arts"
 echo "  BSD/SUN audio output (sun):             $have_sun"
+echo "  PulseAudio sound server (pulse_audio):  $have_pulse"
 echo
 echo "  Input Plugins"
 echo "  -------------"

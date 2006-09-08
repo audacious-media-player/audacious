@@ -1,3 +1,12 @@
+2006-09-08 23:00:10 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2247]
+  PulseAudio output plugin. Ported from the XMMS plugin by Lennart Poettering.
+
+  Changes:        Modified:
+  +15 -0          trunk/Plugins/Output/pulse_audio/Makefile.in  
+  +760 -0         trunk/Plugins/Output/pulse_audio/pulse_audio.c  
+
+
 2006-09-08 17:55:02 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2245]
   - remove this
