@@ -34,7 +34,7 @@
 #include <gtk/gtkmessagedialog.h>
 
 /* GDK including */
-#include "platform/smartinclude.h"
+#include "audacious/platform/smartinclude.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -42,31 +42,32 @@
 
 #include <X11/Xlib.h>
 
-#include "widgets/widgetcore.h"
+#include "audacious/widgets/widgetcore.h"
 #include "mainwin.h"
-#include "pixmaps.h"
+#include "audacious/pixmaps.h"
 
-#include "main.h"
+#include "audacious/main.h"
 
-#include "controlsocket.h"
-#include "pluginenum.h"
+#include "audacious/controlsocket.h"
+#include "audacious/pluginenum.h"
 
-#include "credits.h"
-#include "dnd.h"
-#include "dock.h"
-#include "equalizer.h"
-#include "hints.h"
-#include "input.h"
-#include "ui_playlist.h"
-#include "prefswin.h"
-#include "skinwin.h"
-#include "genevent.h"
-#include "playback.h"
-#include "playlist.h"
-#include "urldecode.h"
-#include "util.h"
-#include "visualization.h"
+#include "audacious/credits.h"
+#include "audacious/dnd.h"
+#include "audacious/dock.h"
+#include "audacious/hints.h"
+#include "audacious/input.h"
+#include "audacious/prefswin.h"
+#include "audacious/skinwin.h"
+#include "audacious/genevent.h"
+#include "audacious/playback.h"
+#include "audacious/playlist.h"
+#include "audacious/urldecode.h"
+#include "audacious/util.h"
+#include "audacious/visualization.h"
 #include "libaudacious/configdb.h"
+
+#include "equalizer.h"
+#include "playlist.h"
 
 static GTimeVal cb_time; /* click delay for tristate is defined by TRISTATE_THRESHOLD */
 

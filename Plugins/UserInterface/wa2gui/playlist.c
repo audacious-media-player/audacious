@@ -22,7 +22,9 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include "ui_playlist.h"
+#include "playlist.h"
+#include "equalizer.h"
+#include "mainwin.h"
 
 #include <glib.h>
 #include <glib/gi18n.h>
@@ -31,27 +33,25 @@
 #include <gtk/gtk.h>
 #include <string.h>
 
-#include "platform/smartinclude.h"
+#include "audacious/platform/smartinclude.h"
 
 #include <unistd.h>
 #include <errno.h>
 
 #include "libaudacious/util.h"
 
-#include "dnd.h"
-#include "dock.h"
-#include "equalizer.h"
-#include "hints.h"
-#include "input.h"
-#include "main.h"
-#include "mainwin.h"
-#include "playback.h"
-#include "playlist.h"
-#include "playlist_container.h"
-#include "util.h"
+#include "audacious/dnd.h"
+#include "audacious/dock.h"
+#include "audacious/hints.h"
+#include "audacious/input.h"
+#include "audacious/main.h"
+#include "audacious/playback.h"
+#include "audacious/playlist.h"
+#include "audacious/playlist_container.h"
+#include "audacious/util.h"
 
-#include "pixmaps.h"
-#include "images/audacious_playlist.xpm"
+#include "audacious/pixmaps.h"
+#include "audacious/images/audacious_playlist.xpm"
 
 
 #define ITEM_SEPARATOR {"/-", NULL, NULL, 0, "<Separator>", NULL}

@@ -27,6 +27,7 @@
 #endif
 
 #include "equalizer.h"
+#include "playlist.h"
 
 #include <glib.h>
 #include <glib/gi18n.h>
@@ -35,21 +36,20 @@
 #include <math.h>
 #include <string.h>
 
-#include "platform/smartinclude.h"
-#include "widgets/widgetcore.h"
-#include "dock.h"
-#include "hints.h"
-#include "input.h"
-#include "main.h"
-#include "playlist.h"
-#include "ui_playlist.h"
-#include "util.h"
-#include "output.h"
+#include "audacious/platform/smartinclude.h"
+#include "audacious/widgets/widgetcore.h"
+#include "audacious/dock.h"
+#include "audacious/hints.h"
+#include "audacious/input.h"
+#include "audacious/main.h"
+#include "audacious/playlist.h"
+#include "audacious/util.h"
+#include "audacious/output.h"
 
 #include "libaudacious/rcfile.h"
 #include "libaudacious/vfs.h"
 
-#include "images/audacious_eq.xpm"
+#include "audacious/images/audacious_eq.xpm"
 
 enum PresetViewCols {
     PRESET_VIEW_COL_NAME,

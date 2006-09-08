@@ -25,7 +25,7 @@
 #include <glib.h>
 
 #include "mainwin.h"
-#include "widgets/widgetcore.h"
+#include "audacious/widgets/widgetcore.h"
 
 #define PLAYLISTWIN_FRAME_TOP_HEIGHT    20
 #define PLAYLISTWIN_FRAME_BOTTOM_HEIGHT 38

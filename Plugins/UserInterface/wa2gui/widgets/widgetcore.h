@@ -1,7 +1,6 @@
 /*
- * Audacious: A cross-platform multimedia player
- * Copyright (c) 2006 William Pitcock, Tony Vroon, George Averill,
- *                    Giacomo Lozito, Derek Pomery and Yoshiki Yazawa.
+ * Audacious - a cross-platform multimedia player
+ * Copyright (c) 2006  Audacious development team.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,16 +17,25 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef _UI_FILEINFO_H_
-#define _UI_FILEINFO_H_
+#ifndef _WIDGETCORE_H_
+#define _WIDGETCORE_H_
 
-void create_fileinfo_window(void);
-void create_filepopup_window(void);
-void fileinfo_show_for_tuple(TitleInput *tuple);
-void filepopup_show_for_tuple(TitleInput *tuple);
-gchar* fileinfo_recursive_get_image(const gchar* path, gint depth);
-void fileinfo_show_for_path(gchar *path);
-
-void filepopup_hide(gpointer unused);
+#include "tbutton.h"
+#include "eq_graph.h"
+#include "eq_slider.h"
+#include "hslider.h"
+#include "menurow.h"
+#include "monostereo.h"
+#include "number.h"
+#include "pbutton.h"
+#include "playlist_list.h"
+#include "playlist_slider.h"
+#include "playstatus.h"
+#include "sbutton.h"
+#include "skin.h"
+#include "svis.h"
+#include "textbox.h"
+#include "vis.h"
+#include "widget.h"
 
 #endif

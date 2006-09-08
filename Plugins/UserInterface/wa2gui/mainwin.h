@@ -24,7 +24,7 @@
 
 #include <gtk/gtk.h>
 
-#include "widgets/widgetcore.h"
+#include "audacious/widgets/widgetcore.h"
 
 /* yes, main window size is fixed */
 #define MAINWIN_WIDTH            (gint)275
