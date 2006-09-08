@@ -31,8 +31,7 @@
 #include "mainwin.h"
 #include "ui_playlist.h"
 
-#include <gdk/gdkx.h>
-#include <gdk/gdkprivate.h>
+#include "platform/smartinclude.h"
 
 void
 hint_set_always(gboolean always)

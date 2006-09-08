@@ -32,8 +32,9 @@
 #include <glib/gprintf.h>
 #include <gtk/gtk.h>
 #include <gtk/gtkmessagedialog.h>
-#include <gdk/gdkx.h>
-#include <gdk/gdkkeysyms.h>
+
+/* GDK including */
+#include "platform/smartinclude.h"
 
 #include <math.h>
 #include <stdlib.h>

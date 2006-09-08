@@ -32,13 +32,12 @@
 #include <glib/gi18n.h>
 #include <glade/glade.h>
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
-#include <gdk/gdkx.h>
+#include "platform/smartinclude.h"
 #include <gdk/gdkkeysyms.h>
 #include <X11/Xlib.h>
 //#include <sys/ipc.h>

@@ -25,8 +25,7 @@
 #include <stdlib.h>
 #include "main.h"
 
-#include <gdk/gdkx.h>
-#include <X11/Xlib.h>
+#include "platform/smartinclude.h"
 
 struct _DockedWindow {
     GtkWindow *w;

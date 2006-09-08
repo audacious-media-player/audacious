@@ -26,10 +26,9 @@
 
 #include <glib.h>
 #include <glib/gi18n.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-#include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
+
+#include "platform/smartinclude.h"
 
 static GtkWidget *about_window = NULL;
 static GdkPixbuf *about_pixbuf = NULL;

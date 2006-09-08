@@ -31,9 +31,8 @@
 #include <gtk/gtk.h>
 #include <string.h>
 
-#include <gdk/gdkx.h>
+#include "platform/smartinclude.h"
 
-#include <X11/Xlib.h>
 #include <unistd.h>
 #include <errno.h>
 

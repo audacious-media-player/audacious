@@ -1,3 +1,12 @@
+2006-09-07 18:57:03 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2209]
+  - use #ifdef linux instead
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/wma/libffwma/mem.c  
+
+
 2006-09-07 18:45:48 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2207]
   - wma.c: use av_malloc() instead of directly using posix_memalign()

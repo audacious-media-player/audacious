@@ -43,9 +43,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <signal.h>
-#include <gdk/gdkx.h>
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
+
+#include "platform/smartinclude.h"
 
 #include "libaudacious/configdb.h"
 #include "libaudacious/beepctrl.h"

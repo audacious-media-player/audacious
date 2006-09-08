@@ -41,8 +41,12 @@
 
 #include "debug.h"
 
+#if defined(GDK_WINDOWING_X11)
+
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
+
+#endif
 
 #define EXTENSION_TARGETS 7
 
@@ -431,6 +435,7 @@ create_default_mask(GdkWindow * parent, gint w, gint h)
 static void
 skin_query_color(GdkColormap * cm, GdkColor * c)
 {
+#ifdef GDK_WINDOWING_X11
     XColor xc = { 0,0,0,0,0,0 };
 
     xc.pixel = c->pixel;
@@ -438,6 +443,9 @@ skin_query_color(GdkColormap * cm, GdkColor * c)
     c->red = xc.red;
     c->green = xc.green;
     c->blue = xc.blue;
+#else
+    /* do nothing. see what breaks? */
+#endif
 }
 
 static glong

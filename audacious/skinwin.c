@@ -28,16 +28,15 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkkeysyms.h>
+
+#include "platform/smartinclude.h"
+
 #include <stdlib.h>
 #include <string.h>
 
 #include "main.h"
 #include "widgets/widgetcore.h"
 #include "util.h"
-
-#include <gdk/gdkx.h>
 
 #define EXTENSION_TARGETS 7
 
