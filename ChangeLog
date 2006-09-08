@@ -1,3 +1,12 @@
+2006-09-08 04:51:36 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2233]
+  - hammer a little more
+  
+
+  Changes:        Modified:
+  +11 -0          trunk/audacious/main.c  
+
+
 2006-09-08 04:47:45 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2231]
   - stuff

@@ -532,10 +532,10 @@ bmp_config_load(void)
     }
 
     if (!cfg.playlist_font)
-        cfg.playlist_font = g_strdup(PLAYLISTWIN_DEFAULT_FONT);
+        cfg.playlist_font = g_strdup("Sans Bold 8");
 
     if (!cfg.mainwin_font)
-        cfg.mainwin_font = g_strdup(MAINWIN_DEFAULT_FONT);
+        cfg.mainwin_font = g_strdup("Sans Bold 9");
 
     if (!cfg.gentitle_format)
         cfg.gentitle_format = g_strdup("%{p:%p - %}%{a:%a - %}%t");
@@ -553,10 +553,10 @@ bmp_config_load(void)
     }
 
     if (!cfg.eqpreset_default_file)
-        cfg.eqpreset_default_file = g_strdup(EQUALIZER_DEFAULT_DIR_PRESET);
+        cfg.eqpreset_default_file = g_strdup("dir_default.preset");
 
     if (!cfg.eqpreset_extension)
-        cfg.eqpreset_extension = g_strdup(EQUALIZER_DEFAULT_PRESET_EXT);
+        cfg.eqpreset_extension = g_strdup("preset");
 
     if (!cfg.cover_name_include)
 	    cfg.cover_name_include = g_strdup("");
