@@ -1,3 +1,13 @@
+2006-09-08 04:47:45 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2231]
+  - stuff
+  
+
+  Changes:        Modified:
+  +0 -2           trunk/audacious/genevent.h  
+  +0 -6           trunk/audacious/main.c  
+
+
 2006-09-08 04:44:05 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2229]
   - abstractionalize a lot of stuff, build still broken, live with it

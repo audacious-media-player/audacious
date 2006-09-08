@@ -1057,10 +1057,14 @@ main(gint argc, gchar ** argv)
 
         gtk_accel_map_load(bmp_paths[BMP_PATH_ACCEL_FILE]);
 
+        current_interface->init();
+#if 0
+	/* *** TO WA2GUI *** */
         mainwin_create();
 
         playlistwin_create();
         equalizerwin_create();
+#endif
 
         if (!init_skins(cfg.skin)) {
             run_load_skin_error_dialog(cfg.skin);
@@ -1075,11 +1079,14 @@ main(gint argc, gchar ** argv)
     playlist_load(bmp_paths[BMP_PATH_PLAYLIST_FILE]);
     playlist_set_position(cfg.playlist_position);
 
+#if 0
+    /* *** TO WA2GUI *** */
     /* this needs to be called after all 3 windows are created and
      * input plugins are setup'ed 
      * but not if we're running headless --nenolod
      */
     mainwin_setup_menus();
+#endif
 
     if (options.headless != 1)
         GDK_THREADS_LEAVE();
@@ -1102,6 +1109,7 @@ main(gint argc, gchar ** argv)
 	create_fileinfo_window();
 	create_filepopup_window();
 
+#if 0
         if (cfg.player_visible)
             mainwin_show(TRUE);
         else if (!cfg.playlist_visible && !cfg.equalizer_visible)
@@ -1114,6 +1122,9 @@ main(gint argc, gchar ** argv)
             playlistwin_show();
 
         hint_set_always(cfg.always_on_top);
+#endif
+
+        current_interface->present();
 
         playlist_start_get_info_thread();
         mainwin_attach_idle_func();
