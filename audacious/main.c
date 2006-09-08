@@ -80,12 +80,6 @@ const gchar *desktop_comment = N_("Audacious");
 
 const gchar *application_name = N_("Audacious");
 
-
-/* XXX */
-#include "Plugins/UserInterface/wa2gui/mainwin.h"
-#include "Plugins/UserInterface/wa2gui/equalizer.h"
-#include "Plugins/UserInterface/wa2gui/playlist.h"
-
 struct _BmpCmdLineOpt {
     GList *filenames;
     gint session;

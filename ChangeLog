@@ -1,3 +1,23 @@
+2006-09-08 04:44:05 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2229]
+  - abstractionalize a lot of stuff, build still broken, live with it
+  
+
+  Changes:        Modified:
+  +2 -8           trunk/audacious/controlsocket.c  
+  +5 -3           trunk/audacious/genevent.c  
+  +8 -7           trunk/audacious/input.c  
+  +13 -2          trunk/audacious/interface.h  
+  +5 -3           trunk/audacious/main.c  
+  +2 -2           trunk/audacious/main.h  
+  +9 -19          trunk/audacious/playback.c  
+  +5 -4           trunk/audacious/playlist.c  
+  +0 -1           trunk/audacious/pluginenum.c  
+  +101 -95        trunk/audacious/util.c  
+  +1 -1           trunk/audacious/util.h  
+  +7 -1           trunk/audacious/visualization.c  
+
+
 2006-09-08 03:53:57 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2227]
   - remove orphaned dependencies

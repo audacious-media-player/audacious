@@ -25,8 +25,6 @@
 #ifndef GENEVENT_H
 #define GENEVENT_H
 
-#include "mainwin.h"
-
 extern gboolean ev_waiting;
 
 gint audcore_generic_events(void);
