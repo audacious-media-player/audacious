@@ -1,3 +1,12 @@
+2006-09-08 23:55:47 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2249]
+  Hook PulseAudio into the build system and clean it up a little.
+
+  Changes:        Modified:
+  +4 -35          trunk/Plugins/Output/pulse_audio/pulse_audio.c  
+  +37 -16         trunk/configure.ac  
+
+
 2006-09-08 23:00:10 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2247]
   PulseAudio output plugin. Ported from the XMMS plugin by Lennart Poettering.

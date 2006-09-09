@@ -194,9 +194,9 @@ dnl Ok, first we find out what flags we need to use.
 AC_MSG_CHECKING([for what extension and flags to use for plugin compilation])
 case "$target" in
 	*-apple-*)
-		AC_MSG_RESULT([Mac OS X: -fPIC -bundle -flat_namespace -undefined suppress, .dylib])
+		AC_MSG_RESULT([Mac OS X: -fPIC -bundle -fno-common -flat_namespace -undefined suppress, .dylib])
 		PICFLAGS="-fPIC -DPIC"
-		PICLDFLAGS="-fPIC -DPIC -bundle -flat_namespace -undefined suppress"
+		PICLDFLAGS="-fPIC -DPIC -bundle -fno-common -flat_namespace -undefined suppress"
 		LIBLDFLAGS="-dynamiclib"
 		AUDLDFLAGS=""
 		SHARED_SUFFIX=".dylib"
