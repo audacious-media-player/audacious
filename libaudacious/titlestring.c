@@ -112,9 +112,8 @@ xmms_get_titlestring(const gchar * fmt, TitleInput * input)
                 PUTCH( ' ' );                   \
     } G_STMT_END;
 
-    if (fmt == NULL)
+    if (fmt == NULL || input == NULL)
         return NULL;
-
     outstr = g_string_new("");
 
     for (;;) {
