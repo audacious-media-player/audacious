@@ -33,6 +33,7 @@
 #include "libaudacious/dirbrowser.h"
 #include "libaudacious/configdb.h"
 #include "libaudacious/util.h"
+#include "libaudacious/vfs.h"
 
 struct wavhead
 {
@@ -60,7 +61,7 @@ static GtkWidget *use_suffix_toggle = NULL;
 static gboolean use_suffix = FALSE;
 
 static gchar *file_path = NULL;
-static FILE *output_file = NULL;
+static VFSFile *output_file = NULL;
 static struct wavhead header;
 static guint64 written = 0;
 static AFormat afmt;
@@ -166,7 +167,7 @@ static gint disk_open(AFormat fmt, gint rate, gint nch)
 	filename = g_strdup_printf("%s/%s.wav", file_path, g_basename(title));
 	g_free(title);
 
-	output_file = fopen(filename, "wb");
+	output_file = vfs_fopen(filename, "wb");
 	g_free(filename);
 
 	if (!output_file)
@@ -188,7 +189,7 @@ static gint disk_open(AFormat fmt, gint rate, gint nch)
 	header.byte_p_spl = GUINT16_TO_LE((GUINT16_FROM_LE(header.bit_p_spl) / (8 / nch)));
 	memcpy(&header.data_chunk, "data", 4);
 	header.data_length = GUINT32_TO_LE(0);
-	fwrite(&header, sizeof (struct wavhead), 1, output_file);
+	vfs_fwrite(&header, sizeof (struct wavhead), 1, output_file);
 
 	return 1;
 }
@@ -254,7 +255,7 @@ static void disk_write(void *ptr, gint length)
 	if (afmt == FMT_S16_NE)
 		convert_buffer(ptr, length);
 #endif
-	written += fwrite(ptr, 1, length, output_file);
+	written += vfs_fwrite(ptr, 1, length, output_file);
 }
 
 static void disk_close(void)
@@ -265,9 +266,9 @@ static void disk_close(void)
 
 		header.data_length = GUINT32_TO_LE(written);
 		fseek(output_file, 0, SEEK_SET);
-		fwrite(&header, sizeof (struct wavhead), 1, output_file);
+		vfs_fwrite(&header, sizeof (struct wavhead), 1, output_file);
 
-		fclose(output_file);
+		vfs_fclose(output_file);
 		written = 0;
 	}
 	output_file = NULL;

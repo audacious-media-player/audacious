@@ -28,6 +28,7 @@
 #include <string.h>
 
 #include <libaudacious/configdb.h>
+#include <libaudacious/vfs.h>
 
 
 static GtkWidget *configure_win = NULL;
@@ -123,15 +124,15 @@ static void
 scan_devices(gchar * type, GtkWidget * option_menu, GtkSignalFunc sigfunc)
 {
     GtkWidget *menu, *item;
-    FILE *file;
+    VFSFile *file;
     gchar buffer[256], *temp, *tmp2;
     gboolean found = FALSE;
     gint index = 0;
 
     menu = gtk_menu_new();
 
-    if ((file = fopen("/dev/sndstat", "r"))) {
-        while (fgets(buffer, 255, file)) {
+    if ((file = vfs_fopen("/dev/sndstat", "r"))) {
+        while (vfs_fgets(buffer, 255, file)) {
             if (found && buffer[0] == '\n')
                 break;
             if (buffer[strlen(buffer) - 1] == '\n')
@@ -161,7 +162,7 @@ scan_devices(gchar * type, GtkWidget * option_menu, GtkSignalFunc sigfunc)
                 found = 1;
 
         }
-        fclose(file);
+        vfs_fclose(file);
     }
     else {
         item = gtk_menu_item_new_with_label(_("Default"));
