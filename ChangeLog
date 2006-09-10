@@ -1,3 +1,12 @@
+2006-09-10 19:19:35 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2261]
+  Portability fix provided by Matti H?\195?\164m?\195?\164l?\195?\164inen (ccr/TNSP).
+
+  Changes:        Modified:
+  +136 -113       trunk/Plugins/Input/sid/xs_length.c  
+  +8 -9           trunk/Plugins/Input/sid/xs_length.h  
+
+
 2006-09-10 13:40:15 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2259]
   Non-RTSP should compile too, ktnxbye.

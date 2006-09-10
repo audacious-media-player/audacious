@@ -16,6 +16,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#include "libaudacious/vfs.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -224,7 +225,7 @@ static int ccomp(const void *v1, const void *v2)
 
 static PSFINFO *LoadPSF(char *path, int level, int type) // Type==1 for just info load.
 {
-        FILE *fp;
+        VFSFile *fp;
         EXE_HEADER tmpHead;
         unsigned char *in,*out=0;
 	u8 head[4];
@@ -235,13 +236,13 @@ static PSFINFO *LoadPSF(char *path, int level, int type) // Type==1 for just inf
 	PSFINFO *psfi;
 	PSFINFO *tmpi;
 
-        if(!(fp=fopen(path,"rb")))
+        if(!(fp=vfs_fopen(path,"rb")))
  	{
          printf("path %s failed to load\n", path);
 	 return(0);
 	}
  
-	fread(head,1,4,fp);
+	vfs_fread(head,1,4,fp);
 	if(memcmp(head,"PSF\x01",4)) return(0);
 
 	psfi=malloc(sizeof(PSFINFO));
@@ -249,22 +250,22 @@ static PSFINFO *LoadPSF(char *path, int level, int type) // Type==1 for just inf
         psfi->stop=~0;
         psfi->fade=0; 
 
-        fread(&reserved,1,4,fp);
-        fread(&complen,1,4,fp);
+        vfs_fread(&reserved,1,4,fp);
+        vfs_fread(&complen,1,4,fp);
 	complen=BFLIP32(complen);
 
-        fread(&crc32,1,4,fp);
+        vfs_fread(&crc32,1,4,fp);
 	crc32=BFLIP32(crc32);
 
-        fseek(fp,reserved,SEEK_CUR);
+        vfs_fseek(fp,reserved,SEEK_CUR);
 
         if(type)
-	 fseek(fp,complen,SEEK_CUR);
+	 vfs_fseek(fp,complen,SEEK_CUR);
         else
         {
          in=malloc(complen);
          out=malloc(1024*1024*2+0x800);
-         fread(in,1,complen,fp);
+         vfs_fread(in,1,complen,fp);
          outlen=1024*1024*2;
          uncompress(out,&outlen,in,complen);
          free(in);
@@ -283,13 +284,13 @@ static PSFINFO *LoadPSF(char *path, int level, int type) // Type==1 for just inf
 
         {
          u8 tagdata[5];
-         if(fread(tagdata,1,5,fp)==5)
+         if(vfs_fread(tagdata,1,5,fp)==5)
          {
           if(!memcmp(tagdata,"[TAG]",5))
           {
            char linebuf[1024];
 
-           while(fgets(linebuf,1024,fp))
+           while(vfs_fgets(linebuf,1024,fp))
            {
             int x;
 	    char *key=0,*value=0;
@@ -331,7 +332,7 @@ static PSFINFO *LoadPSF(char *path, int level, int type) // Type==1 for just inf
 	      free(value);
 	      free(tmpfn);
  	      if(!level) free(out);
-	      fclose(fp);
+	      vfs_fclose(fp);
 	      FreeTags(psfi->tags);
 	      free(psfi);
 	      return(0);
@@ -345,7 +346,7 @@ static PSFINFO *LoadPSF(char *path, int level, int type) // Type==1 for just inf
          }
         }  
 
-        fclose(fp);
+        vfs_fclose(fp);
 
 	/* Now, if we're at level 0(main PSF), load the main executable, and any libN stuff */
         if(!level && !type)
@@ -405,7 +406,7 @@ static PSFINFO *LoadPSF(char *path, int level, int type) // Type==1 for just inf
             //free(key);
             //free(value);
             //free(tmpfn);
-            //fclose(fp);
+            //vfs_fclose(fp);
             //return(0);
            }
            free(tmpfn);
