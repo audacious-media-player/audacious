@@ -400,8 +400,10 @@ mpgdec_open_stream(char *bs_filenam, int fd)
         mpgdec_info->network_stream = TRUE;
         mpgdec_info->stream_type = STREAM_RTSP;
         if (mpgdec_rtsp_open(bs_filenam)) mpgdec_info->eof = TRUE;
-#endif
     } else {
+#else
+    {
+#endif
         if ((filept = vfs_fopen(bs_filenam, "rb")) == NULL ||
             stream_init() == -1)
             mpgdec_info->eof = TRUE;
