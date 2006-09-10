@@ -1,3 +1,11 @@
+2006-09-10 13:40:15 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2259]
+  Non-RTSP should compile too, ktnxbye.
+
+  Changes:        Modified:
+  +3 -1           trunk/Plugins/Input/mpg123/common.c  
+
+
 2006-09-10 04:52:25 +0000  
   revision [2257]
   rtsp support in mp3
