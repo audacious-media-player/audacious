@@ -1127,12 +1127,15 @@ main(gint argc, gchar ** argv)
 	has_x11_connection = TRUE;
 
 	if (cfg.resume_playback_on_startup) {
-		if (cfg.resume_playback_on_startup_time != -1) {
+		if (cfg.resume_playback_on_startup_time != -1 && playlist_get_length() > 0) {
+			int i;
 			while (gtk_events_pending()) gtk_main_iteration();
 			bmp_playback_initiate();
-			g_usleep(10000);	/* XXX: musepack and others need this! */
-			while (!ip_data.playing)
+			for (i = 0; i < 8; i++) {
 				g_usleep(10000);
+				if (!ip_data.playing)
+					break;
+			}
 			bmp_playback_seek(cfg.resume_playback_on_startup_time /
 					  1000);
 		}

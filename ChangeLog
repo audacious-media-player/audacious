@@ -1,3 +1,11 @@
+2006-09-10 01:02:42 +0000  
+  revision [2253]
+  avoid segfaults
+
+  Changes:        Modified:
+  +1 -2           trunk/libaudacious/titlestring.c  
+
+
 2006-09-09 00:31:49 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2251]
   - ensure that the module symtable is consistantly unique on Mach-O bundles
