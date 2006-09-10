@@ -342,7 +342,9 @@ is_our_file(char *filename)
 {
     gchar *ext = strrchr(filename, '.');
 
-    if (!strncasecmp(filename, "http://", 7) && (ext && strncasecmp(ext, ".ogg", 4)) && (ext && strncasecmp(ext, ".flac", 5)))
+    if (CHECK_STREAM(filename) &&
+        (ext && strncasecmp(ext, ".ogg", 4)) &&
+        (ext && strncasecmp(ext, ".flac", 5)))
 	return TRUE;
     else if (mpgdec_detect_by_content(filename))
         return TRUE;
@@ -617,7 +619,7 @@ get_song_info(char *filename, char **title_real, int *len_real)
     /*
      * TODO: Getting song info from http streams.
      */
-    if (!strncasecmp(filename, "http://", 7))
+    if (CHECK_STREAM(filename))
         return;
 
     if ((tuple = get_song_tuple(filename)) != NULL) {
@@ -705,7 +707,7 @@ decode_loop(void *arg)
         set_synth_functions(&fr);
 
         mpgdec_info->tpf = mpgdec_compute_tpf(&fr);
-        if (strncasecmp(filename, "http://", 7)) {
+        if (!CHECK_STREAM(filename)) {
             if (mpgdec_stream_check_for_xing_header(&fr, &xing_header)) {
                 mpgdec_info->num_frames = xing_header.frames;
                 have_xing_header = TRUE;
@@ -727,7 +729,7 @@ decode_loop(void *arg)
                 break;
         }
 
-        if (!have_xing_header && strncasecmp(filename, "http://", 7))
+        if (!have_xing_header && !CHECK_STREAM(filename))
             mpgdec_info->num_frames = mpgdec_calc_numframes(&fr);
 
         memcpy(&fr, &temp_fr, sizeof(struct frame));
@@ -829,7 +831,7 @@ decode_loop(void *arg)
                         /* FIXME networks streams */
                         disp_bitrate = mpgdec_bitrate;
                         if (!have_xing_header
-                            && strncasecmp(filename, "http://", 7)) {
+                            && !CHECK_STREAM(filename)) {
                             double rel = mpgdec_relative_pos();
                             if (rel) {
                                 mpgdec_length =

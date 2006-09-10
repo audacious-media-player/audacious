@@ -8,14 +8,14 @@ LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
 SOURCES = mpg123.c configure.c fileinfo.c common.c \
 	resample.c \
 	layer1.c layer2.c layer3.c \
-	tabinit.c http.c \
+	tabinit.c http.c $(LIBNMS_SRC) \
 	dxhead.c decode.c $(DCT64) paranoia.c interface.c
 
 OBJECTS = ${SOURCES:.c=.o} tag_c_hacked.o
 
-CFLAGS   += -UPSYCHO $(PICFLAGS) $(GTK_CFLAGS) $(TAGLIB_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..
+CFLAGS   += -UPSYCHO $(PICFLAGS) $(GTK_CFLAGS) $(TAGLIB_CFLAGS) $(ARCH_DEFINES) $(LIBNMS_CFLAGS) -I../../../intl -I../../..
 CXXFLAGS += -UPSYCHO $(PICFLAGS) $(GTK_CFLAGS) $(TAGLIB_CFLAGS) $(ARCH_DEFINES) -I../../../intl -I../../..
 
-LIBADD = -ltag_c $(GTK_LIBS) $(TAGLIB_LIBS)
+LIBADD = -ltag_c $(GTK_LIBS) $(TAGLIB_LIBS) $(LIBNMS_LIBS)
 
 include ../../../mk/objective.mk

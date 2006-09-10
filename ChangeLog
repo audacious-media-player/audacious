@@ -1,3 +1,11 @@
+2006-09-10 01:04:36 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2255]
+  Make the playback resume code a lot more robust.
+
+  Changes:        Modified:
+  +6 -3           trunk/audacious/main.c  
+
+
 2006-09-10 01:02:42 +0000  
   revision [2253]
   avoid segfaults

@@ -62,6 +62,12 @@ enum {
     DETECT_BOTH
 };
 
+enum {
+    STREAM_FILE,
+    STREAM_HTTP,
+    STREAM_RTSP
+};
+
 #include <gtk/gtk.h>
 
 #include "audacious/plugin.h"
@@ -80,6 +86,18 @@ enum {
 #define         ENCODING_SEPARATOR      " ,:;|/"
 
 #define		MAXFRAMESIZE		4096
+
+#ifdef HAVE_NEMESI
+int mpgdec_rtsp_open(char *url);
+int mpgdec_rtsp_read(gpointer data, gsize length);
+void mpgdec_rtsp_close (void);
+#define CHECK_STREAM(filename) \
+    (!strncasecmp(filename, "http://", 7) ||\
+     !strncasecmp(filename, "rtsp://", 7))
+#else
+#define CHECK_STREAM(filename) \
+    (!strncasecmp(filename, "http://", 7))
+#endif
 
 struct id3v1tag_t {
     char tag[3];                /* always "TAG": defines ID3v1 tag 128 bytes before EOF */
@@ -116,6 +134,7 @@ typedef struct {
     double tpf;
     float eq_mul[576];
     gboolean output_audio, first_frame, network_stream;
+    gint stream_type;
     guint32 filesize;           /* Filesize without junk */
 } PlayerInfo;
 

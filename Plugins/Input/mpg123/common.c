@@ -50,7 +50,18 @@ fullread(VFSFile * fd, unsigned char *buf, int count)
         if (fd)
             ret = vfs_fread(buf + cnt, 1, count - cnt, fd);
         else
-            ret = mpgdec_http_read(buf + cnt, count - cnt);
+            switch(mpgdec_info->stream_type) {
+                case STREAM_HTTP:
+                    ret = mpgdec_http_read(buf + cnt, count - cnt);
+                    break;
+#ifdef HAVE_NEMESI
+                case STREAM_RTSP:
+                    ret = mpgdec_rtsp_read(buf + cnt, count - cnt);
+                    break;
+#endif
+                default:
+                    return -1;
+            }
         if (ret < 0)
             return ret;
         if (ret == 0)
@@ -73,8 +84,19 @@ mpgdec_stream_close(void)
 {
     if (filept)
         vfs_fclose(filept);
-    else if (mpgdec_info->network_stream)
-        mpgdec_http_close();
+    else 
+        switch(mpgdec_info->stream_type) {
+            case STREAM_HTTP:
+                mpgdec_http_close();
+                break;
+#ifdef HAVE_NEMESI
+            case STREAM_RTSP:
+                mpgdec_rtsp_close();
+                break;
+#endif
+            default:
+                break;
+        }
 }
 
 /**************************************** 
@@ -368,8 +390,18 @@ mpgdec_open_stream(char *bs_filenam, int fd)
         mpgdec_http_open(bs_filenam);
         mpgdec_info->filesize = 0;
         mpgdec_info->network_stream = TRUE;
-    }
-    else {
+        mpgdec_info->stream_type = STREAM_HTTP;
+    } 
+    else
+#ifdef HAVE_NEMESI
+    if (!strncasecmp(bs_filenam, "rtsp://", 7)) {
+        filept = NULL;
+        mpgdec_info->filesize = 0;
+        mpgdec_info->network_stream = TRUE;
+        mpgdec_info->stream_type = STREAM_RTSP;
+        if (mpgdec_rtsp_open(bs_filenam)) mpgdec_info->eof = TRUE;
+#endif
+    } else {
         if ((filept = vfs_fopen(bs_filenam, "rb")) == NULL ||
             stream_init() == -1)
             mpgdec_info->eof = TRUE;

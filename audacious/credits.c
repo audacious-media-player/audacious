@@ -69,6 +69,7 @@ static const gchar *credit_text[] = {
 
     N_("Plugin development:"),
     "Kiyoshi Aman",
+    "Luca Barbato",
     "Shay Green",
     "Giacomo Lozito",
     "William Pitcock",
