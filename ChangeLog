@@ -1,3 +1,12 @@
+2006-09-10 21:28:45 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2265]
+  Have output plugins use the VFS layer too.
+
+  Changes:        Modified:
+  +5 -4           trunk/Plugins/Output/OSS/configure.c  
+  +7 -6           trunk/Plugins/Output/disk_writer/disk_writer.c  
+
+
 2006-09-10 21:01:14 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2263]
   Use the VFS layer.

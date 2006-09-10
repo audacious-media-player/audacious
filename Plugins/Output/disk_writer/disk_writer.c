@@ -265,7 +265,7 @@ static void disk_close(void)
 		header.length = GUINT32_TO_LE(written + sizeof (struct wavhead) - 8);
 
 		header.data_length = GUINT32_TO_LE(written);
-		fseek(output_file, 0, SEEK_SET);
+		vfs_fseek(output_file, 0, SEEK_SET);
 		vfs_fwrite(&header, sizeof (struct wavhead), 1, output_file);
 
 		vfs_fclose(output_file);
