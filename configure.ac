@@ -357,7 +357,7 @@ AC_ARG_ENABLE(mp3,
 if test "$enable_mp3" = "yes"; then
         INPUT_PLUGINS="$INPUT_PLUGINS mpg123"
         PKG_CHECK_MODULES(LIBNMS,[libnms >= 0.6.0],
-            [LIBNMS_SRC=rtsp.c,
+            [LIBNMS_SRC=rtsp.c
              AC_DEFINE(HAVE_NEMESI,,[Define if rtp/rtsp support is available])
             ],[LIBNMS_SRC=""])
         AC_SUBST(LIBNMS_CFLAGS)

@@ -1,3 +1,12 @@
+2006-09-11 06:39:54 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2269]
+  - make fileinfo_recursive_get_image() breadth first search.
+  
+
+  Changes:        Modified:
+  +35 -31         trunk/audacious/ui_fileinfo.c  
+
+
 2006-09-10 22:36:17 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2267]
   Revert broken commit r2209 and fseek -> vfs_fseek, missed in commit r2265.
