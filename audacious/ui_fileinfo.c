@@ -412,46 +412,50 @@ fileinfo_recursive_get_image(const gchar* path, gint depth)
 	
 	d = g_dir_open(path, 0, NULL);
 
-	if (d)
-	{	
+	if (d) {
 		const gchar *f = g_dir_read_name(d);
 		
-		while (f)
-		{
+		/* first pass only searches for files. */
+		while(f) { 
 			gchar *newpath = g_strdup_printf("%s/%s", path, f);
 
-			if (is_front_cover_image(f))
-			{
-				/* We found a suitable file in the current
-				 * directory, use that. The string will be
-				 * freed by the caller */
-				g_dir_close(d);
-				return newpath;
-			}
-			else
-			{
-				f = g_dir_read_name(d);
-				if (cfg.recurse_for_cover)
-				{
-					/* File/directory wasn't suitable, try and recurse into it.
-					 * This should either return a filename for a image file, 
-					 * or NULL if there was no suitable file, or 'f' wasn't a dir.
-					 */
-					gchar *tmp = fileinfo_recursive_get_image(newpath, depth+1);
-					
-					if(tmp)
-					{
-						g_free(newpath);
-						g_dir_close(d);
-						return tmp;
-					}
+			if(!g_file_test(newpath, G_FILE_TEST_IS_DIR)) {
+				if(is_front_cover_image(f)) {
+					g_dir_close(d);
+					return newpath;
 				}
 			}
+			g_free(newpath);
+			f = g_dir_read_name(d);
 		}
-		
+
+		/* checks whether recursive or not. */
+		if(!cfg.recurse_for_cover) {
+			g_dir_close(d);
+			return NULL;
+		}
+
+		/* second pass descends directory recursively. */
+		g_dir_rewind(d);
+		f = g_dir_read_name(d);
+
+		while(f) {
+			gchar *newpath = g_strdup_printf("%s/%s", path, f);
+			
+			if(g_file_test(newpath, G_FILE_TEST_IS_DIR)) {
+				gchar *tmp = fileinfo_recursive_get_image(newpath, depth+1);
+				if(tmp) {
+					g_free(newpath);
+					g_dir_close(d);
+					return tmp;
+				}
+			}
+			g_free(newpath);
+			f = g_dir_read_name(d);
+		}
+
 		g_dir_close(d);
-	}
-	
+	}		
 	return NULL;
 }
 

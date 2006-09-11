@@ -1,3 +1,12 @@
+2006-09-10 22:36:17 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2267]
+  Revert broken commit r2209 and fseek -> vfs_fseek, missed in commit r2265.
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/wma/libffwma/mem.c  
+  +1 -1           trunk/Plugins/Output/disk_writer/disk_writer.c  
+
+
 2006-09-10 21:28:45 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2265]
   Have output plugins use the VFS layer too.
