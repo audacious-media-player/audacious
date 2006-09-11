@@ -1,3 +1,11 @@
+2006-09-11 18:23:34 +0000  
+  revision [2271]
+  fix a typo
+
+  Changes:        Modified:
+  +1 -1           trunk/configure.ac  
+
+
 2006-09-11 06:39:54 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2269]
   - make fileinfo_recursive_get_image() breadth first search.

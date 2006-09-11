@@ -278,7 +278,7 @@ static int wma_decode_init(AVCodecContext * avctx)
     }
 
     bps = (float)s->bit_rate / (float)(s->nb_channels * s->sample_rate);
-    s->byte_offset_bits = av_log2((int)(bps * s->frame_len / 8.0)) + 2;
+    s->byte_offset_bits = av_log2((int)(bps * s->frame_len / 8.0 + 0.5)) + 2;
 
     /* compute high frequency value and choose if noise coding should
        be activated */
@@ -893,7 +893,10 @@ static int wma_decode_block(WMADecodeContext *s)
                     level = -level;
                 ptr += run;
                 if (ptr >= eptr)
-                    return -1;
+                {
+                    av_log(NULL, AV_LOG_ERROR, "overflow in spectral RLE, ignoring\n");
+                    break;
+                }
                 *ptr++ = level;
                 /* NOTE: EOB can be omitted */
                 if (ptr >= eptr)
@@ -1221,7 +1224,7 @@ static int wma_decode_superframe(AVCodecContext *avctx,
                 goto fail;
             q = s->last_superframe + s->last_superframe_len;
             len = bit_offset;
-            while (len > 0) {
+            while (len > 7) {
                 *q++ = (get_bits)(&s->gb, 8);
                 len -= 8;
             }
