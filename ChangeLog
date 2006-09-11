@@ -1,3 +1,14 @@
+2006-09-11 22:24:52 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2275]
+  fprintf implementation in the VFS common layer by Luca Barbato. Use it in the Container plugins.
+
+  Changes:        Modified:
+  +7 -7           trunk/Plugins/Container/m3u/m3u.c  
+  +6 -5           trunk/Plugins/Container/pls/pls.c  
+  +2 -0           trunk/libaudacious/vfs.h  
+  +43 -0          trunk/libaudacious/vfs_common.c  
+
+
 2006-09-11 20:15:31 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2273]
   Partial sync with upstream.

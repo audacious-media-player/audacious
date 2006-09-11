@@ -42,6 +42,7 @@
 #include "debug.h"
 
 #include "platform/smartinclude.h"
+#include "libaudacious/vfs.h"
 
 #define EXTENSION_TARGETS 7
 
@@ -692,7 +693,7 @@ skin_create_transparent_mask(const gchar * path,
 void
 skin_load_viscolor(Skin * skin, const gchar * path, const gchar * basename)
 {
-    FILE *file;
+    VFSFile *file;
     gint i, c;
     gchar line[256], *filename;
     GArray *a;
@@ -707,7 +708,7 @@ skin_load_viscolor(Skin * skin, const gchar * path, const gchar * basename)
     if (!filename)
         return;
 
-    if (!(file = fopen(filename, "r"))) {
+    if (!(file = vfs_fopen(filename, "r"))) {
         g_free(filename);
         return;
     }
@@ -715,7 +716,7 @@ skin_load_viscolor(Skin * skin, const gchar * path, const gchar * basename)
     g_free(filename);
 
     for (i = 0; i < 24; i++) {
-        if (fgets(line, 255, file)) {
+        if (vfs_fgets(line, 255, file)) {
             a = string_to_garray(line);
             if (a->len > 2) {
                 for (c = 0; c < 3; c++)
@@ -727,7 +728,7 @@ skin_load_viscolor(Skin * skin, const gchar * path, const gchar * basename)
             break;
     }
 
-    fclose(file);
+    vfs_fclose(file);
 }
 
 #if 0
