@@ -36,6 +36,7 @@
 #include "audacious/playlist.h"
 #include "audacious/playlist_container.h"
 #include "audacious/plugin.h"
+#include "libaudacious/vfs.h"
 
 static void
 playlist_load_pls(const gchar * filename, gint pos)
@@ -73,25 +74,25 @@ static void
 playlist_save_pls(const gchar *filename, gint pos)
 {
     GList *node;
-    FILE *file = fopen(filename, "wb");
+    VFSFile *file = vfs_fopen(filename, "wb");
 
     g_return_if_fail(file != NULL);
 
-    g_fprintf(file, "[playlist]\n");
-    g_fprintf(file, "NumberOfEntries=%d\n", playlist_get_length());
+    vfs_fprintf(file, "[playlist]\n");
+    vfs_fprintf(file, "NumberOfEntries=%d\n", playlist_get_length());
 
     PLAYLIST_LOCK();
 
     for (node = playlist_get(); node; node = g_list_next(node)) {
         PlaylistEntry *entry = PLAYLIST_ENTRY(node->data);
 
-        g_fprintf(file, "File%d=%s\n", g_list_position(playlist_get(), node) + 1,
+        vfs_fprintf(file, "File%d=%s\n", g_list_position(playlist_get(), node) + 1,
                   entry->filename);
     }
 
     PLAYLIST_UNLOCK();
 
-    fclose(file);
+    vfs_fclose(file);
 }
 
 PlaylistContainer plc_pls = {

@@ -140,16 +140,16 @@ playlist_save_m3u(const gchar *filename, gint pos)
 {
     GList *node;
     gchar *outstr = NULL;
-    FILE *file;
+    VFSFile *file;
 
     g_return_if_fail(filename != NULL);
 
-    file = fopen(filename, "wb");
+    file = vfs_fopen(filename, "wb");
 
     g_return_if_fail(file != NULL);
 
     if (cfg.use_pl_metadata)
-        g_fprintf(file, "#EXTM3U\n");
+        vfs_fprintf(file, "#EXTM3U\n");
 
     PLAYLIST_LOCK();
 
@@ -166,20 +166,20 @@ playlist_save_m3u(const gchar *filename, gint pos)
 
             outstr = g_locale_from_utf8(entry->title, -1, NULL, NULL, NULL);
             if(outstr) {
-                g_fprintf(file, "#EXTINF:%d,%s\n", seconds, outstr);
+                vfs_fprintf(file, "#EXTINF:%d,%s\n", seconds, outstr);
                 g_free(outstr);
                 outstr = NULL;
             } else {
-                g_fprintf(file, "#EXTINF:%d,%s\n", seconds, entry->title);
+                vfs_fprintf(file, "#EXTINF:%d,%s\n", seconds, entry->title);
             }
         }
 
-        g_fprintf(file, "%s\n", entry->filename);
+        vfs_fprintf(file, "%s\n", entry->filename);
     }
 
     PLAYLIST_UNLOCK();
 
-    fclose(file);
+    vfs_fclose(file);
 }
 
 PlaylistContainer plc_m3u = {

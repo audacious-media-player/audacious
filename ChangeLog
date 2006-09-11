@@ -1,3 +1,11 @@
+2006-09-11 20:15:31 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2273]
+  Partial sync with upstream.
+
+  Changes:        Modified:
+  +6 -3           trunk/Plugins/Input/wma/libffwma/wmadec.c  
+
+
 2006-09-11 18:23:34 +0000  
   revision [2271]
   fix a typo

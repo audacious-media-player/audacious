@@ -14,6 +14,9 @@
  */
 
 #include "vfs.h"
+#include <string.h>
+#include <stdlib.h>
+#include <glib/gprintf.h>
 
 /* FIXME low performance vfs_getc */
 gint vfs_getc(VFSFile *stream)
@@ -24,6 +27,17 @@ gint vfs_getc(VFSFile *stream)
     return EOF;
 }
 
+
+gint vfs_fputc(gint c, VFSFile *stream)
+{
+    guchar uc = (guchar) c;
+
+    if (! vfs_fwrite(&uc, 1, 1, stream)) {
+        return EOF;
+    }
+
+    return uc;
+}
 
 gchar *vfs_fgets(gchar *s, gint n, VFSFile *stream)
 {
@@ -48,4 +62,33 @@ gchar *vfs_fgets(gchar *s, gint n, VFSFile *stream)
     }
 
     return NULL;
+}
+
+int vfs_fputs(const gchar *s, VFSFile *stream)
+{
+	size_t n = strlen(s);
+
+	return ((vfs_fwrite(s, 1, n, stream) == n) ? n : EOF);
+}
+
+int vfs_vfprintf(VFSFile *stream, gchar const *format, va_list args)
+{
+    gchar *string;
+    gint rv = g_vasprintf(&string, format, args);
+    if (rv<0) return rv;
+    rv = vfs_fputs(string, stream);
+    free (string);
+    return rv;
+}
+
+int vfs_fprintf(VFSFile *stream, gchar const *format, ...)
+{
+    va_list arg;
+    gint rv;
+
+    va_start(arg, format);
+    rv = vfs_vfprintf(stream, format, arg);
+    va_end(arg);
+
+    return rv;
 }

@@ -42,6 +42,8 @@ extern gboolean vfs_is_writeable(const gchar * path);
 
 extern gboolean vfs_truncate(VFSFile * file, glong length);
 
+extern int vfs_fprintf(VFSFile *stream, gchar const *format, ...)
+    __attribute__ ((__format__ (__printf__, 2, 3)));
 
 G_END_DECLS
 
