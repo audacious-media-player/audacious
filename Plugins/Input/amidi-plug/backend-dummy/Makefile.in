@@ -5,7 +5,7 @@ noinst_HEADERS = b-dummy.h b-dummy-config.h backend-dummy-icon.xpm
 
 CFLAGS += $(PICFLAGS) $(GLIB_CFLAGS) -I../../../../intl -I../../../..
 
-libdir = $(AMIDIPLUGDATADIR)
+libdir = $(AMIDIPLUGBACKENDDIR)
 
 OBJECTIVE_LIBS = ap-dummy$(SHARED_SUFFIX)
 

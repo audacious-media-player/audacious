@@ -361,7 +361,7 @@ static void amidiplug_play( gchar * filename )
     g_warning( "No sequencer backend selected\n" );
     i_message_gui( _("AMIDI-Plug - warning") ,
                    _("No sequencer backend has been selected!\nPlease configure AMIDI-Plug before playing.") ,
-                   AMIDIPLUG_MESSAGE_WARN , NULL );
+                   AMIDIPLUG_MESSAGE_WARN , NULL , TRUE );
     amidiplug_playing_status = AMIDIPLUG_ERR;
     return;
   }
@@ -581,6 +581,12 @@ void * amidiplug_play_loop( void * arg )
         pthread_mutex_lock(&amidiplug_gettime_mutex);
         midifile.current_tempo = event->data.tempo;
         pthread_mutex_unlock(&amidiplug_gettime_mutex);
+        break;
+      case SND_SEQ_EVENT_META_TEXT:
+        /* do nothing */
+        break;
+      case SND_SEQ_EVENT_META_LYRIC:
+        /* do nothing */
         break;
       default:
         DEBUGMSG( "PLAY thread, encountered invalid event type %i\n" , event->type );

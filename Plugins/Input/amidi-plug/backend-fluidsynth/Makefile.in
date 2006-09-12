@@ -5,7 +5,7 @@ noinst_HEADERS = b-fluidsynth.h b-fluidsynth-config.h backend-fluidsynth-icon.xp
 
 CFLAGS += $(PICFLAGS) $(GLIB_CFLAGS) $(FLUIDSYNTH_CFLAGS) -I../../../../intl -I../../../..
 
-libdir = $(AMIDIPLUGDATADIR)
+libdir = $(AMIDIPLUGBACKENDDIR)
 
 OBJECTIVE_LIBS = ap-fluidsynth$(SHARED_SUFFIX)
 

@@ -23,6 +23,7 @@
 
 
 #include "i_midi.h"
+#include "i_configure.h"
 
 #define ERRMSG_MIDITRACK() { g_warning( "%s: invalid MIDI data (offset %#x)" , mf->file_name , mf->file_offset ); return 0; }
 
@@ -278,6 +279,46 @@ gint i_midi_file_read_track( midifile_t * mf , midifile_track_t * track ,
               }
               break;
 
+              case 0x01: /* text comments */
+              {
+                if ( amidiplug_cfg_ap.ap_opts_comments_extract > 0 )
+                {
+                  gint ic = 0;
+                  if (len < 1)
+                    ERRMSG_MIDITRACK();
+                  event = i_midi_file_new_event(track, 0);
+                  event->type = SND_SEQ_EVENT_META_TEXT;
+                  event->tick = tick;
+                  event->data.metat = calloc( len + 1 , sizeof(gchar) );
+                  for ( ic = 0 ; ic < len ; ic++ )
+                    event->data.metat[ic] = i_midi_file_read_byte(mf);
+                  event->data.metat[len] = '\0';
+                }
+                else
+                  i_midi_file_skip_bytes(mf,len);
+              }
+              break;
+
+              case 0x05: /* lyrics */
+              {
+                if ( amidiplug_cfg_ap.ap_opts_lyrics_extract > 0 )
+                {
+                  gint ic = 0;
+                  if (len < 1)
+                    ERRMSG_MIDITRACK();
+                  event = i_midi_file_new_event(track, 0);
+                  event->type = SND_SEQ_EVENT_META_LYRIC;
+                  event->tick = tick;
+                  event->data.metat = calloc( len + 1 , sizeof(gchar) );
+                  for ( ic = 0 ; ic < len ; ic++ )
+                    event->data.metat[ic] = i_midi_file_read_byte(mf);
+                  event->data.metat[len] = '\0';
+                }
+                else
+                  i_midi_file_skip_bytes(mf,len);
+              }
+              break;
+
               default: /* ignore all other meta events */
               {
                 i_midi_file_skip_bytes(mf,len);
@@ -463,6 +504,9 @@ void i_midi_free( midifile_t * mf )
       {
         event_tmp = event;
         event = event->next;
+        if (( event_tmp->type == SND_SEQ_EVENT_META_TEXT ) ||
+            ( event_tmp->type == SND_SEQ_EVENT_META_LYRIC ))
+          free( event_tmp->data.metat );
         free( event_tmp );
       }
     }

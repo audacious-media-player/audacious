@@ -43,7 +43,7 @@
 #endif /* DEBUG */
 
 
-#define AMIDIPLUG_VERSION "0.5"
+#define AMIDIPLUG_VERSION "0.6"
 #define PLAYER_NAME "Audacious"
 #define PLAYER_LOCALRCDIR ".audacious"
 #define G_PATH_GET_BASENAME(x) g_path_get_basename(x)

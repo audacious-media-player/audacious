@@ -34,7 +34,9 @@ amidiplug_cfg_backend_t * amidiplug_cfg_backend;
 
 
 void i_configure_ev_bcancel( gpointer );
-void i_configure_ev_bok( gpointer );
+void i_configure_ev_bapply( GtkWidget * , gpointer );
+void i_configure_ev_bokcheck( GtkWidget * , gpointer );
+void i_configure_ev_bok( GtkWidget * , gpointer );
 void i_configure_cfg_backend_alloc( void );
 void i_configure_cfg_backend_free( void );
 void i_configure_cfg_backend_save( void );
@@ -92,7 +94,7 @@ void i_configure_gui( void )
   static GtkWidget *configwin = NULL;
   GdkGeometry cw_hints;
   GtkWidget *configwin_vbox;
-  GtkWidget *hseparator, *hbuttonbox, *button_ok, *button_cancel;
+  GtkWidget *hseparator, *hbuttonbox, *button_ok, *button_cancel, *button_apply;
 
   GtkWidget *configwin_notebook;
 
@@ -120,6 +122,14 @@ void i_configure_gui( void )
   g_signal_connect( G_OBJECT(configwin) , "destroy" ,
                     G_CALLBACK(gtk_widget_destroyed) , &configwin );
   button_ok = gtk_button_new_from_stock( GTK_STOCK_OK );
+  if ( g_signal_lookup( "ap-commit" , GTK_WIDGET_TYPE(button_ok) ) == 0 )
+  {
+    g_signal_new( "ap-commit" , GTK_WIDGET_TYPE(button_ok) ,
+                  G_SIGNAL_ACTION , 0 , NULL , NULL ,
+                  g_cclosure_marshal_VOID__VOID , G_TYPE_NONE , 0 );
+  }
+  g_signal_connect( G_OBJECT(button_ok) , "clicked" ,
+                    G_CALLBACK(i_configure_ev_bokcheck) , configwin );
   cw_hints.min_width = 480; cw_hints.min_height = -1;
   gtk_window_set_geometry_hints( GTK_WINDOW(configwin) , GTK_WIDGET(configwin) ,
                                  &cw_hints , GDK_HINT_MIN_SIZE );
@@ -178,13 +188,19 @@ void i_configure_gui( void )
   gtk_box_pack_start( GTK_BOX(configwin_vbox) , hseparator , FALSE , FALSE , 4 );
   hbuttonbox = gtk_hbutton_box_new();
   gtk_button_box_set_layout( GTK_BUTTON_BOX(hbuttonbox) , GTK_BUTTONBOX_END );
+  button_apply = gtk_button_new_from_stock( GTK_STOCK_APPLY );
+  gtk_container_add( GTK_CONTAINER(hbuttonbox) , button_apply );
   button_cancel = gtk_button_new_from_stock( GTK_STOCK_CANCEL );
   g_signal_connect_swapped( G_OBJECT(button_cancel) , "clicked" ,
                             G_CALLBACK(i_configure_ev_bcancel) , configwin );
   gtk_container_add( GTK_CONTAINER(hbuttonbox) , button_cancel );
   /* button_ok = gtk_button_new_from_stock( GTK_STOCK_OK ); created above */
-  g_signal_connect_swapped( G_OBJECT(button_ok) , "clicked" ,
-                            G_CALLBACK(i_configure_ev_bok) , configwin );
+  g_object_set_data( G_OBJECT(button_ok) , "bapply_pressed" , GUINT_TO_POINTER(0) );
+  g_object_set_data( G_OBJECT(button_apply) , "bok" , button_ok );
+  g_signal_connect( G_OBJECT(button_ok) , "ap-commit" ,
+                    G_CALLBACK(i_configure_ev_bok) , configwin );
+  g_signal_connect( G_OBJECT(button_apply) , "clicked" ,
+                    G_CALLBACK(i_configure_ev_bapply) , configwin );
   gtk_container_add( GTK_CONTAINER(hbuttonbox) , button_ok );
   gtk_box_pack_start( GTK_BOX(configwin_vbox) , hbuttonbox , FALSE , FALSE , 0 );
 
@@ -194,17 +210,26 @@ void i_configure_gui( void )
 
 void i_configure_ev_bcancel( gpointer configwin )
 {
-  i_configure_cfg_backend_free();
+  i_configure_cfg_backend_free(); /* free backend settings */
   gtk_widget_destroy(GTK_WIDGET(configwin));
 }
 
 
-void i_configure_ev_bok( gpointer configwin )
+void i_configure_ev_bapply( GtkWidget * button_apply , gpointer configwin )
+{
+  GtkWidget *button_ok = g_object_get_data( G_OBJECT(button_apply) , "bok" );
+  g_object_set_data( G_OBJECT(button_ok) , "bapply_pressed" , GUINT_TO_POINTER(1) );
+  i_configure_ev_bokcheck( button_ok , configwin );
+}
+
+
+void i_configure_ev_bokcheck( GtkWidget * button_ok , gpointer configwin )
 {
   if ( xmms_remote_is_playing(0) || xmms_remote_is_paused(0) )
   {
     /* we can't change settings while a song is being played */
     static GtkWidget * configwin_warnmsg = NULL;
+    g_object_set_data( G_OBJECT(button_ok) , "bapply_pressed" , GUINT_TO_POINTER(0) );
     if ( configwin_warnmsg != NULL )
     {
       gdk_window_raise( configwin_warnmsg->window );
@@ -213,7 +238,7 @@ void i_configure_ev_bok( gpointer configwin )
     {
       configwin_warnmsg = (GtkWidget*)i_message_gui( _("AMIDI-Plug message") ,
                                         _("Please stop the player before changing AMIDI-Plug settings.") ,
-                                        AMIDIPLUG_MESSAGE_WARN , configwin );
+                                        AMIDIPLUG_MESSAGE_WARN , configwin , FALSE );
       g_signal_connect( G_OBJECT(configwin_warnmsg) , "destroy" ,
                         G_CALLBACK(gtk_widget_destroyed) , &configwin_warnmsg );
       gtk_widget_show_all( configwin_warnmsg );
@@ -221,26 +246,42 @@ void i_configure_ev_bok( gpointer configwin )
   }
   else
   {
-    DEBUGMSG( "saving configuration...\n" );
-    i_configure_cfg_ap_save(); /* save amidiplug settings */
-    i_configure_cfg_backend_save(); /* save backend settings */
-    i_configure_cfg_backend_free(); /* free backend settings */
-    DEBUGMSG( "configuration saved\n" );
+    g_signal_emit_by_name( G_OBJECT(button_ok) , "ap-commit" ); /* call commit actions */
+  }
+}
 
-    /* check if a different backend has been selected */
-    if ( strcmp( amidiplug_cfg_ap.ap_seq_backend , backend.name ) )
-    {
-      DEBUGMSG( "a new backend has been selected, unloading previous and loading the new one\n" );
-      i_backend_unload(); /* unload previous backend */
-      i_backend_load( amidiplug_cfg_ap.ap_seq_backend ); /* load new backend */
-    }
-    else /* same backend, just reload updated configuration */
+
+void i_configure_ev_bok( GtkWidget * button_ok , gpointer configwin )
+{
+  DEBUGMSG( "saving configuration...\n" );
+  i_configure_cfg_ap_save(); /* save amidiplug settings */
+  i_configure_cfg_backend_save(); /* save backend settings */
+  DEBUGMSG( "configuration saved\n" );
+
+  /* check if a different backend has been selected */
+  if (( backend.name == NULL ) || ( strcmp( amidiplug_cfg_ap.ap_seq_backend , backend.name ) ))
+  {
+    DEBUGMSG( "a new backend has been selected, unloading previous and loading the new one\n" );
+    i_backend_unload(); /* unload previous backend */
+    i_backend_load( amidiplug_cfg_ap.ap_seq_backend ); /* load new backend */
+  }
+  else /* same backend, just reload updated configuration */
+  {
+    if ( backend.gmodule != NULL )
     {
       DEBUGMSG( "the selected backend is already loaded, so just perform backend cleanup and reinit\n" );
       backend.cleanup();
       backend.init();
     }
+  }
 
+  if ( GPOINTER_TO_UINT(g_object_get_data(G_OBJECT(button_ok),"bapply_pressed")) == 1 )
+  {
+    g_object_set_data( G_OBJECT(button_ok) , "bapply_pressed" , GUINT_TO_POINTER(0) );
+  }
+  else
+  {
+    i_configure_cfg_backend_free(); /* free backend settings */
     gtk_widget_destroy(GTK_WIDGET(configwin));
   }
 }
@@ -318,6 +359,8 @@ void i_configure_cfg_ap_read( void )
     /* amidi-plug defaults */
     amidiplug_cfg_ap.ap_seq_backend = g_strdup( "alsa" );
     amidiplug_cfg_ap.ap_opts_length_precalc = 0;
+    amidiplug_cfg_ap.ap_opts_lyrics_extract = 0;
+    amidiplug_cfg_ap.ap_opts_comments_extract = 0;
   }
   else
   {
@@ -325,6 +368,10 @@ void i_configure_cfg_ap_read( void )
                         &amidiplug_cfg_ap.ap_seq_backend , "alsa" );
     i_pcfg_read_integer( cfgfile , "general" , "ap_opts_length_precalc" ,
                          &amidiplug_cfg_ap.ap_opts_length_precalc , 0 );
+    i_pcfg_read_integer( cfgfile , "general" , "ap_opts_lyrics_extract" ,
+                         &amidiplug_cfg_ap.ap_opts_lyrics_extract , 0 );
+    i_pcfg_read_integer( cfgfile , "general" , "ap_opts_comments_extract" ,
+                         &amidiplug_cfg_ap.ap_opts_comments_extract , 0 );
     i_pcfg_free( cfgfile );
   }
 
@@ -343,8 +390,14 @@ void i_configure_cfg_ap_save( void )
     cfgfile = i_pcfg_new();
 
   /* save amidi-plug config information */
-  i_pcfg_write_string( cfgfile , "general" , "ap_seq_backend" , amidiplug_cfg_ap.ap_seq_backend );
-  i_pcfg_write_integer( cfgfile , "general" , "ap_opts_length_precalc" , amidiplug_cfg_ap.ap_opts_length_precalc );
+  i_pcfg_write_string( cfgfile , "general" , "ap_seq_backend" ,
+                       amidiplug_cfg_ap.ap_seq_backend );
+  i_pcfg_write_integer( cfgfile , "general" , "ap_opts_length_precalc" ,
+                        amidiplug_cfg_ap.ap_opts_length_precalc );
+  i_pcfg_write_integer( cfgfile , "general" , "ap_opts_lyrics_extract" ,
+                        amidiplug_cfg_ap.ap_opts_lyrics_extract );
+  i_pcfg_write_integer( cfgfile , "general" , "ap_opts_comments_extract" ,
+                        amidiplug_cfg_ap.ap_opts_comments_extract );
 
   i_pcfg_write_to_file( cfgfile , config_pathfilename );
   i_pcfg_free( cfgfile );

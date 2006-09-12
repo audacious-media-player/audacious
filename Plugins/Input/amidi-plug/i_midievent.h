@@ -31,6 +31,7 @@ struct midievent_stru {
     guchar d[3];			/* channel and data bytes */
     gint tempo;
     guint length;			/* length of sysex data */
+    gchar * metat;			/* meta-event text */
   } data;
   guchar sysex[0];
 };

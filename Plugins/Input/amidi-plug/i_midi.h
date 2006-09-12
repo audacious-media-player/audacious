@@ -214,6 +214,11 @@ enum snd_seq_event_type {
   /* reserved for user apps; event data type = #snd_seq_ev_ext_t */
   SND_SEQ_EVENT_USR_VAR4,
 
+  /* added to support meta-event - general purpose text */
+  SND_SEQ_EVENT_META_TEXT = 150,
+  /* added to support meta-event - lyrics */
+  SND_SEQ_EVENT_META_LYRIC,
+
   /* NOP; ignored in any case */
   SND_SEQ_EVENT_NONE = 255
 };

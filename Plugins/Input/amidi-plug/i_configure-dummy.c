@@ -310,15 +310,15 @@ void i_configure_gui_tab_dumm( GtkWidget * dumm_page_alignment ,
     }
 
     /* commit events */
-    g_signal_connect_swapped( G_OBJECT(commit_button) , "clicked" ,
+    g_signal_connect_swapped( G_OBJECT(commit_button) , "ap-commit" ,
                               G_CALLBACK(i_configure_ev_enablelog_commit) , midilogger_enablelog_option[0] );
-    g_signal_connect_swapped( G_OBJECT(commit_button) , "clicked" ,
+    g_signal_connect_swapped( G_OBJECT(commit_button) , "ap-commit" ,
                               G_CALLBACK(i_configure_ev_lfstyle_commit) , midilogger_logfile_option[0] );
-    g_signal_connect_swapped( G_OBJECT(commit_button) , "clicked" ,
+    g_signal_connect_swapped( G_OBJECT(commit_button) , "ap-commit" ,
                               G_CALLBACK(i_configure_ev_plspeed_commit) , plspeed_option[0] );
-    g_signal_connect_swapped( G_OBJECT(commit_button) , "clicked" ,
+    g_signal_connect_swapped( G_OBJECT(commit_button) , "ap-commit" ,
                               G_CALLBACK(i_configure_ev_logfname_commit) , midilogger_logfile_logfname_entry );
-    g_signal_connect_swapped( G_OBJECT(commit_button) , "clicked" ,
+    g_signal_connect_swapped( G_OBJECT(commit_button) , "ap-commit" ,
                               G_CALLBACK(i_configure_ev_logdir_commit) , midilogger_logfile_logdir_entry );
 
   }

@@ -50,6 +50,7 @@ enum
 };
 
 
+
 void i_configure_ev_portlv_changetoggle( GtkCellRendererToggle * rdtoggle ,
                                          gchar * path_str , gpointer data )
 {
@@ -342,7 +343,7 @@ void i_configure_gui_tab_alsa( GtkWidget * alsa_page_alignment ,
     gtk_container_add( GTK_CONTAINER(port_lv_sw) , port_lv );
     gtk_container_add( GTK_CONTAINER(port_lv_frame) , port_lv_sw );
     gtk_box_pack_start( GTK_BOX(content_vbox) , port_lv_frame , TRUE , TRUE , 0 );
-    g_signal_connect_swapped( G_OBJECT(commit_button) , "clicked" ,
+    g_signal_connect_swapped( G_OBJECT(commit_button) , "ap-commit" ,
                               G_CALLBACK(i_configure_ev_portlv_commit) , port_lv );
 
     /* MIXER CARD/CONTROL COMBOBOXES */
@@ -408,9 +409,9 @@ void i_configure_gui_tab_alsa( GtkWidget * alsa_page_alignment ,
     mixer_frame = gtk_frame_new( _("Mixer settings") );
     gtk_container_add( GTK_CONTAINER(mixer_frame) , mixer_table );
     gtk_box_pack_start( GTK_BOX(content_vbox) , mixer_frame , TRUE , TRUE , 0 );
-    g_signal_connect_swapped( G_OBJECT(commit_button) , "clicked" ,
+    g_signal_connect_swapped( G_OBJECT(commit_button) , "ap-commit" ,
                               G_CALLBACK(i_configure_ev_cardcmb_commit) , mixer_card_cmb );
-    g_signal_connect_swapped( G_OBJECT(commit_button) , "clicked" ,
+    g_signal_connect_swapped( G_OBJECT(commit_button) , "ap-commit" ,
                               G_CALLBACK(i_configure_ev_mixctlcmb_commit) , mixer_ctl_cmb );
 
     free_card_list( scards_h );

@@ -20,7 +20,6 @@
 
 #include "i_backend.h"
 
-
 gboolean i_str_has_pref_and_suff( const gchar *str , gchar *pref , gchar *suff )
 {
   if ( (g_str_has_prefix( str , pref )) &&
@@ -35,7 +34,7 @@ GSList * i_backend_list_lookup( void )
   GDir * backend_directory;
   GSList * backend_list = NULL;
 
-  backend_directory = g_dir_open( AMIDIPLUGDATADIR , 0 , NULL );
+  backend_directory = g_dir_open( AMIDIPLUGBACKENDDIR , 0 , NULL );
   if ( backend_directory != NULL )
   {
     const gchar * backend_directory_entry = g_dir_read_name( backend_directory );
@@ -46,7 +45,7 @@ GSList * i_backend_list_lookup( void )
       {
         GModule * module;
         gchar * (*getapmoduleinfo)( gchar ** , gchar ** , gchar ** , gint * );
-        gchar * module_pathfilename = g_strjoin( "" , AMIDIPLUGDATADIR , "/" ,
+        gchar * module_pathfilename = g_strjoin( "" , AMIDIPLUGBACKENDDIR , "/" ,
                                                  backend_directory_entry , NULL );
         /* seems to be a backend for amidi-plug , try to load it */
         module = g_module_open( module_pathfilename , 0 );
@@ -79,7 +78,7 @@ GSList * i_backend_list_lookup( void )
     g_dir_close( backend_directory );
   }
   else
-    g_warning( "Unable to open the backend directory %s\n" , AMIDIPLUGDATADIR );
+    g_warning( "Unable to open the backend directory %s\n" , AMIDIPLUGBACKENDDIR );
 
   return backend_list;
 }
@@ -103,7 +102,7 @@ void i_backend_list_free( GSList * backend_list )
 
 gint i_backend_load( gchar * module_name )
 {
-  gchar * module_pathfilename = g_strjoin( "" , AMIDIPLUGDATADIR , "/ap-" , module_name , ".so" , NULL );
+  gchar * module_pathfilename = g_strjoin( "" , AMIDIPLUGBACKENDDIR , "/ap-" , module_name , ".so" , NULL );
   DEBUGMSG( "loading backend '%s'\n" , module_pathfilename );
   backend.gmodule = g_module_open( module_pathfilename , 0 );
 
@@ -147,6 +146,7 @@ gint i_backend_load( gchar * module_name )
   }
   else
   {
+    backend.name = NULL;
     g_warning( "unable to load backend '%s'\n" , module_pathfilename );
     g_free( module_pathfilename );
     return 0;

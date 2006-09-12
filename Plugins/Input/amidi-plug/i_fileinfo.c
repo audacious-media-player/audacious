@@ -21,6 +21,7 @@
 
 #include <gtk/gtk.h>
 #include "i_fileinfo.h"
+#include "i_configure.h"
 /* this is needed to retrieve information */
 #include "i_midi.h"
 /* icon from gnome-mime-audio-midi.png of the GNOME ICON SET */
@@ -59,12 +60,62 @@ void i_fileinfo_table_add_entry( gchar * field_text , gchar * value_text ,
 }
 
 
+/* COMMENT: this will also reset current position in each track! */
+void i_fileinfo_text_fill( midifile_t * mf , GtkTextBuffer * text_tb, GtkTextBuffer * lyrics_tb )
+{
+  gint l = 0;
+  /* initialize current position in each track */
+  for (l = 0; l < mf->num_tracks; ++l)
+    mf->tracks[l].current_event = mf->tracks[l].first_event;
+
+  for (;;)
+  {
+    midievent_t * event = NULL;
+    midifile_track_t * event_track = NULL;
+    gint i, min_tick = mf->max_tick + 1;
+
+    /* search next event */
+    for ( i = 0 ; i < mf->num_tracks ; ++i )
+    {
+      midifile_track_t * track = &mf->tracks[i];
+      midievent_t * e2 = track->current_event;
+      if (( e2 ) && ( e2->tick < min_tick ))
+      {
+        min_tick = e2->tick;
+        event = e2;
+        event_track = track;
+      }
+    }
+
+    if (!event)
+      break; /* end of song reached */
+
+    /* advance pointer to next event */
+    event_track->current_event = event->next;
+
+    switch ( event->type )
+    {
+      case SND_SEQ_EVENT_META_TEXT:
+        gtk_text_buffer_insert_at_cursor( text_tb , event->data.metat , strlen(event->data.metat) );
+        break;
+      case SND_SEQ_EVENT_META_LYRIC:
+        gtk_text_buffer_insert_at_cursor( lyrics_tb , event->data.metat , strlen(event->data.metat) );
+        break;
+    }
+  }
+}
+
+
 void i_fileinfo_gui( gchar * filename )
 {
   static GtkWidget *fileinfowin = NULL;
-  GtkWidget *fileinfowin_vbox;
-  GtkWidget *title_hbox , *title_icon_image , *title_name_f_label , *title_name_v_entry;
-  GtkWidget *info_frame , *info_table;
+  GtkWidget *fileinfowin_vbox, *fileinfowin_columns_hbox;
+  GtkWidget *midiinfoboxes_vbox, *miditextboxes_vbox, *miditextboxes_paned;
+  GtkWidget *title_hbox, *title_icon_image, *title_name_f_label, *title_name_v_entry;
+  GtkWidget *info_frame, *info_frame_tl, *info_table;
+  GtkWidget *text_frame, *text_frame_tl, *text_tv, *text_tv_sw;
+  GtkWidget *lyrics_frame, *lyrics_tv, *lyrics_tv_sw;
+  GtkTextBuffer *text_tb, *lyrics_tb;
   GtkWidget *footer_hbbox, *footer_bclose;
   GdkPixbuf *title_icon_pixbuf;
   PangoAttrList *pangoattrlist;
@@ -89,7 +140,6 @@ void i_fileinfo_gui( gchar * filename )
 
   fileinfowin = gtk_window_new( GTK_WINDOW_TOPLEVEL );
   gtk_window_set_type_hint( GTK_WINDOW(fileinfowin), GDK_WINDOW_TYPE_HINT_DIALOG );
-  gtk_window_set_resizable( GTK_WINDOW(fileinfowin) , FALSE );
   gtk_window_set_position( GTK_WINDOW(fileinfowin) , GTK_WIN_POS_CENTER );
   g_signal_connect( G_OBJECT(fileinfowin) , "destroy" , G_CALLBACK(i_fileinfo_ev_destroy) , mf );
   g_signal_connect( G_OBJECT(fileinfowin) , "destroy" , G_CALLBACK(gtk_widget_destroyed) , &fileinfowin );
@@ -125,10 +175,26 @@ void i_fileinfo_gui( gchar * filename )
   gtk_widget_set_size_request( GTK_WIDGET(title_name_v_entry) , 200 , -1 );
   gtk_box_pack_start(GTK_BOX(title_hbox) , title_name_v_entry , TRUE , TRUE , 0 );
 
+  fileinfowin_columns_hbox = gtk_hbox_new( FALSE , 2 );
+  gtk_box_pack_start( GTK_BOX(fileinfowin_vbox) , fileinfowin_columns_hbox , TRUE , TRUE , 0 );
+
   /*********************
    *** MIDI INFO BOX ***/
-  info_frame = gtk_frame_new( _(" MIDI Info ") );
-  gtk_box_pack_start( GTK_BOX(fileinfowin_vbox) , info_frame , TRUE , TRUE , 0 );
+  midiinfoboxes_vbox = gtk_vbox_new( FALSE , 2 );
+  /* pick the entire space if both comments and lyrics boxes are not displayed,
+     pick only required space if at least one of them is displayed */
+  if (( amidiplug_cfg_ap.ap_opts_comments_extract == 0 ) &&
+      ( amidiplug_cfg_ap.ap_opts_lyrics_extract == 0 ))
+    gtk_box_pack_start( GTK_BOX(fileinfowin_columns_hbox) , midiinfoboxes_vbox , TRUE , TRUE , 0 );
+  else
+    gtk_box_pack_start( GTK_BOX(fileinfowin_columns_hbox) , midiinfoboxes_vbox , FALSE , FALSE , 0 );
+
+  info_frame_tl = gtk_label_new( "" );
+  gtk_label_set_markup( GTK_LABEL(info_frame_tl) , _("<span size=\"smaller\"> MIDI Info </span>") );
+  gtk_box_pack_start( GTK_BOX(midiinfoboxes_vbox) , info_frame_tl , FALSE , FALSE , 0 );
+
+  info_frame = gtk_frame_new( NULL );
+  gtk_box_pack_start( GTK_BOX(midiinfoboxes_vbox) , info_frame , TRUE , TRUE , 0 );
   info_table = gtk_table_new( 6 , 2 , FALSE );
   gtk_container_set_border_width( GTK_CONTAINER(info_table) , 5 );
   gtk_container_add( GTK_CONTAINER(info_frame) , info_table );
@@ -160,6 +226,101 @@ void i_fileinfo_gui( gchar * filename )
   i_fileinfo_table_add_entry( _("Time Div:") , value_gstring->str , info_table , 5 , pangoattrlist );
 
   g_string_free( value_gstring , TRUE );
+
+  /**********************************
+   *** MIDI COMMENTS/LYRICS BOXES ***/
+  miditextboxes_vbox = gtk_vbox_new( FALSE , 2 );
+  gtk_box_pack_start( GTK_BOX(fileinfowin_columns_hbox) , miditextboxes_vbox , TRUE , TRUE , 0 );
+
+  text_frame_tl = gtk_label_new( "" );
+  gtk_label_set_markup( GTK_LABEL(text_frame_tl) ,
+                        _("<span size=\"smaller\"> MIDI Comments and Lyrics </span>") );
+  gtk_box_pack_start( GTK_BOX(miditextboxes_vbox) , text_frame_tl , FALSE , FALSE , 0 );
+
+  miditextboxes_paned = gtk_vpaned_new();
+  gtk_box_pack_start( GTK_BOX(miditextboxes_vbox) , miditextboxes_paned , TRUE , TRUE , 0 );
+
+  text_frame = gtk_frame_new( NULL );
+  gtk_paned_pack1( GTK_PANED(miditextboxes_paned) , text_frame , TRUE , TRUE );
+  text_tv = gtk_text_view_new();
+  gtk_text_view_set_editable( GTK_TEXT_VIEW(text_tv) , FALSE );
+  gtk_text_view_set_cursor_visible( GTK_TEXT_VIEW(text_tv) , FALSE );
+  gtk_text_view_set_wrap_mode( GTK_TEXT_VIEW(text_tv) , GTK_WRAP_WORD );
+  gtk_text_view_set_right_margin( GTK_TEXT_VIEW(text_tv) , 4 );
+  gtk_text_view_set_left_margin( GTK_TEXT_VIEW(text_tv) , 4 );
+  gtk_widget_set_size_request( text_tv , 300 , 113 );
+  text_tv_sw = gtk_scrolled_window_new( NULL , NULL );
+  gtk_scrolled_window_set_policy( GTK_SCROLLED_WINDOW(text_tv_sw) ,
+                                  GTK_POLICY_AUTOMATIC , GTK_POLICY_ALWAYS );
+  gtk_container_add( GTK_CONTAINER(text_frame) , text_tv_sw );
+  gtk_container_add( GTK_CONTAINER(text_tv_sw) , text_tv );
+
+  lyrics_frame = gtk_frame_new( NULL );
+  gtk_paned_pack2( GTK_PANED(miditextboxes_paned) , lyrics_frame , TRUE , TRUE );
+  lyrics_tv = gtk_text_view_new();
+  gtk_text_view_set_editable( GTK_TEXT_VIEW(lyrics_tv) , FALSE );
+  gtk_text_view_set_cursor_visible( GTK_TEXT_VIEW(lyrics_tv) , FALSE );
+  gtk_text_view_set_wrap_mode( GTK_TEXT_VIEW(lyrics_tv) , GTK_WRAP_WORD );
+  gtk_text_view_set_right_margin( GTK_TEXT_VIEW(lyrics_tv) , 4 );
+  gtk_text_view_set_left_margin( GTK_TEXT_VIEW(lyrics_tv) , 4 );
+  gtk_widget_set_size_request( lyrics_tv , 300 , 113 );
+  lyrics_tv_sw = gtk_scrolled_window_new( NULL , NULL );
+  gtk_scrolled_window_set_policy( GTK_SCROLLED_WINDOW(lyrics_tv_sw) ,
+                                  GTK_POLICY_AUTOMATIC , GTK_POLICY_ALWAYS );
+  gtk_container_add( GTK_CONTAINER(lyrics_frame) , lyrics_tv_sw );
+  gtk_container_add( GTK_CONTAINER(lyrics_tv_sw) , lyrics_tv );
+
+  text_tb = gtk_text_view_get_buffer( GTK_TEXT_VIEW(text_tv) );
+  lyrics_tb = gtk_text_view_get_buffer( GTK_TEXT_VIEW(lyrics_tv) );
+
+  /* call the buffer fill routine if at least one between comments and lyrics is enabled */
+  if (( amidiplug_cfg_ap.ap_opts_comments_extract > 0 ) ||
+      ( amidiplug_cfg_ap.ap_opts_lyrics_extract > 0 ))
+    i_fileinfo_text_fill( mf , text_tb , lyrics_tb );
+
+  if (( amidiplug_cfg_ap.ap_opts_comments_extract > 0 ) &&
+      ( gtk_text_buffer_get_char_count( text_tb ) == 0 ))
+  {
+    GtkTextIter start, end;
+    GtkTextTag *tag = gtk_text_buffer_create_tag( text_tb , "italicstyle" ,
+                                                  "style" , PANGO_STYLE_ITALIC , NULL );
+    /*gtk_text_view_set_justification( GTK_TEXT_VIEW(text_tv) , GTK_JUSTIFY_CENTER );*/
+    gtk_text_buffer_set_text( text_tb , _("* no comments available in this MIDI file *") , -1 );
+    gtk_text_buffer_get_iter_at_offset( text_tb , &start , 0 );
+    gtk_text_buffer_get_iter_at_offset( text_tb , &end , -1 );
+    gtk_text_buffer_apply_tag( text_tb , tag , &start , &end );
+  }
+
+  if (( amidiplug_cfg_ap.ap_opts_lyrics_extract > 0 ) &&
+      ( gtk_text_buffer_get_char_count( lyrics_tb ) == 0 ))
+  {
+    GtkTextIter start, end;
+    GtkTextTag *tag = gtk_text_buffer_create_tag( lyrics_tb , "italicstyle" ,
+                                                  "style" , PANGO_STYLE_ITALIC , NULL );
+    /*gtk_text_view_set_justification( GTK_TEXT_VIEW(lyrics_tv) , GTK_JUSTIFY_CENTER );*/
+    gtk_text_buffer_set_text( lyrics_tb , _("* no lyrics available in this MIDI file *") , -1 );
+    gtk_text_buffer_get_iter_at_offset( lyrics_tb , &start , 0 );
+    gtk_text_buffer_get_iter_at_offset( lyrics_tb , &end , -1 );
+    gtk_text_buffer_apply_tag( lyrics_tb , tag , &start , &end );
+  }
+
+  /* hide boxes for disabled options (comments and/or lyrics) */
+  if (( amidiplug_cfg_ap.ap_opts_comments_extract == 0 ) &&
+      ( amidiplug_cfg_ap.ap_opts_lyrics_extract == 0 ))
+  {
+    gtk_widget_set_no_show_all( miditextboxes_vbox , TRUE );
+    gtk_widget_hide( miditextboxes_vbox );
+  }
+  else if ( amidiplug_cfg_ap.ap_opts_comments_extract == 0 )
+  {
+    gtk_widget_set_no_show_all( text_frame , TRUE );
+    gtk_widget_hide( text_frame );
+  }
+  else if ( amidiplug_cfg_ap.ap_opts_lyrics_extract == 0 )
+  {
+    gtk_widget_set_no_show_all( lyrics_frame , TRUE );
+    gtk_widget_hide( lyrics_frame );
+  }
 
   /**************
    *** FOOTER ***/

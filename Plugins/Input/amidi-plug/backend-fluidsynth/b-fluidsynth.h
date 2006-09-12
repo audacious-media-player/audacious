@@ -33,7 +33,7 @@ typedef struct
   fluid_settings_t * settings;
   fluid_synth_t * synth;
 
-  gint soundfont_id;
+  GArray *soundfont_ids;
 
   gint ppq;
   gdouble cur_microsec_per_tick;

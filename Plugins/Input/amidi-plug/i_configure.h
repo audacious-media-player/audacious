@@ -28,6 +28,8 @@ typedef struct
 {
   gchar *	ap_seq_backend;
   gint		ap_opts_length_precalc;
+  gint		ap_opts_comments_extract;
+  gint		ap_opts_lyrics_extract;
 }
 amidiplug_cfg_ap_t;
 

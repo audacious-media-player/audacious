@@ -32,7 +32,7 @@ gint backend_info_get( gchar ** name , gchar ** longname , gchar ** desc , gint 
   if ( name != NULL )
     *name = g_strdup( "fluidsynth" );
   if ( longname != NULL )
-    *longname = g_strdup( "FluidSynth Backend " AMIDIPLUG_VERSION );
+    *longname = g_strdup( "FluidSynth Backend " VERSION );
   if ( desc != NULL )
     *desc = g_strdup( _("This backend produces audio by sending MIDI events "
                         "to FluidSynth, a real-time software synthesizer based "
@@ -51,7 +51,7 @@ gint backend_init( void )
   /* read configuration options */
   i_cfg_read();
 
-  sc.soundfont_id = -1;
+  sc.soundfont_ids = g_array_new( FALSE , FALSE , sizeof(gint) );
   sc.sample_rate = amidiplug_cfg_fsyn.fsyn_synth_samplerate;
   sc.settings = new_fluid_settings();
 
@@ -81,8 +81,14 @@ gint backend_init( void )
 
 gint backend_cleanup( void )
 {
-  if ( sc.soundfont_id != -1 )
-    fluid_synth_sfunload( sc.synth , sc.soundfont_id , 0 );
+  if ( sc.soundfont_ids->len > 0 )
+  {
+    /* unload soundfonts */
+    gint i = 0;
+    for ( i = 0 ; i < sc.soundfont_ids->len ; i++ )
+      fluid_synth_sfunload( sc.synth , g_array_index( sc.soundfont_ids , gint , i ) , 0 );
+  }
+  g_array_free( sc.soundfont_ids , TRUE );
   delete_fluid_synth( sc.synth );
   delete_fluid_settings( sc.settings );
 
@@ -102,7 +108,7 @@ gint sequencer_get_port_count( void )
 gint sequencer_start( gchar * midi_fname )
 {
   /* soundfont loader, check if we should load soundfont on first midifile play */
-  if (( amidiplug_cfg_fsyn.fsyn_soundfont_load == 1 ) && (sc.soundfont_id == -1 ))
+  if (( amidiplug_cfg_fsyn.fsyn_soundfont_load == 1 ) && ( sc.soundfont_ids->len == 0 ))
     i_soundfont_load();
 
   return 1; /* success */
@@ -349,19 +355,29 @@ void i_soundfont_load( void )
 {
   if ( strcmp( amidiplug_cfg_fsyn.fsyn_soundfont_file , "" ) )
   {
-    DEBUGMSG( "loading soundfont %s\n" , amidiplug_cfg_fsyn.fsyn_soundfont_file );
-    sc.soundfont_id = fluid_synth_sfload( sc.synth , amidiplug_cfg_fsyn.fsyn_soundfont_file , 0 );
-    if ( sc.soundfont_id == -1 )
-      g_warning( "unable to load SoundFont file %s\n" , amidiplug_cfg_fsyn.fsyn_soundfont_file );
-#ifdef DEBUG
-    else
-      DEBUGMSG( "soundfont %s successfully loaded\n" , amidiplug_cfg_fsyn.fsyn_soundfont_file );
-#endif
+    gchar **sffiles = g_strsplit( amidiplug_cfg_fsyn.fsyn_soundfont_file , ";" , 0 );
+    gint i = 0;
+    while ( sffiles[i] != NULL )
+    {
+      gint sf_id = 0;
+      DEBUGMSG( "loading soundfont %s\n" , sffiles[i] );
+      sf_id = fluid_synth_sfload( sc.synth , sffiles[i] , 0 );
+      if ( sf_id == -1 )
+      {
+        g_warning( "unable to load SoundFont file %s\n" , sffiles[i] );
+      }
+      else
+      {
+        DEBUGMSG( "soundfont %s successfully loaded\n" , sffiles[i] );
+        g_array_append_val( sc.soundfont_ids , sf_id );
+      }
+      i++;
+    }
+    g_strfreev( sffiles );
   }
   else
   {
     g_warning( "FluidSynth backend was selected, but no SoundFont has been specified\n" );
-    sc.soundfont_id = -1;
   }
 }
 

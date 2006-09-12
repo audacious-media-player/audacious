@@ -107,7 +107,7 @@ void i_about_gui( void )
 
 
 gpointer i_message_gui( gchar * title , gchar * message ,
-                        gint type , gpointer parent_win )
+                        gint type , gpointer parent_win , gboolean show_win )
 {
   GtkWidget *win;
   GtkMessageType mtype = GTK_MESSAGE_INFO;
@@ -130,6 +130,9 @@ gpointer i_message_gui( gchar * title , gchar * message ,
 
   gtk_window_set_title( GTK_WINDOW(win) , title );
   g_signal_connect_swapped( G_OBJECT(win) , "response" , G_CALLBACK(gtk_widget_destroy) , win );
+ 
+  if ( show_win == TRUE )
+    gtk_widget_show_all( win );
 
   return win;
 }

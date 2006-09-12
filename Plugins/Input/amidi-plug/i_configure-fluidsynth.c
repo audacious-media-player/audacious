@@ -22,6 +22,15 @@
 #include "i_configure-fluidsynth.h"
 #include "backend-fluidsynth/b-fluidsynth-config.h"
 #include "backend-fluidsynth/backend-fluidsynth-icon.xpm"
+#include <glib/gstdio.h>
+
+
+enum
+{
+  LISTSFONT_FILENAME_COLUMN = 0,
+  LISTSFONT_FILESIZE_COLUMN,
+  LISTSFONT_N_COLUMNS
+};
 
 
 void i_configure_ev_toggle_default( GtkToggleButton *togglebutton , gpointer hbox )
@@ -64,11 +73,116 @@ void i_configure_ev_buffertuner_valuechanged( GtkRange *buffertuner_range )
 }
 
 
-void i_configure_ev_sffile_commit( gpointer sffile_entry )
+void i_configure_ev_sflist_add( gpointer sfont_lv )
+{
+  GtkWidget *parent_window = gtk_widget_get_toplevel( sfont_lv );
+  if ( GTK_WIDGET_TOPLEVEL(parent_window) )
+  {
+    GtkTreeSelection *listsel = gtk_tree_view_get_selection( GTK_TREE_VIEW(sfont_lv) );
+    GtkTreeIter itersel, iterapp;
+    GtkWidget *browse_dialog = gtk_file_chooser_dialog_new( _("AMIDI-Plug - select SoundFont file") ,
+                                                            GTK_WINDOW(parent_window) ,
+                                                            GTK_FILE_CHOOSER_ACTION_OPEN ,
+                                                            GTK_STOCK_CANCEL , GTK_RESPONSE_CANCEL ,
+                                                            GTK_STOCK_OPEN , GTK_RESPONSE_ACCEPT , NULL );
+    if ( gtk_tree_selection_get_selected( listsel , NULL , &itersel ) )
+    {
+      gchar *selfilename = NULL, *selfiledir = NULL;
+      GtkTreeModel *store = gtk_tree_view_get_model( GTK_TREE_VIEW(sfont_lv) );
+      gtk_tree_model_get( GTK_TREE_MODEL(store) , &itersel , LISTSFONT_FILENAME_COLUMN , &selfilename , -1 );
+      selfiledir = g_path_get_dirname( selfilename );
+      gtk_file_chooser_set_current_folder( GTK_FILE_CHOOSER(browse_dialog) , selfiledir );
+      g_free( selfiledir ); g_free( selfilename );
+    }
+    if ( gtk_dialog_run(GTK_DIALOG(browse_dialog)) == GTK_RESPONSE_ACCEPT )
+    {
+      struct stat finfo;
+      GtkTreeModel *store = gtk_tree_view_get_model( GTK_TREE_VIEW(sfont_lv) );
+      gchar *filename = gtk_file_chooser_get_filename( GTK_FILE_CHOOSER(browse_dialog) );
+      gint filesize = -1;
+      if ( g_stat( filename , &finfo ) == 0 )
+        filesize = finfo.st_size;
+      gtk_list_store_append( GTK_LIST_STORE(store) , &iterapp );
+      gtk_list_store_set( GTK_LIST_STORE(store) , &iterapp ,
+                          LISTSFONT_FILENAME_COLUMN , filename ,
+                          LISTSFONT_FILESIZE_COLUMN , filesize , -1 );
+      DEBUGMSG( "selected file: %s\n" , filename );
+      g_free( filename );
+    }
+    gtk_widget_destroy( browse_dialog );
+  }
+}
+
+
+void i_configure_ev_sflist_rem( gpointer sfont_lv )
+{
+  GtkTreeModel *store;
+  GtkTreeIter iter;
+  GtkTreeSelection *listsel = gtk_tree_view_get_selection( GTK_TREE_VIEW(sfont_lv) );
+  if ( gtk_tree_selection_get_selected( listsel , &store , &iter ) )
+    gtk_list_store_remove( GTK_LIST_STORE(store) , &iter );
+}
+
+
+void i_configure_ev_sflist_swap( GtkWidget * button , gpointer sfont_lv )
+{
+  GtkTreeModel *store;
+  GtkTreeIter iter;
+  GtkTreeSelection *listsel = gtk_tree_view_get_selection( GTK_TREE_VIEW(sfont_lv) );
+
+  if ( gtk_tree_selection_get_selected( listsel , &store , &iter ) )
+  {
+    guint swapdire = GPOINTER_TO_UINT(g_object_get_data( G_OBJECT(button) , "swapdire" ));
+    if ( swapdire == 0 ) /* move up */
+    {
+      GtkTreePath *treepath = gtk_tree_model_get_path( store, &iter );
+      if ( gtk_tree_path_prev( treepath ) )
+      {
+         GtkTreeIter iter_prev;
+         if ( gtk_tree_model_get_iter( store , &iter_prev , treepath ) )
+           gtk_list_store_swap( GTK_LIST_STORE(store) , &iter , &iter_prev );
+      }
+      gtk_tree_path_free( treepath );
+    }
+    else /* move down */
+    {
+      GtkTreeIter iter_prev = iter;
+      if ( gtk_tree_model_iter_next( store , &iter ) )
+        gtk_list_store_swap( GTK_LIST_STORE(store) , &iter , &iter_prev );
+    }
+  }
+}
+
+
+void i_configure_ev_sflist_commit( gpointer sfont_lv )
 {
   amidiplug_cfg_fsyn_t * fsyncfg = amidiplug_cfg_backend->fsyn;
+  GtkTreeIter iter;
+  GtkTreeModel *store = gtk_tree_view_get_model( GTK_TREE_VIEW(sfont_lv) );
+  GString *sflist_string = g_string_new( "" );
+
+  if ( gtk_tree_model_get_iter_first( GTK_TREE_MODEL(store) , &iter ) == TRUE )
+  {
+    gboolean iter_is_valid = FALSE;
+    do
+    {
+      gchar *fname;
+      gtk_tree_model_get( GTK_TREE_MODEL(store) , &iter ,
+                          LISTSFONT_FILENAME_COLUMN , &fname , -1 );
+      g_string_prepend_c( sflist_string , ';' );
+      g_string_prepend( sflist_string , fname );
+      g_free( fname );
+      iter_is_valid = gtk_tree_model_iter_next( GTK_TREE_MODEL(store) , &iter );
+    }
+    while ( iter_is_valid == TRUE );
+  }
+
+  if ( sflist_string->len > 0 )
+    g_string_truncate( sflist_string , sflist_string->len - 1 );
+
   g_free( fsyncfg->fsyn_soundfont_file ); /* free previous */
-  fsyncfg->fsyn_soundfont_file = g_strdup( gtk_entry_get_text(GTK_ENTRY(sffile_entry)) );
+  fsyncfg->fsyn_soundfont_file = g_strdup( sflist_string->str );
+  g_string_free( sflist_string , TRUE );
 }
 
 
@@ -266,8 +380,14 @@ void i_configure_gui_tab_fsyn( GtkWidget * fsyn_page_alignment ,
   if ( fsyn_module_ok )
   {
     GtkWidget *soundfont_frame, *soundfont_vbox;
-    GtkWidget *soundfont_file_label, *soundfont_file_entry, *soundfont_file_bbutton, *soundfont_file_hbox;
-    GtkWidget *soundfont_load_hsep, *soundfont_load_vbox, *soundfont_load_option[2];
+    GtkListStore *soundfont_file_store;
+    GtkCellRenderer *soundfont_file_lv_text_rndr;
+    GtkTreeViewColumn *soundfont_file_lv_fname_col, *soundfont_file_lv_fsize_col;
+    GtkWidget *soundfont_file_hbox, *soundfont_file_lv, *soundfont_file_lv_sw, *soundfont_file_lv_frame;
+    GtkTreeSelection *soundfont_file_lv_sel;
+    GtkWidget *soundfont_file_bbox_vbox, *soundfont_file_bbox_addbt, *soundfont_file_bbox_rembt;
+    GtkWidget *soundfont_file_bbox_mvupbt, *soundfont_file_bbox_mvdownbt;
+    GtkWidget *soundfont_load_hsep, *soundfont_load_hbox, *soundfont_load_option[2];
     GtkWidget *synth_frame, *synth_hbox, *synth_leftcol_vbox, *synth_rightcol_vbox;
     GtkWidget *synth_samplerate_frame, *synth_samplerate_vbox, *synth_samplerate_option[4];
     GtkWidget *synth_samplerate_optionhbox, *synth_samplerate_optionentry, *synth_samplerate_optionlabel;
@@ -297,38 +417,102 @@ void i_configure_gui_tab_fsyn( GtkWidget * fsyn_page_alignment ,
     soundfont_vbox = gtk_vbox_new( FALSE , 2 );
     gtk_container_set_border_width( GTK_CONTAINER(soundfont_vbox), 4 );
     gtk_container_add( GTK_CONTAINER(soundfont_frame) , soundfont_vbox );
-    /* soundfont settings - file */
+    /* soundfont settings - soundfont files - listview */
+    soundfont_file_store = gtk_list_store_new( LISTSFONT_N_COLUMNS, G_TYPE_STRING , G_TYPE_INT );
+    if ( strlen(fsyncfg->fsyn_soundfont_file) > 0 )
+    {
+      /* fill soundfont list with fsyn_soundfont_file information */
+      gchar **sffiles = g_strsplit( fsyncfg->fsyn_soundfont_file , ";" , 0 );
+      GtkTreeIter iter;
+      gint i = 0;
+      while ( sffiles[i] != NULL )
+      {
+        gint filesize = -1;
+        struct stat finfo;
+        if ( g_stat( sffiles[i] , &finfo ) == 0 )
+          filesize = finfo.st_size;
+        gtk_list_store_prepend( GTK_LIST_STORE(soundfont_file_store) , &iter );
+        gtk_list_store_set( GTK_LIST_STORE(soundfont_file_store) , &iter ,
+                            LISTSFONT_FILENAME_COLUMN , sffiles[i] ,
+                            LISTSFONT_FILESIZE_COLUMN , filesize , -1 );
+        i++;
+      }
+      g_strfreev( sffiles );
+    }
     soundfont_file_hbox = gtk_hbox_new( FALSE , 2 );
-    soundfont_file_label = gtk_label_new( _("SoundFont filename:") );
-    soundfont_file_entry = gtk_entry_new();
-    g_object_set_data( G_OBJECT(soundfont_file_entry) , "fc-act" ,
-                       GINT_TO_POINTER(GTK_FILE_CHOOSER_ACTION_OPEN) );
-    gtk_entry_set_text( GTK_ENTRY(soundfont_file_entry) , fsyncfg->fsyn_soundfont_file );
-    soundfont_file_bbutton = gtk_button_new_with_label( _("browse") );
-    g_signal_connect_swapped( G_OBJECT(soundfont_file_bbutton) , "clicked" ,
-                              G_CALLBACK(i_configure_ev_browse_for_entry) , soundfont_file_entry );
-    gtk_box_pack_start( GTK_BOX(soundfont_file_hbox) , soundfont_file_label , FALSE , FALSE , 0 );
-    gtk_box_pack_start( GTK_BOX(soundfont_file_hbox) , soundfont_file_entry , TRUE , TRUE , 0 );
-    gtk_box_pack_start( GTK_BOX(soundfont_file_hbox) , soundfont_file_bbutton , FALSE , FALSE , 0 );
+    soundfont_file_lv = gtk_tree_view_new_with_model( GTK_TREE_MODEL(soundfont_file_store) );
+    gtk_tree_view_set_rules_hint( GTK_TREE_VIEW(soundfont_file_lv), TRUE );
+    g_object_unref( soundfont_file_store );
+    soundfont_file_lv_text_rndr = gtk_cell_renderer_text_new();
+    soundfont_file_lv_fname_col = gtk_tree_view_column_new_with_attributes(
+                                    _("Filename") , soundfont_file_lv_text_rndr , "text" ,
+                                    LISTSFONT_FILENAME_COLUMN, NULL );
+    gtk_tree_view_column_set_expand( GTK_TREE_VIEW_COLUMN(soundfont_file_lv_fname_col) , TRUE );
+    soundfont_file_lv_fsize_col = gtk_tree_view_column_new_with_attributes(
+                                    _("Size (bytes)") , soundfont_file_lv_text_rndr , "text" ,
+                                    LISTSFONT_FILESIZE_COLUMN, NULL );
+    gtk_tree_view_column_set_expand( GTK_TREE_VIEW_COLUMN(soundfont_file_lv_fsize_col) , FALSE );
+    gtk_tree_view_append_column( GTK_TREE_VIEW(soundfont_file_lv), soundfont_file_lv_fname_col );
+    gtk_tree_view_append_column( GTK_TREE_VIEW(soundfont_file_lv), soundfont_file_lv_fsize_col );
+    soundfont_file_lv_sel = gtk_tree_view_get_selection( GTK_TREE_VIEW(soundfont_file_lv) );
+    gtk_tree_selection_set_mode( GTK_TREE_SELECTION(soundfont_file_lv_sel) , GTK_SELECTION_SINGLE );
+    soundfont_file_lv_sw = gtk_scrolled_window_new( NULL , NULL );
+    gtk_scrolled_window_set_policy( GTK_SCROLLED_WINDOW(soundfont_file_lv_sw) ,
+                                    GTK_POLICY_NEVER , GTK_POLICY_ALWAYS );
+    soundfont_file_lv_frame = gtk_frame_new( NULL );
+    gtk_container_add( GTK_CONTAINER(soundfont_file_lv_sw) , soundfont_file_lv );
+    gtk_container_add( GTK_CONTAINER(soundfont_file_lv_frame) , soundfont_file_lv_sw );
+    /* soundfont settings - soundfont files - buttonbox */
+    soundfont_file_bbox_vbox = gtk_vbox_new( TRUE , 0 );
+    soundfont_file_bbox_addbt = gtk_button_new();
+    gtk_button_set_image( GTK_BUTTON(soundfont_file_bbox_addbt) ,
+                          gtk_image_new_from_stock( GTK_STOCK_ADD , GTK_ICON_SIZE_MENU ) );
+    g_signal_connect_swapped( G_OBJECT(soundfont_file_bbox_addbt) , "clicked" ,
+                              G_CALLBACK(i_configure_ev_sflist_add) , soundfont_file_lv );
+    gtk_box_pack_start( GTK_BOX(soundfont_file_bbox_vbox) , soundfont_file_bbox_addbt , FALSE , FALSE , 0 );
+    soundfont_file_bbox_rembt = gtk_button_new();
+    gtk_button_set_image( GTK_BUTTON(soundfont_file_bbox_rembt) ,
+                          gtk_image_new_from_stock( GTK_STOCK_REMOVE , GTK_ICON_SIZE_MENU ) );
+    g_signal_connect_swapped( G_OBJECT(soundfont_file_bbox_rembt) , "clicked" ,
+                              G_CALLBACK(i_configure_ev_sflist_rem) , soundfont_file_lv );
+    gtk_box_pack_start( GTK_BOX(soundfont_file_bbox_vbox) , soundfont_file_bbox_rembt , FALSE , FALSE , 0 );
+    soundfont_file_bbox_mvupbt = gtk_button_new();
+    gtk_button_set_image( GTK_BUTTON(soundfont_file_bbox_mvupbt) ,
+                          gtk_image_new_from_stock( GTK_STOCK_GO_UP , GTK_ICON_SIZE_MENU ) );
+    g_object_set_data( G_OBJECT(soundfont_file_bbox_mvupbt) , "swapdire" , GUINT_TO_POINTER(0) );
+    g_signal_connect( G_OBJECT(soundfont_file_bbox_mvupbt) , "clicked" ,
+                      G_CALLBACK(i_configure_ev_sflist_swap) , soundfont_file_lv );
+    gtk_box_pack_start( GTK_BOX(soundfont_file_bbox_vbox) , soundfont_file_bbox_mvupbt , FALSE , FALSE , 0 );
+    soundfont_file_bbox_mvdownbt = gtk_button_new();
+    gtk_button_set_image( GTK_BUTTON(soundfont_file_bbox_mvdownbt) ,
+                          gtk_image_new_from_stock( GTK_STOCK_GO_DOWN , GTK_ICON_SIZE_MENU ) );
+    g_object_set_data( G_OBJECT(soundfont_file_bbox_mvdownbt) , "swapdire" , GUINT_TO_POINTER(1) );
+    g_signal_connect( G_OBJECT(soundfont_file_bbox_mvdownbt) , "clicked" ,
+                      G_CALLBACK(i_configure_ev_sflist_swap) , soundfont_file_lv );
+    gtk_box_pack_start( GTK_BOX(soundfont_file_bbox_vbox) , soundfont_file_bbox_mvdownbt , FALSE , FALSE , 0 );
+    gtk_box_pack_start( GTK_BOX(soundfont_file_hbox) , soundfont_file_lv_frame , TRUE , TRUE , 0 );
+    gtk_box_pack_start( GTK_BOX(soundfont_file_hbox) , soundfont_file_bbox_vbox , FALSE , FALSE , 0 );
     gtk_box_pack_start( GTK_BOX(soundfont_vbox) , soundfont_file_hbox , FALSE , FALSE , 0 );
+
     /* soundfont settings - load */
     soundfont_load_hsep = gtk_hseparator_new();
-    soundfont_load_vbox = gtk_vbox_new( FALSE , 0 );
+    soundfont_load_hbox = gtk_hbox_new( FALSE , 0 );
     soundfont_load_option[0] = gtk_radio_button_new_with_label( NULL ,
-                                 _("Load SoundFont on player start") );
+                                 _("Load SF on player start") );
     g_object_set_data( G_OBJECT(soundfont_load_option[0]) , "val" , GINT_TO_POINTER(0) );
     soundfont_load_option[1] = gtk_radio_button_new_with_label_from_widget(
                                  GTK_RADIO_BUTTON(soundfont_load_option[0]) ,
-                                 _("Load SoundFont on first midifile play") );
+                                 _("Load SF on first midifile play") );
     g_object_set_data( G_OBJECT(soundfont_load_option[1]) , "val" , GINT_TO_POINTER(1) );
     if ( fsyncfg->fsyn_soundfont_load == 0 )
       gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(soundfont_load_option[0]) , TRUE );
     else
       gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(soundfont_load_option[1]) , TRUE );
-    gtk_box_pack_start( GTK_BOX(soundfont_load_vbox) , soundfont_load_option[0] , FALSE , FALSE , 0 );
-    gtk_box_pack_start( GTK_BOX(soundfont_load_vbox) , soundfont_load_option[1] , FALSE , FALSE , 0 );
+    gtk_box_pack_start( GTK_BOX(soundfont_load_hbox) , soundfont_load_option[0] , TRUE , TRUE , 0 );
+    gtk_box_pack_start( GTK_BOX(soundfont_load_hbox) , gtk_vseparator_new() , FALSE , FALSE , 4 );
+    gtk_box_pack_start( GTK_BOX(soundfont_load_hbox) , soundfont_load_option[1] , TRUE , TRUE , 0 );
     gtk_box_pack_start( GTK_BOX(soundfont_vbox) , soundfont_load_hsep , FALSE , FALSE , 3 );
-    gtk_box_pack_start( GTK_BOX(soundfont_vbox) , soundfont_load_vbox , FALSE , FALSE , 0 );
+    gtk_box_pack_start( GTK_BOX(soundfont_vbox) , soundfont_load_hbox , FALSE , FALSE , 0 );
 
     gtk_box_pack_start( GTK_BOX(content_vbox) , soundfont_frame , FALSE , FALSE , 0 );
 
@@ -597,32 +781,33 @@ void i_configure_gui_tab_fsyn( GtkWidget * fsyn_page_alignment ,
 
     gtk_box_pack_start( GTK_BOX(content_vbox) , buffer_frame , FALSE , FALSE , 0 );
 
-    /* commit events */
-    g_signal_connect_swapped( G_OBJECT(commit_button) , "clicked" ,
-                              G_CALLBACK(i_configure_ev_sffile_commit) , soundfont_file_entry );
-    g_signal_connect_swapped( G_OBJECT(commit_button) , "clicked" ,
+    /* commit events  */
+    g_signal_connect_swapped( G_OBJECT(commit_button) , "ap-commit" ,
+                              G_CALLBACK(i_configure_ev_sflist_commit) , soundfont_file_lv );
+    g_signal_connect_swapped( G_OBJECT(commit_button) , "ap-commit" ,
                               G_CALLBACK(i_configure_ev_sfload_commit) , soundfont_load_option[0] );
-    g_signal_connect_swapped( G_OBJECT(commit_button) , "clicked" ,
+    g_signal_connect_swapped( G_OBJECT(commit_button) , "ap-commit" ,
                               G_CALLBACK(i_configure_ev_sygain_commit) , synth_gain_value_spin );
-    g_signal_connect_swapped( G_OBJECT(commit_button) , "clicked" ,
+    g_signal_connect_swapped( G_OBJECT(commit_button) , "ap-commit" ,
                               G_CALLBACK(i_configure_ev_sypoly_commit) , synth_poly_value_spin );
-    g_signal_connect_swapped( G_OBJECT(commit_button) , "clicked" ,
+    g_signal_connect_swapped( G_OBJECT(commit_button) , "ap-commit" ,
                               G_CALLBACK(i_configure_ev_syreverb_commit) , synth_reverb_value_option[0] );
-    g_signal_connect_swapped( G_OBJECT(commit_button) , "clicked" ,
+    g_signal_connect_swapped( G_OBJECT(commit_button) , "ap-commit" ,
                               G_CALLBACK(i_configure_ev_sychorus_commit) , synth_chorus_value_option[0] );
-    g_signal_connect_swapped( G_OBJECT(commit_button) , "clicked" ,
+    g_signal_connect_swapped( G_OBJECT(commit_button) , "ap-commit" ,
                               G_CALLBACK(i_configure_ev_sysamplerate_commit) , synth_samplerate_option[3] );
-    g_signal_connect_swapped( G_OBJECT(commit_button) , "clicked" ,
+    g_signal_connect_swapped( G_OBJECT(commit_button) , "ap-commit" ,
                               G_CALLBACK(i_configure_ev_bufsize_commit) , buffer_bufsize_spin );
-    g_signal_connect_swapped( G_OBJECT(commit_button) , "clicked" ,
+    g_signal_connect_swapped( G_OBJECT(commit_button) , "ap-commit" ,
                               G_CALLBACK(i_configure_ev_bufmarginsize_commit) , buffer_marginsize_spin );
-    g_signal_connect_swapped( G_OBJECT(commit_button) , "clicked" ,
+    g_signal_connect_swapped( G_OBJECT(commit_button) , "ap-commit" ,
                               G_CALLBACK(i_configure_ev_bufmargininc_commit) , buffer_margininc_spin );
 
-    gtk_tooltips_set_tip( GTK_TOOLTIPS(tips) , soundfont_file_entry ,
-                          _("* Select SoundFont *\n"
-                          "In order to play MIDI with FluidSynth, you need to specify a "
-                          "valid SoundFont file here (use absolute paths).") , "" );
+    gtk_tooltips_set_tip( GTK_TOOLTIPS(tips) , soundfont_file_lv ,
+                          _("* Select SoundFont files *\n"
+                          "In order to play MIDI with FluidSynth, you need to specify at "
+                          "least one valid SoundFont file here (use absolute paths). The " 
+                          "loading order is from the top (first) to the bottom (last).") , "" );
     gtk_tooltips_set_tip( GTK_TOOLTIPS(tips) , soundfont_load_option[0] ,
                           _("* Load SoundFont on player start *\n"
                           "Depending on your system speed, SoundFont loading in FluidSynth will "
