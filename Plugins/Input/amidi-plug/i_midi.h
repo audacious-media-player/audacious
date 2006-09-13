@@ -23,6 +23,7 @@
 
 #include "i_common.h"
 #include "i_midievent.h"
+#include "libaudacious/vfs.h"
 
 #define MAKE_ID(c1, c2, c3, c4) ((c1) | ((c2) << 8) | ((c3) << 16) | ((c4) << 24))
 
@@ -234,7 +235,7 @@ midifile_track_t;
 
 typedef struct
 {
-  FILE * file_pointer;
+  VFSFile * file_pointer;
   gchar * file_name;
   gint file_offset;
 

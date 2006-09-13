@@ -31,19 +31,19 @@ InputPlugin *get_iplugin_info(void)
 static gint amidiplug_is_our_file( gchar * filename )
 {
 #if defined(MIDIFILE_PROBE_MAGICBYTES)
-    FILE * fp;
+    VFSFile * fp;
     gchar magic_bytes[4];
 
-    fp = fopen( filename , "rb" );
+    fp = vfs_fopen( filename , "rb" );
 
     if ( fp == NULL )
       return FALSE;
 
-    fread( magic_bytes , 1 , 4 , fp );
+    vfs_fread( magic_bytes , 1 , 4 , fp );
 
     if ( !strncmp( magic_bytes , "MThd" , 4 ) )
     {
-      fclose( fp );
+      vfs_fclose( fp );
       DEBUGMSG( "MIDI found, %s is a standard midi file\n" , filename );
       return TRUE;
     }
@@ -52,16 +52,16 @@ static gint amidiplug_is_our_file( gchar * filename )
     {
       /* skip the four bytes after RIFF,
          then read the next four */
-      fseek( fp , 4 , SEEK_CUR );
-      fread( magic_bytes , 1 , 4 , fp );
+      vfs_fseek( fp , 4 , SEEK_CUR );
+      vfs_fread( magic_bytes , 1 , 4 , fp );
       if ( !strncmp( magic_bytes , "RMID" , 4 ) )
       {
-        fclose( fp );
+        vfs_fclose( fp );
         DEBUGMSG( "MIDI found, %s is a riff midi file\n" , filename );
         return TRUE;
       }
     }
-    fclose( fp );
+    vfs_fclose( fp );
 #else
     gchar * ext = strrchr( filename, '.' );
     /* check the filename extension */
@@ -391,7 +391,7 @@ static void amidiplug_play( gchar * filename )
   }
 
   DEBUGMSG( "PLAY requested, opening file: %s\n" , filename );
-  midifile.file_pointer = fopen( filename , "rb" );
+  midifile.file_pointer = vfs_fopen( filename , "rb" );
   if (!midifile.file_pointer)
   {
     g_warning( "Cannot open %s\n" , filename );
@@ -469,7 +469,7 @@ static void amidiplug_play( gchar * filename )
     }
   }
 
-  fclose( midifile.file_pointer );
+  vfs_fclose( midifile.file_pointer );
   return;
 }
 

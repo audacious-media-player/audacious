@@ -43,7 +43,7 @@ void i_midi_file_skip_bytes( midifile_t * mf , gint bytes )
 gint i_midi_file_read_byte( midifile_t * mf )
 {
   ++mf->file_offset;
-  return getc(mf->file_pointer);
+  return vfs_getc(mf->file_pointer);
 }
 
 
@@ -55,7 +55,7 @@ gint i_midi_file_read_32_le( midifile_t * mf )
   value |= i_midi_file_read_byte(mf) << 8;
   value |= i_midi_file_read_byte(mf) << 16;
   value |= i_midi_file_read_byte(mf) << 24;
-  return !feof(mf->file_pointer) ? value : -1;
+  return !vfs_feof(mf->file_pointer) ? value : -1;
 }
 
 
@@ -102,7 +102,7 @@ gint i_midi_file_read_var( midifile_t * mf )
       }
     }
   }
-  return !feof(mf->file_pointer) ? value : -1;
+  return !vfs_feof(mf->file_pointer) ? value : -1;
 }
 
 
@@ -158,7 +158,7 @@ gint i_midi_file_read_track( midifile_t * mf , midifile_track_t * track ,
         last_cmd = cmd;
     } else {
       /* running status */
-      ungetc(c, mf->file_pointer);
+      vfs_ungetc(c, mf->file_pointer);
       mf->file_offset--;
       cmd = last_cmd;
       if (!cmd)
@@ -398,7 +398,7 @@ gint i_midi_file_parse_smf( midifile_t * mf , gint port_count )
     {
       gint id = i_midi_file_read_id(mf);
       len = i_midi_file_read_int(mf,4);
-      if ( feof(mf->file_pointer) )
+      if ( vfs_feof(mf->file_pointer) )
       {
         g_warning( "%s: unexpected end of file\n" , mf->file_name );
         return 0;
@@ -447,7 +447,7 @@ gint i_midi_file_parse_riff( midifile_t * mf )
     gint id = i_midi_file_read_id(mf);
     gint len = i_midi_file_read_32_le(mf);
 
-    if ( feof(mf->file_pointer) )
+    if ( vfs_feof(mf->file_pointer) )
       return 0;
 
     if ( id == MAKE_ID('d', 'a', 't', 'a') )
@@ -720,7 +720,7 @@ gint i_midi_parse_from_filename( gchar * filename , midifile_t * mf )
 {
   i_midi_init( mf );
   DEBUGMSG( "PARSE_FROM_FILENAME requested, opening file: %s\n" , filename );
-  mf->file_pointer = fopen( filename , "rb" );
+  mf->file_pointer = vfs_fopen( filename , "rb" );
   if (!mf->file_pointer)
   {
     g_warning( "Cannot open %s\n" , filename );
@@ -758,7 +758,7 @@ gint i_midi_parse_from_filename( gchar * filename , midifile_t * mf )
       i_midi_setget_length( mf );
 
       /* ok, mf has been filled with information; successfully return */
-      fclose( mf->file_pointer );
+      vfs_fclose( mf->file_pointer );
       return 1;
     }
 
@@ -770,6 +770,6 @@ gint i_midi_parse_from_filename( gchar * filename , midifile_t * mf )
   }
 
   /* something failed */
-  fclose( mf->file_pointer );
+  vfs_fclose( mf->file_pointer );
   return 0;
 }

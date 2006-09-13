@@ -1,3 +1,14 @@
+2006-09-13 22:59:49 +0000  Giacomo Lozito <james@develia.org>
+  revision [2303]
+  - File stream API for audacious vfs; uses real getc/ungetc functions for vfs_stdio and emulated functions for vfs_gnome
+
+  Changes:        Modified:
+  +3 -0           trunk/libaudacious/vfs.h  
+  +0 -9           trunk/libaudacious/vfs_common.c  
+  +35 -0          trunk/libaudacious/vfs_gnome.c  
+  +12 -0          trunk/libaudacious/vfs_stdio.c  
+
+
 2006-09-13 21:01:54 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2301]
   Added BSD make to the recommended make versions since it's officially supported now.
