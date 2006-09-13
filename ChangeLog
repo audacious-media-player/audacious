@@ -1,3 +1,11 @@
+2006-09-13 15:06:57 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2289]
+  4-way scroll support in the main window (volume & seek) by Jonathan Schleifer <js@h3c.de>.
+
+  Changes:        Modified:
+  +20 -8          trunk/audacious/mainwin.c  
+
+
 2006-09-13 13:38:40 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2287]
   Fixes for NetBSD by Jonathan Schleifer <js@h3c.de>
