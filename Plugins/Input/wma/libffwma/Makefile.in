@@ -18,3 +18,6 @@ CFLAGS+=	$(PICFLAGS) $(GTK_CFLAGS) -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D
 OBJECTS=${SOURCES:.c=.o}
 
 include ../../../../mk/objective.mk
+
+libffwma.a: $(OBJECTS)
+	$(AR) cq $@ $(OBJECTS)

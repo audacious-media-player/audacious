@@ -1,3 +1,12 @@
+2006-09-13 18:03:25 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2295]
+  Link C++ plugins correctly on *BSD, by Jonathan Schleifer <js@h3c.de>.
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/modplug/gui/support.h  
+  +1 -1           trunk/audacious/Makefile  
+
+
 2006-09-13 16:40:07 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2293]
   Remove built-in soundcard.h silliness so OSS actually works on *BSD, by Jonathan Schleifer <js@h3c.de>.

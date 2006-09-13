@@ -18,3 +18,6 @@ SOURCES=alter.c analyze.c attach.c auth.c btree.c build.c \
 OBJECTS=${SOURCES:.c=.o}
 
 include ../mk/objective.mk
+
+libsqlite.a: $(OBJECTS)
+	$(AR) cq $@ $(OBJECTS)

@@ -44,3 +44,6 @@ SOURCES =  \
 OBJECTS = ${SOURCES:.c=.o}
 
 include ../../../../mk/objective.mk
+
+libparanormal.a: $(OBJECTS)
+	$(AR) cq $@ $(OBJECTS)

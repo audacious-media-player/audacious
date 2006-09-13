@@ -36,3 +36,6 @@ SOURCES = \
 OBJECTS = ${SOURCES:.c=.o}
 
 include ../../mk/objective.mk
+
+libwidgets.a: $(OBJECTS)
+	$(AR) cq $@ $(OBJECTS)
