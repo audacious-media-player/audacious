@@ -22,6 +22,7 @@ struct _VFSFile
 {
     GnomeVFSHandle *handle;
     gboolean eof;
+    GSList *streamstack;
 };
 
 
@@ -54,6 +55,7 @@ vfs_fopen(const gchar * path,
 
     file = g_new(VFSFile, 1);
     file->eof = FALSE;
+    file->streamstack = NULL;
 
     mode_to_gnome_vfs(mode, &g_mode, &truncate, &append);
     gchar *escaped_file = gnome_vfs_escape_path_string(path);
@@ -107,6 +109,10 @@ vfs_fclose(VFSFile * file)
             ret = -1;
     }
 
+    /* free the streamstack */
+    if ( file->streamstack != NULL )
+      g_slist_free( file->streamstack );
+
     g_free(file);
 
     return ret;
@@ -153,6 +159,35 @@ vfs_fwrite(gconstpointer ptr,
         return bytes_written;
     else
         return -1;
+}
+
+gint
+vfs_getc(VFSFile *stream)
+{
+    guchar uc;
+    if ( stream->streamstack != NULL ) /* check if some char was ungetc'ed before */
+    {
+      uc = GPOINTER_TO_INT(stream->streamstack->data);
+      stream->streamstack = g_slist_delete_link( stream->streamstack , stream->streamstack );
+      return uc;
+    }
+    else /* for gnomevfs, vfs_getc is emulated by vfs_fread */
+    {
+      if (vfs_fread(&uc, 1, 1, stream))
+        return uc;
+      else
+        return EOF;
+    }
+}
+
+gint
+vfs_ungetc(gint c, VFSFile *stream)
+{
+    stream->streamstack = g_slist_prepend( stream->streamstack , GINT_TO_POINTER(c) );
+    if ( stream->streamstack != NULL )
+      return c;
+    else
+      return EOF; /* an error occurred */
 }
 
 gint

@@ -96,6 +96,18 @@ vfs_fwrite(gconstpointer ptr,
 }
 
 gint
+vfs_getc(VFSFile *stream)
+{
+  return getc( stream->handle );
+}
+
+gint
+vfs_ungetc(gint c, VFSFile *stream)
+{
+  return ungetc( c , stream->handle );
+}
+
+gint
 vfs_fseek(VFSFile * file,
           glong offset,
           gint whence)

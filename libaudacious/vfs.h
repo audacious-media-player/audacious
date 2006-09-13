@@ -24,6 +24,9 @@ extern size_t vfs_fwrite(gconstpointer ptr,
                   size_t nmemb,
                   VFSFile *file);
 
+extern gint vfs_getc(VFSFile *stream);
+extern gint vfs_ungetc(gint c,
+                       VFSFile *stream);
 extern gchar *vfs_fgets(gchar *s,
                         gint n,
                         VFSFile *stream);

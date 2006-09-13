@@ -1,3 +1,12 @@
+2006-09-13 21:01:54 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2301]
+  Added BSD make to the recommended make versions since it's officially supported now.
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/mk/objective.mk  
+
+
 2006-09-13 20:58:21 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2299]
   - fix missing name in ChangeLog (I forgot to add js to our changelog scripts, oops)

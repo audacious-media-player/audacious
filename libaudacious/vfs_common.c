@@ -18,15 +18,6 @@
 #include <stdlib.h>
 #include <glib/gprintf.h>
 
-/* FIXME low performance vfs_getc */
-gint vfs_getc(VFSFile *stream)
-{
-    guchar uc;
-    if (vfs_fread(&uc, 1, 1, stream))
-	return uc;
-    return EOF;
-}
-
 
 gint vfs_fputc(gint c, VFSFile *stream)
 {
