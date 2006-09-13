@@ -35,7 +35,11 @@
 #include "esdout.h"
 
 #ifdef HAVE_OSS
-# include <OSS/soundcard.h>
+# ifdef HAVE_SYS_SOUNDCARD_H
+#  include <sys/soundcard.h>
+# else
+#  include <soundcard.h>
+# endif
 # define OSS_AVAILABLE TRUE
 #else
 # define OSS_AVAILABLE FALSE

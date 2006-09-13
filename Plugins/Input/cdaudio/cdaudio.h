@@ -31,7 +31,11 @@
 #include "cdinfo.h"
 
 #ifdef HAVE_OSS
-#include <Output/OSS/soundcard.h>
+#ifdef HAVE_SYS_SOUNDCARD_H
+#include <sys/soundcard.h>
+#else
+#include <soundcard.h>
+#endif
 #endif
 
 #ifdef HAVE_MNTENT_H

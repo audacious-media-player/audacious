@@ -28,7 +28,12 @@
 
 #include <glib.h>
 
-#include "soundcard.h"
+#ifdef HAVE_SYS_SOUNDCARD_H
+#include <sys/soundcard.h>
+#else
+#include <soundcard.h>
+#endif
+
 #include "audacious/plugin.h"
 
 #define IS_BIG_ENDIAN (G_BYTE_ORDER == G_BIG_ENDIAN)
