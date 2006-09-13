@@ -1,3 +1,14 @@
+2006-09-13 16:40:07 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2293]
+  Remove built-in soundcard.h silliness so OSS actually works on *BSD, by Jonathan Schleifer <js@h3c.de>.
+
+  Changes:        Modified:
+  +5 -1           trunk/Plugins/Input/cdaudio/cdaudio.h  
+  +6 -1           trunk/Plugins/Output/OSS/OSS.h  
+  +0 -1695        trunk/Plugins/Output/OSS/soundcard.h  
+  +5 -1           trunk/Plugins/Output/esd/mixer.c  
+
+
 2006-09-13 16:05:18 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2291]
   Mark autogen.sh executable.

@@ -11,7 +11,7 @@
 /*
  * Standard gettext macros.
  */
-#ifdef ENABLE_NLS
+#if defined ENABLE_NLS && !defined __NetBSD__
 #  include <libintl.h>
 #  undef _
 #  define _(String) dgettext (PACKAGE, String)

@@ -90,5 +90,5 @@ build_stamp.c:
 	fi;
 
 audacious: $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@ 
+	$(CXX) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@ 
 	@printf "%10s     %-20s\n" LINK $@
