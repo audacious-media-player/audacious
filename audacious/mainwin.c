@@ -1920,6 +1920,15 @@ mainwin_set_back_pixmap(void)
     gdk_window_clear(mainwin->window);
 }
 
+/*
+ * Rewritten 09/13/06:
+ *
+ * Remove all of this flaky iter/sourcelist/strsplit stuff.
+ * All we care about is the filepath.
+ *
+ * We can figure this out and easily pass it to xmms_urldecode_plain().
+ *   - nenolod
+ */
 void
 mainwin_drag_data_received(GtkWidget * widget,
                            GdkDragContext * context,
@@ -1930,58 +1939,26 @@ mainwin_drag_data_received(GtkWidget * widget,
                            guint time,
                            gpointer user_data)
 {
-    gchar **iter, **sourcelist, *path;
-    gchar *decoded;
-    gboolean not_font = FALSE;
-    
-    if (!selection_data->data)
+    g_return_if_fail(selection_data != NULL);
+    g_return_if_fail(selection_data->data != NULL);
+
+    if (str_has_prefix_nocase((gchar *) selection_data->data, "fonts:///"))
     {
-        g_warning("DND data string is NULL");
+        gchar *path = selection_data->data + 9;		/* skip fonts:/// */
+	gchar *decoded = xmms_urldecode_plain(path);
+
+        cfg.playlist_font = g_strconcat(decoded, strrchr(cfg.playlist_font, " "), NULL);
+        playlist_list_set_font(cfg.playlist_font);
+        playlistwin_update_list();
+
+        g_free(decoded);
+
         return;
     }
 
-    iter = sourcelist = g_strsplit((gchar *)(selection_data->data),"\n",-1);
-
-    for (path = *sourcelist; *path; path = *(++sourcelist))
-    {
-	if (path == NULL)	/* damn konqueror */
-	    break;
-
-	if (str_has_prefix_nocase(path, "fonts:///"))
-	{
-    	    path += 8;
-
-	    /* plain, since we already stripped the first URI part */
-    	    decoded = xmms_urldecode_plain(path);
-
-            /* Get the old font's size, and add it to the dropped
-	     * font's name
-	     */
-    	    cfg.playlist_font = g_strconcat(decoded + 1,
-        	                            strrchr(cfg.playlist_font, ' '),
-            	                            NULL);
-    	    playlist_list_set_font(cfg.playlist_font);
-    	    playlistwin_update_list();
-        
-    	    g_free(decoded);
-    	    return;
-	}
-
-	if (str_has_prefix_nocase(path,"file:///"))
-	{
-	    if (not_font == FALSE)
-	    {
-		playlist_clear();
-		not_font = TRUE;
-	    }	
-    	    playlist_add_url(path);
-	}
-    }
-    
-    g_strfreev(iter);
-    
-    if (not_font)
-	bmp_playback_initiate();
+    playlist_clear();
+    playlist_add_url((gchar *) selection_data->data);
+    bmp_playback_initiate();
 }
 
 static void
