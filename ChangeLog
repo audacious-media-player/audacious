@@ -1,3 +1,14 @@
+2006-09-13 13:38:40 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2287]
+  Fixes for NetBSD by Jonathan Schleifer <js@h3c.de>
+
+  Changes:        Modified:
+  +2 -0           trunk/Plugins/Container/xspf/xspf.c  
+  +6 -2           trunk/Plugins/Input/cdaudio/cdaudio.c  
+  +2 -0           trunk/Plugins/Input/cdaudio/cdaudio.h  
+  +2 -1           trunk/configure.ac  
+
+
 2006-09-13 12:22:45 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2285]
   Remove unused bmp_player.xpm; as requested by Mikachu on #audacious.

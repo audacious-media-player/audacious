@@ -1103,16 +1103,28 @@ inside_sensitive_widgets(gint x, gint y)
 }
 
 void
-mainwin_scrolled(GtkWidget * widget,
-                 GdkEventScroll * event,
-                 gpointer callback_data)
+mainwin_scrolled(GtkWidget *widget, GdkEventScroll *event,
+    gpointer callback_data)
 {
-    gint d = cfg.mouse_change;
-    if (event->direction == GDK_SCROLL_DOWN)
-        d *= -1;
-    mainwin_set_volume_diff(d);
+	switch (event->direction) {
+	case GDK_SCROLL_UP:
+		mainwin_set_volume_diff(cfg.mouse_change);
+		break;
+	case GDK_SCROLL_DOWN:
+		mainwin_set_volume_diff(-cfg.mouse_change);
+		break;
+	case GDK_SCROLL_LEFT:
+		if (playlist_get_current_length() != -1)
+			bmp_playback_seek(CLAMP(bmp_playback_get_time() - 1000,
+			    0, playlist_get_current_length()) / 1000);
+		break;
+	case GDK_SCROLL_RIGHT:
+		if (playlist_get_current_length() != -1)
+			bmp_playback_seek(CLAMP(bmp_playback_get_time() + 1000,
+			    0, playlist_get_current_length()) / 1000);
+		break;
+	}
 }
-
 
 static gboolean
 mainwin_mouse_button_press(GtkWidget * widget,
