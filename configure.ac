@@ -845,6 +845,7 @@ fi
 
 AC_CHECK_HEADERS(linux/cdrom.h)
 AC_CHECK_HEADERS(sys/cdio.h)
+AC_CHECK_HEADERS(sys/cdrio.h)
 AC_CHECK_HEADERS(linux/joystick.h)
 AC_CHECK_HEADERS(unistd.h)
 AC_CHECK_HEADERS(fcntl.h)
@@ -854,7 +855,7 @@ AC_CHECK_HEADERS(limits.h)
 AC_CHECK_HEADERS(wchar.h)
 AC_CHECK_HEADERS(fts.h)
 
-AC_CHECK_FUNCS([mkdtemp getmntinfo strtoul lrintf])
+AC_CHECK_FUNCS([mkdtemp getmntinfo statvfs strtoul lrintf])
 
 
 if test "${ac_cv_header_linux_cdrom_h}" = "yes" || test "${ac_cv_header_sys_cdio_h}" = "yes"

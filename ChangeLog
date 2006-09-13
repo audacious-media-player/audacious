@@ -1,3 +1,11 @@
+2006-09-13 12:22:45 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2285]
+  Remove unused bmp_player.xpm; as requested by Mikachu on #audacious.
+
+  Changes:        Modified:
+  +0 -97          trunk/audacious/images/bmp_player.xpm  
+
+
 2006-09-13 06:31:24 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2283]
   - new DND handler

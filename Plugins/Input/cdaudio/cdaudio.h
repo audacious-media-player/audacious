@@ -54,7 +54,9 @@
 #include <linux/cdrom.h>
 #elif defined HAVE_SYS_CDIO_H
 #include <sys/cdio.h>
+#ifdef HAVE_SYS_CDRIO_H
 #include <sys/cdrio.h>
+#endif
 #endif
 
 #if defined(CDROMREADAUDIO) || defined(CDIOCREADAUDIO) || defined(CDROMCDDA) || defined(CDRIOCSETBLOCKSIZE)

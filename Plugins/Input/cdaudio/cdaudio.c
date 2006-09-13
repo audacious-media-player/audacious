@@ -76,7 +76,7 @@
 #   define CDDA_DEVICE "/dev/acd0c"
 #  elif defined __FreeBSD__
 #   define CDDA_DEVICE "/dev/acd0"
-#  elif defined __OpenBSD__
+#  elif defined __OpenBSD__ || defined __NetBSD__
 #   define CDDA_DEVICE "/dev/cd0c"
 #  else
 #   define CDDA_DEVICE "/vol/dev/aliases/cdrom0"
@@ -90,7 +90,7 @@
 # ifdef HAVE_SYS_CDIO_H
 #  ifdef __FreeBSD__
 #   define CDDA_DIRECTORY "/cdrom"
-#  elif defined __OpenBSD__
+#  elif defined __OpenBSD__ || defined __NetBSD__
 #   define CDDA_DIRECTORY "/cdrom"
 #  else
 #   define CDDA_DIRECTORY "/cdrom/cdrom0"
@@ -595,7 +595,11 @@ is_mounted(const char *device_name)
     FILE *mounts;
     struct mntent *mnt;
 #elif defined(HAVE_GETMNTINFO)
+#if defined __NetBSD__ && HAVE_STATVFS
+    struct statvfs *fsp;
+#else
     struct statfs *fsp;
+#endif
     int entries;
 #endif
 
