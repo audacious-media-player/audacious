@@ -1,3 +1,12 @@
+2006-09-13 20:58:21 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2299]
+  - fix missing name in ChangeLog (I forgot to add js to our changelog scripts, oops)
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/ChangeLog  
+
+
 2006-09-13 20:56:08 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2297]
   Fixed some Makefiles to make it work with BSD make.
