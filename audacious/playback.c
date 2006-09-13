@@ -124,13 +124,15 @@ bmp_playback_pause(void)
 
     ip_data.paused = !ip_data.paused;
 
+    if (get_current_input_plugin()->pause)
+        get_current_input_plugin()->pause(ip_data.paused);
+
+    g_return_if_fail(mainwin_playstatus != NULL);
+
     if (ip_data.paused)
         playstatus_set_status(mainwin_playstatus, STATUS_PAUSE);
     else
         playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
-
-    if (get_current_input_plugin()->pause)
-        get_current_input_plugin()->pause(ip_data.paused);
 }
 
 void
@@ -156,8 +158,11 @@ bmp_playback_stop(void)
     }
 
     ip_data.buffering = FALSE;
-    playstatus_set_status_buffering(mainwin_playstatus, FALSE);
     ip_data.playing = FALSE;
+
+    g_return_if_fail(mainwin_playstatus != NULL);
+
+    playstatus_set_status_buffering(mainwin_playstatus, FALSE);
 }
 
 void

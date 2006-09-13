@@ -760,8 +760,11 @@ input_set_status_buffering(gboolean status)
 
     ip_data.buffering = status;
 
-    if (ip_data.buffering == TRUE && mainwin_playstatus->ps_status == STATUS_STOP)
+    g_return_if_fail(mainwin_playstatus != NULL);
+
+    if (ip_data.buffering == TRUE && mainwin_playstatus != NULL && mainwin_playstatus->ps_status == STATUS_STOP)
         mainwin_playstatus->ps_status = STATUS_PLAY;
+
     playstatus_set_status_buffering(mainwin_playstatus, ip_data.buffering);
 }
 

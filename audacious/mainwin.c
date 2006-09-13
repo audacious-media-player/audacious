@@ -874,7 +874,7 @@ mainwin_set_song_info(gint bitrate,
     widget_show(WIDGET(mainwin_10sec_num));
     widget_show(WIDGET(mainwin_sec_num));
 
-    if (!bmp_playback_get_paused())
+    if (!bmp_playback_get_paused() && mainwin_playstatus != NULL)
         playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
 
     if (playlist_get_current_length() != -1) {
@@ -944,7 +944,8 @@ mainwin_clear_song_info(void)
     textbox_set_text(mainwin_freq_text, "  ");
     monostereo_set_num_channels(mainwin_monostereo, 0);
 
-    playstatus_set_status(mainwin_playstatus, STATUS_STOP);
+    if (mainwin_playstatus != NULL)
+        playstatus_set_status(mainwin_playstatus, STATUS_STOP);
 
     /* hide playback time */
     widget_hide(WIDGET(mainwin_minus_num));

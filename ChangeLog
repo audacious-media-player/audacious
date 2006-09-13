@@ -1,3 +1,33 @@
+2006-09-12 17:59:59 +0000  Giacomo Lozito <james@develia.org>
+  revision [2279]
+  - amidi-plug 0.6 imported; among other improvements, multiple soundfont loading for fluidsynth backend and option to extract/display lyrics and comments contained in midi files
+
+  Changes:        Modified:
+  +3 -2           trunk/Plugins/Input/amidi-plug/Makefile.in  
+  +7 -1           trunk/Plugins/Input/amidi-plug/amidi-plug.c  
+  +1 -1           trunk/Plugins/Input/amidi-plug/backend-alsa/Makefile.in  
+  +1 -1           trunk/Plugins/Input/amidi-plug/backend-dummy/Makefile.in  
+  +1 -1           trunk/Plugins/Input/amidi-plug/backend-fluidsynth/Makefile.in  
+  +30 -14         trunk/Plugins/Input/amidi-plug/backend-fluidsynth/b-fluidsynth.c  
+  +1 -1           trunk/Plugins/Input/amidi-plug/backend-fluidsynth/b-fluidsynth.h  
+  +5 -5           trunk/Plugins/Input/amidi-plug/i_backend.c  
+  +1 -1           trunk/Plugins/Input/amidi-plug/i_common.h  
+  +4 -3           trunk/Plugins/Input/amidi-plug/i_configure-alsa.c  
+  +42 -6          trunk/Plugins/Input/amidi-plug/i_configure-ap.c  
+  +5 -5           trunk/Plugins/Input/amidi-plug/i_configure-dummy.c  
+  +223 -38        trunk/Plugins/Input/amidi-plug/i_configure-fluidsynth.c  
+  +75 -22         trunk/Plugins/Input/amidi-plug/i_configure.c  
+  +2 -0           trunk/Plugins/Input/amidi-plug/i_configure.h  
+  +167 -6         trunk/Plugins/Input/amidi-plug/i_fileinfo.c  
+  +44 -0          trunk/Plugins/Input/amidi-plug/i_midi.c  
+  +5 -0           trunk/Plugins/Input/amidi-plug/i_midi.h  
+  +1 -0           trunk/Plugins/Input/amidi-plug/i_midievent.h  
+  +4 -1           trunk/Plugins/Input/amidi-plug/i_utils.c  
+  +1 -1           trunk/Plugins/Input/amidi-plug/i_utils.h  
+  +2 -2           trunk/configure.ac  
+  +1 -1           trunk/mk/rules.mk.in  
+
+
 2006-09-11 23:06:23 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2277]
   Use the VFS.
