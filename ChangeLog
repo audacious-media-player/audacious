@@ -1,3 +1,12 @@
+2006-09-13 06:31:24 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2283]
+  - new DND handler
+  
+
+  Changes:        Modified:
+  +23 -46         trunk/audacious/mainwin.c  
+
+
 2006-09-13 06:11:07 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2281]
   - be careful about referencing a NULL widget (e.g. headless/serveronly mode crashes on streams, bug #562)
