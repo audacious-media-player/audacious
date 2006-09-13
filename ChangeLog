@@ -1,3 +1,18 @@
+2006-09-13 20:56:08 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2297]
+  Fixed some Makefiles to make it work with BSD make.
+  I checked that it doesn't break gmake (compile & run works).
+  
+
+  Changes:        Modified:
+  +3 -0           trunk/Plugins/Input/aac/mp4ff/Makefile.in  
+  +3 -0           trunk/Plugins/Input/timidity/libtimidity/Makefile.in  
+  +3 -0           trunk/Plugins/Input/wma/libffwma/Makefile.in  
+  +3 -0           trunk/Plugins/Visualization/paranormal/pn/Makefile  
+  +3 -0           trunk/audacious/widgets/Makefile  
+  +3 -0           trunk/sqlite/Makefile  
+
+
 2006-09-13 18:03:25 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2295]
   Link C++ plugins correctly on *BSD, by Jonathan Schleifer <js@h3c.de>.
