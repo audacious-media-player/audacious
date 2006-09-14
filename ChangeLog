@@ -1,3 +1,47 @@
+2006-09-14 20:33:10 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2319]
+  .cpp -> .cxx
+  This has the nice side effect that we don't need to add .cpp to .SUFFIXES for OpenBSD.
+  
+
+  Changes:        Modified:
+  +268 -268       trunk/Plugins/Input/console/Audacious_Config.cpp  
+  +859 -859       trunk/Plugins/Input/console/Audacious_Driver.cpp  
+  +406 -406       trunk/Plugins/Input/console/Blip_Buffer.cpp  
+  +117 -117       trunk/Plugins/Input/console/Classic_Emu.cpp  
+  +120 -120       trunk/Plugins/Input/console/Dual_Resampler.cpp  
+  +254 -254       trunk/Plugins/Input/console/Fir_Resampler.cpp  
+  +311 -311       trunk/Plugins/Input/console/Gb_Apu.cpp  
+  +1113 -1113     trunk/Plugins/Input/console/Gb_Cpu.cpp  
+  +333 -333       trunk/Plugins/Input/console/Gb_Oscs.cpp  
+  +366 -366       trunk/Plugins/Input/console/Gbs_Emu.cpp  
+  +350 -350       trunk/Plugins/Input/console/Gym_Emu.cpp  
+  +148 -148       trunk/Plugins/Input/console/Gzip_File.cpp  
+  +0 -0           trunk/Plugins/Input/console/Jma_File.cpp  
+  +215 -215       trunk/Plugins/Input/console/Multi_Buffer.cpp  
+  +84 -84         trunk/Plugins/Input/console/Music_Emu.cpp  
+  +383 -383       trunk/Plugins/Input/console/Nes_Apu.cpp  
+  +950 -950       trunk/Plugins/Input/console/Nes_Cpu.cpp  
+  +122 -122       trunk/Plugins/Input/console/Nes_Fme7_Apu.cpp  
+  +151 -151       trunk/Plugins/Input/console/Nes_Namco_Apu.cpp  
+  +498 -498       trunk/Plugins/Input/console/Nes_Oscs.cpp  
+  +219 -219       trunk/Plugins/Input/console/Nes_Vrc6_Apu.cpp  
+  +623 -623       trunk/Plugins/Input/console/Nsf_Emu.cpp  
+  +269 -269       trunk/Plugins/Input/console/Nsfe_Emu.cpp  
+  +319 -319       trunk/Plugins/Input/console/Sms_Apu.cpp  
+  +475 -475       trunk/Plugins/Input/console/Snes_Spc.cpp  
+  +1066 -1066     trunk/Plugins/Input/console/Spc_Cpu.cpp  
+  +666 -666       trunk/Plugins/Input/console/Spc_Dsp.cpp  
+  +133 -133       trunk/Plugins/Input/console/Spc_Emu.cpp  
+  +186 -186       trunk/Plugins/Input/console/Track_Emu.cpp  
+  +54 -54         trunk/Plugins/Input/console/Vfs_File.cpp  
+  +298 -298       trunk/Plugins/Input/console/Vgm_Emu.cpp  
+  +312 -312       trunk/Plugins/Input/console/Vgm_Emu_Impl.cpp  
+  +21 -21         trunk/Plugins/Input/console/Ym2413_Emu.cpp  
+  +1321 -1321     trunk/Plugins/Input/console/Ym2612_Emu.cpp  
+  +282 -282       trunk/Plugins/Input/console/abstract_file.cpp  
+
+
 2006-09-14 20:27:38 +0000  Giacomo Lozito <james@develia.org>
   revision [2317]
   - fix for issue that was fixed in r1946 and then appeared again later :)
