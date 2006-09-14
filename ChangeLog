@@ -1,3 +1,14 @@
+2006-09-14 14:38:06 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2309]
+  Fixed mk/objective.mk so that there won't be any
+  [: ==: unexpected operator
+  error messages anymore. (This occoured with BSD make _AND_ gmake!)
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/mk/objective.mk  
+
+
 2006-09-14 01:59:47 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2307]
   - Avoid trying to regenerate parse.c. Regeneration is unnecessary in usual case and requires lemon as parser generator.

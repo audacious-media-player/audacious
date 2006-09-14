@@ -179,7 +179,7 @@ $(OBJECTIVE_LIBS): $(OBJECTS)
 	if [ "x$(OBJECTS)" != "x" ]; then \
 		$(MAKE) $(OBJECTS) || exit;		\
 		printf "%10s     %-20s\n" LINK $@; \
-		(if [ "x$(SHARED_SUFFIX)" = "so" ]; then \
+		(if [ "x$(SHARED_SUFFIX)" = "xso" ]; then \
 			(if [ "x$(OBJECTIVE_SONAME_SUFFIX)" != "x" ]; then \
 				$(CC) $(PICLDFLAGS) -o $@ -Wl,-soname=$@.$(OBJECTIVE_SONAME_SUFFIX) $(OBJECTS) $(LDFLAGS) $(LIBADD); \
 			else \
