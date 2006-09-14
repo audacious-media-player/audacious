@@ -5,6 +5,7 @@ imagesdir = $(pkgdatadir)/images
 
 OBJECTIVE_DATA = \
 	about-logo.png:$(imagesdir) \
+	audacious_player.xpm:$(imagesdir) \
 	appearance.png:$(imagesdir) \
 	audio.png:$(imagesdir) \
 	connectivity.png:$(imagesdir) \

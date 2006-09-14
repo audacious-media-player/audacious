@@ -1,3 +1,12 @@
+2006-09-14 14:50:44 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2313]
+  Made the content of the password field in the AudioScrobbler plugin invisible.
+  
+
+  Changes:        Modified:
+  +1 -0           trunk/Plugins/General/scrobbler/configure.c  
+
+
 2006-09-14 14:40:39 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2311]
   Just saw another bug in the same line. The if was always false.
