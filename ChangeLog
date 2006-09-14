@@ -1,3 +1,11 @@
+2006-09-14 20:27:38 +0000  Giacomo Lozito <james@develia.org>
+  revision [2317]
+  - fix for issue that was fixed in r1946 and then appeared again later :)
+
+  Changes:        Modified:
+  +4 -4           trunk/audacious/playlist.c  
+
+
 2006-09-14 15:46:01 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2315]
   Install audacious_player.xpm as well, so one can use it as a desktop icon.
