@@ -1,3 +1,12 @@
+2006-09-14 01:59:47 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2307]
+  - Avoid trying to regenerate parse.c. Regeneration is unnecessary in usual case and requires lemon as parser generator.
+  
+
+  Changes:        Modified:
+  +3 -0           trunk/sqlite/Makefile  
+
+
 2006-09-13 23:05:01 +0000  Giacomo Lozito <james@develia.org>
   revision [2305]
   - amidi-plug uses vfs now
