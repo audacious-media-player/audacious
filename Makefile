@@ -1,6 +1,6 @@
 .SILENT:
 
-sinclude mk/rules.mk
+include mk/rules.mk
 include mk/init.mk
 
 SUBDIRS = Plugins libaudacious intl $(SUBDIR_GUESS) sqlite audacious audtool po icons skin

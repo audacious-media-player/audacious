@@ -1,3 +1,12 @@
+2006-09-14 20:38:05 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2321]
+  Forgot to change .cpp -> .cxx in the Makefile.in. Shame on me...
+  
+
+  Changes:        Modified:
+  +35 -35         trunk/Plugins/Input/console/Makefile.in  
+
+
 2006-09-14 20:33:10 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2319]
   .cpp -> .cxx

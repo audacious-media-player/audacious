@@ -104,11 +104,6 @@ distclean: clean
 	fi
 
 build:
-	# test for GNU make
-	@if [ ! "$(MAKE_VERSION)" ]; then \
-		echo "[Your make is not properly supported, please use GNU make or BSD make.]"; \
-		exit 1; \
-	fi;
 	$(MAKE) build-prehook
 	@if [ "x$(SUBDIRS)" != "x" ]; then \
 		for i in $(SUBDIRS); do \
