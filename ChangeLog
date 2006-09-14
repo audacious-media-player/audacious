@@ -1,3 +1,18 @@
+2006-09-14 20:56:35 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2323]
+  * One more .cpp -> .cxx
+  * Changed sinclude -> include for OpenBSD make compatibility
+  * Removed check for MAKE_VERSION for OpenBSD make compatibility
+  * Added myself to the credits (ok by nenolod)
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Makefile  
+  +14 -14         trunk/Plugins/Input/mpg123/tag_c_hacked.cpp  
+  +1 -0           trunk/audacious/credits.c  
+  +0 -5           trunk/mk/objective.mk  
+
+
 2006-09-14 20:38:05 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2321]
   Forgot to change .cpp -> .cxx in the Makefile.in. Shame on me...
