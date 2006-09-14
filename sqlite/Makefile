@@ -21,3 +21,6 @@ include ../mk/objective.mk
 
 libsqlite.a: $(OBJECTS)
 	$(AR) cq $@ $(OBJECTS)
+
+.y.c:
+	

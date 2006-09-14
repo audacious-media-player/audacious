@@ -1,3 +1,13 @@
+2006-09-13 23:05:01 +0000  Giacomo Lozito <james@develia.org>
+  revision [2305]
+  - amidi-plug uses vfs now
+
+  Changes:        Modified:
+  +10 -10         trunk/Plugins/Input/amidi-plug/amidi-plug.c  
+  +9 -9           trunk/Plugins/Input/amidi-plug/i_midi.c  
+  +2 -1           trunk/Plugins/Input/amidi-plug/i_midi.h  
+
+
 2006-09-13 22:59:49 +0000  Giacomo Lozito <james@develia.org>
   revision [2303]
   - File stream API for audacious vfs; uses real getc/ungetc functions for vfs_stdio and emulated functions for vfs_gnome
