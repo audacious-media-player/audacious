@@ -1,3 +1,13 @@
+2006-09-14 15:46:01 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2315]
+  Install audacious_player.xpm as well, so one can use it as a desktop icon.
+  Requested by Jan Schummers <darkadmiral@onlinehome.de>.
+  
+
+  Changes:        Modified:
+  +1 -0           trunk/audacious/images/Makefile.in  
+
+
 2006-09-14 14:50:44 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2313]
   Made the content of the password field in the AudioScrobbler plugin invisible.

@@ -174,6 +174,9 @@ playlist_entry_get_info(PlaylistEntry * entry)
 
     g_return_val_if_fail(entry != NULL, FALSE);
 
+    if (entry->decoder == NULL)
+        entry->decoder = input_check_file(entry->filename, FALSE);
+
     /* renew tuple if file mtime is newer than tuple mtime. */
     if(entry->tuple){
         if(entry->tuple->mtime == modtime)
@@ -183,9 +186,6 @@ playlist_entry_get_info(PlaylistEntry * entry)
             entry->tuple = NULL;
         }
     }
-
-    if (entry->decoder == NULL)
-        entry->decoder = input_check_file(entry->filename, FALSE);
 
     if (entry->decoder == NULL || entry->decoder->get_song_tuple == NULL)
         tuple = input_get_song_tuple(entry->filename);
@@ -2117,7 +2117,7 @@ playlist_fileinfo_current(void)
     if (playlist_get() && playlist_position)
     {
         path = g_strdup(playlist_position->filename);
-        if ( playlist_position->tuple == NULL )
+        if (( playlist_position->tuple == NULL ) || ( playlist_position->decoder == NULL ))
           playlist_entry_get_info(playlist_position);
         tuple = playlist_position->tuple;
     }
