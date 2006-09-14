@@ -1,3 +1,12 @@
+2006-09-14 14:40:39 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2311]
+  Just saw another bug in the same line. The if was always false.
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/mk/objective.mk  
+
+
 2006-09-14 14:38:06 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2309]
   Fixed mk/objective.mk so that there won't be any

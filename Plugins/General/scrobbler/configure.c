@@ -118,6 +118,7 @@ create_cfgdlg(void)
   gtk_table_attach_defaults (GTK_TABLE (table1), entry1, 1, 2, 2, 3);
 
   entry2 = gtk_entry_new ();
+  gtk_entry_set_visibility(GTK_ENTRY(entry2), FALSE);
   gtk_widget_show (entry2);
   gtk_table_attach_defaults (GTK_TABLE (table1), entry2, 1, 2, 3, 4);
   g_signal_connect(entry2, "changed", (GCallback) saveconfig, NULL);
