@@ -1,3 +1,12 @@
+2006-09-15 14:46:49 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2329]
+  - DND fixes
+  
+
+  Changes:        Modified:
+  +2 -2           trunk/audacious/mainwin.c  
+
+
 2006-09-15 13:36:26 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2327]
   - Removed .cpp.o target since we don't have any .cpp files anymore.

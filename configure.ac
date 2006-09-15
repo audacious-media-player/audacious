@@ -637,6 +637,22 @@ if test "$have_oss" = "yes"; then
     if test "${ac_cv_header_sys_soundcard_h}" = "yes" || test "${ac_cv_header_machine_soundcard_h}" = "yes"; then
         have_oss=yes
     fi
+
+    AC_MSG_CHECKING(wether we need -lossaudio)
+    AC_TRY_LINK([
+	#include <sys/ioctl.h>
+	#ifdef HAVE_SYS_SOUNDCARD_H
+	#include <sys/soundcard.h>
+	#else
+	#include <soundcard.h>
+	#endif
+    ], [
+	int fd, value;
+	ioctl(fd, SOUND_MIXER_READ_VOLUME, &value);
+    ], AC_MSG_RESULT(no), [
+	OSS_LIBS="-lossaudio"
+	AC_MSG_RESULT(yes)
+    ])
 fi
 
 if test "$have_oss" = "yes"; then
@@ -648,6 +664,8 @@ fi
 if test "$have_oss" = "yes"; then
 	OUTPUT_PLUGINS="$OUTPUT_PLUGINS OSS"
 fi
+
+AC_SUBST(OSS_LIBS)
 
 dnl *** ALSA output plugin
 

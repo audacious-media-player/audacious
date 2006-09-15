@@ -7,7 +7,7 @@ noinst_HEADERS = OSS.h soundcard.h
 
 LIBDIR = $(plugindir)/$(OUTPUT_PLUGIN_DIR)
 
-LIBADD = $(GTK_LIBS)
+LIBADD = $(OSS_LIBS) $(GTK_LIBS)
 SOURCES = OSS.c mixer.c about.c configure.c audio.c init.c convert.c
 
 OBJECTS = ${SOURCES:.c=.o}
