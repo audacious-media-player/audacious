@@ -115,7 +115,7 @@ AC_ARG_WITH(cdda-dir,
 
 dnl These plugins are always built.
 
-INPUT_PLUGINS="cdaudio tonegen console sexypsf wav cue"
+INPUT_PLUGINS="tonegen console sexypsf wav cue"
 OUTPUT_PLUGINS="disk_writer"
 EFFECT_PLUGINS="audiocompress ladspa voice_removal"
 GENERAL_PLUGINS="song_change"
@@ -896,6 +896,7 @@ AC_CHECK_FUNCS([mkdtemp getmntinfo statvfs strtoul lrintf])
 
 if test "${ac_cv_header_linux_cdrom_h}" = "yes" || test "${ac_cv_header_sys_cdio_h}" = "yes"
 then
+    INPUT_PLUGINS="cdaudio $INPUT_PLUGINS"
     case "$host" in
         *-*-sunos* | *-*-solaris* | *-*-linux*)
             AC_DEFINE(BEEP_CDROM_SOLARIS,, [Define if cdrom access is in Solaris style])
