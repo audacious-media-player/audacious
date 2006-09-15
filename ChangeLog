@@ -1,3 +1,25 @@
+2006-09-15 13:36:26 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2327]
+  - Removed .cpp.o target since we don't have any .cpp files anymore.
+  - A test build then revealed that we still had two .cpp files in
+    Plugins/Input/musepack, fixed that.
+  - Moved nenolod's fix from init.mk to objective.mk.
+  - Removed call to ldconfig in Makefile and replaced it with a hint to
+    call ldconfig manually, since ldconfig without parameters breaks some
+    systems (mainly OpenBSD).
+  - I hope I did not forget to list a change I did ;)
+  
+
+  Changes:        Modified:
+  +6 -3           trunk/Makefile  
+  +3 -0           trunk/Plugins/Input/flac/plugin_common/Makefile.in  
+  +2 -2           trunk/Plugins/Input/musepack/Makefile.in  
+  +196 -196       trunk/Plugins/Input/musepack/equalizer.cpp  
+  +880 -880       trunk/Plugins/Input/musepack/libmpc.cpp  
+  +0 -3           trunk/mk/init.mk  
+  +3 -1           trunk/mk/objective.mk  
+
+
 2006-09-14 21:06:45 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2325]
   - enforce support of our file extensions through use of the .SUFFIXES target

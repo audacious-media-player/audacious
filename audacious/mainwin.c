@@ -1956,10 +1956,10 @@ mainwin_drag_data_received(GtkWidget * widget,
 
     if (str_has_prefix_nocase((gchar *) selection_data->data, "fonts:///"))
     {
-        gchar *path = selection_data->data + 9;		/* skip fonts:/// */
+        gchar *path = (gchar *) selection_data->data + 9;		/* skip fonts:/// */
 	gchar *decoded = xmms_urldecode_plain(path);
 
-        cfg.playlist_font = g_strconcat(decoded, strrchr(cfg.playlist_font, " "), NULL);
+        cfg.playlist_font = g_strconcat(decoded, strrchr(cfg.playlist_font, ' '), NULL);
         playlist_list_set_font(cfg.playlist_font);
         playlistwin_update_list();
 
