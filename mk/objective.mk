@@ -1,6 +1,8 @@
 default: all
 all: build
 
+.SUFFIXES: .cxx .cc
+
 install: build
 	$(MAKE) install-prehook
 	@for i in $(BINDIR) $(LIBDIR) $(INCLUDEDIR); do \
@@ -162,7 +164,7 @@ build:
 	fi;
 	$(CC) $(CFLAGS) -c $< -o $@
 
-.cc.o .cpp.o .cxx.o:
+.cc.o .cxx.o:
 	@if [ $(SHOW_CFLAGS) -eq 1 ]; then	\
 		printf "%10s     %-20s (%s)\n" CXX $< "${CXXFLAGS}";	\
 	else \

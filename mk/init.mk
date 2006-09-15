@@ -18,6 +18,3 @@ BINDIR = $(bindir)
 INCLUDEDIR = $(pkgincludedir)
 CFLAGS += -DHAVE_CONFIG_H -I/usr/pkg/include -I/usr/pkg/xorg/include
 CXXFLAGS += -DHAVE_CONFIG_H -I/usr/pkg/include -I/usr/pkg/xorg/include
-
-# some makes need this -nenolod
-.SUFFIXES: .cpp .cxx .cc

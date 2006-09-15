@@ -9,9 +9,12 @@ include mk/objective.mk
 
 install-posthook:
 	@if test `whoami` = 'root' && test -z "$(DESTDIR)"; then \
-		echo "[running ldconfig to update system library cache]"; \
-		/sbin/ldconfig; \
-		echo "[system library cache updated]"; \
+		echo; \
+		echo "WARNING:"; \
+		echo "On some systems, it might be required that you run"; \
+		echo "ldconfig. However, this isn't done automatically"; \
+		echo "because some ldconfig versions might break the system"; \
+		echo "if it's called without any parameters."; \
 	fi
 
 OBJECTIVE_DATA =							\
