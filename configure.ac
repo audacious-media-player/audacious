@@ -456,7 +456,7 @@ AC_ARG_ENABLE(vorbis,
 if test "$enable_vorbis" = "yes"; then
     PKG_CHECK_MODULES(OGG_VORBIS, [ogg >= 1.0 vorbis >= 1.0 vorbisfile >= 1.0],
         [have_oggvorbis=yes],
-        [AC_MSG_ERROR([Cannot find libogg/libvorbis])
+        [AC_MSG_WARN([*** Cannot find libogg/libvorbis, Ogg Vorbis support will not be built ***])
          have_oggvorbis=no]
     )
 else
