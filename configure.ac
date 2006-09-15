@@ -331,8 +331,26 @@ if test "$enable_pulse" = "yes"; then
          [have_pulse=no]
     )
 else
-    AC_MSG_RESULT([*** esound plugin disabled per user request ***])
+    AC_MSG_RESULT([*** pulseaudio output plugin disabled per user request ***])
     have_pulse=no
+fi
+
+dnl *** CoreAudio
+
+AC_ARG_ENABLE(coreaudio,
+    [  --disable-coreaudio     disable CoreAudio output plugin (default=enabled)],
+    [enable_coreaudio=$enableval],
+    [enable_coreaudio="yes"]
+)
+
+if test "$enable_coreaudio" = "yes"; then
+	AC_CHECK_HEADERS([CoreServices/CoreServices.h],
+		[have_coreaudio=yes
+		 OUTPUT_PLUGINS="$OUTPUT_PLUGINS CoreAudio"],
+		[have_coreaudio=no])
+else
+	AC_MSG_RESULT([*** CoreAudio output plugin disabled per user request ***])
+	have_coreaudio=no
 fi
 
 dnl *** AltiVec
@@ -1210,6 +1228,7 @@ echo "  Jack Audio Connection Kit (jack):       $have_jack"
 echo "  Analog Realtime Synthesizer (arts):     $have_arts"
 echo "  BSD/SUN audio output (sun):             $have_sun"
 echo "  PulseAudio sound server (pulse_audio):  $have_pulse"
+echo "  Mac OS X sound support (CoreAudio):     $have_coreaudio"
 echo
 echo "  Input Plugins"
 echo "  -------------"
