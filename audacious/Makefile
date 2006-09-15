@@ -13,7 +13,6 @@ LDFLAGS += $(AUDLDFLAGS)
 LDADD = \
 	-L.. $(LTLIBINTL)     \
 	-L../libaudacious -laudacious \
-	../sqlite/libsqlite.a	\
 	$(CHARDET_LIBS) \
 	$(GTK_LIBS)      \
 	$(LIBGLADE_LIBS) \
