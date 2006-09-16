@@ -1,11 +1,11 @@
 include ../../../mk/rules.mk
 include ../../../mk/init.mk
 
-OBJECTIVE_LIBS = libxspf$(SHARED_SUFFIX)
+OBJECTIVE_LIBS = libpodcast$(SHARED_SUFFIX)
 
 LIBDIR = $(plugindir)/$(CONTAINER_PLUGIN_DIR)
 
-SOURCES = xspf.c
+SOURCES = podcast.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
