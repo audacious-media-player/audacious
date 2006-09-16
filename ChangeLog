@@ -1,3 +1,12 @@
+2006-09-16 17:08:23 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2367]
+  Fixed 3 warnings, 2 unused variables and 1 missing include
+
+  Changes:        Modified:
+  +2 -2           trunk/Plugins/Output/arts/audio.c  
+  +1 -0           trunk/Plugins/Visualization/paranormal/client.c  
+
+
 2006-09-16 15:34:03 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2365]
   Use the VFS layer.

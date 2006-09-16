@@ -922,7 +922,7 @@ AM_CONDITIONAL(HAVE_LINUX_JOYSTICK,test "${ac_cv_header_linux_joystick_h}" = "ye
 
 if test -n "$GCC"
 then
-    CFLAGS="$CFLAGS -Wall -Wno-strict-aliasing -Wno-unused-parameter -Wpointer-arith -finline-functions -ffast-math"
+    CFLAGS="$CFLAGS -Wall -Wno-unused-parameter -Wpointer-arith -finline-functions -ffast-math"
     case "$CFLAGS" in
         -g*) ;;
         *\ -g*) ;;
