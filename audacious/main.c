@@ -206,6 +206,8 @@ BmpConfig bmp_default_config = {
     FALSE,
     0,
     NULL,			/* default session uri base (non-NULL = custom session uri base) */
+    150,			/* short side length of the picture in the filepopup */
+    20,				/* delay until the filepopup comes up */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -330,7 +332,9 @@ static bmp_cfg_nument bmp_numents[] = {
     {"titlestring_preset", &cfg.titlestring_preset, TRUE},
     {"resume_playback_on_startup_time", &cfg.resume_playback_on_startup_time, TRUE},
     {"output_buffer_size", &cfg.output_buffer_size, TRUE},
-    {"recurse_for_cover_depth", &cfg.recurse_for_cover_depth, TRUE}
+    {"recurse_for_cover_depth", &cfg.recurse_for_cover_depth, TRUE},
+    {"filepopup_pixelsize", &cfg.filepopup_pixelsize, TRUE},
+    {"filepopup_delay", &cfg.filepopup_delay, TRUE},
 };
 
 static gint ncfgient = G_N_ELEMENTS(bmp_numents);

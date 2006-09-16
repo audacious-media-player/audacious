@@ -98,6 +98,8 @@ fileinfo_entry_set_image(const char *entry, const char *text)
 	GladeXML *xml = g_object_get_data(G_OBJECT(fileinfo_win), "glade-xml");
 	GtkWidget *widget = glade_xml_get_widget(xml, entry);
 	GdkPixbuf *pixbuf;
+	int width, height;
+	double aspect;
 
 	if (xml == NULL || widget == NULL)
 		return;
@@ -107,9 +109,22 @@ fileinfo_entry_set_image(const char *entry, const char *text)
 	if (pixbuf == NULL)
 		return;
 
-	if (gdk_pixbuf_get_height(GDK_PIXBUF(pixbuf)) > 150)
+	width  = gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf));
+	height = gdk_pixbuf_get_height(GDK_PIXBUF(pixbuf));
+
+	if(strcmp(DATA_DIR "/images/audio.png", text))
 	{
-		GdkPixbuf *pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), 150, 150, GDK_INTERP_BILINEAR);
+		if(width == 0)
+			width = 1;
+		aspect = (double)height / (double)width;
+		if(aspect > 1.0) {
+			height = (int)(cfg.filepopup_pixelsize * aspect);
+			width = cfg.filepopup_pixelsize;
+		} else {
+			height = cfg.filepopup_pixelsize;
+			width = (int)(cfg.filepopup_pixelsize / aspect);
+		}
+		GdkPixbuf *pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), width, height, GDK_INTERP_BILINEAR);
 		g_object_unref(G_OBJECT(pixbuf));
 		pixbuf = pixbuf2;
 	}
@@ -136,6 +151,8 @@ filepopup_entry_set_image(const char *entry, const char *text)
 	GladeXML *xml = g_object_get_data(G_OBJECT(filepopup_win), "glade-xml");
 	GtkWidget *widget = glade_xml_get_widget(xml, entry);
 	GdkPixbuf *pixbuf;
+	int width, height;
+	double aspect;
 
 	if (xml == NULL || widget == NULL)
 		return;
@@ -145,9 +162,22 @@ filepopup_entry_set_image(const char *entry, const char *text)
 	if (pixbuf == NULL)
 		return;
 
-	if (gdk_pixbuf_get_height(GDK_PIXBUF(pixbuf)) > 150)
+	width  = gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf));
+	height = gdk_pixbuf_get_height(GDK_PIXBUF(pixbuf));
+
+	if(strcmp(DATA_DIR "/images/audio.png", text))
 	{
-		GdkPixbuf *pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), 150, 150, GDK_INTERP_BILINEAR);
+		if(width == 0)
+			width = 1;
+		aspect = (double)height / (double)width;
+		if(aspect > 1.0) {
+			height = (int)(cfg.filepopup_pixelsize * aspect);
+			width = cfg.filepopup_pixelsize;
+		} else {
+			height = cfg.filepopup_pixelsize;
+			width = (int)(cfg.filepopup_pixelsize / aspect);
+		}
+		GdkPixbuf *pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), width, height, GDK_INTERP_BILINEAR);
 		g_object_unref(G_OBJECT(pixbuf));
 		pixbuf = pixbuf2;
 	}
@@ -212,7 +242,7 @@ filepopup_pointer_check_iter(gpointer unused)
 	if (filepopup_win->window == NULL)
 		skip = TRUE;
 
-        if (ctr >= 20 && (skip == TRUE || gdk_window_is_viewable(GDK_WINDOW(filepopup_win->window)) != TRUE))
+        if (ctr >= cfg.filepopup_delay && (skip == TRUE || gdk_window_is_viewable(GDK_WINDOW(filepopup_win->window)) != TRUE))
         {
 		if (pos == -1)
   		{
@@ -258,7 +288,6 @@ void filepopup_hide(gpointer unused)
 	filepopup_entry_set_text("label_year", "");
 	filepopup_entry_set_text("label_length", "");
 
-	filepopup_entry_set_image("image_artwork", DATA_DIR "/images/audio.png");
 
 	gtk_window_resize(GTK_WINDOW(filepopup_win), 1, 1);
 }
@@ -462,8 +491,10 @@ fileinfo_recursive_get_image(const gchar* path, gint depth)
 void
 filepopup_show_for_tuple(TitleInput *tuple)
 {
-	gchar *tmp;
+	gchar *tmp = NULL;
 	gint x, y, x_off = 3, y_off = 3, h, w;
+
+	static gchar *lastpath = NULL;
 
 	if (tuple == NULL)
 		return;
@@ -484,14 +515,21 @@ filepopup_show_for_tuple(TitleInput *tuple)
 	if (tuple->track_number != 0)
 		filepopup_entry_set_text_free("label_track", g_strdup_printf("%d", tuple->track_number));
 
-	tmp = fileinfo_recursive_get_image(tuple->file_path, 0);
+	if(strcmp(lastpath?lastpath:"", tuple->file_path)){
+		tmp = fileinfo_recursive_get_image(tuple->file_path, 0);
 	
-	if(tmp)
-	{
-		filepopup_entry_set_image("image_artwork", tmp);
-		g_free(tmp);
+		if(tmp)
+		{
+			filepopup_entry_set_image("image_artwork", tmp);
+			g_free(tmp);
+			g_free(lastpath);
+			lastpath = g_strdup(tuple->file_path);
+		} else {
+			filepopup_entry_set_image("image_artwork", DATA_DIR "/images/audio.png");
+			g_free(lastpath);
+			lastpath = g_strdup(tuple->file_path);
+		}
 	}
-	
 	gdk_window_get_pointer(NULL, &x, &y, NULL);
 	gtk_window_get_size(GTK_WINDOW(filepopup_win), &w, &h);
 	if (gdk_screen_width()-(w+3) < x) x_off = (w*-1)-3;

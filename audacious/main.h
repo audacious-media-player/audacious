@@ -119,6 +119,8 @@ struct _BmpConfig {
     gboolean recurse_for_cover;
     gint recurse_for_cover_depth;
     gchar *session_uri_base;
+    gint filepopup_pixelsize;
+    gint filepopup_delay;
 };
 
 typedef struct _BmpConfig BmpConfig;
