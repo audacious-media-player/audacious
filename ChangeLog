@@ -1,3 +1,75 @@
+2006-09-16 14:33:28 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2363]
+  More .cpp -> .cxx. Noticed by Chainsaw. Shame on me that I forgot some ;).
+  
+
+  Changes:        Modified:
+  +8 -8           trunk/Plugins/Input/adplug/core/Makefile.in  
+  +449 -449       trunk/Plugins/Input/adplug/core/a2m.cpp  
+  +2427 -2427     trunk/Plugins/Input/adplug/core/adl.cpp  
+  +185 -185       trunk/Plugins/Input/adplug/core/adplug.cpp  
+  +176 -176       trunk/Plugins/Input/adplug/core/adtrack.cpp  
+  +193 -193       trunk/Plugins/Input/adplug/core/amd.cpp  
+  +203 -203       trunk/Plugins/Input/adplug/core/bam.cpp  
+  +596 -596       trunk/Plugins/Input/adplug/core/bmf.cpp  
+  +507 -507       trunk/Plugins/Input/adplug/core/cff.cpp  
+  +538 -538       trunk/Plugins/Input/adplug/core/d00.cpp  
+  +426 -426       trunk/Plugins/Input/adplug/core/database.cpp  
+  +115 -115       trunk/Plugins/Input/adplug/core/dfm.cpp  
+  +90 -90         trunk/Plugins/Input/adplug/core/diskopl.cpp  
+  +403 -403       trunk/Plugins/Input/adplug/core/dmo.cpp  
+  +129 -129       trunk/Plugins/Input/adplug/core/dro.cpp  
+  +317 -317       trunk/Plugins/Input/adplug/core/dtm.cpp  
+  +147 -147       trunk/Plugins/Input/adplug/core/emuopl.cpp  
+  +230 -230       trunk/Plugins/Input/adplug/core/flash.cpp  
+  +223 -223       trunk/Plugins/Input/adplug/core/fmc.cpp  
+  +76 -76         trunk/Plugins/Input/adplug/core/fprovide.cpp  
+  +317 -317       trunk/Plugins/Input/adplug/core/hsc.cpp  
+  +68 -68         trunk/Plugins/Input/adplug/core/hsp.cpp  
+  +248 -248       trunk/Plugins/Input/adplug/core/hybrid.cpp  
+  +125 -125       trunk/Plugins/Input/adplug/core/hyp.cpp  
+  +196 -196       trunk/Plugins/Input/adplug/core/imf.cpp  
+  +336 -336       trunk/Plugins/Input/adplug/core/ksm.cpp  
+  +676 -676       trunk/Plugins/Input/adplug/core/lds.cpp  
+  +126 -126       trunk/Plugins/Input/adplug/core/mad.cpp  
+  +1088 -1088     trunk/Plugins/Input/adplug/core/mid.cpp  
+  +163 -163       trunk/Plugins/Input/adplug/core/mkj.cpp  
+  +312 -312       trunk/Plugins/Input/adplug/core/msc.cpp  
+  +140 -140       trunk/Plugins/Input/adplug/core/mtk.cpp  
+  +70 -70         trunk/Plugins/Input/adplug/core/player.cpp  
+  +105 -105       trunk/Plugins/Input/adplug/core/players.cpp  
+  +719 -719       trunk/Plugins/Input/adplug/core/protrack.cpp  
+  +177 -177       trunk/Plugins/Input/adplug/core/psi.cpp  
+  +124 -124       trunk/Plugins/Input/adplug/core/rad.cpp  
+  +292 -292       trunk/Plugins/Input/adplug/core/rat.cpp  
+  +103 -103       trunk/Plugins/Input/adplug/core/raw.cpp  
+  +492 -492       trunk/Plugins/Input/adplug/core/rix.cpp  
+  +723 -723       trunk/Plugins/Input/adplug/core/rol.cpp  
+  +535 -535       trunk/Plugins/Input/adplug/core/s3m.cpp  
+  +263 -263       trunk/Plugins/Input/adplug/core/sa2.cpp  
+  +84 -84         trunk/Plugins/Input/adplug/core/sng.cpp  
+  +75 -75         trunk/Plugins/Input/adplug/core/temuopl.cpp  
+  +935 -935       trunk/Plugins/Input/adplug/core/u6m.cpp  
+  +140 -140       trunk/Plugins/Input/adplug/core/xad.cpp  
+  +117 -117       trunk/Plugins/Input/adplug/core/xsm.cpp  
+  +2 -2           trunk/Plugins/Input/modplug/Makefile.in  
+  +8 -8           trunk/Plugins/Input/modplug/archive/Makefile.in  
+  +85 -85         trunk/Plugins/Input/modplug/archive/arch_bz2.cpp  
+  +108 -108       trunk/Plugins/Input/modplug/archive/arch_gzip.cpp  
+  +185 -185       trunk/Plugins/Input/modplug/archive/arch_rar.cpp  
+  +55 -55         trunk/Plugins/Input/modplug/archive/arch_raw.cpp  
+  +143 -143       trunk/Plugins/Input/modplug/archive/arch_zip.cpp  
+  +80 -80         trunk/Plugins/Input/modplug/archive/archive.cpp  
+  +112 -112       trunk/Plugins/Input/modplug/archive/open.cpp  
+  +2 -2           trunk/Plugins/Input/modplug/gui/Makefile.in  
+  +164 -164       trunk/Plugins/Input/modplug/gui/callbacks.cpp  
+  +963 -963       trunk/Plugins/Input/modplug/gui/interface.cpp  
+  +308 -308       trunk/Plugins/Input/modplug/gui/main.cpp  
+  +159 -159       trunk/Plugins/Input/modplug/gui/support.cpp  
+  +800 -800       trunk/Plugins/Input/modplug/modplugbmp.cpp  
+  +111 -111       trunk/Plugins/Input/modplug/plugin.cpp  
+
+
 2006-09-16 14:18:18 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2361]
   Use the VFS layer.

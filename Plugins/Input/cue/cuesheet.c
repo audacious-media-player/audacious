@@ -21,6 +21,7 @@
 #include <audacious/plugin.h>
 #include <audacious/output.h>
 #include <audacious/playlist.h>
+#include <libaudacious/vfs.h>
 
 #define MAX_CUE_LINE_LENGTH 1000
 #define MAX_CUE_TRACKS 1000
@@ -333,7 +334,7 @@ static void free_cue_info(void)
 
 static void cache_cue_file(char *f)
 {
-	FILE *file = fopen(f, "rb");
+	VFSFile *file = vfs_fopen(f, "rb");
 	gchar line[MAX_CUE_LINE_LENGTH+1];
 
 	if(!file)
@@ -343,7 +344,7 @@ static void cache_cue_file(char *f)
 		gint p;
 		gint q;
 
-		if (fgets(line, MAX_CUE_LINE_LENGTH+1, file) == NULL)
+		if (vfs_fgets(line, MAX_CUE_LINE_LENGTH+1, file) == NULL)
 			return;
 
 		for (p = 0; line[p] && isspace(line[p]); p++);
@@ -421,7 +422,7 @@ static void cache_cue_file(char *f)
 		}
 	}
 
-	fclose(file);
+	vfs_fclose(file);
 }
 
 static void fix_cue_argument(char *line)
