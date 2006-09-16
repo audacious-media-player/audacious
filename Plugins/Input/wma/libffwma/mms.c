@@ -476,7 +476,9 @@ static void string_utf16_close(iconv_t url_conv) {
     }
 }
 
-static void string_utf16(iconv_t url_conv, char *dest, char *src, int len) {
+static void
+string_utf16(iconv_t url_conv, char *dest, const char *src, int len)
+{
     memset(dest, 0, 2 * len);
 
     if (url_conv == (iconv_t)-1) {
@@ -490,8 +492,9 @@ static void string_utf16(iconv_t url_conv, char *dest, char *src, int len) {
       dest[i * 2 + 1] = 0;
     }
     else {
+      const char *ip;
+      char *op;
       size_t len1, len2;
-      char *ip, *op;
 
       len1 = len; len2 = 1000;
       ip = src; op = dest;

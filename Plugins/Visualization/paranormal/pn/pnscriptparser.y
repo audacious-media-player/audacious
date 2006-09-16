@@ -432,14 +432,14 @@ int
 yylex (void)
 {
   /* Skip whitespaces */
-  while (isspace (*parse_string)) parse_string++;
+  while (isspace ((int) *parse_string)) parse_string++;
 
   /* Handle the end of the string */
   if (*parse_string == '\0')
     return 0;
 
   /* Handle unnamed (numeric) constants */
-  if (*parse_string == '.' || isdigit (*parse_string))
+  if (*parse_string == '.' || isdigit ((int) *parse_string))
     {
       gdouble value;
 
@@ -450,13 +450,14 @@ yylex (void)
     }
 
   /* Handle alphanumeric symbols */
-  if (isalpha (*parse_string))
+  if (isalpha ((int) *parse_string))
     {
       const gchar *symbol_start = parse_string;
       guint function_token;
       gchar *symbol_name;
 
-      while (isalnum (*parse_string) || *parse_string == '_') parse_string++;
+      while (isalnum ((int) *parse_string) || *parse_string == '_')
+        parse_string++;
 
       symbol_name = g_strndup (symbol_start, parse_string - symbol_start);
 

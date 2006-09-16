@@ -137,7 +137,7 @@ pn_boolean_option_load_thyself (PnUserObject *user_object, const xmlNodePtr node
   if (! val_str)
     goto done;
 
-  while (isspace (*val_str))
+  while (isspace ((int) *val_str))
     val_str++;
 
   if (g_strncasecmp (val_str, "True", 4) == 0)

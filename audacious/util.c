@@ -532,7 +532,7 @@ string_to_garray(const gchar * str)
             break;
         g_array_append_val(array, temp);
         ptr = endptr;
-        while (!isdigit(*ptr) && (*ptr) != '\0')
+        while (!isdigit((int) *ptr) && (*ptr) != '\0')
             ptr++;
         if (*ptr == '\0')
             break;

@@ -449,7 +449,7 @@ textbox_generate_pixmap(TextBox * tb)
     for (i = 0; i < length; i++) {
         gchar c;
         x = y = -1;
-        c = toupper(pixmaptext[i]);
+        c = toupper((int) pixmaptext[i]);
         if (c >= 'A' && c <= 'Z') {
             x = 5 * (c - 'A');
             y = 0;

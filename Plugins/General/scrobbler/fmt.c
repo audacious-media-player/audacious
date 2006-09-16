@@ -69,16 +69,16 @@ char *fmt_string_pack(char *string, char *fmt, ...)
 
 int fmt_strcasecmp(const char *s1, const char *s2)
 {
-	while (toupper(*s1) == toupper(*s2++))
+	while (toupper((int) *s1) == toupper((int) *s2++))
 		if (!*s1++)
 			return 0;
-	return toupper(s1[0]) - toupper(s2[-1]);
+	return toupper((int) s1[0]) - toupper((int) s2[-1]);
 }
 
 int fmt_strncasecmp(const char *s1, const char *s2, size_t n)
 {
-	while (toupper(*s1) == toupper(*s2++) && --n)
+	while (toupper((int) *s1) == toupper((int) *s2++) && --n)
 		if(!*s1++)
 			return 0;
-	return n ? toupper(s1[0]) - toupper(s2[-1]) : 0;
+	return n ? toupper((int) s1[0]) - toupper((int) s2[-1]) : 0;
 }

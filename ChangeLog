@@ -1,3 +1,12 @@
+2006-09-16 22:21:56 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2369]
+  Our code is clean enough to not need -Wno-strict-aliasing, with the exception of playlist_list.c (so set that flag for widgets dir only).
+
+  Changes:        Modified:
+  +1 -0           trunk/audacious/widgets/Makefile  
+  +1 -1           trunk/configure.ac  
+
+
 2006-09-16 17:08:23 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2367]
   Fixed 3 warnings, 2 unused variables and 1 missing include

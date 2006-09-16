@@ -128,7 +128,7 @@ static char ishttp(const char *a)
 
 	tmp = strdup(a);
 	for (bp = tmp; *bp; bp++)
-		*bp = toupper(*bp);
+		*bp = toupper((int) *bp);
 	if (strstr(tmp, "HTTP://"))
 		status = -1;
 	free(tmp);
