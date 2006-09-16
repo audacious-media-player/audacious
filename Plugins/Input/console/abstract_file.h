@@ -5,6 +5,7 @@
 #define ABSTRACT_FILE_H
 
 #include <stdio.h>
+#include "libaudacious/vfs.h"
 
 // Supports reading and finding out how many bytes are remaining
 class Data_Reader {
@@ -78,22 +79,22 @@ public:
 	error_t seek( long );
 };
 
-// File reader based on C FILE
+// File reader based on C VFSFile*
 class Std_File_Reader : public File_Reader {
-	FILE* file_;
+	VFSFile* file_;
 protected:
-	void reset( FILE* f ) { file_ = f; }
-	//FILE* owned_file;
+	void reset( VFSFile* f ) { file_ = f; }
+	//VFSFile* owned_file;
 public:
 	Std_File_Reader();
 	~Std_File_Reader();
 	
 	error_t open( const char* );
 	
-	FILE* file() const { return file_; }
+	VFSFile* file() const { return file_; }
 	
 	// Forward read requests to file. Caller must close file later.
-	//void forward( FILE* );
+	//void forward( VFSFile* );
 	
 	long size() const;
 	long read_avail( void*, long );
@@ -123,19 +124,19 @@ private:
 };
 
 class Std_File_Writer : public Data_Writer {
-	FILE* file_;
+	VFSFile* file_;
 protected:
-	void reset( FILE* f ) { file_ = f; }
+	void reset( VFSFile* f ) { file_ = f; }
 public:
 	Std_File_Writer();
 	~Std_File_Writer();
 	
 	error_t open( const char* );
 	
-	FILE* file() const { return file_; }
+	VFSFile* file() const { return file_; }
 	
 	// Forward writes to file. Caller must close file later.
-	//void forward( FILE* );
+	//void forward( VFSFile* );
 	
 	error_t write( const void*, long );
 	

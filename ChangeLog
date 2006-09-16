@@ -1,3 +1,12 @@
+2006-09-16 04:36:31 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2359]
+  - no more busy loop if a file in playlist disappears.
+  
+
+  Changes:        Modified:
+  +6 -1           trunk/audacious/playlist.c  
+
+
 2006-09-16 03:21:35 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2357]
   improvement of filepopup:
