@@ -170,9 +170,14 @@ static gboolean
 playlist_entry_get_info(PlaylistEntry * entry)
 {
     TitleInput *tuple;
-    time_t modtime = playlist_get_mtime(entry->filename);
+    time_t modtime;
 
     g_return_val_if_fail(entry != NULL, FALSE);
+
+    modtime = playlist_get_mtime(entry->filename);
+
+    if (modtime == 0) // maybe file not exist
+	    return FALSE;
 
     if (entry->decoder == NULL)
         entry->decoder = input_check_file(entry->filename, FALSE);

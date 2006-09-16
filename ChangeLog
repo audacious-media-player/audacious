@@ -1,3 +1,17 @@
+2006-09-16 03:21:35 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2357]
+  improvement of filepopup:
+  - now filepopup respects aspect ratio of each image.
+  - it caches scaled image while the same path is being referred.
+  - its image size and delay until coming up is configurable. (no GUI currently.)
+  
+
+  Changes:        Modified:
+  +5 -1           trunk/audacious/main.c  
+  +2 -0           trunk/audacious/main.h  
+  +51 -13         trunk/audacious/ui_fileinfo.c  
+
+
 2006-09-16 03:10:47 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2355]
   - actually on second thought, i don't see the point in this
