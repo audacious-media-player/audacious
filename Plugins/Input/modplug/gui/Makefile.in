@@ -5,8 +5,8 @@ CFLAGS   += $(PICFLAGS) $(GTK_CFLAGS) -I../../../../intl -I../../../..
 CXXFLAGS += $(PICFLAGS) $(GTK_CFLAGS) -I../../../../intl -I../../../..
 
 OBJECTIVE_LIBS_NOINST = libgui.a
-SOURCES = main.cpp support.cpp interface.cpp callbacks.cpp
+SOURCES = main.cxx support.cxx interface.cxx callbacks.cxx
 
-OBJECTS = ${SOURCES:.cpp=.o}
+OBJECTS = ${SOURCES:.cxx=.o}
 
 include ../../../../mk/objective.mk

@@ -5,14 +5,14 @@ CXXFLAGS += $(PICFLAGS) -I../../..
 
 OBJECTIVE_LIBS_NOINST = libarchive.a
 
-SOURCES = archive.cpp     \
-          open.cpp        \
-          arch_raw.cpp    \
-          arch_gzip.cpp   \
-          arch_zip.cpp    \
-          arch_rar.cpp    \
-          arch_bz2.cpp
+SOURCES = archive.cxx     \
+          open.cxx        \
+          arch_raw.cxx    \
+          arch_gzip.cxx   \
+          arch_zip.cxx    \
+          arch_rar.cxx    \
+          arch_bz2.cxx
 
-OBJECTS = ${SOURCES:.cpp=.o}
+OBJECTS = ${SOURCES:.cxx=.o}
 
 include ../../../../mk/objective.mk

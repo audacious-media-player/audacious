@@ -1,3 +1,12 @@
+2006-09-16 14:18:18 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2361]
+  Use the VFS layer.
+
+  Changes:        Modified:
+  +10 -10         trunk/Plugins/Input/console/abstract_file.cxx  
+  +11 -10         trunk/Plugins/Input/console/abstract_file.h  
+
+
 2006-09-16 04:36:31 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2359]
   - no more busy loop if a file in playlist disappears.

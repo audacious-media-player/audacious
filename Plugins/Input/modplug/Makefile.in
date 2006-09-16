@@ -8,8 +8,8 @@ LIBDIR = $(plugindir)/$(INPUT_PLUGIN_DIR)
 
 CXXFLAGS += $(PICFLAGS) $(GTK_CFLAGS) -I.. -I../../.. -I../../../intl
 LIBADD  = $(GTK_LIBS) -lstdc++ -lmodplug ./archive/libarchive.a ./gui/libgui.a
-SOURCES  = plugin.cpp modplugbmp.cpp
+SOURCES  = plugin.cxx modplugbmp.cxx
 
-OBJECTS = ${SOURCES:.cpp=.o}
+OBJECTS = ${SOURCES:.cxx=.o}
 
 include ../../../mk/objective.mk
