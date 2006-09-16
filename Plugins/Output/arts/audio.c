@@ -42,8 +42,8 @@ typedef struct format_info {
 } format_info_t;
 
 static format_info_t input;
-static format_info_t effect;
-static format_info_t output;
+/* static format_info_t effect; */
+/* static format_info_t output; */
 
 
 void artsxmms_tell_audio(AFormat * fmt, gint * srate, gint * nch)

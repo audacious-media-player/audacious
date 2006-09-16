@@ -1,3 +1,11 @@
+2006-09-16 15:34:03 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2365]
+  Use the VFS layer.
+
+  Changes:        Modified:
+  +4 -3           trunk/Plugins/Input/cue/cuesheet.c  
+
+
 2006-09-16 14:33:28 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2363]
   More .cpp -> .cxx. Noticed by Chainsaw. Shame on me that I forgot some ;).
