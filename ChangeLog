@@ -1,3 +1,12 @@
+2006-09-16 01:26:57 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2347]
+  - do not build OSS plugin unless we really can
+  
+
+  Changes:        Modified:
+  +21 -20         trunk/configure.ac  
+
+
 2006-09-16 01:24:27 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2345]
   - remove debugging printf()'s

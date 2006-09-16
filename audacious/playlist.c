@@ -1804,8 +1804,7 @@ playlist_compare_path(PlaylistEntry * a,
 static time_t
 playlist_get_mtime(const gchar *filename)
 {
-	struct stat buf;
-
+    struct stat buf;
     gint rv;
 
     rv = stat(filename, &buf);
@@ -2175,12 +2174,8 @@ playlist_get_info_func(gpointer arg)
             for (node = playlist_get(); node; node = g_list_next(node)) {
                 entry = node->data;
 
-                if(entry->tuple) {
-//                    printf("tuple mtime = %ld file mtime = %ld\n", entry->tuple->mtime, playlist_get_mtime(entry->filename));
-                    if(entry->tuple->mtime == playlist_get_mtime(entry->filename)) 
+                if(entry->tuple && entry->tuple->mtime != 0) {
                         continue;
-                    else
-                        entry->tuple->mtime = 0; /* invalidate mtime */
                 }
 
                 if (!playlist_entry_get_info(entry)) {
@@ -2217,17 +2212,15 @@ playlist_get_info_func(gpointer arg)
                 continue;
             }
 
-            for (node =
-                 g_list_nth(playlist_get(), playlistwin_get_toprow());
-                 node
-                 &&
-                 playlistwin_item_visible(g_list_position
-                                          (playlist_get(), node));
+            for (node = g_list_nth(playlist_get(), playlistwin_get_toprow());
+                 node && playlistwin_item_visible(g_list_position(playlist_get(), node));
                  node = g_list_next(node)) {
+
                 entry = node->data;
-//                if (entry->title || entry->length != -1)
-                if (entry->tuple && (entry->tuple->mtime == playlist_get_mtime(entry->filename)))
+
+                if(entry->tuple && entry->tuple->mtime != 0) {
                     continue;
+                }
 
                 if (!playlist_entry_get_info(entry)) {
                     if (g_list_index(playlist_get(), entry) == -1)
