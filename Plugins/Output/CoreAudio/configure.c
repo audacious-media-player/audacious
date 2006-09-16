@@ -120,14 +120,10 @@ static void scan_devices(gchar * type, GtkWidget * option_menu, GtkSignalFunc si
 	}
 	else
 	{
-		printf("there are %d devices\n",size/sizeof(AudioDeviceID));
-		
 		devicelist = (AudioDeviceID*) malloc(size);
 		
 		if (AudioHardwareGetProperty(kAudioHardwarePropertyDevices,&size,devicelist))
-		{
-			printf("failed to get device list");
-		}
+			return;
 		
 		for (i = 0; i < size/sizeof(AudioDeviceID); i++)
 		{
@@ -195,19 +191,6 @@ void osx_configure(void)
 
 	audio_device = osx_cfg.audio_device;
 	gtk_option_menu_set_history(GTK_OPTION_MENU(adevice), osx_cfg.audio_device);
-
-	/*
-	  audio_alt_box = gtk_hbox_new(FALSE, 0);
-		gtk_box_pack_start_defaults(GTK_BOX(adevice_box), audio_alt_box);
-		adevice_use_alt_check = gtk_check_button_new_with_label("Use alternate device:");
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(adevice_use_alt_check), osx_cfg.use_alt_audio_device);
-		gtk_signal_connect(GTK_OBJECT(adevice_use_alt_check), "toggled", audio_device_toggled, adevice);
-   
-		gtk_box_pack_start(GTK_BOX(audio_alt_box), adevice_use_alt_check, FALSE, FALSE, 0);
-		audio_alt_device_entry = gtk_entry_new();
-
-	gtk_box_pack_start_defaults(GTK_BOX(audio_alt_box), audio_alt_device_entry);
-	*/
 
 	gtk_box_pack_start(GTK_BOX(dev_vbox), mdevice_frame, FALSE, FALSE, 0);
 	

@@ -184,24 +184,17 @@ int (*osx_get_convert_func(int output, int input))(void **, int)
 	if (output == input)
 		return NULL;
 
-	printf("1\n");
-
 	if ((output == FMT_U16_BE && input == FMT_U16_LE) ||
 	    (output == FMT_U16_LE && input == FMT_U16_BE) ||
 	    (output == FMT_S16_BE && input == FMT_S16_LE) ||
 	    (output == FMT_S16_LE && input == FMT_S16_BE))
 		return convert_swap_endian;
 
-	printf("2\n");
-
 	if ((output == FMT_U16_BE && input == FMT_S16_BE) ||
 	    (output == FMT_U16_LE && input == FMT_S16_LE) ||
 	    (output == FMT_S16_BE && input == FMT_U16_BE) ||
 	    (output == FMT_S16_LE && input == FMT_U16_LE))
 		return convert_swap_sign16;
-
-	printf("3\n");
-
 
 	if ((IS_BIG_ENDIAN &&
 	     ((output == FMT_U16_BE && input == FMT_S16_LE) ||
@@ -211,8 +204,6 @@ int (*osx_get_convert_func(int output, int input))(void **, int)
 	      (output == FMT_S16_LE && input == FMT_U16_BE))))
 		return convert_swap_sign_and_endian_to_native;
 
-	printf("4\n");
-		
 	if ((!IS_BIG_ENDIAN &&
 	     ((output == FMT_U16_BE && input == FMT_S16_LE) ||
 	      (output == FMT_S16_BE && input == FMT_U16_LE))) ||
@@ -220,8 +211,6 @@ int (*osx_get_convert_func(int output, int input))(void **, int)
 	     ((output == FMT_U16_LE && input == FMT_S16_BE) ||
 	      (output == FMT_S16_LE && input == FMT_U16_BE))))
 		return convert_swap_sign_and_endian_to_alien;
-
-	printf("5\n");
 
 	if ((IS_BIG_ENDIAN &&
 	     ((output == FMT_U8 && input == FMT_U16_BE) ||
@@ -231,8 +220,6 @@ int (*osx_get_convert_func(int output, int input))(void **, int)
 	      (output == FMT_S8 && input == FMT_S16_LE))))
 		return convert_to_8_native_endian;
 
-	printf("6\n");
-
 	if ((IS_BIG_ENDIAN &&
 	     ((output == FMT_U8 && input == FMT_S16_BE) ||
 	      (output == FMT_S8 && input == FMT_U16_BE))) ||
@@ -240,8 +227,6 @@ int (*osx_get_convert_func(int output, int input))(void **, int)
 	     ((output == FMT_U8 && input == FMT_S16_LE) ||
 	      (output == FMT_S8 && input == FMT_U16_LE))))
 		return convert_to_8_native_endian_swap_sign;
-
-	printf("7\n");
 
 	if ((!IS_BIG_ENDIAN &&
 	     ((output == FMT_U8 && input == FMT_U16_BE) ||
@@ -251,8 +236,6 @@ int (*osx_get_convert_func(int output, int input))(void **, int)
 	      (output == FMT_S8 && input == FMT_S16_LE))))
 		return convert_to_8_alien_endian;
 
-	printf("8\n");
-
 	if ((!IS_BIG_ENDIAN &&
 	     ((output == FMT_U8 && input == FMT_S16_BE) ||
 	      (output == FMT_S8 && input == FMT_U16_BE))) ||
@@ -261,13 +244,9 @@ int (*osx_get_convert_func(int output, int input))(void **, int)
 	      (output == FMT_S8 && input == FMT_U16_LE))))
 		return convert_to_8_alien_endian_swap_sign;
 
-	printf("9\n");
-
 	if ((output == FMT_U8 && input == FMT_S8) ||
 	    (output == FMT_S8 && input == FMT_U8))
 		return convert_swap_sign8;
-
-	printf("10\n");
 
 	if ((IS_BIG_ENDIAN &&
 	     ((output == FMT_U16_BE && input == FMT_U8) ||
@@ -277,8 +256,6 @@ int (*osx_get_convert_func(int output, int input))(void **, int)
 	      (output == FMT_S16_LE && input == FMT_S8))))
 		return convert_to_16_native_endian;
 
-	printf("11\n");
-
 	if ((IS_BIG_ENDIAN &&
 	     ((output == FMT_U16_BE && input == FMT_S8) ||
 	      (output == FMT_S16_BE && input == FMT_U8))) ||
@@ -287,8 +264,6 @@ int (*osx_get_convert_func(int output, int input))(void **, int)
 	      (output == FMT_S16_LE && input == FMT_U8))))
 		return convert_to_16_native_endian_swap_sign;
 
-	printf("12\n");
-
 	if ((!IS_BIG_ENDIAN &&
 	     ((output == FMT_U16_BE && input == FMT_U8) ||
 	      (output == FMT_S16_BE && input == FMT_S8))) ||
@@ -296,8 +271,6 @@ int (*osx_get_convert_func(int output, int input))(void **, int)
 	     ((output == FMT_U16_LE && input == FMT_U8) ||
 	      (output == FMT_S16_LE && input == FMT_S8))))
 		return convert_to_16_alien_endian;
-
-	printf("14\n");
 
 	if ((!IS_BIG_ENDIAN &&
 	     ((output == FMT_U16_BE && input == FMT_S8) ||

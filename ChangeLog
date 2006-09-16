@@ -1,3 +1,12 @@
+2006-09-15 23:48:51 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2343]
+  - only build cdaudio plugin if we support DAE
+  
+
+  Changes:        Modified:
+  +2 -1           trunk/configure.ac  
+
+
 2006-09-15 23:36:30 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2341]
   - if a pkg-config module is unavailable, report this
