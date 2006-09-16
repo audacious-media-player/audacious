@@ -1,3 +1,13 @@
+2006-09-16 01:24:27 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2345]
+  - remove debugging printf()'s
+  
+
+  Changes:        Modified:
+  +1 -18          trunk/Plugins/Output/CoreAudio/configure.c  
+  +0 -27          trunk/Plugins/Output/CoreAudio/convert.c  
+
+
 2006-09-15 23:48:51 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2343]
   - only build cdaudio plugin if we support DAE

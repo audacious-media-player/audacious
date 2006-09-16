@@ -624,11 +624,12 @@ dnl *** OSS output
 
 AC_ARG_ENABLE(oss,
     [  --disable-oss           disable the OSS output plugin (default=enabled)],
-    [have_oss=$enableval],
-    [have_oss=yes]
+    [enable_oss=$enableval],
+    [enable_oss=yes]
 )
 
-if test "$have_oss" = "yes"; then
+have_oss=no
+if test "$enable_oss" = "yes"; then
     AC_MSG_CHECKING(for OSS include dir)
     OSS_CFLAGS=""
     if test -f "/etc/oss.conf" ; then
@@ -652,25 +653,25 @@ if test "$have_oss" = "yes"; then
     AC_CHECK_HEADERS(machine/soundcard.h)
     CFLAGS=$CFLAGS_save
 
-    if test "${ac_cv_header_sys_soundcard_h}" = "yes" || test "${ac_cv_header_machine_soundcard_h}" = "yes"; then
+    if test "${ac_cv_header_sys_soundcard_h}" = "yes" || test "${ac_cv_header_machine_soundcard_h}" = "yes" || test "${ac_cv_header_soundcard_h}" = "yes"; then
         have_oss=yes
-    fi
 
-    AC_MSG_CHECKING(wether we need -lossaudio)
-    AC_TRY_LINK([
-	#include <sys/ioctl.h>
-	#ifdef HAVE_SYS_SOUNDCARD_H
-	#include <sys/soundcard.h>
-	#else
-	#include <soundcard.h>
-	#endif
-    ], [
-	int fd, value;
-	ioctl(fd, SOUND_MIXER_READ_VOLUME, &value);
-    ], AC_MSG_RESULT(no), [
-	OSS_LIBS="-lossaudio"
-	AC_MSG_RESULT(yes)
-    ])
+	AC_MSG_CHECKING(whether we need -lossaudio)
+        AC_TRY_LINK([
+		#include <sys/ioctl.h>
+		#ifdef HAVE_SYS_SOUNDCARD_H
+		#include <sys/soundcard.h>
+		#else
+		#include <soundcard.h>
+		#endif
+        ], [
+		int fd, value;
+		ioctl(fd, SOUND_MIXER_READ_VOLUME, &value);
+	], AC_MSG_RESULT(no), [
+		OSS_LIBS="-lossaudio"
+		AC_MSG_RESULT(yes)
+        ])
+    fi
 fi
 
 if test "$have_oss" = "yes"; then
