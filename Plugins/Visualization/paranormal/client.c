@@ -82,7 +82,7 @@ static void draw_image (PnImage *image);
 /* XMMS interface */
 static void pn_xmms_init (void);
 static void pn_xmms_cleanup (void);
-static void pn_xmms_about (void);
+/* static void pn_xmms_about (void); */
 static void pn_xmms_configure (void);
 static void pn_xmms_render_pcm (gint16 data[2][512]);
 static void pn_xmms_render_freq (gint16 data[2][256]);
@@ -212,11 +212,13 @@ pn_xmms_cleanup (void)
   write_options ();
 }
 
+/*
 static void
 pn_xmms_about (void)
 {
-  /* FIXME: This needs to wait until XMMS supports GTK+ 2.0 */
+  // FIXME: This needs to wait until XMMS supports GTK+ 2.0
 }
+*/
 
 static void
 pn_xmms_configure (void)

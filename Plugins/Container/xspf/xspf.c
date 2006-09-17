@@ -366,7 +366,7 @@ playlist_save_xspf(const gchar *filename, gint pos)
 				str = g_malloc(128); // XXX fix me.
 				tmp = xmlNewNode(NULL, "meta");
 				xmlSetProp(tmp, "rel", "mtime");
-				sprintf(str, "%ld", entry->tuple->mtime);
+				sprintf(str, "%ld", (long) entry->tuple->mtime);
 				xmlAddChild(tmp, xmlNewText(str));
 				xmlAddChild(track, tmp);
 				g_free(str);
