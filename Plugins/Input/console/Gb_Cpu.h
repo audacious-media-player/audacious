@@ -51,7 +51,7 @@ public:
 	
 	// Game Boy Z80 registers. *Not* kept updated during a call to run().
 	struct registers_t {
-		long pc; // more than 16 bits to allow overflow detection
+		gb_addr_t pc; // more than 16 bits to allow overflow detection
 		BOOST::uint16_t sp;
 		uint8_t flags;
 		uint8_t a;

@@ -80,10 +80,12 @@ void gen_sinc( int width, double offset, double spacing, int count, double scale
 	}
 }
 
+/*
 static double plain_sinc( double a )
 {
 	return fabs( a ) < 0.00001 ? 1.0 : sin( a ) / a;
 }
+*/
 
 // Fir_Resampler
 

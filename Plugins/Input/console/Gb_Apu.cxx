@@ -18,8 +18,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA */
 
 #include BLARGG_SOURCE_BEGIN
 
-int const vol_reg    = 0xFF24;
-int const status_reg = 0xFF26;
+const unsigned vol_reg    = 0xFF24;
+const unsigned status_reg = 0xFF26;
 
 Gb_Apu::Gb_Apu()
 {

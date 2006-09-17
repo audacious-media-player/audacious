@@ -242,7 +242,7 @@ static TitleInput   *mp4_get_song_tuple(char *fn)
 		gint numSamples = mp4ff_num_samples(mp4file, mp4track);
 		guint framesize = 1024;
 		gulong samplerate;
-		gchar channels;
+		guchar channels;
 		gint msDuration;
 		mp4AudioSpecificConfig mp4ASC;
 		gchar *tmpval;

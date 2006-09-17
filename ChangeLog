@@ -1,3 +1,18 @@
+2006-09-16 23:26:54 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2371]
+  Fixed a lot of warnings that only showed up on *BSD.
+
+  Changes:        Modified:
+  +4 -4           trunk/Plugins/General/scrobbler/fmt.c  
+  +1 -1           trunk/Plugins/General/scrobbler/xmms_scrobbler.c  
+  +5 -2           trunk/Plugins/Input/wma/libffwma/mms.c  
+  +1 -1           trunk/Plugins/Visualization/paranormal/pn/pnbooleanoption.c  
+  +5 -4           trunk/Plugins/Visualization/paranormal/pn/pnscriptparser.y  
+  +2 -1           trunk/audacious/getopt.c  
+  +1 -1           trunk/audacious/util.c  
+  +1 -1           trunk/audacious/widgets/textbox.c  
+
+
 2006-09-16 22:21:56 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2369]
   Our code is clean enough to not need -Wno-strict-aliasing, with the exception of playlist_list.c (so set that flag for widgets dir only).

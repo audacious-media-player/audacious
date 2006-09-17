@@ -108,7 +108,7 @@ void console_cfg_ui( void )
 	GtkWidget *configwin_gen_playback_deflen_hbox, *configwin_gen_playback_deflen_spbt;
 	GtkWidget *configwin_nsf_nsfeoptpl_cbt;
 	GtkWidget *configwin_spc_ignorespclen_cbt;
-	GtkWidget *hseparator, *hbuttonbox, *button_ok, *button_cancel;
+	GtkWidget /* *hseparator, */ *hbuttonbox, *button_ok, *button_cancel;
 	GtkWidget *configwin_notebook;
 	GtkTooltips *tips;
 

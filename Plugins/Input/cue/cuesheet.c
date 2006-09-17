@@ -347,14 +347,14 @@ static void cache_cue_file(char *f)
 		if (vfs_fgets(line, MAX_CUE_LINE_LENGTH+1, file) == NULL)
 			return;
 
-		for (p = 0; line[p] && isspace(line[p]); p++);
+		for (p = 0; line[p] && isspace((int) line[p]); p++);
 		if (!line[p])
 			continue;
-		for (q = p; line[q] && !isspace(line[q]); q++);
+		for (q = p; line[q] && !isspace((int) line[q]); q++);
 		if (!line[q])
 			continue;
 		line[q] = '\0';
-		for (q++; line[q] && isspace(line[q]); q++);
+		for (q++; line[q] && isspace((int) line[q]); q++);
 
 		if (strcasecmp(line+p, "PERFORMER") == 0) {
 			fix_cue_argument(line+q);
@@ -394,7 +394,7 @@ static void cache_cue_file(char *f)
 			gint track;
 
 			fix_cue_argument(line+q);
-			for (p = q; line[p] && isdigit(line[p]); p++);
+			for (p = q; line[p] && isdigit((int) line[p]); p++);
 			line[p] = '\0';
 			for (; line[q] && line[q] == '0'; q++);
 			if (!line[q])
@@ -408,11 +408,11 @@ static void cache_cue_file(char *f)
 			cue_tracks[last_cue_track-1].title = NULL;
 		}
 		else if (strcasecmp(line+p, "INDEX") == 0) {
-			for (p = q; line[p] && !isspace(line[p]); p++);
+			for (p = q; line[p] && !isspace((int) line[p]); p++);
 			if (!line[p])
 				continue;
-			for (p++; line[p] && isspace(line[p]); p++);
-			for (q = p; line[q] && !isspace(line[q]); q++);
+			for (p++; line[p] && isspace((int) line[p]); p++);
+			for (q = p; line[q] && !isspace((int) line[q]); q++);
 			if (q-p >= 8 && line[p+2] == ':' && line[p+5] == ':') {
 				cue_tracks[last_cue_track-1].index =
 						((line[p+0]-'0')*10 + (line[p+1]-'0')) * 60000 +

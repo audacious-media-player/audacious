@@ -1865,7 +1865,7 @@ int64_t parse_date(const char *datestr, int duration)
         int val, n;
         q++;
         for (val = 0, n = 100000; n >= 1; n /= 10, q++) {
-            if (!isdigit(*q)) 
+            if (!isdigit((int) *q)) 
                 break;
             val += n * (*q - '0');
         }
@@ -1935,11 +1935,11 @@ int get_frame_filename(char *buf, int buf_size,
         if (c == '%') {
             do {
                 nd = 0;
-                while (isdigit(*p)) {
+                while (isdigit((int) *p)) {
                     nd = nd * 10 + *p++ - '0';
                 }
                 c = *p++;
-            } while (isdigit(c));
+            } while (isdigit((int) c));
 
             switch(c) {
             case '%':

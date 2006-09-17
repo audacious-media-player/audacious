@@ -47,7 +47,7 @@ void Nsfe_Emu::start_track( int i )
 	Nsf_Emu::start_track( remap_track( i ) );
 }
 
-const char* Nsfe_Info::track_name( int i ) const
+const char* Nsfe_Info::track_name( unsigned i ) const
 {
 	i = remap_track( i );
 	if ( i < track_names.size() )
@@ -56,7 +56,7 @@ const char* Nsfe_Info::track_name( int i ) const
 	return "";
 }
 
-long Nsfe_Info::track_time( int i ) const
+long Nsfe_Info::track_time( unsigned i ) const
 {
 	i = remap_track( i );
 	if ( i < track_times.size() )
@@ -205,7 +205,7 @@ blargg_err_t Nsfe_Info::load( const header_t& nsfe_tag, Emu_Reader& in, Nsf_Emu*
 			
 			case NSFE_TAG('t','i','m','e'): {
 				track_times.resize( size / 4 );
-				for ( int i = 0; i < track_times.size(); i++ )
+				for ( unsigned i = 0; i < track_times.size(); i++ )
 					BLARGG_RETURN_ERR( read_le32( in, &track_times [i] ) );
 				break;
 			}

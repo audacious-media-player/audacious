@@ -43,10 +43,10 @@ public:
 	// All track indicies are 0-based
 	
 	// Name of track [i], or "" if none available
-	const char* track_name( int i ) const;
+	const char* track_name( unsigned i ) const;
 	
 	// Duration of track [i] in milliseconds, negative if endless, or 0 if none available
-	long track_time( int i ) const;
+	long track_time( unsigned i ) const;
 	
 	// Optional playlist consisting of track indicies
 	int playlist_size() const { return playlist.size(); }
