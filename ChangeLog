@@ -1,3 +1,15 @@
+2006-09-17 00:51:46 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2377]
+  - do not generate a Makefile for libconsole
+  - remove dead JMA code
+  
+
+  Changes:        Modified:
+  +0 -0           trunk/Plugins/Input/console/Jma_File.cxx  
+  +49 -0          trunk/Plugins/Input/console/Jma_File.h  
+  +0 -49          trunk/Plugins/Input/console/Makefile.in  
+
+
 2006-09-17 00:47:12 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2375]
   - remove iconv code altogether

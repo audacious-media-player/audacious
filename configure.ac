@@ -1161,7 +1161,6 @@ AC_CONFIG_FILES([
 	Plugins/Input/flac/Makefile
 	Plugins/Input/flac/plugin_common/Makefile
 	Plugins/Input/sid/Makefile
-	Plugins/Input/console/Makefile
 	Plugins/Input/wma/Makefile
 	Plugins/Input/wma/libffwma/Makefile
 	Plugins/Input/timidity/Makefile
