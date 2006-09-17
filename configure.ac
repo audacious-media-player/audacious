@@ -654,7 +654,7 @@ if test "$enable_oss" = "yes"; then
     AC_CHECK_HEADERS(machine/soundcard.h)
     CFLAGS=$CFLAGS_save
 
-    if test "${ac_cv_header_soundcard_h}" = "yes" || "${ac_cv_header_sys_soundcard_h}" = "yes" || test "${ac_cv_header_machine_soundcard_h}" = "yes"; then
+    if test "${ac_cv_header_soundcard_h}" = "yes" || test "${ac_cv_header_sys_soundcard_h}" = "yes" || test "${ac_cv_header_machine_soundcard_h}" = "yes"; then
         have_oss=yes
     fi
 

@@ -1,3 +1,12 @@
+2006-09-17 05:44:14 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2397]
+  - remove redundant test
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/configure.ac  
+
+
 2006-09-17 02:37:08 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2395]
   Fixed unused variable and missing type conversion
