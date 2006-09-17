@@ -1,3 +1,11 @@
+2006-09-17 02:13:26 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2389]
+  #undef ALIGN, since it's already defined on OpenBSD.
+
+  Changes:        Modified:
+  +1 -0           trunk/Plugins/Input/wma/libffwma/utils.c  
+
+
 2006-09-17 02:10:07 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2387]
   Seems like someone did a fix for Linux' iconv like I did for BSD's in another file. Added an #ifdef here, too.

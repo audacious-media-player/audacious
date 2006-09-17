@@ -20,6 +20,8 @@ extern "C"
 #include <math.h>
 
 //libmpcdec headers
+#undef TRUE
+#undef FALSE
 #include <mpcdec/mpcdec.h>
 
 //GTK+ headers
