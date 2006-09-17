@@ -1,3 +1,27 @@
+2006-09-17 00:17:22 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2373]
+  Fixed a LOT of warnings showing up with -Wall. This is the first step
+  towards making Audacious compile with -Wall -Werror, but it's still far
+  from beeing finished.
+  
+  PS: *sigh* I even had to patch C++ (therefore ugly) files!
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Input/aac/src/libmp4.c  
+  +1 -1           trunk/Plugins/Input/console/Audacious_Config.cxx  
+  +1 -1           trunk/Plugins/Input/console/Dual_Resampler.cxx  
+  +2 -0           trunk/Plugins/Input/console/Fir_Resampler.cxx  
+  +2 -2           trunk/Plugins/Input/console/Gb_Apu.cxx  
+  +1 -1           trunk/Plugins/Input/console/Gb_Cpu.h  
+  +1 -1           trunk/Plugins/Input/console/Nes_Cpu.h  
+  +3 -3           trunk/Plugins/Input/console/Nsfe_Emu.cxx  
+  +2 -2           trunk/Plugins/Input/console/Nsfe_Emu.h  
+  +7 -7           trunk/Plugins/Input/cue/cuesheet.c  
+  +1 -1           trunk/Plugins/Input/wma/libffwma/avio.c  
+  +3 -3           trunk/Plugins/Input/wma/libffwma/futils.c  
+
+
 2006-09-16 23:26:54 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2371]
   Fixed a lot of warnings that only showed up on *BSD.

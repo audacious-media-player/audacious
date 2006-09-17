@@ -45,13 +45,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-#if defined(HAVE_ICONV) && defined(HAVE_LANGINFO_CODESET)
-#define USE_ICONV
-#include <iconv.h>
-#include <locale.h>
-#include <langinfo.h>
-#endif
-
 /********** logging **********/
 #define LOG_MODULE "mms"
 #define LOG_VERBOSE
@@ -465,44 +458,6 @@ static int send_command (mms_io_t *io, mms_t *this, int command,
   return 1;
 }
 
-#ifdef USE_ICONV
-static iconv_t string_utf16_open() {
-    return iconv_open("UTF-16LE", nl_langinfo(CODESET));
-}
-
-static void string_utf16_close(iconv_t url_conv) {
-    if (url_conv != (iconv_t)-1) {
-      iconv_close(url_conv);
-    }
-}
-
-static void
-string_utf16(iconv_t url_conv, char *dest, const char *src, int len)
-{
-    memset(dest, 0, 2 * len);
-
-    if (url_conv == (iconv_t)-1) {
-      int i;
-
-      for (i = 0; i < len; i++) {
-        dest[i * 2] = src[i];
-        dest[i * 2 + 1] = 0;
-      }
-      dest[i * 2] = 0;
-      dest[i * 2 + 1] = 0;
-    }
-    else {
-      const char *ip;
-      char *op;
-      size_t len1, len2;
-
-      len1 = len; len2 = 1000;
-      ip = src; op = dest;
-      iconv(url_conv, &ip, &len1, &op, &len2);
-    }
-}
-
-#else
 static void string_utf16(int unused, char *dest, char *src, int len) {
   int i;
 
@@ -516,8 +471,6 @@ static void string_utf16(int unused, char *dest, char *src, int len) {
   dest[i * 2] = 0;
   dest[i * 2 + 1] = 0;
 }
-#endif
-
 
 /*
  * return packet type
@@ -1030,11 +983,7 @@ int static mms_choose_best_streams(mms_io_t *io, mms_t *this) {
  */
 /* FIXME: got somewhat broken during xine_stream_t->(void*) conversion */
 mms_t *mms_connect (mms_io_t *io, void *data, const char *url, int bandwidth) {
-#ifdef USE_ICONV
-  iconv_t url_conv;
-#else
   int     url_conv = 0;
-#endif
   mms_t  *this;
   int     res;
   GURI   *uri;
@@ -1090,9 +1039,6 @@ mms_t *mms_connect (mms_io_t *io, void *data, const char *url, int bandwidth) {
   /* FIXME de-xine-ification */
 /*   report_progress (stream, 30); */
   
-#ifdef USE_ICONV
-  url_conv = string_utf16_open();
-#endif
   /*
    * let the negotiations begin...
    */
@@ -1268,10 +1214,6 @@ mms_t *mms_connect (mms_io_t *io, void *data, const char *url, int bandwidth) {
   }
 
 /*   report_progress (stream, 100); */
-
-#ifdef USE_ICONV
-  string_utf16_close(url_conv);
-#endif
 
   lprintf("mms_connect: passed\n" );
  
