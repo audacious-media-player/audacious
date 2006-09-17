@@ -1,3 +1,11 @@
+2006-09-17 01:58:23 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2385]
+  nenolod's fix for the soundcard.h check was incomplete, fixed
+
+  Changes:        Modified:
+  +2 -2           trunk/configure.ac  
+
+
 2006-09-17 01:56:17 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2383]
   - check for soundcard.h

@@ -89,7 +89,11 @@ char* FLAC_plugin__charset_convert_string (const char *string, char *from, char 
 	outptr = out;
 
 retry:
+#if defined __OpenBSD__ || defined __NetBSD__
+	if (iconv(cd, &input, &length, &outptr, &outleft) == (size_t)-1)
+#else
 	if (iconv(cd, (char**)&input, &length, &outptr, &outleft) == (size_t)-1)
+#endif
 	{
 		int used;
 		switch (errno)
