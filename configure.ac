@@ -649,6 +649,7 @@ if test "$enable_oss" = "yes"; then
     fi
     CFLAGS_save=$CFLAGS
     CFLAGS="$CFLAGS $OSS_CFLAGS"
+    AC_CHECK_HEADERS(soundcard.h)
     AC_CHECK_HEADERS(sys/soundcard.h)
     AC_CHECK_HEADERS(machine/soundcard.h)
     CFLAGS=$CFLAGS_save

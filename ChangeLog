@@ -1,3 +1,12 @@
+2006-09-17 01:46:42 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2381]
+  - oh oops
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/configure.ac  
+
+
 2006-09-17 00:53:36 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2379]
   - remove reference in autoconf
