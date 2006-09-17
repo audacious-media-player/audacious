@@ -1,3 +1,12 @@
+2006-09-17 02:37:08 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2395]
+  Fixed unused variable and missing type conversion
+
+  Changes:        Modified:
+  +1 -1           trunk/Plugins/Container/xspf/xspf.c  
+  +4 -2           trunk/Plugins/Visualization/paranormal/client.c  
+
+
 2006-09-17 02:21:06 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2393]
   Add #undef FSCALE, since it's already defined on OpenBSD
