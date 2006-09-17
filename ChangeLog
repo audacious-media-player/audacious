@@ -1,3 +1,12 @@
+2006-09-17 00:47:12 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2375]
+  - remove iconv code altogether
+  
+
+  Changes:        Modified:
+  +0 -58          trunk/Plugins/Input/wma/libffwma/mms.c  
+
+
 2006-09-17 00:17:22 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2373]
   Fixed a LOT of warnings showing up with -Wall. This is the first step
