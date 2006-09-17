@@ -116,6 +116,7 @@ typedef struct InternalBuffer{
 
 #define INTERNAL_BUFFER_SIZE 32
 
+#undef ALIGN
 #define ALIGN(x, a) (((x)+(a)-1)&~((a)-1))
 
 void avcodec_align_dimensions(AVCodecContext *s, int *width, int *height){
