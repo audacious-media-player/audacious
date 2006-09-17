@@ -1,3 +1,12 @@
+2006-09-17 00:53:36 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2379]
+  - remove reference in autoconf
+  
+
+  Changes:        Modified:
+  +0 -1           trunk/configure.ac  
+
+
 2006-09-17 00:51:46 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2377]
   - do not generate a Makefile for libconsole

@@ -655,6 +655,7 @@ if test "$enable_oss" = "yes"; then
 
     if test "${ac_cv_header_sys_soundcard_h}" = "yes" || test "${ac_cv_header_machine_soundcard_h}" = "yes" || test "${ac_cv_header_soundcard_h}" = "yes"; then
         have_oss=yes
+    fi
 
 	AC_MSG_CHECKING(whether we need -lossaudio)
         AC_TRY_LINK([
@@ -671,7 +672,6 @@ if test "$enable_oss" = "yes"; then
 		OSS_LIBS="-lossaudio"
 		AC_MSG_RESULT(yes)
         ])
-    fi
 fi
 
 if test "$have_oss" = "yes"; then
