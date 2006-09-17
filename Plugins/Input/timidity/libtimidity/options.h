@@ -88,6 +88,7 @@
 
 #define MAX_AMP_VALUE ((1<<(AMP_BITS+1))-1)
 
+#undef FSCALE
 #define FSCALE(a,b) (float)((a) * (double)(1<<(b)))
 #define FSCALENEG(a,b) (float)((a) * (1.0L / (double)(1<<(b))))
 

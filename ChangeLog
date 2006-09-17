@@ -1,3 +1,11 @@
+2006-09-17 02:18:59 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2391]
+  #undef TRUE and FALSE before inclusion of mpcdec.h since both, GTK and mpcdev, define this, which leads to a hard error on OpenBSD
+
+  Changes:        Modified:
+  +2 -0           trunk/Plugins/Input/musepack/libmpc.h  
+
+
 2006-09-17 02:13:26 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2389]
   #undef ALIGN, since it's already defined on OpenBSD.
