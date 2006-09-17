@@ -636,7 +636,7 @@ if test "$enable_oss" = "yes"; then
         for i in `cat /etc/oss.conf`; do
             t=`echo $i | sed -e 's/OSSLIBDIR=//'`
             if test "$i" != "$t" ; then
-                if test -f "$t/include/sys/soundcard.h" ; then
+                if test -f "$t/include/sys/soundcard.h" -o -f "$i/include/soundcard.h" ; then
                     OSS_CFLAGS="-I$t/include"
                 fi
             fi
@@ -654,7 +654,7 @@ if test "$enable_oss" = "yes"; then
     AC_CHECK_HEADERS(machine/soundcard.h)
     CFLAGS=$CFLAGS_save
 
-    if test "${ac_cv_header_sys_soundcard_h}" = "yes" || test "${ac_cv_header_machine_soundcard_h}" = "yes" || test "${ac_cv_header_soundcard_h}" = "yes"; then
+    if test "${ac_cv_header_soundcard_h}" = "yes" || "${ac_cv_header_sys_soundcard_h}" = "yes" || test "${ac_cv_header_machine_soundcard_h}" = "yes" || test "${ac_cv_header_soundcard_h}" = "yes"; then
         have_oss=yes
     fi
 

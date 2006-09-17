@@ -1,3 +1,12 @@
+2006-09-17 01:56:17 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2383]
+  - check for soundcard.h
+  
+
+  Changes:        Modified:
+  +1 -0           trunk/configure.ac  
+
+
 2006-09-17 01:46:42 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2381]
   - oh oops
