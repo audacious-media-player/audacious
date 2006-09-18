@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT(audacious, 1.2.0)
+AC_INIT([audacious], [1.2.0], [bugs+audacious@atheme.org])
 AC_PREREQ([2.59])
 
 AC_CANONICAL_HOST
@@ -77,40 +77,6 @@ AC_ARG_ENABLE(user-plugin-dir,
     [  --disable-user-plugin-dir          disable per-user plugin dir],
     [enable_user_plugin_dir=$enableval],
     [enable_user_plugin_dir=yes]
-)
-
-AC_ARG_WITH(dev-dsp,
-    [  --with-dev-dsp=path            Path to OSS DSP data pipe, default is /dev/dsp.],
-    [dev_dsp=$withval],
-    [dev_dsp=/dev/dsp]
-)
-AC_DEFINE_UNQUOTED(DEV_DSP, "$dev_dsp",
-    [Path to OSS DSP, really just a data pipe, default is /dev/dsp.]
-)
-
-AC_ARG_WITH(dev-mixer,
-    [  --with-dev-mixer=path          Path to OSS sound mixer, default is /dev/mixer.],
-    [dev_mixer=$withval],
-    [dev_mixer=/dev/mixer]
-)
-AC_DEFINE_UNQUOTED(DEV_MIXER, "$dev_mixer",
-    [Path to OSS mixer, default is /dev/mixer.]
-)
-
-AC_ARG_WITH(cdda-device,
-    [  --with-cdda-device=path        Path to default cdaudio device.],
-    [AC_DEFINE_UNQUOTED(CDDA_DEVICE, "$withval",
-         [Path to default cdaudio device.]
-     )
-    ]
-)
-
-AC_ARG_WITH(cdda-dir,
-    [  --with-cdda-dir=path           Path to default cdaudio directory.],
-    [AC_DEFINE_UNQUOTED(CDDA_DIRECTORY, "$withval",
-         [Path to default cdaudio directory.]
-     )
-    ]
 )
 
 dnl Check for GTK/GLib/GThread/Pango
@@ -534,12 +500,4 @@ if test "$BEEP_PATH" != "no" && test "$prefix/bin/audacious" != "$BEEP_PATH" ; t
     echo "If you don't want two copies of Audacious installed, rerun configure with"
     echo "the --prefix option set to the location of the old Audacious, or uninstall"
     echo "the old Audacious."
-fi
-
-if test "x$ap_disable_timidity" = "xyes" && test "x$enable_timidity" = "xno"; then
-    echo "Note: an ALSA-supported hardware midi synth or a FluidSynth software synth"
-    echo "was detected in configuration; in order to use it, the amidi-plug input"
-    echo "plugin will be compiled in place of timidity. If you wish to compile timidity"
-    echo "anyway, simply use --enable-timidity in configuration."
-    echo ""
 fi

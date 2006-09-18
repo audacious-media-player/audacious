@@ -1,3 +1,12 @@
+2006-09-18 10:20:15 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2425]
+  - add -D_AUDACIOUS_CORE here
+  
+
+  Changes:        Modified:
+  +1 -0           trunk/audacious/widgets/Makefile  
+
+
 2006-09-18 09:51:11 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2423]
   - remove plugins from the core distribution
