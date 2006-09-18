@@ -25,7 +25,7 @@
 #define PLAYLIST_H
 
 #include <glib.h>
-#include "libaudacious/titlestring.h"
+#include "audacious/titlestring.h"
 #include "input.h"
 
 typedef enum {
