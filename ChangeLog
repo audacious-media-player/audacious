@@ -1,3 +1,13 @@
+2006-09-18 09:33:52 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2419]
+  - only include non-SDK things if _AUDACIOUS_CORE is defined.
+  
+
+  Changes:        Modified:
+  +1 -0           trunk/audacious/Makefile  
+  +4 -2           trunk/audacious/main.h  
+
+
 2006-09-18 09:30:57 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2417]
   - export main.h API

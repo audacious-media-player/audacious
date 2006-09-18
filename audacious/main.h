@@ -30,6 +30,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+G_BEGIN_DECLS
+
 #define BMP_USER_PLUGIN_DIR_BASENAME  "Plugins"
 #define BMP_SKIN_DIR_BASENAME         "Skins"
 #define BMP_SKIN_THUMB_DIR_BASENAME   ".thumbs"
@@ -168,5 +170,7 @@ void bmp_config_save(void);
 void bmp_config_load(void);
 void make_directory(const gchar * path, mode_t mode);
 void report_error(const gchar *error_text);
+
+G_END_DECLS
 
 #endif
