@@ -22,8 +22,10 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include "widgets/widgetcore.h"
-#include "mainwin.h"
+#ifdef _AUDACIOUS_CORE
+# include "widgets/widgetcore.h"
+# include "mainwin.h"
+#endif
 
 #include <sys/types.h>
 #include <sys/stat.h>
