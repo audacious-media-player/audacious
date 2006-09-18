@@ -1,3 +1,14 @@
+2006-09-18 08:44:39 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2405]
+  - merge libaudacious (public) and audacious util APIs
+  
+
+  Changes:        Modified:
+  +22 -0          trunk/audacious/util.h  
+  +1 -1           trunk/libaudacious/Makefile.in  
+  +1 -32          trunk/libaudacious/util.h  
+
+
 2006-09-18 08:41:41 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2403]
   - add the PlaylistContainer API to the SDK.

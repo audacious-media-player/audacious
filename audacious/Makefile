@@ -32,7 +32,8 @@ HEADERS = \
 	playlist.h \
 	playlist_container.h \
 	plugin.h \
-	prefswin.h
+	prefswin.h \
+	util.h
 
 SOURCES = \
 	build_stamp.c \
