@@ -29,6 +29,7 @@ CFLAGS += \
 HEADERS = \
 	input.h \
 	output.h \
+	playlist.h \
 	plugin.h \
 	prefswin.h
 
