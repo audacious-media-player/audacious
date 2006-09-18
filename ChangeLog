@@ -1,3 +1,12 @@
+2006-09-18 20:06:15 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2431]
+  - add back a test for libxml2, that way we'll still use xspf as default if available
+  
+
+  Changes:        Modified:
+  +13 -0          trunk/configure.ac  
+
+
 2006-09-18 20:03:22 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2429]
   - remove some plugin checks I missed
