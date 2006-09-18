@@ -1,6 +1,0 @@
-include ../../../mk/rules.mk
-include ../../../mk/init.mk
-
-SUBDIRS = libtimidity src
-
-include ../../../mk/objective.mk

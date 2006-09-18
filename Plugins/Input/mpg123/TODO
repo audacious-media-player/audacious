@@ -1,9 +1,0 @@
-getting from libmpgdec <internal> to libmpgdec <release>
---------------------------------------------------------
-
-1) All the audacious code needs to be moved out of the core library.
-
-2) read/seek callbacks need to be added.
-
-3) interfaces need to be designed
-

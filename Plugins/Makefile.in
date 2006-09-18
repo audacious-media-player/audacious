@@ -1,6 +1,0 @@
-include ../mk/rules.mk
-include ../mk/init.mk
-
-SUBDIRS = Input Output Effect Visualization General Container
-
-include ../mk/objective.mk

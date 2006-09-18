@@ -1,6 +1,0 @@
-include ../../mk/rules.mk
-include ../../mk/init.mk
-
-SUBDIRS = audiocompress ladspa stereo_plugin voice_removal
-
-include ../../mk/objective.mk

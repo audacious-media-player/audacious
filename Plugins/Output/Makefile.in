@@ -1,7 +1,0 @@
-include ../../mk/rules.mk
-include ../../mk/init.mk
-
-ALL_PLUGINS = OSS alsa disk_writer esd jack arts
-SUBDIRS = @OUTPUT_PLUGINS@
-
-include ../../mk/objective.mk

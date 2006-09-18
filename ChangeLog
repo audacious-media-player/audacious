@@ -1,3 +1,12 @@
+2006-09-18 09:34:43 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2421]
+  - add G_BEGIN_DECLS and G_END_DECLS for C++ users
+  
+
+  Changes:        Modified:
+  +4 -0           trunk/audacious/main.h  
+
+
 2006-09-18 09:33:52 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2419]
   - only include non-SDK things if _AUDACIOUS_CORE is defined.

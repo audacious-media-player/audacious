@@ -1,7 +1,0 @@
-include ../../mk/rules.mk
-include ../../mk/init.mk
-
-ALL_PLUGINS = mpg123 aac modplug vorbis tonegen cdaudio sid wav flac console timidity musepack sexypsf adplug wma amidi-plug cue
-SUBDIRS = @INPUT_PLUGINS@
-
-include ../../mk/objective.mk
