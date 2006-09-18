@@ -1,3 +1,12 @@
+2006-09-18 20:03:22 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2429]
+  - remove some plugin checks I missed
+  
+
+  Changes:        Modified:
+  +0 -68          trunk/configure.ac  
+
+
 2006-09-18 19:59:14 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2427]
   - add a bugs@ address for audacious

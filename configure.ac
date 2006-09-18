@@ -366,6 +366,19 @@ fi
 
 AC_SUBST(BEEP_DEFINES)
 
+AC_ARG_ENABLE(xspf,
+[  --disable-xspf          disable XSPF support. (default=enabled)],
+[have_xspf=$enableval], [have_xspf=yes])
+
+AM_PATH_XML2(2.0.0, , [
+       AC_MSG_WARN([*** libxml2 is not installed. Paranormal nor XSPF support will not be built. ***])
+       have_xspf="no"
+])
+
+if test "$have_xspf" = "yes"; then
+       AC_DEFINE(HAVE_XSPF_PLAYLIST, 1, [Define if XSPF playlists are available.])
+fi
+
 AC_SUBST(beepdir)
 AC_SUBST(plugindir)
 
