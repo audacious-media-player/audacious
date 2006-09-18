@@ -1,3 +1,12 @@
+2006-09-18 08:58:20 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2411]
+  - lets be C++ friendly
+  
+
+  Changes:        Modified:
+  +1 -2           trunk/audacious/util.h  
+
+
 2006-09-18 08:56:09 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2409]
   - use audacious/titlestring.h instead of libaudacious/titlestring.h

@@ -28,6 +28,8 @@
 #include "audacious/titlestring.h"
 #include "input.h"
 
+G_BEGIN_DECLS
+
 typedef enum {
     PLAYLIST_SORT_PATH,
     PLAYLIST_SORT_FILENAME,
@@ -179,5 +181,6 @@ extern void playlist_load_ins_file_tuple(const gchar * filename_p,
 					 const gchar * playlist_name, gint pos,
 					 TitleInput *tuple);
 
+G_END_DECLS
 
 #endif
