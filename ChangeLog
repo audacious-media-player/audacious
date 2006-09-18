@@ -1,3 +1,13 @@
+2006-09-18 08:59:07 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2413]
+  - C++ friendliness
+  
+
+  Changes:        Modified:
+  +3 -0           trunk/audacious/playlist.h  
+  +4 -0           trunk/audacious/playlist_container.h  
+
+
 2006-09-18 08:58:20 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2411]
   - lets be C++ friendly
