@@ -30,6 +30,7 @@ HEADERS = \
 	input.h \
 	output.h \
 	playlist.h \
+	playlist_container.h \
 	plugin.h \
 	prefswin.h
 
