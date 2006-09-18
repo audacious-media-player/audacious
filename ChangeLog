@@ -1,3 +1,15 @@
+2006-09-18 09:51:11 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2423]
+  - remove plugins from the core distribution
+  - remove stupid ricer CFLAGS addition
+  (Plugins are now at: svn co http://svn.atheme.org/audacious-plugins/trunk -- have a nice day)
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/Makefile  
+  +0 -763         trunk/configure.ac  
+
+
 2006-09-18 09:34:43 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2421]
   - add G_BEGIN_DECLS and G_END_DECLS for C++ users

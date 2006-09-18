@@ -10,6 +10,7 @@ CFLAGS += \
 	$(LIBGLADE_CFLAGS) \
 	$(BEEP_DEFINES)    \
 	$(ARCH_DEFINES)    \
+	-D_AUDACIOUS_CORE  \
 	-I../..    \
 	-I..	   \
 	-I../../intl \
