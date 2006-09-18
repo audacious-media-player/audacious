@@ -29,6 +29,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
+G_BEGIN_DECLS
 
 #define NO_PLAY_BUTTON  FALSE
 #define PLAY_BUTTON     TRUE
@@ -138,8 +139,6 @@ gchar *chardet_to_utf8(const gchar *str, gssize len,
 
 #define bmp_check_realtime_priority() \
   xmms_check_realtime_priority()
-
-G_BEGIN_DECLS
 
 GtkWidget *xmms_show_message(const gchar * title, const gchar * text,
                              const gchar * button_text, gboolean modal,
