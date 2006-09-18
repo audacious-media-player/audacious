@@ -1,3 +1,12 @@
+2006-09-18 09:06:40 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2415]
+  - export xentry and xconvert API
+  
+
+  Changes:        Modified:
+  +1 -1           trunk/libaudacious/Makefile.in  
+
+
 2006-09-18 08:59:07 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2413]
   - C++ friendliness

@@ -28,6 +28,7 @@ CFLAGS += \
 
 HEADERS = \
 	input.h \
+	main.h \
 	output.h \
 	playlist.h \
 	playlist_container.h \
