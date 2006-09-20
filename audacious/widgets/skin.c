@@ -543,6 +543,9 @@ skin_parse_hints(Skin * skin, gchar *path_p)
 
     if (tmp != NULL)
         skin->properties.mainwin_othertext = atoi(tmp);
+
+    g_free(tmp);
+    g_free(filename);
 }
 
 static guint
