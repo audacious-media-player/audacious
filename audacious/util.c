@@ -1007,10 +1007,14 @@ util_run_filebrowser(gboolean play_button)
         g_signal_handler_disconnect(chooser, handlerid_activate);
         g_signal_handler_disconnect(button_add, handlerid_do);
         g_signal_handler_disconnect(chooser, handlerid_do_activate);
-		if (cfg.refresh_file_list) {
-            // *sigh* force a refresh
-            gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(chooser),gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(chooser)));
-		}
+
+	if (cfg.refresh_file_list)
+	{
+	    gchar *tmp = gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(chooser));
+            gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(chooser), tmp);
+
+	    g_free(tmp);
+	}
     }
     
     if (play_button) {

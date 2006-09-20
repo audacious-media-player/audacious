@@ -1,3 +1,13 @@
+2006-09-20 08:08:15 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2439]
+  - properly free the path to skin.hints once we locate it
+  - properly free a temporary variable (read_ini_string())
+  
+
+  Changes:        Modified:
+  +3 -0           trunk/audacious/widgets/skin.c  
+
+
 2006-09-20 02:20:09 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2437]
   - avoid conflict of mkdtemp() declaration between util.h and stdlib.h.
