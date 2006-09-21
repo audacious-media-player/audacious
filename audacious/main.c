@@ -1133,15 +1133,19 @@ main(gint argc, gchar ** argv)
 	if (cfg.resume_playback_on_startup) {
 		if (cfg.resume_playback_on_startup_time != -1 && playlist_get_length() > 0) {
 			int i;
+			gint l=0, r=0;
 			while (gtk_events_pending()) gtk_main_iteration();
+			output_get_volume(&l, &r);
+			output_set_volume(0,0);
 			bmp_playback_initiate();
-			for (i = 0; i < 8; i++) {
-				g_usleep(10000);
+			for (i = 0; i < 20; i++) { /* Busy wait; loop is fairly tight to minimize duration of "frozen" GUI. Feel free to tune. --chainsaw */
+				g_usleep(1000);
 				if (!ip_data.playing)
 					break;
 			}
 			bmp_playback_seek(cfg.resume_playback_on_startup_time /
 					  1000);
+			output_set_volume(l, r);
 		}
 	}
 
