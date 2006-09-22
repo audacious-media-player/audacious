@@ -98,16 +98,11 @@ show_about_window(void)
 
     if (about_window != NULL)
     {
-        gtk_window_set_keep_above(GTK_WINDOW(about_window), TRUE);
         gtk_window_present(GTK_WINDOW(about_window));
         return;
     }
 
-    about_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_type_hint(GTK_WINDOW(about_window),
-                             GDK_WINDOW_TYPE_HINT_DIALOG);
-
-    gtk_window_set_keep_above(GTK_WINDOW(about_window), TRUE);
+    about_window = gtk_window_new(GTK_WINDOW_POPUP);
 
     g_signal_connect(about_window, "destroy",
                      G_CALLBACK(gtk_widget_destroyed), &about_window);

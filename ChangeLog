@@ -1,3 +1,11 @@
+2006-09-21 20:24:48 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2443]
+  Mute while seeking for playback resume, tighten the loop. We want a responsive GUI ASAP.
+
+  Changes:        Modified:
+  +6 -2           trunk/audacious/main.c  
+
+
 2006-09-20 08:13:06 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2441]
   - fix a memory leak in util_run_filebrowser()
