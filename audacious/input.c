@@ -38,8 +38,8 @@
 #include "playback.h"
 #include "widgets/widgetcore.h"
 #include "pluginenum.h"
+#include "titlestring.h"
 
-#include "libaudacious/titlestring.h"
 #include "libaudacious/util.h"
 #include "libaudacious/xentry.h"
 

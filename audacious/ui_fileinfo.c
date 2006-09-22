@@ -50,8 +50,9 @@
 #include "urldecode.h"
 #include "util.h"
 #include "dnd.h"
+#include "titlestring.h"
+
 #include "libaudacious/configdb.h"
-#include "libaudacious/titlestring.h"
 
 #include "playlist.h"
 

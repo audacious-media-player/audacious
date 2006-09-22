@@ -1,3 +1,14 @@
+2006-09-22 09:57:25 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2445]
+  - use proper X11 hinting here to ensure that the about window isn't decorated on broken WMs (e.g. quartz-wm)
+  
+  about.c |    7 +------
+  1 file changed, 1 insertion(+), 6 deletions(-)
+
+  Changes:        Modified:
+  +1 -6           trunk/audacious/about.c  
+
+
 2006-09-21 20:24:48 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2443]
   Mute while seeking for playback resume, tighten the loop. We want a responsive GUI ASAP.
