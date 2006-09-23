@@ -194,6 +194,8 @@ bmp_cfg_db_set_string(ConfigDb * db,
 {
     GConfValue *cval;
 
+    if (value == NULL)
+	value = "";
     cval = gconf_value_new(GCONF_VALUE_STRING);
     gconf_value_set_string(cval, value);
     bmp_cfg_db_set_value(db, section, key, cval);

@@ -1,3 +1,14 @@
+2006-09-22 10:12:02 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2447]
+  - version bump to 1.2.0-rc2
+  - use audacious/titlestring.h instead of libaudacious/titlestring.h
+  
+  trunk/audacious/input.c       |    2 +-
+  trunk/audacious/ui_fileinfo.c |    3 ++-
+  trunk/configure.ac            |    2 +-
+  3 files changed, 4 insertions(+), 3 deletions(-)
+
+
 2006-09-22 09:57:25 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2445]
   - use proper X11 hinting here to ensure that the about window isn't decorated on broken WMs (e.g. quartz-wm)
