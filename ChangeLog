@@ -1,3 +1,10 @@
+2006-09-23 20:50:17 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2449]
+  Do not try write NULL into a gconf key, convert it to "" first.
+  trunk/libaudacious/configdb_gconf.c |    2 ++
+  1 file changed, 2 insertions(+)
+
+
 2006-09-22 10:12:02 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2447]
   - version bump to 1.2.0-rc2
