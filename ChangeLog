@@ -1,3 +1,10 @@
+2006-09-23 20:53:46 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2451]
+  Revert botched workaround, the actual 3 NULL writes will have to be addressed.
+  trunk/libaudacious/configdb_gconf.c |    2 --
+  1 file changed, 2 deletions(-)
+
+
 2006-09-23 20:50:17 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2449]
   Do not try write NULL into a gconf key, convert it to "" first.

@@ -1979,16 +1979,22 @@ static void
 on_chardet_fallback_realize(GtkEntry *entry, gpointer data)
 {
     ConfigDb *db;
-    gchar *ret;
+    gchar *ret = NULL;
 
     db = bmp_cfg_db_open();
 
     if (bmp_cfg_db_get_string(db, NULL, "chardet_fallback", &ret) != FALSE) {
         if(cfg.chardet_fallback)
             g_free(cfg.chardet_fallback);
-        cfg.chardet_fallback = ret;
+
+        if(ret && strncasecmp(ret, "None", sizeof("None"))) {
+            cfg.chardet_fallback = ret;
+        } else {
+            cfg.chardet_fallback = g_strdup("");
+        }
         gtk_entry_set_text(entry, cfg.chardet_fallback);
     }
+
     bmp_cfg_db_close(db);
 }
 
@@ -1996,16 +2002,19 @@ static void
 on_chardet_fallback_changed(GtkEntry *entry, gpointer data)
 {
     ConfigDb *db;
-    gchar *ret;
-
-    ret = g_strdup(gtk_entry_get_text(entry));
 
     if(cfg.chardet_fallback)
         g_free(cfg.chardet_fallback);
-    cfg.chardet_fallback = ret;
+
+    cfg.chardet_fallback = g_strdup(gtk_entry_get_text(entry));
 
     db = bmp_cfg_db_open();
-    bmp_cfg_db_set_string(db, NULL, "chardet_fallback", cfg.chardet_fallback);
+
+    if(!strncasecmp(cfg.chardet_fallback, "", sizeof("")))
+        bmp_cfg_db_set_string(db, NULL, "chardet_fallback", "None");
+    else
+        bmp_cfg_db_set_string(db, NULL, "chardet_fallback", cfg.chardet_fallback);
+
     bmp_cfg_db_close(db);
 }
 

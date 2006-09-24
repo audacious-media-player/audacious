@@ -176,7 +176,7 @@ esac
 dnl chardet support
 dnl ========================
 AC_ARG_ENABLE(chardet,
-	[  --enable-chardet	 enable character set detection support (default=no)],
+	[  --enable-chardet	  enable character set detection support (default=no)],
 			enable_chardet=$enableval, enable_chardet=no)
 if test "x$enable_chardet" = xyes; then
     AC_DEFINE(USE_CHARDET, 1, [Define if character set detection enabled] )
