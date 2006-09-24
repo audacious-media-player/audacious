@@ -194,10 +194,14 @@ bmp_cfg_db_set_string(ConfigDb * db,
 {
     GConfValue *cval;
 
-    cval = gconf_value_new(GCONF_VALUE_STRING);
-    gconf_value_set_string(cval, value);
-    bmp_cfg_db_set_value(db, section, key, cval);
-    gconf_value_free(cval);
+    if (value == NULL) {
+	bmp_cfg_db_unset_key(db, section, key);
+    } else {
+        cval = gconf_value_new(GCONF_VALUE_STRING);
+        gconf_value_set_string(cval, value);
+        bmp_cfg_db_set_value(db, section, key, cval);
+        gconf_value_free(cval);
+    }
 }
 
 void
