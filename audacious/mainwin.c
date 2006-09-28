@@ -573,7 +573,7 @@ mainwin_set_shade_menu_cb(gboolean shaded)
         widget_hide(WIDGET(mainwin_stime_sec));
         widget_hide(WIDGET(mainwin_sposition));
 
-        textbox_set_scroll(mainwin_info, TRUE);
+        textbox_set_scroll(mainwin_info, cfg.autoscroll);
         mainwin_shade->pb_ny = mainwin_shade->pb_py = 18;
     }
 

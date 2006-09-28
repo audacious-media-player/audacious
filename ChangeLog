@@ -1,3 +1,12 @@
+2006-09-28 15:50:11 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2461]
+  - gtk+-2.10's gtk_widget_destroy() sometimes causes an UI freeze. as a workaround, reuse allocated dialog.
+  - when saving playlist without an extension, .xspf will be appended.
+  
+  trunk/audacious/ui_playlist.c |   99 +++++++++++++++++++++++++++++-------------
+  1 file changed, 70 insertions(+), 29 deletions(-)
+
+
 2006-09-28 15:39:14 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2459]
   - fix for "bmp_rcfile_write_string: assertion `value != NULL' failed"
