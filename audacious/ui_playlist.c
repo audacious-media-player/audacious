@@ -919,40 +919,80 @@ playlistwin_load_playlist(const gchar * filename)
 }
 
 static gchar *
-playlist_file_selection(const gchar * title,
-                        gboolean save,
+playlist_file_selection_load(const gchar * title,
                         const gchar * default_filename)
 {
-    GtkWidget *dialog, *button;
+    static GtkWidget *dialog = NULL;
+    GtkWidget *button;
     gchar *filename;
 
     g_return_val_if_fail(title != NULL, NULL);
 
-    dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(mainwin),
-                                         save ? GTK_FILE_CHOOSER_ACTION_SAVE :
-                                         GTK_FILE_CHOOSER_ACTION_OPEN, NULL, NULL);
-    if (default_filename)
-        gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog),
-                                      default_filename);
+    if(!dialog) {
+        dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(mainwin),
+                                             GTK_FILE_CHOOSER_ACTION_OPEN, NULL, NULL);
 
-    button = gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CANCEL,
-                                   GTK_RESPONSE_REJECT);
-    gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
-    GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
+        if (default_filename)
+            gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog),
+                                          default_filename);
 
-    button = gtk_dialog_add_button(GTK_DIALOG(dialog),
-                                   save ? GTK_STOCK_SAVE : GTK_STOCK_OPEN,
-                                   GTK_RESPONSE_ACCEPT);
-    gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
-    gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
+        button = gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CANCEL,
+                                       GTK_RESPONSE_REJECT);
+        gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
+        GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
+
+        button = gtk_dialog_add_button(GTK_DIALOG(dialog),
+                                       GTK_STOCK_OPEN,
+                                       GTK_RESPONSE_ACCEPT);
+        gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
+        gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
+    }
 
     if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
         filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
     else
         filename = NULL;
 
-    gtk_widget_destroy(dialog);
+    gtk_widget_hide(dialog);
+    return filename;
+}
 
+static gchar *
+playlist_file_selection_save(const gchar * title,
+                        const gchar * default_filename)
+{
+    static GtkWidget *dialog = NULL;
+    GtkWidget *button;
+    gchar *filename;
+
+    g_return_val_if_fail(title != NULL, NULL);
+
+    if(!dialog) {
+        dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(mainwin),
+                                             GTK_FILE_CHOOSER_ACTION_SAVE, NULL, NULL);
+
+        if (default_filename)
+            gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog),
+                                          default_filename);
+
+        button = gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CANCEL,
+                                       GTK_RESPONSE_REJECT);
+        gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
+        GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
+
+        button = gtk_dialog_add_button(GTK_DIALOG(dialog),
+                                       GTK_STOCK_SAVE,
+                                       GTK_RESPONSE_ACCEPT);
+        gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
+        gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
+    }
+
+    if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
+        filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
+    else
+        filename = NULL;
+
+    gtk_widget_hide(dialog);
     return filename;
 }
 
@@ -960,7 +1000,7 @@ void
 playlistwin_select_playlist_to_load(const gchar * default_filename)
 {
     gchar *filename =
-        playlist_file_selection(_("Load Playlist"), FALSE, default_filename);
+        playlist_file_selection_load(_("Load Playlist"), default_filename);
 
     if (filename) {
         playlistwin_load_playlist(filename);
@@ -971,19 +1011,20 @@ playlistwin_select_playlist_to_load(const gchar * default_filename)
 static void
 playlistwin_select_playlist_to_save(const gchar * default_filename)
 {
+    gchar *dot = NULL, *basename = NULL;
     gchar *filename =
-        playlist_file_selection(_("Save Playlist"), TRUE, default_filename);
+        playlist_file_selection_save(_("Save Playlist"), default_filename);
 
     if (filename) {
-        /* Default to M3U if no filename has extension */
-
-        /* NOTE: This doesn't work correctly for hidden files
-           - descender */
-        if (!strchr(filename, '.')) {
-            gchar *tmpstr = filename;
-            filename = g_strconcat(filename, ".m3u", NULL);
-            g_free(tmpstr);
+        /* Default to xspf if no filename has extension */
+        basename = g_path_get_basename(filename);
+        dot = strrchr(basename, '.');
+        if( dot == NULL || dot == basename) {
+            gchar *oldname = filename;
+            filename = g_strconcat(oldname, ".xspf", NULL);
+            g_free(oldname);
         }
+        g_free(basename);
 
         playlistwin_save_playlist(filename);
         g_free(filename);
