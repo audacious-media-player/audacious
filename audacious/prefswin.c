@@ -1929,7 +1929,7 @@ static void
 on_chardet_detector_cbox_changed(GtkComboBox * combobox, gpointer data)
 {
     ConfigDb *db;
-    gint position;
+    gint position = 0;
 
     position = gtk_combo_box_get_active(GTK_COMBO_BOX(combobox));
     cfg.chardet_detector = (char *)chardet_detector_presets[position];
@@ -2002,15 +2002,21 @@ static void
 on_chardet_fallback_changed(GtkEntry *entry, gpointer data)
 {
     ConfigDb *db;
+    gchar *ret = NULL;
 
     if(cfg.chardet_fallback)
         g_free(cfg.chardet_fallback);
 
-    cfg.chardet_fallback = g_strdup(gtk_entry_get_text(entry));
+    ret = g_strdup(gtk_entry_get_text(entry));
+
+    if(ret == NULL)
+        cfg.chardet_fallback = g_strdup("");
+    else
+        cfg.chardet_fallback = ret;
 
     db = bmp_cfg_db_open();
 
-    if(!strncasecmp(cfg.chardet_fallback, "", sizeof("")))
+    if(cfg.chardet_fallback == NULL || !strcmp(cfg.chardet_fallback, ""))
         bmp_cfg_db_set_string(db, NULL, "chardet_fallback", "None");
     else
         bmp_cfg_db_set_string(db, NULL, "chardet_fallback", cfg.chardet_fallback);

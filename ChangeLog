@@ -1,3 +1,11 @@
+2006-09-28 15:36:43 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2457]
+  - fix for "playlist.c:1482: Mutex not locked!"
+  
+  trunk/audacious/playlist.c |    2 ++
+  1 file changed, 2 insertions(+)
+
+
 2006-09-24 19:08:30 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2455]
   Interpret set_string for a NULL value as a key unset action, as gconf will not store NULL values.

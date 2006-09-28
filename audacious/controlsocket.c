@@ -87,10 +87,10 @@ ctrlsocket_start_thread(void)
 gboolean
 ctrlsocket_setup(void)
 {
-    audacious_set_session_uri(cfg.session_uri_base);
-
-    if (cfg.session_uri_base == NULL)
-	return ctrlsocket_setup_unix();
+    if (strcmp(cfg.session_uri_base, ""))
+        audacious_set_session_uri(cfg.session_uri_base);
+    else
+        return ctrlsocket_setup_unix();
 
     if (!g_strncasecmp(cfg.session_uri_base, "tcp://", 6))
 	return ctrlsocket_setup_tcp();

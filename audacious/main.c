@@ -566,11 +566,17 @@ bmp_config_load(void)
     if (!cfg.eqpreset_extension)
         cfg.eqpreset_extension = g_strdup(EQUALIZER_DEFAULT_PRESET_EXT);
 
+    if (!cfg.chardet_fallback)
+        cfg.chardet_fallback = g_strdup("");
+
     if (!cfg.cover_name_include)
 	    cfg.cover_name_include = g_strdup("");
 
     if (!cfg.cover_name_exclude)
 	    cfg.cover_name_exclude = g_strdup("back");
+
+    if (!cfg.session_uri_base)
+        cfg.session_uri_base = g_strdup("");
 }
 
 
