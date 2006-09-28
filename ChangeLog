@@ -1,3 +1,10 @@
+2006-09-24 19:08:30 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2455]
+  Interpret set_string for a NULL value as a key unset action, as gconf will not store NULL values.
+  trunk/libaudacious/configdb_gconf.c |   12 ++++++++----
+  1 file changed, 8 insertions(+), 4 deletions(-)
+
+
 2006-09-24 07:40:12 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2453]
   - fix for gconf_value_get_string() does not accept null string.

@@ -1320,7 +1320,9 @@ playlist_save(const gchar * filename)
     if (plc->plc_write == NULL)
         return FALSE;
 
+    PLAYLIST_LOCK();
     plc->plc_write(filename, 0);
+    PLAYLIST_UNLOCK();
 
     return TRUE;
 }
