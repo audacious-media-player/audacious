@@ -1,3 +1,11 @@
+2006-09-28 17:01:28 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2463]
+  - now mainwindow remembers "autoscroll songname" setting after returns from shaded mode.
+  
+  trunk/audacious/mainwin.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-09-28 15:50:11 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2461]
   - gtk+-2.10's gtk_widget_destroy() sometimes causes an UI freeze. as a workaround, reuse allocated dialog.
