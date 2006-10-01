@@ -415,6 +415,8 @@ input_check_file(const gchar * filename, gboolean show_warning)
             g_free(filename_proxy);
             return ip;
         }
+	else if (ret <= -1)
+	    break;
     }
 
     g_free(filename_proxy);

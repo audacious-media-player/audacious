@@ -1,3 +1,11 @@
+2006-09-30 23:05:40 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2465]
+  - Spanish translation update from Gustavo Vranjes.
+  
+  trunk/po/es.po |  887 ++++++++++++++-------------------------------------------
+  1 file changed, 228 insertions(+), 659 deletions(-)
+
+
 2006-09-28 17:01:28 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2463]
   - now mainwindow remembers "autoscroll songname" setting after returns from shaded mode.
