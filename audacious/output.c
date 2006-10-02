@@ -92,7 +92,6 @@ set_current_output_plugin(gint i)
 #if 0
     playing = bmp_playback_get_playing();
     if (playing) {
-
         /* FIXME: we do all on our own here */
         
         guint min = 0, sec = 0, params, time, pos;
@@ -233,7 +232,7 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
 
     /* Is our output port already open? */
     if ((op_state.rate != 0 && op_state.nch != 0) &&
-	(op_state.rate == rate && op_state.nch == nch))
+	(op_state.rate == rate && op_state.nch == nch && op_state.fmt == fmt))
     {
 	/* Yes, and it's the correct sampling rate. Reset the counter and go. */
 	op->flush(0);
@@ -281,15 +280,6 @@ output_close_audio(void)
     /* Sanity check. */
     if (op == NULL)
         return;
-
-#if 0
-    g_print("Requirements to close audio output have been met:\n"
-	"ip_data.stop = %d\n"
-	"playlist_get_position_nolock() = %d\n"
-	"playlist_get_length_nolock() - 1 = %d\n",
-	ip_data.stop, playlist_get_position_nolock(),
-	playlist_get_length_nolock() - 1);
-#endif
 
     op->close_audio();
 

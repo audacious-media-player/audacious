@@ -1,3 +1,11 @@
+2006-10-02 08:52:12 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2471]
+  - remove an artifact of the bmp -> audacious transition
+  
+  trunk/rename.sh |    7 -------
+  1 file changed, 7 deletions(-)
+
+
 2006-10-02 08:46:59 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2469]
   - always zero-out stack variables, as stack memory may be dirty on x86 and friends
