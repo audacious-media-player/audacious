@@ -100,7 +100,7 @@ bmp_rcfile_open(const gchar * filename)
         else if (lines[i][0] != '#' && section) {
             if ((tmp = strchr(lines[i], '='))) {
                 gchar **frags;
-                frags = g_strsplit(lines[i], "=", 0);
+                frags = g_strsplit(lines[i], "=", 2);
                 if (strlen(frags[1]) > 0) {
                     bmp_rcfile_create_string(section, frags[0], frags[1]);
                 };

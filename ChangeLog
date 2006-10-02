@@ -1,3 +1,12 @@
+2006-10-02 08:56:53 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2473]
+  - remove some old debugging notices
+  - reset audio output if fmt does not match the fmt we already negotiated (for instance, LE->BE conversion requested)
+  
+  trunk/audacious/output.c |   12 +-----------
+  1 file changed, 1 insertion(+), 11 deletions(-)
+
+
 2006-10-02 08:52:12 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2471]
   - remove an artifact of the bmp -> audacious transition
