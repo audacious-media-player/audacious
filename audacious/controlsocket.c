@@ -255,6 +255,8 @@ ctrl_write_packet(gint fd, gpointer data, gint length)
 {
     ServerPktHeader pkthdr;
 
+    memset(&pkthdr, '\0', sizeof(ServerPktHeader));
+
     pkthdr.version = XMMS_PROTOCOL_VERSION;
     pkthdr.data_length = length;
     if ((size_t)write(fd, &pkthdr, sizeof(ServerPktHeader)) < sizeof(pkthdr))
