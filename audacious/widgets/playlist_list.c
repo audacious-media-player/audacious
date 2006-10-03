@@ -97,8 +97,14 @@ GdkPixmap *
 shade_pixmap(GdkPixmap *in, gint x, gint y, gint x_offset, gint y_offset, gint w, gint h, GdkColor *shade_color)
 {
 	GdkImage *ximg;
-	GdkPixmap *p = gdk_pixmap_new(in, w, h, -1);
-	GdkGC *gc = gdk_gc_new(p);
+	GdkPixmap *p;
+	GdkGC *gc;
+
+	if (in == NULL)
+		return;
+
+	P = gdk_pixmap_new(in, w, h, -1);
+	gc = gdk_gc_new(p);
 
         gdk_draw_pixmap(p, gc, in, x, y, 0, 0, w, h);
 
