@@ -103,7 +103,7 @@ shade_pixmap(GdkPixmap *in, gint x, gint y, gint x_offset, gint y_offset, gint w
 	if (in == NULL)
 		return;
 
-	P = gdk_pixmap_new(in, w, h, -1);
+	p = gdk_pixmap_new(in, w, h, -1);
 	gc = gdk_gc_new(p);
 
         gdk_draw_pixmap(p, gc, in, x, y, 0, 0, w, h);
