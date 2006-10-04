@@ -1,3 +1,12 @@
+2006-10-04 08:35:28 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2501]
+  - framework for repositioning the vis element on the skin.
+  
+  trunk/audacious/widgets/skin.c |   24 +++++++++++++++++++++++-
+  trunk/audacious/widgets/skin.h |    2 ++
+  2 files changed, 25 insertions(+), 1 deletion(-)
+
+
 2006-10-03 17:39:17 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2479]
   - that should be a lowercase p, not an uppercase one.

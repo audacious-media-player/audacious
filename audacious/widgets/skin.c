@@ -567,6 +567,38 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    tmp = read_ini_string(filename, "skin", "mainwinTextX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_text_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinTextY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_text_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinInfoBarX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_infobar_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinInfoBarY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_infobar_y = atoi(tmp);
+        g_free(tmp);
+    }
+
     g_free(filename);
 }
 
