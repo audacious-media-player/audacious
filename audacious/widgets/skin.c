@@ -607,6 +607,86 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    tmp = read_ini_string(filename, "skin", "mainwinNumber0X");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_number_0_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinNumber0Y");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_number_0_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinNumber1X");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_number_1_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinNumber1Y");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_number_1_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinNumber2X");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_number_2_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinNumber2Y");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_number_2_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinNumber3X");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_number_3_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinNumber3Y");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_number_3_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinNumber4X");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_number_4_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinNumber4Y");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_number_4_y = atoi(tmp);
+        g_free(tmp);
+    }
+
     g_free(filename);
 }
 

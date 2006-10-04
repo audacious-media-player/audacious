@@ -80,6 +80,21 @@ typedef struct _SkinProperties {
 	gint mainwin_text_width;
 	gint mainwin_infobar_x;
 	gint mainwin_infobar_y;
+
+	gint mainwin_number_0_x;
+	gint mainwin_number_0_y;
+
+	gint mainwin_number_1_x;
+	gint mainwin_number_1_y;
+
+	gint mainwin_number_2_x;
+	gint mainwin_number_2_y;
+
+	gint mainwin_number_3_x;
+	gint mainwin_number_3_y;
+
+	gint mainwin_number_4_x;
+	gint mainwin_number_4_y;
 } SkinProperties;
 
 #define SKIN_PIXMAP(x)  ((SkinPixmap *)(x))

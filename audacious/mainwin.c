@@ -845,6 +845,26 @@ mainwin_refresh_hints(void)
     if (bmp_active_skin->properties.mainwin_infobar_x && bmp_active_skin->properties.mainwin_infobar_y)
 	widget_move(WIDGET(mainwin_othertext), bmp_active_skin->properties.mainwin_infobar_x,
 		bmp_active_skin->properties.mainwin_infobar_y);
+
+    if (bmp_active_skin->properties.mainwin_number_0_x && bmp_active_skin->properties.mainwin_number_0_y)
+	widget_move(WIDGET(mainwin_minus_num), bmp_active_skin->properties.mainwin_number_0_x,
+		bmp_active_skin->properties.mainwin_number_0_y);
+
+    if (bmp_active_skin->properties.mainwin_number_1_x && bmp_active_skin->properties.mainwin_number_1_y)
+	widget_move(WIDGET(mainwin_10min_num), bmp_active_skin->properties.mainwin_number_1_x,
+		bmp_active_skin->properties.mainwin_number_1_y);
+
+    if (bmp_active_skin->properties.mainwin_number_2_x && bmp_active_skin->properties.mainwin_number_2_y)
+	widget_move(WIDGET(mainwin_min_num), bmp_active_skin->properties.mainwin_number_2_x,
+		bmp_active_skin->properties.mainwin_number_2_y);
+
+    if (bmp_active_skin->properties.mainwin_number_3_x && bmp_active_skin->properties.mainwin_number_3_y)
+	widget_move(WIDGET(mainwin_10sec_num), bmp_active_skin->properties.mainwin_number_3_x,
+		bmp_active_skin->properties.mainwin_number_3_y);
+
+    if (bmp_active_skin->properties.mainwin_number_4_x && bmp_active_skin->properties.mainwin_number_4_y)
+	widget_move(WIDGET(mainwin_sec_num), bmp_active_skin->properties.mainwin_number_4_x,
+		bmp_active_skin->properties.mainwin_number_4_y);
 }
 
 void
