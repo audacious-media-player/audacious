@@ -1,3 +1,11 @@
+2006-10-04 10:41:41 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2519]
+  - default skin.hints:mainwinVisWidth value
+  
+  trunk/audacious/widgets/skin.c |    3 ++-
+  1 file changed, 2 insertions(+), 1 deletion(-)
+
+
 2006-10-04 10:39:41 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2517]
   - implement [skin.hints:mainwinVisWidth] property.

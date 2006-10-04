@@ -1,4 +1,23 @@
 [skin]
 skinDescription=The default skin for Audacious.
 mainwinOthertext=1
-
+mainwinVisX=189
+mainwinVisY=36
+mainwinTextX=11
+mainwinTextY=26
+mainwinTextWidth=253
+mainwinInfobarX=11
+mainwinInfobarY=44
+mainwinNumber0X=30
+mainwinNumber0Y=54
+mainwinNumber1X=42
+mainwinNumber1Y=54
+mainwinNumber2X=54
+mainwinNumber2Y=54
+mainwinNumber3X=72
+mainwinNumber3Y=54
+mainwinNumber4X=84
+mainwinNumber4Y=54
+mainwinPlayStatusX=11
+mainwinPlayStatusY=56
+mainwinMenurowVisible=0
