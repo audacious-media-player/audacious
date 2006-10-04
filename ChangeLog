@@ -1,3 +1,16 @@
+2006-10-04 22:27:00 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2525]
+  - allow the menurow to be set invisible
+  - add mimetype to np.sh
+  - revert js's change
+  
+  trunk/audacious/mainwin.c      |    7 +++++++
+  trunk/audacious/widgets/skin.c |   24 ++++++++++++++----------
+  trunk/audacious/widgets/skin.h |    2 ++
+  trunk/audtool/examples/np.sh   |    3 ++-
+  4 files changed, 25 insertions(+), 11 deletions(-)
+
+
 2006-10-04 19:47:37 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2523]
   The default values for old skins were wrong. But since changing from
