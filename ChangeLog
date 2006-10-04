@@ -1,3 +1,13 @@
+2006-10-04 19:47:37 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2523]
+  The default values for old skins were wrong. But since changing from
+  the new skin to an old doesn't work anyway, we can set these to 0 so
+  that the old skins at least work when Audacious is restarted.
+  
+  trunk/audacious/widgets/skin.c |   14 ++++++++++----
+  1 file changed, 10 insertions(+), 4 deletions(-)
+
+
 2006-10-04 11:17:35 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2521]
   - 1.2 skin, EARLY VERSION OF IT. I am *sure* nhjm449 will tweak it a lot.

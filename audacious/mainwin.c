@@ -830,6 +830,7 @@ mainwin_refresh_hints(void)
 	widget_hide(WIDGET(mainwin_othertext));
     }
 
+    /* positioning and size attributes */
     if (bmp_active_skin->properties.mainwin_vis_x && bmp_active_skin->properties.mainwin_vis_y)
 	widget_move(WIDGET(mainwin_vis), bmp_active_skin->properties.mainwin_vis_x,
 		bmp_active_skin->properties.mainwin_vis_y);
@@ -873,6 +874,12 @@ mainwin_refresh_hints(void)
     if (bmp_active_skin->properties.mainwin_playstatus_x && bmp_active_skin->properties.mainwin_playstatus_y)
 	widget_move(WIDGET(mainwin_playstatus), bmp_active_skin->properties.mainwin_playstatus_x,
 		bmp_active_skin->properties.mainwin_playstatus_y);
+
+    /* visibility attributes */
+    if (bmp_active_skin->properties.mainwin_menurow_visible)
+        widget_show(WIDGET(mainwin_menurow));
+    else
+        widget_hide(WIDGET(mainwin_menurow));
 }
 
 void

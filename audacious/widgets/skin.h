@@ -99,6 +99,8 @@ typedef struct _SkinProperties {
 
 	gint mainwin_playstatus_x;
 	gint mainwin_playstatus_y;
+
+	gboolean mainwin_menurow_visible;
 } SkinProperties;
 
 #define SKIN_PIXMAP(x)  ((SkinPixmap *)(x))
