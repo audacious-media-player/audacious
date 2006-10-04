@@ -1,3 +1,13 @@
+2006-10-04 10:05:39 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2515]
+  - implement [skin.hints:mainwinPlayStatus(X,Y)] properties.
+  
+  trunk/audacious/mainwin.c      |    4 ++++
+  trunk/audacious/widgets/skin.c |   16 ++++++++++++++++
+  trunk/audacious/widgets/skin.h |    3 +++
+  3 files changed, 23 insertions(+)
+
+
 2006-10-04 09:31:31 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2513]
   - support for: [skin.hints:mainwinNumber(0-4)(X,Y)] properties.
