@@ -827,6 +827,18 @@ mainwin_refresh_hints(void)
 	widget_show(WIDGET(mainwin_monostereo));
 	widget_hide(WIDGET(mainwin_othertext));
     }
+
+    if (bmp_active_skin->properties.mainwin_vis_x && bmp_active_skin->properties.mainwin_vis_y)
+	widget_move(WIDGET(mainwin_vis), bmp_active_skin->properties.mainwin_vis_x,
+		bmp_active_skin->properties.mainwin_vis_y);
+
+    if (bmp_active_skin->properties.mainwin_text_x && bmp_active_skin->properties.mainwin_text_y)
+	widget_move(WIDGET(mainwin_info), bmp_active_skin->properties.mainwin_text_x,
+		bmp_active_skin->properties.mainwin_text_y);
+
+    if (bmp_active_skin->properties.mainwin_infobar_x && bmp_active_skin->properties.mainwin_infobar_y)
+	widget_move(WIDGET(mainwin_othertext), bmp_active_skin->properties.mainwin_infobar_x,
+		bmp_active_skin->properties.mainwin_infobar_y);
 }
 
 void

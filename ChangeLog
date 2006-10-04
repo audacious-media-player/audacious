@@ -1,3 +1,12 @@
+2006-10-04 08:38:46 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2503]
+  - text and infobar
+  
+  trunk/audacious/widgets/skin.c |   32 ++++++++++++++++++++++++++++++++
+  trunk/audacious/widgets/skin.h |    4 ++++
+  2 files changed, 36 insertions(+)
+
+
 2006-10-04 08:35:28 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2501]
   - framework for repositioning the vis element on the skin.
