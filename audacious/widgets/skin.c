@@ -530,10 +530,16 @@ skin_parse_hints(Skin * skin, gchar *path_p)
 
     path_p = path_p ? path_p : skin->path;
 
-    skin->properties.mainwin_othertext = 0;
-    skin->properties.mainwin_vis_x = 24;
-    skin->properties.mainwin_vis_y = 43;
-    skin->properties.mainwin_vis_width = 76;
+    /*
+     * Changing from the new skin to an old skin doesn't work yet, so we can
+     * as well set these defaults to 0 so that old skins at least work when
+     * Audacious is restarted. The values commented out are the wrong values
+     * which were here before.
+     */
+    skin->properties.mainwin_othertext = 0;	/*  0 */
+    skin->properties.mainwin_vis_x = 0;		/* 24 */
+    skin->properties.mainwin_vis_y = 0;		/* 43 */
+    skin->properties.mainwin_vis_width = 0;	/* 76 */
 
     filename = find_file_recursively(path_p, "skin.hints");
 
