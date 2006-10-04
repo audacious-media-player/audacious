@@ -77,6 +77,7 @@ typedef struct _SkinProperties {
 	gint mainwin_vis_y;
 	gint mainwin_text_x;
 	gint mainwin_text_y;
+	gint mainwin_text_width;
 	gint mainwin_infobar_x;
 	gint mainwin_infobar_y;
 } SkinProperties;

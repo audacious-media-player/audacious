@@ -583,6 +583,14 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    tmp = read_ini_string(filename, "skin", "mainwinTextWidth");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_text_width = atoi(tmp);
+        g_free(tmp);
+    }
+
     tmp = read_ini_string(filename, "skin", "mainwinInfoBarX");
 
     if (tmp != NULL)

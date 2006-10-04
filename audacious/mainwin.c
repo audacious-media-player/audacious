@@ -838,6 +838,10 @@ mainwin_refresh_hints(void)
 	widget_move(WIDGET(mainwin_info), bmp_active_skin->properties.mainwin_text_x,
 		bmp_active_skin->properties.mainwin_text_y);
 
+    if (bmp_active_skin->properties.mainwin_text_width)
+	widget_resize(WIDGET(mainwin_info), bmp_active_skin->properties.mainwin_text_width,
+		mainwin_info->tb_widget.height);
+
     if (bmp_active_skin->properties.mainwin_infobar_x && bmp_active_skin->properties.mainwin_infobar_y)
 	widget_move(WIDGET(mainwin_othertext), bmp_active_skin->properties.mainwin_infobar_x,
 		bmp_active_skin->properties.mainwin_infobar_y);
