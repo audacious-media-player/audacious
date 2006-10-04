@@ -927,6 +927,7 @@ on_playlist_font_button_font_set(GtkFontButton * button,
     cfg.playlist_font = g_strdup(gtk_font_button_get_font_name(button));
 
     playlist_list_set_font(cfg.playlist_font);
+    playlistwin_set_sinfo_font(cfg.playlist_font);  /* propagate font setting to playlistwin_sinfo */
     playlistwin_update_list();
     draw_playlist_window(TRUE);
 }

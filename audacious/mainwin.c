@@ -423,6 +423,8 @@ GtkItemFactoryEntry mainwin_view_menu_entries[] = {
      MAINWIN_OPT_ALWAYS, "<ToggleItem>", NULL},
     {N_("/Put on All Workspaces"), "<control>S",
      mainwin_view_menu_callback, MAINWIN_OPT_STICKY, "<ToggleItem>", NULL},
+    {N_("/Autoscroll Songname"), NULL, mainwin_view_menu_callback,
+     MAINWIN_SONGNAME_SCROLL, "<ToggleItem>", NULL},
     {"/-", NULL, NULL, 0, "<Separator>", NULL},
     {N_("/Roll up Player"), "<control>W", mainwin_view_menu_callback,
      MAINWIN_OPT_WS, "<ToggleItem>", NULL},
@@ -2489,6 +2491,8 @@ mainwin_songname_menu_callback(gpointer data,
     case MAINWIN_SONGNAME_SCROLL:
         check = GTK_CHECK_MENU_ITEM(item);
         mainwin_set_title_scroll(gtk_check_menu_item_get_active(check));
+        check_set(mainwin_view_menu, "/Autoscroll Songname", cfg.autoscroll);
+	playlistwin_set_sinfo_scroll(cfg.autoscroll); /* propagate scroll setting to playlistwin_sinfo */
         break;
     case MAINWIN_SONGNAME_STOPAFTERSONG:
         check = GTK_CHECK_MENU_ITEM(item);
@@ -2538,6 +2542,8 @@ mainwin_view_menu_callback(gpointer data,
                            guint action,
                            GtkWidget * item)
 {
+    GtkCheckMenuItem *check;
+
     switch (action) {
     case MAINWIN_OPT_TELAPSED:
         set_timer_mode_menu_cb(TIMER_ELAPSED);
@@ -2566,6 +2572,12 @@ mainwin_view_menu_callback(gpointer data,
         break;
     case MAINWIN_OPT_EQWS:
         equalizerwin_set_shade_menu_cb(GTK_CHECK_MENU_ITEM(item)->active);
+        break;
+    case MAINWIN_SONGNAME_SCROLL:
+        check = GTK_CHECK_MENU_ITEM(item);
+        mainwin_set_title_scroll(gtk_check_menu_item_get_active(check));
+        check_set(mainwin_songname_menu, "/Autoscroll Songname", cfg.autoscroll);
+	playlistwin_set_sinfo_scroll(cfg.autoscroll); /* propagate scroll setting to playlistwin_sinfo */
         break;
     }
 }

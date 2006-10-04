@@ -367,7 +367,7 @@ playlistwin_update_info(void)
     else
         tot_text = g_strdup("?");
     text = g_strconcat(sel_text, "/", tot_text, NULL);
-    textbox_set_text(playlistwin_info, text);
+    textbox_set_text(playlistwin_info, text ? text : "");
     g_free(text);
     g_free(tot_text);
     g_free(sel_text);
@@ -376,52 +376,48 @@ playlistwin_update_info(void)
 static void
 playlistwin_update_sinfo(void)
 {
-    gchar *posstr, *timestr, *title, *info, *dots;
+    gchar *posstr, *timestr, *title, *info;
     gint pos, time;
-    guint max_len;
+    TitleInput *tuple = NULL;
 
     pos = playlist_get_position();
-    title = playlist_get_songtitle(pos);
-    time = playlist_get_songtime(pos);
+    tuple = playlist_get_tuple(pos);
+
+    if(tuple){
+        title = xmms_get_titlestring(tuple->formatter ? tuple->formatter : xmms_get_gentitle_format(), tuple);
+    }
+    else {
+        title = playlist_get_songtitle(pos);
+    }
 
     if (!title) {
         textbox_set_text(playlistwin_sinfo, "");
         return;
     }
 
+    convert_title_text(title);
+
+    time = playlist_get_songtime(pos);
+
     if (cfg.show_numbers_in_pl)
         posstr = g_strdup_printf("%d. ", pos + 1);
     else
         posstr = g_strdup("");
 
-    max_len = (playlistwin_get_width() - 35) / 5 - strlen(posstr);
-
     if (time != -1) {
         timestr = g_strdup_printf(" %d:%-2.2d", time / 60000,
-                                  (time / 1000) % 60);
-        max_len -= strlen(timestr);
+                                      (time / 1000) % 60);
     }
     else
         timestr = g_strdup("");
 
-    convert_title_text(title);
+    info = g_strdup_printf("%s%s%s", posstr, title, timestr);
 
-    if (strlen(title) > max_len) {
-        max_len -= 1;
-        dots = "\r";
-        /* textbox.c interprets \r as the ellipsis character, as there 
-           is none in ASCII. */
-    }
-    else
-        dots = "";
-
-    info = g_strdup_printf("%s%-*.*s%s%s", posstr, max_len, max_len,
-                           title, dots, timestr);
     g_free(posstr);
     g_free(title);
     g_free(timestr);
 
-    textbox_set_text(playlistwin_sinfo, info);
+    textbox_set_text(playlistwin_sinfo, info ? info : "");
     g_free(info);
 }
 
@@ -525,11 +521,45 @@ playlistwin_set_geometry_hints(gboolean shaded)
 }
 
 void
+playlistwin_set_sinfo_font(gchar *font)
+{
+    gchar *tmp = NULL, *tmp2 = NULL;
+
+    if(!font)
+        return;
+
+    tmp = g_strdup(font);
+    if(!tmp)
+        return;
+
+    *strrchr(tmp, ' ') = '\0';
+    tmp2 = g_strdup_printf("%s 8", tmp);
+    if(!tmp2)
+        return;
+    textbox_set_xfont(playlistwin_sinfo, cfg.mainwin_use_xfont, tmp2);
+
+    g_free(tmp); g_free(tmp2);
+}
+
+void
+playlistwin_set_sinfo_scroll(gboolean scroll)
+{
+    GtkWidget *item;
+
+    if(playlistwin_is_shaded())
+        textbox_set_scroll(playlistwin_sinfo, cfg.autoscroll);
+    else
+        textbox_set_scroll(playlistwin_sinfo, FALSE);
+}
+
+void
 playlistwin_set_shade(gboolean shaded)
 {
     cfg.playlist_shaded = shaded;
 
     if (shaded) {
+        playlistwin_set_sinfo_font(cfg.playlist_font);
+        playlistwin_set_sinfo_scroll(cfg.autoscroll);
         widget_show(WIDGET(playlistwin_sinfo));
         playlistwin_shade->pb_nx = 128;
         playlistwin_shade->pb_ny = 45;
@@ -540,6 +570,7 @@ playlistwin_set_shade(gboolean shaded)
     }
     else {
         widget_hide(WIDGET(playlistwin_sinfo));
+        playlistwin_set_sinfo_scroll(FALSE);
         playlistwin_shade->pb_nx = 157;
         playlistwin_shade->pb_ny = 3;
         playlistwin_shade->pb_px = 62;
@@ -575,6 +606,7 @@ playlistwin_set_shade_menu(gboolean shaded)
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item), shaded);
 
     playlistwin_set_shade(shaded);
+    playlistwin_update_list();
 }
 
 void
@@ -1588,12 +1620,15 @@ playlistwin_drag_data_received(GtkWidget * widget,
 static void
 playlistwin_create_widgets(void)
 {
+    gchar *font = NULL, *tmp = NULL;
     /* This function creates the custom widgets used by the playlist editor */
 
     /* text box for displaying song title in shaded mode */
     playlistwin_sinfo =
         create_textbox(&playlistwin_wlist, playlistwin_bg, playlistwin_gc,
-                       4, 4, playlistwin_get_width() - 35, FALSE, SKIN_TEXT);
+                       4, 4, playlistwin_get_width() - 35, TRUE, SKIN_TEXT);
+
+    playlistwin_set_sinfo_font(cfg.playlist_font);
 
     if (!cfg.playlist_shaded)
         widget_hide(WIDGET(playlistwin_sinfo));

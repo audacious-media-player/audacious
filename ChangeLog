@@ -1,3 +1,11 @@
+2006-10-04 08:45:01 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2505]
+  - allow elements to be repositioned if they are mentioned in skin.hints
+  
+  trunk/audacious/mainwin.c |   12 ++++++++++++
+  1 file changed, 12 insertions(+)
+
+
 2006-10-04 08:38:46 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2503]
   - text and infobar
