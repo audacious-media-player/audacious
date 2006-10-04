@@ -725,6 +725,55 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    tmp = read_ini_string(filename, "skin", "mainwinVolumeX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_volume_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinVolumeY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_volume_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinBalanceX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_balance_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinBalanceY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_balance_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinPositionX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_position_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+
+    tmp = read_ini_string(filename, "skin", "mainwinPositionX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_position_y = atoi(tmp);
+        g_free(tmp);
+    }
+
     g_free(filename);
 }
 

@@ -1,3 +1,11 @@
+2006-10-04 22:33:17 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2527]
+  - wa2 values for mainwinTitleText property.
+  
+  trunk/audacious/widgets/skin.c |    3 +++
+  1 file changed, 3 insertions(+)
+
+
 2006-10-04 22:27:00 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2525]
   - allow the menurow to be set invisible

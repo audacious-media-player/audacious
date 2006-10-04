@@ -875,6 +875,18 @@ mainwin_refresh_hints(void)
 	widget_move(WIDGET(mainwin_playstatus), bmp_active_skin->properties.mainwin_playstatus_x,
 		bmp_active_skin->properties.mainwin_playstatus_y);
 
+    if (bmp_active_skin->properties.mainwin_volume_x && bmp_active_skin->properties.mainwin_volume_y)
+	widget_move(WIDGET(mainwin_volume), bmp_active_skin->properties.mainwin_volume_x,
+		bmp_active_skin->properties.mainwin_volume_y);
+
+    if (bmp_active_skin->properties.mainwin_balance_x && bmp_active_skin->properties.mainwin_balance_y)
+	widget_move(WIDGET(mainwin_balance), bmp_active_skin->properties.mainwin_balance_x,
+		bmp_active_skin->properties.mainwin_balance_y);
+
+    if (bmp_active_skin->properties.mainwin_position_x && bmp_active_skin->properties.mainwin_position_y)
+	widget_move(WIDGET(mainwin_position), bmp_active_skin->properties.mainwin_position_x,
+		bmp_active_skin->properties.mainwin_position_y);
+
     /* visibility attributes */
     if (bmp_active_skin->properties.mainwin_menurow_visible)
         widget_show(WIDGET(mainwin_menurow));

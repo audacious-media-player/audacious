@@ -100,6 +100,15 @@ typedef struct _SkinProperties {
 	gint mainwin_playstatus_x;
 	gint mainwin_playstatus_y;
 
+	gint mainwin_volume_x;
+	gint mainwin_volume_y;	
+
+	gint mainwin_balance_x;
+	gint mainwin_balance_y;	
+
+	gint mainwin_position_x;
+	gint mainwin_position_y;
+
 	gboolean mainwin_menurow_visible;
 } SkinProperties;
 
