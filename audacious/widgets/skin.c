@@ -687,6 +687,22 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    tmp = read_ini_string(filename, "skin", "mainwinPlayStatusX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_playstatus_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinPlayStatusY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_playstatus_y = atoi(tmp);
+        g_free(tmp);
+    }
+
     g_free(filename);
 }
 

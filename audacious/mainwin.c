@@ -865,6 +865,10 @@ mainwin_refresh_hints(void)
     if (bmp_active_skin->properties.mainwin_number_4_x && bmp_active_skin->properties.mainwin_number_4_y)
 	widget_move(WIDGET(mainwin_sec_num), bmp_active_skin->properties.mainwin_number_4_x,
 		bmp_active_skin->properties.mainwin_number_4_y);
+
+    if (bmp_active_skin->properties.mainwin_playstatus_x && bmp_active_skin->properties.mainwin_playstatus_y)
+	widget_move(WIDGET(mainwin_playstatus), bmp_active_skin->properties.mainwin_playstatus_x,
+		bmp_active_skin->properties.mainwin_playstatus_y);
 }
 
 void

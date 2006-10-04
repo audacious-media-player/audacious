@@ -1,3 +1,13 @@
+2006-10-04 09:31:31 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2513]
+  - support for: [skin.hints:mainwinNumber(0-4)(X,Y)] properties.
+  
+  trunk/audacious/mainwin.c      |   20 ++++++++++
+  trunk/audacious/widgets/skin.c |   80 +++++++++++++++++++++++++++++++++++++++++
+  trunk/audacious/widgets/skin.h |   15 +++++++
+  3 files changed, 115 insertions(+)
+
+
 2006-10-04 09:22:04 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2511]
   - support for the [skin.hints:mainwinTextWidth] property.

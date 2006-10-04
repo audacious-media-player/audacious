@@ -95,6 +95,9 @@ typedef struct _SkinProperties {
 
 	gint mainwin_number_4_x;
 	gint mainwin_number_4_y;
+
+	gint mainwin_playstatus_x;
+	gint mainwin_playstatus_y;
 } SkinProperties;
 
 #define SKIN_PIXMAP(x)  ((SkinPixmap *)(x))
