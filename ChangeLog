@@ -1,3 +1,20 @@
+2006-10-04 09:15:22 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2507]
+  improvement of shaded playlist window
+  - title string does auto scroll.
+  - format and font of the string follow playlist configuration. 
+  - filepopup will appear on shaded playlist window.
+  - now shaded playlist window displays multi byte characters correctly.
+  - no more "textbox_set_text: assertion `text != NULL' failed" assertion in the log file.
+  
+  trunk/audacious/mainwin.c     |   12 ++++++
+  trunk/audacious/prefswin.c    |    1 
+  trunk/audacious/ui_fileinfo.c |   22 ++++++++---
+  trunk/audacious/ui_playlist.c |   81 ++++++++++++++++++++++++++++++------------
+  trunk/audacious/ui_playlist.h |    2 +
+  5 files changed, 89 insertions(+), 29 deletions(-)
+
+
 2006-10-04 08:45:01 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2505]
   - allow elements to be repositioned if they are mentioned in skin.hints

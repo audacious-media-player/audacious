@@ -93,6 +93,6 @@ build_stamp.c:
 		) > build_stamp.c; \
 	fi;
 
-audacious: $(OBJECTS)
+audacious: $(OBJECTS) widgets/libwidgets.a
 	$(CXX) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@ 
 	@printf "%10s     %-20s\n" LINK $@
