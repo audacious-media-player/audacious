@@ -530,6 +530,10 @@ skin_parse_hints(Skin * skin, gchar *path_p)
 
     path_p = path_p ? path_p : skin->path;
 
+    skin->properties.mainwin_othertext = 0;
+    skin->properties.mainwin_vis_x = 24;
+    skin->properties.mainwin_vis_y = 46;
+
     filename = find_file_recursively(path_p, "skin.hints");
 
     if (filename == NULL)
@@ -542,9 +546,27 @@ skin_parse_hints(Skin * skin, gchar *path_p)
     tmp = read_ini_string(filename, "skin", "mainwinOthertext");
 
     if (tmp != NULL)
+    {
         skin->properties.mainwin_othertext = atoi(tmp);
+        g_free(tmp);
+    }
 
-    g_free(tmp);
+    tmp = read_ini_string(filename, "skin", "mainwinVisX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_vis_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinVisY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_vis_y = atoi(tmp);
+        g_free(tmp);
+    }
+
     g_free(filename);
 }
 

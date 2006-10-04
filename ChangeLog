@@ -1,3 +1,11 @@
+2006-10-03 17:39:17 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2479]
+  - that should be a lowercase p, not an uppercase one.
+  
+  trunk/audacious/widgets/playlist_list.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-10-03 01:46:02 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2477]
   - fix a potential crash when running audacious remotely
