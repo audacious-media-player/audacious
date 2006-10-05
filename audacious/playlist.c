@@ -2626,7 +2626,8 @@ playlist_read_info_selection(void)
         entry->length = -1;
 
 	/* invalidate mtime to reread */
-	entry->tuple->mtime = 0;
+	if (entry->tuple != NULL)
+	    entry->tuple->mtime = 0;
 
         if (!playlist_entry_get_info(entry)) {
             if (g_list_index(playlist_get(), entry) == -1)
