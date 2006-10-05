@@ -619,7 +619,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
-    skin->properties.mainwin_infobar_y = 43
+    skin->properties.mainwin_infobar_y = 43;
     tmp = read_ini_string(filename, "skin", "mainwinInfoBarY");
 
     if (tmp != NULL)

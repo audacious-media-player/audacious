@@ -1,3 +1,11 @@
+2006-10-05 06:33:22 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2583]
+  - default values for all properties (fixes wa2 skins/amsf 1.0 skins)
+  
+  trunk/audacious/widgets/skin.c |   20 ++++++++++++++++++++
+  1 file changed, 20 insertions(+)
+
+
 2006-10-05 06:25:57 +0000  George Averill <nhjm449@gmail.com>
   revision [2581]
   - Default skin updated
