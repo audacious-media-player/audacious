@@ -1076,11 +1076,6 @@ main(gint argc, gchar ** argv)
             exit(EXIT_FAILURE);
         }
 
-        mainwin_create();
-
-        playlistwin_create();
-        equalizerwin_create();
-
         GDK_THREADS_ENTER();
     }
 

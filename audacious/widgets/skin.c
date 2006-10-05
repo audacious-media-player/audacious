@@ -310,6 +310,14 @@ pixmap_new_from_file(const gchar * filename)
     width = gdk_pixbuf_get_width(pixbuf);
     height = gdk_pixbuf_get_height(pixbuf);
 
+    /* create the windows if they haven't been created yet, needed for bootstrapping */
+    if (mainwin == NULL)
+    {
+        mainwin_create();
+        equalizerwin_create();
+        playlistwin_create();
+    }
+
     if (!(pixmap = gdk_pixmap_new(mainwin->window, width, height,
                                   gdk_rgb_get_visual()->depth))) {
         g_object_unref(pixbuf);
@@ -1318,11 +1326,11 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
     skin->path = g_strdup(path);
 
     if (!file_is_archive(path)) {
-        skin_load_pixmaps(skin, path);
-        skin_load_cursor(skin, path);
-
         /* Parse the hints for this skin. */
         skin_parse_hints(skin, NULL);
+
+        skin_load_pixmaps(skin, path);
+        skin_load_cursor(skin, path);
 
         return TRUE;
     }
@@ -1332,11 +1340,11 @@ skin_load_nolock(Skin * skin, const gchar * path, gboolean force)
         return FALSE;
     }
 
-    skin_load_pixmaps(skin, cpath);
-    skin_load_cursor(skin, cpath);
-
     /* Parse the hints for this skin. */
     skin_parse_hints(skin, cpath);
+
+    skin_load_pixmaps(skin, cpath);
+    skin_load_cursor(skin, cpath);
 
     del_directory(cpath);
     g_free(cpath);

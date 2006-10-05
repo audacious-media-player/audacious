@@ -1,3 +1,11 @@
+2006-10-05 06:11:06 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2577]
+  - load skins before creating the UI
+  
+  trunk/audacious/main.c |   10 +++++-----
+  1 file changed, 5 insertions(+), 5 deletions(-)
+
+
 2006-10-05 06:09:40 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2575]
   - more hardcoded values removed
