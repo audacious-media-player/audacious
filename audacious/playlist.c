@@ -126,7 +126,7 @@ static void playlist_generate_shuffle_list_nolock(void);
 
 static void playlist_recalc_total_time_nolock(void);
 static void playlist_recalc_total_time(void);
-
+static gboolean playlist_entry_get_info(PlaylistEntry * entry);
 
 PlaylistEntry *
 playlist_entry_new(const gchar * filename,
@@ -143,8 +143,9 @@ playlist_entry_new(const gchar * filename,
     entry->selected = FALSE;
     entry->decoder = dec;
 
+    /* only do this if we have a decoder, otherwise it just takes too long */
     if (entry->decoder)
-        entry->tuple = entry->decoder->get_song_tuple(entry->filename);
+        playlist_entry_get_info(entry);
 
     return entry;
 }
@@ -1555,8 +1556,8 @@ playlist_get_songtitle(guint pos)
     entry = node->data;
 
     /* FIXME: simplify this logic */
-    if ( (!entry->title && entry->length == -1) || 
-	 (entry->tuple && (entry->tuple->mtime != playlist_get_mtime(entry->filename))) ){
+    if ((!entry->title && entry->length == -1) || 
+	 (entry->tuple && (entry->tuple->mtime > 0 && entry->tuple->mtime != playlist_get_mtime(entry->filename))) ){
         if (playlist_entry_get_info(entry))
             title = entry->title;
     }

@@ -378,17 +378,9 @@ playlistwin_update_sinfo(void)
 {
     gchar *posstr, *timestr, *title, *info;
     gint pos, time;
-    TitleInput *tuple = NULL;
 
     pos = playlist_get_position();
-    tuple = playlist_get_tuple(pos);
-
-    if(tuple){
-        title = xmms_get_titlestring(tuple->formatter ? tuple->formatter : xmms_get_gentitle_format(), tuple);
-    }
-    else {
-        title = playlist_get_songtitle(pos);
-    }
+    title = playlist_get_songtitle(pos);
 
     if (!title) {
         textbox_set_text(playlistwin_sinfo, "");
