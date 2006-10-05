@@ -772,7 +772,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
-    skin->properties.mainwin_balance_x = 57;
+    skin->properties.mainwin_balance_y = 57;
     tmp = read_ini_string(filename, "skin", "mainwinBalanceY");
 
     if (tmp != NULL)
