@@ -798,7 +798,7 @@ mainwin_release_info_text(void)
     if (mainwin_tb_old_text != NULL)
     {
         textbox_set_text(bmp_active_skin->properties.mainwin_othertext_is_status ?
-  	    mainwin_othertext : mainwin_info, text);
+  	    mainwin_othertext : mainwin_info, mainwin_tb_old_text);
         g_free(mainwin_tb_old_text);
         mainwin_tb_old_text = NULL;
     }
