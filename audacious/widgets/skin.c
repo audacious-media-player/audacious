@@ -539,6 +539,9 @@ skin_parse_hints(Skin * skin, gchar *path_p)
     skin->properties.mainwin_text_width = 153;
 
     skin->properties.mainwin_menurow_visible = TRUE;
+    skin->properties.mainwin_vis_visible = TRUE;
+    skin->properties.mainwin_text_visible = TRUE;
+    skin->properties.mainwin_othertext_visible = TRUE;
 
     filename = find_file_recursively(path_p, "skin.hints");
 
