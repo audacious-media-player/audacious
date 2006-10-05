@@ -76,6 +76,7 @@ static const gchar *credit_text[] = {
     "William Pitcock",
     "Derek Pomery",
     "Tony Vroon",
+    "Jonathan Schleifer",
     NULL,
 
     N_("0.1.x developers:"),
