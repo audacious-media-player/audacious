@@ -2184,7 +2184,7 @@ playlist_get_info_func(gpointer arg)
             for (node = playlist_get(); node; node = g_list_next(node)) {
                 entry = node->data;
 
-                if(entry->tuple && entry->tuple->mtime != 0) {
+                if(entry->tuple && (entry->tuple->length > -1)) {
                         continue;
                 }
 
@@ -2194,7 +2194,7 @@ playlist_get_info_func(gpointer arg)
                            Restart. */
                         node = playlist_get();
                 }
-                else if (entry->title || entry->length != -1) {
+                else if (entry->title || (!entry->tuple && entry->length != -1)) {
                     update_playlistwin = TRUE;
                     if (entry == playlist_position)
                         update_mainwin = TRUE;
@@ -2228,7 +2228,7 @@ playlist_get_info_func(gpointer arg)
 
                 entry = node->data;
 
-                if(entry->tuple && entry->tuple->mtime != 0) {
+                if(entry->tuple && (entry->tuple->length > -1)) {
                     continue;
                 }
 
@@ -2240,7 +2240,7 @@ playlist_get_info_func(gpointer arg)
                             g_list_nth(playlist_get(),
                                        playlistwin_get_toprow());
                 }
-                else if (entry->title || entry->length != -1) {
+                else if (entry->title || (!entry->tuple && entry->length != -1)) {
                     update_playlistwin = TRUE;
                     if (entry == playlist_position)
                         update_mainwin = TRUE;
@@ -2265,6 +2265,7 @@ playlist_get_info_func(gpointer arg)
         }
 
         if (update_mainwin) {
+
             mainwin_set_info_text();
             update_mainwin = FALSE;
         }
