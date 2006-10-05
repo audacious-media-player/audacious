@@ -3677,6 +3677,8 @@ mainwin_idle_func(gpointer data)
         count--;
 
     mainwin_force_redraw = FALSE;
+    draw_equalizer_window(FALSE);
+    draw_playlist_window(FALSE);
 
     if (mainwin_title_text) {
         G_LOCK(mainwin_title);
