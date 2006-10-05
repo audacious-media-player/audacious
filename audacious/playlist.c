@@ -1592,7 +1592,7 @@ playlist_get_tuple(guint pos)
     tuple = entry->tuple;
 
     // if no tuple or tuple with old mtime, get new one.
-    if (!tuple || (entry->tuple->mtime != playlist_get_mtime(entry->filename))) {
+    if (!tuple || (entry->tuple->mtime > 0 && entry->tuple->mtime != playlist_get_mtime(entry->filename))) {
         playlist_entry_get_info(entry);
         tuple = entry->tuple;
     }
