@@ -544,22 +544,24 @@ mainwin_set_shade_menu_cb(gboolean shaded)
 
         textbox_set_scroll(mainwin_info, FALSE);
         if (bmp_playback_get_playing())
-		{
+	{
             	widget_show(WIDGET(mainwin_sposition));
 	        widget_show(WIDGET(mainwin_stime_min));
         	widget_show(WIDGET(mainwin_stime_sec));
-		}
+	}
 	else
-		{
+	{
             	widget_hide(WIDGET(mainwin_sposition));
 	        widget_hide(WIDGET(mainwin_stime_min));
         	widget_hide(WIDGET(mainwin_stime_sec));
-		}
-	
+	}
+
         mainwin_shade->pb_ny = mainwin_shade->pb_py = 27;
     }
     else {
-        dock_shade(dock_window_list, GTK_WINDOW(mainwin), MAINWIN_HEIGHT);
+        dock_shade(dock_window_list, GTK_WINDOW(mainwin),
+		!bmp_active_skin->properties.mainwin_height ? MAINWIN_HEIGHT :
+		     bmp_active_skin->properties.mainwin_height);
 
         widget_hide(WIDGET(mainwin_svis));
         svis_clear_data(mainwin_svis);
@@ -728,8 +730,8 @@ draw_main_window(gboolean force)
     if (force) {
         if (!cfg.player_shaded)
             skin_draw_pixmap(bmp_active_skin, mainwin_bg, mainwin_gc,
-                             SKIN_MAIN, 0, 0, 0, 0, MAINWIN_WIDTH,
-                             MAINWIN_HEIGHT);
+                             SKIN_MAIN, 0, 0, 0, 0, bmp_active_skin->properties.mainwin_width,
+                             bmp_active_skin->properties.mainwin_height);
         mainwin_draw_titlebar(gtk_window_has_toplevel_focus
                               (GTK_WINDOW(mainwin)));
     }
@@ -3459,7 +3461,7 @@ mainwin_create_window(void)
     gtk_window_set_resizable(GTK_WINDOW(mainwin), FALSE);
 
     width = MAINWIN_WIDTH;
-    height = cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : MAINWIN_HEIGHT;
+    height = cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height;
 
     gtk_widget_set_size_request(mainwin, width, height);
     gtk_widget_set_app_paintable(mainwin, TRUE);
