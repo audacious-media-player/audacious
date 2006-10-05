@@ -118,7 +118,7 @@ void
 widget_draw(Widget * widget)
 {
     if (widget->visible == FALSE)
-	continue;
+	return;
 
     widget_lock(widget);
     WIDGET(widget)->redraw = TRUE;

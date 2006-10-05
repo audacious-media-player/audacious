@@ -1,3 +1,11 @@
+2006-10-05 02:45:14 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2543]
+  - do not draw widgets which are invisible (performance tweak)
+  
+  trunk/audacious/widgets/widget.c |    3 +++
+  1 file changed, 3 insertions(+)
+
+
 2006-10-05 02:39:30 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2541]
   - implement mainwinTextVisible, mainwinVisVisible, mainwinOthertextVisible hints
