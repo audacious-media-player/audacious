@@ -117,6 +117,9 @@ widget_move(Widget * widget, gint x, gint y)
 void
 widget_draw(Widget * widget)
 {
+    if (widget->visible == FALSE)
+	continue;
+
     widget_lock(widget);
     WIDGET(widget)->redraw = TRUE;
     widget_unlock(widget);

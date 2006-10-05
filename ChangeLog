@@ -1,3 +1,13 @@
+2006-10-05 02:39:30 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2541]
+  - implement mainwinTextVisible, mainwinVisVisible, mainwinOthertextVisible hints
+  
+  trunk/audacious/mainwin.c      |   15 +++++++++++++++
+  trunk/audacious/widgets/skin.c |   24 ++++++++++++++++++++++++
+  trunk/audacious/widgets/skin.h |   10 ++++++++++
+  3 files changed, 49 insertions(+)
+
+
 2006-10-05 02:00:09 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2539]
   - really preserve the old message on othertext info
