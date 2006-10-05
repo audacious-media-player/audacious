@@ -1,3 +1,12 @@
+2006-10-05 06:16:49 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2579]
+  - create the windows during skin load process after the skin.hints has been loaded
+  
+  trunk/audacious/main.c         |    5 -----
+  trunk/audacious/widgets/skin.c |   20 ++++++++++++++------
+  2 files changed, 14 insertions(+), 11 deletions(-)
+
+
 2006-10-05 06:11:06 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2577]
   - load skins before creating the UI
