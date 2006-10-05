@@ -3,7 +3,7 @@
 include mk/rules.mk
 include mk/init.mk
 
-SUBDIRS = libaudacious intl $(SUBDIR_GUESS) audacious audtool po icons skin
+SUBDIRS = libaudacious intl $(SUBDIR_GUESS) audacious audtool po icons skins
 
 include mk/objective.mk
 

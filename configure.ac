@@ -401,7 +401,6 @@ AC_CONFIG_FILES([
 	po/Makefile.in
 	intl/Makefile
 	icons/Makefile
-	skin/Makefile
 	mk/rules.mk
 ])
 
