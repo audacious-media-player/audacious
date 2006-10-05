@@ -1623,8 +1623,7 @@ playlist_get_songtime(guint pos)
 
     entry = node->data;
 
-//    if (!entry->title && entry->length == -1) {
-    if (!entry->tuple || (entry->tuple->mtime != playlist_get_mtime(entry->filename))){
+    if (!entry->tuple || (entry->tuple->mtime > 0 && entry->tuple->mtime != playlist_get_mtime(entry->filename))){
 
         if (playlist_entry_get_info(entry))
             song_time = entry->length;
