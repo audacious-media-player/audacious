@@ -1,3 +1,14 @@
+2006-10-05 04:46:00 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2565]
+  - mainwinEQButtonX, mainwinEQButtonY, mainwinPLButtonX, mainwinPLButtonY, mainwinAboutX,
+    mainwinAboutY, mainwinShuffleX, mainwinShuffleY, mainwinRepeatX, mainwinRepeatY.
+  
+  trunk/audacious/mainwin.c      |   49 ++++++++
+  trunk/audacious/widgets/skin.c |  229 ++++++++++++++++++++++++++++++++++++++---
+  trunk/audacious/widgets/skin.h |   36 ++++++
+  3 files changed, 301 insertions(+), 13 deletions(-)
+
+
 2006-10-05 04:05:51 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2563]
   WTF, and now even a typo in the ChangeLog! (Fixed.)

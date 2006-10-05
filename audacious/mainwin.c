@@ -951,8 +951,15 @@ mainwin_refresh_hints(void)
 
     /* window size, mainwinWidth && mainwinHeight properties */
     if (bmp_active_skin->properties.mainwin_height && bmp_active_skin->properties.mainwin_width)
-        dock_resize(dock_window_list, GTK_WINDOW(mainwin), bmp_active_skin->properties.mainwin_width,
-		bmp_active_skin->properties.mainwin_height);
+    {
+        gdk_window_set_hints(mainwin->window, 0, 0,
+				bmp_active_skin->properties.mainwin_width,
+				bmp_active_skin->properties.mainwin_height,
+				bmp_active_skin->properties.mainwin_width,
+				bmp_active_skin->properties.mainwin_height,
+                                GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE);
+        gtk_window_resize(GTK_WINDOW(mainwin), PLAYER_WIDTH, PLAYER_HEIGHT);
+    }
 
     /* visibility attributes */
     if (bmp_active_skin->properties.mainwin_menurow_visible)
@@ -2562,8 +2569,14 @@ mainwin_real_show(void)
     nullmask = NULL;
 
     gdk_window_set_hints(mainwin->window, 0, 0,
-                         PLAYER_WIDTH, PLAYER_HEIGHT,
-                         PLAYER_WIDTH, PLAYER_HEIGHT,
+                         !bmp_active_skin->properties.mainwin_width ? PLAYER_WIDTH :
+				bmp_active_skin->properties.mainwin_width,
+                         !bmp_active_skin->properties.mainwin_height ? PLAYER_HEIGHT :
+				bmp_active_skin->properties.mainwin_height,
+                         !bmp_active_skin->properties.mainwin_width ? PLAYER_WIDTH :
+				bmp_active_skin->properties.mainwin_width,
+                         !bmp_active_skin->properties.mainwin_height ? PLAYER_HEIGHT :
+				bmp_active_skin->properties.mainwin_height,
                          GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE);
     gtk_window_resize(GTK_WINDOW(mainwin), PLAYER_WIDTH, PLAYER_HEIGHT);
 
