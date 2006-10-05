@@ -1,3 +1,11 @@
+2006-10-05 14:09:01 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2613]
+  - use gtk_window_present() to make X render the right sized skin
+  
+  trunk/audacious/mainwin.c |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2006-10-05 13:54:42 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2611]
   - include TinyPlayer skin with the main distribution

@@ -960,9 +960,9 @@ mainwin_refresh_hints(void)
 				bmp_active_skin->properties.mainwin_width,
 				bmp_active_skin->properties.mainwin_height,
                                 GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE);
-        gtk_window_resize(GTK_WINDOW(mainwin), bmp_active_skin->properties.mainwin_width,
+        gdk_window_resize(mainwin->window, bmp_active_skin->properties.mainwin_width,
 		bmp_active_skin->properties.mainwin_height);
-	gtk_window_present(GTK_WINDOW(mainwin));
+	gdk_flush();
     }
 
     /* visibility attributes */
