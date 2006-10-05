@@ -1,3 +1,11 @@
+2006-10-05 06:09:40 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2575]
+  - more hardcoded values removed
+  
+  trunk/audacious/mainwin.c |   20 +++++++++++---------
+  1 file changed, 11 insertions(+), 9 deletions(-)
+
+
 2006-10-05 06:05:41 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2573]
   - make sure all size requests match the skin size

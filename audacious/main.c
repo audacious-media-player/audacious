@@ -1071,15 +1071,15 @@ main(gint argc, gchar ** argv)
 
         gtk_accel_map_load(bmp_paths[BMP_PATH_ACCEL_FILE]);
 
-        mainwin_create();
-
-        playlistwin_create();
-        equalizerwin_create();
-
         if (!init_skins(cfg.skin)) {
             run_load_skin_error_dialog(cfg.skin);
             exit(EXIT_FAILURE);
         }
+
+        mainwin_create();
+
+        playlistwin_create();
+        equalizerwin_create();
 
         GDK_THREADS_ENTER();
     }
