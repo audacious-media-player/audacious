@@ -1,3 +1,11 @@
+2006-10-05 08:54:37 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2593]
+  - try not to reject tuples that have an mtime of 0. (special tuples referring to URIs)
+  
+  trunk/audacious/playlist.c |    9 +++------
+  1 file changed, 3 insertions(+), 6 deletions(-)
+
+
 2006-10-05 08:31:41 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2591]
   - make sure the PlaylistEntry has a tuple.
