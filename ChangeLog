@@ -1,3 +1,11 @@
+2006-10-05 01:21:40 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2531]
+  - update hints file
+  
+  trunk/skin/skin.hints |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2006-10-04 23:00:03 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2529]
   - add:

@@ -765,12 +765,19 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
-
-    tmp = read_ini_string(filename, "skin", "mainwinPositionX");
+    tmp = read_ini_string(filename, "skin", "mainwinPositionY");
 
     if (tmp != NULL)
     {
         skin->properties.mainwin_position_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinOthertextIsStatus");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_othertext_is_status = atoi(tmp);
         g_free(tmp);
     }
 

@@ -110,6 +110,8 @@ typedef struct _SkinProperties {
 	gint mainwin_position_y;
 
 	gboolean mainwin_menurow_visible;
+
+	gboolean mainwin_othertext_is_status;
 } SkinProperties;
 
 #define SKIN_PIXMAP(x)  ((SkinPixmap *)(x))
