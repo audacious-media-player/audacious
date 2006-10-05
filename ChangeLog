@@ -1,3 +1,12 @@
+2006-10-05 14:46:20 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2619]
+  - oops
+  
+  trunk/skins/Default/Makefile    |    6 +++---
+  trunk/skins/TinyPlayer/Makefile |    6 +++---
+  2 files changed, 6 insertions(+), 6 deletions(-)
+
+
 2006-10-05 14:44:19 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2617]
   - fix skins/Makefile

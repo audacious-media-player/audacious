@@ -1746,37 +1746,16 @@ on_skin_refresh_button_clicked(GtkButton * button,
     skin_view_update(GTK_TREE_VIEW(widget), GTK_WIDGET(widget2));
 }
 
-static void
-prefswin_set_skin_update(gboolean state)
-{
-    g_object_set_data(G_OBJECT(prefswin), "update-skins",
-                      GINT_TO_POINTER(state));
-}
-
 static gboolean
-prefswin_get_skin_update(void)
-{
-    return g_object_get_data(G_OBJECT(prefswin), "update-skins") != 0;
-}
-
-static gboolean
-on_skin_view_visibility_notify(GtkTreeView * treeview,
-                               GdkEvent * event,
-                               gpointer data)
+on_skin_view_realize(GtkTreeView * treeview,
+                     gpointer data)
 {
     GladeXML *xml;
     GtkWidget *widget;
 
-    if (event->visibility.state == GDK_VISIBILITY_FULLY_OBSCURED)
-        return FALSE;
-
-    if (!prefswin_get_skin_update())
-        return FALSE;
-
-    prefswin_set_skin_update(FALSE);
-
     xml = prefswin_get_xml();
     widget = glade_xml_get_widget(xml, "skin_refresh_button");
+    skin_view_realize(treeview);
     skin_view_update(treeview, GTK_WIDGET(widget));
 
     return TRUE;
@@ -2158,7 +2137,7 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_playlist_no_advance_toggled)
     FUNC_MAP_ENTRY(on_refresh_file_list_realize)
     FUNC_MAP_ENTRY(on_refresh_file_list_toggled)
-    FUNC_MAP_ENTRY(on_skin_view_visibility_notify)
+    FUNC_MAP_ENTRY(on_skin_view_realize)
     FUNC_MAP_ENTRY(on_titlestring_entry_realize)
     FUNC_MAP_ENTRY(on_titlestring_entry_changed)
     FUNC_MAP_ENTRY(on_eq_dir_preset_entry_realize)
@@ -2441,7 +2420,6 @@ create_prefs_window(void)
 void
 show_prefs_window(void)
 {
-    prefswin_set_skin_update(TRUE);
     gtk_widget_show(prefswin);
 }
 
