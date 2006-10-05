@@ -72,15 +72,25 @@ typedef enum {
 } SkinColorId;
 
 typedef struct _SkinProperties {
+	/* this enables the othertext engine, not it's visibility -nenolod */
 	gboolean mainwin_othertext;
+
+	/* Vis properties */
 	gint mainwin_vis_x;
 	gint mainwin_vis_y;
 	gint mainwin_vis_width;
+	gboolean mainwin_vis_visible;
+
+	/* Text properties */
 	gint mainwin_text_x;
 	gint mainwin_text_y;
 	gint mainwin_text_width;
+	gboolean mainwin_text_visible;
+
+	/* Infobar properties */
 	gint mainwin_infobar_x;
 	gint mainwin_infobar_y;
+	gboolean mainwin_othertext_visible;
 
 	gint mainwin_number_0_x;
 	gint mainwin_number_0_y;

@@ -908,6 +908,21 @@ mainwin_refresh_hints(void)
         widget_show(WIDGET(mainwin_menurow));
     else
         widget_hide(WIDGET(mainwin_menurow));
+
+    if (bmp_active_skin->properties.mainwin_text_visible)
+        widget_show(WIDGET(mainwin_info));
+    else
+        widget_hide(WIDGET(mainwin_info));
+
+    if (bmp_active_skin->properties.mainwin_othertext_visible)
+        widget_show(WIDGET(mainwin_othertext));
+    else
+        widget_hide(WIDGET(mainwin_othertext));
+
+    if (bmp_active_skin->properties.mainwin_vis_visible)
+        widget_show(WIDGET(mainwin_vis));
+    else
+        widget_hide(WIDGET(mainwin_vis));
 }
 
 void

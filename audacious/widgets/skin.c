@@ -781,6 +781,30 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    tmp = read_ini_string(filename, "skin", "mainwinOthertextVisible");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_othertext_visible = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinTextVisible");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_text_visible = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinVisVisible");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_vis_visible = atoi(tmp);
+        g_free(tmp);
+    }
+
     g_free(filename);
 }
 
