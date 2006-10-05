@@ -905,6 +905,55 @@ mainwin_refresh_hints(void)
 	widget_move(WIDGET(mainwin_position), bmp_active_skin->properties.mainwin_position_x,
 		bmp_active_skin->properties.mainwin_position_y);
 
+    if (bmp_active_skin->properties.mainwin_previous_x && bmp_active_skin->properties.mainwin_previous_y)
+	widget_move(WIDGET(mainwin_rew), bmp_active_skin->properties.mainwin_previous_x,
+		bmp_active_skin->properties.mainwin_previous_y);
+
+    if (bmp_active_skin->properties.mainwin_play_x && bmp_active_skin->properties.mainwin_play_y)
+	widget_move(WIDGET(mainwin_play), bmp_active_skin->properties.mainwin_play_x,
+		bmp_active_skin->properties.mainwin_play_y);
+
+    if (bmp_active_skin->properties.mainwin_pause_x && bmp_active_skin->properties.mainwin_pause_y)
+	widget_move(WIDGET(mainwin_pause), bmp_active_skin->properties.mainwin_pause_x,
+		bmp_active_skin->properties.mainwin_pause_y);
+
+    if (bmp_active_skin->properties.mainwin_stop_x && bmp_active_skin->properties.mainwin_stop_y)
+	widget_move(WIDGET(mainwin_stop), bmp_active_skin->properties.mainwin_stop_x,
+		bmp_active_skin->properties.mainwin_stop_y);
+
+    if (bmp_active_skin->properties.mainwin_next_x && bmp_active_skin->properties.mainwin_next_y)
+	widget_move(WIDGET(mainwin_fwd), bmp_active_skin->properties.mainwin_next_x,
+		bmp_active_skin->properties.mainwin_next_y);
+
+    if (bmp_active_skin->properties.mainwin_eject_x && bmp_active_skin->properties.mainwin_eject_y)
+	widget_move(WIDGET(mainwin_eject), bmp_active_skin->properties.mainwin_eject_x,
+		bmp_active_skin->properties.mainwin_eject_y);
+
+    if (bmp_active_skin->properties.mainwin_eqbutton_x && bmp_active_skin->properties.mainwin_eqbutton_y)
+	widget_move(WIDGET(mainwin_eq), bmp_active_skin->properties.mainwin_eqbutton_x,
+		bmp_active_skin->properties.mainwin_eqbutton_y);
+
+    if (bmp_active_skin->properties.mainwin_plbutton_x && bmp_active_skin->properties.mainwin_plbutton_y)
+	widget_move(WIDGET(mainwin_pl), bmp_active_skin->properties.mainwin_plbutton_x,
+		bmp_active_skin->properties.mainwin_plbutton_y);
+
+    if (bmp_active_skin->properties.mainwin_shuffle_x && bmp_active_skin->properties.mainwin_shuffle_y)
+	widget_move(WIDGET(mainwin_shuffle), bmp_active_skin->properties.mainwin_shuffle_x,
+		bmp_active_skin->properties.mainwin_shuffle_y);
+
+    if (bmp_active_skin->properties.mainwin_repeat_x && bmp_active_skin->properties.mainwin_repeat_y)
+	widget_move(WIDGET(mainwin_repeat), bmp_active_skin->properties.mainwin_repeat_x,
+		bmp_active_skin->properties.mainwin_repeat_y);
+
+    if (bmp_active_skin->properties.mainwin_about_x && bmp_active_skin->properties.mainwin_about_y)
+	widget_move(WIDGET(mainwin_about), bmp_active_skin->properties.mainwin_about_x,
+		bmp_active_skin->properties.mainwin_about_y);
+
+    /* window size, mainwinWidth && mainwinHeight properties */
+    if (bmp_active_skin->properties.mainwin_height && bmp_active_skin->properties.mainwin_width)
+        dock_resize(dock_window_list, GTK_WINDOW(mainwin), bmp_active_skin->properties.mainwin_width,
+		bmp_active_skin->properties.mainwin_height);
+
     /* visibility attributes */
     if (bmp_active_skin->properties.mainwin_menurow_visible)
         widget_show(WIDGET(mainwin_menurow));

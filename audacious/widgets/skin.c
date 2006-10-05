@@ -530,19 +530,6 @@ skin_parse_hints(Skin * skin, gchar *path_p)
 
     path_p = path_p ? path_p : skin->path;
 
-    skin->properties.mainwin_othertext = FALSE;
-    skin->properties.mainwin_vis_x = 24;
-    skin->properties.mainwin_vis_y = 43;
-    skin->properties.mainwin_vis_width = 76;
-    skin->properties.mainwin_text_x = 112;
-    skin->properties.mainwin_text_y = 27;
-    skin->properties.mainwin_text_width = 153;
-
-    skin->properties.mainwin_menurow_visible = TRUE;
-    skin->properties.mainwin_vis_visible = TRUE;
-    skin->properties.mainwin_text_visible = TRUE;
-    skin->properties.mainwin_othertext_visible = TRUE;
-
     filename = find_file_recursively(path_p, "skin.hints");
 
     if (filename == NULL)
@@ -552,6 +539,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
     skin->description = read_ini_string(filename, "skin", "skinDescription");
 #endif
 
+    skin->properties.mainwin_othertext = FALSE;
     tmp = read_ini_string(filename, "skin", "mainwinOthertext");
 
     if (tmp != NULL)
@@ -560,6 +548,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_vis_x = 24;
     tmp = read_ini_string(filename, "skin", "mainwinVisX");
 
     if (tmp != NULL)
@@ -568,6 +557,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_vis_y = 43;
     tmp = read_ini_string(filename, "skin", "mainwinVisY");
 
     if (tmp != NULL)
@@ -576,6 +566,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_vis_width = 76;
     tmp = read_ini_string(filename, "skin", "mainwinVisWidth");
 
     if (tmp != NULL)
@@ -584,6 +575,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_text_x = 112;
     tmp = read_ini_string(filename, "skin", "mainwinTextX");
 
     if (tmp != NULL)
@@ -592,6 +584,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_text_y = 27;
     tmp = read_ini_string(filename, "skin", "mainwinTextY");
 
     if (tmp != NULL)
@@ -600,6 +593,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_text_width = 153;
     tmp = read_ini_string(filename, "skin", "mainwinTextWidth");
 
     if (tmp != NULL)
@@ -608,6 +602,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_infobar_x = 112;
     tmp = read_ini_string(filename, "skin", "mainwinInfoBarX");
 
     if (tmp != NULL)
@@ -720,6 +715,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_menurow_visible = TRUE;
     tmp = read_ini_string(filename, "skin", "mainwinMenurowVisible");
 
     if (tmp != NULL)
@@ -784,6 +780,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_othertext_visible = TRUE;
     tmp = read_ini_string(filename, "skin", "mainwinOthertextVisible");
 
     if (tmp != NULL)
@@ -792,6 +789,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_text_visible = TRUE;
     tmp = read_ini_string(filename, "skin", "mainwinTextVisible");
 
     if (tmp != NULL)
@@ -800,11 +798,216 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_vis_visible = TRUE;
     tmp = read_ini_string(filename, "skin", "mainwinVisVisible");
 
     if (tmp != NULL)
     {
         skin->properties.mainwin_vis_visible = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinPreviousX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_previous_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinPreviousY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_previous_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinPlayX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_play_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinPlayY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_play_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinPauseX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_pause_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinPauseY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_pause_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinStopX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_stop_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinStopY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_stop_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinNextX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_next_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinNextY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_next_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinEjectX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_eject_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    tmp = read_ini_string(filename, "skin", "mainwinEjectY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_eject_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    skin->properties.mainwin_width = 275;
+    tmp = read_ini_string(filename, "skin", "mainwinWidth");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_width = atoi(tmp);
+        g_free(tmp);
+    }
+
+    skin->properties.mainwin_height = 116;
+    tmp = read_ini_string(filename, "skin", "mainwinHeight");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_height = atoi(tmp);
+        g_free(tmp);
+    }
+
+    skin->properties.mainwin_about_x = 247;
+    tmp = read_ini_string(filename, "skin", "mainwinAboutX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_about_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    skin->properties.mainwin_about_y = 83;
+    tmp = read_ini_string(filename, "skin", "mainwinAboutY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_about_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    skin->properties.mainwin_shuffle_x = 164;
+    tmp = read_ini_string(filename, "skin", "mainwinShuffleX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_shuffle_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    skin->properties.mainwin_shuffle_y = 89;
+    tmp = read_ini_string(filename, "skin", "mainwinShuffleY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_shuffle_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    skin->properties.mainwin_repeat_x = 210;
+    tmp = read_ini_string(filename, "skin", "mainwinRepeatX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_repeat_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    skin->properties.mainwin_repeat_y = 89;
+    tmp = read_ini_string(filename, "skin", "mainwinRepeatY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_repeat_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    skin->properties.mainwin_eqbutton_x = 219;
+    tmp = read_ini_string(filename, "skin", "mainwinEQButtonX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_eqbutton_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    skin->properties.mainwin_eqbutton_y = 58;
+    tmp = read_ini_string(filename, "skin", "mainwinEQButtonY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_eqbutton_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    skin->properties.mainwin_plbutton_x = 242;
+    tmp = read_ini_string(filename, "skin", "mainwinPLButtonX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_plbutton_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    skin->properties.mainwin_plbutton_y = 58;
+    tmp = read_ini_string(filename, "skin", "mainwinPLButtonY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_plbutton_y = atoi(tmp);
         g_free(tmp);
     }
 

@@ -1,3 +1,11 @@
+2006-10-05 04:05:51 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2563]
+  WTF, and now even a typo in the ChangeLog! (Fixed.)
+  
+  trunk/ChangeLog |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-10-05 04:04:50 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2561]
   Just saw that it's ordered by last name. Of course, I was too blind

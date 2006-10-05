@@ -119,6 +119,42 @@ typedef struct _SkinProperties {
 	gint mainwin_position_x;
 	gint mainwin_position_y;
 
+	gint mainwin_previous_x;
+	gint mainwin_previous_y;
+
+	gint mainwin_play_x;
+	gint mainwin_play_y;
+
+	gint mainwin_pause_x;
+	gint mainwin_pause_y;
+
+	gint mainwin_stop_x;
+	gint mainwin_stop_y;
+
+	gint mainwin_next_x;
+	gint mainwin_next_y;
+
+	gint mainwin_eject_x;
+	gint mainwin_eject_y;
+
+	gint mainwin_eqbutton_x;
+	gint mainwin_eqbutton_y;
+
+	gint mainwin_plbutton_x;
+	gint mainwin_plbutton_y;
+
+	gint mainwin_shuffle_x;
+	gint mainwin_shuffle_y;
+
+	gint mainwin_repeat_x;
+	gint mainwin_repeat_y;
+
+	gint mainwin_about_x;
+	gint mainwin_about_y;
+
+	gint mainwin_width;
+	gint mainwin_height;
+
 	gboolean mainwin_menurow_visible;
 
 	gboolean mainwin_othertext_is_status;
