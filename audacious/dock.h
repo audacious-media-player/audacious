@@ -35,7 +35,6 @@ void dock_move_release(GtkWindow * w);
 void dock_get_widget_pos(GtkWindow * w, gint * x, gint * y);
 gboolean dock_is_moving(GtkWindow * w);
 void dock_shade(GList * window_list, GtkWindow * widget, gint new_h);
-void dock_resize(GList * window_list, GtkWindow * w, gint new_w, gint new_h);
 
 GList *dock_window_set_decorated(GList * list, GtkWindow * window,
                                  gboolean decorated);
