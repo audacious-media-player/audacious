@@ -835,6 +835,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_previous_x = 16;
     tmp = read_ini_string(filename, "skin", "mainwinPreviousX");
 
     if (tmp != NULL)
@@ -843,6 +844,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_previous_y = 88;
     tmp = read_ini_string(filename, "skin", "mainwinPreviousY");
 
     if (tmp != NULL)
@@ -851,6 +853,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_play_x = 39;
     tmp = read_ini_string(filename, "skin", "mainwinPlayX");
 
     if (tmp != NULL)
@@ -859,6 +862,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_play_y = 88;
     tmp = read_ini_string(filename, "skin", "mainwinPlayY");
 
     if (tmp != NULL)
@@ -867,6 +871,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_pause_x = 62;
     tmp = read_ini_string(filename, "skin", "mainwinPauseX");
 
     if (tmp != NULL)
@@ -875,6 +880,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_pause_y = 88;
     tmp = read_ini_string(filename, "skin", "mainwinPauseY");
 
     if (tmp != NULL)
@@ -883,6 +889,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_stop_x = 85;
     tmp = read_ini_string(filename, "skin", "mainwinStopX");
 
     if (tmp != NULL)
@@ -891,6 +898,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_stop_y = 88;
     tmp = read_ini_string(filename, "skin", "mainwinStopY");
 
     if (tmp != NULL)
@@ -899,6 +907,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_next_x = 108;
     tmp = read_ini_string(filename, "skin", "mainwinNextX");
 
     if (tmp != NULL)
@@ -907,6 +916,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_next_y = 88;
     tmp = read_ini_string(filename, "skin", "mainwinNextY");
 
     if (tmp != NULL)
@@ -915,6 +925,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_eject_x = 136;
     tmp = read_ini_string(filename, "skin", "mainwinEjectX");
 
     if (tmp != NULL)
@@ -923,6 +934,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_eject_y = 88;
     tmp = read_ini_string(filename, "skin", "mainwinEjectY");
 
     if (tmp != NULL)
