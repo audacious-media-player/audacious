@@ -2194,7 +2194,7 @@ playlist_get_info_func(gpointer arg)
                            Restart. */
                         node = playlist_get();
                 }
-                else if (entry->title || (!entry->tuple && entry->length != -1)) {
+                else if (entry->tuple == NULL && entry->title != NULL && entry->length == -1) {
                     update_playlistwin = TRUE;
                     if (entry == playlist_position)
                         update_mainwin = TRUE;
@@ -2240,7 +2240,7 @@ playlist_get_info_func(gpointer arg)
                             g_list_nth(playlist_get(),
                                        playlistwin_get_toprow());
                 }
-                else if (entry->title || (!entry->tuple && entry->length != -1)) {
+                else if (entry->tuple == NULL && entry->title != NULL && entry->length == -1) {
                     update_playlistwin = TRUE;
                     if (entry == playlist_position)
                         update_mainwin = TRUE;
