@@ -1,3 +1,11 @@
+2006-10-05 09:07:02 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2595]
+  - fix an assertion error
+  
+  trunk/audacious/widgets/textbox.c |    1 -
+  1 file changed, 1 deletion(-)
+
+
 2006-10-05 08:54:37 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2593]
   - try not to reject tuples that have an mtime of 0. (special tuples referring to URIs)
