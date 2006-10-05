@@ -160,6 +160,7 @@ textbox_set_text(TextBox * tb, const gchar * text)
 {
     g_return_if_fail(tb != NULL);
     g_return_if_fail(text != NULL);
+    g_return_if_fail(tb->tb_widget.visible == FALSE);
 
     widget_lock(WIDGET(tb));
 
