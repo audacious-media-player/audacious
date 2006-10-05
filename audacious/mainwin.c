@@ -783,9 +783,11 @@ static gchar *mainwin_tb_old_text = NULL;
 void
 mainwin_lock_info_text(const gchar * text)
 {
+    if (mainwin_info_text_locked != TRUE)
+        mainwin_tb_old_text = g_strdup(bmp_active_skin->properties.mainwin_othertext_is_status ?
+  	    mainwin_othertext->tb_text : mainwin_info->tb_text);
+
     mainwin_info_text_locked = TRUE;
-    mainwin_tb_old_text = g_strdup(bmp_active_skin->properties.mainwin_othertext_is_status ?
-	mainwin_othertext->tb_text : mainwin_info->tb_text);
     textbox_set_text(bmp_active_skin->properties.mainwin_othertext_is_status ?
 	mainwin_othertext : mainwin_info, text);
 }

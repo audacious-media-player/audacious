@@ -1,3 +1,11 @@
+2006-10-05 01:52:37 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2537]
+  - another oops in my oops fix, sorry
+  
+  trunk/audacious/mainwin.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-10-05 01:51:58 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2535]
   - i made an oops
