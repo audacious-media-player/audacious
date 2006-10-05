@@ -1,3 +1,16 @@
+2006-10-04 23:00:03 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2529]
+  - add:
+  [skin.hints:mainwinVolumeX], [skin.hints:mainwinVolumeY]
+  [skin.hints:mainwinBalanceX], [skin.hints:mainwinBalanceY]
+  [skin.hints:mainwinPositionX], [skin.hints:mainwinPositionY]
+  
+  trunk/audacious/mainwin.c      |   12 ++++++++++
+  trunk/audacious/widgets/skin.c |   49 +++++++++++++++++++++++++++++++++++++++++
+  trunk/audacious/widgets/skin.h |    9 +++++++
+  3 files changed, 70 insertions(+)
+
+
 2006-10-04 22:33:17 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2527]
   - wa2 values for mainwinTitleText property.
