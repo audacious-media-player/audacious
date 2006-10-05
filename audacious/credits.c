@@ -53,9 +53,9 @@ static const gchar *credit_text[] = {
     "Giacomo Lozito",
     "William Pitcock",
     "Derek Pomery",
+    "Jonathan Schleifer",
     "Tony Vroon",
     "Yoshiki Yazawa",
-    "Jonathan Schleifer",
     NULL,
 
     N_("Graphics:"),
@@ -75,8 +75,8 @@ static const gchar *credit_text[] = {
     "Giacomo Lozito",
     "William Pitcock",
     "Derek Pomery",
-    "Tony Vroon",
     "Jonathan Schleifer",
+    "Tony Vroon",
     NULL,
 
     N_("0.1.x developers:"),

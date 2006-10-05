@@ -1,3 +1,13 @@
+2006-10-05 04:02:06 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2559]
+  Just saw that we have an AUTHORS file here as well, so I added myself
+  here, too.
+  
+  trunk/AUTHORS             |    1 +
+  trunk/audacious/credits.c |    1 +
+  2 files changed, 2 insertions(+)
+
+
 2006-10-05 03:17:07 +0000  George Averill <nhjm449@gmail.com>
   revision [2557]
   - Put ()'s around the time in the shaded playlist text.
