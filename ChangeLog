@@ -1,3 +1,12 @@
+2006-10-05 14:57:40 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2621]
+  - fix that goddamn skinlist bug
+  
+  trunk/audacious/glade/prefswin.glade |    3 +--
+  trunk/audacious/prefswin.c           |   30 ++++--------------------------
+  2 files changed, 5 insertions(+), 28 deletions(-)
+
+
 2006-10-05 14:46:20 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2619]
   - oops

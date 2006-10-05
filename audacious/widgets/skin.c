@@ -540,13 +540,6 @@ skin_parse_hints(Skin * skin, gchar *path_p)
 
     filename = find_file_recursively(path_p, "skin.hints");
 
-    if (filename == NULL)
-        return;
-
-#if 0
-    skin->description = read_ini_string(filename, "skin", "skinDescription");
-#endif
-
     skin->properties.mainwin_othertext = FALSE;
     tmp = read_ini_string(filename, "skin", "mainwinOthertext");
 
@@ -1051,7 +1044,8 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
-    g_free(filename);
+    if (filename != NULL)
+        g_free(filename);
 }
 
 static guint
