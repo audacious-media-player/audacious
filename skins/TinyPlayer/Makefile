@@ -1,5 +1,5 @@
-include ../mk/rules.mk
-include ../mk/init.mk
+include ../../mk/rules.mk
+include ../../mk/init.mk
 
 skindir = $(pkgdatadir)/Skins/TinyPlayer
 OBJECTIVE_DATA = \
@@ -21,4 +21,4 @@ OBJECTIVE_DATA = \
 	viscolor.txt:$(skindir)		\
 	skin.hints:$(skindir)
 
-include ../mk/objective.mk
+include ../../mk/objective.mk
