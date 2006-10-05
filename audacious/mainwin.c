@@ -836,7 +836,9 @@ mainwin_refresh_hints(void)
 	widget_hide(WIDGET(mainwin_rate_text));
 	widget_hide(WIDGET(mainwin_freq_text));
 	widget_hide(WIDGET(mainwin_monostereo));
-	widget_show(WIDGET(mainwin_othertext));
+
+	if (bmp_active_skin->properties.mainwin_othertext_visible)
+	    widget_show(WIDGET(mainwin_othertext));
     }
     else
     {
@@ -1002,7 +1004,9 @@ mainwin_set_song_info(gint bitrate,
         widget_hide(WIDGET(mainwin_rate_text));
         widget_hide(WIDGET(mainwin_freq_text));
         widget_hide(WIDGET(mainwin_monostereo));
-        widget_show(WIDGET(mainwin_othertext));
+
+        if (bmp_active_skin->properties.mainwin_othertext_visible)
+            widget_show(WIDGET(mainwin_othertext));
     }
     else
     {
