@@ -405,7 +405,7 @@ playlistwin_update_sinfo(void)
         posstr = g_strdup("");
 
     if (time != -1) {
-        timestr = g_strdup_printf(" %d:%-2.2d", time / 60000,
+        timestr = g_strdup_printf(" (%d:%-2.2d)", time / 60000,
                                       (time / 1000) % 60);
     }
     else
