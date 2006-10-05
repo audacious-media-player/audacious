@@ -42,6 +42,7 @@ textbox_draw(Widget * w)
     GdkPixmap *src;
 
     g_return_if_fail(tb != NULL);
+    g_return_if_fail(tb->tb_widget.visible != FALSE);
 
     if (tb->tb_text &&
         (!tb->tb_pixmap_text || strcmp(tb->tb_text, tb->tb_pixmap_text)))
@@ -160,7 +161,6 @@ textbox_set_text(TextBox * tb, const gchar * text)
 {
     g_return_if_fail(tb != NULL);
     g_return_if_fail(text != NULL);
-    g_return_if_fail(tb->tb_widget.visible == FALSE);
 
     widget_lock(WIDGET(tb));
 
