@@ -5,5 +5,5 @@ include ../mk/init.mk
 
 SUBDIRS = Default TinyPlayer
 
-include mk/objective.mk
+include ../mk/objective.mk
 
