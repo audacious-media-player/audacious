@@ -176,9 +176,6 @@ playlist_entry_get_info(PlaylistEntry * entry)
 
     modtime = playlist_get_mtime(entry->filename);
 
-    if (modtime == 0) // maybe file not exist
-	    return FALSE;
-
     if (entry->decoder == NULL)
         entry->decoder = input_check_file(entry->filename, FALSE);
 
@@ -1552,7 +1549,6 @@ playlist_get_songtitle(guint pos)
     entry = node->data;
 
     /* FIXME: simplify this logic */
-//    if (!entry->title && entry->length == -1) {
     if ( (!entry->title && entry->length == -1) || 
 	 (entry->tuple && (entry->tuple->mtime != playlist_get_mtime(entry->filename))) ){
         if (playlist_entry_get_info(entry))
@@ -2072,6 +2068,7 @@ playlist_fileinfo(guint pos)
     GList *node;
     PlaylistEntry *entry = NULL;
     TitleInput *tuple = NULL;
+    gint mtime;
 
     PLAYLIST_LOCK();
 
@@ -2085,8 +2082,8 @@ playlist_fileinfo(guint pos)
     PLAYLIST_UNLOCK();
 
     /* No tuple? Try to set this entry up properly. --nenolod */
-//    if (entry->tuple == NULL)
-    if (!entry->tuple || (entry->tuple->mtime != playlist_get_mtime(entry->filename)))
+    if (entry->tuple == NULL || entry->tuple->mtime == 0 ||
+	(entry->tuple->mtime != playlist_get_mtime(entry->filename)))
     {
         playlist_entry_get_info(entry);
         tuple = entry->tuple;
