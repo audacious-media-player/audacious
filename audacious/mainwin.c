@@ -2579,8 +2579,11 @@ mainwin_real_show(void)
                          !bmp_active_skin->properties.mainwin_height ? PLAYER_HEIGHT :
 				bmp_active_skin->properties.mainwin_height,
                          GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE);
-    gtk_window_resize(GTK_WINDOW(mainwin), PLAYER_WIDTH, PLAYER_HEIGHT);
-
+    gtk_window_resize(GTK_WINDOW(mainwin), 
+                         !bmp_active_skin->properties.mainwin_width ? PLAYER_WIDTH :
+				bmp_active_skin->properties.mainwin_width,
+                         !bmp_active_skin->properties.mainwin_height ? PLAYER_HEIGHT :
+				bmp_active_skin->properties.mainwin_height);
     if (cfg.player_x != -1 && cfg.player_y != -1)
         gtk_window_move(GTK_WINDOW(mainwin), cfg.player_x, cfg.player_y);
 
