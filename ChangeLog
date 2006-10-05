@@ -1,3 +1,11 @@
+2006-10-05 09:43:17 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2603]
+  - ditto for playlist_get_songtime().
+  
+  trunk/audacious/playlist.c |    3 +--
+  1 file changed, 1 insertion(+), 2 deletions(-)
+
+
 2006-10-05 09:41:57 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2601]
   - tuples with an mtime of 0 don't need to be checked

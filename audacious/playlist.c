@@ -143,6 +143,9 @@ playlist_entry_new(const gchar * filename,
     entry->selected = FALSE;
     entry->decoder = dec;
 
+    if (entry->decoder)
+        entry->tuple = entry->decoder->get_song_tuple(entry->filename);
+
     return entry;
 }
 
@@ -174,7 +177,10 @@ playlist_entry_get_info(PlaylistEntry * entry)
 
     g_return_val_if_fail(entry != NULL, FALSE);
 
-    modtime = playlist_get_mtime(entry->filename);
+    if (!entry->tuple || entry->tuple->mtime > 0)
+	modtime = playlist_get_mtime(entry->filename);
+    else
+	modtime = 0;  /* URI -nenolod */
 
     if (entry->decoder == NULL)
         entry->decoder = input_check_file(entry->filename, FALSE);
