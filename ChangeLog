@@ -1,3 +1,11 @@
+2006-10-06 04:31:27 +0000  George Averill <nhjm449@gmail.com>
+  revision [2631]
+  - Make mainwin shading work correctly.
+  
+  trunk/audacious/mainwin.c |   15 +++++++++++----
+  1 file changed, 11 insertions(+), 4 deletions(-)
+
+
 2006-10-06 03:18:41 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2629]
   - implement textboxBitmapFontWidth and textboxBitmapFontHeight for defining the size of a cell in the textbox character grid
