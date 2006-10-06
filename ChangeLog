@@ -1,3 +1,11 @@
+2006-10-06 05:41:09 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2637]
+  - actually, apparently we need that... fucking apple
+  
+  trunk/audacious/mainwin.c |    6 ++++++
+  1 file changed, 6 insertions(+)
+
+
 2006-10-06 05:38:01 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2635]
   - only set window hints after the resize

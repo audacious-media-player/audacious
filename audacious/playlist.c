@@ -178,7 +178,7 @@ playlist_entry_get_info(PlaylistEntry * entry)
 
     g_return_val_if_fail(entry != NULL, FALSE);
 
-    if (!entry->tuple || entry->tuple->mtime > 0)
+    if (entry->tuple == NULL || entry->tuple->mtime > 0 || entry->tuple->mtime == -1)
 	modtime = playlist_get_mtime(entry->filename);
     else
 	modtime = 0;  /* URI -nenolod */
@@ -1556,8 +1556,9 @@ playlist_get_songtitle(guint pos)
     entry = node->data;
 
     /* FIXME: simplify this logic */
-    if ((!entry->title && entry->length == -1) || 
-	 (entry->tuple && (entry->tuple->mtime > 0 && entry->tuple->mtime != playlist_get_mtime(entry->filename))) ){
+    if ((entry->title == NULL && entry->length == -1) ||
+        (entry->tuple && entry->tuple->mtime != 0 && (entry->tuple->mtime == -1 || entry->tuple->mtime != playlist_get_mtime(entry->filename))))
+    {
         if (playlist_entry_get_info(entry))
             title = entry->title;
     }
@@ -1599,7 +1600,9 @@ playlist_get_tuple(guint pos)
     tuple = entry->tuple;
 
     // if no tuple or tuple with old mtime, get new one.
-    if (!tuple || (entry->tuple->mtime > 0 && entry->tuple->mtime != playlist_get_mtime(entry->filename))) {
+    if (tuple == NULL || 
+        (entry->tuple && entry->tuple->mtime != 0 && (entry->tuple->mtime == -1 || entry->tuple->mtime != playlist_get_mtime(entry->filename))))
+    {
         playlist_entry_get_info(entry);
         tuple = entry->tuple;
     }
@@ -1629,8 +1632,8 @@ playlist_get_songtime(guint pos)
     }
 
     entry = node->data;
-
-    if (!entry->tuple || (entry->tuple->mtime > 0 && entry->tuple->mtime != playlist_get_mtime(entry->filename))){
+    if (entry->tuple == NULL ||
+        (entry->tuple->mtime != 0 && (entry->tuple->mtime == -1 || entry->tuple->mtime != playlist_get_mtime(entry->filename)))) {
 
         if (playlist_entry_get_info(entry))
             song_time = entry->length;
@@ -2088,8 +2091,8 @@ playlist_fileinfo(guint pos)
     PLAYLIST_UNLOCK();
 
     /* No tuple? Try to set this entry up properly. --nenolod */
-    if (entry->tuple == NULL || entry->tuple->mtime == 0 ||
-	(entry->tuple->mtime != playlist_get_mtime(entry->filename)))
+    if (entry->tuple == NULL || entry->tuple->mtime == -1 ||
+        entry->tuple->mtime == 0 || entry->tuple->mtime != playlist_get_mtime(entry->filename))
     {
         playlist_entry_get_info(entry);
         tuple = entry->tuple;
@@ -2631,7 +2634,7 @@ playlist_read_info_selection(void)
 
 	/* invalidate mtime to reread */
 	if (entry->tuple != NULL)
-	    entry->tuple->mtime = 0;
+	    entry->tuple->mtime = -1; /* -1 denotes "non-initialized". now 0 is for stream etc. yaz */
 
         if (!playlist_entry_get_info(entry)) {
             if (g_list_index(playlist_get(), entry) == -1)
