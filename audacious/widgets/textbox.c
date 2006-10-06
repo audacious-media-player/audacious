@@ -240,127 +240,132 @@ textbox_generate_xfont_pixmap(TextBox * tb, const gchar * pixmaptext)
 static void
 textbox_handle_special_char(gchar c, gint * x, gint * y)
 {
+    gint tx, ty;
+
     switch (c) {
     case '"':
-        *x = 130;
-        *y = 0;
+        tx = 26;
+        ty = 0;
         break;
     case '\r':
-        *x = 50;
-        *y = 6;
+        tx = 10;
+        ty = 1;
         break;
     case ':':
     case ';':
-        *x = 60;
-        *y = 6;
+        tx = 12;
+        ty = 1;
         break;
     case '(':
-        *x = 65;
-        *y = 6;
+        tx = 13;
+        ty = 1;
         break;
     case ')':
-        *x = 70;
-        *y = 6;
+        tx = 14;
+        ty = 1;
         break;
     case '-':
-        *x = 75;
-        *y = 6;
+        tx = 15;
+        ty = 1;
         break;
     case '`':
     case '\'':
-        *x = 80;
-        *y = 6;
+        tx = 16;
+        ty = 1;
         break;
     case '!':
-        *x = 85;
-        *y = 6;
+        tx = 17;
+        ty = 1;
         break;
     case '_':
-        *x = 90;
-        *y = 6;
+        tx = 18;
+        ty = 1;
         break;
     case '+':
-        *x = 95;
-        *y = 6;
+        tx = 19;
+        ty = 1;
         break;
     case '\\':
-        *x = 100;
-        *y = 6;
+        tx = 20;
+        ty = 1;
         break;
     case '/':
-        *x = 105;
-        *y = 6;
+        tx = 21;
+        ty = 1;
         break;
     case '[':
-        *x = 110;
-        *y = 6;
+        tx = 22;
+        ty = 1;
         break;
     case ']':
-        *x = 115;
-        *y = 6;
+        tx = 23;
+        ty = 1;
         break;
     case '^':
-        *x = 120;
-        *y = 6;
+        tx = 24;
+        ty = 1;
         break;
     case '&':
-        *x = 125;
-        *y = 6;
+        tx = 25;
+        ty = 1;
         break;
     case '%':
-        *x = 130;
-        *y = 6;
+        tx = 26;
+        ty = 1;
         break;
     case '.':
     case ',':
-        *x = 135;
-        *y = 6;
+        tx = 27;
+        ty = 1;
         break;
     case '=':
-        *x = 140;
-        *y = 6;
+        tx = 28;
+        ty = 1;
         break;
     case '$':
-        *x = 145;
-        *y = 6;
+        tx = 29;
+        ty = 1;
         break;
     case '#':
-        *x = 150;
-        *y = 6;
+        tx = 30;
+        ty = 1;
         break;
     case 'å':
     case 'Å':
-        *x = 0;
-        *y = 12;
+        tx = 0;
+        ty = 2;
         break;
     case 'ö':
     case 'Ö':
-        *x = 5;
-        *y = 12;
+        tx = 1;
+        ty = 2;
         break;
     case 'ä':
     case 'Ä':
-        *x = 10;
-        *y = 12;
+        tx = 2;
+        ty = 2;
         break;
     case 'ü':
     case 'Ü':
-        *x = 100;
-        *y = 0;
+        tx = 20;
+        ty = 0;
         break;
     case '?':
-        *x = 15;
-        *y = 12;
+        tx = 3;
+        ty = 2;
         break;
     case '*':
-        *x = 20;
-        *y = 12;
+        tx = 4;
+        ty = 2;
         break;
     default:
-        *x = 145;
-        *y = 0;
+        tx = 29;
+        ty = 0;
         break;
     }
+
+    *x = tx * bmp_active_skin->properties.textbox_bitmap_font_width;
+    *y = ty * bmp_active_skin->properties.textbox_bitmap_font_height;
 }
 
 static void
@@ -443,7 +448,7 @@ textbox_generate_pixmap(TextBox * tb)
 
     tb->tb_pixmap_width = length * 5;
     tb->tb_pixmap = gdk_pixmap_new(mainwin->window,
-                                   tb->tb_pixmap_width, 6,
+                                   tb->tb_pixmap_width, bmp_active_skin->properties.textbox_bitmap_font_height,
                                    gdk_rgb_get_visual()->depth);
     gc = tb->tb_widget.gc;
 
@@ -452,12 +457,12 @@ textbox_generate_pixmap(TextBox * tb)
         x = y = -1;
         c = toupper((int) pixmaptext[i]);
         if (c >= 'A' && c <= 'Z') {
-            x = 5 * (c - 'A');
+            x = bmp_active_skin->properties.textbox_bitmap_font_width * (c - 'A');
             y = 0;
         }
         else if (c >= '0' && c <= '9') {
             x = 5 * (c - '0');
-            y = 6;
+            y = bmp_active_skin->properties.textbox_bitmap_font_height;
         }
         else
             textbox_handle_special_char(c, &x, &y);

@@ -1,3 +1,11 @@
+2006-10-06 02:50:10 +0000  George Averill <nhjm449@gmail.com>
+  revision [2627]
+  - revert to 2599
+  
+  trunk/audacious/mainwin.c |    3 +--
+  1 file changed, 1 insertion(+), 2 deletions(-)
+
+
 2006-10-05 15:55:13 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2625]
   - better handle the stream condition

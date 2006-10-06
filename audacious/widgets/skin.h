@@ -156,8 +156,10 @@ typedef struct _SkinProperties {
 	gint mainwin_height;
 
 	gboolean mainwin_menurow_visible;
-
 	gboolean mainwin_othertext_is_status;
+
+	gint textbox_bitmap_font_width;
+	gint textbox_bitmap_font_height;
 } SkinProperties;
 
 #define SKIN_PIXMAP(x)  ((SkinPixmap *)(x))

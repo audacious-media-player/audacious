@@ -1044,6 +1044,24 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.textbox_bitmap_font_width = 5;
+    tmp = read_ini_string(filename, "skin", "textboxBitmapFontWidth");
+
+    if (tmp != NULL)
+    {
+        skin->properties.textbox_bitmap_font_width = atoi(tmp);
+        g_free(tmp);
+    }
+
+    skin->properties.textbox_bitmap_font_height = 6;
+    tmp = read_ini_string(filename, "skin", "textboxBitmapFontHeight");
+
+    if (tmp != NULL)
+    {
+        skin->properties.textbox_bitmap_font_height = atoi(tmp);
+        g_free(tmp);
+    }
+
     if (filename != NULL)
         g_free(filename);
 }
