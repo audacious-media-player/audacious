@@ -956,12 +956,19 @@ mainwin_refresh_hints(void)
     {
         gdk_window_set_hints(mainwin->window, 0, 0,
 				bmp_active_skin->properties.mainwin_width,
-				bmp_active_skin->properties.mainwin_height,
+				cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
 				bmp_active_skin->properties.mainwin_width,
-				bmp_active_skin->properties.mainwin_height,
+				cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
                                 GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE);
-        gtk_window_resize(GTK_WINDOW(mainwin), bmp_active_skin->properties.mainwin_width,
-		bmp_active_skin->properties.mainwin_height);
+        gdk_window_resize(mainwin->window, bmp_active_skin->properties.mainwin_width,
+		cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height);
+        gdk_window_set_hints(mainwin->window, 0, 0,
+                                bmp_active_skin->properties.mainwin_width,
+                                cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
+                                bmp_active_skin->properties.mainwin_width,
+                                cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
+                                GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE);
+	gdk_flush();
     }
 
     /* visibility attributes */

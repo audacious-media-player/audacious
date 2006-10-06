@@ -1,3 +1,13 @@
+2006-10-06 03:18:41 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2629]
+  - implement textboxBitmapFontWidth and textboxBitmapFontHeight for defining the size of a cell in the textbox character grid
+  
+  trunk/audacious/widgets/skin.c    |   18 +++++
+  trunk/audacious/widgets/skin.h    |    4 -
+  trunk/audacious/widgets/textbox.c |  123 +++++++++++++++++++-------------------
+  3 files changed, 85 insertions(+), 60 deletions(-)
+
+
 2006-10-06 02:50:10 +0000  George Averill <nhjm449@gmail.com>
   revision [2627]
   - revert to 2599
