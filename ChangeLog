@@ -1,3 +1,11 @@
+2006-10-06 05:21:35 +0000  George Averill <nhjm449@gmail.com>
+  revision [2633]
+  - Add a background behind the title scroller in the main window.
+  
+  trunk/skins/TinyPlayer/skin.hints |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2006-10-06 04:31:27 +0000  George Averill <nhjm449@gmail.com>
   revision [2631]
   - Make mainwin shading work correctly.
