@@ -1,3 +1,11 @@
+2006-10-07 22:25:58 +0000  George Averill <nhjm449@gmail.com>
+  revision [2647]
+  - Really make sure it doesn't overlap.
+  
+  trunk/skins/Default/skin.hints |   14 +++++++-------
+  1 file changed, 7 insertions(+), 7 deletions(-)
+
+
 2006-10-07 22:17:31 +0000  George Averill <nhjm449@gmail.com>
   revision [2645]
   - Update shaded playlist font when toggling bitmap fonts.

@@ -912,6 +912,10 @@ on_use_bitmap_fonts_toggled(GtkToggleButton * button,
 
     mainwin_set_info_text();
     draw_main_window(TRUE);
+    if (cfg.playlist_shaded) {
+        playlistwin_update_list();
+        draw_playlist_window(TRUE);
+    }
 }
 
 static void
