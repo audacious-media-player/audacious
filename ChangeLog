@@ -1,3 +1,17 @@
+2006-10-07 20:31:15 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2641]
+  - Replace ?= at CFLAGS, CPPFLAGS and CXXFLAGS with +=
+  - Replace ?= at CC, CPP and CXX with =
+  
+  The reason for this is that on some systems CC, CFLAGS, CPP, CPPFLAGS,
+  CXX and CXXFLAGS are set by default and therefore are already set at
+  this step so that it can happen that the wrong variables are used (or
+  the ones from the configure script are ignored).
+  
+  trunk/mk/rules.mk.in |   12 ++++++------
+  1 file changed, 6 insertions(+), 6 deletions(-)
+
+
 2006-10-06 17:50:55 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2639]
   - mtime=-1 has been introduced to represent "uninitialized".
