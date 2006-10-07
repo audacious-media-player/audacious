@@ -1,3 +1,11 @@
+2006-10-07 22:10:58 +0000  George Averill <nhjm449@gmail.com>
+  revision [2643]
+  - Don't let the text overlap the counter.
+  
+  trunk/skins/Default/skin.hints |   15 ++++++++-------
+  1 file changed, 8 insertions(+), 7 deletions(-)
+
+
 2006-10-07 20:31:15 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2641]
   - Replace ?= at CFLAGS, CPPFLAGS and CXXFLAGS with +=
