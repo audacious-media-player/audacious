@@ -1,3 +1,13 @@
+2006-10-06 17:50:55 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2639]
+  - mtime=-1 has been introduced to represent "uninitialized".
+  - scanning for uninitialized tuple works correctly.
+  - "Update View" works again.
+  
+  trunk/audacious/playlist.c |   21 ++++++++++++---------
+  1 file changed, 12 insertions(+), 9 deletions(-)
+
+
 2006-10-06 05:41:09 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2637]
   - actually, apparently we need that... fucking apple
