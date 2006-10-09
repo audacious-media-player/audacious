@@ -131,6 +131,8 @@ typedef struct {
 gchar *chardet_to_utf8(const gchar *str, gssize len,
 		       gsize *arg_bytes_read, gsize *arg_bytes_write, GError **arg_error);
 
+GdkPixmap *audacious_pixmap_resize(GdkWindow *src, GdkGC *src_gc, GdkPixmap *in, gint width, gint height);
+
 /* XMMS names */
 
 #define bmp_info_dialog(title, text, button_text, model, button_action, action_data) \

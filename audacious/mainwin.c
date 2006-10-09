@@ -968,6 +968,10 @@ mainwin_refresh_hints(void)
                                 bmp_active_skin->properties.mainwin_width,
                                 cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
                                 GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE);
+        mainwin_bg = audacious_pixmap_resize(mainwin->window, mainwin_gc, mainwin_bg,
+                                bmp_active_skin->properties.mainwin_width,
+				bmp_active_skin->properties.mainwin_height);
+        mainwin_set_back_pixmap();
 	gdk_flush();
     }
 
