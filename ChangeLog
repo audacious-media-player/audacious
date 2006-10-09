@@ -1,3 +1,11 @@
+2006-10-09 10:50:11 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2661]
+  - avoid unnecessary resizing
+  
+  trunk/audacious/util.c |    3 +++
+  1 file changed, 3 insertions(+)
+
+
 2006-10-09 10:44:50 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2659]
   - add audacious_pixmap_resize() for resizing a skin pixmap on demand.
