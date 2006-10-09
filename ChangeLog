@@ -1,3 +1,11 @@
+2006-10-07 22:43:56 +0000  George Averill <nhjm449@gmail.com>
+  revision [2649]
+  - Make sure to redraw shaded playlistwin when toggling bitmap fonts.
+  
+  trunk/audacious/prefswin.c |    4 ++++
+  1 file changed, 4 insertions(+)
+
+
 2006-10-07 22:25:58 +0000  George Averill <nhjm449@gmail.com>
   revision [2647]
   - Really make sure it doesn't overlap.

@@ -1,3 +1,15 @@
+Audacious 1.2.0 (2006-10-??)
+
+Enhancements
+* Russian character set support via latest librcd
+* Compatibility with BSD make
+* Make album-art recursion optional
+* Fix an error where configure aborts if libvorbis is not found.
+* Freeform skinning, see the example skins for more information.
+
+Bugfixes
+* Tons. :)
+
 Audacious 1.1.1 (2006-07-21)
 
 Enhancements
