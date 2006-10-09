@@ -1558,6 +1558,9 @@ GdkPixmap *audacious_pixmap_resize(GdkWindow *src, GdkGC *src_gc, GdkPixmap *in,
 
 	gdk_drawable_get_size(in, &owidth, &oheight);
 
+	if (oheight == height && owidth == width)
+		return;
+
 	out = gdk_pixmap_new(src, width, height, -1);
 
 	gdk_draw_rectangle(out, src_gc, TRUE, 0, 0, width, height);

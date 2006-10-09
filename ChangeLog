@@ -1,3 +1,13 @@
+2006-10-09 10:44:50 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2659]
+  - add audacious_pixmap_resize() for resizing a skin pixmap on demand.
+  
+  trunk/audacious/mainwin.c |    4 ++++
+  trunk/audacious/util.c    |   25 +++++++++++++++++++++++++
+  trunk/audacious/util.h    |    2 ++
+  3 files changed, 31 insertions(+)
+
+
 2006-10-09 10:20:36 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2657]
   - the default for mainwinTextVisible() should be FALSE.
