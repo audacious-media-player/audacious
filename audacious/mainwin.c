@@ -3467,7 +3467,7 @@ mainwin_create_window(void)
     gtk_window_set_role(GTK_WINDOW(mainwin), "player");
     gtk_window_set_resizable(GTK_WINDOW(mainwin), FALSE);
 
-    width = MAINWIN_WIDTH;
+    width = bmp_active_skin->properties.mainwin_width;
     height = cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height;
 
     gtk_widget_set_size_request(mainwin, width, height);
@@ -3557,7 +3557,8 @@ mainwin_create(void)
 
     mainwin_gc = gdk_gc_new(mainwin->window);
     mainwin_bg = gdk_pixmap_new(mainwin->window,
-                                MAINWIN_WIDTH, MAINWIN_HEIGHT, -1);
+                                bmp_active_skin->properties.mainwin_width,
+				bmp_active_skin->properties.mainwin_height, -1);
     mainwin_set_back_pixmap();
     mainwin_create_widgets();
 

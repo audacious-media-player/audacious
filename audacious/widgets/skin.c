@@ -1772,5 +1772,5 @@ skin_draw_mainwin_titlebar(Skin * skin,
     }
 
     skin_draw_pixmap(skin, drawable, gc, SKIN_TITLEBAR, 27, y_offset,
-                     0, 0, MAINWIN_WIDTH, MAINWIN_TITLEBAR_HEIGHT);
+                     0, 0, bmp_active_skin->properties.mainwin_width, MAINWIN_TITLEBAR_HEIGHT);
 }
