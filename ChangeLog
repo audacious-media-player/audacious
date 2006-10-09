@@ -1,3 +1,12 @@
+2006-10-09 09:58:18 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2653]
+  - replace several occurances of MAINWIN_WIDTH with bmp_active_skin->properties.mainwin_width.
+  
+  trunk/audacious/mainwin.c      |    5 +++--
+  trunk/audacious/widgets/skin.c |    2 +-
+  2 files changed, 4 insertions(+), 3 deletions(-)
+
+
 2006-10-09 01:17:58 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2651]
   - update NEWS

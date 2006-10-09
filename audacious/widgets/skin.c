@@ -945,6 +945,9 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    /* XXX: use of skin_mask_info here is bad */
+    skin_mask_info[0].width = skin->properties.mainwin_width;
+
     skin->properties.mainwin_height = 116;
     tmp = read_ini_string(filename, "skin", "mainwinHeight");
 
@@ -953,6 +956,9 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         skin->properties.mainwin_height = atoi(tmp);
         g_free(tmp);
     }
+
+    /* XXX: use of skin_mask_info here is bad */
+    skin_mask_info[0].height = skin->properties.mainwin_height;
 
     skin->properties.mainwin_about_x = 247;
     tmp = read_ini_string(filename, "skin", "mainwinAboutX");
