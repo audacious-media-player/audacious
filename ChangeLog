@@ -1,3 +1,11 @@
+2006-10-09 10:04:44 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2655]
+  - change skin_mask_info[] if the player sizes change.
+  
+  trunk/audacious/widgets/skin.c |    6 ++++++
+  1 file changed, 6 insertions(+)
+
+
 2006-10-09 09:58:18 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2653]
   - replace several occurances of MAINWIN_WIDTH with bmp_active_skin->properties.mainwin_width.

@@ -810,7 +810,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
-    skin->properties.mainwin_text_visible = TRUE;
+    skin->properties.mainwin_text_visible = FALSE;
     tmp = read_ini_string(filename, "skin", "mainwinTextVisible");
 
     if (tmp != NULL)
