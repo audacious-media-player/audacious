@@ -1,3 +1,11 @@
+2006-10-09 10:56:32 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2663]
+  - resize fixes
+  
+  trunk/audacious/mainwin.c |    8 +++++---
+  1 file changed, 5 insertions(+), 3 deletions(-)
+
+
 2006-10-09 10:50:11 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2661]
   - avoid unnecessary resizing
