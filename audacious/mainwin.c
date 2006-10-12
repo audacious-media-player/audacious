@@ -951,9 +951,40 @@ mainwin_refresh_hints(void)
 	widget_move(WIDGET(mainwin_about), bmp_active_skin->properties.mainwin_about_x,
 		bmp_active_skin->properties.mainwin_about_y);
 
+    /* visibility attributes */
+    if (bmp_active_skin->properties.mainwin_menurow_visible)
+        widget_show(WIDGET(mainwin_menurow));
+    else
+        widget_hide(WIDGET(mainwin_menurow));
+
+    if (bmp_active_skin->properties.mainwin_text_visible)
+        widget_show(WIDGET(mainwin_info));
+    else
+        widget_hide(WIDGET(mainwin_info));
+
+    if (bmp_active_skin->properties.mainwin_othertext_visible)
+        widget_show(WIDGET(mainwin_othertext));
+    else
+        widget_hide(WIDGET(mainwin_othertext));
+
+    if (bmp_active_skin->properties.mainwin_vis_visible)
+        widget_show(WIDGET(mainwin_vis));
+    else
+        widget_hide(WIDGET(mainwin_vis));
+
     /* window size, mainwinWidth && mainwinHeight properties */
     if (bmp_active_skin->properties.mainwin_height && bmp_active_skin->properties.mainwin_width)
     {
+	gint width, height;
+
+	gdk_window_get_size(mainwin->window, &width, &height);
+
+	if (width == bmp_active_skin->properties.mainwin_width &&
+		height == bmp_active_skin->properties.mainwin_height)
+	{
+		return;
+	}
+
         gdk_window_set_hints(mainwin->window, 0, 0,
                                 bmp_active_skin->properties.mainwin_width,
                                 cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
@@ -976,27 +1007,6 @@ mainwin_refresh_hints(void)
 	widget_list_change_pixmap(mainwin_wlist, mainwin_bg);
 	gdk_flush();
     }
-
-    /* visibility attributes */
-    if (bmp_active_skin->properties.mainwin_menurow_visible)
-        widget_show(WIDGET(mainwin_menurow));
-    else
-        widget_hide(WIDGET(mainwin_menurow));
-
-    if (bmp_active_skin->properties.mainwin_text_visible)
-        widget_show(WIDGET(mainwin_info));
-    else
-        widget_hide(WIDGET(mainwin_info));
-
-    if (bmp_active_skin->properties.mainwin_othertext_visible)
-        widget_show(WIDGET(mainwin_othertext));
-    else
-        widget_hide(WIDGET(mainwin_othertext));
-
-    if (bmp_active_skin->properties.mainwin_vis_visible)
-        widget_show(WIDGET(mainwin_vis));
-    else
-        widget_hide(WIDGET(mainwin_vis));
 }
 
 void

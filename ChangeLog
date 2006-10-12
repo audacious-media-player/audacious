@@ -1,3 +1,11 @@
+2006-10-12 00:47:31 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2667]
+  - don't use hardcoded values for the time indicator area
+  
+  trunk/audacious/mainwin.c |   16 ++++++++++------
+  1 file changed, 10 insertions(+), 6 deletions(-)
+
+
 2006-10-11 19:37:16 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2665]
   - add the Osmosis skin, a more sophisticated example of the new skinning engine.
