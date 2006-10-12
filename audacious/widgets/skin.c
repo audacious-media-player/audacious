@@ -801,7 +801,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
-    skin->properties.mainwin_othertext_visible = TRUE;
+    skin->properties.mainwin_othertext_visible = skin->properties.mainwin_othertext;
     tmp = read_ini_string(filename, "skin", "mainwinOthertextVisible");
 
     if (tmp != NULL)
