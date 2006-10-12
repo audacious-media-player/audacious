@@ -1,3 +1,15 @@
+2006-10-11 19:37:16 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2665]
+  - add the Osmosis skin, a more sophisticated example of the new skinning engine.
+  
+  trunk/skins/Makefile             |    2 -
+  trunk/skins/Osmosis/Makefile     |   24 ++++++++++++++++
+  trunk/skins/Osmosis/pledit.txt   |    6 ++++
+  trunk/skins/Osmosis/skin.hints   |   57 +++++++++++++++++++++++++++++++++++++++
+  trunk/skins/Osmosis/viscolor.txt |   24 ++++++++++++++++
+  5 files changed, 112 insertions(+), 1 deletion(-)
+
+
 2006-10-09 10:56:32 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2663]
   - resize fixes

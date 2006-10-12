@@ -1381,18 +1381,22 @@ mainwin_mouse_button_press(GtkWidget * widget,
             grab = FALSE;
         }
     }
-    if (event->button == 1) {
-        if ((event->x > 35 && event->x < 100 &&
-             event->y > 25 && event->y < 40) ||
-            widget_contains(WIDGET(mainwin_stime_min), event->x, event->y) ||
-            widget_contains(WIDGET(mainwin_stime_sec), event->x, event->y)) {
 
+    if (event->button == 1)
+    {
+        if (widget_contains(WIDGET(mainwin_minus_num), event->x, event->y) ||
+		widget_contains(WIDGET(mainwin_10min_num), event->x, event->y) ||
+		widget_contains(WIDGET(mainwin_min_num), event->x, event->y) ||
+		widget_contains(WIDGET(mainwin_10sec_num), event->x, event->y) ||
+		widget_contains(WIDGET(mainwin_sec_num), event->x, event->y) ||
+		widget_contains(WIDGET(mainwin_stime_min), event->x, event->y) ||
+		widget_contains(WIDGET(mainwin_stime_sec), event->x, event->y))
+	{
             if (cfg.timer_mode == TIMER_ELAPSED)
                 set_timer_mode(TIMER_REMAINING);
             else
                 set_timer_mode(TIMER_ELAPSED);
         }
-
     }
 
     if (grab)
