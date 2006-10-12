@@ -93,16 +93,6 @@ PKG_CHECK_MODULES(LIBGLADE, [libglade-2.0 >= 2.3.1],
     [AC_MSG_ERROR([Cannot find libglade])]
 )
 
-AC_PATH_PROG(TAGLIB_CONFIG, taglib-config, [no], [$PATH:$prefix/bin])
-if test "x$TAGLIB_CONFIG" = "xno" ; then
-AC_MSG_ERROR([Cannot find taglib])
-else
-    TAGLIB_CFLAGS=[`$TAGLIB_CONFIG --cflags`]
-    TAGLIB_LIBS=[`$TAGLIB_CONFIG --libs`]
-fi
-AC_SUBST(TAGLIB_CFLAGS)
-AC_SUBST(TAGLIB_LIBS)
-
 # Check if socklen_t is defined
 
 AC_CACHE_CHECK(for socklen_t, beep_cv_type_socklen_t,
