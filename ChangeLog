@@ -1,3 +1,10 @@
+2006-10-12 02:44:00 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2677]
+  - cleanup some skin textures
+  
+  0 files changed
+
+
 2006-10-12 01:42:49 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2675]
   - main texture: resize to 425x100; add a colon to delimit minutes from seconds.
