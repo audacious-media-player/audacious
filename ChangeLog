@@ -1,3 +1,10 @@
+2006-10-12 11:52:51 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2683]
+  Remove taglib CFLAGS, CONFIG & LIBS, no longer used.
+  trunk/mk/rules.mk.in |    3 ---
+  1 file changed, 3 deletions(-)
+
+
 2006-10-12 11:51:39 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2681]
   - remove checks for taglib in the player

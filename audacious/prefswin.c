@@ -1923,7 +1923,8 @@ on_chardet_detector_cbox_changed(GtkComboBox * combobox, gpointer data)
     db = bmp_cfg_db_open();
     bmp_cfg_db_set_string(db, NULL, "chardet_detector", cfg.chardet_detector);
     bmp_cfg_db_close(db);
-    gtk_widget_set_sensitive(GTK_WIDGET(data), 1);
+    if (data != NULL)
+        gtk_widget_set_sensitive(GTK_WIDGET(data), 1);
 }
 
 static void
@@ -1950,7 +1951,10 @@ on_chardet_detector_cbox_realize(GtkComboBox *combobox, gpointer data)
 
 #ifdef USE_CHARDET
     gtk_combo_box_set_active(GTK_COMBO_BOX(combobox), index);
-    gtk_widget_set_sensitive(GTK_WIDGET(data), 1);
+
+    if (data != NULL)
+        gtk_widget_set_sensitive(GTK_WIDGET(data), TRUE);
+
     g_signal_connect(combobox, "changed",
                      G_CALLBACK(on_chardet_detector_cbox_changed), NULL);
 #else

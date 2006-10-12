@@ -356,11 +356,16 @@ fileinfo_show_for_tuple(TitleInput *tuple)
 
 	gtk_widget_realize(fileinfo_win);
 
-	fileinfo_entry_set_text("entry_title", tuple->track_name);
-	fileinfo_entry_set_text("entry_artist", tuple->performer);
-	fileinfo_entry_set_text("entry_album", tuple->album_name);
-	fileinfo_entry_set_text("entry_comment", tuple->comment);
-	fileinfo_entry_set_text("entry_genre", tuple->genre);
+	if (tuple->track_name)
+		fileinfo_entry_set_text("entry_title", tuple->track_name);
+	if (tuple->performer)
+		fileinfo_entry_set_text("entry_artist", tuple->performer);
+	if (tuple->album_name)
+		fileinfo_entry_set_text("entry_album", tuple->album_name);
+	if (tuple->comment)
+		fileinfo_entry_set_text("entry_comment", tuple->comment);
+	if (tuple->genre)
+		fileinfo_entry_set_text("entry_genre", tuple->genre);
 
 	tmp = g_strdup_printf("%s/%s", tuple->file_path, tuple->file_name);
 	if(tmp){
