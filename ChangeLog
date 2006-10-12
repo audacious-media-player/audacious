@@ -1,3 +1,11 @@
+2006-10-12 11:51:39 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2681]
+  - remove checks for taglib in the player
+  
+  trunk/configure.ac |   10 ----------
+  1 file changed, 10 deletions(-)
+
+
 2006-10-12 06:38:18 +0000  George Averill <nhjm449@gmail.com>
   revision [2679]
   - Skin Osmosis's shaded equalizer.
