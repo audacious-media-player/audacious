@@ -1,3 +1,11 @@
+2006-10-12 01:28:57 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2673]
+  - reposition some elements for better aesthetics
+  
+  trunk/skins/Osmosis/skin.hints |    8 ++++----
+  1 file changed, 4 insertions(+), 4 deletions(-)
+
+
 2006-10-12 01:23:22 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2671]
   - add mainwinMinimizeX, mainwinMinimizeY, mainwinShadeX, mainwinShadeY, mainwinCloseX, mainwinCloseY
