@@ -1,3 +1,11 @@
+2006-10-12 14:44:28 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2687]
+  - for fucks sake, properties::mainwin_text_visible should be initialised to TRUE
+  
+  trunk/audacious/widgets/skin.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-10-12 12:02:14 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2685]
   - some fixes via alxorlov on the forums
