@@ -1,3 +1,16 @@
+2006-10-12 01:23:22 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2671]
+  - add mainwinMinimizeX, mainwinMinimizeY, mainwinShadeX, mainwinShadeY, mainwinCloseX, mainwinCloseY
+  - make Osmosis mainwin 425x100 instead of 425x105
+  - reposition the minimize, shade and close buttons on the Osmosis skin.
+  
+  trunk/audacious/mainwin.c      |   12 +++++++++
+  trunk/audacious/widgets/skin.c |   54 +++++++++++++++++++++++++++++++++++++++++
+  trunk/audacious/widgets/skin.h |    9 ++++++
+  trunk/skins/Osmosis/skin.hints |   13 +++++++--
+  4 files changed, 85 insertions(+), 3 deletions(-)
+
+
 2006-10-12 00:53:03 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2669]
   - avoid recreating the window unless an actual size-dimensional change has occured.
