@@ -951,6 +951,18 @@ mainwin_refresh_hints(void)
 	widget_move(WIDGET(mainwin_about), bmp_active_skin->properties.mainwin_about_x,
 		bmp_active_skin->properties.mainwin_about_y);
 
+    if (bmp_active_skin->properties.mainwin_minimize_x && bmp_active_skin->properties.mainwin_minimize_y)
+	widget_move(WIDGET(mainwin_minimize), bmp_active_skin->properties.mainwin_minimize_x,
+		bmp_active_skin->properties.mainwin_minimize_y);
+
+    if (bmp_active_skin->properties.mainwin_shade_x && bmp_active_skin->properties.mainwin_shade_y)
+	widget_move(WIDGET(mainwin_shade), bmp_active_skin->properties.mainwin_shade_x,
+		bmp_active_skin->properties.mainwin_shade_y);
+
+    if (bmp_active_skin->properties.mainwin_close_x && bmp_active_skin->properties.mainwin_close_y)
+	widget_move(WIDGET(mainwin_close), bmp_active_skin->properties.mainwin_close_x,
+		bmp_active_skin->properties.mainwin_close_y);
+
     /* visibility attributes */
     if (bmp_active_skin->properties.mainwin_menurow_visible)
         widget_show(WIDGET(mainwin_menurow));

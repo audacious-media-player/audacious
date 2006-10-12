@@ -152,6 +152,15 @@ typedef struct _SkinProperties {
 	gint mainwin_about_x;
 	gint mainwin_about_y;
 
+	gint mainwin_minimize_x;
+	gint mainwin_minimize_y;
+
+	gint mainwin_shade_x;
+	gint mainwin_shade_y;
+
+	gint mainwin_close_x;
+	gint mainwin_close_y;
+
 	gint mainwin_width;
 	gint mainwin_height;
 

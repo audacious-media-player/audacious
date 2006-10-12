@@ -1068,6 +1068,60 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin->properties.mainwin_minimize_x = 244;
+    tmp = read_ini_string(filename, "skin", "mainwinMinimizeX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_minimize_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    skin->properties.mainwin_minimize_y = 3;
+    tmp = read_ini_string(filename, "skin", "mainwinMinimizeY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_minimize_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    skin->properties.mainwin_shade_x = 254;
+    tmp = read_ini_string(filename, "skin", "mainwinShadeX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_shade_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    skin->properties.mainwin_shade_y = 3;
+    tmp = read_ini_string(filename, "skin", "mainwinShadeY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_shade_y = atoi(tmp);
+        g_free(tmp);
+    }
+
+    skin->properties.mainwin_close_x = 264;
+    tmp = read_ini_string(filename, "skin", "mainwinCloseX");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_close_x = atoi(tmp);
+        g_free(tmp);
+    }
+
+    skin->properties.mainwin_close_y = 3;
+    tmp = read_ini_string(filename, "skin", "mainwinCloseY");
+
+    if (tmp != NULL)
+    {
+        skin->properties.mainwin_close_y = atoi(tmp);
+        g_free(tmp);
+    }
+
     if (filename != NULL)
         g_free(filename);
 }

@@ -1,3 +1,11 @@
+2006-10-12 00:53:03 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2669]
+  - avoid recreating the window unless an actual size-dimensional change has occured.
+  
+  trunk/audacious/mainwin.c |   52 +++++++++++++++++++++++++++-------------------
+  1 file changed, 31 insertions(+), 21 deletions(-)
+
+
 2006-10-12 00:47:31 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2667]
   - don't use hardcoded values for the time indicator area
