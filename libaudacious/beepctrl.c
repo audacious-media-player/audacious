@@ -289,7 +289,7 @@ audacious_get_session_uri(gint session)
 
     if (audacious_session_uri != NULL)
     {
-	return audacious_session_uri;
+        return g_strdup(audacious_session_uri);
     }
 
     if (audacious_session_type != AUDACIOUS_TYPE_UNIX)
@@ -319,7 +319,7 @@ audacious_set_session_type(gint *type)
 gint *
 audacious_determine_session_type(gint session)
 {
-    gchar *uri;
+    gchar *uri = NULL;
 
     if (audacious_session_type != NULL)
     {

@@ -1,3 +1,11 @@
+2006-10-13 04:12:58 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2693]
+  - pls doesn't go along with PLAYLIST_LOCK in playlist_save().
+  
+  trunk/audacious/playlist.c |    2 --
+  1 file changed, 2 deletions(-)
+
+
 2006-10-12 15:10:01 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2691]
   - fix another regression where mainwin_othertext_visible is TRUE even though the skin doesn't want
