@@ -1,3 +1,12 @@
+2006-10-12 15:10:01 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2691]
+  - fix another regression where mainwin_othertext_visible is TRUE even though the skin doesn't want
+    the othertext system to be used at all
+  
+  trunk/audacious/widgets/skin.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-10-12 14:45:48 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2689]
   - 1.2.0-rc3
