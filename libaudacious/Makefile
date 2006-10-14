@@ -6,7 +6,7 @@ PICLDFLAGS = $(LIBLDFLAGS)
 beepincludedir = $(includedir)/audacious
 
 OBJECTIVE_LIBS = libaudacious$(SHARED_SUFFIX)
-OBJECTIVE_SONAME_SUFFIX = 3.0.0
+OBJECTIVE_SONAME_SUFFIX = 3
 
 LIBADD = \
 	$(GTK_LIBS)      \

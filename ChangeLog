@@ -1,3 +1,19 @@
+2006-10-14 18:36:12 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2699]
+  - same for librcd, libguess, icons and audacious/images
+  
+  trunk/audacious/images/Makefile    |   17 +++++++++++++++++
+  trunk/audacious/images/Makefile.in |   17 -----------------
+  trunk/configure.ac                 |    4 ----
+  trunk/icons/Makefile               |    7 +++++++
+  trunk/icons/Makefile.in            |    7 -------
+  trunk/libguess/Makefile            |   19 +++++++++++++++++++
+  trunk/libguess/Makefile.in         |   19 -------------------
+  trunk/librcd/Makefile              |   19 +++++++++++++++++++
+  trunk/librcd/Makefile.in           |   19 -------------------
+  9 files changed, 62 insertions(+), 66 deletions(-)
+
+
 2006-10-14 18:33:25 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2697]
   - rename libaudacious/Makefile.in -> libaudacious/Makefile as autoconf macro expansion is not needed here
