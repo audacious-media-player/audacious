@@ -1,3 +1,13 @@
+2006-10-14 19:03:26 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2709]
+  - objectify libintl
+  
+  trunk/configure.ac     |    1 
+  trunk/intl/Makefile    |   49 +++++
+  trunk/intl/Makefile.in |  479 -------------------------------------------------
+  3 files changed, 49 insertions(+), 480 deletions(-)
+
+
 2006-10-14 18:52:24 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2707]
   - only attempt to build the intl objective if INTL_OBJECTIVE is defined.
