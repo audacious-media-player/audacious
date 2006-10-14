@@ -1,3 +1,13 @@
+2006-10-14 18:33:25 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2697]
+  - rename libaudacious/Makefile.in -> libaudacious/Makefile as autoconf macro expansion is not needed here
+  
+  trunk/configure.ac             |    1 
+  trunk/libaudacious/Makefile    |   53 +++++++++++++++++++++++++++++++++++++++++
+  trunk/libaudacious/Makefile.in |   53 -----------------------------------------
+  3 files changed, 53 insertions(+), 54 deletions(-)
+
+
 2006-10-13 18:08:02 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2695]
   - audacious_determine_session_type() would crash if audacious_session_uri had value.

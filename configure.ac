@@ -384,12 +384,8 @@ AC_CONFIG_FILES([
 	audacious.spec
 	audacious.pc
 	audacious/audacious.desktop
-	audacious/images/Makefile
-	libguess/Makefile
-	librcd/Makefile
 	po/Makefile.in
 	intl/Makefile
-	icons/Makefile
 	mk/rules.mk
 ])
 
