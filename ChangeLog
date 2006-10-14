@@ -1,3 +1,11 @@
+2006-10-14 18:46:36 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2705]
+  - make things friendly to Objective Make
+  
+  trunk/m4/gettext.m4 |    3 +++
+  1 file changed, 3 insertions(+)
+
+
 2006-10-14 18:39:17 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2703]
   - libaudacious.so.4 actually, due to remote-access API addition
