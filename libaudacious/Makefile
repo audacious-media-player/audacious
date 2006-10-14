@@ -6,7 +6,7 @@ PICLDFLAGS = $(LIBLDFLAGS)
 beepincludedir = $(includedir)/audacious
 
 OBJECTIVE_LIBS = libaudacious$(SHARED_SUFFIX)
-OBJECTIVE_SONAME_SUFFIX = 3
+OBJECTIVE_SONAME_SUFFIX = 4
 
 LIBADD = \
 	$(GTK_LIBS)      \
@@ -46,8 +46,8 @@ HEADERS = \
 include ../mk/objective.mk
 
 install-posthook:
-	@mv ${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX) ${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX).3.0.0
-	@ln -sf ${LIBDIR}/libaudacious$(SHARED_SUFFIX).3.0.0 \
-		${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX).3
-	@ln -sf ${LIBDIR}/libaudacious$(SHARED_SUFFIX).3 \
+	@mv ${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX) ${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX).4.0.0
+	@ln -sf ${LIBDIR}/libaudacious$(SHARED_SUFFIX).4.0.0 \
+		${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX).4
+	@ln -sf ${LIBDIR}/libaudacious$(SHARED_SUFFIX).4 \
 		${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX)

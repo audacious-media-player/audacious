@@ -1,3 +1,11 @@
+2006-10-14 18:38:14 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2701]
+  - libaudacious SONAME becomes libaudacious.so.3
+  
+  trunk/libaudacious/Makefile |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-10-14 18:36:12 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2699]
   - same for librcd, libguess, icons and audacious/images
