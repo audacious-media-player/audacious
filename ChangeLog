@@ -1,3 +1,12 @@
+2006-10-14 18:52:24 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2707]
+  - only attempt to build the intl objective if INTL_OBJECTIVE is defined.
+  
+  trunk/Makefile       |    2 +-
+  trunk/mk/rules.mk.in |    1 +
+  2 files changed, 2 insertions(+), 1 deletion(-)
+
+
 2006-10-14 18:46:36 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2705]
   - make things friendly to Objective Make

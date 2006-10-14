@@ -385,7 +385,6 @@ AC_CONFIG_FILES([
 	audacious.pc
 	audacious/audacious.desktop
 	po/Makefile.in
-	intl/Makefile
 	mk/rules.mk
 ])
 
