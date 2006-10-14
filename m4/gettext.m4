@@ -98,6 +98,7 @@ AC_DEFUN([AM_GNU_GETTEXT],
   ifelse(gt_included_intl, yes, [
     BUILD_INCLUDED_LIBINTL=no
     USE_INCLUDED_LIBINTL=no
+    INTL_OBJECTIVE=
   ])
   LIBINTL=
   LTLIBINTL=
@@ -233,6 +234,7 @@ return (int) gettext ("")]ifelse([$2], [need-ngettext], [ + (int) ngettext ("", 
         dnl Mark actions used to generate GNU NLS library.
         BUILD_INCLUDED_LIBINTL=yes
         USE_INCLUDED_LIBINTL=yes
+	INTL_OBJECTIVE=intl
         LIBINTL="ifelse([$3],[],\${top_builddir}/intl,[$3])/libintl.[]gt_libtool_suffix_prefix[]a $LIBICONV"
         LTLIBINTL="ifelse([$3],[],\${top_builddir}/intl,[$3])/libintl.[]gt_libtool_suffix_prefix[]a $LTLIBICONV"
         LIBS=`echo " $LIBS " | sed -e 's/ -lintl / /' -e 's/^ //' -e 's/ $//'`
@@ -301,6 +303,7 @@ return (int) gettext ("")]ifelse([$2], [need-ngettext], [ + (int) ngettext ("", 
     dnl Make all variables we use known to autoconf.
     AC_SUBST(BUILD_INCLUDED_LIBINTL)
     AC_SUBST(USE_INCLUDED_LIBINTL)
+    AC_SUBST(INTL_OBJECTIVE)
     AC_SUBST(CATOBJEXT)
 
     dnl For backward compatibility. Some configure.ins may be using this.
