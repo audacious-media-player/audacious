@@ -1,3 +1,11 @@
+2006-10-13 18:08:02 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2695]
+  - audacious_determine_session_type() would crash if audacious_session_uri had value.
+  
+  trunk/libaudacious/beepctrl.c |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2006-10-13 04:12:58 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2693]
   - pls doesn't go along with PLAYLIST_LOCK in playlist_save().

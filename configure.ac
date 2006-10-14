@@ -385,7 +385,6 @@ AC_CONFIG_FILES([
 	audacious.pc
 	audacious/audacious.desktop
 	audacious/images/Makefile
-	libaudacious/Makefile
 	libguess/Makefile
 	librcd/Makefile
 	po/Makefile.in
