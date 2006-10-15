@@ -952,16 +952,16 @@ mainwin_refresh_hints(void)
 		bmp_active_skin->properties.mainwin_about_y);
 
     if (bmp_active_skin->properties.mainwin_minimize_x && bmp_active_skin->properties.mainwin_minimize_y)
-	widget_move(WIDGET(mainwin_minimize), bmp_active_skin->properties.mainwin_minimize_x,
-		bmp_active_skin->properties.mainwin_minimize_y);
+	widget_move(WIDGET(mainwin_minimize), cfg.player_shaded ? 244 : bmp_active_skin->properties.mainwin_minimize_x,
+		cfg.player_shaded ? 3 : bmp_active_skin->properties.mainwin_minimize_y);
 
     if (bmp_active_skin->properties.mainwin_shade_x && bmp_active_skin->properties.mainwin_shade_y)
-	widget_move(WIDGET(mainwin_shade), bmp_active_skin->properties.mainwin_shade_x,
-		bmp_active_skin->properties.mainwin_shade_y);
+	widget_move(WIDGET(mainwin_shade), cfg.player_shaded ? 254 : bmp_active_skin->properties.mainwin_shade_x,
+		cfg.player_shaded ? 3 : bmp_active_skin->properties.mainwin_shade_y);
 
     if (bmp_active_skin->properties.mainwin_close_x && bmp_active_skin->properties.mainwin_close_y)
-	widget_move(WIDGET(mainwin_close), bmp_active_skin->properties.mainwin_close_x,
-		bmp_active_skin->properties.mainwin_close_y);
+	widget_move(WIDGET(mainwin_close), cfg.player_shaded ? 264 : bmp_active_skin->properties.mainwin_close_x,
+		cfg.player_shaded ? 3 : bmp_active_skin->properties.mainwin_close_y);
 
     /* visibility attributes */
     if (bmp_active_skin->properties.mainwin_menurow_visible)
@@ -998,17 +998,17 @@ mainwin_refresh_hints(void)
 	}
 
         gdk_window_set_hints(mainwin->window, 0, 0,
-                                bmp_active_skin->properties.mainwin_width,
+                                cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width,
                                 cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
-                                bmp_active_skin->properties.mainwin_width,
+                                cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width,
                                 cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
                                 GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE);
-        gdk_window_resize(mainwin->window, bmp_active_skin->properties.mainwin_width,
+        gdk_window_resize(mainwin->window, cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width,
 		cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height);
         gdk_window_set_hints(mainwin->window, 0, 0,
-                                bmp_active_skin->properties.mainwin_width,
+                                cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width,
                                 cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
-                                bmp_active_skin->properties.mainwin_width,
+                                cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width,
                                 cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
                                 GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE);
 	g_object_unref(mainwin_bg);
@@ -3499,7 +3499,7 @@ mainwin_create_window(void)
     gtk_window_set_role(GTK_WINDOW(mainwin), "player");
     gtk_window_set_resizable(GTK_WINDOW(mainwin), FALSE);
 
-    width = bmp_active_skin->properties.mainwin_width;
+    width = cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width;
     height = cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height;
 
     gtk_widget_set_size_request(mainwin, width, height);

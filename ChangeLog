@@ -1,3 +1,11 @@
+2006-10-14 19:04:49 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2711]
+  - bump to 1.2.0-rc4
+  
+  trunk/configure.ac |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-10-14 19:03:26 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2709]
   - objectify libintl
