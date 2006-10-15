@@ -1,0 +1,190 @@
+.TH AUDTOOL "1" "14 October 2006" "Version @PACKAGE_VERSION@" "Audacious Manual Pages"
+.SH NAME
+Audtool \- A commandline utility for controlling audacious
+.SH SYNOPSIS
+.B audtool
+[\-\-[[handler [parameter]]
+.SH DESCRIPTION
+\fIAudtool\fP is a commandline utility for controlling audacious remotely.
+.SH HANDLERS
+\fIAudtool\fP accepts the following handlers; handlers starting with playlist
+require a parameter, except for playlist-advance and playlist-reverse;
+the parameter for these should be the song number. Additionally,
+playqueue-add and playqueue-remove require a parameter.
+.TP
+.B current\-song
+returns current song title
+.TP
+.B current\-song\-filename
+returns current song filename
+.TP
+.B current\-song\-length
+returns current song length
+.TP
+.B current\-song\-length\-seconds
+returns current song length in seconds
+.TP
+.B current\-song\-length\-frames
+returns current song length in frames
+.TP
+.B current\-song\-output\-length
+returns current song output length
+.TP
+.B current\-song\-output\-length\-seconds
+returns current song output length in seconds
+.TP
+.B current\-song\-output\-length\-frames
+returns current song output length in frames
+.TP
+.B current\-song\-bitrate
+returns current song bitrate in bits per second
+.TP
+.B current\-song\-bitrate\-kbps
+returns current song bitrate in kilobits per second
+.TP
+.B current\-song\-frequency
+returns current song frequency in hertz
+.TP
+.B current\-song\-frequency\-khz
+returns current song frequency in kilohertz
+.TP
+.B current\-song\-channels
+returns current song channels
+.TP
+.B playlist\-advance
+go to the next song in the playlist
+.TP
+.B playlist\-reverse
+go to the previous song in the playlist
+.TP
+.B playlist\-addurl
+adds a url to the playlist
+.TP
+.B playlist\-delete
+deletes a song from the playlist
+.TP
+.B playlist\-length
+returns the total length of the playlist
+.TP
+.B playlist\-song
+returns the title of a song in the playlist
+.TP
+.B playlist\-song\-filename
+returns the filename of a song in the playlist
+.TP
+.B playlist\-song\-length
+returns the length of a song in the playlist
+.TP
+.B playlist\-song\-length\-seconds
+returns the length of a song in the playlist in seconds
+.TP
+.B playlist\-song\-length\-frames
+returns the length of a song in the playlist in frames
+.TP
+.B playlist\-display
+returns the entire playlist
+.TP
+.B playlist\-position
+returns the position in the playlist
+.TP
+.B playlist\-jump
+jumps to a position in the playlist
+.TP
+.B playlist\-clear
+clears the playlist
+.TP
+.B playlist\-repeat\-status
+returns the status of playlist repeat
+.TP
+.B playlist\-repeat\-toggle
+toggles playlist repeat
+.TP
+.B playlist\-shuffle\-status
+returns the status of playlist shuffle
+.TP
+.B playlist\-shuffle\-toggle
+toggles playlist shuffle
+.TP
+.B playqueue\-add
+adds a song to the playqueue
+.TP
+.B playqueue\-remove
+removes a song from the playqueue
+.TP
+.B playqueue\-is\-queued
+returns OK if a song is queued
+.TP
+.B playqueue\-get\-position
+returns the queue position of a song in the playlist
+.TP
+.B playqueue\-get\-qposition
+returns the playlist position of a song in the queue
+.TP
+.B playqueue\-length
+returns the length of the playqueue
+.TP
+.B playqueue\-display
+returns a list of currently-queued songs
+.TP
+.B playqueue\-clear
+clears the playqueue
+.TP
+.B playback\-play
+starts/unpauses song playback
+.TP
+.B playback\-pause
+(un)pauses song playback
+.TP
+.B playback\-playpause
+plays/(un)pauses song playback
+.TP
+.B playback\-stop
+stops song playback
+.TP
+.B playback\-playing
+returns OK if audacious is playing
+.TP
+.B playback\-paused
+returns OK if audacious is paused
+.TP
+.B playback\-stopped
+returns OK if audacious is stopped
+.TP
+.B playback\-status
+returns the playback status
+.TP
+.B get\-volume
+returns the current volume level in percent
+.TP
+.B set\-volume
+sets the current volume level in percent
+.TP
+.B preferences
+shows/hides the preferences window
+.TP
+.B jumptofile
+shows the jump to file window
+.TP
+.B shutdown
+shuts down audacious
+.TP
+.B list\-handlers
+shows handlers list
+.TP
+.B help
+shows handlers list
+.SH ENVIRONMENT VARIABLES
+.TP
+.B AUDTOOL_REMOTE_URI
+Defines a remote location to connect to an audacious instance.
+Audacious must be configured to support this functionality; see the
+audacious(1) manual page for further details.
+.SH BUGS
+There are no known bugs in audtool at this time; if you find any please
+report them to <bugs+audtool@atheme.org>.
+.SH COPYRIGHT
+Audtool is (c) 2005-2006 George Averill and William Pitcock.
+The audtool manpage was mostly written by Kiyoshi Aman.
+.SH COPYING
+Audtool is copyrighted but freely distributable software; see COPYING
+in the sourcecode for licensing details.

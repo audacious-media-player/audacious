@@ -20,5 +20,6 @@ install-posthook:
 OBJECTIVE_DATA =							\
 	audacious.pc:$(LIBDIR)/pkgconfig				\
 	audacious.1:$(mandir)/man1					\
+	audtool.1:$(mandir)/man1					\
 	audacious/audacious.desktop:$(datadir)/applications
 

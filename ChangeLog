@@ -1,3 +1,12 @@
+2006-10-15 01:50:37 +0000  George Averill <nhjm449@gmail.com>
+  revision [2713]
+  - Properly handle shading when mainwin_width is greater than the shaded width.
+  
+  trunk/audacious/mainwin.c |   24 ++++++++++++------------
+  trunk/audacious/mainwin.h |    1 +
+  2 files changed, 13 insertions(+), 12 deletions(-)
+
+
 2006-10-14 19:04:49 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2711]
   - bump to 1.2.0-rc4

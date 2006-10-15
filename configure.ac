@@ -380,6 +380,7 @@ AC_SUBST(VISUALIZATION_PLUGINS)
 AC_SUBST(CONTAINER_PLUGINS)
 
 AC_CONFIG_FILES([
+	audtool.1
 	audacious.1
 	audacious.spec
 	audacious.pc
