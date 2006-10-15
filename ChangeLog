@@ -1,3 +1,11 @@
+2006-10-15 04:25:04 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2725]
+  - fix default config order
+  
+  trunk/audacious/main.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-10-15 04:11:15 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2723]
   - try to intelligently choose which output plugin is best. candidates are in an null-terminated array, pl_candidates.

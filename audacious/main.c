@@ -87,7 +87,7 @@ const gchar *application_name = N_("Audacious");
 struct _BmpCmdLineOpt {
     GList *filenames;
     gint session;
-    gboolean play, stop, pause, fwd, rew, play_pause, playcd;
+    gboolean play, stop, pause, fwd, rew, play_pause, playcd, show_jump_box;
     gboolean enqueue, mainwin, remote, activate;
     gboolean load_skins;
     gboolean headless;
@@ -746,6 +746,9 @@ display_usage(void)
     g_print("\n-f, --fwd              ");
     /* -f, --fwd switch */
     g_print(_("Skip forward in playlist"));
+    g_print("\n-j, --show-jump-box    ");
+    /* -j, --show-jump-box switch */
+    g_print(_("Display Jump to file dialog"));
     g_print("\n-e, --enqueue          ");
     /* -e, --enqueue switch */
     g_print(_("Don't clear the playlist"));
@@ -785,6 +788,7 @@ parse_cmd_line(gint argc,
         {"play-pause", 0, NULL, 't'},
         {"stop", 0, NULL, 's'},
         {"fwd", 0, NULL, 'f'},
+        {"show-jump-box", 0, NULL, 'j'},
         {"enqueue", 0, NULL, 'e'},
         {"show-main-window", 0, NULL, 'm'},
         {"activate", 0, NULL, 'a'},
@@ -802,7 +806,7 @@ parse_cmd_line(gint argc,
     memset(options, 0, sizeof(BmpCmdLineOpt));
     options->session = -1;
 
-    while ((c = getopt_long(argc, argv, "chn:HrpusfemavtLS", long_options,
+    while ((c = getopt_long(argc, argv, "chn:HrpusfemavtLSj", long_options,
                             NULL)) != -1) {
         switch (c) {
         case 'h':
@@ -831,6 +835,9 @@ parse_cmd_line(gint argc,
             break;
         case 't':
             options->play_pause = TRUE;
+            break;
+        case 'j':
+            options->show_jump_box = TRUE;
             break;
         case 'm':
             options->mainwin = TRUE;
@@ -935,6 +942,9 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
 
     if (options->play_pause)
         xmms_remote_play_pause(session);
+
+    if (options->show_jump_box)
+        xmms_remote_show_jtf_box(session);
 
     if (options->mainwin)
         xmms_remote_main_win_toggle(session, TRUE);
