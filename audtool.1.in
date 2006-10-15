@@ -173,12 +173,6 @@ shows handlers list
 .TP
 .B help
 shows handlers list
-.SH ENVIRONMENT VARIABLES
-.TP
-.B AUDTOOL_REMOTE_URI
-Defines a remote location to connect to an audacious instance.
-Audacious must be configured to support this functionality; see the
-audacious(1) manual page for further details.
 .SH BUGS
 There are no known bugs in audtool at this time; if you find any please
 report them to <bugs+audtool@atheme.org>.
