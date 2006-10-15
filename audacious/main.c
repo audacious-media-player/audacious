@@ -370,6 +370,18 @@ gboolean pposition_broken = FALSE;
 
 gboolean starting_up = TRUE;
 
+/* XXX: case-sensitivity is bad for lazy nenolods. :( -nenolod */
+static gchar *pl_candidates[] = {
+	PLUGIN_FILENAME("ALSA"),
+	PLUGIN_FILENAME("OSS"),
+	PLUGIN_FILENAME("coreaudio"),
+	PLUGIN_FILENAME("sun"),
+	PLUGIN_FILENAME("ESD"),
+	PLUGIN_FILENAME("pulse_audio"),
+	PLUGIN_FILENAME("disk_writer"),
+	NULL
+};
+
 static GSList *
 get_feature_list(void)
 {
@@ -549,15 +561,15 @@ bmp_config_load(void)
         cfg.gentitle_format = g_strdup("%{p:%p - %}%{a:%a - %}%t");
 
     if (!cfg.outputplugin) {
-#ifdef HAVE_OSS
-        cfg.outputplugin = g_build_filename(PLUGIN_DIR, plugin_dir_list[0],
-                                            PLUGIN_FILENAME("OSS"), NULL);
-#else
-        /* FIXME: This implicitly means the output plugin that is
-         * first in the alphabet will be used (usually the disk writer
-         * plugin) */
-        cfg.outputplugin = g_strdup("");
-#endif
+	gint iter;
+        gchar *pl_path = g_build_filename(PLUGIN_DIR, plugin_dir_list[0], NULL);
+
+        for (iter = 0; pl_candidates[iter] != NULL && cfg.outputplugin == NULL; iter++)
+	{
+	     cfg.outputplugin = find_file_recursively(pl_path, pl_candidates[iter]);
+	}
+
+        g_free(pl_path);
     }
 
     if (!cfg.eqpreset_default_file)
