@@ -1,3 +1,11 @@
+2006-10-15 03:58:52 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2719]
+  - use SHARED_SUFFIX for PLUGIN_FILENAME().
+  
+  trunk/audacious/pluginenum.h |    3 ++-
+  1 file changed, 2 insertions(+), 1 deletion(-)
+
+
 2006-10-15 02:01:29 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2717]
   - remove comment about remote access as there's no GUI options exposed for it in audacious
