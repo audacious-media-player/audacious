@@ -115,7 +115,6 @@ BmpConfig bmp_default_config = {
     FALSE, FALSE,               /* shuffle, repeat */
     FALSE,                      /* UNUSED (double size) */
     TRUE,                       /* autoscroll */
-    FALSE,                      /* stop after current song */
     TRUE,                       /* analyzer peaks */
     FALSE,                      /* equalizer autoload */
     FALSE,                      /* easy move */
@@ -141,6 +140,7 @@ BmpConfig bmp_default_config = {
     FALSE,                      /* always on top */
     FALSE,                      /* sticky */
     FALSE,                      /* no playlist advance */
+    FALSE,                      /* stop after current song */
 #ifdef HAVE_GNOME_VFS
     FALSE,                      /* refresh file list - should be unneeded with VFS */
 #else
