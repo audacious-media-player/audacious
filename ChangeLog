@@ -1,3 +1,11 @@
+2006-10-15 02:01:29 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2717]
+  - remove comment about remote access as there's no GUI options exposed for it in audacious
+  
+  trunk/audtool.1.in |    6 ------
+  1 file changed, 6 deletions(-)
+
+
 2006-10-15 01:55:20 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2715]
   - add audtool(1) manpage; mostly written by Kiyoshi Aman.
