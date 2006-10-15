@@ -373,8 +373,8 @@ gboolean starting_up = TRUE;
 /* XXX: case-sensitivity is bad for lazy nenolods. :( -nenolod */
 static gchar *pl_candidates[] = {
 	PLUGIN_FILENAME("ALSA"),
-	PLUGIN_FILENAME("OSS"),
 	PLUGIN_FILENAME("coreaudio"),
+	PLUGIN_FILENAME("OSS"),
 	PLUGIN_FILENAME("sun"),
 	PLUGIN_FILENAME("ESD"),
 	PLUGIN_FILENAME("pulse_audio"),

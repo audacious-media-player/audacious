@@ -1,3 +1,10 @@
+2006-10-15 16:30:05 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2727]
+  Jump to track window shown when calling audacious with the -j option. Patch by Henrik Johansson <henrik_johansson@home.se>, submitted as Gentoo bug #151260.
+  trunk/audacious/main.c |   14 ++++++++++++--
+  1 file changed, 12 insertions(+), 2 deletions(-)
+
+
 2006-10-15 04:25:04 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2725]
   - fix default config order
