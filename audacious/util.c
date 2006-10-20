@@ -1551,15 +1551,15 @@ GdkPixmap *audacious_pixmap_resize(GdkWindow *src, GdkGC *src_gc, GdkPixmap *in,
 	GdkPixmap *out;
 	gint owidth, oheight;
 
-	g_return_if_fail(src != NULL);
-	g_return_if_fail(src_gc != NULL);
-	g_return_if_fail(in != NULL);
-	g_return_if_fail(width > 0 && height > 0);
+	g_return_val_if_fail(src != NULL, NULL);
+	g_return_val_if_fail(src_gc != NULL, NULL);
+	g_return_val_if_fail(in != NULL, NULL);
+	g_return_val_if_fail(width > 0 && height > 0, NULL);
 
 	gdk_drawable_get_size(in, &owidth, &oheight);
 
 	if (oheight == height && owidth == width)
-		return;
+		return NULL;
 
 	out = gdk_pixmap_new(src, width, height, -1);
 

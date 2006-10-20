@@ -1,3 +1,11 @@
+2006-10-15 16:58:41 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2729]
+  - try coreaudio before OSS
+  
+  trunk/audacious/main.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-10-15 16:30:05 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2727]
   Jump to track window shown when calling audacious with the -j option. Patch by Henrik Johansson <henrik_johansson@home.se>, submitted as Gentoo bug #151260.
