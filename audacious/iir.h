@@ -51,19 +51,19 @@
 /*
  * Function prototypes
  */
-void init_iir();
-void clean_history();
-void set_gain(gint index, gint chn, float val);
-void set_preamp(gint chn, float val);
+extern void init_iir();
+extern void clean_history();
+extern void set_gain(gint index, gint chn, float val);
+extern void set_preamp(gint chn, float val);
 
 
-__inline__ int iir(gpointer * d, gint length, gint nch);
+extern int iir(gpointer * d, gint length, gint nch);
 
 #ifdef ARCH_X86
-__inline__ int round_trick(float floatvalue_to_round);
+extern int round_trick(float floatvalue_to_round);
 #endif
 #ifdef ARCH_PPC
-__inline__ int round_ppc(float x);
+extern int round_ppc(float x);
 #endif
 
 #define EQ_CHANNELS 2
