@@ -25,7 +25,7 @@ void create_fileinfo_window(void);
 void create_filepopup_window(void);
 void fileinfo_show_for_tuple(TitleInput *tuple);
 void filepopup_show_for_tuple(TitleInput *tuple);
-gchar* fileinfo_recursive_get_image(const gchar* path, gint depth);
+gchar* fileinfo_recursive_get_image(const gchar* path, const gchar* file_name, gint depth);
 void fileinfo_show_for_path(gchar *path);
 
 void filepopup_hide(gpointer unused);

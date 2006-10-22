@@ -125,6 +125,7 @@ struct _BmpConfig {
     gchar *session_uri_base;
     gint filepopup_pixelsize;
     gint filepopup_delay;
+    gboolean use_file_cover;
 };
 
 typedef struct _BmpConfig BmpConfig;

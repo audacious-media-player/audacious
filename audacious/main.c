@@ -301,7 +301,8 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"resume_playback_on_startup", &cfg.resume_playback_on_startup, TRUE},
     {"playlist_detect", &cfg.playlist_detect, TRUE},
     {"show_filepopup_for_tuple", &cfg.show_filepopup_for_tuple, TRUE},
-    {"recurse_for_cover", &cfg.recurse_for_cover, TRUE}
+    {"recurse_for_cover", &cfg.recurse_for_cover, TRUE},
+    {"use_file_cover", &cfg.use_file_cover, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);

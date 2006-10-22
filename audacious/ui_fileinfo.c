@@ -380,7 +380,7 @@ fileinfo_show_for_tuple(TitleInput *tuple)
 	if (tuple->track_number != 0)
 		fileinfo_entry_set_text_free("entry_track", g_strdup_printf("%d", tuple->track_number));
 
-	tmp = fileinfo_recursive_get_image(tuple->file_path, 0);
+	tmp = fileinfo_recursive_get_image(tuple->file_path, tuple->file_name, 0);
 	
 	if(tmp)
 	{
@@ -389,6 +389,22 @@ fileinfo_show_for_tuple(TitleInput *tuple)
 	}
 	
 	gtk_widget_show(fileinfo_win);
+}
+
+static gboolean
+has_front_cover_extension(const gchar *name)
+{
+	char *ext;
+
+	ext = strrchr(name, '.');
+	if (!ext) {
+		/* No file extension */
+		return FALSE;
+	}
+
+	return g_strcasecmp(ext, ".jpg") == 0 ||
+	       g_strcasecmp(ext, ".jpeg") == 0 ||
+	       g_strcasecmp(ext, ".png") == 0;
 }
 
 static gboolean
@@ -426,29 +442,44 @@ cover_name_filter(const gchar *name, const gchar *filter, const gboolean ret_on_
 
 /* Check wether it's an image we want */
 static gboolean
-is_front_cover_image(const gchar *name)
+is_front_cover_image(const gchar *imgfile)
 {
-	char *ext;
+	return cover_name_filter(imgfile, cfg.cover_name_include, TRUE) &&
+	       !cover_name_filter(imgfile, cfg.cover_name_exclude, FALSE);
+}
 
-	ext = strrchr(name, '.');
-	if (!ext) {
+static gboolean
+is_file_image(const gchar *imgfile, const gchar *file_name)
+{
+	char *imgfile_ext, *file_name_ext;
+	size_t imgfile_len, file_name_len;
+	gboolean matches;
+
+	imgfile_ext = strrchr(imgfile, '.');
+	if (!imgfile_ext) {
 		/* No file extension */
 		return FALSE;
 	}
 
-	if (g_strcasecmp(ext, ".jpg") != 0 &&
-	    g_strcasecmp(ext, ".jpeg") != 0 &&
-	    g_strcasecmp(ext, ".png") != 0) {
-		/* No recognized file extension */
+	file_name_ext = strrchr(file_name, '.');
+	if (!file_name_ext) {
+		/* No file extension */
 		return FALSE;
 	}
 
-	return cover_name_filter(name, cfg.cover_name_include, TRUE) &&
-	       !cover_name_filter(name, cfg.cover_name_exclude, FALSE);
+	imgfile_len = (imgfile_ext - imgfile);
+	file_name_len = (file_name_ext - file_name);
+
+	if (imgfile_len == file_name_len) {
+		return (g_ascii_strncasecmp(imgfile, file_name, imgfile_len) == 0);
+	} else {
+		return FALSE;
+	}
 }
 
 gchar*
-fileinfo_recursive_get_image(const gchar* path, gint depth)
+fileinfo_recursive_get_image(const gchar* path,
+	const gchar* file_name, gint depth)
 {
 	GDir *d;
 
@@ -458,59 +489,76 @@ fileinfo_recursive_get_image(const gchar* path, gint depth)
 	d = g_dir_open(path, 0, NULL);
 
 	if (d) {
-		const gchar *f = g_dir_read_name(d);
-		
-		/* first pass only searches for files. */
-		while(f) { 
-			gchar *newpath = g_strdup_printf("%s/%s", path, f);
+		const gchar *f;
 
-			if(!g_file_test(newpath, G_FILE_TEST_IS_DIR)) {
-				if(is_front_cover_image(f)) {
+		if (cfg.use_file_cover && file_name) {
+			/* Look for images matching file name */
+			while(f = g_dir_read_name(d)) { 
+				gchar *newpath = g_strconcat(path, "/", f, NULL);
+
+				if (!g_file_test(newpath, G_FILE_TEST_IS_DIR) &&
+				    has_front_cover_extension(f) &&
+				    is_file_image(f, file_name)) {
 					g_dir_close(d);
 					return newpath;
 				}
+
+				g_free(newpath);
 			}
-			g_free(newpath);
-			f = g_dir_read_name(d);
+			g_dir_rewind(d);
 		}
+		
+		/* Search for files using filter */
+		while (f = g_dir_read_name(d)) {
+			gchar *newpath = g_strconcat(path, "/", f, NULL);
+
+			if (!g_file_test(newpath, G_FILE_TEST_IS_DIR) &&
+			    has_front_cover_extension(f) &&
+			    is_front_cover_image(f)) {
+				g_dir_close(d);
+				return newpath;
+			}
+
+			g_free(newpath);
+		}
+		g_dir_rewind(d);
 
 		/* checks whether recursive or not. */
-		if(!cfg.recurse_for_cover) {
+		if (!cfg.recurse_for_cover) {
 			g_dir_close(d);
 			return NULL;
 		}
 
-		/* second pass descends directory recursively. */
-		g_dir_rewind(d);
-		f = g_dir_read_name(d);
-
-		while(f) {
-			gchar *newpath = g_strdup_printf("%s/%s", path, f);
+		/* Descend into directories recursively. */
+		while (f = g_dir_read_name(d)) {
+			gchar *newpath = g_strconcat(path, "/", f, NULL);
 			
 			if(g_file_test(newpath, G_FILE_TEST_IS_DIR)) {
-				gchar *tmp = fileinfo_recursive_get_image(newpath, depth+1);
+				gchar *tmp = fileinfo_recursive_get_image(newpath,
+					NULL, depth + 1);
 				if(tmp) {
 					g_free(newpath);
 					g_dir_close(d);
 					return tmp;
 				}
 			}
+
 			g_free(newpath);
-			f = g_dir_read_name(d);
 		}
 
 		g_dir_close(d);
-	}		
+	}
+
 	return NULL;
 }
 
 void
 filepopup_show_for_tuple(TitleInput *tuple)
 {
-	gchar *tmp = NULL;
+	gchar *tmp = NULL, *fullpath = NULL;
 	gint x, y, x_off = 3, y_off = 3, h, w;
 
-	static gchar *lastpath = NULL;
+	static gchar *last_artwork = NULL;
 
 	if (tuple == NULL)
 		return;
@@ -531,21 +579,29 @@ filepopup_show_for_tuple(TitleInput *tuple)
 	if (tuple->track_number != 0)
 		filepopup_entry_set_text_free("label_track", g_strdup_printf("%d", tuple->track_number));
 
-	if(strcmp(lastpath?lastpath:"", tuple->file_path)){
-		tmp = fileinfo_recursive_get_image(tuple->file_path, 0);
-	
-		if(tmp)
+	if (cfg.use_file_cover) {
+		/* Use the file name */
+		fullpath = g_strconcat(tuple->file_path, "/", tuple->file_name, NULL);
+	} else {
+		fullpath = g_strconcat(tuple->file_path, "/", NULL);
+	}
+
+	if (!last_artwork || strcmp(last_artwork, fullpath)){
+		g_free(last_artwork);
+		last_artwork = g_strdup(fullpath);
+
+		tmp = fileinfo_recursive_get_image(tuple->file_path, tuple->file_name, 0);
+		if (tmp)
 		{
 			filepopup_entry_set_image("image_artwork", tmp);
 			g_free(tmp);
-			g_free(lastpath);
-			lastpath = g_strdup(tuple->file_path);
 		} else {
 			filepopup_entry_set_image("image_artwork", DATA_DIR "/images/audio.png");
-			g_free(lastpath);
-			lastpath = g_strdup(tuple->file_path);
 		}
 	}
+
+	g_free(fullpath);
+
 	gdk_window_get_pointer(NULL, &x, &y, NULL);
 	gtk_window_get_size(GTK_WINDOW(filepopup_win), &w, &h);
 	if (gdk_screen_width()-(w+3) < x) x_off = (w*-1)-3;

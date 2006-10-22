@@ -2038,66 +2038,61 @@ on_show_filepopup_for_tuple_toggled(GtkToggleButton * button, gpointer data)
 }
 
 static void
+on_recurse_for_cover_toggled(GtkToggleButton *button, gpointer data)
+{
+	gtk_widget_set_sensitive(GTK_WIDGET(data),
+		gtk_toggle_button_get_active(button));
+}
+
+static void
 on_filepopup_for_tuple_settings_clicked(GtkButton *button, gpointer data)
 {
 	GladeXML *xml = prefswin_get_xml();
-	GtkEntry *cover_name_include =
-		(GtkEntry*)glade_xml_get_widget(xml, "filepopup_settings_cover_name_include");
-	GtkEntry *cover_name_exclude =
-		(GtkEntry*)glade_xml_get_widget(xml, "filepopup_settings_cover_name_exclude");
+	GtkWidget *widget, *widget2;
 
-	gtk_entry_set_text(cover_name_include, cfg.cover_name_include);
-	gtk_entry_set_text(cover_name_exclude, cfg.cover_name_exclude);
+	widget = glade_xml_get_widget(xml, "filepopup_settings_cover_name_include");
+	gtk_entry_set_text(GTK_ENTRY(widget), cfg.cover_name_include);
+
+	widget = glade_xml_get_widget(xml, "filepopup_settings_cover_name_exclude");
+	gtk_entry_set_text(GTK_ENTRY(widget), cfg.cover_name_exclude);
+
+	widget2 = glade_xml_get_widget(xml, "filepopup_settings_recurse_for_cover");
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget2), cfg.recurse_for_cover);
+
+	widget = glade_xml_get_widget(xml, "filepopup_settings_recurse_for_cover_depth");
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget), cfg.recurse_for_cover_depth);
+
+	widget = glade_xml_get_widget(xml, "filepopup_settings_recurse_for_cover_depth_box");
+	on_recurse_for_cover_toggled(GTK_TOGGLE_BUTTON(widget2), widget);
+
+	widget = glade_xml_get_widget(xml, "filepopup_settings_use_file_cover");
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget), cfg.use_file_cover);
 
 	gtk_widget_show(filepopup_settings);
-}
-
-static void
-on_recurse_for_cover_depth_realize(GtkSpinButton * button,
-                                    gpointer data)
-{
-    gtk_spin_button_set_value(button, cfg.recurse_for_cover_depth);
-}
-
-static void
-on_recurse_for_cover_depth_changed(GtkSpinButton * button,
-                                    gpointer data)
-{
-    cfg.recurse_for_cover_depth = gtk_spin_button_get_value_as_int(button);
-}
-
-static void
-on_recurse_for_cover_realize(GtkToggleButton * button,
-                               gpointer data)
-{
-    gboolean state = cfg.recurse_for_cover;
-    gtk_toggle_button_set_active(button, state);
-    gtk_widget_set_sensitive(GTK_WIDGET(data), state);
-}
-
-static void
-on_recurse_for_cover_toggled(GtkToggleButton * button,
-                               gpointer data)
-{
-    gboolean state = gtk_toggle_button_get_active(button);
-    cfg.recurse_for_cover = state;
-    gtk_widget_set_sensitive(GTK_WIDGET(data), state);
 }
 
 static void
 on_filepopup_settings_ok_clicked(GtkButton *button, gpointer data)
 {
 	GladeXML *xml = prefswin_get_xml();
-	GtkEntry *cover_name_include =
-		(GtkEntry*)glade_xml_get_widget(xml, "filepopup_settings_cover_name_include");
-	GtkEntry *cover_name_exclude =
-		(GtkEntry*)glade_xml_get_widget(xml, "filepopup_settings_cover_name_exclude");
+	GtkWidget *widget;
 
+	widget = glade_xml_get_widget(xml, "filepopup_settings_cover_name_include");
 	g_free(cfg.cover_name_include);
-	cfg.cover_name_include = g_strdup(gtk_entry_get_text(cover_name_include));
+	cfg.cover_name_include = g_strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
 
+	widget = glade_xml_get_widget(xml, "filepopup_settings_cover_name_exclude");
 	g_free(cfg.cover_name_exclude);
-	cfg.cover_name_exclude = g_strdup(gtk_entry_get_text(cover_name_exclude));
+	cfg.cover_name_exclude = g_strdup(gtk_entry_get_text(GTK_ENTRY(widget)));
+
+	widget = glade_xml_get_widget(xml, "filepopup_settings_recurse_for_cover");
+	cfg.recurse_for_cover = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+
+	widget = glade_xml_get_widget(xml, "filepopup_settings_recurse_for_cover_depth");
+	cfg.recurse_for_cover_depth = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
+
+	widget = glade_xml_get_widget(xml, "filepopup_settings_use_file_cover");
+	cfg.use_file_cover = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
 
 	gtk_widget_hide(filepopup_settings);
 }
@@ -2180,8 +2175,6 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_audio_format_det_cb_realize)
     FUNC_MAP_ENTRY(on_show_filepopup_for_tuple_realize)
     FUNC_MAP_ENTRY(on_show_filepopup_for_tuple_toggled)
-    FUNC_MAP_ENTRY(on_recurse_for_cover_depth_realize)
-    FUNC_MAP_ENTRY(on_recurse_for_cover_depth_changed)
     FUNC_MAP_ENTRY(on_filepopup_for_tuple_settings_clicked)
     FUNC_MAP_ENTRY(on_continue_playback_on_startup_realize)
     FUNC_MAP_ENTRY(on_continue_playback_on_startup_toggled)
@@ -2417,14 +2410,12 @@ create_prefs_window(void)
 	/* Create window for filepopup settings */
 	filepopup_settings = glade_xml_get_widget(xml, "filepopup_for_tuple_settings");
 	gtk_window_set_transient_for(GTK_WINDOW(filepopup_settings), GTK_WINDOW(prefswin));
-    widget = glade_xml_get_widget(xml, "recurse_for_cover_depth_box");
-    widget2 = glade_xml_get_widget(xml, "recurse_for_cover");
-    g_signal_connect_after(G_OBJECT(widget2), "realize",
-                           G_CALLBACK(on_recurse_for_cover_realize),
-                           widget);
-    g_signal_connect(G_OBJECT(widget2), "toggled",
-                     G_CALLBACK(on_recurse_for_cover_toggled),
-                     widget);
+
+	widget = glade_xml_get_widget(xml, "filepopup_settings_recurse_for_cover_depth_box");
+	widget2 = glade_xml_get_widget(xml, "filepopup_settings_recurse_for_cover");
+	g_signal_connect(G_OBJECT(widget2), "toggled",
+		G_CALLBACK(on_recurse_for_cover_toggled),
+		widget);
 }
 
 void
