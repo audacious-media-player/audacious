@@ -1,3 +1,15 @@
+2006-10-22 18:54:51 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2737]
+  - remove mkdtemp().
+  - if mkdtemp() is unavailable, use /tmp/audacious.SYSTEMTIME as path.
+  
+  trunk/audacious/Makefile  |    1 
+  trunk/audacious/mkdtemp.c |  130 ----------------------------------------------
+  trunk/audacious/util.c    |    8 ++
+  trunk/audacious/util.h    |    5 -
+  4 files changed, 7 insertions(+), 137 deletions(-)
+
+
 2006-10-22 18:38:20 +0000  Derek Pomery <nemo@m8y.org>
   revision [2735]
   Patch by Michael Hanselmann to fetch a per-song image file.
