@@ -1,3 +1,17 @@
+2006-10-22 18:38:20 +0000  Derek Pomery <nemo@m8y.org>
+  revision [2735]
+  Patch by Michael Hanselmann to fetch a per-song image file.
+  
+  
+  trunk/audacious/glade/prefswin.glade |  204 +++++++++++++++++++++--------------
+  trunk/audacious/main.c               |    3 
+  trunk/audacious/main.h               |    1 
+  trunk/audacious/prefswin.c           |   93 +++++++--------
+  trunk/audacious/ui_fileinfo.c        |  136 ++++++++++++++++-------
+  trunk/audacious/ui_fileinfo.h        |    2 
+  6 files changed, 268 insertions(+), 171 deletions(-)
+
+
 2006-10-21 00:00:45 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2733]
   - enforce extern status here. we do not provide an inlined iir(), so that shouldn't be declared inline.

@@ -67,7 +67,6 @@ SOURCES = \
 	softvolume.c \
 	getopt.c getopt1.c \
 	urldecode.c \
-	mkdtemp.c \
 	iir.c \
 	iir_cfs.c \
 	iir_fpu.c

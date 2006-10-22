@@ -309,17 +309,23 @@ archive_decompress(const gchar * filename)
 {
     gchar *tmpdir, *cmd, *escaped_filename;
     ArchiveType type;
+    mode_t mode755 = S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
 
     if ((type = archive_get_type(filename)) <= ARCHIVE_DIR)
         return NULL;
 
-    tmpdir = g_build_filename(g_get_tmp_dir(), "bmp.XXXXXXXX", NULL);
+#ifdef HAVE_MKDTEMP
+    tmpdir = g_build_filename(g_get_tmp_dir(), "audacious.XXXXXXXX", NULL);
     if (!mkdtemp(tmpdir)) {
         g_free(tmpdir);
         g_message("Unable to load skin: Failed to create temporary "
                   "directory: %s", g_strerror(errno));
         return NULL;
     }
+#else
+    tmpdir = g_strdup_printf("%s/audacious.%ld", g_get_tmp_dir(), time(NULL));
+    make_directory(tmpdir, mode755);
+#endif
 
     escaped_filename = escape_shell_chars(filename);
     cmd = archive_extract_funcs[type] (escaped_filename, tmpdir);

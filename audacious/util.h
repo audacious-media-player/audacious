@@ -118,11 +118,6 @@ void make_submenu(GtkItemFactory *menu,
 GtkWidget *make_filebrowser(const gchar * title,
                             gboolean save);
 
-/* Not sure this should be here? */
-#ifndef HAVE_MKDTEMP
-char *mkdtemp(char *path);
-#endif
-
 typedef struct {
     gint x;
     gint y;
