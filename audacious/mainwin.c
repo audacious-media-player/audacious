@@ -220,6 +220,8 @@ static gboolean mainwin_force_redraw = FALSE;
 static gchar *mainwin_title_text = NULL;
 static gboolean mainwin_info_text_locked = FALSE;
 
+static int ab_position_a = -1;
+static int ab_position_b = -1;
 
 static void mainwin_songname_menu_callback(gpointer user_data,
                                            guint action,
@@ -355,6 +357,11 @@ GtkItemFactoryEntry mainwin_playback_menu_entries[] = {
     {"/-", NULL, NULL, 0, "<Separator>", NULL},
     {N_("/Jump to Playlist Start"), "<control>Z", mainwin_general_menu_callback,
      MAINWIN_GENERAL_START, "<StockItem>", GTK_STOCK_GOTO_TOP},
+     {N_("/-"), NULL, NULL, 0, "<Separator>"},
+     {N_("/Set A-B"), "A", mainwin_general_menu_callback,
+     MAINWIN_GENERAL_SETAB, "<Item>"},
+     {N_("/Clear A-B"), "S", mainwin_general_menu_callback,
+     MAINWIN_GENERAL_CLEARAB, "<Item>"},
     {"/-", NULL, NULL, 0, "<Separator>", NULL},
     {N_("/Jump to File"), "J", mainwin_general_menu_callback,
      MAINWIN_GENERAL_JTF, "<StockItem>", GTK_STOCK_JUMP_TO},
@@ -2305,6 +2312,8 @@ mainwin_fwd_release(void)
 void
 mainwin_play_pushed(void)
 {
+    if (ab_position_a != -1)
+        bmp_playback_seek(ab_position_a / 1000);
     if (bmp_playback_get_paused()) {
         bmp_playback_pause();
         return;
@@ -2911,6 +2920,26 @@ mainwin_general_menu_callback(gpointer data,
         break;
     case MAINWIN_GENERAL_EXIT:
         mainwin_quit_cb();
+        break;
+    case MAINWIN_GENERAL_SETAB:
+        if (playlist_get_current_length() != -1) {
+            if (ab_position_a == -1) {
+                ab_position_a = bmp_playback_get_time();
+                ab_position_b = -1;
+            } else if (ab_position_b == -1) {
+                int time = bmp_playback_get_time();
+                if (time > ab_position_a)
+                    ab_position_b = time;
+            } else {
+                ab_position_a = bmp_playback_get_time();
+                ab_position_b = -1;
+            }
+        }
+        break;
+    case MAINWIN_GENERAL_CLEARAB:
+        if (playlist_get_current_length() != -1) {
+            ab_position_a = ab_position_b = -1;
+        }
         break;
     }
 }
@@ -3704,8 +3733,10 @@ mainwin_idle_func(gpointer data)
 
     if (bmp_playback_get_playing())
         vis_playback_start();
-    else
+    else {
         vis_playback_stop();
+	ab_position_a = ab_position_b = -1;
+    }
 
     draw_main_window(mainwin_force_redraw);
 

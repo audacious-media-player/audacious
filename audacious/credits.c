@@ -79,6 +79,18 @@ static const gchar *credit_text[] = {
     "Tony Vroon",
     NULL,
 
+    N_("Patch authors:"),
+    "Laszlo Dvornik",
+    "Mike Frysinger",
+    "Michael Hanselmann",
+    "Henrik Johansson",
+    "Rodrigo Martins de Matos Ventura",
+    "Diego Pettenò",
+    "Kazuki Shimura",
+    "Valentine Sinitsyn",
+    "Johan Tavelin",
+    NULL,
+
     N_("0.1.x developers:"),
     "William Pitcock",
     "Mohammed Sameer",
