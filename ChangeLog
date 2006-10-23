@@ -1,3 +1,11 @@
+2006-10-22 19:12:43 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2739]
+  - use rand() instead
+  
+  trunk/audacious/util.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-10-22 18:54:51 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2737]
   - remove mkdtemp().

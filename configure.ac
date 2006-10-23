@@ -121,6 +121,16 @@ fi
 AM_CONDITIONAL(USE_IPV6,test "x$enable_ipv6" = xyes)
 AC_SUBST(USE_IPV6)
 
+dnl rpath stuff
+dnl ========================
+AC_ARG_ENABLE(rpath,
+	[  --disable-rpath                disable hardcoded rpath (default=enabled)],
+			enable_rpath=$enableval, enable_rpath=yes)
+
+if test "x$enable_rpath" = xyes; then
+    RPATH_VAL="-Wl,-rpath=\${libdir}"
+fi
+
 dnl plugin stuff
 dnl ========================
 
@@ -140,7 +150,7 @@ case "$target" in
 		PICFLAGS="-fPIC -DPIC"
 		PICLDFLAGS="-fPIC -DPIC -shared"
 		LIBLDFLAGS="-fPIC -DPIC -shared"
-		AUDLDFLAGS="-Wl,-export-dynamic -Wl,-rpath=\${libdir}"
+		AUDLDFLAGS="-Wl,-export-dynamic $RPATH_VAL"
 		SHARED_SUFFIX=".so"
 		;;
 esac
