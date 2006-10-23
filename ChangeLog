@@ -1,3 +1,16 @@
+2006-10-23 19:56:12 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2743]
+  - integrate A-B patch, with a few changes:
+  + the A-B indicator is not compatible with freeform skins and as such
+    has been removed. once I add textbox_set_text_delayed() i will add
+    a new indicator
+  
+  trunk/audacious/credits.c |   12 ++++++++++++
+  trunk/audacious/mainwin.c |   33 ++++++++++++++++++++++++++++++++-
+  trunk/audacious/mainwin.h |    4 +++-
+  3 files changed, 47 insertions(+), 2 deletions(-)
+
+
 2006-10-23 18:42:56 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2741]
   - add --disable-rpath option to disable hardbinding an rpath to the audacious binaries

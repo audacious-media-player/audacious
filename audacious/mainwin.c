@@ -2926,19 +2926,23 @@ mainwin_general_menu_callback(gpointer data,
             if (ab_position_a == -1) {
                 ab_position_a = bmp_playback_get_time();
                 ab_position_b = -1;
+		mainwin_lock_info_text("LOOP-POINT A POSITION SET.");
             } else if (ab_position_b == -1) {
                 int time = bmp_playback_get_time();
                 if (time > ab_position_a)
                     ab_position_b = time;
+		mainwin_release_info_text();
             } else {
                 ab_position_a = bmp_playback_get_time();
                 ab_position_b = -1;
+		mainwin_lock_info_text("LOOP-POINT A POSITION RESET.");
             }
         }
         break;
     case MAINWIN_GENERAL_CLEARAB:
         if (playlist_get_current_length() != -1) {
             ab_position_a = ab_position_b = -1;
+	    mainwin_release_info_text();
         }
         break;
     }
