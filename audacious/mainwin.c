@@ -360,7 +360,7 @@ GtkItemFactoryEntry mainwin_playback_menu_entries[] = {
      {N_("/-"), NULL, NULL, 0, "<Separator>"},
      {N_("/Set A-B"), "A", mainwin_general_menu_callback,
      MAINWIN_GENERAL_SETAB, "<Item>"},
-     {N_("/Clear A-B"), "S", mainwin_general_menu_callback,
+     {N_("/Clear A-B"), "<control>S", mainwin_general_menu_callback,
      MAINWIN_GENERAL_CLEARAB, "<Item>"},
     {"/-", NULL, NULL, 0, "<Separator>", NULL},
     {N_("/Jump to File"), "J", mainwin_general_menu_callback,
@@ -3256,7 +3256,6 @@ set_timer_mode_menu_cb(TimerMode mode)
     cfg.timer_mode = mode;
 }
 
-
 void
 mainwin_setup_menus(void)
 {
@@ -3642,6 +3641,9 @@ idle_func_update_song_info(gint time)
 {
     gint length, t;
     gchar stime_prefix;
+
+    if (ab_position_a != -1 && ab_position_b != -1)
+        bmp_playback_seek(ab_position_a/1000);
 
     length = playlist_get_current_length();
     if (bmp_playback_get_playing())

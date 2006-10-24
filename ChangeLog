@@ -1,3 +1,11 @@
+2006-10-24 05:57:28 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2747]
+  - make sure the proper wmclass is being set here.
+  
+  trunk/audacious/about.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-10-23 20:04:21 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2745]
   - set status text when loop-point A has been set to "LOOP-POINT A HAS BEEN SET."
