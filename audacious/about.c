@@ -102,7 +102,7 @@ show_about_window(void)
         return;
     }
 
-    about_window = gtk_window_new(GTK_WINDOW_POPUP);
+    about_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
     g_signal_connect(about_window, "destroy",
                      G_CALLBACK(gtk_widget_destroyed), &about_window);

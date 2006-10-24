@@ -1,3 +1,12 @@
+2006-10-23 20:04:21 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2745]
+  - set status text when loop-point A has been set to "LOOP-POINT A HAS BEEN SET."
+  - go back to normal when loop-points are cleared or loop-point B is set.
+  
+  trunk/audacious/mainwin.c |    4 ++++
+  1 file changed, 4 insertions(+)
+
+
 2006-10-23 19:56:12 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2743]
   - integrate A-B patch, with a few changes:
