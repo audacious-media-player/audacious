@@ -1,4 +1,12 @@
-Audacious 1.2.0 (2006-10-??)
+Audacious 1.2.1 (2006-10-23)
+
+Enhancements
+* None
+
+Bugfixes
+* [player] memory leak fixes
+
+Audacious 1.2.0 (2006-10-23)
 
 Enhancements
 * Russian character set support via latest librcd
