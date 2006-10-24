@@ -124,6 +124,7 @@ shade_pixmap(GdkPixmap *in, gint x, gint y, gint x_offset, gint y_offset, gint w
 		cfg.playlist_transparent = FALSE;
 	}
 
+	g_object_unref(in);
 	g_object_unref(gc);
 
 	return p;
