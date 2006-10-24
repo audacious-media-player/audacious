@@ -1,3 +1,11 @@
+2006-10-24 08:11:53 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2753]
+  - fix leak when changing background
+  
+  trunk/audacious/widgets/playlist_list.c |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2006-10-24 07:34:35 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2751]
   - oops, missed a requirement (sorry about that)

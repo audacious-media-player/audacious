@@ -185,6 +185,9 @@ root_event_cb (GdkXEvent *xev, GdkEventProperty *event, gpointer data)
 
                 if (at == xevent->xproperty.atom)
 		{
+			if (rootpix != NULL)
+			    g_object_unref(rootpix);
+
                         rootpix = shade_pixmap(get_transparency_pixmap(), 0, 0, 0, 0, gdk_screen_width(), gdk_screen_height(),
                             skin_get_color(bmp_active_skin, SKIN_PLEDIT_NORMALBG));
 
