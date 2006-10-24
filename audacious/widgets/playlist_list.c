@@ -119,6 +119,8 @@ shade_pixmap(GdkPixmap *in, gint x, gint y, gint x_offset, gint y_offset, gint w
 			ximg, ximg->bpl, w, h, 60, 60, 60, shade_color->pixel);
 
 		gdk_draw_image(p, gc, ximg, 0, 0, x, y, w, h);
+
+		g_object_unref(ximg);
 	}
 	else {
 		cfg.playlist_transparent = FALSE;
@@ -175,13 +177,11 @@ GdkDrawable *get_transparency_pixmap(void)
 static GdkFilterReturn
 root_event_cb (GdkXEvent *xev, GdkEventProperty *event, gpointer data)
 {
-        static Atom at = None;
         XEvent *xevent = (XEvent *)xev;
 
         if (xevent->type == PropertyNotify)
         {
-                if (at == None)
-                        at = XInternAtom (xevent->xproperty.display, "_XROOTPMAP_ID", True);
+	        Atom at = XInternAtom (xevent->xproperty.display, "_XROOTPMAP_ID", True);
 
                 if (at == xevent->xproperty.atom)
 		{

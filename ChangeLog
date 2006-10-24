@@ -1,3 +1,11 @@
+2006-10-24 08:30:49 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2759]
+  - make a note about the 1.2 release page.
+  
+  trunk/NEWS |    2 ++
+  1 file changed, 2 insertions(+)
+
+
 2006-10-24 08:28:01 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2757]
   - 1.2.0 final
