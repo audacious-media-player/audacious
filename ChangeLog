@@ -1,3 +1,11 @@
+2006-10-24 07:34:00 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2749]
+  - fix A-B repetition
+  
+  trunk/audacious/mainwin.c |    6 ++++--
+  1 file changed, 4 insertions(+), 2 deletions(-)
+
+
 2006-10-24 05:57:28 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2747]
   - make sure the proper wmclass is being set here.

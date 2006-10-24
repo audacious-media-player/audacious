@@ -3642,7 +3642,7 @@ idle_func_update_song_info(gint time)
     gint length, t;
     gchar stime_prefix;
 
-    if (ab_position_a != -1 && ab_position_b != -1)
+    if (ab_position_a != -1 && ab_position_b != -1 && time > ab_position_b)
         bmp_playback_seek(ab_position_a/1000);
 
     length = playlist_get_current_length();
