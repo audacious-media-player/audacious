@@ -1,3 +1,17 @@
+2006-10-27 09:01:55 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2767]
+  - change "Transparency" to "Miscillaneous UI Features" in prefswin
+  - add option to use XMMS-like fileselector instead of the one provided 
+    by GTK2
+  
+  trunk/audacious/glade/prefswin.glade |   38 ++++
+  trunk/audacious/main.c               |    2 
+  trunk/audacious/main.h               |    1 
+  trunk/audacious/prefswin.c           |   18 ++
+  trunk/audacious/util.c               |  280 ++++++++++++++++++++++++++++++++++-
+  5 files changed, 330 insertions(+), 9 deletions(-)
+
+
 2006-10-27 07:19:32 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2765]
   - add a default value for cfg.use_file_cover (FALSE)
