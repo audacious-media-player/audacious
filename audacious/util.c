@@ -1232,7 +1232,9 @@ util_run_filebrowser_classic(gboolean play_button)
 	gtk_file_selection_set_filename(GTK_FILE_SELECTION(dialog),
 					cfg.filesel_path);
 
-    // if we destroy the OK button we'll never receive a GTK_RESPONSE_OK e.g. trough dbl click on a file
+    gtk_file_selection_hide_fileop_buttons(GTK_FILE_SELECTION(dialog));
+    gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
+
     gtk_widget_hide(GTK_FILE_SELECTION(dialog)->ok_button);
     gtk_widget_destroy(GTK_FILE_SELECTION(dialog)->cancel_button);
 

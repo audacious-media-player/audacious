@@ -1,3 +1,11 @@
+2006-10-27 09:03:17 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2769]
+  - i doubt we will have a 1.2.2 version of the player anytime soon, but bump the version anyway ;)
+  
+  trunk/configure.ac |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-10-27 09:01:55 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2767]
   - change "Transparency" to "Miscillaneous UI Features" in prefswin
