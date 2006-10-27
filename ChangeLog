@@ -1,3 +1,12 @@
+2006-10-24 20:29:52 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2763]
+  - 1.2.1 release
+  
+  trunk/NEWS         |   10 +++++++++-
+  trunk/configure.ac |    2 +-
+  2 files changed, 10 insertions(+), 2 deletions(-)
+
+
 2006-10-24 20:17:19 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2761]
   - fix memory leak once and for bloody all

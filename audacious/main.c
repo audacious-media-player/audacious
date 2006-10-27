@@ -208,6 +208,7 @@ BmpConfig bmp_default_config = {
     NULL,			/* default session uri base (non-NULL = custom session uri base) */
     150,			/* short side length of the picture in the filepopup */
     20,				/* delay until the filepopup comes up */
+    FALSE,			/* use filename.jpg for coverart */
 };
 
 typedef struct bmp_cfg_boolent_t {
