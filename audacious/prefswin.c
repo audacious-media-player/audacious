@@ -2103,6 +2103,20 @@ on_filepopup_settings_cancel_clicked(GtkButton *button, gpointer data)
 	gtk_widget_hide(filepopup_settings);
 }
 
+static void
+on_xmms_style_fileselector_realize(GtkToggleButton * button,
+                                   gpointer data)
+{
+    gtk_toggle_button_set_active(button, cfg.use_xmms_style_fileselector);
+}
+
+static void
+on_xmms_style_fileselector_toggled(GtkToggleButton * button,
+                                   gpointer data)
+{
+    cfg.use_xmms_style_fileselector = gtk_toggle_button_get_active(button);
+}
+
 /* FIXME: complete the map */
 FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_input_plugin_view_realize)
@@ -2182,6 +2196,10 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     /* Filepopup settings */
     FUNC_MAP_ENTRY(on_filepopup_settings_ok_clicked)
     FUNC_MAP_ENTRY(on_filepopup_settings_cancel_clicked)
+
+    /* XMMS fileselector option -nenolod */
+    FUNC_MAP_ENTRY(on_xmms_style_fileselector_toggled)
+    FUNC_MAP_ENTRY(on_xmms_style_fileselector_realize)
 FUNC_MAP_END
 
 void

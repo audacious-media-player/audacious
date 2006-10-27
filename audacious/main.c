@@ -209,6 +209,7 @@ BmpConfig bmp_default_config = {
     150,			/* short side length of the picture in the filepopup */
     20,				/* delay until the filepopup comes up */
     FALSE,			/* use filename.jpg for coverart */
+    FALSE,			/* use XMMS-style file selection */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -304,6 +305,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"show_filepopup_for_tuple", &cfg.show_filepopup_for_tuple, TRUE},
     {"recurse_for_cover", &cfg.recurse_for_cover, TRUE},
     {"use_file_cover", &cfg.use_file_cover, TRUE},
+    {"use_xmms_style_fileselector", &cfg.use_xmms_style_fileselector, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);

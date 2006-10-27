@@ -1262,7 +1262,7 @@
 			      <child>
 				<widget class="GtkLabel" id="label72">
 				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">&lt;b&gt;_Transparency&lt;/b&gt;</property>
+				  <property name="label" translatable="yes">&lt;b&gt;_Miscillaneous UI Features&lt;/b&gt;</property>
 				  <property name="use_underline">True</property>
 				  <property name="use_markup">True</property>
 				  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -1313,6 +1313,42 @@
 				  <property name="draw_indicator">True</property>
 				  <signal name="toggled" handler="on_playlist_transparent_toggled" last_modification_time="Fri, 19 May 2006 20:05:16 GMT"/>
 				  <signal name="realize" handler="on_playlist_transparent_realize" after="yes" last_modification_time="Fri, 19 May 2006 20:05:10 GMT"/>
+				</widget>
+			      </child>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">False</property>
+			      <property name="fill">False</property>
+			    </packing>
+			  </child>
+
+			  <child>
+			    <widget class="GtkAlignment" id="alignment88">
+			      <property name="visible">True</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xscale">1</property>
+			      <property name="yscale">1</property>
+			      <property name="top_padding">0</property>
+			      <property name="bottom_padding">0</property>
+			      <property name="left_padding">12</property>
+			      <property name="right_padding">0</property>
+
+			      <child>
+				<widget class="GtkCheckButton" id="xmms_style_fileselector_cb">
+				  <property name="visible">True</property>
+				  <property name="tooltip" translatable="yes">This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly).</property>
+				  <property name="can_focus">True</property>
+				  <property name="label" translatable="yes">Use XMMS-style file selector instead of the default selector</property>
+				  <property name="use_underline">True</property>
+				  <property name="relief">GTK_RELIEF_NORMAL</property>
+				  <property name="focus_on_click">True</property>
+				  <property name="active">False</property>
+				  <property name="inconsistent">False</property>
+				  <property name="draw_indicator">True</property>
+				  <signal name="toggled" handler="on_xmms_style_fileselector_toggled" last_modification_time="Fri, 27 Oct 2006 08:48:36 GMT"/>
+				  <signal name="realize" handler="on_xmms_style_fileselector_realize" after="yes" last_modification_time="Fri, 27 Oct 2006 08:48:28 GMT"/>
 				</widget>
 			      </child>
 			    </widget>

@@ -1,3 +1,11 @@
+2006-10-27 07:19:32 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2765]
+  - add a default value for cfg.use_file_cover (FALSE)
+  
+  trunk/audacious/main.c |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2006-10-24 20:29:52 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2763]
   - 1.2.1 release
