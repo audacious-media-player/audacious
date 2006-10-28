@@ -1,3 +1,11 @@
+2006-10-27 09:07:49 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2771]
+  - remove useless fileop buttons from the GTK1-like dialog.
+  
+  trunk/audacious/util.c |    4 +++-
+  1 file changed, 3 insertions(+), 1 deletion(-)
+
+
 2006-10-27 09:03:17 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2769]
   - i doubt we will have a 1.2.2 version of the player anytime soon, but bump the version anyway ;)
