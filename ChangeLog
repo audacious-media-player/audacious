@@ -1,3 +1,11 @@
+2006-10-28 22:17:47 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2773]
+  - from gentoo #152769 add application/ogg and audio/x-vorbis+ogg for gnome shared-mime-info compatibility
+  
+  trunk/audacious/audacious.desktop.in |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-10-27 09:07:49 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2771]
   - remove useless fileop buttons from the GTK1-like dialog.
