@@ -1,3 +1,11 @@
+2006-10-30 10:32:34 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2783]
+  - this should fix #592. somebody please check.
+  
+  trunk/audacious/playback.c |   19 ++++++++++++++++---
+  1 file changed, 16 insertions(+), 3 deletions(-)
+
+
 2006-10-30 09:39:13 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
   revision [2781]
   Add Ivory to skins. [Ivory is an inverse version of the Osmosis skin.]
