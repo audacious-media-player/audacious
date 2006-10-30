@@ -81,7 +81,7 @@ bmp_playback_get_time(void)
 void
 bmp_playback_initiate(void)
 {
-    PlaylistEntry *entry;
+    PlaylistEntry *entry = NULL;
 
     if (playlist_get_length() == 0)
         return;
@@ -98,8 +98,21 @@ bmp_playback_initiate(void)
     if (!entry)
         return;
 
-    if (!bmp_playback_play_file(entry))
-        return;
+    /*
+     * If the playlist entry cannot be played, try to pick another one.
+     * If that does not work, e.g. entry == NULL, then bail.
+     *
+     *   - nenolod
+     */
+    while (entry != NULL && !bmp_playback_play_file(entry))
+    {
+        playlist_next();
+
+        entry = playlist_get_entry_to_play();
+
+        if (entry == NULL)
+            return;
+    }
 
     if (bmp_playback_get_time() != -1) {
         equalizerwin_load_auto_preset(entry->filename);
