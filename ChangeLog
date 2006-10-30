@@ -1,3 +1,11 @@
+2006-10-30 08:28:16 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
+  revision [2777]
+  Changed description to reflect the skin's current name [Osmosis]
+  
+  trunk/skins/Osmosis/skin.hints |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-10-29 06:58:27 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2775]
   - remove redundant rpath option
