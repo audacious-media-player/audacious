@@ -1,3 +1,11 @@
+2006-10-29 06:58:27 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2775]
+  - remove redundant rpath option
+  
+  trunk/m4/lib-link.m4 |    4 ----
+  1 file changed, 4 deletions(-)
+
+
 2006-10-28 22:17:47 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2773]
   - from gentoo #152769 add application/ogg and audio/x-vorbis+ogg for gnome shared-mime-info compatibility
