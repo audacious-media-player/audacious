@@ -1,3 +1,12 @@
+2006-10-30 08:47:31 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2779]
+  - add a Classic variant which looks like the oldschool audacious skin (< 1.2.x)
+  
+  trunk/skins/Default/Makefile           |   22 +++++++++++++++++++++-
+  trunk/skins/Default/skin-classic.hints |    3 +++
+  2 files changed, 24 insertions(+), 1 deletion(-)
+
+
 2006-10-30 08:28:16 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
   revision [2777]
   Changed description to reflect the skin's current name [Osmosis]

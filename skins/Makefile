@@ -3,7 +3,7 @@
 include ../mk/rules.mk
 include ../mk/init.mk
 
-SUBDIRS = Default TinyPlayer Osmosis
+SUBDIRS = Default TinyPlayer Osmosis Ivory
 
 include ../mk/objective.mk
 
