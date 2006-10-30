@@ -89,6 +89,7 @@ static const gchar *credit_text[] = {
     "Kazuki Shimura",
     "Valentine Sinitsyn",
     "Johan Tavelin",
+    "Tim Yamin",
     NULL,
 
     N_("0.1.x developers:"),
