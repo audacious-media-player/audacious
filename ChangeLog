@@ -1,3 +1,11 @@
+2006-10-30 21:58:27 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2799]
+  - add a build-prehook to ensure that the build_stamp is fresh.
+  
+  trunk/audacious/Makefile |    6 ++++++
+  1 file changed, 6 insertions(+)
+
+
 2006-10-30 21:50:51 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2797]
   - oh, and use the right path too.

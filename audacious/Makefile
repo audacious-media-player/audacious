@@ -96,6 +96,7 @@ build_stamp.c:
 			(cd ..; svnversion -n .); \
 			echo '";' \
 		) > build_stamp.c; \
+		printf "%10s     %-20s\n" STAMP build_stamp.c;	\
 	fi;
 
 audacious: $(OBJECTS) widgets/libwidgets.a
