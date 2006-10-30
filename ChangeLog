@@ -1,3 +1,11 @@
+2006-10-30 21:49:02 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2793]
+  - remove classic variant.
+  
+  trunk/skins/Default/Makefile |   23 +----------------------
+  1 file changed, 1 insertion(+), 22 deletions(-)
+
+
 2006-10-30 21:41:36 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2791]
   - svn is stoned again part 2
