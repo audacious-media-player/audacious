@@ -1,3 +1,11 @@
+2006-10-30 21:50:51 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2797]
+  - oh, and use the right path too.
+  
+  trunk/skins/Classic/Makefile |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-10-30 21:50:18 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2795]
   - yes, lets waste extra space because OMK decides to break on installing a variant.

@@ -78,6 +78,12 @@ beepinclude_HEADERS = plugin.h output.h input.h
 desktop_DATA = audacious.desktop
 desktopdir = $(datadir)/applications
 
+build-prehook:
+	if [ -d .svn ]; then					\
+		rm -f build_stamp.c;				\
+		printf "%10s     %-20s\n" RM build_stamp.c;	\
+	fi
+
 build_stamp.c:
 	if [ -d .svn ] || [ ! -f build_stamp.c ]; then		\
 		( \
