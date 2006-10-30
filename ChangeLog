@@ -1,3 +1,10 @@
+2006-10-30 13:20:14 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
+  revision [2785]
+  Ivory now uses dark blues where before it used icky shades of brown.
+  
+  0 files changed
+
+
 2006-10-30 10:32:34 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2783]
   - this should fix #592. somebody please check.

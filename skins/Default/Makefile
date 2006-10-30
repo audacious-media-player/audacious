@@ -38,7 +38,9 @@ OBJECTIVE_DATA = \
 	volume.png:$(classic_skindir)	\
 	pledit.txt:$(classic_skindir)	\
 	viscolor.txt:$(classic_skindir)	\
-	skin-classic.hints:$(classic_skindir)/skin.hints
+	skin-classic.hints:$(classic_skindir)
 
+install-posthook:
+	@mv $(DESTDIR)/$(classic_skindir)/skin-classic.hints $(DESTDIR)/$(classic_skindir)/skin.hints
 
 include ../../mk/objective.mk
