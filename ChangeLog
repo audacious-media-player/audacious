@@ -1,3 +1,11 @@
+2006-10-30 22:01:32 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2801]
+  - add feedback when the build_stamp is generated.
+  
+  trunk/audacious/Makefile |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2006-10-30 21:58:27 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2799]
   - add a build-prehook to ensure that the build_stamp is fresh.
