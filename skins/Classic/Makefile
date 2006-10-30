@@ -1,7 +1,7 @@
 include ../../mk/rules.mk
 include ../../mk/init.mk
 
-skindir = $(pkgdatadir)/Skins/Default
+skindir = $(pkgdatadir)/Skins/Classic
 
 OBJECTIVE_DATA = \
 	balance.png:$(skindir)		\

@@ -1,3 +1,13 @@
+2006-10-30 21:50:18 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2795]
+  - yes, lets waste extra space because OMK decides to break on installing a variant.
+  
+  trunk/skins/Classic/Makefile   |   69 ++++++++++++++---------------------------
+  trunk/skins/Classic/skin.hints |   22 -------------
+  trunk/skins/Makefile           |    2 -
+  3 files changed, 26 insertions(+), 67 deletions(-)
+
+
 2006-10-30 21:49:02 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2793]
   - remove classic variant.
