@@ -1,3 +1,12 @@
+2006-10-30 22:14:13 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2809]
+  - some tweaks to the Osmosis skin engine.
+  
+  trunk/skins/Ivory/skin.hints   |    2 +-
+  trunk/skins/Osmosis/skin.hints |    2 +-
+  2 files changed, 2 insertions(+), 2 deletions(-)
+
+
 2006-10-30 22:08:58 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2807]
   - add plasmaroo to patch authors (oops)
