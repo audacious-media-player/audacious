@@ -1,3 +1,11 @@
+2006-10-30 22:26:30 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2813]
+  - pretty sure you meant this
+  
+  trunk/skins/Ivory/viscolor.txt |   32 ++++++++++++++++----------------
+  1 file changed, 16 insertions(+), 16 deletions(-)
+
+
 2006-10-30 22:16:27 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2811]
   - use a common skinengine for both Osmosis and Ivory.

@@ -373,7 +373,7 @@
   (init
    (((#x00 #x7f)) init         1.0)   ; ASCII range
    (((#x84 #xd3)) jamo51       1.0)   ; jamo51
-   (((#xd8 #xde) (#x30 #xf9)) jamo42  0.95)   ; jamo42
+   (((#xd8 #xde) (#xe0 #xf9)) jamo42  0.95)   ; jamo42
    )
   ;; second byte
   (jamo51
