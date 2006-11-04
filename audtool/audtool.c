@@ -18,6 +18,7 @@
 
 #include <stdlib.h>
 #include <glib.h>
+#include <locale.h>
 #include "libaudacious/beepctrl.h"
 #include "audtool.h"
 
@@ -90,6 +91,8 @@ gint main(gint argc, gchar **argv)
 {
 	gint i;
 	gchar *remote_uri;
+
+	setlocale(LC_CTYPE, "");
 
 	if (argc < 2)
 	{
@@ -464,7 +467,9 @@ void playlist_display(gint session, gint argc, gchar **argv)
 {
 	gint i, ii, frames, length, total;
 	gchar *songname;
-	
+	gchar *fmt = NULL, *p;
+	gint column;
+
 	i = xmms_remote_get_playlist_length(session);
 
 	g_print("%d tracks.\n", i);
@@ -478,8 +483,28 @@ void playlist_display(gint session, gint argc, gchar **argv)
 		length = frames / 1000;
 		total += length;
 
-		g_print("%4d | %-60s | %d:%.2d\n",
-			ii + 1, songname, length / 60, length % 60);
+		/* adjust width for multi byte characters */
+		column = 60;
+		if(songname){
+			p = songname;
+			while(*p){
+				gint stride;
+				stride = g_utf8_next_char(p) - p;
+				if(g_unichar_iswide(g_utf8_get_char(p)) ||
+				   g_unichar_iswide_cjk(g_utf8_get_char(p))){
+					column += (stride - 2);
+				}
+				else {
+					column += (stride - 1);
+				}
+				p = g_utf8_next_char(p);
+			}
+
+		}
+
+		fmt = g_strdup_printf("%%4d | %%-%ds | %%d:%%.2d\n", column);
+		g_print(fmt, ii + 1, songname, length / 60, length % 60);
+		g_free(fmt);
 	}
 
 	g_print("Total length: %d:%.2d\n", total / 60, total % 60);
@@ -707,6 +732,8 @@ void playqueue_display(gint session, gint argc, gchar **argv)
 {
 	gint i, ii, position, frames, length, total;
 	gchar *songname;
+	gchar *fmt = NULL, *p;
+	gint column;
 	
 	i = xmms_remote_get_playqueue_length(session);
 
@@ -722,8 +749,27 @@ void playqueue_display(gint session, gint argc, gchar **argv)
 		length = frames / 1000;
 		total += length;
 
-		g_print("%4d | %4d | %-60s | %d:%.2d\n",
-			ii + 1, position + 1, songname, length / 60, length % 60);
+		/* adjust width for multi byte characters */
+		column = 60;
+		if(songname) {
+			p = songname;
+			while(*p){
+				gint stride;
+				stride = g_utf8_next_char(p) - p;
+				if(g_unichar_iswide(g_utf8_get_char(p)) ||
+				   g_unichar_iswide_cjk(g_utf8_get_char(p))){
+					column += (stride - 2);
+				}
+				else {
+					column += (stride - 1);
+				}
+				p = g_utf8_next_char(p);
+			}
+		}
+
+		fmt = g_strdup_printf("%%4d | %%4d | %%-%ds | %%d:%%.2d\n", column);
+		g_print(fmt, ii + 1, position + 1, songname, length / 60, length % 60);
+		g_free(fmt);
 	}
 
 	g_print("Total length: %d:%.2d\n", total / 60, total % 60);
