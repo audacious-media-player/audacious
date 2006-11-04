@@ -76,6 +76,8 @@ extern void playback_playing(gint, gint, gchar **);
 extern void playback_paused(gint, gint, gchar **);
 extern void playback_stopped(gint, gint, gchar **);
 extern void playback_status(gint, gint, gchar **);
+extern void playback_seek(gint, gint, gchar **);
+extern void playback_seek_relative(gint, gint, gchar **);
 extern void show_preferences_window(gint, gint, gchar **);
 extern void show_jtf_window(gint, gint, gchar **);
 extern void shutdown_audacious_server(gint, gint, gchar **);

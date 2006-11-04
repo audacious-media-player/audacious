@@ -1,3 +1,13 @@
+2006-11-04 12:56:41 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2819]
+  audtool improvement:
+  - print playlist titles in current codeset.
+  - justify multi byte characters correctly in playlist-display and playqueue-display.
+  
+  trunk/audtool/audtool.c |   56 +++++++++++++++++++++++++++++++++++++++++++-----
+  1 file changed, 51 insertions(+), 5 deletions(-)
+
+
 2006-11-04 02:47:00 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2817]
   - merge debian's manpage with ours, and improve overall spelling and grammar

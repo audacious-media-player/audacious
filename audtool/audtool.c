@@ -74,6 +74,8 @@ struct commandhandler handlers[] = {
 	{"playback-paused", playback_paused, "returns OK if audacious is paused"},
 	{"playback-stopped", playback_stopped, "returns OK if audacious is stopped"},
 	{"playback-status", playback_status, "returns the playback status"},
+	{"playback-seek", playback_seek, "performs an absolute seek"},
+	{"playback-seek-relative", playback_seek_relative, "performs a seek relative to the current position"},
 	{"<sep>", NULL, "Volume control"},
 	{"get-volume", get_volume, "returns the current volume level in percent"},
 	{"set-volume", set_volume, "sets the current volume level in percent"},
@@ -99,7 +101,7 @@ gint main(gint argc, gchar **argv)
 		g_print("%s: usage: %s <command>\n", argv[0], argv[0]);
 		g_print("%s: use `%s help' to get a listing of available commands.\n",
 			argv[0], argv[0]);
-		exit(0);
+		exit(-2);
 	}
 
 	remote_uri = getenv("AUDTOOL_REMOTE_URI");
@@ -109,7 +111,7 @@ gint main(gint argc, gchar **argv)
 		&& g_strcasecmp("list-handlers", argv[1]))
 	{
 		g_print("%s: audacious server is not running!\n", argv[0]);
-		exit(0);
+		exit(-1);
 	}
 
 	for (i = 0; handlers[i].name != NULL; i++)
@@ -329,6 +331,36 @@ void playback_status(gint session, gint argc, gchar **argv)
 		g_print("stopped\n");
 		return;
 	}
+}
+
+void playback_seek(gint session, gint argc, gchar **argv)
+{
+	if (argc < 3)
+	{
+		g_print("%s: invalid parameters for playback-seek.\n", argv[0]);
+		g_print("%s: syntax: %s playback-seek <position>\n", argv[0], argv[0]);
+		return;
+	}
+
+	xmms_remote_jump_to_time(session, atoi(argv[2]) * 1000);
+}
+
+void playback_seek_relative(gint session, gint argc, gchar **argv)
+{
+	gint oldtime, newtime, diff;
+
+	if (argc < 3)
+	{
+		g_print("%s: invalid parameters for playback-seek-relative.\n", argv[0]);
+		g_print("%s: syntax: %s playback-seek <position>\n", argv[0], argv[0]);
+		return;
+	}
+
+	oldtime = xmms_remote_get_output_time(session) / 1000;
+	diff = atoi(argv[2]);
+	newtime = oldtime + diff;
+
+	xmms_remote_jump_to_time(session, newtime);
 }
 
 void playlist_add_url_string(gint session, gint argc, gchar **argv)
