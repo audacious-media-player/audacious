@@ -1,184 +1,217 @@
-.TH AUDTOOL "1" "14 October 2006" "Version @PACKAGE_VERSION@" "Audacious Manual Pages"
+.TH AUDTOOL 1 "November 2006" "Version @VERSION@"
 .SH NAME
-Audtool \- A commandline utility for controlling audacious
+.B audtool
+- a small tool to modify behavior of a running audacious instance.
 .SH SYNOPSIS
 .B audtool
-[\-\-[[handler [parameter]]
+[\-\-[[handler [parameters]]
 .SH DESCRIPTION
-\fIAudtool\fP is a commandline utility for controlling audacious remotely.
-.SH HANDLERS
-\fIAudtool\fP accepts the following handlers; handlers starting with playlist
-require a parameter, except for playlist-advance and playlist-reverse;
-the parameter for these should be the song number. Additionally,
-playqueue-add and playqueue-remove require a parameter.
+.B audtool
+is designed to send commands to a running audacious.
+.PP
+It can handle various things like jumping to the next track in playlist
+or returning the current playing track title, as well as other status
+information.
+.SH OPTIONS
+.B "Now playing information:"
 .TP
-.B current\-song
-returns current song title
+.I --current-song
+Returns current song title.
 .TP
-.B current\-song\-filename
-returns current song filename
+.I --current-song-filename
+Returns current song filename.
 .TP
-.B current\-song\-length
-returns current song length
+.I --current-song-length
+Returns current song length.
 .TP
-.B current\-song\-length\-seconds
-returns current song length in seconds
+.I --current-song-length-seconds
+Returns current song length in seconds.
 .TP
-.B current\-song\-length\-frames
-returns current song length in frames
+.I --current-song-length-frames
+Returns current song length in frames.
 .TP
-.B current\-song\-output\-length
-returns current song output length
+.I --current-song-output-length
+Returns current song output length.
 .TP
-.B current\-song\-output\-length\-seconds
-returns current song output length in seconds
+.I --current-song-output-length-seconds
+Returns current song output length in seconds.
 .TP
-.B current\-song\-output\-length\-frames
-returns current song output length in frames
+.I --current-song-output-length-frames
+Returns current song output length in frames.
 .TP
-.B current\-song\-bitrate
-returns current song bitrate in bits per second
+.I --current-song-bitrate
+Returns current song bitrate in bits per second.
 .TP
-.B current\-song\-bitrate\-kbps
-returns current song bitrate in kilobits per second
+.I --current-song-bitrate-kbps
+Returns current song bitrate in kilobits per second.
 .TP
-.B current\-song\-frequency
-returns current song frequency in hertz
+.I --current-song-frequency
+Returns current song frequency in hertz.
 .TP
-.B current\-song\-frequency\-khz
-returns current song frequency in kilohertz
+.I --current-song-frequency-khz
+Returns current song frequency in kilohertz.
 .TP
-.B current\-song\-channels
-returns current song channels
+.I --current-song-channels
+Returns current song channels.
+.PP
+.B "Playlist manipulation:"
 .TP
-.B playlist\-advance
-go to the next song in the playlist
+.I --playlist-advance
+Go to the next song in the playlist.
 .TP
-.B playlist\-reverse
-go to the previous song in the playlist
+.I --playlist-reverse
+Go to the previous song in the playlist.
 .TP
-.B playlist\-addurl
-adds a url to the playlist
+.I --playlist-addurl <uri>
+Adds a uri to the playlist.
 .TP
-.B playlist\-delete
-deletes a song from the playlist
+.I --playlist-delete <position>
+Deletes the song at <position> from the playlist.
 .TP
-.B playlist\-length
-returns the total length of the playlist
+.I --playlist-length
+Returns the total length of the playlist.
 .TP
-.B playlist\-song
-returns the title of a song in the playlist
+.I --playlist-song <position>
+Returns the title of the song at <position> in the playlist.
 .TP
-.B playlist\-song\-filename
-returns the filename of a song in the playlist
+.I --playlist-song-filename <position>
+Returns the filename of the song at <position> in the playlist.
 .TP
-.B playlist\-song\-length
-returns the length of a song in the playlist
+.I --playlist-song-length <position>
+Returns the length of the song at <position> in the playlist.
 .TP
-.B playlist\-song\-length\-seconds
-returns the length of a song in the playlist in seconds
+.I --playlist-song-length-seconds <position>
+Returns the length of the song at <position> in the playlist in seconds.
 .TP
-.B playlist\-song\-length\-frames
-returns the length of a song in the playlist in frames
+.I --playlist-song-length-frames <position>
+Returns the length of the song at <position> in the playlist in frames.
 .TP
-.B playlist\-display
-returns the entire playlist
+.I --playlist-display
+Returns the entire playlist.
 .TP
-.B playlist\-position
-returns the position in the playlist
+.I --playlist-position
+Returns the current position in the playlist.
 .TP
-.B playlist\-jump
-jumps to a position in the playlist
+.I --playlist-jump <position>
+Jumps to <position> in the playlist.
 .TP
-.B playlist\-clear
-clears the playlist
+.I --playlist-clear
+Clears the playlist.
 .TP
-.B playlist\-repeat\-status
-returns the status of playlist repeat
+.I --playlist-repeat-status
+Returns the status of playlist repeat.
 .TP
-.B playlist\-repeat\-toggle
-toggles playlist repeat
+.I --playlist-repeat-toggle
+Toggles playlist repeat.
 .TP
-.B playlist\-shuffle\-status
-returns the status of playlist shuffle
+.I --playlist-shuffle-status
+Returns the status of playlist shuffle.
 .TP
-.B playlist\-shuffle\-toggle
-toggles playlist shuffle
+.I --playlist-shuffle-toggle
+Toggles playlist shuffle.
+.PP
+.B Playqueue manipulation:
 .TP
-.B playqueue\-add
-adds a song to the playqueue
+.I --playqueue-add <position>
+Adds the song at <position> in the playlist to the playqueue.
 .TP
-.B playqueue\-remove
-removes a song from the playqueue
+.I --playqueue-remove <position>
+Removes the song at <position> in the playlist from the playqueue.
 .TP
-.B playqueue\-is\-queued
-returns OK if a song is queued
+.I --playqueue-is-queued <position>
+Returns OK if the song at <postion> in the playtlist is queued.
 .TP
-.B playqueue\-get\-position
-returns the queue position of a song in the playlist
+.I --playqueue-get-position <position>
+Returns the playqueue position of the song at <position> in the playlist.
 .TP
-.B playqueue\-get\-qposition
-returns the playlist position of a song in the queue
+.I --playqueue-get-qposition <qposition>
+Returns the playlist position of the song at <qposition> in the playqueue.
 .TP
-.B playqueue\-length
-returns the length of the playqueue
+.I --playqueue-length
+Returns the length of the playqueue.
 .TP
-.B playqueue\-display
-returns a list of currently-queued songs
+.I --playqueue-display
+Returns a list of currently\-queued songs.
 .TP
-.B playqueue\-clear
-clears the playqueue
+.I --playqueue-clear
+Clears the playqueue.
+.PP
+.B "Playback manipulation:"
 .TP
-.B playback\-play
-starts/unpauses song playback
+.I --playback-play
+Starts/unpauses song playback.
 .TP
-.B playback\-pause
-(un)pauses song playback
+.I --playback-pause
+(Un)pauses song playback.
 .TP
-.B playback\-playpause
-plays/(un)pauses song playback
+.I --playback-playpause
+Plays/(un)pauses song playback.
 .TP
-.B playback\-stop
-stops song playback
+.I --playback-stop
+Stops song playback.
 .TP
-.B playback\-playing
-returns OK if audacious is playing
+.I --playback-playing
+Returns OK if audacious is playing.
 .TP
-.B playback\-paused
-returns OK if audacious is paused
+.I --playback-paused
+Returns OK if audacious is paused.
 .TP
-.B playback\-stopped
-returns OK if audacious is stopped
+.I --playback-stopped
+Returns OK if audacious is stopped.
 .TP
-.B playback\-status
-returns the playback status
+.I --playback-status
+Returns the playback status.
+.PP
+.B "Volume control:"
 .TP
-.B get\-volume
-returns the current volume level in percent
+.I --get-volume
+Returns the current volume level in percent.
 .TP
-.B set\-volume
-sets the current volume level in percent
+.I --set-volume <level>
+Sets the current volume level in percent.
+.PP
+.B "Miscellaneous:"
 .TP
-.B preferences
-shows/hides the preferences window
+.I --preferences
+Shows/hides the preferences window.
 .TP
-.B jumptofile
-shows the jump to file window
+.I --jumptofile
+Shows the jump to file window.
 .TP
-.B shutdown
-shuts down audacious
+.I --shutdown
+Shuts down audacious.
+.PP
+.B "Help system:"
 .TP
-.B list\-handlers
-shows handlers list
+.I --list-handlers
+Shows handlers list.
 .TP
-.B help
-shows handlers list
+.I --help
+Shows handlers list.
+.PP
+Handlers may be prefixed with `\-\-' (GNU\-style long\-options) or not, your choice.
 .SH BUGS
 There are no known bugs in audtool at this time; if you find any please
 report them to <bugs+audtool@atheme.org>.
-.SH COPYRIGHT
-Audtool is (c) 2005-2006 George Averill and William Pitcock.
-The audtool manpage was mostly written by Kiyoshi Aman.
-.SH COPYING
-Audtool is copyrighted but freely distributable software; see COPYING
-in the sourcecode for licensing details.
+.SH AUTHORS
+.B audtool
+was written by George Averill <nhjm@nhjm.net> and William 
+Pitcock <nenolod@atheme.org>.
+.PP
+This manual page was written by Adam Cecile <gandalf@le-vert.net> and 
+Kiyoshi Aman <kiyoshi@atheme.org>. Some additional tweaks were done by 
+William Pitcock <nenolod@atheme.org>.
+.PP
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU General Public License, Version 2 or any
+later version published by the Free Software Foundation.
+.PP
+The complete text of the GNU General Public License is available in the
+sourcecode of Audacious, and is typically included with binary packages 
+as well.
+.PP
+If installed with an operating system, see your Operating System's 
+documentation for licensing details.
+.SH SEE ALSO
+.B Homepage:
+http://audacious-media-player.org/

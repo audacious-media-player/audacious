@@ -1,3 +1,12 @@
+2006-11-01 09:31:16 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2815]
+  - libguess update. a bug in JOHAB detecting was fixed.
+  
+  trunk/libguess/guess.scm   |    2 +-
+  trunk/libguess/guess_tab.c |   22 +++++++++++-----------
+  2 files changed, 12 insertions(+), 12 deletions(-)
+
+
 2006-10-30 22:26:30 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2813]
   - pretty sure you meant this
