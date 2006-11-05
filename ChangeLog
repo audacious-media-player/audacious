@@ -1,3 +1,15 @@
+2006-11-05 10:29:47 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2829]
+  - per bug #605, remove GNOME VFS.
+  
+  trunk/audacious/main.c         |    8 
+  trunk/audacious/util.c         |   25 --
+  trunk/configure.ac             |   27 --
+  trunk/libaudacious/Makefile    |    2 
+  trunk/libaudacious/vfs_gnome.c |  408 -----------------------------------------
+  5 files changed, 1 insertion(+), 469 deletions(-)
+
+
 2006-11-05 08:55:21 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2827]
   - update ja.po via Dai.

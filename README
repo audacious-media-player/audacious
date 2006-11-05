@@ -106,10 +106,6 @@ The following packages are required for optional features:
     alsa-lib >= 1.0
     (http://www.alsa-project.org)
 
-  GNOME VFS support:
-    gnome-vfs >= 2.6.0  
-    (http://ftp.gnome.org/pub/GNOME/desktop/2.6/2.6.0/sources/)
-
   GConf support:
     GConf >= 2.6.0  
     (http://ftp.gnome.org/pub/GNOME/desktop/2.6/2.6.0/sources/)
@@ -139,9 +135,6 @@ make install
 
 This will put the binary in /usr/local/bin and plugins in
 /usr/local/lib/audacious/
-
-Note for packagers: The gnome-vfs option is VERY EXPERIMENTAL. We suggest you
-do not use it in your official distribution packages.
 
 If you want to use the automatic character detection system, then you should
 use --enable-chardet.
