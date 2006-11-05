@@ -1,3 +1,11 @@
+2006-11-05 21:55:21 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2847]
+  - optimize for single-character searches (dramatic JTF speedboost)
+  
+  trunk/audacious/mainwin.c |    8 +++++---
+  1 file changed, 5 insertions(+), 3 deletions(-)
+
+
 2006-11-05 21:49:20 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2845]
   - improve algorithm further
