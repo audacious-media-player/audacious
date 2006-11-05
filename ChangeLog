@@ -1,3 +1,13 @@
+2006-11-04 21:50:43 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2821]
+  - return -1 if audacious server is not running
+  - add playback-seek, playback-seek-relative
+  
+  trunk/audtool/audtool.c |   36 ++++++++++++++++++++++++++++++++++--
+  trunk/audtool/audtool.h |    2 ++
+  2 files changed, 36 insertions(+), 2 deletions(-)
+
+
 2006-11-04 12:56:41 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2819]
   audtool improvement:
