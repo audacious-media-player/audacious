@@ -1,23 +1,23 @@
-# Translation of bmp.pot to Russian for Beep Media Player.
-# Copyright (C) 2004  Free Software Foundation, Inc.
-# За основу взят перевод Александра Коваленко для XMMS...
+# Russian translation for Audacious.
+# Copyright (C) 2006 Alexandr Orlov <alxorlov@pochta.ru>
+# This file is distributed under the same license as the Audacious package.
+# Alexandr Orlov <alxorlov@pochta.ru>, 2006.
+#
+# За основу взят перевод Виталия Липатова для BMP.
 # Улучшения перевода приветствуются :)
-# Pavlo Bohmat <bohm@ukr.net>, 2004.
-# Vitaly Lipatov <lav@altlinux.ru>, 2004.
 #
-#
+
 msgid ""
 msgstr ""
-"Project-Id-Version: bmp cvs20041231\n"
+"Project-Id-Version: audacious 1.2.1\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2006-08-02 18:22-0500\n"
-"PO-Revision-Date: 2004-12-31 13:17MSK\n"
-"Last-Translator: Vitaly Lipatov <lav@altlinux.ru>\n"
-"Language-Team: Russian <ru@li.org>\n"
+"PO-Revision-Date: 2006-11-05 21:00+0400\n"
+"Last-Translator: Alexandr Orlov <alxorlov@pochta.ru>\n"
+"Language-Team: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.9.1\n"
 
 #: Plugins/Effect/audiocompress/audacious-glue.c:96
 msgid "AudioCompress "
@@ -32,11 +32,16 @@ msgid ""
 "Simple dynamic range compressor for transparently\n"
 "keeping the volume level more or less consistent"
 msgstr ""
+"\n"
+"(c)2003 trikuare studios (http://trikuare.cx)\n"
+"Портировано Tony Vroon (chainsaw@gentoo.org) под Audacious\n"
+"\n"
+"Простой динамический компрессор, служащий для\n"
+"удержания громкости на более-менее стандартном уровне"
 
 #: Plugins/Effect/audiocompress/audacious-glue.c:102
-#, fuzzy
 msgid "About AudioCompress"
-msgstr "Об модуле поддержки формата MPEG"
+msgstr "О модуле AudioCompress"
 
 #: Plugins/Effect/audiocompress/audacious-glue.c:103
 #: Plugins/Effect/stereo_plugin/stereo.c:59
@@ -64,25 +69,26 @@ msgid ""
 "\n"
 "By Johan Levin 1999."
 msgstr ""
+"Модуль Extra Stereo\n"
+"\n"
+"Johan Levin 1999."
 
 #: Plugins/Effect/stereo_plugin/stereo.c:38
 #, c-format
 msgid "Extra Stereo Plugin %s"
-msgstr ""
+msgstr "Модуль Extra Stereo %s"
 
 #: Plugins/Effect/stereo_plugin/stereo.c:58
-#, fuzzy
 msgid "About Extra Stereo Plugin"
-msgstr "О модуле вывода звука ESounD"
+msgstr "О модуле Extra Stereo"
 
 #: Plugins/Effect/stereo_plugin/stereo.c:99
 msgid "Configure Extra Stereo"
-msgstr ""
+msgstr "Настроить Extra Stereo"
 
 #: Plugins/Effect/stereo_plugin/stereo.c:101
-#, fuzzy
 msgid "Effect intensity:"
-msgstr "Список модулей _эффектов:"
+msgstr "Интенсивность эффекта:"
 
 #: Plugins/Effect/stereo_plugin/stereo.c:131
 #: Plugins/Input/flac/configure.c:638 Plugins/Input/flac/fileinfo.c:358
@@ -91,24 +97,21 @@ msgstr "Список модулей _эффектов:"
 #: Plugins/Output/alsa/configure.c:411 Plugins/Output/arts/configure.c:92
 #: Plugins/Output/disk_writer/disk_writer.c:412
 #: Plugins/Output/sun/configure.c:566
-#, fuzzy
 msgid "Cancel"
-msgstr "Дэнс"
+msgstr "Отмена"
 
 #: Plugins/Effect/stereo_plugin/stereo.c:138
 #: Plugins/Input/modplug/gui/interface.cpp:733
 msgid "Apply"
-msgstr ""
+msgstr "Применить"
 
 #: Plugins/General/lirc/about.c:65
-#, fuzzy
 msgid "About LIRC Audacious Plugin"
-msgstr "О модуле вывода звука ESounD"
+msgstr "О модуле LIRC"
 
 #: Plugins/General/lirc/about.c:92
-#, fuzzy
 msgid "LIRC Plugin "
-msgstr "Модули"
+msgstr "Модуль LIRC "
 
 #: Plugins/General/lirc/about.c:94
 msgid ""
@@ -123,22 +126,30 @@ msgid ""
 "You can get LIRC information at:\n"
 "http://fsinfo.cs.uni-sb.de/~columbus/lirc/index.html"
 msgstr ""
+"\n"
+"Простой модуль, позволяющий управлять Audacious\n"
+"с помощью инфракрасного пульта управления\n"
+"\n"
+"Адаптировано Tony Vroon <chainsaw@gentoo.org>,\n"
+"основано на модуле XMMS LIRC:\n"
+"Carl van Schaik <carl@leg.uct.ac.za>\n"
+"Christoph Bartelmus <xmms@bartelmus.de>\n"
+"Информацию о LIRC вы можете посмотреть на:\n"
+"http://lirc.org"
 
 #: Plugins/General/lirc/about.c:116
 #: Plugins/Input/modplug/gui/interface.cpp:946
-#, fuzzy
 msgid "Close"
-msgstr "/Закрыть"
+msgstr "Закрыть"
 
 #: Plugins/General/lirc/lirc.c:66
-#, fuzzy
 msgid "LIRC Plugin"
-msgstr "Модули"
+msgstr "Модуль LIRC"
 
 #: Plugins/General/lirc/lirc.c:84
 #, c-format
 msgid "%s: could not init LIRC support\n"
-msgstr ""
+msgstr "%s: невозможно инициализировать поддержку LIRC\n"
 
 #: Plugins/General/lirc/lirc.c:92
 #, c-format
@@ -147,20 +158,23 @@ msgid ""
 "%s: please read the documentation of LIRC\n"
 "%s: how to create a proper config file\n"
 msgstr ""
+"%s: невозможно прочитать конфигурационный файл LIRC\n"
+"%s: пожалуйста, прочитайте в документации LIRC\n"
+"%s: как создать рабочий конфигурационый файл\n"
 
 #: Plugins/General/lirc/lirc.c:338
 #, c-format
 msgid "%s: unknown command \"%s\"\n"
-msgstr ""
+msgstr "%s: неизвестная команда \"%s\"\n"
 
 #: Plugins/General/lirc/lirc.c:348
 #, c-format
 msgid "%s: disconnected from LIRC\n"
-msgstr ""
+msgstr "%s: отключение от LIRC\n"
 
 #: Plugins/General/scrobbler/configure.c:84
 msgid "<b>Scrobbler Preferences</b>"
-msgstr ""
+msgstr "<b>Настройки Scrobbler</b>"
 
 #: Plugins/General/scrobbler/configure.c:102
 msgid "Username:"
@@ -171,44 +185,39 @@ msgid "Password:"
 msgstr "Пароль:"
 
 #: Plugins/General/scrobbler/gtkstuff.c:21
-#, fuzzy
 msgid "About Scrobbler Plugin"
-msgstr "О модуле вывода звука ESounD"
+msgstr "О модуле Scrobbler"
 
 #: Plugins/General/scrobbler/xmms_scrobbler.c:441
-#, fuzzy
 msgid "Scrobbler Plugin"
-msgstr "Модули"
+msgstr "Модуль Scrobbler"
 
 #: Plugins/General/song_change/song_change.c:55
 #, c-format
 msgid "Song Change %s"
-msgstr ""
+msgstr "Смена песни %s"
 
 #: Plugins/General/song_change/song_change.c:179
-#, fuzzy
 msgid "Commands"
-msgstr "Комментарий"
+msgstr "Команды"
 
 #: Plugins/General/song_change/song_change.c:186
 msgid "Command to run when Audacious starts a new song."
-msgstr ""
+msgstr "Команда, запускаемая когда Audacious начинает новую песню."
 
 #: Plugins/General/song_change/song_change.c:195
 #: Plugins/General/song_change/song_change.c:217
 #: Plugins/General/song_change/song_change.c:238
-#, fuzzy
 msgid "Command:"
-msgstr "Комментарий:"
+msgstr "Команда:"
 
 #: Plugins/General/song_change/song_change.c:209
 msgid "Command to run toward the end of a song."
-msgstr ""
+msgstr "Команда, запускаемая в конце песни."
 
 #: Plugins/General/song_change/song_change.c:229
-#, fuzzy
 msgid "Command to run when Audacious reaches the end of the playlist."
-msgstr "Загружать метаданные при отображении файла в списке воспроизведения"
+msgstr "Команда, запускаемая когда Audacious достигает конца списка."
 
 #: Plugins/General/song_change/song_change.c:250
 #, c-format
@@ -226,17 +235,31 @@ msgid ""
 "%%t: Playlist position (%%02d)\n"
 "%%p: Currently playing (1 or 0)"
 msgstr ""
+"Возможно использование следующих строк, которые\n"
+"будут обработаны перед запуском команды\n"
+"(некоторые из них бесполезны для команды конец-списка).\n"
+"\n"
+"%%F: Частота (в герцах)\n"
+"%%c: Количество каналов\n"
+"%%f: Имя файла (полный путь)\n"
+"%%l: Длительность (в миллисекундах)\n"
+"%%n или %%s: Название песни\n"
+"%%r: Битрэйт (в битах в секунду)\n"
+"%%t: Позиция песни в списке (%%02d)\n"
+"%%p: Играет сейчас (1 или 0)"
 
 #: Plugins/General/song_change/song_change.c:275
 msgid ""
 "<span size='small'>Parameters passed to the shell should be encapsulated in "
 "quotes. Doing otherwise is a security risk.</span>"
 msgstr ""
+"<span size='small'>Параметры, передаваемые оболочке, должны быть заключены в "
+"кавычки.\n"
+"В противном случае возможны проблемы с безопастностью.</span>"
 
 #: Plugins/Input/adplug/adplug-xmms.cc:146
-#, fuzzy
 msgid "About "
-msgstr "О программе"
+msgstr "О "
 
 #: Plugins/Input/adplug/adplug-xmms.cc:149
 msgid ""
@@ -250,40 +273,48 @@ msgid ""
 "al.\n"
 "Linked AdPlug library version: "
 msgstr ""
+"\n"
+"Copyright (C) 2002, 2003 Simon Peter <dn.tlp@gmx.net>\n"
+"\n"
+"Этот модуль распространяется на условиях GNU LGPL.\n"
+"Смотрите http://www.gnu.org/licenses/lgpl.html для дополнительной информации.\n"
+"\n"
+"Этот модуль использует библиотеку AdPlug, Copyright (C) Simon Peter.\n"
+"Версия библиотеки AdPlug: "
 
 #: Plugins/Input/amidi-plug/amidi-plug.c:26
 #, c-format
 msgid "AMIDI-Plug %s (MIDI Player)"
-msgstr ""
+msgstr "AMIDI-Plug %s (Проигрыватель MIDI)"
 
 #: Plugins/Input/amidi-plug/amidi-plug.c:362
-#, fuzzy
 msgid "AMIDI-Plug - warning"
-msgstr "Изменение настроек модуля поддержки формата MPEG"
+msgstr "AMIDI-Plug - предупреждение"
 
 #: Plugins/Input/amidi-plug/amidi-plug.c:363
 msgid ""
 "No sequencer backend has been selected!\n"
 "Please configure AMIDI-Plug before playing."
 msgstr ""
+"Не выбран синтезатор!\n"
+"Пожалуйста настройте AMIDI-Plug перед проигрыванием."
 
 #: Plugins/Input/amidi-plug/i_configure.c:71
-#, fuzzy
 msgid "AMIDI-Plug - select file"
-msgstr "Изменение настроек модуля поддержки формата MPEG"
+msgstr "AMIDI-Plug - выберите файл"
 
 #: Plugins/Input/amidi-plug/i_configure.c:118
-#, fuzzy
 msgid "AMIDI-Plug - configuration"
-msgstr "Изменение настроек модуля поддержки формата MPEG"
+msgstr "AMIDI-Plug - настройка"
 
 #: Plugins/Input/amidi-plug/i_configure.c:214
 msgid "AMIDI-Plug message"
-msgstr ""
+msgstr "AMIDI-Plug сообщение"
 
 #: Plugins/Input/amidi-plug/i_configure.c:215
 msgid "Please stop the player before changing AMIDI-Plug settings."
-msgstr ""
+msgstr "Пожалуйста, остановите проигрыватель, прежде чем изменять настройки "
+"AMIDI-Plug."
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:119
 #: Plugins/Input/mpg123/fileinfo.c:288 Plugins/Input/vorbis/fileinfo.c:558
@@ -291,28 +322,24 @@ msgid "Name:"
 msgstr "Имя:"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:130
-#, fuzzy
 msgid " MIDI Info "
-msgstr "Информация о CD"
+msgstr "Информация MIDI"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:139
-#, fuzzy
 msgid "Format:"
-msgstr "Формат ID3-тега:"
+msgstr "Формат:"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:142
-#, fuzzy
 msgid "Length (msec):"
-msgstr "Длина:"
+msgstr "Длительность (миллисекунды):"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:145
-#, fuzzy
 msgid "Num of Tracks:"
-msgstr "Перескочить на дорожку"
+msgstr "Количество дорожек:"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:150
 msgid "variable"
-msgstr ""
+msgstr "переменный"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:151
 msgid "BPM:"
@@ -396,8 +423,7 @@ msgstr ""
 
 #: Plugins/Input/cdaudio/configure.c:285
 msgid "Digital audio extraction not tested as the disc has no audio tracks\n"
-msgstr ""
-"Цифровое считывание аудио не тестировалось, так как на диске нет аудио-"
+msgstr "Цифровое считывание аудио не тестировалось, так как на диске нет аудио-"
 "дорожек\n"
 
 #: Plugins/Input/cdaudio/configure.c:302
@@ -486,7 +512,7 @@ msgstr "Удалить привод"
 
 #: Plugins/Input/cdaudio/configure.c:515
 msgid "CD Audio Player Configuration"
-msgstr "Изменение настроек проигрывателя компакт дисков"
+msgstr "Настройка проигрывателя компакт дисков"
 
 #: Plugins/Input/cdaudio/configure.c:553
 msgid "Add drive"
@@ -498,7 +524,7 @@ msgstr "Устройство"
 
 #: Plugins/Input/cdaudio/configure.c:571
 msgid "CDDB:"
-msgstr "CDDB:"
+msgstr ""
 
 #: Plugins/Input/cdaudio/configure.c:582
 msgid "Use CDDB"
@@ -543,11 +569,11 @@ msgstr "Формат названия:"
 
 #: Plugins/Input/cdaudio/configure.c:680
 msgid "CD Info"
-msgstr "Информация о CD"
+msgstr "Информация CD"
 
 #: Plugins/Input/console/Audacious_Driver.cpp:811
 msgid "About the Console Music Decoder"
-msgstr ""
+msgstr "О модуле поддержки Console Music"
 
 #: Plugins/Input/console/Audacious_Driver.cpp:812
 msgid ""
@@ -555,10 +581,13 @@ msgid ""
 "Audacious implementation by: William Pitcock <nenolod@nenolod.net>, \n"
 "        Shay Green <hotpop.com@blargg>"
 msgstr ""
+"Модуль поддержки Console Music, основанный на Game_Music_Emu 0.3.0.\n"
+"Портирование под Audacious: William Pitcock <nenolod@nenolod.net>, \n"
+"        Shay Green <hotpop.com@blargg>"
 
 #: Plugins/Input/console/Audacious_Driver.cpp:854
 msgid "SPC, VGM, NSF/NSFE, GBS, and GYM module decoder"
-msgstr ""
+msgstr "Модуль поддержки SPC, VGM, NSF/NSFE, GBS и GYM"
 
 #: Plugins/Input/flac/charset.c:40
 msgid "Arabic (IBM-864)"
@@ -665,9 +694,8 @@ msgid "Hebrew (Windows-1255)"
 msgstr ""
 
 #: Plugins/Input/flac/charset.c:66
-#, fuzzy
 msgid "Japanese (EUC-JP)"
-msgstr "Японский:"
+msgstr ""
 
 #: Plugins/Input/flac/charset.c:67
 msgid "Japanese (ISO-2022-JP)"
@@ -710,9 +738,8 @@ msgid "Unicode (UTF-7)"
 msgstr ""
 
 #: Plugins/Input/flac/charset.c:77
-#, fuzzy
 msgid "Unicode (UTF-8)"
-msgstr "  (недопустимая последовательность Юникод)"
+msgstr ""
 
 #: Plugins/Input/flac/charset.c:78
 msgid "Unicode (UTF-16BE)"
@@ -847,9 +874,8 @@ msgid "Korean (JOHAB)"
 msgstr ""
 
 #: Plugins/Input/flac/charset.c:116
-#, fuzzy
 msgid "Korean (UHC)"
-msgstr "Корейский:"
+msgstr ""
 
 #: Plugins/Input/flac/charset.c:117
 msgid "Romanian (MacRomanian)"
@@ -877,28 +903,27 @@ msgstr ""
 
 #: Plugins/Input/flac/configure.c:280 Plugins/Input/mpg123/configure.c:116
 msgid "Select the directory where you want to store the MPEG streams:"
-msgstr "Выберите каталог, в котором вы хотите сохранить потоки MPEG:"
+msgstr "Выберите каталог, в котором вы хотите сохранять потоки MPEG:"
 
 #: Plugins/Input/flac/configure.c:328
-#, fuzzy
 msgid "Flac Configuration"
-msgstr "Изменение настроек проигрывателя компакт дисков"
+msgstr "Настройка модуля Flac"
 
 #: Plugins/Input/flac/configure.c:340
 msgid "Tag Handling"
-msgstr ""
+msgstr "Обработка тэгов"
 
 #: Plugins/Input/flac/configure.c:349
 msgid "Convert Character Set"
-msgstr ""
+msgstr "Преобразование кодировки"
 
 #: Plugins/Input/flac/configure.c:356
 msgid "Convert character set from :"
-msgstr ""
+msgstr "Преобразовать кодировку из :"
 
 #: Plugins/Input/flac/configure.c:361
 msgid "to :"
-msgstr ""
+msgstr "в :"
 
 #: Plugins/Input/flac/configure.c:389 Plugins/Input/vorbis/configure.c:305
 #: audacious/glade/prefswin.glade:2166
@@ -912,94 +937,84 @@ msgstr "Название"
 
 #: Plugins/Input/flac/configure.c:409 Plugins/Input/vorbis/configure.c:380
 msgid "ReplayGain"
-msgstr "ReplayGain"
+msgstr ""
 
 #: Plugins/Input/flac/configure.c:417
-#, fuzzy
 msgid "Enable ReplayGain processing"
 msgstr "Включить ReplayGain"
 
 #: Plugins/Input/flac/configure.c:422
-#, fuzzy
 msgid "Album mode"
-msgstr "Альбом"
+msgstr "Альбомный режим"
 
 #: Plugins/Input/flac/configure.c:429
-#, fuzzy
 msgid "Preamp:"
-msgstr "Сон"
+msgstr "Предусиление:"
 
 #: Plugins/Input/flac/configure.c:436
 msgid "0 dB"
-msgstr ""
+msgstr "0 Дб"
 
 #: Plugins/Input/flac/configure.c:440
-#, fuzzy
 msgid "6dB hard limiting"
-msgstr "Включить усиление на 6dB + тяжелое ограничение"
+msgstr "Тяжелое ограничение на 6 Дб"
 
 #: Plugins/Input/flac/configure.c:449
 #: Plugins/Input/modplug/gui/interface.cpp:151
-#, fuzzy
 msgid "Resolution"
 msgstr "Разрешение:"
 
 #: Plugins/Input/flac/configure.c:457
-#, fuzzy
 msgid "Without ReplayGain"
-msgstr "ReplayGain"
+msgstr "Без ReplayGain"
 
 #: Plugins/Input/flac/configure.c:465
 msgid "Dither 24bps to 16bps"
-msgstr ""
+msgstr "Преобразовать 24 бит/с в 16 бит/с"
 
 #: Plugins/Input/flac/configure.c:470
-#, fuzzy
 msgid "With ReplayGain"
-msgstr "ReplayGain"
+msgstr "С ReplayGain"
 
 #: Plugins/Input/flac/configure.c:478
-#, fuzzy
 msgid "Enable dithering"
-msgstr "Включен"
+msgstr "Включить преобразование"
 
 #: Plugins/Input/flac/configure.c:487
 msgid "Noise shaping"
-msgstr ""
+msgstr "Подавление шума"
 
 #: Plugins/Input/flac/configure.c:495
-#, fuzzy
 msgid "none"
-msgstr "Никакой"
+msgstr "нет"
 
 #: Plugins/Input/flac/configure.c:501
 msgid "low"
-msgstr ""
+msgstr "низкий"
 
 #: Plugins/Input/flac/configure.c:507
 msgid "medium"
-msgstr ""
+msgstr "средний"
 
 #: Plugins/Input/flac/configure.c:513
 msgid "high"
-msgstr ""
+msgstr "высокий"
 
 #: Plugins/Input/flac/configure.c:519
 msgid "Dither to"
-msgstr ""
+msgstr "Преобразовать в"
 
 #: Plugins/Input/flac/configure.c:527
-#, fuzzy
 msgid "16 bps"
-msgstr "16 бит"
+msgstr "16 бит/с"
 
 #: Plugins/Input/flac/configure.c:533
 msgid "24 bps"
-msgstr ""
+msgstr "24 бит/с"
 
 #: Plugins/Input/flac/configure.c:541
 msgid "Output"
-msgstr ""
+msgstr "Вывод"
 
 #: Plugins/Input/flac/configure.c:547 Plugins/Input/mpg123/configure.c:296
 #: Plugins/Input/vorbis/configure.c:198 Plugins/Output/OSS/configure.c:302
@@ -1056,12 +1071,11 @@ msgstr "Включить канал метаданных Icecast UDP"
 #: Plugins/Input/flac/configure.c:623 Plugins/Input/mpg123/configure.c:397
 #: Plugins/Input/vorbis/configure.c:280
 msgid "Streaming"
-msgstr "Потоковый"
+msgstr "Потоки"
 
 #: Plugins/Input/flac/configure.c:655
-#, fuzzy
 msgid "About Flac Plugin"
-msgstr "О модуле вывода звука ESounD"
+msgstr "О модуле поддержки Flac"
 
 #: Plugins/Input/flac/configure.c:656
 msgid ""
@@ -1073,6 +1087,13 @@ msgid ""
 "Daisuke Shimamura\n"
 "Visit http://flac.sourceforge.net/"
 msgstr ""
+"Модуль поддержки Flac от Josh Coalson\n"
+"при участии\n"
+"......\n"
+"......\n"
+"и\n"
+"Daisuke Shimamura\n"
+"Посетите http://flac.sourceforge.net/"
 
 #: Plugins/Input/flac/fileinfo.c:48 Plugins/Input/mpg123/mpg123.c:49
 #: Plugins/Input/vorbis/fileinfo.c:83
@@ -1252,7 +1273,7 @@ msgstr "Кислота"
 #: Plugins/Input/flac/fileinfo.c:56 Plugins/Input/mpg123/mpg123.c:57
 #: Plugins/Input/vorbis/fileinfo.c:91
 msgid "House"
-msgstr "Дом"
+msgstr "Хаус"
 
 #: Plugins/Input/flac/fileinfo.c:56 Plugins/Input/mpg123/mpg123.c:57
 #: Plugins/Input/vorbis/fileinfo.c:91
@@ -1276,7 +1297,7 @@ msgstr "Шум"
 
 #: Plugins/Input/flac/fileinfo.c:57
 msgid "Alt"
-msgstr ""
+msgstr "Альт"
 
 #: Plugins/Input/flac/fileinfo.c:58 Plugins/Input/mpg123/mpg123.c:59
 #: Plugins/Input/vorbis/fileinfo.c:93
@@ -1711,17 +1732,17 @@ msgstr "Гоа"
 #: Plugins/Input/flac/fileinfo.c:84 Plugins/Input/mpg123/mpg123.c:85
 #: Plugins/Input/vorbis/fileinfo.c:119
 msgid "Drum & Bass"
-msgstr "Ударники и бас"
+msgstr "Драм-н-бас"
 
 #: Plugins/Input/flac/fileinfo.c:84 Plugins/Input/mpg123/mpg123.c:85
 #: Plugins/Input/vorbis/fileinfo.c:119
 msgid "Club-House"
-msgstr "Клуб-дом"
+msgstr "Клуб-хаус"
 
 #: Plugins/Input/flac/fileinfo.c:84 Plugins/Input/mpg123/mpg123.c:85
 #: Plugins/Input/vorbis/fileinfo.c:119
 msgid "Hardcore"
-msgstr "Нардкор"
+msgstr "Хардкор"
 
 #: Plugins/Input/flac/fileinfo.c:85 Plugins/Input/mpg123/mpg123.c:86
 #: Plugins/Input/vorbis/fileinfo.c:120
@@ -1814,24 +1835,24 @@ msgid "Synthpop"
 msgstr "Электронный поп"
 
 #: Plugins/Input/flac/fileinfo.c:214
-#, fuzzy, c-format
+#, c-format
 msgid "Samplerate: %d Hz"
-msgstr "Частота:"
+msgstr "Частота: %d Гц"
 
 #: Plugins/Input/flac/fileinfo.c:215
-#, fuzzy, c-format
+#, c-format
 msgid "Channels: %d"
-msgstr "Каналы:"
+msgstr "Каналы: %d"
 
 #: Plugins/Input/flac/fileinfo.c:216
 #, c-format
 msgid "Bits/Sample: %d"
-msgstr ""
+msgstr "Бит/Сэмпл: %d"
 
 #: Plugins/Input/flac/fileinfo.c:218
 #, c-format
 msgid "Blocksize: %d"
-msgstr ""
+msgstr "Размер блока: %d"
 
 #: Plugins/Input/flac/fileinfo.c:220
 #, c-format
@@ -1839,20 +1860,22 @@ msgid ""
 "Blocksize: variable\n"
 "  min/max: %d/%d"
 msgstr ""
+"Размер болка: переменный\n"
+"  мин/макс: %d/%d"
 
 #: Plugins/Input/flac/fileinfo.c:223
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Samples: %llu\n"
 "Length: %d:%.2d"
 msgstr ""
-"\n"
-"Общая длительность: %d:%d\n"
+"Сэмплы: %llu\n"
+"Длительность: %d:%.2d"
 
 #: Plugins/Input/flac/fileinfo.c:229
-#, fuzzy, c-format
+#, c-format
 msgid "Filesize: %ld B"
-msgstr "Размер файла:"
+msgstr "Размер файла: %ld Байт"
 
 #: Plugins/Input/flac/fileinfo.c:231
 #, c-format
@@ -1860,15 +1883,16 @@ msgid ""
 "Avg. bitrate: %.1f kb/s\n"
 "Compression ratio: %.1f%%"
 msgstr ""
+"Средн. битрэйт: %.1f КБит/с\n"
+"Степень сжатия: %.1f%%"
 
 #: Plugins/Input/flac/fileinfo.c:261 audacious/input.c:567
 msgid "Filename:"
-msgstr "Название файла:"
+msgstr "Имя файла:"
 
 #: Plugins/Input/flac/fileinfo.c:273
-#, fuzzy
 msgid "Tag:"
-msgstr "Танго"
+msgstr "Тэг:"
 
 #: Plugins/Input/flac/fileinfo.c:280 Plugins/Input/mpg123/fileinfo.c:456
 #: Plugins/Input/vorbis/fileinfo.c:581
@@ -1905,24 +1929,21 @@ msgid "Genre:"
 msgstr "Стиль:"
 
 #: Plugins/Input/flac/fileinfo.c:347
-#, fuzzy
 msgid "Save"
-msgstr "/Сохранить"
+msgstr "Сохранить"
 
 #: Plugins/Input/flac/fileinfo.c:353
-#, fuzzy
 msgid "Remove Tag"
-msgstr "/Удалить выделенное"
+msgstr "Удалить тэг"
 
 #: Plugins/Input/flac/fileinfo.c:363
-#, fuzzy
 msgid "FLAC Info:"
-msgstr "Информация о CD"
+msgstr "Информация FLAC"
 
 #: Plugins/Input/flac/fileinfo.c:415
-#, fuzzy, c-format
+#, c-format
 msgid "File Info - %s"
-msgstr "Инфрмация о файле"
+msgstr "Инфрмация о файле - %s"
 
 #: Plugins/Input/flac/http.c:219 Plugins/Input/mpg123/http.c:221
 #: Plugins/Input/vorbis/http.c:218
@@ -1934,7 +1955,7 @@ msgstr "Ошибка"
 #: Plugins/Input/vorbis/http.c:370
 #, c-format
 msgid "LOOKING UP %s"
-msgstr "ИЩЕМ %s"
+msgstr "ПОИСК %s"
 
 #: Plugins/Input/flac/http.c:389 Plugins/Input/mpg123/http.c:407
 #: Plugins/Input/mpg123/http.c:424 Plugins/Input/vorbis/http.c:360
@@ -1948,7 +1969,7 @@ msgstr "Не могу найти узел %s"
 #: Plugins/Input/vorbis/http.c:390
 #, c-format
 msgid "CONNECTING TO %s:%d"
-msgstr "ПОДКЛЮЧЕН К %s:%d"
+msgstr "ПОДКЛЮЧЕНИЕ К %s:%d"
 
 #: Plugins/Input/flac/http.c:409 Plugins/Input/flac/http.c:429
 #: Plugins/Input/mpg123/http.c:447 Plugins/Input/mpg123/http.c:468
@@ -1970,7 +1991,7 @@ msgid ""
 "Server reported: %s"
 msgstr ""
 "Не могу подключиться к узлу %s\n"
-"сервер возвратил: %s"
+"Сервер возвратил: %s"
 
 #: Plugins/Input/flac/http.c:675 Plugins/Input/vorbis/http.c:607
 #, c-format
@@ -1978,14 +1999,12 @@ msgid "PRE-BUFFERING: %dKB/%dKB"
 msgstr "ПРЕБУФЕРИЗАЦИЯ: %dКб/%dКб"
 
 #: Plugins/Input/flac/plugin.c:188
-#, fuzzy
 msgid "FLAC Audio Plugin"
-msgstr "Модуль поддержки аудио компакт-дисков"
+msgstr "Модуль поддержки FLAC"
 
 #: Plugins/Input/modplug/gui/interface.cpp:117
-#, fuzzy
 msgid "ModPlug Configuration"
-msgstr "Изменение настроек модуля поддержки формата MPEG"
+msgstr "Настройка ModPlug"
 
 #: Plugins/Input/modplug/gui/interface.cpp:165
 #: Plugins/Input/mpg123/configure.c:210
@@ -2001,9 +2020,8 @@ msgstr "8 бит"
 
 #: Plugins/Input/modplug/gui/interface.cpp:181
 #: Plugins/Input/timidity/src/interface.c:149
-#, fuzzy
 msgid "Channels"
-msgstr "Каналы:"
+msgstr "Каналы"
 
 #: Plugins/Input/modplug/gui/interface.cpp:195
 #: Plugins/Input/mpg123/fileinfo.c:205
@@ -2013,176 +2031,161 @@ msgstr "Стерео"
 
 #: Plugins/Input/modplug/gui/interface.cpp:203
 msgid "Mono (downmix)"
-msgstr ""
+msgstr "Моно"
 
 #: Plugins/Input/modplug/gui/interface.cpp:218
 #: Plugins/Input/timidity/src/interface.c:75
-#, fuzzy
 msgid "Sampling Rate"
-msgstr "Частота:"
+msgstr "Частота"
 
 #: Plugins/Input/modplug/gui/interface.cpp:232
-#, fuzzy
 msgid "48 kHz"
-msgstr "1:1 (44 кГц)"
+msgstr "48 кГц"
 
 #: Plugins/Input/modplug/gui/interface.cpp:240
-#, fuzzy
 msgid "44 kHz"
-msgstr "1:1 (44 кГц)"
+msgstr "44 кГц"
 
 #: Plugins/Input/modplug/gui/interface.cpp:248
-#, fuzzy
 msgid "22 kHz"
-msgstr "1:2 (22 кГц)"
+msgstr "22 кГц"
 
 #: Plugins/Input/modplug/gui/interface.cpp:256
-#, fuzzy
 msgid "11 kHz"
-msgstr "1:1 (44 кГц)"
+msgstr "11 кГц"
 
 #: Plugins/Input/modplug/gui/interface.cpp:264
-#, fuzzy
 msgid "Resampling"
-msgstr "Потоковый"
+msgstr "Преобразование частоты"
 
 #: Plugins/Input/modplug/gui/interface.cpp:278
 msgid "Nearest (fastest)"
-msgstr ""
+msgstr "Ближайший (очень быстро)"
 
 #: Plugins/Input/modplug/gui/interface.cpp:286
 msgid "Linear (fast)"
-msgstr ""
+msgstr "Линейный (быстро)"
 
 #: Plugins/Input/modplug/gui/interface.cpp:294
 msgid "Spline (good quality)"
-msgstr ""
+msgstr "Сплайн (хорошее качество)"
 
 #: Plugins/Input/modplug/gui/interface.cpp:302
 msgid "8-tap Fir (extremely high quality)"
-msgstr ""
+msgstr "8-tap Fir (самое хорошее качество)"
 
 #: Plugins/Input/modplug/gui/interface.cpp:310
-#, fuzzy
 msgid "Quality"
-msgstr "/_Выход"
+msgstr "Качество"
 
 #: Plugins/Input/modplug/gui/interface.cpp:325
 #: Plugins/Input/modplug/gui/interface.cpp:833
-#, fuzzy
 msgid "General"
-msgstr "Стиль"
+msgstr "Основной"
 
 #: Plugins/Input/modplug/gui/interface.cpp:346
 msgid "Use Filename as Song Title"
-msgstr ""
+msgstr "Использовать имя файла, как название песни"
 
 #: Plugins/Input/modplug/gui/interface.cpp:353
-#, fuzzy
 msgid "Fast Playlist Info"
-msgstr "Загрузка списка воспроизведения"
+msgstr "Быстрая информация в списке воспроизведения"
 
 #: Plugins/Input/modplug/gui/interface.cpp:368
 msgid "Noise Reduction"
-msgstr ""
+msgstr "Уменьшение шума"
 
 #: Plugins/Input/modplug/gui/interface.cpp:376
 msgid "Play Amiga MOD"
-msgstr ""
+msgstr "Проигрывать Amiga MOD"
 
 #: Plugins/Input/modplug/gui/interface.cpp:384
-#, fuzzy
 msgid "Reverb"
-msgstr "Сервер"
+msgstr "Эхо"
 
 #: Plugins/Input/modplug/gui/interface.cpp:398
 #: Plugins/Input/modplug/gui/interface.cpp:470
 #: Plugins/Input/modplug/gui/interface.cpp:542
 #: Plugins/Input/modplug/gui/interface.cpp:628
-#, fuzzy
 msgid "Enable"
-msgstr "Включен"
+msgstr "Включить"
 
 #: Plugins/Input/modplug/gui/interface.cpp:438
 #: Plugins/Input/modplug/gui/interface.cpp:582
-#, fuzzy
 msgid "Depth"
-msgstr "Дуэт"
+msgstr "Глубина"
 
 #: Plugins/Input/modplug/gui/interface.cpp:447
 #: Plugins/Input/modplug/gui/interface.cpp:591
 msgid "Delay"
-msgstr ""
+msgstr "Задержка"
 
 #: Plugins/Input/modplug/gui/interface.cpp:456
 msgid "Bass Boost"
-msgstr ""
+msgstr "Усиление басов"
 
 #: Plugins/Input/modplug/gui/interface.cpp:510
-#, fuzzy
 msgid "Amount"
-msgstr "О программе"
+msgstr "Количество"
 
 #: Plugins/Input/modplug/gui/interface.cpp:519
-#, fuzzy
 msgid "Range"
-msgstr "Рэйв"
+msgstr "Диапазон"
 
 #: Plugins/Input/modplug/gui/interface.cpp:528
 msgid "Surround"
 msgstr ""
 
 #: Plugins/Input/modplug/gui/interface.cpp:600
-#, fuzzy
 msgid "Preamp"
-msgstr "Сон"
+msgstr "Предусиление"
 
 #: Plugins/Input/modplug/gui/interface.cpp:614
 msgid ""
 "Note:  Setting the preamp too high may cause\n"
 "clipping / distortion!"
 msgstr ""
+"Примечание:  Слишком большое предусиление может привести к\n"
+"щелчкам или шумам!"
 
 #: Plugins/Input/modplug/gui/interface.cpp:635
 msgid "Volume"
-msgstr ""
+msgstr "Громкость"
 
 #: Plugins/Input/modplug/gui/interface.cpp:649
 msgid "Looping"
-msgstr ""
+msgstr "Повторение"
 
 #: Plugins/Input/modplug/gui/interface.cpp:663
 msgid "Don't loop"
-msgstr ""
+msgstr "Не повторять"
 
 #: Plugins/Input/modplug/gui/interface.cpp:678
 msgid "Loop"
-msgstr ""
+msgstr "Повторять"
 
 #: Plugins/Input/modplug/gui/interface.cpp:694
 msgid "time(s)"
-msgstr ""
+msgstr "время"
 
 #: Plugins/Input/modplug/gui/interface.cpp:701
 msgid "Loop forever"
-msgstr ""
+msgstr "Повторять вечно"
 
 #: Plugins/Input/modplug/gui/interface.cpp:709
-#, fuzzy
 msgid "Effects"
-msgstr "<b>Эффекты</b>"
+msgstr "Эффекты"
 
 #: Plugins/Input/modplug/gui/interface.cpp:725 Plugins/Output/alsa/about.c:46
 #: Plugins/Output/alsa/configure.c:405
 #: Plugins/Output/disk_writer/disk_writer.c:140
 #: Plugins/Output/disk_writer/disk_writer.c:405
 msgid "OK"
-msgstr ""
+msgstr "ОК"
 
 #: Plugins/Input/modplug/gui/interface.cpp:793
-#, fuzzy
 msgid "MOD Info"
-msgstr "Информация о CD"
+msgstr "Информация MOD"
 
 #: Plugins/Input/modplug/gui/interface.cpp:817
 msgid ""
@@ -2197,24 +2200,32 @@ msgid ""
 "Patterns:\n"
 "Channels:"
 msgstr ""
+"Имя файла:\n"
+"Название:\n"
+"Тип:\n"
+"Длительность:\n"
+"Скорость:\n"
+"Темп:\n"
+"Сэмплы:\n"
+"Инструменты:\n"
+"Шаблоны:\n"
+"Каналы:"
 
 #: Plugins/Input/modplug/gui/interface.cpp:866
-#, fuzzy
 msgid "Samples"
-msgstr "Салса"
+msgstr "Сэмплы"
 
 #: Plugins/Input/modplug/gui/interface.cpp:899
-#, fuzzy
 msgid "Instruments"
-msgstr "Инструментальный"
+msgstr "Инструменты"
 
 #: Plugins/Input/modplug/gui/interface.cpp:932
 msgid "Message"
-msgstr ""
+msgstr "Сообщение"
 
 #: Plugins/Input/modplug/gui/main.cpp:43
 msgid "Modplug Input Plugin for Audacious ver"
-msgstr ""
+msgstr "Модуль поддержки Modplug для Audacious, версия"
 
 #: Plugins/Input/modplug/gui/main.cpp:44
 msgid ""
@@ -2225,25 +2236,30 @@ msgid ""
 "Updates and Maintainance by Konstanty Bialkowski.\n"
 "Ported to BMP by Theofilos Intzoglou."
 msgstr ""
+"\n"
+"Модуль поддержки файлов Modplug, Olivier Lapicque.\n"
+"XMMS интерфейс Kenton Varda.\n"
+"(c)2000 Olivier Lapicque и Kenton Varda.\n"
+"Обновление и поддержка Konstanty Bialkowski.\n"
+"Портировано для BMP Theofilos Intzoglou."
 
 #: Plugins/Input/modplug/gui/main.cpp:45
-#, fuzzy
 msgid "About Modplug"
-msgstr "О модуле вывода звука ESounD"
+msgstr "О ModPlug"
 
 #: Plugins/Input/modplug/gui/support.cpp:118
 #, c-format
 msgid "Couldn't find pixmap file: %s"
-msgstr ""
+msgstr "Не могу найти файл с изображением: %s"
 
 #: Plugins/Input/modplug/gui/support.cpp:127
 #, c-format
 msgid "Error loading pixmap file: %s"
-msgstr ""
+msgstr "Ошибка загрузки файла с изображением: %s"
 
 #: Plugins/Input/mpg123/configure.c:185
 msgid "MPEG Audio Plugin Configuration"
-msgstr "Изменение настроек модуля поддержки формата MPEG"
+msgstr "Настройка модуля поддержки формата MPEG"
 
 #: Plugins/Input/mpg123/configure.c:202
 msgid "Resolution:"
@@ -2319,7 +2335,7 @@ msgstr "%ld Гц"
 
 #: Plugins/Input/mpg123/fileinfo.c:239
 msgid "None"
-msgstr "Никакой"
+msgstr "Нет"
 
 #: Plugins/Input/mpg123/fileinfo.c:240
 msgid "50/15 ms"
@@ -2361,9 +2377,8 @@ msgid "File size:"
 msgstr "Размер файла:"
 
 #: Plugins/Input/mpg123/fileinfo.c:372 Plugins/Input/mpg123/fileinfo.c:665
-#, fuzzy
 msgid "Mode:"
-msgstr "Декодер:"
+msgstr "Режим:"
 
 #: Plugins/Input/mpg123/fileinfo.c:395 Plugins/Input/mpg123/fileinfo.c:650
 msgid "Error Protection:"
@@ -2419,14 +2434,14 @@ msgid "%lu Bytes"
 msgstr "%lu байт"
 
 #: Plugins/Input/mpg123/http.c:401 Plugins/Input/vorbis/http.c:353
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't connect to host %s:%d"
-msgstr "Не могу подключиться к узлу %s"
+msgstr "Не могу подключиться к узлу %s:%d"
 
 #: Plugins/Input/mpg123/http.c:690
-#, fuzzy, c-format
+#, c-format
 msgid "PRE-BUFFERING: %zuKB/%zuKB"
-msgstr "ПРЕБУФЕРИЗАЦИЯ: %dКб/%dКб"
+msgstr "ПРЕБУФЕРИЗАЦИЯ: %zuКб/%zuКб"
 
 #: Plugins/Input/mpg123/mpg123.c:58 Plugins/Input/vorbis/fileinfo.c:92
 msgid "AlternRock"
@@ -2434,7 +2449,7 @@ msgstr "Альтернативный рок"
 
 #: Plugins/Input/mpg123/mpg123.c:953
 msgid "About MPEG Audio Plugin"
-msgstr "Об модуле поддержки формата MPEG"
+msgstr "О модуле поддержки формата MPEG"
 
 #: Plugins/Input/mpg123/mpg123.c:954
 msgid ""
@@ -2444,45 +2459,44 @@ msgid ""
 "Derived partially from mpg123 0.59s.mc3 as well.\n"
 "Based on the original XMMS plugin."
 msgstr ""
+"Декодер формата MPEG для Audacious, William Pitcock <nenolod@nenolod.net>, основан "
+"на:\n"
+"Декодер mpg123 от Michael Hipp <mh@mpg123.de>\n"
+"Который в свою очередь основан на mpg123 0.59s.mc3 .\n"
+"Первоначальный код взят из модуля XMMS."
 
 #: Plugins/Input/mpg123/mpg123.c:993
 msgid "MPEG Audio Plugin"
 msgstr "Модуль поддержки MPEG"
 
 #: Plugins/Input/timidity/src/interface.c:55
-#, fuzzy
 msgid "TiMidity Configuration"
-msgstr "Изменение настроек модуля поддержки формата MPEG"
+msgstr "Настройка модуля поддержки TiMidity"
 
 #: Plugins/Input/timidity/src/interface.c:92
-#, fuzzy
 msgid "11000 Hz"
-msgstr "1:1 (44 кГц)"
+msgstr "11000 Гц"
 
 #: Plugins/Input/timidity/src/interface.c:100
-#, fuzzy
 msgid "22000 Hz"
-msgstr "1:2 (22 кГц)"
+msgstr "22000 Гц"
 
 #: Plugins/Input/timidity/src/interface.c:108
-#, fuzzy
 msgid "44100 Hz"
-msgstr "1:1 (44 кГц)"
+msgstr "44100 Гц"
 
 #: Plugins/Input/timidity/src/interface.c:116
-#, fuzzy
 msgid "Sample Width"
-msgstr "Частота:"
+msgstr "Длительность сэмпла"
 
 #: Plugins/Input/timidity/src/interface.c:182
-#, fuzzy
 msgid "TiMidity Configuration File"
-msgstr "Изменение настроек модуля поддержки формата MPEG"
+msgstr "Конфигурационный файл TiMidity"
 
 #: Plugins/Input/timidity/src/xmms-timidity.c:99
 #, c-format
 msgid "TiMidity Player %s"
-msgstr ""
+msgstr "Проигрыватель TiMidity %s"
 
 #: Plugins/Input/timidity/src/xmms-timidity.c:134
 msgid ""
@@ -2490,20 +2504,22 @@ msgid ""
 "http://libtimidity.sourceforge.net\n"
 "by Konstantin Korikov"
 msgstr ""
+"Модуль TiMidity\n"
+"http://libtimidity.sourceforge.net\n"
+"Konstantin Korikov"
 
 #: Plugins/Input/timidity/src/xmms-timidity.c:135
-#, fuzzy, c-format
+#, c-format
 msgid "TiMidity Plugin %s"
-msgstr "Модуль ввода: %s"
+msgstr "Модуль TiMidity %s"
 
 #: Plugins/Input/timidity/src/xmms-timidity.c:372
-#, fuzzy
 msgid "Couldn't load MIDI file"
-msgstr "Не могу найти узел %s"
+msgstr "Невозможно загрузить MIDI файл"
 
 #: Plugins/Input/tonegen/tonegen.c:51
 msgid "About Tone Generator"
-msgstr ""
+msgstr "О генераторе сигналов"
 
 #: Plugins/Input/tonegen/tonegen.c:53
 msgid ""
@@ -2513,19 +2529,24 @@ msgid ""
 "To use it, add a URL: tone://frequency1;frequency2;frequency3;...\n"
 "e.g. tone://2000;2005 to play a 2000Hz tone and a 2005Hz tone"
 msgstr ""
+"Генератор синусоидальных сигналов, Haavard Kvaalen <havardk@xmms.org>\n"
+"Изменения, Daniel J. Peng <danielpeng@bigfoot.com>\n"
+"\n"
+"Для использования добавьте URL: tone://частота1;частота2;частота3;...\n"
+"Например tone://2000;2005 для воспроизведения сигналов 2000 Гц и 2005 Гц"
 
 #: Plugins/Input/tonegen/tonegen.c:165
 msgid "Tone Generator: "
-msgstr ""
+msgstr "Генератор сигналов: "
 
 #: Plugins/Input/tonegen/tonegen.c:265
 #, c-format
 msgid "Tone Generator %s"
-msgstr ""
+msgstr "Генератор сигналов %s"
 
 #: Plugins/Input/vorbis/configure.c:107
 msgid "Select the directory where you want to store the Ogg Vorbis streams:"
-msgstr "Выберите каталог, в котором вы хотите сохранить потоки Ogg Vorbis:"
+msgstr "Выберите каталог, в котором вы хотите сохранять потоки Ogg Vorbis:"
 
 #: Plugins/Input/vorbis/configure.c:186
 msgid "Ogg Vorbis Audio Plugin Configuration"
@@ -2553,11 +2574,11 @@ msgstr "Тип ReplayGain:"
 
 #: Plugins/Input/vorbis/configure.c:352
 msgid "use Track Gain/Peak"
-msgstr "использовать Дорожка Gain/Peak"
+msgstr "использовать Gain/Peak Дорожки"
 
 #: Plugins/Input/vorbis/configure.c:362
 msgid "use Album Gain/Peak"
-msgstr "использовать Альбом Gain/Peak"
+msgstr "использовать Gain/Peak Альбома"
 
 #: Plugins/Input/vorbis/configure.c:374
 msgid "Enable 6dB Boost + Hard Limiting"
@@ -2614,7 +2635,7 @@ msgstr "Организация:"
 
 #: Plugins/Input/vorbis/fileinfo.c:756
 msgid " Ogg Vorbis ReplayGain "
-msgstr " Ogg Vorbis ReplayGain"
+msgstr ""
 
 #: Plugins/Input/vorbis/fileinfo.c:762
 msgid "Track gain:"
@@ -2653,12 +2674,12 @@ msgstr "%d Гц"
 #: Plugins/Input/vorbis/fileinfo.c:958
 #, c-format
 msgid "%d"
-msgstr "%d"
+msgstr ""
 
 #: Plugins/Input/vorbis/fileinfo.c:960
 #, c-format
 msgid "%d:%.2d"
-msgstr "%d:%.2d"
+msgstr ""
 
 #: Plugins/Input/vorbis/fileinfo.c:962
 #, c-format
@@ -2671,7 +2692,7 @@ msgstr "Модуль поддержки Ogg Vorbis"
 
 #: Plugins/Input/vorbis/vorbis.c:806
 msgid "About Ogg Vorbis Audio Plugin"
-msgstr "Об модуле поддержки формата Ogg Vorbis"
+msgstr "О модуле поддержки формата Ogg Vorbis"
 
 #: Plugins/Input/vorbis/vorbis.c:812
 msgid ""
@@ -2707,10 +2728,9 @@ msgstr ""
 
 #: Plugins/Input/wav/wav-sndfile.c:246
 msgid "About sndfile WAV support"
-msgstr ""
+msgstr "О мидуле поддержки sndfile WAV"
 
 #: Plugins/Input/wav/wav-sndfile.c:247
-#, fuzzy
 msgid ""
 "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
 "from the xmms_sndfile plugin which is:\n"
@@ -2732,7 +2752,9 @@ msgid ""
 "51 Franklin Street, Fifth Floor, \n"
 "Boston, MA  02110-1301  USA"
 msgstr ""
-"Модуль XMMS ESounD\n"
+"Адаптировано для Audacios Tony Vroon <chainsaw@gentoo.org>\n"
+"основано на модуле xmms_sndfile\n"
+"Copyright (C) 2000, 2002 Erik de Castro Lopo\n"
 "\n"
 " Эта программа - бесплатное программное обеспечение; вы можете "
 "распространять и/или модифицировать ее\n"
@@ -2746,15 +2768,14 @@ msgstr ""
 "РАБОТОСПОСОБНОСТИ или ПРИГОДНОСТИ ДЛЯ КАКОЙ-ЛИБО ЦЕЛИ. Пожалуйста,\n"
 "за подробностями обратитесь к Лицензии GNU.\n"
 "\n"
-"Вы должны были получить копию Лицензии GNU\n"
-"вместе с этой программой; если же нет, то напишите об этом по адресу: \n"
-"Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA "
-"02111-1307,\n"
+"Вы должны были получить копию Лицензии GNU вместе с этой программой;\n"
+"если же нет, то напишите об этом по адресу: Free Software\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1307,\n"
 "USA."
 
 #: Plugins/Input/wav/wav-sndfile.c:272
 msgid "sndfile WAV plugin"
-msgstr ""
+msgstr "Модуль поддержки sndfile WAV"
 
 #: Plugins/Input/wav/wav.c:67
 msgid "WAV Audio Plugin"
@@ -2763,17 +2784,16 @@ msgstr "Модуль поддержки WAV"
 #: Plugins/Input/wma/wma.c:123
 #, c-format
 msgid "WMA Player %s"
-msgstr ""
+msgstr "Проигрыватель WMA %s"
 
 #: Plugins/Input/wma/wma.c:156
-#, fuzzy, c-format
+#, c-format
 msgid "About %s"
-msgstr "О программе"
+msgstr "О программе %s"
 
 #: Plugins/Input/wma/wma.c:169
-#, fuzzy
 msgid " Close "
-msgstr "/Закрыть"
+msgstr " Закрыть "
 
 #: Plugins/Output/OSS/OSS.c:53
 msgid "OSS Output Plugin"
@@ -2784,7 +2804,6 @@ msgid "About OSS Driver"
 msgstr "О модуле вывода звука OSS"
 
 #: Plugins/Output/OSS/about.c:40
-#, fuzzy
 msgid ""
 "Audacious OSS Driver\n"
 "\n"
@@ -2803,7 +2822,7 @@ msgid ""
 "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA."
 msgstr ""
-"XMMS OSS драйвер\n"
+"Драйвер OSS для Audacious\n"
 "\n"
 " Эта программа - бесплатное программное обеспечение; вы можете "
 "распространять и/или модифицировать ее\n"
@@ -2817,10 +2836,9 @@ msgstr ""
 "РАБОТОСПОСОБНОСТИ или ПРИГОДНОСТИ ДЛЯ КАКОЙ-ЛИБО ЦЕЛИ. Пожалуйста,\n"
 "за подробностями обратитесь к Лицензии GNU.\n"
 "\n"
-"Вы должны были получить копию Лицензии GNU\n"
-"вместе с этой программой; если же нет, то напишите об этом по адресу: \n"
-"Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA "
-"02111-1307,\n"
+"Вы должны были получить копию Лицензии GNU вместе с этой программой;\n"
+"если же нет, то напишите об этом по адресу: Free Software\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA."
 
 #: Plugins/Output/OSS/configure.c:149
@@ -2881,7 +2899,6 @@ msgid "About ALSA Driver"
 msgstr "О модуле вывода звука ALSA"
 
 #: Plugins/Output/alsa/about.c:31
-#, fuzzy
 msgid ""
 "Audacious ALSA Driver\n"
 "\n"
@@ -2901,7 +2918,7 @@ msgid ""
 "USA.\n"
 "Author: Matthieu Sozeau (mattam@altern.org)"
 msgstr ""
-"XMMS ALSA драйвер\n"
+"Драйвер ALSA для Audacious\n"
 "\n"
 " Эта программа - бесплатное программное обеспечение; вы можете "
 "распространять и/или модифицировать ее\n"
@@ -2915,10 +2932,9 @@ msgstr ""
 "РАБОТОСПОСОБНОСТИ или ПРИГОДНОСТИ ДЛЯ КАКОЙ-ЛИБО ЦЕЛИ. Пожалуйста,\n"
 "за подробностями обратитесь к Лицензии GNU.\n"
 "\n"
-"Вы должны были получить копию Лицензии GNU\n"
-"вместе с этой программой; если же нет, то напишите об этом по адресу: \n"
-"Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA "
-"02111-1307,\n"
+"Вы должны были получить копию Лицензии GNU вместе с этой программой;\n"
+"если же нет, то напишите об этом по адресу: Free Software\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1307,\n"
 "USA."
 
 #: Plugins/Output/alsa/alsa.c:47
@@ -2956,9 +2972,8 @@ msgid "Device settings"
 msgstr "Настройки устройства"
 
 #: Plugins/Output/alsa/configure.c:356
-#, fuzzy
 msgid "Soundcard:"
-msgstr "Звуковая дорожка"
+msgstr "Звуковая карта:"
 
 #: Plugins/Output/alsa/configure.c:369
 msgid "Buffer time (ms):"
@@ -2973,41 +2988,39 @@ msgid "Advanced settings"
 msgstr "Дополнительные настройки"
 
 #: Plugins/Output/arts/configure.c:51
-#, fuzzy
 msgid "aRts Driver configuration"
-msgstr "Настройка драйвера OSS"
+msgstr "Настройка драйвера aRts"
 
 #: Plugins/Output/disk_writer/disk_writer.c:110
 #, c-format
 msgid "Disk Writer Plugin %s"
-msgstr ""
+msgstr "Модуль записи на диск %s"
 
 #: Plugins/Output/disk_writer/disk_writer.c:138
 msgid ""
 "You cannot use the Disk Writer plugin\n"
 "when you're running in realtime mode."
 msgstr ""
+"Использование модуля записи на диск невозможно\n"
+"во время работы в режиме реального времени."
 
 #: Plugins/Output/disk_writer/disk_writer.c:315
-#, fuzzy
 msgid "Select the directory where you want to store the output files:"
-msgstr "Выберите каталог, в котором вы хотите сохранить потоки MPEG:"
+msgstr "Выберите каталог, в котором вы хотите сохранять полученные файлы:"
 
 #: Plugins/Output/disk_writer/disk_writer.c:359
-#, fuzzy
 msgid "Disk Writer Configuration"
-msgstr "Настройка драйвера OSS"
+msgstr "Настройка записи на диск"
 
 #: Plugins/Output/disk_writer/disk_writer.c:388
 msgid "Don't strip file name extension"
-msgstr ""
+msgstr "Не удалять расширение имени файла"
 
 #: Plugins/Output/esd/about.c:34
 msgid "About ESounD Plugin"
 msgstr "О модуле вывода звука ESounD"
 
 #: Plugins/Output/esd/about.c:35
-#, fuzzy
 msgid ""
 "Audacious ESounD Plugin\n"
 "\n"
@@ -3026,7 +3039,7 @@ msgid ""
 "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
 "USA."
 msgstr ""
-"Модуль XMMS ESounD\n"
+"Драйвер ESounD для Audacious\n"
 "\n"
 " Эта программа - бесплатное программное обеспечение; вы можете "
 "распространять и/или модифицировать ее\n"
@@ -3040,15 +3053,14 @@ msgstr ""
 "РАБОТОСПОСОБНОСТИ или ПРИГОДНОСТИ ДЛЯ КАКОЙ-ЛИБО ЦЕЛИ. Пожалуйста,\n"
 "за подробностями обратитесь к Лицензии GNU.\n"
 "\n"
-"Вы должны были получить копию Лицензии GNU\n"
-"вместе с этой программой; если же нет, то напишите об этом по адресу: \n"
-"Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA "
-"02111-1307,\n"
+"Вы должны были получить копию Лицензии GNU вместе с этой программой;\n"
+"если же нет, то напишите об этом по адресу: Free Software\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02111-1307,\n"
 "USA."
 
 #: Plugins/Output/esd/configure.c:102
 msgid "ESD Output Plugin configuration"
-msgstr "Изменение настроек модуля вывода звука ESD"
+msgstr "Настройка модуля вывода звука ESD"
 
 #: Plugins/Output/esd/configure.c:114 Plugins/Output/esd/configure.c:144
 msgid "Host:"
@@ -3075,9 +3087,8 @@ msgid "eSound Output Plugin"
 msgstr "Модуль вывода звука eSound"
 
 #: Plugins/Output/jack/jack.c:591
-#, fuzzy
 msgid "About JACK Output Plugin 0.15"
-msgstr "Модуль вывода звука eSound"
+msgstr "О модуле вывода JACK 0.15"
 
 #: Plugins/Output/jack/jack.c:592
 msgid ""
@@ -3089,11 +3100,17 @@ msgid ""
 "Audacious port by\n"
 "Giacomo Lozito from develia.org"
 msgstr ""
+"XMMS Jack Драйвер 0.15\n"
+"\n"
+"xmms-jack.sf.net\n"
+"Chris Morgan <cmorgan@alum.wpi.edu>\n"
+"\n"
+"Audacious порт:\n"
+"Giacomo Lozito из develia.org"
 
 #: Plugins/Output/sun/about.c:34
-#, fuzzy
 msgid "About the Sun Driver"
-msgstr "О модуле вывода звука OSS"
+msgstr "О модуле вывода Sun"
 
 #: Plugins/Output/sun/about.c:35
 msgid ""
@@ -3102,34 +3119,35 @@ msgid ""
 "Copyright (c) 2001 CubeSoft Communications, Inc.\n"
 "Maintainer: <vedge at csoft.org>.\n"
 msgstr ""
+"XMMS BSD Sun Драйвер\n"
+"\n"
+"Copyright (c) 2001 CubeSoft Communications, Inc.\n"
+"Поддержка: <vedge at csoft.org>.\n"
 
 #: Plugins/Output/sun/configure.c:200
-#, fuzzy
 msgid "Audio control device:"
-msgstr "Аудиоустройство:"
+msgstr "Устройство управления звуком:"
 
 #: Plugins/Output/sun/configure.c:349
-#, fuzzy
 msgid "Volume controls device:"
-msgstr "Регулятор громкости:"
+msgstr "Устройство управления громкостью:"
 
 #: Plugins/Output/sun/configure.c:362
 msgid "XMMS uses mixer exclusively."
-msgstr ""
+msgstr "XMMS использует микшер эксклюзивно."
 
 #: Plugins/Output/sun/configure.c:487
 msgid "Status"
-msgstr ""
+msgstr "Статус"
 
 #: Plugins/Output/sun/configure.c:537
-#, fuzzy
 msgid "Sun driver configuration"
-msgstr "Настройка драйвера OSS"
+msgstr "Настройка драйвера Sun"
 
 #: Plugins/Output/sun/sun.c:55
 #, c-format
 msgid "BSD Sun Driver %s"
-msgstr ""
+msgstr "BSD Sun Драйвер %s"
 
 #: Plugins/Visualization/blur_scope/blur_scope.c:57
 msgid "/Toggle Decorations"
@@ -3137,7 +3155,7 @@ msgstr "/Переключить отображение обрамления"
 
 #: Plugins/Visualization/blur_scope/blur_scope.c:59
 msgid "/-"
-msgstr "/-"
+msgstr ""
 
 #: Plugins/Visualization/blur_scope/blur_scope.c:60
 msgid "/Close"
@@ -3156,105 +3174,101 @@ msgid "Options:"
 msgstr "Параметры:"
 
 #: audacious/about.c:125 audacious/credits.c:296
-#, fuzzy
 msgid "About Audacious"
-msgstr "Об модуле поддержки формата MPEG"
+msgstr "Об Audacious"
 
 #: audacious/about.c:174 audacious/credits.c:341
 msgid "Credits"
 msgstr "Авторы"
 
 #: audacious/credits.c:45
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "The future of UNIX multimedia.\n"
 "\n"
 "Copyright (C) 2005-2006 Audacious Development Team\n"
 msgstr ""
-"<big><b>Beep Media Player %s</b></big>\n"
-"Мультимедийный проигрыватель, основанный на XMMS\n"
+"<big><b>Audacious %s</b></big>\n"
+"Мультимедийный проигрыватель будущего под UNIX.\n"
 "\n"
-"Copyright (C) 2003-2004 Команда разработчиков BMP\n"
+"Copyright (C) 2005-2006 Команда разработчиков Audacious\n"
 
 #: audacious/credits.c:51
-#, fuzzy
 msgid "Audacious core developers:"
-msgstr "Изменение настроек BMP"
+msgstr "Разработчики ядра Audacious:"
 
 #: audacious/credits.c:60
 msgid "Graphics:"
-msgstr ""
+msgstr "Графика:"
 
 #: audacious/credits.c:65
 msgid "Default skin:"
-msgstr "Тема по умолчанию:"
+msgstr "Стандартная тема:"
 
 #: audacious/credits.c:70
 msgid "Plugin development:"
-msgstr ""
+msgstr "Разработка модулей:"
+
+#: audacious/credits.c:82
+msgid "Patch authors:"
+msgstr "Авторы патчей:"
 
 #: audacious/credits.c:79
-#, fuzzy
 msgid "0.1.x developers:"
-msgstr "Разработчики:"
+msgstr "Разработчики версий 0.1.x:"
 
 #: audacious/credits.c:85
-#, fuzzy
 msgid "BMP Developers:"
-msgstr "Разработчики:"
+msgstr "Разработчики BMP:"
 
 #: audacious/credits.c:117
 msgid "Brazilian Portuguese:"
-msgstr ""
+msgstr "Бразильский, португальский:"
 
 #: audacious/credits.c:120
 msgid "Breton:"
-msgstr ""
+msgstr "Бретонский:"
 
 #: audacious/credits.c:123
 msgid "Chinese:"
 msgstr "Китайский:"
 
 #: audacious/credits.c:127
-#, fuzzy
 msgid "Czech:"
-msgstr "Французкий:"
+msgstr "Чешский:"
 
 #: audacious/credits.c:130
 msgid "Dutch:"
-msgstr "Голладский:"
+msgstr "Голландский:"
 
 #: audacious/credits.c:134
-#, fuzzy
 msgid "Finnish:"
-msgstr "Испанский:"
+msgstr "Финский:"
 
 #: audacious/credits.c:137
 msgid "French:"
-msgstr "Французкий:"
+msgstr "Французский:"
 
 #: audacious/credits.c:140
 msgid "German:"
 msgstr "Немецкий:"
 
 #: audacious/credits.c:144
-#, fuzzy
 msgid "Georgian: "
-msgstr "Немецкий:"
+msgstr "Грузинский:"
 
 #: audacious/credits.c:147
-#, fuzzy
 msgid "Greek:"
-msgstr "Стиль:"
+msgstr "Греческий:"
 
 #: audacious/credits.c:152
 msgid "Hindi:"
-msgstr ""
+msgstr "Хинди:"
 
 #: audacious/credits.c:155
 msgid "Hungarian:"
-msgstr ""
+msgstr "Венгерский:"
 
 #: audacious/credits.c:158
 msgid "Italian:"
@@ -3274,16 +3288,15 @@ msgstr "Литовский:"
 
 #: audacious/credits.c:171
 msgid "Macedonian:"
-msgstr ""
+msgstr "Македонский:"
 
 #: audacious/credits.c:174
 msgid "Polish:"
 msgstr "Польский:"
 
 #: audacious/credits.c:178
-#, fuzzy
 msgid "Romanian:"
-msgstr "Литовский:"
+msgstr "Румынский:"
 
 #: audacious/credits.c:181
 msgid "Russian:"
@@ -3291,7 +3304,7 @@ msgstr "Русский:"
 
 #: audacious/credits.c:186
 msgid "Slovak:"
-msgstr ""
+msgstr "Словацкий:"
 
 #: audacious/credits.c:189
 msgid "Spanish:"
@@ -3302,9 +3315,8 @@ msgid "Swedish:"
 msgstr "Шведский:"
 
 #: audacious/credits.c:195
-#, fuzzy
 msgid "Ukrainian:"
-msgstr "Организация:"
+msgstr "Украинский:"
 
 #: audacious/credits.c:198
 msgid "Welsh:"
@@ -3316,7 +3328,7 @@ msgstr "Переводчики"
 
 #: audacious/eq_slider.c:93
 msgid "PREAMP"
-msgstr "PREAMP"
+msgstr "ПРЕДУСИЛЕНИЕ"
 
 #: audacious/eq_slider.c:93
 msgid "60HZ"
@@ -3431,9 +3443,8 @@ msgid "/Delete/Auto-load preset"
 msgstr "/Удалить/Автозагружаемую предустановку"
 
 #: audacious/equalizer.c:748
-#, fuzzy
 msgid "Audacious Equalizer"
-msgstr "Эквалайзер"
+msgstr "Эквалайзер Audacious"
 
 #: audacious/equalizer.c:1401
 msgid "Preset"
@@ -3474,7 +3485,7 @@ msgstr "Удалить предустановку"
 
 #: audacious/equalizer.c:1675
 msgid "Delete auto-preset"
-msgstr "Удалить автозагружаемую предустановку"
+msgstr "Удалить автоустановку"
 
 #: audacious/getopt.c:616
 #, c-format
@@ -3538,6 +3549,9 @@ msgid ""
 "\n"
 "Could not open glade file (%s). Please check your installation.\n"
 msgstr ""
+"<b><big>Невозможно создать %s.</big></b>\n"
+"\n"
+"Невозможно открыть файл glade (%s). Пожалуйста, проверьте систему.\n"
 
 #: audacious/input.c:302
 msgid ""
@@ -3565,7 +3579,7 @@ msgstr "_Подробнее"
 #: audacious/input.c:343 audacious/prefswin.c:116 audacious/prefswin.c:488
 #: audacious/prefswin.c:576 audacious/prefswin.c:665 audacious/prefswin.c:761
 msgid "Filename"
-msgstr "Название файла"
+msgstr "Имя файла"
 
 #: audacious/input.c:551
 #, c-format
@@ -3597,14 +3611,13 @@ msgid "Could not create directory (%s): %s"
 msgstr "Невозможно создать каталог (%s): %s"
 
 #: audacious/main.c:701
-#, fuzzy
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
 "Options:\n"
 "--------\n"
 msgstr ""
-"Использование: beep-media-player [параметры] [файлы] ...\n"
+"Использование: audacious [параметры] [файлы] ...\n"
 "\n"
 "Параметры:\n"
 "--------\n"
@@ -3614,9 +3627,8 @@ msgid "Display this text and exit"
 msgstr "Отобразить этот текст и выйти"
 
 #: audacious/main.c:709
-#, fuzzy
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-msgstr "Указать ВМР/XMMS сессию (по умолчанию: 0)"
+msgstr "Указать Audacious/ВМР/XMMS сессию (по умолчанию: 0)"
 
 #: audacious/main.c:712
 msgid "Skip backwards in playlist"
@@ -3640,7 +3652,7 @@ msgstr "Приостановить, если что-либо проигрыва�
 
 #: audacious/main.c:727
 msgid "Skip forward in playlist"
-msgstr "Перейти к следующей песне в списке песен"
+msgstr "Перейти к следующей песне в списке"
 
 #: audacious/main.c:730
 msgid "Don't clear the playlist"
@@ -3651,9 +3663,8 @@ msgid "Show the main window"
 msgstr "Показать главное окно"
 
 #: audacious/main.c:736
-#, fuzzy
 msgid "Activate Audacious"
-msgstr "Об модуле поддержки формата MPEG"
+msgstr "Активировать Audacious"
 
 #: audacious/main.c:739
 msgid "Previous session ID"
@@ -3661,18 +3672,17 @@ msgstr "Идентификатор предыдущей сессии"
 
 #: audacious/main.c:742
 msgid "Headless operation [experimental]"
-msgstr ""
+msgstr "Работать в режиме сервера [экспериментальный]"
 
 #: audacious/main.c:745
 msgid "Disable error/warning interception (logging)"
-msgstr ""
+msgstr "Отключить показ ошибок/предупреждений (журналирование)"
 
 #: audacious/main.c:748
 msgid "Print version number and exit\n"
 msgstr "Вывести номер версии и выйти\n"
 
 #: audacious/main.c:931
-#, fuzzy
 msgid ""
 "\n"
 "Received SIGSEGV\n"
@@ -3684,8 +3694,8 @@ msgstr ""
 "\n"
 "Получен SIGSEGV\n"
 "\n"
-"Возможно, это ошибка в BMP. Если вы не знаете почему это произошло, "
-"отправьте письмо на beepmp-devel@lists.sourceforge.net\n"
+"Возможно, это ошибка в Audacious. Если вы не знаете почему это произошло, "
+"напишите сообщение об ошибке на http://bugs.nenolod.net/\n"
 "\n"
 
 #: audacious/main.c:954
@@ -3702,12 +3712,12 @@ msgstr ""
 "умолчанию в '%s'\n"
 
 #: audacious/main.c:1000
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
 "Please use GTK+ %s or newer.\n"
 msgstr ""
-"Простите, ваша версия GTK+ (%d.%d.%d) не будет работать с BMP.\n"
+"Простите, ваша версия GTK+ (%d.%d.%d) не будет работать с Audacious.\n"
 "Пожалуйста, используйте GTK+ %s или новее.\n"
 
 #: audacious/main.c:1011
@@ -3721,13 +3731,12 @@ msgstr ""
 "Простите, потоки не поддерживаются на вашей платформе.\n"
 "\n"
 "Если вы используете систему Linux, базирующуюся на libc5 и установленными "
-"Glib и GTK+, вам\n"
-"перед установкой LinuxThreads необходимо перекомпилировать Glib и GTK+.\n"
+"Glib и GTK+\n"
+"до установки LinuxThreads, вам необходимо перекомпилировать Glib и GTK+.\n"
 
 #: audacious/main.c:1027
-#, fuzzy
 msgid "audacious: Unable to open display, exiting.\n"
-msgstr "ВМР: Невозможно открыть экран для отображения, выходим."
+msgstr "audacious: Невозможно открыть экран, выходим.\n"
 
 #: audacious/mainwin.c:252 audacious/mainwin.c:373 audacious/ui_playlist.c:128
 msgid "/View Track Details"
@@ -3742,13 +3751,12 @@ msgid "/Autoscroll Songname"
 msgstr "/Автопрокрутка названия песни"
 
 #: audacious/mainwin.c:259 audacious/mainwin.c:351
-#, fuzzy
 msgid "/Stop After Current Song"
-msgstr "Остановить текущую песню"
+msgstr "/Остановиться после текущей песни"
 
 #: audacious/mainwin.c:269
 msgid "/Visualization Mode"
-msgstr "/Режим визуализации"
+msgstr "/Визуализация"
 
 #: audacious/mainwin.c:270
 msgid "/Visualization Mode/Analyzer"
@@ -3884,7 +3892,7 @@ msgstr "/Падение пиков/Быстрое"
 
 #: audacious/mainwin.c:332
 msgid "/Peaks Falloff/Fastest"
-msgstr "/Падение пиков/Быстрей некуда"
+msgstr "/Падение пиков/Самое быстрое"
 
 #: audacious/mainwin.c:342
 msgid "/Play CD"
@@ -3926,65 +3934,69 @@ msgstr "/Следующая песня"
 msgid "/Jump to Playlist Start"
 msgstr "/Перейти на первую песню в списке"
 
+#: audacious/mainwin.c:361
+msgid "/Set A-B"
+msgstr "/Поставить метку A-B"
+
+#: audacious/mainwin.c:363
+msgid "/Clear A-B"
+msgstr "/Убрать метки A-B"
+
 #: audacious/mainwin.c:370
 msgid "/Jump to Time"
 msgstr "/Перескочить на время"
 
 #: audacious/mainwin.c:383
-#, fuzzy
 msgid "/About Audacious"
-msgstr "Об модуле поддержки формата MPEG"
+msgstr "/Об Audacious"
 
 #: audacious/mainwin.c:386
-#, fuzzy
 msgid "/Play File"
-msgstr "Воспроизвести файлы"
+msgstr "/Воспроизвести файл"
 
 #: audacious/mainwin.c:388
-#, fuzzy
 msgid "/Play Location"
-msgstr "Местоположение:"
+msgstr "/Открыть адрес"
 
 #: audacious/mainwin.c:391
-#, fuzzy
 msgid "/V_isualization"
-msgstr "/Режим визуализации"
+msgstr "/Режим _визуализации"
 
 #: audacious/mainwin.c:392
-#, fuzzy
 msgid "/_Playback"
-msgstr "/Воспроизведение"
+msgstr "/_Воспроизведение"
 
 #: audacious/mainwin.c:393
 msgid "/_View"
-msgstr ""
+msgstr "/_Вид"
 
 #: audacious/mainwin.c:395
 msgid "/Preferences"
-msgstr "/Изменить настройки"
+msgstr "/Настройки"
 
 #: audacious/mainwin.c:397
 msgid "/_Quit"
 msgstr "/_Выход"
 
 #: audacious/mainwin.c:407
-#, fuzzy
 msgid "/Files..."
-msgstr "/Добавить/Файлы..."
+msgstr "/Файлы..."
 
 #: audacious/mainwin.c:409
-#, fuzzy
 msgid "/Internet location..."
-msgstr "/Добавить/Местоположение в интернет..."
+msgstr "/Адрес в интернет..."
+
+#: audacious/mainwin.c:417
+msgid "/Show Player"
+msgstr "/Показать проигрыватель"
 
 #: audacious/mainwin.c:419
 msgid "/Show Playlist Editor"
 msgstr "/Показать редактор списка песен"
 
 #: audacious/mainwin.c:421
-#, fuzzy
 msgid "/Show Equalizer"
-msgstr "Эквалайзер"
+msgstr "/Показать эквалайзер"
 
 #: audacious/mainwin.c:424
 msgid "/Time Elapsed"
@@ -4000,35 +4012,31 @@ msgstr "/Поднять на передний план"
 
 #: audacious/mainwin.c:431
 msgid "/Put on All Workspaces"
-msgstr ""
+msgstr "/Поместить на все рабочие столы"
 
 #: audacious/mainwin.c:434
 msgid "/Roll up Player"
-msgstr ""
+msgstr "/Свернуть проигрыватель"
 
 #: audacious/mainwin.c:436
-#, fuzzy
 msgid "/Roll up Playlist Editor"
-msgstr "/Сделать список воспроизведения активным окном"
+msgstr "/Свернуть редактор списка песен"
 
 #: audacious/mainwin.c:438
-#, fuzzy
 msgid "/Roll up Equalizer"
-msgstr "Эквалайзер"
+msgstr "/Свернуть эквалайзер"
 
 #: audacious/mainwin.c:864
 msgid "VBR"
 msgstr "VBR"
 
 #: audacious/mainwin.c:905 audacious/mainwin.c:909
-#, fuzzy
 msgid "stereo"
-msgstr "Стерео"
+msgstr "стерео"
 
 #: audacious/mainwin.c:905 audacious/mainwin.c:909
-#, fuzzy
 msgid "mono"
-msgstr "Моно"
+msgstr "моно"
 
 #: audacious/mainwin.c:1360
 msgid "Jump to Time"
@@ -4043,14 +4051,12 @@ msgid "Track length:"
 msgstr "Длина дорожки:"
 
 #: audacious/mainwin.c:1479
-#, fuzzy
 msgid "Un_queue"
-msgstr "Очередь"
+msgstr "_Убрать из очереди"
 
 #: audacious/mainwin.c:1481 audacious/mainwin.c:1806
-#, fuzzy
 msgid "_Queue"
-msgstr "Очередь"
+msgstr "_В очередь"
 
 #: audacious/mainwin.c:1734
 msgid "Jump to Track"
@@ -4060,9 +4066,13 @@ msgstr "Перескочить на дорожку"
 msgid "Filter: "
 msgstr "Фильтр: "
 
+#: audacious/mainwin.c:1776
+msgid "_Filter:"
+msgstr "_Фильтр:"
+
 #: audacious/mainwin.c:1989
 msgid "Enter location to play:"
-msgstr ""
+msgstr "Введите адрес для воспроизведения:"
 
 #: audacious/mainwin.c:2194
 #, c-format
@@ -4106,7 +4116,7 @@ msgstr "ОКНО ИНФОРМАЦИИ О ФАЙЛЕ"
 
 #: audacious/mainwin.c:2698
 msgid "** DOUBLESIZE HAS BEEN REMOVED **"
-msgstr ""
+msgstr "** ДВОЙНОЙ РАЗМЕР УДАЛЕН **"
 
 #: audacious/mainwin.c:2701
 msgid "VISUALIZATION MENU"
@@ -4131,7 +4141,7 @@ msgid ""
 "2. No other programs is blocking the soundcard.\n"
 "3. Your soundcard is configured properly.\n"
 msgstr ""
-"<b><big>Не могу открыть аудио-устройство</big></b>\n"
+"<b><big>Не могу открыть аудио-устройство.</big></b>\n"
 "\n"
 "Пожалуйста, проверьте следующее:\n"
 "1. Правильность выбора модуля вывода.\n"
@@ -4143,13 +4153,12 @@ msgid "Appearance"
 msgstr "Внешний вид"
 
 #: audacious/prefswin.c:100
-#, fuzzy
 msgid "Audio"
-msgstr "Об модуле поддержки формата MPEG"
+msgstr "Звук"
 
 #: audacious/prefswin.c:101
 msgid "Connectivity"
-msgstr ""
+msgstr "Сеть"
 
 #: audacious/prefswin.c:102 audacious/glade/prefswin.glade:2814
 msgid "Equalizer"
@@ -4223,48 +4232,43 @@ msgstr "Окно настроек"
 
 #: audacious/skinwin.c:178
 msgid "Archived Winamp 2.x skin"
-msgstr ""
+msgstr "Упакованная тема Winamp 2.x"
 
 #: audacious/skinwin.c:183
 msgid "Unarchived Winamp 2.x skin"
-msgstr ""
+msgstr "Неупакованная тема Winamp 2.x"
 
 #: audacious/ui_playlist.c:132
 msgid "/Show Popup Info"
-msgstr ""
+msgstr "/Показывать информационное окно"
 
 #: audacious/ui_playlist.c:138 audacious/ui_playlist.c:203
 msgid "/Remove Selected"
 msgstr "/Удалить выделенное"
 
 #: audacious/ui_playlist.c:142 audacious/ui_playlist.c:199
-#, fuzzy
 msgid "/Remove Unselected"
-msgstr "/Удалить выделенное"
+msgstr "/Удалить не выделенное"
 
 #: audacious/ui_playlist.c:146 audacious/ui_playlist.c:195
-#, fuzzy
 msgid "/Remove All"
-msgstr "/Удалить выделенное"
+msgstr "/Удалить все"
 
 #: audacious/ui_playlist.c:152
 msgid "/Queue Toggle"
 msgstr "/Поставить песню в очередь"
 
 #: audacious/ui_playlist.c:158
-#, fuzzy
 msgid "/Add CD..."
-msgstr "/Добавить/Файлы..."
+msgstr "/Добавить CD..."
 
 #: audacious/ui_playlist.c:162
-#, fuzzy
 msgid "/Add Internet Address..."
-msgstr "/Добавить/Адрес интернет..."
+msgstr "/Добавить адрес интернет..."
 
 #: audacious/ui_playlist.c:166
-#, fuzzy
 msgid "/Add Files..."
-msgstr "/Добавить/Файлы..."
+msgstr "/Добавить файлы..."
 
 #: audacious/ui_playlist.c:172
 msgid "/Clear Queue"
@@ -4275,62 +4279,52 @@ msgid "/Remove Unavailable Files"
 msgstr "/Удалить недоступные файлы"
 
 #: audacious/ui_playlist.c:182
-#, fuzzy
 msgid "/Remove Duplicates"
-msgstr "/Удалить выделенное"
+msgstr "/Удалить дубликаты"
 
 #: audacious/ui_playlist.c:183
-#, fuzzy
 msgid "/Remove Duplicates/By Title"
-msgstr "/Сортировать список/По названию"
+msgstr "/Удалить дубликаты/По названию"
 
 #: audacious/ui_playlist.c:186
-#, fuzzy
 msgid "/Remove Duplicates/By Filename"
-msgstr "/Сортировать список/По имени файла"
+msgstr "/Удалить дубликаты/По имени файла"
 
 #: audacious/ui_playlist.c:189
-#, fuzzy
 msgid "/Remove Duplicates/By Path + Filename"
-msgstr "/Сортировать список/По пути + имя файла"
+msgstr "/Удалить дубликаты/По пути + имя файла"
 
 #: audacious/ui_playlist.c:209
 msgid "/New List"
 msgstr "/Новый список"
 
 #: audacious/ui_playlist.c:215
-#, fuzzy
 msgid "/Load List"
-msgstr "/Сортировать список"
+msgstr "/Загрузить список"
 
 #: audacious/ui_playlist.c:219
-#, fuzzy
 msgid "/Save List"
-msgstr "/Новый список"
+msgstr "/Сохранить список"
 
 #: audacious/ui_playlist.c:223
-#, fuzzy
 msgid "/Save Default List"
-msgstr "/Сохранить/Сделать по умолчанию"
+msgstr "/Сохранить список по умолчанию"
 
 #: audacious/ui_playlist.c:229
 msgid "/Update View"
-msgstr "/Обновить видимый список"
+msgstr "/Обновить список"
 
 #: audacious/ui_playlist.c:235
-#, fuzzy
 msgid "/Invert Selection"
-msgstr "/Сортировать выбранные"
+msgstr "/Инвертировать выделение"
 
 #: audacious/ui_playlist.c:241
-#, fuzzy
 msgid "/Select None"
-msgstr "/Сортировать выбранные"
+msgstr "/Снять выделение"
 
 #: audacious/ui_playlist.c:245
-#, fuzzy
 msgid "/Select All"
-msgstr "Выделить все"
+msgstr "/Выделить все"
 
 #: audacious/ui_playlist.c:251
 msgid "/Randomize List"
@@ -4349,9 +4343,8 @@ msgid "/Sort List/By Title"
 msgstr "/Сортировать список/По названию"
 
 #: audacious/ui_playlist.c:259
-#, fuzzy
 msgid "/Sort List/By Artist"
-msgstr "/Сортировать список/По названию"
+msgstr "/Сортировать список/По исполнителю"
 
 #: audacious/ui_playlist.c:261
 msgid "/Sort List/By Filename"
@@ -4366,14 +4359,12 @@ msgid "/Sort List/By Date"
 msgstr "/Сортировать список/По дате"
 
 #: audacious/ui_playlist.c:267
-#, fuzzy
 msgid "/Sort List/By Track Number"
-msgstr "/Сортировать список/По дате"
+msgstr "/Сортировать список/По дорожке"
 
 #: audacious/ui_playlist.c:269
-#, fuzzy
 msgid "/Sort List/By Playlist Entry"
-msgstr "/Сортировать список/По названию"
+msgstr "/Сортировать список/По названию в списке"
 
 #: audacious/ui_playlist.c:271
 msgid "/Sort Selection"
@@ -4384,9 +4375,8 @@ msgid "/Sort Selection/By Title"
 msgstr "/Сортировать выбранные/По названию"
 
 #: audacious/ui_playlist.c:274
-#, fuzzy
 msgid "/Sort Selection/By Artist"
-msgstr "/Сортировать выбранные/По названию"
+msgstr "/Сортировать выбранные/По испонителю"
 
 #: audacious/ui_playlist.c:276
 msgid "/Sort Selection/By Filename"
@@ -4401,19 +4391,17 @@ msgid "/Sort Selection/By Date"
 msgstr "/Сортировать выбранные/По дате"
 
 #: audacious/ui_playlist.c:282
-#, fuzzy
 msgid "/Sort Selection/By Track Number"
-msgstr "/Сортировать выбранные/По дате"
+msgstr "/Сортировать выбранные/По дорожке"
 
 #: audacious/ui_playlist.c:284
-#, fuzzy
 msgid "/Sort Selection/By Playlist Entry"
-msgstr "/Сортировать выбранные/По названию"
+msgstr "/Сортировать выбранные/По названию в списке"
 
 #: audacious/ui_playlist.c:822
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
-msgstr "Ошибка записи списка песен \"%s\": %s"
+msgstr "Ошибка записи списка воспроизведения \"%s\": %s"
 
 #: audacious/ui_playlist.c:843
 #, c-format
@@ -4421,41 +4409,39 @@ msgid "%s already exist. Continue?"
 msgstr "%s уже существует. Продолжить?"
 
 #: audacious/ui_playlist.c:857
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
 "\n"
 "Unknown file type for '%s'.\n"
-msgstr "Невозможно сохранить список воспроизведения! Неизвестный тип файла %s"
+msgstr
+"<b><big>Невозможно сохранить список воспроизведения.</big></b>\n"
+"\n"
+"Неизвестный формат файла '%s'.\n"
 
 #: audacious/ui_playlist.c:967
-#, fuzzy
 msgid "Load Playlist"
 msgstr "Загрузка списка воспроизведения"
 
 #: audacious/ui_playlist.c:979
-#, fuzzy
 msgid "Save Playlist"
 msgstr "Сохранение списка воспроизведения"
 
 #: audacious/ui_playlist.c:1687
-#, fuzzy
 msgid "Audacious Playlist Editor"
-msgstr "/Показать редактор списка песен"
+msgstr "Список воспроизведения Audacious"
 
 #: audacious/util.c:957
-#, fuzzy
 msgid "Add/Open Files dialog"
-msgstr "Добавление файлов"
+msgstr "Добавить/Открыть файлы"
 
 #: audacious/util.c:1017
-#, fuzzy
 msgid "Open Files"
-msgstr "/Убрать файлы"
+msgstr "Открыть файлы"
 
 #: audacious/util.c:1021
 msgid "Close dialog on Open"
-msgstr ""
+msgstr "Закрыть окно при Открытии"
 
 #: audacious/util.c:1031 audacious/glade/addfiles.glade:8
 msgid "Add Files"
@@ -4463,17 +4449,19 @@ msgstr "Добавление файлов"
 
 #: audacious/util.c:1035
 msgid "Close dialog on Add"
-msgstr ""
+msgstr "Закрыть окно при Добавлении"
 
 #: audacious/playback.c:192
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
 msgstr ""
+"<b><big>Не выбран модуль вывода звука.</big></b>\n"
+"Вы не выбрали модуль вывода звука."
 
 #: audacious/glade/addfiles.glade:77
 msgid "Close Dialog on Add"
-msgstr ""
+msgstr "Закрыть окно при Добавлении"
 
 #: audacious/glade/addfiles.glade:105
 msgid "Select All"
@@ -4484,19 +4472,16 @@ msgid "Deselect All"
 msgstr "Снять выделение"
 
 #: audacious/glade/prefswin.glade:8
-#, fuzzy
 msgid "Audacious Preferences"
-msgstr "Изменение настроек BMP"
+msgstr "Настройки Audacious"
 
 #: audacious/glade/prefswin.glade:115
-#, fuzzy
 msgid "_Decoder list:"
-msgstr "Декодер"
+msgstr "Список модулей де_кодеров:"
 
 #: audacious/glade/prefswin.glade:219
-#, fuzzy
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
-msgstr "<span size=\"medium\"><b>Общие</b></span>"
+msgstr "<span size=\"medium\"><b>Декодеры</b></span>"
 
 #: audacious/glade/prefswin.glade:261
 msgid "_General plugin list:"
@@ -4527,9 +4512,8 @@ msgid "<b>_Skin</b>"
 msgstr "<b>_Тема</b>"
 
 #: audacious/glade/prefswin.glade:772
-#, fuzzy
 msgid "Refresh skin list"
-msgstr "/Частота обновления"
+msgstr "Обновить список тем"
 
 #: audacious/glade/prefswin.glade:867
 msgid "<b>_Fonts</b>"
@@ -4556,11 +4540,12 @@ msgid ""
 "Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
 "strings."
 msgstr ""
+"Использовать растровые шрифты, если возможно. Растровые шрифты не поддерживают "
+"Юникод."
 
 #: audacious/glade/prefswin.glade:1067
-#, fuzzy
 msgid "Use Bitmap fonts if available"
-msgstr "Стерео (если доступно)"
+msgstr "Использовать растровые шрифты, если возможно"
 
 #: audacious/glade/prefswin.glade:1101
 msgid "<b>_Miscellaneous</b>"
@@ -4571,18 +4556,16 @@ msgid "Show track numbers in playlist"
 msgstr "Показывать номера песен в списке воспроизведения"
 
 #: audacious/glade/prefswin.glade:1184
-#, fuzzy
 msgid "Show separators in playlist"
-msgstr "Показывать номера песен в списке воспроизведения"
+msgstr "Показывать разделители в списке воспроизведения"
 
 #: audacious/glade/prefswin.glade:1219
 msgid "Use custom cursors"
 msgstr "Использовать курсоры, установленные темой"
 
 #: audacious/glade/prefswin.glade:1266
-#, fuzzy
 msgid "<b>_Transparency</b>"
-msgstr "<b>Воспроизведение</b>"
+msgstr "<b>_Прозрачность</b>"
 
 #: audacious/glade/prefswin.glade:1306
 msgid ""
@@ -4590,29 +4573,29 @@ msgid ""
 "as it requires some CPU time to create and cache the pixmaps used for the "
 "transparency."
 msgstr ""
+"Включает прозрачность списка воспроизведения. Не рекомендуется для медленных машин "
+"потому что это требует дополнительное процессорное время для создания и "
+"кэширования изображений необходимых для прозрачности."
 
 #: audacious/glade/prefswin.glade:1308
-#, fuzzy
 msgid "Enable playlist transparency"
-msgstr "Включить ReplayGain"
+msgstr "Прозрачный список воспроизведения"
 
 #: audacious/glade/prefswin.glade:1397
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>Колесо мыши</b>"
 
 #: audacious/glade/prefswin.glade:1445
-#, fuzzy
 msgid "Changes volume by"
-msgstr "Поворот колеса мыши изменяет громкость на"
+msgstr "Изменяет громкость на"
 
 #: audacious/glade/prefswin.glade:1473
 msgid "percent"
 msgstr "процентов"
 
 #: audacious/glade/prefswin.glade:1501
-#, fuzzy
 msgid "Scrolls playlist by"
-msgstr "Поворот колеса мыши прокручивает список воспроизведения на"
+msgstr "Прокручивает список воспроизведения на"
 
 #: audacious/glade/prefswin.glade:1554
 msgid "lines"
@@ -4636,19 +4619,16 @@ msgstr "<b>Информация о песне и исполнителе</b>"
 
 #: audacious/glade/prefswin.glade:1824
 msgid "Load metadata (tag information) from music files."
-msgstr ""
-"Загружать информацию о песне и исполнителе (информационный тэг) из "
+msgstr "Загружать информацию о песне и исполнителе (информационный тэг) из "
 "музыкальных файлов."
 
 #: audacious/glade/prefswin.glade:1826
 msgid "Load metadata from playlists and files"
-msgstr ""
-"Загружать информацию о песнях из музыкальных файлов и списков воспроизведения"
+msgstr "Загружать информацию о песнях из музыкальных файлов и списков воспроизведения"
 
 #: audacious/glade/prefswin.glade:1864
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"Загружать метаданные при добавлении файла в список воспроизведения или "
+msgstr "Загружать метаданные при добавлении файла в список воспроизведения или "
 "открытии"
 
 #: audacious/glade/prefswin.glade:1866
@@ -4665,7 +4645,7 @@ msgstr "При отображении"
 
 #: audacious/glade/prefswin.glade:1918
 msgid "Fallback charcter encodings:"
-msgstr ""
+msgstr "Кодировка по умолчанию:"
 
 #: audacious/glade/prefswin.glade:1946
 msgid ""
@@ -4674,37 +4654,40 @@ msgid ""
 "in this list would be treated as candidates of the encoding of metadata, and "
 "fall back conversion from these encodings to UTF-8 would be attempted."
 msgstr ""
+"Список кодировок, используемых при отображении метаданных. Если "
+"автоматическое определение кодировки отключено или не сработает, то для "
+"преобразования метаданных в UTF-8 будут использованы кодировки из этого "
+"списка."
 
 #: audacious/glade/prefswin.glade:1987
 msgid "Auto character encoding detector for:"
-msgstr ""
+msgstr "Автоматическое определение кодировки для:"
 
 #: audacious/glade/prefswin.glade:2043
-#, fuzzy
 msgid "<b>File Dialog</b>"
-msgstr "<b>Название файла</b>"
+msgstr "<b>Окно выбора файла</b>"
 
 #: audacious/glade/prefswin.glade:2082
 msgid ""
 "Always refresh the file dialog (this will slow opening the dialog on large "
 "directories, and Gnome VFS should handle automatically)."
 msgstr ""
+"Всегда обновлять окно выбора файлов (это замедлит открытие окна для больших "
+"каталогов, при использовании Gnome VFS обновление происходит автоматически)."
 
 #: audacious/glade/prefswin.glade:2084
 msgid "Always refresh directory when opening file dialog"
-msgstr ""
+msgstr "Всевгда обновлять каталог при открытии окна выбора файлов"
 
 #: audacious/glade/prefswin.glade:2118
-#, fuzzy
 msgid "<b>Song Display</b>"
-msgstr "<b>Отображение названия песни</b>"
+msgstr "<b>Отображение Названий</b>"
 
 #: audacious/glade/prefswin.glade:2194
 msgid "Custom string:"
 msgstr "Особый:"
 
 #: audacious/glade/prefswin.glade:2245
-#, fuzzy
 msgid ""
 "TITLE\n"
 "ARTIST - TITLE\n"
@@ -4717,17 +4700,18 @@ msgstr ""
 "Название\n"
 "Исполнитель - Название\n"
 "Исполнитель - Альбом - Название\n"
+"Исполнитель - Альбом - Дорожка. Название\n"
+"Исполнитель [ Альбом ] - Дорожка. Название\n"
 "Альбом - Название\n"
 "Особое"
 
 #: audacious/glade/prefswin.glade:2267
 msgid "Show information about titlestring format"
-msgstr "Вставить последовательность строки названия"
+msgstr "Показать информацию о формате названия"
 
 #: audacious/glade/prefswin.glade:2317
-#, fuzzy
 msgid "<b>Popup Information</b>"
-msgstr "Изменение настроек модуля поддержки формата MPEG"
+msgstr "<b>Всплывающее информационное окно</b>"
 
 #: audacious/glade/prefswin.glade:2368
 msgid ""
@@ -4735,14 +4719,17 @@ msgid ""
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
 msgstr ""
+"Включает показ всплывающего окна с информацией о выбранной песне. "
+"Окно содержит название песни, название альбома, стиль, год, номер "
+"дорожки, длительность песни и обложку альбома."
 
 #: audacious/glade/prefswin.glade:2370
 msgid "Show popup information for playlist entries"
-msgstr ""
+msgstr "Показывать всплывающее информационное окно для песен в списке"
 
 #: audacious/glade/prefswin.glade:2397
 msgid "Edit settings for popup information"
-msgstr ""
+msgstr "Изменить настройки всплывающего информационного окна"
 
 #: audacious/glade/prefswin.glade:2505
 msgid "<b>Presets</b>"
@@ -4761,62 +4748,56 @@ msgid "Available _Presets:"
 msgstr "Доступные _предустановки:"
 
 #: audacious/glade/prefswin.glade:2861
-#, fuzzy
 msgid "<b>Proxy Configuration</b>"
-msgstr "Изменение настроек модуля поддержки формата MPEG"
+msgstr "<b>Настройка Прокси</b>"
 
 #: audacious/glade/prefswin.glade:2919
 msgid "Enable proxy usage"
-msgstr ""
+msgstr "Использовать прокси"
 
 #: audacious/glade/prefswin.glade:2950
 msgid "Proxy hostname:"
-msgstr ""
+msgstr "Прокси сервер:"
 
 #: audacious/glade/prefswin.glade:2978
-#, fuzzy
 msgid "Proxy port:"
-msgstr "Прокси:"
+msgstr "Прокси порт:"
 
 #: audacious/glade/prefswin.glade:3072
-#, fuzzy
 msgid "Use authentication with proxy"
-msgstr "Использовать идентификацию"
+msgstr "Использовать авторизацию на прокси"
 
 #: audacious/glade/prefswin.glade:3103
-#, fuzzy
 msgid "Proxy username:"
-msgstr "Имя пользователя:"
+msgstr "Имя пользователя прокси:"
 
 #: audacious/glade/prefswin.glade:3131
-#, fuzzy
 msgid "Proxy password:"
-msgstr "Пароль:"
+msgstr "Пароль прокси:"
 
 #: audacious/glade/prefswin.glade:3247
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
+"<span size=\"small\">Изменение этих настроек потребует перезапуск "
+"Audacious.</span>"
 
 #: audacious/glade/prefswin.glade:3303
 msgid "label65"
 msgstr ""
 
 #: audacious/glade/prefswin.glade:3344
-#, fuzzy
 msgid "<b>Audio System</b>"
-msgstr "<b>Предустановки</b>"
+msgstr "<b>Звуковая Система</b>"
 
 #: audacious/glade/prefswin.glade:3398
-#, fuzzy
 msgid "Current output plugin:"
-msgstr "_Текущий модуль вывода звука:"
+msgstr "Текущий модуль вывода звука:"
 
 #: audacious/glade/prefswin.glade:3443
-#, fuzzy
 msgid "Buffer size:"
-msgstr "Размер буфера (Кб):"
+msgstr "Размер буфера:"
 
 #: audacious/glade/prefswin.glade:3513
 msgid ""
@@ -4826,21 +4807,28 @@ msgid ""
 "Please note however, that high values will result in Audacious performing "
 "poorly.</span>"
 msgstr ""
+"<span size=\"small\">Это время предварительной буферизации звуковых потоков, "
+"в миллисекундах.\n"
+"Увеличьте это значение, если при проигрывании звук прерывается. \n"
+"Учтите, что при слишком больших значениях Audacious будет работать "
+"медленно.</span>"
 
 #: audacious/glade/prefswin.glade:3748
-#, fuzzy
 msgid "<b>Format Detection</b>"
-msgstr "Автоматическое определение"
+msgstr "<b>Распознавание файлов</b>"
 
 #: audacious/glade/prefswin.glade:3787
 msgid ""
 "When checked, Audacious will detect file formats on demand. This can result "
 "in a messier playlist, but delivers a major speed benefit."
 msgstr ""
+"Если включено, то Audacious будет определять формат файла только когда "
+"потребуется. Это ускорит работу проигрывателя, но может внести беспорядок "
+"в список воспроизведения."
 
 #: audacious/glade/prefswin.glade:3789
 msgid "Detect file formats on demand, instead of immediately."
-msgstr ""
+msgstr "Определять формат файла не сразу, а при необходимости."
 
 #: audacious/glade/prefswin.glade:3823
 msgid "<b>Playback</b>"
@@ -4851,15 +4839,16 @@ msgid ""
 "When Audacious starts, automatically begin playing from the point where we "
 "stopped before."
 msgstr ""
+"При запуске Audacious, автоматически продолжать проигрывание с "
+"момента остановки."
 
 #: audacious/glade/prefswin.glade:3864
 msgid "Continue playback on startup"
-msgstr ""
+msgstr "Продолжать проигрывание при запуске"
 
 #: audacious/glade/prefswin.glade:3898
 msgid "When finished playing a song, don't automatically advance to the next."
-msgstr ""
-"При завершении проигрывания песни не передвигаться автоматически на "
+msgstr "При завершении проигрывания песни не передвигаться автоматически на "
 "следующую."
 
 #: audacious/glade/prefswin.glade:3900
@@ -4884,7 +4873,7 @@ msgstr ""
 
 #: audacious/glade/prefswin.glade:4173
 msgid "Popup Information Settings"
-msgstr ""
+msgstr "Всплывающее информационное окно"
 
 #: audacious/glade/prefswin.glade:4197
 msgid ""
@@ -4892,23 +4881,28 @@ msgid ""
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
+"При поиске обложки альбома, Audacious ищет определенные слова в именах файлов. "
+"Вы можете указать эти слова ниже, разделив их запятыми."
 
 #: audacious/glade/prefswin.glade:4252
-#, fuzzy
 msgid "Include:"
-msgstr "Независимая музыка"
+msgstr "Включая:"
 
 #: audacious/glade/prefswin.glade:4280
 msgid "Exclude:"
-msgstr ""
+msgstr "Исключая:"
 
 #: audacious/glade/prefswin.glade:4348
 msgid "Recursively search for cover"
-msgstr ""
+msgstr "Искать обложку во вложенных каталогах"
 
 #: audacious/glade/prefswin.glade:4381
 msgid "Search depth: "
-msgstr ""
+msgstr "Глубина поиска: "
+
+#: audacious/glade/prefswin.glade:4452
+msgid "Use per-file cover"
+msgstr "Искать изображение для каждого файла"
 
 #: libaudacious/titlestring.c:340
 msgid "Performer/Artist"
@@ -4937,691 +4931,3 @@ msgstr "Номер дорожки"
 #: libaudacious/titlestring.c:401
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: Отображать \"...\", когда элемент %n присутствует"
-
-#, fuzzy
-#~ msgid "Scrobbler Configuration"
-#~ msgstr "Изменение настроек модуля поддержки формата MPEG"
-
-#, fuzzy
-#~ msgid "Song Change Configuration"
-#~ msgstr "Изменение настроек проигрывателя компакт дисков"
-
-#, fuzzy
-#~ msgid "Song Metadata"
-#~ msgstr "Соната"
-
-#, fuzzy
-#~ msgid "Port"
-#~ msgstr "Порт:"
-
-#, fuzzy
-#~ msgid "Client name"
-#~ msgstr "Имя файла"
-
-#, fuzzy
-#~ msgid "Port name"
-#~ msgstr "Имя дорожки"
-
-#, fuzzy
-#~ msgid "ALSA output ports"
-#~ msgstr "Модуль вывода звука ALSA %s"
-
-#, fuzzy
-#~ msgid "Mixer settings"
-#~ msgstr "Настройки микшера:"
-
-#~ msgid "Convert non-UTF8 ID3 tags to UTF8"
-#~ msgstr ""
-#~ "Преобразовывать ID3-теги (названия песен и др.) из локальной кодировки в "
-#~ "Юникод"
-
-#~ msgid "ID3 encoding:"
-#~ msgstr "Кодировка ID3-тегов:"
-
-#, fuzzy
-#~ msgid "Convert non-UTF8 Vorbis tags to UTF8"
-#~ msgstr ""
-#~ "Преобразовывать ID3-теги (названия песен и др.) из локальной кодировки в "
-#~ "Юникод"
-
-#, fuzzy
-#~ msgid "Vorbis encoding:"
-#~ msgstr "Кодировка ID3-тегов:"
-
-#, fuzzy
-#~ msgid "%d Kb/s"
-#~ msgstr "%d кБит/с"
-
-#, fuzzy
-#~ msgid "<b>Name:</b>"
-#~ msgstr "<b>Название файла</b>"
-
-#, fuzzy
-#~ msgid "<b>WMA Version:</b>"
-#~ msgstr "<b>Визуализация</b>"
-
-#, fuzzy
-#~ msgid "<b>Bitrate:</b>"
-#~ msgstr "Битовая частота:"
-
-#, fuzzy
-#~ msgid "<b>Samplerate:</b>"
-#~ msgstr "Частота:"
-
-#, fuzzy
-#~ msgid "<b>Channels:</b>"
-#~ msgstr "Каналы:"
-
-#, fuzzy
-#~ msgid "<b>Play time:</b>"
-#~ msgstr "<b>Название файла</b>"
-
-#, fuzzy
-#~ msgid "<b>Filesize:</b>"
-#~ msgstr "<b>Название файла</b>"
-
-#, fuzzy
-#~ msgid "WMA Info"
-#~ msgstr "Информация о CD"
-
-#, fuzzy
-#~ msgid "<b>Title:</b>"
-#~ msgstr "<b>Название файла</b>"
-
-#, fuzzy
-#~ msgid "<b>Album:</b>"
-#~ msgstr "<b>Название файла</b>"
-
-#, fuzzy
-#~ msgid "<b>Comments:</b>"
-#~ msgstr "<b>_Шрифты</b>"
-
-#, fuzzy
-#~ msgid "<b>Year:</b>"
-#~ msgstr "<b>Название файла</b>"
-
-#, fuzzy
-#~ msgid "<b>Track:</b>"
-#~ msgstr "<b>Воспроизведение</b>"
-
-#, fuzzy
-#~ msgid "<b>Genre:</b>"
-#~ msgstr "<b>Название файла</b>"
-
-#, fuzzy
-#~ msgid "Tags"
-#~ msgstr "Танго"
-
-#~ msgid "Edward Brocklesby"
-#~ msgstr "Edward Brocklesby"
-
-#~ msgid "Chong Kai Xiong"
-#~ msgstr "Chong Kai Xiong"
-
-#~ msgid "Milosz Derezynski"
-#~ msgstr "Milosz Derezynski"
-
-#~ msgid "David Lau"
-#~ msgstr "David Lau"
-
-#~ msgid "Ole Andre Vadla Ravnaas"
-#~ msgstr "Ole Andre Vadla Ravnaas"
-
-#~ msgid "Michiel Sikkes"
-#~ msgstr "Michiel Sikkes"
-
-#~ msgid "Bernard Blackham"
-#~ msgstr "Bernard Blackham"
-
-#~ msgid "Oliver Blin"
-#~ msgstr "Oliver Blin"
-
-#~ msgid "Tomas Bzatek"
-#~ msgstr "Tomas Bzatek"
-
-#~ msgid "Jon Dowland"
-#~ msgstr "Jon Dowland"
-
-#~ msgid "Artur Frysiak"
-#~ msgstr "Artur Frysiak"
-
-#~ msgid "Sebastian Kapfer"
-#~ msgstr "Sebastian Kapfer"
-
-#~ msgid "Lukas Koberstein"
-#~ msgstr "Lukas Koberstein"
-
-#~ msgid "Dan Korostelev"
-#~ msgstr "Dan Korostelev <dan@ats.energo.ru>"
-
-#, fuzzy
-#~ msgid "Michael Marineau"
-#~ msgstr "Michiel Sikkes"
-
-#~ msgid "Tim-Philipp Muller"
-#~ msgstr "Tim-Philipp Muller"
-
-#~ msgid "Olivier Samyn"
-#~ msgstr "Olivier Samyn"
-
-#~ msgid "Martijn Vernooij"
-#~ msgstr "Martijn Vernooij"
-
-#~ msgid "Laurens Buhler"
-#~ msgstr "Laurens Buhler"
-
-#~ msgid "David Le Brun"
-#~ msgstr "David Le Brun"
-
-#~ msgid "Matthias Debus"
-#~ msgstr "Matthias Debus"
-
-#~ msgid "Alessio D'Ascanio"
-#~ msgstr "Alessio D'Ascanio"
-
-#~ msgid "DongCheon Park"
-#~ msgstr "DongCheon Park"
-
-#~ msgid "Rimas Kudelis"
-#~ msgstr "Rimas Kudelis"
-
-#~ msgid "Jacek Wolszczak"
-#~ msgstr "Jacek Wolszczak"
-
-#~ msgid "Pavlo Bohmat"
-#~ msgstr "Pavlo Bohmat"
-
-#~ msgid "Martin Persenius"
-#~ msgstr "Martin Persenius"
-
-#~ msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Модули</b></span>"
-
-#~ msgid "_Media plugin list:"
-#~ msgstr "_Список модулей поддержки музыкальных форматов:"
-
-#~ msgid "<span size=\"medium\"><b>Media</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Медиа</b></span>"
-
-#, fuzzy
-#~ msgid ""
-#~ "The change is now effective in Audacious' configuration database, but "
-#~ "won't take effect for playback until the next song!\n"
-#~ "\n"
-#~ "Optionally, you can stop and restart playback for the change to take "
-#~ "effect."
-#~ msgstr ""
-#~ "Изменения задействованы в конфигурации базы данных BMP, но не будут "
-#~ "задействованы при воспроизведении до следующей песни!\n"
-#~ "\n"
-#~ "Дополнительно, чтобы изменения вступили в силу, вы можете остановить и "
-#~ "перезапустить воспроизведение."
-
-#~ msgid "<span size=\"medium\"><b>Output</b></span>"
-#~ msgstr "<span size=\"medium\"><b>Вывод звука</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Внешний вид</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Мышь</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Список воспроизведения</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Эквалайзер</b></span>"
-
-#, fuzzy
-#~ msgid "<span size=\"xx-large\"><b>Connectivity</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Мышь</b></span>"
-
-#~ msgid "Use proxy"
-#~ msgstr "Использовать прокси"
-
-#~ msgid "Frames:"
-#~ msgstr "Кадров:"
-
-#~ msgid ""
-#~ "Variable,\n"
-#~ "avg. bitrate: %d KBit/s"
-#~ msgstr ""
-#~ "Переменная,\n"
-#~ "средняя битовая частота: %d кб/с"
-
-#~ msgid "Francisco Javier F. Serrador"
-#~ msgstr "Francisco Javier F. Serrador"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to write to file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Невозможно записать в файл: %s"
-
-#~ msgid "Couldn't write tag!"
-#~ msgstr "Не могу записать тег!"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to open file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Невозможно открыть файл: %s"
-
-#~ msgid "File Info"
-#~ msgstr "Инфрмация о файле"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to truncate file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Невозможно урезать файл: %s"
-
-#~ msgid "Couldn't remove tag!"
-#~ msgstr "Не могу удалить тег!"
-
-#~ msgid "No tag to remove!"
-#~ msgstr "Нет тега для удаления!"
-
-#, fuzzy
-#~ msgid "About TiMidity Plugin"
-#~ msgstr "Об модуле поддержки формата MPEG"
-
-#, fuzzy
-#~ msgid "TiMidity Plugin"
-#~ msgstr "Модуль поддержки MPEG"
-
-#~ msgid "Options"
-#~ msgstr "Параметры:"
-
-#~ msgid "Content"
-#~ msgstr "Определять тип по содержимому"
-
-#~ msgid "Extension"
-#~ msgstr "Определять тип по расширению"
-
-#~ msgid "Extension and content"
-#~ msgstr "Определять тип по расширению и содержимому"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Copyright (C) 2000-2004  Peter Eisenlohr <peter@eisenlohr.org>\n"
-#~ "\n"
-#~ "based on the original OSS Output Plugin  Copyright (C) 1998-2000\n"
-#~ "Peter Alm, Mikael Alm, Olle Hallnas, Thomas Nilsson and 4Front "
-#~ "Technologies\n"
-#~ "\n"
-#~ "This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "Модуль XMMS ESounD\n"
-#~ "\n"
-#~ " Эта программа - бесплатное программное обеспечение; вы можете "
-#~ "распространять и/или модифицировать ее\n"
-#~ "в соответствии с условиями Лицензии GNU, опубликованную\n"
-#~ "Организацией Бесплатного Программного Обеспечения; вы можете пользоваться "
-#~ "версией 2 Лицензии или\n"
-#~ "(по вашему желанию) любой более поздней версией.\n"
-#~ "\n"
-#~ "Эта программа распространяется в надежде, что она будет полезна,\n"
-#~ "но БЕЗ ВСЯКОЙ ГАРАНТИИ; даже без гарании подразумеваемой\n"
-#~ "РАБОТОСПОСОБНОСТИ или ПРИГОДНОСТИ ДЛЯ КАКОЙ-ЛИБО ЦЕЛИ. Пожалуйста,\n"
-#~ "за подробностями обратитесь к Лицензии GNU.\n"
-#~ "\n"
-#~ "Вы должны были получить копию Лицензии GNU\n"
-#~ "вместе с этой программой; если же нет, то напишите об этом по адресу: \n"
-#~ "Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA "
-#~ "02111-1307,\n"
-#~ "USA."
-
-#, fuzzy
-#~ msgid " Enable"
-#~ msgstr "Включен"
-
-#, fuzzy
-#~ msgid "About XMMS Crossfade Plugin"
-#~ msgstr "О модуле вывода звука ESounD"
-
-#, fuzzy
-#~ msgid "Additional silence"
-#~ msgstr "С дополнительной помощью:"
-
-#, fuzzy
-#~ msgid "Advanced"
-#~ msgstr "Дополнительные настройки"
-
-#, fuzzy
-#~ msgid "Advanced XF"
-#~ msgstr "Дополнительные настройки"
-
-#, fuzzy
-#~ msgid "Advanced options"
-#~ msgstr "Дополнительные настройки"
-
-#, fuzzy
-#~ msgid "Configure"
-#~ msgstr "Настроить эквалайзер"
-
-#, fuzzy
-#~ msgid "Crossfade"
-#~ msgstr "Переходный"
-
-#, fuzzy
-#~ msgid "Crossfader"
-#~ msgstr "Переходный"
-
-#, fuzzy
-#~ msgid "Custom (ms):"
-#~ msgstr "Особый:"
-
-#, fuzzy
-#~ msgid "Delete"
-#~ msgstr "/Удалить"
-
-#, fuzzy
-#~ msgid "Enable volume control"
-#~ msgstr "Регулятор громкости:"
-
-#, fuzzy
-#~ msgid "Limit OP buffer usage (ms):"
-#~ msgstr "Размер буфера (мс):"
-
-#~ msgid "Load"
-#~ msgstr "Загрузить"
-
-#, fuzzy
-#~ msgid "Mixing buffer size (ms):"
-#~ msgstr "Размер буфера (мс):"
-
-#, fuzzy
-#~ msgid "Output plugin"
-#~ msgstr "Модуль вывода звука OSS"
-
-#, fuzzy
-#~ msgid "Pause"
-#~ msgstr "/Приостановить"
-
-#, fuzzy
-#~ msgid "Plugin compatibility options"
-#~ msgstr "Режим совместимости с XMMS"
-
-#, fuzzy
-#~ msgid "Position:"
-#~ msgstr "Описание:"
-
-#, fuzzy
-#~ msgid "Quality:"
-#~ msgstr "/_Выход"
-
-#, fuzzy
-#~ msgid "Rate:"
-#~ msgstr "Дата:"
-
-#, fuzzy
-#~ msgid "Reopen"
-#~ msgstr "/Повторять"
-
-#, fuzzy
-#~ msgid "Use plugin"
-#~ msgstr "Модули"
-
-#, fuzzy
-#~ msgid "Volume control options"
-#~ msgstr "Регулятор громкости:"
-
-#, fuzzy
-#~ msgid "Volume normalizer"
-#~ msgstr "Регулятор громкости:"
-
-#, fuzzy
-#~ msgid "same file"
-#~ msgstr "Из файла"
-
-#, fuzzy
-#~ msgid "LibVisual Audacious Plugin"
-#~ msgstr "/Модули визуализации"
-
-#, fuzzy
-#~ msgid "Visualization Plugins"
-#~ msgstr "/Модули визуализации"
-
-#, fuzzy
-#~ msgid "All plugins"
-#~ msgstr "Модули"
-
-#, fuzzy
-#~ msgid " (enabled)"
-#~ msgstr "Включен"
-
-#, fuzzy
-#~ msgid "Version: "
-#~ msgstr "Версия:"
-
-#, fuzzy
-#~ msgid " error"
-#~ msgstr "Террор"
-
-#, fuzzy
-#~ msgid "Audacious plugin"
-#~ msgstr "Модуль поддержки аудио компакт-дисков"
-
-#, fuzzy
-#~ msgid "Cannot initialize SDL!\n"
-#~ msgstr "Невозможно инициализировать gnome-vfs.\n"
-
-#~ msgid "Developers:"
-#~ msgstr "Разработчики:"
-
-#~ msgid "DISABLE ALWAYS ON TOP (N/A)"
-#~ msgstr "ОТКЛЮЧИТЬ ВСЕГДА НАВЕРХУ (Н/Д)"
-
-#~ msgid "ENABLE ALWAYS ON TOP (N/A)"
-#~ msgstr "ВКЛЮЧИТЬ ВСЕГДА НАВЕРХУ (Н/Д)"
-
-#, fuzzy
-#~ msgid "Downsample:"
-#~ msgstr "Частота:"
-
-#, fuzzy
-#~ msgid "Use interpolation"
-#~ msgstr "Использовать идентификацию"
-
-#~ msgid "%s - BMP"
-#~ msgstr "%s - BMP"
-
-#~ msgid "bmp: %s"
-#~ msgstr "BMP: %s"
-
-#, fuzzy
-#~ msgid "/Play Directory"
-#~ msgstr "_Каталог:"
-
-#~ msgid "Add Folders"
-#~ msgstr "Добавление каталогов"
-
-#, fuzzy
-#~ msgid "/Add Folders..."
-#~ msgstr "/Добавить/Каталоги..."
-
-#~ msgid "3DNow! optimized decoder"
-#~ msgstr "Оптимизированный декодер 3DNow!"
-
-#~ msgid "MMX optimized decoder"
-#~ msgstr "Оптимизированный для MMX декодер"
-
-#~ msgid "FPU decoder"
-#~ msgstr "Декодер FPU"
-
-#~ msgid ""
-#~ "mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
-#~ "Plugin by The XMMS team"
-#~ msgstr ""
-#~ "Движок декодирования mpg123 Майкла Хиппа <mh@mpg123.de>\n"
-#~ "Модуль написан командой XMMS"
-
-#~ msgid "Advanced settings:"
-#~ msgstr "Дополнительные настройки:"
-
-#, fuzzy
-#~ msgid "Thread buffer time (ms):"
-#~ msgstr "Время буфера (мс):"
-
-#~ msgid "Mmap mode"
-#~ msgstr "Режим mmap"
-
-#~ msgid "Homepage and Graphics:"
-#~ msgstr "Домашняя страница и графика:"
-
-#~ msgid "Takeshi Aihana"
-#~ msgstr "Takeshi Aihana"
-
-#~ msgid "BMP Equalizer"
-#~ msgstr "Эквалайзер ВМР"
-
-#~ msgid "Beep Media Player"
-#~ msgstr "Beep Media Player"
-
-#~ msgid "/About BMP"
-#~ msgstr "/О программе"
-
-#~ msgid "BMP"
-#~ msgstr "BMP"
-
-#, fuzzy
-#~ msgid "Add Internet Address"
-#~ msgstr "/Добавить/Адрес интернет..."
-
-#~ msgid "BMP Playlist Editor"
-#~ msgstr "Редактор списка воспроизведения BMP"
-
-#~ msgid "*"
-#~ msgstr "*"
-
-#~ msgid "Danicel Liviu Cristian"
-#~ msgstr "Danicel Liviu Cristian"
-
-#~ msgid "Vlad Gerasimov"
-#~ msgstr "Владислав Герасимов"
-
-#~ msgid "/5 seconds REW"
-#~ msgstr "/Назад на 5 секунд"
-
-#~ msgid "/5 seconds FFWD"
-#~ msgstr "/Вперёд на 5 секунд"
-
-#~ msgid "/Add"
-#~ msgstr "/Добавить"
-
-#~ msgid "/_Options"
-#~ msgstr "/_Параметры"
-
-#~ msgid "/Show Graphical EQ"
-#~ msgstr "/Показать графический эквалайзер"
-
-#~ msgid "/Reload skin"
-#~ msgstr "/Перезагрузить тему"
-
-#~ msgid "/Show on all desktops"
-#~ msgstr "/Поместить на все рабочие места"
-
-#~ msgid "/WindowShade Mode"
-#~ msgstr "/Скрутить главное окно"
-
-#~ msgid "/Playlist WindowShade Mode"
-#~ msgstr "/Скрутить окно списка воспроизведения"
-
-#~ msgid "/Equalizer WindowShade Mode"
-#~ msgstr "/Скрутить окно эквалайзера"
-
-#~ msgid "/DoubleSize"
-#~ msgstr "/Двойной размер"
-
-#~ msgid "/Easy Move"
-#~ msgstr "/Простое перемещение"
-
-#~ msgid "Jump to:"
-#~ msgstr "Перескочить на:"
-
-#~ msgid "Jump"
-#~ msgstr "Перескочить"
-
-#~ msgid "Add URL"
-#~ msgstr "Добавление URL"
-
-#~ msgid "DISABLE DOUBLESIZE"
-#~ msgstr "ОТКЛЮЧИТЬ ДВОЙНОЙ РАЗМЕР"
-
-#~ msgid "ENABLE DOUBLESIZE"
-#~ msgstr "ВКЛЮЧИТЬ ДВОЙНОЙ РАЗМЕР"
-
-#~ msgid "/By extension"
-#~ msgstr "/По расширению"
-
-#~ msgid "/Playlist"
-#~ msgstr "/Список воспроизведения"
-
-#~ msgid "/Close Window"
-#~ msgstr "/Закрыть окно"
-
-#~ msgid "/Sort by Title"
-#~ msgstr "/Сортировать по названию"
-
-#~ msgid "/Sort by Filename"
-#~ msgstr "/Сортировать по имени файла"
-
-#~ msgid "/Sort by Date"
-#~ msgstr "/Сортировать по дате"
-
-#~ msgid "Failed to delete \"%s\": %s."
-#~ msgstr "Не удалось удалить \"%s\": %s."
-
-#~ msgid "%d of %d files successfully deleted."
-#~ msgstr "%d из %d файлов успешно удалены."
-
-#~ msgid "XMMS: Files deleted"
-#~ msgstr "BMP: Файлы удалены"
-
-#~ msgid "Really delete %d files?"
-#~ msgstr "Действительно удалить %d файл(ов)?"
-
-#~ msgid "Really delete: \"%s\"?"
-#~ msgstr "Действительно удалить: \"%s\"?"
-
-#~ msgid "Auto-load preset"
-#~ msgstr "Автоматически загружать предустановки"
-
-#~ msgid "Zero"
-#~ msgstr "Пустой"
-
-#~ msgid "From WinAMP EQF file"
-#~ msgstr "Из EQF-файла WinAMP "
-
-#~ msgid "Import"
-#~ msgstr "Импортировать"
-
-#~ msgid "WinAMP presets"
-#~ msgstr "Предустановки из WinAMP"
-
-#~ msgid "To file"
-#~ msgstr "В файл"
-
-#~ msgid "To WinAMP EQF file"
-#~ msgstr "В EQF-файл WinAMP"
-
-#~ msgid "Smooth title scrolling in main window"
-#~ msgstr "Плавная прокрутка названия в главном окне"
