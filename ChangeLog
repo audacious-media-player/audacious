@@ -1,3 +1,11 @@
+2006-11-05 21:49:20 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2845]
+  - improve algorithm further
+  
+  trunk/audacious/mainwin.c |   10 ++++------
+  1 file changed, 4 insertions(+), 6 deletions(-)
+
+
 2006-11-05 21:33:25 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2843]
   - use g_strcasecmp instead of several g_strdowns to speed up jump-to-file performance. closes #56

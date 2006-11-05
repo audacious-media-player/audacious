@@ -1950,10 +1950,12 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
          * In any case the string to match should _never_ contain
          * something the user can't actually see in the playlist.
          */
-        if (words[0])
-            match = mainwin_jump_to_file_match(title, words);
-        else
+        if ((words[0] == NULL || words[0][0] == '\0') ||
+            (words[0] != NULL && words[0][0] != '\0' && words[0][1] == '\0' && 
+             strchr(title, words[0][0])))
             match = TRUE;
+        else if (strlen(words[0]) > 1)
+            match = mainwin_jump_to_file_match(title, words);
 
         if (match) {
             gchar *song_index_str = g_strdup_printf("%d", song_index + 1);
