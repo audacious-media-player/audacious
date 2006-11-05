@@ -1822,9 +1822,14 @@ mainwin_jump_to_file_keypress_cb(GtkWidget * object,
         gtk_widget_destroy(mainwin_jtf);
         mainwin_jtf = NULL;
         return TRUE;
+    case GDK_KP_Enter:
+        mainwin_jump_to_file_queue_cb(NULL, data);
+        return TRUE;
     default:
         return FALSE;
     };
+
+    return FALSE;
 }
 
 static gboolean

@@ -1,3 +1,11 @@
+2006-11-05 20:22:41 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2839]
+  - update russian translation
+  
+  trunk/po/ru.po | 1754 +++++++++++++++++----------------------------------------
+  1 file changed, 530 insertions(+), 1224 deletions(-)
+
+
 2006-11-05 20:17:53 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2837]
   - improve doublesize
