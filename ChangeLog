@@ -1,3 +1,11 @@
+2006-11-05 21:33:25 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2843]
+  - use g_strcasecmp instead of several g_strdowns to speed up jump-to-file performance. closes #56
+  
+  trunk/audacious/mainwin.c |   14 +-------------
+  1 file changed, 1 insertion(+), 13 deletions(-)
+
+
 2006-11-05 21:29:22 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2841]
   - add keypad-enter binding for queueing files in jump-to-file. closes #295.

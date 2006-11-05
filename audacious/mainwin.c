@@ -1837,13 +1837,11 @@ mainwin_jump_to_file_match(const gchar * song, gchar ** keys)
 {
     gint i = 0;
 
-    while (keys[i]) {
-        if (g_strcasecmp(song, keys[i]))
-            return FALSE;
-        i++;
-    }
+    for (i = 0; keys[i] != NULL; i++)
+        if (strstr(song, keys[i]))
+            return TRUE;
 
-    return TRUE;
+    return FALSE;
 }
 
 /* FIXME: Clear the entry when the list gets updated */
