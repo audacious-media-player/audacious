@@ -1,3 +1,11 @@
+2006-11-05 05:41:23 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2823]
+  - fix X11 hinting for the preferences window, fixes bug #559.
+  
+  trunk/audacious/glade/prefswin.glade |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-11-04 21:50:43 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2821]
   - return -1 if audacious server is not running

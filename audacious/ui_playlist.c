@@ -242,7 +242,7 @@ static GtkItemFactoryEntry plsel_menu_entries[] = {
 };
 
 static GtkItemFactoryEntry plsort_menu_entries[] = {
-    {N_("/Randomize List"), NULL, plsort_menu_callback,
+    {N_("/Randomize List"), "<Ctrl><Shift>R", plsort_menu_callback,
      PLAYLISTWIN_SORT_RANDOMIZE, "<ImageItem>", randomizepl_pixbuf},
     {N_("/Reverse List"), NULL, plsort_menu_callback,
      PLAYLISTWIN_SORT_REVERSE, "<ImageItem>", invertpl_pixbuf},
