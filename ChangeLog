@@ -1,3 +1,11 @@
+2006-11-05 08:55:21 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2827]
+  - update ja.po via Dai.
+  
+  trunk/po/ja.po |  119 +++++++++++++++++++++++++--------------------------------
+  1 file changed, 53 insertions(+), 66 deletions(-)
+
+
 2006-11-05 07:34:22 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2825]
   - assign Control+Shift+R keybinding. to Randomize Playlist. Closes #529

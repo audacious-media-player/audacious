@@ -801,11 +801,7 @@ filebrowser_add_files(GtkFileChooser * browser,
     if (GTK_IS_WIDGET(mainwin_jtf))
         gtk_widget_set_sensitive(mainwin_jtf, TRUE);
 
-#ifdef HAVE_GNOME_VFS
-    ptr = gtk_file_chooser_get_current_folder_uri(GTK_FILE_CHOOSER(browser));
-#else
     ptr = gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(browser));
-#endif
 
     g_free(cfg.filesel_path);
     cfg.filesel_path = ptr;
@@ -816,11 +812,7 @@ filebrowser_add(GtkFileChooser *browser)
 {
     GSList *files;
 
-#ifdef HAVE_GNOME_VFS
-    files = gtk_file_chooser_get_uris(GTK_FILE_CHOOSER(browser));
-#else
     files = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER(browser));
-#endif
 
     if (!files) {
         return;
@@ -836,11 +828,7 @@ filebrowser_play(GtkFileChooser * browser)
 {
     GSList *files;
 
-#ifdef HAVE_GNOME_VFS
-    files = gtk_file_chooser_get_uris(GTK_FILE_CHOOSER(browser));
-#else
     files = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER(browser));
-#endif
 
     if (!files) return;
 
@@ -973,18 +961,9 @@ util_run_filebrowser_gtk2style(gboolean play_button)
         chooser = gtk_file_chooser_widget_new(GTK_FILE_CHOOSER_ACTION_OPEN);    
         gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(chooser), TRUE);
         
-#ifdef HAVE_GNOME_VFS
-        gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(chooser), FALSE);
-#endif
-        
         if (cfg.filesel_path)
-#ifdef HAVE_GNOME_VFS
-            gtk_file_chooser_set_current_folder_uri(GTK_FILE_CHOOSER(chooser),
-                                                    cfg.filesel_path);
-#else
             gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(chooser),
                                                 cfg.filesel_path);
-#endif
 
         alignment = glade_xml_get_widget(xml, "alignment2");
         gtk_container_add(GTK_CONTAINER(alignment), chooser);
@@ -1655,10 +1634,6 @@ make_filebrowser(const gchar * title,
 
     g_signal_connect(dialog, "destroy",
                      G_CALLBACK(gtk_widget_destroyed), &dialog);
-
-#ifdef HAVE_GNOME_VFS
-    gtk_file_chooser_set_local_only(GTK_FILE_CHOOSER(dialog), FALSE);
-#endif
 
     button_close = gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CANCEL,
                                          GTK_RESPONSE_REJECT);

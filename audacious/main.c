@@ -141,11 +141,7 @@ BmpConfig bmp_default_config = {
     FALSE,                      /* sticky */
     FALSE,                      /* no playlist advance */
     FALSE,                      /* stop after current song */
-#ifdef HAVE_GNOME_VFS
-    FALSE,                      /* refresh file list - should be unneeded with VFS */
-#else
     TRUE,                       /* refresh file list */
-#endif
     TRUE,                       /* UNUSED (smooth title scrolling) */
     TRUE,                       /* use playlist metadata */
     TRUE,                       /* warn about unplayables */
@@ -391,10 +387,6 @@ get_feature_list(void)
 {
     GSList *features = NULL;
     
-#ifdef HAVE_GNOME_VFS
-    features = g_slist_append(features, "GNOME VFS");
-#endif
-
 #ifdef HAVE_GCONF
     features = g_slist_append(features, "GConf");
 #endif
