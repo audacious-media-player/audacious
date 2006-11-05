@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2006-08-02 18:22-0500\n"
-"PO-Revision-Date: 2006-06-12 18:51+0900\n"
+"PO-Revision-Date: 2006-08-26 21:52+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -202,9 +202,8 @@ msgid "Commands"
 msgstr "コマンド"
 
 #: Plugins/General/song_change/song_change.c:186
-#, fuzzy
 msgid "Command to run when Audacious starts a new song."
-msgstr "Audacious が新しい曲を開始したときに実行するシェルコマンド"
+msgstr "Audacious が新しい曲を開始したときに実行するコマンド"
 
 #: Plugins/General/song_change/song_change.c:195
 #: Plugins/General/song_change/song_change.c:217
@@ -213,17 +212,15 @@ msgid "Command:"
 msgstr "コマンド:"
 
 #: Plugins/General/song_change/song_change.c:209
-#, fuzzy
 msgid "Command to run toward the end of a song."
-msgstr "曲の終わりで実行するシェルコマンド"
+msgstr "曲の終わりで実行するコマンド"
 
 #: Plugins/General/song_change/song_change.c:229
-#, fuzzy
 msgid "Command to run when Audacious reaches the end of the playlist."
-msgstr "Audacious が演奏一覧の最後に到達したときに実行するシェルコマンド"
+msgstr "Audacious が演奏一覧の最後に到達したときに実行するコマンド"
 
 #: Plugins/General/song_change/song_change.c:250
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You can use the following format strings which\n"
 "will be substituted before calling the command\n"
@@ -246,7 +243,7 @@ msgstr ""
 "%%f: ファイル名 (フルパス)\n"
 "%%l: 長さ (ミリ秒)\n"
 "%%n または %%s: 曲名\n"
-"%%r: bps (ビット毎秒)\n"
+"%%r: レート (ビット毎秒)\n"
 "%%t: 演奏一覧の位置 (%%02d)\n"
 "%%p: 現在演奏中か (1 or 0)"
 
@@ -255,6 +252,8 @@ msgid ""
 "<span size='small'>Parameters passed to the shell should be encapsulated in "
 "quotes. Doing otherwise is a security risk.</span>"
 msgstr ""
+"<span size='small'>シェルに渡されるパラメータはクォートでくくられるべきです。"
+"さもないとセキュリティ上の危険があります。</span>"
 
 #: Plugins/Input/adplug/adplug-xmms.cc:146
 msgid "About "
@@ -288,33 +287,32 @@ msgid "AMIDI-Plug %s (MIDI Player)"
 msgstr "AMIDI-Plug %s (MIDI プレイヤー)"
 
 #: Plugins/Input/amidi-plug/amidi-plug.c:362
-#, fuzzy
 msgid "AMIDI-Plug - warning"
-msgstr "AMIDI-Plug - 設定"
+msgstr "AMIDI-Plug - 警告"
 
 #: Plugins/Input/amidi-plug/amidi-plug.c:363
 msgid ""
 "No sequencer backend has been selected!\n"
 "Please configure AMIDI-Plug before playing."
 msgstr ""
+"シーケンサバックエンドが選択されていません！\n"
+"演奏する前に AMIDI-Plug を設定してください。"
 
 #: Plugins/Input/amidi-plug/i_configure.c:71
-#, fuzzy
 msgid "AMIDI-Plug - select file"
-msgstr "AMIDI-Plug - 設定"
+msgstr "AMIDI-Plug - ファイル選択"
 
 #: Plugins/Input/amidi-plug/i_configure.c:118
 msgid "AMIDI-Plug - configuration"
 msgstr "AMIDI-Plug - 設定"
 
 #: Plugins/Input/amidi-plug/i_configure.c:214
-#, fuzzy
 msgid "AMIDI-Plug message"
-msgstr "AMIDI-Plug %s (MIDI プレイヤー)"
+msgstr "AMIDI-Plug メッセージ"
 
 #: Plugins/Input/amidi-plug/i_configure.c:215
 msgid "Please stop the player before changing AMIDI-Plug settings."
-msgstr ""
+msgstr "AMIDI-Plug の設定を変更する前にプレイヤーを停止してください。"
 
 #: Plugins/Input/amidi-plug/i_fileinfo.c:119
 #: Plugins/Input/mpg123/fileinfo.c:288 Plugins/Input/vorbis/fileinfo.c:558
@@ -2729,7 +2727,6 @@ msgid "About sndfile WAV support"
 msgstr "sndfile WAV サポートについて"
 
 #: Plugins/Input/wav/wav-sndfile.c:247
-#, fuzzy
 msgid ""
 "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
 "from the xmms_sndfile plugin which is:\n"
@@ -2767,9 +2764,9 @@ msgstr ""
 "\n"
 "あなたは、本プログラムと一緒に\n"
 "GNU 一般公有使用許諾契約書の写しを受け取っているはずです。\n"
-"そうでない場合は、Free Software Foundation, Inc., 59\n"
-"Temple Place - Suite 330, Boston, MA 02111-1307, USA へ\n"
-"手紙を書いて下さい。"
+"そうでない場合は、the Free Software Foundation, Inc., \n"
+"51 Franklin Street, Fifth Floor, \n"
+"Boston, MA  02110-1301  USA へ手紙を書いて下さい。"
 
 #: Plugins/Input/wav/wav-sndfile.c:272
 msgid "sndfile WAV plugin"
@@ -2802,7 +2799,6 @@ msgid "About OSS Driver"
 msgstr "OSS ドライバについて"
 
 #: Plugins/Output/OSS/about.c:40
-#, fuzzy
 msgid ""
 "Audacious OSS Driver\n"
 "\n"
@@ -2833,11 +2829,10 @@ msgstr ""
 "暗黙の保証を含めて、いかなる保証も行ないません。\n"
 "詳細については GNU 一般公有使用許諾契約書をご覧下さい。\n"
 "\n"
-"あなたは、本プログラムと一緒に\n"
-"GNU 一般公有使用許諾契約書の写しを受け取っているはずです。\n"
-"そうでない場合は、Free Software Foundation, Inc., 59\n"
-"Temple Place - Suite 330, Boston, MA 02111-1307, USA へ\n"
-"手紙を書いて下さい。"
+"あなたは、本プログラムと一緒に GNU 一般公有使用許諾契約書の\n"
+"写しを受け取っているはずです。そうでない場合は、Free Software\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
+"USA. へ手紙を書いて下さい。"
 
 #: Plugins/Output/OSS/configure.c:149
 #, c-format
@@ -2897,7 +2892,6 @@ msgid "About ALSA Driver"
 msgstr "ALSA ドライバについて"
 
 #: Plugins/Output/alsa/about.c:31
-#, fuzzy
 msgid ""
 "Audacious ALSA Driver\n"
 "\n"
@@ -2929,11 +2923,10 @@ msgstr ""
 "暗黙の保証を含めて、いかなる保証も行ないません。\n"
 "詳細については GNU 一般公有使用許諾契約書をご覧下さい。\n"
 "\n"
-"あなたは、本プログラムと一緒に\n"
-"GNU 一般公有使用許諾契約書の写しを受け取っているはずです。\n"
-"そうでない場合は、Free Software Foundation, Inc., 59\n"
-"Temple Place - Suite 330, Boston, MA 02111-1307, USA へ\n"
-"手紙を書いて下さい。\n"
+"あなたは、本プログラムと一緒に GNU 一般公有使用許諾契約書の\n"
+"写しを受け取っているはずです。そうでない場合は、Free Software\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
+"USA. へ手紙を書いて下さい。\n"
 "作者: Matthieu Sozeau <mattam@altern.org>"
 
 #: Plugins/Output/alsa/alsa.c:47
@@ -3020,7 +3013,6 @@ msgid "About ESounD Plugin"
 msgstr "ESounD プラグインについて"
 
 #: Plugins/Output/esd/about.c:35
-#, fuzzy
 msgid ""
 "Audacious ESounD Plugin\n"
 "\n"
@@ -3051,11 +3043,10 @@ msgstr ""
 "暗黙の保証を含めて、いかなる保証も行ないません。\n"
 "詳細については GNU 一般公有使用許諾契約書をご覧下さい。\n"
 "\n"
-"あなたは、本プログラムと一緒に\n"
-"GNU 一般公有使用許諾契約書の写しを受け取っているはずです。\n"
-"そうでない場合は、Free Software Foundation, Inc., 59\n"
-"Temple Place - Suite 330, Boston, MA 02111-1307, USA へ\n"
-"手紙を書いて下さい。"
+"あなたは、本プログラムと一緒に GNU 一般公有使用許諾契約書の\n"
+"写しを受け取っているはずです。そうでない場合は、the Free Software\n"
+"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,\n"
+"USA.へ手紙を書いて下さい。"
 
 #: Plugins/Output/esd/configure.c:102
 msgid "ESD Output Plugin configuration"
@@ -3670,7 +3661,7 @@ msgstr "ヘッドレス動作 [実験的]"
 
 #: audacious/main.c:745
 msgid "Disable error/warning interception (logging)"
-msgstr ""
+msgstr "エラー/警告の捕獲(ロギング)を無効にする"
 
 #: audacious/main.c:748
 msgid "Print version number and exit\n"
@@ -4219,7 +4210,7 @@ msgstr "Unarchived Winamp 2.x スキン"
 
 #: audacious/ui_playlist.c:132
 msgid "/Show Popup Info"
-msgstr ""
+msgstr "/ポップアップ情報を表示"
 
 #: audacious/ui_playlist.c:138 audacious/ui_playlist.c:203
 msgid "/Remove Selected"
@@ -4322,9 +4313,8 @@ msgid "/Sort List/By Title"
 msgstr "/演奏一覧のソート/タイトル順"
 
 #: audacious/ui_playlist.c:259
-#, fuzzy
 msgid "/Sort List/By Artist"
-msgstr "/演奏一覧のソート/タイトル順"
+msgstr "/演奏一覧のソート/アーティスト順"
 
 #: audacious/ui_playlist.c:261
 msgid "/Sort List/By Filename"
@@ -4339,14 +4329,12 @@ msgid "/Sort List/By Date"
 msgstr "/演奏一覧のソート/日付順"
 
 #: audacious/ui_playlist.c:267
-#, fuzzy
 msgid "/Sort List/By Track Number"
-msgstr "/演奏一覧のソート/日付順"
+msgstr "/演奏一覧のソート/トラック番号順"
 
 #: audacious/ui_playlist.c:269
-#, fuzzy
 msgid "/Sort List/By Playlist Entry"
-msgstr "/演奏一覧のソート/タイトル順"
+msgstr "/演奏一覧のソート/エントリ順"
 
 #: audacious/ui_playlist.c:271
 msgid "/Sort Selection"
@@ -4357,9 +4345,8 @@ msgid "/Sort Selection/By Title"
 msgstr "/選択範囲のソート/タイトル順"
 
 #: audacious/ui_playlist.c:274
-#, fuzzy
 msgid "/Sort Selection/By Artist"
-msgstr "/選択範囲のソート/タイトル順"
+msgstr "/選択範囲のソート/アーティスト順"
 
 #: audacious/ui_playlist.c:276
 msgid "/Sort Selection/By Filename"
@@ -4374,14 +4361,12 @@ msgid "/Sort Selection/By Date"
 msgstr "/選択範囲のソート/日付順"
 
 #: audacious/ui_playlist.c:282
-#, fuzzy
 msgid "/Sort Selection/By Track Number"
-msgstr "/選択範囲のソート/日付順"
+msgstr "/選択範囲のソート/トラック番号順"
 
 #: audacious/ui_playlist.c:284
-#, fuzzy
 msgid "/Sort Selection/By Playlist Entry"
-msgstr "/選択範囲のソート/タイトル順"
+msgstr "/選択範囲のソート/エントリ順"
 
 #: audacious/ui_playlist.c:822
 #, c-format
@@ -4461,14 +4446,12 @@ msgid "Audacious Preferences"
 msgstr "Audacious の設定"
 
 #: audacious/glade/prefswin.glade:115
-#, fuzzy
 msgid "_Decoder list:"
-msgstr "デコーダ"
+msgstr "デコーダ一覧(_D):"
 
 #: audacious/glade/prefswin.glade:219
-#, fuzzy
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
-msgstr "<span size=\"medium\"><b>全般</b></span>"
+msgstr "<span size=\"medium\"><b>デコーダ</b></span>"
 
 #: audacious/glade/prefswin.glade:261
 msgid "_General plugin list:"
@@ -4695,9 +4678,8 @@ msgid "Show information about titlestring format"
 msgstr "タイトルに使用できる書式を表示します"
 
 #: audacious/glade/prefswin.glade:2317
-#, fuzzy
 msgid "<b>Popup Information</b>"
-msgstr "<b>プロキシ設定</b>"
+msgstr "<b>ポップアップ情報</b>"
 
 #: audacious/glade/prefswin.glade:2368
 msgid ""
@@ -4705,14 +4687,17 @@ msgid ""
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
 msgstr ""
+"演奏一覧中でポイントされたエントリのポップアップ情報ウィンドウを切り替える。"
+"ウィンドウには曲のタイトル、アルバム名、ジャンル、製作年、トラック番号、"
+"トラックの長さとアートワークが表示される。"
 
 #: audacious/glade/prefswin.glade:2370
 msgid "Show popup information for playlist entries"
-msgstr ""
+msgstr "演奏一覧のエントリのポップアップ情報を表示する"
 
 #: audacious/glade/prefswin.glade:2397
 msgid "Edit settings for popup information"
-msgstr ""
+msgstr "ポップアップ情報の設定を編集する"
 
 #: audacious/glade/prefswin.glade:2505
 msgid "<b>Presets</b>"
@@ -4818,6 +4803,7 @@ msgid ""
 "When Audacious starts, automatically begin playing from the point where we "
 "stopped before."
 msgstr ""
+"Audacious が開始したとき、以前停止した位置から自動的に演奏を開始する。"
 
 #: audacious/glade/prefswin.glade:3864
 msgid "Continue playback on startup"
@@ -4849,7 +4835,7 @@ msgstr "label76"
 
 #: audacious/glade/prefswin.glade:4173
 msgid "Popup Information Settings"
-msgstr ""
+msgstr "ポップアップ情報の設定"
 
 #: audacious/glade/prefswin.glade:4197
 msgid ""
@@ -4857,23 +4843,24 @@ msgid ""
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
+"アルバムのカバーを検索する際、Audacious はファイル名の中の単語を探します。"
+"コンマで区切られた単語リストを以下に指定できます。"
 
 #: audacious/glade/prefswin.glade:4252
-#, fuzzy
 msgid "Include:"
-msgstr "インディーズ"
+msgstr "含む:"
 
 #: audacious/glade/prefswin.glade:4280
 msgid "Exclude:"
-msgstr ""
+msgstr "含まない:"
 
 #: audacious/glade/prefswin.glade:4348
 msgid "Recursively search for cover"
-msgstr ""
+msgstr "カバーの再帰検索"
 
 #: audacious/glade/prefswin.glade:4381
 msgid "Search depth: "
-msgstr ""
+msgstr "検索の深さ: "
 
 #: libaudacious/titlestring.c:340
 msgid "Performer/Artist"
