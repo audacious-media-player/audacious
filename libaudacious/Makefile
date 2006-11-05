@@ -10,13 +10,11 @@ OBJECTIVE_SONAME_SUFFIX = 4
 
 LIBADD = \
 	$(GTK_LIBS)      \
-	$(GCONF_LIBS)    \
-	$(GNOMEVFS_LIBS)
+	$(GCONF_LIBS)
 
 CFLAGS += $(PICFLAGS) \
 	$(GTK_CFLAGS)        \
 	$(GCONF_CFLAGS)      \
-	$(GNOMEVFS_CFLAGS)   \
 	-I..		      \
 	-I../intl
 

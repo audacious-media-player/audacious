@@ -1,3 +1,30 @@
+2006-11-05 12:43:16 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2833]
+  - DoubleSize support.
+  This has bugs, the most notable one being that DoubleSize only works 
+  right if you restart the player.
+  The second bug is rather obvious too. No osmosis skinengine. No 
+  TinyPlayer. Classic-esque skinengine only. This is because the 
+  doublesize algorithm hates you and wants you to go die in a fire.
+  
+  trunk/audacious/dock.c         |    2 
+  trunk/audacious/dock.h         |    1 
+  trunk/audacious/equalizer.c    |  117 ++++++++++++--
+  trunk/audacious/equalizer.h    |   11 -
+  trunk/audacious/main.c         |    3 
+  trunk/audacious/main.h         |    5 
+  trunk/audacious/mainwin.c      |  196 +++++++++++++++++++-----
+  trunk/audacious/ui_playlist.c  |    2 
+  trunk/audacious/util.c         |  106 +++++++++++++
+  trunk/audacious/util.h         |    2 
+  trunk/audacious/widgets/skin.c |   43 +++--
+  trunk/audacious/widgets/skin.h |    1 
+  trunk/audacious/widgets/svis.c |  138 ++++++++++++-----
+  trunk/audacious/widgets/vis.c  |  331 ++++++++++++++++++++++++++++++-----------
+  trunk/audacious/widgets/vis.h  |    4 
+  15 files changed, 760 insertions(+), 202 deletions(-)
+
+
 2006-11-05 10:38:25 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2831]
   - update documentation per bug #605
