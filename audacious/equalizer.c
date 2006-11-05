@@ -204,12 +204,12 @@ equalizerwin_set_doublesize(gboolean ds)
     equalizerwin_set_shape_mask();
 
     if (ds) {
-        dock_window_resize(equalizerwin, 275, height, 550, height * 2);
+        dock_window_resize(GTK_WINDOW(equalizerwin), 550, height * 2, 550, height * 2);
         gdk_window_set_back_pixmap(equalizerwin->window, equalizerwin_bg_x2,
                                    0);
     }
     else {
-        dock_window_resize(equalizerwin, 275, height, 275, height);
+        dock_window_resize(GTK_WINDOW(equalizerwin), 275, height, 275, height);
         gdk_window_set_back_pixmap(equalizerwin->window, equalizerwin_bg, 0);
     }
 

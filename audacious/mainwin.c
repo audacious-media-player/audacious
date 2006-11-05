@@ -1044,8 +1044,8 @@ mainwin_refresh_hints(void)
 		return;
 	}
 
-        dock_window_resize(GTK_WINDOW(mainwin), cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width,
-		cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
+        dock_window_resize(GTK_WINDOW(mainwin), cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1),
+		cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1),
 		bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1),
 		bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1));
 
