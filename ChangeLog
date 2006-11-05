@@ -1,3 +1,11 @@
+2006-11-05 21:29:22 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2841]
+  - add keypad-enter binding for queueing files in jump-to-file. closes #295.
+  
+  trunk/audacious/mainwin.c |    5 +++++
+  1 file changed, 5 insertions(+)
+
+
 2006-11-05 20:22:41 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2839]
   - update russian translation

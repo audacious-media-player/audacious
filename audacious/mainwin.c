@@ -1836,24 +1836,12 @@ static gboolean
 mainwin_jump_to_file_match(const gchar * song, gchar ** keys)
 {
     gint i = 0;
-    gchar *key;
-    gchar *song_lc;
-
-    song_lc = g_ascii_strdown(song, -1);
 
     while (keys[i]) {
-        key = g_ascii_strdown(keys[i], -1);
-        if (!g_strrstr(song_lc, key)) {
-            g_free(key);
-            g_free(song_lc);
+        if (g_strcasecmp(song, keys[i]))
             return FALSE;
-        }
-
-        g_free(key);
         i++;
     }
-
-    g_free(song_lc);
 
     return TRUE;
 }
