@@ -1817,3 +1817,109 @@ GdkPixmap *audacious_pixmap_resize(GdkWindow *src, GdkGC *src_gc, GdkPixmap *in,
 
 	return out;
 }
+
+GdkImage *create_dblsize_image(GdkImage * img)
+{
+    GdkImage *dblimg;
+    register guint x, y;
+
+    /*
+     * This needs to be optimized
+     */
+
+    dblimg =
+	gdk_image_new(GDK_IMAGE_NORMAL, gdk_visual_get_best(),
+		      img->width << 1, img->height << 1);
+    if (dblimg->bpp == 1) {
+	register guint8 *srcptr, *ptr, *ptr2, pix;
+
+	srcptr = GDK_IMAGE_XIMAGE(img)->data;
+	ptr = GDK_IMAGE_XIMAGE(dblimg)->data;
+	ptr2 = ptr + dblimg->bpl;
+
+	for (y = 0; y < img->height; y++) {
+	    for (x = 0; x < img->width; x++) {
+		pix = *srcptr++;
+		*ptr++ = pix;
+		*ptr++ = pix;
+		*ptr2++ = pix;
+		*ptr2++ = pix;
+	    }
+	    srcptr += img->bpl - img->width;
+	    ptr += (dblimg->bpl << 1) - dblimg->width;
+	    ptr2 += (dblimg->bpl << 1) - dblimg->width;
+	}
+    }
+    if (dblimg->bpp == 2) {
+	guint16 *srcptr, *ptr, *ptr2, pix;
+
+	srcptr = (guint16 *) GDK_IMAGE_XIMAGE(img)->data;
+	ptr = (guint16 *) GDK_IMAGE_XIMAGE(dblimg)->data;
+	ptr2 = ptr + (dblimg->bpl >> 1);
+
+	for (y = 0; y < img->height; y++) {
+	    for (x = 0; x < img->width; x++) {
+		pix = *srcptr++;
+		*ptr++ = pix;
+		*ptr++ = pix;
+		*ptr2++ = pix;
+		*ptr2++ = pix;
+	    }
+	    srcptr += (img->bpl >> 1) - img->width;
+	    ptr += (dblimg->bpl) - dblimg->width;
+	    ptr2 += (dblimg->bpl) - dblimg->width;
+	}
+    }
+    if (dblimg->bpp == 3) {
+	register guint8 *srcptr, *ptr, *ptr2, pix1, pix2, pix3;
+
+	srcptr = GDK_IMAGE_XIMAGE(img)->data;
+	ptr = GDK_IMAGE_XIMAGE(dblimg)->data;
+	ptr2 = ptr + dblimg->bpl;
+
+	for (y = 0; y < img->height; y++) {
+	    for (x = 0; x < img->width; x++) {
+		pix1 = *srcptr++;
+		pix2 = *srcptr++;
+		pix3 = *srcptr++;
+		*ptr++ = pix1;
+		*ptr++ = pix2;
+		*ptr++ = pix3;
+		*ptr++ = pix1;
+		*ptr++ = pix2;
+		*ptr++ = pix3;
+		*ptr2++ = pix1;
+		*ptr2++ = pix2;
+		*ptr2++ = pix3;
+		*ptr2++ = pix1;
+		*ptr2++ = pix2;
+		*ptr2++ = pix3;
+
+	    }
+	    srcptr += img->bpl - (img->width * 3);
+	    ptr += (dblimg->bpl << 1) - (dblimg->width * 3);
+	    ptr2 += (dblimg->bpl << 1) - (dblimg->width * 3);
+	}
+    }
+    if (dblimg->bpp == 4) {
+	register guint32 *srcptr, *ptr, *ptr2, pix;
+
+	srcptr = (guint32 *) GDK_IMAGE_XIMAGE(img)->data;
+	ptr = (guint32 *) GDK_IMAGE_XIMAGE(dblimg)->data;
+	ptr2 = ptr + (dblimg->bpl >> 2);
+
+	for (y = 0; y < img->height; y++) {
+	    for (x = 0; x < img->width; x++) {
+		pix = *srcptr++;
+		*ptr++ = pix;
+		*ptr++ = pix;
+		*ptr2++ = pix;
+		*ptr2++ = pix;
+	    }
+	    srcptr += (img->bpl >> 2) - img->width;
+	    ptr += (dblimg->bpl >> 1) - dblimg->width;
+	    ptr2 += (dblimg->bpl >> 1) - dblimg->width;
+	}
+    }
+    return dblimg;
+}

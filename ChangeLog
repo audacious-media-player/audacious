@@ -1,3 +1,11 @@
+2006-11-05 10:38:25 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2831]
+  - update documentation per bug #605
+  
+  trunk/README |    7 -------
+  1 file changed, 7 deletions(-)
+
+
 2006-11-05 10:29:47 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2829]
   - per bug #605, remove GNOME VFS.

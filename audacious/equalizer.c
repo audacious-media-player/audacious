@@ -93,7 +93,7 @@ static GtkWidget *equalizerwin_save_auto_entry;
 static GtkWidget *equalizerwin_delete_window = NULL;
 static GtkWidget *equalizerwin_delete_auto_window = NULL;
 
-static GdkPixmap *equalizerwin_bg;
+static GdkPixmap *equalizerwin_bg, *equalizerwin_bg_x2;
 static GdkGC *equalizerwin_gc;
 
 static GList *equalizerwin_wlist = NULL;
@@ -180,15 +180,41 @@ equalizer_preset_free(EqualizerPreset * preset)
 static void
 equalizerwin_set_shape_mask(void)
 {
-    GdkBitmap *mask;
-
     if (cfg.show_wm_decorations)
         return;
 
-    mask = skin_get_mask(bmp_active_skin, SKIN_MASK_EQ + cfg.equalizer_shaded);
-    gtk_widget_shape_combine_mask(equalizerwin, mask, 0, 0);
+    if (cfg.doublesize == FALSE)
+        gtk_widget_shape_combine_mask(equalizerwin,
+                                      skin_get_mask(bmp_active_skin,
+                                                    SKIN_MASK_EQ), 0, 0);
+    else
+        gtk_widget_shape_combine_mask(equalizerwin, NULL, 0, 0);
 }
 
+void
+equalizerwin_set_doublesize(gboolean ds)
+{
+    gint height;
+
+    if (cfg.equalizer_shaded)
+        height = 14;
+    else
+        height = 116;
+
+    equalizerwin_set_shape_mask();
+
+    if (ds) {
+        dock_window_resize(equalizerwin, 275, height, 550, height * 2);
+        gdk_window_set_back_pixmap(equalizerwin->window, equalizerwin_bg_x2,
+                                   0);
+    }
+    else {
+        dock_window_resize(equalizerwin, 275, height, 275, height);
+        gdk_window_set_back_pixmap(equalizerwin->window, equalizerwin_bg, 0);
+    }
+
+    draw_equalizer_window(TRUE);
+}
 
 void
 equalizerwin_set_shade_menu_cb(gboolean shaded)
@@ -198,7 +224,8 @@ equalizerwin_set_shade_menu_cb(gboolean shaded)
     equalizerwin_set_shape_mask();
 
     if (shaded) {
-        dock_shade(dock_window_list, GTK_WINDOW(equalizerwin), 14);
+        dock_shade(dock_window_list, GTK_WINDOW(equalizerwin),
+                   14 * (EQUALIZER_DOUBLESIZE + 1));
         pbutton_set_button_data(equalizerwin_shade, -1, 3, -1, 47);
         pbutton_set_skin_index1(equalizerwin_shade, SKIN_EQ_EX);
         pbutton_set_button_data(equalizerwin_close, 11, 38, 11, 47);
@@ -207,7 +234,8 @@ equalizerwin_set_shade_menu_cb(gboolean shaded)
         widget_show(WIDGET(equalizerwin_balance));
     }
     else {
-        dock_shade(dock_window_list, GTK_WINDOW(equalizerwin), 116);
+        dock_shade(dock_window_list, GTK_WINDOW(equalizerwin),
+                   116 * (EQUALIZER_DOUBLESIZE + 1));
         pbutton_set_button_data(equalizerwin_shade, -1, 137, -1, 38);
         pbutton_set_skin_index1(equalizerwin_shade, SKIN_EQMAIN);
         pbutton_set_button_data(equalizerwin_close, 0, 116, 0, 125);
@@ -286,6 +314,9 @@ equalizerwin_auto_pushed(gboolean toggled)
 void
 draw_equalizer_window(gboolean force)
 {
+    GdkImage *img, *img2;
+    GList *wl;
+    Widget *w;
     gboolean redraw;
 
     widget_list_lock(equalizerwin_wlist);
@@ -320,7 +351,36 @@ draw_equalizer_window(gboolean force)
     widget_list_draw(equalizerwin_wlist, &redraw, force);
 
     if (force || redraw) {
-        widget_list_clear_redraw(equalizerwin_wlist);
+        if (cfg.doublesize && cfg.eq_doublesize_linked) {
+            if (force) {
+                img = gdk_drawable_get_image(equalizerwin_bg, 0, 0, 275, 116);
+                img2 = create_dblsize_image(img);
+                gdk_draw_image(equalizerwin_bg_x2, equalizerwin_gc,
+                               img2, 0, 0, 0, 0, 550, 232);
+                gdk_image_destroy(img2);
+                gdk_image_destroy(img);
+            }
+            else {
+                for (wl = equalizerwin_wlist; wl; wl = g_list_next(wl)) {
+                    w = WIDGET(wl->data);
+                    if (w->redraw && w->visible) {
+                        img = gdk_drawable_get_image(equalizerwin_bg,
+                                                     w->x, w->y,
+                                                     w->width, w->height);
+                        img2 = create_dblsize_image(img);
+                        gdk_draw_image(equalizerwin_bg_x2,
+                                       equalizerwin_gc, img2, 0, 0,
+                                       w->x << 1, w->y << 1, w->width << 1,
+                                       w->height << 1);
+                        gdk_image_destroy(img2);
+                        gdk_image_destroy(img);
+                        w->redraw = FALSE;
+                    }
+                }
+            }
+        }
+        else
+            widget_list_clear_redraw(equalizerwin_wlist);
         gdk_window_clear(equalizerwin->window);
         gdk_flush();
     }
@@ -360,9 +420,13 @@ equalizerwin_press(GtkWidget * widget, GdkEventButton * event,
 
     mx = event->x;
     my = event->y;
+    if (cfg.doublesize && cfg.eq_doublesize_linked) {
+        event->x /= 2;
+        event->y /= 2;
+    }
 
     if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
-        ((cfg.equalizer_shaded || event->y < 14) &&
+        ((cfg.easy_move || cfg.equalizer_shaded || event->y < 14) &&
          !inside_sensitive_widgets(event->x, event->y))) {
         if (0 && hint_move_resize_available()) {
             hint_move_resize(equalizerwin, event->x_root,
@@ -407,6 +471,11 @@ equalizerwin_press(GtkWidget * widget, GdkEventButton * event,
 static void
 equalizerwin_scroll(GtkWidget * widget, GdkEventScroll * event, gpointer data)
 {
+    if (cfg.doublesize && cfg.eq_doublesize_linked) {
+        event->x /= 2;
+        event->y /= 2;
+    }
+
     handle_scroll_cb(equalizerwin_wlist, widget, event);
     draw_equalizer_window(FALSE);
 }
@@ -441,6 +510,10 @@ equalizerwin_release(GtkWidget * widget,
     gdk_pointer_ungrab(GDK_CURRENT_TIME);
     gdk_flush();
 
+    if (cfg.doublesize && cfg.eq_doublesize_linked) {
+        event->x /= 2;
+        event->y /= 2;
+    }
     if (dock_is_moving(GTK_WINDOW(equalizerwin))) {
         dock_move_release(GTK_WINDOW(equalizerwin));
     }
@@ -517,7 +590,11 @@ equalizerwin_configure(GtkWidget * window,
 static void
 equalizerwin_set_back_pixmap(void)
 {
-    gdk_window_set_back_pixmap(equalizerwin->window, equalizerwin_bg, 0);
+    if (cfg.doublesize && cfg.eq_doublesize_linked)
+        gdk_window_set_back_pixmap(equalizerwin->window, equalizerwin_bg_x2,
+                                   0);
+    else
+        gdk_window_set_back_pixmap(equalizerwin->window, equalizerwin_bg, 0);
     gdk_window_clear(equalizerwin->window);
 }
 
@@ -743,6 +820,11 @@ equalizerwin_create_window(void)
     width = 275;
     height = cfg.equalizer_shaded ? 14 : 116;
 
+    if (cfg.doublesize && cfg.eq_doublesize_linked) {
+        width *= 2;
+        height *= 2;
+    }
+
     gtk_window_set_default_size(GTK_WINDOW(equalizerwin), width, height);
     gtk_window_set_resizable(GTK_WINDOW(equalizerwin), FALSE);
 
@@ -817,11 +899,16 @@ equalizerwin_create(void)
 
     equalizerwin_gc = gdk_gc_new(equalizerwin->window);
     equalizerwin_bg = gdk_pixmap_new(equalizerwin->window, 275, 116, -1);
+    equalizerwin_bg_x2 = gdk_pixmap_new(equalizerwin->window, 550, 232, -1);
 
     equalizerwin_create_widgets();
 
     equalizerwin_set_back_pixmap();
-    gdk_window_set_back_pixmap(equalizerwin->window, equalizerwin_bg, 0);
+    if (cfg.doublesize && cfg.eq_doublesize_linked)
+        gdk_window_set_back_pixmap(equalizerwin->window,
+                                   equalizerwin_bg_x2, 0);
+    else
+        gdk_window_set_back_pixmap(equalizerwin->window, equalizerwin_bg, 0);
 }
 
 
@@ -845,8 +932,12 @@ equalizerwin_real_show(void)
 
     gtk_window_get_position(GTK_WINDOW(equalizerwin), &x, &y);
     gtk_window_move(GTK_WINDOW(equalizerwin), x, y);
-    gtk_widget_set_size_request(equalizerwin, 275,
-                                (cfg.equalizer_shaded ? 14 : 116));
+    if (cfg.doublesize && cfg.eq_doublesize_linked)
+        gtk_widget_set_size_request(equalizerwin, 550,
+                                    (cfg.equalizer_shaded ? 28 : 232));
+    else
+        gtk_widget_set_size_request(equalizerwin, 275,
+                                    (cfg.equalizer_shaded ? 14 : 116));
     gdk_flush();
     draw_equalizer_window(TRUE);
     cfg.equalizer_visible = TRUE;

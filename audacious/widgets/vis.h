@@ -66,6 +66,7 @@ struct _Vis {
     GdkWindow *vs_window;
     gfloat vs_data[75], vs_peak[75], vs_peak_speed[75];
     gint vs_refresh_delay;
+    gboolean vs_doublesize;
 };
 
 typedef struct _Vis Vis;
@@ -73,10 +74,11 @@ typedef struct _Vis Vis;
 void vis_draw(Widget * w);
 
 Vis *create_vis(GList ** wlist, GdkPixmap * parent, GdkWindow * window,
-                GdkGC * gc, gint x, gint y, gint width);
+                GdkGC * gc, gint x, gint y, gint width, gboolean doublesize);
 void vis_timeout_func(Vis * vis, guchar * data);
 void vis_clear_data(Vis * vis);
 void vis_clear(Vis * vis);
+void vis_set_doublesize(Vis * vis, gboolean doublesize);
 void vis_set_window(Vis * vis, GdkWindow * window);
 
 #endif

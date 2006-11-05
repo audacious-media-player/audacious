@@ -1,4 +1,7 @@
-/*  BMP - Cross-platform multimedia player
+/*  Audacious
+ *  Copyright (C) 2005-2006  Audacious development team.
+ *
+ *  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
  *
  *  Based on XMMS:
@@ -27,8 +30,9 @@
 
 #include "widgets/widgetcore.h"
 
-#define EQUALIZER_HEIGHT         (gint)(cfg.equalizer_shaded ? 14 : 116)
-#define EQUALIZER_WIDTH          (gint)275
+#define EQUALIZER_DOUBLESIZE     (cfg.doublesize && cfg.eq_doublesize_linked)
+#define EQUALIZER_HEIGHT         ((cfg.equalizer_shaded ? 14 : 116) * (EQUALIZER_DOUBLESIZE + 1))
+#define EQUALIZER_WIDTH          (275 * (EQUALIZER_DOUBLESIZE + 1))
 
 #define EQUALIZER_DEFAULT_POS_X  20
 #define EQUALIZER_DEFAULT_POS_Y  136
@@ -36,6 +40,7 @@
 #define EQUALIZER_DEFAULT_DIR_PRESET "dir_default.preset"
 #define EQUALIZER_DEFAULT_PRESET_EXT "preset"
 
+void equalizerwin_set_doublesize(gboolean ds);
 void equalizerwin_set_shade_menu_cb(gboolean shaded);
 void draw_equalizer_window(gboolean force);
 void equalizerwin_create(void);

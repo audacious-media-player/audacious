@@ -122,19 +122,15 @@ static const guchar skin_default_viscolor[24][3] = {
     {200, 200, 200}
 };
 
-static GdkBitmap *
-skin_create_transparent_mask(const gchar *,
-                             const gchar *,
-                             const gchar *,
-                             GdkWindow *,
-                             gint, gint);
+static GdkBitmap *skin_create_transparent_mask(const gchar *,
+                                               const gchar *,
+                                               const gchar *,
+                                               GdkWindow *,
+                                               gint, gint, gboolean);
 
-static void
-skin_setup_masks(Skin * skin);
+static void skin_setup_masks(Skin * skin);
 
-static void
-skin_set_default_vis_color(Skin * skin);
-
+static void skin_set_default_vis_color(Skin * skin);
 
 void
 skin_lock(Skin * skin)
@@ -219,8 +215,11 @@ skin_free(Skin * skin)
     for (i = 0; i < SKIN_PIXMAP_COUNT; i++) {
         if (skin->masks[i])
             g_object_unref(skin->masks[i]);
+        if (skin->ds_masks[i])
+            g_object_unref(skin->ds_masks[i]);
 
         skin->masks[i] = NULL;
+        skin->ds_masks[i] = NULL;
     }
 
     skin_set_default_vis_color(skin);
@@ -399,7 +398,13 @@ skin_mask_create(Skin * skin,
         skin_create_transparent_mask(path, "region.txt",
                                      skin_mask_info[id].inistr, window,
                                      skin_mask_info[id].width,
-                                     skin_mask_info[id].height);
+                                     skin_mask_info[id].height, FALSE);
+
+    skin->ds_masks[id] =
+        skin_create_transparent_mask(path, "region.txt",
+                                     skin_mask_info[id].inistr, window,
+                                     skin_mask_info[id].width * 2,
+                                     skin_mask_info[id].height * 2, TRUE);
 }
 
 static void
@@ -1203,7 +1208,7 @@ skin_create_transparent_mask(const gchar * path,
                              const gchar * section,
                              GdkWindow * window,
                              gint width,
-                             gint height)
+                             gint height, gboolean doublesize)
 {
     GdkBitmap *mask = NULL;
     GdkGC *gc = NULL;
@@ -1250,8 +1255,11 @@ skin_create_transparent_mask(const gchar * path,
             created_mask = TRUE;
             gpoints = g_new(GdkPoint, g_array_index(num, gint, i));
             for (k = 0; k < g_array_index(num, gint, i); k++) {
-                gpoints[k].x = g_array_index(point, gint, j + k * 2);
-                gpoints[k].y = g_array_index(point, gint, j + k * 2 + 1);
+                gpoints[k].x =
+                    g_array_index(point, gint, j + k * 2) * (1 + doublesize);
+                gpoints[k].y =
+                    g_array_index(point, gint,
+                                  j + k * 2 + 1) * (1 + doublesize);
             }
             j += k * 2;
             gdk_draw_polygon(mask, gc, TRUE, gpoints,
@@ -1521,10 +1529,13 @@ skin_get_pixmap(Skin * skin, SkinPixmapId map_id)
 GdkBitmap *
 skin_get_mask(Skin * skin, SkinMaskId mi)
 {
+    GdkBitmap **masks;
+
     g_return_val_if_fail(skin != NULL, NULL);
     g_return_val_if_fail(mi < SKIN_PIXMAP_COUNT, NULL);
 
-    return skin->masks[mi];
+    masks = cfg.doublesize ? skin->ds_masks : skin->masks;
+    return masks[mi];
 }
 
 GdkColor *

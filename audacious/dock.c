@@ -289,7 +289,7 @@ find_shade_list(GtkWindow * widget, GList * winlist, GList * shade_list)
     return shade_list;
 }
 
-static void
+void
 dock_window_resize(GtkWindow * widget, gint new_w, gint new_h, gint w, gint h)
 {
     gdk_window_set_hints(GTK_WIDGET(widget)->window, 0, 0, MIN(w, new_w),

@@ -117,51 +117,103 @@ svis_draw(Widget * w)
     }
     cmap = gdk_rgb_cmap_new(colors, 24);
 
-    memset(rgb_data, 0, SVIS_WIDTH * SVIS_HEIGHT);
-    if (cfg.vis_type == VIS_ANALYZER) {
-        switch (cfg.vu_mode) {
-        case VU_NORMAL:
-            for (y = 0; y < 2; y++) {
-                ptr = rgb_data + ((y * 3) * 38);
-                h = (svis->vs_data[y] * 7) / 37;
-                for (x = 0; x < h; x++, ptr += 5) {
-                    c = svis_vu_normal_colors[x];
-                    *(ptr) = c;
-                    *(ptr + 1) = c;
-                    *(ptr + 2) = c;
-                    *(ptr + 38) = c;
-                    *(ptr + 39) = c;
-                    *(ptr + 40) = c;
+    if (!cfg.doublesize) {
+        memset(rgb_data, 0, SVIS_WIDTH * SVIS_HEIGHT);
+        if (cfg.vis_type == VIS_ANALYZER) {
+            switch (cfg.vu_mode) {
+            case VU_NORMAL:
+                for (y = 0; y < 2; y++) {
+                    ptr = rgb_data + ((y * 3) * 38);
+                    h = (svis->vs_data[y] * 7) / 37;
+                    for (x = 0; x < h; x++, ptr += 5) {
+                        c = svis_vu_normal_colors[x];
+                        *(ptr) = c;
+                        *(ptr + 1) = c;
+                        *(ptr + 2) = c;
+                        *(ptr + 38) = c;
+                        *(ptr + 39) = c;
+                        *(ptr + 40) = c;
+                    }
                 }
-            }
-            break;
-        case VU_SMOOTH:
-            for (y = 0; y < 2; y++) {
-                ptr = rgb_data + ((y * 3) * SVIS_WIDTH);
-                for (x = 0; x < svis->vs_data[y]; x++, ptr++) {
-                    c = 17 - ((x * 15) / 37);
-                    *(ptr) = c;
-                    *(ptr + 38) = c;
+                break;
+            case VU_SMOOTH:
+                for (y = 0; y < 2; y++) {
+                    ptr = rgb_data + ((y * 3) * SVIS_WIDTH);
+                    for (x = 0; x < svis->vs_data[y]; x++, ptr++) {
+                        c = 17 - ((x * 15) / 37);
+                        *(ptr) = c;
+                        *(ptr + 38) = c;
+                    }
                 }
+                break;
             }
-            break;
         }
-    }
-    else if (cfg.vis_type == VIS_SCOPE) {
-        for (x = 0; x < 38; x++) {
-            h = svis->vs_data[x << 1] / 3;
-            ptr = rgb_data + ((4 - h) * 38) + x;
-            *ptr = svis_scope_colors[h];
+        else if (cfg.vis_type == VIS_SCOPE) {
+            for (x = 0; x < 38; x++) {
+                h = svis->vs_data[x << 1] / 3;
+                ptr = rgb_data + ((4 - h) * 38) + x;
+                *ptr = svis_scope_colors[h];
+            }
         }
+
+        gdk_draw_indexed_image(mainwin->window, mainwin_gc,
+                               svis->vs_widget.x, svis->vs_widget.y,
+                               svis->vs_widget.width,
+                               svis->vs_widget.height,
+                               GDK_RGB_DITHER_NORMAL, (guchar *) rgb_data,
+                               38, cmap);
     }
+    else {                      /* doublesize */
 
-    gdk_draw_indexed_image(mainwin->window, mainwin_gc,
-                           svis->vs_widget.x, svis->vs_widget.y,
-                           svis->vs_widget.width,
-                           svis->vs_widget.height,
-                           GDK_RGB_DITHER_NORMAL, (guchar *) rgb_data,
-                           38, cmap);
+        memset(rgb_data, 0, SVIS_WIDTH * 2 * SVIS_HEIGHT * 2);
+        if (cfg.vis_type == VIS_ANALYZER) {
+            switch (cfg.vu_mode) {
+            case VU_NORMAL:
+                for (y = 0; y < 2; y++) {
+                    ptr = rgb_data + ((y * 3) * 152);
+                    h = (svis->vs_data[y] * 8) / 37;
+                    for (x = 0; x < h; x++, ptr += 10) {
+                        c = svis_vu_normal_colors[x];
+                        DRAW_DS_PIXEL(ptr, c);
+                        DRAW_DS_PIXEL(ptr + 2, c);
+                        DRAW_DS_PIXEL(ptr + 4, c);
+                        DRAW_DS_PIXEL(ptr + 152, c);
+                        DRAW_DS_PIXEL(ptr + 154, c);
+                        DRAW_DS_PIXEL(ptr + 156, c);
+                    }
+                }
+                break;
+            case VU_SMOOTH:
+                for (y = 0; y < 2; y++) {
+                    ptr = rgb_data + ((y * 3) * 152);
+                    for (x = 0; x < svis->vs_data[y]; x++, ptr += 2) {
+                        c = 17 - ((x * 15) / 37);
+                        DRAW_DS_PIXEL(ptr, c);
+                        DRAW_DS_PIXEL(ptr + 152, c);
+                    }
+                }
+                break;
+            }
+        }
+        else if (cfg.vis_type == VIS_SCOPE) {
+            for (x = 0; x < 38; x++) {
+                h = svis->vs_data[x << 1] / 3;
+                ptr = rgb_data + ((4 - h) * 152) + (x << 1);
+                *ptr = svis_scope_colors[h];
+                *(ptr + 1) = svis_scope_colors[h];
+                *(ptr + 76) = svis_scope_colors[h];
+                *(ptr + 77) = svis_scope_colors[h];
+            }
+        }
 
+        gdk_draw_indexed_image(mainwin->window, mainwin_gc,
+                               svis->vs_widget.x << 1,
+                               svis->vs_widget.y << 1,
+                               svis->vs_widget.width << 1,
+                               svis->vs_widget.height << 1,
+                               GDK_RGB_DITHER_NONE, (guchar *) rgb_data,
+                               76, cmap);
+    }
     gdk_rgb_cmap_free(cmap);
     GDK_THREADS_LEAVE();
 }
@@ -182,9 +234,15 @@ svis_clear_data(SVis * svis)
 void
 svis_clear(SVis * svis)
 {
-    gdk_window_clear_area(mainwin->window, svis->vs_widget.x,
-                          svis->vs_widget.y, svis->vs_widget.width,
-                          svis->vs_widget.height);
+    if (!cfg.doublesize)
+        gdk_window_clear_area(mainwin->window, svis->vs_widget.x,
+                              svis->vs_widget.y, svis->vs_widget.width,
+                              svis->vs_widget.height);
+    else
+        gdk_window_clear_area(mainwin->window, svis->vs_widget.x << 1,
+                              svis->vs_widget.y << 1,
+                              svis->vs_widget.width << 1,
+                              svis->vs_widget.height << 1);
 }
 
 SVis *

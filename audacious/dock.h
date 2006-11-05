@@ -38,5 +38,6 @@ void dock_shade(GList * window_list, GtkWindow * widget, gint new_h);
 
 GList *dock_window_set_decorated(GList * list, GtkWindow * window,
                                  gboolean decorated);
+void dock_window_resize(GtkWindow * widget, gint new_w, gint new_h, gint w, gint h);
 
 #endif

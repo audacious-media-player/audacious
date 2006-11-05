@@ -1205,7 +1205,7 @@ playlistwin_press(GtkWidget * widget,
                               GDK_TARGET_STRING, event->time);
     }
     else if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
-             !inside_sensitive_widgets(event->x, event->y) && event->y < 14)
+             !inside_sensitive_widgets(event->x, event->y) && (cfg.easy_move || event->y < 14))
     {
         dock_move_press(dock_window_list, GTK_WINDOW(playlistwin), event,
                         FALSE);

@@ -146,6 +146,8 @@ GtkWidget *xmms_show_message(const gchar * title, const gchar * text,
 gboolean xmms_check_realtime_priority(void);
 void xmms_usleep(gint usec);
 
+GdkImage *create_dblsize_image(GdkImage * img);
+
 G_END_DECLS
 
 #endif

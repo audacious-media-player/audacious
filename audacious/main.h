@@ -45,8 +45,9 @@ G_BEGIN_DECLS
 #define BMP_LOG_BASENAME              "log"
 
 #define PLAYER_HEIGHT \
-  (cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : MAINWIN_HEIGHT)
-#define PLAYER_WIDTH  MAINWIN_WIDTH
+  ((cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : MAINWIN_HEIGHT) * (cfg.doublesize + 1))
+#define PLAYER_WIDTH \
+  (MAINWIN_WIDTH * (cfg.doublesize + 1))
 
 struct _BmpConfig {
     gint player_x, player_y;

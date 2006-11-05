@@ -119,7 +119,7 @@ enum {
     MAINWIN_OPT_STICKY,
     MAINWIN_OPT_WS,
     MAINWIN_OPT_PWS,
-    MAINWIN_OPT_EQWS
+    MAINWIN_OPT_EQWS, MAINWIN_OPT_DOUBLESIZE, MAINWIN_OPT_EASY_MOVE
 };
 
 enum {
@@ -173,7 +173,7 @@ gint seek_state = MAINWIN_SEEK_NIL;
 gint seek_initial_pos = 0;
 
 GdkGC *mainwin_gc;
-static GdkPixmap *mainwin_bg = NULL;
+static GdkPixmap *mainwin_bg = NULL, *mainwin_bg_x2 = NULL;
 
 GtkAccelGroup *mainwin_accel = NULL;
 
@@ -438,7 +438,12 @@ GtkItemFactoryEntry mainwin_view_menu_entries[] = {
     {N_("/Roll up Playlist Editor"), "<control><shift>W", mainwin_view_menu_callback,
      MAINWIN_OPT_PWS, "<ToggleItem>", NULL},
     {N_("/Roll up Equalizer"), "<control><alt>W", mainwin_view_menu_callback,
-     MAINWIN_OPT_EQWS, "<ToggleItem>", NULL}
+     MAINWIN_OPT_EQWS, "<ToggleItem>", NULL},
+    {"/-", NULL, NULL, 0, "<Separator>", NULL},
+    {N_("/DoubleSize"), "<control>D", mainwin_view_menu_callback,
+     MAINWIN_OPT_DOUBLESIZE, "<ToggleItem>"},
+    {N_("/Easy Move"), "<control>E", mainwin_view_menu_callback,
+     MAINWIN_OPT_EASY_MOVE, "<ToggleItem>"}
 };
 
 static const gint mainwin_view_menu_entries_num =
@@ -457,6 +462,8 @@ static void mainwin_refresh_hints(void);
 
 void mainwin_position_motion_cb(gint pos);
 void mainwin_position_release_cb(gint pos);
+
+void set_doublesize(gboolean doublesize);
 
 
 /* FIXME: placed here for now */
@@ -510,13 +517,15 @@ mainwin_set_always_on_top(gboolean always)
 static void
 mainwin_set_shape_mask(void)
 {
-    GdkBitmap *mask;
-
     if (!cfg.player_visible)
         return;
 
-    mask = skin_get_mask(bmp_active_skin, SKIN_MASK_MAIN + cfg.player_shaded);
-    gtk_widget_shape_combine_mask(mainwin, mask, 0, 0);
+    if (cfg.doublesize == FALSE)
+        gtk_widget_shape_combine_mask(mainwin,
+                                  skin_get_mask(bmp_active_skin,
+                                                SKIN_MASK_MAIN), 0, 0);
+    else
+        gtk_widget_shape_combine_mask(mainwin, NULL, 0, 0);
 }
 
 static void
@@ -537,7 +546,7 @@ mainwin_set_shade_menu_cb(gboolean shaded)
 
     if (shaded) {
         dock_shade(dock_window_list, GTK_WINDOW(mainwin),
-                   MAINWIN_SHADED_HEIGHT);
+                   MAINWIN_SHADED_HEIGHT * (cfg.doublesize + 1));
 
         widget_show(WIDGET(mainwin_svis));
         vis_clear_data(mainwin_vis);
@@ -566,9 +575,10 @@ mainwin_set_shade_menu_cb(gboolean shaded)
         mainwin_shade->pb_ny = mainwin_shade->pb_py = 27;
     }
     else {
-        dock_shade(dock_window_list, GTK_WINDOW(mainwin),
-		!bmp_active_skin->properties.mainwin_height ? MAINWIN_HEIGHT :
-		     bmp_active_skin->properties.mainwin_height);
+	gint height = !bmp_active_skin->properties.mainwin_height ? MAINWIN_HEIGHT :
+                     bmp_active_skin->properties.mainwin_height;
+
+        dock_shade(dock_window_list, GTK_WINDOW(mainwin), height * (cfg.doublesize + 1));
 
         widget_hide(WIDGET(mainwin_svis));
         svis_clear_data(mainwin_svis);
@@ -659,8 +669,8 @@ mainwin_menubtn_cb(void)
     gint x, y;
     gtk_window_get_position(GTK_WINDOW(mainwin), &x, &y);
     util_item_factory_popup(mainwin_general_menu,
-                            x + 6,
-                            y + MAINWIN_SHADED_HEIGHT,
+                            x + 6 * (1 + cfg.doublesize),
+                            y + MAINWIN_SHADED_HEIGHT * (1 + cfg.doublesize),
                             1, GDK_CURRENT_TIME);
 }
 
@@ -722,6 +732,7 @@ mainwin_draw_titlebar(gboolean focus)
 void
 draw_main_window(gboolean force)
 {
+    GdkImage *img, *img2x;
     GList *wl;
     Widget *w;
     gboolean redraw;
@@ -747,7 +758,22 @@ draw_main_window(gboolean force)
 
     if (redraw || force) {
         if (force) {
+            if (cfg.doublesize) {
+                img = gdk_drawable_get_image(mainwin_bg, 0, 0, bmp_active_skin->properties.mainwin_width,
+                                             cfg.player_shaded ?
+                                             MAINWIN_SHADED_HEIGHT :
+                                             bmp_active_skin->properties.mainwin_height);
+                img2x = create_dblsize_image(img);
+                gdk_draw_image(mainwin_bg_x2, mainwin_gc, img2x, 0, 0,
+                               0, 0, MAINWIN_WIDTH * 2,
+                               cfg.player_shaded ? MAINWIN_SHADED_HEIGHT *
+                               2 : MAINWIN_HEIGHT * 2);
+                gdk_image_destroy(img2x);
+                gdk_image_destroy(img);
+            }
+
             gdk_window_clear(mainwin->window);
+
         }
         else {
             for (wl = mainwin_wlist; wl; wl = g_list_next(wl)) {
@@ -756,8 +782,22 @@ draw_main_window(gboolean force)
                 if (!w->redraw || !w->visible)
                     continue;
 
-                gdk_window_clear_area(mainwin->window, w->x, w->y,
-                                      w->width, w->height);
+                if (cfg.doublesize) {
+                    img = gdk_drawable_get_image(mainwin_bg, w->x, w->y,
+                                                 w->width, w->height);
+                    img2x = create_dblsize_image(img);
+                    gdk_draw_image(mainwin_bg_x2, mainwin_gc,
+                                   img2x, 0, 0, w->x << 1, w->y << 1,
+                                   w->width << 1, w->height << 1);
+                    gdk_image_destroy(img2x);
+                    gdk_image_destroy(img);
+                    gdk_window_clear_area(mainwin->window, w->x << 1,
+                                          w->y << 1, w->width << 1,
+                                          w->height << 1);
+                }
+                else
+                    gdk_window_clear_area(mainwin->window, w->x, w->y,
+                                          w->width, w->height);
                 w->redraw = FALSE;
             }
         }
@@ -998,30 +1038,25 @@ mainwin_refresh_hints(void)
 
 	gdk_window_get_size(mainwin->window, &width, &height);
 
-	if (width == bmp_active_skin->properties.mainwin_width &&
-		height == bmp_active_skin->properties.mainwin_height)
+	if (width == bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1) &&
+		height == bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1))
 	{
 		return;
 	}
 
-        gdk_window_set_hints(mainwin->window, 0, 0,
-                                cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width,
-                                cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
-                                cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width,
-                                cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
-                                GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE);
-        gdk_window_resize(mainwin->window, cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width,
-		cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height);
-        gdk_window_set_hints(mainwin->window, 0, 0,
-                                cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width,
-                                cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
-                                cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width,
-                                cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
-                                GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE);
+        dock_window_resize(GTK_WINDOW(mainwin), cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width,
+		cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
+		bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1),
+		bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1));
+
 	g_object_unref(mainwin_bg);
+	g_object_unref(mainwin_bg_x2);
         mainwin_bg = gdk_pixmap_new(mainwin->window,
 				bmp_active_skin->properties.mainwin_width,
 				bmp_active_skin->properties.mainwin_height, -1);
+        mainwin_bg_x2 = gdk_pixmap_new(mainwin->window,
+				bmp_active_skin->properties.mainwin_width * 2,
+				bmp_active_skin->properties.mainwin_height * 2, -1);
         mainwin_set_back_pixmap();
 	widget_list_change_pixmap(mainwin_wlist, mainwin_bg);
 	gdk_flush();
@@ -1243,7 +1278,10 @@ mainwin_motion(GtkWidget * widget,
         y = event->y;
         state = event->state;
     }
-
+    if (cfg.doublesize) {
+        event->x /= 2;
+        event->y /= 2;
+    }
     if (dock_is_moving(GTK_WINDOW(mainwin))) {
         dock_move_motion(GTK_WINDOW(mainwin), event);
     }
@@ -1335,8 +1373,19 @@ mainwin_mouse_button_press(GtkWidget * widget,
 
     gboolean grab = TRUE;
 
+    if (cfg.doublesize) {
+        /*
+         * A hack to make doublesize transparent to callbacks.
+         * We should make a copy of this data instead of
+         * tampering with the data we get from gtk+
+         */
+        event->x /= 2;
+        event->y /= 2;
+    }
+
     if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
-        !inside_sensitive_widgets(event->x, event->y) && event->y < 14) {
+        !inside_sensitive_widgets(event->x, event->y) &&
+        (cfg.easy_move || event->y < 14)) {
         if (0 && hint_move_resize_available()) {
             hint_move_resize(mainwin, event->x_root, event->y_root, TRUE);
             grab = FALSE;
@@ -2133,7 +2182,10 @@ mainwin_configure(GtkWidget * window,
 void
 mainwin_set_back_pixmap(void)
 {
-    gdk_window_set_back_pixmap(mainwin->window, mainwin_bg, 0);
+    if (cfg.doublesize)
+        gdk_window_set_back_pixmap(mainwin->window, mainwin_bg_x2, 0);
+    else
+        gdk_window_set_back_pixmap(mainwin->window, mainwin_bg, 0);
     gdk_window_clear(mainwin->window);
 }
 
@@ -2738,6 +2790,44 @@ mainwin_play_menu_callback(gpointer data,
     }
 }
 
+static void
+mainwin_set_doublesize(gboolean doublesize)
+{
+    gint height;
+
+    if (cfg.player_shaded)
+        height = MAINWIN_SHADED_HEIGHT;
+    else
+        height = bmp_active_skin->properties.mainwin_height;
+
+    mainwin_set_shape_mask();
+
+    dock_window_resize(GTK_WINDOW(mainwin), cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width,
+		cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
+		bmp_active_skin->properties.mainwin_width * 2, bmp_active_skin->properties.mainwin_height * 2);
+
+    if (cfg.doublesize) {
+        gdk_window_set_back_pixmap(mainwin->window, mainwin_bg_x2, 0);
+    }
+    else {
+        gdk_window_set_back_pixmap(mainwin->window, mainwin_bg, 0);
+    }
+
+    draw_main_window(TRUE);
+    vis_set_doublesize(mainwin_vis, doublesize);
+}
+
+void
+set_doublesize(gboolean doublesize)
+{
+    cfg.doublesize = doublesize;
+
+    mainwin_set_doublesize(doublesize);
+
+    if (cfg.eq_doublesize_linked)
+        equalizerwin_set_doublesize(doublesize);
+}
+
                                
 static void
 mainwin_view_menu_callback(gpointer data,
@@ -2774,6 +2864,20 @@ mainwin_view_menu_callback(gpointer data,
         break;
     case MAINWIN_OPT_EQWS:
         equalizerwin_set_shade_menu_cb(GTK_CHECK_MENU_ITEM(item)->active);
+        break;
+    case MAINWIN_OPT_DOUBLESIZE:
+        mainwin_menurow->mr_doublesize_selected =
+            GTK_CHECK_MENU_ITEM(gtk_item_factory_get_widget
+                                (mainwin_view_menu,
+                                 "/DoubleSize"))->active;
+        widget_draw(WIDGET(mainwin_menurow));
+        set_doublesize(mainwin_menurow->mr_doublesize_selected);
+        gdk_flush();
+        break;
+    case MAINWIN_OPT_EASY_MOVE:
+        cfg.easy_move =
+            GTK_CHECK_MENU_ITEM(gtk_item_factory_get_widget
+                                (mainwin_view_menu, "/Easy Move"))->active;
         break;
     case MAINWIN_SONGNAME_SCROLL:
         check = GTK_CHECK_MENU_ITEM(item);
@@ -2968,7 +3072,10 @@ mainwin_mr_change(MenuRowItem i)
         mainwin_lock_info_text(_("FILE INFO BOX"));
         break;
     case MENUROW_DOUBLESIZE:
-        mainwin_lock_info_text(_("** DOUBLESIZE HAS BEEN REMOVED **"));
+        if (mainwin_menurow->mr_doublesize_selected)
+            mainwin_lock_info_text(_("DISABLE DOUBLESIZE"));
+        else
+            mainwin_lock_info_text(_("ENABLE DOUBLESIZE"));
         break;
     case MENUROW_VISUALIZATION:
         mainwin_lock_info_text(_("VISUALIZATION MENU"));
@@ -3000,7 +3107,10 @@ mainwin_mr_release(MenuRowItem i)
         playlist_fileinfo_current();
         break;
     case MENUROW_DOUBLESIZE:
-        /* double size removed, do nothing */
+        widget =
+            gtk_item_factory_get_widget(mainwin_view_menu, "/DoubleSize");
+        gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget),
+                                       mainwin_menurow->mr_doublesize_selected);
         break;
     case MENUROW_VISUALIZATION:
         gdk_window_get_pointer(NULL, &x, &y, &modmask);
@@ -3268,6 +3378,8 @@ mainwin_setup_menus(void)
     check_set(mainwin_view_menu, "/Roll up Player", cfg.player_shaded);
     check_set(mainwin_view_menu, "/Roll up Playlist Editor", cfg.playlist_shaded);
     check_set(mainwin_view_menu, "/Roll up Equalizer", cfg.equalizer_shaded);
+    check_set(mainwin_view_menu, "/Easy Move", cfg.easy_move);
+    check_set(mainwin_view_menu, "/DoubleSize", cfg.doublesize);
 
     /* Songname menu */
 
@@ -3422,7 +3534,7 @@ mainwin_create_widgets(void)
         create_menurow(&mainwin_wlist, mainwin_bg, mainwin_gc, 10, 22, 304,
                        0, 304, 44, mainwin_mr_change, mainwin_mr_release,
                        SKIN_TITLEBAR);
-    mainwin_menurow->mr_doublesize_selected = FALSE;
+    mainwin_menurow->mr_doublesize_selected = cfg.doublesize;
     mainwin_menurow->mr_always_selected = cfg.always_on_top;
 
     mainwin_volume =
@@ -3473,7 +3585,7 @@ mainwin_create_widgets(void)
 
     mainwin_vis =
         create_vis(&mainwin_wlist, mainwin_bg, mainwin->window, mainwin_gc,
-                   24, 43, 76);
+                   24, 43, 76, cfg.doublesize);
     mainwin_svis = create_svis(&mainwin_wlist, mainwin_bg, mainwin_gc, 79, 5);
     active_vis = mainwin_vis;
 
@@ -3533,6 +3645,11 @@ mainwin_create_window(void)
 
     width = cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width;
     height = cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height;
+
+    if (cfg.doublesize) {
+        width *= 2;
+        height *= 2;
+    }
 
     gtk_widget_set_size_request(mainwin, width, height);
     gtk_widget_set_app_paintable(mainwin, TRUE);
@@ -3623,6 +3740,9 @@ mainwin_create(void)
     mainwin_bg = gdk_pixmap_new(mainwin->window,
                                 bmp_active_skin->properties.mainwin_width,
 				bmp_active_skin->properties.mainwin_height, -1);
+    mainwin_bg_x2 = gdk_pixmap_new(mainwin->window,
+                                bmp_active_skin->properties.mainwin_width * 2,
+				bmp_active_skin->properties.mainwin_height * 2, -1);
     mainwin_set_back_pixmap();
     mainwin_create_widgets();
 
