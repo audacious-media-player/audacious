@@ -522,8 +522,8 @@ void playlist_display(gint session, gint argc, gchar **argv)
 			while(*p){
 				gint stride;
 				stride = g_utf8_next_char(p) - p;
-				if(g_unichar_iswide(g_utf8_get_char(p)) ||
-#if (GLIB_MAJOR_VERSION == 2 && GLIB_MINOR_VERSION >= 12)
+				if(g_unichar_iswide(g_utf8_get_char(p))
+#if ( (GLIB_MAJOR_VERSION == 2) && (GLIB_MINOR_VERSION >= 12) )
 				   || g_unichar_iswide_cjk(g_utf8_get_char(p))
 #endif
                                 ){
@@ -791,8 +791,11 @@ void playqueue_display(gint session, gint argc, gchar **argv)
 			while(*p){
 				gint stride;
 				stride = g_utf8_next_char(p) - p;
-				if(g_unichar_iswide(g_utf8_get_char(p)) ||
-				   g_unichar_iswide_cjk(g_utf8_get_char(p))){
+				if(g_unichar_iswide(g_utf8_get_char(p))
+#if ( (GLIB_MAJOR_VERSION == 2) && (GLIB_MINOR_VERSION >= 12) )
+				   || g_unichar_iswide_cjk(g_utf8_get_char(p))
+#endif
+				){
 					column += (stride - 2);
 				}
 				else {

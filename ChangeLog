@@ -1,3 +1,11 @@
+2006-11-06 02:38:44 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2863]
+  - bump to 1.3.0
+  
+  trunk/configure.ac |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-11-06 02:36:26 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2861]
   - NewVFS input probing layer. VFS-Aware plugins can automatically take 

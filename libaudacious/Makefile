@@ -15,6 +15,7 @@ LIBADD = \
 CFLAGS += $(PICFLAGS) \
 	$(GTK_CFLAGS)        \
 	$(GCONF_CFLAGS)      \
+	-D_AUDACIOUS_CORE    \
 	-I..		      \
 	-I../intl
 
