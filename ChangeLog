@@ -1,3 +1,11 @@
+2006-11-06 08:10:47 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2869]
+  - use values from the skin loader instead of constants (should make doublesize work with Osmosis)
+  
+  trunk/audacious/mainwin.c |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2006-11-06 06:26:49 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2865]
   - build fix

@@ -782,18 +782,27 @@ draw_main_window(gboolean force)
                 if (!w->redraw || !w->visible)
                     continue;
 
+	        if (w->x > bmp_active_skin->properties.mainwin_width ||
+		    w->y > bmp_active_skin->properties.mainwin_height)
+		    continue;
+
                 if (cfg.doublesize) {
+                    gint width, height;
+
+                    width = w->x + w->width <= bmp_active_skin->properties.mainwin_width ? w->width : (w->width - ((w->x + w->width) - bmp_active_skin->properties.mainwin_width));
+                    height = w->y + w->height <= bmp_active_skin->properties.mainwin_width ? w->height : (w->height - ((w->y + w->height) - bmp_active_skin->properties.mainwin_height));
+
                     img = gdk_drawable_get_image(mainwin_bg, w->x, w->y,
-                                                 w->width, w->height);
+                                                 width, height);
                     img2x = create_dblsize_image(img);
                     gdk_draw_image(mainwin_bg_x2, mainwin_gc,
                                    img2x, 0, 0, w->x << 1, w->y << 1,
-                                   w->width << 1, w->height << 1);
+                                   width << 1, height << 1);
                     gdk_image_destroy(img2x);
                     gdk_image_destroy(img);
                     gdk_window_clear_area(mainwin->window, w->x << 1,
-                                          w->y << 1, w->width << 1,
-                                          w->height << 1);
+                                          w->y << 1, width << 1,
+                                          height << 1);
                 }
                 else
                     gdk_window_clear_area(mainwin->window, w->x, w->y,
