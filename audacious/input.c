@@ -1,4 +1,7 @@
-/*  BMP - Cross-platform multimedia player
+/*  Audacious
+ *  Copyright (C) 2005-2006  Audacious development team.
+ *
+ *  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
  *
  *  Based on XMMS:
@@ -401,18 +404,24 @@ input_file_not_playable(const gchar * filename)
 InputPlugin *
 input_check_file(const gchar * filename, gboolean show_warning)
 {
+    VFSFile *fd;
     GList *node;
     InputPlugin *ip;
     gchar *filename_proxy;
     gint ret = 1;
 
     filename_proxy = g_strdup(filename);
+    fd = vfs_fopen(filename, "rb");
 
     for (node = get_input_list(); node != NULL; node = g_list_next(node)) {
         ip = INPUT_PLUGIN(node->data);
         if (ip && input_is_enabled(ip->filename) &&
-            (ret = ip->is_our_file(filename_proxy)) > 0) {
+            (ip->is_our_file_from_vfs != NULL &&
+             (ret = ip->is_our_file_from_vfs(filename_proxy, fd) > 0) || 
+             (ip->is_our_file != NULL &&
+              (ret = ip->is_our_file(filename_proxy)) > 0))) {
             g_free(filename_proxy);
+            vfs_fclose(fd);
             return ip;
         }
 	else if (ret <= -1)
@@ -424,6 +433,8 @@ input_check_file(const gchar * filename, gboolean show_warning)
     if (show_warning && !(ret <= -1)) {
         input_file_not_playable(filename);
     }
+
+    vfs_fclose(fd);
 
     return NULL;
 }

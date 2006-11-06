@@ -32,6 +32,11 @@
 
 
 #include <glib.h>
+#ifdef _AUDACIOUS_CORE
+# include "libaudacious/vfs.h"
+#else
+# include "audacious/vfs.h"
+#endif
 #include "audacious/titlestring.h"
 
 #define INPUT_PLUGIN(x)   ((InputPlugin *)(x))
@@ -42,6 +47,7 @@
 
 #define LOWLEVEL_PLUGIN(x) ((LowlevelPlugin *)(x))
 
+#define __AUDACIOUS_NEWVFS__
 
 typedef enum {
     FMT_U8,
@@ -173,9 +179,13 @@ struct _InputPlugin {
 
     OutputPlugin *output;
 
+    /* Added in Audacious 1.1.0 */
     TitleInput *(*get_song_tuple) (gchar * filename);
     void (*set_song_tuple) (TitleInput * tuple);
     void (*set_status_buffering) (gboolean status);
+
+    /* Added in Audacious 1.2.2 */
+    gint (*is_our_file_from_vfs) (gchar *filename, VFSFile *fd);
 };
 
 struct _GeneralPlugin {

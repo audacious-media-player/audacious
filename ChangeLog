@@ -1,3 +1,11 @@
+2006-11-06 02:00:14 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2857]
+  - fix potential display corruption problem in doublesize
+  
+  trunk/audacious/mainwin.c |    7 ++++---
+  1 file changed, 4 insertions(+), 3 deletions(-)
+
+
 2006-11-06 01:45:59 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2855]
   - do not evaluate mainwinHeight() or mainwinWidth() in skin scripts if doublesize is on
