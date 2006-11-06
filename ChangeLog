@@ -1,3 +1,17 @@
+2006-11-06 02:36:26 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2861]
+  - NewVFS input probing layer. VFS-Aware plugins can automatically take 
+    advantage of this. Non VFS-aware plugins (such as FLAC) won't be able 
+    to yet. To take advantage, just modify your probing function as 
+    described in plugin.h.
+  - __AUDACIOUS_NEWVFS__ is defined to designate availability of this new 
+    probing layer.
+  
+  trunk/audacious/input.c  |   15 +++++++++++++--
+  trunk/audacious/plugin.h |   10 ++++++++++
+  2 files changed, 23 insertions(+), 2 deletions(-)
+
+
 2006-11-06 02:00:14 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2857]
   - fix potential display corruption problem in doublesize
