@@ -1031,18 +1031,15 @@ mainwin_refresh_hints(void)
     else
         widget_hide(WIDGET(mainwin_vis));
 
+    if (cfg.doublesize)
+        return;
+
     /* window size, mainwinWidth && mainwinHeight properties */
     if (bmp_active_skin->properties.mainwin_height && bmp_active_skin->properties.mainwin_width)
     {
 	gint width, height;
 
 	gdk_window_get_size(mainwin->window, &width, &height);
-
-	if (width == bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1) &&
-		height == bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1))
-	{
-		return;
-	}
 
         dock_window_resize(GTK_WINDOW(mainwin), cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1),
 		cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1),
