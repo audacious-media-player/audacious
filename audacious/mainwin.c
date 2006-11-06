@@ -765,9 +765,9 @@ draw_main_window(gboolean force)
                                              bmp_active_skin->properties.mainwin_height);
                 img2x = create_dblsize_image(img);
                 gdk_draw_image(mainwin_bg_x2, mainwin_gc, img2x, 0, 0,
-                               0, 0, MAINWIN_WIDTH * 2,
+                               0, 0, bmp_active_skin->properties.mainwin_width * 2,
                                cfg.player_shaded ? MAINWIN_SHADED_HEIGHT *
-                               2 : MAINWIN_HEIGHT * 2);
+                               2 : bmp_active_skin->properties.mainwin_height * 2);
                 gdk_image_destroy(img2x);
                 gdk_image_destroy(img);
             }
