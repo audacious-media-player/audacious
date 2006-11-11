@@ -1,3 +1,11 @@
+2006-11-06 12:00:12 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2877]
+  - make doublesize work with modern skins
+  
+  trunk/audacious/mainwin.c |   17 +++++++++++++----
+  1 file changed, 13 insertions(+), 4 deletions(-)
+
+
 2006-11-06 08:10:47 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2869]
   - use values from the skin loader instead of constants (should make doublesize work with Osmosis)

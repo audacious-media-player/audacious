@@ -15,7 +15,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -65,7 +66,6 @@
 
 GtkWidget *fileinfo_win;
 GtkWidget *filepopup_win;
-GdkPixbuf *filepopup_pixbuf;
 
 static void
 fileinfo_entry_set_text(const char *entry, const char *text)
@@ -104,6 +104,8 @@ fileinfo_entry_set_image(const char *entry, const char *text)
 
 	if (xml == NULL || widget == NULL)
 		return;
+
+	g_printf("fileinfo_entry_set_image: %s\n", text);
 
 	pixbuf = gdk_pixbuf_new_from_file(text, NULL);
 
