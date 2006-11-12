@@ -76,6 +76,8 @@
 #include "pixmaps.h"
 #include "images/audacious_player.xpm"
 
+#include "newui/newui_window.h"
+
 gboolean has_x11_connection = FALSE; 	/* do we have an X11 connection? */
 
 /* Translatable string for beep.desktop's comment field */
@@ -1132,6 +1134,9 @@ main(gint argc, gchar ** argv)
 	create_fileinfo_window();
 	create_filepopup_window();
 
+	create_newui_window();
+	show_newui_window();
+
         if (cfg.player_visible)
             mainwin_show(TRUE);
         else if (!cfg.playlist_visible && !cfg.equalizer_visible)
@@ -1160,7 +1165,11 @@ main(gint argc, gchar ** argv)
 			output_get_volume(&l, &r);
 			output_set_volume(0,0);
 			bmp_playback_initiate();
-			for (i = 0; i < 20; i++) { /* Busy wait; loop is fairly tight to minimize duration of "frozen" GUI. Feel free to tune. --chainsaw */
+
+			/* Busy wait; loop is fairly tight to minimize duration of "frozen" GUI. Feel free to 
+			 * tune. --chainsaw
+			 */
+			for (i = 0; i < 20; i++) { 
 				g_usleep(1000);
 				if (!ip_data.playing)
 					break;

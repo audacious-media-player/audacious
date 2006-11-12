@@ -1,3 +1,11 @@
+2006-11-12 13:38:04 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2905]
+  - add some more controls (seekbar and such)
+  
+  trunk/audacious/glade/newui.glade |  891 +++++++++++++++++++++-----------------
+  1 file changed, 499 insertions(+), 392 deletions(-)
+
+
 2006-11-12 11:09:28 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2903]
   - avoid freeing a NULL pointer in ui_fileinfo.c
