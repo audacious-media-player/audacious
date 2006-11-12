@@ -1,3 +1,15 @@
+2006-11-12 14:55:04 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2913]
+  - some newui stuff (and also turn it off again, giacomo will need to look at a few things)
+  
+  trunk/audacious/glade/newui.glade    |  912 ++++++++++++++++-------------------
+  trunk/audacious/main.c               |    4 
+  trunk/audacious/mainwin.c            |    2 
+  trunk/audacious/newui/newui_window.c |   11 
+  trunk/audacious/playlist.c           |    2 
+  5 files changed, 442 insertions(+), 489 deletions(-)
+
+
 2006-11-12 14:15:11 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2911]
   - some code for seekbar

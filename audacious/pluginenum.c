@@ -216,7 +216,7 @@ add_plugin(const gchar * filename)
     if (plugin_is_duplicate(filename))
         return;
 
-    if (!(module = g_module_open(filename, 0))) {
+    if (!(module = g_module_open(filename, G_MODULE_BIND_LOCAL))) {
         printf("Failed to load plugin (%s): %s\n", 
                   filename, g_module_error());
         return;
