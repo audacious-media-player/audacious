@@ -136,13 +136,14 @@ newui_update_nowplaying_from_entry(PlaylistEntry *entry)
 	static gchar *last_artwork = NULL;
 	gchar *fullpath;
 
-	widget = glade_xml_get_widget(xml, "newui_titlestring");
-	tmp = g_strdup_printf("<span size='x-large'>%s</span>", entry->title);
-	gtk_label_set_markup(GTK_LABEL(widget), tmp);
-	g_free(tmp);
-
 	if (entry->tuple == NULL)
 		return;
+
+	widget = glade_xml_get_widget(xml, "newui_playstatus");
+	tmp = g_strdup_printf("<b>%s</b> from <b>%s</b> by <b>%s</b>", entry->tuple->track_name, 
+		entry->tuple->album_name, entry->tuple->performer);
+	gtk_label_set_markup(GTK_LABEL(widget), tmp);
+	g_free(tmp);
 
 	widget = glade_xml_get_widget(xml, "newui_label_title");
 	gtk_label_set_text(GTK_LABEL(widget), entry->tuple->track_name);

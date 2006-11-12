@@ -849,7 +849,7 @@ playlist_set_info(const gchar * title, gint length, gint rate,
     playlist_recalc_total_time();
 
     mainwin_set_song_info(rate, freq, nch);
-    newui_update_nowplaying_from_entry(playlist_position);
+//    newui_update_nowplaying_from_entry(playlist_position);
 }
 
 void

@@ -1,3 +1,12 @@
+2006-11-12 14:15:11 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2911]
+  - some code for seekbar
+  
+  trunk/audacious/mainwin.c            |    2 ++
+  trunk/audacious/newui/newui_window.c |   12 ++++++++++++
+  2 files changed, 14 insertions(+)
+
+
 2006-11-12 13:49:04 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2909]
   - add code for the shuffle checkbox

@@ -1134,8 +1134,8 @@ main(gint argc, gchar ** argv)
 	create_fileinfo_window();
 	create_filepopup_window();
 
-	create_newui_window();
-	show_newui_window();
+//	create_newui_window();
+//	show_newui_window();
 
         if (cfg.player_visible)
             mainwin_show(TRUE);
