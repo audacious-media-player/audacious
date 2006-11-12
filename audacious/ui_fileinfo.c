@@ -105,8 +105,6 @@ fileinfo_entry_set_image(const char *entry, const char *text)
 	if (xml == NULL || widget == NULL)
 		return;
 
-	g_printf("fileinfo_entry_set_image: %s\n", text);
-
 	pixbuf = gdk_pixbuf_new_from_file(text, NULL);
 
 	if (pixbuf == NULL)
