@@ -2,7 +2,7 @@ include ../mk/rules.mk
 include ../mk/init.mk
 include ../mk/objective.mk
 
-SUBDIRS = widgets glade images
+SUBDIRS = widgets newui glade images
 
 beepincludedir = $(includedir)/audacious
 
@@ -16,7 +16,8 @@ LDADD = \
 	$(CHARDET_LIBS) \
 	$(GTK_LIBS)      \
 	$(LIBGLADE_LIBS) \
-	./widgets/libwidgets.a
+	./widgets/libwidgets.a \
+	./newui/libnewui.a
 
 CFLAGS += \
 	$(GTK_CFLAGS)      \
