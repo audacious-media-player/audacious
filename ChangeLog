@@ -1,3 +1,11 @@
+2006-11-12 10:16:17 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2897]
+  - add newui to build
+  
+  trunk/audacious/Makefile |    5 +++--
+  1 file changed, 3 insertions(+), 2 deletions(-)
+
+
 2006-11-12 09:58:29 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2893]
   - remove spurious debug notice
