@@ -1,3 +1,13 @@
+2006-11-12 08:38:03 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2885]
+  - add scaffolding for newui
+  
+  trunk/audacious/newui/Makefile       |   27 +++++++++++++++++++++++++++
+  trunk/audacious/newui/newui_window.c |   21 +++++++++++++++++++++
+  trunk/audacious/newui/newui_window.h |   27 +++++++++++++++++++++++++++
+  3 files changed, 75 insertions(+)
+
+
 2006-11-11 22:03:41 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2883]
   - remove unused declaration "filepopup_pixbuf".
