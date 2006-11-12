@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 void create_newui_window(void);
+void show_newui_window(void);
 void newui_update_nowplaying_from_entry(PlaylistEntry *entry);
 
 #endif

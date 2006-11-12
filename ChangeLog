@@ -1,3 +1,12 @@
+2006-11-12 10:36:47 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2899]
+  - some code
+  
+  trunk/audacious/newui/newui_window.c |   74 ++++++++++++++++++++++++++++++++++-
+  trunk/audacious/newui/newui_window.h |    3 -
+  2 files changed, 75 insertions(+), 2 deletions(-)
+
+
 2006-11-12 10:16:17 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2897]
   - add newui to build

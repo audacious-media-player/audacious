@@ -80,6 +80,12 @@ create_newui_window(void)
 }
 
 void
+show_newui_window(void)
+{
+	gtk_widget_show(newui_win);
+}
+
+void
 newui_update_nowplaying_from_entry(PlaylistEntry *entry)
 {
 	GladeXML *xml = g_object_get_data(G_OBJECT(newui_win), "glade-xml");
