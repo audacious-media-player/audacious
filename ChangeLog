@@ -1,3 +1,11 @@
+2006-11-12 13:49:04 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2909]
+  - add code for the shuffle checkbox
+  
+  trunk/audacious/newui/newui_window.c |   15 +++++++++++++++
+  1 file changed, 15 insertions(+)
+
+
 2006-11-12 13:38:48 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2907]
   - temporarily display the newui at startup along with the oldui

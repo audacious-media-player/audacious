@@ -198,6 +198,18 @@ newui_update_nowplaying_from_entry(PlaylistEntry *entry)
         g_free(fullpath);
 }
 
+/* ********** callbacks ********** */
+
+void
+newui_set_time(gint time, gint length)
+{
+	GladeXML *xml = g_object_get_data(G_OBJECT(newui_win), "glade-xml");
+	GtkWidget *widget = glade_xml_get_widget(xml, "newui_seekbar");
+
+	gtk_range_set_range(GTK_RANGE(widget), 0, length);
+	gtk_range_set_value(GTK_RANGE(widget), time);
+}
+
 /* ********** signals ********** */
 
 void
