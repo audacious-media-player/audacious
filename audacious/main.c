@@ -960,7 +960,7 @@ segfault_handler(gint sig)
 {
     g_printerr(_("\nReceived SIGSEGV\n\n"
                  "This could be a bug in Audacious. If you don't know why this happened, "
-                 "file a bug at http://bugs.nenolod.net/\n\n"));
+                 "file a bug at http://bugs-meta.atheme.org/\n\n"));
 #ifdef HANDLE_SIGSEGV
     exit(EXIT_FAILURE);
 #else

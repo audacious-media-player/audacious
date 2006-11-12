@@ -1,3 +1,12 @@
+2006-11-12 09:27:04 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2887]
+  - add newui glade interface
+  
+  trunk/audacious/glade/Makefile    |    3 
+  trunk/audacious/glade/newui.glade |  659 ++++++++++++++++++++++++++++++++++++++
+  2 files changed, 661 insertions(+), 1 deletion(-)
+
+
 2006-11-12 08:38:03 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2885]
   - add scaffolding for newui
