@@ -1,3 +1,16 @@
+2006-11-12 11:09:28 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2903]
+  - avoid freeing a NULL pointer in ui_fileinfo.c
+  - add some hooks for newui
+  - implement album art support in newui
+  
+  trunk/audacious/glade/newui.glade    |   14 ++--
+  trunk/audacious/newui/newui_window.c |  100 +++++++++++++++++++++++++++++++++++
+  trunk/audacious/playlist.c           |    3 +
+  trunk/audacious/ui_fileinfo.c        |    7 +-
+  4 files changed, 115 insertions(+), 9 deletions(-)
+
+
 2006-11-12 10:37:32 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2901]
   - show_newui_window() implementation
