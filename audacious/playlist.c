@@ -57,6 +57,8 @@
 
 #include "debug.h"
 
+#include "newui/newui_window.h"
+
 typedef gint (*PlaylistCompareFunc) (PlaylistEntry * a, PlaylistEntry * b);
 typedef void (*PlaylistSaveFunc) (FILE * file);
 
@@ -847,6 +849,7 @@ playlist_set_info(const gchar * title, gint length, gint rate,
     playlist_recalc_total_time();
 
     mainwin_set_song_info(rate, freq, nch);
+    newui_update_nowplaying_from_entry(playlist_position);
 }
 
 void

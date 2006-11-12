@@ -586,8 +586,11 @@ filepopup_show_for_tuple(TitleInput *tuple)
 		fullpath = g_strconcat(tuple->file_path, "/", NULL);
 	}
 
-	if (!last_artwork || strcmp(last_artwork, fullpath)){
-		g_free(last_artwork);
+	if (!last_artwork || strcmp(last_artwork, fullpath))
+	{
+		if (last_artwork != NULL)
+			g_free(last_artwork);
+
 		last_artwork = g_strdup(fullpath);
 
 		tmp = fileinfo_recursive_get_image(tuple->file_path, tuple->file_name, 0);

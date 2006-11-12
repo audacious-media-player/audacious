@@ -338,7 +338,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="label15">
+			<widget class="GtkLabel" id="newui_label_tracklen">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes"></property>
 			  <property name="use_underline">False</property>
@@ -365,7 +365,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="label14">
+			<widget class="GtkLabel" id="newui_label_tracknum">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes"></property>
 			  <property name="use_underline">False</property>
@@ -392,7 +392,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="label13">
+			<widget class="GtkLabel" id="newui_label_year">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes"></property>
 			  <property name="use_underline">False</property>
@@ -419,7 +419,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="label12">
+			<widget class="GtkLabel" id="newui_label_genre">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes"></property>
 			  <property name="use_underline">False</property>
@@ -446,7 +446,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="label11">
+			<widget class="GtkLabel" id="newui_label_album">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes"></property>
 			  <property name="use_underline">False</property>
@@ -473,7 +473,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="label10">
+			<widget class="GtkLabel" id="newui_label_artist">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes"></property>
 			  <property name="use_underline">False</property>
@@ -500,7 +500,7 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkLabel" id="label9">
+			<widget class="GtkLabel" id="newui_label_title">
 			  <property name="visible">True</property>
 			  <property name="label" translatable="yes"></property>
 			  <property name="use_underline">False</property>
