@@ -197,3 +197,18 @@ newui_update_nowplaying_from_entry(PlaylistEntry *entry)
 
         g_free(fullpath);
 }
+
+/* ********** signals ********** */
+
+void
+on_newui_shuffle_cb_realize(GtkToggleButton *button, gpointer data)
+{
+	gtk_toggle_button_set_active(button, cfg.shuffle);
+}
+
+void
+on_newui_shuffle_cb_toggled(GtkToggleButton *button, gpointer data)
+{
+	cfg.shuffle = gtk_toggle_button_get_active(button);
+	mainwin_shuffle_pushed(cfg.shuffle);
+}
