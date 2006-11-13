@@ -2117,6 +2117,25 @@ on_xmms_style_fileselector_toggled(GtkToggleButton * button,
     cfg.use_xmms_style_fileselector = gtk_toggle_button_get_active(button);
 }
 
+static void
+on_show_wm_decorations_realize(GtkToggleButton * button,
+                                   gpointer data)
+{
+    gtk_toggle_button_set_active(button, cfg.show_wm_decorations);
+}
+
+static void
+on_show_wm_decorations_toggled(GtkToggleButton * button,
+                                   gpointer data)
+{
+    extern GtkWidget *equalizerwin;
+    cfg.show_wm_decorations = gtk_toggle_button_get_active(button);
+    gtk_window_set_decorated(GTK_WINDOW(mainwin), cfg.show_wm_decorations);
+    gtk_window_set_decorated(GTK_WINDOW(playlistwin), cfg.show_wm_decorations);
+    gtk_window_set_decorated(GTK_WINDOW(equalizerwin), cfg.show_wm_decorations);
+
+}
+
 /* FIXME: complete the map */
 FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_input_plugin_view_realize)
@@ -2200,6 +2219,10 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     /* XMMS fileselector option -nenolod */
     FUNC_MAP_ENTRY(on_xmms_style_fileselector_toggled)
     FUNC_MAP_ENTRY(on_xmms_style_fileselector_realize)
+
+    /* show window manager decorations */
+    FUNC_MAP_ENTRY(on_show_wm_decorations_toggled)
+    FUNC_MAP_ENTRY(on_show_wm_decorations_realize)
 FUNC_MAP_END
 
 void

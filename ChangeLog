@@ -1,3 +1,12 @@
+2006-11-12 20:50:16 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2915]
+  - only GModule would be so dumb to push all symbols to the global 
+    namespace by default. I hate GLib.
+  
+  trunk/audacious/pluginenum.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-11-12 14:55:04 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2913]
   - some newui stuff (and also turn it off again, giacomo will need to look at a few things)
