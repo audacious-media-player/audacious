@@ -1828,7 +1828,7 @@ GdkImage *create_dblsize_image(GdkImage * img)
      */
 
     dblimg =
-	gdk_image_new(GDK_IMAGE_NORMAL, gdk_visual_get_best(),
+	gdk_image_new(GDK_IMAGE_NORMAL, gdk_visual_get_system(),
 		      img->width << 1, img->height << 1);
     if (dblimg->bpp == 1) {
 	register guint8 *srcptr, *ptr, *ptr2, pix;
