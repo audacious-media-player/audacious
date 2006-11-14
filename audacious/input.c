@@ -424,6 +424,8 @@ input_check_file(const gchar * filename, gboolean show_warning)
             vfs_fclose(fd);
             return ip;
         }
+        else if (ret == 0)
+            vfs_fseek(fd, 0, SEEK_SET);
 	else if (ret <= -1)
 	    break;
     }

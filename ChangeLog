@@ -1,3 +1,11 @@
+2006-11-13 02:41:41 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2921]
+  - in particular X environment, double size caused a bad match X error.
+  
+  trunk/audacious/util.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-11-13 02:33:35 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2919]
   - add show window decorations option to appearance preferences. closes #167.
