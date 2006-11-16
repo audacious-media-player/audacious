@@ -1,3 +1,11 @@
+2006-11-14 20:37:14 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2923]
+  - reseek to 0 on a newvfs FD for each probe pass
+  
+  trunk/audacious/input.c |    2 ++
+  1 file changed, 2 insertions(+)
+
+
 2006-11-13 02:41:41 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2921]
   - in particular X environment, double size caused a bad match X error.

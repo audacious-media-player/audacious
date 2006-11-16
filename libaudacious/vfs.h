@@ -1,3 +1,22 @@
+/*
+ * Audacious
+ * Copyright (c) 2006 Audacious team
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
+
 #ifndef VFS_H
 #define VFS_H
 
@@ -5,6 +24,23 @@
 #include <stdio.h>
 
 typedef struct _VFSFile VFSFile;
+
+struct _VFSConstructor {
+	gchar *uri_id;
+	VFSFile *(*vfs_fopen_impl)(const gchar *path,
+		const gchar *mode);
+	gint (*vfs_fclose_impl)(VFSFile * file);
+	size_t (*vfs_fread_impl)(gpointer ptr, size_t size,
+		size_t nmemb, VFSFile *file);
+	gint (*vfs_ungetc_impl)(gint c, VFSFile *stream);
+	gint (*vfs_fseek_impl)(VFSFile *file, glong offset, gint whence);
+	void (*vfs_rewind_impl)(VFSFile *file);
+	glong (*vfs_ftell_impl)(VFSFile *file);
+	gboolean (*vfs_feof_impl)(VFSFile *file);
+	gboolean (*vfs_truncate_impl)(VFSFile *file, glong length);
+};
+
+typedef struct _VFSConstructor VFSConstructor;
 
 G_BEGIN_DECLS
 
