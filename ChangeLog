@@ -1,3 +1,10 @@
+2006-11-16 19:57:47 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2943]
+  Updated Polish translation by VoJcEK <vojcek@tlen.pl>
+  trunk/po/pl.po |  233 +++++++++++++++++++++++++++------------------------------
+  1 file changed, 112 insertions(+), 121 deletions(-)
+
+
 2006-11-16 19:49:34 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2941]
   - simplify po files (a lot of translations are removed due to plugins split)

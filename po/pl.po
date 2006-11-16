@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-11-16 19:55+0000\n"
+"POT-Creation-Date: 2006-11-16 14:45-0600\n"
 "PO-Revision-Date: 2006-06-22 18:47+0000\n"
 "Last-Translator: Wojciech Myrda <vojcek@tlen.pl>\n"
 "Language-Team:\n"
@@ -1795,6 +1795,16 @@ msgstr ""
 "Zwiększ tą wartość jeśli doświadczysz przerywania płynności odtwarzania. \n"
 "Zwróć jednak uwagę, że ustawienie tej wartości za wysoko może powodować że "
 "Audacious będzie się słabo sprawował.</span>"
+
+#: audacious/glade/prefswin.glade:3696
+#, fuzzy
+msgid "Output Plugin Preferences"
+msgstr "Wtyczka wyjściowa"
+
+#: audacious/glade/prefswin.glade:3771
+#, fuzzy
+msgid "Output Plugin Information"
+msgstr "Konfiguracja wtyczki wyjściowej ESD"
 
 #: audacious/glade/prefswin.glade:3823
 msgid "<b>Format Detection</b>"
@@ -4063,9 +4073,6 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ "z tym programem; jeśli nie, napisz do Free Software Foundation,\n"
 #~ "Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
-#~ msgid "ESD Output Plugin configuration"
-#~ msgstr "Konfiguracja wtyczki wyjściowej ESD"
-
 #~ msgid "Host:"
 #~ msgstr "Serwer:"
 
@@ -4684,9 +4691,6 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #, fuzzy
 #~ msgid "Mixing buffer size (ms):"
 #~ msgstr "Rozmiar bufora (ms):"
-
-#~ msgid "Output plugin"
-#~ msgstr "Wtyczka wyjściowa"
 
 #~ msgid "Pause"
 #~ msgstr "Wstrzymaj"
