@@ -20,8 +20,20 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+
+struct _VFSFile {
+    FILE *handle;
+};
+
+
+gboolean
+vfs_init(void)
+{
+    return TRUE;
+}
+
 VFSFile *
-stdio_vfs_fopen_impl(const gchar * path,
+vfs_fopen(const gchar * path,
           const gchar * mode)
 {
     VFSFile *file;
@@ -42,7 +54,7 @@ stdio_vfs_fopen_impl(const gchar * path,
 }
 
 gint
-stdio_vfs_fclose_impl(VFSFile * file)
+vfs_fclose(VFSFile * file)
 {
     gint ret = 0;
 
@@ -60,7 +72,7 @@ stdio_vfs_fclose_impl(VFSFile * file)
 }
 
 size_t
-stdio_vfs_fread_impl(gpointer ptr,
+vfs_fread(gpointer ptr,
           size_t size,
           size_t nmemb,
           VFSFile * file)
@@ -72,7 +84,7 @@ stdio_vfs_fread_impl(gpointer ptr,
 }
 
 size_t
-stdio_vfs_fwrite_impl(gconstpointer ptr,
+vfs_fwrite(gconstpointer ptr,
            size_t size,
            size_t nmemb,
            VFSFile * file)
@@ -84,19 +96,19 @@ stdio_vfs_fwrite_impl(gconstpointer ptr,
 }
 
 gint
-stdio_vfs_getc_impl(VFSFile *stream)
+vfs_getc(VFSFile *stream)
 {
   return getc( stream->handle );
 }
 
 gint
-stdio_vfs_ungetc_impl(gint c, VFSFile *stream)
+vfs_ungetc(gint c, VFSFile *stream)
 {
   return ungetc( c , stream->handle );
 }
 
 gint
-stdio_vfs_fseek_impl(VFSFile * file,
+vfs_fseek(VFSFile * file,
           glong offset,
           gint whence)
 {
@@ -107,7 +119,7 @@ stdio_vfs_fseek_impl(VFSFile * file,
 }
 
 void
-stdio_vfs_rewind_impl(VFSFile * file)
+vfs_rewind(VFSFile * file)
 {
     if (file == NULL)
         return;
@@ -116,7 +128,7 @@ stdio_vfs_rewind_impl(VFSFile * file)
 }
 
 glong
-stdio_vfs_ftell_impl(VFSFile * file)
+vfs_ftell(VFSFile * file)
 {
     if (file == NULL)
         return 0;
@@ -125,7 +137,7 @@ stdio_vfs_ftell_impl(VFSFile * file)
 }
 
 gboolean
-stdio_vfs_feof_impl(VFSFile * file)
+vfs_feof(VFSFile * file)
 {
     if (file == NULL)
         return FALSE;
@@ -133,51 +145,29 @@ stdio_vfs_feof_impl(VFSFile * file)
     return (gboolean) feof(file->handle);
 }
 
+gboolean
+vfs_file_test(const gchar * path, GFileTest test)
+{
+    return g_file_test(path, test);
+}
+
+/* NOTE: stat() is not part of stdio */
+gboolean
+vfs_is_writeable(const gchar * path)
+{
+    struct stat info;
+
+    if (stat(path, &info) == -1)
+        return FALSE;
+
+    return (info.st_mode & S_IWUSR);
+}
+
 gint
-stdio_vfs_truncate_impl(VFSFile * file, glong size)
+vfs_truncate(VFSFile * file, glong size)
 {
     if (file == NULL)
         return -1;
 
     return ftruncate(fileno(file->handle), size);
 }
-
-VFSConstructor file_const = {
-	"file://",
-	stdio_vfs_fopen_impl,
-	stdio_vfs_fclose_impl,
-	stdio_vfs_fread_impl,
-	stdio_vfs_fwrite_impl,
-	stdio_vfs_getc_impl,
-	stdio_vfs_ungetc_impl,
-	stdio_vfs_fseek_impl,
-	stdio_vfs_rewind_impl,
-	stdio_vfs_ftell_impl,
-	stdio_vfs_feof_impl,
-	stdio_vfs_truncate_impl
-};
-
-VFSConstructor default_const = {
-	"/",
-	stdio_vfs_fopen_impl,
-	stdio_vfs_fclose_impl,
-	stdio_vfs_fread_impl,
-	stdio_vfs_fwrite_impl,
-	stdio_vfs_getc_impl,
-	stdio_vfs_ungetc_impl,
-	stdio_vfs_fseek_impl,
-	stdio_vfs_rewind_impl,
-	stdio_vfs_ftell_impl,
-	stdio_vfs_feof_impl,
-	stdio_vfs_truncate_impl
-};
-
-#if 0
-gboolean
-vfs_init(void)
-{
-    vfs_register_transport(&default_const);
-    vfs_register_transport(&file_const);
-    return TRUE;
-}
-#endif

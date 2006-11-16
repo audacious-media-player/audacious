@@ -20,7 +20,7 @@ CFLAGS += $(PICFLAGS) \
 	-I../intl
 
 CONF_SRC = configdb_$(CONFIGDB_BACKEND).c
-VFS_SRC = vfs_stdio.c vfs_common.c
+VFS_SRC = vfs.c vfs_stdio.c vfs_common.c
 
 SOURCES = \
 	$(CONF_SRC) \

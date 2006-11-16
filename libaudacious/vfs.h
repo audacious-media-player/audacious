@@ -24,6 +24,13 @@
 #include <stdio.h>
 
 typedef struct _VFSFile VFSFile;
+typedef struct _VFSConstructor VFSConstructor;
+
+struct _VFSFile {
+	gchar *uri;
+	gpointer handle;
+	VFSConstructor *base;
+};
 
 struct _VFSConstructor {
 	gchar *uri_id;
@@ -32,6 +39,9 @@ struct _VFSConstructor {
 	gint (*vfs_fclose_impl)(VFSFile * file);
 	size_t (*vfs_fread_impl)(gpointer ptr, size_t size,
 		size_t nmemb, VFSFile *file);
+	size_t (*vfs_fwrite_impl)(gconstpointer ptr, size_t size,
+		size_t nmemb, VFSFile *file);
+	gint (*vfs_getc_impl)(VFSFile *stream);
 	gint (*vfs_ungetc_impl)(gint c, VFSFile *stream);
 	gint (*vfs_fseek_impl)(VFSFile *file, glong offset, gint whence);
 	void (*vfs_rewind_impl)(VFSFile *file);
@@ -39,8 +49,6 @@ struct _VFSConstructor {
 	gboolean (*vfs_feof_impl)(VFSFile *file);
 	gboolean (*vfs_truncate_impl)(VFSFile *file, glong length);
 };
-
-typedef struct _VFSConstructor VFSConstructor;
 
 G_BEGIN_DECLS
 
