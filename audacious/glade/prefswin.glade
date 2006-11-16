@@ -3693,7 +3693,7 @@ Please note however, that high values will result in Audacious performing poorly
 				      <child>
 					<widget class="GtkLabel" id="label80">
 					  <property name="visible">True</property>
-					  <property name="label">Output Plugin Preferences</property>
+					  <property name="label" translatable="yes">Output Plugin Preferences</property>
 					  <property name="use_underline">True</property>
 					  <property name="use_markup">False</property>
 					  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -3768,7 +3768,7 @@ Please note however, that high values will result in Audacious performing poorly
 				      <child>
 					<widget class="GtkLabel" id="label81">
 					  <property name="visible">True</property>
-					  <property name="label">Output Plugin Information</property>
+					  <property name="label" translatable="yes">Output Plugin Information</property>
 					  <property name="use_underline">True</property>
 					  <property name="use_markup">False</property>
 					  <property name="justify">GTK_JUSTIFY_LEFT</property>
