@@ -20,12 +20,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-
-struct _VFSFile {
-    FILE *handle;
-};
-
-
 gboolean
 vfs_init(void)
 {
