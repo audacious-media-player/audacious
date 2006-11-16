@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-11-16 14:45-0600\n"
+"POT-Creation-Date: 2006-11-16 19:55+0000\n"
 "PO-Revision-Date: 2006-06-22 18:47+0000\n"
 "Last-Translator: Wojciech Myrda <vojcek@tlen.pl>\n"
 "Language-Team:\n"
@@ -49,9 +49,8 @@ msgstr ""
 "Copyright (C) 2005-2006 Zespół autorów Audacious\n"
 
 #: audacious/credits.c:51
-#, fuzzy
 msgid "Audacious core developers:"
-msgstr "Twórcy trzonu aplikacji Audacious"
+msgstr "Twórcy podstaw aplikacji Audacious:"
 
 #: audacious/credits.c:61
 msgid "Graphics:"
@@ -254,7 +253,6 @@ msgid "/Delete/Auto-load preset"
 msgstr "/Usuń/Automatycznie wczytywane ustawienie"
 
 #: audacious/equalizer.c:816
-#, fuzzy
 msgid "Audacious Equalizer"
 msgstr "Korektor graficzny Audacious"
 
@@ -495,7 +493,7 @@ msgstr ""
 
 #: audacious/main.c:770
 msgid "Disable error/warning interception (logging)"
-msgstr ""
+msgstr "Wyłącz przechwytywanie błędół/ostrzerzeń (logowanie)"
 
 #: audacious/main.c:773
 msgid "Print version number and exit\n"
@@ -555,9 +553,8 @@ msgstr ""
 "zainstalowałeś LinuxThreads potrzebujesz przekompilować Glib & GTK+.\n"
 
 #: audacious/main.c:1059
-#, fuzzy
 msgid "audacious: Unable to open display, exiting.\n"
-msgstr "audacious: Niemożna otworzyć trybu graficznego, opuszczanie.\n"
+msgstr "audacious: Niemożna otworzyć trybu graficznego, zamknięcie.\n"
 
 #: audacious/mainwin.c:245 audacious/mainwin.c:371 audacious/ui_playlist.c:122
 msgid "/View Track Details"
@@ -994,9 +991,8 @@ msgid "Appearance"
 msgstr "Wygląd"
 
 #: audacious/prefswin.c:99
-#, fuzzy
 msgid "Audio"
-msgstr "Audacious"
+msgstr "Audio"
 
 #: audacious/prefswin.c:100
 msgid "Connectivity"
@@ -1085,8 +1081,9 @@ msgid "Unarchived Winamp 2.x skin"
 msgstr "Niezarchiwizowana sĸóra Winamp 2.x"
 
 #: audacious/ui_fileinfo.c:313
+#, fuzzy
 msgid "Track Information Window"
-msgstr ""
+msgstr "Ustawienia Informacje o dymkach"
 
 #: audacious/ui_fileinfo.c:335
 msgid "Track Information Popup"
@@ -1094,7 +1091,7 @@ msgstr ""
 
 #: audacious/ui_playlist.c:126
 msgid "/Show Popup Info"
-msgstr ""
+msgstr "Pokaż informacje w dymkach"
 
 #: audacious/ui_playlist.c:132 audacious/ui_playlist.c:197
 msgid "/Remove Selected"
@@ -1197,9 +1194,8 @@ msgid "/Sort List/By Title"
 msgstr "/Sortuj listę/Według tytułu"
 
 #: audacious/ui_playlist.c:253
-#, fuzzy
 msgid "/Sort List/By Artist"
-msgstr "/Sortuj listę/Według tytułu"
+msgstr "/Sortuj listę/Według artysty"
 
 #: audacious/ui_playlist.c:255
 msgid "/Sort List/By Filename"
@@ -1214,14 +1210,12 @@ msgid "/Sort List/By Date"
 msgstr "/Sortuj listę/Według daty"
 
 #: audacious/ui_playlist.c:261
-#, fuzzy
 msgid "/Sort List/By Track Number"
-msgstr "/Sortuj listę/Według daty"
+msgstr "/Sortuj listę/Według numeru utworu"
 
 #: audacious/ui_playlist.c:263
-#, fuzzy
 msgid "/Sort List/By Playlist Entry"
-msgstr "/Sortuj listę/Według tytułu"
+msgstr "/Sortuj listę/Według kolejności wpisu"
 
 #: audacious/ui_playlist.c:265
 msgid "/Sort Selection"
@@ -1232,9 +1226,8 @@ msgid "/Sort Selection/By Title"
 msgstr "/Sortuj zaznaczone/Według tytułu"
 
 #: audacious/ui_playlist.c:268
-#, fuzzy
 msgid "/Sort Selection/By Artist"
-msgstr "/Sortuj zaznaczone/Według tytułu"
+msgstr "/Sortuj zaznaczone/Według Artysty"
 
 #: audacious/ui_playlist.c:270
 msgid "/Sort Selection/By Filename"
@@ -1249,14 +1242,12 @@ msgid "/Sort Selection/By Date"
 msgstr "/Sortuj zaznaczone/Według daty"
 
 #: audacious/ui_playlist.c:276
-#, fuzzy
 msgid "/Sort Selection/By Track Number"
-msgstr "/Sortuj zaznaczone/Według daty"
+msgstr "/Sortuj zaznaczone/Według numeru ścieżki"
 
 #: audacious/ui_playlist.c:278
-#, fuzzy
 msgid "/Sort Selection/By Playlist Entry"
-msgstr "/Sortuj zaznaczone/Według tytułu"
+msgstr "/Sortuj zaznaczone/Według kolejności wpisu"
 
 #: audacious/ui_playlist.c:841
 #, c-format
@@ -1348,7 +1339,7 @@ msgstr "Odznacz wszystkie"
 #: audacious/glade/fileinfo.glade:8
 #, fuzzy
 msgid "Track Information"
-msgstr "Uzyskany utwór:"
+msgstr "Uzyskanie utwóru:"
 
 #: audacious/glade/fileinfo.glade:81
 #, fuzzy
@@ -1435,14 +1426,12 @@ msgid "Audacious Preferences"
 msgstr "Ustawienia Audacious"
 
 #: audacious/glade/prefswin.glade:115
-#, fuzzy
 msgid "_Decoder list:"
-msgstr "Dekoder"
+msgstr "_Lista Dekoderów:"
 
 #: audacious/glade/prefswin.glade:219
-#, fuzzy
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
-msgstr "<span size=\"medium\"><b>Ogólne</b></span>"
+msgstr "<span size=\"medium\"><b>Dekodery</b></span>"
 
 #: audacious/glade/prefswin.glade:261
 msgid "_General plugin list:"
@@ -1517,7 +1506,6 @@ msgid "Show track numbers in playlist"
 msgstr "Wyświetlanie numerów utworów na liście odtwarzania"
 
 #: audacious/glade/prefswin.glade:1183
-#, fuzzy
 msgid "Show separators in playlist"
 msgstr "Wyświetlanie średników na liście odtwarzania"
 
@@ -1635,7 +1623,7 @@ msgstr "Na żądanie"
 
 #: audacious/glade/prefswin.glade:1993
 msgid "Fallback charcter encodings:"
-msgstr ""
+msgstr "Zastępcze kodowanie znaków:"
 
 #: audacious/glade/prefswin.glade:2021
 msgid ""
@@ -1644,10 +1632,15 @@ msgid ""
 "in this list would be treated as candidates of the encoding of metadata, and "
 "fall back conversion from these encodings to UTF-8 would be attempted."
 msgstr ""
+"Lista kodowania znaków używana jest podczas konwersji informacji o plikach. "
+"Jeśli automatyczne ustawienie kodowania się niepowiodło lub zostało "
+"wyłączone, znaki  kodowania w tej liście będą uważane jako kandydaci dla "
+"kodowania informacji o pliku. Wówczas ta zastępcza próba to kodowania w UTF-"
+"8 zostanie podjęta."
 
 #: audacious/glade/prefswin.glade:2062
 msgid "Auto character encoding detector for:"
-msgstr ""
+msgstr "Autodetekcja kodowania na:"
 
 #: audacious/glade/prefswin.glade:2118
 msgid "<b>File Dialog</b>"
@@ -1662,16 +1655,12 @@ msgstr ""
 "dużej liczby plików, Gnome VFS powinno to załatwić automatycznie)."
 
 #: audacious/glade/prefswin.glade:2159
-#, fuzzy
 msgid "Always refresh directory when opening file dialog"
-msgstr ""
-"Zawsze odświerz katalog otwierając okno dialogowe, powinno być zbędne  przy "
-"użyciu Gnome VFS."
+msgstr "Zawsze odświerz katalog otwierając okno dialogowe"
 
 #: audacious/glade/prefswin.glade:2193
-#, fuzzy
 msgid "<b>Song Display</b>"
-msgstr "<b>Opis piosenki</b>"
+msgstr "<b>Przedstawienie Piosenki</b>"
 
 #: audacious/glade/prefswin.glade:2241
 msgid "Title format:"
@@ -1704,9 +1693,8 @@ msgid "Show information about titlestring format"
 msgstr "Pokaż informację o formacie ciągu tytułowego"
 
 #: audacious/glade/prefswin.glade:2392
-#, fuzzy
 msgid "<b>Popup Information</b>"
-msgstr "Konfiguracja Proxy"
+msgstr "<b>Informacja w dymkach</b>"
 
 #: audacious/glade/prefswin.glade:2443
 msgid ""
@@ -1714,14 +1702,17 @@ msgid ""
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
 msgstr ""
+"Włącza informacje w dymkach dla wskazanych wpisów na playliście. Okno to "
+"ukazuje informacje o tytule, nazwie albumu, rodzaju muzyki, roku publikacji, "
+"numeru ścieżki, jej długości oraz zdjęcie okładki."
 
 #: audacious/glade/prefswin.glade:2445
 msgid "Show popup information for playlist entries"
-msgstr ""
+msgstr "Pokaż informacje w dymkach dla wpisów na liście"
 
 #: audacious/glade/prefswin.glade:2472
 msgid "Edit settings for popup information"
-msgstr ""
+msgstr "Edytuj wpisy dla informacji o dymkach"
 
 #: audacious/glade/prefswin.glade:2580
 msgid "<b>Presets</b>"
@@ -1741,7 +1732,7 @@ msgstr "Dostę_pne ustawienia:"
 
 #: audacious/glade/prefswin.glade:2936
 msgid "<b>Proxy Configuration</b>"
-msgstr "Konfiguracja Proxy"
+msgstr "<b>Konfiguracja Proxy</b>"
 
 #: audacious/glade/prefswin.glade:2994
 msgid "Enable proxy usage"
@@ -1749,48 +1740,47 @@ msgstr "Włącz ustawienia proxy"
 
 #: audacious/glade/prefswin.glade:3025
 msgid "Proxy hostname:"
-msgstr "Pośrednik:"
+msgstr "Nazwa proxy:"
 
 #: audacious/glade/prefswin.glade:3053
 msgid "Proxy port:"
-msgstr "Port:"
+msgstr "Port Proxy:"
 
 #: audacious/glade/prefswin.glade:3147
 msgid "Use authentication with proxy"
-msgstr "Użyj uwierzytelniania"
+msgstr "Użyj uwierzytelniania dla proxy"
 
 #: audacious/glade/prefswin.glade:3178
 msgid "Proxy username:"
-msgstr "Użytkownik:"
+msgstr "Użytkownik proxy:"
 
 #: audacious/glade/prefswin.glade:3206
 msgid "Proxy password:"
-msgstr "Hasło:"
+msgstr "Hasło dla proxy:"
 
 #: audacious/glade/prefswin.glade:3322
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
+"<span size=\"small\">Zmiana tych ustawień wymaga ponownego uruchomienia "
+"Audacious.</span>"
 
 #: audacious/glade/prefswin.glade:3378
 msgid "label65"
 msgstr "label65"
 
 #: audacious/glade/prefswin.glade:3419
-#, fuzzy
 msgid "<b>Audio System</b>"
-msgstr "<b>Wykonawca:</b>"
+msgstr "<b>System Audio</b>"
 
 #: audacious/glade/prefswin.glade:3473
-#, fuzzy
 msgid "Current output plugin:"
 msgstr "Aktualna wty_czka wyjściowa:"
 
 #: audacious/glade/prefswin.glade:3518
-#, fuzzy
 msgid "Buffer size:"
-msgstr "Rozmiar bufora (kb):"
+msgstr "Rozmiar bufora:"
 
 #: audacious/glade/prefswin.glade:3588
 msgid ""
@@ -1800,31 +1790,29 @@ msgid ""
 "Please note however, that high values will result in Audacious performing "
 "poorly.</span>"
 msgstr ""
-
-#: audacious/glade/prefswin.glade:3696
-#, fuzzy
-msgid "Output Plugin Preferences"
-msgstr "Wtyczka wyjściowa"
-
-#: audacious/glade/prefswin.glade:3771
-#, fuzzy
-msgid "Output Plugin Information"
-msgstr "Konfiguracja wtyczki wyjściowej ESD"
+"<span size=\"small\">To jest długość czasu na który buforowane są ścieżki "
+"audio, w milisekundach\n"
+"Zwiększ tą wartość jeśli doświadczysz przerywania płynności odtwarzania. \n"
+"Zwróć jednak uwagę, że ustawienie tej wartości za wysoko może powodować że "
+"Audacious będzie się słabo sprawował.</span>"
 
 #: audacious/glade/prefswin.glade:3823
-#, fuzzy
 msgid "<b>Format Detection</b>"
-msgstr "Autodetekcja"
+msgstr "<b>Autodetekcja Formatu</b>"
 
 #: audacious/glade/prefswin.glade:3862
 msgid ""
 "When checked, Audacious will detect file formats on demand. This can result "
 "in a messier playlist, but delivers a major speed benefit."
 msgstr ""
+"Gdy ta opcja jest zaznaczona Audacious będzie sprawdzał formaty plików na "
+"życzenie.Może to spowodować wczytanie nierozpoznawalnych plików do "
+"playlisty, które niebędą pózniej mogły być odtworzone, lecz znakomicie "
+"przyspieszy czas jej wgrywania."
 
 #: audacious/glade/prefswin.glade:3864
 msgid "Detect file formats on demand, instead of immediately."
-msgstr ""
+msgstr "Rozpoznawaj format plików na życzenie, zamiast natychmiast."
 
 #: audacious/glade/prefswin.glade:3898
 msgid "<b>Playback</b>"
@@ -1835,10 +1823,12 @@ msgid ""
 "When Audacious starts, automatically begin playing from the point where we "
 "stopped before."
 msgstr ""
+"Gdy zostanie włączone Audacious automatycznie zacznij grać od miejscaw "
+"którym poprzednio przerwano."
 
 #: audacious/glade/prefswin.glade:3939
 msgid "Continue playback on startup"
-msgstr ""
+msgstr "Kontynułuj grę od właczenia"
 
 #: audacious/glade/prefswin.glade:3973
 msgid "When finished playing a song, don't automatically advance to the next."
@@ -1862,13 +1852,12 @@ msgid "seconds"
 msgstr "sekund"
 
 #: audacious/glade/prefswin.glade:4134
-#, fuzzy
 msgid "label76"
-msgstr "label65"
+msgstr "label76"
 
 #: audacious/glade/prefswin.glade:4248
 msgid "Popup Information Settings"
-msgstr ""
+msgstr "Ustawienia Informacje o dymkach"
 
 #: audacious/glade/prefswin.glade:4272
 msgid ""
@@ -1876,23 +1865,25 @@ msgid ""
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
+"Podczas poszukiwań zdjęć okładek albumów Audacious szuka konkretnych słów w "
+"nazwach plików. Możesz określić te słowa w listach poniżej, odzielonych "
+"średnikami"
 
 #: audacious/glade/prefswin.glade:4327
-#, fuzzy
 msgid "Include:"
-msgstr "Indie"
+msgstr "Użyj:"
 
 #: audacious/glade/prefswin.glade:4355
 msgid "Exclude:"
-msgstr ""
+msgstr "Omiń:"
 
 #: audacious/glade/prefswin.glade:4424
 msgid "Recursively search for cover"
-msgstr ""
+msgstr "Rekurencyjnie szukaj okładek"
 
 #: audacious/glade/prefswin.glade:4462
 msgid "Search depth: "
-msgstr ""
+msgstr "Głębokość wyszukiwania: "
 
 #: audacious/glade/prefswin.glade:4528
 msgid "Use per-file cover"
@@ -2095,23 +2086,18 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "Commands"
 #~ msgstr "Komendy"
 
-#, fuzzy
 #~ msgid "Command to run when Audacious starts a new song."
-#~ msgstr "Komenda linii poleceń do uruchomienia przy grze nowego utworu"
+#~ msgstr "Komenda do uruchomienia przy grze nowego utworu"
 
 #~ msgid "Command:"
 #~ msgstr "Komenda:"
 
-#, fuzzy
 #~ msgid "Command to run toward the end of a song."
-#~ msgstr "Komenda linii poleceń do uruchomienia przy końcu gry utworu"
+#~ msgstr "Komenda do uruchomienia przy końcu gry utworu"
 
-#, fuzzy
 #~ msgid "Command to run when Audacious reaches the end of the playlist."
-#~ msgstr ""
-#~ "Komenda linii poleceń do uruchomienia przy dotarciu do końca playlisty"
+#~ msgstr "Komenda do uruchomienia przy dotarciu do końca playlisty"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can use the following format strings which\n"
 #~ "will be substituted before calling the command\n"
@@ -2139,10 +2125,17 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ "%%t: Pozycja w playliście (%%02d)\n"
 #~ "%%p: Obecnie gra (1 or 0)"
 
+#~ msgid ""
+#~ "<span size='small'>Parameters passed to the shell should be encapsulated "
+#~ "in quotes. Doing otherwise is a security risk.</span>"
+#~ msgstr ""
+#~ "<span size='small'>Parametry podawane do konsoli powinny być wpisane "
+#~ "pomiędzy cudzysłowy. Zrobienie inaczej stwarza ryzyko dla bezpieczeństwa."
+#~ "</span>"
+
 #~ msgid "About "
 #~ msgstr "Informacje o"
 
-#, fuzzy
 #~ msgid ""
 #~ "\n"
 #~ "Copyright (C) 2002, 2003 Simon Peter <dn.tlp@gmx.net>\n"
@@ -2168,21 +2161,27 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "AMIDI-Plug %s (MIDI Player)"
 #~ msgstr "AMIDI-Plug %s (MIDI Player)"
 
-#, fuzzy
 #~ msgid "AMIDI-Plug - warning"
-#~ msgstr "Konfiguracja wtyczki AMIDI-Plug"
+#~ msgstr "AMIDI-Plug - ostrzeżenie"
 
-#, fuzzy
+#~ msgid ""
+#~ "No sequencer backend has been selected!\n"
+#~ "Please configure AMIDI-Plug before playing."
+#~ msgstr ""
+#~ "Żaden sequencer nie został wybrany!\n"
+#~ "Proszę skonfiguruj AMIDI-Plug przed odtwarzaniem."
+
 #~ msgid "AMIDI-Plug - select file"
-#~ msgstr "Konfiguracja wtyczki AMIDI-Plug"
+#~ msgstr "AMIDI-Plug - wybierz plik"
 
-#, fuzzy
 #~ msgid "AMIDI-Plug - configuration"
-#~ msgstr "Konfiguracja wtyczki AMIDI-Plug"
+#~ msgstr "AMIDI-Plug - konfiguracja"
 
-#, fuzzy
 #~ msgid "AMIDI-Plug message"
-#~ msgstr "AMIDI-Plug %s (MIDI Player)"
+#~ msgstr "AMIDI-Plug wiadomość"
+
+#~ msgid "Please stop the player before changing AMIDI-Plug settings."
+#~ msgstr "Proszę zatrzymaj odtwarzacz przed zmianą ustawień MIDI-Plug"
 
 #~ msgid "Name:"
 #~ msgstr "Nazwa:"
@@ -2465,7 +2464,6 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "Hebrew (Windows-1255)"
 #~ msgstr "Hebrajski (Windows-1255)"
 
-#, fuzzy
 #~ msgid "Japanese (EUC-JP)"
 #~ msgstr "Japoński (EUC-JP)"
 
@@ -2499,7 +2497,6 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "Unicode (UTF-7)"
 #~ msgstr "Unikod (UTF-7)"
 
-#, fuzzy
 #~ msgid "Unicode (UTF-8)"
 #~ msgstr "Unikod (UTF-8)"
 
@@ -2573,7 +2570,6 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "Cyrillic/Ukrainian (MacUkrainian)"
 #~ msgstr "Cyrylica/Ukraiński (MacUkrainian)"
 
-#, fuzzy
 #~ msgid "Farsi (MacFarsi)"
 #~ msgstr "Farski (MacFarsi)"
 
@@ -2637,18 +2633,15 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "to :"
 #~ msgstr "do :"
 
-#, fuzzy
 #~ msgid "ReplayGain"
-#~ msgstr "Powtarzaj uzyskane"
+#~ msgstr "Powtarzaj uzyskanie"
 
-#, fuzzy
 #~ msgid "Enable ReplayGain processing"
 #~ msgstr "Włączenie powtarzania uzyskanego"
 
 #~ msgid "Album mode"
 #~ msgstr "Tryb Album"
 
-#, fuzzy
 #~ msgid "Preamp:"
 #~ msgstr "Przedwzm:"
 
@@ -2661,15 +2654,12 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "Resolution"
 #~ msgstr "Rozdzielczość:"
 
-#, fuzzy
 #~ msgid "Without ReplayGain"
-#~ msgstr "Powtarzaj uzyskane"
+#~ msgstr "Bez Powtarzania uzyskanego"
 
-#, fuzzy
 #~ msgid "With ReplayGain"
-#~ msgstr "Powtarzaj uzyskane"
+#~ msgstr "Wraz z powtarzaj uzyskanym"
 
-#, fuzzy
 #~ msgid "Noise shaping"
 #~ msgstr "Gładzenie szumu"
 
@@ -3215,7 +3205,6 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "Filesize: %ld B"
 #~ msgstr "Rozmiar pliku: %ld B"
 
-#, fuzzy
 #~ msgid ""
 #~ "Avg. bitrate: %.1f kb/s\n"
 #~ "Compression ratio: %.1f%%"
@@ -3287,9 +3276,8 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "PRE-BUFFERING: %dKB/%dKB"
 #~ msgstr "WSTĘPNE BUFOROWANIE: %dKB/%dKB"
 
-#, fuzzy
 #~ msgid "FLAC Audio Plugin"
-#~ msgstr "Wtyczka audio CD"
+#~ msgstr "Wtyczka FLAC"
 
 #~ msgid "ModPlug Configuration"
 #~ msgstr "Konfiguracja wtyczki ModPlug"
@@ -3375,11 +3363,9 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "Surround"
 #~ msgstr "Surround"
 
-#, fuzzy
 #~ msgid "Preamp"
 #~ msgstr "Przedwzm"
 
-#, fuzzy
 #~ msgid ""
 #~ "Note:  Setting the preamp too high may cause\n"
 #~ "clipping / distortion!"
@@ -3414,7 +3400,6 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "MOD Info"
 #~ msgstr "Informacje o MOD"
 
-#, fuzzy
 #~ msgid ""
 #~ "Filename:\n"
 #~ "Title:\n"
@@ -3588,13 +3573,11 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "%lu Bytes"
 #~ msgstr "%lu bajtów"
 
-#, fuzzy
 #~ msgid "Couldn't connect to host %s:%d"
-#~ msgstr "Nie można połączyć się z serwerem %s"
+#~ msgstr "Nie można połączyć się z serwerem %s:%d"
 
-#, fuzzy
 #~ msgid "PRE-BUFFERING: %zuKB/%zuKB"
-#~ msgstr "WSTĘPNE BUFOROWANIE: %dKB/%dKB"
+#~ msgstr "WSTĘPNE BUFOROWANIE: %zuKB/%zuKB"
 
 #~ msgid "AlternRock"
 #~ msgstr "Rock alternatywny"
@@ -3685,7 +3668,6 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "ReplayGain Settings:"
 #~ msgstr "Ustawienia powtarzania uzyskanego:"
 
-#, fuzzy
 #~ msgid "Enable Clipping Prevention"
 #~ msgstr "Włącz prewencję zakłuceń"
 
@@ -3747,11 +3729,9 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "Track peak:"
 #~ msgstr "Utwór szczytowy:"
 
-#, fuzzy
 #~ msgid "Album gain:"
-#~ msgstr "Uzyskany Album"
+#~ msgstr "Uzyskanie dla Albumu"
 
-#, fuzzy
 #~ msgid "Album peak:"
 #~ msgstr "Szczytowe uzyskanie Albumu"
 
@@ -3816,7 +3796,6 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "About sndfile WAV support"
 #~ msgstr "O pluginie sndfile WAV"
 
-#, fuzzy
 #~ msgid ""
 #~ "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
 #~ "from the xmms_sndfile plugin which is:\n"
@@ -3862,6 +3841,9 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "WAV Audio Plugin"
 #~ msgstr "Wtyczka audio WAV"
 
+#~ msgid "WMA Player %s"
+#~ msgstr "Player WMA %s"
+
 #~ msgid "About %s"
 #~ msgstr "Informacje o %s"
 
@@ -3874,7 +3856,6 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "About OSS Driver"
 #~ msgstr "Informacje o sterowniku OSS"
 
-#, fuzzy
 #~ msgid ""
 #~ "Audacious OSS Driver\n"
 #~ "\n"
@@ -3949,7 +3930,6 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "About ALSA Driver"
 #~ msgstr "Informacje o sterowniku ALSA"
 
-#, fuzzy
 #~ msgid ""
 #~ "Audacious ALSA Driver\n"
 #~ "\n"
@@ -4048,7 +4028,6 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ msgid "About ESounD Plugin"
 #~ msgstr "Informacje o wtyczce ESound"
 
-#, fuzzy
 #~ msgid ""
 #~ "Audacious ESounD Plugin\n"
 #~ "\n"
@@ -4083,6 +4062,9 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #~ "Powinieneś otrzymać kopię GNU General Public License razem\n"
 #~ "z tym programem; jeśli nie, napisz do Free Software Foundation,\n"
 #~ "Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
+
+#~ msgid "ESD Output Plugin configuration"
+#~ msgstr "Konfiguracja wtyczki wyjściowej ESD"
 
 #~ msgid "Host:"
 #~ msgstr "Serwer:"
@@ -4156,6 +4138,12 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 
 #~ msgid "/Close"
 #~ msgstr "/Zamknij"
+
+#~ msgid "Blur scope"
+#~ msgstr "Zakres plam"
+
+#~ msgid "Blur Scope: Color selection"
+#~ msgstr "Zakres plam: Ywbór koloru"
 
 #~ msgid "Options:"
 #~ msgstr "Opcje:"
@@ -4696,6 +4684,9 @@ msgstr "%{n:...%}: Pokaż \"...\" jedynie jeśli element %n jest obecny"
 #, fuzzy
 #~ msgid "Mixing buffer size (ms):"
 #~ msgstr "Rozmiar bufora (ms):"
+
+#~ msgid "Output plugin"
+#~ msgstr "Wtyczka wyjściowa"
 
 #~ msgid "Pause"
 #~ msgstr "Wstrzymaj"
