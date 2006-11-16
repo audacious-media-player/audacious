@@ -1,3 +1,17 @@
+2006-11-16 19:44:58 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2937]
+  - a bunch of (mainly i18n-related) patches from Laszlo Dvornik.
+  - updated hungarian translation
+  - more mimetypes for audacious.desktop
+  
+  trunk/AUTHORS                        |    4 
+  trunk/audacious/audacious.desktop.in |    2 
+  trunk/audacious/glade/prefswin.glade |    4 
+  trunk/po/POTFILES.in                 |  116 
+  trunk/po/hu.po                       | 4967 +++++------------------------------
+  5 files changed, 822 insertions(+), 4271 deletions(-)
+
+
 2006-11-16 19:21:05 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2931]
   - remove shadowed struct _VFSFile.
