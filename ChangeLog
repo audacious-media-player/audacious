@@ -1,3 +1,11 @@
+2006-11-16 19:58:25 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2945]
+  - strip cruft from pl.po
+  
+  trunk/po/pl.po |   18 +++++++++++-------
+  1 file changed, 11 insertions(+), 7 deletions(-)
+
+
 2006-11-16 19:57:47 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2943]
   Updated Polish translation by VoJcEK <vojcek@tlen.pl>
