@@ -463,18 +463,28 @@ input_get_song_info(const gchar * filename, gchar ** title, gint * length)
     GList *node;
     gchar *tmp = NULL, *ext;
     gchar *filename_proxy;
+    VFSFile *fd;
 
     g_return_if_fail(filename != NULL);
     g_return_if_fail(title != NULL);
     g_return_if_fail(length != NULL);
 
     filename_proxy = g_strdup(filename);
+    fd = vfs_fopen(filename, "rb");
 
     for (node = get_input_list(); node != NULL; node = g_list_next(node)) {
         ip = INPUT_PLUGIN(node->data);
-        if (input_is_enabled(ip->filename) && ip->is_our_file(filename_proxy))
+        if (ip && input_is_enabled(ip->filename) &&
+            (ip->is_our_file_from_vfs != NULL &&
+             (ret = ip->is_our_file_from_vfs(filename_proxy, fd) > 0) || 
+             (ip->is_our_file != NULL &&
+              (ret = ip->is_our_file(filename_proxy)) > 0))) {
+            g_free(filename_proxy);
             break;
+        }
     }
+
+    vfs_fclose(fd);
 
     if (ip && node && ip->get_song_info) {
         ip->get_song_info(filename_proxy, &tmp, length);
@@ -517,17 +527,27 @@ input_get_song_tuple(const gchar * filename)
     GList *node;
     gchar *tmp = NULL, *ext;
     gchar *filename_proxy;
+    VFSFile *fd;
 
     if (filename == NULL)
 	return NULL;
 
     filename_proxy = g_strdup(filename);
+    fd = vfs_fopen(filename, "rb");
 
     for (node = get_input_list(); node != NULL; node = g_list_next(node)) {
         ip = INPUT_PLUGIN(node->data);
-        if (input_is_enabled(ip->filename) && ip->is_our_file(filename_proxy))
+        if (ip && input_is_enabled(ip->filename) &&
+            (ip->is_our_file_from_vfs != NULL &&
+             (ret = ip->is_our_file_from_vfs(filename_proxy, fd) > 0) || 
+             (ip->is_our_file != NULL &&
+              (ret = ip->is_our_file(filename_proxy)) > 0))) {
+            g_free(filename_proxy);
             break;
+        }
     }
+
+    vfs_fclose(fd);
 
     if (ip && node && ip->get_song_tuple)
         input = ip->get_song_tuple(filename_proxy);
@@ -629,23 +649,31 @@ input_file_info_box(const gchar * filename)
     GList *node;
     InputPlugin *ip;
     gchar *filename_proxy;
+    VFSFile *fd;
 
     filename_proxy = g_strdup(filename);
 
+    fd = vfs_fopen(filename, "rb");
+
     for (node = get_input_list(); node != NULL; node = g_list_next(node)) {
         ip = INPUT_PLUGIN(node->data);
-        if (input_is_enabled(ip->filename)
-            && ip->is_our_file(filename_proxy)) {
+        if (ip && input_is_enabled(ip->filename) &&
+            (ip->is_our_file_from_vfs != NULL &&
+             (ret = ip->is_our_file_from_vfs(filename_proxy, fd) > 0) || 
+             (ip->is_our_file != NULL &&
+              (ret = ip->is_our_file(filename_proxy)) > 0))) {
             if (ip->file_info_box)
                 ip->file_info_box(filename_proxy);
             else
                 input_general_file_info_box(filename, ip);
 
+            vfs_fclose(fd);
             g_free(filename_proxy);
             return;
         }
     }
 
+    vfs_close(fd);
     input_general_file_info_box(filename, NULL);
     g_free(filename_proxy);
 }

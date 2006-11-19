@@ -1,3 +1,10 @@
+2006-11-16 20:14:22 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2949]
+  Updated dutch translation.
+  trunk/po/nl.po | 2349 +--------------------------------------------------------
+  1 file changed, 43 insertions(+), 2306 deletions(-)
+
+
 2006-11-16 19:58:25 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2945]
   - strip cruft from pl.po
