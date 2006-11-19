@@ -676,7 +676,7 @@ input_file_info_box(const gchar * filename)
         }
     }
 
-    vfs_close(fd);
+    vfs_fclose(fd);
     input_general_file_info_box(filename, NULL);
     g_free(filename_proxy);
 }
