@@ -94,7 +94,7 @@ build_stamp.c:
 			echo ' */'; \
 			echo '#include <glib.h>'; \
 			echo -n 'const gchar *svn_stamp = "'; \
-			(cd ..; svnversion -n .); \
+			(svnversion -n .); \
 			echo '";' \
 		) > build_stamp.c; \
 		printf "%10s     %-20s\n" STAMP build_stamp.c;	\

@@ -1,3 +1,11 @@
+2006-11-19 06:27:37 +0000  George Averill <nhjm449@gmail.com>
+  revision [2959]
+  - Remove pointless duplicate 'Miscellaneous' header from Appearance tab of prefs
+  
+  trunk/audacious/glade/prefswin.glade | 7274 ++++++++++++-----------------------
+  1 file changed, 2697 insertions(+), 4577 deletions(-)
+
+
 2006-11-19 03:47:13 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2957]
   - s/vfs_close/vfs_fclose/
