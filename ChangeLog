@@ -1,3 +1,10 @@
+2006-11-19 14:40:10 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2961]
+  Avoid chdir .. when creating the SVN build stamp. This way we get a valid stamp when compiling from an ebuild.
+  trunk/audacious/Makefile |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-11-19 06:27:37 +0000  George Averill <nhjm449@gmail.com>
   revision [2959]
   - Remove pointless duplicate 'Miscellaneous' header from Appearance tab of prefs
