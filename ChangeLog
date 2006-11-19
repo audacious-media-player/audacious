@@ -1,3 +1,11 @@
+2006-11-19 03:47:13 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2957]
+  - s/vfs_close/vfs_fclose/
+  
+  trunk/audacious/input.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-11-19 03:46:18 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2955]
   - forgot a variable
