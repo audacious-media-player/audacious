@@ -464,6 +464,7 @@ input_get_song_info(const gchar * filename, gchar ** title, gint * length)
     gchar *tmp = NULL, *ext;
     gchar *filename_proxy;
     VFSFile *fd;
+    gint ret = 1;
 
     g_return_if_fail(filename != NULL);
     g_return_if_fail(title != NULL);
@@ -528,6 +529,7 @@ input_get_song_tuple(const gchar * filename)
     gchar *tmp = NULL, *ext;
     gchar *filename_proxy;
     VFSFile *fd;
+    gint ret = 1;
 
     if (filename == NULL)
 	return NULL;
@@ -650,6 +652,7 @@ input_file_info_box(const gchar * filename)
     InputPlugin *ip;
     gchar *filename_proxy;
     VFSFile *fd;
+    gint ret = 1;
 
     filename_proxy = g_strdup(filename);
 
