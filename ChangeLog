@@ -1,3 +1,10 @@
+2006-11-19 18:50:21 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [2963]
+  Fixed broken Classic skin.
+  
+  0 files changed
+
+
 2006-11-19 14:40:10 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [2961]
   Avoid chdir .. when creating the SVN build stamp. This way we get a valid stamp when compiling from an ebuild.
