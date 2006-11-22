@@ -1,3 +1,11 @@
+2006-11-22 11:33:52 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2967]
+  - avoid double free
+  
+  trunk/audacious/input.c |    4 +++-
+  1 file changed, 3 insertions(+), 1 deletion(-)
+
+
 2006-11-21 19:56:37 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2965]
   - update russian translation
