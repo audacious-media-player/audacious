@@ -1,3 +1,11 @@
+2006-11-21 19:56:37 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2965]
+  - update russian translation
+  
+  trunk/po/ru.po | 2070 +--------------------------------------------------------
+  1 file changed, 40 insertions(+), 2030 deletions(-)
+
+
 2006-11-19 18:50:21 +0000  Jonathan Schleifer <js@h3c.de>
   revision [2963]
   Fixed broken Classic skin.
