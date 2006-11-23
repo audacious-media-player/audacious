@@ -76,8 +76,6 @@
 #include "pixmaps.h"
 #include "images/audacious_player.xpm"
 
-#include "newui/newui_window.h"
-
 gboolean has_x11_connection = FALSE; 	/* do we have an X11 connection? */
 
 /* Translatable string for beep.desktop's comment field */
@@ -1133,9 +1131,6 @@ main(gint argc, gchar ** argv)
 
 	create_fileinfo_window();
 	create_filepopup_window();
-
-//	create_newui_window();
-//	show_newui_window();
 
         if (cfg.player_visible)
             mainwin_show(TRUE);

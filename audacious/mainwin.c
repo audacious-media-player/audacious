@@ -3770,8 +3770,6 @@ idle_func_update_song_info(gint time)
         playlistwin_hide_timer();
     input_update_vis(time);
 
-//    newui_set_time(time, length);
-
     if (cfg.timer_mode == TIMER_REMAINING) {
         if (length != -1) {
             number_set_number(mainwin_minus_num, 11);

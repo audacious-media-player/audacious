@@ -1,3 +1,11 @@
+2006-11-22 22:35:19 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2969]
+  - update french translation
+  
+  trunk/po/fr.po |  462 ++++++++++++++++++++++++++-------------------------------
+  1 file changed, 212 insertions(+), 250 deletions(-)
+
+
 2006-11-22 11:33:52 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2967]
   - avoid double free
