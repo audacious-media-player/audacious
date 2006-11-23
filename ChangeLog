@@ -1,3 +1,37 @@
+2006-11-23 16:40:31 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [2977]
+  Fallback character -> character. Update PO files accordingly. Closes bug #641.
+  trunk/audacious/glade/prefswin.glade |    2 
+  trunk/po/audacious.pot               |  339 ++++++++----------------
+  trunk/po/br.po                       |  355 +++++++++----------------
+  trunk/po/cs.po                       |  382 +++++++++++----------------
+  trunk/po/cy.po                       |  378 ++++++++++-----------------
+  trunk/po/de.po                       |  471 +++++++++++++++------------------
+  trunk/po/el.po                       |  449 ++++++++++++++------------------
+  trunk/po/es.po                       |  473 ++++++++++++++++------------------
+  trunk/po/fi.po                       |  382 +++++++++++----------------
+  trunk/po/fr.po                       |  485 ++++++++++++++++------------------
+  trunk/po/hi.po                       |  386 +++++++++++----------------
+  trunk/po/hu.po                       |  471 +++++++++++++++------------------
+  trunk/po/it.po                       |  417 +++++++++++++-----------------
+  trunk/po/ja.po                       |  455 +++++++++++++++-----------------
+  trunk/po/ka.po                       |  371 ++++++++++----------------
+  trunk/po/ko.po                       |  379 ++++++++++-----------------
+  trunk/po/lt.po                       |  376 ++++++++++-----------------
+  trunk/po/mk.po                       |  384 +++++++++++----------------
+  trunk/po/nl.po                       |  479 ++++++++++++++++------------------
+  trunk/po/pl.po                       |  474 ++++++++++++++++------------------
+  trunk/po/pt_BR.po                    |  383 +++++++++++----------------
+  trunk/po/ro.po                       |  362 +++++++++-----------------
+  trunk/po/ru.po                       |  486 ++++++++++++++++-------------------
+  trunk/po/sk.po                       |  383 +++++++++++----------------
+  trunk/po/sv.po                       |  378 ++++++++++-----------------
+  trunk/po/uk.po                       |  394 +++++++++++-----------------
+  trunk/po/zh_CN.po                    |  382 +++++++++++----------------
+  trunk/po/zh_TW.po                    |  382 +++++++++++----------------
+  28 files changed, 4716 insertions(+), 6342 deletions(-)
+
+
 2006-11-23 14:03:55 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [2975]
   - filename_proxy need not and should not be freed here.
