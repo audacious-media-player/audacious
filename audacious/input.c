@@ -462,7 +462,7 @@ input_get_song_info(const gchar * filename, gchar ** title, gint * length)
     BmpTitleInput *input;
     GList *node;
     gchar *tmp = NULL, *ext;
-    gchar *filename_proxy = NULL;
+    gchar *filename_proxy;
     VFSFile *fd;
     gint ret = 1;
 
@@ -480,8 +480,6 @@ input_get_song_info(const gchar * filename, gchar ** title, gint * length)
              (ret = ip->is_our_file_from_vfs(filename_proxy, fd) > 0) || 
              (ip->is_our_file != NULL &&
               (ret = ip->is_our_file(filename_proxy)) > 0))) {
-            g_free(filename_proxy);
-            filename_proxy = NULL;
             break;
         }
     }
@@ -519,7 +517,6 @@ input_get_song_info(const gchar * filename, gchar ** title, gint * length)
     }
 
     g_free(filename_proxy);
-    filename_proxy = NULL;
 }
 
 TitleInput *

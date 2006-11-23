@@ -1,3 +1,12 @@
+2006-11-23 05:05:57 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2973]
+  - remove the glade files for newui too.
+  
+  trunk/audacious/glade/Makefile    |    3 
+  trunk/audacious/glade/newui.glade |  718 --------------------------------------
+  2 files changed, 1 insertion(+), 720 deletions(-)
+
+
 2006-11-23 05:05:20 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2971]
   - remove newui
