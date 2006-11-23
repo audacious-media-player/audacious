@@ -1,3 +1,14 @@
+2006-11-23 05:05:20 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2971]
+  - remove newui
+  
+  trunk/audacious/Makefile   |    5 ++---
+  trunk/audacious/main.c     |    5 -----
+  trunk/audacious/mainwin.c  |    2 --
+  trunk/audacious/playlist.c |    3 ---
+  4 files changed, 2 insertions(+), 13 deletions(-)
+
+
 2006-11-22 22:35:19 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2969]
   - update french translation
