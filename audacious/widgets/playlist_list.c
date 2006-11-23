@@ -639,6 +639,8 @@ playlist_list_draw(Widget * w)
         else
             title = str_to_utf8(entry->title);
 
+        title = convert_title_text(title);
+
         pos = playlist_get_queue_position(entry);
 
         tail[0] = 0;
