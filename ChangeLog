@@ -1,3 +1,11 @@
+2006-11-23 14:03:55 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [2975]
+  - filename_proxy need not and should not be freed here.
+  
+  trunk/audacious/input.c |    5 +----
+  1 file changed, 1 insertion(+), 4 deletions(-)
+
+
 2006-11-23 05:05:57 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2973]
   - remove the glade files for newui too.

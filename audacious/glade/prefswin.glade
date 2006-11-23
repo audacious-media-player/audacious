@@ -1198,7 +1198,7 @@
                                       <widget class="GtkLabel" id="label74">
                                         <property name="visible">True</property>
                                         <property name="xalign">1.000000</property>
-                                        <property name="label" translatable="yes">Fallback charcter encodings:</property>
+                                        <property name="label" translatable="yes">Fallback character encodings:</property>
                                         <property name="justify">GTK_JUSTIFY_RIGHT</property>
                                       </widget>
                                       <packing>

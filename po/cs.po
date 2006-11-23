@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 0.2\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-11-16 14:45-0600\n"
+"POT-Creation-Date: 2006-11-23 16:38+0000\n"
 "PO-Revision-Date: 2006-01-22 18:07+0100\n"
 "Last-Translator: Jan Nárovec <finn@sendmail.cz>\n"
 "Language-Team: Czech\n"
@@ -379,20 +379,20 @@ msgstr "Ukaž podrobné _informace"
 msgid "Filename"
 msgstr "Jméno souboru"
 
-#: audacious/input.c:568
+#: audacious/input.c:589
 #, c-format
 msgid "audacious: %s"
 msgstr "audacious: %s"
 
-#: audacious/input.c:584
+#: audacious/input.c:605
 msgid "Filename:"
 msgstr "Jméno souboru:"
 
-#: audacious/input.c:602
+#: audacious/input.c:623
 msgid "No input plugin recognized this file"
 msgstr "Soubor nebyl rozpoznán žádným vstupním modulem"
 
-#: audacious/input.c:604
+#: audacious/input.c:625
 #, c-format
 msgid "Input plugin: %s"
 msgstr "Vstupní modul: %s"
@@ -402,17 +402,17 @@ msgstr "Vstupní modul: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "Nepodařilo se vytvořit logovací soubor (%s)!\n"
 
-#: audacious/main.c:84 audacious/main.c:86 audacious/mainwin.c:876
+#: audacious/main.c:82 audacious/main.c:84 audacious/mainwin.c:876
 #: audacious/mainwin.c:3640
 msgid "Audacious"
 msgstr "Audacious"
 
-#: audacious/main.c:447
+#: audacious/main.c:445
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "Nepodařilo se vytvořit adresář (%s): %s"
 
-#: audacious/main.c:723
+#: audacious/main.c:721
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
@@ -424,71 +424,71 @@ msgstr ""
 "Volby:\n"
 "------\n"
 
-#: audacious/main.c:728
+#: audacious/main.c:726
 msgid "Display this text and exit"
 msgstr "Zobrazí tento text a skončí"
 
-#: audacious/main.c:731
+#: audacious/main.c:729
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Výběr sezení Audacious/BMP/XMMS (standardně: 0)"
 
-#: audacious/main.c:734
+#: audacious/main.c:732
 msgid "Skip backwards in playlist"
 msgstr "Přejít zpět v seznamu skladeb"
 
-#: audacious/main.c:737
+#: audacious/main.c:735
 msgid "Start playing current playlist"
 msgstr "Přehrát skladby v aktuálním seznamu"
 
-#: audacious/main.c:740
+#: audacious/main.c:738
 msgid "Pause current song"
 msgstr "Pozastavit přehrávanou skladbu"
 
-#: audacious/main.c:743
+#: audacious/main.c:741
 msgid "Stop current song"
 msgstr "Zastavit přehrávanou skladbu"
 
-#: audacious/main.c:746
+#: audacious/main.c:744
 msgid "Pause if playing, play otherwise"
 msgstr "Pozastavit při přehrávání; jinak spustit"
 
-#: audacious/main.c:749
+#: audacious/main.c:747
 msgid "Skip forward in playlist"
 msgstr "Přejít na další skladbu"
 
-#: audacious/main.c:752
+#: audacious/main.c:750
 msgid "Display Jump to file dialog"
 msgstr ""
 
-#: audacious/main.c:755
+#: audacious/main.c:753
 msgid "Don't clear the playlist"
 msgstr "Nemazat seznam skladeb"
 
-#: audacious/main.c:758
+#: audacious/main.c:756
 msgid "Show the main window"
 msgstr "Zobrazit hlavní okno"
 
-#: audacious/main.c:761
+#: audacious/main.c:759
 msgid "Activate Audacious"
 msgstr "Aktivovat Audacious"
 
-#: audacious/main.c:764
+#: audacious/main.c:762
 msgid "Previous session ID"
 msgstr "ID předchozího sezení"
 
-#: audacious/main.c:767
+#: audacious/main.c:765
 msgid "Headless operation [experimental]"
 msgstr ""
 
-#: audacious/main.c:770
+#: audacious/main.c:768
 msgid "Disable error/warning interception (logging)"
 msgstr ""
 
-#: audacious/main.c:773
+#: audacious/main.c:771
 msgid "Print version number and exit\n"
 msgstr "Zobrazí číslo verze a skončí\n"
 
-#: audacious/main.c:963
+#: audacious/main.c:961
 #, fuzzy
 msgid ""
 "\n"
@@ -505,7 +505,7 @@ msgstr ""
 "kontaktujte vývojáře (anglicky) na http://bugs.nenold.net\n"
 "\n"
 
-#: audacious/main.c:986
+#: audacious/main.c:984
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -518,7 +518,7 @@ msgstr ""
 "Zkontrolujte, zda skin v '%s' je použitelný a zda je standardní skin správně "
 "nainstalován v '%s'.\n"
 
-#: audacious/main.c:1032
+#: audacious/main.c:1030
 #, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -527,7 +527,7 @@ msgstr ""
 "Verze knihovny GTK+ (%d.%d.%d) není kompatibilní s Audacious.\n"
 "Použijte GTK+ %s nebo novější.\n"
 
-#: audacious/main.c:1043
+#: audacious/main.c:1041
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -541,7 +541,7 @@ msgstr ""
 "dříve\n"
 "než LinuxThreads, budete muset Glib a GTK+ přeložit znovu.\n"
 
-#: audacious/main.c:1059
+#: audacious/main.c:1057
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "audacious: Nepodařilo se otevřít displej. Končím.\n"
 
@@ -978,7 +978,7 @@ msgstr ""
 "2. žádný jiný program neblokuje zvukovou kartu,\n"
 "3. vaše karta je správně nakonfigurována.\n"
 
-#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1425
+#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:876
 msgid "Appearance"
 msgstr "Vzhled"
 
@@ -991,19 +991,19 @@ msgstr "Audacious"
 msgid "Connectivity"
 msgstr ""
 
-#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:2889
+#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:1721
 msgid "Equalizer"
 msgstr "Ekvalizér"
 
-#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:1704
+#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:1033
 msgid "Mouse"
 msgstr "Myš"
 
-#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:2521
+#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:1515
 msgid "Playlist"
 msgstr "Seznam skladeb"
 
-#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:693
+#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:470
 msgid "Plugins"
 msgstr "Moduly"
 
@@ -1424,250 +1424,177 @@ msgstr "Číslo stopy"
 msgid "<i>Track Length</i>"
 msgstr "Délka stopy:"
 
-#: audacious/glade/prefswin.glade:8
-msgid "Audacious Preferences"
-msgstr "Nastavení programu"
-
-#: audacious/glade/prefswin.glade:115
+#: audacious/glade/prefswin.glade:68
 #, fuzzy
 msgid "_Decoder list:"
 msgstr "Dekodér"
 
-#: audacious/glade/prefswin.glade:219
+#: audacious/glade/prefswin.glade:148
 #, fuzzy
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr "<span size=\"medium\"><b>Obecné</b></span>"
 
-#: audacious/glade/prefswin.glade:261
+#: audacious/glade/prefswin.glade:169
 msgid "_General plugin list:"
 msgstr "_Seznam obecných modulů:"
 
-#: audacious/glade/prefswin.glade:365
+#: audacious/glade/prefswin.glade:248
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b>Obecné</b></span>"
 
-#: audacious/glade/prefswin.glade:407
+#: audacious/glade/prefswin.glade:270
 msgid "_Visualization plugin list:"
 msgstr "_Seznam vizualizačních modulů"
 
-#: audacious/glade/prefswin.glade:511
+#: audacious/glade/prefswin.glade:349
 msgid "<b>Visualization</b>"
 msgstr "<b>Vizualizační</b>"
 
-#: audacious/glade/prefswin.glade:553
+#: audacious/glade/prefswin.glade:371
 msgid "_Effect plugin list:"
 msgstr "_Seznam efektových modulů"
 
-#: audacious/glade/prefswin.glade:657
+#: audacious/glade/prefswin.glade:450
 msgid "<b>Effects</b>"
 msgstr "<b>Efekty</b>"
 
-#: audacious/glade/prefswin.glade:746
+#: audacious/glade/prefswin.glade:496
 msgid "<b>_Skin</b>"
 msgstr "<b>_Skin</b>"
 
-#: audacious/glade/prefswin.glade:772
-#, fuzzy
-msgid "Refresh skin list"
-msgstr "/Obnovování"
-
-#: audacious/glade/prefswin.glade:866
+#: audacious/glade/prefswin.glade:564
 msgid "<b>_Fonts</b>"
 msgstr "<b>_Fonty</b>"
 
-#: audacious/glade/prefswin.glade:921
+#: audacious/glade/prefswin.glade:596
 msgid "_Player:"
 msgstr "V okně _přehrávače:"
 
-#: audacious/glade/prefswin.glade:964
+#: audacious/glade/prefswin.glade:617
 msgid "_Playlist:"
 msgstr "V seznamu sklade_b:"
 
-#: audacious/glade/prefswin.glade:996
-msgid "Select main player window font:"
-msgstr "Font v hlavním okně přehrávače:"
-
-#: audacious/glade/prefswin.glade:1018
-msgid "Select playlist font:"
-msgstr "Font v seznamu skladeb:"
-
-#: audacious/glade/prefswin.glade:1064
-msgid ""
-"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
-"strings."
-msgstr ""
-
-#: audacious/glade/prefswin.glade:1066
+#: audacious/glade/prefswin.glade:683
 msgid "Use Bitmap fonts if available"
 msgstr "Pokud možno, používat bitmapové fonty"
 
-#: audacious/glade/prefswin.glade:1100
+#: audacious/glade/prefswin.glade:706
 msgid "<b>_Miscellaneous</b>"
 msgstr "<b>_Různé</b>"
 
-#: audacious/glade/prefswin.glade:1148
+#: audacious/glade/prefswin.glade:735
 msgid "Show track numbers in playlist"
 msgstr "Zobrazit čísla stop v seznamu skladeb"
 
-#: audacious/glade/prefswin.glade:1183
+#: audacious/glade/prefswin.glade:757
 #, fuzzy
 msgid "Show separators in playlist"
 msgstr "Zobrazit čísla stop v seznamu skladeb"
 
-#: audacious/glade/prefswin.glade:1218
+#: audacious/glade/prefswin.glade:779
 msgid "Use custom cursors"
 msgstr "Použít vlastní kurzory"
 
-#: audacious/glade/prefswin.glade:1265
-#, fuzzy
-msgid "<b>_Miscillaneous UI Features</b>"
-msgstr "<b>_Různé</b>"
-
-#: audacious/glade/prefswin.glade:1305
-msgid ""
-"Enables playlist transparency. This is not recommended for slower machines "
-"as it requires some CPU time to create and cache the pixmaps used for the "
-"transparency."
+#: audacious/glade/prefswin.glade:799
+msgid "Show window manager decoration"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1307
+#: audacious/glade/prefswin.glade:804
+msgid "Show window manager decorations"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:805
+msgid "This enables the window manager to show decorations for windows."
+msgstr ""
+
+#: audacious/glade/prefswin.glade:824
+msgid "Use XMMS-style file selector instead of the default selector"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:845
 #, fuzzy
 msgid "Enable playlist transparency"
 msgstr "Zapnout zesílení pro přehrávání"
 
-#: audacious/glade/prefswin.glade:1341
-msgid ""
-"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
-"provided by Audacious itself and is faster than the default GTK2 selector "
-"(but sadly not as user-friendly)."
-msgstr ""
-
-#: audacious/glade/prefswin.glade:1343
-msgid "Use XMMS-style file selector instead of the default selector"
-msgstr ""
-
-#: audacious/glade/prefswin.glade:1377
-msgid "This enables the window mangaer to show decorations for windows."
-msgstr ""
-
-#: audacious/glade/prefswin.glade:1379
-msgid "Show window manager decoration"
-msgstr ""
-
-#: audacious/glade/prefswin.glade:1387
-msgid "Show window manager decorations"
-msgstr ""
-
-#: audacious/glade/prefswin.glade:1388
-msgid "This enables the window manager to show decorations for windows."
-msgstr ""
-
-#: audacious/glade/prefswin.glade:1472
+#: audacious/glade/prefswin.glade:900
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>Kolečko myši</b>"
 
-#: audacious/glade/prefswin.glade:1520
+#: audacious/glade/prefswin.glade:925
 msgid "Changes volume by"
 msgstr "změní hlasitost o"
 
-#: audacious/glade/prefswin.glade:1548
+#: audacious/glade/prefswin.glade:937
 msgid "percent"
 msgstr "procent."
 
-#: audacious/glade/prefswin.glade:1576
+#: audacious/glade/prefswin.glade:951
 msgid "Scrolls playlist by"
 msgstr "posune seznam skladeb o"
 
-#: audacious/glade/prefswin.glade:1629
+#: audacious/glade/prefswin.glade:984
 msgid "lines"
 msgstr "řádek."
 
-#: audacious/glade/prefswin.glade:1751
+#: audacious/glade/prefswin.glade:1056
 msgid "<b>Filename</b>"
 msgstr "<b>Jméno souboru</b>"
 
-#: audacious/glade/prefswin.glade:1791
+#: audacious/glade/prefswin.glade:1074
 msgid "Convert underscores to blanks"
 msgstr "Převést podtržítka na mezery"
 
-#: audacious/glade/prefswin.glade:1826
+#: audacious/glade/prefswin.glade:1096
 msgid "Convert %20 to blanks"
 msgstr "Převést %20 na mezery"
 
-#: audacious/glade/prefswin.glade:1860
+#: audacious/glade/prefswin.glade:1119
 msgid "<b>Metadata</b>"
 msgstr "<b>Metadata</b>"
 
-#: audacious/glade/prefswin.glade:1899
-msgid "Load metadata (tag information) from music files."
-msgstr "Načíst metadata (tagy) z hudebních souborů."
-
-#: audacious/glade/prefswin.glade:1901
+#: audacious/glade/prefswin.glade:1138
 msgid "Load metadata from playlists and files"
 msgstr "Načíst metadata ze seznamů skladeb a souborů"
 
-#: audacious/glade/prefswin.glade:1939
-msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"Načíst metadata při vložení souboru do seznamu skladeb nebo při otevření"
-
-#: audacious/glade/prefswin.glade:1941
+#: audacious/glade/prefswin.glade:1162
 msgid "On load"
 msgstr "Při nahrání"
 
-#: audacious/glade/prefswin.glade:1961
-msgid "Load metadata on demand when displaying the file in the playlist"
-msgstr "Načíst metadata na vyžádání při zobrazení souboru v seznamu skladeb"
-
-#: audacious/glade/prefswin.glade:1963
+#: audacious/glade/prefswin.glade:1178
 msgid "On display"
 msgstr "Při zobrazení"
 
-#: audacious/glade/prefswin.glade:1993
-msgid "Fallback charcter encodings:"
+#: audacious/glade/prefswin.glade:1201
+msgid "Fallback character encodings:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2021
-msgid ""
-"List of character encodings used for fall back conversion of metadata. If "
-"automatic character encoding detector failed or has been disabled, encodings "
-"in this list would be treated as candidates of the encoding of metadata, and "
-"fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr ""
-
-#: audacious/glade/prefswin.glade:2062
+#: audacious/glade/prefswin.glade:1243
 msgid "Auto character encoding detector for:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2118
+#: audacious/glade/prefswin.glade:1274
 #, fuzzy
 msgid "<b>File Dialog</b>"
 msgstr "<b>Jméno souboru</b>"
 
-#: audacious/glade/prefswin.glade:2157
-msgid ""
-"Always refresh the file dialog (this will slow opening the dialog on large "
-"directories, and Gnome VFS should handle automatically)."
-msgstr ""
-
-#: audacious/glade/prefswin.glade:2159
+#: audacious/glade/prefswin.glade:1293
 msgid "Always refresh directory when opening file dialog"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2193
+#: audacious/glade/prefswin.glade:1317
 #, fuzzy
 msgid "<b>Song Display</b>"
 msgstr "<b>Zobrazení skladby</b>"
 
-#: audacious/glade/prefswin.glade:2241
+#: audacious/glade/prefswin.glade:1343
 msgid "Title format:"
 msgstr "Formát názvu:"
 
-#: audacious/glade/prefswin.glade:2269
+#: audacious/glade/prefswin.glade:1355
 msgid "Custom string:"
 msgstr "Vlastní řetězec:"
 
-#: audacious/glade/prefswin.glade:2320
+#: audacious/glade/prefswin.glade:1383
 #, fuzzy
 msgid ""
 "TITLE\n"
@@ -1684,105 +1611,90 @@ msgstr ""
 "ALBUM - NÁZEV\n"
 "Vlastní"
 
-#: audacious/glade/prefswin.glade:2342
-msgid "Show information about titlestring format"
-msgstr "Zobrazit informace o formátu titulku"
-
-#: audacious/glade/prefswin.glade:2392
+#: audacious/glade/prefswin.glade:1437
 #, fuzzy
 msgid "<b>Popup Information</b>"
 msgstr "Nastavení modulu MPEG Audio"
 
-#: audacious/glade/prefswin.glade:2443
-msgid ""
-"Toggles popup information window for the pointed entry in the playlist. The "
-"window shows title of song, name of album, genre, year of publish, track "
-"number, track length, and artwork."
-msgstr ""
-
-#: audacious/glade/prefswin.glade:2445
+#: audacious/glade/prefswin.glade:1463
 msgid "Show popup information for playlist entries"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2472
-msgid "Edit settings for popup information"
-msgstr ""
-
-#: audacious/glade/prefswin.glade:2580
+#: audacious/glade/prefswin.glade:1541
 msgid "<b>Presets</b>"
 msgstr "<b>Předvolby</b>"
 
-#: audacious/glade/prefswin.glade:2680
+#: audacious/glade/prefswin.glade:1597
 msgid "Directory preset file:"
 msgstr "Adresář s předvolbami:"
 
-#: audacious/glade/prefswin.glade:2708
+#: audacious/glade/prefswin.glade:1608
 msgid "File preset extension:"
 msgstr "Přípony souborů s předvolbami:"
 
-#: audacious/glade/prefswin.glade:2756
+#: audacious/glade/prefswin.glade:1632
 msgid "Available _Presets:"
 msgstr "Dostupné _předvolby:"
 
-#: audacious/glade/prefswin.glade:2936
+#: audacious/glade/prefswin.glade:1744
 #, fuzzy
 msgid "<b>Proxy Configuration</b>"
 msgstr "Nastavení modulu MPEG Audio"
 
-#: audacious/glade/prefswin.glade:2994
+#: audacious/glade/prefswin.glade:1769
 msgid "Enable proxy usage"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3025
+#: audacious/glade/prefswin.glade:1794
 msgid "Proxy hostname:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3053
+#: audacious/glade/prefswin.glade:1805
 #, fuzzy
 msgid "Proxy port:"
 msgstr "Proxy:"
 
-#: audacious/glade/prefswin.glade:3147
+#: audacious/glade/prefswin.glade:1858
 #, fuzzy
 msgid "Use authentication with proxy"
 msgstr "Autorizovat se"
 
-#: audacious/glade/prefswin.glade:3178
+#: audacious/glade/prefswin.glade:1884
 #, fuzzy
 msgid "Proxy username:"
 msgstr "Přístupové jméno:"
 
-#: audacious/glade/prefswin.glade:3206
+#: audacious/glade/prefswin.glade:1895
 #, fuzzy
 msgid "Proxy password:"
 msgstr "Heslo:"
 
-#: audacious/glade/prefswin.glade:3322
+#: audacious/glade/prefswin.glade:1961
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3378
+#: audacious/glade/prefswin.glade:1997
 msgid "label65"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3419
+#: audacious/glade/prefswin.glade:2017
 #, fuzzy
 msgid "<b>Audio System</b>"
 msgstr "<b>Předvolby</b>"
 
-#: audacious/glade/prefswin.glade:3473
+#: audacious/glade/prefswin.glade:2046
 #, fuzzy
 msgid "Current output plugin:"
 msgstr "_Aktuální výstupní modul"
 
-#: audacious/glade/prefswin.glade:3518
+#: audacious/glade/prefswin.glade:2069
 #, fuzzy
 msgid "Buffer size:"
 msgstr "Velikost vyrovnávací paměti (kB):"
 
-#: audacious/glade/prefswin.glade:3588
+#: audacious/glade/prefswin.glade:2112
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
@@ -1791,98 +1703,78 @@ msgid ""
 "poorly.</span>"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3696
+#: audacious/glade/prefswin.glade:2179
 #, fuzzy
 msgid "Output Plugin Preferences"
 msgstr "Výstupní modul"
 
-#: audacious/glade/prefswin.glade:3771
+#: audacious/glade/prefswin.glade:2222
 #, fuzzy
 msgid "Output Plugin Information"
 msgstr "Nastavení výstupního modulu ESD"
 
-#: audacious/glade/prefswin.glade:3823
+#: audacious/glade/prefswin.glade:2258
 #, fuzzy
 msgid "<b>Format Detection</b>"
 msgstr "Automatický výběr"
 
-#: audacious/glade/prefswin.glade:3862
-msgid ""
-"When checked, Audacious will detect file formats on demand. This can result "
-"in a messier playlist, but delivers a major speed benefit."
-msgstr ""
-
-#: audacious/glade/prefswin.glade:3864
+#: audacious/glade/prefswin.glade:2277
 msgid "Detect file formats on demand, instead of immediately."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3898
+#: audacious/glade/prefswin.glade:2301
 msgid "<b>Playback</b>"
 msgstr "<b>Přehrávání</b>"
 
-#: audacious/glade/prefswin.glade:3937
-msgid ""
-"When Audacious starts, automatically begin playing from the point where we "
-"stopped before."
-msgstr ""
-
-#: audacious/glade/prefswin.glade:3939
+#: audacious/glade/prefswin.glade:2320
 msgid "Continue playback on startup"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3973
-msgid "When finished playing a song, don't automatically advance to the next."
-msgstr "Po přehrání skladby nepřecházet automaticky na následující."
-
-#: audacious/glade/prefswin.glade:3975
+#: audacious/glade/prefswin.glade:2343
 msgid "Don't advance in the playlist"
 msgstr "Nepokračovat v přehrávání dle seznamu skladeb"
 
-#: audacious/glade/prefswin.glade:4010
+#: audacious/glade/prefswin.glade:2366
 msgid "Pause between songs"
 msgstr "Pauza mezi skladbami"
 
-#: audacious/glade/prefswin.glade:4048
+#: audacious/glade/prefswin.glade:2389
 msgid "Pause for"
 msgstr "Pozastavit na"
 
-#: audacious/glade/prefswin.glade:4094
+#: audacious/glade/prefswin.glade:2415
 msgid "seconds"
 msgstr "sec."
 
-#: audacious/glade/prefswin.glade:4134
+#: audacious/glade/prefswin.glade:2441
 msgid "label76"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:4248
-msgid "Popup Information Settings"
-msgstr ""
-
-#: audacious/glade/prefswin.glade:4272
+#: audacious/glade/prefswin.glade:2526
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:4327
+#: audacious/glade/prefswin.glade:2559
 #, fuzzy
 msgid "Include:"
 msgstr "Indie"
 
-#: audacious/glade/prefswin.glade:4355
+#: audacious/glade/prefswin.glade:2570
 msgid "Exclude:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:4424
+#: audacious/glade/prefswin.glade:2606
 msgid "Recursively search for cover"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:4462
+#: audacious/glade/prefswin.glade:2627
 msgid "Search depth: "
 msgstr ""
 
-#: audacious/glade/prefswin.glade:4528
+#: audacious/glade/prefswin.glade:2659
 msgid "Use per-file cover"
 msgstr ""
 
@@ -1957,6 +1849,40 @@ msgstr "Číslo stopy"
 #: libaudacious/titlestring.c:409
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: Zobraz \"...\" pouze pokud %n nechybí"
+
+#~ msgid "Audacious Preferences"
+#~ msgstr "Nastavení programu"
+
+#, fuzzy
+#~ msgid "Refresh skin list"
+#~ msgstr "/Obnovování"
+
+#~ msgid "Select main player window font:"
+#~ msgstr "Font v hlavním okně přehrávače:"
+
+#~ msgid "Select playlist font:"
+#~ msgstr "Font v seznamu skladeb:"
+
+#, fuzzy
+#~ msgid "<b>_Miscillaneous UI Features</b>"
+#~ msgstr "<b>_Různé</b>"
+
+#~ msgid "Load metadata (tag information) from music files."
+#~ msgstr "Načíst metadata (tagy) z hudebních souborů."
+
+#~ msgid "Load metadata when adding the file to the playlist or opening it"
+#~ msgstr ""
+#~ "Načíst metadata při vložení souboru do seznamu skladeb nebo při otevření"
+
+#~ msgid "Load metadata on demand when displaying the file in the playlist"
+#~ msgstr "Načíst metadata na vyžádání při zobrazení souboru v seznamu skladeb"
+
+#~ msgid "Show information about titlestring format"
+#~ msgstr "Zobrazit informace o formátu titulku"
+
+#~ msgid ""
+#~ "When finished playing a song, don't automatically advance to the next."
+#~ msgstr "Po přehrání skladby nepřecházet automaticky na následující."
 
 #, fuzzy
 #~ msgid "About AudioCompress"

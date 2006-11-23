@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-11-16 14:45-0600\n"
+"POT-Creation-Date: 2006-11-23 16:38+0000\n"
 "PO-Revision-Date: 2006-08-26 21:52+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -382,20 +382,20 @@ msgstr "詳細を表示する(_D)"
 msgid "Filename"
 msgstr "ファイル名"
 
-#: audacious/input.c:568
+#: audacious/input.c:589
 #, c-format
 msgid "audacious: %s"
 msgstr "audacious: %s"
 
-#: audacious/input.c:584
+#: audacious/input.c:605
 msgid "Filename:"
 msgstr "ファイル名:"
 
-#: audacious/input.c:602
+#: audacious/input.c:623
 msgid "No input plugin recognized this file"
 msgstr "このファイルを認識する入力プラグインではありません"
 
-#: audacious/input.c:604
+#: audacious/input.c:625
 #, c-format
 msgid "Input plugin: %s"
 msgstr "入力プラグイン: %s"
@@ -405,17 +405,17 @@ msgstr "入力プラグイン: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "ログ・ファイル (%s) を作成できません！\n"
 
-#: audacious/main.c:84 audacious/main.c:86 audacious/mainwin.c:876
+#: audacious/main.c:82 audacious/main.c:84 audacious/mainwin.c:876
 #: audacious/mainwin.c:3640
 msgid "Audacious"
 msgstr "Audacious"
 
-#: audacious/main.c:447
+#: audacious/main.c:445
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "ディレクトリ (%s) を作成できませんでした: %s"
 
-#: audacious/main.c:723
+#: audacious/main.c:721
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
@@ -427,71 +427,71 @@ msgstr ""
 "オプション:\n"
 "--------\n"
 
-#: audacious/main.c:728
+#: audacious/main.c:726
 msgid "Display this text and exit"
 msgstr "このメッセージを表示して終了する"
 
-#: audacious/main.c:731
+#: audacious/main.c:729
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Audacious/BMP/XMMS セッションを選択する (デフォルト: 0)"
 
-#: audacious/main.c:734
+#: audacious/main.c:732
 msgid "Skip backwards in playlist"
 msgstr "演奏一覧の一つ前の曲にジャンプする"
 
-#: audacious/main.c:737
+#: audacious/main.c:735
 msgid "Start playing current playlist"
 msgstr "現在の演奏一覧で演奏を開始する"
 
-#: audacious/main.c:740
+#: audacious/main.c:738
 msgid "Pause current song"
 msgstr "現在の曲を一時停止する"
 
-#: audacious/main.c:743
+#: audacious/main.c:741
 msgid "Stop current song"
 msgstr "現在の曲を停止する"
 
-#: audacious/main.c:746
+#: audacious/main.c:744
 msgid "Pause if playing, play otherwise"
 msgstr "演奏していたら一時停止し、それ以外は演奏する"
 
-#: audacious/main.c:749
+#: audacious/main.c:747
 msgid "Skip forward in playlist"
 msgstr "演奏一覧の一つ次の曲にジャンプする"
 
-#: audacious/main.c:752
+#: audacious/main.c:750
 msgid "Display Jump to file dialog"
 msgstr ""
 
-#: audacious/main.c:755
+#: audacious/main.c:753
 msgid "Don't clear the playlist"
 msgstr "演奏一覧をクリアしない"
 
-#: audacious/main.c:758
+#: audacious/main.c:756
 msgid "Show the main window"
 msgstr "メイン・ウィンドウを表示する"
 
-#: audacious/main.c:761
+#: audacious/main.c:759
 msgid "Activate Audacious"
 msgstr "Audacious をアクティブにする"
 
-#: audacious/main.c:764
+#: audacious/main.c:762
 msgid "Previous session ID"
 msgstr "以前のセッション ID を指定する"
 
-#: audacious/main.c:767
+#: audacious/main.c:765
 msgid "Headless operation [experimental]"
 msgstr "ヘッドレス動作 [実験的]"
 
-#: audacious/main.c:770
+#: audacious/main.c:768
 msgid "Disable error/warning interception (logging)"
 msgstr "エラー/警告の捕獲(ロギング)を無効にする"
 
-#: audacious/main.c:773
+#: audacious/main.c:771
 msgid "Print version number and exit\n"
 msgstr "バージョンを表示して終了する\n"
 
-#: audacious/main.c:963
+#: audacious/main.c:961
 #, fuzzy
 msgid ""
 "\n"
@@ -508,7 +508,7 @@ msgstr ""
 "bugs.nenolod.net/ に報告して下さい。\n"
 "\n"
 
-#: audacious/main.c:986
+#: audacious/main.c:984
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -521,7 +521,7 @@ msgstr ""
 "'%s' にあるスキンが利用可能であるか確認して下さい。\n"
 "デフォルトのスキンはおそらく '%s' にインストールされています。\n"
 
-#: audacious/main.c:1032
+#: audacious/main.c:1030
 #, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -531,7 +531,7 @@ msgstr ""
 "していません。\n"
 "GTK+ %s またはそれ以降のバージョンをお使い下さい。\n"
 
-#: audacious/main.c:1043
+#: audacious/main.c:1041
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -545,7 +545,7 @@ msgstr ""
 "GTK+ をインストールした場合は、Glib と GTK+ を再コンパイルして再インストール"
 "する必要があります。\n"
 
-#: audacious/main.c:1059
+#: audacious/main.c:1057
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "audacious: X ディスプレイを開けません。強制終了します。\n"
 
@@ -979,7 +979,7 @@ msgstr ""
 "2. お使いのサウンドカードをブロックしているアプリが他に存在しないか。\n"
 "3. お使いのサウンドカードが正しく設定されているか。\n"
 
-#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1425
+#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:876
 msgid "Appearance"
 msgstr "外観"
 
@@ -991,19 +991,19 @@ msgstr "オーディオ"
 msgid "Connectivity"
 msgstr "接続"
 
-#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:2889
+#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:1721
 msgid "Equalizer"
 msgstr "イコライザ"
 
-#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:1704
+#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:1033
 msgid "Mouse"
 msgstr "マウス"
 
-#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:2521
+#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:1515
 msgid "Playlist"
 msgstr "演奏一覧"
 
-#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:693
+#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:470
 msgid "Plugins"
 msgstr "プラグイン"
 
@@ -1414,253 +1414,171 @@ msgstr "トラック番号"
 msgid "<i>Track Length</i>"
 msgstr "トラックの合計時間:"
 
-#: audacious/glade/prefswin.glade:8
-msgid "Audacious Preferences"
-msgstr "Audacious の設定"
-
-#: audacious/glade/prefswin.glade:115
+#: audacious/glade/prefswin.glade:68
 msgid "_Decoder list:"
 msgstr "デコーダ一覧(_D):"
 
-#: audacious/glade/prefswin.glade:219
+#: audacious/glade/prefswin.glade:148
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr "<span size=\"medium\"><b>デコーダ</b></span>"
 
-#: audacious/glade/prefswin.glade:261
+#: audacious/glade/prefswin.glade:169
 msgid "_General plugin list:"
 msgstr "全般プラグインの一覧(_G):"
 
-#: audacious/glade/prefswin.glade:365
+#: audacious/glade/prefswin.glade:248
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b>全般</b></span>"
 
-#: audacious/glade/prefswin.glade:407
+#: audacious/glade/prefswin.glade:270
 msgid "_Visualization plugin list:"
 msgstr "視覚化プラグインの一覧(_V):"
 
-#: audacious/glade/prefswin.glade:511
+#: audacious/glade/prefswin.glade:349
 msgid "<b>Visualization</b>"
 msgstr "<b>視覚化</b>"
 
-#: audacious/glade/prefswin.glade:553
+#: audacious/glade/prefswin.glade:371
 msgid "_Effect plugin list:"
 msgstr "エフェクト・プラグインの一覧(_E):"
 
-#: audacious/glade/prefswin.glade:657
+#: audacious/glade/prefswin.glade:450
 msgid "<b>Effects</b>"
 msgstr "<b>エフェクト</b>"
 
-#: audacious/glade/prefswin.glade:746
+#: audacious/glade/prefswin.glade:496
 msgid "<b>_Skin</b>"
 msgstr "<b>スキン(_S)</b>"
 
-#: audacious/glade/prefswin.glade:772
-msgid "Refresh skin list"
-msgstr "スキン一覧の更新"
-
-#: audacious/glade/prefswin.glade:866
+#: audacious/glade/prefswin.glade:564
 msgid "<b>_Fonts</b>"
 msgstr "<b>フォント(_F)</b>"
 
-#: audacious/glade/prefswin.glade:921
+#: audacious/glade/prefswin.glade:596
 msgid "_Player:"
 msgstr "演奏者(_P):"
 
-#: audacious/glade/prefswin.glade:964
+#: audacious/glade/prefswin.glade:617
 msgid "_Playlist:"
 msgstr "演奏一覧(_P):"
 
-#: audacious/glade/prefswin.glade:996
-msgid "Select main player window font:"
-msgstr "メイン・ウィンドウで使用するフォントの選択"
-
-#: audacious/glade/prefswin.glade:1018
-msgid "Select playlist font:"
-msgstr "演奏一覧で使用するフォントの選択:"
-
-#: audacious/glade/prefswin.glade:1064
-msgid ""
-"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
-"strings."
-msgstr ""
-"可能ならばビットマップフォントを使用する。ビットマップフォントはユニコード文"
-"字列をサポートしない。"
-
-#: audacious/glade/prefswin.glade:1066
+#: audacious/glade/prefswin.glade:683
 msgid "Use Bitmap fonts if available"
 msgstr "可能ならばビットマップフォントを使用"
 
-#: audacious/glade/prefswin.glade:1100
+#: audacious/glade/prefswin.glade:706
 msgid "<b>_Miscellaneous</b>"
 msgstr "<b>その他(_M)</b>"
 
-#: audacious/glade/prefswin.glade:1148
+#: audacious/glade/prefswin.glade:735
 msgid "Show track numbers in playlist"
 msgstr "演奏一覧にトラック番号を表示する"
 
-#: audacious/glade/prefswin.glade:1183
+#: audacious/glade/prefswin.glade:757
 msgid "Show separators in playlist"
 msgstr "演奏一覧の区切り線を表示する"
 
-#: audacious/glade/prefswin.glade:1218
+#: audacious/glade/prefswin.glade:779
 msgid "Use custom cursors"
 msgstr "カスタム・カーソルを使用する"
 
-#: audacious/glade/prefswin.glade:1265
-#, fuzzy
-msgid "<b>_Miscillaneous UI Features</b>"
-msgstr "<b>その他(_M)</b>"
-
-#: audacious/glade/prefswin.glade:1305
-msgid ""
-"Enables playlist transparency. This is not recommended for slower machines "
-"as it requires some CPU time to create and cache the pixmaps used for the "
-"transparency."
-msgstr ""
-"演奏一覧の透過を有効にする。透過に用いるピックスマップの作成とキャッシュにあ"
-"る程度の CPU 時間が必要なので、遅いマシンにはお勧めできない。"
-
-#: audacious/glade/prefswin.glade:1307
-msgid "Enable playlist transparency"
-msgstr "演奏一覧の透過を有効にする"
-
-#: audacious/glade/prefswin.glade:1341
-msgid ""
-"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
-"provided by Audacious itself and is faster than the default GTK2 selector "
-"(but sadly not as user-friendly)."
-msgstr ""
-
-#: audacious/glade/prefswin.glade:1343
-msgid "Use XMMS-style file selector instead of the default selector"
-msgstr ""
-
-#: audacious/glade/prefswin.glade:1377
-msgid "This enables the window mangaer to show decorations for windows."
-msgstr ""
-
-#: audacious/glade/prefswin.glade:1379
+#: audacious/glade/prefswin.glade:799
 msgid "Show window manager decoration"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1387
+#: audacious/glade/prefswin.glade:804
 msgid "Show window manager decorations"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1388
+#: audacious/glade/prefswin.glade:805
 msgid "This enables the window manager to show decorations for windows."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1472
+#: audacious/glade/prefswin.glade:824
+msgid "Use XMMS-style file selector instead of the default selector"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:845
+msgid "Enable playlist transparency"
+msgstr "演奏一覧の透過を有効にする"
+
+#: audacious/glade/prefswin.glade:900
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>マウスのホィール</b>"
 
-#: audacious/glade/prefswin.glade:1520
+#: audacious/glade/prefswin.glade:925
 msgid "Changes volume by"
 msgstr "音量を変更する割合: "
 
-#: audacious/glade/prefswin.glade:1548
+#: audacious/glade/prefswin.glade:937
 msgid "percent"
 msgstr "％"
 
-#: audacious/glade/prefswin.glade:1576
+#: audacious/glade/prefswin.glade:951
 msgid "Scrolls playlist by"
 msgstr "演奏一覧で移動する量: "
 
-#: audacious/glade/prefswin.glade:1629
+#: audacious/glade/prefswin.glade:984
 msgid "lines"
 msgstr "行"
 
-#: audacious/glade/prefswin.glade:1751
+#: audacious/glade/prefswin.glade:1056
 msgid "<b>Filename</b>"
 msgstr "<b>ファイル名</b>"
 
-#: audacious/glade/prefswin.glade:1791
+#: audacious/glade/prefswin.glade:1074
 msgid "Convert underscores to blanks"
 msgstr "アンダースコア (__) をスペースに変換する"
 
-#: audacious/glade/prefswin.glade:1826
+#: audacious/glade/prefswin.glade:1096
 msgid "Convert %20 to blanks"
 msgstr "'%20' をスペースに変換する"
 
-#: audacious/glade/prefswin.glade:1860
+#: audacious/glade/prefswin.glade:1119
 msgid "<b>Metadata</b>"
 msgstr "<b>メタデータ</b>"
 
-#: audacious/glade/prefswin.glade:1899
-msgid "Load metadata (tag information) from music files."
-msgstr "曲ファイルからタグ情報を読み込みます"
-
-#: audacious/glade/prefswin.glade:1901
+#: audacious/glade/prefswin.glade:1138
 msgid "Load metadata from playlists and files"
 msgstr "演奏一覧とファイルからメタデータを読み込む"
 
-#: audacious/glade/prefswin.glade:1939
-msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"演奏一覧へファイルを追加するか、演奏一覧を開いたらタグ情報を読み込みます"
-
-#: audacious/glade/prefswin.glade:1941
+#: audacious/glade/prefswin.glade:1162
 msgid "On load"
 msgstr "読み込み時"
 
-#: audacious/glade/prefswin.glade:1961
-msgid "Load metadata on demand when displaying the file in the playlist"
-msgstr "演奏一覧にファイルを表示したら、必要に応じてタグ情報を読み込みます"
-
-#: audacious/glade/prefswin.glade:1963
+#: audacious/glade/prefswin.glade:1178
 msgid "On display"
 msgstr "表示時"
 
-#: audacious/glade/prefswin.glade:1993
-msgid "Fallback charcter encodings:"
+#: audacious/glade/prefswin.glade:1201
+msgid "Fallback character encodings:"
 msgstr "代替キャラクタエンコーディング:"
 
-#: audacious/glade/prefswin.glade:2021
-msgid ""
-"List of character encodings used for fall back conversion of metadata. If "
-"automatic character encoding detector failed or has been disabled, encodings "
-"in this list would be treated as candidates of the encoding of metadata, and "
-"fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr ""
-"メタデータの変換の代替に用いるキャラクタエンコーディングのリスト。自動キャラ"
-"クタエンコーディング検出が失敗するか無効であれば、メタデータのエンコーディン"
-"グの候補としてリスト中のエンコーディングが用いられ、これらのエンコーディング"
-"から UTF-8 への変換が試みられる。"
-
-#: audacious/glade/prefswin.glade:2062
+#: audacious/glade/prefswin.glade:1243
 msgid "Auto character encoding detector for:"
 msgstr "自動キャラクタエンコーディング検出:"
 
-#: audacious/glade/prefswin.glade:2118
+#: audacious/glade/prefswin.glade:1274
 msgid "<b>File Dialog</b>"
 msgstr "<b>ファイルダイアログ</b>"
 
-#: audacious/glade/prefswin.glade:2157
-msgid ""
-"Always refresh the file dialog (this will slow opening the dialog on large "
-"directories, and Gnome VFS should handle automatically)."
-msgstr ""
-"ファイルダイアログを常に更新する(大きなディレクトリがあるとダイアログを開くの"
-"が遅くなるが、Gnome VFS は自動的に扱ってくれるだろう)。"
-
-#: audacious/glade/prefswin.glade:2159
+#: audacious/glade/prefswin.glade:1293
 msgid "Always refresh directory when opening file dialog"
 msgstr "ファイルダイアログを開くときにディレクトリを常に更新する"
 
-#: audacious/glade/prefswin.glade:2193
+#: audacious/glade/prefswin.glade:1317
 msgid "<b>Song Display</b>"
 msgstr "<b>曲の表示</b>"
 
-#: audacious/glade/prefswin.glade:2241
+#: audacious/glade/prefswin.glade:1343
 msgid "Title format:"
 msgstr "タイトルの書式:"
 
-#: audacious/glade/prefswin.glade:2269
+#: audacious/glade/prefswin.glade:1355
 msgid "Custom string:"
 msgstr "タイトルの文字:"
 
-#: audacious/glade/prefswin.glade:2320
+#: audacious/glade/prefswin.glade:1383
 msgid ""
 "TITLE\n"
 "ARTIST - TITLE\n"
@@ -1678,100 +1596,82 @@ msgstr ""
 "アルバム名 - タイトル\n"
 "カスタム"
 
-#: audacious/glade/prefswin.glade:2342
-msgid "Show information about titlestring format"
-msgstr "タイトルに使用できる書式を表示します"
-
-#: audacious/glade/prefswin.glade:2392
+#: audacious/glade/prefswin.glade:1437
 msgid "<b>Popup Information</b>"
 msgstr "<b>ポップアップ情報</b>"
 
-#: audacious/glade/prefswin.glade:2443
-msgid ""
-"Toggles popup information window for the pointed entry in the playlist. The "
-"window shows title of song, name of album, genre, year of publish, track "
-"number, track length, and artwork."
-msgstr ""
-"演奏一覧中でポイントされたエントリのポップアップ情報ウィンドウを切り替える。"
-"ウィンドウには曲のタイトル、アルバム名、ジャンル、製作年、トラック番号、ト"
-"ラックの長さとアートワークが表示される。"
-
-#: audacious/glade/prefswin.glade:2445
+#: audacious/glade/prefswin.glade:1463
 msgid "Show popup information for playlist entries"
 msgstr "演奏一覧のエントリのポップアップ情報を表示する"
 
-#: audacious/glade/prefswin.glade:2472
-msgid "Edit settings for popup information"
-msgstr "ポップアップ情報の設定を編集する"
-
-#: audacious/glade/prefswin.glade:2580
+#: audacious/glade/prefswin.glade:1541
 msgid "<b>Presets</b>"
 msgstr "<b>プリセット</b>"
 
-#: audacious/glade/prefswin.glade:2680
+#: audacious/glade/prefswin.glade:1597
 msgid "Directory preset file:"
 msgstr "ディレクトリのプリセット:"
 
-#: audacious/glade/prefswin.glade:2708
+#: audacious/glade/prefswin.glade:1608
 msgid "File preset extension:"
 msgstr "プリセットの拡張子:"
 
-#: audacious/glade/prefswin.glade:2756
+#: audacious/glade/prefswin.glade:1632
 msgid "Available _Presets:"
 msgstr "利用可能なプリセット(_P):"
 
-#: audacious/glade/prefswin.glade:2936
+#: audacious/glade/prefswin.glade:1744
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>プロキシ設定</b>"
 
-#: audacious/glade/prefswin.glade:2994
+#: audacious/glade/prefswin.glade:1769
 msgid "Enable proxy usage"
 msgstr "プロキシの使用を有効にする"
 
-#: audacious/glade/prefswin.glade:3025
+#: audacious/glade/prefswin.glade:1794
 msgid "Proxy hostname:"
 msgstr "プロキシのホスト名:"
 
-#: audacious/glade/prefswin.glade:3053
+#: audacious/glade/prefswin.glade:1805
 msgid "Proxy port:"
 msgstr "プロキシのポート:"
 
-#: audacious/glade/prefswin.glade:3147
+#: audacious/glade/prefswin.glade:1858
 msgid "Use authentication with proxy"
 msgstr "プロキシの認証を行う"
 
-#: audacious/glade/prefswin.glade:3178
+#: audacious/glade/prefswin.glade:1884
 msgid "Proxy username:"
 msgstr "プロキシのユーザ名:"
 
-#: audacious/glade/prefswin.glade:3206
+#: audacious/glade/prefswin.glade:1895
 msgid "Proxy password:"
 msgstr "プロキシのパスワード:"
 
-#: audacious/glade/prefswin.glade:3322
+#: audacious/glade/prefswin.glade:1961
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
 "<span size=\"small\">これらの設定の変更は Audacious の再起動が必要。</span>"
 
-#: audacious/glade/prefswin.glade:3378
+#: audacious/glade/prefswin.glade:1997
 msgid "label65"
 msgstr "label65"
 
-#: audacious/glade/prefswin.glade:3419
+#: audacious/glade/prefswin.glade:2017
 msgid "<b>Audio System</b>"
 msgstr "<b>オーディオシステム:</b>"
 
-#: audacious/glade/prefswin.glade:3473
+#: audacious/glade/prefswin.glade:2046
 msgid "Current output plugin:"
 msgstr "現在の出力プラグイン:"
 
-#: audacious/glade/prefswin.glade:3518
+#: audacious/glade/prefswin.glade:2069
 msgid "Buffer size:"
 msgstr "バッファのサイズ:"
 
-#: audacious/glade/prefswin.glade:3588
+#: audacious/glade/prefswin.glade:2112
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
@@ -1783,75 +1683,53 @@ msgstr ""
 "ミリ秒で指定する。音飛びがあるなら、この値を増やす。しかし、高い値は "
 "Audacious のパフォーマンスを悪くすることに注意してください。</span>"
 
-#: audacious/glade/prefswin.glade:3696
+#: audacious/glade/prefswin.glade:2179
 #, fuzzy
 msgid "Output Plugin Preferences"
 msgstr "出力プラグイン"
 
-#: audacious/glade/prefswin.glade:3771
+#: audacious/glade/prefswin.glade:2222
 #, fuzzy
 msgid "Output Plugin Information"
 msgstr "ESD 出力プラグインの設定"
 
-#: audacious/glade/prefswin.glade:3823
+#: audacious/glade/prefswin.glade:2258
 msgid "<b>Format Detection</b>"
 msgstr "<b>フォーマットの検出</b>"
 
-#: audacious/glade/prefswin.glade:3862
-msgid ""
-"When checked, Audacious will detect file formats on demand. This can result "
-"in a messier playlist, but delivers a major speed benefit."
-msgstr ""
-"有効ならば、Audacious はファイルフォーマットを要求に応じて検出する。演奏一覧"
-"が汚くなってしまうが、速度の恩恵を受けることができる。"
-
-#: audacious/glade/prefswin.glade:3864
+#: audacious/glade/prefswin.glade:2277
 msgid "Detect file formats on demand, instead of immediately."
 msgstr "ファイルフォーマットをすぐにではなく要求に応じて検出する。"
 
-#: audacious/glade/prefswin.glade:3898
+#: audacious/glade/prefswin.glade:2301
 msgid "<b>Playback</b>"
 msgstr "<b>再生</b>"
 
-#: audacious/glade/prefswin.glade:3937
-msgid ""
-"When Audacious starts, automatically begin playing from the point where we "
-"stopped before."
-msgstr "Audacious が開始したとき、以前停止した位置から自動的に演奏を開始する。"
-
-#: audacious/glade/prefswin.glade:3939
+#: audacious/glade/prefswin.glade:2320
 msgid "Continue playback on startup"
 msgstr "起動時に再生を続ける"
 
-#: audacious/glade/prefswin.glade:3973
-msgid "When finished playing a song, don't automatically advance to the next."
-msgstr "曲の演奏が終了したら、次の曲を自動的に演奏しません"
-
-#: audacious/glade/prefswin.glade:3975
+#: audacious/glade/prefswin.glade:2343
 msgid "Don't advance in the playlist"
 msgstr "演奏一覧の次の曲へ進めない"
 
-#: audacious/glade/prefswin.glade:4010
+#: audacious/glade/prefswin.glade:2366
 msgid "Pause between songs"
 msgstr "曲の間に一時停止する"
 
-#: audacious/glade/prefswin.glade:4048
+#: audacious/glade/prefswin.glade:2389
 msgid "Pause for"
 msgstr "一時停止の時間: "
 
-#: audacious/glade/prefswin.glade:4094
+#: audacious/glade/prefswin.glade:2415
 msgid "seconds"
 msgstr "秒"
 
-#: audacious/glade/prefswin.glade:4134
+#: audacious/glade/prefswin.glade:2441
 msgid "label76"
 msgstr "label76"
 
-#: audacious/glade/prefswin.glade:4248
-msgid "Popup Information Settings"
-msgstr "ポップアップ情報の設定"
-
-#: audacious/glade/prefswin.glade:4272
+#: audacious/glade/prefswin.glade:2526
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -1860,23 +1738,23 @@ msgstr ""
 "アルバムのカバーを検索する際、Audacious はファイル名の中の単語を探します。コ"
 "ンマで区切られた単語リストを以下に指定できます。"
 
-#: audacious/glade/prefswin.glade:4327
+#: audacious/glade/prefswin.glade:2559
 msgid "Include:"
 msgstr "含む:"
 
-#: audacious/glade/prefswin.glade:4355
+#: audacious/glade/prefswin.glade:2570
 msgid "Exclude:"
 msgstr "含まない:"
 
-#: audacious/glade/prefswin.glade:4424
+#: audacious/glade/prefswin.glade:2606
 msgid "Recursively search for cover"
 msgstr "カバーの再帰検索"
 
-#: audacious/glade/prefswin.glade:4462
+#: audacious/glade/prefswin.glade:2627
 msgid "Search depth: "
 msgstr "検索の深さ: "
 
-#: audacious/glade/prefswin.glade:4528
+#: audacious/glade/prefswin.glade:2659
 msgid "Use per-file cover"
 msgstr ""
 
@@ -1951,6 +1829,101 @@ msgstr "トラック番号"
 #: libaudacious/titlestring.c:409
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: トラック番号 %n が存在している場合にのみ \"...\" を表示する"
+
+#~ msgid "Audacious Preferences"
+#~ msgstr "Audacious の設定"
+
+#~ msgid "Refresh skin list"
+#~ msgstr "スキン一覧の更新"
+
+#~ msgid "Select main player window font:"
+#~ msgstr "メイン・ウィンドウで使用するフォントの選択"
+
+#~ msgid "Select playlist font:"
+#~ msgstr "演奏一覧で使用するフォントの選択:"
+
+#~ msgid ""
+#~ "Use bitmap fonts if they are available. Bitmap fonts do not support "
+#~ "Unicode strings."
+#~ msgstr ""
+#~ "可能ならばビットマップフォントを使用する。ビットマップフォントはユニコード"
+#~ "文字列をサポートしない。"
+
+#, fuzzy
+#~ msgid "<b>_Miscillaneous UI Features</b>"
+#~ msgstr "<b>その他(_M)</b>"
+
+#~ msgid ""
+#~ "Enables playlist transparency. This is not recommended for slower "
+#~ "machines as it requires some CPU time to create and cache the pixmaps "
+#~ "used for the transparency."
+#~ msgstr ""
+#~ "演奏一覧の透過を有効にする。透過に用いるピックスマップの作成とキャッシュに"
+#~ "ある程度の CPU 時間が必要なので、遅いマシンにはお勧めできない。"
+
+#~ msgid "Load metadata (tag information) from music files."
+#~ msgstr "曲ファイルからタグ情報を読み込みます"
+
+#~ msgid "Load metadata when adding the file to the playlist or opening it"
+#~ msgstr ""
+#~ "演奏一覧へファイルを追加するか、演奏一覧を開いたらタグ情報を読み込みます"
+
+#~ msgid "Load metadata on demand when displaying the file in the playlist"
+#~ msgstr "演奏一覧にファイルを表示したら、必要に応じてタグ情報を読み込みます"
+
+#~ msgid ""
+#~ "List of character encodings used for fall back conversion of metadata. If "
+#~ "automatic character encoding detector failed or has been disabled, "
+#~ "encodings in this list would be treated as candidates of the encoding of "
+#~ "metadata, and fall back conversion from these encodings to UTF-8 would be "
+#~ "attempted."
+#~ msgstr ""
+#~ "メタデータの変換の代替に用いるキャラクタエンコーディングのリスト。自動キャ"
+#~ "ラクタエンコーディング検出が失敗するか無効であれば、メタデータのエンコー"
+#~ "ディングの候補としてリスト中のエンコーディングが用いられ、これらのエンコー"
+#~ "ディングから UTF-8 への変換が試みられる。"
+
+#~ msgid ""
+#~ "Always refresh the file dialog (this will slow opening the dialog on "
+#~ "large directories, and Gnome VFS should handle automatically)."
+#~ msgstr ""
+#~ "ファイルダイアログを常に更新する(大きなディレクトリがあるとダイアログを開"
+#~ "くのが遅くなるが、Gnome VFS は自動的に扱ってくれるだろう)。"
+
+#~ msgid "Show information about titlestring format"
+#~ msgstr "タイトルに使用できる書式を表示します"
+
+#~ msgid ""
+#~ "Toggles popup information window for the pointed entry in the playlist. "
+#~ "The window shows title of song, name of album, genre, year of publish, "
+#~ "track number, track length, and artwork."
+#~ msgstr ""
+#~ "演奏一覧中でポイントされたエントリのポップアップ情報ウィンドウを切り替え"
+#~ "る。ウィンドウには曲のタイトル、アルバム名、ジャンル、製作年、トラック番"
+#~ "号、トラックの長さとアートワークが表示される。"
+
+#~ msgid "Edit settings for popup information"
+#~ msgstr "ポップアップ情報の設定を編集する"
+
+#~ msgid ""
+#~ "When checked, Audacious will detect file formats on demand. This can "
+#~ "result in a messier playlist, but delivers a major speed benefit."
+#~ msgstr ""
+#~ "有効ならば、Audacious はファイルフォーマットを要求に応じて検出する。演奏一"
+#~ "覧が汚くなってしまうが、速度の恩恵を受けることができる。"
+
+#~ msgid ""
+#~ "When Audacious starts, automatically begin playing from the point where "
+#~ "we stopped before."
+#~ msgstr ""
+#~ "Audacious が開始したとき、以前停止した位置から自動的に演奏を開始する。"
+
+#~ msgid ""
+#~ "When finished playing a song, don't automatically advance to the next."
+#~ msgstr "曲の演奏が終了したら、次の曲を自動的に演奏しません"
+
+#~ msgid "Popup Information Settings"
+#~ msgstr "ポップアップ情報の設定"
 
 #~ msgid "AudioCompress "
 #~ msgstr "オーディオ圧縮 "
