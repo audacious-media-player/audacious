@@ -1,3 +1,11 @@
+2006-11-24 07:14:03 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2993]
+  - cleanup the controlsocket code. (nenolod + help from ticpu)
+  
+  trunk/libaudacious/beepctrl.c |   92 +++++++++++-------------------------------
+  1 file changed, 26 insertions(+), 66 deletions(-)
+
+
 2006-11-24 04:21:49 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2991]
   - remove vfs_stdio.c

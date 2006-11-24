@@ -1080,6 +1080,8 @@ main(gint argc, gchar ** argv)
         exit(EXIT_SUCCESS);
     }
 
+    plugin_system_init();
+
     if (options.headless != 1)
     {
 
@@ -1094,8 +1096,6 @@ main(gint argc, gchar ** argv)
 
         GDK_THREADS_ENTER();
     }
-
-    plugin_system_init();
 
     playlist_load(bmp_paths[BMP_PATH_PLAYLIST_FILE]);
     playlist_set_position(cfg.playlist_position);
