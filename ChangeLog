@@ -1,3 +1,10 @@
+2006-11-24 12:49:53 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [3001]
+  Updated translation by Yang Zhang <zyangmath@gmail.com> aka program, closes bug #660.
+  trunk/po/zh_CN.po |  607 +++++++++++++++++++++++++++---------------------------
+  1 file changed, 304 insertions(+), 303 deletions(-)
+
+
 2006-11-24 07:29:34 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2999]
   - init plugins before initalizing the skin system.

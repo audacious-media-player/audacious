@@ -58,7 +58,7 @@ dnl Path settings
 AC_PATH_PROG(BEEP_PATH, audacious, no)
 
 AC_ARG_WITH(rc-path,
-    [  --rc-path=path                 Resource and configuration path for audacious relative to $HOME.],
+    [  --with-rc-path=path                 Resource and configuration path for audacious relative to $HOME.],
     [rc_path=$withval],
     [rc_path=.audacious]
 )
