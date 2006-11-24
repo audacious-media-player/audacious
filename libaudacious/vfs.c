@@ -1,4 +1,7 @@
-/*  This program is free software; you can redistribute it and/or modify
+/*  Audacious
+ *  Copyright (c) 2006 William Pitcock
+ *
+ *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
@@ -20,9 +23,23 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+static GList *vfs_transports = NULL;
+
+#define VFS_DEBUG
+
+#ifdef VFS_DEBUG
+# define DBG(x, args...) g_print(x, ## args);
+#else
+# define DBG(x, args...)
+#endif
+
 gboolean
-vfs_init(void)
+vfs_register_transport(VFSConstructor *vtable)
 {
+    DBG("registering transport [%s]\n", vtable->uri_id);
+
+    vfs_transports = g_list_append(vfs_transports, vtable);
+
     return TRUE;
 }
 
@@ -31,18 +48,56 @@ vfs_fopen(const gchar * path,
           const gchar * mode)
 {
     VFSFile *file;
+    gchar **vec;
+    VFSConstructor *vtable = NULL;
+    GList *node;
 
     if (!path || !mode)
 	return NULL;
 
-    file = g_new(VFSFile, 1);
+    vec = g_strsplit(path, "://", 2);
 
-    file->handle = fopen(path, mode);
+    DBG("vec[0]: %s, vec[1]: %s\n", vec[0], vec[1]);
 
-    if (file->handle == NULL) {
-        g_free(file);
-        file = NULL;
+    /* special case: no transport specified, look for the "/" transport */
+    if (vec[1] == NULL)
+    {
+        for (node = vfs_transports; node != NULL; node = g_list_next(node))
+        {
+            vtable = (VFSConstructor *) node->data;
+
+            if (*vtable->uri_id == '/')
+                break;
+        }
     }
+    else
+    {
+        for (node = vfs_transports; node != NULL; node = g_list_next(node))
+        {
+            vtable = (VFSConstructor *) node->data;
+
+            if (!g_strcasecmp(vec[0], vtable->uri_id))
+                break;
+        }
+    }
+
+    /* no transport vtable has been registered, bail. */
+    if (vtable == NULL)
+    {
+        return NULL;
+    }
+
+    file = vtable->vfs_fopen_impl(vec[1] ? vec[1] : vec[0], mode);
+
+    if (file == NULL)
+    {
+        return NULL;
+    }
+
+    file->uri = g_strdup(path);
+    file->base = vtable;
+
+    DBG("returning %p", file);
 
     return file;
 }
@@ -55,10 +110,8 @@ vfs_fclose(VFSFile * file)
     if (file == NULL)
         return -1;
 
-    if (file->handle) {
-        if (fclose(file->handle) != 0)
-            ret = -1;
-    }
+    if (file->base->vfs_fclose_impl(file) != 0)
+        ret = -1;
 
     g_free(file);
 
@@ -74,7 +127,7 @@ vfs_fread(gpointer ptr,
     if (file == NULL)
         return 0;
 
-    return fread(ptr, size, nmemb, file->handle);
+    return file->base->vfs_fread_impl(ptr, size, nmemb, file);
 }
 
 size_t
@@ -86,19 +139,25 @@ vfs_fwrite(gconstpointer ptr,
     if (file == NULL)
         return 0;
 
-    return fwrite(ptr, size, nmemb, file->handle);
+    return file->base->vfs_fwrite_impl(ptr, size, nmemb, file);
 }
 
 gint
 vfs_getc(VFSFile *stream)
 {
-  return getc( stream->handle );
+    if (stream == NULL)
+        return -1;
+
+    return stream->base->vfs_getc_impl(stream);
 }
 
 gint
 vfs_ungetc(gint c, VFSFile *stream)
 {
-  return ungetc( c , stream->handle );
+    if (stream == NULL)
+        return -1;
+
+    return stream->base->vfs_ungetc_impl(c, stream);
 }
 
 gint
@@ -109,7 +168,7 @@ vfs_fseek(VFSFile * file,
     if (file == NULL)
         return 0;
 
-    return fseek(file->handle, offset, whence);
+    return file->base->vfs_fseek_impl(file, offset, whence);
 }
 
 void
@@ -118,7 +177,7 @@ vfs_rewind(VFSFile * file)
     if (file == NULL)
         return;
 
-    rewind(file->handle);
+    file->base->vfs_rewind_impl(file);
 }
 
 glong
@@ -127,7 +186,7 @@ vfs_ftell(VFSFile * file)
     if (file == NULL)
         return 0;
 
-    return ftell(file->handle);
+    return file->base->vfs_ftell_impl(file);
 }
 
 gboolean
@@ -136,7 +195,7 @@ vfs_feof(VFSFile * file)
     if (file == NULL)
         return FALSE;
 
-    return (gboolean) feof(file->handle);
+    return (gboolean) file->base->vfs_feof_impl(file);
 }
 
 gboolean
@@ -163,5 +222,5 @@ vfs_truncate(VFSFile * file, glong size)
     if (file == NULL)
         return -1;
 
-    return ftruncate(fileno(file->handle), size);
+    return file->base->vfs_truncate_impl(file, size);
 }

@@ -92,6 +92,8 @@ extern gboolean vfs_truncate(VFSFile * file, glong length);
 extern int vfs_fprintf(VFSFile *stream, gchar const *format, ...)
     __attribute__ ((__format__ (__printf__, 2, 3)));
 
+extern gboolean vfs_register_transport(VFSConstructor *vtable);
+
 G_END_DECLS
 
 #endif /* VFS_H */

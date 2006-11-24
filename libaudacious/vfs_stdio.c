@@ -54,8 +54,6 @@ stdio_vfs_fclose_impl(VFSFile * file)
             ret = -1;
     }
 
-    g_free(file);
-
     return ret;
 }
 
@@ -172,7 +170,6 @@ VFSConstructor default_const = {
 	stdio_vfs_truncate_impl
 };
 
-#if 0
 gboolean
 vfs_init(void)
 {
@@ -180,4 +177,4 @@ vfs_init(void)
     vfs_register_transport(&file_const);
     return TRUE;
 }
-#endif
+
