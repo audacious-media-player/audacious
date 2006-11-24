@@ -1,3 +1,12 @@
+2006-11-24 04:21:49 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [2991]
+  - remove vfs_stdio.c
+  
+  trunk/libaudacious/Makefile    |    2 
+  trunk/libaudacious/vfs_stdio.c |  180 -----------------------------------------
+  2 files changed, 1 insertion(+), 181 deletions(-)
+
+
 2006-11-24 04:21:34 +0000  William Pitcock <nenolod@nenolod.net>
   revision [2989]
   - remove vfs_init(), it is no longer used.

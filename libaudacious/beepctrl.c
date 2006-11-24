@@ -57,23 +57,27 @@ gint *audacious_session_type = NULL;
 #endif
 
 static gpointer
-remote_read_packet(gint fd, ServerPktHeader * pkt_hdr)
+remote_read_packet(gint fd)
 {
     gpointer data = NULL;
+    ServerPktHeader pkt_hdr = { 0, 0 };
 
-    memset(pkt_hdr, '\0', sizeof(ServerPktHeader));
-
-    if (read(fd, pkt_hdr, sizeof(ServerPktHeader)) ==
-        sizeof(ServerPktHeader)) {
-        if (pkt_hdr->data_length) {
-            size_t data_length = pkt_hdr->data_length;
+    if (read(fd, &pkt_hdr, sizeof(ServerPktHeader)) ==
+        sizeof(ServerPktHeader))
+    {
+        if (pkt_hdr.version == XMMS_PROTOCOL_VERSION && 
+		pkt_hdr.data_length > 0)
+        {
+            size_t data_length = pkt_hdr.data_length;
             data = g_malloc0(data_length);
-            if ((size_t)read(fd, data, data_length) < data_length) {
+            if ((size_t)read(fd, data, data_length) < data_length)
+            {
                 g_free(data);
                 data = NULL;
             }
         }
     }
+
     return data;
 }
 
@@ -81,11 +85,8 @@ static void
 remote_read_ack(gint fd)
 {
     gpointer data;
-    ServerPktHeader pkt_hdr;
 
-    memset(&pkt_hdr, '\0', sizeof(ServerPktHeader));
-
-    data = remote_read_packet(fd, &pkt_hdr);
+    data = remote_read_packet(fd);
     if (data)
         g_free(data);
 
@@ -173,17 +174,14 @@ remote_cmd(gint session, guint32 cmd)
 static gboolean
 remote_get_gboolean(gint session, gint cmd)
 {
-    ServerPktHeader pkt_hdr;
     gboolean ret = FALSE;
     gpointer data;
     gint fd;
 
-    memset(&pkt_hdr, '\0', sizeof(ServerPktHeader));
-
     if ((fd = xmms_connect_to_session(session)) == -1)
         return ret;
     remote_send_packet(fd, cmd, NULL, 0);
-    data = remote_read_packet(fd, &pkt_hdr);
+    data = remote_read_packet(fd);
     if (data) {
         ret = *((gboolean *) data);
         g_free(data);
@@ -197,16 +195,13 @@ remote_get_gboolean(gint session, gint cmd)
 static guint32
 remote_get_gint(gint session, gint cmd)
 {
-    ServerPktHeader pkt_hdr;
     gpointer data;
     gint fd, ret = 0;
-
-    memset(&pkt_hdr, '\0', sizeof(ServerPktHeader));
 
     if ((fd = xmms_connect_to_session(session)) == -1)
         return ret;
     remote_send_packet(fd, cmd, NULL, 0);
-    data = remote_read_packet(fd, &pkt_hdr);
+    data = remote_read_packet(fd);
     if (data) {
         ret = *((gint *) data);
         g_free(data);
@@ -219,17 +214,14 @@ remote_get_gint(gint session, gint cmd)
 static gfloat
 remote_get_gfloat(gint session, gint cmd)
 {
-    ServerPktHeader pkt_hdr;
     gpointer data;
     gint fd;
     gfloat ret = 0.0;
 
-    memset(&pkt_hdr, '\0', sizeof(ServerPktHeader));
-
     if ((fd = xmms_connect_to_session(session)) == -1)
         return ret;
     remote_send_packet(fd, cmd, NULL, 0);
-    data = remote_read_packet(fd, &pkt_hdr);
+    data = remote_read_packet(fd);
     if (data) {
         ret = *((gfloat *) data);
         g_free(data);
@@ -242,16 +234,13 @@ remote_get_gfloat(gint session, gint cmd)
 gchar *
 remote_get_string(gint session, gint cmd)
 {
-    ServerPktHeader pkt_hdr;
     gpointer data;
     gint fd;
-
-    memset(&pkt_hdr, '\0', sizeof(ServerPktHeader));
 
     if ((fd = xmms_connect_to_session(session)) == -1)
         return NULL;
     remote_send_packet(fd, cmd, NULL, 0);
-    data = remote_read_packet(fd, &pkt_hdr);
+    data = remote_read_packet(fd);
     remote_read_ack(fd);
     close(fd);
     return data;
@@ -260,16 +249,13 @@ remote_get_string(gint session, gint cmd)
 gchar *
 remote_get_string_pos(gint session, gint cmd, guint32 pos)
 {
-    ServerPktHeader pkt_hdr;
     gpointer data;
     gint fd;
-
-    memset(&pkt_hdr, '\0', sizeof(ServerPktHeader));
 
     if ((fd = xmms_connect_to_session(session)) == -1)
         return NULL;
     remote_send_packet(fd, cmd, &pos, sizeof(guint32));
-    data = remote_read_packet(fd, &pkt_hdr);
+    data = remote_read_packet(fd);
     remote_read_ack(fd);
     close(fd);
     return data;
@@ -618,17 +604,14 @@ xmms_remote_jump_to_time(gint session, gint pos)
 void
 xmms_remote_get_volume(gint session, gint * vl, gint * vr)
 {
-    ServerPktHeader pkt_hdr;
     gint fd;
     gpointer data;
-
-    memset(&pkt_hdr, '\0', sizeof(ServerPktHeader));
 
     if ((fd = xmms_connect_to_session(session)) == -1)
         return;
 
     remote_send_packet(fd, CMD_GET_VOLUME, NULL, 0);
-    data = remote_read_packet(fd, &pkt_hdr);
+    data = remote_read_packet(fd);
     if (data) {
         *vl = ((guint32 *) data)[0];
         *vr = ((guint32 *) data)[1];
@@ -750,17 +733,14 @@ xmms_remote_get_playlist_title(gint session, gint pos)
 gint
 xmms_remote_get_playlist_time(gint session, gint pos)
 {
-    ServerPktHeader pkt_hdr;
     gpointer data;
     gint fd, ret = 0;
     guint32 p = pos;
 
-    memset(&pkt_hdr, '\0', sizeof(ServerPktHeader));
-
     if ((fd = xmms_connect_to_session(session)) == -1)
         return ret;
     remote_send_packet(fd, CMD_GET_PLAYLIST_TIME, &p, sizeof(guint32));
-    data = remote_read_packet(fd, &pkt_hdr);
+    data = remote_read_packet(fd);
     if (data) {
         ret = *((gint *) data);
         g_free(data);
@@ -773,16 +753,13 @@ xmms_remote_get_playlist_time(gint session, gint pos)
 void
 xmms_remote_get_info(gint session, gint * rate, gint * freq, gint * nch)
 {
-    ServerPktHeader pkt_hdr;
     gint fd;
     gpointer data;
-
-    memset(&pkt_hdr, '\0', sizeof(ServerPktHeader));
 
     if ((fd = xmms_connect_to_session(session)) == -1)
         return;
     remote_send_packet(fd, CMD_GET_INFO, NULL, 0);
-    data = remote_read_packet(fd, &pkt_hdr);
+    data = remote_read_packet(fd);
     if (data) {
         *rate = ((guint32 *) data)[0];
         *freq = ((guint32 *) data)[1];
@@ -981,17 +958,14 @@ xmms_remote_get_playqueue_length(gint session)
 gboolean
 xmms_remote_playqueue_is_queued(gint session, gint pos)
 {
-    ServerPktHeader pkt_hdr;
     gpointer data;
     gint fd, ret = 0;
     guint32 p = pos;
 
-    memset(&pkt_hdr, '\0', sizeof(ServerPktHeader));
-
     if ((fd = xmms_connect_to_session(session)) == -1)
         return ret;
     remote_send_packet(fd, CMD_PLAYQUEUE_IS_QUEUED, &p, sizeof(guint32));
-    data = remote_read_packet(fd, &pkt_hdr);
+    data = remote_read_packet(fd);
     if (data) {
         ret = *((gint *) data);
         g_free(data);
@@ -1004,17 +978,14 @@ xmms_remote_playqueue_is_queued(gint session, gint pos)
 gint
 xmms_remote_get_playqueue_position(gint session, gint pos)
 {
-    ServerPktHeader pkt_hdr;
     gpointer data;
     gint fd, ret = 0;
     guint32 p = pos;
 
-    memset(&pkt_hdr, '\0', sizeof(ServerPktHeader));
-
     if ((fd = xmms_connect_to_session(session)) == -1)
         return ret;
     remote_send_packet(fd, CMD_PLAYQUEUE_GET_POS, &p, sizeof(guint32));
-    data = remote_read_packet(fd, &pkt_hdr);
+    data = remote_read_packet(fd);
     if (data) {
         ret = *((gint *) data);
         g_free(data);
@@ -1027,17 +998,14 @@ xmms_remote_get_playqueue_position(gint session, gint pos)
 gint
 xmms_remote_get_playqueue_queue_position(gint session, gint pos)
 {
-    ServerPktHeader pkt_hdr;
     gpointer data;
     gint fd, ret = 0;
     guint32 p = pos;
 
-    memset(&pkt_hdr, '\0', sizeof(ServerPktHeader));
-
     if ((fd = xmms_connect_to_session(session)) == -1)
         return ret;
     remote_send_packet(fd, CMD_PLAYQUEUE_GET_QPOS, &p, sizeof(guint32));
-    data = remote_read_packet(fd, &pkt_hdr);
+    data = remote_read_packet(fd);
     if (data) {
         ret = *((gint *) data);
         g_free(data);
@@ -1050,11 +1018,8 @@ xmms_remote_get_playqueue_queue_position(gint session, gint pos)
 void
 xmms_remote_get_eq(gint session, gfloat * preamp, gfloat ** bands)
 {
-    ServerPktHeader pkt_hdr;
     gint fd;
     gpointer data;
-
-    memset(&pkt_hdr, '\0', sizeof(ServerPktHeader));
 
     if (preamp)
         *preamp = 0.0;
@@ -1065,16 +1030,14 @@ xmms_remote_get_eq(gint session, gfloat * preamp, gfloat ** bands)
     if ((fd = xmms_connect_to_session(session)) == -1)
         return;
     remote_send_packet(fd, CMD_GET_EQ, NULL, 0);
-    data = remote_read_packet(fd, &pkt_hdr);
+    data = remote_read_packet(fd);
     if (data) {
-        if (pkt_hdr.data_length >= 11 * sizeof(gfloat)) {
             if (preamp)
                 *preamp = *((gfloat *) data);
             if (bands)
                 *bands =
                     (gfloat *) g_memdup((gfloat *) data + 1,
                                         10 * sizeof(gfloat));
-        }
         g_free(data);
     }
     remote_read_ack(fd);
@@ -1090,17 +1053,14 @@ xmms_remote_get_eq_preamp(gint session)
 gfloat
 xmms_remote_get_eq_band(gint session, gint band)
 {
-    ServerPktHeader pkt_hdr;
     gint fd;
     gpointer data;
     gfloat val = 0.0;
 
-    memset(&pkt_hdr, '\0', sizeof(ServerPktHeader));
-
     if ((fd = xmms_connect_to_session(session)) == -1)
         return val;
     remote_send_packet(fd, CMD_GET_EQ_BAND, &band, sizeof(band));
-    data = remote_read_packet(fd, &pkt_hdr);
+    data = remote_read_packet(fd);
     if (data) {
         val = *((gfloat *) data);
         g_free(data);
