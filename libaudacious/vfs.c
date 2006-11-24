@@ -105,6 +105,9 @@ vfs_fclose(VFSFile * file)
     if (file->base->vfs_fclose_impl(file) != 0)
         ret = -1;
 
+    if (file->uri != NULL)
+        g_free(file->uri);
+
     g_free(file);
 
     return ret;
