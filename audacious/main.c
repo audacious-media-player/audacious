@@ -1068,11 +1068,6 @@ main(gint argc, gchar ** argv)
     if (options.no_log == FALSE)
         bmp_setup_logger();
 
-    if (!vfs_init()) {
-        g_printerr(Q_("Could not initialize VFS.\n"));
-        exit(EXIT_FAILURE);
-    }
-
     signal(SIGPIPE, SIG_IGN);   /* for controlsocket.c */
     signal(SIGSEGV, segfault_handler);
 
