@@ -25,8 +25,6 @@
 
 static GList *vfs_transports = NULL;
 
-#define VFS_DEBUG
-
 #ifdef VFS_DEBUG
 # define DBG(x, args...) g_print(x, ## args);
 #else
@@ -36,8 +34,6 @@ static GList *vfs_transports = NULL;
 gboolean
 vfs_register_transport(VFSConstructor *vtable)
 {
-    DBG("registering transport [%s]\n", vtable->uri_id);
-
     vfs_transports = g_list_append(vfs_transports, vtable);
 
     return TRUE;
@@ -56,8 +52,6 @@ vfs_fopen(const gchar * path,
 	return NULL;
 
     vec = g_strsplit(path, "://", 2);
-
-    DBG("vec[0]: %s, vec[1]: %s\n", vec[0], vec[1]);
 
     /* special case: no transport specified, look for the "/" transport */
     if (vec[1] == NULL)
@@ -96,8 +90,6 @@ vfs_fopen(const gchar * path,
 
     file->uri = g_strdup(path);
     file->base = vtable;
-
-    DBG("returning %p", file);
 
     return file;
 }
