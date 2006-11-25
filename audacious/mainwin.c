@@ -1843,12 +1843,22 @@ static gboolean
 mainwin_jump_to_file_match(const gchar * song, gchar ** keys)
 {
     gint i = 0;
+    gboolean rv = TRUE;
 
-    for (i = 0; keys[i] != NULL; i++)
-        if (strstr(song, keys[i]))
-            return TRUE;
+    while (keys[i]) {
+        gint len = strlen(keys[i]);
+        gint j = 0;        
+        while (*(song + j)) {
+            if (!g_strncasecmp(song + j, keys[i], len))
+                goto found;
+            j++;
+        }
+        rv = FALSE;
+    found:
+        i++;
+    }
 
-    return FALSE;
+    return rv;
 }
 
 /* FIXME: Clear the entry when the list gets updated */
@@ -1957,7 +1967,7 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
          * In any case the string to match should _never_ contain
          * something the user can't actually see in the playlist.
          */
-        if (words[0] != NULL && strlen(words[0]) > 3)
+        if (words[0] != NULL)
             match = mainwin_jump_to_file_match(title, words);
         else
             match = TRUE;

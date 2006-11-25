@@ -1,3 +1,11 @@
+2006-11-25 08:31:33 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [3005]
+  - now filepopup can find newly added images immediately.
+  
+  trunk/audacious/ui_fileinfo.c |   39 +++++++++++++++++----------------------
+  1 file changed, 17 insertions(+), 22 deletions(-)
+
+
 2006-11-24 17:49:06 +0000  Jonathan Schleifer <js@h3c.de>
   revision [3003]
   Fixed wrong help, it has to be --with-rc-path.
