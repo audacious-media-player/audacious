@@ -555,10 +555,11 @@ fileinfo_recursive_get_image(const gchar* path,
 void
 filepopup_show_for_tuple(TitleInput *tuple)
 {
-	gchar *tmp = NULL, *fullpath = NULL;
+	gchar *tmp = NULL;
 	gint x, y, x_off = 3, y_off = 3, h, w;
 
 	static gchar *last_artwork = NULL;
+	const static char default_artwork[] = DATA_DIR "/images/audio.png";
 
 	if (tuple == NULL)
 		return;
@@ -579,31 +580,25 @@ filepopup_show_for_tuple(TitleInput *tuple)
 	if (tuple->track_number != 0)
 		filepopup_entry_set_text_free("label_track", g_strdup_printf("%d", tuple->track_number));
 
-	if (cfg.use_file_cover) {
-		/* Use the file name */
-		fullpath = g_strconcat(tuple->file_path, "/", tuple->file_name, NULL);
-	} else {
-		fullpath = g_strconcat(tuple->file_path, "/", NULL);
-	}
-
-	if (!last_artwork || strcmp(last_artwork, fullpath))
-	{
-		if (last_artwork != NULL)
-			g_free(last_artwork);
-
-		last_artwork = g_strdup(fullpath);
-
-		tmp = fileinfo_recursive_get_image(tuple->file_path, tuple->file_name, 0);
-		if (tmp)
-		{
+	tmp = fileinfo_recursive_get_image(tuple->file_path, tuple->file_name, 0);
+	if (tmp) { // picture found
+		if (!last_artwork || strcmp(last_artwork, tmp)) { // new picture
 			filepopup_entry_set_image("image_artwork", tmp);
-			g_free(tmp);
-		} else {
-			filepopup_entry_set_image("image_artwork", DATA_DIR "/images/audio.png");
+			g_free(last_artwork);
+			last_artwork = tmp;
+		}
+		else { // same picture
 		}
 	}
-
-	g_free(fullpath);
+	else { // no picture found
+		if (!last_artwork || strcmp(last_artwork, default_artwork)) {
+			filepopup_entry_set_image("image_artwork", default_artwork);
+			g_free(last_artwork);
+			last_artwork = g_strdup(default_artwork);
+		}
+		else {
+		}
+	}
 
 	gdk_window_get_pointer(NULL, &x, &y, NULL);
 	gtk_window_get_size(GTK_WINDOW(filepopup_win), &w, &h);

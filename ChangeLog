@@ -1,3 +1,12 @@
+2006-11-24 17:49:06 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [3003]
+  Fixed wrong help, it has to be --with-rc-path.
+  Found by Benny Siegert <bsiegert@gmx.de>
+  
+  trunk/configure.ac |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-11-24 12:49:53 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [3001]
   Updated translation by Yang Zhang <zyangmath@gmail.com> aka program, closes bug #660.
