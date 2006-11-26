@@ -196,7 +196,8 @@ xmms_get_titlestring(const gchar * fmt, TitleInput * input)
                       (n == 'g' && VS(input, genre)) ||
                       (n == 'n' && VI(input, track_number)) ||
                       (n == 'p' && VS(input, performer)) ||
-                      (n == 't' && VS(input, track_name)))) {
+                      (n == 't' && VS(input, track_name)) ||
+                      (n == 'y' && VI(input, year)))) {
                     int nl = 0;
                     char c;
                     while ((c = *fmt++))    /* until end of string      */
@@ -242,6 +243,10 @@ xmms_get_titlestring(const gchar * fmt, TitleInput * input)
             goto Print_string;
         case 't':
             string = VS(input, track_name);
+	    goto Print_string;
+        case 'y':
+            val = VI(input, year);
+	    goto Print_number;
 
           Print_string:
             if (string == NULL)
@@ -279,9 +284,6 @@ xmms_get_titlestring(const gchar * fmt, TitleInput * input)
 
             RIGHTPAD(width - numpr);
             break;
-
-        case 'y':
-            val = VI(input, year);
 
           Print_number:
             if (val == 0)

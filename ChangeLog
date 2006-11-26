@@ -1,3 +1,11 @@
+2006-11-26 03:19:56 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3013]
+  - xmms_urldecode_path() is no longer needed due to NewVFS layer.
+  
+  trunk/audacious/playlist.c |    3 +--
+  1 file changed, 1 insertion(+), 2 deletions(-)
+
+
 2006-11-26 03:17:17 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3011]
   - update credit for welsh translation
