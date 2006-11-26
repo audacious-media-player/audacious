@@ -786,8 +786,7 @@ playlist_ins_url(const gchar * string,
             *tmp = '\0';
         }
 
-        if (!(decoded = xmms_urldecode_path(string)))
-            decoded = g_strdup(string);
+        decoded = g_strdup(string);
 
         if (g_file_test(decoded, G_FILE_TEST_IS_DIR)) {
             i = playlist_ins_dir(decoded, pos, FALSE);
