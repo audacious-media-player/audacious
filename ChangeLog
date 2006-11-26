@@ -1,3 +1,11 @@
+2006-11-26 05:29:05 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [3017]
+  - fix for custom format bug. closes #664.
+  
+  trunk/libaudacious/titlestring.c |   10 ++++++----
+  1 file changed, 6 insertions(+), 4 deletions(-)
+
+
 2006-11-26 03:19:56 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3013]
   - xmms_urldecode_path() is no longer needed due to NewVFS layer.

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2006-11-23 16:38+0000\n"
-"PO-Revision-Date: 2006-11-25 21:56-0600\n"
+"PO-Revision-Date: 2006-11-26 17:24-0600\n"
 "Last-Translator: William Pitcock <nenolod@atheme.org>\n"
 "Language-Team: Welsh\n"
 "MIME-Version: 1.0\n"
@@ -355,6 +355,9 @@ msgid ""
 "\n"
 "Could not open glade file (%s). Please check your installation.\n"
 msgstr ""
+"<b><big>Methu llwytho'r rhestr %s.</big></b>\n"
+"\n"
+"Methu llytho'r rhestr glade ffiel (%s).\n"
 
 #: audacious/input.c:305
 msgid ""
@@ -501,6 +504,11 @@ msgid ""
 "This could be a bug in Audacious. If you don't know why this happened, file a bug at http://bugs-meta.atheme.org/\n"
 "\n"
 msgstr ""
+"\n"
+"SIGSEGV afreolaidd\n"
+"\n"
+"Sydd byg y Audacious. Ymweliad URL: http://bugs-meta.atheme.org/\n"
+"\n"
 
 #: audacious/main.c:984
 #, c-format
@@ -509,6 +517,9 @@ msgid ""
 "\n"
 "Check that skin at '%s' is usable and default skin is properly installed at '%s'\n"
 msgstr ""
+"<b><big>Methu llwytho'r rhestr croen</big></b>\n"
+"\n"
+"Gwiriwch croen am '%s' ar gael a croen rhagosodedig at am '%s'\n"
 
 #: audacious/main.c:1030
 #, c-format
@@ -954,6 +965,9 @@ msgid ""
 "\n"
 "No CD inserted, or inserted CD is not an audio CD.\n"
 msgstr ""
+"<b><big>Dim CD ar gael</big></b>\n"
+"\n"
+"Dim CD ar gael.\n"
 
 #: audacious/mainwin.c:3144
 msgid ""
@@ -1081,11 +1095,11 @@ msgstr "Croen Winamp 2.x"
 
 #: audacious/ui_fileinfo.c:313
 msgid "Track Information Window"
-msgstr ""
+msgstr "Gwybodaeth Trac"
 
 #: audacious/ui_fileinfo.c:335
 msgid "Track Information Popup"
-msgstr ""
+msgstr "Gwybodaeth Trac"
 
 #: audacious/ui_playlist.c:126
 msgid "/Show Popup Info"
@@ -1480,7 +1494,7 @@ msgstr "Dangos addurniadau'r rheolwr ffenestr"
 
 #: audacious/glade/prefswin.glade:805
 msgid "This enables the window manager to show decorations for windows."
-msgstr ""
+msgstr "Dangos addurniadau am ffenestri."
 
 #: audacious/glade/prefswin.glade:824
 msgid "Use XMMS-style file selector instead of the default selector"
@@ -1540,11 +1554,11 @@ msgstr "Am gofyn"
 
 #: audacious/glade/prefswin.glade:1201
 msgid "Fallback character encodings:"
-msgstr ""
+msgstr "Arallddewisiol cymeriad mathau:"
 
 #: audacious/glade/prefswin.glade:1243
 msgid "Auto character encoding detector for:"
-msgstr ""
+msgstr "Awtoganfod cymeriad am:"
 
 #: audacious/glade/prefswin.glade:1274
 msgid "<b>File Dialog</b>"
@@ -1552,7 +1566,7 @@ msgstr "<b>Ceridwyn deialog</b>"
 
 #: audacious/glade/prefswin.glade:1293
 msgid "Always refresh directory when opening file dialog"
-msgstr ""
+msgstr "Adnewyddu y tocie defnyddio at rhagosodiad."
 
 #: audacious/glade/prefswin.glade:1317
 msgid "<b>Song Display</b>"
@@ -1590,7 +1604,7 @@ msgstr "<b>Gwybodaeth Popup</b>"
 
 #: audacious/glade/prefswin.glade:1463
 msgid "Show popup information for playlist entries"
-msgstr ""
+msgstr "Dangos gwybodaeth am chwarae llyfrifiadau"
 
 #: audacious/glade/prefswin.glade:1541
 msgid "<b>Presets</b>"
@@ -1606,7 +1620,7 @@ msgstr "Estyniad rhagosodiadau'r ffeil:"
 
 #: audacious/glade/prefswin.glade:1632
 msgid "Available _Presets:"
-msgstr ""
+msgstr "_Rhagosodiadau ar gael:"
 
 #: audacious/glade/prefswin.glade:1744
 msgid "<b>Proxy Configuration</b>"
@@ -1638,7 +1652,7 @@ msgstr "Cyfrinair dirprwy:"
 
 #: audacious/glade/prefswin.glade:1961
 msgid "<span size=\"small\">Changing these settings will require a restart of Audacious.</span>"
-msgstr ""
+msgstr "<span size=\"small\">Cyfnewidau machludiad angen ailddechrau Audacious.</span>"
 
 #: audacious/glade/prefswin.glade:1997
 msgid "label65"
@@ -1661,7 +1675,7 @@ msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams by, in milliseconds.\n"
 "Increase this value if you are experiencing audio skipping. \n"
 "Please note however, that high values will result in Audacious performing poorly.</span>"
-msgstr ""
+msgstr "<span size=\"small\">Cyn fyffer amser (ms).</span>"
 
 #: audacious/glade/prefswin.glade:2179
 msgid "Output Plugin Preferences"
@@ -1677,7 +1691,7 @@ msgstr "<b>Awtoganfod trefniad</b>"
 
 #: audacious/glade/prefswin.glade:2277
 msgid "Detect file formats on demand, instead of immediately."
-msgstr ""
+msgstr "Awtoganfod ffiel trefniad am gofyn."
 
 #: audacious/glade/prefswin.glade:2301
 msgid "<b>Playback</b>"
@@ -1709,7 +1723,7 @@ msgstr "label76"
 
 #: audacious/glade/prefswin.glade:2526
 msgid "While searching for the album's cover, Audacious looks for certain words in the filename. You can specify those words in the lists below, separated using commas."
-msgstr ""
+msgstr "Chi enwi y allweddair yng chwilio am tannod."
 
 #: audacious/glade/prefswin.glade:2559
 msgid "Include:"
