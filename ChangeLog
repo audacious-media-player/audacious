@@ -1,3 +1,12 @@
+2006-11-26 22:41:53 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3019]
+  - update Welsh translation:
+  407 strings (0 fuzzy, 0 bad tokens, 0 not translated)
+  
+  trunk/po/cy.po |   40 +++++++++++++++++++++++++++-------------
+  1 file changed, 27 insertions(+), 13 deletions(-)
+
+
 2006-11-26 05:29:05 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [3017]
   - fix for custom format bug. closes #664.
