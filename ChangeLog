@@ -1,3 +1,13 @@
+2006-11-25 17:25:21 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [3007]
+  jump to file improvement:
+  - case insensitive search
+  - AND search with keywords
+  
+  trunk/audacious/mainwin.c |   20 +++++++++++++++-----
+  1 file changed, 15 insertions(+), 5 deletions(-)
+
+
 2006-11-25 08:31:33 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [3005]
   - now filepopup can find newly added images immediately.
