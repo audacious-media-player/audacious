@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.2\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-11-23 16:38+0000\n"
+"POT-Creation-Date: 2006-11-27 00:47+0100\n"
 "PO-Revision-Date: 2004-07-28 21:35+0800\n"
 "Last-Translator: Chao-Hsiung Liao <pesder.liao@msa.hinet.net>\n"
 "Language-Team: chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -15,12 +15,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.0.2\n"
 
-#: audacious/about.c:119 audacious/credits.c:312
+#: audacious/about.c:119 audacious/credits.c:313
 #, fuzzy
 msgid "About Audacious"
 msgstr "關於 MPEG 音效外掛程式"
 
-#: audacious/about.c:168 audacious/credits.c:357
+#: audacious/about.c:168 audacious/credits.c:358
 msgid "Credits"
 msgstr "工作人員"
 
@@ -171,7 +171,7 @@ msgstr "羅馬尼亞語:"
 msgid "Welsh:"
 msgstr "威爾斯語:"
 
-#: audacious/credits.c:361
+#: audacious/credits.c:362
 msgid "Translators"
 msgstr "翻譯人員"
 
@@ -407,7 +407,7 @@ msgid "Unable to create log file (%s)!\n"
 msgstr "無法建立紀錄檔(%s)！\n"
 
 #: audacious/main.c:82 audacious/main.c:84 audacious/mainwin.c:876
-#: audacious/mainwin.c:3640
+#: audacious/mainwin.c:3650
 msgid "Audacious"
 msgstr ""
 
@@ -897,76 +897,76 @@ msgstr "音軌長度:"
 msgid "Un_queue"
 msgstr "佇列"
 
-#: audacious/mainwin.c:1748 audacious/mainwin.c:2093
+#: audacious/mainwin.c:1748 audacious/mainwin.c:2103
 #, fuzzy
 msgid "_Queue"
 msgstr "佇列"
 
-#: audacious/mainwin.c:2018
+#: audacious/mainwin.c:2028
 msgid "Jump to Track"
 msgstr "跳至音軌"
 
-#: audacious/mainwin.c:2059
+#: audacious/mainwin.c:2069
 msgid "Filter: "
 msgstr "過濾器:"
 
-#: audacious/mainwin.c:2260
+#: audacious/mainwin.c:2270
 msgid "Enter location to play:"
 msgstr ""
 
-#: audacious/mainwin.c:2467
+#: audacious/mainwin.c:2477
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "尋找: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2499 audacious/mainwin.c:3286
+#: audacious/mainwin.c:2509 audacious/mainwin.c:3296
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "音量: %d%%"
 
-#: audacious/mainwin.c:2530 audacious/mainwin.c:3289
+#: audacious/mainwin.c:2540 audacious/mainwin.c:3299
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "平衡: %d%% 左"
 
-#: audacious/mainwin.c:2534 audacious/mainwin.c:3292
+#: audacious/mainwin.c:2544 audacious/mainwin.c:3302
 msgid "BALANCE: CENTER"
 msgstr "平衡: 中央"
 
-#: audacious/mainwin.c:2538 audacious/mainwin.c:3294
+#: audacious/mainwin.c:2548 audacious/mainwin.c:3304
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "平衡: %d%% 右"
 
-#: audacious/mainwin.c:3061
+#: audacious/mainwin.c:3071
 msgid "OPTIONS MENU"
 msgstr "選項選單"
 
-#: audacious/mainwin.c:3065
+#: audacious/mainwin.c:3075
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "停用最上層顯示"
 
-#: audacious/mainwin.c:3067
+#: audacious/mainwin.c:3077
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "啟用最上層顯示"
 
-#: audacious/mainwin.c:3070
+#: audacious/mainwin.c:3080
 msgid "FILE INFO BOX"
 msgstr "檔案資訊方塊"
 
-#: audacious/mainwin.c:3074
+#: audacious/mainwin.c:3084
 msgid "DISABLE DOUBLESIZE"
 msgstr ""
 
-#: audacious/mainwin.c:3076
+#: audacious/mainwin.c:3086
 msgid "ENABLE DOUBLESIZE"
 msgstr ""
 
-#: audacious/mainwin.c:3079
+#: audacious/mainwin.c:3089
 msgid "VISUALIZATION MENU"
 msgstr "視覺化選單"
 
-#: audacious/mainwin.c:3127
+#: audacious/mainwin.c:3137
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -976,7 +976,7 @@ msgstr ""
 "\n"
 "可能是沒有插入 CD ，或插入的 CD 不是音樂 CD。\n"
 
-#: audacious/mainwin.c:3144
+#: audacious/mainwin.c:3154
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -992,7 +992,7 @@ msgstr ""
 "2. 沒有其他的程式佔用音效卡。\n"
 "3. 您的音效卡已正確設定。\n"
 
-#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:876
+#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1372
 msgid "Appearance"
 msgstr "外觀"
 
@@ -1005,19 +1005,19 @@ msgstr "關於 MPEG 音效外掛程式"
 msgid "Connectivity"
 msgstr ""
 
-#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:1721
+#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:2836
 msgid "Equalizer"
 msgstr "等化器"
 
-#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:1033
+#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:1651
 msgid "Mouse"
 msgstr "滑鼠"
 
-#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:1515
+#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:2468
 msgid "Playlist"
 msgstr "播放清單"
 
-#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:470
+#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:693
 msgid "Plugins"
 msgstr "外掛程式"
 
@@ -1025,7 +1025,7 @@ msgstr "外掛程式"
 msgid "Artist"
 msgstr "藝人"
 
-#: audacious/prefswin.c:111 libaudacious/titlestring.c:349
+#: audacious/prefswin.c:111 libaudacious/titlestring.c:351
 msgid "Album"
 msgstr "專輯"
 
@@ -1037,7 +1037,7 @@ msgstr "標題"
 msgid "Tracknumber"
 msgstr "音軌編號"
 
-#: audacious/prefswin.c:114 libaudacious/titlestring.c:350
+#: audacious/prefswin.c:114 libaudacious/titlestring.c:352
 msgid "Genre"
 msgstr "樂曲類型"
 
@@ -1045,15 +1045,15 @@ msgstr "樂曲類型"
 msgid "Filepath"
 msgstr "檔案路徑"
 
-#: audacious/prefswin.c:117 libaudacious/titlestring.c:356
+#: audacious/prefswin.c:117 libaudacious/titlestring.c:358
 msgid "Date"
 msgstr "日期"
 
-#: audacious/prefswin.c:118 libaudacious/titlestring.c:357
+#: audacious/prefswin.c:118 libaudacious/titlestring.c:359
 msgid "Year"
 msgstr "年份"
 
-#: audacious/prefswin.c:119 libaudacious/titlestring.c:358
+#: audacious/prefswin.c:119 libaudacious/titlestring.c:360
 msgid "Comment"
 msgstr "註解"
 
@@ -1436,180 +1436,180 @@ msgstr "音軌編號"
 msgid "<i>Track Length</i>"
 msgstr "音軌長度:"
 
-#: audacious/glade/prefswin.glade:68
+#: audacious/glade/prefswin.glade:115
 #, fuzzy
 msgid "_Decoder list:"
 msgstr "解碼器"
 
-#: audacious/glade/prefswin.glade:148
+#: audacious/glade/prefswin.glade:219
 #, fuzzy
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr "<span size=\"medium\"><b>一般</b></span>"
 
-#: audacious/glade/prefswin.glade:169
+#: audacious/glade/prefswin.glade:261
 msgid "_General plugin list:"
 msgstr "一般外掛程式清單(_G):"
 
-#: audacious/glade/prefswin.glade:248
+#: audacious/glade/prefswin.glade:365
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b>一般</b></span>"
 
-#: audacious/glade/prefswin.glade:270
+#: audacious/glade/prefswin.glade:407
 msgid "_Visualization plugin list:"
 msgstr "視覺化外掛程式清單(_V):"
 
-#: audacious/glade/prefswin.glade:349
+#: audacious/glade/prefswin.glade:511
 msgid "<b>Visualization</b>"
 msgstr "<b>視覺化</b>"
 
-#: audacious/glade/prefswin.glade:371
+#: audacious/glade/prefswin.glade:553
 msgid "_Effect plugin list:"
 msgstr "效果外掛程式清單(_E):"
 
-#: audacious/glade/prefswin.glade:450
+#: audacious/glade/prefswin.glade:657
 msgid "<b>Effects</b>"
 msgstr "<b>效果</b>"
 
-#: audacious/glade/prefswin.glade:496
+#: audacious/glade/prefswin.glade:746
 msgid "<b>_Skin</b>"
 msgstr "<b>面板(_S)</b>"
 
-#: audacious/glade/prefswin.glade:564
+#: audacious/glade/prefswin.glade:866
 msgid "<b>_Fonts</b>"
 msgstr "<b>字型(_F)</b>"
 
-#: audacious/glade/prefswin.glade:596
+#: audacious/glade/prefswin.glade:921
 msgid "_Player:"
 msgstr "播放程式(_P)"
 
-#: audacious/glade/prefswin.glade:617
+#: audacious/glade/prefswin.glade:964
 msgid "_Playlist:"
 msgstr "播放清單(_P)"
 
-#: audacious/glade/prefswin.glade:683
+#: audacious/glade/prefswin.glade:1066
 #, fuzzy
 msgid "Use Bitmap fonts if available"
 msgstr "立體聲(如果可用)"
 
-#: audacious/glade/prefswin.glade:706
+#: audacious/glade/prefswin.glade:1100
 msgid "<b>_Miscellaneous</b>"
 msgstr "<b>雜項(_M)</b>"
 
-#: audacious/glade/prefswin.glade:735
+#: audacious/glade/prefswin.glade:1148
 msgid "Show track numbers in playlist"
 msgstr "顯示播放清單中的音軌編號"
 
-#: audacious/glade/prefswin.glade:757
+#: audacious/glade/prefswin.glade:1183
 #, fuzzy
 msgid "Show separators in playlist"
 msgstr "顯示播放清單中的音軌編號"
 
-#: audacious/glade/prefswin.glade:779
+#: audacious/glade/prefswin.glade:1218
 msgid "Use custom cursors"
 msgstr "使用自訂游標"
 
-#: audacious/glade/prefswin.glade:799
+#: audacious/glade/prefswin.glade:1254
 msgid "Show window manager decoration"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:804
+#: audacious/glade/prefswin.glade:1262
 msgid "Show window manager decorations"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:805
+#: audacious/glade/prefswin.glade:1263
 msgid "This enables the window manager to show decorations for windows."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:824
+#: audacious/glade/prefswin.glade:1294
 msgid "Use XMMS-style file selector instead of the default selector"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:845
+#: audacious/glade/prefswin.glade:1330
 #, fuzzy
 msgid "Enable playlist transparency"
 msgstr "啟用播放增益"
 
-#: audacious/glade/prefswin.glade:900
+#: audacious/glade/prefswin.glade:1419
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>滑鼠滾輪</b>"
 
-#: audacious/glade/prefswin.glade:925
+#: audacious/glade/prefswin.glade:1467
 #, fuzzy
 msgid "Changes volume by"
 msgstr "滑鼠滾輪改變音量依"
 
-#: audacious/glade/prefswin.glade:937
+#: audacious/glade/prefswin.glade:1495
 msgid "percent"
 msgstr "百分比"
 
-#: audacious/glade/prefswin.glade:951
+#: audacious/glade/prefswin.glade:1523
 #, fuzzy
 msgid "Scrolls playlist by"
 msgstr "滑鼠捲動播放清單依"
 
-#: audacious/glade/prefswin.glade:984
+#: audacious/glade/prefswin.glade:1576
 msgid "lines"
 msgstr "線條"
 
-#: audacious/glade/prefswin.glade:1056
+#: audacious/glade/prefswin.glade:1698
 msgid "<b>Filename</b>"
 msgstr "<b>檔案名稱</b>"
 
-#: audacious/glade/prefswin.glade:1074
+#: audacious/glade/prefswin.glade:1738
 msgid "Convert underscores to blanks"
 msgstr "轉換下劃線為空白"
 
-#: audacious/glade/prefswin.glade:1096
+#: audacious/glade/prefswin.glade:1773
 msgid "Convert %20 to blanks"
 msgstr "轉換 %20 為空白"
 
-#: audacious/glade/prefswin.glade:1119
+#: audacious/glade/prefswin.glade:1807
 msgid "<b>Metadata</b>"
 msgstr "<b>中繼資料</b>"
 
-#: audacious/glade/prefswin.glade:1138
+#: audacious/glade/prefswin.glade:1848
 msgid "Load metadata from playlists and files"
 msgstr "從播放清單與檔案載入中繼資料"
 
-#: audacious/glade/prefswin.glade:1162
+#: audacious/glade/prefswin.glade:1888
 msgid "On load"
 msgstr "載入時"
 
-#: audacious/glade/prefswin.glade:1178
+#: audacious/glade/prefswin.glade:1910
 msgid "On display"
 msgstr "顯示時"
 
-#: audacious/glade/prefswin.glade:1201
+#: audacious/glade/prefswin.glade:1940
 msgid "Fallback character encodings:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1243
+#: audacious/glade/prefswin.glade:2009
 msgid "Auto character encoding detector for:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1274
+#: audacious/glade/prefswin.glade:2065
 #, fuzzy
 msgid "<b>File Dialog</b>"
 msgstr "<b>檔案名稱</b>"
 
-#: audacious/glade/prefswin.glade:1293
+#: audacious/glade/prefswin.glade:2106
 msgid "Always refresh directory when opening file dialog"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1317
+#: audacious/glade/prefswin.glade:2140
 #, fuzzy
 msgid "<b>Song Display</b>"
 msgstr "<b>歌曲顯示</b>"
 
-#: audacious/glade/prefswin.glade:1343
+#: audacious/glade/prefswin.glade:2188
 msgid "Title format:"
 msgstr "標題格式:"
 
-#: audacious/glade/prefswin.glade:1355
+#: audacious/glade/prefswin.glade:2216
 msgid "Custom string:"
 msgstr "自訂字串:"
 
-#: audacious/glade/prefswin.glade:1383
+#: audacious/glade/prefswin.glade:2267
 #, fuzzy
 msgid ""
 "TITLE\n"
@@ -1626,90 +1626,90 @@ msgstr ""
 "專輯 - 標題\n"
 "自訂"
 
-#: audacious/glade/prefswin.glade:1437
+#: audacious/glade/prefswin.glade:2339
 #, fuzzy
 msgid "<b>Popup Information</b>"
 msgstr "MPEG 音效外掛程式組態"
 
-#: audacious/glade/prefswin.glade:1463
+#: audacious/glade/prefswin.glade:2392
 msgid "Show popup information for playlist entries"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1541
+#: audacious/glade/prefswin.glade:2527
 msgid "<b>Presets</b>"
 msgstr "<b>設定組合</b>"
 
-#: audacious/glade/prefswin.glade:1597
+#: audacious/glade/prefswin.glade:2627
 msgid "Directory preset file:"
 msgstr "目錄設定組合檔案:"
 
-#: audacious/glade/prefswin.glade:1608
+#: audacious/glade/prefswin.glade:2655
 msgid "File preset extension:"
 msgstr "設定組合延伸檔名:"
 
-#: audacious/glade/prefswin.glade:1632
+#: audacious/glade/prefswin.glade:2703
 msgid "Available _Presets:"
 msgstr "可選用的設定組合(_P):"
 
-#: audacious/glade/prefswin.glade:1744
+#: audacious/glade/prefswin.glade:2883
 #, fuzzy
 msgid "<b>Proxy Configuration</b>"
 msgstr "MPEG 音效外掛程式組態"
 
-#: audacious/glade/prefswin.glade:1769
+#: audacious/glade/prefswin.glade:2941
 msgid "Enable proxy usage"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1794
+#: audacious/glade/prefswin.glade:2972
 msgid "Proxy hostname:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1805
+#: audacious/glade/prefswin.glade:3000
 #, fuzzy
 msgid "Proxy port:"
 msgstr "代理伺服器:"
 
-#: audacious/glade/prefswin.glade:1858
+#: audacious/glade/prefswin.glade:3094
 #, fuzzy
 msgid "Use authentication with proxy"
 msgstr "使用驗證"
 
-#: audacious/glade/prefswin.glade:1884
+#: audacious/glade/prefswin.glade:3125
 #, fuzzy
 msgid "Proxy username:"
 msgstr "使用者名稱:"
 
-#: audacious/glade/prefswin.glade:1895
+#: audacious/glade/prefswin.glade:3153
 #, fuzzy
 msgid "Proxy password:"
 msgstr "密碼:"
 
-#: audacious/glade/prefswin.glade:1961
+#: audacious/glade/prefswin.glade:3269
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1997
+#: audacious/glade/prefswin.glade:3325
 msgid "label65"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2017
+#: audacious/glade/prefswin.glade:3366
 #, fuzzy
 msgid "<b>Audio System</b>"
 msgstr "<b>設定組合</b>"
 
-#: audacious/glade/prefswin.glade:2046
+#: audacious/glade/prefswin.glade:3420
 #, fuzzy
 msgid "Current output plugin:"
 msgstr "目前的輸出外掛程式(_C):"
 
-#: audacious/glade/prefswin.glade:2069
+#: audacious/glade/prefswin.glade:3465
 #, fuzzy
 msgid "Buffer size:"
 msgstr "緩衝區大小(kb):"
 
-#: audacious/glade/prefswin.glade:2112
+#: audacious/glade/prefswin.glade:3535
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
@@ -1718,54 +1718,54 @@ msgid ""
 "poorly.</span>"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2179
+#: audacious/glade/prefswin.glade:3643
 #, fuzzy
 msgid "Output Plugin Preferences"
 msgstr "OSS 輸出外掛程式"
 
-#: audacious/glade/prefswin.glade:2222
+#: audacious/glade/prefswin.glade:3718
 #, fuzzy
 msgid "Output Plugin Information"
 msgstr "ESD 輸出外掛程式組態"
 
-#: audacious/glade/prefswin.glade:2258
+#: audacious/glade/prefswin.glade:3770
 #, fuzzy
 msgid "<b>Format Detection</b>"
 msgstr "自動偵測"
 
-#: audacious/glade/prefswin.glade:2277
+#: audacious/glade/prefswin.glade:3811
 msgid "Detect file formats on demand, instead of immediately."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2301
+#: audacious/glade/prefswin.glade:3845
 msgid "<b>Playback</b>"
 msgstr "<b>播放</b>"
 
-#: audacious/glade/prefswin.glade:2320
+#: audacious/glade/prefswin.glade:3886
 msgid "Continue playback on startup"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2343
+#: audacious/glade/prefswin.glade:3922
 msgid "Don't advance in the playlist"
 msgstr "播放清單不使用進階功能"
 
-#: audacious/glade/prefswin.glade:2366
+#: audacious/glade/prefswin.glade:3957
 msgid "Pause between songs"
 msgstr "歌曲間加入暫停"
 
-#: audacious/glade/prefswin.glade:2389
+#: audacious/glade/prefswin.glade:3995
 msgid "Pause for"
 msgstr "暫停"
 
-#: audacious/glade/prefswin.glade:2415
+#: audacious/glade/prefswin.glade:4041
 msgid "seconds"
 msgstr "秒"
 
-#: audacious/glade/prefswin.glade:2441
+#: audacious/glade/prefswin.glade:4081
 msgid "label76"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2526
+#: audacious/glade/prefswin.glade:4219
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -1773,24 +1773,24 @@ msgid ""
 msgstr ""
 
 # This entry is taken from Sun. -- Abel
-#: audacious/glade/prefswin.glade:2559
+#: audacious/glade/prefswin.glade:4274
 #, fuzzy
 msgid "Include:"
 msgstr "獨立製作唱片(Indie)"
 
-#: audacious/glade/prefswin.glade:2570
+#: audacious/glade/prefswin.glade:4302
 msgid "Exclude:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2606
+#: audacious/glade/prefswin.glade:4371
 msgid "Recursively search for cover"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2627
+#: audacious/glade/prefswin.glade:4409
 msgid "Search depth: "
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2659
+#: audacious/glade/prefswin.glade:4475
 msgid "Use per-file cover"
 msgstr ""
 
@@ -1838,31 +1838,31 @@ msgstr "14KHZ"
 msgid "16KHZ"
 msgstr "16KHZ"
 
-#: libaudacious/titlestring.c:348
+#: libaudacious/titlestring.c:350
 msgid "Performer/Artist"
 msgstr "演出者/藝人"
 
-#: libaudacious/titlestring.c:351
+#: libaudacious/titlestring.c:353
 msgid "File name"
 msgstr "檔案名稱"
 
-#: libaudacious/titlestring.c:352
+#: libaudacious/titlestring.c:354
 msgid "File path"
 msgstr "檔案的路徑"
 
-#: libaudacious/titlestring.c:353
+#: libaudacious/titlestring.c:355
 msgid "File extension"
 msgstr "延伸檔名"
 
-#: libaudacious/titlestring.c:354
+#: libaudacious/titlestring.c:356
 msgid "Track name"
 msgstr "音軌名稱"
 
-#: libaudacious/titlestring.c:355
+#: libaudacious/titlestring.c:357
 msgid "Track number"
 msgstr "音軌編號"
 
-#: libaudacious/titlestring.c:409
+#: libaudacious/titlestring.c:411
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: 如果出現元素 %n 時只顯示 \"...\""
 

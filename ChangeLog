@@ -1,3 +1,13 @@
+2006-11-26 23:40:14 +0000  Adam Cecile <gandalf@le-vert.net>
+  revision [3021]
+  First po updates by Le_Vert.
+  Fix many small glitches and typos.
+  Remove strings that are not used anymore (thanks to kbabel).
+  
+  trunk/po/fr.po | 2365 ---------------------------------------------------------
+  1 file changed, 25 insertions(+), 2340 deletions(-)
+
+
 2006-11-26 22:41:53 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3019]
   - update Welsh translation:

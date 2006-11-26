@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.2.1\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-11-23 16:38+0000\n"
+"POT-Creation-Date: 2006-11-27 00:47+0100\n"
 "PO-Revision-Date: 2006-11-03 18:21+0100\n"
 "Last-Translator: Laszlo Dvornik <dvornik@gnome.hu>\n"
 "Language-Team: Hungarian <dvornik@gnome.hu>\n"
@@ -15,11 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: audacious/about.c:119 audacious/credits.c:312
+#: audacious/about.c:119 audacious/credits.c:313
 msgid "About Audacious"
 msgstr "Audacious névjegye"
 
-#: audacious/about.c:168 audacious/credits.c:357
+#: audacious/about.c:168 audacious/credits.c:358
 msgid "Credits"
 msgstr "Köszönet"
 
@@ -164,7 +164,7 @@ msgstr "Ukrán:"
 msgid "Welsh:"
 msgstr "Walesi:"
 
-#: audacious/credits.c:361
+#: audacious/credits.c:362
 msgid "Translators"
 msgstr "Fordítók"
 
@@ -402,7 +402,7 @@ msgid "Unable to create log file (%s)!\n"
 msgstr "Nem lehet létrehozni a naplófájlt (%s)!\n"
 
 #: audacious/main.c:82 audacious/main.c:84 audacious/mainwin.c:876
-#: audacious/mainwin.c:3640
+#: audacious/mainwin.c:3650
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -876,75 +876,75 @@ msgstr "Szám hossza:"
 msgid "Un_queue"
 msgstr "_Kiszedés a sorból"
 
-#: audacious/mainwin.c:1748 audacious/mainwin.c:2093
+#: audacious/mainwin.c:1748 audacious/mainwin.c:2103
 msgid "_Queue"
 msgstr "_Betevés a sorba"
 
-#: audacious/mainwin.c:2018
+#: audacious/mainwin.c:2028
 msgid "Jump to Track"
 msgstr "Ugrás számra"
 
-#: audacious/mainwin.c:2059
+#: audacious/mainwin.c:2069
 msgid "Filter: "
 msgstr "Szűrő: "
 
-#: audacious/mainwin.c:2260
+#: audacious/mainwin.c:2270
 msgid "Enter location to play:"
 msgstr "Adja meg a lejátszani kívánt helyet:"
 
-#: audacious/mainwin.c:2467
+#: audacious/mainwin.c:2477
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "POZICIONÁLÁS IDE: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2499 audacious/mainwin.c:3286
+#: audacious/mainwin.c:2509 audacious/mainwin.c:3296
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "HANGERŐ: %d%%"
 
-#: audacious/mainwin.c:2530 audacious/mainwin.c:3289
+#: audacious/mainwin.c:2540 audacious/mainwin.c:3299
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "BALANSZ: %d%% BAL"
 
-#: audacious/mainwin.c:2534 audacious/mainwin.c:3292
+#: audacious/mainwin.c:2544 audacious/mainwin.c:3302
 msgid "BALANCE: CENTER"
 msgstr "BALANSZ: KÖZÉP"
 
-#: audacious/mainwin.c:2538 audacious/mainwin.c:3294
+#: audacious/mainwin.c:2548 audacious/mainwin.c:3304
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "BALANSZ: %d%% JOBB"
 
-#: audacious/mainwin.c:3061
+#: audacious/mainwin.c:3071
 msgid "OPTIONS MENU"
 msgstr "BEÁLLÍTÁSOK MENÜ"
 
-#: audacious/mainwin.c:3065
+#: audacious/mainwin.c:3075
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "MINDIG LEGFELÜL KIKAPCSOLÁSA"
 
-#: audacious/mainwin.c:3067
+#: audacious/mainwin.c:3077
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "MINDIG LEGFELÜL BEKAPCSOLÁSA"
 
-#: audacious/mainwin.c:3070
+#: audacious/mainwin.c:3080
 msgid "FILE INFO BOX"
 msgstr "FÁJLINFÓ ABLAK"
 
-#: audacious/mainwin.c:3074
+#: audacious/mainwin.c:3084
 msgid "DISABLE DOUBLESIZE"
 msgstr ""
 
-#: audacious/mainwin.c:3076
+#: audacious/mainwin.c:3086
 msgid "ENABLE DOUBLESIZE"
 msgstr ""
 
-#: audacious/mainwin.c:3079
+#: audacious/mainwin.c:3089
 msgid "VISUALIZATION MENU"
 msgstr "KIJELZÉS MENÜ"
 
-#: audacious/mainwin.c:3127
+#: audacious/mainwin.c:3137
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -954,7 +954,7 @@ msgstr ""
 "\n"
 "Nincs behelyezve CD, vagy a behelyezett CD nem audio CD.\n"
 
-#: audacious/mainwin.c:3144
+#: audacious/mainwin.c:3154
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -970,7 +970,7 @@ msgstr ""
 "2. Semmilyen más program nem foglalja le a hangkártyát.\n"
 "3. A hangkártya megfelelően van beállítva.\n"
 
-#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:876
+#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1372
 msgid "Appearance"
 msgstr "Megjelenés"
 
@@ -982,19 +982,19 @@ msgstr "Hang"
 msgid "Connectivity"
 msgstr "Kapcsolódás"
 
-#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:1721
+#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:2836
 msgid "Equalizer"
 msgstr "Equalizer"
 
-#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:1033
+#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:1651
 msgid "Mouse"
 msgstr "Egér"
 
-#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:1515
+#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:2468
 msgid "Playlist"
 msgstr "Lejátszólista"
 
-#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:470
+#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:693
 msgid "Plugins"
 msgstr "Bővítmények"
 
@@ -1002,7 +1002,7 @@ msgstr "Bővítmények"
 msgid "Artist"
 msgstr "Előadó"
 
-#: audacious/prefswin.c:111 libaudacious/titlestring.c:349
+#: audacious/prefswin.c:111 libaudacious/titlestring.c:351
 msgid "Album"
 msgstr "Album"
 
@@ -1014,7 +1014,7 @@ msgstr "Cím"
 msgid "Tracknumber"
 msgstr "Szám sorszáma"
 
-#: audacious/prefswin.c:114 libaudacious/titlestring.c:350
+#: audacious/prefswin.c:114 libaudacious/titlestring.c:352
 msgid "Genre"
 msgstr "Műfaj"
 
@@ -1022,15 +1022,15 @@ msgstr "Műfaj"
 msgid "Filepath"
 msgstr "Fájlútvonal"
 
-#: audacious/prefswin.c:117 libaudacious/titlestring.c:356
+#: audacious/prefswin.c:117 libaudacious/titlestring.c:358
 msgid "Date"
 msgstr "Dátum"
 
-#: audacious/prefswin.c:118 libaudacious/titlestring.c:357
+#: audacious/prefswin.c:118 libaudacious/titlestring.c:359
 msgid "Year"
 msgstr "Év"
 
-#: audacious/prefswin.c:119 libaudacious/titlestring.c:358
+#: audacious/prefswin.c:119 libaudacious/titlestring.c:360
 msgid "Comment"
 msgstr "Megjegyzés"
 
@@ -1387,171 +1387,171 @@ msgstr "<i>Szám sorszáma</i>"
 msgid "<i>Track Length</i>"
 msgstr "<i>Szám hossza</i>"
 
-#: audacious/glade/prefswin.glade:68
+#: audacious/glade/prefswin.glade:115
 msgid "_Decoder list:"
 msgstr "_Dekódolólista:"
 
-#: audacious/glade/prefswin.glade:148
+#: audacious/glade/prefswin.glade:219
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr "<span size=\"medium\"><b>Dekódolók</b></span>"
 
-#: audacious/glade/prefswin.glade:169
+#: audacious/glade/prefswin.glade:261
 msgid "_General plugin list:"
 msgstr "Á_ltalános bővítmények listája:"
 
-#: audacious/glade/prefswin.glade:248
+#: audacious/glade/prefswin.glade:365
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b>Általános</b></span>"
 
-#: audacious/glade/prefswin.glade:270
+#: audacious/glade/prefswin.glade:407
 msgid "_Visualization plugin list:"
 msgstr "_Kijelzési bővítmények listája:"
 
-#: audacious/glade/prefswin.glade:349
+#: audacious/glade/prefswin.glade:511
 msgid "<b>Visualization</b>"
 msgstr "<b>Kijelzési mód</b>"
 
-#: audacious/glade/prefswin.glade:371
+#: audacious/glade/prefswin.glade:553
 msgid "_Effect plugin list:"
 msgstr "_Effektusbővítmények listája:"
 
-#: audacious/glade/prefswin.glade:450
+#: audacious/glade/prefswin.glade:657
 msgid "<b>Effects</b>"
 msgstr "<b>Effektusok</b>"
 
-#: audacious/glade/prefswin.glade:496
+#: audacious/glade/prefswin.glade:746
 msgid "<b>_Skin</b>"
 msgstr "<b>_Bőr</b>"
 
-#: audacious/glade/prefswin.glade:564
+#: audacious/glade/prefswin.glade:866
 msgid "<b>_Fonts</b>"
 msgstr "<b>_Betűkészletek</b>"
 
-#: audacious/glade/prefswin.glade:596
+#: audacious/glade/prefswin.glade:921
 msgid "_Player:"
 msgstr "_Lejátszó:"
 
-#: audacious/glade/prefswin.glade:617
+#: audacious/glade/prefswin.glade:964
 msgid "_Playlist:"
 msgstr "L_ejátszólista:"
 
-#: audacious/glade/prefswin.glade:683
+#: audacious/glade/prefswin.glade:1066
 msgid "Use Bitmap fonts if available"
 msgstr "Bitmap betűkészletek használata, ha elérhetőek"
 
-#: audacious/glade/prefswin.glade:706
+#: audacious/glade/prefswin.glade:1100
 msgid "<b>_Miscellaneous</b>"
 msgstr "<b>_Egyebek</b>"
 
-#: audacious/glade/prefswin.glade:735
+#: audacious/glade/prefswin.glade:1148
 msgid "Show track numbers in playlist"
 msgstr "Számok sorszámának megjelenítése a lejátszólistában"
 
-#: audacious/glade/prefswin.glade:757
+#: audacious/glade/prefswin.glade:1183
 msgid "Show separators in playlist"
 msgstr "Elválasztók megjelenítése a lejátszólistában"
 
-#: audacious/glade/prefswin.glade:779
+#: audacious/glade/prefswin.glade:1218
 msgid "Use custom cursors"
 msgstr "Egyéni kurzorok használata"
 
-#: audacious/glade/prefswin.glade:799
+#: audacious/glade/prefswin.glade:1254
 msgid "Show window manager decoration"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:804
+#: audacious/glade/prefswin.glade:1262
 msgid "Show window manager decorations"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:805
+#: audacious/glade/prefswin.glade:1263
 msgid "This enables the window manager to show decorations for windows."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:824
+#: audacious/glade/prefswin.glade:1294
 msgid "Use XMMS-style file selector instead of the default selector"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:845
+#: audacious/glade/prefswin.glade:1330
 msgid "Enable playlist transparency"
 msgstr "Lejátszólista átlátszóságának bekapcsolása"
 
-#: audacious/glade/prefswin.glade:900
+#: audacious/glade/prefswin.glade:1419
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>Egérgörgő</b>"
 
-#: audacious/glade/prefswin.glade:925
+#: audacious/glade/prefswin.glade:1467
 msgid "Changes volume by"
 msgstr "Megváltoztatja a hangerőt"
 
-#: audacious/glade/prefswin.glade:937
+#: audacious/glade/prefswin.glade:1495
 msgid "percent"
 msgstr "százalékkal"
 
-#: audacious/glade/prefswin.glade:951
+#: audacious/glade/prefswin.glade:1523
 msgid "Scrolls playlist by"
 msgstr "Ennyit görget a lejátszólistában:"
 
-#: audacious/glade/prefswin.glade:984
+#: audacious/glade/prefswin.glade:1576
 msgid "lines"
 msgstr "sor"
 
-#: audacious/glade/prefswin.glade:1056
+#: audacious/glade/prefswin.glade:1698
 msgid "<b>Filename</b>"
 msgstr "<b>Fájlnév</b>"
 
-#: audacious/glade/prefswin.glade:1074
+#: audacious/glade/prefswin.glade:1738
 msgid "Convert underscores to blanks"
 msgstr "Aláhúzás karakterek konvertálása szóközre"
 
-#: audacious/glade/prefswin.glade:1096
+#: audacious/glade/prefswin.glade:1773
 msgid "Convert %20 to blanks"
 msgstr "%20 konvertálása szóközre"
 
-#: audacious/glade/prefswin.glade:1119
+#: audacious/glade/prefswin.glade:1807
 msgid "<b>Metadata</b>"
 msgstr "<b>Metaadat</b>"
 
-#: audacious/glade/prefswin.glade:1138
+#: audacious/glade/prefswin.glade:1848
 msgid "Load metadata from playlists and files"
 msgstr "Metaadat betöltése lejátszólistákból és fájlokból"
 
-#: audacious/glade/prefswin.glade:1162
+#: audacious/glade/prefswin.glade:1888
 msgid "On load"
 msgstr "Betöltéskor"
 
-#: audacious/glade/prefswin.glade:1178
+#: audacious/glade/prefswin.glade:1910
 msgid "On display"
 msgstr "Megjelenítéskor"
 
-#: audacious/glade/prefswin.glade:1201
+#: audacious/glade/prefswin.glade:1940
 msgid "Fallback character encodings:"
 msgstr "Tartalék karakterkódolások:"
 
-#: audacious/glade/prefswin.glade:1243
+#: audacious/glade/prefswin.glade:2009
 msgid "Auto character encoding detector for:"
 msgstr "Autom. karakterkódolás felismerés ennél:"
 
-#: audacious/glade/prefswin.glade:1274
+#: audacious/glade/prefswin.glade:2065
 msgid "<b>File Dialog</b>"
 msgstr "<b>Fájl párbeszédablak</b>"
 
-#: audacious/glade/prefswin.glade:1293
+#: audacious/glade/prefswin.glade:2106
 msgid "Always refresh directory when opening file dialog"
 msgstr "Mindig frissítse a könyvtárat a fájl párbeszédablak megnyitásakor"
 
-#: audacious/glade/prefswin.glade:1317
+#: audacious/glade/prefswin.glade:2140
 msgid "<b>Song Display</b>"
 msgstr "<b>Szám megjelenítése</b>"
 
-#: audacious/glade/prefswin.glade:1343
+#: audacious/glade/prefswin.glade:2188
 msgid "Title format:"
 msgstr "Címformátum:"
 
-#: audacious/glade/prefswin.glade:1355
+#: audacious/glade/prefswin.glade:2216
 msgid "Custom string:"
 msgstr "Egyéni karakterlánc:"
 
-#: audacious/glade/prefswin.glade:1383
+#: audacious/glade/prefswin.glade:2267
 msgid ""
 "TITLE\n"
 "ARTIST - TITLE\n"
@@ -1569,59 +1569,59 @@ msgstr ""
 "ALBUM - CÍM\n"
 "Egyéni"
 
-#: audacious/glade/prefswin.glade:1437
+#: audacious/glade/prefswin.glade:2339
 msgid "<b>Popup Information</b>"
 msgstr "<b>Felbukkanó információ</b>"
 
-#: audacious/glade/prefswin.glade:1463
+#: audacious/glade/prefswin.glade:2392
 msgid "Show popup information for playlist entries"
 msgstr "Felbukkanó információ megjelenítése a lejátszólista bejegyzéseknél"
 
-#: audacious/glade/prefswin.glade:1541
+#: audacious/glade/prefswin.glade:2527
 msgid "<b>Presets</b>"
 msgstr "<b>Beállítások</b>"
 
-#: audacious/glade/prefswin.glade:1597
+#: audacious/glade/prefswin.glade:2627
 msgid "Directory preset file:"
 msgstr "Könyvtár-beállítás fájlja:"
 
-#: audacious/glade/prefswin.glade:1608
+#: audacious/glade/prefswin.glade:2655
 msgid "File preset extension:"
 msgstr "Fájlbeállítás kiterjesztése:"
 
-#: audacious/glade/prefswin.glade:1632
+#: audacious/glade/prefswin.glade:2703
 msgid "Available _Presets:"
 msgstr "Elérhető _beállítások:"
 
-#: audacious/glade/prefswin.glade:1744
+#: audacious/glade/prefswin.glade:2883
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Proxy beállítása</b>"
 
-#: audacious/glade/prefswin.glade:1769
+#: audacious/glade/prefswin.glade:2941
 msgid "Enable proxy usage"
 msgstr "Proxyhasználat bekapcsolása"
 
-#: audacious/glade/prefswin.glade:1794
+#: audacious/glade/prefswin.glade:2972
 msgid "Proxy hostname:"
 msgstr "Proxy gépnév:"
 
-#: audacious/glade/prefswin.glade:1805
+#: audacious/glade/prefswin.glade:3000
 msgid "Proxy port:"
 msgstr "Proxy port:"
 
-#: audacious/glade/prefswin.glade:1858
+#: audacious/glade/prefswin.glade:3094
 msgid "Use authentication with proxy"
 msgstr "Hitelesítés használata proxyval"
 
-#: audacious/glade/prefswin.glade:1884
+#: audacious/glade/prefswin.glade:3125
 msgid "Proxy username:"
 msgstr "Proxy felhasználónév:"
 
-#: audacious/glade/prefswin.glade:1895
+#: audacious/glade/prefswin.glade:3153
 msgid "Proxy password:"
 msgstr "Proxy jelszó:"
 
-#: audacious/glade/prefswin.glade:1961
+#: audacious/glade/prefswin.glade:3269
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
@@ -1629,23 +1629,23 @@ msgstr ""
 "<span size=\"small\">Ezen beállítások megváltoztatásához újra kell indítani "
 "az Audacioust.</span>"
 
-#: audacious/glade/prefswin.glade:1997
+#: audacious/glade/prefswin.glade:3325
 msgid "label65"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2017
+#: audacious/glade/prefswin.glade:3366
 msgid "<b>Audio System</b>"
 msgstr "<b>Hangrendszer</b>"
 
-#: audacious/glade/prefswin.glade:2046
+#: audacious/glade/prefswin.glade:3420
 msgid "Current output plugin:"
 msgstr "Jelenlegi kimeneti bővítmény:"
 
-#: audacious/glade/prefswin.glade:2069
+#: audacious/glade/prefswin.glade:3465
 msgid "Buffer size:"
 msgstr "Pufferméret:"
 
-#: audacious/glade/prefswin.glade:2112
+#: audacious/glade/prefswin.glade:3535
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
@@ -1659,51 +1659,51 @@ msgstr ""
 "Figyeljen arra, hogy a magas értékek az Audacious teljesítménycsökkenéséhez "
 "vezethetnek.</span>"
 
-#: audacious/glade/prefswin.glade:2179
+#: audacious/glade/prefswin.glade:3643
 msgid "Output Plugin Preferences"
 msgstr "Kimeneti bővítmény beállításai"
 
-#: audacious/glade/prefswin.glade:2222
+#: audacious/glade/prefswin.glade:3718
 msgid "Output Plugin Information"
 msgstr "Kimeneti bővítmény információja"
 
-#: audacious/glade/prefswin.glade:2258
+#: audacious/glade/prefswin.glade:3770
 msgid "<b>Format Detection</b>"
 msgstr "<b>Formátum-felismerés</b>"
 
-#: audacious/glade/prefswin.glade:2277
+#: audacious/glade/prefswin.glade:3811
 msgid "Detect file formats on demand, instead of immediately."
 msgstr "Fájlformátumok felismerése kérés esetén, azonnali mód helyett."
 
-#: audacious/glade/prefswin.glade:2301
+#: audacious/glade/prefswin.glade:3845
 msgid "<b>Playback</b>"
 msgstr "<b>Lejátszás</b>"
 
-#: audacious/glade/prefswin.glade:2320
+#: audacious/glade/prefswin.glade:3886
 msgid "Continue playback on startup"
 msgstr "Lejátszás folytatása induláskor"
 
-#: audacious/glade/prefswin.glade:2343
+#: audacious/glade/prefswin.glade:3922
 msgid "Don't advance in the playlist"
 msgstr "Ne legyen léptetés a lejátszólistában"
 
-#: audacious/glade/prefswin.glade:2366
+#: audacious/glade/prefswin.glade:3957
 msgid "Pause between songs"
 msgstr "Szünet a számok között"
 
-#: audacious/glade/prefswin.glade:2389
+#: audacious/glade/prefswin.glade:3995
 msgid "Pause for"
 msgstr "Szünet"
 
-#: audacious/glade/prefswin.glade:2415
+#: audacious/glade/prefswin.glade:4041
 msgid "seconds"
 msgstr "másodpercre"
 
-#: audacious/glade/prefswin.glade:2441
+#: audacious/glade/prefswin.glade:4081
 msgid "label76"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2526
+#: audacious/glade/prefswin.glade:4219
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -1713,23 +1713,23 @@ msgstr ""
 "fájlnévben. Megadhatja ezeket a szavakat az alábbi listában, vesszővel "
 "elválasztva."
 
-#: audacious/glade/prefswin.glade:2559
+#: audacious/glade/prefswin.glade:4274
 msgid "Include:"
 msgstr "Beletartozzon:"
 
-#: audacious/glade/prefswin.glade:2570
+#: audacious/glade/prefswin.glade:4302
 msgid "Exclude:"
 msgstr "Kihagyja:"
 
-#: audacious/glade/prefswin.glade:2606
+#: audacious/glade/prefswin.glade:4371
 msgid "Recursively search for cover"
 msgstr "Borító keresése rekurzívan"
 
-#: audacious/glade/prefswin.glade:2627
+#: audacious/glade/prefswin.glade:4409
 msgid "Search depth: "
 msgstr "Keresési mélység: "
 
-#: audacious/glade/prefswin.glade:2659
+#: audacious/glade/prefswin.glade:4475
 msgid "Use per-file cover"
 msgstr "Fájlonkénti borító használata"
 
@@ -1777,31 +1777,31 @@ msgstr "14 KHZ"
 msgid "16KHZ"
 msgstr "16 KHZ"
 
-#: libaudacious/titlestring.c:348
+#: libaudacious/titlestring.c:350
 msgid "Performer/Artist"
 msgstr "Előadó/szerző"
 
-#: libaudacious/titlestring.c:351
+#: libaudacious/titlestring.c:353
 msgid "File name"
 msgstr "Fájlnév"
 
-#: libaudacious/titlestring.c:352
+#: libaudacious/titlestring.c:354
 msgid "File path"
 msgstr "Fájlútvonal"
 
-#: libaudacious/titlestring.c:353
+#: libaudacious/titlestring.c:355
 msgid "File extension"
 msgstr "Fájlkiterjesztés"
 
-#: libaudacious/titlestring.c:354
+#: libaudacious/titlestring.c:356
 msgid "Track name"
 msgstr "Szám neve"
 
-#: libaudacious/titlestring.c:355
+#: libaudacious/titlestring.c:357
 msgid "Track number"
 msgstr "Szám sorszáma"
 
-#: libaudacious/titlestring.c:409
+#: libaudacious/titlestring.c:411
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: \"...\" csak akkor legyen megjelenítve, ha van %n elem"
 

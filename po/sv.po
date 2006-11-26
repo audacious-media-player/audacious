@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-11-23 16:38+0000\n"
+"POT-Creation-Date: 2006-11-27 00:47+0100\n"
 "PO-Revision-Date: 2004-02-29 02:46+0100\n"
 "Last-Translator: Martin Persenius <martin@persenius.net>\n"
 "Language-Team: Sweden\n"
@@ -18,12 +18,12 @@ msgstr ""
 "NPOT-Creation-Date: 2004-02-21 19:35+0200\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 
-#: audacious/about.c:119 audacious/credits.c:312
+#: audacious/about.c:119 audacious/credits.c:313
 #, fuzzy
 msgid "About Audacious"
 msgstr "Om MPEG-ljudinsticksmodulen"
 
-#: audacious/about.c:168 audacious/credits.c:357
+#: audacious/about.c:168 audacious/credits.c:358
 msgid "Credits"
 msgstr ""
 
@@ -174,7 +174,7 @@ msgstr "Organisation:"
 msgid "Welsh:"
 msgstr ""
 
-#: audacious/credits.c:361
+#: audacious/credits.c:362
 msgid "Translators"
 msgstr ""
 
@@ -406,7 +406,7 @@ msgid "Unable to create log file (%s)!\n"
 msgstr "Kunde ej skapa loggfil (%s)!\n"
 
 #: audacious/main.c:82 audacious/main.c:84 audacious/mainwin.c:876
-#: audacious/mainwin.c:3640
+#: audacious/mainwin.c:3650
 msgid "Audacious"
 msgstr ""
 
@@ -900,84 +900,84 @@ msgstr "Spårlängd:"
 msgid "Un_queue"
 msgstr "/_Lägg i väntelista"
 
-#: audacious/mainwin.c:1748 audacious/mainwin.c:2093
+#: audacious/mainwin.c:1748 audacious/mainwin.c:2103
 #, fuzzy
 msgid "_Queue"
 msgstr "Kö"
 
-#: audacious/mainwin.c:2018
+#: audacious/mainwin.c:2028
 #, fuzzy
 msgid "Jump to Track"
 msgstr "bmp: Hoppa till spår"
 
-#: audacious/mainwin.c:2059
+#: audacious/mainwin.c:2069
 msgid "Filter: "
 msgstr "Filter:"
 
-#: audacious/mainwin.c:2260
+#: audacious/mainwin.c:2270
 msgid "Enter location to play:"
 msgstr ""
 
-#: audacious/mainwin.c:2467
+#: audacious/mainwin.c:2477
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "POSITION: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2499 audacious/mainwin.c:3286
+#: audacious/mainwin.c:2509 audacious/mainwin.c:3296
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "VOLYM: %d%%"
 
-#: audacious/mainwin.c:2530 audacious/mainwin.c:3289
+#: audacious/mainwin.c:2540 audacious/mainwin.c:3299
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "BALANS: %d%% VÄNSTER"
 
-#: audacious/mainwin.c:2534 audacious/mainwin.c:3292
+#: audacious/mainwin.c:2544 audacious/mainwin.c:3302
 msgid "BALANCE: CENTER"
 msgstr "BALANS: CENTRUM"
 
-#: audacious/mainwin.c:2538 audacious/mainwin.c:3294
+#: audacious/mainwin.c:2548 audacious/mainwin.c:3304
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "BALANS: %d%% HÖGER"
 
-#: audacious/mainwin.c:3061
+#: audacious/mainwin.c:3071
 msgid "OPTIONS MENU"
 msgstr "VALMENY"
 
-#: audacious/mainwin.c:3065
+#: audacious/mainwin.c:3075
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "INAKTIVERA ALLTID ÖVERST"
 
-#: audacious/mainwin.c:3067
+#: audacious/mainwin.c:3077
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "AKTIVERA ALLTID ÖVERST"
 
-#: audacious/mainwin.c:3070
+#: audacious/mainwin.c:3080
 msgid "FILE INFO BOX"
 msgstr "FIL-INFO BOX"
 
-#: audacious/mainwin.c:3074
+#: audacious/mainwin.c:3084
 msgid "DISABLE DOUBLESIZE"
 msgstr "INAKTIVERA DUBBEL STORLEK"
 
-#: audacious/mainwin.c:3076
+#: audacious/mainwin.c:3086
 msgid "ENABLE DOUBLESIZE"
 msgstr "AKTIVERA DUBBEL STORLEK"
 
-#: audacious/mainwin.c:3079
+#: audacious/mainwin.c:3089
 msgid "VISUALIZATION MENU"
 msgstr "VISUALISERINGSMENY"
 
-#: audacious/mainwin.c:3127
+#: audacious/mainwin.c:3137
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
 "No CD inserted, or inserted CD is not an audio CD.\n"
 msgstr ""
 
-#: audacious/mainwin.c:3144
+#: audacious/mainwin.c:3154
 #, fuzzy
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
@@ -993,7 +993,7 @@ msgstr ""
 "2. Inga andra program blokerar ljudkortet.\n"
 "3. Ditt kort är korrekt konfigurerat."
 
-#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:876
+#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1372
 #, fuzzy
 msgid "Appearance"
 msgstr "Trance"
@@ -1007,22 +1007,22 @@ msgstr "Om MPEG-ljudinsticksmodulen"
 msgid "Connectivity"
 msgstr ""
 
-#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:1721
+#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:2836
 #, fuzzy
 msgid "Equalizer"
 msgstr "BMP Equalizer"
 
-#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:1033
+#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:1651
 #, fuzzy
 msgid "Mouse"
 msgstr "House"
 
-#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:1515
+#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:2468
 #, fuzzy
 msgid "Playlist"
 msgstr "/Spellista"
 
-#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:470
+#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:693
 #, fuzzy
 msgid "Plugins"
 msgstr "Insticksmoduler"
@@ -1032,7 +1032,7 @@ msgstr "Insticksmoduler"
 msgid "Artist"
 msgstr "Artist:"
 
-#: audacious/prefswin.c:111 libaudacious/titlestring.c:349
+#: audacious/prefswin.c:111 libaudacious/titlestring.c:351
 msgid "Album"
 msgstr "Album"
 
@@ -1045,7 +1045,7 @@ msgstr "Titel"
 msgid "Tracknumber"
 msgstr "Spårnummer"
 
-#: audacious/prefswin.c:114 libaudacious/titlestring.c:350
+#: audacious/prefswin.c:114 libaudacious/titlestring.c:352
 msgid "Genre"
 msgstr "Genre"
 
@@ -1054,15 +1054,15 @@ msgstr "Genre"
 msgid "Filepath"
 msgstr "Sökväg"
 
-#: audacious/prefswin.c:117 libaudacious/titlestring.c:356
+#: audacious/prefswin.c:117 libaudacious/titlestring.c:358
 msgid "Date"
 msgstr "Datum"
 
-#: audacious/prefswin.c:118 libaudacious/titlestring.c:357
+#: audacious/prefswin.c:118 libaudacious/titlestring.c:359
 msgid "Year"
 msgstr "År"
 
-#: audacious/prefswin.c:119 libaudacious/titlestring.c:358
+#: audacious/prefswin.c:119 libaudacious/titlestring.c:360
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -1452,199 +1452,199 @@ msgstr "Spårnummer"
 msgid "<i>Track Length</i>"
 msgstr "Spårlängd:"
 
-#: audacious/glade/prefswin.glade:68
+#: audacious/glade/prefswin.glade:115
 #, fuzzy
 msgid "_Decoder list:"
 msgstr "Avkodare"
 
-#: audacious/glade/prefswin.glade:148
+#: audacious/glade/prefswin.glade:219
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:169
+#: audacious/glade/prefswin.glade:261
 #, fuzzy
 msgid "_General plugin list:"
 msgstr "Generella insticksmoduler"
 
-#: audacious/glade/prefswin.glade:248
+#: audacious/glade/prefswin.glade:365
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:270
+#: audacious/glade/prefswin.glade:407
 #, fuzzy
 msgid "_Visualization plugin list:"
 msgstr "Visualiseringsinsticksmoduler"
 
-#: audacious/glade/prefswin.glade:349
+#: audacious/glade/prefswin.glade:511
 #, fuzzy
 msgid "<b>Visualization</b>"
 msgstr "/Visualiseringsläge"
 
-#: audacious/glade/prefswin.glade:371
+#: audacious/glade/prefswin.glade:553
 #, fuzzy
 msgid "_Effect plugin list:"
 msgstr "Effektinsticksmoduler"
 
-#: audacious/glade/prefswin.glade:450
+#: audacious/glade/prefswin.glade:657
 #, fuzzy
 msgid "<b>Effects</b>"
 msgstr "Förinställningar"
 
-#: audacious/glade/prefswin.glade:496
+#: audacious/glade/prefswin.glade:746
 #, fuzzy
 msgid "<b>_Skin</b>"
 msgstr "_Filter:"
 
-#: audacious/glade/prefswin.glade:564
+#: audacious/glade/prefswin.glade:866
 #, fuzzy
 msgid "<b>_Fonts</b>"
 msgstr "_Filter:"
 
-#: audacious/glade/prefswin.glade:596
+#: audacious/glade/prefswin.glade:921
 #, fuzzy
 msgid "_Player:"
 msgstr "/_Spela"
 
-#: audacious/glade/prefswin.glade:617
+#: audacious/glade/prefswin.glade:964
 #, fuzzy
 msgid "_Playlist:"
 msgstr "/Spellista"
 
-#: audacious/glade/prefswin.glade:683
+#: audacious/glade/prefswin.glade:1066
 #, fuzzy
 msgid "Use Bitmap fonts if available"
 msgstr "Använd omedelbar prioritet om tillgängligt"
 
-#: audacious/glade/prefswin.glade:706
+#: audacious/glade/prefswin.glade:1100
 #, fuzzy
 msgid "<b>_Miscellaneous</b>"
 msgstr "_Filter:"
 
-#: audacious/glade/prefswin.glade:735
+#: audacious/glade/prefswin.glade:1148
 #, fuzzy
 msgid "Show track numbers in playlist"
 msgstr "Visa nummer i spellistan"
 
-#: audacious/glade/prefswin.glade:757
+#: audacious/glade/prefswin.glade:1183
 #, fuzzy
 msgid "Show separators in playlist"
 msgstr "Visa nummer i spellistan"
 
-#: audacious/glade/prefswin.glade:779
+#: audacious/glade/prefswin.glade:1218
 msgid "Use custom cursors"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:799
+#: audacious/glade/prefswin.glade:1254
 #, fuzzy
 msgid "Show window manager decoration"
 msgstr "Visa fönsterhanterarens dekorationer"
 
-#: audacious/glade/prefswin.glade:804
+#: audacious/glade/prefswin.glade:1262
 #, fuzzy
 msgid "Show window manager decorations"
 msgstr "Visa fönsterhanterarens dekorationer"
 
-#: audacious/glade/prefswin.glade:805
+#: audacious/glade/prefswin.glade:1263
 msgid "This enables the window manager to show decorations for windows."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:824
+#: audacious/glade/prefswin.glade:1294
 msgid "Use XMMS-style file selector instead of the default selector"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:845
+#: audacious/glade/prefswin.glade:1330
 #, fuzzy
 msgid "Enable playlist transparency"
 msgstr "Aktivera ReplayGain"
 
-#: audacious/glade/prefswin.glade:900
+#: audacious/glade/prefswin.glade:1419
 #, fuzzy
 msgid "<b>Mouse wheel</b>"
 msgstr "_Filter:"
 
-#: audacious/glade/prefswin.glade:925
+#: audacious/glade/prefswin.glade:1467
 #, fuzzy
 msgid "Changes volume by"
 msgstr "Mushjulet justerar volymen med (%)"
 
-#: audacious/glade/prefswin.glade:937
+#: audacious/glade/prefswin.glade:1495
 msgid "percent"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:951
+#: audacious/glade/prefswin.glade:1523
 #, fuzzy
 msgid "Scrolls playlist by"
 msgstr "Ladda spellista"
 
-#: audacious/glade/prefswin.glade:984
+#: audacious/glade/prefswin.glade:1576
 #, fuzzy
 msgid "lines"
 msgstr "Oldies"
 
-#: audacious/glade/prefswin.glade:1056
+#: audacious/glade/prefswin.glade:1698
 #, fuzzy
 msgid "<b>Filename</b>"
 msgstr "_Filter:"
 
-#: audacious/glade/prefswin.glade:1074
+#: audacious/glade/prefswin.glade:1738
 #, fuzzy
 msgid "Convert underscores to blanks"
 msgstr "Konvertera nedsatt streck till tomrum"
 
-#: audacious/glade/prefswin.glade:1096
+#: audacious/glade/prefswin.glade:1773
 #, fuzzy
 msgid "Convert %20 to blanks"
 msgstr "Konvertera %20 till tomrum"
 
-#: audacious/glade/prefswin.glade:1119
+#: audacious/glade/prefswin.glade:1807
 #, fuzzy
 msgid "<b>Metadata</b>"
 msgstr "_Filter:"
 
-#: audacious/glade/prefswin.glade:1138
+#: audacious/glade/prefswin.glade:1848
 #, fuzzy
 msgid "Load metadata from playlists and files"
 msgstr "Använd metadata i spellistor"
 
-#: audacious/glade/prefswin.glade:1162
+#: audacious/glade/prefswin.glade:1888
 msgid "On load"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1178
+#: audacious/glade/prefswin.glade:1910
 msgid "On display"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1201
+#: audacious/glade/prefswin.glade:1940
 msgid "Fallback character encodings:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1243
+#: audacious/glade/prefswin.glade:2009
 msgid "Auto character encoding detector for:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1274
+#: audacious/glade/prefswin.glade:2065
 #, fuzzy
 msgid "<b>File Dialog</b>"
 msgstr "_Filter:"
 
-#: audacious/glade/prefswin.glade:1293
+#: audacious/glade/prefswin.glade:2106
 msgid "Always refresh directory when opening file dialog"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1317
+#: audacious/glade/prefswin.glade:2140
 #, fuzzy
 msgid "<b>Song Display</b>"
 msgstr "_Filter:"
 
-#: audacious/glade/prefswin.glade:1343
+#: audacious/glade/prefswin.glade:2188
 msgid "Title format:"
 msgstr "Titelformat:"
 
-#: audacious/glade/prefswin.glade:1355
+#: audacious/glade/prefswin.glade:2216
 msgid "Custom string:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1383
+#: audacious/glade/prefswin.glade:2267
 msgid ""
 "TITLE\n"
 "ARTIST - TITLE\n"
@@ -1655,91 +1655,91 @@ msgid ""
 "Custom"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1437
+#: audacious/glade/prefswin.glade:2339
 #, fuzzy
 msgid "<b>Popup Information</b>"
 msgstr "bmp: Konfiguration av MPEG-ljudinsticksmodul"
 
-#: audacious/glade/prefswin.glade:1463
+#: audacious/glade/prefswin.glade:2392
 msgid "Show popup information for playlist entries"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1541
+#: audacious/glade/prefswin.glade:2527
 #, fuzzy
 msgid "<b>Presets</b>"
 msgstr "Förinställningar"
 
-#: audacious/glade/prefswin.glade:1597
+#: audacious/glade/prefswin.glade:2627
 msgid "Directory preset file:"
 msgstr "Répetoire des fichiers de pré-réglages:"
 
-#: audacious/glade/prefswin.glade:1608
+#: audacious/glade/prefswin.glade:2655
 msgid "File preset extension:"
 msgstr "Inställningsfilsändelse:"
 
-#: audacious/glade/prefswin.glade:1632
+#: audacious/glade/prefswin.glade:2703
 msgid "Available _Presets:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1744
+#: audacious/glade/prefswin.glade:2883
 #, fuzzy
 msgid "<b>Proxy Configuration</b>"
 msgstr "bmp: Konfiguration av MPEG-ljudinsticksmodul"
 
-#: audacious/glade/prefswin.glade:1769
+#: audacious/glade/prefswin.glade:2941
 msgid "Enable proxy usage"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1794
+#: audacious/glade/prefswin.glade:2972
 msgid "Proxy hostname:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1805
+#: audacious/glade/prefswin.glade:3000
 #, fuzzy
 msgid "Proxy port:"
 msgstr "Proxy:"
 
-#: audacious/glade/prefswin.glade:1858
+#: audacious/glade/prefswin.glade:3094
 #, fuzzy
 msgid "Use authentication with proxy"
 msgstr "Använd autentisering"
 
-#: audacious/glade/prefswin.glade:1884
+#: audacious/glade/prefswin.glade:3125
 #, fuzzy
 msgid "Proxy username:"
 msgstr "Användarnamn:"
 
-#: audacious/glade/prefswin.glade:1895
+#: audacious/glade/prefswin.glade:3153
 #, fuzzy
 msgid "Proxy password:"
 msgstr "Lösenord:"
 
-#: audacious/glade/prefswin.glade:1961
+#: audacious/glade/prefswin.glade:3269
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1997
+#: audacious/glade/prefswin.glade:3325
 msgid "label65"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2017
+#: audacious/glade/prefswin.glade:3366
 #, fuzzy
 msgid "<b>Audio System</b>"
 msgstr "Förinställningar"
 
-#: audacious/glade/prefswin.glade:2046
+#: audacious/glade/prefswin.glade:3420
 #, fuzzy
 msgid "Current output plugin:"
 msgstr "eSound-uppspelningsinsticksmodul"
 
-#: audacious/glade/prefswin.glade:2069
+#: audacious/glade/prefswin.glade:3465
 #, fuzzy
 msgid "Buffer size:"
 msgstr "Buffertstorlek (kB):"
 
-#: audacious/glade/prefswin.glade:2112
+#: audacious/glade/prefswin.glade:3535
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
@@ -1748,82 +1748,82 @@ msgid ""
 "poorly.</span>"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2179
+#: audacious/glade/prefswin.glade:3643
 #, fuzzy
 msgid "Output Plugin Preferences"
 msgstr "OSS-uppspelningsinsticksmodul"
 
-#: audacious/glade/prefswin.glade:2222
+#: audacious/glade/prefswin.glade:3718
 #, fuzzy
 msgid "Output Plugin Information"
 msgstr "Konfiguration av ESD-uppspelningsinsticksmodul"
 
-#: audacious/glade/prefswin.glade:2258
+#: audacious/glade/prefswin.glade:3770
 #, fuzzy
 msgid "<b>Format Detection</b>"
 msgstr "Automatiskt upptäckande"
 
-#: audacious/glade/prefswin.glade:2277
+#: audacious/glade/prefswin.glade:3811
 msgid "Detect file formats on demand, instead of immediately."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2301
+#: audacious/glade/prefswin.glade:3845
 #, fuzzy
 msgid "<b>Playback</b>"
 msgstr "/Kontroll"
 
-#: audacious/glade/prefswin.glade:2320
+#: audacious/glade/prefswin.glade:3886
 msgid "Continue playback on startup"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2343
+#: audacious/glade/prefswin.glade:3922
 #, fuzzy
 msgid "Don't advance in the playlist"
 msgstr "Rensa inte spellistan"
 
-#: audacious/glade/prefswin.glade:2366
+#: audacious/glade/prefswin.glade:3957
 #, fuzzy
 msgid "Pause between songs"
 msgstr "Pausa mellan sånger i"
 
-#: audacious/glade/prefswin.glade:2389
+#: audacious/glade/prefswin.glade:3995
 #, fuzzy
 msgid "Pause for"
 msgstr "/Paus"
 
-#: audacious/glade/prefswin.glade:2415
+#: audacious/glade/prefswin.glade:4041
 msgid "seconds"
 msgstr "sekunder"
 
-#: audacious/glade/prefswin.glade:2441
+#: audacious/glade/prefswin.glade:4081
 msgid "label76"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2526
+#: audacious/glade/prefswin.glade:4219
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2559
+#: audacious/glade/prefswin.glade:4274
 #, fuzzy
 msgid "Include:"
 msgstr "Indisk"
 
-#: audacious/glade/prefswin.glade:2570
+#: audacious/glade/prefswin.glade:4302
 msgid "Exclude:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2606
+#: audacious/glade/prefswin.glade:4371
 msgid "Recursively search for cover"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2627
+#: audacious/glade/prefswin.glade:4409
 msgid "Search depth: "
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2659
+#: audacious/glade/prefswin.glade:4475
 msgid "Use per-file cover"
 msgstr ""
 
@@ -1871,31 +1871,31 @@ msgstr "14 KHZ"
 msgid "16KHZ"
 msgstr "16 KHZ"
 
-#: libaudacious/titlestring.c:348
+#: libaudacious/titlestring.c:350
 msgid "Performer/Artist"
 msgstr "Artist"
 
-#: libaudacious/titlestring.c:351
+#: libaudacious/titlestring.c:353
 msgid "File name"
 msgstr "Filnamn"
 
-#: libaudacious/titlestring.c:352
+#: libaudacious/titlestring.c:354
 msgid "File path"
 msgstr "Sökväg"
 
-#: libaudacious/titlestring.c:353
+#: libaudacious/titlestring.c:355
 msgid "File extension"
 msgstr "Filändelse"
 
-#: libaudacious/titlestring.c:354
+#: libaudacious/titlestring.c:356
 msgid "Track name"
 msgstr "Spårnamn"
 
-#: libaudacious/titlestring.c:355
+#: libaudacious/titlestring.c:357
 msgid "Track number"
 msgstr "Spårnummer"
 
-#: libaudacious/titlestring.c:409
+#: libaudacious/titlestring.c:411
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr ""
 

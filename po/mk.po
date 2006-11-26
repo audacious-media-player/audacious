@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mk 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-11-23 16:38+0000\n"
+"POT-Creation-Date: 2006-11-27 00:47+0100\n"
 "PO-Revision-Date: 2005-05-18 11:38+0200\n"
 "Last-Translator: Арангел Ангов <ufo@linux.net.mk>\n"
 "Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
@@ -16,12 +16,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: audacious/about.c:119 audacious/credits.c:312
+#: audacious/about.c:119 audacious/credits.c:313
 #, fuzzy
 msgid "About Audacious"
 msgstr "За MPEG аудио додаток"
 
-#: audacious/about.c:168 audacious/credits.c:357
+#: audacious/about.c:168 audacious/credits.c:358
 msgid "Credits"
 msgstr "Заслуги"
 
@@ -172,7 +172,7 @@ msgstr "Романски:"
 msgid "Welsh:"
 msgstr "Велшки:"
 
-#: audacious/credits.c:361
+#: audacious/credits.c:362
 msgid "Translators"
 msgstr "Преведувачи"
 
@@ -408,7 +408,7 @@ msgid "Unable to create log file (%s)!\n"
 msgstr "Unable to create log file (%s)!\n"
 
 #: audacious/main.c:82 audacious/main.c:84 audacious/mainwin.c:876
-#: audacious/mainwin.c:3640
+#: audacious/mainwin.c:3650
 msgid "Audacious"
 msgstr ""
 
@@ -899,76 +899,76 @@ msgstr "Должина на песна:"
 msgid "Un_queue"
 msgstr "Редица"
 
-#: audacious/mainwin.c:1748 audacious/mainwin.c:2093
+#: audacious/mainwin.c:1748 audacious/mainwin.c:2103
 #, fuzzy
 msgid "_Queue"
 msgstr "Редица"
 
-#: audacious/mainwin.c:2018
+#: audacious/mainwin.c:2028
 msgid "Jump to Track"
 msgstr "Оди до песна"
 
-#: audacious/mainwin.c:2059
+#: audacious/mainwin.c:2069
 msgid "Filter: "
 msgstr "Филтер "
 
-#: audacious/mainwin.c:2260
+#: audacious/mainwin.c:2270
 msgid "Enter location to play:"
 msgstr ""
 
-#: audacious/mainwin.c:2467
+#: audacious/mainwin.c:2477
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "Барај до: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2499 audacious/mainwin.c:3286
+#: audacious/mainwin.c:2509 audacious/mainwin.c:3296
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "Звук: %d%%"
 
-#: audacious/mainwin.c:2530 audacious/mainwin.c:3289
+#: audacious/mainwin.c:2540 audacious/mainwin.c:3299
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "Баланс: %d%% лев"
 
-#: audacious/mainwin.c:2534 audacious/mainwin.c:3292
+#: audacious/mainwin.c:2544 audacious/mainwin.c:3302
 msgid "BALANCE: CENTER"
 msgstr "Баланс: средина"
 
-#: audacious/mainwin.c:2538 audacious/mainwin.c:3294
+#: audacious/mainwin.c:2548 audacious/mainwin.c:3304
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "Баланс: %d%% десен"
 
-#: audacious/mainwin.c:3061
+#: audacious/mainwin.c:3071
 msgid "OPTIONS MENU"
 msgstr "Мени со опции"
 
-#: audacious/mainwin.c:3065
+#: audacious/mainwin.c:3075
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "Оневозможи секогаш најгоре"
 
-#: audacious/mainwin.c:3067
+#: audacious/mainwin.c:3077
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "Овозможи секогаш најгоре"
 
-#: audacious/mainwin.c:3070
+#: audacious/mainwin.c:3080
 msgid "FILE INFO BOX"
 msgstr "Поле со информации за датотека"
 
-#: audacious/mainwin.c:3074
+#: audacious/mainwin.c:3084
 msgid "DISABLE DOUBLESIZE"
 msgstr "Оневозможи двоjно поголем XMMS"
 
-#: audacious/mainwin.c:3076
+#: audacious/mainwin.c:3086
 msgid "ENABLE DOUBLESIZE"
 msgstr "Овозможи двојно поголем XMMS"
 
-#: audacious/mainwin.c:3079
+#: audacious/mainwin.c:3089
 msgid "VISUALIZATION MENU"
 msgstr "Мени за визуелизација"
 
-#: audacious/mainwin.c:3127
+#: audacious/mainwin.c:3137
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -978,7 +978,7 @@ msgstr ""
 "\n"
 "Немате внесено CD, или пак CD-то не е аудио CD.\n"
 
-#: audacious/mainwin.c:3144
+#: audacious/mainwin.c:3154
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -994,7 +994,7 @@ msgstr ""
 "2. No other programs is blocking the soundcard.\n"
 "3. Your soundcard is configured properly.\n"
 
-#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:876
+#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1372
 msgid "Appearance"
 msgstr "Изглед"
 
@@ -1007,19 +1007,19 @@ msgstr "За MPEG аудио додаток"
 msgid "Connectivity"
 msgstr ""
 
-#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:1721
+#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:2836
 msgid "Equalizer"
 msgstr "Изедначувач"
 
-#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:1033
+#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:1651
 msgid "Mouse"
 msgstr "Глушец"
 
-#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:1515
+#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:2468
 msgid "Playlist"
 msgstr "Листа со песни"
 
-#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:470
+#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:693
 msgid "Plugins"
 msgstr "Додатоци"
 
@@ -1027,7 +1027,7 @@ msgstr "Додатоци"
 msgid "Artist"
 msgstr "Изведувач"
 
-#: audacious/prefswin.c:111 libaudacious/titlestring.c:349
+#: audacious/prefswin.c:111 libaudacious/titlestring.c:351
 msgid "Album"
 msgstr "Албум"
 
@@ -1039,7 +1039,7 @@ msgstr "Наслов"
 msgid "Tracknumber"
 msgstr "Број на песната"
 
-#: audacious/prefswin.c:114 libaudacious/titlestring.c:350
+#: audacious/prefswin.c:114 libaudacious/titlestring.c:352
 msgid "Genre"
 msgstr "Вид"
 
@@ -1047,15 +1047,15 @@ msgstr "Вид"
 msgid "Filepath"
 msgstr "Патека на датотеката"
 
-#: audacious/prefswin.c:117 libaudacious/titlestring.c:356
+#: audacious/prefswin.c:117 libaudacious/titlestring.c:358
 msgid "Date"
 msgstr "Датум"
 
-#: audacious/prefswin.c:118 libaudacious/titlestring.c:357
+#: audacious/prefswin.c:118 libaudacious/titlestring.c:359
 msgid "Year"
 msgstr "Година"
 
-#: audacious/prefswin.c:119 libaudacious/titlestring.c:358
+#: audacious/prefswin.c:119 libaudacious/titlestring.c:360
 msgid "Comment"
 msgstr "Коментар"
 
@@ -1438,180 +1438,180 @@ msgstr "Број на песна"
 msgid "<i>Track Length</i>"
 msgstr "Должина на песна:"
 
-#: audacious/glade/prefswin.glade:68
+#: audacious/glade/prefswin.glade:115
 #, fuzzy
 msgid "_Decoder list:"
 msgstr "Декодер"
 
-#: audacious/glade/prefswin.glade:148
+#: audacious/glade/prefswin.glade:219
 #, fuzzy
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
 msgstr "<span size=\"medium\"><b> Општо</b></span>"
 
-#: audacious/glade/prefswin.glade:169
+#: audacious/glade/prefswin.glade:261
 msgid "_General plugin list:"
 msgstr "_Општа листа на додатоци:"
 
-#: audacious/glade/prefswin.glade:248
+#: audacious/glade/prefswin.glade:365
 msgid "<span size=\"medium\"><b>General</b></span>"
 msgstr "<span size=\"medium\"><b> Општо</b></span>"
 
-#: audacious/glade/prefswin.glade:270
+#: audacious/glade/prefswin.glade:407
 msgid "_Visualization plugin list:"
 msgstr "_Листа на додатоци за визуелизација"
 
-#: audacious/glade/prefswin.glade:349
+#: audacious/glade/prefswin.glade:511
 msgid "<b>Visualization</b>"
 msgstr "<b> Визуелизација</b>"
 
-#: audacious/glade/prefswin.glade:371
+#: audacious/glade/prefswin.glade:553
 msgid "_Effect plugin list:"
 msgstr "_Листа на додатоци за ефекти:"
 
-#: audacious/glade/prefswin.glade:450
+#: audacious/glade/prefswin.glade:657
 msgid "<b>Effects</b>"
 msgstr "<b>Ефекти</b>"
 
-#: audacious/glade/prefswin.glade:496
+#: audacious/glade/prefswin.glade:746
 msgid "<b>_Skin</b>"
 msgstr "<b>_Тема</b>"
 
-#: audacious/glade/prefswin.glade:564
+#: audacious/glade/prefswin.glade:866
 msgid "<b>_Fonts</b>"
 msgstr "<b>_Фонтови</b>"
 
-#: audacious/glade/prefswin.glade:596
+#: audacious/glade/prefswin.glade:921
 msgid "_Player:"
 msgstr "_Пуштач:"
 
-#: audacious/glade/prefswin.glade:617
+#: audacious/glade/prefswin.glade:964
 msgid "_Playlist:"
 msgstr "_Листа со песни:"
 
-#: audacious/glade/prefswin.glade:683
+#: audacious/glade/prefswin.glade:1066
 #, fuzzy
 msgid "Use Bitmap fonts if available"
 msgstr "Стерео (ако е достапно)"
 
-#: audacious/glade/prefswin.glade:706
+#: audacious/glade/prefswin.glade:1100
 msgid "<b>_Miscellaneous</b>"
 msgstr "<b> Разно</b>"
 
-#: audacious/glade/prefswin.glade:735
+#: audacious/glade/prefswin.glade:1148
 msgid "Show track numbers in playlist"
 msgstr "Покажи ги броевите на песните во листата"
 
-#: audacious/glade/prefswin.glade:757
+#: audacious/glade/prefswin.glade:1183
 #, fuzzy
 msgid "Show separators in playlist"
 msgstr "Покажи ги броевите на песните во листата"
 
-#: audacious/glade/prefswin.glade:779
+#: audacious/glade/prefswin.glade:1218
 msgid "Use custom cursors"
 msgstr "Користи сопствени стрелки"
 
-#: audacious/glade/prefswin.glade:799
+#: audacious/glade/prefswin.glade:1254
 msgid "Show window manager decoration"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:804
+#: audacious/glade/prefswin.glade:1262
 msgid "Show window manager decorations"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:805
+#: audacious/glade/prefswin.glade:1263
 msgid "This enables the window manager to show decorations for windows."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:824
+#: audacious/glade/prefswin.glade:1294
 msgid "Use XMMS-style file selector instead of the default selector"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:845
+#: audacious/glade/prefswin.glade:1330
 #, fuzzy
 msgid "Enable playlist transparency"
 msgstr "Овозможи ReplayGain"
 
-#: audacious/glade/prefswin.glade:900
+#: audacious/glade/prefswin.glade:1419
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>Тркалцето на глушецот</b>"
 
-#: audacious/glade/prefswin.glade:925
+#: audacious/glade/prefswin.glade:1467
 #, fuzzy
 msgid "Changes volume by"
 msgstr "Тркалцето на глушецот ја менува јачината за"
 
-#: audacious/glade/prefswin.glade:937
+#: audacious/glade/prefswin.glade:1495
 msgid "percent"
 msgstr "проценти"
 
-#: audacious/glade/prefswin.glade:951
+#: audacious/glade/prefswin.glade:1523
 #, fuzzy
 msgid "Scrolls playlist by"
 msgstr "Глушецот ја поместува листата за"
 
-#: audacious/glade/prefswin.glade:984
+#: audacious/glade/prefswin.glade:1576
 msgid "lines"
 msgstr "линии"
 
-#: audacious/glade/prefswin.glade:1056
+#: audacious/glade/prefswin.glade:1698
 msgid "<b>Filename</b>"
 msgstr "<b> Име на датотека</b>"
 
-#: audacious/glade/prefswin.glade:1074
+#: audacious/glade/prefswin.glade:1738
 msgid "Convert underscores to blanks"
 msgstr "Конвертирај ги лошите карактерите во празни"
 
-#: audacious/glade/prefswin.glade:1096
+#: audacious/glade/prefswin.glade:1773
 msgid "Convert %20 to blanks"
 msgstr "Конвертирај %20 во празни"
 
-#: audacious/glade/prefswin.glade:1119
+#: audacious/glade/prefswin.glade:1807
 msgid "<b>Metadata</b>"
 msgstr "<b>Мета податоци</b>"
 
-#: audacious/glade/prefswin.glade:1138
+#: audacious/glade/prefswin.glade:1848
 msgid "Load metadata from playlists and files"
 msgstr "Вчитувај податоци од листи и датотеки"
 
-#: audacious/glade/prefswin.glade:1162
+#: audacious/glade/prefswin.glade:1888
 msgid "On load"
 msgstr "При вчитување"
 
-#: audacious/glade/prefswin.glade:1178
+#: audacious/glade/prefswin.glade:1910
 msgid "On display"
 msgstr "При приказ"
 
-#: audacious/glade/prefswin.glade:1201
+#: audacious/glade/prefswin.glade:1940
 msgid "Fallback character encodings:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1243
+#: audacious/glade/prefswin.glade:2009
 msgid "Auto character encoding detector for:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1274
+#: audacious/glade/prefswin.glade:2065
 #, fuzzy
 msgid "<b>File Dialog</b>"
 msgstr "<b> Име на датотека</b>"
 
-#: audacious/glade/prefswin.glade:1293
+#: audacious/glade/prefswin.glade:2106
 msgid "Always refresh directory when opening file dialog"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1317
+#: audacious/glade/prefswin.glade:2140
 #, fuzzy
 msgid "<b>Song Display</b>"
 msgstr "<b> Приказ за песните</b>"
 
-#: audacious/glade/prefswin.glade:1343
+#: audacious/glade/prefswin.glade:2188
 msgid "Title format:"
 msgstr "Формат на наслов:"
 
-#: audacious/glade/prefswin.glade:1355
+#: audacious/glade/prefswin.glade:2216
 msgid "Custom string:"
 msgstr "Сопствен стринг:"
 
-#: audacious/glade/prefswin.glade:1383
+#: audacious/glade/prefswin.glade:2267
 #, fuzzy
 msgid ""
 "TITLE\n"
@@ -1628,90 +1628,90 @@ msgstr ""
 "АЛБУМ - НАСЛОВ\n"
 "Сопствено"
 
-#: audacious/glade/prefswin.glade:1437
+#: audacious/glade/prefswin.glade:2339
 #, fuzzy
 msgid "<b>Popup Information</b>"
 msgstr "Конфигурација за MPEG аудио додаток"
 
-#: audacious/glade/prefswin.glade:1463
+#: audacious/glade/prefswin.glade:2392
 msgid "Show popup information for playlist entries"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1541
+#: audacious/glade/prefswin.glade:2527
 msgid "<b>Presets</b>"
 msgstr "<b>Модификатори</b>"
 
-#: audacious/glade/prefswin.glade:1597
+#: audacious/glade/prefswin.glade:2627
 msgid "Directory preset file:"
 msgstr "Директориум со датотека-модификатор:"
 
-#: audacious/glade/prefswin.glade:1608
+#: audacious/glade/prefswin.glade:2655
 msgid "File preset extension:"
 msgstr "Наставка на датотеката-модификатор:"
 
-#: audacious/glade/prefswin.glade:1632
+#: audacious/glade/prefswin.glade:2703
 msgid "Available _Presets:"
 msgstr "Достапни _модификатори:"
 
-#: audacious/glade/prefswin.glade:1744
+#: audacious/glade/prefswin.glade:2883
 #, fuzzy
 msgid "<b>Proxy Configuration</b>"
 msgstr "Конфигурација за MPEG аудио додаток"
 
-#: audacious/glade/prefswin.glade:1769
+#: audacious/glade/prefswin.glade:2941
 msgid "Enable proxy usage"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1794
+#: audacious/glade/prefswin.glade:2972
 msgid "Proxy hostname:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1805
+#: audacious/glade/prefswin.glade:3000
 #, fuzzy
 msgid "Proxy port:"
 msgstr "Proxy:"
 
-#: audacious/glade/prefswin.glade:1858
+#: audacious/glade/prefswin.glade:3094
 #, fuzzy
 msgid "Use authentication with proxy"
 msgstr "Користи автентикација"
 
-#: audacious/glade/prefswin.glade:1884
+#: audacious/glade/prefswin.glade:3125
 #, fuzzy
 msgid "Proxy username:"
 msgstr "Корисничко име:"
 
-#: audacious/glade/prefswin.glade:1895
+#: audacious/glade/prefswin.glade:3153
 #, fuzzy
 msgid "Proxy password:"
 msgstr "Лозинка:"
 
-#: audacious/glade/prefswin.glade:1961
+#: audacious/glade/prefswin.glade:3269
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1997
+#: audacious/glade/prefswin.glade:3325
 msgid "label65"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2017
+#: audacious/glade/prefswin.glade:3366
 #, fuzzy
 msgid "<b>Audio System</b>"
 msgstr "<b>Модификатори</b>"
 
-#: audacious/glade/prefswin.glade:2046
+#: audacious/glade/prefswin.glade:3420
 #, fuzzy
 msgid "Current output plugin:"
 msgstr "_Тековен излезен додаток:"
 
-#: audacious/glade/prefswin.glade:2069
+#: audacious/glade/prefswin.glade:3465
 #, fuzzy
 msgid "Buffer size:"
 msgstr "Бафер големина (kb):"
 
-#: audacious/glade/prefswin.glade:2112
+#: audacious/glade/prefswin.glade:3535
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
@@ -1720,78 +1720,78 @@ msgid ""
 "poorly.</span>"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2179
+#: audacious/glade/prefswin.glade:3643
 #, fuzzy
 msgid "Output Plugin Preferences"
 msgstr "OSS излезен додаток"
 
-#: audacious/glade/prefswin.glade:2222
+#: audacious/glade/prefswin.glade:3718
 #, fuzzy
 msgid "Output Plugin Information"
 msgstr "ESD конфигурација на излезниот додаток"
 
-#: audacious/glade/prefswin.glade:2258
+#: audacious/glade/prefswin.glade:3770
 #, fuzzy
 msgid "<b>Format Detection</b>"
 msgstr "Автоматска детекција"
 
-#: audacious/glade/prefswin.glade:2277
+#: audacious/glade/prefswin.glade:3811
 msgid "Detect file formats on demand, instead of immediately."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2301
+#: audacious/glade/prefswin.glade:3845
 msgid "<b>Playback</b>"
 msgstr "<b>Плејбек</b>"
 
-#: audacious/glade/prefswin.glade:2320
+#: audacious/glade/prefswin.glade:3886
 msgid "Continue playback on startup"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2343
+#: audacious/glade/prefswin.glade:3922
 msgid "Don't advance in the playlist"
 msgstr "Не оди напред на листата"
 
-#: audacious/glade/prefswin.glade:2366
+#: audacious/glade/prefswin.glade:3957
 msgid "Pause between songs"
 msgstr "Пауза помеѓу"
 
-#: audacious/glade/prefswin.glade:2389
+#: audacious/glade/prefswin.glade:3995
 msgid "Pause for"
 msgstr "Пауза за"
 
-#: audacious/glade/prefswin.glade:2415
+#: audacious/glade/prefswin.glade:4041
 msgid "seconds"
 msgstr "секунди"
 
-#: audacious/glade/prefswin.glade:2441
+#: audacious/glade/prefswin.glade:4081
 msgid "label76"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2526
+#: audacious/glade/prefswin.glade:4219
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2559
+#: audacious/glade/prefswin.glade:4274
 #, fuzzy
 msgid "Include:"
 msgstr "Инди"
 
-#: audacious/glade/prefswin.glade:2570
+#: audacious/glade/prefswin.glade:4302
 msgid "Exclude:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2606
+#: audacious/glade/prefswin.glade:4371
 msgid "Recursively search for cover"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2627
+#: audacious/glade/prefswin.glade:4409
 msgid "Search depth: "
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2659
+#: audacious/glade/prefswin.glade:4475
 msgid "Use per-file cover"
 msgstr ""
 
@@ -1839,31 +1839,31 @@ msgstr "14KHZ"
 msgid "16KHZ"
 msgstr "16KHZ"
 
-#: libaudacious/titlestring.c:348
+#: libaudacious/titlestring.c:350
 msgid "Performer/Artist"
 msgstr "Изведувач"
 
-#: libaudacious/titlestring.c:351
+#: libaudacious/titlestring.c:353
 msgid "File name"
 msgstr "Име на датотека"
 
-#: libaudacious/titlestring.c:352
+#: libaudacious/titlestring.c:354
 msgid "File path"
 msgstr "Патека на датотеката"
 
-#: libaudacious/titlestring.c:353
+#: libaudacious/titlestring.c:355
 msgid "File extension"
 msgstr "Наставка на датотека"
 
-#: libaudacious/titlestring.c:354
+#: libaudacious/titlestring.c:356
 msgid "Track name"
 msgstr "Име на песна"
 
-#: libaudacious/titlestring.c:355
+#: libaudacious/titlestring.c:357
 msgid "Track number"
 msgstr "Број на песна"
 
-#: libaudacious/titlestring.c:409
+#: libaudacious/titlestring.c:411
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: Display \"...\" only if element %n is present"
 
