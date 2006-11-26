@@ -213,6 +213,7 @@ static const gchar *translators[] = {
     NULL,
     N_("Welsh:"),
     "Edward Brocklesby",
+    "William Pitcock",
     NULL,
 
     NULL
