@@ -1,3 +1,37 @@
+2006-11-26 23:57:59 +0000  Adam Cecile <gandalf@le-vert.net>
+  revision [3023]
+  Just ran make update-po.
+  
+  trunk/po/audacious.pot |  236 +++++++-------
+  trunk/po/br.po         |  236 +++++++-------
+  trunk/po/cs.po         |  236 +++++++-------
+  trunk/po/cy.po         |  779 +++++++++++++++++++++++++++++++++++++------------
+  trunk/po/de.po         |  236 +++++++-------
+  trunk/po/el.po         |  236 +++++++-------
+  trunk/po/es.po         |  236 +++++++-------
+  trunk/po/fi.po         |  236 +++++++-------
+  trunk/po/fr.po         |  237 +++++++-------
+  trunk/po/hi.po         |  236 +++++++-------
+  trunk/po/hu.po         |  236 +++++++-------
+  trunk/po/it.po         |  236 +++++++-------
+  trunk/po/ja.po         |  236 +++++++-------
+  trunk/po/ka.po         |  236 +++++++-------
+  trunk/po/ko.po         |  236 +++++++-------
+  trunk/po/lt.po         |  236 +++++++-------
+  trunk/po/mk.po         |  236 +++++++-------
+  trunk/po/nl.po         |  236 +++++++-------
+  trunk/po/pl.po         |  236 +++++++-------
+  trunk/po/pt_BR.po      |  236 +++++++-------
+  trunk/po/ro.po         |  236 +++++++-------
+  trunk/po/ru.po         |  236 +++++++-------
+  trunk/po/sk.po         |  236 +++++++-------
+  trunk/po/sv.po         |  236 +++++++-------
+  trunk/po/uk.po         |  236 +++++++-------
+  trunk/po/zh_CN.po      |   70 ++--
+  trunk/po/zh_TW.po      |  236 +++++++-------
+  27 files changed, 3574 insertions(+), 3176 deletions(-)
+
+
 2006-11-26 23:40:14 +0000  Adam Cecile <gandalf@le-vert.net>
   revision [3021]
   First po updates by Le_Vert.

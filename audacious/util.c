@@ -1542,13 +1542,13 @@ str_to_utf8(const gchar * str)
      * encodings. To avoid this, the order of evaluation has been
      * changed. (It might cause a drawback?)
      */
-    /* already UTF-8? */
-    if (g_utf8_validate(str, -1, NULL))
-        return g_strdup(str);
-
     /* chardet encoding detector */
     if ((out_str = chardet_to_utf8(str, strlen(str), NULL, NULL, NULL)))
         return out_str;
+
+    /* already UTF-8? */
+    if (g_utf8_validate(str, -1, NULL))
+        return g_strdup(str);
 
     /* assume encoding associated with locale */
     if ((out_str = g_locale_to_utf8(str, -1, NULL, NULL, NULL)))
