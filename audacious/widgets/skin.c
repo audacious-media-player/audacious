@@ -1806,7 +1806,7 @@ skin_draw_playlistwin_shaded(Skin * skin,
                          (i * 25) + 25, 0, 25, 14);
 
     /* right corner */
-    skin_draw_pixmap(skin, drawable, gc, SKIN_PLEDIT, 99, focus ? 57 : 42,
+    skin_draw_pixmap(skin, drawable, gc, SKIN_PLEDIT, 99, focus ? 42 : 57,
                      width - 50, 0, 50, 14);
 }
 
