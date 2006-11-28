@@ -247,7 +247,7 @@ have_solaris=no
 have_sun=no
 ARCH_DEFINES=""
 case "$host" in
-    *-*-openbsd* | *-*-netbsd*)
+    *-*-openbsd* | *-*-netbsd* | *-*-mirbsd*)
         have_sun=yes
         if test "${is_elf}" = "no"
         then

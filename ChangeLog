@@ -1,3 +1,12 @@
+2006-11-28 02:12:56 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3029]
+  - avoid a race condition in produce_audio() where we have closed output, 
+    but produce_audio() had already been queued
+  
+  trunk/audacious/output.c |    3 +++
+  1 file changed, 3 insertions(+)
+
+
 2006-11-28 01:58:02 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3027]
   - fix a bug regarding shaded mode in the playlist editor where 
