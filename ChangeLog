@@ -1,3 +1,13 @@
+2006-11-28 01:58:02 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3027]
+  - fix a bug regarding shaded mode in the playlist editor where 
+    decorations are not properly rendered.
+  Patch by external contributor: Ralf Ertzinger <ralf@skytale.net>
+  
+  trunk/audacious/widgets/skin.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-11-27 23:38:11 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3025]
   - run chardet against even valid UTF-8 strings, as they may be non-UTF-8 

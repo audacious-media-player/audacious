@@ -394,6 +394,9 @@ produce_audio(gint time,        /* position             */
 	if (ip_data.stop)
 	    return;
 
+	if (going && !*going)                  /*   thread stopped?          */
+	    return;                            /*     so finish              */
+
 	/* do output */
 	op->write_audio(((guint8 *) ptr) + writeoffs, writable);
 
