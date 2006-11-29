@@ -1,3 +1,15 @@
+2006-11-29 20:45:02 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [3033]
+  Allow \ to / conversion to be switched on & off, by external contributor Chris Kehler <cbkehler@sympatico.ca>.
+  trunk/audacious/glade/prefswin.glade |   35 +++++++++++++++++++++++++++++++++++
+  trunk/audacious/main.c               |    3 ++-
+  trunk/audacious/main.h               |    2 +-
+  trunk/audacious/playlist.c           |    1 +
+  trunk/audacious/prefswin.c           |   14 ++++++++++++++
+  trunk/audacious/util.c               |    3 +++
+  6 files changed, 56 insertions(+), 2 deletions(-)
+
+
 2006-11-28 20:06:18 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3031]
   - MirBSD support from <bsiegert -at- gmx.de>
