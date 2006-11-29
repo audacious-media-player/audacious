@@ -1,3 +1,11 @@
+2006-11-29 20:58:35 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3039]
+  - add le_vert to credits (he will need to accent his letters, though)
+  
+  trunk/audacious/credits.c |    3 ++-
+  1 file changed, 2 insertions(+), 1 deletion(-)
+
+
 2006-11-29 20:52:02 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3037]
   - credit patch contributions from Ralf Ertzinger
