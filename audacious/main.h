@@ -62,7 +62,7 @@ struct _BmpConfig {
     gboolean playlist_visible, equalizer_visible, player_visible;
     gboolean player_shaded, playlist_shaded, equalizer_shaded;
     gboolean allow_multiple_instances, always_show_cb;
-    gboolean convert_underscore, convert_twenty;
+    gboolean convert_underscore, convert_twenty, convert_slash;
     gboolean show_numbers_in_pl;
     gboolean snap_windows, save_window_position;
     gboolean dim_titlebar;

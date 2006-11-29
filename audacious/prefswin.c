@@ -1588,6 +1588,18 @@ on_playlist_convert_twenty_toggled(GtkToggleButton * button, gpointer data)
     cfg.convert_twenty = gtk_toggle_button_get_active(button);
 }
 
+static void
+on_playlist_convert_slash_realize(GtkToggleButton * button, gpointer data)
+{
+    gtk_toggle_button_set_active(button, cfg.convert_slash);
+}
+
+static void
+on_playlist_convert_slash_toggled(GtkToggleButton * button, gpointer data)
+{
+    cfg.convert_slash = gtk_toggle_button_get_active(button);
+}
+
 #if 0
 static void
 on_playlist_update_clicked(GtkButton * button,
@@ -2169,6 +2181,8 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_playlist_convert_twenty_toggled)
     FUNC_MAP_ENTRY(on_playlist_convert_underscore_realize)
     FUNC_MAP_ENTRY(on_playlist_convert_underscore_toggled)
+    FUNC_MAP_ENTRY(on_playlist_convert_slash_realize)
+    FUNC_MAP_ENTRY(on_playlist_convert_slash_toggled)
     FUNC_MAP_ENTRY(on_playlist_font_button_realize)
     FUNC_MAP_ENTRY(on_playlist_font_button_font_set)
     FUNC_MAP_ENTRY(on_playlist_no_advance_realize)

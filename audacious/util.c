@@ -1573,6 +1573,9 @@ convert_title_text(gchar * title)
 {
     g_return_val_if_fail(title != NULL, NULL);
 
+    if (cfg.convert_slash)
+	    str_replace_char(title, '\\', '/');
+    
     if (cfg.convert_underscore)
         str_replace_char(title, '_', ' ');
 

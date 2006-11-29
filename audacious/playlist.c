@@ -1354,6 +1354,7 @@ playlist_load_ins_file(const gchar * filename_p,
 
     filename = g_strchug(g_strdup(filename_p));
 
+    if(cfg.convert_slash)
     while ((tmp = strchr(filename, '\\')) != NULL)
         *tmp = '/';
 

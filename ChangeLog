@@ -1,3 +1,11 @@
+2006-11-28 20:06:18 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3031]
+  - MirBSD support from <bsiegert -at- gmx.de>
+  
+  trunk/configure.ac |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-11-28 02:12:56 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3029]
   - avoid a race condition in produce_audio() where we have closed output, 

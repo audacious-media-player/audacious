@@ -127,7 +127,7 @@ BmpConfig bmp_default_config = {
     FALSE,                      /* equalizer shaded */
     FALSE,                      /* allow multiple instances */
     TRUE,                       /* always show cb */
-    TRUE, TRUE,                 /* convert '_' and %20 */
+    TRUE, TRUE, TRUE,           /* convert '_', %20 and '\' */
     TRUE,                       /* show numbers in playlist */
     TRUE,                       /* snap windows */
     TRUE,                       /* save window positions */
@@ -257,6 +257,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"always_show_cb", &cfg.always_show_cb, TRUE},
     {"convert_underscore", &cfg.convert_underscore, TRUE},
     {"convert_twenty", &cfg.convert_twenty, TRUE},
+    {"convert_slash", &cfg.convert_slash, TRUE },
     {"show_numbers_in_pl", &cfg.show_numbers_in_pl, TRUE},
     {"show_separator_in_pl", &cfg.show_separator_in_pl, TRUE},
     {"snap_windows", &cfg.snap_windows, TRUE},
