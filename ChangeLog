@@ -1,3 +1,11 @@
+2006-11-29 21:09:07 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3041]
+  - seeking by keypad should seek 5s, not 1s. closes #673.
+  
+  trunk/audacious/mainwin.c |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2006-11-29 20:58:35 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3039]
   - add le_vert to credits (he will need to accent his letters, though)
