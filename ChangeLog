@@ -1,3 +1,10 @@
+2006-11-29 20:50:12 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [3035]
+  Credit patch contribution by Chris Kehler.
+  trunk/audacious/credits.c |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2006-11-29 20:45:02 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [3033]
   Allow \ to / conversion to be switched on & off, by external contributor Chris Kehler <cbkehler@sympatico.ca>.
