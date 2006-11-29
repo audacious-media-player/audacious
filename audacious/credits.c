@@ -50,6 +50,7 @@ static const gchar *bmp_brief =
 static const gchar *credit_text[] = {
     N_("Audacious core developers:"),
     "George Averill",
+    "Adam Cecile",
     "Giacomo Lozito",
     "William Pitcock",
     "Derek Pomery",
@@ -153,7 +154,7 @@ static const gchar *translators[] = {
     "Pauli Virtanen",
     NULL,
     N_("French:"),
-    "David Le Brun",
+    "Adam Cecile",
     NULL,
     N_("German:"),
     "Michael Hanselmann",

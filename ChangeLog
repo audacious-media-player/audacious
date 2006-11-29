@@ -1,3 +1,11 @@
+2006-11-29 20:52:02 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3037]
+  - credit patch contributions from Ralf Ertzinger
+  
+  trunk/audacious/credits.c |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2006-11-29 20:50:12 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [3035]
   Credit patch contribution by Chris Kehler.
