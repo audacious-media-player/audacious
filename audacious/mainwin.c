@@ -1051,8 +1051,8 @@ mainwin_refresh_hints(void)
 	    height == bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1))
             return;
 
-        dock_window_resize(GTK_WINDOW(mainwin), cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1),
-		cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1),
+        dock_window_resize(GTK_WINDOW(mainwin), cfg.player_shaded ? MAINWIN_SHADED_WIDTH * (cfg.doublesize + 1) : bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1),
+		cfg.player_shaded ? MAINWIN_SHADED_HEIGHT * (cfg.doublesize + 1) : bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1),
 		bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1),
 		bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1));
 

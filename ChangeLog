@@ -1,3 +1,11 @@
+2006-11-29 21:46:59 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3043]
+  - fix conditionals for building build_stamp.c
+  
+  trunk/audacious/Makefile |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-11-29 21:09:07 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3041]
   - seeking by keypad should seek 5s, not 1s. closes #673.
