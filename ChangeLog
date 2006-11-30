@@ -1,3 +1,19 @@
+2006-11-30 11:16:08 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [3055]
+  rewrite scan thread with g_cond_wait():
+  - new scan thread is completely event driven.
+  - reduce playlist update latency.
+  - no need for periodical execution.
+  
+  trunk/audacious/main.c                    |    9 ++
+  trunk/audacious/main.h                    |    3 
+  trunk/audacious/playlist.c                |  107 ++++++++++++++++++------------
+  trunk/audacious/ui_playlist.c             |   10 +-
+  trunk/audacious/widgets/Makefile          |    2 
+  trunk/audacious/widgets/playlist_slider.c |    5 +
+  6 files changed, 87 insertions(+), 49 deletions(-)
+
+
 2006-11-30 03:49:30 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3049]
   - make sure the mainwin is redrawn correctly when doublesized. reported by Tom St. Denis, closes #674.

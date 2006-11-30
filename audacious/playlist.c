@@ -2260,6 +2260,7 @@ playlist_get_info_func(gpointer arg)
                         update_playlistwin = TRUE;
                         if (entry == playlist_position)
                             update_mainwin = TRUE;
+			// no need for break here since this iteration is very short.
                     }
                 }
                 PLAYLIST_UNLOCK();
@@ -2284,7 +2285,7 @@ playlist_get_info_func(gpointer arg)
         g_cond_wait(cond_scan, mutex_scan);
         g_mutex_unlock(mutex_scan);
 
-    }// while
+    } // while
 
     g_thread_exit(NULL);
     return NULL;
@@ -2293,7 +2294,10 @@ playlist_get_info_func(gpointer arg)
 void
 playlist_start_get_info_thread(void)
 {
+    G_LOCK(playlist_get_info_going);
     playlist_get_info_going = TRUE;
+    G_UNLOCK(playlist_get_info_going);
+
     playlist_get_info_thread = g_thread_create(playlist_get_info_func,
                                                NULL, TRUE, NULL);
 }
@@ -2304,10 +2308,6 @@ playlist_stop_get_info_thread(void)
     G_LOCK(playlist_get_info_going);
     playlist_get_info_going = FALSE;
     G_UNLOCK(playlist_get_info_going);
-
-    g_mutex_lock(mutex_scan);
-    playlist_get_info_scan_active = TRUE;
-    g_mutex_unlock(mutex_scan);
 
     g_cond_broadcast(cond_scan);
     g_thread_join(playlist_get_info_thread);
