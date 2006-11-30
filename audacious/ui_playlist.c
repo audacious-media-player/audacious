@@ -1096,6 +1096,8 @@ playlistwin_scrolled(GtkWidget * widget,
     if (event->direction == GDK_SCROLL_UP)
         playlistwin_scroll(-cfg.scroll_pl_by);
 
+    g_cond_signal(cond_scan);
+
 }
 
 
