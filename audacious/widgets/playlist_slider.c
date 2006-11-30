@@ -28,6 +28,8 @@
 #include "skin.h"
 #include "widget.h"
 
+extern GCond *cond_scan;
+
 void
 playlistslider_draw(Widget * w)
 {
@@ -82,7 +84,6 @@ playlistslider_set_pos(PlaylistSlider * ps, gint y)
     playlistwin_set_toprow(pos);
 }
 
-
 void
 playlistslider_button_press_cb(GtkWidget * widget,
                                GdkEventButton * event, PlaylistSlider * ps)
@@ -112,6 +113,7 @@ playlistslider_button_press_cb(GtkWidget * widget,
             n *= -1;
         playlistwin_scroll(n);
     }
+    g_cond_signal(cond_scan);
 }
 
 void
@@ -136,6 +138,7 @@ playlistslider_motion_cb(GtkWidget * widget, GdkEventMotion * event,
 
     y = event->y - ps->ps_widget.y - ps->ps_drag_y;
     playlistslider_set_pos(ps, y);
+    g_cond_signal(cond_scan);
 }
 
 PlaylistSlider *

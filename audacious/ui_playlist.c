@@ -643,15 +643,13 @@ playlistwin_scroll(gint num)
 void
 playlistwin_scroll_up_pushed(void)
 {
-    playlistwin_list->pl_first -= 3;
-    playlistwin_update_list();
+    playlistwin_scroll(-3);
 }
 
 void
 playlistwin_scroll_down_pushed(void)
 {
-    playlistwin_list->pl_first += 3;
-    playlistwin_update_list();
+    playlistwin_scroll(3);
 }
 
 static void
@@ -1462,8 +1460,10 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
         return FALSE;
     }
 
-    if (refresh)
+    if (refresh) {
+        g_cond_signal(cond_scan);
         playlistwin_update_list();
+    }
 
     return TRUE;
 }

@@ -386,6 +386,9 @@ static gchar *pl_candidates[] = {
 	NULL
 };
 
+GCond *cond_scan;
+GMutex *mutex_scan;
+
 static GSList *
 get_feature_list(void)
 {
@@ -1047,6 +1050,9 @@ main(gint argc, gchar ** argv)
 
     gdk_threads_init();
 
+    cond_scan = g_cond_new();
+    mutex_scan = g_mutex_new();
+
     gtk_init_check_ok = gtk_init_check(&argc, &argv);
     /* Now let's parse the command line options first. */
     parse_cmd_line(argc, argv, &options);
@@ -1174,6 +1180,9 @@ main(gint argc, gchar ** argv)
         gtk_main();
 
         GDK_THREADS_LEAVE();
+
+        g_cond_free(cond_scan);
+        g_mutex_free(mutex_scan);
 
         return EXIT_SUCCESS;
     }

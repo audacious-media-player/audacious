@@ -486,7 +486,10 @@ __playlist_ins_with_info(const gchar * filename,
                              pos);
     PLAYLIST_UNLOCK();
 
+    g_mutex_lock(mutex_scan);
     playlist_get_info_scan_active = TRUE;
+    g_mutex_unlock(mutex_scan);
+    g_cond_signal(cond_scan);
 }
 
 static void
@@ -520,7 +523,10 @@ __playlist_ins_with_info_tuple(const gchar * filename,
 
     PLAYLIST_UNLOCK();
 
+    g_mutex_lock(mutex_scan);
     playlist_get_info_scan_active = TRUE;
+    g_mutex_unlock(mutex_scan);
+    g_cond_signal(cond_scan);
 }
 
 static void
@@ -871,6 +877,7 @@ playlist_check_pos_current(void)
     row = CLAMP(pos - playlistwin_list->pl_num_visible / 2, 0, bottom);
     PLAYLIST_UNLOCK();
     playlistwin_set_toprow(row);
+    g_cond_signal(cond_scan);
 }
 
 void
@@ -2177,6 +2184,7 @@ playlist_get_info_func(gpointer arg)
     while (playlist_get_info_is_going()) {
         PlaylistEntry *entry;
 
+        // on_load
         if (cfg.use_pl_metadata &&
             cfg.get_info_on_load &&
             playlist_get_info_scan_active) {
@@ -2186,7 +2194,8 @@ playlist_get_info_func(gpointer arg)
                 entry = node->data;
 
                 if(entry->tuple && (entry->tuple->length > -1)) {
-                        continue;
+                    update_playlistwin = TRUE;
+                    continue;
                 }
 
                 if (!playlist_entry_get_info(entry)) {
@@ -2195,7 +2204,7 @@ playlist_get_info_func(gpointer arg)
                            Restart. */
                         node = playlist_get();
                 }
-                else if (entry->tuple == NULL && entry->title != NULL && entry->length == -1) {
+                else if ((entry->tuple != NULL || entry->title != NULL) && entry->length != -1) {
                     update_playlistwin = TRUE;
                     if (entry == playlist_position)
                         update_mainwin = TRUE;
@@ -2203,62 +2212,59 @@ playlist_get_info_func(gpointer arg)
                 }
             }
             PLAYLIST_UNLOCK();
-
-            if (!node)
+            
+            if (!node) {
+                g_mutex_lock(mutex_scan);
                 playlist_get_info_scan_active = FALSE;
-        }
+                g_mutex_unlock(mutex_scan);
+            }
+        } // on_load
+
+        // on_demand
         else if (!cfg.get_info_on_load &&
                  cfg.get_info_on_demand &&
                  cfg.playlist_visible &&
                  !cfg.playlist_shaded &&
                  cfg.use_pl_metadata) {
 
-            gboolean found = FALSE;
+            g_mutex_lock(mutex_scan);
+            playlist_get_info_scan_active = FALSE;
+            g_mutex_unlock(mutex_scan);
 
             PLAYLIST_LOCK();
 
             if (!playlist_get()) {
                 PLAYLIST_UNLOCK();
-                g_usleep(1000000);
-                continue;
             }
+            else {
+                for (node = g_list_nth(playlist_get(), playlistwin_get_toprow());
+                     node && playlistwin_item_visible(g_list_position(playlist_get(), node));
+                     node = g_list_next(node)) {
 
-            for (node = g_list_nth(playlist_get(), playlistwin_get_toprow());
-                 node && playlistwin_item_visible(g_list_position(playlist_get(), node));
-                 node = g_list_next(node)) {
+                    entry = node->data;
 
-                entry = node->data;
+                    if(entry->tuple && (entry->tuple->length > -1)) {
+                        update_playlistwin = TRUE;
+                        continue;
+                    }
 
-                if(entry->tuple && (entry->tuple->length > -1)) {
-                    continue;
+                    if (!playlist_entry_get_info(entry)) { 
+                        if (g_list_index(playlist_get(), entry) == -1)
+                            /* Entry disapeared while we
+                               looked it up.  Restart. */
+                            node =
+                                g_list_nth(playlist_get(),
+                                           playlistwin_get_toprow());
+                    }
+                    else if ((entry->tuple != NULL || entry->title != NULL) && entry->length != -1) {
+                        update_playlistwin = TRUE;
+                        if (entry == playlist_position)
+                            update_mainwin = TRUE;
+                    }
                 }
-
-                if (!playlist_entry_get_info(entry)) {
-                    if (g_list_index(playlist_get(), entry) == -1)
-                        /* Entry disapeared while we
-                           looked it up.  Restart. */
-                        node =
-                            g_list_nth(playlist_get(),
-                                       playlistwin_get_toprow());
-                }
-                else if (entry->tuple == NULL && entry->title != NULL && entry->length == -1) {
-                    update_playlistwin = TRUE;
-                    if (entry == playlist_position)
-                        update_mainwin = TRUE;
-                    found = TRUE;
-                    break;
-                }
+                PLAYLIST_UNLOCK();
             }
-
-            PLAYLIST_UNLOCK();
-
-            if (!found) {
-                g_usleep(500000);
-                continue;
-            }
-        }
-        else
-            g_usleep(500000);
+        } // on_demand
 
         if (update_playlistwin) {
             playlistwin_update_list();
@@ -2266,11 +2272,19 @@ playlist_get_info_func(gpointer arg)
         }
 
         if (update_mainwin) {
-
             mainwin_set_info_text();
             update_mainwin = FALSE;
         }
-    }
+
+        if (playlist_get_info_scan_active) {
+            continue;
+        }
+
+        g_mutex_lock(mutex_scan);
+        g_cond_wait(cond_scan, mutex_scan);
+        g_mutex_unlock(mutex_scan);
+
+    }// while
 
     g_thread_exit(NULL);
     return NULL;
@@ -2290,13 +2304,22 @@ playlist_stop_get_info_thread(void)
     G_LOCK(playlist_get_info_going);
     playlist_get_info_going = FALSE;
     G_UNLOCK(playlist_get_info_going);
+
+    g_mutex_lock(mutex_scan);
+    playlist_get_info_scan_active = TRUE;
+    g_mutex_unlock(mutex_scan);
+
+    g_cond_broadcast(cond_scan);
     g_thread_join(playlist_get_info_thread);
 }
 
 void
 playlist_start_get_info_scan(void)
 {
+    g_mutex_lock(mutex_scan);
     playlist_get_info_scan_active = TRUE;
+    g_mutex_unlock(mutex_scan);
+    g_cond_signal(cond_scan);
 }
 
 void

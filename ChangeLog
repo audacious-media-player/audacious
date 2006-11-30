@@ -1,3 +1,11 @@
+2006-11-30 03:49:30 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3049]
+  - make sure the mainwin is redrawn correctly when doublesized. reported by Tom St. Denis, closes #674.
+  
+  trunk/audacious/mainwin.c |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2006-11-29 21:46:59 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3043]
   - fix conditionals for building build_stamp.c

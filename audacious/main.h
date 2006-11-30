@@ -174,6 +174,9 @@ void bmp_config_load(void);
 void make_directory(const gchar * path, mode_t mode);
 void report_error(const gchar *error_text);
 
+extern GCond *cond_scan;
+extern GMutex *mutex_scan;
+
 G_END_DECLS
 
 #endif
