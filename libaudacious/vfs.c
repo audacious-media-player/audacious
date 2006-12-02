@@ -78,6 +78,7 @@ vfs_fopen(const gchar * path,
     /* no transport vtable has been registered, bail. */
     if (vtable == NULL)
     {
+        g_strfreev(vec);
         return NULL;
     }
 
@@ -90,6 +91,8 @@ vfs_fopen(const gchar * path,
 
     file->uri = g_strdup(path);
     file->base = vtable;
+
+    g_strfreev(vec);
 
     return file;
 }
