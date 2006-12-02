@@ -64,7 +64,6 @@ SOURCES = \
 	glade.c \
 	hints.c \
 	about.c credits.c \
-	softvolume.c \
 	getopt.c getopt1.c \
 	urldecode.c \
 	iir.c \
