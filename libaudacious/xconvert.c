@@ -1,7 +1,24 @@
-/*
- *  Copyright (C) 2001-2003  Haavard Kvaalen <havardk@xmms.org>
+/*  Audacious
+ *  Copyright (C) 2005-2007  Audacious team
  *
- *  Licensed under GNU LGPL version 2.
+ *  XMMS - Cross-platform multimedia player
+ *  Copyright (C) 1998-2003  Peter Alm, Mikael Alm, Olle Hallnas,
+ *                           Thomas Nilsson and 4Front Technologies
+ *  Copyright (C) 1999-2003  Haavard Kvaalen
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
 #include "config.h"
@@ -20,12 +37,26 @@ struct xmms_convert_buffers {
     struct buffer format_buffer, stereo_buffer, freq_buffer;
 };
 
+/**
+ * xmms_convert_buffers_new:
+ *
+ * Factory for an #xmms_convert_buffers struct.
+ *
+ * Return value: An #xmms_convert_buffers struct.
+ **/
 struct xmms_convert_buffers *
 xmms_convert_buffers_new(void)
 {
     return g_malloc0(sizeof(struct xmms_convert_buffers));
 }
 
+/**
+ * convert_get_buffer:
+ * @buffer: A buffer to resize.
+ * @size: The new size for that buffer.
+ *
+ * Resizes a conversion buffer.
+ **/
 static void *
 convert_get_buffer(struct buffer *buffer, size_t size)
 {
@@ -37,6 +68,12 @@ convert_get_buffer(struct buffer *buffer, size_t size)
     return buffer->buffer;
 }
 
+/**
+ * xmms_convert_buffers_free:
+ * @buf: An xmms_convert_buffers structure to free.
+ *
+ * Frees the actual buffers contained inside the buffer struct.
+ **/
 void
 xmms_convert_buffers_free(struct xmms_convert_buffers *buf)
 {
@@ -45,6 +82,12 @@ xmms_convert_buffers_free(struct xmms_convert_buffers *buf)
     convert_get_buffer(&buf->freq_buffer, 0);
 }
 
+/**
+ * xmms_convert_buffers_destroy:
+ * @buf: An xmms_convert_buffers structure to destroy.
+ *
+ * Destroys an xmms_convert_buffers structure.
+ **/
 void
 xmms_convert_buffers_destroy(struct xmms_convert_buffers *buf)
 {
@@ -246,6 +289,15 @@ unnativize(AFormat fmt)
     return fmt;
 }
 
+/**
+ * xmms_convert_get_func:
+ * @output: A format to output data as.
+ * @input: The format of the inbound data.
+ *
+ * Looks up the proper conversion method to use.
+ *
+ * Return value: A function pointer to the desired conversion function.
+ **/
 convert_func_t
 xmms_convert_get_func(AFormat output, AFormat input)
 {
@@ -502,6 +554,16 @@ convert_stereo_to_mono_s16be(struct xmms_convert_buffers *buf,
     return length / 2;
 }
 
+/**
+ * xmms_convert_get_channel_func:
+ * @fmt: The format of the data.
+ * @output: The number of channels to output as.
+ * @input: The number of channels inbound.
+ *
+ * Looks up the proper conversion method to use.
+ *
+ * Return value: A function pointer to the desired conversion function.
+ **/
 convert_channel_func_t
 xmms_convert_get_channel_func(AFormat fmt, int output, int input)
 {
@@ -706,6 +768,15 @@ convert_resample_mono_s8(struct xmms_convert_buffers *buf,
 }
 
 
+/**
+ * xmms_convert_get_frequency_func:
+ * @fmt: The format of the data.
+ * @channels: The number of channels inbound.
+ *
+ * Looks up the proper conversion method to use.
+ *
+ * Return value: A function pointer to the desired conversion function.
+ **/
 convert_freq_func_t
 xmms_convert_get_frequency_func(AFormat fmt, int channels)
 {

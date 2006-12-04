@@ -1,7 +1,7 @@
-70% symbol docs coverage.
-110 symbols documented.
+71% symbol docs coverage.
+111 symbols documented.
 7 symbols incomplete.
-47 not documented.
+46 not documented.
 
 
 BmpTitleInput
@@ -57,6 +57,5 @@ rcfile:Long_Description
 rcfile:Short_Description
 titlestring:Long_Description
 util:Long_Description
-util:Short_Description
 xconvert:Long_Description
 xconvert:Short_Description
