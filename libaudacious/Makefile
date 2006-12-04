@@ -31,7 +31,6 @@ SOURCES = \
 	util.c \
 	formatter.c \
 	titlestring.c \
-	xentry.c \
 	xconvert.c \
 	xml_document.c
 
@@ -40,7 +39,7 @@ OBJECTS = ${SOURCES:.c=.o}
 HEADERS = \
 	vfs.h rcfile.h configdb.h \
 	beepctrl.h dirbrowser.h \
-	formatter.h titlestring.h xentry.h xconvert.h xml_document.h
+	formatter.h titlestring.h xconvert.h xml_document.h
 
 include ../mk/objective.mk
 
