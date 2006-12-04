@@ -1,3 +1,15 @@
+2006-12-04 09:23:15 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3087]
+  - clean up some internal audacious controlsocket functions
+  - document the controlsocket API
+  
+  trunk/audacious/controlsocket.c           |    4 
+  trunk/doc/libaudacious/tmpl/beepctrl.sgml |    4 
+  trunk/libaudacious/beepctrl.c             |  576 +++++++++++++++++++++++++++++-
+  trunk/libaudacious/beepctrl.h             |    2 
+  4 files changed, 570 insertions(+), 16 deletions(-)
+
+
 2006-12-04 09:01:13 +0000  Daniel Bradshaw <nazca@atheme.org>
   revision [3085]
   Added to credits :P
