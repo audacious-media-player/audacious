@@ -16,6 +16,5 @@
     <xi:include href="xml/rcfile.xml"/>
     <xi:include href="xml/xconvert.xml"/>
     <xi:include href="xml/configdb.xml"/>
-    <xi:include href="xml/dirbrowser.xml"/>
   </chapter>
 </book>
