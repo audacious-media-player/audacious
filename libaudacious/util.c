@@ -1,3 +1,26 @@
+/*  Audacious
+ *  Copyright (C) 2005-2007  Audacious team
+ *
+ *  XMMS - Cross-platform multimedia player
+ *  Copyright (C) 1998-2003  Peter Alm, Mikael Alm, Olle Hallnas,
+ *                           Thomas Nilsson and 4Front Technologies
+ *  Copyright (C) 1999-2003  Haavard Kvaalen
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ */
+
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
@@ -5,7 +28,19 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-
+/**
+ * xmms_show_message:
+ * @title: The title of the message to show.
+ * @text: The text of the message to show.
+ * @button_text: The text of the button which will close the messagebox.
+ * @modal: Whether or not the messagebox should be modal.
+ * @button_action: Code to execute on when the messagebox is closed, or %NULL.
+ * @action_data: Optional opaque data to pass to @button_action.
+ *
+ * Displays a message box.
+ *
+ * Return value: A GTK widget handle for the message box.
+ **/
 GtkWidget *
 xmms_show_message(const gchar * title, const gchar * text,
                   const gchar * button_text, gboolean modal,
@@ -58,12 +93,25 @@ xmms_show_message(const gchar * title, const gchar * text,
   return dialog;
 }
 
+/**
+ * xmms_check_realtime_priority:
+ *
+ * Legacy function included for compatibility with XMMS.
+ *
+ * Return value: FALSE
+ **/
 gboolean
 xmms_check_realtime_priority(void)
 {
     return FALSE;
 }
 
+/**
+ * xmms_usleep:
+ * @usec: The amount of microseconds to sleep.
+ *
+ * Legacy function included for compatibility with XMMS.
+ **/
 void
 xmms_usleep(gint usec)
 {

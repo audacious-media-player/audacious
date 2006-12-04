@@ -1,8 +1,8 @@
 <!-- ##### SECTION Title ##### -->
-util
+Miscillaneous Utility Functions
 
 <!-- ##### SECTION Short_Description ##### -->
-
+MessageBoxes, sleeping.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>

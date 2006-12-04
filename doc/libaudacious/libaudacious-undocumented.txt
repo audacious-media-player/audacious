@@ -1,0 +1,62 @@
+70% symbol docs coverage.
+110 symbols documented.
+7 symbols incomplete.
+47 not documented.
+
+
+BmpTitleInput
+ConfigDb
+Formatter
+RcFile
+RcLine
+RcSection
+TitleInput
+VFSConstructor
+VFSFile
+XMMS_NEW_TITLEINPUT
+XMMS_TITLEINPUT_SIZE
+XMMS_TITLEINPUT_VERSION
+bmp_rcfile_free
+bmp_rcfile_new
+bmp_rcfile_open
+bmp_rcfile_read_bool
+bmp_rcfile_read_double
+bmp_rcfile_read_float
+bmp_rcfile_read_int
+bmp_rcfile_read_string
+bmp_rcfile_remove_key
+bmp_rcfile_write
+bmp_rcfile_write_boolean
+bmp_rcfile_write_double
+bmp_rcfile_write_float
+bmp_rcfile_write_int
+bmp_rcfile_write_string
+convert_free_buffer
+vfs_fgets
+vfs_fprintf
+vfs_fseek (offset, whence)
+vfs_ftell
+vfs_init
+vfs_is_writeable
+vfs_truncate (length)
+vfs_ungetc (c)
+xmms_convert_buffers
+xmms_create_dir_browser
+xmms_formatter_new (Returns)
+xmms_remote_add_files
+xmms_remote_playqueue_add (pos)
+xmms_remote_playqueue_remove (pos)
+xmms_titlestring_descriptions (rows)
+
+
+beepctrl:Long_Description
+configdb:Long_Description
+dirbrowser:Short_Description
+formatter:Long_Description
+rcfile:Long_Description
+rcfile:Short_Description
+titlestring:Long_Description
+util:Long_Description
+util:Short_Description
+xconvert:Long_Description
+xconvert:Short_Description

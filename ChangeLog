@@ -1,3 +1,11 @@
+2006-12-04 10:18:02 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3107]
+  - what the hell is this, and why do we need it?
+  
+  trunk/libaudacious/configdb_xmlfile.c |  203 ----------------------------------
+  1 file changed, 203 deletions(-)
+
+
 2006-12-04 10:07:12 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3105]
   - add some missing docs
