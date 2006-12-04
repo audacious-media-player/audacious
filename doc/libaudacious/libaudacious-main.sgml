@@ -8,7 +8,6 @@
 
   <chapter>
     <title>libaudacious SDK</title>
-    <xi:include href="xml/xentry.xml"/>
     <xi:include href="xml/xml_document.xml"/>
     <xi:include href="xml/vfs.xml"/>
     <xi:include href="xml/beepctrl.xml"/>
