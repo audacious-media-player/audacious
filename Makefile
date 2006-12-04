@@ -37,36 +37,36 @@ documentation-build:
 			mkdir -p doc/libaudacious/xml; \
 			mkdir -p doc/audacious/xml; \
 		fi; \
-		pushd doc/libaudacious > /dev/null; \
+		cd doc/libaudacious; \
 			gtkdoc-scan --module=libaudacious --source-dir=../../libaudacious; \
-		popd > /dev/null; \
-		pushd doc/audacious > /dev/null; \
+		cd ../..; \
+		cd doc/audacious; \
 			gtkdoc-scan --module=audacious --source-dir=../../audacious --ignore-headers=intl; \
-		popd > /dev/null; \
-		pushd doc/libaudacious > /dev/null; \
+		cd ../..; \
+		cd doc/libaudacious; \
 			gtkdoc-mktmpl --module=libaudacious; \
-		popd > /dev/null; \
-		pushd doc/audacious > /dev/null; \
+		cd ../..; \
+		cd doc/audacious; \
 			gtkdoc-mktmpl --module=audacious; \
-		popd > /dev/null; \
-		pushd doc/libaudacious > /dev/null; \
+		cd ../..; \
+		cd doc/libaudacious; \
 			gtkdoc-mkdb --module=libaudacious --source-dir=../../libaudacious/ --output-format=xml --main-sgml-file=xml/libaudacious-main.sgml; \
-		popd > /dev/null; \
-		pushd doc/audacious > /dev/null; \
+		cd ../..; \
+		cd doc/audacious; \
 			gtkdoc-mkdb --module=audacious --source-dir=../../audacious/ --ignore-files=intl --output-format=xml --main-sgml-file=xml/audacious-main.sgml; \
-		popd > /dev/null; \
+		cd ../..; \
 		rm -rf doc/libaudacious/html; \
 		mkdir -p doc/libaudacious/html; \
 		rm -rf doc/audacious/html; \
 		mkdir -p doc/audacious/html; \
-		pushd doc/libaudacious/html > /dev/null; \
+		cd doc/libaudacious/html; \
 			gtkdoc-mkhtml libaudacious ../libaudacious-main.sgml; \
-		popd > /dev/null; \
-		pushd doc/audacious/html > /dev/null; \
+		cd ../../..; \
+		cd doc/audacious/html; \
 			rm ../xml/xml; \
 			ln -sf ../xml ../xml/xml; \
 			gtkdoc-mkhtml audacious ../xml/audacious-main.sgml; \
-		popd > /dev/null; \
+		cd ../../..; \
 		echo; \
 		echo "The audacious SDK documentation was built successfully in doc/."; \
 		echo; \
