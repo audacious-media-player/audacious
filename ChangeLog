@@ -1,3 +1,11 @@
+2006-12-04 06:35:18 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3067]
+  - document the VFS layer.
+  
+  trunk/libaudacious/vfs.c |  248 ++++++++++++++++++++++++++++++++++++++++++++---
+  1 file changed, 237 insertions(+), 11 deletions(-)
+
+
 2006-12-02 07:29:36 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3065]
   - don't leak the split URI vector after doing the vtable lookup
