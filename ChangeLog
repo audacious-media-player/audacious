@@ -1,3 +1,13 @@
+2006-12-04 08:17:54 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3075]
+  - remove xentry.c
+  
+  trunk/libaudacious/Makefile |    3 
+  trunk/libaudacious/xentry.c |  372 --------------------------------------------
+  trunk/libaudacious/xentry.h |   64 -------
+  3 files changed, 1 insertion(+), 438 deletions(-)
+
+
 2006-12-04 08:16:52 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3073]
   - remove only reference in source to xmms_entry_new() and prepare xentry.c's last rites.
