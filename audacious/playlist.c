@@ -61,6 +61,8 @@ typedef gint (*PlaylistCompareFunc) (PlaylistEntry * a, PlaylistEntry * b);
 typedef void (*PlaylistSaveFunc) (FILE * file);
 
 PlaylistEntry *playlist_position;
+/* If we manually change the song, p_p_b_j will show us where to go back to */
+PlaylistEntry *playlist_position_before_jump = NULL;
 G_LOCK_DEFINE(playlist);
 
 static GList *playlist = NULL;
@@ -891,6 +893,12 @@ playlist_next(void)
         PLAYLIST_UNLOCK();
         return;
     }
+    
+    if ((playlist_position_before_jump != NULL) && !queued_list)
+    {
+      playlist_position = playlist_position_before_jump;
+      playlist_position_before_jump = NULL;
+    }
 
     plist_pos_list = find_playlist_position_list();
 
@@ -943,6 +951,12 @@ playlist_prev(void)
     if (!playlist) {
         PLAYLIST_UNLOCK();
         return;
+    }
+    
+		if ((playlist_position_before_jump != NULL) && !queued_list)
+    {
+      playlist_position = playlist_position_before_jump;
+      playlist_position_before_jump = NULL;
     }
 
     plist_pos_list = find_playlist_position_list();
@@ -997,6 +1011,12 @@ playlist_queue(void)
     GList *it = list;
 
     PLAYLIST_LOCK();
+		
+    if ((cfg.shuffle) && (playlist_position_before_jump == NULL))
+    {
+      /* Shuffling and this is our first manual jump. */
+      playlist_position_before_jump = playlist_position;
+    }
 
     while (it) {
         GList *next = g_list_next(it);
@@ -1028,6 +1048,13 @@ playlist_queue_position(guint pos)
     PlaylistEntry *entry;
 
     PLAYLIST_LOCK();
+    
+    if ((cfg.shuffle) && (playlist_position_before_jump == NULL))
+    {
+      /* Shuffling and this is our first manual jump. */
+      playlist_position_before_jump = playlist_position;
+    }
+
     entry = g_list_nth_data(playlist, pos);
     if ((tmp = g_list_find(queued_list, entry))) {
         queued_list = g_list_remove_link(queued_list, tmp);
@@ -1142,6 +1169,12 @@ playlist_set_position(guint pos)
         restart_playing = TRUE;
     }
 
+    if ((cfg.shuffle) && (playlist_position_before_jump == NULL))
+    {
+      /* Shuffling and this is our first manual jump. */
+      playlist_position_before_jump = playlist_position;
+    }
+		
     playlist_position = node->data;
     PLAYLIST_UNLOCK();
     playlist_check_pos_current();
@@ -1152,13 +1185,6 @@ playlist_set_position(guint pos)
         mainwin_set_info_text();
         playlistwin_update_list();
     }
-
-    /*
-     * Regenerate the shuffle list when the user set a position
-     * manually
-     */
-    playlist_generate_shuffle_list();
-    playlist_recalc_total_time();
 }
 
 void
@@ -1173,6 +1199,13 @@ playlist_eof_reached(void)
       ip_data.stop = FALSE;
 
     PLAYLIST_LOCK();
+    
+    if ((playlist_position_before_jump != NULL) && !queued_list)
+    {
+      playlist_position = playlist_position_before_jump;
+      playlist_position_before_jump = NULL;
+    }
+		
     plist_pos_list = find_playlist_position_list();
 
     if (cfg.no_playlist_advance) {
@@ -2696,6 +2729,8 @@ void
 playlist_set_shuffle(gboolean shuffle)
 {
     PLAYLIST_LOCK();
+
+    playlist_position_before_jump = NULL;
 
     cfg.shuffle = shuffle;
     playlist_generate_shuffle_list_nolock();
