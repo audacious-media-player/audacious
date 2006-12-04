@@ -1,3 +1,10 @@
+2006-12-04 09:46:09 +0000  Daniel Bradshaw <nazca@atheme.org>
+  revision [3099]
+  Numpad 4 and 6 liked to prev and next respectively to be more consistant with the main window
+  trunk/audacious/ui_playlist.c |    6 ++++++
+  1 file changed, 6 insertions(+)
+
+
 2006-12-04 09:44:20 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3097]
   - remove xml_document.c

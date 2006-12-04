@@ -1,8 +1,8 @@
 <!-- ##### SECTION Title ##### -->
-configdb
+ConfigDB
 
 <!-- ##### SECTION Short_Description ##### -->
-
+The audacious configuration database.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
