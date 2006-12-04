@@ -31,6 +31,20 @@ static GList *vfs_transports = NULL;
 # define DBG(x, args...)
 #endif
 
+/*
+ * vfs_register_transport(VFSConstructor *vtable)
+ *
+ * Registers a VFSConstructor vtable with the VFS system.
+ *
+ * Inputs:
+ *     - a VFSConstructor object
+ *
+ * Outputs:
+ *     - TRUE on success, FALSE on failure.
+ *
+ * Side Effects:
+ *     - none
+ */
 gboolean
 vfs_register_transport(VFSConstructor *vtable)
 {
@@ -39,6 +53,22 @@ vfs_register_transport(VFSConstructor *vtable)
     return TRUE;
 }
 
+/*
+ * vfs_fopen(const gchar * path, const gchar * mode)
+ *
+ * Opens a stream from a VFS transport using a VFSConstructor.
+ *
+ * Inputs:
+ *     - path or URI to open
+ *     - preferred access privileges (not guaranteed)
+ *
+ * Outputs:
+ *     - on success, a VFSFile object representing the VFS stream
+ *     - on failure, nothing
+ *
+ * Side Effects:
+ *     - file descriptors are opened or more memory is allocated.
+ */
 VFSFile *
 vfs_fopen(const gchar * path,
           const gchar * mode)
@@ -86,6 +116,7 @@ vfs_fopen(const gchar * path,
 
     if (file == NULL)
     {
+        g_strfreev(vec);
         return NULL;
     }
 
@@ -97,6 +128,20 @@ vfs_fopen(const gchar * path,
     return file;
 }
 
+/*
+ * vfs_fclose(VFSFile * file)
+ *
+ * Closes a VFS stream and destroys a VFSFile object.
+ *
+ * Inputs:
+ *     - a VFSFile object to destroy
+ *
+ * Outputs:
+ *     - -1 on success, otherwise 0
+ *
+ * Side Effects:
+ *     - a file description is closed or allocated memory is freed
+ */
 gint
 vfs_fclose(VFSFile * file)
 {
@@ -116,6 +161,25 @@ vfs_fclose(VFSFile * file)
     return ret;
 }
 
+/*
+ * vfs_fread(gpointer ptr, size_t size, size_t nmemb, VFSFile * file)
+ *
+ * Reads from a VFS stream.
+ *
+ * Inputs:
+ *     - pointer to destination buffer
+ *     - size of each element to read
+ *     - number of elements to read
+ *     - VFSFile object that represents the VFS stream
+ *
+ * Outputs:
+ *     - on success, the amount of elements successfully read
+ *     - on failure, -1
+ *
+ * Side Effects:
+ *     - on nonblocking sources, the socket may be unavailable after 
+ *       this call.
+ */
 size_t
 vfs_fread(gpointer ptr,
           size_t size,
@@ -128,6 +192,25 @@ vfs_fread(gpointer ptr,
     return file->base->vfs_fread_impl(ptr, size, nmemb, file);
 }
 
+/*
+ * vfs_fwrite(gconstpointer ptr, size_t size, size_t nmemb, VFSFile * file)
+ *
+ * Writes to a VFS stream.
+ *
+ * Inputs:
+ *     - const pointer to source buffer
+ *     - size of each element to write
+ *     - number of elements to write
+ *     - VFSFile object that represents the VFS stream
+ *
+ * Outputs:
+ *     - on success, the amount of elements successfully written
+ *     - on failure, -1
+ *
+ * Side Effects:
+ *     - on nonblocking sources, the socket may be unavailable after 
+ *       this call.
+ */
 size_t
 vfs_fwrite(gconstpointer ptr,
            size_t size,
@@ -140,6 +223,22 @@ vfs_fwrite(gconstpointer ptr,
     return file->base->vfs_fwrite_impl(ptr, size, nmemb, file);
 }
 
+/*
+ * vfs_getc(VFSFile *stream)
+ *
+ * Reads a character from a VFS stream.
+ *
+ * Inputs:
+ *     - a VFSFile object representing a VFS stream.
+ *
+ * Outputs:
+ *     - on success, a character
+ *     - on failure, -1
+ *
+ * Side Effects:
+ *     - on nonblocking sources, the socket may be unavailable after 
+ *       this call.
+ */
 gint
 vfs_getc(VFSFile *stream)
 {
@@ -149,6 +248,23 @@ vfs_getc(VFSFile *stream)
     return stream->base->vfs_getc_impl(stream);
 }
 
+/*
+ * vfs_ungetc(gint c, VFSFile *stream)
+ *
+ * Pushes a character back to the VFS stream.
+ *
+ * Inputs:
+ *     - a character to push back
+ *     - a VFSFile object representing a VFS stream.
+ *
+ * Outputs:
+ *     - on success, 0
+ *     - on failure, -1
+ *
+ * Side Effects:
+ *     - on nonblocking sources, the socket may be unavailable after 
+ *       this call.
+ */
 gint
 vfs_ungetc(gint c, VFSFile *stream)
 {
@@ -158,6 +274,23 @@ vfs_ungetc(gint c, VFSFile *stream)
     return stream->base->vfs_ungetc_impl(c, stream);
 }
 
+/*
+ * vfs_fseek(VFSFile * file, gint offset, gint whence)
+ *
+ * Seeks through a VFS stream.
+ *
+ * Inputs:
+ *     - a VFSFile object which represents a VFS stream
+ *     - the offset to seek
+ *     - whether or not the seek is absolute or non-absolute
+ *
+ * Outputs:
+ *     - on success, 1
+ *     - on failure, 0
+ *
+ * Side Effects:
+ *     - on nonblocking sources, this is not guaranteed to work
+ */
 gint
 vfs_fseek(VFSFile * file,
           glong offset,
@@ -169,6 +302,20 @@ vfs_fseek(VFSFile * file,
     return file->base->vfs_fseek_impl(file, offset, whence);
 }
 
+/*
+ * vfs_rewind(VFSFile * file)
+ *
+ * Rewinds a VFS stream.
+ *
+ * Inputs:
+ *     - a VFSFile object which represents a VFS stream
+ *
+ * Outputs:
+ *     - nothing
+ *
+ * Side Effects:
+ *     - on nonblocking sources, this is not guaranteed to work
+ */
 void
 vfs_rewind(VFSFile * file)
 {
@@ -178,15 +325,45 @@ vfs_rewind(VFSFile * file)
     file->base->vfs_rewind_impl(file);
 }
 
+/*
+ * vfs_ftell(VFSFile * file)
+ *
+ * Returns the position of a VFS stream.
+ *
+ * Inputs:
+ *     - a VFSFile object which represents a VFS stream
+ *
+ * Outputs:
+ *     - on failure, -1.
+ *     - on success, the stream's position
+ *
+ * Side Effects:
+ *     - on nonblocking sources, this is not guaranteed to work
+ */
 glong
 vfs_ftell(VFSFile * file)
 {
     if (file == NULL)
-        return 0;
+        return -1;
 
     return file->base->vfs_ftell_impl(file);
 }
 
+/*
+ * vfs_feof(VFSFile * file)
+ *
+ * Returns whether or not the VFS stream has reached EOF.
+ *
+ * Inputs:
+ *     - a VFSFile object which represents a VFS stream
+ *
+ * Outputs:
+ *     - on failure, FALSE.
+ *     - on success, whether or not the VFS stream is at EOF.
+ *
+ * Side Effects:
+ *     - none
+ */
 gboolean
 vfs_feof(VFSFile * file)
 {
@@ -196,13 +373,71 @@ vfs_feof(VFSFile * file)
     return (gboolean) file->base->vfs_feof_impl(file);
 }
 
+/*
+ * vfs_truncate(VFSFile * file, glong size)
+ *
+ * Truncates a VFS stream to a certain size.
+ *
+ * Inputs:
+ *     - a VFS stream to truncate
+ *     - length to truncate at
+ *
+ * Outputs:
+ *     - -1 on failure
+ *     - 0 on success
+ *
+ * Side Effects:
+ *     - this is not guaranteed to work on non-blocking
+ *       sources
+ */
+gint
+vfs_truncate(VFSFile * file, glong size)
+{
+    if (file == NULL)
+        return -1;
+
+    return file->base->vfs_truncate_impl(file, size);
+}
+
+/*
+ * vfs_file_test(const gchar * path, GFileTest test)
+ *
+ * Wrapper for g_file_test().
+ *
+ * Inputs:
+ *     - a path to test
+ *     - a GFileTest to run
+ *
+ * Outputs:
+ *     - the result of g_file_test().
+ *
+ * Side Effects:
+ *     - g_file_test() is called.
+ */
 gboolean
 vfs_file_test(const gchar * path, GFileTest test)
 {
     return g_file_test(path, test);
 }
 
-/* NOTE: stat() is not part of stdio */
+/*
+ * vfs_is_writable(const gchar * path)
+ *
+ * Tests if a file is writable.
+ *
+ * Inputs:
+ *     - a path to test
+ *
+ * Outputs:
+ *     - FALSE if the file is not writable
+ *     - TRUE if the file is writable
+ *
+ * Side Effects:
+ *     - stat() is called.
+ *
+ * Bugs:
+ *     - stat() is not considered part of stdio
+ */
 gboolean
 vfs_is_writeable(const gchar * path)
 {
@@ -212,13 +447,4 @@ vfs_is_writeable(const gchar * path)
         return FALSE;
 
     return (info.st_mode & S_IWUSR);
-}
-
-gint
-vfs_truncate(VFSFile * file, glong size)
-{
-    if (file == NULL)
-        return -1;
-
-    return file->base->vfs_truncate_impl(file, size);
 }
