@@ -1,3 +1,12 @@
+2006-12-04 09:37:47 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3093]
+  - document the formatter class
+  
+  trunk/doc/libaudacious/tmpl/formatter.sgml |    4 -
+  trunk/libaudacious/formatter.c             |   59 ++++++++++++++++++++++++++++-
+  2 files changed, 60 insertions(+), 3 deletions(-)
+
+
 2006-12-04 09:30:01 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3091]
   - bye bye dirbrowser
