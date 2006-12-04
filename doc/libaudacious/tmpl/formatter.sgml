@@ -1,8 +1,8 @@
 <!-- ##### SECTION Title ##### -->
-formatter
+Formatter
 
 <!-- ##### SECTION Short_Description ##### -->
-
+A simple id->substitution class.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>

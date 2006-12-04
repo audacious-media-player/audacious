@@ -1,3 +1,15 @@
+2006-12-04 09:30:01 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3091]
+  - bye bye dirbrowser
+  
+  trunk/doc/libaudacious/libaudacious-main.sgml |    1 
+  trunk/doc/libaudacious/tmpl/dirbrowser.sgml   |   31 --
+  trunk/libaudacious/Makefile                   |    3 
+  trunk/libaudacious/dirbrowser.c               |  400 --------------------------
+  trunk/libaudacious/dirbrowser.h               |   34 --
+  5 files changed, 1 insertion(+), 468 deletions(-)
+
+
 2006-12-04 09:26:08 +0000  Daniel Bradshaw <nazca@atheme.org>
   revision [3089]
   Seek controls (left and right) now seek 5 seconds like the main window
