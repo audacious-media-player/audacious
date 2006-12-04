@@ -39,7 +39,11 @@
 #define VS(input, field) (CHECK(input, field) ? input->field : NULL)
 #define VI(input, field) (CHECK(input, field) ? input->field : 0)
 
-
+/**
+ * bmp_title_input_new:
+ *
+ * #BmpTitleInput tuple factory.
+ **/
 BmpTitleInput *
 bmp_title_input_new()
 {
@@ -50,6 +54,12 @@ bmp_title_input_new()
     return input;
 }
 
+/**
+ * bmp_title_input_free:
+ * @input: A #BmpTitleInput tuple to destroy.
+ *
+ * Destroys a #BmpTitleInput tuple.
+ **/
 void
 bmp_title_input_free(BmpTitleInput * input)
 {
@@ -83,6 +93,15 @@ bmp_title_input_free(BmpTitleInput * input)
     g_free(input);
 }
 
+/**
+ * xmms_get_titlestring:
+ * @fmt: A format string.
+ * @input: A tuple to use for data.
+ *
+ * Generates a formatted string from a tuple.
+ *
+ * Return value: A formatted tuple string.
+ **/
 gchar *
 xmms_get_titlestring(const gchar * fmt, TitleInput * input)
 {
@@ -363,6 +382,15 @@ static TagDescription tag_descriptions[] = {
 gint tag_descriptions_length =
     sizeof(tag_descriptions) / sizeof(TagDescription);
 
+/**
+ * xmms_titlestring_descriptions:
+ * @tags: A list of formatters to provide.
+ * @columns: A number of columns to arrange them in.
+ *
+ * Generates a box explaining how to use the formatters.
+ *
+ * Return value: A GtkWidget containing the table.
+ **/
 GtkWidget *
 xmms_titlestring_descriptions(gchar * tags, gint columns)
 {
