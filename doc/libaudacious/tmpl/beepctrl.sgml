@@ -1,8 +1,8 @@
 <!-- ##### SECTION Title ##### -->
-beepctrl
+Control Socket API ("beepctrl")
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Remote access to an Audacious server.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>

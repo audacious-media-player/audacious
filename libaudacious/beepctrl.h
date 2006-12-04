@@ -117,7 +117,7 @@ extern "C" {
 /* Added in Audacious 1.2 */
     void audacious_set_session_uri(gchar *uri);
     gchar *audacious_get_session_uri(gint session);
-    void audacious_set_session_type(gint *type);
+    void audacious_set_session_type(gint type);
 
 #ifdef __cplusplus
 };

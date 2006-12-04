@@ -105,7 +105,7 @@ ctrlsocket_setup_unix(void)
     gint i;
     gint fd;
 
-    audacious_set_session_type((gint *) AUDACIOUS_TYPE_UNIX);
+    audacious_set_session_type(AUDACIOUS_TYPE_UNIX);
 
     if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
         g_critical("ctrlsocket_setup(): Failed to open socket: %s",
@@ -163,7 +163,7 @@ ctrlsocket_setup_tcp(void)
     gint i;
     gint fd;
 
-    audacious_set_session_type((gint *) AUDACIOUS_TYPE_TCP);
+    audacious_set_session_type(AUDACIOUS_TYPE_TCP);
 
     if ((fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
         g_critical("ctrlsocket_setup(): Failed to open socket: %s",

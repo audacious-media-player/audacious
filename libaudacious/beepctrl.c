@@ -1,4 +1,7 @@
-/*  XMMS - Cross-platform multimedia player
+/*  Audacious
+ *  Copyright (C) 2005-2007  Audacious team
+ *
+ *  XMMS - Cross-platform multimedia player
  *  Copyright (C) 1998-2003  Peter Alm, Mikael Alm, Olle Hallnas,
  *                           Thomas Nilsson and 4Front Technologies
  *  Copyright (C) 1999-2003  Haavard Kvaalen
@@ -50,7 +53,7 @@
 
 /* overrides audacious_get_session_uri(). */
 gchar *audacious_session_uri = NULL;
-gint *audacious_session_type = NULL;
+gint  audacious_session_type = 0;
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -261,12 +264,26 @@ remote_get_string_pos(gint session, gint cmd, guint32 pos)
     return data;
 }
 
+/**
+ * audacious_set_session_uri:
+ * @uri: The session URI to set the client API to.
+ *
+ * Sets the Session URI where Audacious can be reached at.
+ **/
 void
 audacious_set_session_uri(gchar *uri)
 {
     audacious_session_uri = uri;
 }
 
+/**
+ * audacious_get_session_uri:
+ * @session: Legacy XMMS session id (usually 0).
+ *
+ * Attempts to determine what the Session URI may be.
+ *
+ * Return value: A session URI.
+ **/
 gchar *
 audacious_get_session_uri(gint session)
 {
@@ -296,18 +313,30 @@ audacious_get_session_uri(gint session)
     return value;
 }
 
+/**
+ * audacious_set_session_type:
+ * @type: The type to set the session type to.
+ *
+ * Sets the type of session used by the audacious server.
+ **/
 void
-audacious_set_session_type(gint *type)
+audacious_set_session_type(gint type)
 {
    audacious_session_type = type;
 }
 
-gint *
+/**
+ * audacious_determine_session_type:
+ * @session: Legacy XMMS session id (usually 0).
+ *
+ * Attempts to determine what the session type may be.
+ **/
+gint
 audacious_determine_session_type(gint session)
 {
     gchar *uri = NULL;
 
-    if (audacious_session_type != NULL)
+    if (audacious_session_type != 0)
     {
         return audacious_session_type;
     }
@@ -315,12 +344,12 @@ audacious_determine_session_type(gint session)
     uri = audacious_get_session_uri(session);
 
     if (!g_strncasecmp(uri, "tcp://", 6))
-        audacious_session_type = (gint *) AUDACIOUS_TYPE_TCP;
+        audacious_session_type = AUDACIOUS_TYPE_TCP;
     else
-        audacious_session_type = (gint *) AUDACIOUS_TYPE_UNIX;
+        audacious_session_type = AUDACIOUS_TYPE_UNIX;
 
-    if (audacious_session_type == NULL)
-        audacious_session_type = (gint *) AUDACIOUS_TYPE_UNIX;
+    if (audacious_session_type == 0)
+        audacious_session_type = AUDACIOUS_TYPE_UNIX;
 
     /* memory leak! */
     g_free(uri);
@@ -329,6 +358,17 @@ audacious_determine_session_type(gint session)
 }
 
 /* tcp://192.168.100.1:5900/zyzychynxi389xvmfewqaxznvnw */
+
+/**
+ * audacious_decode_tcp_uri:
+ * @session: The legacy XMMS session id (usually 0).
+ * @in: A TCP:// Session URI to decode.
+ * @host: Pointer to a host buffer.
+ * @port: Pointer to the TCP port.
+ * @key: Pointer to a security key buffer.
+ *
+ * Decodes a tcp:// session URI.
+ **/
 void
 audacious_decode_tcp_uri(gint session, gchar *in, gchar **host, gint *port, gchar **key)
 {
@@ -362,6 +402,15 @@ audacious_decode_tcp_uri(gint session, gchar *in, gchar **host, gint *port, gcha
 }
 
 /* unix://localhost/tmp/audacious_nenolod.0 */
+
+/**
+ * audacious_decode_unix_uri:
+ * @session: The legacy XMMS session id (usually 0).
+ * @in: A UNIX:// Session URI to decode.
+ * @key: Pointer to a UNIX path buffer.
+ *
+ * Decodes a unix:// session URI.
+ **/
 void
 audacious_decode_unix_uri(gint session, gchar *in, gchar **key)
 {
@@ -380,11 +429,19 @@ audacious_decode_unix_uri(gint session, gchar *in, gchar **key)
     g_free(tmp);
 }
 
+/**
+ * xmms_connect_to_session:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Connects to an audacious server.
+ *
+ * Return value: an FD on success, otherwise -1.
+ **/
 gint
 xmms_connect_to_session(gint session)
 {
     gint fd;
-    gint *type = audacious_determine_session_type(session);
+    gint type = audacious_determine_session_type(session);
     gchar *uri = audacious_get_session_uri(session);
 
     if (type == AUDACIOUS_TYPE_UNIX)
@@ -449,6 +506,15 @@ xmms_connect_to_session(gint session)
     return -1;
 }
 
+/**
+ * xmms_remote_playlist:
+ * @session: Legacy XMMS-style session identifier.
+ * @list: A list of URIs to play.
+ * @num: Number of URIs to play.
+ * @enqueue: Whether or not the new playlist should be added on, or replace the current playlist.
+ *
+ * Sends a playlist to audacious.
+ **/
 void
 xmms_remote_playlist(gint session, gchar ** list, gint num, gboolean enqueue)
 {
@@ -489,22 +555,44 @@ xmms_remote_playlist(gint session, gchar ** list, gint num, gboolean enqueue)
         xmms_remote_play(session);
 }
 
+/**
+ * xmms_remote_get_version:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Queries audacious for it's protocol version.
+ *
+ * Return value: The protocol version used by Audacious.
+ **/
 gint
 xmms_remote_get_version(gint session)
 {
     return remote_get_gint(session, CMD_GET_VERSION);
 }
 
+/**
+ * xmms_remote_play_files:
+ * @session: Legacy XMMS-style session identifier.
+ * @list: A GList of URIs to play.
+ *
+ * Sends a list of URIs to Audacious to play.
+ **/
 void
 xmms_remote_play_files(gint session, GList * list)
 {
     g_return_if_fail(list != NULL);
 
     xmms_remote_playlist_clear(session);
-    xmms_remote_add_files(session, list);
+    xmms_remote_playlist_add(session, list);
     xmms_remote_play(session);
 }
 
+/**
+ * xmms_remote_playlist_add:
+ * @session: Legacy XMMS-style session identifier.
+ * @list: A GList of URIs to add to the playlist.
+ *
+ * Sends a list of URIs to Audacious to add to the playlist.
+ **/
 void
 xmms_remote_playlist_add(gint session, GList * list)
 {
@@ -523,84 +611,183 @@ xmms_remote_playlist_add(gint session, GList * list)
     g_free(str_list);
 }
 
+/**
+ * xmms_remote_playlist_delete:
+ * @session: Legacy XMMS-style session identifier.
+ * @pos: The playlist position to delete.
+ *
+ * Deletes a playlist entry.
+ **/
 void
 xmms_remote_playlist_delete(gint session, gint pos)
 {
     remote_send_guint32(session, CMD_PLAYLIST_DELETE, pos);
 }
 
+/**
+ * xmms_remote_play:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Tells audacious to begin playback.
+ **/
 void
 xmms_remote_play(gint session)
 {
     remote_cmd(session, CMD_PLAY);
 }
 
+/**
+ * xmms_remote_pause:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Tells audacious to pause.
+ **/
 void
 xmms_remote_pause(gint session)
 {
     remote_cmd(session, CMD_PAUSE);
 }
 
+/**
+ * xmms_remote_stop:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Tells audacious to stop.
+ **/
 void
 xmms_remote_stop(gint session)
 {
     remote_cmd(session, CMD_STOP);
 }
 
+/**
+ * xmms_remote_play_pause:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Tells audacious to either play or pause.
+ **/
 void
 xmms_remote_play_pause(gint session)
 {
     remote_cmd(session, CMD_PLAY_PAUSE);
 }
 
+/**
+ * xmms_remote_is_playing:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Queries audacious about whether it is playing or not.
+ *
+ * Return value: TRUE if playing, FALSE otherwise.
+ **/
 gboolean
 xmms_remote_is_playing(gint session)
 {
     return remote_get_gboolean(session, CMD_IS_PLAYING);
 }
 
+/**
+ * xmms_remote_is_paused:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Queries audacious about whether it is paused or not.
+ *
+ * Return value: TRUE if playing, FALSE otherwise.
+ **/
 gboolean
 xmms_remote_is_paused(gint session)
 {
     return remote_get_gboolean(session, CMD_IS_PAUSED);
 }
 
+/**
+ * xmms_remote_get_playlist_pos:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Queries audacious about the current playlist position.
+ *
+ * Return value: The current playlist position.
+ **/
 gint
 xmms_remote_get_playlist_pos(gint session)
 {
     return remote_get_gint(session, CMD_GET_PLAYLIST_POS);
 }
 
+/**
+ * xmms_remote_set_playlist_pos:
+ * @session: Legacy XMMS-style session identifier.
+ * @pos: Playlist position to jump to.
+ *
+ * Tells audacious to jump to a different playlist position.
+ **/
 void
 xmms_remote_set_playlist_pos(gint session, gint pos)
 {
     remote_send_guint32(session, CMD_SET_PLAYLIST_POS, pos);
 }
 
+/**
+ * xmms_remote_get_playlist_length:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Queries audacious about the current playlist length.
+ *
+ * Return value: The amount of entries in the playlist.
+ **/
 gint
 xmms_remote_get_playlist_length(gint session)
 {
     return remote_get_gint(session, CMD_GET_PLAYLIST_LENGTH);
 }
 
+/**
+ * xmms_remote_playlist_clear:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Clears the playlist.
+ **/
 void
 xmms_remote_playlist_clear(gint session)
 {
     remote_cmd(session, CMD_PLAYLIST_CLEAR);
 }
 
+/**
+ * xmms_remote_get_output_time:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Queries audacious about the current output position.
+ *
+ * Return value: The current output position.
+ **/
 gint
 xmms_remote_get_output_time(gint session)
 {
     return remote_get_gint(session, CMD_GET_OUTPUT_TIME);
 }
 
+/**
+ * xmms_remote_jump_to_time:
+ * @session: Legacy XMMS-style session identifier.
+ * @pos: The time (in milliseconds) to jump to.
+ *
+ * Tells audacious to seek to a new time position.
+ **/
 void
 xmms_remote_jump_to_time(gint session, gint pos)
 {
     remote_send_guint32(session, CMD_JUMP_TO_TIME, pos);
 }
 
+/**
+ * xmms_remote_get_volume:
+ * @session: Legacy XMMS-style session identifier.
+ * @vl: Pointer to integer containing the left channel's volume.
+ * @vr: Pointer to integer containing the right channel's volume.
+ *
+ * Queries audacious about the current volume.
+ **/
 void
 xmms_remote_get_volume(gint session, gint * vl, gint * vr)
 {
@@ -621,6 +808,14 @@ xmms_remote_get_volume(gint session, gint * vl, gint * vr)
     close(fd);
 }
 
+/**
+ * xmms_remote_get_main_volume:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Queries audacious about the current volume.
+ *
+ * Return value: The current volume.
+ **/
 gint
 xmms_remote_get_main_volume(gint session)
 {
@@ -631,12 +826,28 @@ xmms_remote_get_main_volume(gint session)
     return (vl > vr) ? vl : vr;
 }
 
+/**
+ * xmms_remote_get_balance:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Queries audacious about the current balance.
+ *
+ * Return value: The current balance.
+ **/
 gint
 xmms_remote_get_balance(gint session)
 {
     return remote_get_gint(session, CMD_GET_BALANCE);
 }
 
+/**
+ * xmms_remote_set_volume:
+ * @session: Legacy XMMS-style session identifier.
+ * @vl: The volume for the left channel.
+ * @vr: The volume for the right channel.
+ *
+ * Sets the volume for the left and right channels in Audacious.
+ **/
 void
 xmms_remote_set_volume(gint session, gint vl, gint vr)
 {
@@ -661,6 +872,13 @@ xmms_remote_set_volume(gint session, gint vl, gint vr)
     close(fd);
 }
 
+/**
+ * xmms_remote_set_main_volume:
+ * @session: Legacy XMMS-style session identifier.
+ * @v: The volume to set.
+ *
+ * Sets the volume in Audacious.
+ **/
 void
 xmms_remote_set_main_volume(gint session, gint v)
 {
@@ -681,6 +899,13 @@ xmms_remote_set_main_volume(gint session, gint v)
     xmms_remote_set_volume(session, vl, vr);
 }
 
+/**
+ * xmms_remote_set_balance:
+ * @session: Legacy XMMS-style session identifier.
+ * @b: The balance to set.
+ *
+ * Sets the balance in Audacious.
+ **/
 void
 xmms_remote_set_balance(gint session, gint b)
 {
@@ -706,30 +931,72 @@ xmms_remote_set_balance(gint session, gint b)
     xmms_remote_set_volume(session, vl, vr);
 }
 
+/**
+ * xmms_remote_get_skin:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Queries Audacious about it's skin.
+ *
+ * Return value: A path to the currently selected skin.
+ **/
 gchar *
 xmms_remote_get_skin(gint session)
 {
     return remote_get_string(session, CMD_GET_SKIN);
 }
 
+/**
+ * xmms_remote_set_skin:
+ * @session: Legacy XMMS-style session identifier.
+ * @skinfile: Path to a skinfile to use with Audacious.
+ *
+ * Tells audacious to start using the skinfile provided.
+ **/
 void
 xmms_remote_set_skin(gint session, gchar * skinfile)
 {
     remote_send_string(session, CMD_SET_SKIN, skinfile);
 }
 
+/**
+ * xmms_remote_get_playlist_file:
+ * @session: Legacy XMMS-style session identifier.
+ * @pos: The playlist position to query for.
+ *
+ * Queries Audacious about a playlist entry's file.
+ *
+ * Return value: A path to the file in the playlist at %pos position.
+ **/
 gchar *
 xmms_remote_get_playlist_file(gint session, gint pos)
 {
     return remote_get_string_pos(session, CMD_GET_PLAYLIST_FILE, pos);
 }
 
+/**
+ * xmms_remote_get_playlist_title:
+ * @session: Legacy XMMS-style session identifier.
+ * @pos: The playlist position to query for.
+ *
+ * Queries Audacious about a playlist entry's title.
+ *
+ * Return value: The title for the entry in the playlist at %pos position.
+ **/
 gchar *
 xmms_remote_get_playlist_title(gint session, gint pos)
 {
     return remote_get_string_pos(session, CMD_GET_PLAYLIST_TITLE, pos);
 }
 
+/**
+ * xmms_remote_get_playlist_time:
+ * @session: Legacy XMMS-style session identifier.
+ * @pos: The playlist position to query for.
+ *
+ * Queries Audacious about a playlist entry's length.
+ *
+ * Return value: The length of the entry in the playlist at %pos position.
+ **/
 gint
 xmms_remote_get_playlist_time(gint session, gint pos)
 {
@@ -750,6 +1017,15 @@ xmms_remote_get_playlist_time(gint session, gint pos)
     return ret;
 }
 
+/**
+ * xmms_remote_get_info:
+ * @session: Legacy XMMS-style session identifier.
+ * @rate: Pointer to an integer containing the bitrate.
+ * @freq: Pointer to an integer containing the frequency.
+ * @nch: Pointer to an integer containing the number of channels.
+ *
+ * Queries Audacious about the current audio format.
+ **/
 void
 xmms_remote_get_info(gint session, gint * rate, gint * freq, gint * nch)
 {
@@ -770,96 +1046,203 @@ xmms_remote_get_info(gint session, gint * rate, gint * freq, gint * nch)
     close(fd);
 }
 
+/**
+ * xmms_remote_get_eq_data:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Not implemented, present for compatibility with libxmms API.
+ **/
 void
 xmms_remote_get_eq_data(gint session)
 {
     /* Obsolete */
 }
 
+/**
+ * xmms_remote_set_eq_data:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Not implemented, present for compatibility with libxmms API.
+ **/
 void
 xmms_remote_set_eq_data(gint session)
 {
     /* Obsolete */
 }
 
+/**
+ * xmms_remote_pl_win_toggle:
+ * @session: Legacy XMMS-style session identifier.
+ * @show: Whether or not to show the playlist window.
+ *
+ * Toggles the playlist window's visibility.
+ **/
 void
 xmms_remote_pl_win_toggle(gint session, gboolean show)
 {
     remote_send_boolean(session, CMD_PL_WIN_TOGGLE, show);
 }
 
+/**
+ * xmms_remote_eq_win_toggle:
+ * @session: Legacy XMMS-style session identifier.
+ * @show: Whether or not to show the equalizer window.
+ *
+ * Toggles the equalizer window's visibility.
+ **/
 void
 xmms_remote_eq_win_toggle(gint session, gboolean show)
 {
     remote_send_boolean(session, CMD_EQ_WIN_TOGGLE, show);
 }
 
+/**
+ * xmms_remote_main_win_toggle:
+ * @session: Legacy XMMS-style session identifier.
+ * @show: Whether or not to show the main window.
+ *
+ * Toggles the main window's visibility.
+ **/
 void
 xmms_remote_main_win_toggle(gint session, gboolean show)
 {
     remote_send_boolean(session, CMD_MAIN_WIN_TOGGLE, show);
 }
 
+/**
+ * xmms_remote_is_main_win:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Queries Audacious about the main window's visibility.
+ *
+ * Return value: TRUE if visible, FALSE otherwise.
+ **/
 gboolean
 xmms_remote_is_main_win(gint session)
 {
     return remote_get_gboolean(session, CMD_IS_MAIN_WIN);
 }
 
+/**
+ * xmms_remote_is_pl_win:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Queries Audacious about the playlist window's visibility.
+ *
+ * Return value: TRUE if visible, FALSE otherwise.
+ **/
 gboolean
 xmms_remote_is_pl_win(gint session)
 {
     return remote_get_gboolean(session, CMD_IS_PL_WIN);
 }
 
+/**
+ * xmms_remote_is_eq_win:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Queries Audacious about the equalizer window's visibility.
+ *
+ * Return value: TRUE if visible, FALSE otherwise.
+ **/
 gboolean
 xmms_remote_is_eq_win(gint session)
 {
     return remote_get_gboolean(session, CMD_IS_EQ_WIN);
 }
 
+/**
+ * xmms_remote_show_prefs_box:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Tells audacious to show the preferences pane.
+ **/
 void
 xmms_remote_show_prefs_box(gint session)
 {
     remote_cmd(session, CMD_SHOW_PREFS_BOX);
 }
 
+/**
+ * xmms_remote_show_jtf_box:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Tells audacious to show the Jump-to-File pane.
+ **/
 void
 xmms_remote_show_jtf_box(gint session)
 {
     remote_cmd(session, CMD_SHOW_JTF_BOX);
 }
 
+/**
+ * xmms_remote_toggle_aot:
+ * @session: Legacy XMMS-style session identifier.
+ * @ontop: Whether or not Audacious should be always-on-top.
+ *
+ * Tells audacious to toggle the always-on-top feature.
+ **/
 void
 xmms_remote_toggle_aot(gint session, gboolean ontop)
 {
     remote_send_boolean(session, CMD_TOGGLE_AOT, ontop);
 }
 
+/**
+ * xmms_remote_show_about_box:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Tells audacious to show the about pane.
+ **/
 void
 xmms_remote_show_about_box(gint session)
 {
     remote_cmd(session, CMD_SHOW_ABOUT_BOX);
 }
 
+/**
+ * xmms_remote_eject:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Tells audacious to display the open files pane.
+ **/
 void
 xmms_remote_eject(gint session)
 {
     remote_cmd(session, CMD_EJECT);
 }
 
+/**
+ * xmms_remote_playlist_prev:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Tells audacious to move backwards in the playlist.
+ **/
 void
 xmms_remote_playlist_prev(gint session)
 {
     remote_cmd(session, CMD_PLAYLIST_PREV);
 }
 
+/**
+ * xmms_remote_playlist_next:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Tells audacious to move forward in the playlist.
+ **/
 void
 xmms_remote_playlist_next(gint session)
 {
     remote_cmd(session, CMD_PLAYLIST_NEXT);
 }
 
+/**
+ * xmms_remote_playlist_add_url_string:
+ * @session: Legacy XMMS-style session identifier.
+ * @string: The URI to add.
+ *
+ * Tells audacious to add an URI to the playlist.
+ **/
 void
 xmms_remote_playlist_add_url_string(gint session, gchar * string)
 {
@@ -867,6 +1250,14 @@ xmms_remote_playlist_add_url_string(gint session, gchar * string)
     remote_send_string(session, CMD_PLAYLIST_ADD_URL_STRING, string);
 }
 
+/**
+ * xmms_remote_playlist_ins_url_string:
+ * @session: Legacy XMMS-style session identifier.
+ * @string: The URI to add.
+ * @pos: The position to add the URI at.
+ *
+ * Tells audacious to add an URI to the playlist at a specific position.
+ **/
 void
 xmms_remote_playlist_ins_url_string(gint session, gchar * string, gint pos)
 {
@@ -889,72 +1280,157 @@ xmms_remote_playlist_ins_url_string(gint session, gchar * string, gint pos)
     g_free(packet);
 }
 
+/**
+ * xmms_remote_is_running:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Checks to see if an Audacious server is running.
+ *
+ * Return value: TRUE if yes, otherwise FALSE.
+ **/
 gboolean
 xmms_remote_is_running(gint session)
 {
     return remote_cmd(session, CMD_PING);
 }
 
+/**
+ * xmms_remote_toggle_repeat:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Tells audacious to toggle the repeat feature.
+ **/
 void
 xmms_remote_toggle_repeat(gint session)
 {
     remote_cmd(session, CMD_TOGGLE_REPEAT);
 }
 
+/**
+ * xmms_remote_toggle_shuffle:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Tells audacious to toggle the shuffle feature.
+ **/
 void
 xmms_remote_toggle_shuffle(gint session)
 {
     remote_cmd(session, CMD_TOGGLE_SHUFFLE);
 }
 
+/**
+ * xmms_remote_toggle_advance:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Tells audacious to toggle the no-playlist-advance feature.
+ **/
 void
 xmms_remote_toggle_advance(int session)
 {
     remote_cmd(session, CMD_TOGGLE_ADVANCE);
 }
 
+/**
+ * xmms_remote_is_repeat:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Queries audacious about whether or not the repeat feature is active.
+ *
+ * Return value: TRUE if yes, otherwise FALSE.
+ **/
 gboolean
 xmms_remote_is_repeat(gint session)
 {
     return remote_get_gboolean(session, CMD_IS_REPEAT);
 }
 
+/**
+ * xmms_remote_is_shuffle:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Queries audacious about whether or not the shuffle feature is active.
+ *
+ * Return value: TRUE if yes, otherwise FALSE.
+ **/
 gboolean
 xmms_remote_is_shuffle(gint session)
 {
     return remote_get_gboolean(session, CMD_IS_SHUFFLE);
 }
 
+/**
+ * xmms_remote_is_advance:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Queries audacious about whether or not the no-playlist-advance feature is active.
+ *
+ * Return value: TRUE if yes, otherwise FALSE.
+ **/
 gboolean
 xmms_remote_is_advance(gint session)
 {
     return remote_get_gboolean(session, CMD_IS_ADVANCE);
 }
 
+/**
+ * xmms_remote_playqueue_add:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Tells audacious to add a playlist entry to the playqueue.
+ **/
 void
 xmms_remote_playqueue_add(gint session, gint pos)
 {
     remote_send_guint32(session, CMD_PLAYQUEUE_ADD, pos);
 }
 
+/**
+ * xmms_remote_playqueue_remove:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Tells audacious to remove a playlist entry from the playqueue.
+ **/
 void
 xmms_remote_playqueue_remove(gint session, gint pos)
 {
     remote_send_guint32(session, CMD_PLAYQUEUE_REMOVE, pos);
 }
 
+/**
+ * xmms_remote_playqueue_clear:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Tells audacious to clear the playqueue.
+ **/
 void
 xmms_remote_playqueue_clear(gint session)
 {
     remote_cmd(session, CMD_PLAYQUEUE_CLEAR);
 }
 
+/**
+ * xmms_remote_get_playqueue_length:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Queries audacious about the playqueue's length.
+ *
+ * Return value: The number of entries in the playqueue.
+ **/
 gint
 xmms_remote_get_playqueue_length(gint session)
 {
     return remote_get_gint(session, CMD_GET_PLAYQUEUE_LENGTH);
 }
 
+/**
+ * xmms_remote_playqueue_is_queued:
+ * @session: Legacy XMMS-style session identifier.
+ * @pos: Position to check queue for.
+ *
+ * Queries audacious about whether or not a playlist entry is in the playqueue.
+ *
+ * Return value: TRUE if yes, FALSE otherwise.
+ **/
 gboolean
 xmms_remote_playqueue_is_queued(gint session, gint pos)
 {
@@ -975,6 +1451,15 @@ xmms_remote_playqueue_is_queued(gint session, gint pos)
     return ret;
 }
 
+/**
+ * xmms_remote_get_playqueue_position:
+ * @session: Legacy XMMS-style session identifier.
+ * @pos: Position to check queue for.
+ *
+ * Queries audacious about what the playqueue position is for a playlist entry.
+ *
+ * Return value: TRUE if yes, FALSE otherwise.
+ **/
 gint
 xmms_remote_get_playqueue_position(gint session, gint pos)
 {
@@ -995,6 +1480,15 @@ xmms_remote_get_playqueue_position(gint session, gint pos)
     return ret;
 }
 
+/**
+ * xmms_remote_get_playqueue_queue_position:
+ * @session: Legacy XMMS-style session identifier.
+ * @pos: Position to check queue for.
+ *
+ * Queries audacious about what the playlist position is for a playqueue entry.
+ *
+ * Return value: TRUE if yes, FALSE otherwise.
+ **/
 gint
 xmms_remote_get_playqueue_queue_position(gint session, gint pos)
 {
@@ -1015,6 +1509,14 @@ xmms_remote_get_playqueue_queue_position(gint session, gint pos)
     return ret;
 }
 
+/**
+ * xmms_remote_get_eq:
+ * @session: Legacy XMMS-style session identifier.
+ * @preamp: Pointer to value for preamp setting.
+ * @bands: Pointer to array of band settings.
+ *
+ * Queries audacious about the equalizer settings.
+ **/
 void
 xmms_remote_get_eq(gint session, gfloat * preamp, gfloat ** bands)
 {
@@ -1044,12 +1546,29 @@ xmms_remote_get_eq(gint session, gfloat * preamp, gfloat ** bands)
     close(fd);
 }
 
+/**
+ * xmms_remote_get_eq_preamp:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Queries audacious about the equalizer preamp's setting.
+ *
+ * Return value: The equalizer preamp's setting.
+ **/
 gfloat
 xmms_remote_get_eq_preamp(gint session)
 {
     return remote_get_gfloat(session, CMD_GET_EQ_PREAMP);
 }
 
+/**
+ * xmms_remote_get_eq_band:
+ * @session: Legacy XMMS-style session identifier.
+ * @band: Which band to lookup the value for.
+ *
+ * Queries audacious about an equalizer band's value.
+ *
+ * Return value: The equalizer band's value.
+ **/
 gfloat
 xmms_remote_get_eq_band(gint session, gint band)
 {
@@ -1070,6 +1589,14 @@ xmms_remote_get_eq_band(gint session, gint band)
     return val;
 }
 
+/**
+ * xmms_remote_set_eq:
+ * @session: Legacy XMMS-style session identifier.
+ * @preamp: Value for preamp setting.
+ * @bands: Array of band settings.
+ *
+ * Tells audacious to set the equalizer up using the provided values.
+ **/
 void
 xmms_remote_set_eq(gint session, gfloat preamp, gfloat * bands)
 {
@@ -1088,12 +1615,27 @@ xmms_remote_set_eq(gint session, gfloat preamp, gfloat * bands)
     close(fd);
 }
 
+/**
+ * xmms_remote_set_eq_preamp:
+ * @session: Legacy XMMS-style session identifier.
+ * @preamp: Value for preamp setting.
+ *
+ * Tells audacious to set the equalizer's preamp setting.
+ **/
 void
 xmms_remote_set_eq_preamp(gint session, gfloat preamp)
 {
     remote_send_gfloat(session, CMD_SET_EQ_PREAMP, preamp);
 }
 
+/**
+ * xmms_remote_set_eq_band:
+ * @session: Legacy XMMS-style session identifier.
+ * @band: The band to set the value for.
+ * @value: The value to set that band to.
+ *
+ * Tells audacious to set an equalizer band's setting.
+ **/
 void
 xmms_remote_set_eq_band(gint session, gint band, gfloat value)
 {
@@ -1109,6 +1651,12 @@ xmms_remote_set_eq_band(gint session, gint band, gfloat value)
     close(fd);
 }
 
+/**
+ * xmms_remote_quit:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Tells audacious to quit.
+ **/
 void
 xmms_remote_quit(gint session)
 {
@@ -1121,6 +1669,12 @@ xmms_remote_quit(gint session)
     close(fd);
 }
 
+/**
+ * xmms_remote_activate:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Tells audacious to display the main window and become the selected window.
+ **/
 void
 xmms_remote_activate(gint session)
 {
