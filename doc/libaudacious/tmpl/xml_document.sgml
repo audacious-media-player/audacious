@@ -1,0 +1,224 @@
+<!-- ##### SECTION Title ##### -->
+xml_document
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### ENUM BmpXmlNodeType ##### -->
+<para>
+
+</para>
+
+@BMP_XML_NODE_DOC: 
+@BMP_XML_NODE_ELEMENT: 
+@BMP_XML_NODE_ATTRIB: 
+@BMP_XML_NODE_TEXT: 
+
+<!-- ##### MACRO BMP_XML_DOCUMENT ##### -->
+<para>
+
+</para>
+
+@x: 
+
+
+<!-- ##### STRUCT BmpXmlDocument ##### -->
+<para>
+
+</para>
+
+@tree: 
+@current_node: 
+@current_depth: 
+@parse_context: 
+
+<!-- ##### MACRO BMP_XML_NODE_DATA ##### -->
+<para>
+
+</para>
+
+@x: 
+
+
+<!-- ##### STRUCT BmpXmlNodeData ##### -->
+<para>
+
+</para>
+
+@type: 
+
+<!-- ##### MACRO BMP_XML_DOC_NODE_DATA ##### -->
+<para>
+
+</para>
+
+@x: 
+
+
+<!-- ##### STRUCT BmpXmlDocNodeData ##### -->
+<para>
+
+</para>
+
+@type: 
+
+<!-- ##### MACRO BMP_XML_ELEMENT_NODE_DATA ##### -->
+<para>
+
+</para>
+
+@x: 
+
+
+<!-- ##### STRUCT BmpXmlElementNodeData ##### -->
+<para>
+
+</para>
+
+@type: 
+@name: 
+
+<!-- ##### MACRO BMP_XML_ATTRIB_NODE_DATA ##### -->
+<para>
+
+</para>
+
+@x: 
+
+
+<!-- ##### STRUCT BmpXmlAttribNodeData ##### -->
+<para>
+
+</para>
+
+@type: 
+@name: 
+@value: 
+
+<!-- ##### MACRO BMP_XML_TEXT_NODE_DATA ##### -->
+<para>
+
+</para>
+
+@x: 
+
+
+<!-- ##### STRUCT BmpXmlTextNodeData ##### -->
+<para>
+
+</para>
+
+@type: 
+@text: 
+@length: 
+
+<!-- ##### FUNCTION bmp_xml_doc_node_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION bmp_xml_doc_node_data_free ##### -->
+<para>
+
+</para>
+
+@data: 
+
+
+<!-- ##### FUNCTION bmp_xml_element_node_new ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION bmp_xml_element_node_data_free ##### -->
+<para>
+
+</para>
+
+@data: 
+
+
+<!-- ##### FUNCTION bmp_xml_attrib_node_new ##### -->
+<para>
+
+</para>
+
+@name: 
+@value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION bmp_xml_attrib_node_data_free ##### -->
+<para>
+
+</para>
+
+@data: 
+
+
+<!-- ##### FUNCTION bmp_xml_text_node_data_free ##### -->
+<para>
+
+</para>
+
+@data: 
+
+
+<!-- ##### FUNCTION bmp_xml_text_node_new ##### -->
+<para>
+
+</para>
+
+@text: 
+@length: 
+@Returns: 
+
+
+<!-- ##### FUNCTION bmp_xml_document_load ##### -->
+<para>
+
+</para>
+
+@document: 
+@filename: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION bmp_xml_document_free ##### -->
+<para>
+
+</para>
+
+@document: 
+
+
+<!-- ##### FUNCTION bmp_xml_document_get_tree ##### -->
+<para>
+
+</para>
+
+@document: 
+@Returns: 
+
+

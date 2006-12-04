@@ -1,0 +1,213 @@
+<!-- ##### SECTION Title ##### -->
+VFS
+
+<!-- ##### SECTION Short_Description ##### -->
+Stream-based I/O in Audacious
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Audacious uses the VFS subsystem for moving implementing types of streams.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT VFSFile ##### -->
+<para>
+
+</para>
+
+@uri: 
+@handle: 
+@base: 
+
+<!-- ##### STRUCT VFSConstructor ##### -->
+<para>
+
+</para>
+
+@uri_id: 
+@vfs_fopen_impl: 
+@vfs_fclose_impl: 
+@vfs_fread_impl: 
+@vfs_fwrite_impl: 
+@vfs_getc_impl: 
+@vfs_ungetc_impl: 
+@vfs_fseek_impl: 
+@vfs_rewind_impl: 
+@vfs_ftell_impl: 
+@vfs_feof_impl: 
+@vfs_truncate_impl: 
+
+<!-- ##### FUNCTION vfs_init ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION vfs_fopen ##### -->
+<para>
+
+</para>
+
+@path: 
+@mode: 
+@Returns: 
+
+
+<!-- ##### FUNCTION vfs_fclose ##### -->
+<para>
+
+</para>
+
+@file: 
+@Returns: 
+
+
+<!-- ##### FUNCTION vfs_fread ##### -->
+<para>
+
+</para>
+
+@ptr: 
+@size: 
+@nmemb: 
+@file: 
+@Returns: 
+
+
+<!-- ##### FUNCTION vfs_fwrite ##### -->
+<para>
+
+</para>
+
+@ptr: 
+@size: 
+@nmemb: 
+@file: 
+@Returns: 
+
+
+<!-- ##### FUNCTION vfs_getc ##### -->
+<para>
+
+</para>
+
+@stream: 
+@Returns: 
+
+
+<!-- ##### FUNCTION vfs_ungetc ##### -->
+<para>
+
+</para>
+
+@c: 
+@stream: 
+@Returns: 
+
+
+<!-- ##### FUNCTION vfs_fgets ##### -->
+<para>
+
+</para>
+
+@s: 
+@n: 
+@stream: 
+@Returns: 
+
+
+<!-- ##### FUNCTION vfs_fseek ##### -->
+<para>
+
+</para>
+
+@file: 
+@offset: 
+@whence: 
+@Returns: 
+
+
+<!-- ##### FUNCTION vfs_rewind ##### -->
+<para>
+
+</para>
+
+@file: 
+
+
+<!-- ##### FUNCTION vfs_ftell ##### -->
+<para>
+
+</para>
+
+@file: 
+@Returns: 
+
+
+<!-- ##### FUNCTION vfs_feof ##### -->
+<para>
+
+</para>
+
+@file: 
+@Returns: 
+
+
+<!-- ##### FUNCTION vfs_file_test ##### -->
+<para>
+
+</para>
+
+@path: 
+@test: 
+@Returns: 
+
+
+<!-- ##### FUNCTION vfs_is_writeable ##### -->
+<para>
+
+</para>
+
+@path: 
+@Returns: 
+
+
+<!-- ##### FUNCTION vfs_truncate ##### -->
+<para>
+
+</para>
+
+@file: 
+@length: 
+@Returns: 
+
+
+<!-- ##### FUNCTION vfs_fprintf ##### -->
+<para>
+
+</para>
+
+@stream: 
+@format: 
+@Varargs: 
+@Returns: 
+
+
+<!-- ##### FUNCTION vfs_register_transport ##### -->
+<para>
+
+</para>
+
+@vtable: 
+@Returns: 
+
+

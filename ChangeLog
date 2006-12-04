@@ -1,3 +1,11 @@
+2006-12-04 07:26:42 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3069]
+  - make documentation-build will invoke gtk-doc to compile the audacious SDK docs.
+  
+  trunk/Makefile |   48 ++++++++++++++++++++++++++++++++++++++++++++++++
+  1 file changed, 48 insertions(+)
+
+
 2006-12-04 06:35:18 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3067]
   - document the VFS layer.

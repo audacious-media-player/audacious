@@ -1,0 +1,71 @@
+<!-- ##### SECTION Title ##### -->
+formatter
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT Formatter ##### -->
+<para>
+
+</para>
+
+@values: 
+
+<!-- ##### FUNCTION xmms_formatter_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION xmms_formatter_destroy ##### -->
+<para>
+
+</para>
+
+@formatter: 
+
+
+<!-- ##### FUNCTION xmms_formatter_associate ##### -->
+<para>
+
+</para>
+
+@formatter: 
+@id: 
+@value: 
+
+
+<!-- ##### FUNCTION xmms_formatter_dissociate ##### -->
+<para>
+
+</para>
+
+@formatter: 
+@id: 
+
+
+<!-- ##### FUNCTION xmms_formatter_format ##### -->
+<para>
+
+</para>
+
+@formatter: 
+@format: 
+@Returns: 
+
+

@@ -1,0 +1,105 @@
+<!-- ##### SECTION Title ##### -->
+titlestring
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT TitleInput ##### -->
+<para>
+
+</para>
+
+@__size: 
+@__version: 
+@performer: 
+@album_name: 
+@track_name: 
+@track_number: 
+@year: 
+@date: 
+@genre: 
+@comment: 
+@file_name: 
+@file_ext: 
+@file_path: 
+@length: 
+@formatter: 
+@mtime: 
+
+<!-- ##### TYPEDEF BmpTitleInput ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO XMMS_TITLEINPUT_SIZE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO XMMS_TITLEINPUT_VERSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO XMMS_NEW_TITLEINPUT ##### -->
+<para>
+
+</para>
+
+@input: 
+
+
+<!-- ##### FUNCTION bmp_title_input_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION bmp_title_input_free ##### -->
+<para>
+
+</para>
+
+@input: 
+
+
+<!-- ##### FUNCTION xmms_get_titlestring ##### -->
+<para>
+
+</para>
+
+@fmt: 
+@input: 
+@Returns: 
+
+
+<!-- ##### FUNCTION xmms_titlestring_descriptions ##### -->
+<para>
+
+</para>
+
+@tags: 
+@rows: 
+@Returns: 
+
+
