@@ -1,3 +1,13 @@
+2006-12-04 08:57:49 +0000  Daniel Bradshaw <nazca@atheme.org>
+  revision [3083]
+  Playlist shuffle behaviour should now be a little more consistant.  
+  When queue and manual jump are used, shuffle will remember where you were before jumping.
+  It will use that location for the next/prev shuffle track, and not reshuffle each time.
+  
+  trunk/audacious/playlist.c |   49 ++++++++++++++++++++++++++++++++++++++-------
+  1 file changed, 42 insertions(+), 7 deletions(-)
+
+
 2006-12-04 08:38:41 +0000  Daniel Bradshaw <nazca@atheme.org>
   revision [3081]
   xentry.h is no more.
