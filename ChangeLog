@@ -1,3 +1,15 @@
+2006-12-04 09:44:20 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3097]
+  - remove xml_document.c
+  
+  trunk/doc/libaudacious/libaudacious-main.sgml |    2 
+  trunk/doc/libaudacious/tmpl/xml_document.sgml |  224 ------------------
+  trunk/libaudacious/Makefile                   |    5 
+  trunk/libaudacious/xml_document.c             |  313 --------------------------
+  trunk/libaudacious/xml_document.h             |   90 -------
+  5 files changed, 3 insertions(+), 631 deletions(-)
+
+
 2006-12-04 09:39:52 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3095]
   - bleah, put dirbrowser back

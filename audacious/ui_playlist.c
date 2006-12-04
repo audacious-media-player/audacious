@@ -1454,6 +1454,12 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
                               (bmp_playback_get_time() + 5000, 0,
                               playlist_get_current_length()) / 1000);
         break;
+    case GDK_KP_4:
+        playlist_prev();
+        break;
+    case GDK_KP_6:
+        playlist_next();
+        break;
 
     case GDK_Escape:
         mainwin_minimize_cb();
