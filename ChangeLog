@@ -1,3 +1,23 @@
+2006-12-04 08:10:02 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3071]
+  - update VFS documentation
+  - include gtkdoc templates for libaudacious
+  
+  trunk/doc/libaudacious/tmpl/beepctrl.sgml     |  648 ++++++++++++++++++++++++++
+  trunk/doc/libaudacious/tmpl/configdb.sgml     |  166 ++++++
+  trunk/doc/libaudacious/tmpl/dirbrowser.sgml   |   31 +
+  trunk/doc/libaudacious/tmpl/formatter.sgml    |   71 ++
+  trunk/doc/libaudacious/tmpl/rcfile.sgml       |  202 ++++++++
+  trunk/doc/libaudacious/tmpl/titlestring.sgml  |  105 ++++
+  trunk/doc/libaudacious/tmpl/util.sgml         |   19 
+  trunk/doc/libaudacious/tmpl/vfs.sgml          |  213 ++++++++
+  trunk/doc/libaudacious/tmpl/xconvert.sgml     |   32 +
+  trunk/doc/libaudacious/tmpl/xentry.sgml       |   34 +
+  trunk/doc/libaudacious/tmpl/xml_document.sgml |  224 ++++++++
+  trunk/libaudacious/vfs.c                      |  273 +++-------
+  12 files changed, 1829 insertions(+), 189 deletions(-)
+
+
 2006-12-04 07:26:42 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3069]
   - make documentation-build will invoke gtk-doc to compile the audacious SDK docs.

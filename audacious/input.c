@@ -605,7 +605,7 @@ input_general_file_info_box(const gchar * filename, InputPlugin * ip)
     label = gtk_label_new(_("Filename:"));
     gtk_box_pack_start(GTK_BOX(filename_hbox), label, FALSE, TRUE, 0);
 
-    filename_entry = xmms_entry_new();
+    filename_entry = gtk_entry_new();
     filename_utf8 = filename_to_utf8(filename);
 
     gtk_entry_set_text(GTK_ENTRY(filename_entry), filename_utf8);
