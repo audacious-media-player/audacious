@@ -43,6 +43,8 @@
  * bmp_title_input_new:
  *
  * #BmpTitleInput tuple factory.
+ *
+ * Return value: A #BmpTitleInput object.
  **/
 BmpTitleInput *
 bmp_title_input_new()
