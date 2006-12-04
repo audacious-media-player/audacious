@@ -44,7 +44,6 @@
 #include "titlestring.h"
 
 #include "libaudacious/util.h"
-#include "libaudacious/xentry.h"
 
 G_LOCK_DEFINE_STATIC(vis_mutex);
 

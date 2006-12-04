@@ -1,3 +1,13 @@
+2006-12-04 08:22:32 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3079]
+  - remove xentry API
+  
+  trunk/doc/libaudacious/libaudacious-main.sgml        |    1 
+  trunk/doc/libaudacious/tmpl/libaudacious-unused.sgml |   14 +++++++
+  trunk/doc/libaudacious/tmpl/xentry.sgml              |   34 -------------------
+  3 files changed, 14 insertions(+), 35 deletions(-)
+
+
 2006-12-04 08:21:12 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3077]
   - add documentation template
