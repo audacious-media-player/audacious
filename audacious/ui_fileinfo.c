@@ -101,6 +101,7 @@ fileinfo_entry_set_image(const char *entry, const char *text)
 	GdkPixbuf *pixbuf;
 	int width, height;
 	double aspect;
+	GdkPixbuf *pixbuf2;
 
 	if (xml == NULL || widget == NULL)
 		return;
@@ -125,7 +126,7 @@ fileinfo_entry_set_image(const char *entry, const char *text)
 			height = cfg.filepopup_pixelsize;
 			width = (int)(cfg.filepopup_pixelsize / aspect);
 		}
-		GdkPixbuf *pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), width, height, GDK_INTERP_BILINEAR);
+		pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), width, height, GDK_INTERP_BILINEAR);
 		g_object_unref(G_OBJECT(pixbuf));
 		pixbuf = pixbuf2;
 	}
@@ -154,6 +155,7 @@ filepopup_entry_set_image(const char *entry, const char *text)
 	GdkPixbuf *pixbuf;
 	int width, height;
 	double aspect;
+	GdkPixbuf *pixbuf2;
 
 	if (xml == NULL || widget == NULL)
 		return;
@@ -178,7 +180,7 @@ filepopup_entry_set_image(const char *entry, const char *text)
 			height = cfg.filepopup_pixelsize;
 			width = (int)(cfg.filepopup_pixelsize / aspect);
 		}
-		GdkPixbuf *pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), width, height, GDK_INTERP_BILINEAR);
+		pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), width, height, GDK_INTERP_BILINEAR);
 		g_object_unref(G_OBJECT(pixbuf));
 		pixbuf = pixbuf2;
 	}
