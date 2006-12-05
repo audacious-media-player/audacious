@@ -78,7 +78,7 @@ TitleInput *bmp_title_input_new(void);
 void bmp_title_input_free(BmpTitleInput * input);
 
 gchar *xmms_get_titlestring(const gchar * fmt, TitleInput * input);
-GtkWidget *xmms_titlestring_descriptions(gchar * tags, gint rows);
+GtkWidget *xmms_titlestring_descriptions(gchar * tags, gint columns);
 
 G_END_DECLS
 

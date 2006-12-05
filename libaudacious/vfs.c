@@ -259,7 +259,7 @@ vfs_rewind(VFSFile * file)
 }
 
 /**
- * vfs_fseek:
+ * vfs_ftell:
  * @file: #VFSFile object that represents the VFS stream.
  *
  * Returns the current position in the VFS stream's buffer.
@@ -295,19 +295,19 @@ vfs_feof(VFSFile * file)
 /**
  * vfs_truncate:
  * @file: #VFSFile object that represents the VFS stream.
- * @size: The length to truncate at.
+ * @length: The length to truncate at.
  *
  * Truncates a VFS stream to a certain size.
  *
  * Return value: On success, 0. Otherwise, -1.
  **/
 gint
-vfs_truncate(VFSFile * file, glong size)
+vfs_truncate(VFSFile * file, glong length)
 {
     if (file == NULL)
         return -1;
 
-    return file->base->vfs_truncate_impl(file, size);
+    return file->base->vfs_truncate_impl(file, length);
 }
 
 /**
@@ -326,12 +326,12 @@ vfs_file_test(const gchar * path, GFileTest test)
 }
 
 /**
- * vfs_is_writable:
+ * vfs_is_writeable:
  * @path: A path to test.
  *
- * Tests if a file is writable.
+ * Tests if a file is writeable.
  *
- * Return value: TRUE if the file is writable, otherwise FALSE.
+ * Return value: TRUE if the file is writeable, otherwise FALSE.
  **/
 gboolean
 vfs_is_writeable(const gchar * path)

@@ -18,7 +18,15 @@
 #include <stdlib.h>
 #include <glib/gprintf.h>
 
-
+/**
+ * vfs_fputc:
+ * @c: A character to write to the stream.
+ * @stream: A #VFSFile object representing the stream.
+ *
+ * Writes a character to a stream.
+ *
+ * Return value: The character on success, or EOF.
+ **/
 gint vfs_fputc(gint c, VFSFile *stream)
 {
     guchar uc = (guchar) c;
@@ -30,6 +38,16 @@ gint vfs_fputc(gint c, VFSFile *stream)
     return uc;
 }
 
+/**
+ * vfs_fgets:
+ * @s: A buffer to put the string in.
+ * @n: The amount of characters to read.
+ * @stream: A #VFSFile object representing the stream.
+ *
+ * Reads a set of characters from a stream.
+ *
+ * Return value: The string on success, or NULL.
+ **/
 gchar *vfs_fgets(gchar *s, gint n, VFSFile *stream)
 {
     gint c;
@@ -55,6 +73,15 @@ gchar *vfs_fgets(gchar *s, gint n, VFSFile *stream)
     return NULL;
 }
 
+/**
+ * vfs_fputc:
+ * @s: A string to write to the stream.
+ * @stream: A #VFSFile object representing the stream.
+ *
+ * Writes a string to a VFS stream.
+ *
+ * Return value: The amount of bytes written.
+ **/
 int vfs_fputs(const gchar *s, VFSFile *stream)
 {
 	size_t n = strlen(s);
@@ -62,6 +89,16 @@ int vfs_fputs(const gchar *s, VFSFile *stream)
 	return ((vfs_fwrite(s, 1, n, stream) == n) ? n : EOF);
 }
 
+/**
+ * vfs_vfprintf:
+ * @stream: A #VFSFile object representing the stream.
+ * @format: A printf-style format string.
+ * @args: A va_list of args to use.
+ *
+ * Writes a formatted string to a VFS stream via a va_list of args.
+ *
+ * Return value: The amount of bytes written.
+ **/
 int vfs_vfprintf(VFSFile *stream, gchar const *format, va_list args)
 {
     gchar *string;
@@ -72,6 +109,15 @@ int vfs_vfprintf(VFSFile *stream, gchar const *format, va_list args)
     return rv;
 }
 
+/**
+ * vfs_fprintf:
+ * @stream: A #VFSFile object representing the stream.
+ * @format: A printf-style format string.
+ *
+ * Writes a formatted string to a VFS stream.
+ *
+ * Return value: The amount of bytes written.
+ **/
 int vfs_fprintf(VFSFile *stream, gchar const *format, ...)
 {
     va_list arg;

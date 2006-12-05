@@ -1,3 +1,12 @@
+2006-12-05 02:21:39 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3119]
+  - a directory browser widget
+  
+  trunk/doc/libaudacious/tmpl/dirbrowser.sgml |   31 ++++++++++++++++++++++++++++
+  trunk/libaudacious/dirbrowser.c             |   11 +++++++++
+  2 files changed, 42 insertions(+)
+
+
 2006-12-05 02:08:15 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3117]
   - document rcfile
