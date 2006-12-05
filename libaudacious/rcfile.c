@@ -1,4 +1,10 @@
-/*  This program is free software; you can redistribute it and/or modify
+/*  Audacious
+ *  Copyright (c) 2005-2007  Audacious team
+ *
+ *  BMP
+ *  Copyright (c) 2003-2005  BMP team
+ *
+ *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
@@ -32,13 +38,25 @@ static RcLine *bmp_rcfile_create_string(RcSection * section,
 static RcSection *bmp_rcfile_find_section(RcFile * file, const gchar * name);
 static RcLine *bmp_rcfile_find_string(RcSection * section, const gchar * key);
 
-
+/**
+ * bmp_rcfile_new:
+ *
+ * #RcFile object factory.
+ *
+ * Return value: A #RcFile object.
+ **/
 RcFile *
 bmp_rcfile_new(void)
 {
     return g_new0(RcFile, 1);
 }
 
+/**
+ * bmp_rcfile_free:
+ * @file: A #RcFile object to destroy.
+ *
+ * #RcFile object destructor.
+ **/
 void
 bmp_rcfile_free(RcFile * file)
 {
@@ -71,6 +89,14 @@ bmp_rcfile_free(RcFile * file)
     g_free(file);
 }
 
+/**
+ * bmp_rcfile_open:
+ * @filename: Path to rcfile to open.
+ *
+ * Opens an rcfile and returns an #RcFile object representing it.
+ *
+ * Return value: An #RcFile object representing the rcfile given.
+ **/
 RcFile *
 bmp_rcfile_open(const gchar * filename)
 {
@@ -86,7 +112,7 @@ bmp_rcfile_open(const gchar * filename)
     if (!g_file_get_contents(filename, &buffer, NULL, NULL))
         return NULL;
 
-    file = g_malloc0(sizeof(RcFile));
+    file = bmp_rcfile_new();
     lines = g_strsplit(buffer, "\n", 0);
     g_free(buffer);
     i = 0;
@@ -113,6 +139,15 @@ bmp_rcfile_open(const gchar * filename)
     return file;
 }
 
+/**
+ * bmp_rcfile_write:
+ * @file: A #RcFile object to write to disk.
+ * @filename: A path to write the #RcFile object's data to.
+ *
+ * Writes the contents of a #RcFile object to disk.
+ *
+ * Return value: TRUE on success, FALSE otherwise.
+ **/
 gboolean
 bmp_rcfile_write(RcFile * file, const gchar * filename)
 {
@@ -146,6 +181,17 @@ bmp_rcfile_write(RcFile * file, const gchar * filename)
     return TRUE;
 }
 
+/**
+ * bmp_rcfile_read_string:
+ * @file: A #RcFile object to write to disk.
+ * @section: The section of the RcFile to look in.
+ * @key: The name of the identifier to look up.
+ * @value: A pointer to a memory location to place the data.
+ *
+ * Looks up a value in an RcFile and places it in %value.
+ *
+ * Return value: TRUE on success, FALSE otherwise.
+ **/
 gboolean
 bmp_rcfile_read_string(RcFile * file, const gchar * section,
                        const gchar * key, gchar ** value)
@@ -166,6 +212,17 @@ bmp_rcfile_read_string(RcFile * file, const gchar * section,
     return TRUE;
 }
 
+/**
+ * bmp_rcfile_read_int:
+ * @file: A #RcFile object to write to disk.
+ * @section: The section of the RcFile to look in.
+ * @key: The name of the identifier to look up.
+ * @value: A pointer to a memory location to place the data.
+ *
+ * Looks up a value in an RcFile and places it in %value.
+ *
+ * Return value: TRUE on success, FALSE otherwise.
+ **/
 gboolean
 bmp_rcfile_read_int(RcFile * file, const gchar * section,
                     const gchar * key, gint * value)
@@ -185,6 +242,17 @@ bmp_rcfile_read_int(RcFile * file, const gchar * section,
     return TRUE;
 }
 
+/**
+ * bmp_rcfile_read_bool:
+ * @file: A #RcFile object to write to disk.
+ * @section: The section of the RcFile to look in.
+ * @key: The name of the identifier to look up.
+ * @value: A pointer to a memory location to place the data.
+ *
+ * Looks up a value in an RcFile and places it in %value.
+ *
+ * Return value: TRUE on success, FALSE otherwise.
+ **/
 gboolean
 bmp_rcfile_read_bool(RcFile * file, const gchar * section,
                      const gchar * key, gboolean * value)
@@ -206,6 +274,17 @@ bmp_rcfile_read_bool(RcFile * file, const gchar * section,
     return TRUE;
 }
 
+/**
+ * bmp_rcfile_read_float:
+ * @file: A #RcFile object to write to disk.
+ * @section: The section of the RcFile to look in.
+ * @key: The name of the identifier to look up.
+ * @value: A pointer to a memory location to place the data.
+ *
+ * Looks up a value in an RcFile and places it in %value.
+ *
+ * Return value: TRUE on success, FALSE otherwise.
+ **/
 gboolean
 bmp_rcfile_read_float(RcFile * file, const gchar * section,
                       const gchar * key, gfloat * value)
@@ -230,6 +309,17 @@ bmp_rcfile_read_float(RcFile * file, const gchar * section,
     return TRUE;
 }
 
+/**
+ * bmp_rcfile_read_double:
+ * @file: A #RcFile object to write to disk.
+ * @section: The section of the RcFile to look in.
+ * @key: The name of the identifier to look up.
+ * @value: A pointer to a memory location to place the data.
+ *
+ * Looks up a value in an RcFile and places it in %value.
+ *
+ * Return value: TRUE on success, FALSE otherwise.
+ **/
 gboolean
 bmp_rcfile_read_double(RcFile * file, const gchar * section,
                        const gchar * key, gdouble * value)
@@ -254,6 +344,15 @@ bmp_rcfile_read_double(RcFile * file, const gchar * section,
     return TRUE;
 }
 
+/**
+ * bmp_rcfile_write_string:
+ * @file: A #RcFile object to write to disk.
+ * @section: The section of the RcFile to set the key in.
+ * @key: The name of the identifier to set.
+ * @value: The value to set for that identifier.
+ *
+ * Sets a value in an RcFile for %key.
+ **/
 void
 bmp_rcfile_write_string(RcFile * file, const gchar * section,
                         const gchar * key, const gchar * value)
@@ -277,6 +376,15 @@ bmp_rcfile_write_string(RcFile * file, const gchar * section,
         bmp_rcfile_create_string(sect, key, value);
 }
 
+/**
+ * bmp_rcfile_write_int:
+ * @file: A #RcFile object to write to disk.
+ * @section: The section of the RcFile to set the key in.
+ * @key: The name of the identifier to set.
+ * @value: The value to set for that identifier.
+ *
+ * Sets a value in an RcFile for %key.
+ **/
 void
 bmp_rcfile_write_int(RcFile * file, const gchar * section,
                      const gchar * key, gint value)
@@ -292,6 +400,15 @@ bmp_rcfile_write_int(RcFile * file, const gchar * section,
     g_free(strvalue);
 }
 
+/**
+ * bmp_rcfile_write_boolean:
+ * @file: A #RcFile object to write to disk.
+ * @section: The section of the RcFile to set the key in.
+ * @key: The name of the identifier to set.
+ * @value: The value to set for that identifier.
+ *
+ * Sets a value in an RcFile for %key.
+ **/
 void
 bmp_rcfile_write_boolean(RcFile * file, const gchar * section,
                          const gchar * key, gboolean value)
@@ -306,6 +423,15 @@ bmp_rcfile_write_boolean(RcFile * file, const gchar * section,
         bmp_rcfile_write_string(file, section, key, "FALSE");
 }
 
+/**
+ * bmp_rcfile_write_float:
+ * @file: A #RcFile object to write to disk.
+ * @section: The section of the RcFile to set the key in.
+ * @key: The name of the identifier to set.
+ * @value: The value to set for that identifier.
+ *
+ * Sets a value in an RcFile for %key.
+ **/
 void
 bmp_rcfile_write_float(RcFile * file, const gchar * section,
                        const gchar * key, gfloat value)
@@ -325,6 +451,15 @@ bmp_rcfile_write_float(RcFile * file, const gchar * section,
     g_free(strvalue);
 }
 
+/**
+ * bmp_rcfile_write_double:
+ * @file: A #RcFile object to write to disk.
+ * @section: The section of the RcFile to set the key in.
+ * @key: The name of the identifier to set.
+ * @value: The value to set for that identifier.
+ *
+ * Sets a value in an RcFile for %key.
+ **/
 void
 bmp_rcfile_write_double(RcFile * file, const gchar * section,
                         const gchar * key, gdouble value)
@@ -344,6 +479,14 @@ bmp_rcfile_write_double(RcFile * file, const gchar * section,
     g_free(strvalue);
 }
 
+/**
+ * bmp_rcfile_remove_key:
+ * @file: A #RcFile object to write to disk.
+ * @section: The section of the RcFile to set the key in.
+ * @key: The name of the identifier to remove.
+ *
+ * Removes %key from an #RcFile object.
+ **/
 void
 bmp_rcfile_remove_key(RcFile * file, const gchar * section, const gchar * key)
 {

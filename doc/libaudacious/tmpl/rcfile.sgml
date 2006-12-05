@@ -1,8 +1,8 @@
 <!-- ##### SECTION Title ##### -->
-rcfile
+RcFile
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Manipulation of RcFiles (old XMMS ConfigFile)
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>

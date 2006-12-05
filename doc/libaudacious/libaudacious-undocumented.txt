@@ -1,7 +1,7 @@
-71% symbol docs coverage.
-111 symbols documented.
+82% symbol docs coverage.
+128 symbols documented.
 7 symbols incomplete.
-46 not documented.
+29 not documented.
 
 
 BmpTitleInput
@@ -16,21 +16,6 @@ VFSFile
 XMMS_NEW_TITLEINPUT
 XMMS_TITLEINPUT_SIZE
 XMMS_TITLEINPUT_VERSION
-bmp_rcfile_free
-bmp_rcfile_new
-bmp_rcfile_open
-bmp_rcfile_read_bool
-bmp_rcfile_read_double
-bmp_rcfile_read_float
-bmp_rcfile_read_int
-bmp_rcfile_read_string
-bmp_rcfile_remove_key
-bmp_rcfile_write
-bmp_rcfile_write_boolean
-bmp_rcfile_write_double
-bmp_rcfile_write_float
-bmp_rcfile_write_int
-bmp_rcfile_write_string
 convert_free_buffer
 vfs_fgets
 vfs_fprintf
@@ -54,8 +39,6 @@ configdb:Long_Description
 dirbrowser:Short_Description
 formatter:Long_Description
 rcfile:Long_Description
-rcfile:Short_Description
 titlestring:Long_Description
 util:Long_Description
 xconvert:Long_Description
-xconvert:Short_Description
