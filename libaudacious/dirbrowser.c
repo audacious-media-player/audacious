@@ -268,6 +268,17 @@ ok_clicked(GtkWidget * widget, GtkWidget * tree)
 
 }
 
+/**
+ * xmms_create_dir_browser:
+ * @title: The title of the dir browser.
+ * @current_path: The path that the dir browser should represent.
+ * @mode: The GtkSelectionMode that should be used.
+ * @handler: A handler to execute upon a selection.
+ *
+ * Creates a directory browser.
+ *
+ * Return value: A GtkWidget containing the directory browser.
+ **/
 GtkWidget *
 xmms_create_dir_browser(gchar * title, gchar * current_path,
                         GtkSelectionMode mode, void (*handler) (gchar *))
