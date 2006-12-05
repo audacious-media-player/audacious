@@ -25,13 +25,30 @@
 #include <unistd.h>
 #include <time.h>
 
-/*
- * Struct which is passed to xmms_get_titlestring().  An input struct
- * is allocated and initialized with XMMS_NEW_TITLEINPUT().  Before
+/**
+ * TitleInput:
+ * @__size: Private field which describes the version of the TitleInput.
+ * @__version: Private field which describes the version of the TitleInput.
+ * @performer: The performer of the media that the tuple is describing.
+ * @album_name: The name of the album that contains the media.
+ * @track_name: The title of the media.
+ * @track_number: The track number of the media.
+ * @year: The year the media was published.
+ * @date: The date the media was published.
+ * @genre: The genre of the media.
+ * @comment: Any comments attached to the media.
+ * @file_name: The filename which refers to the media.
+ * @file_ext: The file's extension.
+ * @file_path: The path that the media is in.
+ * @length: The length of the media.
+ * @formatter: The format string that should be used.
+ * @mtime: The last modified time of the file.
+ *
+ * Tuple which is passed to xmms_get_titlestring().  An input tuple
+ * is allocated and initialized with bmp_title_input_new().  Before
  * passing the struct to xmms_get_titlestring() it should be filled
  * with appropriate field values.
- */
-
+ **/
 typedef struct {
     gint __size;                /* Set by bmp_title_input_new() */
     gint __version;             /* Ditto */
@@ -52,6 +69,11 @@ typedef struct {
     time_t mtime;
 } TitleInput;
 
+/**
+ * BmpTitleInput:
+ *
+ * An alternate name for the #TitleInput object.
+ **/
 typedef TitleInput BmpTitleInput;
 
 
@@ -62,14 +84,27 @@ typedef TitleInput BmpTitleInput;
  * the struct layout.
  */
 
+/**
+ * XMMS_TITLEINPUT_SIZE:
+ *
+ * The size of the TitleInput object compiled into the library.
+ **/
 #define XMMS_TITLEINPUT_SIZE	sizeof(TitleInput)
+
+/**
+ * XMMS_TITLEINPUT_VERSION:
+ *
+ * The version of the TitleInput object compiled into the library.
+ **/
 #define XMMS_TITLEINPUT_VERSION	(1)
 
-#define XMMS_NEW_TITLEINPUT(input) G_STMT_START { \
-    input = g_new0(TitleInput, 1);                \
-    input->__size = XMMS_TITLEINPUT_SIZE;         \
-    input->__version = XMMS_TITLEINPUT_VERSION;   \
-} G_STMT_END
+/**
+ * XMMS_NEW_TITLEINPUT:
+ * @input: A TitleInput to initialize.
+ *
+ * Initializes a TitleInput object. Included for XMMS compatibility.
+ **/
+#define XMMS_NEW_TITLEINPUT(input) input = bmp_title_input_new();
 
 
 G_BEGIN_DECLS

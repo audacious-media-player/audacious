@@ -6,7 +6,8 @@ Stream-based I/O in Audacious
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-Audacious uses the VFS subsystem for moving implementing types of streams.
+Audacious uses the VFS subsystem for implementing the I/O transport layer. VFSConstructors provide a base table for deriving streams from. Stream 
+methods may be derived from the base classes registered with the VFS subsystem via vfs_register_transport().
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -43,14 +44,6 @@ Audacious uses the VFS subsystem for moving implementing types of streams.
 @vfs_ftell_impl: 
 @vfs_feof_impl: 
 @vfs_truncate_impl: 
-
-<!-- ##### FUNCTION vfs_init ##### -->
-<para>
-
-</para>
-
-@Returns: 
-
 
 <!-- ##### FUNCTION vfs_fopen ##### -->
 <para>

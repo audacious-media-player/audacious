@@ -126,6 +126,13 @@ extern "C" {
 /* Deprecated APIs */
 void xmms_remote_play_files(gint session, GList * list);
 
+/**
+ * xmms_remote_add_files:
+ * @session: Legacy XMMS-style session identifier.
+ * @list: A GList of files to add.
+ *
+ * Tells audacious to add files to the playlist.
+ **/
 #define xmms_remote_add_files(session,list) \
         xmms_remote_playlist_add(session,list)
 

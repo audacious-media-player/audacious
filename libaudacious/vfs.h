@@ -26,12 +26,39 @@
 typedef struct _VFSFile VFSFile;
 typedef struct _VFSConstructor VFSConstructor;
 
+/**
+ * VFSFile:
+ * @uri: The URI of the stream.
+ * @handle: Opaque data used by the transport plugins.
+ * @base: The base vtable used for VFS functions.
+ *
+ * #VFSFile objects describe a VFS stream.
+ **/
 struct _VFSFile {
 	gchar *uri;
 	gpointer handle;
 	VFSConstructor *base;
 };
 
+/**
+ * VFSConstructor:
+ * @uri_id: The uri identifier, e.g. "file" would handle "file://" streams.
+ * @vfs_fopen_impl: A function pointer which points to a fopen implementation.
+ * @vfs_fclose_impl: A function pointer which points to a fclose implementation.
+ * @vfs_fread_impl: A function pointer which points to a fread implementation.
+ * @vfs_fwrite_impl: A function pointer which points to a fwrite implementation.
+ * @vfs_getc_impl: A function pointer which points to a getc implementation.
+ * @vfs_ungetc_impl: A function pointer which points to an ungetc implementation.
+ * @vfs_fseek_impl: A function pointer which points to a fseek implementation.
+ * @vfs_rewind_impl: A function pointer which points to a rewind implementation.
+ * @vfs_ftell_impl: A function pointer which points to a ftell implementation.
+ * @vfs_feof_impl: A function pointer which points to a feof implementation.
+ * @vfs_truncate_impl: A function pointer which points to a ftruncate implementation.
+ *
+ * #VFSConstructor objects contain the base vtables used for extrapolating
+ * a VFS stream. #VFSConstructor objects should be considered %virtual in
+ * nature. VFS base vtables are registered via vfs_register_transport().
+ **/
 struct _VFSConstructor {
 	gchar *uri_id;
 	VFSFile *(*vfs_fopen_impl)(const gchar *path,
@@ -51,9 +78,6 @@ struct _VFSConstructor {
 };
 
 G_BEGIN_DECLS
-
-/* Reserved for private use by BMP */
-extern gboolean vfs_init(void);
 
 extern VFSFile * vfs_fopen(const gchar * path,
                     const gchar * mode);

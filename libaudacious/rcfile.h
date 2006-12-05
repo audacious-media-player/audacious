@@ -20,16 +20,36 @@
 
 #include <glib.h>
 
+/**
+ * RcLine:
+ * @key: A key for the key->value mapping.
+ * @value: A value for the key->value mapping.
+ *
+ * RcLine objects contain key->value mappings.
+ **/
 typedef struct {
     gchar *key;
     gchar *value;
 } RcLine;
 
+/**
+ * RcSection:
+ * @name: The name for the #RcSection.
+ * @lines: A list of key->value mappings for the #RcSection.
+ *
+ * RcSection objects contain collections of key->value mappings.
+ **/
 typedef struct {
     gchar *name;
     GList *lines;
 } RcSection;
 
+/**
+ * RcFile:
+ * @sections: A list of sections.
+ *
+ * An RcFile object contains a collection of key->value mappings organized by section.
+ **/
 typedef struct {
     GList *sections;
 } RcFile;

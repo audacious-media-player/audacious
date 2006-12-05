@@ -2,7 +2,6 @@
 <FILE>vfs</FILE>
 VFSFile
 VFSConstructor
-vfs_init
 vfs_fopen
 vfs_fclose
 vfs_fread
@@ -142,7 +141,6 @@ bmp_rcfile_remove_key
 
 <SECTION>
 <FILE>xconvert</FILE>
-convert_free_buffer
 xmms_convert_buffers
 </SECTION>
 

@@ -29,6 +29,19 @@ xml_document
 
 @entry: 
 
+<!-- ##### FUNCTION convert_free_buffer ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION vfs_init ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
 <!-- ##### FUNCTION xmms_entry_new ##### -->
 <para>
 

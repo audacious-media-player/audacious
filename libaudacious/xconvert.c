@@ -28,11 +28,28 @@
 
 #define IS_BIG_ENDIAN  (G_BYTE_ORDER==G_BIG_ENDIAN)
 
+/**
+ * buffer:
+ *
+ * Contains data for conversion.
+ *
+ * @buffer: A pointer to the memory being used in the conversion process.
+ * @size: The size of the memory being referenced.
+ **/
 struct buffer {
     void *buffer;
     int size;
 };
 
+/**
+ * xmms_convert_buffers:
+ *
+ * Stores data for conversion.
+ *
+ * @format_buffer: A buffer for converting formats.
+ * @stereo_buffer: A buffer for downmixing or upmixing.
+ * @freq_buffer: A buffer used for resampling.
+ **/
 struct xmms_convert_buffers {
     struct buffer format_buffer, stereo_buffer, freq_buffer;
 };

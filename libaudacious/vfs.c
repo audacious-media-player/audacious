@@ -207,6 +207,7 @@ vfs_getc(VFSFile *stream)
 
 /**
  * vfs_ungetc:
+ * @c: The character to push back.
  * @stream: #VFSFile object that represents the VFS stream.
  *
  * Pushes a character back to the VFS stream.

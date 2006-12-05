@@ -3,7 +3,11 @@
 
 #include <glib.h>
 
-
+/**
+ * ConfigDb:
+ *
+ * A configuration database handle, opened with bmp_cfg_db_open().
+ **/
 typedef struct _ConfigDb ConfigDb;
 
 

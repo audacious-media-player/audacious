@@ -1,44 +1,8 @@
-82% symbol docs coverage.
-128 symbols documented.
-7 symbols incomplete.
-29 not documented.
+100% symbol docs coverage.
+155 symbols documented.
+0 symbols incomplete.
+0 not documented.
 
 
-BmpTitleInput
-ConfigDb
-Formatter
-RcFile
-RcLine
-RcSection
-TitleInput
-VFSConstructor
-VFSFile
-XMMS_NEW_TITLEINPUT
-XMMS_TITLEINPUT_SIZE
-XMMS_TITLEINPUT_VERSION
-convert_free_buffer
-vfs_fgets
-vfs_fprintf
-vfs_fseek (offset, whence)
-vfs_ftell
-vfs_init
-vfs_is_writeable
-vfs_truncate (length)
-vfs_ungetc (c)
-xmms_convert_buffers
-xmms_create_dir_browser
-xmms_formatter_new (Returns)
-xmms_remote_add_files
-xmms_remote_playqueue_add (pos)
-xmms_remote_playqueue_remove (pos)
-xmms_titlestring_descriptions (rows)
 
 
-beepctrl:Long_Description
-configdb:Long_Description
-dirbrowser:Short_Description
-formatter:Long_Description
-rcfile:Long_Description
-titlestring:Long_Description
-util:Long_Description
-xconvert:Long_Description

@@ -6,8 +6,6 @@
 
 #include <audacious/plugin.h>
 
-void convert_free_buffer(void);
-
 struct xmms_convert_buffers;
 
 struct xmms_convert_buffers *xmms_convert_buffers_new(void);

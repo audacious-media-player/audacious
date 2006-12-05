@@ -6,7 +6,7 @@ Resampling and byteswapping.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+Audacious plugins use XConvert to resample, downmix, upmix, and byteswap audio.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -15,13 +15,6 @@ Resampling and byteswapping.
 </para>
 
 <!-- ##### SECTION Stability_Level ##### -->
-
-
-<!-- ##### FUNCTION convert_free_buffer ##### -->
-<para>
-
-</para>
-
 
 
 <!-- ##### STRUCT xmms_convert_buffers ##### -->

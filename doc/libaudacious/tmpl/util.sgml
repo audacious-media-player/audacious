@@ -6,7 +6,7 @@ MessageBoxes, sleeping.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+These are miscillaneous utility functions used by plugins.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

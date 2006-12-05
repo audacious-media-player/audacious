@@ -1375,6 +1375,7 @@ xmms_remote_is_advance(gint session)
 /**
  * xmms_remote_playqueue_add:
  * @session: Legacy XMMS-style session identifier.
+ * @pos: The playlist position to add to the queue.
  *
  * Tells audacious to add a playlist entry to the playqueue.
  **/
@@ -1387,6 +1388,7 @@ xmms_remote_playqueue_add(gint session, gint pos)
 /**
  * xmms_remote_playqueue_remove:
  * @session: Legacy XMMS-style session identifier.
+ * @pos: The playlist position to remove from the queue.
  *
  * Tells audacious to remove a playlist entry from the playqueue.
  **/

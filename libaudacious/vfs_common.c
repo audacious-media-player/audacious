@@ -113,6 +113,7 @@ int vfs_vfprintf(VFSFile *stream, gchar const *format, va_list args)
  * vfs_fprintf:
  * @stream: A #VFSFile object representing the stream.
  * @format: A printf-style format string.
+ * @...: A list of args to use.
  *
  * Writes a formatted string to a VFS stream.
  *

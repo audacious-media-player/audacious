@@ -3,6 +3,12 @@
 
 #include <glib.h>
 
+/**
+ * Formatter:
+ * @values: The stack of values used for replacement.
+ *
+ * Formatter objects contain id->replacement mapping tables.
+ **/
 typedef struct {
     gchar *values[256];
 } Formatter;

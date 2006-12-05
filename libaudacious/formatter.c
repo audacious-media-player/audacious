@@ -33,6 +33,8 @@
  * xmms_formatter_new:
  *
  * Factory for #Formatter objects.
+ *
+ * Return value: A #Formatter object.
  **/
 Formatter *
 xmms_formatter_new(void)

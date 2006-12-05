@@ -6,7 +6,7 @@ The audacious configuration database.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+The configuration database is used to store settings used by Audacious and it's plugins.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->

@@ -33,11 +33,6 @@ struct _VFSConstructor {
 };
 </STRUCT>
 <FUNCTION>
-<NAME>vfs_init</NAME>
-<RETURNS>gboolean </RETURNS>
-void
-</FUNCTION>
-<FUNCTION>
 <NAME>vfs_fopen</NAME>
 <RETURNS>VFSFile *</RETURNS>
 const gchar * path,const gchar * mode
@@ -503,11 +498,7 @@ typedef TitleInput BmpTitleInput;
 </MACRO>
 <MACRO>
 <NAME>XMMS_NEW_TITLEINPUT</NAME>
-#define XMMS_NEW_TITLEINPUT(input) G_STMT_START { \
-    input = g_new0(TitleInput, 1);                \
-    input->__size = XMMS_TITLEINPUT_SIZE;         \
-    input->__version = XMMS_TITLEINPUT_VERSION;   \
-} G_STMT_END
+#define XMMS_NEW_TITLEINPUT(input) input = bmp_title_input_new();
 </MACRO>
 <FUNCTION>
 <NAME>bmp_title_input_new</NAME>
@@ -527,7 +518,7 @@ const gchar * fmt, TitleInput * input
 <FUNCTION>
 <NAME>xmms_titlestring_descriptions</NAME>
 <RETURNS>GtkWidget *</RETURNS>
-gchar * tags, gint rows
+gchar * tags, gint columns
 </FUNCTION>
 <STRUCT>
 <NAME>Formatter</NAME>
@@ -654,11 +645,6 @@ RcFile * file, const gchar * section,const gchar * key, gdouble value
 <NAME>bmp_rcfile_remove_key</NAME>
 <RETURNS>void </RETURNS>
 RcFile * file, const gchar * section,const gchar * key
-</FUNCTION>
-<FUNCTION>
-<NAME>convert_free_buffer</NAME>
-<RETURNS>void </RETURNS>
-void
 </FUNCTION>
 <STRUCT>
 <NAME>xmms_convert_buffers</NAME>
