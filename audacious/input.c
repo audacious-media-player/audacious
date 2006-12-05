@@ -399,6 +399,10 @@ input_file_not_playable(const gchar * filename)
  *       -- this can have very ugly effects performance wise on streams
  *
  * --nenolod, Dec 31 2005
+ *
+ * Rewritten to use NewVFS probing, semantics are still basically the same.
+ *
+ * --nenolod, Dec  5 2006
  */
 InputPlugin *
 input_check_file(const gchar * filename, gboolean show_warning)
@@ -412,28 +416,46 @@ input_check_file(const gchar * filename, gboolean show_warning)
     filename_proxy = g_strdup(filename);
     fd = vfs_fopen(filename, "rb");
 
-    for (node = get_input_list(); node != NULL; node = g_list_next(node)) {
+    for (node = get_input_list(); node != NULL; node = g_list_next(node))
+    {
         ip = INPUT_PLUGIN(node->data);
-        if (ip && input_is_enabled(ip->filename) &&
-            (ip->is_our_file_from_vfs != NULL &&
-             (ret = ip->is_our_file_from_vfs(filename_proxy, fd) > 0) || 
-             (ip->is_our_file != NULL &&
-              (ret = ip->is_our_file(filename_proxy)) > 0))) {
-            g_free(filename_proxy);
-            vfs_fclose(fd);
-            return ip;
+
+        if (!ip || !input_is_enabled(ip->filename))
+            continue;
+
+        vfs_fseek(fd, 0, SEEK_SET);
+
+        if (ip->is_our_file_from_vfs != NULL)
+        {
+            ret = ip->is_our_file_from_vfs(filename_proxy, fd);
+
+            if (ret > 0)
+            {
+                g_free(filename_proxy);
+                vfs_fclose(fd);
+                return ip;
+            }
         }
-        else if (ret == 0)
-            vfs_fseek(fd, 0, SEEK_SET);
-	else if (ret <= -1)
+        else if (ip->is_our_file != NULL)
+        {
+            ret = ip->is_our_file(filename_proxy);
+
+            if (ret > 0)
+            {
+                g_free(filename_proxy);
+                vfs_fclose(fd);
+                return ip;
+            }
+        }
+
+	if (ret <= -1)
 	    break;
     }
 
     g_free(filename_proxy);
 
-    if (show_warning && !(ret <= -1)) {
+    if (show_warning && ret != -1)
         input_file_not_playable(filename);
-    }
 
     vfs_fclose(fd);
 
@@ -462,28 +484,14 @@ input_get_song_info(const gchar * filename, gchar ** title, gint * length)
     GList *node;
     gchar *tmp = NULL, *ext;
     gchar *filename_proxy;
-    VFSFile *fd;
-    gint ret = 1;
 
     g_return_if_fail(filename != NULL);
     g_return_if_fail(title != NULL);
     g_return_if_fail(length != NULL);
 
     filename_proxy = g_strdup(filename);
-    fd = vfs_fopen(filename, "rb");
 
-    for (node = get_input_list(); node != NULL; node = g_list_next(node)) {
-        ip = INPUT_PLUGIN(node->data);
-        if (ip && input_is_enabled(ip->filename) &&
-            (ip->is_our_file_from_vfs != NULL &&
-             (ret = ip->is_our_file_from_vfs(filename_proxy, fd) > 0) || 
-             (ip->is_our_file != NULL &&
-              (ret = ip->is_our_file(filename_proxy)) > 0))) {
-            break;
-        }
-    }
-
-    vfs_fclose(fd);
+    ip = input_check_file(filename_proxy, FALSE);
 
     if (ip && node && ip->get_song_info) {
         ip->get_song_info(filename_proxy, &tmp, length);
@@ -526,28 +534,13 @@ input_get_song_tuple(const gchar * filename)
     GList *node;
     gchar *tmp = NULL, *ext;
     gchar *filename_proxy;
-    VFSFile *fd;
-    gint ret = 1;
 
     if (filename == NULL)
 	return NULL;
 
     filename_proxy = g_strdup(filename);
-    fd = vfs_fopen(filename, "rb");
 
-    for (node = get_input_list(); node != NULL; node = g_list_next(node)) {
-        ip = INPUT_PLUGIN(node->data);
-        if (ip && input_is_enabled(ip->filename) &&
-            (ip->is_our_file_from_vfs != NULL &&
-             (ret = ip->is_our_file_from_vfs(filename_proxy, fd) > 0) || 
-             (ip->is_our_file != NULL &&
-              (ret = ip->is_our_file(filename_proxy)) > 0))) {
-            g_free(filename_proxy);
-            break;
-        }
-    }
-
-    vfs_fclose(fd);
+    ip = input_check_file(filename_proxy, FALSE);
 
     if (ip && node && ip->get_song_tuple)
         input = ip->get_song_tuple(filename_proxy);
@@ -649,32 +642,16 @@ input_file_info_box(const gchar * filename)
     GList *node;
     InputPlugin *ip;
     gchar *filename_proxy;
-    VFSFile *fd;
-    gint ret = 1;
 
     filename_proxy = g_strdup(filename);
 
-    fd = vfs_fopen(filename, "rb");
+    ip = input_check_file(filename_proxy, FALSE);
 
-    for (node = get_input_list(); node != NULL; node = g_list_next(node)) {
-        ip = INPUT_PLUGIN(node->data);
-        if (ip && input_is_enabled(ip->filename) &&
-            (ip->is_our_file_from_vfs != NULL &&
-             (ret = ip->is_our_file_from_vfs(filename_proxy, fd) > 0) || 
-             (ip->is_our_file != NULL &&
-              (ret = ip->is_our_file(filename_proxy)) > 0))) {
-            if (ip->file_info_box)
-                ip->file_info_box(filename_proxy);
-            else
-                input_general_file_info_box(filename, ip);
+    if (ip->file_info_box)
+        ip->file_info_box(filename_proxy);
+    else
+        input_general_file_info_box(filename, ip);
 
-            vfs_fclose(fd);
-            g_free(filename_proxy);
-            return;
-        }
-    }
-
-    vfs_fclose(fd);
     input_general_file_info_box(filename, NULL);
     g_free(filename_proxy);
 }
