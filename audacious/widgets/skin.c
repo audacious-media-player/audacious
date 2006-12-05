@@ -932,7 +932,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
-    skin->properties.mainwin_eject_y = 88;
+    skin->properties.mainwin_eject_y = 89;
     tmp = read_ini_string(filename, "skin", "mainwinEjectY");
 
     if (tmp != NULL)

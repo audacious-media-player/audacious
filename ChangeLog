@@ -1,3 +1,35 @@
+2006-12-05 03:24:14 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3123]
+  - finish documenting the libaudacious API
+  
+  trunk/doc/libaudacious/libaudacious-decl-list.txt    |    2 
+  trunk/doc/libaudacious/libaudacious-decl.txt         |   18 ------
+  trunk/doc/libaudacious/libaudacious-sections.txt     |    2 
+  trunk/doc/libaudacious/libaudacious-undocumented.txt |   44 +--------------
+  trunk/doc/libaudacious/tmpl/beepctrl.sgml            |    2 
+  trunk/doc/libaudacious/tmpl/configdb.sgml            |    2 
+  trunk/doc/libaudacious/tmpl/formatter.sgml           |    2 
+  trunk/doc/libaudacious/tmpl/libaudacious-unused.sgml |   13 ++++
+  trunk/doc/libaudacious/tmpl/rcfile.sgml              |    2 
+  trunk/doc/libaudacious/tmpl/titlestring.sgml         |    4 -
+  trunk/doc/libaudacious/tmpl/util.sgml                |    2 
+  trunk/doc/libaudacious/tmpl/vfs.sgml                 |   11 ---
+  trunk/doc/libaudacious/tmpl/xconvert.sgml            |    9 ---
+  trunk/libaudacious/beepctrl.c                        |    2 
+  trunk/libaudacious/beepctrl.h                        |    7 ++
+  trunk/libaudacious/configdb.h                        |    6 +-
+  trunk/libaudacious/formatter.c                       |    2 
+  trunk/libaudacious/formatter.h                       |    6 ++
+  trunk/libaudacious/rcfile.h                          |   20 ++++++
+  trunk/libaudacious/titlestring.h                     |   55 +++++++++++++++----
+  trunk/libaudacious/vfs.c                             |    1 
+  trunk/libaudacious/vfs.h                             |   30 +++++++++-
+  trunk/libaudacious/vfs_common.c                      |    1 
+  trunk/libaudacious/xconvert.c                        |   17 +++++
+  trunk/libaudacious/xconvert.h                        |    2 
+  25 files changed, 162 insertions(+), 100 deletions(-)
+
+
 2006-12-05 02:30:58 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3121]
   - documentation fixups
