@@ -1,3 +1,13 @@
+2006-12-05 08:31:38 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3127]
+  - rewrite input_check_file()
+  - make similar functions use input_check_file() instead of probing by 
+    hand
+  
+  trunk/audacious/input.c |  109 ++++++++++++++++++------------------------------
+  1 file changed, 43 insertions(+), 66 deletions(-)
+
+
 2006-12-05 03:43:36 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3125]
   - mainwinEjectY's default value should be 89, not 88.

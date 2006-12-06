@@ -2299,6 +2299,14 @@ playlist_get_info_func(gpointer arg)
                 PLAYLIST_UNLOCK();
             }
         } // on_demand
+        else if (cfg.get_info_on_demand && 
+			(!cfg.playlist_visible || cfg.playlist_shaded
+                	 || !cfg.use_pl_metadata))
+        {
+            g_mutex_lock(mutex_scan);
+            playlist_get_info_scan_active = FALSE;
+            g_mutex_unlock(mutex_scan);
+        }
 
         if (update_playlistwin) {
             playlistwin_update_list();
