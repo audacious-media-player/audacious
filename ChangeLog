@@ -1,3 +1,13 @@
+2006-12-07 08:12:31 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3131]
+  - add work in progress TagLib::TagVFSFile class.
+  
+  trunk/taglib-vfs/Makefile     |   32 ++
+  trunk/taglib-vfs/tvfsfile.cxx |  501 ++++++++++++++++++++++++++++++++++++++++++
+  trunk/taglib-vfs/tvfsfile.h   |  247 ++++++++++++++++++++
+  3 files changed, 780 insertions(+)
+
+
 2006-12-06 11:41:04 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3129]
   - playlist_scan_thread_is_going should not be TRUE if the playlist is 
