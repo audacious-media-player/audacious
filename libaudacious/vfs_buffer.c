@@ -217,7 +217,7 @@ vfs_buffer_new(gpointer data, gsize size)
     buffer->size = size;
 
     handle->handle = buffer;
-    handle->base = buffer_const;
+    handle->base = &buffer_const;
 
     return handle;
 }
