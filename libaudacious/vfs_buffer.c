@@ -36,8 +36,6 @@ buffer_vfs_fclose_impl(VFSFile * file)
     if (file->handle)
         g_free(file->handle);
 
-    g_free(file);
-
     return 0;
 }
 
