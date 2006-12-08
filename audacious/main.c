@@ -1076,7 +1076,15 @@ main(gint argc, gchar ** argv)
         bmp_setup_logger();
 
     signal(SIGPIPE, SIG_IGN);   /* for controlsocket.c */
-    signal(SIGSEGV, segfault_handler);
+
+    /* in particular environment (maybe with glibc 2.5), core file
+       through signal handler doesn't contain useful back trace. */
+    {
+        char *magic;
+        magic = getenv("AUD_ENSURE_BACKTRACE");
+        if(magic == NULL)
+            signal(SIGSEGV, segfault_handler);
+    }
 
     g_random_set_seed(time(NULL));
 

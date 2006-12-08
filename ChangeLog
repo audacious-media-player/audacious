@@ -1,3 +1,10 @@
+2006-12-07 08:22:55 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3133]
+  - no, this is not going to work
+  
+  0 files changed
+
+
 2006-12-07 08:12:31 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3131]
   - add work in progress TagLib::TagVFSFile class.
