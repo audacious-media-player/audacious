@@ -31,13 +31,14 @@ SOURCES = \
 	util.c \
 	formatter.c \
 	titlestring.c \
-	xconvert.c
+	xconvert.c \
+	urldecode.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
 HEADERS = \
 	vfs.h vfs_buffer.h rcfile.h configdb.h \
-	beepctrl.h dirbrowser.h \
+	beepctrl.h dirbrowser.h urldecode.h \
 	formatter.h titlestring.h xconvert.h
 
 include ../mk/objective.mk

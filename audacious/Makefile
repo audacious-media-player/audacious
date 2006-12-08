@@ -65,7 +65,6 @@ SOURCES = \
 	hints.c \
 	about.c credits.c \
 	getopt.c getopt1.c \
-	urldecode.c \
 	iir.c \
 	iir_cfs.c \
 	iir_fpu.c

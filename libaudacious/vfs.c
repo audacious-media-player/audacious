@@ -23,6 +23,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#include "urldecode.h"
+
 static GList *vfs_transports = NULL;
 
 #ifdef VFS_DEBUG
@@ -64,11 +66,14 @@ vfs_fopen(const gchar * path,
     gchar **vec;
     VFSConstructor *vtable = NULL;
     GList *node;
+    gchar *decpath;
 
     if (!path || !mode)
 	return NULL;
 
-    vec = g_strsplit(path, "://", 2);
+    decpath = xmms_urldecode_plain(path);
+
+    vec = g_strsplit(decpath, "://", 2);
 
     /* special case: no transport specified, look for the "/" transport */
     if (vec[1] == NULL)
@@ -111,6 +116,7 @@ vfs_fopen(const gchar * path,
     file->base = vtable;
 
     g_strfreev(vec);
+    g_free(decpath);
 
     return file;
 }
