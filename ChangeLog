@@ -1,3 +1,12 @@
+2006-12-08 06:56:55 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3137]
+  - allow the output plugin to be changed while playing.
+  
+  trunk/audacious/output.c   |   76 ++++++++++++++++++++++++---------------------
+  trunk/audacious/prefswin.c |    4 --
+  2 files changed, 41 insertions(+), 39 deletions(-)
+
+
 2006-12-08 06:42:22 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [3135]
   Do not install signal handler for SIGSEGV if environmental variable

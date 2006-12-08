@@ -20,7 +20,7 @@ CFLAGS += $(PICFLAGS) \
 	-I../intl
 
 CONF_SRC = configdb_$(CONFIGDB_BACKEND).c
-VFS_SRC = vfs.c vfs_common.c
+VFS_SRC = vfs.c vfs_common.c vfs_buffer.c
 
 SOURCES = \
 	$(CONF_SRC) \
@@ -36,7 +36,7 @@ SOURCES = \
 OBJECTS = ${SOURCES:.c=.o}
 
 HEADERS = \
-	vfs.h rcfile.h configdb.h \
+	vfs.h vfs_buffer.h rcfile.h configdb.h \
 	beepctrl.h dirbrowser.h \
 	formatter.h titlestring.h xconvert.h
 
