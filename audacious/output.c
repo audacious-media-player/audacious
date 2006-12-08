@@ -1,4 +1,7 @@
-/*  BMP - Cross-platform multimedia player
+/*  Audacious
+ *  Copyright (C) 2005-2007  Audacious team
+ *
+ *  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
  *
  *  Based on XMMS:
@@ -74,11 +77,10 @@ get_current_output_plugin(void)
 void
 set_current_output_plugin(gint i)
 {
-#if 0
     gint time;
     gint pos;
     gboolean playing;
-#endif
+    OutputPlugin *op = get_current_output_plugin();
 
     GList *node = g_list_nth(op_data.output_list, i);
     if (!node) {
@@ -88,44 +90,48 @@ set_current_output_plugin(gint i)
 
     op_data.current_output_plugin = node->data;
 
-
-#if 0
     playing = bmp_playback_get_playing();
-    if (playing) {
-        /* FIXME: we do all on our own here */
-        
-        guint min = 0, sec = 0, params, time, pos;
-        gchar timestr[10];
-        
-        bmp_playback_pause();
-        pos = get_playlist_position();
-        time = bmp_playback_get_time() / 1000;
-        g_snprintf(timestr, sizeof(timestr), "%u:%2.2u",
-                   time / 60, time % 60);
-        
-        params = sscanf(timestr, "%u:%u", &min, &sec);
-        if (params == 2)
-            time = (min * 60) + sec;
-        else if (params == 1)
-            time = min;
-        else
-            return;
-        
-        bmp_playback_stop();
-        playlist_set_position(pos);
-        bmp_playback_play_file(playlist_get_filename(pos));
-        
-        while (!bmp_playback_get_playing())
-            g_message("waiting...");
 
+    if (playing == TRUE)
+    {
+	gint i = 99;
+        guint time, pos;
+	PlaylistEntry *entry;
+
+	/* don't stop yet, get the seek time and playlist position first */
+        pos = playlist_get_position();
+        time = op->output_time();
+
+	/* reset the audio system */
+        mainwin_stop_pushed();
+        op->close_audio();
+
+	g_usleep(300000);
+
+	/* wait for the playback thread to come online */
+        while (bmp_playback_get_playing())
+            g_message("waiting for audio system shutdown...");
+
+	/* wait for the playback thread to come online */
+        playlist_set_position(pos);
+	entry = playlist_get_entry_to_play();
+        bmp_playback_play_file(entry);
+
+	while (!bmp_playback_get_playing())
+	{
+	    gtk_main_iteration();
+            g_message("waiting for audio system startup...");
+	}
+
+	/* and signal a reseek */
         if (playlist_get_current_length() > -1 &&
-            time <= (playlist_get_current_length() / 1000)) {
-            /* Some time for things to cool down and heat up */
-            g_usleep(1000000);
-            bmp_playback_seek(time);
+            time <= (playlist_get_current_length()))
+	{
+	    gint i;
+
+            bmp_playback_seek(time / 1000);
         }
     }
-#endif
 }
 
 GList *

@@ -397,10 +397,6 @@ on_output_plugin_cbox_changed(GtkComboBox * combobox,
     gint selected;
     selected = gtk_combo_box_get_active(combobox);
 
-    /* Force playback to stop. There is NO way to change the output
-       plugin in the middle of a playback, and NO way to know when the
-       user closes the output plugin settings dialog. */
-    mainwin_stop_pushed();
     set_current_output_plugin(selected);
 }
 
