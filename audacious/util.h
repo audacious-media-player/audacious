@@ -148,6 +148,9 @@ void xmms_usleep(gint usec);
 
 GdkImage *create_dblsize_image(GdkImage * img);
 
+gchar *xmms_urldecode_path(const gchar * encoded_path);
+
+
 G_END_DECLS
 
 #endif

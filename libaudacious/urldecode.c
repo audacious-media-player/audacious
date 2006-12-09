@@ -27,50 +27,6 @@
 
 #include "util.h"
 
-/* URL-decode a file: URL path, return NULL if it's not what we expect */
-gchar *
-xmms_urldecode_path(const gchar * encoded_path)
-{
-    const gchar *cur, *ext;
-    gchar *path, *tmp;
-    gint realchar;
-
-    if (!encoded_path)
-        return NULL;
-
-    if (!str_has_prefix_nocase(encoded_path, "file:"))
-        return NULL;
-
-    cur = encoded_path + 5;
-
-    if (str_has_prefix_nocase(cur, "//localhost"))
-        cur += 11;
-
-    if (*cur == '/')
-        while (cur[1] == '/')
-            cur++;
-
-    tmp = g_malloc0(strlen(cur) + 1);
-
-    while ((ext = strchr(cur, '%')) != NULL) {
-        strncat(tmp, cur, ext - cur);
-        ext++;
-        cur = ext + 2;
-        if (!sscanf(ext, "%2x", &realchar)) {
-            /* Assume it is a literal '%'.  Several file
-             * managers send unencoded file: urls on drag
-             * and drop. */
-            realchar = '%';
-            cur -= 2;
-        }
-        tmp[strlen(tmp)] = realchar;
-    }
-
-    path = g_strconcat(tmp, cur, NULL);
-    g_free(tmp);
-    return path;
-}
-
 gchar *
 xmms_urldecode_plain(const gchar * encoded_path)
 {
