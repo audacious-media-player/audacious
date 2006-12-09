@@ -18,6 +18,7 @@
  */
 
 #include <glib.h>
+#include <string.h>
 #include "vfs.h"
 #include "vfs_buffer.h"
 

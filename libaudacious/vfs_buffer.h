@@ -21,7 +21,7 @@
 #define AUDACIOUS_VFS_BUFFER_H
 
 #include <glib.h>
-#include <audacious/vfs.h>
+#include "vfs.h"
 
 G_BEGIN_DECLS
 
