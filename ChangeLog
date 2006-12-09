@@ -1,3 +1,18 @@
+2006-12-08 23:41:46 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3145]
+  - move urldecode to libaudacious
+  - use urldecode in the VFS layer
+  
+  trunk/audacious/Makefile       |    1 
+  trunk/audacious/urldecode.c    |  110 -----------------------------------------
+  trunk/audacious/urldecode.h    |   25 ---------
+  trunk/libaudacious/Makefile    |    5 +
+  trunk/libaudacious/urldecode.c |  110 +++++++++++++++++++++++++++++++++++++++++
+  trunk/libaudacious/urldecode.h |   25 +++++++++
+  trunk/libaudacious/vfs.c       |    8 ++
+  7 files changed, 145 insertions(+), 139 deletions(-)
+
+
 2006-12-08 11:26:45 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3143]
   - don't free the VFS handle here, just our private handle.

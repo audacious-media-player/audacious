@@ -10,7 +10,7 @@ fi
 
 ### XXX: Gentoo's subversion.eclass sucks, yet people insist on using 
 ###      it.
-mkdir audacious/.svn
+mkdir -p audacious/.svn
 
 AUTOCONF=${AUTOCONF:-autoconf}
 ACLOCAL=${ACLOCAL:-aclocal}

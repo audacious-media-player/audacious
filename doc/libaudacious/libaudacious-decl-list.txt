@@ -1,4 +1,9 @@
 <SECTION>
+<FILE>dirbrowser</FILE>
+xmms_create_dir_browser
+</SECTION>
+
+<SECTION>
 <FILE>vfs</FILE>
 VFSFile
 VFSConstructor
@@ -95,19 +100,6 @@ xmms_remote_add_files
 </SECTION>
 
 <SECTION>
-<FILE>titlestring</FILE>
-TitleInput
-BmpTitleInput
-XMMS_TITLEINPUT_SIZE
-XMMS_TITLEINPUT_VERSION
-XMMS_NEW_TITLEINPUT
-bmp_title_input_new
-bmp_title_input_free
-xmms_get_titlestring
-xmms_titlestring_descriptions
-</SECTION>
-
-<SECTION>
 <FILE>formatter</FILE>
 Formatter
 xmms_formatter_new
@@ -140,6 +132,19 @@ bmp_rcfile_remove_key
 </SECTION>
 
 <SECTION>
+<FILE>titlestring</FILE>
+TitleInput
+BmpTitleInput
+XMMS_TITLEINPUT_SIZE
+XMMS_TITLEINPUT_VERSION
+XMMS_NEW_TITLEINPUT
+bmp_title_input_new
+bmp_title_input_free
+xmms_get_titlestring
+xmms_titlestring_descriptions
+</SECTION>
+
+<SECTION>
 <FILE>xconvert</FILE>
 xmms_convert_buffers
 </SECTION>
@@ -164,10 +169,5 @@ bmp_cfg_db_unset_key
 
 <SECTION>
 <FILE>util</FILE>
-</SECTION>
-
-<SECTION>
-<FILE>dirbrowser</FILE>
-xmms_create_dir_browser
 </SECTION>
 
