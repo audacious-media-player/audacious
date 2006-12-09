@@ -46,12 +46,12 @@
 #include "libaudacious/util.h"
 #include "libaudacious/configdb.h"
 #include "libaudacious/vfs.h"
+#include "libaudacious/urldecode.h"
 #include "equalizer.h"
 #include "playback.h"
 #include "playlist.h"
 #include "playlist_container.h"
 #include "ui_playlist.h"
-#include "urldecode.h"
 #include "util.h"
 #include "ui_fileinfo.h"
 

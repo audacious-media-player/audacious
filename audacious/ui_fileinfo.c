@@ -48,7 +48,7 @@
 #include "visualization.h"
 
 #include "main.h"
-#include "urldecode.h"
+#include "libaudacious/urldecode.h"
 #include "util.h"
 #include "dnd.h"
 #include "titlestring.h"

@@ -63,7 +63,7 @@
 #include "genevent.h"
 #include "playback.h"
 #include "playlist.h"
-#include "urldecode.h"
+#include "libaudacious/urldecode.h"
 #include "util.h"
 #include "visualization.h"
 #include "libaudacious/configdb.h"

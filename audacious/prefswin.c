@@ -49,7 +49,7 @@
 
 #include "main.h"
 #include "widgets/widgetcore.h"
-#include "urldecode.h"
+#include "libaudacious/urldecode.h"
 #include "util.h"
 #include "dnd.h"
 #include "libaudacious/configdb.h"

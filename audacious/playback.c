@@ -46,7 +46,7 @@
 #include "playlist.h"
 #include "ui_playlist.h"
 #include "skinwin.h"
-#include "urldecode.h"
+#include "libaudacious/urldecode.h"
 #include "util.h"
 
 
