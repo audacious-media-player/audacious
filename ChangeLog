@@ -1,3 +1,11 @@
+2006-12-11 09:23:47 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3155]
+  - exit gracefully on SIGINT/SIGTERM.
+  
+  trunk/audacious/main.c |    9 +++++++++
+  1 file changed, 9 insertions(+)
+
+
 2006-12-09 10:18:22 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [3153]
   - build fix

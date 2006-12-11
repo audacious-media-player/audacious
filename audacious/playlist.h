@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2006  William Pitcock, Tony Vroon, George Averill,
+ *  Copyright (C) 2005-2007  William Pitcock, Tony Vroon, George Averill,
  *                           Giacomo Lozito, Derek Pomery and Yoshiki Yazawa.
  *
  *  XMMS - Cross-platform multimedia player
@@ -54,16 +54,22 @@ typedef enum {
 } PlaylistFormat;
 
 #define PLAYLIST_ENTRY(x)  ((PlaylistEntry*)(x))
-struct _PlaylistEntry {
+typedef struct _PlaylistEntry {
     gchar *filename;
     gchar *title;
     gint length;
     gboolean selected;
     InputPlugin *decoder;
     TitleInput *tuple;		/* cached entry tuple, if available */
-};
+} PlaylistEntry;
 
-typedef struct _PlaylistEntry PlaylistEntry;
+#define PLAYLIST(x)  ((Playlist *)(x))
+typedef struct _Playlist {
+    gchar *title;
+    gchar *filename;
+    gint   length;
+    GList *entries;
+} Playlist;
 
 PlaylistEntry *playlist_entry_new(const gchar * filename,
                                   const gchar * title, const gint len,
