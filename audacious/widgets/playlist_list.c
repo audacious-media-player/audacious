@@ -309,6 +309,7 @@ playlist_list_button_press_cb(GtkWidget * widget,
                               PlayList_List * pl)
 {
     gint nr, y;
+    Playlist *playlist = playlist_get_active();
 
     if (event->button == 1 && pl->pl_fheight &&
         widget_contains(&pl->pl_widget, event->x, event->y)) {
@@ -316,20 +317,20 @@ playlist_list_button_press_cb(GtkWidget * widget,
         y = event->y - pl->pl_widget.y;
         nr = (y / pl->pl_fheight) + pl->pl_first;
 
-        if (nr >= playlist_get_length())
-            nr = playlist_get_length() - 1;
+        if (nr >= playlist_get_length(playlist))
+            nr = playlist_get_length(playlist) - 1;
 
         if (!(event->state & GDK_CONTROL_MASK))
-            playlist_select_all(FALSE);
+            playlist_select_all(playlist, FALSE);
 
         if (event->state & GDK_SHIFT_MASK && pl->pl_prev_selected != -1) {
-            playlist_select_range(pl->pl_prev_selected, nr, TRUE);
+            playlist_select_range(playlist, pl->pl_prev_selected, nr, TRUE);
             pl->pl_prev_min = pl->pl_prev_selected;
             pl->pl_prev_max = nr;
             pl->pl_drag_pos = nr - pl->pl_first;
         }
         else {
-            if (playlist_select_invert(nr)) {
+            if (playlist_select_invert(playlist, nr)) {
                 if (event->state & GDK_CONTROL_MASK) {
                     if (pl->pl_prev_min == -1) {
                         pl->pl_prev_min = pl->pl_prev_selected;
@@ -354,7 +355,7 @@ playlist_list_button_press_cb(GtkWidget * widget,
              */
             gdk_pointer_ungrab(GDK_CURRENT_TIME);
             gdk_flush();
-            playlist_set_position(nr);
+            playlist_set_position(playlist, nr);
             if (!bmp_playback_get_playing())
                 bmp_playback_initiate();
         }
@@ -371,11 +372,12 @@ playlist_list_get_playlist_position(PlayList_List * pl,
 {
     gint iy, length;
     gint ret;
+    Playlist *playlist = playlist_get_active();
 
     if (!widget_contains(WIDGET(pl), x, y) || !pl->pl_fheight)
         return -1;
 
-    if ((length = playlist_get_length()) == 0)
+    if ((length = playlist_get_length(playlist)) == 0)
         return -1;
     iy = y - pl->pl_widget.y;
 
@@ -454,15 +456,16 @@ playlist_list_draw_string(PlayList_List * pl,
                           guint ppos)
 {
     guint plist_length_int;
+    Playlist *playlist = playlist_get_active();
 
     PangoLayout *layout;
 
-    REQUIRE_STATIC_LOCK(playlist);
+    REQUIRE_STATIC_LOCK(playlists);
 
     if (cfg.show_numbers_in_pl) {
         gchar *pos_string = g_strdup_printf(cfg.show_separator_in_pl == TRUE ? "%d" : "%d.", ppos);
         plist_length_int =
-            gint_count_digits(playlist_get_length_nolock()) + !cfg.show_separator_in_pl + 1; /* cf.show_separator_in_pl will be 0 if false */
+            gint_count_digits(playlist_get_length_nolock(playlist)) + !cfg.show_separator_in_pl + 1; /* cf.show_separator_in_pl will be 0 if false */
 
         padding = plist_length_int;
         padding = ((padding + 1) * width_approx_digits);
@@ -508,6 +511,7 @@ playlist_list_draw_string(PlayList_List * pl,
 void
 playlist_list_draw(Widget * w)
 {
+    Playlist *playlist = playlist_get_active();
     PlayList_List *pl = PLAYLIST_LIST(w);
     GList *list;
     GdkGC *gc;
@@ -581,13 +585,13 @@ playlist_list_draw(Widget * w)
     pl->pl_fheight = (ascent + abs(descent));
     pl->pl_num_visible = height / pl->pl_fheight;
 
-    max_first = playlist_get_length() - pl->pl_num_visible;
+    max_first = playlist_get_length(playlist) - pl->pl_num_visible;
     max_first = MAX(max_first, 0);
 
     pl->pl_first = CLAMP(pl->pl_first, 0, max_first);
 
     PLAYLIST_LOCK();
-    list = playlist_get();
+    list = playlist->entries;
     list = g_list_nth(list, pl->pl_first);
 
     /* It sucks having to run the iteration twice but this is the only
@@ -641,7 +645,7 @@ playlist_list_draw(Widget * w)
 
         title = convert_title_text(title);
 
-        pos = playlist_get_queue_position(entry);
+        pos = playlist_get_queue_position(playlist, entry);
 
         tail[0] = 0;
         queuepos[0] = 0;
@@ -670,7 +674,7 @@ playlist_list_draw(Widget * w)
         else
             tail_width = width;
 
-        if (i == playlist_get_position_nolock())
+        if (i == playlist_get_position_nolock(playlist))
             gdk_gc_set_foreground(gc,
                                   skin_get_color(bmp_active_skin,
                                                  SKIN_PLEDIT_CURRENT));
@@ -766,7 +770,7 @@ playlist_list_draw(Widget * w)
 	gint x, y, plx, ply;
 
         if (cfg.show_numbers_in_pl) {
-            lpadding = gint_count_digits(playlist_get_length_nolock()) + 1;
+            lpadding = gint_count_digits(playlist_get_length_nolock(playlist)) + 1;
             lpadding = ((lpadding + 1) * width_approx_digits);
         }
         else {
@@ -775,7 +779,7 @@ playlist_list_draw(Widget * w)
 
         /* We already hold the mutex and have the playlist locked, so call
            the non-locking function. */
-        plength = playlist_get_length_nolock();
+        plength = playlist_get_length_nolock(playlist);
 
         x = pl->drag_motion_x;
         y = pl->drag_motion_y;
@@ -834,15 +838,15 @@ playlist_list_draw(Widget * w)
                           skin_get_color(bmp_active_skin,
                                          SKIN_PLEDIT_NORMAL));
 
-    if (cfg.show_numbers_in_pl) {
-
-        padding_plength = playlist_get_length_nolock();
+    if (cfg.show_numbers_in_pl)
+    {
+        padding_plength = playlist_get_length_nolock(playlist);
 
         if (padding_plength == 0) {
             padding_dwidth = 0;
         }
         else {
-            padding_dwidth = gint_count_digits(playlist_get_length_nolock());
+            padding_dwidth = gint_count_digits(playlist_get_length_nolock(playlist));
         }
 
         padding =

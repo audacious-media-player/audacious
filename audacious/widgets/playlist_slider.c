@@ -36,13 +36,14 @@ playlistslider_draw(Widget * w)
     PlaylistSlider *ps = (PlaylistSlider *) w;
     GdkPixmap *obj;
     gint y, skinx;
+    Playlist *playlist = playlist_get_active();
 
     g_return_if_fail(ps != NULL);
     g_return_if_fail(ps->ps_list != NULL);
 
-    if (playlist_get_length() > ps->ps_list->pl_num_visible)
+    if (playlist_get_length(playlist) > ps->ps_list->pl_num_visible)
         y = (ps->ps_list->pl_first * (ps->ps_widget.height - 19)) /
-            (playlist_get_length() - ps->ps_list->pl_num_visible);
+            (playlist_get_length(playlist) - ps->ps_list->pl_num_visible);
     else
         y = 0;
 
@@ -76,10 +77,11 @@ static void
 playlistslider_set_pos(PlaylistSlider * ps, gint y)
 {
     gint pos;
+    Playlist *playlist = playlist_get_active();
 
     y = CLAMP(y, 0, ps->ps_widget.height - 19);
 
-    pos = (y * (playlist_get_length() - ps->ps_list->pl_num_visible)) /
+    pos = (y * (playlist_get_length(playlist) - ps->ps_list->pl_num_visible)) /
         (ps->ps_widget.height - 19);
     playlistwin_set_toprow(pos);
 }
