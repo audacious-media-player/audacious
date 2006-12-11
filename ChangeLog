@@ -1,3 +1,10 @@
+2006-12-11 12:36:50 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [3183]
+  Add playlist_get_active where required.
+  trunk/audacious/output.c |   12 ++++++------
+  1 file changed, 6 insertions(+), 6 deletions(-)
+
+
 2006-12-11 12:34:17 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3181]
   - update main.c to new API

@@ -1,0 +1,5 @@
+VFSBuffer
+vfs_buffer_new
+vfs_buffer_new_from_string
+xmms_urldecode_path
+xmms_urldecode_plain
