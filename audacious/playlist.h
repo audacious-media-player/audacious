@@ -65,121 +65,132 @@ typedef struct _PlaylistEntry {
 
 #define PLAYLIST(x)  ((Playlist *)(x))
 typedef struct _Playlist {
-    gchar *title;
-    gchar *filename;
-    gint   length;
-    GList *entries;
-    GList *queue;
-    GList *shuffle;
+    gchar         *title;
+    gchar         *filename;
+    gint           length;
+    GList         *entries;
+    GList         *queue;
+    GList         *shuffle;
+    PlaylistEntry *position;    /* bleah */
 } Playlist;
+
+typedef enum {
+    PLAYLIST_ASSOC_LINEAR,
+    PLAYLIST_ASSOC_QUEUE,
+    PLAYLIST_ASSOC_SHUFFLE
+} PlaylistAssociation;
 
 PlaylistEntry *playlist_entry_new(const gchar * filename,
                                   const gchar * title, const gint len,
 				  InputPlugin * dec);
 void playlist_entry_free(PlaylistEntry * entry);
 
+void playlist_entry_associate(Playlist * playlist, PlaylistEntry * entry,
+                              PlaylistAssociation assoc);
+
+void playlist_entry_associate_pos(Playlist * playlist, PlaylistEntry * entry,
+                                  PlaylistAssociation assoc, gint pos);
+
 void playlist_init(void);
-void playlist_clear(void);
-void playlist_delete(gboolean crop);
+void playlist_clear(Playlist *playlist);
+void playlist_delete(Playlist *playlist, gboolean crop);
 
-gboolean playlist_add(const gchar * filename);
-gboolean playlist_ins(const gchar * filename, gint pos);
-guint playlist_add_dir(const gchar * dir);
-guint playlist_ins_dir(const gchar * dir, gint pos, gboolean background);
-guint playlist_add_url(const gchar * url);
-guint playlist_ins_url(const gchar * string, gint pos);
+gboolean playlist_add(Playlist *playlist, const gchar * filename);
+gboolean playlist_ins(Playlist *playlist, const gchar * filename, gint pos);
+guint playlist_add_dir(Playlist *playlist, const gchar * dir);
+guint playlist_ins_dir(Playlist *playlist, const gchar * dir, gint pos, gboolean background);
+guint playlist_add_url(Playlist *playlist, const gchar * url);
+guint playlist_ins_url(Playlist *playlist, const gchar * string, gint pos);
 
-void playlist_play(void);
 void playlist_set_info(const gchar * title, gint length, gint rate,
                        gint freq, gint nch);
-void playlist_check_pos_current(void);
-void playlist_next(void);
-void playlist_prev(void);
-void playlist_queue(void);
-void playlist_queue_position(guint pos);
-void playlist_queue_remove(guint pos);
-gint playlist_queue_get_length(void);
-gboolean playlist_is_position_queued(guint pos);
-void playlist_clear_queue(void);
-gint playlist_get_queue_position(PlaylistEntry * entry);
-gint playlist_get_queue_position_number(guint pos);
-gint playlist_get_queue_qposition_number(guint pos);
-void playlist_eof_reached(void);
-void playlist_set_position(guint pos);
-gint playlist_get_length(void);
-gint playlist_get_length_nolock(void);
-gint playlist_get_position(void);
-gint playlist_get_position_nolock(void);
+void playlist_check_pos_current(Playlist *playlist);
+void playlist_next(Playlist *playlist);
+void playlist_prev(Playlist *playlist);
+void playlist_queue(Playlist *playlist);
+void playlist_queue_position(Playlist *playlist, guint pos);
+void playlist_queue_remove(Playlist *playlist, guint pos);
+gint playlist_queue_get_length(Playlist *playlist);
+gboolean playlist_is_position_queued(Playlist *playlist, guint pos);
+void playlist_clear_queue(Playlist *playlist);
+gint playlist_get_queue_position(Playlist *playlist, PlaylistEntry * entry);
+gint playlist_get_queue_position_number(Playlist *playlist, guint pos);
+gint playlist_get_queue_qposition_number(Playlist *playlist, guint pos);
+void playlist_eof_reached(Playlist *playlist);
+void playlist_set_position(Playlist *playlist, guint pos);
+gint playlist_get_length(Playlist *playlist);
+gint playlist_get_length_nolock(Playlist *playlist);
+gint playlist_get_position(Playlist *playlist);
+gint playlist_get_position_nolock(Playlist *playlist);
 gchar *playlist_get_info_text(void);
-gint playlist_get_current_length(void);
+gint playlist_get_current_length(Playlist *playlist);
 
-gboolean playlist_save(const gchar * filename);
-gboolean playlist_load(const gchar * filename);
+gboolean playlist_save(Playlist *playlist, const gchar * filename);
+gboolean playlist_load(Playlist *playlist, const gchar * filename);
 
+/* returns the current selected *linear* playlist */
 GList *playlist_get(void);
 
 void playlist_start_get_info_thread(void);
 void playlist_stop_get_info_thread();
 void playlist_start_get_info_scan(void);
 
-void playlist_sort(PlaylistSortType type);
-void playlist_sort_selected(PlaylistSortType type);
+void playlist_sort(Playlist *playlist, PlaylistSortType type);
+void playlist_sort_selected(Playlist *playlist, PlaylistSortType type);
 
-void playlist_reverse(void);
-void playlist_random(void);
-void playlist_remove_duplicates(PlaylistDupsType);
-void playlist_remove_dead_files(void);
+void playlist_reverse(Playlist *playlist);
+void playlist_random(Playlist *playlist);
+void playlist_remove_duplicates(Playlist *playlist, PlaylistDupsType);
+void playlist_remove_dead_files(Playlist *playlist);
 
-void playlist_fileinfo_current(void);
-void playlist_fileinfo(guint pos);
+void playlist_fileinfo_current(Playlist *playlist);
+void playlist_fileinfo(Playlist *playlist, guint pos);
 
-void playlist_delete_index(guint pos);
-void playlist_delete_filenames(GList * filenames);
+void playlist_delete_index(Playlist *playlist, guint pos);
+void playlist_delete_filenames(Playlist *playlist, GList * filenames);
 
-PlaylistEntry *playlist_get_entry_to_play();
+PlaylistEntry *playlist_get_entry_to_play(Playlist *playlist);
 
 /* XXX this is for reverse compatibility --nenolod */
-const gchar *playlist_get_filename_to_play();
+const gchar *playlist_get_filename_to_play(Playlist *playlist);
 
-gchar *playlist_get_filename(guint pos);
-gchar *playlist_get_songtitle(guint pos);
-TitleInput *playlist_get_tuple(guint pos);
-gint playlist_get_songtime(guint pos);
+gchar *playlist_get_filename(Playlist *playlist, guint pos);
+gchar *playlist_get_songtitle(Playlist *playlist, guint pos);
+TitleInput *playlist_get_tuple(Playlist *playlist, guint pos);
+gint playlist_get_songtime(Playlist *playlist, guint pos);
 
-GList *playlist_get_selected(void);
-GList *playlist_get_selected_list(void);
-int playlist_get_num_selected(void);
+GList *playlist_get_selected(Playlist *playlist);
+GList *playlist_get_selected_list(Playlist *playlist);
+int playlist_get_num_selected(Playlist *playlist);
 
-void playlist_get_total_time(gulong * total_time, gulong * selection_time,
+void playlist_get_total_time(Playlist *playlist, gulong * total_time, gulong * selection_time,
                              gboolean * total_more,
                              gboolean * selection_more);
 
-void playlist_select_all(gboolean set);
-void playlist_select_range(gint min, gint max, gboolean sel);
-void playlist_select_invert_all(void);
-gboolean playlist_select_invert(guint pos);
+void playlist_select_all(Playlist *playlist, gboolean set);
+void playlist_select_range(Playlist *playlist, gint min, gint max, gboolean sel);
+void playlist_select_invert_all(Playlist *playlist);
+gboolean playlist_select_invert(Playlist *playlist, guint pos);
 
 gboolean playlist_read_info_selection(void);
 void playlist_read_info(guint pos);
 
 void playlist_set_shuffle(gboolean shuffle);
 
-void playlist_clear_selected(void);
+void playlist_clear_selected(Playlist *playlist);
 
-GList *get_playlist_nth(guint);
-gboolean playlist_set_current_name(const gchar * filename);
-const gchar *playlist_get_current_name(void);
-void playlist_new(void);
+GList *get_playlist_nth(Playlist *playlist, guint);
+gboolean playlist_set_current_name(Playlist *playlist, const gchar * filename);
+const gchar *playlist_get_current_name(Playlist *playlist);
+Playlist *playlist_new(void);
 
 PlaylistFormat playlist_format_get_from_name(const gchar * filename);
 gboolean is_playlist_name(const gchar * filename);
 
-#define PLAYLIST_LOCK()    G_LOCK(playlist)
-#define PLAYLIST_UNLOCK()  G_UNLOCK(playlist)
+#define PLAYLIST_LOCK()    G_LOCK(playlists)
+#define PLAYLIST_UNLOCK()  G_UNLOCK(playlists)
 
-G_LOCK_EXTERN(playlist);
-
-extern PlaylistEntry *playlist_position;
+G_LOCK_EXTERN(playlists);
 
 extern void playlist_load_ins_file(const gchar * filename,
                                    const gchar * playlist_name, gint pos,
@@ -188,6 +199,8 @@ extern void playlist_load_ins_file(const gchar * filename,
 extern void playlist_load_ins_file_tuple(const gchar * filename_p,
 					 const gchar * playlist_name, gint pos,
 					 TitleInput *tuple);
+
+Playlist *playlist_get_active(void);
 
 G_END_DECLS
 
