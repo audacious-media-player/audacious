@@ -132,7 +132,7 @@ static PlaylistCompareFunc playlist_compare_func_table[] = {
     playlist_compare_playlist
 };
 
-static guint playlist_load_ins(const gchar * filename, gint pos);
+static guint playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos);
 
 static void playlist_generate_shuffle_list(Playlist *);
 static void playlist_generate_shuffle_list_nolock(Playlist *);
@@ -565,7 +565,7 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
 
     if (is_playlist_name(filename)) {
         loading_playlist = TRUE;
-        playlist_load_ins(filename, pos);
+        playlist_load_ins(playlist, filename, pos);
         loading_playlist = FALSE;
         return TRUE;
     }
@@ -606,7 +606,7 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
     for (p = buf; r-- > 0 && (*p == '\r' || *p == '\n'); p++);
 
     if (r > 5 && str_has_prefix_nocase(p, "http:")) {
-        playlist_load_ins(filename, pos);
+        playlist_load_ins(playlist, filename, pos);
         return TRUE;
     }
 
@@ -744,19 +744,19 @@ playlist_add(Playlist * playlist, const gchar * filename)
 }
 
 guint 
-playlist_add_dir(const gchar * directory)
+playlist_add_dir(Playlist * playlist, const gchar * directory)
 {
-    return playlist_ins_dir(directory, -1, TRUE);
+    return playlist_ins_dir(playlist, directory, -1, TRUE);
 }
 
 guint
-playlist_add_url(const gchar * url)
+playlist_add_url(Playlist * playlist, const gchar * url)
 {
-    return playlist_ins_url(url, -1);
+    return playlist_ins_url(playlist, url, -1);
 }
 
 guint
-playlist_ins_dir(const gchar * path,
+playlist_ins_dir(Playlist * playlist, const gchar * path,
                     gint pos,
                     gboolean background)
 {
@@ -772,7 +772,7 @@ playlist_ins_dir(const gchar * path,
     g_hash_table_foreach_remove(htab, devino_destroy, NULL);
 
     for (node = list; node; node = g_list_next(node)) {
-        __playlist_ins(node->data, pos, NULL);
+        __playlist_ins(playlist, node->data, pos, NULL);
         g_free(node->data);
         entries++;
         if (pos >= 0)
@@ -788,7 +788,7 @@ playlist_ins_dir(const gchar * path,
 }
 
 guint
-playlist_ins_url(const gchar * string,
+playlist_ins_url(Playlist * playlist, const gchar * string,
                     gint pos)
 {
     gchar *tmp;
@@ -798,6 +798,7 @@ playlist_ins_url(const gchar * string,
     gboolean success = FALSE;
     gchar *decoded = NULL;
 
+    g_return_val_if_fail(playlist != NULL, 0);
     g_return_val_if_fail(string != NULL, 0);
 
     playlistwin_update_list();
@@ -814,14 +815,14 @@ playlist_ins_url(const gchar * string,
         decoded = g_strdup(string);
 
         if (g_file_test(decoded, G_FILE_TEST_IS_DIR)) {
-            i = playlist_ins_dir(decoded, pos, FALSE);
+            i = playlist_ins_dir(playlist, decoded, pos, FALSE);
         }
         else {
             if (is_playlist_name(decoded)) {
-                i = playlist_load_ins(decoded, pos);
+                i = playlist_load_ins(playlist, decoded, pos);
             }
             else {
-                success = playlist_ins(decoded, pos);
+                success = playlist_ins(playlist, decoded, pos);
                 i = 1;
             }
         }
@@ -855,15 +856,17 @@ playlist_ins_url(const gchar * string,
 }
 
 void
-playlist_set_info(const gchar * title, gint length, gint rate,
+playlist_set_info(Playlist * playlist, const gchar * title, gint length, gint rate,
                   gint freq, gint nch)
 {
     PLAYLIST_LOCK();
 
-    if (playlist_position) {
-        g_free(playlist_position->title);
-        playlist_position->title = g_strdup(title);
-        playlist_position->length = length;
+    g_return_if_fail(playlist != NULL);
+
+    if (playlist->position) {
+        g_free(playlist->position->title);
+        playlist->position->title = g_strdup(title);
+        playlist->position->length = length;
     }
 
     PLAYLIST_UNLOCK();
@@ -1363,16 +1366,17 @@ playlist_get_current_length(void)
 }
 
 gboolean
-playlist_save(const gchar * filename)
+playlist_save(Playlist * playlist, const gchar * filename)
 {
     PlaylistContainer *plc = NULL;
     gchar *ext;
 
+    g_return_val_if_fail(playlist != NULL, FALSE);
     g_return_val_if_fail(filename != NULL, FALSE);
 
     ext = strrchr(filename, '.') + 1;
 
-    playlist_set_current_name(filename);
+    playlist_set_current_name(playlist, filename);
 
     if ((plc = playlist_container_find(ext)) == NULL)
         return FALSE;
@@ -1386,12 +1390,12 @@ playlist_save(const gchar * filename)
 }
 
 gboolean
-playlist_load(const gchar * filename)
+playlist_load(Playlist * playlist, const gchar * filename)
 {
     gboolean ret = FALSE;
 
     loading_playlist = TRUE;
-    ret = playlist_load_ins(filename, -1);
+    ret = playlist_load_ins(Playlist * playlist, filename, -1);
     loading_playlist = FALSE;
 
     return ret;
@@ -1508,11 +1512,12 @@ playlist_load_ins_file_tuple(const gchar * filename_p,
 }
 
 static guint
-playlist_load_ins(const gchar * filename, gint pos)
+playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
 {
     PlaylistContainer *plc;
     gchar *ext;
 
+    g_return_val_if_fail(playlist != NULL, 0);
     g_return_val_if_fail(filename != NULL, 0);
 
     ext = strrchr(filename, '.') + 1;

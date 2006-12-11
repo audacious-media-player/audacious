@@ -102,7 +102,7 @@ guint playlist_ins_dir(Playlist *playlist, const gchar * dir, gint pos, gboolean
 guint playlist_add_url(Playlist *playlist, const gchar * url);
 guint playlist_ins_url(Playlist *playlist, const gchar * string, gint pos);
 
-void playlist_set_info(const gchar * title, gint length, gint rate,
+void playlist_set_info(Playlist *playlist, const gchar * title, gint length, gint rate,
                        gint freq, gint nch);
 void playlist_check_pos_current(Playlist *playlist);
 void playlist_next(Playlist *playlist);
@@ -192,11 +192,11 @@ gboolean is_playlist_name(const gchar * filename);
 
 G_LOCK_EXTERN(playlists);
 
-extern void playlist_load_ins_file(const gchar * filename,
+extern void playlist_load_ins_file(Playlist *playlist, const gchar * filename,
                                    const gchar * playlist_name, gint pos,
                                    const gchar * title, gint len);
 
-extern void playlist_load_ins_file_tuple(const gchar * filename_p,
+extern void playlist_load_ins_file_tuple(Playlist *playlist, const gchar * filename_p,
 					 const gchar * playlist_name, gint pos,
 					 TitleInput *tuple);
 
