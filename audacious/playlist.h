@@ -122,7 +122,7 @@ gint playlist_get_length(Playlist *playlist);
 gint playlist_get_length_nolock(Playlist *playlist);
 gint playlist_get_position(Playlist *playlist);
 gint playlist_get_position_nolock(Playlist *playlist);
-gchar *playlist_get_info_text(void);
+gchar *playlist_get_info_text(Playlist *playlist);
 gint playlist_get_current_length(Playlist *playlist);
 
 gboolean playlist_save(Playlist *playlist, const gchar * filename);

@@ -1,3 +1,12 @@
+2006-12-11 11:44:07 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3171]
+  - more updates
+  
+  trunk/audacious/playlist.c |   51 ++++++++++++++++++++++++---------------------
+  trunk/audacious/playlist.h |    6 ++---
+  2 files changed, 31 insertions(+), 26 deletions(-)
+
+
 2006-12-11 11:35:52 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3169]
   - update playlist_ins(), playlist_add().
