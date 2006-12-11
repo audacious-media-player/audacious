@@ -342,7 +342,7 @@ playlist_delete_node(Playlist * playlist, GList * node, gboolean * set_info_text
             playlist->position = NULL;
 
         /* Make sure the entry did not disappear under us */
-        if (g_list_index(playlist_get(), entry) == -1)
+        if (g_list_index(playlist->entries, entry) == -1)
             return;
 
     }
@@ -400,7 +400,7 @@ playlist_delete_index(Playlist *playlist, guint pos)
 }
 
 void
-playlist_delete_filenames(GList * filenames)
+playlist_delete_filenames(Playlist * playlist, GList * filenames)
 {
     GList *node, *fnode;
     gboolean set_info_text = FALSE, restart_playing = FALSE;
@@ -415,7 +415,7 @@ playlist_delete_filenames(GList * filenames)
             PlaylistEntry *entry = node->data;
 
             if (!strcmp(entry->filename, fnode->data))
-                playlist_delete_node(node, &set_info_text, &restart_playing);
+                playlist_delete_node(playlist, node, &set_info_text, &restart_playing);
 
             node = next;
         }
@@ -441,15 +441,17 @@ playlist_delete_filenames(GList * filenames)
 }
 
 void
-playlist_delete(gboolean crop)
+playlist_delete(Playlist * playlist, gboolean crop)
 {
     gboolean restart_playing = FALSE, set_info_text = FALSE;
     GList *node, *next_node;
     PlaylistEntry *entry;
 
+    g_return_if_fail(playlist != NULL);
+
     PLAYLIST_LOCK();
 
-    node = playlist;
+    node = playlist->entries;
 
     while (node) {
         entry = PLAYLIST_ENTRY(node->data);
@@ -457,7 +459,7 @@ playlist_delete(gboolean crop)
         next_node = g_list_next(node);
 
         if ((entry->selected && !crop) || (!entry->selected && crop)) {
-            playlist_delete_node(node, &set_info_text, &restart_playing);
+            playlist_delete_node(playlist, node, &set_info_text, &restart_playing);
         }
 
         node = next_node;

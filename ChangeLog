@@ -1,3 +1,14 @@
+2006-12-11 11:25:21 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3165]
+  - this commit breaks the API. I'm not done here, but hopefully the new API is
+    stable enough now that the other chunks of the code can be converted by 
+    Chainsaw ;)
+  
+  trunk/audacious/playlist.c |  288 ++++++++++++++++++++++++---------------------
+  trunk/audacious/playlist.h |  153 ++++++++++++-----------
+  2 files changed, 237 insertions(+), 204 deletions(-)
+
+
 2006-12-11 10:17:12 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [3161]
   remove plugin-reactivation loops for general and visualization plugins
