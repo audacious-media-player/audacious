@@ -1,3 +1,12 @@
+2006-12-11 12:28:00 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3177]
+  - update widgetcore to new API
+  
+  trunk/audacious/widgets/playlist_list.c   |   42 ++++++++++++++++--------------
+  trunk/audacious/widgets/playlist_slider.c |    8 +++--
+  2 files changed, 28 insertions(+), 22 deletions(-)
+
+
 2006-12-11 12:19:56 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3175]
   - finish conversion to new API.

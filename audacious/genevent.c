@@ -110,10 +110,12 @@ idle_func_change_song(gboolean waiting)
     }
 
     if (!cfg.pause_between_songs ||
-        g_timer_elapsed(pause_timer, NULL) >= cfg.pause_between_songs_time) {
+        g_timer_elapsed(pause_timer, NULL) >= cfg.pause_between_songs_time)
+    {
+	Playlist *playlist = playlist_get_active();
 
         GDK_THREADS_ENTER();
-        playlist_eof_reached();
+        playlist_eof_reached(playlist);
         GDK_THREADS_LEAVE();
 
         waiting = FALSE;

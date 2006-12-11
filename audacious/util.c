@@ -777,6 +777,7 @@ filebrowser_add_files(GtkFileChooser * browser,
     GSList *cur;
     gchar *ptr;
     guint ctr = 0;
+    Playlist *playlist = playlist_get_active();
 
     if (GTK_IS_WIDGET(mainwin_jtf))
         gtk_widget_set_sensitive(mainwin_jtf, FALSE);
@@ -784,9 +785,9 @@ filebrowser_add_files(GtkFileChooser * browser,
     for (cur = files; cur; cur = g_slist_next(cur)) {
 
         if (g_file_test(cur->data,G_FILE_TEST_IS_DIR)) {
-            playlist_add_dir((const gchar *) cur->data);
+            playlist_add_dir(playlist, (const gchar *) cur->data);
         } else {
-            playlist_add((const gchar *) cur->data);
+            playlist_add(playlist, (const gchar *) cur->data);
         }       
 
         if (++ctr == 20) {
@@ -832,7 +833,7 @@ filebrowser_play(GtkFileChooser * browser)
 
     if (!files) return;
 
-    playlist_clear();
+    playlist_clear(playlist_get_active());
 
     filebrowser_add_files(browser, files);
     g_slist_foreach(files, (GFunc) g_free, NULL);
@@ -1111,12 +1112,13 @@ static void filebrowser_add_files_classic(gchar ** files,
 {
     int ctr = 0;
     char *ptr;
+    Playlist *playlist = playlist_get_active();
 
     if (GTK_IS_WIDGET(mainwin_jtf))
 	gtk_widget_set_sensitive(mainwin_jtf, FALSE);
 
     while (files[ctr] != NULL) {
-	playlist_add(files[ctr++]);
+	playlist_add(playlist, files[ctr++]);
     }
     playlistwin_update_list();
 
@@ -1148,7 +1150,7 @@ static void filebrowser_play_classic(GtkWidget * w, GtkWidget * filesel)
     if (util_filebrowser_is_dir_classic
 	(GTK_FILE_SELECTION(GTK_FILE_SELECTION(filesel))))
 	return;
-    playlist_clear();
+    playlist_clear(playlist_get_active());
     files = gtk_file_selection_get_selections(GTK_FILE_SELECTION(filesel));
     filebrowser_add_files_classic(files, GTK_FILE_SELECTION(filesel));
     gtk_widget_destroy(filesel);
