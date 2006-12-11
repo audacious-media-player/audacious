@@ -972,6 +972,13 @@ segfault_handler(gint sig)
 #endif
 }
 
+/* Handles SIGINT/SIGTERM events gracefully. */
+static void
+sigterm_handler(gint sig)
+{
+    mainwin_quit_cb();
+}
+
 static void
 bmp_setup_logger(void)
 {
@@ -1076,6 +1083,8 @@ main(gint argc, gchar ** argv)
         bmp_setup_logger();
 
     signal(SIGPIPE, SIG_IGN);   /* for controlsocket.c */
+    signal(SIGINT,  sigterm_handler);
+    signal(SIGTERM, sigterm_handler);
 
     /* in particular environment (maybe with glibc 2.5), core file
        through signal handler doesn't contain useful back trace. */
