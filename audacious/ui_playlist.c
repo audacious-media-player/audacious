@@ -339,7 +339,7 @@ playlistwin_update_info(void)
     gulong selection, total;
     gboolean selection_more, total_more;
 
-    playlist_get_total_time(&total, &selection, &total_more, &selection_more);
+    playlist_get_total_time(playlist_get_active(), &total, &selection, &total_more, &selection_more);
 
     if (selection > 0 || (selection == 0 && !selection_more)) {
         if (selection > 3600)
@@ -379,9 +379,10 @@ playlistwin_update_sinfo(void)
 {
     gchar *posstr, *timestr, *title, *info;
     gint pos, time;
+    Playlist *playlist = playlist_get_active();
 
-    pos = playlist_get_position();
-    title = playlist_get_songtitle(pos);
+    pos = playlist_get_position(playlist);
+    title = playlist_get_songtitle(playlist, pos);
 
     if (!title) {
         textbox_set_text(playlistwin_sinfo, "");
@@ -390,7 +391,7 @@ playlistwin_update_sinfo(void)
 
     convert_title_text(title);
 
-    time = playlist_get_songtime(pos);
+    time = playlist_get_songtime(playlist, pos);
 
     if (cfg.show_numbers_in_pl)
         posstr = g_strdup_printf("%d. ", pos + 1);
@@ -656,17 +657,19 @@ playlistwin_scroll_down_pushed(void)
 static void
 playlistwin_select_all(void)
 {
-    playlist_select_all(TRUE);
+    Playlist *playlist = playlist_get_active();
+
+    playlist_select_all(playlist, TRUE);
     playlistwin_list->pl_prev_selected = 0;
     playlistwin_list->pl_prev_min = 0;
-    playlistwin_list->pl_prev_max = playlist_get_length() - 1;
+    playlistwin_list->pl_prev_max = playlist_get_length(playlist) - 1;
     playlistwin_update_list();
 }
 
 static void
 playlistwin_select_none(void)
 {
-    playlist_select_all(FALSE);
+    playlist_select_all(playlist_get_active(), FALSE);
     playlistwin_list->pl_prev_selected = -1;
     playlistwin_list->pl_prev_min = -1;
     playlistwin_update_list();
@@ -675,7 +678,7 @@ playlistwin_select_none(void)
 static void
 playlistwin_inverse_selection(void)
 {
-    playlist_select_invert_all();
+    playlist_select_invert_all(playlist_get_active());
     playlistwin_list->pl_prev_selected = -1;
     playlistwin_list->pl_prev_min = -1;
     playlistwin_update_list();
@@ -793,15 +796,17 @@ playlistwin_add_dir_handler(const gchar * dir)
 static void
 playlistwin_fileinfo(void)
 {
+    Playlist *playlist = playlist_get_active();
+
     /* Show the first selected file, or the current file if nothing is
      * selected */
-    GList *list = playlist_get_selected();
+    GList *list = playlist_get_selected(playlist);
     if (list) {
-        playlist_fileinfo(GPOINTER_TO_INT(list->data));
+        playlist_fileinfo(playlist, GPOINTER_TO_INT(list->data));
         g_list_free(list);
     }
     else
-        playlist_fileinfo_current();
+        playlist_fileinfo_current(playlist);
 }
 
 static void
@@ -817,7 +822,7 @@ menu_set_item_sensitive(GtkItemFactory * item_factory,
 static void
 playlistwin_set_sensitive_sortmenu(void)
 {
-    gboolean set = playlist_get_num_selected() > 1;
+    gboolean set = playlist_get_num_selected(playlist_get_active()) > 1;
     menu_set_item_sensitive(plsort_menu, "/Sort Selection/By Title", set);
     menu_set_item_sensitive(plsort_menu, "/Sort Selection/By Filename", set);
     menu_set_item_sensitive(plsort_menu, "/Sort Selection/By Path + Filename", set);
@@ -909,7 +914,7 @@ playlistwin_save_playlist(const gchar * filename)
         if (!show_playlist_overwrite_prompt(GTK_WINDOW(playlistwin), filename))
             return;
 
-    if (!playlist_save(filename))
+    if (!playlist_save(playlist_get_active(), filename))
         show_playlist_save_error(GTK_WINDOW(playlistwin), filename);
 }
 
@@ -929,16 +934,18 @@ playlistwin_save_current(void)
 static void
 playlistwin_load_playlist(const gchar * filename)
 {
+    Playlist *playlist = playlist_get_active();
+
     g_return_if_fail(filename != NULL);
 
     str_replace_in(&cfg.playlist_path, g_strdup(filename));
 
-    playlist_clear();
+    playlist_clear(playlist);
     mainwin_clear_song_info();
     mainwin_set_info_text();
 
-    playlist_load(filename);
-    playlist_set_current_name(filename);
+    playlist_load(playlist, filename);
+    playlist_set_current_name(playlist, filename);
 }
 
 static gchar *
@@ -1322,10 +1329,12 @@ static void
 playlistwin_keypress_up_down_handler(PlayList_List * pl,
                                      gboolean up, guint state)
 {
+    Playlist *playlist = playlist_get_active();
+
     if ((state & GDK_MOD1_MASK) && (state & GDK_SHIFT_MASK))
         return;
     if (!(state & GDK_MOD1_MASK))
-        playlist_select_all(FALSE);
+        playlist_select_all(playlist, FALSE);
 
     if (pl->pl_prev_selected == -1 ||
         (!playlistwin_item_visible(pl->pl_prev_selected) &&
@@ -1339,12 +1348,12 @@ playlistwin_keypress_up_down_handler(PlayList_List * pl,
         }
         pl->pl_prev_max += (up ? -1 : 1);
         pl->pl_prev_max =
-            CLAMP(pl->pl_prev_max, 0, playlist_get_length() - 1);
+            CLAMP(pl->pl_prev_max, 0, playlist_get_length(playlist) - 1);
 
         pl->pl_first = MIN(pl->pl_first, pl->pl_prev_max);
         pl->pl_first = MAX(pl->pl_first, pl->pl_prev_max -
                            pl->pl_num_visible + 1);
-        playlist_select_range(pl->pl_prev_min, pl->pl_prev_max, TRUE);
+        playlist_select_range(playlist, pl->pl_prev_min, pl->pl_prev_max, TRUE);
         return;
     }
     else if (state & GDK_MOD1_MASK) {
@@ -1364,16 +1373,15 @@ playlistwin_keypress_up_down_handler(PlayList_List * pl,
         pl->pl_prev_selected++;
 
     pl->pl_prev_selected =
-        CLAMP(pl->pl_prev_selected, 0, playlist_get_length() - 1);
+        CLAMP(pl->pl_prev_selected, 0, playlist_get_length(playlist) - 1);
 
     if (pl->pl_prev_selected < pl->pl_first)
         pl->pl_first--;
     else if (pl->pl_prev_selected >= (pl->pl_first + pl->pl_num_visible))
         pl->pl_first++;
 
-    playlist_select_range(pl->pl_prev_selected, pl->pl_prev_selected, TRUE);
+    playlist_select_range(playlist, pl->pl_prev_selected, pl->pl_prev_selected, TRUE);
     pl->pl_prev_min = -1;
-
 }
 
 /* FIXME: Handle the keys through menu */
@@ -1381,6 +1389,8 @@ playlistwin_keypress_up_down_handler(PlayList_List * pl,
 static gboolean
 playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
 {
+    Playlist *playlist = playlist_get_active();
+
     guint keyval;
     gboolean refresh = FALSE;
 
@@ -1412,13 +1422,13 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
         break;
     case GDK_End:
         playlistwin_list->pl_first =
-            playlist_get_length() - playlistwin_list->pl_num_visible;
+            playlist_get_length(playlist) - playlistwin_list->pl_num_visible;
         refresh = TRUE;
         break;
     case GDK_Return:
         if (playlistwin_list->pl_prev_selected > -1
             && playlistwin_item_visible(playlistwin_list->pl_prev_selected)) {
-            playlist_set_position(playlistwin_list->pl_prev_selected);
+            playlist_set_position(playlist, playlistwin_list->pl_prev_selected);
             if (!bmp_playback_get_playing())
                 bmp_playback_initiate();
         }
@@ -1429,9 +1439,9 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
         break;
     case GDK_Delete:
         if (event->state & GDK_CONTROL_MASK)
-            playlist_delete(TRUE);
+            playlist_delete(playlist, TRUE);
         else
-            playlist_delete(FALSE);
+            playlist_delete(playlist, FALSE);
         break;
     case GDK_Insert:
         if (event->state & GDK_MOD1_MASK)
@@ -1442,24 +1452,24 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
     case GDK_Left:
     case GDK_KP_Left:
     case GDK_KP_7:
-        if (playlist_get_current_length() != -1)
+        if (playlist_get_current_length(playlist) != -1)
             bmp_playback_seek(CLAMP
                               (bmp_playback_get_time() - 5000, 0,
-                              playlist_get_current_length()) / 1000);
+                              playlist_get_current_length(playlist)) / 1000);
         break;
     case GDK_Right:
     case GDK_KP_Right:
     case GDK_KP_9:
-        if (playlist_get_current_length() != -1)
+        if (playlist_get_current_length(playlist) != -1)
             bmp_playback_seek(CLAMP
                               (bmp_playback_get_time() + 5000, 0,
-                              playlist_get_current_length()) / 1000);
+                              playlist_get_current_length(playlist)) / 1000);
         break;
     case GDK_KP_4:
-        playlist_prev();
+        playlist_prev(playlist);
         break;
     case GDK_KP_6:
-        playlist_next();
+        playlist_next(playlist);
         break;
 
     case GDK_Escape:
@@ -1599,6 +1609,7 @@ playlistwin_drag_data_received(GtkWidget * widget,
                                guint time, gpointer user_data)
 {
     gint pos;
+    Playlist *playlist = playlist_get_active();
 
     g_return_if_fail(selection_data != NULL);
 
@@ -1611,11 +1622,23 @@ playlistwin_drag_data_received(GtkWidget * widget,
         pos = (y - WIDGET(playlistwin_list)->y) /
             playlistwin_list->pl_fheight + playlistwin_list->pl_first;
 
-        pos = MIN(pos, playlist_get_length());
-        playlist_ins_url((gchar *) selection_data->data, pos);
+        pos = MIN(pos, playlist_get_length(playlist));
+        playlist_ins_url(playlist, (gchar *) selection_data->data, pos);
     }
     else
-        playlist_add_url((gchar *) selection_data->data);
+        playlist_add_url(playlist, (gchar *) selection_data->data);
+}
+
+static void
+local_playlist_prev(void)
+{
+    playlist_prev(playlist_get_active());
+}
+
+static void
+local_playlist_next(void)
+{
+    playlist_next(playlist_get_active());
 }
 
 static void
@@ -1696,7 +1719,7 @@ playlistwin_create_widgets(void)
     playlistwin_srew =
         create_sbutton(&playlistwin_wlist, playlistwin_bg, playlistwin_gc,
                        playlistwin_get_width() - 144,
-                       cfg.playlist_height - 16, 8, 7, playlist_prev);
+                       cfg.playlist_height - 16, 8, 7, local_playlist_prev);
 
     /* play button */
     playlistwin_splay =
@@ -1720,7 +1743,7 @@ playlistwin_create_widgets(void)
     playlistwin_sfwd =
         create_sbutton(&playlistwin_wlist, playlistwin_bg, playlistwin_gc,
                        playlistwin_get_width() - 109,
-                       cfg.playlist_height - 16, 8, 7, playlist_next);
+                       cfg.playlist_height - 16, 8, 7, local_playlist_next);
 
     /* eject button */
     playlistwin_seject =
@@ -1748,7 +1771,7 @@ selection_received(GtkWidget * widget,
 {
     if (selection_data->type == GDK_SELECTION_TYPE_STRING &&
         selection_data->length > 0)
-        playlist_add_url((gchar *) selection_data->data);
+        playlist_add_url(playlist_get_active(), (gchar *) selection_data->data);
 }
 
 static void
@@ -1904,7 +1927,7 @@ playlistwin_show(void)
     cfg.playlist_visible = TRUE;
 
     playlistwin_set_toprow(0);
-    playlist_check_pos_current();
+    playlist_check_pos_current(playlist_get_active());
 
     gtk_widget_show(playlistwin);
 }
@@ -1932,69 +1955,71 @@ plsort_menu_callback(gpointer data,
                      guint action,
                      GtkWidget * widget)
 {
+    Playlist *playlist = playlist_get_active();
+
     switch (action) {
     case PLAYLISTWIN_SORT_BYPLAYLIST:
-        playlist_sort(PLAYLIST_SORT_PLAYLIST);
+        playlist_sort(playlist, PLAYLIST_SORT_PLAYLIST);
         playlistwin_update_list();
         break;
     case PLAYLISTWIN_SORT_BYTRACK:
-        playlist_sort(PLAYLIST_SORT_TRACK);
+        playlist_sort(playlist, PLAYLIST_SORT_TRACK);
         playlistwin_update_list();
         break;
     case PLAYLISTWIN_SORT_BYTITLE:
-        playlist_sort(PLAYLIST_SORT_TITLE);
+        playlist_sort(playlist, PLAYLIST_SORT_TITLE);
         playlistwin_update_list();
         break;
     case PLAYLISTWIN_SORT_BYARTIST:
-        playlist_sort(PLAYLIST_SORT_ARTIST);
+        playlist_sort(playlist, PLAYLIST_SORT_ARTIST);
         playlistwin_update_list();
         break;
     case PLAYLISTWIN_SORT_BYPATH:
-        playlist_sort(PLAYLIST_SORT_PATH);
+        playlist_sort(playlist, PLAYLIST_SORT_PATH);
         playlistwin_update_list();
         break;
     case PLAYLISTWIN_SORT_BYDATE:
-        playlist_sort(PLAYLIST_SORT_DATE);
+        playlist_sort(playlist, PLAYLIST_SORT_DATE);
         playlistwin_update_list();
         break;
     case PLAYLISTWIN_SORT_BYFILENAME:
-        playlist_sort(PLAYLIST_SORT_FILENAME);
+        playlist_sort(playlist, PLAYLIST_SORT_FILENAME);
         playlistwin_update_list();
         break;
     case PLAYLISTWIN_SORT_SEL_BYPLAYLIST:
-        playlist_sort_selected(PLAYLIST_SORT_PLAYLIST);
+        playlist_sort_selected(playlist, PLAYLIST_SORT_PLAYLIST);
         playlistwin_update_list();
         break;
     case PLAYLISTWIN_SORT_SEL_BYTRACK:
-        playlist_sort_selected(PLAYLIST_SORT_TRACK);
+        playlist_sort_selected(playlist, PLAYLIST_SORT_TRACK);
         playlistwin_update_list();
         break;
     case PLAYLISTWIN_SORT_SEL_BYTITLE:
-        playlist_sort_selected(PLAYLIST_SORT_TITLE);
+        playlist_sort_selected(playlist, PLAYLIST_SORT_TITLE);
         playlistwin_update_list();
         break;
     case PLAYLISTWIN_SORT_SEL_BYARTIST:
-        playlist_sort_selected(PLAYLIST_SORT_ARTIST);
+        playlist_sort_selected(playlist, PLAYLIST_SORT_ARTIST);
         playlistwin_update_list();
         break;
     case PLAYLISTWIN_SORT_SEL_BYFILENAME:
-        playlist_sort_selected(PLAYLIST_SORT_FILENAME);
+        playlist_sort_selected(playlist, PLAYLIST_SORT_FILENAME);
         playlistwin_update_list();
         break;
     case PLAYLISTWIN_SORT_SEL_BYPATH:
-        playlist_sort_selected(PLAYLIST_SORT_PATH);
+        playlist_sort_selected(playlist, PLAYLIST_SORT_PATH);
         playlistwin_update_list();
         break;
     case PLAYLISTWIN_SORT_SEL_BYDATE:
-        playlist_sort_selected(PLAYLIST_SORT_DATE);
+        playlist_sort_selected(playlist, PLAYLIST_SORT_DATE);
         playlistwin_update_list();
         break;
     case PLAYLISTWIN_SORT_REVERSE:
-        playlist_reverse();
+        playlist_reverse(playlist);
         playlistwin_update_list();
         break;
     case PLAYLISTWIN_SORT_RANDOMIZE:
-        playlist_random();
+        playlist_random(playlist);
         playlistwin_update_list();
         break;
     }
@@ -2005,24 +2030,26 @@ playlistwin_sub_menu_callback(gpointer data,
                               guint action,
                               GtkWidget * widget)
 {
+    Playlist *playlist = playlist_get_active();
+
     switch (action) {
     case PLIST_NEW:
-        playlist_set_current_name(NULL);
-        playlist_clear();
+        playlist_set_current_name(playlist, NULL);
+        playlist_clear(playlist);
         mainwin_clear_song_info();
         mainwin_set_info_text();
         break;
     case PLIST_SAVE:
-        playlistwin_select_playlist_to_save(playlist_get_current_name());
+        playlistwin_select_playlist_to_save(playlist_get_current_name(playlist));
         break;
     case PLIST_DEFAULTSAVE:
-        playlist_save(bmp_paths[BMP_PATH_PLAYLIST_FILE]);
+        playlist_save(playlist, bmp_paths[BMP_PATH_PLAYLIST_FILE]);
         break;
     case PLIST_SAVE_AS:
-        playlistwin_select_playlist_to_save(playlist_get_current_name());
+        playlistwin_select_playlist_to_save(playlist_get_current_name(playlist));
         break;
     case PLIST_LOAD:
-        playlistwin_select_playlist_to_load(playlist_get_current_name());
+        playlistwin_select_playlist_to_load(playlist_get_current_name(playlist));
         break;
     case SEL_INV:
         playlistwin_inverse_selection();
@@ -2034,30 +2061,30 @@ playlistwin_sub_menu_callback(gpointer data,
         playlistwin_select_all();
         break;
     case SUB_ALL:
-        playlist_clear();
+        playlist_clear(playlist);
         mainwin_clear_song_info();
         mainwin_set_info_text();
         break;
     case SUB_CROP:
-        playlist_delete(TRUE);
+        playlist_delete(playlist, TRUE);
         break;
     case SUB_SELECTED:
-        playlist_delete(FALSE);
+        playlist_delete(playlist, FALSE);
         break;
     case SUB_DUPLICATE_BYTITLE:
-        playlist_remove_duplicates(PLAYLIST_DUPS_TITLE);
+        playlist_remove_duplicates(playlist, PLAYLIST_DUPS_TITLE);
         break;
     case SUB_DUPLICATE_BYFILENAME:
-        playlist_remove_duplicates(PLAYLIST_DUPS_FILENAME);
+        playlist_remove_duplicates(playlist, PLAYLIST_DUPS_FILENAME);
         break;
     case SUB_DUPLICATE_BYPATH:
-        playlist_remove_duplicates(PLAYLIST_DUPS_PATH);
+        playlist_remove_duplicates(playlist, PLAYLIST_DUPS_PATH);
         break;
     case PLAYLISTWIN_REMOVE_DEAD_FILES:
-        playlist_remove_dead_files();
+        playlist_remove_dead_files(playlist);
         break;
     case PLAYLISTWIN_REFRESH:
-        playlist_read_info_selection();
+        playlist_read_info_selection(playlist);
         playlistwin_update_list();
         break;
     }
@@ -2069,6 +2096,7 @@ playlistwin_popup_menu_callback(gpointer data,
                                 GtkWidget * widget)
 {
     extern GtkWidget *filepopupbutton;
+    Playlist *playlist = playlist_get_active();
 
     switch (action) {
     case ADD_FILES:
@@ -2081,13 +2109,13 @@ playlistwin_popup_menu_callback(gpointer data,
         playlistwin_fileinfo();
         break;
     case SEL_LOOKUP:
-        playlist_read_info_selection();
+        playlist_read_info_selection(playlist);
         break;
     case MISC_QUEUE:
-        playlist_queue();
+        playlist_queue(playlist);
         break;
     case PLIST_CQUEUE:
-        playlist_clear_queue();
+        playlist_clear_queue(playlist);
         break;
     case PLIST_JTT:
         mainwin_jump_to_time();

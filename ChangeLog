@@ -1,3 +1,10 @@
+2006-12-11 12:56:46 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
+  revision [3193]
+  Update equalizer.c to new API
+  trunk/audacious/equalizer.c |    6 ++++--
+  1 file changed, 4 insertions(+), 2 deletions(-)
+
+
 2006-12-11 12:53:17 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
   revision [3191]
   Oops. controlsocket.c is *much* happier now that the arguments are in the right order. >.>
