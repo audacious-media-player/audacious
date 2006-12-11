@@ -99,7 +99,7 @@ set_current_output_plugin(gint i)
 	PlaylistEntry *entry;
 
 	/* don't stop yet, get the seek time and playlist position first */
-        pos = playlist_get_position();
+        pos = playlist_get_position(playlist_get_active());
         time = op->output_time();
 
 	/* reset the audio system */
@@ -113,8 +113,8 @@ set_current_output_plugin(gint i)
             g_message("waiting for audio system shutdown...");
 
 	/* wait for the playback thread to come online */
-        playlist_set_position(pos);
-	entry = playlist_get_entry_to_play();
+        playlist_set_position(playlist_get_active(), pos);
+	entry = playlist_get_entry_to_play(playlist_get_active());
         bmp_playback_play_file(entry);
 
 	while (!bmp_playback_get_playing())
@@ -124,8 +124,8 @@ set_current_output_plugin(gint i)
 	}
 
 	/* and signal a reseek */
-        if (playlist_get_current_length() > -1 &&
-            time <= (playlist_get_current_length()))
+        if (playlist_get_current_length(playlist_get_active()) > -1 &&
+            time <= (playlist_get_current_length(playlist_get_active())))
 	{
 	    gint i;
 
@@ -280,7 +280,7 @@ output_close_audio(void)
      * not requested a stop.  --nenolod
      */
     if (ip_data.stop == FALSE && 
-	(playlist_get_position_nolock() < playlist_get_length_nolock() - 1))
+	(playlist_get_position_nolock(playlist_get_active()) < playlist_get_length_nolock(playlist_get_active()) - 1))
         return;
 
     /* Sanity check. */

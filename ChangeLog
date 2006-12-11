@@ -1,3 +1,11 @@
+2006-12-11 12:34:17 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3181]
+  - update main.c to new API
+  
+  trunk/audacious/main.c |   13 ++++++++-----
+  1 file changed, 8 insertions(+), 5 deletions(-)
+
+
 2006-12-11 12:30:50 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3179]
   - update these files
