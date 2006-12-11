@@ -69,6 +69,8 @@ typedef struct _Playlist {
     gchar *filename;
     gint   length;
     GList *entries;
+    GList *queue;
+    GList *shuffle;
 } Playlist;
 
 PlaylistEntry *playlist_entry_new(const gchar * filename,
