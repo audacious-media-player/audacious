@@ -1,3 +1,11 @@
+2006-12-11 11:30:07 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3167]
+  - update playlist_delete_filenames() and friends
+  
+  trunk/audacious/playlist.c |   14 ++++++++------
+  1 file changed, 8 insertions(+), 6 deletions(-)
+
+
 2006-12-11 11:25:21 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3165]
   - this commit breaks the API. I'm not done here, but hopefully the new API is

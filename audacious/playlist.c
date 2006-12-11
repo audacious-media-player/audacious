@@ -408,7 +408,7 @@ playlist_delete_filenames(Playlist * playlist, GList * filenames)
     PLAYLIST_LOCK();
 
     for (fnode = filenames; fnode; fnode = g_list_next(fnode)) {
-        node = playlist;
+        node = playlist->entries;
 
         while (node) {
             GList *next = g_list_next(node);
@@ -486,7 +486,8 @@ playlist_delete(Playlist * playlist, gboolean crop)
 }
 
 static void
-__playlist_ins_with_info(const gchar * filename,
+__playlist_ins_with_info(Playlist * playlist,
+			 const gchar * filename,
                          gint pos,
                          const gchar * title,
                          gint len,
@@ -495,7 +496,7 @@ __playlist_ins_with_info(const gchar * filename,
     g_return_if_fail(filename != NULL);
 
     PLAYLIST_LOCK();
-    playlist = g_list_insert(playlist,
+    playlist->entries = g_list_insert(playlist->entries,
                              playlist_entry_new(filename, title, len, dec),
                              pos);
     PLAYLIST_UNLOCK();
@@ -507,7 +508,8 @@ __playlist_ins_with_info(const gchar * filename,
 }
 
 static void
-__playlist_ins_with_info_tuple(const gchar * filename,
+__playlist_ins_with_info_tuple(Playlist * playlist,
+			       const gchar * filename,
 			       gint pos,
 			       TitleInput *tuple,
 			       InputPlugin * dec)
@@ -515,18 +517,18 @@ __playlist_ins_with_info_tuple(const gchar * filename,
     GList *node;
     PlaylistEntry *entry;
 
+    g_return_if_fail(playlist != NULL);
     g_return_if_fail(filename != NULL);
 
     PLAYLIST_LOCK();
-    playlist = g_list_insert(playlist,
+    playlist->entries = g_list_insert(playlist->entries,
                              playlist_entry_new(filename, tuple->track_name, tuple->length, dec),
                              pos);
 
-    if(pos < 0 ) {
-	    pos = g_list_length(playlist) - 1; /* last element. */
-    }
+    if (pos < 0)
+	    pos = g_list_length(playlist->entries) - 1; /* last element. */
 
-    node = g_list_nth(playlist, pos);
+    node = g_list_nth(playlist->entries, pos);
     entry = PLAYLIST_ENTRY(node->data);
 
     if (tuple != NULL) {
@@ -544,19 +546,22 @@ __playlist_ins_with_info_tuple(const gchar * filename,
 }
 
 static void
-__playlist_ins(const gchar * filename, gint pos, InputPlugin *dec)
+__playlist_ins(Playlist * playlist, const gchar * filename, gint pos, InputPlugin *dec)
 {
-    __playlist_ins_with_info(filename, pos, NULL, -1, dec);
+    __playlist_ins_with_info(playlist, filename, pos, NULL, -1, dec);
     playlist_recalc_total_time();
 }
 
 gboolean
-playlist_ins(const gchar * filename, gint pos)
+playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
 {
     gchar buf[64], *p;
     gint r;
     VFSFile *file;
     InputPlugin *dec;
+
+    g_return_val_if_fail(playlist != NULL, FALSE);
+    g_return_val_if_fail(filename != NULL, FALSE);
 
     if (is_playlist_name(filename)) {
         loading_playlist = TRUE;
@@ -572,7 +577,7 @@ playlist_ins(const gchar * filename, gint pos)
 
     if (cfg.playlist_detect == TRUE || loading_playlist == TRUE || (loading_playlist == FALSE && dec != NULL))
     {
-	__playlist_ins(filename, pos, dec);
+	__playlist_ins(playlist, filename, pos, dec);
 	playlist_generate_shuffle_list(playlist);
 	playlistwin_update_list();
         return TRUE;
@@ -733,9 +738,9 @@ playlist_dir_find_files(const gchar * path,
 }
 
 gboolean
-playlist_add(const gchar * filename)
+playlist_add(Playlist * playlist, const gchar * filename)
 {
-    return playlist_ins(filename, -1);
+    return playlist_ins(playlist, filename, -1);
 }
 
 guint 
