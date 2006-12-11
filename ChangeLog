@@ -1,3 +1,13 @@
+2006-12-11 12:46:09 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
+  revision [3185]
+  Make controlsocket.c happier. Still a ton of warnings, but it compiles now.
+  trunk/audacious/controlsocket.c                   |   61 +-
+  trunk/doc/libaudacious/libaudacious-decl-list.txt |  155 +++---
+  trunk/doc/libaudacious/libaudacious-decl.txt      |  527 +++++++++++-----------
+  trunk/doc/libaudacious/libaudacious-unused.txt    |    5 
+  4 files changed, 396 insertions(+), 352 deletions(-)
+
+
 2006-12-11 12:36:50 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [3183]
   Add playlist_get_active where required.
