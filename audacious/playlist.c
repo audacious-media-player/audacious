@@ -137,8 +137,8 @@ static guint playlist_load_ins(Playlist * playlist, const gchar * filename, gint
 static void playlist_generate_shuffle_list(Playlist *);
 static void playlist_generate_shuffle_list_nolock(Playlist *);
 
-static void playlist_recalc_total_time_nolock(void);
-static void playlist_recalc_total_time(void);
+static void playlist_recalc_total_time_nolock(Playlist *);
+static void playlist_recalc_total_time(Playlist *);
 static gboolean playlist_entry_get_info(PlaylistEntry * entry);
 
 PlaylistEntry *
@@ -300,7 +300,7 @@ playlist_clear(Playlist *playlist)
 
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list();
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
 }
 
 static void
@@ -356,7 +356,7 @@ playlist_delete_node(Playlist * playlist, GList * node, gboolean * set_info_text
     playlist_entry_free(entry);
     g_list_free_1(node);
 
-    playlist_recalc_total_time_nolock();
+    playlist_recalc_total_time_nolock(playlist);
 }
 
 void
@@ -383,7 +383,7 @@ playlist_delete_index(Playlist *playlist, guint pos)
 
     PLAYLIST_UNLOCK();
 
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
 
     playlistwin_update_list();
     if (restart_playing) {
@@ -421,7 +421,7 @@ playlist_delete_filenames(Playlist * playlist, GList * filenames)
         }
     }
 
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
     PLAYLIST_UNLOCK();
 
     playlistwin_update_list();
@@ -467,7 +467,7 @@ playlist_delete(Playlist * playlist, gboolean crop)
 
     PLAYLIST_UNLOCK();
 
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
 
     if (set_info_text) {
         mainwin_set_info_text();
@@ -549,7 +549,7 @@ static void
 __playlist_ins(Playlist * playlist, const gchar * filename, gint pos, InputPlugin *dec)
 {
     __playlist_ins_with_info(playlist, filename, pos, NULL, -1, dec);
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
 }
 
 gboolean
@@ -781,7 +781,7 @@ playlist_ins_dir(Playlist * playlist, const gchar * path,
 
     g_list_free(list);
 
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list();
     return entries;
@@ -848,7 +848,7 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
         string = tmp + 1;
     }
 
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list();
 
@@ -871,7 +871,7 @@ playlist_set_info(Playlist * playlist, const gchar * title, gint length, gint ra
 
     PLAYLIST_UNLOCK();
 
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
 
     mainwin_set_song_info(rate, freq, nch);
 }
@@ -1058,7 +1058,7 @@ playlist_queue(Playlist *playlist)
 
     PLAYLIST_UNLOCK();
 
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
     playlistwin_update_list();
 }
 
@@ -1085,7 +1085,7 @@ playlist_queue_position(Playlist *playlist, guint pos)
         playlist->queue = g_list_append(playlist->queue, entry);
     PLAYLIST_UNLOCK();
 
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
     playlistwin_update_list();
 }
 
@@ -1139,7 +1139,7 @@ playlist_clear_queue(Playlist *playlist)
     playlist->queue = NULL;
     PLAYLIST_UNLOCK();
 
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
     playlistwin_update_list();
 }
 
@@ -2054,13 +2054,13 @@ playlist_random(Playlist *playlist)
 }
 
 GList *
-playlist_get_selected(void)
+playlist_get_selected(Playlist *playlist)
 {
     GList *node, *list = NULL;
     gint i = 0;
 
     PLAYLIST_LOCK();
-    for (node = playlist_get(); node; node = g_list_next(node), i++) {
+    for (node = playlist->entries; node; node = g_list_next(node), i++) {
         PlaylistEntry *entry = node->data;
         if (entry->selected)
             list = g_list_prepend(list, GINT_TO_POINTER(i));
@@ -2070,27 +2070,27 @@ playlist_get_selected(void)
 }
 
 void
-playlist_clear_selected(void)
+playlist_clear_selected(Playlist *playlist)
 {
     GList *node = NULL;
     gint i = 0;
 
     PLAYLIST_LOCK();
-    for (node = playlist_get(); node; node = g_list_next(node), i++) {
+    for (node = playlist->entries; node; node = g_list_next(node), i++) {
         PLAYLIST_ENTRY(node->data)->selected = FALSE;
     }
     PLAYLIST_UNLOCK();
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
 }
 
 gint
-playlist_get_num_selected(void)
+playlist_get_num_selected(Playlist *playlist)
 {
     GList *node;
     gint num = 0;
 
     PLAYLIST_LOCK();
-    for (node = playlist_get(); node; node = g_list_next(node)) {
+    for (node = playlist->entries; node; node = g_list_next(node)) {
         PlaylistEntry *entry = node->data;
         if (entry->selected)
             num++;
@@ -2136,7 +2136,7 @@ playlist_generate_shuffle_list_nolock(Playlist *playlist)
 }
 
 void
-playlist_fileinfo(guint pos)
+playlist_fileinfo(Playlist *playlist, guint pos)
 {
     gchar *path = NULL;
     GList *node;
@@ -2146,7 +2146,7 @@ playlist_fileinfo(guint pos)
 
     PLAYLIST_LOCK();
 
-    if ((node = g_list_nth(playlist_get(), pos)))
+    if ((node = g_list_nth(playlist->entries, pos)))
     {
         entry = node->data;
         tuple = entry->tuple;
@@ -2184,37 +2184,37 @@ playlist_fileinfo(guint pos)
 }
 
 void
-playlist_fileinfo_current(void)
+playlist_fileinfo_current(Playlist *playlist)
 {
     gchar *path = NULL;
     TitleInput *tuple = NULL;
 
     PLAYLIST_LOCK();
 
-    if (playlist_get() && playlist_position)
+    if (playlist->entries && playlist->position)
     {
-        path = g_strdup(playlist_position->filename);
-        if (( playlist_position->tuple == NULL ) || ( playlist_position->decoder == NULL ))
-          playlist_entry_get_info(playlist_position);
-        tuple = playlist_position->tuple;
+        path = g_strdup(playlist->position->filename);
+        if (( playlist->position->tuple == NULL ) || ( playlist->position->decoder == NULL ))
+          playlist_entry_get_info(playlist->position);
+        tuple = playlist->position->tuple;
     }
 
     PLAYLIST_UNLOCK();
 
     if (tuple != NULL)
     {
-        if (playlist_position->decoder != NULL && playlist_position->decoder->file_info_box == NULL)
+        if (playlist->position->decoder != NULL && playlist->position->decoder->file_info_box == NULL)
             fileinfo_show_for_tuple(tuple);
-        else if (playlist_position->decoder != NULL && playlist_position->decoder->file_info_box != NULL)
-            playlist_position->decoder->file_info_box(path);
+        else if (playlist->position->decoder != NULL && playlist->position->decoder->file_info_box != NULL)
+            playlist->position->decoder->file_info_box(path);
         else
             fileinfo_show_for_path(path);
         g_free(path);
     }
     else if (path != NULL)
     {
-        if (playlist_position != NULL && playlist_position->decoder != NULL && playlist_position->decoder->file_info_box != NULL)
-            playlist_position->decoder->file_info_box(path);
+        if (playlist->position != NULL && playlist->position->decoder != NULL && playlist->position->decoder->file_info_box != NULL)
+            playlist->position->decoder->file_info_box(path);
         else
             fileinfo_show_for_path(path);
         g_free(path);
@@ -2434,7 +2434,7 @@ playlist_remove_dead_files(Playlist *playlist)
     
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list();
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
 }
 
 
@@ -2567,121 +2567,119 @@ playlist_remove_duplicates(Playlist *playlist, PlaylistDupsType type)
     PLAYLIST_UNLOCK();
 
     playlistwin_update_list();
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
 }
 
-static gulong pl_total_time = 0, pl_selection_time = 0;
-static gboolean pl_total_more = FALSE, pl_selection_more = FALSE;
-
 void
-playlist_get_total_time(gulong * total_time,
+playlist_get_total_time(Playlist * playlist,
+			gulong * total_time,
                         gulong * selection_time,
                         gboolean * total_more,
                         gboolean * selection_more)
 {
     PLAYLIST_LOCK();
-    *total_time = pl_total_time;
-    *selection_time = pl_selection_time;
-    *total_more = pl_total_more;
-    *selection_more = pl_selection_more;
+    *total_time = playlist->pl_total_time;
+    *selection_time = playlist->pl_selection_time;
+    *total_more = playlist->pl_total_more;
+    *selection_more = playlist->pl_selection_more;
     PLAYLIST_UNLOCK();
 }
 
 
 static void
-playlist_recalc_total_time_nolock(void)
+playlist_recalc_total_time_nolock(Playlist *playlist)
 {
     GList *list;
     PlaylistEntry *entry;
 
     REQUIRE_STATIC_LOCK(playlists);
 
-    pl_total_time = 0;
-    pl_selection_time = 0;
-    pl_total_more = FALSE;
-    pl_selection_more = FALSE;
+    playlist->pl_total_time = 0;
+    playlist->pl_selection_time = 0;
+    playlist->pl_total_more = FALSE;
+    playlist->pl_selection_more = FALSE;
 
     for (list = playlist_get(); list; list = g_list_next(list)) {
         entry = list->data;
 
         if (entry->length != -1)
-            pl_total_time += entry->length / 1000;
+            playlist->pl_total_time += entry->length / 1000;
         else
-            pl_total_more = TRUE;
+            playlist->pl_total_more = TRUE;
 
         if (entry->selected) {
             if (entry->length != -1)
-                pl_selection_time += entry->length / 1000;
+                playlist->pl_selection_time += entry->length / 1000;
             else
-                pl_selection_more = TRUE;
+                playlist->pl_selection_more = TRUE;
         }
     }
 }
 
 static void
-playlist_recalc_total_time(void)
+playlist_recalc_total_time(Playlist *playlist)
 {
     PLAYLIST_LOCK();
-    playlist_recalc_total_time_nolock();
+    playlist_recalc_total_time_nolock(playlist);
     PLAYLIST_UNLOCK();
 }
 
 
 void
-playlist_select_all(gboolean set)
+playlist_select_all(Playlist *playlist, gboolean set)
 {
     GList *list;
 
     PLAYLIST_LOCK();
 
-    for (list = playlist_get(); list; list = g_list_next(list)) {
+    for (list = playlist->entries; list; list = g_list_next(list)) {
         PlaylistEntry *entry = list->data;
         entry->selected = set;
     }
 
     PLAYLIST_UNLOCK();
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
 }
 
 void
-playlist_select_invert_all(void)
+playlist_select_invert_all(Playlist *playlist)
 {
     GList *list;
 
     PLAYLIST_LOCK();
 
-    for (list = playlist_get(); list; list = g_list_next(list)) {
+    for (list = playlist->entries; list; list = g_list_next(list)) {
         PlaylistEntry *entry = list->data;
         entry->selected = !entry->selected;
     }
 
     PLAYLIST_UNLOCK();
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
 }
 
 gboolean
-playlist_select_invert(guint pos)
+playlist_select_invert(Playlist *playlist, guint pos)
 {
     GList *list;
     gboolean invert_ok = FALSE;
 
     PLAYLIST_LOCK();
 
-    if ((list = g_list_nth(playlist_get(), pos))) {
+    if ((list = g_list_nth(playlist->entries, pos))) {
         PlaylistEntry *entry = list->data;
         entry->selected = !entry->selected;
         invert_ok = TRUE;
     }
 
     PLAYLIST_UNLOCK();
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
 
     return invert_ok;
 }
 
 
 void
-playlist_select_range(gint min_pos, gint max_pos, gboolean select)
+playlist_select_range(Playlist *playlist, gint min_pos, gint max_pos, gboolean select)
 {
     GList *list;
     gint i;
@@ -2691,7 +2689,7 @@ playlist_select_range(gint min_pos, gint max_pos, gboolean select)
 
     PLAYLIST_LOCK();
 
-    list = g_list_nth(playlist_get(), min_pos);
+    list = g_list_nth(playlist->entries, min_pos);
     for (i = min_pos; i <= max_pos && list; i++) {
         PlaylistEntry *entry = list->data;
         entry->selected = select;
@@ -2700,11 +2698,11 @@ playlist_select_range(gint min_pos, gint max_pos, gboolean select)
 
     PLAYLIST_UNLOCK();
 
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
 }
 
 gboolean
-playlist_read_info_selection(void)
+playlist_read_info_selection(Playlist *playlist)
 {
     GList *node;
     gboolean retval = FALSE;
@@ -2735,13 +2733,13 @@ playlist_read_info_selection(void)
     PLAYLIST_UNLOCK();
 
     playlistwin_update_list();
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
 
     return retval;
 }
 
 void
-playlist_read_info(guint pos)
+playlist_read_info(Playlist *playlist, guint pos)
 {
     GList *node;
 
@@ -2757,7 +2755,7 @@ playlist_read_info(guint pos)
     PLAYLIST_UNLOCK();
 
     playlistwin_update_list();
-    playlist_recalc_total_time();
+    playlist_recalc_total_time(playlist);
 }
 
 Playlist *

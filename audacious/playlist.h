@@ -72,6 +72,10 @@ typedef struct _Playlist {
     GList         *queue;
     GList         *shuffle;
     PlaylistEntry *position;    /* bleah */
+    gulong         pl_total_time;
+    gulong         pl_selection_time;
+    gboolean       pl_total_more;
+    gboolean       pl_selection_more;
 } Playlist;
 
 typedef enum {
@@ -172,8 +176,8 @@ void playlist_select_range(Playlist *playlist, gint min, gint max, gboolean sel)
 void playlist_select_invert_all(Playlist *playlist);
 gboolean playlist_select_invert(Playlist *playlist, guint pos);
 
-gboolean playlist_read_info_selection(void);
-void playlist_read_info(guint pos);
+gboolean playlist_read_info_selection(Playlist *playlist);
+void playlist_read_info(Playlist *playlist, guint pos);
 
 void playlist_set_shuffle(gboolean shuffle);
 

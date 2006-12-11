@@ -1,3 +1,12 @@
+2006-12-11 12:08:43 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3173]
+  - much closer now
+  
+  trunk/audacious/playlist.c |  199 +++++++++++++++++++++++----------------------
+  trunk/audacious/playlist.h |    2 
+  2 files changed, 103 insertions(+), 98 deletions(-)
+
+
 2006-12-11 11:44:07 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3171]
   - more updates
