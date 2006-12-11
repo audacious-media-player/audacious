@@ -1,3 +1,11 @@
+2006-12-11 09:56:42 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3159]
+  - add playlist.queue and playlist.shuffle for the queue and shuffle lists associated with each playlist.
+  
+  trunk/audacious/playlist.h |    2 ++
+  1 file changed, 2 insertions(+)
+
+
 2006-12-11 09:53:05 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3157]
   - cleanup the declaration of PlaylistEntry, and add some initial structure for migrating to multiple playlists.

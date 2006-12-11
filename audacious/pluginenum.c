@@ -430,6 +430,7 @@ plugin_system_cleanup(void)
     if (ep_data.effect_list)
         g_list_free(ep_data.effect_list);
 
+#if 0
     for (node = get_general_enabled_list(); node; node = g_list_next(node)) {
         gp = GENERAL_PLUGIN(node->data);
         enable_general_plugin(g_list_index(gp_data.general_list, gp), FALSE);
@@ -441,6 +442,7 @@ plugin_system_cleanup(void)
     GDK_THREADS_LEAVE();
     while (g_main_iteration(FALSE));
     GDK_THREADS_ENTER();
+#endif
 
     for (node = get_general_list(); node; node = g_list_next(node)) {
         gp = GENERAL_PLUGIN(node->data);
@@ -456,6 +458,7 @@ plugin_system_cleanup(void)
     if (gp_data.general_list)
         g_list_free(gp_data.general_list);
 
+#if 0
     for (node = get_vis_enabled_list(); node; node = g_list_next(node)) {
         vp = VIS_PLUGIN(node->data);
         enable_vis_plugin(g_list_index(vp_data.vis_list, vp), FALSE);
@@ -467,6 +470,7 @@ plugin_system_cleanup(void)
     GDK_THREADS_LEAVE();
     while (g_main_iteration(FALSE));
     GDK_THREADS_ENTER();
+#endif
 
     for (node = get_vis_list(); node; node = g_list_next(node)) {
         vp = VIS_PLUGIN(node->data);
