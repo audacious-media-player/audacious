@@ -212,6 +212,7 @@ filepopup_pointer_check_iter(gpointer unused)
 	static gint shaded_pos = -1, shaded_prev_pos = -1;
 	gboolean skip = FALSE;
 	GdkWindow *win;
+	Playlist *playlist = playlist_get_active();
 
 	win = gdk_window_at_pointer(NULL, NULL);
 	gdk_window_get_pointer(GDK_WINDOW(playlistwin->window), &x, &y, NULL);
@@ -246,7 +247,7 @@ filepopup_pointer_check_iter(gpointer unused)
 		skip = TRUE;
 
 	if (playlistwin_is_shaded()) {
-		shaded_pos = playlist_get_position();
+		shaded_pos = playlist_get_position(playlist);
 		if (shaded_prev_pos != shaded_pos)
 			skip = TRUE;
 	}
@@ -257,7 +258,7 @@ filepopup_pointer_check_iter(gpointer unused)
 			return TRUE;
 	    	}
 		else { /* shaded mode */
-			tuple = playlist_get_tuple(shaded_pos);
+			tuple = playlist_get_tuple(playlist, shaded_pos);
 			filepopup_hide(NULL);
 			filepopup_show_for_tuple(tuple);
 			shaded_prev_pos = shaded_pos;
@@ -265,7 +266,7 @@ filepopup_pointer_check_iter(gpointer unused)
 
 		prev_pos = pos;
 
-		tuple = playlist_get_tuple(pos);
+		tuple = playlist_get_tuple(playlist, pos);
 		filepopup_show_for_tuple(tuple);
 	}
 

@@ -82,8 +82,9 @@ void
 bmp_playback_initiate(void)
 {
     PlaylistEntry *entry = NULL;
+    Playlist *playlist = playlist_get_active();
 
-    if (playlist_get_length() == 0)
+    if (playlist_get_length(playlist) == 0)
         return;
 
     if (bmp_playback_get_playing())
@@ -93,9 +94,9 @@ bmp_playback_initiate(void)
     svis_clear_data(mainwin_svis);
     mainwin_disable_seekbar();
 
-    entry = playlist_get_entry_to_play();
+    entry = playlist_get_entry_to_play(playlist);
 
-    if (!entry)
+    if (entry == NULL)
         return;
 
     /*
@@ -106,9 +107,9 @@ bmp_playback_initiate(void)
      */
     while (entry != NULL && !bmp_playback_play_file(entry))
     {
-        playlist_next();
+        playlist_next(playlist);
 
-        entry = playlist_get_entry_to_play();
+        entry = playlist_get_entry_to_play(playlist);
 
         if (entry == NULL)
             return;
@@ -122,7 +123,7 @@ bmp_playback_initiate(void)
                       cfg.equalizer_bands);
     }
 
-    playlist_check_pos_current();
+    playlist_check_pos_current(playlist);
     mainwin_set_info_text();
 }
 
@@ -308,6 +309,6 @@ void
 bmp_playback_seek_relative(gint offset)
 {
     gint time = CLAMP(bmp_playback_get_time() / 1000 + offset,
-                      0, playlist_get_current_length() / 1000 - 1);
+                      0, playlist_get_current_length(playlist_get_active()) / 1000 - 1);
     bmp_playback_seek(time);
 }
