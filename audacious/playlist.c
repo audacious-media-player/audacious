@@ -77,7 +77,11 @@ static Playlist default_playlist = {
 	NULL,
 	NULL,
 	NULL,
-	NULL
+	NULL,
+	0,
+	0,
+	0,
+	0,
 };
 
 /* If this is set to TRUE, we do not probe upon playlist add.
@@ -863,7 +867,8 @@ playlist_set_info(Playlist * playlist, const gchar * title, gint length, gint ra
     g_return_if_fail(playlist != NULL);
 
     if (playlist->position) {
-        g_free(playlist->position->title);
+/* XXX: what is playlist->position->title is not dup'd? */
+//        g_free(playlist->position->title);
         playlist->position->title = g_strdup(title);
         playlist->position->length = length;
     }
