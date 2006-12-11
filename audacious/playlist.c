@@ -60,7 +60,6 @@
 typedef gint (*PlaylistCompareFunc) (PlaylistEntry * a, PlaylistEntry * b);
 typedef void (*PlaylistSaveFunc) (FILE * file);
 
-PlaylistEntry *playlist_position;
 /* If we manually change the song, p_p_b_j will show us where to go back to */
 PlaylistEntry *playlist_position_before_jump = NULL;
 G_LOCK_DEFINE(playlists);
@@ -387,7 +386,7 @@ playlist_delete_index(Playlist *playlist, guint pos)
 
     playlistwin_update_list();
     if (restart_playing) {
-        if (playlist_position) {
+        if (playlist->position) {
             bmp_playback_initiate();
         }
         else {
@@ -427,7 +426,7 @@ playlist_delete_filenames(Playlist * playlist, GList * filenames)
     playlistwin_update_list();
 
     if (restart_playing) {
-        if (playlist_position) {
+        if (playlist->position) {
             bmp_playback_initiate();
         }
         else {
@@ -474,7 +473,7 @@ playlist_delete(Playlist * playlist, gboolean crop)
     }
 
     if (restart_playing) {
-        if (playlist_position) {
+        if (playlist->position) {
             bmp_playback_initiate();
         }
         else {
@@ -975,7 +974,7 @@ playlist_prev(Playlist *playlist)
     
     if ((playlist_position_before_jump != NULL) && playlist->queue == NULL)
     {
-        playlist_position = playlist_position_before_jump;
+        playlist->position = playlist_position_before_jump;
         playlist_position_before_jump = NULL;
     }
 
@@ -998,18 +997,18 @@ playlist_prev(Playlist *playlist)
 
     plist_pos_list = find_playlist_position_list(playlist);
     if (g_list_previous(plist_pos_list)) {
-        playlist_position = g_list_previous(plist_pos_list)->data;
+        playlist->position = g_list_previous(plist_pos_list)->data;
     }
     else if (cfg.repeat) {
         GList *node;
-        playlist_position = NULL;
+        playlist->position = NULL;
         playlist_generate_shuffle_list_nolock(playlist);
         if (cfg.shuffle)
             node = g_list_last(playlist->shuffle);
         else
             node = g_list_last(playlist->entries);
         if (node)
-            playlist_position = node->data;
+            playlist->position = node->data;
     }
 
     PLAYLIST_UNLOCK();
@@ -1337,7 +1336,7 @@ playlist_get_info_text(Playlist *playlist)
     else
         numbers = g_strdup("");
 
-    if (playlist_position->length != -1)
+    if (playlist->position->length != -1)
         length = g_strdup_printf(" (%d:%-2.2d)",
                                  playlist->position->length / 60000,
                                  (playlist->position->length / 1000) % 60);
@@ -1557,7 +1556,7 @@ playlist_get(void)
 gint
 playlist_get_position_nolock(Playlist *playlist)
 {
-    if (playlist && playlist_position)
+    if (playlist && playlist->position)
         return g_list_index(playlist->entries, playlist->position);
     return 0;
 }
@@ -2240,6 +2239,7 @@ playlist_get_info_func(gpointer arg)
     GList *node;
     gboolean update_playlistwin = FALSE;
     gboolean update_mainwin = FALSE;
+    Playlist *playlist = playlist_get_active();
 
     while (playlist_get_info_is_going()) {
         PlaylistEntry *entry;
@@ -2266,7 +2266,7 @@ playlist_get_info_func(gpointer arg)
                 }
                 else if ((entry->tuple != NULL || entry->title != NULL) && entry->length != -1) {
                     update_playlistwin = TRUE;
-                    if (entry == playlist_position)
+                    if (entry == playlist->position)
                         update_mainwin = TRUE;
                     break;
                 }
@@ -2318,7 +2318,7 @@ playlist_get_info_func(gpointer arg)
                     }
                     else if ((entry->tuple != NULL || entry->title != NULL) && entry->length != -1) {
                         update_playlistwin = TRUE;
-                        if (entry == playlist_position)
+                        if (entry == playlist->position)
                             update_mainwin = TRUE;
 			// no need for break here since this iteration is very short.
                     }
@@ -2415,7 +2415,7 @@ playlist_remove_dead_files(Playlist *playlist)
         if (vfs_file_test(entry->filename, G_FILE_TEST_EXISTS))  
             continue;
 
-        if (entry == playlist_position) {
+        if (entry == playlist->position) {
             /* Don't remove the currently playing song */
             if (bmp_playback_get_playing())
                 continue;
@@ -2542,7 +2542,7 @@ playlist_remove_duplicates(Playlist *playlist, PlaylistDupsType type)
             /* compare using the chosen dups_compare_func */
             if ( !dups_compare_func( entry , entry_cmp ) ) {
 
-                if (entry_cmp == playlist_position) {
+                if (entry_cmp == playlist->position) {
                     /* Don't remove the currently playing song */
                     if (bmp_playback_get_playing())
                         continue;
