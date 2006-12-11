@@ -602,6 +602,7 @@ bmp_config_save(void)
     gchar *str;
     gint i, cur_pb_time;
     ConfigDb *db;
+    Playlist *playlist = playlist_get_active();
 
     cfg.disabled_iplugins = input_stringify_disabled_list();
 
@@ -623,7 +624,7 @@ bmp_config_save(void)
     /* This is a bit lame .. it'll end up being written twice,
      * could do with being done a bit neater.  -larne   */
     bmp_cfg_db_set_int(db, NULL, "playlist_position",
-                       playlist_get_position());
+                       playlist_get_position(playlist));
 
     bmp_cfg_db_set_bool(db, NULL, "mainwin_use_xfont",
 			cfg.mainwin_use_xfont);
@@ -706,7 +707,7 @@ bmp_config_save(void)
 
     bmp_cfg_db_close(db);
 
-    playlist_save(bmp_paths[BMP_PATH_PLAYLIST_FILE]);
+    playlist_save(playlist, bmp_paths[BMP_PATH_PLAYLIST_FILE]);
 }
 
 static void
@@ -1025,6 +1026,7 @@ gint
 main(gint argc, gchar ** argv)
 {
     gboolean gtk_init_check_ok;
+    Playlist *playlist;
 
     /* Setup l10n early so we can print localized error messages */
     gtk_set_locale();
@@ -1121,8 +1123,9 @@ main(gint argc, gchar ** argv)
         GDK_THREADS_ENTER();
     }
 
-    playlist_load(bmp_paths[BMP_PATH_PLAYLIST_FILE]);
-    playlist_set_position(cfg.playlist_position);
+    playlist = playlist_get_active();
+    playlist_load(playlist, bmp_paths[BMP_PATH_PLAYLIST_FILE]);
+    playlist_set_position(playlist, cfg.playlist_position);
 
     /* this needs to be called after all 3 windows are created and
      * input plugins are setup'ed 
@@ -1172,7 +1175,7 @@ main(gint argc, gchar ** argv)
 	has_x11_connection = TRUE;
 
 	if (cfg.resume_playback_on_startup) {
-		if (cfg.resume_playback_on_startup_time != -1 && playlist_get_length() > 0) {
+		if (cfg.resume_playback_on_startup_time != -1 && playlist_get_length(playlist) > 0) {
 			int i;
 			gint l=0, r=0;
 			while (gtk_events_pending()) gtk_main_iteration();
