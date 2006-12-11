@@ -297,6 +297,8 @@ playlist_clear(Playlist *playlist)
     if (playlist) {
         g_list_foreach(playlist->entries, (GFunc) playlist_entry_free, NULL);
         g_list_free(playlist->entries);
+	playlist->position = NULL;
+	playlist->entries = NULL;
     }
 
     PLAYLIST_UNLOCK();

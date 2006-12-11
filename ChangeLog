@@ -1,3 +1,14 @@
+2006-12-11 13:49:54 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3201]
+  - provide the old ABI for plugins (intermediate layer).
+  Pointed out by yaz, pointy hat to me.
+  
+  trunk/audacious/playlist.c   |   26 ++++++++++++++++++++++++--
+  trunk/audacious/playlist.h   |    2 ++
+  trunk/audacious/pluginenum.c |    2 +-
+  3 files changed, 27 insertions(+), 3 deletions(-)
+
+
 2006-12-11 13:47:05 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3199]
   - make sure &default_playlist (temporary construct) has full padding. 
