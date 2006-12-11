@@ -1,3 +1,12 @@
+2006-12-11 12:53:05 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3189]
+  - update to new API
+  
+  trunk/audacious/playback.c    |   15 ++++++++-------
+  trunk/audacious/ui_fileinfo.c |    7 ++++---
+  2 files changed, 12 insertions(+), 10 deletions(-)
+
+
 2006-12-11 12:48:05 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3187]
   - update mainwin.c to new API

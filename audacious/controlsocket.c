@@ -386,14 +386,14 @@ ctrlsocket_func(gpointer arg)
             break;
         case CMD_PLAYQUEUE_IS_QUEUED:
             ctrl_write_gboolean(pkt->fd,
-                playlist_is_position_queued(* ((guint32 *) pkt->data), playlist_get_active()));
+                playlist_is_position_queued(playlist_get_active(), *((guint32 *) pkt->data)));
             ctrl_ack_packet(pkt);
             break;
         case CMD_PLAYQUEUE_GET_POS:
             if (pkt->data)
                 ctrl_write_gint(pkt->fd,
-                                playlist_get_queue_position_number(* ((guint32 *) pkt->data),
-                                                                     playlist_get_active()));
+                                playlist_get_queue_position_number(playlist_get_active(),
+                                                                   *((guint32 *) pkt->data)));
             else
                 ctrl_write_gint(pkt->fd, 0);
 
@@ -402,8 +402,8 @@ ctrlsocket_func(gpointer arg)
         case CMD_PLAYQUEUE_GET_QPOS:
             if (pkt->data)
                 ctrl_write_gint(pkt->fd,
-                                playlist_get_queue_qposition_number(* ((guint32 *) pkt->data),
-                                                                    playlist_get_active()));
+                                playlist_get_queue_position_number(playlist_get_active(),
+                                                                   *((guint32 *) pkt->data)));
             else
                 ctrl_write_gint(pkt->fd, 0);
 
@@ -441,7 +441,7 @@ ctrlsocket_func(gpointer arg)
         case CMD_GET_PLAYLIST_FILE:
             if (pkt->data) {
                 gchar *filename;
-                filename = playlist_get_filename(*((guint32 *) pkt->data), playlist_get_active());
+                filename = playlist_get_filename(playlist_get_active(), *((guint32 *) pkt->data));
                 ctrl_write_string(pkt->fd, filename);
                 g_free(filename);
             }
@@ -452,7 +452,7 @@ ctrlsocket_func(gpointer arg)
         case CMD_GET_PLAYLIST_TITLE:
             if (pkt->data) {
                 gchar *title;
-                title = playlist_get_songtitle(*((guint32 *) pkt->data), playlist_get_active());
+                title = playlist_get_songtitle(playlist_get_active(), *((guint32 *) pkt->data));
                 ctrl_write_string(pkt->fd, title);
                 g_free(title);
             }
@@ -463,8 +463,8 @@ ctrlsocket_func(gpointer arg)
         case CMD_GET_PLAYLIST_TIME:
             if (pkt->data)
                 ctrl_write_gint(pkt->fd,
-                                playlist_get_songtime(*((guint32 *) pkt->data),
-                                                      playlist_get_active()));
+                                playlist_get_songtime(playlist_get_active(),
+                                                      *((guint32 *) pkt->data)));
             else
                 ctrl_write_gint(pkt->fd, -1);
 
@@ -494,7 +494,7 @@ ctrlsocket_func(gpointer arg)
                     memcpy(filename, dataptr, len);
 
                     GDK_THREADS_ENTER();
-                    playlist_add_url(filename, playlist_get_active());
+                    playlist_add_url(playlist_get_active(), filename);
                     GDK_THREADS_LEAVE();
 
                     g_free(filename);
@@ -505,7 +505,7 @@ ctrlsocket_func(gpointer arg)
             break;
         case CMD_PLAYLIST_ADD_URL_STRING:
             GDK_THREADS_ENTER();
-            playlist_add_url(pkt->data, playlist_get_active());
+            playlist_add_url(playlist_get_active(), pkt->data);
             GDK_THREADS_LEAVE();
 
             ctrl_ack_packet(pkt);
@@ -515,13 +515,13 @@ ctrlsocket_func(gpointer arg)
                 gint pos = *(gint *) pkt->data;
                 gchar *ptr = pkt->data;
                 ptr += sizeof(gint);
-                playlist_ins_url(ptr, pos, playlist_get_active());
+                playlist_ins_url(playlist_get_active(), ptr, pos);
             }
             ctrl_ack_packet(pkt);
             break;
         case CMD_PLAYLIST_DELETE:
             GDK_THREADS_ENTER();
-            playlist_delete_index(*((guint32 *) pkt->data), playlist_get_active());
+            playlist_delete_index(playlist_get_active(), *((guint32 *) pkt->data));
             GDK_THREADS_LEAVE();
             ctrl_ack_packet(pkt);
             break;
@@ -631,12 +631,12 @@ ctrlsocket_check(void)
         case CMD_PLAYQUEUE_ADD:
             num = *((guint32 *) data);
             if (num < (guint)playlist_get_length(playlist_get_active()))
-                playlist_queue_position(num, playlist_get_active());
+                playlist_queue_position(playlist_get_active(), num);
             break;
         case CMD_PLAYQUEUE_REMOVE:
             num = *((guint32 *) data);
             if (num < (guint)playlist_get_length(playlist_get_active()))
-                playlist_queue_remove(num, playlist_get_active());
+                playlist_queue_remove(playlist_get_active(), num);
             break;
         case CMD_PLAYQUEUE_CLEAR:
             playlist_clear_queue(playlist_get_active());
@@ -644,7 +644,7 @@ ctrlsocket_check(void)
         case CMD_SET_PLAYLIST_POS:
             num = *((guint32 *) data);
             if (num < (guint)playlist_get_length(playlist_get_active()))
-                playlist_set_position(num, playlist_get_active());
+                playlist_set_position(playlist_get_active(), num);
             break;
         case CMD_JUMP_TO_TIME:
             num = *((guint32 *) data);
