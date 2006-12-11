@@ -108,6 +108,8 @@ guint playlist_ins_url(Playlist *playlist, const gchar * string, gint pos);
 
 void playlist_set_info(Playlist *playlist, const gchar * title, gint length, gint rate,
                        gint freq, gint nch);
+void playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
+                               gint freq, gint nch);
 void playlist_check_pos_current(Playlist *playlist);
 void playlist_next(Playlist *playlist);
 void playlist_prev(Playlist *playlist);

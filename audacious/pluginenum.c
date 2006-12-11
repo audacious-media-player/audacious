@@ -140,7 +140,7 @@ input_plugin_init(Plugin * plugin)
     /* Pretty const casts courtesy of XMMS's plugin.h legacy. Anyone
        else thinks we could use a CONST macro to solve the warnings?
        - descender */
-    p->set_info = (void (*)(gchar *, gint, gint, gint, gint)) playlist_set_info;
+    p->set_info = (void (*)(gchar *, gint, gint, gint, gint)) playlist_set_info_old_abi;
     p->set_info_text = (void (*)(gchar *)) input_set_info_text;
     p->set_status_buffering = (void (*)(gboolean)) input_set_status_buffering;     
 

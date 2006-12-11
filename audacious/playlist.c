@@ -859,6 +859,29 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
 }
 
 void
+playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
+                          gint freq, gint nch)
+{
+    Playlist *playlist = playlist_get_active();
+
+    PLAYLIST_LOCK();
+
+    g_return_if_fail(playlist != NULL);
+
+    if (playlist->position) {
+        g_free(playlist->position->title);
+        playlist->position->title = g_strdup(title);
+        playlist->position->length = length;
+    }
+
+    PLAYLIST_UNLOCK();
+
+    playlist_recalc_total_time(playlist);
+
+    mainwin_set_song_info(rate, freq, nch);
+}
+
+void
 playlist_set_info(Playlist * playlist, const gchar * title, gint length, gint rate,
                   gint freq, gint nch)
 {
@@ -867,8 +890,7 @@ playlist_set_info(Playlist * playlist, const gchar * title, gint length, gint ra
     g_return_if_fail(playlist != NULL);
 
     if (playlist->position) {
-/* XXX: what is playlist->position->title is not dup'd? */
-//        g_free(playlist->position->title);
+        g_free(playlist->position->title);
         playlist->position->title = g_strdup(title);
         playlist->position->length = length;
     }
