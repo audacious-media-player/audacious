@@ -1689,7 +1689,8 @@ equalizerwin_presets_menu_cb(gpointer cb_data, guint action, GtkWidget * w)
             else
                 gtk_window_present(GTK_WINDOW(equalizerwin_save_auto_window));
 
-            name = playlist_get_filename(playlist_get_position());
+            name = playlist_get_filename(playlist_get_active(),
+                                         playlist_get_position(playlist_get_active()));
 
             if (name) {
                 gtk_entry_set_text(GTK_ENTRY(equalizerwin_save_auto_entry),
@@ -1714,7 +1715,8 @@ equalizerwin_presets_menu_cb(gpointer cb_data, guint action, GtkWidget * w)
                              G_CALLBACK(equalizerwin_file_chooser_on_response),
                              save_preset_file);
 
-            songname = playlist_get_filename(playlist_get_position());
+            songname = playlist_get_filename(playlist_get_active(),
+                                             playlist_get_position(playlist_get_active()));
             if (songname) {
                 gchar *eqname = g_strdup_printf("%s.%s", songname,
                                                 cfg.eqpreset_extension);
