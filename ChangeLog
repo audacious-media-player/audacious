@@ -1,3 +1,38 @@
+2006-12-12 03:21:54 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3205]
+  - run update-po
+  - update zh_CN translation from programfan (closes #689)
+  
+  trunk/po/audacious.pot |  366 ++--
+  trunk/po/br.po         |  366 ++--
+  trunk/po/cs.po         |  366 ++--
+  trunk/po/cy.po         |  366 ++--
+  trunk/po/de.po         |  366 ++--
+  trunk/po/el.po         |  366 ++--
+  trunk/po/es.po         |  366 ++--
+  trunk/po/fi.po         |  366 ++--
+  trunk/po/fr.po         |  366 ++--
+  trunk/po/hi.po         |  366 ++--
+  trunk/po/hu.po         |  366 ++--
+  trunk/po/it.po         |  366 ++--
+  trunk/po/ja.po         |  366 ++--
+  trunk/po/ka.po         |  366 ++--
+  trunk/po/ko.po         |  366 ++--
+  trunk/po/lt.po         |  366 ++--
+  trunk/po/mk.po         |  366 ++--
+  trunk/po/nl.po         |  366 ++--
+  trunk/po/pl.po         |  366 ++--
+  trunk/po/pt_BR.po      |  366 ++--
+  trunk/po/ro.po         |  366 ++--
+  trunk/po/ru.po         |  366 ++--
+  trunk/po/sk.po         |  366 ++--
+  trunk/po/sv.po         |  366 ++--
+  trunk/po/uk.po         |  366 ++--
+  trunk/po/zh_CN.po      | 3997 ++-----------------------------------------------
+  trunk/po/zh_TW.po      |  366 ++--
+  27 files changed, 5051 insertions(+), 8462 deletions(-)
+
+
 2006-12-11 14:25:24 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3203]
   - when clearing a playlist's entries, make sure to reset the playlist's 
