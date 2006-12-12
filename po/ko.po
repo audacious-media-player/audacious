@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-12-11 22:04-0600\n"
+"POT-Creation-Date: 2006-12-11 22:15-0600\n"
 "PO-Revision-Date: 2004-06-29 19:02+0900\n"
 "Last-Translator: DongCheon Park <dcpark@kaist.ac.kr>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -1594,7 +1594,7 @@ msgid "Convert %20 to blanks"
 msgstr "%20을 공백으로 바꿈"
 
 #: audacious/glade/prefswin.glade:1808
-msgid "Convert forward slash '\\' to backslash '/'"
+msgid "Convert backslash '\\' to forward slash '/'"
 msgstr ""
 
 #: audacious/glade/prefswin.glade:1842

@@ -1,3 +1,11 @@
+2006-12-12 03:29:51 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3209]
+  - this was backwards. lets fix it!
+  
+  trunk/audacious/glade/prefswin.glade |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-12-12 03:23:52 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3207]
   - update Welsh translation (1 new string added)

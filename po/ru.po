@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.2.2\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-12-11 22:04-0600\n"
+"POT-Creation-Date: 2006-12-11 22:15-0600\n"
 "PO-Revision-Date: 2006-11-17 19:24+0400\n"
 "Last-Translator: Alexandr Orlov <alxorlov@pochta.ru>\n"
 "Language-Team: none\n"
@@ -1510,7 +1510,7 @@ msgid "Convert %20 to blanks"
 msgstr "Преобразовывать %20 в пробел"
 
 #: audacious/glade/prefswin.glade:1808
-msgid "Convert forward slash '\\' to backslash '/'"
+msgid "Convert backslash '\\' to forward slash '/'"
 msgstr ""
 
 #: audacious/glade/prefswin.glade:1842

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-12-11 22:04-0600\n"
+"POT-Creation-Date: 2006-12-11 22:15-0600\n"
 "PO-Revision-Date: 2006-06-25 03:54+0200\n"
 "Last-Translator: Diego 'Flameeyes' Pettenò <flameeyes@gentoo.org>\n"
 "Language-Team: Italian\n"
@@ -1545,7 +1545,7 @@ msgid "Convert %20 to blanks"
 msgstr "Converti %%20 in spazi"
 
 #: audacious/glade/prefswin.glade:1808
-msgid "Convert forward slash '\\' to backslash '/'"
+msgid "Convert backslash '\\' to forward slash '/'"
 msgstr ""
 
 #: audacious/glade/prefswin.glade:1842

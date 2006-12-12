@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BMP\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-12-11 22:04-0600\n"
+"POT-Creation-Date: 2006-12-11 22:15-0600\n"
 "PO-Revision-Date: 2004-12-06 19:02+0200\n"
 "Last-Translator: Rimas Kudelis <rq@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -1569,7 +1569,7 @@ msgid "Convert %20 to blanks"
 msgstr "Keisti %20 tarpais"
 
 #: audacious/glade/prefswin.glade:1808
-msgid "Convert forward slash '\\' to backslash '/'"
+msgid "Convert backslash '\\' to forward slash '/'"
 msgstr ""
 
 #: audacious/glade/prefswin.glade:1842

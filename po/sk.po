@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sk\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-12-11 22:04-0600\n"
+"POT-Creation-Date: 2006-12-11 22:15-0600\n"
 "PO-Revision-Date: 2004-09-03 09:32+0800\n"
 "Last-Translator: Pavel Kanzelsberger <kanzels@zmail.sk>\n"
 "Language-Team: Slovak <kanzels@zmail.sk>\n"
@@ -1580,7 +1580,7 @@ msgid "Convert %20 to blanks"
 msgstr "Konvertovať %20 na medzery"
 
 #: audacious/glade/prefswin.glade:1808
-msgid "Convert forward slash '\\' to backslash '/'"
+msgid "Convert backslash '\\' to forward slash '/'"
 msgstr ""
 
 #: audacious/glade/prefswin.glade:1842
