@@ -1,3 +1,38 @@
+2006-12-12 03:32:18 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3211]
+  - run update-po
+  - change cy.po's indices (invalid string fix in r3209)
+  
+  trunk/po/audacious.pot |    4 ++--
+  trunk/po/br.po         |    4 ++--
+  trunk/po/cs.po         |    4 ++--
+  trunk/po/cy.po         |    6 +++---
+  trunk/po/de.po         |    4 ++--
+  trunk/po/el.po         |    4 ++--
+  trunk/po/es.po         |    4 ++--
+  trunk/po/fi.po         |    4 ++--
+  trunk/po/fr.po         |    4 ++--
+  trunk/po/hi.po         |    4 ++--
+  trunk/po/hu.po         |    4 ++--
+  trunk/po/it.po         |    4 ++--
+  trunk/po/ja.po         |    4 ++--
+  trunk/po/ka.po         |    4 ++--
+  trunk/po/ko.po         |    4 ++--
+  trunk/po/lt.po         |    4 ++--
+  trunk/po/mk.po         |    4 ++--
+  trunk/po/nl.po         |    4 ++--
+  trunk/po/pl.po         |    4 ++--
+  trunk/po/pt_BR.po      |    4 ++--
+  trunk/po/ro.po         |    4 ++--
+  trunk/po/ru.po         |    4 ++--
+  trunk/po/sk.po         |    4 ++--
+  trunk/po/sv.po         |    4 ++--
+  trunk/po/uk.po         |    4 ++--
+  trunk/po/zh_CN.po      |    4 ++--
+  trunk/po/zh_TW.po      |    4 ++--
+  27 files changed, 55 insertions(+), 55 deletions(-)
+
+
 2006-12-12 03:29:51 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3209]
   - this was backwards. lets fix it!

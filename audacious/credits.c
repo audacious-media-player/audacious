@@ -143,6 +143,7 @@ static const gchar *translators[] = {
     N_("Chinese:"),
     "Chong Kai Xiong",
     "Chao-Hsiung Liao",
+    "Yang Zhang",
     NULL,
     N_("Czech:"),
     "Jan Narovec",
