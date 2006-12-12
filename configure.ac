@@ -215,10 +215,6 @@ fi
 
 AC_SUBST(CONFIGDB_BACKEND)
 
-AC_CHECK_HEADERS(linux/cdrom.h)
-AC_CHECK_HEADERS(sys/cdio.h)
-AC_CHECK_HEADERS(sys/cdrio.h)
-AC_CHECK_HEADERS(linux/joystick.h)
 AC_CHECK_HEADERS(unistd.h)
 AC_CHECK_HEADERS(fcntl.h)
 AC_CHECK_HEADERS(sys/ioctl.h)
@@ -228,9 +224,6 @@ AC_CHECK_HEADERS(wchar.h)
 AC_CHECK_HEADERS(fts.h)
 
 AC_CHECK_FUNCS([mkdtemp getmntinfo statvfs strtoul lrintf])
-
-AM_CONDITIONAL(HAVE_CDROM, test "${ac_cv_header_linux_cdrom_h}" = "yes" || test "${ac_cv_header_sys_cdio_h}" = "yes")
-AM_CONDITIONAL(HAVE_LINUX_JOYSTICK,test "${ac_cv_header_linux_joystick_h}" = "yes")
 
 AC_MSG_CHECKING(if __ELF__ is defined)
 AC_EGREP_CPP(yes,
@@ -253,7 +246,6 @@ case "$host" in
         then
             AC_DEFINE(SYMBOL_PREFIX, "_", [Define to symbol prefix, if any])
         fi
-        OUTPUT_PLUGINS="$OUTPUT_PLUGINS sun"
     ;;
     *-*-darwin*)
         AC_DEFINE(SYMBOL_PREFIX, "_", [Define to symbol prefix, if any])
@@ -355,13 +347,6 @@ fi
 
 AC_SUBST(beepdir)
 AC_SUBST(plugindir)
-
-AC_SUBST(EFFECT_PLUGINS)
-AC_SUBST(GENERAL_PLUGINS)
-AC_SUBST(INPUT_PLUGINS)
-AC_SUBST(OUTPUT_PLUGINS)
-AC_SUBST(VISUALIZATION_PLUGINS)
-AC_SUBST(CONTAINER_PLUGINS)
 
 AC_CONFIG_FILES([
 	audtool.1
