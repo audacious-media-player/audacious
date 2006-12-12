@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp-hi\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-11-27 00:47+0100\n"
+"POT-Creation-Date: 2006-12-11 22:04-0600\n"
 "PO-Revision-Date: 2005-08-20 21:59+0530\n"
 "Last-Translator: धनञ्जय शर्मा (Dhananjaya Sharma) <dysxhi@yahoo.co.in>\n"
 "Language-Team: Hindi, India <dysxhi@yahoo.co.in>\n"
@@ -16,12 +16,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.10\n"
 
-#: audacious/about.c:119 audacious/credits.c:313
+#: audacious/about.c:119 audacious/credits.c:317
 #, fuzzy
 msgid "About Audacious"
 msgstr "एमपीईजी आडियो प्लग-इन के बारे में"
 
-#: audacious/about.c:168 audacious/credits.c:358
+#: audacious/about.c:168 audacious/credits.c:362
 msgid "Credits"
 msgstr "आभार"
 
@@ -43,136 +43,136 @@ msgstr ""
 msgid "Audacious core developers:"
 msgstr "BMP की वरीयतायें"
 
-#: audacious/credits.c:61
+#: audacious/credits.c:63
 msgid "Graphics:"
 msgstr ""
 
-#: audacious/credits.c:66
+#: audacious/credits.c:68
 msgid "Default skin:"
 msgstr "डिफ़ाल्ट स्किन:"
 
-#: audacious/credits.c:71
+#: audacious/credits.c:73
 msgid "Plugin development:"
 msgstr ""
 
-#: audacious/credits.c:82
+#: audacious/credits.c:84
 msgid "Patch authors:"
 msgstr ""
 
-#: audacious/credits.c:95
+#: audacious/credits.c:99
 #, fuzzy
 msgid "0.1.x developers:"
 msgstr "सभी विकासकर्ता:"
 
-#: audacious/credits.c:101
+#: audacious/credits.c:105
 #, fuzzy
 msgid "BMP Developers:"
 msgstr "सभी विकासकर्ता:"
 
-#: audacious/credits.c:133
+#: audacious/credits.c:137
 msgid "Brazilian Portuguese:"
 msgstr "पुर्तगाली ब्राजील:"
 
-#: audacious/credits.c:136
+#: audacious/credits.c:140
 msgid "Breton:"
 msgstr "Breton:"
 
-#: audacious/credits.c:139
+#: audacious/credits.c:143
 msgid "Chinese:"
 msgstr "चीनी:"
 
-#: audacious/credits.c:143
+#: audacious/credits.c:147
 msgid "Czech:"
 msgstr "चेक:"
 
-#: audacious/credits.c:146
+#: audacious/credits.c:150
 msgid "Dutch:"
 msgstr "डच:"
 
-#: audacious/credits.c:150
+#: audacious/credits.c:154
 #, fuzzy
 msgid "Finnish:"
 msgstr "स्पैनिस:"
 
-#: audacious/credits.c:153
+#: audacious/credits.c:157
 msgid "French:"
 msgstr "फ़्रेंच:"
 
-#: audacious/credits.c:156
+#: audacious/credits.c:160
 msgid "German:"
 msgstr "जर्मन:"
 
-#: audacious/credits.c:160
+#: audacious/credits.c:164
 #, fuzzy
 msgid "Georgian: "
 msgstr "जर्मन:"
 
-#: audacious/credits.c:163
+#: audacious/credits.c:167
 msgid "Greek:"
 msgstr "ग्रीक:"
 
-#: audacious/credits.c:168
+#: audacious/credits.c:172
 msgid "Hindi:"
 msgstr ""
 
-#: audacious/credits.c:171
+#: audacious/credits.c:175
 msgid "Hungarian:"
 msgstr "हंगारियन:"
 
-#: audacious/credits.c:174
+#: audacious/credits.c:178
 msgid "Italian:"
 msgstr "इटैलियन:"
 
-#: audacious/credits.c:178
+#: audacious/credits.c:182
 msgid "Japanese:"
 msgstr "जापानी:"
 
-#: audacious/credits.c:181
+#: audacious/credits.c:185
 msgid "Korean:"
 msgstr "कोरियन:"
 
-#: audacious/credits.c:184
+#: audacious/credits.c:188
 msgid "Lithuanian:"
 msgstr "लिथूनियन:"
 
-#: audacious/credits.c:187
+#: audacious/credits.c:191
 msgid "Macedonian:"
 msgstr "Macedonian:"
 
-#: audacious/credits.c:190
+#: audacious/credits.c:194
 msgid "Polish:"
 msgstr "पोलिश:"
 
-#: audacious/credits.c:194
+#: audacious/credits.c:198
 msgid "Romanian:"
 msgstr "रोमानियन:"
 
-#: audacious/credits.c:197
+#: audacious/credits.c:201
 msgid "Russian:"
 msgstr "रूसी:"
 
-#: audacious/credits.c:202
+#: audacious/credits.c:206
 msgid "Slovak:"
 msgstr "स्लोवाक:"
 
-#: audacious/credits.c:205
+#: audacious/credits.c:209
 msgid "Spanish:"
 msgstr "स्पैनिस:"
 
-#: audacious/credits.c:208
+#: audacious/credits.c:212
 msgid "Swedish:"
 msgstr "स्वीडिस:"
 
-#: audacious/credits.c:211
+#: audacious/credits.c:215
 #, fuzzy
 msgid "Ukrainian:"
 msgstr "रोमानियन:"
 
-#: audacious/credits.c:214
+#: audacious/credits.c:218
 msgid "Welsh:"
 msgstr "वाल्श:"
 
-#: audacious/credits.c:362
+#: audacious/credits.c:366
 msgid "Translators"
 msgstr "सभी अनुवादक"
 
@@ -282,15 +282,15 @@ msgstr "प्रीसेट को सुरक्षित करना"
 msgid "Save auto-preset"
 msgstr "आटो-प्रीसेट को सुरक्षित करना"
 
-#: audacious/equalizer.c:1712 audacious/equalizer.c:1731
+#: audacious/equalizer.c:1713 audacious/equalizer.c:1733
 msgid "Save equalizer preset"
 msgstr "ईक्यूलाईजर प्रीसेट को सुरक्षित करना"
 
-#: audacious/equalizer.c:1740
+#: audacious/equalizer.c:1742
 msgid "Delete preset"
 msgstr "प्रीसेट को हटाना"
 
-#: audacious/equalizer.c:1758
+#: audacious/equalizer.c:1760
 msgid "Delete auto-preset"
 msgstr "आटो-प्रीसेट को हटाना"
 
@@ -357,7 +357,7 @@ msgid ""
 "Could not open glade file (%s). Please check your installation.\n"
 msgstr ""
 
-#: audacious/input.c:305
+#: audacious/input.c:304
 msgid ""
 "<b><big>Unable to play files.</big></b>\n"
 "\n"
@@ -371,33 +371,33 @@ msgstr ""
 "१. इन तक पहुँच प्राप्त है ।\n"
 "२. आपने आवश्यक मीडिया प्लग-इनों को सक्रिय किया हुआ है।"
 
-#: audacious/input.c:330
+#: audacious/input.c:329
 msgid "Don't show this warning anymore"
 msgstr "इस चेतावनी को फ़िर कभी ना दिखाएँ"
 
-#: audacious/input.c:332
+#: audacious/input.c:331
 msgid "Show more _details"
 msgstr "और अधिक विवरण दिखाएँ (_d)"
 
-#: audacious/input.c:346 audacious/prefswin.c:115 audacious/prefswin.c:487
-#: audacious/prefswin.c:575 audacious/prefswin.c:664 audacious/prefswin.c:760
+#: audacious/input.c:345 audacious/prefswin.c:115 audacious/prefswin.c:483
+#: audacious/prefswin.c:571 audacious/prefswin.c:660 audacious/prefswin.c:756
 msgid "Filename"
 msgstr "संचिकानाम"
 
-#: audacious/input.c:589
+#: audacious/input.c:581
 #, c-format
 msgid "audacious: %s"
 msgstr ""
 
-#: audacious/input.c:605
+#: audacious/input.c:597
 msgid "Filename:"
 msgstr "संचिकानाम:"
 
-#: audacious/input.c:623
+#: audacious/input.c:615
 msgid "No input plugin recognized this file"
 msgstr "कोई आउटपुट प्लग-इन इस संचिका की पहचान नहीं कर पाया"
 
-#: audacious/input.c:625
+#: audacious/input.c:617
 #, c-format
 msgid "Input plugin: %s"
 msgstr "इन्पुट प्लग-इन: %s"
@@ -408,16 +408,16 @@ msgid "Unable to create log file (%s)!\n"
 msgstr "लॉग संचिका को निर्मित करने में असमर्थ (%s)!\n"
 
 #: audacious/main.c:82 audacious/main.c:84 audacious/mainwin.c:876
-#: audacious/mainwin.c:3650
+#: audacious/mainwin.c:3676
 msgid "Audacious"
 msgstr ""
 
-#: audacious/main.c:445
+#: audacious/main.c:449
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "निर्देशिका (%s) का निर्माण करने में असफ़लता: %s"
 
-#: audacious/main.c:721
+#: audacious/main.c:726
 #, fuzzy
 msgid ""
 "Usage: audacious [options] [files] ...\n"
@@ -430,73 +430,73 @@ msgstr ""
 "सभी विकल्प:\n"
 "--------\n"
 
-#: audacious/main.c:726
+#: audacious/main.c:731
 msgid "Display this text and exit"
 msgstr "इस पाठ को दिखायें और बाहर निकलें"
 
-#: audacious/main.c:729
+#: audacious/main.c:734
 #, fuzzy
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "BMP/XMMS संत्र का चयन (डिफ़ाल्ट: ०)"
 
-#: audacious/main.c:732
+#: audacious/main.c:737
 msgid "Skip backwards in playlist"
 msgstr "प्लेसूची में पीछे जाना"
 
-#: audacious/main.c:735
+#: audacious/main.c:740
 msgid "Start playing current playlist"
 msgstr "वर्तमान प्लेसूची को चलाना आरम्भ करना"
 
-#: audacious/main.c:738
+#: audacious/main.c:743
 msgid "Pause current song"
 msgstr "वर्तमान गीत को ठहरना"
 
-#: audacious/main.c:741
+#: audacious/main.c:746
 msgid "Stop current song"
 msgstr "वर्तमान गीत को रोकना"
 
-#: audacious/main.c:744
+#: audacious/main.c:749
 msgid "Pause if playing, play otherwise"
 msgstr "ठहराना यदि चल रहा हो, अन्यथा चलाना"
 
-#: audacious/main.c:747
+#: audacious/main.c:752
 msgid "Skip forward in playlist"
 msgstr "प्लेसूची में आगे जाना"
 
-#: audacious/main.c:750
+#: audacious/main.c:755
 msgid "Display Jump to file dialog"
 msgstr ""
 
-#: audacious/main.c:753
+#: audacious/main.c:758
 msgid "Don't clear the playlist"
 msgstr "प्लेसूची को साफ़ नहीं करना"
 
-#: audacious/main.c:756
+#: audacious/main.c:761
 msgid "Show the main window"
 msgstr "मुख्य खिड़की को दिखाना"
 
-#: audacious/main.c:759
+#: audacious/main.c:764
 #, fuzzy
 msgid "Activate Audacious"
 msgstr "BMP को सक्रिय करें"
 
-#: audacious/main.c:762
+#: audacious/main.c:767
 msgid "Previous session ID"
 msgstr "पिछले संत्र की आईडी"
 
-#: audacious/main.c:765
+#: audacious/main.c:770
 msgid "Headless operation [experimental]"
 msgstr ""
 
-#: audacious/main.c:768
+#: audacious/main.c:773
 msgid "Disable error/warning interception (logging)"
 msgstr ""
 
-#: audacious/main.c:771
+#: audacious/main.c:776
 msgid "Print version number and exit\n"
 msgstr "संस्मरण संख्या को मुद्रित करें और बाहर निकलें\n"
 
-#: audacious/main.c:961
+#: audacious/main.c:966
 #, fuzzy
 msgid ""
 "\n"
@@ -513,7 +513,7 @@ msgstr ""
 "beepmp-devel@lists.sourceforge.net पर भेजें\n"
 "\n"
 
-#: audacious/main.c:984
+#: audacious/main.c:996
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -526,7 +526,7 @@ msgstr ""
 "कृपया जाँचे कि '%s' पर स्थित स्किन उपयोगी है और डिफ़ाल्ट स्किन को भली-भांति '%s' पर "
 "संसाधित है\n"
 
-#: audacious/main.c:1030
+#: audacious/main.c:1043
 #, fuzzy, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -535,7 +535,7 @@ msgstr ""
 "क्षमा करें, आपका जीटीके+ संस्मरण (%d.%d.%d) BMP के साथ कार्य नहीं करता है ।\n"
 "कृपया जीटीके+ %s या और नवीन संस्मरण का उपयोग करें ।\n"
 
-#: audacious/main.c:1041
+#: audacious/main.c:1054
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -550,7 +550,7 @@ msgstr ""
 "लिनक्स थ्रेडों को संसाधित करने के पूर्व आपको जीलिब व जीटीके+ को पुनः कम्पाइल करने की "
 "आवश्यकता है।\n"
 
-#: audacious/main.c:1057
+#: audacious/main.c:1073
 #, fuzzy
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "BMP: डिसप्ले को खोलने में असमर्थ, बाहर निकल रहा है।"
@@ -870,107 +870,107 @@ msgstr ""
 msgid "%s - Audacious"
 msgstr ""
 
-#: audacious/mainwin.c:1098
+#: audacious/mainwin.c:1099
 msgid "VBR"
 msgstr "VBR"
 
-#: audacious/mainwin.c:1139 audacious/mainwin.c:1143
+#: audacious/mainwin.c:1140 audacious/mainwin.c:1144
 #, fuzzy
 msgid "stereo"
 msgstr "स्टीरियो"
 
-#: audacious/mainwin.c:1139 audacious/mainwin.c:1143
+#: audacious/mainwin.c:1140 audacious/mainwin.c:1144
 #, fuzzy
 msgid "mono"
 msgstr "मोनो"
 
-#: audacious/mainwin.c:1627
+#: audacious/mainwin.c:1633
 msgid "Jump to Time"
 msgstr "समय पर जाएँ"
 
-#: audacious/mainwin.c:1648
+#: audacious/mainwin.c:1654
 msgid "minutes:seconds"
 msgstr "क्षण:पल"
 
-#: audacious/mainwin.c:1658
+#: audacious/mainwin.c:1664
 msgid "Track length:"
 msgstr "ट्रैक की लंबाई:"
 
-#: audacious/mainwin.c:1746
+#: audacious/mainwin.c:1752
 #, fuzzy
 msgid "Un_queue"
 msgstr "कतार"
 
-#: audacious/mainwin.c:1748 audacious/mainwin.c:2103
+#: audacious/mainwin.c:1754 audacious/mainwin.c:2109
 #, fuzzy
 msgid "_Queue"
 msgstr "कतार"
 
-#: audacious/mainwin.c:2028
+#: audacious/mainwin.c:2034
 msgid "Jump to Track"
 msgstr "ट्रैक पर जाएँ"
 
-#: audacious/mainwin.c:2069
+#: audacious/mainwin.c:2075
 msgid "Filter: "
 msgstr "फ़िल्टर: "
 
-#: audacious/mainwin.c:2270
+#: audacious/mainwin.c:2280
 msgid "Enter location to play:"
 msgstr ""
 
-#: audacious/mainwin.c:2477
+#: audacious/mainwin.c:2488
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "को खोजें: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2509 audacious/mainwin.c:3296
+#: audacious/mainwin.c:2520 audacious/mainwin.c:3310
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "वाल्यूम: %d%%"
 
-#: audacious/mainwin.c:2540 audacious/mainwin.c:3299
+#: audacious/mainwin.c:2551 audacious/mainwin.c:3313
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "संतुलन:  %d%% बायाँ"
 
-#: audacious/mainwin.c:2544 audacious/mainwin.c:3302
+#: audacious/mainwin.c:2555 audacious/mainwin.c:3316
 msgid "BALANCE: CENTER"
 msgstr "संतुलन: केन्द्रिय"
 
-#: audacious/mainwin.c:2548 audacious/mainwin.c:3304
+#: audacious/mainwin.c:2559 audacious/mainwin.c:3318
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "संतुलन: %d%% दायाँ"
 
-#: audacious/mainwin.c:3071
+#: audacious/mainwin.c:3084
 msgid "OPTIONS MENU"
 msgstr "विकल्प मीनू"
 
-#: audacious/mainwin.c:3075
+#: audacious/mainwin.c:3088
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "हमेशा ऊपर निष्क्रिय"
 
-#: audacious/mainwin.c:3077
+#: audacious/mainwin.c:3090
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "हमेशा ऊपर सक्रिय़"
 
-#: audacious/mainwin.c:3080
+#: audacious/mainwin.c:3093
 msgid "FILE INFO BOX"
 msgstr "संचिका सूचना बॉक्स"
 
-#: audacious/mainwin.c:3084
+#: audacious/mainwin.c:3097
 msgid "DISABLE DOUBLESIZE"
 msgstr ""
 
-#: audacious/mainwin.c:3086
+#: audacious/mainwin.c:3099
 msgid "ENABLE DOUBLESIZE"
 msgstr ""
 
-#: audacious/mainwin.c:3089
+#: audacious/mainwin.c:3102
 msgid "VISUALIZATION MENU"
 msgstr "कल्पना मीनू"
 
-#: audacious/mainwin.c:3137
+#: audacious/mainwin.c:3150
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -980,7 +980,7 @@ msgstr ""
 "\n"
 "या तो कोई सीडी डाली नहीं गई है, या फ़िर डाली गयी सीडी एक आडियो सीडी नहीं है।\n"
 
-#: audacious/mainwin.c:3154
+#: audacious/mainwin.c:3167
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -1010,7 +1010,7 @@ msgstr "एमपीईजी आडियो प्लग-इन के बा�
 msgid "Connectivity"
 msgstr ""
 
-#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:2836
+#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:2871
 msgid "Equalizer"
 msgstr "ईक्यूलाईजर"
 
@@ -1018,7 +1018,7 @@ msgstr "ईक्यूलाईजर"
 msgid "Mouse"
 msgstr "माउस"
 
-#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:2468
+#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:2503
 msgid "Playlist"
 msgstr "प्लेसूची"
 
@@ -1030,7 +1030,7 @@ msgstr "प्लग-इन्स"
 msgid "Artist"
 msgstr "कलाकार"
 
-#: audacious/prefswin.c:111 libaudacious/titlestring.c:351
+#: audacious/prefswin.c:111 libaudacious/titlestring.c:372
 msgid "Album"
 msgstr "एल्बम"
 
@@ -1042,7 +1042,7 @@ msgstr "शीर्षक"
 msgid "Tracknumber"
 msgstr "ट्रैकसंख्या"
 
-#: audacious/prefswin.c:114 libaudacious/titlestring.c:352
+#: audacious/prefswin.c:114 libaudacious/titlestring.c:373
 msgid "Genre"
 msgstr "प्रकार"
 
@@ -1050,15 +1050,15 @@ msgstr "प्रकार"
 msgid "Filepath"
 msgstr "संचिकापथ"
 
-#: audacious/prefswin.c:117 libaudacious/titlestring.c:358
+#: audacious/prefswin.c:117 libaudacious/titlestring.c:379
 msgid "Date"
 msgstr "दिनांक"
 
-#: audacious/prefswin.c:118 libaudacious/titlestring.c:359
+#: audacious/prefswin.c:118 libaudacious/titlestring.c:380
 msgid "Year"
 msgstr "वर्ष"
 
-#: audacious/prefswin.c:119 libaudacious/titlestring.c:360
+#: audacious/prefswin.c:119 libaudacious/titlestring.c:381
 msgid "Comment"
 msgstr "टिप्पणी"
 
@@ -1066,21 +1066,21 @@ msgstr "टिप्पणी"
 msgid "localhost"
 msgstr ""
 
-#: audacious/prefswin.c:457 audacious/prefswin.c:544 audacious/prefswin.c:633
-#: audacious/prefswin.c:729
+#: audacious/prefswin.c:453 audacious/prefswin.c:540 audacious/prefswin.c:629
+#: audacious/prefswin.c:725
 msgid "Enabled"
 msgstr "सक्रिय किया गया"
 
-#: audacious/prefswin.c:473 audacious/prefswin.c:560 audacious/prefswin.c:649
-#: audacious/prefswin.c:745
+#: audacious/prefswin.c:469 audacious/prefswin.c:556 audacious/prefswin.c:645
+#: audacious/prefswin.c:741
 msgid "Description"
 msgstr "विवरण"
 
-#: audacious/prefswin.c:1784
+#: audacious/prefswin.c:1792
 msgid "Category"
 msgstr "वर्ग"
 
-#: audacious/prefswin.c:2241
+#: audacious/prefswin.c:2251
 msgid "Preferences Window"
 msgstr "वरीयताऐं खिड़की"
 
@@ -1092,11 +1092,11 @@ msgstr ""
 msgid "Unarchived Winamp 2.x skin"
 msgstr ""
 
-#: audacious/ui_fileinfo.c:313
+#: audacious/ui_fileinfo.c:316
 msgid "Track Information Window"
 msgstr ""
 
-#: audacious/ui_fileinfo.c:335
+#: audacious/ui_fileinfo.c:338
 msgid "Track Information Popup"
 msgstr ""
 
@@ -1271,17 +1271,17 @@ msgstr "/चयन को क्रमानुसार लगायें/द�
 msgid "/Sort Selection/By Playlist Entry"
 msgstr "/चयन को क्रमानुसार लगायें/शीर्षक द्वारा"
 
-#: audacious/ui_playlist.c:841
+#: audacious/ui_playlist.c:845
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "\"%s\" प्लेसूची लिखने में त्रुटि : %s"
 
-#: audacious/ui_playlist.c:862
+#: audacious/ui_playlist.c:866
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s पहिले से विद्यमान है। जारी रहा जाएँ?"
 
-#: audacious/ui_playlist.c:876
+#: audacious/ui_playlist.c:880
 #, fuzzy, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -1289,56 +1289,56 @@ msgid ""
 "Unknown file type for '%s'.\n"
 msgstr "प्लेसूची को सुरक्षित करने में असमर्थ! %s हेतु अज्ञात संचिका प्रकार"
 
-#: audacious/ui_playlist.c:1027
+#: audacious/ui_playlist.c:1033
 #, fuzzy
 msgid "Load Playlist"
 msgstr "प्लेसूची को लाना"
 
-#: audacious/ui_playlist.c:1040
+#: audacious/ui_playlist.c:1046
 #, fuzzy
 msgid "Save Playlist"
 msgstr "प्लेसूची को सुरक्षित करना"
 
-#: audacious/ui_playlist.c:1751
+#: audacious/ui_playlist.c:1783
 #, fuzzy
 msgid "Audacious Playlist Editor"
 msgstr "/प्लेसूची संपादक दिखाएँ"
 
-#: audacious/util.c:951
+#: audacious/util.c:952
 msgid "Add/Open Files dialog"
 msgstr "फ़ाइलों को जोड़ना/खोलना संवाद"
 
-#: audacious/util.c:1006
+#: audacious/util.c:1007
 msgid "Open Files"
 msgstr "संचिकाओं को खोलें"
 
-#: audacious/util.c:1010
+#: audacious/util.c:1011
 msgid "Close dialog on Open"
 msgstr "खोलने पर बन्द संवाद"
 
-#: audacious/util.c:1020 audacious/glade/addfiles.glade:8
+#: audacious/util.c:1021 audacious/glade/addfiles.glade:8
 msgid "Add Files"
 msgstr "संचिकाओं को जोड़ें"
 
-#: audacious/util.c:1024
+#: audacious/util.c:1025
 msgid "Close dialog on Add"
 msgstr "जोड़ने पर बन्द संवाद"
 
-#: audacious/util.c:1201
+#: audacious/util.c:1203
 #, fuzzy
 msgid "Play files"
 msgstr "/चलायें"
 
-#: audacious/util.c:1203
+#: audacious/util.c:1205
 #, fuzzy
 msgid "Load files"
 msgstr "/लायें/संचिका से"
 
-#: audacious/util.c:1507
+#: audacious/util.c:1509
 msgid "  (invalid UTF-8)"
 msgstr "   (अवैध यूटीएफ़-८)"
 
-#: audacious/playback.c:208
+#: audacious/playback.c:209
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1568,53 +1568,57 @@ msgstr "अण्डरस्कोरों को रिक्त स्था
 msgid "Convert %20 to blanks"
 msgstr "%20 को रिक्त स्थान में बदलना"
 
-#: audacious/glade/prefswin.glade:1807
+#: audacious/glade/prefswin.glade:1808
+msgid "Convert forward slash '\\' to backslash '/'"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:1842
 msgid "<b>Metadata</b>"
 msgstr "<b>मेटाडाटा</b>"
 
-#: audacious/glade/prefswin.glade:1848
+#: audacious/glade/prefswin.glade:1883
 msgid "Load metadata from playlists and files"
 msgstr "प्लेसूचियों और संचिकाओं से मेटा डाटा को लाएँ"
 
-#: audacious/glade/prefswin.glade:1888
+#: audacious/glade/prefswin.glade:1923
 msgid "On load"
 msgstr "लाने पर"
 
-#: audacious/glade/prefswin.glade:1910
+#: audacious/glade/prefswin.glade:1945
 msgid "On display"
 msgstr "डिस्प्ले करने पर"
 
-#: audacious/glade/prefswin.glade:1940
+#: audacious/glade/prefswin.glade:1975
 msgid "Fallback character encodings:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2009
+#: audacious/glade/prefswin.glade:2044
 msgid "Auto character encoding detector for:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2065
+#: audacious/glade/prefswin.glade:2100
 #, fuzzy
 msgid "<b>File Dialog</b>"
 msgstr "<b>संचिकानाम</b>"
 
-#: audacious/glade/prefswin.glade:2106
+#: audacious/glade/prefswin.glade:2141
 msgid "Always refresh directory when opening file dialog"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2140
+#: audacious/glade/prefswin.glade:2175
 #, fuzzy
 msgid "<b>Song Display</b>"
 msgstr "<b>गीत को दिखाना</b>"
 
-#: audacious/glade/prefswin.glade:2188
+#: audacious/glade/prefswin.glade:2223
 msgid "Title format:"
 msgstr "शीर्षक का प्रारूप:"
 
-#: audacious/glade/prefswin.glade:2216
+#: audacious/glade/prefswin.glade:2251
 msgid "Custom string:"
 msgstr "कस्टम स्ट्रींग:"
 
-#: audacious/glade/prefswin.glade:2267
+#: audacious/glade/prefswin.glade:2302
 #, fuzzy
 msgid ""
 "TITLE\n"
@@ -1631,90 +1635,90 @@ msgstr ""
 "एल्बम - शीर्षक\n"
 "कस्टम"
 
-#: audacious/glade/prefswin.glade:2339
+#: audacious/glade/prefswin.glade:2374
 #, fuzzy
 msgid "<b>Popup Information</b>"
 msgstr "एमपीईजी आडियो प्लग-इन संरचना"
 
-#: audacious/glade/prefswin.glade:2392
+#: audacious/glade/prefswin.glade:2427
 msgid "Show popup information for playlist entries"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2527
+#: audacious/glade/prefswin.glade:2562
 msgid "<b>Presets</b>"
 msgstr "<b>प्रीसेट्स</b>"
 
-#: audacious/glade/prefswin.glade:2627
+#: audacious/glade/prefswin.glade:2662
 msgid "Directory preset file:"
 msgstr "निर्देशिका प्रीसेट संचिका:"
 
-#: audacious/glade/prefswin.glade:2655
+#: audacious/glade/prefswin.glade:2690
 msgid "File preset extension:"
 msgstr "संचिका प्रीसेट उपनाम:"
 
-#: audacious/glade/prefswin.glade:2703
+#: audacious/glade/prefswin.glade:2738
 msgid "Available _Presets:"
 msgstr "उपलब्ध प्रीसेट (_P):"
 
-#: audacious/glade/prefswin.glade:2883
+#: audacious/glade/prefswin.glade:2918
 #, fuzzy
 msgid "<b>Proxy Configuration</b>"
 msgstr "एमपीईजी आडियो प्लग-इन संरचना"
 
-#: audacious/glade/prefswin.glade:2941
+#: audacious/glade/prefswin.glade:2976
 msgid "Enable proxy usage"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:2972
+#: audacious/glade/prefswin.glade:3007
 msgid "Proxy hostname:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3000
+#: audacious/glade/prefswin.glade:3035
 #, fuzzy
 msgid "Proxy port:"
 msgstr "प्रोक्सी"
 
-#: audacious/glade/prefswin.glade:3094
+#: audacious/glade/prefswin.glade:3129
 #, fuzzy
 msgid "Use authentication with proxy"
 msgstr "प्रमाणीकरण का उपयोग"
 
-#: audacious/glade/prefswin.glade:3125
+#: audacious/glade/prefswin.glade:3160
 #, fuzzy
 msgid "Proxy username:"
 msgstr "उपयोगकर्ता का नाम:"
 
-#: audacious/glade/prefswin.glade:3153
+#: audacious/glade/prefswin.glade:3188
 #, fuzzy
 msgid "Proxy password:"
 msgstr "कूटशब्द:"
 
-#: audacious/glade/prefswin.glade:3269
+#: audacious/glade/prefswin.glade:3304
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3325
+#: audacious/glade/prefswin.glade:3360
 msgid "label65"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3366
+#: audacious/glade/prefswin.glade:3401
 #, fuzzy
 msgid "<b>Audio System</b>"
 msgstr "<b>प्रीसेट्स</b>"
 
-#: audacious/glade/prefswin.glade:3420
+#: audacious/glade/prefswin.glade:3455
 #, fuzzy
 msgid "Current output plugin:"
 msgstr "वर्तमान आउटपुट प्लग-इन (_C):"
 
-#: audacious/glade/prefswin.glade:3465
+#: audacious/glade/prefswin.glade:3500
 #, fuzzy
 msgid "Buffer size:"
 msgstr "बफ़र का आकार (केबी):"
 
-#: audacious/glade/prefswin.glade:3535
+#: audacious/glade/prefswin.glade:3570
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
@@ -1723,78 +1727,78 @@ msgid ""
 "poorly.</span>"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3643
+#: audacious/glade/prefswin.glade:3678
 #, fuzzy
 msgid "Output Plugin Preferences"
 msgstr "ओएसएस आउटपुट प्लग-इन"
 
-#: audacious/glade/prefswin.glade:3718
+#: audacious/glade/prefswin.glade:3753
 #, fuzzy
 msgid "Output Plugin Information"
 msgstr "ईएसडी आउटपुट प्लग-इन संरचना"
 
-#: audacious/glade/prefswin.glade:3770
+#: audacious/glade/prefswin.glade:3805
 #, fuzzy
 msgid "<b>Format Detection</b>"
 msgstr "स्वचालित पहचान"
 
-#: audacious/glade/prefswin.glade:3811
+#: audacious/glade/prefswin.glade:3846
 msgid "Detect file formats on demand, instead of immediately."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3845
+#: audacious/glade/prefswin.glade:3880
 msgid "<b>Playback</b>"
 msgstr "<b>प्लेबैक</b>"
 
-#: audacious/glade/prefswin.glade:3886
+#: audacious/glade/prefswin.glade:3921
 msgid "Continue playback on startup"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3922
+#: audacious/glade/prefswin.glade:3957
 msgid "Don't advance in the playlist"
 msgstr "प्लेसूची में आगे नहीं बढ़ें"
 
-#: audacious/glade/prefswin.glade:3957
+#: audacious/glade/prefswin.glade:3992
 msgid "Pause between songs"
 msgstr "गीतों के मध्य ठहरें"
 
-#: audacious/glade/prefswin.glade:3995
+#: audacious/glade/prefswin.glade:4030
 msgid "Pause for"
 msgstr "के लिए ठहरें"
 
-#: audacious/glade/prefswin.glade:4041
+#: audacious/glade/prefswin.glade:4076
 msgid "seconds"
 msgstr "सेकेन्डस"
 
-#: audacious/glade/prefswin.glade:4081
+#: audacious/glade/prefswin.glade:4116
 msgid "label76"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:4219
+#: audacious/glade/prefswin.glade:4254
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:4274
+#: audacious/glade/prefswin.glade:4309
 #, fuzzy
 msgid "Include:"
 msgstr "ईन्डी"
 
-#: audacious/glade/prefswin.glade:4302
+#: audacious/glade/prefswin.glade:4337
 msgid "Exclude:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:4371
+#: audacious/glade/prefswin.glade:4406
 msgid "Recursively search for cover"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:4409
+#: audacious/glade/prefswin.glade:4444
 msgid "Search depth: "
 msgstr ""
 
-#: audacious/glade/prefswin.glade:4475
+#: audacious/glade/prefswin.glade:4510
 msgid "Use per-file cover"
 msgstr ""
 
@@ -1842,31 +1846,31 @@ msgstr "१४ किलोहर्टज"
 msgid "16KHZ"
 msgstr "१६ किलोहर्टज"
 
-#: libaudacious/titlestring.c:350
+#: libaudacious/titlestring.c:371
 msgid "Performer/Artist"
 msgstr "नट/कलाकार"
 
-#: libaudacious/titlestring.c:353
+#: libaudacious/titlestring.c:374
 msgid "File name"
 msgstr "संचिका का नाम"
 
-#: libaudacious/titlestring.c:354
+#: libaudacious/titlestring.c:375
 msgid "File path"
 msgstr "संचिका पथ"
 
-#: libaudacious/titlestring.c:355
+#: libaudacious/titlestring.c:376
 msgid "File extension"
 msgstr "संचिका उपनाम"
 
-#: libaudacious/titlestring.c:356
+#: libaudacious/titlestring.c:377
 msgid "Track name"
 msgstr "ट्रैक का नाम"
 
-#: libaudacious/titlestring.c:357
+#: libaudacious/titlestring.c:378
 msgid "Track number"
 msgstr "ट्रैक की संख्या"
 
-#: libaudacious/titlestring.c:411
+#: libaudacious/titlestring.c:441
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: दिखाएँ \"...\" तब ही जब %n तत्त्व विद्यमान हो"
 

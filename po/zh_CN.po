@@ -1,33 +1,20 @@
-# Simplified Chinese translation for BMP
-# Chong Kai Xiong <descender@phreaker.net>, 2004-2005
-# Based on:
-# Simplified Chinese localization file for xmms.
-# Copyright (C) 2000 Taiwan Linux User Group
-# Jouston Huang <http://Linuxfab.cx> <jouston@linuxfab.cx>, 2000.
-# Andrew Lee <andrew@cle.linux.org.tw>, 2000.
-# Chih-Wei Huang <cwhuang@linux.org.tw>, 2000.
-# Danny Zeng <danny@zeng.com.cn>, 2000
-# Shiyu Tang <ShiyuTang@netscape.net>, 2003
-# Shiyu Tang <shiyutang@netscape.net>, 2004.
-#
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: Audacious \n"
+"Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-11-27 00:47+0100\n"
-"PO-Revision-Date: 2006-11-24 20:25+0700\n"
+"POT-Creation-Date: 2006-12-11 22:04-0600\n"
+"PO-Revision-Date: 2006-12-05 11:20+0700\n"
 "Last-Translator: Yang Zhang <zyangmath@gmail.com>\n"
-"Language-Team: Chinese/Simplified \n"
+"Language-Team: Chinese/Simplified\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: audacious/about.c:119 audacious/credits.c:313
+#: audacious/about.c:119 audacious/credits.c:317
 msgid "About Audacious"
 msgstr "关于 Audacious"
 
-#: audacious/about.c:168 audacious/credits.c:358
+#: audacious/about.c:168 audacious/credits.c:362
 msgid "Credits"
 msgstr "致谢"
 
@@ -48,131 +35,131 @@ msgstr ""
 msgid "Audacious core developers:"
 msgstr "Audacious 核心开发者："
 
-#: audacious/credits.c:61
+#: audacious/credits.c:63
 msgid "Graphics:"
 msgstr "图像："
 
-#: audacious/credits.c:66
+#: audacious/credits.c:68
 msgid "Default skin:"
 msgstr "默认皮肤："
 
-#: audacious/credits.c:71
+#: audacious/credits.c:73
 msgid "Plugin development:"
 msgstr "插件开发："
 
-#: audacious/credits.c:82
+#: audacious/credits.c:84
 msgid "Patch authors:"
 msgstr "补丁作者："
 
-#: audacious/credits.c:95
+#: audacious/credits.c:99
 msgid "0.1.x developers:"
 msgstr "0.1.x 开发者："
 
-#: audacious/credits.c:101
+#: audacious/credits.c:105
 msgid "BMP Developers:"
 msgstr "BMP 开发者："
 
-#: audacious/credits.c:133
+#: audacious/credits.c:137
 msgid "Brazilian Portuguese:"
 msgstr "巴西葡萄牙语："
 
-#: audacious/credits.c:136
+#: audacious/credits.c:140
 msgid "Breton:"
 msgstr "布列塔尼语："
 
-#: audacious/credits.c:139
+#: audacious/credits.c:143
 msgid "Chinese:"
 msgstr "中文："
 
-#: audacious/credits.c:143
+#: audacious/credits.c:147
 msgid "Czech:"
 msgstr "捷克语："
 
-#: audacious/credits.c:146
+#: audacious/credits.c:150
 msgid "Dutch:"
 msgstr "荷兰语："
 
-#: audacious/credits.c:150
+#: audacious/credits.c:154
 msgid "Finnish:"
 msgstr "芬兰语："
 
-#: audacious/credits.c:153
+#: audacious/credits.c:157
 msgid "French:"
 msgstr "法语："
 
-#: audacious/credits.c:156
+#: audacious/credits.c:160
 msgid "German:"
 msgstr "德语："
 
-#: audacious/credits.c:160
+#: audacious/credits.c:164
 msgid "Georgian: "
 msgstr "乔治亚语："
 
-#: audacious/credits.c:163
+#: audacious/credits.c:167
 msgid "Greek:"
 msgstr "希腊语："
 
-#: audacious/credits.c:168
+#: audacious/credits.c:172
 msgid "Hindi:"
 msgstr "Hindi 语:"
 
-#: audacious/credits.c:171
+#: audacious/credits.c:175
 msgid "Hungarian:"
 msgstr "匈牙利语："
 
-#: audacious/credits.c:174
+#: audacious/credits.c:178
 msgid "Italian:"
 msgstr "意大利语："
 
-#: audacious/credits.c:178
+#: audacious/credits.c:182
 msgid "Japanese:"
 msgstr "日语："
 
-#: audacious/credits.c:181
+#: audacious/credits.c:185
 msgid "Korean:"
 msgstr "朝语："
 
-#: audacious/credits.c:184
+#: audacious/credits.c:188
 msgid "Lithuanian:"
 msgstr "立陶宛语："
 
-#: audacious/credits.c:187
+#: audacious/credits.c:191
 msgid "Macedonian:"
 msgstr "马其顿语："
 
-#: audacious/credits.c:190
+#: audacious/credits.c:194
 msgid "Polish:"
 msgstr "波兰语："
 
-#: audacious/credits.c:194
+#: audacious/credits.c:198
 msgid "Romanian:"
 msgstr "罗马尼亚语："
 
-#: audacious/credits.c:197
+#: audacious/credits.c:201
 msgid "Russian:"
 msgstr "俄语："
 
-#: audacious/credits.c:202
+#: audacious/credits.c:206
 msgid "Slovak:"
 msgstr "斯洛伐克语："
 
-#: audacious/credits.c:205
+#: audacious/credits.c:209
 msgid "Spanish:"
 msgstr "西班牙语："
 
-#: audacious/credits.c:208
+#: audacious/credits.c:212
 msgid "Swedish:"
 msgstr "瑞典语："
 
-#: audacious/credits.c:211
+#: audacious/credits.c:215
 msgid "Ukrainian:"
 msgstr "乌克兰语："
 
-#: audacious/credits.c:214
+#: audacious/credits.c:218
 msgid "Welsh:"
 msgstr "威尔斯语："
 
-#: audacious/credits.c:362
+#: audacious/credits.c:366
 msgid "Translators"
 msgstr "翻译者"
 
@@ -281,15 +268,15 @@ msgstr "保存预设"
 msgid "Save auto-preset"
 msgstr "保存自动预设"
 
-#: audacious/equalizer.c:1712 audacious/equalizer.c:1731
+#: audacious/equalizer.c:1713 audacious/equalizer.c:1733
 msgid "Save equalizer preset"
 msgstr "保存均衡器预设"
 
-#: audacious/equalizer.c:1740
+#: audacious/equalizer.c:1742
 msgid "Delete preset"
 msgstr "删除预设"
 
-#: audacious/equalizer.c:1758
+#: audacious/equalizer.c:1760
 msgid "Delete auto-preset"
 msgstr "删除自动预设"
 
@@ -359,7 +346,7 @@ msgstr ""
 "\n"
 "无法打开 glade 文件 (%s)，请检查您的安装。\n"
 
-#: audacious/input.c:305
+#: audacious/input.c:304
 msgid ""
 "<b><big>Unable to play files.</big></b>\n"
 "\n"
@@ -373,33 +360,33 @@ msgstr ""
 "1. 它们是可访问的。\n"
 "2. 您开启了相应的媒体插件。"
 
-#: audacious/input.c:330
+#: audacious/input.c:329
 msgid "Don't show this warning anymore"
 msgstr "不要再显示这警告"
 
-#: audacious/input.c:332
+#: audacious/input.c:331
 msgid "Show more _details"
 msgstr "显示更多细节(_d)"
 
-#: audacious/input.c:346 audacious/prefswin.c:115 audacious/prefswin.c:487
-#: audacious/prefswin.c:575 audacious/prefswin.c:664 audacious/prefswin.c:760
+#: audacious/input.c:345 audacious/prefswin.c:115 audacious/prefswin.c:483
+#: audacious/prefswin.c:571 audacious/prefswin.c:660 audacious/prefswin.c:756
 msgid "Filename"
 msgstr "文件名"
 
-#: audacious/input.c:589
+#: audacious/input.c:581
 #, c-format
 msgid "audacious: %s"
 msgstr "audacious: %s"
 
-#: audacious/input.c:605
+#: audacious/input.c:597
 msgid "Filename:"
 msgstr "文件名："
 
-#: audacious/input.c:623
+#: audacious/input.c:615
 msgid "No input plugin recognized this file"
 msgstr "没有输入插件可识别此文件"
 
-#: audacious/input.c:625
+#: audacious/input.c:617
 #, c-format
 msgid "Input plugin: %s"
 msgstr "输入插件：%s"
@@ -410,18 +397,18 @@ msgid "Unable to create log file (%s)!\n"
 msgstr "无法创建日志文件 (%s)！\n"
 
 #: audacious/main.c:82 audacious/main.c:84 audacious/mainwin.c:876
-#: audacious/mainwin.c:3650
+#: audacious/mainwin.c:3676
 msgid "Audacious"
 msgstr "Audacious"
 
-#: audacious/main.c:445
+#: audacious/main.c:449
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr ""
 "新建目录 %s 失败\n"
 "错误：%s"
 
-#: audacious/main.c:721
+#: audacious/main.c:726
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
@@ -433,71 +420,71 @@ msgstr ""
 "选项：\n"
 "———\n"
 
-#: audacious/main.c:726
+#: audacious/main.c:731
 msgid "Display this text and exit"
 msgstr "显示文字并退出"
 
-#: audacious/main.c:729
+#: audacious/main.c:734
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "选择 Audacious/BMP/XMMS 会话 (默认：0)"
 
-#: audacious/main.c:732
+#: audacious/main.c:737
 msgid "Skip backwards in playlist"
 msgstr "在播放列表中向后跳"
 
-#: audacious/main.c:735
+#: audacious/main.c:740
 msgid "Start playing current playlist"
 msgstr "开始播放现有列表"
 
-#: audacious/main.c:738
+#: audacious/main.c:743
 msgid "Pause current song"
 msgstr "暂停当前歌曲"
 
-#: audacious/main.c:741
+#: audacious/main.c:746
 msgid "Stop current song"
 msgstr "停止当前歌曲"
 
-#: audacious/main.c:744
+#: audacious/main.c:749
 msgid "Pause if playing, play otherwise"
 msgstr "如正播放则暂停，否则播放"
 
-#: audacious/main.c:747
+#: audacious/main.c:752
 msgid "Skip forward in playlist"
 msgstr "在播放列表中向前跳"
 
-#: audacious/main.c:750
+#: audacious/main.c:755
 msgid "Display Jump to file dialog"
 msgstr "显示 “跳到文件” 对话框"
 
-#: audacious/main.c:753
+#: audacious/main.c:758
 msgid "Don't clear the playlist"
 msgstr "不要清除播放列表"
 
-#: audacious/main.c:756
+#: audacious/main.c:761
 msgid "Show the main window"
 msgstr "显示主窗口"
 
-#: audacious/main.c:759
+#: audacious/main.c:764
 msgid "Activate Audacious"
 msgstr "激活 Audacious"
 
-#: audacious/main.c:762
+#: audacious/main.c:767
 msgid "Previous session ID"
 msgstr "以往连接 ID"
 
-#: audacious/main.c:765
+#: audacious/main.c:770
 msgid "Headless operation [experimental]"
 msgstr "Headless 选项 [实验性质的]"
 
-#: audacious/main.c:768
+#: audacious/main.c:773
 msgid "Disable error/warning interception (logging)"
 msgstr "禁用“错误/警告”侦听(记录)"
 
-#: audacious/main.c:771
+#: audacious/main.c:776
 msgid "Print version number and exit\n"
 msgstr "显示版本号并退出\n"
 
-#: audacious/main.c:961
+#: audacious/main.c:966
 msgid ""
 "\n"
 "Received SIGSEGV\n"
@@ -513,7 +500,7 @@ msgstr ""
 "bugs-meta.atheme.org 报告一个Bug。\n"
 "\n"
 
-#: audacious/main.c:984
+#: audacious/main.c:996
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -525,7 +512,7 @@ msgstr ""
 "\n"
 "请检查设在'%s'的皮肤是可用的，并且确保默认皮肤也已正确安装到'%s'。\n"
 
-#: audacious/main.c:1030
+#: audacious/main.c:1043
 #, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -534,7 +521,7 @@ msgstr ""
 "抱歉，您的 GTK+ 版本(%d.%d.%d)不能和 Audacious 一起工作。\n"
 "请使用 GTK+ %s 或以后的版本。\n"
 
-#: audacious/main.c:1041
+#: audacious/main.c:1054
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -547,7 +534,7 @@ msgstr ""
 "如果你原本使用 libc5 的 Linux 并且装了 GLIB & GTK+ \n"
 "之后又安装了 LinuxThreads，请重新编译 GLIB & GTK+。\n"
 
-#: audacious/main.c:1057
+#: audacious/main.c:1073
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "audacious： 无法打开显示器，即将退出。\n"
 
@@ -856,103 +843,103 @@ msgstr "/如意移动"
 msgid "%s - Audacious"
 msgstr "%s - Audacious"
 
-#: audacious/mainwin.c:1098
+#: audacious/mainwin.c:1099
 msgid "VBR"
 msgstr "可变位数率"
 
-#: audacious/mainwin.c:1139 audacious/mainwin.c:1143
+#: audacious/mainwin.c:1140 audacious/mainwin.c:1144
 msgid "stereo"
 msgstr "立体声"
 
-#: audacious/mainwin.c:1139 audacious/mainwin.c:1143
+#: audacious/mainwin.c:1140 audacious/mainwin.c:1144
 msgid "mono"
 msgstr "单声道"
 
-#: audacious/mainwin.c:1627
+#: audacious/mainwin.c:1633
 msgid "Jump to Time"
 msgstr "跳到特定时间"
 
-#: audacious/mainwin.c:1648
+#: audacious/mainwin.c:1654
 msgid "minutes:seconds"
 msgstr "分:秒"
 
-#: audacious/mainwin.c:1658
+#: audacious/mainwin.c:1664
 msgid "Track length:"
 msgstr "音轨长度："
 
-#: audacious/mainwin.c:1746
+#: audacious/mainwin.c:1752
 msgid "Un_queue"
 msgstr "不排队(_q)"
 
-#: audacious/mainwin.c:1748 audacious/mainwin.c:2103
+#: audacious/mainwin.c:1754 audacious/mainwin.c:2109
 msgid "_Queue"
 msgstr "排队(_Q)"
 
-#: audacious/mainwin.c:2028
+#: audacious/mainwin.c:2034
 msgid "Jump to Track"
 msgstr "跳到音轨"
 
-#: audacious/mainwin.c:2069
+#: audacious/mainwin.c:2075
 msgid "Filter: "
 msgstr "过滤: "
 
-#: audacious/mainwin.c:2270
+#: audacious/mainwin.c:2280
 msgid "Enter location to play:"
 msgstr "输入要播放的位置："
 
-#: audacious/mainwin.c:2477
+#: audacious/mainwin.c:2488
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "搜寻：%d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2509 audacious/mainwin.c:3296
+#: audacious/mainwin.c:2520 audacious/mainwin.c:3310
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "音量：%d%%"
 
-#: audacious/mainwin.c:2540 audacious/mainwin.c:3299
+#: audacious/mainwin.c:2551 audacious/mainwin.c:3313
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "平衡：%d%% 左"
 
-#: audacious/mainwin.c:2544 audacious/mainwin.c:3302
+#: audacious/mainwin.c:2555 audacious/mainwin.c:3316
 msgid "BALANCE: CENTER"
 msgstr "平衡：中心"
 
-#: audacious/mainwin.c:2548 audacious/mainwin.c:3304
+#: audacious/mainwin.c:2559 audacious/mainwin.c:3318
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "平衡：%d%% 右"
 
-#: audacious/mainwin.c:3071
+#: audacious/mainwin.c:3084
 msgid "OPTIONS MENU"
 msgstr "选项菜单"
 
-#: audacious/mainwin.c:3075
+#: audacious/mainwin.c:3088
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "取消永远在最上层"
 
-#: audacious/mainwin.c:3077
+#: audacious/mainwin.c:3090
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "永远在最上层"
 
-#: audacious/mainwin.c:3080
+#: audacious/mainwin.c:3093
 msgid "FILE INFO BOX"
 msgstr "文件信息框"
 
-#: audacious/mainwin.c:3084
+#: audacious/mainwin.c:3097
 msgid "DISABLE DOUBLESIZE"
 msgstr "取消加倍模式"
 
-#: audacious/mainwin.c:3086
+#: audacious/mainwin.c:3099
 msgid "ENABLE DOUBLESIZE"
 msgstr "开启加倍模式"
 
-#: audacious/mainwin.c:3089
+#: audacious/mainwin.c:3102
 msgid "VISUALIZATION MENU"
 msgstr "可视效果菜单"
 
-#: audacious/mainwin.c:3137
+#: audacious/mainwin.c:3150
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -962,7 +949,7 @@ msgstr ""
 "\n"
 "没有放入 CD，或者放入的不是音频·CD。\n"
 
-#: audacious/mainwin.c:3154
+#: audacious/mainwin.c:3167
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -989,7 +976,7 @@ msgstr "音频"
 msgid "Connectivity"
 msgstr "连接"
 
-#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:2836
+#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:2871
 msgid "Equalizer"
 msgstr "均衡器"
 
@@ -997,7 +984,7 @@ msgstr "均衡器"
 msgid "Mouse"
 msgstr "鼠标"
 
-#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:2468
+#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:2503
 msgid "Playlist"
 msgstr "播放列表"
 
@@ -1009,7 +996,7 @@ msgstr "插件"
 msgid "Artist"
 msgstr "艺术家"
 
-#: audacious/prefswin.c:111 libaudacious/titlestring.c:351
+#: audacious/prefswin.c:111 libaudacious/titlestring.c:372
 msgid "Album"
 msgstr "专辑"
 
@@ -1021,7 +1008,7 @@ msgstr "标题"
 msgid "Tracknumber"
 msgstr "音轨编号"
 
-#: audacious/prefswin.c:114 libaudacious/titlestring.c:352
+#: audacious/prefswin.c:114 libaudacious/titlestring.c:373
 msgid "Genre"
 msgstr "风格"
 
@@ -1029,15 +1016,15 @@ msgstr "风格"
 msgid "Filepath"
 msgstr "文件路径"
 
-#: audacious/prefswin.c:117 libaudacious/titlestring.c:358
+#: audacious/prefswin.c:117 libaudacious/titlestring.c:379
 msgid "Date"
 msgstr "日期"
 
-#: audacious/prefswin.c:118 libaudacious/titlestring.c:359
+#: audacious/prefswin.c:118 libaudacious/titlestring.c:380
 msgid "Year"
 msgstr "年份"
 
-#: audacious/prefswin.c:119 libaudacious/titlestring.c:360
+#: audacious/prefswin.c:119 libaudacious/titlestring.c:381
 msgid "Comment"
 msgstr "备注"
 
@@ -1045,21 +1032,21 @@ msgstr "备注"
 msgid "localhost"
 msgstr "本地 (localhost)"
 
-#: audacious/prefswin.c:457 audacious/prefswin.c:544 audacious/prefswin.c:633
-#: audacious/prefswin.c:729
+#: audacious/prefswin.c:453 audacious/prefswin.c:540 audacious/prefswin.c:629
+#: audacious/prefswin.c:725
 msgid "Enabled"
 msgstr "启用"
 
-#: audacious/prefswin.c:473 audacious/prefswin.c:560 audacious/prefswin.c:649
-#: audacious/prefswin.c:745
+#: audacious/prefswin.c:469 audacious/prefswin.c:556 audacious/prefswin.c:645
+#: audacious/prefswin.c:741
 msgid "Description"
 msgstr "描述"
 
-#: audacious/prefswin.c:1784
+#: audacious/prefswin.c:1792
 msgid "Category"
 msgstr "项目"
 
-#: audacious/prefswin.c:2241
+#: audacious/prefswin.c:2251
 msgid "Preferences Window"
 msgstr "首选项"
 
@@ -1071,11 +1058,11 @@ msgstr "打包的 Winamp 2.x 皮肤"
 msgid "Unarchived Winamp 2.x skin"
 msgstr "未打包的 Winamp 2.x 皮肤"
 
-#: audacious/ui_fileinfo.c:313
+#: audacious/ui_fileinfo.c:316
 msgid "Track Information Window"
 msgstr "音轨信息窗口"
 
-#: audacious/ui_fileinfo.c:335
+#: audacious/ui_fileinfo.c:338
 msgid "Track Information Popup"
 msgstr "音轨信息(弹出)"
 
@@ -1239,17 +1226,17 @@ msgstr "/排序选择/按音轨序号"
 msgid "/Sort Selection/By Playlist Entry"
 msgstr "/排序选择/按列表项"
 
-#: audacious/ui_playlist.c:841
+#: audacious/ui_playlist.c:845
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "写入播放列表“%s”：%s 出错"
 
-#: audacious/ui_playlist.c:862
+#: audacious/ui_playlist.c:866
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s 已经存在。继续吗？"
 
-#: audacious/ui_playlist.c:876
+#: audacious/ui_playlist.c:880
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -1259,51 +1246,51 @@ msgstr ""
 "无法保存播放列表！\n"
 "未知文件类型 %s\n"
 
-#: audacious/ui_playlist.c:1027
+#: audacious/ui_playlist.c:1033
 msgid "Load Playlist"
 msgstr "装入播放列表"
 
-#: audacious/ui_playlist.c:1040
+#: audacious/ui_playlist.c:1046
 msgid "Save Playlist"
 msgstr "保存播放列表"
 
-#: audacious/ui_playlist.c:1751
+#: audacious/ui_playlist.c:1783
 msgid "Audacious Playlist Editor"
 msgstr "Audacious 播放列表编辑器"
 
-#: audacious/util.c:951
+#: audacious/util.c:952
 msgid "Add/Open Files dialog"
 msgstr "打开/添加文件的会话"
 
-#: audacious/util.c:1006
+#: audacious/util.c:1007
 msgid "Open Files"
 msgstr "打开文件"
 
-#: audacious/util.c:1010
+#: audacious/util.c:1011
 msgid "Close dialog on Open"
 msgstr "打开后关闭对话"
 
-#: audacious/util.c:1020 audacious/glade/addfiles.glade:8
+#: audacious/util.c:1021 audacious/glade/addfiles.glade:8
 msgid "Add Files"
 msgstr "添加文件"
 
-#: audacious/util.c:1024
+#: audacious/util.c:1025
 msgid "Close dialog on Add"
 msgstr "添加后关闭对话"
 
-#: audacious/util.c:1201
+#: audacious/util.c:1203
 msgid "Play files"
 msgstr "播放文件"
 
-#: audacious/util.c:1203
+#: audacious/util.c:1205
 msgid "Load files"
 msgstr "装入文件"
 
-#: audacious/util.c:1507
+#: audacious/util.c:1509
 msgid "  (invalid UTF-8)"
 msgstr "  (非法的 UTF-8 字符)"
 
-#: audacious/playback.c:208
+#: audacious/playback.c:209
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1345,7 +1332,7 @@ msgstr "<span size=\"small\">注释</span>"
 
 #: audacious/glade/fileinfo.glade:313
 msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"small\">常规</span>"
+msgstr "<span size=\"small\">流派</span>"
 
 #: audacious/glade/fileinfo.glade:392
 msgid "<span size=\"small\">Year</span>"
@@ -1377,7 +1364,7 @@ msgstr "<i>唱片</i>"
 
 #: audacious/glade/fileinfo_popup.glade:234
 msgid "<i>Genre</i>"
-msgstr "<i>常规</i>"
+msgstr "<i>流派</i>"
 
 #: audacious/glade/fileinfo_popup.glade:290
 msgid "<i>Year</i>"
@@ -1511,52 +1498,56 @@ msgstr "将下划线转换成空格"
 msgid "Convert %20 to blanks"
 msgstr "将 %20 转换成空格"
 
-#: audacious/glade/prefswin.glade:1807
+#: audacious/glade/prefswin.glade:1808
+msgid "Convert forward slash '\\' to backslash '/'"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:1842
 msgid "<b>Metadata</b>"
 msgstr "<b>元数据</b>"
 
-#: audacious/glade/prefswin.glade:1848
+#: audacious/glade/prefswin.glade:1883
 msgid "Load metadata from playlists and files"
 msgstr "使用播放列表中的元数据"
 
-#: audacious/glade/prefswin.glade:1888
+#: audacious/glade/prefswin.glade:1923
 msgid "On load"
 msgstr "装入时"
 
-#: audacious/glade/prefswin.glade:1910
+#: audacious/glade/prefswin.glade:1945
 msgid "On display"
 msgstr "显示时"
 
-#: audacious/glade/prefswin.glade:1940
+#: audacious/glade/prefswin.glade:1975
 #, fuzzy
 msgid "Fallback character encodings:"
 msgstr "缺省字符编码："
 
-#: audacious/glade/prefswin.glade:2009
+#: audacious/glade/prefswin.glade:2044
 msgid "Auto character encoding detector for:"
 msgstr "使用自动编码检测器："
 
-#: audacious/glade/prefswin.glade:2065
+#: audacious/glade/prefswin.glade:2100
 msgid "<b>File Dialog</b>"
 msgstr "<b>文件对话框</b>"
 
-#: audacious/glade/prefswin.glade:2106
+#: audacious/glade/prefswin.glade:2141
 msgid "Always refresh directory when opening file dialog"
 msgstr "当打开文件对话框时总是自动刷新目录"
 
-#: audacious/glade/prefswin.glade:2140
+#: audacious/glade/prefswin.glade:2175
 msgid "<b>Song Display</b>"
 msgstr "<b> 歌曲显示</b>"
 
-#: audacious/glade/prefswin.glade:2188
+#: audacious/glade/prefswin.glade:2223
 msgid "Title format:"
 msgstr "标题格式："
 
-#: audacious/glade/prefswin.glade:2216
+#: audacious/glade/prefswin.glade:2251
 msgid "Custom string:"
 msgstr "自定格式："
 
-#: audacious/glade/prefswin.glade:2267
+#: audacious/glade/prefswin.glade:2302
 msgid ""
 "TITLE\n"
 "ARTIST - TITLE\n"
@@ -1574,81 +1565,81 @@ msgstr ""
 "唱片 － 标题\n"
 "自定"
 
-#: audacious/glade/prefswin.glade:2339
+#: audacious/glade/prefswin.glade:2374
 msgid "<b>Popup Information</b>"
 msgstr "<b>弹出信息</b>"
 
-#: audacious/glade/prefswin.glade:2392
+#: audacious/glade/prefswin.glade:2427
 msgid "Show popup information for playlist entries"
 msgstr "为播放列表项显示弹出信息"
 
-#: audacious/glade/prefswin.glade:2527
+#: audacious/glade/prefswin.glade:2562
 msgid "<b>Presets</b>"
 msgstr "<b>预设</b>"
 
-#: audacious/glade/prefswin.glade:2627
+#: audacious/glade/prefswin.glade:2662
 msgid "Directory preset file:"
 msgstr "目录预设文件："
 
-#: audacious/glade/prefswin.glade:2655
+#: audacious/glade/prefswin.glade:2690
 msgid "File preset extension:"
 msgstr "文件预设扩展名："
 
-#: audacious/glade/prefswin.glade:2703
+#: audacious/glade/prefswin.glade:2738
 msgid "Available _Presets:"
 msgstr "可用预设："
 
-#: audacious/glade/prefswin.glade:2883
+#: audacious/glade/prefswin.glade:2918
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>代理服务器设置</b>"
 
-#: audacious/glade/prefswin.glade:2941
+#: audacious/glade/prefswin.glade:2976
 msgid "Enable proxy usage"
 msgstr "启用代理服务器"
 
-#: audacious/glade/prefswin.glade:2972
+#: audacious/glade/prefswin.glade:3007
 msgid "Proxy hostname:"
 msgstr "主机名："
 
-#: audacious/glade/prefswin.glade:3000
+#: audacious/glade/prefswin.glade:3035
 msgid "Proxy port:"
 msgstr "端口："
 
-#: audacious/glade/prefswin.glade:3094
+#: audacious/glade/prefswin.glade:3129
 msgid "Use authentication with proxy"
 msgstr "使用身份验证"
 
-#: audacious/glade/prefswin.glade:3125
+#: audacious/glade/prefswin.glade:3160
 msgid "Proxy username:"
 msgstr "用户名："
 
-#: audacious/glade/prefswin.glade:3153
+#: audacious/glade/prefswin.glade:3188
 msgid "Proxy password:"
 msgstr "密码："
 
-#: audacious/glade/prefswin.glade:3269
+#: audacious/glade/prefswin.glade:3304
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr "<span size=\"small\">这些设置将在重启 Audacious 后生效。</span>"
 
-#: audacious/glade/prefswin.glade:3325
+#: audacious/glade/prefswin.glade:3360
 msgid "label65"
 msgstr "label65"
 
-#: audacious/glade/prefswin.glade:3366
+#: audacious/glade/prefswin.glade:3401
 msgid "<b>Audio System</b>"
 msgstr "<b>音频系统</b>"
 
-#: audacious/glade/prefswin.glade:3420
+#: audacious/glade/prefswin.glade:3455
 msgid "Current output plugin:"
 msgstr "当前输出插件："
 
-#: audacious/glade/prefswin.glade:3465
+#: audacious/glade/prefswin.glade:3500
 msgid "Buffer size:"
 msgstr "缓冲区大小："
 
-#: audacious/glade/prefswin.glade:3535
+#: audacious/glade/prefswin.glade:3570
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
@@ -1657,54 +1648,54 @@ msgid ""
 "poorly.</span>"
 msgstr ""
 "<span size=\"small\">这是预先缓冲的音频流的时间，以毫秒为单位。\n"
-"如果您碰到中立跳音，请增加这个值。\n"
+"如果您碰到跳音，请增加这个值。\n"
 "但需要注意的是：增大这个值可能会使 Audacious 表现很糟糕。</span>"
 
-#: audacious/glade/prefswin.glade:3643
+#: audacious/glade/prefswin.glade:3678
 msgid "Output Plugin Preferences"
 msgstr "输出插件首选项"
 
-#: audacious/glade/prefswin.glade:3718
+#: audacious/glade/prefswin.glade:3753
 msgid "Output Plugin Information"
 msgstr "输出插件信息"
 
-#: audacious/glade/prefswin.glade:3770
+#: audacious/glade/prefswin.glade:3805
 msgid "<b>Format Detection</b>"
 msgstr "<b>格式检测</b>"
 
-#: audacious/glade/prefswin.glade:3811
+#: audacious/glade/prefswin.glade:3846
 msgid "Detect file formats on demand, instead of immediately."
 msgstr "在需要时而不是立即检测文件格式"
 
-#: audacious/glade/prefswin.glade:3845
+#: audacious/glade/prefswin.glade:3880
 msgid "<b>Playback</b>"
 msgstr "<b>播放</b>"
 
-#: audacious/glade/prefswin.glade:3886
+#: audacious/glade/prefswin.glade:3921
 msgid "Continue playback on startup"
 msgstr "在启动时恢复回放"
 
-#: audacious/glade/prefswin.glade:3922
+#: audacious/glade/prefswin.glade:3957
 msgid "Don't advance in the playlist"
 msgstr "不允许列表快进"
 
-#: audacious/glade/prefswin.glade:3957
+#: audacious/glade/prefswin.glade:3992
 msgid "Pause between songs"
 msgstr "在歌曲之间暂停"
 
-#: audacious/glade/prefswin.glade:3995
+#: audacious/glade/prefswin.glade:4030
 msgid "Pause for"
 msgstr "暂停"
 
-#: audacious/glade/prefswin.glade:4041
+#: audacious/glade/prefswin.glade:4076
 msgid "seconds"
 msgstr "秒"
 
-#: audacious/glade/prefswin.glade:4081
+#: audacious/glade/prefswin.glade:4116
 msgid "label76"
 msgstr "label76"
 
-#: audacious/glade/prefswin.glade:4219
+#: audacious/glade/prefswin.glade:4254
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -1713,23 +1704,23 @@ msgstr ""
 "当搜索专辑封面时，Audacious 搜索文件名中的关键字。您可以在下面列表中指定它"
 "们，用逗号隔开。"
 
-#: audacious/glade/prefswin.glade:4274
+#: audacious/glade/prefswin.glade:4309
 msgid "Include:"
 msgstr "包括："
 
-#: audacious/glade/prefswin.glade:4302
+#: audacious/glade/prefswin.glade:4337
 msgid "Exclude:"
 msgstr "排除："
 
-#: audacious/glade/prefswin.glade:4371
+#: audacious/glade/prefswin.glade:4406
 msgid "Recursively search for cover"
 msgstr "递归搜索封面"
 
-#: audacious/glade/prefswin.glade:4409
+#: audacious/glade/prefswin.glade:4444
 msgid "Search depth: "
 msgstr "搜索深度："
 
-#: audacious/glade/prefswin.glade:4475
+#: audacious/glade/prefswin.glade:4510
 msgid "Use per-file cover"
 msgstr "为每个文件使用单独封面"
 
@@ -1777,36 +1768,79 @@ msgstr "14KHz"
 msgid "16KHZ"
 msgstr "16KHz"
 
-#: libaudacious/titlestring.c:350
+#: libaudacious/titlestring.c:371
 msgid "Performer/Artist"
 msgstr "演奏者/艺术家"
 
-#: libaudacious/titlestring.c:353
+#: libaudacious/titlestring.c:374
 msgid "File name"
 msgstr "文件名"
 
-#: libaudacious/titlestring.c:354
+#: libaudacious/titlestring.c:375
 msgid "File path"
 msgstr "文件路径"
 
-#: libaudacious/titlestring.c:355
+#: libaudacious/titlestring.c:376
 msgid "File extension"
 msgstr "文件扩展名"
 
-#: libaudacious/titlestring.c:356
+#: libaudacious/titlestring.c:377
 msgid "Track name"
 msgstr "音轨名称"
 
-#: libaudacious/titlestring.c:357
+#: libaudacious/titlestring.c:378
 msgid "Track number"
 msgstr "音轨编号"
 
-#: libaudacious/titlestring.c:411
+#: libaudacious/titlestring.c:441
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: 如果 %n 元素存在，显示“...”"
 
+#~ msgid "<b>_Miscillaneous UI Features</b>"
+#~ msgstr "<b>其它界面特性 (_M)</b>"
+
+#~ msgid ""
+#~ "Always refresh the file dialog (this will slow opening the dialog on "
+#~ "large directories, and Gnome VFS should handle automatically)."
+#~ msgstr ""
+#~ "总是自动刷新文件对话框 (这将使在大目录打开时文件打开对话框变慢，并且 "
+#~ "Gnome VFS 应该能够自动处理。)。"
+
 #~ msgid "Audacious Preferences"
 #~ msgstr "Audacious 首选项"
+
+#~ msgid "Edit settings for popup information"
+#~ msgstr "编辑弹出信息设置"
+
+#~ msgid ""
+#~ "Enables playlist transparency. This is not recommended for slower "
+#~ "machines as it requires some CPU time to create and cache the pixmaps "
+#~ "used for the transparency."
+#~ msgstr ""
+#~ "启用播放列表透明。在较慢机器上不推荐，因为这需要一些 CPU 时间来创建并缓存"
+#~ "为透明使用的位图。"
+
+#~ msgid ""
+#~ "List of character encodings used for fall back conversion of metadata. If "
+#~ "automatic character encoding detector failed or has been disabled, "
+#~ "encodings in this list would be treated as candidates of the encoding of "
+#~ "metadata, and fall back conversion from these encodings to UTF-8 would be "
+#~ "attempted."
+#~ msgstr ""
+#~ "缺省的元数据转换使用的字符编码列表。如果自动编码转换检测器失败或被禁用，这"
+#~ "个列表中的编码将被作为元数据编码的候选，并将试图由此转换到UTF-8。"
+
+#~ msgid "Load metadata (tag information) from music files."
+#~ msgstr "从文件中获取元素据。"
+
+#~ msgid "Load metadata on demand when displaying the file in the playlist"
+#~ msgstr "当歌曲在播放列表中可见时读取原数据"
+
+#~ msgid "Load metadata when adding the file to the playlist or opening it"
+#~ msgstr "打开文件或者把文件加入列表时加载原数据"
+
+#~ msgid "Popup Information Settings"
+#~ msgstr "弹出信息设置"
 
 #~ msgid "Refresh skin list"
 #~ msgstr "/刷新皮肤列表"
@@ -1817,21 +1851,8 @@ msgstr "%{n:...%}: 如果 %n 元素存在，显示“...”"
 #~ msgid "Select playlist font:"
 #~ msgstr "选择播放列表字体："
 
-#~ msgid ""
-#~ "Use bitmap fonts if they are available. Bitmap fonts do not support "
-#~ "Unicode strings."
-#~ msgstr "如果可能，则使用点阵字体。点阵字体不支持 Unicode 字符串。"
-
-#~ msgid "<b>_Miscillaneous UI Features</b>"
-#~ msgstr "<b>其它界面特性 (_M)</b>"
-
-#~ msgid ""
-#~ "Enables playlist transparency. This is not recommended for slower "
-#~ "machines as it requires some CPU time to create and cache the pixmaps "
-#~ "used for the transparency."
-#~ msgstr ""
-#~ "启用播放列表透明。在较慢机器上不推荐，因为这需要一些 CPU 时间来创建并缓存"
-#~ "为透明使用的位图。"
+#~ msgid "Show information about titlestring format"
+#~ msgstr "显示标题格式信息"
 
 #~ msgid ""
 #~ "This enables the XMMS/GTK1-style file selection dialogs. This selector is "
@@ -1844,45 +1865,23 @@ msgstr "%{n:...%}: 如果 %n 元素存在，显示“...”"
 #~ msgid "This enables the window mangaer to show decorations for windows."
 #~ msgstr "这启用窗口管理器显示窗口装饰。"
 
-#~ msgid "Load metadata (tag information) from music files."
-#~ msgstr "从文件中获取元素据。"
-
-#~ msgid "Load metadata when adding the file to the playlist or opening it"
-#~ msgstr "打开文件或者把文件加入列表时加载原数据"
-
-#~ msgid "Load metadata on demand when displaying the file in the playlist"
-#~ msgstr "当歌曲在播放列表中可见时读取原数据"
-
-#~ msgid ""
-#~ "List of character encodings used for fall back conversion of metadata. If "
-#~ "automatic character encoding detector failed or has been disabled, "
-#~ "encodings in this list would be treated as candidates of the encoding of "
-#~ "metadata, and fall back conversion from these encodings to UTF-8 would be "
-#~ "attempted."
-#~ msgstr ""
-#~ "缺省的元数据转换使用的字符编码列表。如果自动编码转换检测器失败或被禁用，这"
-#~ "个列表中的编码将被作为元数据编码的候选，并将试图由此转换到UTF-8。"
-
-#~ msgid ""
-#~ "Always refresh the file dialog (this will slow opening the dialog on "
-#~ "large directories, and Gnome VFS should handle automatically)."
-#~ msgstr ""
-#~ "总是自动刷新文件对话框 (这将使在大目录打开时文件打开对话框变慢，并且 "
-#~ "Gnome VFS 应该能够自动处理。)。"
-
-#~ msgid "Show information about titlestring format"
-#~ msgstr "显示标题格式信息"
-
 #~ msgid ""
 #~ "Toggles popup information window for the pointed entry in the playlist. "
 #~ "The window shows title of song, name of album, genre, year of publish, "
 #~ "track number, track length, and artwork."
 #~ msgstr ""
-#~ "切换播放列表中鼠标指向的项的弹出信息窗口。该窗口显示歌曲标题、专辑名、常规"
+#~ "切换播放列表中鼠标指向的项的弹出信息窗口。该窗口显示歌曲标题、专辑名、流派"
 #~ "信息、发布年份，音轨编号，音轨长度和艺术品(专辑封面)。"
 
-#~ msgid "Edit settings for popup information"
-#~ msgstr "编辑弹出信息设置"
+#~ msgid ""
+#~ "Use bitmap fonts if they are available. Bitmap fonts do not support "
+#~ "Unicode strings."
+#~ msgstr "如果可能，则使用点阵字体。点阵字体不支持 Unicode 字符串。"
+
+#~ msgid ""
+#~ "When Audacious starts, automatically begin playing from the point where "
+#~ "we stopped before."
+#~ msgstr "当 Audacious 启动时，自动从上次停止的地方开始播放。"
 
 #~ msgid ""
 #~ "When checked, Audacious will detect file formats on demand. This can "
@@ -1892,3519 +1891,5 @@ msgstr "%{n:...%}: 如果 %n 元素存在，显示“...”"
 #~ "使速度大大提高。"
 
 #~ msgid ""
-#~ "When Audacious starts, automatically begin playing from the point where "
-#~ "we stopped before."
-#~ msgstr "当 Audacious 启动时，自动从上次停止的地方开始播放。"
-
-#~ msgid ""
 #~ "When finished playing a song, don't automatically advance to the next."
 #~ msgstr "歌曲播完后，不要自动快进。"
-
-#~ msgid "Popup Information Settings"
-#~ msgstr "弹出信息设置"
-
-#, fuzzy
-#~ msgid "About AudioCompress"
-#~ msgstr "关于 MPEG 插件"
-
-#~ msgid "Ok"
-#~ msgstr "确定"
-
-#~ msgid ""
-#~ "Extra Stereo Plugin\n"
-#~ "\n"
-#~ "By Johan Levin 1999."
-#~ msgstr ""
-#~ "超强立体声插件\n"
-#~ "\n"
-#~ "Johan Levin 1999 制作"
-
-#~ msgid "Extra Stereo Plugin %s"
-#~ msgstr "超强立体声插件 %s"
-
-#~ msgid "About Extra Stereo Plugin"
-#~ msgstr "关于超强立体声插件"
-
-#~ msgid "Configure Extra Stereo"
-#~ msgstr "配置超强立体声"
-
-#~ msgid "Effect intensity:"
-#~ msgstr "效果强度："
-
-#~ msgid "Cancel"
-#~ msgstr "取消"
-
-#~ msgid "Apply"
-#~ msgstr "应用"
-
-#, fuzzy
-#~ msgid "About LIRC Audacious Plugin"
-#~ msgstr "关于人声消除插件"
-
-#, fuzzy
-#~ msgid "LIRC Plugin "
-#~ msgstr "插件"
-
-#~ msgid "Close"
-#~ msgstr "关闭"
-
-#, fuzzy
-#~ msgid "LIRC Plugin"
-#~ msgstr "插件"
-
-#~ msgid "Username:"
-#~ msgstr "使用者名称："
-
-#~ msgid "Password:"
-#~ msgstr "口令："
-
-#, fuzzy
-#~ msgid "About Scrobbler Plugin"
-#~ msgstr "关于 ESounD 插件"
-
-#, fuzzy
-#~ msgid "Scrobbler Plugin"
-#~ msgstr "输出插件"
-
-#~ msgid "Song Change %s"
-#~ msgstr "歌曲变换 %s"
-
-#, fuzzy
-#~ msgid "Commands"
-#~ msgstr "命令："
-
-#, fuzzy
-#~ msgid "Command to run when Audacious starts a new song."
-#~ msgstr "当 xmms 达到播放列表的结尾时执行的外壳命令。"
-
-#~ msgid "Command:"
-#~ msgstr "命令："
-
-#, fuzzy
-#~ msgid "Command to run toward the end of a song."
-#~ msgstr "当 xmms 达到播放列表的结尾时执行的外壳命令。"
-
-#, fuzzy
-#~ msgid "Command to run when Audacious reaches the end of the playlist."
-#~ msgstr "当 xmms 达到播放列表的结尾时执行的外壳命令。"
-
-#, fuzzy
-#~ msgid "About "
-#~ msgstr "关于"
-
-#, fuzzy
-#~ msgid "AMIDI-Plug - warning"
-#~ msgstr "MikMod 配置"
-
-#, fuzzy
-#~ msgid "AMIDI-Plug - select file"
-#~ msgstr "MikMod 配置"
-
-#, fuzzy
-#~ msgid "AMIDI-Plug - configuration"
-#~ msgstr "MikMod 配置"
-
-#~ msgid "Name:"
-#~ msgstr "曲名："
-
-#, fuzzy
-#~ msgid " MIDI Info "
-#~ msgstr "光盘信息"
-
-#, fuzzy
-#~ msgid "Format:"
-#~ msgstr "ID3 格式："
-
-#, fuzzy
-#~ msgid "Length (msec):"
-#~ msgstr "长度："
-
-#, fuzzy
-#~ msgid "Num of Tracks:"
-#~ msgstr "跳到音轨"
-
-#~ msgid "CD Audio Plugin"
-#~ msgstr "CD 音频插件"
-
-#~ msgid "CD Audio Track %02u"
-#~ msgstr "CD 音轨 %02u"
-
-#~ msgid "(unknown)"
-#~ msgstr "(未知)"
-
-#~ msgid "Drive %d"
-#~ msgstr "驱动器 %d"
-
-#~ msgid ""
-#~ "Failed to open device %s\n"
-#~ "Error: %s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "打开设备 %s 失败\n"
-#~ "错误：%s\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Failed to read \"Table of Contents\"\n"
-#~ "Maybe no disc in the drive?\n"
-#~ "\n"
-#~ msgstr ""
-#~ "读取目录失败\n"
-#~ "可能此驱动器中没有盘？\n"
-
-#~ msgid ""
-#~ "Device %s OK.\n"
-#~ "Disc has %d tracks"
-#~ msgstr ""
-#~ "驱动器 %s 没有问题。\n"
-#~ "盘中共有 %d 条音轨"
-
-#~ msgid " (%d data tracks)"
-#~ msgstr "(%d 条数据轨)"
-
-#~ msgid ""
-#~ "\n"
-#~ "Total length: %d:%d\n"
-#~ msgstr ""
-#~ "\n"
-#~ "总长度：%d:%d\n"
-
-#~ msgid ""
-#~ "Digital audio extraction not tested as the disc has no audio tracks\n"
-#~ msgstr "无法进行数码音频抓取测试。光碟没有音轨。\n"
-
-#~ msgid ""
-#~ "Digital audio extraction test: OK\n"
-#~ "\n"
-#~ msgstr ""
-#~ "数码音频抓取测试：成功\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Digital audio extraction test failed: %s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "数码音频抓取测试失败：%s\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Failed to check directory %s\n"
-#~ "Error: %s"
-#~ msgstr ""
-#~ "检查目录 %s 失败\n"
-#~ "错误：%s"
-
-#~ msgid "Error: %s exist, but is not a directory"
-#~ msgstr "错误：%s 存在，但不是目录"
-
-#~ msgid "Directory %s OK."
-#~ msgstr "目录 %s 没有问题。"
-
-#~ msgid "Device:"
-#~ msgstr "设备："
-
-#~ msgid "_Device:"
-#~ msgstr "设备(_D)："
-
-#~ msgid "Dir_ectory:"
-#~ msgstr "目录(_e)："
-
-#~ msgid "Play mode:"
-#~ msgstr "播放模式："
-
-#~ msgid "Analog"
-#~ msgstr "模拟"
-
-#~ msgid "Digital audio extraction"
-#~ msgstr "数字音频扩展"
-
-#~ msgid "Volume control:"
-#~ msgstr "音量控制："
-
-#~ msgid "No mixer"
-#~ msgstr "无混音器"
-
-#~ msgid "CDROM drive"
-#~ msgstr "CDROM 驱动器"
-
-#~ msgid "OSS mixer"
-#~ msgstr "OSS 混音器"
-
-#~ msgid "Check drive..."
-#~ msgstr "更改驱动器..."
-
-#~ msgid "Remove drive"
-#~ msgstr "移除驱动器"
-
-#~ msgid "CD Audio Player Configuration"
-#~ msgstr "CD 唱片播放器配置"
-
-#~ msgid "Add drive"
-#~ msgstr "添加驱动器"
-
-#~ msgid "Device"
-#~ msgstr "设备"
-
-#~ msgid "CDDB:"
-#~ msgstr "CDDB："
-
-#~ msgid "Use CDDB"
-#~ msgstr "使用 CDDB"
-
-#~ msgid "Get server list"
-#~ msgstr "获得服务器清单"
-
-#~ msgid "Show network window"
-#~ msgstr "显示网络窗口"
-
-#~ msgid "CDDB server:"
-#~ msgstr "CDDB 服务器："
-
-#~ msgid "CD Index:"
-#~ msgstr "CD 索引："
-
-#~ msgid "Use CD Index"
-#~ msgstr "使用 CD 索引"
-
-#~ msgid "CD Index server:"
-#~ msgstr "CD 索引服务器："
-
-#~ msgid "Track names:"
-#~ msgstr "音轨名称："
-
-#~ msgid "Override generic titles"
-#~ msgstr "覆盖通常标题"
-
-#~ msgid "Name format:"
-#~ msgstr "名称格式："
-
-#~ msgid "CD Info"
-#~ msgstr "光盘信息"
-
-#, fuzzy
-#~ msgid "Japanese (EUC-JP)"
-#~ msgstr "日语："
-
-#, fuzzy
-#~ msgid "Unicode (UTF-8)"
-#~ msgstr "  (非 UTF-8)"
-
-#, fuzzy
-#~ msgid "Vietnamese (VISCII)"
-#~ msgstr "越南语："
-
-#, fuzzy
-#~ msgid "Korean (UHC)"
-#~ msgstr "朝语："
-
-#, fuzzy
-#~ msgid "User Defined"
-#~ msgstr "用户定义："
-
-#, fuzzy
-#~ msgid "Vietnamese (TCVN)"
-#~ msgstr "越南语："
-
-#, fuzzy
-#~ msgid "Vietnamese (VPS)"
-#~ msgstr "越南语："
-
-#~ msgid "Select the directory where you want to store the MPEG streams:"
-#~ msgstr "请选择你想要保存 MPEG 流的目录："
-
-#, fuzzy
-#~ msgid "Flac Configuration"
-#~ msgstr "MPG123 配置"
-
-#~ msgid "ReplayGain"
-#~ msgstr "ReplayGain"
-
-#, fuzzy
-#~ msgid "Enable ReplayGain processing"
-#~ msgstr "启动 ReplayGain"
-
-#, fuzzy
-#~ msgid "Album mode"
-#~ msgstr "专辑"
-
-#, fuzzy
-#~ msgid "Preamp:"
-#~ msgstr "Dream 梦幻"
-
-#, fuzzy
-#~ msgid "6dB hard limiting"
-#~ msgstr "启用 6 dB 推进 + 硬极限"
-
-#, fuzzy
-#~ msgid "Resolution"
-#~ msgstr "分辨率："
-
-#, fuzzy
-#~ msgid "Without ReplayGain"
-#~ msgstr "ReplayGain"
-
-#, fuzzy
-#~ msgid "With ReplayGain"
-#~ msgstr "ReplayGain"
-
-#, fuzzy
-#~ msgid "Enable dithering"
-#~ msgstr "启用插件"
-
-#, fuzzy
-#~ msgid "Noise shaping"
-#~ msgstr "无"
-
-#, fuzzy
-#~ msgid "none"
-#~ msgstr "(无)"
-
-#, fuzzy
-#~ msgid "16 bps"
-#~ msgstr "16 位"
-
-#, fuzzy
-#~ msgid "Output"
-#~ msgstr "输出端口："
-
-#~ msgid "Buffering:"
-#~ msgstr "缓冲："
-
-#~ msgid "Buffer size (kb):"
-#~ msgstr "缓冲区大小 (Kb)："
-
-#~ msgid "Pre-buffer (percent):"
-#~ msgstr "前期缓冲区 (%)："
-
-#~ msgid "Save stream to disk:"
-#~ msgstr "将流存入磁盘："
-
-#~ msgid "Save stream to disk"
-#~ msgstr "将流存入磁盘"
-
-#~ msgid "Path:"
-#~ msgstr "路径："
-
-#~ msgid "Browse"
-#~ msgstr "浏览"
-
-#~ msgid "SHOUT/Icecast:"
-#~ msgstr "SHOUT/Icecast:"
-
-#~ msgid "Enable SHOUT/Icecast title streaming"
-#~ msgstr "启用 SHOUT/Icecast 曲名流"
-
-#~ msgid "Enable Icecast Metadata UDP Channel"
-#~ msgstr "启用 Icecast Metadata UDP 通道"
-
-#~ msgid "Streaming"
-#~ msgstr "流"
-
-#, fuzzy
-#~ msgid "About Flac Plugin"
-#~ msgstr "关于 ESounD 插件"
-
-#~ msgid "Blues"
-#~ msgstr "Blues 蓝调"
-
-#~ msgid "Classic Rock"
-#~ msgstr "Classic Rock 古典摇滚"
-
-#~ msgid "Country"
-#~ msgstr "Country 乡村"
-
-#~ msgid "Dance"
-#~ msgstr "Dance 舞蹈"
-
-#~ msgid "Disco"
-#~ msgstr "Disco 迪斯科"
-
-#~ msgid "Funk"
-#~ msgstr "Funk 乡土乐"
-
-#~ msgid "Grunge"
-#~ msgstr "Grunge"
-
-#~ msgid "Hip-Hop"
-#~ msgstr "Hip-Hop"
-
-#~ msgid "Jazz"
-#~ msgstr "Jazz 爵士"
-
-#~ msgid "Metal"
-#~ msgstr "Metal 金属"
-
-#~ msgid "New Age"
-#~ msgstr "New Age 新时代"
-
-#~ msgid "Oldies"
-#~ msgstr "Oldies 怀旧"
-
-#~ msgid "Other"
-#~ msgstr "其它"
-
-#~ msgid "Pop"
-#~ msgstr "Pop 流行"
-
-#~ msgid "R&B"
-#~ msgstr "R&B 节拍与蓝调"
-
-#~ msgid "Rap"
-#~ msgstr "Rap 敲击乐"
-
-#~ msgid "Reggae"
-#~ msgstr "Reggae 瑞格舞"
-
-#~ msgid "Rock"
-#~ msgstr "Rock 摇滚"
-
-#~ msgid "Techno"
-#~ msgstr "Techno"
-
-#~ msgid "Industrial"
-#~ msgstr "Industrial 工业时代"
-
-#~ msgid "Alternative"
-#~ msgstr "Alternative"
-
-#~ msgid "Ska"
-#~ msgstr "Ska 斯卡"
-
-#~ msgid "Death Metal"
-#~ msgstr "Death Metal 重金属"
-
-#~ msgid "Pranks"
-#~ msgstr "Pranks"
-
-#~ msgid "Soundtrack"
-#~ msgstr "Soundtrack 电影配乐"
-
-#~ msgid "Euro-Techno"
-#~ msgstr "Euro-Techno"
-
-#~ msgid "Ambient"
-#~ msgstr "Ambient 环境"
-
-#~ msgid "Trip-Hop"
-#~ msgstr "Trip-Hop"
-
-#~ msgid "Vocal"
-#~ msgstr "Vocal 声乐"
-
-#~ msgid "Jazz+Funk"
-#~ msgstr "Jazz+Funk 爵士乐+乡土乐"
-
-#~ msgid "Fusion"
-#~ msgstr "Fusion 融合"
-
-#~ msgid "Trance"
-#~ msgstr "Trance 迷魂乐"
-
-#~ msgid "Classical"
-#~ msgstr "Classical 古典音乐"
-
-#~ msgid "Instrumental"
-#~ msgstr "Instrumental 古典"
-
-#~ msgid "Acid"
-#~ msgstr "Acid 迷幻"
-
-#~ msgid "House"
-#~ msgstr "House 旅店"
-
-#~ msgid "Game"
-#~ msgstr "Game 游戏"
-
-#~ msgid "Sound Clip"
-#~ msgstr "Sound Clip"
-
-#~ msgid "Gospel"
-#~ msgstr "Gospel 福音"
-
-#~ msgid "Noise"
-#~ msgstr "Noise 噪音"
-
-#~ msgid "Bass"
-#~ msgstr "Bass 低音"
-
-#~ msgid "Soul"
-#~ msgstr "Soul 灵歌"
-
-#~ msgid "Punk"
-#~ msgstr "Punk 朋克"
-
-#~ msgid "Space"
-#~ msgstr "Space 空间"
-
-#~ msgid "Meditative"
-#~ msgstr "Meditative 沉思"
-
-#~ msgid "Instrumental Pop"
-#~ msgstr "Instrumental Pop 金属流行"
-
-#~ msgid "Instrumental Rock"
-#~ msgstr "Instrumental Rock 金属摇滚"
-
-#~ msgid "Ethnic"
-#~ msgstr "Ethnic 异教徒"
-
-#~ msgid "Gothic"
-#~ msgstr "Gothic 哥特式"
-
-#~ msgid "Darkwave"
-#~ msgstr "Darkwave"
-
-#~ msgid "Techno-Industrial"
-#~ msgstr "Techno-Industrial"
-
-#~ msgid "Electronic"
-#~ msgstr "Electronic 电声"
-
-#~ msgid "Pop-Folk"
-#~ msgstr "Pop-Folk 流行民歌"
-
-#~ msgid "Eurodance"
-#~ msgstr "Eurodance 欧洲舞蹈"
-
-#~ msgid "Dream"
-#~ msgstr "Dream 梦幻"
-
-#~ msgid "Southern Rock"
-#~ msgstr "Southern Rock 南方摇滚"
-
-#~ msgid "Comedy"
-#~ msgstr "Comedy 喜剧"
-
-#~ msgid "Cult"
-#~ msgstr "Cult 祭仪"
-
-#~ msgid "Gangsta Rap"
-#~ msgstr "Gangsta Rap"
-
-#~ msgid "Top 40"
-#~ msgstr "Top 40"
-
-#~ msgid "Christian Rap"
-#~ msgstr "Christian Rap"
-
-#~ msgid "Pop/Funk"
-#~ msgstr "Pop/Funk 流行/乡土乐"
-
-#~ msgid "Jungle"
-#~ msgstr "Jungle 丛林"
-
-#~ msgid "Native American"
-#~ msgstr "Native American 美洲土著"
-
-#~ msgid "Cabaret"
-#~ msgstr "Cabaret 卡巴莱酒馆乐"
-
-#~ msgid "New Wave"
-#~ msgstr "New Wave"
-
-#~ msgid "Psychedelic"
-#~ msgstr "Psychedelic 迷幻乐"
-
-#~ msgid "Rave"
-#~ msgstr "Rave 狂欢"
-
-#~ msgid "Showtunes"
-#~ msgstr "Showtunes"
-
-#~ msgid "Trailer"
-#~ msgstr "Trailer"
-
-#~ msgid "Lo-Fi"
-#~ msgstr "Lo-Fi"
-
-#~ msgid "Tribal"
-#~ msgstr "Tribal 部落"
-
-#~ msgid "Acid Punk"
-#~ msgstr "Acid Punk 迷幻朋克"
-
-#~ msgid "Acid Jazz"
-#~ msgstr "Acid Jazz 迷幻爵士"
-
-#~ msgid "Polka"
-#~ msgstr "Polka 波尔卡舞曲"
-
-#~ msgid "Retro"
-#~ msgstr "Retro 怀旧"
-
-#~ msgid "Musical"
-#~ msgstr "Musical 音乐剧"
-
-#~ msgid "Rock & Roll"
-#~ msgstr "Rock & Roll 摇滚"
-
-#~ msgid "Hard Rock"
-#~ msgstr "Hard Rock"
-
-#~ msgid "Folk"
-#~ msgstr "Folk 民乐"
-
-#~ msgid "Folk/Rock"
-#~ msgstr "Folk/Rock 民乐/摇滚"
-
-#~ msgid "National Folk"
-#~ msgstr "National Folk 民族音乐"
-
-#~ msgid "Swing"
-#~ msgstr "Swing 摇摆乐"
-
-#~ msgid "Fast-Fusion"
-#~ msgstr "Fast-Fusion"
-
-#~ msgid "Bebob"
-#~ msgstr "Bebob 博普爵士乐"
-
-#~ msgid "Latin"
-#~ msgstr "Latin 拉丁乐"
-
-#~ msgid "Revival"
-#~ msgstr "Revival 苏醒"
-
-#~ msgid "Celtic"
-#~ msgstr "Celtic 凯尔特人"
-
-#~ msgid "Bluegrass"
-#~ msgstr "Bluegrass 蓝草音乐"
-
-#~ msgid "Avantgarde"
-#~ msgstr "Avantgarde"
-
-#~ msgid "Gothic Rock"
-#~ msgstr "Gothic Rock 哥特式摇滚"
-
-#~ msgid "Progressive Rock"
-#~ msgstr "Progressive Rock 渐进式摇滚"
-
-#~ msgid "Psychedelic Rock"
-#~ msgstr "Psychedelic Rock 迷幻式摇滚"
-
-#~ msgid "Symphonic Rock"
-#~ msgstr "Symphonic Rock 交响乐式摇滚"
-
-#~ msgid "Slow Rock"
-#~ msgstr "Slow Rock 慢速摇滚"
-
-#~ msgid "Big Band"
-#~ msgstr "Big Band 爵士乐团"
-
-#~ msgid "Chorus"
-#~ msgstr "Chorus 合唱"
-
-#~ msgid "Easy Listening"
-#~ msgstr "Easy Listening"
-
-#~ msgid "Acoustic"
-#~ msgstr "Acoustic 非电声乐器"
-
-#~ msgid "Humour"
-#~ msgstr "Humour 幽默"
-
-#~ msgid "Speech"
-#~ msgstr "Speech 讲话"
-
-#~ msgid "Chanson"
-#~ msgstr "Chanson 小调"
-
-#~ msgid "Opera"
-#~ msgstr "Opera 歌剧"
-
-#~ msgid "Chamber Music"
-#~ msgstr "Chamber Music 室内乐"
-
-#~ msgid "Sonata"
-#~ msgstr "Sonata 奏鸣曲"
-
-#~ msgid "Symphony"
-#~ msgstr "Symphony 交响乐"
-
-#~ msgid "Booty Bass"
-#~ msgstr "Booty Bass"
-
-#~ msgid "Primus"
-#~ msgstr "Primus"
-
-#~ msgid "Porn Groove"
-#~ msgstr "Porn Groove"
-
-#~ msgid "Satire"
-#~ msgstr "Satire 讽刺"
-
-#~ msgid "Slow Jam"
-#~ msgstr "Slow Jam"
-
-#~ msgid "Club"
-#~ msgstr "Club"
-
-#~ msgid "Tango"
-#~ msgstr "Tango 探戈"
-
-#~ msgid "Samba"
-#~ msgstr "Samba 桑巴"
-
-#~ msgid "Folklore"
-#~ msgstr "Folklore 民间传说"
-
-#~ msgid "Ballad"
-#~ msgstr "Ballad 叙事歌"
-
-#~ msgid "Power Ballad"
-#~ msgstr "Power Ballad 强烈的叙事歌"
-
-#~ msgid "Rhythmic Soul"
-#~ msgstr "Rhythmic Soul 节拍灵乐"
-
-#~ msgid "Freestyle"
-#~ msgstr "Freestyle 自由式"
-
-#~ msgid "Duet"
-#~ msgstr "Duet 二重奏"
-
-#~ msgid "Punk Rock"
-#~ msgstr "Punk Rock 朋客摇滚"
-
-#~ msgid "Drum Solo"
-#~ msgstr "Drum Solo 单独鼓奏"
-
-#~ msgid "A Cappella"
-#~ msgstr "A Cappella"
-
-#~ msgid "Euro-House"
-#~ msgstr "Euro-House"
-
-#~ msgid "Dance Hall"
-#~ msgstr "Dance Hall 舞厅"
-
-#~ msgid "Goa"
-#~ msgstr "Goa 果阿"
-
-#~ msgid "Drum & Bass"
-#~ msgstr "Drum & Bass 击鼓和低音"
-
-#~ msgid "Club-House"
-#~ msgstr "Club-House 俱乐部"
-
-#~ msgid "Hardcore"
-#~ msgstr "Hardcore"
-
-#~ msgid "Terror"
-#~ msgstr "Terror 恐怖"
-
-#~ msgid "Indie"
-#~ msgstr "Indie"
-
-#~ msgid "BritPop"
-#~ msgstr "BritPop"
-
-#~ msgid "Negerpunk"
-#~ msgstr "Negerpunk"
-
-#~ msgid "Polsk Punk"
-#~ msgstr "Polsk Punk"
-
-#~ msgid "Beat"
-#~ msgstr "Beat"
-
-#~ msgid "Christian Gangsta Rap"
-#~ msgstr "Christian Gangsta Rap"
-
-#~ msgid "Heavy Metal"
-#~ msgstr "Heavy Metal 重金属"
-
-#~ msgid "Black Metal"
-#~ msgstr "Black Metal 黑色金属"
-
-#~ msgid "Crossover"
-#~ msgstr "Crossover 混合音乐"
-
-#~ msgid "Contemporary Christian"
-#~ msgstr "Contemporary Christian"
-
-#~ msgid "Christian Rock"
-#~ msgstr "Christian Rock"
-
-#~ msgid "Merengue"
-#~ msgstr "Merengue"
-
-#~ msgid "Salsa"
-#~ msgstr "Salsa"
-
-#~ msgid "Thrash Metal"
-#~ msgstr "Thrash Metal 金属打击乐"
-
-#~ msgid "Anime"
-#~ msgstr "Anime 日本动画"
-
-#~ msgid "JPop"
-#~ msgstr "JPop 日本流行曲"
-
-#~ msgid "Synthpop"
-#~ msgstr "Synthpop"
-
-#, fuzzy
-#~ msgid "Samplerate: %d Hz"
-#~ msgstr "采样率：%ld Hz"
-
-#~ msgid "Channels: %d"
-#~ msgstr "声道：%d"
-
-#, fuzzy
-#~ msgid "Bits/Sample: %d"
-#~ msgstr "采样率：%ld Hz"
-
-#, fuzzy
-#~ msgid ""
-#~ "Samples: %llu\n"
-#~ "Length: %d:%.2d"
-#~ msgstr ""
-#~ "\n"
-#~ "总长度：%d:%d\n"
-
-#, fuzzy
-#~ msgid "Filesize: %ld B"
-#~ msgstr "文件大小："
-
-#, fuzzy
-#~ msgid "Tag:"
-#~ msgstr "泰语："
-
-#~ msgid "Title:"
-#~ msgstr "曲名："
-
-#~ msgid "Artist:"
-#~ msgstr "艺术家："
-
-#~ msgid "Album:"
-#~ msgstr "专辑："
-
-#~ msgid "Comment:"
-#~ msgstr "备注："
-
-#~ msgid "Date:"
-#~ msgstr "日期："
-
-#~ msgid "Track number:"
-#~ msgstr "音轨号："
-
-#~ msgid "Genre:"
-#~ msgstr "风格："
-
-#~ msgid "Save"
-#~ msgstr "保存"
-
-#~ msgid "Remove Tag"
-#~ msgstr "删除标签"
-
-#, fuzzy
-#~ msgid "FLAC Info:"
-#~ msgstr "光盘信息"
-
-#~ msgid "File Info - %s"
-#~ msgstr "文件信息 - %s"
-
-#~ msgid "Error"
-#~ msgstr "错误"
-
-#~ msgid "LOOKING UP %s"
-#~ msgstr "正在寻找 %s"
-
-#~ msgid "Couldn't look up host %s"
-#~ msgstr "无法找到主机 %s"
-
-#~ msgid "CONNECTING TO %s:%d"
-#~ msgstr "正在连接到主机 %s:%d"
-
-#~ msgid "Couldn't connect to host %s"
-#~ msgstr "无法连接到主机 %s"
-
-#~ msgid "CONNECTED: WAITING FOR REPLY"
-#~ msgstr "已连接：正等待回应"
-
-#~ msgid ""
-#~ "Couldn't connect to host %s\n"
-#~ "Server reported: %s"
-#~ msgstr ""
-#~ "无法连接到主机 %s\n"
-#~ "服务器报告：%s"
-
-#~ msgid "PRE-BUFFERING: %dKB/%dKB"
-#~ msgstr "前期缓冲：%dKB/%dKB"
-
-#, fuzzy
-#~ msgid "FLAC Audio Plugin"
-#~ msgstr "CD 音频插件"
-
-#, fuzzy
-#~ msgid "ModPlug Configuration"
-#~ msgstr "MikMod 配置"
-
-#~ msgid "16 bit"
-#~ msgstr "16 位"
-
-#~ msgid "8 bit"
-#~ msgstr "8 位"
-
-#, fuzzy
-#~ msgid "Channels"
-#~ msgstr "声道："
-
-#~ msgid "Stereo"
-#~ msgstr "立体声"
-
-#, fuzzy
-#~ msgid "Sampling Rate"
-#~ msgstr "采样率："
-
-#, fuzzy
-#~ msgid "48 kHz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "44 kHz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "22 kHz"
-#~ msgstr "1:2 (22 kHz)"
-
-#, fuzzy
-#~ msgid "11 kHz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "Resampling"
-#~ msgstr "流"
-
-#, fuzzy
-#~ msgid "Quality"
-#~ msgstr "/退出(_Q)"
-
-#~ msgid "General"
-#~ msgstr "一般"
-
-#, fuzzy
-#~ msgid "Fast Playlist Info"
-#~ msgstr "装入播放列表"
-
-#, fuzzy
-#~ msgid "Reverb"
-#~ msgstr "服务器"
-
-#, fuzzy
-#~ msgid "Enable"
-#~ msgstr "启用"
-
-#, fuzzy
-#~ msgid "Depth"
-#~ msgstr "Duet 二重奏"
-
-#, fuzzy
-#~ msgid "Delay"
-#~ msgstr "播放"
-
-#, fuzzy
-#~ msgid "Amount"
-#~ msgstr "关于"
-
-#, fuzzy
-#~ msgid "Range"
-#~ msgstr "Rave 狂欢"
-
-#, fuzzy
-#~ msgid "Surround"
-#~ msgstr "环绕回音"
-
-#, fuzzy
-#~ msgid "Preamp"
-#~ msgstr "Dream 梦幻"
-
-#, fuzzy
-#~ msgid "Volume"
-#~ msgstr "音量加大"
-
-#, fuzzy
-#~ msgid "Effects"
-#~ msgstr "<b>效果</b>"
-
-#, fuzzy
-#~ msgid "MOD Info"
-#~ msgstr "光盘信息"
-
-#, fuzzy
-#~ msgid "Samples"
-#~ msgstr "Salsa"
-
-#, fuzzy
-#~ msgid "Instruments"
-#~ msgstr "Instrumental 古典"
-
-#, fuzzy
-#~ msgid "About Modplug"
-#~ msgstr "关于 mikmod 插件"
-
-#, fuzzy
-#~ msgid "Couldn't find pixmap file: %s"
-#~ msgstr "错误：无法找到 %s\n"
-
-#~ msgid "MPEG Audio Plugin Configuration"
-#~ msgstr "MPEG 音频插件配置"
-
-#~ msgid "Resolution:"
-#~ msgstr "分辨率："
-
-#~ msgid "Channels:"
-#~ msgstr "声道："
-
-#~ msgid "Stereo (if available)"
-#~ msgstr "立体声（如果有的话）"
-
-#~ msgid "Mono"
-#~ msgstr "单声"
-
-#~ msgid "Down sample:"
-#~ msgstr "降低取样："
-
-#~ msgid "1:1 (44 kHz)"
-#~ msgstr "1:1 (44 kHz)"
-
-#~ msgid "1:2 (22 kHz)"
-#~ msgstr "1:2 (22 kHz)"
-
-#~ msgid "1:4 (11 kHz)"
-#~ msgstr "1:4 (11 kHz)"
-
-#~ msgid "Decoder"
-#~ msgstr "解码器"
-
-#~ msgid "ID3 Tags:"
-#~ msgstr "ID3 标签："
-
-#~ msgid "Disable ID3V2 tags"
-#~ msgstr "禁用 ID3v2 标签"
-
-#~ msgid "ID3 format:"
-#~ msgstr "ID3 格式："
-
-#~ msgid "Joint stereo"
-#~ msgstr "联合立体声"
-
-#~ msgid "Dual channel"
-#~ msgstr "双声道"
-
-#~ msgid "Single channel"
-#~ msgstr "单声道"
-
-#~ msgid "%d KBit/s"
-#~ msgstr "%d KBit/s"
-
-#~ msgid "%ld Hz"
-#~ msgstr "%ld-Hz"
-
-#~ msgid "None"
-#~ msgstr "无"
-
-#~ msgid "50/15 ms"
-#~ msgstr "50/15 ms"
-
-#~ msgid "CCIT J.17"
-#~ msgstr "CCIT J.17"
-
-#~ msgid "No"
-#~ msgstr "否"
-
-#~ msgid "Yes"
-#~ msgstr "是"
-
-#~ msgid " MPEG Info "
-#~ msgstr " MPEG 信息 "
-
-#~ msgid "MPEG Level:"
-#~ msgstr "MPEG Level："
-
-#~ msgid "Bit rate:"
-#~ msgstr "位速率："
-
-#~ msgid "Sample rate:"
-#~ msgstr "采样率："
-
-#~ msgid "File size:"
-#~ msgstr "文件大小："
-
-#, fuzzy
-#~ msgid "Mode:"
-#~ msgstr "解码器："
-
-#~ msgid "Error Protection:"
-#~ msgstr "Error Protection："
-
-#~ msgid "Copyright:"
-#~ msgstr "版权："
-
-#~ msgid "Original:"
-#~ msgstr "Original："
-
-#~ msgid "Emphasis:"
-#~ msgstr "Emphasis："
-
-#~ msgid " ID3 Tag "
-#~ msgstr " ID3 标签 "
-
-#~ msgid "Year:"
-#~ msgstr "年份："
-
-#~ msgid "N/A"
-#~ msgstr "不可用"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "%lu Bytes"
-#~ msgstr "%lu·Bytes"
-
-#~ msgid "Couldn't connect to host %s:%d"
-#~ msgstr "无法连结到主机 %s:%d"
-
-#, fuzzy
-#~ msgid "PRE-BUFFERING: %zuKB/%zuKB"
-#~ msgstr "前期缓冲：%dKB/%dKB"
-
-#~ msgid "AlternRock"
-#~ msgstr "AlternRock"
-
-#~ msgid "About MPEG Audio Plugin"
-#~ msgstr "关于 MPEG 插件"
-
-#~ msgid "MPEG Audio Plugin"
-#~ msgstr "MPEG 音频插件"
-
-#, fuzzy
-#~ msgid "TiMidity Configuration"
-#~ msgstr "MikMod 配置"
-
-#, fuzzy
-#~ msgid "11000 Hz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "22000 Hz"
-#~ msgstr "1:2 (22 kHz)"
-
-#, fuzzy
-#~ msgid "44100 Hz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "Sample Width"
-#~ msgstr "采样率："
-
-#, fuzzy
-#~ msgid "TiMidity Configuration File"
-#~ msgstr "MikMod 配置"
-
-#, fuzzy
-#~ msgid "TiMidity Player %s"
-#~ msgstr "MikMod 播放器 %s"
-
-#, fuzzy
-#~ msgid "TiMidity Plugin %s"
-#~ msgstr "写入磁盘插件 %s"
-
-#, fuzzy
-#~ msgid "Couldn't load MIDI file"
-#~ msgstr "无法加载 mod 插件"
-
-#~ msgid "About Tone Generator"
-#~ msgstr "关于音调生成器"
-
-#, fuzzy
-#~ msgid ""
-#~ "Sinus tone generator by Haavard Kvaalen <havardk@xmms.org>\n"
-#~ "Modified by Daniel J. Peng <danielpeng@bigfoot.com>\n"
-#~ "\n"
-#~ "To use it, add a URL: tone://frequency1;frequency2;frequency3;...\n"
-#~ "e.g. tone://2000;2005 to play a 2000Hz tone and a 2005Hz tone"
-#~ msgstr ""
-#~ "Sinus 音调生成器, 作者 Haavard Kvaalen <havardk@xmms.org>\n"
-#~ "\n"
-#~ "要使用它, 增加一个 URL: tone://频率\n"
-#~ "例如, tone://2000 将演奏 2000Hz 的音调"
-
-#~ msgid "Tone Generator: "
-#~ msgstr "音调生成器："
-
-#~ msgid "Tone Generator %s"
-#~ msgstr "音调生成器 %s"
-
-#~ msgid "Select the directory where you want to store the Ogg Vorbis streams:"
-#~ msgstr "请选择一个目录用来存放您的 Ogg Vorbis 流文件："
-
-#~ msgid "Ogg Vorbis Audio Plugin Configuration"
-#~ msgstr "Ogg Vorbis 音频插件配置"
-
-#~ msgid "Ogg Vorbis Tags:"
-#~ msgstr "Ogg Vorbis 标记："
-
-#~ msgid "ReplayGain Settings:"
-#~ msgstr "ReplayGain 设定："
-
-#~ msgid "Enable Clipping Prevention"
-#~ msgstr "启用爆音防护"
-
-#~ msgid "Enable ReplayGain"
-#~ msgstr "启动 ReplayGain"
-
-#~ msgid "ReplayGain Type:"
-#~ msgstr "ReplayGain 类型："
-
-#~ msgid "use Track Gain/Peak"
-#~ msgstr "使用音轨增益/峰值"
-
-#~ msgid "use Album Gain/Peak"
-#~ msgstr "使用专辑增益/峰值"
-
-#~ msgid "Enable 6dB Boost + Hard Limiting"
-#~ msgstr "启用 6 dB 推进 + 硬极限"
-
-#~ msgid ""
-#~ "An error occured:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "发生错误：\n"
-#~ "%s"
-
-#~ msgid "Error!"
-#~ msgstr "错误！"
-
-#~ msgid "Failed to modify tag (open)"
-#~ msgstr "修改标记失败(开)"
-
-#~ msgid "Failed to modify tag (close)"
-#~ msgstr "修改标记失败(关)"
-
-#~ msgid "Failed to modify tag"
-#~ msgstr "修改标记失败"
-
-#~ msgid " Ogg Vorbis Tag "
-#~ msgstr "Ogg Vorbis 标记"
-
-#~ msgid "Description:"
-#~ msgstr "描述："
-
-#~ msgid "Location:"
-#~ msgstr "位置："
-
-#~ msgid "Version:"
-#~ msgstr "版本："
-
-#~ msgid "ISRC number:"
-#~ msgstr "ISRC 编号："
-
-#~ msgid "Organization:"
-#~ msgstr "组织："
-
-#~ msgid " Ogg Vorbis ReplayGain "
-#~ msgstr "Ogg Vorbis ReplayGain"
-
-#~ msgid "Track peak:"
-#~ msgstr "音轨峰值："
-
-#~ msgid "Album gain:"
-#~ msgstr "专辑增益："
-
-#~ msgid "Album peak:"
-#~ msgstr "专辑峰值："
-
-#~ msgid " Ogg Vorbis Info "
-#~ msgstr "Ogg Vorbis 信息"
-
-#~ msgid "Length:"
-#~ msgstr "长度："
-
-#~ msgid "%d KBit/s (nominal)"
-#~ msgstr "%d Kbit/s (额定)"
-
-#~ msgid "%d Hz"
-#~ msgstr "%d Hz"
-
-#~ msgid "%d"
-#~ msgstr "%d"
-
-#~ msgid "%d:%.2d"
-#~ msgstr "%d:%.2d"
-
-#~ msgid "%d Bytes"
-#~ msgstr "%d B"
-
-#~ msgid "Ogg Vorbis Audio Plugin"
-#~ msgstr "Ogg Vorbis 音频插件"
-
-#~ msgid "About Ogg Vorbis Audio Plugin"
-#~ msgstr "关于 Ogg Vorbis 插件"
-
-#~ msgid ""
-#~ "Ogg Vorbis Plugin by the Xiph.org Foundation\n"
-#~ "\n"
-#~ "Original code by\n"
-#~ "Tony Arcieri <bascule@inferno.tusculum.edu>\n"
-#~ "Contributions from\n"
-#~ "Chris Montgomery <monty@xiph.org>\n"
-#~ "Peter Alm <peter@xmms.org>\n"
-#~ "Michael Smith <msmith@labyrinth.edu.au>\n"
-#~ "Jack Moffitt <jack@icecast.org>\n"
-#~ "Jorn Baayen <jorn@nl.linux.org>\n"
-#~ "Haavard Kvaalen <havardk@xmms.org>\n"
-#~ "Gian-Carlo Pascutto <gcp@sjeng.org>\n"
-#~ "\n"
-#~ "Visit the Xiph.org Foundation at http://www.xiph.org/\n"
-#~ msgstr ""
-#~ "Ogg·Vorbis·插件由 Xiph.org 基金会制作\n"
-#~ "\n"
-#~ "原作：\n"
-#~ "Tony·Arcieri·<bascule@inferno.tusculum.edu>\n"
-#~ "Contributions·from\n"
-#~ "Chris·Montgomery·<monty@xiph.org>\n"
-#~ "Peter·Alm·<peter@xmms.org>\n"
-#~ "Michael·Smith·<msmith@labyrinth.edu.au>\n"
-#~ "Jack·Moffitt·<jack@icecast.org>\n"
-#~ "Jorn·Baayen·<jorn@nl.linux.org>\n"
-#~ "Haavard·Kvaalen·<havardk@xmms.org>\n"
-#~ "Gian-Carlo·Pascutto·<gcp@sjeng.org>\n"
-#~ "\n"
-#~ "请访问 Xiph.org 基金会网站： http://www.xiph.org/\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
-#~ "from the xmms_sndfile plugin which is:\n"
-#~ "Copyright (C) 2000, 2002 Erik de Castro Lopo\n"
-#~ "\n"
-#~ "This program is free software ; you can redistribute it and/or modify \n"
-#~ "it under the terms of the GNU General Public License as published by \n"
-#~ "the Free Software Foundation ; either version 2 of the License, or \n"
-#~ "(at your option) any later version. \n"
-#~ " \n"
-#~ "This program is distributed in the hope that it will be useful, \n"
-#~ "but WITHOUT ANY WARRANTY ; without even the implied warranty of \n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
-#~ "See the GNU General Public License for more details. \n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public \n"
-#~ "License along with this program ; if not, write to \n"
-#~ "the Free Software Foundation, Inc., \n"
-#~ "51 Franklin Street, Fifth Floor, \n"
-#~ "Boston, MA  02110-1301  USA"
-#~ msgstr ""
-#~ "XMMS ESounD 插件 v0.1\n"
-#~ "\n"
-#~ "这个程序是自由软件，您可以复制或是修改这个程序。\n"
-#~ "条件是您要遵守 GNU 一般公共许可证 GPL 这个由自由软件基金会所出版的\n"
-#~ "授权声明；您可以选择第二版或更后面的版本。\n"
-#~ "\n"
-#~ "这个程式发表时是期待它将会很好用的，但是没有任何保证！\n"
-#~ "甚至不会隐含的保证它可以销售或适合任何特定目的。\n"
-#~ "您可以由阅读 GNU一般公共许可证 GPL 来获得更多细节。\n"
-#~ "\n"
-#~ "正常情况下，您在收到这个软件的同时，也应该收到 GNU\n"
-#~ "GPL 授权，如果没有，请连络自由软件基金会，地址是：\n"
-#~ "59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
-#, fuzzy
-#~ msgid "sndfile WAV plugin"
-#~ msgstr "启用插件"
-
-#~ msgid "WAV Audio Plugin"
-#~ msgstr "WAV 音频插件"
-
-#, fuzzy
-#~ msgid "WMA Player %s"
-#~ msgstr "波形播放器 %s"
-
-#, fuzzy
-#~ msgid "About %s"
-#~ msgstr "关于"
-
-#, fuzzy
-#~ msgid " Close "
-#~ msgstr "关闭"
-
-#~ msgid "OSS Output Plugin"
-#~ msgstr "OSS 输出插件"
-
-#~ msgid "About OSS Driver"
-#~ msgstr "关于 OSS 开放音效系统驱动程式"
-
-#, fuzzy
-#~ msgid ""
-#~ "Audacious OSS Driver\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "XMMS 开放音效系统驱动程序\n"
-#~ "\n"
-#~ "这个程序是自由软件，您可以复制或是修改这个程序。\n"
-#~ "条件是您要遵守 GNU 一般公共许可证 GPL 这个由自由软件基金会所出版的\n"
-#~ "授权声明；您可以选择第二版或更后面的版本。\n"
-#~ "\n"
-#~ "这个程式发表时是期待它将会很好用的，但是没有任何保证！\n"
-#~ "甚至不会隐含的保证它可以销售或适合任何特定目的。\n"
-#~ "您可以由阅读 GNU 一般公共许可证 GPL 来获得更多细节。\n"
-#~ "\n"
-#~ "正常情况下，您在收到这个软件的同时，也应该收到 GNU\n"
-#~ "GPL 授权，如果没有，请连络自由软件基金会，地址是：\n"
-#~ "59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
-#~ msgid "Default (%s)"
-#~ msgstr "默认值 (%s)"
-
-#~ msgid "Default"
-#~ msgstr "默认"
-
-#~ msgid "OSS Driver configuration"
-#~ msgstr "OSS 驱动程序配置"
-
-#~ msgid "Audio device:"
-#~ msgstr "音频设备："
-
-#~ msgid "Use alternate device:"
-#~ msgstr "使用替代设备："
-
-#~ msgid "Mixer device:"
-#~ msgstr "混音设备："
-
-#~ msgid "Devices"
-#~ msgstr "设备"
-
-#~ msgid "Buffer size (ms):"
-#~ msgstr "缓冲区大小 (ms)："
-
-#~ msgid "Buffering"
-#~ msgstr "缓冲"
-
-#~ msgid "Mixer Settings:"
-#~ msgstr "混音器设定："
-
-#~ msgid "Volume controls Master not PCM"
-#~ msgstr "主音量控制不是 PCM"
-
-#~ msgid "Mixer"
-#~ msgstr "混音器"
-
-#~ msgid "About ALSA Driver"
-#~ msgstr "关于 ALSA 驱动程序"
-
-#, fuzzy
-#~ msgid ""
-#~ "Audacious ALSA Driver\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
-#~ "USA.\n"
-#~ "Author: Matthieu Sozeau (mattam@altern.org)"
-#~ msgstr ""
-#~ "XMMS ALSA 驱动程序\n"
-#~ "\n"
-#~ "这个程序是自由软件，您可以复制或是修改这个程序。\n"
-#~ "条件是您要遵守 GNU 一般公共许可证 GPL 这个由自由软件基金会所出版的\n"
-#~ "授权声明；您可以选择第二版或更后面的版本。\n"
-#~ "\n"
-#~ "这个程式发表时是期待它将会很好用的，但是没有任何保证！\n"
-#~ "甚至不会隐含的保证它可以销售或适合任何特定目的。\n"
-#~ "您可以由阅读 GNU 一般公共许可证 GPL 来获得更多细节。\n"
-#~ "\n"
-#~ "正常情况下，您在收到这个软件的同时，也应该收到 GNU\n"
-#~ "GPL 授权，如果没有，请连络自由软件基金会，地址是：\n"
-#~ "59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
-#~ msgid "ALSA %s output plugin"
-#~ msgstr "ALSA %s 输出插件"
-
-#~ msgid "Unknown soundcard"
-#~ msgstr "未知声卡"
-
-#~ msgid "Default PCM device (%s)"
-#~ msgstr "默认 PCM 设备(%s)"
-
-#~ msgid "ALSA Driver configuration"
-#~ msgstr "ALSA 驱动程序配置"
-
-#~ msgid "Mixer:"
-#~ msgstr "混音器:"
-
-#~ msgid "Use software volume control"
-#~ msgstr "使用软件音量控制："
-
-#~ msgid "Mixer card:"
-#~ msgstr "混音设备："
-
-#~ msgid "Device settings"
-#~ msgstr "设备设置："
-
-#, fuzzy
-#~ msgid "Soundcard:"
-#~ msgstr "声卡 #%d - %s"
-
-#~ msgid "Buffer time (ms):"
-#~ msgstr "缓冲区大小 (ms)："
-
-#~ msgid "Period time (ms):"
-#~ msgstr "周期大小 (ms)："
-
-#~ msgid "Advanced settings"
-#~ msgstr "高级设置"
-
-#, fuzzy
-#~ msgid "aRts Driver configuration"
-#~ msgstr "OSS 驱动程序配置"
-
-#~ msgid "Disk Writer Plugin %s"
-#~ msgstr "写入磁盘插件 %s"
-
-#~ msgid ""
-#~ "You cannot use the Disk Writer plugin\n"
-#~ "when you're running in realtime mode."
-#~ msgstr ""
-#~ "当您运行于实时模式时，\n"
-#~ "不可以使用写入磁盘插件"
-
-#~ msgid "Select the directory where you want to store the output files:"
-#~ msgstr "请选择目录来存放输出的文件："
-
-#~ msgid "Disk Writer Configuration"
-#~ msgstr "写入磁盘设定"
-
-#~ msgid "About ESounD Plugin"
-#~ msgstr "关于 ESounD 插件"
-
-#, fuzzy
-#~ msgid ""
-#~ "Audacious ESounD Plugin\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "XMMS ESounD 插件 v0.1\n"
-#~ "\n"
-#~ "这个程序是自由软件，您可以复制或是修改这个程序。\n"
-#~ "条件是您要遵守 GNU 一般公共许可证 GPL 这个由自由软件基金会所出版的\n"
-#~ "授权声明；您可以选择第二版或更后面的版本。\n"
-#~ "\n"
-#~ "这个程式发表时是期待它将会很好用的，但是没有任何保证！\n"
-#~ "甚至不会隐含的保证它可以销售或适合任何特定目的。\n"
-#~ "您可以由阅读 GNU一般公共许可证 GPL 来获得更多细节。\n"
-#~ "\n"
-#~ "正常情况下，您在收到这个软件的同时，也应该收到 GNU\n"
-#~ "GPL 授权，如果没有，请连络自由软件基金会，地址是：\n"
-#~ "59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
-#~ msgid "Host:"
-#~ msgstr "主机名："
-
-#~ msgid "Use remote host"
-#~ msgstr "使用远程主机"
-
-#~ msgid "Volume controls OSS mixer"
-#~ msgstr "音量控制 OSS 混音器"
-
-#~ msgid "Port:"
-#~ msgstr "端口："
-
-#~ msgid "Server"
-#~ msgstr "服务器"
-
-#~ msgid "eSound Output Plugin"
-#~ msgstr "eSound 输出插件"
-
-#, fuzzy
-#~ msgid "About JACK Output Plugin 0.15"
-#~ msgstr "ALSA 输出插件 %s"
-
-#~ msgid "About the Sun Driver"
-#~ msgstr "关于 Sun 驱动程序"
-
-#, fuzzy
-#~ msgid ""
-#~ "XMMS BSD Sun Driver\n"
-#~ "\n"
-#~ "Copyright (c) 2001 CubeSoft Communications, Inc.\n"
-#~ "Maintainer: <vedge at csoft.org>.\n"
-#~ msgstr ""
-#~ "XMMS BSD Sun 驱动程序\n"
-#~ "\n"
-#~ " 版权所有 (c) 2001 CubeSoft Communications, Inc.\n"
-#~ "维护者：<vedge at csoft.org>.\n"
-
-#~ msgid "Audio control device:"
-#~ msgstr "音频控制设备："
-
-#~ msgid "Volume controls device:"
-#~ msgstr "音量控制设备："
-
-#~ msgid "XMMS uses mixer exclusively."
-#~ msgstr "XMMS 用户专有混音器"
-
-#~ msgid "Status"
-#~ msgstr "状况"
-
-#~ msgid "Sun driver configuration"
-#~ msgstr "Sun 驱动程序配置"
-
-#~ msgid "BSD Sun Driver %s"
-#~ msgstr "BSD Sun 驱动程序 %s"
-
-#~ msgid "/Toggle Decorations"
-#~ msgstr "/切换窗口装饰"
-
-#~ msgid "/Close"
-#~ msgstr "/关闭"
-
-#~ msgid "Blur scope"
-#~ msgstr "柔化范围"
-
-#~ msgid "Blur Scope: Color selection"
-#~ msgstr "柔化范围： 颜色选择"
-
-#~ msgid "Options:"
-#~ msgstr "选项："
-
-#~ msgid "** DOUBLESIZE HAS BEEN REMOVED **"
-#~ msgstr "＊＊双倍大小功能已经被删除＊＊"
-
-#, fuzzy
-#~ msgid "<b>_Transparency</b>"
-#~ msgstr "<b>播放</b>"
-
-#, fuzzy
-#~ msgid "Scrobbler Configuration"
-#~ msgstr "MikMod 配置"
-
-#~ msgid "Warning"
-#~ msgstr "警告"
-
-#~ msgid "Song Change Configuration"
-#~ msgstr "歌曲变换配置"
-
-#, fuzzy
-#~ msgid "Song Metadata"
-#~ msgstr "Sonata 奏鸣曲"
-
-#, fuzzy
-#~ msgid "Port"
-#~ msgstr "端口："
-
-#, fuzzy
-#~ msgid "Client name"
-#~ msgstr "文件名"
-
-#, fuzzy
-#~ msgid "Port name"
-#~ msgstr "音轨名称"
-
-#, fuzzy
-#~ msgid "ALSA output ports"
-#~ msgstr "ALSA %s 输出插件"
-
-#, fuzzy
-#~ msgid "Mixer settings"
-#~ msgstr "混音器设定："
-
-#~ msgid "Convert non-UTF8 ID3 tags to UTF8"
-#~ msgstr "将非 UTF-8 ID3 标签转换成 UTF-8"
-
-#~ msgid "ID3 encoding:"
-#~ msgstr "ID3 编码："
-
-#, fuzzy
-#~ msgid "Convert non-UTF8 Vorbis tags to UTF8"
-#~ msgstr "将非 UTF-8 ID3 标签转换成 UTF-8"
-
-#, fuzzy
-#~ msgid "Vorbis encoding:"
-#~ msgstr "ID3 编码："
-
-#, fuzzy
-#~ msgid "%d Kb/s"
-#~ msgstr "%d KBit/s"
-
-#, fuzzy
-#~ msgid "<b>Name:</b>"
-#~ msgstr "<b>文件名</b>"
-
-#, fuzzy
-#~ msgid "<b>WMA Version:</b>"
-#~ msgstr "<b>可视化效果</b>"
-
-#, fuzzy
-#~ msgid "<b>Bitrate:</b>"
-#~ msgstr "<b>过滤(_F)：</b>"
-
-#, fuzzy
-#~ msgid "<b>Samplerate:</b>"
-#~ msgstr "采样率："
-
-#, fuzzy
-#~ msgid "<b>Channels:</b>"
-#~ msgstr "声道："
-
-#, fuzzy
-#~ msgid "<b>Play time:</b>"
-#~ msgstr "<b>播放列表字体(_P)：</b>"
-
-#, fuzzy
-#~ msgid "<b>Filesize:</b>"
-#~ msgstr "<b>文件名</b>"
-
-#, fuzzy
-#~ msgid "WMA Info"
-#~ msgstr "光盘信息"
-
-#, fuzzy
-#~ msgid "<b>Comments:</b>"
-#~ msgstr "<b>字体(_F)</b>"
-
-#, fuzzy
-#~ msgid "<b>Track:</b>"
-#~ msgstr "<b>播放</b>"
-
-#, fuzzy
-#~ msgid "Tags"
-#~ msgstr "泰语："
-
-#~ msgid "Chong Kai Xiong"
-#~ msgstr "Chong Kai Xiong 张凯雄"
-
-#, fuzzy
-#~ msgid "Dai"
-#~ msgstr "丹麦语："
-
-#~ msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>插件</b></span>"
-
-#~ msgid "_Media plugin list:"
-#~ msgstr "媒体插件表(_M)："
-
-#, fuzzy
-#~ msgid ""
-#~ "The change is now effective in Audacious' configuration database, but "
-#~ "won't take effect for playback until the next song!\n"
-#~ "\n"
-#~ "Optionally, you can stop and restart playback for the change to take "
-#~ "effect."
-#~ msgstr "修改将在播放下一首歌时生效。您也可以暂停再恢复播放以让修改生效。"
-
-#~ msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>外观</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>鼠标</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Playlist</b></span>"
-
-#, fuzzy
-#~ msgid "<span size=\"xx-large\"><b>Connectivity</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>鼠标</b></span>"
-
-#~ msgid "Use proxy"
-#~ msgstr "使用代理服务器"
-
-#~ msgid "Frames:"
-#~ msgstr "帧数："
-
-#~ msgid ""
-#~ "Variable,\n"
-#~ "avg. bitrate: %d KBit/s"
-#~ msgstr ""
-#~ "位速率：可变，\n"
-#~ "平均位速率：%d kb/s"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to write to file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "无法写入文件：%s"
-
-#~ msgid "Couldn't write tag!"
-#~ msgstr "无法写入标签！"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to open file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "无法打开文件：%s"
-
-#~ msgid "File Info"
-#~ msgstr "文件信息"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to truncate file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "无法截断文件：%s"
-
-#~ msgid "Couldn't remove tag!"
-#~ msgstr "无法移除标签！"
-
-#~ msgid "No tag to remove!"
-#~ msgstr "没有要移除的标签！"
-
-#~ msgid "Copy album tags"
-#~ msgstr "复制专辑标签"
-
-#~ msgid "Paste album tags"
-#~ msgstr "粘贴专辑标签"
-
-#, fuzzy
-#~ msgid "About TiMidity Plugin"
-#~ msgstr "关于 MPEG 插件"
-
-#, fuzzy
-#~ msgid "TiMidity Plugin"
-#~ msgstr "MPEG 音频插件"
-
-#~ msgid "Options"
-#~ msgstr "选项"
-
-#~ msgid "Content"
-#~ msgstr "目录"
-
-#~ msgid "Extension"
-#~ msgstr "扩展名"
-
-#~ msgid "Extension and content"
-#~ msgstr "扩展名和目录"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Copyright (C) 2000-2004  Peter Eisenlohr <peter@eisenlohr.org>\n"
-#~ "\n"
-#~ "based on the original OSS Output Plugin  Copyright (C) 1998-2000\n"
-#~ "Peter Alm, Mikael Alm, Olle Hallnas, Thomas Nilsson and 4Front "
-#~ "Technologies\n"
-#~ "\n"
-#~ "This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "XMMS ESounD 插件 v0.1\n"
-#~ "\n"
-#~ "这个程序是自由软件，您可以复制或是修改这个程序。\n"
-#~ "条件是您要遵守 GNU 一般公共许可证 GPL 这个由自由软件基金会所出版的\n"
-#~ "授权声明；您可以选择第二版或更后面的版本。\n"
-#~ "\n"
-#~ "这个程式发表时是期待它将会很好用的，但是没有任何保证！\n"
-#~ "甚至不会隐含的保证它可以销售或适合任何特定目的。\n"
-#~ "您可以由阅读 GNU一般公共许可证 GPL 来获得更多细节。\n"
-#~ "\n"
-#~ "正常情况下，您在收到这个软件的同时，也应该收到 GNU\n"
-#~ "GPL 授权，如果没有，请连络自由软件基金会，地址是：\n"
-#~ "59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
-#, fuzzy
-#~ msgid " Enable"
-#~ msgstr "启用"
-
-#, fuzzy
-#~ msgid "About XMMS Crossfade Plugin"
-#~ msgstr "关于 ESounD 插件"
-
-#, fuzzy
-#~ msgid "Additional silence"
-#~ msgstr "其他程序员："
-
-#, fuzzy
-#~ msgid "Advanced"
-#~ msgstr "高级设置"
-
-#, fuzzy
-#~ msgid "Advanced XF"
-#~ msgstr "高级设置"
-
-#, fuzzy
-#~ msgid "Advanced options"
-#~ msgstr "高级设置"
-
-#~ msgid "Configure"
-#~ msgstr "配置"
-
-#, fuzzy
-#~ msgid "Crossfade"
-#~ msgstr "Crossover 混合音乐"
-
-#, fuzzy
-#~ msgid "Crossfader"
-#~ msgstr "Crossover 混合音乐"
-
-#, fuzzy
-#~ msgid "Custom (ms):"
-#~ msgstr "自定格式："
-
-#~ msgid "Delete"
-#~ msgstr "删除"
-
-#, fuzzy
-#~ msgid "Enable volume control"
-#~ msgstr "音量控制："
-
-#, fuzzy
-#~ msgid "End volume (%):"
-#~ msgstr "音量：(%)"
-
-#, fuzzy
-#~ msgid "Fade out"
-#~ msgstr "线路输入"
-
-#, fuzzy
-#~ msgid "Limit OP buffer usage (ms):"
-#~ msgstr "缓冲区大小 (ms)："
-
-#~ msgid "Load"
-#~ msgstr "装入"
-
-#, fuzzy
-#~ msgid "Mixing buffer size (ms):"
-#~ msgstr "缓冲区大小 (ms)："
-
-#, fuzzy
-#~ msgid "Pause"
-#~ msgstr "/暂停"
-
-#, fuzzy
-#~ msgid "Plugin compatibility options"
-#~ msgstr "XMMS 兼容模式"
-
-#, fuzzy
-#~ msgid "Position:"
-#~ msgstr "描述："
-
-#, fuzzy
-#~ msgid "Quality:"
-#~ msgstr "/退出(_Q)"
-
-#, fuzzy
-#~ msgid "Rate:"
-#~ msgstr "日期："
-
-#, fuzzy
-#~ msgid "Reopen"
-#~ msgstr "重复播放"
-
-#, fuzzy
-#~ msgid "Set the duration for the fadein when starting playback."
-#~ msgstr "仅当歌曲开始播放时才读取歌曲标题和长度"
-
-#, fuzzy
-#~ msgid "Start volume (%):"
-#~ msgstr "音量：(%)"
-
-#, fuzzy
-#~ msgid "Use plugin"
-#~ msgstr "输入插件"
-
-#, fuzzy
-#~ msgid "Volume control options"
-#~ msgstr "音量控制："
-
-#, fuzzy
-#~ msgid "Volume normalizer"
-#~ msgstr "音量控制："
-
-#, fuzzy
-#~ msgid "same file"
-#~ msgstr "从文件"
-
-#, fuzzy
-#~ msgid "LibVisual Audacious Plugin"
-#~ msgstr "可视效果插件"
-
-#~ msgid "Visualization Plugins"
-#~ msgstr "可视效果插件"
-
-#, fuzzy
-#~ msgid "Fullscreen"
-#~ msgstr "3DFX 全屏幕模式"
-
-#, fuzzy
-#~ msgid "All plugins"
-#~ msgstr "输入插件"
-
-#, fuzzy
-#~ msgid "Only GL plugins"
-#~ msgstr "启用插件"
-
-#, fuzzy
-#~ msgid "GL plugins only"
-#~ msgstr "在以下目录搜索插件(_L)："
-
-#, fuzzy
-#~ msgid "non GL plugins only"
-#~ msgstr "在以下目录搜索插件(_L)："
-
-#, fuzzy
-#~ msgid " (enabled)"
-#~ msgstr "（禁用）"
-
-#, fuzzy
-#~ msgid "Version: "
-#~ msgstr "版本："
-
-#, fuzzy
-#~ msgid " error"
-#~ msgstr "Terror 恐怖"
-
-#, fuzzy
-#~ msgid "Audacious plugin"
-#~ msgstr "CD 音频插件"
-
-#, fuzzy
-#~ msgid "Cannot get options"
-#~ msgstr "保存选项"
-
-#, fuzzy
-#~ msgid "Cannot initialize SDL!\n"
-#~ msgstr "无法初始化 gnome-vfs。\n"
-
-#, fuzzy
-#~ msgid "Last plugin: %s"
-#~ msgstr "输入插件：%s"
-
-#, fuzzy
-#~ msgid "Could not get video info"
-#~ msgstr "无法打开音频"
-
-#~ msgid "Developers:"
-#~ msgstr "开发者："
-
-#~ msgid "DISABLE ALWAYS ON TOP (N/A)"
-#~ msgstr "取消永远在最上层 (N/A)"
-
-#~ msgid "ENABLE ALWAYS ON TOP (N/A)"
-#~ msgstr "永远在最上层 (N/A)"
-
-#~ msgid ""
-#~ "Mikmod Plugin\n"
-#~ "http://www.multimania.com/miodrag/mikmod/\n"
-#~ "Ported to xmms by J. Nick Koston"
-#~ msgstr ""
-#~ "Mikmod 插件\n"
-#~ "http://www.multimania.com/miodrag/mikmod/\n"
-#~ "由 J. Nick Koston 移植到 XMMS"
-
-#, fuzzy
-#~ msgid "Downsample:"
-#~ msgstr "降低取样："
-
-#~ msgid "Look for hidden patterns in modules "
-#~ msgstr "寻找模块中隐藏的样式"
-
-#~ msgid "Use surround mixing"
-#~ msgstr "使用环绕声混音效果"
-
-#~ msgid "Force volume fade at the end of the module"
-#~ msgstr "强迫音量在模块结束时淡出"
-
-#~ msgid "Use interpolation"
-#~ msgstr "使用插值法"
-
-#~ msgid "Default panning separation"
-#~ msgstr "默认平移间隔"
-
-#~ msgid "%s - BMP"
-#~ msgstr "%s·-·BMP"
-
-#, fuzzy
-#~ msgid "XMMS:"
-#~ msgstr "XMMS"
-
-#, fuzzy
-#~ msgid "XMMS plugin"
-#~ msgstr "XMMS IRman 插件："
-
-#~ msgid "bmp: %s"
-#~ msgstr "bmp: %s"
-
-#~ msgid "/Play Directory"
-#~ msgstr "/播放目录"
-
-#~ msgid "Add Folders"
-#~ msgstr "添加文件"
-
-#~ msgid "/Add Folders..."
-#~ msgstr "/添加文件夹..."
-
-#~ msgid "3DNow! optimized decoder"
-#~ msgstr "3DNow! 优化的解码器"
-
-#~ msgid "MMX optimized decoder"
-#~ msgstr "MMX 优化的解码器"
-
-#~ msgid "FPU decoder"
-#~ msgstr "FPU 解码器"
-
-#~ msgid ""
-#~ "mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
-#~ "Plugin by The XMMS team"
-#~ msgstr ""
-#~ "mpg123 解码器由 Michael Hipp <mh@mpg123.de> 制作\n"
-#~ "插件由 XMMS 小组提供"
-
-#~ msgid "Advanced settings:"
-#~ msgstr "高级设置："
-
-#~ msgid "Thread buffer time (ms):"
-#~ msgstr "缓冲区大小 (ms)："
-
-#~ msgid "Multi-thread mode"
-#~ msgstr "多线程模式"
-
-#~ msgid "Mmap mode"
-#~ msgstr "Mmap 模式"
-
-#~ msgid "With Additional Help:"
-#~ msgstr "提供帮助者："
-
-#~ msgid "Homepage and Graphics:"
-#~ msgstr "主页和图形："
-
-#~ msgid "About BMP"
-#~ msgstr "关于 BMP"
-
-#~ msgid "BMP Equalizer"
-#~ msgstr "BMP 均衡器"
-
-#~ msgid "Beep Media Player"
-#~ msgstr "Beep 媒体播放机"
-
-#~ msgid "/About BMP"
-#~ msgstr "/关于 BMP"
-
-#~ msgid "Add Internet Address"
-#~ msgstr "添加网址"
-
-#~ msgid "BMP Playlist Editor"
-#~ msgstr "BMP 播放列表"
-
-#~ msgid "/By extension"
-#~ msgstr "/由文件扩展名"
-
-#~ msgid "Add Folders - BMP"
-#~ msgstr "添加文件夹"
-
-#~ msgid "Add URL"
-#~ msgstr "添加 URL"
-
-#~ msgid "/Sort by Title"
-#~ msgstr "/按曲名排序"
-
-#~ msgid "/Sort by Filename"
-#~ msgstr "/按文件名排序"
-
-#~ msgid "/Sort by Date"
-#~ msgstr "/按日期排序"
-
-#~ msgid "/5 seconds REW"
-#~ msgstr "/向后 5 秒"
-
-#~ msgid "/5 seconds FFWD"
-#~ msgstr "/向前 5 秒"
-
-#~ msgid "/Add"
-#~ msgstr "/添加"
-
-#~ msgid "/_Options"
-#~ msgstr "/选项(_O)"
-
-#~ msgid "/Playlist"
-#~ msgstr "/播放列表"
-
-#~ msgid "/Close Window"
-#~ msgstr "/关闭窗口"
-
-#~ msgid "Failed to delete \"%s\": %s."
-#~ msgstr "删除失败“%s”：%s。"
-
-#~ msgid "%d of %d files successfully deleted."
-#~ msgstr "成功删除 %d 个文件，总共 %d 个"
-
-#~ msgid "XMMS: Files deleted"
-#~ msgstr "XMMS：文件已删除"
-
-#~ msgid "Really delete %d files?"
-#~ msgstr "确定要删除 %d 个文件吗？"
-
-#~ msgid "Really delete: \"%s\"?"
-#~ msgstr "确认删除：“%s”？"
-
-#~ msgid "Auto-load preset"
-#~ msgstr "自动读取预设值"
-
-#~ msgid "Zero"
-#~ msgstr "归零"
-
-#~ msgid "From WinAMP EQF file"
-#~ msgstr "从 WinAMP EQF 文件"
-
-#~ msgid "Import"
-#~ msgstr "导入"
-
-#~ msgid "WinAMP presets"
-#~ msgstr "WinAMP 预设"
-
-#~ msgid "To file"
-#~ msgstr "到文件"
-
-#~ msgid "To WinAMP EQF file"
-#~ msgstr "到 WinAMP EQF 文件"
-
-#~ msgid "Configure Equalizer"
-#~ msgstr "配置均衡器"
-
-#~ msgid "/Visualization plugins"
-#~ msgstr "/可视化效果插件"
-
-#~ msgid "/Show Graphical EQ"
-#~ msgstr "/显示图形均衡器"
-
-#~ msgid "/Reload skin"
-#~ msgstr "/重新加载皮肤"
-
-#~ msgid "/Show on all desktops"
-#~ msgstr "/在所有桌面上显示"
-
-#~ msgid "/WindowShade Mode"
-#~ msgstr "/窗口阴影模式"
-
-#~ msgid "/Playlist WindowShade Mode"
-#~ msgstr "/播放列表窗口阴影模式"
-
-#~ msgid "/Equalizer WindowShade Mode"
-#~ msgstr "/均衡器窗口阴影模式"
-
-#~ msgid "Jump to:"
-#~ msgstr "跳到："
-
-#~ msgid "Jump"
-#~ msgstr "跳跃"
-
-#~ msgid "Smooth title scrolling in main window"
-#~ msgstr "让标题平滑卷动"
-
-#~ msgid "Unplayable files - BMP"
-#~ msgstr "无法播放的文件"
-
-#~ msgid ""
-#~ "The following files could not be played. They are either not accessible "
-#~ "or require a dedicated input plugin."
-#~ msgstr "无法播放以下的文件。 无法访问或者没有适合的输入插件"
-
-#~ msgid "Directory"
-#~ msgstr "目录："
-
-#~ msgid "Directory browser"
-#~ msgstr "目录浏览器"
-
-#~ msgid "/Add/Directories..."
-#~ msgstr "/添加/目录..."
-
-#~ msgid "Add Directories... "
-#~ msgstr "添加目录"
-
-#~ msgid "Look into sub_folders"
-#~ msgstr "查找子目录"
-
-#~ msgid "<b>Other options</b>"
-#~ msgstr "<b>其他</b>"
-
-#~ msgid ""
-#~ "Update the playlist according to the settings. This doesn't happen "
-#~ "automatically because it can take a very long time when having a lot of "
-#~ "files in the list."
-#~ msgstr "根据设置更新播放列表。"
-
-#~ msgid "Update playlist"
-#~ msgstr "更新播放列表"
-
-#~ msgid "BMP Equalizer Preferences"
-#~ msgstr "BMP 均衡器首选页"
-
-#~ msgid ""
-#~ "If \"Auto\" is enabled on the equalizer, xmms will try to load equalizer "
-#~ "presets like this:\n"
-#~ "1: Look for a preset file in the directory of the file we are about to "
-#~ "play.\n"
-#~ "2: Look for a directory preset file in the same directory.\n"
-#~ "3: Look for a preset saved with the \"auto-load\" feature\n"
-#~ "4: Finally, try to load the \"default\" preset"
-#~ msgstr ""
-#~ "如果设定“自动”均衡器, BMP 将会按照下列顺序加载均衡器：\n"
-#~ "1: 在我们要播放的文件所在目录中寻找一个预设文件。\n"
-#~ "2: 在同一目录下寻找一个目录预设文件。\n"
-#~ "3: 寻找利用“自动读取”保存的预设文件。\n"
-#~ "4: 最后尝试“默认”预设值"
-
-#~ msgid "/Jump to Track"
-#~ msgstr "/跳到音轨"
-
-#~ msgid "/Save as..."
-#~ msgstr "/另存为..."
-
-#~ msgid "A_dd all"
-#~ msgstr "添加全部(_d)"
-
-#~ msgid "_Skin list:"
-#~ msgstr "皮肤(_S)："
-
-#~ msgid "<b>_Main window font:</b>"
-#~ msgstr "<b>主窗口字体(_M)：</b>"
-
-#~ msgid "Mixer device"
-#~ msgstr "混音设备："
-
-#, fuzzy
-#~ msgid "Settings"
-#~ msgstr "混音器设定："
-
-#, fuzzy
-#~ msgid "Blur Scope"
-#~ msgstr "柔化范围"
-
-#~ msgid "Choose a preferences category"
-#~ msgstr "请选择首选项目"
-
-#, fuzzy
-#~ msgid "BMP: Add Directories... "
-#~ msgstr "/添加目录"
-
-#~ msgid "Import equalizer presets"
-#~ msgstr "导入均衡器预设值"
-
-#~ msgid "Version: %s"
-#~ msgstr "版本： %s"
-
-#~ msgid "/Skin Browser"
-#~ msgstr "/皮肤浏览器"
-
-#~ msgid "Plugin Name"
-#~ msgstr "插件名"
-
-#~ msgid "Effects Plugins"
-#~ msgstr "效果插件"
-
-#~ msgid "General Plugins"
-#~ msgstr "通用插件"
-
-#, fuzzy
-#~ msgid "Read file tag on"
-#~ msgstr "读取信息的时间"
-
-#~ msgid "Demand"
-#~ msgstr "按需"
-
-#, fuzzy
-#~ msgid "Read song information as soon as the song is loaded to the playlist"
-#~ msgstr "当歌曲装入播放清单时读取歌曲标题和长度"
-
-#~ msgid "Warn about non-playable files"
-#~ msgstr "警告无法播放的件"
-
-#~ msgid "Sort \"Jump to file\" alphabetically"
-#~ msgstr "用字母顺序排列“跳到文件”"
-
-#~ msgid "Allow multiple instances"
-#~ msgstr "允许多个程序执行"
-
-#~ msgid "Always show clutterbar"
-#~ msgstr "永远显示 clutterbar"
-
-#, fuzzy
-#~ msgid ""
-#~ "The \"clutterbar\" is the row of buttons at the left side of the main "
-#~ "window"
-#~ msgstr "“clutterbar”　就是主窗口左侧的一行按钮"
-
-#~ msgid "Save window positions"
-#~ msgstr "保存窗口位置"
-
-#~ msgid "Dim titlebar when inactive"
-#~ msgstr "当程序不执行时隐暗标题列"
-
-#~ msgid "Equalizer doublesize linked"
-#~ msgstr "双倍大小的均衡器已连接"
-
-#~ msgid "Use '\\' as a directory delimiter"
-#~ msgstr "用“\\”作为目录分隔符号"
-
-#~ msgid "pixels"
-#~ msgstr "像素"
-
-#, fuzzy
-#~ msgid "%"
-#~ msgstr "%d"
-
-#~ msgid "Audio I/O Plugins"
-#~ msgstr "音频输入输出插件"
-
-#~ msgid "Fonts"
-#~ msgstr "字体"
-
-#~ msgid "BMP Skin Browser"
-#~ msgstr "BMP 皮肤浏览器"
-
-#~ msgid "Select random skin on play"
-#~ msgstr "在播放时随机选择皮肤"
-
-#~ msgid "/_Enqueue"
-#~ msgstr "/加入列表(_E)"
-
-#, fuzzy
-#~ msgid "/_Collapse"
-#~ msgstr "/关闭"
-
-#~ msgid "/Remove"
-#~ msgstr "/删除"
-
-#, fuzzy
-#~ msgid "/Rename"
-#~ msgstr "/删除"
-
-#~ msgid "/New Playlist"
-#~ msgstr "/新建列表"
-
-#~ msgid "Searching folders..."
-#~ msgstr "正在搜索..."
-
-#~ msgid "bmp: Jump to time"
-#~ msgstr "bmp: 跳到特定时间"
-
-#~ msgid "Cannot play CD"
-#~ msgstr "无法播放 CD"
-
-#~ msgid ""
-#~ "The inserted CD is not an Audio CD.\n"
-#~ "Unable to start playback."
-#~ msgstr ""
-#~ "插入的CD并非音频CD。\n"
-#~ "无法播放。"
-
-#~ msgid "bmp: Add Files..."
-#~ msgstr "bmp: 添加文件..."
-
-#~ msgid "bmp: Configure Equalizer"
-#~ msgstr "bmp: 配置均衡器"
-
-#~ msgid "bmp"
-#~ msgstr "bmp"
-
-#~ msgid "Unable to write playlist!"
-#~ msgstr "无法写入播放清单！"
-
-#~ msgid "bmp: Error: File exists!"
-#~ msgstr "bmp: 错误： 文件已存在！"
-
-#~ msgid "Overwrite"
-#~ msgstr "覆盖"
-
-#~ msgid "Unknown filetype for %s"
-#~ msgstr "%s 的文件类型未知"
-
-#~ msgid "Determine file type:"
-#~ msgstr "确定文件类型："
-
-#~ msgid "bmp: Error: Delete files?"
-#~ msgstr "bmp: 错误： 删除文件？"
-
-#~ msgid ""
-#~ "Realtime priority is a way for BMP to get a higher\n"
-#~ "priority for CPU time.  This might give less \"skips\".\n"
-#~ "\n"
-#~ "This requires that BMP is run with root privileges and\n"
-#~ "may, although it's very unusal, lock up your computer.\n"
-#~ "Running BMP with root privilegies might also have\n"
-#~ "security implications.\n"
-#~ "\n"
-#~ "Using this feature is not encouraged.\n"
-#~ "To activate this you need to restart BMP."
-#~ msgstr ""
-#~ "实时优先级可以保证 BMP 抢到足够的 CPU 资源, \n"
-#~ "这样调音或爆音的情况就会比较少出现。\n"
-#~ "\n"
-#~ "这要求 BMP 以 root 的权限运行。然而在某些不常\n"
-#~ "见的情况下，这个权限有可能会锁住您的电脑。以\n"
-#~ "root 权限运行 BMP 还可能导致其它的安全问题。\n"
-#~ "\n"
-#~ "不推荐使用此特性。\n"
-#~ "要激活此选项，您需要重新启动 BMP。"
-
-#~ msgid "Transparent playlist window"
-#~ msgstr "透明的播放列表窗口"
-
-#~ msgid "Use realtime priority when available"
-#~ msgstr "可能时使用实时权限"
-
-#~ msgid "Run BMP with higher priority (not recomended)"
-#~ msgstr "以较高优先级运行 BMP (不推荐)"
-
-#~ msgid "Snap windows at"
-#~ msgstr "卷起窗口的位置"
-
-#~ msgid "bmp: Preferences and Settings"
-#~ msgstr "bmp: 首选页"
-
-#~ msgid "bmp: Add Url..."
-#~ msgstr "bmp: 添加 URL..."
-
-#~ msgid "Bitrate:"
-#~ msgstr "位速率："
-
-#~ msgid "Echo Plugin %s"
-#~ msgstr "回音插件 %s"
-
-#~ msgid ""
-#~ "Echo Plugin\n"
-#~ "By Johan Levin 1999.\n"
-#~ "\n"
-#~ "Surround echo by Carl van Schaik 1999"
-#~ msgstr ""
-#~ "回音插件\n"
-#~ "\n"
-#~ "Johan Levin 1999 制作\n"
-#~ "环绕声由 Carl van Schaik 1999 制作"
-
-#~ msgid "Configure Echo"
-#~ msgstr "设定回音"
-
-#~ msgid "Delay: (ms)"
-#~ msgstr "延迟：(ms)"
-
-#~ msgid "Feedback: (%)"
-#~ msgstr "反馈：(%)"
-
-#~ msgid ""
-#~ "XMMS Voice Removal Plugin\n"
-#~ "\n"
-#~ "A simple voice removal plugin by Anders Carlsson <andersca@gnu.org>"
-#~ msgstr ""
-#~ "XMMS 人声消除插件\n"
-#~ "\n"
-#~ "一个简单的人声消除插件，由 Anders Carlsson <andersca@gnu.org> 制作"
-
-#~ msgid "Voice removal plugin %s"
-#~ msgstr "消除人声插件 %s"
-
-#~ msgid ""
-#~ "Created by Charles Sielski <stray@teklabs.net>\n"
-#~ "Control XMMS with your TV / VCR / Stereo remote \n"
-#~ "IRman page - http://www.evation.com/irman/"
-#~ msgstr ""
-#~ "Charles Sielski <stray@teklabs.net> 制作\n"
-#~ "利用你的 TV / VCR / 立体声遥控器操作 XMMS\n"
-#~ "IRman 首页 - http://www.evation.com/irman/"
-
-#~ msgid "Prev"
-#~ msgstr "上一曲"
-
-#~ msgid "Vol +"
-#~ msgstr "音量增加"
-
-#~ msgid "Seek -5s"
-#~ msgstr "快退 5 秒"
-
-#~ msgid "Seek +5s"
-#~ msgstr "快进 5 秒"
-
-#~ msgid "Vol -"
-#~ msgstr "音量降低"
-
-#~ msgid "Shuffle"
-#~ msgstr "乱序播放"
-
-#~ msgid "+100"
-#~ msgstr "加 100"
-
-#~ msgid "0"
-#~ msgstr "0"
-
-#~ msgid "1"
-#~ msgstr "1"
-
-#~ msgid "2"
-#~ msgstr "2"
-
-#~ msgid "3"
-#~ msgstr "3"
-
-#~ msgid "4"
-#~ msgstr "4"
-
-#~ msgid "5"
-#~ msgstr "5"
-
-#~ msgid "6"
-#~ msgstr "6"
-
-#~ msgid "7"
-#~ msgstr "7"
-
-#~ msgid "8"
-#~ msgstr "8"
-
-#~ msgid "9"
-#~ msgstr "9"
-
-#~ msgid "`%s' Button Setup"
-#~ msgstr "“%s”按钮设置"
-
-#~ msgid "Enter code or use remote"
-#~ msgstr "键入数字或使用遥控器"
-
-#~ msgid "XMMS IRman Configuration"
-#~ msgstr "XMMS 遥控器配置"
-
-#~ msgid "Device: "
-#~ msgstr "设备："
-
-#~ msgid "IR code length: "
-#~ msgstr "红外码长度："
-
-#~ msgid "Controls:"
-#~ msgstr "控制："
-
-#~ msgid "IRman Control %s"
-#~ msgstr "IRman 红外控制 %s"
-
-#~ msgid "unable to open port `%s' (%s)\n"
-#~ msgstr "无法打开端口“%s”(%s)\n"
-
-#~ msgid "About Joystick Driver"
-#~ msgstr "关于摇杆驱动程序"
-
-#~ msgid ""
-#~ "Joystick Control Plugin\n"
-#~ "\n"
-#~ "Created by Tim Ferguson <timf@dgs.monash.edu.au>.\n"
-#~ "http://www.dgs.monash.edu.au/~timf/\n"
-#~ "\n"
-#~ "5+ button support by Justin Wake <justin@globalsoft.com.au>\n"
-#~ "\n"
-#~ "Control XMMS with one or two joysticks.\n"
-#~ msgstr ""
-#~ "摇杆控制插件\n"
-#~ "\n"
-#~ "由 Tim Ferguson <timf@dgs.monash.edu.au> 制作\n"
-#~ " http://www.dgs.monash.edu.au/~timf/\n"
-#~ "\n"
-#~ "5+ 按键支持由 Justin Wake <justin@globalsoft.com.au> 制作\n"
-#~ "\n"
-#~ "使用一个或两个摇杆控制 XMMS。\n"
-
-#~ msgid "Play/Pause"
-#~ msgstr "播放/暂停"
-
-#~ msgid "Next Track"
-#~ msgstr "下一音轨"
-
-#~ msgid "Prev Track"
-#~ msgstr "前一音轨"
-
-#~ msgid "Fwd 5 tracks"
-#~ msgstr "前进 5 条音轨"
-
-#~ msgid "Back 5 tracks"
-#~ msgstr "后退 5 条音轨"
-
-#~ msgid "Volume Down"
-#~ msgstr "音量减小"
-
-#~ msgid "Forward 5s"
-#~ msgstr "快进 5 秒"
-
-#~ msgid "Rewind 5s"
-#~ msgstr "快退 5 秒"
-
-#~ msgid "Alternate"
-#~ msgstr "轮流"
-
-#~ msgid "XMMS Joystick Configuration"
-#~ msgstr "XMMS 摇杆设定"
-
-#~ msgid "Joystick 1:"
-#~ msgstr "摇杆 1："
-
-#~ msgid "Joystick 2:"
-#~ msgstr "摇杆 2："
-
-#~ msgid "Sensitivity (10-32767):"
-#~ msgstr "灵敏度（10-32767）："
-
-#~ msgid "Directionals:"
-#~ msgstr "方向："
-
-#~ msgid "Directionals (alternate):"
-#~ msgstr "方向（轮流）："
-
-#~ msgid "Button %d:"
-#~ msgstr "按钮 %d："
-
-#~ msgid "Joystick Control %s"
-#~ msgstr "摇杆控制 %s"
-
-#~ msgid "Joystick Control"
-#~ msgstr "摇杆控制"
-
-#~ msgid ""
-#~ "\n"
-#~ "Joystick Control: error reading"
-#~ msgstr ""
-#~ "\n"
-#~ "摇杆控制：读时出错"
-
-#~ msgid "Song change"
-#~ msgstr "歌曲变换"
-
-#~ msgid ""
-#~ "Shell-command to run when xmms changes song.  It can optionally include "
-#~ "the string %%s which will be replaced by the new song title."
-#~ msgstr ""
-#~ "在 xmms 改变歌曲时执行的外壳命令。它可以包含字符串 %%s，新歌曲的标题会代替"
-#~ "它。"
-
-#~ msgid "CD Audio Player %s"
-#~ msgstr "CD 播放器 %s"
-
-#, fuzzy
-#~ msgid "Latitude"
-#~ msgstr "Latin 拉丁乐"
-
-#~ msgid "CDDB"
-#~ msgstr "CDDB"
-
-#~ msgid "CDDB servers"
-#~ msgstr "CDDB 服务器"
-
-#~ msgid "Remove ID3"
-#~ msgstr "移除 ID3 标签"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Error protection: %s\n"
-#~ "Copyright: %s\n"
-#~ "Original: %s\n"
-#~ "Emphasis: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "错误保护：%s\n"
-#~ "版权所有：%s\n"
-#~ "原创：%s\n"
-#~ "重点：%s"
-
-#~ msgid ""
-#~ "%d frames\n"
-#~ "Filesize: %lu B"
-#~ msgstr ""
-#~ "%d 帧\n"
-#~ "文件大小：%lu B"
-
-#~ msgid "About MPEG Layer 1/2/3 plugin"
-#~ msgstr "关于 MPEG Layer 1/2/3 播放器"
-
-#~ msgid "MPEG Layer 1/2/3 Player %s"
-#~ msgstr "MPEG Layer 1/2/3 播放器 %s"
-
-#~ msgid "Nominal bitrate: %d kbps"
-#~ msgstr "正常位速率：%d kbps"
-
-#~ msgid "OSS Driver %s"
-#~ msgstr "开放音效系统驱动程式 %s"
-
-#~ msgid "Solaris audio plugin %s"
-#~ msgstr "Solaris 音效插件 %s"
-
-#~ msgid "About Solaris Audio Driver"
-#~ msgstr "关于 Solaris Audio 驱动"
-
-#~ msgid ""
-#~ "XMMS Solaris Audio Driver\n"
-#~ "\n"
-#~ "Written by John Riddoch (jr@scms.rgu.ac.uk)\n"
-#~ "with help from many contributors."
-#~ msgstr ""
-#~ "XMMS Solaris 音频驱动程序\n"
-#~ "\n"
-#~ "作者 John Riddoch (jr@scms.rgu.ac.uk)\n"
-#~ "并得到众多贡献者的帮助。"
-
-#~ msgid "Default - %s"
-#~ msgstr "默认值 - %s"
-
-#~ msgid "Configure Solaris driver"
-#~ msgstr "配置 Solaris 驱动"
-
-#~ msgid "Always use AUDIODEV environment variable"
-#~ msgstr "请一直使用 AUDIODEV 环境变量"
-
-#~ msgid "Headphones"
-#~ msgstr "耳机"
-
-#~ msgid "Internal speaker"
-#~ msgstr "内置喇叭"
-
-#~ msgid "Color Entry"
-#~ msgstr "彩色条目"
-
-#~ msgid "OpenGL Spectrum configuration"
-#~ msgstr "OpenGL 频谱配置"
-
-#~ msgid "OpenGL Spectrum analyzer"
-#~ msgstr "OpenGL 光谱分析器"
-
-#~ msgid "OpenGL Spectrum analyzer %s"
-#~ msgstr "OpenGL 光谱分析器 %s"
-
-#~ msgid "Simple spectrum analyzer %s"
-#~ msgstr "简单光谱分析器 %s"
-
-#~ msgid "Spectrum analyzer"
-#~ msgstr "光谱分析器"
-
-#~ msgid ""
-#~ "Usage: %s [options]\n"
-#~ "\n"
-#~ "Options:\n"
-#~ "--------\n"
-#~ "\n"
-#~ "-h, --help\t\tDisplay this text and exit.\n"
-#~ "-g, --geometry\t\tSet the geometry (for example +20+20)\n"
-#~ "-s, --session\t\tSet the xmms session to use (Default: 0)\n"
-#~ "-c, --command\t\tCommand to launch xmms (Default: xmms)\n"
-#~ "-i, --icon\t\tSet the icon to use when xmms is not running\n"
-#~ "-n, --single\t\tOnly a single click is needed to start xmms\n"
-#~ "-t, --title\t\tDisplay song title when mouse is in window\n"
-#~ "-v, --version\t\tDisplay version information and exit\n"
-#~ "\n"
-#~ msgstr ""
-#~ "用法：%s [选项]\n"
-#~ "\n"
-#~ "选项：\n"
-#~ "--------\n"
-#~ "\n"
-#~ "-h, --help\t\t显示这些文字并离开\n"
-#~ "-g, --geometry\t\t设定窗口位置和大小（例如：+20+20）\n"
-#~ "-s, --session\t\t设定使用哪个 XMMS 会话（默认为：0）\n"
-#~ "-c, --command\t\t用于起动 XMMS 的指令（默认为：xmms）\n"
-#~ "-i, --icon\t\t设定当 XMMS 不在执行中时显示的图标\n"
-#~ "-n, --single\t\t只要按一下就可以启动 XMMS\n"
-#~ "-t, --title\t\t当鼠标在窗口内时显示歌曲的标题\n"
-#~ "-v, --version\t\t显示版本信息并退出\n"
-#~ "\n"
-
-#~ msgid "Main Programming:"
-#~ msgstr "编程主力："
-
-#~ msgid "Peter Alm"
-#~ msgstr "Peter Alm"
-
-#~ msgid "Haavard Kvaalen"
-#~ msgstr "Haavard Kvaalen"
-
-#~ msgid "Derrik Pates"
-#~ msgstr "Derrik Pates"
-
-#~ msgid "Sean Atkinson"
-#~ msgstr "Sean Atkinson"
-
-#~ msgid "Jorn Baayen"
-#~ msgstr "Jorn Baayen"
-
-#~ msgid "James M. Cape"
-#~ msgstr "James M. Cape"
-
-#~ msgid "Anders Carlsson (effect plugins)"
-#~ msgstr "Anders Carlsson（若干效果插件）"
-
-#~ msgid "Chun-Chung Chen (xfont patch)"
-#~ msgstr "Chun-Chung Chen（xfont 补丁）"
-
-#~ msgid "Tim Ferguson (joystick plugin)"
-#~ msgstr "Tim Ferguson（游戏杆插件）"
-
-#~ msgid "Ben Gertzfield"
-#~ msgstr "Ben Gertzfield"
-
-#~ msgid "Vesa Halttunen"
-#~ msgstr "Vesa Halttunen"
-
-#~ msgid "Logan Hanks"
-#~ msgstr "Logan Hanks"
-
-#~ msgid "Eric L. Hernes (FreeBSD patches)"
-#~ msgstr "Eric L. Hernes（FreeBSD 补丁）"
-
-#~ msgid "Ville Herva"
-#~ msgstr "Ville Herva"
-
-#~ msgid "higway (MMX)"
-#~ msgstr "higway (MMX)"
-
-#~ msgid "Michael Hipp and others (MPG123 engine)"
-#~ msgstr "Michael Hipp 等人（MPG123 引擎）"
-
-#~ msgid "Olle Hallnas (compiling fixes)"
-#~ msgstr "Olle Hallnas (编译修正)"
-
-#~ msgid "Osamu Kayasono (3DNow!/MMX)"
-#~ msgstr "Osamu Kayasono (3DNow!/MMX)"
-
-#~ msgid "Lyle B Kempler"
-#~ msgstr "Lyle B Kempler"
-
-#~ msgid "J. Nick Koston (MikMod plugin)"
-#~ msgstr "J. Nick Koston（MikMod 插件）"
-
-#~ msgid "Aaron Lehmann"
-#~ msgstr "Aaron Lehmann"
-
-#~ msgid "Johan Levin (echo + stereo plugin)"
-#~ msgstr "Johan Levin（回音 + 立体声插件）"
-
-#~ msgid "Eric Lindvall"
-#~ msgstr "Eric Lindvall"
-
-#~ msgid "Colin Marquardt"
-#~ msgstr "Colin Marquardt"
-
-#~ msgid "Willem Monsuwe"
-#~ msgstr "Willem Monsuwe"
-
-#~ msgid "John Riddoch (Solaris plugin)"
-#~ msgstr "John Riddoch（Solaris 补丁）"
-
-#~ msgid "Josip Rodin"
-#~ msgstr "Josip Rodin"
-
-#~ msgid "Pablo Saratxaga (i18n)"
-#~ msgstr "Pablo Saratxaga（国际化）"
-
-#~ msgid "Carl van Schaik (pro logic plugin)"
-#~ msgstr "Carl van Schaik（pro logic 插件）"
-
-#~ msgid "Joerg Schuler"
-#~ msgstr "Joerg Schuler"
-
-#~ msgid "Charles Sielski (irman plugin)"
-#~ msgstr "Charles Sielski（irman 插件）"
-
-#~ msgid "Espen Skoglund"
-#~ msgstr "Espen Skoglund"
-
-#~ msgid "Matthieu Sozeau (ALSA plugin)"
-#~ msgstr "Matthieu Sozeau（ALSA 插件）"
-
-#~ msgid "Kimura Takuhiro (3DNow!)"
-#~ msgstr "Kimura Takuhiro (3DNow!)"
-
-#~ msgid "Zinx Verituse"
-#~ msgstr "Zinx Verituse"
-
-#~ msgid "Ryan Weaver (RPMs among other things)"
-#~ msgstr "Ryan Weaver（RPM 及其它内容）"
-
-#~ msgid "Chris Wilson"
-#~ msgstr "Chris Wilson"
-
-#~ msgid "Dave Yearke"
-#~ msgstr "Dave Yearke"
-
-#~ msgid "Stephan K. Zitz"
-#~ msgstr "Stephan K. Zitz"
-
-#~ msgid "Leonard \"Blayde\" Tan"
-#~ msgstr "Leonard \"Blayde\" Tan"
-
-#~ msgid "Robin Sylvestre (Equalizer and Playlist)"
-#~ msgstr "Robin Sylvestre（均衡器和播放清单）"
-
-#, fuzzy
-#~ msgid "Thomas Nilsson (New titles and cleanups)"
-#~ msgstr "Thomas Nilsson（新标题和整理）"
-
-#~ msgid "Thomas Nilsson"
-#~ msgstr "Thomas Nilsson"
-
-#~ msgid "Support and Docs:"
-#~ msgstr "支持和文档："
-
-#~ msgid "Olle Hallnas"
-#~ msgstr "Olle Hallnas"
-
-#~ msgid "Afrikaans:"
-#~ msgstr "南非荷兰语："
-
-#~ msgid "Albanian:"
-#~ msgstr "阿尔巴尼亚语"
-
-#, fuzzy
-#~ msgid "Naim Daka"
-#~ msgstr "Nazmi Savga"
-
-#~ msgid "Azerbaijani:"
-#~ msgstr "阿塞拜疆语："
-
-#~ msgid "Vasif Ismailoglu"
-#~ msgstr "Vasif Ismailoglu"
-
-#~ msgid "Basque:"
-#~ msgstr "巴斯克语："
-
-#~ msgid "Juan Carlos Castro y Castro"
-#~ msgstr "Juan Carlos Castro y Castro"
-
-#~ msgid "Bulgarian:"
-#~ msgstr "保加利亚语："
-
-#~ msgid "Yovko D. Lambrev"
-#~ msgstr "Yovko D. Lambrev"
-
-#~ msgid "Catalan:"
-#~ msgstr "加泰罗尼亚语："
-
-#~ msgid "Quico Llach"
-#~ msgstr "Quico Llach"
-
-#~ msgid "Jordi Mallach"
-#~ msgstr "Jordi Mallach"
-
-#~ msgid "Chun-Chung Chen"
-#~ msgstr "Chun-Chung Chen"
-
-#~ msgid "Jouston Huang"
-#~ msgstr "Jouston Huang"
-
-#~ msgid "Chih-Wei Huang"
-#~ msgstr "Chih-Wei Huang"
-
-#~ msgid "Danny Zeng"
-#~ msgstr ""
-#~ "Danny Zeng\n"
-#~ "Shiyu Tang"
-
-#~ msgid "Croatian:"
-#~ msgstr "克罗地亚语："
-
-#~ msgid "Vlatko Kosturjak"
-#~ msgstr "Vlatko Kosturjak"
-
-#~ msgid "Vladimir Vuksan"
-#~ msgstr "Vladimir Vuksan"
-
-#~ msgid "Radek Vybiral"
-#~ msgstr "Radek Vybiral"
-
-#~ msgid "Nikolaj Berg Amondsen"
-#~ msgstr "Nikolaj Berg Amondsen"
-
-#~ msgid "Troels Liebe Bentsen"
-#~ msgstr "Troels Liebe Bentsen"
-
-#~ msgid "Kenneth Christiansen"
-#~ msgstr "Kenneth Christiansen"
-
-#~ msgid "Keld Simonsen"
-#~ msgstr "Keld Simonsen"
-
-#~ msgid "Wilmer van der Gaast"
-#~ msgstr "Wilmer van der Gaast"
-
-#~ msgid "Tom Laermans"
-#~ msgstr "Tom Laermans"
-
-#~ msgid "Esperanto:"
-#~ msgstr "世界语："
-
-#~ msgid "D. Dale Gulledge"
-#~ msgstr "D. Dale Gulledge"
-
-#~ msgid "Estonian:"
-#~ msgstr "爱沙尼亚语"
-
-#~ msgid "Arnaud Boissinot"
-#~ msgstr "Arnaud Boissinot"
-
-#~ msgid "Eric Fernandez-Bellot"
-#~ msgstr "Eric Fernandez-Bellot"
-
-#~ msgid "Galician:"
-#~ msgstr "加利西亚语："
-
-#~ msgid "Stefan Siegel"
-#~ msgstr "Stefan Siegel"
-
-#~ msgid "Kyritsis Athanasios"
-#~ msgstr "Kyritsis Athanasios"
-
-#~ msgid "Arpad Biro"
-#~ msgstr "Arpad Biro"
-
-#~ msgid "Budi Rachmanto"
-#~ msgstr "Budi Rachmanto"
-
-#~ msgid "Irish:"
-#~ msgstr "爱尔兰语："
-
-#~ msgid "Alastair McKinstry"
-#~ msgstr "Alastair McKinstry"
-
-#~ msgid "Paolo Lorenzin"
-#~ msgstr "Paolo Lorenzin"
-
-#~ msgid "Hiroshi Takekawa"
-#~ msgstr "Hiroshi Takekawa"
-
-#~ msgid "Jaegeum Choe"
-#~ msgstr "Jaegeum Choe"
-
-#~ msgid "Sang-Jin Hwang"
-#~ msgstr "Sang-Jin Hwang"
-
-#~ msgid "Byeong-Chan Kim"
-#~ msgstr "Byeong-Chan Kim"
-
-#~ msgid "Man-Yong Lee"
-#~ msgstr "Man-Yong Lee"
-
-#~ msgid "Gediminas Paulauskas"
-#~ msgstr "Gediminas Paulauskas"
-
-#~ msgid "Latvian:"
-#~ msgstr "拉脱维亚语："
-
-#~ msgid "Vitauts Stochka"
-#~ msgstr "Vitauts Stochka"
-
-#~ msgid "Malay:"
-#~ msgstr "马来语"
-
-#~ msgid "Norwegian:"
-#~ msgstr "挪威语："
-
-#~ msgid "Terje Bjerkelia"
-#~ msgstr "Terje Bjerkelia"
-
-#~ msgid "Roy-Magne Mo"
-#~ msgstr "Roy-Magne Mo"
-
-#~ msgid "Grzegorz Kowal"
-#~ msgstr "Grzegorz Kowal"
-
-#~ msgid "Portuguese:"
-#~ msgstr "葡萄牙语："
-
-#~ msgid "Jorge Costa"
-#~ msgstr "Jorge Costa"
-
-#~ msgid "Florin Grad"
-#~ msgstr "Florin Grad"
-
-#~ msgid "Valek Filippov"
-#~ msgstr "Valek Filippov"
-
-#~ msgid "Alexandr P. Kovalenko"
-#~ msgstr "Alexandr P. Kovalenko"
-
-#~ msgid "Aleksey Smirnov"
-#~ msgstr "Aleksey Smirnov"
-
-#~ msgid "Serbian:"
-#~ msgstr "塞尔维亚语："
-
-#~ msgid "Tomislav Jankovic"
-#~ msgstr "Tomislav Jankovic"
-
-#~ msgid "Pavol Cvengros"
-#~ msgstr "Pavol Cvengros"
-
-#~ msgid "Tomas Hornocek"
-#~ msgstr "Tomas Hornocek"
-
-#~ msgid "Jan Matis"
-#~ msgstr "Jan Matis"
-
-#~ msgid "Fabian Mandelbaum"
-#~ msgstr "Fabian Mandelbaum"
-
-#~ msgid "Christian Rose"
-#~ msgstr "Christian Rose"
-
-#~ msgid "Fuad Sabanovic"
-#~ msgstr "Fuad Sabanovic"
-
-#~ msgid "Tajik:"
-#~ msgstr "塔吉克语："
-
-#~ msgid "Roger Kovacs"
-#~ msgstr "Roger Kovacs"
-
-#~ msgid "Dilshod Marupov"
-#~ msgstr "Dilshod Marupov"
-
-#~ msgid "Supphachoke Suntiwichaya"
-#~ msgstr "Supphachoke Suntiwichaya"
-
-#~ msgid "Turkish:"
-#~ msgstr "土耳其语："
-
-#~ msgid "Nazmi Savga"
-#~ msgstr "Nazmi Savga"
-
-#~ msgid "Dmytro Koval'ov"
-#~ msgstr "Dmytro Koval'ov"
-
-#~ msgid "Trinh Minh Thanh"
-#~ msgstr "Trinh Minh Thanh"
-
-#~ msgid "Walloon:"
-#~ msgstr "瓦龙语："
-
-#~ msgid "Lucyin Mahin"
-#~ msgstr "Lucyin Mahin"
-
-#~ msgid "Pablo Saratxaga"
-#~ msgstr "Pablo Saratxaga"
-
-#~ msgid "XMMS %s - Cross platform multimedia player"
-#~ msgstr "XMMS %s - 跨平台的多媒体播放器"
-
-#, fuzzy
-#~ msgid "Copyright (C) 1997-2004 4Front Technologies and The XMMS Team"
-#~ msgstr "1997-2004 4Front Technologies 版权所有"
-
-#~ msgid "/Load/-"
-#~ msgstr "/装入/-"
-
-#~ msgid "/Save/-"
-#~ msgstr "/保存/-"
-
-#~ msgid "No output plugin has been selected"
-#~ msgstr "没有选中输出插件"
-
-#~ msgid "/File Info"
-#~ msgstr "/文件信息"
-
-#~ msgid "/Analyzer Mode/-"
-#~ msgstr "/分析器模式/-"
-
-#~ msgid "/View File Info"
-#~ msgstr "/查看文件信息"
-
-#~ msgid "/Playback/Play"
-#~ msgstr "/播放/播放"
-
-#~ msgid "/Playback/Pause"
-#~ msgstr "/播放/暂停"
-
-#~ msgid "/Playback/Stop"
-#~ msgstr "/播放/停止"
-
-#~ msgid "/Playback/Next"
-#~ msgstr "/播放/下一首"
-
-#~ msgid "/Playback/Back 5 Seconds"
-#~ msgstr "/播放/向后 5 秒"
-
-#~ msgid "/Playback/Fwd 5 Seconds"
-#~ msgstr "/播放/向前 5 秒"
-
-#~ msgid "/Playback/Start of List"
-#~ msgstr "/播放/播放清单开始"
-
-#~ msgid "/Playback/10 Tracks Back"
-#~ msgstr "/播放/向后十首歌"
-
-#~ msgid "/Playback/10 Tracks Fwd"
-#~ msgstr "/播放/向前十首歌"
-
-#~ msgid "/Playback/Jump to Time"
-#~ msgstr "/播放/跳到特定时间"
-
-#~ msgid "/Playback/Jump to File"
-#~ msgstr "/播放/跳至文件"
-
-#~ msgid "/Exit"
-#~ msgstr "/离开"
-
-#~ msgid "Select directory to add:"
-#~ msgstr "选择要增加的目录："
-
-#~ msgid ""
-#~ "\n"
-#~ "Segmentation fault\n"
-#~ "\n"
-#~ "You've probably found a bug in XMMS, please visit\n"
-#~ "http://bugs.xmms.org and fill out a bug report.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "段错误\n"
-#~ "\n"
-#~ "你可能发现了一个 XMMS 的程序错误，请来这个网站\n"
-#~ "http://bugs.xmms.org，并填写故障报告。\n"
-
-#~ msgid "X Multimedia System"
-#~ msgstr "X 多媒体系统"
-
-#~ msgid "/Physically Delete Files"
-#~ msgstr "/物理删除文件"
-
-#, fuzzy
-#~ msgid "/Queue - Unqueue"
-#~ msgstr "/播放/列表 - 不列表"
-
-#~ msgid "/Add/Url"
-#~ msgstr "/添加/URL"
-
-#~ msgid "/Remove/Crop"
-#~ msgstr "/删除/截选"
-
-#~ msgid "/Remove/Misc"
-#~ msgstr "/删除/其它"
-
-#~ msgid "/Selection/Select None"
-#~ msgstr "/选择/清除选择"
-
-#~ msgid "/Selection/Invert Selection"
-#~ msgstr "/选择/反转选择"
-
-#~ msgid "/Selection/-"
-#~ msgstr "/选择/-"
-
-#~ msgid "/Selection/Read Extended Info"
-#~ msgstr "/选择/读取扩展信息"
-
-#~ msgid "/Sort"
-#~ msgstr "/排序"
-
-#~ msgid "/Playlist/Load List"
-#~ msgstr "/播放列表/装入列表"
-
-#~ msgid "/Playlist/Save List"
-#~ msgstr "/播放列表/保存列表"
-
-#~ msgid "Enter URL to add:"
-#~ msgstr "键入要添加的 URL："
-
-#~ msgid "XMMS Playlist"
-#~ msgstr "XMMS 播放清单"
-
-#~ msgid "play"
-#~ msgstr "播放"
-
-#~ msgid "Use fontsets (Enable for multi-byte charset support)"
-#~ msgstr "使用字体集（支持中文等多字节语言时需要选中）"
-
-#~ msgid "Main Window"
-#~ msgstr "主窗口"
-
-#~ msgid "Use X font"
-#~ msgstr "使用 X 字体"
-
-#~ msgid "Skin selector"
-#~ msgstr "皮肤选择器"
-
-#~ msgid "Add selected files"
-#~ msgstr "增加选择的文件"
-
-#~ msgid "Add all files in directory"
-#~ msgstr "增加目录中所有的文件"
-
-#~ msgid "xmms applet"
-#~ msgstr "XMMS 小应用"
-
-#~ msgid "Copyright (C) Anders Carlsson 1999), Hiroshi Takekawa 2001"
-#~ msgstr "版权 (C) Anders Carlsson 1999), Hiroshi Takekawa 2001"
-
-#~ msgid ""
-#~ "A simple xmms gnome panel applet by Anders Carlsson.\n"
-#~ "Some code is from wmxmms by Mikael Alm.\n"
-#~ "Tooltip support by Hiroshi Takekawa."
-#~ msgstr ""
-#~ "一个简单的 xmms gnome 面板小程序，作者 Anders Carlsson。\n"
-#~ "有部份的程式码来自 Mikael Alm 的 wmxmms。\n"
-#~ "Hiroshi Takekawa 添加了工具提示支持。"
-
-#~ msgid "About..."
-#~ msgstr "关于..."
-
-#~ msgid ""
-#~ "The SHA-1 hash function failed to properly\n"
-#~ "generate a test key.  As such, Xmms will\n"
-#~ "not be able to contact a CD Index server.\n"
-#~ msgstr ""
-#~ "SHA-1 哈希功能不能正确生成测试密码。\n"
-#~ "结果，Xmms 不能和 CD 索引服务器联络。\n"
-
-#~ msgid "Copyright (C) 1997-2002 The XMMS Team"
-#~ msgstr "版权 (C) 1997-2002 The XMMS Team"
-
-#~ msgid "/Sticky"
-#~ msgstr "/靠边"

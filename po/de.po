@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-11-27 00:47+0100\n"
+"POT-Creation-Date: 2006-12-11 22:04-0600\n"
 "PO-Revision-Date: 2006-08-05 23:11+0100\n"
 "Last-Translator: Michael Hanselmann <audacious@hansmi.ch>\n"
 "Language-Team: german <psic4t@netbands.de>\n"
@@ -11,11 +11,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: audacious/about.c:119 audacious/credits.c:313
+#: audacious/about.c:119 audacious/credits.c:317
 msgid "About Audacious"
 msgstr "Über Audacious"
 
-#: audacious/about.c:168 audacious/credits.c:358
+#: audacious/about.c:168 audacious/credits.c:362
 msgid "Credits"
 msgstr "Credits"
 
@@ -36,131 +36,131 @@ msgstr ""
 msgid "Audacious core developers:"
 msgstr "Audacious-Kernentwickler:"
 
-#: audacious/credits.c:61
+#: audacious/credits.c:63
 msgid "Graphics:"
 msgstr "Grafiken:"
 
-#: audacious/credits.c:66
+#: audacious/credits.c:68
 msgid "Default skin:"
 msgstr "Standard-Skin:"
 
-#: audacious/credits.c:71
+#: audacious/credits.c:73
 msgid "Plugin development:"
 msgstr "Plugin-Entwicklung:"
 
-#: audacious/credits.c:82
+#: audacious/credits.c:84
 msgid "Patch authors:"
 msgstr ""
 
-#: audacious/credits.c:95
+#: audacious/credits.c:99
 msgid "0.1.x developers:"
 msgstr "0.1.x-Entwickler:"
 
-#: audacious/credits.c:101
+#: audacious/credits.c:105
 msgid "BMP Developers:"
 msgstr "BMP-Entwickler:"
 
-#: audacious/credits.c:133
+#: audacious/credits.c:137
 msgid "Brazilian Portuguese:"
 msgstr "Brasilianisches Portugiesisch:"
 
-#: audacious/credits.c:136
+#: audacious/credits.c:140
 msgid "Breton:"
 msgstr "Bretonisch:"
 
-#: audacious/credits.c:139
+#: audacious/credits.c:143
 msgid "Chinese:"
 msgstr "Chinesisch:"
 
-#: audacious/credits.c:143
+#: audacious/credits.c:147
 msgid "Czech:"
 msgstr "Tschechisch:"
 
-#: audacious/credits.c:146
+#: audacious/credits.c:150
 msgid "Dutch:"
 msgstr "Niederländisch:"
 
-#: audacious/credits.c:150
+#: audacious/credits.c:154
 msgid "Finnish:"
 msgstr "Finnisch:"
 
-#: audacious/credits.c:153
+#: audacious/credits.c:157
 msgid "French:"
 msgstr "Französisch:"
 
-#: audacious/credits.c:156
+#: audacious/credits.c:160
 msgid "German:"
 msgstr "Deutsch:"
 
-#: audacious/credits.c:160
+#: audacious/credits.c:164
 msgid "Georgian: "
 msgstr "Georgisch: "
 
-#: audacious/credits.c:163
+#: audacious/credits.c:167
 msgid "Greek:"
 msgstr "Griechisch:"
 
-#: audacious/credits.c:168
+#: audacious/credits.c:172
 msgid "Hindi:"
 msgstr "Hindi:"
 
-#: audacious/credits.c:171
+#: audacious/credits.c:175
 msgid "Hungarian:"
 msgstr "Ungarisch:"
 
-#: audacious/credits.c:174
+#: audacious/credits.c:178
 msgid "Italian:"
 msgstr "Italienisch:"
 
-#: audacious/credits.c:178
+#: audacious/credits.c:182
 msgid "Japanese:"
 msgstr "Japanisch:"
 
-#: audacious/credits.c:181
+#: audacious/credits.c:185
 msgid "Korean:"
 msgstr "Koreanisch:"
 
-#: audacious/credits.c:184
+#: audacious/credits.c:188
 msgid "Lithuanian:"
 msgstr "Lettisch:"
 
-#: audacious/credits.c:187
+#: audacious/credits.c:191
 msgid "Macedonian:"
 msgstr "Makedonisch:"
 
-#: audacious/credits.c:190
+#: audacious/credits.c:194
 msgid "Polish:"
 msgstr "Polnisch:"
 
-#: audacious/credits.c:194
+#: audacious/credits.c:198
 msgid "Romanian:"
 msgstr "Rumänisch:"
 
-#: audacious/credits.c:197
+#: audacious/credits.c:201
 msgid "Russian:"
 msgstr "Russisch:"
 
-#: audacious/credits.c:202
+#: audacious/credits.c:206
 msgid "Slovak:"
 msgstr "Slovakisch:"
 
-#: audacious/credits.c:205
+#: audacious/credits.c:209
 msgid "Spanish:"
 msgstr "Spanisch:"
 
-#: audacious/credits.c:208
+#: audacious/credits.c:212
 msgid "Swedish:"
 msgstr "Schwedisch:"
 
-#: audacious/credits.c:211
+#: audacious/credits.c:215
 msgid "Ukrainian:"
 msgstr "Ukrainisch:"
 
-#: audacious/credits.c:214
+#: audacious/credits.c:218
 msgid "Welsh:"
 msgstr "Walisisch:"
 
-#: audacious/credits.c:362
+#: audacious/credits.c:366
 msgid "Translators"
 msgstr "Übersetzer"
 
@@ -269,15 +269,15 @@ msgstr "Speichere Voreinstellung"
 msgid "Save auto-preset"
 msgstr "Speichere Auto-Voreinstellung"
 
-#: audacious/equalizer.c:1712 audacious/equalizer.c:1731
+#: audacious/equalizer.c:1713 audacious/equalizer.c:1733
 msgid "Save equalizer preset"
 msgstr "Speichere Equalizer-Voreinstellung"
 
-#: audacious/equalizer.c:1740
+#: audacious/equalizer.c:1742
 msgid "Delete preset"
 msgstr "Lösche Voreinstellung"
 
-#: audacious/equalizer.c:1758
+#: audacious/equalizer.c:1760
 msgid "Delete auto-preset"
 msgstr "Lösche Auto-Voreinstellung"
 
@@ -348,7 +348,7 @@ msgstr ""
 "Konnte die Glade-Datei nicht öffnen (%s). Bitte überprüfen Sie Ihre "
 "Installation.\n"
 
-#: audacious/input.c:305
+#: audacious/input.c:304
 msgid ""
 "<b><big>Unable to play files.</big></b>\n"
 "\n"
@@ -363,33 +363,33 @@ msgstr ""
 "1. sie lesbar sind.\n"
 "2. die benötigten Medien-Plugins aktiviert wurden."
 
-#: audacious/input.c:330
+#: audacious/input.c:329
 msgid "Don't show this warning anymore"
 msgstr "Diese Warnung nicht noch einmal anzeigen"
 
-#: audacious/input.c:332
+#: audacious/input.c:331
 msgid "Show more _details"
 msgstr "Mehr _Details anzeigen"
 
-#: audacious/input.c:346 audacious/prefswin.c:115 audacious/prefswin.c:487
-#: audacious/prefswin.c:575 audacious/prefswin.c:664 audacious/prefswin.c:760
+#: audacious/input.c:345 audacious/prefswin.c:115 audacious/prefswin.c:483
+#: audacious/prefswin.c:571 audacious/prefswin.c:660 audacious/prefswin.c:756
 msgid "Filename"
 msgstr "Dateiname"
 
-#: audacious/input.c:589
+#: audacious/input.c:581
 #, c-format
 msgid "audacious: %s"
 msgstr "audacious: %s"
 
-#: audacious/input.c:605
+#: audacious/input.c:597
 msgid "Filename:"
 msgstr "Dateiname:"
 
-#: audacious/input.c:623
+#: audacious/input.c:615
 msgid "No input plugin recognized this file"
 msgstr "Kein Input-Plugin konnte diese Datei erkennen"
 
-#: audacious/input.c:625
+#: audacious/input.c:617
 #, c-format
 msgid "Input plugin: %s"
 msgstr "Input-Plugin: %s"
@@ -400,16 +400,16 @@ msgid "Unable to create log file (%s)!\n"
 msgstr "Konnte Logfile nicht erstellen (%s)!\n"
 
 #: audacious/main.c:82 audacious/main.c:84 audacious/mainwin.c:876
-#: audacious/mainwin.c:3650
+#: audacious/mainwin.c:3676
 msgid "Audacious"
 msgstr "Audacious"
 
-#: audacious/main.c:445
+#: audacious/main.c:449
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "Konnte Verzeichnis nicht erstellen (%s): %s"
 
-#: audacious/main.c:721
+#: audacious/main.c:726
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
@@ -422,82 +422,82 @@ msgstr ""
 "--------\n"
 
 #  -h, --help switch
-#: audacious/main.c:726
+#: audacious/main.c:731
 msgid "Display this text and exit"
 msgstr "Diesen Text zeigen und beenden"
 
 #  -n, --session switch
-#: audacious/main.c:729
+#: audacious/main.c:734
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Wähle Audacious/BMP/XMMS-Session (Standard: 0)"
 
 #  -r, --rew switch
-#: audacious/main.c:732
+#: audacious/main.c:737
 msgid "Skip backwards in playlist"
 msgstr "In der Wiedergabeliste rückwärts springen"
 
 #  -p, --play switch
-#: audacious/main.c:735
+#: audacious/main.c:740
 msgid "Start playing current playlist"
 msgstr "Abspielen der aktuellen Wiedergabeliste beginnen"
 
 #  -u, --pause switch
-#: audacious/main.c:738
+#: audacious/main.c:743
 msgid "Pause current song"
 msgstr "Aktuellen Song unterbrechen"
 
 #  -s, --stop switch
-#: audacious/main.c:741
+#: audacious/main.c:746
 msgid "Stop current song"
 msgstr "Aktuellen Song stoppen"
 
 #  -t, --play-pause switch
-#: audacious/main.c:744
+#: audacious/main.c:749
 msgid "Pause if playing, play otherwise"
 msgstr "Pause falls beim abspielen, andernfalls Wiedergabe starten"
 
 #  -f, --fwd switch
-#: audacious/main.c:747
+#: audacious/main.c:752
 msgid "Skip forward in playlist"
 msgstr "In der Wiedergabeliste vorwärts springen"
 
-#: audacious/main.c:750
+#: audacious/main.c:755
 msgid "Display Jump to file dialog"
 msgstr ""
 
 #  -e, --enqueue switch
-#: audacious/main.c:753
+#: audacious/main.c:758
 msgid "Don't clear the playlist"
 msgstr "Wiedergabeliste nicht entfernen"
 
 #  -m, --show-main-window switch
 #  -m, --show-main-window switch
-#: audacious/main.c:756
+#: audacious/main.c:761
 msgid "Show the main window"
 msgstr "Das Hauptfenster zeigen"
 
-#: audacious/main.c:759
+#: audacious/main.c:764
 msgid "Activate Audacious"
 msgstr "Audacious aktivieren"
 
-#: audacious/main.c:762
+#: audacious/main.c:767
 msgid "Previous session ID"
 msgstr "Vorherige Session-ID"
 
-#: audacious/main.c:765
+#: audacious/main.c:770
 msgid "Headless operation [experimental]"
 msgstr "Headless operation [experimentell]"
 
-#: audacious/main.c:768
+#: audacious/main.c:773
 msgid "Disable error/warning interception (logging)"
 msgstr "Das Abfangen von Fehlern und Warnungen deaktivieren."
 
 #  -v, --version switch
-#: audacious/main.c:771
+#: audacious/main.c:776
 msgid "Print version number and exit\n"
 msgstr "Die Versionsnummer zeigen und beenden\n"
 
-#: audacious/main.c:961
+#: audacious/main.c:966
 #, fuzzy
 msgid ""
 "\n"
@@ -515,7 +515,7 @@ msgstr ""
 "net/.\n"
 "\n"
 
-#: audacious/main.c:984
+#: audacious/main.c:996
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -528,7 +528,7 @@ msgstr ""
 "Überprüfen Sie, dass der Skin in '%s' benutzbar ist und der Default-Skin "
 "ordnungsgemäß in '%s' installiert wurde.\n"
 
-#: audacious/main.c:1030
+#: audacious/main.c:1043
 #, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -538,7 +538,7 @@ msgstr ""
 "Audacious.\n"
 "Bitte benutzen Sie GTK+ %s oder neuer.\n"
 
-#: audacious/main.c:1041
+#: audacious/main.c:1054
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -552,7 +552,7 @@ msgstr ""
 "vor LinuxThreads installiert haben, müssen Sie Glib und GTK+ erneut "
 "kompilieren.\n"
 
-#: audacious/main.c:1057
+#: audacious/main.c:1073
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "audacious: Kann Display nicht öffnen, beende.\n"
 
@@ -865,103 +865,103 @@ msgstr ""
 msgid "%s - Audacious"
 msgstr "%s - Audacious"
 
-#: audacious/mainwin.c:1098
+#: audacious/mainwin.c:1099
 msgid "VBR"
 msgstr "VBR"
 
-#: audacious/mainwin.c:1139 audacious/mainwin.c:1143
+#: audacious/mainwin.c:1140 audacious/mainwin.c:1144
 msgid "stereo"
 msgstr "stereo"
 
-#: audacious/mainwin.c:1139 audacious/mainwin.c:1143
+#: audacious/mainwin.c:1140 audacious/mainwin.c:1144
 msgid "mono"
 msgstr "mono"
 
-#: audacious/mainwin.c:1627
+#: audacious/mainwin.c:1633
 msgid "Jump to Time"
 msgstr "Zu Zeitpunkt springen"
 
-#: audacious/mainwin.c:1648
+#: audacious/mainwin.c:1654
 msgid "minutes:seconds"
 msgstr "Minuten:Sekunden"
 
-#: audacious/mainwin.c:1658
+#: audacious/mainwin.c:1664
 msgid "Track length:"
 msgstr "Titellänge:"
 
-#: audacious/mainwin.c:1746
+#: audacious/mainwin.c:1752
 msgid "Un_queue"
 msgstr "Aus _Queue entfernen"
 
-#: audacious/mainwin.c:1748 audacious/mainwin.c:2103
+#: audacious/mainwin.c:1754 audacious/mainwin.c:2109
 msgid "_Queue"
 msgstr "Zu _Queue hinzufügen"
 
-#: audacious/mainwin.c:2028
+#: audacious/mainwin.c:2034
 msgid "Jump to Track"
 msgstr "Zu Titel springen"
 
-#: audacious/mainwin.c:2069
+#: audacious/mainwin.c:2075
 msgid "Filter: "
 msgstr "Filter: "
 
-#: audacious/mainwin.c:2270
+#: audacious/mainwin.c:2280
 msgid "Enter location to play:"
 msgstr "Abspielort angeben:"
 
-#: audacious/mainwin.c:2477
+#: audacious/mainwin.c:2488
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "SUCHE NACH: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2509 audacious/mainwin.c:3296
+#: audacious/mainwin.c:2520 audacious/mainwin.c:3310
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "Lautstärke: %d%%"
 
-#: audacious/mainwin.c:2540 audacious/mainwin.c:3299
+#: audacious/mainwin.c:2551 audacious/mainwin.c:3313
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "BALANCE: %d%% LINKS"
 
-#: audacious/mainwin.c:2544 audacious/mainwin.c:3302
+#: audacious/mainwin.c:2555 audacious/mainwin.c:3316
 msgid "BALANCE: CENTER"
 msgstr "BALANCE: MITTE"
 
-#: audacious/mainwin.c:2548 audacious/mainwin.c:3304
+#: audacious/mainwin.c:2559 audacious/mainwin.c:3318
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "BALANCE: %d%% RECHTS"
 
-#: audacious/mainwin.c:3071
+#: audacious/mainwin.c:3084
 msgid "OPTIONS MENU"
 msgstr "OPTIONSMENÜ"
 
-#: audacious/mainwin.c:3075
+#: audacious/mainwin.c:3088
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "IMMER IM VORDERGRUND AUS"
 
-#: audacious/mainwin.c:3077
+#: audacious/mainwin.c:3090
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "IMMER IM VORDERGRUND AN"
 
-#: audacious/mainwin.c:3080
+#: audacious/mainwin.c:3093
 msgid "FILE INFO BOX"
 msgstr "DATEI-INFORMATIONSBOX"
 
-#: audacious/mainwin.c:3084
+#: audacious/mainwin.c:3097
 msgid "DISABLE DOUBLESIZE"
 msgstr ""
 
-#: audacious/mainwin.c:3086
+#: audacious/mainwin.c:3099
 msgid "ENABLE DOUBLESIZE"
 msgstr ""
 
-#: audacious/mainwin.c:3089
+#: audacious/mainwin.c:3102
 msgid "VISUALIZATION MENU"
 msgstr "VISUALISIERUNGSMENÜ"
 
-#: audacious/mainwin.c:3137
+#: audacious/mainwin.c:3150
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -971,7 +971,7 @@ msgstr ""
 "\n"
 "Keine CD eingelegt, oder die eingelegte CD ist keine Audio-CD.\n"
 
-#: audacious/mainwin.c:3154
+#: audacious/mainwin.c:3167
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -999,7 +999,7 @@ msgstr "Audio"
 msgid "Connectivity"
 msgstr "Verbindung"
 
-#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:2836
+#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:2871
 msgid "Equalizer"
 msgstr "Equalizer"
 
@@ -1007,7 +1007,7 @@ msgstr "Equalizer"
 msgid "Mouse"
 msgstr "Maus"
 
-#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:2468
+#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:2503
 msgid "Playlist"
 msgstr "Wiedergabeliste"
 
@@ -1019,7 +1019,7 @@ msgstr "Plugins"
 msgid "Artist"
 msgstr "Artist"
 
-#: audacious/prefswin.c:111 libaudacious/titlestring.c:351
+#: audacious/prefswin.c:111 libaudacious/titlestring.c:372
 msgid "Album"
 msgstr "Album"
 
@@ -1031,7 +1031,7 @@ msgstr "Titel"
 msgid "Tracknumber"
 msgstr "Titelnummer"
 
-#: audacious/prefswin.c:114 libaudacious/titlestring.c:352
+#: audacious/prefswin.c:114 libaudacious/titlestring.c:373
 msgid "Genre"
 msgstr "Genre"
 
@@ -1039,15 +1039,15 @@ msgstr "Genre"
 msgid "Filepath"
 msgstr "Dateipfad"
 
-#: audacious/prefswin.c:117 libaudacious/titlestring.c:358
+#: audacious/prefswin.c:117 libaudacious/titlestring.c:379
 msgid "Date"
 msgstr "Datum"
 
-#: audacious/prefswin.c:118 libaudacious/titlestring.c:359
+#: audacious/prefswin.c:118 libaudacious/titlestring.c:380
 msgid "Year"
 msgstr "Jahr"
 
-#: audacious/prefswin.c:119 libaudacious/titlestring.c:360
+#: audacious/prefswin.c:119 libaudacious/titlestring.c:381
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -1055,22 +1055,22 @@ msgstr "Kommentar"
 msgid "localhost"
 msgstr "localhost"
 
-#: audacious/prefswin.c:457 audacious/prefswin.c:544 audacious/prefswin.c:633
-#: audacious/prefswin.c:729
+#: audacious/prefswin.c:453 audacious/prefswin.c:540 audacious/prefswin.c:629
+#: audacious/prefswin.c:725
 msgid "Enabled"
 msgstr "Aktiviert"
 
-#: audacious/prefswin.c:473 audacious/prefswin.c:560 audacious/prefswin.c:649
-#: audacious/prefswin.c:745
+#: audacious/prefswin.c:469 audacious/prefswin.c:556 audacious/prefswin.c:645
+#: audacious/prefswin.c:741
 msgid "Description"
 msgstr "Beschreibung"
 
-#: audacious/prefswin.c:1784
+#: audacious/prefswin.c:1792
 msgid "Category"
 msgstr "Kategorie"
 
 #  load the interface
-#: audacious/prefswin.c:2241
+#: audacious/prefswin.c:2251
 msgid "Preferences Window"
 msgstr "Einstellungsfenster"
 
@@ -1082,12 +1082,12 @@ msgstr "Archivierter Winamp 2.x-Skin"
 msgid "Unarchived Winamp 2.x skin"
 msgstr "Nichtarchivierter Winamp 2.x-Skin"
 
-#: audacious/ui_fileinfo.c:313
+#: audacious/ui_fileinfo.c:316
 #, fuzzy
 msgid "Track Information Window"
 msgstr "Popup-Informations-Einstellungen"
 
-#: audacious/ui_fileinfo.c:335
+#: audacious/ui_fileinfo.c:338
 msgid "Track Information Popup"
 msgstr ""
 
@@ -1251,17 +1251,17 @@ msgstr "/Auswahl sortieren/Nach Titelnummer"
 msgid "/Sort Selection/By Playlist Entry"
 msgstr "/Auswahl sortieren/Nach Wiedergabelisteneintrag"
 
-#: audacious/ui_playlist.c:841
+#: audacious/ui_playlist.c:845
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "Fehler beim Schreiben der Wiedergabeliste \"%s\": %s"
 
-#: audacious/ui_playlist.c:862
+#: audacious/ui_playlist.c:866
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s existiert bereits. Trotzdem fortfahren?"
 
-#: audacious/ui_playlist.c:876
+#: audacious/ui_playlist.c:880
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -1272,53 +1272,53 @@ msgstr ""
 "\n"
 "Unbekannter Dateityp für '%s'.\n"
 
-#: audacious/ui_playlist.c:1027
+#: audacious/ui_playlist.c:1033
 msgid "Load Playlist"
 msgstr "Wiedergabeliste laden"
 
-#: audacious/ui_playlist.c:1040
+#: audacious/ui_playlist.c:1046
 msgid "Save Playlist"
 msgstr "Wiedergabeliste speichern"
 
-#: audacious/ui_playlist.c:1751
+#: audacious/ui_playlist.c:1783
 msgid "Audacious Playlist Editor"
 msgstr "Audacious Wiedergabelisteneditor"
 
-#: audacious/util.c:951
+#: audacious/util.c:952
 msgid "Add/Open Files dialog"
 msgstr "Dateien hinzufügen/öffnen-Dialog"
 
-#: audacious/util.c:1006
+#: audacious/util.c:1007
 msgid "Open Files"
 msgstr "/Dateien öffnen"
 
-#: audacious/util.c:1010
+#: audacious/util.c:1011
 msgid "Close dialog on Open"
 msgstr "Dialog nach dem Öffnen schließen"
 
-#: audacious/util.c:1020 audacious/glade/addfiles.glade:8
+#: audacious/util.c:1021 audacious/glade/addfiles.glade:8
 msgid "Add Files"
 msgstr "Dateien hinzufügen"
 
-#: audacious/util.c:1024
+#: audacious/util.c:1025
 msgid "Close dialog on Add"
 msgstr "Dialog nach dem Hinzufügen schließen"
 
-#: audacious/util.c:1201
+#: audacious/util.c:1203
 #, fuzzy
 msgid "Play files"
 msgstr "/Datei wiedergeben"
 
-#: audacious/util.c:1203
+#: audacious/util.c:1205
 #, fuzzy
 msgid "Load files"
 msgstr "/Laden/aus Datei"
 
-#: audacious/util.c:1507
+#: audacious/util.c:1509
 msgid "  (invalid UTF-8)"
 msgstr "  (ungültiges UTF-8)"
 
-#: audacious/playback.c:208
+#: audacious/playback.c:209
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1543,51 +1543,55 @@ msgstr "Unterstriche zu Leerzeichen konvertieren"
 msgid "Convert %20 to blanks"
 msgstr "%20 zu Leerzeichen konvertieren"
 
-#: audacious/glade/prefswin.glade:1807
+#: audacious/glade/prefswin.glade:1808
+msgid "Convert forward slash '\\' to backslash '/'"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:1842
 msgid "<b>Metadata</b>"
 msgstr "<b>Metadaten</b>"
 
-#: audacious/glade/prefswin.glade:1848
+#: audacious/glade/prefswin.glade:1883
 msgid "Load metadata from playlists and files"
 msgstr "Metadaten aus Wiedergabelisten und Dateien lesen"
 
-#: audacious/glade/prefswin.glade:1888
+#: audacious/glade/prefswin.glade:1923
 msgid "On load"
 msgstr "Beim Laden"
 
-#: audacious/glade/prefswin.glade:1910
+#: audacious/glade/prefswin.glade:1945
 msgid "On display"
 msgstr "Bei Anzeige"
 
-#: audacious/glade/prefswin.glade:1940
+#: audacious/glade/prefswin.glade:1975
 msgid "Fallback character encodings:"
 msgstr "Alternative Zeichensätze:"
 
-#: audacious/glade/prefswin.glade:2009
+#: audacious/glade/prefswin.glade:2044
 msgid "Auto character encoding detector for:"
 msgstr "Automatische Zeichensatzerkennung für:"
 
-#: audacious/glade/prefswin.glade:2065
+#: audacious/glade/prefswin.glade:2100
 msgid "<b>File Dialog</b>"
 msgstr "<b>Datei-Dialog</b>"
 
-#: audacious/glade/prefswin.glade:2106
+#: audacious/glade/prefswin.glade:2141
 msgid "Always refresh directory when opening file dialog"
 msgstr "Verzeichnis beim Öffnen von Dateidialogen immer aktualisieren"
 
-#: audacious/glade/prefswin.glade:2140
+#: audacious/glade/prefswin.glade:2175
 msgid "<b>Song Display</b>"
 msgstr "<b>Titelanzeige</b>"
 
-#: audacious/glade/prefswin.glade:2188
+#: audacious/glade/prefswin.glade:2223
 msgid "Title format:"
 msgstr "Titelformat:"
 
-#: audacious/glade/prefswin.glade:2216
+#: audacious/glade/prefswin.glade:2251
 msgid "Custom string:"
 msgstr "Eigene Zeichenkette:"
 
-#: audacious/glade/prefswin.glade:2267
+#: audacious/glade/prefswin.glade:2302
 msgid ""
 "TITLE\n"
 "ARTIST - TITLE\n"
@@ -1605,59 +1609,59 @@ msgstr ""
 "ALBUM - TITEL\n"
 "Eigene"
 
-#: audacious/glade/prefswin.glade:2339
+#: audacious/glade/prefswin.glade:2374
 msgid "<b>Popup Information</b>"
 msgstr "<b>Popup-Information</b>"
 
-#: audacious/glade/prefswin.glade:2392
+#: audacious/glade/prefswin.glade:2427
 msgid "Show popup information for playlist entries"
 msgstr "Popup-Informationen für Widergabelisteneinträge anzeigen"
 
-#: audacious/glade/prefswin.glade:2527
+#: audacious/glade/prefswin.glade:2562
 msgid "<b>Presets</b>"
 msgstr "<b>Voreinstellungen</b>"
 
-#: audacious/glade/prefswin.glade:2627
+#: audacious/glade/prefswin.glade:2662
 msgid "Directory preset file:"
 msgstr "Verzeichnis für Voreinstellungs-Dateien:"
 
-#: audacious/glade/prefswin.glade:2655
+#: audacious/glade/prefswin.glade:2690
 msgid "File preset extension:"
 msgstr "Endung von Voreinstellungs-Dateien:"
 
-#: audacious/glade/prefswin.glade:2703
+#: audacious/glade/prefswin.glade:2738
 msgid "Available _Presets:"
 msgstr "Verfügbare _Voreinstellungen:"
 
-#: audacious/glade/prefswin.glade:2883
+#: audacious/glade/prefswin.glade:2918
 msgid "<b>Proxy Configuration</b>"
 msgstr "<b>Proxy-Konfiguration</b>"
 
-#: audacious/glade/prefswin.glade:2941
+#: audacious/glade/prefswin.glade:2976
 msgid "Enable proxy usage"
 msgstr "Proxy aktivieren"
 
-#: audacious/glade/prefswin.glade:2972
+#: audacious/glade/prefswin.glade:3007
 msgid "Proxy hostname:"
 msgstr "Proxy-Host:"
 
-#: audacious/glade/prefswin.glade:3000
+#: audacious/glade/prefswin.glade:3035
 msgid "Proxy port:"
 msgstr "Proxy-Port:"
 
-#: audacious/glade/prefswin.glade:3094
+#: audacious/glade/prefswin.glade:3129
 msgid "Use authentication with proxy"
 msgstr "Benutze Authentisierung mit Proxy"
 
-#: audacious/glade/prefswin.glade:3125
+#: audacious/glade/prefswin.glade:3160
 msgid "Proxy username:"
 msgstr "Benutzername für Proxy:"
 
-#: audacious/glade/prefswin.glade:3153
+#: audacious/glade/prefswin.glade:3188
 msgid "Proxy password:"
 msgstr "Passwort für Proxy:"
 
-#: audacious/glade/prefswin.glade:3269
+#: audacious/glade/prefswin.glade:3304
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
@@ -1665,23 +1669,23 @@ msgstr ""
 "<span size=\"small\">Das Ändern dieser Einstellungen wird einen Neustart von "
 "Audacious benötigen.</span>"
 
-#: audacious/glade/prefswin.glade:3325
+#: audacious/glade/prefswin.glade:3360
 msgid "label65"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3366
+#: audacious/glade/prefswin.glade:3401
 msgid "<b>Audio System</b>"
 msgstr "<b>Audio-System:</b>"
 
-#: audacious/glade/prefswin.glade:3420
+#: audacious/glade/prefswin.glade:3455
 msgid "Current output plugin:"
 msgstr "Aktives Ausgabe-Plugin"
 
-#: audacious/glade/prefswin.glade:3465
+#: audacious/glade/prefswin.glade:3500
 msgid "Buffer size:"
 msgstr "Puffergrösse:"
 
-#: audacious/glade/prefswin.glade:3535
+#: audacious/glade/prefswin.glade:3570
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
@@ -1694,53 +1698,53 @@ msgstr ""
 "Erhöhen sie diesen Wert, wenn sie Unterbrüche im Ton haben.\n"
 "Hohe Werte können dazu führen, dass Audacious langsamer läuft.</span>"
 
-#: audacious/glade/prefswin.glade:3643
+#: audacious/glade/prefswin.glade:3678
 #, fuzzy
 msgid "Output Plugin Preferences"
 msgstr "OSS Output Plugin"
 
-#: audacious/glade/prefswin.glade:3718
+#: audacious/glade/prefswin.glade:3753
 #, fuzzy
 msgid "Output Plugin Information"
 msgstr "ESD-Output-Plugin-Konfiguration"
 
-#: audacious/glade/prefswin.glade:3770
+#: audacious/glade/prefswin.glade:3805
 msgid "<b>Format Detection</b>"
 msgstr "<b>Formaterkennung</b>"
 
-#: audacious/glade/prefswin.glade:3811
+#: audacious/glade/prefswin.glade:3846
 msgid "Detect file formats on demand, instead of immediately."
 msgstr "Dateiformate nicht sofort ermitteln, sondern nur bei Bedarf."
 
-#: audacious/glade/prefswin.glade:3845
+#: audacious/glade/prefswin.glade:3880
 msgid "<b>Playback</b>"
 msgstr "<b>Wiedergabe</b>"
 
-#: audacious/glade/prefswin.glade:3886
+#: audacious/glade/prefswin.glade:3921
 msgid "Continue playback on startup"
 msgstr "Wiedergabe beim Start fortführen"
 
-#: audacious/glade/prefswin.glade:3922
+#: audacious/glade/prefswin.glade:3957
 msgid "Don't advance in the playlist"
 msgstr "Nicht an die Wiedergabeliste anfügen"
 
-#: audacious/glade/prefswin.glade:3957
+#: audacious/glade/prefswin.glade:3992
 msgid "Pause between songs"
 msgstr "Zwischen Songs unterbrechen"
 
-#: audacious/glade/prefswin.glade:3995
+#: audacious/glade/prefswin.glade:4030
 msgid "Pause for"
 msgstr "Unterbrechen für"
 
-#: audacious/glade/prefswin.glade:4041
+#: audacious/glade/prefswin.glade:4076
 msgid "seconds"
 msgstr "Sekunden"
 
-#: audacious/glade/prefswin.glade:4081
+#: audacious/glade/prefswin.glade:4116
 msgid "label76"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:4219
+#: audacious/glade/prefswin.glade:4254
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -1750,23 +1754,23 @@ msgstr ""
 "Dateinamen. Diese können nachfolgend eingegeben werden, jeweils mit Kommas "
 "getrennt."
 
-#: audacious/glade/prefswin.glade:4274
+#: audacious/glade/prefswin.glade:4309
 msgid "Include:"
 msgstr "Einschliessen:"
 
-#: audacious/glade/prefswin.glade:4302
+#: audacious/glade/prefswin.glade:4337
 msgid "Exclude:"
 msgstr "Ausschliessen:"
 
-#: audacious/glade/prefswin.glade:4371
+#: audacious/glade/prefswin.glade:4406
 msgid "Recursively search for cover"
 msgstr "Rekursiv nach dem Titelbild suchen"
 
-#: audacious/glade/prefswin.glade:4409
+#: audacious/glade/prefswin.glade:4444
 msgid "Search depth: "
 msgstr "Suchtiefe:"
 
-#: audacious/glade/prefswin.glade:4475
+#: audacious/glade/prefswin.glade:4510
 msgid "Use per-file cover"
 msgstr ""
 
@@ -1814,31 +1818,31 @@ msgstr "14KHZ"
 msgid "16KHZ"
 msgstr "16KHZ"
 
-#: libaudacious/titlestring.c:350
+#: libaudacious/titlestring.c:371
 msgid "Performer/Artist"
 msgstr "Performer/Artist"
 
-#: libaudacious/titlestring.c:353
+#: libaudacious/titlestring.c:374
 msgid "File name"
 msgstr "Dateiname"
 
-#: libaudacious/titlestring.c:354
+#: libaudacious/titlestring.c:375
 msgid "File path"
 msgstr "Dateipfad"
 
-#: libaudacious/titlestring.c:355
+#: libaudacious/titlestring.c:376
 msgid "File extension"
 msgstr "Dateiendung"
 
-#: libaudacious/titlestring.c:356
+#: libaudacious/titlestring.c:377
 msgid "Track name"
 msgstr "Titelname"
 
-#: libaudacious/titlestring.c:357
+#: libaudacious/titlestring.c:378
 msgid "Track number"
 msgstr "Titelnummer"
 
-#: libaudacious/titlestring.c:411
+#: libaudacious/titlestring.c:441
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: \"...\" nur zeigen, wenn Element %n vorhanden ist"
 
