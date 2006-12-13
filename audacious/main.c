@@ -205,6 +205,7 @@ BmpConfig bmp_default_config = {
     20,				/* delay until the filepopup comes up */
     FALSE,			/* use filename.jpg for coverart */
     FALSE,			/* use XMMS-style file selection */
+    FALSE,                      /* use extension probing         */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -305,6 +306,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"recurse_for_cover", &cfg.recurse_for_cover, TRUE},
     {"use_file_cover", &cfg.use_file_cover, TRUE},
     {"use_xmms_style_fileselector", &cfg.use_xmms_style_fileselector, TRUE},
+    {"use_extension_probing", &cfg.use_extension_probing, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);

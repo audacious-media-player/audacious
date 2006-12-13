@@ -127,6 +127,7 @@ struct _BmpConfig {
     gint filepopup_delay;
     gboolean use_file_cover;
     gboolean use_xmms_style_fileselector;
+    gboolean use_extension_probing;
 };
 
 typedef struct _BmpConfig BmpConfig;

@@ -402,6 +402,10 @@ input_file_not_playable(const gchar * filename)
  * Rewritten to use NewVFS probing, semantics are still basically the same.
  *
  * --nenolod, Dec  5 2006
+ *
+ * Adapted to use the NewVFS extension probing system if enabled.
+ *
+ * --nenolod, Dec 12 2006
  */
 InputPlugin *
 input_check_file(const gchar * filename, gboolean show_warning)
@@ -423,27 +427,50 @@ input_check_file(const gchar * filename, gboolean show_warning)
             continue;
 
         vfs_fseek(fd, 0, SEEK_SET);
-
-        if (ip->is_our_file_from_vfs != NULL)
+        if (cfg.use_extension_probing != TRUE || ip->vfs_extensions == NULL)
         {
-            ret = ip->is_our_file_from_vfs(filename_proxy, fd);
 
-            if (ret > 0)
+            if (ip->is_our_file_from_vfs != NULL)
             {
-                g_free(filename_proxy);
-                vfs_fclose(fd);
-                return ip;
+                ret = ip->is_our_file_from_vfs(filename_proxy, fd);
+
+                if (ret > 0)
+                {
+                    g_free(filename_proxy);
+                    vfs_fclose(fd);
+                    return ip;
+                }
+            }
+            else if (ip->is_our_file != NULL)
+            {
+                ret = ip->is_our_file(filename_proxy);
+
+                if (ret > 0)
+                {
+                    g_free(filename_proxy);
+                    vfs_fclose(fd);
+                    return ip;
+                }
             }
         }
-        else if (ip->is_our_file != NULL)
+        else
         {
-            ret = ip->is_our_file(filename_proxy);
+            gint i;
+            gchar *ext = strrchr(filename_proxy, '.');
 
-            if (ret > 0)
+            if (ext == NULL)
+                continue;
+
+            ext++;
+
+            for (i = 0; ip->vfs_extensions[i] != NULL; i++)
             {
-                g_free(filename_proxy);
-                vfs_fclose(fd);
-                return ip;
+                if (!g_strcasecmp(ip->vfs_extensions[i], ext))
+                {
+                    g_free(filename_proxy);
+                    vfs_fclose(fd);
+                    return ip;
+                }
             }
         }
 
