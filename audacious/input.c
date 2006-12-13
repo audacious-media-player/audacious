@@ -415,9 +415,12 @@ input_check_file(const gchar * filename, gboolean show_warning)
     InputPlugin *ip;
     gchar *filename_proxy;
     gint ret = 1;
+    gchar *ext;
 
     filename_proxy = g_strdup(filename);
     fd = vfs_fopen(filename, "rb");
+
+    ext = strrchr(filename) + 1;
 
     for (node = get_input_list(); node != NULL; node = g_list_next(node))
     {
@@ -427,50 +430,47 @@ input_check_file(const gchar * filename, gboolean show_warning)
             continue;
 
         vfs_fseek(fd, 0, SEEK_SET);
-        if (cfg.use_extension_probing != TRUE || ip->vfs_extensions == NULL)
-        {
 
-            if (ip->is_our_file_from_vfs != NULL)
-            {
-                ret = ip->is_our_file_from_vfs(filename_proxy, fd);
-
-                if (ret > 0)
-                {
-                    g_free(filename_proxy);
-                    vfs_fclose(fd);
-                    return ip;
-                }
-            }
-            else if (ip->is_our_file != NULL)
-            {
-                ret = ip->is_our_file(filename_proxy);
-
-                if (ret > 0)
-                {
-                    g_free(filename_proxy);
-                    vfs_fclose(fd);
-                    return ip;
-                }
-            }
-        }
-        else
+        if (cfg.use_extension_probing == TRUE && ip->vfs_extensions != NULL
+		&& ext != NULL && ext != 1)
         {
             gint i;
-            gchar *ext = strrchr(filename_proxy, '.');
-
-            if (ext == NULL)
-                continue;
-
-            ext++;
+            gboolean is_our_ext = FALSE;
 
             for (i = 0; ip->vfs_extensions[i] != NULL; i++)
             {
                 if (!g_strcasecmp(ip->vfs_extensions[i], ext))
-                {
-                    g_free(filename_proxy);
-                    vfs_fclose(fd);
-                    return ip;
-                }
+	        {
+		    is_our_ext = TRUE;
+		    break;
+		}
+            }
+
+            /* not a plugin that supports this extension */
+            if (is_our_ext == FALSE) 
+                continue;
+        }
+
+        if (ip->is_our_file_from_vfs != NULL)
+        {
+            ret = ip->is_our_file_from_vfs(filename_proxy, fd);
+
+            if (ret > 0)
+            {
+                g_free(filename_proxy);
+                vfs_fclose(fd);
+                return ip;
+            }
+        }
+        else if (ip->is_our_file != NULL)
+        {
+            ret = ip->is_our_file(filename_proxy);
+
+            if (ret > 0)
+            {
+                g_free(filename_proxy);
+                vfs_fclose(fd);
+                return ip;
             }
         }
 
