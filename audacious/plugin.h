@@ -1,4 +1,7 @@
-/*  BMP - Cross-platform multimedia player
+/*  Audacious
+ *  Copyright (C) 2005-2007  Audacious team.
+ *
+ *  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
  *
  *  Based on XMMS:
@@ -6,11 +9,15 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
- * met: 1. Redistributions of source code must retain the above copyright
- * notice, this list of conditions and the following disclaimer. 2.
- * Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ * met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in 
+ *    the documentation and/or other materials provided with the 
+ *    distribution.
  *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -184,8 +191,9 @@ struct _InputPlugin {
     void (*set_song_tuple) (TitleInput * tuple);
     void (*set_status_buffering) (gboolean status);
 
-    /* Added in Audacious 1.2.2 */
+    /* Added in Audacious 1.3.0 */
     gint (*is_our_file_from_vfs) (gchar *filename, VFSFile *fd);
+    gchar **vfs_extensions;
 };
 
 struct _GeneralPlugin {
