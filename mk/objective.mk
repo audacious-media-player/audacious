@@ -191,7 +191,7 @@ $(OBJECTIVE_LIBS): $(OBJECTS)
 	if [ "x$(OBJECTS)" != "x" ]; then \
 		$(MAKE) $(OBJECTS) || exit;		\
 		printf "%10s     %-20s\n" LINK $@; \
-		$(AR) cq $@ $(OBJECTS); \
+		$(AR) cr $@ $(OBJECTS); \
 	fi
 
 $(OBJECTIVE_BINS): $(OBJECTS)
