@@ -3495,34 +3495,6 @@ Custom</property>
 			      </child>
 
 			      <child>
-				<widget class="GtkLabel" id="label79">
-				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">Buffer size:</property>
-				  <property name="use_underline">False</property>
-				  <property name="use_markup">False</property>
-				  <property name="justify">GTK_JUSTIFY_LEFT</property>
-				  <property name="wrap">False</property>
-				  <property name="selectable">False</property>
-				  <property name="xalign">0</property>
-				  <property name="yalign">0.5</property>
-				  <property name="xpad">0</property>
-				  <property name="ypad">0</property>
-				  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-				  <property name="width_chars">-1</property>
-				  <property name="single_line_mode">False</property>
-				  <property name="angle">0</property>
-				</widget>
-				<packing>
-				  <property name="left_attach">0</property>
-				  <property name="right_attach">1</property>
-				  <property name="top_attach">1</property>
-				  <property name="bottom_attach">2</property>
-				  <property name="x_options"></property>
-				  <property name="y_options"></property>
-				</packing>
-			      </child>
-
-			      <child>
 				<widget class="GtkSpinButton" id="output_plugin_bufsize">
 				  <property name="visible">True</property>
 				  <property name="can_focus">True</property>
@@ -3542,25 +3514,6 @@ Custom</property>
 				  <property name="top_attach">1</property>
 				  <property name="bottom_attach">2</property>
 				  <property name="y_options"></property>
-				</packing>
-			      </child>
-
-			      <child>
-				<widget class="GtkImage" id="image7">
-				  <property name="visible">True</property>
-				  <property name="stock">gtk-info</property>
-				  <property name="icon_size">4</property>
-				  <property name="xalign">1</property>
-				  <property name="yalign">0</property>
-				  <property name="xpad">0</property>
-				  <property name="ypad">0</property>
-				</widget>
-				<packing>
-				  <property name="left_attach">0</property>
-				  <property name="right_attach">1</property>
-				  <property name="top_attach">2</property>
-				  <property name="bottom_attach">3</property>
-				  <property name="x_options"></property>
 				</packing>
 			      </child>
 
@@ -3591,6 +3544,52 @@ Please note however, that high values will result in Audacious performing poorly
 				  <property name="bottom_attach">3</property>
 				  <property name="x_options"></property>
 				  <property name="y_options"></property>
+				</packing>
+			      </child>
+
+			      <child>
+				<widget class="GtkLabel" id="label79">
+				  <property name="visible">True</property>
+				  <property name="label" translatable="yes">Buffer size:</property>
+				  <property name="use_underline">False</property>
+				  <property name="use_markup">False</property>
+				  <property name="justify">GTK_JUSTIFY_LEFT</property>
+				  <property name="wrap">False</property>
+				  <property name="selectable">False</property>
+				  <property name="xalign">1</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+				  <property name="width_chars">-1</property>
+				  <property name="single_line_mode">False</property>
+				  <property name="angle">0</property>
+				</widget>
+				<packing>
+				  <property name="left_attach">0</property>
+				  <property name="right_attach">1</property>
+				  <property name="top_attach">1</property>
+				  <property name="bottom_attach">2</property>
+				  <property name="y_options"></property>
+				</packing>
+			      </child>
+
+			      <child>
+				<widget class="GtkImage" id="image7">
+				  <property name="visible">True</property>
+				  <property name="stock">gtk-info</property>
+				  <property name="icon_size">4</property>
+				  <property name="xalign">1</property>
+				  <property name="yalign">0</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				</widget>
+				<packing>
+				  <property name="left_attach">0</property>
+				  <property name="right_attach">1</property>
+				  <property name="top_attach">2</property>
+				  <property name="bottom_attach">3</property>
+				  <property name="x_options">fill</property>
 				</packing>
 			      </child>
 			    </widget>
@@ -3852,6 +3851,42 @@ Please note however, that high values will result in Audacious performing poorly
 			  <property name="draw_indicator">True</property>
 			  <signal name="toggled" handler="on_audio_format_det_cb_toggled"/>
 			  <signal name="realize" handler="on_audio_format_det_cb_realize"/>
+			</widget>
+		      </child>
+		    </widget>
+		    <packing>
+		      <property name="padding">0</property>
+		      <property name="expand">False</property>
+		      <property name="fill">False</property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkAlignment" id="alignment89">
+		      <property name="visible">True</property>
+		      <property name="xalign">0.5</property>
+		      <property name="yalign">0.5</property>
+		      <property name="xscale">1</property>
+		      <property name="yscale">1</property>
+		      <property name="top_padding">0</property>
+		      <property name="bottom_padding">0</property>
+		      <property name="left_padding">12</property>
+		      <property name="right_padding">0</property>
+
+		      <child>
+			<widget class="GtkCheckButton" id="detect_by_extension_cb">
+			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">When checked, Audacious will detect file formats based by extension. This is slightly slower than detection on demand, but still provides a minimal level of format detection.</property>
+			  <property name="can_focus">True</property>
+			  <property name="label" translatable="yes">Detect file formats by extension.</property>
+			  <property name="use_underline">True</property>
+			  <property name="relief">GTK_RELIEF_NORMAL</property>
+			  <property name="focus_on_click">True</property>
+			  <property name="active">False</property>
+			  <property name="inconsistent">False</property>
+			  <property name="draw_indicator">True</property>
+			  <signal name="toggled" handler="on_detect_by_extension_cb_toggled" last_modification_time="Wed, 13 Dec 2006 03:21:51 GMT"/>
+			  <signal name="realize" handler="on_detect_by_extension_cb_realize" last_modification_time="Wed, 13 Dec 2006 03:21:59 GMT"/>
 			</widget>
 		      </child>
 		    </widget>

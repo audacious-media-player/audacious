@@ -1003,6 +1003,20 @@ on_audio_format_det_cb_realize(GtkToggleButton * button,
     gtk_toggle_button_set_active(button, cfg.playlist_detect);
 }
 
+static void
+on_detect_by_extension_cb_toggled(GtkToggleButton * button,
+                                    gpointer data)
+{
+    cfg.use_extension_probing = gtk_toggle_button_get_active(button);
+}
+
+static void
+on_detect_by_extension_cb_realize(GtkToggleButton * button,
+                                    gpointer data)
+{
+    gtk_toggle_button_set_active(button, cfg.use_extension_probing);
+}
+
 /* proxy */
 static void
 on_proxy_use_realize(GtkToggleButton * button,
@@ -2215,6 +2229,8 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_output_plugin_bufsize_value_changed)
     FUNC_MAP_ENTRY(on_audio_format_det_cb_toggled)
     FUNC_MAP_ENTRY(on_audio_format_det_cb_realize)
+    FUNC_MAP_ENTRY(on_detect_by_extension_cb_toggled)
+    FUNC_MAP_ENTRY(on_detect_by_extension_cb_realize)
     FUNC_MAP_ENTRY(on_show_filepopup_for_tuple_realize)
     FUNC_MAP_ENTRY(on_show_filepopup_for_tuple_toggled)
     FUNC_MAP_ENTRY(on_filepopup_for_tuple_settings_clicked)
