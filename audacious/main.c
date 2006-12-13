@@ -205,7 +205,7 @@ BmpConfig bmp_default_config = {
     20,				/* delay until the filepopup comes up */
     FALSE,			/* use filename.jpg for coverart */
     FALSE,			/* use XMMS-style file selection */
-    FALSE,                      /* use extension probing         */
+    TRUE,                       /* use extension probing         */
 };
 
 typedef struct bmp_cfg_boolent_t {

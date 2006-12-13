@@ -420,7 +420,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
     filename_proxy = g_strdup(filename);
     fd = vfs_fopen(filename, "rb");
 
-    ext = strrchr(filename) + 1;
+    ext = strrchr(filename_proxy, '.') + 1;
 
     for (node = get_input_list(); node != NULL; node = g_list_next(node))
     {
@@ -432,7 +432,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
         vfs_fseek(fd, 0, SEEK_SET);
 
         if (cfg.use_extension_probing == TRUE && ip->vfs_extensions != NULL
-		&& ext != NULL && ext != 1)
+		&& ext != NULL && ext != (gpointer) 0x1)
         {
             gint i;
             gboolean is_our_ext = FALSE;
