@@ -444,7 +444,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
 
             for (i = 0; ip->vfs_extensions[i] != NULL; i++)
             {
-                if (!g_strcasecmp(ip->vfs_extensions[i], ext))
+                if (str_has_prefix_nocase(ext, ip->vfs_extensions[i]))
 	        {
 		    is_our_ext = TRUE;
 		    break;
