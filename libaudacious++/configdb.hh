@@ -18,10 +18,10 @@ namespace Audacious
 	 * Usage example:
 	 *
 	 * {
-	 *     Audacious::ConfigDb foo;
+	 *     Audacious::ConfigDB foo;
 	 *     Audacious::ConfValue *bar;
 	 *
-	 *     bar = foo.GetValue("bar", "filter");
+	 *     bar = foo.GetValue("bar", "filter", Audacious::ConfigDB::String);
 	 *     std::string filter = bar->asString();
 	 *     delete bar;
 	 *

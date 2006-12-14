@@ -1,3 +1,13 @@
+2006-12-14 06:46:29 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3241]
+  - add the starting point of some audacious C++ bindings
+  
+  trunk/libaudacious++/Makefile     |   35 ++++++++++
+  trunk/libaudacious++/configdb.cxx |  121 ++++++++++++++++++++++++++++++++++++++
+  trunk/libaudacious++/configdb.hh  |   75 +++++++++++++++++++++++
+  3 files changed, 231 insertions(+)
+
+
 2006-12-14 04:38:24 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3239]
   - use str_has_prefix_nocase instead of a literal compare on extension
