@@ -2729,7 +2729,7 @@ playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
             for ( ; entry_list ; entry_list = g_list_next(entry_list) )
             {
                 PlaylistEntry *entry = entry_list->data;
-                if ( ( entry->tuple != NULL ) &&
+                if ( ( entry->tuple != NULL ) && ( entry->tuple->track_name != NULL ) &&
                    ( regexec( &regex , entry->tuple->track_name , 0 , NULL , 0 ) == 0 ) )
                 {
                     tfound_list = g_list_append( tfound_list , entry );
@@ -2755,7 +2755,7 @@ playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
             for ( ; entry_list ; entry_list = g_list_next(entry_list) )
             {
                 PlaylistEntry *entry = entry_list->data;
-                if ( ( entry->tuple != NULL ) &&
+                if ( ( entry->tuple != NULL ) && ( entry->tuple->album_name != NULL ) &&
                    ( regexec( &regex , entry->tuple->album_name , 0 , NULL , 0 ) == 0 ) )
                 {
                     tfound_list = g_list_append( tfound_list , entry );
@@ -2781,7 +2781,7 @@ playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
             for ( ; entry_list ; entry_list = g_list_next(entry_list) )
             {
                 PlaylistEntry *entry = entry_list->data;
-                if ( ( entry->tuple != NULL ) &&
+                if ( ( entry->tuple != NULL ) && ( entry->tuple->performer != NULL ) &&
                    ( regexec( &regex , entry->tuple->performer , 0 , NULL , 0 ) == 0 ) )
                 {
                     tfound_list = g_list_append( tfound_list , entry );
@@ -2807,7 +2807,7 @@ playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
             for ( ; entry_list ; entry_list = g_list_next(entry_list) )
             {
                 PlaylistEntry *entry = entry_list->data;
-                if ( ( entry->tuple != NULL ) &&
+                if ( ( entry->tuple != NULL ) && ( entry->tuple->file_name != NULL ) &&
                    ( regexec( &regex , entry->tuple->file_name , 0 , NULL , 0 ) == 0 ) )
                 {
                     tfound_list = g_list_append( tfound_list , entry );

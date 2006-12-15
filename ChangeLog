@@ -1,3 +1,12 @@
+2006-12-15 19:14:46 +0000  Giacomo Lozito <james@develia.org>
+  revision [3263]
+  added a regex-based search option in playlist that allows to select playlist entries using multiple match criteria
+  trunk/audacious/playlist.c    |  131 ++++++++++++++++++++++++++++++++++++++++++
+  trunk/audacious/playlist.h    |    1 
+  trunk/audacious/ui_playlist.c |  114 +++++++++++++++++++++++++++++++++++-
+  3 files changed, 244 insertions(+), 2 deletions(-)
+
+
 2006-12-15 18:48:13 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3261]
   - bail after 15 failures to find an acceptable playback candidate
