@@ -247,6 +247,28 @@ playlist_remove_playlist(Playlist *playlist)
         playlists_iter = playlists;
 }
 
+void
+playlist_select_next(void)
+{
+    playlists_iter = g_list_next(playlists);
+
+    if (playlists_iter == NULL)
+        playlists_iter = playlists;
+
+    playlistwin_update_list();
+}
+
+void
+playlist_select_prev(void)
+{
+    playlists_iter = g_list_next(playlists);
+
+    if (playlists_iter == NULL)
+        playlists_iter = playlists;
+
+    playlistwin_update_list();
+}
+
 /* *********************** playlist code ********************** */
 
 const gchar *

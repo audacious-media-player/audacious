@@ -1,3 +1,11 @@
+2006-12-15 15:25:30 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3249]
+  - remove static Playlist default_playlist
+  
+  trunk/audacious/playlist.c |   18 ------------------
+  1 file changed, 18 deletions(-)
+
+
 2006-12-15 15:23:19 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3247]
   - remove all improper uses of playlist_get()
