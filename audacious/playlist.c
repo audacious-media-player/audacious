@@ -66,24 +66,6 @@ G_LOCK_DEFINE(playlists);
 static GList *playlists = NULL;
 static GList *playlists_iter;
 
-static Playlist default_playlist = {
-	"Default",
-#ifdef HAVE_XSPF
-	"playlist.xspf",
-#else
-	"playlist.m3u",
-#endif
-	0,
-	NULL,
-	NULL,
-	NULL,
-	NULL,
-	0,
-	0,
-	0,
-	0,
-};
-
 /* If this is set to TRUE, we do not probe upon playlist add.
  *
  * Under Audacious 0.1.x, this was not a big deal because we used 
