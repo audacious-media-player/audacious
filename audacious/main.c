@@ -1109,6 +1109,9 @@ main(gint argc, gchar ** argv)
 
     plugin_system_init();
 
+    /* Initialize the playlist system. */
+    playlist_init();
+
     if (options.headless != 1)
     {
 
@@ -1124,6 +1127,7 @@ main(gint argc, gchar ** argv)
         GDK_THREADS_ENTER();
     }
 
+    /* Load the default playlist in. */
     playlist = playlist_get_active();
     playlist_load(playlist, bmp_paths[BMP_PATH_PLAYLIST_FILE]);
     playlist_set_position(playlist, cfg.playlist_position);

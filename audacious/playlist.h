@@ -95,6 +95,9 @@ void playlist_entry_associate_pos(Playlist * playlist, PlaylistEntry * entry,
                                   PlaylistAssociation assoc, gint pos);
 
 void playlist_init(void);
+void playlist_add_playlist(Playlist *);
+void playlist_remove_playlist(Playlist *);
+
 void playlist_clear(Playlist *playlist);
 void playlist_delete(Playlist *playlist, gboolean crop);
 

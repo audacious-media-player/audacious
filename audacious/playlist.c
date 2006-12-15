@@ -64,6 +64,7 @@ PlaylistEntry *playlist_position_before_jump = NULL;
 G_LOCK_DEFINE(playlists);
 
 static GList *playlists = NULL;
+static GList *playlists_iter;
 
 static Playlist default_playlist = {
 	"Default",
@@ -142,6 +143,8 @@ static void playlist_generate_shuffle_list_nolock(Playlist *);
 static void playlist_recalc_total_time_nolock(Playlist *);
 static void playlist_recalc_total_time(Playlist *);
 static gboolean playlist_entry_get_info(PlaylistEntry * entry);
+
+/* *********************** playlist entry code ********************** */
 
 PlaylistEntry *
 playlist_entry_new(const gchar * filename,
@@ -230,6 +233,40 @@ playlist_entry_get_info(PlaylistEntry * entry)
     return TRUE;
 }
 
+/* *********************** playlist selector code ************************* */
+
+void
+playlist_init(void)
+{
+    Playlist *initial_pl;
+
+    REQUIRE_STATIC_LOCK(playlists);
+
+    initial_pl = playlist_new();
+
+    playlist_add_playlist(initial_pl);
+}
+
+void
+playlist_add_playlist(Playlist *playlist)
+{
+    playlists = g_list_append(playlists, playlist);
+
+    if (playlists_iter == NULL)
+        playlists_iter = playlists;
+}
+
+void
+playlist_remove_playlist(Playlist *playlist)
+{
+    playlists = g_list_remove(playlists, playlist);
+
+    if (playlists_iter == NULL)
+        playlists_iter = playlists;
+}
+
+/* *********************** playlist code ********************** */
+
 const gchar *
 playlist_get_current_name(Playlist *playlist)
 {
@@ -239,9 +276,8 @@ playlist_get_current_name(Playlist *playlist)
 gboolean
 playlist_set_current_name(Playlist *playlist, const gchar * filename)
 {
-#ifdef NOTYET
-    g_free(playlist->title);
-#endif
+    if (playlist->title)
+        g_free(playlist->title);
 
     if (!filename) {
         playlist->title = NULL;
@@ -2627,7 +2663,7 @@ playlist_recalc_total_time_nolock(Playlist *playlist)
     playlist->pl_total_more = FALSE;
     playlist->pl_selection_more = FALSE;
 
-    for (list = playlist_get(); list; list = g_list_next(list)) {
+    for (list = playlist->entries; list; list = g_list_next(list)) {
         entry = list->data;
 
         if (entry->length != -1)
@@ -2789,8 +2825,11 @@ playlist_read_info(Playlist *playlist, guint pos)
 Playlist *
 playlist_get_active(void)
 {
-    return &default_playlist;
-};
+    if (playlists_iter != NULL)
+        return (Playlist *) playlists_iter->data;
+
+    return (Playlist *) playlists->data;
+}
 
 void
 playlist_set_shuffle(gboolean shuffle)
@@ -2812,8 +2851,6 @@ playlist_new(void)
 
     playlist_set_current_name(playlist, NULL);
     playlist_clear(playlist);
-    mainwin_clear_song_info();
-    mainwin_set_info_text();
 
     return playlist;
 }
