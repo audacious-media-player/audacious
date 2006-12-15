@@ -179,6 +179,7 @@ void playlist_get_total_time(Playlist *playlist, gulong * total_time, gulong * s
                              gboolean * total_more,
                              gboolean * selection_more);
 
+gint playlist_select_search(Playlist *playlist, TitleInput *tuple, gint action);
 void playlist_select_all(Playlist *playlist, gboolean set);
 void playlist_select_range(Playlist *playlist, gint min, gint max, gboolean sel);
 void playlist_select_invert_all(Playlist *playlist);

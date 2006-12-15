@@ -60,7 +60,7 @@ enum {
     ADD_URL, ADD_DIR, ADD_FILES,
     SUB_MISC, SUB_ALL, SUB_CROP, SUB_SELECTED,
     SUB_DUPLICATE_BYTITLE, SUB_DUPLICATE_BYFILENAME, SUB_DUPLICATE_BYPATH,
-    SEL_INV, SEL_ZERO, SEL_ALL,
+    SEL_SEARCH, SEL_INV, SEL_ZERO, SEL_ALL,
     MISC_SORT, MISC_FILEINFO, MISC_MISCOPTS,
     PLIST_NEW, PLIST_SAVE_AS, PLIST_LOAD,
     SEL_LOOKUP, CLOSE_PL_WINDOW, MOVE_UP, PLIST_SAVE,
@@ -225,10 +225,16 @@ static GtkItemFactoryEntry pllist_menu_entries[] = {
 };
 
 static GtkItemFactoryEntry plsel_menu_entries[] = {
+    {N_("/Search and Select"), NULL,
+     playlistwin_sub_menu_callback,
+     SEL_SEARCH, "<StockItem>", GTK_STOCK_FIND},
+
+    ITEM_SEPARATOR,
+
     {N_("/Invert Selection"), NULL,
      playlistwin_sub_menu_callback,
      SEL_INV, "<ImageItem>", selectinvert_pixbuf},
-    
+
     ITEM_SEPARATOR,
 
     {N_("/Select None"),"<Ctrl><Shift>A",
@@ -651,6 +657,107 @@ void
 playlistwin_scroll_down_pushed(void)
 {
     playlistwin_scroll(3);
+}
+
+static void
+playlistwin_select_search(void)
+{
+    Playlist *playlist = playlist_get_active();
+    GtkWidget *searchdlg_win, *searchdlg_table;
+    GtkWidget *searchdlg_hbox, *searchdlg_logo, *searchdlg_helptext;
+    GtkWidget *searchdlg_entry_track_name, *searchdlg_label_track_name;
+    GtkWidget *searchdlg_entry_album_name, *searchdlg_label_album_name;
+    GtkWidget *searchdlg_entry_file_name, *searchdlg_label_file_name;
+    GtkWidget *searchdlg_entry_performer, *searchdlg_label_performer;
+    gint result;
+
+    /* create dialog */
+    searchdlg_win = gtk_dialog_new_with_buttons(
+      "Search entries in active playlist" , GTK_WINDOW(mainwin) ,
+      GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT ,
+      GTK_STOCK_CANCEL , GTK_RESPONSE_REJECT , GTK_STOCK_OK , GTK_RESPONSE_ACCEPT , NULL );
+    /* help text and logo */
+    searchdlg_hbox = gtk_hbox_new( FALSE , 4 );
+    searchdlg_logo = gtk_image_new_from_stock( GTK_STOCK_FIND , GTK_ICON_SIZE_DIALOG );
+    searchdlg_helptext = gtk_label_new( _("Select entries in playlist by filling one or more "
+      "fields. Fields use regular expressions syntax, case-insensitive. If you don't know how "
+      "regular expressions work, simply insert a literal portion of what you're searching for.") );
+    gtk_label_set_line_wrap( GTK_LABEL(searchdlg_helptext) , TRUE );
+    gtk_box_pack_start( GTK_BOX(searchdlg_hbox) , searchdlg_logo , FALSE , FALSE , 0 );
+    gtk_box_pack_start( GTK_BOX(searchdlg_hbox) , searchdlg_helptext , FALSE , FALSE , 0 );
+    /* track name */
+    searchdlg_label_track_name = gtk_label_new( _("Track name: ") );
+    searchdlg_entry_track_name = gtk_entry_new();
+    gtk_misc_set_alignment( GTK_MISC(searchdlg_label_track_name) , 0 , 0.5 );
+    /* album name */
+    searchdlg_label_album_name = gtk_label_new( _("Album name: ") );
+    searchdlg_entry_album_name = gtk_entry_new();
+    gtk_misc_set_alignment( GTK_MISC(searchdlg_label_album_name) , 0 , 0.5 );
+    /* artist */
+    searchdlg_label_performer = gtk_label_new( _("Artist: ") );
+    searchdlg_entry_performer = gtk_entry_new();
+    gtk_misc_set_alignment( GTK_MISC(searchdlg_label_performer) , 0 , 0.5 );
+    /* file name */
+    searchdlg_label_file_name = gtk_label_new( _("Filename: ") );
+    searchdlg_entry_file_name = gtk_entry_new();
+    gtk_misc_set_alignment( GTK_MISC(searchdlg_label_file_name) , 0 , 0.5 );
+    /* place fields in searchdlg_table */
+    searchdlg_table = gtk_table_new( 5 , 2 , FALSE );
+    gtk_table_set_row_spacing( GTK_TABLE(searchdlg_table) , 0 , 8 );
+    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_hbox ,
+      0 , 2 , 0 , 1 , GTK_FILL | GTK_EXPAND , GTK_FILL | GTK_EXPAND , 0 , 2 );
+    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_label_track_name ,
+      0 , 1 , 1 , 2 , GTK_FILL , GTK_FILL | GTK_EXPAND , 0 , 2 );
+    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_entry_track_name ,
+      1 , 2 , 1 , 2 , GTK_FILL | GTK_EXPAND , GTK_FILL | GTK_EXPAND , 0 , 2 );
+    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_label_album_name ,
+      0 , 1 , 2 , 3 , GTK_FILL , GTK_FILL | GTK_EXPAND , 0 , 2 );
+    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_entry_album_name ,
+      1 , 2 , 2 , 3 , GTK_FILL | GTK_EXPAND , GTK_FILL | GTK_EXPAND , 0 , 2 );
+    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_label_performer ,
+      0 , 1 , 3 , 4 , GTK_FILL , GTK_FILL | GTK_EXPAND , 0 , 2 );
+    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_entry_performer ,
+      1 , 2 , 3 , 4 , GTK_FILL | GTK_EXPAND , GTK_FILL | GTK_EXPAND , 0 , 2 );
+    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_label_file_name ,
+      0 , 1 , 4 , 5 , GTK_FILL , GTK_FILL | GTK_EXPAND , 0 , 2 );
+    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_entry_file_name ,
+      1 , 2 , 4 , 5 , GTK_FILL | GTK_EXPAND , GTK_FILL | GTK_EXPAND , 0 , 2 );
+
+    gtk_container_set_border_width( GTK_CONTAINER(searchdlg_table) , 5 );
+    gtk_container_add( GTK_CONTAINER(GTK_DIALOG(searchdlg_win)->vbox) , searchdlg_table );
+    gtk_widget_show_all( searchdlg_win );
+    result = gtk_dialog_run( GTK_DIALOG(searchdlg_win) );
+    switch(result)
+    {
+      case GTK_RESPONSE_ACCEPT:
+      {
+         /* create a TitleInput tuple with user search data */
+         TitleInput *tuple = g_malloc(sizeof(TitleInput));
+         gchar *searchdata = NULL;
+         searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_track_name) );
+         tuple->track_name = ( strcmp(searchdata,"") ) ? g_strdup(searchdata) : NULL;
+         searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_album_name) );
+         tuple->album_name = ( strcmp(searchdata,"") ) ? g_strdup(searchdata) : NULL;
+         searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_performer) );
+         tuple->performer = ( strcmp(searchdata,"") ) ? g_strdup(searchdata) : NULL;
+         searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_file_name) );
+         tuple->file_name = ( strcmp(searchdata,"") ) ? g_strdup(searchdata) : NULL;
+         /* now send this tuple to the real search function */
+         playlist_select_search( playlist , tuple , 0 );
+         /* we do not need the tuple and its data anymore */
+         if ( tuple->track_name != NULL ) g_free( tuple->track_name );
+         if ( tuple->album_name != NULL )  g_free( tuple->album_name );
+         if ( tuple->performer != NULL ) g_free( tuple->performer );
+         if ( tuple->file_name != NULL ) g_free( tuple->file_name );
+         g_free( tuple );
+         playlistwin_update_list();
+         break;
+      }
+      default:
+         break;
+    }
+    /* done here :) */
+    gtk_widget_destroy( searchdlg_win );
 }
 
 static void
@@ -2049,6 +2156,9 @@ playlistwin_sub_menu_callback(gpointer data,
         break;
     case PLIST_LOAD:
         playlistwin_select_playlist_to_load(playlist_get_current_name(playlist));
+        break;
+    case SEL_SEARCH:
+        playlistwin_select_search();
         break;
     case SEL_INV:
         playlistwin_inverse_selection();

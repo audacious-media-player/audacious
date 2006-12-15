@@ -38,6 +38,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/errno.h>
+#include <regex.h>
 
 #include "input.h"
 #include "main.h"
@@ -2706,6 +2707,136 @@ playlist_recalc_total_time(Playlist *playlist)
     PLAYLIST_UNLOCK();
 }
 
+gint
+playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
+{
+    GList *entry_list = NULL, *found_list = NULL, *sel_list = NULL;
+    gboolean is_first_search = TRUE;
+    gint num_of_entries_found = 0;
+
+    PLAYLIST_LOCK();
+
+    if ( tuple->track_name != NULL )
+    {
+        /* match by track_name */
+        const gchar *regex_pattern = tuple->track_name;
+        regex_t regex;
+        if ( regcomp( &regex , regex_pattern , REG_NOSUB | REG_ICASE ) == 0 )
+        {
+            GList *tfound_list = NULL;
+            if ( is_first_search == TRUE ) entry_list = playlist->entries;
+            else entry_list = found_list; /* use found_list */
+            for ( ; entry_list ; entry_list = g_list_next(entry_list) )
+            {
+                PlaylistEntry *entry = entry_list->data;
+                if ( ( entry->tuple != NULL ) &&
+                   ( regexec( &regex , entry->tuple->track_name , 0 , NULL , 0 ) == 0 ) )
+                {
+                    tfound_list = g_list_append( tfound_list , entry );
+                }
+            }
+            g_list_free( found_list ); /* wipe old found_list */
+            found_list = tfound_list; /* move tfound_list in found_list */
+            regfree( &regex );
+        }
+        is_first_search = FALSE;
+    }
+
+    if ( tuple->album_name != NULL )
+    {
+        /* match by album_name */
+        const gchar *regex_pattern = tuple->album_name;
+        regex_t regex;
+        if ( regcomp( &regex , regex_pattern , REG_NOSUB | REG_ICASE ) == 0 )
+        {
+            GList *tfound_list = NULL;
+            if ( is_first_search == TRUE ) entry_list = playlist->entries;
+            else entry_list = found_list; /* use found_list */
+            for ( ; entry_list ; entry_list = g_list_next(entry_list) )
+            {
+                PlaylistEntry *entry = entry_list->data;
+                if ( ( entry->tuple != NULL ) &&
+                   ( regexec( &regex , entry->tuple->album_name , 0 , NULL , 0 ) == 0 ) )
+                {
+                    tfound_list = g_list_append( tfound_list , entry );
+                }
+            }
+            g_list_free( found_list ); /* wipe old found_list */
+            found_list = tfound_list; /* move tfound_list in found_list */
+            regfree( &regex );
+        }
+        is_first_search = FALSE;
+    }
+
+    if ( tuple->performer != NULL )
+    {
+        /* match by performer */
+        const gchar *regex_pattern = tuple->performer;
+        regex_t regex;
+        if ( regcomp( &regex , regex_pattern , REG_NOSUB | REG_ICASE ) == 0 )
+        {
+            GList *tfound_list = NULL;
+            if ( is_first_search == TRUE ) entry_list = playlist->entries;
+            else entry_list = found_list; /* use found_list */
+            for ( ; entry_list ; entry_list = g_list_next(entry_list) )
+            {
+                PlaylistEntry *entry = entry_list->data;
+                if ( ( entry->tuple != NULL ) &&
+                   ( regexec( &regex , entry->tuple->performer , 0 , NULL , 0 ) == 0 ) )
+                {
+                    tfound_list = g_list_append( tfound_list , entry );
+                }
+            }
+            g_list_free( found_list ); /* wipe old found_list */
+            found_list = tfound_list; /* move tfound_list in found_list */
+            regfree( &regex );
+        }
+        is_first_search = FALSE;
+    }
+
+    if ( tuple->file_name != NULL )
+    {
+        /* match by file_name */
+        const gchar *regex_pattern = tuple->file_name;
+        regex_t regex;
+        if ( regcomp( &regex , regex_pattern , REG_NOSUB | REG_ICASE ) == 0 )
+        {
+            GList *tfound_list = NULL;
+            if ( is_first_search == TRUE ) entry_list = playlist->entries;
+            else entry_list = found_list; /* use found_list */
+            for ( ; entry_list ; entry_list = g_list_next(entry_list) )
+            {
+                PlaylistEntry *entry = entry_list->data;
+                if ( ( entry->tuple != NULL ) &&
+                   ( regexec( &regex , entry->tuple->file_name , 0 , NULL , 0 ) == 0 ) )
+                {
+                    tfound_list = g_list_append( tfound_list , entry );
+                }
+            }
+            g_list_free( found_list ); /* wipe old found_list */
+            found_list = tfound_list; /* move tfound_list in found_list */
+            regfree( &regex );
+        }
+        is_first_search = FALSE;
+    }
+
+    /* NOTE: action = 0 -> default behaviour, select all matching entries */
+    /* if some entries are still in found_list, those
+       are what the user is searching for; select them */
+    for ( sel_list = found_list ; sel_list ; sel_list = g_list_next(sel_list) )
+    {
+        PlaylistEntry *entry = sel_list->data;
+        entry->selected = TRUE;
+        num_of_entries_found++;
+    }
+
+    g_list_free( found_list );
+
+    PLAYLIST_UNLOCK();
+    playlist_recalc_total_time(playlist);
+
+    return num_of_entries_found;
+}
 
 void
 playlist_select_all(Playlist *playlist, gboolean set)

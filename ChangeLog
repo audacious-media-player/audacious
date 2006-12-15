@@ -1,3 +1,11 @@
+2006-12-15 18:48:13 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3261]
+  - bail after 15 failures to find an acceptable playback candidate
+  
+  trunk/audacious/playback.c |   14 ++++++++++++++
+  1 file changed, 14 insertions(+)
+
+
 2006-12-15 16:23:51 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3259]
   - add playlist_select_playlist() to select a literal playlist
