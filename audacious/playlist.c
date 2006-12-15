@@ -870,7 +870,7 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
         g_free(decoded);
 
         PLAYLIST_LOCK();
-        node = g_list_nth(playlist_get(), pos);
+        node = g_list_nth(playlist->entries, pos);
         PLAYLIST_UNLOCK();
 
         entries += i;
@@ -2314,7 +2314,7 @@ playlist_get_info_func(gpointer arg)
             playlist_get_info_scan_active) {
 
             PLAYLIST_LOCK();
-            for (node = playlist_get(); node; node = g_list_next(node)) {
+            for (node = playlist->entries; node; node = g_list_next(node)) {
                 entry = node->data;
 
                 if(entry->tuple && (entry->tuple->length > -1)) {
@@ -2323,10 +2323,10 @@ playlist_get_info_func(gpointer arg)
                 }
 
                 if (!playlist_entry_get_info(entry)) {
-                    if (g_list_index(playlist_get(), entry) == -1)
+                    if (g_list_index(playlist->entries, entry) == -1)
                         /* Entry disappeared while we looked it up.
                            Restart. */
-                        node = playlist_get();
+                        node = playlist->entries;
                 }
                 else if ((entry->tuple != NULL || entry->title != NULL) && entry->length != -1) {
                     update_playlistwin = TRUE;
@@ -2357,12 +2357,12 @@ playlist_get_info_func(gpointer arg)
 
             PLAYLIST_LOCK();
 
-            if (!playlist_get()) {
+            if (!playlist->entries) {
                 PLAYLIST_UNLOCK();
             }
             else {
-                for (node = g_list_nth(playlist_get(), playlistwin_get_toprow());
-                     node && playlistwin_item_visible(g_list_position(playlist_get(), node));
+                for (node = g_list_nth(playlist->entries, playlistwin_get_toprow());
+                     node && playlistwin_item_visible(g_list_position(playlist->entries, node));
                      node = g_list_next(node)) {
 
                     entry = node->data;
@@ -2373,11 +2373,11 @@ playlist_get_info_func(gpointer arg)
                     }
 
                     if (!playlist_entry_get_info(entry)) { 
-                        if (g_list_index(playlist_get(), entry) == -1)
+                        if (g_list_index(playlist->entries, entry) == -1)
                             /* Entry disapeared while we
                                looked it up.  Restart. */
                             node =
-                                g_list_nth(playlist_get(),
+                                g_list_nth(playlist->entries,
                                            playlistwin_get_toprow());
                     }
                     else if ((entry->tuple != NULL || entry->title != NULL) && entry->length != -1) {
@@ -2773,7 +2773,7 @@ playlist_read_info_selection(Playlist *playlist)
 
     PLAYLIST_LOCK();
 
-    for (node = playlist_get(); node; node = g_list_next(node)) {
+    for (node = playlist->entries; node; node = g_list_next(node)) {
         PlaylistEntry *entry = node->data;
         if (!entry->selected)
             continue;
@@ -2788,9 +2788,9 @@ playlist_read_info_selection(Playlist *playlist)
 	    entry->tuple->mtime = -1; /* -1 denotes "non-initialized". now 0 is for stream etc. yaz */
 
         if (!playlist_entry_get_info(entry)) {
-            if (g_list_index(playlist_get(), entry) == -1)
+            if (g_list_index(playlist->entries, entry) == -1)
                 /* Entry disappeared while we looked it up. Restart. */
-                node = playlist_get();
+                node = playlist->entries;
         }
     }
 
@@ -2809,7 +2809,7 @@ playlist_read_info(Playlist *playlist, guint pos)
 
     PLAYLIST_LOCK();
 
-    if ((node = g_list_nth(playlist_get(), pos))) {
+    if ((node = g_list_nth(playlist->entries, pos))) {
         PlaylistEntry *entry = node->data;
         str_replace_in(&entry->title, NULL);
         entry->length = -1;
