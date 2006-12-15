@@ -82,6 +82,7 @@ bmp_playback_initiate(void)
 {
     PlaylistEntry *entry = NULL;
     Playlist *playlist = playlist_get_active();
+    int penalty;
 
     if (playlist_get_length(playlist) == 0)
         return;
@@ -110,8 +111,21 @@ bmp_playback_initiate(void)
 
         entry = playlist_get_entry_to_play(playlist);
 
+	/* XXX ew. workaround for a stupid bug where audacious will keep 
+	 * trying to play a file with no valid decoder.
+	 */
         if (entry == NULL)
             return;
+
+	if (entry->decoder == NULL &&
+	    (entry->decoder = input_check_file(entry->filename, FALSE)) == NULL)
+	    penalty++;
+
+	/* if we hit 15 entries in a row with no valid decoder, just 
+         * bail due to confusion
+	 */
+	if (penalty > 15)
+	    return;
     }
 
     if (bmp_playback_get_time() != -1) {
