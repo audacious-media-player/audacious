@@ -1,3 +1,13 @@
+2006-12-15 15:38:23 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3253]
+  - add some basic code for the manipulation of temporary playlists
+  
+  trunk/audacious/mainwin.c  |   20 ++++++++++++++++++++
+  trunk/audacious/mainwin.h  |    6 +++++-
+  trunk/audacious/playlist.c |   10 ++++++++--
+  3 files changed, 33 insertions(+), 3 deletions(-)
+
+
 2006-12-15 15:28:29 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3251]
   - add playlist_select_next(), playlist_select_prev()

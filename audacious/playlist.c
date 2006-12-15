@@ -331,12 +331,6 @@ play_queued(Playlist *playlist)
 void
 playlist_clear(Playlist *playlist)
 {
-    if (bmp_playback_get_playing()) {
-        ip_data.stop = TRUE;
-        bmp_playback_stop();
-        ip_data.stop = FALSE;
-    }
-
     PLAYLIST_LOCK();
 
     if (playlist) {
