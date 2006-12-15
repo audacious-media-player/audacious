@@ -2307,10 +2307,10 @@ playlist_get_info_func(gpointer arg)
     GList *node;
     gboolean update_playlistwin = FALSE;
     gboolean update_mainwin = FALSE;
-    Playlist *playlist = playlist_get_active();
 
     while (playlist_get_info_is_going()) {
         PlaylistEntry *entry;
+        Playlist *playlist = playlist_get_active();
 
         // on_load
         if (cfg.use_pl_metadata &&
