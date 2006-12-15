@@ -250,7 +250,10 @@ playlist_remove_playlist(Playlist *playlist)
 void
 playlist_select_next(void)
 {
-    playlists_iter = g_list_next(playlists);
+    if (playlists_iter == NULL)
+        playlists_iter = playlists;
+
+    playlists_iter = g_list_next(playlists_iter);
 
     if (playlists_iter == NULL)
         playlists_iter = playlists;
@@ -261,7 +264,10 @@ playlist_select_next(void)
 void
 playlist_select_prev(void)
 {
-    playlists_iter = g_list_next(playlists);
+    if (playlists_iter == NULL)
+        playlists_iter = playlists;
+
+    playlists_iter = g_list_previous(playlists_iter);
 
     if (playlists_iter == NULL)
         playlists_iter = playlists;

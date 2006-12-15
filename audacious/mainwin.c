@@ -367,6 +367,13 @@ GtkItemFactoryEntry mainwin_playback_menu_entries[] = {
     {N_("/Jump to Time"), "<control>J", mainwin_general_menu_callback,
      MAINWIN_GENERAL_JTT, "<StockItem>", GTK_STOCK_JUMP_TO},
     {"/-", NULL, NULL, 0, "<Separator>", NULL},
+    {N_("/New Playlist"), "<shift>N", mainwin_general_menu_callback,
+     MAINWIN_GENERAL_NEW_PL, "<Item>"},    
+    {N_("/Select Next Playlist"), "<shift>P", mainwin_general_menu_callback,
+     MAINWIN_GENERAL_NEXT_PL, "<Item>"},
+    {N_("/Select Previous Playlist"), "<control><shift>P", mainwin_general_menu_callback,
+     MAINWIN_GENERAL_PREV_PL, "<Item>"},
+    {"/-", NULL, NULL, 0, "<Separator>", NULL},
     {N_("/View Track Details"), "<alt>I", mainwin_general_menu_callback,
      MAINWIN_GENERAL_FILEINFO, "<ImageItem>", my_pixbuf}
 };
@@ -3068,6 +3075,19 @@ mainwin_general_menu_callback(gpointer data,
             ab_position_a = ab_position_b = -1;
 	    mainwin_release_info_text();
         }
+        break;
+    case MAINWIN_GENERAL_NEW_PL:
+        {
+            Playlist *new_pl = playlist_new();
+
+            playlist_add_playlist(new_pl);
+        }
+        break;
+    case MAINWIN_GENERAL_PREV_PL:
+        playlist_select_prev();
+        break;
+    case MAINWIN_GENERAL_NEXT_PL:
+        playlist_select_next();
         break;
     }
 }
