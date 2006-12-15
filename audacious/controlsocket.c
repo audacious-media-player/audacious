@@ -502,6 +502,18 @@ ctrlsocket_func(gpointer arg)
             }
             ctrl_ack_packet(pkt);
             break;
+	case CMD_PLAYLIST_ENQUEUE_TO_TEMP:
+	    {
+ 	        Playlist *new_pl = playlist_new();
+
+                GDK_THREADS_ENTER();
+                playlist_select_playlist(new_pl);
+                playlist_add_url(new_pl, pkt->data);
+                GDK_THREADS_LEAVE();
+
+                ctrl_ack_packet(pkt);
+            }
+            break;
         case CMD_PLAYLIST_ADD_URL_STRING:
             GDK_THREADS_ENTER();
             playlist_add_url(playlist_get_active(), pkt->data);

@@ -275,6 +275,20 @@ playlist_select_prev(void)
     playlistwin_update_list();
 }
 
+void
+playlist_select_playlist(Playlist *playlist)
+{
+    if (playlists_iter == NULL)
+        playlists_iter = playlists;
+
+    playlists_iter = g_list_find(playlists, playlist);
+
+    if (playlists_iter == NULL)
+        playlists_iter = playlists;
+
+    playlistwin_update_list();
+}
+
 /* *********************** playlist code ********************** */
 
 const gchar *

@@ -1250,6 +1250,20 @@ xmms_remote_playlist_add_url_string(gint session, gchar * string)
 }
 
 /**
+ * xmms_remote_playlist_enqueue_to_temp:
+ * @session: Legacy XMMS-style session identifier.
+ * @string: The URI to enqueue to a temporary playlist.
+ *
+ * Tells audacious to add an URI to a temporary playlist.
+ **/
+void
+xmms_remote_playlist_enqueue_to_temp(gint session, gchar * string)
+{
+    g_return_if_fail(string != NULL);
+    remote_send_string(session, CMD_PLAYLIST_ENQUEUE_TO_TEMP, string);
+}
+
+/**
  * xmms_remote_playlist_ins_url_string:
  * @session: Legacy XMMS-style session identifier.
  * @string: The URI to add.

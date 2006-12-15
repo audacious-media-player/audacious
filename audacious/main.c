@@ -91,6 +91,7 @@ struct _BmpCmdLineOpt {
     gboolean load_skins;
     gboolean headless;
     gboolean no_log;
+    gboolean enqueue_to_temp;
     gchar *previous_session_id;
 };
 
@@ -795,6 +796,7 @@ parse_cmd_line(gint argc,
         {"fwd", 0, NULL, 'f'},
         {"show-jump-box", 0, NULL, 'j'},
         {"enqueue", 0, NULL, 'e'},
+	{"enqueue-to-temp", 0, NULL, 'E'},
         {"show-main-window", 0, NULL, 'm'},
         {"activate", 0, NULL, 'a'},
         {"version", 0, NULL, 'v'},
@@ -811,7 +813,7 @@ parse_cmd_line(gint argc,
     memset(options, 0, sizeof(BmpCmdLineOpt));
     options->session = -1;
 
-    while ((c = getopt_long(argc, argv, "chn:HrpusfemavtLSj", long_options,
+    while ((c = getopt_long(argc, argv, "chn:HrpusfemavtLSjE", long_options,
                             NULL)) != -1) {
         switch (c) {
         case 'h':
@@ -849,6 +851,9 @@ parse_cmd_line(gint argc,
             break;
         case 'a':
             options->activate = TRUE;
+	    break;
+	case 'E':
+	    options->enqueue_to_temp = TRUE;
 	    break;
         case 'e':
             options->enqueue = TRUE;
@@ -910,6 +915,9 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
             skin_install_skin(filenames->data);
         }
         else {
+	    if (options->enqueue_to_temp)
+                xmms_remote_playlist_enqueue_to_temp(session, filenames->data);
+
             if (options->enqueue && options->play)
                 pos = xmms_remote_get_playlist_length(session);
 

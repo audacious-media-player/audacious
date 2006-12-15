@@ -75,6 +75,7 @@ extern "C" {
     void xmms_remote_playlist_prev(gint session);
     void xmms_remote_playlist_next(gint session);
     void xmms_remote_playlist_add_url_string(gint session, gchar * string);
+    void xmms_remote_playlist_enqueue_to_temp(gint session, gchar * string);
     gboolean xmms_remote_is_running(gint session);
     void xmms_remote_toggle_repeat(gint session);
     void xmms_remote_toggle_shuffle(gint session);
