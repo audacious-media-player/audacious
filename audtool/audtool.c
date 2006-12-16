@@ -356,8 +356,8 @@ void playback_seek_relative(gint session, gint argc, gchar **argv)
 		return;
 	}
 
-	oldtime = xmms_remote_get_output_time(session) / 1000;
-	diff = atoi(argv[2]);
+	oldtime = xmms_remote_get_output_time(session);
+	diff = atoi(argv[2]) * 1000;
 	newtime = oldtime + diff;
 
 	xmms_remote_jump_to_time(session, newtime);
