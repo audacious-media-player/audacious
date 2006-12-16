@@ -244,15 +244,19 @@ void
 playlist_list_move_up(PlayList_List * pl)
 {
     GList *list;
+    Playlist *playlist = playlist_get_active();
 
-    PLAYLIST_LOCK();
-    if ((list = playlist_get()) == NULL) {
-        PLAYLIST_UNLOCK();
+    if (!playlist)
+        return;
+
+    PLAYLIST_LOCK(playlist->mutex);
+    if ((list = playlist->entries) == NULL) {
+        PLAYLIST_UNLOCK(playlist->mutex);
         return;
     }
     if (PLAYLIST_ENTRY(list->data)->selected) {
         /* We are at the top */
-        PLAYLIST_UNLOCK();
+        PLAYLIST_UNLOCK(playlist->mutex);
         return;
     }
     while (list) {
@@ -260,7 +264,7 @@ playlist_list_move_up(PlayList_List * pl)
             glist_moveup(list);
         list = g_list_next(list);
     }
-    PLAYLIST_UNLOCK();
+    PLAYLIST_UNLOCK(playlist->mutex);
     if (pl->pl_prev_selected != -1)
         pl->pl_prev_selected--;
     if (pl->pl_prev_min != -1)
@@ -273,17 +277,21 @@ void
 playlist_list_move_down(PlayList_List * pl)
 {
     GList *list;
+    Playlist *playlist = playlist_get_active();
 
-    PLAYLIST_LOCK();
+    if (!playlist)
+        return;
 
-    if (!(list = g_list_last(playlist_get()))) {
-        PLAYLIST_UNLOCK();
+    PLAYLIST_LOCK(playlist->mutex);
+
+    if (!(list = g_list_last(playlist->entries))) {
+        PLAYLIST_UNLOCK(playlist->mutex);
         return;
     }
 
     if (PLAYLIST_ENTRY(list->data)->selected) {
         /* We are at the bottom */
-        PLAYLIST_UNLOCK();
+        PLAYLIST_UNLOCK(playlist->mutex);
         return;
     }
 
@@ -293,7 +301,7 @@ playlist_list_move_down(PlayList_List * pl)
         list = g_list_previous(list);
     }
 
-    PLAYLIST_UNLOCK();
+    PLAYLIST_UNLOCK(playlist->mutex);
 
     if (pl->pl_prev_selected != -1)
         pl->pl_prev_selected++;
@@ -460,7 +468,7 @@ playlist_list_draw_string(PlayList_List * pl,
 
     PangoLayout *layout;
 
-    REQUIRE_STATIC_LOCK(playlists);
+    REQUIRE_LOCK(playlist->mutex);
 
     if (cfg.show_numbers_in_pl) {
         gchar *pos_string = g_strdup_printf(cfg.show_separator_in_pl == TRUE ? "%d" : "%d.", ppos);
@@ -590,7 +598,7 @@ playlist_list_draw(Widget * w)
 
     pl->pl_first = CLAMP(pl->pl_first, 0, max_first);
 
-    PLAYLIST_LOCK();
+    PLAYLIST_LOCK(playlist->mutex);
     list = playlist->entries;
     list = g_list_nth(list, pl->pl_first);
 
@@ -612,7 +620,7 @@ playlist_list_draw(Widget * w)
     }
 
     /* Reset */
-    list = playlist_get();
+    list = playlist->entries;
     list = g_list_nth(list, pl->pl_first);
 
     for (i = pl->pl_first;
@@ -887,7 +895,7 @@ playlist_list_draw(Widget * w)
     gdk_gc_set_clip_origin(gc, 0, 0);
     gdk_gc_set_clip_rectangle(gc, NULL);
 
-    PLAYLIST_UNLOCK();
+    PLAYLIST_UNLOCK(playlist->mutex);
 
     gdk_flush();
 

@@ -660,6 +660,27 @@ playlistwin_scroll_down_pushed(void)
 }
 
 static void
+playlistwin_select_all(void)
+{
+    Playlist *playlist = playlist_get_active();
+
+    playlist_select_all(playlist, TRUE);
+    playlistwin_list->pl_prev_selected = 0;
+    playlistwin_list->pl_prev_min = 0;
+    playlistwin_list->pl_prev_max = playlist_get_length(playlist) - 1;
+    playlistwin_update_list();
+}
+
+static void
+playlistwin_select_none(void)
+{
+    playlist_select_all(playlist_get_active(), FALSE);
+    playlistwin_list->pl_prev_selected = -1;
+    playlistwin_list->pl_prev_min = -1;
+    playlistwin_update_list();
+}
+
+static void
 playlistwin_select_search(void)
 {
     Playlist *playlist = playlist_get_active();
@@ -669,6 +690,8 @@ playlistwin_select_search(void)
     GtkWidget *searchdlg_entry_album_name, *searchdlg_label_album_name;
     GtkWidget *searchdlg_entry_file_name, *searchdlg_label_file_name;
     GtkWidget *searchdlg_entry_performer, *searchdlg_label_performer;
+    GtkWidget *searchdlg_checkbt_clearprevsel;
+    GtkWidget *searchdlg_checkbt_newplaylist;
     gint result;
 
     /* create dialog */
@@ -701,9 +724,17 @@ playlistwin_select_search(void)
     searchdlg_label_file_name = gtk_label_new( _("Filename: ") );
     searchdlg_entry_file_name = gtk_entry_new();
     gtk_misc_set_alignment( GTK_MISC(searchdlg_label_file_name) , 0 , 0.5 );
+    /* some options that control behaviour */
+    searchdlg_checkbt_clearprevsel = gtk_check_button_new_with_label(
+      _("Clear previous selection before searching") );
+    gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(searchdlg_checkbt_clearprevsel) , TRUE );
+    searchdlg_checkbt_newplaylist = gtk_check_button_new_with_label(
+      _("Create a new playlist with matching entries") );
+    gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(searchdlg_checkbt_newplaylist) , FALSE );
     /* place fields in searchdlg_table */
-    searchdlg_table = gtk_table_new( 5 , 2 , FALSE );
+    searchdlg_table = gtk_table_new( 7 , 2 , FALSE );
     gtk_table_set_row_spacing( GTK_TABLE(searchdlg_table) , 0 , 8 );
+    gtk_table_set_row_spacing( GTK_TABLE(searchdlg_table) , 4 , 8 );
     gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_hbox ,
       0 , 2 , 0 , 1 , GTK_FILL | GTK_EXPAND , GTK_FILL | GTK_EXPAND , 0 , 2 );
     gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_label_track_name ,
@@ -722,6 +753,10 @@ playlistwin_select_search(void)
       0 , 1 , 4 , 5 , GTK_FILL , GTK_FILL | GTK_EXPAND , 0 , 2 );
     gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_entry_file_name ,
       1 , 2 , 4 , 5 , GTK_FILL | GTK_EXPAND , GTK_FILL | GTK_EXPAND , 0 , 2 );
+    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_checkbt_clearprevsel ,
+      0 , 2 , 5 , 6 , GTK_FILL | GTK_EXPAND , GTK_FILL | GTK_EXPAND , 0 , 1 );
+    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_checkbt_newplaylist ,
+      0 , 2 , 6 , 7 , GTK_FILL | GTK_EXPAND , GTK_FILL | GTK_EXPAND , 0 , 1 );
 
     gtk_container_set_border_width( GTK_CONTAINER(searchdlg_table) , 5 );
     gtk_container_add( GTK_CONTAINER(GTK_DIALOG(searchdlg_win)->vbox) , searchdlg_table );
@@ -731,6 +766,7 @@ playlistwin_select_search(void)
     {
       case GTK_RESPONSE_ACCEPT:
       {
+         gint matched_entries_num = 0;
          /* create a TitleInput tuple with user search data */
          TitleInput *tuple = g_malloc(sizeof(TitleInput));
          gchar *searchdata = NULL;
@@ -742,8 +778,11 @@ playlistwin_select_search(void)
          tuple->performer = ( strcmp(searchdata,"") ) ? g_strdup(searchdata) : NULL;
          searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_file_name) );
          tuple->file_name = ( strcmp(searchdata,"") ) ? g_strdup(searchdata) : NULL;
+         /* check if previous selection should be cleared before searching */
+         if ( gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(searchdlg_checkbt_clearprevsel)) == TRUE )
+             playlistwin_select_none();
          /* now send this tuple to the real search function */
-         playlist_select_search( playlist , tuple , 0 );
+         matched_entries_num = playlist_select_search( playlist , tuple , 0 );
          /* we do not need the tuple and its data anymore */
          if ( tuple->track_name != NULL ) g_free( tuple->track_name );
          if ( tuple->album_name != NULL )  g_free( tuple->album_name );
@@ -751,6 +790,9 @@ playlistwin_select_search(void)
          if ( tuple->file_name != NULL ) g_free( tuple->file_name );
          g_free( tuple );
          playlistwin_update_list();
+         /* check if a new playlist should be created after searching */
+         if ( gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(searchdlg_checkbt_newplaylist)) == TRUE )
+             playlist_new_from_selected();
          break;
       }
       default:
@@ -758,27 +800,6 @@ playlistwin_select_search(void)
     }
     /* done here :) */
     gtk_widget_destroy( searchdlg_win );
-}
-
-static void
-playlistwin_select_all(void)
-{
-    Playlist *playlist = playlist_get_active();
-
-    playlist_select_all(playlist, TRUE);
-    playlistwin_list->pl_prev_selected = 0;
-    playlistwin_list->pl_prev_min = 0;
-    playlistwin_list->pl_prev_max = playlist_get_length(playlist) - 1;
-    playlistwin_update_list();
-}
-
-static void
-playlistwin_select_none(void)
-{
-    playlist_select_all(playlist_get_active(), FALSE);
-    playlistwin_list->pl_prev_selected = -1;
-    playlistwin_list->pl_prev_min = -1;
-    playlistwin_update_list();
 }
 
 static void

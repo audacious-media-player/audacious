@@ -75,6 +75,7 @@ typedef struct _Playlist {
     gulong         pl_selection_time;
     gboolean       pl_total_more;
     gboolean       pl_selection_more;
+    GMutex        *mutex;       /* this is required for multiple playlist */
 } Playlist;
 
 typedef enum {
@@ -140,9 +141,6 @@ gint playlist_get_current_length(Playlist *playlist);
 gboolean playlist_save(Playlist *playlist, const gchar * filename);
 gboolean playlist_load(Playlist *playlist, const gchar * filename);
 
-/* returns the current selected *linear* playlist */
-GList *playlist_get(void);
-
 void playlist_start_get_info_thread(void);
 void playlist_stop_get_info_thread();
 void playlist_start_get_info_scan(void);
@@ -196,12 +194,13 @@ GList *get_playlist_nth(Playlist *playlist, guint);
 gboolean playlist_set_current_name(Playlist *playlist, const gchar * filename);
 const gchar *playlist_get_current_name(Playlist *playlist);
 Playlist *playlist_new(void);
+Playlist *playlist_new_from_selected(void);
 
 PlaylistFormat playlist_format_get_from_name(const gchar * filename);
 gboolean is_playlist_name(const gchar * filename);
 
-#define PLAYLIST_LOCK()    G_LOCK(playlists)
-#define PLAYLIST_UNLOCK()  G_UNLOCK(playlists)
+#define PLAYLIST_LOCK(m)    g_mutex_lock(m)
+#define PLAYLIST_UNLOCK(m)  g_mutex_unlock(m)
 
 G_LOCK_EXTERN(playlists);
 

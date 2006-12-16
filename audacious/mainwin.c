@@ -1883,12 +1883,12 @@ mainwin_update_jtf(GtkWidget * widget, gpointer user_data)
     /* FIXME: Is not in sync with playlist due to delayed extinfo
      * reading */
     gint row;
-    GList *node;
+    GList *playlist_glist;
     gchar *desc_buf = NULL;
     gchar *row_str;
     GtkTreeIter iter;
     GtkTreeSelection *selection;
-    Playlist *playlist = playlist_get_active();
+    Playlist *playlist;
 
     GtkTreeModel *store;
 
@@ -1899,9 +1899,10 @@ mainwin_update_jtf(GtkWidget * widget, gpointer user_data)
     gtk_list_store_clear(GTK_LIST_STORE(store));
 
     row = 1;
-    for (node = playlist->entries; node; node = g_list_next(node))
-    {
-        PlaylistEntry *entry = PLAYLIST_ENTRY(node->data);
+    playlist = playlist_get_active();
+    for (playlist_glist = playlist->entries; playlist_glist;
+         playlist_glist = g_list_next(playlist_glist)) {
+        PlaylistEntry *entry = PLAYLIST_ENTRY(playlist_glist->data);
 
         if (entry->title)
 		desc_buf = g_strdup(entry->title);
@@ -1935,13 +1936,13 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
     GtkTreeView *treeview = GTK_TREE_VIEW(user_data);
     GtkTreeSelection *selection;
     GtkTreeIter iter;
-    Playlist *playlist = playlist_get_active();
 
     GtkListStore *store;
 
     gint song_index = 0;
     gchar **words;
-    GList *node;
+    GList *playlist_glist;
+    Playlist *playlist;
 
     gboolean match = FALSE;
 
@@ -1963,14 +1964,15 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
      * (row-selected will still eventually arrive once) */
     store = GTK_LIST_STORE(gtk_tree_view_get_model(treeview));
     gtk_list_store_clear(store);
-    g_object_ref(store);
-    gtk_tree_view_set_model(treeview, NULL);
 
-    PLAYLIST_LOCK();
+    playlist = playlist_get_active();
 
-    for (node = playlist->entries; node; node = g_list_next(node))
-    {
-        PlaylistEntry *entry = PLAYLIST_ENTRY(node->data);
+    PLAYLIST_LOCK(playlist->mutex);
+
+    for (playlist_glist = playlist->entries; playlist_glist;
+         playlist_glist = g_list_next(playlist_glist)) {
+
+        PlaylistEntry *entry = PLAYLIST_ENTRY(playlist_glist->data);
         const gchar *title;
         gchar *filename = NULL;
 
@@ -2015,10 +2017,7 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
 	}
     }
 
-    PLAYLIST_UNLOCK();
-
-    gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(store));
-    g_object_unref(store);
+    PLAYLIST_UNLOCK(playlist->mutex);
 
     if ( regex_list != NULL )
     {
@@ -2047,7 +2046,8 @@ mainwin_jump_to_file(void)
     GtkWidget *jump, *queue, *cancel;
     GtkWidget *rescan, *edit;
     GtkWidget *search_label, *hbox;
-    GList *node;
+    GList *playlist_glist;
+    Playlist *playlist;
     gchar *desc_buf = NULL;
     gchar *row_str;
     gint row;
@@ -2058,8 +2058,6 @@ mainwin_jump_to_file(void)
     GtkTreeIter iter;
     GtkCellRenderer *renderer;
     GtkTreeViewColumn *column;
-
-    Playlist *playlist = playlist_get_active();
 
     if (mainwin_jtf) {
         gtk_window_present(GTK_WINDOW(mainwin_jtf));
@@ -2183,11 +2181,14 @@ mainwin_jump_to_file(void)
 
     row = 1;
 
-    PLAYLIST_LOCK();
+    playlist = playlist_get_active();
 
-    for (node = playlist->entries; node; node = g_list_next(node))
-    {
-        PlaylistEntry *entry = PLAYLIST_ENTRY(node->data);
+    PLAYLIST_LOCK(playlist->mutex);
+
+    for (playlist_glist = playlist->entries; playlist_glist;
+         playlist_glist = g_list_next(playlist_glist)) {
+
+        PlaylistEntry *entry = PLAYLIST_ENTRY(playlist_glist->data);
 
         if (entry->title)
 		desc_buf = g_strdup(entry->title);
@@ -2209,7 +2210,7 @@ mainwin_jump_to_file(void)
         g_free(row_str);
     }
 
-    PLAYLIST_UNLOCK();
+    PLAYLIST_UNLOCK(playlist->mutex);
 
     gtk_widget_show_all(mainwin_jtf);
 }
