@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-12-11 22:15-0600\n"
+"POT-Creation-Date: 2006-12-15 20:35-0600\n"
 "PO-Revision-Date: 2006-08-26 21:52+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -19,15 +19,15 @@ msgstr ""
 "Content-Type: text/plain; charset=EUC-JP\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: audacious/about.c:119 audacious/credits.c:317
+#: audacious/about.c:118 audacious/credits.c:317
 msgid "About Audacious"
 msgstr "Audacious について"
 
-#: audacious/about.c:168 audacious/credits.c:362
+#: audacious/about.c:167 audacious/credits.c:362
 msgid "Credits"
 msgstr "クレジット"
 
-#: audacious/credits.c:45
+#: audacious/credits.c:44
 #, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
@@ -40,43 +40,43 @@ msgstr ""
 "\n"
 "Copyright (C) 2005-2006 Audacious 開発チーム\n"
 
-#: audacious/credits.c:51
+#: audacious/credits.c:50
 msgid "Audacious core developers:"
 msgstr "Audacious 主要開発者:"
 
-#: audacious/credits.c:63
+#: audacious/credits.c:62
 msgid "Graphics:"
 msgstr "グラフィックス:"
 
-#: audacious/credits.c:68
+#: audacious/credits.c:67
 msgid "Default skin:"
 msgstr "デフォルトのスキン:"
 
-#: audacious/credits.c:73
+#: audacious/credits.c:72
 msgid "Plugin development:"
 msgstr "プラグイン開発:"
 
-#: audacious/credits.c:84
+#: audacious/credits.c:83
 msgid "Patch authors:"
 msgstr ""
 
-#: audacious/credits.c:99
+#: audacious/credits.c:98
 msgid "0.1.x developers:"
 msgstr "0.1.x 開発者:"
 
-#: audacious/credits.c:105
+#: audacious/credits.c:104
 msgid "BMP Developers:"
 msgstr "BMP 開発者:"
 
-#: audacious/credits.c:137
+#: audacious/credits.c:136
 msgid "Brazilian Portuguese:"
 msgstr "ブラジル・ポルトガル語:"
 
-#: audacious/credits.c:140
+#: audacious/credits.c:139
 msgid "Breton:"
 msgstr "ブレトン語:"
 
-#: audacious/credits.c:143
+#: audacious/credits.c:142
 msgid "Chinese:"
 msgstr "中国語:"
 
@@ -172,120 +172,120 @@ msgstr "ウェールズ語:"
 msgid "Translators"
 msgstr "翻訳者"
 
-#: audacious/equalizer.c:120
+#: audacious/equalizer.c:119
 msgid "/Load"
 msgstr "/読み込み"
 
-#: audacious/equalizer.c:121
+#: audacious/equalizer.c:120
 msgid "/Load/Preset"
 msgstr "/読み込み/プリセット"
 
-#: audacious/equalizer.c:123
+#: audacious/equalizer.c:122
 msgid "/Load/Auto-load preset"
 msgstr "/読み込み/自動読み込みのプリセット"
 
-#: audacious/equalizer.c:125
+#: audacious/equalizer.c:124
 msgid "/Load/Default"
 msgstr "/読み込み/デフォルト"
 
-#: audacious/equalizer.c:128
+#: audacious/equalizer.c:127
 msgid "/Load/Zero"
 msgstr "/読み込み/リセット"
 
-#: audacious/equalizer.c:131
+#: audacious/equalizer.c:130
 msgid "/Load/From file"
 msgstr "/読み込み/ファイル"
 
-#: audacious/equalizer.c:133
+#: audacious/equalizer.c:132
 msgid "/Load/From WinAMP EQF file"
 msgstr "/読み込み/WinAMP EQF ファイル"
 
-#: audacious/equalizer.c:135
+#: audacious/equalizer.c:134
 msgid "/Import"
 msgstr "/インポート"
 
-#: audacious/equalizer.c:136
+#: audacious/equalizer.c:135
 msgid "/Import/WinAMP Presets"
 msgstr "/インポート/WinAMP プリセット"
 
-#: audacious/equalizer.c:138
+#: audacious/equalizer.c:137
 msgid "/Save"
 msgstr "/保存"
 
-#: audacious/equalizer.c:139
+#: audacious/equalizer.c:138
 msgid "/Save/Preset"
 msgstr "/保存/プリセット"
 
-#: audacious/equalizer.c:141
+#: audacious/equalizer.c:140
 msgid "/Save/Auto-load preset"
 msgstr "/保存/自動読み込みのプリセット"
 
-#: audacious/equalizer.c:143
+#: audacious/equalizer.c:142
 msgid "/Save/Default"
 msgstr "/保存/デフォルト"
 
-#: audacious/equalizer.c:146
+#: audacious/equalizer.c:145
 msgid "/Save/To file"
 msgstr "/保存/ファイル"
 
-#: audacious/equalizer.c:148
+#: audacious/equalizer.c:147
 msgid "/Save/To WinAMP EQF file"
 msgstr "/保存/WinAMP EQF ファイル"
 
-#: audacious/equalizer.c:150
+#: audacious/equalizer.c:149
 msgid "/Delete"
 msgstr "/削除"
 
-#: audacious/equalizer.c:151
+#: audacious/equalizer.c:150
 msgid "/Delete/Preset"
 msgstr "/削除/プリセット"
 
-#: audacious/equalizer.c:153
+#: audacious/equalizer.c:152
 msgid "/Delete/Auto-load preset"
 msgstr "/削除/自動読み込みのプリセット"
 
-#: audacious/equalizer.c:816
+#: audacious/equalizer.c:815
 msgid "Audacious Equalizer"
 msgstr "Audacious イコライザ"
 
-#: audacious/equalizer.c:1484
+#: audacious/equalizer.c:1483
 msgid "Preset"
 msgstr "プリセット"
 
-#: audacious/equalizer.c:1529
+#: audacious/equalizer.c:1528
 msgid "Presets"
 msgstr "プリセット"
 
-#: audacious/equalizer.c:1593
+#: audacious/equalizer.c:1592
 msgid "Load preset"
 msgstr "プリセットの読み込み"
 
-#: audacious/equalizer.c:1609
+#: audacious/equalizer.c:1608
 msgid "Load auto-preset"
 msgstr "自動読み込みのプリセットの読み込み"
 
-#: audacious/equalizer.c:1635 audacious/equalizer.c:1641
-#: audacious/equalizer.c:1648
+#: audacious/equalizer.c:1634 audacious/equalizer.c:1640
+#: audacious/equalizer.c:1647
 msgid "Load equalizer preset"
 msgstr "イコライザ・プリセットの読み込み"
 
-#: audacious/equalizer.c:1657
+#: audacious/equalizer.c:1656
 msgid "Save preset"
 msgstr "プリセットの保存"
 
-#: audacious/equalizer.c:1677
+#: audacious/equalizer.c:1676
 msgid "Save auto-preset"
 msgstr "自動読み込みのプリセットの保存"
 
-#: audacious/equalizer.c:1713 audacious/equalizer.c:1733
+#: audacious/equalizer.c:1712 audacious/equalizer.c:1732
 msgid "Save equalizer preset"
 msgstr "イコライザ・プリセットの保存"
 
-#: audacious/equalizer.c:1742
+#: audacious/equalizer.c:1741
 msgid "Delete preset"
 msgstr "プリセットの削除"
 
-#: audacious/equalizer.c:1760
+#: audacious/equalizer.c:1759
 msgid "Delete auto-preset"
 msgstr "自動読み込みのプリセットの削除"
 
@@ -344,7 +344,7 @@ msgstr "%s: オプション '-W %s' があいまいです\n"
 msgid "%s: option `-W %s' doesn't allow an argument\n"
 msgstr "%s: オプション '-W %s' は引数をとりません\n"
 
-#: audacious/glade.c:41
+#: audacious/glade.c:40
 #, c-format
 msgid ""
 "<b><big>Unable to create %s.</big></b>\n"
@@ -355,7 +355,7 @@ msgstr ""
 "\n"
 "glade ファイル (%s) を開けません。インストール手順を確認してください。\n"
 
-#: audacious/input.c:304
+#: audacious/input.c:303
 msgid ""
 "<b><big>Unable to play files.</big></b>\n"
 "\n"
@@ -369,53 +369,53 @@ msgstr ""
 "1. アクセス可能であるか。\n"
 "2. 演奏に必要なメディアのプラグインを有効にしているか。"
 
-#: audacious/input.c:329
+#: audacious/input.c:328
 msgid "Don't show this warning anymore"
 msgstr "次回からこの警告を表示しない"
 
-#: audacious/input.c:331
+#: audacious/input.c:330
 msgid "Show more _details"
 msgstr "詳細を表示する(_D)"
 
-#: audacious/input.c:345 audacious/prefswin.c:115 audacious/prefswin.c:483
-#: audacious/prefswin.c:571 audacious/prefswin.c:660 audacious/prefswin.c:756
+#: audacious/input.c:344 audacious/prefswin.c:114 audacious/prefswin.c:482
+#: audacious/prefswin.c:570 audacious/prefswin.c:659 audacious/prefswin.c:755
 msgid "Filename"
 msgstr "ファイル名"
 
-#: audacious/input.c:581
+#: audacious/input.c:612
 #, c-format
 msgid "audacious: %s"
 msgstr "audacious: %s"
 
-#: audacious/input.c:597
+#: audacious/input.c:628
 msgid "Filename:"
 msgstr "ファイル名:"
 
-#: audacious/input.c:615
+#: audacious/input.c:646
 msgid "No input plugin recognized this file"
 msgstr "このファイルを認識する入力プラグインではありません"
 
-#: audacious/input.c:617
+#: audacious/input.c:648
 #, c-format
 msgid "Input plugin: %s"
 msgstr "入力プラグイン: %s"
 
-#: audacious/logger.c:120
+#: audacious/logger.c:119
 #, c-format
 msgid "Unable to create log file (%s)!\n"
 msgstr "ログ・ファイル (%s) を作成できません！\n"
 
-#: audacious/main.c:82 audacious/main.c:84 audacious/mainwin.c:876
-#: audacious/mainwin.c:3676
+#: audacious/main.c:81 audacious/main.c:83 audacious/mainwin.c:885
+#: audacious/mainwin.c:3720
 msgid "Audacious"
 msgstr "Audacious"
 
-#: audacious/main.c:449
+#: audacious/main.c:451
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "ディレクトリ (%s) を作成できませんでした: %s"
 
-#: audacious/main.c:726
+#: audacious/main.c:728
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
@@ -427,71 +427,71 @@ msgstr ""
 "オプション:\n"
 "--------\n"
 
-#: audacious/main.c:731
+#: audacious/main.c:733
 msgid "Display this text and exit"
 msgstr "このメッセージを表示して終了する"
 
-#: audacious/main.c:734
+#: audacious/main.c:736
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Audacious/BMP/XMMS セッションを選択する (デフォルト: 0)"
 
-#: audacious/main.c:737
+#: audacious/main.c:739
 msgid "Skip backwards in playlist"
 msgstr "演奏一覧の一つ前の曲にジャンプする"
 
-#: audacious/main.c:740
+#: audacious/main.c:742
 msgid "Start playing current playlist"
 msgstr "現在の演奏一覧で演奏を開始する"
 
-#: audacious/main.c:743
+#: audacious/main.c:745
 msgid "Pause current song"
 msgstr "現在の曲を一時停止する"
 
-#: audacious/main.c:746
+#: audacious/main.c:748
 msgid "Stop current song"
 msgstr "現在の曲を停止する"
 
-#: audacious/main.c:749
+#: audacious/main.c:751
 msgid "Pause if playing, play otherwise"
 msgstr "演奏していたら一時停止し、それ以外は演奏する"
 
-#: audacious/main.c:752
+#: audacious/main.c:754
 msgid "Skip forward in playlist"
 msgstr "演奏一覧の一つ次の曲にジャンプする"
 
-#: audacious/main.c:755
+#: audacious/main.c:757
 msgid "Display Jump to file dialog"
 msgstr ""
 
-#: audacious/main.c:758
+#: audacious/main.c:760
 msgid "Don't clear the playlist"
 msgstr "演奏一覧をクリアしない"
 
-#: audacious/main.c:761
+#: audacious/main.c:763
 msgid "Show the main window"
 msgstr "メイン・ウィンドウを表示する"
 
-#: audacious/main.c:764
+#: audacious/main.c:766
 msgid "Activate Audacious"
 msgstr "Audacious をアクティブにする"
 
-#: audacious/main.c:767
+#: audacious/main.c:769
 msgid "Previous session ID"
 msgstr "以前のセッション ID を指定する"
 
-#: audacious/main.c:770
+#: audacious/main.c:772
 msgid "Headless operation [experimental]"
 msgstr "ヘッドレス動作 [実験的]"
 
-#: audacious/main.c:773
+#: audacious/main.c:775
 msgid "Disable error/warning interception (logging)"
 msgstr "エラー/警告の捕獲(ロギング)を無効にする"
 
-#: audacious/main.c:776
+#: audacious/main.c:778
 msgid "Print version number and exit\n"
 msgstr "バージョンを表示して終了する\n"
 
-#: audacious/main.c:966
+#: audacious/main.c:975
 #, fuzzy
 msgid ""
 "\n"
@@ -508,7 +508,7 @@ msgstr ""
 "bugs.nenolod.net/ に報告して下さい。\n"
 "\n"
 
-#: audacious/main.c:996
+#: audacious/main.c:1005
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -521,7 +521,7 @@ msgstr ""
 "'%s' にあるスキンが利用可能であるか確認して下さい。\n"
 "デフォルトのスキンはおそらく '%s' にインストールされています。\n"
 
-#: audacious/main.c:1043
+#: audacious/main.c:1052
 #, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -531,7 +531,7 @@ msgstr ""
 "していません。\n"
 "GTK+ %s またはそれ以降のバージョンをお使い下さい。\n"
 
-#: audacious/main.c:1054
+#: audacious/main.c:1063
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -545,415 +545,430 @@ msgstr ""
 "GTK+ をインストールした場合は、Glib と GTK+ を再コンパイルして再インストール"
 "する必要があります。\n"
 
-#: audacious/main.c:1073
+#: audacious/main.c:1082
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "audacious: X ディスプレイを開けません。強制終了します。\n"
 
-#: audacious/mainwin.c:245 audacious/mainwin.c:371 audacious/ui_playlist.c:122
+#: audacious/mainwin.c:247 audacious/mainwin.c:380 audacious/ui_playlist.c:121
 msgid "/View Track Details"
 msgstr "/トラックの詳細"
 
-#: audacious/mainwin.c:247 audacious/mainwin.c:366
+#: audacious/mainwin.c:249 audacious/mainwin.c:368
 msgid "/Jump to File"
 msgstr "/指定したファイルへ移動"
 
-#: audacious/mainwin.c:250 audacious/mainwin.c:433
+#: audacious/mainwin.c:252 audacious/mainwin.c:442
 msgid "/Autoscroll Songname"
 msgstr "/曲名の自動スクロール"
 
-#: audacious/mainwin.c:252 audacious/mainwin.c:344
+#: audacious/mainwin.c:254 audacious/mainwin.c:346
 msgid "/Stop After Current Song"
 msgstr "/現在の曲の後に停止する"
 
-#: audacious/mainwin.c:262
+#: audacious/mainwin.c:264
 msgid "/Visualization Mode"
 msgstr "/視覚化モード"
 
-#: audacious/mainwin.c:263
+#: audacious/mainwin.c:265
 msgid "/Visualization Mode/Analyzer"
 msgstr "/視覚化モード/アナライザ"
 
-#: audacious/mainwin.c:265
+#: audacious/mainwin.c:267
 msgid "/Visualization Mode/Scope"
 msgstr "/視覚化モード/スコープ"
 
-#: audacious/mainwin.c:267
+#: audacious/mainwin.c:269
 msgid "/Visualization Mode/Off"
 msgstr "/視覚化モード/無効"
 
-#: audacious/mainwin.c:269
+#: audacious/mainwin.c:271
 msgid "/Analyzer Mode"
 msgstr "/アナライザ・モード"
 
-#: audacious/mainwin.c:270
+#: audacious/mainwin.c:272
 msgid "/Analyzer Mode/Normal"
 msgstr "/アナライザ・モード/標準"
 
-#: audacious/mainwin.c:272
+#: audacious/mainwin.c:274
 msgid "/Analyzer Mode/Fire"
 msgstr "/アナライザ・モード/ファイア"
 
-#: audacious/mainwin.c:274
+#: audacious/mainwin.c:276
 msgid "/Analyzer Mode/Vertical Lines"
 msgstr "/アナライザ・モード/垂直ライン"
 
-#: audacious/mainwin.c:277
+#: audacious/mainwin.c:279
 msgid "/Analyzer Mode/Lines"
 msgstr "/アナライザ・モード/ライン"
 
-#: audacious/mainwin.c:279
+#: audacious/mainwin.c:281
 msgid "/Analyzer Mode/Bars"
 msgstr "/アナライザ・モード/バー"
 
-#: audacious/mainwin.c:282
+#: audacious/mainwin.c:284
 msgid "/Analyzer Mode/Peaks"
 msgstr "/アナライザ・モード/ピーク"
 
-#: audacious/mainwin.c:284
+#: audacious/mainwin.c:286
 msgid "/Scope Mode"
 msgstr "/スコープ・モード"
 
-#: audacious/mainwin.c:285
+#: audacious/mainwin.c:287
 msgid "/Scope Mode/Dot Scope"
 msgstr "/スコープ・モード/ドット・スコープ"
 
-#: audacious/mainwin.c:287
+#: audacious/mainwin.c:289
 msgid "/Scope Mode/Line Scope"
 msgstr "/スコープ・モード/ライン・スコープ"
 
-#: audacious/mainwin.c:289
+#: audacious/mainwin.c:291
 msgid "/Scope Mode/Solid Scope"
 msgstr "/スコープ・モード/ソリッド・モード"
 
-#: audacious/mainwin.c:291
+#: audacious/mainwin.c:293
 msgid "/WindowShade VU Mode"
 msgstr "/WindowShade VU モード"
 
-#: audacious/mainwin.c:292
+#: audacious/mainwin.c:294
 msgid "/WindowShade VU Mode/Normal"
 msgstr "/WindowShade VU モード/標準"
 
-#: audacious/mainwin.c:294
+#: audacious/mainwin.c:296
 msgid "/WindowShade VU Mode/Smooth"
 msgstr "/WindowShade VU モード/スムーズ"
 
-#: audacious/mainwin.c:296
+#: audacious/mainwin.c:298
 msgid "/Refresh Rate"
 msgstr "/リフレッシュ・レート"
 
-#: audacious/mainwin.c:297
+#: audacious/mainwin.c:299
 msgid "/Refresh Rate/Full (~50 fps)"
 msgstr "/リフレッシュ・レート/1:1 (〜50 fps)"
 
-#: audacious/mainwin.c:299
+#: audacious/mainwin.c:301
 msgid "/Refresh Rate/Half (~25 fps)"
 msgstr "/リフレッシュ・レート/1:2 (〜25 fps)"
 
-#: audacious/mainwin.c:301
+#: audacious/mainwin.c:303
 msgid "/Refresh Rate/Quarter (~13 fps)"
 msgstr "/リフレッシュ・レート/1:4(〜13 fps)"
 
-#: audacious/mainwin.c:303
+#: audacious/mainwin.c:305
 msgid "/Refresh Rate/Eighth (~6 fps)"
 msgstr "/リフレッシュ・レート/1:8 (〜6 fps)"
 
-#: audacious/mainwin.c:305
+#: audacious/mainwin.c:307
 msgid "/Analyzer Falloff"
 msgstr "/アナライザ・フォールオフ"
 
-#: audacious/mainwin.c:306
+#: audacious/mainwin.c:308
 msgid "/Analyzer Falloff/Slowest"
 msgstr "/アナライザ・フォールオフ/最低速"
 
-#: audacious/mainwin.c:308
+#: audacious/mainwin.c:310
 msgid "/Analyzer Falloff/Slow"
 msgstr "/アナライザ・フォールオフ/低速"
 
-#: audacious/mainwin.c:310
+#: audacious/mainwin.c:312
 msgid "/Analyzer Falloff/Medium"
 msgstr "/アナライザ・フォールオフ/中速"
 
-#: audacious/mainwin.c:312
+#: audacious/mainwin.c:314
 msgid "/Analyzer Falloff/Fast"
 msgstr "/アナライザ・フォールオフ/高速"
 
-#: audacious/mainwin.c:314
+#: audacious/mainwin.c:316
 msgid "/Analyzer Falloff/Fastest"
 msgstr "/アナライザ・フォールオフ/最高速"
 
-#: audacious/mainwin.c:316
+#: audacious/mainwin.c:318
 msgid "/Peaks Falloff"
 msgstr "/ピーク・フォールオフ"
 
-#: audacious/mainwin.c:317
+#: audacious/mainwin.c:319
 msgid "/Peaks Falloff/Slowest"
 msgstr "/ピーク・フォールオフ/最低速"
 
-#: audacious/mainwin.c:319
+#: audacious/mainwin.c:321
 msgid "/Peaks Falloff/Slow"
 msgstr "/ピーク・フォールオフ/低速"
 
-#: audacious/mainwin.c:321
+#: audacious/mainwin.c:323
 msgid "/Peaks Falloff/Medium"
 msgstr "/ピーク・フォールオフ/中速"
 
-#: audacious/mainwin.c:323
+#: audacious/mainwin.c:325
 msgid "/Peaks Falloff/Fast"
 msgstr "/ピーク・フォールオフ/高速"
 
-#: audacious/mainwin.c:325
+#: audacious/mainwin.c:327
 msgid "/Peaks Falloff/Fastest"
 msgstr "/ピーク・フォールオフ/最高速"
 
-#: audacious/mainwin.c:335
+#: audacious/mainwin.c:337
 msgid "/Play CD"
 msgstr "/CD の演奏"
 
-#: audacious/mainwin.c:338
+#: audacious/mainwin.c:340
 msgid "/Repeat"
 msgstr "/リピート"
 
-#: audacious/mainwin.c:340
+#: audacious/mainwin.c:342
 msgid "/Shuffle"
 msgstr "/シャッフル"
 
-#: audacious/mainwin.c:342
+#: audacious/mainwin.c:344
 msgid "/No Playlist Advance"
 msgstr "/演奏一覧アドバンスなし"
 
-#: audacious/mainwin.c:347
+#: audacious/mainwin.c:349
 msgid "/Play"
 msgstr "/演奏"
 
-#: audacious/mainwin.c:349
+#: audacious/mainwin.c:351
 msgid "/Pause"
 msgstr "/一時停止"
 
-#: audacious/mainwin.c:351
+#: audacious/mainwin.c:353
 msgid "/Stop"
 msgstr "/停止"
 
-#: audacious/mainwin.c:353
+#: audacious/mainwin.c:355
 msgid "/Previous"
 msgstr "/前の曲"
 
-#: audacious/mainwin.c:355
+#: audacious/mainwin.c:357
 msgid "/Next"
 msgstr "/次の曲"
 
-#: audacious/mainwin.c:358
+#: audacious/mainwin.c:360
 msgid "/Jump to Playlist Start"
 msgstr "/演奏一覧の開始へ移動"
 
-#: audacious/mainwin.c:360
+#: audacious/mainwin.c:362
 msgid "/-"
 msgstr "/-"
 
-#: audacious/mainwin.c:361
+#: audacious/mainwin.c:363
 #, fuzzy
 msgid "/Set A-B"
 msgstr "/全て選択"
 
-#: audacious/mainwin.c:363
+#: audacious/mainwin.c:365
 #, fuzzy
 msgid "/Clear A-B"
 msgstr "/キューのクリア"
 
-#: audacious/mainwin.c:368
+#: audacious/mainwin.c:370
 msgid "/Jump to Time"
 msgstr "/指定した時間へ移動"
 
-#: audacious/mainwin.c:381
+#: audacious/mainwin.c:373
+#, fuzzy
+msgid "/New Playlist"
+msgstr "演奏一覧の保存"
+
+#: audacious/mainwin.c:375
+#, fuzzy
+msgid "/Select Next Playlist"
+msgstr "演奏一覧で使用するフォントの選択:"
+
+#: audacious/mainwin.c:377
+#, fuzzy
+msgid "/Select Previous Playlist"
+msgstr "/選択範囲のソート/エントリ順"
+
+#: audacious/mainwin.c:390
 msgid "/About Audacious"
 msgstr "/Audacious について"
 
-#: audacious/mainwin.c:384
+#: audacious/mainwin.c:393
 msgid "/Play File"
 msgstr "/ファイルを演奏"
 
-#: audacious/mainwin.c:386
+#: audacious/mainwin.c:395
 msgid "/Play Location"
 msgstr "/場所を演奏"
 
-#: audacious/mainwin.c:389
+#: audacious/mainwin.c:398
 msgid "/V_isualization"
 msgstr "/視覚化モード(_V)"
 
-#: audacious/mainwin.c:390
+#: audacious/mainwin.c:399
 msgid "/_Playback"
 msgstr "/演奏(_P)"
 
-#: audacious/mainwin.c:391
+#: audacious/mainwin.c:400
 msgid "/_View"
 msgstr "/表示(_V)"
 
-#: audacious/mainwin.c:393
+#: audacious/mainwin.c:402
 msgid "/Preferences"
 msgstr "/設定"
 
-#: audacious/mainwin.c:395
+#: audacious/mainwin.c:404
 msgid "/_Quit"
 msgstr "/終了(_Q)"
 
-#: audacious/mainwin.c:405
+#: audacious/mainwin.c:414
 msgid "/Files..."
 msgstr "/ファイル..."
 
-#: audacious/mainwin.c:407
+#: audacious/mainwin.c:416
 msgid "/Internet location..."
 msgstr "/インターネット上の場所..."
 
-#: audacious/mainwin.c:417
+#: audacious/mainwin.c:426
 #, fuzzy
 msgid "/Show Player"
 msgstr "/演奏一覧エディタを表示する"
 
-#: audacious/mainwin.c:419
+#: audacious/mainwin.c:428
 msgid "/Show Playlist Editor"
 msgstr "/演奏一覧エディタを表示する"
 
-#: audacious/mainwin.c:421
+#: audacious/mainwin.c:430
 msgid "/Show Equalizer"
 msgstr "/イコライザを表示する"
 
-#: audacious/mainwin.c:424
+#: audacious/mainwin.c:433
 msgid "/Time Elapsed"
 msgstr "/経過時間を表示する"
 
-#: audacious/mainwin.c:426
+#: audacious/mainwin.c:435
 msgid "/Time Remaining"
 msgstr "/残り時間を表示する"
 
-#: audacious/mainwin.c:429
+#: audacious/mainwin.c:438
 msgid "/Always On Top"
 msgstr "/常に最前面に配置する"
 
-#: audacious/mainwin.c:431
+#: audacious/mainwin.c:440
 msgid "/Put on All Workspaces"
 msgstr "/全ワークスペースに配置する"
 
-#: audacious/mainwin.c:436
+#: audacious/mainwin.c:445
 msgid "/Roll up Player"
 msgstr "/プレイヤを巻き上げる"
 
-#: audacious/mainwin.c:438
+#: audacious/mainwin.c:447
 msgid "/Roll up Playlist Editor"
 msgstr "/演奏一覧エディタを巻き上げる"
 
-#: audacious/mainwin.c:440
+#: audacious/mainwin.c:449
 msgid "/Roll up Equalizer"
 msgstr "/イコライザを巻き上げる"
 
-#: audacious/mainwin.c:443
+#: audacious/mainwin.c:452
 msgid "/DoubleSize"
 msgstr ""
 
-#: audacious/mainwin.c:445
+#: audacious/mainwin.c:454
 msgid "/Easy Move"
 msgstr ""
 
-#: audacious/mainwin.c:874
+#: audacious/mainwin.c:883
 #, c-format
 msgid "%s - Audacious"
 msgstr "%s - Audacious"
 
-#: audacious/mainwin.c:1099
+#: audacious/mainwin.c:1108
 msgid "VBR"
 msgstr "VBR"
 
-#: audacious/mainwin.c:1140 audacious/mainwin.c:1144
+#: audacious/mainwin.c:1149 audacious/mainwin.c:1153
 msgid "stereo"
 msgstr "ステレオ"
 
-#: audacious/mainwin.c:1140 audacious/mainwin.c:1144
+#: audacious/mainwin.c:1149 audacious/mainwin.c:1153
 msgid "mono"
 msgstr "モノラル"
 
-#: audacious/mainwin.c:1633
+#: audacious/mainwin.c:1642
 msgid "Jump to Time"
 msgstr "指定した時間へ移動"
 
-#: audacious/mainwin.c:1654
+#: audacious/mainwin.c:1663
 msgid "minutes:seconds"
 msgstr "分:秒"
 
-#: audacious/mainwin.c:1664
+#: audacious/mainwin.c:1673
 msgid "Track length:"
 msgstr "トラックの合計時間:"
 
-#: audacious/mainwin.c:1752
+#: audacious/mainwin.c:1761
 msgid "Un_queue"
 msgstr "キューから外す"
 
-#: audacious/mainwin.c:1754 audacious/mainwin.c:2109
+#: audacious/mainwin.c:1763 audacious/mainwin.c:2140
 msgid "_Queue"
 msgstr "キューに入れる"
 
-#: audacious/mainwin.c:2034
+#: audacious/mainwin.c:2065
 msgid "Jump to Track"
 msgstr "指定トラックへ移動"
 
-#: audacious/mainwin.c:2075
+#: audacious/mainwin.c:2106
 msgid "Filter: "
 msgstr "フィルタ:"
 
-#: audacious/mainwin.c:2280
+#: audacious/mainwin.c:2311
 msgid "Enter location to play:"
 msgstr "演奏する位置の入力:"
 
-#: audacious/mainwin.c:2488
+#: audacious/mainwin.c:2519
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "移動先: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2520 audacious/mainwin.c:3310
+#: audacious/mainwin.c:2551 audacious/mainwin.c:3354
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "音量: %d%%"
 
-#: audacious/mainwin.c:2551 audacious/mainwin.c:3313
+#: audacious/mainwin.c:2582 audacious/mainwin.c:3357
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "バランス: %d%% (左寄り)"
 
-#: audacious/mainwin.c:2555 audacious/mainwin.c:3316
+#: audacious/mainwin.c:2586 audacious/mainwin.c:3360
 msgid "BALANCE: CENTER"
 msgstr "バランス: 中央"
 
-#: audacious/mainwin.c:2559 audacious/mainwin.c:3318
+#: audacious/mainwin.c:2590 audacious/mainwin.c:3362
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "バランス: %d%% (右寄り)"
 
-#: audacious/mainwin.c:3084
+#: audacious/mainwin.c:3128
 msgid "OPTIONS MENU"
 msgstr "オプション・メニュー"
 
-#: audacious/mainwin.c:3088
+#: audacious/mainwin.c:3132
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "\"常に最前面に配置\" は無効"
 
-#: audacious/mainwin.c:3090
+#: audacious/mainwin.c:3134
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "\"常に最前面に配置\" は有効"
 
-#: audacious/mainwin.c:3093
+#: audacious/mainwin.c:3137
 msgid "FILE INFO BOX"
 msgstr "ファイル情報ボックス"
 
-#: audacious/mainwin.c:3097
+#: audacious/mainwin.c:3141
 msgid "DISABLE DOUBLESIZE"
 msgstr ""
 
-#: audacious/mainwin.c:3099
+#: audacious/mainwin.c:3143
 msgid "ENABLE DOUBLESIZE"
 msgstr ""
 
-#: audacious/mainwin.c:3102
+#: audacious/mainwin.c:3146
 msgid "VISUALIZATION MENU"
 msgstr "視覚化メニュー"
 
-#: audacious/mainwin.c:3150
+#: audacious/mainwin.c:3194
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -963,7 +978,7 @@ msgstr ""
 "\n"
 "CD が挿入されていないか、挿入された CD はオーディオ CD ではありません。\n"
 
-#: audacious/mainwin.c:3167
+#: audacious/mainwin.c:3211
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -979,280 +994,313 @@ msgstr ""
 "2. お使いのサウンドカードをブロックしているアプリが他に存在しないか。\n"
 "3. お使いのサウンドカードが正しく設定されているか。\n"
 
-#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1372
+#: audacious/prefswin.c:97 audacious/glade/prefswin.glade:1372
 msgid "Appearance"
 msgstr "外観"
 
-#: audacious/prefswin.c:99
+#: audacious/prefswin.c:98
 msgid "Audio"
 msgstr "オーディオ"
 
-#: audacious/prefswin.c:100
+#: audacious/prefswin.c:99
 msgid "Connectivity"
 msgstr "接続"
 
-#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:2871
+#: audacious/prefswin.c:100 audacious/glade/prefswin.glade:2871
 msgid "Equalizer"
 msgstr "イコライザ"
 
-#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:1651
+#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:1651
 msgid "Mouse"
 msgstr "マウス"
 
-#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:2503
+#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:2503
 msgid "Playlist"
 msgstr "演奏一覧"
 
-#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:693
+#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:693
 msgid "Plugins"
 msgstr "プラグイン"
 
-#: audacious/prefswin.c:110
+#: audacious/prefswin.c:109
 msgid "Artist"
 msgstr "アーティスト"
 
-#: audacious/prefswin.c:111 libaudacious/titlestring.c:372
+#: audacious/prefswin.c:110 libaudacious/titlestring.c:372
 msgid "Album"
 msgstr "アルバム名"
 
-#: audacious/prefswin.c:112
+#: audacious/prefswin.c:111
 msgid "Title"
 msgstr "タイトル"
 
-#: audacious/prefswin.c:113
+#: audacious/prefswin.c:112
 msgid "Tracknumber"
 msgstr "トラック番号"
 
-#: audacious/prefswin.c:114 libaudacious/titlestring.c:373
+#: audacious/prefswin.c:113 libaudacious/titlestring.c:373
 msgid "Genre"
 msgstr "ジャンル"
 
-#: audacious/prefswin.c:116
+#: audacious/prefswin.c:115
 msgid "Filepath"
 msgstr "パス名"
 
-#: audacious/prefswin.c:117 libaudacious/titlestring.c:379
+#: audacious/prefswin.c:116 libaudacious/titlestring.c:379
 msgid "Date"
 msgstr "日付"
 
-#: audacious/prefswin.c:118 libaudacious/titlestring.c:380
+#: audacious/prefswin.c:117 libaudacious/titlestring.c:380
 msgid "Year"
 msgstr "制作年"
 
-#: audacious/prefswin.c:119 libaudacious/titlestring.c:381
+#: audacious/prefswin.c:118 libaudacious/titlestring.c:381
 msgid "Comment"
 msgstr "コメント"
 
-#: audacious/prefswin.c:140
+#: audacious/prefswin.c:139
 msgid "localhost"
 msgstr "localhost"
 
-#: audacious/prefswin.c:453 audacious/prefswin.c:540 audacious/prefswin.c:629
-#: audacious/prefswin.c:725
+#: audacious/prefswin.c:452 audacious/prefswin.c:539 audacious/prefswin.c:628
+#: audacious/prefswin.c:724
 msgid "Enabled"
 msgstr "有効"
 
-#: audacious/prefswin.c:469 audacious/prefswin.c:556 audacious/prefswin.c:645
-#: audacious/prefswin.c:741
+#: audacious/prefswin.c:468 audacious/prefswin.c:555 audacious/prefswin.c:644
+#: audacious/prefswin.c:740
 msgid "Description"
 msgstr "説明"
 
-#: audacious/prefswin.c:1792
+#: audacious/prefswin.c:1805
 msgid "Category"
 msgstr "カテゴリ"
 
-#: audacious/prefswin.c:2251
+#: audacious/prefswin.c:2266
 msgid "Preferences Window"
 msgstr "設定ウィンドウ"
 
-#: audacious/skinwin.c:177
+#: audacious/skinwin.c:176
 msgid "Archived Winamp 2.x skin"
 msgstr "Archived Winamp 2.x スキン"
 
-#: audacious/skinwin.c:182
+#: audacious/skinwin.c:181
 msgid "Unarchived Winamp 2.x skin"
 msgstr "Unarchived Winamp 2.x スキン"
 
-#: audacious/ui_fileinfo.c:316
+#: audacious/ui_fileinfo.c:315
 #, fuzzy
 msgid "Track Information Window"
 msgstr "ポップアップ情報の設定"
 
-#: audacious/ui_fileinfo.c:338
+#: audacious/ui_fileinfo.c:337
 msgid "Track Information Popup"
 msgstr ""
 
-#: audacious/ui_playlist.c:126
+#: audacious/ui_playlist.c:125
 msgid "/Show Popup Info"
 msgstr "/ポップアップ情報を表示"
 
-#: audacious/ui_playlist.c:132 audacious/ui_playlist.c:197
+#: audacious/ui_playlist.c:131 audacious/ui_playlist.c:196
 msgid "/Remove Selected"
 msgstr "/選択したエントリの削除"
 
-#: audacious/ui_playlist.c:136 audacious/ui_playlist.c:193
+#: audacious/ui_playlist.c:135 audacious/ui_playlist.c:192
 msgid "/Remove Unselected"
 msgstr "/選択していないエントリの削除"
 
-#: audacious/ui_playlist.c:140 audacious/ui_playlist.c:189
+#: audacious/ui_playlist.c:139 audacious/ui_playlist.c:188
 msgid "/Remove All"
 msgstr "/全て削除"
 
-#: audacious/ui_playlist.c:146
+#: audacious/ui_playlist.c:145
 msgid "/Queue Toggle"
 msgstr "/キューを切り替える"
 
-#: audacious/ui_playlist.c:152
+#: audacious/ui_playlist.c:151
 msgid "/Add CD..."
 msgstr "/CD の追加..."
 
-#: audacious/ui_playlist.c:156
+#: audacious/ui_playlist.c:155
 msgid "/Add Internet Address..."
 msgstr "/インターネット・アドレスの追加..."
 
-#: audacious/ui_playlist.c:160
+#: audacious/ui_playlist.c:159
 msgid "/Add Files..."
 msgstr "/ファイルの追加..."
 
-#: audacious/ui_playlist.c:166
+#: audacious/ui_playlist.c:165
 msgid "/Clear Queue"
 msgstr "/キューのクリア"
 
-#: audacious/ui_playlist.c:172
+#: audacious/ui_playlist.c:171
 msgid "/Remove Unavailable Files"
 msgstr "/利用不可ファイルの削除"
 
-#: audacious/ui_playlist.c:176
+#: audacious/ui_playlist.c:175
 msgid "/Remove Duplicates"
 msgstr "/重複エントリの削除"
 
-#: audacious/ui_playlist.c:177
+#: audacious/ui_playlist.c:176
 msgid "/Remove Duplicates/By Title"
 msgstr "/重複エントリの削除/タイトル"
 
-#: audacious/ui_playlist.c:180
+#: audacious/ui_playlist.c:179
 msgid "/Remove Duplicates/By Filename"
 msgstr "/重複エントリの削除/ファイル名"
 
-#: audacious/ui_playlist.c:183
+#: audacious/ui_playlist.c:182
 msgid "/Remove Duplicates/By Path + Filename"
 msgstr "/重複エントリの削除/パス名とファイル名"
 
-#: audacious/ui_playlist.c:203
+#: audacious/ui_playlist.c:202
 msgid "/New List"
 msgstr "/新しい一覧"
 
-#: audacious/ui_playlist.c:209
+#: audacious/ui_playlist.c:208
 msgid "/Load List"
 msgstr "/演奏一覧の読み込み"
 
-#: audacious/ui_playlist.c:213
+#: audacious/ui_playlist.c:212
 msgid "/Save List"
 msgstr "/演奏一覧の保存"
 
-#: audacious/ui_playlist.c:217
+#: audacious/ui_playlist.c:216
 msgid "/Save Default List"
 msgstr "/デフォルトの演奏一覧の保存"
 
-#: audacious/ui_playlist.c:223
+#: audacious/ui_playlist.c:222
 msgid "/Update View"
 msgstr "/表示のリフレッシュ"
 
-#: audacious/ui_playlist.c:229
+#: audacious/ui_playlist.c:228
+#, fuzzy
+msgid "/Search and Select"
+msgstr "検索の深さ: "
+
+#: audacious/ui_playlist.c:234
 msgid "/Invert Selection"
 msgstr "/選択範囲の反転"
 
-#: audacious/ui_playlist.c:235
+#: audacious/ui_playlist.c:240
 msgid "/Select None"
 msgstr "/未選択にする"
 
-#: audacious/ui_playlist.c:239
+#: audacious/ui_playlist.c:244
 msgid "/Select All"
 msgstr "/全て選択"
 
-#: audacious/ui_playlist.c:245
+#: audacious/ui_playlist.c:250
 msgid "/Randomize List"
 msgstr "/順番をランダムにする"
 
-#: audacious/ui_playlist.c:247
+#: audacious/ui_playlist.c:252
 msgid "/Reverse List"
 msgstr "/逆順にする"
 
-#: audacious/ui_playlist.c:250
+#: audacious/ui_playlist.c:255
 msgid "/Sort List"
 msgstr "/演奏一覧のソート"
 
-#: audacious/ui_playlist.c:251
+#: audacious/ui_playlist.c:256
 msgid "/Sort List/By Title"
 msgstr "/演奏一覧のソート/タイトル順"
 
-#: audacious/ui_playlist.c:253
+#: audacious/ui_playlist.c:258
 msgid "/Sort List/By Artist"
 msgstr "/演奏一覧のソート/アーティスト順"
 
-#: audacious/ui_playlist.c:255
+#: audacious/ui_playlist.c:260
 msgid "/Sort List/By Filename"
 msgstr "/演奏一覧のソート/ファイル名順"
 
-#: audacious/ui_playlist.c:257
+#: audacious/ui_playlist.c:262
 msgid "/Sort List/By Path + Filename"
 msgstr "/演奏一覧のソート/パス名とファイル名順"
 
-#: audacious/ui_playlist.c:259
+#: audacious/ui_playlist.c:264
 msgid "/Sort List/By Date"
 msgstr "/演奏一覧のソート/日付順"
 
-#: audacious/ui_playlist.c:261
+#: audacious/ui_playlist.c:266
 msgid "/Sort List/By Track Number"
 msgstr "/演奏一覧のソート/トラック番号順"
 
-#: audacious/ui_playlist.c:263
+#: audacious/ui_playlist.c:268
 msgid "/Sort List/By Playlist Entry"
 msgstr "/演奏一覧のソート/エントリ順"
 
-#: audacious/ui_playlist.c:265
+#: audacious/ui_playlist.c:270
 msgid "/Sort Selection"
 msgstr "/選択範囲のソート"
 
-#: audacious/ui_playlist.c:266
+#: audacious/ui_playlist.c:271
 msgid "/Sort Selection/By Title"
 msgstr "/選択範囲のソート/タイトル順"
 
-#: audacious/ui_playlist.c:268
+#: audacious/ui_playlist.c:273
 msgid "/Sort Selection/By Artist"
 msgstr "/選択範囲のソート/アーティスト順"
 
-#: audacious/ui_playlist.c:270
+#: audacious/ui_playlist.c:275
 msgid "/Sort Selection/By Filename"
 msgstr "/選択範囲のソート/ファイル名順"
 
-#: audacious/ui_playlist.c:272
+#: audacious/ui_playlist.c:277
 msgid "/Sort Selection/By Path + Filename"
 msgstr "/選択範囲のソート/パス名とファイル名順"
 
-#: audacious/ui_playlist.c:274
+#: audacious/ui_playlist.c:279
 msgid "/Sort Selection/By Date"
 msgstr "/選択範囲のソート/日付順"
 
-#: audacious/ui_playlist.c:276
+#: audacious/ui_playlist.c:281
 msgid "/Sort Selection/By Track Number"
 msgstr "/選択範囲のソート/トラック番号順"
 
-#: audacious/ui_playlist.c:278
+#: audacious/ui_playlist.c:283
 msgid "/Sort Selection/By Playlist Entry"
 msgstr "/選択範囲のソート/エントリ順"
 
-#: audacious/ui_playlist.c:845
+#: audacious/ui_playlist.c:682
+msgid ""
+"Select entries in playlist by filling one or more fields. Fields use regular "
+"expressions syntax, case-insensitive. If you don't know how regular "
+"expressions work, simply insert a literal portion of what you're searching "
+"for."
+msgstr ""
+
+#: audacious/ui_playlist.c:689
+#, fuzzy
+msgid "Track name: "
+msgstr "トラック名:"
+
+#: audacious/ui_playlist.c:693
+#, fuzzy
+msgid "Album name: "
+msgstr "アルバム・モード"
+
+#: audacious/ui_playlist.c:697
+#, fuzzy
+msgid "Artist: "
+msgstr "アーティスト:"
+
+#: audacious/ui_playlist.c:701
+#, fuzzy
+msgid "Filename: "
+msgstr "ファイル名:"
+
+#: audacious/ui_playlist.c:951
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "演奏一覧 \"%s\" を書き込む際にエラー: %s"
 
-#: audacious/ui_playlist.c:866
+#: audacious/ui_playlist.c:972
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s は既に存在しています。続行しますか？"
 
-#: audacious/ui_playlist.c:880
+#: audacious/ui_playlist.c:986
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -1263,53 +1311,53 @@ msgstr ""
 "\n"
 "%s のファイルの種類が不明です。\n"
 
-#: audacious/ui_playlist.c:1033
+#: audacious/ui_playlist.c:1139
 msgid "Load Playlist"
 msgstr "演奏一覧の読み込み"
 
-#: audacious/ui_playlist.c:1046
+#: audacious/ui_playlist.c:1152
 msgid "Save Playlist"
 msgstr "演奏一覧の保存"
 
-#: audacious/ui_playlist.c:1783
+#: audacious/ui_playlist.c:1889
 msgid "Audacious Playlist Editor"
 msgstr "Audacious 演奏一覧エディタ"
 
-#: audacious/util.c:952
+#: audacious/util.c:951
 msgid "Add/Open Files dialog"
 msgstr "ファイルの追加/開くダイアログ"
 
-#: audacious/util.c:1007
+#: audacious/util.c:1006
 msgid "Open Files"
 msgstr "ファイルを開く"
 
-#: audacious/util.c:1011
+#: audacious/util.c:1010
 msgid "Close dialog on Open"
 msgstr "開いたらダイアログを閉じる"
 
-#: audacious/util.c:1021 audacious/glade/addfiles.glade:8
+#: audacious/util.c:1020 audacious/glade/addfiles.glade:8
 msgid "Add Files"
 msgstr "ファイルの追加"
 
-#: audacious/util.c:1025
+#: audacious/util.c:1024
 msgid "Close dialog on Add"
 msgstr "追加したらダイアログを閉じる"
 
-#: audacious/util.c:1203
+#: audacious/util.c:1202
 #, fuzzy
 msgid "Play files"
 msgstr "/ファイルを演奏"
 
-#: audacious/util.c:1205
+#: audacious/util.c:1204
 #, fuzzy
 msgid "Load files"
 msgstr "/読み込み/ファイル"
 
-#: audacious/util.c:1509
+#: audacious/util.c:1508
 msgid "  (invalid UTF-8)"
 msgstr "  (不正な UTF-8)"
 
-#: audacious/playback.c:209
+#: audacious/playback.c:222
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1671,11 +1719,7 @@ msgstr "<b>オーディオシステム:</b>"
 msgid "Current output plugin:"
 msgstr "現在の出力プラグイン:"
 
-#: audacious/glade/prefswin.glade:3500
-msgid "Buffer size:"
-msgstr "バッファのサイズ:"
-
-#: audacious/glade/prefswin.glade:3570
+#: audacious/glade/prefswin.glade:3523
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
@@ -1687,53 +1731,72 @@ msgstr ""
 "ミリ秒で指定する。音飛びがあるなら、この値を増やす。しかし、高い値は "
 "Audacious のパフォーマンスを悪くすることに注意してください。</span>"
 
-#: audacious/glade/prefswin.glade:3678
+#: audacious/glade/prefswin.glade:3553
+msgid "Buffer size:"
+msgstr "バッファのサイズ:"
+
+#: audacious/glade/prefswin.glade:3677
 #, fuzzy
 msgid "Output Plugin Preferences"
 msgstr "出力プラグイン"
 
-#: audacious/glade/prefswin.glade:3753
+#: audacious/glade/prefswin.glade:3752
 #, fuzzy
 msgid "Output Plugin Information"
 msgstr "ESD 出力プラグインの設定"
 
-#: audacious/glade/prefswin.glade:3805
+#: audacious/glade/prefswin.glade:3804
 msgid "<b>Format Detection</b>"
 msgstr "<b>フォーマットの検出</b>"
 
-#: audacious/glade/prefswin.glade:3846
+#: audacious/glade/prefswin.glade:3845
 msgid "Detect file formats on demand, instead of immediately."
 msgstr "ファイルフォーマットをすぐにではなく要求に応じて検出する。"
 
-#: audacious/glade/prefswin.glade:3880
+#: audacious/glade/prefswin.glade:3879
+#, fuzzy
+msgid ""
+"When checked, Audacious will detect file formats based by extension. This is "
+"slightly slower than detection on demand, but still provides a minimal level "
+"of format detection."
+msgstr ""
+"有効ならば、Audacious はファイルフォーマットを要求に応じて検出する。演奏一覧"
+"が汚くなってしまうが、速度の恩恵を受けることができる。"
+
+#: audacious/glade/prefswin.glade:3881
+#, fuzzy
+msgid "Detect file formats by extension."
+msgstr "ファイル名の拡張子を取り除かない"
+
+#: audacious/glade/prefswin.glade:3915
 msgid "<b>Playback</b>"
 msgstr "<b>再生</b>"
 
-#: audacious/glade/prefswin.glade:3921
+#: audacious/glade/prefswin.glade:3956
 msgid "Continue playback on startup"
 msgstr "起動時に再生を続ける"
 
-#: audacious/glade/prefswin.glade:3957
+#: audacious/glade/prefswin.glade:3992
 msgid "Don't advance in the playlist"
 msgstr "演奏一覧の次の曲へ進めない"
 
-#: audacious/glade/prefswin.glade:3992
+#: audacious/glade/prefswin.glade:4027
 msgid "Pause between songs"
 msgstr "曲の間に一時停止する"
 
-#: audacious/glade/prefswin.glade:4030
+#: audacious/glade/prefswin.glade:4065
 msgid "Pause for"
 msgstr "一時停止の時間: "
 
-#: audacious/glade/prefswin.glade:4076
+#: audacious/glade/prefswin.glade:4111
 msgid "seconds"
 msgstr "秒"
 
-#: audacious/glade/prefswin.glade:4116
+#: audacious/glade/prefswin.glade:4151
 msgid "label76"
 msgstr "label76"
 
-#: audacious/glade/prefswin.glade:4254
+#: audacious/glade/prefswin.glade:4289
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -1742,23 +1805,23 @@ msgstr ""
 "アルバムのカバーを検索する際、Audacious はファイル名の中の単語を探します。コ"
 "ンマで区切られた単語リストを以下に指定できます。"
 
-#: audacious/glade/prefswin.glade:4309
+#: audacious/glade/prefswin.glade:4344
 msgid "Include:"
 msgstr "含む:"
 
-#: audacious/glade/prefswin.glade:4337
+#: audacious/glade/prefswin.glade:4372
 msgid "Exclude:"
 msgstr "含まない:"
 
-#: audacious/glade/prefswin.glade:4406
+#: audacious/glade/prefswin.glade:4441
 msgid "Recursively search for cover"
 msgstr "カバーの再帰検索"
 
-#: audacious/glade/prefswin.glade:4444
+#: audacious/glade/prefswin.glade:4479
 msgid "Search depth: "
 msgstr "検索の深さ: "
 
-#: audacious/glade/prefswin.glade:4510
+#: audacious/glade/prefswin.glade:4545
 msgid "Use per-file cover"
 msgstr ""
 
@@ -1843,9 +1906,6 @@ msgstr "%{n:...%}: トラック番号 %n が存在している場合にのみ \"...\" を表示する"
 #~ msgid "Select main player window font:"
 #~ msgstr "メイン・ウィンドウで使用するフォントの選択"
 
-#~ msgid "Select playlist font:"
-#~ msgstr "演奏一覧で使用するフォントの選択:"
-
 #~ msgid ""
 #~ "Use bitmap fonts if they are available. Bitmap fonts do not support "
 #~ "Unicode strings."
@@ -1908,13 +1968,6 @@ msgstr "%{n:...%}: トラック番号 %n が存在している場合にのみ \"...\" を表示する"
 
 #~ msgid "Edit settings for popup information"
 #~ msgstr "ポップアップ情報の設定を編集する"
-
-#~ msgid ""
-#~ "When checked, Audacious will detect file formats on demand. This can "
-#~ "result in a messier playlist, but delivers a major speed benefit."
-#~ msgstr ""
-#~ "有効ならば、Audacious はファイルフォーマットを要求に応じて検出する。演奏一"
-#~ "覧が汚くなってしまうが、速度の恩恵を受けることができる。"
 
 #~ msgid ""
 #~ "When Audacious starts, automatically begin playing from the point where "
@@ -2320,9 +2373,6 @@ msgstr "%{n:...%}: トラック番号 %n が存在している場合にのみ \"...\" を表示する"
 #~ msgid "CD Index server:"
 #~ msgstr "CD インデックス・サーバ:"
 
-#~ msgid "Track names:"
-#~ msgstr "トラック名:"
-
 #~ msgid "Override generic titles"
 #~ msgstr "オリジナルのタイトルを上書きする"
 
@@ -2605,9 +2655,6 @@ msgstr "%{n:...%}: トラック番号 %n が存在している場合にのみ \"...\" を表示する"
 
 #~ msgid "Enable ReplayGain processing"
 #~ msgstr "リプレイ・ゲイン処理を有効にする"
-
-#~ msgid "Album mode"
-#~ msgstr "アルバム・モード"
 
 #~ msgid "Preamp:"
 #~ msgstr "プリアンプ:"
@@ -3198,9 +3245,6 @@ msgstr "%{n:...%}: トラック番号 %n が存在している場合にのみ \"...\" を表示する"
 
 #~ msgid "Title:"
 #~ msgstr "タイトル:"
-
-#~ msgid "Artist:"
-#~ msgstr "アーティスト:"
 
 #~ msgid "Album:"
 #~ msgstr "アルバム名:"
@@ -4018,9 +4062,6 @@ msgstr "%{n:...%}: トラック番号 %n が存在している場合にのみ \"...\" を表示する"
 
 #~ msgid "Disk Writer Configuration"
 #~ msgstr "ディスク・ライターの設定"
-
-#~ msgid "Don't strip file name extension"
-#~ msgstr "ファイル名の拡張子を取り除かない"
 
 #~ msgid "About ESounD Plugin"
 #~ msgstr "ESounD プラグインについて"

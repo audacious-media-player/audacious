@@ -9,25 +9,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-12-11 22:15-0600\n"
-"PO-Revision-Date: 2006-12-11 22:16-0600\n"
+"POT-Creation-Date: 2006-12-15 20:35-0600\n"
+"PO-Revision-Date: 2006-12-15 20:55-0600\n"
 "Last-Translator: William Pitcock <nenolod@atheme.org>\n"
 "Language-Team: Welsh\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: audacious/about.c:119
+#: audacious/about.c:118
 #: audacious/credits.c:317
 msgid "About Audacious"
 msgstr "Ynghylch Audacious"
 
-#: audacious/about.c:168
+#: audacious/about.c:167
 #: audacious/credits.c:362
 msgid "Credits"
 msgstr "Diolchiadau"
 
-#: audacious/credits.c:45
+#: audacious/credits.c:44
 #, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
@@ -40,43 +40,43 @@ msgstr ""
 "\n"
 "Hawlfraint (C) 2005-2006 Audacious Development Team\n"
 
-#: audacious/credits.c:51
+#: audacious/credits.c:50
 msgid "Audacious core developers:"
 msgstr "Audacious awduron:"
 
-#: audacious/credits.c:63
+#: audacious/credits.c:62
 msgid "Graphics:"
 msgstr "Diolchiadau graphi:"
 
-#: audacious/credits.c:68
+#: audacious/credits.c:67
 msgid "Default skin:"
 msgstr "Croen rhagosodedig:"
 
-#: audacious/credits.c:73
+#: audacious/credits.c:72
 msgid "Plugin development:"
 msgstr "Diolchiadau ategynnau:"
 
-#: audacious/credits.c:84
+#: audacious/credits.c:83
 msgid "Patch authors:"
 msgstr "Diolchiadau patch:"
 
-#: audacious/credits.c:99
+#: audacious/credits.c:98
 msgid "0.1.x developers:"
 msgstr "Diolchiadau 0.1.x:"
 
-#: audacious/credits.c:105
+#: audacious/credits.c:104
 msgid "BMP Developers:"
 msgstr "Diolchiadau BMP:"
 
-#: audacious/credits.c:137
+#: audacious/credits.c:136
 msgid "Brazilian Portuguese:"
 msgstr "Brazilian Portuguese:"
 
-#: audacious/credits.c:140
+#: audacious/credits.c:139
 msgid "Breton:"
 msgstr "Breton:"
 
-#: audacious/credits.c:143
+#: audacious/credits.c:142
 msgid "Chinese:"
 msgstr "Chinese:"
 
@@ -172,122 +172,122 @@ msgstr "Welsh:"
 msgid "Translators"
 msgstr "Cyfieithwyr"
 
-#: audacious/equalizer.c:120
+#: audacious/equalizer.c:119
 msgid "/Load"
 msgstr "/Llwytho"
 
-#: audacious/equalizer.c:121
+#: audacious/equalizer.c:120
 msgid "/Load/Preset"
 msgstr "/Llwytho/Rhagosod"
 
-#: audacious/equalizer.c:123
+#: audacious/equalizer.c:122
 msgid "/Load/Auto-load preset"
 msgstr "/Llwytho/Awtolwytho rhagosod"
 
-#: audacious/equalizer.c:125
+#: audacious/equalizer.c:124
 msgid "/Load/Default"
 msgstr "/Llwytho/Rhagosodedig"
 
-#: audacious/equalizer.c:128
+#: audacious/equalizer.c:127
 msgid "/Load/Zero"
 msgstr "/Llwytho/Sero"
 
-#: audacious/equalizer.c:131
+#: audacious/equalizer.c:130
 msgid "/Load/From file"
 msgstr "/Llwytho/O'r ffeil"
 
-#: audacious/equalizer.c:133
+#: audacious/equalizer.c:132
 msgid "/Load/From WinAMP EQF file"
 msgstr "/Llwytho/O'r ffeil WinAMP EQF"
 
-#: audacious/equalizer.c:135
+#: audacious/equalizer.c:134
 msgid "/Import"
 msgstr "/Mewnforio"
 
-#: audacious/equalizer.c:136
+#: audacious/equalizer.c:135
 msgid "/Import/WinAMP Presets"
 msgstr "/Mewnforio/Rhagosodiadau WinAMP"
 
-#: audacious/equalizer.c:138
+#: audacious/equalizer.c:137
 msgid "/Save"
 msgstr "/Cadw"
 
-#: audacious/equalizer.c:139
+#: audacious/equalizer.c:138
 msgid "/Save/Preset"
 msgstr "/Cadw/Rhagosodiadau"
 
-#: audacious/equalizer.c:141
+#: audacious/equalizer.c:140
 msgid "/Save/Auto-load preset"
 msgstr "/Llwytho/Awtolwytho rhagosod"
 
-#: audacious/equalizer.c:143
+#: audacious/equalizer.c:142
 msgid "/Save/Default"
 msgstr "/Cadw/Rhagosodedig"
 
-#: audacious/equalizer.c:146
+#: audacious/equalizer.c:145
 msgid "/Save/To file"
 msgstr "/Cadw/I ffeil"
 
-#: audacious/equalizer.c:148
+#: audacious/equalizer.c:147
 msgid "/Save/To WinAMP EQF file"
 msgstr "/Cadw/I ffeil WinAMP EQF"
 
-#: audacious/equalizer.c:150
+#: audacious/equalizer.c:149
 msgid "/Delete"
 msgstr "/Dileu"
 
-#: audacious/equalizer.c:151
+#: audacious/equalizer.c:150
 msgid "/Delete/Preset"
 msgstr "/Dileu/Rhagosodiadau"
 
-#: audacious/equalizer.c:153
+#: audacious/equalizer.c:152
 msgid "/Delete/Auto-load preset"
 msgstr "/Dileu/Awtolwytho Rhagosodiadau"
 
-#: audacious/equalizer.c:816
+#: audacious/equalizer.c:815
 msgid "Audacious Equalizer"
 msgstr "Hafalydd Audacious"
 
-#: audacious/equalizer.c:1484
+#: audacious/equalizer.c:1483
 msgid "Preset"
 msgstr "Rhagosodau"
 
-#: audacious/equalizer.c:1529
+#: audacious/equalizer.c:1528
 msgid "Presets"
 msgstr "Rhagosodau"
 
-#: audacious/equalizer.c:1593
+#: audacious/equalizer.c:1592
 msgid "Load preset"
 msgstr "Llwytho'r rhagosodiadau"
 
-#: audacious/equalizer.c:1609
+#: audacious/equalizer.c:1608
 msgid "Load auto-preset"
 msgstr "Llwytho'r awto-rhagosodiadau"
 
-#: audacious/equalizer.c:1635
-#: audacious/equalizer.c:1641
-#: audacious/equalizer.c:1648
+#: audacious/equalizer.c:1634
+#: audacious/equalizer.c:1640
+#: audacious/equalizer.c:1647
 msgid "Load equalizer preset"
 msgstr "Llwytho rhagosodiadau'r hafalydd"
 
-#: audacious/equalizer.c:1657
+#: audacious/equalizer.c:1656
 msgid "Save preset"
 msgstr "Cadw'r rhagosodiadau"
 
-#: audacious/equalizer.c:1677
+#: audacious/equalizer.c:1676
 msgid "Save auto-preset"
 msgstr "Cadw'r awto-ragosodiadau"
 
-#: audacious/equalizer.c:1713
-#: audacious/equalizer.c:1733
+#: audacious/equalizer.c:1712
+#: audacious/equalizer.c:1732
 msgid "Save equalizer preset"
 msgstr "Cadw rhagosodiadau'r hafalydd"
 
-#: audacious/equalizer.c:1742
+#: audacious/equalizer.c:1741
 msgid "Delete preset"
 msgstr "Dileu'r rhagosodiadau"
 
-#: audacious/equalizer.c:1760
+#: audacious/equalizer.c:1759
 msgid "Delete auto-preset"
 msgstr "Dileu'r awto-ragosodiadau"
 
@@ -348,7 +348,7 @@ msgstr "%s: dewis `-W %s' yn aneglur\n"
 msgid "%s: option `-W %s' doesn't allow an argument\n"
 msgstr "%s: dewis `- nid yw -W %s' yn caniatáu ymresymiad\n"
 
-#: audacious/glade.c:41
+#: audacious/glade.c:40
 #, c-format
 msgid ""
 "<b><big>Unable to create %s.</big></b>\n"
@@ -359,7 +359,7 @@ msgstr ""
 "\n"
 "Methu llytho'r rhestr glade ffiel (%s).\n"
 
-#: audacious/input.c:304
+#: audacious/input.c:303
 msgid ""
 "<b><big>Unable to play files.</big></b>\n"
 "\n"
@@ -368,59 +368,59 @@ msgid ""
 "2. you have enabled the media plugins required."
 msgstr "<b><big>Ategyn mewnbwn heb adnabod y ffeil</big></b>"
 
-#: audacious/input.c:329
+#: audacious/input.c:328
 msgid "Don't show this warning anymore"
 msgstr "Peidio â dangos y r rhybydd yma eto."
 
-#: audacious/input.c:331
+#: audacious/input.c:330
 msgid "Show more _details"
 msgstr "Dangos _manylion"
 
-#: audacious/input.c:345
-#: audacious/prefswin.c:115
-#: audacious/prefswin.c:483
-#: audacious/prefswin.c:571
-#: audacious/prefswin.c:660
-#: audacious/prefswin.c:756
+#: audacious/input.c:344
+#: audacious/prefswin.c:114
+#: audacious/prefswin.c:482
+#: audacious/prefswin.c:570
+#: audacious/prefswin.c:659
+#: audacious/prefswin.c:755
 msgid "Filename"
 msgstr "Enw ffeil"
 
-#: audacious/input.c:581
+#: audacious/input.c:612
 #, c-format
 msgid "audacious: %s"
 msgstr "audacious: %s"
 
-#: audacious/input.c:597
+#: audacious/input.c:628
 msgid "Filename:"
 msgstr "Enw ffeil:"
 
-#: audacious/input.c:615
+#: audacious/input.c:646
 msgid "No input plugin recognized this file"
 msgstr "Ategyn mewnbwn heb adnabod y ffeil"
 
-#: audacious/input.c:617
+#: audacious/input.c:648
 #, c-format
 msgid "Input plugin: %s"
 msgstr "Ategyn mewnbwn: %s"
 
-#: audacious/logger.c:120
+#: audacious/logger.c:119
 #, c-format
 msgid "Unable to create log file (%s)!\n"
 msgstr "Methu creu'r ffeil gofnod (%s)!\n"
 
-#: audacious/main.c:82
-#: audacious/main.c:84
-#: audacious/mainwin.c:876
-#: audacious/mainwin.c:3676
+#: audacious/main.c:81
+#: audacious/main.c:83
+#: audacious/mainwin.c:885
+#: audacious/mainwin.c:3720
 msgid "Audacious"
 msgstr "Audacious"
 
-#: audacious/main.c:449
+#: audacious/main.c:451
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "Methu Creu Cyfrifiadur (%s): %s"
 
-#: audacious/main.c:726
+#: audacious/main.c:728
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
@@ -432,71 +432,71 @@ msgstr ""
 "Dewisiadau:\n"
 "--------\n"
 
-#: audacious/main.c:731
+#: audacious/main.c:733
 msgid "Display this text and exit"
 msgstr "Dangos y testun hwn a gadael."
 
-#: audacious/main.c:734
+#: audacious/main.c:736
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Dewis sesiwn Audacious/BMP/XMMS (Rhagosodedig: 0)"
 
-#: audacious/main.c:737
+#: audacious/main.c:739
 msgid "Skip backwards in playlist"
 msgstr "Sgipio nôl yn y rhestr chwarae"
 
-#: audacious/main.c:740
+#: audacious/main.c:742
 msgid "Start playing current playlist"
 msgstr "Cychwyn chwarae'r rhestr chwarae"
 
-#: audacious/main.c:743
+#: audacious/main.c:745
 msgid "Pause current song"
 msgstr "Oedi'r gân"
 
-#: audacious/main.c:746
+#: audacious/main.c:748
 msgid "Stop current song"
 msgstr "Atal y gân"
 
-#: audacious/main.c:749
+#: audacious/main.c:751
 msgid "Pause if playing, play otherwise"
 msgstr "Oedi os yn chwarae, chwarae fel arall"
 
-#: audacious/main.c:752
+#: audacious/main.c:754
 msgid "Skip forward in playlist"
 msgstr "Sgipio mlaen yn y rhestr chwarae"
 
-#: audacious/main.c:755
+#: audacious/main.c:757
 msgid "Display Jump to file dialog"
 msgstr "Dangos Neidio i Ffeil"
 
-#: audacious/main.c:758
+#: audacious/main.c:760
 msgid "Don't clear the playlist"
 msgstr "Peidio clirio'r rhestr chwarae"
 
-#: audacious/main.c:761
+#: audacious/main.c:763
 msgid "Show the main window"
 msgstr "Dangos y brif ffenestr."
 
-#: audacious/main.c:764
+#: audacious/main.c:766
 msgid "Activate Audacious"
 msgstr "Actifadu Audacious"
 
-#: audacious/main.c:767
+#: audacious/main.c:769
 msgid "Previous session ID"
 msgstr "Dynodwr sesiwn blaenorol"
 
-#: audacious/main.c:770
+#: audacious/main.c:772
 msgid "Headless operation [experimental]"
 msgstr "Ni wn cysylltu at X11 [arbrofol]"
 
-#: audacious/main.c:773
+#: audacious/main.c:775
 msgid "Disable error/warning interception (logging)"
 msgstr "Analluogi loglyfr"
 
-#: audacious/main.c:776
+#: audacious/main.c:778
 msgid "Print version number and exit\n"
 msgstr "Argraffu rhif y fersiwn a gadael.\n"
 
-#: audacious/main.c:966
+#: audacious/main.c:975
 msgid ""
 "\n"
 "Received SIGSEGV\n"
@@ -510,7 +510,7 @@ msgstr ""
 "Sydd byg y Audacious. Ymweliad URL: http://bugs-meta.atheme.org/\n"
 "\n"
 
-#: audacious/main.c:996
+#: audacious/main.c:1005
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -521,7 +521,7 @@ msgstr ""
 "\n"
 "Gwiriwch croen am '%s' ar gael a croen rhagosodedig at am '%s'\n"
 
-#: audacious/main.c:1043
+#: audacious/main.c:1052
 #, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -530,7 +530,7 @@ msgstr ""
 "Yn anffodus ni fydd eich fersiwn o GTK+ (%d.%d.%d) yn gweithio gyda Audacious\n"
 "Defnyddiwch GTK+ %s neu ddiweddarach.\n"
 
-#: audacious/main.c:1054
+#: audacious/main.c:1063
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -542,424 +542,436 @@ msgstr ""
 "Os ydych ar system linux libc5 ac wedi gosod GLIB a GTK cyn gosod LinuxThreads\n"
 "bydd angen i chi ailgrynhoi GLIB a GTK+\n"
 
-#: audacious/main.c:1073
+#: audacious/main.c:1082
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "audacious: Methu agor dangosydd, yn gadael.\n"
 
-#: audacious/mainwin.c:245
-#: audacious/mainwin.c:371
-#: audacious/ui_playlist.c:122
+#: audacious/mainwin.c:247
+#: audacious/mainwin.c:380
+#: audacious/ui_playlist.c:121
 msgid "/View Track Details"
 msgstr "/Dangos Manylion Trac"
 
-#: audacious/mainwin.c:247
-#: audacious/mainwin.c:366
+#: audacious/mainwin.c:249
+#: audacious/mainwin.c:368
 msgid "/Jump to File"
 msgstr "/Neidio i Ffeil"
 
-#: audacious/mainwin.c:250
-#: audacious/mainwin.c:433
+#: audacious/mainwin.c:252
+#: audacious/mainwin.c:442
 msgid "/Autoscroll Songname"
 msgstr "/Awtosgrolio Enw Cân"
 
-#: audacious/mainwin.c:252
-#: audacious/mainwin.c:344
+#: audacious/mainwin.c:254
+#: audacious/mainwin.c:346
 msgid "/Stop After Current Song"
 msgstr "/Atal y gân"
 
-#: audacious/mainwin.c:262
+#: audacious/mainwin.c:264
 msgid "/Visualization Mode"
 msgstr "/Modd Delweddu"
 
-#: audacious/mainwin.c:263
+#: audacious/mainwin.c:265
 msgid "/Visualization Mode/Analyzer"
 msgstr "/Modd Delweddu/Dadansoddwr"
 
-#: audacious/mainwin.c:265
+#: audacious/mainwin.c:267
 msgid "/Visualization Mode/Scope"
 msgstr "/Modd Delweddu/Cwmpas"
 
-#: audacious/mainwin.c:267
+#: audacious/mainwin.c:269
 msgid "/Visualization Mode/Off"
 msgstr "/Modd Delweddu/Diffodd"
 
-#: audacious/mainwin.c:269
+#: audacious/mainwin.c:271
 msgid "/Analyzer Mode"
 msgstr "/Modd Dadansoddwr"
 
-#: audacious/mainwin.c:270
+#: audacious/mainwin.c:272
 msgid "/Analyzer Mode/Normal"
 msgstr "/Modd Dadansoddwr/Normal"
 
-#: audacious/mainwin.c:272
+#: audacious/mainwin.c:274
 msgid "/Analyzer Mode/Fire"
 msgstr "/Modd Dadansoddwr/Tân"
 
-#: audacious/mainwin.c:274
+#: audacious/mainwin.c:276
 msgid "/Analyzer Mode/Vertical Lines"
 msgstr "/Modd Dadansoddwr/Llinellau Fertigol"
 
-#: audacious/mainwin.c:277
+#: audacious/mainwin.c:279
 msgid "/Analyzer Mode/Lines"
 msgstr "/Modd Dadansoddwr/Llinellau"
 
-#: audacious/mainwin.c:279
+#: audacious/mainwin.c:281
 msgid "/Analyzer Mode/Bars"
 msgstr "/Modd Dadansoddwr/Barau"
 
-#: audacious/mainwin.c:282
+#: audacious/mainwin.c:284
 msgid "/Analyzer Mode/Peaks"
 msgstr "/Modd Dadansoddwr/Brigau"
 
-#: audacious/mainwin.c:284
+#: audacious/mainwin.c:286
 msgid "/Scope Mode"
 msgstr "/Modd Cwmpas"
 
-#: audacious/mainwin.c:285
+#: audacious/mainwin.c:287
 msgid "/Scope Mode/Dot Scope"
 msgstr "/Modd Cwmpas/Cwmpas Dot"
 
-#: audacious/mainwin.c:287
+#: audacious/mainwin.c:289
 msgid "/Scope Mode/Line Scope"
 msgstr "/Modd Cwmpas/Cwmpas Llinell"
 
-#: audacious/mainwin.c:289
+#: audacious/mainwin.c:291
 msgid "/Scope Mode/Solid Scope"
 msgstr "/Modd Cwmpas/Cwmpas Solet"
 
-#: audacious/mainwin.c:291
+#: audacious/mainwin.c:293
 msgid "/WindowShade VU Mode"
 msgstr "/Modd WindowShade VU"
 
-#: audacious/mainwin.c:292
+#: audacious/mainwin.c:294
 msgid "/WindowShade VU Mode/Normal"
 msgstr "/Modd WindowShade VU/Normal"
 
-#: audacious/mainwin.c:294
+#: audacious/mainwin.c:296
 msgid "/WindowShade VU Mode/Smooth"
 msgstr "/Modd WindowShade VU/Llyfn"
 
-#: audacious/mainwin.c:296
+#: audacious/mainwin.c:298
 msgid "/Refresh Rate"
 msgstr "/Graddfa Adnewyddu"
 
-#: audacious/mainwin.c:297
+#: audacious/mainwin.c:299
 msgid "/Refresh Rate/Full (~50 fps)"
 msgstr "/Graddfa Adnewyddu/Llawn (~50fps)"
 
-#: audacious/mainwin.c:299
+#: audacious/mainwin.c:301
 msgid "/Refresh Rate/Half (~25 fps)"
 msgstr "/Graddfa Adnewyddu/Hanner (~25 fps)"
 
-#: audacious/mainwin.c:301
+#: audacious/mainwin.c:303
 msgid "/Refresh Rate/Quarter (~13 fps)"
 msgstr "/Graddfa Adnewyddu/Chwarter (~13 fps)"
 
-#: audacious/mainwin.c:303
+#: audacious/mainwin.c:305
 msgid "/Refresh Rate/Eighth (~6 fps)"
 msgstr "/Graddfa Adnewyddu/Wythfed (~6 fps)"
 
-#: audacious/mainwin.c:305
+#: audacious/mainwin.c:307
 msgid "/Analyzer Falloff"
 msgstr "/Cwymp Dadansoddwr"
 
-#: audacious/mainwin.c:306
+#: audacious/mainwin.c:308
 msgid "/Analyzer Falloff/Slowest"
 msgstr "/Cwymp Dadansoddwr/Arafaf"
 
-#: audacious/mainwin.c:308
+#: audacious/mainwin.c:310
 msgid "/Analyzer Falloff/Slow"
 msgstr "/Cwymp Dadansoddwr/Araf"
 
-#: audacious/mainwin.c:310
+#: audacious/mainwin.c:312
 msgid "/Analyzer Falloff/Medium"
 msgstr "/Cwymp Dadansoddwr/Canolig"
 
-#: audacious/mainwin.c:312
+#: audacious/mainwin.c:314
 msgid "/Analyzer Falloff/Fast"
 msgstr "/Cwymp Dadansoddwr/Cyflym"
 
-#: audacious/mainwin.c:314
+#: audacious/mainwin.c:316
 msgid "/Analyzer Falloff/Fastest"
 msgstr "/Cwymp Dadansoddwr/Cyflymaf"
 
-#: audacious/mainwin.c:316
+#: audacious/mainwin.c:318
 msgid "/Peaks Falloff"
 msgstr "/Cwymp Brigau"
 
-#: audacious/mainwin.c:317
+#: audacious/mainwin.c:319
 msgid "/Peaks Falloff/Slowest"
 msgstr "/Cwymp Brigau/Arafaf"
 
-#: audacious/mainwin.c:319
+#: audacious/mainwin.c:321
 msgid "/Peaks Falloff/Slow"
 msgstr "/Cwymp Brigau/Araf"
 
-#: audacious/mainwin.c:321
+#: audacious/mainwin.c:323
 msgid "/Peaks Falloff/Medium"
 msgstr "/Cwymp Brigau/Canolig"
 
-#: audacious/mainwin.c:323
+#: audacious/mainwin.c:325
 msgid "/Peaks Falloff/Fast"
 msgstr "/Cwymp Brigau/Cyflym"
 
-#: audacious/mainwin.c:325
+#: audacious/mainwin.c:327
 msgid "/Peaks Falloff/Fastest"
 msgstr "/Cwymp Brigau /Cyflymaf"
 
-#: audacious/mainwin.c:335
+#: audacious/mainwin.c:337
 msgid "/Play CD"
 msgstr "/Chwarae CD"
 
-#: audacious/mainwin.c:338
+#: audacious/mainwin.c:340
 msgid "/Repeat"
 msgstr "/Ailadrodd"
 
-#: audacious/mainwin.c:340
+#: audacious/mainwin.c:342
 msgid "/Shuffle"
 msgstr "/Cymysgu"
 
-#: audacious/mainwin.c:342
+#: audacious/mainwin.c:344
 msgid "/No Playlist Advance"
 msgstr "/Dim Symud Ymlaen Trwy'r Rhestr Chwarae"
 
-#: audacious/mainwin.c:347
+#: audacious/mainwin.c:349
 msgid "/Play"
 msgstr "/Chwarae"
 
-#: audacious/mainwin.c:349
+#: audacious/mainwin.c:351
 msgid "/Pause"
 msgstr "/Seibio"
 
-#: audacious/mainwin.c:351
+#: audacious/mainwin.c:353
 msgid "/Stop"
 msgstr "/Atal"
 
-#: audacious/mainwin.c:353
+#: audacious/mainwin.c:355
 msgid "/Previous"
 msgstr "/Blaenorol"
 
-#: audacious/mainwin.c:355
+#: audacious/mainwin.c:357
 msgid "/Next"
 msgstr "/Nesaf"
 
-#: audacious/mainwin.c:358
+#: audacious/mainwin.c:360
 msgid "/Jump to Playlist Start"
 msgstr "/Neidio i dechrau'r rhestr chwarae"
 
-#: audacious/mainwin.c:360
+#: audacious/mainwin.c:362
 msgid "/-"
 msgstr "/-"
 
-#: audacious/mainwin.c:361
+#: audacious/mainwin.c:363
 msgid "/Set A-B"
 msgstr "/Set A-B"
 
-#: audacious/mainwin.c:363
+#: audacious/mainwin.c:365
 msgid "/Clear A-B"
 msgstr "/Clear A-B"
 
-#: audacious/mainwin.c:368
+#: audacious/mainwin.c:370
 msgid "/Jump to Time"
 msgstr "/Neidio i Amser"
 
-#: audacious/mainwin.c:381
+#: audacious/mainwin.c:373
+msgid "/New Playlist"
+msgstr "/Rhestr Chwarae Newydd"
+
+#: audacious/mainwin.c:375
+msgid "/Select Next Playlist"
+msgstr "/Rhestr Chwarae Nesaf"
+
+#: audacious/mainwin.c:377
+msgid "/Select Previous Playlist"
+msgstr "/Rhestr Chwarae Blaenorol"
+
+#: audacious/mainwin.c:390
 msgid "/About Audacious"
 msgstr "/Ynghylch Audacious"
 
-#: audacious/mainwin.c:384
+#: audacious/mainwin.c:393
 msgid "/Play File"
 msgstr "/Chwarae Ffeil"
 
-#: audacious/mainwin.c:386
+#: audacious/mainwin.c:395
 msgid "/Play Location"
 msgstr "/Chwarae Lleoliad"
 
-#: audacious/mainwin.c:389
+#: audacious/mainwin.c:398
 msgid "/V_isualization"
 msgstr "/Delweddu"
 
-#: audacious/mainwin.c:390
+#: audacious/mainwin.c:399
 msgid "/_Playback"
 msgstr "/Chwarae Nôl"
 
-#: audacious/mainwin.c:391
+#: audacious/mainwin.c:400
 msgid "/_View"
 msgstr "/_Edrych"
 
-#: audacious/mainwin.c:393
+#: audacious/mainwin.c:402
 msgid "/Preferences"
 msgstr "/Dewisiadau"
 
-#: audacious/mainwin.c:395
+#: audacious/mainwin.c:404
 msgid "/_Quit"
 msgstr "/_Gadael"
 
-#: audacious/mainwin.c:405
+#: audacious/mainwin.c:414
 msgid "/Files..."
 msgstr "/Ychwanegu Ffeiliau..."
 
-#: audacious/mainwin.c:407
+#: audacious/mainwin.c:416
 msgid "/Internet location..."
 msgstr "/Ychwanegu URL..."
 
-#: audacious/mainwin.c:417
+#: audacious/mainwin.c:426
 msgid "/Show Player"
 msgstr "/Dangos Y Brif Ffenestr"
 
-#: audacious/mainwin.c:419
+#: audacious/mainwin.c:428
 msgid "/Show Playlist Editor"
 msgstr "/Dangos Golygydd Rhestr Chwarae"
 
-#: audacious/mainwin.c:421
+#: audacious/mainwin.c:430
 msgid "/Show Equalizer"
 msgstr "/Dangos Hafalydd"
 
-#: audacious/mainwin.c:424
+#: audacious/mainwin.c:433
 msgid "/Time Elapsed"
 msgstr "/Amser aeth Heibio"
 
-#: audacious/mainwin.c:426
+#: audacious/mainwin.c:435
 msgid "/Time Remaining"
 msgstr "/Amser yn Weddill"
 
-#: audacious/mainwin.c:429
+#: audacious/mainwin.c:438
 msgid "/Always On Top"
 msgstr "/Bob Tro ar yr Wyneb"
 
-#: audacious/mainwin.c:431
+#: audacious/mainwin.c:440
 msgid "/Put on All Workspaces"
 msgstr "/Dangos ar bob bwrdd gwaith"
 
-#: audacious/mainwin.c:436
+#: audacious/mainwin.c:445
 msgid "/Roll up Player"
 msgstr "/Chrawae cysgodi"
 
-#: audacious/mainwin.c:438
+#: audacious/mainwin.c:447
 msgid "/Roll up Playlist Editor"
 msgstr "/Dangos Golygydd Rhestr Chwarae"
 
-#: audacious/mainwin.c:440
+#: audacious/mainwin.c:449
 msgid "/Roll up Equalizer"
 msgstr "/Ffurfweddiu'r Hafalydd"
 
-#: audacious/mainwin.c:443
+#: audacious/mainwin.c:452
 msgid "/DoubleSize"
 msgstr "/Maint Dwbwl"
 
-#: audacious/mainwin.c:445
+#: audacious/mainwin.c:454
 msgid "/Easy Move"
 msgstr "/Easy Move"
 
-#: audacious/mainwin.c:874
+#: audacious/mainwin.c:883
 #, c-format
 msgid "%s - Audacious"
 msgstr "%s - Audacious"
 
-#: audacious/mainwin.c:1099
+#: audacious/mainwin.c:1108
 msgid "VBR"
 msgstr "VBR"
 
-#: audacious/mainwin.c:1140
-#: audacious/mainwin.c:1144
+#: audacious/mainwin.c:1149
+#: audacious/mainwin.c:1153
 msgid "stereo"
 msgstr "Stereo"
 
-#: audacious/mainwin.c:1140
-#: audacious/mainwin.c:1144
+#: audacious/mainwin.c:1149
+#: audacious/mainwin.c:1153
 msgid "mono"
 msgstr "Unsain"
 
-#: audacious/mainwin.c:1633
+#: audacious/mainwin.c:1642
 msgid "Jump to Time"
 msgstr "Neidio i Amser"
 
-#: audacious/mainwin.c:1654
+#: audacious/mainwin.c:1663
 msgid "minutes:seconds"
 msgstr "munudau:eiliadau"
 
-#: audacious/mainwin.c:1664
+#: audacious/mainwin.c:1673
 msgid "Track length:"
 msgstr "Hyd trac:"
 
-#: audacious/mainwin.c:1752
+#: audacious/mainwin.c:1761
 msgid "Un_queue"
 msgstr "_Rhes tynnu"
 
-#: audacious/mainwin.c:1754
-#: audacious/mainwin.c:2109
+#: audacious/mainwin.c:1763
+#: audacious/mainwin.c:2140
 msgid "_Queue"
 msgstr "_Rhes"
 
-#: audacious/mainwin.c:2034
+#: audacious/mainwin.c:2065
 msgid "Jump to Track"
 msgstr "Neidio i trac"
 
-#: audacious/mainwin.c:2075
+#: audacious/mainwin.c:2106
 msgid "Filter: "
 msgstr "Hidl:"
 
-#: audacious/mainwin.c:2280
+#: audacious/mainwin.c:2311
 msgid "Enter location to play:"
 msgstr "Rhowch leoliad i chwarae:"
 
-#: audacious/mainwin.c:2488
+#: audacious/mainwin.c:2519
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "CHWILIO HYD: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2520
-#: audacious/mainwin.c:3310
+#: audacious/mainwin.c:2551
+#: audacious/mainwin.c:3354
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "LEFEL SAIN: %d%%"
 
-#: audacious/mainwin.c:2551
-#: audacious/mainwin.c:3313
+#: audacious/mainwin.c:2582
+#: audacious/mainwin.c:3357
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "CYDBWYSEDD: %d%% CHWITH"
 
-#: audacious/mainwin.c:2555
-#: audacious/mainwin.c:3316
+#: audacious/mainwin.c:2586
+#: audacious/mainwin.c:3360
 msgid "BALANCE: CENTER"
 msgstr "CYDBWYSEDD: CANOL"
 
-#: audacious/mainwin.c:2559
-#: audacious/mainwin.c:3318
+#: audacious/mainwin.c:2590
+#: audacious/mainwin.c:3362
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "CYDBWYSEDD: %d%% DE"
 
-#: audacious/mainwin.c:3084
+#: audacious/mainwin.c:3128
 msgid "OPTIONS MENU"
 msgstr "DEWISLEN DEWIS"
 
-#: audacious/mainwin.c:3088
+#: audacious/mainwin.c:3132
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "ANALLUOGI AR YR WYNEB"
 
-#: audacious/mainwin.c:3090
+#: audacious/mainwin.c:3134
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "GALLUOGI AR YR WYNEB"
 
-#: audacious/mainwin.c:3093
+#: audacious/mainwin.c:3137
 msgid "FILE INFO BOX"
 msgstr "BLWCH GWYBODAETH FFEIL"
 
-#: audacious/mainwin.c:3097
+#: audacious/mainwin.c:3141
 msgid "DISABLE DOUBLESIZE"
 msgstr "ANALLUOGI DOUBLESIZE"
 
-#: audacious/mainwin.c:3099
+#: audacious/mainwin.c:3143
 msgid "ENABLE DOUBLESIZE"
 msgstr "GALLUOGI DWBL MAINT"
 
-#: audacious/mainwin.c:3102
+#: audacious/mainwin.c:3146
 msgid "VISUALIZATION MENU"
 msgstr "DEWISLEN DELWEDDU"
 
-#: audacious/mainwin.c:3150
+#: audacious/mainwin.c:3194
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -969,7 +981,7 @@ msgstr ""
 "\n"
 "Dim CD ar gael.\n"
 
-#: audacious/mainwin.c:3167
+#: audacious/mainwin.c:3211
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -985,296 +997,320 @@ msgstr ""
 "2. Nid oes rhaglen arall yn rhwystro'r cerdyn sain\n"
 "3. Bod eich cerdyn sain wedi ei ffurfweddu'n gywir\n"
 
-#: audacious/prefswin.c:98
+#: audacious/prefswin.c:97
 #: audacious/glade/prefswin.glade:1372
 msgid "Appearance"
 msgstr "Tremiant"
 
-#: audacious/prefswin.c:99
+#: audacious/prefswin.c:98
 msgid "Audio"
 msgstr "Seniau"
 
-#: audacious/prefswin.c:100
+#: audacious/prefswin.c:99
 msgid "Connectivity"
 msgstr "Cysylltu"
 
-#: audacious/prefswin.c:101
+#: audacious/prefswin.c:100
 #: audacious/glade/prefswin.glade:2871
 msgid "Equalizer"
 msgstr "Hafalydd"
 
-#: audacious/prefswin.c:102
+#: audacious/prefswin.c:101
 #: audacious/glade/prefswin.glade:1651
 msgid "Mouse"
 msgstr "Llygod"
 
-#: audacious/prefswin.c:103
+#: audacious/prefswin.c:102
 #: audacious/glade/prefswin.glade:2503
 msgid "Playlist"
 msgstr "Chwarae"
 
-#: audacious/prefswin.c:104
+#: audacious/prefswin.c:103
 #: audacious/glade/prefswin.glade:693
 msgid "Plugins"
 msgstr "Ategynnau"
 
-#: audacious/prefswin.c:110
+#: audacious/prefswin.c:109
 msgid "Artist"
 msgstr "Cyflawnwr"
 
-#: audacious/prefswin.c:111
+#: audacious/prefswin.c:110
 #: libaudacious/titlestring.c:372
 msgid "Album"
 msgstr "Albwm"
 
-#: audacious/prefswin.c:112
+#: audacious/prefswin.c:111
 msgid "Title"
 msgstr "Teitl"
 
-#: audacious/prefswin.c:113
+#: audacious/prefswin.c:112
 msgid "Tracknumber"
 msgstr "Rhif y Trac:"
 
-#: audacious/prefswin.c:114
+#: audacious/prefswin.c:113
 #: libaudacious/titlestring.c:373
 msgid "Genre"
 msgstr "Math"
 
-#: audacious/prefswin.c:116
+#: audacious/prefswin.c:115
 msgid "Filepath"
 msgstr "Llwybr ffeil"
 
-#: audacious/prefswin.c:117
+#: audacious/prefswin.c:116
 #: libaudacious/titlestring.c:379
 msgid "Date"
 msgstr "Dyddiad"
 
-#: audacious/prefswin.c:118
+#: audacious/prefswin.c:117
 #: libaudacious/titlestring.c:380
 msgid "Year"
 msgstr "Blwyddyn"
 
-#: audacious/prefswin.c:119
+#: audacious/prefswin.c:118
 #: libaudacious/titlestring.c:381
 msgid "Comment"
 msgstr "Sylwad"
 
-#: audacious/prefswin.c:140
+#: audacious/prefswin.c:139
 msgid "localhost"
 msgstr "localhost"
 
-#: audacious/prefswin.c:453
-#: audacious/prefswin.c:540
-#: audacious/prefswin.c:629
-#: audacious/prefswin.c:725
+#: audacious/prefswin.c:452
+#: audacious/prefswin.c:539
+#: audacious/prefswin.c:628
+#: audacious/prefswin.c:724
 msgid "Enabled"
 msgstr " (galluog)"
 
-#: audacious/prefswin.c:469
-#: audacious/prefswin.c:556
-#: audacious/prefswin.c:645
-#: audacious/prefswin.c:741
+#: audacious/prefswin.c:468
+#: audacious/prefswin.c:555
+#: audacious/prefswin.c:644
+#: audacious/prefswin.c:740
 msgid "Description"
 msgstr "Disgrifiad:"
 
-#: audacious/prefswin.c:1792
+#: audacious/prefswin.c:1805
 msgid "Category"
 msgstr "Categori"
 
-#: audacious/prefswin.c:2251
+#: audacious/prefswin.c:2266
 msgid "Preferences Window"
 msgstr "Dewisiadau"
 
-#: audacious/skinwin.c:177
+#: audacious/skinwin.c:176
 msgid "Archived Winamp 2.x skin"
 msgstr "Croen Winamp 2.x"
 
-#: audacious/skinwin.c:182
+#: audacious/skinwin.c:181
 msgid "Unarchived Winamp 2.x skin"
 msgstr "Croen Winamp 2.x"
 
-#: audacious/ui_fileinfo.c:316
+#: audacious/ui_fileinfo.c:315
 msgid "Track Information Window"
 msgstr "Gwybodaeth Trac"
 
-#: audacious/ui_fileinfo.c:338
+#: audacious/ui_fileinfo.c:337
 msgid "Track Information Popup"
 msgstr "Gwybodaeth Trac"
 
-#: audacious/ui_playlist.c:126
+#: audacious/ui_playlist.c:125
 msgid "/Show Popup Info"
 msgstr "/Dangos Gwybodaeth Popup"
 
-#: audacious/ui_playlist.c:132
-#: audacious/ui_playlist.c:197
+#: audacious/ui_playlist.c:131
+#: audacious/ui_playlist.c:196
 msgid "/Remove Selected"
 msgstr "/Tynnu'r Dewis"
 
-#: audacious/ui_playlist.c:136
-#: audacious/ui_playlist.c:193
+#: audacious/ui_playlist.c:135
+#: audacious/ui_playlist.c:192
 msgid "/Remove Unselected"
 msgstr "/Tynnu'r Dewis"
 
-#: audacious/ui_playlist.c:140
-#: audacious/ui_playlist.c:189
+#: audacious/ui_playlist.c:139
+#: audacious/ui_playlist.c:188
 msgid "/Remove All"
 msgstr "/Tynnu'r Gyrrwr"
 
-#: audacious/ui_playlist.c:146
+#: audacious/ui_playlist.c:145
 msgid "/Queue Toggle"
 msgstr "/Ychwanegu neu Dynnu i/o'r Ciw"
 
-#: audacious/ui_playlist.c:152
+#: audacious/ui_playlist.c:151
 msgid "/Add CD..."
 msgstr "/Ychwanegu CD..."
 
-#: audacious/ui_playlist.c:156
+#: audacious/ui_playlist.c:155
 msgid "/Add Internet Address..."
 msgstr "/Ychwanegu·URL..."
 
-#: audacious/ui_playlist.c:160
+#: audacious/ui_playlist.c:159
 msgid "/Add Files..."
 msgstr "/Ychwanegu Ffeiliau..."
 
-#: audacious/ui_playlist.c:166
+#: audacious/ui_playlist.c:165
 msgid "/Clear Queue"
 msgstr "/Clirio'r Rhes"
 
-#: audacious/ui_playlist.c:172
+#: audacious/ui_playlist.c:171
 msgid "/Remove Unavailable Files"
 msgstr "/Gwaredu Ffeiliau Annilys"
 
-#: audacious/ui_playlist.c:176
+#: audacious/ui_playlist.c:175
 msgid "/Remove Duplicates"
 msgstr "/Tynnu'r Dewis"
 
-#: audacious/ui_playlist.c:177
+#: audacious/ui_playlist.c:176
 msgid "/Remove Duplicates/By Title"
 msgstr "/Rhestr Didoli/Yn ôl Teitl"
 
-#: audacious/ui_playlist.c:180
+#: audacious/ui_playlist.c:179
 msgid "/Remove Duplicates/By Filename"
 msgstr "/Rhestr Didoli/Yn ôl Enw Ffeil"
 
-#: audacious/ui_playlist.c:183
+#: audacious/ui_playlist.c:182
 msgid "/Remove Duplicates/By Path + Filename"
 msgstr "/Rhestr Didoli/Yn ôl Llwybr + Enw ffeil"
 
-#: audacious/ui_playlist.c:203
+#: audacious/ui_playlist.c:202
 msgid "/New List"
 msgstr "/Rhestr Newydd"
 
-#: audacious/ui_playlist.c:209
+#: audacious/ui_playlist.c:208
 msgid "/Load List"
 msgstr "/Rhestr Didoli"
 
-#: audacious/ui_playlist.c:213
+#: audacious/ui_playlist.c:212
 msgid "/Save List"
 msgstr "/Rhestr Newydd"
 
-#: audacious/ui_playlist.c:217
+#: audacious/ui_playlist.c:216
 msgid "/Save Default List"
 msgstr "/Rhestr Rhagosodiad Newydd"
 
-#: audacious/ui_playlist.c:223
+#: audacious/ui_playlist.c:222
 msgid "/Update View"
 msgstr "/Diweddaru Gweld"
 
-#: audacious/ui_playlist.c:229
+#: audacious/ui_playlist.c:228
+msgid "/Search and Select"
+msgstr "/Archwilio y Dewis"
+
+#: audacious/ui_playlist.c:234
 msgid "/Invert Selection"
 msgstr "/Dewis Gwrth-droi"
 
-#: audacious/ui_playlist.c:235
+#: audacious/ui_playlist.c:240
 msgid "/Select None"
 msgstr "/Dewis Didoli"
 
-#: audacious/ui_playlist.c:239
+#: audacious/ui_playlist.c:244
 msgid "/Select All"
 msgstr "/Dewis Popeth"
 
-#: audacious/ui_playlist.c:245
+#: audacious/ui_playlist.c:250
 msgid "/Randomize List"
 msgstr "/Hapio'r Rhestr"
 
-#: audacious/ui_playlist.c:247
+#: audacious/ui_playlist.c:252
 msgid "/Reverse List"
 msgstr "/Cildroi'r Rhestr"
 
-#: audacious/ui_playlist.c:250
+#: audacious/ui_playlist.c:255
 msgid "/Sort List"
 msgstr "/Rhestr Didoli"
 
-#: audacious/ui_playlist.c:251
+#: audacious/ui_playlist.c:256
 msgid "/Sort List/By Title"
 msgstr "/Rhestr Didoli/Yn ôl Teitl"
 
-#: audacious/ui_playlist.c:253
+#: audacious/ui_playlist.c:258
 msgid "/Sort List/By Artist"
 msgstr "/Rhestr Didoli/Yn ôl Cyflawnwr"
 
-#: audacious/ui_playlist.c:255
+#: audacious/ui_playlist.c:260
 msgid "/Sort List/By Filename"
 msgstr "/Rhestr Didoli/Yn ôl Enw Ffeil"
 
-#: audacious/ui_playlist.c:257
+#: audacious/ui_playlist.c:262
 msgid "/Sort List/By Path + Filename"
 msgstr "/Rhestr Didoli/Yn ôl Llwybr + Enw ffeil"
 
-#: audacious/ui_playlist.c:259
+#: audacious/ui_playlist.c:264
 msgid "/Sort List/By Date"
 msgstr "/Rhestr Didoli/Yn ôl Dyddiad"
 
-#: audacious/ui_playlist.c:261
+#: audacious/ui_playlist.c:266
 msgid "/Sort List/By Track Number"
 msgstr "/Rhestr Didoli/Yn ôl Dyddiad"
 
-#: audacious/ui_playlist.c:263
+#: audacious/ui_playlist.c:268
 msgid "/Sort List/By Playlist Entry"
 msgstr "/Rhestr Didoli/Yn ôl Teitl"
 
-#: audacious/ui_playlist.c:265
+#: audacious/ui_playlist.c:270
 msgid "/Sort Selection"
 msgstr "/Dewis Didoli"
 
-#: audacious/ui_playlist.c:266
+#: audacious/ui_playlist.c:271
 msgid "/Sort Selection/By Title"
 msgstr "/Dewis Didoli/Yn ôl Teitl"
 
-#: audacious/ui_playlist.c:268
+#: audacious/ui_playlist.c:273
 msgid "/Sort Selection/By Artist"
 msgstr "/Dewis Didoli/Yn ôl Cyflawnwr"
 
-#: audacious/ui_playlist.c:270
+#: audacious/ui_playlist.c:275
 msgid "/Sort Selection/By Filename"
 msgstr "/Dewis Didoli/Yn ôl Enw Ffeil"
 
-#: audacious/ui_playlist.c:272
+#: audacious/ui_playlist.c:277
 msgid "/Sort Selection/By Path + Filename"
 msgstr "/Dewis Didoli/Yn ôl LLwybr + Enw Ffeil"
 
-#: audacious/ui_playlist.c:274
+#: audacious/ui_playlist.c:279
 msgid "/Sort Selection/By Date"
 msgstr "/Dewis Didoli/Yn ôl Dyddiad"
 
-#: audacious/ui_playlist.c:276
+#: audacious/ui_playlist.c:281
 msgid "/Sort Selection/By Track Number"
 msgstr "/Dewis Didoli/Yn ôl Dyddiad"
 
-#: audacious/ui_playlist.c:278
+#: audacious/ui_playlist.c:283
 msgid "/Sort Selection/By Playlist Entry"
 msgstr "/Dewis Didoli/Yn ôl Teitl"
 
-#: audacious/ui_playlist.c:845
+#: audacious/ui_playlist.c:682
+msgid "Select entries in playlist by filling one or more fields. Fields use regular expressions syntax, case-insensitive. If you don't know how regular expressions work, simply insert a literal portion of what you're searching for."
+msgstr "Dethol llyfrifiadau am chwarae at rhagddarbodau amryfal meysydd. Meysyddau defnyddiau regular-expressions."
+
+#: audacious/ui_playlist.c:689
+msgid "Track name: "
+msgstr "Enwau'r Traciau: "
+
+#: audacious/ui_playlist.c:693
+msgid "Album name: "
+msgstr "Enwau'r Albwm:"
+
+#: audacious/ui_playlist.c:697
+msgid "Artist: "
+msgstr "Enw perfformiwr: "
+
+#: audacious/ui_playlist.c:701
+msgid "Filename: "
+msgstr "Enw ffeil: "
+
+#: audacious/ui_playlist.c:951
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "Gwall ysgrifennu'r rhestr chwarae \"%s\": %s"
 
-#: audacious/ui_playlist.c:866
+#: audacious/ui_playlist.c:972
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "Mae'r ffeil %s yn bodoli eisioes."
 
-#: audacious/ui_playlist.c:880
+#: audacious/ui_playlist.c:986
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -1285,52 +1321,52 @@ msgstr ""
 "\n"
 "Anhysbys ffeil trefniad ceisio am '%s'.\n"
 
-#: audacious/ui_playlist.c:1033
+#: audacious/ui_playlist.c:1139
 msgid "Load Playlist"
 msgstr "Llwytho'r rhestr chwarae"
 
-#: audacious/ui_playlist.c:1046
+#: audacious/ui_playlist.c:1152
 msgid "Save Playlist"
 msgstr "Cadw'r Rhestr Chwarae"
 
-#: audacious/ui_playlist.c:1783
+#: audacious/ui_playlist.c:1889
 msgid "Audacious Playlist Editor"
 msgstr "Rhestr Chwarae y tr Audacious"
 
-#: audacious/util.c:952
+#: audacious/util.c:951
 msgid "Add/Open Files dialog"
 msgstr "Ychwanegu/Tocio Ffeiliau"
 
-#: audacious/util.c:1007
+#: audacious/util.c:1006
 msgid "Open Files"
 msgstr "Tocio Ffeiliau"
 
-#: audacious/util.c:1011
+#: audacious/util.c:1010
 msgid "Close dialog on Open"
 msgstr "Closio am Tocio"
 
-#: audacious/util.c:1021
+#: audacious/util.c:1020
 #: audacious/glade/addfiles.glade:8
 msgid "Add Files"
 msgstr "Ychwanegu Ffeiliau"
 
-#: audacious/util.c:1025
+#: audacious/util.c:1024
 msgid "Close dialog on Add"
 msgstr "Closio am Ychwanegu"
 
-#: audacious/util.c:1203
+#: audacious/util.c:1202
 msgid "Play files"
 msgstr "Ffeiliau chwarae"
 
-#: audacious/util.c:1205
+#: audacious/util.c:1204
 msgid "Load files"
 msgstr "Llwytho ffeiliau"
 
-#: audacious/util.c:1509
+#: audacious/util.c:1508
 msgid "  (invalid UTF-8)"
 msgstr "  (UTF-8 annilys)"
 
-#: audacious/playback.c:209
+#: audacious/playback.c:222
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1670,82 +1706,90 @@ msgstr "<b>System Seniau</b>"
 msgid "Current output plugin:"
 msgstr "Ategyn allbwn:"
 
-#: audacious/glade/prefswin.glade:3500
-msgid "Buffer size:"
-msgstr "Maint y byffer:"
-
-#: audacious/glade/prefswin.glade:3570
+#: audacious/glade/prefswin.glade:3523
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams by, in milliseconds.\n"
 "Increase this value if you are experiencing audio skipping. \n"
 "Please note however, that high values will result in Audacious performing poorly.</span>"
 msgstr "<span size=\"small\">Cyn fyffer amser (ms).</span>"
 
-#: audacious/glade/prefswin.glade:3678
+#: audacious/glade/prefswin.glade:3553
+msgid "Buffer size:"
+msgstr "Maint y byffer:"
+
+#: audacious/glade/prefswin.glade:3677
 msgid "Output Plugin Preferences"
 msgstr "Ffurfwedd Ategyn Allbwn"
 
-#: audacious/glade/prefswin.glade:3753
+#: audacious/glade/prefswin.glade:3752
 msgid "Output Plugin Information"
 msgstr "Ynghylch Ategyn Allbwn"
 
-#: audacious/glade/prefswin.glade:3805
+#: audacious/glade/prefswin.glade:3804
 msgid "<b>Format Detection</b>"
 msgstr "<b>Awtoganfod trefniad</b>"
 
-#: audacious/glade/prefswin.glade:3846
+#: audacious/glade/prefswin.glade:3845
 msgid "Detect file formats on demand, instead of immediately."
 msgstr "Awtoganfod ffiel trefniad am gofyn."
 
-#: audacious/glade/prefswin.glade:3880
+#: audacious/glade/prefswin.glade:3879
+msgid "When checked, Audacious will detect file formats based by extension. This is slightly slower than detection on demand, but still provides a minimal level of format detection."
+msgstr "Os dewisedig, Audacious ewyllys awtoganfod ffiel trefniad at ymestyniad."
+
+#: audacious/glade/prefswin.glade:3881
+msgid "Detect file formats by extension."
+msgstr "Awtoganfawd ffiel trefniad at ymestyniad."
+
+#: audacious/glade/prefswin.glade:3915
 msgid "<b>Playback</b>"
 msgstr "<b>Chwarae</b>"
 
-#: audacious/glade/prefswin.glade:3921
+#: audacious/glade/prefswin.glade:3956
 msgid "Continue playback on startup"
 msgstr "Parhau Chrawae am Cychwyn"
 
-#: audacious/glade/prefswin.glade:3957
+#: audacious/glade/prefswin.glade:3992
 msgid "Don't advance in the playlist"
 msgstr "Peidio clirio'r rhestr chwarae"
 
-#: audacious/glade/prefswin.glade:3992
+#: audacious/glade/prefswin.glade:4027
 msgid "Pause between songs"
 msgstr "Oedi rhwng caneuon"
 
-#: audacious/glade/prefswin.glade:4030
+#: audacious/glade/prefswin.glade:4065
 msgid "Pause for"
 msgstr "Oedi am"
 
-#: audacious/glade/prefswin.glade:4076
+#: audacious/glade/prefswin.glade:4111
 msgid "seconds"
 msgstr "eiliad"
 
-#: audacious/glade/prefswin.glade:4116
+#: audacious/glade/prefswin.glade:4151
 msgid "label76"
 msgstr "label76"
 
-#: audacious/glade/prefswin.glade:4254
+#: audacious/glade/prefswin.glade:4289
 msgid "While searching for the album's cover, Audacious looks for certain words in the filename. You can specify those words in the lists below, separated using commas."
 msgstr "Chi enwi y allweddair yng chwilio am tannod."
 
-#: audacious/glade/prefswin.glade:4309
+#: audacious/glade/prefswin.glade:4344
 msgid "Include:"
 msgstr "Cynnwys:"
 
-#: audacious/glade/prefswin.glade:4337
+#: audacious/glade/prefswin.glade:4372
 msgid "Exclude:"
 msgstr "Allgau:"
 
-#: audacious/glade/prefswin.glade:4406
+#: audacious/glade/prefswin.glade:4441
 msgid "Recursively search for cover"
 msgstr "Archwilio amrfyal gwastad am pictiwr"
 
-#: audacious/glade/prefswin.glade:4444
+#: audacious/glade/prefswin.glade:4479
 msgid "Search depth: "
 msgstr "Archwilio dyfndra:"
 
-#: audacious/glade/prefswin.glade:4510
+#: audacious/glade/prefswin.glade:4545
 msgid "Use per-file cover"
 msgstr "Defnyddio amgenach pictiwr am y pen ffiel"
 
@@ -2046,8 +2090,6 @@ msgstr "%{n:...%}: Dangos \"...\" uniq os elfen %n ys presennol"
 #~ msgstr "Defnyddiwch Fynegai'r CD"
 #~ msgid "CD Index server:"
 #~ msgstr "Gwasanaethwr Mynegai CD:"
-#~ msgid "Track names:"
-#~ msgstr "Enwau'r Traciau:"
 #~ msgid "Override generic titles"
 #~ msgstr "Diystyru'r teitlau cyffredinol"
 #~ msgid "Name format:"
@@ -2074,10 +2116,6 @@ msgstr "%{n:...%}: Dangos \"...\" uniq os elfen %n ys presennol"
 #, fuzzy
 #~ msgid "Enable ReplayGain processing"
 #~ msgstr "Galluogi ReplayGain"
-
-#, fuzzy
-#~ msgid "Album mode"
-#~ msgstr "Albwm"
 
 #, fuzzy
 #~ msgid "Preamp:"
@@ -2460,8 +2498,6 @@ msgstr "%{n:...%}: Dangos \"...\" uniq os elfen %n ys presennol"
 #~ msgstr "Tango"
 #~ msgid "Title:"
 #~ msgstr "Teitl:"
-#~ msgid "Artist:"
-#~ msgstr "Artist:"
 #~ msgid "Album:"
 #~ msgstr "Albwm:"
 #~ msgid "Comment:"
@@ -3714,8 +3750,6 @@ msgstr "%{n:...%}: Dangos \"...\" uniq os elfen %n ys presennol"
 #, fuzzy
 #~ msgid "/Rename"
 #~ msgstr "Enw ffeil"
-#~ msgid "/New Playlist"
-#~ msgstr "/Rhestr Chwarae Newydd"
 #~ msgid "Searching folders..."
 #~ msgstr "Chwilio ffolderi..."
 #~ msgid "bmp: Jump to time"

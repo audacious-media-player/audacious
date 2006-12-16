@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-12-11 22:15-0600\n"
+"POT-Creation-Date: 2006-12-15 20:35-0600\n"
 "PO-Revision-Date: 2004-06-29 19:02+0900\n"
 "Last-Translator: DongCheon Park <dcpark@kaist.ac.kr>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -19,16 +19,16 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: audacious/about.c:119 audacious/credits.c:317
+#: audacious/about.c:118 audacious/credits.c:317
 #, fuzzy
 msgid "About Audacious"
 msgstr "MPEG 오디오 플러그인 정보"
 
-#: audacious/about.c:168 audacious/credits.c:362
+#: audacious/about.c:167 audacious/credits.c:362
 msgid "Credits"
 msgstr "공로"
 
-#: audacious/credits.c:45
+#: audacious/credits.c:44
 #, fuzzy, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
@@ -42,46 +42,46 @@ msgstr ""
 "Copyright (C) 2003-2004 BMP 개발 팀\n"
 "한글번역: 동쪽하늘 (dcpark@kaist.ac.kr)\n"
 
-#: audacious/credits.c:51
+#: audacious/credits.c:50
 #, fuzzy
 msgid "Audacious core developers:"
 msgstr "BMP 선택사항"
 
-#: audacious/credits.c:63
+#: audacious/credits.c:62
 msgid "Graphics:"
 msgstr ""
 
-#: audacious/credits.c:68
+#: audacious/credits.c:67
 msgid "Default skin:"
 msgstr "기본 스킨:"
 
-#: audacious/credits.c:73
+#: audacious/credits.c:72
 msgid "Plugin development:"
 msgstr ""
 
-#: audacious/credits.c:84
+#: audacious/credits.c:83
 msgid "Patch authors:"
 msgstr ""
 
-#: audacious/credits.c:99
+#: audacious/credits.c:98
 #, fuzzy
 msgid "0.1.x developers:"
 msgstr "개발자:"
 
-#: audacious/credits.c:105
+#: audacious/credits.c:104
 #, fuzzy
 msgid "BMP Developers:"
 msgstr "개발자:"
 
-#: audacious/credits.c:137
+#: audacious/credits.c:136
 msgid "Brazilian Portuguese:"
 msgstr ""
 
-#: audacious/credits.c:140
+#: audacious/credits.c:139
 msgid "Breton:"
 msgstr ""
 
-#: audacious/credits.c:143
+#: audacious/credits.c:142
 msgid "Chinese:"
 msgstr "중국어:"
 
@@ -185,121 +185,121 @@ msgstr "웨일스어:"
 msgid "Translators"
 msgstr "번역"
 
-#: audacious/equalizer.c:120
+#: audacious/equalizer.c:119
 msgid "/Load"
 msgstr "/읽기"
 
-#: audacious/equalizer.c:121
+#: audacious/equalizer.c:120
 msgid "/Load/Preset"
 msgstr "/읽기/설정값"
 
-#: audacious/equalizer.c:123
+#: audacious/equalizer.c:122
 msgid "/Load/Auto-load preset"
 msgstr "/읽기/설정값 자동-읽기"
 
-#: audacious/equalizer.c:125
+#: audacious/equalizer.c:124
 msgid "/Load/Default"
 msgstr "/읽기/기본값"
 
-#: audacious/equalizer.c:128
+#: audacious/equalizer.c:127
 msgid "/Load/Zero"
 msgstr "/읽기/없음"
 
-#: audacious/equalizer.c:131
+#: audacious/equalizer.c:130
 msgid "/Load/From file"
 msgstr "/읽기/파일"
 
-#: audacious/equalizer.c:133
+#: audacious/equalizer.c:132
 msgid "/Load/From WinAMP EQF file"
 msgstr "/읽기/WinAMP EQF 파일"
 
-#: audacious/equalizer.c:135
+#: audacious/equalizer.c:134
 msgid "/Import"
 msgstr "/가져오기"
 
-#: audacious/equalizer.c:136
+#: audacious/equalizer.c:135
 msgid "/Import/WinAMP Presets"
 msgstr "/가져오기/Winamp 설정값"
 
-#: audacious/equalizer.c:138
+#: audacious/equalizer.c:137
 msgid "/Save"
 msgstr "/저장"
 
-#: audacious/equalizer.c:139
+#: audacious/equalizer.c:138
 msgid "/Save/Preset"
 msgstr "/저장/설정값"
 
-#: audacious/equalizer.c:141
+#: audacious/equalizer.c:140
 msgid "/Save/Auto-load preset"
 msgstr "/저장/설정값 자동-읽기"
 
-#: audacious/equalizer.c:143
+#: audacious/equalizer.c:142
 msgid "/Save/Default"
 msgstr "/저장/기본값"
 
-#: audacious/equalizer.c:146
+#: audacious/equalizer.c:145
 msgid "/Save/To file"
 msgstr "/저장/파일"
 
-#: audacious/equalizer.c:148
+#: audacious/equalizer.c:147
 msgid "/Save/To WinAMP EQF file"
 msgstr "/저장/WinAMP EQF파일"
 
-#: audacious/equalizer.c:150
+#: audacious/equalizer.c:149
 msgid "/Delete"
 msgstr "/삭제"
 
-#: audacious/equalizer.c:151
+#: audacious/equalizer.c:150
 msgid "/Delete/Preset"
 msgstr "/삭제/설정값"
 
-#: audacious/equalizer.c:153
+#: audacious/equalizer.c:152
 msgid "/Delete/Auto-load preset"
 msgstr "/삭제/설정값 자동-읽기"
 
-#: audacious/equalizer.c:816
+#: audacious/equalizer.c:815
 #, fuzzy
 msgid "Audacious Equalizer"
 msgstr "이퀄라이저"
 
-#: audacious/equalizer.c:1484
+#: audacious/equalizer.c:1483
 msgid "Preset"
 msgstr "설정값"
 
-#: audacious/equalizer.c:1529
+#: audacious/equalizer.c:1528
 msgid "Presets"
 msgstr "설정값"
 
-#: audacious/equalizer.c:1593
+#: audacious/equalizer.c:1592
 msgid "Load preset"
 msgstr "설정값 읽기"
 
-#: audacious/equalizer.c:1609
+#: audacious/equalizer.c:1608
 msgid "Load auto-preset"
 msgstr "자동-설정값 읽기"
 
-#: audacious/equalizer.c:1635 audacious/equalizer.c:1641
-#: audacious/equalizer.c:1648
+#: audacious/equalizer.c:1634 audacious/equalizer.c:1640
+#: audacious/equalizer.c:1647
 msgid "Load equalizer preset"
 msgstr "이퀄라이저 설정값 읽기"
 
-#: audacious/equalizer.c:1657
+#: audacious/equalizer.c:1656
 msgid "Save preset"
 msgstr "설정값 저장"
 
-#: audacious/equalizer.c:1677
+#: audacious/equalizer.c:1676
 msgid "Save auto-preset"
 msgstr "자동-설정값 저장"
 
-#: audacious/equalizer.c:1713 audacious/equalizer.c:1733
+#: audacious/equalizer.c:1712 audacious/equalizer.c:1732
 msgid "Save equalizer preset"
 msgstr "이퀄라이저 설정값 저장"
 
-#: audacious/equalizer.c:1742
+#: audacious/equalizer.c:1741
 msgid "Delete preset"
 msgstr "설정값 삭제"
 
-#: audacious/equalizer.c:1760
+#: audacious/equalizer.c:1759
 msgid "Delete auto-preset"
 msgstr "자동 설정값 삭제"
 
@@ -358,7 +358,7 @@ msgstr "%s: 알 수 없는 옵션 `-W %s'\n"
 msgid "%s: option `-W %s' doesn't allow an argument\n"
 msgstr "%s: `-W %s' 옵션은 인자를 사용하지 않습니다.\n"
 
-#: audacious/glade.c:41
+#: audacious/glade.c:40
 #, c-format
 msgid ""
 "<b><big>Unable to create %s.</big></b>\n"
@@ -366,7 +366,7 @@ msgid ""
 "Could not open glade file (%s). Please check your installation.\n"
 msgstr ""
 
-#: audacious/input.c:304
+#: audacious/input.c:303
 msgid ""
 "<b><big>Unable to play files.</big></b>\n"
 "\n"
@@ -375,53 +375,53 @@ msgid ""
 "2. you have enabled the media plugins required."
 msgstr ""
 
-#: audacious/input.c:329
+#: audacious/input.c:328
 msgid "Don't show this warning anymore"
 msgstr "이 경고를 다시 보이지 않습니다."
 
-#: audacious/input.c:331
+#: audacious/input.c:330
 msgid "Show more _details"
 msgstr ""
 
-#: audacious/input.c:345 audacious/prefswin.c:115 audacious/prefswin.c:483
-#: audacious/prefswin.c:571 audacious/prefswin.c:660 audacious/prefswin.c:756
+#: audacious/input.c:344 audacious/prefswin.c:114 audacious/prefswin.c:482
+#: audacious/prefswin.c:570 audacious/prefswin.c:659 audacious/prefswin.c:755
 msgid "Filename"
 msgstr "파일이름"
 
-#: audacious/input.c:581
+#: audacious/input.c:612
 #, c-format
 msgid "audacious: %s"
 msgstr ""
 
-#: audacious/input.c:597
+#: audacious/input.c:628
 msgid "Filename:"
 msgstr "파일이름:"
 
-#: audacious/input.c:615
+#: audacious/input.c:646
 msgid "No input plugin recognized this file"
 msgstr "이 파일을 인식하는 입력 플러그인이 없습니다."
 
-#: audacious/input.c:617
+#: audacious/input.c:648
 #, c-format
 msgid "Input plugin: %s"
 msgstr "입력 플러그인: %s"
 
-#: audacious/logger.c:120
+#: audacious/logger.c:119
 #, c-format
 msgid "Unable to create log file (%s)!\n"
 msgstr "(%s) 로그 파일을 생성할 수 없습니다!\n"
 
-#: audacious/main.c:82 audacious/main.c:84 audacious/mainwin.c:876
-#: audacious/mainwin.c:3676
+#: audacious/main.c:81 audacious/main.c:83 audacious/mainwin.c:885
+#: audacious/mainwin.c:3720
 msgid "Audacious"
 msgstr ""
 
-#: audacious/main.c:449
+#: audacious/main.c:451
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "(%s) 디렉토리를 생성할 수 없습니다.: %s"
 
-#: audacious/main.c:726
+#: audacious/main.c:728
 #, fuzzy
 msgid ""
 "Usage: audacious [options] [files] ...\n"
@@ -434,73 +434,73 @@ msgstr ""
 "선택사항:\n"
 "--------\n"
 
-#: audacious/main.c:731
+#: audacious/main.c:733
 msgid "Display this text and exit"
 msgstr "이 도움말을 표시하고 끝냄"
 
-#: audacious/main.c:734
+#: audacious/main.c:736
 #, fuzzy
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "BMP/XMMS 세션 선택 (기본값: 0)"
 
-#: audacious/main.c:737
+#: audacious/main.c:739
 msgid "Skip backwards in playlist"
 msgstr "재생목록의 뒷부분 건너뛰기"
 
-#: audacious/main.c:740
+#: audacious/main.c:742
 msgid "Start playing current playlist"
 msgstr "현재 재생목록 재생 시작"
 
-#: audacious/main.c:743
+#: audacious/main.c:745
 msgid "Pause current song"
 msgstr "현재 노래 멈춤"
 
-#: audacious/main.c:746
+#: audacious/main.c:748
 msgid "Stop current song"
 msgstr "현재 노래 정지"
 
-#: audacious/main.c:749
+#: audacious/main.c:751
 msgid "Pause if playing, play otherwise"
 msgstr "재생중이면 멈춤, 그 외에는 재생"
 
-#: audacious/main.c:752
+#: audacious/main.c:754
 msgid "Skip forward in playlist"
 msgstr "재생목록의 앞부분 건너뛰기"
 
-#: audacious/main.c:755
+#: audacious/main.c:757
 msgid "Display Jump to file dialog"
 msgstr ""
 
-#: audacious/main.c:758
+#: audacious/main.c:760
 msgid "Don't clear the playlist"
 msgstr "재생목록 지우지 않음"
 
-#: audacious/main.c:761
+#: audacious/main.c:763
 msgid "Show the main window"
 msgstr "기본 창 보임"
 
-#: audacious/main.c:764
+#: audacious/main.c:766
 #, fuzzy
 msgid "Activate Audacious"
 msgstr "MPEG 오디오 플러그인 정보"
 
-#: audacious/main.c:767
+#: audacious/main.c:769
 msgid "Previous session ID"
 msgstr "이전 세션 ID"
 
-#: audacious/main.c:770
+#: audacious/main.c:772
 msgid "Headless operation [experimental]"
 msgstr ""
 
-#: audacious/main.c:773
+#: audacious/main.c:775
 msgid "Disable error/warning interception (logging)"
 msgstr ""
 
-#: audacious/main.c:776
+#: audacious/main.c:778
 msgid "Print version number and exit\n"
 msgstr "버전 번호를 출력하고 끝냄\n"
 
-#: audacious/main.c:966
+#: audacious/main.c:975
 #, fuzzy
 msgid ""
 "\n"
@@ -517,7 +517,7 @@ msgstr ""
 "beepmp-devel@lists.sourceforge.net으로 메일을 보내주시기 바랍니다.\n"
 "\n"
 
-#: audacious/main.c:996
+#: audacious/main.c:1005
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -530,7 +530,7 @@ msgstr ""
 "'%s'에 있는 스킨이 사용가능한지, 기본 스킨이 '%s'에 제대로 설치되어있는지 확"
 "인하시기 바랍니다.\n"
 
-#: audacious/main.c:1043
+#: audacious/main.c:1052
 #, fuzzy, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -539,7 +539,7 @@ msgstr ""
 "사용 중인 GTK+ 버전 (%d.%d.%d)에서는 BMP가 동작하지 않습니다.\n"
 "GTK+ %s 이나 그 이상을 사용하세요.\n"
 
-#: audacious/main.c:1054
+#: audacious/main.c:1063
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -553,431 +553,446 @@ msgstr ""
 "GTK+를 설치하셨다면\n"
 "Glib과 GTK+를 다시 컴파일해야 합니다.\n"
 
-#: audacious/main.c:1073
+#: audacious/main.c:1082
 #, fuzzy
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "BMP: 디스플레이를 열 수 없어, 종료합니다."
 
-#: audacious/mainwin.c:245 audacious/mainwin.c:371 audacious/ui_playlist.c:122
+#: audacious/mainwin.c:247 audacious/mainwin.c:380 audacious/ui_playlist.c:121
 msgid "/View Track Details"
 msgstr "/트랙 세부정보 보기"
 
-#: audacious/mainwin.c:247 audacious/mainwin.c:366
+#: audacious/mainwin.c:249 audacious/mainwin.c:368
 msgid "/Jump to File"
 msgstr "/파일 이동"
 
-#: audacious/mainwin.c:250 audacious/mainwin.c:433
+#: audacious/mainwin.c:252 audacious/mainwin.c:442
 msgid "/Autoscroll Songname"
 msgstr "/제목 자동 스크롤"
 
-#: audacious/mainwin.c:252 audacious/mainwin.c:344
+#: audacious/mainwin.c:254 audacious/mainwin.c:346
 #, fuzzy
 msgid "/Stop After Current Song"
 msgstr "현재 노래 정지"
 
-#: audacious/mainwin.c:262
+#: audacious/mainwin.c:264
 msgid "/Visualization Mode"
 msgstr "/시각효과 모드"
 
-#: audacious/mainwin.c:263
+#: audacious/mainwin.c:265
 msgid "/Visualization Mode/Analyzer"
 msgstr "/시각효과 모드/스펙트럼"
 
-#: audacious/mainwin.c:265
+#: audacious/mainwin.c:267
 msgid "/Visualization Mode/Scope"
 msgstr "/시각효과 모드/파형"
 
-#: audacious/mainwin.c:267
+#: audacious/mainwin.c:269
 msgid "/Visualization Mode/Off"
 msgstr "/시각효과 모드/끄기"
 
-#: audacious/mainwin.c:269
+#: audacious/mainwin.c:271
 msgid "/Analyzer Mode"
 msgstr "/스펙트럼 모드"
 
-#: audacious/mainwin.c:270
+#: audacious/mainwin.c:272
 msgid "/Analyzer Mode/Normal"
 msgstr "/스펙트럼 모드/일반"
 
-#: audacious/mainwin.c:272
+#: audacious/mainwin.c:274
 msgid "/Analyzer Mode/Fire"
 msgstr "/스펙트럼 모드/화염"
 
-#: audacious/mainwin.c:274
+#: audacious/mainwin.c:276
 msgid "/Analyzer Mode/Vertical Lines"
 msgstr "/스펙트럼 모드/수직선"
 
-#: audacious/mainwin.c:277
+#: audacious/mainwin.c:279
 msgid "/Analyzer Mode/Lines"
 msgstr "/스펙트럼 모드/선"
 
-#: audacious/mainwin.c:279
+#: audacious/mainwin.c:281
 msgid "/Analyzer Mode/Bars"
 msgstr "/스펙트럼 모드/막대기"
 
-#: audacious/mainwin.c:282
+#: audacious/mainwin.c:284
 msgid "/Analyzer Mode/Peaks"
 msgstr "/스펙트럼 모드/꼭지점"
 
-#: audacious/mainwin.c:284
+#: audacious/mainwin.c:286
 msgid "/Scope Mode"
 msgstr "/파형 모드"
 
-#: audacious/mainwin.c:285
+#: audacious/mainwin.c:287
 msgid "/Scope Mode/Dot Scope"
 msgstr "/파형 모드/점 파형"
 
-#: audacious/mainwin.c:287
+#: audacious/mainwin.c:289
 msgid "/Scope Mode/Line Scope"
 msgstr "/파형 모드/선 파형"
 
-#: audacious/mainwin.c:289
+#: audacious/mainwin.c:291
 msgid "/Scope Mode/Solid Scope"
 msgstr "/파형 모드/고체 파형"
 
-#: audacious/mainwin.c:291
+#: audacious/mainwin.c:293
 msgid "/WindowShade VU Mode"
 msgstr "/창줄임 VU 모드"
 
-#: audacious/mainwin.c:292
+#: audacious/mainwin.c:294
 msgid "/WindowShade VU Mode/Normal"
 msgstr "/창줄임 VU 모드/일반"
 
-#: audacious/mainwin.c:294
+#: audacious/mainwin.c:296
 msgid "/WindowShade VU Mode/Smooth"
 msgstr "/창줄임 VU 모드/부드럽게"
 
-#: audacious/mainwin.c:296
+#: audacious/mainwin.c:298
 msgid "/Refresh Rate"
 msgstr "/재생율"
 
-#: audacious/mainwin.c:297
+#: audacious/mainwin.c:299
 msgid "/Refresh Rate/Full (~50 fps)"
 msgstr "/재생율/최대 (~50 fps)"
 
-#: audacious/mainwin.c:299
+#: audacious/mainwin.c:301
 msgid "/Refresh Rate/Half (~25 fps)"
 msgstr "/재생율/중간 (~25 fps)"
 
-#: audacious/mainwin.c:301
+#: audacious/mainwin.c:303
 msgid "/Refresh Rate/Quarter (~13 fps)"
 msgstr "/재생율/25% (~13 fps)"
 
-#: audacious/mainwin.c:303
+#: audacious/mainwin.c:305
 msgid "/Refresh Rate/Eighth (~6 fps)"
 msgstr "/재생율/12.5% (~6 fps)"
 
-#: audacious/mainwin.c:305
+#: audacious/mainwin.c:307
 msgid "/Analyzer Falloff"
 msgstr "/스펙트럼 감소"
 
-#: audacious/mainwin.c:306
+#: audacious/mainwin.c:308
 msgid "/Analyzer Falloff/Slowest"
 msgstr "/스펙트럼 감소/최대한 느리게"
 
-#: audacious/mainwin.c:308
+#: audacious/mainwin.c:310
 msgid "/Analyzer Falloff/Slow"
 msgstr "/스펙트럼 감소/느리게"
 
-#: audacious/mainwin.c:310
+#: audacious/mainwin.c:312
 msgid "/Analyzer Falloff/Medium"
 msgstr "/스펙트럼 감소/중간"
 
-#: audacious/mainwin.c:312
+#: audacious/mainwin.c:314
 msgid "/Analyzer Falloff/Fast"
 msgstr "/스펙트럼 감소/빠르게"
 
-#: audacious/mainwin.c:314
+#: audacious/mainwin.c:316
 msgid "/Analyzer Falloff/Fastest"
 msgstr "/스펙트럼 감소/최대한 빠르게"
 
-#: audacious/mainwin.c:316
+#: audacious/mainwin.c:318
 msgid "/Peaks Falloff"
 msgstr "/최고점 감소"
 
-#: audacious/mainwin.c:317
+#: audacious/mainwin.c:319
 msgid "/Peaks Falloff/Slowest"
 msgstr "/최고점 감소/최대한 느리게"
 
-#: audacious/mainwin.c:319
+#: audacious/mainwin.c:321
 msgid "/Peaks Falloff/Slow"
 msgstr "/최고점 감소/느리게"
 
-#: audacious/mainwin.c:321
+#: audacious/mainwin.c:323
 msgid "/Peaks Falloff/Medium"
 msgstr "/최고점 감소/중간"
 
-#: audacious/mainwin.c:323
+#: audacious/mainwin.c:325
 msgid "/Peaks Falloff/Fast"
 msgstr "/최고점 감소/빠르게"
 
-#: audacious/mainwin.c:325
+#: audacious/mainwin.c:327
 msgid "/Peaks Falloff/Fastest"
 msgstr "/최고점 감소/최대한 빠르게"
 
-#: audacious/mainwin.c:335
+#: audacious/mainwin.c:337
 msgid "/Play CD"
 msgstr "/CD 재생"
 
-#: audacious/mainwin.c:338
+#: audacious/mainwin.c:340
 msgid "/Repeat"
 msgstr "/반복"
 
-#: audacious/mainwin.c:340
+#: audacious/mainwin.c:342
 msgid "/Shuffle"
 msgstr "/뒤섞기"
 
-#: audacious/mainwin.c:342
+#: audacious/mainwin.c:344
 msgid "/No Playlist Advance"
 msgstr "/다음곡 진행 안함"
 
-#: audacious/mainwin.c:347
+#: audacious/mainwin.c:349
 msgid "/Play"
 msgstr "/재생"
 
-#: audacious/mainwin.c:349
+#: audacious/mainwin.c:351
 msgid "/Pause"
 msgstr "/멈춤"
 
-#: audacious/mainwin.c:351
+#: audacious/mainwin.c:353
 msgid "/Stop"
 msgstr "/정지"
 
-#: audacious/mainwin.c:353
+#: audacious/mainwin.c:355
 msgid "/Previous"
 msgstr "/이전"
 
-#: audacious/mainwin.c:355
+#: audacious/mainwin.c:357
 msgid "/Next"
 msgstr "/다음"
 
-#: audacious/mainwin.c:358
+#: audacious/mainwin.c:360
 msgid "/Jump to Playlist Start"
 msgstr "/목록 처음으로"
 
-#: audacious/mainwin.c:360
+#: audacious/mainwin.c:362
 msgid "/-"
 msgstr "/-"
 
-#: audacious/mainwin.c:361
+#: audacious/mainwin.c:363
 #, fuzzy
 msgid "/Set A-B"
 msgstr "모두 선택"
 
-#: audacious/mainwin.c:363
+#: audacious/mainwin.c:365
 #, fuzzy
 msgid "/Clear A-B"
 msgstr "/대기열 비움"
 
-#: audacious/mainwin.c:368
+#: audacious/mainwin.c:370
 msgid "/Jump to Time"
 msgstr "/시간 이동"
 
-#: audacious/mainwin.c:381
+#: audacious/mainwin.c:373
+#, fuzzy
+msgid "/New Playlist"
+msgstr "/재생목록"
+
+#: audacious/mainwin.c:375
+#, fuzzy
+msgid "/Select Next Playlist"
+msgstr "재생목록 글꼴 선택:"
+
+#: audacious/mainwin.c:377
+#, fuzzy
+msgid "/Select Previous Playlist"
+msgstr "/선택 정렬/제목 순"
+
+#: audacious/mainwin.c:390
 #, fuzzy
 msgid "/About Audacious"
 msgstr "MPEG 오디오 플러그인 정보"
 
-#: audacious/mainwin.c:384
+#: audacious/mainwin.c:393
 #, fuzzy
 msgid "/Play File"
 msgstr "파일 재생"
 
-#: audacious/mainwin.c:386
+#: audacious/mainwin.c:395
 #, fuzzy
 msgid "/Play Location"
 msgstr "위치:"
 
-#: audacious/mainwin.c:389
+#: audacious/mainwin.c:398
 #, fuzzy
 msgid "/V_isualization"
 msgstr "/시각효과 모드"
 
-#: audacious/mainwin.c:390
+#: audacious/mainwin.c:399
 #, fuzzy
 msgid "/_Playback"
 msgstr "/재생하기"
 
-#: audacious/mainwin.c:391
+#: audacious/mainwin.c:400
 msgid "/_View"
 msgstr ""
 
-#: audacious/mainwin.c:393
+#: audacious/mainwin.c:402
 msgid "/Preferences"
 msgstr "/환경설정"
 
-#: audacious/mainwin.c:395
+#: audacious/mainwin.c:404
 msgid "/_Quit"
 msgstr "/끝내기(_Q)"
 
-#: audacious/mainwin.c:405
+#: audacious/mainwin.c:414
 #, fuzzy
 msgid "/Files..."
 msgstr "/추가/파일..."
 
-#: audacious/mainwin.c:407
+#: audacious/mainwin.c:416
 #, fuzzy
 msgid "/Internet location..."
 msgstr "/추가/인터넷 위치..."
 
-#: audacious/mainwin.c:417
+#: audacious/mainwin.c:426
 #, fuzzy
 msgid "/Show Player"
 msgstr "/재생목록 편집기 보기"
 
-#: audacious/mainwin.c:419
+#: audacious/mainwin.c:428
 msgid "/Show Playlist Editor"
 msgstr "/재생목록 편집기 보기"
 
-#: audacious/mainwin.c:421
+#: audacious/mainwin.c:430
 #, fuzzy
 msgid "/Show Equalizer"
 msgstr "이퀄라이저"
 
-#: audacious/mainwin.c:424
+#: audacious/mainwin.c:433
 msgid "/Time Elapsed"
 msgstr "/경과 시간"
 
-#: audacious/mainwin.c:426
+#: audacious/mainwin.c:435
 msgid "/Time Remaining"
 msgstr "/남은 시간"
 
-#: audacious/mainwin.c:429
+#: audacious/mainwin.c:438
 msgid "/Always On Top"
 msgstr "/항상 맨 위"
 
-#: audacious/mainwin.c:431
+#: audacious/mainwin.c:440
 msgid "/Put on All Workspaces"
 msgstr ""
 
-#: audacious/mainwin.c:436
+#: audacious/mainwin.c:445
 msgid "/Roll up Player"
 msgstr ""
 
-#: audacious/mainwin.c:438
+#: audacious/mainwin.c:447
 #, fuzzy
 msgid "/Roll up Playlist Editor"
 msgstr "/재생목록 편집기 활성"
 
-#: audacious/mainwin.c:440
+#: audacious/mainwin.c:449
 #, fuzzy
 msgid "/Roll up Equalizer"
 msgstr "이퀄라이저"
 
-#: audacious/mainwin.c:443
+#: audacious/mainwin.c:452
 msgid "/DoubleSize"
 msgstr "/두배 크기"
 
-#: audacious/mainwin.c:445
+#: audacious/mainwin.c:454
 msgid "/Easy Move"
 msgstr "/쉬운 이동"
 
-#: audacious/mainwin.c:874
+#: audacious/mainwin.c:883
 #, c-format
 msgid "%s - Audacious"
 msgstr ""
 
-#: audacious/mainwin.c:1099
+#: audacious/mainwin.c:1108
 msgid "VBR"
 msgstr "VBR"
 
-#: audacious/mainwin.c:1140 audacious/mainwin.c:1144
+#: audacious/mainwin.c:1149 audacious/mainwin.c:1153
 #, fuzzy
 msgid "stereo"
 msgstr "스테레오"
 
-#: audacious/mainwin.c:1140 audacious/mainwin.c:1144
+#: audacious/mainwin.c:1149 audacious/mainwin.c:1153
 #, fuzzy
 msgid "mono"
 msgstr "모노"
 
-#: audacious/mainwin.c:1633
+#: audacious/mainwin.c:1642
 msgid "Jump to Time"
 msgstr "시간 이동"
 
-#: audacious/mainwin.c:1654
+#: audacious/mainwin.c:1663
 msgid "minutes:seconds"
 msgstr "분:초"
 
-#: audacious/mainwin.c:1664
+#: audacious/mainwin.c:1673
 msgid "Track length:"
 msgstr "트랙 길이:"
 
-#: audacious/mainwin.c:1752
+#: audacious/mainwin.c:1761
 #, fuzzy
 msgid "Un_queue"
 msgstr "대기열"
 
-#: audacious/mainwin.c:1754 audacious/mainwin.c:2109
+#: audacious/mainwin.c:1763 audacious/mainwin.c:2140
 #, fuzzy
 msgid "_Queue"
 msgstr "대기열"
 
-#: audacious/mainwin.c:2034
+#: audacious/mainwin.c:2065
 msgid "Jump to Track"
 msgstr "트랙 이동"
 
-#: audacious/mainwin.c:2075
+#: audacious/mainwin.c:2106
 msgid "Filter: "
 msgstr "필터: "
 
-#: audacious/mainwin.c:2280
+#: audacious/mainwin.c:2311
 msgid "Enter location to play:"
 msgstr ""
 
-#: audacious/mainwin.c:2488
+#: audacious/mainwin.c:2519
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "이동 위치: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2520 audacious/mainwin.c:3310
+#: audacious/mainwin.c:2551 audacious/mainwin.c:3354
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "음량: %d%%"
 
-#: audacious/mainwin.c:2551 audacious/mainwin.c:3313
+#: audacious/mainwin.c:2582 audacious/mainwin.c:3357
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "균형: %d%% 왼쪽"
 
-#: audacious/mainwin.c:2555 audacious/mainwin.c:3316
+#: audacious/mainwin.c:2586 audacious/mainwin.c:3360
 msgid "BALANCE: CENTER"
 msgstr "균형: 가운데"
 
-#: audacious/mainwin.c:2559 audacious/mainwin.c:3318
+#: audacious/mainwin.c:2590 audacious/mainwin.c:3362
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "균형: %d%% 오른쪽"
 
-#: audacious/mainwin.c:3084
+#: audacious/mainwin.c:3128
 msgid "OPTIONS MENU"
 msgstr "옵션 메뉴"
 
-#: audacious/mainwin.c:3088
+#: audacious/mainwin.c:3132
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "항상 맨 위 해제"
 
-#: audacious/mainwin.c:3090
+#: audacious/mainwin.c:3134
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "항상 맨 위 설정"
 
-#: audacious/mainwin.c:3093
+#: audacious/mainwin.c:3137
 msgid "FILE INFO BOX"
 msgstr "파일 정보 상자"
 
-#: audacious/mainwin.c:3097
+#: audacious/mainwin.c:3141
 msgid "DISABLE DOUBLESIZE"
 msgstr "두배크기 해제"
 
-#: audacious/mainwin.c:3099
+#: audacious/mainwin.c:3143
 msgid "ENABLE DOUBLESIZE"
 msgstr "두배크기 설정"
 
-#: audacious/mainwin.c:3102
+#: audacious/mainwin.c:3146
 msgid "VISUALIZATION MENU"
 msgstr "시각효과 메뉴"
 
-#: audacious/mainwin.c:3150
+#: audacious/mainwin.c:3194
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -987,7 +1002,7 @@ msgstr ""
 "\n"
 "삽입된 CD가 없거나, 오디오 CD가 아닙니다.\n"
 
-#: audacious/mainwin.c:3167
+#: audacious/mainwin.c:3211
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -1003,304 +1018,337 @@ msgstr ""
 "2. 다른 프로그램의 사운드카드 사용 여부\n"
 "3. 사운드카드의 올바른 설정 여부\n"
 
-#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1372
+#: audacious/prefswin.c:97 audacious/glade/prefswin.glade:1372
 msgid "Appearance"
 msgstr "겉모양"
 
-#: audacious/prefswin.c:99
+#: audacious/prefswin.c:98
 #, fuzzy
 msgid "Audio"
 msgstr "MPEG 오디오 플러그인 정보"
 
-#: audacious/prefswin.c:100
+#: audacious/prefswin.c:99
 msgid "Connectivity"
 msgstr ""
 
-#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:2871
+#: audacious/prefswin.c:100 audacious/glade/prefswin.glade:2871
 msgid "Equalizer"
 msgstr "이퀄라이저"
 
-#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:1651
+#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:1651
 msgid "Mouse"
 msgstr "마우스"
 
-#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:2503
+#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:2503
 msgid "Playlist"
 msgstr "재생목록"
 
-#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:693
+#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:693
 msgid "Plugins"
 msgstr "플러그인"
 
-#: audacious/prefswin.c:110
+#: audacious/prefswin.c:109
 #, fuzzy
 msgid "Artist"
 msgstr "가수:"
 
-#: audacious/prefswin.c:111 libaudacious/titlestring.c:372
+#: audacious/prefswin.c:110 libaudacious/titlestring.c:372
 msgid "Album"
 msgstr "앨범"
 
-#: audacious/prefswin.c:112
+#: audacious/prefswin.c:111
 msgid "Title"
 msgstr "제목"
 
-#: audacious/prefswin.c:113
+#: audacious/prefswin.c:112
 #, fuzzy
 msgid "Tracknumber"
 msgstr "트랙 번호"
 
-#: audacious/prefswin.c:114 libaudacious/titlestring.c:373
+#: audacious/prefswin.c:113 libaudacious/titlestring.c:373
 msgid "Genre"
 msgstr "장르"
 
-#: audacious/prefswin.c:116
+#: audacious/prefswin.c:115
 #, fuzzy
 msgid "Filepath"
 msgstr "파일 경로"
 
-#: audacious/prefswin.c:117 libaudacious/titlestring.c:379
+#: audacious/prefswin.c:116 libaudacious/titlestring.c:379
 msgid "Date"
 msgstr "날짜"
 
-#: audacious/prefswin.c:118 libaudacious/titlestring.c:380
+#: audacious/prefswin.c:117 libaudacious/titlestring.c:380
 msgid "Year"
 msgstr "연도"
 
-#: audacious/prefswin.c:119 libaudacious/titlestring.c:381
+#: audacious/prefswin.c:118 libaudacious/titlestring.c:381
 msgid "Comment"
 msgstr "설명"
 
-#: audacious/prefswin.c:140
+#: audacious/prefswin.c:139
 msgid "localhost"
 msgstr ""
 
-#: audacious/prefswin.c:453 audacious/prefswin.c:540 audacious/prefswin.c:629
-#: audacious/prefswin.c:725
+#: audacious/prefswin.c:452 audacious/prefswin.c:539 audacious/prefswin.c:628
+#: audacious/prefswin.c:724
 msgid "Enabled"
 msgstr "사용함"
 
-#: audacious/prefswin.c:469 audacious/prefswin.c:556 audacious/prefswin.c:645
-#: audacious/prefswin.c:741
+#: audacious/prefswin.c:468 audacious/prefswin.c:555 audacious/prefswin.c:644
+#: audacious/prefswin.c:740
 msgid "Description"
 msgstr "설명:"
 
-#: audacious/prefswin.c:1792
+#: audacious/prefswin.c:1805
 msgid "Category"
 msgstr "카테고리"
 
-#: audacious/prefswin.c:2251
+#: audacious/prefswin.c:2266
 msgid "Preferences Window"
 msgstr "선택사항 창"
 
-#: audacious/skinwin.c:177
+#: audacious/skinwin.c:176
 msgid "Archived Winamp 2.x skin"
 msgstr ""
 
-#: audacious/skinwin.c:182
+#: audacious/skinwin.c:181
 msgid "Unarchived Winamp 2.x skin"
 msgstr ""
 
-#: audacious/ui_fileinfo.c:316
+#: audacious/ui_fileinfo.c:315
 msgid "Track Information Window"
 msgstr ""
 
-#: audacious/ui_fileinfo.c:338
+#: audacious/ui_fileinfo.c:337
 msgid "Track Information Popup"
 msgstr ""
 
-#: audacious/ui_playlist.c:126
+#: audacious/ui_playlist.c:125
 msgid "/Show Popup Info"
 msgstr ""
 
-#: audacious/ui_playlist.c:132 audacious/ui_playlist.c:197
+#: audacious/ui_playlist.c:131 audacious/ui_playlist.c:196
 msgid "/Remove Selected"
 msgstr "/선택항목 제거"
 
-#: audacious/ui_playlist.c:136 audacious/ui_playlist.c:193
+#: audacious/ui_playlist.c:135 audacious/ui_playlist.c:192
 #, fuzzy
 msgid "/Remove Unselected"
 msgstr "/선택항목 제거"
 
-#: audacious/ui_playlist.c:140 audacious/ui_playlist.c:189
+#: audacious/ui_playlist.c:139 audacious/ui_playlist.c:188
 #, fuzzy
 msgid "/Remove All"
 msgstr "/선택항목 제거"
 
-#: audacious/ui_playlist.c:146
+#: audacious/ui_playlist.c:145
 msgid "/Queue Toggle"
 msgstr "/대기열 고정"
 
-#: audacious/ui_playlist.c:152
+#: audacious/ui_playlist.c:151
 #, fuzzy
 msgid "/Add CD..."
 msgstr "/추가/파일..."
 
-#: audacious/ui_playlist.c:156
+#: audacious/ui_playlist.c:155
 #, fuzzy
 msgid "/Add Internet Address..."
 msgstr "/추가/인터넷 주소..."
 
-#: audacious/ui_playlist.c:160
+#: audacious/ui_playlist.c:159
 #, fuzzy
 msgid "/Add Files..."
 msgstr "/추가/파일..."
 
-#: audacious/ui_playlist.c:166
+#: audacious/ui_playlist.c:165
 msgid "/Clear Queue"
 msgstr "/대기열 비움"
 
-#: audacious/ui_playlist.c:172
+#: audacious/ui_playlist.c:171
 msgid "/Remove Unavailable Files"
 msgstr "/유효하지 않은 파일 제거"
 
-#: audacious/ui_playlist.c:176
+#: audacious/ui_playlist.c:175
 #, fuzzy
 msgid "/Remove Duplicates"
 msgstr "/선택항목 제거"
 
-#: audacious/ui_playlist.c:177
+#: audacious/ui_playlist.c:176
 #, fuzzy
 msgid "/Remove Duplicates/By Title"
 msgstr "/목록 정렬/제목 순"
 
-#: audacious/ui_playlist.c:180
+#: audacious/ui_playlist.c:179
 #, fuzzy
 msgid "/Remove Duplicates/By Filename"
 msgstr "/목록 정렬/파일이름 순"
 
-#: audacious/ui_playlist.c:183
+#: audacious/ui_playlist.c:182
 #, fuzzy
 msgid "/Remove Duplicates/By Path + Filename"
 msgstr "/목록 정렬/경로 + 파일이름 순"
 
-#: audacious/ui_playlist.c:203
+#: audacious/ui_playlist.c:202
 msgid "/New List"
 msgstr "/새 목록"
 
-#: audacious/ui_playlist.c:209
+#: audacious/ui_playlist.c:208
 #, fuzzy
 msgid "/Load List"
 msgstr "/목록 정렬"
 
-#: audacious/ui_playlist.c:213
+#: audacious/ui_playlist.c:212
 #, fuzzy
 msgid "/Save List"
 msgstr "/새 목록"
 
-#: audacious/ui_playlist.c:217
+#: audacious/ui_playlist.c:216
 #, fuzzy
 msgid "/Save Default List"
 msgstr "/저장/기본값"
 
-#: audacious/ui_playlist.c:223
+#: audacious/ui_playlist.c:222
 msgid "/Update View"
 msgstr "/보기 새로고침"
 
-#: audacious/ui_playlist.c:229
+#: audacious/ui_playlist.c:228
+#, fuzzy
+msgid "/Search and Select"
+msgstr "/선택 정렬"
+
+#: audacious/ui_playlist.c:234
 #, fuzzy
 msgid "/Invert Selection"
 msgstr "/선택 정렬"
 
-#: audacious/ui_playlist.c:235
+#: audacious/ui_playlist.c:240
 #, fuzzy
 msgid "/Select None"
 msgstr "/선택 정렬"
 
-#: audacious/ui_playlist.c:239
+#: audacious/ui_playlist.c:244
 #, fuzzy
 msgid "/Select All"
 msgstr "모두 선택"
 
-#: audacious/ui_playlist.c:245
+#: audacious/ui_playlist.c:250
 msgid "/Randomize List"
 msgstr "/목록 무작위화"
 
-#: audacious/ui_playlist.c:247
+#: audacious/ui_playlist.c:252
 msgid "/Reverse List"
 msgstr "/목록 역순으로"
 
-#: audacious/ui_playlist.c:250
+#: audacious/ui_playlist.c:255
 msgid "/Sort List"
 msgstr "/목록 정렬"
 
-#: audacious/ui_playlist.c:251
+#: audacious/ui_playlist.c:256
 msgid "/Sort List/By Title"
 msgstr "/목록 정렬/제목 순"
 
-#: audacious/ui_playlist.c:253
+#: audacious/ui_playlist.c:258
 #, fuzzy
 msgid "/Sort List/By Artist"
 msgstr "/목록 정렬/제목 순"
 
-#: audacious/ui_playlist.c:255
+#: audacious/ui_playlist.c:260
 msgid "/Sort List/By Filename"
 msgstr "/목록 정렬/파일이름 순"
 
-#: audacious/ui_playlist.c:257
+#: audacious/ui_playlist.c:262
 msgid "/Sort List/By Path + Filename"
 msgstr "/목록 정렬/경로 + 파일이름 순"
 
-#: audacious/ui_playlist.c:259
+#: audacious/ui_playlist.c:264
 msgid "/Sort List/By Date"
 msgstr "/목록 정렬/날짜 순"
 
-#: audacious/ui_playlist.c:261
+#: audacious/ui_playlist.c:266
 #, fuzzy
 msgid "/Sort List/By Track Number"
 msgstr "/목록 정렬/날짜 순"
 
-#: audacious/ui_playlist.c:263
+#: audacious/ui_playlist.c:268
 #, fuzzy
 msgid "/Sort List/By Playlist Entry"
 msgstr "/목록 정렬/제목 순"
 
-#: audacious/ui_playlist.c:265
+#: audacious/ui_playlist.c:270
 msgid "/Sort Selection"
 msgstr "/선택 정렬"
 
-#: audacious/ui_playlist.c:266
+#: audacious/ui_playlist.c:271
 msgid "/Sort Selection/By Title"
 msgstr "/선택 정렬/제목 순"
 
-#: audacious/ui_playlist.c:268
+#: audacious/ui_playlist.c:273
 #, fuzzy
 msgid "/Sort Selection/By Artist"
 msgstr "/선택 정렬/제목 순"
 
-#: audacious/ui_playlist.c:270
+#: audacious/ui_playlist.c:275
 msgid "/Sort Selection/By Filename"
 msgstr "/선택 정렬/파일이름 순"
 
-#: audacious/ui_playlist.c:272
+#: audacious/ui_playlist.c:277
 msgid "/Sort Selection/By Path + Filename"
 msgstr "/선택 정렬/경로 + 파일이름 순"
 
-#: audacious/ui_playlist.c:274
+#: audacious/ui_playlist.c:279
 msgid "/Sort Selection/By Date"
 msgstr "/선택 정렬/날짜 순"
 
-#: audacious/ui_playlist.c:276
+#: audacious/ui_playlist.c:281
 #, fuzzy
 msgid "/Sort Selection/By Track Number"
 msgstr "/선택 정렬/날짜 순"
 
-#: audacious/ui_playlist.c:278
+#: audacious/ui_playlist.c:283
 #, fuzzy
 msgid "/Sort Selection/By Playlist Entry"
 msgstr "/선택 정렬/제목 순"
 
-#: audacious/ui_playlist.c:845
+#: audacious/ui_playlist.c:682
+msgid ""
+"Select entries in playlist by filling one or more fields. Fields use regular "
+"expressions syntax, case-insensitive. If you don't know how regular "
+"expressions work, simply insert a literal portion of what you're searching "
+"for."
+msgstr ""
+
+#: audacious/ui_playlist.c:689
+#, fuzzy
+msgid "Track name: "
+msgstr "트랙 이름:"
+
+#: audacious/ui_playlist.c:693
+#, fuzzy
+msgid "Album name: "
+msgstr "앨범"
+
+#: audacious/ui_playlist.c:697
+#, fuzzy
+msgid "Artist: "
+msgstr "가수:"
+
+#: audacious/ui_playlist.c:701
+#, fuzzy
+msgid "Filename: "
+msgstr "파일이름:"
+
+#: audacious/ui_playlist.c:951
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "재생목록 \"%s\" 쓰기 오류: %s"
 
-#: audacious/ui_playlist.c:866
+#: audacious/ui_playlist.c:972
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s는 이미 존재합니다. 계속 할까요?"
 
-#: audacious/ui_playlist.c:880
+#: audacious/ui_playlist.c:986
 #, fuzzy, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -1308,58 +1356,58 @@ msgid ""
 "Unknown file type for '%s'.\n"
 msgstr "재생목록을 저장할 수 없습니다! %s의 파일형식을 알 수 없습니다."
 
-#: audacious/ui_playlist.c:1033
+#: audacious/ui_playlist.c:1139
 #, fuzzy
 msgid "Load Playlist"
 msgstr "재생목록 열기"
 
-#: audacious/ui_playlist.c:1046
+#: audacious/ui_playlist.c:1152
 #, fuzzy
 msgid "Save Playlist"
 msgstr "재생목록 저장"
 
-#: audacious/ui_playlist.c:1783
+#: audacious/ui_playlist.c:1889
 #, fuzzy
 msgid "Audacious Playlist Editor"
 msgstr "/재생목록 편집기 보기"
 
-#: audacious/util.c:952
+#: audacious/util.c:951
 #, fuzzy
 msgid "Add/Open Files dialog"
 msgstr "파일 추가"
 
-#: audacious/util.c:1007
+#: audacious/util.c:1006
 #, fuzzy
 msgid "Open Files"
 msgstr "/파일 자르기"
 
-#: audacious/util.c:1011
+#: audacious/util.c:1010
 msgid "Close dialog on Open"
 msgstr ""
 
-#: audacious/util.c:1021 audacious/glade/addfiles.glade:8
+#: audacious/util.c:1020 audacious/glade/addfiles.glade:8
 msgid "Add Files"
 msgstr "파일 추가"
 
-#: audacious/util.c:1025
+#: audacious/util.c:1024
 msgid "Close dialog on Add"
 msgstr ""
 
-#: audacious/util.c:1203
+#: audacious/util.c:1202
 #, fuzzy
 msgid "Play files"
 msgstr "파일 재생"
 
-#: audacious/util.c:1205
+#: audacious/util.c:1204
 #, fuzzy
 msgid "Load files"
 msgstr "/읽기/파일"
 
-#: audacious/util.c:1509
+#: audacious/util.c:1508
 msgid "  (invalid UTF-8)"
 msgstr "  (유효하지 않은 UTF-8)"
 
-#: audacious/playback.c:209
+#: audacious/playback.c:222
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1732,12 +1780,7 @@ msgstr "<b>설정값</b>"
 msgid "Current output plugin:"
 msgstr "현재 출력 플러그인(_C):"
 
-#: audacious/glade/prefswin.glade:3500
-#, fuzzy
-msgid "Buffer size:"
-msgstr "버퍼 크기 (kb):"
-
-#: audacious/glade/prefswin.glade:3570
+#: audacious/glade/prefswin.glade:3523
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
@@ -1746,78 +1789,94 @@ msgid ""
 "poorly.</span>"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3678
+#: audacious/glade/prefswin.glade:3553
+#, fuzzy
+msgid "Buffer size:"
+msgstr "버퍼 크기 (kb):"
+
+#: audacious/glade/prefswin.glade:3677
 #, fuzzy
 msgid "Output Plugin Preferences"
 msgstr "OSS 출력 플러그인"
 
-#: audacious/glade/prefswin.glade:3753
+#: audacious/glade/prefswin.glade:3752
 #, fuzzy
 msgid "Output Plugin Information"
 msgstr "ESD 출력 플러그인 설정"
 
-#: audacious/glade/prefswin.glade:3805
+#: audacious/glade/prefswin.glade:3804
 #, fuzzy
 msgid "<b>Format Detection</b>"
 msgstr "자동 감지"
 
-#: audacious/glade/prefswin.glade:3846
+#: audacious/glade/prefswin.glade:3845
 msgid "Detect file formats on demand, instead of immediately."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3880
+#: audacious/glade/prefswin.glade:3879
+msgid ""
+"When checked, Audacious will detect file formats based by extension. This is "
+"slightly slower than detection on demand, but still provides a minimal level "
+"of format detection."
+msgstr ""
+
+#: audacious/glade/prefswin.glade:3881
+msgid "Detect file formats by extension."
+msgstr ""
+
+#: audacious/glade/prefswin.glade:3915
 msgid "<b>Playback</b>"
 msgstr "<b>재생하기</b>"
 
-#: audacious/glade/prefswin.glade:3921
+#: audacious/glade/prefswin.glade:3956
 msgid "Continue playback on startup"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:3957
+#: audacious/glade/prefswin.glade:3992
 msgid "Don't advance in the playlist"
 msgstr "재생목록에서 다음곡 진행 안함"
 
-#: audacious/glade/prefswin.glade:3992
+#: audacious/glade/prefswin.glade:4027
 msgid "Pause between songs"
 msgstr "곡사이 멈춤 시간"
 
-#: audacious/glade/prefswin.glade:4030
+#: audacious/glade/prefswin.glade:4065
 msgid "Pause for"
 msgstr "잠시 멈춤"
 
-#: audacious/glade/prefswin.glade:4076
+#: audacious/glade/prefswin.glade:4111
 msgid "seconds"
 msgstr "초"
 
-#: audacious/glade/prefswin.glade:4116
+#: audacious/glade/prefswin.glade:4151
 msgid "label76"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:4254
+#: audacious/glade/prefswin.glade:4289
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
 
-#: audacious/glade/prefswin.glade:4309
+#: audacious/glade/prefswin.glade:4344
 #, fuzzy
 msgid "Include:"
 msgstr "인디"
 
-#: audacious/glade/prefswin.glade:4337
+#: audacious/glade/prefswin.glade:4372
 msgid "Exclude:"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:4406
+#: audacious/glade/prefswin.glade:4441
 msgid "Recursively search for cover"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:4444
+#: audacious/glade/prefswin.glade:4479
 msgid "Search depth: "
 msgstr ""
 
-#: audacious/glade/prefswin.glade:4510
+#: audacious/glade/prefswin.glade:4545
 msgid "Use per-file cover"
 msgstr ""
 
@@ -1903,9 +1962,6 @@ msgstr "%{n:...%}: 표시 \"...\" %n 항목이 있는 경우만"
 
 #~ msgid "Select main player window font:"
 #~ msgstr "기본 재생 창 글꼴 선택:"
-
-#~ msgid "Select playlist font:"
-#~ msgstr "재생목록 글꼴 선택:"
 
 #, fuzzy
 #~ msgid "<b>_Miscillaneous UI Features</b>"
@@ -2168,9 +2224,6 @@ msgstr "%{n:...%}: 표시 \"...\" %n 항목이 있는 경우만"
 #~ msgid "CD Index server:"
 #~ msgstr "CD 인덱스 서버:"
 
-#~ msgid "Track names:"
-#~ msgstr "트랙 이름:"
-
 #~ msgid "Override generic titles"
 #~ msgstr "일반 제목 덮어쓰기"
 
@@ -2201,10 +2254,6 @@ msgstr "%{n:...%}: 표시 \"...\" %n 항목이 있는 경우만"
 #, fuzzy
 #~ msgid "Enable ReplayGain processing"
 #~ msgstr "재생 음량조정 사용"
-
-#, fuzzy
-#~ msgid "Album mode"
-#~ msgstr "앨범"
 
 #, fuzzy
 #~ msgid "Preamp:"
@@ -2742,9 +2791,6 @@ msgstr "%{n:...%}: 표시 \"...\" %n 항목이 있는 경우만"
 
 #~ msgid "Title:"
 #~ msgstr "제목:"
-
-#~ msgid "Artist:"
-#~ msgstr "가수:"
 
 #~ msgid "Album:"
 #~ msgstr "앨범:"
@@ -4094,9 +4140,6 @@ msgstr "%{n:...%}: 표시 \"...\" %n 항목이 있는 경우만"
 
 #~ msgid "/By extension"
 #~ msgstr "/확장자 순"
-
-#~ msgid "/Playlist"
-#~ msgstr "/재생목록"
 
 #~ msgid "/Close Window"
 #~ msgstr "/창 닫기"

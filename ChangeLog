@@ -1,3 +1,10 @@
+2006-12-16 00:04:22 +0000  Giacomo Lozito <james@develia.org>
+  revision [3267]
+  regex-powered jump to file - should be considerably faster than the old one
+  trunk/audacious/mainwin.c |   57 +++++++++++++++++++++++++++++++++-------------
+  1 file changed, 41 insertions(+), 16 deletions(-)
+
+
 2006-12-15 19:22:42 +0000  Giacomo Lozito <james@develia.org>
   revision [3265]
   do not assume that a tuple field exists just cause the tuple does, regexec hates null strings
