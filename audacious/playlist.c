@@ -2085,7 +2085,7 @@ playlist_reverse(Playlist *playlist)
 }
 
 static GList *
-playlist_shuffle_list(GList * list)
+playlist_shuffle_list(Playlist *playlist, GList * list)
 {
     /*
      * Note that this doesn't make a copy of the original list.
@@ -2095,7 +2095,9 @@ playlist_shuffle_list(GList * list)
     gint len = g_list_length(list);
     gint i, j;
     GList *node, **ptrs;
-    Playlist *playlist = playlist_get_active();
+
+    if (!playlist)
+        return NULL;
 
     REQUIRE_LOCK(playlist->mutex);
 
@@ -2130,7 +2132,7 @@ void
 playlist_random(Playlist *playlist)
 {
     PLAYLIST_LOCK(playlist->mutex);
-    playlist->entries = playlist_shuffle_list(playlist->entries);
+    playlist->entries = playlist_shuffle_list(playlist, playlist->entries);
     PLAYLIST_UNLOCK(playlist->mutex);
 }
 
@@ -2195,17 +2197,17 @@ playlist_generate_shuffle_list_nolock(Playlist *playlist)
     GList *node;
     gint numsongs;
 
-    REQUIRE_LOCK(playlist->mutex);
-
     if (!cfg.shuffle || !playlist)
         return;
+
+    REQUIRE_LOCK(playlist->mutex);
 
     if (playlist->shuffle) {
         g_list_free(playlist->shuffle);
         playlist->shuffle = NULL;
     }
 
-    playlist->shuffle = playlist_shuffle_list(g_list_copy(playlist->entries));
+    playlist->shuffle = playlist_shuffle_list(playlist, g_list_copy(playlist->entries));
     numsongs = g_list_length(playlist->shuffle);
 
     if (playlist->position) {

@@ -1,3 +1,11 @@
+2006-12-16 13:41:27 +0000  Giacomo Lozito <james@develia.org>
+  revision [3289]
+  - clear and free a playlist passed to playlist_remove_playlist
+  trunk/audacious/playlist.c |    3 +++
+  trunk/audacious/playlist.h |    1 +
+  2 files changed, 4 insertions(+)
+
+
 2006-12-16 13:18:19 +0000  Giacomo Lozito <james@develia.org>
   revision [3287]
   added playlist_free and ensure that each created playlist is freed in mainwin_quit_cb; the list of playlists is freed there as well
