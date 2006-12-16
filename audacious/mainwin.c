@@ -1883,11 +1883,12 @@ mainwin_update_jtf(GtkWidget * widget, gpointer user_data)
     /* FIXME: Is not in sync with playlist due to delayed extinfo
      * reading */
     gint row;
-    GList *playlist;
+    GList *node;
     gchar *desc_buf = NULL;
     gchar *row_str;
     GtkTreeIter iter;
     GtkTreeSelection *selection;
+    Playlist *playlist = playlist_get_active();
 
     GtkTreeModel *store;
 
@@ -1898,9 +1899,9 @@ mainwin_update_jtf(GtkWidget * widget, gpointer user_data)
     gtk_list_store_clear(GTK_LIST_STORE(store));
 
     row = 1;
-    for (playlist = playlist_get(); playlist;
-         playlist = g_list_next(playlist)) {
-        PlaylistEntry *entry = PLAYLIST_ENTRY(playlist->data);
+    for (node = playlist->entries; node; node = g_list_next(node))
+    {
+        PlaylistEntry *entry = PLAYLIST_ENTRY(node->data);
 
         if (entry->title)
 		desc_buf = g_strdup(entry->title);
@@ -1934,12 +1935,13 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
     GtkTreeView *treeview = GTK_TREE_VIEW(user_data);
     GtkTreeSelection *selection;
     GtkTreeIter iter;
+    Playlist *playlist = playlist_get_active();
 
     GtkListStore *store;
 
     gint song_index = 0;
     gchar **words;
-    GList *playlist;
+    GList *node;
 
     gboolean match = FALSE;
 
@@ -1966,10 +1968,9 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
 
     PLAYLIST_LOCK();
 
-    for (playlist = playlist_get(); playlist;
-         playlist = g_list_next(playlist)) {
-
-        PlaylistEntry *entry = PLAYLIST_ENTRY(playlist->data);
+    for (node = playlist->entries; node; node = g_list_next(node))
+    {
+        PlaylistEntry *entry = PLAYLIST_ENTRY(node->data);
         const gchar *title;
         gchar *filename = NULL;
 
@@ -2046,7 +2047,7 @@ mainwin_jump_to_file(void)
     GtkWidget *jump, *queue, *cancel;
     GtkWidget *rescan, *edit;
     GtkWidget *search_label, *hbox;
-    GList *playlist;
+    GList *node;
     gchar *desc_buf = NULL;
     gchar *row_str;
     gint row;
@@ -2057,6 +2058,8 @@ mainwin_jump_to_file(void)
     GtkTreeIter iter;
     GtkCellRenderer *renderer;
     GtkTreeViewColumn *column;
+
+    Playlist *playlist = playlist_get_active();
 
     if (mainwin_jtf) {
         gtk_window_present(GTK_WINDOW(mainwin_jtf));
@@ -2182,10 +2185,9 @@ mainwin_jump_to_file(void)
 
     PLAYLIST_LOCK();
 
-    for (playlist = playlist_get(); playlist;
-         playlist = g_list_next(playlist)) {
-
-        PlaylistEntry *entry = PLAYLIST_ENTRY(playlist->data);
+    for (node = playlist->entries; node; node = g_list_next(node))
+    {
+        PlaylistEntry *entry = PLAYLIST_ENTRY(node->data);
 
         if (entry->title)
 		desc_buf = g_strdup(entry->title);

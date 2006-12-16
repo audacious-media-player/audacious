@@ -1,3 +1,11 @@
+2006-12-16 05:14:16 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3275]
+  - log a warning if deprecated functions from <= 1.2 are used
+  
+  trunk/audacious/playlist.c |    4 ++++
+  1 file changed, 4 insertions(+)
+
+
 2006-12-16 04:33:34 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3273]
   - use g_object_ref() on the list store when we disassociate to make
