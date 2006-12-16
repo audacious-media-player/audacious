@@ -25,6 +25,7 @@
 
 #include "mainwin.h"
 #include "widgets/widgetcore.h"
+#include "playlist.h"
 
 #define PLAYLISTWIN_FRAME_TOP_HEIGHT    20
 #define PLAYLISTWIN_FRAME_BOTTOM_HEIGHT 38
@@ -48,7 +49,7 @@
 #define PLAYLISTWIN_DEFAULT_FONT        "Sans Bold 8"
 
 gboolean playlistwin_is_shaded(void);
-void playlistwin_update_list(void);
+void playlistwin_update_list(Playlist *playlist);
 gboolean playlistwin_item_visible(gint index);
 gint playlistwin_get_toprow(void);
 void playlistwin_set_toprow(gint top);

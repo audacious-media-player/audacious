@@ -1,3 +1,14 @@
+2006-12-16 10:52:03 +0000  Giacomo Lozito <james@develia.org>
+  revision [3283]
+  - multiple playlist support requires separated locking; each Playlist holds its GMutex now; removed playlist_get function cause it doesn't fit with this scheme
+  trunk/audacious/mainwin.c               |   51 +--
+  trunk/audacious/playlist.c              |  447 ++++++++++++++++----------------
+  trunk/audacious/playlist.h              |    9 
+  trunk/audacious/ui_playlist.c           |   67 +++-
+  trunk/audacious/widgets/playlist_list.c |   36 +-
+  5 files changed, 330 insertions(+), 280 deletions(-)
+
+
 2006-12-16 10:35:16 +0000  Jerome Poulin <ticpu@ticpu.net>
   revision [3281]
   Added playback-seek{-relative} in audtool.1 man page.

@@ -83,7 +83,6 @@ static GList *playlists_iter;
  *
  * January 7, 2006, William Pitcock <nenolod@nenolod.net>
  */
-static gboolean loading_playlist = FALSE;
 
 G_LOCK_DEFINE(playlist_get_info_going);
 
@@ -258,7 +257,7 @@ playlist_select_next(void)
     if (playlists_iter == NULL)
         playlists_iter = playlists;
 
-    playlistwin_update_list();
+    playlistwin_update_list(playlist_get_active());
 }
 
 void
@@ -272,7 +271,7 @@ playlist_select_prev(void)
     if (playlists_iter == NULL)
         playlists_iter = playlists;
 
-    playlistwin_update_list();
+    playlistwin_update_list(playlist_get_active());
 }
 
 void
@@ -286,7 +285,7 @@ playlist_select_playlist(Playlist *playlist)
     if (playlists_iter == NULL)
         playlists_iter = playlists;
 
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
 }
 
 /* *********************** playlist code ********************** */
@@ -346,12 +345,7 @@ void
 playlist_clear(Playlist *playlist)
 {
     if (!playlist)
-    {
-        playlist_generate_shuffle_list(playlist);
-        playlistwin_update_list();
-        playlist_recalc_total_time(playlist);
         return;
-    }
 
     PLAYLIST_LOCK( playlist->mutex );
 
@@ -363,7 +357,7 @@ playlist_clear(Playlist *playlist)
     PLAYLIST_UNLOCK( playlist->mutex );
 
     playlist_generate_shuffle_list(playlist);
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
 }
 
@@ -447,7 +441,7 @@ playlist_delete_index(Playlist *playlist, guint pos)
 
     playlist_recalc_total_time(playlist);
 
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
     if (restart_playing) {
         if (playlist->position) {
             bmp_playback_initiate();
@@ -486,7 +480,7 @@ playlist_delete_filenames(Playlist * playlist, GList * filenames)
     playlist_recalc_total_time(playlist);
     PLAYLIST_UNLOCK(playlist->mutex);
 
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
 
     if (restart_playing) {
         if (playlist->position) {
@@ -544,7 +538,7 @@ playlist_delete(Playlist * playlist, gboolean crop)
         }
     }
 
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
 }
 
 static void
@@ -626,22 +620,22 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
     g_return_val_if_fail(filename != NULL, FALSE);
 
     if (is_playlist_name(filename)) {
-        loading_playlist = TRUE;
+        playlist->loading_playlist = TRUE;
         playlist_load_ins(playlist, filename, pos);
-        loading_playlist = FALSE;
+        playlist->loading_playlist = FALSE;
         return TRUE;
     }
 
-    if (loading_playlist == TRUE || cfg.playlist_detect == TRUE)
+    if (playlist->loading_playlist == TRUE || cfg.playlist_detect == TRUE)
 	dec = NULL;
     else
 	dec = input_check_file(filename, TRUE);
 
-    if (cfg.playlist_detect == TRUE || loading_playlist == TRUE || (loading_playlist == FALSE && dec != NULL))
+    if (cfg.playlist_detect == TRUE || playlist->loading_playlist == TRUE || (playlist->loading_playlist == FALSE && dec != NULL))
     {
 	__playlist_ins(playlist, filename, pos, dec);
 	playlist_generate_shuffle_list(playlist);
-	playlistwin_update_list();
+	playlistwin_update_list(playlist);
         return TRUE;
     }
 
@@ -845,7 +839,7 @@ playlist_ins_dir(Playlist * playlist, const gchar * path,
 
     playlist_recalc_total_time(playlist);
     playlist_generate_shuffle_list(playlist);
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
     return entries;
 }
 
@@ -863,7 +857,7 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
     g_return_val_if_fail(playlist != NULL, 0);
     g_return_val_if_fail(string != NULL, 0);
 
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
 
     while (*string) {
         GList *node;
@@ -912,7 +906,7 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
 
     playlist_recalc_total_time(playlist);
     playlist_generate_shuffle_list(playlist);
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
 
     return entries;
 }
@@ -1044,7 +1038,7 @@ playlist_next(Playlist *playlist)
         bmp_playback_initiate();
     else {
         mainwin_set_info_text();
-        playlistwin_update_list();
+        playlistwin_update_list(playlist);
     }
 }
 
@@ -1106,7 +1100,7 @@ playlist_prev(Playlist *playlist)
         bmp_playback_initiate();
     else {
         mainwin_set_info_text();
-        playlistwin_update_list();
+        playlistwin_update_list(playlist);
     }
 }
 
@@ -1145,7 +1139,7 @@ playlist_queue(Playlist *playlist)
     PLAYLIST_UNLOCK(playlist->mutex);
 
     playlist_recalc_total_time(playlist);
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
 }
 
 void
@@ -1172,7 +1166,7 @@ playlist_queue_position(Playlist *playlist, guint pos)
     PLAYLIST_UNLOCK(playlist->mutex);
 
     playlist_recalc_total_time(playlist);
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
 }
 
 gboolean
@@ -1226,7 +1220,7 @@ playlist_clear_queue(Playlist *playlist)
     PLAYLIST_UNLOCK(playlist->mutex);
 
     playlist_recalc_total_time(playlist);
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
 }
 
 void
@@ -1239,7 +1233,7 @@ playlist_queue_remove(Playlist *playlist, guint pos)
     playlist->queue = g_list_remove(playlist->queue, entry);
     PLAYLIST_UNLOCK(playlist->mutex);
 
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
 }
 
 gint
@@ -1289,7 +1283,7 @@ playlist_set_position(Playlist *playlist, guint pos)
         bmp_playback_initiate();
     else {
         mainwin_set_info_text();
-        playlistwin_update_list();
+        playlistwin_update_list(playlist);
     }
 }
 
@@ -1355,7 +1349,7 @@ playlist_eof_reached(Playlist *playlist)
     playlist_check_pos_current(playlist);
     bmp_playback_initiate();
     mainwin_set_info_text();
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
 }
 
 gint
@@ -1484,10 +1478,11 @@ gboolean
 playlist_load(Playlist * playlist, const gchar * filename)
 {
     gboolean ret = FALSE;
+    g_return_val_if_fail(playlist != NULL, FALSE);
 
-    loading_playlist = TRUE;
+    playlist->loading_playlist = TRUE;
     ret = playlist_load_ins(playlist, filename, -1);
-    loading_playlist = FALSE;
+    playlist->loading_playlist = FALSE;
 
     return ret;
 }
@@ -1503,6 +1498,7 @@ playlist_load_ins_file(Playlist *playlist,
     InputPlugin *dec;		/* for decoder cache */
 
     g_return_if_fail(filename_p != NULL);
+    g_return_if_fail(playlist != NULL);
     g_return_if_fail(playlist_name != NULL);
 
     filename = g_strchug(g_strdup(filename_p));
@@ -1516,7 +1512,7 @@ playlist_load_ins_file(Playlist *playlist,
         if ((tmp = strrchr(path, '/')))
             *tmp = '\0';
         else {
-	    if (loading_playlist != TRUE || cfg.playlist_detect == FALSE)
+	    if (playlist->loading_playlist != TRUE || cfg.playlist_detect == FALSE)
 	        dec = input_check_file(filename, FALSE);
 	    else
 		dec = NULL;
@@ -1526,7 +1522,7 @@ playlist_load_ins_file(Playlist *playlist,
         }
         tmp = g_build_filename(path, filename, NULL);
 
-	if (loading_playlist != TRUE && cfg.playlist_detect != TRUE)
+	if (playlist->loading_playlist != TRUE && cfg.playlist_detect != TRUE)
 	    dec = input_check_file(tmp, FALSE);
 	else
 	    dec = NULL;
@@ -1537,7 +1533,7 @@ playlist_load_ins_file(Playlist *playlist,
     }
     else
     {
-	if (loading_playlist != TRUE && cfg.playlist_detect != TRUE)
+	if (playlist->loading_playlist != TRUE && cfg.playlist_detect != TRUE)
 	    dec = input_check_file(filename, FALSE);
 	else
 	    dec = NULL;
@@ -1561,6 +1557,7 @@ playlist_load_ins_file_tuple(Playlist * playlist,
 
     g_return_if_fail(filename_p != NULL);
     g_return_if_fail(playlist_name != NULL);
+    g_return_if_fail(playlist != NULL);
 
     filename = g_strchug(g_strdup(filename_p));
 
@@ -1572,7 +1569,7 @@ playlist_load_ins_file_tuple(Playlist * playlist,
         if ((tmp = strrchr(path, '/')))
             *tmp = '\0';
         else {
-	    if (loading_playlist != TRUE || cfg.playlist_detect == FALSE)
+	    if (playlist->loading_playlist != TRUE || cfg.playlist_detect == FALSE)
 	        dec = input_check_file(filename, FALSE);
 	    else
 		dec = NULL;
@@ -1582,7 +1579,7 @@ playlist_load_ins_file_tuple(Playlist * playlist,
         }
         tmp = g_build_filename(path, filename, NULL);
 
-	if (loading_playlist != TRUE && cfg.playlist_detect != TRUE)
+	if (playlist->loading_playlist != TRUE && cfg.playlist_detect != TRUE)
 	    dec = input_check_file(tmp, FALSE);
 	else
 	    dec = NULL;
@@ -1593,7 +1590,7 @@ playlist_load_ins_file_tuple(Playlist * playlist,
     }
     else
     {
-	if (loading_playlist != TRUE && cfg.playlist_detect != TRUE)
+	if (playlist->loading_playlist != TRUE && cfg.playlist_detect != TRUE)
 	    dec = input_check_file(filename, FALSE);
 	else
 	    dec = NULL;
@@ -1622,7 +1619,7 @@ playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
     plc->plc_read(filename, pos);
 
     playlist_generate_shuffle_list(playlist);
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
 
     return 1;
 }
@@ -2412,7 +2409,7 @@ playlist_get_info_func(gpointer arg)
         }
 
         if (update_playlistwin) {
-            playlistwin_update_list();
+            playlistwin_update_list(playlist);
             update_playlistwin = FALSE;
         }
 
@@ -2509,7 +2506,7 @@ playlist_remove_dead_files(Playlist *playlist)
     PLAYLIST_UNLOCK(playlist->mutex);
     
     playlist_generate_shuffle_list(playlist);
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
 }
 
@@ -2642,7 +2639,7 @@ playlist_remove_duplicates(Playlist *playlist, PlaylistDupsType type)
 
     PLAYLIST_UNLOCK(playlist->mutex);
 
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
 }
 
@@ -2938,7 +2935,7 @@ playlist_read_info_selection(Playlist *playlist)
 
     PLAYLIST_UNLOCK(playlist->mutex);
 
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
 
     return retval;
@@ -2960,7 +2957,7 @@ playlist_read_info(Playlist *playlist, guint pos)
 
     PLAYLIST_UNLOCK(playlist->mutex);
 
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
 }
 
@@ -2995,6 +2992,7 @@ playlist_new(void)
 {
     Playlist *playlist = g_new0(Playlist, 1);
     playlist->mutex = g_mutex_new();
+    playlist->loading_playlist = FALSE;
 
     playlist_set_current_name(playlist, NULL);
     playlist_clear(playlist);
@@ -3005,11 +3003,11 @@ playlist_new(void)
 Playlist *
 playlist_new_from_selected(void)
 {
-#if 0
- /* !!!!!! TODO !!!!!!! */
     Playlist *newpl = playlist_new();
     Playlist *playlist = playlist_get_active();
     GList *list = playlist_get_selected(playlist);
+
+    playlist_add_playlist( newpl );
 
     PLAYLIST_LOCK(playlist->mutex);
 
@@ -3024,8 +3022,7 @@ playlist_new_from_selected(void)
     PLAYLIST_UNLOCK(playlist->mutex);
 
     playlist_recalc_total_time(newpl);
-    playlistwin_update_list();
-#endif
+    playlistwin_update_list(playlist);
 }
 
 const gchar *

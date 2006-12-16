@@ -193,7 +193,7 @@ root_event_cb (GdkXEvent *xev, GdkEventProperty *event, gpointer data)
 
 			if (cfg.playlist_transparent)
 			{
-				playlistwin_update_list();
+				playlistwin_update_list(playlist_get_active());
 				draw_playlist_window(TRUE);
 			}
 		}
@@ -219,7 +219,7 @@ playlist_list_auto_drag_down_func(gpointer data)
     if (pl->pl_auto_drag_down) {
         playlist_list_move_down(pl);
         pl->pl_first++;
-        playlistwin_update_list();
+        playlistwin_update_list(playlist_get_active());
         return TRUE;
     }
     return FALSE;
@@ -233,7 +233,7 @@ playlist_list_auto_drag_up_func(gpointer data)
     if (pl->pl_auto_drag_up) {
         playlist_list_move_up(pl);
         pl->pl_first--;
-        playlistwin_update_list();
+        playlistwin_update_list(playlist_get_active());
         return TRUE;
 
     }
@@ -369,7 +369,7 @@ playlist_list_button_press_cb(GtkWidget * widget,
         }
 
         pl->pl_dragging = TRUE;
-        playlistwin_update_list();
+        playlistwin_update_list(playlist);
     }
 }
 
@@ -439,7 +439,7 @@ playlist_list_motion_cb(GtkWidget * widget,
                     playlist_list_move_down(pl);
 
             }
-            playlistwin_update_list();
+            playlistwin_update_list(playlist_get_active());
         }
         pl->pl_drag_pos = nr;
     }

@@ -790,13 +790,13 @@ filebrowser_add_files(GtkFileChooser * browser,
         }       
 
         if (++ctr == 20) {
-            playlistwin_update_list();
+            playlistwin_update_list(playlist);
             ctr = 0;
             while (gtk_events_pending() ) gtk_main_iteration();
         }
     } 
 
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
 
     if (GTK_IS_WIDGET(mainwin_jtf))
         gtk_widget_set_sensitive(mainwin_jtf, TRUE);
@@ -1119,7 +1119,7 @@ static void filebrowser_add_files_classic(gchar ** files,
     while (files[ctr] != NULL) {
 	playlist_add(playlist, files[ctr++]);
     }
-    playlistwin_update_list();
+    playlistwin_update_list(playlist);
 
     if (GTK_IS_WIDGET(mainwin_jtf))
 	gtk_widget_set_sensitive(mainwin_jtf, TRUE);

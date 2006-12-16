@@ -908,7 +908,7 @@ on_use_bitmap_fonts_toggled(GtkToggleButton * button,
     mainwin_set_info_text();
     draw_main_window(TRUE);
     if (cfg.playlist_shaded) {
-        playlistwin_update_list();
+        playlistwin_update_list(playlist_get_active());
         draw_playlist_window(TRUE);
     }
 }
@@ -929,7 +929,7 @@ on_playlist_font_button_font_set(GtkFontButton * button,
 
     playlist_list_set_font(cfg.playlist_font);
     playlistwin_set_sinfo_font(cfg.playlist_font);  /* propagate font setting to playlistwin_sinfo */
-    playlistwin_update_list();
+    playlistwin_update_list(playlist_get_active());
     draw_playlist_window(TRUE);
 }
 
@@ -952,7 +952,7 @@ on_playlist_show_pl_numbers_toggled(GtkToggleButton * button,
                                     gpointer data)
 {
     cfg.show_numbers_in_pl = gtk_toggle_button_get_active(button);
-    playlistwin_update_list();
+    playlistwin_update_list(playlist_get_active());
     draw_playlist_window(TRUE);
 }
 
@@ -968,7 +968,7 @@ on_playlist_transparent_toggled(GtkToggleButton * button,
                                     gpointer data)
 {
     cfg.playlist_transparent = gtk_toggle_button_get_active(button);
-    playlistwin_update_list();
+    playlistwin_update_list(playlist_get_active());
     draw_playlist_window(TRUE);
 }
 
@@ -984,7 +984,7 @@ on_playlist_show_pl_separator_toggled(GtkToggleButton * button,
                                     gpointer data)
 {
     cfg.show_separator_in_pl = gtk_toggle_button_get_active(button);
-    playlistwin_update_list();
+    playlistwin_update_list(playlist_get_active());
     draw_playlist_window(TRUE);
 }
 
@@ -1881,7 +1881,7 @@ mainwin_drag_data_received1(GtkWidget * widget,
                                     strrchr(cfg.playlist_font, ' '),
                                     NULL);
     playlist_list_set_font(cfg.playlist_font);
-    playlistwin_update_list();
+    playlistwin_update_list(playlist_get_active());
     gtk_font_button_set_font_name(user_data, cfg.playlist_font);	
     
     g_free(decoded);
