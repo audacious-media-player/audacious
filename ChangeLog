@@ -1,3 +1,10 @@
+2006-12-16 18:44:25 +0000  Giacomo Lozito <james@develia.org>
+  revision [3293]
+  - added auto-enqueue option for search-in-playlist
+  trunk/audacious/ui_playlist.c |   31 +++++++++++++++++++++++++++++--
+  1 file changed, 29 insertions(+), 2 deletions(-)
+
+
 2006-12-16 15:56:32 +0000  Giacomo Lozito <james@develia.org>
   revision [3291]
   - changed playlist_shuffle_list to pick a playlist as parameter instead of calling playlist_get_active

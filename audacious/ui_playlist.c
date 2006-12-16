@@ -119,6 +119,8 @@ static void playlistwin_popup_menu_callback(gpointer cb_data, guint action,
 
 static void playlistwin_select_search_cbt_cb( GtkWidget *called_cbt ,
                                               gpointer other_cbt );
+static gboolean playlistwin_select_search_kp_cb( GtkWidget *entry , GdkEventKey *event ,
+                                                 gpointer searchdlg_win );
 
 static GtkItemFactoryEntry playlistwin_popup_menu_entries[] = {
     {N_("/View Track Details"), NULL,
@@ -715,18 +717,26 @@ playlistwin_select_search(void)
     searchdlg_label_track_name = gtk_label_new( _("Track name: ") );
     searchdlg_entry_track_name = gtk_entry_new();
     gtk_misc_set_alignment( GTK_MISC(searchdlg_label_track_name) , 0 , 0.5 );
+    g_signal_connect( G_OBJECT(searchdlg_entry_track_name) , "key-press-event" ,
+      G_CALLBACK(playlistwin_select_search_kp_cb) , searchdlg_win );
     /* album name */
     searchdlg_label_album_name = gtk_label_new( _("Album name: ") );
     searchdlg_entry_album_name = gtk_entry_new();
     gtk_misc_set_alignment( GTK_MISC(searchdlg_label_album_name) , 0 , 0.5 );
+    g_signal_connect( G_OBJECT(searchdlg_entry_album_name) , "key-press-event" ,
+      G_CALLBACK(playlistwin_select_search_kp_cb) , searchdlg_win );
     /* artist */
     searchdlg_label_performer = gtk_label_new( _("Artist: ") );
     searchdlg_entry_performer = gtk_entry_new();
     gtk_misc_set_alignment( GTK_MISC(searchdlg_label_performer) , 0 , 0.5 );
+    g_signal_connect( G_OBJECT(searchdlg_entry_performer) , "key-press-event" ,
+      G_CALLBACK(playlistwin_select_search_kp_cb) , searchdlg_win );
     /* file name */
     searchdlg_label_file_name = gtk_label_new( _("Filename: ") );
     searchdlg_entry_file_name = gtk_entry_new();
     gtk_misc_set_alignment( GTK_MISC(searchdlg_label_file_name) , 0 , 0.5 );
+    g_signal_connect( G_OBJECT(searchdlg_entry_file_name) , "key-press-event" ,
+      G_CALLBACK(playlistwin_select_search_kp_cb) , searchdlg_win );
     /* some options that control behaviour */
     searchdlg_checkbt_clearprevsel = gtk_check_button_new_with_label(
       _("Clear previous selection before searching") );
@@ -2288,4 +2298,18 @@ playlistwin_select_search_cbt_cb( GtkWidget *called_cbt , gpointer other_cbt )
     if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON(called_cbt) ) == TRUE )
         gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(other_cbt) , FALSE );
     return;
+}
+
+static gboolean
+playlistwin_select_search_kp_cb( GtkWidget *entry , GdkEventKey *event ,
+                                 gpointer searchdlg_win )
+{
+    switch (event->keyval)
+    {
+        case GDK_Return:
+            gtk_dialog_response( GTK_DIALOG(searchdlg_win) , GTK_RESPONSE_ACCEPT );
+            return TRUE;
+        default:
+            return FALSE;
+    }
 }
