@@ -1961,6 +1961,7 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
      * (row-selected will still eventually arrive once) */
     store = GTK_LIST_STORE(gtk_tree_view_get_model(treeview));
     gtk_list_store_clear(store);
+    g_object_ref(store);
     gtk_tree_view_set_model(treeview, NULL);
 
     PLAYLIST_LOCK();
@@ -2016,6 +2017,7 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
     PLAYLIST_UNLOCK();
 
     gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(store));
+    g_object_unref(store);
 
     if ( regex_list != NULL )
     {
