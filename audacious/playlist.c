@@ -246,6 +246,12 @@ playlist_remove_playlist(Playlist *playlist)
         playlists_iter = playlists;
 }
 
+GList *
+playlist_get_playlists(void)
+{
+    return playlists;
+}
+
 void
 playlist_select_next(void)
 {
@@ -2988,7 +2994,7 @@ playlist_set_shuffle(gboolean shuffle)
 }
 
 Playlist *
-playlist_new(void) 
+playlist_new(void)
 {
     Playlist *playlist = g_new0(Playlist, 1);
     playlist->mutex = g_mutex_new();
@@ -2998,6 +3004,14 @@ playlist_new(void)
     playlist_clear(playlist);
 
     return playlist;
+}
+
+void
+playlist_free(Playlist *playlist)
+{
+    g_mutex_free( playlist->mutex );
+    g_free( playlist );
+    return;
 }
 
 Playlist *

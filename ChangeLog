@@ -1,3 +1,18 @@
+2006-12-16 12:49:16 +0000  Giacomo Lozito <james@develia.org>
+  revision [3285]
+  - made playlistwin_update_list depend on passed Playlist* instead of blindly using playlist_get_active(); this solves many locking issues with multiple playlists, but SHOULD be reviewed in every place playlistwin_update_list is used; added a playlist_new_from_selected() call too
+  trunk/audacious/mainwin.c               |    4 -
+  trunk/audacious/playlist.c              |   91 +++++++++++++++-----------------
+  trunk/audacious/playlist.h              |    1 
+  trunk/audacious/prefswin.c              |   12 ++--
+  trunk/audacious/ui_playlist.c           |   74 +++++++++++++-------------
+  trunk/audacious/ui_playlist.h           |    3 -
+  trunk/audacious/util.c                  |    6 +-
+  trunk/audacious/widgets/playlist_list.c |   10 +--
+  trunk/audacious/widgets/skin.c          |    2 
+  9 files changed, 101 insertions(+), 102 deletions(-)
+
+
 2006-12-16 10:52:03 +0000  Giacomo Lozito <james@develia.org>
   revision [3283]
   - multiple playlist support requires separated locking; each Playlist holds its GMutex now; removed playlist_get function cause it doesn't fit with this scheme

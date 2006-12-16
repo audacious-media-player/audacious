@@ -701,6 +701,8 @@ mainwin_shade_toggle(void)
 void
 mainwin_quit_cb(void)
 {
+    GList *playlists = NULL, *playlists_top = NULL;
+
     gtk_widget_hide(equalizerwin);
     gtk_widget_hide(playlistwin);
     gtk_widget_hide(mainwin);
@@ -716,10 +718,20 @@ mainwin_quit_cb(void)
     ctrlsocket_cleanup();
 
     playlist_stop_get_info_thread();
-    playlist_clear(playlist_get_active());
+
+    /* free and clear each playlist */
+    playlists = playlist_get_playlists();
+    playlists_top = playlists;
+    while ( playlists != NULL )
+    {
+        playlist_clear((Playlist*)playlists->data);
+        playlist_free((Playlist*)playlists->data);
+        playlists = g_list_next(playlists);
+    }
+    g_list_free( playlists_top );
 
     plugin_system_cleanup();
-    
+
     gtk_main_quit();
 
     exit(EXIT_SUCCESS);
