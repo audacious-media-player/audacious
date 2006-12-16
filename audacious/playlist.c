@@ -1624,6 +1624,8 @@ playlist_load_ins(Playlist * playlist, const gchar * filename, gint pos)
 GList *
 get_playlist_nth(Playlist *playlist, guint nth)
 {
+    g_warning("deprecated function get_playlist_nth() was called");
+
     REQUIRE_STATIC_LOCK(playlists);
     return g_list_nth(playlist->entries, nth);
 }
@@ -1632,6 +1634,8 @@ get_playlist_nth(Playlist *playlist, guint nth)
 GList *
 playlist_get(void)
 {
+    g_warning("deprecated function playlist_get() was called");
+
     REQUIRE_STATIC_LOCK(playlists);
     return playlist_get_active()->entries;
 }
