@@ -41,6 +41,9 @@
 
 #include <X11/Xlib.h>
 
+#include <sys/types.h>
+#include <regex.h>
+
 #include "widgets/widgetcore.h"
 #include "mainwin.h"
 #include "pixmaps.h"
@@ -1852,22 +1855,22 @@ mainwin_jump_to_file_keypress_cb(GtkWidget * object,
 }
 
 static gboolean
-mainwin_jump_to_file_match(const gchar * song, gchar ** keys)
+mainwin_jump_to_file_match(const gchar * song, GSList *regex_list)
 {
     gint i = 0;
     gboolean rv = TRUE;
 
-    while (keys[i]) {
-        gint len = strlen(keys[i]);
-        gint j = 0;        
-        while (*(song + j)) {
-            if (!g_strncasecmp(song + j, keys[i], len))
-                goto found;
-            j++;
+    if ( song == NULL )
+        return FALSE;
+
+    for ( ; regex_list ; regex_list = g_slist_next(regex_list) )
+    {
+        regex_t *regex = regex_list->data;
+        if ( regexec( regex , song , 0 , NULL , 0 ) != 0 )
+        {
+            rv = FALSE;
+            break;
         }
-        rv = FALSE;
-    found:
-        i++;
     }
 
     return rv;
@@ -1940,8 +1943,19 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
 
     gboolean match = FALSE;
 
-    /* Chop the key string into ' '-separated key words */
+    GSList *regex_list = NULL, *regex_list_tmp = NULL;
+    gint i = -1;
+
+    /* Chop the key string into ' '-separated key regex-pattern strings */
     words = g_strsplit(gtk_entry_get_text(entry), " ", 0);
+
+    /* create a list of regex using the regex-pattern strings */
+    while ( words[++i] != NULL )
+    {
+        regex_t *regex = g_malloc(sizeof(regex_t));
+        if ( regcomp( regex , words[i] , REG_NOSUB | REG_ICASE ) == 0 )
+            regex_list = g_slist_append( regex_list , regex );
+    }
 
     /* FIXME: Remove the connected signals before clearing
      * (row-selected will still eventually arrive once) */
@@ -1967,8 +1981,8 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
                 title = filename;
         }
 
-        /* Compare the key words to the string - if all the words
-           match, add to the ListStore */
+        /* Compare the reg.expressions to the string - if all the
+           regexp in regex_list match, add to the ListStore */
 
         /*
          * FIXME: The search string should be adapted to the
@@ -1979,8 +1993,8 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
          * In any case the string to match should _never_ contain
          * something the user can't actually see in the playlist.
          */
-        if (words[0] != NULL)
-            match = mainwin_jump_to_file_match(title, words);
+        if (regex_list != NULL)
+            match = mainwin_jump_to_file_match(title, regex_list);
         else
             match = TRUE;
 
@@ -2000,6 +2014,17 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
 
     PLAYLIST_UNLOCK();
 
+    if ( regex_list != NULL )
+    {
+        regex_list_tmp = regex_list;
+        while ( regex_list != NULL )
+        {
+            regex_t *regex = regex_list->data;
+            regfree( regex );
+            regex_list = g_slist_next(regex_list);
+        }
+        g_slist_free( regex_list_tmp );
+    }
     g_strfreev(words);
 
     if (gtk_tree_model_get_iter_first(GTK_TREE_MODEL(store), &iter)) {
