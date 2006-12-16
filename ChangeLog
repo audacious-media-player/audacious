@@ -1,3 +1,10 @@
+2006-12-16 15:56:32 +0000  Giacomo Lozito <james@develia.org>
+  revision [3291]
+  - changed playlist_shuffle_list to pick a playlist as parameter instead of calling playlist_get_active
+  trunk/audacious/playlist.c |   14 ++++++++------
+  1 file changed, 8 insertions(+), 6 deletions(-)
+
+
 2006-12-16 13:41:27 +0000  Giacomo Lozito <james@develia.org>
   revision [3289]
   - clear and free a playlist passed to playlist_remove_playlist

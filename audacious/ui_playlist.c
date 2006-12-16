@@ -117,6 +117,9 @@ static void playlistwin_sub_menu_callback(gpointer cb_data, guint action,
 static void playlistwin_popup_menu_callback(gpointer cb_data, guint action,
                                             GtkWidget * w);
 
+static void playlistwin_select_search_cbt_cb( GtkWidget *called_cbt ,
+                                              gpointer other_cbt );
+
 static GtkItemFactoryEntry playlistwin_popup_menu_entries[] = {
     {N_("/View Track Details"), NULL,
      playlistwin_popup_menu_callback,
@@ -691,6 +694,7 @@ playlistwin_select_search(void)
     GtkWidget *searchdlg_entry_performer, *searchdlg_label_performer;
     GtkWidget *searchdlg_checkbt_clearprevsel;
     GtkWidget *searchdlg_checkbt_newplaylist;
+    GtkWidget *searchdlg_checkbt_autoenqueue;
     gint result;
 
     /* create dialog */
@@ -727,11 +731,18 @@ playlistwin_select_search(void)
     searchdlg_checkbt_clearprevsel = gtk_check_button_new_with_label(
       _("Clear previous selection before searching") );
     gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(searchdlg_checkbt_clearprevsel) , TRUE );
+    searchdlg_checkbt_autoenqueue = gtk_check_button_new_with_label(
+      _("Automatically toggle queue for matching entries") );
+    gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(searchdlg_checkbt_autoenqueue) , FALSE );
     searchdlg_checkbt_newplaylist = gtk_check_button_new_with_label(
       _("Create a new playlist with matching entries") );
     gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(searchdlg_checkbt_newplaylist) , FALSE );
+    g_signal_connect( G_OBJECT(searchdlg_checkbt_autoenqueue) , "clicked" ,
+      G_CALLBACK(playlistwin_select_search_cbt_cb) , searchdlg_checkbt_newplaylist );
+    g_signal_connect( G_OBJECT(searchdlg_checkbt_newplaylist) , "clicked" ,
+      G_CALLBACK(playlistwin_select_search_cbt_cb) , searchdlg_checkbt_autoenqueue );
     /* place fields in searchdlg_table */
-    searchdlg_table = gtk_table_new( 7 , 2 , FALSE );
+    searchdlg_table = gtk_table_new( 8 , 2 , FALSE );
     gtk_table_set_row_spacing( GTK_TABLE(searchdlg_table) , 0 , 8 );
     gtk_table_set_row_spacing( GTK_TABLE(searchdlg_table) , 4 , 8 );
     gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_hbox ,
@@ -754,8 +765,10 @@ playlistwin_select_search(void)
       1 , 2 , 4 , 5 , GTK_FILL | GTK_EXPAND , GTK_FILL | GTK_EXPAND , 0 , 2 );
     gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_checkbt_clearprevsel ,
       0 , 2 , 5 , 6 , GTK_FILL | GTK_EXPAND , GTK_FILL | GTK_EXPAND , 0 , 1 );
-    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_checkbt_newplaylist ,
+    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_checkbt_autoenqueue ,
       0 , 2 , 6 , 7 , GTK_FILL | GTK_EXPAND , GTK_FILL | GTK_EXPAND , 0 , 1 );
+    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_checkbt_newplaylist ,
+      0 , 2 , 7 , 8 , GTK_FILL | GTK_EXPAND , GTK_FILL | GTK_EXPAND , 0 , 1 );
 
     gtk_container_set_border_width( GTK_CONTAINER(searchdlg_table) , 5 );
     gtk_container_add( GTK_CONTAINER(GTK_DIALOG(searchdlg_win)->vbox) , searchdlg_table );
@@ -792,6 +805,9 @@ playlistwin_select_search(void)
          /* check if a new playlist should be created after searching */
          if ( gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(searchdlg_checkbt_newplaylist)) == TRUE )
              playlist_new_from_selected();
+         /* check if matched entries should be queued */
+         else if ( gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(searchdlg_checkbt_autoenqueue)) == TRUE )
+             playlist_queue(playlist_get_active());
          break;
       }
       default:
@@ -2261,4 +2277,15 @@ playlistwin_popup_menu_callback(gpointer data,
         break;
 
     }
+}
+
+
+/* playlistwin_select_search callback functions
+   placed here to avoid making the code messier :) */
+static void
+playlistwin_select_search_cbt_cb( GtkWidget *called_cbt , gpointer other_cbt )
+{
+    if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON(called_cbt) ) == TRUE )
+        gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(other_cbt) , FALSE );
+    return;
 }
