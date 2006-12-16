@@ -240,7 +240,10 @@ playlist_add_playlist(Playlist *playlist)
 void
 playlist_remove_playlist(Playlist *playlist)
 {
+    /* upon removal, a playlist should be cleared and freed */
     playlists = g_list_remove(playlists, playlist);
+    playlist_clear(playlist);
+    playlist_free(playlist);
 
     if (playlists_iter == NULL)
         playlists_iter = playlists;

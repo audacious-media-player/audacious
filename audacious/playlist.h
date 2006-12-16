@@ -195,6 +195,7 @@ GList *get_playlist_nth(Playlist *playlist, guint);
 gboolean playlist_set_current_name(Playlist *playlist, const gchar * filename);
 const gchar *playlist_get_current_name(Playlist *playlist);
 Playlist *playlist_new(void);
+void playlist_free(Playlist *playlist);
 Playlist *playlist_new_from_selected(void);
 
 PlaylistFormat playlist_format_get_from_name(const gchar * filename);

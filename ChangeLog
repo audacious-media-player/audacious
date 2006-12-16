@@ -1,3 +1,12 @@
+2006-12-16 13:18:19 +0000  Giacomo Lozito <james@develia.org>
+  revision [3287]
+  added playlist_free and ensure that each created playlist is freed in mainwin_quit_cb; the list of playlists is freed there as well
+  trunk/audacious/mainwin.c  |   16 ++++++++++++++--
+  trunk/audacious/playlist.c |   16 +++++++++++++++-
+  trunk/audacious/playlist.h |    2 +-
+  3 files changed, 30 insertions(+), 4 deletions(-)
+
+
 2006-12-16 12:49:16 +0000  Giacomo Lozito <james@develia.org>
   revision [3285]
   - made playlistwin_update_list depend on passed Playlist* instead of blindly using playlist_get_active(); this solves many locking issues with multiple playlists, but SHOULD be reviewed in every place playlistwin_update_list is used; added a playlist_new_from_selected() call too
