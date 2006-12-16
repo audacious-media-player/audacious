@@ -161,6 +161,12 @@ Returns OK if audacious is stopped.
 .TP
 .I --playback-status
 Returns the playback status.
+.TP
+.I --playback-seek
+Performs an absolute seek in milliseconds.
+.TP
+.I --playback-seek-relative
+Performs a seek relative to the current position in milliseconds.
 .PP
 .B "Volume control:"
 .TP
