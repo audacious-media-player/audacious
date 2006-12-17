@@ -1975,6 +1975,10 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
     /* FIXME: Remove the connected signals before clearing
      * (row-selected will still eventually arrive once) */
     store = GTK_LIST_STORE(gtk_tree_view_get_model(treeview));
+    /* detach model from treeview */
+    g_object_ref( store );
+    gtk_tree_view_set_model( GTK_TREE_VIEW(treeview) , NULL );
+
     gtk_list_store_clear(store);
 
     playlist = playlist_get_active();
@@ -2030,6 +2034,10 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
     }
 
     PLAYLIST_UNLOCK(playlist->mutex);
+
+    /* attach the model again to the treeview */
+    gtk_tree_view_set_model( GTK_TREE_VIEW(treeview) , GTK_TREE_MODEL(store) );
+    g_object_unref( store );
 
     if ( regex_list != NULL )
     {
