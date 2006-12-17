@@ -42,7 +42,7 @@
 #include "debug.h"
 
 #include "platform/smartinclude.h"
-#include "libaudacious/vfs.h"
+#include "vfs.h"
 
 #define EXTENSION_TARGETS 7
 
