@@ -46,7 +46,7 @@
 #include "output.h"
 
 #include "libaudacious/rcfile.h"
-#include "libaudacious/vfs.h"
+#include "vfs.h"
 
 #include "images/audacious_eq.xpm"
 

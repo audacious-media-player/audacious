@@ -45,7 +45,7 @@
 #include "mainwin.h"
 #include "libaudacious/util.h"
 #include "libaudacious/configdb.h"
-#include "libaudacious/vfs.h"
+#include "vfs.h"
 #include "libaudacious/urldecode.h"
 #include "equalizer.h"
 #include "playback.h"

@@ -1,3 +1,10 @@
+2006-12-16 19:20:00 +0000  Giacomo Lozito <james@develia.org>
+  revision [3295]
+  added enter keypress shortcut for search-in-playlist dialog
+  trunk/audacious/ui_playlist.c |   24 ++++++++++++++++++++++++
+  1 file changed, 24 insertions(+)
+
+
 2006-12-16 18:44:25 +0000  Giacomo Lozito <james@develia.org>
   revision [3293]
   - added auto-enqueue option for search-in-playlist

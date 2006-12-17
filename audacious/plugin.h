@@ -39,11 +39,7 @@
 
 
 #include <glib.h>
-#ifdef _AUDACIOUS_CORE
-# include "libaudacious/vfs.h"
-#else
-# include "audacious/vfs.h"
-#endif
+#include "audacious/vfs.h"
 #include "audacious/titlestring.h"
 
 #define INPUT_PLUGIN(x)   ((InputPlugin *)(x))

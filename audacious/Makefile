@@ -35,10 +35,15 @@ HEADERS = \
 	playlist_container.h \
 	plugin.h \
 	prefswin.h \
-	util.h
+	util.h \
+	vfs.h \
+	vfs_buffer.h
 
 SOURCES = \
 	build_stamp.c \
+	vfs.c \
+	vfs_buffer.c \
+	vfs_common.c \
 	genevent.c \
 	util.c \
 	output.c \
@@ -70,8 +75,6 @@ SOURCES = \
 	iir_fpu.c
 
 OBJECTS = ${SOURCES:.c=.o}
-
-beepinclude_HEADERS = plugin.h output.h input.h
 
 desktop_DATA = audacious.desktop
 desktopdir = $(datadir)/applications

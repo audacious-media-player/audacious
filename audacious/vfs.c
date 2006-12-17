@@ -22,7 +22,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include "urldecode.h"
+#include "audacious/urldecode.h"
 
 static GList *vfs_transports = NULL;
 

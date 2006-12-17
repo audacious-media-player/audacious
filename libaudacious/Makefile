@@ -20,12 +20,10 @@ CFLAGS += $(PICFLAGS) \
 	-I../intl
 
 CONF_SRC = configdb_$(CONFIGDB_BACKEND).c
-VFS_SRC = vfs.c vfs_common.c vfs_buffer.c
 
 SOURCES = \
 	$(CONF_SRC) \
 	rcfile.c \
-	$(VFS_SRC) \
 	beepctrl.c \
 	dirbrowser.c \
 	util.c \
