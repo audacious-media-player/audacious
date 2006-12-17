@@ -1738,7 +1738,6 @@ mainwin_jump_to_file_jump(GtkTreeView * treeview)
     GtkTreeModel *model;
     GtkTreeSelection *selection;
     GtkTreeIter iter;
-    gchar *pos_str;
     guint pos;
 
     model = gtk_tree_view_get_model(treeview);
@@ -1747,11 +1746,9 @@ mainwin_jump_to_file_jump(GtkTreeView * treeview)
     if (!gtk_tree_selection_get_selected(selection, NULL, &iter))
         return;
 
-    gtk_tree_model_get(model, &iter, 0, &pos_str, -1);
-    pos = g_ascii_strtoull(pos_str, NULL, 10) - 1;
-    g_free(pos_str);
+    gtk_tree_model_get(model, &iter, 0, &pos, -1);
 
-    change_song(pos);
+    change_song(pos - 1);
 
     /* FIXME: should only hide window */
     gtk_widget_destroy(mainwin_jtf);
@@ -1783,7 +1780,6 @@ mainwin_jump_to_file_queue_cb(GtkButton * button,
     GtkTreeModel *model;
     GtkTreeSelection *selection;
     GtkTreeIter iter;
-    gchar *pos_str;
     guint pos;
 
     treeview = GTK_TREE_VIEW(data);
@@ -1793,12 +1789,11 @@ mainwin_jump_to_file_queue_cb(GtkButton * button,
     if (!gtk_tree_selection_get_selected(selection, NULL, &iter))
         return;
 
-    gtk_tree_model_get(model, &iter, 0, &pos_str, -1);
-    pos = g_ascii_strtoull(pos_str, NULL, 10) - 1;
+    gtk_tree_model_get(model, &iter, 0, &pos, -1);
 
-    playlist_queue_position(playlist_get_active(), pos);
+    playlist_queue_position(playlist_get_active(), (pos - 1));
 
-    mainwin_jump_to_file_set_queue_button_label(button, pos);
+    mainwin_jump_to_file_set_queue_button_label(button, (pos - 1));
 }
 
 static void
@@ -1809,7 +1804,6 @@ mainwin_jump_to_file_selection_changed_cb(GtkTreeSelection *treesel,
     GtkTreeModel *model;
     GtkTreeSelection *selection;
     GtkTreeIter iter;
-    gchar *pos_str;
     guint pos;
 
     treeview = gtk_tree_selection_get_tree_view(treesel);
@@ -1819,11 +1813,9 @@ mainwin_jump_to_file_selection_changed_cb(GtkTreeSelection *treesel,
     if (!gtk_tree_selection_get_selected(selection, NULL, &iter))
         return;
 
-    gtk_tree_model_get(model, &iter, 0, &pos_str, -1);
-    pos = g_ascii_strtoull(pos_str, NULL, 10) - 1;
-    g_free(pos_str);
+    gtk_tree_model_get(model, &iter, 0, &pos, -1);
 
-    mainwin_jump_to_file_set_queue_button_label(GTK_BUTTON(data), pos);
+    mainwin_jump_to_file_set_queue_button_label(GTK_BUTTON(data), (pos - 1));
 }
 
 static gboolean
@@ -1894,7 +1886,7 @@ mainwin_update_jtf(GtkWidget * widget, gpointer user_data)
 {
     /* FIXME: Is not in sync with playlist due to delayed extinfo
      * reading */
-    gint row;
+    guint row;
     GList *playlist_glist;
     gchar *desc_buf = NULL;
     gchar *row_str;
@@ -1923,18 +1915,15 @@ mainwin_update_jtf(GtkWidget * widget, gpointer user_data)
         else
 		desc_buf = str_to_utf8(entry->filename);
 
-        row_str = g_strdup_printf("%d", row++);
-
         gtk_list_store_append(GTK_LIST_STORE(store), &iter);
         gtk_list_store_set(GTK_LIST_STORE(store), &iter,
-                           0, row_str, 1, desc_buf, -1);
+                           0, row, 1, desc_buf, -1);
+        row++;
 
 	if(desc_buf) {
 		g_free(desc_buf);
 		desc_buf = NULL;
 	}
-
-        g_free(row_str);
     }
 
     gtk_tree_model_get_iter_first(GTK_TREE_MODEL(store), &iter);
@@ -1951,7 +1940,7 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
 
     GtkListStore *store;
 
-    gint song_index = 0;
+    guint song_index = 0;
     gchar **words;
     GList *playlist_glist;
     Playlist *playlist;
@@ -2020,10 +2009,8 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
             match = TRUE;
 
         if (match) {
-            gchar *song_index_str = g_strdup_printf("%d", song_index + 1);
             gtk_list_store_append(store, &iter);
-            gtk_list_store_set(store, &iter, 0, song_index_str, 1, title, -1);
-            g_free(song_index_str);
+            gtk_list_store_set(store, &iter, 0, song_index + 1 , 1, title, -1);
         }
 
         song_index++;
@@ -2069,8 +2056,7 @@ mainwin_jump_to_file(void)
     GList *playlist_glist;
     Playlist *playlist;
     gchar *desc_buf = NULL;
-    gchar *row_str;
-    gint row;
+    guint row;
 
     GtkWidget *treeview;
     GtkListStore *jtf_store;
@@ -2100,7 +2086,7 @@ mainwin_jump_to_file(void)
     vbox = gtk_vbox_new(FALSE, 5);
     gtk_container_add(GTK_CONTAINER(mainwin_jtf), vbox);
 
-    jtf_store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING);
+    jtf_store = gtk_list_store_new(2, G_TYPE_UINT, G_TYPE_STRING);
     treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(jtf_store));
     g_object_unref(jtf_store);
 
@@ -2217,17 +2203,15 @@ mainwin_jump_to_file(void)
         else
 		desc_buf = str_to_utf8(entry->filename);
 
-        row_str = g_strdup_printf("%d", row++);
-
         gtk_list_store_append(GTK_LIST_STORE(jtf_store), &iter);
         gtk_list_store_set(GTK_LIST_STORE(jtf_store), &iter,
-                           0, row_str, 1, desc_buf, -1);
+                           0, row, 1, desc_buf, -1);
+        row++;
 
 	if (desc_buf) {
 		g_free(desc_buf);
 		desc_buf = NULL;
 	}
-        g_free(row_str);
     }
 
     PLAYLIST_UNLOCK(playlist->mutex);

@@ -1,3 +1,11 @@
+2006-12-17 18:35:49 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3307]
+  - ui/Makefile was missing.
+  
+  trunk/audacious/ui/Makefile |    9 +++++++++
+  1 file changed, 9 insertions(+)
+
+
 2006-12-17 18:35:32 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3305]
   - add XML interface declaration for the playlist editor
