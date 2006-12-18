@@ -167,8 +167,10 @@ bmp_playback_stop(void)
 {
     if (ip_data.playing && get_current_input_plugin()) {
 
-        if (bmp_playback_get_paused())
+        if (bmp_playback_get_paused()) {
+            output_flush(get_written_time()); /* to avoid noise */
             bmp_playback_pause();
+        }
 
         ip_data.playing = FALSE; 
 
@@ -187,9 +189,8 @@ bmp_playback_stop(void)
 
     ip_data.buffering = FALSE;
     ip_data.playing = FALSE;
-
+    
     g_return_if_fail(mainwin_playstatus != NULL);
-
     playstatus_set_status_buffering(mainwin_playstatus, FALSE);
 }
 
@@ -197,10 +198,11 @@ void
 bmp_playback_stop_reentrant(void)
 {
     if (ip_data.playing && get_current_input_plugin()) {
-        ip_data.playing = FALSE;
 
         if (bmp_playback_get_paused())
             bmp_playback_pause();
+
+        ip_data.playing = FALSE;
 
         free_vis_data();
         ip_data.paused = FALSE;

@@ -1,3 +1,13 @@
+2006-12-18 14:53:52 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [3323]
+  - change the cleanup order in mainwin_quit_cb() to avoid freeze on quit.
+  - replace deprecated g_main_iteration() with g_main_context_iteration().
+  
+  trunk/audacious/mainwin.c    |    4 ++--
+  trunk/audacious/pluginenum.c |   16 ++++++++--------
+  2 files changed, 10 insertions(+), 10 deletions(-)
+
+
 2006-12-18 12:15:09 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3321]
   - damn SVN reverted this to some old version
