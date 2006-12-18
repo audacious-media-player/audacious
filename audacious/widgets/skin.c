@@ -476,11 +476,11 @@ skin_get_textcolors(GdkPixmap * text, GdkColor * bgc, GdkColor * fgc)
     gint i;
 
     g_return_if_fail(text != NULL);
+    g_return_if_fail(GDK_IS_WINDOW(playlistwin->window));
 
     /* Get the first line of text */
     gi = gdk_drawable_get_image(text, 0, 0, 152, 6);
-    cm = gdk_window_get_colormap(playlistwin->window);
-    g_return_if_fail(GDK_IS_WINDOW(playlistwin->window));
+    cm = gdk_drawable_get_colormap(playlistwin->window);
 
     for (i = 0; i < 6; i++) {
         GdkColor c;
@@ -1190,8 +1190,8 @@ skin_load_color(const gchar * path, const gchar * file,
             if (len >= 2)
                 color->blue = hex_chars_to_int(*ptr, *(ptr + 1));
 
-            gdk_color_alloc(gdk_window_get_colormap(playlistwin->window),
-                            color);
+            gdk_colormap_alloc_color(gdk_drawable_get_colormap(playlistwin->window),
+                            color, TRUE, TRUE);
             g_free(value);
         }
         if (filename)

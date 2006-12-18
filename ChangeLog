@@ -1,3 +1,17 @@
+2006-12-18 17:56:52 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3331]
+  - gdk_image_destroy -> g_object_unref
+  - gdk_gc_destroy -> g_object_unref
+  - gdk_pixbuf_render_to_drawable -> gdk_draw_pixbuf
+  
+  trunk/audacious/equalizer.c               |    8 ++++----
+  trunk/audacious/mainwin.c                 |   10 +++++-----
+  trunk/audacious/ui_playlist.c             |    2 +-
+  trunk/audacious/widgets/playlist_slider.c |    2 +-
+  trunk/audacious/widgets/skin.c            |   12 ++++++------
+  5 files changed, 17 insertions(+), 17 deletions(-)
+
+
 2006-12-18 17:43:42 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3329]
   - remove deprecated symbol warnings for gdk_draw_pixmap
