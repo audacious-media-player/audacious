@@ -412,7 +412,7 @@ playlist_list_motion_cb(GtkWidget * widget,
             if (!pl->pl_auto_drag_up) {
                 pl->pl_auto_drag_up = TRUE;
                 pl->pl_auto_drag_up_tag =
-                    gtk_timeout_add(100, playlist_list_auto_drag_up_func, pl);
+                    g_timeout_add(100, playlist_list_auto_drag_up_func, pl);
             }
         }
         else if (pl->pl_auto_drag_up)
@@ -423,7 +423,7 @@ playlist_list_motion_cb(GtkWidget * widget,
             if (!pl->pl_auto_drag_down) {
                 pl->pl_auto_drag_down = TRUE;
                 pl->pl_auto_drag_down_tag =
-                    gtk_timeout_add(100, playlist_list_auto_drag_down_func,
+                    g_timeout_add(100, playlist_list_auto_drag_down_func,
                                     pl);
             }
         }
