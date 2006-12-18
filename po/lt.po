@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BMP\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-12-15 20:35-0600\n"
+"POT-Creation-Date: 2006-12-18 14:12-0600\n"
 "PO-Revision-Date: 2004-12-06 19:02+0200\n"
 "Last-Translator: Rimas Kudelis <rq@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -409,17 +409,17 @@ msgstr "įvesties įskiepis: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "Nepavyko sukurti žurnalo bylos (%s)!\n"
 
-#: audacious/main.c:81 audacious/main.c:83 audacious/mainwin.c:885
-#: audacious/mainwin.c:3720
+#: audacious/main.c:82 audacious/main.c:84 audacious/mainwin.c:899
+#: audacious/mainwin.c:3735
 msgid "Audacious"
 msgstr ""
 
-#: audacious/main.c:451
+#: audacious/main.c:452
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "Nepavyko sukurti aplanko (%s): %s"
 
-#: audacious/main.c:728
+#: audacious/main.c:729
 #, fuzzy
 msgid ""
 "Usage: audacious [options] [files] ...\n"
@@ -432,90 +432,73 @@ msgstr ""
 "Raktai:\n"
 "--------\n"
 
-#: audacious/main.c:733
+#: audacious/main.c:734
 msgid "Display this text and exit"
 msgstr "Parodyti šią žinutę ir baigti darbą"
 
-#: audacious/main.c:736
+#: audacious/main.c:737
 #, fuzzy
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Pasirinkti BMP/XMMS sesiją (Nutylimai: 0)"
 
-#: audacious/main.c:739
+#: audacious/main.c:740
 msgid "Skip backwards in playlist"
 msgstr "Šoktelti atgal grojaraštyje"
 
-#: audacious/main.c:742
+#: audacious/main.c:743
 msgid "Start playing current playlist"
 msgstr "Pradėti groti esamą grojaraštį"
 
-#: audacious/main.c:745
+#: audacious/main.c:746
 msgid "Pause current song"
 msgstr "Pristabdyti grojamą dainą"
 
-#: audacious/main.c:748
+#: audacious/main.c:749
 msgid "Stop current song"
 msgstr "Sustabdyti grojamą dainą"
 
-#: audacious/main.c:751
+#: audacious/main.c:752
 msgid "Pause if playing, play otherwise"
 msgstr "Pristabdyti, jei grojama, kitu atveju groti"
 
-#: audacious/main.c:754
+#: audacious/main.c:755
 msgid "Skip forward in playlist"
 msgstr "Šoktelti pirmyn grojaraštyje"
 
-#: audacious/main.c:757
+#: audacious/main.c:758
 msgid "Display Jump to file dialog"
 msgstr ""
 
-#: audacious/main.c:760
+#: audacious/main.c:761
 msgid "Don't clear the playlist"
 msgstr "Neišvalyti grojaraščio"
 
-#: audacious/main.c:763
+#: audacious/main.c:764
 msgid "Show the main window"
 msgstr "Parodyti pagrindinį langą"
 
-#: audacious/main.c:766
+#: audacious/main.c:767
 #, fuzzy
 msgid "Activate Audacious"
 msgstr "Aktyvinti BMP"
 
-#: audacious/main.c:769
+#: audacious/main.c:770
 msgid "Previous session ID"
 msgstr "Praėjusios sesijos ID"
 
-#: audacious/main.c:772
+#: audacious/main.c:773
 msgid "Headless operation [experimental]"
 msgstr ""
 
-#: audacious/main.c:775
+#: audacious/main.c:776
 msgid "Disable error/warning interception (logging)"
 msgstr ""
 
-#: audacious/main.c:778
+#: audacious/main.c:779
 msgid "Print version number and exit\n"
 msgstr "Parodyti versijos numerį ir baigti darbą\n"
 
-#: audacious/main.c:975
-#, fuzzy
-msgid ""
-"\n"
-"Received SIGSEGV\n"
-"\n"
-"This could be a bug in Audacious. If you don't know why this happened, file "
-"a bug at http://bugs-meta.atheme.org/\n"
-"\n"
-msgstr ""
-"\n"
-"Gautas SIGSEGV signalas\n"
-"\n"
-"Tai gali būti BMP riktas. Jei nežinote, kodėl tai nutiko, prašome nusiųsti "
-"laišką adresu beepmp-devel@lists.sourceforge.net\n"
-"\n"
-
-#: audacious/main.c:1005
+#: audacious/main.c:986
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -528,7 +511,7 @@ msgstr ""
 "Įsitikinkite, jog įmanoma naudoti rūbą, esantį „%s“ ir kad tvarkingai "
 "įdiegtas numatytasis rūbas, esantis „%s“.\n"
 
-#: audacious/main.c:1052
+#: audacious/main.c:1033
 #, fuzzy, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -537,7 +520,7 @@ msgstr ""
 "Atsiprašome, tačiau jūsų GTK+ versija (%d.%d.%d) neveiks su BMP.\n"
 "Prašome naudoti GTK+ %s ar naujesnę versiją.\n"
 
-#: audacious/main.c:1063
+#: audacious/main.c:1044
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -551,24 +534,24 @@ msgstr ""
 "prieš\n"
 "įsidiegdami LinuxThreads, jums reikia perkompiliuoti Glib ir GTK+.\n"
 
-#: audacious/main.c:1082
+#: audacious/main.c:1063
 #, fuzzy
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "BMP: Nepavyko pasinaudoti displėjum, baigiu darbą."
 
-#: audacious/mainwin.c:247 audacious/mainwin.c:380 audacious/ui_playlist.c:121
+#: audacious/mainwin.c:247 audacious/mainwin.c:382
 msgid "/View Track Details"
 msgstr "/Takelio informacija"
 
-#: audacious/mainwin.c:249 audacious/mainwin.c:368
+#: audacious/mainwin.c:249 audacious/mainwin.c:370
 msgid "/Jump to File"
 msgstr "/Šokti į bylą"
 
-#: audacious/mainwin.c:252 audacious/mainwin.c:442
+#: audacious/mainwin.c:252 audacious/mainwin.c:444
 msgid "/Autoscroll Songname"
 msgstr "/Automatiškai slinkti pavadinimą"
 
-#: audacious/mainwin.c:254 audacious/mainwin.c:346
+#: audacious/mainwin.c:254 audacious/mainwin.c:348
 #, fuzzy
 msgid "/Stop After Current Song"
 msgstr "Sustabdyti grojamą dainą"
@@ -586,407 +569,412 @@ msgid "/Visualization Mode/Scope"
 msgstr "Vizualizacijos tipas/Akiratis"
 
 #: audacious/mainwin.c:269
+#, fuzzy
+msgid "/Visualization Mode/Voiceprint"
+msgstr "Vizualizacijos tipas/Akiratis"
+
+#: audacious/mainwin.c:271
 msgid "/Visualization Mode/Off"
 msgstr "/Vizualizacijos tipas/Išjungta"
 
-#: audacious/mainwin.c:271
+#: audacious/mainwin.c:273
 msgid "/Analyzer Mode"
 msgstr "/Analizės būdas"
 
-#: audacious/mainwin.c:272
+#: audacious/mainwin.c:274
 msgid "/Analyzer Mode/Normal"
 msgstr "/Analizės būdas/Normali"
 
-#: audacious/mainwin.c:274
+#: audacious/mainwin.c:276
 msgid "/Analyzer Mode/Fire"
 msgstr "/Analizės būdas/Ugnis"
 
-#: audacious/mainwin.c:276
+#: audacious/mainwin.c:278
 msgid "/Analyzer Mode/Vertical Lines"
 msgstr "/Analizės būdas/Gulsčios linijos"
 
-#: audacious/mainwin.c:279
+#: audacious/mainwin.c:281
 msgid "/Analyzer Mode/Lines"
 msgstr "/Analizės būdas/Linijos"
 
-#: audacious/mainwin.c:281
+#: audacious/mainwin.c:283
 msgid "/Analyzer Mode/Bars"
 msgstr "/Analizės būdas/Stulpeliai"
 
-#: audacious/mainwin.c:284
+#: audacious/mainwin.c:286
 msgid "/Analyzer Mode/Peaks"
 msgstr "/Analizės režimas/Pikai"
 
-#: audacious/mainwin.c:286
+#: audacious/mainwin.c:288
 msgid "/Scope Mode"
 msgstr "/Akiračio būdas"
 
-#: audacious/mainwin.c:287
+#: audacious/mainwin.c:289
 msgid "/Scope Mode/Dot Scope"
 msgstr "/Akiračio būdas/Taškinis akiratis"
 
-#: audacious/mainwin.c:289
+#: audacious/mainwin.c:291
 msgid "/Scope Mode/Line Scope"
 msgstr "/Akiračio būdas/Linijinis akiratis"
 
-#: audacious/mainwin.c:291
+#: audacious/mainwin.c:293
 msgid "/Scope Mode/Solid Scope"
 msgstr "/Akiračio būdas/Vientisas akiratis"
 
-#: audacious/mainwin.c:293
+#: audacious/mainwin.c:295
 msgid "/WindowShade VU Mode"
 msgstr "s"
 
-#: audacious/mainwin.c:294
+#: audacious/mainwin.c:296
 msgid "/WindowShade VU Mode/Normal"
 msgstr "/Suvynioto lango VU būdas/Normalus"
 
-#: audacious/mainwin.c:296
+#: audacious/mainwin.c:298
 msgid "/WindowShade VU Mode/Smooth"
 msgstr "/Suvynioto lango VU būdas/Glodus"
 
-#: audacious/mainwin.c:298
+#: audacious/mainwin.c:300
 msgid "/Refresh Rate"
 msgstr "/Atnaujinimo dažnis"
 
-#: audacious/mainwin.c:299
+#: audacious/mainwin.c:301
 msgid "/Refresh Rate/Full (~50 fps)"
 msgstr "/Atnaujinimo dažnis/Pilnas (~50 fps)"
 
-#: audacious/mainwin.c:301
+#: audacious/mainwin.c:303
 msgid "/Refresh Rate/Half (~25 fps)"
 msgstr "/Atnaujinimo dažnis/Pusinis (~25 fps)"
 
-#: audacious/mainwin.c:303
+#: audacious/mainwin.c:305
 msgid "/Refresh Rate/Quarter (~13 fps)"
 msgstr "/Atnaujinimo dažnis/Ketvirtinis (~13fps)"
 
-#: audacious/mainwin.c:305
+#: audacious/mainwin.c:307
 msgid "/Refresh Rate/Eighth (~6 fps)"
 msgstr "/Atnaujinimo dažnis/Aštuntinis (~6fps)"
 
-#: audacious/mainwin.c:307
+#: audacious/mainwin.c:309
 msgid "/Analyzer Falloff"
 msgstr "/Analizės atkritimas"
 
-#: audacious/mainwin.c:308
+#: audacious/mainwin.c:310
 msgid "/Analyzer Falloff/Slowest"
 msgstr "/Analizės atkiritimas/Lėčiausias"
 
-#: audacious/mainwin.c:310
+#: audacious/mainwin.c:312
 msgid "/Analyzer Falloff/Slow"
 msgstr "/Analizės atkritimas/Lėtas"
 
-#: audacious/mainwin.c:312
+#: audacious/mainwin.c:314
 msgid "/Analyzer Falloff/Medium"
 msgstr "/Analizės atkritimas/Vidutinis"
 
-#: audacious/mainwin.c:314
+#: audacious/mainwin.c:316
 msgid "/Analyzer Falloff/Fast"
 msgstr "/Analizės atkritimas/Greitas"
 
-#: audacious/mainwin.c:316
+#: audacious/mainwin.c:318
 msgid "/Analyzer Falloff/Fastest"
 msgstr "/Analizės atkritimas/Greičiausias"
 
-#: audacious/mainwin.c:318
+#: audacious/mainwin.c:320
 msgid "/Peaks Falloff"
 msgstr "/Pikų atkritimas"
 
-#: audacious/mainwin.c:319
+#: audacious/mainwin.c:321
 msgid "/Peaks Falloff/Slowest"
 msgstr "/Pikų atkritimas/Lėčiausias"
 
-#: audacious/mainwin.c:321
+#: audacious/mainwin.c:323
 msgid "/Peaks Falloff/Slow"
 msgstr "/Pikų atkritimas/Lėtas"
 
-#: audacious/mainwin.c:323
+#: audacious/mainwin.c:325
 msgid "/Peaks Falloff/Medium"
 msgstr "/Pikų atkritimas/Vidutinis"
 
-#: audacious/mainwin.c:325
+#: audacious/mainwin.c:327
 msgid "/Peaks Falloff/Fast"
 msgstr "/Pikų atkritimas/Greitas"
 
-#: audacious/mainwin.c:327
+#: audacious/mainwin.c:329
 msgid "/Peaks Falloff/Fastest"
 msgstr "/Pikų atkritimas/Greičiausias"
 
-#: audacious/mainwin.c:337
+#: audacious/mainwin.c:339
 #, fuzzy
 msgid "/Play CD"
 msgstr "/Groti"
 
-#: audacious/mainwin.c:340
+#: audacious/mainwin.c:342
 msgid "/Repeat"
 msgstr "/Kartoti"
 
-#: audacious/mainwin.c:342
+#: audacious/mainwin.c:344
 msgid "/Shuffle"
 msgstr "/Atsitiktine tvarka"
 
-#: audacious/mainwin.c:344
+#: audacious/mainwin.c:346
 msgid "/No Playlist Advance"
 msgstr "/Nesislinkti grojaraščiu"
 
-#: audacious/mainwin.c:349
+#: audacious/mainwin.c:351
 msgid "/Play"
 msgstr "/Groti"
 
-#: audacious/mainwin.c:351
+#: audacious/mainwin.c:353
 msgid "/Pause"
 msgstr "/Pristabdyti"
 
-#: audacious/mainwin.c:353
+#: audacious/mainwin.c:355
 msgid "/Stop"
 msgstr "/Sustabdyti"
 
-#: audacious/mainwin.c:355
+#: audacious/mainwin.c:357
 msgid "/Previous"
 msgstr "/Šokti atgal"
 
-#: audacious/mainwin.c:357
+#: audacious/mainwin.c:359
 msgid "/Next"
 msgstr "/Šokti pirmyn"
 
-#: audacious/mainwin.c:360
+#: audacious/mainwin.c:362
 msgid "/Jump to Playlist Start"
 msgstr "/Šokti į grojaraščio pradžią"
 
-#: audacious/mainwin.c:362
+#: audacious/mainwin.c:364
 msgid "/-"
 msgstr "/-"
 
-#: audacious/mainwin.c:363
+#: audacious/mainwin.c:365
 #, fuzzy
 msgid "/Set A-B"
 msgstr "/Žymėti visus"
 
-#: audacious/mainwin.c:365
+#: audacious/mainwin.c:367
 #, fuzzy
 msgid "/Clear A-B"
 msgstr "/Išvalyti eilę"
 
-#: audacious/mainwin.c:370
+#: audacious/mainwin.c:372
 msgid "/Jump to Time"
 msgstr "/Šokti į laiką"
 
-#: audacious/mainwin.c:373
+#: audacious/mainwin.c:375
 #, fuzzy
 msgid "/New Playlist"
 msgstr "Išsaugoti grojaraštį"
 
-#: audacious/mainwin.c:375
+#: audacious/mainwin.c:377
 #, fuzzy
 msgid "/Select Next Playlist"
 msgstr "Pasirinkite grojaraščio šriftą:"
 
-#: audacious/mainwin.c:377
+#: audacious/mainwin.c:379
 #, fuzzy
 msgid "/Select Previous Playlist"
 msgstr "/Rūšiuoti pasirinktus/Pagal pavadinimą"
 
-#: audacious/mainwin.c:390
+#: audacious/mainwin.c:392
 #, fuzzy
 msgid "/About Audacious"
 msgstr "Apie MPEG audio įskiepį"
 
-#: audacious/mainwin.c:393
+#: audacious/mainwin.c:395
 #, fuzzy
 msgid "/Play File"
 msgstr "/Groti"
 
-#: audacious/mainwin.c:395
+#: audacious/mainwin.c:397
 #, fuzzy
 msgid "/Play Location"
 msgstr "Vieta:"
 
-#: audacious/mainwin.c:398
+#: audacious/mainwin.c:400
 #, fuzzy
 msgid "/V_isualization"
 msgstr "Vizualizacijos tipas"
 
-#: audacious/mainwin.c:399
+#: audacious/mainwin.c:401
 #, fuzzy
 msgid "/_Playback"
 msgstr "/Groti"
 
-#: audacious/mainwin.c:400
+#: audacious/mainwin.c:402
 msgid "/_View"
 msgstr "/_Rodinys"
 
-#: audacious/mainwin.c:402
+#: audacious/mainwin.c:404
 msgid "/Preferences"
 msgstr "/Nustatymai"
 
-#: audacious/mainwin.c:404
+#: audacious/mainwin.c:406
 msgid "/_Quit"
 msgstr "/_Išeiti"
 
-#: audacious/mainwin.c:414
+#: audacious/mainwin.c:416
 msgid "/Files..."
 msgstr "/Bylas…"
 
-#: audacious/mainwin.c:416
+#: audacious/mainwin.c:418
 msgid "/Internet location..."
 msgstr "/Adresą internete…"
 
-#: audacious/mainwin.c:426
+#: audacious/mainwin.c:428
 #, fuzzy
 msgid "/Show Player"
 msgstr "/Parodyti grojaraščio redaktorių"
 
-#: audacious/mainwin.c:428
+#: audacious/mainwin.c:430
 msgid "/Show Playlist Editor"
 msgstr "/Parodyti grojaraščio redaktorių"
 
-#: audacious/mainwin.c:430
+#: audacious/mainwin.c:432
 msgid "/Show Equalizer"
 msgstr "/Rodyti ekvalaizerį"
 
-#: audacious/mainwin.c:433
+#: audacious/mainwin.c:435
 msgid "/Time Elapsed"
 msgstr "/Praėjęs laikas"
 
-#: audacious/mainwin.c:435
+#: audacious/mainwin.c:437
 msgid "/Time Remaining"
 msgstr "/Likęs laikas"
 
-#: audacious/mainwin.c:438
+#: audacious/mainwin.c:440
 msgid "/Always On Top"
 msgstr "/Visada viršuje"
 
-#: audacious/mainwin.c:440
+#: audacious/mainwin.c:442
 msgid "/Put on All Workspaces"
 msgstr "/Rodyti visuose darbalaukiuose"
 
-#: audacious/mainwin.c:445
+#: audacious/mainwin.c:447
 msgid "/Roll up Player"
 msgstr "/Sutraukti grotuvą"
 
-#: audacious/mainwin.c:447
+#: audacious/mainwin.c:449
 msgid "/Roll up Playlist Editor"
 msgstr "/Sutraukti grojaraščio redaktorių"
 
-#: audacious/mainwin.c:449
+#: audacious/mainwin.c:451
 msgid "/Roll up Equalizer"
 msgstr "/Sutraukti ekvalaizerį"
 
-#: audacious/mainwin.c:452
+#: audacious/mainwin.c:454
 msgid "/DoubleSize"
 msgstr ""
 
-#: audacious/mainwin.c:454
+#: audacious/mainwin.c:456
 msgid "/Easy Move"
 msgstr ""
 
-#: audacious/mainwin.c:883
+#: audacious/mainwin.c:897
 #, c-format
 msgid "%s - Audacious"
 msgstr ""
 
-#: audacious/mainwin.c:1108
+#: audacious/mainwin.c:1122
 msgid "VBR"
 msgstr "VBR"
 
-#: audacious/mainwin.c:1149 audacious/mainwin.c:1153
+#: audacious/mainwin.c:1163 audacious/mainwin.c:1167
 #, fuzzy
 msgid "stereo"
 msgstr "Stereo"
 
-#: audacious/mainwin.c:1149 audacious/mainwin.c:1153
+#: audacious/mainwin.c:1163 audacious/mainwin.c:1167
 #, fuzzy
 msgid "mono"
 msgstr "Mono"
 
-#: audacious/mainwin.c:1642
+#: audacious/mainwin.c:1656
 msgid "Jump to Time"
 msgstr "Šokti į laiką"
 
-#: audacious/mainwin.c:1663
+#: audacious/mainwin.c:1677
 msgid "minutes:seconds"
 msgstr "minučių:sekundžių"
 
-#: audacious/mainwin.c:1673
+#: audacious/mainwin.c:1687
 msgid "Track length:"
 msgstr "Takelio trukmė:"
 
-#: audacious/mainwin.c:1761
+#: audacious/mainwin.c:1772
 #, fuzzy
 msgid "Un_queue"
 msgstr "Eilė"
 
-#: audacious/mainwin.c:1763 audacious/mainwin.c:2140
+#: audacious/mainwin.c:1774 audacious/mainwin.c:2154
 #, fuzzy
 msgid "_Queue"
 msgstr "Eilė"
 
-#: audacious/mainwin.c:2065
+#: audacious/mainwin.c:2079
 msgid "Jump to Track"
 msgstr "Šokti į takelį"
 
-#: audacious/mainwin.c:2106
+#: audacious/mainwin.c:2120
 msgid "Filter: "
 msgstr "Filtruoti:"
 
-#: audacious/mainwin.c:2311
+#: audacious/mainwin.c:2325
 msgid "Enter location to play:"
 msgstr ""
 
-#: audacious/mainwin.c:2519
+#: audacious/mainwin.c:2533
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "PERŠOKTI Į: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2551 audacious/mainwin.c:3354
+#: audacious/mainwin.c:2565 audacious/mainwin.c:3369
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "GARSUMAS: %d%%"
 
-#: audacious/mainwin.c:2582 audacious/mainwin.c:3357
+#: audacious/mainwin.c:2596 audacious/mainwin.c:3372
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "BALANSAS: %d%% KAIRĖJE"
 
-#: audacious/mainwin.c:2586 audacious/mainwin.c:3360
+#: audacious/mainwin.c:2600 audacious/mainwin.c:3375
 msgid "BALANCE: CENTER"
 msgstr "BALANSAS: VIDURYS"
 
-#: audacious/mainwin.c:2590 audacious/mainwin.c:3362
+#: audacious/mainwin.c:2604 audacious/mainwin.c:3377
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "BALANSAS: %d%% DEŠINĖJE"
 
-#: audacious/mainwin.c:3128
+#: audacious/mainwin.c:3143
 msgid "OPTIONS MENU"
 msgstr "NUSTATYMŲ MENIU"
 
-#: audacious/mainwin.c:3132
+#: audacious/mainwin.c:3147
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "ATJUNGTI „VISADA VIRŠUJE“"
 
-#: audacious/mainwin.c:3134
+#: audacious/mainwin.c:3149
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "ĮJUNGTI „VISADA VIRŠUJE“"
 
-#: audacious/mainwin.c:3137
+#: audacious/mainwin.c:3152
 msgid "FILE INFO BOX"
 msgstr "DIALOGAS „APIE BYLĄ“"
 
-#: audacious/mainwin.c:3141
+#: audacious/mainwin.c:3156
 msgid "DISABLE DOUBLESIZE"
 msgstr ""
 
-#: audacious/mainwin.c:3143
+#: audacious/mainwin.c:3158
 msgid "ENABLE DOUBLESIZE"
 msgstr ""
 
-#: audacious/mainwin.c:3146
+#: audacious/mainwin.c:3161
 msgid "VISUALIZATION MENU"
 msgstr "VIZUALIZACIJOS MENIU"
 
-#: audacious/mainwin.c:3194
+#: audacious/mainwin.c:3209
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -996,7 +984,7 @@ msgstr ""
 "\n"
 "CD įrenginyje nėra disko, arba įdėtas ne AudioCD diskas.\n"
 
-#: audacious/mainwin.c:3211
+#: audacious/mainwin.c:3226
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -1116,183 +1104,302 @@ msgstr ""
 msgid "Track Information Popup"
 msgstr ""
 
-#: audacious/ui_playlist.c:125
-msgid "/Show Popup Info"
-msgstr ""
-
-#: audacious/ui_playlist.c:131 audacious/ui_playlist.c:196
-msgid "/Remove Selected"
-msgstr "/Pašalinti pažymėtus"
-
-#: audacious/ui_playlist.c:135 audacious/ui_playlist.c:192
-msgid "/Remove Unselected"
-msgstr "/Pašalinti nepažymėtus"
-
-#: audacious/ui_playlist.c:139 audacious/ui_playlist.c:188
-msgid "/Remove All"
-msgstr "/Pašalinti visus"
-
-#: audacious/ui_playlist.c:145
-msgid "/Queue Toggle"
-msgstr "/Perjungti eilės rodomumą"
-
-#: audacious/ui_playlist.c:151
-msgid "/Add CD..."
-msgstr "/Pridėti CD…"
-
-#: audacious/ui_playlist.c:155
-msgid "/Add Internet Address..."
-msgstr "/Pridėti adresą internete…"
-
-#: audacious/ui_playlist.c:159
-msgid "/Add Files..."
-msgstr "/Pridėti bylas…"
-
-#: audacious/ui_playlist.c:165
-msgid "/Clear Queue"
-msgstr "/Išvalyti eilę"
-
-#: audacious/ui_playlist.c:171
-msgid "/Remove Unavailable Files"
-msgstr "/Pašalinti nepasiekiamas bylas"
-
-#: audacious/ui_playlist.c:175
+#: audacious/ui_playlist.c:136 audacious/ui_playlist.c:139
 #, fuzzy
-msgid "/Remove Duplicates"
-msgstr "/Pašalinti pažymėtus"
-
-#: audacious/ui_playlist.c:176
-#, fuzzy
-msgid "/Remove Duplicates/By Title"
-msgstr "/Rūšiuoti grojaraštį/Pagal pavadinimą"
-
-#: audacious/ui_playlist.c:179
-#, fuzzy
-msgid "/Remove Duplicates/By Filename"
-msgstr "/Rūšiuoti grojaraštį/Pagal bylos vardą"
-
-#: audacious/ui_playlist.c:182
-#, fuzzy
-msgid "/Remove Duplicates/By Path + Filename"
-msgstr "/Rūšiuoti grojaraštį/Pagal kelią ir bylą"
-
-#: audacious/ui_playlist.c:202
-msgid "/New List"
+msgid "New List"
 msgstr "/Naujas grojaraštis"
 
-#: audacious/ui_playlist.c:208
-msgid "/Load List"
-msgstr "/Įkelti grojaraštį"
+#: audacious/ui_playlist.c:137
+#, fuzzy
+msgid "Creates a new playlist."
+msgstr "Grojaraštyje rodyti takelio numerį"
 
-#: audacious/ui_playlist.c:212
-msgid "/Save List"
+#: audacious/ui_playlist.c:140
+#, fuzzy
+msgid "Loads a playlist file into the selected playlist."
+msgstr "Aprašus įkelti tik rodant bylą grojaraštyje"
+
+#: audacious/ui_playlist.c:142
+#, fuzzy
+msgid "Save List"
 msgstr "/Išsaugoti grojaraštį"
 
-#: audacious/ui_playlist.c:216
+#: audacious/ui_playlist.c:143
 #, fuzzy
-msgid "/Save Default List"
+msgid "Saves the selected playlist."
+msgstr "Pasirinkite grojaraščio šriftą:"
+
+#: audacious/ui_playlist.c:145
+#, fuzzy
+msgid "Save Default List"
 msgstr "/Išsaugoti/Įprastąjį"
 
-#: audacious/ui_playlist.c:222
-msgid "/Update View"
-msgstr "/Atnaujinti vaizdą"
+#: audacious/ui_playlist.c:146
+msgid "Saves the selected playlist to the default location."
+msgstr ""
+
+#: audacious/ui_playlist.c:149
+#, fuzzy
+msgid "Refresh List"
+msgstr "/Atnaujinimo dažnis"
+
+#: audacious/ui_playlist.c:150
+msgid "Refreshes metadata associated with a playlist entry."
+msgstr ""
+
+#: audacious/ui_playlist.c:155
+#, fuzzy
+msgid "Search and Select"
+msgstr "/Rūšiuoti pasirinktus"
+
+#: audacious/ui_playlist.c:156
+msgid ""
+"Searches the playlist and selects playlist entries based on specific "
+"criteria."
+msgstr ""
+
+#: audacious/ui_playlist.c:159
+#, fuzzy
+msgid "Invert Selection"
+msgstr "/Žymėti priešingai"
+
+#: audacious/ui_playlist.c:160
+msgid "Inverts the selected and unselected entries."
+msgstr ""
+
+#: audacious/ui_playlist.c:163 audacious/glade/addfiles.glade:105
+msgid "Select All"
+msgstr "Žymėti visus"
+
+#: audacious/ui_playlist.c:164
+msgid "Selects all of the playlist entries."
+msgstr ""
+
+#: audacious/ui_playlist.c:167
+#, fuzzy
+msgid "Select None"
+msgstr "/Panaikinti žymėjimą"
+
+#: audacious/ui_playlist.c:168
+msgid "Deselects all of the playlist entries."
+msgstr ""
+
+#: audacious/ui_playlist.c:173
+#, fuzzy
+msgid "Clear Queue"
+msgstr "/Išvalyti eilę"
+
+#: audacious/ui_playlist.c:174
+msgid "Clears the queue associated with this playlist."
+msgstr ""
+
+#: audacious/ui_playlist.c:177
+#, fuzzy
+msgid "Remove Unavailable Files"
+msgstr "/Pašalinti nepasiekiamas bylas"
+
+#: audacious/ui_playlist.c:178
+#, fuzzy
+msgid "Removes unavailable files from the playlist."
+msgstr "/Pašalinti nepasiekiamas bylas"
+
+#: audacious/ui_playlist.c:181
+#, fuzzy
+msgid "Remove Duplicates"
+msgstr "/Pašalinti pažymėtus"
+
+#: audacious/ui_playlist.c:183 audacious/ui_playlist.c:233
+#: audacious/ui_playlist.c:263
+#, fuzzy
+msgid "By Title"
+msgstr "Pavadinimas"
+
+#: audacious/ui_playlist.c:184
+msgid "Removes duplicate entries from the playlist by title."
+msgstr ""
+
+# msgstr[0] "Įtrauktas %d elementas."
+# msgstr[1] "Įtraukti %d elementai."
+#: audacious/ui_playlist.c:187 audacious/ui_playlist.c:241
+#: audacious/ui_playlist.c:271
+#, fuzzy
+msgid "By Filename"
+msgstr "Bylos vardas"
+
+#: audacious/ui_playlist.c:188
+#, fuzzy
+msgid "Removes duplicate entries from the playlist by filename."
+msgstr "/Rūšiuoti grojaraštį/Pagal kelią ir bylą"
+
+#: audacious/ui_playlist.c:191 audacious/ui_playlist.c:245
+#: audacious/ui_playlist.c:275
+#, fuzzy
+msgid "By Path + Filename"
+msgstr "/Rūšiuoti grojaraštį/Pagal kelią ir bylą"
+
+#: audacious/ui_playlist.c:192
+msgid "Removes duplicate entries from the playlist by their full path."
+msgstr ""
+
+#: audacious/ui_playlist.c:195
+#, fuzzy
+msgid "Remove All"
+msgstr "/Pašalinti visus"
+
+#: audacious/ui_playlist.c:196
+msgid "Removes all entries from the playlist."
+msgstr ""
+
+#: audacious/ui_playlist.c:199
+#, fuzzy
+msgid "Remove Unselected"
+msgstr "/Pašalinti nepažymėtus"
+
+#: audacious/ui_playlist.c:200
+msgid "Remove unselected entries from the playlist."
+msgstr ""
+
+#: audacious/ui_playlist.c:203
+#, fuzzy
+msgid "Remove Selected"
+msgstr "/Pašalinti pažymėtus"
+
+#: audacious/ui_playlist.c:204
+msgid "Remove selected entries from the playlist."
+msgstr ""
+
+#: audacious/ui_playlist.c:209
+#, fuzzy
+msgid "Add CD..."
+msgstr "/Pridėti CD…"
+
+#: audacious/ui_playlist.c:210
+#, fuzzy
+msgid "Adds a CD to the playlist."
+msgstr "Neišvalyti grojaraščio"
+
+#: audacious/ui_playlist.c:213
+#, fuzzy
+msgid "Add Internet Address..."
+msgstr "/Pridėti adresą internete…"
+
+#: audacious/ui_playlist.c:214
+msgid "Adds a remote track to the playlist."
+msgstr ""
+
+#: audacious/ui_playlist.c:217
+#, fuzzy
+msgid "Add Files..."
+msgstr "/Pridėti bylas…"
+
+#: audacious/ui_playlist.c:218
+#, fuzzy
+msgid "Adds files to the playlist."
+msgstr "Neišvalyti grojaraščio"
+
+#: audacious/ui_playlist.c:223
+#, fuzzy
+msgid "Randomize List"
+msgstr "/Sumaišyti grojaraštį"
+
+#: audacious/ui_playlist.c:224
+#, fuzzy
+msgid "Randomizes the playlist."
+msgstr "/Sumaišyti grojaraštį"
+
+#: audacious/ui_playlist.c:227
+#, fuzzy
+msgid "Reverse List"
+msgstr "/Apversti grojaraštį"
 
 #: audacious/ui_playlist.c:228
 #, fuzzy
-msgid "/Search and Select"
-msgstr "/Rūšiuoti pasirinktus"
+msgid "Reverses the playlist."
+msgstr "Neišvalyti grojaraščio"
 
-#: audacious/ui_playlist.c:234
-msgid "/Invert Selection"
-msgstr "/Žymėti priešingai"
-
-#: audacious/ui_playlist.c:240
-msgid "/Select None"
-msgstr "/Panaikinti žymėjimą"
-
-#: audacious/ui_playlist.c:244
-msgid "/Select All"
-msgstr "/Žymėti visus"
-
-#: audacious/ui_playlist.c:250
-msgid "/Randomize List"
-msgstr "/Sumaišyti grojaraštį"
-
-#: audacious/ui_playlist.c:252
-msgid "/Reverse List"
-msgstr "/Apversti grojaraštį"
-
-#: audacious/ui_playlist.c:255
-msgid "/Sort List"
+#: audacious/ui_playlist.c:231
+#, fuzzy
+msgid "Sort List"
 msgstr "/Rūšiuoti grojaraštį"
 
-#: audacious/ui_playlist.c:256
-msgid "/Sort List/By Title"
-msgstr "/Rūšiuoti grojaraštį/Pagal pavadinimą"
-
-#: audacious/ui_playlist.c:258
+#: audacious/ui_playlist.c:234 audacious/ui_playlist.c:264
 #, fuzzy
-msgid "/Sort List/By Artist"
+msgid "Sorts the list by title."
 msgstr "/Rūšiuoti grojaraštį/Pagal pavadinimą"
 
-#: audacious/ui_playlist.c:260
-msgid "/Sort List/By Filename"
+#: audacious/ui_playlist.c:237 audacious/ui_playlist.c:267
+#, fuzzy
+msgid "By Artist"
+msgstr "Atlikėjas"
+
+#: audacious/ui_playlist.c:238 audacious/ui_playlist.c:268
+#, fuzzy
+msgid "Sorts the list by artist."
+msgstr "/Rūšiuoti grojaraštį/Pagal pavadinimą"
+
+#: audacious/ui_playlist.c:242 audacious/ui_playlist.c:272
+#, fuzzy
+msgid "Sorts the list by filename."
 msgstr "/Rūšiuoti grojaraštį/Pagal bylos vardą"
 
-#: audacious/ui_playlist.c:262
-msgid "/Sort List/By Path + Filename"
-msgstr "/Rūšiuoti grojaraštį/Pagal kelią ir bylą"
+#: audacious/ui_playlist.c:246 audacious/ui_playlist.c:276
+msgid "Sorts the list by full pathname."
+msgstr ""
 
-#: audacious/ui_playlist.c:264
-msgid "/Sort List/By Date"
+#: audacious/ui_playlist.c:249 audacious/ui_playlist.c:279
+#, fuzzy
+msgid "By Date"
+msgstr "Data"
+
+#: audacious/ui_playlist.c:250 audacious/ui_playlist.c:280
+msgid "Sorts the list by modification time."
+msgstr ""
+
+#: audacious/ui_playlist.c:253 audacious/ui_playlist.c:283
+#, fuzzy
+msgid "By Track Number"
+msgstr "Takelio numeris"
+
+#: audacious/ui_playlist.c:254 audacious/ui_playlist.c:284
+#, fuzzy
+msgid "Sorts the list by track number."
 msgstr "/Rūšiuoti grojaraštį/pagal datą"
 
-#: audacious/ui_playlist.c:266
+#: audacious/ui_playlist.c:257 audacious/ui_playlist.c:287
 #, fuzzy
-msgid "/Sort List/By Track Number"
-msgstr "/Rūšiuoti grojaraštį/pagal datą"
+msgid "By Playlist Entry"
+msgstr "BMP grojaraščio redaktorius"
 
-#: audacious/ui_playlist.c:268
+#: audacious/ui_playlist.c:258 audacious/ui_playlist.c:288
 #, fuzzy
-msgid "/Sort List/By Playlist Entry"
+msgid "Sorts the list by playlist entry."
 msgstr "/Rūšiuoti grojaraštį/Pagal pavadinimą"
 
-#: audacious/ui_playlist.c:270
-msgid "/Sort Selection"
+#: audacious/ui_playlist.c:261
+#, fuzzy
+msgid "Sort Selected"
 msgstr "/Rūšiuoti pasirinktus"
 
-#: audacious/ui_playlist.c:271
-msgid "/Sort Selection/By Title"
-msgstr "/Rūšiuoti pasirinktus/Pagal pavadinimą"
-
-#: audacious/ui_playlist.c:273
+#: audacious/ui_playlist.c:293
 #, fuzzy
-msgid "/Sort Selection/By Artist"
-msgstr "/Rūšiuoti pasirinktus/Pagal pavadinimą"
+msgid "View Track Details"
+msgstr "/Takelio informacija"
 
-#: audacious/ui_playlist.c:275
-msgid "/Sort Selection/By Filename"
-msgstr "/Rūšiuoti pasirinktus/Pagal bylos vardą"
-
-#: audacious/ui_playlist.c:277
-msgid "/Sort Selection/By Path + Filename"
-msgstr "/Rūšiuoti pasirinktus/Pagal kelią ir bylą"
-
-#: audacious/ui_playlist.c:279
-msgid "/Sort Selection/By Date"
-msgstr "/Rūšiuoti pasirinktus/Pagal datą"
-
-#: audacious/ui_playlist.c:281
+#: audacious/ui_playlist.c:294
 #, fuzzy
-msgid "/Sort Selection/By Track Number"
-msgstr "/Rūšiuoti pasirinktus/Pagal datą"
+msgid "Displays track information."
+msgstr "CD Audio grotuvo konfigūravimas"
 
-#: audacious/ui_playlist.c:283
+#: audacious/ui_playlist.c:297
 #, fuzzy
-msgid "/Sort Selection/By Playlist Entry"
-msgstr "/Rūšiuoti pasirinktus/Pagal pavadinimą"
+msgid "Queue Toggle"
+msgstr "/Perjungti eilės rodomumą"
 
-#: audacious/ui_playlist.c:682
+#: audacious/ui_playlist.c:298
+msgid "Enables/disables the entry in the playlist's queue."
+msgstr ""
+
+#: audacious/ui_playlist.c:722
 msgid ""
 "Select entries in playlist by filling one or more fields. Fields use regular "
 "expressions syntax, case-insensitive. If you don't know how regular "
@@ -1300,37 +1407,49 @@ msgid ""
 "for."
 msgstr ""
 
-#: audacious/ui_playlist.c:689
+#: audacious/ui_playlist.c:729
 #, fuzzy
 msgid "Track name: "
 msgstr "Takelių pavadinimai:"
 
-#: audacious/ui_playlist.c:693
+#: audacious/ui_playlist.c:735
 #, fuzzy
 msgid "Album name: "
 msgstr "Albumas"
 
-#: audacious/ui_playlist.c:697
+#: audacious/ui_playlist.c:741
 #, fuzzy
 msgid "Artist: "
 msgstr "Atlikėjas:"
 
-#: audacious/ui_playlist.c:701
+#: audacious/ui_playlist.c:747
 #, fuzzy
 msgid "Filename: "
 msgstr "Bylos vardas:"
 
-#: audacious/ui_playlist.c:951
+#: audacious/ui_playlist.c:754
+msgid "Clear previous selection before searching"
+msgstr ""
+
+#: audacious/ui_playlist.c:757
+msgid "Automatically toggle queue for matching entries"
+msgstr ""
+
+#: audacious/ui_playlist.c:760
+msgid "Create a new playlist with matching entries"
+msgstr ""
+
+#: audacious/ui_playlist.c:998
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "Klaida įrašant grojaraštį „%s“: %s"
 
-#: audacious/ui_playlist.c:972
+#: audacious/ui_playlist.c:1019
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s jau egzistuoja. Tęsti?"
 
-#: audacious/ui_playlist.c:986
+#: audacious/ui_playlist.c:1033
 #, fuzzy, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -1338,17 +1457,17 @@ msgid ""
 "Unknown file type for '%s'.\n"
 msgstr "Nepavyko išsaugoti grojaraščio! Nežinomas bylos %s tipas"
 
-#: audacious/ui_playlist.c:1139
+#: audacious/ui_playlist.c:1186
 #, fuzzy
 msgid "Load Playlist"
 msgstr "Įkrauti grojaraštį"
 
-#: audacious/ui_playlist.c:1152
+#: audacious/ui_playlist.c:1199
 #, fuzzy
 msgid "Save Playlist"
 msgstr "Išsaugoti grojaraštį"
 
-#: audacious/ui_playlist.c:1889
+#: audacious/ui_playlist.c:1949
 #, fuzzy
 msgid "Audacious Playlist Editor"
 msgstr "/Parodyti grojaraščio redaktorių"
@@ -1387,7 +1506,7 @@ msgstr "/Įkelti/Iš bylos"
 msgid "  (invalid UTF-8)"
 msgstr "  (blogas UTF-8)"
 
-#: audacious/playback.c:222
+#: audacious/playback.c:225
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1396,10 +1515,6 @@ msgstr ""
 #: audacious/glade/addfiles.glade:77
 msgid "Close Dialog on Add"
 msgstr "Pridėjus, užverti dialogą2"
-
-#: audacious/glade/addfiles.glade:105
-msgid "Select All"
-msgstr "Žymėti visus"
 
 #: audacious/glade/addfiles.glade:116
 msgid "Deselect All"
@@ -1934,12 +2049,68 @@ msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: Rodyti „…“ tik jei rastas elementas %n"
 
 #, fuzzy
-#~ msgid "Audacious Preferences"
-#~ msgstr "BMP nustatymai"
+#~ msgid ""
+#~ "\n"
+#~ "Received SIGSEGV\n"
+#~ "\n"
+#~ "This could be a bug in Audacious. If you don't know why this happened, "
+#~ "file a bug at http://bugs-meta.atheme.org/\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Gautas SIGSEGV signalas\n"
+#~ "\n"
+#~ "Tai gali būti BMP riktas. Jei nežinote, kodėl tai nutiko, prašome "
+#~ "nusiųsti laišką adresu beepmp-devel@lists.sourceforge.net\n"
+#~ "\n"
 
 #, fuzzy
-#~ msgid "Refresh skin list"
-#~ msgstr "/Atnaujinimo dažnis"
+#~ msgid "/Remove Duplicates/By Title"
+#~ msgstr "/Rūšiuoti grojaraštį/Pagal pavadinimą"
+
+#, fuzzy
+#~ msgid "/Remove Duplicates/By Filename"
+#~ msgstr "/Rūšiuoti grojaraštį/Pagal bylos vardą"
+
+#~ msgid "/Load List"
+#~ msgstr "/Įkelti grojaraštį"
+
+#~ msgid "/Update View"
+#~ msgstr "/Atnaujinti vaizdą"
+
+#~ msgid "/Select All"
+#~ msgstr "/Žymėti visus"
+
+#~ msgid "/Sort List/By Date"
+#~ msgstr "/Rūšiuoti grojaraštį/pagal datą"
+
+#~ msgid "/Sort Selection/By Title"
+#~ msgstr "/Rūšiuoti pasirinktus/Pagal pavadinimą"
+
+#, fuzzy
+#~ msgid "/Sort Selection/By Artist"
+#~ msgstr "/Rūšiuoti pasirinktus/Pagal pavadinimą"
+
+#~ msgid "/Sort Selection/By Filename"
+#~ msgstr "/Rūšiuoti pasirinktus/Pagal bylos vardą"
+
+#~ msgid "/Sort Selection/By Path + Filename"
+#~ msgstr "/Rūšiuoti pasirinktus/Pagal kelią ir bylą"
+
+#~ msgid "/Sort Selection/By Date"
+#~ msgstr "/Rūšiuoti pasirinktus/Pagal datą"
+
+#, fuzzy
+#~ msgid "/Sort Selection/By Track Number"
+#~ msgstr "/Rūšiuoti pasirinktus/Pagal datą"
+
+#, fuzzy
+#~ msgid "/Sort Selection/By Playlist Entry"
+#~ msgstr "/Rūšiuoti pasirinktus/Pagal pavadinimą"
+
+#, fuzzy
+#~ msgid "Audacious Preferences"
+#~ msgstr "BMP nustatymai"
 
 #~ msgid "Select main player window font:"
 #~ msgstr "Pasirinkite pagrindinio grotuvo lango šriftą:"
@@ -1953,9 +2124,6 @@ msgstr "%{n:...%}: Rodyti „…“ tik jei rastas elementas %n"
 
 #~ msgid "Load metadata when adding the file to the playlist or opening it"
 #~ msgstr "Aprašus įkelti, pridedant bylą į grojaraštį ar jį atveriant"
-
-#~ msgid "Load metadata on demand when displaying the file in the playlist"
-#~ msgstr "Aprašus įkelti tik rodant bylą grojaraštyje"
 
 #~ msgid "Show information about titlestring format"
 #~ msgstr "Parodyti informaciją apie pavadinimo formatą"
@@ -4088,9 +4256,6 @@ msgstr "%{n:...%}: Rodyti „…“ tik jei rastas elementas %n"
 
 #~ msgid "Add Internet Address"
 #~ msgstr "Pridėti adresą internete…"
-
-#~ msgid "BMP Playlist Editor"
-#~ msgstr "BMP grojaraščio redaktorius"
 
 #~ msgid "*"
 #~ msgstr "*"

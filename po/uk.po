@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-12-15 20:35-0600\n"
+"POT-Creation-Date: 2006-12-18 14:12-0600\n"
 "PO-Revision-Date: 2005-12-17 11:01+0400\n"
 "Last-Translator: Mykola Lynnyk<pydefiner@gmail.com>\n"
 "Language-Team: Ukrainian <linux@linux.org.ua>\n"
@@ -405,17 +405,17 @@ msgstr "Модуль вводу: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "Не можу створити файл журналу (%s)!\n"
 
-#: audacious/main.c:81 audacious/main.c:83 audacious/mainwin.c:885
-#: audacious/mainwin.c:3720
+#: audacious/main.c:82 audacious/main.c:84 audacious/mainwin.c:899
+#: audacious/mainwin.c:3735
 msgid "Audacious"
 msgstr ""
 
-#: audacious/main.c:451
+#: audacious/main.c:452
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "Не можу створити директорію (%s): %s"
 
-#: audacious/main.c:728
+#: audacious/main.c:729
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
@@ -427,90 +427,73 @@ msgstr ""
 "Параметри:\n"
 "--------\n"
 
-#: audacious/main.c:733
+#: audacious/main.c:734
 msgid "Display this text and exit"
 msgstr "Надрукувати цей текст і вийти"
 
-#: audacious/main.c:736
+#: audacious/main.c:737
 #, fuzzy
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Встановити сесію для audacious/ВМР/XMMS (типова: 0)"
 
-#: audacious/main.c:739
+#: audacious/main.c:740
 msgid "Skip backwards in playlist"
 msgstr "Перейти до попередньої пісні у списку"
 
-#: audacious/main.c:742
+#: audacious/main.c:743
 msgid "Start playing current playlist"
 msgstr "Почати програвати поточний список"
 
-#: audacious/main.c:745
+#: audacious/main.c:746
 msgid "Pause current song"
 msgstr "Призупинити поточну пісню"
 
-#: audacious/main.c:748
+#: audacious/main.c:749
 msgid "Stop current song"
 msgstr "Зупинити поточну пісню"
 
-#: audacious/main.c:751
+#: audacious/main.c:752
 msgid "Pause if playing, play otherwise"
 msgstr "Призупинити, якщо що-небуть програється, в іншому випадку програвати"
 
-#: audacious/main.c:754
+#: audacious/main.c:755
 msgid "Skip forward in playlist"
 msgstr "Перейти до наступної пісні у списку пісень"
 
-#: audacious/main.c:757
+#: audacious/main.c:758
 msgid "Display Jump to file dialog"
 msgstr ""
 
-#: audacious/main.c:760
+#: audacious/main.c:761
 msgid "Don't clear the playlist"
 msgstr "Не очищати список програвання"
 
-#: audacious/main.c:763
+#: audacious/main.c:764
 msgid "Show the main window"
 msgstr "Показати головне вікно."
 
-#: audacious/main.c:766
+#: audacious/main.c:767
 #, fuzzy
 msgid "Activate Audacious"
 msgstr "Активувати audacious"
 
-#: audacious/main.c:769
+#: audacious/main.c:770
 msgid "Previous session ID"
 msgstr "Ідентифікатор попередньго сеансу"
 
-#: audacious/main.c:772
+#: audacious/main.c:773
 msgid "Headless operation [experimental]"
 msgstr ""
 
-#: audacious/main.c:775
+#: audacious/main.c:776
 msgid "Disable error/warning interception (logging)"
 msgstr ""
 
-#: audacious/main.c:778
+#: audacious/main.c:779
 msgid "Print version number and exit\n"
 msgstr "Надрукувати номер версії і завершити роботу.\n"
 
-#: audacious/main.c:975
-#, fuzzy
-msgid ""
-"\n"
-"Received SIGSEGV\n"
-"\n"
-"This could be a bug in Audacious. If you don't know why this happened, file "
-"a bug at http://bugs-meta.atheme.org/\n"
-"\n"
-msgstr ""
-"\n"
-"Отрмано SIGSEGV\n"
-"\n"
-"Можливо, це помилка в Audacious. Якщо ви не знаєте, чому це сталось, "
-"відправте повідомлення на at http://bugs.nenolod.net/\n"
-"\n"
-
-#: audacious/main.c:1005
+#: audacious/main.c:986
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -523,7 +506,7 @@ msgstr ""
 "Перевірте,чи придатна до використання тема '%s' і встановлена типова тема в "
 "'%s'\n"
 
-#: audacious/main.c:1052
+#: audacious/main.c:1033
 #, fuzzy, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -532,7 +515,7 @@ msgstr ""
 "Вибачте, ваша GTK+ версія (%d.%d.%d) не працюватиме з BMP.\n"
 "Будь-ласка, викоритовуйте GTK+ %s або кращу.\n"
 
-#: audacious/main.c:1063
+#: audacious/main.c:1044
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -546,23 +529,23 @@ msgstr ""
 "GTK+ вам\n"
 "перед встановленням LinuxThreads слід перекомпілювати Glib і GTK+.\n"
 
-#: audacious/main.c:1082
+#: audacious/main.c:1063
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "audacious: Не можу відкрити екран для показу, вихід.\n"
 
-#: audacious/mainwin.c:247 audacious/mainwin.c:380 audacious/ui_playlist.c:121
+#: audacious/mainwin.c:247 audacious/mainwin.c:382
 msgid "/View Track Details"
 msgstr "/Інформація про пісню"
 
-#: audacious/mainwin.c:249 audacious/mainwin.c:368
+#: audacious/mainwin.c:249 audacious/mainwin.c:370
 msgid "/Jump to File"
 msgstr "/Перейти до файлу"
 
-#: audacious/mainwin.c:252 audacious/mainwin.c:442
+#: audacious/mainwin.c:252 audacious/mainwin.c:444
 msgid "/Autoscroll Songname"
 msgstr "/Автоматична прокрутка назви пісні"
 
-#: audacious/mainwin.c:254 audacious/mainwin.c:346
+#: audacious/mainwin.c:254 audacious/mainwin.c:348
 #, fuzzy
 msgid "/Stop After Current Song"
 msgstr "Зупинити поточну пісню"
@@ -580,400 +563,405 @@ msgid "/Visualization Mode/Scope"
 msgstr "/Режим візуалізації/Графік"
 
 #: audacious/mainwin.c:269
+#, fuzzy
+msgid "/Visualization Mode/Voiceprint"
+msgstr "/Режим візуалізації/Графік"
+
+#: audacious/mainwin.c:271
 msgid "/Visualization Mode/Off"
 msgstr "/Режим візуализації/Вимкнено"
 
-#: audacious/mainwin.c:271
+#: audacious/mainwin.c:273
 msgid "/Analyzer Mode"
 msgstr "/Режим аналізатора"
 
-#: audacious/mainwin.c:272
+#: audacious/mainwin.c:274
 msgid "/Analyzer Mode/Normal"
 msgstr "/Режим аналізатора/Звичайний"
 
-#: audacious/mainwin.c:274
+#: audacious/mainwin.c:276
 msgid "/Analyzer Mode/Fire"
 msgstr "/Режим аналізатора/Полум'я"
 
-#: audacious/mainwin.c:276
+#: audacious/mainwin.c:278
 msgid "/Analyzer Mode/Vertical Lines"
 msgstr "/Режим аналізатора/Вертикальні лінії"
 
-#: audacious/mainwin.c:279
+#: audacious/mainwin.c:281
 msgid "/Analyzer Mode/Lines"
 msgstr "/Режим аналізатора/Лінії"
 
-#: audacious/mainwin.c:281
+#: audacious/mainwin.c:283
 msgid "/Analyzer Mode/Bars"
 msgstr "/Режим аналізатора/Смуги"
 
-#: audacious/mainwin.c:284
+#: audacious/mainwin.c:286
 msgid "/Analyzer Mode/Peaks"
 msgstr "/Режим аналізатора/Піки"
 
-#: audacious/mainwin.c:286
+#: audacious/mainwin.c:288
 msgid "/Scope Mode"
 msgstr "/Режим графіка"
 
-#: audacious/mainwin.c:287
+#: audacious/mainwin.c:289
 msgid "/Scope Mode/Dot Scope"
 msgstr "/Режим графіка/Точки"
 
-#: audacious/mainwin.c:289
+#: audacious/mainwin.c:291
 msgid "/Scope Mode/Line Scope"
 msgstr "/Режим графіка/Лінії"
 
-#: audacious/mainwin.c:291
+#: audacious/mainwin.c:293
 msgid "/Scope Mode/Solid Scope"
 msgstr "/Режим графіка/Заливка"
 
-#: audacious/mainwin.c:293
+#: audacious/mainwin.c:295
 msgid "/WindowShade VU Mode"
 msgstr "/При мінімізованому вікні"
 
-#: audacious/mainwin.c:294
+#: audacious/mainwin.c:296
 msgid "/WindowShade VU Mode/Normal"
 msgstr "/При мінімізованому окне/Звичайний"
 
-#: audacious/mainwin.c:296
+#: audacious/mainwin.c:298
 msgid "/WindowShade VU Mode/Smooth"
 msgstr "/При мінімізованому вікні/Плавний"
 
-#: audacious/mainwin.c:298
+#: audacious/mainwin.c:300
 msgid "/Refresh Rate"
 msgstr "/Частота поновлення"
 
-#: audacious/mainwin.c:299
+#: audacious/mainwin.c:301
 msgid "/Refresh Rate/Full (~50 fps)"
 msgstr "/Частота поновлення/Повна (~50 fps)"
 
-#: audacious/mainwin.c:301
+#: audacious/mainwin.c:303
 msgid "/Refresh Rate/Half (~25 fps)"
 msgstr "/Частота поновлення/Половина (~25 fps)"
 
-#: audacious/mainwin.c:303
+#: audacious/mainwin.c:305
 msgid "/Refresh Rate/Quarter (~13 fps)"
 msgstr "/Частота  поновлення/Четверть (~13 fps)"
 
-#: audacious/mainwin.c:305
+#: audacious/mainwin.c:307
 msgid "/Refresh Rate/Eighth (~6 fps)"
 msgstr "/Частота поновлення/Восьма (~6 fps)"
 
-#: audacious/mainwin.c:307
+#: audacious/mainwin.c:309
 msgid "/Analyzer Falloff"
 msgstr "/Падіння аналізатора"
 
-#: audacious/mainwin.c:308
+#: audacious/mainwin.c:310
 msgid "/Analyzer Falloff/Slowest"
 msgstr "/Падіння Аналізатора/Найповільніше"
 
-#: audacious/mainwin.c:310
+#: audacious/mainwin.c:312
 msgid "/Analyzer Falloff/Slow"
 msgstr "/Падіння Аналізатора/Повільне"
 
-#: audacious/mainwin.c:312
+#: audacious/mainwin.c:314
 msgid "/Analyzer Falloff/Medium"
 msgstr "/Падіння Аналізатора/Середнє"
 
-#: audacious/mainwin.c:314
+#: audacious/mainwin.c:316
 msgid "/Analyzer Falloff/Fast"
 msgstr "/Падіння Аналізатора/Швидке"
 
-#: audacious/mainwin.c:316
+#: audacious/mainwin.c:318
 msgid "/Analyzer Falloff/Fastest"
 msgstr "/Падіння Аналізатора/Найшвидше"
 
-#: audacious/mainwin.c:318
+#: audacious/mainwin.c:320
 msgid "/Peaks Falloff"
 msgstr "/Падіння піків"
 
-#: audacious/mainwin.c:319
+#: audacious/mainwin.c:321
 msgid "/Peaks Falloff/Slowest"
 msgstr "/Падіння піків/Найповільніше"
 
-#: audacious/mainwin.c:321
+#: audacious/mainwin.c:323
 msgid "/Peaks Falloff/Slow"
 msgstr "/Падіння піків/Повільне"
 
-#: audacious/mainwin.c:323
+#: audacious/mainwin.c:325
 msgid "/Peaks Falloff/Medium"
 msgstr "/Падіння піків/Середнє"
 
-#: audacious/mainwin.c:325
+#: audacious/mainwin.c:327
 msgid "/Peaks Falloff/Fast"
 msgstr "/Падіння піків/Швидке"
 
-#: audacious/mainwin.c:327
+#: audacious/mainwin.c:329
 msgid "/Peaks Falloff/Fastest"
 msgstr "/Падіння піків/Найшвидше"
 
-#: audacious/mainwin.c:337
+#: audacious/mainwin.c:339
 #, fuzzy
 msgid "/Play CD"
 msgstr "/Грати"
 
-#: audacious/mainwin.c:340
+#: audacious/mainwin.c:342
 msgid "/Repeat"
 msgstr "/Повторювати"
 
-#: audacious/mainwin.c:342
+#: audacious/mainwin.c:344
 msgid "/Shuffle"
 msgstr "/Випадково"
 
-#: audacious/mainwin.c:344
+#: audacious/mainwin.c:346
 msgid "/No Playlist Advance"
 msgstr "/Не просуватись у списку пісень"
 
-#: audacious/mainwin.c:349
+#: audacious/mainwin.c:351
 msgid "/Play"
 msgstr "/Грати"
 
-#: audacious/mainwin.c:351
+#: audacious/mainwin.c:353
 msgid "/Pause"
 msgstr "/Призупинити"
 
-#: audacious/mainwin.c:353
+#: audacious/mainwin.c:355
 msgid "/Stop"
 msgstr "/Зупинити"
 
-#: audacious/mainwin.c:355
+#: audacious/mainwin.c:357
 msgid "/Previous"
 msgstr "/Попередня пісня"
 
-#: audacious/mainwin.c:357
+#: audacious/mainwin.c:359
 msgid "/Next"
 msgstr "/Наступна пісня"
 
-#: audacious/mainwin.c:360
+#: audacious/mainwin.c:362
 msgid "/Jump to Playlist Start"
 msgstr "/Перейти до першої пісні у списку"
 
-#: audacious/mainwin.c:362
+#: audacious/mainwin.c:364
 msgid "/-"
 msgstr "/-"
 
-#: audacious/mainwin.c:363
+#: audacious/mainwin.c:365
 #, fuzzy
 msgid "/Set A-B"
 msgstr "Вибрати все"
 
-#: audacious/mainwin.c:365
+#: audacious/mainwin.c:367
 #, fuzzy
 msgid "/Clear A-B"
 msgstr "/Очистити чергу"
 
-#: audacious/mainwin.c:370
+#: audacious/mainwin.c:372
 msgid "/Jump to Time"
 msgstr "/Перейти до часу"
 
-#: audacious/mainwin.c:373
+#: audacious/mainwin.c:375
 #, fuzzy
 msgid "/New Playlist"
 msgstr "Зберегти список програвання"
 
-#: audacious/mainwin.c:375
+#: audacious/mainwin.c:377
 #, fuzzy
 msgid "/Select Next Playlist"
 msgstr "Вибір шрифту для списку програвання"
 
-#: audacious/mainwin.c:377
+#: audacious/mainwin.c:379
 #, fuzzy
 msgid "/Select Previous Playlist"
 msgstr "/Сортувати вибране/За назвою"
 
-#: audacious/mainwin.c:390
+#: audacious/mainwin.c:392
 msgid "/About Audacious"
 msgstr "/Про Audacious"
 
-#: audacious/mainwin.c:393
+#: audacious/mainwin.c:395
 msgid "/Play File"
 msgstr "/Програвати файли"
 
-#: audacious/mainwin.c:395
+#: audacious/mainwin.c:397
 msgid "/Play Location"
 msgstr "/Програвати знаходження"
 
-#: audacious/mainwin.c:398
+#: audacious/mainwin.c:400
 msgid "/V_isualization"
 msgstr "/Режим _візуалізації"
 
-#: audacious/mainwin.c:399
+#: audacious/mainwin.c:401
 msgid "/_Playback"
 msgstr "/_Програвання"
 
-#: audacious/mainwin.c:400
+#: audacious/mainwin.c:402
 msgid "/_View"
 msgstr "/Вигляд"
 
-#: audacious/mainwin.c:402
+#: audacious/mainwin.c:404
 msgid "/Preferences"
 msgstr "/Налаштування"
 
-#: audacious/mainwin.c:404
+#: audacious/mainwin.c:406
 msgid "/_Quit"
 msgstr "/_Вийти"
 
-#: audacious/mainwin.c:414
+#: audacious/mainwin.c:416
 msgid "/Files..."
 msgstr "/Додати Файли..."
 
-#: audacious/mainwin.c:416
+#: audacious/mainwin.c:418
 msgid "/Internet location..."
 msgstr "/Додати Адресу в інтернет..."
 
-#: audacious/mainwin.c:426
+#: audacious/mainwin.c:428
 #, fuzzy
 msgid "/Show Player"
 msgstr "/Показати редактор списку пісень"
 
-#: audacious/mainwin.c:428
+#: audacious/mainwin.c:430
 msgid "/Show Playlist Editor"
 msgstr "/Показати редактор списку пісень"
 
-#: audacious/mainwin.c:430
+#: audacious/mainwin.c:432
 msgid "/Show Equalizer"
 msgstr "/Еквалайзер"
 
-#: audacious/mainwin.c:433
+#: audacious/mainwin.c:435
 msgid "/Time Elapsed"
 msgstr "/Час від початку"
 
-#: audacious/mainwin.c:435
+#: audacious/mainwin.c:437
 msgid "/Time Remaining"
 msgstr "/Час, що залишився"
 
-#: audacious/mainwin.c:438
+#: audacious/mainwin.c:440
 msgid "/Always On Top"
 msgstr "/Завжди згори"
 
-#: audacious/mainwin.c:440
+#: audacious/mainwin.c:442
 msgid "/Put on All Workspaces"
 msgstr "/На всі стільниці"
 
-#: audacious/mainwin.c:445
+#: audacious/mainwin.c:447
 msgid "/Roll up Player"
 msgstr "/Згорнути програвач"
 
-#: audacious/mainwin.c:447
+#: audacious/mainwin.c:449
 msgid "/Roll up Playlist Editor"
 msgstr "/Згорнути редактор списку програвання"
 
-#: audacious/mainwin.c:449
+#: audacious/mainwin.c:451
 msgid "/Roll up Equalizer"
 msgstr "/Згорнути еквалайзер"
 
-#: audacious/mainwin.c:452
+#: audacious/mainwin.c:454
 msgid "/DoubleSize"
 msgstr ""
 
-#: audacious/mainwin.c:454
+#: audacious/mainwin.c:456
 msgid "/Easy Move"
 msgstr ""
 
-#: audacious/mainwin.c:883
+#: audacious/mainwin.c:897
 #, c-format
 msgid "%s - Audacious"
 msgstr ""
 
-#: audacious/mainwin.c:1108
+#: audacious/mainwin.c:1122
 msgid "VBR"
 msgstr "VBR"
 
-#: audacious/mainwin.c:1149 audacious/mainwin.c:1153
+#: audacious/mainwin.c:1163 audacious/mainwin.c:1167
 #, fuzzy
 msgid "stereo"
 msgstr "Стерео"
 
-#: audacious/mainwin.c:1149 audacious/mainwin.c:1153
+#: audacious/mainwin.c:1163 audacious/mainwin.c:1167
 #, fuzzy
 msgid "mono"
 msgstr "Моно"
 
-#: audacious/mainwin.c:1642
+#: audacious/mainwin.c:1656
 msgid "Jump to Time"
 msgstr "Перейти до часу"
 
-#: audacious/mainwin.c:1663
+#: audacious/mainwin.c:1677
 msgid "minutes:seconds"
 msgstr "хвилин:секунд"
 
-#: audacious/mainwin.c:1673
+#: audacious/mainwin.c:1687
 msgid "Track length:"
 msgstr "Довжина доріжки:"
 
-#: audacious/mainwin.c:1761
+#: audacious/mainwin.c:1772
 msgid "Un_queue"
 msgstr "В_илучити зі списку"
 
-#: audacious/mainwin.c:1763 audacious/mainwin.c:2140
+#: audacious/mainwin.c:1774 audacious/mainwin.c:2154
 msgid "_Queue"
 msgstr "_Додати до списку"
 
-#: audacious/mainwin.c:2065
+#: audacious/mainwin.c:2079
 msgid "Jump to Track"
 msgstr "Перейти до доріжки"
 
-#: audacious/mainwin.c:2106
+#: audacious/mainwin.c:2120
 msgid "Filter: "
 msgstr "Фільтр: "
 
-#: audacious/mainwin.c:2311
+#: audacious/mainwin.c:2325
 msgid "Enter location to play:"
 msgstr ""
 
-#: audacious/mainwin.c:2519
+#: audacious/mainwin.c:2533
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "ПЕРЕМОТАТИ НА: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2551 audacious/mainwin.c:3354
+#: audacious/mainwin.c:2565 audacious/mainwin.c:3369
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "ГУЧНІСТЬ: %d%%"
 
-#: audacious/mainwin.c:2582 audacious/mainwin.c:3357
+#: audacious/mainwin.c:2596 audacious/mainwin.c:3372
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "БАЛАНС: %d%% ЛІВОРУЧ"
 
-#: audacious/mainwin.c:2586 audacious/mainwin.c:3360
+#: audacious/mainwin.c:2600 audacious/mainwin.c:3375
 msgid "BALANCE: CENTER"
 msgstr "БАЛАНС: ЦЕНТР"
 
-#: audacious/mainwin.c:2590 audacious/mainwin.c:3362
+#: audacious/mainwin.c:2604 audacious/mainwin.c:3377
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "БАЛАНС: %d%% ПРАВОРУЧ"
 
-#: audacious/mainwin.c:3128
+#: audacious/mainwin.c:3143
 msgid "OPTIONS MENU"
 msgstr "МЕНЮ ОПЦІЙ"
 
-#: audacious/mainwin.c:3132
+#: audacious/mainwin.c:3147
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "ЗАБОРОНИТИ СПЛИВАННЯ НАГОРУ"
 
-#: audacious/mainwin.c:3134
+#: audacious/mainwin.c:3149
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "ДОЗВОЛИТИ СПЛИВАННЯ НАГОРУ "
 
-#: audacious/mainwin.c:3137
+#: audacious/mainwin.c:3152
 msgid "FILE INFO BOX"
 msgstr "ВІКНО ІНФОРМАЦІЇ ФАЙЛУ"
 
-#: audacious/mainwin.c:3141
+#: audacious/mainwin.c:3156
 msgid "DISABLE DOUBLESIZE"
 msgstr ""
 
-#: audacious/mainwin.c:3143
+#: audacious/mainwin.c:3158
 msgid "ENABLE DOUBLESIZE"
 msgstr ""
 
-#: audacious/mainwin.c:3146
+#: audacious/mainwin.c:3161
 msgid "VISUALIZATION MENU"
 msgstr "МЕНЮ ВІЗУАЛІЗАЦІЇ"
 
-#: audacious/mainwin.c:3194
+#: audacious/mainwin.c:3209
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -983,7 +971,7 @@ msgstr ""
 "\n"
 "Компакт-диск відсутній або не містить аудіодоріжок.\n"
 
-#: audacious/mainwin.c:3211
+#: audacious/mainwin.c:3226
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -1102,183 +1090,302 @@ msgstr ""
 msgid "Track Information Popup"
 msgstr ""
 
-#: audacious/ui_playlist.c:125
-msgid "/Show Popup Info"
+#: audacious/ui_playlist.c:136 audacious/ui_playlist.c:139
+#, fuzzy
+msgid "New List"
+msgstr "/Новий список"
+
+#: audacious/ui_playlist.c:137
+#, fuzzy
+msgid "Creates a new playlist."
+msgstr "Показувати номери пісень у списку програвання"
+
+#: audacious/ui_playlist.c:140
+#, fuzzy
+msgid "Loads a playlist file into the selected playlist."
 msgstr ""
+"Завантажувати інформацію про пісню та виконавця при відображенні файлу в "
+"списку програвання"
 
-#: audacious/ui_playlist.c:131 audacious/ui_playlist.c:196
-msgid "/Remove Selected"
-msgstr "/Видалити вибране"
+#: audacious/ui_playlist.c:142
+#, fuzzy
+msgid "Save List"
+msgstr "/Новий список"
 
-#: audacious/ui_playlist.c:135 audacious/ui_playlist.c:192
-msgid "/Remove Unselected"
-msgstr "/Видалити НЕ вибране"
-
-#: audacious/ui_playlist.c:139 audacious/ui_playlist.c:188
-msgid "/Remove All"
-msgstr "/Видалити все"
+#: audacious/ui_playlist.c:143
+#, fuzzy
+msgid "Saves the selected playlist."
+msgstr "Вибір шрифту для списку програвання"
 
 #: audacious/ui_playlist.c:145
-msgid "/Queue Toggle"
-msgstr "/Поставити пісню в чергу"
-
-#: audacious/ui_playlist.c:151
-msgid "/Add CD..."
-msgstr "/Додати CD..."
-
-#: audacious/ui_playlist.c:155
-msgid "/Add Internet Address..."
-msgstr "/Додати адресу інтернет..."
-
-#: audacious/ui_playlist.c:159
-msgid "/Add Files..."
-msgstr "/Додати файли..."
-
-#: audacious/ui_playlist.c:165
-msgid "/Clear Queue"
-msgstr "/Очистити чергу"
-
-#: audacious/ui_playlist.c:171
-msgid "/Remove Unavailable Files"
-msgstr "/Видалити недоступні файли"
-
-#: audacious/ui_playlist.c:175
 #, fuzzy
-msgid "/Remove Duplicates"
-msgstr "/Видалити вибране"
-
-#: audacious/ui_playlist.c:176
-#, fuzzy
-msgid "/Remove Duplicates/By Title"
-msgstr "/Сортувати список/За назвою"
-
-#: audacious/ui_playlist.c:179
-#, fuzzy
-msgid "/Remove Duplicates/By Filename"
-msgstr "/Сортувати список/За іменем файлу"
-
-#: audacious/ui_playlist.c:182
-#, fuzzy
-msgid "/Remove Duplicates/By Path + Filename"
-msgstr "/Сортувати список/За шляхом й іменем файлу"
-
-#: audacious/ui_playlist.c:202
-msgid "/New List"
-msgstr "/Новий список"
-
-#: audacious/ui_playlist.c:208
-msgid "/Load List"
-msgstr "/Сортувати список"
-
-#: audacious/ui_playlist.c:212
-msgid "/Save List"
-msgstr "/Новий список"
-
-#: audacious/ui_playlist.c:216
-#, fuzzy
-msgid "/Save Default List"
+msgid "Save Default List"
 msgstr "/Зберегти/Стандартні "
 
-#: audacious/ui_playlist.c:222
-msgid "/Update View"
-msgstr "/Обновити видимий список"
+#: audacious/ui_playlist.c:146
+msgid "Saves the selected playlist to the default location."
+msgstr ""
+
+#: audacious/ui_playlist.c:149
+#, fuzzy
+msgid "Refresh List"
+msgstr "/Частота поновлення"
+
+#: audacious/ui_playlist.c:150
+msgid "Refreshes metadata associated with a playlist entry."
+msgstr ""
+
+#: audacious/ui_playlist.c:155
+#, fuzzy
+msgid "Search and Select"
+msgstr "/Сортувати вибране"
+
+#: audacious/ui_playlist.c:156
+msgid ""
+"Searches the playlist and selects playlist entries based on specific "
+"criteria."
+msgstr ""
+
+#: audacious/ui_playlist.c:159
+#, fuzzy
+msgid "Invert Selection"
+msgstr "/Інвертувати вибране"
+
+#: audacious/ui_playlist.c:160
+msgid "Inverts the selected and unselected entries."
+msgstr ""
+
+#: audacious/ui_playlist.c:163 audacious/glade/addfiles.glade:105
+msgid "Select All"
+msgstr "Вибрати все"
+
+#: audacious/ui_playlist.c:164
+msgid "Selects all of the playlist entries."
+msgstr ""
+
+#: audacious/ui_playlist.c:167
+#, fuzzy
+msgid "Select None"
+msgstr "/Сортувати вибране"
+
+#: audacious/ui_playlist.c:168
+msgid "Deselects all of the playlist entries."
+msgstr ""
+
+#: audacious/ui_playlist.c:173
+#, fuzzy
+msgid "Clear Queue"
+msgstr "/Очистити чергу"
+
+#: audacious/ui_playlist.c:174
+msgid "Clears the queue associated with this playlist."
+msgstr ""
+
+#: audacious/ui_playlist.c:177
+#, fuzzy
+msgid "Remove Unavailable Files"
+msgstr "/Видалити недоступні файли"
+
+#: audacious/ui_playlist.c:178
+#, fuzzy
+msgid "Removes unavailable files from the playlist."
+msgstr "/Видалити недоступні файли"
+
+#: audacious/ui_playlist.c:181
+#, fuzzy
+msgid "Remove Duplicates"
+msgstr "/Видалити вибране"
+
+#: audacious/ui_playlist.c:183 audacious/ui_playlist.c:233
+#: audacious/ui_playlist.c:263
+#, fuzzy
+msgid "By Title"
+msgstr "Заголовок"
+
+#: audacious/ui_playlist.c:184
+msgid "Removes duplicate entries from the playlist by title."
+msgstr ""
+
+#: audacious/ui_playlist.c:187 audacious/ui_playlist.c:241
+#: audacious/ui_playlist.c:271
+#, fuzzy
+msgid "By Filename"
+msgstr "Ім'я файлу"
+
+#: audacious/ui_playlist.c:188
+#, fuzzy
+msgid "Removes duplicate entries from the playlist by filename."
+msgstr "/Сортувати список/За шляхом й іменем файлу"
+
+#: audacious/ui_playlist.c:191 audacious/ui_playlist.c:245
+#: audacious/ui_playlist.c:275
+#, fuzzy
+msgid "By Path + Filename"
+msgstr "/Сортувати список/За шляхом й іменем файлу"
+
+#: audacious/ui_playlist.c:192
+msgid "Removes duplicate entries from the playlist by their full path."
+msgstr ""
+
+#: audacious/ui_playlist.c:195
+#, fuzzy
+msgid "Remove All"
+msgstr "/Видалити все"
+
+#: audacious/ui_playlist.c:196
+msgid "Removes all entries from the playlist."
+msgstr ""
+
+#: audacious/ui_playlist.c:199
+#, fuzzy
+msgid "Remove Unselected"
+msgstr "/Видалити НЕ вибране"
+
+#: audacious/ui_playlist.c:200
+msgid "Remove unselected entries from the playlist."
+msgstr ""
+
+#: audacious/ui_playlist.c:203
+#, fuzzy
+msgid "Remove Selected"
+msgstr "/Видалити вибране"
+
+#: audacious/ui_playlist.c:204
+msgid "Remove selected entries from the playlist."
+msgstr ""
+
+#: audacious/ui_playlist.c:209
+#, fuzzy
+msgid "Add CD..."
+msgstr "/Додати CD..."
+
+#: audacious/ui_playlist.c:210
+#, fuzzy
+msgid "Adds a CD to the playlist."
+msgstr "Не очищати список програвання"
+
+#: audacious/ui_playlist.c:213
+#, fuzzy
+msgid "Add Internet Address..."
+msgstr "/Додати адресу інтернет..."
+
+#: audacious/ui_playlist.c:214
+msgid "Adds a remote track to the playlist."
+msgstr ""
+
+#: audacious/ui_playlist.c:217
+#, fuzzy
+msgid "Add Files..."
+msgstr "/Додати файли..."
+
+#: audacious/ui_playlist.c:218
+#, fuzzy
+msgid "Adds files to the playlist."
+msgstr "Не очищати список програвання"
+
+#: audacious/ui_playlist.c:223
+#, fuzzy
+msgid "Randomize List"
+msgstr "/Перемішати список"
+
+#: audacious/ui_playlist.c:224
+#, fuzzy
+msgid "Randomizes the playlist."
+msgstr "/Перемішати список"
+
+#: audacious/ui_playlist.c:227
+#, fuzzy
+msgid "Reverse List"
+msgstr "/Інвертувати список"
 
 #: audacious/ui_playlist.c:228
 #, fuzzy
-msgid "/Search and Select"
-msgstr "/Сортувати вибране"
+msgid "Reverses the playlist."
+msgstr "Не очищати список програвання"
 
-#: audacious/ui_playlist.c:234
-msgid "/Invert Selection"
-msgstr "/Інвертувати вибране"
-
-#: audacious/ui_playlist.c:240
-msgid "/Select None"
-msgstr "/Сортувати вибране"
-
-#: audacious/ui_playlist.c:244
-msgid "/Select All"
-msgstr "Вибрати все"
-
-#: audacious/ui_playlist.c:250
-msgid "/Randomize List"
-msgstr "/Перемішати список"
-
-#: audacious/ui_playlist.c:252
-msgid "/Reverse List"
-msgstr "/Інвертувати список"
-
-#: audacious/ui_playlist.c:255
-msgid "/Sort List"
+#: audacious/ui_playlist.c:231
+#, fuzzy
+msgid "Sort List"
 msgstr "/Сортувати список"
 
-#: audacious/ui_playlist.c:256
-msgid "/Sort List/By Title"
-msgstr "/Сортувати список/За назвою"
-
-#: audacious/ui_playlist.c:258
+#: audacious/ui_playlist.c:234 audacious/ui_playlist.c:264
 #, fuzzy
-msgid "/Sort List/By Artist"
+msgid "Sorts the list by title."
 msgstr "/Сортувати список/За назвою"
 
-#: audacious/ui_playlist.c:260
-msgid "/Sort List/By Filename"
+#: audacious/ui_playlist.c:237 audacious/ui_playlist.c:267
+#, fuzzy
+msgid "By Artist"
+msgstr "Виконавець"
+
+#: audacious/ui_playlist.c:238 audacious/ui_playlist.c:268
+#, fuzzy
+msgid "Sorts the list by artist."
+msgstr "/Сортувати список/За назвою"
+
+#: audacious/ui_playlist.c:242 audacious/ui_playlist.c:272
+#, fuzzy
+msgid "Sorts the list by filename."
 msgstr "/Сортувати список/За іменем файлу"
 
-#: audacious/ui_playlist.c:262
-msgid "/Sort List/By Path + Filename"
-msgstr "/Сортувати список/За шляхом й іменем файлу"
+#: audacious/ui_playlist.c:246 audacious/ui_playlist.c:276
+msgid "Sorts the list by full pathname."
+msgstr ""
 
-#: audacious/ui_playlist.c:264
-msgid "/Sort List/By Date"
+#: audacious/ui_playlist.c:249 audacious/ui_playlist.c:279
+#, fuzzy
+msgid "By Date"
+msgstr "Дата"
+
+#: audacious/ui_playlist.c:250 audacious/ui_playlist.c:280
+msgid "Sorts the list by modification time."
+msgstr ""
+
+#: audacious/ui_playlist.c:253 audacious/ui_playlist.c:283
+#, fuzzy
+msgid "By Track Number"
+msgstr "Номер доріжкии"
+
+#: audacious/ui_playlist.c:254 audacious/ui_playlist.c:284
+#, fuzzy
+msgid "Sorts the list by track number."
 msgstr "/Сортувати список/За датою"
 
-#: audacious/ui_playlist.c:266
+#: audacious/ui_playlist.c:257 audacious/ui_playlist.c:287
 #, fuzzy
-msgid "/Sort List/By Track Number"
-msgstr "/Сортувати список/За датою"
-
-#: audacious/ui_playlist.c:268
-#, fuzzy
-msgid "/Sort List/By Playlist Entry"
+msgid "By Playlist Entry"
 msgstr "/Сортувати список/За назвою"
 
-#: audacious/ui_playlist.c:270
-msgid "/Sort Selection"
+#: audacious/ui_playlist.c:258 audacious/ui_playlist.c:288
+#, fuzzy
+msgid "Sorts the list by playlist entry."
+msgstr "/Сортувати список/За назвою"
+
+#: audacious/ui_playlist.c:261
+#, fuzzy
+msgid "Sort Selected"
 msgstr "/Сортувати вибране"
 
-#: audacious/ui_playlist.c:271
-msgid "/Sort Selection/By Title"
-msgstr "/Сортувати вибране/За назвою"
-
-#: audacious/ui_playlist.c:273
+#: audacious/ui_playlist.c:293
 #, fuzzy
-msgid "/Sort Selection/By Artist"
-msgstr "/Сортувати вибране/За назвою"
+msgid "View Track Details"
+msgstr "/Інформація про пісню"
 
-#: audacious/ui_playlist.c:275
-msgid "/Sort Selection/By Filename"
-msgstr "/Сортувати вибране/За іменем файлу"
-
-#: audacious/ui_playlist.c:277
-msgid "/Sort Selection/By Path + Filename"
-msgstr "/Сортувати вибране/За шляхом й іменем файлу"
-
-#: audacious/ui_playlist.c:279
-msgid "/Sort Selection/By Date"
-msgstr "/Сортувати вибране/За датою"
-
-#: audacious/ui_playlist.c:281
+#: audacious/ui_playlist.c:294
 #, fuzzy
-msgid "/Sort Selection/By Track Number"
-msgstr "/Сортувати вибране/За датою"
+msgid "Displays track information."
+msgstr "Підсилення доріжок:"
 
-#: audacious/ui_playlist.c:283
+#: audacious/ui_playlist.c:297
 #, fuzzy
-msgid "/Sort Selection/By Playlist Entry"
-msgstr "/Сортувати вибране/За назвою"
+msgid "Queue Toggle"
+msgstr "/Поставити пісню в чергу"
 
-#: audacious/ui_playlist.c:682
+#: audacious/ui_playlist.c:298
+msgid "Enables/disables the entry in the playlist's queue."
+msgstr ""
+
+#: audacious/ui_playlist.c:722
 msgid ""
 "Select entries in playlist by filling one or more fields. Fields use regular "
 "expressions syntax, case-insensitive. If you don't know how regular "
@@ -1286,37 +1393,49 @@ msgid ""
 "for."
 msgstr ""
 
-#: audacious/ui_playlist.c:689
+#: audacious/ui_playlist.c:729
 #, fuzzy
 msgid "Track name: "
 msgstr "Назви доріжок:"
 
-#: audacious/ui_playlist.c:693
+#: audacious/ui_playlist.c:735
 #, fuzzy
 msgid "Album name: "
 msgstr "Альбом"
 
-#: audacious/ui_playlist.c:697
+#: audacious/ui_playlist.c:741
 #, fuzzy
 msgid "Artist: "
 msgstr "Виконавець:"
 
-#: audacious/ui_playlist.c:701
+#: audacious/ui_playlist.c:747
 #, fuzzy
 msgid "Filename: "
 msgstr "Ім'я файлу:"
 
-#: audacious/ui_playlist.c:951
+#: audacious/ui_playlist.c:754
+msgid "Clear previous selection before searching"
+msgstr ""
+
+#: audacious/ui_playlist.c:757
+msgid "Automatically toggle queue for matching entries"
+msgstr ""
+
+#: audacious/ui_playlist.c:760
+msgid "Create a new playlist with matching entries"
+msgstr ""
+
+#: audacious/ui_playlist.c:998
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "Помилка при записі списку програвання \"%s\": %s"
 
-#: audacious/ui_playlist.c:972
+#: audacious/ui_playlist.c:1019
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s вже існує. Продовжити?"
 
-#: audacious/ui_playlist.c:986
+#: audacious/ui_playlist.c:1033
 #, fuzzy, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -1326,15 +1445,15 @@ msgstr ""
 "<b><big>Не можу зберегти список програвання.</big></b>\n"
 "\n"
 
-#: audacious/ui_playlist.c:1139
+#: audacious/ui_playlist.c:1186
 msgid "Load Playlist"
 msgstr "Завантажии список програвання"
 
-#: audacious/ui_playlist.c:1152
+#: audacious/ui_playlist.c:1199
 msgid "Save Playlist"
 msgstr "Зберегти список програвання"
 
-#: audacious/ui_playlist.c:1889
+#: audacious/ui_playlist.c:1949
 msgid "Audacious Playlist Editor"
 msgstr "/Показати редактор списку пісень"
 
@@ -1372,7 +1491,7 @@ msgstr "/Завантажити/З файлу"
 msgid "  (invalid UTF-8)"
 msgstr "  (недопустима послідовність Юнікод)"
 
-#: audacious/playback.c:222
+#: audacious/playback.c:225
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1381,10 +1500,6 @@ msgstr ""
 #: audacious/glade/addfiles.glade:77
 msgid "Close Dialog on Add"
 msgstr "Закрити вікно після додавання"
-
-#: audacious/glade/addfiles.glade:105
-msgid "Select All"
-msgstr "Вибрати все"
 
 #: audacious/glade/addfiles.glade:116
 msgid "Deselect All"
@@ -1917,12 +2032,68 @@ msgstr "Номер доріжкии"
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: Відображати \"...\", коли елемент %n присутній"
 
-#~ msgid "Audacious Preferences"
-#~ msgstr "Налаштування Audacious"
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "Received SIGSEGV\n"
+#~ "\n"
+#~ "This could be a bug in Audacious. If you don't know why this happened, "
+#~ "file a bug at http://bugs-meta.atheme.org/\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Отрмано SIGSEGV\n"
+#~ "\n"
+#~ "Можливо, це помилка в Audacious. Якщо ви не знаєте, чому це сталось, "
+#~ "відправте повідомлення на at http://bugs.nenolod.net/\n"
+#~ "\n"
 
 #, fuzzy
-#~ msgid "Refresh skin list"
-#~ msgstr "/Частота поновлення"
+#~ msgid "/Remove Duplicates/By Title"
+#~ msgstr "/Сортувати список/За назвою"
+
+#, fuzzy
+#~ msgid "/Remove Duplicates/By Filename"
+#~ msgstr "/Сортувати список/За іменем файлу"
+
+#~ msgid "/Load List"
+#~ msgstr "/Сортувати список"
+
+#~ msgid "/Update View"
+#~ msgstr "/Обновити видимий список"
+
+#~ msgid "/Select All"
+#~ msgstr "Вибрати все"
+
+#~ msgid "/Sort List/By Date"
+#~ msgstr "/Сортувати список/За датою"
+
+#~ msgid "/Sort Selection/By Title"
+#~ msgstr "/Сортувати вибране/За назвою"
+
+#, fuzzy
+#~ msgid "/Sort Selection/By Artist"
+#~ msgstr "/Сортувати вибране/За назвою"
+
+#~ msgid "/Sort Selection/By Filename"
+#~ msgstr "/Сортувати вибране/За іменем файлу"
+
+#~ msgid "/Sort Selection/By Path + Filename"
+#~ msgstr "/Сортувати вибране/За шляхом й іменем файлу"
+
+#~ msgid "/Sort Selection/By Date"
+#~ msgstr "/Сортувати вибране/За датою"
+
+#, fuzzy
+#~ msgid "/Sort Selection/By Track Number"
+#~ msgstr "/Сортувати вибране/За датою"
+
+#, fuzzy
+#~ msgid "/Sort Selection/By Playlist Entry"
+#~ msgstr "/Сортувати вибране/За назвою"
+
+#~ msgid "Audacious Preferences"
+#~ msgstr "Налаштування Audacious"
 
 #~ msgid "Select main player window font:"
 #~ msgstr "Вибір шрифту для головного вікна"
@@ -1940,11 +2111,6 @@ msgstr "%{n:...%}: Відображати \"...\", коли елемент %n п
 #~ msgstr ""
 #~ "Завантажувати інформацію про пісню та виконавця при додаванні файлу в "
 #~ "список програвання або відкритті"
-
-#~ msgid "Load metadata on demand when displaying the file in the playlist"
-#~ msgstr ""
-#~ "Завантажувати інформацію про пісню та виконавця при відображенні файлу в "
-#~ "списку програвання"
 
 #~ msgid "Show information about titlestring format"
 #~ msgstr "Показати інформацію про рядок назви"
