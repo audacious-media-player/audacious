@@ -166,10 +166,11 @@ void
 bmp_playback_stop(void)
 {
     if (ip_data.playing && get_current_input_plugin()) {
-        ip_data.playing = FALSE;
 
         if (bmp_playback_get_paused())
             bmp_playback_pause();
+
+        ip_data.playing = FALSE; 
 
         if (get_current_input_plugin()->stop)
             get_current_input_plugin()->stop();
