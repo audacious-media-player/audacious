@@ -1,3 +1,12 @@
+2006-12-18 11:25:13 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3311]
+  - port playlist editor to XML interface description
+  
+  trunk/audacious/ui/playlist.ui |  133 ++---
+  trunk/audacious/ui_playlist.c  |  959 +++++++++++++++++++++++------------------
+  2 files changed, 606 insertions(+), 486 deletions(-)
+
+
 2006-12-17 19:48:12 +0000  Giacomo Lozito <james@develia.org>
   revision [3309]
   - jump to file: use G_TYPE_UINT to store the song number in the model
