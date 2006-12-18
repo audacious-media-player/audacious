@@ -426,6 +426,7 @@ playlist_delete_node(Playlist * playlist, GList * node, gboolean * set_info_text
     }
 
     playlist->shuffle = g_list_remove(playlist->shuffle, entry);
+    playlist->queue = g_list_remove(playlist->queue, entry);
     playlist->entries = g_list_remove_link(playlist->entries, node);
     playlist_entry_free(entry);
     g_list_free_1(node);
