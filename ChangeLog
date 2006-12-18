@@ -1,3 +1,11 @@
+2006-12-18 12:13:20 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3319]
+  - fix XML description of the playlist editor (unbreak menus)
+  
+  trunk/audacious/ui/playlist.ui |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-12-18 11:59:55 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3317]
   - new signal handling which does not block (based on concept from BMP 0.9.8 that never got released)
