@@ -105,7 +105,7 @@ shade_pixmap(GdkPixmap *in, gint x, gint y, gint x_offset, gint y_offset, gint w
 	p = gdk_pixmap_new(in, w, h, -1);
 	gc = gdk_gc_new(p);
 
-        gdk_draw_pixmap(p, gc, in, x, y, 0, 0, w, h);
+        gdk_draw_drawable(p, gc, in, x, y, 0, 0, w, h);
 
 	gdk_error_trap_push();
 
@@ -580,7 +580,7 @@ playlist_list_draw(Widget * w)
 	if (!rootpix)
            rootpix = shade_pixmap(get_transparency_pixmap(), 0, 0, 0, 0, gdk_screen_width(), gdk_screen_height(), 
     			    skin_get_color(bmp_active_skin, SKIN_PLEDIT_NORMALBG));
-        gdk_draw_pixmap(obj, gc, rootpix, cfg.playlist_x + pl->pl_widget.x,
+        gdk_draw_drawable(obj, gc, rootpix, cfg.playlist_x + pl->pl_widget.x,
                     cfg.playlist_y + pl->pl_widget.y, pl->pl_widget.x, pl->pl_widget.y,
                     width, height);
     }

@@ -1605,8 +1605,8 @@ skin_draw_pixmap(Skin * skin, GdkDrawable * drawable, GdkGC * gc,
 
     width = MIN(width, pixmap->width - xsrc);
     height = MIN(height, pixmap->height - ysrc);
-    gdk_draw_pixmap(drawable, gc, pixmap->pixmap, xsrc, ysrc,
-                    xdest, ydest, width, height);
+    gdk_draw_drawable(drawable, gc, pixmap->pixmap, xsrc, ysrc,
+                      xdest, ydest, width, height);
 }
 
 void

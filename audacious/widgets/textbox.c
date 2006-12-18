@@ -59,13 +59,13 @@ textbox_draw(Widget * w)
         cw = tb->tb_pixmap_width - tb->tb_offset;
         if (cw > tb->tb_widget.width)
             cw = tb->tb_widget.width;
-        gdk_draw_pixmap(obj, tb->tb_widget.gc, src, tb->tb_offset, 0,
-                        tb->tb_widget.x, tb->tb_widget.y, cw,
-                        tb->tb_widget.height);
+        gdk_draw_drawable(obj, tb->tb_widget.gc, src, tb->tb_offset, 0,
+                          tb->tb_widget.x, tb->tb_widget.y, cw,
+                          tb->tb_widget.height);
         if (cw < tb->tb_widget.width)
-            gdk_draw_pixmap(obj, tb->tb_widget.gc, src, 0, 0,
-                            tb->tb_widget.x + cw, tb->tb_widget.y,
-                            tb->tb_widget.width - cw, tb->tb_widget.height);
+            gdk_draw_drawable(obj, tb->tb_widget.gc, src, 0, 0,
+                              tb->tb_widget.x + cw, tb->tb_widget.y,
+                              tb->tb_widget.width - cw, tb->tb_widget.height);
     }
 }
 
