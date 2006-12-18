@@ -1,3 +1,10 @@
+2006-12-17 19:48:12 +0000  Giacomo Lozito <james@develia.org>
+  revision [3309]
+  - jump to file: use G_TYPE_UINT to store the song number in the model
+  trunk/audacious/mainwin.c |   48 +++++++++++++++-------------------------------
+  1 file changed, 16 insertions(+), 32 deletions(-)
+
+
 2006-12-17 18:35:49 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3307]
   - ui/Makefile was missing.
