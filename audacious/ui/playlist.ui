@@ -8,7 +8,7 @@
 		<menuitem action="remove selected" />
 		<menuitem action="remove unselected" />
 		<menuitem action="remove all" />
-		<seperator />
+		<separator />
 		<menuitem action="queue toggle" />
 	</menu>
 

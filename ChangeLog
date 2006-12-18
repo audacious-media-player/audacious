@@ -1,3 +1,14 @@
+2006-12-18 11:59:55 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3317]
+  - new signal handling which does not block (based on concept from BMP 0.9.8 that never got released)
+  
+  trunk/audacious/Makefile  |    3 -
+  trunk/audacious/main.c    |   34 -------------
+  trunk/audacious/signals.c |  118 ++++++++++++++++++++++++++++++++++++++++++++++
+  trunk/audacious/signals.h |   28 ++++++++++
+  4 files changed, 150 insertions(+), 33 deletions(-)
+
+
 2006-12-18 11:34:52 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [3315]
   - fix the logic of bmp_playback_stop(). now JTF works well even if the playing is paused.
