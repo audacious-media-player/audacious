@@ -34,6 +34,8 @@ static const gfloat vis_pfalloff_speeds[] = { 1.2, 1.3, 1.4, 1.5, 1.6 };
 static const gint vis_redraw_delays[] = { 1, 2, 4, 8 };
 static const guint8 vis_scope_colors[] =
     { 21, 21, 20, 20, 19, 19, 18, 19, 19, 20, 20, 21, 21 };
+static guint8 vs_data_ext[1216];
+
 
 void
 vis_timeout_func(Vis * vis, guchar * data)
@@ -41,7 +43,7 @@ vis_timeout_func(Vis * vis, guchar * data)
     static GTimer *timer = NULL;
     gulong micros = 9999999;
     gboolean falloff = FALSE;
-    gint i;
+    gint i, n;
 
     if (!timer) {
         timer = g_timer_new();
@@ -95,6 +97,13 @@ vis_timeout_func(Vis * vis, guchar * data)
                 }
             }
         }
+    }
+    else if (cfg.vis_type == VIS_VOICEPRINT && data){
+      for(i = 0; i < 16; i++)
+	{
+	  vis->vs_data[i] = data[16 - i] >> 5 > 16 ? 16 : data[16-i] >> 5;
+       
+	}
     }
     else if (data) {
         for (i = 0; i < 75; i++)
@@ -176,6 +185,21 @@ vis_draw(Widget * w)
                 }
             }
         }
+	else if (cfg.vis_type == VIS_VOICEPRINT) {
+	  for (y = 0; y < 16; y ++) {
+
+            for (x = 74; x > 0; x--)
+	      {
+		vs_data_ext[x + (y * 76)] = vs_data_ext[x-1+(y*76)];
+	      }
+	      } 
+	  for(y=0;y<16;y++){
+	    vs_data_ext[y * 76] = vis->vs_data[y];
+	  }
+	  
+	  memcpy(rgb_data, vs_data_ext,1216);
+	  
+	}
         else if (cfg.vis_type == VIS_SCOPE) {
             for (x = 0; x < 75; x++) {
                 switch (cfg.scope_mode) {
@@ -313,6 +337,20 @@ vis_draw(Widget * w)
                 }
             }
         }
+	else if (cfg.vis_type == VIS_VOICEPRINT) {
+	  for (y = 0; y < 16; y ++) {
+            for (x = 74; x > 0; x--)
+	      {
+		vs_data_ext[x + (y * 76)] = vs_data_ext[x-1+(y*76)];
+		rgb_data[(x << 1)+ y * 304] = vs_data_ext[x-1+(y*76)];
+	      }
+	  } 
+	  for(y=0;y<16;y++){
+	    vs_data_ext[y * 76] = vis->vs_data[y];
+	  }
+	  //	  memcpy(rgb_data, vs_data_ext,1216);
+	  
+	}
         else if (cfg.vis_type == VIS_SCOPE) {
             for (x = 0; x < 75; x++) {
                 switch (cfg.scope_mode) {

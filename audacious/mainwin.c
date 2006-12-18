@@ -125,7 +125,7 @@ enum {
 };
 
 enum {
-    MAINWIN_VIS_ANALYZER, MAINWIN_VIS_SCOPE, MAINWIN_VIS_OFF,
+    MAINWIN_VIS_ANALYZER, MAINWIN_VIS_SCOPE, MAINWIN_VIS_VOICEPRINT, MAINWIN_VIS_OFF,
     MAINWIN_VIS_ANALYZER_NORMAL, MAINWIN_VIS_ANALYZER_FIRE,
     MAINWIN_VIS_ANALYZER_VLINES,
     MAINWIN_VIS_ANALYZER_LINES, MAINWIN_VIS_ANALYZER_BARS,
@@ -266,6 +266,8 @@ GtkItemFactoryEntry mainwin_vis_menu_entries[] = {
      MAINWIN_VIS_ANALYZER, "<RadioItem>", NULL},
     {N_("/Visualization Mode/Scope"), NULL, mainwin_vis_menu_callback,
      MAINWIN_VIS_SCOPE, "/Visualization Mode/Analyzer", NULL},
+    {N_("/Visualization Mode/Voiceprint"), NULL, mainwin_vis_menu_callback,
+     MAINWIN_VIS_VOICEPRINT, "/Visualization Mode/Analyzer", NULL},
     {N_("/Visualization Mode/Off"), NULL, mainwin_vis_menu_callback,
      MAINWIN_VIS_OFF, "/Visualization Mode/Analyzer", NULL},
     {N_("/Analyzer Mode"), NULL, NULL, 0, "<Branch>", NULL},
@@ -2958,6 +2960,7 @@ mainwin_vis_menu_callback(gpointer data,
     switch (action) {
     case MAINWIN_VIS_ANALYZER:
     case MAINWIN_VIS_SCOPE:
+    case MAINWIN_VIS_VOICEPRINT:
     case MAINWIN_VIS_OFF:
         mainwin_vis_set_type_menu_cb(action - MAINWIN_VIS_ANALYZER);
         break;

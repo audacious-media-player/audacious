@@ -32,7 +32,7 @@
 #include "widget.h"
 
 typedef enum {
-    VIS_ANALYZER, VIS_SCOPE, VIS_OFF
+    VIS_ANALYZER, VIS_SCOPE, VIS_VOICEPRINT, VIS_OFF
 } VisType;
 
 typedef enum {
@@ -68,6 +68,7 @@ struct _Vis {
     gint vs_refresh_delay;
     gboolean vs_doublesize;
 };
+
 
 typedef struct _Vis Vis;
 

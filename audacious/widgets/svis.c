@@ -148,6 +148,9 @@ svis_draw(Widget * w)
                 break;
             }
         }
+	else if (cfg.vis_type == VIS_VOICEPRINT){
+	  
+	}
         else if (cfg.vis_type == VIS_SCOPE) {
             for (x = 0; x < 38; x++) {
                 h = svis->vs_data[x << 1] / 3;
