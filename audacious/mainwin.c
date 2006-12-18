@@ -717,6 +717,8 @@ mainwin_quit_cb(void)
 
     ctrlsocket_cleanup();
 
+    plugin_system_cleanup();
+
     playlist_stop_get_info_thread();
 
     /* free and clear each playlist */
@@ -729,8 +731,6 @@ mainwin_quit_cb(void)
         playlists = g_list_next(playlists);
     }
     g_list_free( playlists_top );
-
-    plugin_system_cleanup();
 
     gtk_main_quit();
 

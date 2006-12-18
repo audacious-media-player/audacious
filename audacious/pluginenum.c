@@ -392,7 +392,7 @@ plugin_system_cleanup(void)
         if (ip && ip->cleanup) {
             ip->cleanup();
             GDK_THREADS_LEAVE();
-            while (g_main_iteration(FALSE));
+            while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
         g_module_close(ip->handle);
@@ -406,7 +406,7 @@ plugin_system_cleanup(void)
         if (op && op->cleanup) {
             op->cleanup();
             GDK_THREADS_LEAVE();
-            while (g_main_iteration(FALSE));
+            while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
         g_module_close(op->handle);
@@ -420,7 +420,7 @@ plugin_system_cleanup(void)
         if (ep && ep->cleanup) {
             ep->cleanup();
             GDK_THREADS_LEAVE();
-            while (g_main_iteration(FALSE));
+            while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
         g_module_close(ep->handle);
@@ -439,7 +439,7 @@ plugin_system_cleanup(void)
         g_list_free(gp_data.enabled_list);
 
     GDK_THREADS_LEAVE();
-    while (g_main_iteration(FALSE));
+    while (g_main_context_iteration(NULL, FALSE));
     GDK_THREADS_ENTER();
 #endif
 
@@ -448,7 +448,7 @@ plugin_system_cleanup(void)
         if (gp && gp->cleanup) {
             gp->cleanup();
             GDK_THREADS_LEAVE();
-            while (g_main_iteration(FALSE));
+            while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
         g_module_close(gp->handle);
@@ -467,7 +467,7 @@ plugin_system_cleanup(void)
         g_list_free(vp_data.enabled_list);
 
     GDK_THREADS_LEAVE();
-    while (g_main_iteration(FALSE));
+    while (g_main_context_iteration(NULL, FALSE));
     GDK_THREADS_ENTER();
 #endif
 
@@ -476,7 +476,7 @@ plugin_system_cleanup(void)
         if (vp && vp->cleanup) {
             vp->cleanup();
             GDK_THREADS_LEAVE();
-            while (g_main_iteration(FALSE));
+            while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
         g_module_close(vp->handle);
@@ -490,7 +490,7 @@ plugin_system_cleanup(void)
         if (lp && lp->cleanup) {
             lp->cleanup();
             GDK_THREADS_LEAVE();
-            while (g_main_iteration(FALSE));
+            while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
         g_module_close(lp->handle);
