@@ -416,7 +416,7 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
 	calc_mono_freq(mono_freq, pcm_data, nch);
       for(i = 0; i < 16 ; i++)
 	{
-	  intern_vis_data[i] = mono_freq[0][i << 4];
+	  intern_vis_data[i] = mono_freq[0][i << 2] >> 2;
 	}
     }
     else { /* (cfg.vis_type == VIS_SCOPE) */

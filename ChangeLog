@@ -1,3 +1,13 @@
+2006-12-18 18:09:07 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3335]
+  - gtk_timeout_add -> g_timeout_add
+  - gtk_timeout_remove -> g_source_remove
+  
+  trunk/audacious/widgets/playlist_list.c |    4 ++--
+  trunk/audacious/widgets/textbox.c       |    8 ++++----
+  2 files changed, 6 insertions(+), 6 deletions(-)
+
+
 2006-12-18 18:04:29 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3333]
   - fix the positioning of an assertion to a place where it would actually 
