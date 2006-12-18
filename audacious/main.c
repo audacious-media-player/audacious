@@ -71,6 +71,7 @@
 #include "visualization.h"
 #include "build_stamp.h"
 #include "ui_fileinfo.h"
+#include "signals.h"
 
 #include "pixmaps.h"
 #include "images/audacious_player.xpm"
@@ -970,26 +971,6 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
 }
 
 static void
-segfault_handler(gint sig)
-{
-    g_printerr(_("\nReceived SIGSEGV\n\n"
-                 "This could be a bug in Audacious. If you don't know why this happened, "
-                 "file a bug at http://bugs-meta.atheme.org/\n\n"));
-#ifdef HANDLE_SIGSEGV
-    exit(EXIT_FAILURE);
-#else
-    abort();
-#endif
-}
-
-/* Handles SIGINT/SIGTERM events gracefully. */
-static void
-sigterm_handler(gint sig)
-{
-    mainwin_quit_cb();
-}
-
-static void
 bmp_setup_logger(void)
 {
     if (!bmp_logger_start(bmp_paths[BMP_PATH_LOG_FILE]))
@@ -1093,18 +1074,7 @@ main(gint argc, gchar ** argv)
     if (options.no_log == FALSE)
         bmp_setup_logger();
 
-    signal(SIGPIPE, SIG_IGN);   /* for controlsocket.c */
-    signal(SIGINT,  sigterm_handler);
-    signal(SIGTERM, sigterm_handler);
-
-    /* in particular environment (maybe with glibc 2.5), core file
-       through signal handler doesn't contain useful back trace. */
-    {
-        char *magic;
-        magic = getenv("AUD_ENSURE_BACKTRACE");
-        if(magic == NULL)
-            signal(SIGSEGV, segfault_handler);
-    }
+    signal_handlers_init();
 
     g_random_set_seed(time(NULL));
 

@@ -72,7 +72,8 @@ SOURCES = \
 	getopt.c getopt1.c \
 	iir.c \
 	iir_cfs.c \
-	iir_fpu.c
+	iir_fpu.c \
+	signals.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
