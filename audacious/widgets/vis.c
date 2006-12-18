@@ -101,8 +101,7 @@ vis_timeout_func(Vis * vis, guchar * data)
     else if (cfg.vis_type == VIS_VOICEPRINT && data){
       for(i = 0; i < 16; i++)
 	{
-	  vis->vs_data[i] = data[15 - i] >> 5 > 16 ? 16 : data[15-i] >> 5;
-       
+	  vis->vs_data[i] = data[15 - i] > 23 ? 23 : data[15-i];
 	}
     }
     else if (data) {
