@@ -1,3 +1,13 @@
+2006-12-18 17:43:42 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3329]
+  - remove deprecated symbol warnings for gdk_draw_pixmap
+  
+  trunk/audacious/widgets/playlist_list.c |    4 ++--
+  trunk/audacious/widgets/skin.c          |    4 ++--
+  trunk/audacious/widgets/textbox.c       |   12 ++++++------
+  3 files changed, 10 insertions(+), 10 deletions(-)
+
+
 2006-12-18 16:44:33 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3327]
   - patch to add a scrolling voiceprint to the mini visualizer.

@@ -356,8 +356,8 @@ draw_equalizer_window(gboolean force)
                 img2 = create_dblsize_image(img);
                 gdk_draw_image(equalizerwin_bg_x2, equalizerwin_gc,
                                img2, 0, 0, 0, 0, 550, 232);
-                gdk_image_destroy(img2);
-                gdk_image_destroy(img);
+                g_object_unref(img2);
+                g_object_unref(img);
             }
             else {
                 for (wl = equalizerwin_wlist; wl; wl = g_list_next(wl)) {
@@ -371,8 +371,8 @@ draw_equalizer_window(gboolean force)
                                        equalizerwin_gc, img2, 0, 0,
                                        w->x << 1, w->y << 1, w->width << 1,
                                        w->height << 1);
-                        gdk_image_destroy(img2);
-                        gdk_image_destroy(img);
+                        g_object_unref(img2);
+                        g_object_unref(img);
                         w->redraw = FALSE;
                     }
                 }

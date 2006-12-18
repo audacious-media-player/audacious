@@ -791,8 +791,8 @@ draw_main_window(gboolean force)
                                0, 0, bmp_active_skin->properties.mainwin_width * 2,
                                cfg.player_shaded ? MAINWIN_SHADED_HEIGHT *
                                2 : bmp_active_skin->properties.mainwin_height * 2);
-                gdk_image_destroy(img2x);
-                gdk_image_destroy(img);
+                g_object_unref(img2x);
+                g_object_unref(img);
             }
 
             gdk_window_clear(mainwin->window);
@@ -821,8 +821,8 @@ draw_main_window(gboolean force)
                     gdk_draw_image(mainwin_bg_x2, mainwin_gc,
                                    img2x, 0, 0, w->x << 1, w->y << 1,
                                    width << 1, height << 1);
-                    gdk_image_destroy(img2x);
-                    gdk_image_destroy(img);
+                    g_object_unref(img2x);
+                    g_object_unref(img);
                     gdk_window_clear_area(mainwin->window, w->x << 1,
                                           w->y << 1, width << 1,
                                           height << 1);
@@ -2775,7 +2775,7 @@ mainwin_real_hide(void)
         pattern.pixel = 0;
         gdk_gc_set_foreground(gc, &pattern);
         gdk_draw_rectangle(nullmask, gc, TRUE, 0, 0, 20, 20);
-        gdk_gc_destroy(gc);
+        g_object_unref(gc);
         gtk_widget_shape_combine_mask(mainwin, nullmask, 0, 0);
 
         gdk_window_set_hints(mainwin->window, 0, 0, 0, 0, 0, 0,

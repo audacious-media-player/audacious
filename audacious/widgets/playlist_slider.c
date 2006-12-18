@@ -57,7 +57,7 @@ playlistslider_draw(Widget * w)
                            ps->ps_back_image, 0, 0,
                            ps->ps_widget.x,
                            ps->ps_widget.y + ps->ps_prev_y, 8, 18);
-        gdk_image_destroy(ps->ps_back_image);
+        g_object_unref(ps->ps_back_image);
     }
 
     ps->ps_prev_y = y;

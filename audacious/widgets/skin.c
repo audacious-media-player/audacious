@@ -323,8 +323,8 @@ pixmap_new_from_file(const gchar * filename)
         return NULL;
     }
 
-    gdk_pixbuf_render_to_drawable(pixbuf, pixmap, mainwin_gc, 0, 0, 0, 0,
-                                  width, height, GDK_RGB_DITHER_MAX, 0, 0);
+    gdk_draw_pixbuf(pixmap, mainwin_gc, pixbuf, 0, 0, 0, 0, width, height,
+		    GDK_RGB_DITHER_MAX, 0, 0);
     g_object_unref(pixbuf);
 
     return pixmap;
@@ -436,7 +436,7 @@ create_default_mask(GdkWindow * parent, gint w, gint h)
     pattern.pixel = 1;
     gdk_gc_set_foreground(gc, &pattern);
     gdk_draw_rectangle(ret, gc, TRUE, 0, 0, w, h);
-    gdk_gc_destroy(gc);
+    g_object_unref(gc);
 
     return ret;
 }
@@ -503,7 +503,7 @@ skin_get_textcolors(GdkPixmap * text, GdkColor * bgc, GdkColor * fgc)
             }
         }
     }
-    gdk_image_destroy(gi);
+    g_object_unref(gi);
 }
 
 gboolean
@@ -1274,7 +1274,7 @@ skin_create_transparent_mask(const gchar * path,
     if (!created_mask)
         gdk_draw_rectangle(mask, gc, TRUE, 0, 0, width, height);
 
-    gdk_gc_destroy(gc);
+    g_object_unref(gc);
 
     return mask;
 }
@@ -1635,7 +1635,7 @@ skin_get_eq_spline_colors(Skin * skin, guint32 colors[19])
     for (i = 0; i < 19; i++)
         colors[i] = gdk_image_get_pixel(img, 0, i);
 
-    gdk_image_destroy(img);
+    g_object_unref(img);
 }
 
 

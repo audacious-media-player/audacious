@@ -502,7 +502,7 @@ playlistwin_set_mask(void)
     gdk_gc_set_foreground(gc, &pattern);
     gdk_draw_rectangle(playlistwin_mask, gc, TRUE, 0, 0,
                        playlistwin_get_width(), playlistwin_get_height());
-    gdk_gc_destroy(gc);
+    g_object_unref(gc);
 
     gtk_widget_shape_combine_mask(playlistwin, playlistwin_mask, 0, 0);
 }
