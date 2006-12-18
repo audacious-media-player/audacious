@@ -189,6 +189,46 @@ AC_SUBST(USE_CHARDET)
 AC_SUBST(CHARDET_LIBS)
 AC_SUBST(SUBDIR_GUESS)
 
+dnl regex support (gnu/oniguruma/pcre)
+dnl ========================
+REGEX_LIBS=
+REGEX_CFLAGS=
+AC_ARG_WITH(regexlib,
+[
+  --with-regexlib[[=gnu/oniguruma/pcre]]   use the chosen regex library (default: gnu)
+],
+[case "${withval}" in
+  gnu)
+    AC_DEFINE(USE_REGEX_GNU,[1],[If this macro is defined, use GNU regex library.])
+    ;;
+  pcre)
+    PKG_CHECK_MODULES(LIBPCRE, [libpcre >= 6.7],
+        [
+          AC_DEFINE(USE_REGEX_PCRE,[1],[If this macro is defined, use PCRE regex library.])
+          REGEX_LIBS="-lpcreposix $LIBPCRE_LIBS"
+          REGEX_CFLAGS=$LIBPCRE_CFLAGS
+        ],
+        [AC_MSG_ERROR([Cannot find PCRE])]
+    )
+    ;;
+  oniguruma)
+    AC_CHECK_LIB( onig , onig_new ,
+        [
+          AC_DEFINE(USE_REGEX_ONIGURUMA,[1],[If this macro is defined, use Oniguruma regex library.])
+          REGEX_LIBS=['-lonig']
+        ],
+        [AC_MSG_ERROR([Cannot find Oniguruma])]
+    )
+    ;;
+  *)
+    AC_DEFINE(USE_REGEX_GNU,[1],[If this macro is defined, use GNU regex library.])
+    ;;
+esac],AC_DEFINE(USE_REGEX_GNU,[1],[If this macro is defined, use GNU regex library.]))
+
+AC_SUBST(REGEX_LIBS)
+AC_SUBST(REGEX_CFLAGS)
+
+
 dnl GConf support
 
 AC_ARG_ENABLE( gconf,

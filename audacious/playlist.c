@@ -38,7 +38,14 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/errno.h>
-#include <regex.h>
+
+#if defined(USE_REGEX_ONIGURUMA)
+  #include <onigposix.h>
+#elif defined(USE_REGEX_PCRE)
+  #include <pcreposix.h>
+#else
+  #include <regex.h>
+#endif
 
 #include "input.h"
 #include "main.h"
@@ -2715,6 +2722,12 @@ playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
     gboolean is_first_search = TRUE;
     gint num_of_entries_found = 0;
 
+    #if defined(USE_REGEX_ONIGURUMA)
+    /* set encoding for Oniguruma regex to UTF-8 */
+    reg_set_encoding( REG_POSIX_ENCODING_UTF8 );
+    onig_set_default_syntax( ONIG_SYNTAX_POSIX_BASIC );
+    #endif
+
     PLAYLIST_LOCK(playlist->mutex);
 
     if ( tuple->track_name != NULL )
@@ -2722,7 +2735,11 @@ playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
         /* match by track_name */
         const gchar *regex_pattern = tuple->track_name;
         regex_t regex;
+    #if defined(USE_REGEX_PCRE)
+        if ( regcomp( &regex , regex_pattern , REG_NOSUB | REG_ICASE | REG_UTF8 ) == 0 )
+    #else
         if ( regcomp( &regex , regex_pattern , REG_NOSUB | REG_ICASE ) == 0 )
+    #endif
         {
             GList *tfound_list = NULL;
             if ( is_first_search == TRUE ) entry_list = playlist->entries;
@@ -2748,7 +2765,11 @@ playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
         /* match by album_name */
         const gchar *regex_pattern = tuple->album_name;
         regex_t regex;
+    #if defined(USE_REGEX_PCRE)
+        if ( regcomp( &regex , regex_pattern , REG_NOSUB | REG_ICASE | REG_UTF8 ) == 0 )
+    #else
         if ( regcomp( &regex , regex_pattern , REG_NOSUB | REG_ICASE ) == 0 )
+    #endif
         {
             GList *tfound_list = NULL;
             if ( is_first_search == TRUE ) entry_list = playlist->entries;
@@ -2774,7 +2795,11 @@ playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
         /* match by performer */
         const gchar *regex_pattern = tuple->performer;
         regex_t regex;
+    #if defined(USE_REGEX_PCRE)
+        if ( regcomp( &regex , regex_pattern , REG_NOSUB | REG_ICASE | REG_UTF8 ) == 0 )
+    #else
         if ( regcomp( &regex , regex_pattern , REG_NOSUB | REG_ICASE ) == 0 )
+    #endif
         {
             GList *tfound_list = NULL;
             if ( is_first_search == TRUE ) entry_list = playlist->entries;
@@ -2800,7 +2825,11 @@ playlist_select_search( Playlist *playlist , TitleInput *tuple , gint action )
         /* match by file_name */
         const gchar *regex_pattern = tuple->file_name;
         regex_t regex;
+    #if defined(USE_REGEX_PCRE)
+        if ( regcomp( &regex , regex_pattern , REG_NOSUB | REG_ICASE | REG_UTF8 ) == 0 )
+    #else
         if ( regcomp( &regex , regex_pattern , REG_NOSUB | REG_ICASE ) == 0 )
+    #endif
         {
             GList *tfound_list = NULL;
             if ( is_first_search == TRUE ) entry_list = playlist->entries;

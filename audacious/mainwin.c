@@ -42,7 +42,14 @@
 #include <X11/Xlib.h>
 
 #include <sys/types.h>
-#include <regex.h>
+
+#if defined(USE_REGEX_ONIGURUMA)
+  #include <onigposix.h>
+#elif defined(USE_REGEX_PCRE)
+  #include <pcreposix.h>
+#else
+  #include <regex.h>
+#endif
 
 #include "widgets/widgetcore.h"
 #include "mainwin.h"
@@ -1959,7 +1966,11 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
     while ( words[++i] != NULL )
     {
         regex_t *regex = g_malloc(sizeof(regex_t));
+    #if defined(USE_REGEX_PCRE)
+        if ( regcomp( regex , words[i] , REG_NOSUB | REG_ICASE | REG_UTF8 ) == 0 )
+    #else
         if ( regcomp( regex , words[i] , REG_NOSUB | REG_ICASE ) == 0 )
+    #endif
             regex_list = g_slist_append( regex_list , regex );
     }
 
@@ -2071,6 +2082,12 @@ mainwin_jump_to_file(void)
         gtk_window_present(GTK_WINDOW(mainwin_jtf));
         return;
     }
+
+    #if defined(USE_REGEX_ONIGURUMA)
+    /* set encoding for Oniguruma regex to UTF-8 */
+    reg_set_encoding( REG_POSIX_ENCODING_UTF8 );
+    onig_set_default_syntax( ONIG_SYNTAX_POSIX_BASIC );
+    #endif
 
     mainwin_jtf = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_type_hint(GTK_WINDOW(mainwin_jtf),

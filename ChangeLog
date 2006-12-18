@@ -1,3 +1,38 @@
+2006-12-18 19:59:00 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3339]
+  - run update-po
+  - update welsh translation: 408 translated messages, 33 untranslated messages.
+  
+  trunk/po/audacious.pot |  547 +++++-----
+  trunk/po/br.po         |  615 ++++++-----
+  trunk/po/cs.po         |  721 ++++++++-----
+  trunk/po/cy.po         | 2629 +++++++------------------------------------------
+  trunk/po/de.po         |  736 ++++++++-----
+  trunk/po/el.po         |  729 ++++++++-----
+  trunk/po/es.po         |  728 ++++++++-----
+  trunk/po/fi.po         |  758 ++++++++------
+  trunk/po/fr.po         |  718 ++++++++-----
+  trunk/po/hi.po         |  721 ++++++++-----
+  trunk/po/hu.po         |  728 ++++++++-----
+  trunk/po/it.po         |  724 ++++++++-----
+  trunk/po/ja.po         |  727 ++++++++-----
+  trunk/po/ka.po         |  719 ++++++++-----
+  trunk/po/ko.po         |  713 ++++++++-----
+  trunk/po/lt.po         |  723 ++++++++-----
+  trunk/po/mk.po         |  723 ++++++++-----
+  trunk/po/nl.po         |  731 ++++++++-----
+  trunk/po/pl.po         |  731 ++++++++-----
+  trunk/po/pt_BR.po      |  713 ++++++++-----
+  trunk/po/ro.po         |  688 +++++++-----
+  trunk/po/ru.po         |  723 ++++++++-----
+  trunk/po/sk.po         |  713 ++++++++-----
+  trunk/po/sv.po         |  718 ++++++++-----
+  trunk/po/uk.po         |  722 ++++++++-----
+  trunk/po/zh_CN.po      |  723 ++++++++-----
+  trunk/po/zh_TW.po      |  721 ++++++++-----
+  27 files changed, 11726 insertions(+), 9416 deletions(-)
+
+
 2006-12-18 18:57:11 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3337]
   - voiceprint fixes from Troels Bang Jensen.

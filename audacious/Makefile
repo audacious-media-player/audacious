@@ -16,6 +16,7 @@ LDADD = \
 	$(CHARDET_LIBS) \
 	$(GTK_LIBS)      \
 	$(LIBGLADE_LIBS) \
+	$(REGEX_LIBS)    \
 	./widgets/libwidgets.a
 
 CFLAGS += \
@@ -23,6 +24,7 @@ CFLAGS += \
 	$(LIBGLADE_CFLAGS) \
 	$(BEEP_DEFINES)    \
 	$(ARCH_DEFINES)    \
+	$(REGEX_CFLAGS)    \
 	-D_AUDACIOUS_CORE \
 	-I..    \
 	-I../intl
