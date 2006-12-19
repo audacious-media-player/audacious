@@ -150,7 +150,7 @@ textbox_should_scroll(TextBox * tb)
             return TRUE;
     }
 
-    if (g_utf8_strlen(tb->tb_text, -1) * 5 > tb->tb_widget.width)
+    if (g_utf8_strlen(tb->tb_text, -1) * bmp_active_skin->properties.textbox_bitmap_font_width > tb->tb_widget.width)
         return TRUE;
 
     return FALSE;
@@ -559,7 +559,7 @@ create_textbox(GList ** wlist, GdkPixmap * parent, GdkGC * gc,
     TextBox *tb;
 
     tb = g_new0(TextBox, 1);
-    widget_init(&tb->tb_widget, parent, gc, x, y, w, 6, 1);
+    widget_init(&tb->tb_widget, parent, gc, x, y, w, bmp_active_skin->properties.textbox_bitmap_font_height, 1);
     tb->tb_widget.button_press_cb = textbox_button_press;
     tb->tb_widget.button_release_cb = textbox_button_release;
     tb->tb_widget.motion_cb = textbox_motion;

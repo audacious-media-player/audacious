@@ -1,3 +1,11 @@
+2006-12-19 15:48:03 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3357]
+  - somewhat fix textboxBitmapFontWidth,Height hints
+  
+  trunk/audacious/widgets/textbox.c |    7 ++++---
+  1 file changed, 4 insertions(+), 3 deletions(-)
+
+
 2006-12-19 15:32:23 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3355]
   - fix skin.hints parsing for textbox
