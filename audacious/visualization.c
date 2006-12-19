@@ -417,11 +417,10 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
 	  
 	  /* Subsampling; 8 frequencies per sample*/
 	  for(i = 0; i < 256 ; i++)
-	    intern_vis_data[i] = (mono_freq[0][i] >> 9);
-	  
+	    intern_vis_data[i] = (mono_freq[0][i] >> 8);
 	  /* Nonlinear transfer function makes the tones stand out*/
-	  for(i = 0; i < 16 ; i++)
-	    intern_vis_data[i] = pow(2, intern_vis_data[i]);
+	  //for(i = 0; i < 16 ; i++)
+	  // intern_vis_data[i] = pow(1.2, intern_vis_data[i]);
 	}
     }
     else { /* (cfg.vis_type == VIS_SCOPE) */

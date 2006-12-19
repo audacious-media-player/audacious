@@ -1,3 +1,11 @@
+2006-12-19 16:26:05 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [3361]
+  - key bindings for Save List and Save Default List had been changed accidentally.
+  
+  trunk/audacious/ui_playlist.c |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2006-12-19 15:54:26 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3359]
   - fix all hardcoded values

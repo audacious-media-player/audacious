@@ -101,8 +101,8 @@ vis_timeout_func(Vis * vis, guchar * data)
     else if (cfg.vis_type == VIS_VOICEPRINT && data){
       for(i = 0; i < 16; i++)
 	{
-	  /*The color palette is in the range [2-23]. This makes sure we stay there.*/
-	  vis->vs_data[i] = data[15 - i] > 23 ? 23 : data[15-i] ^ 1;
+	  /*The color palette is in the range [0-17]. This makes sure we stay there.*/
+	  vis->vs_data[i] = data[15 - i] > 17 ? 17 : data[15-i];
 	}
     }
     else if (data) {
