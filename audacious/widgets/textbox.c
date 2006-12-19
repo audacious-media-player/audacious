@@ -446,7 +446,7 @@ textbox_generate_pixmap(TextBox * tb)
         return;
     }
 
-    tb->tb_pixmap_width = length * 5;
+    tb->tb_pixmap_width = length * bmp_active_skin->properties.textbox_bitmap_font_width;
     tb->tb_pixmap = gdk_pixmap_new(mainwin->window,
                                    tb->tb_pixmap_width, bmp_active_skin->properties.textbox_bitmap_font_height,
                                    gdk_rgb_get_visual()->depth);
@@ -461,7 +461,7 @@ textbox_generate_pixmap(TextBox * tb)
             y = 0;
         }
         else if (c >= '0' && c <= '9') {
-            x = 5 * (c - '0');
+            x = bmp_active_skin->properties.textbox_bitmap_font_width * (c - '0');
             y = bmp_active_skin->properties.textbox_bitmap_font_height;
         }
         else
@@ -469,7 +469,8 @@ textbox_generate_pixmap(TextBox * tb)
 
         skin_draw_pixmap(bmp_active_skin,
                          tb->tb_pixmap, gc, tb->tb_skin_index,
-                         x, y, i * 5, 0, 5, 6);
+                         x, y, i * bmp_active_skin->properties.textbox_bitmap_font_width, 0, bmp_active_skin->properties.textbox_bitmap_font_width, 
+			 bmp_active_skin->properties.textbox_bitmap_font_height);
     }
     g_free(pixmaptext);
 }
