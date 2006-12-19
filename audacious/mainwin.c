@@ -87,7 +87,7 @@ static GTimeVal cb_time; /* click delay for tristate is defined by TRISTATE_THRE
  */
 
 #define MAINWIN_VIS_MENU_VIS_MODE               1
-#define MAINWIN_VIS_MENU_NUM_VIS_MODE           3
+#define MAINWIN_VIS_MENU_NUM_VIS_MODE           4
 #define MAINWIN_VIS_MENU_ANALYZER_MODE          5
 #define MAINWIN_VIS_MENU_NUM_ANALYZER_MODE      3
 #define MAINWIN_VIS_MENU_ANALYZER_TYPE          9
