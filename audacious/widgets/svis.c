@@ -65,7 +65,7 @@ svis_timeout_func(SVis * svis, guchar * data)
 
     }
 
-    if (cfg.vis_type == INPUT_VIS_ANALYZER) {
+    if (cfg.vis_type == VIS_VOICEPRINT) {
         if (micros > 14000)
             falloff = TRUE;
 
@@ -120,36 +120,43 @@ svis_draw(Widget * w)
     if (!cfg.doublesize) {
         memset(rgb_data, 0, SVIS_WIDTH * SVIS_HEIGHT);
         if (cfg.vis_type == VIS_ANALYZER) {
-            switch (cfg.vu_mode) {
-            case VU_NORMAL:
-                for (y = 0; y < 2; y++) {
-                    ptr = rgb_data + ((y * 3) * 38);
-                    h = (svis->vs_data[y] * 7) / 37;
-                    for (x = 0; x < h; x++, ptr += 5) {
-                        c = svis_vu_normal_colors[x];
-                        *(ptr) = c;
-                        *(ptr + 1) = c;
-                        *(ptr + 2) = c;
-                        *(ptr + 38) = c;
-                        *(ptr + 39) = c;
-                        *(ptr + 40) = c;
-                    }
-                }
-                break;
-            case VU_SMOOTH:
-                for (y = 0; y < 2; y++) {
-                    ptr = rgb_data + ((y * 3) * SVIS_WIDTH);
-                    for (x = 0; x < svis->vs_data[y]; x++, ptr++) {
-                        c = 17 - ((x * 15) / 37);
-                        *(ptr) = c;
-                        *(ptr + 38) = c;
-                    }
-                }
-                break;
-            }
+	  for(y=0; y < SVIS_HEIGHT; y++){
+	    for(x=0;x< SVIS_WIDTH; x++){
+	      if(svis->vs_data[x] > y << 1)
+		{
+		  rgb_data[x + (SVIS_HEIGHT - y) * SVIS_WIDTH] = 23;
+		}
+	    }
+	  }
         }
 	else if (cfg.vis_type == VIS_VOICEPRINT){
-	  
+	  switch (cfg.vu_mode) {
+	  case VU_NORMAL:
+	    for (y = 0; y < 2; y++) {
+	      ptr = rgb_data + ((y * 3) * 38);
+	      h = (svis->vs_data[y] * 7) / 37;
+	      for (x = 0; x < h; x++, ptr += 5) {
+		c = svis_vu_normal_colors[x];
+		*(ptr) = c;
+		*(ptr + 1) = c;
+		*(ptr + 2) = c;
+		*(ptr + 38) = c;
+		*(ptr + 39) = c;
+		*(ptr + 40) = c;
+	      }
+	    }
+	    break;
+	  case VU_SMOOTH:
+	    for (y = 0; y < 2; y++) {
+	      ptr = rgb_data + ((y * 3) * SVIS_WIDTH);
+	      for (x = 0; x < svis->vs_data[y]; x++, ptr++) {
+		c = 17 - ((x * 15) / 37);
+		*(ptr) = c;
+		*(ptr + 38) = c;
+	      }
+	    }
+	    break;
+	  }	  
 	}
         else if (cfg.vis_type == VIS_SCOPE) {
             for (x = 0; x < 38; x++) {
@@ -170,34 +177,45 @@ svis_draw(Widget * w)
 
         memset(rgb_data, 0, SVIS_WIDTH * 2 * SVIS_HEIGHT * 2);
         if (cfg.vis_type == VIS_ANALYZER) {
-            switch (cfg.vu_mode) {
-            case VU_NORMAL:
-                for (y = 0; y < 2; y++) {
-                    ptr = rgb_data + ((y * 3) * 152);
-                    h = (svis->vs_data[y] * 8) / 37;
-                    for (x = 0; x < h; x++, ptr += 10) {
-                        c = svis_vu_normal_colors[x];
-                        DRAW_DS_PIXEL(ptr, c);
-                        DRAW_DS_PIXEL(ptr + 2, c);
-                        DRAW_DS_PIXEL(ptr + 4, c);
-                        DRAW_DS_PIXEL(ptr + 152, c);
-                        DRAW_DS_PIXEL(ptr + 154, c);
-                        DRAW_DS_PIXEL(ptr + 156, c);
-                    }
-                }
-                break;
-            case VU_SMOOTH:
-                for (y = 0; y < 2; y++) {
-                    ptr = rgb_data + ((y * 3) * 152);
-                    for (x = 0; x < svis->vs_data[y]; x++, ptr += 2) {
-                        c = 17 - ((x * 15) / 37);
-                        DRAW_DS_PIXEL(ptr, c);
-                        DRAW_DS_PIXEL(ptr + 152, c);
-                    }
-                }
-                break;
-            }
+	  for(y=0; y < SVIS_HEIGHT; y++){
+	    for(x=0;x< SVIS_WIDTH; x++){
+	      if(svis->vs_data[x] > y << 1)
+		{
+		  ptr = rgb_data + x * 2 + (SVIS_HEIGHT - y) * SVIS_WIDTH * 2;
+		  DRAW_DS_PIXEL(ptr, 23);
+		}
+	    }
+	  }
         }
+	else if (cfg.vis_type == VIS_VOICEPRINT){
+	  switch (cfg.vu_mode) {
+	  case VU_NORMAL:
+	    for (y = 0; y < 2; y++) {
+	      ptr = rgb_data + ((y * 3) * 152);
+	      h = (svis->vs_data[y] * 8) / 37;
+	      for (x = 0; x < h; x++, ptr += 10) {
+		c = svis_vu_normal_colors[x];
+		DRAW_DS_PIXEL(ptr, c);
+		DRAW_DS_PIXEL(ptr + 2, c);
+		DRAW_DS_PIXEL(ptr + 4, c);
+		DRAW_DS_PIXEL(ptr + 152, c);
+		DRAW_DS_PIXEL(ptr + 154, c);
+		DRAW_DS_PIXEL(ptr + 156, c);
+	      }
+	    }
+	    break;
+	  case VU_SMOOTH:
+	    for (y = 0; y < 2; y++) {
+	      ptr = rgb_data + ((y * 3) * 152);
+	      for (x = 0; x < svis->vs_data[y]; x++, ptr += 2) {
+		c = 17 - ((x * 15) / 37);
+		DRAW_DS_PIXEL(ptr, c);
+		DRAW_DS_PIXEL(ptr + 152, c);
+	      }
+	    }
+	    break;
+	  }  
+	}
         else if (cfg.vis_type == VIS_SCOPE) {
             for (x = 0; x < 38; x++) {
                 h = svis->vs_data[x << 1] / 3;

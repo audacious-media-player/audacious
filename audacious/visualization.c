@@ -329,36 +329,6 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
         return;
 
     if (cfg.vis_type == VIS_ANALYZER) {
-        if (cfg.player_shaded && cfg.player_visible) {
-            /* VU */
-            gint vu, val;
-
-            if (!stereo_pcm_calced)
-                calc_stereo_pcm(stereo_pcm, pcm_data, nch);
-            vu = 0;
-            for (i = 0; i < 512; i++) {
-                val = abs(stereo_pcm[0][i]);
-                if (val > vu)
-                    vu = val;
-            }
-            intern_vis_data[0] = (vu * 37) >> 15;
-            if (intern_vis_data[0] > 37)
-                intern_vis_data[0] = 37;
-            if (nch == 2) {
-                vu = 0;
-                for (i = 0; i < 512; i++) {
-                    val = abs(stereo_pcm[1][i]);
-                    if (val > vu)
-                        vu = val;
-                }
-                intern_vis_data[1] = (vu * 37) >> 15;
-                if (intern_vis_data[1] > 37)
-                    intern_vis_data[1] = 37;
-            }
-            else
-                intern_vis_data[1] = intern_vis_data[0];
-        }
-        else {
             /* Spectrum analyzer */
             /* 76 values */
             const gint long_xscale[] =
@@ -409,19 +379,50 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
                 else
                     intern_vis_data[i] = 0;
             }
-        }
+        
     }
     else if(cfg.vis_type == VIS_VOICEPRINT){
-      if (!mono_freq_calced)
-	calc_mono_freq(mono_freq, pcm_data, nch);
-      
-      /* Subsampling; 8 frequencies per sample*/
-      for(i = 0; i < 256 ; i++)
-	intern_vis_data[i] = (mono_freq[0][i] >> 9);
+        if (cfg.player_shaded && cfg.player_visible) {
+            /* VU */
+            gint vu, val;
 
-      /* Nonlinear transfer function makes the tones stand out*/
-      for(i = 0; i < 16 ; i++)
-	intern_vis_data[i] = pow(2, intern_vis_data[i]);
+            if (!stereo_pcm_calced)
+                calc_stereo_pcm(stereo_pcm, pcm_data, nch);
+            vu = 0;
+            for (i = 0; i < 512; i++) {
+                val = abs(stereo_pcm[0][i]);
+                if (val > vu)
+                    vu = val;
+            }
+            intern_vis_data[0] = (vu * 37) >> 15;
+            if (intern_vis_data[0] > 37)
+                intern_vis_data[0] = 37;
+            if (nch == 2) {
+                vu = 0;
+                for (i = 0; i < 512; i++) {
+                    val = abs(stereo_pcm[1][i]);
+                    if (val > vu)
+                        vu = val;
+                }
+                intern_vis_data[1] = (vu * 37) >> 15;
+                if (intern_vis_data[1] > 37)
+                    intern_vis_data[1] = 37;
+            }
+            else
+                intern_vis_data[1] = intern_vis_data[0];
+        }
+	else{ /*Voiceprint*/
+	  if (!mono_freq_calced)
+	    calc_mono_freq(mono_freq, pcm_data, nch);
+	  
+	  /* Subsampling; 8 frequencies per sample*/
+	  for(i = 0; i < 256 ; i++)
+	    intern_vis_data[i] = (mono_freq[0][i] >> 9);
+	  
+	  /* Nonlinear transfer function makes the tones stand out*/
+	  for(i = 0; i < 16 ; i++)
+	    intern_vis_data[i] = pow(2, intern_vis_data[i]);
+	}
     }
     else { /* (cfg.vis_type == VIS_SCOPE) */
 

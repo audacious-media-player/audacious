@@ -1,3 +1,10 @@
+2006-12-18 22:47:48 +0000  Giacomo Lozito <james@develia.org>
+  revision [3345]
+  fixed bug #699 about playlist->queue with patch provided by bug reporter
+  trunk/audacious/playlist.c |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2006-12-18 22:01:29 +0000  Troels Bang Jensen <marvin@fnuck.dk>
   revision [3343]
   Added subsampling and nonlinear transfer function to the voiceprint 

@@ -101,7 +101,8 @@ vis_timeout_func(Vis * vis, guchar * data)
     else if (cfg.vis_type == VIS_VOICEPRINT && data){
       for(i = 0; i < 16; i++)
 	{
-	  vis->vs_data[i] = data[15 - i] > 23 ? 23 : data[15-i];
+	  /*The color palette is in the range [2-23]. This makes sure we stay there.*/
+	  vis->vs_data[i] = data[15 - i] > 23 ? 23 : data[15-i] ^ 1;
 	}
     }
     else if (data) {
@@ -337,18 +338,23 @@ vis_draw(Widget * w)
             }
         }
 	else if (cfg.vis_type == VIS_VOICEPRINT) {
-	  for (y = 0; y < 16; y ++) {
+	  for (y = 0; y < 15; y ++) {
             for (x = 74; x > 0; x--)
 	      {
-		vs_data_ext[x + (y * 76)] = vs_data_ext[x-1+(y*76)];
-		rgb_data[(x << 1)+ y * 304] = vs_data_ext[x-1+(y*76)];
+		ptr = rgb_data + (x << 1) + y * 304;
+		vs_data_ext[x + y * 76] = vs_data_ext[x - 1 + y * 76];
+		*ptr = vs_data_ext[x - 1 + y * 76];
+		*(ptr+1) = vs_data_ext[x - 1 + y * 76];
+
+		//FIXME. Currently only every other line is shown in
+		//doublesize mode.
+		//*(ptr+304) = vs_data_ext[x + y * 76];
+		//*(ptr+1+304) = vs_data_ext[x - 1 + y * 76];
 	      }
 	  } 
 	  for(y=0;y<16;y++){
 	    vs_data_ext[y * 76] = vis->vs_data[y];
 	  }
-	  //	  memcpy(rgb_data, vs_data_ext,1216);
-	  
 	}
         else if (cfg.vis_type == VIS_SCOPE) {
             for (x = 0; x < 75; x++) {
