@@ -202,7 +202,7 @@ static GtkActionEntry playlistwin_actions[] = {
 
 	{ "remove selected", GTK_STOCK_REMOVE, N_("Remove Selected"), "Delete", 
 	  N_("Remove selected entries from the playlist."),
-	  G_CALLBACK(action_remove_unselected) },
+	  G_CALLBACK(action_remove_selected) },
 
 	/* **************** add menu **************** */
 

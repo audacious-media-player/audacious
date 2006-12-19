@@ -1,3 +1,12 @@
+2006-12-19 02:04:05 +0000  Troels Bang Jensen <marvin@fnuck.dk>
+  revision [3351]
+  Fixed wrong number of entries in the vis-mode submenu which caused an 
+  offset error in the displayed settings
+  
+  trunk/audacious/mainwin.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-12-19 01:26:47 +0000  Troels Bang Jensen <marvin@fnuck.dk>
   revision [3349]
   - Added 'bars' mode for analyzer in windowshade mode
