@@ -139,10 +139,10 @@ static GtkActionEntry playlistwin_actions[] = {
 	{ "load list", GTK_STOCK_OPEN, N_("New List"), "O",
 	  N_("Loads a playlist file into the selected playlist."), G_CALLBACK(action_load_list) },
 
-	{ "save list", GTK_STOCK_SAVE, N_("Save List"), "S",
+	{ "save list", GTK_STOCK_SAVE, N_("Save List"), "<Shift>S",
 	  N_("Saves the selected playlist."), G_CALLBACK(action_save_list) },
 
-	{ "save default list", GTK_STOCK_SAVE, N_("Save Default List"), "<Shift>S",
+	{ "save default list", GTK_STOCK_SAVE, N_("Save Default List"), "<Alt>S",
 	  N_("Saves the selected playlist to the default location."),
 	  G_CALLBACK(action_save_default_list) },
 
