@@ -118,9 +118,20 @@ svis_draw(Widget * w)
     cmap = gdk_rgb_cmap_new(colors, 24);
 
     if (!cfg.doublesize) {
-        memset(rgb_data, 0, SVIS_WIDTH * SVIS_HEIGHT);
-        if (cfg.vis_type == VIS_ANALYZER) {
-	  for(y=0; y < SVIS_HEIGHT; y++){
+      memset(rgb_data, 0, SVIS_WIDTH * SVIS_HEIGHT);
+      if (cfg.vis_type == VIS_ANALYZER) {
+	for(y=0; y < SVIS_HEIGHT; y++){
+	  if (cfg.analyzer_type == ANALYZER_BARS){
+	    for(x=0;x< SVIS_WIDTH; x++){
+	      if(svis->vs_data[x] > y << 1)
+		{
+		  rgb_data[x*3+ (SVIS_HEIGHT - y) * SVIS_WIDTH] = 23;
+		  rgb_data[x*3+1 + (SVIS_HEIGHT - y) * SVIS_WIDTH] = 23;
+		  
+		}
+	    }
+	  }
+	  else{
 	    for(x=0;x< SVIS_WIDTH; x++){
 	      if(svis->vs_data[x] > y << 1)
 		{
@@ -128,7 +139,8 @@ svis_draw(Widget * w)
 		}
 	    }
 	  }
-        }
+	}
+      }
 	else if (cfg.vis_type == VIS_VOICEPRINT){
 	  switch (cfg.vu_mode) {
 	  case VU_NORMAL:

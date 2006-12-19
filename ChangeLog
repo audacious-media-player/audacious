@@ -1,3 +1,15 @@
+2006-12-19 00:37:47 +0000  Troels Bang Jensen <marvin@fnuck.dk>
+  revision [3347]
+  -added analyzer vis to windowshade mode
+  -changed order of windowshade visualizers to analyzer->Scope->VU
+  -tweaked voiceprint in doublesize mode
+  
+  trunk/audacious/visualization.c |   81 ++++++++++++------------
+  trunk/audacious/widgets/svis.c  |  130 ++++++++++++++++++++++------------------
+  trunk/audacious/widgets/vis.c   |   18 +++--
+  3 files changed, 127 insertions(+), 102 deletions(-)
+
+
 2006-12-18 22:47:48 +0000  Giacomo Lozito <james@develia.org>
   revision [3345]
   fixed bug #699 about playlist->queue with patch provided by bug reporter
