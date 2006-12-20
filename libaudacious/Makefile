@@ -35,7 +35,7 @@ SOURCES = \
 OBJECTS = ${SOURCES:.c=.o}
 
 HEADERS = \
-	vfs.h vfs_buffer.h rcfile.h configdb.h \
+	rcfile.h configdb.h \
 	beepctrl.h dirbrowser.h urldecode.h \
 	formatter.h titlestring.h xconvert.h
 

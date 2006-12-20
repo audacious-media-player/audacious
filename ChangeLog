@@ -1,3 +1,14 @@
+2006-12-20 01:22:33 +0000  Troels Bang Jensen <marvin@fnuck.dk>
+  revision [3367]
+  - Added vis gradient to Ivory skin. With any luck Aerdan won't break my legs :)
+  - Made voiceprint subsampling work and fixed pause scrolling bug
+  
+  trunk/audacious/visualization.c |    4 +--
+  trunk/audacious/widgets/vis.c   |   29 ++++++++++++----------------
+  trunk/skins/Ivory/viscolor.txt  |   41 ++++++++++++++++++++--------------------
+  3 files changed, 36 insertions(+), 38 deletions(-)
+
+
 2006-12-20 00:28:41 +0000  Troels Bang Jensen <marvin@fnuck.dk>
   revision [3365]
   - Changed the visualizer colors for the Default skin to a gradient
