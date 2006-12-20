@@ -49,14 +49,15 @@ static const gchar *bmp_brief =
 static const gchar *credit_text[] = {
     N_("Audacious core developers:"),
     "George Averill",
+    "Daniel Bradshaw",
     "Adam Cecile",
+    "Troels Bang Jensen",
     "Giacomo Lozito",
     "William Pitcock",
     "Derek Pomery",
     "Jonathan Schleifer",
     "Tony Vroon",
     "Yoshiki Yazawa",
-    "Daniel Bradshaw",
     NULL,
 
     N_("Graphics:"),
