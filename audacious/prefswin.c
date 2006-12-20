@@ -89,6 +89,7 @@ TitleFieldTag;
 
 static GtkWidget *prefswin = NULL;
 static GtkWidget *filepopup_settings = NULL;
+static GtkWidget *colorize_settings = NULL;
 static GtkWidget *category_treeview = NULL;
 static GtkWidget *category_notebook = NULL;
 GtkWidget *filepopupbutton = NULL;
@@ -2066,6 +2067,93 @@ on_recurse_for_cover_toggled(GtkToggleButton *button, gpointer data)
 }
 
 static void
+on_colorize_button_clicked(GtkButton *button, gpointer data)
+{
+	GladeXML *xml = prefswin_get_xml();
+	GtkWidget *widget;
+
+	widget = glade_xml_get_widget(xml, "red_scale");
+	gtk_range_set_value(GTK_RANGE(widget), cfg.colorize_r);
+
+	widget = glade_xml_get_widget(xml, "green_scale");
+	gtk_range_set_value(GTK_RANGE(widget), cfg.colorize_g);
+
+	widget = glade_xml_get_widget(xml, "blue_scale");
+	gtk_range_set_value(GTK_RANGE(widget), cfg.colorize_b);
+
+	gtk_widget_show(colorize_settings);
+}
+
+static void
+on_red_scale_value_changed(GtkHScale *scale, gpointer data)
+{
+	GladeXML *xml = prefswin_get_xml();
+	GtkWidget *widget;
+	gint value;
+
+	value = gtk_range_get_value(GTK_RANGE(scale));
+
+	if (value != cfg.colorize_r)
+	{
+		cfg.colorize_r = value;
+
+		/* reload the skin to apply the change */
+		skin_reload_forced();
+		draw_main_window(TRUE);
+		draw_equalizer_window(TRUE);
+		draw_playlist_window(TRUE);
+	}
+}
+
+static void
+on_green_scale_value_changed(GtkHScale *scale, gpointer data)
+{
+	GladeXML *xml = prefswin_get_xml();
+	GtkWidget *widget;
+	gint value;
+
+	value = gtk_range_get_value(GTK_RANGE(scale));
+
+	if (value != cfg.colorize_r)
+	{
+		cfg.colorize_g = value;
+
+		/* reload the skin to apply the change */
+		skin_reload_forced();
+		draw_main_window(TRUE);
+		draw_equalizer_window(TRUE);
+		draw_playlist_window(TRUE);
+	}
+}
+
+static void
+on_blue_scale_value_changed(GtkHScale *scale, gpointer data)
+{
+	GladeXML *xml = prefswin_get_xml();
+	GtkWidget *widget;
+	gint value;
+
+	value = gtk_range_get_value(GTK_RANGE(scale));
+
+	if (value != cfg.colorize_r)
+	{
+		cfg.colorize_b = value;
+
+		/* reload the skin to apply the change */
+		skin_reload_forced();
+		draw_main_window(TRUE);
+		draw_equalizer_window(TRUE);
+		draw_playlist_window(TRUE);
+	}
+}
+
+static void
+on_colorize_close_clicked(GtkButton *button, gpointer data)
+{
+	gtk_widget_hide(colorize_settings);
+}
+
+static void
 on_filepopup_for_tuple_settings_clicked(GtkButton *button, gpointer data)
 {
 	GladeXML *xml = prefswin_get_xml();
@@ -2248,6 +2336,13 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     /* show window manager decorations */
     FUNC_MAP_ENTRY(on_show_wm_decorations_toggled)
     FUNC_MAP_ENTRY(on_show_wm_decorations_realize)
+
+    /* colorize */
+    FUNC_MAP_ENTRY(on_colorize_button_clicked)
+    FUNC_MAP_ENTRY(on_red_scale_value_changed)
+    FUNC_MAP_ENTRY(on_green_scale_value_changed)
+    FUNC_MAP_ENTRY(on_blue_scale_value_changed)
+    FUNC_MAP_ENTRY(on_colorize_close_clicked)
 FUNC_MAP_END
 
 void
@@ -2482,6 +2577,11 @@ create_prefs_window(void)
 	g_signal_connect(G_OBJECT(widget2), "toggled",
 		G_CALLBACK(on_recurse_for_cover_toggled),
 		widget);
+
+	/* Create window for filepopup settings */
+	colorize_settings = glade_xml_get_widget(xml, "colorize_popup");
+	gtk_window_set_transient_for(GTK_WINDOW(colorize_settings), GTK_WINDOW(prefswin));
+	gtk_widget_hide(colorize_settings);
 }
 
 void
