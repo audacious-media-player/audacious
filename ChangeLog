@@ -1,3 +1,11 @@
+2006-12-20 00:28:41 +0000  Troels Bang Jensen <marvin@fnuck.dk>
+  revision [3365]
+  - Changed the visualizer colors for the Default skin to a gradient
+  
+  trunk/skins/Default/viscolor.txt |   44 +++++++++++++++++++--------------------
+  1 file changed, 22 insertions(+), 22 deletions(-)
+
+
 2006-12-19 23:13:17 +0000  Troels Bang Jensen <marvin@fnuck.dk>
   revision [3363]
   Keep the voiceprint inside the range for the theme.

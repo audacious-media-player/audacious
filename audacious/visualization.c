@@ -414,10 +414,10 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
 	else{ /*Voiceprint*/
 	  if (!mono_freq_calced)
 	    calc_mono_freq(mono_freq, pcm_data, nch);
-	  
+	  memset(intern_vis_data, 0, 256);
 	  /* Subsampling; 8 frequencies per sample*/
 	  for(i = 0; i < 256 ; i++)
-	    intern_vis_data[i] = (mono_freq[0][i] >> 8);
+	    intern_vis_data[i>>2] += (mono_freq[0][i] >> 8);
 	  /* Nonlinear transfer function makes the tones stand out*/
 	  //for(i = 0; i < 16 ; i++)
 	  // intern_vis_data[i] = pow(1.2, intern_vis_data[i]);

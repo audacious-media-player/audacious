@@ -186,19 +186,14 @@ vis_draw(Widget * w)
             }
         }
 	else if (cfg.vis_type == VIS_VOICEPRINT) {
-	  for (y = 0; y < 16; y ++) {
-
-            for (x = 74; x > 0; x--)
-	      {
+	  if(!bmp_playback_get_paused()){/*Don't scroll when it's paused*/
+	    for (y = 0; y < 16; y ++) 
+	      for (x = 74; x > 0; x--)
 		vs_data_ext[x + (y * 76)] = vs_data_ext[x-1+(y*76)];
-	      }
-	      } 
-	  for(y=0;y<16;y++){
-	    vs_data_ext[y * 76] = vis->vs_data[y];
+	    for(y=0;y<16;y++)
+	      vs_data_ext[y * 76] = vis->vs_data[y];
 	  }
-	  
 	  memcpy(rgb_data, vs_data_ext,1216);
-	  
 	}
         else if (cfg.vis_type == VIS_SCOPE) {
             for (x = 0; x < 75; x++) {
@@ -338,22 +333,24 @@ vis_draw(Widget * w)
             }
         }
 	else if (cfg.vis_type == VIS_VOICEPRINT) {
+	  if(!bmp_playback_get_paused()){/*Don't scroll when it's paused*/
+	    for (y = 0; y < 15; y ++) 
+	      for (x = 74; x > 0; x--)
+		vs_data_ext[x + y * 76] = vs_data_ext[x - 1 + y * 76];
+	    for(y=0;y<16;y++)
+	      vs_data_ext[y * 76] = vis->vs_data[y];
+	  }
 	  for (y = 0; y < 15; y ++) {
             for (x = 74; x > 0; x--)
 	      {
 		ptr = rgb_data + (x << 1) + y * 304;
-		vs_data_ext[x + y * 76] = vs_data_ext[x - 1 + y * 76];
 		*ptr = vs_data_ext[x - 1 + y * 76];
 		*(ptr+1) = vs_data_ext[x - 1 + y * 76];
-
 		//FIXME. Currently only every other line is shown in
 		//doublesize mode.
-		//*(ptr+304) = vs_data_ext[x + y * 76];
+		//*(ptr-304) = vs_data_ext[x + y * 76];
 		//*(ptr+1+304) = vs_data_ext[x - 1 + y * 76];
 	      }
-	  } 
-	  for(y=0;y<16;y++){
-	    vs_data_ext[y * 76] = vis->vs_data[y];
 	  }
 	}
         else if (cfg.vis_type == VIS_SCOPE) {
