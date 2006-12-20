@@ -149,6 +149,7 @@ GdkImage *create_dblsize_image(GdkImage * img);
 
 gchar *xmms_urldecode_path(const gchar * encoded_path);
 
+GdkPixbuf *audacious_create_colorized_pixbuf(GdkPixbuf *src, gint red, gint green, gint blue);
 
 G_END_DECLS
 
