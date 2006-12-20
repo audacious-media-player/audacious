@@ -186,7 +186,7 @@ vis_draw(Widget * w)
             }
         }
 	else if (cfg.vis_type == VIS_VOICEPRINT) {
-	  if(!bmp_playback_get_paused()){/*Don't scroll when it's paused*/
+	  if(!bmp_playback_get_paused() && bmp_playback_get_playing()){/*Don't scroll when it's paused or stopped*/
 	    for (y = 0; y < 16; y ++) 
 	      for (x = 74; x > 0; x--)
 		vs_data_ext[x + (y * 76)] = vs_data_ext[x-1+(y*76)];
@@ -333,23 +333,22 @@ vis_draw(Widget * w)
             }
         }
 	else if (cfg.vis_type == VIS_VOICEPRINT) {
-	  if(!bmp_playback_get_paused()){/*Don't scroll when it's paused*/
-	    for (y = 0; y < 15; y ++) 
+	  if(!bmp_playback_get_paused() && bmp_playback_get_playing()){/*Don't scroll when it's paused or stopped*/
+	    for (y = 0; y < 16; y ++) 
 	      for (x = 74; x > 0; x--)
 		vs_data_ext[x + y * 76] = vs_data_ext[x - 1 + y * 76];
 	    for(y=0;y<16;y++)
 	      vs_data_ext[y * 76] = vis->vs_data[y];
 	  }
-	  for (y = 0; y < 15; y ++) {
+	  for (y = 0; y < 16; y ++) {
             for (x = 74; x > 0; x--)
 	      {
 		ptr = rgb_data + (x << 1) + y * 304;
-		*ptr = vs_data_ext[x - 1 + y * 76];
-		*(ptr+1) = vs_data_ext[x - 1 + y * 76];
-		//FIXME. Currently only every other line is shown in
-		//doublesize mode.
-		//*(ptr-304) = vs_data_ext[x + y * 76];
-		//*(ptr+1+304) = vs_data_ext[x - 1 + y * 76];
+		/*draw a 2x2 area with the same data*/
+		*ptr = vs_data_ext[x + y * 76];
+		*(ptr + 1) = vs_data_ext[x + y * 76];
+		*(ptr + 152) = vs_data_ext[x + y * 76];
+		*(ptr + 153) = vs_data_ext[x + y * 76];
 	      }
 	  }
 	}

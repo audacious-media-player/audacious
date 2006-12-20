@@ -1,3 +1,12 @@
+2006-12-20 15:57:56 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3379]
+  - allow changing the colourtheme from preferences
+  
+  trunk/audacious/glade/prefswin.glade |  266 +++++++++++++++++++++++++++++++++++
+  trunk/audacious/prefswin.c           |  100 +++++++++++++
+  2 files changed, 366 insertions(+)
+
+
 2006-12-20 15:09:22 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3377]
   - add ability to colourtheme the UI
