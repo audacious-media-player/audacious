@@ -299,7 +299,7 @@ skin_pixmap_locate(const gchar * dirname, gchar ** basenames)
 static GdkPixmap *
 pixmap_new_from_file(const gchar * filename)
 {
-    GdkPixbuf *pixbuf;
+    GdkPixbuf *pixbuf, *pixbuf2;
     GdkPixmap *pixmap;
     gint width, height;
 
@@ -323,9 +323,12 @@ pixmap_new_from_file(const gchar * filename)
         return NULL;
     }
 
-    gdk_draw_pixbuf(pixmap, mainwin_gc, pixbuf, 0, 0, 0, 0, width, height,
-		    GDK_RGB_DITHER_MAX, 0, 0);
+    pixbuf2 = audacious_create_colorized_pixbuf(pixbuf, cfg.colorize_r, cfg.colorize_g, cfg.colorize_b);
     g_object_unref(pixbuf);
+
+    gdk_draw_pixbuf(pixmap, mainwin_gc, pixbuf2, 0, 0, 0, 0, width, height,
+		    GDK_RGB_DITHER_MAX, 0, 0);
+    g_object_unref(pixbuf2);
 
     return pixmap;
 }

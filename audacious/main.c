@@ -208,6 +208,7 @@ BmpConfig bmp_default_config = {
     FALSE,			/* use filename.jpg for coverart */
     FALSE,			/* use XMMS-style file selection */
     TRUE,                       /* use extension probing         */
+    255, 255, 255,		/* colorize r, g, b */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -342,6 +343,9 @@ static bmp_cfg_nument bmp_numents[] = {
     {"recurse_for_cover_depth", &cfg.recurse_for_cover_depth, TRUE},
     {"filepopup_pixelsize", &cfg.filepopup_pixelsize, TRUE},
     {"filepopup_delay", &cfg.filepopup_delay, TRUE},
+    {"colorize_r", &cfg.colorize_r, TRUE},
+    {"colorize_g", &cfg.colorize_g, TRUE},
+    {"colorize_b", &cfg.colorize_b, TRUE},
 };
 
 static gint ncfgient = G_N_ELEMENTS(bmp_numents);
