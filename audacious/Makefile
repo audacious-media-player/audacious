@@ -75,7 +75,8 @@ SOURCES = \
 	iir.c \
 	iir_cfs.c \
 	iir_fpu.c \
-	signals.c
+	signals.c \
+	strings.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
