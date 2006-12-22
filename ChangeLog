@@ -1,3 +1,14 @@
+2006-12-22 08:17:31 +0000  George Averill <nhjm449@gmail.com>
+  revision [3385]
+  - Fix the number of analyzer bars drawn in shaded mode.
+  - Fix doublesize for analyzer in shaded mode.
+  
+  trunk/audacious/mainwin.c       |    2 +-
+  trunk/audacious/visualization.c |   14 ++++++++++++--
+  trunk/audacious/widgets/svis.c  |    3 ++-
+  3 files changed, 15 insertions(+), 4 deletions(-)
+
+
 2006-12-20 21:42:30 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3383]
   - update credits

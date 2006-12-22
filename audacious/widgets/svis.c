@@ -190,14 +190,25 @@ svis_draw(Widget * w)
         memset(rgb_data, 0, SVIS_WIDTH * 2 * SVIS_HEIGHT * 2);
         if (cfg.vis_type == VIS_ANALYZER) {
 	  for(y=0; y < SVIS_HEIGHT; y++){
-	    for(x=0;x< SVIS_WIDTH; x++){
-	      if(svis->vs_data[x] > y << 1)
-		{
-		  ptr = rgb_data + x * 6 + (SVIS_HEIGHT * 2 - y * 2) * SVIS_WIDTH * 2;
-		  DRAW_DS_PIXEL(ptr, 23);
-		  DRAW_DS_PIXEL(ptr + 2, 23);
-		}
-	    }
+            if (cfg.analyzer_type == ANALYZER_BARS){
+              for(x=0;x< SVIS_WIDTH; x++){
+                if(svis->vs_data[x] > y << 1)
+                {
+                  ptr = rgb_data + x * 6 + (SVIS_HEIGHT * 2 - y * 2) * SVIS_WIDTH * 2;
+                  DRAW_DS_PIXEL(ptr, 23);
+                  DRAW_DS_PIXEL(ptr + 2, 23);
+                }
+              }
+            }
+            else{
+              for(x=0;x< SVIS_WIDTH; x++){
+                if(svis->vs_data[x] > y << 1)
+                {
+                  ptr = rgb_data + x * 2 + (SVIS_HEIGHT * 2 - y * 2) * SVIS_WIDTH * 2;
+                  DRAW_DS_PIXEL(ptr, 23);
+                }
+              }
+            }
 	  }
         }
 	else if (cfg.vis_type == VIS_VOICEPRINT){
