@@ -1,3 +1,11 @@
+2006-12-22 08:52:22 +0000  George Averill <nhjm449@gmail.com>
+  revision [3389]
+  - Allow radiobuttons/checkboxes in the visualization menu to be updated correctly on startup with the addition of the Voiceprint mode.
+  
+  trunk/audacious/mainwin.c |   16 ++++++++--------
+  1 file changed, 8 insertions(+), 8 deletions(-)
+
+
 2006-12-22 08:32:44 +0000  George Averill <nhjm449@gmail.com>
   revision [3387]
   - Updated fix for doublesized, shaded analyzer.

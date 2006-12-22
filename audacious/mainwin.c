@@ -267,6 +267,8 @@ static gint mainwin_songname_menu_entries_num =
 
 /* Mini-visualizer area menu */
 
+/* If you add something here, be sure to update the #defines up above!!! */
+
 GtkItemFactoryEntry mainwin_vis_menu_entries[] = {
     {N_("/Visualization Mode"), NULL, NULL, 0, "<Branch>", NULL},
     {N_("/Visualization Mode/Analyzer"), NULL, mainwin_vis_menu_callback,
