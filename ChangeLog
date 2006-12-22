@@ -1,3 +1,11 @@
+2006-12-22 14:13:13 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3401]
+  - port to GtkUIManager
+  
+  trunk/audacious/equalizer.c |  636 +++++++++++++++++++++++++-------------------
+  1 file changed, 366 insertions(+), 270 deletions(-)
+
+
 2006-12-22 13:47:15 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3399]
   - add XML description of the equalizer window's menus

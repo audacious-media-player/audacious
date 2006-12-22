@@ -488,7 +488,7 @@ textbox_set_scroll(TextBox * tb, gboolean s)
 
 	if (tb->tb_timeout_tag)
         {
-	    gtk_timeout_remove(tb->tb_timeout_tag);
+	    g_source_remove(tb->tb_timeout_tag);
             tb->tb_timeout_tag = 0;
 	}
 
