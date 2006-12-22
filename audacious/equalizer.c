@@ -541,6 +541,10 @@ equalizerwin_motion(GtkWidget * widget,
 {
     GdkEvent *gevent;
 
+    if (cfg.doublesize && cfg.eq_doublesize_linked) {
+        event->x /= 2;
+        event->y /= 2;
+    }
     if (dock_is_moving(GTK_WINDOW(equalizerwin)))
     {
         dock_move_motion(GTK_WINDOW(equalizerwin), event);
