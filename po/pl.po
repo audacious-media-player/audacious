@@ -1,16 +1,11 @@
-# Copyright (C) 2001-2004 Free Software Foundation, Inc.
-# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-# Aktualną wersję tego pliku możesz odnaleźć w repozytorium cvs.gnome.pl
-# (:pserver:anonymous@cvs.gnome.pl:/gnomepl, puste hasło)
-# Jeśli masz jakiekolwiek uwagi odnoszące się do tłumaczenia lub chcesz
-# pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas na adres:
-# translators@gnome.pl
+# Polish translation for audacious
+# Copyright (C) 2006, Wojciech Myrda <vojcek@tlen.pl>
+# This file is distributed under the same license as the audacious package.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 #
 # Based on the Polish translation of XMMS by:
 # Grzegorz Kowal <g_kowal@poczta.onet.pl>, 2000, 2001.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2003
-#
 #
 # Based on the Polish translation of BMP by:
 # GNOME PL Team <translators@gnome.pl>, 2004
@@ -82,7 +77,7 @@ msgstr "Brazylijski - Portugalski"
 
 #: audacious/credits.c:139
 msgid "Breton:"
-msgstr ""
+msgstr "Bretoński"
 
 #: audacious/credits.c:142
 msgid "Chinese:"
@@ -114,7 +109,7 @@ msgstr "Gruziński:"
 
 #: audacious/credits.c:167
 msgid "Greek:"
-msgstr "Garecki:"
+msgstr "Grecki:"
 
 #: audacious/credits.c:172
 msgid "Hindi:"
@@ -315,7 +310,7 @@ msgstr "%s: opcja '%c%s' nie zezwala na podanie argumentu\n"
 #: audacious/getopt.c:662 audacious/getopt.c:820
 #, c-format
 msgid "%s: option `%s' requires an argument\n"
-msgstr ""
+msgstr "%s: opcja `%s' wymaga argumentu\n"
 
 #: audacious/getopt.c:688
 #, c-format
@@ -350,7 +345,7 @@ msgstr "%s: opcja 'W %s' jest dwuznaczna\n"
 #: audacious/getopt.c:806
 #, c-format
 msgid "%s: option `-W %s' doesn't allow an argument\n"
-msgstr "%s: opcja `-W %s' niepozwala na argument\n"
+msgstr "%s: opcja `-W %s' nie pozwala na argument\n"
 
 #: audacious/glade.c:40
 #, c-format
@@ -361,7 +356,7 @@ msgid ""
 msgstr ""
 "<b><big>Niemożna utworzyć %s.</big></b>\n"
 "\n"
-"Niemógł otworzyć pliku glade (%s). Sprawdź poprawność instalacji.\n"
+"Nie mógł otworzyć pliku glade (%s). Sprawdź poprawność instalacji.\n"
 
 #: audacious/input.c:303
 msgid ""
@@ -401,7 +396,7 @@ msgstr "Nazwa pliku:"
 
 #: audacious/input.c:646
 msgid "No input plugin recognized this file"
-msgstr "Żaden plugin nierozpoznał tego pliku"
+msgstr "Żaden plugin nie rozpoznał tego pliku"
 
 #: audacious/input.c:648
 #, c-format
@@ -411,7 +406,7 @@ msgstr "Wtyczka wejściowa: %s"
 #: audacious/logger.c:119
 #, c-format
 msgid "Unable to create log file (%s)!\n"
-msgstr "Nie można utworzyć pliku dziennka (%s)!\n"
+msgstr "Nie można utworzyć pliku dziennika (%s)!\n"
 
 #: audacious/main.c:82 audacious/main.c:84 audacious/mainwin.c:899
 #: audacious/mainwin.c:3735
@@ -457,7 +452,7 @@ msgstr "Wstrzymuje bieżący utwór"
 
 #: audacious/main.c:749
 msgid "Stop current song"
-msgstr "Zatrzymyje bieżący utwór"
+msgstr "Zatrzymuje bieżący utwór"
 
 #: audacious/main.c:752
 msgid "Pause if playing, play otherwise"
@@ -469,7 +464,7 @@ msgstr "Przechodzi do następnego utworu na liście odtwarzania"
 
 #: audacious/main.c:758
 msgid "Display Jump to file dialog"
-msgstr ""
+msgstr "Wyświetl okno dialogowe Skocz do pliku"
 
 #: audacious/main.c:761
 msgid "Don't clear the playlist"
@@ -509,7 +504,7 @@ msgid ""
 msgstr ""
 "<b><big>Nie można wgrać skóry.</big></b>\n"
 "\n"
-"Sprawdź czy skóra '%s' jest poprawana i czy domyślna skóra jest "
+"Sprawdź czy skóra '%s' jest poprawna i czy domyślna skóra jest "
 "zainstalowana w '%s'\n"
 
 #: audacious/main.c:1033
@@ -531,7 +526,7 @@ msgid ""
 msgstr ""
 "Niestety wątkowanie jest niewspierane przez twoją platformę.\n"
 "\n"
-"Jeśli używasz Linuxa bazowanego na libc5 i zainstalowałeś Glib i GTK+ "
+"Jeśli używasz Linuksa bazowanego na libc5 i zainstalowałeś Glib i GTK+ "
 "zanim \n"
 "zainstalowałeś LinuxThreads potrzebujesz przekompilować Glib & GTK+.\n"
 
@@ -553,7 +548,7 @@ msgstr "/Przewijanie tytułu utworu"
 
 #: audacious/mainwin.c:254 audacious/mainwin.c:348
 msgid "/Stop After Current Song"
-msgstr "/Zatrzymaj po bieżącym utwórze"
+msgstr "/Zatrzymaj po bieżącym utworze"
 
 #: audacious/mainwin.c:264
 msgid "/Visualization Mode"
@@ -714,7 +709,7 @@ msgstr "/Losowo"
 
 #: audacious/mainwin.c:346
 msgid "/No Playlist Advance"
-msgstr "/Odtwarzaj pliki pojedyńczo"
+msgstr "/Odtwarzaj pliki pojedynczo"
 
 #: audacious/mainwin.c:351
 msgid "/Play"
@@ -909,7 +904,7 @@ msgstr "Filtr: "
 
 #: audacious/mainwin.c:2325
 msgid "Enter location to play:"
-msgstr "Wpisz loalizację do gry:"
+msgstr "Wpisz lokalizację do gry:"
 
 #: audacious/mainwin.c:2533
 #, c-format
@@ -941,7 +936,7 @@ msgstr "MENU OPCJI"
 
 #: audacious/mainwin.c:3147
 msgid "DISABLE ALWAYS ON TOP"
-msgstr "WYŁĄCZ ZAWSZE NA WIERCZHU"
+msgstr "WYŁĄCZ ZAWSZE NA WIERZCHU"
 
 #: audacious/mainwin.c:3149
 msgid "ENABLE ALWAYS ON TOP"
@@ -969,7 +964,7 @@ msgid ""
 "\n"
 "No CD inserted, or inserted CD is not an audio CD.\n"
 msgstr ""
-"<b><big>Nieznaleziono odpowiedniego CD.</big></b>\n"
+"<b><big>Nie znaleziono odpowiedniego CD.</big></b>\n"
 "\n"
 "Brak CD w trayu, lub włożona płytka nie jest audio CD.\n"
 
@@ -1498,7 +1493,7 @@ msgid ""
 "You have not selected an output plugin."
 msgstr ""
 "<b><big>Niewybrany plugin wyjścia.</big></b>\n"
-"Nie wybrałeś pluginu wyjściowego."
+"Nie wybrałeś wtyczki wyjściowej."
 
 #: audacious/glade/addfiles.glade:77
 msgid "Close Dialog on Add"
@@ -1509,89 +1504,72 @@ msgid "Deselect All"
 msgstr "Odznacz wszystkie"
 
 #: audacious/glade/fileinfo.glade:8
-#, fuzzy
 msgid "Track Information"
-msgstr "Uzyskanie utwóru:"
+msgstr "Informacje o Ścieżce"
 
 #: audacious/glade/fileinfo.glade:81
-#, fuzzy
 msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"medium\"><b>Wejściowe</b></span>"
+msgstr "<span size=\"medium\"><b>Tytuł</b></span>"
 
 #: audacious/glade/fileinfo.glade:139
-#, fuzzy
 msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"medium\"><b>Ustawienia</b></span>"
+msgstr "<span size=\"medium\"><b>Artysta</b></span>"
 
 #: audacious/glade/fileinfo.glade:197
-#, fuzzy
 msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"medium\"><b>Wyjściowe</b></span>"
+msgstr "<span size=\"medium\"><b>Album</b></span>"
 
 #: audacious/glade/fileinfo.glade:255
-#, fuzzy
 msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"medium\"><b>Ogólne</b></span>"
+msgstr "<span size=\"medium\"><b>Komentarz</b></span>"
 
 #: audacious/glade/fileinfo.glade:313
-#, fuzzy
 msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"medium\"><b>Ogólne</b></span>"
+msgstr "<span size=\"medium\"><b>Rodzaj</b></span>"
 
 #: audacious/glade/fileinfo.glade:392
-#, fuzzy
 msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"medium\"><b>Wejściowe</b></span>"
+msgstr "<span size=\"medium\"><b>Rok</b></span>"
 
 #: audacious/glade/fileinfo.glade:441
-#, fuzzy
 msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"medium\"><b>Ogólne</b></span>"
+msgstr "<span size=\"medium\"><b>Numer Piosenki</b></span>"
 
 #: audacious/glade/fileinfo.glade:499
-#, fuzzy
 msgid "<span size=\"small\">Location</span>"
-msgstr "<span size=\"medium\"><b>Ustawienia</b></span>"
+msgstr "<span size=\"medium\"><b>Lokalizacja</b></span>"
 
 #: audacious/glade/fileinfo_popup.glade:8
-#, fuzzy
 msgid "Artist Popup"
-msgstr "Wykonawca"
+msgstr "Dymki o Wykonawcy"
 
 #: audacious/glade/fileinfo_popup.glade:66
-#, fuzzy
 msgid "<i>Title</i>"
-msgstr "<b>Tytuł:</b>"
+msgstr "<i>Tytuł</i>"
 
 #: audacious/glade/fileinfo_popup.glade:94
-#, fuzzy
 msgid "<i>Artist</i>"
-msgstr "Wykonawca"
+msgstr "<i>Wykonawca</i>"
 
 #: audacious/glade/fileinfo_popup.glade:122
-#, fuzzy
 msgid "<i>Album</i>"
-msgstr "<b>Album:</b>"
+msgstr "<i>Album</i>"
 
 #: audacious/glade/fileinfo_popup.glade:234
-#, fuzzy
 msgid "<i>Genre</i>"
-msgstr "<b>Rodzaj:</b>"
+msgstr "<i>Rodzaj</i>"
 
 #: audacious/glade/fileinfo_popup.glade:290
-#, fuzzy
 msgid "<i>Year</i>"
-msgstr "<b>Rok:</b>"
+msgstr "<i>Rok</i>"
 
 #: audacious/glade/fileinfo_popup.glade:318
-#, fuzzy
 msgid "<i>Track Number</i>"
-msgstr "Numer utworu"
+msgstr "<i>Numer utworu</i>"
 
 #: audacious/glade/fileinfo_popup.glade:346
-#, fuzzy
 msgid "<i>Track Length</i>"
-msgstr "Długość utworu:"
+msgstr "<i>Długość utworu</i>"
 
 #: audacious/glade/prefswin.glade:115
 msgid "_Decoder list:"
@@ -1615,11 +1593,11 @@ msgstr "Lista _wtyczek wizualizacji:"
 
 #: audacious/glade/prefswin.glade:511
 msgid "<b>Visualization</b>"
-msgstr "<b>Wizualizacjia</b>"
+msgstr "<b>Wizualizacja</b>"
 
 #: audacious/glade/prefswin.glade:553
 msgid "_Effect plugin list:"
-msgstr "_Lista wtyczek effektów:"
+msgstr "_Lista wtyczek efektów:"
 
 #: audacious/glade/prefswin.glade:657
 msgid "<b>Effects</b>"
@@ -1663,19 +1641,19 @@ msgstr "Użyj własnych kursorów"
 
 #: audacious/glade/prefswin.glade:1254
 msgid "Show window manager decoration"
-msgstr ""
+msgstr "Pokaż dekoracje okien"
 
 #: audacious/glade/prefswin.glade:1262
 msgid "Show window manager decorations"
-msgstr ""
+msgstr "Pokaż dekoracje okien"
 
 #: audacious/glade/prefswin.glade:1263
 msgid "This enables the window manager to show decorations for windows."
-msgstr ""
+msgstr "To włącza dekoracje okien menadżera okien."
 
 #: audacious/glade/prefswin.glade:1294
 msgid "Use XMMS-style file selector instead of the default selector"
-msgstr ""
+msgstr "Użyj styl okna wyboru plików jak w XMMS zamiast standardowego"
 
 #: audacious/glade/prefswin.glade:1330
 msgid "Enable playlist transparency"
@@ -1707,7 +1685,7 @@ msgstr "<b>Opcje nazw plików</b>"
 
 #: audacious/glade/prefswin.glade:1738
 msgid "Convert underscores to blanks"
-msgstr "Zamiana podkreślników na spacje"
+msgstr "Zamiana podkreśleń na spacje"
 
 #: audacious/glade/prefswin.glade:1773
 msgid "Convert %20 to blanks"
@@ -1747,7 +1725,7 @@ msgstr "<b>Opcje Plików</b>"
 
 #: audacious/glade/prefswin.glade:2141
 msgid "Always refresh directory when opening file dialog"
-msgstr "Zawsze odświerz katalog otwierając okno dialogowe"
+msgstr "Zawsze odśwież katalog otwierając okno dialogowe"
 
 #: audacious/glade/prefswin.glade:2175
 msgid "<b>Song Display</b>"
@@ -1910,7 +1888,7 @@ msgstr "<b>Odtwarzanie</b>"
 
 #: audacious/glade/prefswin.glade:3956
 msgid "Continue playback on startup"
-msgstr "Kontynułuj grę od właczenia"
+msgstr "Kontynuuj grę od włączenia"
 
 #: audacious/glade/prefswin.glade:3992
 msgid "Don't advance in the playlist"
@@ -1939,7 +1917,7 @@ msgid ""
 "using commas."
 msgstr ""
 "Podczas poszukiwań zdjęć okładek albumów Audacious szuka konkretnych słów w "
-"nazwach plików. Możesz określić te słowa w listach poniżej, odzielonych "
+"nazwach plików. Możesz określić te słowa w listach poniżej, oddzielonych "
 "średnikami"
 
 #: audacious/glade/prefswin.glade:4344

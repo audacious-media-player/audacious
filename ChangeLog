@@ -1,3 +1,12 @@
+2006-12-22 11:06:44 +0000  George Averill <nhjm449@gmail.com>
+  revision [3393]
+  - Improve the scope visualization
+  
+  trunk/audacious/visualization.c |    6 ++--
+  trunk/audacious/widgets/vis.c   |   54 ++++++++++++++++++++--------------------
+  2 files changed, 31 insertions(+), 29 deletions(-)
+
+
 2006-12-22 08:54:43 +0000  George Averill <nhjm449@gmail.com>
   revision [3391]
   - Added comment so it won't happen again ;)
