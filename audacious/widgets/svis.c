@@ -193,8 +193,9 @@ svis_draw(Widget * w)
 	    for(x=0;x< SVIS_WIDTH; x++){
 	      if(svis->vs_data[x] > y << 1)
 		{
-		  ptr = rgb_data + x * 2 + (SVIS_HEIGHT - y) * SVIS_WIDTH * 2;
+		  ptr = rgb_data + x * 6 + (SVIS_HEIGHT * 2 - y * 2) * SVIS_WIDTH * 2;
 		  DRAW_DS_PIXEL(ptr, 23);
+		  DRAW_DS_PIXEL(ptr + 2, 23);
 		}
 	    }
 	  }

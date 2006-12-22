@@ -357,11 +357,21 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
             memset(intern_vis_data, 0, 75);
 
             if (cfg.analyzer_type == ANALYZER_BARS) {
-                max = 19;
+                if (cfg.player_shaded) {
+                    max = 13;
+                }
+                else {
+                    max = 19;
+                }
                 xscale = short_xscale;
             }
             else {
-                max = 75;
+                if (cfg.player_shaded) {
+                    max = 37;
+                }
+                else {
+                    max = 75;
+                }
                 xscale = long_xscale;
             }
 

@@ -675,7 +675,7 @@ mainwin_vis_set_type_menu_cb(VisType mode)
         else
             vis_clear(active_vis);
     }
-    if (mode == VIS_ANALYZER || mode == VIS_SCOPE) {
+    if (mode == VIS_ANALYZER || mode == VIS_SCOPE || mode == VIS_VOICEPRINT) {
         vis_clear_data(active_vis);
         svis_clear_data(mainwin_svis);
     }
