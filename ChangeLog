@@ -1,3 +1,11 @@
+2006-12-22 13:38:45 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3397]
+  - fix credits.c translators table
+  
+  trunk/audacious/credits.c |    3 +--
+  1 file changed, 1 insertion(+), 2 deletions(-)
+
+
 2006-12-22 13:37:06 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3395]
   - update Polish translation care of it's maintainer

@@ -1,0 +1,36 @@
+<?xml version="1.0" standalone="yes" encoding="utf-8" ?>
+
+<ui>
+	<menubar name="equalizer-menus">
+		<menu action="dummy" name="preset-menu">
+			<menu action="preset load menu">
+				<menuitem action="load preset" />
+				<menuitem action="load auto preset" />
+				<menuitem action="load default preset" />
+				<separator />
+				<menuitem action="zero preset" />
+				<separator />
+				<menuitem action="load preset file" />
+				<menuitem action="load preset eqf" />
+			</menu>
+
+			<menu action="preset import menu">
+				<menuitem action="import winamp presets" />
+			</menu>
+
+			<menu action="preset save menu">
+				<menuitem action="save preset" />
+				<menuitem action="save auto preset" />
+				<menuitem action="save default preset" />
+				<separator />
+				<menuitem action="save preset file" />
+				<menuitem action="save preset eqf" />
+			</menu>
+
+			<menu action="preset delete menu">
+				<menuitem action="delete preset" />
+				<menuitem action="delete auto preset" />
+			</menu>
+		</menu>
+	</menubar>
+</ui>
