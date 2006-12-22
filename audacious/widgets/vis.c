@@ -200,13 +200,13 @@ vis_draw(Widget * w)
                 switch (cfg.scope_mode) {
                 case SCOPE_DOT:
                     h = vis->vs_data[x];
-                    ptr = rgb_data + ((15 - h) * 76) + x;
-                    *ptr = vis_scope_colors[h];
+                    ptr = rgb_data + ((14 - h) * 76) + x;
+                    *ptr = vis_scope_colors[h + 1];
                     break;
                 case SCOPE_LINE:
                     if (x != 74) {
-                        h = 15 - vis->vs_data[x];
-                        h2 = 15 - vis->vs_data[x + 1];
+                        h = 14 - vis->vs_data[x];
+                        h2 = 14 - vis->vs_data[x + 1];
                         if (h > h2) {
                             y = h;
                             h = h2;
@@ -214,18 +214,18 @@ vis_draw(Widget * w)
                         }
                         ptr = rgb_data + (h * 76) + x;
                         for (y = h; y <= h2; y++, ptr += 76)
-                            *ptr = vis_scope_colors[y - 3];
+                            *ptr = vis_scope_colors[y - 2];
 
                     }
                     else {
-                        h = 15 - vis->vs_data[x];
+                        h = 14 - vis->vs_data[x];
                         ptr = rgb_data + (h * 76) + x;
-                        *ptr = vis_scope_colors[h];
+                        *ptr = vis_scope_colors[h + 1];
                     }
                     break;
                 case SCOPE_SOLID:
-                    h = 15 - vis->vs_data[x];
-                    h2 = 9;
+                    h = 14 - vis->vs_data[x];
+                    h2 = 8;
                     c = vis_scope_colors[(gint) vis->vs_data[x]];
                     if (h > h2) {
                         y = h;
@@ -357,16 +357,16 @@ vis_draw(Widget * w)
                 switch (cfg.scope_mode) {
                 case SCOPE_DOT:
                     h = vis->vs_data[x];
-                    ptr = rgb_data + ((15 - h) * 304) + (x << 1);
-                    *ptr = vis_scope_colors[h];
-                    *(ptr + 1) = vis_scope_colors[h];
-                    *(ptr + 152) = vis_scope_colors[h];
-                    *(ptr + 153) = vis_scope_colors[h];
+                    ptr = rgb_data + ((14 - h) * 304) + (x << 1);
+                    *ptr = vis_scope_colors[h + 1];
+                    *(ptr + 1) = vis_scope_colors[h + 1];
+                    *(ptr + 152) = vis_scope_colors[h + 1];
+                    *(ptr + 153) = vis_scope_colors[h + 1];
                     break;
                 case SCOPE_LINE:
                     if (x != 74) {
-                        h = 15 - vis->vs_data[x];
-                        h2 = 15 - vis->vs_data[x + 1];
+                        h = 14 - vis->vs_data[x];
+                        h2 = 14 - vis->vs_data[x + 1];
                         if (h > h2) {
                             y = h;
                             h = h2;
@@ -374,24 +374,24 @@ vis_draw(Widget * w)
                         }
                         ptr = rgb_data + (h * 304) + (x << 1);
                         for (y = h; y <= h2; y++, ptr += 304) {
-                            *ptr = vis_scope_colors[y - 3];
-                            *(ptr + 1) = vis_scope_colors[y - 3];
-                            *(ptr + 152) = vis_scope_colors[y - 3];
-                            *(ptr + 153) = vis_scope_colors[y - 3];
+                            *ptr = vis_scope_colors[y - 2];
+                            *(ptr + 1) = vis_scope_colors[y - 2];
+                            *(ptr + 152) = vis_scope_colors[y - 2];
+                            *(ptr + 153) = vis_scope_colors[y - 2];
                         }
                     }
                     else {
-                        h = 15 - vis->vs_data[x];
+                        h = 14 - vis->vs_data[x];
                         ptr = rgb_data + (h * 304) + (x << 1);
-                        *ptr = vis_scope_colors[h];
-                        *(ptr + 1) = vis_scope_colors[h];
-                        *(ptr + 152) = vis_scope_colors[h];
-                        *(ptr + 153) = vis_scope_colors[h];
+                        *ptr = vis_scope_colors[h + 1];
+                        *(ptr + 1) = vis_scope_colors[h + 1];
+                        *(ptr + 152) = vis_scope_colors[h + 1];
+                        *(ptr + 153) = vis_scope_colors[h + 1];
                     }
                     break;
                 case SCOPE_SOLID:
-                    h = 15 - vis->vs_data[x];
-                    h2 = 9;
+                    h = 14 - vis->vs_data[x];
+                    h2 = 8;
                     c = vis_scope_colors[(gint) vis->vs_data[x]];
                     if (h > h2) {
                         y = h;

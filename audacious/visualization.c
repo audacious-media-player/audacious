@@ -443,8 +443,10 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
 
         step = (length << 8) / 74;
         for (i = 0, pos = 0; i < 75; i++, pos += step) {
-            intern_vis_data[i] = ((mono_pcm[0][pos >> 8]) >> 11) + 6;
-            if (intern_vis_data[i] > 12)
+            intern_vis_data[i] = ((mono_pcm[0][pos >> 8]) >> 12) + 7;
+            if (intern_vis_data[i] == 255)
+                intern_vis_data[i] = 0;
+            else if (intern_vis_data[i] > 12)
                 intern_vis_data[i] = 12;
             /* Do not see the point of that? (comparison always false) -larne.
                if (intern_vis_data[i] < 0)
