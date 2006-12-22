@@ -88,20 +88,20 @@ static GTimeVal cb_time; /* click delay for tristate is defined by TRISTATE_THRE
 
 #define MAINWIN_VIS_MENU_VIS_MODE               1
 #define MAINWIN_VIS_MENU_NUM_VIS_MODE           4
-#define MAINWIN_VIS_MENU_ANALYZER_MODE          5
+#define MAINWIN_VIS_MENU_ANALYZER_MODE          6
 #define MAINWIN_VIS_MENU_NUM_ANALYZER_MODE      3
-#define MAINWIN_VIS_MENU_ANALYZER_TYPE          9
+#define MAINWIN_VIS_MENU_ANALYZER_TYPE          10
 #define MAINWIN_VIS_MENU_NUM_ANALYZER_TYPE      2
-#define MAINWIN_VIS_MENU_ANALYZER_PEAKS         12
-#define MAINWIN_VIS_MENU_SCOPE_MODE             14
+#define MAINWIN_VIS_MENU_ANALYZER_PEAKS         13
+#define MAINWIN_VIS_MENU_SCOPE_MODE             15
 #define MAINWIN_VIS_MENU_NUM_SCOPE_MODE         3
-#define MAINWIN_VIS_MENU_WSHADEVU_MODE          18
+#define MAINWIN_VIS_MENU_WSHADEVU_MODE          19
 #define MAINWIN_VIS_MENU_NUM_WSHADEVU_MODE      2
-#define MAINWIN_VIS_MENU_REFRESH_RATE           21
+#define MAINWIN_VIS_MENU_REFRESH_RATE           22
 #define MAINWIN_VIS_MENU_NUM_REFRESH_RATE       4
-#define MAINWIN_VIS_MENU_AFALLOFF               26
+#define MAINWIN_VIS_MENU_AFALLOFF               27
 #define MAINWIN_VIS_MENU_NUM_AFALLOFF           5
-#define MAINWIN_VIS_MENU_PFALLOFF               32
+#define MAINWIN_VIS_MENU_PFALLOFF               33
 #define MAINWIN_VIS_MENU_NUM_PFALLOFF           5
 
 #define VOLSET_DISP_TIMES 5

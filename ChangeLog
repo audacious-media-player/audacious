@@ -1,3 +1,11 @@
+2006-12-22 08:32:44 +0000  George Averill <nhjm449@gmail.com>
+  revision [3387]
+  - Updated fix for doublesized, shaded analyzer.
+  
+  trunk/audacious/widgets/svis.c |   27 +++++++++++++++++++--------
+  1 file changed, 19 insertions(+), 8 deletions(-)
+
+
 2006-12-22 08:17:31 +0000  George Averill <nhjm449@gmail.com>
   revision [3385]
   - Fix the number of analyzer bars drawn in shaded mode.
