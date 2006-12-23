@@ -43,7 +43,7 @@ include ../mk/objective.mk
 
 install-posthook:
 	@mv ${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX) ${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX).4.0.0
-	@ln -sf ${LIBDIR}/libaudacious$(SHARED_SUFFIX).4.0.0 \
+	@ln -sf libaudacious$(SHARED_SUFFIX).4.0.0 \
 		${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX).4
-	@ln -sf ${LIBDIR}/libaudacious$(SHARED_SUFFIX).4 \
+	@ln -sf libaudacious$(SHARED_SUFFIX).4 \
 		${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX)
