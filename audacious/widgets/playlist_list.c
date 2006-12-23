@@ -555,7 +555,8 @@ playlist_list_draw(Widget * w)
 
     obj = pl->pl_widget.parent;
 
-    gtk_window_get_size(GTK_WINDOW(playlistwin), &plw_w, &plw_h);
+    plw_w = playlistwin_get_width();
+    plw_h = playlistwin_get_height();
 
     playlist_rect = g_new0(GdkRectangle, 1);
 

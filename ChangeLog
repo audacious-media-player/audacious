@@ -1,3 +1,18 @@
+2006-12-23 04:10:22 +0000  Troels Bang Jensen <marvin@fnuck.dk>
+  revision [3411]
+  - two realcolour modes for voiceprint vis: Fire and Ice
+  - removed duplicate code from vis.c
+  
+  trunk/audacious/main.c          |    2 
+  trunk/audacious/main.h          |    1 
+  trunk/audacious/mainwin.c       |   27 +
+  trunk/audacious/visualization.c |   19 -
+  trunk/audacious/widgets/svis.c  |    4 
+  trunk/audacious/widgets/vis.c   |  581 ++++++++++++++++++++--------------------
+  trunk/audacious/widgets/vis.h   |    5 
+  7 files changed, 348 insertions(+), 291 deletions(-)
+
+
 2006-12-23 01:35:11 +0000  Giacomo Lozito <james@develia.org>
   revision [3409]
   - playlist manager, work done for data consistency; now it should react and update when it is active and playlists are created/modified/deleted outside the manager (i.e. with keyboard shortcuts)
