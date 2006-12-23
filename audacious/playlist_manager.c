@@ -25,9 +25,11 @@
 #include <gtk/gtk.h>
 
 
-/* TODO: we're accessing playlist_ stuff directly here, and storing a pointer to
-     each Playlist. Data consistency should be always checked, cause playlists could
-     be deleted by user without using the playlist manager, while the latter is active */
+#define DISABLE_MANAGER_UPDATE() g_object_set_data(G_OBJECT(listview),"opt1",GINT_TO_POINTER(1))
+#define ENABLE_MANAGER_UPDATE() g_object_set_data(G_OBJECT(listview),"opt1",GINT_TO_POINTER(0))
+
+
+static GtkWidget *playman_win = NULL;
 
 
 enum
@@ -80,10 +82,14 @@ playlist_manager_cb_new ( gpointer listview )
   GtkListStore *store;
   gchar *pl_name = NULL;
 
+  /* this ensures that playlist_manager_update() will
+     not perform update, since we're already doing it here */
+  DISABLE_MANAGER_UPDATE();
+
   newpl = playlist_new();
+  pl_name = (gchar*)playlist_get_current_name( newpl );
   playlists = playlist_get_playlists();
   playlist_add_playlist( newpl );
-  pl_name = (gchar*)playlist_get_current_name( newpl );
 
   store = (GtkListStore*)gtk_tree_view_get_model( GTK_TREE_VIEW(listview) );
   gtk_list_store_append( store , &iter );
@@ -91,6 +97,9 @@ playlist_manager_cb_new ( gpointer listview )
                       PLLIST_COL_NAME , pl_name ,
                       PLLIST_COL_ENTRIESNUM , 0 ,
                       PLLIST_COL_PLPOINTER , newpl , -1 );
+
+  ENABLE_MANAGER_UPDATE();
+
   return;
 }
 
@@ -116,8 +125,11 @@ playlist_manager_cb_del ( gpointer listview )
     if ( playlist == playlist_get_active() )
       playlist_select_next();
 
-    /* TODO: check that playlist has not been freed already!! */
+    /* this ensures that playlist_manager_update() will
+       not perform update, since we're already doing it here */
+    DISABLE_MANAGER_UPDATE();
     playlist_remove_playlist( playlist );
+    ENABLE_MANAGER_UPDATE();
   }
 
   return;
@@ -136,7 +148,6 @@ playlist_manager_cb_lv_dclick ( GtkTreeView * lv , GtkTreePath * path ,
   {
     Playlist *playlist = NULL;
     gtk_tree_model_get( store , &iter , PLLIST_COL_PLPOINTER , &playlist , -1 );
-    /* TODO: check that playlist has not been freed already!! */
     playlist_select_playlist( playlist );
   }
 
@@ -147,7 +158,6 @@ playlist_manager_cb_lv_dclick ( GtkTreeView * lv , GtkTreePath * path ,
 void
 playlist_manager_ui_show ( void )
 {
-  static GtkWidget *playman_win = NULL;
   GtkWidget *playman_vbox;
   GtkWidget *playman_pl_lv, *playman_pl_lv_frame, *playman_pl_lv_sw;
   GtkCellRenderer *playman_pl_lv_textrndr;
@@ -191,6 +201,8 @@ playlist_manager_ui_show ( void )
   playman_pl_lv_frame = gtk_frame_new( NULL );
   playman_pl_lv = gtk_tree_view_new_with_model( GTK_TREE_MODEL(pl_store) );
   g_object_unref( pl_store );
+  g_object_set_data( G_OBJECT(playman_win) , "lv" , playman_pl_lv );
+  g_object_set_data( G_OBJECT(playman_pl_lv) , "opt1" , GINT_TO_POINTER(0) );
   playman_pl_lv_textrndr = gtk_cell_renderer_text_new();
   playman_pl_lv_col_name = gtk_tree_view_column_new_with_attributes(
     _("Playlist") , playman_pl_lv_textrndr , "text" , PLLIST_COL_NAME , NULL );
@@ -232,4 +244,30 @@ playlist_manager_ui_show ( void )
                             G_CALLBACK(gtk_widget_destroy) , playman_win );
 
   gtk_widget_show_all( playman_win );
+}
+
+
+void
+playlist_manager_update ( void )
+{
+  /* this function is called whenever there is a change in playlist, such as
+     playlist created/deleted or entry added/deleted in a playlist; if the playlist
+     manager is active, it should be updated to keep consistency of information */
+
+  /* CAREFUL! this currently locks/unlocks all the playlists */
+
+  if ( playman_win != NULL )
+  {
+    GtkWidget *lv = (GtkWidget*)g_object_get_data( G_OBJECT(playman_win) , "lv" );
+    if ( GPOINTER_TO_INT(g_object_get_data(G_OBJECT(lv),"opt1")) == 0 )
+    {
+      GtkListStore *store = (GtkListStore*)gtk_tree_view_get_model( GTK_TREE_VIEW(lv) );
+      /* TODO: this re-populates everything... there's definitely room for optimization */
+      gtk_list_store_clear( store );
+      playlist_manager_populate( store );
+    }
+    return;
+  }
+  else
+    return; /* if the playlist manager is not active, simply return */
 }

@@ -58,6 +58,7 @@
 #include "playback.h"
 #include "playlist.h"
 #include "playlist_container.h"
+#include "playlist_manager.h"
 #include "ui_playlist.h"
 #include "util.h"
 #include "ui_fileinfo.h"
@@ -242,6 +243,8 @@ playlist_add_playlist(Playlist *playlist)
 
     if (playlists_iter == NULL)
         playlists_iter = playlists;
+
+    playlist_manager_update();
 }
 
 void
@@ -254,6 +257,8 @@ playlist_remove_playlist(Playlist *playlist)
 
     if (playlists_iter == NULL)
         playlists_iter = playlists;
+
+    playlist_manager_update();
 }
 
 GList *
@@ -375,6 +380,7 @@ playlist_clear(Playlist *playlist)
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
+    playlist_manager_update();
 }
 
 static void
@@ -470,6 +476,8 @@ playlist_delete_index(Playlist *playlist, guint pos)
     else if (set_info_text) {
         mainwin_set_info_text();
     }
+
+    playlist_manager_update();
 }
 
 void
@@ -511,6 +519,7 @@ playlist_delete_filenames(Playlist * playlist, GList * filenames)
         mainwin_set_info_text();
     }
 
+    playlist_manager_update();
 }
 
 void
@@ -556,6 +565,7 @@ playlist_delete(Playlist * playlist, gboolean crop)
     }
 
     playlistwin_update_list(playlist);
+    playlist_manager_update();
 }
 
 static void
@@ -623,6 +633,7 @@ __playlist_ins(Playlist * playlist, const gchar * filename, gint pos, InputPlugi
 {
     __playlist_ins_with_info(playlist, filename, pos, NULL, -1, dec);
     playlist_recalc_total_time(playlist);
+    playlist_manager_update();
 }
 
 gboolean
@@ -857,6 +868,7 @@ playlist_ins_dir(Playlist * playlist, const gchar * path,
     playlist_recalc_total_time(playlist);
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list(playlist);
+    playlist_manager_update();
     return entries;
 }
 
@@ -924,6 +936,8 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
     playlist_recalc_total_time(playlist);
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list(playlist);
+
+    playlist_manager_update();
 
     return entries;
 }
@@ -2172,6 +2186,7 @@ playlist_clear_selected(Playlist *playlist)
     }
     PLAYLIST_UNLOCK(playlist->mutex);
     playlist_recalc_total_time(playlist);
+    playlist_manager_update();
 }
 
 gint
@@ -2527,6 +2542,7 @@ playlist_remove_dead_files(Playlist *playlist)
     playlist_generate_shuffle_list(playlist);
     playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
+    playlist_manager_update();
 }
 
 
@@ -2660,6 +2676,8 @@ playlist_remove_duplicates(Playlist *playlist, PlaylistDupsType type)
 
     playlistwin_update_list(playlist);
     playlist_recalc_total_time(playlist);
+
+    playlist_manager_update();
 }
 
 void
@@ -3072,6 +3090,8 @@ playlist_new_from_selected(void)
 
     playlist_recalc_total_time(newpl);
     playlistwin_update_list(playlist);
+
+    return newpl;
 }
 
 const gchar *

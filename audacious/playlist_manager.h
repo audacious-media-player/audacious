@@ -21,6 +21,7 @@
 #ifndef PLAYLISTMANAGER_H
 #define PLAYLISTMANAGER_H
 
+void playlist_manager_update ( void );
 void playlist_manager_ui_show ( void );
 
 #endif

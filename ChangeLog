@@ -1,3 +1,14 @@
+2006-12-23 00:29:35 +0000  Giacomo Lozito <james@develia.org>
+  revision [3407]
+  - added initial code for playlist manager, that allows to create, delete and switch playlists
+  trunk/audacious/Makefile           |    2 
+  trunk/audacious/playlist_manager.c |  235 +++++++++++++++++++++++++++++++++++++
+  trunk/audacious/playlist_manager.h |   26 ++++
+  trunk/audacious/ui/playlist.ui     |    2 
+  trunk/audacious/ui_playlist.c      |   12 +
+  5 files changed, 277 insertions(+)
+
+
 2006-12-22 22:58:16 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3405]
   - fix equalizer motion response in doublesize
