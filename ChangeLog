@@ -1,3 +1,17 @@
+2006-12-23 11:47:44 +0000  Giacomo Lozito <james@develia.org>
+  revision [3415]
+  - added audacious stock icons; source files wanting to use them must include icons-stock.h; removed obsolete pixmaps.h
+  trunk/audacious/Makefile           |    4 
+  trunk/audacious/icons-csource.h    |  949 +++++++++++++++++++++++++++++++++++++
+  trunk/audacious/icons-stock.h      |   38 +
+  trunk/audacious/main.c             |   60 ++
+  trunk/audacious/mainwin.c          |    6 
+  trunk/audacious/pixmaps.h          |  949 -------------------------------------
+  trunk/audacious/playlist_manager.h |    7 
+  trunk/audacious/ui_playlist.c      |   60 +-
+  8 files changed, 1084 insertions(+), 989 deletions(-)
+
+
 2006-12-23 08:20:59 +0000  George Averill <nhjm449@gmail.com>
   revision [3413]
   - Correctly set the size of playlistwin_list on startup/etc.

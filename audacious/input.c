@@ -538,7 +538,7 @@ input_get_song_info(const gchar * filename, gchar ** title, gint * length)
 
         input->file_name = g_path_get_basename(tmp);
         input->file_ext = ext ? ext + 1 : NULL;
-        input->file_path = tmp;
+        input->file_path = g_path_get_dirname(tmp);
 
         if ((tmp = xmms_get_titlestring(xmms_get_gentitle_format(), input))) {
             (*title) = str_to_utf8(tmp);
@@ -587,7 +587,7 @@ input_get_song_tuple(const gchar * filename)
 	input_get_song_info(filename, &input->track_name, &input->length);
         input->file_name = g_path_get_basename(tmp);
         input->file_ext = ext ? ext + 1 : NULL;
-        input->file_path = tmp;
+        input->file_path = g_path_get_dirname(tmp);
     }
 
     return input;
