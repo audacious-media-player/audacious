@@ -40,7 +40,9 @@ HEADERS = \
 	prefswin.h \
 	util.h \
 	vfs.h \
-	vfs_buffer.h
+	vfs_buffer.h \
+	icons-csource.h \
+	icons-stock.h
 
 SOURCES = \
 	build_stamp.c \

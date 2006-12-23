@@ -50,7 +50,7 @@
 #include "playlist_manager.h"
 #include "util.h"
 
-#include "pixmaps.h"
+#include "icons-stock.h"
 #include "images/audacious_playlist.xpm"
 
 GtkWidget *playlistwin;
@@ -148,7 +148,7 @@ static GtkActionEntry playlistwin_actions[] = {
 	  N_("Saves the selected playlist to the default location."),
 	  G_CALLBACK(action_save_default_list) },
 
-	{ "list manager", GTK_STOCK_SAVE, N_("List Manager"), "P",
+	{ "list manager", AUD_STOCK_PLAYLIST , N_("List Manager"), "P",
 	  N_("Opens the playlist manager."),
 	  G_CALLBACK(action_open_list_manager) },
 
@@ -162,15 +162,15 @@ static GtkActionEntry playlistwin_actions[] = {
 	  N_("Searches the playlist and selects playlist entries based on specific criteria."),
 	  G_CALLBACK(action_search_and_select) },
 
-	{ "invert selection", NULL, N_("Invert Selection"), NULL,
+	{ "invert selection", AUD_STOCK_SELECTINVERT , N_("Invert Selection"), NULL,
 	  N_("Inverts the selected and unselected entries."),
 	  G_CALLBACK(action_invert_selection) },
 
-	{ "select all", NULL, N_("Select All"), "<Ctrl>A",
+	{ "select all", AUD_STOCK_SELECTALL , N_("Select All"), "<Ctrl>A",
 	  N_("Selects all of the playlist entries."),
 	  G_CALLBACK(action_select_all) },
 
-	{ "select none", NULL, N_("Select None"), "<Shift><Ctrl>A",
+	{ "select none", AUD_STOCK_SELECTNONE , N_("Select None"), "<Shift><Ctrl>A",
 	  N_("Deselects all of the playlist entries."),
 	  G_CALLBACK(action_select_none) },
 
@@ -180,21 +180,21 @@ static GtkActionEntry playlistwin_actions[] = {
 	  N_("Clears the queue associated with this playlist."),
 	  G_CALLBACK(action_clear_queue) },
 
-	{ "remove unavailable", NULL, N_("Remove Unavailable Files"), NULL,
+	{ "remove unavailable", AUD_STOCK_REMOVEUNAVAIL , N_("Remove Unavailable Files"), NULL,
 	  N_("Removes unavailable files from the playlist."),
 	  G_CALLBACK(action_remove_unavailable) },
 
-	{ "remove duplicates menu", NULL, N_("Remove Duplicates") },
+	{ "remove duplicates menu", AUD_STOCK_REMOVEDUPS , N_("Remove Duplicates") },
 
-	{ "remove by title", NULL, N_("By Title"), NULL,
+	{ "remove by title", AUD_STOCK_REMOVEDUPS , N_("By Title"), NULL,
 	  N_("Removes duplicate entries from the playlist by title."),
 	  G_CALLBACK(action_remove_dupes_by_title) },
 
-	{ "remove by filename", NULL, N_("By Filename"), NULL, 
+	{ "remove by filename", AUD_STOCK_REMOVEDUPS , N_("By Filename"), NULL, 
 	  N_("Removes duplicate entries from the playlist by filename."),
 	  G_CALLBACK(action_remove_dupes_by_filename) },
 
-	{ "remove by full path", NULL, N_("By Path + Filename"), NULL, 
+	{ "remove by full path", AUD_STOCK_REMOVEDUPS , N_("By Path + Filename"), NULL, 
 	  N_("Removes duplicate entries from the playlist by their full path."),
 	  G_CALLBACK(action_remove_dupes_by_full_path) },
 
@@ -226,81 +226,81 @@ static GtkActionEntry playlistwin_actions[] = {
 
 	/* **************** sort menu **************** */
 
-	{ "randomize list", NULL, N_("Randomize List"), "<Ctrl><Shift>R",
+	{ "randomize list", AUD_STOCK_RANDOMIZEPL , N_("Randomize List"), "<Ctrl><Shift>R",
 	  N_("Randomizes the playlist."),
 	  G_CALLBACK(action_randomize_list) },
 
-	{ "reverse list", NULL, N_("Reverse List"), NULL,
+	{ "reverse list", AUD_STOCK_INVERTPL , N_("Reverse List"), NULL,
 	  N_("Reverses the playlist."),
 	  G_CALLBACK(action_reverse_list) },
 
-	{ "sort menu", NULL, N_("Sort List") },
+	{ "sort menu", AUD_STOCK_SORTBYTITLE , N_("Sort List") },
 
-	{ "sort by title", NULL, N_("By Title"), NULL,
+	{ "sort by title", AUD_STOCK_SORTBYTITLE , N_("By Title"), NULL,
 	  N_("Sorts the list by title."),
 	  G_CALLBACK(action_sort_by_title) },
 
-	{ "sort by artist", NULL, N_("By Artist"), NULL,
+	{ "sort by artist", AUD_STOCK_SORTBYARTIST , N_("By Artist"), NULL,
 	  N_("Sorts the list by artist."),
 	  G_CALLBACK(action_sort_by_artist) },
 
-	{ "sort by filename", NULL, N_("By Filename"), NULL,
+	{ "sort by filename", AUD_STOCK_SORTBYFILENAME , N_("By Filename"), NULL,
 	  N_("Sorts the list by filename."),
 	  G_CALLBACK(action_sort_by_filename) },
 
-	{ "sort by full path", NULL, N_("By Path + Filename"), NULL,
+	{ "sort by full path", AUD_STOCK_SORTBYPATHFILE , N_("By Path + Filename"), NULL,
 	  N_("Sorts the list by full pathname."),
 	  G_CALLBACK(action_sort_by_full_path) },
 
-	{ "sort by date", NULL, N_("By Date"), NULL,
+	{ "sort by date", AUD_STOCK_SORTBYARTIST , N_("By Date"), NULL,
 	  N_("Sorts the list by modification time."),
 	  G_CALLBACK(action_sort_by_date) },
 
-	{ "sort by track number", NULL, N_("By Track Number"), NULL,
+	{ "sort by track number", AUD_STOCK_SORTBYFILENAME , N_("By Track Number"), NULL,
 	  N_("Sorts the list by track number."),
 	  G_CALLBACK(action_sort_by_track_number) },
 
-	{ "sort by playlist entry", NULL, N_("By Playlist Entry"), NULL,
+	{ "sort by playlist entry", AUD_STOCK_SORTBYPATHFILE , N_("By Playlist Entry"), NULL,
 	  N_("Sorts the list by playlist entry."),
 	  G_CALLBACK(action_sort_by_playlist_entry) },
 
-	{ "sort selected menu", NULL, N_("Sort Selected") },
+	{ "sort selected menu", AUD_STOCK_SORTBYTITLE , N_("Sort Selected") },
 
-	{ "sort selected by title", NULL, N_("By Title"), NULL,
+	{ "sort selected by title", AUD_STOCK_SORTBYTITLE , N_("By Title"), NULL,
 	  N_("Sorts the list by title."),
 	  G_CALLBACK(action_sort_selected_by_title) },
 
-	{ "sort selected by artist", NULL, N_("By Artist"), NULL,
+	{ "sort selected by artist", AUD_STOCK_SORTBYARTIST, N_("By Artist"), NULL,
 	  N_("Sorts the list by artist."),
 	  G_CALLBACK(action_sort_selected_by_artist) },
 
-	{ "sort selected by filename", NULL, N_("By Filename"), NULL,
+	{ "sort selected by filename", AUD_STOCK_SORTBYFILENAME , N_("By Filename"), NULL,
 	  N_("Sorts the list by filename."),
 	  G_CALLBACK(action_sort_selected_by_filename) },
 
-	{ "sort selected by full path", NULL, N_("By Path + Filename"), NULL,
+	{ "sort selected by full path", AUD_STOCK_SORTBYPATHFILE , N_("By Path + Filename"), NULL,
 	  N_("Sorts the list by full pathname."),
 	  G_CALLBACK(action_sort_selected_by_full_path) },
 
-	{ "sort selected by date", NULL, N_("By Date"), NULL,
+	{ "sort selected by date", AUD_STOCK_SORTBYARTIST , N_("By Date"), NULL,
 	  N_("Sorts the list by modification time."),
 	  G_CALLBACK(action_sort_selected_by_date) },
 
-	{ "sort selected by track number", NULL, N_("By Track Number"), NULL,
+	{ "sort selected by track number", AUD_STOCK_SORTBYFILENAME , N_("By Track Number"), NULL,
 	  N_("Sorts the list by track number."),
 	  G_CALLBACK(action_sort_selected_by_track_number) },
 
-	{ "sort selected by playlist entry", NULL, N_("By Playlist Entry"), NULL,
+	{ "sort selected by playlist entry", AUD_STOCK_SORTBYPATHFILE, N_("By Playlist Entry"), NULL,
 	  N_("Sorts the list by playlist entry."),
 	  G_CALLBACK(action_sort_selected_by_playlist_entry) },
 
 	/* stuff used in rightclick menu, but not yet covered */
 
-	{ "view track info", NULL, N_("View Track Details"), "<Alt>I",
+	{ "view track info", AUD_STOCK_INFO , N_("View Track Details"), "<Alt>I",
 	  N_("Displays track information."),
 	  G_CALLBACK(action_view_track_info) },
 
-	{ "queue toggle", NULL, N_("Queue Toggle"), "Q", 
+	{ "queue toggle", AUD_STOCK_QUEUETOGGLE , N_("Queue Toggle"), "Q", 
 	  N_("Enables/disables the entry in the playlist's queue."),
 	  G_CALLBACK(action_queue_toggle) },
 };

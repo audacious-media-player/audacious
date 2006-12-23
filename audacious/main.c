@@ -73,7 +73,8 @@
 #include "ui_fileinfo.h"
 #include "signals.h"
 
-#include "pixmaps.h"
+#include "icons-csource.h"
+#include "icons-stock.h"
 #include "images/audacious_player.xpm"
 
 gboolean has_x11_connection = FALSE; 	/* do we have an X11 connection? */
@@ -730,6 +731,61 @@ bmp_set_default_icon(void)
 }
 
 static void
+register_aud_stock_icons(void)
+{
+  GtkIconFactory *iconfactory = gtk_icon_factory_new();
+  GtkIconSet *iconset;
+  GdkPixbuf *pixbuf;
+
+  /* pick images in icons-csource.h */
+  pixbuf = gdk_pixbuf_new_from_inline( -1 , removedups_pixbuf , FALSE , NULL );
+   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
+   gtk_icon_factory_add( iconfactory , AUD_STOCK_REMOVEDUPS , iconset );
+  pixbuf = gdk_pixbuf_new_from_inline( -1 , removeunavail_pixbuf , FALSE , NULL );
+   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
+   gtk_icon_factory_add( iconfactory , AUD_STOCK_REMOVEUNAVAIL , iconset );
+  pixbuf = gdk_pixbuf_new_from_inline( -1 , randomizepl_pixbuf , FALSE , NULL );
+   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
+   gtk_icon_factory_add( iconfactory , AUD_STOCK_RANDOMIZEPL , iconset );
+  pixbuf = gdk_pixbuf_new_from_inline( -1 , sortbytitle_pixbuf , FALSE , NULL );
+   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
+   gtk_icon_factory_add( iconfactory , AUD_STOCK_SORTBYTITLE , iconset );
+  pixbuf = gdk_pixbuf_new_from_inline( -1 , sortbyfilename_pixbuf , FALSE , NULL );
+   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
+   gtk_icon_factory_add( iconfactory , AUD_STOCK_SORTBYFILENAME , iconset );
+  pixbuf = gdk_pixbuf_new_from_inline( -1 , sortbyartist_pixbuf , FALSE , NULL );
+   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
+   gtk_icon_factory_add( iconfactory , AUD_STOCK_SORTBYARTIST , iconset );
+  pixbuf = gdk_pixbuf_new_from_inline( -1 , sortbypathfile_pixbuf , FALSE , NULL );
+   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
+   gtk_icon_factory_add( iconfactory , AUD_STOCK_SORTBYPATHFILE , iconset );
+  pixbuf = gdk_pixbuf_new_from_inline( -1 , selectnone_pixbuf , FALSE , NULL );
+   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
+   gtk_icon_factory_add( iconfactory , AUD_STOCK_SELECTNONE , iconset );
+  pixbuf = gdk_pixbuf_new_from_inline( -1 , selectall_pixbuf , FALSE , NULL );
+   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
+   gtk_icon_factory_add( iconfactory , AUD_STOCK_SELECTALL , iconset );
+  pixbuf = gdk_pixbuf_new_from_inline( -1 , selectinvert_pixbuf , FALSE , NULL );
+   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
+   gtk_icon_factory_add( iconfactory , AUD_STOCK_SELECTINVERT , iconset );
+  pixbuf = gdk_pixbuf_new_from_inline( -1 , invertpl_pixbuf , FALSE , NULL );
+   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
+   gtk_icon_factory_add( iconfactory , AUD_STOCK_INVERTPL , iconset );
+  pixbuf = gdk_pixbuf_new_from_inline( -1 , queuetoggle_pixbuf , FALSE , NULL );
+   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
+   gtk_icon_factory_add( iconfactory , AUD_STOCK_QUEUETOGGLE , iconset );
+  pixbuf = gdk_pixbuf_new_from_inline( -1 , info_pixbuf , FALSE , NULL );
+   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
+   gtk_icon_factory_add( iconfactory , AUD_STOCK_INFO , iconset );
+  pixbuf = gdk_pixbuf_new_from_inline( -1 , playlist_pixbuf , FALSE , NULL );
+   iconset = gtk_icon_set_new_from_pixbuf( pixbuf ); g_object_unref( pixbuf );
+   gtk_icon_factory_add( iconfactory , AUD_STOCK_PLAYLIST , iconset );
+
+  gtk_icon_factory_add_default( iconfactory );
+  g_object_unref( iconfactory );
+}
+
+static void
 display_usage(void)
 {
     g_print(_("Usage: audacious [options] [files] ...\n\n"
@@ -1098,6 +1154,8 @@ main(gint argc, gchar ** argv)
 
     if (options.headless != 1)
     {
+        /* register icons in stock */
+        register_aud_stock_icons();
 
         bmp_set_default_icon();
 

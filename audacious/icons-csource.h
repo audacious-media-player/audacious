@@ -4,9 +4,9 @@
 #pragma align 4 (my_pixbuf)
 #endif
 #ifdef __GNUC__
-static const guint8 my_pixbuf[] __attribute__ ((__aligned__ (4))) = 
+static const guint8 info_pixbuf[] __attribute__ ((__aligned__ (4))) = 
 #else
-static const guint8 my_pixbuf[] = 
+static const guint8 info_pixbuf[] = 
 #endif
 { ""
   /* Pixbuf magic (0x47646b50) */
@@ -532,12 +532,12 @@ static const guint8 sortbypathfile_pixbuf[] =
 /* GdkPixbuf RGBA C-Source image dump */
 
 #ifdef __SUNPRO_C
-#pragma align 4 (sortbydate_pixbuf)
+#pragma align 4 (sortbyartist_pixbuf)
 #endif
 #ifdef __GNUC__
-static const guint8 sortbydate_pixbuf[] __attribute__ ((__aligned__ (4))) = 
+static const guint8 sortbyartist_pixbuf[] __attribute__ ((__aligned__ (4))) = 
 #else
-static const guint8 sortbydate_pixbuf[] = 
+static const guint8 sortbyartist_pixbuf[] = 
 #endif
 { ""
   /* Pixbuf magic (0x47646b50) */

@@ -15,10 +15,24 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef PLAYLISTMANAGER_H
-#define PLAYLISTMANAGER_H
+#ifndef ICONSSTOCK_H
+#define ICONSSTOCK_H
 
-void playlist_manager_update ( void );
-void playlist_manager_ui_show ( void );
+/* this header contains macro defines for Audacious stock icons */
+
+#define AUD_STOCK_INFO			"aud-info"
+#define AUD_STOCK_INVERTPL		"aud-invertpl"
+#define AUD_STOCK_PLAYLIST		"aud-playlist"
+#define AUD_STOCK_QUEUETOGGLE		"aud-queuetoggle"
+#define AUD_STOCK_RANDOMIZEPL		"aud-randomizepl"
+#define AUD_STOCK_REMOVEDUPS		"aud-removedups"
+#define AUD_STOCK_REMOVEUNAVAIL		"aud-removeunavail"
+#define AUD_STOCK_SELECTALL		"aud-selectall"
+#define AUD_STOCK_SELECTINVERT		"aud-selectinvert"
+#define AUD_STOCK_SELECTNONE		"aud-selectnone"
+#define AUD_STOCK_SORTBYARTIST		"aud-sortbydate"
+#define AUD_STOCK_SORTBYFILENAME	"aud-sortbyfilename"
+#define AUD_STOCK_SORTBYPATHFILE	"aud-sortbypathfile"
+#define AUD_STOCK_SORTBYTITLE		"aud-sortbytitle"
 
 #endif
