@@ -83,7 +83,7 @@ static GTimeVal cb_time; /* click delay for tristate is defined by TRISTATE_THRE
 #define TRISTATE_THRESHOLD 200
 
 /*
- * If you change the menu above change these defines also
+ * If you change the menu below change these defines also
  */
 
 #define MAINWIN_VIS_MENU_VIS_MODE               1
@@ -95,13 +95,15 @@ static GTimeVal cb_time; /* click delay for tristate is defined by TRISTATE_THRE
 #define MAINWIN_VIS_MENU_ANALYZER_PEAKS         13
 #define MAINWIN_VIS_MENU_SCOPE_MODE             15
 #define MAINWIN_VIS_MENU_NUM_SCOPE_MODE         3
-#define MAINWIN_VIS_MENU_WSHADEVU_MODE          19
+#define MAINWIN_VIS_MENU_VOICEPRINT_MODE        19
+#define MAINWIN_VIS_MENU_NUM_VOICEPRINT_MODE    3
+#define MAINWIN_VIS_MENU_WSHADEVU_MODE          23
 #define MAINWIN_VIS_MENU_NUM_WSHADEVU_MODE      2
-#define MAINWIN_VIS_MENU_REFRESH_RATE           22
+#define MAINWIN_VIS_MENU_REFRESH_RATE           26
 #define MAINWIN_VIS_MENU_NUM_REFRESH_RATE       4
-#define MAINWIN_VIS_MENU_AFALLOFF               27
+#define MAINWIN_VIS_MENU_AFALLOFF               31
 #define MAINWIN_VIS_MENU_NUM_AFALLOFF           5
-#define MAINWIN_VIS_MENU_PFALLOFF               33
+#define MAINWIN_VIS_MENU_PFALLOFF               37
 #define MAINWIN_VIS_MENU_NUM_PFALLOFF           5
 
 #define VOLSET_DISP_TIMES 5
@@ -138,6 +140,7 @@ enum {
     MAINWIN_VIS_ANALYZER_LINES, MAINWIN_VIS_ANALYZER_BARS,
     MAINWIN_VIS_ANALYZER_PEAKS,
     MAINWIN_VIS_SCOPE_DOT, MAINWIN_VIS_SCOPE_LINE, MAINWIN_VIS_SCOPE_SOLID,
+    MAINWIN_VIS_VOICEPRINT_NORMAL, MAINWIN_VIS_VOICEPRINT_FIRE, MAINWIN_VIS_VOICEPRINT_ICE,
     MAINWIN_VIS_VU_NORMAL, MAINWIN_VIS_VU_SMOOTH,
     MAINWIN_VIS_REFRESH_FULL, MAINWIN_VIS_REFRESH_HALF,
     MAINWIN_VIS_REFRESH_QUARTER, MAINWIN_VIS_REFRESH_EIGHTH,
@@ -301,6 +304,13 @@ GtkItemFactoryEntry mainwin_vis_menu_entries[] = {
      MAINWIN_VIS_SCOPE_LINE, "/Scope Mode/Dot Scope", NULL},
     {N_("/Scope Mode/Solid Scope"), NULL, mainwin_vis_menu_callback,
      MAINWIN_VIS_SCOPE_SOLID, "/Scope Mode/Dot Scope", NULL},
+    {N_("/Voiceprint mode"), NULL, NULL, 0, "<Branch>", NULL},
+    {N_("/Voiceprint mode/Normal"), NULL, mainwin_vis_menu_callback,
+    MAINWIN_VIS_VOICEPRINT_NORMAL, "<RadioItem>", NULL},
+    {N_("/Voiceprint mode/Fire"), NULL, mainwin_vis_menu_callback,
+    MAINWIN_VIS_VOICEPRINT_FIRE, "/Voiceprint mode/Normal", NULL},
+    {N_("/Voiceprint mode/Ice"), NULL, mainwin_vis_menu_callback,
+    MAINWIN_VIS_VOICEPRINT_ICE, "/Voiceprint mode/Normal", NULL},
     {N_("/WindowShade VU Mode"), NULL, NULL, 0, "<Branch>", NULL},
     {N_("/WindowShade VU Mode/Normal"), NULL, mainwin_vis_menu_callback,
      MAINWIN_VIS_VU_NORMAL, "<RadioItem>", NULL},
@@ -2976,7 +2986,7 @@ mainwin_vis_menu_callback(gpointer data,
                           guint action,
                           GtkWidget * item)
 {
-    switch (action) {
+  switch (action) {
     case MAINWIN_VIS_ANALYZER:
     case MAINWIN_VIS_SCOPE:
     case MAINWIN_VIS_VOICEPRINT:
@@ -2999,6 +3009,11 @@ mainwin_vis_menu_callback(gpointer data,
     case MAINWIN_VIS_SCOPE_LINE:
     case MAINWIN_VIS_SCOPE_SOLID:
         cfg.scope_mode = action - MAINWIN_VIS_SCOPE_DOT;
+        break;
+    case MAINWIN_VIS_VOICEPRINT_NORMAL:
+    case MAINWIN_VIS_VOICEPRINT_FIRE:
+    case MAINWIN_VIS_VOICEPRINT_ICE:
+        cfg.voiceprint_mode = action - MAINWIN_VIS_VOICEPRINT_NORMAL;
         break;
     case MAINWIN_VIS_VU_NORMAL:
     case MAINWIN_VIS_VU_SMOOTH:

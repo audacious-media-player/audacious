@@ -425,12 +425,19 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
 	  if (!mono_freq_calced)
 	    calc_mono_freq(mono_freq, pcm_data, nch);
 	  memset(intern_vis_data, 0, 256);
-	  /* Subsampling; 8 frequencies per sample*/
-	  for(i = 0; i < 256 ; i++)
-	    intern_vis_data[i>>2] += (mono_freq[0][i] >> 8);
-	  /* Nonlinear transfer function makes the tones stand out*/
-	  //for(i = 0; i < 16 ; i++)
-	  // intern_vis_data[i] = pow(1.2, intern_vis_data[i]);
+	  /* For the values [0-16] we use the frequency that's 3/2 as much.
+	  If we assume the 512 values calculated by calc_mono_freq to cover 0-22kHz linearly
+	  we get a range of [0-16] * 3/2 * 22000/512 = [0-1,031] Hz.
+	  Most stuff above that is harmonics and we want to utilize the 16 samples we have
+	  to the max[tm]
+	  */
+	  for(i = 0; i < 50 ; i+=3){
+	    intern_vis_data[i/3] += (mono_freq[0][i/2] >> 5);
+	    
+	    /*Boost frequencies above 257Hz a little*/
+	    //if(i > 4 * 3)
+	    //  intern_vis_data[i/3] += 8;
+	  }
 	}
     }
     else { /* (cfg.vis_type == VIS_SCOPE) */

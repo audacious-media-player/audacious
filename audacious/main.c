@@ -174,6 +174,7 @@ BmpConfig bmp_default_config = {
     ANALYZER_NORMAL,            /* analyzer mode */
     ANALYZER_BARS,              /* analyzer type */
     SCOPE_DOT,                  /* scope mode */
+    VOICEPRINT_NORMAL,          /* voiceprint mode */
     VU_SMOOTH,                  /* VU mode */
     REFRESH_FULL,               /* visualizer refresh rate */
     FALLOFF_FAST,               /* analyzer fall off rate */
@@ -323,6 +324,7 @@ static bmp_cfg_nument bmp_numents[] = {
     {"analyzer_type", &cfg.analyzer_type, TRUE},
     {"scope_mode", &cfg.scope_mode, TRUE},
     {"vu_mode", &cfg.vu_mode, TRUE},
+    {"voiceprint_mode", &cfg.voiceprint_mode, TRUE},
     {"vis_refresh_rate", &cfg.vis_refresh, TRUE},
     {"analyzer_falloff", &cfg.analyzer_falloff, TRUE},
     {"peaks_falloff", &cfg.peaks_falloff, TRUE},

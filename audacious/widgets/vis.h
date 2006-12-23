@@ -46,6 +46,10 @@ typedef enum {
 typedef enum {
     SCOPE_DOT, SCOPE_LINE, SCOPE_SOLID
 } ScopeMode;
+typedef enum {
+  VOICEPRINT_NORMAL, VOICEPRINT_FIRE, VOICEPRINT_ICE
+} VoiceprintMode;
+
 
 typedef enum {
     VU_NORMAL, VU_SMOOTH
@@ -73,6 +77,7 @@ struct _Vis {
 typedef struct _Vis Vis;
 
 void vis_draw(Widget * w);
+void vis_draw_pixel(Vis * vis, guchar *texture, gint x, gint y, guint8 colour);
 
 Vis *create_vis(GList ** wlist, GdkPixmap * parent, GdkWindow * window,
                 GdkGC * gc, gint x, gint y, gint width, gboolean doublesize);

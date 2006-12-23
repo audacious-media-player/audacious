@@ -119,7 +119,7 @@ svis_draw(Widget * w)
 
     if (!cfg.doublesize) {
       memset(rgb_data, 0, SVIS_WIDTH * SVIS_HEIGHT);
-      if (cfg.vis_type == VIS_ANALYZER) {
+      if (cfg.vis_type == VIS_ANALYZER  && !bmp_playback_get_paused() && bmp_playback_get_playing()){
 	for(y=0; y < SVIS_HEIGHT; y++){
 	  if (cfg.analyzer_type == ANALYZER_BARS){
 	    for(x=0;x< SVIS_WIDTH; x++){
@@ -188,7 +188,7 @@ svis_draw(Widget * w)
     else {                      /* doublesize */
 
         memset(rgb_data, 0, SVIS_WIDTH * 2 * SVIS_HEIGHT * 2);
-        if (cfg.vis_type == VIS_ANALYZER) {
+        if (cfg.vis_type == VIS_ANALYZER && !bmp_playback_get_paused() && bmp_playback_get_playing()){
 	  for(y=0; y < SVIS_HEIGHT; y++){
             if (cfg.analyzer_type == ANALYZER_BARS){
               for(x=0;x< SVIS_WIDTH; x++){

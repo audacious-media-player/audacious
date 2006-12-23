@@ -97,6 +97,7 @@ struct _BmpConfig {
     gint vis_type;
     gint analyzer_mode, analyzer_type;
     gint scope_mode;
+    gint voiceprint_mode;
     gint vu_mode, vis_refresh;
     gint analyzer_falloff, peaks_falloff;
     gint playlist_position;
