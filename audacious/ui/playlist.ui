@@ -73,6 +73,8 @@
 			<menuitem action="save list" />
 			<menuitem action="save default list" />
 			<separator />
+			<menuitem action="list manager" />
+			<separator />
 			<menuitem action="refresh list" />
 		</menu>
 	</menubar>

@@ -35,6 +35,7 @@ HEADERS = \
 	output.h \
 	playlist.h \
 	playlist_container.h \
+	playlist_manager.h \
 	plugin.h \
 	prefswin.h \
 	util.h \
@@ -57,6 +58,7 @@ SOURCES = \
 	pluginenum.c \
 	playlist.c \
 	playlist_container.c \
+	playlist_manager.c \
 	controlsocket.c \
 	dock.c \
 	playback.c \

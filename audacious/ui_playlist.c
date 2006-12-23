@@ -47,6 +47,7 @@
 #include "playback.h"
 #include "playlist.h"
 #include "playlist_container.h"
+#include "playlist_manager.h"
 #include "util.h"
 
 #include "pixmaps.h"
@@ -86,6 +87,7 @@ static void action_new_list(void);
 static void action_load_list(void);
 static void action_save_list(void);
 static void action_save_default_list(void);
+static void action_open_list_manager(void);
 static void action_refresh_list(void);
 
 static void action_search_and_select(void);
@@ -145,6 +147,10 @@ static GtkActionEntry playlistwin_actions[] = {
 	{ "save default list", GTK_STOCK_SAVE, N_("Save Default List"), "<Alt>S",
 	  N_("Saves the selected playlist to the default location."),
 	  G_CALLBACK(action_save_default_list) },
+
+	{ "list manager", GTK_STOCK_SAVE, N_("List Manager"), "P",
+	  N_("Opens the playlist manager."),
+	  G_CALLBACK(action_open_list_manager) },
 
 	{ "refresh list", GTK_STOCK_REFRESH, N_("Refresh List"), "F5",
 	  N_("Refreshes metadata associated with a playlist entry."),
@@ -2383,6 +2389,12 @@ action_refresh_list(void)
 
     playlist_read_info_selection(playlist);
     playlistwin_update_list(playlist);
+}
+
+static void
+action_open_list_manager(void)
+{
+    playlist_manager_ui_show();
 }
 
 static void
