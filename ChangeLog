@@ -1,3 +1,12 @@
+2006-12-24 07:38:02 +0000  George Averill <nhjm449@gmail.com>
+  revision [3421]
+  - Center new windows so they don't get cut off by the edge of the screen.
+  
+  trunk/audacious/glade/fileinfo.glade |    2 +-
+  trunk/audacious/playlist_manager.c   |    3 ++-
+  2 files changed, 3 insertions(+), 2 deletions(-)
+
+
 2006-12-23 16:42:05 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3419]
   - use relative links for this (FHS compliance)

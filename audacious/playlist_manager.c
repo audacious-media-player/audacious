@@ -23,6 +23,7 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 
 #define DISABLE_MANAGER_UPDATE() g_object_set_data(G_OBJECT(listview),"opt1",GINT_TO_POINTER(1))
@@ -32,6 +33,8 @@
 static GtkWidget *playman_win = NULL;
 
 
+/* in this enum, place the columns according to visualization order
+   (information not displayed in columns should be placed right before PLLIST_NUMCOLS) */
 enum
 {
   PLLIST_COL_NAME = 0,
@@ -136,7 +139,7 @@ playlist_manager_cb_del ( gpointer listview )
 }
 
 
-void
+static void
 playlist_manager_cb_lv_dclick ( GtkTreeView * lv , GtkTreePath * path ,
                                 GtkTreeViewColumn * col , gpointer userdata )
 {
@@ -155,14 +158,84 @@ playlist_manager_cb_lv_dclick ( GtkTreeView * lv , GtkTreePath * path ,
 }
 
 
+static void
+playlist_manager_cb_lv_pmenu_rename ( GtkMenuItem *menuitem , gpointer lv )
+{
+  GtkTreeSelection *listsel = gtk_tree_view_get_selection( GTK_TREE_VIEW(lv) );
+  GtkTreeModel *store;
+  GtkTreeIter iter;
+
+  if ( gtk_tree_selection_get_selected( listsel , &store , &iter ) == TRUE )
+  {
+    GtkTreePath *path = gtk_tree_model_get_path( GTK_TREE_MODEL(store) , &iter );
+    GtkCellRenderer *rndrname = g_object_get_data( G_OBJECT(lv) , "rn" );
+    /* set the name renderer to editable and start editing */
+    g_object_set( G_OBJECT(rndrname) , "editable" , TRUE , NULL );
+    gtk_tree_view_set_cursor_on_cell( GTK_TREE_VIEW(lv) , path ,
+      gtk_tree_view_get_column( GTK_TREE_VIEW(lv) , PLLIST_COL_NAME ) , rndrname , TRUE );
+    gtk_tree_path_free( path );
+  }
+}
+
+static void
+playlist_manager_cb_lv_name_edited ( GtkCellRendererText *cell , gchar *path_string ,
+                                     gchar *new_text , gpointer lv )
+{
+  /* this is currently used to change playlist names */
+  GtkTreeModel *store = gtk_tree_view_get_model( GTK_TREE_VIEW(lv) );;
+  GtkTreeIter iter;
+
+  if ( gtk_tree_model_get_iter_from_string( store , &iter , path_string ) == TRUE )
+  {
+    Playlist *playlist = NULL;
+    gtk_tree_model_get( GTK_TREE_MODEL(store), &iter, PLLIST_COL_PLPOINTER , &playlist , -1 );
+    playlist_set_current_name( playlist , new_text );
+    gtk_list_store_set( GTK_LIST_STORE(store), &iter, PLLIST_COL_NAME , new_text , -1 );
+  }
+  /* set the renderer uneditable again */
+  g_object_set( G_OBJECT(cell) , "editable" , FALSE , NULL );
+}
+
+
+static gboolean
+playlist_manager_cb_lv_btpress ( GtkWidget *lv , GdkEventButton *event )
+{
+  if (( event->type == GDK_BUTTON_PRESS ) && ( event->button == 3 ))
+  {
+    GtkWidget *pmenu = (GtkWidget*)g_object_get_data( G_OBJECT(lv) , "menu" );
+    gtk_menu_popup( GTK_MENU(pmenu) , NULL , NULL , NULL , NULL ,
+                    (event != NULL) ? event->button : 0,
+                    gdk_event_get_time((GdkEvent*)event));
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+
+static gboolean
+playlist_manager_cb_keypress ( GtkWidget *win , GdkEventKey *event )
+{
+    switch (event->keyval)
+    {
+        case GDK_Escape:
+            gtk_widget_destroy( playman_win );
+            return TRUE;
+        default:
+            return FALSE;
+    }
+}
+
+
 void
 playlist_manager_ui_show ( void )
 {
   GtkWidget *playman_vbox;
   GtkWidget *playman_pl_lv, *playman_pl_lv_frame, *playman_pl_lv_sw;
-  GtkCellRenderer *playman_pl_lv_textrndr;
+  GtkCellRenderer *playman_pl_lv_textrndr_name, *playman_pl_lv_textrndr_entriesnum;
   GtkTreeViewColumn *playman_pl_lv_col_name, *playman_pl_lv_col_entriesnum;
   GtkListStore *pl_store;
+  GtkWidget *playman_pl_lv_pmenu, *playman_pl_lv_pmenu_rename;
   GtkWidget *playman_bbar_hbbox;
   GtkWidget *playman_bbar_bt_new, *playman_bbar_bt_del, *playman_bbar_bt_close;
   GdkGeometry playman_win_hints;
@@ -181,6 +254,8 @@ playlist_manager_ui_show ( void )
   gtk_container_set_border_width( GTK_CONTAINER(playman_win), 10 );
   g_signal_connect( G_OBJECT(playman_win) , "destroy" ,
                     G_CALLBACK(gtk_widget_destroyed) , &playman_win );
+  g_signal_connect( G_OBJECT(playman_win) , "key-press-event" ,
+                    G_CALLBACK(playlist_manager_cb_keypress) , NULL );
   playman_win_hints.min_width = 400;
   playman_win_hints.min_height = 250;
   gtk_window_set_geometry_hints( GTK_WINDOW(playman_win) , GTK_WIDGET(playman_win) ,
@@ -204,13 +279,17 @@ playlist_manager_ui_show ( void )
   g_object_unref( pl_store );
   g_object_set_data( G_OBJECT(playman_win) , "lv" , playman_pl_lv );
   g_object_set_data( G_OBJECT(playman_pl_lv) , "opt1" , GINT_TO_POINTER(0) );
-  playman_pl_lv_textrndr = gtk_cell_renderer_text_new();
+  playman_pl_lv_textrndr_entriesnum = gtk_cell_renderer_text_new(); /* uneditable */
+  playman_pl_lv_textrndr_name = gtk_cell_renderer_text_new(); /* can become editable */
+  g_signal_connect( G_OBJECT(playman_pl_lv_textrndr_name) , "edited" ,
+                    G_CALLBACK(playlist_manager_cb_lv_name_edited) , playman_pl_lv );
+  g_object_set_data( G_OBJECT(playman_pl_lv) , "rn" , playman_pl_lv_textrndr_name );
   playman_pl_lv_col_name = gtk_tree_view_column_new_with_attributes(
-    _("Playlist") , playman_pl_lv_textrndr , "text" , PLLIST_COL_NAME , NULL );
+    _("Playlist") , playman_pl_lv_textrndr_name , "text" , PLLIST_COL_NAME , NULL );
   gtk_tree_view_column_set_expand( GTK_TREE_VIEW_COLUMN(playman_pl_lv_col_name) , TRUE );
   gtk_tree_view_append_column( GTK_TREE_VIEW(playman_pl_lv), playman_pl_lv_col_name );
   playman_pl_lv_col_entriesnum = gtk_tree_view_column_new_with_attributes(
-    _("Entries") , playman_pl_lv_textrndr , "text" , PLLIST_COL_ENTRIESNUM , NULL );
+    _("Entries") , playman_pl_lv_textrndr_entriesnum , "text" , PLLIST_COL_ENTRIESNUM , NULL );
   gtk_tree_view_column_set_expand( GTK_TREE_VIEW_COLUMN(playman_pl_lv_col_entriesnum) , FALSE );
   gtk_tree_view_append_column( GTK_TREE_VIEW(playman_pl_lv), playman_pl_lv_col_entriesnum );
   playman_pl_lv_sw = gtk_scrolled_window_new( NULL , NULL );
@@ -221,6 +300,17 @@ playlist_manager_ui_show ( void )
   gtk_box_pack_start( GTK_BOX(playman_vbox) , playman_pl_lv_frame , TRUE , TRUE , 0 );
 
   gtk_box_pack_start( GTK_BOX(playman_vbox) , gtk_hseparator_new() , FALSE , FALSE , 4 );
+
+  /* listview popup menu */
+  playman_pl_lv_pmenu = gtk_menu_new();
+  playman_pl_lv_pmenu_rename = gtk_menu_item_new_with_mnemonic( _( "_Rename" ) );
+  g_signal_connect( G_OBJECT(playman_pl_lv_pmenu_rename) , "activate" ,
+                    G_CALLBACK(playlist_manager_cb_lv_pmenu_rename) , playman_pl_lv );
+  gtk_menu_shell_append( GTK_MENU_SHELL(playman_pl_lv_pmenu) , playman_pl_lv_pmenu_rename );
+  gtk_widget_show_all( playman_pl_lv_pmenu );
+  g_object_set_data( G_OBJECT(playman_pl_lv) , "menu" , playman_pl_lv_pmenu );
+  g_signal_connect_swapped( G_OBJECT(playman_win) , "destroy" ,
+                            G_CALLBACK(gtk_widget_destroy) , playman_pl_lv_pmenu );
 
   /* button bar */
   playman_bbar_hbbox = gtk_hbutton_box_new();
@@ -235,6 +325,8 @@ playlist_manager_ui_show ( void )
                                       playman_bbar_bt_close , TRUE );
   gtk_box_pack_start( GTK_BOX(playman_vbox) , playman_bbar_hbbox , FALSE , FALSE , 0 );
 
+  g_signal_connect( G_OBJECT(playman_pl_lv) , "button-press-event" ,
+                    G_CALLBACK(playlist_manager_cb_lv_btpress) , NULL );
   g_signal_connect( G_OBJECT(playman_pl_lv) , "row-activated" ,
                     G_CALLBACK(playlist_manager_cb_lv_dclick) , NULL );
   g_signal_connect_swapped( G_OBJECT(playman_bbar_bt_new) , "clicked" ,
