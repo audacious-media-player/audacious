@@ -1,3 +1,11 @@
+2006-12-25 16:44:29 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3425]
+  - improve the presentation of the URL entry dialog
+  
+  trunk/audacious/util.c |    9 +++++++--
+  1 file changed, 7 insertions(+), 2 deletions(-)
+
+
 2006-12-24 15:37:57 +0000  Giacomo Lozito <james@develia.org>
   revision [3423]
   - more work done on playlist manager: playlist renaming and keyboard shortcuts
