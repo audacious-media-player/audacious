@@ -662,11 +662,12 @@ GtkWidget *
 util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
     GCallback enqueue_func)
 {
-    GtkWidget *win, *vbox, *bbox, *enqueue, *ok, *cancel, *combo, *entry;
+    GtkWidget *win, *vbox, *bbox, *enqueue, *ok, *cancel, *combo, *entry, 
+	      *label;
     GList *url;
 
     win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(win), caption);
+    gtk_window_set_title(GTK_WINDOW(win), "Add/Open URL Dialog");
     gtk_window_set_type_hint(GTK_WINDOW(win), GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_window_set_position(GTK_WINDOW(win), GTK_WIN_POS_CENTER);
     gtk_window_set_default_size(GTK_WINDOW(win), 400, -1);
@@ -674,6 +675,10 @@ util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
 
     vbox = gtk_vbox_new(FALSE, 10);
     gtk_container_add(GTK_CONTAINER(win), vbox);
+
+    label = gtk_label_new(caption);
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
     combo = gtk_combo_box_entry_new_text();
     gtk_box_pack_start(GTK_BOX(vbox), combo, FALSE, FALSE, 0);

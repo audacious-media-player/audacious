@@ -1,3 +1,10 @@
+2006-12-24 15:37:57 +0000  Giacomo Lozito <james@develia.org>
+  revision [3423]
+  - more work done on playlist manager: playlist renaming and keyboard shortcuts
+  trunk/audacious/playlist_manager.c |  102 +++++++++++++++++++++++++++++++++++--
+  1 file changed, 97 insertions(+), 5 deletions(-)
+
+
 2006-12-24 07:38:02 +0000  George Averill <nhjm449@gmail.com>
   revision [3421]
   - Center new windows so they don't get cut off by the edge of the screen.
