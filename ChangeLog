@@ -1,3 +1,12 @@
+2006-12-25 18:16:38 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3427]
+  - new Traditional Chinese translator: Cheng-Wei Chien
+  
+  trunk/audacious/credits.c |   11 
+  trunk/po/zh_TW.po         | 3074 +++++++++++++++++++---------------------------
+  2 files changed, 1278 insertions(+), 1807 deletions(-)
+
+
 2006-12-25 16:44:29 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3425]
   - improve the presentation of the URL entry dialog
