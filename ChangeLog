@@ -1,3 +1,12 @@
+2006-12-25 18:28:32 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3431]
+  - new Romanian translator: Daniel Patriche
+  
+  trunk/audacious/credits.c |    2 
+  trunk/po/ro.po            | 1802 +++++++++++-----------------------------------
+  2 files changed, 445 insertions(+), 1359 deletions(-)
+
+
 2006-12-25 18:21:14 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3429]
   - update credits for russian i18n

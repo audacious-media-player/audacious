@@ -13,7 +13,7 @@ msgstr ""
 "Last-Translator: Daniel Patriche <m4st3rth0r@yahoo.com>\n"
 "Language-Team: Romanian <m4st3rth0r@yahoo.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: audacious/about.c:118 audacious/credits.c:317
@@ -486,7 +486,7 @@ msgstr "Dezactiveaza interceptarea erorilor/avertismentelor (logarea)"
 
 #: audacious/main.c:779
 msgid "Print version number and exit\n"
-msgstr "Arata numarul versiunii si iesi"
+msgstr "Arata numarul versiunii si iesi\n"
 
 #: audacious/main.c:986
 #, c-format
