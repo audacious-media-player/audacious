@@ -1,129 +1,129 @@
-# Romanian translation for BMP
-# Copyright (C) 2004 Liviu Danicel
-# Liviu Danicel <liviu@planters.ro>, 2004.
+# AUDACIOUS Romanaian Translation - Traducere in lb. Romana pentru Audacious
+# Copyright (C) 2006 Daniel Patriche <m4st3rth0r@yahoo.com>
+# This file is distributed under the same license as the audacious package.
+# Daniel Patriche <m4st3rth0r@yahoo.com>, 2006.
+#
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.9.7\n"
+"Project-Id-Version: audacious 1.2.1\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2006-12-18 14:12-0600\n"
-"PO-Revision-Date: 2004-08-28 07:46+0800\n"
-"Last-Translator: Liviu Danicel\n"
-"Language-Team:  <ro@li.org>\n"
+"PO-Revision-Date: 2006-12-23 21:24+0200\n"
+"Last-Translator: Daniel Patriche <m4st3rth0r@yahoo.com>\n"
+"Language-Team: Romanian <m4st3rth0r@yahoo.com>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.9\n"
 
 #: audacious/about.c:118 audacious/credits.c:317
-#, fuzzy
 msgid "About Audacious"
-msgstr "Despre Plugin-ul Audio MPEG"
+msgstr "Despre Audacious"
 
 #: audacious/about.c:167 audacious/credits.c:362
 msgid "Credits"
-msgstr ""
+msgstr "Credite"
 
 #: audacious/credits.c:44
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "The future of UNIX multimedia.\n"
 "\n"
 "Copyright (C) 2005-2006 Audacious Development Team\n"
 msgstr ""
-"<big><b>Beep Media Player %s</b></big>\n"
-"Un player de fisiere media bazat pe XMMS\n"
+"<big><b>Audacious %s</b></big>\n"
+"Viitorul Multimedia in Unix.\n"
 "\n"
-"Copyright (C) 2003-2004 BMP Development Team\n"
+"Copyright (C) 2005-2006 Echipa de dezvoltare Audacious \n"
 
 #: audacious/credits.c:50
-#, fuzzy
 msgid "Audacious core developers:"
-msgstr "Preferinte BMP"
+msgstr "Developerii de baza Audacious"
 
 #: audacious/credits.c:62
 msgid "Graphics:"
-msgstr ""
+msgstr "Grafica"
 
 #: audacious/credits.c:67
 msgid "Default skin:"
-msgstr ""
+msgstr "Skin-ul implicit"
 
 #: audacious/credits.c:72
 msgid "Plugin development:"
-msgstr ""
+msgstr "Dezvoltarea pluginurilor"
 
 #: audacious/credits.c:83
 msgid "Patch authors:"
-msgstr ""
+msgstr "Autorii modificarilor"
 
 #: audacious/credits.c:98
 msgid "0.1.x developers:"
-msgstr ""
+msgstr "Dezvoltatorii versiunii 0.1.x"
 
 #: audacious/credits.c:104
 msgid "BMP Developers:"
-msgstr ""
+msgstr "Dezvoltatorii BMP"
 
 #: audacious/credits.c:136
 msgid "Brazilian Portuguese:"
-msgstr ""
+msgstr "Braziliana Portugheza"
 
 #: audacious/credits.c:139
 msgid "Breton:"
-msgstr ""
+msgstr "Bretona"
 
 #: audacious/credits.c:142
 msgid "Chinese:"
-msgstr ""
+msgstr "Chineza"
 
 #: audacious/credits.c:147
 msgid "Czech:"
-msgstr ""
+msgstr "Ceha"
 
 #: audacious/credits.c:150
 msgid "Dutch:"
-msgstr ""
+msgstr "Olandeza"
 
 #: audacious/credits.c:154
 msgid "Finnish:"
-msgstr ""
+msgstr "Finlandeza"
 
 #: audacious/credits.c:157
 msgid "French:"
-msgstr ""
+msgstr "Franceza"
 
 #: audacious/credits.c:160
 msgid "German:"
-msgstr ""
+msgstr "Germana"
 
 #: audacious/credits.c:164
 msgid "Georgian: "
-msgstr ""
+msgstr "Georgiana"
 
 #: audacious/credits.c:167
 msgid "Greek:"
-msgstr ""
+msgstr "Greaca"
 
 #: audacious/credits.c:172
 msgid "Hindi:"
-msgstr ""
+msgstr "Hindi"
 
 #: audacious/credits.c:175
 msgid "Hungarian:"
-msgstr ""
+msgstr "Ungara"
 
 #: audacious/credits.c:178
 msgid "Italian:"
-msgstr ""
+msgstr "Italiana"
 
 #: audacious/credits.c:182
 msgid "Japanese:"
-msgstr ""
+msgstr "Japoneza"
 
 #: audacious/credits.c:185
 msgid "Korean:"
-msgstr ""
+msgstr "Koreana"
 
 #: audacious/credits.c:188
 msgid "Lithuanian:"
@@ -131,43 +131,43 @@ msgstr ""
 
 #: audacious/credits.c:191
 msgid "Macedonian:"
-msgstr ""
+msgstr "Macedona"
 
 #: audacious/credits.c:194
 msgid "Polish:"
-msgstr ""
+msgstr "Poloneza"
 
 #: audacious/credits.c:198
 msgid "Romanian:"
-msgstr ""
+msgstr "Romana"
 
 #: audacious/credits.c:201
 msgid "Russian:"
-msgstr ""
+msgstr "Rusa"
 
 #: audacious/credits.c:206
 msgid "Slovak:"
-msgstr ""
+msgstr "Slovaca"
 
 #: audacious/credits.c:209
 msgid "Spanish:"
-msgstr ""
+msgstr "Spaniola"
 
 #: audacious/credits.c:212
 msgid "Swedish:"
-msgstr ""
+msgstr "Suedeza"
 
 #: audacious/credits.c:215
 msgid "Ukrainian:"
-msgstr ""
+msgstr "Ucraineana"
 
 #: audacious/credits.c:218
 msgid "Welsh:"
-msgstr ""
+msgstr "Tara Galilor"
 
 #: audacious/credits.c:366
 msgid "Translators"
-msgstr "Traducatori"
+msgstr "Translatori"
 
 #: audacious/equalizer.c:119
 msgid "/Load"
@@ -179,11 +179,11 @@ msgstr "/Incarca/Preset"
 
 #: audacious/equalizer.c:122
 msgid "/Load/Auto-load preset"
-msgstr "/Incarca/Auto incarca preset"
+msgstr "/Incarca/Auto-incarca preset"
 
 #: audacious/equalizer.c:124
 msgid "/Load/Default"
-msgstr "/Incarca/Default"
+msgstr "/Incarca/Implicit"
 
 #: audacious/equalizer.c:127
 msgid "/Load/Zero"
@@ -195,15 +195,15 @@ msgstr "/Incarca/Din fisier"
 
 #: audacious/equalizer.c:132
 msgid "/Load/From WinAMP EQF file"
-msgstr "/Incarca/Din fisier EQF WinAMP"
+msgstr "/Incarca/Din fisier Winamp EQF"
 
 #: audacious/equalizer.c:134
 msgid "/Import"
-msgstr ""
+msgstr "/Importa"
 
 #: audacious/equalizer.c:135
 msgid "/Import/WinAMP Presets"
-msgstr ""
+msgstr "/Importa/Preseturi Winamp"
 
 #: audacious/equalizer.c:137
 msgid "/Save"
@@ -215,11 +215,11 @@ msgstr "/Salveaza/Preset"
 
 #: audacious/equalizer.c:140
 msgid "/Save/Auto-load preset"
-msgstr "/Salveaza/Auto incarca preset"
+msgstr "/Salveaza/Auto-incarca preset"
 
 #: audacious/equalizer.c:142
 msgid "/Save/Default"
-msgstr "/Salveaza/Default"
+msgstr "/Salveaza/Implicit"
 
 #: audacious/equalizer.c:145
 msgid "/Save/To file"
@@ -227,7 +227,7 @@ msgstr "/Salveaza/In fisier"
 
 #: audacious/equalizer.c:147
 msgid "/Save/To WinAMP EQF file"
-msgstr "/Salveaza/In fisier EQF WinAMP"
+msgstr "/Salveaza/In fisier Wianamp EQF"
 
 #: audacious/equalizer.c:149
 msgid "/Delete"
@@ -239,20 +239,19 @@ msgstr "/Sterge/Preset"
 
 #: audacious/equalizer.c:152
 msgid "/Delete/Auto-load preset"
-msgstr "/Sterge/Auto incarca preset"
+msgstr "/Sterge/Auto-incarca preset"
 
 #: audacious/equalizer.c:815
-#, fuzzy
 msgid "Audacious Equalizer"
-msgstr "/Arata Equalizer-ul"
+msgstr "Egalizator Audacious"
 
 #: audacious/equalizer.c:1483
 msgid "Preset"
-msgstr ""
+msgstr "Preset"
 
 #: audacious/equalizer.c:1528
 msgid "Presets"
-msgstr ""
+msgstr "Preseturi"
 
 #: audacious/equalizer.c:1592
 msgid "Load preset"
@@ -260,12 +259,12 @@ msgstr "Incarca preset"
 
 #: audacious/equalizer.c:1608
 msgid "Load auto-preset"
-msgstr "Incarca auto preset"
+msgstr "Incarca auto-preset"
 
 #: audacious/equalizer.c:1634 audacious/equalizer.c:1640
 #: audacious/equalizer.c:1647
 msgid "Load equalizer preset"
-msgstr "Incarca preset pentru equalizer"
+msgstr "Incarca preset egalizator"
 
 #: audacious/equalizer.c:1656
 msgid "Save preset"
@@ -273,11 +272,11 @@ msgstr "Salveaza preset"
 
 #: audacious/equalizer.c:1676
 msgid "Save auto-preset"
-msgstr "Salveaza auto preset"
+msgstr "Salveaza auto-preset"
 
 #: audacious/equalizer.c:1712 audacious/equalizer.c:1732
 msgid "Save equalizer preset"
-msgstr "Salveaza preset equalizer"
+msgstr "Salveaza preset egalizator"
 
 #: audacious/equalizer.c:1741
 msgid "Delete preset"
@@ -285,27 +284,27 @@ msgstr "Sterge preset"
 
 #: audacious/equalizer.c:1759
 msgid "Delete auto-preset"
-msgstr "Sterge auto preset"
+msgstr "Sterge auto-preset"
 
 #: audacious/getopt.c:616
 #, c-format
 msgid "%s: option `%s' is ambiguous\n"
-msgstr ""
+msgstr "%s: optiunea `%s' este ambigua\n"
 
 #: audacious/getopt.c:638
 #, c-format
 msgid "%s: option `--%s' doesn't allow an argument\n"
-msgstr ""
+msgstr "%s: optiunea `--%s' nu permite nici un argument\n"
 
 #: audacious/getopt.c:644
 #, c-format
 msgid "%s: option `%c%s' doesn't allow an argument\n"
-msgstr ""
+msgstr "%s: optiunea `%c%s' nu permite nici un argument\n"
 
 #: audacious/getopt.c:662 audacious/getopt.c:820
 #, c-format
 msgid "%s: option `%s' requires an argument\n"
-msgstr ""
+msgstr "%s: optiunea `%s' are nevoie de un argument\n"
 
 #: audacious/getopt.c:688
 #, c-format
@@ -320,7 +319,7 @@ msgstr "%s: optiune nerecunoscuta `%c%s'\n"
 #: audacious/getopt.c:716
 #, c-format
 msgid "%s: illegal option -- %c\n"
-msgstr "%s: optiune ilegala -- %c\n"
+msgstr "%s: optiune nepermisa -- %c\n"
 
 #: audacious/getopt.c:719
 #, c-format
@@ -330,17 +329,17 @@ msgstr "%s: optiune invalida -- %c\n"
 #: audacious/getopt.c:746 audacious/getopt.c:862
 #, c-format
 msgid "%s: option requires an argument -- %c\n"
-msgstr ""
+msgstr "%s: optiunea necesita un argument -- %c\n"
 
 #: audacious/getopt.c:791
 #, c-format
 msgid "%s: option `-W %s' is ambiguous\n"
-msgstr ""
+msgstr "%s: optiunea `-W %s' este ambigua\n"
 
 #: audacious/getopt.c:806
 #, c-format
 msgid "%s: option `-W %s' doesn't allow an argument\n"
-msgstr ""
+msgstr "%s: optiunea `-W %s' nu permite argument\n"
 
 #: audacious/glade.c:40
 #, c-format
@@ -349,6 +348,9 @@ msgid ""
 "\n"
 "Could not open glade file (%s). Please check your installation.\n"
 msgstr ""
+"<b><big>Nu s-a putut crea %s.</big></b>\n"
+"\n"
+"Nu s-a putut deschide fisierul glade (%s). Verificati instalarea.\n"
 
 #: audacious/input.c:303
 msgid ""
@@ -358,15 +360,15 @@ msgid ""
 "1. they are accessible.\n"
 "2. you have enabled the media plugins required."
 msgstr ""
-"<b><big>Nu se pot asculta fisierele.</big></b>\n"
+"<b><big>Nu este posibila redarea fisierelor.</big></b>\n"
 "\n"
-"Urmatoarele fisiere nu au putut fii ascultate. Va rugam verificati daca:\n"
-"1. fisierele sunt accesibile.\n"
-"2. ai selectat plugin-urile media necesare."
+"Urmatoarele fisiere nu au putut fi redate. Verificati ca:\n"
+"1. sunt accesibile.\n"
+"2. Ati activat pluginurile necesare."
 
 #: audacious/input.c:328
 msgid "Don't show this warning anymore"
-msgstr "Nu mai arata aceasta avertizare"
+msgstr "Nu mai arata aceast avertisment"
 
 #: audacious/input.c:330
 msgid "Show more _details"
@@ -375,35 +377,35 @@ msgstr "Arata mai multe _detalii"
 #: audacious/input.c:344 audacious/prefswin.c:114 audacious/prefswin.c:482
 #: audacious/prefswin.c:570 audacious/prefswin.c:659 audacious/prefswin.c:755
 msgid "Filename"
-msgstr "Nume Fisier"
+msgstr "Fisier"
 
 #: audacious/input.c:612
 #, c-format
 msgid "audacious: %s"
-msgstr ""
+msgstr "audacious: %s"
 
 #: audacious/input.c:628
 msgid "Filename:"
-msgstr "Nume fisier:"
+msgstr "Fisier"
 
 #: audacious/input.c:646
 msgid "No input plugin recognized this file"
-msgstr "Nici un plugin de input nu a recunoscut acest fisier"
+msgstr "Nici un plugin de intrare nu a recunoscut acest fisier"
 
 #: audacious/input.c:648
 #, c-format
 msgid "Input plugin: %s"
-msgstr ""
+msgstr "Plugin de intrare: %s"
 
 #: audacious/logger.c:119
 #, c-format
 msgid "Unable to create log file (%s)!\n"
-msgstr "Nu s-a putut crea fisierul de log (%s)!\n"
+msgstr "Nu s-a pautut crea fisierul de log (%s)!\n"
 
 #: audacious/main.c:82 audacious/main.c:84 audacious/mainwin.c:899
 #: audacious/mainwin.c:3735
 msgid "Audacious"
-msgstr ""
+msgstr "Audacious"
 
 #: audacious/main.c:452
 #, c-format
@@ -411,37 +413,36 @@ msgid "Could not create directory (%s): %s"
 msgstr "Nu s-a putut crea directorul (%s): %s"
 
 #: audacious/main.c:729
-#, fuzzy
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
 "Options:\n"
 "--------\n"
 msgstr ""
-"Utilizare:beep-media-player [options] [files] ...\n"
+"Sintaxa: audacious [optiuni] [fisiere] ...\n"
 "\n"
 "Optiuni:\n"
 "--------\n"
 
 #: audacious/main.c:734
-msgid "Display this text and exit"
-msgstr "Afiseaza acest text si iesi"
+msgid "Arata acest text si iesi"
+msgstr ""
 
 #: audacious/main.c:737
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-msgstr ""
+msgstr "Alege sesiunea Audacious/BMP/XMMS (Implicit: 0)"
 
 #: audacious/main.c:740
 msgid "Skip backwards in playlist"
-msgstr ""
+msgstr "Sari inapoi in playlist"
 
 #: audacious/main.c:743
 msgid "Start playing current playlist"
-msgstr "Incepe a asculta playlist-ul curent"
+msgstr "Incepe redarea playlist-ului curent"
 
 #: audacious/main.c:746
 msgid "Pause current song"
-msgstr "Pune pauza melodiei curente"
+msgstr "Pauza melodia curenta"
 
 #: audacious/main.c:749
 msgid "Stop current song"
@@ -449,44 +450,43 @@ msgstr "Opreste melodia curenta"
 
 #: audacious/main.c:752
 msgid "Pause if playing, play otherwise"
-msgstr ""
+msgstr "Pauza daca se reda, redare altfel"
 
 #: audacious/main.c:755
 msgid "Skip forward in playlist"
-msgstr ""
+msgstr "Sari inainte in playlist"
 
 #: audacious/main.c:758
 msgid "Display Jump to file dialog"
-msgstr ""
+msgstr "Arata dialogul Sari la fisier"
 
 #: audacious/main.c:761
 msgid "Don't clear the playlist"
-msgstr "Nu sterge playlist-ul"
+msgstr "Nu curata playlist-ul"
 
 #: audacious/main.c:764
 msgid "Show the main window"
 msgstr "Arata fereastra principala"
 
 #: audacious/main.c:767
-#, fuzzy
 msgid "Activate Audacious"
-msgstr "Despre Plugin-ul Audio MPEG"
+msgstr "Activeaza Audacious"
 
 #: audacious/main.c:770
 msgid "Previous session ID"
-msgstr ""
+msgstr "ID-ul sesiunii precedente"
 
 #: audacious/main.c:773
 msgid "Headless operation [experimental]"
-msgstr ""
+msgstr "Rulare tip server [experimental]"
 
 #: audacious/main.c:776
 msgid "Disable error/warning interception (logging)"
-msgstr ""
+msgstr "Dezactiveaza interceptarea erorilor/avertismentelor (logarea)"
 
 #: audacious/main.c:779
 msgid "Print version number and exit\n"
-msgstr ""
+msgstr "Arata numarul versiunii si iesi"
 
 #: audacious/main.c:986
 #, c-format
@@ -496,19 +496,19 @@ msgid ""
 "Check that skin at '%s' is usable and default skin is properly installed at "
 "'%s'\n"
 msgstr ""
-"<b><big>Nu s-a putut incarca skin-ul.</big></b>\n"
+"<b><bigNu s-a putut incarca skin-ul.</big></b>\n"
 "\n"
-"Verifica daca skin-ul la '%s'  este utilizabil si daca skin-ul default este "
-"instalat la '%s'\n"
+"Verificati ca skin-ul '%s' este folosibil si ca skin-ul default este instalat la "
+"'%s'\n"
 
 #: audacious/main.c:1033
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
 "Please use GTK+ %s or newer.\n"
 msgstr ""
-"Ne pare rau, versiunea dv de GTK+ (%d.%d.%d) nu poate fi folosita de BMP.\n"
-"Va rugam folositi GTK+ %s sau o versiune mai noua.\n"
+"Scuze, dar Audacious nu functioneaza cu versiunea de GTK+ (%d.%d.%d).\n"
+"Folositi GTK+ %s sau mai nou.\n"
 
 #: audacious/main.c:1044
 msgid ""
@@ -518,176 +518,179 @@ msgid ""
 "you\n"
 "installed LinuxThreads you need to recompile Glib & GTK+.\n"
 msgstr ""
+"Scuze, thread-urile nu sunt suportate pe platorma curenta.\n"
+"\n"
+"Daca te afli pe un sistem linux cu libc5 si ai instalat Glib & GTK+ inainte "
+"de\n"
+"a instala LinuxThreads trebuie sa recompilezi Glib & GTK+.\n"
 
 #: audacious/main.c:1063
 msgid "audacious: Unable to open display, exiting.\n"
-msgstr ""
+msgstr "audacious: Nu s-a putut deschide display-ul, iesire.\n"
 
 #: audacious/mainwin.c:247 audacious/mainwin.c:382
 msgid "/View Track Details"
-msgstr "/Vizualizeaza Detalii Track"
+msgstr "/Vezi Detaliile Track-ului"
 
 #: audacious/mainwin.c:249 audacious/mainwin.c:370
 msgid "/Jump to File"
-msgstr "/Sari la fisier"
+msgstr "/Sari la Fisier"
 
 #: audacious/mainwin.c:252 audacious/mainwin.c:444
 msgid "/Autoscroll Songname"
-msgstr "/Autoscroll nume melodie"
+msgstr "/Autoscroll al Numelui Fisierului"
 
 #: audacious/mainwin.c:254 audacious/mainwin.c:348
-#, fuzzy
 msgid "/Stop After Current Song"
-msgstr "Opreste melodia curenta"
+msgstr "/Opreste dupa Melodia Curenta"
 
 #: audacious/mainwin.c:264
 msgid "/Visualization Mode"
-msgstr "/Mod Vizualizare"
+msgstr "/Modul de Vizualizare"
 
 #: audacious/mainwin.c:265
 msgid "/Visualization Mode/Analyzer"
-msgstr "/Mod Vizualizare/Analizator"
+msgstr "/Modul de Vizualizare/Analizator"
 
 #: audacious/mainwin.c:267
 msgid "/Visualization Mode/Scope"
-msgstr "/Mod Vizualizare/Scope"
+msgstr "/Modul de Vizualizare/Scope"
 
 #: audacious/mainwin.c:269
-#, fuzzy
 msgid "/Visualization Mode/Voiceprint"
-msgstr "/Mod Vizualizare/Scope"
+msgstr "/Modul de Vizualizare/Amprenta Vocala"
 
 #: audacious/mainwin.c:271
 msgid "/Visualization Mode/Off"
-msgstr "/Mod Vizualizare/Off"
+msgstr "/Modul de Vizualizare/Inchis"
 
 #: audacious/mainwin.c:273
 msgid "/Analyzer Mode"
-msgstr "/Mod Analizator"
+msgstr "/Modul Analizatorului"
 
 #: audacious/mainwin.c:274
 msgid "/Analyzer Mode/Normal"
-msgstr "/Mod Analizator/Normal"
+msgstr "/Modul Analizatorului/Normal"
 
 #: audacious/mainwin.c:276
 msgid "/Analyzer Mode/Fire"
-msgstr "/Mod Analizator/Foc"
+msgstr "/Modul Analizatorului/Foc"
 
 #: audacious/mainwin.c:278
 msgid "/Analyzer Mode/Vertical Lines"
-msgstr "/Mod Analizator/Linii Verticale"
+msgstr "/Modul Analizatorului/Linii Verticale"
 
 #: audacious/mainwin.c:281
 msgid "/Analyzer Mode/Lines"
-msgstr "/Mod Analizator/Linii"
+msgstr "/Modul Analizatorului/Linii"
 
 #: audacious/mainwin.c:283
 msgid "/Analyzer Mode/Bars"
-msgstr "/Mod Analizator/Bare"
+msgstr "/Modul Analizatorului/Bare"
 
 #: audacious/mainwin.c:286
 msgid "/Analyzer Mode/Peaks"
-msgstr "/Mod Analizator/Varfuri"
+msgstr "/Modul Analizatorului/Varfuri"
 
 #: audacious/mainwin.c:288
 msgid "/Scope Mode"
-msgstr ""
+msgstr "/Modul Scope"
 
 #: audacious/mainwin.c:289
 msgid "/Scope Mode/Dot Scope"
-msgstr ""
+msgstr "/Modul Scope/Puncte"
 
 #: audacious/mainwin.c:291
 msgid "/Scope Mode/Line Scope"
-msgstr ""
+msgstr "/Modul Scope/Linii"
 
 #: audacious/mainwin.c:293
 msgid "/Scope Mode/Solid Scope"
-msgstr ""
+msgstr "/Modul Scope/Solid"
 
 #: audacious/mainwin.c:295
 msgid "/WindowShade VU Mode"
-msgstr ""
+msgstr "/Modul WindowShade VU"
 
 #: audacious/mainwin.c:296
 msgid "/WindowShade VU Mode/Normal"
-msgstr ""
+msgstr "/Modul WindowShade VU/Normal"
 
 #: audacious/mainwin.c:298
 msgid "/WindowShade VU Mode/Smooth"
-msgstr ""
+msgstr "/Modul WindowShade VU/Fin"
 
 #: audacious/mainwin.c:300
 msgid "/Refresh Rate"
-msgstr "/Rata Refresh"
+msgstr "/Rata de Refresh"
 
 #: audacious/mainwin.c:301
 msgid "/Refresh Rate/Full (~50 fps)"
-msgstr "/Rata Refresh/Full (~50 fps)"
+msgstr "/Rata de Refresh/Maxim (~50 fps)"
 
 #: audacious/mainwin.c:303
 msgid "/Refresh Rate/Half (~25 fps)"
-msgstr "/Rata Refresh/Jumatate (~25 fps)"
+msgstr "/Rata de Refresh/Jumatate (~25 fps)"
 
 #: audacious/mainwin.c:305
 msgid "/Refresh Rate/Quarter (~13 fps)"
-msgstr "/Rata Refresh/Un sfert (~13 fps)"
+msgstr "/Rata de Refresh/Sfert (~13 fps)"
 
 #: audacious/mainwin.c:307
 msgid "/Refresh Rate/Eighth (~6 fps)"
-msgstr "/Rata Refresh/O optime (~6 fps)"
+msgstr "/Rata de Refresh/Optime (~6 fps)"
 
 #: audacious/mainwin.c:309
 msgid "/Analyzer Falloff"
-msgstr ""
+msgstr "/Retragere Analizator"
 
 #: audacious/mainwin.c:310
 msgid "/Analyzer Falloff/Slowest"
-msgstr ""
+msgstr "/Retragere Analizator/Cel Mai Incet"
 
 #: audacious/mainwin.c:312
 msgid "/Analyzer Falloff/Slow"
-msgstr ""
+msgstr "/Retragere Analizator/Incet"
 
 #: audacious/mainwin.c:314
 msgid "/Analyzer Falloff/Medium"
-msgstr ""
+msgstr "/Retragere Analizator/Mediu"
 
 #: audacious/mainwin.c:316
 msgid "/Analyzer Falloff/Fast"
-msgstr ""
+msgstr "/Retragere Analizator/Rapid"
 
 #: audacious/mainwin.c:318
 msgid "/Analyzer Falloff/Fastest"
-msgstr ""
+msgstr "/Retragere Analizator/Cel Mai Rapid"
 
 #: audacious/mainwin.c:320
 msgid "/Peaks Falloff"
-msgstr ""
+msgstr "/Retragere Varfuri"
 
 #: audacious/mainwin.c:321
 msgid "/Peaks Falloff/Slowest"
-msgstr ""
+msgstr "/Retragere Varfuri/Cel Mai Incet"
 
 #: audacious/mainwin.c:323
 msgid "/Peaks Falloff/Slow"
-msgstr ""
+msgstr "/Retragere Varfuri/Incet"
 
 #: audacious/mainwin.c:325
 msgid "/Peaks Falloff/Medium"
-msgstr ""
+msgstr "/Retragere Varfuri/Mediu"
 
 #: audacious/mainwin.c:327
 msgid "/Peaks Falloff/Fast"
-msgstr ""
+msgstr "/Retragere Varfuri/Rapid"
 
 #: audacious/mainwin.c:329
 msgid "/Peaks Falloff/Fastest"
-msgstr ""
+msgstr "/Retragere Varfuri/Cel Mai Rapid"
 
 #: audacious/mainwin.c:339
 msgid "/Play CD"
-msgstr "/Asculta CD"
+msgstr "/Reda CD"
 
 #: audacious/mainwin.c:342
 msgid "/Repeat"
@@ -695,7 +698,7 @@ msgstr "/Repeta"
 
 #: audacious/mainwin.c:344
 msgid "/Shuffle"
-msgstr ""
+msgstr "/Amesteca"
 
 #: audacious/mainwin.c:346
 msgid "/No Playlist Advance"
@@ -703,7 +706,7 @@ msgstr "/Nu avansa in Playlist"
 
 #: audacious/mainwin.c:351
 msgid "/Play"
-msgstr "/Asculta"
+msgstr "/Reda"
 
 #: audacious/mainwin.c:353
 msgid "/Pause"
@@ -711,11 +714,11 @@ msgstr "/Pauza"
 
 #: audacious/mainwin.c:355
 msgid "/Stop"
-msgstr "/Opreste"
+msgstr "/Stop"
 
 #: audacious/mainwin.c:357
 msgid "/Previous"
-msgstr "/Inainte"
+msgstr "/Anterioara"
 
 #: audacious/mainwin.c:359
 msgid "/Next"
@@ -727,64 +730,55 @@ msgstr "/Sari la inceputul Playlist-ului"
 
 #: audacious/mainwin.c:364
 msgid "/-"
-msgstr ""
+msgstr "/-"
 
 #: audacious/mainwin.c:365
-#, fuzzy
 msgid "/Set A-B"
-msgstr "Selecteaza tot"
+msgstr "/Seteaza A-B"
 
 #: audacious/mainwin.c:367
 msgid "/Clear A-B"
-msgstr ""
+msgstr "/Anuleaza A-B"
 
 #: audacious/mainwin.c:372
 msgid "/Jump to Time"
 msgstr "/Sari la Timp"
 
 #: audacious/mainwin.c:375
-#, fuzzy
 msgid "/New Playlist"
-msgstr "Salveaza playlist"
+msgstr "/Playlist Nou"
 
 #: audacious/mainwin.c:377
-#, fuzzy
 msgid "/Select Next Playlist"
-msgstr "Selecteaza fontul pentru playlist:"
+msgstr "/Selecteaza Urmatorul Playlist"
 
 #: audacious/mainwin.c:379
-#, fuzzy
 msgid "/Select Previous Playlist"
-msgstr "/Adauga/Locatie Internet..."
+msgstr "/Selecteaza Playlist-ul Anterior"
 
 #: audacious/mainwin.c:392
-#, fuzzy
 msgid "/About Audacious"
-msgstr "Despre Plugin-ul Audio MPEG"
+msgstr "/Despre Audacious"
 
 #: audacious/mainwin.c:395
-#, fuzzy
 msgid "/Play File"
-msgstr "Asculta Fisiere"
+msgstr "/Reda Fisier"
 
 #: audacious/mainwin.c:397
-#, fuzzy
 msgid "/Play Location"
-msgstr "Locatie:"
+msgstr "/Reda Locatia"
 
 #: audacious/mainwin.c:400
-#, fuzzy
 msgid "/V_isualization"
-msgstr "/Mod Vizualizare"
+msgstr "/V_uzualizare"
 
 #: audacious/mainwin.c:401
-#, fuzzy
 msgid "/_Playback"
-msgstr "/Ascultare"
+msgstr "/_Redare"
 
 #: audacious/mainwin.c:402
 msgid "/_View"
-msgstr ""
+msgstr "/_Vizualizeaza"
 
 #: audacious/mainwin.c:404
 msgid "/Preferences"
@@ -792,46 +786,43 @@ msgstr "/Preferinte"
 
 #: audacious/mainwin.c:406
 msgid "/_Quit"
-msgstr "/_Iesi"
+msgstr "/_Iesire"
 
 #: audacious/mainwin.c:416
-#, fuzzy
 msgid "/Files..."
-msgstr "/Adauga/Fisiere"
+msgstr "/Fisiere..."
 
 #: audacious/mainwin.c:418
-#, fuzzy
 msgid "/Internet location..."
-msgstr "/Adauga/Locatie Internet..."
+msgstr "/Locatioe Internet..."
 
 #: audacious/mainwin.c:428
-#, fuzzy
 msgid "/Show Player"
-msgstr "/Arata Editor-ul Playlist"
+msgstr "/Arata player"
 
 #: audacious/mainwin.c:430
 msgid "/Show Playlist Editor"
-msgstr "/Arata Editor-ul Playlist"
+msgstr "/Arata Editorul de Playlist"
 
 #: audacious/mainwin.c:432
 msgid "/Show Equalizer"
-msgstr "/Arata Equalizer-ul"
+msgstr "/Arata Egalizatorul"
 
 #: audacious/mainwin.c:435
 msgid "/Time Elapsed"
-msgstr "/Timp Trecut"
+msgstr "/Timpul Trecut"
 
 #: audacious/mainwin.c:437
 msgid "/Time Remaining"
-msgstr "/Timp Ramas"
+msgstr "/Timpul Ramas"
 
 #: audacious/mainwin.c:440
 msgid "/Always On Top"
-msgstr "/Tot timpul in fata"
+msgstr "/Mereu Deasupra"
 
 #: audacious/mainwin.c:442
 msgid "/Put on All Workspaces"
-msgstr "/Sta pe toate spatiile de lucru"
+msgstr "/Pune pe Toate Spatiile de Lucru"
 
 #: audacious/mainwin.c:447
 msgid "/Roll up Player"
@@ -847,29 +838,28 @@ msgstr ""
 
 #: audacious/mainwin.c:454
 msgid "/DoubleSize"
-msgstr ""
+msgstr "/Marime Dubla"
 
 #: audacious/mainwin.c:456
 msgid "/Easy Move"
-msgstr ""
+msgstr "/Mutare usoara"
 
 #: audacious/mainwin.c:897
 #, c-format
 msgid "%s - Audacious"
-msgstr ""
+msgstr "%s - Audacious"
 
 #: audacious/mainwin.c:1122
 msgid "VBR"
-msgstr ""
+msgstr "VBR"
 
 #: audacious/mainwin.c:1163 audacious/mainwin.c:1167
 msgid "stereo"
-msgstr ""
+msgstr "stereo"
 
 #: audacious/mainwin.c:1163 audacious/mainwin.c:1167
-#, fuzzy
 msgid "mono"
-msgstr "Despre BMP"
+msgstr "mono"
 
 #: audacious/mainwin.c:1656
 msgid "Jump to Time"
@@ -877,21 +867,19 @@ msgstr "Sari la Timp"
 
 #: audacious/mainwin.c:1677
 msgid "minutes:seconds"
-msgstr "minute :secunde"
+msgstr "minute:secunde"
 
 #: audacious/mainwin.c:1687
 msgid "Track length:"
-msgstr "Lungime Track"
+msgstr "Marimea track-ului"
 
 #: audacious/mainwin.c:1772
-#, fuzzy
 msgid "Un_queue"
-msgstr "Coada"
+msgstr "Scoate din coada"
 
 #: audacious/mainwin.c:1774 audacious/mainwin.c:2154
-#, fuzzy
 msgid "_Queue"
-msgstr "Coada"
+msgstr "Adauga in coada"
 
 #: audacious/mainwin.c:2079
 msgid "Jump to Track"
@@ -903,12 +891,12 @@ msgstr "Filtru: "
 
 #: audacious/mainwin.c:2325
 msgid "Enter location to play:"
-msgstr ""
+msgstr "Introdu locatia pentru redare: "
 
 #: audacious/mainwin.c:2533
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
-msgstr ""
+msgstr "SEEK LA: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
 #: audacious/mainwin.c:2565 audacious/mainwin.c:3369
 #, c-format
@@ -931,31 +919,31 @@ msgstr "BALANS: %d%% DREAPTA"
 
 #: audacious/mainwin.c:3143
 msgid "OPTIONS MENU"
-msgstr "OPTIUNI MENIU"
+msgstr "MENIUL OPTIUNI"
 
 #: audacious/mainwin.c:3147
 msgid "DISABLE ALWAYS ON TOP"
-msgstr ""
+msgstr "DEZACTIVEAZA MEREU DEASUPRA"
 
 #: audacious/mainwin.c:3149
 msgid "ENABLE ALWAYS ON TOP"
-msgstr ""
+msgstr "ACTIVEAZA MEREU DEASUPRA"
 
 #: audacious/mainwin.c:3152
 msgid "FILE INFO BOX"
-msgstr "CASUTA INFORMATII FISIER"
+msgstr "FEREASTRA DETALII FISIER"
 
 #: audacious/mainwin.c:3156
 msgid "DISABLE DOUBLESIZE"
-msgstr ""
+msgstr "DEZACTIVEAZA MARIME DUBLA"
 
 #: audacious/mainwin.c:3158
 msgid "ENABLE DOUBLESIZE"
-msgstr ""
+msgstr "ACTIVEAZA MARIME DUBLA"
 
 #: audacious/mainwin.c:3161
 msgid "VISUALIZATION MENU"
-msgstr "MENIU VIZUALIZARI"
+msgstr "MENIUL VIZUALIZARE"
 
 #: audacious/mainwin.c:3209
 msgid ""
@@ -963,9 +951,9 @@ msgid ""
 "\n"
 "No CD inserted, or inserted CD is not an audio CD.\n"
 msgstr ""
-"<b><big>Nu a fost gasit nici un CD audio.</big></b>\n"
+"<b><big>Nu a fost gasit nici un CD ce poate fi redat.</big></b>\n"
 "\n"
-"Nici un CD in drive, sau CD-ul nu este unul audio.\n"
+"Nici un CD inserat, sau CD-ul inserat nu este audio.\n"
 
 #: audacious/mainwin.c:3226
 msgid ""
@@ -976,43 +964,48 @@ msgid ""
 "2. No other programs is blocking the soundcard.\n"
 "3. Your soundcard is configured properly.\n"
 msgstr ""
+"<b><big>Nu s-a putut deschide canalul audio.</big></b>\n"
+"\n"
+"Verificati ca:\n"
+"1. Ati ales pluginul corect de iesire.\n"
+"2. Nici un alt program nu blocheaza placa de sunet.\n"
+"3. Placa de sunet este configurata corect.\n"
 
 #: audacious/prefswin.c:97 audacious/glade/prefswin.glade:1372
 msgid "Appearance"
-msgstr "Infatisare"
+msgstr "Aparenta"
 
 #: audacious/prefswin.c:98
-#, fuzzy
 msgid "Audio"
-msgstr "Despre Plugin-ul Audio MPEG"
+msgstr "Audoi"
 
 #: audacious/prefswin.c:99
 msgid "Connectivity"
-msgstr ""
+msgstr "Conectivitate"
 
 #: audacious/prefswin.c:100 audacious/glade/prefswin.glade:2871
 msgid "Equalizer"
-msgstr ""
+msgstr "Egalizator"
 
 #: audacious/prefswin.c:101 audacious/glade/prefswin.glade:1651
 msgid "Mouse"
-msgstr ""
+msgstr "Mouse"
 
 #: audacious/prefswin.c:102 audacious/glade/prefswin.glade:2503
 msgid "Playlist"
-msgstr ""
+msgstr "Playlist"
 
 #: audacious/prefswin.c:103 audacious/glade/prefswin.glade:693
 msgid "Plugins"
-msgstr ""
+msgstr "Plugin-uri"
 
 #: audacious/prefswin.c:109
 msgid "Artist"
-msgstr ""
+msgstr "Artist"
 
 #: audacious/prefswin.c:110 libaudacious/titlestring.c:372
 msgid "Album"
-msgstr ""
+msgstr "Album"
 
 #: audacious/prefswin.c:111
 msgid "Title"
@@ -1020,15 +1013,15 @@ msgstr "Titlu"
 
 #: audacious/prefswin.c:112
 msgid "Tracknumber"
-msgstr ""
+msgstr "Numarul Track-ului"
 
 #: audacious/prefswin.c:113 libaudacious/titlestring.c:373
 msgid "Genre"
-msgstr ""
+msgstr "Genul"
 
 #: audacious/prefswin.c:115
 msgid "Filepath"
-msgstr ""
+msgstr "Calea spre fisier"
 
 #: audacious/prefswin.c:116 libaudacious/titlestring.c:379
 msgid "Date"
@@ -1036,20 +1029,20 @@ msgstr "Data"
 
 #: audacious/prefswin.c:117 libaudacious/titlestring.c:380
 msgid "Year"
-msgstr "An"
+msgstr "Anul"
 
 #: audacious/prefswin.c:118 libaudacious/titlestring.c:381
 msgid "Comment"
-msgstr "Nota"
+msgstr "Comentariu"
 
 #: audacious/prefswin.c:139
 msgid "localhost"
-msgstr ""
+msgstr "localhost"
 
 #: audacious/prefswin.c:452 audacious/prefswin.c:539 audacious/prefswin.c:628
 #: audacious/prefswin.c:724
 msgid "Enabled"
-msgstr ""
+msgstr "Activat"
 
 #: audacious/prefswin.c:468 audacious/prefswin.c:555 audacious/prefswin.c:644
 #: audacious/prefswin.c:740
@@ -1062,312 +1055,274 @@ msgstr "Categorie"
 
 #: audacious/prefswin.c:2266
 msgid "Preferences Window"
-msgstr "Fereastra preferinte"
+msgstr "Fereastra de Preferinte"
 
 #: audacious/skinwin.c:176
 msgid "Archived Winamp 2.x skin"
-msgstr ""
+msgstr "Skin Winamp 2.x arhivat"
 
 #: audacious/skinwin.c:181
 msgid "Unarchived Winamp 2.x skin"
-msgstr ""
+msgstr "Skin Winamp 2.x ne-arhivat"
 
 #: audacious/ui_fileinfo.c:315
 msgid "Track Information Window"
-msgstr ""
+msgstr "Fereastra de informatii despre Track"
 
 #: audacious/ui_fileinfo.c:337
 msgid "Track Information Popup"
-msgstr ""
+msgstr "Popup-ul de informatii despre Track"
 
 #: audacious/ui_playlist.c:136 audacious/ui_playlist.c:139
-#, fuzzy
 msgid "New List"
-msgstr "/Lista Noua"
+msgstr "Lista noua"
 
 #: audacious/ui_playlist.c:137
-#, fuzzy
 msgid "Creates a new playlist."
-msgstr "Arata numarul track-ului in playlist"
+msgstr "Creaza un nou playlist"
 
 #: audacious/ui_playlist.c:140
 msgid "Loads a playlist file into the selected playlist."
-msgstr ""
+msgstr "Incarca un fisier playlist in playlist-ul selectat"
 
 #: audacious/ui_playlist.c:142
-#, fuzzy
 msgid "Save List"
-msgstr "/Lista Noua"
+msgstr "Salveaza Lista"
 
 #: audacious/ui_playlist.c:143
-#, fuzzy
 msgid "Saves the selected playlist."
-msgstr "Selecteaza fontul pentru playlist:"
+msgstr "Salveaza playlist-ul selectat"
 
 #: audacious/ui_playlist.c:145
-#, fuzzy
 msgid "Save Default List"
-msgstr "/Salveaza/Default"
+msgstr "Salveaza Lista Implicita"
 
 #: audacious/ui_playlist.c:146
 msgid "Saves the selected playlist to the default location."
-msgstr ""
+msgstr "Salveaza playlist-ul selectat in locatia implicita"
 
 #: audacious/ui_playlist.c:149
-#, fuzzy
 msgid "Refresh List"
-msgstr "/Rata Refresh"
+msgstr "Reimprospateaza Lista"
 
 #: audacious/ui_playlist.c:150
 msgid "Refreshes metadata associated with a playlist entry."
-msgstr ""
+msgstr "Reimprospateaza metadata asociata cu o intrare din playlist"
 
 #: audacious/ui_playlist.c:155
 msgid "Search and Select"
-msgstr ""
+msgstr "Cauta si Selecteaza"
 
 #: audacious/ui_playlist.c:156
 msgid ""
 "Searches the playlist and selects playlist entries based on specific "
 "criteria."
 msgstr ""
+"Cauta in playlist si selecteaza intrarile bazate pe un anumit "
+"criteriu."
 
 #: audacious/ui_playlist.c:159
-#, fuzzy
 msgid "Invert Selection"
-msgstr "/Adauga/Locatie Internet..."
+msgstr "Inverseaza Selectia"
 
 #: audacious/ui_playlist.c:160
 msgid "Inverts the selected and unselected entries."
-msgstr ""
+msgstr "Inverseaza intrarile selectate si neselctate"
 
 #: audacious/ui_playlist.c:163 audacious/glade/addfiles.glade:105
 msgid "Select All"
-msgstr "Selecteaza tot"
+msgstr "Selecteaza Tot"
 
 #: audacious/ui_playlist.c:164
 msgid "Selects all of the playlist entries."
-msgstr ""
+msgstr "Selecteaza toate intrarile din playlist"
 
 #: audacious/ui_playlist.c:167
-#, fuzzy
 msgid "Select None"
-msgstr "Selecteaza tot"
+msgstr "Deselecteaza"
 
 #: audacious/ui_playlist.c:168
 msgid "Deselects all of the playlist entries."
-msgstr ""
+msgstr "Deslecteaza toate intrarile din playlist"
 
 #: audacious/ui_playlist.c:173
 msgid "Clear Queue"
-msgstr ""
+msgstr "Curata Coada"
 
 #: audacious/ui_playlist.c:174
 msgid "Clears the queue associated with this playlist."
-msgstr ""
+msgstr "Sterge toate intarile din coada asociata cu acest playlist"
 
 #: audacious/ui_playlist.c:177
-#, fuzzy
 msgid "Remove Unavailable Files"
-msgstr "/Sterge Fisierele Nedisponibile"
+msgstr "Sterge Fisierele Nedisponibile"
 
 #: audacious/ui_playlist.c:178
-#, fuzzy
 msgid "Removes unavailable files from the playlist."
-msgstr "/Sterge Fisierele Nedisponibile"
+msgstr "Sterge fisierele nedisponibile din playlist"
 
 #: audacious/ui_playlist.c:181
-#, fuzzy
 msgid "Remove Duplicates"
-msgstr "/Sterge Selectia"
+msgstr "Sterge Dublurile"
 
 #: audacious/ui_playlist.c:183 audacious/ui_playlist.c:233
 #: audacious/ui_playlist.c:263
-#, fuzzy
 msgid "By Title"
-msgstr "Titlu"
+msgstr "Dupa Titlu"
 
 #: audacious/ui_playlist.c:184
 msgid "Removes duplicate entries from the playlist by title."
-msgstr ""
+msgstr "Sterge dublurile din playlist dupa titlu"
 
 #: audacious/ui_playlist.c:187 audacious/ui_playlist.c:241
 #: audacious/ui_playlist.c:271
-#, fuzzy
 msgid "By Filename"
-msgstr "Nume Fisier"
+msgstr "Dupa Fisier"
 
 #: audacious/ui_playlist.c:188
-#, fuzzy
 msgid "Removes duplicate entries from the playlist by filename."
-msgstr "/Sorteaza Lista/Dupa Cale + Nume Fisier"
+msgstr "Sterge dublurile din playlist dupa fisier"
 
 #: audacious/ui_playlist.c:191 audacious/ui_playlist.c:245
 #: audacious/ui_playlist.c:275
-#, fuzzy
 msgid "By Path + Filename"
-msgstr "/Sorteaza Lista/Dupa Cale + Nume Fisier"
+msgstr "Dupa cale + nume de fisier"
 
 #: audacious/ui_playlist.c:192
 msgid "Removes duplicate entries from the playlist by their full path."
-msgstr ""
+msgstr "Sterge dublurile din playlist dupa calea completa"
 
 #: audacious/ui_playlist.c:195
-#, fuzzy
 msgid "Remove All"
-msgstr "/Sterge Selectia"
+msgstr "Sterge tot"
 
 #: audacious/ui_playlist.c:196
 msgid "Removes all entries from the playlist."
-msgstr ""
+msgstr "Sterge toate intrarile din playlisat"
 
 #: audacious/ui_playlist.c:199
-#, fuzzy
 msgid "Remove Unselected"
-msgstr "/Sterge Selectia"
+msgstr "Sterge intrarile neselctate"
 
 #: audacious/ui_playlist.c:200
 msgid "Remove unselected entries from the playlist."
-msgstr ""
+msgstr "Sterge intrarile neselctate din playlist"
 
 #: audacious/ui_playlist.c:203
-#, fuzzy
 msgid "Remove Selected"
-msgstr "/Sterge Selectia"
+msgstr "Sterge intrarile selectate"
 
 #: audacious/ui_playlist.c:204
 msgid "Remove selected entries from the playlist."
-msgstr ""
+msgstr "Sterge intrarile selectate din playlist"
 
 #: audacious/ui_playlist.c:209
-#, fuzzy
 msgid "Add CD..."
-msgstr "/Adauga/Fisiere"
+msgstr "Adauga CD..."
 
 #: audacious/ui_playlist.c:210
-#, fuzzy
 msgid "Adds a CD to the playlist."
-msgstr "Nu sterge playlist-ul"
+msgstr "Adauga un CD la playlist"
 
 #: audacious/ui_playlist.c:213
-#, fuzzy
 msgid "Add Internet Address..."
-msgstr "/Adauga/Adresa Internet"
+msgstr "Adauga Adresa Internet..."
 
 #: audacious/ui_playlist.c:214
 msgid "Adds a remote track to the playlist."
-msgstr ""
+msgstr "Adauga un Track remote in playlist"
 
 #: audacious/ui_playlist.c:217
-#, fuzzy
 msgid "Add Files..."
-msgstr "/Adauga/Fisiere"
+msgstr "Adauga Fisiere..."
 
 #: audacious/ui_playlist.c:218
-#, fuzzy
 msgid "Adds files to the playlist."
-msgstr "Nu sterge playlist-ul"
+msgstr "Adauga fisiere la playlist"
 
 #: audacious/ui_playlist.c:223
-#, fuzzy
 msgid "Randomize List"
-msgstr "/Amesteca Lista"
+msgstr "La intamplare"
 
 #: audacious/ui_playlist.c:224
-#, fuzzy
 msgid "Randomizes the playlist."
-msgstr "/Amesteca Lista"
+msgstr "Pune track-urile din playlist la intamplare"
 
 #: audacious/ui_playlist.c:227
-#, fuzzy
 msgid "Reverse List"
-msgstr "/Inverseaza Lista"
+msgstr "Inverseaza Lista"
 
 #: audacious/ui_playlist.c:228
-#, fuzzy
 msgid "Reverses the playlist."
-msgstr "Nu sterge playlist-ul"
+msgstr "Inverseaza ordinea track-urilor din playlist"
 
 #: audacious/ui_playlist.c:231
-#, fuzzy
 msgid "Sort List"
-msgstr "/Sorteaza Lista"
+msgstr "Sorteaza Lista"
 
 #: audacious/ui_playlist.c:234 audacious/ui_playlist.c:264
-#, fuzzy
 msgid "Sorts the list by title."
-msgstr "/Sorteaza Lista/Dupa Titlu"
+msgstr "Sotrteaza lista dupa titlu"
 
 #: audacious/ui_playlist.c:237 audacious/ui_playlist.c:267
-#, fuzzy
 msgid "By Artist"
-msgstr "/Sorteaza Lista/Dupa Titlu"
+msgstr "Dupa artist"
 
 #: audacious/ui_playlist.c:238 audacious/ui_playlist.c:268
-#, fuzzy
 msgid "Sorts the list by artist."
-msgstr "/Sorteaza Lista/Dupa Titlu"
+msgstr "Sorteaza lista dupa artist"
 
 #: audacious/ui_playlist.c:242 audacious/ui_playlist.c:272
-#, fuzzy
 msgid "Sorts the list by filename."
-msgstr "/Sorteaza Lista/Dupa Nume Fisier"
+msgstr "Sorteaza lista dupa fisier"
 
 #: audacious/ui_playlist.c:246 audacious/ui_playlist.c:276
 msgid "Sorts the list by full pathname."
-msgstr ""
+msgstr "Sorteaza lista dupa calea completa"
 
 #: audacious/ui_playlist.c:249 audacious/ui_playlist.c:279
-#, fuzzy
 msgid "By Date"
-msgstr "Data"
+msgstr "Dupa data"
 
 #: audacious/ui_playlist.c:250 audacious/ui_playlist.c:280
 msgid "Sorts the list by modification time."
-msgstr ""
+msgstr "Sorteaza lista dupa data modificarii"
 
 #: audacious/ui_playlist.c:253 audacious/ui_playlist.c:283
-#, fuzzy
 msgid "By Track Number"
-msgstr "Numar track"
+msgstr "Dupa numarul Trackului"
 
 #: audacious/ui_playlist.c:254 audacious/ui_playlist.c:284
-#, fuzzy
 msgid "Sorts the list by track number."
-msgstr "/Sorteaza Lista/Dupa Data"
+msgstr "Sorteaza lista dupa numarul Trackului"
 
 #: audacious/ui_playlist.c:257 audacious/ui_playlist.c:287
-#, fuzzy
 msgid "By Playlist Entry"
-msgstr "Editor Playlist BMP"
+msgstr "Dupa intrarea in Playlist"
 
 #: audacious/ui_playlist.c:258 audacious/ui_playlist.c:288
-#, fuzzy
 msgid "Sorts the list by playlist entry."
-msgstr "/Sorteaza Lista/Dupa Titlu"
+msgstr "Sorteaza dupa intrarea in playlist"
 
 #: audacious/ui_playlist.c:261
-#, fuzzy
 msgid "Sort Selected"
-msgstr "/Sterge Selectia"
+msgstr "Sorteaza Track-urile selectate"
 
 #: audacious/ui_playlist.c:293
-#, fuzzy
 msgid "View Track Details"
-msgstr "/Vizualizeaza Detalii Track"
+msgstr "Vizualizeaza Detaliile Trackului"
 
 #: audacious/ui_playlist.c:294
-#, fuzzy
 msgid "Displays track information."
-msgstr "Configurarea Driver-ului OSS"
+msgstr "Arata informatii despre Track"
 
 #: audacious/ui_playlist.c:297
 msgid "Queue Toggle"
-msgstr ""
+msgstr "Schimba Coada"
 
 #: audacious/ui_playlist.c:298
 msgid "Enables/disables the entry in the playlist's queue."
-msgstr ""
+msgstr "Activeaza/Dezactiveaza intrarile din coada playlist-ului"
 
 #: audacious/ui_playlist.c:722
 msgid ""
@@ -1376,84 +1331,83 @@ msgid ""
 "expressions work, simply insert a literal portion of what you're searching "
 "for."
 msgstr ""
+"Alege intrarile din playlist completand unul sau mai multe campuri. Campurile folosesc "
+"expresii regulate, ne-sensibile la Caps. Daca nu stiti sa folositi expresii regulate, "
+"introduceti portiunea de litere la ce cautati."
+"for."
 
 #: audacious/ui_playlist.c:729
-#, fuzzy
 msgid "Track name: "
-msgstr "Nume track-uri:"
+msgstr "Numele Trackului"
 
 #: audacious/ui_playlist.c:735
-#, fuzzy
 msgid "Album name: "
-msgstr "Mod de ascultare:"
+msgstr "Numele Albumului"
 
 #: audacious/ui_playlist.c:741
 msgid "Artist: "
-msgstr ""
+msgstr "Artist"
 
 #: audacious/ui_playlist.c:747
-#, fuzzy
 msgid "Filename: "
-msgstr "Nume fisier:"
+msgstr "Fisier"
 
 #: audacious/ui_playlist.c:754
 msgid "Clear previous selection before searching"
-msgstr ""
+msgstr "Sterge selectia anterioara inainte de a cauta"
 
 #: audacious/ui_playlist.c:757
 msgid "Automatically toggle queue for matching entries"
-msgstr ""
+msgstr "Schimba automat coada pentru intari care se potrivesc"
 
 #: audacious/ui_playlist.c:760
 msgid "Create a new playlist with matching entries"
-msgstr ""
+msgstr "Creeaza un nou playlist pentru intrarile care se potrivesc"
 
 #: audacious/ui_playlist.c:998
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
-msgstr "Eroare in scriere in playlist \"%s\": %s"
+msgstr "Eroare la scrierea playlist-ului \"%s\": %s"
 
 #: audacious/ui_playlist.c:1019
 #, c-format
 msgid "%s already exist. Continue?"
-msgstr "%s deja exista. Continuam?"
+msgstr "%s exista deja. Continuam?"
 
 #: audacious/ui_playlist.c:1033
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
 "\n"
 "Unknown file type for '%s'.\n"
-msgstr "Nu s-a putut salva playlist-ul! Tip fisier necunoscut pentru %s"
+msgstr ""
+"<b><big>Nu s-a putut salva playlist-ul</big></b>\n"
+"\n"
+"Tipul fisierului necunoscut pentru: '%s'.\n"
 
 #: audacious/ui_playlist.c:1186
-#, fuzzy
 msgid "Load Playlist"
-msgstr "Incarca playlist"
+msgstr "Incarca Playlist"
 
 #: audacious/ui_playlist.c:1199
-#, fuzzy
 msgid "Save Playlist"
-msgstr "Salveaza playlist"
+msgstr "Salveaza Playlist"
 
 #: audacious/ui_playlist.c:1949
-#, fuzzy
 msgid "Audacious Playlist Editor"
-msgstr "/Arata Editor-ul Playlist"
+msgstr "Editor Playlist Audacious"
 
 #: audacious/util.c:951
-#, fuzzy
 msgid "Add/Open Files dialog"
-msgstr "Adauga Fisiere"
+msgstr "Dialog Adauga/Deschidere Fisiere"
 
 #: audacious/util.c:1006
-#, fuzzy
 msgid "Open Files"
-msgstr "Adauga Fisiere"
+msgstr "Deschide Fisiere"
 
 #: audacious/util.c:1010
 msgid "Close dialog on Open"
-msgstr ""
+msgstr "Inchide dialogul la deschidere"
 
 #: audacious/util.c:1020 audacious/glade/addfiles.glade:8
 msgid "Add Files"
@@ -1461,140 +1415,123 @@ msgstr "Adauga Fisiere"
 
 #: audacious/util.c:1024
 msgid "Close dialog on Add"
-msgstr ""
+msgstr "Inchide dialogul la adougare"
 
 #: audacious/util.c:1202
-#, fuzzy
 msgid "Play files"
-msgstr "Asculta Fisiere"
+msgstr "Reda fisiere"
 
 #: audacious/util.c:1204
-#, fuzzy
 msgid "Load files"
-msgstr "/Incarca/Din fisier"
+msgstr "Incarca fisiere"
 
 #: audacious/util.c:1508
 msgid "  (invalid UTF-8)"
-msgstr ""
+msgstr " (UTF-8 invalid)"
 
 #: audacious/playback.c:225
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
 msgstr ""
+"<b><big>Nici un plugin de iesire selectat</big></b>\n"
+"Nu ati ales nici un plugin de iesire."
 
 #: audacious/glade/addfiles.glade:77
 msgid "Close Dialog on Add"
-msgstr ""
+msgstr "Inchide Dialogul la Adougare"
 
 #: audacious/glade/addfiles.glade:116
 msgid "Deselect All"
-msgstr "Deselecteaza tot"
+msgstr "Deslecteaza toate"
 
 #: audacious/glade/fileinfo.glade:8
-#, fuzzy
 msgid "Track Information"
-msgstr "Configurarea Driver-ului OSS"
+msgstr "Informatii Track"
 
 #: audacious/glade/fileinfo.glade:81
-#, fuzzy
 msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"xx-large\"><b>Infatisare</b></span>"
+msgstr "<span size=\"small\">Titlu</span>"
 
 #: audacious/glade/fileinfo.glade:139
-#, fuzzy
 msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"xx-large\"><b>Infatisare</b></span>"
+msgstr "<span size=\"small\">Artist</span>"
 
 #: audacious/glade/fileinfo.glade:197
-#, fuzzy
 msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"xx-large\"><b>Infatisare</b></span>"
+msgstr "<span size=\"small\">Album</span>"
 
 #: audacious/glade/fileinfo.glade:255
-#, fuzzy
 msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"xx-large\"><b>Infatisare</b></span>"
+msgstr "<span size=\"small\">Comentariu</span>"
 
 #: audacious/glade/fileinfo.glade:313
-#, fuzzy
 msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"xx-large\"><b>Infatisare</b></span>"
+msgstr "<span size=\"small\">Gen</span>"
 
 #: audacious/glade/fileinfo.glade:392
-#, fuzzy
 msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"xx-large\"><b>Infatisare</b></span>"
+msgstr "<span size=\"small\">An</span>"
 
 #: audacious/glade/fileinfo.glade:441
-#, fuzzy
 msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"xx-large\"><b>Infatisare</b></span>"
+msgstr "<span size=\"small\">Numarul Track-ului</span>"
 
 #: audacious/glade/fileinfo.glade:499
-#, fuzzy
 msgid "<span size=\"small\">Location</span>"
-msgstr "<span size=\"xx-large\"><b>Infatisare</b></span>"
+msgstr "<span size=\"small\">Locatia</span>"
 
 #: audacious/glade/fileinfo_popup.glade:8
 msgid "Artist Popup"
-msgstr ""
+msgstr "Popup Artist"
 
 #: audacious/glade/fileinfo_popup.glade:66
-#, fuzzy
 msgid "<i>Title</i>"
-msgstr "<b>Nume fisier</b>"
+msgstr "<i>Titlu</i>"
 
 #: audacious/glade/fileinfo_popup.glade:94
 msgid "<i>Artist</i>"
-msgstr ""
+msgstr "<i>Artist</i>"
 
 #: audacious/glade/fileinfo_popup.glade:122
-#, fuzzy
 msgid "<i>Album</i>"
-msgstr "<b>Nume fisier</b>"
+msgstr "<i>Album</i>"
 
 #: audacious/glade/fileinfo_popup.glade:234
-#, fuzzy
 msgid "<i>Genre</i>"
-msgstr "<b>Nume fisier</b>"
+msgstr "<i>Gen</i>"
 
 #: audacious/glade/fileinfo_popup.glade:290
-#, fuzzy
 msgid "<i>Year</i>"
-msgstr "<b>Nume fisier</b>"
+msgstr "<i>An</i>"
 
 #: audacious/glade/fileinfo_popup.glade:318
-#, fuzzy
 msgid "<i>Track Number</i>"
-msgstr "Numar track"
+msgstr "<i>Numarul Track-ului</i>"
 
 #: audacious/glade/fileinfo_popup.glade:346
-#, fuzzy
 msgid "<i>Track Length</i>"
-msgstr "Lungime Track"
+msgstr "<i>Lungimea Track-ului</i>"
 
 #: audacious/glade/prefswin.glade:115
-#, fuzzy
 msgid "_Decoder list:"
-msgstr "Decodor"
+msgstr "Lista _Decodoarelor"
 
 #: audacious/glade/prefswin.glade:219
-#, fuzzy
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
-msgstr "<span size=\"xx-large\"><b>Infatisare</b></span>"
+msgstr "<span size=\"medium\"><b>Decodoare</b></span>"
 
 #: audacious/glade/prefswin.glade:261
 msgid "_General plugin list:"
-msgstr ""
+msgstr "Lista plugin-urilor _Generale"
 
 #: audacious/glade/prefswin.glade:365
 msgid "<span size=\"medium\"><b>General</b></span>"
-msgstr ""
+msgstr "<span size=\"medium\"><b>General</b></span>"
 
 #: audacious/glade/prefswin.glade:407
 msgid "_Visualization plugin list:"
-msgstr ""
+msgstr "Lista plugin-urilor de _Vizualizare"
 
 #: audacious/glade/prefswin.glade:511
 msgid "<b>Visualization</b>"
@@ -1602,7 +1539,7 @@ msgstr "<b>Vizualizare</b>"
 
 #: audacious/glade/prefswin.glade:553
 msgid "_Effect plugin list:"
-msgstr ""
+msgstr "Lista plugin-urilor de _Efecte"
 
 #: audacious/glade/prefswin.glade:657
 msgid "<b>Effects</b>"
@@ -1610,78 +1547,75 @@ msgstr "<b>Efecte</b>"
 
 #: audacious/glade/prefswin.glade:746
 msgid "<b>_Skin</b>"
-msgstr ""
+msgstr "<b>_Skin</b>"
 
 #: audacious/glade/prefswin.glade:866
 msgid "<b>_Fonts</b>"
-msgstr ""
+msgstr "<b>_Fonturi</b>"
 
 #: audacious/glade/prefswin.glade:921
 msgid "_Player:"
-msgstr ""
+msgstr "_Player:"
 
 #: audacious/glade/prefswin.glade:964
 msgid "_Playlist:"
-msgstr ""
+msgstr "_Playlist:"
 
 #: audacious/glade/prefswin.glade:1066
-#, fuzzy
 msgid "Use Bitmap fonts if available"
-msgstr "Stereo (daca este disponibil)"
+msgstr "Foloseste fonturi Bitmap daca este posibil"
 
 #: audacious/glade/prefswin.glade:1100
 msgid "<b>_Miscellaneous</b>"
-msgstr ""
+msgstr "<b>_Diverse</b>"
 
 #: audacious/glade/prefswin.glade:1148
 msgid "Show track numbers in playlist"
 msgstr "Arata numarul track-ului in playlist"
 
 #: audacious/glade/prefswin.glade:1183
-#, fuzzy
 msgid "Show separators in playlist"
-msgstr "Arata numarul track-ului in playlist"
+msgstr "Arata separatori in playlist"
 
 #: audacious/glade/prefswin.glade:1218
 msgid "Use custom cursors"
-msgstr ""
+msgstr "Foloseste cursoare modificate"
 
 #: audacious/glade/prefswin.glade:1254
 msgid "Show window manager decoration"
-msgstr ""
+msgstr "Arata decoratia managerului de ferestre"
 
 #: audacious/glade/prefswin.glade:1262
 msgid "Show window manager decorations"
-msgstr ""
+msgstr "Arata decoratiile managerului de ferestre"
 
 #: audacious/glade/prefswin.glade:1263
 msgid "This enables the window manager to show decorations for windows."
-msgstr ""
+msgstr "Aceasta optiune permite managerului de ferestre sa arate decoratii pentru ferestre"
 
 #: audacious/glade/prefswin.glade:1294
 msgid "Use XMMS-style file selector instead of the default selector"
-msgstr ""
+msgstr "Foloseste selectorul de fisiere XMMS in loc de cel implicit"
 
 #: audacious/glade/prefswin.glade:1330
 msgid "Enable playlist transparency"
-msgstr ""
+msgstr "Activeaza transparenta playlist-ului"
 
 #: audacious/glade/prefswin.glade:1419
 msgid "<b>Mouse wheel</b>"
-msgstr "<b>Rotita Mouse</b>"
+msgstr "<b>Mouse wheel</b>"
 
 #: audacious/glade/prefswin.glade:1467
 msgid "Changes volume by"
-msgstr ""
+msgstr "Schimba volumul cu"
 
 #: audacious/glade/prefswin.glade:1495
 msgid "percent"
 msgstr "la suta"
 
 #: audacious/glade/prefswin.glade:1523
-#, fuzzy
 msgid "Scrolls playlist by"
-msgstr "Incarca playlist"
+msgstr "Deruleaza playlist-ul cu "
 
 #: audacious/glade/prefswin.glade:1576
 msgid "lines"
@@ -1689,11 +1623,11 @@ msgstr "linii"
 
 #: audacious/glade/prefswin.glade:1698
 msgid "<b>Filename</b>"
-msgstr "<b>Nume fisier</b>"
+msgstr "<b>Fisier</b>"
 
 #: audacious/glade/prefswin.glade:1738
 msgid "Convert underscores to blanks"
-msgstr ""
+msgstr "Converteste barele orizontale la spatii"
 
 #: audacious/glade/prefswin.glade:1773
 msgid "Convert %20 to blanks"
@@ -1701,15 +1635,15 @@ msgstr "Schimba %20 in spatii"
 
 #: audacious/glade/prefswin.glade:1808
 msgid "Convert backslash '\\' to forward slash '/'"
-msgstr ""
+msgstr "Schimba '\\' in '/'"
 
 #: audacious/glade/prefswin.glade:1842
 msgid "<b>Metadata</b>"
-msgstr ""
+msgstr "<b>Metadata</b>"
 
 #: audacious/glade/prefswin.glade:1883
 msgid "Load metadata from playlists and files"
-msgstr ""
+msgstr "Incarca metadata din playlist-uri si fisiere"
 
 #: audacious/glade/prefswin.glade:1923
 msgid "On load"
@@ -1717,37 +1651,35 @@ msgstr "La incarcare"
 
 #: audacious/glade/prefswin.glade:1945
 msgid "On display"
-msgstr ""
+msgstr "La afisare"
 
 #: audacious/glade/prefswin.glade:1975
 msgid "Fallback character encodings:"
-msgstr ""
+msgstr "Setari pentru caracter in caz de necesitate"
 
 #: audacious/glade/prefswin.glade:2044
 msgid "Auto character encoding detector for:"
-msgstr ""
+msgstr "Setari caractere automate detectate pentru:"
 
 #: audacious/glade/prefswin.glade:2100
-#, fuzzy
 msgid "<b>File Dialog</b>"
-msgstr "<b>Nume fisier</b>"
+msgstr "<b>Dialog Fisiere</b>"
 
 #: audacious/glade/prefswin.glade:2141
 msgid "Always refresh directory when opening file dialog"
-msgstr ""
+msgstr "Mereu reimprospateaza directorul la deschiderea dialogului de fisiere"
 
 #: audacious/glade/prefswin.glade:2175
-#, fuzzy
 msgid "<b>Song Display</b>"
-msgstr "<b>Ascultare</b>"
+msgstr "<b>Vizualizarea melodiei</b>"
 
 #: audacious/glade/prefswin.glade:2223
 msgid "Title format:"
-msgstr "Format titlu:"
+msgstr "Formatul titlului"
 
 #: audacious/glade/prefswin.glade:2251
 msgid "Custom string:"
-msgstr ""
+msgstr "String specific:"
 
 #: audacious/glade/prefswin.glade:2302
 msgid ""
@@ -1759,81 +1691,85 @@ msgid ""
 "ALBUM - TITLE\n"
 "Custom"
 msgstr ""
+"TITLE\n"
+"ARTIST - TITLU\n"
+"ARTIST - ALBUM - TITLU\n"
+"ARTIST - ALBUM - TRACK. TITLU\n"
+"ARTIST [ ALBUM ] - TRACK. TITLU\n"
+"ALBUM - TITLU\n"
+"Specific"
 
 #: audacious/glade/prefswin.glade:2374
-#, fuzzy
 msgid "<b>Popup Information</b>"
-msgstr "Configurare Plugin-ului Audio MPEG"
+msgstr "<b>Informatii Popup</b>"
 
 #: audacious/glade/prefswin.glade:2427
 msgid "Show popup information for playlist entries"
-msgstr ""
+msgstr "Arata informatii popup pentru intrarile din playlist"
 
 #: audacious/glade/prefswin.glade:2562
 msgid "<b>Presets</b>"
-msgstr ""
+msgstr "<b>Preseturi</b>"
 
 #: audacious/glade/prefswin.glade:2662
 msgid "Directory preset file:"
-msgstr ""
+msgstr "Fisierul de presetare a directoarelor"
 
 #: audacious/glade/prefswin.glade:2690
 msgid "File preset extension:"
-msgstr ""
+msgstr "Extensia fisierului de presetare"
 
 #: audacious/glade/prefswin.glade:2738
 msgid "Available _Presets:"
-msgstr ""
+msgstr "_Preseturile disponibile"
 
 #: audacious/glade/prefswin.glade:2918
-#, fuzzy
 msgid "<b>Proxy Configuration</b>"
-msgstr "Configurare Plugin-ului Audio MPEG"
+msgstr "<b>Configuratia Proxy-ului</b>"
 
 #: audacious/glade/prefswin.glade:2976
 msgid "Enable proxy usage"
-msgstr ""
+msgstr "Activeaza proxy"
 
 #: audacious/glade/prefswin.glade:3007
 msgid "Proxy hostname:"
-msgstr ""
+msgstr "Hostname-ul Proxy-ului"
 
 #: audacious/glade/prefswin.glade:3035
 msgid "Proxy port:"
-msgstr ""
+msgstr "Port-ul Proxy-ului"
 
 #: audacious/glade/prefswin.glade:3129
-#, fuzzy
 msgid "Use authentication with proxy"
-msgstr "Foloseste autentificare"
+msgstr "Foloseste autentificare cu proxy"
 
 #: audacious/glade/prefswin.glade:3160
 msgid "Proxy username:"
-msgstr ""
+msgstr "Utilizator Proxy"
 
 #: audacious/glade/prefswin.glade:3188
-#, fuzzy
 msgid "Proxy password:"
-msgstr "Parola:"
+msgstr "Parola Proxy"
 
 #: audacious/glade/prefswin.glade:3304
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
+"<span size=\"small\">Schimbarea acestor setari necesita restartul aplicatiei "
+".</span>"
 
 #: audacious/glade/prefswin.glade:3360
 msgid "label65"
 msgstr ""
 
 #: audacious/glade/prefswin.glade:3401
-#, fuzzy
 msgid "<b>Audio System</b>"
-msgstr "<b>Efecte</b>"
+msgstr "<b>Sistemul Audio</b>"
 
 #: audacious/glade/prefswin.glade:3455
 msgid "Current output plugin:"
-msgstr ""
+msgstr "Pluginul de iesire curent"
 
 #: audacious/glade/prefswin.glade:3523
 msgid ""
@@ -1843,30 +1779,31 @@ msgid ""
 "Please note however, that high values will result in Audacious performing "
 "poorly.</span>"
 msgstr ""
+"<span size=\"small\">Aceasta este cantitatea de prebuffer pentru stream-urile audio "
+"in milisecunde.\n"
+"Mariti aceasta valoare daca se sare peste parti din melodii. \n"
+"Aveti insa in vedere ca valori prea mari rezulta in Audacious comportandu-se slab "
+".</span>"
 
 #: audacious/glade/prefswin.glade:3553
-#, fuzzy
 msgid "Buffer size:"
-msgstr "Marime buffer (kb):"
+msgstr "Marimea Bufferului"
 
 #: audacious/glade/prefswin.glade:3677
-#, fuzzy
 msgid "Output Plugin Preferences"
-msgstr "Preferinte BMP"
+msgstr "Preferintele Plugin-ului de Iesire"
 
 #: audacious/glade/prefswin.glade:3752
-#, fuzzy
 msgid "Output Plugin Information"
-msgstr "Configurare Plugin-ului Audio MPEG"
+msgstr "Informatii despre Pluginul de iesire"
 
 #: audacious/glade/prefswin.glade:3804
-#, fuzzy
 msgid "<b>Format Detection</b>"
-msgstr "Detectare automata"
+msgstr "<b>Detectarea formatului</b>"
 
 #: audacious/glade/prefswin.glade:3845
 msgid "Detect file formats on demand, instead of immediately."
-msgstr ""
+msgstr "Detecteaza formatul fisierelor la cerere, in loc de imediat"
 
 #: audacious/glade/prefswin.glade:3879
 msgid ""
@@ -1874,18 +1811,21 @@ msgid ""
 "slightly slower than detection on demand, but still provides a minimal level "
 "of format detection."
 msgstr ""
+"Cand este activat,Audacious va detecta formatul dupa extensie. Aceasta varianta "
+"este un pic mai inceata decat detectia la cerere, dar totusi ofera un nivel minim de  "
+"detectare a formatului."
 
 #: audacious/glade/prefswin.glade:3881
 msgid "Detect file formats by extension."
-msgstr ""
+msgstr "Detectie a formatului dupa extensie"
 
 #: audacious/glade/prefswin.glade:3915
 msgid "<b>Playback</b>"
-msgstr "<b>Ascultare</b>"
+msgstr "<b>Redare</b>"
 
 #: audacious/glade/prefswin.glade:3956
 msgid "Continue playback on startup"
-msgstr ""
+msgstr "Continua redarea la pornire"
 
 #: audacious/glade/prefswin.glade:3992
 msgid "Don't advance in the playlist"
@@ -1913,952 +1853,98 @@ msgid ""
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
+"Cand cauta coperta albumului, Audacious urmareste anumite cuvinte in fisier. "
+"Puteti specifica aceste cuvinte in lista de mai jos, separate prin spatii. "
+
 
 #: audacious/glade/prefswin.glade:4344
 msgid "Include:"
-msgstr ""
+msgstr "Include:"
 
 #: audacious/glade/prefswin.glade:4372
 msgid "Exclude:"
-msgstr ""
+msgstr "Exclude:"
 
 #: audacious/glade/prefswin.glade:4441
 msgid "Recursively search for cover"
-msgstr ""
+msgstr "Cauta recursiv pentru coperta"
 
 #: audacious/glade/prefswin.glade:4479
 msgid "Search depth: "
-msgstr ""
+msgstr "Adancimea cautarii"
 
 #: audacious/glade/prefswin.glade:4545
 msgid "Use per-file cover"
-msgstr ""
+msgstr "Foloseste coperta per-fisier"
 
 #: audacious/widgets/eq_slider.c:93
 msgid "PREAMP"
-msgstr ""
+msgstr "PREAMP"
 
 #: audacious/widgets/eq_slider.c:93
 msgid "60HZ"
-msgstr ""
+msgstr "60HZ"
 
 #: audacious/widgets/eq_slider.c:93
 msgid "170HZ"
-msgstr ""
+msgstr "170HZ"
 
 #: audacious/widgets/eq_slider.c:94
 msgid "310HZ"
-msgstr ""
+msgstr "310HZ"
 
 #: audacious/widgets/eq_slider.c:94
 msgid "600HZ"
-msgstr ""
+msgstr "600HZ"
 
 #: audacious/widgets/eq_slider.c:94
 msgid "1KHZ"
-msgstr ""
+msgstr "1KHZ"
 
 #: audacious/widgets/eq_slider.c:95
 msgid "3KHZ"
-msgstr ""
+msgstr "3KHZ"
 
 #: audacious/widgets/eq_slider.c:95
 msgid "6KHZ"
-msgstr ""
+msgstr "6KHZ"
 
 #: audacious/widgets/eq_slider.c:95
 msgid "12KHZ"
-msgstr ""
+msgstr "12KHZ"
 
 #: audacious/widgets/eq_slider.c:96
 msgid "14KHZ"
-msgstr ""
+msgstr "14KHZ"
 
 #: audacious/widgets/eq_slider.c:96
 msgid "16KHZ"
-msgstr ""
+msgstr "16KHZ"
 
 #: libaudacious/titlestring.c:371
 msgid "Performer/Artist"
-msgstr ""
+msgstr "Cantaret/Artist"
 
 #: libaudacious/titlestring.c:374
 msgid "File name"
-msgstr "Nume fisier"
+msgstr "Fisier"
 
 #: libaudacious/titlestring.c:375
 msgid "File path"
-msgstr ""
+msgstr "Calea fisierului"
 
 #: libaudacious/titlestring.c:376
 msgid "File extension"
-msgstr "Extensie fisier"
+msgstr "Extensia fisierului"
 
 #: libaudacious/titlestring.c:377
 msgid "Track name"
-msgstr "Nume track"
+msgstr "Numele Trackului"
 
 #: libaudacious/titlestring.c:378
 msgid "Track number"
-msgstr "Numar track"
+msgstr "Numarul Trackului"
 
 #: libaudacious/titlestring.c:441
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
-msgstr ""
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Received SIGSEGV\n"
-#~ "\n"
-#~ "This could be a bug in Audacious. If you don't know why this happened, "
-#~ "file a bug at http://bugs-meta.atheme.org/\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Am primit un SIGSEGV\n"
-#~ "\n"
-#~ "Acest lucru ar putea fii un bug in BMP. Daca stiti de ce s-a intamplat "
-#~ "acest lucru trimite-ti un e-mail la beepmp-devel@lists.sourceforge.net\n"
-#~ "\n"
-
-#, fuzzy
-#~ msgid "/Remove Duplicates/By Title"
-#~ msgstr "/Sorteaza Lista/Dupa Titlu"
-
-#, fuzzy
-#~ msgid "/Remove Duplicates/By Filename"
-#~ msgstr "/Sorteaza Lista/Dupa Nume Fisier"
-
-#, fuzzy
-#~ msgid "/Load List"
-#~ msgstr "/Sorteaza Lista"
-
-#, fuzzy
-#~ msgid "/Select All"
-#~ msgstr "Selecteaza tot"
-
-#~ msgid "/Sort List/By Date"
-#~ msgstr "/Sorteaza Lista/Dupa Data"
-
-#, fuzzy
-#~ msgid "/Sort Selection/By Artist"
-#~ msgstr "/Adauga/Locatie Internet..."
-
-#, fuzzy
-#~ msgid "/Sort Selection/By Track Number"
-#~ msgstr "/Adauga/Locatie Internet..."
-
-#, fuzzy
-#~ msgid "/Sort Selection/By Playlist Entry"
-#~ msgstr "/Adauga/Locatie Internet..."
-
-#, fuzzy
-#~ msgid "Audacious Preferences"
-#~ msgstr "Preferinte BMP"
-
-#~ msgid "Select main player window font:"
-#~ msgstr "Selecteaza fontul pentru fereastra principala:"
-
-#~ msgid "Show information about titlestring format"
-#~ msgstr "Arata informatii despre formatul titlestring"
-
-#~ msgid ""
-#~ "When finished playing a song, don't automatically advance to the next."
-#~ msgstr "Cand a terminat ascultarea unei melodii nu trece la urmatoarea."
-
-#, fuzzy
-#~ msgid "About AudioCompress"
-#~ msgstr "Despre Plugin-ul Audio MPEG"
-
-#, fuzzy
-#~ msgid "About Extra Stereo Plugin"
-#~ msgstr "Despre Plugin-ul ESounD"
-
-#, fuzzy
-#~ msgid "Cancel"
-#~ msgstr "Canale:"
-
-#, fuzzy
-#~ msgid "About LIRC Audacious Plugin"
-#~ msgstr "Despre Plugin-ul ESounD"
-
-#, fuzzy
-#~ msgid "LIRC Plugin"
-#~ msgstr "Plugin-ul Audio MPEG"
-
-#~ msgid "Password:"
-#~ msgstr "Parola:"
-
-#, fuzzy
-#~ msgid "About Scrobbler Plugin"
-#~ msgstr "Despre Plugin-ul ESounD"
-
-#, fuzzy
-#~ msgid "Commands"
-#~ msgstr "Nota"
-
-#, fuzzy
-#~ msgid "Command:"
-#~ msgstr "Nota:"
-
-#, fuzzy
-#~ msgid "About "
-#~ msgstr "Despre BMP"
-
-#, fuzzy
-#~ msgid "AMIDI-Plug - warning"
-#~ msgstr "Configurare Plugin-ului Audio MPEG"
-
-#, fuzzy
-#~ msgid "AMIDI-Plug - select file"
-#~ msgstr "Configurare Plugin-ului Audio MPEG"
-
-#, fuzzy
-#~ msgid "AMIDI-Plug - configuration"
-#~ msgstr "Configurare Plugin-ului Audio MPEG"
-
-#~ msgid "Name:"
-#~ msgstr "Nume:"
-
-#, fuzzy
-#~ msgid " MIDI Info "
-#~ msgstr "Informatii fisier"
-
-#, fuzzy
-#~ msgid "Format:"
-#~ msgstr "Format nume:"
-
-#, fuzzy
-#~ msgid "Length (msec):"
-#~ msgstr "Lungime:"
-
-#, fuzzy
-#~ msgid "Num of Tracks:"
-#~ msgstr "Sari la Track"
-
-#~ msgid "(unknown)"
-#~ msgstr "(necunoscut)"
-
-#~ msgid ""
-#~ "Failed to open device %s\n"
-#~ "Error: %s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Nu s-a putut deschide device-ul %s\n"
-#~ "Eroare:%s\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Failed to read \"Table of Contents\"\n"
-#~ "Maybe no disc in the drive?\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Nu s-a putut citi \"Table of Contents\"\n"
-#~ "Poate nu exista disc in drive?\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Device %s OK.\n"
-#~ "Disc has %d tracks"
-#~ msgstr ""
-#~ "Device %s OK.\n"
-#~ "Discul are %d track-uri"
-
-#~ msgid ""
-#~ "\n"
-#~ "Total length: %d:%d\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Lungime totala: %d:%d\n"
-
-#~ msgid ""
-#~ "Digital audio extraction not tested as the disc has no audio tracks\n"
-#~ msgstr ""
-#~ "Extragerea audio digitala nu a fost testata deoarece discul nu are nici "
-#~ "un track audio\n"
-
-#~ msgid ""
-#~ "Digital audio extraction test: OK\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Extragere audio digitala: OK\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Digital audio extraction test failed: %s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Testarea extragerii audio digitale a esuat:%s\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Failed to check directory %s\n"
-#~ "Error: %s"
-#~ msgstr ""
-#~ "Esuare in verificarea directorului %s\n"
-#~ "Eroare:%s"
-
-#~ msgid "Error: %s exist, but is not a directory"
-#~ msgstr "Eroare:%s exista, dar nu e un director"
-
-#~ msgid "Directory %s OK."
-#~ msgstr "Directorul %s OK."
-
-#~ msgid "Play mode:"
-#~ msgstr "Mod de ascultare:"
-
-#~ msgid "Digital audio extraction"
-#~ msgstr "Extragere audio digitala"
-
-#~ msgid "Volume control:"
-#~ msgstr "Control volum:"
-
-#~ msgid "No mixer"
-#~ msgstr "Nu exista mixer"
-
-#~ msgid "CDROM drive"
-#~ msgstr "Unitate CDROM"
-
-#~ msgid "OSS mixer"
-#~ msgstr "Mixer OSS"
-
-#~ msgid "Check drive..."
-#~ msgstr "Verifica drive-ul..."
-
-#~ msgid "Remove drive"
-#~ msgstr "Inlatura drive-ul"
-
-#~ msgid "Add drive"
-#~ msgstr "Adauga un drive"
-
-#~ msgid "Use CDDB"
-#~ msgstr "Foloseste CDDB"
-
-#~ msgid "Show network window"
-#~ msgstr "Arata fereastra network"
-
-#~ msgid "Use CD Index"
-#~ msgstr "Foloseste CD Index"
-
-#~ msgid "CD Index server:"
-#~ msgstr "Server CD Index:"
-
-#~ msgid "Override generic titles"
-#~ msgstr "Suprascrie titlurile generice"
-
-#~ msgid "Name format:"
-#~ msgstr "Format nume:"
-
-#~ msgid "Select the directory where you want to store the MPEG streams:"
-#~ msgstr "Selecteaza directorul unde vrei sa pui stream-urile MPEG"
-
-#, fuzzy
-#~ msgid "Resolution"
-#~ msgstr "Rezolutie:"
-
-#~ msgid "Buffer size (kb):"
-#~ msgstr "Marime buffer (kb):"
-
-#~ msgid "Save stream to disk:"
-#~ msgstr "Salveaza stream-ul pe disk:"
-
-#~ msgid "Save stream to disk"
-#~ msgstr "Salveaza stream-ul pe disk"
-
-#~ msgid "Browse"
-#~ msgstr "Rasfoieste"
-
-#, fuzzy
-#~ msgid "About Flac Plugin"
-#~ msgstr "Despre Plugin-ul ESounD"
-
-#, fuzzy
-#~ msgid "Channels: %d"
-#~ msgstr "Canale:"
-
-#, fuzzy
-#~ msgid ""
-#~ "Samples: %llu\n"
-#~ "Length: %d:%.2d"
-#~ msgstr ""
-#~ "\n"
-#~ "Lungime totala: %d:%d\n"
-
-#, fuzzy
-#~ msgid "Filesize: %ld B"
-#~ msgstr "Marime fisier:"
-
-#, fuzzy
-#~ msgid "Tag:"
-#~ msgstr "Taguri ID3:"
-
-#~ msgid "Title:"
-#~ msgstr "Titlu:"
-
-#~ msgid "Comment:"
-#~ msgstr "Nota:"
-
-#~ msgid "Date:"
-#~ msgstr "Data:"
-
-#~ msgid "Track number:"
-#~ msgstr "Numar track:"
-
-#, fuzzy
-#~ msgid "Save"
-#~ msgstr "/Salveaza"
-
-#, fuzzy
-#~ msgid "Remove Tag"
-#~ msgstr "/Sterge Selectia"
-
-#, fuzzy
-#~ msgid "FLAC Info:"
-#~ msgstr "Informatii fisier"
-
-#, fuzzy
-#~ msgid "File Info - %s"
-#~ msgstr "Informatii fisier"
-
-#~ msgid "Error"
-#~ msgstr "Eroare"
-
-#~ msgid "LOOKING UP %s"
-#~ msgstr "Cauta %s"
-
-#~ msgid "Couldn't look up host %s"
-#~ msgstr "Nu s-a putut rezolva host-ul %s"
-
-#~ msgid "CONNECTING TO %s:%d"
-#~ msgstr "Se conecteaza la %s:%d"
-
-#~ msgid "Couldn't connect to host %s"
-#~ msgstr "Nu a fost posibila conectarea la %s"
-
-#~ msgid "CONNECTED: WAITING FOR REPLY"
-#~ msgstr "CONECTAT: ASTEPT RASPUNS"
-
-#~ msgid ""
-#~ "Couldn't connect to host %s\n"
-#~ "Server reported: %s"
-#~ msgstr ""
-#~ "Nu a fost posibil conectarea la %s\n"
-#~ "Server-ul a reportat: %s"
-
-#, fuzzy
-#~ msgid "FLAC Audio Plugin"
-#~ msgstr "Plugin Audio WAV"
-
-#, fuzzy
-#~ msgid "ModPlug Configuration"
-#~ msgstr "Configurare Plugin-ului Audio MPEG"
-
-#, fuzzy
-#~ msgid "Channels"
-#~ msgstr "Canale:"
-
-#, fuzzy
-#~ msgid "Quality"
-#~ msgstr "/_Iesi"
-
-#, fuzzy
-#~ msgid "Fast Playlist Info"
-#~ msgstr "Incarca playlist"
-
-#, fuzzy
-#~ msgid "Amount"
-#~ msgstr "Despre BMP"
-
-#, fuzzy
-#~ msgid "Effects"
-#~ msgstr "<b>Efecte</b>"
-
-#, fuzzy
-#~ msgid "About Modplug"
-#~ msgstr "Despre Plugin-ul ESounD"
-
-#~ msgid "Resolution:"
-#~ msgstr "Rezolutie:"
-
-#~ msgid "Channels:"
-#~ msgstr "Canale:"
-
-#~ msgid "Stereo (if available)"
-#~ msgstr "Stereo (daca este disponibil)"
-
-#~ msgid "Decoder"
-#~ msgstr "Decodor"
-
-#~ msgid "ID3 Tags:"
-#~ msgstr "Taguri ID3:"
-
-#~ msgid "No"
-#~ msgstr "Nu"
-
-#~ msgid "Yes"
-#~ msgstr "Da"
-
-#~ msgid "File size:"
-#~ msgstr "Marime fisier:"
-
-#, fuzzy
-#~ msgid "Mode:"
-#~ msgstr "Decodor:"
-
-#~ msgid "Year:"
-#~ msgstr "An:"
-
-#, fuzzy
-#~ msgid "Couldn't connect to host %s:%d"
-#~ msgstr "Nu a fost posibila conectarea la %s"
-
-#~ msgid "About MPEG Audio Plugin"
-#~ msgstr "Despre Plugin-ul Audio MPEG"
-
-#~ msgid "MPEG Audio Plugin"
-#~ msgstr "Plugin-ul Audio MPEG"
-
-#, fuzzy
-#~ msgid "TiMidity Configuration"
-#~ msgstr "Configurare Plugin-ului Audio MPEG"
-
-#, fuzzy
-#~ msgid "TiMidity Configuration File"
-#~ msgstr "Configurare Plugin-ului Audio MPEG"
-
-#, fuzzy
-#~ msgid "Couldn't load MIDI file"
-#~ msgstr "Nu s-a putut rezolva host-ul %s"
-
-#~ msgid "Select the directory where you want to store the Ogg Vorbis streams:"
-#~ msgstr "Selecteaza directorul unde vrei sa pui stream-urile Ogg Vorbis:"
-
-#~ msgid "Ogg Vorbis Audio Plugin Configuration"
-#~ msgstr "Configurare Plugin Audio Ogg Vorbis"
-
-#~ msgid "Ogg Vorbis Tags:"
-#~ msgstr "Tag-uri Ogg Vorbis:"
-
-#~ msgid ""
-#~ "An error occured:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "O eroare a avut loc:\n"
-#~ "%s"
-
-#~ msgid "Error!"
-#~ msgstr "Eroare!"
-
-#~ msgid "Failed to modify tag (open)"
-#~ msgstr "Nu s-a putut modifica tag-ul (deschidere)"
-
-#~ msgid "Failed to modify tag (close)"
-#~ msgstr "Nu s-a putut modifica tag-ul (inchidere)"
-
-#~ msgid "Failed to modify tag"
-#~ msgstr "Nu s-a putut modifica tag-ul"
-
-#~ msgid "Description:"
-#~ msgstr "Descriere:"
-
-#~ msgid "Location:"
-#~ msgstr "Locatie:"
-
-#~ msgid "Version:"
-#~ msgstr "Versiune:"
-
-#~ msgid "Length:"
-#~ msgstr "Lungime:"
-
-#~ msgid "Ogg Vorbis Audio Plugin"
-#~ msgstr "Plugin Audio Ogg Vorbis"
-
-#~ msgid "About Ogg Vorbis Audio Plugin"
-#~ msgstr "Despre Plugin-ul Audio Ogg Vorbis"
-
-#~ msgid "WAV Audio Plugin"
-#~ msgstr "Plugin Audio WAV"
-
-#, fuzzy
-#~ msgid "About %s"
-#~ msgstr "Despre BMP"
-
-#~ msgid "About OSS Driver"
-#~ msgstr "Despre Driver-ul OSS"
-
-#~ msgid "OSS Driver configuration"
-#~ msgstr "Configurarea Driver-ului OSS"
-
-#~ msgid "Use alternate device:"
-#~ msgstr "Foloseste device alternativ:"
-
-#~ msgid "Mixer Settings:"
-#~ msgstr "Setari Mixer:"
-
-#~ msgid "Volume controls Master not PCM"
-#~ msgstr "Volumul controleaza Master si nu PCM"
-
-#~ msgid "About ALSA Driver"
-#~ msgstr "Despre Driver-ul ALSA"
-
-#~ msgid "Unknown soundcard"
-#~ msgstr "Placa de sunet necunoscuta"
-
-#~ msgid "ALSA Driver configuration"
-#~ msgstr "Configurare Driver ALSA"
-
-#~ msgid "Device settings"
-#~ msgstr "Setari Device"
-
-#~ msgid "Advanced settings"
-#~ msgstr "Setari avansate"
-
-#, fuzzy
-#~ msgid "aRts Driver configuration"
-#~ msgstr "Configurarea Driver-ului OSS"
-
-#, fuzzy
-#~ msgid "Select the directory where you want to store the output files:"
-#~ msgstr "Selecteaza directorul unde vrei sa pui stream-urile MPEG"
-
-#, fuzzy
-#~ msgid "Disk Writer Configuration"
-#~ msgstr "Configurarea Driver-ului OSS"
-
-#~ msgid "About ESounD Plugin"
-#~ msgstr "Despre Plugin-ul ESounD"
-
-#~ msgid "Volume controls OSS mixer"
-#~ msgstr "Volumul controleaza mixerul OSS"
-
-#, fuzzy
-#~ msgid "About JACK Output Plugin 0.15"
-#~ msgstr "Despre Plugin-ul ESounD"
-
-#, fuzzy
-#~ msgid "About the Sun Driver"
-#~ msgstr "Despre Driver-ul OSS"
-
-#, fuzzy
-#~ msgid "Audio control device:"
-#~ msgstr "Preferinte BMP"
-
-#, fuzzy
-#~ msgid "Volume controls device:"
-#~ msgstr "Control volum:"
-
-#, fuzzy
-#~ msgid "Sun driver configuration"
-#~ msgstr "Configurarea Driver-ului OSS"
-
-#~ msgid "Options:"
-#~ msgstr "Optiuni:"
-
-#, fuzzy
-#~ msgid "<b>_Transparency</b>"
-#~ msgstr "<b>Ascultare</b>"
-
-#, fuzzy
-#~ msgid "Scrobbler Configuration"
-#~ msgstr "Configurare Plugin-ului Audio MPEG"
-
-#, fuzzy
-#~ msgid "Song Change Configuration"
-#~ msgstr "Configurarea Driver-ului OSS"
-
-#, fuzzy
-#~ msgid "Client name"
-#~ msgstr "Nume fisier"
-
-#, fuzzy
-#~ msgid "Port name"
-#~ msgstr "Nume track"
-
-#, fuzzy
-#~ msgid "Mixer settings"
-#~ msgstr "Setari Mixer:"
-
-#, fuzzy
-#~ msgid "<b>Name:</b>"
-#~ msgstr "<b>Nume fisier</b>"
-
-#, fuzzy
-#~ msgid "<b>WMA Version:</b>"
-#~ msgstr "<b>Vizualizare</b>"
-
-#, fuzzy
-#~ msgid "<b>Bitrate:</b>"
-#~ msgstr "<b>Nume fisier</b>"
-
-#, fuzzy
-#~ msgid "<b>Samplerate:</b>"
-#~ msgstr "<b>Nume fisier</b>"
-
-#, fuzzy
-#~ msgid "<b>Channels:</b>"
-#~ msgstr "Canale:"
-
-#, fuzzy
-#~ msgid "<b>Play time:</b>"
-#~ msgstr "<b>Nume fisier</b>"
-
-#, fuzzy
-#~ msgid "<b>Filesize:</b>"
-#~ msgstr "<b>Nume fisier</b>"
-
-#, fuzzy
-#~ msgid "WMA Info"
-#~ msgstr "Informatii fisier"
-
-#, fuzzy
-#~ msgid "<b>Comments:</b>"
-#~ msgstr "Nota:"
-
-#, fuzzy
-#~ msgid "<b>Track:</b>"
-#~ msgstr "<b>Ascultare</b>"
-
-#, fuzzy
-#~ msgid "Tags"
-#~ msgstr "Taguri ID3:"
-
-#, fuzzy
-#~ msgid ""
-#~ "The change is now effective in Audacious' configuration database, but "
-#~ "won't take effect for playback until the next song!\n"
-#~ "\n"
-#~ "Optionally, you can stop and restart playback for the change to take "
-#~ "effect."
-#~ msgstr ""
-#~ "Schimbarea este actualizata in configuratia BMP dar nu va avea efect la "
-#~ "ascultare pana la urmatoarea melodie!\n"
-#~ "\n"
-#~ "Optional, puteti sa opriti si sa reporniti ascultarea melodiei."
-
-#~ msgid "Use proxy"
-#~ msgstr "Foloseste proxy"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to write to file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Nu s-a putut scrie in fisierul:%s"
-
-#~ msgid "Couldn't write tag!"
-#~ msgstr "Nu s-a putut scrie tag-ul!"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to open file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Nu s-a putut deschide fisierul:%s"
-
-#~ msgid "File Info"
-#~ msgstr "Informatii fisier"
-
-#~ msgid "Couldn't remove tag!"
-#~ msgstr "Nu s-a putut sterge tag-ul!"
-
-#~ msgid "No tag to remove!"
-#~ msgstr "Nu exista tag care sa fie sters!"
-
-#~ msgid "Copy album tags"
-#~ msgstr "Copiaza tag-urile album"
-
-#, fuzzy
-#~ msgid "About TiMidity Plugin"
-#~ msgstr "Despre Plugin-ul Audio MPEG"
-
-#, fuzzy
-#~ msgid "TiMidity Plugin"
-#~ msgstr "Plugin-ul Audio MPEG"
-
-#~ msgid "Options"
-#~ msgstr "Optiuni"
-
-#~ msgid "Content"
-#~ msgstr "Continut"
-
-#~ msgid "Extension"
-#~ msgstr "Extensie"
-
-#~ msgid "Extension and content"
-#~ msgstr "Extensie si continut"
-
-#, fuzzy
-#~ msgid "About XMMS Crossfade Plugin"
-#~ msgstr "Despre Plugin-ul ESounD"
-
-#, fuzzy
-#~ msgid "Advanced"
-#~ msgstr "Setari avansate"
-
-#, fuzzy
-#~ msgid "Advanced XF"
-#~ msgstr "Setari avansate"
-
-#, fuzzy
-#~ msgid "Advanced options"
-#~ msgstr "Setari avansate"
-
-#, fuzzy
-#~ msgid "Delete"
-#~ msgstr "/Sterge"
-
-#, fuzzy
-#~ msgid "Enable volume control"
-#~ msgstr "Control volum:"
-
-#~ msgid "Load"
-#~ msgstr "Incarca"
-
-#, fuzzy
-#~ msgid "Mixing buffer size (ms):"
-#~ msgstr "Marime buffer (kb):"
-
-#, fuzzy
-#~ msgid "Pause"
-#~ msgstr "/Pauza"
-
-#, fuzzy
-#~ msgid "Position:"
-#~ msgstr "Descriere:"
-
-#, fuzzy
-#~ msgid "Quality:"
-#~ msgstr "/_Iesi"
-
-#, fuzzy
-#~ msgid "Rate:"
-#~ msgstr "Data:"
-
-#, fuzzy
-#~ msgid "Reopen"
-#~ msgstr "/Repeta"
-
-#, fuzzy
-#~ msgid "Volume control options"
-#~ msgstr "Control volum:"
-
-#, fuzzy
-#~ msgid "Volume normalizer"
-#~ msgstr "Control volum:"
-
-#, fuzzy
-#~ msgid "same file"
-#~ msgstr "De la fisier"
-
-#, fuzzy
-#~ msgid "LibVisual Audacious Plugin"
-#~ msgstr "/Mod Vizualizare"
-
-#, fuzzy
-#~ msgid "Visualization Plugins"
-#~ msgstr "/Mod Vizualizare"
-
-#, fuzzy
-#~ msgid "Version: "
-#~ msgstr "Versiune:"
-
-#, fuzzy
-#~ msgid " error"
-#~ msgstr "Eroare"
-
-#, fuzzy
-#~ msgid "Audacious plugin"
-#~ msgstr "Plugin Audio WAV"
-
-#, fuzzy
-#~ msgid "Use interpolation"
-#~ msgstr "Foloseste autentificare"
-
-#, fuzzy
-#~ msgid "/Play Directory"
-#~ msgstr "/Asculta CD"
-
-#~ msgid "Add Folders"
-#~ msgstr "Adauga directoare"
-
-#, fuzzy
-#~ msgid "/Add Folders..."
-#~ msgstr "/Adauga/Directoare"
-
-#~ msgid "3DNow! optimized decoder"
-#~ msgstr "Decodor optimizat 3DNow!"
-
-#~ msgid "MMX optimized decoder"
-#~ msgstr "Decodor optimizat MMX"
-
-#~ msgid "FPU decoder"
-#~ msgstr "Decodor FPU"
-
-#~ msgid ""
-#~ "mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
-#~ "Plugin by The XMMS team"
-#~ msgstr ""
-#~ "Engine-ul de decodare mpg123 scris de Michael Hipp <mh@mpg123.de>\n"
-#~ "Plugin scris de The XMMS team"
-
-#~ msgid "Advanced settings:"
-#~ msgstr "Setari avansate"
-
-#~ msgid "/About BMP"
-#~ msgstr "/Despre BMP"
-
-#, fuzzy
-#~ msgid "Add Internet Address"
-#~ msgstr "/Adauga/Adresa Internet"
-
-#~ msgid "/5 seconds REW"
-#~ msgstr "/5 secunde REW"
-
-#~ msgid "/5 seconds FFWD"
-#~ msgstr "/5 secunde FFWD"
-
-#~ msgid "/Add"
-#~ msgstr "/Adauga"
-
-#~ msgid "/_Options"
-#~ msgstr "/_Optiuni"
-
-#~ msgid "Jump to:"
-#~ msgstr "Sari la:"
-
-#~ msgid "Jump"
-#~ msgstr "Sari"
-
-#~ msgid "Add URL"
-#~ msgstr "Adauga URL"
-
-#~ msgid "/By extension"
-#~ msgstr "/Dupa extensie"
-
-#~ msgid "/Close Window"
-#~ msgstr "/Inchide Fereastra"
-
-#~ msgid "/Sort by Title"
-#~ msgstr "/Sorteaza dupa Titlu"
-
-#~ msgid "/Sort by Filename"
-#~ msgstr "/Sorteaza dupa Nume Fisier"
-
-#~ msgid "/Sort by Date"
-#~ msgstr "/Sorteaza dupa Data"
-
-#~ msgid "Failed to delete \"%s\": %s."
-#~ msgstr "Esuat in a sterge \"%s\": %s."
-
-#~ msgid "%d of %d files successfully deleted."
-#~ msgstr "%d of %d fisierele au fost sterse."
-
-#~ msgid "Really delete %d files?"
-#~ msgstr "Chiar doriti sa stergeti %d fisierele?"
-
-#~ msgid "Really delete: \"%s\"?"
-#~ msgstr "Chiar doriti sa stergeti: \"%s\"?"
-
-#~ msgid "To file"
-#~ msgstr "In fisierul"
+msgstr "%{n:...%}: Arata \"...\" numai daca elementul %n este prezent"
