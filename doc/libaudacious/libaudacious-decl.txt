@@ -1,118 +1,4 @@
 <STRUCT>
-<NAME>VFSFile</NAME>
-</STRUCT>
-<STRUCT>
-<NAME>VFSConstructor</NAME>
-</STRUCT>
-<STRUCT>
-<NAME>VFSFile</NAME>
-struct _VFSFile {
-	gchar *uri;
-	gpointer handle;
-	VFSConstructor *base;
-};
-</STRUCT>
-<STRUCT>
-<NAME>VFSConstructor</NAME>
-struct _VFSConstructor {
-	gchar *uri_id;
-	VFSFile *(*vfs_fopen_impl)(const gchar *path,
-		const gchar *mode);
-	gint (*vfs_fclose_impl)(VFSFile * file);
-	size_t (*vfs_fread_impl)(gpointer ptr, size_t size,
-		size_t nmemb, VFSFile *file);
-	size_t (*vfs_fwrite_impl)(gconstpointer ptr, size_t size,
-		size_t nmemb, VFSFile *file);
-	gint (*vfs_getc_impl)(VFSFile *stream);
-	gint (*vfs_ungetc_impl)(gint c, VFSFile *stream);
-	gint (*vfs_fseek_impl)(VFSFile *file, glong offset, gint whence);
-	void (*vfs_rewind_impl)(VFSFile *file);
-	glong (*vfs_ftell_impl)(VFSFile *file);
-	gboolean (*vfs_feof_impl)(VFSFile *file);
-	gboolean (*vfs_truncate_impl)(VFSFile *file, glong length);
-};
-</STRUCT>
-<FUNCTION>
-<NAME>vfs_fopen</NAME>
-<RETURNS>VFSFile *</RETURNS>
-const gchar * path,const gchar * mode
-</FUNCTION>
-<FUNCTION>
-<NAME>vfs_fclose</NAME>
-<RETURNS>gint </RETURNS>
-VFSFile * file
-</FUNCTION>
-<FUNCTION>
-<NAME>vfs_fread</NAME>
-<RETURNS>size_t </RETURNS>
-gpointer ptr,size_t size,size_t nmemb,VFSFile * file
-</FUNCTION>
-<FUNCTION>
-<NAME>vfs_fwrite</NAME>
-<RETURNS>size_t </RETURNS>
-gconstpointer ptr,size_t size,size_t nmemb,VFSFile *file
-</FUNCTION>
-<FUNCTION>
-<NAME>vfs_getc</NAME>
-<RETURNS>gint </RETURNS>
-VFSFile *stream
-</FUNCTION>
-<FUNCTION>
-<NAME>vfs_ungetc</NAME>
-<RETURNS>gint </RETURNS>
-gint c,VFSFile *stream
-</FUNCTION>
-<FUNCTION>
-<NAME>vfs_fgets</NAME>
-<RETURNS>gchar *</RETURNS>
-gchar *s,gint n,VFSFile *stream
-</FUNCTION>
-<FUNCTION>
-<NAME>vfs_fseek</NAME>
-<RETURNS>gint </RETURNS>
-VFSFile * file,glong offset,gint whence
-</FUNCTION>
-<FUNCTION>
-<NAME>vfs_rewind</NAME>
-<RETURNS>void </RETURNS>
-VFSFile * file
-</FUNCTION>
-<FUNCTION>
-<NAME>vfs_ftell</NAME>
-<RETURNS>glong </RETURNS>
-VFSFile * file
-</FUNCTION>
-<FUNCTION>
-<NAME>vfs_feof</NAME>
-<RETURNS>gboolean </RETURNS>
-VFSFile * file
-</FUNCTION>
-<FUNCTION>
-<NAME>vfs_file_test</NAME>
-<RETURNS>gboolean </RETURNS>
-const gchar * path,GFileTest test
-</FUNCTION>
-<FUNCTION>
-<NAME>vfs_is_writeable</NAME>
-<RETURNS>gboolean </RETURNS>
-const gchar * path
-</FUNCTION>
-<FUNCTION>
-<NAME>vfs_truncate</NAME>
-<RETURNS>gboolean </RETURNS>
-VFSFile * file, glong length
-</FUNCTION>
-<FUNCTION>
-<NAME>vfs_fprintf</NAME>
-<RETURNS>int </RETURNS>
-VFSFile *stream, gchar const *format, ...
-</FUNCTION>
-<FUNCTION>
-<NAME>vfs_register_transport</NAME>
-<RETURNS>gboolean </RETURNS>
-VFSConstructor *vtable
-</FUNCTION>
-<STRUCT>
 <NAME>ConfigDb</NAME>
 </STRUCT>
 <FUNCTION>
@@ -574,6 +460,11 @@ gint session
 gint session, gchar * string
 </FUNCTION>
 <FUNCTION>
+<NAME>xmms_remote_playlist_enqueue_to_temp</NAME>
+<RETURNS>void </RETURNS>
+gint session, gchar * string
+</FUNCTION>
+<FUNCTION>
 <NAME>xmms_remote_is_running</NAME>
 <RETURNS>gboolean </RETURNS>
 gint session
@@ -732,23 +623,4 @@ const gchar *
 <NAME>xmms_urldecode_plain</NAME>
 <RETURNS>gchar *</RETURNS>
 const gchar *
-</FUNCTION>
-<STRUCT>
-<NAME>VFSBuffer</NAME>
-typedef struct {
-	guchar *data;
-	guchar *iter;
-	guchar *end;
-	gsize   size;
-} VFSBuffer;
-</STRUCT>
-<FUNCTION>
-<NAME>vfs_buffer_new</NAME>
-<RETURNS>VFSFile *</RETURNS>
-gpointer data, gsize size
-</FUNCTION>
-<FUNCTION>
-<NAME>vfs_buffer_new_from_string</NAME>
-<RETURNS>VFSFile *</RETURNS>
-gchar *str
 </FUNCTION>
