@@ -34,9 +34,10 @@ static const gfloat vis_pfalloff_speeds[] = { 1.2, 1.3, 1.4, 1.5, 1.6 };
 static const gint vis_redraw_delays[] = { 1, 2, 4, 8 };
 static const guint8 vis_scope_colors[] =
     { 21, 21, 20, 20, 19, 19, 18, 19, 19, 20, 20, 21, 21 };
-static guint8 vs_data_ext[76 * 16 * 4];
-static guint8 voiceprint_data_normal[76*16];
-static guint8 voiceprint_data_rgb[76*16*4];
+//static guint8 vs_data_ext[76 * 16 * 4];
+static guchar voiceprint_data[76*16];
+//static guchar voiceprint_data_normal[76*16];
+//static guchar voiceprint_data_rgb[76*16*4];
 
 void
 vis_timeout_func(Vis * vis, guchar * data)
@@ -100,9 +101,7 @@ vis_timeout_func(Vis * vis, guchar * data)
     else if (cfg.vis_type == VIS_VOICEPRINT && data){
       for(i = 0; i < 16; i++)
 	{
-	  /*The color palette is in the range [0-17]. This makes sure we stay there.*/
-	  /* x 4*/
-	  vis->vs_data[i] = data[15 - i] > 17 * 8 ? 17 * 8 : data[15-i];
+	  vis->vs_data[i] = data[15 - i];
 	}
     }
     else if (data) {
@@ -140,23 +139,33 @@ vis_draw(Widget * w)
     cmap = gdk_rgb_cmap_new(colors, 24);
 
     if (!vis->vs_doublesize) {
-      memset(rgb_data, 0, 76 * 16);
-      for (y = 1; y < 16; y += 2) {
-	ptr = rgb_data + (y * 76);
-	for (x = 0; x < 76; x += 2, ptr += 2)
-	  *ptr = 1;
+      if(cfg.vis_type == VIS_VOICEPRINT && cfg.voiceprint_mode != VOICEPRINT_NORMAL){
+	memset(rgb_data, 0, 76 * 16 * 3);
+      }
+      else{
+	memset(rgb_data, 0, 76 * 16);
+	for (y = 1; y < 16; y += 2) {
+	  ptr = rgb_data + (y * 76);
+	  for (x = 0; x < 76; x += 2, ptr += 2)
+	    *ptr = 1;
+      }
       }
     }
     else{
-      memset(rgb_data, 0, 152 * 32);
-      for (y = 1; y < 16; y += 2) {
-	ptr = rgb_data + (y * 304);
-	for (x = 0; x < 76; x += 2, ptr += 4) {
-	  *ptr = 1;
-	  *(ptr + 1) = 1;
-	  *(ptr + 152) = 1;
-	  *(ptr + 153) = 1;
+      if(cfg.vis_type == VIS_VOICEPRINT && cfg.voiceprint_mode != VOICEPRINT_NORMAL){
+	memset(rgb_data, 0, 3 * 4 * 16 * 76);
+      }
+      else{
+	memset(rgb_data, 0, 152 * 32);
+	for (y = 1; y < 16; y += 2) {
+	  ptr = rgb_data + (y * 304);
+	  for (x = 0; x < 76; x += 2, ptr += 4) {
+	    *ptr = 1;
+	    *(ptr + 1) = 1;
+	    *(ptr + 152) = 1;
+	    *(ptr + 153) = 1;
 	}
+      }
       }
     }
     if (cfg.vis_type == VIS_ANALYZER) {
@@ -240,77 +249,63 @@ vis_draw(Widget * w)
     }
     else if (cfg.vis_type == VIS_VOICEPRINT) {
       if(!bmp_playback_get_paused() && bmp_playback_get_playing()){/*Don't scroll when it's paused or stopped*/
-	if(cfg.voiceprint_mode == VOICEPRINT_NORMAL){
-	  for (y = 0; y < 16; y ++) 
-	    for (x = 75; x > 0; x--)
-	      voiceprint_data_normal[x + y * 76] = voiceprint_data_normal[x-1+y*76];
+	for (y = 0; y < 16; y ++)
+	  for (x = 75; x > 0; x--)
+	    voiceprint_data[x + y * 76] = voiceprint_data[x-1+y*76];
 	  for(y=0;y<16;y++)
-	    voiceprint_data_normal[y * 76] = vis->vs_data[y] / 6;
-	  if (!vis->vs_doublesize) {
-	    memcpy(rgb_data, voiceprint_data_normal,16*76);	    
-	  }
-	  else{
-	    for (y = 0; y < 16; y ++) {
-	      for (x = 74; x > 0; x--)
-		{
-		  ptr = rgb_data + (x << 1) + y * 304;
-		  /*draw a 2x2 area with the same data*/
-		  *ptr = voiceprint_data_normal[x + y * 76];
-		  *(ptr + 1) = voiceprint_data_normal[x + y * 76];
-		  *(ptr + 152) = voiceprint_data_normal[x + y * 76];
-		  *(ptr + 153) = voiceprint_data_normal[x + y * 76];
-		}
+	    voiceprint_data[y * 76] = vis->vs_data[y];
+      }
+      if(bmp_playback_get_playing()){ /*Only draw the data if we're playing*/
+	for (y = 0; y < 16; y ++){
+	  for (x = 0; x < 76; x++){
+	    guint8 d = voiceprint_data[x + y*76];
+	    if(cfg.voiceprint_mode == VOICEPRINT_NORMAL){
+	      d = d > 64 ? 17 : d >> 3 ;
+	      if(!vis->vs_doublesize){
+		rgb_data[x + y * 76] =  d;
+	      }
+	      else{
+		ptr = rgb_data + (x << 1) + y * 304;
+		*ptr = d;
+		*(ptr + 1) = d;
+		*(ptr + 152) = d;
+		*(ptr + 153) = d;
+	      }
 	    }
-	  }
-	}
-	else { /* RGB modes */
-	  if(cfg.voiceprint_mode == VOICEPRINT_FIRE){
-	    for(x=76*16*3;x > 2;x--)
-	      voiceprint_data_rgb[x] = voiceprint_data_rgb[x-3];  
-	    for(y=0;y<16;y++)
-	      {
-		gfloat d = vis->vs_data[y] * 1.8;
-		voiceprint_data_rgb[y * 76*3] = d < 128 ? (d * 2) : 255; //R
-		voiceprint_data_rgb[y * 76*3+1] = d < 128 ? 0 : (d < 192 ? (d-128) * 4 : 255); //G
-		voiceprint_data_rgb[y * 76*3+2] = d < 192 ? 0 : (d-192) * 4; //B
+	    else{
+	      guint8 c[3]; // R, G, B array
+	      if(cfg.voiceprint_mode == VOICEPRINT_FIRE){
+		c[0] = d < 64 ? (d * 2) : 255; //R
+		c[1] = d < 64 ? 0 : (d < 128 ? (d-64) * 2 : 255); //G
+		c[2] = d < 128 ? 0 : (d-128) * 2; //B
 	      }
-	    
-	    
-	  }
-	  else if(cfg.voiceprint_mode == VOICEPRINT_ICE){	    
-	    for(x=76*16*3;x > 2;x--)
-	      voiceprint_data_rgb[x] = voiceprint_data_rgb[x-3];  
-	    for(y=0;y<16;y++)
-	      {
-		gfloat d = vis->vs_data[y] * 1.8;
-		voiceprint_data_rgb[y * 76*3] = d < 192 ? 0 : (d-192) * 4; //R
-		voiceprint_data_rgb[y * 76*3+1] = d < 192 ? 0 : (d-192) * 4; //G
-		voiceprint_data_rgb[y * 76*3+2] = d < 128 ? d * 2 : 255; //B
+	      else if(cfg.voiceprint_mode == VOICEPRINT_ICE){	    
+		//c[0] = d < 192 ? 0 : (d-192) * 4; //R
+		//c[1] = d < 192 ? 0 : (d-192) * 4; //G
+		c[0] = d; //R
+		c[1] = d < 128 ? d * 2 : 255; //G
+		c[2] = d < 64 ? d * 4 : 255; //B
 	      }
-	  }
-	  if(!vis->vs_doublesize){
-	    memcpy(rgb_data, voiceprint_data_rgb,16*76*4);
-	  }
-	  else{
-	    for (y = 0; y < 16; y++) {
-	      for (x = 0; x < 76; x++)
-		{
-		  ptr = rgb_data + x * 3 * 2 + y * 2 * 76 * 3 * 2;
-		  for(n=0;n<3;n++)
-		    {
-		      /*draw a 2x2 area with the same data*/
-		      *(ptr + n) = voiceprint_data_rgb[x * 3 + n + y * 76 * 3];
-		      *(ptr + n + 3) = voiceprint_data_rgb[x * 3 + n + y * 76  * 3];
-		      *(ptr + n + 76 * 2 * 3) = voiceprint_data_rgb[x * 3 + n + y * 76 * 3];
-		      *(ptr + n + 3 + 76 * 2 * 3) = voiceprint_data_rgb[x * 3 + n + y * 76 * 3];
-		    }
-		}
+	      if(!vis->vs_doublesize){
+		for(n=0;n<3;n++)
+		  rgb_data[x * 3 + y * 76*3+n] = c[n];
+	      }
+	      else{
+		ptr = rgb_data + x * 3 * 2 + y * 2 * 76 * 3 * 2;
+		for(n=0;n<3;n++)
+		  {
+		    *(ptr + n) = c[n];
+		    *(ptr + n + 3) = c[n];
+		    *(ptr + n + 76 * 2 * 3) = c[n];
+		    *(ptr + n + 3 + 76 * 2 * 3) = c[n];
+		  }
+	      }
 	    }
 	  }
 	}
       }
     }
-    else if (cfg.vis_type == VIS_SCOPE) {
+ if (cfg.vis_type == VIS_SCOPE) {
       for (x = 0; x < 75; x++) {
 	switch (cfg.scope_mode) {
 	case SCOPE_DOT:
@@ -445,7 +440,7 @@ vis_clear_data(Vis * vis)
 
     if (!vis)
         return;
-
+    memset(voiceprint_data, 0, 16*76);
     for (i = 0; i < 75; i++) {
         vis->vs_data[i] = (cfg.vis_type == VIS_SCOPE) ? 6 : 0;
         vis->vs_peak[i] = 0;
@@ -503,7 +498,7 @@ create_vis(GList ** wlist,
     Vis *vis;
 
     vis = g_new0(Vis, 1);
-
+    memset(voiceprint_data, 0, 16*76);
     widget_init(&vis->vs_widget, parent, gc, x, y, width, 16, 1);
 
     vis->vs_doublesize = doublesize;
