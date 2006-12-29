@@ -1,3 +1,12 @@
+2006-12-27 00:37:57 +0000  Troels Bang Jensen <marvin@fnuck.dk>
+  revision [3437]
+  - Make voiceprint behave nicer, esp. in doublesize mode
+  - Prettier voiceprint ice and fire modes
+  
+  trunk/audacious/widgets/vis.c |  161 ++++++++++++++++++++----------------------
+  1 file changed, 78 insertions(+), 83 deletions(-)
+
+
 2006-12-26 10:36:33 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
   revision [3435]
   equalizer.c: port from GtkCTree to GtkTreeView. Patch by external contributer Michael Farber <01mf02 -at- gmail.com>

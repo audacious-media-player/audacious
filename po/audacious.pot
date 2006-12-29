@@ -37,131 +37,143 @@ msgstr ""
 msgid "Audacious core developers:"
 msgstr ""
 
-#: audacious/credits.c:62
+#: audacious/credits.c:63
 msgid "Graphics:"
 msgstr ""
 
-#: audacious/credits.c:67
+#: audacious/credits.c:68
 msgid "Default skin:"
 msgstr ""
 
-#: audacious/credits.c:72
+#: audacious/credits.c:73
 msgid "Plugin development:"
 msgstr ""
 
-#: audacious/credits.c:83
+#: audacious/credits.c:84
 msgid "Patch authors:"
 msgstr ""
 
-#: audacious/credits.c:98
+#: audacious/credits.c:99
 msgid "0.1.x developers:"
 msgstr ""
 
-#: audacious/credits.c:104
+#: audacious/credits.c:105
 msgid "BMP Developers:"
 msgstr ""
 
-#: audacious/credits.c:136
+#: audacious/credits.c:137
 msgid "Brazilian Portuguese:"
 msgstr ""
 
-#: audacious/credits.c:139
+#: audacious/credits.c:140
 msgid "Breton:"
 msgstr ""
 
-#: audacious/credits.c:142
-msgid "Chinese:"
-msgstr ""
-
-#: audacious/credits.c:147
+#: audacious/credits.c:143
 msgid "Czech:"
 msgstr ""
 
-#: audacious/credits.c:150
+#: audacious/credits.c:146
 msgid "Dutch:"
 msgstr ""
 
-#: audacious/credits.c:154
+#: audacious/credits.c:150
 msgid "Finnish:"
 msgstr ""
 
-#: audacious/credits.c:157
+#: audacious/credits.c:153
 msgid "French:"
 msgstr ""
 
-#: audacious/credits.c:160
+#: audacious/credits.c:156
 msgid "German:"
 msgstr ""
 
-#: audacious/credits.c:164
+#: audacious/credits.c:160
 msgid "Georgian: "
 msgstr ""
 
-#: audacious/credits.c:167
+#: audacious/credits.c:163
 msgid "Greek:"
 msgstr ""
 
-#: audacious/credits.c:172
+#: audacious/credits.c:168
 msgid "Hindi:"
 msgstr ""
 
-#: audacious/credits.c:175
+#: audacious/credits.c:171
 msgid "Hungarian:"
 msgstr ""
 
-#: audacious/credits.c:178
+#: audacious/credits.c:174
 msgid "Italian:"
 msgstr ""
 
-#: audacious/credits.c:182
+#: audacious/credits.c:178
 msgid "Japanese:"
 msgstr ""
 
-#: audacious/credits.c:185
+#: audacious/credits.c:181
 msgid "Korean:"
 msgstr ""
 
-#: audacious/credits.c:188
+#: audacious/credits.c:184
 msgid "Lithuanian:"
 msgstr ""
 
-#: audacious/credits.c:191
+#: audacious/credits.c:187
 msgid "Macedonian:"
 msgstr ""
 
-#: audacious/credits.c:194
+#: audacious/credits.c:190
 msgid "Polish:"
 msgstr ""
 
-#: audacious/credits.c:198
+#: audacious/credits.c:193
 msgid "Romanian:"
 msgstr ""
 
-#: audacious/credits.c:201
+#: audacious/credits.c:196
 msgid "Russian:"
 msgstr ""
 
-#: audacious/credits.c:206
+#: audacious/credits.c:199
+msgid "Serbian (Latin):"
+msgstr ""
+
+#: audacious/credits.c:202
+msgid "Serbian (Cyrillic):"
+msgstr ""
+
+#: audacious/credits.c:205
+msgid "Simplified Chinese:"
+msgstr ""
+
+#: audacious/credits.c:208
 msgid "Slovak:"
 msgstr ""
 
-#: audacious/credits.c:209
+#: audacious/credits.c:211
 msgid "Spanish:"
 msgstr ""
 
-#: audacious/credits.c:212
+#: audacious/credits.c:214
 msgid "Swedish:"
 msgstr ""
 
-#: audacious/credits.c:215
+#: audacious/credits.c:217
+msgid "Traditional Chinese:"
+msgstr ""
+
+#: audacious/credits.c:220
 msgid "Ukrainian:"
 msgstr ""
 
-#: audacious/credits.c:218
+#: audacious/credits.c:223
 msgid "Welsh:"
 msgstr ""
 
-#: audacious/credits.c:366
+#: audacious/credits.c:371
 msgid "Translators"
 msgstr ""
 
