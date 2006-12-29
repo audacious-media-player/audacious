@@ -1,3 +1,36 @@
+2006-12-29 13:26:01 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
+  revision [3441]
+  Update po/
+  trunk/po/audacious.pot |  803 ++++++++--------
+  trunk/po/br.po         |  998 ++++++++++----------
+  trunk/po/cs.po         | 1037 +++++++++++----------
+  trunk/po/cy.po         | 1108 ++++++++++++----------
+  trunk/po/de.po         | 1040 +++++++++++----------
+  trunk/po/el.po         | 1020 +++++++++++---------
+  trunk/po/es.po         | 1020 +++++++++++---------
+  trunk/po/fi.po         | 1036 +++++++++++----------
+  trunk/po/fr.po         | 1002 +++++++++++---------
+  trunk/po/hi.po         | 1036 +++++++++++----------
+  trunk/po/hu.po         | 1002 +++++++++++---------
+  trunk/po/it.po         | 1020 +++++++++++---------
+  trunk/po/ja.po         | 1036 +++++++++++----------
+  trunk/po/ka.po         | 1010 +++++++++++---------
+  trunk/po/ko.po         | 1056 +++++++++++----------
+  trunk/po/lt.po         | 1036 +++++++++++----------
+  trunk/po/mk.po         | 1055 +++++++++++----------
+  trunk/po/nl.po         | 1003 +++++++++++---------
+  trunk/po/pl.po         | 1059 +++++++++++----------
+  trunk/po/pt_BR.po      | 1056 +++++++++++----------
+  trunk/po/ro.po         | 1037 +++++++++++----------
+  trunk/po/ru.po         | 1002 +++++++++++---------
+  trunk/po/sk.po         | 1037 +++++++++++----------
+  trunk/po/sv.po         | 1060 +++++++++++----------
+  trunk/po/uk.po         | 1017 +++++++++++---------
+  trunk/po/zh_CN.po      | 1002 +++++++++++---------
+  trunk/po/zh_TW.po      | 2417 ++++++++++++++++++-------------------------------
+  27 files changed, 15512 insertions(+), 13493 deletions(-)
+
+
 2006-12-29 13:20:29 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
   revision [3439]
   Added Serbian (Latin) & Serbian (Cyrillic) to credits.c & updated audacious.pot.
