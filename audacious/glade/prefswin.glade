@@ -1276,7 +1276,7 @@
 			      <child>
 				<widget class="GtkCheckButton" id="show_wm_decorations">
 				  <property name="visible">True</property>
-				  <property name="tooltip">This enables the window mangaer to show decorations for windows.</property>
+				  <property name="tooltip">This enables the window manager to show decorations for windows.</property>
 				  <property name="can_focus">True</property>
 				  <property name="label" translatable="yes">Show window manager decoration</property>
 				  <property name="use_underline">True</property>

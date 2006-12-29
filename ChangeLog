@@ -1,3 +1,12 @@
+2006-12-29 14:14:57 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
+  revision [3443]
+  Add Serbian Latin & Cyrillic translations courtesy of external translator Strahinja Kustudi?\196?\135 <kustodian -at- gmail.com>
+  trunk/po/LINGUAS    |    2 
+  trunk/po/sr.po      | 2069 +++++++++++++++++++++++++++++++++++++++++++++++++++
+  trunk/po/sr@Latn.po | 2071 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+  3 files changed, 4142 insertions(+)
+
+
 2006-12-29 13:26:01 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
   revision [3441]
   Update po/
