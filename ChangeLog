@@ -1,3 +1,11 @@
+2006-12-29 17:59:21 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [3445]
+  - fix a typo that kustodian pointed out. (probably it's mine.)
+  
+  trunk/audacious/glade/prefswin.glade |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2006-12-29 14:14:57 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
   revision [3443]
   Add Serbian Latin & Cyrillic translations courtesy of external translator Strahinja Kustudi?\196?\135 <kustodian -at- gmail.com>

@@ -250,6 +250,16 @@ playlist_add_playlist(Playlist *playlist)
 void
 playlist_remove_playlist(Playlist *playlist)
 {
+    /* trying to free the last playlist simply clears and resets it */
+    if (g_list_length(playlists) < 2) {
+        playlist_clear(playlist);
+        playlist_set_current_name(playlist, NULL);
+        return;
+    }
+
+    if (playlist == playlist_get_active())
+        playlist_select_next();
+
     /* upon removal, a playlist should be cleared and freed */
     playlists = g_list_remove(playlists, playlist);
     playlist_clear(playlist);

@@ -120,19 +120,19 @@ playlist_manager_cb_del ( gpointer listview )
     gtk_tree_model_get( store, &iter, PLLIST_COL_PLPOINTER , &playlist , -1 );
 
     if ( gtk_tree_model_iter_n_children( store , NULL ) < 2 )
-      return; /* do not delete the last playlist available */
-
-    gtk_list_store_remove( (GtkListStore*)store , &iter );
-
-    /* if the playlist removed is the active one, switch to the next */
-    if ( playlist == playlist_get_active() )
-      playlist_select_next();
-
-    /* this ensures that playlist_manager_update() will
-       not perform update, since we're already doing it here */
-    DISABLE_MANAGER_UPDATE();
-    playlist_remove_playlist( playlist );
-    ENABLE_MANAGER_UPDATE();
+    {
+      /* let playlist_manager_update() handle the deletion of the last playlist */
+      playlist_remove_playlist( playlist );
+    }
+    else
+    {
+      gtk_list_store_remove( (GtkListStore*)store , &iter );
+      /* this ensures that playlist_manager_update() will
+         not perform update, since we're already doing it here */
+      DISABLE_MANAGER_UPDATE();
+      playlist_remove_playlist( playlist );
+      ENABLE_MANAGER_UPDATE();
+    }
   }
 
   return;
