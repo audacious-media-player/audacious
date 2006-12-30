@@ -1,4 +1,7 @@
-/*  BMP - Cross-platform multimedia player
+/*  Audacious
+ *  Copyright (C) 2005-2007  Audacious development team.
+ *
+ *  BMP - Cross-platform multimedia player
  *  Copyright (C) 2003-2004  BMP development team.
  *
  *  Based on XMMS:
@@ -51,6 +54,7 @@
 #include "ui_playlist.h"
 #include "prefswin.h"
 #include "libaudacious/beepctrl.h"
+#include "memorypool.h"
 
 #define CTRLSOCKET_BACKLOG        100
 #define CTRLSOCKET_TIMEOUT        100000
@@ -71,7 +75,7 @@ static gboolean started = FALSE;
 static gboolean going = TRUE;
 static GCond *start_cond = NULL;
 static GMutex *status_mutex = NULL;
-
+static MemoryPool *cs_pool = NULL;
 
 static void
 ctrlsocket_start_thread(void)
@@ -86,6 +90,8 @@ ctrlsocket_start_thread(void)
 gboolean
 ctrlsocket_setup(void)
 {
+    cs_pool = memory_pool_new();
+
     if (strcmp(cfg.session_uri_base, ""))
         audacious_set_session_uri(cfg.session_uri_base);
     else
@@ -140,7 +146,7 @@ ctrlsocket_setup_unix(void)
 
         listen(fd, CTRLSOCKET_BACKLOG);
 
-        socket_name = g_strdup(saddr.sun_path);
+        socket_name = memory_pool_strdup(cs_pool, saddr.sun_path);
         ctrl_fd = fd;
         session_id = i;
         going = TRUE;
@@ -213,7 +219,8 @@ ctrlsocket_get_session_id(void)
 void
 ctrlsocket_cleanup(void)
 {
-    if (ctrl_fd) {
+    if (ctrl_fd)
+    {
         g_mutex_lock(status_mutex);
         going = FALSE;
         g_cond_signal(start_cond);
@@ -229,13 +236,15 @@ ctrlsocket_cleanup(void)
         if (socket_name != NULL)
 	{
             unlink(socket_name);
-            g_free(socket_name);
+            memory_pool_release(cs_pool, socket_name);
 	}
 
         g_cond_free(start_cond);
         g_mutex_free(status_mutex);
         g_mutex_free(packet_list_mutex);
     }
+
+    memory_pool_destroy(cs_pool);
 }
 
 void
@@ -294,8 +303,8 @@ ctrl_ack_packet(PacketNode * pkt)
     ctrl_write_packet(pkt->fd, NULL, 0);
     close(pkt->fd);
     if (pkt->data)
-        g_free(pkt->data);
-    g_free(pkt);
+        memory_pool_release(cs_pool, pkt->data);
+    memory_pool_release(cs_pool, pkt);
 }
 
 static gboolean
@@ -339,19 +348,19 @@ ctrlsocket_func(gpointer arg)
         if ((fd = accept(ctrl_fd, (struct sockaddr *) &saddr, &len)) == -1)
             continue;
 
-        pkt = g_new0(PacketNode, 1);
+        pkt = memory_pool_alloc_object(cs_pool, PacketNode);
         if ((size_t)read(fd, &pkt->hdr, sizeof(ClientPktHeader))
             < sizeof(ClientPktHeader)) {
-            g_free(pkt);
+            memory_pool_release(cs_pool, pkt);
             continue;
         }
 
         if (pkt->hdr.data_length) {
             size_t data_length = pkt->hdr.data_length;
-            pkt->data = g_malloc0(data_length);
+            pkt->data = memory_pool_allocate(cs_pool, data_length);
             if ((size_t)read(fd, pkt->data, data_length) < data_length) {
-                g_free(pkt->data);
-                g_free(pkt);
+                memory_pool_release(cs_pool, pkt->data);
+                memory_pool_release(cs_pool, pkt);
                 g_warning("ctrlsocket_func(): Incomplete data packet dropped");
                 continue;
             }
@@ -489,14 +498,14 @@ ctrlsocket_func(gpointer arg)
                     gchar *filename;
 
                     dataptr++;
-                    filename = g_malloc0(len);
+                    filename = memory_pool_allocate(cs_pool, len);
                     memcpy(filename, dataptr, len);
 
                     GDK_THREADS_ENTER();
                     playlist_add_url(playlist_get_active(), filename);
                     GDK_THREADS_LEAVE();
 
-                    g_free(filename);
+                    memory_pool_release(cs_pool, filename);
                     dataptr += (len + 3) / 4;
                 }
             }
@@ -776,8 +785,8 @@ ctrlsocket_check(void)
         packet_list = g_list_remove_link(packet_list, pkt_list);
         g_list_free_1(pkt_list);
         if (pkt->data)
-            g_free(pkt->data);
-        g_free(pkt);
+            memory_pool_release(cs_pool, pkt->data);
+        memory_pool_release(cs_pool, pkt);
     }
     g_mutex_unlock(packet_list_mutex);
 }

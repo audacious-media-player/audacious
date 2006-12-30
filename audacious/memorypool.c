@@ -16,7 +16,10 @@
  */
 
 #include <glib.h>
+#include <stdlib.h>
+#include <string.h>
 
+#include "util.h"
 #include "memorypool.h"
 
 /* visibility of this object is not available to the outside */
@@ -104,4 +107,16 @@ memory_pool_destroy(MemoryPool * pool)
 
     g_mutex_free(pool->mutex);
     g_free(pool);
+}
+
+gchar *
+memory_pool_strdup(MemoryPool * pool, gchar * src)
+{
+    gchar *out;
+    gsize sz = strlen(src) + 1;
+
+    out = memory_pool_allocate(pool, sz);
+    g_strlcpy(out, src, sz);
+
+    return out;
 }

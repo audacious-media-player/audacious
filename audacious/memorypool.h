@@ -30,4 +30,9 @@ void memory_pool_cleanup(MemoryPool * pool);
 
 void memory_pool_destroy(MemoryPool * pool);
 
+gchar * memory_pool_strdup(MemoryPool * pool, gchar * src);
+
+#define memory_pool_alloc_object(pool, obj) \
+	memory_pool_allocate(pool, sizeof(obj))
+
 #endif
