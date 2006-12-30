@@ -81,7 +81,8 @@ SOURCES = \
 	iir_fpu.c \
 	signals.c \
 	strings.c \
-	pixbuf_effects.c
+	pixbuf_effects.c \
+	memorypool.c
 
 OBJECTS = ${SOURCES:.c=.o}
 

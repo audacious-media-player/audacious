@@ -1,3 +1,13 @@
+2006-12-30 03:51:55 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3449]
+  - make SIGTERM work in a threadsafe manner.
+  
+  trunk/audacious/main.c    |    1 +
+  trunk/audacious/main.h    |    1 +
+  trunk/audacious/signals.c |   25 +++++++++++++++++++++----
+  3 files changed, 23 insertions(+), 4 deletions(-)
+
+
 2006-12-29 22:33:09 +0000  Giacomo Lozito <james@develia.org>
   revision [3447]
   - deletion of the last playlist is now handled directly in playlist_remove_playlist (patch by Joker) ; small code changes in playlist manager
