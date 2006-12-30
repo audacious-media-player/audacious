@@ -130,6 +130,7 @@ struct _BmpConfig {
     gboolean use_xmms_style_fileselector;
     gboolean use_extension_probing;
     gint colorize_r; gint colorize_g; gint colorize_b;
+    gboolean terminate;
 };
 
 typedef struct _BmpConfig BmpConfig;

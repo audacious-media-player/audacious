@@ -29,6 +29,8 @@
 #include <sys/types.h>
 #include <signal.h>
 
+#include "main.h"
+#include "mainwin.h"
 #include "signals.h"
 
 typedef void (*SignalHandler) (gint);
@@ -98,7 +100,20 @@ sigsegv_handler (gint signal_number)
 static void
 sigterm_handler (gint signal_number)
 {
-    mainwin_quit_cb();
+    cfg.terminate = TRUE;
+}
+
+static gboolean
+signal_process_events (gpointer data)
+{
+    if (cfg.terminate == TRUE)
+    {
+        g_message("Audacious has received SIGTERM and is shutting down.");
+        mainwin_quit_cb();
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
 void 
@@ -107,12 +122,14 @@ signal_handlers_init (void)
     char *magic;
     magic = getenv("AUD_ENSURE_BACKTRACE");
 
-    signal_install_handler (SIGPIPE, signal_empty_handler);
-    signal_install_handler (SIGINT, sigterm_handler);
-    signal_install_handler (SIGTERM, sigterm_handler);
+    signal_install_handler(SIGPIPE, signal_empty_handler);
+    signal_install_handler(SIGINT, sigterm_handler);
+    signal_install_handler(SIGTERM, sigterm_handler);
 
     /* in particular environment (maybe with glibc 2.5), core file
        through signal handler doesn't contain useful back trace. --yaz */
     if (magic == NULL)
         signal_install_handler(SIGSEGV, sigsegv_handler);
+
+    g_timeout_add(100, signal_process_events, NULL);
 }

@@ -211,6 +211,7 @@ BmpConfig bmp_default_config = {
     FALSE,			/* use XMMS-style file selection */
     TRUE,                       /* use extension probing         */
     255, 255, 255,		/* colorize r, g, b */
+    FALSE,			/* internal: whether or not to terminate */
 };
 
 typedef struct bmp_cfg_boolent_t {
