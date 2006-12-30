@@ -1550,69 +1550,6 @@ save_winamp_file(const gchar * filename)
     vfs_fclose(file);
 }
 
-static gint
-equalizerwin_list_sort_func(GtkCList * clist,
-                            gconstpointer ptr1, gconstpointer ptr2)
-{
-    GtkCListRow *row1 = (GtkCListRow *) ptr1;
-    GtkCListRow *row2 = (GtkCListRow *) ptr2;
-
-    return strcasecmp(GTK_CELL_TEXT(row1->cell[clist->sort_column])->text,
-                      GTK_CELL_TEXT(row2->cell[clist->sort_column])->text);
-}
-
-
-static GtkListStore *
-preset_list_store_new(GList * preset)
-{
-    GtkListStore *store;
-    GtkTreeIter iter;
-    GList *node;
-
-    store = gtk_list_store_new(PRESET_VIEW_N_COLS, G_TYPE_STRING);
-
-    for (node = preset; node; node = g_list_next(node)) {
-        gtk_list_store_append(store, &iter);
-        gtk_list_store_set(store, &iter,
-                           PRESET_VIEW_COL_NAME,
-                           &((EqualizerPreset *) node->data)->name, -1);
-    }
-
-    return store;
-}
-
-
-GtkWidget *
-preset_view_new(GList * preset)
-{
-    GtkWidget *treeview;
-    GtkTreeModel *model;
-    GtkTreeViewColumn *column;
-    GtkCellRenderer *renderer;
-    GtkListStore *store;
-
-    store = preset_list_store_new(preset);
-
-    model = gtk_tree_model_sort_new_with_model(GTK_TREE_MODEL(store));
-    gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(model),
-                                         PRESET_VIEW_COL_NAME,
-                                         GTK_SORT_ASCENDING);
-
-    treeview = gtk_tree_view_new_with_model(model);
-    gtk_tree_view_set_headers_clickable(GTK_TREE_VIEW(treeview), TRUE);
-    gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeview), TRUE);
-
-    renderer = gtk_cell_renderer_text_new();
-    column = gtk_tree_view_column_new_with_attributes(_("Preset"), renderer,
-                                                      "text",
-                                                      PRESET_VIEW_COL_NAME,
-                                                      NULL);
-    gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
-
-    return treeview;
-}
-
-
 static GtkWidget *
 equalizerwin_create_list_window(GList *preset_list,
                                 const gchar *title,
@@ -1623,7 +1560,8 @@ equalizerwin_create_list_window(GList *preset_list,
                                 GCallback action_func,
                                 GCallback select_row_func)
 {
-    GtkWidget *vbox, *scrolled_window, *bbox, *button_cancel, *button_action, *view;
+    GtkWidget *vbox, *scrolled_window, *bbox, *view;
+	GtkWidget *button_cancel, *button_action;
     GList *node;
 
 	GtkListStore *store;
@@ -1631,6 +1569,7 @@ equalizerwin_create_list_window(GList *preset_list,
 	GtkTreeModel *model;
 	GtkCellRenderer *renderer;
 	GtkTreeSelection *selection;
+	GtkTreeSortable *sortable;
 
 
 
@@ -1663,6 +1602,10 @@ equalizerwin_create_list_window(GList *preset_list,
 						   -1);
 	}
 	model = GTK_TREE_MODEL(store);
+
+
+	sortable = GTK_TREE_SORTABLE(store);
+	gtk_tree_sortable_set_sort_column_id(sortable, 0, GTK_SORT_ASCENDING);
 
 
 	view = gtk_tree_view_new();
