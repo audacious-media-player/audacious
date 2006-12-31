@@ -5,7 +5,7 @@
 
 <widget class="GtkWindow" id="prefswin">
   <property name="border_width">12</property>
-  <property name="title">Audacious Preferences</property>
+  <property name="title" translatable="yes">Audacious Preferences</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_CENTER</property>
   <property name="modal">False</property>
@@ -796,7 +796,7 @@
 			      <child>
 				<widget class="GtkButton" id="skin_refresh_button">
 				  <property name="visible">True</property>
-				  <property name="tooltip">Refresh skin list</property>
+				  <property name="tooltip" translatable="yes">Refresh skin list</property>
 				  <property name="relief">GTK_RELIEF_HALF</property>
 				  <property name="focus_on_click">False</property>
 				  <signal name="clicked" handler="on_skin_refresh_button_clicked" object="prefswin"/>
@@ -1020,7 +1020,7 @@
 				<widget class="GtkFontButton" id="mainwin_font_button">
 				  <property name="visible">True</property>
 				  <property name="can_focus">True</property>
-				  <property name="title">Select main player window font:</property>
+				  <property name="title" translatable="yes">Select main player window font:</property>
 				  <property name="show_style">True</property>
 				  <property name="show_size">True</property>
 				  <property name="use_font">True</property>
@@ -1088,7 +1088,7 @@
 				  <child>
 				    <widget class="GtkCheckButton" id="checkbutton1">
 				      <property name="visible">True</property>
-				      <property name="tooltip">Use bitmap fonts if they are available. Bitmap fonts do not support Unicode strings.</property>
+				      <property name="tooltip" translatable="yes">Use bitmap fonts if they are available. Bitmap fonts do not support Unicode strings.</property>
 				      <property name="can_focus">True</property>
 				      <property name="label" translatable="yes">Use Bitmap fonts if available</property>
 				      <property name="use_underline">True</property>
@@ -1276,7 +1276,7 @@
 			      <child>
 				<widget class="GtkCheckButton" id="show_wm_decorations">
 				  <property name="visible">True</property>
-				  <property name="tooltip">This enables the window manager to show decorations for windows.</property>
+				  <property name="tooltip" translatable="yes">This enables the window manager to show decorations for windows.</property>
 				  <property name="can_focus">True</property>
 				  <property name="label" translatable="yes">Show window manager decoration</property>
 				  <property name="use_underline">True</property>
@@ -1316,7 +1316,7 @@
 			      <child>
 				<widget class="GtkCheckButton" id="xmms_style_fileselector_cb1">
 				  <property name="visible">True</property>
-				  <property name="tooltip">This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly).</property>
+				  <property name="tooltip" translatable="yes">This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly).</property>
 				  <property name="can_focus">True</property>
 				  <property name="label" translatable="yes">Use XMMS-style file selector instead of the default selector</property>
 				  <property name="use_underline">True</property>
@@ -1352,7 +1352,7 @@
 			      <child>
 				<widget class="GtkCheckButton" id="playlist_transparent">
 				  <property name="visible">True</property>
-				  <property name="tooltip">Enables playlist transparency. This is not recommended for slower machines as it requires some CPU time to create and cache the pixmaps used for the transparency.</property>
+				  <property name="tooltip" translatable="yes">Enables playlist transparency. This is not recommended for slower machines as it requires some CPU time to create and cache the pixmaps used for the transparency.</property>
 				  <property name="can_focus">True</property>
 				  <property name="label" translatable="yes">Enable playlist transparency</property>
 				  <property name="use_underline">True</property>
@@ -1905,7 +1905,7 @@
 			  <child>
 			    <widget class="GtkCheckButton" id="playlist_use_metadata">
 			      <property name="visible">True</property>
-			      <property name="tooltip">Load metadata (tag information) from music files.</property>
+			      <property name="tooltip" translatable="yes">Load metadata (tag information) from music files.</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">Load metadata from playlists and files</property>
 			      <property name="use_underline">True</property>
@@ -1945,7 +1945,7 @@
 			      <child>
 				<widget class="GtkRadioButton" id="playlist_metadata_on_load">
 				  <property name="visible">True</property>
-				  <property name="tooltip">Load metadata when adding the file to the playlist or opening it</property>
+				  <property name="tooltip" translatable="yes">Load metadata when adding the file to the playlist or opening it</property>
 				  <property name="can_focus">True</property>
 				  <property name="label" translatable="yes">On load</property>
 				  <property name="use_underline">True</property>
@@ -1967,7 +1967,7 @@
 			      <child>
 				<widget class="GtkRadioButton" id="playlist_metadata_on_display">
 				  <property name="visible">True</property>
-				  <property name="tooltip">Load metadata on demand when displaying the file in the playlist</property>
+				  <property name="tooltip" translatable="yes">Load metadata on demand when displaying the file in the playlist</property>
 				  <property name="can_focus">True</property>
 				  <property name="label" translatable="yes">On display</property>
 				  <property name="use_underline">True</property>
@@ -2027,7 +2027,7 @@
 				  <child>
 				    <widget class="GtkEntry" id="entry1">
 				      <property name="visible">True</property>
-				      <property name="tooltip">List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted.</property>
+				      <property name="tooltip" translatable="yes">List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted.</property>
 				      <property name="can_focus">True</property>
 				      <property name="editable">True</property>
 				      <property name="visibility">True</property>
@@ -2163,7 +2163,7 @@
 			  <child>
 			    <widget class="GtkCheckButton" id="refresh_file_list">
 			      <property name="visible">True</property>
-			      <property name="tooltip">Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically).</property>
+			      <property name="tooltip" translatable="yes">Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically).</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">Always refresh directory when opening file dialog</property>
 			      <property name="use_underline">True</property>
@@ -2348,7 +2348,7 @@ Custom</property>
 			      <child>
 				<widget class="GtkButton" id="titlestring_help_button">
 				  <property name="visible">True</property>
-				  <property name="tooltip">Show information about titlestring format</property>
+				  <property name="tooltip" translatable="yes">Show information about titlestring format</property>
 				  <property name="relief">GTK_RELIEF_HALF</property>
 				  <property name="focus_on_click">False</property>
 
@@ -2449,7 +2449,7 @@ Custom</property>
 				  <child>
 				    <widget class="GtkCheckButton" id="checkbutton10">
 				      <property name="visible">True</property>
-				      <property name="tooltip">Toggles popup information window for the pointed entry in the playlist. The window shows title of song, name of album, genre, year of publish, track number, track length, and artwork.</property>
+				      <property name="tooltip" translatable="yes">Toggles popup information window for the pointed entry in the playlist. The window shows title of song, name of album, genre, year of publish, track number, track length, and artwork.</property>
 				      <property name="can_focus">True</property>
 				      <property name="label" translatable="yes">Show popup information for playlist entries</property>
 				      <property name="use_underline">True</property>
@@ -2478,7 +2478,7 @@ Custom</property>
 			      <child>
 				<widget class="GtkButton" id="filepopup_for_tuple_settings_button">
 				  <property name="visible">True</property>
-				  <property name="tooltip">Edit settings for popup information</property>
+				  <property name="tooltip" translatable="yes">Edit settings for popup information</property>
 				  <property name="relief">GTK_RELIEF_HALF</property>
 				  <property name="focus_on_click">True</property>
 				  <signal name="clicked" handler="on_filepopup_for_tuple_settings_clicked"/>
@@ -3867,7 +3867,7 @@ Please note however, that high values will result in Audacious performing poorly
 		      <child>
 			<widget class="GtkCheckButton" id="audio_format_det_cb">
 			  <property name="visible">True</property>
-			  <property name="tooltip">When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit.</property>
+			  <property name="tooltip" translatable="yes">When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit.</property>
 			  <property name="can_focus">True</property>
 			  <property name="label" translatable="yes">Detect file formats on demand, instead of immediately.</property>
 			  <property name="use_underline">True</property>
@@ -3978,7 +3978,7 @@ Please note however, that high values will result in Audacious performing poorly
 		      <child>
 			<widget class="GtkCheckButton" id="continue_playback_on_startup">
 			  <property name="visible">True</property>
-			  <property name="tooltip">When Audacious starts, automatically begin playing from the point where we stopped before.</property>
+			  <property name="tooltip" translatable="yes">When Audacious starts, automatically begin playing from the point where we stopped before.</property>
 			  <property name="can_focus">True</property>
 			  <property name="label" translatable="yes">Continue playback on startup</property>
 			  <property name="use_underline">True</property>
@@ -4014,7 +4014,7 @@ Please note however, that high values will result in Audacious performing poorly
 		      <child>
 			<widget class="GtkCheckButton" id="playlist_no_advance">
 			  <property name="visible">True</property>
-			  <property name="tooltip">When finished playing a song, don't automatically advance to the next.</property>
+			  <property name="tooltip" translatable="yes">When finished playing a song, don't automatically advance to the next.</property>
 			  <property name="can_focus">True</property>
 			  <property name="label" translatable="yes">Don't advance in the playlist</property>
 			  <property name="use_underline">True</property>
@@ -4289,7 +4289,7 @@ Please note however, that high values will result in Audacious performing poorly
 
 <widget class="GtkWindow" id="filepopup_for_tuple_settings">
   <property name="border_width">12</property>
-  <property name="title">Popup Information Settings</property>
+  <property name="title" translatable="yes">Popup Information Settings</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
   <property name="modal">False</property>

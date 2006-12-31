@@ -14,6 +14,7 @@ audacious/ui_fileinfo.c
 audacious/ui_playlist.c
 audacious/util.c
 audacious/playback.c
+audacious/playlist_manager.c
 
 # Glade files.
 audacious/glade/addfiles.glade

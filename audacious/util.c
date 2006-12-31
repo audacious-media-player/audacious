@@ -667,7 +667,7 @@ util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
     GList *url;
 
     win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(win), "Add/Open URL Dialog");
+    gtk_window_set_title(GTK_WINDOW(win), _("Add/Open URL Dialog"));
     gtk_window_set_type_hint(GTK_WINDOW(win), GDK_WINDOW_TYPE_HINT_DIALOG);
     gtk_window_set_position(GTK_WINDOW(win), GTK_WIN_POS_CENTER);
     gtk_window_set_default_size(GTK_WINDOW(win), 400, -1);

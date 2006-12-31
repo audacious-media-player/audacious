@@ -2147,7 +2147,7 @@ mainwin_jump_to_file(void)
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 3);
 
     search_label = gtk_label_new(_("Filter: "));
-    gtk_label_set_markup_with_mnemonic(GTK_LABEL(search_label), "_Filter:");
+    gtk_label_set_markup_with_mnemonic(GTK_LABEL(search_label), _("_Filter:"));
     gtk_box_pack_start(GTK_BOX(hbox), search_label, FALSE, FALSE, 0);
 
     edit = gtk_entry_new();
@@ -3750,7 +3750,7 @@ mainwin_create_widgets(void)
     }
 
     err = gtk_message_dialog_new(GTK_WINDOW(mainwin), GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_MODAL,
-                                 GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,"Error in Audacious.");
+                                 GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, _("Error in Audacious."));
 
 
     gtk_window_set_position(GTK_WINDOW(err), GTK_WIN_POS_CENTER);
