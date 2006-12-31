@@ -957,6 +957,7 @@ equalizerwin_create_popup_menus(void)
     GError *error = NULL;
 
     action_group = gtk_action_group_new("equalizer-window");
+    gtk_action_group_set_translation_domain(action_group, PACKAGE_NAME);
     gtk_action_group_add_actions(action_group,
                                  equalizerwin_actions,
                                  G_N_ELEMENTS(equalizerwin_actions),
