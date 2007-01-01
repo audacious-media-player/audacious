@@ -359,13 +359,13 @@ playlist_list_button_press_cb(GtkWidget * widget,
             /*
              * Ungrab the pointer to prevent us from
              * hanging on to it during the sometimes slow
-             * bmp_playback_initiate().
+             * playback_initiate().
              */
             gdk_pointer_ungrab(GDK_CURRENT_TIME);
             gdk_flush();
             playlist_set_position(playlist, nr);
-            if (!bmp_playback_get_playing())
-                bmp_playback_initiate();
+            if (!playback_get_playing())
+                playback_initiate();
         }
 
         pl->pl_dragging = TRUE;

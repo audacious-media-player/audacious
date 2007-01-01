@@ -1,3 +1,23 @@
+2007-01-01 03:57:29 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3461]
+  - bmp_playback_* -> playback_* -- i knew something smelled rotten here, hmm.
+  
+  trunk/audacious/controlsocket.c |   26 ++++++-------
+  trunk/audacious/genevent.c      |    4 +-
+  trunk/audacious/input.c         |    6 +--
+  trunk/audacious/main.c          |    8 ++--
+  trunk/audacious/mainwin.c       |   78 ++++++++++++++++++++--------------------
+  trunk/audacious/output.c        |   10 ++---
+  trunk/audacious/playback.c      |   52 +++++++++++++-------------
+  trunk/audacious/playback.h      |   22 +++++------
+  trunk/audacious/playlist.c      |   44 +++++++++++-----------
+  trunk/audacious/pluginenum.c    |    4 +-
+  trunk/audacious/ui_playlist.c   |   14 +++----
+  trunk/audacious/util.c          |    4 +-
+  trunk/audacious/visualization.c |    6 +--
+  13 files changed, 140 insertions(+), 138 deletions(-)
+
+
 2006-12-31 19:40:27 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3459]
   - mark several tooltips in Preferences as translatable.

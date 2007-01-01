@@ -248,14 +248,14 @@ vis_draw(Widget * w)
       }
     }
     else if (cfg.vis_type == VIS_VOICEPRINT) {
-      if(!bmp_playback_get_paused() && bmp_playback_get_playing()){/*Don't scroll when it's paused or stopped*/
+      if(!playback_get_paused() && playback_get_playing()){/*Don't scroll when it's paused or stopped*/
 	for (y = 0; y < 16; y ++)
 	  for (x = 75; x > 0; x--)
 	    voiceprint_data[x + y * 76] = voiceprint_data[x-1+y*76];
 	  for(y=0;y<16;y++)
 	    voiceprint_data[y * 76] = vis->vs_data[y];
       }
-      if(bmp_playback_get_playing()){ /*Only draw the data if we're playing*/
+      if(playback_get_playing()){ /*Only draw the data if we're playing*/
 	for (y = 0; y < 16; y ++){
 	  for (x = 0; x < 76; x++){
 	    guint8 d = voiceprint_data[x + y*76];
