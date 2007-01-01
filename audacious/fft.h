@@ -1,5 +1,7 @@
-/* fft.h: Header for iterative implementation of a FFT
- * Copyright (C) 1999 Richard Boulton <richard@tartarus.org>
+/*  Audacious - Cross-platform multimedia player
+ *  Copyright (C) 2005-2007  Audacious development team
+ *
+ *  Copyright (C) 1999 Richard Boulton <richard@tartarus.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,6 +16,8 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+
+/* fft.h: header for iterative implementation of a FFT */
 
 #ifndef _FFT_H_
 #define _FFT_H_

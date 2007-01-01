@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-12-29 07:21-0600\n"
+"POT-Creation-Date: 2007-01-01 11:21-0600\n"
 "PO-Revision-Date: 2006-12-05 11:20+0700\n"
 "Last-Translator: Yang Zhang <zyangmath@gmail.com>\n"
 "Language-Team: Chinese/Simplified\n"
@@ -10,15 +10,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: audacious/about.c:118 audacious/credits.c:322
+#: audacious/about.c:123 audacious/credits.c:323
 msgid "About Audacious"
 msgstr "关于 Audacious"
 
-#: audacious/about.c:167 audacious/credits.c:367
+#: audacious/about.c:172 audacious/credits.c:368
 msgid "Credits"
 msgstr "致谢"
 
-#: audacious/credits.c:44
+#: audacious/credits.c:45
 #, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
@@ -31,148 +31,148 @@ msgstr ""
 "\n"
 "Copyright (C) 2005-2006 Audacious 开发小组\n"
 
-#: audacious/credits.c:50
+#: audacious/credits.c:51
 msgid "Audacious core developers:"
 msgstr "Audacious 核心开发者："
 
-#: audacious/credits.c:63
+#: audacious/credits.c:64
 msgid "Graphics:"
 msgstr "图像："
 
-#: audacious/credits.c:68
+#: audacious/credits.c:69
 msgid "Default skin:"
 msgstr "默认皮肤："
 
-#: audacious/credits.c:73
+#: audacious/credits.c:74
 msgid "Plugin development:"
 msgstr "插件开发："
 
-#: audacious/credits.c:84
+#: audacious/credits.c:85
 msgid "Patch authors:"
 msgstr "补丁作者："
 
-#: audacious/credits.c:99
+#: audacious/credits.c:100
 msgid "0.1.x developers:"
 msgstr "0.1.x 开发者："
 
-#: audacious/credits.c:105
+#: audacious/credits.c:106
 msgid "BMP Developers:"
 msgstr "BMP 开发者："
 
-#: audacious/credits.c:137
+#: audacious/credits.c:138
 msgid "Brazilian Portuguese:"
 msgstr "巴西葡萄牙语："
 
-#: audacious/credits.c:140
+#: audacious/credits.c:141
 msgid "Breton:"
 msgstr "布列塔尼语："
 
-#: audacious/credits.c:143
+#: audacious/credits.c:144
 msgid "Czech:"
 msgstr "捷克语："
 
-#: audacious/credits.c:146
+#: audacious/credits.c:147
 msgid "Dutch:"
 msgstr "荷兰语："
 
-#: audacious/credits.c:150
+#: audacious/credits.c:151
 msgid "Finnish:"
 msgstr "芬兰语："
 
-#: audacious/credits.c:153
+#: audacious/credits.c:154
 msgid "French:"
 msgstr "法语："
 
-#: audacious/credits.c:156
+#: audacious/credits.c:157
 msgid "German:"
 msgstr "德语："
 
-#: audacious/credits.c:160
+#: audacious/credits.c:161
 #, fuzzy
 msgid "Georgian:"
 msgstr "乔治亚语："
 
-#: audacious/credits.c:163
+#: audacious/credits.c:164
 msgid "Greek:"
 msgstr "希腊语："
 
-#: audacious/credits.c:168
+#: audacious/credits.c:169
 msgid "Hindi:"
 msgstr "Hindi 语:"
 
-#: audacious/credits.c:171
+#: audacious/credits.c:172
 msgid "Hungarian:"
 msgstr "匈牙利语："
 
-#: audacious/credits.c:174
+#: audacious/credits.c:175
 msgid "Italian:"
 msgstr "意大利语："
 
-#: audacious/credits.c:178
+#: audacious/credits.c:179
 msgid "Japanese:"
 msgstr "日语："
 
-#: audacious/credits.c:181
+#: audacious/credits.c:182
 msgid "Korean:"
 msgstr "朝语："
 
-#: audacious/credits.c:184
+#: audacious/credits.c:185
 msgid "Lithuanian:"
 msgstr "立陶宛语："
 
-#: audacious/credits.c:187
+#: audacious/credits.c:188
 msgid "Macedonian:"
 msgstr "马其顿语："
 
-#: audacious/credits.c:190
+#: audacious/credits.c:191
 msgid "Polish:"
 msgstr "波兰语："
 
-#: audacious/credits.c:193
+#: audacious/credits.c:194
 msgid "Romanian:"
 msgstr "罗马尼亚语："
 
-#: audacious/credits.c:196
+#: audacious/credits.c:197
 msgid "Russian:"
 msgstr "俄语："
 
-#: audacious/credits.c:199
+#: audacious/credits.c:200
 msgid "Serbian (Latin):"
 msgstr ""
 
-#: audacious/credits.c:202
+#: audacious/credits.c:203
 msgid "Serbian (Cyrillic):"
 msgstr ""
 
-#: audacious/credits.c:205
+#: audacious/credits.c:206
 msgid "Simplified Chinese:"
 msgstr ""
 
-#: audacious/credits.c:208
+#: audacious/credits.c:209
 msgid "Slovak:"
 msgstr "斯洛伐克语："
 
-#: audacious/credits.c:211
+#: audacious/credits.c:212
 msgid "Spanish:"
 msgstr "西班牙语："
 
-#: audacious/credits.c:214
+#: audacious/credits.c:215
 msgid "Swedish:"
 msgstr "瑞典语："
 
-#: audacious/credits.c:217
+#: audacious/credits.c:218
 msgid "Traditional Chinese:"
 msgstr ""
 
-#: audacious/credits.c:220
+#: audacious/credits.c:221
 msgid "Ukrainian:"
 msgstr "乌克兰语："
 
-#: audacious/credits.c:223
+#: audacious/credits.c:224
 msgid "Welsh:"
 msgstr "威尔斯语："
 
-#: audacious/credits.c:371
+#: audacious/credits.c:372
 msgid "Translators"
 msgstr "翻译者"
 
@@ -197,7 +197,7 @@ msgid "Delete"
 msgstr "/删除"
 
 #: audacious/equalizer.c:118 audacious/equalizer.c:153
-#: audacious/equalizer.c:178 audacious/equalizer.c:1606
+#: audacious/equalizer.c:178
 msgid "Preset"
 msgstr "预设"
 
@@ -312,7 +312,7 @@ msgstr "/删除/自动读取预设"
 msgid "Audacious Equalizer"
 msgstr "Audacious 均衡器"
 
-#: audacious/equalizer.c:1671
+#: audacious/equalizer.c:1615
 msgid "Presets"
 msgstr "预设"
 
@@ -437,14 +437,14 @@ msgstr "无法创建日志文件 (%s)！\n"
 msgid "Audacious"
 msgstr "Audacious"
 
-#: audacious/main.c:459
+#: audacious/main.c:460
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr ""
 "新建目录 %s 失败\n"
 "错误：%s"
 
-#: audacious/main.c:791
+#: audacious/main.c:792
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
@@ -456,71 +456,71 @@ msgstr ""
 "选项：\n"
 "———\n"
 
-#: audacious/main.c:796
+#: audacious/main.c:797
 msgid "Display this text and exit"
 msgstr "显示文字并退出"
 
-#: audacious/main.c:799
+#: audacious/main.c:800
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "选择 Audacious/BMP/XMMS 会话 (默认：0)"
 
-#: audacious/main.c:802
+#: audacious/main.c:803
 msgid "Skip backwards in playlist"
 msgstr "在播放列表中向后跳"
 
-#: audacious/main.c:805
+#: audacious/main.c:806
 msgid "Start playing current playlist"
 msgstr "开始播放现有列表"
 
-#: audacious/main.c:808
+#: audacious/main.c:809
 msgid "Pause current song"
 msgstr "暂停当前歌曲"
 
-#: audacious/main.c:811
+#: audacious/main.c:812
 msgid "Stop current song"
 msgstr "停止当前歌曲"
 
-#: audacious/main.c:814
+#: audacious/main.c:815
 msgid "Pause if playing, play otherwise"
 msgstr "如正播放则暂停，否则播放"
 
-#: audacious/main.c:817
+#: audacious/main.c:818
 msgid "Skip forward in playlist"
 msgstr "在播放列表中向前跳"
 
-#: audacious/main.c:820
+#: audacious/main.c:821
 msgid "Display Jump to file dialog"
 msgstr "显示 “跳到文件” 对话框"
 
-#: audacious/main.c:823
+#: audacious/main.c:824
 msgid "Don't clear the playlist"
 msgstr "不要清除播放列表"
 
-#: audacious/main.c:826
+#: audacious/main.c:827
 msgid "Show the main window"
 msgstr "显示主窗口"
 
-#: audacious/main.c:829
+#: audacious/main.c:830
 msgid "Activate Audacious"
 msgstr "激活 Audacious"
 
-#: audacious/main.c:832
+#: audacious/main.c:833
 msgid "Previous session ID"
 msgstr "以往连接 ID"
 
-#: audacious/main.c:835
+#: audacious/main.c:836
 msgid "Headless operation [experimental]"
 msgstr "Headless 选项 [实验性质的]"
 
-#: audacious/main.c:838
+#: audacious/main.c:839
 msgid "Disable error/warning interception (logging)"
 msgstr "禁用“错误/警告”侦听(记录)"
 
-#: audacious/main.c:841
+#: audacious/main.c:842
 msgid "Print version number and exit\n"
 msgstr "显示版本号并退出\n"
 
-#: audacious/main.c:1048
+#: audacious/main.c:1049
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -532,7 +532,7 @@ msgstr ""
 "\n"
 "请检查设在'%s'的皮肤是可用的，并且确保默认皮肤也已正确安装到'%s'。\n"
 
-#: audacious/main.c:1095
+#: audacious/main.c:1096
 #, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -541,7 +541,7 @@ msgstr ""
 "抱歉，您的 GTK+ 版本(%d.%d.%d)不能和 Audacious 一起工作。\n"
 "请使用 GTK+ %s 或以后的版本。\n"
 
-#: audacious/main.c:1106
+#: audacious/main.c:1107
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -554,7 +554,7 @@ msgstr ""
 "如果你原本使用 libc5 的 Linux 并且装了 GLIB & GTK+ \n"
 "之后又安装了 LinuxThreads，请重新编译 GLIB & GTK+。\n"
 
-#: audacious/main.c:1125
+#: audacious/main.c:1126
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "audacious： 无法打开显示器，即将退出。\n"
 
@@ -941,6 +941,11 @@ msgstr "跳到音轨"
 msgid "Filter: "
 msgstr "过滤: "
 
+#: audacious/mainwin.c:2150
+#, fuzzy
+msgid "_Filter:"
+msgstr "过滤: "
+
 #: audacious/mainwin.c:2354
 msgid "Enter location to play:"
 msgstr "输入要播放的位置："
@@ -1022,6 +1027,11 @@ msgstr ""
 "2. 没有其他的程式正在使用音效卡。\n"
 "3. 您的音效卡有正常驱动。\n"
 
+#: audacious/mainwin.c:3753
+#, fuzzy
+msgid "Error in Audacious."
+msgstr "%s - Audacious"
+
 #: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1399
 msgid "Appearance"
 msgstr "外观"
@@ -1042,7 +1052,8 @@ msgstr "均衡器"
 msgid "Mouse"
 msgstr "鼠标"
 
-#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:2530
+#: audacious/prefswin.c:103 audacious/playlist_manager.c:288
+#: audacious/glade/prefswin.glade:2530
 msgid "Playlist"
 msgstr "播放列表"
 
@@ -1503,6 +1514,11 @@ msgstr "保存播放列表"
 msgid "Audacious Playlist Editor"
 msgstr "Audacious 播放列表编辑器"
 
+#: audacious/util.c:670
+#, fuzzy
+msgid "Add/Open URL Dialog"
+msgstr "打开/添加文件的会话"
+
 #: audacious/util.c:922
 msgid "Add/Open Files dialog"
 msgstr "打开/添加文件的会话"
@@ -1538,6 +1554,20 @@ msgid ""
 msgstr ""
 "<b><big>没有选择输出插件</big></b>\n"
 "您还没有选择输出插件。"
+
+#: audacious/playlist_manager.c:253
+#, fuzzy
+msgid "Playlist Manager"
+msgstr "/不允许播放列表快进"
+
+#: audacious/playlist_manager.c:292
+msgid "Entries"
+msgstr ""
+
+#: audacious/playlist_manager.c:306
+#, fuzzy
+msgid "_Rename"
+msgstr "文件名"
 
 #: audacious/glade/addfiles.glade:77
 msgid "Close Dialog on Add"
@@ -1615,6 +1645,10 @@ msgstr "<i>音轨序号</i>"
 msgid "<i>Track Length</i>"
 msgstr "<i>音轨长度</i>"
 
+#: audacious/glade/prefswin.glade:8
+msgid "Audacious Preferences"
+msgstr "Audacious 首选项"
+
 #: audacious/glade/prefswin.glade:115
 msgid "_Decoder list:"
 msgstr "解码器列表 (_D) ："
@@ -1651,6 +1685,11 @@ msgstr "<b>效果</b>"
 msgid "<b>_Skin</b>"
 msgstr "<b>皮肤(_S)</b>"
 
+#: audacious/glade/prefswin.glade:799
+#, fuzzy
+msgid "Refresh skin list"
+msgstr "/刷新皮肤列表"
+
 #: audacious/glade/prefswin.glade:893
 msgid "<b>_Fonts</b>"
 msgstr "<b>字体(_F)</b>"
@@ -1662,6 +1701,16 @@ msgstr "播放器(_P)："
 #: audacious/glade/prefswin.glade:991
 msgid "_Playlist:"
 msgstr "播放列表(_P)："
+
+#: audacious/glade/prefswin.glade:1023
+msgid "Select main player window font:"
+msgstr "选择主窗口字体："
+
+#: audacious/glade/prefswin.glade:1091
+msgid ""
+"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
+"strings."
+msgstr "如果可能，则使用点阵字体。点阵字体不支持 Unicode 字符串。"
 
 #: audacious/glade/prefswin.glade:1093
 msgid "Use Bitmap fonts if available"
@@ -1683,6 +1732,10 @@ msgstr "在播放列表中显示分隔符"
 msgid "Use custom cursors"
 msgstr "使用自定光标"
 
+#: audacious/glade/prefswin.glade:1279 audacious/glade/prefswin.glade:1290
+msgid "This enables the window manager to show decorations for windows."
+msgstr "这启用窗口管理器显示窗口装饰。"
+
 #: audacious/glade/prefswin.glade:1281
 msgid "Show window manager decoration"
 msgstr "显示窗口管理器装饰"
@@ -1691,13 +1744,27 @@ msgstr "显示窗口管理器装饰"
 msgid "Show window manager decorations"
 msgstr "显示窗口管理器装饰"
 
-#: audacious/glade/prefswin.glade:1290
-msgid "This enables the window manager to show decorations for windows."
-msgstr "这启用窗口管理器显示窗口装饰。"
+#: audacious/glade/prefswin.glade:1319
+msgid ""
+"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
+"provided by Audacious itself and is faster than the default GTK2 selector "
+"(but sadly not as user-friendly)."
+msgstr ""
+"这将启用 XMMS/GTK-1 样式的文件选择对话框。该选择是 Audadious 自身提供的，比默"
+"认的 GTK2 选择器快(但可惜不如它对用户友好)。"
 
 #: audacious/glade/prefswin.glade:1321
 msgid "Use XMMS-style file selector instead of the default selector"
 msgstr "使用 XMMS 样式的文件选择器"
+
+#: audacious/glade/prefswin.glade:1355
+msgid ""
+"Enables playlist transparency. This is not recommended for slower machines "
+"as it requires some CPU time to create and cache the pixmaps used for the "
+"transparency."
+msgstr ""
+"启用播放列表透明。在较慢机器上不推荐，因为这需要一些 CPU 时间来创建并缓存为透"
+"明使用的位图。"
 
 #: audacious/glade/prefswin.glade:1357
 msgid "Enable playlist transparency"
@@ -1743,13 +1810,26 @@ msgstr ""
 msgid "<b>Metadata</b>"
 msgstr "<b>元数据</b>"
 
+#: audacious/glade/prefswin.glade:1908
+msgid "Load metadata (tag information) from music files."
+msgstr "从文件中获取元素据。"
+
 #: audacious/glade/prefswin.glade:1910
 msgid "Load metadata from playlists and files"
 msgstr "使用播放列表中的元数据"
 
+#: audacious/glade/prefswin.glade:1948
+msgid "Load metadata when adding the file to the playlist or opening it"
+msgstr "打开文件或者把文件加入列表时加载原数据"
+
 #: audacious/glade/prefswin.glade:1950
 msgid "On load"
 msgstr "装入时"
+
+#: audacious/glade/prefswin.glade:1970
+#, fuzzy
+msgid "Load metadata on demand when displaying the file in the playlist"
+msgstr "打开文件或者把文件加入列表时加载原数据"
 
 #: audacious/glade/prefswin.glade:1972
 msgid "On display"
@@ -1760,6 +1840,16 @@ msgstr "显示时"
 msgid "Fallback character encodings:"
 msgstr "缺省字符编码："
 
+#: audacious/glade/prefswin.glade:2030
+msgid ""
+"List of character encodings used for fall back conversion of metadata. If "
+"automatic character encoding detector failed or has been disabled, encodings "
+"in this list would be treated as candidates of the encoding of metadata, and "
+"fall back conversion from these encodings to UTF-8 would be attempted."
+msgstr ""
+"缺省的元数据转换使用的字符编码列表。如果自动编码转换检测器失败或被禁用，这个"
+"列表中的编码将被作为元数据编码的候选，并将试图由此转换到UTF-8。"
+
 #: audacious/glade/prefswin.glade:2071
 msgid "Auto character encoding detector for:"
 msgstr "使用自动编码检测器："
@@ -1767,6 +1857,14 @@ msgstr "使用自动编码检测器："
 #: audacious/glade/prefswin.glade:2127
 msgid "<b>File Dialog</b>"
 msgstr "<b>文件对话框</b>"
+
+#: audacious/glade/prefswin.glade:2166
+msgid ""
+"Always refresh the file dialog (this will slow opening the dialog on large "
+"directories, and Gnome VFS should handle automatically)."
+msgstr ""
+"总是自动刷新文件对话框 (这将使在大目录打开时文件打开对话框变慢，并且 Gnome "
+"VFS 应该能够自动处理。)。"
 
 #: audacious/glade/prefswin.glade:2168
 msgid "Always refresh directory when opening file dialog"
@@ -1802,13 +1900,30 @@ msgstr ""
 "唱片 － 标题\n"
 "自定"
 
+#: audacious/glade/prefswin.glade:2351
+msgid "Show information about titlestring format"
+msgstr "显示标题格式信息"
+
 #: audacious/glade/prefswin.glade:2401
 msgid "<b>Popup Information</b>"
 msgstr "<b>弹出信息</b>"
 
+#: audacious/glade/prefswin.glade:2452
+msgid ""
+"Toggles popup information window for the pointed entry in the playlist. The "
+"window shows title of song, name of album, genre, year of publish, track "
+"number, track length, and artwork."
+msgstr ""
+"切换播放列表中鼠标指向的项的弹出信息窗口。该窗口显示歌曲标题、专辑名、流派信"
+"息、发布年份，音轨编号，音轨长度和艺术品(专辑封面)。"
+
 #: audacious/glade/prefswin.glade:2454
 msgid "Show popup information for playlist entries"
 msgstr "为播放列表项显示弹出信息"
+
+#: audacious/glade/prefswin.glade:2481
+msgid "Edit settings for popup information"
+msgstr "编辑弹出信息设置"
 
 #: audacious/glade/prefswin.glade:2589
 msgid "<b>Presets</b>"
@@ -1900,6 +2015,15 @@ msgstr "输出插件信息"
 msgid "<b>Format Detection</b>"
 msgstr "<b>格式检测</b>"
 
+#: audacious/glade/prefswin.glade:3870
+#, fuzzy
+msgid ""
+"When checked, Audacious will detect file formats on demand. This can result "
+"in a messier playlist, but delivers a major speed benefit."
+msgstr ""
+"当选中时，Audacious 将在需要时才检测文件格式。这会使播放列表有些混乱，但会使"
+"速度大大提高。"
+
 #: audacious/glade/prefswin.glade:3872
 msgid "Detect file formats on demand, instead of immediately."
 msgstr "在需要时而不是立即检测文件格式"
@@ -1922,9 +2046,19 @@ msgstr ""
 msgid "<b>Playback</b>"
 msgstr "<b>播放</b>"
 
+#: audacious/glade/prefswin.glade:3981
+msgid ""
+"When Audacious starts, automatically begin playing from the point where we "
+"stopped before."
+msgstr "当 Audacious 启动时，自动从上次停止的地方开始播放。"
+
 #: audacious/glade/prefswin.glade:3983
 msgid "Continue playback on startup"
 msgstr "在启动时恢复回放"
+
+#: audacious/glade/prefswin.glade:4017
+msgid "When finished playing a song, don't automatically advance to the next."
+msgstr "歌曲播完后，不要自动快进。"
 
 #: audacious/glade/prefswin.glade:4019
 msgid "Don't advance in the playlist"
@@ -1945,6 +2079,10 @@ msgstr "秒"
 #: audacious/glade/prefswin.glade:4178
 msgid "label76"
 msgstr "label76"
+
+#: audacious/glade/prefswin.glade:4292
+msgid "Popup Information Settings"
+msgstr "弹出信息设置"
 
 #: audacious/glade/prefswin.glade:4316
 msgid ""
@@ -2163,81 +2301,5 @@ msgstr "%{n:...%}: 如果 %n 元素存在，显示“...”"
 #~ msgid "<b>_Miscillaneous UI Features</b>"
 #~ msgstr "<b>其它界面特性 (_M)</b>"
 
-#~ msgid ""
-#~ "Always refresh the file dialog (this will slow opening the dialog on "
-#~ "large directories, and Gnome VFS should handle automatically)."
-#~ msgstr ""
-#~ "总是自动刷新文件对话框 (这将使在大目录打开时文件打开对话框变慢，并且 "
-#~ "Gnome VFS 应该能够自动处理。)。"
-
-#~ msgid "Audacious Preferences"
-#~ msgstr "Audacious 首选项"
-
-#~ msgid "Edit settings for popup information"
-#~ msgstr "编辑弹出信息设置"
-
-#~ msgid ""
-#~ "Enables playlist transparency. This is not recommended for slower "
-#~ "machines as it requires some CPU time to create and cache the pixmaps "
-#~ "used for the transparency."
-#~ msgstr ""
-#~ "启用播放列表透明。在较慢机器上不推荐，因为这需要一些 CPU 时间来创建并缓存"
-#~ "为透明使用的位图。"
-
-#~ msgid ""
-#~ "List of character encodings used for fall back conversion of metadata. If "
-#~ "automatic character encoding detector failed or has been disabled, "
-#~ "encodings in this list would be treated as candidates of the encoding of "
-#~ "metadata, and fall back conversion from these encodings to UTF-8 would be "
-#~ "attempted."
-#~ msgstr ""
-#~ "缺省的元数据转换使用的字符编码列表。如果自动编码转换检测器失败或被禁用，这"
-#~ "个列表中的编码将被作为元数据编码的候选，并将试图由此转换到UTF-8。"
-
-#~ msgid "Load metadata (tag information) from music files."
-#~ msgstr "从文件中获取元素据。"
-
-#~ msgid "Load metadata when adding the file to the playlist or opening it"
-#~ msgstr "打开文件或者把文件加入列表时加载原数据"
-
-#~ msgid "Popup Information Settings"
-#~ msgstr "弹出信息设置"
-
-#~ msgid "Select main player window font:"
-#~ msgstr "选择主窗口字体："
-
-#~ msgid "Show information about titlestring format"
-#~ msgstr "显示标题格式信息"
-
-#~ msgid ""
-#~ "This enables the XMMS/GTK1-style file selection dialogs. This selector is "
-#~ "provided by Audacious itself and is faster than the default GTK2 selector "
-#~ "(but sadly not as user-friendly)."
-#~ msgstr ""
-#~ "这将启用 XMMS/GTK-1 样式的文件选择对话框。该选择是 Audadious 自身提供的，"
-#~ "比默认的 GTK2 选择器快(但可惜不如它对用户友好)。"
-
 #~ msgid "This enables the window mangaer to show decorations for windows."
 #~ msgstr "这启用窗口管理器显示窗口装饰。"
-
-#~ msgid ""
-#~ "Toggles popup information window for the pointed entry in the playlist. "
-#~ "The window shows title of song, name of album, genre, year of publish, "
-#~ "track number, track length, and artwork."
-#~ msgstr ""
-#~ "切换播放列表中鼠标指向的项的弹出信息窗口。该窗口显示歌曲标题、专辑名、流派"
-#~ "信息、发布年份，音轨编号，音轨长度和艺术品(专辑封面)。"
-
-#~ msgid ""
-#~ "Use bitmap fonts if they are available. Bitmap fonts do not support "
-#~ "Unicode strings."
-#~ msgstr "如果可能，则使用点阵字体。点阵字体不支持 Unicode 字符串。"
-
-#~ msgid ""
-#~ "When Audacious starts, automatically begin playing from the point where "
-#~ "we stopped before."
-#~ msgstr "当 Audacious 启动时，自动从上次停止的地方开始播放。"
-
-#~ msgid ""
-#~ "When finished playing a song, don't automatically advance to the next."
-#~ msgstr "歌曲播完后，不要自动快进。"

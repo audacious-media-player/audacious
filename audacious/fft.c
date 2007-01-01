@@ -1,4 +1,6 @@
-/* fft.c: Iterative implementation of a FFT
+/* Audacious - Cross-platform multimedia player
+ * Copyright (C) 2005-2007  Audacious development team
+ *
  * Copyright (C) 1999 Richard Boulton <richard@tartarus.org>
  * Convolution stuff by Ralph Loader <suckfish@ihug.co.nz>
  *
@@ -15,6 +17,8 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
+
+/* fft.c: iterative implementation of a FFT */
 
 /*
  * TODO

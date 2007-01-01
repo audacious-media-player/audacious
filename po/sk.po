@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sk\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-12-29 07:21-0600\n"
+"POT-Creation-Date: 2007-01-01 11:21-0600\n"
 "PO-Revision-Date: 2004-09-03 09:32+0800\n"
 "Last-Translator: Pavel Kanzelsberger <kanzels@zmail.sk>\n"
 "Language-Team: Slovak <kanzels@zmail.sk>\n"
@@ -15,16 +15,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: audacious/about.c:118 audacious/credits.c:322
+#: audacious/about.c:123 audacious/credits.c:323
 #, fuzzy
 msgid "About Audacious"
 msgstr "O MPEG Audio plugine"
 
-#: audacious/about.c:167 audacious/credits.c:367
+#: audacious/about.c:172 audacious/credits.c:368
 msgid "Credits"
 msgstr "Credits"
 
-#: audacious/credits.c:44
+#: audacious/credits.c:45
 #, fuzzy, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
@@ -37,156 +37,156 @@ msgstr ""
 "\n"
 "Copyright (C) 2003-2004 BMP Development Team\n"
 
-#: audacious/credits.c:50
+#: audacious/credits.c:51
 #, fuzzy
 msgid "Audacious core developers:"
 msgstr "Nastavenia BMP"
 
-#: audacious/credits.c:63
+#: audacious/credits.c:64
 msgid "Graphics:"
 msgstr ""
 
-#: audacious/credits.c:68
+#: audacious/credits.c:69
 msgid "Default skin:"
 msgstr "Štandardný vzhľad:"
 
-#: audacious/credits.c:73
+#: audacious/credits.c:74
 msgid "Plugin development:"
 msgstr ""
 
-#: audacious/credits.c:84
+#: audacious/credits.c:85
 msgid "Patch authors:"
 msgstr ""
 
-#: audacious/credits.c:99
+#: audacious/credits.c:100
 #, fuzzy
 msgid "0.1.x developers:"
 msgstr "Vývojári:"
 
-#: audacious/credits.c:105
+#: audacious/credits.c:106
 #, fuzzy
 msgid "BMP Developers:"
 msgstr "Vývojári:"
 
-#: audacious/credits.c:137
+#: audacious/credits.c:138
 msgid "Brazilian Portuguese:"
 msgstr ""
 
-#: audacious/credits.c:140
+#: audacious/credits.c:141
 msgid "Breton:"
 msgstr "Bretónsky:"
 
-#: audacious/credits.c:143
+#: audacious/credits.c:144
 #, fuzzy
 msgid "Czech:"
 msgstr "Francúzsky:"
 
-#: audacious/credits.c:146
+#: audacious/credits.c:147
 msgid "Dutch:"
 msgstr "Holandsky:"
 
-#: audacious/credits.c:150
+#: audacious/credits.c:151
 #, fuzzy
 msgid "Finnish:"
 msgstr "Španielsky:"
 
-#: audacious/credits.c:153
+#: audacious/credits.c:154
 msgid "French:"
 msgstr "Francúzsky:"
 
-#: audacious/credits.c:156
+#: audacious/credits.c:157
 msgid "German:"
 msgstr "Nemecky:"
 
-#: audacious/credits.c:160
+#: audacious/credits.c:161
 #, fuzzy
 msgid "Georgian:"
 msgstr "Nemecky:"
 
-#: audacious/credits.c:163
+#: audacious/credits.c:164
 msgid "Greek:"
 msgstr "Grécky:"
 
-#: audacious/credits.c:168
+#: audacious/credits.c:169
 msgid "Hindi:"
 msgstr ""
 
-#: audacious/credits.c:171
+#: audacious/credits.c:172
 msgid "Hungarian:"
 msgstr "Maďarsky:"
 
-#: audacious/credits.c:174
+#: audacious/credits.c:175
 msgid "Italian:"
 msgstr "Taliansky:"
 
-#: audacious/credits.c:178
+#: audacious/credits.c:179
 msgid "Japanese:"
 msgstr "Japonsky:"
 
-#: audacious/credits.c:181
+#: audacious/credits.c:182
 msgid "Korean:"
 msgstr "Kórejsky:"
 
-#: audacious/credits.c:184
+#: audacious/credits.c:185
 msgid "Lithuanian:"
 msgstr "Litovčina:"
 
-#: audacious/credits.c:187
+#: audacious/credits.c:188
 #, fuzzy
 msgid "Macedonian:"
 msgstr "Rumunsky:"
 
-#: audacious/credits.c:190
+#: audacious/credits.c:191
 msgid "Polish:"
 msgstr "Poľsky:"
 
-#: audacious/credits.c:193
+#: audacious/credits.c:194
 msgid "Romanian:"
 msgstr "Rumunsky:"
 
-#: audacious/credits.c:196
+#: audacious/credits.c:197
 msgid "Russian:"
 msgstr "Rusky:"
 
-#: audacious/credits.c:199
+#: audacious/credits.c:200
 msgid "Serbian (Latin):"
 msgstr ""
 
-#: audacious/credits.c:202
+#: audacious/credits.c:203
 msgid "Serbian (Cyrillic):"
 msgstr ""
 
-#: audacious/credits.c:205
+#: audacious/credits.c:206
 msgid "Simplified Chinese:"
 msgstr ""
 
-#: audacious/credits.c:208
+#: audacious/credits.c:209
 msgid "Slovak:"
 msgstr ""
 
-#: audacious/credits.c:211
+#: audacious/credits.c:212
 msgid "Spanish:"
 msgstr "Španielsky:"
 
-#: audacious/credits.c:214
+#: audacious/credits.c:215
 msgid "Swedish:"
 msgstr "Švédsky:"
 
-#: audacious/credits.c:217
+#: audacious/credits.c:218
 #, fuzzy
 msgid "Traditional Chinese:"
 msgstr "With Additional Help:"
 
-#: audacious/credits.c:220
+#: audacious/credits.c:221
 #, fuzzy
 msgid "Ukrainian:"
 msgstr "Rumunsky:"
 
-#: audacious/credits.c:223
+#: audacious/credits.c:224
 msgid "Welsh:"
 msgstr "Welshsky:"
 
-#: audacious/credits.c:371
+#: audacious/credits.c:372
 msgid "Translators"
 msgstr "Prekladatelia"
 
@@ -211,7 +211,7 @@ msgid "Delete"
 msgstr "/Vymazať"
 
 #: audacious/equalizer.c:118 audacious/equalizer.c:153
-#: audacious/equalizer.c:178 audacious/equalizer.c:1606
+#: audacious/equalizer.c:178
 msgid "Preset"
 msgstr "Preset"
 
@@ -326,7 +326,7 @@ msgstr "/Vymazať/Auto otvárací preset"
 msgid "Audacious Equalizer"
 msgstr "/Zrolovať ekvalizér"
 
-#: audacious/equalizer.c:1671
+#: audacious/equalizer.c:1615
 msgid "Presets"
 msgstr "Presety"
 
@@ -448,12 +448,12 @@ msgstr "Nepodarilo sa vytvoriť log súbor (%s)!\n"
 msgid "Audacious"
 msgstr ""
 
-#: audacious/main.c:459
+#: audacious/main.c:460
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "Nepodarilo sa vytvoriť adresár (%s): %s"
 
-#: audacious/main.c:791
+#: audacious/main.c:792
 #, fuzzy
 msgid ""
 "Usage: audacious [options] [files] ...\n"
@@ -466,73 +466,73 @@ msgstr ""
 "Voľby:\n"
 "--------\n"
 
-#: audacious/main.c:796
+#: audacious/main.c:797
 msgid "Display this text and exit"
 msgstr "Zobraziť tento text a skončiť"
 
-#: audacious/main.c:799
+#: audacious/main.c:800
 #, fuzzy
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Vybrať BMP/XMMS sedenie (Štandardne: 0)"
 
-#: audacious/main.c:802
+#: audacious/main.c:803
 msgid "Skip backwards in playlist"
 msgstr "Vrátiť sa späť v playliste"
 
-#: audacious/main.c:805
+#: audacious/main.c:806
 msgid "Start playing current playlist"
 msgstr "Začať hrať aktuálny playlist"
 
-#: audacious/main.c:808
+#: audacious/main.c:809
 msgid "Pause current song"
 msgstr "Zapauzovať aktuálnu skladbu"
 
-#: audacious/main.c:811
+#: audacious/main.c:812
 msgid "Stop current song"
 msgstr "Zastaviť aktuálnu skladbu"
 
-#: audacious/main.c:814
+#: audacious/main.c:815
 msgid "Pause if playing, play otherwise"
 msgstr "Pauza ak hrá, inak prehrať"
 
-#: audacious/main.c:817
+#: audacious/main.c:818
 msgid "Skip forward in playlist"
 msgstr "Posunúť vpred v playliste"
 
-#: audacious/main.c:820
+#: audacious/main.c:821
 msgid "Display Jump to file dialog"
 msgstr ""
 
-#: audacious/main.c:823
+#: audacious/main.c:824
 msgid "Don't clear the playlist"
 msgstr "Nevyčistiť playlist"
 
-#: audacious/main.c:826
+#: audacious/main.c:827
 msgid "Show the main window"
 msgstr "Zobraziť hlavné okno"
 
-#: audacious/main.c:829
+#: audacious/main.c:830
 #, fuzzy
 msgid "Activate Audacious"
 msgstr "O MPEG Audio plugine"
 
-#: audacious/main.c:832
+#: audacious/main.c:833
 msgid "Previous session ID"
 msgstr "ID predchádzajúcej session"
 
-#: audacious/main.c:835
+#: audacious/main.c:836
 msgid "Headless operation [experimental]"
 msgstr ""
 
-#: audacious/main.c:838
+#: audacious/main.c:839
 msgid "Disable error/warning interception (logging)"
 msgstr ""
 
-#: audacious/main.c:841
+#: audacious/main.c:842
 msgid "Print version number and exit\n"
 msgstr "Zobraziť verziu programu a skončiť\n"
 
-#: audacious/main.c:1048
+#: audacious/main.c:1049
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -545,7 +545,7 @@ msgstr ""
 "Skontrolujte či je skin '%s' používateľný a či je štandardný skin "
 "nainštalovaný v '%s'\n"
 
-#: audacious/main.c:1095
+#: audacious/main.c:1096
 #, fuzzy, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -554,7 +554,7 @@ msgstr ""
 "Prepáčte, verzia GTK+ (%d.%d.%d), ktorú máte nepracuje s BMP.\n"
 "Prosím použite GTK+ verzie %s alebo novšie.\n"
 
-#: audacious/main.c:1106
+#: audacious/main.c:1107
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -567,7 +567,7 @@ msgstr ""
 "Ak máte Linux s podporou libc5 a nainštalovali ste Glib & GTK+ predtým ako\n"
 "ste inštalovali LinuxThreads budete musiet rekompilovať Glib & GTK+.\n"
 
-#: audacious/main.c:1125
+#: audacious/main.c:1126
 #, fuzzy
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "BMP: Nepodarilo sa otvoriť display, koniec."
@@ -970,6 +970,11 @@ msgstr "Preskočiť na skladbu"
 msgid "Filter: "
 msgstr "Filter: "
 
+#: audacious/mainwin.c:2150
+#, fuzzy
+msgid "_Filter:"
+msgstr "Filter: "
+
 #: audacious/mainwin.c:2354
 msgid "Enter location to play:"
 msgstr ""
@@ -1052,6 +1057,11 @@ msgstr ""
 "2. či žiadne iné programy neblokuju zvukovú kartu.\n"
 "3. či je vaša zvuková karta správne nakonfigurovaná.\n"
 
+#: audacious/mainwin.c:3753
+#, fuzzy
+msgid "Error in Audacious."
+msgstr "O MPEG Audio plugine"
+
 #: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1399
 msgid "Appearance"
 msgstr "Vzhľad"
@@ -1073,7 +1083,8 @@ msgstr "Ekvalizér"
 msgid "Mouse"
 msgstr "Myš"
 
-#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:2530
+#: audacious/prefswin.c:103 audacious/playlist_manager.c:288
+#: audacious/glade/prefswin.glade:2530
 msgid "Playlist"
 msgstr "Playlist"
 
@@ -1535,6 +1546,11 @@ msgstr "Uložiť playlist"
 msgid "Audacious Playlist Editor"
 msgstr "/Zobraziť editor playlistu"
 
+#: audacious/util.c:670
+#, fuzzy
+msgid "Add/Open URL Dialog"
+msgstr "Pridať súbory"
+
 #: audacious/util.c:922
 #, fuzzy
 msgid "Add/Open Files dialog"
@@ -1572,6 +1588,20 @@ msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
 msgstr ""
+
+#: audacious/playlist_manager.c:253
+#, fuzzy
+msgid "Playlist Manager"
+msgstr "/Nepokračovať v playliste"
+
+#: audacious/playlist_manager.c:292
+msgid "Entries"
+msgstr ""
+
+#: audacious/playlist_manager.c:306
+#, fuzzy
+msgid "_Rename"
+msgstr "Názov súboru"
 
 #: audacious/glade/addfiles.glade:77
 msgid "Close Dialog on Add"
@@ -1666,6 +1696,11 @@ msgstr "Číslo skladby"
 msgid "<i>Track Length</i>"
 msgstr "Dĺžka skladby:"
 
+#: audacious/glade/prefswin.glade:8
+#, fuzzy
+msgid "Audacious Preferences"
+msgstr "Nastavenia BMP"
+
 #: audacious/glade/prefswin.glade:115
 #, fuzzy
 msgid "_Decoder list:"
@@ -1704,6 +1739,11 @@ msgstr "<b>Efekty</b>"
 msgid "<b>_Skin</b>"
 msgstr "<b>_Skiny</b>"
 
+#: audacious/glade/prefswin.glade:799
+#, fuzzy
+msgid "Refresh skin list"
+msgstr "/Obnovovací režim"
+
 #: audacious/glade/prefswin.glade:893
 msgid "<b>_Fonts</b>"
 msgstr "<b>_Fonty</b>"
@@ -1715,6 +1755,16 @@ msgstr "_Prehrávač:"
 #: audacious/glade/prefswin.glade:991
 msgid "_Playlist:"
 msgstr "_Playlist:"
+
+#: audacious/glade/prefswin.glade:1023
+msgid "Select main player window font:"
+msgstr "Vyberte font hlavného okna:"
+
+#: audacious/glade/prefswin.glade:1091
+msgid ""
+"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
+"strings."
+msgstr ""
 
 #: audacious/glade/prefswin.glade:1093
 #, fuzzy
@@ -1738,6 +1788,10 @@ msgstr "Zobrazovať čísla skladieb v playliste"
 msgid "Use custom cursors"
 msgstr "Používať vlastné kurzory"
 
+#: audacious/glade/prefswin.glade:1279 audacious/glade/prefswin.glade:1290
+msgid "This enables the window manager to show decorations for windows."
+msgstr ""
+
 #: audacious/glade/prefswin.glade:1281
 msgid "Show window manager decoration"
 msgstr ""
@@ -1746,12 +1800,22 @@ msgstr ""
 msgid "Show window manager decorations"
 msgstr ""
 
-#: audacious/glade/prefswin.glade:1290
-msgid "This enables the window manager to show decorations for windows."
+#: audacious/glade/prefswin.glade:1319
+msgid ""
+"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
+"provided by Audacious itself and is faster than the default GTK2 selector "
+"(but sadly not as user-friendly)."
 msgstr ""
 
 #: audacious/glade/prefswin.glade:1321
 msgid "Use XMMS-style file selector instead of the default selector"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:1355
+msgid ""
+"Enables playlist transparency. This is not recommended for slower machines "
+"as it requires some CPU time to create and cache the pixmaps used for the "
+"transparency."
 msgstr ""
 
 #: audacious/glade/prefswin.glade:1357
@@ -1801,13 +1865,26 @@ msgstr ""
 msgid "<b>Metadata</b>"
 msgstr "<b>Metadáta</b>"
 
+#: audacious/glade/prefswin.glade:1908
+msgid "Load metadata (tag information) from music files."
+msgstr "Načítať metadáta (tag informácie) zo zvukových súborov."
+
 #: audacious/glade/prefswin.glade:1910
 msgid "Load metadata from playlists and files"
 msgstr "Načítať metadáta z playlistov a súborov"
 
+#: audacious/glade/prefswin.glade:1948
+msgid "Load metadata when adding the file to the playlist or opening it"
+msgstr "Načítať metadáta pri pridávaní súboru do playlistu alebo pri otváraní"
+
 #: audacious/glade/prefswin.glade:1950
 msgid "On load"
 msgstr "Pri otváraní"
+
+#: audacious/glade/prefswin.glade:1970
+#, fuzzy
+msgid "Load metadata on demand when displaying the file in the playlist"
+msgstr "Načítať metadáta pri pridávaní súboru do playlistu alebo pri otváraní"
 
 #: audacious/glade/prefswin.glade:1972
 msgid "On display"
@@ -1815,6 +1892,14 @@ msgstr "Pri zobrazení"
 
 #: audacious/glade/prefswin.glade:2002
 msgid "Fallback character encodings:"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:2030
+msgid ""
+"List of character encodings used for fall back conversion of metadata. If "
+"automatic character encoding detector failed or has been disabled, encodings "
+"in this list would be treated as candidates of the encoding of metadata, and "
+"fall back conversion from these encodings to UTF-8 would be attempted."
 msgstr ""
 
 #: audacious/glade/prefswin.glade:2071
@@ -1825,6 +1910,12 @@ msgstr ""
 #, fuzzy
 msgid "<b>File Dialog</b>"
 msgstr "<b><Názov súboru/b>"
+
+#: audacious/glade/prefswin.glade:2166
+msgid ""
+"Always refresh the file dialog (this will slow opening the dialog on large "
+"directories, and Gnome VFS should handle automatically)."
+msgstr ""
 
 #: audacious/glade/prefswin.glade:2168
 msgid "Always refresh directory when opening file dialog"
@@ -1860,13 +1951,28 @@ msgstr ""
 "ALBUM - NÁZOV\n"
 "Vlastné"
 
+#: audacious/glade/prefswin.glade:2351
+msgid "Show information about titlestring format"
+msgstr "Zobraziť informácie o formáte názvu"
+
 #: audacious/glade/prefswin.glade:2401
 #, fuzzy
 msgid "<b>Popup Information</b>"
 msgstr "Konfigurácia MPEG Audio pluginu"
 
+#: audacious/glade/prefswin.glade:2452
+msgid ""
+"Toggles popup information window for the pointed entry in the playlist. The "
+"window shows title of song, name of album, genre, year of publish, track "
+"number, track length, and artwork."
+msgstr ""
+
 #: audacious/glade/prefswin.glade:2454
 msgid "Show popup information for playlist entries"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:2481
+msgid "Edit settings for popup information"
 msgstr ""
 
 #: audacious/glade/prefswin.glade:2589
@@ -1967,6 +2073,12 @@ msgstr "Konfigurácia výstupného ESD Pluginu"
 msgid "<b>Format Detection</b>"
 msgstr "Automatická detekcia"
 
+#: audacious/glade/prefswin.glade:3870
+msgid ""
+"When checked, Audacious will detect file formats on demand. This can result "
+"in a messier playlist, but delivers a major speed benefit."
+msgstr ""
+
 #: audacious/glade/prefswin.glade:3872
 msgid "Detect file formats on demand, instead of immediately."
 msgstr ""
@@ -1986,9 +2098,19 @@ msgstr ""
 msgid "<b>Playback</b>"
 msgstr "<b>Prehrávanie</b>"
 
+#: audacious/glade/prefswin.glade:3981
+msgid ""
+"When Audacious starts, automatically begin playing from the point where we "
+"stopped before."
+msgstr ""
+
 #: audacious/glade/prefswin.glade:3983
 msgid "Continue playback on startup"
 msgstr ""
+
+#: audacious/glade/prefswin.glade:4017
+msgid "When finished playing a song, don't automatically advance to the next."
+msgstr "Keď skončí prehrávanie skladby, automaticky nepokračovať ďaľšou."
 
 #: audacious/glade/prefswin.glade:4019
 msgid "Don't advance in the playlist"
@@ -2009,6 +2131,11 @@ msgstr "sekúnd"
 #: audacious/glade/prefswin.glade:4178
 msgid "label76"
 msgstr ""
+
+#: audacious/glade/prefswin.glade:4292
+#, fuzzy
+msgid "Popup Information Settings"
+msgstr "Konfigurácia MPEG Audio pluginu"
 
 #: audacious/glade/prefswin.glade:4316
 msgid ""
@@ -2238,29 +2365,8 @@ msgstr "%{n:...%}: Zobraziť \"...\" len ak je %n prítomný"
 #~ msgstr "/Triediť výber/Podľa názvu"
 
 #, fuzzy
-#~ msgid "Audacious Preferences"
-#~ msgstr "Nastavenia BMP"
-
-#~ msgid "Select main player window font:"
-#~ msgstr "Vyberte font hlavného okna:"
-
-#, fuzzy
 #~ msgid "<b>_Miscillaneous UI Features</b>"
 #~ msgstr "<b>_Rôzne</b>"
-
-#~ msgid "Load metadata (tag information) from music files."
-#~ msgstr "Načítať metadáta (tag informácie) zo zvukových súborov."
-
-#~ msgid "Load metadata when adding the file to the playlist or opening it"
-#~ msgstr ""
-#~ "Načítať metadáta pri pridávaní súboru do playlistu alebo pri otváraní"
-
-#~ msgid "Show information about titlestring format"
-#~ msgstr "Zobraziť informácie o formáte názvu"
-
-#~ msgid ""
-#~ "When finished playing a song, don't automatically advance to the next."
-#~ msgstr "Keď skončí prehrávanie skladby, automaticky nepokračovať ďaľšou."
 
 #, fuzzy
 #~ msgid "About AudioCompress"

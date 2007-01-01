@@ -1,3 +1,10 @@
+2007-01-01 07:46:17 +0000  Cheng-Wei Chien <e.cwchien@gmail.com>
+  revision [3465]
+  zh_TW.po updated by: Cheng-Wei Chien <e.cwchien@gmail.com>
+  trunk/po/zh_TW.po | 1965 +++++++++++++++++++++++++++++++++++++-----------------
+  1 file changed, 1352 insertions(+), 613 deletions(-)
+
+
 2007-01-01 03:58:46 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3463]
   - bmp_playback_* -> playback_* -- i knew something smelled rotten in widgetcore, hmm.

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sr\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2006-12-29 07:21-0600\n"
+"POT-Creation-Date: 2007-01-01 11:21-0600\n"
 "PO-Revision-Date: 2006-12-29 14:58+0100\n"
 "Last-Translator: Strahinja  Kustudić <kustodian@gmail.com>\n"
 "Language-Team: Serbian Cyrillic <kustodian@gmail.com>\n"
@@ -15,15 +15,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: audacious/about.c:118 audacious/credits.c:322
+#: audacious/about.c:123 audacious/credits.c:323
 msgid "About Audacious"
 msgstr "O Аудациоус-u"
 
-#: audacious/about.c:167 audacious/credits.c:367
+#: audacious/about.c:172 audacious/credits.c:368
 msgid "Credits"
 msgstr "Заслуге"
 
-#: audacious/credits.c:44
+#: audacious/credits.c:45
 #, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
@@ -36,148 +36,148 @@ msgstr ""
 "\n"
 "Сва права задржана, 2005-2006 Аудациоус Развојни Тим\n"
 
-#: audacious/credits.c:50
+#: audacious/credits.c:51
 msgid "Audacious core developers:"
 msgstr "Аудациоус основни ствараоци:"
 
-#: audacious/credits.c:63
+#: audacious/credits.c:64
 msgid "Graphics:"
 msgstr "Графика:"
 
-#: audacious/credits.c:68
+#: audacious/credits.c:69
 msgid "Default skin:"
 msgstr "Подразумевана маска:"
 
-#: audacious/credits.c:73
+#: audacious/credits.c:74
 msgid "Plugin development:"
 msgstr "Развој додатака:"
 
-#: audacious/credits.c:84
+#: audacious/credits.c:85
 msgid "Patch authors:"
 msgstr "Аутори закрпа:"
 
-#: audacious/credits.c:99
+#: audacious/credits.c:100
 msgid "0.1.x developers:"
 msgstr "0.1.x ствараоци:"
 
-#: audacious/credits.c:105
+#: audacious/credits.c:106
 msgid "BMP Developers:"
 msgstr "BMP ствараоци:"
 
-#: audacious/credits.c:137
+#: audacious/credits.c:138
 msgid "Brazilian Portuguese:"
 msgstr "Бразилско Португалски:"
 
-#: audacious/credits.c:140
+#: audacious/credits.c:141
 msgid "Breton:"
 msgstr "Бретонски:"
 
-#: audacious/credits.c:143
+#: audacious/credits.c:144
 msgid "Czech:"
 msgstr "Чешки:"
 
-#: audacious/credits.c:146
+#: audacious/credits.c:147
 msgid "Dutch:"
 msgstr "Холандски:"
 
-#: audacious/credits.c:150
+#: audacious/credits.c:151
 msgid "Finnish:"
 msgstr "Фински:"
 
-#: audacious/credits.c:153
+#: audacious/credits.c:154
 msgid "French:"
 msgstr "Француски:"
 
-#: audacious/credits.c:156
+#: audacious/credits.c:157
 msgid "German:"
 msgstr "Немачки:"
 
-#: audacious/credits.c:160
+#: audacious/credits.c:161
 #, fuzzy
 msgid "Georgian:"
 msgstr "Арменски:"
 
-#: audacious/credits.c:163
+#: audacious/credits.c:164
 msgid "Greek:"
 msgstr "Грчки:"
 
-#: audacious/credits.c:168
+#: audacious/credits.c:169
 msgid "Hindi:"
 msgstr "Индијски:"
 
-#: audacious/credits.c:171
+#: audacious/credits.c:172
 msgid "Hungarian:"
 msgstr "Мађарски:"
 
-#: audacious/credits.c:174
+#: audacious/credits.c:175
 msgid "Italian:"
 msgstr "Италијански:"
 
-#: audacious/credits.c:178
+#: audacious/credits.c:179
 msgid "Japanese:"
 msgstr "Јапански:"
 
-#: audacious/credits.c:181
+#: audacious/credits.c:182
 msgid "Korean:"
 msgstr "Кореански:"
 
-#: audacious/credits.c:184
+#: audacious/credits.c:185
 msgid "Lithuanian:"
 msgstr "Литвански:"
 
-#: audacious/credits.c:187
+#: audacious/credits.c:188
 msgid "Macedonian:"
 msgstr "Македонски:"
 
-#: audacious/credits.c:190
+#: audacious/credits.c:191
 msgid "Polish:"
 msgstr "Пољски:"
 
-#: audacious/credits.c:193
+#: audacious/credits.c:194
 msgid "Romanian:"
 msgstr "Румунски:"
 
-#: audacious/credits.c:196
+#: audacious/credits.c:197
 msgid "Russian:"
 msgstr "Руски:"
 
-#: audacious/credits.c:199
+#: audacious/credits.c:200
 msgid "Serbian (Latin):"
 msgstr "Спрски (Латиница):"
 
-#: audacious/credits.c:202
+#: audacious/credits.c:203
 msgid "Serbian (Cyrillic):"
 msgstr "Спрски (Ћирилица):"
 
-#: audacious/credits.c:205
+#: audacious/credits.c:206
 msgid "Simplified Chinese:"
 msgstr "Упроштен Кинески:"
 
-#: audacious/credits.c:208
+#: audacious/credits.c:209
 msgid "Slovak:"
 msgstr "Словеначки:"
 
-#: audacious/credits.c:211
+#: audacious/credits.c:212
 msgid "Spanish:"
 msgstr "Шпански:"
 
-#: audacious/credits.c:214
+#: audacious/credits.c:215
 msgid "Swedish:"
 msgstr "Шведски:"
 
-#: audacious/credits.c:217
+#: audacious/credits.c:218
 msgid "Traditional Chinese:"
 msgstr "Традиционални Кинески:"
 
-#: audacious/credits.c:220
+#: audacious/credits.c:221
 msgid "Ukrainian:"
 msgstr "Украински:"
 
-#: audacious/credits.c:223
+#: audacious/credits.c:224
 msgid "Welsh:"
 msgstr "Велшански:"
 
-#: audacious/credits.c:371
+#: audacious/credits.c:372
 msgid "Translators"
 msgstr "Преводиоци"
 
@@ -202,7 +202,7 @@ msgid "Delete"
 msgstr "/Избрисати"
 
 #: audacious/equalizer.c:118 audacious/equalizer.c:153
-#: audacious/equalizer.c:178 audacious/equalizer.c:1606
+#: audacious/equalizer.c:178
 msgid "Preset"
 msgstr "Претподешавање"
 
@@ -317,7 +317,7 @@ msgstr "/Избрисати/Ауто-учитано претподешавање
 msgid "Audacious Equalizer"
 msgstr "Аудациоус Еквилајзер"
 
-#: audacious/equalizer.c:1671
+#: audacious/equalizer.c:1615
 msgid "Presets"
 msgstr "Претподешавања"
 
@@ -443,12 +443,12 @@ msgstr "Није могуће направити датотеку евиденц
 msgid "Audacious"
 msgstr "Аудациоус"
 
-#: audacious/main.c:459
+#: audacious/main.c:460
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "Није могуће направити директоријум (%s): %s"
 
-#: audacious/main.c:791
+#: audacious/main.c:792
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
@@ -460,71 +460,71 @@ msgstr ""
 "Опције:\n"
 "--------\n"
 
-#: audacious/main.c:796
+#: audacious/main.c:797
 msgid "Display this text and exit"
 msgstr "Прикажи овај текст и изађи"
 
-#: audacious/main.c:799
+#: audacious/main.c:800
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Изаберите Аудациоус/BMP/XММS сесију (Подразумевано: 0)"
 
-#: audacious/main.c:802
+#: audacious/main.c:803
 msgid "Skip backwards in playlist"
 msgstr "Скочи уназад у листи нумера"
 
-#: audacious/main.c:805
+#: audacious/main.c:806
 msgid "Start playing current playlist"
 msgstr "Пусти текућу листу нумера"
 
-#: audacious/main.c:808
+#: audacious/main.c:809
 msgid "Pause current song"
 msgstr "Паузирај текућу песму"
 
-#: audacious/main.c:811
+#: audacious/main.c:812
 msgid "Stop current song"
 msgstr "Заустави текућу песму"
 
-#: audacious/main.c:814
+#: audacious/main.c:815
 msgid "Pause if playing, play otherwise"
 msgstr "Паузирај ако свира, иначе пусти"
 
-#: audacious/main.c:817
+#: audacious/main.c:818
 msgid "Skip forward in playlist"
 msgstr "Скочи унапред у листи нумера"
 
-#: audacious/main.c:820
+#: audacious/main.c:821
 msgid "Display Jump to file dialog"
 msgstr "Прикажи Пређи на датотеку оквир"
 
-#: audacious/main.c:823
+#: audacious/main.c:824
 msgid "Don't clear the playlist"
 msgstr "Немој обрисати листу нумера"
 
-#: audacious/main.c:826
+#: audacious/main.c:827
 msgid "Show the main window"
 msgstr "Прикажи главни прозор"
 
-#: audacious/main.c:829
+#: audacious/main.c:830
 msgid "Activate Audacious"
 msgstr "Активирај Аудациоус"
 
-#: audacious/main.c:832
+#: audacious/main.c:833
 msgid "Previous session ID"
 msgstr "Име претходне сесије"
 
-#: audacious/main.c:835
+#: audacious/main.c:836
 msgid "Headless operation [experimental]"
 msgstr "Безглава операција [експериментално]"
 
-#: audacious/main.c:838
+#: audacious/main.c:839
 msgid "Disable error/warning interception (logging)"
 msgstr "Искључи прекидање због грешке/упозорења (евидентирање)"
 
-#: audacious/main.c:841
+#: audacious/main.c:842
 msgid "Print version number and exit\n"
 msgstr "Испиши број верзије и изађи\n"
 
-#: audacious/main.c:1048
+#: audacious/main.c:1049
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -537,7 +537,7 @@ msgstr ""
 "Проверите да ли је маска у '%s' употребљива и да ли је подразумевана маска "
 "правилно инсталирана у '%s'\n"
 
-#: audacious/main.c:1095
+#: audacious/main.c:1096
 #, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -546,7 +546,7 @@ msgstr ""
 "Извините, ваша верзија GTK+ (%d.%d.%d) не ради са Аудациоус-ом.\n"
 "Молим вас користите GTK+ %s или новији.\n"
 
-#: audacious/main.c:1106
+#: audacious/main.c:1107
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -560,7 +560,7 @@ msgstr ""
 "пре него\n"
 "што сте инсталирали LinuxThreads морате поново превести Glib и GTK+.\n"
 
-#: audacious/main.c:1125
+#: audacious/main.c:1126
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "audacious: Није могуће отворити приказ, излазим.\n"
 
@@ -943,6 +943,11 @@ msgstr "Пређи на нумеру"
 msgid "Filter: "
 msgstr "Филтер: "
 
+#: audacious/mainwin.c:2150
+#, fuzzy
+msgid "_Filter:"
+msgstr "Филтер: "
+
 #: audacious/mainwin.c:2354
 msgid "Enter location to play:"
 msgstr "Унесите локацију за репродуковање:"
@@ -1025,6 +1030,11 @@ msgstr ""
 "2. Ниједан други програм не блокира звучну картицу.\n"
 "3. Ваша звучна картица је исправно подешена.\n"
 
+#: audacious/mainwin.c:3753
+#, fuzzy
+msgid "Error in Audacious."
+msgstr "%s - Аудациоус"
+
 #: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1399
 msgid "Appearance"
 msgstr "Изглед"
@@ -1045,7 +1055,8 @@ msgstr "Еквилајзер"
 msgid "Mouse"
 msgstr "Миш"
 
-#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:2530
+#: audacious/prefswin.c:103 audacious/playlist_manager.c:288
+#: audacious/glade/prefswin.glade:2530
 msgid "Playlist"
 msgstr "Листа нумера"
 
@@ -1463,6 +1474,11 @@ msgstr "Сачувај листу нумера"
 msgid "Audacious Playlist Editor"
 msgstr "Аудациоус едитор листе нумера"
 
+#: audacious/util.c:670
+#, fuzzy
+msgid "Add/Open URL Dialog"
+msgstr "Оквир додај/отвори датотеке"
+
 #: audacious/util.c:922
 msgid "Add/Open Files dialog"
 msgstr "Оквир додај/отвори датотеке"
@@ -1498,6 +1514,20 @@ msgid ""
 msgstr ""
 "<b><big>Није изабран излазни додатак.</big></b>\n"
 "Нисте изабрали излазни додатак."
+
+#: audacious/playlist_manager.c:253
+#, fuzzy
+msgid "Playlist Manager"
+msgstr "/Не напредуј у листи нумера"
+
+#: audacious/playlist_manager.c:292
+msgid "Entries"
+msgstr ""
+
+#: audacious/playlist_manager.c:306
+#, fuzzy
+msgid "_Rename"
+msgstr "Име датотеке"
 
 #: audacious/glade/addfiles.glade:77
 msgid "Close Dialog on Add"
@@ -1575,6 +1605,11 @@ msgstr "<i>Број нумере</i>"
 msgid "<i>Track Length</i>"
 msgstr "<i>Дужина нумере</i>"
 
+#: audacious/glade/prefswin.glade:8
+#, fuzzy
+msgid "Audacious Preferences"
+msgstr "Аудациоус основни ствараоци:"
+
 #: audacious/glade/prefswin.glade:115
 msgid "_Decoder list:"
 msgstr "Листа _декодера:"
@@ -1611,6 +1646,11 @@ msgstr "<b>Ефекти</b>"
 msgid "<b>_Skin</b>"
 msgstr "<b>_Маска</b>"
 
+#: audacious/glade/prefswin.glade:799
+#, fuzzy
+msgid "Refresh skin list"
+msgstr "Освежи листу"
+
 #: audacious/glade/prefswin.glade:893
 msgid "<b>_Fonts</b>"
 msgstr "<b>_Фонтови</b>"
@@ -1622,6 +1662,16 @@ msgstr "_Плејер:"
 #: audacious/glade/prefswin.glade:991
 msgid "_Playlist:"
 msgstr "_Листа нумера:"
+
+#: audacious/glade/prefswin.glade:1023
+msgid "Select main player window font:"
+msgstr ""
+
+#: audacious/glade/prefswin.glade:1091
+msgid ""
+"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
+"strings."
+msgstr ""
 
 #: audacious/glade/prefswin.glade:1093
 msgid "Use Bitmap fonts if available"
@@ -1643,6 +1693,12 @@ msgstr "Прикажи раздвајаче у листи нумера"
 msgid "Use custom cursors"
 msgstr "Користи сопствени курсор"
 
+#: audacious/glade/prefswin.glade:1279 audacious/glade/prefswin.glade:1290
+msgid "This enables the window manager to show decorations for windows."
+msgstr ""
+"Ово омогућава програму за управљање\n"
+"прозорима да прикаже украсе на прозорима."
+
 #: audacious/glade/prefswin.glade:1281
 msgid "Show window manager decoration"
 msgstr "Прикажи украс програма за управљање прозорима"
@@ -1651,15 +1707,23 @@ msgstr "Прикажи украс програма за управљање пр�
 msgid "Show window manager decorations"
 msgstr "Прикажи украсе програма за управљање прозорима"
 
-#: audacious/glade/prefswin.glade:1290
-msgid "This enables the window manager to show decorations for windows."
+#: audacious/glade/prefswin.glade:1319
+msgid ""
+"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
+"provided by Audacious itself and is faster than the default GTK2 selector "
+"(but sadly not as user-friendly)."
 msgstr ""
-"Ово омогућава програму за управљање\n"
-"прозорима да прикаже украсе на прозорима."
 
 #: audacious/glade/prefswin.glade:1321
 msgid "Use XMMS-style file selector instead of the default selector"
 msgstr "Користи  XMMS-ов селектор датотека уместо подразумеваног"
+
+#: audacious/glade/prefswin.glade:1355
+msgid ""
+"Enables playlist transparency. This is not recommended for slower machines "
+"as it requires some CPU time to create and cache the pixmaps used for the "
+"transparency."
+msgstr ""
 
 #: audacious/glade/prefswin.glade:1357
 msgid "Enable playlist transparency"
@@ -1705,13 +1769,26 @@ msgstr "Претвори обрнуту косу црту '\\' у косу цр�
 msgid "<b>Metadata</b>"
 msgstr "<b>Мета-подаци</b>"
 
+#: audacious/glade/prefswin.glade:1908
+msgid "Load metadata (tag information) from music files."
+msgstr ""
+
 #: audacious/glade/prefswin.glade:1910
 msgid "Load metadata from playlists and files"
 msgstr "Учитај мета-податке из листа нумера и датотека"
 
+#: audacious/glade/prefswin.glade:1948
+msgid "Load metadata when adding the file to the playlist or opening it"
+msgstr ""
+
 #: audacious/glade/prefswin.glade:1950
 msgid "On load"
 msgstr "Приликом учитавања"
+
+#: audacious/glade/prefswin.glade:1970
+#, fuzzy
+msgid "Load metadata on demand when displaying the file in the playlist"
+msgstr "Учита датотеку листе нумера у изабрану листу нумера."
 
 #: audacious/glade/prefswin.glade:1972
 msgid "On display"
@@ -1721,6 +1798,14 @@ msgstr "Приликом приказивања"
 msgid "Fallback character encodings:"
 msgstr "Резервно кодирање карактера:"
 
+#: audacious/glade/prefswin.glade:2030
+msgid ""
+"List of character encodings used for fall back conversion of metadata. If "
+"automatic character encoding detector failed or has been disabled, encodings "
+"in this list would be treated as candidates of the encoding of metadata, and "
+"fall back conversion from these encodings to UTF-8 would be attempted."
+msgstr ""
+
 #: audacious/glade/prefswin.glade:2071
 msgid "Auto character encoding detector for:"
 msgstr "Ауто-препознавање кодирања карактера за:"
@@ -1728,6 +1813,12 @@ msgstr "Ауто-препознавање кодирања карактера з
 #: audacious/glade/prefswin.glade:2127
 msgid "<b>File Dialog</b>"
 msgstr "<b>Оквир датотеке</b>"
+
+#: audacious/glade/prefswin.glade:2166
+msgid ""
+"Always refresh the file dialog (this will slow opening the dialog on large "
+"directories, and Gnome VFS should handle automatically)."
+msgstr ""
 
 #: audacious/glade/prefswin.glade:2168
 msgid "Always refresh directory when opening file dialog"
@@ -1763,13 +1854,28 @@ msgstr ""
 "АЛБУМ - НАСЛОВ\n"
 "Сопствени"
 
+#: audacious/glade/prefswin.glade:2351
+msgid "Show information about titlestring format"
+msgstr ""
+
 #: audacious/glade/prefswin.glade:2401
 msgid "<b>Popup Information</b>"
 msgstr "<b>Искачуће информације</b>"
 
+#: audacious/glade/prefswin.glade:2452
+msgid ""
+"Toggles popup information window for the pointed entry in the playlist. The "
+"window shows title of song, name of album, genre, year of publish, track "
+"number, track length, and artwork."
+msgstr ""
+
 #: audacious/glade/prefswin.glade:2454
 msgid "Show popup information for playlist entries"
 msgstr "Прикажи искачуће информације за ставке у листи нумера"
+
+#: audacious/glade/prefswin.glade:2481
+msgid "Edit settings for popup information"
+msgstr ""
 
 #: audacious/glade/prefswin.glade:2589
 msgid "<b>Presets</b>"
@@ -1865,6 +1971,16 @@ msgstr "Информације о излазном додатку"
 msgid "<b>Format Detection</b>"
 msgstr "<b>Препознавање формата</b>"
 
+#: audacious/glade/prefswin.glade:3870
+#, fuzzy
+msgid ""
+"When checked, Audacious will detect file formats on demand. This can result "
+"in a messier playlist, but delivers a major speed benefit."
+msgstr ""
+"Ако је потврђено, Аудациоус ће препознати формат датотеке према ознаци типа. "
+"Ово је мало спорије од препознавања на захтев, али ипак обезбеђује минималан "
+"ниво препознавања формата."
+
 #: audacious/glade/prefswin.glade:3872
 msgid "Detect file formats on demand, instead of immediately."
 msgstr "Препознај формат датотеке на захтев, уместо одма."
@@ -1887,9 +2003,19 @@ msgstr "Препознај формат датотеке на основу оз�
 msgid "<b>Playback</b>"
 msgstr "<b>Репродуковање</b>"
 
+#: audacious/glade/prefswin.glade:3981
+msgid ""
+"When Audacious starts, automatically begin playing from the point where we "
+"stopped before."
+msgstr ""
+
 #: audacious/glade/prefswin.glade:3983
 msgid "Continue playback on startup"
 msgstr "Настави репродуковање на почетку"
+
+#: audacious/glade/prefswin.glade:4017
+msgid "When finished playing a song, don't automatically advance to the next."
+msgstr ""
 
 #: audacious/glade/prefswin.glade:4019
 msgid "Don't advance in the playlist"
@@ -1910,6 +2036,11 @@ msgstr "секунди"
 #: audacious/glade/prefswin.glade:4178
 msgid "label76"
 msgstr "label76"
+
+#: audacious/glade/prefswin.glade:4292
+#, fuzzy
+msgid "Popup Information Settings"
+msgstr "<b>Искачуће информације</b>"
 
 #: audacious/glade/prefswin.glade:4316
 msgid ""

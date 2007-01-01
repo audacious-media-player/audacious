@@ -1,7 +1,12 @@
-/*  XMMS - Cross-platform multimedia player
- *  Copyright (C) 1998-2003  Peter Alm, Mikael Alm, Olle Hallnas,
- *                           Thomas Nilsson and 4Front Technologies
- *  Copyright (C) 2000-2003  Haavard Kvaalen
+/*
+ *  Audacious - Cross-platform multimedia player
+ *  Copyright (C) 2005-2007  Audacious development team
+ *
+ *  Based on BMP:
+ *  Copyright (C) 2003-2004  BMP development team
+ *
+ *  Based on XMMS:
+ *  Copyright (C) 1998-2003  XMMS development team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,7 +42,7 @@ static GdkBitmap *mask_bitmap_window1 = NULL,
         *mask_bitmap_window2 = NULL;
 
 static const gchar *audacious_brief = "<big><b>Audacious %s</b></big>\n\n"
-			"Copyright (C) 2005-2006 Audacious Development Team";
+			"Copyright (C) 2005-2007 Audacious Development Team";
     
 static gboolean
 on_about_window_expose(GtkWidget *widget, GdkEventExpose *expose, gpointer data)
