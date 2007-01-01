@@ -124,12 +124,12 @@ enable_vis_plugin(gint i, gboolean enable)
         vp_data.enabled_list = g_list_append(vp_data.enabled_list, vp);
         if (vp->init)
             vp->init();
-        if (bmp_playback_get_playing() && vp->playback_start)
+        if (playback_get_playing() && vp->playback_start)
             vp->playback_start();
     }
     else if (!enable && g_list_find(vp_data.enabled_list, vp)) {
         vp_data.enabled_list = g_list_remove(vp_data.enabled_list, vp);
-        if (bmp_playback_get_playing() && vp->playback_stop)
+        if (playback_get_playing() && vp->playback_stop)
             vp->playback_stop();
         if (vp->cleanup)
             vp->cleanup();
@@ -183,7 +183,7 @@ vis_enable_from_stringified_list(gchar * list)
                     g_list_append(vp_data.enabled_list, vp);
                 if (vp->init)
                     vp->init();
-                if (bmp_playback_get_playing() && vp->playback_start)
+                if (playback_get_playing() && vp->playback_start)
                     vp->playback_start();
             }
             g_free(base);

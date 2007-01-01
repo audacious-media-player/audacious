@@ -728,7 +728,7 @@ input_get_volume(gint * l, gint * r)
 {
     *l = -1;
     *r = -1;
-    if (bmp_playback_get_playing()) {
+    if (playback_get_playing()) {
         if (get_current_input_plugin() &&
             get_current_input_plugin()->get_volume) {
             get_current_input_plugin()->get_volume(l, r);
@@ -741,7 +741,7 @@ input_get_volume(gint * l, gint * r)
 void
 input_set_volume(gint l, gint r)
 {
-    if (bmp_playback_get_playing()) {
+    if (playback_get_playing()) {
         if (get_current_input_plugin() &&
             get_current_input_plugin()->set_volume) {
             get_current_input_plugin()->set_volume(l, r);
@@ -804,7 +804,7 @@ input_set_info_text(const gchar * text)
 void
 input_set_status_buffering(gboolean status)
 {
-    if (!bmp_playback_get_playing())
+    if (!playback_get_playing())
         return;
 
     if (!get_current_input_plugin())

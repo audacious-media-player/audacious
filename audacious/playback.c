@@ -54,7 +54,7 @@
 
 /* FIXME: yuck!! this shouldn't be here... */
 void
-bmp_playback_set_random_skin(void)
+playback_set_random_skin(void)
 {
     SkinNode *node;
     guint32 randval;
@@ -66,9 +66,9 @@ bmp_playback_set_random_skin(void)
 }
 
 gint
-bmp_playback_get_time(void)
+playback_get_time(void)
 {
-    if (!bmp_playback_get_playing())
+    if (!playback_get_playing())
         return -1;
 
     if (!get_current_input_plugin())
@@ -78,7 +78,7 @@ bmp_playback_get_time(void)
 }
 
 void
-bmp_playback_initiate(void)
+playback_initiate(void)
 {
     PlaylistEntry *entry = NULL;
     Playlist *playlist = playlist_get_active();
@@ -87,8 +87,8 @@ bmp_playback_initiate(void)
     if (playlist_get_length(playlist) == 0)
         return;
 
-    if (bmp_playback_get_playing())
-        bmp_playback_stop();
+    if (playback_get_playing())
+        playback_stop();
 
     vis_clear_data(mainwin_vis);
     svis_clear_data(mainwin_svis);
@@ -105,7 +105,7 @@ bmp_playback_initiate(void)
      *
      *   - nenolod
      */
-    while (entry != NULL && !bmp_playback_play_file(entry))
+    while (entry != NULL && !playback_play_file(entry))
     {
         playlist_next(playlist);
 
@@ -128,7 +128,7 @@ bmp_playback_initiate(void)
 	    return;
     }
 
-    if (bmp_playback_get_time() != -1) {
+    if (playback_get_time() != -1) {
         equalizerwin_load_auto_preset(entry->filename);
         input_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
                      cfg.equalizer_bands);
@@ -141,9 +141,9 @@ bmp_playback_initiate(void)
 }
 
 void
-bmp_playback_pause(void)
+playback_pause(void)
 {
-    if (!bmp_playback_get_playing())
+    if (!playback_get_playing())
         return;
 
     if (!get_current_input_plugin())
@@ -163,13 +163,13 @@ bmp_playback_pause(void)
 }
 
 void
-bmp_playback_stop(void)
+playback_stop(void)
 {
     if (ip_data.playing && get_current_input_plugin()) {
 
-        if (bmp_playback_get_paused()) {
+        if (playback_get_paused()) {
             output_flush(get_written_time()); /* to avoid noise */
-            bmp_playback_pause();
+            playback_pause();
         }
 
         ip_data.playing = FALSE; 
@@ -195,12 +195,12 @@ bmp_playback_stop(void)
 }
 
 void
-bmp_playback_stop_reentrant(void)
+playback_stop_reentrant(void)
 {
     if (ip_data.playing && get_current_input_plugin()) {
 
-        if (bmp_playback_get_paused())
-            bmp_playback_pause();
+        if (playback_get_paused())
+            playback_pause();
 
         ip_data.playing = FALSE;
 
@@ -236,7 +236,7 @@ run_no_output_plugin_dialog(void)
 }
 
 gboolean
-bmp_playback_play_file(PlaylistEntry *entry)
+playback_play_file(PlaylistEntry *entry)
 {
     g_return_val_if_fail(entry != NULL, FALSE);
 
@@ -247,7 +247,7 @@ bmp_playback_play_file(PlaylistEntry *entry)
     }
 
     if (cfg.random_skin_on_play)
-        bmp_playback_set_random_skin();
+        playback_set_random_skin();
 
     /*
      * This is slightly uglier than the original version, but should
@@ -276,19 +276,19 @@ bmp_playback_play_file(PlaylistEntry *entry)
 }
 
 gboolean
-bmp_playback_get_playing(void)
+playback_get_playing(void)
 {
     return ip_data.playing;
 }
 
 gboolean
-bmp_playback_get_paused(void)
+playback_get_paused(void)
 {
     return ip_data.paused;
 }
 
 void
-bmp_playback_seek(gint time)
+playback_seek(gint time)
 {
     gboolean restore_pause = FALSE;
     gint l=0, r=0;
@@ -308,7 +308,7 @@ bmp_playback_seek(gint time)
 	restore_pause = TRUE;
 	output_get_volume(&l, &r);
 	output_set_volume(0,0);
-	bmp_playback_pause();	
+	playback_pause();	
     }
     
     free_vis_data();
@@ -316,15 +316,15 @@ bmp_playback_seek(gint time)
     
     if(restore_pause)
     {
-	bmp_playback_pause();
+	playback_pause();
 	output_set_volume(l, r);
     }
 }
 
 void
-bmp_playback_seek_relative(gint offset)
+playback_seek_relative(gint offset)
 {
-    gint time = CLAMP(bmp_playback_get_time() / 1000 + offset,
+    gint time = CLAMP(playback_get_time() / 1000 + offset,
                       0, playlist_get_current_length(playlist_get_active()) / 1000 - 1);
-    bmp_playback_seek(time);
+    playback_seek(time);
 }

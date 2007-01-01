@@ -373,11 +373,11 @@ ctrlsocket_func(gpointer arg)
             ctrl_ack_packet(pkt);
             break;
         case CMD_IS_PLAYING:
-            ctrl_write_gboolean(pkt->fd, bmp_playback_get_playing());
+            ctrl_write_gboolean(pkt->fd, playback_get_playing());
             ctrl_ack_packet(pkt);
             break;
         case CMD_IS_PAUSED:
-            ctrl_write_gboolean(pkt->fd, bmp_playback_get_paused());
+            ctrl_write_gboolean(pkt->fd, playback_get_paused());
             ctrl_ack_packet(pkt);
             break;
         case CMD_GET_PLAYLIST_POS:
@@ -418,8 +418,8 @@ ctrlsocket_func(gpointer arg)
             ctrl_ack_packet(pkt);
             break;
         case CMD_GET_OUTPUT_TIME:
-            if (bmp_playback_get_playing())
-                ctrl_write_gint(pkt->fd, bmp_playback_get_time());
+            if (playback_get_playing())
+                ctrl_write_gint(pkt->fd, playback_get_time());
             else
                 ctrl_write_gint(pkt->fd, 0);
             ctrl_ack_packet(pkt);
@@ -626,27 +626,27 @@ ctrlsocket_check(void)
 
         switch (pkt->hdr.command) {
         case CMD_PLAY:
-            if (bmp_playback_get_paused())
-                bmp_playback_pause();
+            if (playback_get_paused())
+                playback_pause();
             else if (playlist_get_length(playlist_get_active()))
-                bmp_playback_initiate();
+                playback_initiate();
             else
                 mainwin_eject_pushed();
             break;
         case CMD_PAUSE:
-            bmp_playback_pause();
+            playback_pause();
             break;
         case CMD_STOP:
             ip_data.stop = TRUE;
-            bmp_playback_stop();
+            playback_stop();
             ip_data.stop = FALSE;
             mainwin_clear_song_info();
             break;
         case CMD_PLAY_PAUSE:
-            if (bmp_playback_get_playing())
-                bmp_playback_pause();
+            if (playback_get_playing())
+                playback_pause();
             else
-                bmp_playback_initiate();
+                playback_initiate();
             break;
         case CMD_PLAYQUEUE_ADD:
             num = *((guint32 *) data);
@@ -670,7 +670,7 @@ ctrlsocket_check(void)
             num = *((guint32 *) data);
             if (playlist_get_current_length(playlist_get_active()) > 0 &&
                 num < (guint)playlist_get_current_length(playlist_get_active()))
-                bmp_playback_seek(num / 1000);
+                playback_seek(num / 1000);
             break;
         case CMD_SET_VOLUME:
             v[0] = ((guint32 *) data)[0];

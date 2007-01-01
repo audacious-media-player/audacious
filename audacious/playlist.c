@@ -1,4 +1,7 @@
-/*  BMP (C) GPL 2003 $top_src_dir/AUTHORS
+/*  Audacious
+ *  Copyright (C) 2005-2007  Audacious team.
+ *
+ *  BMP (C) GPL 2003 $top_src_dir/AUTHORS
  *
  *  based on:
  *
@@ -6,7 +9,6 @@
  *  Copyright (C) 1998-2003  Peter Alm, Mikael Alm, Olle Hallnas,
  *                           Thomas Nilsson and 4Front Technologies
  *  Copyright (C) 1999-2003  Haavard Kvaalen
- *
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -413,10 +415,10 @@ playlist_delete_node(Playlist * playlist, GList * node, gboolean * set_info_text
     if (playing_song == node) {
         *set_info_text = TRUE;
 
-        if (bmp_playback_get_playing()) {
+        if (playback_get_playing()) {
             PLAYLIST_UNLOCK(playlist->mutex);
             ip_data.stop = TRUE;
-            bmp_playback_stop();
+            playback_stop();
             ip_data.stop = FALSE;
             PLAYLIST_LOCK(playlist->mutex);
             *restart_playing = TRUE;
@@ -477,7 +479,7 @@ playlist_delete_index(Playlist *playlist, guint pos)
     playlistwin_update_list(playlist);
     if (restart_playing) {
         if (playlist->position) {
-            bmp_playback_initiate();
+            playback_initiate();
         }
         else {
             mainwin_clear_song_info();
@@ -519,7 +521,7 @@ playlist_delete_filenames(Playlist * playlist, GList * filenames)
 
     if (restart_playing) {
         if (playlist->position) {
-            bmp_playback_initiate();
+            playback_initiate();
         }
         else {
             mainwin_clear_song_info();
@@ -567,7 +569,7 @@ playlist_delete(Playlist * playlist, gboolean crop)
 
     if (restart_playing) {
         if (playlist->position) {
-            bmp_playback_initiate();
+            playback_initiate();
         }
         else {
             mainwin_clear_song_info();
@@ -1049,11 +1051,11 @@ playlist_next(Playlist *playlist)
         return;
     }
 
-    if (bmp_playback_get_playing()) {
+    if (playback_get_playing()) {
         /* We need to stop before changing playlist_position */
         PLAYLIST_UNLOCK(playlist->mutex);
         ip_data.stop = TRUE;
-        bmp_playback_stop();
+        playback_stop();
         ip_data.stop = FALSE;
         PLAYLIST_LOCK(playlist->mutex);
         restart_playing = TRUE;
@@ -1076,7 +1078,7 @@ playlist_next(Playlist *playlist)
     playlist_check_pos_current(playlist);
 
     if (restart_playing)
-        bmp_playback_initiate();
+        playback_initiate();
     else {
         mainwin_set_info_text();
         playlistwin_update_list(playlist);
@@ -1107,11 +1109,11 @@ playlist_prev(Playlist *playlist)
         return;
     }
 
-    if (bmp_playback_get_playing()) {
+    if (playback_get_playing()) {
         /* We need to stop before changing playlist_position */
         PLAYLIST_UNLOCK(playlist->mutex);
         ip_data.stop = TRUE;
-        bmp_playback_stop();
+        playback_stop();
         ip_data.stop = FALSE;
         PLAYLIST_LOCK(playlist->mutex);
         restart_playing = TRUE;
@@ -1138,7 +1140,7 @@ playlist_prev(Playlist *playlist)
     playlist_check_pos_current(playlist);
 
     if (restart_playing)
-        bmp_playback_initiate();
+        playback_initiate();
     else {
         mainwin_set_info_text();
         playlistwin_update_list(playlist);
@@ -1300,11 +1302,11 @@ playlist_set_position(Playlist *playlist, guint pos)
         return;
     }
 
-    if (bmp_playback_get_playing()) {
+    if (playback_get_playing()) {
         /* We need to stop before changing playlist_position */
         PLAYLIST_UNLOCK(playlist->mutex);
         ip_data.stop = TRUE;
-        bmp_playback_stop();
+        playback_stop();
         ip_data.stop = FALSE;
         PLAYLIST_LOCK(playlist->mutex);
         restart_playing = TRUE;
@@ -1321,7 +1323,7 @@ playlist_set_position(Playlist *playlist, guint pos)
     playlist_check_pos_current(playlist);
 
     if (restart_playing)
-        bmp_playback_initiate();
+        playback_initiate();
     else {
         mainwin_set_info_text();
         playlistwin_update_list(playlist);
@@ -1335,7 +1337,7 @@ playlist_eof_reached(Playlist *playlist)
 
     if ((cfg.no_playlist_advance && !cfg.repeat) || cfg.stopaftersong)
       ip_data.stop = TRUE;
-    bmp_playback_stop();
+    playback_stop();
     if ((cfg.no_playlist_advance && !cfg.repeat) || cfg.stopaftersong)  
       ip_data.stop = FALSE;
 
@@ -1353,7 +1355,7 @@ playlist_eof_reached(Playlist *playlist)
         PLAYLIST_UNLOCK(playlist->mutex);
         mainwin_clear_song_info();
         if (cfg.repeat)
-            bmp_playback_initiate();
+            playback_initiate();
         return;
     }
 
@@ -1388,7 +1390,7 @@ playlist_eof_reached(Playlist *playlist)
     PLAYLIST_UNLOCK(playlist->mutex);
 
     playlist_check_pos_current(playlist);
-    bmp_playback_initiate();
+    playback_initiate();
     mainwin_set_info_text();
     playlistwin_update_list(playlist);
 }
@@ -2534,7 +2536,7 @@ playlist_remove_dead_files(Playlist *playlist)
 
         if (entry == playlist->position) {
             /* Don't remove the currently playing song */
-            if (bmp_playback_get_playing())
+            if (playback_get_playing())
                 continue;
 
             if (next_node)
@@ -2662,7 +2664,7 @@ playlist_remove_duplicates(Playlist *playlist, PlaylistDupsType type)
 
                 if (entry_cmp == playlist->position) {
                     /* Don't remove the currently playing song */
-                    if (bmp_playback_get_playing())
+                    if (playback_get_playing())
                         continue;
 
                     if (next_node_cmp)

@@ -89,7 +89,7 @@ set_current_output_plugin(gint i)
 
     op_data.current_output_plugin = node->data;
 
-    playing = bmp_playback_get_playing();
+    playing = playback_get_playing();
 
     if (playing == TRUE)
     {
@@ -108,15 +108,15 @@ set_current_output_plugin(gint i)
 	g_usleep(300000);
 
 	/* wait for the playback thread to come online */
-        while (bmp_playback_get_playing())
+        while (playback_get_playing())
             g_message("waiting for audio system shutdown...");
 
 	/* wait for the playback thread to come online */
         playlist_set_position(playlist_get_active(), pos);
 	entry = playlist_get_entry_to_play(playlist_get_active());
-        bmp_playback_play_file(entry);
+        playback_play_file(entry);
 
-	while (!bmp_playback_get_playing())
+	while (!playback_get_playing())
 	{
 	    gtk_main_iteration();
             g_message("waiting for audio system startup...");
@@ -128,7 +128,7 @@ set_current_output_plugin(gint i)
 	{
 	    gint i;
 
-            bmp_playback_seek(time / 1000);
+            playback_seek(time / 1000);
         }
     }
 }

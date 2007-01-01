@@ -708,8 +708,8 @@ bmp_config_save(void)
         g_free(str);
     }
 
-    if (bmp_playback_get_playing()) {
-	    cur_pb_time = bmp_playback_get_time();
+    if (playback_get_playing()) {
+	    cur_pb_time = playback_get_time();
     } else
 	    cur_pb_time = -1;
     cfg.resume_playback_on_startup_time = cur_pb_time;
@@ -1229,7 +1229,7 @@ main(gint argc, gchar ** argv)
 			while (gtk_events_pending()) gtk_main_iteration();
 			output_get_volume(&l, &r);
 			output_set_volume(0,0);
-			bmp_playback_initiate();
+			playback_initiate();
 
 			/* Busy wait; loop is fairly tight to minimize duration of "frozen" GUI. Feel free to 
 			 * tune. --chainsaw
@@ -1239,7 +1239,7 @@ main(gint argc, gchar ** argv)
 				if (!ip_data.playing)
 					break;
 			}
-			bmp_playback_seek(cfg.resume_playback_on_startup_time /
+			playback_seek(cfg.resume_playback_on_startup_time /
 					  1000);
 			output_set_volume(l, r);
 		}

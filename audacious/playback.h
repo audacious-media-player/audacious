@@ -22,16 +22,16 @@
 
 #include "audacious/playlist.h"
 
-void bmp_playback_set_random_skin(void);
-gint bmp_playback_get_time(void);
-void bmp_playback_initiate(void);
-void bmp_playback_pause(void);
-void bmp_playback_stop(void);
-void bmp_playback_stop_reentrant(void);
-gboolean bmp_playback_play_file(PlaylistEntry *entry);
-gboolean bmp_playback_get_playing(void);
-gboolean bmp_playback_get_paused(void);
-void bmp_playback_seek(gint time);
-void bmp_playback_seek_relative(gint offset);
+void playback_set_random_skin(void);
+gint playback_get_time(void);
+void playback_initiate(void);
+void playback_pause(void);
+void playback_stop(void);
+void playback_stop_reentrant(void);
+gboolean playback_play_file(PlaylistEntry *entry);
+gboolean playback_get_playing(void);
+gboolean playback_get_paused(void);
+void playback_seek(gint time);
+void playback_seek_relative(gint offset);
 
 #endif

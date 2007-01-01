@@ -809,7 +809,7 @@ filebrowser_play(GtkFileChooser * browser)
     g_slist_foreach(files, (GFunc) g_free, NULL);
     g_slist_free(files);
 
-    bmp_playback_initiate();
+    playback_initiate();
 }
 
 
@@ -1124,7 +1124,7 @@ static void filebrowser_play_classic(GtkWidget * w, GtkWidget * filesel)
     files = gtk_file_selection_get_selections(GTK_FILE_SELECTION(filesel));
     filebrowser_add_files_classic(files, GTK_FILE_SELECTION(filesel));
     gtk_widget_destroy(filesel);
-    bmp_playback_initiate();
+    playback_initiate();
 }
 
 static void filebrowser_add_selected_files_classic(GtkWidget * w, gpointer data)

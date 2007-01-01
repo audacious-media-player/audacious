@@ -1601,8 +1601,8 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
         if (playlistwin_list->pl_prev_selected > -1
             && playlistwin_item_visible(playlistwin_list->pl_prev_selected)) {
             playlist_set_position(playlist, playlistwin_list->pl_prev_selected);
-            if (!bmp_playback_get_playing())
-                bmp_playback_initiate();
+            if (!playback_get_playing())
+                playback_initiate();
         }
         break;
     case GDK_3:
@@ -1625,16 +1625,16 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
     case GDK_KP_Left:
     case GDK_KP_7:
         if (playlist_get_current_length(playlist) != -1)
-            bmp_playback_seek(CLAMP
-                              (bmp_playback_get_time() - 5000, 0,
+            playback_seek(CLAMP
+                              (playback_get_time() - 5000, 0,
                               playlist_get_current_length(playlist)) / 1000);
         break;
     case GDK_Right:
     case GDK_KP_Right:
     case GDK_KP_9:
         if (playlist_get_current_length(playlist) != -1)
-            bmp_playback_seek(CLAMP
-                              (bmp_playback_get_time() + 5000, 0,
+            playback_seek(CLAMP
+                              (playback_get_time() + 5000, 0,
                               playlist_get_current_length(playlist)) / 1000);
         break;
     case GDK_KP_4:
@@ -1903,7 +1903,7 @@ playlistwin_create_widgets(void)
     playlistwin_spause =
         create_sbutton(&playlistwin_wlist, playlistwin_bg, playlistwin_gc,
                        playlistwin_get_width() - 128,
-                       cfg.playlist_height - 16, 10, 7, bmp_playback_pause);
+                       cfg.playlist_height - 16, 10, 7, playback_pause);
 
     /* stop button */
     playlistwin_sstop =

@@ -130,8 +130,8 @@ audcore_generic_events(void)
 
     ctrlsocket_check();
 
-    if (bmp_playback_get_playing()) {
-        time = bmp_playback_get_time();
+    if (playback_get_playing()) {
+        time = playback_get_time();
 
         switch (time) {
         case -1:

@@ -589,7 +589,7 @@ mainwin_set_shade_menu_cb(gboolean shaded)
         widget_show(WIDGET(mainwin_seject));
 
         textbox_set_scroll(mainwin_info, FALSE);
-        if (bmp_playback_get_playing())
+        if (playback_get_playing())
 	{
             	widget_show(WIDGET(mainwin_sposition));
 	        widget_show(WIDGET(mainwin_stime_min));
@@ -1158,7 +1158,7 @@ mainwin_set_song_info(gint bitrate,
     widget_show(WIDGET(mainwin_10sec_num));
     widget_show(WIDGET(mainwin_sec_num));
 
-    if (!bmp_playback_get_paused() && mainwin_playstatus != NULL)
+    if (!playback_get_paused() && mainwin_playstatus != NULL)
         playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
 
     if (playlist_get_current_length(playlist) != -1) {
@@ -1406,12 +1406,12 @@ mainwin_scrolled(GtkWidget *widget, GdkEventScroll *event,
 		break;
 	case GDK_SCROLL_LEFT:
 		if (playlist_get_current_length(playlist) != -1)
-			bmp_playback_seek(CLAMP(bmp_playback_get_time() - 1000,
+			playback_seek(CLAMP(playback_get_time() - 1000,
 			    0, playlist_get_current_length(playlist)) / 1000);
 		break;
 	case GDK_SCROLL_RIGHT:
 		if (playlist_get_current_length(playlist) != -1)
-			bmp_playback_seek(CLAMP(bmp_playback_get_time() + 1000,
+			playback_seek(CLAMP(playback_get_time() + 1000,
 			    0, playlist_get_current_length(playlist)) / 1000);
 		break;
 	}
@@ -1590,16 +1590,16 @@ mainwin_keypress(GtkWidget * grab_widget,
     case GDK_KP_Left:
     case GDK_KP_7:
         if (playlist_get_current_length(playlist) != -1)
-            bmp_playback_seek(CLAMP
-                              (bmp_playback_get_time() - 5000, 0,
+            playback_seek(CLAMP
+                              (playback_get_time() - 5000, 0,
                                playlist_get_current_length(playlist)) / 1000);
         break;
     case GDK_Right:
     case GDK_KP_Right:
     case GDK_KP_9:
         if (playlist_get_current_length(playlist) != -1)
-            bmp_playback_seek(CLAMP
-                              (bmp_playback_get_time() + 5000, 0,
+            playback_seek(CLAMP
+                              (playback_get_time() + 5000, 0,
                                playlist_get_current_length(playlist)) / 1000);
         break;
     case GDK_KP_4:
@@ -1644,7 +1644,7 @@ mainwin_jump_to_time_cb(GtkWidget * widget,
     if (playlist_get_current_length(playlist) > -1 &&
         time <= (playlist_get_current_length(playlist) / 1000))
     {
-        bmp_playback_seek(time);
+        playback_seek(time);
         gtk_widget_destroy(mainwin_jtt);
     }
 }
@@ -1658,7 +1658,7 @@ mainwin_jump_to_time(void)
     guint tindex;
     gchar time_str[10];
 
-    if (!bmp_playback_get_playing()) {
+    if (!playback_get_playing()) {
         report_error("JIT can't be launched when no track is being played.\n");
         return;
     }
@@ -1730,7 +1730,7 @@ mainwin_jump_to_time(void)
     g_signal_connect(jump, "clicked",
                      G_CALLBACK(mainwin_jump_to_time_cb), time_entry);
 
-    tindex = bmp_playback_get_time() / 1000;
+    tindex = playback_get_time() / 1000;
     g_snprintf(time_str, sizeof(time_str), "%u:%2.2u", tindex / 60,
                tindex % 60);
     gtk_entry_set_text(GTK_ENTRY(time_entry), time_str);
@@ -1746,11 +1746,11 @@ mainwin_jump_to_time(void)
 static void
 change_song(guint pos)
 {
-    if (bmp_playback_get_playing())
-        bmp_playback_stop();
+    if (playback_get_playing())
+        playback_stop();
 
     playlist_set_position(playlist_get_active(), pos);
-    bmp_playback_initiate();
+    playback_initiate();
 }
 
 static void
@@ -2317,7 +2317,7 @@ mainwin_drag_data_received(GtkWidget * widget,
 
     playlist_clear(playlist);
     playlist_add_url(playlist, (gchar *) selection_data->data);
-    bmp_playback_initiate();
+    playback_initiate();
 }
 
 static void
@@ -2340,7 +2340,7 @@ on_add_url_ok_clicked(GtkWidget * widget,
     {
         playlist_clear(playlist);
         playlist_add_url(playlist, text);
-        bmp_playback_initiate();
+        playback_initiate();
     }
 }
 
@@ -2457,14 +2457,14 @@ void
 mainwin_play_pushed(void)
 {
     if (ab_position_a != -1)
-        bmp_playback_seek(ab_position_a / 1000);
-    if (bmp_playback_get_paused()) {
-        bmp_playback_pause();
+        playback_seek(ab_position_a / 1000);
+    if (playback_get_paused()) {
+        playback_pause();
         return;
     }
 
     if (playlist_get_length(playlist_get_active()))
-        bmp_playback_initiate();
+        playback_initiate();
     else
         mainwin_eject_pushed();
 }
@@ -2474,7 +2474,7 @@ mainwin_stop_pushed(void)
 {
     ip_data.stop = TRUE;
     mainwin_clear_song_info();
-    bmp_playback_stop();
+    playback_stop();
     ip_data.stop = FALSE;
 }
 
@@ -2547,7 +2547,7 @@ mainwin_spos_motion_cb(gint pos)
 void
 mainwin_spos_release_cb(gint pos)
 {
-    bmp_playback_seek(((playlist_get_current_length(playlist_get_active()) / 1000) *
+    playback_seek(((playlist_get_current_length(playlist_get_active()) / 1000) *
                        (pos - 1)) / 12);
 }
 
@@ -2574,7 +2574,7 @@ mainwin_position_release_cb(gint pos)
 
     length = playlist_get_current_length(playlist_get_active()) / 1000;
     time = (length * pos) / 219;
-    bmp_playback_seek(time);
+    playback_seek(time);
     mainwin_release_info_text();
 }
 
@@ -3096,7 +3096,7 @@ mainwin_general_menu_callback(gpointer data,
         mainwin_play_pushed();
         break;
     case MAINWIN_GENERAL_PAUSE:
-        bmp_playback_pause();
+        playback_pause();
         break;
     case MAINWIN_GENERAL_STOP:
         mainwin_stop_pushed();
@@ -3105,14 +3105,14 @@ mainwin_general_menu_callback(gpointer data,
         playlist_next(playlist);
         break;
     case MAINWIN_GENERAL_BACK5SEC:
-        if (bmp_playback_get_playing()
+        if (playback_get_playing()
             && playlist_get_current_length(playlist) != -1)
-            bmp_playback_seek_relative(-5);
+            playback_seek_relative(-5);
         break;
     case MAINWIN_GENERAL_FWD5SEC:
-        if (bmp_playback_get_playing()
+        if (playback_get_playing()
             && playlist_get_current_length(playlist) != -1)
-            bmp_playback_seek_relative(5);
+            playback_seek_relative(5);
         break;
     case MAINWIN_GENERAL_START:
         playlist_set_position(playlist, 0);
@@ -3129,16 +3129,16 @@ mainwin_general_menu_callback(gpointer data,
     case MAINWIN_GENERAL_SETAB:
         if (playlist_get_current_length(playlist) != -1) {
             if (ab_position_a == -1) {
-                ab_position_a = bmp_playback_get_time();
+                ab_position_a = playback_get_time();
                 ab_position_b = -1;
 		mainwin_lock_info_text("LOOP-POINT A POSITION SET.");
             } else if (ab_position_b == -1) {
-                int time = bmp_playback_get_time();
+                int time = playback_get_time();
                 if (time > ab_position_a)
                     ab_position_b = time;
 		mainwin_release_info_text();
             } else {
-                ab_position_a = bmp_playback_get_time();
+                ab_position_a = playback_get_time();
                 ab_position_b = -1;
 		mainwin_lock_info_text("LOOP-POINT A POSITION RESET.");
             }
@@ -3335,7 +3335,7 @@ play_medium(void)
     g_list_free(list);
 
     playlist_set_position(playlist, 0);
-    bmp_playback_initiate();
+    playback_initiate();
 }
 
 void
@@ -3581,7 +3581,7 @@ mainwin_create_widgets(void)
                        18, 23, 0, 23, 18, mainwin_play_pushed, SKIN_CBUTTONS);
     mainwin_pause =
         create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 62, 88, 23,
-                       18, 46, 0, 46, 18, bmp_playback_pause, SKIN_CBUTTONS);
+                       18, 46, 0, 46, 18, playback_pause, SKIN_CBUTTONS);
     mainwin_stop =
         create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 85, 88, 23,
                        18, 69, 0, 69, 18, mainwin_stop_pushed, SKIN_CBUTTONS);
@@ -3608,7 +3608,7 @@ mainwin_create_widgets(void)
                        7, mainwin_play_pushed);
     mainwin_spause =
         create_sbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 187, 4, 10,
-                       7, bmp_playback_pause);
+                       7, playback_pause);
     mainwin_sstop =
         create_sbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 197, 4, 9,
                        7, mainwin_stop_pushed);
@@ -3890,10 +3890,10 @@ idle_func_update_song_info(gint time)
     gchar stime_prefix;
 
     if (ab_position_a != -1 && ab_position_b != -1 && time > ab_position_b)
-        bmp_playback_seek(ab_position_a/1000);
+        playback_seek(ab_position_a/1000);
 
     length = playlist_get_current_length(playlist_get_active());
-    if (bmp_playback_get_playing())
+    if (playback_get_playing())
         playlistwin_set_time(time, length, cfg.timer_mode);
     else
         playlistwin_hide_timer();
@@ -3984,7 +3984,7 @@ mainwin_idle_func(gpointer data)
 
     GDK_THREADS_ENTER();
 
-    if (bmp_playback_get_playing())
+    if (playback_get_playing())
         vis_playback_start();
     else {
         vis_playback_stop();
@@ -4051,10 +4051,10 @@ mainwin_idle_func(gpointer data)
 
     /*
     if (seek_state == MAINWIN_SEEK_REV)
-        bmp_playback_seek(CLAMP(bmp_playback_get_time() - 1000, 0,
+        playback_seek(CLAMP(playback_get_time() - 1000, 0,
                                 playlist_get_current_length()) / 1000);
     else if (seek_state == MAINWIN_SEEK_FWD)
-        bmp_playback_seek(CLAMP(bmp_playback_get_time() + 1000, 0,
+        playback_seek(CLAMP(playback_get_time() + 1000, 0,
                                 playlist_get_current_length()) / 1000);
     */
 
