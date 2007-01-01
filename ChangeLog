@@ -1,3 +1,13 @@
+2007-01-01 03:58:46 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3463]
+  - bmp_playback_* -> playback_* -- i knew something smelled rotten in widgetcore, hmm.
+  
+  trunk/audacious/widgets/playlist_list.c |    6 +++---
+  trunk/audacious/widgets/svis.c          |    4 ++--
+  trunk/audacious/widgets/vis.c           |    4 ++--
+  3 files changed, 7 insertions(+), 7 deletions(-)
+
+
 2007-01-01 03:57:29 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3461]
   - bmp_playback_* -> playback_* -- i knew something smelled rotten here, hmm.
