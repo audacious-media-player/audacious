@@ -67,7 +67,7 @@
 #include "ui_playlist.h"
 #include "ui_preferences.h"
 #include "pluginenum.h"
-#include "skinwin.h"
+#include "ui_skinselector.h"
 #include "util.h"
 #include "visualization.h"
 #include "build_stamp.h"

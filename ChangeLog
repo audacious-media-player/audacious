@@ -1,3 +1,11 @@
+2007-01-03 06:17:06 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3491]
+  - fix skin scripts
+  
+  trunk/audacious/widgets/skin.c |    8 ++++----
+  1 file changed, 4 insertions(+), 4 deletions(-)
+
+
 2007-01-03 06:13:10 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3489]
   - prefswin.c -> ui_preferences.c

@@ -36,7 +36,7 @@
 #include "ui_equalizer.h"
 #include "main.h"
 #include "ui_playlist.h"
-#include "skinwin.h"
+#include "ui_skinselector.h"
 #include "util.h"
 
 #include "debug.h"

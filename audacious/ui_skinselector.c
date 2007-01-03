@@ -22,7 +22,7 @@
 #  include "config.h"
 #endif
 
-#include "skinwin.h"
+#include "ui_skinselector.h"
 
 #include <glib.h>
 #include <glib/gi18n.h>

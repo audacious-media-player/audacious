@@ -58,7 +58,6 @@
 
 #include "ui_main.h"
 #include "ui_playlist.h"
-#include "skinwin.h"
 #include "build_stamp.h"
 #include "ui_fileinfo.h"
 #include "ui_playlist.h"

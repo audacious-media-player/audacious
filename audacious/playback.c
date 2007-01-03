@@ -44,7 +44,7 @@
 #include "output.h"
 #include "playlist.h"
 #include "ui_playlist.h"
-#include "skinwin.h"
+#include "ui_skinselector.h"
 #include "libaudacious/urldecode.h"
 #include "util.h"
 

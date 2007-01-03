@@ -62,7 +62,7 @@ SOURCES = \
 	playback.c \
 	main.c \
 	logger.c \
-	skinwin.c \
+	ui_skinselector.c \
 	ui_preferences.c \
 	ui_fileinfo.c \
 	ui_playlist.c \

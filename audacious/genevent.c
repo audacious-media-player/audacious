@@ -61,7 +61,6 @@
 #include "playlist.h"
 #include "ui_playlist.h"
 #include "pluginenum.h"
-#include "skinwin.h"
 #include "util.h"
 #include "visualization.h"
 

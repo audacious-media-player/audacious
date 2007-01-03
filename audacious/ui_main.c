@@ -71,7 +71,7 @@
 #include "input.h"
 #include "ui_playlist.h"
 #include "ui_preferences.h"
-#include "skinwin.h"
+#include "ui_skinselector.h"
 #include "genevent.h"
 #include "playback.h"
 #include "playlist.h"
