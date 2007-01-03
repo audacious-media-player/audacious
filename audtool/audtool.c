@@ -1,5 +1,5 @@
 /*  Audtool -- Audacious scripting tool
- *  Copyright (c) 2005-2006  George Averill, William Pitcock
+ *  Copyright (c) 2005-2007  Audacious development team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

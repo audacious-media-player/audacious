@@ -1,3 +1,26 @@
+2007-01-03 22:55:03 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
+  revision [3511]
+  More copyright notice updates
+  trunk/audacious/platform/smartinclude.h |    2 +-
+  trunk/audacious/playback.c              |    5 ++++-
+  trunk/audacious/playback.h              |    7 +++++--
+  trunk/audacious/playlist_container.c    |    4 ++--
+  trunk/audacious/playlist_container.h    |    4 ++--
+  trunk/audacious/playlist_manager.c      |    2 +-
+  trunk/audacious/playlist_manager.h      |    2 +-
+  trunk/audacious/pluginenum.c            |    9 ++++++---
+  trunk/audacious/pluginenum.h            |    9 ++++++---
+  trunk/audacious/util.c                  |    5 ++++-
+  trunk/audacious/util.h                  |    9 ++++++---
+  trunk/audacious/vfs.c                   |    2 +-
+  trunk/audacious/vfs.h                   |    2 +-
+  trunk/audacious/vfs_buffer.c            |    2 +-
+  trunk/audacious/vfs_buffer.h            |    2 +-
+  trunk/audacious/visualization.c         |    9 ++++++---
+  trunk/audacious/visualization.h         |    9 ++++++---
+  17 files changed, 54 insertions(+), 30 deletions(-)
+
+
 2007-01-03 22:45:41 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
   revision [3509]
   Update copyright notices
