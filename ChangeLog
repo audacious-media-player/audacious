@@ -1,3 +1,10 @@
+2007-01-03 00:56:11 +0000  Giacomo Lozito <james@develia.org>
+  revision [3471]
+  - add missing header actions-mainwin.h
+  trunk/audacious/actions-mainwin.h |   83 ++++++++++++++++++++++++++++++++++++++
+  1 file changed, 83 insertions(+)
+
+
 2007-01-03 00:48:38 +0000  Giacomo Lozito <james@develia.org>
   revision [3469]
   - migration from gtkitemfactory to actions and uimanager; main menu has been ported, still much work and test to do

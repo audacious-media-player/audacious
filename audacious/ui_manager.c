@@ -418,8 +418,18 @@ ui_manager_get_popup_menu ( GtkUIManager * self , const gchar * path )
 static void
 menu_popup_pos_func (GtkMenu * menu , gint * x , gint * y , gboolean * push_in , gint * point )
 {
-  *x = point[0];
-  *y = point[1];
+  GtkRequisition requisition;
+  gint screen_width;
+  gint screen_height;
+
+  gtk_widget_size_request(GTK_WIDGET(menu), &requisition);
+
+  screen_width = gdk_screen_width();
+  screen_height = gdk_screen_height();
+
+  *x = CLAMP(point[0] - 2, 0, MAX(0, screen_width - requisition.width));
+  *y = CLAMP(point[1] - 2, 0, MAX(0, screen_height - requisition.height));
+
   *push_in = FALSE;
 }
 
