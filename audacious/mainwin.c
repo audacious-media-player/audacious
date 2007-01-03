@@ -55,6 +55,9 @@
 #include "mainwin.h"
 #include "icons-stock.h"
 
+#include "ui_manager.h"
+#include "actions-mainwin.h"
+
 #include "main.h"
 
 #include "controlsocket.h"
@@ -82,75 +85,12 @@ static GTimeVal cb_time; /* click delay for tristate is defined by TRISTATE_THRE
 #define ITEM_SEPARATOR {"/-", NULL, NULL, 0, "<Separator>"}
 #define TRISTATE_THRESHOLD 200
 
-/*
- * If you change the menu below change these defines also
- */
-
-#define MAINWIN_VIS_MENU_VIS_MODE               1
-#define MAINWIN_VIS_MENU_NUM_VIS_MODE           4
-#define MAINWIN_VIS_MENU_ANALYZER_MODE          6
-#define MAINWIN_VIS_MENU_NUM_ANALYZER_MODE      3
-#define MAINWIN_VIS_MENU_ANALYZER_TYPE          10
-#define MAINWIN_VIS_MENU_NUM_ANALYZER_TYPE      2
-#define MAINWIN_VIS_MENU_ANALYZER_PEAKS         13
-#define MAINWIN_VIS_MENU_SCOPE_MODE             15
-#define MAINWIN_VIS_MENU_NUM_SCOPE_MODE         3
-#define MAINWIN_VIS_MENU_VOICEPRINT_MODE        19
-#define MAINWIN_VIS_MENU_NUM_VOICEPRINT_MODE    3
-#define MAINWIN_VIS_MENU_WSHADEVU_MODE          23
-#define MAINWIN_VIS_MENU_NUM_WSHADEVU_MODE      2
-#define MAINWIN_VIS_MENU_REFRESH_RATE           26
-#define MAINWIN_VIS_MENU_NUM_REFRESH_RATE       4
-#define MAINWIN_VIS_MENU_AFALLOFF               31
-#define MAINWIN_VIS_MENU_NUM_AFALLOFF           5
-#define MAINWIN_VIS_MENU_PFALLOFF               37
-#define MAINWIN_VIS_MENU_NUM_PFALLOFF           5
-
 #define VOLSET_DISP_TIMES 5
 
 enum {
     MAINWIN_SEEK_REV = -1,
     MAINWIN_SEEK_NIL,
     MAINWIN_SEEK_FWD
-};
-
-enum {
-    MAINWIN_SONGNAME_FILEINFO,
-    MAINWIN_SONGNAME_JTF,
-    MAINWIN_SONGNAME_JTT,
-    MAINWIN_SONGNAME_SCROLL,
-    MAINWIN_SONGNAME_STOPAFTERSONG
-};
-
-enum {
-    MAINWIN_OPT_SKIN, MAINWIN_OPT_RELOADSKIN,
-    MAINWIN_OPT_REPEAT, MAINWIN_OPT_SHUFFLE, MAINWIN_OPT_NPA,
-    MAINWIN_OPT_TELAPSED, MAINWIN_OPT_TREMAINING,
-    MAINWIN_OPT_ALWAYS,
-    MAINWIN_OPT_STICKY,
-    MAINWIN_OPT_WS,
-    MAINWIN_OPT_PWS,
-    MAINWIN_OPT_EQWS, MAINWIN_OPT_DOUBLESIZE, MAINWIN_OPT_EASY_MOVE
-};
-
-enum {
-    MAINWIN_VIS_ANALYZER, MAINWIN_VIS_SCOPE, MAINWIN_VIS_VOICEPRINT, MAINWIN_VIS_OFF,
-    MAINWIN_VIS_ANALYZER_NORMAL, MAINWIN_VIS_ANALYZER_FIRE,
-    MAINWIN_VIS_ANALYZER_VLINES,
-    MAINWIN_VIS_ANALYZER_LINES, MAINWIN_VIS_ANALYZER_BARS,
-    MAINWIN_VIS_ANALYZER_PEAKS,
-    MAINWIN_VIS_SCOPE_DOT, MAINWIN_VIS_SCOPE_LINE, MAINWIN_VIS_SCOPE_SOLID,
-    MAINWIN_VIS_VOICEPRINT_NORMAL, MAINWIN_VIS_VOICEPRINT_FIRE, MAINWIN_VIS_VOICEPRINT_ICE,
-    MAINWIN_VIS_VU_NORMAL, MAINWIN_VIS_VU_SMOOTH,
-    MAINWIN_VIS_REFRESH_FULL, MAINWIN_VIS_REFRESH_HALF,
-    MAINWIN_VIS_REFRESH_QUARTER, MAINWIN_VIS_REFRESH_EIGHTH,
-    MAINWIN_VIS_AFALLOFF_SLOWEST, MAINWIN_VIS_AFALLOFF_SLOW,
-    MAINWIN_VIS_AFALLOFF_MEDIUM, MAINWIN_VIS_AFALLOFF_FAST,
-    MAINWIN_VIS_AFALLOFF_FASTEST,
-    MAINWIN_VIS_PFALLOFF_SLOWEST, MAINWIN_VIS_PFALLOFF_SLOW,
-    MAINWIN_VIS_PFALLOFF_MEDIUM, MAINWIN_VIS_PFALLOFF_FAST,
-    MAINWIN_VIS_PFALLOFF_FASTEST,
-    MAINWIN_VIS_PLUGINS
 };
 
 enum {
@@ -176,10 +116,6 @@ static gint balance;
 
 GtkWidget *mainwin_jtf = NULL;
 static GtkWidget *mainwin_jtt = NULL;
-
-GtkItemFactory *mainwin_songname_menu, *mainwin_vis_menu;
-GtkItemFactory *mainwin_general_menu, *mainwin_play_menu, *mainwin_add_menu;
-GtkItemFactory *mainwin_view_menu;
 
 gint seek_state = MAINWIN_SEEK_NIL;
 gint seek_initial_pos = 0;
@@ -235,251 +171,6 @@ static gboolean mainwin_info_text_locked = FALSE;
 static int ab_position_a = -1;
 static int ab_position_b = -1;
 
-static void mainwin_songname_menu_callback(gpointer user_data,
-                                           guint action,
-                                           GtkWidget * widget);
-
-static void mainwin_vis_menu_callback(gpointer user_data,
-                                      guint action,
-                                      GtkWidget * widget);
-
-static void mainwin_view_menu_callback(gpointer user_data,
-                                       guint action,
-                                       GtkWidget * widget);
-
-static void mainwin_play_menu_callback(gpointer user_data,
-                                       guint action,
-                                       GtkWidget * widget);
-
-/* Song name area menu */
-
-GtkItemFactoryEntry mainwin_songname_menu_entries[] = {
-    {N_("/View Track Details"), "<alt>i", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_FILEINFO, "<StockItem>", AUD_STOCK_INFO },
-    {N_("/Jump to File"), "J", mainwin_songname_menu_callback,
-     MAINWIN_SONGNAME_JTF, "<StockItem>", GTK_STOCK_JUMP_TO},
-    {"/-", NULL, NULL, 0, "<Separator>", NULL},
-    {N_("/Autoscroll Songname"), NULL, mainwin_songname_menu_callback,
-     MAINWIN_SONGNAME_SCROLL, "<ToggleItem>", NULL},
-    {N_("/Stop After Current Song"), "<control>M", mainwin_songname_menu_callback,
-     MAINWIN_SONGNAME_STOPAFTERSONG, "<ToggleItem>", NULL},
-};
-
-static gint mainwin_songname_menu_entries_num =
-    G_N_ELEMENTS(mainwin_songname_menu_entries);
-
-/* Mini-visualizer area menu */
-
-/* If you add something here, be sure to update the #defines up above!!! */
-
-GtkItemFactoryEntry mainwin_vis_menu_entries[] = {
-    {N_("/Visualization Mode"), NULL, NULL, 0, "<Branch>", NULL},
-    {N_("/Visualization Mode/Analyzer"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_ANALYZER, "<RadioItem>", NULL},
-    {N_("/Visualization Mode/Scope"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_SCOPE, "/Visualization Mode/Analyzer", NULL},
-    {N_("/Visualization Mode/Voiceprint"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_VOICEPRINT, "/Visualization Mode/Analyzer", NULL},
-    {N_("/Visualization Mode/Off"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_OFF, "/Visualization Mode/Analyzer", NULL},
-    {N_("/Analyzer Mode"), NULL, NULL, 0, "<Branch>", NULL},
-    {N_("/Analyzer Mode/Normal"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_ANALYZER_NORMAL, "<RadioItem>", NULL},
-    {N_("/Analyzer Mode/Fire"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_ANALYZER_FIRE, "/Analyzer Mode/Normal", NULL},
-    {N_("/Analyzer Mode/Vertical Lines"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_ANALYZER_VLINES, "/Analyzer Mode/Normal", NULL},
-    {"/Analyzer Mode/-", NULL, NULL, 0, "<Separator>", NULL},
-    {N_("/Analyzer Mode/Lines"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_ANALYZER_LINES, "<RadioItem>", NULL},
-    {N_("/Analyzer Mode/Bars"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_ANALYZER_BARS, "/Analyzer Mode/Lines", NULL},
-    {"/Analyzer Mode/-", NULL, NULL, 0, "<Separator>", NULL},
-    {N_("/Analyzer Mode/Peaks"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_ANALYZER_PEAKS, "<ToggleItem>", NULL},
-    {N_("/Scope Mode"), NULL, NULL, 0, "<Branch>", NULL},
-    {N_("/Scope Mode/Dot Scope"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_SCOPE_DOT, "<RadioItem>", NULL},
-    {N_("/Scope Mode/Line Scope"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_SCOPE_LINE, "/Scope Mode/Dot Scope", NULL},
-    {N_("/Scope Mode/Solid Scope"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_SCOPE_SOLID, "/Scope Mode/Dot Scope", NULL},
-    {N_("/Voiceprint mode"), NULL, NULL, 0, "<Branch>", NULL},
-    {N_("/Voiceprint mode/Normal"), NULL, mainwin_vis_menu_callback,
-    MAINWIN_VIS_VOICEPRINT_NORMAL, "<RadioItem>", NULL},
-    {N_("/Voiceprint mode/Fire"), NULL, mainwin_vis_menu_callback,
-    MAINWIN_VIS_VOICEPRINT_FIRE, "/Voiceprint mode/Normal", NULL},
-    {N_("/Voiceprint mode/Ice"), NULL, mainwin_vis_menu_callback,
-    MAINWIN_VIS_VOICEPRINT_ICE, "/Voiceprint mode/Normal", NULL},
-    {N_("/WindowShade VU Mode"), NULL, NULL, 0, "<Branch>", NULL},
-    {N_("/WindowShade VU Mode/Normal"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_VU_NORMAL, "<RadioItem>", NULL},
-    {N_("/WindowShade VU Mode/Smooth"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_VU_SMOOTH, "/WindowShade VU Mode/Normal", NULL},
-    {N_("/Refresh Rate"), NULL, NULL, 0, "<Branch>", NULL},
-    {N_("/Refresh Rate/Full (~50 fps)"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_REFRESH_FULL, "<RadioItem>", NULL},
-    {N_("/Refresh Rate/Half (~25 fps)"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_REFRESH_HALF, "/Refresh Rate/Full (~50 fps)", NULL},
-    {N_("/Refresh Rate/Quarter (~13 fps)"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_REFRESH_QUARTER, "/Refresh Rate/Full (~50 fps)", NULL},
-    {N_("/Refresh Rate/Eighth (~6 fps)"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_REFRESH_EIGHTH, "/Refresh Rate/Full (~50 fps)", NULL},
-    {N_("/Analyzer Falloff"), NULL, NULL, 0, "<Branch>", NULL},
-    {N_("/Analyzer Falloff/Slowest"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_AFALLOFF_SLOWEST, "<RadioItem>", NULL},
-    {N_("/Analyzer Falloff/Slow"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_AFALLOFF_SLOW, "/Analyzer Falloff/Slowest", NULL},
-    {N_("/Analyzer Falloff/Medium"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_AFALLOFF_MEDIUM, "/Analyzer Falloff/Slowest", NULL},
-    {N_("/Analyzer Falloff/Fast"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_AFALLOFF_FAST, "/Analyzer Falloff/Slowest", NULL},
-    {N_("/Analyzer Falloff/Fastest"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_AFALLOFF_FASTEST, "/Analyzer Falloff/Slowest", NULL},
-    {N_("/Peaks Falloff"), NULL, NULL, 0, "<Branch>", NULL},
-    {N_("/Peaks Falloff/Slowest"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_PFALLOFF_SLOWEST, "<RadioItem>", NULL},
-    {N_("/Peaks Falloff/Slow"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_PFALLOFF_SLOW, "/Peaks Falloff/Slowest", NULL},
-    {N_("/Peaks Falloff/Medium"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_PFALLOFF_MEDIUM, "/Peaks Falloff/Slowest", NULL},
-    {N_("/Peaks Falloff/Fast"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_PFALLOFF_FAST, "/Peaks Falloff/Slowest", NULL},
-    {N_("/Peaks Falloff/Fastest"), NULL, mainwin_vis_menu_callback,
-     MAINWIN_VIS_PFALLOFF_FASTEST, "/Peaks Falloff/Slowest", NULL}
-};
-
-static const gint mainwin_vis_menu_entries_num =
-    G_N_ELEMENTS(mainwin_vis_menu_entries);
-
-/* Playback menu (now used only for accelerators) */
-
-GtkItemFactoryEntry mainwin_playback_menu_entries[] = {
-    {N_("/Play CD"), "<alt>C", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_PLAYCD, "<StockItem>", GTK_STOCK_CDROM},
-    {"/-", NULL, NULL, 0, "<Separator>", NULL},
-    {N_("/Repeat"), "R", mainwin_play_menu_callback,
-     MAINWIN_OPT_REPEAT, "<ToggleItem>", NULL},
-    {N_("/Shuffle"), "S", mainwin_play_menu_callback,
-     MAINWIN_OPT_SHUFFLE, "<ToggleItem>", NULL},
-    {N_("/No Playlist Advance"), "<control>N", mainwin_play_menu_callback,
-     MAINWIN_OPT_NPA, "<ToggleItem>", NULL},
-    {N_("/Stop After Current Song"), "<control>M", mainwin_songname_menu_callback,
-     MAINWIN_SONGNAME_STOPAFTERSONG, "<ToggleItem>", NULL},
-    {"/-", NULL, NULL, 0, "<Separator>", NULL},
-    {N_("/Play"), "x", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_PLAY, "<StockItem>", GTK_STOCK_MEDIA_PLAY},
-    {N_("/Pause"), "c", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_PAUSE, "<StockItem>", GTK_STOCK_MEDIA_PAUSE},
-    {N_("/Stop"), "v", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_STOP, "<StockItem>", GTK_STOCK_MEDIA_STOP},
-    {N_("/Previous"), "z", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_PREV, "<StockItem>", GTK_STOCK_MEDIA_PREVIOUS},
-    {N_("/Next"), "b", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_NEXT, "<StockItem>", GTK_STOCK_MEDIA_NEXT},
-    {"/-", NULL, NULL, 0, "<Separator>", NULL},
-    {N_("/Jump to Playlist Start"), "<control>Z", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_START, "<StockItem>", GTK_STOCK_GOTO_TOP},
-     {N_("/-"), NULL, NULL, 0, "<Separator>"},
-     {N_("/Set A-B"), "A", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_SETAB, "<Item>"},
-     {N_("/Clear A-B"), "<control>S", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_CLEARAB, "<Item>"},
-    {"/-", NULL, NULL, 0, "<Separator>", NULL},
-    {N_("/Jump to File"), "J", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_JTF, "<StockItem>", GTK_STOCK_JUMP_TO},
-    {N_("/Jump to Time"), "<control>J", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_JTT, "<StockItem>", GTK_STOCK_JUMP_TO},
-    {"/-", NULL, NULL, 0, "<Separator>", NULL},
-    {N_("/New Playlist"), "<shift>N", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_NEW_PL, "<Item>"},    
-    {N_("/Select Next Playlist"), "<shift>P", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_NEXT_PL, "<Item>"},
-    {N_("/Select Previous Playlist"), "<control><shift>P", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_PREV_PL, "<Item>"},
-    {"/-", NULL, NULL, 0, "<Separator>", NULL},
-    {N_("/View Track Details"), "<alt>I", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_FILEINFO, "<StockItem>", AUD_STOCK_INFO }
-};
-
-static const gint mainwin_playback_menu_entries_num =
-    G_N_ELEMENTS(mainwin_playback_menu_entries);
-
-/* Main menu */
-
-GtkItemFactoryEntry mainwin_general_menu_entries[] = {
-    {N_("/About Audacious"), NULL, mainwin_general_menu_callback,
-     MAINWIN_GENERAL_ABOUT, "<StockItem>", GTK_STOCK_DIALOG_INFO},
-    {"/-", NULL, NULL, 0, "<Separator>", NULL},
-    {N_("/Play File"), "L", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_PLAYFILE, "<StockItem>", GTK_STOCK_OPEN},
-    {N_("/Play Location"), "<control>L", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_PLAYLOCATION, "<StockItem>", GTK_STOCK_NETWORK},
-    {"/-", NULL, NULL, 0, "<Separator>", NULL},
-    {N_("/V_isualization"), NULL, NULL, 0, "<Item>", NULL},
-    {N_("/_Playback"), NULL, NULL, 0, "<Item>", NULL},
-    {N_("/_View"), NULL, NULL, 0, "<Item>", NULL},
-    {"/-", NULL, NULL, 0, "<Separator>", NULL},
-    {N_("/Preferences"), "<control>P", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_PREFS, "<StockItem>", GTK_STOCK_PREFERENCES},
-    {N_("/_Quit"), NULL, mainwin_general_menu_callback,
-     MAINWIN_GENERAL_EXIT, "<StockItem>", GTK_STOCK_QUIT}
-};
-
-static const gint mainwin_general_menu_entries_num =
-    G_N_ELEMENTS(mainwin_general_menu_entries);
-
-/* Add submenu */
-
-GtkItemFactoryEntry mainwin_add_menu_entries[] = {
-    {N_("/Files..."), "f", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_PLAYFILE, "<StockItem>", GTK_STOCK_OPEN},
-    {N_("/Internet location..."), "<control>h", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_PLAYLOCATION, "<StockItem>", GTK_STOCK_NETWORK},
-};
-
-static const gint mainwin_add_menu_entries_num =
-    G_N_ELEMENTS(mainwin_add_menu_entries);
-
-/* View submenu */
-
-GtkItemFactoryEntry mainwin_view_menu_entries[] = {
-    {N_("/Show Player"), "<alt>M", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_SHOWMWIN, "<ToggleItem>", NULL},
-    {N_("/Show Playlist Editor"), "<alt>E", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_SHOWPLWIN, "<ToggleItem>", NULL},
-    {N_("/Show Equalizer"), "<alt>G", mainwin_general_menu_callback,
-     MAINWIN_GENERAL_SHOWEQWIN, "<ToggleItem>", NULL},
-    {"/-", NULL, NULL, 0, "<Separator>", NULL},
-    {N_("/Time Elapsed"), "<control>E", mainwin_view_menu_callback,
-     MAINWIN_OPT_TELAPSED, "<RadioItem>", NULL},
-    {N_("/Time Remaining"), "<control>R", mainwin_view_menu_callback,
-     MAINWIN_OPT_TREMAINING, "/Time Elapsed", NULL},
-    {"/-", NULL, NULL, 0, "<Separator>", NULL},
-    {N_("/Always On Top"), "<control>o", mainwin_view_menu_callback,
-     MAINWIN_OPT_ALWAYS, "<ToggleItem>", NULL},
-    {N_("/Put on All Workspaces"), "<control>S",
-     mainwin_view_menu_callback, MAINWIN_OPT_STICKY, "<ToggleItem>", NULL},
-    {N_("/Autoscroll Songname"), NULL, mainwin_view_menu_callback,
-     MAINWIN_SONGNAME_SCROLL, "<ToggleItem>", NULL},
-    {"/-", NULL, NULL, 0, "<Separator>", NULL},
-    {N_("/Roll up Player"), "<control>W", mainwin_view_menu_callback,
-     MAINWIN_OPT_WS, "<ToggleItem>", NULL},
-    {N_("/Roll up Playlist Editor"), "<control><shift>W", mainwin_view_menu_callback,
-     MAINWIN_OPT_PWS, "<ToggleItem>", NULL},
-    {N_("/Roll up Equalizer"), "<control><alt>W", mainwin_view_menu_callback,
-     MAINWIN_OPT_EQWS, "<ToggleItem>", NULL},
-    {"/-", NULL, NULL, 0, "<Separator>", NULL},
-    {N_("/DoubleSize"), "<control>D", mainwin_view_menu_callback,
-     MAINWIN_OPT_DOUBLESIZE, "<ToggleItem>"},
-    {N_("/Easy Move"), "<control>E", mainwin_view_menu_callback,
-     MAINWIN_OPT_EASY_MOVE, "<ToggleItem>"}
-};
-
-static const gint mainwin_view_menu_entries_num =
-    G_N_ELEMENTS(mainwin_view_menu_entries);
-
-
 static PlaybackInfo playback_info = { NULL, 0, 0, 0 };
 
 
@@ -494,6 +185,7 @@ void mainwin_position_motion_cb(gint pos);
 void mainwin_position_release_cb(gint pos);
 
 void set_doublesize(gboolean doublesize);
+
 
 
 /* FIXME: placed here for now */
@@ -538,10 +230,9 @@ mainwin_set_title_scroll(gboolean scroll)
 void
 mainwin_set_always_on_top(gboolean always)
 {
-    GtkWidget *widget = gtk_item_factory_get_widget(mainwin_view_menu,
-                                                    "/Always On Top");
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget),
-                                   mainwin_menurow->mr_always_selected);
+    GtkAction *action = gtk_action_group_get_action(
+      mainwin_toggleaction_group_others , "view always on top" );
+    gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(action) , always );
 }
 
 static void
@@ -561,10 +252,13 @@ mainwin_set_shape_mask(void)
 static void
 mainwin_set_shade(gboolean shaded)
 {
-    GtkWidget *widget;
-    widget = gtk_item_factory_get_widget(mainwin_view_menu,
-                                         "/Roll up Player");
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget), shaded);
+    GtkAction *action = gtk_action_group_get_action(
+      mainwin_toggleaction_group_others , "view roll up player" );
+    gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(action) , shaded );
+/*
+    GtkWidget *widget = gtk_ui_manager_get_widget(ui_manager,
+      "/mainwin-menus/main-menu/view/view roll up player" );
+    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget), shaded);*/
 }
 
 static void
@@ -670,10 +364,30 @@ mainwin_vis_set_analyzer_type(AnalyzerType mode)
 void
 mainwin_vis_set_type(VisType mode)
 {
-    gchar *path =
-        mainwin_vis_menu_entries[MAINWIN_VIS_MENU_VIS_MODE + mode].path;
-    GtkWidget *widget = gtk_item_factory_get_widget(mainwin_vis_menu, path);
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget), TRUE);
+    GtkAction *action;
+
+    switch ( mode )
+    {
+        case VIS_ANALYZER:
+            action = gtk_action_group_get_action(
+              mainwin_radioaction_group_vismode , "vismode analyzer" );
+            break;
+        case VIS_SCOPE:
+            action = gtk_action_group_get_action(
+              mainwin_radioaction_group_vismode , "vismode scope" );
+            break;
+        case VIS_VOICEPRINT:
+            action = gtk_action_group_get_action(
+              mainwin_radioaction_group_vismode , "vismode voiceprint" );
+            break;
+        case VIS_OFF:
+        default:
+            action = gtk_action_group_get_action(
+              mainwin_radioaction_group_vismode , "vismode off" );
+            break;
+    }
+
+    gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(action) , TRUE );
 }
 
 static void
@@ -698,7 +412,7 @@ mainwin_menubtn_cb(void)
 {
     gint x, y;
     gtk_window_get_position(GTK_WINDOW(mainwin), &x, &y);
-    util_item_factory_popup(mainwin_general_menu,
+    ui_manager_popup_menu_show(GTK_MENU(mainwin_general_menu),
                             x + 6 * (1 + cfg.doublesize),
                             y + MAINWIN_SHADED_HEIGHT * (1 + cfg.doublesize),
                             1, GDK_CURRENT_TIME);
@@ -1477,21 +1191,21 @@ mainwin_mouse_button_press(GtkWidget * widget,
 
     if (event->button == 3) {
         if (widget_contains(WIDGET(mainwin_info), event->x, event->y)) {
-            util_item_factory_popup(mainwin_songname_menu,
-                                    event->x_root, event->y_root,
-                                    3, event->time);
+            ui_manager_popup_menu_show(GTK_MENU(mainwin_songname_menu),
+                   event->x_root, event->y_root,
+                   3, event->time);
             grab = FALSE;
         }
         else if (widget_contains(WIDGET(mainwin_vis), event->x, event->y) ||
                  widget_contains(WIDGET(mainwin_svis), event->x, event->y)) {
-            util_item_factory_popup(mainwin_vis_menu, event->x_root,
+            ui_manager_popup_menu_show(GTK_MENU(mainwin_visualization_menu), event->x_root,
                                     event->y_root, 3, event->time);
             grab = FALSE;
         }
         else if ( (event->y > 70) && (event->x < 128) )
         {
 
-            util_item_factory_popup(mainwin_play_menu,
+            ui_manager_popup_menu_show(GTK_MENU(mainwin_playback_menu),
                                     event->x_root,
                                     event->y_root, 3, event->time);
             grab = FALSE;
@@ -1505,7 +1219,7 @@ mainwin_mouse_button_press(GtkWidget * widget,
              ***MD I think the above is stupid, people don't expect this
              *
              */
-            util_item_factory_popup(mainwin_general_menu,
+            ui_manager_popup_menu_show(GTK_MENU(mainwin_general_menu),
                                     event->x_root,
                                     event->y_root, 3, event->time);
             grab = FALSE;
@@ -2365,12 +2079,15 @@ mainwin_show_add_url_window(void)
 }
 
 static void
-check_set(GtkItemFactory * factory, 
-          const gchar * path,
-          gboolean active)
+check_set( GtkActionGroup * action_group ,
+           const gchar * action_name ,
+           gboolean is_on )
 {
-    GtkWidget *item = gtk_item_factory_get_widget(factory, path);
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item), active);
+    /* check_set noew uses gtkaction */
+    GtkAction *action = gtk_action_group_get_action( action_group , action_name );
+    if ( action != NULL )
+        gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(action) , is_on );
+    return;
 }
 
 void
@@ -2481,13 +2198,13 @@ mainwin_stop_pushed(void)
 void
 mainwin_shuffle_pushed(gboolean toggled)
 {
-    check_set(mainwin_play_menu, "/Shuffle", toggled);
+    check_set( mainwin_toggleaction_group_others , "playback shuffle" , toggled );
 }
 
 void
 mainwin_repeat_pushed(gboolean toggled)
 {
-    check_set(mainwin_play_menu, "/Repeat", toggled);
+    check_set( mainwin_toggleaction_group_others , "playback repeat" , toggled );
 }
 
 void
@@ -2734,7 +2451,7 @@ mainwin_real_show(void)
 {
     cfg.player_visible = TRUE;
 
-    check_set(mainwin_view_menu, "/Show Player", TRUE);
+    check_set( mainwin_toggleaction_group_others , "show player" , TRUE );
 
     if (cfg.player_shaded)
         vis_clear_data(active_vis);
@@ -2793,7 +2510,7 @@ mainwin_real_hide(void)
     GdkGC *gc;
     GdkColor pattern;
 
-    check_set(mainwin_view_menu, "/Show Player", FALSE);
+    check_set( mainwin_toggleaction_group_others , "show player", FALSE);
 
     if (cfg.player_shaded)
         svis_clear_data(mainwin_svis);
@@ -2818,70 +2535,14 @@ mainwin_real_hide(void)
     cfg.player_visible = FALSE;
 }
 
-static void
-mainwin_songname_menu_callback(gpointer data,
-                               guint action,
-                               GtkWidget * item)
-{
-    GtkCheckMenuItem *check;
-
-    switch (action) {
-    case MAINWIN_SONGNAME_FILEINFO:
-        playlist_fileinfo_current(playlist_get_active());
-        break;
-    case MAINWIN_SONGNAME_JTF:
-        mainwin_jump_to_file();
-        break;
-    case MAINWIN_SONGNAME_JTT:
-        mainwin_jump_to_time();
-        break;
-    case MAINWIN_SONGNAME_SCROLL:
-        check = GTK_CHECK_MENU_ITEM(item);
-        mainwin_set_title_scroll(gtk_check_menu_item_get_active(check));
-        check_set(mainwin_view_menu, "/Autoscroll Songname", cfg.autoscroll);
-	playlistwin_set_sinfo_scroll(cfg.autoscroll); /* propagate scroll setting to playlistwin_sinfo */
-        break;
-    case MAINWIN_SONGNAME_STOPAFTERSONG:
-        check = GTK_CHECK_MENU_ITEM(item);
-        cfg.stopaftersong = gtk_check_menu_item_get_active(check);
-        check_set(mainwin_songname_menu, "/Stop After Current Song", cfg.stopaftersong);
-        check_set(mainwin_play_menu, "/Stop After Current Song", cfg.stopaftersong);
-        break;
-    }
-}
 
 void
 mainwin_set_stopaftersong(gboolean stop)
 {
     cfg.stopaftersong = stop;
-    check_set(mainwin_songname_menu, "/Stop After Current Song", cfg.stopaftersong);
+    check_set(mainwin_toggleaction_group_others, "stop after current song", cfg.stopaftersong);
 }
 
-static void
-mainwin_play_menu_callback(gpointer data,
-                           guint action,
-                           GtkWidget * item)
-{
-    GtkCheckMenuItem *check;
-
-    switch (action) {
-    case MAINWIN_OPT_SHUFFLE:
-        check = GTK_CHECK_MENU_ITEM(item);
-        cfg.shuffle = gtk_check_menu_item_get_active(check);
-        playlist_set_shuffle(cfg.shuffle);
-        tbutton_set_toggled(mainwin_shuffle, cfg.shuffle);
-        break;
-    case MAINWIN_OPT_REPEAT:
-        check = GTK_CHECK_MENU_ITEM(item);
-        cfg.repeat = gtk_check_menu_item_get_active(check);
-        tbutton_set_toggled(mainwin_repeat, cfg.repeat);
-        break;
-    case MAINWIN_OPT_NPA:
-        check = GTK_CHECK_MENU_ITEM(item);
-        cfg.no_playlist_advance = gtk_check_menu_item_get_active(check);
-        break;
-    }
-}
 
 static void
 mainwin_set_doublesize(gboolean doublesize)
@@ -2921,126 +2582,7 @@ set_doublesize(gboolean doublesize)
         equalizerwin_set_doublesize(doublesize);
 }
 
-                               
-static void
-mainwin_view_menu_callback(gpointer data,
-                           guint action,
-                           GtkWidget * item)
-{
-    GtkCheckMenuItem *check;
 
-    switch (action) {
-    case MAINWIN_OPT_TELAPSED:
-        set_timer_mode_menu_cb(TIMER_ELAPSED);
-        break;
-    case MAINWIN_OPT_TREMAINING:
-        set_timer_mode_menu_cb(TIMER_REMAINING);
-        break;
-    case MAINWIN_OPT_ALWAYS:
-        mainwin_menurow->mr_always_selected = GTK_CHECK_MENU_ITEM(item)->active;
-        cfg.always_on_top = mainwin_menurow->mr_always_selected;
-        widget_draw(WIDGET(mainwin_menurow));
-
-        if (starting_up == FALSE)
-            hint_set_always(cfg.always_on_top);
-
-        break;
-    case MAINWIN_OPT_STICKY:
-        cfg.sticky = GTK_CHECK_MENU_ITEM(item)->active;
-        hint_set_sticky(cfg.sticky);
-        break;
-    case MAINWIN_OPT_WS:
-        mainwin_set_shade_menu_cb(GTK_CHECK_MENU_ITEM(item)->active);
-        break;
-    case MAINWIN_OPT_PWS:
-        playlistwin_set_shade(GTK_CHECK_MENU_ITEM(item)->active);
-        break;
-    case MAINWIN_OPT_EQWS:
-        equalizerwin_set_shade_menu_cb(GTK_CHECK_MENU_ITEM(item)->active);
-        break;
-    case MAINWIN_OPT_DOUBLESIZE:
-        mainwin_menurow->mr_doublesize_selected =
-            GTK_CHECK_MENU_ITEM(gtk_item_factory_get_widget
-                                (mainwin_view_menu,
-                                 "/DoubleSize"))->active;
-        widget_draw(WIDGET(mainwin_menurow));
-        set_doublesize(mainwin_menurow->mr_doublesize_selected);
-        gdk_flush();
-        break;
-    case MAINWIN_OPT_EASY_MOVE:
-        cfg.easy_move =
-            GTK_CHECK_MENU_ITEM(gtk_item_factory_get_widget
-                                (mainwin_view_menu, "/Easy Move"))->active;
-        break;
-    case MAINWIN_SONGNAME_SCROLL:
-        check = GTK_CHECK_MENU_ITEM(item);
-        mainwin_set_title_scroll(gtk_check_menu_item_get_active(check));
-        check_set(mainwin_songname_menu, "/Autoscroll Songname", cfg.autoscroll);
-	playlistwin_set_sinfo_scroll(cfg.autoscroll); /* propagate scroll setting to playlistwin_sinfo */
-        break;
-    }
-}
-
-void
-mainwin_vis_menu_callback(gpointer data,
-                          guint action,
-                          GtkWidget * item)
-{
-  switch (action) {
-    case MAINWIN_VIS_ANALYZER:
-    case MAINWIN_VIS_SCOPE:
-    case MAINWIN_VIS_VOICEPRINT:
-    case MAINWIN_VIS_OFF:
-        mainwin_vis_set_type_menu_cb(action - MAINWIN_VIS_ANALYZER);
-        break;
-    case MAINWIN_VIS_ANALYZER_NORMAL:
-    case MAINWIN_VIS_ANALYZER_FIRE:
-    case MAINWIN_VIS_ANALYZER_VLINES:
-        mainwin_vis_set_analyzer_mode(action - MAINWIN_VIS_ANALYZER_NORMAL);
-        break;
-    case MAINWIN_VIS_ANALYZER_LINES:
-    case MAINWIN_VIS_ANALYZER_BARS:
-        mainwin_vis_set_analyzer_type(action - MAINWIN_VIS_ANALYZER_LINES);
-        break;
-    case MAINWIN_VIS_ANALYZER_PEAKS:
-        cfg.analyzer_peaks = GTK_CHECK_MENU_ITEM(item)->active;
-        break;
-    case MAINWIN_VIS_SCOPE_DOT:
-    case MAINWIN_VIS_SCOPE_LINE:
-    case MAINWIN_VIS_SCOPE_SOLID:
-        cfg.scope_mode = action - MAINWIN_VIS_SCOPE_DOT;
-        break;
-    case MAINWIN_VIS_VOICEPRINT_NORMAL:
-    case MAINWIN_VIS_VOICEPRINT_FIRE:
-    case MAINWIN_VIS_VOICEPRINT_ICE:
-        cfg.voiceprint_mode = action - MAINWIN_VIS_VOICEPRINT_NORMAL;
-        break;
-    case MAINWIN_VIS_VU_NORMAL:
-    case MAINWIN_VIS_VU_SMOOTH:
-        cfg.vu_mode = action - MAINWIN_VIS_VU_NORMAL;
-        break;
-    case MAINWIN_VIS_REFRESH_FULL:
-    case MAINWIN_VIS_REFRESH_HALF:
-    case MAINWIN_VIS_REFRESH_QUARTER:
-    case MAINWIN_VIS_REFRESH_EIGHTH:
-        mainwin_vis_set_refresh(action - MAINWIN_VIS_REFRESH_FULL);
-        break;
-    case MAINWIN_VIS_AFALLOFF_SLOWEST:
-    case MAINWIN_VIS_AFALLOFF_SLOW:
-    case MAINWIN_VIS_AFALLOFF_MEDIUM:
-    case MAINWIN_VIS_AFALLOFF_FAST:
-    case MAINWIN_VIS_AFALLOFF_FASTEST:
-        mainwin_vis_set_afalloff(action - MAINWIN_VIS_AFALLOFF_SLOWEST);
-        break;
-    case MAINWIN_VIS_PFALLOFF_SLOWEST:
-    case MAINWIN_VIS_PFALLOFF_SLOW:
-    case MAINWIN_VIS_PFALLOFF_MEDIUM:
-    case MAINWIN_VIS_PFALLOFF_FAST:
-    case MAINWIN_VIS_PFALLOFF_FASTEST:
-        mainwin_vis_set_pfalloff(action - MAINWIN_VIS_PFALLOFF_SLOWEST);
-        break;
-    }
-}
 
 void
 mainwin_general_menu_callback(gpointer data,
@@ -3153,8 +2695,8 @@ mainwin_general_menu_callback(gpointer data,
     case MAINWIN_GENERAL_NEW_PL:
         {
             Playlist *new_pl = playlist_new();
-
             playlist_add_playlist(new_pl);
+            playlist_select_playlist(new_pl);
         }
         break;
     case MAINWIN_GENERAL_PREV_PL:
@@ -3207,28 +2749,27 @@ mainwin_mr_release(MenuRowItem i)
     switch (i) {
     case MENUROW_OPTIONS:
         gdk_window_get_pointer(NULL, &x, &y, &modmask);
-        util_item_factory_popup(mainwin_view_menu, x, y, 1,
+        ui_manager_popup_menu_show(GTK_MENU(mainwin_view_menu), x, y, 1,
                                 GDK_CURRENT_TIME);
         break;
     case MENUROW_ALWAYS:
-        widget =
-            gtk_item_factory_get_widget(mainwin_view_menu,
-                                        "/Always On Top");
-        gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget),
-                                       mainwin_menurow->mr_always_selected);
+        gtk_toggle_action_set_active(
+          GTK_TOGGLE_ACTION(gtk_action_group_get_action(
+          mainwin_toggleaction_group_others , "view always on top" )) ,
+          mainwin_menurow->mr_always_selected );
         break;
     case MENUROW_FILEINFOBOX:
         playlist_fileinfo_current(playlist_get_active());
         break;
     case MENUROW_DOUBLESIZE:
-        widget =
-            gtk_item_factory_get_widget(mainwin_view_menu, "/DoubleSize");
-        gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget),
-                                       mainwin_menurow->mr_doublesize_selected);
+        gtk_toggle_action_set_active(
+          GTK_TOGGLE_ACTION(gtk_action_group_get_action(
+          mainwin_toggleaction_group_others , "view doublesize" )) ,
+          mainwin_menurow->mr_doublesize_selected );
         break;
     case MENUROW_VISUALIZATION:
         gdk_window_get_pointer(NULL, &x, &y, &modmask);
-        util_item_factory_popup(mainwin_vis_menu, x, y, 1, GDK_CURRENT_TIME);
+        ui_manager_popup_menu_show(GTK_MENU(mainwin_visualization_menu), x, y, 1, GDK_CURRENT_TIME);
         break;
     case MENUROW_NONE:
         break;
@@ -3470,9 +3011,9 @@ static void
 set_timer_mode(TimerMode mode)
 {
     if (mode == TIMER_ELAPSED)
-        check_set(mainwin_view_menu, "/Time Elapsed", TRUE);
+        check_set(mainwin_radioaction_group_viewtime, "view time elapsed", TRUE);
     else
-        check_set(mainwin_view_menu, "/Time Remaining", TRUE);
+        check_set(mainwin_radioaction_group_viewtime, "view time remaining", TRUE);
 }
 
 static void
@@ -3500,54 +3041,167 @@ mainwin_setup_menus(void)
 
     /* View menu */
 
-    check_set(mainwin_view_menu, "/Always On Top", cfg.always_on_top);
-    check_set(mainwin_view_menu, "/Put on All Workspaces", cfg.sticky);
-    check_set(mainwin_view_menu, "/Roll up Player", cfg.player_shaded);
-    check_set(mainwin_view_menu, "/Roll up Playlist Editor", cfg.playlist_shaded);
-    check_set(mainwin_view_menu, "/Roll up Equalizer", cfg.equalizer_shaded);
-    check_set(mainwin_view_menu, "/Easy Move", cfg.easy_move);
-    check_set(mainwin_view_menu, "/DoubleSize", cfg.doublesize);
+    check_set(mainwin_toggleaction_group_others, "view always on top", cfg.always_on_top);
+    check_set(mainwin_toggleaction_group_others, "view put on all workspaces", cfg.sticky);
+    check_set(mainwin_toggleaction_group_others, "roll up player", cfg.player_shaded);
+    check_set(mainwin_toggleaction_group_others, "roll up playlist editor", cfg.playlist_shaded);
+    check_set(mainwin_toggleaction_group_others, "roll up equalizer", cfg.equalizer_shaded);
+    check_set(mainwin_toggleaction_group_others, "view easy move", cfg.easy_move);
+    check_set(mainwin_toggleaction_group_others, "view doublesize", cfg.doublesize);
 
     /* Songname menu */
 
-    check_set(mainwin_songname_menu, "/Autoscroll Songname", cfg.autoscroll);
-    check_set(mainwin_songname_menu, "/Stop After Current Song", cfg.stopaftersong);
+    check_set(mainwin_toggleaction_group_others, "autoscroll songname", cfg.autoscroll);
+    check_set(mainwin_toggleaction_group_others, "stop after current song", cfg.stopaftersong);
 
     /* Playback menu */
 
-    check_set(mainwin_play_menu, "/Repeat", cfg.repeat);
-    check_set(mainwin_play_menu, "/Shuffle", cfg.shuffle);
-    check_set(mainwin_play_menu, "/No Playlist Advance", cfg.no_playlist_advance);
+    check_set(mainwin_toggleaction_group_others, "playback repeat", cfg.repeat);
+    check_set(mainwin_toggleaction_group_others, "playback shuffle", cfg.shuffle);
+    check_set(mainwin_toggleaction_group_others, "playback no playlist advance", cfg.no_playlist_advance);
 
     /* Visualization menu */
 
-    check_set(mainwin_vis_menu,
-              mainwin_vis_menu_entries[MAINWIN_VIS_MENU_VIS_MODE +
-                                       cfg.vis_type].path, TRUE);
-    check_set(mainwin_vis_menu,
-              mainwin_vis_menu_entries[MAINWIN_VIS_MENU_ANALYZER_MODE +
-                                       cfg.analyzer_mode].path, TRUE);
-    check_set(mainwin_vis_menu,
-              mainwin_vis_menu_entries[MAINWIN_VIS_MENU_ANALYZER_TYPE +
-                                       cfg.analyzer_type].path, TRUE);
-    check_set(mainwin_vis_menu,
-              mainwin_vis_menu_entries[MAINWIN_VIS_MENU_ANALYZER_PEAKS].
-              path, cfg.analyzer_peaks);
-    check_set(mainwin_vis_menu,
-              mainwin_vis_menu_entries[MAINWIN_VIS_MENU_SCOPE_MODE +
-                                       cfg.scope_mode].path, TRUE);
-    check_set(mainwin_vis_menu,
-              mainwin_vis_menu_entries[MAINWIN_VIS_MENU_WSHADEVU_MODE +
-                                       cfg.vu_mode].path, TRUE);
-    check_set(mainwin_vis_menu,
-              mainwin_vis_menu_entries[MAINWIN_VIS_MENU_REFRESH_RATE +
-                                       cfg.vis_refresh].path, TRUE);
-    check_set(mainwin_vis_menu,
-              mainwin_vis_menu_entries[MAINWIN_VIS_MENU_AFALLOFF +
-                                       cfg.analyzer_falloff].path, TRUE);
-    check_set(mainwin_vis_menu,
-              mainwin_vis_menu_entries[MAINWIN_VIS_MENU_PFALLOFF +
-                                       cfg.peaks_falloff].path, TRUE);
+    switch ( cfg.vis_type )
+    {
+      case VIS_ANALYZER:
+        check_set(mainwin_radioaction_group_vismode, "vismode analyzer", TRUE);
+        break;
+      case VIS_SCOPE:
+        check_set(mainwin_radioaction_group_vismode, "vismode scope", TRUE);
+        break;
+      case VIS_VOICEPRINT:
+        check_set(mainwin_radioaction_group_vismode, "vismode voiceprint", TRUE);
+        break;
+      case VIS_OFF:
+      default:
+        check_set(mainwin_radioaction_group_vismode, "vismode off", TRUE);
+        break;
+    }
+
+    switch ( cfg.analyzer_mode )
+    {
+      case ANALYZER_FIRE:
+        check_set(mainwin_radioaction_group_anamode, "anamode fire", TRUE);
+        break;
+      case ANALYZER_VLINES:
+        check_set(mainwin_radioaction_group_anamode, "anamode vertical lines", TRUE);
+        break;
+      case ANALYZER_NORMAL:
+      default:
+        check_set(mainwin_radioaction_group_anamode, "anamode normal", TRUE);
+        break;
+    }
+
+    switch ( cfg.analyzer_type )
+    {
+      case ANALYZER_BARS:
+        check_set(mainwin_radioaction_group_anatype, "anatype bars", TRUE);
+        break;
+      case ANALYZER_LINES:
+      default:
+        check_set(mainwin_radioaction_group_anatype, "anatype lines", TRUE);
+        break;
+    }
+
+    check_set(mainwin_toggleaction_group_others, "anamode peaks", cfg.analyzer_peaks );
+
+    switch ( cfg.scope_mode )
+    {
+      case SCOPE_LINE:
+        check_set(mainwin_radioaction_group_scomode, "scomode line", TRUE);
+        break;
+      case SCOPE_SOLID:
+        check_set(mainwin_radioaction_group_scomode, "scomode solid", TRUE);
+        break;
+      case SCOPE_DOT:
+      default:
+        check_set(mainwin_radioaction_group_scomode, "scomode dot", TRUE);
+        break;
+    }
+
+    switch ( cfg.voiceprint_mode )
+    {
+      case VOICEPRINT_FIRE:
+        check_set(mainwin_radioaction_group_vprmode, "vprmode fire", TRUE);
+        break;
+      case VOICEPRINT_ICE:
+        check_set(mainwin_radioaction_group_vprmode, "vprmode ice", TRUE);
+        break;
+      case VOICEPRINT_NORMAL:
+      default:
+        check_set(mainwin_radioaction_group_vprmode, "vprmode normal", TRUE);
+        break;
+    }
+
+    switch ( cfg.vu_mode )
+    {
+      case VU_SMOOTH:
+        check_set(mainwin_radioaction_group_wshmode, "wshmode smooth", TRUE);
+        break;
+      case VU_NORMAL:
+      default:
+        check_set(mainwin_radioaction_group_wshmode, "wshmode normal", TRUE);
+        break;
+    }
+
+    switch ( cfg.vis_refresh )
+    {
+      case REFRESH_HALF:
+        check_set(mainwin_radioaction_group_refrate, "refrate half", TRUE);
+        break;
+      case REFRESH_QUARTER:
+        check_set(mainwin_radioaction_group_refrate, "refrate quarter", TRUE);
+        break;
+      case REFRESH_EIGTH:
+        check_set(mainwin_radioaction_group_refrate, "refrate eighth", TRUE);
+        break;
+      case REFRESH_FULL:
+      default:
+        check_set(mainwin_radioaction_group_refrate, "refrate full", TRUE);
+        break;
+    }
+
+    switch ( cfg.analyzer_falloff )
+    {
+      case FALLOFF_SLOW:
+        check_set(mainwin_radioaction_group_anafoff, "anafoff slow", TRUE);
+        break;
+      case FALLOFF_MEDIUM:
+        check_set(mainwin_radioaction_group_anafoff, "anafoff medium", TRUE);
+        break;
+      case FALLOFF_FAST:
+        check_set(mainwin_radioaction_group_anafoff, "anafoff fast", TRUE);
+        break;
+      case FALLOFF_FASTEST:
+        check_set(mainwin_radioaction_group_anafoff, "anafoff fastest", TRUE);
+        break;
+      case FALLOFF_SLOWEST:
+      default:
+        check_set(mainwin_radioaction_group_anafoff, "anafoff slowest", TRUE);
+        break;
+    }
+
+    switch ( cfg.peaks_falloff )
+    {
+      case FALLOFF_SLOW:
+        check_set(mainwin_radioaction_group_peafoff, "peafoff slow", TRUE);
+        break;
+      case FALLOFF_MEDIUM:
+        check_set(mainwin_radioaction_group_peafoff, "peafoff medium", TRUE);
+        break;
+      case FALLOFF_FAST:
+        check_set(mainwin_radioaction_group_peafoff, "peafoff fast", TRUE);
+        break;
+      case FALLOFF_FASTEST:
+        check_set(mainwin_radioaction_group_peafoff, "peafoff fastest", TRUE);
+        break;
+      case FALLOFF_SLOWEST:
+      default:
+        check_set(mainwin_radioaction_group_peafoff, "peafoff slowest", TRUE);
+        break;
+    }
+
 }
 
 static void
@@ -3821,47 +3475,13 @@ mainwin_create_window(void)
                      G_CALLBACK(mainwin_keypress), NULL);
 }
 
-static void
-mainwin_create_menus(void)
-{
-    mainwin_general_menu = create_menu(mainwin_general_menu_entries,
-                                       mainwin_general_menu_entries_num,
-                                       mainwin_accel);
-
-    mainwin_play_menu = create_menu(mainwin_playback_menu_entries,
-                                    mainwin_playback_menu_entries_num,
-                                    mainwin_accel);
-
-    mainwin_view_menu = create_menu(mainwin_view_menu_entries,
-                                    mainwin_view_menu_entries_num,
-                                    mainwin_accel);
-
-    mainwin_songname_menu = create_menu(mainwin_songname_menu_entries,
-                                        mainwin_songname_menu_entries_num,
-                                        mainwin_accel);
-
-    mainwin_add_menu = create_menu(mainwin_add_menu_entries,
-                                   mainwin_add_menu_entries_num,
-                                   mainwin_accel);
-
-    mainwin_vis_menu = create_menu(mainwin_vis_menu_entries,
-                                   mainwin_vis_menu_entries_num,
-                                   mainwin_accel);
-
-    make_submenu(mainwin_general_menu, "/View", mainwin_view_menu);
-    make_submenu(mainwin_general_menu, "/Playback", mainwin_play_menu);
-    make_submenu(mainwin_general_menu, "/Visualization", mainwin_vis_menu);
-
-    gtk_window_add_accel_group(GTK_WINDOW(mainwin), mainwin_accel);
-}
-
 void
 mainwin_create(void)
 {
     mainwin_create_window();
 
     mainwin_accel = gtk_accel_group_new();
-    mainwin_create_menus();
+    gtk_window_add_accel_group( GTK_WINDOW(mainwin) , ui_manager_get_accel_group() );
 
     mainwin_gc = gdk_gc_new(mainwin->window);
     mainwin_bg = gdk_pixmap_new(mainwin->window,
@@ -4059,4 +3679,340 @@ mainwin_idle_func(gpointer data)
     */
 
     return TRUE;
+}
+
+
+/* toggleactionentries actions */
+
+void
+action_anamode_peaks( GtkToggleAction * action )
+{
+  cfg.analyzer_peaks = gtk_toggle_action_get_active( action );
+}
+
+void
+action_autoscroll_songname( GtkToggleAction * action )
+{
+  mainwin_set_title_scroll(gtk_toggle_action_get_active(action));
+  playlistwin_set_sinfo_scroll(cfg.autoscroll); /* propagate scroll setting to playlistwin_sinfo */
+}
+
+void
+action_playback_noplaylistadvance( GtkToggleAction * action )
+{
+  cfg.no_playlist_advance = gtk_toggle_action_get_active( action );
+}
+
+void
+action_playback_repeat( GtkToggleAction * action )
+{
+  cfg.repeat = gtk_toggle_action_get_active( action );
+  tbutton_set_toggled(mainwin_repeat, cfg.repeat);
+}
+
+void
+action_playback_shuffle( GtkToggleAction * action )
+{
+  cfg.shuffle = gtk_toggle_action_get_active( action );
+  playlist_set_shuffle(cfg.shuffle);
+  tbutton_set_toggled(mainwin_shuffle, cfg.shuffle);
+}
+
+void
+action_stop_after_current_song( GtkToggleAction * action )
+{
+  cfg.stopaftersong = gtk_toggle_action_get_active( action );
+}
+
+void
+action_view_always_on_top( GtkToggleAction * action )
+{
+  mainwin_menurow->mr_always_selected = gtk_toggle_action_get_active( action );
+  cfg.always_on_top = mainwin_menurow->mr_always_selected;
+  widget_draw(WIDGET(mainwin_menurow));
+
+  if (starting_up == FALSE)
+    hint_set_always(cfg.always_on_top);
+}
+
+void
+action_view_doublesize( GtkToggleAction * action )
+{
+  mainwin_menurow->mr_doublesize_selected = gtk_toggle_action_get_active( action );
+  widget_draw(WIDGET(mainwin_menurow));
+  set_doublesize(mainwin_menurow->mr_doublesize_selected);
+  gdk_flush();
+}
+
+void
+action_view_easymove( GtkToggleAction * action )
+{
+  cfg.easy_move = gtk_toggle_action_get_active( action );
+}
+
+void
+action_view_on_all_workspaces( GtkToggleAction * action )
+{
+  cfg.sticky = gtk_toggle_action_get_active( action );
+  hint_set_sticky(cfg.sticky);
+}
+
+void
+action_roll_up_equalizer( GtkToggleAction * action )
+{
+  equalizerwin_set_shade_menu_cb(gtk_toggle_action_get_active(action));
+}
+
+void
+action_roll_up_player( GtkToggleAction * action )
+{
+  mainwin_set_shade_menu_cb(gtk_toggle_action_get_active(action));
+}
+
+void
+action_roll_up_playlist_editor( GtkToggleAction * action )
+{
+  playlistwin_set_shade(gtk_toggle_action_get_active(action));
+}
+
+void
+action_show_equalizer( GtkToggleAction * action )
+{
+  if (gtk_toggle_action_get_active(action))
+    equalizerwin_real_show();
+  else
+    equalizerwin_real_hide();
+}
+
+void
+action_show_playlist_editor( GtkToggleAction * action )
+{
+  if (gtk_toggle_action_get_active(action))
+    playlistwin_show();
+  else
+    playlistwin_hide();
+}
+
+void
+action_show_player( GtkToggleAction * action )
+{
+  mainwin_show(gtk_toggle_action_get_active(action));
+}
+
+
+/* radioactionentries actions (one callback for each radio group) */
+
+void
+action_anafoff( GtkAction *action, GtkRadioAction *current )
+{
+  mainwin_vis_set_afalloff(gtk_radio_action_get_current_value(current));
+}
+
+void
+action_anamode( GtkAction *action, GtkRadioAction *current )
+{
+  mainwin_vis_set_analyzer_mode(gtk_radio_action_get_current_value(current));
+}
+
+void
+action_anatype( GtkAction *action, GtkRadioAction *current )
+{
+  mainwin_vis_set_analyzer_type(gtk_radio_action_get_current_value(current));
+}
+
+void
+action_peafoff( GtkAction *action, GtkRadioAction *current )
+{
+  mainwin_vis_set_pfalloff(gtk_radio_action_get_current_value(current));
+}
+
+void
+action_refrate( GtkAction *action, GtkRadioAction *current )
+{
+  mainwin_vis_set_refresh(gtk_radio_action_get_current_value(current));
+}
+
+void
+action_scomode( GtkAction *action, GtkRadioAction *current )
+{
+  cfg.scope_mode = gtk_radio_action_get_current_value(current);
+}
+
+void
+action_vismode( GtkAction *action, GtkRadioAction *current )
+{
+  mainwin_vis_set_type_menu_cb(gtk_radio_action_get_current_value(current));
+}
+
+void
+action_vprmode( GtkAction *action, GtkRadioAction *current )
+{
+  cfg.voiceprint_mode = gtk_radio_action_get_current_value(current);
+}
+
+void
+action_wshmode( GtkAction *action, GtkRadioAction *current )
+{
+  cfg.vu_mode = gtk_radio_action_get_current_value(current);
+}
+
+void
+action_viewtime( GtkAction *action, GtkRadioAction *current )
+{
+  set_timer_mode_menu_cb(gtk_radio_action_get_current_value(current));
+}
+
+
+/* actionentries actions */
+
+void
+action_about_audacious( void )
+{
+  show_about_window();
+}
+
+void
+action_play_file( void )
+{
+  util_run_filebrowser(NO_PLAY_BUTTON);
+}
+
+void
+action_play_location( void )
+{
+  mainwin_show_add_url_window();
+}
+
+void
+action_ab_set( void )
+{
+  Playlist *playlist = playlist_get_active();
+  if (playlist_get_current_length(playlist) != -1)
+  {
+    if (ab_position_a == -1)
+    {
+      ab_position_a = playback_get_time();
+      ab_position_b = -1;
+      mainwin_lock_info_text("LOOP-POINT A POSITION SET.");
+    }
+    else if (ab_position_b == -1)
+    {
+      int time = playback_get_time();
+      if (time > ab_position_a)
+        ab_position_b = time;
+      mainwin_release_info_text();
+    }
+    else
+    {
+      ab_position_a = playback_get_time();
+      ab_position_b = -1;
+      mainwin_lock_info_text("LOOP-POINT A POSITION RESET.");
+    }
+  }
+}
+
+void
+action_ab_clear( void )
+{
+  Playlist *playlist = playlist_get_active();
+  if (playlist_get_current_length(playlist) != -1)
+  {
+    ab_position_a = ab_position_b = -1;
+    mainwin_release_info_text();
+  }
+}
+
+void
+action_track_info( void )
+{
+  playlist_fileinfo_current(playlist_get_active());
+}
+
+void
+action_jump_to_file( void )
+{
+  mainwin_jump_to_file();
+}
+
+void
+action_jump_to_playlist_start( void )
+{
+  Playlist *playlist = playlist_get_active();
+  playlist_set_position(playlist, 0);
+}
+
+void
+action_jump_to_time( void )
+{
+  mainwin_jump_to_time();
+}
+
+void
+action_playback_next( void )
+{
+  Playlist *playlist = playlist_get_active();
+  playlist_next(playlist);
+}
+
+void
+action_playback_previous( void )
+{
+  Playlist *playlist = playlist_get_active();
+  playlist_prev(playlist);
+}
+
+void
+action_playback_play( void )
+{
+  mainwin_play_pushed();
+}
+
+void
+action_playback_playcd( void )
+{
+  play_medium();
+}
+
+void
+action_playback_pause( void )
+{
+  playback_pause();
+}
+
+void
+action_playback_stop( void )
+{
+  mainwin_stop_pushed();
+}
+
+void
+action_playlist_new( void )
+{
+  Playlist *new_pl = playlist_new();
+  playlist_add_playlist(new_pl);
+  playlist_select_playlist(new_pl);
+}
+
+void
+action_playlist_prev( void )
+{
+  playlist_select_prev();
+}
+
+void
+action_playlist_next( void )
+{
+  playlist_select_next();
+}
+
+void
+action_preferences( void )
+{
+  show_prefs_window();
+}
+
+void
+action_quit( void )
+{
+  mainwin_quit_cb();
 }

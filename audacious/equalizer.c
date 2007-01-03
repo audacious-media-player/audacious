@@ -40,6 +40,7 @@
 #include "hints.h"
 #include "input.h"
 #include "main.h"
+#include "ui_manager.h"
 #include "playlist.h"
 #include "ui_playlist.h"
 #include "util.h"
@@ -277,10 +278,9 @@ equalizerwin_set_shade_menu_cb(gboolean shaded)
 static void
 equalizerwin_set_shade(gboolean shaded)
 {
-    GtkWidget *widget;
-    widget = gtk_item_factory_get_widget(mainwin_view_menu,
-                                         "/Roll up Equalizer");
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget), shaded);
+    GtkAction *action = gtk_action_group_get_action(
+      mainwin_toggleaction_group_others , "roll up equalizer" );
+    gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(action) , shaded );
 }
 
 static void
@@ -507,7 +507,7 @@ equalizerwin_press(GtkWidget * widget, GdkEventButton * event,
          * Pop up the main menu a few pixels down to avoid
          * anything to be selected initially.
          */
-        util_item_factory_popup(mainwin_general_menu, event->x_root,
+       ui_manager_popup_menu_show(GTK_MENU(mainwin_general_menu), event->x_root,
                                 event->y_root + 2, 3, event->time);
         grab = FALSE;
     }
@@ -1009,9 +1009,9 @@ equalizerwin_create(void)
 void
 equalizerwin_show(gboolean show)
 {
-    GtkWidget *item = gtk_item_factory_get_widget(mainwin_view_menu,
-                                                  "/Show Equalizer");
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item), show);
+    GtkAction *action = gtk_action_group_get_action(
+      mainwin_toggleaction_group_others , "show equalizer" );
+    gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(action) , show );
 }
 
 void

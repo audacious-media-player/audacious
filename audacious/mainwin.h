@@ -102,9 +102,11 @@ extern gboolean mainwin_focus;
 
 extern GtkWidget *mainwin_jtf;
 
+/*
 extern GtkItemFactory *mainwin_general_menu; 
 extern GtkItemFactory *mainwin_vis_menu;
 extern GtkItemFactory *mainwin_play_menu, *mainwin_view_menu;
+*/
 
 extern TextBox *mainwin_stime_min, *mainwin_stime_sec;
 extern TextBox *mainwin_info;
@@ -195,5 +197,6 @@ void mainwin_ewmh_activate(void);
 void playback_get_sample_params(gint * bitrate,
                                 gint * frequency,
                                 gint * numchannels);
+
 
 #endif

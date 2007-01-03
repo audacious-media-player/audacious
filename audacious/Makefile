@@ -34,15 +34,11 @@ HEADERS = \
 	main.h \
 	output.h \
 	playlist.h \
-	playlist_container.h \
-	playlist_manager.h \
 	plugin.h \
 	prefswin.h \
 	util.h \
 	vfs.h \
-	vfs_buffer.h \
-	icons-csource.h \
-	icons-stock.h
+	vfs_buffer.h
 
 SOURCES = \
 	build_stamp.c \
@@ -71,6 +67,7 @@ SOURCES = \
 	prefswin.c \
 	ui_fileinfo.c \
 	ui_playlist.c \
+	ui_manager.c \
 	equalizer.c \
 	glade.c \
 	hints.c \

@@ -60,6 +60,7 @@
 #include "input.h"
 #include "logger.h"
 #include "mainwin.h"
+#include "ui_manager.h"
 #include "output.h"
 #include "playback.h"
 #include "playlist.h"
@@ -1161,6 +1162,10 @@ main(gint argc, gchar ** argv)
         bmp_set_default_icon();
 
         gtk_accel_map_load(bmp_paths[BMP_PATH_ACCEL_FILE]);
+
+        /* uimanager */
+        ui_manager_init();
+        ui_manager_create_menus();
 
         if (!init_skins(cfg.skin)) {
             run_load_skin_error_dialog(cfg.skin);

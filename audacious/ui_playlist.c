@@ -44,6 +44,7 @@
 #include "input.h"
 #include "main.h"
 #include "mainwin.h"
+#include "ui_manager.h"
 #include "playback.h"
 #include "playlist.h"
 #include "playlist_container.h"
@@ -620,11 +621,9 @@ playlistwin_set_shade(gboolean shaded)
 static void
 playlistwin_set_shade_menu(gboolean shaded)
 {
-    GtkWidget *item;
-
-    item = gtk_item_factory_get_widget(mainwin_view_menu,
-                                       "/Roll up Playlist Editor");
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item), shaded);
+    GtkAction *action = gtk_action_group_get_action(
+      mainwin_toggleaction_group_others , "roll up playlist editor" );
+    gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(action) , shaded );
 
     playlistwin_set_shade(shaded);
     playlistwin_update_list(playlist_get_active());
@@ -977,15 +976,6 @@ playlistwin_fileinfo(void)
     }
     else
         playlist_fileinfo_current(playlist);
-}
-
-static void
-menu_set_item_sensitive(GtkItemFactory * item_factory,
-                        const gchar * path,
-                        gboolean sensitive)
-{
-    GtkWidget *item = gtk_item_factory_get_widget(item_factory, path);
-    gtk_widget_set_sensitive(item, sensitive);
 }
 
 static void
@@ -1420,7 +1410,7 @@ playlistwin_press(GtkWidget * widget,
          * Pop up the main menu a few pixels down to avoid
          * anything to be selected initially.
          */
-        util_item_factory_popup(mainwin_general_menu, event->x_root,
+        ui_manager_popup_menu_show(GTK_MENU(mainwin_general_menu), event->x_root,
                                 event->y_root + 2, 3, event->time);
         grab = FALSE;
     }
@@ -2106,11 +2096,9 @@ playlistwin_create(void)
 void
 playlistwin_show(void)
 {
-    GtkWidget *item;
-
-    item = gtk_item_factory_get_widget(mainwin_view_menu,
-                                       "/Show Playlist Editor");
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item), TRUE);
+    GtkAction *action = gtk_action_group_get_action(
+      mainwin_toggleaction_group_others , "show playlist editor" );
+    gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(action) , TRUE );
 
     tbutton_set_toggled(mainwin_pl, TRUE);
     cfg.playlist_visible = TRUE;
@@ -2124,11 +2112,9 @@ playlistwin_show(void)
 void
 playlistwin_hide(void)
 {
-    GtkWidget *item;
-
-    item = gtk_item_factory_get_widget(mainwin_view_menu,
-                                       "/Show Playlist Editor");
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item), FALSE);
+    GtkAction *action = gtk_action_group_get_action(
+      mainwin_toggleaction_group_others , "show playlist editor" );
+    gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(action) , FALSE );
 
     gtk_widget_hide(playlistwin);
     tbutton_set_toggled(mainwin_pl, FALSE);

@@ -1,3 +1,54 @@
+2007-01-01 17:28:18 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
+  revision [3467]
+  Update some copyrights notices, update po/
+  
+  trunk/AUTHORS                   |    2 
+  trunk/README                    |    2 
+  trunk/audacious/about.c         |   15 
+  trunk/audacious/controlsocket.c |    2 
+  trunk/audacious/controlsocket.h |    5 
+  trunk/audacious/credits.c       |   11 
+  trunk/audacious/dnd.h           |   10 
+  trunk/audacious/dock.c          |    5 
+  trunk/audacious/dock.h          |    5 
+  trunk/audacious/effect.c        |    6 
+  trunk/audacious/effect.h        |    5 
+  trunk/audacious/equalizer.c     |    4 
+  trunk/audacious/equalizer.h     |    6 
+  trunk/audacious/fft.c           |    6 
+  trunk/audacious/fft.h           |    8 
+  trunk/po/audacious.pot          |  252 +++-
+  trunk/po/br.po                  |  266 +++-
+  trunk/po/cs.po                  |  282 +++--
+  trunk/po/cy.po                  |  264 +++-
+  trunk/po/de.po                  |  364 +++---
+  trunk/po/el.po                  |  342 +++---
+  trunk/po/es.po                  |  364 +++---
+  trunk/po/fi.po                  |  285 +++--
+  trunk/po/fr.po                  |  264 +++-
+  trunk/po/hi.po                  |  287 +++--
+  trunk/po/hu.po                  |  362 +++---
+  trunk/po/it.po                  |  317 +++--
+  trunk/po/ja.po                  |  352 +++---
+  trunk/po/ka.po                  |  279 +++--
+  trunk/po/ko.po                  |  278 +++--
+  trunk/po/lt.po                  |  283 +++--
+  trunk/po/mk.po                  |  281 +++--
+  trunk/po/nl.po                  |  375 ++++--
+  trunk/po/pl.po                  |  370 ++++--
+  trunk/po/pt_BR.po               |  282 +++--
+  trunk/po/ro.po                  |  269 +++-
+  trunk/po/ru.po                  |  384 ++++---
+  trunk/po/sk.po                  |  282 +++--
+  trunk/po/sr.po                  |  269 +++-
+  trunk/po/sr@Latn.po             |  269 +++-
+  trunk/po/sv.po                  |  282 +++--
+  trunk/po/uk.po                  |  291 +++--
+  trunk/po/zh_CN.po               |  350 +++---
+  trunk/po/zh_TW.po               | 2185 ++++++++++++++--------------------------
+  44 files changed, 6517 insertions(+), 4305 deletions(-)
+
+
 2007-01-01 07:46:17 +0000  Cheng-Wei Chien <e.cwchien@gmail.com>
   revision [3465]
   zh_TW.po updated by: Cheng-Wei Chien <e.cwchien@gmail.com>
