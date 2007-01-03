@@ -1,3 +1,11 @@
+2007-01-03 06:04:44 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3481]
+  - fix sed
+  
+  trunk/audacious/widgets/skin.c |    6 +++---
+  1 file changed, 3 insertions(+), 3 deletions(-)
+
+
 2007-01-03 06:03:33 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3479]
   - rename mainwin.c to ui_main.c and such

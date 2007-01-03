@@ -20,7 +20,7 @@
 #endif
 
 #include "ui_manager.h"
-#include "actions-ui_main.h"
+#include "actions-mainwin.h"
 
 #include "ui_main.h"
 #include "icons-stock.h"
