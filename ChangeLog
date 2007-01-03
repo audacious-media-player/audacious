@@ -1,3 +1,11 @@
+2007-01-03 20:33:03 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3503]
+  - add missing actions-playlist.h (sorry)
+  
+  trunk/audacious/actions-playlist.h |   68 +++++++++++++++++++++++++++++++++++++
+  1 file changed, 68 insertions(+)
+
+
 2007-01-03 15:45:47 +0000  Giacomo Lozito <james@develia.org>
   revision [3501]
   - added in audtool mainwin-show, playlist-show and equalizer-show to toggle display of audacious windows
