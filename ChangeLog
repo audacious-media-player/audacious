@@ -1,3 +1,24 @@
+2007-01-03 22:45:41 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
+  revision [3509]
+  Update copyright notices
+  trunk/audacious/genevent.c    |    2 +-
+  trunk/audacious/genevent.h    |    2 +-
+  trunk/audacious/glade.c       |    5 ++++-
+  trunk/audacious/glade.h       |    5 ++++-
+  trunk/audacious/hints.c       |    6 +++---
+  trunk/audacious/hints.h       |    5 ++++-
+  trunk/audacious/icons-stock.h |    2 +-
+  trunk/audacious/input.c       |   10 +++++-----
+  trunk/audacious/input.h       |    9 ++++++---
+  trunk/audacious/logger.c      |    7 +++++--
+  trunk/audacious/logger.h      |    5 ++++-
+  trunk/audacious/main.c        |    2 +-
+  trunk/audacious/main.h        |    9 ++++++---
+  trunk/audacious/output.c      |    4 ++--
+  trunk/audacious/output.h      |    9 ++++++---
+  15 files changed, 53 insertions(+), 29 deletions(-)
+
+
 2007-01-03 22:41:33 +0000  Giacomo Lozito <james@develia.org>
   revision [3507]
   - added translation domain for actiongroups
