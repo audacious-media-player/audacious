@@ -1,3 +1,19 @@
+2007-01-03 00:48:38 +0000  Giacomo Lozito <james@develia.org>
+  revision [3469]
+  - migration from gtkitemfactory to actions and uimanager; main menu has been ported, still much work and test to do
+  trunk/audacious/Makefile      |    7 
+  trunk/audacious/equalizer.c   |   16 
+  trunk/audacious/main.c        |    5 
+  trunk/audacious/mainwin.c     | 1164 ++++++++++++++++++++----------------------
+  trunk/audacious/mainwin.h     |    3 
+  trunk/audacious/ui/Makefile   |    1 
+  trunk/audacious/ui/mainwin.ui |  124 ++++
+  trunk/audacious/ui_manager.c  |  436 +++++++++++++++
+  trunk/audacious/ui_manager.h  |   60 ++
+  trunk/audacious/ui_playlist.c |   36 -
+  10 files changed, 1210 insertions(+), 642 deletions(-)
+
+
 2007-01-01 17:28:18 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
   revision [3467]
   Update some copyrights notices, update po/
