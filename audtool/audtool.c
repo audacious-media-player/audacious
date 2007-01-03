@@ -80,6 +80,7 @@ struct commandhandler handlers[] = {
 	{"get-volume", get_volume, "returns the current volume level in percent"},
 	{"set-volume", set_volume, "sets the current volume level in percent"},
 	{"<sep>", NULL, "Miscellaneous"},
+	{"mainwin-display", mainwin_display, "shows/hides the mainwin"},
 	{"preferences", show_preferences_window, "shows/hides the preferences window"},
 	{"jumptofile", show_jtf_window, "shows the jump to file window"},
 	{"shutdown", shutdown_audacious_server, "shuts down audacious"},
@@ -871,6 +872,20 @@ void set_volume(gint session, gint argc, gchar **argv)
 	}
 
 	xmms_remote_set_main_volume(session, i);
+}
+
+void mainwin_display(gint session, gint argc, gchar **argv)
+{
+	if (strncmp(argv[2],"on"),2) {
+		xmms_remote_main_win_toggle(session, TRUE);
+	}
+	else if (strncmp(argv[2],"off",3)) {
+		xmms_remote_main_win_toggle(session, FALSE);
+	}
+	else {
+		g_print("%s: invalid parameter for mainwin-display.\n",argv[0]);
+		g_print("%s: syntax: %s mainwin-display <on/off>\n",argv[0],argv[0]);
+	}
 }
 
 void show_preferences_window(gint session, gint argc, gchar **argv)

@@ -1,3 +1,10 @@
+2007-01-03 12:44:05 +0000  Giacomo Lozito <james@develia.org>
+  revision [3497]
+  - no more menu_popup() in ui_playlist.c, now it uses ui_manager_popup_menu_show() from ui_manager framework
+  trunk/audacious/ui_playlist.c |   41 ++++++-----------------------------------
+  1 file changed, 6 insertions(+), 35 deletions(-)
+
+
 2007-01-03 09:25:18 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3495]
   - port playlist uimanager code to giacomo's ui_manager framework
