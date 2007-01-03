@@ -422,102 +422,111 @@ static GtkActionEntry action_entries_others[] = {
 
 /* ***************************** */
 
+
+static GtkActionGroup *
+ui_manager_new_action_group( const gchar * group_name )
+{
+  GtkActionGroup *group = gtk_action_group_new( group_name );
+  gtk_action_group_set_translation_domain( group , PACKAGE_NAME );
+  return group;
+}
+
 void
 ui_manager_init ( void )
 {
   /* toggle actions */
-  toggleaction_group_others = gtk_action_group_new("toggleaction_others");
+  toggleaction_group_others = ui_manager_new_action_group("toggleaction_others");
   gtk_action_group_add_toggle_actions(
     toggleaction_group_others , toggleaction_entries_others ,
     G_N_ELEMENTS(toggleaction_entries_others) , NULL );
 
   /* radio actions */
-  radioaction_group_anamode = gtk_action_group_new("radioaction_anamode");
+  radioaction_group_anamode = ui_manager_new_action_group("radioaction_anamode");
   gtk_action_group_add_radio_actions(
     radioaction_group_anamode , radioaction_entries_anamode ,
     G_N_ELEMENTS(radioaction_entries_anamode) , 0 , G_CALLBACK(action_anamode) , NULL );
 
-  radioaction_group_anatype = gtk_action_group_new("radioaction_anatype");
+  radioaction_group_anatype = ui_manager_new_action_group("radioaction_anatype");
   gtk_action_group_add_radio_actions(
     radioaction_group_anatype , radioaction_entries_anatype ,
     G_N_ELEMENTS(radioaction_entries_anatype) , 0 , G_CALLBACK(action_anatype) , NULL );
 
-  radioaction_group_scomode = gtk_action_group_new("radioaction_scomode");
+  radioaction_group_scomode = ui_manager_new_action_group("radioaction_scomode");
   gtk_action_group_add_radio_actions(
     radioaction_group_scomode , radioaction_entries_scomode ,
     G_N_ELEMENTS(radioaction_entries_scomode) , 0 , G_CALLBACK(action_scomode) , NULL );
 
-  radioaction_group_vprmode = gtk_action_group_new("radioaction_vprmode");
+  radioaction_group_vprmode = ui_manager_new_action_group("radioaction_vprmode");
   gtk_action_group_add_radio_actions(
     radioaction_group_vprmode , radioaction_entries_vprmode ,
     G_N_ELEMENTS(radioaction_entries_vprmode) , 0 , G_CALLBACK(action_vprmode) , NULL );
 
-  radioaction_group_wshmode = gtk_action_group_new("radioaction_wshmode");
+  radioaction_group_wshmode = ui_manager_new_action_group("radioaction_wshmode");
   gtk_action_group_add_radio_actions(
     radioaction_group_wshmode , radioaction_entries_wshmode ,
     G_N_ELEMENTS(radioaction_entries_wshmode) , 0 , G_CALLBACK(action_wshmode) , NULL );
 
-  radioaction_group_refrate = gtk_action_group_new("radioaction_refrate");
+  radioaction_group_refrate = ui_manager_new_action_group("radioaction_refrate");
   gtk_action_group_add_radio_actions(
     radioaction_group_refrate , radioaction_entries_refrate ,
     G_N_ELEMENTS(radioaction_entries_refrate) , 0 , G_CALLBACK(action_refrate) , NULL );
 
-  radioaction_group_anafoff = gtk_action_group_new("radioaction_anafoff");
+  radioaction_group_anafoff = ui_manager_new_action_group("radioaction_anafoff");
   gtk_action_group_add_radio_actions(
     radioaction_group_anafoff , radioaction_entries_anafoff ,
     G_N_ELEMENTS(radioaction_entries_anafoff) , 0 , G_CALLBACK(action_anafoff) , NULL );
 
-  radioaction_group_peafoff = gtk_action_group_new("radioaction_peafoff");
+  radioaction_group_peafoff = ui_manager_new_action_group("radioaction_peafoff");
   gtk_action_group_add_radio_actions(
     radioaction_group_peafoff , radioaction_entries_peafoff ,
     G_N_ELEMENTS(radioaction_entries_peafoff) , 0 , G_CALLBACK(action_peafoff) , NULL );
 
-  radioaction_group_vismode = gtk_action_group_new("radioaction_vismode");
+  radioaction_group_vismode = ui_manager_new_action_group("radioaction_vismode");
   gtk_action_group_add_radio_actions(
     radioaction_group_vismode , radioaction_entries_vismode ,
     G_N_ELEMENTS(radioaction_entries_vismode) , 0 , G_CALLBACK(action_vismode) , NULL );
 
-  radioaction_group_viewtime = gtk_action_group_new("radioaction_viewtime");
+  radioaction_group_viewtime = ui_manager_new_action_group("radioaction_viewtime");
   gtk_action_group_add_radio_actions(
     radioaction_group_viewtime , radioaction_entries_viewtime ,
     G_N_ELEMENTS(radioaction_entries_viewtime) , 0 , G_CALLBACK(action_viewtime) , NULL );
 
   /* normal actions */
-  action_group_playback = gtk_action_group_new("action_playback");
+  action_group_playback = ui_manager_new_action_group("action_playback");
     gtk_action_group_add_actions(
     action_group_playback , action_entries_playback ,
     G_N_ELEMENTS(action_entries_playback) , NULL );
 
-  action_group_playlist = gtk_action_group_new("action_playlist");
+  action_group_playlist = ui_manager_new_action_group("action_playlist");
     gtk_action_group_add_actions(
     action_group_playlist , action_entries_playlist ,
     G_N_ELEMENTS(action_entries_playlist) , NULL );
 
-  action_group_visualization = gtk_action_group_new("action_visualization");
+  action_group_visualization = ui_manager_new_action_group("action_visualization");
     gtk_action_group_add_actions(
     action_group_visualization , action_entries_visualization ,
     G_N_ELEMENTS(action_entries_visualization) , NULL );
 
-  action_group_view = gtk_action_group_new("action_view");
+  action_group_view = ui_manager_new_action_group("action_view");
     gtk_action_group_add_actions(
     action_group_view , action_entries_view ,
     G_N_ELEMENTS(action_entries_view) , NULL );
 
-  action_group_others = gtk_action_group_new("action_others");
+  action_group_others = ui_manager_new_action_group("action_others");
     gtk_action_group_add_actions(
     action_group_others , action_entries_others ,
     G_N_ELEMENTS(action_entries_others) , NULL );
 
-  action_group_add = gtk_action_group_new("action_add");
+  action_group_add = ui_manager_new_action_group("action_add");
   gtk_action_group_add_actions(action_group_add, action_entries_add, G_N_ELEMENTS(action_entries_add), NULL );
 
-  action_group_select = gtk_action_group_new("action_select");
+  action_group_select = ui_manager_new_action_group("action_select");
   gtk_action_group_add_actions(action_group_select, action_entries_select, G_N_ELEMENTS(action_entries_select), NULL );
 
-  action_group_delete = gtk_action_group_new("action_delete");
+  action_group_delete = ui_manager_new_action_group("action_delete");
   gtk_action_group_add_actions(action_group_delete, action_entries_delete, G_N_ELEMENTS(action_entries_delete), NULL );
 
-  action_group_sort = gtk_action_group_new("action_sort");
+  action_group_sort = ui_manager_new_action_group("action_sort");
   gtk_action_group_add_actions(action_group_sort, action_entries_sort, G_N_ELEMENTS(action_entries_sort), NULL );
 
   /* ui */

@@ -1,3 +1,11 @@
+2007-01-03 22:12:30 +0000  Strahinja Kustudi <kustodian@gmail.com>
+  revision [3505]
+  Updated sr.po and sr@Latn.po
+  trunk/po/sr.po      |  210 +++++++++++++++++++---------------------------------
+  trunk/po/sr@Latn.po |  209 +++++++++++++++++++--------------------------------
+  2 files changed, 158 insertions(+), 261 deletions(-)
+
+
 2007-01-03 20:33:03 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3503]
   - add missing actions-playlist.h (sorry)
