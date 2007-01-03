@@ -25,7 +25,7 @@
 #  include "config.h"
 #endif
 
-#include "credits.h"
+#include "ui_credits.h"
 
 #include <glib.h>
 #include <glib/gi18n.h>

@@ -63,7 +63,7 @@
 #include "controlsocket.h"
 #include "pluginenum.h"
 
-#include "credits.h"
+#include "ui_credits.h"
 #include "dnd.h"
 #include "dock.h"
 #include "ui_equalizer.h"

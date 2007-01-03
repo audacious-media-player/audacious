@@ -1,3 +1,11 @@
+2007-01-03 06:06:49 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3485]
+  - fix sed
+  
+  trunk/audacious/ui_main.c |   52 +++++++++++++++++++++++-----------------------
+  1 file changed, 26 insertions(+), 26 deletions(-)
+
+
 2007-01-03 06:05:31 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3483]
   - fix sed

@@ -69,9 +69,9 @@ SOURCES = \
 	ui_manager.c \
 	ui_equalizer.c \
 	ui_main.c \
+	ui_about.c ui_credits.c \
 	glade.c \
 	hints.c \
-	about.c credits.c \
 	getopt.c getopt1.c \
 	iir.c \
 	iir_cfs.c \
