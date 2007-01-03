@@ -1,4 +1,7 @@
-/*  XMMS - Cross-platform multimedia player
+/*  Audacious - Cross-platform multimedia player
+ *  Copyright (C) 2005-2007  Audacious development team
+ *
+ *  Based on XMMS:
  *  Copyright (C) 1998-2002  Peter Alm, Mikael Alm, Olle Hallnas,
  *                           Thomas Nilsson and 4Front Technologies
  *  Copyright (C) 1999-2002  Haavard Kvaalen

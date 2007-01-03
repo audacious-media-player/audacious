@@ -1,3 +1,11 @@
+2007-01-03 22:56:40 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
+  revision [3513]
+  Update audtool's copyright notices
+  trunk/audtool/audtool.c |    2 +-
+  trunk/audtool/audtool.h |    2 +-
+  2 files changed, 2 insertions(+), 2 deletions(-)
+
+
 2007-01-03 22:55:03 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
   revision [3511]
   More copyright notice updates
