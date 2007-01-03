@@ -77,4 +77,7 @@ extern PButton *playlistwin_shade, *playlistwin_close;
 
 extern gboolean playlistwin_focus;
 
+extern GtkWidget *pladd_menu, *pldel_menu, *plsel_menu, *plsort_menu, *pllist_menu;
+extern GtkWidget *playlistwin_popup_menu;
+
 #endif

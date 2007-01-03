@@ -31,22 +31,26 @@ GtkWidget *mainwin_playback_menu;
 GtkWidget *mainwin_playlist_menu;
 GtkWidget *mainwin_view_menu;
 
-GtkActionGroup *mainwin_toggleaction_group_others;
-GtkActionGroup *mainwin_radioaction_group_anamode; /* Analyzer mode */
-GtkActionGroup *mainwin_radioaction_group_anatype; /* Analyzer type */
-GtkActionGroup *mainwin_radioaction_group_scomode; /* Scope mode */
-GtkActionGroup *mainwin_radioaction_group_vprmode; /* Voiceprint mode */
-GtkActionGroup *mainwin_radioaction_group_wshmode; /* WindowShade VU mode */
-GtkActionGroup *mainwin_radioaction_group_refrate; /* Refresh rate */
-GtkActionGroup *mainwin_radioaction_group_anafoff; /* Analyzer Falloff */
-GtkActionGroup *mainwin_radioaction_group_peafoff; /* Peak Falloff */
-GtkActionGroup *mainwin_radioaction_group_vismode; /* Visualization mode */
-GtkActionGroup *mainwin_radioaction_group_viewtime; /* View time (remaining/elapsed) */
-GtkActionGroup *mainwin_action_group_playback;
-GtkActionGroup *mainwin_action_group_playlist;
-GtkActionGroup *mainwin_action_group_visualization;
-GtkActionGroup *mainwin_action_group_view;
-GtkActionGroup *mainwin_action_group_others;
+GtkActionGroup *toggleaction_group_others;
+GtkActionGroup *radioaction_group_anamode; /* Analyzer mode */
+GtkActionGroup *radioaction_group_anatype; /* Analyzer type */
+GtkActionGroup *radioaction_group_scomode; /* Scope mode */
+GtkActionGroup *radioaction_group_vprmode; /* Voiceprint mode */
+GtkActionGroup *radioaction_group_wshmode; /* WindowShade VU mode */
+GtkActionGroup *radioaction_group_refrate; /* Refresh rate */
+GtkActionGroup *radioaction_group_anafoff; /* Analyzer Falloff */
+GtkActionGroup *radioaction_group_peafoff; /* Peak Falloff */
+GtkActionGroup *radioaction_group_vismode; /* Visualization mode */
+GtkActionGroup *radioaction_group_viewtime; /* View time (remaining/elapsed) */
+GtkActionGroup *action_group_playback;
+GtkActionGroup *action_group_playlist;
+GtkActionGroup *action_group_visualization;
+GtkActionGroup *action_group_view;
+GtkActionGroup *action_group_others;
+GtkActionGroup *action_group_add;
+GtkActionGroup *action_group_select;
+GtkActionGroup *action_group_delete;
+GtkActionGroup *action_group_sort;
 
 
 void uimanager_init ( void );

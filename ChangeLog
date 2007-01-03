@@ -1,3 +1,22 @@
+2007-01-03 06:23:09 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3493]
+  skinwin.[ch] -> ui_skinselector.[ch]
+  
+  trunk/audacious/Makefile          |    2 
+  trunk/audacious/genevent.c        |    1 
+  trunk/audacious/main.c            |    2 
+  trunk/audacious/playback.c        |    2 
+  trunk/audacious/skinwin.c         |  405 --------------------------------------
+  trunk/audacious/skinwin.h         |   43 ----
+  trunk/audacious/ui_fileinfo.c     |    1 
+  trunk/audacious/ui_main.c         |    2 
+  trunk/audacious/ui_preferences.c  |    5 
+  trunk/audacious/ui_skinselector.c |  405 ++++++++++++++++++++++++++++++++++++++
+  trunk/audacious/ui_skinselector.h |   43 ++++
+  trunk/audacious/widgets/skin.c    |    2 
+  12 files changed, 456 insertions(+), 457 deletions(-)
+
+
 2007-01-03 06:17:06 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3491]
   - fix skin scripts

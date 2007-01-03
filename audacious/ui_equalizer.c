@@ -279,7 +279,7 @@ static void
 equalizerwin_set_shade(gboolean shaded)
 {
     GtkAction *action = gtk_action_group_get_action(
-      mainwin_toggleaction_group_others , "roll up equalizer" );
+      toggleaction_group_others , "roll up equalizer" );
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(action) , shaded );
 }
 
@@ -1010,8 +1010,13 @@ void
 equalizerwin_show(gboolean show)
 {
     GtkAction *action = gtk_action_group_get_action(
-      mainwin_toggleaction_group_others , "show equalizer" );
+      toggleaction_group_others , "show equalizer" );
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(action) , show );
+
+    if (show)
+        equalizerwin_real_show();
+    else
+        equalizerwin_real_hide();
 }
 
 void

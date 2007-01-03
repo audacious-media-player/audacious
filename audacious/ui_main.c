@@ -231,7 +231,7 @@ void
 mainwin_set_always_on_top(gboolean always)
 {
     GtkAction *action = gtk_action_group_get_action(
-      mainwin_toggleaction_group_others , "view always on top" );
+      toggleaction_group_others , "view always on top" );
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(action) , always );
 }
 
@@ -253,7 +253,7 @@ static void
 mainwin_set_shade(gboolean shaded)
 {
     GtkAction *action = gtk_action_group_get_action(
-      mainwin_toggleaction_group_others , "view roll up player" );
+      toggleaction_group_others , "view roll up player" );
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(action) , shaded );
 /*
     GtkWidget *widget = gtk_ui_manager_get_widget(ui_manager,
@@ -370,20 +370,20 @@ mainwin_vis_set_type(VisType mode)
     {
         case VIS_ANALYZER:
             action = gtk_action_group_get_action(
-              mainwin_radioaction_group_vismode , "vismode analyzer" );
+              radioaction_group_vismode , "vismode analyzer" );
             break;
         case VIS_SCOPE:
             action = gtk_action_group_get_action(
-              mainwin_radioaction_group_vismode , "vismode scope" );
+              radioaction_group_vismode , "vismode scope" );
             break;
         case VIS_VOICEPRINT:
             action = gtk_action_group_get_action(
-              mainwin_radioaction_group_vismode , "vismode voiceprint" );
+              radioaction_group_vismode , "vismode voiceprint" );
             break;
         case VIS_OFF:
         default:
             action = gtk_action_group_get_action(
-              mainwin_radioaction_group_vismode , "vismode off" );
+              radioaction_group_vismode , "vismode off" );
             break;
     }
 
@@ -2198,13 +2198,13 @@ mainwin_stop_pushed(void)
 void
 mainwin_shuffle_pushed(gboolean toggled)
 {
-    check_set( mainwin_toggleaction_group_others , "playback shuffle" , toggled );
+    check_set( toggleaction_group_others , "playback shuffle" , toggled );
 }
 
 void
 mainwin_repeat_pushed(gboolean toggled)
 {
-    check_set( mainwin_toggleaction_group_others , "playback repeat" , toggled );
+    check_set( toggleaction_group_others , "playback repeat" , toggled );
 }
 
 void
@@ -2451,7 +2451,7 @@ mainwin_real_show(void)
 {
     cfg.player_visible = TRUE;
 
-    check_set( mainwin_toggleaction_group_others , "show player" , TRUE );
+    check_set( toggleaction_group_others , "show player" , TRUE );
 
     if (cfg.player_shaded)
         vis_clear_data(active_vis);
@@ -2510,7 +2510,7 @@ mainwin_real_hide(void)
     GdkGC *gc;
     GdkColor pattern;
 
-    check_set( mainwin_toggleaction_group_others , "show player", FALSE);
+    check_set( toggleaction_group_others , "show player", FALSE);
 
     if (cfg.player_shaded)
         svis_clear_data(mainwin_svis);
@@ -2540,7 +2540,7 @@ void
 mainwin_set_stopaftersong(gboolean stop)
 {
     cfg.stopaftersong = stop;
-    check_set(mainwin_toggleaction_group_others, "stop after current song", cfg.stopaftersong);
+    check_set(toggleaction_group_others, "stop after current song", cfg.stopaftersong);
 }
 
 
@@ -2755,7 +2755,7 @@ mainwin_mr_release(MenuRowItem i)
     case MENUROW_ALWAYS:
         gtk_toggle_action_set_active(
           GTK_TOGGLE_ACTION(gtk_action_group_get_action(
-          mainwin_toggleaction_group_others , "view always on top" )) ,
+          toggleaction_group_others , "view always on top" )) ,
           mainwin_menurow->mr_always_selected );
         break;
     case MENUROW_FILEINFOBOX:
@@ -2764,7 +2764,7 @@ mainwin_mr_release(MenuRowItem i)
     case MENUROW_DOUBLESIZE:
         gtk_toggle_action_set_active(
           GTK_TOGGLE_ACTION(gtk_action_group_get_action(
-          mainwin_toggleaction_group_others , "view doublesize" )) ,
+          toggleaction_group_others , "view doublesize" )) ,
           mainwin_menurow->mr_doublesize_selected );
         break;
     case MENUROW_VISUALIZATION:
@@ -3011,9 +3011,9 @@ static void
 set_timer_mode(TimerMode mode)
 {
     if (mode == TIMER_ELAPSED)
-        check_set(mainwin_radioaction_group_viewtime, "view time elapsed", TRUE);
+        check_set(radioaction_group_viewtime, "view time elapsed", TRUE);
     else
-        check_set(mainwin_radioaction_group_viewtime, "view time remaining", TRUE);
+        check_set(radioaction_group_viewtime, "view time remaining", TRUE);
 }
 
 static void
@@ -3041,164 +3041,164 @@ mainwin_setup_menus(void)
 
     /* View menu */
 
-    check_set(mainwin_toggleaction_group_others, "view always on top", cfg.always_on_top);
-    check_set(mainwin_toggleaction_group_others, "view put on all workspaces", cfg.sticky);
-    check_set(mainwin_toggleaction_group_others, "roll up player", cfg.player_shaded);
-    check_set(mainwin_toggleaction_group_others, "roll up playlist editor", cfg.playlist_shaded);
-    check_set(mainwin_toggleaction_group_others, "roll up equalizer", cfg.equalizer_shaded);
-    check_set(mainwin_toggleaction_group_others, "view easy move", cfg.easy_move);
-    check_set(mainwin_toggleaction_group_others, "view doublesize", cfg.doublesize);
+    check_set(toggleaction_group_others, "view always on top", cfg.always_on_top);
+    check_set(toggleaction_group_others, "view put on all workspaces", cfg.sticky);
+    check_set(toggleaction_group_others, "roll up player", cfg.player_shaded);
+    check_set(toggleaction_group_others, "roll up playlist editor", cfg.playlist_shaded);
+    check_set(toggleaction_group_others, "roll up equalizer", cfg.equalizer_shaded);
+    check_set(toggleaction_group_others, "view easy move", cfg.easy_move);
+    check_set(toggleaction_group_others, "view doublesize", cfg.doublesize);
 
     /* Songname menu */
 
-    check_set(mainwin_toggleaction_group_others, "autoscroll songname", cfg.autoscroll);
-    check_set(mainwin_toggleaction_group_others, "stop after current song", cfg.stopaftersong);
+    check_set(toggleaction_group_others, "autoscroll songname", cfg.autoscroll);
+    check_set(toggleaction_group_others, "stop after current song", cfg.stopaftersong);
 
     /* Playback menu */
 
-    check_set(mainwin_toggleaction_group_others, "playback repeat", cfg.repeat);
-    check_set(mainwin_toggleaction_group_others, "playback shuffle", cfg.shuffle);
-    check_set(mainwin_toggleaction_group_others, "playback no playlist advance", cfg.no_playlist_advance);
+    check_set(toggleaction_group_others, "playback repeat", cfg.repeat);
+    check_set(toggleaction_group_others, "playback shuffle", cfg.shuffle);
+    check_set(toggleaction_group_others, "playback no playlist advance", cfg.no_playlist_advance);
 
     /* Visualization menu */
 
     switch ( cfg.vis_type )
     {
       case VIS_ANALYZER:
-        check_set(mainwin_radioaction_group_vismode, "vismode analyzer", TRUE);
+        check_set(radioaction_group_vismode, "vismode analyzer", TRUE);
         break;
       case VIS_SCOPE:
-        check_set(mainwin_radioaction_group_vismode, "vismode scope", TRUE);
+        check_set(radioaction_group_vismode, "vismode scope", TRUE);
         break;
       case VIS_VOICEPRINT:
-        check_set(mainwin_radioaction_group_vismode, "vismode voiceprint", TRUE);
+        check_set(radioaction_group_vismode, "vismode voiceprint", TRUE);
         break;
       case VIS_OFF:
       default:
-        check_set(mainwin_radioaction_group_vismode, "vismode off", TRUE);
+        check_set(radioaction_group_vismode, "vismode off", TRUE);
         break;
     }
 
     switch ( cfg.analyzer_mode )
     {
       case ANALYZER_FIRE:
-        check_set(mainwin_radioaction_group_anamode, "anamode fire", TRUE);
+        check_set(radioaction_group_anamode, "anamode fire", TRUE);
         break;
       case ANALYZER_VLINES:
-        check_set(mainwin_radioaction_group_anamode, "anamode vertical lines", TRUE);
+        check_set(radioaction_group_anamode, "anamode vertical lines", TRUE);
         break;
       case ANALYZER_NORMAL:
       default:
-        check_set(mainwin_radioaction_group_anamode, "anamode normal", TRUE);
+        check_set(radioaction_group_anamode, "anamode normal", TRUE);
         break;
     }
 
     switch ( cfg.analyzer_type )
     {
       case ANALYZER_BARS:
-        check_set(mainwin_radioaction_group_anatype, "anatype bars", TRUE);
+        check_set(radioaction_group_anatype, "anatype bars", TRUE);
         break;
       case ANALYZER_LINES:
       default:
-        check_set(mainwin_radioaction_group_anatype, "anatype lines", TRUE);
+        check_set(radioaction_group_anatype, "anatype lines", TRUE);
         break;
     }
 
-    check_set(mainwin_toggleaction_group_others, "anamode peaks", cfg.analyzer_peaks );
+    check_set(toggleaction_group_others, "anamode peaks", cfg.analyzer_peaks );
 
     switch ( cfg.scope_mode )
     {
       case SCOPE_LINE:
-        check_set(mainwin_radioaction_group_scomode, "scomode line", TRUE);
+        check_set(radioaction_group_scomode, "scomode line", TRUE);
         break;
       case SCOPE_SOLID:
-        check_set(mainwin_radioaction_group_scomode, "scomode solid", TRUE);
+        check_set(radioaction_group_scomode, "scomode solid", TRUE);
         break;
       case SCOPE_DOT:
       default:
-        check_set(mainwin_radioaction_group_scomode, "scomode dot", TRUE);
+        check_set(radioaction_group_scomode, "scomode dot", TRUE);
         break;
     }
 
     switch ( cfg.voiceprint_mode )
     {
       case VOICEPRINT_FIRE:
-        check_set(mainwin_radioaction_group_vprmode, "vprmode fire", TRUE);
+        check_set(radioaction_group_vprmode, "vprmode fire", TRUE);
         break;
       case VOICEPRINT_ICE:
-        check_set(mainwin_radioaction_group_vprmode, "vprmode ice", TRUE);
+        check_set(radioaction_group_vprmode, "vprmode ice", TRUE);
         break;
       case VOICEPRINT_NORMAL:
       default:
-        check_set(mainwin_radioaction_group_vprmode, "vprmode normal", TRUE);
+        check_set(radioaction_group_vprmode, "vprmode normal", TRUE);
         break;
     }
 
     switch ( cfg.vu_mode )
     {
       case VU_SMOOTH:
-        check_set(mainwin_radioaction_group_wshmode, "wshmode smooth", TRUE);
+        check_set(radioaction_group_wshmode, "wshmode smooth", TRUE);
         break;
       case VU_NORMAL:
       default:
-        check_set(mainwin_radioaction_group_wshmode, "wshmode normal", TRUE);
+        check_set(radioaction_group_wshmode, "wshmode normal", TRUE);
         break;
     }
 
     switch ( cfg.vis_refresh )
     {
       case REFRESH_HALF:
-        check_set(mainwin_radioaction_group_refrate, "refrate half", TRUE);
+        check_set(radioaction_group_refrate, "refrate half", TRUE);
         break;
       case REFRESH_QUARTER:
-        check_set(mainwin_radioaction_group_refrate, "refrate quarter", TRUE);
+        check_set(radioaction_group_refrate, "refrate quarter", TRUE);
         break;
       case REFRESH_EIGTH:
-        check_set(mainwin_radioaction_group_refrate, "refrate eighth", TRUE);
+        check_set(radioaction_group_refrate, "refrate eighth", TRUE);
         break;
       case REFRESH_FULL:
       default:
-        check_set(mainwin_radioaction_group_refrate, "refrate full", TRUE);
+        check_set(radioaction_group_refrate, "refrate full", TRUE);
         break;
     }
 
     switch ( cfg.analyzer_falloff )
     {
       case FALLOFF_SLOW:
-        check_set(mainwin_radioaction_group_anafoff, "anafoff slow", TRUE);
+        check_set(radioaction_group_anafoff, "anafoff slow", TRUE);
         break;
       case FALLOFF_MEDIUM:
-        check_set(mainwin_radioaction_group_anafoff, "anafoff medium", TRUE);
+        check_set(radioaction_group_anafoff, "anafoff medium", TRUE);
         break;
       case FALLOFF_FAST:
-        check_set(mainwin_radioaction_group_anafoff, "anafoff fast", TRUE);
+        check_set(radioaction_group_anafoff, "anafoff fast", TRUE);
         break;
       case FALLOFF_FASTEST:
-        check_set(mainwin_radioaction_group_anafoff, "anafoff fastest", TRUE);
+        check_set(radioaction_group_anafoff, "anafoff fastest", TRUE);
         break;
       case FALLOFF_SLOWEST:
       default:
-        check_set(mainwin_radioaction_group_anafoff, "anafoff slowest", TRUE);
+        check_set(radioaction_group_anafoff, "anafoff slowest", TRUE);
         break;
     }
 
     switch ( cfg.peaks_falloff )
     {
       case FALLOFF_SLOW:
-        check_set(mainwin_radioaction_group_peafoff, "peafoff slow", TRUE);
+        check_set(radioaction_group_peafoff, "peafoff slow", TRUE);
         break;
       case FALLOFF_MEDIUM:
-        check_set(mainwin_radioaction_group_peafoff, "peafoff medium", TRUE);
+        check_set(radioaction_group_peafoff, "peafoff medium", TRUE);
         break;
       case FALLOFF_FAST:
-        check_set(mainwin_radioaction_group_peafoff, "peafoff fast", TRUE);
+        check_set(radioaction_group_peafoff, "peafoff fast", TRUE);
         break;
       case FALLOFF_FASTEST:
-        check_set(mainwin_radioaction_group_peafoff, "peafoff fastest", TRUE);
+        check_set(radioaction_group_peafoff, "peafoff fastest", TRUE);
         break;
       case FALLOFF_SLOWEST:
       default:
-        check_set(mainwin_radioaction_group_peafoff, "peafoff slowest", TRUE);
+        check_set(radioaction_group_peafoff, "peafoff slowest", TRUE);
         break;
     }
 

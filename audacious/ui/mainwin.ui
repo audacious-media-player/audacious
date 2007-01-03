@@ -93,9 +93,19 @@
 			</menu>
 			<menu action="playlist">
 				<menuitem action="playlist new" />
+				<separator />
 				<menuitem action="playlist select next" />
 				<menuitem action="playlist select previous" />
-				<menuitem action="playlist delete" />
+				<separator />
+				<menuitem action="playlist load" />
+				<menuitem action="playlist save" />
+				<menuitem action="playlist save default" />
+				<separator />
+				<menuitem action="playlist manager" />
+				<separator />
+				<menuitem action="playlist refresh" />
+				<separator />
+<!--				<menuitem action="playlist delete" /> -->
 			</menu>
 			<menu action="view">
 				<menuitem action="show player" />
