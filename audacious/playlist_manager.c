@@ -18,7 +18,7 @@
 #include "playlist_manager.h"
 #include "ui_playlist.h"
 #include "playlist.h"
-#include "mainwin.h"
+#include "ui_main.h"
 
 #include <glib.h>
 #include <glib/gi18n.h>

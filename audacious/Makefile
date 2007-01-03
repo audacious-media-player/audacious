@@ -62,13 +62,13 @@ SOURCES = \
 	playback.c \
 	main.c \
 	logger.c \
-	mainwin.c \
 	skinwin.c \
 	prefswin.c \
 	ui_fileinfo.c \
 	ui_playlist.c \
 	ui_manager.c \
 	ui_equalizer.c \
+	ui_main.c \
 	glade.c \
 	hints.c \
 	about.c credits.c \

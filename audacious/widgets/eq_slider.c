@@ -27,7 +27,7 @@
 #include <gdk/gdk.h>
 
 #include "ui_equalizer.h"
-#include "mainwin.h"
+#include "ui_main.h"
 #include "skin.h"
 
 void

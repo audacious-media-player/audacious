@@ -23,7 +23,7 @@
 
 #include <glib.h>
 
-#include "mainwin.h"
+#include "ui_main.h"
 #include "widgets/widgetcore.h"
 #include "playlist.h"
 

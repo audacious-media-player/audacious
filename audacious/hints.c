@@ -27,7 +27,7 @@
 #include <gtk/gtk.h>
 
 #include "ui_equalizer.h"
-#include "mainwin.h"
+#include "ui_main.h"
 #include "ui_playlist.h"
 
 #include "platform/smartinclude.h"

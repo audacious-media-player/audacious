@@ -43,7 +43,7 @@
 #include "hints.h"
 #include "input.h"
 #include "main.h"
-#include "mainwin.h"
+#include "ui_main.h"
 #include "ui_manager.h"
 #include "playback.h"
 #include "playlist.h"

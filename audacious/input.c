@@ -33,7 +33,7 @@
 #include "fft.h"
 #include "input.h"
 #include "main.h"
-#include "mainwin.h"
+#include "ui_main.h"
 #include "output.h"
 #include "util.h"
 #include "visualization.h"

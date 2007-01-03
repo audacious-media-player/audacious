@@ -56,7 +56,7 @@
 
 #include "playlist.h"
 
-#include "mainwin.h"
+#include "ui_main.h"
 #include "ui_playlist.h"
 #include "skinwin.h"
 #include "build_stamp.h"

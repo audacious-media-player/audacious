@@ -59,7 +59,7 @@
 #include "hints.h"
 #include "input.h"
 #include "logger.h"
-#include "mainwin.h"
+#include "ui_main.h"
 #include "ui_manager.h"
 #include "output.h"
 #include "playback.h"

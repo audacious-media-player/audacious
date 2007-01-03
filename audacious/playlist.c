@@ -51,7 +51,7 @@
 
 #include "input.h"
 #include "main.h"
-#include "mainwin.h"
+#include "ui_main.h"
 #include "libaudacious/util.h"
 #include "libaudacious/configdb.h"
 #include "vfs.h"

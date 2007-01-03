@@ -30,7 +30,7 @@
 #include <signal.h>
 
 #include "main.h"
-#include "mainwin.h"
+#include "ui_main.h"
 #include "signals.h"
 
 typedef void (*SignalHandler) (gint);

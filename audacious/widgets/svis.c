@@ -26,7 +26,7 @@
 #include <string.h>
 
 #include "main.h"
-#include "mainwin.h"
+#include "ui_main.h"
 #include "plugin.h"
 #include "widget.h"
 #include "vis.h"

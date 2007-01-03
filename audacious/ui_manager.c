@@ -20,9 +20,9 @@
 #endif
 
 #include "ui_manager.h"
-#include "actions-mainwin.h"
+#include "actions-ui_main.h"
 
-#include "mainwin.h"
+#include "ui_main.h"
 #include "icons-stock.h"
 #include "widgets/widgetcore.h"
 

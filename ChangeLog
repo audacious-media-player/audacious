@@ -1,3 +1,25 @@
+2007-01-03 05:57:04 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3477]
+  - rename equalizer.c to ui_equalizer.c
+  
+  trunk/audacious/Makefile            |    2 
+  trunk/audacious/controlsocket.c     |    2 
+  trunk/audacious/equalizer.c         | 1937 ------------------------------------
+  trunk/audacious/equalizer.h         |   64 -
+  trunk/audacious/genevent.c          |    1 
+  trunk/audacious/hints.c             |    2 
+  trunk/audacious/main.c              |    2 
+  trunk/audacious/mainwin.c           |    2 
+  trunk/audacious/playback.c          |    2 
+  trunk/audacious/playlist.c          |    2 
+  trunk/audacious/ui_equalizer.c      | 1937 ++++++++++++++++++++++++++++++++++++
+  trunk/audacious/ui_equalizer.h      |   64 +
+  trunk/audacious/ui_playlist.c       |    2 
+  trunk/audacious/widgets/eq_slider.c |    2 
+  trunk/audacious/widgets/skin.c      |    2 
+  15 files changed, 2011 insertions(+), 2012 deletions(-)
+
+
 2007-01-03 05:52:19 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3475]
   - remove everything relating to GtkItemFactory.

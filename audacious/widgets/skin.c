@@ -956,17 +956,17 @@ skin_parse_hints(Skin * skin, gchar *path_p)
     /* XXX: use of skin_mask_info here is bad */
     skin_mask_info[0].width = skin->properties.mainwin_width;
 
-    skin->properties.mainwin_height = 116;
+    skin->properties.ui_main.height = 116;
     tmp = read_ini_string(filename, "skin", "mainwinHeight");
 
     if (tmp != NULL)
     {
-        skin->properties.mainwin_height = atoi(tmp);
+        skin->properties.ui_main.height = atoi(tmp);
         g_free(tmp);
     }
 
     /* XXX: use of skin_mask_info here is bad */
-    skin_mask_info[0].height = skin->properties.mainwin_height;
+    skin_mask_info[0].height = skin->properties.ui_main.height;
 
     skin->properties.mainwin_about_x = 247;
     tmp = read_ini_string(filename, "skin", "mainwinAboutX");
@@ -987,7 +987,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
     }
 
     skin->properties.mainwin_shuffle_x = 164;
-    tmp = read_ini_string(filename, "skin", "mainwinShuffleX");
+    tmp = read_ini_string(filename, "skin", "ui_main.huffleX");
 
     if (tmp != NULL)
     {
@@ -996,7 +996,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
     }
 
     skin->properties.mainwin_shuffle_y = 89;
-    tmp = read_ini_string(filename, "skin", "mainwinShuffleY");
+    tmp = read_ini_string(filename, "skin", "ui_main.huffleY");
 
     if (tmp != NULL)
     {
@@ -1095,7 +1095,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
     }
 
     skin->properties.mainwin_shade_x = 254;
-    tmp = read_ini_string(filename, "skin", "mainwinShadeX");
+    tmp = read_ini_string(filename, "skin", "ui_main.hadeX");
 
     if (tmp != NULL)
     {
@@ -1104,7 +1104,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
     }
 
     skin->properties.mainwin_shade_y = 3;
-    tmp = read_ini_string(filename, "skin", "mainwinShadeY");
+    tmp = read_ini_string(filename, "skin", "ui_main.hadeY");
 
     if (tmp != NULL)
     {

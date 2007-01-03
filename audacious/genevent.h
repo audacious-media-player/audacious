@@ -24,7 +24,7 @@
 #ifndef GENEVENT_H
 #define GENEVENT_H
 
-#include "mainwin.h"
+#include "ui_main.h"
 
 extern gboolean ev_waiting;
 

@@ -23,7 +23,7 @@
 
 #ifdef _AUDACIOUS_CORE
 # include "widgets/widgetcore.h"
-# include "mainwin.h"
+# include "ui_main.h"
 #endif
 
 #include <sys/types.h>
