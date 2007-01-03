@@ -1036,35 +1036,6 @@ playlistwin_scrolled(GtkWidget * widget,
 
 }
 
-static void
-menu_popup_pos_func(GtkMenu * menu,
-                    gint * x,
-                    gint * y,
-                    gboolean * push_in,
-                    gint * point)
-{
-    *x = point[0];
-    *y = point[1];
-    *push_in = FALSE;
-}
-
-static void
-menu_popup(GtkMenu * menu,
-           gint x,
-           gint y,
-           guint button,
-           guint time)
-{
-    gint pos[2];
-
-    pos[0] = x;
-    pos[1] = y;
-
-    gtk_menu_popup(menu, NULL, NULL,
-                   (GtkMenuPositionFunc) menu_popup_pos_func, pos,
-                   button, time);
-}
-
 static gboolean
 playlistwin_press(GtkWidget * widget,
                   GdkEventButton * event,
@@ -1101,7 +1072,7 @@ playlistwin_press(GtkWidget * widget,
     else if (event->button == 1 && REGION_L(12, 37, 29, 11)) {
         /* ADD button menu */
         gtk_widget_size_request(pladd_menu, &req);
-        menu_popup(GTK_MENU(pladd_menu),
+        ui_manager_popup_menu_show(GTK_MENU(pladd_menu),
                    xpos + 12,
                    (ypos + playlistwin_get_height()) - 8 - req.height,
                    event->button,
@@ -1111,7 +1082,7 @@ playlistwin_press(GtkWidget * widget,
     else if (event->button == 1 && REGION_L(41, 66, 29, 11)) {
         /* SUB button menu */
         gtk_widget_size_request(pldel_menu, &req);
-        menu_popup(GTK_MENU(pldel_menu),
+        ui_manager_popup_menu_show(GTK_MENU(pldel_menu),
                    xpos + 40,
                    (ypos + playlistwin_get_height()) - 8 - req.height,
                    event->button,
@@ -1121,7 +1092,7 @@ playlistwin_press(GtkWidget * widget,
     else if (event->button == 1 && REGION_L(70, 95, 29, 11)) {
         /* SEL button menu */
         gtk_widget_size_request(plsel_menu, &req);
-        menu_popup(GTK_MENU(plsel_menu),
+        ui_manager_popup_menu_show(GTK_MENU(plsel_menu),
                    xpos + 68,
                    (ypos + playlistwin_get_height()) - 8 - req.height,
                    event->button,
@@ -1131,7 +1102,7 @@ playlistwin_press(GtkWidget * widget,
     else if (event->button == 1 && REGION_L(99, 124, 29, 11)) {
         /* MISC button menu */
         gtk_widget_size_request(plsort_menu, &req);
-        menu_popup(GTK_MENU(plsort_menu),
+        ui_manager_popup_menu_show(GTK_MENU(plsort_menu),
                    xpos + 100,
                    (ypos + playlistwin_get_height()) - 8 - req.height,
                    event->button,
@@ -1141,7 +1112,7 @@ playlistwin_press(GtkWidget * widget,
     else if (event->button == 1 && REGION_R(46, 23, 29, 11)) {
         /* LIST button menu */
         gtk_widget_size_request(pllist_menu, &req);
-        menu_popup(GTK_MENU(pllist_menu),
+        ui_manager_popup_menu_show(GTK_MENU(pllist_menu),
                    xpos + playlistwin_get_width() - req.width - 12,
                    (ypos + playlistwin_get_height()) - 8 - req.height,
                    event->button,
@@ -1195,7 +1166,7 @@ playlistwin_press(GtkWidget * widget,
     }
     else if (event->button == 3 &&
              widget_contains(WIDGET(playlistwin_list), event->x, event->y)) {
-        menu_popup(GTK_MENU(playlistwin_popup_menu),
+        ui_manager_popup_menu_show(GTK_MENU(playlistwin_popup_menu),
                                event->x_root, event->y_root + 5,
                                event->button, event->time);
         grab = FALSE;

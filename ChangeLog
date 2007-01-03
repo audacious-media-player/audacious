@@ -1,3 +1,18 @@
+2007-01-03 09:25:18 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3495]
+  - port playlist uimanager code to giacomo's ui_manager framework
+  
+  trunk/audacious/ui/mainwin.ui  |   12 +
+  trunk/audacious/ui/playlist.ui |   19 +-
+  trunk/audacious/ui_equalizer.c |    9 -
+  trunk/audacious/ui_main.c      |  118 ++++++-------
+  trunk/audacious/ui_manager.c   |  367 +++++++++++++++++++++++++++++++----------
+  trunk/audacious/ui_manager.h   |   36 ++--
+  trunk/audacious/ui_playlist.c  |  365 +++++-----------------------------------
+  trunk/audacious/ui_playlist.h  |    3 
+  8 files changed, 440 insertions(+), 489 deletions(-)
+
+
 2007-01-03 06:23:09 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3493]
   skinwin.[ch] -> ui_skinselector.[ch]
