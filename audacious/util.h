@@ -58,13 +58,6 @@ GArray *string_to_garray(const gchar * str);
 void glist_movedown(GList * list);
 void glist_moveup(GList * list);
 
-void util_item_factory_popup(GtkItemFactory * ifactory, guint x, guint y,
-                             guint mouse_button, guint32 time);
-void util_item_factory_popup_with_data(GtkItemFactory * ifactory,
-                                       gpointer data,
-                                       GtkDestroyNotify destroy, guint x,
-                                       guint y, guint mouse_button,
-                                       guint32 time);
 GtkWidget *util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
                                    GCallback enqueue_func);
 void util_menu_position(GtkMenu * menu, gint * x, gint * y,
@@ -105,14 +98,6 @@ gchar *bmp_menu_translate(const gchar * path, gpointer func_data);
 #else
 #  define bmp_menu_translate NULL
 #endif
-
-GtkItemFactory *create_menu(GtkItemFactoryEntry *entries,
-                            guint n_entries,
-                            GtkAccelGroup *accel);
-
-void make_submenu(GtkItemFactory *menu,
-                  const gchar *item_path,
-                  GtkItemFactory *submenu);
 
 GtkWidget *make_filebrowser(const gchar * title,
                             gboolean save);

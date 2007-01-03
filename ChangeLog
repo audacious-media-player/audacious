@@ -1,3 +1,10 @@
+2007-01-03 01:28:38 +0000  Giacomo Lozito <james@develia.org>
+  revision [3473]
+  - ensure that popup menus are always fully displayed
+  trunk/audacious/ui_manager.c |   14 ++++++++++++--
+  1 file changed, 12 insertions(+), 2 deletions(-)
+
+
 2007-01-03 00:56:11 +0000  Giacomo Lozito <james@develia.org>
   revision [3471]
   - add missing header actions-mainwin.h

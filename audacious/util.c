@@ -570,73 +570,6 @@ util_menu_position(GtkMenu * menu, gint * x, gint * y,
     *y = CLAMP(pos->y - 2, 0, MAX(0, screen_height - requisition.height));
 }
 
-static void
-util_menu_delete_popup_data(GtkObject * object, GtkItemFactory * ifactory)
-{
-    gtk_signal_disconnect_by_func(object,
-                                  GTK_SIGNAL_FUNC
-                                  (util_menu_delete_popup_data), ifactory);
-    gtk_object_remove_data_by_id(GTK_OBJECT(ifactory), quark_popup_data);
-}
-
-
-/*
- * util_item_factory_popup[_with_data]() is a replacement for
- * gtk_item_factory_popup[_with_data]().
- *
- * The difference is that the menu is always popped up whithin the
- * screen.  This means it does not neccesarily pop up at (x,y).
- */
-
-void
-util_item_factory_popup_with_data(GtkItemFactory * ifactory,
-                                  gpointer data,
-                                  GtkDestroyNotify destroy, guint x,
-                                  guint y, guint mouse_button, guint32 time)
-{
-    static GQuark quark_user_menu_pos = 0;
-    MenuPos *pos;
-
-    if (!quark_user_menu_pos)
-        quark_user_menu_pos = g_quark_from_static_string("user_menu_pos");
-
-    if (!quark_popup_data)
-        quark_popup_data =
-            g_quark_from_static_string("GtkItemFactory-popup-data");
-
-    pos = g_object_get_qdata(G_OBJECT(ifactory), quark_user_menu_pos);
-    if (!pos) {
-        pos = g_new0(MenuPos, 1);
-
-        g_object_set_qdata_full(G_OBJECT(ifactory->widget),
-                                quark_user_menu_pos, pos, g_free);
-    }
-    pos->x = x;
-    pos->y = y;
-
-
-    if (data != NULL) {
-        g_object_set_qdata_full(G_OBJECT(ifactory),
-                                quark_popup_data, data, destroy);
-        g_signal_connect(G_OBJECT(ifactory->widget),
-                         "selection-done",
-                         G_CALLBACK(util_menu_delete_popup_data), ifactory);
-    }
-
-    gtk_menu_popup(GTK_MENU(ifactory->widget), NULL, NULL,
-                   (GtkMenuPositionFunc) util_menu_position,
-                   pos, mouse_button, time);
-}
-
-void
-util_item_factory_popup(GtkItemFactory * ifactory, guint x, guint y,
-                        guint mouse_button, guint32 time)
-{
-    util_item_factory_popup_with_data(ifactory, NULL, NULL, x, y,
-                                      mouse_button, time);
-}
-
-
 #define URL_HISTORY_MAX_SIZE 30
 
 static void
@@ -1451,35 +1384,6 @@ make_filebrowser(const gchar * title,
     gtk_widget_show(dialog);
 
     return dialog;
-}
-
-
-GtkItemFactory *
-create_menu(GtkItemFactoryEntry *entries,
-            guint n_entries,
-            GtkAccelGroup *accel)
-{
-    GtkItemFactory *menu;
-
-    menu = gtk_item_factory_new(GTK_TYPE_MENU, "<Main>", accel);
-    gtk_item_factory_set_translate_func(menu, bmp_menu_translate, NULL,
-                                        NULL);
-    gtk_item_factory_create_items(menu, n_entries, entries, NULL);
-
-    return menu;
-}
-
-
-void
-make_submenu(GtkItemFactory *menu,
-             const gchar *item_path,
-             GtkItemFactory *submenu)
-{
-    GtkWidget *item, *menu_;
-
-    item = gtk_item_factory_get_widget(menu, item_path);
-    menu_ = gtk_item_factory_get_widget(submenu, "");
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(item), menu_);
 }
 
 /*
