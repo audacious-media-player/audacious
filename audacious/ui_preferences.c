@@ -57,7 +57,7 @@
 #include "ui_playlist.h"
 #include "skinwin.h"
 #include "build_stamp.h"
-#include "prefswin.h"
+#include "ui_preferences.h"
 
 enum CategoryViewCols {
     CATEGORY_VIEW_COL_ICON,

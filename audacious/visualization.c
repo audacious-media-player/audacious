@@ -30,7 +30,7 @@
 #include "main.h"
 #include "playback.h"
 #include "plugin.h"
-#include "prefswin.h"
+#include "ui_preferences.h"
 #include "widgets/widgetcore.h"
 
 VisPluginData vp_data = {

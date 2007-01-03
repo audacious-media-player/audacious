@@ -1,3 +1,18 @@
+2007-01-03 06:09:10 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3487]
+  - about.c -> ui_about.c, credits.c -> ui_credits.c
+  
+  trunk/audacious/Makefile     |    2 
+  trunk/audacious/about.c      |  203 ----------------------
+  trunk/audacious/credits.c    |  387 -------------------------------------------
+  trunk/audacious/credits.h    |    8 
+  trunk/audacious/ui_about.c   |  203 ++++++++++++++++++++++
+  trunk/audacious/ui_credits.c |  387 +++++++++++++++++++++++++++++++++++++++++++
+  trunk/audacious/ui_credits.h |    8 
+  trunk/audacious/ui_main.c    |    2 
+  8 files changed, 600 insertions(+), 600 deletions(-)
+
+
 2007-01-03 06:06:49 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3485]
   - fix sed

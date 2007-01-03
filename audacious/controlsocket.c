@@ -52,7 +52,7 @@
 #include "playback.h"
 #include "playlist.h"
 #include "ui_playlist.h"
-#include "prefswin.h"
+#include "ui_preferences.h"
 #include "libaudacious/beepctrl.h"
 #include "memorypool.h"
 

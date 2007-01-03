@@ -35,7 +35,7 @@ HEADERS = \
 	output.h \
 	playlist.h \
 	plugin.h \
-	prefswin.h \
+	ui_preferences.h \
 	util.h \
 	vfs.h \
 	vfs_buffer.h
@@ -63,7 +63,7 @@ SOURCES = \
 	main.c \
 	logger.c \
 	skinwin.c \
-	prefswin.c \
+	ui_preferences.c \
 	ui_fileinfo.c \
 	ui_playlist.c \
 	ui_manager.c \

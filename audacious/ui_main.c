@@ -70,7 +70,7 @@
 #include "hints.h"
 #include "input.h"
 #include "ui_playlist.h"
-#include "prefswin.h"
+#include "ui_preferences.h"
 #include "skinwin.h"
 #include "genevent.h"
 #include "playback.h"
