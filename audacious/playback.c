@@ -40,7 +40,7 @@
 #include "input.h"
 #include "main.h"
 #include "mainwin.h"
-#include "equalizer.h"
+#include "ui_equalizer.h"
 #include "output.h"
 #include "playlist.h"
 #include "ui_playlist.h"

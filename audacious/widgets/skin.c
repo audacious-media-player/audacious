@@ -33,7 +33,7 @@
 
 #include "widgetcore.h"
 
-#include "equalizer.h"
+#include "ui_equalizer.h"
 #include "main.h"
 #include "ui_playlist.h"
 #include "skinwin.h"

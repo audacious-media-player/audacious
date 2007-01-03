@@ -46,7 +46,7 @@
 #include <arpa/inet.h>
 
 #include "main.h"
-#include "equalizer.h"
+#include "ui_equalizer.h"
 #include "mainwin.h"
 #include "input.h"
 #include "playback.h"

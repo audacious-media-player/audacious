@@ -1,3 +1,13 @@
+2007-01-03 05:52:19 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3475]
+  - remove everything relating to GtkItemFactory.
+  
+  trunk/audacious/mainwin.h |    6 --
+  trunk/audacious/util.c    |   96 ----------------------------------------------
+  trunk/audacious/util.h    |   15 -------
+  3 files changed, 117 deletions(-)
+
+
 2007-01-03 01:28:38 +0000  Giacomo Lozito <james@develia.org>
   revision [3473]
   - ensure that popup menus are always fully displayed

@@ -25,7 +25,7 @@
 #  include "config.h"
 #endif
 
-#include "equalizer.h"
+#include "ui_equalizer.h"
 
 #include <glib.h>
 #include <glib/gi18n.h>

@@ -68,7 +68,7 @@ SOURCES = \
 	ui_fileinfo.c \
 	ui_playlist.c \
 	ui_manager.c \
-	equalizer.c \
+	ui_equalizer.c \
 	glade.c \
 	hints.c \
 	about.c credits.c \

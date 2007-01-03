@@ -53,7 +53,7 @@
 #include "controlsocket.h"
 #include "dnd.h"
 #include "effect.h"
-#include "equalizer.h"
+#include "ui_equalizer.h"
 #include "general.h"
 #include "genevent.h"
 #include "hints.h"

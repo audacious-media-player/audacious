@@ -39,7 +39,7 @@
 
 #include "dnd.h"
 #include "dock.h"
-#include "equalizer.h"
+#include "ui_equalizer.h"
 #include "hints.h"
 #include "input.h"
 #include "main.h"

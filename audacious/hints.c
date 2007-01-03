@@ -26,7 +26,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#include "equalizer.h"
+#include "ui_equalizer.h"
 #include "mainwin.h"
 #include "ui_playlist.h"
 

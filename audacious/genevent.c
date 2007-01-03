@@ -51,7 +51,6 @@
 #include "controlsocket.h"
 #include "dnd.h"
 #include "effect.h"
-#include "equalizer.h"
 #include "general.h"
 #include "hints.h"
 #include "input.h"

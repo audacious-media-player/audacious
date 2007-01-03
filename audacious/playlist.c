@@ -56,7 +56,7 @@
 #include "libaudacious/configdb.h"
 #include "vfs.h"
 #include "libaudacious/urldecode.h"
-#include "equalizer.h"
+#include "ui_equalizer.h"
 #include "playback.h"
 #include "playlist.h"
 #include "playlist_container.h"
