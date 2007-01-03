@@ -1,3 +1,11 @@
+2007-01-03 15:19:28 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
+  revision [3499]
+  Add 'mainwin-display' handler; currently can only make the mainwin appear, but not disappear.
+  trunk/audtool/audtool.c |   15 +++++++++++++++
+  trunk/audtool/audtool.h |    1 +
+  2 files changed, 16 insertions(+)
+
+
 2007-01-03 12:44:05 +0000  Giacomo Lozito <james@develia.org>
   revision [3497]
   - no more menu_popup() in ui_playlist.c, now it uses ui_manager_popup_menu_show() from ui_manager framework
