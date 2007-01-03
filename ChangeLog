@@ -1,3 +1,20 @@
+2007-01-03 06:13:10 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3489]
+  - prefswin.c -> ui_preferences.c
+  
+  trunk/audacious/Makefile         |    4 
+  trunk/audacious/controlsocket.c  |    2 
+  trunk/audacious/genevent.c       |    1 
+  trunk/audacious/main.c           |    2 
+  trunk/audacious/prefswin.c       | 2716 ---------------------------------------
+  trunk/audacious/prefswin.h       |   27 
+  trunk/audacious/ui_main.c        |    2 
+  trunk/audacious/ui_preferences.c | 2716 +++++++++++++++++++++++++++++++++++++++
+  trunk/audacious/ui_preferences.h |   27 
+  trunk/audacious/visualization.c  |    2 
+  10 files changed, 2749 insertions(+), 2750 deletions(-)
+
+
 2007-01-03 06:09:10 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3487]
   - about.c -> ui_about.c, credits.c -> ui_credits.c

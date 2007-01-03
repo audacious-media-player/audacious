@@ -987,7 +987,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
     }
 
     skin->properties.mainwin_shuffle_x = 164;
-    tmp = read_ini_string(filename, "skin", "ui_main.huffleX");
+    tmp = read_ini_string(filename, "skin", "mainwinShuffleX");
 
     if (tmp != NULL)
     {
@@ -996,7 +996,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
     }
 
     skin->properties.mainwin_shuffle_y = 89;
-    tmp = read_ini_string(filename, "skin", "ui_main.huffleY");
+    tmp = read_ini_string(filename, "skin", "mainwinShuffleY");
 
     if (tmp != NULL)
     {
@@ -1095,7 +1095,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
     }
 
     skin->properties.mainwin_shade_x = 254;
-    tmp = read_ini_string(filename, "skin", "ui_main.hadeX");
+    tmp = read_ini_string(filename, "skin", "mainwinShadeX");
 
     if (tmp != NULL)
     {
@@ -1104,7 +1104,7 @@ skin_parse_hints(Skin * skin, gchar *path_p)
     }
 
     skin->properties.mainwin_shade_y = 3;
-    tmp = read_ini_string(filename, "skin", "ui_main.hadeY");
+    tmp = read_ini_string(filename, "skin", "mainwinShadeY");
 
     if (tmp != NULL)
     {
