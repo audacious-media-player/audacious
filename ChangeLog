@@ -1,3 +1,35 @@
+2007-01-03 06:03:33 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3479]
+  - rename mainwin.c to ui_main.c and such
+  
+  trunk/audacious/Makefile            |    2 
+  trunk/audacious/controlsocket.c     |    2 
+  trunk/audacious/genevent.c          |    2 
+  trunk/audacious/genevent.h          |    2 
+  trunk/audacious/hints.c             |    2 
+  trunk/audacious/input.c             |    2 
+  trunk/audacious/main.c              |    2 
+  trunk/audacious/main.h              |    2 
+  trunk/audacious/mainwin.c           | 4018 ------------------------------------
+  trunk/audacious/mainwin.h           |  196 -
+  trunk/audacious/playback.c          |    2 
+  trunk/audacious/playlist.c          |    2 
+  trunk/audacious/playlist_manager.c  |    2 
+  trunk/audacious/pluginenum.c        |    2 
+  trunk/audacious/prefswin.c          |    2 
+  trunk/audacious/signals.c           |    2 
+  trunk/audacious/ui_fileinfo.c       |    2 
+  trunk/audacious/ui_main.c           | 4018 ++++++++++++++++++++++++++++++++++++
+  trunk/audacious/ui_main.h           |  196 +
+  trunk/audacious/ui_manager.c        |    4 
+  trunk/audacious/ui_playlist.c       |    2 
+  trunk/audacious/ui_playlist.h       |    2 
+  trunk/audacious/widgets/eq_slider.c |    2 
+  trunk/audacious/widgets/skin.c      |   14 
+  trunk/audacious/widgets/svis.c      |    2 
+  25 files changed, 4242 insertions(+), 4242 deletions(-)
+
+
 2007-01-03 05:57:04 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3477]
   - rename equalizer.c to ui_equalizer.c
