@@ -1,3 +1,10 @@
+2007-01-03 22:41:33 +0000  Giacomo Lozito <james@develia.org>
+  revision [3507]
+  - added translation domain for actiongroups
+  trunk/audacious/ui_manager.c |   49 +++++++++++++++++++++++++------------------
+  1 file changed, 29 insertions(+), 20 deletions(-)
+
+
 2007-01-03 22:12:30 +0000  Strahinja Kustudi <kustodian@gmail.com>
   revision [3505]
   Updated sr.po and sr@Latn.po

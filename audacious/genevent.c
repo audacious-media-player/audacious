@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia platform.
- *  Copyright (C) 2005  Audacious development team.
+ *  Copyright (C) 2005-2007  Audacious development team.
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team.
