@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fi\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-01 11:21-0600\n"
+"POT-Creation-Date: 2007-01-04 09:46-0600\n"
 "PO-Revision-Date: 2005-03-13 21:31+0200\n"
 "Last-Translator: Pauli Virtanen <pauli.virtanen@hut.fi>\n"
 "Language-Team: Finnish <lokalisointi-laatu@linux-aktivaattori.org>\n"
@@ -18,16 +18,17 @@ msgstr ""
 "X-Generator: KBabel 1.3.1\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: audacious/about.c:123 audacious/credits.c:323
+#: audacious/ui_about.c:123 audacious/ui_credits.c:323
+#: audacious/ui_manager.c:393 audacious/ui_manager.c:394
 #, fuzzy
 msgid "About Audacious"
 msgstr "MPEG-ääniliitännäisestä"
 
-#: audacious/about.c:172 audacious/credits.c:368
+#: audacious/ui_about.c:172 audacious/ui_credits.c:368
 msgid "Credits"
 msgstr "Tekijät"
 
-#: audacious/credits.c:45
+#: audacious/ui_credits.c:45
 #, fuzzy, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
@@ -40,294 +41,163 @@ msgstr ""
 "\n"
 "Copyright (C) 2003-2004 BMP-kehittäjäryhmä\n"
 
-#: audacious/credits.c:51
+#: audacious/ui_credits.c:51
 #, fuzzy
 msgid "Audacious core developers:"
 msgstr "BMP:n asetukset"
 
-#: audacious/credits.c:64
+#: audacious/ui_credits.c:64
 msgid "Graphics:"
 msgstr ""
 
-#: audacious/credits.c:69
+#: audacious/ui_credits.c:69
 msgid "Default skin:"
 msgstr "Oletusteema:"
 
-#: audacious/credits.c:74
+#: audacious/ui_credits.c:74
 msgid "Plugin development:"
 msgstr ""
 
-#: audacious/credits.c:85
+#: audacious/ui_credits.c:85
 msgid "Patch authors:"
 msgstr ""
 
-#: audacious/credits.c:100
+#: audacious/ui_credits.c:100
 #, fuzzy
 msgid "0.1.x developers:"
 msgstr "Kehittäjät:"
 
-#: audacious/credits.c:106
+#: audacious/ui_credits.c:106
 #, fuzzy
 msgid "BMP Developers:"
 msgstr "Kehittäjät:"
 
-#: audacious/credits.c:138
+#: audacious/ui_credits.c:138
 msgid "Brazilian Portuguese:"
 msgstr "portugali (Brasilia):"
 
-#: audacious/credits.c:141
+#: audacious/ui_credits.c:141
 msgid "Breton:"
 msgstr "bretoni:"
 
-#: audacious/credits.c:144
+#: audacious/ui_credits.c:144
 msgid "Czech:"
 msgstr "tšekki:"
 
-#: audacious/credits.c:147
+#: audacious/ui_credits.c:147
 msgid "Dutch:"
 msgstr "hollanti:"
 
-#: audacious/credits.c:151
+#: audacious/ui_credits.c:151
 #, fuzzy
 msgid "Finnish:"
 msgstr "espanja:"
 
-#: audacious/credits.c:154
+#: audacious/ui_credits.c:154
 msgid "French:"
 msgstr "ranska:"
 
-#: audacious/credits.c:157
+#: audacious/ui_credits.c:157
 msgid "German:"
 msgstr "saksa:"
 
-#: audacious/credits.c:161
+#: audacious/ui_credits.c:161
 #, fuzzy
 msgid "Georgian:"
 msgstr "saksa:"
 
-#: audacious/credits.c:164
+#: audacious/ui_credits.c:164
 msgid "Greek:"
 msgstr "kreikka:"
 
-#: audacious/credits.c:169
+#: audacious/ui_credits.c:169
 msgid "Hindi:"
 msgstr ""
 
-#: audacious/credits.c:172
+#: audacious/ui_credits.c:172
 msgid "Hungarian:"
 msgstr "unkari:"
 
-#: audacious/credits.c:175
+#: audacious/ui_credits.c:175
 msgid "Italian:"
 msgstr "italia:"
 
-#: audacious/credits.c:179
+#: audacious/ui_credits.c:179
 msgid "Japanese:"
 msgstr "japani:"
 
-#: audacious/credits.c:182
+#: audacious/ui_credits.c:182
 msgid "Korean:"
 msgstr "korea:"
 
-#: audacious/credits.c:185
+#: audacious/ui_credits.c:185
 msgid "Lithuanian:"
 msgstr "liettua:"
 
-#: audacious/credits.c:188
+#: audacious/ui_credits.c:188
 msgid "Macedonian:"
 msgstr "makedonia:"
 
-#: audacious/credits.c:191
+#: audacious/ui_credits.c:191
 msgid "Polish:"
 msgstr "puola:"
 
-#: audacious/credits.c:194
+#: audacious/ui_credits.c:194
 msgid "Romanian:"
 msgstr "romania:"
 
-#: audacious/credits.c:197
+#: audacious/ui_credits.c:197
 msgid "Russian:"
 msgstr "venäjä:"
 
-#: audacious/credits.c:200
+#: audacious/ui_credits.c:200
 msgid "Serbian (Latin):"
 msgstr ""
 
-#: audacious/credits.c:203
+#: audacious/ui_credits.c:203
 msgid "Serbian (Cyrillic):"
 msgstr ""
 
-#: audacious/credits.c:206
+#: audacious/ui_credits.c:206
 msgid "Simplified Chinese:"
 msgstr ""
 
-#: audacious/credits.c:209
+#: audacious/ui_credits.c:209
 msgid "Slovak:"
 msgstr "slovakki:"
 
-#: audacious/credits.c:212
+#: audacious/ui_credits.c:212
 msgid "Spanish:"
 msgstr "espanja:"
 
-#: audacious/credits.c:215
+#: audacious/ui_credits.c:215
 msgid "Swedish:"
 msgstr "ruotsi:"
 
-#: audacious/credits.c:218
+#: audacious/ui_credits.c:218
 #, fuzzy
 msgid "Traditional Chinese:"
 msgstr "Avustajat:"
 
-#: audacious/credits.c:221
+#: audacious/ui_credits.c:221
 #, fuzzy
 msgid "Ukrainian:"
 msgstr "romania:"
 
-#: audacious/credits.c:224
+#: audacious/ui_credits.c:224
 msgid "Welsh:"
 msgstr "kymri:"
 
-#: audacious/credits.c:372
+#: audacious/ui_credits.c:372
 msgid "Translators"
 msgstr "Kääntäjät"
 
-#: audacious/equalizer.c:112
-#, fuzzy
-msgid "Load"
-msgstr "/Lataa"
-
-#: audacious/equalizer.c:113
-#, fuzzy
-msgid "Import"
-msgstr "/Tuo"
-
-#: audacious/equalizer.c:114
-#, fuzzy
-msgid "Save"
-msgstr "/Tallenna"
-
-#: audacious/equalizer.c:115
-#, fuzzy
-msgid "Delete"
-msgstr "/Poista"
-
-#: audacious/equalizer.c:118 audacious/equalizer.c:153
-#: audacious/equalizer.c:178
-msgid "Preset"
-msgstr "Asetus"
-
-#: audacious/equalizer.c:119
-msgid "Load preset"
-msgstr "Lataa asetus"
-
-#: audacious/equalizer.c:123 audacious/equalizer.c:158
-#: audacious/equalizer.c:183
-#, fuzzy
-msgid "Auto-load preset"
-msgstr "/Lataa/Automaattinen asetus"
-
-#: audacious/equalizer.c:124
-#, fuzzy
-msgid "Load auto-load preset"
-msgstr "/Lataa/Automaattinen asetus"
-
-#: audacious/equalizer.c:128 audacious/equalizer.c:163
-msgid "Default"
-msgstr "Oletus"
-
-#: audacious/equalizer.c:129
-msgid "Load default preset into equalizer"
-msgstr ""
-
-#: audacious/equalizer.c:133
-#, fuzzy
-msgid "Zero"
-msgstr "Retro"
-
-#: audacious/equalizer.c:134
-#, fuzzy
-msgid "Set equalizer preset levels to zero"
-msgstr "Tallenna taajuuskorjaimen asetus"
-
-#: audacious/equalizer.c:138
-#, fuzzy
-msgid "From file"
-msgstr "/Lataa/Tiedosto"
-
-#: audacious/equalizer.c:139
-#, fuzzy
-msgid "Load preset from file"
-msgstr "Lataa asetus"
-
-#: audacious/equalizer.c:143
-#, fuzzy
-msgid "From WinAMP EQF file"
-msgstr "/Lataa/Winampin EQF-tiedosto"
-
-#: audacious/equalizer.c:144
-#, fuzzy
-msgid "Load preset from WinAMP EQF file"
-msgstr "/Lataa/Winampin EQF-tiedosto"
-
-#: audacious/equalizer.c:148
-#, fuzzy
-msgid "WinAMP Presets"
-msgstr "/Tuo/Winampin asetukset"
-
-#: audacious/equalizer.c:149
-#, fuzzy
-msgid "Import WinAMP presets"
-msgstr "/Tuo/Winampin asetukset"
-
-#: audacious/equalizer.c:154
-msgid "Save preset"
-msgstr "Tallenna asetus"
-
-#: audacious/equalizer.c:159
-#, fuzzy
-msgid "Save auto-load preset"
-msgstr "/Tallenna/Automaattinen asetus"
-
-#: audacious/equalizer.c:164
-#, fuzzy
-msgid "Save default preset"
-msgstr "Tallenna automaattinen asetus"
-
-#: audacious/equalizer.c:168
-#, fuzzy
-msgid "To file"
-msgstr "/Lataa/Tiedosto"
-
-#: audacious/equalizer.c:169
-#, fuzzy
-msgid "Save preset to file"
-msgstr "Tallenna asetus"
-
-#: audacious/equalizer.c:173
-#, fuzzy
-msgid "To WinAMP EQF file"
-msgstr "/Tallenna/Winampin EQF-tiedosto"
-
-#: audacious/equalizer.c:174
-#, fuzzy
-msgid "Save preset to WinAMP EQF file"
-msgstr "/Tallenna/Winampin EQF-tiedosto"
-
-#: audacious/equalizer.c:179
-msgid "Delete preset"
-msgstr "Poista asetus"
-
-#: audacious/equalizer.c:184
-#, fuzzy
-msgid "Delete auto-load preset"
-msgstr "/Poista/Automaattinen asetus"
-
-#: audacious/equalizer.c:875
+#: audacious/ui_equalizer.c:752
 #, fuzzy
 msgid "Audacious Equalizer"
 msgstr "/Rullaa taajuuskorjainikkuna"
 
-#: audacious/equalizer.c:1615
+#: audacious/ui_equalizer.c:1466
 msgid "Presets"
 msgstr "Asetukset"
 
@@ -386,7 +256,7 @@ msgstr "%s: valitsin `-W %s' ei ole yksiselitteinen\n"
 msgid "%s: option `-W %s' doesn't allow an argument\n"
 msgstr "%s: valitsin `-W %s' ei tarvitse parametria\n"
 
-#: audacious/glade.c:40
+#: audacious/glade.c:43
 #, c-format
 msgid ""
 "<b><big>Unable to create %s.</big></b>\n"
@@ -416,8 +286,9 @@ msgstr "Älä näytä tätä varoitusta enää"
 msgid "Show more _details"
 msgstr "Näytä _lisätietoja"
 
-#: audacious/input.c:344 audacious/prefswin.c:115 audacious/prefswin.c:483
-#: audacious/prefswin.c:571 audacious/prefswin.c:660 audacious/prefswin.c:756
+#: audacious/input.c:344 audacious/ui_preferences.c:116
+#: audacious/ui_preferences.c:484 audacious/ui_preferences.c:572
+#: audacious/ui_preferences.c:661 audacious/ui_preferences.c:757
 msgid "Filename"
 msgstr "Tiedostonimi"
 
@@ -439,22 +310,22 @@ msgstr "Yksikään liitännäinen ei tunnistanut tätä tiedostoa"
 msgid "Input plugin: %s"
 msgstr "Syöteliitännäinen: %s"
 
-#: audacious/logger.c:119
+#: audacious/logger.c:122
 #, c-format
 msgid "Unable to create log file (%s)!\n"
 msgstr "Lokitiedoston (%s) luominen ei onnistu.\n"
 
-#: audacious/main.c:83 audacious/main.c:85 audacious/mainwin.c:918
-#: audacious/mainwin.c:3769
+#: audacious/main.c:84 audacious/main.c:86 audacious/ui_main.c:630
+#: audacious/ui_main.c:3421
 msgid "Audacious"
 msgstr ""
 
-#: audacious/main.c:460
+#: audacious/main.c:461
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "Kansion (%s) luominen epäonnistui: %s"
 
-#: audacious/main.c:792
+#: audacious/main.c:793
 #, fuzzy
 msgid ""
 "Usage: audacious [options] [files] ...\n"
@@ -467,73 +338,73 @@ msgstr ""
 "Valitsimet:\n"
 "-----------\n"
 
-#: audacious/main.c:797
+#: audacious/main.c:798
 msgid "Display this text and exit"
 msgstr "Näytä tämä teksti ja lopeta"
 
-#: audacious/main.c:800
+#: audacious/main.c:801
 #, fuzzy
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Valitse BMP:n tai XMMS:n istuntonumero (oletus: 0)"
 
-#: audacious/main.c:803
+#: audacious/main.c:804
 msgid "Skip backwards in playlist"
 msgstr "Siirry taaksepäin soittolistassa"
 
-#: audacious/main.c:806
+#: audacious/main.c:807
 msgid "Start playing current playlist"
 msgstr "Soita nykyistä soittolistaa"
 
-#: audacious/main.c:809
+#: audacious/main.c:810
 msgid "Pause current song"
 msgstr "Aloita tauko nykyisessä kappaleessa"
 
-#: audacious/main.c:812
+#: audacious/main.c:813
 msgid "Stop current song"
 msgstr "Pysäytä nykyisen kappaleen soittaminen"
 
-#: audacious/main.c:815
+#: audacious/main.c:816
 msgid "Pause if playing, play otherwise"
 msgstr "Pidä tauko jos kappale soi, muuten aloita soittaminen"
 
-#: audacious/main.c:818
+#: audacious/main.c:819
 msgid "Skip forward in playlist"
 msgstr "Siirry eteenpäin soittolistassa"
 
-#: audacious/main.c:821
+#: audacious/main.c:822
 msgid "Display Jump to file dialog"
 msgstr ""
 
-#: audacious/main.c:824
+#: audacious/main.c:825
 msgid "Don't clear the playlist"
 msgstr "Älä tyhjennä soittolistaa"
 
-#: audacious/main.c:827
+#: audacious/main.c:828
 msgid "Show the main window"
 msgstr "Näytä pääikkuna"
 
-#: audacious/main.c:830
+#: audacious/main.c:831
 #, fuzzy
 msgid "Activate Audacious"
 msgstr "Aktivoi BMP"
 
-#: audacious/main.c:833
+#: audacious/main.c:834
 msgid "Previous session ID"
 msgstr "Edellisen istunnon tunniste"
 
-#: audacious/main.c:836
+#: audacious/main.c:837
 msgid "Headless operation [experimental]"
 msgstr ""
 
-#: audacious/main.c:839
+#: audacious/main.c:840
 msgid "Disable error/warning interception (logging)"
 msgstr ""
 
-#: audacious/main.c:842
+#: audacious/main.c:843
 msgid "Print version number and exit\n"
 msgstr "Tulosta versionumero ja lopeta\n"
 
-#: audacious/main.c:1049
+#: audacious/main.c:1050
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -546,7 +417,7 @@ msgstr ""
 "Tarkista että teema \"%s\" on käytettävissä, ja että oletusarvoinen teema on "
 "asennettu kunnolla kansioon \"%s\"\n"
 
-#: audacious/main.c:1096
+#: audacious/main.c:1097
 #, fuzzy, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -556,7 +427,7 @@ msgstr ""
 "kanssa.\n"
 "Käytä GTK+:n versiota %s tai uudempaa.\n"
 
-#: audacious/main.c:1107
+#: audacious/main.c:1108
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -570,469 +441,144 @@ msgstr ""
 "ennen\n"
 "LinuxThreadsia, niin Glib ja GTK+ täytyy kääntää uudestaan.\n"
 
-#: audacious/main.c:1126
+#: audacious/main.c:1127
 #, fuzzy
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "BMP: näytön avaaminen ei onnistu, sulkeutuu."
 
-#: audacious/mainwin.c:257 audacious/mainwin.c:401
-msgid "/View Track Details"
-msgstr "/Näytä kappaleen tiedot"
-
-#: audacious/mainwin.c:259 audacious/mainwin.c:389
-msgid "/Jump to File"
-msgstr "/Siirry tiedoston kohdalle"
-
-#: audacious/mainwin.c:262 audacious/mainwin.c:463
-msgid "/Autoscroll Songname"
-msgstr "/Vieritä kappaleen nimeä"
-
-#: audacious/mainwin.c:264 audacious/mainwin.c:367
+#: audacious/signals.c:90
 #, fuzzy
-msgid "/Stop After Current Song"
-msgstr "Pysäytä nykyisen kappaleen soittaminen"
-
-#: audacious/mainwin.c:276
-msgid "/Visualization Mode"
-msgstr "/Visualisointitapa"
-
-#: audacious/mainwin.c:277
-msgid "/Visualization Mode/Analyzer"
-msgstr "/Visualisointitapa/Taajuusspektri"
-
-#: audacious/mainwin.c:279
-msgid "/Visualization Mode/Scope"
-msgstr "/Visualisointitapa/Oskilloskooppi"
-
-#: audacious/mainwin.c:281
-#, fuzzy
-msgid "/Visualization Mode/Voiceprint"
-msgstr "/Visualisointitapa/Oskilloskooppi"
-
-#: audacious/mainwin.c:283
-msgid "/Visualization Mode/Off"
-msgstr "/Visualisointitapa/Ei käytössä"
-
-#: audacious/mainwin.c:285
-msgid "/Analyzer Mode"
-msgstr "/Taajuusspektri"
-
-#: audacious/mainwin.c:286
-msgid "/Analyzer Mode/Normal"
-msgstr "/Taajuusspektri/Tavallinen"
-
-#: audacious/mainwin.c:288
-msgid "/Analyzer Mode/Fire"
-msgstr "/Taajuusspektri/Tuli"
-
-#: audacious/mainwin.c:290
-msgid "/Analyzer Mode/Vertical Lines"
-msgstr "/Taajuusspektri/Pystyviivat"
-
-#: audacious/mainwin.c:293
-msgid "/Analyzer Mode/Lines"
-msgstr "/Taajuusspektri/Viivat"
-
-#: audacious/mainwin.c:295
-msgid "/Analyzer Mode/Bars"
-msgstr "/Taajuusspektri/Palkit"
-
-#: audacious/mainwin.c:298
-msgid "/Analyzer Mode/Peaks"
-msgstr "/Taajuusspektri/Huiput"
-
-#: audacious/mainwin.c:300
-msgid "/Scope Mode"
-msgstr "/Oskilloskooppi"
-
-#: audacious/mainwin.c:301
-msgid "/Scope Mode/Dot Scope"
-msgstr "/Oskilloskooppi/Pisteet"
-
-#: audacious/mainwin.c:303
-msgid "/Scope Mode/Line Scope"
-msgstr "/Oskilloskooppi/Viiva"
-
-#: audacious/mainwin.c:305
-msgid "/Scope Mode/Solid Scope"
-msgstr "/Oskilloskooppi/Yhtenäinen"
-
-#: audacious/mainwin.c:307
-msgid "/Voiceprint mode"
+msgid ""
+"\n"
+"Received SIGSEGV\n"
+"\n"
+"This could be a bug in Audacious. If you don't know why this happened, file "
+"a bug at http://bugs-meta.atheme.org/\n"
+"\n"
 msgstr ""
+"\n"
+"Signaali SIGSEGV vastaanotettu\n"
+"\n"
+"Tämä voi merkitä ohjelmistovirhettä BMP:ssä. Jos et tiedä miksi tämä "
+"tapahtui, ota yhteyttä kehittäjiin sähköpostiosoitteessa beepmp-devel@lists."
+"sourceforge.net\n"
+"\n"
 
-#: audacious/mainwin.c:308
-#, fuzzy
-msgid "/Voiceprint mode/Normal"
-msgstr "/Taajuusspektri/Tavallinen"
+#: audacious/strings.c:199
+msgid "  (invalid UTF-8)"
+msgstr "  (virheellistä UTF-8:aa)"
 
-#: audacious/mainwin.c:310
-#, fuzzy
-msgid "/Voiceprint mode/Fire"
-msgstr "/Taajuusspektri/Tuli"
-
-#: audacious/mainwin.c:312
-msgid "/Voiceprint mode/Ice"
-msgstr ""
-
-#: audacious/mainwin.c:314
-msgid "/WindowShade VU Mode"
-msgstr "/Rullattu ikkuna"
-
-#: audacious/mainwin.c:315
-msgid "/WindowShade VU Mode/Normal"
-msgstr "/Rullattu ikkuna/Tavallinen"
-
-#: audacious/mainwin.c:317
-msgid "/WindowShade VU Mode/Smooth"
-msgstr "/Rullattu ikkuna/Pehmeä"
-
-#: audacious/mainwin.c:319
-msgid "/Refresh Rate"
-msgstr "/Päivitystaajuus"
-
-#: audacious/mainwin.c:320
-msgid "/Refresh Rate/Full (~50 fps)"
-msgstr "/Päivitystaajuus/Täysi (~50 Hz)"
-
-#: audacious/mainwin.c:322
-msgid "/Refresh Rate/Half (~25 fps)"
-msgstr "/Päivitystaajuus/Puolet (~25 Hz)"
-
-#: audacious/mainwin.c:324
-msgid "/Refresh Rate/Quarter (~13 fps)"
-msgstr "/Päivitystaajuus/Neljäsosa (~13 Hz)"
-
-#: audacious/mainwin.c:326
-msgid "/Refresh Rate/Eighth (~6 fps)"
-msgstr "/Päivitystaajuus/Kahdeksasosa (~6 Hz)"
-
-#: audacious/mainwin.c:328
-msgid "/Analyzer Falloff"
-msgstr "/Taajuusspektrin nopeus"
-
-#: audacious/mainwin.c:329
-msgid "/Analyzer Falloff/Slowest"
-msgstr "/Taajuusspektrin nopeus/Hitain"
-
-#: audacious/mainwin.c:331
-msgid "/Analyzer Falloff/Slow"
-msgstr "/Taajuusspektrin nopeus/Hidas"
-
-#: audacious/mainwin.c:333
-msgid "/Analyzer Falloff/Medium"
-msgstr "/Taajuusspektrin nopeus/Keskinopea"
-
-#: audacious/mainwin.c:335
-msgid "/Analyzer Falloff/Fast"
-msgstr "/Taajuusspektrin nopeus/Nopea"
-
-#: audacious/mainwin.c:337
-msgid "/Analyzer Falloff/Fastest"
-msgstr "/Taajuusspektrin nopeus/Nopein"
-
-#: audacious/mainwin.c:339
-msgid "/Peaks Falloff"
-msgstr "/Huippujen nopeus"
-
-#: audacious/mainwin.c:340
-msgid "/Peaks Falloff/Slowest"
-msgstr "/Huippujen nopeus/Hitain"
-
-#: audacious/mainwin.c:342
-msgid "/Peaks Falloff/Slow"
-msgstr "/Huippujen nopeus/Hidas"
-
-#: audacious/mainwin.c:344
-msgid "/Peaks Falloff/Medium"
-msgstr "/Huippujen nopeus/Keskinopea"
-
-#: audacious/mainwin.c:346
-msgid "/Peaks Falloff/Fast"
-msgstr "/Huippujen nopeus/Nopea"
-
-#: audacious/mainwin.c:348
-msgid "/Peaks Falloff/Fastest"
-msgstr "/Huippujen nopeus/Nopein"
-
-#: audacious/mainwin.c:358
-#, fuzzy
-msgid "/Play CD"
-msgstr "/Soita"
-
-#: audacious/mainwin.c:361
-msgid "/Repeat"
-msgstr "/Toisto"
-
-#: audacious/mainwin.c:363
-msgid "/Shuffle"
-msgstr "/Sekaisin"
-
-#: audacious/mainwin.c:365
-msgid "/No Playlist Advance"
-msgstr "/Älä etene soittolistassa"
-
-#: audacious/mainwin.c:370
-msgid "/Play"
-msgstr "/Soita"
-
-#: audacious/mainwin.c:372
-msgid "/Pause"
-msgstr "/Tauko"
-
-#: audacious/mainwin.c:374
-msgid "/Stop"
-msgstr "/Pysäytä"
-
-#: audacious/mainwin.c:376
-msgid "/Previous"
-msgstr "/Edellinen"
-
-#: audacious/mainwin.c:378
-msgid "/Next"
-msgstr "/Seuraava"
-
-#: audacious/mainwin.c:381
-msgid "/Jump to Playlist Start"
-msgstr "/Siirry soittolistan alkuun"
-
-#: audacious/mainwin.c:383
-msgid "/-"
-msgstr "/-"
-
-#: audacious/mainwin.c:384
-#, fuzzy
-msgid "/Set A-B"
-msgstr "/Valitse kaikki"
-
-#: audacious/mainwin.c:386
-#, fuzzy
-msgid "/Clear A-B"
-msgstr "/Tyhjennä jono"
-
-#: audacious/mainwin.c:391
-msgid "/Jump to Time"
-msgstr "/Siirrä ajanhetkeä"
-
-#: audacious/mainwin.c:394
-#, fuzzy
-msgid "/New Playlist"
-msgstr "Uusi soittolista"
-
-#: audacious/mainwin.c:396
-#, fuzzy
-msgid "/Select Next Playlist"
-msgstr "Valitse soittolistan kirjasinlaji:"
-
-#: audacious/mainwin.c:398
-#, fuzzy
-msgid "/Select Previous Playlist"
-msgstr "/Järjestä valittu osa/Nimien mukaan"
-
-#: audacious/mainwin.c:411
-#, fuzzy
-msgid "/About Audacious"
-msgstr "MPEG-ääniliitännäisestä"
-
-#: audacious/mainwin.c:414
-#, fuzzy
-msgid "/Play File"
-msgstr "/Soita"
-
-#: audacious/mainwin.c:416
-#, fuzzy
-msgid "/Play Location"
-msgstr "Sijainti:"
-
-#: audacious/mainwin.c:419
-#, fuzzy
-msgid "/V_isualization"
-msgstr "/Visualisointitapa"
-
-#: audacious/mainwin.c:420
-#, fuzzy
-msgid "/_Playback"
-msgstr "/Soita"
-
-#: audacious/mainwin.c:421
-msgid "/_View"
-msgstr "/_Näytä"
-
-#: audacious/mainwin.c:423
-msgid "/Preferences"
-msgstr "/Asetukset"
-
-#: audacious/mainwin.c:425
-msgid "/_Quit"
-msgstr "/_Lopeta"
-
-#: audacious/mainwin.c:435
-msgid "/Files..."
-msgstr "/Tiedostot..."
-
-#: audacious/mainwin.c:437
-msgid "/Internet location..."
-msgstr "/Internet-osoite..."
-
-#: audacious/mainwin.c:447
-#, fuzzy
-msgid "/Show Player"
-msgstr "/Näytä soittolistan muokkain"
-
-#: audacious/mainwin.c:449
-msgid "/Show Playlist Editor"
-msgstr "/Näytä soittolistan muokkain"
-
-#: audacious/mainwin.c:451
-msgid "/Show Equalizer"
-msgstr "/Näytä taajuuskorjain"
-
-#: audacious/mainwin.c:454
-msgid "/Time Elapsed"
-msgstr "/Kulunut aika"
-
-#: audacious/mainwin.c:456
-msgid "/Time Remaining"
-msgstr "/Aikaa jäljellä"
-
-#: audacious/mainwin.c:459
-msgid "/Always On Top"
-msgstr "/Aina päällimmäisenä"
-
-#: audacious/mainwin.c:461
-msgid "/Put on All Workspaces"
-msgstr "/Näkyy kaikissa työtiloissa"
-
-#: audacious/mainwin.c:466
-msgid "/Roll up Player"
-msgstr "/Rullaa soittoikkuna"
-
-#: audacious/mainwin.c:468
-msgid "/Roll up Playlist Editor"
-msgstr "/Rullaa soittolistan muokkausikkuna"
-
-#: audacious/mainwin.c:470
-msgid "/Roll up Equalizer"
-msgstr "/Rullaa taajuuskorjainikkuna"
-
-#: audacious/mainwin.c:473
-msgid "/DoubleSize"
-msgstr ""
-
-#: audacious/mainwin.c:475
-msgid "/Easy Move"
-msgstr ""
-
-#: audacious/mainwin.c:916
+#: audacious/ui_main.c:628
 #, c-format
 msgid "%s - Audacious"
 msgstr ""
 
-#: audacious/mainwin.c:1141
+#: audacious/ui_main.c:853
 msgid "VBR"
 msgstr "VBR"
 
-#: audacious/mainwin.c:1182 audacious/mainwin.c:1186
+#: audacious/ui_main.c:894 audacious/ui_main.c:898
 #, fuzzy
 msgid "stereo"
 msgstr "Stereo"
 
-#: audacious/mainwin.c:1182 audacious/mainwin.c:1186
+#: audacious/ui_main.c:894 audacious/ui_main.c:898
 #, fuzzy
 msgid "mono"
 msgstr "Mono"
 
-#: audacious/mainwin.c:1675
+#: audacious/ui_main.c:1387 audacious/ui_manager.c:420
+#: audacious/ui_manager.c:421
 msgid "Jump to Time"
 msgstr "Siirry hetkeen"
 
-#: audacious/mainwin.c:1696
+#: audacious/ui_main.c:1408
 msgid "minutes:seconds"
 msgstr "minuutti:sekunti"
 
-#: audacious/mainwin.c:1706
+#: audacious/ui_main.c:1418
 msgid "Track length:"
 msgstr "Kappaleen kesto:"
 
-#: audacious/mainwin.c:1791
+#: audacious/ui_main.c:1503
 msgid "Un_queue"
 msgstr "_Poista jonosta"
 
-#: audacious/mainwin.c:1793 audacious/mainwin.c:2183
+#: audacious/ui_main.c:1505 audacious/ui_main.c:1895
 #, fuzzy
 msgid "_Queue"
 msgstr "Lisää jonoon"
 
-#: audacious/mainwin.c:2108
+#: audacious/ui_main.c:1820
 msgid "Jump to Track"
 msgstr "Siirry kappaleeseen"
 
-#: audacious/mainwin.c:2149
+#: audacious/ui_main.c:1861
 msgid "Filter: "
 msgstr "Suodatin:"
 
-#: audacious/mainwin.c:2150
+#: audacious/ui_main.c:1862
 #, fuzzy
 msgid "_Filter:"
 msgstr "Suodatin:"
 
-#: audacious/mainwin.c:2354
+#: audacious/ui_main.c:2066
 msgid "Enter location to play:"
 msgstr ""
 
-#: audacious/mainwin.c:2562
+#: audacious/ui_main.c:2277
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "SIIRRY: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2594 audacious/mainwin.c:3403
+#: audacious/ui_main.c:2309 audacious/ui_main.c:2942
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "ÄÄNENVOIMAKKUUS: %d%%"
 
-#: audacious/mainwin.c:2625 audacious/mainwin.c:3406
+#: audacious/ui_main.c:2340 audacious/ui_main.c:2945
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "TASAPAINO: %d%% VASEN"
 
-#: audacious/mainwin.c:2629 audacious/mainwin.c:3409
+#: audacious/ui_main.c:2344 audacious/ui_main.c:2948
 msgid "BALANCE: CENTER"
 msgstr "TASAPAINO: KESKELLÄ"
 
-#: audacious/mainwin.c:2633 audacious/mainwin.c:3411
+#: audacious/ui_main.c:2348 audacious/ui_main.c:2950
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "TASAPAINO: %d%% OIKEA"
 
-#: audacious/mainwin.c:3177
+#: audacious/ui_main.c:2717
 msgid "OPTIONS MENU"
 msgstr "ASETUSVALIKKO"
 
-#: audacious/mainwin.c:3181
+#: audacious/ui_main.c:2721
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "ÄLÄ PIDÄ AINA PÄÄLLIMMÄISENÄ"
 
-#: audacious/mainwin.c:3183
+#: audacious/ui_main.c:2723
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "PIDÄ AINA PÄÄLLIMMÄISENÄ"
 
-#: audacious/mainwin.c:3186
+#: audacious/ui_main.c:2726
 msgid "FILE INFO BOX"
 msgstr "TIEDOSTOTIEDOT"
 
-#: audacious/mainwin.c:3190
+#: audacious/ui_main.c:2730
 msgid "DISABLE DOUBLESIZE"
 msgstr ""
 
-#: audacious/mainwin.c:3192
+#: audacious/ui_main.c:2732
 msgid "ENABLE DOUBLESIZE"
 msgstr ""
 
-#: audacious/mainwin.c:3195
+#: audacious/ui_main.c:2735
 msgid "VISUALIZATION MENU"
 msgstr "VISUALISOINTIVALIKKO"
 
-#: audacious/mainwin.c:3243
+#: audacious/ui_main.c:2782
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -1042,7 +588,7 @@ msgstr ""
 "\n"
 "CD:tä ei joko ole asemassa, tai asemassa oleva CD ei sisällä ääntä.\n"
 
-#: audacious/mainwin.c:3260
+#: audacious/ui_main.c:2799
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -1058,425 +604,854 @@ msgstr ""
 "2. Muut ohjelmat eivät käytä juuri nyt äänikorttia.\n"
 "3. Äänikortin asetukset ovat oikein.\n"
 
-#: audacious/mainwin.c:3753
+#: audacious/ui_main.c:3405
 #, fuzzy
 msgid "Error in Audacious."
 msgstr "MPEG-ääniliitännäisestä"
 
-#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1399
-msgid "Appearance"
-msgstr "Ulkonäkö"
-
-#: audacious/prefswin.c:99
+#: audacious/ui_manager.c:43 audacious/ui_manager.c:44
 #, fuzzy
-msgid "Audio"
-msgstr "MPEG-ääniliitännäisestä"
+msgid "Autoscroll Songname"
+msgstr "/Vieritä kappaleen nimeä"
 
-#: audacious/prefswin.c:100
-msgid "Connectivity"
+#: audacious/ui_manager.c:46 audacious/ui_manager.c:47
+#, fuzzy
+msgid "Stop after Current Song"
+msgstr "Pysäytä nykyisen kappaleen soittaminen"
+
+#: audacious/ui_manager.c:49 audacious/ui_manager.c:50
+#, fuzzy
+msgid "Peaks"
+msgstr "Pilat"
+
+#: audacious/ui_manager.c:52 audacious/ui_manager.c:53
+#, fuzzy
+msgid "Repeat"
+msgstr "/Toisto"
+
+#: audacious/ui_manager.c:55 audacious/ui_manager.c:56
+#, fuzzy
+msgid "Shuffle"
+msgstr "/Sekaisin"
+
+#: audacious/ui_manager.c:58 audacious/ui_manager.c:59
+#, fuzzy
+msgid "No Playlist Advance"
+msgstr "/Älä etene soittolistassa"
+
+#: audacious/ui_manager.c:61 audacious/ui_manager.c:62
+#, fuzzy
+msgid "Show Player"
+msgstr "/Näytä soittolistan muokkain"
+
+#: audacious/ui_manager.c:64 audacious/ui_manager.c:65
+#, fuzzy
+msgid "Show Playlist Editor"
+msgstr "/Näytä soittolistan muokkain"
+
+#: audacious/ui_manager.c:67 audacious/ui_manager.c:68
+#, fuzzy
+msgid "Show Equalizer"
+msgstr "/Näytä taajuuskorjain"
+
+#: audacious/ui_manager.c:70 audacious/ui_manager.c:71
+#, fuzzy
+msgid "Always on Top"
+msgstr "/Aina päällimmäisenä"
+
+#: audacious/ui_manager.c:73 audacious/ui_manager.c:74
+#, fuzzy
+msgid "Put on All Workspaces"
+msgstr "/Näkyy kaikissa työtiloissa"
+
+#: audacious/ui_manager.c:76 audacious/ui_manager.c:77
+#, fuzzy
+msgid "Roll up Player"
+msgstr "/Rullaa soittoikkuna"
+
+#: audacious/ui_manager.c:79 audacious/ui_manager.c:80
+#, fuzzy
+msgid "Roll up Playlist Editor"
+msgstr "/Rullaa soittolistan muokkausikkuna"
+
+#: audacious/ui_manager.c:82 audacious/ui_manager.c:83
+#, fuzzy
+msgid "Roll up Equalizer"
+msgstr "/Rullaa taajuuskorjainikkuna"
+
+#: audacious/ui_manager.c:85 audacious/ui_manager.c:86
+msgid "DoubleSize"
 msgstr ""
 
-#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:2898
-msgid "Equalizer"
-msgstr "Taajuuskorjain"
-
-#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:1678
-msgid "Mouse"
-msgstr "Hiiri"
-
-#: audacious/prefswin.c:103 audacious/playlist_manager.c:288
-#: audacious/glade/prefswin.glade:2530
-msgid "Playlist"
-msgstr "Soittolista"
-
-#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:693
-msgid "Plugins"
-msgstr "Liitännäiset"
-
-#: audacious/prefswin.c:110
-msgid "Artist"
-msgstr "Esittäjä"
-
-#: audacious/prefswin.c:111 libaudacious/titlestring.c:372
-msgid "Album"
-msgstr "Levy"
-
-#: audacious/prefswin.c:112
-msgid "Title"
-msgstr "Nimi"
-
-#: audacious/prefswin.c:113
-msgid "Tracknumber"
-msgstr "Kappalenumero"
-
-#: audacious/prefswin.c:114 libaudacious/titlestring.c:373
-msgid "Genre"
-msgstr "Tyylilaji"
-
-#: audacious/prefswin.c:116
-msgid "Filepath"
-msgstr "Tiedostopolku"
-
-#: audacious/prefswin.c:117 libaudacious/titlestring.c:379
-msgid "Date"
-msgstr "Päiväys"
-
-#: audacious/prefswin.c:118 libaudacious/titlestring.c:380
-msgid "Year"
-msgstr "Vuosi"
-
-#: audacious/prefswin.c:119 libaudacious/titlestring.c:381
-msgid "Comment"
-msgstr "Kommentti"
-
-#: audacious/prefswin.c:140
-msgid "localhost"
+#: audacious/ui_manager.c:88 audacious/ui_manager.c:89
+msgid "Easy Move"
 msgstr ""
 
-#: audacious/prefswin.c:453 audacious/prefswin.c:540 audacious/prefswin.c:629
-#: audacious/prefswin.c:725
-msgid "Enabled"
-msgstr "Käytössä"
+#: audacious/ui_manager.c:97
+#, fuzzy
+msgid "Analyzer"
+msgstr "/Taajuusspektri"
 
-#: audacious/prefswin.c:469 audacious/prefswin.c:556 audacious/prefswin.c:645
-#: audacious/prefswin.c:741
-msgid "Description"
-msgstr "Kuvaus"
+#: audacious/ui_manager.c:98
+#, fuzzy
+msgid "Scope"
+msgstr "/Oskilloskooppi"
 
-#: audacious/prefswin.c:1806
-msgid "Category"
-msgstr "Luokka"
+#: audacious/ui_manager.c:99
+#, fuzzy
+msgid "Voiceprint"
+msgstr "/Taajuusspektri/Tuli"
 
-#: audacious/prefswin.c:2361
-msgid "Preferences Window"
-msgstr "Asetusikkuna"
-
-#: audacious/skinwin.c:176
-msgid "Archived Winamp 2.x skin"
+#: audacious/ui_manager.c:100
+msgid "Off"
 msgstr ""
 
-#: audacious/skinwin.c:181
-msgid "Unarchived Winamp 2.x skin"
+#: audacious/ui_manager.c:104 audacious/ui_manager.c:121
+#: audacious/ui_manager.c:127
+#, fuzzy
+msgid "Normal"
+msgstr "ID3-muoto:"
+
+#: audacious/ui_manager.c:105 audacious/ui_manager.c:122
+#, fuzzy
+msgid "Fire"
+msgstr "Satiiri"
+
+#: audacious/ui_manager.c:106
+#, fuzzy
+msgid "Vertical Lines"
+msgstr "/Taajuusspektri/Pystyviivat"
+
+#: audacious/ui_manager.c:110
+#, fuzzy
+msgid "Lines"
+msgstr "riviä"
+
+#: audacious/ui_manager.c:111
+#, fuzzy
+msgid "Bars"
+msgstr "Basso"
+
+#: audacious/ui_manager.c:115
+#, fuzzy
+msgid "Dot Scope"
+msgstr "/Oskilloskooppi/Pisteet"
+
+#: audacious/ui_manager.c:116
+#, fuzzy
+msgid "Line Scope"
+msgstr "/Oskilloskooppi/Viiva"
+
+#: audacious/ui_manager.c:117
+#, fuzzy
+msgid "Solid Scope"
+msgstr "/Oskilloskooppi/Yhtenäinen"
+
+#: audacious/ui_manager.c:123
+msgid "Ice"
 msgstr ""
 
-#: audacious/ui_fileinfo.c:315
+#: audacious/ui_manager.c:128
 #, fuzzy
-msgid "Track Information Window"
-msgstr "Näytä kappaleen tiedot"
+msgid "Smooth"
+msgstr "Mono"
 
-#: audacious/ui_fileinfo.c:337
+#: audacious/ui_manager.c:132
 #, fuzzy
-msgid "Track Information Popup"
-msgstr "Näytä kappaleen tiedot"
+msgid "Full (~50 fps)"
+msgstr "/Päivitystaajuus/Täysi (~50 Hz)"
 
-#: audacious/ui_playlist.c:138
+#: audacious/ui_manager.c:133
 #, fuzzy
-msgid "New List"
-msgstr "/Uusi lista"
+msgid "Half (~25 fps)"
+msgstr "/Päivitystaajuus/Puolet (~25 Hz)"
 
-#: audacious/ui_playlist.c:139
+#: audacious/ui_manager.c:134
 #, fuzzy
-msgid "Creates a new playlist."
-msgstr "Päivitä soittolista"
+msgid "Quarter (~13 fps)"
+msgstr "/Päivitystaajuus/Neljäsosa (~13 Hz)"
 
-#: audacious/ui_playlist.c:141
+#: audacious/ui_manager.c:135
+#, fuzzy
+msgid "Eighth (~6 fps)"
+msgstr "/Päivitystaajuus/Kahdeksasosa (~6 Hz)"
+
+#: audacious/ui_manager.c:139 audacious/ui_manager.c:147
+#, fuzzy
+msgid "Slowest"
+msgstr "Showmusiikki"
+
+#: audacious/ui_manager.c:140 audacious/ui_manager.c:148
+#, fuzzy
+msgid "Slow"
+msgstr "Hidas jam"
+
+#: audacious/ui_manager.c:141 audacious/ui_manager.c:149
+msgid "Medium"
+msgstr ""
+
+#: audacious/ui_manager.c:142 audacious/ui_manager.c:150
+msgid "Fast"
+msgstr ""
+
+#: audacious/ui_manager.c:143 audacious/ui_manager.c:151
+msgid "Fastest"
+msgstr ""
+
+#: audacious/ui_manager.c:155
+#, fuzzy
+msgid "Time Elapsed"
+msgstr "/Kulunut aika"
+
+#: audacious/ui_manager.c:156
+#, fuzzy
+msgid "Time Remaining"
+msgstr "/Aikaa jäljellä"
+
+#: audacious/ui_manager.c:167 audacious/ui_manager.c:168
+#, fuzzy
+msgid "Play CD"
+msgstr "/Soita"
+
+#: audacious/ui_manager.c:170 audacious/ui_manager.c:171
+#, fuzzy
+msgid "Play"
+msgstr "/Soita"
+
+#: audacious/ui_manager.c:173 audacious/ui_manager.c:174
+#, fuzzy
+msgid "Pause"
+msgstr "/Tauko"
+
+#: audacious/ui_manager.c:176 audacious/ui_manager.c:177
+#, fuzzy
+msgid "Stop"
+msgstr "/Pysäytä"
+
+#: audacious/ui_manager.c:179 audacious/ui_manager.c:180
+#, fuzzy
+msgid "Previous"
+msgstr "/Edellinen"
+
+#: audacious/ui_manager.c:182 audacious/ui_manager.c:183
+#, fuzzy
+msgid "Next"
+msgstr "/Seuraava"
+
+#: audacious/ui_manager.c:212 audacious/ui_manager.c:213
+#, fuzzy
+msgid "New Playlist"
+msgstr "Uusi soittolista"
+
+#: audacious/ui_manager.c:215 audacious/ui_manager.c:216
+#, fuzzy
+msgid "Select Next Playlist"
+msgstr "Valitse soittolistan kirjasinlaji:"
+
+#: audacious/ui_manager.c:218 audacious/ui_manager.c:219
+#, fuzzy
+msgid "Select Previous Playlist"
+msgstr "/Järjestä valittu osa/Nimien mukaan"
+
+#: audacious/ui_manager.c:221 audacious/ui_manager.c:222
+#, fuzzy
+msgid "Delete Playlist"
+msgstr "Valitse soittolistan kirjasinlaji:"
+
+#: audacious/ui_manager.c:224
 #, fuzzy
 msgid "Load List"
 msgstr "/Avaa lista"
 
-#: audacious/ui_playlist.c:142
+#: audacious/ui_manager.c:225
 #, fuzzy
 msgid "Loads a playlist file into the selected playlist."
 msgstr "Lataa metatiedot, kun tiedosto näytetään soittolistassa"
 
-#: audacious/ui_playlist.c:144
+#: audacious/ui_manager.c:227
 #, fuzzy
 msgid "Save List"
 msgstr "/Tallenna lista"
 
-#: audacious/ui_playlist.c:145
+#: audacious/ui_manager.c:228
 #, fuzzy
 msgid "Saves the selected playlist."
 msgstr "Tallenna soittolista"
 
-#: audacious/ui_playlist.c:147
+#: audacious/ui_manager.c:230
 #, fuzzy
 msgid "Save Default List"
 msgstr "/Tallenna/Oletus"
 
-#: audacious/ui_playlist.c:148
+#: audacious/ui_manager.c:231
 msgid "Saves the selected playlist to the default location."
 msgstr ""
 
-#: audacious/ui_playlist.c:151
+#: audacious/ui_manager.c:234
 msgid "List Manager"
 msgstr ""
 
-#: audacious/ui_playlist.c:152
+#: audacious/ui_manager.c:235
 #, fuzzy
 msgid "Opens the playlist manager."
 msgstr "Päivitä soittolista"
 
-#: audacious/ui_playlist.c:155
+#: audacious/ui_manager.c:238
 #, fuzzy
 msgid "Refresh List"
 msgstr "Päivitä soittolista"
 
-#: audacious/ui_playlist.c:156
+#: audacious/ui_manager.c:239
 msgid "Refreshes metadata associated with a playlist entry."
 msgstr ""
 
-#: audacious/ui_playlist.c:161
+#: audacious/ui_manager.c:249
+#, fuzzy
+msgid "Add CD..."
+msgstr "/Lisää CD..."
+
+#: audacious/ui_manager.c:250
+#, fuzzy
+msgid "Adds a CD to the playlist."
+msgstr "Älä tyhjennä soittolistaa"
+
+#: audacious/ui_manager.c:253
+#, fuzzy
+msgid "Add Internet Address..."
+msgstr "/Lisää internet-osoite..."
+
+#: audacious/ui_manager.c:254
+msgid "Adds a remote track to the playlist."
+msgstr ""
+
+#: audacious/ui_manager.c:257
+#, fuzzy
+msgid "Add Files..."
+msgstr "/Lisää tiedostoja..."
+
+#: audacious/ui_manager.c:258
+#, fuzzy
+msgid "Adds files to the playlist."
+msgstr "Älä tyhjennä soittolistaa"
+
+#: audacious/ui_manager.c:263
 #, fuzzy
 msgid "Search and Select"
 msgstr "/Järjestä valittu osa"
 
-#: audacious/ui_playlist.c:162
+#: audacious/ui_manager.c:264
 msgid ""
 "Searches the playlist and selects playlist entries based on specific "
 "criteria."
 msgstr ""
 
-#: audacious/ui_playlist.c:165
+#: audacious/ui_manager.c:267
 #, fuzzy
 msgid "Invert Selection"
 msgstr "/Käänteinen valinta"
 
-#: audacious/ui_playlist.c:166
+#: audacious/ui_manager.c:268
 msgid "Inverts the selected and unselected entries."
 msgstr ""
 
-#: audacious/ui_playlist.c:169 audacious/glade/addfiles.glade:105
+#: audacious/ui_manager.c:271 audacious/glade/addfiles.glade:105
 msgid "Select All"
 msgstr "Valitse kaikki"
 
-#: audacious/ui_playlist.c:170
+#: audacious/ui_manager.c:272
 msgid "Selects all of the playlist entries."
 msgstr ""
 
-#: audacious/ui_playlist.c:173
+#: audacious/ui_manager.c:275
 #, fuzzy
 msgid "Select None"
 msgstr "/Tyhjä valinta"
 
-#: audacious/ui_playlist.c:174
+#: audacious/ui_manager.c:276
 msgid "Deselects all of the playlist entries."
 msgstr ""
 
-#: audacious/ui_playlist.c:179
+#: audacious/ui_manager.c:281
 #, fuzzy
 msgid "Clear Queue"
 msgstr "/Tyhjennä jono"
 
-#: audacious/ui_playlist.c:180
+#: audacious/ui_manager.c:282
 msgid "Clears the queue associated with this playlist."
 msgstr ""
 
-#: audacious/ui_playlist.c:183
+#: audacious/ui_manager.c:285
 #, fuzzy
 msgid "Remove Unavailable Files"
 msgstr "/Poista kappaleet, jotka eivät ole saatavilla"
 
-#: audacious/ui_playlist.c:184
+#: audacious/ui_manager.c:286
 #, fuzzy
 msgid "Removes unavailable files from the playlist."
 msgstr "/Poista kappaleet, jotka eivät ole saatavilla"
 
-#: audacious/ui_playlist.c:187
+#: audacious/ui_manager.c:289
 #, fuzzy
 msgid "Remove Duplicates"
 msgstr "/Poista valitut"
 
-#: audacious/ui_playlist.c:189 audacious/ui_playlist.c:239
-#: audacious/ui_playlist.c:269
+#: audacious/ui_manager.c:291 audacious/ui_manager.c:327
+#: audacious/ui_manager.c:357
 msgid "By Title"
 msgstr "Nimen mukaan"
 
-#: audacious/ui_playlist.c:190
+#: audacious/ui_manager.c:292
 msgid "Removes duplicate entries from the playlist by title."
 msgstr ""
 
-#: audacious/ui_playlist.c:193 audacious/ui_playlist.c:247
-#: audacious/ui_playlist.c:277
+#: audacious/ui_manager.c:295 audacious/ui_manager.c:335
+#: audacious/ui_manager.c:365
 msgid "By Filename"
 msgstr "Tiedostonimen mukaan"
 
-#: audacious/ui_playlist.c:194
+#: audacious/ui_manager.c:296
 #, fuzzy
 msgid "Removes duplicate entries from the playlist by filename."
 msgstr "/Järjestä lista/Täydellisen tiedostonimen mukaan"
 
-#: audacious/ui_playlist.c:197 audacious/ui_playlist.c:251
-#: audacious/ui_playlist.c:281
+#: audacious/ui_manager.c:299 audacious/ui_manager.c:339
+#: audacious/ui_manager.c:369
 #, fuzzy
 msgid "By Path + Filename"
 msgstr "/Järjestä lista/Täydellisen tiedostonimen mukaan"
 
-#: audacious/ui_playlist.c:198
+#: audacious/ui_manager.c:300
 msgid "Removes duplicate entries from the playlist by their full path."
 msgstr ""
 
-#: audacious/ui_playlist.c:201
+#: audacious/ui_manager.c:303
 #, fuzzy
 msgid "Remove All"
 msgstr "/Poista kaikki"
 
-#: audacious/ui_playlist.c:202
+#: audacious/ui_manager.c:304
 msgid "Removes all entries from the playlist."
 msgstr ""
 
-#: audacious/ui_playlist.c:205
+#: audacious/ui_manager.c:307
 #, fuzzy
 msgid "Remove Unselected"
 msgstr "/Poista valitsemattomat"
 
-#: audacious/ui_playlist.c:206
+#: audacious/ui_manager.c:308
 #, fuzzy
 msgid "Remove unselected entries from the playlist."
 msgstr "Poista valitut kappaleet"
 
-#: audacious/ui_playlist.c:209
+#: audacious/ui_manager.c:311
 #, fuzzy
 msgid "Remove Selected"
 msgstr "/Poista valitut"
 
-#: audacious/ui_playlist.c:210
+#: audacious/ui_manager.c:312
 #, fuzzy
 msgid "Remove selected entries from the playlist."
 msgstr "Poista valitut kappaleet"
 
-#: audacious/ui_playlist.c:215
-#, fuzzy
-msgid "Add CD..."
-msgstr "/Lisää CD..."
-
-#: audacious/ui_playlist.c:216
-#, fuzzy
-msgid "Adds a CD to the playlist."
-msgstr "Älä tyhjennä soittolistaa"
-
-#: audacious/ui_playlist.c:219
-#, fuzzy
-msgid "Add Internet Address..."
-msgstr "/Lisää internet-osoite..."
-
-#: audacious/ui_playlist.c:220
-msgid "Adds a remote track to the playlist."
-msgstr ""
-
-#: audacious/ui_playlist.c:223
-#, fuzzy
-msgid "Add Files..."
-msgstr "/Lisää tiedostoja..."
-
-#: audacious/ui_playlist.c:224
-#, fuzzy
-msgid "Adds files to the playlist."
-msgstr "Älä tyhjennä soittolistaa"
-
-#: audacious/ui_playlist.c:229
+#: audacious/ui_manager.c:317
 #, fuzzy
 msgid "Randomize List"
 msgstr "/Sekoita lista"
 
-#: audacious/ui_playlist.c:230
+#: audacious/ui_manager.c:318
 #, fuzzy
 msgid "Randomizes the playlist."
 msgstr "/Sekoita lista"
 
-#: audacious/ui_playlist.c:233
+#: audacious/ui_manager.c:321
 #, fuzzy
 msgid "Reverse List"
 msgstr "/Käänteinen järjestys"
 
-#: audacious/ui_playlist.c:234
+#: audacious/ui_manager.c:322
 #, fuzzy
 msgid "Reverses the playlist."
 msgstr "Päivitä soittolista"
 
-#: audacious/ui_playlist.c:237
+#: audacious/ui_manager.c:325
 #, fuzzy
 msgid "Sort List"
 msgstr "/Järjestä lista"
 
-#: audacious/ui_playlist.c:240 audacious/ui_playlist.c:270
+#: audacious/ui_manager.c:328 audacious/ui_manager.c:358
 #, fuzzy
 msgid "Sorts the list by title."
 msgstr "Järjestä kaikki nimen mukaan"
 
-#: audacious/ui_playlist.c:243 audacious/ui_playlist.c:273
+#: audacious/ui_manager.c:331 audacious/ui_manager.c:361
 #, fuzzy
 msgid "By Artist"
 msgstr "Esittäjä"
 
-#: audacious/ui_playlist.c:244 audacious/ui_playlist.c:274
+#: audacious/ui_manager.c:332 audacious/ui_manager.c:362
 #, fuzzy
 msgid "Sorts the list by artist."
 msgstr "/Järjestä lista/Nimen mukaan"
 
-#: audacious/ui_playlist.c:248 audacious/ui_playlist.c:278
+#: audacious/ui_manager.c:336 audacious/ui_manager.c:366
 #, fuzzy
 msgid "Sorts the list by filename."
 msgstr "Järjestä kaikki tiedostonimen mukaan"
 
-#: audacious/ui_playlist.c:252 audacious/ui_playlist.c:282
+#: audacious/ui_manager.c:340 audacious/ui_manager.c:370
 #, fuzzy
 msgid "Sorts the list by full pathname."
 msgstr "Järjestä kappaleet täydellisen tiedostonimen mukaan"
 
-#: audacious/ui_playlist.c:255 audacious/ui_playlist.c:285
+#: audacious/ui_manager.c:343 audacious/ui_manager.c:373
 msgid "By Date"
 msgstr "Päiväyksen mukaan"
 
-#: audacious/ui_playlist.c:256 audacious/ui_playlist.c:286
+#: audacious/ui_manager.c:344 audacious/ui_manager.c:374
 msgid "Sorts the list by modification time."
 msgstr ""
 
-#: audacious/ui_playlist.c:259 audacious/ui_playlist.c:289
+#: audacious/ui_manager.c:347 audacious/ui_manager.c:377
 #, fuzzy
 msgid "By Track Number"
 msgstr "Kappaleen numero"
 
-#: audacious/ui_playlist.c:260 audacious/ui_playlist.c:290
+#: audacious/ui_manager.c:348 audacious/ui_manager.c:378
 #, fuzzy
 msgid "Sorts the list by track number."
 msgstr "/Järjestä lista/Päiväyksen mukaan"
 
-#: audacious/ui_playlist.c:263 audacious/ui_playlist.c:293
+#: audacious/ui_manager.c:351 audacious/ui_manager.c:381
 #, fuzzy
 msgid "By Playlist Entry"
 msgstr "BMP:n soittolistan muokkain"
 
-#: audacious/ui_playlist.c:264 audacious/ui_playlist.c:294
+#: audacious/ui_manager.c:352 audacious/ui_manager.c:382
 #, fuzzy
 msgid "Sorts the list by playlist entry."
 msgstr "/Järjestä lista/Nimen mukaan"
 
-#: audacious/ui_playlist.c:267
+#: audacious/ui_manager.c:355
 #, fuzzy
 msgid "Sort Selected"
 msgstr "/Järjestä valittu osa"
 
-#: audacious/ui_playlist.c:299
+#: audacious/ui_manager.c:390
 #, fuzzy
 msgid "View Track Details"
 msgstr "/Näytä kappaleen tiedot"
 
-#: audacious/ui_playlist.c:300
+#: audacious/ui_manager.c:391
 #, fuzzy
-msgid "Displays track information."
-msgstr "Näytä kappaleen tiedot"
+msgid "View track details"
+msgstr "/Näytä kappaleen tiedot"
 
-#: audacious/ui_playlist.c:303
+#: audacious/ui_manager.c:396
+#, fuzzy
+msgid "Play File"
+msgstr "/Soita"
+
+#: audacious/ui_manager.c:397
+#, fuzzy
+msgid "Load and play a file"
+msgstr "Lataa metatiedot soittolistoista ja musiikkitiedostoista"
+
+#: audacious/ui_manager.c:399
+#, fuzzy
+msgid "Play Location"
+msgstr "Sijainti:"
+
+#: audacious/ui_manager.c:400
+msgid "Play media from the selected location"
+msgstr ""
+
+#: audacious/ui_manager.c:402
+#, fuzzy
+msgid "Preferences"
+msgstr "/Asetukset"
+
+#: audacious/ui_manager.c:403
+#, fuzzy
+msgid "Open preferences window"
+msgstr "Avaa asetusikkuna"
+
+#: audacious/ui_manager.c:405
+#, fuzzy
+msgid "_Quit"
+msgstr "/_Lopeta"
+
+#: audacious/ui_manager.c:406
+#, fuzzy
+msgid "Quit Audacious"
+msgstr "MPEG-ääniliitännäisestä"
+
+#: audacious/ui_manager.c:408 audacious/ui_manager.c:409
+#, fuzzy
+msgid "Set A-B"
+msgstr "/Valitse kaikki"
+
+#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
+#, fuzzy
+msgid "Clear A-B"
+msgstr "/Tyhjennä jono"
+
+#: audacious/ui_manager.c:414 audacious/ui_manager.c:415
+#, fuzzy
+msgid "Jump to Playlist Start"
+msgstr "/Siirry soittolistan alkuun"
+
+#: audacious/ui_manager.c:417 audacious/ui_manager.c:418
+#, fuzzy
+msgid "Jump to File"
+msgstr "/Siirry tiedoston kohdalle"
+
+#: audacious/ui_manager.c:423
 #, fuzzy
 msgid "Queue Toggle"
 msgstr "/Muuta soittojonoa"
 
-#: audacious/ui_playlist.c:304
+#: audacious/ui_manager.c:424
 msgid "Enables/disables the entry in the playlist's queue."
 msgstr ""
 
-#: audacious/ui_playlist.c:728
+#: audacious/ui_manager.c:431
+#, fuzzy
+msgid "Load"
+msgstr "/Lataa"
+
+#: audacious/ui_manager.c:432
+#, fuzzy
+msgid "Import"
+msgstr "/Tuo"
+
+#: audacious/ui_manager.c:433
+#, fuzzy
+msgid "Save"
+msgstr "/Tallenna"
+
+#: audacious/ui_manager.c:434
+#, fuzzy
+msgid "Delete"
+msgstr "/Poista"
+
+#: audacious/ui_manager.c:436 audacious/ui_manager.c:457
+#: audacious/ui_manager.c:472
+msgid "Preset"
+msgstr "Asetus"
+
+#: audacious/ui_manager.c:437
+msgid "Load preset"
+msgstr "Lataa asetus"
+
+#: audacious/ui_manager.c:439 audacious/ui_manager.c:460
+#: audacious/ui_manager.c:475
+#, fuzzy
+msgid "Auto-load preset"
+msgstr "/Lataa/Automaattinen asetus"
+
+#: audacious/ui_manager.c:440
+#, fuzzy
+msgid "Load auto-load preset"
+msgstr "/Lataa/Automaattinen asetus"
+
+#: audacious/ui_manager.c:442 audacious/ui_manager.c:463
+msgid "Default"
+msgstr "Oletus"
+
+#: audacious/ui_manager.c:443
+msgid "Load default preset into equalizer"
+msgstr ""
+
+#: audacious/ui_manager.c:445
+#, fuzzy
+msgid "Zero"
+msgstr "Retro"
+
+#: audacious/ui_manager.c:446
+#, fuzzy
+msgid "Set equalizer preset levels to zero"
+msgstr "Tallenna taajuuskorjaimen asetus"
+
+#: audacious/ui_manager.c:448
+#, fuzzy
+msgid "From file"
+msgstr "/Lataa/Tiedosto"
+
+#: audacious/ui_manager.c:449
+#, fuzzy
+msgid "Load preset from file"
+msgstr "Lataa asetus"
+
+#: audacious/ui_manager.c:451
+#, fuzzy
+msgid "From WinAMP EQF file"
+msgstr "/Lataa/Winampin EQF-tiedosto"
+
+#: audacious/ui_manager.c:452
+#, fuzzy
+msgid "Load preset from WinAMP EQF file"
+msgstr "/Lataa/Winampin EQF-tiedosto"
+
+#: audacious/ui_manager.c:454
+#, fuzzy
+msgid "WinAMP Presets"
+msgstr "/Tuo/Winampin asetukset"
+
+#: audacious/ui_manager.c:455
+#, fuzzy
+msgid "Import WinAMP presets"
+msgstr "/Tuo/Winampin asetukset"
+
+#: audacious/ui_manager.c:458
+msgid "Save preset"
+msgstr "Tallenna asetus"
+
+#: audacious/ui_manager.c:461
+#, fuzzy
+msgid "Save auto-load preset"
+msgstr "/Tallenna/Automaattinen asetus"
+
+#: audacious/ui_manager.c:464
+#, fuzzy
+msgid "Save default preset"
+msgstr "Tallenna automaattinen asetus"
+
+#: audacious/ui_manager.c:466
+#, fuzzy
+msgid "To file"
+msgstr "/Lataa/Tiedosto"
+
+#: audacious/ui_manager.c:467
+#, fuzzy
+msgid "Save preset to file"
+msgstr "Tallenna asetus"
+
+#: audacious/ui_manager.c:469
+#, fuzzy
+msgid "To WinAMP EQF file"
+msgstr "/Tallenna/Winampin EQF-tiedosto"
+
+#: audacious/ui_manager.c:470
+#, fuzzy
+msgid "Save preset to WinAMP EQF file"
+msgstr "/Tallenna/Winampin EQF-tiedosto"
+
+#: audacious/ui_manager.c:473
+msgid "Delete preset"
+msgstr "Poista asetus"
+
+#: audacious/ui_manager.c:476
+#, fuzzy
+msgid "Delete auto-load preset"
+msgstr "/Poista/Automaattinen asetus"
+
+#: audacious/ui_preferences.c:99 audacious/glade/prefswin.glade:1399
+msgid "Appearance"
+msgstr "Ulkonäkö"
+
+#: audacious/ui_preferences.c:100
+#, fuzzy
+msgid "Audio"
+msgstr "MPEG-ääniliitännäisestä"
+
+#: audacious/ui_preferences.c:101
+msgid "Connectivity"
+msgstr ""
+
+#: audacious/ui_preferences.c:102 audacious/glade/prefswin.glade:2898
+msgid "Equalizer"
+msgstr "Taajuuskorjain"
+
+#: audacious/ui_preferences.c:103 audacious/glade/prefswin.glade:1678
+msgid "Mouse"
+msgstr "Hiiri"
+
+#: audacious/ui_preferences.c:104 audacious/playlist_manager.c:288
+#: audacious/glade/prefswin.glade:2530
+msgid "Playlist"
+msgstr "Soittolista"
+
+#: audacious/ui_preferences.c:105 audacious/glade/prefswin.glade:693
+msgid "Plugins"
+msgstr "Liitännäiset"
+
+#: audacious/ui_preferences.c:111
+msgid "Artist"
+msgstr "Esittäjä"
+
+#: audacious/ui_preferences.c:112 libaudacious/titlestring.c:372
+msgid "Album"
+msgstr "Levy"
+
+#: audacious/ui_preferences.c:113
+msgid "Title"
+msgstr "Nimi"
+
+#: audacious/ui_preferences.c:114
+msgid "Tracknumber"
+msgstr "Kappalenumero"
+
+#: audacious/ui_preferences.c:115 libaudacious/titlestring.c:373
+msgid "Genre"
+msgstr "Tyylilaji"
+
+#: audacious/ui_preferences.c:117
+msgid "Filepath"
+msgstr "Tiedostopolku"
+
+#: audacious/ui_preferences.c:118 libaudacious/titlestring.c:379
+msgid "Date"
+msgstr "Päiväys"
+
+#: audacious/ui_preferences.c:119 libaudacious/titlestring.c:380
+msgid "Year"
+msgstr "Vuosi"
+
+#: audacious/ui_preferences.c:120 libaudacious/titlestring.c:381
+msgid "Comment"
+msgstr "Kommentti"
+
+#: audacious/ui_preferences.c:141
+msgid "localhost"
+msgstr ""
+
+#: audacious/ui_preferences.c:454 audacious/ui_preferences.c:541
+#: audacious/ui_preferences.c:630 audacious/ui_preferences.c:726
+msgid "Enabled"
+msgstr "Käytössä"
+
+#: audacious/ui_preferences.c:470 audacious/ui_preferences.c:557
+#: audacious/ui_preferences.c:646 audacious/ui_preferences.c:742
+msgid "Description"
+msgstr "Kuvaus"
+
+#: audacious/ui_preferences.c:1807
+msgid "Category"
+msgstr "Luokka"
+
+#: audacious/ui_preferences.c:2362
+msgid "Preferences Window"
+msgstr "Asetusikkuna"
+
+#: audacious/ui_skinselector.c:176
+msgid "Archived Winamp 2.x skin"
+msgstr ""
+
+#: audacious/ui_skinselector.c:181
+msgid "Unarchived Winamp 2.x skin"
+msgstr ""
+
+#: audacious/ui_fileinfo.c:314
+#, fuzzy
+msgid "Track Information Window"
+msgstr "Näytä kappaleen tiedot"
+
+#: audacious/ui_fileinfo.c:336
+#, fuzzy
+msgid "Track Information Popup"
+msgstr "Näytä kappaleen tiedot"
+
+#: audacious/ui_playlist.c:501
 msgid ""
 "Select entries in playlist by filling one or more fields. Fields use regular "
 "expressions syntax, case-insensitive. If you don't know how regular "
@@ -1484,49 +1459,49 @@ msgid ""
 "for."
 msgstr ""
 
-#: audacious/ui_playlist.c:735
+#: audacious/ui_playlist.c:508
 #, fuzzy
 msgid "Track name: "
 msgstr "Kappaleiden nimet:"
 
-#: audacious/ui_playlist.c:741
+#: audacious/ui_playlist.c:514
 #, fuzzy
 msgid "Album name: "
 msgstr "Levy"
 
-#: audacious/ui_playlist.c:747
+#: audacious/ui_playlist.c:520
 #, fuzzy
 msgid "Artist: "
 msgstr "Esittäjä:"
 
-#: audacious/ui_playlist.c:753
+#: audacious/ui_playlist.c:526
 #, fuzzy
 msgid "Filename: "
 msgstr "Tiedostonimi:"
 
-#: audacious/ui_playlist.c:760
+#: audacious/ui_playlist.c:533
 msgid "Clear previous selection before searching"
 msgstr ""
 
-#: audacious/ui_playlist.c:763
+#: audacious/ui_playlist.c:536
 msgid "Automatically toggle queue for matching entries"
 msgstr ""
 
-#: audacious/ui_playlist.c:766
+#: audacious/ui_playlist.c:539
 msgid "Create a new playlist with matching entries"
 msgstr ""
 
-#: audacious/ui_playlist.c:1004
+#: audacious/ui_playlist.c:768
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "Virhe soittolistan \"%s\" kirjoittamisessa: %s"
 
-#: audacious/ui_playlist.c:1025
+#: audacious/ui_playlist.c:789
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s on jo olemassa. Jatketaanko?"
 
-#: audacious/ui_playlist.c:1039
+#: audacious/ui_playlist.c:803
 #, fuzzy, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -1535,56 +1510,56 @@ msgid ""
 msgstr ""
 "Soittolistan tallentaminen epäonnistui. Tuntematon tiedoston \"%s\" tyyppi."
 
-#: audacious/ui_playlist.c:1192
+#: audacious/ui_playlist.c:956
 #, fuzzy
 msgid "Load Playlist"
 msgstr "Avaa soittolista"
 
-#: audacious/ui_playlist.c:1205
+#: audacious/ui_playlist.c:969
 msgid "Save Playlist"
 msgstr "Tallenna soittolista"
 
-#: audacious/ui_playlist.c:1955
+#: audacious/ui_playlist.c:1690
 #, fuzzy
 msgid "Audacious Playlist Editor"
 msgstr "/Näytä soittolistan muokkain"
 
-#: audacious/util.c:670
+#: audacious/util.c:606
 #, fuzzy
 msgid "Add/Open URL Dialog"
 msgstr "Lisää/avaa tiedostoja -ikkuna"
 
-#: audacious/util.c:922
+#: audacious/util.c:858
 msgid "Add/Open Files dialog"
 msgstr "Lisää/avaa tiedostoja -ikkuna"
 
-#: audacious/util.c:977
+#: audacious/util.c:913
 msgid "Open Files"
 msgstr "Avaa tiedostoja"
 
-#: audacious/util.c:981
+#: audacious/util.c:917
 msgid "Close dialog on Open"
 msgstr "Sulje ikkuna kun tiedostot avattu"
 
-#: audacious/util.c:991 audacious/glade/addfiles.glade:8
+#: audacious/util.c:927 audacious/glade/addfiles.glade:8
 msgid "Add Files"
 msgstr "Lisää tiedostoja"
 
-#: audacious/util.c:995
+#: audacious/util.c:931
 msgid "Close dialog on Add"
 msgstr "Sulje ikkuna kun tiedostot lisätty"
 
-#: audacious/util.c:1173
+#: audacious/util.c:1109
 #, fuzzy
 msgid "Play files"
 msgstr "/Soita"
 
-#: audacious/util.c:1175
+#: audacious/util.c:1111
 #, fuzzy
 msgid "Load files"
 msgstr "/Lataa/Tiedosto"
 
-#: audacious/playback.c:225
+#: audacious/playback.c:228
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -2262,6 +2237,134 @@ msgstr "Kappaleen numero"
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: Näytä \"...\" vain jos kohta %n on olemassa"
 
+#~ msgid "/View Track Details"
+#~ msgstr "/Näytä kappaleen tiedot"
+
+#~ msgid "/Visualization Mode"
+#~ msgstr "/Visualisointitapa"
+
+#~ msgid "/Visualization Mode/Analyzer"
+#~ msgstr "/Visualisointitapa/Taajuusspektri"
+
+#~ msgid "/Visualization Mode/Scope"
+#~ msgstr "/Visualisointitapa/Oskilloskooppi"
+
+#, fuzzy
+#~ msgid "/Visualization Mode/Voiceprint"
+#~ msgstr "/Visualisointitapa/Oskilloskooppi"
+
+#~ msgid "/Visualization Mode/Off"
+#~ msgstr "/Visualisointitapa/Ei käytössä"
+
+#~ msgid "/Analyzer Mode/Normal"
+#~ msgstr "/Taajuusspektri/Tavallinen"
+
+#~ msgid "/Analyzer Mode/Fire"
+#~ msgstr "/Taajuusspektri/Tuli"
+
+#~ msgid "/Analyzer Mode/Lines"
+#~ msgstr "/Taajuusspektri/Viivat"
+
+#~ msgid "/Analyzer Mode/Bars"
+#~ msgstr "/Taajuusspektri/Palkit"
+
+#~ msgid "/Analyzer Mode/Peaks"
+#~ msgstr "/Taajuusspektri/Huiput"
+
+#, fuzzy
+#~ msgid "/Voiceprint mode/Normal"
+#~ msgstr "/Taajuusspektri/Tavallinen"
+
+#~ msgid "/WindowShade VU Mode"
+#~ msgstr "/Rullattu ikkuna"
+
+#~ msgid "/WindowShade VU Mode/Normal"
+#~ msgstr "/Rullattu ikkuna/Tavallinen"
+
+#~ msgid "/WindowShade VU Mode/Smooth"
+#~ msgstr "/Rullattu ikkuna/Pehmeä"
+
+#~ msgid "/Refresh Rate"
+#~ msgstr "/Päivitystaajuus"
+
+#~ msgid "/Analyzer Falloff"
+#~ msgstr "/Taajuusspektrin nopeus"
+
+#~ msgid "/Analyzer Falloff/Slowest"
+#~ msgstr "/Taajuusspektrin nopeus/Hitain"
+
+#~ msgid "/Analyzer Falloff/Slow"
+#~ msgstr "/Taajuusspektrin nopeus/Hidas"
+
+#~ msgid "/Analyzer Falloff/Medium"
+#~ msgstr "/Taajuusspektrin nopeus/Keskinopea"
+
+#~ msgid "/Analyzer Falloff/Fast"
+#~ msgstr "/Taajuusspektrin nopeus/Nopea"
+
+#~ msgid "/Analyzer Falloff/Fastest"
+#~ msgstr "/Taajuusspektrin nopeus/Nopein"
+
+#~ msgid "/Peaks Falloff"
+#~ msgstr "/Huippujen nopeus"
+
+#~ msgid "/Peaks Falloff/Slowest"
+#~ msgstr "/Huippujen nopeus/Hitain"
+
+#~ msgid "/Peaks Falloff/Slow"
+#~ msgstr "/Huippujen nopeus/Hidas"
+
+#~ msgid "/Peaks Falloff/Medium"
+#~ msgstr "/Huippujen nopeus/Keskinopea"
+
+#~ msgid "/Peaks Falloff/Fast"
+#~ msgstr "/Huippujen nopeus/Nopea"
+
+#~ msgid "/Peaks Falloff/Fastest"
+#~ msgstr "/Huippujen nopeus/Nopein"
+
+#~ msgid "/Pause"
+#~ msgstr "/Tauko"
+
+#~ msgid "/-"
+#~ msgstr "/-"
+
+#~ msgid "/Jump to Time"
+#~ msgstr "/Siirrä ajanhetkeä"
+
+#, fuzzy
+#~ msgid "/About Audacious"
+#~ msgstr "MPEG-ääniliitännäisestä"
+
+#, fuzzy
+#~ msgid "/V_isualization"
+#~ msgstr "/Visualisointitapa"
+
+#, fuzzy
+#~ msgid "/_Playback"
+#~ msgstr "/Soita"
+
+#~ msgid "/_View"
+#~ msgstr "/_Näytä"
+
+#~ msgid "/Files..."
+#~ msgstr "/Tiedostot..."
+
+#~ msgid "/Internet location..."
+#~ msgstr "/Internet-osoite..."
+
+#, fuzzy
+#~ msgid "New List"
+#~ msgstr "/Uusi lista"
+
+#, fuzzy
+#~ msgid "Creates a new playlist."
+#~ msgstr "Päivitä soittolista"
+
+#, fuzzy
+#~ msgid "Displays track information."
+#~ msgstr "Näytä kappaleen tiedot"
+
 #~ msgid "Chinese:"
 #~ msgstr "kiina:"
 
@@ -2303,26 +2406,6 @@ msgstr "%{n:...%}: Näytä \"...\" vain jos kohta %n on olemassa"
 
 #~ msgid "Delete auto-preset"
 #~ msgstr "Poista automaattinen asetus"
-
-#~ msgid "  (invalid UTF-8)"
-#~ msgstr "  (virheellistä UTF-8:aa)"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Received SIGSEGV\n"
-#~ "\n"
-#~ "This could be a bug in Audacious. If you don't know why this happened, "
-#~ "file a bug at http://bugs-meta.atheme.org/\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Signaali SIGSEGV vastaanotettu\n"
-#~ "\n"
-#~ "Tämä voi merkitä ohjelmistovirhettä BMP:ssä. Jos et tiedä miksi tämä "
-#~ "tapahtui, ota yhteyttä kehittäjiin sähköpostiosoitteessa beepmp-"
-#~ "devel@lists.sourceforge.net\n"
-#~ "\n"
 
 #, fuzzy
 #~ msgid "/Remove Duplicates/By Title"
@@ -2458,10 +2541,6 @@ msgstr "%{n:...%}: Näytä \"...\" vain jos kohta %n on olemassa"
 #, fuzzy
 #~ msgid " MIDI Info "
 #~ msgstr "CD-tiedot"
-
-#, fuzzy
-#~ msgid "Format:"
-#~ msgstr "ID3-muoto:"
 
 #, fuzzy
 #~ msgid "Length (msec):"
@@ -2786,9 +2865,6 @@ msgstr "%{n:...%}: Näytä \"...\" vain jos kohta %n on olemassa"
 #~ msgid "Death Metal"
 #~ msgstr "Death Metal"
 
-#~ msgid "Pranks"
-#~ msgstr "Pilat"
-
 #~ msgid "Soundtrack"
 #~ msgstr "Ääniraita"
 
@@ -2836,9 +2912,6 @@ msgstr "%{n:...%}: Näytä \"...\" vain jos kohta %n on olemassa"
 
 #~ msgid "Noise"
 #~ msgstr "Melu"
-
-#~ msgid "Bass"
-#~ msgstr "Basso"
 
 #~ msgid "Soul"
 #~ msgstr "Soul"
@@ -2920,9 +2993,6 @@ msgstr "%{n:...%}: Näytä \"...\" vain jos kohta %n on olemassa"
 
 #~ msgid "Rave"
 #~ msgstr "Rave"
-
-#~ msgid "Showtunes"
-#~ msgstr "Showmusiikki"
 
 #~ msgid "Trailer"
 #~ msgstr "Esittely"
@@ -3040,12 +3110,6 @@ msgstr "%{n:...%}: Näytä \"...\" vain jos kohta %n on olemassa"
 
 #~ msgid "Porn Groove"
 #~ msgstr "Pornogroove"
-
-#~ msgid "Satire"
-#~ msgstr "Satiiri"
-
-#~ msgid "Slow Jam"
-#~ msgstr "Hidas jam"
 
 #~ msgid "Club"
 #~ msgstr "Klubi"
@@ -4372,10 +4436,6 @@ msgstr "%{n:...%}: Näytä \"...\" vain jos kohta %n on olemassa"
 #~ msgstr "Puskurin koko (ms):"
 
 #, fuzzy
-#~ msgid "Pause"
-#~ msgstr "/Tauko"
-
-#, fuzzy
 #~ msgid "Position:"
 #~ msgstr "Kuvaus:"
 
@@ -4601,9 +4661,6 @@ msgstr "%{n:...%}: Näytä \"...\" vain jos kohta %n on olemassa"
 
 #~ msgid "Jump to time"
 #~ msgstr "Siirry ajanhetkeen"
-
-#~ msgid "Open preferences dialog"
-#~ msgstr "Avaa asetusikkuna"
 
 #~ msgid "View BMP project information"
 #~ msgstr "Näytä BMP-projektin tietoja"

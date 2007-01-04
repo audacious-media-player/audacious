@@ -1,15 +1,18 @@
 # Audacious.
-audacious/about.c
-audacious/credits.c
-audacious/equalizer.c
+audacious/ui_about.c
+audacious/ui_credits.c
+audacious/ui_equalizer.c
 audacious/getopt.c
 audacious/glade.c
 audacious/input.c
 audacious/logger.c
 audacious/main.c
-audacious/mainwin.c
-audacious/prefswin.c
-audacious/skinwin.c
+audacious/signals.c
+audacious/strings.c
+audacious/ui_main.c
+audacious/ui_manager.c
+audacious/ui_preferences.c
+audacious/ui_skinselector.c
 audacious/ui_fileinfo.c
 audacious/ui_playlist.c
 audacious/util.c

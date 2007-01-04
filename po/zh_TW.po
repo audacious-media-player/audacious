@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious VERSION\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-01 11:21-0600\n"
+"POT-Creation-Date: 2007-01-04 09:46-0600\n"
 "PO-Revision-Date: 2007-01-01 15:32+0800\n"
 "Last-Translator: Cheng-Wei Chien <e.cwchien@gmail.com>\n"
 "Language-Team: Cheng-Wei Chien <e.cwchien@gmail.com>\n"
@@ -18,15 +18,16 @@ msgstr ""
 "X-Poedit-Country: TAIWAN\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: audacious/about.c:123 audacious/credits.c:323
+#: audacious/ui_about.c:123 audacious/ui_credits.c:323
+#: audacious/ui_manager.c:393 audacious/ui_manager.c:394
 msgid "About Audacious"
 msgstr "關於 Audacious"
 
-#: audacious/about.c:172 audacious/credits.c:368
+#: audacious/ui_about.c:172 audacious/ui_credits.c:368
 msgid "Credits"
 msgstr "工作人員"
 
-#: audacious/credits.c:45
+#: audacious/ui_credits.c:45
 #, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
@@ -39,265 +40,155 @@ msgstr ""
 "\n"
 "版權所有 (C) 2005-2006 Audacious Development Team\n"
 
-#: audacious/credits.c:51
+#: audacious/ui_credits.c:51
 msgid "Audacious core developers:"
 msgstr "Audacious 主要開發人員："
 
-#: audacious/credits.c:64
+#: audacious/ui_credits.c:64
 msgid "Graphics:"
 msgstr "美工："
 
-#: audacious/credits.c:69
+#: audacious/ui_credits.c:69
 msgid "Default skin:"
 msgstr "預設面板："
 
-#: audacious/credits.c:74
+#: audacious/ui_credits.c:74
 msgid "Plugin development:"
 msgstr "插件開發："
 
-#: audacious/credits.c:85
+#: audacious/ui_credits.c:85
 msgid "Patch authors:"
 msgstr "修正檔作者："
 
-#: audacious/credits.c:100
+#: audacious/ui_credits.c:100
 msgid "0.1.x developers:"
 msgstr "0.1.x 開發人員："
 
-#: audacious/credits.c:106
+#: audacious/ui_credits.c:106
 msgid "BMP Developers:"
 msgstr "BMP 開發人員："
 
-#: audacious/credits.c:138
+#: audacious/ui_credits.c:138
 msgid "Brazilian Portuguese:"
 msgstr "巴西葡萄牙語："
 
-#: audacious/credits.c:141
+#: audacious/ui_credits.c:141
 msgid "Breton:"
 msgstr "布列塔尼語："
 
-#: audacious/credits.c:144
+#: audacious/ui_credits.c:144
 msgid "Czech:"
 msgstr "捷克語："
 
-#: audacious/credits.c:147
+#: audacious/ui_credits.c:147
 msgid "Dutch:"
 msgstr "荷蘭語："
 
-#: audacious/credits.c:151
+#: audacious/ui_credits.c:151
 msgid "Finnish:"
 msgstr "芬蘭語："
 
-#: audacious/credits.c:154
+#: audacious/ui_credits.c:154
 msgid "French:"
 msgstr "法語："
 
-#: audacious/credits.c:157
+#: audacious/ui_credits.c:157
 msgid "German:"
 msgstr "德語："
 
-#: audacious/credits.c:161
+#: audacious/ui_credits.c:161
 msgid "Georgian:"
 msgstr "喬治亞語："
 
-#: audacious/credits.c:164
+#: audacious/ui_credits.c:164
 msgid "Greek:"
 msgstr "希臘語："
 
-#: audacious/credits.c:169
+#: audacious/ui_credits.c:169
 msgid "Hindi:"
 msgstr "北印度語："
 
-#: audacious/credits.c:172
+#: audacious/ui_credits.c:172
 msgid "Hungarian:"
 msgstr "匈牙利語："
 
-#: audacious/credits.c:175
+#: audacious/ui_credits.c:175
 msgid "Italian:"
 msgstr "義大利語："
 
-#: audacious/credits.c:179
+#: audacious/ui_credits.c:179
 msgid "Japanese:"
 msgstr "日語："
 
-#: audacious/credits.c:182
+#: audacious/ui_credits.c:182
 msgid "Korean:"
 msgstr "韓語："
 
-#: audacious/credits.c:185
+#: audacious/ui_credits.c:185
 msgid "Lithuanian:"
 msgstr "立陶宛語："
 
-#: audacious/credits.c:188
+#: audacious/ui_credits.c:188
 msgid "Macedonian:"
 msgstr "馬其頓語："
 
-#: audacious/credits.c:191
+#: audacious/ui_credits.c:191
 msgid "Polish:"
 msgstr "波蘭語："
 
-#: audacious/credits.c:194
+#: audacious/ui_credits.c:194
 msgid "Romanian:"
 msgstr "羅馬尼亞語："
 
-#: audacious/credits.c:197
+#: audacious/ui_credits.c:197
 msgid "Russian:"
 msgstr "俄語："
 
-#: audacious/credits.c:200
+#: audacious/ui_credits.c:200
 msgid "Serbian (Latin):"
 msgstr "塞爾維亞 (拉丁語)："
 
-#: audacious/credits.c:203
+#: audacious/ui_credits.c:203
 msgid "Serbian (Cyrillic):"
 msgstr "塞爾維亞 (斯拉夫語)："
 
-#: audacious/credits.c:206
+#: audacious/ui_credits.c:206
 msgid "Simplified Chinese:"
 msgstr "簡體中文："
 
-#: audacious/credits.c:209
+#: audacious/ui_credits.c:209
 msgid "Slovak:"
 msgstr "斯洛伐克語："
 
-#: audacious/credits.c:212
+#: audacious/ui_credits.c:212
 msgid "Spanish:"
 msgstr "西班牙語："
 
-#: audacious/credits.c:215
+#: audacious/ui_credits.c:215
 msgid "Swedish:"
 msgstr "瑞典語："
 
-#: audacious/credits.c:218
+#: audacious/ui_credits.c:218
 msgid "Traditional Chinese:"
 msgstr "正體中文："
 
-#: audacious/credits.c:221
+#: audacious/ui_credits.c:221
 msgid "Ukrainian:"
 msgstr "烏克蘭語："
 
-#: audacious/credits.c:224
+#: audacious/ui_credits.c:224
 msgid "Welsh:"
 msgstr "威爾斯語："
 
-#: audacious/credits.c:372
+#: audacious/ui_credits.c:372
 msgid "Translators"
 msgstr "翻譯人員"
 
-#: audacious/equalizer.c:112
-msgid "Load"
-msgstr "載入"
-
-#: audacious/equalizer.c:113
-msgid "Import"
-msgstr "匯入"
-
-#: audacious/equalizer.c:114
-msgid "Save"
-msgstr "儲存"
-
-#: audacious/equalizer.c:115
-msgid "Delete"
-msgstr "刪除"
-
-#: audacious/equalizer.c:118 audacious/equalizer.c:153
-#: audacious/equalizer.c:178
-msgid "Preset"
-msgstr "設定組合"
-
-#: audacious/equalizer.c:119
-msgid "Load preset"
-msgstr "載入設定組合"
-
-#: audacious/equalizer.c:123 audacious/equalizer.c:158
-#: audacious/equalizer.c:183
-msgid "Auto-load preset"
-msgstr "自動載入設定組合"
-
-#: audacious/equalizer.c:124
-msgid "Load auto-load preset"
-msgstr "載入自動設定組合"
-
-#: audacious/equalizer.c:128 audacious/equalizer.c:163
-msgid "Default"
-msgstr "預設的設定組合"
-
-#: audacious/equalizer.c:129
-msgid "Load default preset into equalizer"
-msgstr "載入預設的設定組合至等化器"
-
-#: audacious/equalizer.c:133
-msgid "Zero"
-msgstr "零值"
-
-#: audacious/equalizer.c:134
-msgid "Set equalizer preset levels to zero"
-msgstr "將等化器設定組合設定為零值"
-
-#: audacious/equalizer.c:138
-msgid "From file"
-msgstr "從檔案"
-
-#: audacious/equalizer.c:139
-msgid "Load preset from file"
-msgstr "從檔案載入設定組合"
-
-#: audacious/equalizer.c:143
-msgid "From WinAMP EQF file"
-msgstr "從 WinAMP EQF 檔案"
-
-#: audacious/equalizer.c:144
-msgid "Load preset from WinAMP EQF file"
-msgstr "從 WinAMP EQF 檔案載入設定組合"
-
-#: audacious/equalizer.c:148
-msgid "WinAMP Presets"
-msgstr "WinAMP 設定組合"
-
-#: audacious/equalizer.c:149
-msgid "Import WinAMP presets"
-msgstr "匯入 WinAMP 設定組合"
-
-#: audacious/equalizer.c:154
-msgid "Save preset"
-msgstr "儲存設定組合"
-
-#: audacious/equalizer.c:159
-msgid "Save auto-load preset"
-msgstr "儲存自動載入設定組合"
-
-#: audacious/equalizer.c:164
-msgid "Save default preset"
-msgstr "存為預設的設定組合"
-
-#: audacious/equalizer.c:168
-msgid "To file"
-msgstr "至檔案"
-
-#: audacious/equalizer.c:169
-msgid "Save preset to file"
-msgstr "儲存設定組合至檔案"
-
-#: audacious/equalizer.c:173
-msgid "To WinAMP EQF file"
-msgstr "至 WinAMP EQF 檔案"
-
-#: audacious/equalizer.c:174
-msgid "Save preset to WinAMP EQF file"
-msgstr "儲存設定組合至 WinAMP EQF 檔案"
-
-#: audacious/equalizer.c:179
-msgid "Delete preset"
-msgstr "刪除設定組合"
-
-#: audacious/equalizer.c:184
-msgid "Delete auto-load preset"
-msgstr "刪除自動載入設定組合"
-
-#: audacious/equalizer.c:875
+#: audacious/ui_equalizer.c:752
 msgid "Audacious Equalizer"
 msgstr "Audacious 等化器"
 
-#: audacious/equalizer.c:1615
+#: audacious/ui_equalizer.c:1466
 msgid "Presets"
 msgstr "設定組合"
 
@@ -356,7 +247,7 @@ msgstr "%s：選項 `-W %s' 是模稜兩可的\n"
 msgid "%s: option `-W %s' doesn't allow an argument\n"
 msgstr "%s：選項 `-W %s' 不允許一個引數\n"
 
-#: audacious/glade.c:40
+#: audacious/glade.c:43
 #, c-format
 msgid ""
 "<b><big>Unable to create %s.</big></b>\n"
@@ -389,8 +280,9 @@ msgstr "以後別再顯示這個警告。"
 msgid "Show more _details"
 msgstr "顯示更多細節 (_d)"
 
-#: audacious/input.c:344 audacious/prefswin.c:115 audacious/prefswin.c:483
-#: audacious/prefswin.c:571 audacious/prefswin.c:660 audacious/prefswin.c:756
+#: audacious/input.c:344 audacious/ui_preferences.c:116
+#: audacious/ui_preferences.c:484 audacious/ui_preferences.c:572
+#: audacious/ui_preferences.c:661 audacious/ui_preferences.c:757
 msgid "Filename"
 msgstr "檔案名稱"
 
@@ -412,22 +304,22 @@ msgstr "沒有輸入插件適用此檔"
 msgid "Input plugin: %s"
 msgstr "輸入插件：%s"
 
-#: audacious/logger.c:119
+#: audacious/logger.c:122
 #, c-format
 msgid "Unable to create log file (%s)!\n"
 msgstr "無法建立紀錄檔 (%s)！\n"
 
-#: audacious/main.c:83 audacious/main.c:85 audacious/mainwin.c:918
-#: audacious/mainwin.c:3769
+#: audacious/main.c:84 audacious/main.c:86 audacious/ui_main.c:630
+#: audacious/ui_main.c:3421
 msgid "Audacious"
 msgstr "Audacious"
 
-#: audacious/main.c:460
+#: audacious/main.c:461
 #, c-format
 msgid "Could not create directory (%s): %s"
 msgstr "無法建立目錄 (%s)：%s"
 
-#: audacious/main.c:792
+#: audacious/main.c:793
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
@@ -439,71 +331,71 @@ msgstr ""
 "選項：\n"
 "--------\n"
 
-#: audacious/main.c:797
+#: audacious/main.c:798
 msgid "Display this text and exit"
 msgstr "顯示這段文字後結束"
 
-#: audacious/main.c:800
+#: audacious/main.c:801
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "請選擇 Audacious/BMP/XMMS 作業階段 (預設：0)"
 
-#: audacious/main.c:803
+#: audacious/main.c:804
 msgid "Skip backwards in playlist"
 msgstr "跳至播放清單開頭"
 
-#: audacious/main.c:806
+#: audacious/main.c:807
 msgid "Start playing current playlist"
 msgstr "開始播放目前的播放清單"
 
-#: audacious/main.c:809
+#: audacious/main.c:810
 msgid "Pause current song"
 msgstr "暫停目前的歌曲"
 
-#: audacious/main.c:812
+#: audacious/main.c:813
 msgid "Stop current song"
 msgstr "停止目前的歌曲"
 
-#: audacious/main.c:815
+#: audacious/main.c:816
 msgid "Pause if playing, play otherwise"
 msgstr "播放/暫停"
 
-#: audacious/main.c:818
+#: audacious/main.c:819
 msgid "Skip forward in playlist"
 msgstr "跳至播放清單結尾"
 
-#: audacious/main.c:821
+#: audacious/main.c:822
 msgid "Display Jump to file dialog"
 msgstr "顯示跳至檔案對話框"
 
-#: audacious/main.c:824
+#: audacious/main.c:825
 msgid "Don't clear the playlist"
 msgstr "不要清除此播放清單"
 
-#: audacious/main.c:827
+#: audacious/main.c:828
 msgid "Show the main window"
 msgstr "顯示主視窗"
 
-#: audacious/main.c:830
+#: audacious/main.c:831
 msgid "Activate Audacious"
 msgstr "喚起 Audacious"
 
-#: audacious/main.c:833
+#: audacious/main.c:834
 msgid "Previous session ID"
 msgstr "前一個作業階段 ID"
 
-#: audacious/main.c:836
+#: audacious/main.c:837
 msgid "Headless operation [experimental]"
 msgstr "遠端作業 [尚在測試階段]"
 
-#: audacious/main.c:839
+#: audacious/main.c:840
 msgid "Disable error/warning interception (logging)"
 msgstr "停用錯誤/警告訊息擷取 (紀錄)"
 
-#: audacious/main.c:842
+#: audacious/main.c:843
 msgid "Print version number and exit\n"
 msgstr "印出版本編號後結束\n"
 
-#: audacious/main.c:1049
+#: audacious/main.c:1050
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -515,7 +407,7 @@ msgstr ""
 "\n"
 "請確認位於 '%s' 的面板是可用的，且預設面板被正確地安裝於 '%s'\n"
 
-#: audacious/main.c:1096
+#: audacious/main.c:1097
 #, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -524,7 +416,7 @@ msgstr ""
 "抱歉，您的 GTK+ 版本 (%d.%d.%d) 與 Audacious 不相容。\n"
 "請使用 GTK+ %s 或更新的版本。\n"
 
-#: audacious/main.c:1107
+#: audacious/main.c:1108
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -537,449 +429,139 @@ msgstr ""
 "如果您使用基於 libc5 的 linux 系統且已安裝 Glib 與 GTK+。\n"
 "在安裝 LinuxThreads 前，您必須重新編譯 Glib 與 GTK+。\n"
 
-#: audacious/main.c:1126
+#: audacious/main.c:1127
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "audacious：無法顯示，正在結束。\n"
 
-#: audacious/mainwin.c:257 audacious/mainwin.c:401
-msgid "/View Track Details"
-msgstr "/檢視音軌細節"
-
-#: audacious/mainwin.c:259 audacious/mainwin.c:389
-msgid "/Jump to File"
-msgstr "/跳至檔案"
-
-#: audacious/mainwin.c:262 audacious/mainwin.c:463
-msgid "/Autoscroll Songname"
-msgstr "/自動捲動歌曲名稱"
-
-#: audacious/mainwin.c:264 audacious/mainwin.c:367
-msgid "/Stop After Current Song"
-msgstr "/播完目前的歌曲後停止"
-
-#: audacious/mainwin.c:276
-msgid "/Visualization Mode"
-msgstr "/視覺化模式"
-
-#: audacious/mainwin.c:277
-msgid "/Visualization Mode/Analyzer"
-msgstr "/視覺化模式/分析器"
-
-#: audacious/mainwin.c:279
-msgid "/Visualization Mode/Scope"
-msgstr "/視覺化模式/範圍"
-
-#: audacious/mainwin.c:281
-msgid "/Visualization Mode/Voiceprint"
-msgstr "/視覺化模式/聲波紋"
-
-#: audacious/mainwin.c:283
-msgid "/Visualization Mode/Off"
-msgstr "/視覺化模式/關閉"
-
-#: audacious/mainwin.c:285
-msgid "/Analyzer Mode"
-msgstr "/分析器模式"
-
-#: audacious/mainwin.c:286
-msgid "/Analyzer Mode/Normal"
-msgstr "/分析器模式/一般"
-
-#: audacious/mainwin.c:288
-msgid "/Analyzer Mode/Fire"
-msgstr "/分析器模式/火焰"
-
-#: audacious/mainwin.c:290
-msgid "/Analyzer Mode/Vertical Lines"
-msgstr "/分析器模式/垂直線"
-
-#: audacious/mainwin.c:293
-msgid "/Analyzer Mode/Lines"
-msgstr "/分析器模式/線狀"
-
-#: audacious/mainwin.c:295
-msgid "/Analyzer Mode/Bars"
-msgstr "/分析器模式/長條"
-
-#: audacious/mainwin.c:298
-msgid "/Analyzer Mode/Peaks"
-msgstr "/分析器模式/波峰"
-
-#: audacious/mainwin.c:300
-msgid "/Scope Mode"
-msgstr "/範圍模式"
-
-#: audacious/mainwin.c:301
-msgid "/Scope Mode/Dot Scope"
-msgstr "/範圍模式/點狀"
-
-#: audacious/mainwin.c:303
-msgid "/Scope Mode/Line Scope"
-msgstr "/範圍模式/線狀"
-
-#: audacious/mainwin.c:305
-msgid "/Scope Mode/Solid Scope"
-msgstr "/範圍模式/密實"
-
-#: audacious/mainwin.c:307
-msgid "/Voiceprint mode"
-msgstr "/分析器模式"
-
-#: audacious/mainwin.c:308
-msgid "/Voiceprint mode/Normal"
-msgstr "/分析器模式/一般"
-
-#: audacious/mainwin.c:310
-msgid "/Voiceprint mode/Fire"
-msgstr "/分析器模式/火焰"
-
-#: audacious/mainwin.c:312
-msgid "/Voiceprint mode/Ice"
-msgstr "/分析器模式/冰柱"
-
-#: audacious/mainwin.c:314
-msgid "/WindowShade VU Mode"
-msgstr "/視窗陰影 VU 模式"
-
-#: audacious/mainwin.c:315
-msgid "/WindowShade VU Mode/Normal"
-msgstr "/視窗陰影 VU 模式/一般"
-
-#: audacious/mainwin.c:317
-msgid "/WindowShade VU Mode/Smooth"
-msgstr "/視窗陰影 VU 模式/平滑"
-
-#: audacious/mainwin.c:319
-msgid "/Refresh Rate"
-msgstr "/重新整理頻率"
-
-#: audacious/mainwin.c:320
-msgid "/Refresh Rate/Full (~50 fps)"
-msgstr "/重新整理頻率/全速 (約 50 fps)"
-
-#: audacious/mainwin.c:322
-msgid "/Refresh Rate/Half (~25 fps)"
-msgstr "/重新整理頻率/半速 (約 25 fps)"
-
-#: audacious/mainwin.c:324
-msgid "/Refresh Rate/Quarter (~13 fps)"
-msgstr "/重新整理頻率/四分之一 (約 13 fps)"
-
-#: audacious/mainwin.c:326
-msgid "/Refresh Rate/Eighth (~6 fps)"
-msgstr "/重新整理頻率/八分之一 (約 6 fps)"
-
-#: audacious/mainwin.c:328
-msgid "/Analyzer Falloff"
-msgstr "/分析器下降速度"
-
-#: audacious/mainwin.c:329
-msgid "/Analyzer Falloff/Slowest"
-msgstr "/分析器下降速度/最慢"
-
-#: audacious/mainwin.c:331
-msgid "/Analyzer Falloff/Slow"
-msgstr "/分析器下降速度/慢"
-
-#: audacious/mainwin.c:333
-msgid "/Analyzer Falloff/Medium"
-msgstr "/分析器下降速度/中等"
-
-#: audacious/mainwin.c:335
-msgid "/Analyzer Falloff/Fast"
-msgstr "/分析器下降速度/快"
-
-#: audacious/mainwin.c:337
-msgid "/Analyzer Falloff/Fastest"
-msgstr "/分析器下降速度/最快"
-
-#: audacious/mainwin.c:339
-msgid "/Peaks Falloff"
-msgstr "/波峰下降速度"
-
-#: audacious/mainwin.c:340
-msgid "/Peaks Falloff/Slowest"
-msgstr "/波峰下降速度/最慢"
-
-#: audacious/mainwin.c:342
-msgid "/Peaks Falloff/Slow"
-msgstr "/波峰下降速度/慢"
-
-#: audacious/mainwin.c:344
-msgid "/Peaks Falloff/Medium"
-msgstr "/波峰下降速度/中等"
-
-#: audacious/mainwin.c:346
-msgid "/Peaks Falloff/Fast"
-msgstr "/波峰下降速度/快"
-
-#: audacious/mainwin.c:348
-msgid "/Peaks Falloff/Fastest"
-msgstr "/波峰下降速度/最快"
-
-#: audacious/mainwin.c:358
-msgid "/Play CD"
-msgstr "/播放 CD"
-
-#: audacious/mainwin.c:361
-msgid "/Repeat"
-msgstr "/重複"
-
-#: audacious/mainwin.c:363
-msgid "/Shuffle"
-msgstr "/隨機"
-
-#: audacious/mainwin.c:365
-msgid "/No Playlist Advance"
-msgstr "/不使用播放清單進階項目"
-
-#: audacious/mainwin.c:370
-msgid "/Play"
-msgstr "/播放"
-
-#: audacious/mainwin.c:372
-msgid "/Pause"
-msgstr "/暫停"
-
-#: audacious/mainwin.c:374
-msgid "/Stop"
-msgstr "/停止"
-
-#: audacious/mainwin.c:376
-msgid "/Previous"
-msgstr "/上一首"
-
-#: audacious/mainwin.c:378
-msgid "/Next"
-msgstr "/下一首"
-
-#: audacious/mainwin.c:381
-msgid "/Jump to Playlist Start"
-msgstr "/跳至播放清單開頭"
-
-#: audacious/mainwin.c:383
-msgid "/-"
-msgstr "/-"
-
-#: audacious/mainwin.c:384
-msgid "/Set A-B"
-msgstr "/設定播放區段"
-
-#: audacious/mainwin.c:386
-msgid "/Clear A-B"
-msgstr "/清除播放區段"
-
-#: audacious/mainwin.c:391
-msgid "/Jump to Time"
-msgstr "/跳至時刻"
-
-#: audacious/mainwin.c:394
-msgid "/New Playlist"
-msgstr "/新增播放清單"
-
-#: audacious/mainwin.c:396
-msgid "/Select Next Playlist"
-msgstr "/選擇下個播放清單"
-
-#: audacious/mainwin.c:398
-msgid "/Select Previous Playlist"
-msgstr "/選擇上個播放清單"
-
-#: audacious/mainwin.c:411
-msgid "/About Audacious"
-msgstr "/關於 Audacious"
-
-#: audacious/mainwin.c:414
-msgid "/Play File"
-msgstr "/播放檔案"
-
-#: audacious/mainwin.c:416
-msgid "/Play Location"
-msgstr "/播放位置"
-
-#: audacious/mainwin.c:419
-msgid "/V_isualization"
-msgstr "/視覺化效果 (_i)"
-
-#: audacious/mainwin.c:420
-msgid "/_Playback"
-msgstr "/播放 (_P)"
-
-#: audacious/mainwin.c:421
-msgid "/_View"
-msgstr "/檢視 (_V)"
-
-#: audacious/mainwin.c:423
-msgid "/Preferences"
-msgstr "/偏好設定"
-
-#: audacious/mainwin.c:425
-msgid "/_Quit"
-msgstr "/結束 (_Q)"
-
-#: audacious/mainwin.c:435
-msgid "/Files..."
-msgstr "/檔案..."
-
-#: audacious/mainwin.c:437
-msgid "/Internet location..."
-msgstr "/網路位置..."
-
-#: audacious/mainwin.c:447
-msgid "/Show Player"
-msgstr "/顯示播放器"
-
-#: audacious/mainwin.c:449
-msgid "/Show Playlist Editor"
-msgstr "/顯示播放清單編輯器"
-
-#: audacious/mainwin.c:451
-msgid "/Show Equalizer"
-msgstr "/顯示等化器"
-
-#: audacious/mainwin.c:454
-msgid "/Time Elapsed"
-msgstr "/經過時間"
-
-#: audacious/mainwin.c:456
-msgid "/Time Remaining"
-msgstr "/剩餘時間"
-
-#: audacious/mainwin.c:459
-msgid "/Always On Top"
-msgstr "/最上層顯示"
-
-#: audacious/mainwin.c:461
-msgid "/Put on All Workspaces"
-msgstr "/置於所有工作區"
-
-#: audacious/mainwin.c:466
-msgid "/Roll up Player"
-msgstr "/捲起播放器"
-
-#: audacious/mainwin.c:468
-msgid "/Roll up Playlist Editor"
-msgstr "/捲起播放清單編輯器"
-
-#: audacious/mainwin.c:470
-msgid "/Roll up Equalizer"
-msgstr "/捲起等化器"
-
-#: audacious/mainwin.c:473
-msgid "/DoubleSize"
-msgstr "/雙倍大小"
-
-#: audacious/mainwin.c:475
-msgid "/Easy Move"
-msgstr "/隨意移動"
-
-#: audacious/mainwin.c:916
+#: audacious/signals.c:90
+#, fuzzy
+msgid ""
+"\n"
+"Received SIGSEGV\n"
+"\n"
+"This could be a bug in Audacious. If you don't know why this happened, file "
+"a bug at http://bugs-meta.atheme.org/\n"
+"\n"
+msgstr ""
+"\n"
+"收到 SIGSEGV\n"
+"\n"
+"這可能是 BMP裡的錯誤。如果您不知道為什麼會發生這種事，請傳 E mail 到 beepmp-"
+"devel@lists.sourceforge.net\n"
+"\n"
+
+#: audacious/strings.c:199
+msgid "  (invalid UTF-8)"
+msgstr "  (無效的 UTF-8 字元)"
+
+#: audacious/ui_main.c:628
 #, c-format
 msgid "%s - Audacious"
 msgstr "%s - Audacious"
 
-#: audacious/mainwin.c:1141
+#: audacious/ui_main.c:853
 msgid "VBR"
 msgstr "VBR"
 
-#: audacious/mainwin.c:1182 audacious/mainwin.c:1186
+#: audacious/ui_main.c:894 audacious/ui_main.c:898
 msgid "stereo"
 msgstr "立體聲"
 
-#: audacious/mainwin.c:1182 audacious/mainwin.c:1186
+#: audacious/ui_main.c:894 audacious/ui_main.c:898
 msgid "mono"
 msgstr "單聲道"
 
-#: audacious/mainwin.c:1675
+#: audacious/ui_main.c:1387 audacious/ui_manager.c:420
+#: audacious/ui_manager.c:421
 msgid "Jump to Time"
 msgstr "跳至時刻"
 
-#: audacious/mainwin.c:1696
+#: audacious/ui_main.c:1408
 msgid "minutes:seconds"
 msgstr "分：秒"
 
-#: audacious/mainwin.c:1706
+#: audacious/ui_main.c:1418
 msgid "Track length:"
 msgstr "音軌長度："
 
-#: audacious/mainwin.c:1791
+#: audacious/ui_main.c:1503
 msgid "Un_queue"
 msgstr "移出佇列 (_q)"
 
-#: audacious/mainwin.c:1793 audacious/mainwin.c:2183
+#: audacious/ui_main.c:1505 audacious/ui_main.c:1895
 msgid "_Queue"
 msgstr "排入佇列 (_Q)"
 
-#: audacious/mainwin.c:2108
+#: audacious/ui_main.c:1820
 msgid "Jump to Track"
 msgstr "跳至音軌"
 
-#: audacious/mainwin.c:2149
+#: audacious/ui_main.c:1861
 msgid "Filter: "
 msgstr "濾波器："
 
-#: audacious/mainwin.c:2150
+#: audacious/ui_main.c:1862
 #, fuzzy
 msgid "_Filter:"
 msgstr "濾波器："
 
-#: audacious/mainwin.c:2354
+#: audacious/ui_main.c:2066
 msgid "Enter location to play:"
 msgstr "請輸入欲播放的位置"
 
-#: audacious/mainwin.c:2562
+#: audacious/ui_main.c:2277
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "尋至：%d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/mainwin.c:2594 audacious/mainwin.c:3403
+#: audacious/ui_main.c:2309 audacious/ui_main.c:2942
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "音量：%d%%"
 
-#: audacious/mainwin.c:2625 audacious/mainwin.c:3406
+#: audacious/ui_main.c:2340 audacious/ui_main.c:2945
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "平衡：%d%% 左"
 
-#: audacious/mainwin.c:2629 audacious/mainwin.c:3409
+#: audacious/ui_main.c:2344 audacious/ui_main.c:2948
 msgid "BALANCE: CENTER"
 msgstr "平衡：中央"
 
-#: audacious/mainwin.c:2633 audacious/mainwin.c:3411
+#: audacious/ui_main.c:2348 audacious/ui_main.c:2950
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "平衡：%d%% 右"
 
-#: audacious/mainwin.c:3177
+#: audacious/ui_main.c:2717
 msgid "OPTIONS MENU"
 msgstr "選項選單"
 
-#: audacious/mainwin.c:3181
+#: audacious/ui_main.c:2721
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "停用最上層顯示"
 
-#: audacious/mainwin.c:3183
+#: audacious/ui_main.c:2723
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "啟用最上層顯示"
 
-#: audacious/mainwin.c:3186
+#: audacious/ui_main.c:2726
 msgid "FILE INFO BOX"
 msgstr "檔案資訊方塊"
 
-#: audacious/mainwin.c:3190
+#: audacious/ui_main.c:2730
 msgid "DISABLE DOUBLESIZE"
 msgstr "停用雙倍大小"
 
-#: audacious/mainwin.c:3192
+#: audacious/ui_main.c:2732
 msgid "ENABLE DOUBLESIZE"
 msgstr "啟用雙倍大小"
 
-#: audacious/mainwin.c:3195
+#: audacious/ui_main.c:2735
 msgid "VISUALIZATION MENU"
 msgstr "視覺化選單"
 
-#: audacious/mainwin.c:3243
+#: audacious/ui_main.c:2782
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -989,7 +571,7 @@ msgstr ""
 "\n"
 "可能是沒放入 CD，或放入的不是音訊 CD。\n"
 
-#: audacious/mainwin.c:3260
+#: audacious/ui_main.c:2799
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -1005,376 +587,785 @@ msgstr ""
 "2. 沒有其他程式佔用音效卡。\n"
 "3. 您的音效卡設定正確。\n"
 
-#: audacious/mainwin.c:3753
+#: audacious/ui_main.c:3405
 #, fuzzy
 msgid "Error in Audacious."
 msgstr "%s - Audacious"
 
-#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1399
-msgid "Appearance"
-msgstr "外觀"
+#: audacious/ui_manager.c:43 audacious/ui_manager.c:44
+#, fuzzy
+msgid "Autoscroll Songname"
+msgstr "/自動捲動歌曲名稱"
 
-#: audacious/prefswin.c:99
-msgid "Audio"
-msgstr "音訊"
+#: audacious/ui_manager.c:46 audacious/ui_manager.c:47
+#, fuzzy
+msgid "Stop after Current Song"
+msgstr "/播完目前的歌曲後停止"
 
-#: audacious/prefswin.c:100
-msgid "Connectivity"
-msgstr "連線"
+#: audacious/ui_manager.c:49 audacious/ui_manager.c:50
+#, fuzzy
+msgid "Peaks"
+msgstr "/暫停"
 
-#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:2898
-msgid "Equalizer"
-msgstr "等化器"
+#: audacious/ui_manager.c:52 audacious/ui_manager.c:53
+#, fuzzy
+msgid "Repeat"
+msgstr "/重複"
 
-#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:1678
-msgid "Mouse"
-msgstr "滑鼠"
+#: audacious/ui_manager.c:55 audacious/ui_manager.c:56
+#, fuzzy
+msgid "Shuffle"
+msgstr "/隨機"
 
-#: audacious/prefswin.c:103 audacious/playlist_manager.c:288
-#: audacious/glade/prefswin.glade:2530
-msgid "Playlist"
-msgstr "播放清單"
+#: audacious/ui_manager.c:58 audacious/ui_manager.c:59
+#, fuzzy
+msgid "No Playlist Advance"
+msgstr "/不使用播放清單進階項目"
 
-#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:693
-msgid "Plugins"
-msgstr "插件"
+#: audacious/ui_manager.c:61 audacious/ui_manager.c:62
+#, fuzzy
+msgid "Show Player"
+msgstr "/顯示播放器"
 
-#: audacious/prefswin.c:110
-msgid "Artist"
-msgstr "藝人"
+#: audacious/ui_manager.c:64 audacious/ui_manager.c:65
+#, fuzzy
+msgid "Show Playlist Editor"
+msgstr "/顯示播放清單編輯器"
 
-#: audacious/prefswin.c:111 libaudacious/titlestring.c:372
-msgid "Album"
-msgstr "專輯"
+#: audacious/ui_manager.c:67 audacious/ui_manager.c:68
+#, fuzzy
+msgid "Show Equalizer"
+msgstr "/顯示等化器"
 
-#: audacious/prefswin.c:112
-msgid "Title"
-msgstr "標題"
+#: audacious/ui_manager.c:70 audacious/ui_manager.c:71
+#, fuzzy
+msgid "Always on Top"
+msgstr "/最上層顯示"
 
-#: audacious/prefswin.c:113
-msgid "Tracknumber"
-msgstr "音軌編號"
+#: audacious/ui_manager.c:73 audacious/ui_manager.c:74
+#, fuzzy
+msgid "Put on All Workspaces"
+msgstr "/置於所有工作區"
 
-#: audacious/prefswin.c:114 libaudacious/titlestring.c:373
-msgid "Genre"
-msgstr "樂曲類型"
+#: audacious/ui_manager.c:76 audacious/ui_manager.c:77
+#, fuzzy
+msgid "Roll up Player"
+msgstr "/捲起播放器"
 
-#: audacious/prefswin.c:116
-msgid "Filepath"
-msgstr "檔案路徑"
+#: audacious/ui_manager.c:79 audacious/ui_manager.c:80
+#, fuzzy
+msgid "Roll up Playlist Editor"
+msgstr "/捲起播放清單編輯器"
 
-#: audacious/prefswin.c:117 libaudacious/titlestring.c:379
-msgid "Date"
-msgstr "日期"
+#: audacious/ui_manager.c:82 audacious/ui_manager.c:83
+#, fuzzy
+msgid "Roll up Equalizer"
+msgstr "/捲起等化器"
 
-#: audacious/prefswin.c:118 libaudacious/titlestring.c:380
-msgid "Year"
-msgstr "年份"
+#: audacious/ui_manager.c:85 audacious/ui_manager.c:86
+#, fuzzy
+msgid "DoubleSize"
+msgstr "/雙倍大小"
 
-#: audacious/prefswin.c:119 libaudacious/titlestring.c:381
-msgid "Comment"
-msgstr "註解"
+#: audacious/ui_manager.c:88 audacious/ui_manager.c:89
+#, fuzzy
+msgid "Easy Move"
+msgstr "/隨意移動"
 
-#: audacious/prefswin.c:140
-msgid "localhost"
-msgstr "本地主機"
+#: audacious/ui_manager.c:97
+#, fuzzy
+msgid "Analyzer"
+msgstr "/分析器模式"
 
-#: audacious/prefswin.c:453 audacious/prefswin.c:540 audacious/prefswin.c:629
-#: audacious/prefswin.c:725
-msgid "Enabled"
-msgstr "已啟用"
+#: audacious/ui_manager.c:98
+#, fuzzy
+msgid "Scope"
+msgstr "/範圍模式"
 
-#: audacious/prefswin.c:469 audacious/prefswin.c:556 audacious/prefswin.c:645
-#: audacious/prefswin.c:741
-msgid "Description"
-msgstr "描述"
+#: audacious/ui_manager.c:99
+#, fuzzy
+msgid "Voiceprint"
+msgstr "/分析器模式"
 
-#: audacious/prefswin.c:1806
-msgid "Category"
-msgstr "分類"
+#: audacious/ui_manager.c:100
+msgid "Off"
+msgstr ""
 
-#: audacious/prefswin.c:2361
-msgid "Preferences Window"
-msgstr "偏好設定視窗"
+#: audacious/ui_manager.c:104 audacious/ui_manager.c:121
+#: audacious/ui_manager.c:127
+#, fuzzy
+msgid "Normal"
+msgstr "ID3 格式:"
 
-#: audacious/skinwin.c:176
-msgid "Archived Winamp 2.x skin"
-msgstr "已壓縮的 Winamp 2.x 面板"
+#: audacious/ui_manager.c:105 audacious/ui_manager.c:122
+msgid "Fire"
+msgstr ""
 
-#: audacious/skinwin.c:181
-msgid "Unarchived Winamp 2.x skin"
-msgstr "解壓縮的 Winamp 2.x 面板"
+#: audacious/ui_manager.c:106
+#, fuzzy
+msgid "Vertical Lines"
+msgstr "/分析器模式/垂直線"
 
-#: audacious/ui_fileinfo.c:315
-msgid "Track Information Window"
-msgstr "音軌資訊視窗"
+#: audacious/ui_manager.c:110
+#, fuzzy
+msgid "Lines"
+msgstr "列"
 
-#: audacious/ui_fileinfo.c:337
-msgid "Track Information Popup"
-msgstr "音軌資訊彈出訊息"
+#: audacious/ui_manager.c:111
+msgid "Bars"
+msgstr ""
 
-#: audacious/ui_playlist.c:138
-msgid "New List"
-msgstr "新增清單"
+#: audacious/ui_manager.c:115
+#, fuzzy
+msgid "Dot Scope"
+msgstr "/範圍模式/點狀"
 
-#: audacious/ui_playlist.c:139
-msgid "Creates a new playlist."
-msgstr "建立一個新的播放清單。"
+#: audacious/ui_manager.c:116
+#, fuzzy
+msgid "Line Scope"
+msgstr "/範圍模式/線狀"
 
-#: audacious/ui_playlist.c:141
+#: audacious/ui_manager.c:117
+#, fuzzy
+msgid "Solid Scope"
+msgstr "/範圍模式/密實"
+
+#: audacious/ui_manager.c:123
+msgid "Ice"
+msgstr ""
+
+#: audacious/ui_manager.c:128
+#, fuzzy
+msgid "Smooth"
+msgstr "單聲道"
+
+#: audacious/ui_manager.c:132
+#, fuzzy
+msgid "Full (~50 fps)"
+msgstr "/重新整理頻率/全速 (約 50 fps)"
+
+#: audacious/ui_manager.c:133
+#, fuzzy
+msgid "Half (~25 fps)"
+msgstr "/重新整理頻率/半速 (約 25 fps)"
+
+#: audacious/ui_manager.c:134
+#, fuzzy
+msgid "Quarter (~13 fps)"
+msgstr "/重新整理頻率/四分之一 (約 13 fps)"
+
+#: audacious/ui_manager.c:135
+#, fuzzy
+msgid "Eighth (~6 fps)"
+msgstr "/重新整理頻率/八分之一 (約 6 fps)"
+
+#: audacious/ui_manager.c:139 audacious/ui_manager.c:147
+msgid "Slowest"
+msgstr ""
+
+#: audacious/ui_manager.c:140 audacious/ui_manager.c:148
+msgid "Slow"
+msgstr ""
+
+#: audacious/ui_manager.c:141 audacious/ui_manager.c:149
+msgid "Medium"
+msgstr ""
+
+#: audacious/ui_manager.c:142 audacious/ui_manager.c:150
+msgid "Fast"
+msgstr ""
+
+#: audacious/ui_manager.c:143 audacious/ui_manager.c:151
+msgid "Fastest"
+msgstr ""
+
+#: audacious/ui_manager.c:155
+#, fuzzy
+msgid "Time Elapsed"
+msgstr "/經過時間"
+
+#: audacious/ui_manager.c:156
+#, fuzzy
+msgid "Time Remaining"
+msgstr "/剩餘時間"
+
+#: audacious/ui_manager.c:167 audacious/ui_manager.c:168
+#, fuzzy
+msgid "Play CD"
+msgstr "/播放 CD"
+
+#: audacious/ui_manager.c:170 audacious/ui_manager.c:171
+#, fuzzy
+msgid "Play"
+msgstr "/播放"
+
+#: audacious/ui_manager.c:173 audacious/ui_manager.c:174
+#, fuzzy
+msgid "Pause"
+msgstr "/暫停"
+
+#: audacious/ui_manager.c:176 audacious/ui_manager.c:177
+#, fuzzy
+msgid "Stop"
+msgstr "/停止"
+
+#: audacious/ui_manager.c:179 audacious/ui_manager.c:180
+#, fuzzy
+msgid "Previous"
+msgstr "/上一首"
+
+#: audacious/ui_manager.c:182 audacious/ui_manager.c:183
+#, fuzzy
+msgid "Next"
+msgstr "/下一首"
+
+#: audacious/ui_manager.c:212 audacious/ui_manager.c:213
+#, fuzzy
+msgid "New Playlist"
+msgstr "/新增播放清單"
+
+#: audacious/ui_manager.c:215 audacious/ui_manager.c:216
+#, fuzzy
+msgid "Select Next Playlist"
+msgstr "/選擇下個播放清單"
+
+#: audacious/ui_manager.c:218 audacious/ui_manager.c:219
+#, fuzzy
+msgid "Select Previous Playlist"
+msgstr "/選擇上個播放清單"
+
+#: audacious/ui_manager.c:221 audacious/ui_manager.c:222
+#, fuzzy
+msgid "Delete Playlist"
+msgstr "/選擇下個播放清單"
+
+#: audacious/ui_manager.c:224
 msgid "Load List"
 msgstr "載入清單"
 
-#: audacious/ui_playlist.c:142
+#: audacious/ui_manager.c:225
 msgid "Loads a playlist file into the selected playlist."
 msgstr "載入一個播放清單至所選清單中。"
 
-#: audacious/ui_playlist.c:144
+#: audacious/ui_manager.c:227
 msgid "Save List"
 msgstr "儲存清單"
 
-#: audacious/ui_playlist.c:145
+#: audacious/ui_manager.c:228
 msgid "Saves the selected playlist."
 msgstr "儲存所選播放清單"
 
-#: audacious/ui_playlist.c:147
+#: audacious/ui_manager.c:230
 msgid "Save Default List"
 msgstr "儲存預設清單"
 
-#: audacious/ui_playlist.c:148
+#: audacious/ui_manager.c:231
 msgid "Saves the selected playlist to the default location."
 msgstr "將所選播放清單存至預設位置。"
 
-#: audacious/ui_playlist.c:151
+#: audacious/ui_manager.c:234
 msgid "List Manager"
 msgstr "播放清單管理員"
 
-#: audacious/ui_playlist.c:152
+#: audacious/ui_manager.c:235
 msgid "Opens the playlist manager."
 msgstr "開啟播放清單管理員。"
 
-#: audacious/ui_playlist.c:155
+#: audacious/ui_manager.c:238
 msgid "Refresh List"
 msgstr "重新整理清單"
 
-#: audacious/ui_playlist.c:156
+#: audacious/ui_manager.c:239
 msgid "Refreshes metadata associated with a playlist entry."
 msgstr "重新整理和清單項目相關聯的資訊"
 
-#: audacious/ui_playlist.c:161
+#: audacious/ui_manager.c:249
+msgid "Add CD..."
+msgstr "加入 CD..."
+
+#: audacious/ui_manager.c:250
+msgid "Adds a CD to the playlist."
+msgstr "加入 CD 至播放清單。"
+
+#: audacious/ui_manager.c:253
+msgid "Add Internet Address..."
+msgstr "加入網路位址..."
+
+#: audacious/ui_manager.c:254
+msgid "Adds a remote track to the playlist."
+msgstr "加入遠端音軌至播放清單。"
+
+#: audacious/ui_manager.c:257
+msgid "Add Files..."
+msgstr "加入檔案..."
+
+#: audacious/ui_manager.c:258
+msgid "Adds files to the playlist."
+msgstr "加入檔案至播放清單。"
+
+#: audacious/ui_manager.c:263
 msgid "Search and Select"
 msgstr "搜尋並選取"
 
-#: audacious/ui_playlist.c:162
+#: audacious/ui_manager.c:264
 msgid ""
 "Searches the playlist and selects playlist entries based on specific "
 "criteria."
 msgstr "在播放清單中搜尋，並依指定的規則選取清單項目。"
 
-#: audacious/ui_playlist.c:165
+#: audacious/ui_manager.c:267
 msgid "Invert Selection"
 msgstr "反向選取"
 
-#: audacious/ui_playlist.c:166
+#: audacious/ui_manager.c:268
 msgid "Inverts the selected and unselected entries."
 msgstr "反向已選和未選的項目。"
 
-#: audacious/ui_playlist.c:169 audacious/glade/addfiles.glade:105
+#: audacious/ui_manager.c:271 audacious/glade/addfiles.glade:105
 msgid "Select All"
 msgstr "全選"
 
-#: audacious/ui_playlist.c:170
+#: audacious/ui_manager.c:272
 msgid "Selects all of the playlist entries."
 msgstr "選取全部清單項目。"
 
-#: audacious/ui_playlist.c:173
+#: audacious/ui_manager.c:275
 msgid "Select None"
 msgstr "取消選取"
 
-#: audacious/ui_playlist.c:174
+#: audacious/ui_manager.c:276
 msgid "Deselects all of the playlist entries."
 msgstr "取消全部清單項目的選取"
 
-#: audacious/ui_playlist.c:179
+#: audacious/ui_manager.c:281
 msgid "Clear Queue"
 msgstr "清除佇列"
 
-#: audacious/ui_playlist.c:180
+#: audacious/ui_manager.c:282
 msgid "Clears the queue associated with this playlist."
 msgstr "清除和此播放清單相關聯的佇列。"
 
-#: audacious/ui_playlist.c:183
+#: audacious/ui_manager.c:285
 msgid "Remove Unavailable Files"
 msgstr "移除無法使用的檔案"
 
-#: audacious/ui_playlist.c:184
+#: audacious/ui_manager.c:286
 msgid "Removes unavailable files from the playlist."
 msgstr "移除清單中無法使用的檔案。"
 
-#: audacious/ui_playlist.c:187
+#: audacious/ui_manager.c:289
 msgid "Remove Duplicates"
 msgstr "移除重複的項目"
 
-#: audacious/ui_playlist.c:189 audacious/ui_playlist.c:239
-#: audacious/ui_playlist.c:269
+#: audacious/ui_manager.c:291 audacious/ui_manager.c:327
+#: audacious/ui_manager.c:357
 msgid "By Title"
 msgstr "依標題"
 
-#: audacious/ui_playlist.c:190
+#: audacious/ui_manager.c:292
 msgid "Removes duplicate entries from the playlist by title."
 msgstr "依標題移除清單中重複的項目。"
 
-#: audacious/ui_playlist.c:193 audacious/ui_playlist.c:247
-#: audacious/ui_playlist.c:277
+#: audacious/ui_manager.c:295 audacious/ui_manager.c:335
+#: audacious/ui_manager.c:365
 msgid "By Filename"
 msgstr "依檔名"
 
-#: audacious/ui_playlist.c:194
+#: audacious/ui_manager.c:296
 msgid "Removes duplicate entries from the playlist by filename."
 msgstr "依檔名移除清單中重複的項目。"
 
-#: audacious/ui_playlist.c:197 audacious/ui_playlist.c:251
-#: audacious/ui_playlist.c:281
+#: audacious/ui_manager.c:299 audacious/ui_manager.c:339
+#: audacious/ui_manager.c:369
 msgid "By Path + Filename"
 msgstr "依路徑 + 檔名"
 
-#: audacious/ui_playlist.c:198
+#: audacious/ui_manager.c:300
 msgid "Removes duplicate entries from the playlist by their full path."
 msgstr "依完整路徑移除清單中重複的項目。"
 
-#: audacious/ui_playlist.c:201
+#: audacious/ui_manager.c:303
 msgid "Remove All"
 msgstr "全部移除"
 
-#: audacious/ui_playlist.c:202
+#: audacious/ui_manager.c:304
 msgid "Removes all entries from the playlist."
 msgstr "移除全部的清單項目。"
 
-#: audacious/ui_playlist.c:205
+#: audacious/ui_manager.c:307
 msgid "Remove Unselected"
 msgstr "移除未選取的"
 
-#: audacious/ui_playlist.c:206
+#: audacious/ui_manager.c:308
 msgid "Remove unselected entries from the playlist."
 msgstr "移除清單中未選取的項目。"
 
-#: audacious/ui_playlist.c:209
+#: audacious/ui_manager.c:311
 msgid "Remove Selected"
 msgstr "移除選取的"
 
-#: audacious/ui_playlist.c:210
+#: audacious/ui_manager.c:312
 msgid "Remove selected entries from the playlist."
 msgstr "移除清單中選取的項目。"
 
-#: audacious/ui_playlist.c:215
-msgid "Add CD..."
-msgstr "加入 CD..."
-
-#: audacious/ui_playlist.c:216
-msgid "Adds a CD to the playlist."
-msgstr "加入 CD 至播放清單。"
-
-#: audacious/ui_playlist.c:219
-msgid "Add Internet Address..."
-msgstr "加入網路位址..."
-
-#: audacious/ui_playlist.c:220
-msgid "Adds a remote track to the playlist."
-msgstr "加入遠端音軌至播放清單。"
-
-#: audacious/ui_playlist.c:223
-msgid "Add Files..."
-msgstr "加入檔案..."
-
-#: audacious/ui_playlist.c:224
-msgid "Adds files to the playlist."
-msgstr "加入檔案至播放清單。"
-
-#: audacious/ui_playlist.c:229
+#: audacious/ui_manager.c:317
 msgid "Randomize List"
 msgstr "隨機清單"
 
-#: audacious/ui_playlist.c:230
+#: audacious/ui_manager.c:318
 msgid "Randomizes the playlist."
 msgstr "隨機排序播放清單。"
 
-#: audacious/ui_playlist.c:233
+#: audacious/ui_manager.c:321
 msgid "Reverse List"
 msgstr "反轉清單"
 
-#: audacious/ui_playlist.c:234
+#: audacious/ui_manager.c:322
 msgid "Reverses the playlist."
 msgstr "反轉播放清單。"
 
-#: audacious/ui_playlist.c:237
+#: audacious/ui_manager.c:325
 msgid "Sort List"
 msgstr "排序清單"
 
-#: audacious/ui_playlist.c:240 audacious/ui_playlist.c:270
+#: audacious/ui_manager.c:328 audacious/ui_manager.c:358
 msgid "Sorts the list by title."
 msgstr "依標題排序清單。"
 
-#: audacious/ui_playlist.c:243 audacious/ui_playlist.c:273
+#: audacious/ui_manager.c:331 audacious/ui_manager.c:361
 msgid "By Artist"
 msgstr "依藝人"
 
-#: audacious/ui_playlist.c:244 audacious/ui_playlist.c:274
+#: audacious/ui_manager.c:332 audacious/ui_manager.c:362
 msgid "Sorts the list by artist."
 msgstr "依藝人排序清單。"
 
-#: audacious/ui_playlist.c:248 audacious/ui_playlist.c:278
+#: audacious/ui_manager.c:336 audacious/ui_manager.c:366
 msgid "Sorts the list by filename."
 msgstr "依檔名排序清單。"
 
-#: audacious/ui_playlist.c:252 audacious/ui_playlist.c:282
+#: audacious/ui_manager.c:340 audacious/ui_manager.c:370
 msgid "Sorts the list by full pathname."
 msgstr "依完整路徑排序清單。"
 
-#: audacious/ui_playlist.c:255 audacious/ui_playlist.c:285
+#: audacious/ui_manager.c:343 audacious/ui_manager.c:373
 msgid "By Date"
 msgstr "依日期"
 
-#: audacious/ui_playlist.c:256 audacious/ui_playlist.c:286
+#: audacious/ui_manager.c:344 audacious/ui_manager.c:374
 msgid "Sorts the list by modification time."
 msgstr "依修改時間排序清單。"
 
-#: audacious/ui_playlist.c:259 audacious/ui_playlist.c:289
+#: audacious/ui_manager.c:347 audacious/ui_manager.c:377
 msgid "By Track Number"
 msgstr "依音軌編號"
 
-#: audacious/ui_playlist.c:260 audacious/ui_playlist.c:290
+#: audacious/ui_manager.c:348 audacious/ui_manager.c:378
 msgid "Sorts the list by track number."
 msgstr "依音軌編號排序清單。"
 
-#: audacious/ui_playlist.c:263 audacious/ui_playlist.c:293
+#: audacious/ui_manager.c:351 audacious/ui_manager.c:381
 msgid "By Playlist Entry"
 msgstr "依清單項目"
 
-#: audacious/ui_playlist.c:264 audacious/ui_playlist.c:294
+#: audacious/ui_manager.c:352 audacious/ui_manager.c:382
 msgid "Sorts the list by playlist entry."
 msgstr "依清單項目排序清單。"
 
-#: audacious/ui_playlist.c:267
+#: audacious/ui_manager.c:355
 msgid "Sort Selected"
 msgstr "排序選取的項目"
 
-#: audacious/ui_playlist.c:299
+#: audacious/ui_manager.c:390
 msgid "View Track Details"
 msgstr "檢視音軌細節"
 
-#: audacious/ui_playlist.c:300
-msgid "Displays track information."
-msgstr "顯示音軌資訊。"
+#: audacious/ui_manager.c:391
+#, fuzzy
+msgid "View track details"
+msgstr "檢視音軌細節"
 
-#: audacious/ui_playlist.c:303
+#: audacious/ui_manager.c:396
+#, fuzzy
+msgid "Play File"
+msgstr "/播放檔案"
+
+#: audacious/ui_manager.c:397
+#, fuzzy
+msgid "Load and play a file"
+msgstr "從播放清單與檔案載入歌曲資訊"
+
+#: audacious/ui_manager.c:399
+#, fuzzy
+msgid "Play Location"
+msgstr "/播放位置"
+
+#: audacious/ui_manager.c:400
+msgid "Play media from the selected location"
+msgstr ""
+
+#: audacious/ui_manager.c:402
+#, fuzzy
+msgid "Preferences"
+msgstr "/偏好設定"
+
+#: audacious/ui_manager.c:403
+#, fuzzy
+msgid "Open preferences window"
+msgstr "偏好設定視窗"
+
+#: audacious/ui_manager.c:405
+#, fuzzy
+msgid "_Quit"
+msgstr "/結束 (_Q)"
+
+#: audacious/ui_manager.c:406
+#, fuzzy
+msgid "Quit Audacious"
+msgstr "關於 Audacious"
+
+#: audacious/ui_manager.c:408 audacious/ui_manager.c:409
+#, fuzzy
+msgid "Set A-B"
+msgstr "/設定播放區段"
+
+#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
+#, fuzzy
+msgid "Clear A-B"
+msgstr "/清除播放區段"
+
+#: audacious/ui_manager.c:414 audacious/ui_manager.c:415
+#, fuzzy
+msgid "Jump to Playlist Start"
+msgstr "/跳至播放清單開頭"
+
+#: audacious/ui_manager.c:417 audacious/ui_manager.c:418
+#, fuzzy
+msgid "Jump to File"
+msgstr "/跳至檔案"
+
+#: audacious/ui_manager.c:423
 msgid "Queue Toggle"
 msgstr "佇列切換"
 
-#: audacious/ui_playlist.c:304
+#: audacious/ui_manager.c:424
 msgid "Enables/disables the entry in the playlist's queue."
 msgstr "啟用/停用清單佇列中的項目。"
 
-#: audacious/ui_playlist.c:728
+#: audacious/ui_manager.c:431
+msgid "Load"
+msgstr "載入"
+
+#: audacious/ui_manager.c:432
+msgid "Import"
+msgstr "匯入"
+
+#: audacious/ui_manager.c:433
+msgid "Save"
+msgstr "儲存"
+
+#: audacious/ui_manager.c:434
+msgid "Delete"
+msgstr "刪除"
+
+#: audacious/ui_manager.c:436 audacious/ui_manager.c:457
+#: audacious/ui_manager.c:472
+msgid "Preset"
+msgstr "設定組合"
+
+#: audacious/ui_manager.c:437
+msgid "Load preset"
+msgstr "載入設定組合"
+
+#: audacious/ui_manager.c:439 audacious/ui_manager.c:460
+#: audacious/ui_manager.c:475
+msgid "Auto-load preset"
+msgstr "自動載入設定組合"
+
+#: audacious/ui_manager.c:440
+msgid "Load auto-load preset"
+msgstr "載入自動設定組合"
+
+#: audacious/ui_manager.c:442 audacious/ui_manager.c:463
+msgid "Default"
+msgstr "預設的設定組合"
+
+#: audacious/ui_manager.c:443
+msgid "Load default preset into equalizer"
+msgstr "載入預設的設定組合至等化器"
+
+#: audacious/ui_manager.c:445
+msgid "Zero"
+msgstr "零值"
+
+#: audacious/ui_manager.c:446
+msgid "Set equalizer preset levels to zero"
+msgstr "將等化器設定組合設定為零值"
+
+#: audacious/ui_manager.c:448
+msgid "From file"
+msgstr "從檔案"
+
+#: audacious/ui_manager.c:449
+msgid "Load preset from file"
+msgstr "從檔案載入設定組合"
+
+#: audacious/ui_manager.c:451
+msgid "From WinAMP EQF file"
+msgstr "從 WinAMP EQF 檔案"
+
+#: audacious/ui_manager.c:452
+msgid "Load preset from WinAMP EQF file"
+msgstr "從 WinAMP EQF 檔案載入設定組合"
+
+#: audacious/ui_manager.c:454
+msgid "WinAMP Presets"
+msgstr "WinAMP 設定組合"
+
+#: audacious/ui_manager.c:455
+msgid "Import WinAMP presets"
+msgstr "匯入 WinAMP 設定組合"
+
+#: audacious/ui_manager.c:458
+msgid "Save preset"
+msgstr "儲存設定組合"
+
+#: audacious/ui_manager.c:461
+msgid "Save auto-load preset"
+msgstr "儲存自動載入設定組合"
+
+#: audacious/ui_manager.c:464
+msgid "Save default preset"
+msgstr "存為預設的設定組合"
+
+#: audacious/ui_manager.c:466
+msgid "To file"
+msgstr "至檔案"
+
+#: audacious/ui_manager.c:467
+msgid "Save preset to file"
+msgstr "儲存設定組合至檔案"
+
+#: audacious/ui_manager.c:469
+msgid "To WinAMP EQF file"
+msgstr "至 WinAMP EQF 檔案"
+
+#: audacious/ui_manager.c:470
+msgid "Save preset to WinAMP EQF file"
+msgstr "儲存設定組合至 WinAMP EQF 檔案"
+
+#: audacious/ui_manager.c:473
+msgid "Delete preset"
+msgstr "刪除設定組合"
+
+#: audacious/ui_manager.c:476
+msgid "Delete auto-load preset"
+msgstr "刪除自動載入設定組合"
+
+#: audacious/ui_preferences.c:99 audacious/glade/prefswin.glade:1399
+msgid "Appearance"
+msgstr "外觀"
+
+#: audacious/ui_preferences.c:100
+msgid "Audio"
+msgstr "音訊"
+
+#: audacious/ui_preferences.c:101
+msgid "Connectivity"
+msgstr "連線"
+
+#: audacious/ui_preferences.c:102 audacious/glade/prefswin.glade:2898
+msgid "Equalizer"
+msgstr "等化器"
+
+#: audacious/ui_preferences.c:103 audacious/glade/prefswin.glade:1678
+msgid "Mouse"
+msgstr "滑鼠"
+
+#: audacious/ui_preferences.c:104 audacious/playlist_manager.c:288
+#: audacious/glade/prefswin.glade:2530
+msgid "Playlist"
+msgstr "播放清單"
+
+#: audacious/ui_preferences.c:105 audacious/glade/prefswin.glade:693
+msgid "Plugins"
+msgstr "插件"
+
+#: audacious/ui_preferences.c:111
+msgid "Artist"
+msgstr "藝人"
+
+#: audacious/ui_preferences.c:112 libaudacious/titlestring.c:372
+msgid "Album"
+msgstr "專輯"
+
+#: audacious/ui_preferences.c:113
+msgid "Title"
+msgstr "標題"
+
+#: audacious/ui_preferences.c:114
+msgid "Tracknumber"
+msgstr "音軌編號"
+
+#: audacious/ui_preferences.c:115 libaudacious/titlestring.c:373
+msgid "Genre"
+msgstr "樂曲類型"
+
+#: audacious/ui_preferences.c:117
+msgid "Filepath"
+msgstr "檔案路徑"
+
+#: audacious/ui_preferences.c:118 libaudacious/titlestring.c:379
+msgid "Date"
+msgstr "日期"
+
+#: audacious/ui_preferences.c:119 libaudacious/titlestring.c:380
+msgid "Year"
+msgstr "年份"
+
+#: audacious/ui_preferences.c:120 libaudacious/titlestring.c:381
+msgid "Comment"
+msgstr "註解"
+
+#: audacious/ui_preferences.c:141
+msgid "localhost"
+msgstr "本地主機"
+
+#: audacious/ui_preferences.c:454 audacious/ui_preferences.c:541
+#: audacious/ui_preferences.c:630 audacious/ui_preferences.c:726
+msgid "Enabled"
+msgstr "已啟用"
+
+#: audacious/ui_preferences.c:470 audacious/ui_preferences.c:557
+#: audacious/ui_preferences.c:646 audacious/ui_preferences.c:742
+msgid "Description"
+msgstr "描述"
+
+#: audacious/ui_preferences.c:1807
+msgid "Category"
+msgstr "分類"
+
+#: audacious/ui_preferences.c:2362
+msgid "Preferences Window"
+msgstr "偏好設定視窗"
+
+#: audacious/ui_skinselector.c:176
+msgid "Archived Winamp 2.x skin"
+msgstr "已壓縮的 Winamp 2.x 面板"
+
+#: audacious/ui_skinselector.c:181
+msgid "Unarchived Winamp 2.x skin"
+msgstr "解壓縮的 Winamp 2.x 面板"
+
+#: audacious/ui_fileinfo.c:314
+msgid "Track Information Window"
+msgstr "音軌資訊視窗"
+
+#: audacious/ui_fileinfo.c:336
+msgid "Track Information Popup"
+msgstr "音軌資訊彈出訊息"
+
+#: audacious/ui_playlist.c:501
 msgid ""
 "Select entries in playlist by filling one or more fields. Fields use regular "
 "expressions syntax, case-insensitive. If you don't know how regular "
@@ -1384,45 +1375,45 @@ msgstr ""
 "透過填寫一個或多個欄位來選取清單項目。欄位使用正規表示式語法且大小寫相異。若"
 "您不曉得正規表示式如何運作，只要輸入您要搜尋的文字片段。"
 
-#: audacious/ui_playlist.c:735
+#: audacious/ui_playlist.c:508
 msgid "Track name: "
 msgstr "音軌名稱："
 
-#: audacious/ui_playlist.c:741
+#: audacious/ui_playlist.c:514
 msgid "Album name: "
 msgstr "專輯名稱："
 
-#: audacious/ui_playlist.c:747
+#: audacious/ui_playlist.c:520
 msgid "Artist: "
 msgstr "藝人："
 
-#: audacious/ui_playlist.c:753
+#: audacious/ui_playlist.c:526
 msgid "Filename: "
 msgstr "檔案名稱："
 
-#: audacious/ui_playlist.c:760
+#: audacious/ui_playlist.c:533
 msgid "Clear previous selection before searching"
 msgstr "搜尋前先清除之前的選取"
 
-#: audacious/ui_playlist.c:763
+#: audacious/ui_playlist.c:536
 msgid "Automatically toggle queue for matching entries"
 msgstr "依符合的項目自動切換佇列"
 
-#: audacious/ui_playlist.c:766
+#: audacious/ui_playlist.c:539
 msgid "Create a new playlist with matching entries"
 msgstr "以符合的項目建立新的播放清單"
 
-#: audacious/ui_playlist.c:1004
+#: audacious/ui_playlist.c:768
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "寫入播放清單 \"%s\"：%s 時發生錯誤"
 
-#: audacious/ui_playlist.c:1025
+#: audacious/ui_playlist.c:789
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s 已經存在。是否繼續？"
 
-#: audacious/ui_playlist.c:1039
+#: audacious/ui_playlist.c:803
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -1433,52 +1424,52 @@ msgstr ""
 "\n"
 "'%s' 是未知的檔案型別。\n"
 
-#: audacious/ui_playlist.c:1192
+#: audacious/ui_playlist.c:956
 msgid "Load Playlist"
 msgstr "載入播放清單"
 
-#: audacious/ui_playlist.c:1205
+#: audacious/ui_playlist.c:969
 msgid "Save Playlist"
 msgstr "儲存播放清單"
 
-#: audacious/ui_playlist.c:1955
+#: audacious/ui_playlist.c:1690
 msgid "Audacious Playlist Editor"
 msgstr "Audacious 播放清單編輯器"
 
-#: audacious/util.c:670
+#: audacious/util.c:606
 #, fuzzy
 msgid "Add/Open URL Dialog"
 msgstr "加入/開啟檔案對話框"
 
-#: audacious/util.c:922
+#: audacious/util.c:858
 msgid "Add/Open Files dialog"
 msgstr "加入/開啟檔案對話框"
 
-#: audacious/util.c:977
+#: audacious/util.c:913
 msgid "Open Files"
 msgstr "開啟檔案"
 
-#: audacious/util.c:981
+#: audacious/util.c:917
 msgid "Close dialog on Open"
 msgstr "開啟後關閉對話框"
 
-#: audacious/util.c:991 audacious/glade/addfiles.glade:8
+#: audacious/util.c:927 audacious/glade/addfiles.glade:8
 msgid "Add Files"
 msgstr "加入檔案"
 
-#: audacious/util.c:995
+#: audacious/util.c:931
 msgid "Close dialog on Add"
 msgstr "加入後關閉對話框"
 
-#: audacious/util.c:1173
+#: audacious/util.c:1109
 msgid "Play files"
 msgstr "播放檔案"
 
-#: audacious/util.c:1175
+#: audacious/util.c:1111
 msgid "Load files"
 msgstr "載入檔案"
 
-#: audacious/playback.c:225
+#: audacious/playback.c:228
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -2131,6 +2122,132 @@ msgstr "音軌編號"
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}：只在表示元素 %n 時顯示 \"...\""
 
+#~ msgid "/View Track Details"
+#~ msgstr "/檢視音軌細節"
+
+#~ msgid "/Visualization Mode"
+#~ msgstr "/視覺化模式"
+
+#~ msgid "/Visualization Mode/Analyzer"
+#~ msgstr "/視覺化模式/分析器"
+
+#~ msgid "/Visualization Mode/Scope"
+#~ msgstr "/視覺化模式/範圍"
+
+#~ msgid "/Visualization Mode/Voiceprint"
+#~ msgstr "/視覺化模式/聲波紋"
+
+#~ msgid "/Visualization Mode/Off"
+#~ msgstr "/視覺化模式/關閉"
+
+#~ msgid "/Analyzer Mode/Normal"
+#~ msgstr "/分析器模式/一般"
+
+#~ msgid "/Analyzer Mode/Fire"
+#~ msgstr "/分析器模式/火焰"
+
+#~ msgid "/Analyzer Mode/Lines"
+#~ msgstr "/分析器模式/線狀"
+
+#~ msgid "/Analyzer Mode/Bars"
+#~ msgstr "/分析器模式/長條"
+
+#~ msgid "/Analyzer Mode/Peaks"
+#~ msgstr "/分析器模式/波峰"
+
+#~ msgid "/Voiceprint mode/Normal"
+#~ msgstr "/分析器模式/一般"
+
+#~ msgid "/Voiceprint mode/Fire"
+#~ msgstr "/分析器模式/火焰"
+
+#~ msgid "/Voiceprint mode/Ice"
+#~ msgstr "/分析器模式/冰柱"
+
+#~ msgid "/WindowShade VU Mode"
+#~ msgstr "/視窗陰影 VU 模式"
+
+#~ msgid "/WindowShade VU Mode/Normal"
+#~ msgstr "/視窗陰影 VU 模式/一般"
+
+#~ msgid "/WindowShade VU Mode/Smooth"
+#~ msgstr "/視窗陰影 VU 模式/平滑"
+
+#~ msgid "/Refresh Rate"
+#~ msgstr "/重新整理頻率"
+
+#~ msgid "/Analyzer Falloff"
+#~ msgstr "/分析器下降速度"
+
+#~ msgid "/Analyzer Falloff/Slowest"
+#~ msgstr "/分析器下降速度/最慢"
+
+#~ msgid "/Analyzer Falloff/Slow"
+#~ msgstr "/分析器下降速度/慢"
+
+#~ msgid "/Analyzer Falloff/Medium"
+#~ msgstr "/分析器下降速度/中等"
+
+#~ msgid "/Analyzer Falloff/Fast"
+#~ msgstr "/分析器下降速度/快"
+
+#~ msgid "/Analyzer Falloff/Fastest"
+#~ msgstr "/分析器下降速度/最快"
+
+#~ msgid "/Peaks Falloff"
+#~ msgstr "/波峰下降速度"
+
+#~ msgid "/Peaks Falloff/Slowest"
+#~ msgstr "/波峰下降速度/最慢"
+
+#~ msgid "/Peaks Falloff/Slow"
+#~ msgstr "/波峰下降速度/慢"
+
+#~ msgid "/Peaks Falloff/Medium"
+#~ msgstr "/波峰下降速度/中等"
+
+#~ msgid "/Peaks Falloff/Fast"
+#~ msgstr "/波峰下降速度/快"
+
+#~ msgid "/Peaks Falloff/Fastest"
+#~ msgstr "/波峰下降速度/最快"
+
+#~ msgid "/Pause"
+#~ msgstr "/暫停"
+
+#~ msgid "/-"
+#~ msgstr "/-"
+
+#~ msgid "/Jump to Time"
+#~ msgstr "/跳至時刻"
+
+#~ msgid "/About Audacious"
+#~ msgstr "/關於 Audacious"
+
+#~ msgid "/V_isualization"
+#~ msgstr "/視覺化效果 (_i)"
+
+#~ msgid "/_Playback"
+#~ msgstr "/播放 (_P)"
+
+#~ msgid "/_View"
+#~ msgstr "/檢視 (_V)"
+
+#~ msgid "/Files..."
+#~ msgstr "/檔案..."
+
+#~ msgid "/Internet location..."
+#~ msgstr "/網路位置..."
+
+#~ msgid "New List"
+#~ msgstr "新增清單"
+
+#~ msgid "Creates a new playlist."
+#~ msgstr "建立一個新的播放清單。"
+
+#~ msgid "Displays track information."
+#~ msgstr "顯示音軌資訊。"
+
 #~ msgid "Chinese:"
 #~ msgstr "中文："
 
@@ -2205,25 +2322,6 @@ msgstr "%{n:...%}：只在表示元素 %n 時顯示 \"...\""
 
 #~ msgid "Delete auto-preset"
 #~ msgstr "刪除自動設定組合"
-
-#~ msgid "  (invalid UTF-8)"
-#~ msgstr "  (無效的 UTF-8 字元)"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Received SIGSEGV\n"
-#~ "\n"
-#~ "This could be a bug in Audacious. If you don't know why this happened, "
-#~ "file a bug at http://bugs-meta.atheme.org/\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "收到 SIGSEGV\n"
-#~ "\n"
-#~ "這可能是 BMP裡的錯誤。如果您不知道為什麼會發生這種事，請傳 E mail 到 "
-#~ "beepmp-devel@lists.sourceforge.net\n"
-#~ "\n"
 
 #, fuzzy
 #~ msgid "/Remove Duplicates/By Title"
@@ -2331,10 +2429,6 @@ msgstr "%{n:...%}：只在表示元素 %n 時顯示 \"...\""
 #, fuzzy
 #~ msgid " MIDI Info "
 #~ msgstr "CD 資訊"
-
-#, fuzzy
-#~ msgid "Format:"
-#~ msgstr "ID3 格式:"
 
 #, fuzzy
 #~ msgid "Length (msec):"
@@ -3279,10 +3373,6 @@ msgstr "%{n:...%}：只在表示元素 %n 時顯示 \"...\""
 #, fuzzy
 #~ msgid "Mixing buffer size (ms):"
 #~ msgstr "緩衝區大小(ms):"
-
-#, fuzzy
-#~ msgid "Pause"
-#~ msgstr "/暫停"
 
 #, fuzzy
 #~ msgid "Position:"
