@@ -162,7 +162,7 @@ static GtkRadioActionEntry radioaction_entries_viewtime[] = {
 
 static GtkActionEntry action_entries_playback[] = {
 
-	{ "playback", NULL, "Playback" },
+	{ "playback", NULL, N_("Playback") },
 
 	{ "playback play cd", GTK_STOCK_CDROM , N_("Play CD"), "<Alt>C",
 	  N_("Play CD"), G_CALLBACK(action_playback_playcd) },
@@ -185,29 +185,20 @@ static GtkActionEntry action_entries_playback[] = {
 
 
 static GtkActionEntry action_entries_visualization[] = {
-
-	{ "visualization", NULL, "Visualization" },
-
-	{ "vismode", NULL, "Visualization Mode" },
-
-	{ "anamode", NULL, "Analyzer Mode" },
-
-	{ "scomode", NULL, "Scope Mode" },
-
-	{ "vprmode", NULL, "Voiceprint Mode" },
-
-	{ "wshmode", NULL, "WindowShade VU Mode" },
-
-	{ "refrate", NULL, "Refresh Rate" },
-
-	{ "anafoff", NULL, "Analyzer Falloff" },
-
-	{ "peafoff", NULL, "Peaks Falloff" }
+	{ "visualization", NULL, _("Visualization") },
+	{ "vismode", NULL, N_("Visualization Mode") },
+	{ "anamode", NULL, N_("Analyzer Mode") },
+	{ "scomode", NULL, N_("Scope Mode") },
+	{ "vprmode", NULL, N_("Voiceprint Mode") },
+	{ "wshmode", NULL, N_("WindowShade VU Mode") },
+	{ "refrate", NULL, N_("Refresh Rate") },
+	{ "anafoff", NULL, N_("Analyzer Falloff") },
+	{ "peafoff", NULL, N_("Peaks Falloff") }
 };
 
 static GtkActionEntry action_entries_playlist[] = {
 
-	{ "playlist", NULL, "Playlist" },
+	{ "playlist", NULL, N_("Playlist") },
 
 	{ "playlist new", GTK_STOCK_NEW , N_("New Playlist"), "<Shift>N",
 	  N_("New Playlist"), G_CALLBACK(action_playlist_new) },
@@ -242,7 +233,7 @@ static GtkActionEntry action_entries_playlist[] = {
 
 static GtkActionEntry action_entries_view[] = {
 
-	{ "view", NULL, "View" }
+	{ "view", NULL, N_("View") }
 };
 
 static GtkActionEntry action_entries_playlist_add[] = {

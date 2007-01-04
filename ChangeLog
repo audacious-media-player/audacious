@@ -1,3 +1,11 @@
+2007-01-04 22:55:34 +0000  Strahinja Kustudi <kustodian@gmail.com>
+  revision [3545]
+  Serbian language upadated
+  trunk/po/sr.po      |  324 ++++++++++++----------------------------------------
+  trunk/po/sr@Latn.po |  316 +++++++++++---------------------------------------
+  2 files changed, 149 insertions(+), 491 deletions(-)
+
+
 2007-01-04 21:56:51 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
   revision [3543]
   Make a string in ui_playist.c translatable, and update po/

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-04 15:53-0600\n"
+"POT-Creation-Date: 2007-01-04 17:12-0600\n"
 "PO-Revision-Date: 2006-12-05 11:20+0700\n"
 "Last-Translator: Yang Zhang <zyangmath@gmail.com>\n"
 "Language-Team: Chinese/Simplified\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: audacious/ui_about.c:123 audacious/ui_credits.c:323
-#: audacious/ui_manager.c:396 audacious/ui_manager.c:397
+#: audacious/ui_manager.c:387 audacious/ui_manager.c:388
 msgid "About Audacious"
 msgstr "关于 Audacious"
 
@@ -465,8 +465,8 @@ msgstr "立体声"
 msgid "mono"
 msgstr "单声道"
 
-#: audacious/ui_main.c:1387 audacious/ui_manager.c:423
-#: audacious/ui_manager.c:424
+#: audacious/ui_main.c:1387 audacious/ui_manager.c:414
+#: audacious/ui_manager.c:415
 msgid "Jump to Time"
 msgstr "跳到特定时间"
 
@@ -780,6 +780,11 @@ msgstr "/已过时间"
 msgid "Time Remaining"
 msgstr "/剩余时间"
 
+#: audacious/ui_manager.c:165
+#, fuzzy
+msgid "Playback"
+msgstr "/回放 (_P)"
+
 #: audacious/ui_manager.c:167 audacious/ui_manager.c:168
 #, fuzzy
 msgid "Play CD"
@@ -810,511 +815,566 @@ msgstr "/前一首"
 msgid "Next"
 msgstr "/下一曲"
 
-#: audacious/ui_manager.c:212 audacious/ui_manager.c:213
+#: audacious/ui_manager.c:188
+#, fuzzy
+msgid "Visualization"
+msgstr "/视觉化模式 (_i)"
+
+#: audacious/ui_manager.c:189
+#, fuzzy
+msgid "Visualization Mode"
+msgstr "/视觉化模式"
+
+#: audacious/ui_manager.c:190
+#, fuzzy
+msgid "Analyzer Mode"
+msgstr "/分析器模式/火焰"
+
+#: audacious/ui_manager.c:191
+#, fuzzy
+msgid "Scope Mode"
+msgstr "/示波器模式"
+
+#: audacious/ui_manager.c:192
+#, fuzzy
+msgid "Voiceprint Mode"
+msgstr "/分析器模式/火焰"
+
+#: audacious/ui_manager.c:193
+#, fuzzy
+msgid "WindowShade VU Mode"
+msgstr "/窗口阴影 VU 模式"
+
+#: audacious/ui_manager.c:194
+#, fuzzy
+msgid "Refresh Rate"
+msgstr "/刷新率"
+
+#: audacious/ui_manager.c:195
+#, fuzzy
+msgid "Analyzer Falloff"
+msgstr "/分析器消散"
+
+#: audacious/ui_manager.c:196
+#, fuzzy
+msgid "Peaks Falloff"
+msgstr "/顶点消散"
+
+#: audacious/ui_manager.c:201 audacious/ui_preferences.c:104
+#: audacious/playlist_manager.c:288 audacious/glade/prefswin.glade:2530
+msgid "Playlist"
+msgstr "播放列表"
+
+#: audacious/ui_manager.c:203 audacious/ui_manager.c:204
 #, fuzzy
 msgid "New Playlist"
 msgstr "保存播放列表"
 
-#: audacious/ui_manager.c:215 audacious/ui_manager.c:216
+#: audacious/ui_manager.c:206 audacious/ui_manager.c:207
 #, fuzzy
 msgid "Select Next Playlist"
 msgstr "选择播放列表字体："
 
-#: audacious/ui_manager.c:218 audacious/ui_manager.c:219
+#: audacious/ui_manager.c:209 audacious/ui_manager.c:210
 #, fuzzy
 msgid "Select Previous Playlist"
 msgstr "/排序选择/按列表项"
 
-#: audacious/ui_manager.c:221 audacious/ui_manager.c:222
+#: audacious/ui_manager.c:212 audacious/ui_manager.c:213
 #, fuzzy
 msgid "Delete Playlist"
 msgstr "选择播放列表字体："
 
-#: audacious/ui_manager.c:224
+#: audacious/ui_manager.c:215
 #, fuzzy
 msgid "Load List"
 msgstr "/打开列表"
 
-#: audacious/ui_manager.c:225
+#: audacious/ui_manager.c:216
 #, fuzzy
 msgid "Loads a playlist file into the selected playlist."
 msgstr "当歌曲在播放列表中可见时读取原数据"
 
-#: audacious/ui_manager.c:227
+#: audacious/ui_manager.c:218
 #, fuzzy
 msgid "Save List"
 msgstr "/保存列表"
 
-#: audacious/ui_manager.c:228
+#: audacious/ui_manager.c:219
 #, fuzzy
 msgid "Saves the selected playlist."
 msgstr "选择播放列表字体："
 
-#: audacious/ui_manager.c:230
+#: audacious/ui_manager.c:221
 #, fuzzy
 msgid "Save Default List"
 msgstr "/保存为默认列表"
 
-#: audacious/ui_manager.c:231
+#: audacious/ui_manager.c:222
 #, fuzzy
 msgid "Saves the selected playlist to the default location."
 msgstr "使用 XMMS 样式的文件选择器"
 
-#: audacious/ui_manager.c:234
+#: audacious/ui_manager.c:225
 #, fuzzy
 msgid "Refresh List"
 msgstr "/刷新皮肤列表"
 
-#: audacious/ui_manager.c:235
+#: audacious/ui_manager.c:226
 msgid "Refreshes metadata associated with a playlist entry."
 msgstr ""
 
-#: audacious/ui_manager.c:238
+#: audacious/ui_manager.c:229
 msgid "List Manager"
 msgstr ""
 
-#: audacious/ui_manager.c:239
+#: audacious/ui_manager.c:230
 #, fuzzy
 msgid "Opens the playlist manager."
 msgstr "不要清除播放列表"
 
-#: audacious/ui_manager.c:249
+#: audacious/ui_manager.c:236
+#, fuzzy
+msgid "View"
+msgstr "/显示(_V)"
+
+#: audacious/ui_manager.c:240
 #, fuzzy
 msgid "Add CD..."
 msgstr "/添加 CD ..."
 
-#: audacious/ui_manager.c:250
+#: audacious/ui_manager.c:241
 #, fuzzy
 msgid "Adds a CD to the playlist."
 msgstr "不要清除播放列表"
 
-#: audacious/ui_manager.c:253
+#: audacious/ui_manager.c:244
 #, fuzzy
 msgid "Add Internet Address..."
 msgstr "/添加网址..."
 
-#: audacious/ui_manager.c:254
+#: audacious/ui_manager.c:245
 msgid "Adds a remote track to the playlist."
 msgstr ""
 
-#: audacious/ui_manager.c:257
+#: audacious/ui_manager.c:248
 #, fuzzy
 msgid "Add Files..."
 msgstr "/添加文件..."
 
-#: audacious/ui_manager.c:258
+#: audacious/ui_manager.c:249
 #, fuzzy
 msgid "Adds files to the playlist."
 msgstr "不要清除播放列表"
 
-#: audacious/ui_manager.c:263
+#: audacious/ui_manager.c:254
 #, fuzzy
 msgid "Search and Select"
 msgstr "搜索深度："
 
-#: audacious/ui_manager.c:264
+#: audacious/ui_manager.c:255
 msgid ""
 "Searches the playlist and selects playlist entries based on specific "
 "criteria."
 msgstr ""
 
-#: audacious/ui_manager.c:267
+#: audacious/ui_manager.c:258
 #, fuzzy
 msgid "Invert Selection"
 msgstr "/反转选择"
 
-#: audacious/ui_manager.c:268
+#: audacious/ui_manager.c:259
 msgid "Inverts the selected and unselected entries."
 msgstr ""
 
-#: audacious/ui_manager.c:271 audacious/glade/addfiles.glade:105
+#: audacious/ui_manager.c:262 audacious/glade/addfiles.glade:105
 msgid "Select All"
 msgstr "全部选中"
 
-#: audacious/ui_manager.c:272
+#: audacious/ui_manager.c:263
 msgid "Selects all of the playlist entries."
 msgstr ""
 
-#: audacious/ui_manager.c:275
+#: audacious/ui_manager.c:266
 #, fuzzy
 msgid "Select None"
 msgstr "/全部不选"
 
-#: audacious/ui_manager.c:276
+#: audacious/ui_manager.c:267
 msgid "Deselects all of the playlist entries."
 msgstr ""
 
-#: audacious/ui_manager.c:281
+#: audacious/ui_manager.c:272
 #, fuzzy
 msgid "Clear Queue"
 msgstr "/清除队列"
 
-#: audacious/ui_manager.c:282
+#: audacious/ui_manager.c:273
 msgid "Clears the queue associated with this playlist."
 msgstr ""
 
-#: audacious/ui_manager.c:285
+#: audacious/ui_manager.c:276
 #, fuzzy
 msgid "Remove Unavailable Files"
 msgstr "/移除不存在的文件"
 
-#: audacious/ui_manager.c:286
+#: audacious/ui_manager.c:277
 #, fuzzy
 msgid "Removes unavailable files from the playlist."
 msgstr "/移除不存在的文件"
 
-#: audacious/ui_manager.c:289
+#: audacious/ui_manager.c:280
 #, fuzzy
 msgid "Remove Duplicates"
 msgstr "/删除重复"
 
-#: audacious/ui_manager.c:291 audacious/ui_manager.c:327
-#: audacious/ui_manager.c:357
+#: audacious/ui_manager.c:282 audacious/ui_manager.c:318
+#: audacious/ui_manager.c:348
 #, fuzzy
 msgid "By Title"
 msgstr "标题"
 
-#: audacious/ui_manager.c:292
+#: audacious/ui_manager.c:283
 msgid "Removes duplicate entries from the playlist by title."
 msgstr ""
 
-#: audacious/ui_manager.c:295 audacious/ui_manager.c:335
-#: audacious/ui_manager.c:365
+#: audacious/ui_manager.c:286 audacious/ui_manager.c:326
+#: audacious/ui_manager.c:356
 #, fuzzy
 msgid "By Filename"
 msgstr "文件名"
 
-#: audacious/ui_manager.c:296
+#: audacious/ui_manager.c:287
 #, fuzzy
 msgid "Removes duplicate entries from the playlist by filename."
 msgstr "/删除重复/按路径+文件名"
 
-#: audacious/ui_manager.c:299 audacious/ui_manager.c:339
-#: audacious/ui_manager.c:369
+#: audacious/ui_manager.c:290 audacious/ui_manager.c:330
+#: audacious/ui_manager.c:360
 #, fuzzy
 msgid "By Path + Filename"
 msgstr "/排序列表/按路径+文件名排序"
 
-#: audacious/ui_manager.c:300
+#: audacious/ui_manager.c:291
 msgid "Removes duplicate entries from the playlist by their full path."
 msgstr ""
 
-#: audacious/ui_manager.c:303
+#: audacious/ui_manager.c:294
 #, fuzzy
 msgid "Remove All"
 msgstr "/删除全部"
 
-#: audacious/ui_manager.c:304
+#: audacious/ui_manager.c:295
 msgid "Removes all entries from the playlist."
 msgstr ""
 
-#: audacious/ui_manager.c:307
+#: audacious/ui_manager.c:298
 #, fuzzy
 msgid "Remove Unselected"
 msgstr "/删除未选中的"
 
-#: audacious/ui_manager.c:308
+#: audacious/ui_manager.c:299
 msgid "Remove unselected entries from the playlist."
 msgstr ""
 
-#: audacious/ui_manager.c:311
+#: audacious/ui_manager.c:302
 #, fuzzy
 msgid "Remove Selected"
 msgstr "/删除选中"
 
-#: audacious/ui_manager.c:312
+#: audacious/ui_manager.c:303
 msgid "Remove selected entries from the playlist."
 msgstr ""
 
-#: audacious/ui_manager.c:317
+#: audacious/ui_manager.c:308
 #, fuzzy
 msgid "Randomize List"
 msgstr "/打乱列表"
 
-#: audacious/ui_manager.c:318
+#: audacious/ui_manager.c:309
 #, fuzzy
 msgid "Randomizes the playlist."
 msgstr "/打乱列表"
 
-#: audacious/ui_manager.c:321
+#: audacious/ui_manager.c:312
 #, fuzzy
 msgid "Reverse List"
 msgstr "/反转列表"
 
-#: audacious/ui_manager.c:322
+#: audacious/ui_manager.c:313
 #, fuzzy
 msgid "Reverses the playlist."
 msgstr "不要清除播放列表"
 
-#: audacious/ui_manager.c:325
+#: audacious/ui_manager.c:316
 #, fuzzy
 msgid "Sort List"
 msgstr "/排序列表"
 
-#: audacious/ui_manager.c:328 audacious/ui_manager.c:358
+#: audacious/ui_manager.c:319 audacious/ui_manager.c:349
 #, fuzzy
 msgid "Sorts the list by title."
 msgstr "/排序列表/按曲名排序"
 
-#: audacious/ui_manager.c:331 audacious/ui_manager.c:361
+#: audacious/ui_manager.c:322 audacious/ui_manager.c:352
 #, fuzzy
 msgid "By Artist"
 msgstr "艺术家"
 
-#: audacious/ui_manager.c:332 audacious/ui_manager.c:362
+#: audacious/ui_manager.c:323 audacious/ui_manager.c:353
 #, fuzzy
 msgid "Sorts the list by artist."
 msgstr "/排序列表/按艺术家"
 
-#: audacious/ui_manager.c:336 audacious/ui_manager.c:366
+#: audacious/ui_manager.c:327 audacious/ui_manager.c:357
 #, fuzzy
 msgid "Sorts the list by filename."
 msgstr "/排序列表/按文件名排序"
 
-#: audacious/ui_manager.c:340 audacious/ui_manager.c:370
+#: audacious/ui_manager.c:331 audacious/ui_manager.c:361
 msgid "Sorts the list by full pathname."
 msgstr ""
 
-#: audacious/ui_manager.c:343 audacious/ui_manager.c:373
+#: audacious/ui_manager.c:334 audacious/ui_manager.c:364
 #, fuzzy
 msgid "By Date"
 msgstr "日期"
 
-#: audacious/ui_manager.c:344 audacious/ui_manager.c:374
+#: audacious/ui_manager.c:335 audacious/ui_manager.c:365
 msgid "Sorts the list by modification time."
 msgstr ""
 
-#: audacious/ui_manager.c:347 audacious/ui_manager.c:377
+#: audacious/ui_manager.c:338 audacious/ui_manager.c:368
 #, fuzzy
 msgid "By Track Number"
 msgstr "音轨编号"
 
-#: audacious/ui_manager.c:348 audacious/ui_manager.c:378
+#: audacious/ui_manager.c:339 audacious/ui_manager.c:369
 #, fuzzy
 msgid "Sorts the list by track number."
 msgstr "/排序列表/按音轨序号"
 
-#: audacious/ui_manager.c:351 audacious/ui_manager.c:381
+#: audacious/ui_manager.c:342 audacious/ui_manager.c:372
 #, fuzzy
 msgid "By Playlist Entry"
 msgstr "/排序列表/按列表项"
 
-#: audacious/ui_manager.c:352 audacious/ui_manager.c:382
+#: audacious/ui_manager.c:343 audacious/ui_manager.c:373
 #, fuzzy
 msgid "Sorts the list by playlist entry."
 msgstr "/排序列表/按列表项"
 
-#: audacious/ui_manager.c:355
+#: audacious/ui_manager.c:346
 #, fuzzy
 msgid "Sort Selected"
 msgstr "/排序选择"
 
-#: audacious/ui_manager.c:390 audacious/ui_manager.c:393
+#: audacious/ui_manager.c:381 audacious/ui_manager.c:384
 #, fuzzy
 msgid "View Track Details"
 msgstr "/查看音轨信息"
 
-#: audacious/ui_manager.c:391 audacious/ui_manager.c:394
+#: audacious/ui_manager.c:382 audacious/ui_manager.c:385
 #, fuzzy
 msgid "View track details"
 msgstr "/查看音轨信息"
 
-#: audacious/ui_manager.c:399
+#: audacious/ui_manager.c:390
 #, fuzzy
 msgid "Play File"
 msgstr "/播放文件"
 
-#: audacious/ui_manager.c:400
+#: audacious/ui_manager.c:391
 #, fuzzy
 msgid "Load and play a file"
 msgstr "使用播放列表中的元数据"
 
-#: audacious/ui_manager.c:402
+#: audacious/ui_manager.c:393
 #, fuzzy
 msgid "Play Location"
 msgstr "/播放位置"
 
-#: audacious/ui_manager.c:403
+#: audacious/ui_manager.c:394
 msgid "Play media from the selected location"
 msgstr ""
 
-#: audacious/ui_manager.c:405
+#: audacious/ui_manager.c:396
 #, fuzzy
 msgid "Preferences"
 msgstr "/首选项"
 
-#: audacious/ui_manager.c:406
+#: audacious/ui_manager.c:397
 #, fuzzy
 msgid "Open preferences window"
 msgstr "首选项"
 
-#: audacious/ui_manager.c:408
+#: audacious/ui_manager.c:399
 #, fuzzy
 msgid "_Quit"
 msgstr "/退出(_Q)"
 
-#: audacious/ui_manager.c:409
+#: audacious/ui_manager.c:400
 #, fuzzy
 msgid "Quit Audacious"
 msgstr "关于 Audacious"
 
-#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
+#: audacious/ui_manager.c:402 audacious/ui_manager.c:403
 #, fuzzy
 msgid "Set A-B"
 msgstr "/设置 A-B"
 
-#: audacious/ui_manager.c:414 audacious/ui_manager.c:415
+#: audacious/ui_manager.c:405 audacious/ui_manager.c:406
 #, fuzzy
 msgid "Clear A-B"
 msgstr "/清除 A-B"
 
-#: audacious/ui_manager.c:417 audacious/ui_manager.c:418
+#: audacious/ui_manager.c:408 audacious/ui_manager.c:409
 #, fuzzy
 msgid "Jump to Playlist Start"
 msgstr "/跳到列表最前"
 
-#: audacious/ui_manager.c:420 audacious/ui_manager.c:421
+#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
 #, fuzzy
 msgid "Jump to File"
 msgstr "/跳到文件"
 
-#: audacious/ui_manager.c:426
+#: audacious/ui_manager.c:417
 #, fuzzy
 msgid "Queue Toggle"
 msgstr "/排队切换"
 
-#: audacious/ui_manager.c:427
+#: audacious/ui_manager.c:418
 msgid "Enables/disables the entry in the playlist's queue."
 msgstr ""
 
-#: audacious/ui_manager.c:434
+#: audacious/ui_manager.c:425
 #, fuzzy
 msgid "Load"
 msgstr "/装入"
 
-#: audacious/ui_manager.c:435
+#: audacious/ui_manager.c:426
 #, fuzzy
 msgid "Import"
 msgstr "/导入"
 
-#: audacious/ui_manager.c:436
+#: audacious/ui_manager.c:427
 #, fuzzy
 msgid "Save"
 msgstr "/保存"
 
-#: audacious/ui_manager.c:437
+#: audacious/ui_manager.c:428
 #, fuzzy
 msgid "Delete"
 msgstr "/删除"
 
-#: audacious/ui_manager.c:439 audacious/ui_manager.c:460
-#: audacious/ui_manager.c:475
+#: audacious/ui_manager.c:430 audacious/ui_manager.c:451
+#: audacious/ui_manager.c:466
 msgid "Preset"
 msgstr "预设"
 
-#: audacious/ui_manager.c:440
+#: audacious/ui_manager.c:431
 msgid "Load preset"
 msgstr "读取预设"
 
-#: audacious/ui_manager.c:442 audacious/ui_manager.c:463
-#: audacious/ui_manager.c:478
+#: audacious/ui_manager.c:433 audacious/ui_manager.c:454
+#: audacious/ui_manager.c:469
 #, fuzzy
 msgid "Auto-load preset"
 msgstr "/装入/自动装入预设"
 
-#: audacious/ui_manager.c:443
+#: audacious/ui_manager.c:434
 #, fuzzy
 msgid "Load auto-load preset"
 msgstr "/装入/自动装入预设"
 
-#: audacious/ui_manager.c:445 audacious/ui_manager.c:466
+#: audacious/ui_manager.c:436 audacious/ui_manager.c:457
 #, fuzzy
 msgid "Default"
 msgstr "默认皮肤："
 
-#: audacious/ui_manager.c:446
+#: audacious/ui_manager.c:437
 msgid "Load default preset into equalizer"
 msgstr ""
 
-#: audacious/ui_manager.c:448
+#: audacious/ui_manager.c:439
 #, fuzzy
 msgid "Zero"
 msgstr "立体声"
 
-#: audacious/ui_manager.c:449
+#: audacious/ui_manager.c:440
 #, fuzzy
 msgid "Set equalizer preset levels to zero"
 msgstr "保存均衡器预设"
 
-#: audacious/ui_manager.c:451
+#: audacious/ui_manager.c:442
 #, fuzzy
 msgid "From file"
 msgstr "/装入/从文件"
 
-#: audacious/ui_manager.c:452
+#: audacious/ui_manager.c:443
 #, fuzzy
 msgid "Load preset from file"
 msgstr "读取预设"
 
-#: audacious/ui_manager.c:454
+#: audacious/ui_manager.c:445
 #, fuzzy
 msgid "From WinAMP EQF file"
 msgstr "/装入/从 WinAMP EQF 文件"
 
-#: audacious/ui_manager.c:455
+#: audacious/ui_manager.c:446
 #, fuzzy
 msgid "Load preset from WinAMP EQF file"
 msgstr "/装入/从 WinAMP EQF 文件"
 
-#: audacious/ui_manager.c:457
+#: audacious/ui_manager.c:448
 #, fuzzy
 msgid "WinAMP Presets"
 msgstr "/导入/WinAMP 预设"
 
-#: audacious/ui_manager.c:458
+#: audacious/ui_manager.c:449
 #, fuzzy
 msgid "Import WinAMP presets"
 msgstr "/导入/WinAMP 预设"
 
-#: audacious/ui_manager.c:461
+#: audacious/ui_manager.c:452
 msgid "Save preset"
 msgstr "保存预设"
 
-#: audacious/ui_manager.c:464
+#: audacious/ui_manager.c:455
 #, fuzzy
 msgid "Save auto-load preset"
 msgstr "/保存/自动读取预设"
 
-#: audacious/ui_manager.c:467
+#: audacious/ui_manager.c:458
 #, fuzzy
 msgid "Save default preset"
 msgstr "保存自动预设"
 
-#: audacious/ui_manager.c:469
+#: audacious/ui_manager.c:460
 #, fuzzy
 msgid "To file"
 msgstr "装入文件"
 
-#: audacious/ui_manager.c:470
+#: audacious/ui_manager.c:461
 #, fuzzy
 msgid "Save preset to file"
 msgstr "保存预设"
 
-#: audacious/ui_manager.c:472
+#: audacious/ui_manager.c:463
 #, fuzzy
 msgid "To WinAMP EQF file"
 msgstr "/保存/到 WinAMP EQF 文件"
 
-#: audacious/ui_manager.c:473
+#: audacious/ui_manager.c:464
 #, fuzzy
 msgid "Save preset to WinAMP EQF file"
 msgstr "/保存/到 WinAMP EQF 文件"
 
-#: audacious/ui_manager.c:476
+#: audacious/ui_manager.c:467
 msgid "Delete preset"
 msgstr "删除预设"
 
-#: audacious/ui_manager.c:479
+#: audacious/ui_manager.c:470
 #, fuzzy
 msgid "Delete auto-load preset"
 msgstr "/删除/自动读取预设"
@@ -1338,11 +1398,6 @@ msgstr "均衡器"
 #: audacious/ui_preferences.c:103 audacious/glade/prefswin.glade:1678
 msgid "Mouse"
 msgstr "鼠标"
-
-#: audacious/ui_preferences.c:104 audacious/playlist_manager.c:288
-#: audacious/glade/prefswin.glade:2530
-msgid "Playlist"
-msgstr "播放列表"
 
 #: audacious/ui_preferences.c:105 audacious/glade/prefswin.glade:693
 msgid "Plugins"
@@ -2195,9 +2250,6 @@ msgstr "%{n:...%}: 如果 %n 元素存在，显示“...”"
 #~ msgid "/View Track Details"
 #~ msgstr "/查看音轨信息"
 
-#~ msgid "/Visualization Mode"
-#~ msgstr "/视觉化模式"
-
 #~ msgid "/Visualization Mode/Analyzer"
 #~ msgstr "/视觉化模式/分析器"
 
@@ -2214,9 +2266,6 @@ msgstr "%{n:...%}: 如果 %n 元素存在，显示“...”"
 #~ msgid "/Analyzer Mode/Normal"
 #~ msgstr "/分析器模式/正常"
 
-#~ msgid "/Analyzer Mode/Fire"
-#~ msgstr "/分析器模式/火焰"
-
 #~ msgid "/Analyzer Mode/Lines"
 #~ msgstr "/分析器模式/线段"
 
@@ -2230,20 +2279,11 @@ msgstr "%{n:...%}: 如果 %n 元素存在，显示“...”"
 #~ msgid "/Voiceprint mode/Normal"
 #~ msgstr "/分析器模式/正常"
 
-#~ msgid "/WindowShade VU Mode"
-#~ msgstr "/窗口阴影 VU 模式"
-
 #~ msgid "/WindowShade VU Mode/Normal"
 #~ msgstr "/窗口阴影 VU 模式/正常"
 
 #~ msgid "/WindowShade VU Mode/Smooth"
 #~ msgstr "/窗口阴影 VU 模式/平滑"
-
-#~ msgid "/Refresh Rate"
-#~ msgstr "/刷新率"
-
-#~ msgid "/Analyzer Falloff"
-#~ msgstr "/分析器消散"
 
 #~ msgid "/Analyzer Falloff/Slowest"
 #~ msgstr "/分析器消散/最慢"
@@ -2259,9 +2299,6 @@ msgstr "%{n:...%}: 如果 %n 元素存在，显示“...”"
 
 #~ msgid "/Analyzer Falloff/Fastest"
 #~ msgstr "/分析器消散/最快"
-
-#~ msgid "/Peaks Falloff"
-#~ msgstr "/顶点消散"
 
 #~ msgid "/Peaks Falloff/Slowest"
 #~ msgstr "/顶点消散/最慢"
@@ -2286,15 +2323,6 @@ msgstr "%{n:...%}: 如果 %n 元素存在，显示“...”"
 
 #~ msgid "/About Audacious"
 #~ msgstr "/关于 Audacious"
-
-#~ msgid "/V_isualization"
-#~ msgstr "/视觉化模式 (_i)"
-
-#~ msgid "/_Playback"
-#~ msgstr "/回放 (_P)"
-
-#~ msgid "/_View"
-#~ msgstr "/显示(_V)"
 
 #~ msgid "/Files..."
 #~ msgstr "/文件..."
