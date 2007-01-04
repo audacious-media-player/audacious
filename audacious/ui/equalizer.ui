@@ -3,33 +3,33 @@
 <ui>
 	<menubar name="equalizer-menus">
 		<menu action="dummy" name="preset-menu">
-			<menu action="preset load menu">
-				<menuitem action="load preset" />
-				<menuitem action="load auto preset" />
-				<menuitem action="load default preset" />
+			<menu action="equ preset load menu">
+				<menuitem action="equ load preset" />
+				<menuitem action="equ load auto preset" />
+				<menuitem action="equ load default preset" />
 				<separator />
-				<menuitem action="zero preset" />
+				<menuitem action="equ zero preset" />
 				<separator />
-				<menuitem action="load preset file" />
-				<menuitem action="load preset eqf" />
+				<menuitem action="equ load preset file" />
+				<menuitem action="equ load preset eqf" />
 			</menu>
 
-			<menu action="preset import menu">
-				<menuitem action="import winamp presets" />
+			<menu action="equ preset import menu">
+				<menuitem action="equ import winamp presets" />
 			</menu>
 
-			<menu action="preset save menu">
-				<menuitem action="save preset" />
-				<menuitem action="save auto preset" />
-				<menuitem action="save default preset" />
+			<menu action="equ preset save menu">
+				<menuitem action="equ save preset" />
+				<menuitem action="equ save auto preset" />
+				<menuitem action="equ save default preset" />
 				<separator />
-				<menuitem action="save preset file" />
-				<menuitem action="save preset eqf" />
+				<menuitem action="equ save preset file" />
+				<menuitem action="equ save preset eqf" />
 			</menu>
 
-			<menu action="preset delete menu">
-				<menuitem action="delete preset" />
-				<menuitem action="delete auto preset" />
+			<menu action="equ preset delete menu">
+				<menuitem action="equ delete preset" />
+				<menuitem action="equ delete auto preset" />
 			</menu>
 		</menu>
 	</menubar>

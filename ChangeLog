@@ -1,3 +1,13 @@
+2007-01-04 12:16:48 +0000  Giacomo Lozito <james@develia.org>
+  revision [3523]
+  - moved action_playlist_* implementation from ui_main.c to ui_playlist.c (more appropriate)
+  trunk/audacious/actions-mainwin.h  |    4 ----
+  trunk/audacious/actions-playlist.h |    6 +++++-
+  trunk/audacious/ui_main.c          |   26 --------------------------
+  trunk/audacious/ui_playlist.c      |   28 ++++++++++++++++++++++++++++
+  4 files changed, 33 insertions(+), 31 deletions(-)
+
+
 2007-01-04 12:11:21 +0000  Giacomo Lozito <james@develia.org>
   revision [3521]
   - added delete playlist action (finally :p)

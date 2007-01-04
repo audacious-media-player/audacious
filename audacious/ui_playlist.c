@@ -45,12 +45,12 @@
 #include "main.h"
 #include "ui_main.h"
 #include "ui_manager.h"
+#include "actions-playlist.h"
 #include "playback.h"
 #include "playlist.h"
 #include "playlist_container.h"
 #include "playlist_manager.h"
 #include "util.h"
-#include "actions-playlist.h"
 
 #include "icons-stock.h"
 #include "images/audacious_playlist.xpm"

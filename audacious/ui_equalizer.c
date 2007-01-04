@@ -41,6 +41,7 @@
 #include "input.h"
 #include "main.h"
 #include "ui_manager.h"
+#include "actions-equalizer.h"
 #include "playlist.h"
 #include "ui_playlist.h"
 #include "util.h"
@@ -88,103 +89,8 @@ static EqGraph *equalizerwin_graph;
 static EqSlider *equalizerwin_preamp, *equalizerwin_bands[10];
 static HSlider *equalizerwin_volume, *equalizerwin_balance;
 
-static GtkWidget *presets_menu;
-
 static GList *equalizer_presets = NULL, *equalizer_auto_presets = NULL;
 
-static void action_load_preset(void);
-static void action_load_auto_preset(void);
-static void action_load_default_preset(void);
-static void action_zero_preset(void);
-static void action_load_preset_file(void);
-static void action_load_preset_eqf(void);
-static void action_import_winamp_presets(void);
-static void action_save_preset(void);
-static void action_save_auto_preset(void);
-static void action_save_default_preset(void);
-static void action_save_preset_file(void);
-static void action_save_preset_eqf(void);
-static void action_delete_preset(void);
-static void action_delete_auto_preset(void);
-
-static GtkActionEntry equalizerwin_actions[] = {
-    { "dummy", NULL, "dummy" },
-    
-    { "preset load menu", NULL, N_("Load") },
-    { "preset import menu", NULL, N_("Import") },
-    { "preset save menu", NULL, N_("Save") },
-    { "preset delete menu", NULL, N_("Delete") },
-
-    { "load preset", NULL,
-      N_("Preset"), NULL,
-      N_("Load preset"),
-      G_CALLBACK(action_load_preset) },
-
-    { "load auto preset", NULL,
-      N_("Auto-load preset"), NULL,
-      N_("Load auto-load preset"),
-      G_CALLBACK(action_load_auto_preset) },
-
-    { "load default preset", NULL,
-      N_("Default"), NULL,
-      N_("Load default preset into equalizer"),
-      G_CALLBACK(action_load_default_preset) },
-
-    { "zero preset", NULL,
-      N_("Zero"), NULL,
-      N_("Set equalizer preset levels to zero"),
-      G_CALLBACK(action_zero_preset) },
-
-    { "load preset file", NULL,
-      N_("From file"), NULL,
-      N_("Load preset from file"),
-      G_CALLBACK(action_load_preset_file) },
-
-    { "load preset eqf", NULL,
-      N_("From WinAMP EQF file"), NULL,
-      N_("Load preset from WinAMP EQF file"),
-      G_CALLBACK(action_load_preset_eqf) },
-
-    { "import winamp presets", NULL,
-      N_("WinAMP Presets"), NULL,
-      N_("Import WinAMP presets"), 
-      G_CALLBACK(action_import_winamp_presets) },
-
-    { "save preset", NULL,
-      N_("Preset"), NULL,
-      N_("Save preset"),
-      G_CALLBACK(action_save_preset) },
-
-    { "save auto preset", NULL,
-      N_("Auto-load preset"), NULL,
-      N_("Save auto-load preset"),
-      G_CALLBACK(action_save_auto_preset) },
-
-    { "save default preset", NULL,
-      N_("Default"), NULL,
-      N_("Save default preset"),
-      G_CALLBACK(action_save_default_preset) },
-
-    { "save preset file", NULL,
-      N_("To file"), NULL,
-      N_("Save preset to file"), 
-      G_CALLBACK(action_save_preset_file) },
-
-    { "save preset eqf", NULL,
-      N_("To WinAMP EQF file"), NULL,
-      N_("Save preset to WinAMP EQF file"),
-      G_CALLBACK(action_save_preset_eqf) },
-
-    { "delete preset", NULL,
-      N_("Preset"), NULL,
-      N_("Delete preset"), 
-      G_CALLBACK(action_delete_preset) },
-
-    { "delete auto preset", NULL,
-      N_("Auto-load preset"), NULL,
-      N_("Delete auto-load preset"),
-      G_CALLBACK(action_delete_auto_preset) }
-};
 
 EqualizerPreset *
 equalizer_preset_new(const gchar * name)
@@ -322,42 +228,13 @@ equalizerwin_on_pushed(gboolean toggled)
 }
 
 static void
-menu_popup_pos_func(GtkMenu * menu,
-                    gint * x,
-                    gint * y,
-                    gboolean * push_in,
-                    gint * point)
-{
-    *x = point[0];
-    *y = point[1];
-    *push_in = FALSE;
-}
-
-static void
-menu_popup(GtkMenu * menu,
-           gint x,
-           gint y,
-           guint button,
-           guint time)
-{
-    gint pos[2];
-
-    pos[0] = x;
-    pos[1] = y;
-
-    gtk_menu_popup(menu, NULL, NULL,
-                   (GtkMenuPositionFunc) menu_popup_pos_func, pos,
-                   button, time);
-}
-
-static void
 equalizerwin_presets_pushed(void)
 {
     GdkModifierType modmask;
     gint x, y;
 
     gdk_window_get_pointer(NULL, &x, &y, &modmask);
-    menu_popup(GTK_MENU(presets_menu), x, y, 1, GDK_CURRENT_TIME);
+    ui_manager_popup_menu_show(GTK_MENU(equalizerwin_presets_menu), x, y, 1, GDK_CURRENT_TIME);
 }
 
 static void
@@ -949,38 +826,6 @@ ui_manager_get_popup(GtkUIManager * self, const gchar * path)
         return NULL;
 }
 
-void
-equalizerwin_create_popup_menus(void)
-{
-    GtkUIManager *ui_manager;
-    GtkActionGroup *action_group;
-    GError *error = NULL;
-
-    action_group = gtk_action_group_new("equalizer-window");
-    gtk_action_group_set_translation_domain(action_group, PACKAGE_NAME);
-    gtk_action_group_add_actions(action_group,
-                                 equalizerwin_actions,
-                                 G_N_ELEMENTS(equalizerwin_actions),
-                                 NULL);
-
-    ui_manager = gtk_ui_manager_new();
-    gtk_ui_manager_add_ui_from_file(ui_manager,
-                                    DATA_DIR "/ui/equalizer.ui",
-                                    &error);
-
-    if (error) {
-        g_message("Error creating UI (%s)", error->message);
-        g_error_free(error);
-        return;
-    }
-
-    gtk_ui_manager_insert_action_group(ui_manager, action_group, 0);
-
-    gtk_window_add_accel_group(GTK_WINDOW(equalizerwin),
-                               gtk_ui_manager_get_accel_group(ui_manager));
-
-    presets_menu = ui_manager_get_popup(ui_manager, "/equalizer-menus/preset-menu");
-}
 
 void
 equalizerwin_create(void)
@@ -989,7 +834,8 @@ equalizerwin_create(void)
     equalizer_auto_presets = equalizerwin_read_presets("eq.auto_preset");
 
     equalizerwin_create_window();
-    equalizerwin_create_popup_menus();
+
+    gtk_window_add_accel_group( GTK_WINDOW(equalizerwin) , ui_manager_get_accel_group() );
 
     equalizerwin_gc = gdk_gc_new(equalizerwin->window);
     equalizerwin_bg = gdk_pixmap_new(equalizerwin->window, 275, 116, -1);
@@ -1737,8 +1583,8 @@ equalizerwin_get_band(gint band)
     return eqslider_get_position(equalizerwin_bands[band]);
 }
 
-static void
-action_load_preset(void)
+void
+action_equ_load_preset(void)
 {
     if (equalizerwin_load_window) {
         gtk_window_present(GTK_WINDOW(equalizerwin_load_window));
@@ -1754,8 +1600,8 @@ action_load_preset(void)
                                     G_CALLBACK(equalizerwin_load_select));
 }
 
-static void
-action_load_auto_preset(void)
+void
+action_equ_load_auto_preset(void)
 {
     if (equalizerwin_load_auto_window) {
         gtk_window_present(GTK_WINDOW(equalizerwin_load_auto_window));
@@ -1771,14 +1617,14 @@ action_load_auto_preset(void)
                                     G_CALLBACK(equalizerwin_load_auto_select));
 }
 
-static void
-action_load_default_preset(void)
+void
+action_equ_load_default_preset(void)
 {
     equalizerwin_load_preset(equalizer_presets, "Default");
 }
 
-static void
-action_zero_preset(void)
+void
+action_equ_zero_preset(void)
 {
     gint i;
     
@@ -1789,8 +1635,8 @@ action_zero_preset(void)
     equalizerwin_eq_changed();
 }
 
-static void
-action_load_preset_file(void)
+void
+action_equ_load_preset_file(void)
 {
     GtkWidget *dialog;
 
@@ -1800,8 +1646,8 @@ action_load_preset_file(void)
                      load_preset_file);
 }
 
-static void
-action_load_preset_eqf(void)
+void
+action_equ_load_preset_eqf(void)
 {
     GtkWidget *dialog;
 
@@ -1811,8 +1657,8 @@ action_load_preset_eqf(void)
                      load_winamp_file);
 }
 
-static void
-action_import_winamp_presets(void)
+void
+action_equ_import_winamp_presets(void)
 {
     GtkWidget *dialog;
 
@@ -1822,8 +1668,8 @@ action_import_winamp_presets(void)
                      import_winamp_file);
 }
 
-static void
-action_save_preset(void)
+void
+action_equ_save_preset(void)
 {
     if (equalizerwin_save_window) {
         gtk_window_present(GTK_WINDOW(equalizerwin_save_window));
@@ -1840,8 +1686,8 @@ action_save_preset(void)
                                     G_CALLBACK(equalizerwin_save_select));
 }
 
-static void
-action_save_auto_preset(void)
+void
+action_equ_save_auto_preset(void)
 {
     gchar *name;
     Playlist *playlist = playlist_get_active();
@@ -1866,15 +1712,15 @@ action_save_auto_preset(void)
     }
 }
 
-static void
-action_save_default_preset(void)
+void
+action_equ_save_default_preset(void)
 {
     equalizer_presets = equalizerwin_save_preset(equalizer_presets, "Default",
                                                  "eq.preset");
 }
 
-static void
-action_save_preset_file(void)
+void
+action_equ_save_preset_file(void)
 {
     GtkWidget *dialog;
     gchar *songname;
@@ -1896,8 +1742,8 @@ action_save_preset_file(void)
     }
 }
 
-static void
-action_save_preset_eqf(void)
+void
+action_equ_save_preset_eqf(void)
 {
     GtkWidget *dialog;
 
@@ -1907,8 +1753,8 @@ action_save_preset_eqf(void)
                      save_winamp_file);
 }
 
-static void
-action_delete_preset(void)
+void
+action_equ_delete_preset(void)
 {
     if (equalizerwin_delete_window) {
         gtk_window_present(GTK_WINDOW(equalizerwin_delete_window));
@@ -1924,8 +1770,8 @@ action_delete_preset(void)
                                     NULL);
 }
 
-static void
-action_delete_auto_preset(void)
+void
+action_equ_delete_auto_preset(void)
 {
     if (equalizerwin_delete_auto_window) {
         gtk_window_present(GTK_WINDOW(equalizerwin_delete_auto_window));

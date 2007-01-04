@@ -31,6 +31,15 @@ GtkWidget *mainwin_playback_menu;
 GtkWidget *mainwin_playlist_menu;
 GtkWidget *mainwin_view_menu;
 
+GtkWidget *pladd_menu;
+GtkWidget *pldel_menu;
+GtkWidget *plsel_menu;
+GtkWidget *plsort_menu;
+GtkWidget *pllist_menu;
+GtkWidget *playlistwin_popup_menu;
+
+GtkWidget *equalizerwin_presets_menu;
+
 GtkActionGroup *toggleaction_group_others;
 GtkActionGroup *radioaction_group_anamode; /* Analyzer mode */
 GtkActionGroup *radioaction_group_anatype; /* Analyzer type */
@@ -51,6 +60,7 @@ GtkActionGroup *action_group_add;
 GtkActionGroup *action_group_select;
 GtkActionGroup *action_group_delete;
 GtkActionGroup *action_group_sort;
+GtkActionGroup *action_group_equalizer;
 
 
 void uimanager_init ( void );

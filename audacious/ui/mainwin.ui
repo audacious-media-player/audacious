@@ -93,10 +93,10 @@
 			</menu>
 			<menu action="playlist">
 				<menuitem action="playlist new" />
+				<menuitem action="playlist delete" />
 				<separator />
 				<menuitem action="playlist select next" />
 				<menuitem action="playlist select previous" />
-				<menuitem action="playlist delete" />
 				<separator />
 				<menuitem action="playlist load" />
 				<menuitem action="playlist save" />
