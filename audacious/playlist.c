@@ -2283,6 +2283,9 @@ playlist_fileinfo(Playlist *playlist, guint pos)
 
     if (tuple != NULL)
     {
+        if (entry->decoder == NULL)
+            entry->decoder = input_check_file(entry->filename, FALSE); /* try to find a decoder */
+
         if (entry->decoder != NULL && entry->decoder->file_info_box == NULL)
             fileinfo_show_for_tuple(tuple);
         else if (entry->decoder != NULL && entry->decoder->file_info_box != NULL)
