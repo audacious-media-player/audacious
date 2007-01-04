@@ -123,8 +123,6 @@ gint seek_initial_pos = 0;
 GdkGC *mainwin_gc;
 static GdkPixmap *mainwin_bg = NULL, *mainwin_bg_x2 = NULL;
 
-GtkAccelGroup *mainwin_accel = NULL;
-
 static PButton *mainwin_menubtn;
 static PButton *mainwin_minimize, *mainwin_shade, *mainwin_close;
 
@@ -3480,7 +3478,6 @@ mainwin_create(void)
 {
     mainwin_create_window();
 
-    mainwin_accel = gtk_accel_group_new();
     gtk_window_add_accel_group( GTK_WINDOW(mainwin) , ui_manager_get_accel_group() );
 
     mainwin_gc = gdk_gc_new(mainwin->window);

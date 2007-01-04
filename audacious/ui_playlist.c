@@ -66,8 +66,6 @@ static GdkPixmap *playlistwin_bg;
 static GdkBitmap *playlistwin_mask = NULL;
 static GdkGC *playlistwin_gc;
 
-static GtkAccelGroup *playlistwin_accel;
-
 static gboolean playlistwin_hint_flag = FALSE;
 
 static PlaylistSlider *playlistwin_slider = NULL;
@@ -1789,7 +1787,7 @@ playlistwin_create(void)
     playlistwin_create_widgets();
     playlistwin_update_info(playlist_get_active());
 
-    gtk_window_add_accel_group(GTK_WINDOW(playlistwin), mainwin_accel);
+    gtk_window_add_accel_group(GTK_WINDOW(playlistwin), ui_manager_get_accel_group());
 }
 
 

@@ -1,3 +1,11 @@
+2007-01-04 09:25:00 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3517]
+  - somehow playlist_container.h got expunged from the SDK distribution.
+  
+  trunk/audacious/Makefile |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2007-01-03 23:02:53 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
   revision [3515]
   Update libaudacious copyright notices
