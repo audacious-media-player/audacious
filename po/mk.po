@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mk 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-04 09:46-0600\n"
+"POT-Creation-Date: 2007-01-04 15:53-0600\n"
 "PO-Revision-Date: 2005-05-18 11:38+0200\n"
 "Last-Translator: Арангел Ангов <ufo@linux.net.mk>\n"
 "Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: audacious/ui_about.c:123 audacious/ui_credits.c:323
-#: audacious/ui_manager.c:393 audacious/ui_manager.c:394
+#: audacious/ui_manager.c:396 audacious/ui_manager.c:397
 #, fuzzy
 msgid "About Audacious"
 msgstr "За MPEG аудио додаток"
@@ -483,8 +483,8 @@ msgstr "Стерео"
 msgid "mono"
 msgstr "Моно"
 
-#: audacious/ui_main.c:1387 audacious/ui_manager.c:420
-#: audacious/ui_manager.c:421
+#: audacious/ui_main.c:1387 audacious/ui_manager.c:423
+#: audacious/ui_manager.c:424
 msgid "Jump to Time"
 msgstr "Скокни до (време)"
 
@@ -888,22 +888,22 @@ msgid "Saves the selected playlist to the default location."
 msgstr ""
 
 #: audacious/ui_manager.c:234
-msgid "List Manager"
-msgstr ""
-
-#: audacious/ui_manager.c:235
-#, fuzzy
-msgid "Opens the playlist manager."
-msgstr "Не ја чисти листата"
-
-#: audacious/ui_manager.c:238
 #, fuzzy
 msgid "Refresh List"
 msgstr "/Стапка на освежување"
 
-#: audacious/ui_manager.c:239
+#: audacious/ui_manager.c:235
 msgid "Refreshes metadata associated with a playlist entry."
 msgstr ""
+
+#: audacious/ui_manager.c:238
+msgid "List Manager"
+msgstr ""
+
+#: audacious/ui_manager.c:239
+#, fuzzy
+msgid "Opens the playlist manager."
+msgstr "Не ја чисти листата"
 
 #: audacious/ui_manager.c:249
 #, fuzzy
@@ -1136,204 +1136,204 @@ msgstr "/Подреди листа/По наслов"
 msgid "Sort Selected"
 msgstr "/Избор на подредување"
 
-#: audacious/ui_manager.c:390
+#: audacious/ui_manager.c:390 audacious/ui_manager.c:393
 #, fuzzy
 msgid "View Track Details"
 msgstr "/Види детали за песна"
 
-#: audacious/ui_manager.c:391
+#: audacious/ui_manager.c:391 audacious/ui_manager.c:394
 #, fuzzy
 msgid "View track details"
 msgstr "/Види детали за песна"
 
-#: audacious/ui_manager.c:396
+#: audacious/ui_manager.c:399
 #, fuzzy
 msgid "Play File"
 msgstr "Пушти датотеки"
 
-#: audacious/ui_manager.c:397
+#: audacious/ui_manager.c:400
 #, fuzzy
 msgid "Load and play a file"
 msgstr "Вчитувај податоци од листи и датотеки"
 
-#: audacious/ui_manager.c:399
+#: audacious/ui_manager.c:402
 #, fuzzy
 msgid "Play Location"
 msgstr "Локација:"
 
-#: audacious/ui_manager.c:400
+#: audacious/ui_manager.c:403
 msgid "Play media from the selected location"
 msgstr ""
 
-#: audacious/ui_manager.c:402
+#: audacious/ui_manager.c:405
 #, fuzzy
 msgid "Preferences"
 msgstr "/Параметри"
 
-#: audacious/ui_manager.c:403
+#: audacious/ui_manager.c:406
 #, fuzzy
 msgid "Open preferences window"
 msgstr "Параметри Прозорец"
 
-#: audacious/ui_manager.c:405
+#: audacious/ui_manager.c:408
 #, fuzzy
 msgid "_Quit"
 msgstr "/_Излез"
 
-#: audacious/ui_manager.c:406
+#: audacious/ui_manager.c:409
 #, fuzzy
 msgid "Quit Audacious"
 msgstr "За MPEG аудио додаток"
 
-#: audacious/ui_manager.c:408 audacious/ui_manager.c:409
+#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
 #, fuzzy
 msgid "Set A-B"
 msgstr "/Избери сѐ"
 
-#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
+#: audacious/ui_manager.c:414 audacious/ui_manager.c:415
 #, fuzzy
 msgid "Clear A-B"
 msgstr "/Исчисти ред"
 
-#: audacious/ui_manager.c:414 audacious/ui_manager.c:415
+#: audacious/ui_manager.c:417 audacious/ui_manager.c:418
 #, fuzzy
 msgid "Jump to Playlist Start"
 msgstr "/Оди до почетокот на листата"
 
-#: audacious/ui_manager.c:417 audacious/ui_manager.c:418
+#: audacious/ui_manager.c:420 audacious/ui_manager.c:421
 #, fuzzy
 msgid "Jump to File"
 msgstr "/Оди до датотека"
 
-#: audacious/ui_manager.c:423
+#: audacious/ui_manager.c:426
 #, fuzzy
 msgid "Queue Toggle"
 msgstr "/Менување помеѓу редови"
 
-#: audacious/ui_manager.c:424
+#: audacious/ui_manager.c:427
 msgid "Enables/disables the entry in the playlist's queue."
 msgstr ""
 
-#: audacious/ui_manager.c:431
+#: audacious/ui_manager.c:434
 msgid "Load"
 msgstr "Вчитај"
 
-#: audacious/ui_manager.c:432
+#: audacious/ui_manager.c:435
 msgid "Import"
 msgstr "Увези"
 
-#: audacious/ui_manager.c:433
+#: audacious/ui_manager.c:436
 #, fuzzy
 msgid "Save"
 msgstr "/Сними"
 
-#: audacious/ui_manager.c:434
+#: audacious/ui_manager.c:437
 #, fuzzy
 msgid "Delete"
 msgstr "/Избриши"
 
-#: audacious/ui_manager.c:436 audacious/ui_manager.c:457
-#: audacious/ui_manager.c:472
+#: audacious/ui_manager.c:439 audacious/ui_manager.c:460
+#: audacious/ui_manager.c:475
 msgid "Preset"
 msgstr "Модификатор"
 
-#: audacious/ui_manager.c:437
+#: audacious/ui_manager.c:440
 msgid "Load preset"
 msgstr "Вчитај модификација"
 
-#: audacious/ui_manager.c:439 audacious/ui_manager.c:460
-#: audacious/ui_manager.c:475
+#: audacious/ui_manager.c:442 audacious/ui_manager.c:463
+#: audacious/ui_manager.c:478
 msgid "Auto-load preset"
 msgstr "Автоматски вчитај модификатор"
 
-#: audacious/ui_manager.c:440
+#: audacious/ui_manager.c:443
 #, fuzzy
 msgid "Load auto-load preset"
 msgstr "/Вчитај/автоматски-вчитлив модификатор"
 
-#: audacious/ui_manager.c:442 audacious/ui_manager.c:463
+#: audacious/ui_manager.c:445 audacious/ui_manager.c:466
 msgid "Default"
 msgstr "Стандардно"
 
-#: audacious/ui_manager.c:443
+#: audacious/ui_manager.c:446
 msgid "Load default preset into equalizer"
 msgstr ""
 
-#: audacious/ui_manager.c:445
+#: audacious/ui_manager.c:448
 msgid "Zero"
 msgstr "Нула"
 
-#: audacious/ui_manager.c:446
+#: audacious/ui_manager.c:449
 #, fuzzy
 msgid "Set equalizer preset levels to zero"
 msgstr "Сними модификатор за изедначувачот"
 
-#: audacious/ui_manager.c:448
+#: audacious/ui_manager.c:451
 #, fuzzy
 msgid "From file"
 msgstr "/Вчитај/Од датотека"
 
-#: audacious/ui_manager.c:449
+#: audacious/ui_manager.c:452
 #, fuzzy
 msgid "Load preset from file"
 msgstr "Вчитај модификација"
 
-#: audacious/ui_manager.c:451
+#: audacious/ui_manager.c:454
 msgid "From WinAMP EQF file"
 msgstr "Од датотека"
 
-#: audacious/ui_manager.c:452
+#: audacious/ui_manager.c:455
 #, fuzzy
 msgid "Load preset from WinAMP EQF file"
 msgstr "/Вчитај/Од WinAMP EQF датотека"
 
-#: audacious/ui_manager.c:454
+#: audacious/ui_manager.c:457
 #, fuzzy
 msgid "WinAMP Presets"
 msgstr "Модификатори од WinAMP"
 
-#: audacious/ui_manager.c:455
+#: audacious/ui_manager.c:458
 #, fuzzy
 msgid "Import WinAMP presets"
 msgstr "/Увези/модификатори од WinAMP"
 
-#: audacious/ui_manager.c:458
+#: audacious/ui_manager.c:461
 msgid "Save preset"
 msgstr "Сними модификатор"
 
-#: audacious/ui_manager.c:461
+#: audacious/ui_manager.c:464
 #, fuzzy
 msgid "Save auto-load preset"
 msgstr "/Сними/автоматски-вчитлив модификатор"
 
-#: audacious/ui_manager.c:464
+#: audacious/ui_manager.c:467
 #, fuzzy
 msgid "Save default preset"
 msgstr "Сними автоматски-модификатор"
 
-#: audacious/ui_manager.c:466
+#: audacious/ui_manager.c:469
 msgid "To file"
 msgstr "До датотека"
 
-#: audacious/ui_manager.c:467
+#: audacious/ui_manager.c:470
 #, fuzzy
 msgid "Save preset to file"
 msgstr "Сними модификатор"
 
-#: audacious/ui_manager.c:469
+#: audacious/ui_manager.c:472
 msgid "To WinAMP EQF file"
 msgstr "До WinAMP EQF датотека"
 
-#: audacious/ui_manager.c:470
+#: audacious/ui_manager.c:473
 #, fuzzy
 msgid "Save preset to WinAMP EQF file"
 msgstr "/Сними/Во WinAMP EQF датотека"
 
-#: audacious/ui_manager.c:473
+#: audacious/ui_manager.c:476
 msgid "Delete preset"
 msgstr "Избриши модификатор"
 
-#: audacious/ui_manager.c:476
+#: audacious/ui_manager.c:479
 #, fuzzy
 msgid "Delete auto-load preset"
 msgstr "/Избриши/автоматски-вчитлив модификатор"
@@ -1441,6 +1441,11 @@ msgstr ""
 #: audacious/ui_fileinfo.c:336
 msgid "Track Information Popup"
 msgstr ""
+
+#: audacious/ui_playlist.c:495
+#, fuzzy
+msgid "Search entries in active playlist"
+msgstr "Покажи ги броевите на песните во листата"
 
 #: audacious/ui_playlist.c:501
 msgid ""

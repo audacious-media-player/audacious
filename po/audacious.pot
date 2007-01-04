@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-04 09:46-0600\n"
+"POT-Creation-Date: 2007-01-04 15:53-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: audacious/ui_about.c:123 audacious/ui_credits.c:323
-#: audacious/ui_manager.c:393 audacious/ui_manager.c:394
+#: audacious/ui_manager.c:396 audacious/ui_manager.c:397
 msgid "About Audacious"
 msgstr ""
 
@@ -437,8 +437,8 @@ msgstr ""
 msgid "mono"
 msgstr ""
 
-#: audacious/ui_main.c:1387 audacious/ui_manager.c:420
-#: audacious/ui_manager.c:421
+#: audacious/ui_main.c:1387 audacious/ui_manager.c:423
+#: audacious/ui_manager.c:424
 msgid "Jump to Time"
 msgstr ""
 
@@ -777,19 +777,19 @@ msgid "Saves the selected playlist to the default location."
 msgstr ""
 
 #: audacious/ui_manager.c:234
-msgid "List Manager"
-msgstr ""
-
-#: audacious/ui_manager.c:235
-msgid "Opens the playlist manager."
-msgstr ""
-
-#: audacious/ui_manager.c:238
 msgid "Refresh List"
 msgstr ""
 
-#: audacious/ui_manager.c:239
+#: audacious/ui_manager.c:235
 msgid "Refreshes metadata associated with a playlist entry."
+msgstr ""
+
+#: audacious/ui_manager.c:238
+msgid "List Manager"
+msgstr ""
+
+#: audacious/ui_manager.c:239
+msgid "Opens the playlist manager."
 msgstr ""
 
 #: audacious/ui_manager.c:249
@@ -989,177 +989,177 @@ msgstr ""
 msgid "Sort Selected"
 msgstr ""
 
-#: audacious/ui_manager.c:390
+#: audacious/ui_manager.c:390 audacious/ui_manager.c:393
 msgid "View Track Details"
 msgstr ""
 
-#: audacious/ui_manager.c:391
+#: audacious/ui_manager.c:391 audacious/ui_manager.c:394
 msgid "View track details"
 msgstr ""
 
-#: audacious/ui_manager.c:396
+#: audacious/ui_manager.c:399
 msgid "Play File"
 msgstr ""
 
-#: audacious/ui_manager.c:397
+#: audacious/ui_manager.c:400
 msgid "Load and play a file"
 msgstr ""
 
-#: audacious/ui_manager.c:399
+#: audacious/ui_manager.c:402
 msgid "Play Location"
 msgstr ""
 
-#: audacious/ui_manager.c:400
+#: audacious/ui_manager.c:403
 msgid "Play media from the selected location"
 msgstr ""
 
-#: audacious/ui_manager.c:402
+#: audacious/ui_manager.c:405
 msgid "Preferences"
 msgstr ""
 
-#: audacious/ui_manager.c:403
+#: audacious/ui_manager.c:406
 msgid "Open preferences window"
 msgstr ""
 
-#: audacious/ui_manager.c:405
+#: audacious/ui_manager.c:408
 msgid "_Quit"
 msgstr ""
 
-#: audacious/ui_manager.c:406
+#: audacious/ui_manager.c:409
 msgid "Quit Audacious"
 msgstr ""
 
-#: audacious/ui_manager.c:408 audacious/ui_manager.c:409
+#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
 msgid "Set A-B"
 msgstr ""
 
-#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
+#: audacious/ui_manager.c:414 audacious/ui_manager.c:415
 msgid "Clear A-B"
 msgstr ""
 
-#: audacious/ui_manager.c:414 audacious/ui_manager.c:415
+#: audacious/ui_manager.c:417 audacious/ui_manager.c:418
 msgid "Jump to Playlist Start"
 msgstr ""
 
-#: audacious/ui_manager.c:417 audacious/ui_manager.c:418
+#: audacious/ui_manager.c:420 audacious/ui_manager.c:421
 msgid "Jump to File"
 msgstr ""
 
-#: audacious/ui_manager.c:423
+#: audacious/ui_manager.c:426
 msgid "Queue Toggle"
 msgstr ""
 
-#: audacious/ui_manager.c:424
+#: audacious/ui_manager.c:427
 msgid "Enables/disables the entry in the playlist's queue."
 msgstr ""
 
-#: audacious/ui_manager.c:431
+#: audacious/ui_manager.c:434
 msgid "Load"
 msgstr ""
 
-#: audacious/ui_manager.c:432
+#: audacious/ui_manager.c:435
 msgid "Import"
 msgstr ""
 
-#: audacious/ui_manager.c:433
+#: audacious/ui_manager.c:436
 msgid "Save"
 msgstr ""
 
-#: audacious/ui_manager.c:434
-msgid "Delete"
-msgstr ""
-
-#: audacious/ui_manager.c:436 audacious/ui_manager.c:457
-#: audacious/ui_manager.c:472
-msgid "Preset"
-msgstr ""
-
 #: audacious/ui_manager.c:437
-msgid "Load preset"
+msgid "Delete"
 msgstr ""
 
 #: audacious/ui_manager.c:439 audacious/ui_manager.c:460
 #: audacious/ui_manager.c:475
-msgid "Auto-load preset"
+msgid "Preset"
 msgstr ""
 
 #: audacious/ui_manager.c:440
-msgid "Load auto-load preset"
+msgid "Load preset"
 msgstr ""
 
 #: audacious/ui_manager.c:442 audacious/ui_manager.c:463
-msgid "Default"
+#: audacious/ui_manager.c:478
+msgid "Auto-load preset"
 msgstr ""
 
 #: audacious/ui_manager.c:443
-msgid "Load default preset into equalizer"
+msgid "Load auto-load preset"
 msgstr ""
 
-#: audacious/ui_manager.c:445
-msgid "Zero"
+#: audacious/ui_manager.c:445 audacious/ui_manager.c:466
+msgid "Default"
 msgstr ""
 
 #: audacious/ui_manager.c:446
-msgid "Set equalizer preset levels to zero"
+msgid "Load default preset into equalizer"
 msgstr ""
 
 #: audacious/ui_manager.c:448
-msgid "From file"
+msgid "Zero"
 msgstr ""
 
 #: audacious/ui_manager.c:449
-msgid "Load preset from file"
+msgid "Set equalizer preset levels to zero"
 msgstr ""
 
 #: audacious/ui_manager.c:451
-msgid "From WinAMP EQF file"
+msgid "From file"
 msgstr ""
 
 #: audacious/ui_manager.c:452
-msgid "Load preset from WinAMP EQF file"
+msgid "Load preset from file"
 msgstr ""
 
 #: audacious/ui_manager.c:454
-msgid "WinAMP Presets"
+msgid "From WinAMP EQF file"
 msgstr ""
 
 #: audacious/ui_manager.c:455
-msgid "Import WinAMP presets"
+msgid "Load preset from WinAMP EQF file"
+msgstr ""
+
+#: audacious/ui_manager.c:457
+msgid "WinAMP Presets"
 msgstr ""
 
 #: audacious/ui_manager.c:458
-msgid "Save preset"
+msgid "Import WinAMP presets"
 msgstr ""
 
 #: audacious/ui_manager.c:461
-msgid "Save auto-load preset"
+msgid "Save preset"
 msgstr ""
 
 #: audacious/ui_manager.c:464
-msgid "Save default preset"
-msgstr ""
-
-#: audacious/ui_manager.c:466
-msgid "To file"
+msgid "Save auto-load preset"
 msgstr ""
 
 #: audacious/ui_manager.c:467
-msgid "Save preset to file"
+msgid "Save default preset"
 msgstr ""
 
 #: audacious/ui_manager.c:469
-msgid "To WinAMP EQF file"
+msgid "To file"
 msgstr ""
 
 #: audacious/ui_manager.c:470
-msgid "Save preset to WinAMP EQF file"
+msgid "Save preset to file"
+msgstr ""
+
+#: audacious/ui_manager.c:472
+msgid "To WinAMP EQF file"
 msgstr ""
 
 #: audacious/ui_manager.c:473
-msgid "Delete preset"
+msgid "Save preset to WinAMP EQF file"
 msgstr ""
 
 #: audacious/ui_manager.c:476
+msgid "Delete preset"
+msgstr ""
+
+#: audacious/ui_manager.c:479
 msgid "Delete auto-load preset"
 msgstr ""
 
@@ -1264,6 +1264,10 @@ msgstr ""
 
 #: audacious/ui_fileinfo.c:336
 msgid "Track Information Popup"
+msgstr ""
+
+#: audacious/ui_playlist.c:495
+msgid "Search entries in active playlist"
 msgstr ""
 
 #: audacious/ui_playlist.c:501

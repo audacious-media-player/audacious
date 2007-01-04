@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp-hi\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-04 09:46-0600\n"
+"POT-Creation-Date: 2007-01-04 15:53-0600\n"
 "PO-Revision-Date: 2005-08-20 21:59+0530\n"
 "Last-Translator: धनञ्जय शर्मा (Dhananjaya Sharma) <dysxhi@yahoo.co.in>\n"
 "Language-Team: Hindi, India <dysxhi@yahoo.co.in>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Generator: KBabel 1.10\n"
 
 #: audacious/ui_about.c:123 audacious/ui_credits.c:323
-#: audacious/ui_manager.c:393 audacious/ui_manager.c:394
+#: audacious/ui_manager.c:396 audacious/ui_manager.c:397
 #, fuzzy
 msgid "About Audacious"
 msgstr "एमपीईजी आडियो प्लग-इन के बारे में"
@@ -484,8 +484,8 @@ msgstr "स्टीरियो"
 msgid "mono"
 msgstr "मोनो"
 
-#: audacious/ui_main.c:1387 audacious/ui_manager.c:420
-#: audacious/ui_manager.c:421
+#: audacious/ui_main.c:1387 audacious/ui_manager.c:423
+#: audacious/ui_manager.c:424
 msgid "Jump to Time"
 msgstr "समय पर जाएँ"
 
@@ -887,22 +887,22 @@ msgid "Saves the selected playlist to the default location."
 msgstr ""
 
 #: audacious/ui_manager.c:234
-msgid "List Manager"
-msgstr ""
-
-#: audacious/ui_manager.c:235
-#, fuzzy
-msgid "Opens the playlist manager."
-msgstr "प्लेसूची को साफ़ नहीं करना"
-
-#: audacious/ui_manager.c:238
 #, fuzzy
 msgid "Refresh List"
 msgstr "/ताजा करने की दर"
 
-#: audacious/ui_manager.c:239
+#: audacious/ui_manager.c:235
 msgid "Refreshes metadata associated with a playlist entry."
 msgstr ""
+
+#: audacious/ui_manager.c:238
+msgid "List Manager"
+msgstr ""
+
+#: audacious/ui_manager.c:239
+#, fuzzy
+msgid "Opens the playlist manager."
+msgstr "प्लेसूची को साफ़ नहीं करना"
 
 #: audacious/ui_manager.c:249
 #, fuzzy
@@ -1135,211 +1135,211 @@ msgstr "/सूची को क्रमानुसार लगायें/�
 msgid "Sort Selected"
 msgstr "/चयन को क्रमानुसार लगायें"
 
-#: audacious/ui_manager.c:390
+#: audacious/ui_manager.c:390 audacious/ui_manager.c:393
 #, fuzzy
 msgid "View Track Details"
 msgstr "/ट्रैक के विवरणों को देखें"
 
-#: audacious/ui_manager.c:391
+#: audacious/ui_manager.c:391 audacious/ui_manager.c:394
 #, fuzzy
 msgid "View track details"
 msgstr "/ट्रैक के विवरणों को देखें"
 
-#: audacious/ui_manager.c:396
+#: audacious/ui_manager.c:399
 #, fuzzy
 msgid "Play File"
 msgstr "/चलायें"
 
-#: audacious/ui_manager.c:397
+#: audacious/ui_manager.c:400
 #, fuzzy
 msgid "Load and play a file"
 msgstr "प्लेसूचियों और संचिकाओं से मेटा डाटा को लाएँ"
 
-#: audacious/ui_manager.c:399
+#: audacious/ui_manager.c:402
 #, fuzzy
 msgid "Play Location"
 msgstr "स्थान:"
 
-#: audacious/ui_manager.c:400
+#: audacious/ui_manager.c:403
 msgid "Play media from the selected location"
 msgstr ""
 
-#: audacious/ui_manager.c:402
+#: audacious/ui_manager.c:405
 #, fuzzy
 msgid "Preferences"
 msgstr "/वरीयतायें"
 
-#: audacious/ui_manager.c:403
+#: audacious/ui_manager.c:406
 #, fuzzy
 msgid "Open preferences window"
 msgstr "वरीयताऐं खिड़की"
 
-#: audacious/ui_manager.c:405
+#: audacious/ui_manager.c:408
 #, fuzzy
 msgid "_Quit"
 msgstr "/निकास (_Q)"
 
-#: audacious/ui_manager.c:406
+#: audacious/ui_manager.c:409
 #, fuzzy
 msgid "Quit Audacious"
 msgstr "एमपीईजी आडियो प्लग-इन के बारे में"
 
-#: audacious/ui_manager.c:408 audacious/ui_manager.c:409
+#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
 #, fuzzy
 msgid "Set A-B"
 msgstr "/सभी का चयन करें"
 
-#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
+#: audacious/ui_manager.c:414 audacious/ui_manager.c:415
 #, fuzzy
 msgid "Clear A-B"
 msgstr "/कतार को साफ़ करें"
 
-#: audacious/ui_manager.c:414 audacious/ui_manager.c:415
+#: audacious/ui_manager.c:417 audacious/ui_manager.c:418
 #, fuzzy
 msgid "Jump to Playlist Start"
 msgstr "/प्लेसूची के आरम्भ में जाएँ"
 
-#: audacious/ui_manager.c:417 audacious/ui_manager.c:418
+#: audacious/ui_manager.c:420 audacious/ui_manager.c:421
 #, fuzzy
 msgid "Jump to File"
 msgstr "/संचिका पर जाएँ"
 
-#: audacious/ui_manager.c:423
+#: audacious/ui_manager.c:426
 #, fuzzy
 msgid "Queue Toggle"
 msgstr "/क्यू टॉगल"
 
-#: audacious/ui_manager.c:424
+#: audacious/ui_manager.c:427
 msgid "Enables/disables the entry in the playlist's queue."
 msgstr ""
 
-#: audacious/ui_manager.c:431
+#: audacious/ui_manager.c:434
 #, fuzzy
 msgid "Load"
 msgstr "/लायें"
 
-#: audacious/ui_manager.c:432
+#: audacious/ui_manager.c:435
 #, fuzzy
 msgid "Import"
 msgstr "/इम्पोर्ट"
 
-#: audacious/ui_manager.c:433
+#: audacious/ui_manager.c:436
 #, fuzzy
 msgid "Save"
 msgstr "/सुरक्षित करें"
 
-#: audacious/ui_manager.c:434
+#: audacious/ui_manager.c:437
 #, fuzzy
 msgid "Delete"
 msgstr "/मिटायें"
 
-#: audacious/ui_manager.c:436 audacious/ui_manager.c:457
-#: audacious/ui_manager.c:472
+#: audacious/ui_manager.c:439 audacious/ui_manager.c:460
+#: audacious/ui_manager.c:475
 msgid "Preset"
 msgstr "प्रीसेट"
 
-#: audacious/ui_manager.c:437
+#: audacious/ui_manager.c:440
 msgid "Load preset"
 msgstr "प्रीसेट लाना"
 
-#: audacious/ui_manager.c:439 audacious/ui_manager.c:460
-#: audacious/ui_manager.c:475
+#: audacious/ui_manager.c:442 audacious/ui_manager.c:463
+#: audacious/ui_manager.c:478
 #, fuzzy
 msgid "Auto-load preset"
 msgstr "/लायें/आटो-लोड-प्रीसेट"
 
-#: audacious/ui_manager.c:440
+#: audacious/ui_manager.c:443
 #, fuzzy
 msgid "Load auto-load preset"
 msgstr "/लायें/आटो-लोड-प्रीसेट"
 
-#: audacious/ui_manager.c:442 audacious/ui_manager.c:463
+#: audacious/ui_manager.c:445 audacious/ui_manager.c:466
 msgid "Default"
 msgstr "डिफ़ाल्ट"
 
-#: audacious/ui_manager.c:443
+#: audacious/ui_manager.c:446
 msgid "Load default preset into equalizer"
 msgstr ""
 
-#: audacious/ui_manager.c:445
+#: audacious/ui_manager.c:448
 #, fuzzy
 msgid "Zero"
 msgstr "रेट्रो"
 
-#: audacious/ui_manager.c:446
+#: audacious/ui_manager.c:449
 #, fuzzy
 msgid "Set equalizer preset levels to zero"
 msgstr "ईक्यूलाईजर प्रीसेट को सुरक्षित करना"
 
-#: audacious/ui_manager.c:448
+#: audacious/ui_manager.c:451
 #, fuzzy
 msgid "From file"
 msgstr "/लायें/संचिका से"
 
-#: audacious/ui_manager.c:449
+#: audacious/ui_manager.c:452
 #, fuzzy
 msgid "Load preset from file"
 msgstr "प्रीसेट लाना"
 
-#: audacious/ui_manager.c:451
+#: audacious/ui_manager.c:454
 #, fuzzy
 msgid "From WinAMP EQF file"
 msgstr "/लायें/विन-ऐम्प ई०क्य़ू०एफ़० संचिका से"
 
-#: audacious/ui_manager.c:452
+#: audacious/ui_manager.c:455
 #, fuzzy
 msgid "Load preset from WinAMP EQF file"
 msgstr "/लायें/विन-ऐम्प ई०क्य़ू०एफ़० संचिका से"
 
-#: audacious/ui_manager.c:454
+#: audacious/ui_manager.c:457
 #, fuzzy
 msgid "WinAMP Presets"
 msgstr "/इम्पोर्ट/विन-ऐम्प प्रीसेटों को"
 
-#: audacious/ui_manager.c:455
+#: audacious/ui_manager.c:458
 #, fuzzy
 msgid "Import WinAMP presets"
 msgstr "/इम्पोर्ट/विन-ऐम्प प्रीसेटों को"
 
-#: audacious/ui_manager.c:458
+#: audacious/ui_manager.c:461
 msgid "Save preset"
 msgstr "प्रीसेट को सुरक्षित करना"
 
-#: audacious/ui_manager.c:461
+#: audacious/ui_manager.c:464
 #, fuzzy
 msgid "Save auto-load preset"
 msgstr "/सुरक्षित/आटो-लोड प्रीसेड"
 
-#: audacious/ui_manager.c:464
+#: audacious/ui_manager.c:467
 #, fuzzy
 msgid "Save default preset"
 msgstr "आटो-प्रीसेट को सुरक्षित करना"
 
-#: audacious/ui_manager.c:466
+#: audacious/ui_manager.c:469
 #, fuzzy
 msgid "To file"
 msgstr "/लायें/संचिका से"
 
-#: audacious/ui_manager.c:467
+#: audacious/ui_manager.c:470
 #, fuzzy
 msgid "Save preset to file"
 msgstr "प्रीसेट को सुरक्षित करना"
 
-#: audacious/ui_manager.c:469
+#: audacious/ui_manager.c:472
 #, fuzzy
 msgid "To WinAMP EQF file"
 msgstr "/सुरक्षित/विन-ऐम्प ई०क्यू०एफ़० संचिका में"
 
-#: audacious/ui_manager.c:470
+#: audacious/ui_manager.c:473
 #, fuzzy
 msgid "Save preset to WinAMP EQF file"
 msgstr "/सुरक्षित/विन-ऐम्प ई०क्यू०एफ़० संचिका में"
 
-#: audacious/ui_manager.c:473
+#: audacious/ui_manager.c:476
 msgid "Delete preset"
 msgstr "प्रीसेट को हटाना"
 
-#: audacious/ui_manager.c:476
+#: audacious/ui_manager.c:479
 #, fuzzy
 msgid "Delete auto-load preset"
 msgstr "/मिटायें/आटो-लोड प्रीसेट"
@@ -1447,6 +1447,11 @@ msgstr ""
 #: audacious/ui_fileinfo.c:336
 msgid "Track Information Popup"
 msgstr ""
+
+#: audacious/ui_playlist.c:495
+#, fuzzy
+msgid "Search entries in active playlist"
+msgstr "प्लेसूची में ट्रैक संख्याओं को दिखाएँ"
 
 #: audacious/ui_playlist.c:501
 msgid ""

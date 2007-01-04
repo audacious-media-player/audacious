@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-04 09:46-0600\n"
+"POT-Creation-Date: 2007-01-04 15:53-0600\n"
 "PO-Revision-Date: 2006-09-30 16:57+0000\n"
 "Last-Translator: Gustavo D. Vranjes <gvranjes@nerdshack.com>\n"
 "Language-Team:  <es@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 "X-Generator: KBabel 1.2\n"
 
 #: audacious/ui_about.c:123 audacious/ui_credits.c:323
-#: audacious/ui_manager.c:393 audacious/ui_manager.c:394
+#: audacious/ui_manager.c:396 audacious/ui_manager.c:397
 msgid "About Audacious"
 msgstr "Acerca de Audacious"
 
@@ -477,8 +477,8 @@ msgstr "Estéreo"
 msgid "mono"
 msgstr "Mono"
 
-#: audacious/ui_main.c:1387 audacious/ui_manager.c:420
-#: audacious/ui_manager.c:421
+#: audacious/ui_main.c:1387 audacious/ui_manager.c:423
+#: audacious/ui_manager.c:424
 msgid "Jump to Time"
 msgstr "Saltar al tiempo"
 
@@ -880,22 +880,22 @@ msgid "Saves the selected playlist to the default location."
 msgstr ""
 
 #: audacious/ui_manager.c:234
-msgid "List Manager"
-msgstr ""
-
-#: audacious/ui_manager.c:235
-#, fuzzy
-msgid "Opens the playlist manager."
-msgstr "No limpiar la lista de reproducción"
-
-#: audacious/ui_manager.c:238
 #, fuzzy
 msgid "Refresh List"
 msgstr "Refresco de lista de pieles"
 
-#: audacious/ui_manager.c:239
+#: audacious/ui_manager.c:235
 msgid "Refreshes metadata associated with a playlist entry."
 msgstr ""
+
+#: audacious/ui_manager.c:238
+msgid "List Manager"
+msgstr ""
+
+#: audacious/ui_manager.c:239
+#, fuzzy
+msgid "Opens the playlist manager."
+msgstr "No limpiar la lista de reproducción"
 
 #: audacious/ui_manager.c:249
 #, fuzzy
@@ -1128,210 +1128,210 @@ msgstr "Ordenar Lista/Por Lista de Reproducción"
 msgid "Sort Selected"
 msgstr "/Ordenar selección"
 
-#: audacious/ui_manager.c:390
+#: audacious/ui_manager.c:390 audacious/ui_manager.c:393
 #, fuzzy
 msgid "View Track Details"
 msgstr "/Ver detalles de pista"
 
-#: audacious/ui_manager.c:391
+#: audacious/ui_manager.c:391 audacious/ui_manager.c:394
 #, fuzzy
 msgid "View track details"
 msgstr "/Ver detalles de pista"
 
-#: audacious/ui_manager.c:396
+#: audacious/ui_manager.c:399
 #, fuzzy
 msgid "Play File"
 msgstr "/Reproducir archivo"
 
-#: audacious/ui_manager.c:397
+#: audacious/ui_manager.c:400
 #, fuzzy
 msgid "Load and play a file"
 msgstr "Cargar metadatos de las listas de reproducción y archivos"
 
-#: audacious/ui_manager.c:399
+#: audacious/ui_manager.c:402
 #, fuzzy
 msgid "Play Location"
 msgstr "/ Reproducir Lugar"
 
-#: audacious/ui_manager.c:400
+#: audacious/ui_manager.c:403
 msgid "Play media from the selected location"
 msgstr ""
 
-#: audacious/ui_manager.c:402
+#: audacious/ui_manager.c:405
 #, fuzzy
 msgid "Preferences"
 msgstr "/Preferencias"
 
-#: audacious/ui_manager.c:403
+#: audacious/ui_manager.c:406
 #, fuzzy
 msgid "Open preferences window"
 msgstr "Ventana de preferencias"
 
-#: audacious/ui_manager.c:405
+#: audacious/ui_manager.c:408
 #, fuzzy
 msgid "_Quit"
 msgstr "/_Salir"
 
-#: audacious/ui_manager.c:406
+#: audacious/ui_manager.c:409
 #, fuzzy
 msgid "Quit Audacious"
 msgstr "Acerca de Audacious"
 
-#: audacious/ui_manager.c:408 audacious/ui_manager.c:409
+#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
 #, fuzzy
 msgid "Set A-B"
 msgstr "/Seleccionar todo"
 
-#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
+#: audacious/ui_manager.c:414 audacious/ui_manager.c:415
 #, fuzzy
 msgid "Clear A-B"
 msgstr "/Vaciar cola"
 
-#: audacious/ui_manager.c:414 audacious/ui_manager.c:415
+#: audacious/ui_manager.c:417 audacious/ui_manager.c:418
 #, fuzzy
 msgid "Jump to Playlist Start"
 msgstr "/Saltar al inicio de la lista de reproducción"
 
-#: audacious/ui_manager.c:417 audacious/ui_manager.c:418
+#: audacious/ui_manager.c:420 audacious/ui_manager.c:421
 #, fuzzy
 msgid "Jump to File"
 msgstr "/Saltar al archivo"
 
-#: audacious/ui_manager.c:423
+#: audacious/ui_manager.c:426
 #, fuzzy
 msgid "Queue Toggle"
 msgstr "/Activar cola"
 
-#: audacious/ui_manager.c:424
+#: audacious/ui_manager.c:427
 msgid "Enables/disables the entry in the playlist's queue."
 msgstr ""
 
-#: audacious/ui_manager.c:431
+#: audacious/ui_manager.c:434
 #, fuzzy
 msgid "Load"
 msgstr "/Cargar"
 
-#: audacious/ui_manager.c:432
+#: audacious/ui_manager.c:435
 #, fuzzy
 msgid "Import"
 msgstr "/Importar"
 
-#: audacious/ui_manager.c:433
+#: audacious/ui_manager.c:436
 msgid "Save"
 msgstr "Guardar"
 
-#: audacious/ui_manager.c:434
+#: audacious/ui_manager.c:437
 #, fuzzy
 msgid "Delete"
 msgstr "/Borrar"
 
-#: audacious/ui_manager.c:436 audacious/ui_manager.c:457
-#: audacious/ui_manager.c:472
+#: audacious/ui_manager.c:439 audacious/ui_manager.c:460
+#: audacious/ui_manager.c:475
 msgid "Preset"
 msgstr "Preconfigurado"
 
-#: audacious/ui_manager.c:437
+#: audacious/ui_manager.c:440
 msgid "Load preset"
 msgstr "Cargar preconfigurado"
 
-#: audacious/ui_manager.c:439 audacious/ui_manager.c:460
-#: audacious/ui_manager.c:475
+#: audacious/ui_manager.c:442 audacious/ui_manager.c:463
+#: audacious/ui_manager.c:478
 #, fuzzy
 msgid "Auto-load preset"
 msgstr "/Cargar/Autocargar preconfigurado"
 
-#: audacious/ui_manager.c:440
+#: audacious/ui_manager.c:443
 #, fuzzy
 msgid "Load auto-load preset"
 msgstr "/Cargar/Autocargar preconfigurado"
 
-#: audacious/ui_manager.c:442 audacious/ui_manager.c:463
+#: audacious/ui_manager.c:445 audacious/ui_manager.c:466
 msgid "Default"
 msgstr "Predeterminado"
 
-#: audacious/ui_manager.c:443
+#: audacious/ui_manager.c:446
 msgid "Load default preset into equalizer"
 msgstr ""
 
-#: audacious/ui_manager.c:445
+#: audacious/ui_manager.c:448
 #, fuzzy
 msgid "Zero"
 msgstr "Retro"
 
-#: audacious/ui_manager.c:446
+#: audacious/ui_manager.c:449
 #, fuzzy
 msgid "Set equalizer preset levels to zero"
 msgstr "Guardar preconfigurado del ecualizador"
 
-#: audacious/ui_manager.c:448
+#: audacious/ui_manager.c:451
 #, fuzzy
 msgid "From file"
 msgstr "/Cargar/Desde archivo"
 
-#: audacious/ui_manager.c:449
+#: audacious/ui_manager.c:452
 #, fuzzy
 msgid "Load preset from file"
 msgstr "Cargar preconfigurado"
 
-#: audacious/ui_manager.c:451
+#: audacious/ui_manager.c:454
 #, fuzzy
 msgid "From WinAMP EQF file"
 msgstr "/Cargar/Desde archivo EQF de WinAMP"
 
-#: audacious/ui_manager.c:452
+#: audacious/ui_manager.c:455
 #, fuzzy
 msgid "Load preset from WinAMP EQF file"
 msgstr "/Cargar/Desde archivo EQF de WinAMP"
 
-#: audacious/ui_manager.c:454
+#: audacious/ui_manager.c:457
 #, fuzzy
 msgid "WinAMP Presets"
 msgstr "/Importar/Preconfigurado de WinAMP"
 
-#: audacious/ui_manager.c:455
+#: audacious/ui_manager.c:458
 #, fuzzy
 msgid "Import WinAMP presets"
 msgstr "/Importar/Preconfigurado de WinAMP"
 
-#: audacious/ui_manager.c:458
+#: audacious/ui_manager.c:461
 msgid "Save preset"
 msgstr "Guardar preconfigurado"
 
-#: audacious/ui_manager.c:461
+#: audacious/ui_manager.c:464
 #, fuzzy
 msgid "Save auto-load preset"
 msgstr "/Guardar/Preconfigurado autocargado"
 
-#: audacious/ui_manager.c:464
+#: audacious/ui_manager.c:467
 #, fuzzy
 msgid "Save default preset"
 msgstr "Guardar auto-preconfigurado"
 
-#: audacious/ui_manager.c:466
+#: audacious/ui_manager.c:469
 #, fuzzy
 msgid "To file"
 msgstr "/Cargar/Desde archivo"
 
-#: audacious/ui_manager.c:467
+#: audacious/ui_manager.c:470
 #, fuzzy
 msgid "Save preset to file"
 msgstr "Guardar preconfigurado"
 
-#: audacious/ui_manager.c:469
+#: audacious/ui_manager.c:472
 #, fuzzy
 msgid "To WinAMP EQF file"
 msgstr "/Guardar/En archivo EQF de WinAMP"
 
-#: audacious/ui_manager.c:470
+#: audacious/ui_manager.c:473
 #, fuzzy
 msgid "Save preset to WinAMP EQF file"
 msgstr "/Guardar/En archivo EQF de WinAMP"
 
-#: audacious/ui_manager.c:473
+#: audacious/ui_manager.c:476
 msgid "Delete preset"
 msgstr "Borrar preconfigurado"
 
-#: audacious/ui_manager.c:476
+#: audacious/ui_manager.c:479
 #, fuzzy
 msgid "Delete auto-load preset"
 msgstr "/Borrar/Preconfigurado autocargado"
@@ -1439,6 +1439,11 @@ msgstr "Configuración de la información de Popup"
 #: audacious/ui_fileinfo.c:336
 msgid "Track Information Popup"
 msgstr ""
+
+#: audacious/ui_playlist.c:495
+#, fuzzy
+msgid "Search entries in active playlist"
+msgstr "Mostrar separadores en la lista de canciones"
 
 #: audacious/ui_playlist.c:501
 msgid ""

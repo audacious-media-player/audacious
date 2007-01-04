@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-04 09:46-0600\n"
+"POT-Creation-Date: 2007-01-04 15:53-0600\n"
 "PO-Revision-Date: 2004-06-29 19:02+0900\n"
 "Last-Translator: DongCheon Park <dcpark@kaist.ac.kr>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: audacious/ui_about.c:123 audacious/ui_credits.c:323
-#: audacious/ui_manager.c:393 audacious/ui_manager.c:394
+#: audacious/ui_manager.c:396 audacious/ui_manager.c:397
 #, fuzzy
 msgid "About Audacious"
 msgstr "MPEG 오디오 플러그인 정보"
@@ -487,8 +487,8 @@ msgstr "스테레오"
 msgid "mono"
 msgstr "모노"
 
-#: audacious/ui_main.c:1387 audacious/ui_manager.c:420
-#: audacious/ui_manager.c:421
+#: audacious/ui_main.c:1387 audacious/ui_manager.c:423
+#: audacious/ui_manager.c:424
 msgid "Jump to Time"
 msgstr "시간 이동"
 
@@ -890,22 +890,22 @@ msgid "Saves the selected playlist to the default location."
 msgstr ""
 
 #: audacious/ui_manager.c:234
-msgid "List Manager"
-msgstr ""
-
-#: audacious/ui_manager.c:235
-#, fuzzy
-msgid "Opens the playlist manager."
-msgstr "재생목록 지우지 않음"
-
-#: audacious/ui_manager.c:238
 #, fuzzy
 msgid "Refresh List"
 msgstr "/재생율"
 
-#: audacious/ui_manager.c:239
+#: audacious/ui_manager.c:235
 msgid "Refreshes metadata associated with a playlist entry."
 msgstr ""
+
+#: audacious/ui_manager.c:238
+msgid "List Manager"
+msgstr ""
+
+#: audacious/ui_manager.c:239
+#, fuzzy
+msgid "Opens the playlist manager."
+msgstr "재생목록 지우지 않음"
 
 #: audacious/ui_manager.c:249
 #, fuzzy
@@ -1138,204 +1138,204 @@ msgstr "/목록 정렬/제목 순"
 msgid "Sort Selected"
 msgstr "/선택 정렬"
 
-#: audacious/ui_manager.c:390
+#: audacious/ui_manager.c:390 audacious/ui_manager.c:393
 #, fuzzy
 msgid "View Track Details"
 msgstr "/트랙 세부정보 보기"
 
-#: audacious/ui_manager.c:391
+#: audacious/ui_manager.c:391 audacious/ui_manager.c:394
 #, fuzzy
 msgid "View track details"
 msgstr "/트랙 세부정보 보기"
 
-#: audacious/ui_manager.c:396
+#: audacious/ui_manager.c:399
 #, fuzzy
 msgid "Play File"
 msgstr "파일 재생"
 
-#: audacious/ui_manager.c:397
+#: audacious/ui_manager.c:400
 #, fuzzy
 msgid "Load and play a file"
 msgstr "재생목록 및 파일로부터 메타데이터 읽기"
 
-#: audacious/ui_manager.c:399
+#: audacious/ui_manager.c:402
 #, fuzzy
 msgid "Play Location"
 msgstr "위치:"
 
-#: audacious/ui_manager.c:400
+#: audacious/ui_manager.c:403
 msgid "Play media from the selected location"
 msgstr ""
 
-#: audacious/ui_manager.c:402
+#: audacious/ui_manager.c:405
 #, fuzzy
 msgid "Preferences"
 msgstr "/환경설정"
 
-#: audacious/ui_manager.c:403
+#: audacious/ui_manager.c:406
 #, fuzzy
 msgid "Open preferences window"
 msgstr "선택사항 창"
 
-#: audacious/ui_manager.c:405
+#: audacious/ui_manager.c:408
 #, fuzzy
 msgid "_Quit"
 msgstr "/끝내기(_Q)"
 
-#: audacious/ui_manager.c:406
+#: audacious/ui_manager.c:409
 #, fuzzy
 msgid "Quit Audacious"
 msgstr "MPEG 오디오 플러그인 정보"
 
-#: audacious/ui_manager.c:408 audacious/ui_manager.c:409
+#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
 #, fuzzy
 msgid "Set A-B"
 msgstr "모두 선택"
 
-#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
+#: audacious/ui_manager.c:414 audacious/ui_manager.c:415
 #, fuzzy
 msgid "Clear A-B"
 msgstr "/대기열 비움"
 
-#: audacious/ui_manager.c:414 audacious/ui_manager.c:415
+#: audacious/ui_manager.c:417 audacious/ui_manager.c:418
 #, fuzzy
 msgid "Jump to Playlist Start"
 msgstr "/목록 처음으로"
 
-#: audacious/ui_manager.c:417 audacious/ui_manager.c:418
+#: audacious/ui_manager.c:420 audacious/ui_manager.c:421
 #, fuzzy
 msgid "Jump to File"
 msgstr "/파일 이동"
 
-#: audacious/ui_manager.c:423
+#: audacious/ui_manager.c:426
 #, fuzzy
 msgid "Queue Toggle"
 msgstr "/대기열 고정"
 
-#: audacious/ui_manager.c:424
+#: audacious/ui_manager.c:427
 msgid "Enables/disables the entry in the playlist's queue."
 msgstr ""
 
-#: audacious/ui_manager.c:431
+#: audacious/ui_manager.c:434
 msgid "Load"
 msgstr "읽기"
 
-#: audacious/ui_manager.c:432
+#: audacious/ui_manager.c:435
 msgid "Import"
 msgstr "가져오기"
 
-#: audacious/ui_manager.c:433
+#: audacious/ui_manager.c:436
 #, fuzzy
 msgid "Save"
 msgstr "/저장"
 
-#: audacious/ui_manager.c:434
+#: audacious/ui_manager.c:437
 #, fuzzy
 msgid "Delete"
 msgstr "/삭제"
 
-#: audacious/ui_manager.c:436 audacious/ui_manager.c:457
-#: audacious/ui_manager.c:472
+#: audacious/ui_manager.c:439 audacious/ui_manager.c:460
+#: audacious/ui_manager.c:475
 msgid "Preset"
 msgstr "설정값"
 
-#: audacious/ui_manager.c:437
+#: audacious/ui_manager.c:440
 msgid "Load preset"
 msgstr "설정값 읽기"
 
-#: audacious/ui_manager.c:439 audacious/ui_manager.c:460
-#: audacious/ui_manager.c:475
+#: audacious/ui_manager.c:442 audacious/ui_manager.c:463
+#: audacious/ui_manager.c:478
 msgid "Auto-load preset"
 msgstr "설정값 자동-읽기"
 
-#: audacious/ui_manager.c:440
+#: audacious/ui_manager.c:443
 #, fuzzy
 msgid "Load auto-load preset"
 msgstr "/읽기/설정값 자동-읽기"
 
-#: audacious/ui_manager.c:442 audacious/ui_manager.c:463
+#: audacious/ui_manager.c:445 audacious/ui_manager.c:466
 msgid "Default"
 msgstr "기본값"
 
-#: audacious/ui_manager.c:443
+#: audacious/ui_manager.c:446
 msgid "Load default preset into equalizer"
 msgstr ""
 
-#: audacious/ui_manager.c:445
+#: audacious/ui_manager.c:448
 msgid "Zero"
 msgstr "없음"
 
-#: audacious/ui_manager.c:446
+#: audacious/ui_manager.c:449
 #, fuzzy
 msgid "Set equalizer preset levels to zero"
 msgstr "이퀄라이저 설정값 저장"
 
-#: audacious/ui_manager.c:448
+#: audacious/ui_manager.c:451
 #, fuzzy
 msgid "From file"
 msgstr "/읽기/파일"
 
-#: audacious/ui_manager.c:449
+#: audacious/ui_manager.c:452
 #, fuzzy
 msgid "Load preset from file"
 msgstr "설정값 읽기"
 
-#: audacious/ui_manager.c:451
+#: audacious/ui_manager.c:454
 msgid "From WinAMP EQF file"
 msgstr "WinAMP EQF 파일에서"
 
-#: audacious/ui_manager.c:452
+#: audacious/ui_manager.c:455
 #, fuzzy
 msgid "Load preset from WinAMP EQF file"
 msgstr "/읽기/WinAMP EQF 파일"
 
-#: audacious/ui_manager.c:454
+#: audacious/ui_manager.c:457
 #, fuzzy
 msgid "WinAMP Presets"
 msgstr "Winamp 설정값"
 
-#: audacious/ui_manager.c:455
+#: audacious/ui_manager.c:458
 #, fuzzy
 msgid "Import WinAMP presets"
 msgstr "/가져오기/Winamp 설정값"
 
-#: audacious/ui_manager.c:458
+#: audacious/ui_manager.c:461
 msgid "Save preset"
 msgstr "설정값 저장"
 
-#: audacious/ui_manager.c:461
+#: audacious/ui_manager.c:464
 #, fuzzy
 msgid "Save auto-load preset"
 msgstr "/저장/설정값 자동-읽기"
 
-#: audacious/ui_manager.c:464
+#: audacious/ui_manager.c:467
 #, fuzzy
 msgid "Save default preset"
 msgstr "자동-설정값 저장"
 
-#: audacious/ui_manager.c:466
+#: audacious/ui_manager.c:469
 msgid "To file"
 msgstr "파일로"
 
-#: audacious/ui_manager.c:467
+#: audacious/ui_manager.c:470
 #, fuzzy
 msgid "Save preset to file"
 msgstr "설정값 저장"
 
-#: audacious/ui_manager.c:469
+#: audacious/ui_manager.c:472
 msgid "To WinAMP EQF file"
 msgstr "WinAMP EQF파일로"
 
-#: audacious/ui_manager.c:470
+#: audacious/ui_manager.c:473
 #, fuzzy
 msgid "Save preset to WinAMP EQF file"
 msgstr "/저장/WinAMP EQF파일"
 
-#: audacious/ui_manager.c:473
+#: audacious/ui_manager.c:476
 msgid "Delete preset"
 msgstr "설정값 삭제"
 
-#: audacious/ui_manager.c:476
+#: audacious/ui_manager.c:479
 #, fuzzy
 msgid "Delete auto-load preset"
 msgstr "/삭제/설정값 자동-읽기"
@@ -1446,6 +1446,11 @@ msgstr ""
 #: audacious/ui_fileinfo.c:336
 msgid "Track Information Popup"
 msgstr ""
+
+#: audacious/ui_playlist.c:495
+#, fuzzy
+msgid "Search entries in active playlist"
+msgstr "재생목록에 트랙 번호 보이기"
 
 #: audacious/ui_playlist.c:501
 msgid ""

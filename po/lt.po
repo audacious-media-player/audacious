@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BMP\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-04 09:46-0600\n"
+"POT-Creation-Date: 2007-01-04 15:53-0600\n"
 "PO-Revision-Date: 2004-12-06 19:02+0200\n"
 "Last-Translator: Rimas Kudelis <rq@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: audacious/ui_about.c:123 audacious/ui_credits.c:323
-#: audacious/ui_manager.c:393 audacious/ui_manager.c:394
+#: audacious/ui_manager.c:396 audacious/ui_manager.c:397
 #, fuzzy
 msgid "About Audacious"
 msgstr "Apie MPEG audio įskiepį"
@@ -485,8 +485,8 @@ msgstr "Stereo"
 msgid "mono"
 msgstr "Mono"
 
-#: audacious/ui_main.c:1387 audacious/ui_manager.c:420
-#: audacious/ui_manager.c:421
+#: audacious/ui_main.c:1387 audacious/ui_manager.c:423
+#: audacious/ui_manager.c:424
 msgid "Jump to Time"
 msgstr "Šokti į laiką"
 
@@ -888,22 +888,22 @@ msgid "Saves the selected playlist to the default location."
 msgstr ""
 
 #: audacious/ui_manager.c:234
-msgid "List Manager"
-msgstr ""
-
-#: audacious/ui_manager.c:235
-#, fuzzy
-msgid "Opens the playlist manager."
-msgstr "Neišvalyti grojaraščio"
-
-#: audacious/ui_manager.c:238
 #, fuzzy
 msgid "Refresh List"
 msgstr "/Atnaujinimo dažnis"
 
-#: audacious/ui_manager.c:239
+#: audacious/ui_manager.c:235
 msgid "Refreshes metadata associated with a playlist entry."
 msgstr ""
+
+#: audacious/ui_manager.c:238
+msgid "List Manager"
+msgstr ""
+
+#: audacious/ui_manager.c:239
+#, fuzzy
+msgid "Opens the playlist manager."
+msgstr "Neišvalyti grojaraščio"
 
 #: audacious/ui_manager.c:249
 #, fuzzy
@@ -1138,211 +1138,211 @@ msgstr "/Rūšiuoti grojaraštį/Pagal pavadinimą"
 msgid "Sort Selected"
 msgstr "/Rūšiuoti pasirinktus"
 
-#: audacious/ui_manager.c:390
+#: audacious/ui_manager.c:390 audacious/ui_manager.c:393
 #, fuzzy
 msgid "View Track Details"
 msgstr "/Takelio informacija"
 
-#: audacious/ui_manager.c:391
+#: audacious/ui_manager.c:391 audacious/ui_manager.c:394
 #, fuzzy
 msgid "View track details"
 msgstr "/Takelio informacija"
 
-#: audacious/ui_manager.c:396
+#: audacious/ui_manager.c:399
 #, fuzzy
 msgid "Play File"
 msgstr "/Groti"
 
-#: audacious/ui_manager.c:397
+#: audacious/ui_manager.c:400
 #, fuzzy
 msgid "Load and play a file"
 msgstr "Įkelti aprašus iš grojaraščių bei bylų"
 
-#: audacious/ui_manager.c:399
+#: audacious/ui_manager.c:402
 #, fuzzy
 msgid "Play Location"
 msgstr "Vieta:"
 
-#: audacious/ui_manager.c:400
+#: audacious/ui_manager.c:403
 msgid "Play media from the selected location"
 msgstr ""
 
-#: audacious/ui_manager.c:402
+#: audacious/ui_manager.c:405
 #, fuzzy
 msgid "Preferences"
 msgstr "/Nustatymai"
 
-#: audacious/ui_manager.c:403
+#: audacious/ui_manager.c:406
 #, fuzzy
 msgid "Open preferences window"
 msgstr "Nustatymų langas"
 
-#: audacious/ui_manager.c:405
+#: audacious/ui_manager.c:408
 #, fuzzy
 msgid "_Quit"
 msgstr "/_Išeiti"
 
-#: audacious/ui_manager.c:406
+#: audacious/ui_manager.c:409
 #, fuzzy
 msgid "Quit Audacious"
 msgstr "Apie MPEG audio įskiepį"
 
-#: audacious/ui_manager.c:408 audacious/ui_manager.c:409
+#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
 #, fuzzy
 msgid "Set A-B"
 msgstr "/Žymėti visus"
 
-#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
+#: audacious/ui_manager.c:414 audacious/ui_manager.c:415
 #, fuzzy
 msgid "Clear A-B"
 msgstr "/Išvalyti eilę"
 
-#: audacious/ui_manager.c:414 audacious/ui_manager.c:415
+#: audacious/ui_manager.c:417 audacious/ui_manager.c:418
 #, fuzzy
 msgid "Jump to Playlist Start"
 msgstr "/Šokti į grojaraščio pradžią"
 
-#: audacious/ui_manager.c:417 audacious/ui_manager.c:418
+#: audacious/ui_manager.c:420 audacious/ui_manager.c:421
 #, fuzzy
 msgid "Jump to File"
 msgstr "/Šokti į bylą"
 
-#: audacious/ui_manager.c:423
+#: audacious/ui_manager.c:426
 #, fuzzy
 msgid "Queue Toggle"
 msgstr "/Perjungti eilės rodomumą"
 
-#: audacious/ui_manager.c:424
+#: audacious/ui_manager.c:427
 msgid "Enables/disables the entry in the playlist's queue."
 msgstr ""
 
-#: audacious/ui_manager.c:431
+#: audacious/ui_manager.c:434
 #, fuzzy
 msgid "Load"
 msgstr "/Įkelti"
 
-#: audacious/ui_manager.c:432
+#: audacious/ui_manager.c:435
 #, fuzzy
 msgid "Import"
 msgstr "/Importuoti"
 
-#: audacious/ui_manager.c:433
+#: audacious/ui_manager.c:436
 #, fuzzy
 msgid "Save"
 msgstr "/Išsaugoti"
 
-#: audacious/ui_manager.c:434
+#: audacious/ui_manager.c:437
 #, fuzzy
 msgid "Delete"
 msgstr "/Šalinti"
 
-#: audacious/ui_manager.c:436 audacious/ui_manager.c:457
-#: audacious/ui_manager.c:472
+#: audacious/ui_manager.c:439 audacious/ui_manager.c:460
+#: audacious/ui_manager.c:475
 msgid "Preset"
 msgstr "Šablonas"
 
-#: audacious/ui_manager.c:437
+#: audacious/ui_manager.c:440
 msgid "Load preset"
 msgstr "Įkelti šabloną"
 
-#: audacious/ui_manager.c:439 audacious/ui_manager.c:460
-#: audacious/ui_manager.c:475
+#: audacious/ui_manager.c:442 audacious/ui_manager.c:463
+#: audacious/ui_manager.c:478
 #, fuzzy
 msgid "Auto-load preset"
 msgstr "/Įkelti/Automatiškai įsikeliantį šabloną"
 
-#: audacious/ui_manager.c:440
+#: audacious/ui_manager.c:443
 #, fuzzy
 msgid "Load auto-load preset"
 msgstr "/Įkelti/Automatiškai įsikeliantį šabloną"
 
-#: audacious/ui_manager.c:442 audacious/ui_manager.c:463
+#: audacious/ui_manager.c:445 audacious/ui_manager.c:466
 msgid "Default"
 msgstr "Įprastasis"
 
-#: audacious/ui_manager.c:443
+#: audacious/ui_manager.c:446
 msgid "Load default preset into equalizer"
 msgstr ""
 
-#: audacious/ui_manager.c:445
+#: audacious/ui_manager.c:448
 #, fuzzy
 msgid "Zero"
 msgstr "Retro"
 
-#: audacious/ui_manager.c:446
+#: audacious/ui_manager.c:449
 #, fuzzy
 msgid "Set equalizer preset levels to zero"
 msgstr "Išsaugoti ekvalaizerio šabloną"
 
-#: audacious/ui_manager.c:448
+#: audacious/ui_manager.c:451
 #, fuzzy
 msgid "From file"
 msgstr "/Įkelti/Iš bylos"
 
-#: audacious/ui_manager.c:449
+#: audacious/ui_manager.c:452
 #, fuzzy
 msgid "Load preset from file"
 msgstr "Įkelti šabloną"
 
-#: audacious/ui_manager.c:451
+#: audacious/ui_manager.c:454
 #, fuzzy
 msgid "From WinAMP EQF file"
 msgstr "/Įkelti/Iš WinAMP EQF bylos"
 
-#: audacious/ui_manager.c:452
+#: audacious/ui_manager.c:455
 #, fuzzy
 msgid "Load preset from WinAMP EQF file"
 msgstr "/Įkelti/Iš WinAMP EQF bylos"
 
-#: audacious/ui_manager.c:454
+#: audacious/ui_manager.c:457
 #, fuzzy
 msgid "WinAMP Presets"
 msgstr "/Įmportuoti/WinAMP šablonus"
 
-#: audacious/ui_manager.c:455
+#: audacious/ui_manager.c:458
 #, fuzzy
 msgid "Import WinAMP presets"
 msgstr "/Įmportuoti/WinAMP šablonus"
 
-#: audacious/ui_manager.c:458
+#: audacious/ui_manager.c:461
 msgid "Save preset"
 msgstr "Išsaugoti šabloną"
 
-#: audacious/ui_manager.c:461
+#: audacious/ui_manager.c:464
 #, fuzzy
 msgid "Save auto-load preset"
 msgstr "/Išsaugoti/Automatiškai įsikeliantį šabloną"
 
-#: audacious/ui_manager.c:464
+#: audacious/ui_manager.c:467
 #, fuzzy
 msgid "Save default preset"
 msgstr "Išsaugoti automatiškai įsikeliantį šabloną"
 
-#: audacious/ui_manager.c:466
+#: audacious/ui_manager.c:469
 #, fuzzy
 msgid "To file"
 msgstr "/Įkelti/Iš bylos"
 
-#: audacious/ui_manager.c:467
+#: audacious/ui_manager.c:470
 #, fuzzy
 msgid "Save preset to file"
 msgstr "Išsaugoti šabloną"
 
-#: audacious/ui_manager.c:469
+#: audacious/ui_manager.c:472
 #, fuzzy
 msgid "To WinAMP EQF file"
 msgstr "/Išsaugoti/WinAMP EQF bylon"
 
-#: audacious/ui_manager.c:470
+#: audacious/ui_manager.c:473
 #, fuzzy
 msgid "Save preset to WinAMP EQF file"
 msgstr "/Išsaugoti/WinAMP EQF bylon"
 
-#: audacious/ui_manager.c:473
+#: audacious/ui_manager.c:476
 msgid "Delete preset"
 msgstr "Pašalinti šabloną"
 
-#: audacious/ui_manager.c:476
+#: audacious/ui_manager.c:479
 #, fuzzy
 msgid "Delete auto-load preset"
 msgstr "/Šalinti/Automatiškai įsikeliantį šabloną"
@@ -1450,6 +1450,11 @@ msgstr ""
 #: audacious/ui_fileinfo.c:336
 msgid "Track Information Popup"
 msgstr ""
+
+#: audacious/ui_playlist.c:495
+#, fuzzy
+msgid "Search entries in active playlist"
+msgstr "Grojaraštyje rodyti takelio numerį"
 
 #: audacious/ui_playlist.c:501
 msgid ""

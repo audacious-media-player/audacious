@@ -492,7 +492,7 @@ playlistwin_select_search(void)
 
     /* create dialog */
     searchdlg_win = gtk_dialog_new_with_buttons(
-      "Search entries in active playlist" , GTK_WINDOW(mainwin) ,
+      _("Search entries in active playlist") , GTK_WINDOW(mainwin) ,
       GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT ,
       GTK_STOCK_CANCEL , GTK_RESPONSE_REJECT , GTK_STOCK_OK , GTK_RESPONSE_ACCEPT , NULL );
     /* help text and logo */

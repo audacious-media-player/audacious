@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.3\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-04 09:46-0600\n"
+"POT-Creation-Date: 2007-01-04 15:53-0600\n"
 "PO-Revision-Date: 2006-12-30 22:38+0400\n"
 "Last-Translator: Alexandr Orlov <alxorlov@pochta.ru>\n"
 "Language-Team: none\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: audacious/ui_about.c:123 audacious/ui_credits.c:323
-#: audacious/ui_manager.c:393 audacious/ui_manager.c:394
+#: audacious/ui_manager.c:396 audacious/ui_manager.c:397
 msgid "About Audacious"
 msgstr "Об Audacious"
 
@@ -467,8 +467,8 @@ msgstr "стерео"
 msgid "mono"
 msgstr "моно"
 
-#: audacious/ui_main.c:1387 audacious/ui_manager.c:420
-#: audacious/ui_manager.c:421
+#: audacious/ui_main.c:1387 audacious/ui_manager.c:423
+#: audacious/ui_manager.c:424
 msgid "Jump to Time"
 msgstr "Перескочить на время"
 
@@ -856,20 +856,20 @@ msgid "Saves the selected playlist to the default location."
 msgstr "Сохраняет выбранный список в список по-умолчанию."
 
 #: audacious/ui_manager.c:234
-msgid "List Manager"
-msgstr "Управление списками"
-
-#: audacious/ui_manager.c:235
-msgid "Opens the playlist manager."
-msgstr "Открывает окно управления списками."
-
-#: audacious/ui_manager.c:238
 msgid "Refresh List"
 msgstr "Обновить список"
 
-#: audacious/ui_manager.c:239
+#: audacious/ui_manager.c:235
 msgid "Refreshes metadata associated with a playlist entry."
 msgstr "Обновляет данные для каждого списка воспроизведения."
+
+#: audacious/ui_manager.c:238
+msgid "List Manager"
+msgstr "Управление списками"
+
+#: audacious/ui_manager.c:239
+msgid "Opens the playlist manager."
+msgstr "Открывает окно управления списками."
 
 #: audacious/ui_manager.c:249
 msgid "Add CD..."
@@ -1070,189 +1070,189 @@ msgstr "Сортирует список по названию в списке."
 msgid "Sort Selected"
 msgstr "Сортировать выбранные"
 
-#: audacious/ui_manager.c:390
+#: audacious/ui_manager.c:390 audacious/ui_manager.c:393
 msgid "View Track Details"
 msgstr "Информация о записи"
 
-#: audacious/ui_manager.c:391
+#: audacious/ui_manager.c:391 audacious/ui_manager.c:394
 #, fuzzy
 msgid "View track details"
 msgstr "Информация о записи"
 
-#: audacious/ui_manager.c:396
+#: audacious/ui_manager.c:399
 #, fuzzy
 msgid "Play File"
 msgstr "/Воспроизвести файл"
 
-#: audacious/ui_manager.c:397
+#: audacious/ui_manager.c:400
 #, fuzzy
 msgid "Load and play a file"
 msgstr "Загружать информацию о песнях из файлов и списков воспроизведения"
 
-#: audacious/ui_manager.c:399
+#: audacious/ui_manager.c:402
 #, fuzzy
 msgid "Play Location"
 msgstr "/Открыть адрес"
 
-#: audacious/ui_manager.c:400
+#: audacious/ui_manager.c:403
 msgid "Play media from the selected location"
 msgstr ""
 
-#: audacious/ui_manager.c:402
+#: audacious/ui_manager.c:405
 #, fuzzy
 msgid "Preferences"
 msgstr "/Настройки"
 
-#: audacious/ui_manager.c:403
+#: audacious/ui_manager.c:406
 #, fuzzy
 msgid "Open preferences window"
 msgstr "Окно настроек"
 
-#: audacious/ui_manager.c:405
+#: audacious/ui_manager.c:408
 #, fuzzy
 msgid "_Quit"
 msgstr "/_Выход"
 
-#: audacious/ui_manager.c:406
+#: audacious/ui_manager.c:409
 #, fuzzy
 msgid "Quit Audacious"
 msgstr "Об Audacious"
 
-#: audacious/ui_manager.c:408 audacious/ui_manager.c:409
+#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
 #, fuzzy
 msgid "Set A-B"
 msgstr "/Поставить метку A-B"
 
-#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
+#: audacious/ui_manager.c:414 audacious/ui_manager.c:415
 #, fuzzy
 msgid "Clear A-B"
 msgstr "/Убрать метки A-B"
 
-#: audacious/ui_manager.c:414 audacious/ui_manager.c:415
+#: audacious/ui_manager.c:417 audacious/ui_manager.c:418
 #, fuzzy
 msgid "Jump to Playlist Start"
 msgstr "/Перейти на первую песню в списке"
 
-#: audacious/ui_manager.c:417 audacious/ui_manager.c:418
+#: audacious/ui_manager.c:420 audacious/ui_manager.c:421
 #, fuzzy
 msgid "Jump to File"
 msgstr "/Перескочить на файл"
 
-#: audacious/ui_manager.c:423
+#: audacious/ui_manager.c:426
 msgid "Queue Toggle"
 msgstr "В очередь"
 
-#: audacious/ui_manager.c:424
+#: audacious/ui_manager.c:427
 msgid "Enables/disables the entry in the playlist's queue."
 msgstr "Добавляет/исключает элемент списка из очереди."
 
-#: audacious/ui_manager.c:431
+#: audacious/ui_manager.c:434
 msgid "Load"
 msgstr "Загрузить"
 
-#: audacious/ui_manager.c:432
+#: audacious/ui_manager.c:435
 msgid "Import"
 msgstr "Импортировать"
 
-#: audacious/ui_manager.c:433
+#: audacious/ui_manager.c:436
 msgid "Save"
 msgstr "Сохранить"
 
-#: audacious/ui_manager.c:434
+#: audacious/ui_manager.c:437
 msgid "Delete"
 msgstr "Удалить"
 
-#: audacious/ui_manager.c:436 audacious/ui_manager.c:457
-#: audacious/ui_manager.c:472
+#: audacious/ui_manager.c:439 audacious/ui_manager.c:460
+#: audacious/ui_manager.c:475
 msgid "Preset"
 msgstr "Предустановку"
 
-#: audacious/ui_manager.c:437
+#: audacious/ui_manager.c:440
 msgid "Load preset"
 msgstr "Загрузка предустановки"
 
-#: audacious/ui_manager.c:439 audacious/ui_manager.c:460
-#: audacious/ui_manager.c:475
+#: audacious/ui_manager.c:442 audacious/ui_manager.c:463
+#: audacious/ui_manager.c:478
 msgid "Auto-load preset"
 msgstr "Автозагружаемую предустановку"
 
-#: audacious/ui_manager.c:440
+#: audacious/ui_manager.c:443
 msgid "Load auto-load preset"
 msgstr "Загрузить aвтозагружаемую предустановку"
 
-#: audacious/ui_manager.c:442 audacious/ui_manager.c:463
+#: audacious/ui_manager.c:445 audacious/ui_manager.c:466
 msgid "Default"
 msgstr "По-умолчанию"
 
-#: audacious/ui_manager.c:443
+#: audacious/ui_manager.c:446
 msgid "Load default preset into equalizer"
 msgstr "Загрузить стандартную предустановку в эквалайзер"
 
-#: audacious/ui_manager.c:445
+#: audacious/ui_manager.c:448
 msgid "Zero"
 msgstr "Обнулить"
 
-#: audacious/ui_manager.c:446
+#: audacious/ui_manager.c:449
 msgid "Set equalizer preset levels to zero"
 msgstr "Установить все уровни на ноль"
 
-#: audacious/ui_manager.c:448
+#: audacious/ui_manager.c:451
 msgid "From file"
 msgstr "Из файла"
 
-#: audacious/ui_manager.c:449
+#: audacious/ui_manager.c:452
 msgid "Load preset from file"
 msgstr "Загрузить предустановку из файла"
 
-#: audacious/ui_manager.c:451
+#: audacious/ui_manager.c:454
 msgid "From WinAMP EQF file"
 msgstr "Из файла WinAMP EQF"
 
-#: audacious/ui_manager.c:452
+#: audacious/ui_manager.c:455
 msgid "Load preset from WinAMP EQF file"
 msgstr "Загрузить предустановку из файла WinAMP EQF"
 
-#: audacious/ui_manager.c:454
+#: audacious/ui_manager.c:457
 msgid "WinAMP Presets"
 msgstr "Предустановки из WinAMP"
 
-#: audacious/ui_manager.c:455
+#: audacious/ui_manager.c:458
 msgid "Import WinAMP presets"
 msgstr "Импортировать предустановки из WinAMP"
 
-#: audacious/ui_manager.c:458
+#: audacious/ui_manager.c:461
 msgid "Save preset"
 msgstr "Сохранить предустановку"
 
-#: audacious/ui_manager.c:461
+#: audacious/ui_manager.c:464
 msgid "Save auto-load preset"
 msgstr "Сохранить автозагружаемую предустановку"
 
-#: audacious/ui_manager.c:464
+#: audacious/ui_manager.c:467
 msgid "Save default preset"
 msgstr "Сохранить предустановку по-умолчанию"
 
-#: audacious/ui_manager.c:466
+#: audacious/ui_manager.c:469
 msgid "To file"
 msgstr "В файл"
 
-#: audacious/ui_manager.c:467
+#: audacious/ui_manager.c:470
 msgid "Save preset to file"
 msgstr "Сохранить предустановку в файл"
 
-#: audacious/ui_manager.c:469
+#: audacious/ui_manager.c:472
 msgid "To WinAMP EQF file"
 msgstr "В файл WinAMP EQF"
 
-#: audacious/ui_manager.c:470
+#: audacious/ui_manager.c:473
 msgid "Save preset to WinAMP EQF file"
 msgstr "Сохранить в файл WinAMP EQF"
 
-#: audacious/ui_manager.c:473
+#: audacious/ui_manager.c:476
 msgid "Delete preset"
 msgstr "Удалить предустановку"
 
-#: audacious/ui_manager.c:476
+#: audacious/ui_manager.c:479
 msgid "Delete auto-load preset"
 msgstr "Удалить автозагружаемую предустановку"
 
@@ -1358,6 +1358,10 @@ msgstr "Окно информации о дорожке"
 #: audacious/ui_fileinfo.c:336
 msgid "Track Information Popup"
 msgstr "Всплывающее информационное окно"
+
+#: audacious/ui_playlist.c:495
+msgid "Search entries in active playlist"
+msgstr "Поиск элементов в текущем списке"
 
 #: audacious/ui_playlist.c:501
 msgid ""
@@ -2261,6 +2265,3 @@ msgstr "%{n:...%}: Отображать \"...\", когда элемент %n п
 
 #~ msgid "Displays track information."
 #~ msgstr "Показывает информацию о записи."
-
-#~ msgid "Search entries in active playlist"
-#~ msgstr "Поиск элементов в текущем списке"

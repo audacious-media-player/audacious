@@ -1,3 +1,10 @@
+2007-01-04 16:46:19 +0000  Giacomo Lozito <james@develia.org>
+  revision [3541]
+  - in playlist_fileinfo(), try to find a decoder for the selected entry before falling back to default info window
+  trunk/audacious/playlist.c |    3 +++
+  1 file changed, 3 insertions(+)
+
+
 2007-01-04 16:11:28 +0000  Giacomo Lozito <james@develia.org>
   revision [3539]
   - namespace for playlist menus (part 3, hopefully the last); separated concepts and actions for current_track_info and playlist_track_info, the second still needs some work
