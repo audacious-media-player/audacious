@@ -1,3 +1,10 @@
+2007-01-04 13:35:15 +0000  Alexandr Orlov <alxorlov@pochta.ru>
+  revision [3529]
+  Update russian translation
+  trunk/po/ru.po |  454 +++++++++++++++++----------------------------------------
+  1 file changed, 141 insertions(+), 313 deletions(-)
+
+
 2007-01-04 13:29:13 +0000  Giacomo Lozito <james@develia.org>
   revision [3527]
   - given some decent namespacing to playlist menus (part 1); removed last references to obsolete mainwin_accel

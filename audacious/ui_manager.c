@@ -27,9 +27,10 @@
 /* TODO ui_main.h is only included because ui_manager.c needs the values of
    TimerMode enum; move that enum elsewhere so we can get rid of this include */
 #include "ui_main.h"
+/* we need this to define values of visualization radio-actions */
+#include "widgets/widgetcore.h"
 
 #include "icons-stock.h"
-#include "widgets/widgetcore.h"
 
 
 static GtkUIManager *ui_manager;
@@ -244,140 +245,140 @@ static GtkActionEntry action_entries_view[] = {
 	{ "view", NULL, "View" }
 };
 
-static GtkActionEntry action_entries_add[] = {
-        { "add cd", GTK_STOCK_CDROM, N_("Add CD..."), "<Shift>C",
+static GtkActionEntry action_entries_playlist_add[] = {
+        { "playlist add cd", GTK_STOCK_CDROM, N_("Add CD..."), "<Shift>C",
           N_("Adds a CD to the playlist."),
           G_CALLBACK(action_add_cd) },
 
-        { "add url", GTK_STOCK_NETWORK, N_("Add Internet Address..."), "<Ctrl>H",
+        { "playlist add url", GTK_STOCK_NETWORK, N_("Add Internet Address..."), "<Ctrl>H",
           N_("Adds a remote track to the playlist."),
           G_CALLBACK(action_add_url) },
 
-        { "add files", GTK_STOCK_ADD, N_("Add Files..."), "F",
+        { "playlist add files", GTK_STOCK_ADD, N_("Add Files..."), "F",
           N_("Adds files to the playlist."),
           G_CALLBACK(action_add_files) },
 };
 
-static GtkActionEntry action_entries_select[] = {
-        { "search and select", GTK_STOCK_FIND, N_("Search and Select"), "<Ctrl>F",
+static GtkActionEntry action_entries_playlist_select[] = {
+        { "playlist search and select", GTK_STOCK_FIND, N_("Search and Select"), "<Ctrl>F",
           N_("Searches the playlist and selects playlist entries based on specific criteria."),
           G_CALLBACK(action_search_and_select) },
 
-        { "invert selection", AUD_STOCK_SELECTINVERT , N_("Invert Selection"), NULL,
+        { "playlist invert selection", AUD_STOCK_SELECTINVERT , N_("Invert Selection"), NULL,
           N_("Inverts the selected and unselected entries."),
           G_CALLBACK(action_invert_selection) },
 
-        { "select all", AUD_STOCK_SELECTALL , N_("Select All"), "<Ctrl>A",
+        { "playlist select all", AUD_STOCK_SELECTALL , N_("Select All"), "<Ctrl>A",
           N_("Selects all of the playlist entries."),
           G_CALLBACK(action_select_all) },
 
-        { "select none", AUD_STOCK_SELECTNONE , N_("Select None"), "<Shift><Ctrl>A",
+        { "playlist select none", AUD_STOCK_SELECTNONE , N_("Select None"), "<Shift><Ctrl>A",
           N_("Deselects all of the playlist entries."),
           G_CALLBACK(action_select_none) },
 };
 
-static GtkActionEntry action_entries_delete[] = {
-	{ "clear queue", GTK_STOCK_REMOVE, N_("Clear Queue"), "<Shift>Q",
+static GtkActionEntry action_entries_playlist_delete[] = {
+	{ "playlist clear queue", GTK_STOCK_REMOVE, N_("Clear Queue"), "<Shift>Q",
 	  N_("Clears the queue associated with this playlist."),
 	  G_CALLBACK(action_clear_queue) },
 
-	{ "remove unavailable", AUD_STOCK_REMOVEUNAVAIL , N_("Remove Unavailable Files"), NULL,
+	{ "playlist remove unavailable", AUD_STOCK_REMOVEUNAVAIL , N_("Remove Unavailable Files"), NULL,
 	  N_("Removes unavailable files from the playlist."),
 	  G_CALLBACK(action_remove_unavailable) },
 
-	{ "remove duplicates menu", AUD_STOCK_REMOVEDUPS , N_("Remove Duplicates") },
+	{ "playlist remove dups menu", AUD_STOCK_REMOVEDUPS , N_("Remove Duplicates") },
 
-	{ "remove by title", AUD_STOCK_REMOVEDUPS , N_("By Title"), NULL,
+	{ "playlist remove dups by title", AUD_STOCK_REMOVEDUPS , N_("By Title"), NULL,
 	  N_("Removes duplicate entries from the playlist by title."),
 	  G_CALLBACK(action_remove_dupes_by_title) },
 
-	{ "remove by filename", AUD_STOCK_REMOVEDUPS , N_("By Filename"), NULL, 
+	{ "playlist remove dups by filename", AUD_STOCK_REMOVEDUPS , N_("By Filename"), NULL, 
 	  N_("Removes duplicate entries from the playlist by filename."),
 	  G_CALLBACK(action_remove_dupes_by_filename) },
 
-	{ "remove by full path", AUD_STOCK_REMOVEDUPS , N_("By Path + Filename"), NULL, 
+	{ "playlist remove dups by full path", AUD_STOCK_REMOVEDUPS , N_("By Path + Filename"), NULL, 
 	  N_("Removes duplicate entries from the playlist by their full path."),
 	  G_CALLBACK(action_remove_dupes_by_full_path) },
 
-	{ "remove all", GTK_STOCK_CLEAR, N_("Remove All"), NULL, 
+	{ "playlist remove all", GTK_STOCK_CLEAR, N_("Remove All"), NULL, 
 	  N_("Removes all entries from the playlist."),
 	  G_CALLBACK(action_remove_all) },
 
-	{ "remove unselected", GTK_STOCK_REMOVE, N_("Remove Unselected"), NULL,
+	{ "playlist remove unselected", GTK_STOCK_REMOVE, N_("Remove Unselected"), NULL,
 	  N_("Remove unselected entries from the playlist."),
 	  G_CALLBACK(action_remove_unselected) },
 
-	{ "remove selected", GTK_STOCK_REMOVE, N_("Remove Selected"), "Delete", 
+	{ "playlist remove selected", GTK_STOCK_REMOVE, N_("Remove Selected"), "Delete", 
 	  N_("Remove selected entries from the playlist."),
 	  G_CALLBACK(action_remove_selected) },
 };
 
-static GtkActionEntry action_entries_sort[] = {
-	{ "randomize list", AUD_STOCK_RANDOMIZEPL , N_("Randomize List"), "<Ctrl><Shift>R",
+static GtkActionEntry action_entries_playlist_sort[] = {
+	{ "playlist randomize list", AUD_STOCK_RANDOMIZEPL , N_("Randomize List"), "<Ctrl><Shift>R",
 	  N_("Randomizes the playlist."),
 	  G_CALLBACK(action_randomize_list) },
 
-	{ "reverse list", AUD_STOCK_INVERTPL , N_("Reverse List"), NULL,
+	{ "playlist reverse list", AUD_STOCK_INVERTPL , N_("Reverse List"), NULL,
 	  N_("Reverses the playlist."),
 	  G_CALLBACK(action_reverse_list) },
 
-	{ "sort menu", AUD_STOCK_SORTBYTITLE , N_("Sort List") },
+	{ "playlist sort menu", AUD_STOCK_SORTBYTITLE , N_("Sort List") },
 
-	{ "sort by title", AUD_STOCK_SORTBYTITLE , N_("By Title"), NULL,
+	{ "playlist sort by title", AUD_STOCK_SORTBYTITLE , N_("By Title"), NULL,
 	  N_("Sorts the list by title."),
 	  G_CALLBACK(action_sort_by_title) },
 
-	{ "sort by artist", AUD_STOCK_SORTBYARTIST , N_("By Artist"), NULL,
+	{ "playlist sort by artist", AUD_STOCK_SORTBYARTIST , N_("By Artist"), NULL,
 	  N_("Sorts the list by artist."),
 	  G_CALLBACK(action_sort_by_artist) },
 
-	{ "sort by filename", AUD_STOCK_SORTBYFILENAME , N_("By Filename"), NULL,
+	{ "playlist sort by filename", AUD_STOCK_SORTBYFILENAME , N_("By Filename"), NULL,
 	  N_("Sorts the list by filename."),
 	  G_CALLBACK(action_sort_by_filename) },
 
-	{ "sort by full path", AUD_STOCK_SORTBYPATHFILE , N_("By Path + Filename"), NULL,
+	{ "playlist sort by full path", AUD_STOCK_SORTBYPATHFILE , N_("By Path + Filename"), NULL,
 	  N_("Sorts the list by full pathname."),
 	  G_CALLBACK(action_sort_by_full_path) },
 
-	{ "sort by date", AUD_STOCK_SORTBYARTIST , N_("By Date"), NULL,
+	{ "playlist sort by date", AUD_STOCK_SORTBYARTIST , N_("By Date"), NULL,
 	  N_("Sorts the list by modification time."),
 	  G_CALLBACK(action_sort_by_date) },
 
-	{ "sort by track number", AUD_STOCK_SORTBYFILENAME , N_("By Track Number"), NULL,
+	{ "playlist sort by track number", AUD_STOCK_SORTBYFILENAME , N_("By Track Number"), NULL,
 	  N_("Sorts the list by track number."),
 	  G_CALLBACK(action_sort_by_track_number) },
 
-	{ "sort by playlist entry", AUD_STOCK_SORTBYPATHFILE , N_("By Playlist Entry"), NULL,
+	{ "playlist sort by playlist entry", AUD_STOCK_SORTBYPATHFILE , N_("By Playlist Entry"), NULL,
 	  N_("Sorts the list by playlist entry."),
 	  G_CALLBACK(action_sort_by_playlist_entry) },
 
-	{ "sort selected menu", AUD_STOCK_SORTBYTITLE , N_("Sort Selected") },
+	{ "playlist sort selected menu", AUD_STOCK_SORTBYTITLE , N_("Sort Selected") },
 
-	{ "sort selected by title", AUD_STOCK_SORTBYTITLE , N_("By Title"), NULL,
+	{ "playlist sort selected by title", AUD_STOCK_SORTBYTITLE , N_("By Title"), NULL,
 	  N_("Sorts the list by title."),
 	  G_CALLBACK(action_sort_selected_by_title) },
 
-	{ "sort selected by artist", AUD_STOCK_SORTBYARTIST, N_("By Artist"), NULL,
+	{ "playlist sort selected by artist", AUD_STOCK_SORTBYARTIST, N_("By Artist"), NULL,
 	  N_("Sorts the list by artist."),
 	  G_CALLBACK(action_sort_selected_by_artist) },
 
-	{ "sort selected by filename", AUD_STOCK_SORTBYFILENAME , N_("By Filename"), NULL,
+	{ "playlist sort selected by filename", AUD_STOCK_SORTBYFILENAME , N_("By Filename"), NULL,
 	  N_("Sorts the list by filename."),
 	  G_CALLBACK(action_sort_selected_by_filename) },
 
-	{ "sort selected by full path", AUD_STOCK_SORTBYPATHFILE , N_("By Path + Filename"), NULL,
+	{ "playlist sort selected by full path", AUD_STOCK_SORTBYPATHFILE , N_("By Path + Filename"), NULL,
 	  N_("Sorts the list by full pathname."),
 	  G_CALLBACK(action_sort_selected_by_full_path) },
 
-	{ "sort selected by date", AUD_STOCK_SORTBYARTIST , N_("By Date"), NULL,
+	{ "playlist sort selected by date", AUD_STOCK_SORTBYARTIST , N_("By Date"), NULL,
 	  N_("Sorts the list by modification time."),
 	  G_CALLBACK(action_sort_selected_by_date) },
 
-	{ "sort selected by track number", AUD_STOCK_SORTBYFILENAME , N_("By Track Number"), NULL,
+	{ "playlist sort selected by track number", AUD_STOCK_SORTBYFILENAME , N_("By Track Number"), NULL,
 	  N_("Sorts the list by track number."),
 	  G_CALLBACK(action_sort_selected_by_track_number) },
 
-	{ "sort selected by playlist entry", AUD_STOCK_SORTBYPATHFILE, N_("By Playlist Entry"), NULL,
+	{ "playlist sort selected by playlist entry", AUD_STOCK_SORTBYPATHFILE, N_("By Playlist Entry"), NULL,
 	  N_("Sorts the list by playlist entry."),
 	  G_CALLBACK(action_sort_selected_by_playlist_entry) },
 };
@@ -574,25 +575,25 @@ ui_manager_init ( void )
     action_group_others , action_entries_others ,
     G_N_ELEMENTS(action_entries_others) , NULL );
 
-  action_group_add = ui_manager_new_action_group("action_add");
+  action_group_playlist_add = ui_manager_new_action_group("action_playlist_add");
   gtk_action_group_add_actions(
-    action_group_add, action_entries_add,
-    G_N_ELEMENTS(action_entries_add), NULL );
+    action_group_playlist_add, action_entries_playlist_add,
+    G_N_ELEMENTS(action_entries_playlist_add), NULL );
 
-  action_group_select = ui_manager_new_action_group("action_select");
+  action_group_playlist_select = ui_manager_new_action_group("action_playlist_select");
   gtk_action_group_add_actions(
-    action_group_select, action_entries_select,
-    G_N_ELEMENTS(action_entries_select), NULL );
+    action_group_playlist_select, action_entries_playlist_select,
+    G_N_ELEMENTS(action_entries_playlist_select), NULL );
 
-  action_group_delete = ui_manager_new_action_group("action_delete");
+  action_group_playlist_delete = ui_manager_new_action_group("action_playlist_delete");
   gtk_action_group_add_actions(
-    action_group_delete, action_entries_delete,
-    G_N_ELEMENTS(action_entries_delete), NULL );
+    action_group_playlist_delete, action_entries_playlist_delete,
+    G_N_ELEMENTS(action_entries_playlist_delete), NULL );
 
-  action_group_sort = ui_manager_new_action_group("action_sort");
+  action_group_playlist_sort = ui_manager_new_action_group("action_playlist_sort");
   gtk_action_group_add_actions(
-    action_group_sort, action_entries_sort,
-    G_N_ELEMENTS(action_entries_sort), NULL );
+    action_group_playlist_sort, action_entries_playlist_sort,
+    G_N_ELEMENTS(action_entries_playlist_sort), NULL );
 
   action_group_equalizer = ui_manager_new_action_group("action_equalizer");
   gtk_action_group_add_actions(
@@ -617,10 +618,10 @@ ui_manager_init ( void )
   gtk_ui_manager_insert_action_group( ui_manager , action_group_visualization , 0 );
   gtk_ui_manager_insert_action_group( ui_manager , action_group_view , 0 );
   gtk_ui_manager_insert_action_group( ui_manager , action_group_others , 0 );
-  gtk_ui_manager_insert_action_group( ui_manager , action_group_add , 0 );
-  gtk_ui_manager_insert_action_group( ui_manager , action_group_select , 0 );
-  gtk_ui_manager_insert_action_group( ui_manager , action_group_delete , 0 );
-  gtk_ui_manager_insert_action_group( ui_manager , action_group_sort , 0 );
+  gtk_ui_manager_insert_action_group( ui_manager , action_group_playlist_add , 0 );
+  gtk_ui_manager_insert_action_group( ui_manager , action_group_playlist_select , 0 );
+  gtk_ui_manager_insert_action_group( ui_manager , action_group_playlist_delete , 0 );
+  gtk_ui_manager_insert_action_group( ui_manager , action_group_playlist_sort , 0 );
   gtk_ui_manager_insert_action_group( ui_manager , action_group_equalizer , 0 );
 
   return;

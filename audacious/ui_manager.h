@@ -52,14 +52,14 @@ GtkActionGroup *radioaction_group_peafoff; /* Peak Falloff */
 GtkActionGroup *radioaction_group_vismode; /* Visualization mode */
 GtkActionGroup *radioaction_group_viewtime; /* View time (remaining/elapsed) */
 GtkActionGroup *action_group_playback;
-GtkActionGroup *action_group_playlist;
 GtkActionGroup *action_group_visualization;
 GtkActionGroup *action_group_view;
 GtkActionGroup *action_group_others;
-GtkActionGroup *action_group_add;
-GtkActionGroup *action_group_select;
-GtkActionGroup *action_group_delete;
-GtkActionGroup *action_group_sort;
+GtkActionGroup *action_group_playlist;
+GtkActionGroup *action_group_playlist_add;
+GtkActionGroup *action_group_playlist_select;
+GtkActionGroup *action_group_playlist_delete;
+GtkActionGroup *action_group_playlist_sort;
 GtkActionGroup *action_group_equalizer;
 
 
