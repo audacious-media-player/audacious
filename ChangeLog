@@ -1,3 +1,11 @@
+2007-01-04 23:37:58 +0000  Strahinja Kustudi <kustodian@gmail.com>
+  revision [3551]
+  Serbian language upadated (once again)
+  trunk/po/sr.po      |   51 ++++++++++++++++++++-------------------------------
+  trunk/po/sr@Latn.po |   45 ++++++++++++++++++---------------------------
+  2 files changed, 38 insertions(+), 58 deletions(-)
+
+
 2007-01-04 23:30:25 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
   revision [3549]
   update copyright notice and make another string translateable

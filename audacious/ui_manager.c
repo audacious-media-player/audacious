@@ -185,7 +185,7 @@ static GtkActionEntry action_entries_playback[] = {
 
 
 static GtkActionEntry action_entries_visualization[] = {
-	{ "visualization", NULL, _("Visualization") },
+	{ "visualization", NULL, N_("Visualization") },
 	{ "vismode", NULL, N_("Visualization Mode") },
 	{ "anamode", NULL, N_("Analyzer Mode") },
 	{ "scomode", NULL, N_("Scope Mode") },
