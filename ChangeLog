@@ -1,3 +1,15 @@
+2007-01-03 23:02:53 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
+  revision [3515]
+  Update libaudacious copyright notices
+  trunk/libaudacious/beepctrl.h   |    5 ++++-
+  trunk/libaudacious/dirbrowser.c |    5 ++++-
+  trunk/libaudacious/dirbrowser.h |    6 ++++--
+  trunk/libaudacious/rcfile.h     |    5 ++++-
+  trunk/libaudacious/urldecode.c  |    5 ++++-
+  trunk/libaudacious/urldecode.h  |    5 ++++-
+  6 files changed, 24 insertions(+), 7 deletions(-)
+
+
 2007-01-03 22:56:40 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
   revision [3513]
   Update audtool's copyright notices

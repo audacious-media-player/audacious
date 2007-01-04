@@ -34,6 +34,7 @@ HEADERS = \
 	main.h \
 	output.h \
 	playlist.h \
+	playlist_container.h \
 	plugin.h \
 	ui_preferences.h \
 	util.h \
