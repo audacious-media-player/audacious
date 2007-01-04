@@ -214,6 +214,9 @@ static GtkActionEntry action_entries_playlist[] = {
 	{ "playlist select previous", GTK_STOCK_MEDIA_PREVIOUS, N_("Select Previous Playlist"), "<Shift><Ctrl>P",
 	  N_("Select Previous Playlist"), G_CALLBACK(action_playlist_prev) },
 
+	{ "playlist delete", GTK_STOCK_DELETE , N_("Delete Playlist"), "<Shift>D",
+	  N_("Delete Playlist"), G_CALLBACK(action_playlist_delete) },
+
         { "playlist load", GTK_STOCK_OPEN, N_("Load List"), "O",
           N_("Loads a playlist file into the selected playlist."), G_CALLBACK(action_load_list) },
 

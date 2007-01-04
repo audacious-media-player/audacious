@@ -75,6 +75,7 @@ void action_playback_stop(void);
 void action_playlist_prev(void);
 void action_playlist_new(void);
 void action_playlist_next(void);
+void action_playlist_delete(void);
 void action_preferences(void);
 void action_quit(void);
 void action_track_info(void);

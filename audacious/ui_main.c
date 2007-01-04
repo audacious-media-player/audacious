@@ -4003,6 +4003,12 @@ action_playlist_next( void )
 }
 
 void
+action_playlist_delete( void )
+{
+  playlist_remove_playlist( playlist_get_active() );
+}
+
+void
 action_preferences( void )
 {
   show_prefs_window();
