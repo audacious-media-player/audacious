@@ -2032,6 +2032,7 @@ action_add_url(void)
     mainwin_show_add_url_window();
 }
 
+/* TODO this is no longer used, remove it
 void
 action_new_list(void)
 {
@@ -2041,6 +2042,33 @@ action_new_list(void)
     playlist_clear(playlist);
     mainwin_clear_song_info();
     mainwin_set_info_text();
+}
+*/
+
+void
+action_playlist_new( void )
+{
+  Playlist *new_pl = playlist_new();
+  playlist_add_playlist(new_pl);
+  playlist_select_playlist(new_pl);
+}
+
+void
+action_playlist_prev( void )
+{
+  playlist_select_prev();
+}
+
+void
+action_playlist_next( void )
+{
+  playlist_select_next();
+}
+
+void
+action_playlist_delete( void )
+{
+  playlist_remove_playlist( playlist_get_active() );
 }
 
 void

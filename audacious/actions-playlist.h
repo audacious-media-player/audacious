@@ -18,12 +18,16 @@
 #ifndef ACTIONS_PLAYLIST_H
 #define ACTIONS_PLAYLIST_H
 
-void action_new_list(void);
 void action_load_list(void);
 void action_save_list(void);
 void action_save_default_list(void);
 void action_open_list_manager(void);
 void action_refresh_list(void);
+
+void action_playlist_prev(void);
+void action_playlist_new(void);
+void action_playlist_next(void);
+void action_playlist_delete(void);
 
 void action_search_and_select(void);
 void action_invert_selection(void);

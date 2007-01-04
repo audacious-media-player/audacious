@@ -1,3 +1,14 @@
+2007-01-04 12:11:21 +0000  Giacomo Lozito <james@develia.org>
+  revision [3521]
+  - added delete playlist action (finally :p)
+  trunk/audacious/actions-mainwin.h |    1 +
+  trunk/audacious/ui/mainwin.ui     |    1 +
+  trunk/audacious/ui/playlist.ui    |    1 +
+  trunk/audacious/ui_main.c         |    6 ++++++
+  trunk/audacious/ui_manager.c      |    3 +++
+  5 files changed, 12 insertions(+)
+
+
 2007-01-04 11:58:58 +0000  Giacomo Lozito <james@develia.org>
   revision [3519]
   - do not create GtkAccelGroup anymore; use ui_manager_get_accel_group to get accelerator groups from ui_manager

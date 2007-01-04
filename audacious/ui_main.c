@@ -3983,32 +3983,6 @@ action_playback_stop( void )
 }
 
 void
-action_playlist_new( void )
-{
-  Playlist *new_pl = playlist_new();
-  playlist_add_playlist(new_pl);
-  playlist_select_playlist(new_pl);
-}
-
-void
-action_playlist_prev( void )
-{
-  playlist_select_prev();
-}
-
-void
-action_playlist_next( void )
-{
-  playlist_select_next();
-}
-
-void
-action_playlist_delete( void )
-{
-  playlist_remove_playlist( playlist_get_active() );
-}
-
-void
 action_preferences( void )
 {
   show_prefs_window();
