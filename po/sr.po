@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sr\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-04 17:12-0600\n"
+"POT-Creation-Date: 2007-01-04 17:23-0600\n"
 "PO-Revision-Date: 2007-01-04 23:46+0100\n"
 "Last-Translator: Strahinja  Kustudić <kustodian@gmail.com>\n"
 "Language-Team: Serbian Cyrillic <kustodian@gmail.com>\n"
@@ -15,6 +15,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#: audacious/ui_about.c:44
+#, fuzzy, c-format
+msgid ""
+"<big><b>Audacious %s</b></big>\n"
+"\n"
+"Copyright (C) 2005-2007 Audacious Development Team"
+msgstr ""
+"<big><b>Аудациоус %s</b></big>\n"
+"Будућност UNIX мултимедије.\n"
+"\n"
+"Сва права задржана, 2005-2006 Аудациоус Развојни Тим\n"
 
 #: audacious/ui_about.c:123 audacious/ui_credits.c:323
 #: audacious/ui_manager.c:387 audacious/ui_manager.c:388
@@ -26,12 +38,12 @@ msgid "Credits"
 msgstr "Заслуге"
 
 #: audacious/ui_credits.c:45
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "The future of UNIX multimedia.\n"
 "\n"
-"Copyright (C) 2005-2006 Audacious Development Team\n"
+"Copyright (C) 2005-2007 Audacious Development Team\n"
 msgstr ""
 "<big><b>Аудациоус %s</b></big>\n"
 "Будућност UNIX мултимедије.\n"

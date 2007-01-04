@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-04 17:12-0600\n"
+"POT-Creation-Date: 2007-01-04 17:23-0600\n"
 "PO-Revision-Date: 2006-09-30 16:57+0000\n"
 "Last-Translator: Gustavo D. Vranjes <gvranjes@nerdshack.com>\n"
 "Language-Team:  <es@li.org>\n"
@@ -20,6 +20,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.2\n"
+
+#: audacious/ui_about.c:44
+#, fuzzy, c-format
+msgid ""
+"<big><b>Audacious %s</b></big>\n"
+"\n"
+"Copyright (C) 2005-2007 Audacious Development Team"
+msgstr ""
+"<big><b>Audacious %s</b></big>\n"
+"El futuro de  multimedia en UNIX.\n"
+"\n"
+"Copyright (C) 2005-2006 Equipo de Desarrollo de Audacious \n"
 
 #: audacious/ui_about.c:123 audacious/ui_credits.c:323
 #: audacious/ui_manager.c:387 audacious/ui_manager.c:388
@@ -31,12 +43,12 @@ msgid "Credits"
 msgstr "Créditos:"
 
 #: audacious/ui_credits.c:45
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "The future of UNIX multimedia.\n"
 "\n"
-"Copyright (C) 2005-2006 Audacious Development Team\n"
+"Copyright (C) 2005-2007 Audacious Development Team\n"
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
 "El futuro de  multimedia en UNIX.\n"

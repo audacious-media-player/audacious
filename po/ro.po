@@ -8,13 +8,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.2.1\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-04 17:12-0600\n"
+"POT-Creation-Date: 2007-01-04 17:23-0600\n"
 "PO-Revision-Date: 2006-12-23 21:24+0200\n"
 "Last-Translator: Daniel Patriche <m4st3rth0r@yahoo.com>\n"
 "Language-Team: Romanian <m4st3rth0r@yahoo.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: audacious/ui_about.c:44
+#, fuzzy, c-format
+msgid ""
+"<big><b>Audacious %s</b></big>\n"
+"\n"
+"Copyright (C) 2005-2007 Audacious Development Team"
+msgstr ""
+"<big><b>Audacious %s</b></big>\n"
+"Viitorul Multimedia in Unix.\n"
+"\n"
+"Copyright (C) 2005-2006 Echipa de dezvoltare Audacious \n"
 
 #: audacious/ui_about.c:123 audacious/ui_credits.c:323
 #: audacious/ui_manager.c:387 audacious/ui_manager.c:388
@@ -26,12 +38,12 @@ msgid "Credits"
 msgstr "Credite"
 
 #: audacious/ui_credits.c:45
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "The future of UNIX multimedia.\n"
 "\n"
-"Copyright (C) 2005-2006 Audacious Development Team\n"
+"Copyright (C) 2005-2007 Audacious Development Team\n"
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
 "Viitorul Multimedia in Unix.\n"

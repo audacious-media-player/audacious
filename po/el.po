@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.1.0\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-04 17:12-0600\n"
+"POT-Creation-Date: 2007-01-04 17:23-0600\n"
 "PO-Revision-Date: 2006-07-18 20:56+0200\n"
 "Last-Translator: Stavros Giannouris <stavrosg2002@freemail.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -17,6 +17,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,-1,1,-1\n"
+
+#: audacious/ui_about.c:44
+#, fuzzy, c-format
+msgid ""
+"<big><b>Audacious %s</b></big>\n"
+"\n"
+"Copyright (C) 2005-2007 Audacious Development Team"
+msgstr ""
+"<big><b>Audacious %s</b></big>\n"
+"Αναπαράγοντας πολυμέσα στο UNIX.\n"
+"\n"
+"Copyright (C) 2005 Η ομάδα ανάπτυξης του Audacious\n"
 
 #: audacious/ui_about.c:123 audacious/ui_credits.c:323
 #: audacious/ui_manager.c:387 audacious/ui_manager.c:388
@@ -28,12 +40,12 @@ msgid "Credits"
 msgstr "Μνεία"
 
 #: audacious/ui_credits.c:45
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "The future of UNIX multimedia.\n"
 "\n"
-"Copyright (C) 2005-2006 Audacious Development Team\n"
+"Copyright (C) 2005-2007 Audacious Development Team\n"
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
 "Αναπαράγοντας πολυμέσα στο UNIX.\n"

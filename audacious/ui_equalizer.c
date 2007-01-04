@@ -1715,7 +1715,7 @@ action_equ_save_auto_preset(void)
 void
 action_equ_save_default_preset(void)
 {
-    equalizer_presets = equalizerwin_save_preset(equalizer_presets, "Default",
+    equalizer_presets = equalizerwin_save_preset(equalizer_presets, Q_("Default"),
                                                  "eq.preset");
 }
 

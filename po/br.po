@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.6\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-04 17:12-0600\n"
+"POT-Creation-Date: 2007-01-04 17:23-0600\n"
 "PO-Revision-Date: 2004-08-25 17:10+0200\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandrakesoft.com>\n"
 "Language-Team: Brezhoneg <LL@li.org>\n"
@@ -14,6 +14,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "NPOT-Creation-Date: 2003-08-08 19:35+0200\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
+
+#: audacious/ui_about.c:44
+#, c-format
+msgid ""
+"<big><b>Audacious %s</b></big>\n"
+"\n"
+"Copyright (C) 2005-2007 Audacious Development Team"
+msgstr ""
 
 #: audacious/ui_about.c:123 audacious/ui_credits.c:323
 #: audacious/ui_manager.c:387 audacious/ui_manager.c:388
@@ -31,7 +39,7 @@ msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "The future of UNIX multimedia.\n"
 "\n"
-"Copyright (C) 2005-2006 Audacious Development Team\n"
+"Copyright (C) 2005-2007 Audacious Development Team\n"
 msgstr ""
 
 #: audacious/ui_credits.c:51

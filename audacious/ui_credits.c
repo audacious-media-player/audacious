@@ -45,7 +45,7 @@ static const gchar *bmp_brief =
     N_("<big><b>Audacious %s</b></big>\n"
        "The future of UNIX multimedia.\n"
        "\n"
-       "Copyright (C) 2005-2006 Audacious Development Team\n");
+       "Copyright (C) 2005-2007 Audacious Development Team\n");
 
 static const gchar *credit_text[] = {
     N_("Audacious core developers:"),
