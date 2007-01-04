@@ -1,3 +1,17 @@
+2007-01-04 13:15:08 +0000  Giacomo Lozito <james@develia.org>
+  revision [3525]
+  - ported ui_equalizer.c to ui_manager.c framework
+  trunk/audacious/ui/equalizer.ui |   36 +++---
+  trunk/audacious/ui/mainwin.ui   |    2 
+  trunk/audacious/ui/playlist.ui  |    2 
+  trunk/audacious/ui_equalizer.c  |  218 +++++-----------------------------------
+  trunk/audacious/ui_manager.c    |   85 ++++++++++++++-
+  trunk/audacious/ui_manager.h    |   10 +
+  trunk/audacious/ui_playlist.c   |    2 
+  trunk/audacious/ui_playlist.h   |    3 
+  8 files changed, 144 insertions(+), 214 deletions(-)
+
+
 2007-01-04 12:16:48 +0000  Giacomo Lozito <james@develia.org>
   revision [3523]
   - moved action_playlist_* implementation from ui_main.c to ui_playlist.c (more appropriate)

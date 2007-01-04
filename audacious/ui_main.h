@@ -95,8 +95,6 @@ extern GtkWidget *mainwin;
 extern GtkWidget *err;
 extern GdkGC *mainwin_gc;
 
-extern GtkAccelGroup *mainwin_accel;
-
 extern gboolean mainwin_moving;
 extern gboolean mainwin_focus;
 

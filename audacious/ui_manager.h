@@ -31,11 +31,11 @@ GtkWidget *mainwin_playback_menu;
 GtkWidget *mainwin_playlist_menu;
 GtkWidget *mainwin_view_menu;
 
-GtkWidget *pladd_menu;
-GtkWidget *pldel_menu;
-GtkWidget *plsel_menu;
-GtkWidget *plsort_menu;
-GtkWidget *pllist_menu;
+GtkWidget *playlistwin_pladd_menu;
+GtkWidget *playlistwin_pldel_menu;
+GtkWidget *playlistwin_plsel_menu;
+GtkWidget *playlistwin_plsort_menu;
+GtkWidget *playlistwin_pllist_menu;
 GtkWidget *playlistwin_popup_menu;
 
 GtkWidget *equalizerwin_presets_menu;

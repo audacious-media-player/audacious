@@ -24,8 +24,10 @@
 #include "actions-playlist.h"
 #include "actions-equalizer.h"
 
+/* TODO ui_main.h is only included because ui_manager.c needs the values of
+   TimerMode enum; move that enum elsewhere so we can get rid of this include */
 #include "ui_main.h"
-#include "ui_playlist.h"
+
 #include "icons-stock.h"
 #include "widgets/widgetcore.h"
 
@@ -659,11 +661,11 @@ ui_manager_create_menus ( void )
 
   playlistwin_popup_menu = ui_manager_get_popup_menu(ui_manager, "/playlist-menus/playlist-rightclick-menu");
 
-  pladd_menu  = ui_manager_get_popup_menu(ui_manager, "/playlist-menus/add-menu");
-  pldel_menu  = ui_manager_get_popup_menu(ui_manager, "/playlist-menus/del-menu");
-  plsel_menu  = ui_manager_get_popup_menu(ui_manager, "/playlist-menus/select-menu");
-  plsort_menu = ui_manager_get_popup_menu(ui_manager, "/playlist-menus/misc-menu");
-  pllist_menu = ui_manager_get_popup_menu(ui_manager, "/playlist-menus/playlist-menu");
+  playlistwin_pladd_menu  = ui_manager_get_popup_menu(ui_manager, "/playlist-menus/add-menu");
+  playlistwin_pldel_menu  = ui_manager_get_popup_menu(ui_manager, "/playlist-menus/del-menu");
+  playlistwin_plsel_menu  = ui_manager_get_popup_menu(ui_manager, "/playlist-menus/select-menu");
+  playlistwin_plsort_menu = ui_manager_get_popup_menu(ui_manager, "/playlist-menus/misc-menu");
+  playlistwin_pllist_menu = ui_manager_get_popup_menu(ui_manager, "/playlist-menus/playlist-menu");
 
   gtk_ui_manager_add_ui_from_file( ui_manager , DATA_DIR "/ui/equalizer.ui" , &gerr );
 
