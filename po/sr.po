@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: sr\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-01-04 17:23-0600\n"
-"PO-Revision-Date: 2007-01-05 00:34+0100\n"
+"PO-Revision-Date: 2007-01-05 00:52+0100\n"
 "Last-Translator: Strahinja  Kustudić <kustodian@gmail.com>\n"
 "Language-Team: Serbian Cyrillic <kustodian@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -808,7 +808,7 @@ msgstr "Режим анализатора"
 
 #: audacious/ui_manager.c:191
 msgid "Scope Mode"
-msgstr "Режим Досега"
+msgstr "Режим досега"
 
 #: audacious/ui_manager.c:192
 msgid "Voiceprint Mode"
