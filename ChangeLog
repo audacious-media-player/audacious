@@ -1,3 +1,12 @@
+2007-01-04 13:45:38 +0000  Giacomo Lozito <james@develia.org>
+  revision [3531]
+  - given some decent namespacing to playlist menus (part 2, the end)
+  trunk/audacious/ui/playlist.ui |   74 +++++++++++++--------------
+  trunk/audacious/ui_manager.c   |  111 ++++++++++++++++++++---------------------
+  trunk/audacious/ui_manager.h   |   10 +--
+  3 files changed, 98 insertions(+), 97 deletions(-)
+
+
 2007-01-04 13:35:15 +0000  Alexandr Orlov <alxorlov@pochta.ru>
   revision [3529]
   Update russian translation

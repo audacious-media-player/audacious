@@ -1,4 +1,4 @@
-/* Audacious - Cross-platform multimedia player
+/*  Audacious - Cross-platform multimedia player
  *  Copyright (C) 2005-2007  Audacious development team.
  *
  *  This program is free software; you can redistribute it and/or modify
