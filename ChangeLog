@@ -1,3 +1,13 @@
+2007-01-04 15:31:59 +0000  Giacomo Lozito <james@develia.org>
+  revision [3533]
+  - small copyright corrections
+  trunk/audacious/actions-mainwin.h  |    7 ++-----
+  trunk/audacious/actions-playlist.h |    4 ++--
+  trunk/audacious/playlist_manager.c |    2 +-
+  trunk/audacious/ui_manager.c       |    2 +-
+  4 files changed, 6 insertions(+), 9 deletions(-)
+
+
 2007-01-04 13:45:38 +0000  Giacomo Lozito <james@develia.org>
   revision [3531]
   - given some decent namespacing to playlist menus (part 2, the end)
