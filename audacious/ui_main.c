@@ -3920,7 +3920,7 @@ action_ab_clear( void )
 }
 
 void
-action_track_info( void )
+action_current_track_info( void )
 {
   playlist_fileinfo_current(playlist_get_active());
 }

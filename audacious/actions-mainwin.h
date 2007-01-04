@@ -71,7 +71,7 @@ void action_playback_previous(void);
 void action_playback_stop(void);
 void action_preferences(void);
 void action_quit(void);
-void action_track_info(void);
+void action_current_track_info(void);
 
 
 #endif

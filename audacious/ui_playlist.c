@@ -1819,7 +1819,7 @@ playlistwin_hide(void)
     gtk_widget_grab_focus(mainwin);
 }
 
-void action_view_track_info(void)
+void action_playlist_track_info(void)
 {
     playlistwin_fileinfo();
 }
@@ -1829,7 +1829,7 @@ void action_queue_toggle(void)
     playlist_queue(playlist_get_active());
 }
 
-void action_sort_by_playlist_entry(void)
+void action_playlist_sort_by_playlist_entry(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -1837,7 +1837,7 @@ void action_sort_by_playlist_entry(void)
     playlistwin_update_list(playlist);
 }
 
-void action_sort_by_track_number(void)
+void action_playlist_sort_by_track_number(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -1845,7 +1845,7 @@ void action_sort_by_track_number(void)
     playlistwin_update_list(playlist);
 }
 
-void action_sort_by_title(void)
+void action_playlist_sort_by_title(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -1853,7 +1853,7 @@ void action_sort_by_title(void)
     playlistwin_update_list(playlist);
 }
 
-void action_sort_by_artist(void)
+void action_playlist_sort_by_artist(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -1861,7 +1861,7 @@ void action_sort_by_artist(void)
     playlistwin_update_list(playlist);
 }
 
-void action_sort_by_full_path(void)
+void action_playlist_sort_by_full_path(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -1869,7 +1869,7 @@ void action_sort_by_full_path(void)
     playlistwin_update_list(playlist);
 }
 
-void action_sort_by_date(void)
+void action_playlist_sort_by_date(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -1877,7 +1877,7 @@ void action_sort_by_date(void)
     playlistwin_update_list(playlist);
 }
 
-void action_sort_by_filename(void)
+void action_playlist_sort_by_filename(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -1885,7 +1885,7 @@ void action_sort_by_filename(void)
     playlistwin_update_list(playlist);
 }
 
-void action_sort_selected_by_playlist_entry(void)
+void action_playlist_sort_selected_by_playlist_entry(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -1893,7 +1893,7 @@ void action_sort_selected_by_playlist_entry(void)
     playlistwin_update_list(playlist);
 }
 
-void action_sort_selected_by_track_number(void)
+void action_playlist_sort_selected_by_track_number(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -1901,7 +1901,7 @@ void action_sort_selected_by_track_number(void)
     playlistwin_update_list(playlist);
 }
 
-void action_sort_selected_by_title(void)
+void action_playlist_sort_selected_by_title(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -1909,7 +1909,7 @@ void action_sort_selected_by_title(void)
     playlistwin_update_list(playlist);
 }
 
-void action_sort_selected_by_artist(void)
+void action_playlist_sort_selected_by_artist(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -1917,7 +1917,7 @@ void action_sort_selected_by_artist(void)
     playlistwin_update_list(playlist);
 }
 
-void action_sort_selected_by_full_path(void)
+void action_playlist_sort_selected_by_full_path(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -1925,7 +1925,7 @@ void action_sort_selected_by_full_path(void)
     playlistwin_update_list(playlist);
 }
 
-void action_sort_selected_by_date(void)
+void action_playlist_sort_selected_by_date(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -1933,7 +1933,7 @@ void action_sort_selected_by_date(void)
     playlistwin_update_list(playlist);
 }
 
-void action_sort_selected_by_filename(void)
+void action_playlist_sort_selected_by_filename(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -1941,7 +1941,7 @@ void action_sort_selected_by_filename(void)
     playlistwin_update_list(playlist);
 }
 
-void action_randomize_list(void)
+void action_playlist_randomize_list(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -1949,7 +1949,7 @@ void action_randomize_list(void)
     playlistwin_update_list(playlist);
 }
 
-void action_reverse_list(void)
+void action_playlist_reverse_list(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -1958,37 +1958,37 @@ void action_reverse_list(void)
 }
 
 void
-action_clear_queue(void)
+action_playlist_clear_queue(void)
 {
     playlist_clear_queue(playlist_get_active());
 }
 
 void
-action_remove_unavailable(void)
+action_playlist_remove_unavailable(void)
 {
     playlist_remove_dead_files(playlist_get_active());
 }
 
 void
-action_remove_dupes_by_title(void)
+action_playlist_remove_dupes_by_title(void)
 {
     playlist_remove_duplicates(playlist_get_active(), PLAYLIST_DUPS_TITLE);
 }
 
 void
-action_remove_dupes_by_filename(void)
+action_playlist_remove_dupes_by_filename(void)
 {
     playlist_remove_duplicates(playlist_get_active(), PLAYLIST_DUPS_FILENAME);
 }
 
 void
-action_remove_dupes_by_full_path(void)
+action_playlist_remove_dupes_by_full_path(void)
 {
     playlist_remove_duplicates(playlist_get_active(), PLAYLIST_DUPS_PATH);
 }
 
 void
-action_remove_all(void)
+action_playlist_remove_all(void)
 {
     playlist_clear(playlist_get_active());
 
@@ -1998,19 +1998,19 @@ action_remove_all(void)
 }
 
 void
-action_remove_selected(void)
+action_playlist_remove_selected(void)
 {
     playlist_delete(playlist_get_active(), FALSE);
 }
 
 void
-action_remove_unselected(void)
+action_playlist_remove_unselected(void)
 {
     playlist_delete(playlist_get_active(), TRUE);
 }
 
 void
-action_add_files(void)
+action_playlist_add_files(void)
 {
     util_run_filebrowser(NO_PLAY_BUTTON);
 }
@@ -2018,29 +2018,16 @@ action_add_files(void)
 void add_medium(void); /* XXX */
 
 void
-action_add_cd(void)
+action_playlist_add_cd(void)
 {
     add_medium();
 }
 
 void
-action_add_url(void)
+action_playlist_add_url(void)
 {
     mainwin_show_add_url_window();
 }
-
-/* TODO this is no longer used, remove it
-void
-action_new_list(void)
-{
-    Playlist *playlist = playlist_get_active();
-
-    playlist_set_current_name(playlist, NULL);
-    playlist_clear(playlist);
-    mainwin_clear_song_info();
-    mainwin_set_info_text();
-}
-*/
 
 void
 action_playlist_new( void )
@@ -2069,7 +2056,7 @@ action_playlist_delete( void )
 }
 
 void
-action_save_list(void)
+action_playlist_save_list(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -2077,7 +2064,7 @@ action_save_list(void)
 }
 
 void
-action_save_default_list(void)
+action_playlist_save_default_list(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -2085,7 +2072,7 @@ action_save_default_list(void)
 }
 
 void
-action_load_list(void)
+action_playlist_load_list(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -2093,7 +2080,7 @@ action_load_list(void)
 }
 
 void
-action_refresh_list(void)
+action_playlist_refresh_list(void)
 {
     Playlist *playlist = playlist_get_active();
 
@@ -2108,28 +2095,30 @@ action_open_list_manager(void)
 }
 
 void
-action_search_and_select(void)
+action_playlist_search_and_select(void)
 {
     playlistwin_select_search();
 }
 
 void
-action_invert_selection(void)
+action_playlist_invert_selection(void)
 {
     playlistwin_inverse_selection();
 }
 
 void
-action_select_none(void)
+action_playlist_select_none(void)
 {
     playlistwin_select_none();
 }
 
 void
-action_select_all(void)
+action_playlist_select_all(void)
 {
     playlistwin_select_all();
 }
+
+
 
 /* playlistwin_select_search callback functions
    placed here to avoid making the code messier :) */

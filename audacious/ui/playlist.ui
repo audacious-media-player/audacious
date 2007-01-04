@@ -3,7 +3,7 @@
 <ui>
 	<menubar name="playlist-menus">
 		<menu action="dummy" name="playlist-rightclick-menu">
-			<menuitem action="track info" />
+			<menuitem action="playlist track info" />
 			<separator />
 			<menuitem action="playlist remove selected" />
 			<menuitem action="playlist remove unselected" />

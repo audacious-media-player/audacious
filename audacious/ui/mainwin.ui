@@ -3,7 +3,7 @@
 <ui>
 	<menubar name="mainwin-menus">
 		<menu action="dummy" name="songname-menu">
-			<menuitem action="track info" />
+			<menuitem action="current track info" />
 			<separator />
 			<menuitem action="autoscroll songname" />
 			<menuitem action="stop after current song" />
