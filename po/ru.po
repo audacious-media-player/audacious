@@ -8,10 +8,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: audacious 1.2.2\n"
+"Project-Id-Version: audacious 1.3\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-01-01 11:21-0600\n"
-"PO-Revision-Date: 2006-11-17 19:24+0400\n"
+"PO-Revision-Date: 2006-12-30 22:38+0400\n"
 "Last-Translator: Alexandr Orlov <alxorlov@pochta.ru>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -69,7 +69,7 @@ msgstr "Разработчики BMP:"
 
 #: audacious/credits.c:138
 msgid "Brazilian Portuguese:"
-msgstr "Бразильский, португальский:"
+msgstr "Бразильский, Португальский:"
 
 #: audacious/credits.c:141
 msgid "Breton:"
@@ -96,7 +96,6 @@ msgid "German:"
 msgstr "Немецкий:"
 
 #: audacious/credits.c:161
-#, fuzzy
 msgid "Georgian:"
 msgstr "Грузинский:"
 
@@ -146,15 +145,15 @@ msgstr "Русский:"
 
 #: audacious/credits.c:200
 msgid "Serbian (Latin):"
-msgstr ""
+msgstr "Сербский (Латиница):"
 
 #: audacious/credits.c:203
 msgid "Serbian (Cyrillic):"
-msgstr ""
+msgstr "Сербский (Кириллица):"
 
 #: audacious/credits.c:206
 msgid "Simplified Chinese:"
-msgstr ""
+msgstr "Упрощённый Китайский:"
 
 #: audacious/credits.c:209
 msgid "Slovak:"
@@ -170,7 +169,7 @@ msgstr "Шведский:"
 
 #: audacious/credits.c:218
 msgid "Traditional Chinese:"
-msgstr ""
+msgstr "Традиционный Китайский:"
 
 #: audacious/credits.c:221
 msgid "Ukrainian:"
@@ -185,24 +184,20 @@ msgid "Translators"
 msgstr "Переводчики"
 
 #: audacious/equalizer.c:112
-#, fuzzy
 msgid "Load"
-msgstr "/Загрузить"
+msgstr "Загрузить"
 
 #: audacious/equalizer.c:113
-#, fuzzy
 msgid "Import"
-msgstr "/Импортировать"
+msgstr "Импортировать"
 
 #: audacious/equalizer.c:114
-#, fuzzy
 msgid "Save"
-msgstr "/Сохранить"
+msgstr "Сохранить"
 
 #: audacious/equalizer.c:115
-#, fuzzy
 msgid "Delete"
-msgstr "/Удалить"
+msgstr "Удалить"
 
 #: audacious/equalizer.c:118 audacious/equalizer.c:153
 #: audacious/equalizer.c:178
@@ -215,106 +210,88 @@ msgstr "Загрузка предустановки"
 
 #: audacious/equalizer.c:123 audacious/equalizer.c:158
 #: audacious/equalizer.c:183
-#, fuzzy
 msgid "Auto-load preset"
-msgstr "/Загрузить/Автозагружаемую предустановку"
+msgstr "Автозагружаемую предустановку"
 
 #: audacious/equalizer.c:124
-#, fuzzy
 msgid "Load auto-load preset"
-msgstr "/Загрузить/Автозагружаемую предустановку"
+msgstr "Загрузить aвтозагружаемую предустановку"
 
 #: audacious/equalizer.c:128 audacious/equalizer.c:163
-#, fuzzy
 msgid "Default"
-msgstr "Стандартная тема:"
+msgstr "По-умолчанию"
 
 #: audacious/equalizer.c:129
 msgid "Load default preset into equalizer"
-msgstr ""
+msgstr "Загрузить стандартную предустановку в эквалайзер"
 
 #: audacious/equalizer.c:133
-#, fuzzy
 msgid "Zero"
-msgstr "стерео"
+msgstr "Обнулить"
 
 #: audacious/equalizer.c:134
-#, fuzzy
 msgid "Set equalizer preset levels to zero"
-msgstr "Сохранить установки эквалайзера"
+msgstr "Установить все уровни на ноль"
 
 #: audacious/equalizer.c:138
-#, fuzzy
 msgid "From file"
-msgstr "/Загрузить/Из файла"
+msgstr "Из файла"
 
 #: audacious/equalizer.c:139
-#, fuzzy
 msgid "Load preset from file"
-msgstr "Загрузка предустановки"
+msgstr "Загрузить предустановку из файла"
 
 #: audacious/equalizer.c:143
-#, fuzzy
 msgid "From WinAMP EQF file"
-msgstr "/Загрузить/Из файла WinAMP EQF"
+msgstr "Из файла WinAMP EQF"
 
 #: audacious/equalizer.c:144
-#, fuzzy
 msgid "Load preset from WinAMP EQF file"
-msgstr "/Загрузить/Из файла WinAMP EQF"
+msgstr "Загрузить предустановку из файла WinAMP EQF"
 
 #: audacious/equalizer.c:148
-#, fuzzy
 msgid "WinAMP Presets"
-msgstr "/Импортировать/Предустановки из WinAMP"
+msgstr "Предустановки из WinAMP"
 
 #: audacious/equalizer.c:149
-#, fuzzy
 msgid "Import WinAMP presets"
-msgstr "/Импортировать/Предустановки из WinAMP"
+msgstr "Импортировать предустановки из WinAMP"
 
 #: audacious/equalizer.c:154
 msgid "Save preset"
 msgstr "Сохранить предустановку"
 
 #: audacious/equalizer.c:159
-#, fuzzy
 msgid "Save auto-load preset"
-msgstr "/Сохранить/Автозагружаемую предустановку"
+msgstr "Сохранить автозагружаемую предустановку"
 
 #: audacious/equalizer.c:164
-#, fuzzy
 msgid "Save default preset"
-msgstr "Сохранить автоустановки"
+msgstr "Сохранить предустановку по-умолчанию"
 
 #: audacious/equalizer.c:168
-#, fuzzy
 msgid "To file"
-msgstr "Загрузить файлы"
+msgstr "В файл"
 
 #: audacious/equalizer.c:169
-#, fuzzy
 msgid "Save preset to file"
-msgstr "Сохранить предустановку"
+msgstr "Сохранить предустановку в файл"
 
 #: audacious/equalizer.c:173
-#, fuzzy
 msgid "To WinAMP EQF file"
-msgstr "/Сохранить/В файл WinAMP EQF"
+msgstr "В файл WinAMP EQF"
 
 #: audacious/equalizer.c:174
-#, fuzzy
 msgid "Save preset to WinAMP EQF file"
-msgstr "/Сохранить/В файл WinAMP EQF"
+msgstr "Сохранить в файл WinAMP EQF"
 
 #: audacious/equalizer.c:179
 msgid "Delete preset"
 msgstr "Удалить предустановку"
 
 #: audacious/equalizer.c:184
-#, fuzzy
 msgid "Delete auto-load preset"
-msgstr "/Удалить/Автозагружаемую предустановку"
+msgstr "Удалить автозагружаемую предустановку"
 
 #: audacious/equalizer.c:875
 msgid "Audacious Equalizer"
@@ -596,9 +573,8 @@ msgid "/Visualization Mode/Scope"
 msgstr "/Режим визуализации/График"
 
 #: audacious/mainwin.c:281
-#, fuzzy
 msgid "/Visualization Mode/Voiceprint"
-msgstr "/Режим визуализации/График"
+msgstr "/Режим визуализации/Отпечаток голоса"
 
 #: audacious/mainwin.c:283
 msgid "/Visualization Mode/Off"
@@ -650,21 +626,19 @@ msgstr "/Режим графика/Заливка"
 
 #: audacious/mainwin.c:307
 msgid "/Voiceprint mode"
-msgstr ""
+msgstr "/Режим отпечаток голоса"
 
 #: audacious/mainwin.c:308
-#, fuzzy
 msgid "/Voiceprint mode/Normal"
-msgstr "/Режим анализатора/Обычный"
+msgstr "/Режим отпечаток голоса/Обычный"
 
 #: audacious/mainwin.c:310
-#, fuzzy
 msgid "/Voiceprint mode/Fire"
-msgstr "/Режим анализатора/Пламя"
+msgstr "/Режим отпечаток голоса/Пламя"
 
 #: audacious/mainwin.c:312
 msgid "/Voiceprint mode/Ice"
-msgstr ""
+msgstr "/Режим отпечаток голоса/Лёд"
 
 #: audacious/mainwin.c:314
 msgid "/WindowShade VU Mode"
@@ -803,19 +777,16 @@ msgid "/Jump to Time"
 msgstr "/Перескочить на время"
 
 #: audacious/mainwin.c:394
-#, fuzzy
 msgid "/New Playlist"
-msgstr "Сохранение списка воспроизведения"
+msgstr "/Новый список"
 
 #: audacious/mainwin.c:396
-#, fuzzy
 msgid "/Select Next Playlist"
-msgstr "Выбор шрифта для списка воспроизведения"
+msgstr "/Выбрать следующий список"
 
 #: audacious/mainwin.c:398
-#, fuzzy
 msgid "/Select Previous Playlist"
-msgstr "/Сортировать выбранные/По названию в списке"
+msgstr "/Выбрать предыдущий список"
 
 #: audacious/mainwin.c:411
 msgid "/About Audacious"
@@ -951,9 +922,8 @@ msgid "Filter: "
 msgstr "Фильтр: "
 
 #: audacious/mainwin.c:2150
-#, fuzzy
 msgid "_Filter:"
-msgstr "Фильтр: "
+msgstr "_Фильтр:"
 
 #: audacious/mainwin.c:2354
 msgid "Enter location to play:"
@@ -1038,9 +1008,8 @@ msgstr ""
 "3. Правильность настройки звуковой карты.\n"
 
 #: audacious/mainwin.c:3753
-#, fuzzy
 msgid "Error in Audacious."
-msgstr "Об Audacious"
+msgstr "Ошибка Audacious."
 
 #: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1399
 msgid "Appearance"
@@ -1146,82 +1115,72 @@ msgid "Track Information Popup"
 msgstr "Всплывающее информационное окно"
 
 #: audacious/ui_playlist.c:138
-#, fuzzy
 msgid "New List"
-msgstr "/Новый список"
+msgstr "Новый список"
 
 #: audacious/ui_playlist.c:139
-#, fuzzy
 msgid "Creates a new playlist."
-msgstr "Показывать разделители в списке воспроизведения"
+msgstr "Создает новый список."
 
 #: audacious/ui_playlist.c:141
-#, fuzzy
 msgid "Load List"
-msgstr "/Загрузить список"
+msgstr "Загрузить список"
 
 #: audacious/ui_playlist.c:142
-#, fuzzy
 msgid "Loads a playlist file into the selected playlist."
-msgstr "Загружать метаданные при отображении файла в списке воспроизведения"
+msgstr "Загружает список воспроизведения из файла в выбранный список."
 
 #: audacious/ui_playlist.c:144
-#, fuzzy
 msgid "Save List"
-msgstr "/Сохранить список"
+msgstr "Сохранить список"
 
 #: audacious/ui_playlist.c:145
-#, fuzzy
 msgid "Saves the selected playlist."
-msgstr "Выбор шрифта для списка воспроизведения"
+msgstr "Сохраняет выбранный список."
 
 #: audacious/ui_playlist.c:147
-#, fuzzy
 msgid "Save Default List"
-msgstr "/Сохранить список по умолчанию"
+msgstr "Сохранить список по умолчанию"
 
 #: audacious/ui_playlist.c:148
-#, fuzzy
 msgid "Saves the selected playlist to the default location."
-msgstr "Использовать окно выбора файлов в стиле XMMS, вместо стандартного"
+msgstr "Сохраняет выбранный список в список по-умолчанию."
 
 #: audacious/ui_playlist.c:151
 msgid "List Manager"
-msgstr ""
+msgstr "Управление списками"
 
 #: audacious/ui_playlist.c:152
-#, fuzzy
 msgid "Opens the playlist manager."
-msgstr "Не очищать список воспроизведения"
+msgstr "Открывает окно управления списками."
 
 #: audacious/ui_playlist.c:155
-#, fuzzy
 msgid "Refresh List"
-msgstr "Обновить список тем"
+msgstr "Обновить список"
 
 #: audacious/ui_playlist.c:156
 msgid "Refreshes metadata associated with a playlist entry."
-msgstr ""
+msgstr "Обновляет данные для каждого списка воспроизведения."
 
 #: audacious/ui_playlist.c:161
-#, fuzzy
 msgid "Search and Select"
-msgstr "Глубина поиска: "
+msgstr "Найти и выбрать"
 
 #: audacious/ui_playlist.c:162
 msgid ""
 "Searches the playlist and selects playlist entries based on specific "
 "criteria."
 msgstr ""
+"Выполняет поиск по списку воспроизведения и выбирает элементы, основываясь "
+"на указанных критериях."
 
 #: audacious/ui_playlist.c:165
-#, fuzzy
 msgid "Invert Selection"
-msgstr "/Инвертировать выделение"
+msgstr "Инвертировать выделение"
 
 #: audacious/ui_playlist.c:166
 msgid "Inverts the selected and unselected entries."
-msgstr ""
+msgstr "Инвертирует выбранные и не выбранные элементы."
 
 #: audacious/ui_playlist.c:169 audacious/glade/addfiles.glade:105
 msgid "Select All"
@@ -1229,229 +1188,194 @@ msgstr "Выделить все"
 
 #: audacious/ui_playlist.c:170
 msgid "Selects all of the playlist entries."
-msgstr ""
+msgstr "Выделяет все элементы в списке."
 
 #: audacious/ui_playlist.c:173
-#, fuzzy
 msgid "Select None"
-msgstr "/Снять выделение"
+msgstr "Снять выделение"
 
 #: audacious/ui_playlist.c:174
 msgid "Deselects all of the playlist entries."
-msgstr ""
+msgstr "Снимает выделение со всех элементов в списке."
 
 #: audacious/ui_playlist.c:179
-#, fuzzy
 msgid "Clear Queue"
-msgstr "/Очистить очередь"
+msgstr "Очистить очередь"
 
 #: audacious/ui_playlist.c:180
 msgid "Clears the queue associated with this playlist."
-msgstr ""
+msgstr "Очищает очередь для этого списка воспроизведения."
 
 #: audacious/ui_playlist.c:183
-#, fuzzy
 msgid "Remove Unavailable Files"
-msgstr "/Удалить недоступные файлы"
+msgstr "Удалить недоступные файлы"
 
 #: audacious/ui_playlist.c:184
-#, fuzzy
 msgid "Removes unavailable files from the playlist."
-msgstr "/Удалить недоступные файлы"
+msgstr "Удаляет недоступные файлы из списка воспроизведения."
 
 #: audacious/ui_playlist.c:187
-#, fuzzy
 msgid "Remove Duplicates"
-msgstr "/Удалить дубликаты"
+msgstr "Удалить дубликаты"
 
 #: audacious/ui_playlist.c:189 audacious/ui_playlist.c:239
 #: audacious/ui_playlist.c:269
-#, fuzzy
 msgid "By Title"
-msgstr "Название"
+msgstr "По названию"
 
 #: audacious/ui_playlist.c:190
 msgid "Removes duplicate entries from the playlist by title."
-msgstr ""
+msgstr "Удаляет одинаковые элементы из списка по названию."
 
 #: audacious/ui_playlist.c:193 audacious/ui_playlist.c:247
 #: audacious/ui_playlist.c:277
-#, fuzzy
 msgid "By Filename"
-msgstr "Имя файла"
+msgstr "По имени файла"
 
 #: audacious/ui_playlist.c:194
-#, fuzzy
 msgid "Removes duplicate entries from the playlist by filename."
-msgstr "/Удалить дубликаты/По пути + имя файла"
+msgstr "Удаляет одинаковые элементы из списка по имени файла."
 
 #: audacious/ui_playlist.c:197 audacious/ui_playlist.c:251
 #: audacious/ui_playlist.c:281
-#, fuzzy
 msgid "By Path + Filename"
-msgstr "/Сортировать список/По пути + имя файла"
+msgstr "По пути + имя файла"
 
 #: audacious/ui_playlist.c:198
 msgid "Removes duplicate entries from the playlist by their full path."
-msgstr ""
+msgstr "Удаляет одинаковые элементы из списка по их полному пути."
 
 #: audacious/ui_playlist.c:201
-#, fuzzy
 msgid "Remove All"
-msgstr "/Удалить все"
+msgstr "Удалить все"
 
 #: audacious/ui_playlist.c:202
 msgid "Removes all entries from the playlist."
-msgstr ""
+msgstr "Удаляет все элементы из списка."
 
 #: audacious/ui_playlist.c:205
-#, fuzzy
 msgid "Remove Unselected"
-msgstr "/Удалить не выделенное"
+msgstr "Удалить не выделенное"
 
 #: audacious/ui_playlist.c:206
 msgid "Remove unselected entries from the playlist."
-msgstr ""
+msgstr "Удаляет не выделенные элементы из списка."
 
 #: audacious/ui_playlist.c:209
-#, fuzzy
 msgid "Remove Selected"
-msgstr "/Удалить выделенное"
+msgstr "Удалить выделенное"
 
 #: audacious/ui_playlist.c:210
 msgid "Remove selected entries from the playlist."
-msgstr ""
+msgstr "Удаляет выделенные элементы из списка."
 
 #: audacious/ui_playlist.c:215
-#, fuzzy
 msgid "Add CD..."
-msgstr "/Добавить CD..."
+msgstr "Добавить CD..."
 
 #: audacious/ui_playlist.c:216
-#, fuzzy
 msgid "Adds a CD to the playlist."
-msgstr "Не очищать список воспроизведения"
+msgstr "Добавляет записи с компакт-диска в список воспроизведения."
 
 #: audacious/ui_playlist.c:219
-#, fuzzy
 msgid "Add Internet Address..."
-msgstr "/Добавить адрес интернет..."
+msgstr "Добавить адрес интернет..."
 
 #: audacious/ui_playlist.c:220
 msgid "Adds a remote track to the playlist."
-msgstr ""
+msgstr "Добавляет удаленную запись в список воспроизведения."
 
 #: audacious/ui_playlist.c:223
-#, fuzzy
 msgid "Add Files..."
-msgstr "/Добавить файлы..."
+msgstr "Добавить файлы..."
 
 #: audacious/ui_playlist.c:224
-#, fuzzy
 msgid "Adds files to the playlist."
-msgstr "Не очищать список воспроизведения"
+msgstr "Добавляет файлы в список воспроизведения."
 
 #: audacious/ui_playlist.c:229
-#, fuzzy
 msgid "Randomize List"
-msgstr "/Перемешать список"
+msgstr "Перемешать список"
 
 #: audacious/ui_playlist.c:230
-#, fuzzy
 msgid "Randomizes the playlist."
-msgstr "/Перемешать список"
+msgstr "Перемешивает список."
 
 #: audacious/ui_playlist.c:233
-#, fuzzy
 msgid "Reverse List"
-msgstr "/Перевернуть список"
+msgstr "Перевернуть список"
 
 #: audacious/ui_playlist.c:234
-#, fuzzy
 msgid "Reverses the playlist."
-msgstr "Не очищать список воспроизведения"
+msgstr "Переворачивает список."
 
 #: audacious/ui_playlist.c:237
-#, fuzzy
 msgid "Sort List"
-msgstr "/Сортировать список"
+msgstr "Сортировать список"
 
 #: audacious/ui_playlist.c:240 audacious/ui_playlist.c:270
-#, fuzzy
 msgid "Sorts the list by title."
-msgstr "/Сортировать список/По названию"
+msgstr "Сортирует список по названию."
 
 #: audacious/ui_playlist.c:243 audacious/ui_playlist.c:273
-#, fuzzy
 msgid "By Artist"
-msgstr "Исполнитель"
+msgstr "По исполнителю"
 
 #: audacious/ui_playlist.c:244 audacious/ui_playlist.c:274
-#, fuzzy
 msgid "Sorts the list by artist."
-msgstr "/Сортировать список/По исполнителю"
+msgstr "Сортирует список по исполнителю."
 
 #: audacious/ui_playlist.c:248 audacious/ui_playlist.c:278
-#, fuzzy
 msgid "Sorts the list by filename."
-msgstr "/Сортировать список/По имени файла"
+msgstr "Сортирует список по имени файла."
 
 #: audacious/ui_playlist.c:252 audacious/ui_playlist.c:282
 msgid "Sorts the list by full pathname."
-msgstr ""
+msgstr "Сортирует список по полному пути к файлу."
 
 #: audacious/ui_playlist.c:255 audacious/ui_playlist.c:285
-#, fuzzy
 msgid "By Date"
-msgstr "Дата"
+msgstr "По дате"
 
 #: audacious/ui_playlist.c:256 audacious/ui_playlist.c:286
 msgid "Sorts the list by modification time."
-msgstr ""
+msgstr "Сортирует список по времени создания."
 
 #: audacious/ui_playlist.c:259 audacious/ui_playlist.c:289
-#, fuzzy
 msgid "By Track Number"
-msgstr "Номер дорожки"
+msgstr "По номеру дорожки"
 
 #: audacious/ui_playlist.c:260 audacious/ui_playlist.c:290
-#, fuzzy
 msgid "Sorts the list by track number."
-msgstr "/Сортировать список/По дорожке"
+msgstr "Сортирует список по номеру дорожки."
 
 #: audacious/ui_playlist.c:263 audacious/ui_playlist.c:293
-#, fuzzy
 msgid "By Playlist Entry"
-msgstr "/Сортировать список/По названию в списке"
+msgstr "По названию в списке"
 
 #: audacious/ui_playlist.c:264 audacious/ui_playlist.c:294
-#, fuzzy
 msgid "Sorts the list by playlist entry."
-msgstr "/Сортировать список/По названию в списке"
+msgstr "Сортирует список по названию в списке."
 
 #: audacious/ui_playlist.c:267
-#, fuzzy
 msgid "Sort Selected"
-msgstr "/Сортировать выбранные"
+msgstr "Сортировать выбранные"
 
 #: audacious/ui_playlist.c:299
-#, fuzzy
 msgid "View Track Details"
-msgstr "/Информация о песне"
+msgstr "Информация о записи"
 
 #: audacious/ui_playlist.c:300
-#, fuzzy
 msgid "Displays track information."
-msgstr "Информация о дорожке"
+msgstr "Показывает информацию о записи."
 
 #: audacious/ui_playlist.c:303
-#, fuzzy
 msgid "Queue Toggle"
-msgstr "/Поставить песню в очередь"
+msgstr "В очередь"
 
 #: audacious/ui_playlist.c:304
 msgid "Enables/disables the entry in the playlist's queue."
-msgstr ""
+msgstr "Добавляет/исключает элемент списка из очереди."
 
 #: audacious/ui_playlist.c:728
 msgid ""
@@ -1460,37 +1384,38 @@ msgid ""
 "expressions work, simply insert a literal portion of what you're searching "
 "for."
 msgstr ""
+"Поиск элементов в списке воспроизведения по одному или нескольким полям. При "
+"поиске возможно использование регулярных выражений, без учета регистра. Если "
+"вы не знаете что такое регулярные выражения, то просто впишите буквенную "
+"часть того, что вы ищете."
 
 #: audacious/ui_playlist.c:735
-#, fuzzy
 msgid "Track name: "
-msgstr "Имя дорожки"
+msgstr "Название: "
 
 #: audacious/ui_playlist.c:741
 msgid "Album name: "
-msgstr ""
+msgstr "Альбом: "
 
 #: audacious/ui_playlist.c:747
-#, fuzzy
 msgid "Artist: "
-msgstr "Исполнитель"
+msgstr "Исполнитель: "
 
 #: audacious/ui_playlist.c:753
-#, fuzzy
 msgid "Filename: "
-msgstr "Имя файла:"
+msgstr "Имя файла: "
 
 #: audacious/ui_playlist.c:760
 msgid "Clear previous selection before searching"
-msgstr ""
+msgstr "Сбросить предыдущий выбор перед поиском"
 
 #: audacious/ui_playlist.c:763
 msgid "Automatically toggle queue for matching entries"
-msgstr ""
+msgstr "Автоматически поставить в очередь найденные элементы"
 
 #: audacious/ui_playlist.c:766
 msgid "Create a new playlist with matching entries"
-msgstr ""
+msgstr "Создать новый список из найденных элементов"
 
 #: audacious/ui_playlist.c:1004
 #, c-format
@@ -1526,9 +1451,8 @@ msgid "Audacious Playlist Editor"
 msgstr "Список воспроизведения Audacious"
 
 #: audacious/util.c:670
-#, fuzzy
 msgid "Add/Open URL Dialog"
-msgstr "Добавить/Открыть файлы"
+msgstr "Добавить/Открыть URL"
 
 #: audacious/util.c:922
 msgid "Add/Open Files dialog"
@@ -1567,18 +1491,16 @@ msgstr ""
 "Вы не выбрали модуль вывода звука."
 
 #: audacious/playlist_manager.c:253
-#, fuzzy
 msgid "Playlist Manager"
-msgstr "/Не переходить на следующую песню"
+msgstr "Управление списками"
 
 #: audacious/playlist_manager.c:292
 msgid "Entries"
-msgstr ""
+msgstr "Элементов"
 
 #: audacious/playlist_manager.c:306
-#, fuzzy
 msgid "_Rename"
-msgstr "Имя файла"
+msgstr "_Переименовать"
 
 #: audacious/glade/addfiles.glade:77
 msgid "Close Dialog on Add"
@@ -1662,7 +1584,7 @@ msgstr "Настройки Audacious"
 
 #: audacious/glade/prefswin.glade:115
 msgid "_Decoder list:"
-msgstr "Список модулей де_кодеров:"
+msgstr "Список модулей _декодеров:"
 
 #: audacious/glade/prefswin.glade:219
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
@@ -1670,7 +1592,7 @@ msgstr "<span size=\"medium\"><b>Декодеры</b></span>"
 
 #: audacious/glade/prefswin.glade:261
 msgid "_General plugin list:"
-msgstr "_Список модулей общего назначения:"
+msgstr "Список модулей _общего назначения:"
 
 #: audacious/glade/prefswin.glade:365
 msgid "<span size=\"medium\"><b>General</b></span>"
@@ -1697,7 +1619,6 @@ msgid "<b>_Skin</b>"
 msgstr "<b>_Тема</b>"
 
 #: audacious/glade/prefswin.glade:799
-#, fuzzy
 msgid "Refresh skin list"
 msgstr "Обновить список тем"
 
@@ -1819,7 +1740,7 @@ msgstr "Преобразовывать %20 в пробел"
 
 #: audacious/glade/prefswin.glade:1835
 msgid "Convert backslash '\\' to forward slash '/'"
-msgstr ""
+msgstr "Преобразовывать обратный слэш '\\' в прямой слэш '/'"
 
 #: audacious/glade/prefswin.glade:1869
 msgid "<b>Metadata</b>"
@@ -1833,8 +1754,7 @@ msgstr ""
 
 #: audacious/glade/prefswin.glade:1910
 msgid "Load metadata from playlists and files"
-msgstr ""
-"Загружать информацию о песнях из музыкальных файлов и списков воспроизведения"
+msgstr "Загружать информацию о песнях из файлов и списков воспроизведения"
 
 #: audacious/glade/prefswin.glade:1948
 msgid "Load metadata when adding the file to the playlist or opening it"
@@ -1847,11 +1767,10 @@ msgid "On load"
 msgstr "При открытии"
 
 #: audacious/glade/prefswin.glade:1970
-#, fuzzy
 msgid "Load metadata on demand when displaying the file in the playlist"
 msgstr ""
-"Загружать метаданные при добавлении файла в список воспроизведения или "
-"открытии"
+"Загружать метаданные по необходимости при отображении файла в списке "
+"воспроизведения"
 
 #: audacious/glade/prefswin.glade:1972
 msgid "On display"
@@ -1921,7 +1840,7 @@ msgstr ""
 "Исполнитель - Альбом - Дорожка. Название\n"
 "Исполнитель [ Альбом ] - Дорожка. Название\n"
 "Альбом - Название\n"
-"Особое"
+"Особый"
 
 #: audacious/glade/prefswin.glade:2351
 msgid "Show information about titlestring format"
@@ -2044,7 +1963,6 @@ msgid "<b>Format Detection</b>"
 msgstr "<b>Распознавание файлов</b>"
 
 #: audacious/glade/prefswin.glade:3870
-#, fuzzy
 msgid ""
 "When checked, Audacious will detect file formats on demand. This can result "
 "in a messier playlist, but delivers a major speed benefit."
@@ -2055,22 +1973,21 @@ msgstr ""
 
 #: audacious/glade/prefswin.glade:3872
 msgid "Detect file formats on demand, instead of immediately."
-msgstr "Определять формат файла не сразу, а при необходимости."
+msgstr "Определять формат файлов не сразу, а при необходимости."
 
 #: audacious/glade/prefswin.glade:3906
-#, fuzzy
 msgid ""
 "When checked, Audacious will detect file formats based by extension. This is "
 "slightly slower than detection on demand, but still provides a minimal level "
 "of format detection."
 msgstr ""
-"Если включено, то Audacious будет определять формат файла только когда "
-"потребуется. Это ускорит работу проигрывателя, но может внести беспорядок в "
-"список воспроизведения."
+"Если включено, то Audacious будет определять формат файла по расширению. Это "
+"немного медленнее, чем распознавание при необходимости, зато предоставляет "
+"минимальный уровень распознавания файлов."
 
 #: audacious/glade/prefswin.glade:3908
 msgid "Detect file formats by extension."
-msgstr ""
+msgstr "Определять формат файлов по расширению."
 
 #: audacious/glade/prefswin.glade:3942
 msgid "<b>Playback</b>"
@@ -2116,7 +2033,7 @@ msgstr ""
 
 #: audacious/glade/prefswin.glade:4292
 msgid "Popup Information Settings"
-msgstr "Всплывающее информационное окно"
+msgstr "Настройки всплывающей информации"
 
 #: audacious/glade/prefswin.glade:4316
 msgid ""
@@ -2149,26 +2066,27 @@ msgstr "Искать изображение для каждого файла"
 
 #: audacious/glade/prefswin.glade:4633
 msgid "Color Adjustment"
-msgstr ""
+msgstr "Настройка цвета"
 
 #: audacious/glade/prefswin.glade:4656
 msgid ""
 "Audacious allows you to alter the color balance of the skinned UI. The "
 "sliders below will allow you to do this."
 msgstr ""
+"Audacious позволяет вам изменить цветовой баланс пользовательского "
+"интерфейса. Ползунки внизу позволят вам сделать это."
 
 #: audacious/glade/prefswin.glade:4752
 msgid "Red"
-msgstr ""
+msgstr "Красный"
 
 #: audacious/glade/prefswin.glade:4780
-#, fuzzy
 msgid "Green"
-msgstr "Греческий:"
+msgstr "Зелёный"
 
 #: audacious/glade/prefswin.glade:4808
 msgid "Blue"
-msgstr ""
+msgstr "Синий"
 
 #: audacious/widgets/eq_slider.c:93
 msgid "PREAMP"
@@ -2232,7 +2150,7 @@ msgstr "Расширение файла"
 
 #: libaudacious/titlestring.c:377
 msgid "Track name"
-msgstr "Имя дорожки"
+msgstr "Название"
 
 #: libaudacious/titlestring.c:378
 msgid "Track number"
@@ -2242,98 +2160,8 @@ msgstr "Номер дорожки"
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: Отображать \"...\", когда элемент %n присутствует"
 
-#~ msgid "Chinese:"
-#~ msgstr "Китайский:"
-
-#~ msgid "/Load/Preset"
-#~ msgstr "/Загрузить/Предустановку"
-
-#~ msgid "/Load/Default"
-#~ msgstr "/Загрузить/Предустановку по умолчанию"
-
-#~ msgid "/Load/Zero"
-#~ msgstr "/Загрузить/Пустую предустановку"
-
-#~ msgid "/Save/Preset"
-#~ msgstr "/Сохранить/Предустановку"
-
-#~ msgid "/Save/Default"
-#~ msgstr "/Сохранить/Сделать по умолчанию"
-
-#~ msgid "/Save/To file"
-#~ msgstr "/Сохранить/В файл"
-
-#~ msgid "/Delete/Preset"
-#~ msgstr "/Удалить/Предустановку"
-
-#~ msgid "Load auto-preset"
-#~ msgstr "Загрузка автозагружаемой предустановки"
-
-#~ msgid "Load equalizer preset"
-#~ msgstr "Загрузка предустановок эквалайзера"
-
-#~ msgid "Delete auto-preset"
-#~ msgstr "Удалить автоустановку"
+#~ msgid "Search entries in active playlist"
+#~ msgstr "Поиск элементов в текущем списке"
 
 #~ msgid "  (invalid UTF-8)"
 #~ msgstr "  (недопустимая последовательность Юникод)"
-
-#~ msgid ""
-#~ "\n"
-#~ "Received SIGSEGV\n"
-#~ "\n"
-#~ "This could be a bug in Audacious. If you don't know why this happened, "
-#~ "file a bug at http://bugs-meta.atheme.org/\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Получен SIGSEGV\n"
-#~ "\n"
-#~ "Возможно, это ошибка в Audacious. Если вы не знаете почему это произошло, "
-#~ "напишите сообщение об ошибке на http://bugs-meta.atheme.org/\n"
-#~ "\n"
-
-#~ msgid "/Show Popup Info"
-#~ msgstr "/Показывать информационное окно"
-
-#~ msgid "/Remove Duplicates/By Title"
-#~ msgstr "/Удалить дубликаты/По названию"
-
-#~ msgid "/Remove Duplicates/By Filename"
-#~ msgstr "/Удалить дубликаты/По имени файла"
-
-#~ msgid "/Update View"
-#~ msgstr "/Обновить список"
-
-#~ msgid "/Select All"
-#~ msgstr "/Выделить все"
-
-#~ msgid "/Sort List/By Date"
-#~ msgstr "/Сортировать список/По дате"
-
-#~ msgid "/Sort Selection/By Title"
-#~ msgstr "/Сортировать выбранные/По названию"
-
-#~ msgid "/Sort Selection/By Artist"
-#~ msgstr "/Сортировать выбранные/По испонителю"
-
-#~ msgid "/Sort Selection/By Filename"
-#~ msgstr "/Сортировать выбранные/По имени файла"
-
-#~ msgid "/Sort Selection/By Path + Filename"
-#~ msgstr "/Сортировать выбранные/По пути + имя файла"
-
-#~ msgid "/Sort Selection/By Date"
-#~ msgstr "/Сортировать выбранные/По дате"
-
-#~ msgid "/Sort Selection/By Track Number"
-#~ msgstr "/Сортировать выбранные/По дорожке"
-
-#~ msgid "/Sort Selection/By Playlist Entry"
-#~ msgstr "/Сортировать выбранные/По названию в списке"
-
-#~ msgid "<b>_Miscillaneous UI Features</b>"
-#~ msgstr "<b>_Дополнительные параметры интерфейса</b>"
-
-#~ msgid "This enables the window mangaer to show decorations for windows."
-#~ msgstr "Это позволяет оконному менеджеру показывать свои заголовки окон."
