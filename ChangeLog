@@ -1,3 +1,41 @@
+2007-01-04 23:30:25 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
+  revision [3549]
+  update copyright notice and make another string translateable
+  trunk/audacious/ui_about.c     |    4 ++--
+  trunk/audacious/ui_credits.c   |    2 +-
+  trunk/audacious/ui_equalizer.c |    2 +-
+  trunk/po/audacious.pot         |   12 ++++++++++--
+  trunk/po/br.po                 |   12 ++++++++++--
+  trunk/po/cs.po                 |   18 +++++++++++++++---
+  trunk/po/cy.po                 |   18 +++++++++++++++---
+  trunk/po/de.po                 |   18 +++++++++++++++---
+  trunk/po/el.po                 |   18 +++++++++++++++---
+  trunk/po/es.po                 |   18 +++++++++++++++---
+  trunk/po/fi.po                 |   16 ++++++++++++++--
+  trunk/po/fr.po                 |   18 +++++++++++++++---
+  trunk/po/hi.po                 |   16 ++++++++++++++--
+  trunk/po/hu.po                 |   18 +++++++++++++++---
+  trunk/po/it.po                 |   18 +++++++++++++++---
+  trunk/po/ja.po                 |   18 +++++++++++++++---
+  trunk/po/ka.po                 |   16 ++++++++++++++--
+  trunk/po/ko.po                 |   17 +++++++++++++++--
+  trunk/po/lt.po                 |   16 ++++++++++++++--
+  trunk/po/mk.po                 |   16 ++++++++++++++--
+  trunk/po/nl.po                 |   18 +++++++++++++++---
+  trunk/po/pl.po                 |   18 +++++++++++++++---
+  trunk/po/pt_BR.po              |   16 ++++++++++++++--
+  trunk/po/ro.po                 |   18 +++++++++++++++---
+  trunk/po/ru.po                 |   18 +++++++++++++++---
+  trunk/po/sk.po                 |   16 ++++++++++++++--
+  trunk/po/sr.po                 |   18 +++++++++++++++---
+  trunk/po/sr@Latn.po            |   18 +++++++++++++++---
+  trunk/po/sv.po                 |   12 ++++++++++--
+  trunk/po/uk.po                 |   16 ++++++++++++++--
+  trunk/po/zh_CN.po              |   18 +++++++++++++++---
+  trunk/po/zh_TW.po              |   18 +++++++++++++++---
+  32 files changed, 416 insertions(+), 79 deletions(-)
+
+
 2007-01-04 23:15:18 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
   revision [3547]
   fix giacomo's untranslatable strings and update po/

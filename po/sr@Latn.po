@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: sr@Latn\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-01-04 17:23-0600\n"
-"PO-Revision-Date: 2007-01-04 23:45+0100\n"
+"PO-Revision-Date: 2007-01-05 00:35+0100\n"
 "Last-Translator: Strahinja  Kustudić <kustodian@gmail.com>\n"
 "Language-Team: Serbian Latin <kustodian@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -17,16 +17,15 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: audacious/ui_about.c:44
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "\n"
 "Copyright (C) 2005-2007 Audacious Development Team"
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
-"Budućnost UNIX multimedije.\n"
 "\n"
-"Sva prava zadržana, 2005-2006 Audacious Razvojni Tim\n"
+"Sva prava zadržana, 2005-2007 Audacious Razvojni Tim"
 
 #: audacious/ui_about.c:123 audacious/ui_credits.c:323
 #: audacious/ui_manager.c:387 audacious/ui_manager.c:388
@@ -38,7 +37,7 @@ msgid "Credits"
 msgstr "Zasluge"
 
 #: audacious/ui_credits.c:45
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "The future of UNIX multimedia.\n"
@@ -48,7 +47,7 @@ msgstr ""
 "<big><b>Audacious %s</b></big>\n"
 "Budućnost UNIX multimedije.\n"
 "\n"
-"Sva prava zadržana, 2005-2006 Audacious Razvojni Tim\n"
+"Sva prava zadržana, 2005-2007 Audacious Razvojni Tim\n"
 
 #: audacious/ui_credits.c:51
 msgid "Audacious core developers:"
@@ -768,9 +767,8 @@ msgid "Time Remaining"
 msgstr "Vreme preostalo"
 
 #: audacious/ui_manager.c:165
-#, fuzzy
 msgid "Playback"
-msgstr "<b>Reprodukovanje</b>"
+msgstr "Reprodukovanje"
 
 #: audacious/ui_manager.c:167 audacious/ui_manager.c:168
 msgid "Play CD"
@@ -797,47 +795,40 @@ msgid "Next"
 msgstr "Sledeća"
 
 #: audacious/ui_manager.c:188
-#, fuzzy
 msgid "Visualization"
-msgstr "<b>Vizuelizacija</b>"
+msgstr "Vizuelizacija"
 
 #: audacious/ui_manager.c:189
-#, fuzzy
 msgid "Visualization Mode"
-msgstr "<b>Vizuelizacija</b>"
+msgstr "Režim vizuelizacije"
 
 #: audacious/ui_manager.c:190
-#, fuzzy
 msgid "Analyzer Mode"
-msgstr "Analizatora"
+msgstr "Režim analizatora"
 
 #: audacious/ui_manager.c:191
-#, fuzzy
 msgid "Scope Mode"
-msgstr "Dosega"
+msgstr "Režim dosega"
 
 #: audacious/ui_manager.c:192
-#, fuzzy
 msgid "Voiceprint Mode"
-msgstr "Prikaza glasa"
+msgstr "Režim prikaza glasa"
 
 #: audacious/ui_manager.c:193
 msgid "WindowShade VU Mode"
-msgstr ""
+msgstr "VU režim delimičnog skrivenog prozora"
 
 #: audacious/ui_manager.c:194
-#, fuzzy
 msgid "Refresh Rate"
-msgstr "Osveži listu"
+msgstr "Učestalost osvežavanja"
 
 #: audacious/ui_manager.c:195
-#, fuzzy
 msgid "Analyzer Falloff"
-msgstr "Analizatora"
+msgstr "Analizatori padaju"
 
 #: audacious/ui_manager.c:196
 msgid "Peaks Falloff"
-msgstr ""
+msgstr "Vrhovi padaju"
 
 #: audacious/ui_manager.c:201 audacious/ui_preferences.c:104
 #: audacious/playlist_manager.c:288 audacious/glade/prefswin.glade:2530
@@ -902,7 +893,7 @@ msgstr "Otvara menađžer liste."
 
 #: audacious/ui_manager.c:236
 msgid "View"
-msgstr ""
+msgstr "Prikaz"
 
 #: audacious/ui_manager.c:240
 msgid "Add CD..."
@@ -1760,8 +1751,7 @@ msgstr "Učitaj meta-podatke iz lista numera i datoteka"
 
 #: audacious/glade/prefswin.glade:1948
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"Učitaj meta-podatke pri dodavanju datoteke u listu ili prilikom otvaranja"
+msgstr "Učitaj meta-podatke pri dodavanju datoteke u listu ili prilikom otvaranja"
 
 #: audacious/glade/prefswin.glade:1950
 msgid "On load"
@@ -2155,3 +2145,4 @@ msgstr "Broj numere"
 #: libaudacious/titlestring.c:441
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: Prikaži \"...\" samo ako je prisutan elemenat %n"
+
