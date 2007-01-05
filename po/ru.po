@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: audacious 1.3\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-01-04 17:23-0600\n"
-"PO-Revision-Date: 2006-12-30 22:38+0400\n"
+"PO-Revision-Date: 2006-01-05 12:11+0400\n"
 "Last-Translator: Alexandr Orlov <alxorlov@pochta.ru>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -19,16 +19,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: audacious/ui_about.c:44
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "\n"
 "Copyright (C) 2005-2007 Audacious Development Team"
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
-"Мультимедийный проигрыватель будущего под UNIX.\n"
 "\n"
-"Copyright (C) 2005-2006 Команда разработчиков Audacious\n"
+"Copyright (C) 2005-2007 Команда разработчиков Audacious"
 
 #: audacious/ui_about.c:123 audacious/ui_credits.c:323
 #: audacious/ui_manager.c:387 audacious/ui_manager.c:388
@@ -40,7 +39,7 @@ msgid "Credits"
 msgstr "Авторы"
 
 #: audacious/ui_credits.c:45
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "The future of UNIX multimedia.\n"
@@ -48,9 +47,9 @@ msgid ""
 "Copyright (C) 2005-2007 Audacious Development Team\n"
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
-"Мультимедийный проигрыватель будущего под UNIX.\n"
+"Мультимедийный проигрыватель будущего для UNIX.\n"
 "\n"
-"Copyright (C) 2005-2006 Команда разработчиков Audacious\n"
+"Copyright (C) 2005-2007 Команда разработчиков Audacious\n"
 
 #: audacious/ui_credits.c:51
 msgid "Audacious core developers:"
@@ -190,7 +189,7 @@ msgstr "Украинский:"
 
 #: audacious/ui_credits.c:224
 msgid "Welsh:"
-msgstr "Валлийский:"
+msgstr "Уэльский:"
 
 #: audacious/ui_credits.c:372
 msgid "Translators"
@@ -457,6 +456,12 @@ msgid ""
 "a bug at http://bugs-meta.atheme.org/\n"
 "\n"
 msgstr ""
+"\n"
+"Получен SIGSEGV\n"
+"\n"
+"Возможно это ошибка в Audacious. Если вы не знаете, почему это произошло, то "
+"напишите сообщение об ошибке на http://bugs-meta.atheme.org/\n"
+"\n"
 
 #: audacious/strings.c:199
 msgid "  (invalid UTF-8)"
@@ -599,279 +604,233 @@ msgid "Error in Audacious."
 msgstr "Ошибка Audacious."
 
 #: audacious/ui_manager.c:43 audacious/ui_manager.c:44
-#, fuzzy
 msgid "Autoscroll Songname"
-msgstr "/Автопрокрутка названия песни"
+msgstr "Автопрокрутка названия песни"
 
 #: audacious/ui_manager.c:46 audacious/ui_manager.c:47
-#, fuzzy
 msgid "Stop after Current Song"
-msgstr "/Остановиться после текущей песни"
+msgstr "Остановиться после текущей песни"
 
 #: audacious/ui_manager.c:49 audacious/ui_manager.c:50
 msgid "Peaks"
-msgstr ""
+msgstr "Пики"
 
 #: audacious/ui_manager.c:52 audacious/ui_manager.c:53
-#, fuzzy
 msgid "Repeat"
-msgstr "/Повторять"
+msgstr "Повторять"
 
 #: audacious/ui_manager.c:55 audacious/ui_manager.c:56
-#, fuzzy
 msgid "Shuffle"
-msgstr "/Случайно"
+msgstr "Случайно"
 
 #: audacious/ui_manager.c:58 audacious/ui_manager.c:59
-#, fuzzy
 msgid "No Playlist Advance"
-msgstr "/Не переходить на следующую песню"
+msgstr "Не переходить на следующую песню"
 
 #: audacious/ui_manager.c:61 audacious/ui_manager.c:62
-#, fuzzy
 msgid "Show Player"
-msgstr "/Показать проигрыватель"
+msgstr "Показать проигрыватель"
 
 #: audacious/ui_manager.c:64 audacious/ui_manager.c:65
-#, fuzzy
 msgid "Show Playlist Editor"
-msgstr "/Показать редактор списка песен"
+msgstr "Показать редактор списка песен"
 
 #: audacious/ui_manager.c:67 audacious/ui_manager.c:68
-#, fuzzy
 msgid "Show Equalizer"
-msgstr "/Показать эквалайзер"
+msgstr "Показать эквалайзер"
 
 #: audacious/ui_manager.c:70 audacious/ui_manager.c:71
-#, fuzzy
 msgid "Always on Top"
-msgstr "/Поднять на передний план"
+msgstr "Поднять на передний план"
 
 #: audacious/ui_manager.c:73 audacious/ui_manager.c:74
-#, fuzzy
 msgid "Put on All Workspaces"
-msgstr "/Поместить на все рабочие столы"
+msgstr "Поместить на все рабочие столы"
 
 #: audacious/ui_manager.c:76 audacious/ui_manager.c:77
-#, fuzzy
 msgid "Roll up Player"
-msgstr "/Свернуть проигрыватель"
+msgstr "Свернуть проигрыватель"
 
 #: audacious/ui_manager.c:79 audacious/ui_manager.c:80
-#, fuzzy
 msgid "Roll up Playlist Editor"
-msgstr "/Свернуть редактор списка песен"
+msgstr "Свернуть редактор списка песен"
 
 #: audacious/ui_manager.c:82 audacious/ui_manager.c:83
-#, fuzzy
 msgid "Roll up Equalizer"
-msgstr "/Свернуть эквалайзер"
+msgstr "Свернуть эквалайзер"
 
 #: audacious/ui_manager.c:85 audacious/ui_manager.c:86
-#, fuzzy
 msgid "DoubleSize"
-msgstr "/Двойной размер"
+msgstr "Двойной размер"
 
 #: audacious/ui_manager.c:88 audacious/ui_manager.c:89
-#, fuzzy
 msgid "Easy Move"
-msgstr "/Легкое перемещение"
+msgstr "Легкое перемещение"
 
 #: audacious/ui_manager.c:97
-#, fuzzy
 msgid "Analyzer"
-msgstr "/Режим анализатора"
+msgstr "Анализатор"
 
 #: audacious/ui_manager.c:98
-#, fuzzy
 msgid "Scope"
-msgstr "/Режим графика"
+msgstr "График"
 
 #: audacious/ui_manager.c:99
-#, fuzzy
 msgid "Voiceprint"
-msgstr "/Режим отпечаток голоса"
+msgstr "Отпечаток голоса"
 
 #: audacious/ui_manager.c:100
 msgid "Off"
-msgstr ""
+msgstr "Выключено"
 
 #: audacious/ui_manager.c:104 audacious/ui_manager.c:121
 #: audacious/ui_manager.c:127
 msgid "Normal"
-msgstr ""
+msgstr "Обычный"
 
 #: audacious/ui_manager.c:105 audacious/ui_manager.c:122
 msgid "Fire"
-msgstr ""
+msgstr "Пламя"
 
 #: audacious/ui_manager.c:106
-#, fuzzy
 msgid "Vertical Lines"
-msgstr "/Режим анализатора/Вертикальные линии"
+msgstr "Вертикальные линии"
 
 #: audacious/ui_manager.c:110
-#, fuzzy
 msgid "Lines"
-msgstr "строк"
+msgstr "Линии"
 
 #: audacious/ui_manager.c:111
 msgid "Bars"
-msgstr ""
+msgstr "Полоски"
 
 #: audacious/ui_manager.c:115
-#, fuzzy
 msgid "Dot Scope"
-msgstr "/Режим графика/Точки"
+msgstr "Точки"
 
 #: audacious/ui_manager.c:116
-#, fuzzy
 msgid "Line Scope"
-msgstr "/Режим графика/Линии"
+msgstr "Линии"
 
 #: audacious/ui_manager.c:117
-#, fuzzy
 msgid "Solid Scope"
-msgstr "/Режим графика/Заливка"
+msgstr "Заливка"
 
 #: audacious/ui_manager.c:123
 msgid "Ice"
-msgstr ""
+msgstr "Лёд"
 
 #: audacious/ui_manager.c:128
-#, fuzzy
 msgid "Smooth"
-msgstr "моно"
+msgstr "Плавный"
 
 #: audacious/ui_manager.c:132
-#, fuzzy
 msgid "Full (~50 fps)"
-msgstr "/Частота обновления/Полная (~50 fps)"
+msgstr "Полная (~50 fps)"
 
 #: audacious/ui_manager.c:133
-#, fuzzy
 msgid "Half (~25 fps)"
-msgstr "/Частота обновления/Половина (~25 fps)"
+msgstr "Половина (~25 fps)"
 
 #: audacious/ui_manager.c:134
-#, fuzzy
 msgid "Quarter (~13 fps)"
-msgstr "/Частота обновления/Четверть (~13 fps)"
+msgstr "Четверть (~13 fps)"
 
 #: audacious/ui_manager.c:135
-#, fuzzy
 msgid "Eighth (~6 fps)"
-msgstr "/Частота обновления/Восьмая (~6 fps)"
+msgstr "Восьмая (~6 fps)"
 
 #: audacious/ui_manager.c:139 audacious/ui_manager.c:147
 msgid "Slowest"
-msgstr ""
+msgstr "Самое медленное"
 
 #: audacious/ui_manager.c:140 audacious/ui_manager.c:148
 msgid "Slow"
-msgstr ""
+msgstr "Медленное"
 
 #: audacious/ui_manager.c:141 audacious/ui_manager.c:149
 msgid "Medium"
-msgstr ""
+msgstr "Среднее"
 
 #: audacious/ui_manager.c:142 audacious/ui_manager.c:150
 msgid "Fast"
-msgstr ""
+msgstr "Быстрое"
 
 #: audacious/ui_manager.c:143 audacious/ui_manager.c:151
 msgid "Fastest"
-msgstr ""
+msgstr "Самое быстрое"
 
 #: audacious/ui_manager.c:155
-#, fuzzy
 msgid "Time Elapsed"
-msgstr "/Показывать прошедшее время"
+msgstr "Показывать прошедшее время"
 
 #: audacious/ui_manager.c:156
-#, fuzzy
 msgid "Time Remaining"
-msgstr "/Показывать оставшееся время"
+msgstr "Показывать оставшееся время"
 
 #: audacious/ui_manager.c:165
-#, fuzzy
 msgid "Playback"
-msgstr "/_Воспроизведение"
+msgstr "Воспроизведение"
 
 #: audacious/ui_manager.c:167 audacious/ui_manager.c:168
-#, fuzzy
 msgid "Play CD"
-msgstr "/Воспроизвести CD"
+msgstr "Воспроизвести CD"
 
 #: audacious/ui_manager.c:170 audacious/ui_manager.c:171
-#, fuzzy
 msgid "Play"
-msgstr "/Воспроизведение"
+msgstr "Воспроизведение"
 
 #: audacious/ui_manager.c:173 audacious/ui_manager.c:174
-#, fuzzy
 msgid "Pause"
-msgstr "/Приостановить"
+msgstr "Приостановить"
 
 #: audacious/ui_manager.c:176 audacious/ui_manager.c:177
-#, fuzzy
 msgid "Stop"
-msgstr "/Остановить"
+msgstr "Остановить"
 
 #: audacious/ui_manager.c:179 audacious/ui_manager.c:180
-#, fuzzy
 msgid "Previous"
-msgstr "/Предыдущая песня"
+msgstr "Предыдущая песня"
 
 #: audacious/ui_manager.c:182 audacious/ui_manager.c:183
-#, fuzzy
 msgid "Next"
-msgstr "/Следующая песня"
+msgstr "Следующая песня"
 
 #: audacious/ui_manager.c:188
-#, fuzzy
 msgid "Visualization"
-msgstr "/Режим _визуализации"
+msgstr "Визуализация"
 
 #: audacious/ui_manager.c:189
-#, fuzzy
 msgid "Visualization Mode"
-msgstr "/Визуализация"
+msgstr "Режим визуализации"
 
 #: audacious/ui_manager.c:190
-#, fuzzy
 msgid "Analyzer Mode"
-msgstr "/Режим анализатора/Пламя"
+msgstr "Режим анализатора"
 
 #: audacious/ui_manager.c:191
-#, fuzzy
 msgid "Scope Mode"
-msgstr "/Режим графика"
+msgstr "Режим графика"
 
 #: audacious/ui_manager.c:192
-#, fuzzy
 msgid "Voiceprint Mode"
-msgstr "/Режим отпечаток голоса"
+msgstr "Режим отпечаток голоса"
 
 #: audacious/ui_manager.c:193
-#, fuzzy
 msgid "WindowShade VU Mode"
-msgstr "/При минимизированном окне"
+msgstr "При минимизированном окне"
 
 #: audacious/ui_manager.c:194
-#, fuzzy
 msgid "Refresh Rate"
-msgstr "/Частота обновления"
+msgstr "Частота обновления"
 
 #: audacious/ui_manager.c:195
-#, fuzzy
 msgid "Analyzer Falloff"
-msgstr "/Падение анализатора"
+msgstr "Падение анализатора"
 
 #: audacious/ui_manager.c:196
-#, fuzzy
 msgid "Peaks Falloff"
-msgstr "/Падение пиков"
+msgstr "Падение пиков"
 
 #: audacious/ui_manager.c:201 audacious/ui_preferences.c:104
 #: audacious/playlist_manager.c:288 audacious/glade/prefswin.glade:2530
@@ -879,24 +838,20 @@ msgid "Playlist"
 msgstr "Список воспроизведения"
 
 #: audacious/ui_manager.c:203 audacious/ui_manager.c:204
-#, fuzzy
 msgid "New Playlist"
-msgstr "/Новый список"
+msgstr "Новый список"
 
 #: audacious/ui_manager.c:206 audacious/ui_manager.c:207
-#, fuzzy
 msgid "Select Next Playlist"
-msgstr "/Выбрать следующий список"
+msgstr "Выбрать следующий список"
 
 #: audacious/ui_manager.c:209 audacious/ui_manager.c:210
-#, fuzzy
 msgid "Select Previous Playlist"
-msgstr "/Выбрать предыдущий список"
+msgstr "Выбрать предыдущий список"
 
 #: audacious/ui_manager.c:212 audacious/ui_manager.c:213
-#, fuzzy
 msgid "Delete Playlist"
-msgstr "/Выбрать следующий список"
+msgstr "Удалить список"
 
 #: audacious/ui_manager.c:215
 msgid "Load List"
@@ -939,9 +894,8 @@ msgid "Opens the playlist manager."
 msgstr "Открывает окно управления списками."
 
 #: audacious/ui_manager.c:236
-#, fuzzy
 msgid "View"
-msgstr "/_Вид"
+msgstr "Вид"
 
 #: audacious/ui_manager.c:240
 msgid "Add CD..."
@@ -1144,71 +1098,59 @@ msgstr "Сортировать выбранные"
 
 #: audacious/ui_manager.c:381 audacious/ui_manager.c:384
 msgid "View Track Details"
-msgstr "Информация о записи"
+msgstr "Информация о дорожке"
 
 #: audacious/ui_manager.c:382 audacious/ui_manager.c:385
-#, fuzzy
 msgid "View track details"
-msgstr "Информация о записи"
+msgstr "Информация о дорожке"
 
 #: audacious/ui_manager.c:390
-#, fuzzy
 msgid "Play File"
-msgstr "/Воспроизвести файл"
+msgstr "Воспроизвести файл"
 
 #: audacious/ui_manager.c:391
-#, fuzzy
 msgid "Load and play a file"
-msgstr "Загружать информацию о песнях из файлов и списков воспроизведения"
+msgstr "Загрузить и воспроизвести файл"
 
 #: audacious/ui_manager.c:393
-#, fuzzy
 msgid "Play Location"
-msgstr "/Открыть адрес"
+msgstr "Открыть адрес"
 
 #: audacious/ui_manager.c:394
 msgid "Play media from the selected location"
-msgstr ""
+msgstr "Воспроизвести запись с указанного адреса"
 
 #: audacious/ui_manager.c:396
-#, fuzzy
 msgid "Preferences"
-msgstr "/Настройки"
+msgstr "Настройки"
 
 #: audacious/ui_manager.c:397
-#, fuzzy
 msgid "Open preferences window"
-msgstr "Окно настроек"
+msgstr "Открыть окно настроек"
 
 #: audacious/ui_manager.c:399
-#, fuzzy
 msgid "_Quit"
-msgstr "/_Выход"
+msgstr "_Выход"
 
 #: audacious/ui_manager.c:400
-#, fuzzy
 msgid "Quit Audacious"
-msgstr "Об Audacious"
+msgstr "Закрыть Audacious"
 
 #: audacious/ui_manager.c:402 audacious/ui_manager.c:403
-#, fuzzy
 msgid "Set A-B"
-msgstr "/Поставить метку A-B"
+msgstr "Поставить метку A-B"
 
 #: audacious/ui_manager.c:405 audacious/ui_manager.c:406
-#, fuzzy
 msgid "Clear A-B"
-msgstr "/Убрать метки A-B"
+msgstr "Убрать метки A-B"
 
 #: audacious/ui_manager.c:408 audacious/ui_manager.c:409
-#, fuzzy
 msgid "Jump to Playlist Start"
-msgstr "/Перейти на первую песню в списке"
+msgstr "Перейти на первую песню в списке"
 
 #: audacious/ui_manager.c:411 audacious/ui_manager.c:412
-#, fuzzy
 msgid "Jump to File"
-msgstr "/Перескочить на файл"
+msgstr "Перескочить на дорожку"
 
 #: audacious/ui_manager.c:417
 msgid "Queue Toggle"
@@ -1813,7 +1755,7 @@ msgstr "Загружать информацию о песнях из файло�
 msgid "Load metadata when adding the file to the playlist or opening it"
 msgstr ""
 "Загружать метаданные при добавлении файла в список воспроизведения или "
-"открытии"
+"при открытии"
 
 #: audacious/glade/prefswin.glade:1950
 msgid "On load"
@@ -1859,7 +1801,7 @@ msgid ""
 "directories, and Gnome VFS should handle automatically)."
 msgstr ""
 "Всегда обновлять окно выбора файлов (это замедлит открытие окна для больших "
-"каталогов, при использовании Gnome VFS обновление происходит автоматически)."
+"каталогов; при использовании Gnome VFS обновление происходит автоматически)."
 
 #: audacious/glade/prefswin.glade:2168
 msgid "Always refresh directory when opening file dialog"
@@ -2035,7 +1977,7 @@ msgid ""
 "of format detection."
 msgstr ""
 "Если включено, то Audacious будет определять формат файла по расширению. Это "
-"немного медленнее, чем распознавание при необходимости, зато предоставляет "
+"немного медленнее, чем распознавание при необходимости, но предоставляет "
 "минимальный уровень распознавания файлов."
 
 #: audacious/glade/prefswin.glade:3908
@@ -2212,96 +2154,3 @@ msgstr "Номер дорожки"
 #: libaudacious/titlestring.c:441
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: Отображать \"...\", когда элемент %n присутствует"
-
-#~ msgid "/View Track Details"
-#~ msgstr "/Информация о песне"
-
-#~ msgid "/Visualization Mode/Analyzer"
-#~ msgstr "/Режим визуализации/Анализатор"
-
-#~ msgid "/Visualization Mode/Scope"
-#~ msgstr "/Режим визуализации/График"
-
-#~ msgid "/Visualization Mode/Voiceprint"
-#~ msgstr "/Режим визуализации/Отпечаток голоса"
-
-#~ msgid "/Visualization Mode/Off"
-#~ msgstr "/Режим визуализации/Выключено"
-
-#~ msgid "/Analyzer Mode/Normal"
-#~ msgstr "/Режим анализатора/Обычный"
-
-#~ msgid "/Analyzer Mode/Lines"
-#~ msgstr "/Режим анализатора/Линии"
-
-#~ msgid "/Analyzer Mode/Bars"
-#~ msgstr "/Режим анализатора/Полоски"
-
-#~ msgid "/Analyzer Mode/Peaks"
-#~ msgstr "/Режим анализатора/Пики"
-
-#~ msgid "/Voiceprint mode/Normal"
-#~ msgstr "/Режим отпечаток голоса/Обычный"
-
-#~ msgid "/Voiceprint mode/Fire"
-#~ msgstr "/Режим отпечаток голоса/Пламя"
-
-#~ msgid "/Voiceprint mode/Ice"
-#~ msgstr "/Режим отпечаток голоса/Лёд"
-
-#~ msgid "/WindowShade VU Mode/Normal"
-#~ msgstr "/При минимизированном окне/Обычный"
-
-#~ msgid "/WindowShade VU Mode/Smooth"
-#~ msgstr "/При минимизированном окне/Плавный"
-
-#~ msgid "/Analyzer Falloff/Slowest"
-#~ msgstr "/Падение Анализатора/Самое медленное"
-
-#~ msgid "/Analyzer Falloff/Slow"
-#~ msgstr "/Падение Анализатора/Медленное"
-
-#~ msgid "/Analyzer Falloff/Medium"
-#~ msgstr "/Падение Анализатора/Среднее"
-
-#~ msgid "/Analyzer Falloff/Fast"
-#~ msgstr "/Падение Анализатора/Быстрое"
-
-#~ msgid "/Analyzer Falloff/Fastest"
-#~ msgstr "/Падение Анализатора/Самое быстрое"
-
-#~ msgid "/Peaks Falloff/Slowest"
-#~ msgstr "/Падение пиков/Самое медленное"
-
-#~ msgid "/Peaks Falloff/Slow"
-#~ msgstr "/Падение пиков/Медленное"
-
-#~ msgid "/Peaks Falloff/Medium"
-#~ msgstr "/Падение пиков/Среднее"
-
-#~ msgid "/Peaks Falloff/Fast"
-#~ msgstr "/Падение пиков/Быстрое"
-
-#~ msgid "/Peaks Falloff/Fastest"
-#~ msgstr "/Падение пиков/Самое быстрое"
-
-#~ msgid "/Jump to Time"
-#~ msgstr "/Перескочить на время"
-
-#~ msgid "/About Audacious"
-#~ msgstr "/Об Audacious"
-
-#~ msgid "/Files..."
-#~ msgstr "/Файлы..."
-
-#~ msgid "/Internet location..."
-#~ msgstr "/Адрес в интернет..."
-
-#~ msgid "New List"
-#~ msgstr "Новый список"
-
-#~ msgid "Creates a new playlist."
-#~ msgstr "Создает новый список."
-
-#~ msgid "Displays track information."
-#~ msgstr "Показывает информацию о записи."

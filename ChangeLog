@@ -1,3 +1,12 @@
+2007-01-05 07:45:10 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3563]
+  - update cy.po (again):
+  472 translated messages.
+  
+  trunk/po/cy.po |   84 ++++++++++++++++++++++++++++-----------------------------
+  1 file changed, 42 insertions(+), 42 deletions(-)
+
+
 2007-01-05 06:21:40 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3561]
   - fix XML handler reference (action="view roll up player" -> "roll up player")
