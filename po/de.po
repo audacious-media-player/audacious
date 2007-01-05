@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-01-04 17:23-0600\n"
-"PO-Revision-Date: 2007-01-05 20:38+0100\n"
+"PO-Revision-Date: 2007-01-05 21:15+0100\n"
 "Last-Translator: Michael Hanselmann\n"
 "Language-Team: german <psic4t@netbands.de>\n"
 "MIME-Version: 1.0\n"
@@ -388,7 +388,7 @@ msgstr "In der Wiedergabeliste vorwärts springen"
 
 #: audacious/main.c:822
 msgid "Display Jump to file dialog"
-msgstr ""
+msgstr "«Springe zu Datei»-Fenster anzeigen"
 
 #  -e, --enqueue switch
 #: audacious/main.c:825
@@ -579,11 +579,11 @@ msgstr "DATEI-INFORMATIONSBOX"
 
 #: audacious/ui_main.c:2730
 msgid "DISABLE DOUBLESIZE"
-msgstr ""
+msgstr "DOPPELTE GRÖSSE DEAKTIVIEREN"
 
 #: audacious/ui_main.c:2732
 msgid "ENABLE DOUBLESIZE"
-msgstr ""
+msgstr "DOPPELTE GRÖSSE AKTIVIEREN"
 
 #: audacious/ui_main.c:2735
 msgid "VISUALIZATION MENU"
@@ -935,11 +935,11 @@ msgstr "Liste erneuern"
 
 #: audacious/ui_manager.c:226
 msgid "Refreshes metadata associated with a playlist entry."
-msgstr ""
+msgstr "Aktualisiert mit diesem Eintrag verknüpfte Metadaten"
 
 #: audacious/ui_manager.c:229
 msgid "List Manager"
-msgstr ""
+msgstr "Listenverwatung"
 
 #  -e, --enqueue switch
 #: audacious/ui_manager.c:230
@@ -965,7 +965,7 @@ msgstr "Internetadresse hinzufügen..."
 
 #: audacious/ui_manager.c:245
 msgid "Adds a remote track to the playlist."
-msgstr ""
+msgstr "Fügt einen entfernten Eintrag zur Wiedergabeliste hinzu"
 
 #: audacious/ui_manager.c:248
 msgid "Add Files..."
@@ -982,7 +982,7 @@ msgstr "Suchen und auswählen"
 
 #: audacious/ui_manager.c:255
 msgid "Searches the playlist and selects playlist entries based on specific criteria."
-msgstr ""
+msgstr "Durchsucht die Wiedergabeliste und spielt Einträge anhand verschiedener Kriterien"
 
 #: audacious/ui_manager.c:258
 msgid "Invert Selection"
@@ -990,7 +990,7 @@ msgstr "Auswahl umkehren"
 
 #: audacious/ui_manager.c:259
 msgid "Inverts the selected and unselected entries."
-msgstr ""
+msgstr "Kehrt die Auswahl um"
 
 #: audacious/ui_manager.c:262
 #: audacious/glade/addfiles.glade:105
@@ -999,7 +999,7 @@ msgstr "Alle auswählen"
 
 #: audacious/ui_manager.c:263
 msgid "Selects all of the playlist entries."
-msgstr ""
+msgstr "Alle Wiedergabelisteneinträge auswählen"
 
 #: audacious/ui_manager.c:266
 msgid "Select None"
@@ -1007,7 +1007,7 @@ msgstr "Nichts auswählen"
 
 #: audacious/ui_manager.c:267
 msgid "Deselects all of the playlist entries."
-msgstr ""
+msgstr "Alle Wiedergabelisteneinträge abwählen"
 
 #: audacious/ui_manager.c:272
 msgid "Clear Queue"
@@ -1015,7 +1015,7 @@ msgstr "Queue löschen"
 
 #: audacious/ui_manager.c:273
 msgid "Clears the queue associated with this playlist."
-msgstr ""
+msgstr "Leert die mit dieser Wiedergabeliste verknüpfte Warteschlange"
 
 #: audacious/ui_manager.c:276
 msgid "Remove Unavailable Files"
@@ -1037,7 +1037,7 @@ msgstr "Nach Titel"
 
 #: audacious/ui_manager.c:283
 msgid "Removes duplicate entries from the playlist by title."
-msgstr ""
+msgstr "Löscht anhand des Titels doppelte Einträge aus der Wiedergabeliste."
 
 #: audacious/ui_manager.c:286
 #: audacious/ui_manager.c:326
@@ -1057,7 +1057,7 @@ msgstr "Nach Pfad & Dateinamen"
 
 #: audacious/ui_manager.c:291
 msgid "Removes duplicate entries from the playlist by their full path."
-msgstr ""
+msgstr "Löscht anhand des vollen Dateipfads doppelte Einträge aus der Wiedergabeliste."
 
 #: audacious/ui_manager.c:294
 msgid "Remove All"
@@ -1065,7 +1065,7 @@ msgstr "Alle entfernen"
 
 #: audacious/ui_manager.c:295
 msgid "Removes all entries from the playlist."
-msgstr ""
+msgstr "Löscht alle Einträge aus der Wiedergabeliste"
 
 #: audacious/ui_manager.c:298
 msgid "Remove Unselected"
@@ -1073,7 +1073,7 @@ msgstr "Nicht ausgewählte entfernen"
 
 #: audacious/ui_manager.c:299
 msgid "Remove unselected entries from the playlist."
-msgstr ""
+msgstr "Nicht ausgewählte Einträge aus der Wiedergabeliste löschen"
 
 #: audacious/ui_manager.c:302
 msgid "Remove Selected"
@@ -1081,7 +1081,7 @@ msgstr "Ausgewählte entfernen"
 
 #: audacious/ui_manager.c:303
 msgid "Remove selected entries from the playlist."
-msgstr ""
+msgstr "Ausgewählte Einträge aus der Wiedergabeliste löschen"
 
 #: audacious/ui_manager.c:308
 msgid "Randomize List"
@@ -1187,7 +1187,7 @@ msgstr "Internetadresse wiedergeben"
 
 #: audacious/ui_manager.c:394
 msgid "Play media from the selected location"
-msgstr ""
+msgstr "Medien vom ausgewählten Ort abspielen"
 
 #: audacious/ui_manager.c:396
 msgid "Preferences"
@@ -1277,7 +1277,7 @@ msgstr "Standard"
 
 #: audacious/ui_manager.c:437
 msgid "Load default preset into equalizer"
-msgstr ""
+msgstr "Standardeinstellung in Equalizer laden"
 
 #: audacious/ui_manager.c:439
 msgid "Zero"
@@ -1457,7 +1457,7 @@ msgstr "Titel-Informationsfenster"
 
 #: audacious/ui_fileinfo.c:336
 msgid "Track Information Popup"
-msgstr ""
+msgstr "Titelinformationsfenster"
 
 #: audacious/ui_playlist.c:495
 msgid "Search entries in active playlist"
@@ -1465,7 +1465,7 @@ msgstr "Einträge in der aktiven Wiedergabeliste suchen"
 
 #: audacious/ui_playlist.c:501
 msgid "Select entries in playlist by filling one or more fields. Fields use regular expressions syntax, case-insensitive. If you don't know how regular expressions work, simply insert a literal portion of what you're searching for."
-msgstr ""
+msgstr "Wiedergabelisteneinträge durch Eingabe von einem oder mehreren Feldern auswählen. Benutzt reguläre Ausdrücke ohne Beachtung der Gross- und Kleinschreibung. Falls diese unbekannt sind, kann auch einfach ein Suchbegriff eingegeben werden."
 
 #: audacious/ui_playlist.c:508
 msgid "Track name: "
@@ -1485,15 +1485,15 @@ msgstr "Dateiname:"
 
 #: audacious/ui_playlist.c:533
 msgid "Clear previous selection before searching"
-msgstr ""
+msgstr "Vor der Suche vorherige Auswahl entfernen"
 
 #: audacious/ui_playlist.c:536
 msgid "Automatically toggle queue for matching entries"
-msgstr ""
+msgstr "Für passende Einträge Warteschlange automatisch umschalten"
 
 #: audacious/ui_playlist.c:539
 msgid "Create a new playlist with matching entries"
-msgstr ""
+msgstr "Erstelle neue Wiedergabeliste mit den passenden Einträgen"
 
 #: audacious/ui_playlist.c:768
 #, c-format
@@ -1575,7 +1575,7 @@ msgstr "Wiedergabelistenverwaltung"
 
 #: audacious/playlist_manager.c:292
 msgid "Entries"
-msgstr ""
+msgstr "Einträge"
 
 #: audacious/playlist_manager.c:306
 msgid "_Rename"
@@ -1744,23 +1744,23 @@ msgstr "Eigenen Cursor benutzen"
 #: audacious/glade/prefswin.glade:1279
 #: audacious/glade/prefswin.glade:1290
 msgid "This enables the window manager to show decorations for windows."
-msgstr ""
+msgstr "Hiermit werden Window-Manager-Dekorationen für die Fenster aktiviert."
 
 #: audacious/glade/prefswin.glade:1281
 msgid "Show window manager decoration"
-msgstr ""
+msgstr "Window-Manager-Dekoration anzeigen"
 
 #: audacious/glade/prefswin.glade:1289
 msgid "Show window manager decorations"
-msgstr ""
+msgstr "Window-Manager-Dekorationen anzeigen"
 
 #: audacious/glade/prefswin.glade:1319
 msgid "This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly)."
-msgstr ""
+msgstr "XMMS/GTK1-mässiger Dateiauswahldialog aktivieren. Dieser wird von Audacious zur Verfügung gestellt und ist schneller als derjenige von GTK2, aber auch nicht so benutzerfreundlich."
 
 #: audacious/glade/prefswin.glade:1321
 msgid "Use XMMS-style file selector instead of the default selector"
-msgstr ""
+msgstr "Benutze XMMS-mässige Dateiauswahl anstatt die standardmässige"
 
 #: audacious/glade/prefswin.glade:1355
 msgid "Enables playlist transparency. This is not recommended for slower machines as it requires some CPU time to create and cache the pixmaps used for the transparency."
@@ -1804,7 +1804,7 @@ msgstr "%20 zu Leerzeichen konvertieren"
 
 #: audacious/glade/prefswin.glade:1835
 msgid "Convert backslash '\\' to forward slash '/'"
-msgstr ""
+msgstr "Umgekehrter Schrägstich (\\) zu normalem Schrägstrich (/) umwandeln"
 
 #: audacious/glade/prefswin.glade:1869
 msgid "<b>Metadata</b>"
@@ -2072,15 +2072,15 @@ msgstr "Suchtiefe:"
 
 #: audacious/glade/prefswin.glade:4572
 msgid "Use per-file cover"
-msgstr ""
+msgstr "Pro-Datei-Titelbild benutzen"
 
 #: audacious/glade/prefswin.glade:4633
 msgid "Color Adjustment"
-msgstr ""
+msgstr "Farbanpassung"
 
 #: audacious/glade/prefswin.glade:4656
 msgid "Audacious allows you to alter the color balance of the skinned UI. The sliders below will allow you to do this."
-msgstr ""
+msgstr "Audacious erlaubt es, die Farbe der Oberfläche mit der Schiebeleiste unten zu ändern."
 
 #: audacious/glade/prefswin.glade:4752
 msgid "Red"

@@ -1,3 +1,11 @@
+2007-01-05 19:40:46 +0000  Michael Hanselmann <hansmi@forkbomb.ch>
+  revision [3570]
+  Switch to poedit, hence the big diff. Update fuzzy translations. New ones still left untouched.
+  
+  trunk/po/de.po | 1761 +++++++++++++--------------------------------------------
+  1 file changed, 406 insertions(+), 1355 deletions(-)
+
+
 2007-01-05 09:16:37 +0000  Alexandr Orlov <alxorlov@pochta.ru>
   revision [3568]
   Update russian translation
