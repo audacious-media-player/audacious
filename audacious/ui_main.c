@@ -251,12 +251,8 @@ static void
 mainwin_set_shade(gboolean shaded)
 {
     GtkAction *action = gtk_action_group_get_action(
-      toggleaction_group_others , "view roll up player" );
+      toggleaction_group_others , "roll up player" );
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(action) , shaded );
-/*
-    GtkWidget *widget = gtk_ui_manager_get_widget(ui_manager,
-      "/mainwin-menus/main-menu/view/view roll up player" );
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget), shaded);*/
 }
 
 static void

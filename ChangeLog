@@ -1,3 +1,12 @@
+2007-01-05 04:22:10 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3559]
+  - update cy.po:
+  431 translated messages, 41 untranslated messages.
+  
+  trunk/po/cy.po |  771 +++++++++++++++++++++++++--------------------------------
+  1 file changed, 342 insertions(+), 429 deletions(-)
+
+
 2007-01-05 01:22:49 +0000  Stephen Sokolow <deitarion@gmail.com>
   revision [3557]
   Fix the accidental overlap between the contents of README.bmp/NEWS.bmp and the PC bitmap magic bytes.
