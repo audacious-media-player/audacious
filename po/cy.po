@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Audacious 1.3.0\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-01-04 17:23-0600\n"
-"PO-Revision-Date: 2007-01-04 23:08-0600\n"
+"PO-Revision-Date: 2007-01-05 02:32-0600\n"
 "Last-Translator: William Pitcock <nenolod@atheme.org>\n"
 "Language-Team: Cynmaeg <i18n@nenolod.net>\n"
 "MIME-Version: 1.0\n"
@@ -901,7 +901,7 @@ msgstr "Llwytho'r rhestr chwarae"
 
 #: audacious/ui_manager.c:216
 msgid "Loads a playlist file into the selected playlist."
-msgstr ""
+msgstr "Llwytho'r rhestr chwarae ffeil actif rhestr."
 
 #: audacious/ui_manager.c:218
 msgid "Save List"
@@ -909,7 +909,7 @@ msgstr "Cadw'r Rhestr"
 
 #: audacious/ui_manager.c:219
 msgid "Saves the selected playlist."
-msgstr ""
+msgstr "Cadw'r ddewis rhestr chwarae."
 
 #: audacious/ui_manager.c:221
 msgid "Save Default List"
@@ -917,7 +917,7 @@ msgstr "Cadw'r Rhagosodiad Newydd"
 
 #: audacious/ui_manager.c:222
 msgid "Saves the selected playlist to the default location."
-msgstr ""
+msgstr "Cadw'r ddewis rhestr chwarae y am rhagosodedig lleoliad."
 
 #: audacious/ui_manager.c:225
 msgid "Refresh List"
@@ -925,7 +925,7 @@ msgstr "Graddfa Rhestr"
 
 #: audacious/ui_manager.c:226
 msgid "Refreshes metadata associated with a playlist entry."
-msgstr ""
+msgstr "Adnewyddu metadata cysylltiol rhestr chwarae llyfrifiad."
 
 #: audacious/ui_manager.c:229
 msgid "List Manager"
@@ -945,7 +945,7 @@ msgstr "Ychwanegu CD..."
 
 #: audacious/ui_manager.c:241
 msgid "Adds a CD to the playlist."
-msgstr ""
+msgstr "Adio y CD at ar rhestr chwarae."
 
 #: audacious/ui_manager.c:244
 msgid "Add Internet Address..."
@@ -953,7 +953,7 @@ msgstr "Ychwanegu·URL..."
 
 #: audacious/ui_manager.c:245
 msgid "Adds a remote track to the playlist."
-msgstr ""
+msgstr "Adio y diarffordd trac at ar rhestr chwarae."
 
 #: audacious/ui_manager.c:248
 msgid "Add Files..."
@@ -961,7 +961,7 @@ msgstr "Ychwanegu Ffeiliau..."
 
 #: audacious/ui_manager.c:249
 msgid "Adds files to the playlist."
-msgstr ""
+msgstr "Adio y ffeil at ar rhestr chwarae."
 
 #: audacious/ui_manager.c:254
 msgid "Search and Select"
@@ -969,7 +969,7 @@ msgstr "Archwilio y Dewis"
 
 #: audacious/ui_manager.c:255
 msgid "Searches the playlist and selects playlist entries based on specific criteria."
-msgstr ""
+msgstr "Archwilio am rhestr chwarae a dewis llyfrifiadau am rhestr chwarae seiliedig defnyddwyr mewnbynnu."
 
 #: audacious/ui_manager.c:258
 msgid "Invert Selection"
@@ -977,7 +977,7 @@ msgstr "Dewis Gwrth-droi"
 
 #: audacious/ui_manager.c:259
 msgid "Inverts the selected and unselected entries."
-msgstr ""
+msgstr "Gwrth-droi ar dewis y dad-dewis llyfrifiadau."
 
 #: audacious/ui_manager.c:262
 #: audacious/glade/addfiles.glade:105
@@ -986,7 +986,7 @@ msgstr "Dewis Popeth"
 
 #: audacious/ui_manager.c:263
 msgid "Selects all of the playlist entries."
-msgstr ""
+msgstr "Dewis popeth am yr rhestr chwarae."
 
 #: audacious/ui_manager.c:266
 msgid "Select None"
@@ -994,7 +994,7 @@ msgstr "Dewis Didoli"
 
 #: audacious/ui_manager.c:267
 msgid "Deselects all of the playlist entries."
-msgstr ""
+msgstr "Dewis didoli am yr rhestr chwarae."
 
 #: audacious/ui_manager.c:272
 msgid "Clear Queue"
@@ -1002,7 +1002,7 @@ msgstr "Clirio'r Rhes"
 
 #: audacious/ui_manager.c:273
 msgid "Clears the queue associated with this playlist."
-msgstr ""
+msgstr "Clirio ar rhes atafaeliau at am rhestr chwarae."
 
 #: audacious/ui_manager.c:276
 msgid "Remove Unavailable Files"
@@ -1024,7 +1024,7 @@ msgstr "Yn ôl Teitl"
 
 #: audacious/ui_manager.c:283
 msgid "Removes duplicate entries from the playlist by title."
-msgstr ""
+msgstr "Tynnu'r dyblyg llyfrifiadau am yr rhestr chwarae at teitl."
 
 #: audacious/ui_manager.c:286
 #: audacious/ui_manager.c:326
@@ -1034,7 +1034,7 @@ msgstr "Yn ôl Enw ffeil"
 
 #: audacious/ui_manager.c:287
 msgid "Removes duplicate entries from the playlist by filename."
-msgstr ""
+msgstr "Tynnu'r dyblyg llyfrifiadau am yr rhestr chwarae at enw ffeil."
 
 #: audacious/ui_manager.c:290
 #: audacious/ui_manager.c:330
@@ -1044,7 +1044,7 @@ msgstr "Yn ôl Llwybr + Enw ffeil"
 
 #: audacious/ui_manager.c:291
 msgid "Removes duplicate entries from the playlist by their full path."
-msgstr ""
+msgstr "Tynnu'r dyblyg llyfrifiadau am yr rhestr chwarae at enw ffeil am llwbyr."
 
 #: audacious/ui_manager.c:294
 msgid "Remove All"
@@ -1052,7 +1052,7 @@ msgstr "Tynnu'r Gyrrwr"
 
 #: audacious/ui_manager.c:295
 msgid "Removes all entries from the playlist."
-msgstr ""
+msgstr "Tynnu'r gyrrwr llyfrifiadau am yr rhestr chwarae."
 
 #: audacious/ui_manager.c:298
 msgid "Remove Unselected"
@@ -1060,7 +1060,7 @@ msgstr "Tynnu'r Dad-dewis"
 
 #: audacious/ui_manager.c:299
 msgid "Remove unselected entries from the playlist."
-msgstr ""
+msgstr "Tynnu'r dad-dewis llyfrifiadau gan a rhestr chwarae."
 
 #: audacious/ui_manager.c:302
 msgid "Remove Selected"
@@ -1068,7 +1068,7 @@ msgstr "Tynnu'r Dewis"
 
 #: audacious/ui_manager.c:303
 msgid "Remove selected entries from the playlist."
-msgstr ""
+msgstr "Tynnu'r dewis llyfrifiadau gan a rhestr chwarae."
 
 #: audacious/ui_manager.c:308
 msgid "Randomize List"
@@ -1076,7 +1076,7 @@ msgstr "Hapio'r Rhestr"
 
 #: audacious/ui_manager.c:309
 msgid "Randomizes the playlist."
-msgstr ""
+msgstr "Hapio'r yr rhestr chwarae."
 
 #: audacious/ui_manager.c:312
 msgid "Reverse List"
@@ -1084,7 +1084,7 @@ msgstr "Cildroi'r Rhestr"
 
 #: audacious/ui_manager.c:313
 msgid "Reverses the playlist."
-msgstr ""
+msgstr "Cildroi'r yr rhestr chwarae."
 
 #: audacious/ui_manager.c:316
 msgid "Sort List"
@@ -1093,7 +1093,7 @@ msgstr "Rhestr Didoli"
 #: audacious/ui_manager.c:319
 #: audacious/ui_manager.c:349
 msgid "Sorts the list by title."
-msgstr ""
+msgstr "Rhestr didoli yn ôl teitl."
 
 #: audacious/ui_manager.c:322
 #: audacious/ui_manager.c:352
@@ -1103,17 +1103,17 @@ msgstr "Yn ôl Cyflawnwr"
 #: audacious/ui_manager.c:323
 #: audacious/ui_manager.c:353
 msgid "Sorts the list by artist."
-msgstr ""
+msgstr "Rhestr didoli yn ôl cyflawnwr."
 
 #: audacious/ui_manager.c:327
 #: audacious/ui_manager.c:357
 msgid "Sorts the list by filename."
-msgstr ""
+msgstr "Rhestr didoli yn ôl enw ffeil."
 
 #: audacious/ui_manager.c:331
 #: audacious/ui_manager.c:361
 msgid "Sorts the list by full pathname."
-msgstr ""
+msgstr "Rhestr didoli yn ôl llwybr + enw ffiel."
 
 #: audacious/ui_manager.c:334
 #: audacious/ui_manager.c:364
@@ -1123,7 +1123,7 @@ msgstr "Yn ôl Dyddiad"
 #: audacious/ui_manager.c:335
 #: audacious/ui_manager.c:365
 msgid "Sorts the list by modification time."
-msgstr ""
+msgstr "Rhestr didoli yn ôl dyddiad."
 
 #: audacious/ui_manager.c:338
 #: audacious/ui_manager.c:368
@@ -1133,7 +1133,7 @@ msgstr "Yn ôl Trac"
 #: audacious/ui_manager.c:339
 #: audacious/ui_manager.c:369
 msgid "Sorts the list by track number."
-msgstr ""
+msgstr "Rhestr didoli yn ôl rhif y trac."
 
 #: audacious/ui_manager.c:342
 #: audacious/ui_manager.c:372
@@ -1143,7 +1143,7 @@ msgstr "Yn ôl chwarae"
 #: audacious/ui_manager.c:343
 #: audacious/ui_manager.c:373
 msgid "Sorts the list by playlist entry."
-msgstr ""
+msgstr "Rhestr didoli yn ôl rhestr dewis."
 
 #: audacious/ui_manager.c:346
 msgid "Sort Selected"
@@ -1173,7 +1173,7 @@ msgstr "Chwarae Lleoliad"
 
 #: audacious/ui_manager.c:394
 msgid "Play media from the selected location"
-msgstr ""
+msgstr "Chwarae cyfryngau gan dewis lleoliad"
 
 #: audacious/ui_manager.c:396
 msgid "Preferences"
@@ -1217,7 +1217,7 @@ msgstr "Rhesu - Dad-rhesu"
 
 #: audacious/ui_manager.c:418
 msgid "Enables/disables the entry in the playlist's queue."
-msgstr ""
+msgstr "Toglo llyfrifiad am rhestr chwarae rhes."
 
 #: audacious/ui_manager.c:425
 msgid "Load"
@@ -1262,7 +1262,7 @@ msgstr "Rhagosodedig"
 
 #: audacious/ui_manager.c:437
 msgid "Load default preset into equalizer"
-msgstr ""
+msgstr "Llwytho rhagosodiad rhagosodau am hafalydd"
 
 #: audacious/ui_manager.c:439
 msgid "Zero"
@@ -1746,7 +1746,7 @@ msgstr "Defnyddio ffiel dewiswr XMMS"
 
 #: audacious/glade/prefswin.glade:1355
 msgid "Enables playlist transparency. This is not recommended for slower machines as it requires some CPU time to create and cache the pixmaps used for the transparency."
-msgstr ""
+msgstr "Toglo rhestr chwarae tryloyw."
 
 #: audacious/glade/prefswin.glade:1357
 msgid "Enable playlist transparency"
@@ -1794,7 +1794,7 @@ msgstr "<b>Gwybodaeth</b>"
 
 #: audacious/glade/prefswin.glade:1908
 msgid "Load metadata (tag information) from music files."
-msgstr ""
+msgstr "Llwytho'r metadata o ffeil cerdd."
 
 #: audacious/glade/prefswin.glade:1910
 msgid "Load metadata from playlists and files"
@@ -1802,7 +1802,7 @@ msgstr "Defnyddio meta data mewn rhestrau chwarae"
 
 #: audacious/glade/prefswin.glade:1948
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
+msgstr "Llwytho'r metadata pryd ychwanegu ffeil am ar rhestr chwarae ai agor ffeil"
 
 #: audacious/glade/prefswin.glade:1950
 msgid "On load"
@@ -1810,7 +1810,7 @@ msgstr "Am llwytho"
 
 #: audacious/glade/prefswin.glade:1970
 msgid "Load metadata on demand when displaying the file in the playlist"
-msgstr ""
+msgstr "Llwytho'r metadata at galw pryd gofyn ar ffeil am ar rhestr chwarae"
 
 #: audacious/glade/prefswin.glade:1972
 msgid "On display"
@@ -1822,7 +1822,7 @@ msgstr "Arallddewisiol cymeriad mathau:"
 
 #: audacious/glade/prefswin.glade:2030
 msgid "List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr ""
+msgstr "Rhestr am arallddewisiol cymeriad cynefino am mathau trawsnewidiau am metadata. Os awtoganfod cymeriad ffaelu ai ys anablu, yr rhestr ys defnyddio."
 
 #: audacious/glade/prefswin.glade:2071
 msgid "Auto character encoding detector for:"
@@ -1834,7 +1834,7 @@ msgstr "<b>Ceridwyn deialog</b>"
 
 #: audacious/glade/prefswin.glade:2166
 msgid "Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."
-msgstr ""
+msgstr "Bob amser adnewyddu yr ffeil ffenestr"
 
 #: audacious/glade/prefswin.glade:2168
 msgid "Always refresh directory when opening file dialog"
@@ -1872,7 +1872,7 @@ msgstr ""
 
 #: audacious/glade/prefswin.glade:2351
 msgid "Show information about titlestring format"
-msgstr ""
+msgstr "Dangos gwybodaeth am titlestring"
 
 #: audacious/glade/prefswin.glade:2401
 msgid "<b>Popup Information</b>"
@@ -1880,7 +1880,7 @@ msgstr "<b>Gwybodaeth Popup</b>"
 
 #: audacious/glade/prefswin.glade:2452
 msgid "Toggles popup information window for the pointed entry in the playlist. The window shows title of song, name of album, genre, year of publish, track number, track length, and artwork."
-msgstr ""
+msgstr "Toglo ffenestr celfyddydau."
 
 #: audacious/glade/prefswin.glade:2454
 msgid "Show popup information for playlist entries"
@@ -1888,7 +1888,7 @@ msgstr "Dangos gwybodaeth am chwarae llyfrifiadau"
 
 #: audacious/glade/prefswin.glade:2481
 msgid "Edit settings for popup information"
-msgstr ""
+msgstr "Golygyddion ffenestr celfyddydau machludiadau"
 
 #: audacious/glade/prefswin.glade:2589
 msgid "<b>Presets</b>"
@@ -1995,7 +1995,7 @@ msgstr "<b>Chwarae</b>"
 
 #: audacious/glade/prefswin.glade:3981
 msgid "When Audacious starts, automatically begin playing from the point where we stopped before."
-msgstr ""
+msgstr "Ar cychwyn am Audacious, awtomatig cychwyn chwarae."
 
 #: audacious/glade/prefswin.glade:3983
 msgid "Continue playback on startup"
@@ -2003,7 +2003,7 @@ msgstr "Parhau Chrawae am Cychwyn"
 
 #: audacious/glade/prefswin.glade:4017
 msgid "When finished playing a song, don't automatically advance to the next."
-msgstr ""
+msgstr "Pryd ar ben chwarae y cerddi, na awtomatig darparu."
 
 #: audacious/glade/prefswin.glade:4019
 msgid "Don't advance in the playlist"

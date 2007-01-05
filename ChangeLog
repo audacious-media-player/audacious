@@ -1,3 +1,11 @@
+2007-01-05 06:21:40 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3561]
+  - fix XML handler reference (action="view roll up player" -> "roll up player")
+  
+  trunk/audacious/ui_main.c |    6 +-----
+  1 file changed, 1 insertion(+), 5 deletions(-)
+
+
 2007-01-05 04:22:10 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3559]
   - update cy.po:
