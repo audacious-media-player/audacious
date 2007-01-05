@@ -1,3 +1,10 @@
+2007-01-05 09:16:37 +0000  Alexandr Orlov <alxorlov@pochta.ru>
+  revision [3568]
+  Update russian translation
+  trunk/po/ru.po |  335 +++++++++++++++------------------------------------------
+  1 file changed, 92 insertions(+), 243 deletions(-)
+
+
 2007-01-05 07:45:10 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3563]
   - update cy.po (again):
