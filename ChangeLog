@@ -1,3 +1,10 @@
+2007-01-04 23:55:20 +0000  Strahinja Kustudi <kustodian@gmail.com>
+  revision [3555]
+  Fixed one small typo
+  trunk/po/sr.po |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2007-01-04 23:40:06 +0000  Giacomo Lozito <james@develia.org>
   revision [3553]
   - untransatable strings: fixed the fix :)
