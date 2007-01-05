@@ -1,3 +1,12 @@
+2007-01-05 01:22:49 +0000  Stephen Sokolow <deitarion@gmail.com>
+  revision [3557]
+  Fix the accidental overlap between the contents of README.bmp/NEWS.bmp and the PC bitmap magic bytes.
+  
+  trunk/NEWS.bmp   |    1 +
+  trunk/README.bmp |    1 +
+  2 files changed, 2 insertions(+)
+
+
 2007-01-04 23:55:20 +0000  Strahinja Kustudi <kustodian@gmail.com>
   revision [3555]
   Fixed one small typo
