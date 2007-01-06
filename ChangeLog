@@ -1,3 +1,11 @@
+2007-01-05 20:17:04 +0000  Michael Hanselmann <hansmi@forkbomb.ch>
+  revision [3572]
+  Translate new strings
+  
+  trunk/po/de.po |   68 ++++++++++++++++++++++++++++-----------------------------
+  1 file changed, 34 insertions(+), 34 deletions(-)
+
+
 2007-01-05 19:40:46 +0000  Michael Hanselmann <hansmi@forkbomb.ch>
   revision [3570]
   Switch to poedit, hence the big diff. Update fuzzy translations. New ones still left untouched.

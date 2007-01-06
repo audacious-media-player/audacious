@@ -604,6 +604,10 @@ bmp_config_load(void)
 
     if (!cfg.session_uri_base)
         cfg.session_uri_base = g_strdup("");
+
+    /* at least one of these should be true */
+    if ((!cfg.get_info_on_demand) && (!cfg.get_info_on_load))
+        cfg.get_info_on_demand = TRUE;
 }
 
 

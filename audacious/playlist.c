@@ -2456,6 +2456,13 @@ playlist_get_info_func(gpointer arg)
             playlist_get_info_scan_active = FALSE;
             g_mutex_unlock(mutex_scan);
         }
+        else /* not on_demand and not on_load...
+                NOTE: this shouldn't happen anymore, sanity check in bmp_config_load now */
+        {
+            g_mutex_lock(mutex_scan);
+            playlist_get_info_scan_active = FALSE;
+            g_mutex_unlock(mutex_scan);
+        }
 
         if (update_playlistwin) {
             playlistwin_update_list(playlist);
