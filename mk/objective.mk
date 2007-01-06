@@ -178,9 +178,9 @@ $(OBJECTIVE_LIBS): $(OBJECTS)
 		printf "%10s     %-20s\n" LINK $@; \
 		(if [ "x$(SHARED_SUFFIX)" = "x.so" ]; then \
 			(if [ "x$(OBJECTIVE_SONAME_SUFFIX)" != "x" ]; then \
-				$(CC) $(PICLDFLAGS) -o $@ -Wl,-soname=$@.$(OBJECTIVE_SONAME_SUFFIX) $(OBJECTS) $(LDFLAGS) $(LIBADD); \
+				$(CC) $(PICLDFLAGS) -o $@ -Wl,-h$@.$(OBJECTIVE_SONAME_SUFFIX) $(OBJECTS) $(LDFLAGS) $(LIBADD); \
 			else \
-				$(CC) $(PICLDFLAGS) -o $@ -Wl,-soname=$@ $(OBJECTS) $(LDFLAGS) $(LIBADD); \
+				$(CC) $(PICLDFLAGS) -o $@ -Wl,-h$@ $(OBJECTS) $(LDFLAGS) $(LIBADD); \
 			fi;) \
 		 else \
 			$(CC) $(PICLDFLAGS) -o $@ $(OBJECTS) $(LDFLAGS) $(LIBADD); \
