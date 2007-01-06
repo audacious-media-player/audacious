@@ -1,3 +1,11 @@
+2007-01-06 01:59:08 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3576]
+  - fix "load files" action
+  
+  trunk/audacious/ui_main.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-01-06 01:31:19 +0000  Giacomo Lozito <james@develia.org>
   revision [3574]
   - avoid cpu raising when get_info_on_demand and get_info_on_load are both FALSE; and prevent the combo from happening at all

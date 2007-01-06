@@ -955,5 +955,5 @@ void get_handlers_list(gint session, gint argc, gchar **argv)
 	}
 
 	g_print("\nHandlers may be prefixed with `--' (GNU-style long-options) or not, your choice.\n");
-	g_print("Report bugs to http://bugs.audacious-media-player.org.\n");
+	g_print("Report bugs to http://bugs-meta.atheme.org/\n");
 }
