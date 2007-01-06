@@ -3867,7 +3867,7 @@ action_about_audacious( void )
 void
 action_play_file( void )
 {
-  util_run_filebrowser(NO_PLAY_BUTTON);
+  util_run_filebrowser(PLAY_BUTTON);
 }
 
 void

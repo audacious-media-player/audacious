@@ -1,3 +1,11 @@
+2007-01-06 01:31:19 +0000  Giacomo Lozito <james@develia.org>
+  revision [3574]
+  - avoid cpu raising when get_info_on_demand and get_info_on_load are both FALSE; and prevent the combo from happening at all
+  trunk/audacious/main.c     |    4 ++++
+  trunk/audacious/playlist.c |    7 +++++++
+  2 files changed, 11 insertions(+)
+
+
 2007-01-05 20:17:04 +0000  Michael Hanselmann <hansmi@forkbomb.ch>
   revision [3572]
   Translate new strings
