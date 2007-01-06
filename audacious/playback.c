@@ -85,7 +85,7 @@ playback_initiate(void)
 {
     PlaylistEntry *entry = NULL;
     Playlist *playlist = playlist_get_active();
-    int penalty;
+    gint penalty = 0;
 
     if (playlist_get_length(playlist) == 0)
         return;
