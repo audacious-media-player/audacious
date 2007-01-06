@@ -1,3 +1,10 @@
+2007-01-06 20:33:11 +0000  Giacomo Lozito <james@develia.org>
+  revision [3584]
+  - fix uninitialized integer, that was bringing troubles if the last playlist item was not available for playback
+  trunk/audacious/playback.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-01-06 03:25:19 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3582]
   - update to objective-make II

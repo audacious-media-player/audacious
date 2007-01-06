@@ -108,7 +108,7 @@ playback_initiate(void)
      *
      *   - nenolod
      */
-    while (entry != NULL && !playback_play_file(entry))
+    for ( penalty=0 ; penalty <= 15 && entry != NULL && !playback_play_file(entry) ; penalty++ )
     {
         playlist_next(playlist);
 
@@ -120,14 +120,13 @@ playback_initiate(void)
         if (entry == NULL)
             return;
 
-	if (entry->decoder == NULL &&
-	    (entry->decoder = input_check_file(entry->filename, FALSE)) == NULL)
-	    penalty++;
+	if (entry->decoder == NULL )
+	    entry->decoder = input_check_file(entry->filename, FALSE);
 
 	/* if we hit 15 entries in a row with no valid decoder, just 
          * bail due to confusion
 	 */
-	if (penalty > 15)
+	if (penalty == 15)
 	    return;
     }
 
