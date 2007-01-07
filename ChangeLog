@@ -1,3 +1,10 @@
+2007-01-06 21:29:29 +0000  Giacomo Lozito <james@develia.org>
+  revision [3586]
+  - strenghtened penalty check in playback_initiate to handle some extreme situations (such as no output plugins loaded)
+  trunk/audacious/playback.c |    9 ++++-----
+  1 file changed, 4 insertions(+), 5 deletions(-)
+
+
 2007-01-06 20:33:11 +0000  Giacomo Lozito <james@develia.org>
   revision [3584]
   - fix uninitialized integer, that was bringing troubles if the last playlist item was not available for playback

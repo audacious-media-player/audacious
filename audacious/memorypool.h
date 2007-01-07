@@ -23,6 +23,7 @@ typedef struct _MemoryPool MemoryPool;
 MemoryPool * memory_pool_new(void);
 MemoryPool * memory_pool_with_custom_destructor(GDestroyNotify notify);
 
+gpointer memory_pool_add(MemoryPool * pool, gpointer ptr);
 gpointer memory_pool_allocate(MemoryPool * pool, gsize sz);
 void memory_pool_release(MemoryPool * pool, gpointer addr);
 

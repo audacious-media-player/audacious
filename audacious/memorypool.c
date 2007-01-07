@@ -54,6 +54,16 @@ memory_pool_with_custom_destructor(GDestroyNotify notify)
 }
 
 gpointer
+memory_pool_add(MemoryPool * pool, gpointer ptr)
+{
+    g_mutex_lock(pool->mutex);
+    pool->stack = g_list_append(pool->stack, addr);
+    g_mutex_unlock(pool->mutex);
+
+    return ptr;
+}
+
+gpointer
 memory_pool_allocate(MemoryPool * pool, gsize sz)
 {
     gpointer addr;
