@@ -1611,16 +1611,6 @@ on_playlist_convert_slash_toggled(GtkToggleButton * button, gpointer data)
     cfg.convert_slash = gtk_toggle_button_get_active(button);
 }
 
-#if 0
-static void
-on_playlist_update_clicked(GtkButton * button,
-                           gpointer data)
-{
-    playlistwin_update_list();
-    draw_playlist_window(TRUE);
-}
-#endif
-
 static void
 on_use_pl_metadata_realize(GtkToggleButton * button,
                            gpointer data)

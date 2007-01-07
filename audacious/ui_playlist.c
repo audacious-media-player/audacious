@@ -246,13 +246,14 @@ playlistwin_set_toprow(gint toprow)
 void
 playlistwin_update_list(Playlist *playlist)
 {
-    g_return_if_fail(playlistwin_list != NULL);
+    /* this can happen early on. just bail gracefully. */
+    if (playlistwin_list == NULL)
+        return;
 
     widget_draw(WIDGET(playlistwin_list));
     widget_draw(WIDGET(playlistwin_slider));
     playlistwin_update_info(playlist);
     playlistwin_update_sinfo(playlist);
-    /*     mainwin_update_jtf(); */
 }
 
 #if 0

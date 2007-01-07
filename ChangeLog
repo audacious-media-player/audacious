@@ -1,3 +1,10 @@
+2007-01-07 22:14:14 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [3594]
+  WTF addr? ITYM ptr!
+  trunk/audacious/memorypool.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-01-07 08:51:04 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3592]
   - log crashes in .audacious/log
