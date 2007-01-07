@@ -86,7 +86,7 @@ signal_empty_handler (gint signal_number)
 static void
 sigsegv_handler (gint signal_number)
 {
-#ifdef HANDLE_SIGSEGV
+#ifndef SIGSEGV_ABORT
     g_printerr(_("\nReceived SIGSEGV\n\n"
                  "This could be a bug in Audacious. If you don't know why this happened, "
                  "file a bug at http://bugs-meta.atheme.org/\n\n"));
