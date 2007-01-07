@@ -593,6 +593,9 @@ bmp_config_load(void)
     if (!cfg.eqpreset_extension)
         cfg.eqpreset_extension = g_strdup(EQUALIZER_DEFAULT_PRESET_EXT);
 
+    if (!cfg.chardet_detector)
+        cfg.chardet_detector = g_strdup("");
+
     if (!cfg.chardet_fallback)
         cfg.chardet_fallback = g_strdup("");
 

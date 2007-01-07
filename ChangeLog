@@ -1,3 +1,13 @@
+2007-01-07 23:14:59 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3596]
+  - remove the static assertion for playlistwin_list != NULL and just 
+    cleanly return instead if that is not the case
+  
+  trunk/audacious/ui_playlist.c    |    5 +++--
+  trunk/audacious/ui_preferences.c |   10 ----------
+  2 files changed, 3 insertions(+), 12 deletions(-)
+
+
 2007-01-07 22:14:14 +0000  Jonathan Schleifer <js@h3c.de>
   revision [3594]
   WTF addr? ITYM ptr!
