@@ -89,7 +89,7 @@
 				<menuitem action="jump to file" />
 				<menuitem action="jump to time" />
 				<separator />
-				<menuitem action="track info" />
+				<menuitem action="current track info" />
 			</menu>
 			<menu action="playlist">
 				<menuitem action="playlist new" />

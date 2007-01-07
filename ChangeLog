@@ -1,3 +1,12 @@
+2007-01-07 23:21:28 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3598]
+  - fix ** CRITICAL **: bmp_rcfile_write_string: assertion `value != NULL' 
+    failed on shutdown.
+  
+  trunk/audacious/main.c |    3 +++
+  1 file changed, 3 insertions(+)
+
+
 2007-01-07 23:14:59 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3596]
   - remove the static assertion for playlistwin_list != NULL and just 
