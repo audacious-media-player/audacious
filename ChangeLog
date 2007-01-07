@@ -1,3 +1,11 @@
+2007-01-07 08:51:04 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3592]
+  - log crashes in .audacious/log
+  
+  trunk/audacious/signals.c |    2 ++
+  1 file changed, 2 insertions(+)
+
+
 2007-01-07 08:49:42 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3590]
   - reverse the nature of the crash handler

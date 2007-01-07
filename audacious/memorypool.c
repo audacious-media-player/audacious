@@ -57,7 +57,7 @@ gpointer
 memory_pool_add(MemoryPool * pool, gpointer ptr)
 {
     g_mutex_lock(pool->mutex);
-    pool->stack = g_list_append(pool->stack, addr);
+    pool->stack = g_list_append(pool->stack, ptr);
     g_mutex_unlock(pool->mutex);
 
     return ptr;
