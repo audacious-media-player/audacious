@@ -1,3 +1,11 @@
+2007-01-07 08:49:42 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3590]
+  - reverse the nature of the crash handler
+  
+  trunk/audacious/signals.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-01-07 08:47:47 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3588]
   - add memory_pool_add(): adds a pre-allocated element to a memory pool

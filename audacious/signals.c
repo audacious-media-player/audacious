@@ -90,7 +90,9 @@ sigsegv_handler (gint signal_number)
     g_printerr(_("\nReceived SIGSEGV\n\n"
                  "This could be a bug in Audacious. If you don't know why this happened, "
                  "file a bug at http://bugs-meta.atheme.org/\n\n"));
+    g_critical("Received SIGSEGV");
 
+    /* TO DO: log stack trace and possibly dump config file. */
     exit (EXIT_FAILURE);
 #else
     abort ();
