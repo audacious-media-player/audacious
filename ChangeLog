@@ -1,3 +1,42 @@
+2007-01-08 11:08:15 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3606]
+  - new bulgarian translator: Andrew Ivanov
+  - run update-po
+  
+  trunk/audacious/ui_credits.c |    3 
+  trunk/po/LINGUAS             |    1 
+  trunk/po/audacious.pot       |  140 ++--
+  trunk/po/br.po               |  140 ++--
+  trunk/po/cs.po               |  140 ++--
+  trunk/po/cy.po               |  552 ++++++++---------
+  trunk/po/de.po               | 1363 +++++++++++++++++++++++++++++++++----------
+  trunk/po/el.po               |  140 ++--
+  trunk/po/es.po               |  140 ++--
+  trunk/po/fi.po               |  140 ++--
+  trunk/po/fr.po               |  140 ++--
+  trunk/po/hi.po               |  140 ++--
+  trunk/po/hu.po               |  140 ++--
+  trunk/po/it.po               |  140 ++--
+  trunk/po/ja.po               |  140 ++--
+  trunk/po/ka.po               |  140 ++--
+  trunk/po/ko.po               |  140 ++--
+  trunk/po/lt.po               |  140 ++--
+  trunk/po/mk.po               |  140 ++--
+  trunk/po/nl.po               |  140 ++--
+  trunk/po/pl.po               |  140 ++--
+  trunk/po/pt_BR.po            |  140 ++--
+  trunk/po/ro.po               |  140 ++--
+  trunk/po/ru.po               |  144 ++--
+  trunk/po/sk.po               |  140 ++--
+  trunk/po/sr.po               |  150 ++--
+  trunk/po/sr@Latn.po          |  144 ++--
+  trunk/po/sv.po               |  140 ++--
+  trunk/po/uk.po               |  140 ++--
+  trunk/po/zh_CN.po            |  140 ++--
+  trunk/po/zh_TW.po            |  140 ++--
+  31 files changed, 3255 insertions(+), 2462 deletions(-)
+
+
 2007-01-08 05:17:40 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [3604]
   libguess update:
