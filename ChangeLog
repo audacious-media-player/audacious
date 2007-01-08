@@ -1,3 +1,14 @@
+2007-01-08 05:17:40 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [3604]
+  libguess update:
+  - follow the update of upstream.
+  - now precedence orders of encodings are explicitly specifiable on compile time.
+  - make UTF-8 the highest ordered eoncoding. (it may cope with the problems described in #738.)
+  
+  trunk/libguess/guess.c |  323 +++++++++++++++++++++++--------------------------
+  1 file changed, 155 insertions(+), 168 deletions(-)
+
+
 2007-01-07 23:23:46 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3600]
   - fix XML definition for missing action: "track info" -> "current track info"

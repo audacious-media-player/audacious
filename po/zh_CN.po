@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-04 17:23-0600\n"
+"POT-Creation-Date: 2007-01-08 05:03-0600\n"
 "PO-Revision-Date: 2006-12-05 11:20+0700\n"
 "Last-Translator: Yang Zhang <zyangmath@gmail.com>\n"
 "Language-Team: Chinese/Simplified\n"
@@ -314,8 +314,8 @@ msgstr "输入插件：%s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "无法创建日志文件 (%s)！\n"
 
-#: audacious/main.c:84 audacious/main.c:86 audacious/ui_main.c:630
-#: audacious/ui_main.c:3421
+#: audacious/main.c:84 audacious/main.c:86 audacious/ui_main.c:626
+#: audacious/ui_main.c:3417
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -326,7 +326,7 @@ msgstr ""
 "新建目录 %s 失败\n"
 "错误：%s"
 
-#: audacious/main.c:793
+#: audacious/main.c:800
 msgid ""
 "Usage: audacious [options] [files] ...\n"
 "\n"
@@ -338,71 +338,71 @@ msgstr ""
 "选项：\n"
 "———\n"
 
-#: audacious/main.c:798
+#: audacious/main.c:805
 msgid "Display this text and exit"
 msgstr "显示文字并退出"
 
-#: audacious/main.c:801
+#: audacious/main.c:808
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "选择 Audacious/BMP/XMMS 会话 (默认：0)"
 
-#: audacious/main.c:804
+#: audacious/main.c:811
 msgid "Skip backwards in playlist"
 msgstr "在播放列表中向后跳"
 
-#: audacious/main.c:807
+#: audacious/main.c:814
 msgid "Start playing current playlist"
 msgstr "开始播放现有列表"
 
-#: audacious/main.c:810
+#: audacious/main.c:817
 msgid "Pause current song"
 msgstr "暂停当前歌曲"
 
-#: audacious/main.c:813
+#: audacious/main.c:820
 msgid "Stop current song"
 msgstr "停止当前歌曲"
 
-#: audacious/main.c:816
+#: audacious/main.c:823
 msgid "Pause if playing, play otherwise"
 msgstr "如正播放则暂停，否则播放"
 
-#: audacious/main.c:819
+#: audacious/main.c:826
 msgid "Skip forward in playlist"
 msgstr "在播放列表中向前跳"
 
-#: audacious/main.c:822
+#: audacious/main.c:829
 msgid "Display Jump to file dialog"
 msgstr "显示 “跳到文件” 对话框"
 
-#: audacious/main.c:825
+#: audacious/main.c:832
 msgid "Don't clear the playlist"
 msgstr "不要清除播放列表"
 
-#: audacious/main.c:828
+#: audacious/main.c:835
 msgid "Show the main window"
 msgstr "显示主窗口"
 
-#: audacious/main.c:831
+#: audacious/main.c:838
 msgid "Activate Audacious"
 msgstr "激活 Audacious"
 
-#: audacious/main.c:834
+#: audacious/main.c:841
 msgid "Previous session ID"
 msgstr "以往连接 ID"
 
-#: audacious/main.c:837
+#: audacious/main.c:844
 msgid "Headless operation [experimental]"
 msgstr "Headless 选项 [实验性质的]"
 
-#: audacious/main.c:840
+#: audacious/main.c:847
 msgid "Disable error/warning interception (logging)"
 msgstr "禁用“错误/警告”侦听(记录)"
 
-#: audacious/main.c:843
+#: audacious/main.c:850
 msgid "Print version number and exit\n"
 msgstr "显示版本号并退出\n"
 
-#: audacious/main.c:1050
+#: audacious/main.c:1057
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -414,7 +414,7 @@ msgstr ""
 "\n"
 "请检查设在'%s'的皮肤是可用的，并且确保默认皮肤也已正确安装到'%s'。\n"
 
-#: audacious/main.c:1097
+#: audacious/main.c:1104
 #, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -423,7 +423,7 @@ msgstr ""
 "抱歉，您的 GTK+ 版本(%d.%d.%d)不能和 Audacious 一起工作。\n"
 "请使用 GTK+ %s 或以后的版本。\n"
 
-#: audacious/main.c:1108
+#: audacious/main.c:1115
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -436,7 +436,7 @@ msgstr ""
 "如果你原本使用 libc5 的 Linux 并且装了 GLIB & GTK+ \n"
 "之后又安装了 LinuxThreads，请重新编译 GLIB & GTK+。\n"
 
-#: audacious/main.c:1127
+#: audacious/main.c:1134
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "audacious： 无法打开显示器，即将退出。\n"
 
@@ -460,114 +460,114 @@ msgstr ""
 msgid "  (invalid UTF-8)"
 msgstr "  (非法的 UTF-8 字符)"
 
-#: audacious/ui_main.c:628
+#: audacious/ui_main.c:624
 #, c-format
 msgid "%s - Audacious"
 msgstr "%s - Audacious"
 
-#: audacious/ui_main.c:853
+#: audacious/ui_main.c:849
 msgid "VBR"
 msgstr "可变位数率"
 
-#: audacious/ui_main.c:894 audacious/ui_main.c:898
+#: audacious/ui_main.c:890 audacious/ui_main.c:894
 msgid "stereo"
 msgstr "立体声"
 
-#: audacious/ui_main.c:894 audacious/ui_main.c:898
+#: audacious/ui_main.c:890 audacious/ui_main.c:894
 msgid "mono"
 msgstr "单声道"
 
-#: audacious/ui_main.c:1387 audacious/ui_manager.c:414
+#: audacious/ui_main.c:1383 audacious/ui_manager.c:414
 #: audacious/ui_manager.c:415
 msgid "Jump to Time"
 msgstr "跳到特定时间"
 
-#: audacious/ui_main.c:1408
+#: audacious/ui_main.c:1404
 msgid "minutes:seconds"
 msgstr "分:秒"
 
-#: audacious/ui_main.c:1418
+#: audacious/ui_main.c:1414
 msgid "Track length:"
 msgstr "音轨长度："
 
-#: audacious/ui_main.c:1503
+#: audacious/ui_main.c:1499
 msgid "Un_queue"
 msgstr "不排队(_q)"
 
-#: audacious/ui_main.c:1505 audacious/ui_main.c:1895
+#: audacious/ui_main.c:1501 audacious/ui_main.c:1891
 msgid "_Queue"
 msgstr "排队(_Q)"
 
-#: audacious/ui_main.c:1820
+#: audacious/ui_main.c:1816
 msgid "Jump to Track"
 msgstr "跳到音轨"
 
-#: audacious/ui_main.c:1861
+#: audacious/ui_main.c:1857
 msgid "Filter: "
 msgstr "过滤: "
 
-#: audacious/ui_main.c:1862
+#: audacious/ui_main.c:1858
 #, fuzzy
 msgid "_Filter:"
 msgstr "过滤: "
 
-#: audacious/ui_main.c:2066
+#: audacious/ui_main.c:2062
 msgid "Enter location to play:"
 msgstr "输入要播放的位置："
 
-#: audacious/ui_main.c:2277
+#: audacious/ui_main.c:2273
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "搜寻：%d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/ui_main.c:2309 audacious/ui_main.c:2942
+#: audacious/ui_main.c:2305 audacious/ui_main.c:2938
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "音量：%d%%"
 
-#: audacious/ui_main.c:2340 audacious/ui_main.c:2945
+#: audacious/ui_main.c:2336 audacious/ui_main.c:2941
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "平衡：%d%% 左"
 
-#: audacious/ui_main.c:2344 audacious/ui_main.c:2948
+#: audacious/ui_main.c:2340 audacious/ui_main.c:2944
 msgid "BALANCE: CENTER"
 msgstr "平衡：中心"
 
-#: audacious/ui_main.c:2348 audacious/ui_main.c:2950
+#: audacious/ui_main.c:2344 audacious/ui_main.c:2946
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "平衡：%d%% 右"
 
-#: audacious/ui_main.c:2717
+#: audacious/ui_main.c:2713
 msgid "OPTIONS MENU"
 msgstr "选项菜单"
 
-#: audacious/ui_main.c:2721
+#: audacious/ui_main.c:2717
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "取消永远在最上层"
 
-#: audacious/ui_main.c:2723
+#: audacious/ui_main.c:2719
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "永远在最上层"
 
-#: audacious/ui_main.c:2726
+#: audacious/ui_main.c:2722
 msgid "FILE INFO BOX"
 msgstr "文件信息框"
 
-#: audacious/ui_main.c:2730
+#: audacious/ui_main.c:2726
 msgid "DISABLE DOUBLESIZE"
 msgstr "取消加倍模式"
 
-#: audacious/ui_main.c:2732
+#: audacious/ui_main.c:2728
 msgid "ENABLE DOUBLESIZE"
 msgstr "开启加倍模式"
 
-#: audacious/ui_main.c:2735
+#: audacious/ui_main.c:2731
 msgid "VISUALIZATION MENU"
 msgstr "可视效果菜单"
 
-#: audacious/ui_main.c:2782
+#: audacious/ui_main.c:2778
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -577,7 +577,7 @@ msgstr ""
 "\n"
 "没有放入 CD，或者放入的不是音频·CD。\n"
 
-#: audacious/ui_main.c:2799
+#: audacious/ui_main.c:2795
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -592,7 +592,7 @@ msgstr ""
 "2. 没有其他的程式正在使用音效卡。\n"
 "3. 您的音效卡有正常驱动。\n"
 
-#: audacious/ui_main.c:3405
+#: audacious/ui_main.c:3401
 #, fuzzy
 msgid "Error in Audacious."
 msgstr "%s - Audacious"
@@ -1465,11 +1465,11 @@ msgstr "启用"
 msgid "Description"
 msgstr "描述"
 
-#: audacious/ui_preferences.c:1807
+#: audacious/ui_preferences.c:1797
 msgid "Category"
 msgstr "项目"
 
-#: audacious/ui_preferences.c:2362
+#: audacious/ui_preferences.c:2352
 msgid "Preferences Window"
 msgstr "首选项"
 
@@ -1489,12 +1489,12 @@ msgstr "音轨信息窗口"
 msgid "Track Information Popup"
 msgstr "音轨信息(弹出)"
 
-#: audacious/ui_playlist.c:495
+#: audacious/ui_playlist.c:496
 #, fuzzy
 msgid "Search entries in active playlist"
 msgstr "在播放列表中显示分隔符"
 
-#: audacious/ui_playlist.c:501
+#: audacious/ui_playlist.c:502
 msgid ""
 "Select entries in playlist by filling one or more fields. Fields use regular "
 "expressions syntax, case-insensitive. If you don't know how regular "
@@ -1502,48 +1502,48 @@ msgid ""
 "for."
 msgstr ""
 
-#: audacious/ui_playlist.c:508
+#: audacious/ui_playlist.c:509
 #, fuzzy
 msgid "Track name: "
 msgstr "音轨名称"
 
-#: audacious/ui_playlist.c:514
+#: audacious/ui_playlist.c:515
 msgid "Album name: "
 msgstr ""
 
-#: audacious/ui_playlist.c:520
+#: audacious/ui_playlist.c:521
 #, fuzzy
 msgid "Artist: "
 msgstr "艺术家"
 
-#: audacious/ui_playlist.c:526
+#: audacious/ui_playlist.c:527
 #, fuzzy
 msgid "Filename: "
 msgstr "文件名："
 
-#: audacious/ui_playlist.c:533
+#: audacious/ui_playlist.c:534
 msgid "Clear previous selection before searching"
 msgstr ""
 
-#: audacious/ui_playlist.c:536
+#: audacious/ui_playlist.c:537
 msgid "Automatically toggle queue for matching entries"
 msgstr ""
 
-#: audacious/ui_playlist.c:539
+#: audacious/ui_playlist.c:540
 msgid "Create a new playlist with matching entries"
 msgstr ""
 
-#: audacious/ui_playlist.c:768
+#: audacious/ui_playlist.c:769
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "写入播放列表“%s”：%s 出错"
 
-#: audacious/ui_playlist.c:789
+#: audacious/ui_playlist.c:790
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s 已经存在。继续吗？"
 
-#: audacious/ui_playlist.c:803
+#: audacious/ui_playlist.c:804
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -1553,15 +1553,15 @@ msgstr ""
 "无法保存播放列表！\n"
 "未知文件类型 %s\n"
 
-#: audacious/ui_playlist.c:956
+#: audacious/ui_playlist.c:957
 msgid "Load Playlist"
 msgstr "装入播放列表"
 
-#: audacious/ui_playlist.c:969
+#: audacious/ui_playlist.c:970
 msgid "Save Playlist"
 msgstr "保存播放列表"
 
-#: audacious/ui_playlist.c:1690
+#: audacious/ui_playlist.c:1691
 msgid "Audacious Playlist Editor"
 msgstr "Audacious 播放列表编辑器"
 
@@ -1598,7 +1598,7 @@ msgstr "播放文件"
 msgid "Load files"
 msgstr "装入文件"
 
-#: audacious/playback.c:228
+#: audacious/playback.c:227
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."

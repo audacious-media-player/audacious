@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-04 17:23-0600\n"
+"POT-Creation-Date: 2007-01-08 05:03-0600\n"
 "PO-Revision-Date: 2004-02-29 02:46+0100\n"
 "Last-Translator: Martin Persenius <martin@persenius.net>\n"
 "Language-Team: Sweden\n"
@@ -316,8 +316,8 @@ msgstr "Insticksmodul: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "Kunde ej skapa loggfil (%s)!\n"
 
-#: audacious/main.c:84 audacious/main.c:86 audacious/ui_main.c:630
-#: audacious/ui_main.c:3421
+#: audacious/main.c:84 audacious/main.c:86 audacious/ui_main.c:626
+#: audacious/ui_main.c:3417
 msgid "Audacious"
 msgstr ""
 
@@ -326,7 +326,7 @@ msgstr ""
 msgid "Could not create directory (%s): %s"
 msgstr "Kunde ej skapa mapp (%s): %s"
 
-#: audacious/main.c:793
+#: audacious/main.c:800
 #, fuzzy
 msgid ""
 "Usage: audacious [options] [files] ...\n"
@@ -339,76 +339,76 @@ msgstr ""
 "Val:\n"
 "--------\n"
 
-#: audacious/main.c:798
+#: audacious/main.c:805
 #, fuzzy
 msgid "Display this text and exit"
 msgstr "Visa den här texten och avsluta."
 
-#: audacious/main.c:801
+#: audacious/main.c:808
 #, fuzzy
 msgid "Select Audacious/BMP/XMMS session (Default: 0)"
 msgstr "Välj XMMS-session (Förinställt: 0)"
 
-#: audacious/main.c:804
+#: audacious/main.c:811
 msgid "Skip backwards in playlist"
 msgstr "Hoppa båket i spellista"
 
-#: audacious/main.c:807
+#: audacious/main.c:814
 msgid "Start playing current playlist"
 msgstr "Börja spela nuvarande spellista"
 
-#: audacious/main.c:810
+#: audacious/main.c:817
 msgid "Pause current song"
 msgstr "Pausa nuvarande sång"
 
-#: audacious/main.c:813
+#: audacious/main.c:820
 msgid "Stop current song"
 msgstr "Stoppa nuvarande sång"
 
-#: audacious/main.c:816
+#: audacious/main.c:823
 msgid "Pause if playing, play otherwise"
 msgstr "Pausa om spelandes, spela annars"
 
-#: audacious/main.c:819
+#: audacious/main.c:826
 msgid "Skip forward in playlist"
 msgstr "Hoppas framåt i spellistan"
 
-#: audacious/main.c:822
+#: audacious/main.c:829
 msgid "Display Jump to file dialog"
 msgstr ""
 
-#: audacious/main.c:825
+#: audacious/main.c:832
 msgid "Don't clear the playlist"
 msgstr "Rensa inte spellistan"
 
-#: audacious/main.c:828
+#: audacious/main.c:835
 #, fuzzy
 msgid "Show the main window"
 msgstr "Visa huvudfönstret."
 
-#: audacious/main.c:831
+#: audacious/main.c:838
 #, fuzzy
 msgid "Activate Audacious"
 msgstr "Om MPEG-ljudinsticksmodulen"
 
-#: audacious/main.c:834
+#: audacious/main.c:841
 msgid "Previous session ID"
 msgstr "Tidigare sessions-ID"
 
-#: audacious/main.c:837
+#: audacious/main.c:844
 msgid "Headless operation [experimental]"
 msgstr ""
 
-#: audacious/main.c:840
+#: audacious/main.c:847
 msgid "Disable error/warning interception (logging)"
 msgstr ""
 
-#: audacious/main.c:843
+#: audacious/main.c:850
 #, fuzzy
 msgid "Print version number and exit\n"
 msgstr "Skriv versionsnummer och avsluta."
 
-#: audacious/main.c:1050
+#: audacious/main.c:1057
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -417,7 +417,7 @@ msgid ""
 "'%s'\n"
 msgstr ""
 
-#: audacious/main.c:1097
+#: audacious/main.c:1104
 #, fuzzy, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
@@ -426,7 +426,7 @@ msgstr ""
 "Tyvärr, din GTK+ version (%d.%d.%d) fungerar inte med BMP.\n"
 "Var god använd GTK+ %s eller nyare.\n"
 
-#: audacious/main.c:1108
+#: audacious/main.c:1115
 #, fuzzy
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
@@ -440,7 +440,7 @@ msgstr ""
 "Om du är på ett libc5-baserat Linux-system och installerat Glib och GTK+ \n"
 "innan du installerade LinuxThreads måste du kompilera om Glib och GTK+.\n"
 
-#: audacious/main.c:1127
+#: audacious/main.c:1134
 #, fuzzy
 msgid "audacious: Unable to open display, exiting.\n"
 msgstr "BMP: Kunde ej öppna för visning, avslutar."
@@ -465,127 +465,127 @@ msgstr ""
 msgid "  (invalid UTF-8)"
 msgstr "  (invalid UTF-8)"
 
-#: audacious/ui_main.c:628
+#: audacious/ui_main.c:624
 #, c-format
 msgid "%s - Audacious"
 msgstr ""
 
-#: audacious/ui_main.c:853
+#: audacious/ui_main.c:849
 msgid "VBR"
 msgstr "VBR"
 
-#: audacious/ui_main.c:894 audacious/ui_main.c:898
+#: audacious/ui_main.c:890 audacious/ui_main.c:894
 #, fuzzy
 msgid "stereo"
 msgstr "Stereo"
 
-#: audacious/ui_main.c:894 audacious/ui_main.c:898
+#: audacious/ui_main.c:890 audacious/ui_main.c:894
 #, fuzzy
 msgid "mono"
 msgstr "Mono"
 
-#: audacious/ui_main.c:1387 audacious/ui_manager.c:414
+#: audacious/ui_main.c:1383 audacious/ui_manager.c:414
 #: audacious/ui_manager.c:415
 #, fuzzy
 msgid "Jump to Time"
 msgstr "/Hoppa till tiden"
 
-#: audacious/ui_main.c:1408
+#: audacious/ui_main.c:1404
 msgid "minutes:seconds"
 msgstr "minuter:sekunder"
 
-#: audacious/ui_main.c:1418
+#: audacious/ui_main.c:1414
 msgid "Track length:"
 msgstr "Spårlängd:"
 
-#: audacious/ui_main.c:1503
+#: audacious/ui_main.c:1499
 #, fuzzy
 msgid "Un_queue"
 msgstr "/_Lägg i väntelista"
 
-#: audacious/ui_main.c:1505 audacious/ui_main.c:1895
+#: audacious/ui_main.c:1501 audacious/ui_main.c:1891
 #, fuzzy
 msgid "_Queue"
 msgstr "Kö"
 
-#: audacious/ui_main.c:1820
+#: audacious/ui_main.c:1816
 #, fuzzy
 msgid "Jump to Track"
 msgstr "bmp: Hoppa till spår"
 
-#: audacious/ui_main.c:1861
+#: audacious/ui_main.c:1857
 msgid "Filter: "
 msgstr "Filter:"
 
-#: audacious/ui_main.c:1862
+#: audacious/ui_main.c:1858
 #, fuzzy
 msgid "_Filter:"
 msgstr "Filter:"
 
-#: audacious/ui_main.c:2066
+#: audacious/ui_main.c:2062
 msgid "Enter location to play:"
 msgstr ""
 
-#: audacious/ui_main.c:2277
+#: audacious/ui_main.c:2273
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "POSITION: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/ui_main.c:2309 audacious/ui_main.c:2942
+#: audacious/ui_main.c:2305 audacious/ui_main.c:2938
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "VOLYM: %d%%"
 
-#: audacious/ui_main.c:2340 audacious/ui_main.c:2945
+#: audacious/ui_main.c:2336 audacious/ui_main.c:2941
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "BALANS: %d%% VÄNSTER"
 
-#: audacious/ui_main.c:2344 audacious/ui_main.c:2948
+#: audacious/ui_main.c:2340 audacious/ui_main.c:2944
 msgid "BALANCE: CENTER"
 msgstr "BALANS: CENTRUM"
 
-#: audacious/ui_main.c:2348 audacious/ui_main.c:2950
+#: audacious/ui_main.c:2344 audacious/ui_main.c:2946
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "BALANS: %d%% HÖGER"
 
-#: audacious/ui_main.c:2717
+#: audacious/ui_main.c:2713
 msgid "OPTIONS MENU"
 msgstr "VALMENY"
 
-#: audacious/ui_main.c:2721
+#: audacious/ui_main.c:2717
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "INAKTIVERA ALLTID ÖVERST"
 
-#: audacious/ui_main.c:2723
+#: audacious/ui_main.c:2719
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "AKTIVERA ALLTID ÖVERST"
 
-#: audacious/ui_main.c:2726
+#: audacious/ui_main.c:2722
 msgid "FILE INFO BOX"
 msgstr "FIL-INFO BOX"
 
-#: audacious/ui_main.c:2730
+#: audacious/ui_main.c:2726
 msgid "DISABLE DOUBLESIZE"
 msgstr "INAKTIVERA DUBBEL STORLEK"
 
-#: audacious/ui_main.c:2732
+#: audacious/ui_main.c:2728
 msgid "ENABLE DOUBLESIZE"
 msgstr "AKTIVERA DUBBEL STORLEK"
 
-#: audacious/ui_main.c:2735
+#: audacious/ui_main.c:2731
 msgid "VISUALIZATION MENU"
 msgstr "VISUALISERINGSMENY"
 
-#: audacious/ui_main.c:2782
+#: audacious/ui_main.c:2778
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
 "No CD inserted, or inserted CD is not an audio CD.\n"
 msgstr ""
 
-#: audacious/ui_main.c:2799
+#: audacious/ui_main.c:2795
 #, fuzzy
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
@@ -601,7 +601,7 @@ msgstr ""
 "2. Inga andra program blokerar ljudkortet.\n"
 "3. Ditt kort är korrekt konfigurerat."
 
-#: audacious/ui_main.c:3405
+#: audacious/ui_main.c:3401
 #, fuzzy
 msgid "Error in Audacious."
 msgstr "Om MPEG-ljudinsticksmodulen"
@@ -1486,11 +1486,11 @@ msgstr "(aktiverad)"
 msgid "Description"
 msgstr "Beskrivning:"
 
-#: audacious/ui_preferences.c:1807
+#: audacious/ui_preferences.c:1797
 msgid "Category"
 msgstr ""
 
-#: audacious/ui_preferences.c:2362
+#: audacious/ui_preferences.c:2352
 #, fuzzy
 msgid "Preferences Window"
 msgstr "/Inställningar"
@@ -1511,12 +1511,12 @@ msgstr ""
 msgid "Track Information Popup"
 msgstr ""
 
-#: audacious/ui_playlist.c:495
+#: audacious/ui_playlist.c:496
 #, fuzzy
 msgid "Search entries in active playlist"
 msgstr "Visa nummer i spellistan"
 
-#: audacious/ui_playlist.c:501
+#: audacious/ui_playlist.c:502
 msgid ""
 "Select entries in playlist by filling one or more fields. Fields use regular "
 "expressions syntax, case-insensitive. If you don't know how regular "
@@ -1524,49 +1524,49 @@ msgid ""
 "for."
 msgstr ""
 
-#: audacious/ui_playlist.c:508
+#: audacious/ui_playlist.c:509
 #, fuzzy
 msgid "Track name: "
 msgstr "Spårnamn:"
 
-#: audacious/ui_playlist.c:514
+#: audacious/ui_playlist.c:515
 #, fuzzy
 msgid "Album name: "
 msgstr "Album"
 
-#: audacious/ui_playlist.c:520
+#: audacious/ui_playlist.c:521
 #, fuzzy
 msgid "Artist: "
 msgstr "Artist:"
 
-#: audacious/ui_playlist.c:526
+#: audacious/ui_playlist.c:527
 #, fuzzy
 msgid "Filename: "
 msgstr "Filnamn:"
 
-#: audacious/ui_playlist.c:533
+#: audacious/ui_playlist.c:534
 msgid "Clear previous selection before searching"
 msgstr ""
 
-#: audacious/ui_playlist.c:536
+#: audacious/ui_playlist.c:537
 msgid "Automatically toggle queue for matching entries"
 msgstr ""
 
-#: audacious/ui_playlist.c:539
+#: audacious/ui_playlist.c:540
 msgid "Create a new playlist with matching entries"
 msgstr ""
 
-#: audacious/ui_playlist.c:768
+#: audacious/ui_playlist.c:769
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "Fel vid skrivning av spellista \"%s\": %s"
 
-#: audacious/ui_playlist.c:789
+#: audacious/ui_playlist.c:790
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s finns redan. Fortsätt?"
 
-#: audacious/ui_playlist.c:803
+#: audacious/ui_playlist.c:804
 #, fuzzy, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -1574,17 +1574,17 @@ msgid ""
 "Unknown file type for '%s'.\n"
 msgstr "Kunde ej spara spellista! Okänd filtyp för %s."
 
-#: audacious/ui_playlist.c:956
+#: audacious/ui_playlist.c:957
 #, fuzzy
 msgid "Load Playlist"
 msgstr "Ladda spellista"
 
-#: audacious/ui_playlist.c:969
+#: audacious/ui_playlist.c:970
 #, fuzzy
 msgid "Save Playlist"
 msgstr "Spara spellista"
 
-#: audacious/ui_playlist.c:1690
+#: audacious/ui_playlist.c:1691
 #, fuzzy
 msgid "Audacious Playlist Editor"
 msgstr "/Visa spellistredigeraren"
@@ -1627,7 +1627,7 @@ msgstr "bmp: Spela filer"
 msgid "Load files"
 msgstr "bmp: Ladda filer"
 
-#: audacious/playback.c:228
+#: audacious/playback.c:227
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
