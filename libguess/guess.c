@@ -40,32 +40,35 @@
 #include "libguess.h"
 #define NULL ((void *)0)
 
-/* take precedence if scores are same. */
-#undef PREFER_UTF8
-#undef PREFER_SJIS
-#undef PREFER_BIG5
-#undef PREFER_GB18030
-#undef PREFER_JOHAB
+/* take precedence if scores are same. you can customize the order as: */
+/* ORDER_** &highest, &second, ... &lowest */
+#define ORDER_JP &utf8, &sjis, &eucj
+#define ORDER_TW &utf8, &big5
+#define ORDER_CN &utf8, &gb2312, &gb18030
+#define ORDER_KR &utf8, &euck, &johab
 
-/* workaround for that glib's g_convert can't convert properly from UCS-2BE/LE trailing after BOM. */
+/* workaround for that glib's g_convert can't convert
+   properly from UCS-2BE/LE trailing after BOM. */
 #define WITH_G_CONVERT 1
 /* #undef WITH_G_CONVERT */
 
 #ifdef WITH_G_CONVERT
-const char UCS_2BE[]="UTF-16";
-const char UCS_2LE[]="UTF-16";
+const char UCS_2BE[] = "UTF-16";
+const char UCS_2LE[] = "UTF-16";
 #else
-const char UCS_2BE[]="UCS-2BE";
-const char UCS_2LE[]="UCS-2LE";
+const char UCS_2BE[] = "UCS-2BE";
+const char UCS_2LE[] = "UCS-2LE";
 #endif
 
 /* data types */
-typedef struct guess_arc_rec {
+typedef struct guess_arc_rec
+{
     unsigned int next;          /* next state */
     double score;               /* score */
 } guess_arc;
 
-typedef struct guess_dfa_rec {
+typedef struct guess_dfa_rec
+{
     signed char (*states)[256];
     guess_arc *arcs;
     int state;
@@ -103,41 +106,49 @@ const char *guess_jp(const char *buf, int buflen)
     guess_dfa utf8 = DFA_INIT(guess_utf8_st, guess_utf8_ar);
     guess_dfa *top = NULL;
 
-    for (i=0; i<buflen; i++) {
-        int c = (unsigned char)buf[i];
+    guess_dfa *order[] = { ORDER_JP, NULL };
+
+    for (i = 0; i < buflen; i++) {
+        int c = (unsigned char) buf[i];
 
         /* special treatment of iso-2022 escape sequence */
         if (c == 0x1b) {
-            if (i < buflen-1) {
-                c = (unsigned char)buf[++i];
-                if (c == '$' || c == '(') return "ISO-2022-JP";
+            if (i < buflen - 1) {
+                c = (unsigned char) buf[++i];
+                if (c == '$' || c == '(')
+                    return "ISO-2022-JP";
             }
         }
-        
+
         /* special treatment of BOM */
-        if (i==0 && c == 0xff) {
-            if (i < buflen-1) {
-                c = (unsigned char)buf[i+1];
-                if (c == 0xfe) return UCS_2LE;
+        if (i == 0 && c == 0xff) {
+            if (i < buflen - 1) {
+                c = (unsigned char) buf[i + 1];
+                if (c == 0xfe)
+                    return UCS_2LE;
             }
         }
-        if (i==0 && c == 0xfe) {
-            if (i < buflen-1) {
-                c = (unsigned char)buf[i+1];
-                if (c == 0xff) return UCS_2BE;
+        if (i == 0 && c == 0xfe) {
+            if (i < buflen - 1) {
+                c = (unsigned char) buf[i + 1];
+                if (c == 0xff)
+                    return UCS_2BE;
             }
         }
 
         if (DFA_ALIVE(eucj)) {
-            if (!DFA_ALIVE(sjis) && !DFA_ALIVE(utf8)) return "EUC-JP";
+            if (!DFA_ALIVE(sjis) && !DFA_ALIVE(utf8))
+                return "EUC-JP";
             DFA_NEXT(eucj, c);
         }
         if (DFA_ALIVE(sjis)) {
-            if (!DFA_ALIVE(eucj) && !DFA_ALIVE(utf8)) return "SJIS";
+            if (!DFA_ALIVE(eucj) && !DFA_ALIVE(utf8))
+                return "SJIS";
             DFA_NEXT(sjis, c);
         }
         if (DFA_ALIVE(utf8)) {
-            if (!DFA_ALIVE(sjis) && !DFA_ALIVE(eucj)) return "UTF-8";
+            if (!DFA_ALIVE(sjis) && !DFA_ALIVE(eucj))
+                return "UTF-8";
             DFA_NEXT(utf8, c);
         }
 
@@ -149,33 +160,19 @@ const char *guess_jp(const char *buf, int buflen)
 
     /* Now, we have ambigous code.  Pick the highest score.  If more than
        one candidate tie, pick the default encoding. */
-    if (DFA_ALIVE(eucj)) top = &eucj;
-    if (DFA_ALIVE(utf8)) {
-        if (top) {
-#if defined PREFER_UTF8
-            if (top->score <= utf8.score)  top = &utf8;
-#else
-            if (top->score <  utf8.score) top = &utf8;
-#endif
-        } else {
-            top = &utf8;
-        }
-    }
-    if (DFA_ALIVE(sjis)) {
-        if (top) {
-#if defined PREFER_SJIS
-            if (top->score <= sjis.score)  top = &sjis;
-#else
-            if (top->score <  sjis.score) top = &sjis;
-#endif
-        } else {
-            top = &sjis;
+    for (i = 0; order[i] != NULL; i++) {
+        if (order[i]->state >= 0) { //DFA_ALIVE()
+            if (top == NULL || order[i]->score > top->score)
+                top = order[i];
         }
     }
 
-    if (top == &eucj) return "EUC-JP";
-    if (top == &utf8) return "UTF-8";
-    if (top == &sjis) return "SJIS";
+    if (top == &eucj)
+        return "EUC-JP";
+    if (top == &utf8)
+        return "UTF-8";
+    if (top == &sjis)
+        return "SJIS";
     return NULL;
 }
 
@@ -186,37 +183,44 @@ const char *guess_tw(const char *buf, int buflen)
     guess_dfa utf8 = DFA_INIT(guess_utf8_st, guess_utf8_ar);
     guess_dfa *top = NULL;
 
-    for (i=0; i<buflen; i++) {
-        int c = (unsigned char)buf[i];
+    guess_dfa *order[] = { ORDER_TW, NULL };
+
+    for (i = 0; i < buflen; i++) {
+        int c = (unsigned char) buf[i];
 
         /* special treatment of iso-2022 escape sequence */
         if (c == 0x1b) {
-            if (i < buflen-1) {
-                c = (unsigned char)buf[++i];
-                if (c == '$' || c == '(') return "ISO-2022-TW";
+            if (i < buflen - 1) {
+                c = (unsigned char) buf[++i];
+                if (c == '$' || c == '(')
+                    return "ISO-2022-TW";
             }
         }
-        
+
         /* special treatment of BOM */
-        if (i==0 && c == 0xff) {
-            if (i < buflen-1) {
-                c = (unsigned char)buf[i+1];
-                if (c == 0xfe) return UCS_2LE;
+        if (i == 0 && c == 0xff) {
+            if (i < buflen - 1) {
+                c = (unsigned char) buf[i + 1];
+                if (c == 0xfe)
+                    return UCS_2LE;
             }
         }
-        if (i==0 && c == 0xfe) {
-            if (i < buflen-1) {
-                c = (unsigned char)buf[i+1];
-                if (c == 0xff) return UCS_2BE;
+        if (i == 0 && c == 0xfe) {
+            if (i < buflen - 1) {
+                c = (unsigned char) buf[i + 1];
+                if (c == 0xff)
+                    return UCS_2BE;
             }
         }
 
         if (DFA_ALIVE(big5)) {
-            if (!DFA_ALIVE(utf8)) return "BIG5";
+            if (!DFA_ALIVE(utf8))
+                return "BIG5";
             DFA_NEXT(big5, c);
         }
         if (DFA_ALIVE(utf8)) {
-            if (!DFA_ALIVE(big5)) return "UTF-8";
+            if (!DFA_ALIVE(big5))
+                return "UTF-8";
             DFA_NEXT(utf8, c);
         }
 
@@ -228,21 +232,17 @@ const char *guess_tw(const char *buf, int buflen)
 
     /* Now, we have ambigous code.  Pick the highest score.  If more than
        one candidate tie, pick the default encoding. */
-    if (DFA_ALIVE(big5)) top = &big5;
-    if (DFA_ALIVE(utf8)) {
-        if (top) {
-#if defined PREFER_UTF8
-            if (top->score <= utf8.score)  top = &utf8;
-#else
-            if (top->score <  utf8.score) top = &utf8;
-#endif
-        } else {
-            top = &utf8;
+    for (i = 0; order[i] != NULL; i++) {
+        if (order[i]->state >= 0) { //DFA_ALIVE()
+            if (top == NULL || order[i]->score > top->score)
+                top = order[i];
         }
     }
 
-    if (top == &big5) return "BIG5";
-    if (top == &utf8) return "UTF-8";
+    if (top == &big5)
+        return "BIG5";
+    if (top == &utf8)
+        return "UTF-8";
     return NULL;
 }
 
@@ -254,43 +254,51 @@ const char *guess_cn(const char *buf, int buflen)
     guess_dfa gb18030 = DFA_INIT(guess_gb18030_st, guess_gb18030_ar);
     guess_dfa *top = NULL;
 
-    for (i=0; i<buflen; i++) {
-        int c = (unsigned char)buf[i];
+    guess_dfa *order[] = { ORDER_CN, NULL };
+
+    for (i = 0; i < buflen; i++) {
+        int c = (unsigned char) buf[i];
         int c2;
 
         /* special treatment of iso-2022 escape sequence */
         if (c == 0x1b) {
-            if (i < buflen-1) {
-                c = (unsigned char)buf[i+1];
-		c2 = (unsigned char)buf[i+2];
-                if (c == '$' && (c2 == ')' || c2 == '+')) return "ISO-2022-CN";
+            if (i < buflen - 1) {
+                c = (unsigned char) buf[i + 1];
+                c2 = (unsigned char) buf[i + 2];
+                if (c == '$' && (c2 == ')' || c2 == '+'))
+                    return "ISO-2022-CN";
             }
         }
-        
+
         /* special treatment of BOM */
-        if (i==0 && c == 0xff) {
-            if (i < buflen-1) {
-                c = (unsigned char)buf[i+1];
-                if (c == 0xfe) return UCS_2LE;
+        if (i == 0 && c == 0xff) {
+            if (i < buflen - 1) {
+                c = (unsigned char) buf[i + 1];
+                if (c == 0xfe)
+                    return UCS_2LE;
             }
         }
-        if (i==0 && c == 0xfe) {
-            if (i < buflen-1) {
-                c = (unsigned char)buf[i+1];
-                if (c == 0xff) return UCS_2BE;
+        if (i == 0 && c == 0xfe) {
+            if (i < buflen - 1) {
+                c = (unsigned char) buf[i + 1];
+                if (c == 0xff)
+                    return UCS_2BE;
             }
         }
 
         if (DFA_ALIVE(gb2312)) {
-            if (!DFA_ALIVE(utf8) && !DFA_ALIVE(gb18030)) return "GB2312";
+            if (!DFA_ALIVE(utf8) && !DFA_ALIVE(gb18030))
+                return "GB2312";
             DFA_NEXT(gb2312, c);
         }
         if (DFA_ALIVE(utf8)) {
-            if (!DFA_ALIVE(gb2312) && !DFA_ALIVE(gb18030)) return "UTF-8";
+            if (!DFA_ALIVE(gb2312) && !DFA_ALIVE(gb18030))
+                return "UTF-8";
             DFA_NEXT(utf8, c);
         }
         if (DFA_ALIVE(gb18030)) {
-            if (!DFA_ALIVE(utf8) && !DFA_ALIVE(gb2312)) return "GB18030";
+            if (!DFA_ALIVE(utf8) && !DFA_ALIVE(gb2312))
+                return "GB18030";
             DFA_NEXT(gb18030, c);
         }
 
@@ -302,33 +310,19 @@ const char *guess_cn(const char *buf, int buflen)
 
     /* Now, we have ambigous code.  Pick the highest score.  If more than
        one candidate tie, pick the default encoding. */
-    if (DFA_ALIVE(gb2312)) top = &gb2312;
-    if (DFA_ALIVE(utf8)) {
-        if (top) {
-#if defined PREFER_UTF8
-            if (top->score <= utf8.score)  top = &utf8;
-#else
-            if (top->score <  utf8.score) top = &utf8;
-#endif
-        } else {
-            top = &utf8;
-        }
-    }
-    if (DFA_ALIVE(gb18030)) {
-        if (top) {
-#if defined PREFER_GB18030
-	        if (top->score <= gb18030.score) top = &gb18030;
-#else
-            if (top->score <  gb18030.score) top = &gb18030;
-#endif
-        } else {
-            top = &gb18030;
+    for (i = 0; order[i] != NULL; i++) {
+        if (order[i]->state >= 0) { //DFA_ALIVE()
+            if (top == NULL || order[i]->score > top->score)
+                top = order[i];
         }
     }
 
-    if (top == &gb2312) return "GB2312";
-    if (top == &utf8)   return "UTF-8";
-    if (top == &gb18030) return "GB18030";
+    if (top == &gb2312)
+        return "GB2312";
+    if (top == &utf8)
+        return "UTF-8";
+    if (top == &gb18030)
+        return "GB18030";
     return NULL;
 }
 
@@ -340,43 +334,51 @@ const char *guess_kr(const char *buf, int buflen)
     guess_dfa johab = DFA_INIT(guess_johab_st, guess_johab_ar);
     guess_dfa *top = NULL;
 
-    for (i=0; i<buflen; i++) {
-        int c = (unsigned char)buf[i];
-	int c2;
+    guess_dfa *order[] = { ORDER_KR, NULL };
+
+    for (i = 0; i < buflen; i++) {
+        int c = (unsigned char) buf[i];
+        int c2;
 
         /* special treatment of iso-2022 escape sequence */
         if (c == 0x1b) {
-            if (i < buflen-1) {
-                c = (unsigned char)buf[i+1];
-		c2 = (unsigned char)buf[i+2];
-                if (c == '$' && c2 == ')') return "ISO-2022-KR";
+            if (i < buflen - 1) {
+                c = (unsigned char) buf[i + 1];
+                c2 = (unsigned char) buf[i + 2];
+                if (c == '$' && c2 == ')')
+                    return "ISO-2022-KR";
             }
         }
-        
+
         /* special treatment of BOM */
-        if (i==0 && c == 0xff) {
-            if (i < buflen-1) {
-                c = (unsigned char)buf[i+1];
-                if (c == 0xfe) return UCS_2LE;
+        if (i == 0 && c == 0xff) {
+            if (i < buflen - 1) {
+                c = (unsigned char) buf[i + 1];
+                if (c == 0xfe)
+                    return UCS_2LE;
             }
         }
-        if (i==0 && c == 0xfe) {
-            if (i < buflen-1) {
-                c = (unsigned char)buf[i+1];
-                if (c == 0xff) return UCS_2BE;
+        if (i == 0 && c == 0xfe) {
+            if (i < buflen - 1) {
+                c = (unsigned char) buf[i + 1];
+                if (c == 0xff)
+                    return UCS_2BE;
             }
         }
 
         if (DFA_ALIVE(euck)) {
-            if (!DFA_ALIVE(johab) && !DFA_ALIVE(utf8)) return "EUC-KR";
+            if (!DFA_ALIVE(johab) && !DFA_ALIVE(utf8))
+                return "EUC-KR";
             DFA_NEXT(euck, c);
         }
         if (DFA_ALIVE(johab)) {
-            if (!DFA_ALIVE(euck) && !DFA_ALIVE(utf8)) return "JOHAB";
+            if (!DFA_ALIVE(euck) && !DFA_ALIVE(utf8))
+                return "JOHAB";
             DFA_NEXT(johab, c);
         }
         if (DFA_ALIVE(utf8)) {
-            if (!DFA_ALIVE(euck) && !DFA_ALIVE(johab)) return "UTF-8";
+            if (!DFA_ALIVE(euck) && !DFA_ALIVE(johab))
+                return "UTF-8";
             DFA_NEXT(utf8, c);
         }
 
@@ -388,33 +390,18 @@ const char *guess_kr(const char *buf, int buflen)
 
     /* Now, we have ambigous code.  Pick the highest score.  If more than
        one candidate tie, pick the default encoding. */
-    if (DFA_ALIVE(euck)) top = &euck;
-    if (DFA_ALIVE(utf8)) {
-        if (top) {
-#if defined PREFER_UTF8
-            if (top->score <= utf8.score)  top = &utf8;
-#else
-            if (top->score <  utf8.score) top = &utf8;
-#endif
-        } else {
-            top = &utf8;
-        }
-    }
-    if (DFA_ALIVE(johab)) {
-        if (top) {
-#if defined PREFER_JOAHB
-            if (top->score <= johab.score)  top = &johab;
-#else
-            if (top->score <  johab.score) top = &johab;
-#endif
-        } else {
-            top = &johab;
+    for (i = 0; order[i] != NULL; i++) {
+        if (order[i]->state >= 0) { //DFA_ALIVE()
+            if (top == NULL || order[i]->score > top->score)
+                top = order[i];
         }
     }
 
-    if (top == &euck)  return "EUC-KR";
-    if (top == &utf8)  return "UTF-8";
-    if (top == &johab) return "JOHAB";
+    if (top == &euck)
+        return "EUC-KR";
+    if (top == &utf8)
+        return "UTF-8";
+    if (top == &johab)
+        return "JOHAB";
     return NULL;
 }
-
