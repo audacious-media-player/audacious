@@ -1,3 +1,10 @@
+2007-01-09 15:45:01 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [3612]
+  Change /home/js/.audacious to /home/js/.config/audacious
+  trunk/configure.ac |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-01-09 05:55:14 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3610]
   - remove two unused labels
