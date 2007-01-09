@@ -1,3 +1,11 @@
+2007-01-09 05:55:14 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3610]
+  - remove two unused labels
+  
+  trunk/audacious/glade/prefswin.glade |   42 +----------------------------------
+  1 file changed, 2 insertions(+), 40 deletions(-)
+
+
 2007-01-08 22:01:50 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3608]
   - oops i think i forgot this \o/
