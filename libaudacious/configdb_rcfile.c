@@ -38,13 +38,30 @@ ConfigDb *
 bmp_cfg_db_open()
 {
     ConfigDb *db;
+    char *tmp;
 
     db = g_new(ConfigDb, 1);
-    db->filename = g_build_filename(g_get_home_dir(), BMP_RCPATH, 
-                                    "config", NULL);
+
+    if ((tmp = getenv("XDG_CONFIG_HOME")) == NULL)
+        db->filename = g_build_filename(g_get_home_dir(), ".config",
+                                        "audacious", "config", NULL);
+    else
+        db->filename = g_build_filename(tmp, "audacious", "config", NULL);
+
     db->file = bmp_rcfile_open(db->filename);
-    if (!db->file)
+
+    if (!db->file) {
+        tmp = g_build_filename(g_get_home_dir(), BMP_RCPATH, "config", NULL);
+        if (db->file = bmp_rcfile_open(tmp)) {
+            g_free(db->filename);
+            db->filename = tmp;
+        }
+    }
+
+    if (!db->file) {
+        g_free(tmp);
         db->file = bmp_rcfile_new();
+    }
 
     db->dirty = FALSE;
 
