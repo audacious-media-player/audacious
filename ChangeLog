@@ -1,3 +1,11 @@
+2007-01-08 22:01:50 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3608]
+  - oops i think i forgot this \o/
+  
+  trunk/po/bg.po | 2349 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  1 file changed, 2349 insertions(+)
+
+
 2007-01-08 11:08:15 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3606]
   - new bulgarian translator: Andrew Ivanov
