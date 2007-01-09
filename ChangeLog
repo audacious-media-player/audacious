@@ -1,3 +1,10 @@
+2007-01-09 22:51:38 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [3616]
+  Initial XDG basedir support.
+  trunk/libaudacious/configdb_rcfile.c |   23 ++++++++++++++++++++---
+  1 file changed, 20 insertions(+), 3 deletions(-)
+
+
 2007-01-09 17:14:22 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
   revision [3614]
   Revert stupid commit by js, because that does not make us XDG basedir compliant.
@@ -7,7 +14,7 @@
 
 2007-01-09 15:45:01 +0000  Jonathan Schleifer <js@h3c.de>
   revision [3612]
-  Change /home/js/.audacious to /home/js/.config/audacious
+  Change $HOME/.audacious to $HOME/.config/audacious
   trunk/configure.ac |    2 +-
   1 file changed, 1 insertion(+), 1 deletion(-)
 
