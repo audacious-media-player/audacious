@@ -170,6 +170,10 @@ For BASH:
 For C Shell:
   setenv SKINSDIR /path/to/Skins:/more/paths/to/other/locations/of/Skins
 
+You should note that skins designed specifically for Audacious are not compatible
+with Winamp. Likewise, we do not support Winamp "modern" skins as there is a lot of
+Winamp-specifics that would have to be reverse-engineered or emulated to properly
+support those skins.
 
 3. Documentation
 ----------------
