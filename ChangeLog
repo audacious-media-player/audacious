@@ -1,3 +1,13 @@
+2007-01-10 12:54:30 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3624]
+  - i see no reason to keep the BMP changelogs
+  
+  trunk/ChangeLog.bmp | 8259 ----------------------------------------------------
+  trunk/NEWS.bmp      |   98 
+  trunk/README.bmp    |  921 -----
+  3 files changed, 9278 deletions(-)
+
+
 2007-01-10 12:46:52 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3622]
   - this was out of date like whoa
