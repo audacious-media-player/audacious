@@ -1,12 +1,12 @@
-Audacious (c) GPL 2005-2007
+Audacious
+A relatively powerful media player
 
-Audacious Development Team (see AUTHORS)
-
+Copyright (c) 2005-2007 Audacious Development Team (see AUTHORS)
 
 Based on:
-  BMP - Beep Media Player.
+  BMP - Beep Media Player (c)2002-2005
 
-  Which was based on:
+Which was based on:
   XMMS - X Multimedia System (c)1997-2001
 
   A Cross platform Multimedia Player
@@ -40,19 +40,7 @@ TABLE OF CONTENTS
       3.5.5 Fonts
       3.5.6 Title
    3.6 Plugins
-      3.6.1 Input plugins
-            3.6.1.1 Cd Audio Player
-            3.6.1.2 MPEG Layer 1/2/3 player
-            3.6.1.3 Ogg Vorbis player
-            3.6.1.4 WAV player
-      3.6.2 Output plugins
-            3.6.2.1 OSS Driver
-            3.6.2.2 eSound Output
-            3.6.2.3 BSD Sun Output
-      3.6.3 Effect plugins
-      3.6.4 General plugins
-      3.6.5 Visualization plugins
-            3.6.5.1 Blur scope
+   3.7 Playlist Manager
 4. Command Line Options
 5. Features
    5.1 Supported File formats
@@ -498,276 +486,40 @@ Choose a tab to list one of the types of plugins:
 
 3.6 Plugins
 -----------
-Plugins is what makes Audacious work, by moving most of the code out of Audacious and
-into a plugin architecture it's possible to change almost everything in Audacious.
-There are today 5 different types of plugins. Only a few plugins are
-distributed with Audacious, you can find information on more of them at:
 
-  http://audacious-media-player.org
+Plugins are what makes Audacious work, by moving most of the code out of
+Audacious and into a plugin architecture it's possible to change almost
+everything in Audacious. There are today 8 different types of plugins.
 
+However to promote maximum flexibility of the platform itself, we no longer
+include any plugins with the Audacious core.
 
-3.6.1 Input plugins
--------------------
-The input plugins is what you use to play mp3, mod, wav and even movies with.
+You will need to download and install our plugin pack for Audacious if you
+expect it to do anything useful (or install someone else's plugin pack if one
+should exist).
 
+Additionally, you can find a list of plugins at:
+  http://audacious-media-player.org/Plugins
 
-3.6.1.1 Cd Audio Player
------------------------
-Plays audio cd's on Linux, FreeBSD and Solaris. This plugin typically does not
-pass the sound through Audacious, so no visualization can be made nor will the
-equalizer settings have any effect. It can however, be configured to do so.
+You should note that third-party plugins are not supported by the Audacious
+development team, and that you should report any issues with them on our forums,
+but NEVER on our bugtracker.
 
-Before I explain the usage we better have a look on the configuration
-first.
-
-In the device tab you should set Device to your cdrom unit. /dev/cdrom
-is generally a good choice on Linux systems. Set 'Directory' to where a
-directory which will be used by Audacious to present the available cd tracks in.
-Using the normal mount point for the cdrom is recommended unless the
-cdrom is automounted if it contains a data track.
-
-  Example:
-  --------
-     Device: /dev/cdrom (which on my system is symlinked to /dev/hdc)
-  Directory: /mnt/cdrom
-
-The next setting is used to decide what volume is to be changed, it's either
-the OSS Mixer for CD Audio or the actual volume on the CDROM.
-
-In the CD Info tab you can choose if the plugin should try and get the
-track names from a Internet database server.
-
-You can either use the CDDB protocol or CD Index. CDDB defaults to a free
-version of CDDB, but it will work with the infamous cddb servers as well.
-
-Show network window will display some useful information if something goes
-wrong, but you'll have to close and re-open it to update the content of it.
-
-If a CDDB server is too slow for your taste, you can press 'Get server list'
-to receive a list of alternate servers.
-
-CD Index is another type of database, but works in a similar manner. If
-you don't have libxml installed when you compiled the plugin, this will be
-grayed out.
-
-In the "Track names" box you can decide on how the plugin presents the
-tracks to you. This is normally handled by the 'Title' (section 3.5.6) setting
-in the main preferences, but you can choose to override them here.
-
-Available variables are:
-
-   %p = Performer/Artist   %t = Track name
-   %a = Album              %n = Track number
-
-So "%n. %t / %p (%a)" would display something like:
-
-  1. New Life / Depeche Mode (Speak & Spell)
-
-Now to add your CDROM tracks to the playlist. Insert an audio cd into the
-CDROM drive and press the Eject button. Go to the directory which you defined
-earlier ( /mnt/cdrom ) and you should see a list of tracks. They will be named
-Track XX.cda, select the tracks you want to play and press OK. If you had
-choosed an Internet database and the CD exists in it, Audacious will now display
-the tracks you have chosen with their names according to the 'Name format'
-configuration.
-
-Now, that wasn't hard now was it?
-
-If you want Audacious to identify as something else when speaking with servers, you
-can set the environmental variable "XMMS_CDDB_CLIENT_NAME", and Audacious will use
-that instead.
-
-
-3.6.1.2 MPEG Layer 1/2/3 player
--------------------------------
-The main reason why this player exists today is mp3 files, so what could be
-better than a plugin that plays them?.
-
-It's loosely based off the mpg123 engine and handles MPEG Layer 1/2/3 files and
-VBR (variable bit rate) MP3 files.
-
-The first configuration tab is just like the MikMod one, and again, if you
-have an older soundcard and the music is going half speed, change the
-'Resolution' setting.
-
-If you have mp3 files named something else than .mp3, you might want to enable
-'Detect files by content' so Audacious will know that they are supported. Although
-I'd recommend that you rename the files (or just beat the person who burned his
-high-school bands music with in proper file extensions into giving you a new
-cd) since this is rather slow.
-
-In the streaming tab you can choose a 'Buffer size' in kilobytes which Audacious
-will keep while streaming. This ranges from 4 -> 4096kb (which should be
-sufficient for most people. The 'Pre-buffer' value is how much of the buffer
-Audacious should fill before starting to play the stream. (0%-90%)
-
-I'll let Chad Armstrong describe the two following options.
-
-"As streaming becomes more popular, there is rising demand for better
-information about the current track being played. This 'Now Playing'
-information (also known as 'Title Streaming') allows for more information to be
-passed back to the listener. In the past, there was a method started by the
-Shoutcast group, which embedded this information in the stream itself. The mp3
-standard was never designed to allow for text information to be interleaved
-with audio data, and it is this design which can cause errors in playback. The
-Icecast Team has taken this data completely out of the mp3 data, and has
-provided it in a side channel (via UDP)."
-
-- Chad Armstrong (icemonk)
-
-You're better off having both these options enabled. :)
-
-In the 'Title' tab you can change the way Audacious presents the mp3 files to the
-playlist.
-
-ID3 is data stored in the mp3 file and can include Artist, Album etc. If you
-uncheck 'Use ID3 tags' Audacious will display the filename instead of the ID3
-information.
-
-ID3V2 allows for a lot of extra data to be stored in the mp3 file, and don't
-suffer from the limitations of ID3V1, Audacious supports the same data that are
-available in ID3V1 but not the extra data. If a mp3 file contains both ID3V1
-and ID3V2 tags, you might see something different that the 'file info' editor
-displays. If this happens, you might want to turn on 'Disable ID3V2 tags'.
-
-'Override generic titles' is used if you do not want to use the generic titles
-defined in the preferences. See section 3.5.6.
-
-The 'ID3 format:' box allows you to alter in which order the information about
-the current song is displayed.
-
-Example: %p - %t (%a) [%y]
-will display something like "Laibach - Alle Gegen Alle (Nato) [1994]"
-
-available fields are:
-
-%p - Artist          (ex: Laibach)
-%a - Album           (ex: Nato)
-%f - File name       (ex: laibach-allegegenalle)
-%F - File path       (ex: /home/thomas/mp3)
-%e - File extension  (ex: mp3)
-
-%t - Track name      (ex: Alle Gegen Alle)
-%n - Track number    (ex: 6)
-%y - Year            (ex: 1994)
-%g - Genre           (ex: Electronic)
-%c - Comment         (ex: Cover of D.A.F)
-
-
-3.6.1.3 Ogg Vorbis Player
--------------------------
-
-Plays OGG Vorbis encoded files, see http://www.xiph.org/ogg/vorbis/index.html
-for more information.
-
-
-3.6.1.4 WAV player
--------------------
-This plugin plays as suggested, wave files. It supports 16bit and 8bit PCM wave
-files.
-
-
-3.6.2 Output plugins
+3.7 Playlist Manager
 --------------------
-This type of plugins is what is used to send the audio data to your soundcard
-or alternative devices.
 
+Audacious supports multiple playlists (think foobar2000). For the manipulation of
+playlists, we have included a playlist manager tool.
 
-3.6.2.1 OSS Driver
-------------------
-This plugin is probably what most of you will use if your system is equipped
-with the OpenSoundSystem (www.opensound.com) drivers or compatible.
-Compatible drivers are ALSA with their OSS emulation, and Linux kernel sound
-drivers.
-
-In the 'Devices' tab you can change the soundcard which Audacious is going to use.
-If your driver have more than one dsp, you can change the one Audacious uses by
-enabling 'Use alternate device' and changing the '/dev/dsp' to suit your needs.
-
-If you have changed your Audio Device to another soundcard (if you for some
-reason have two cards) don't forget to change the 'Mixer device' setting to the
-soundcard you want to use.
-
-In the 'Buffering' tab you can change how much data the OSS plugin will buffer.
-The 'Buffer size' ranges from 200 - 10000ms. If you want the plugin to wait for
-the buffer to be filled before it starts playing the music change the 'Pre-
-buffer' value, this ranges from 0% - 90% of the 'Buffer size' value.
-
-In the 'Mixer' tab you can change which volume setting Audacious should change when
-you alter the volume from Audacious. Enable 'Volume controls Master not PCM' if you
-want Audacious to change the volume of all sounds instead of only PCM/wave sound.
-
-
-3.6.2.2 eSound Output
----------------------
-The 'ESD' plugin will use the 'Enlightened Sound Daemon' to playback the audio.
-It's useful if you want to be able to have sound effects in your programs and
-still be able to listen to music with Audacious.
-
-In the 'Server' tab of the configuration, you can tell the plugin where to send
-the audio data. Enable 'Use remote host' and enter the name/ip of the server
-and port to send to. This is probably only useful in a LAN environment, since
-the audio data is sent uncompressed to the remote ESD.
-
-The 'Buffering' tab works just like the 'OSS Driver' one.
-
-
-3.6.2.3 BSD Sun Output
-----------------------
-The 'Sun' output plugin will use the native audio(4) interface provided
-by OpenBSD and NetBSD for playback and mixing.
-
-The $AUDIODEVICE and $MIXERDEVICE environment variables will override the
-current configuration settings. Defaults are /dev/audio and /dev/mixer.
-
-In the 'Devices' tab you can change the audio, audioctl and mixer devices
-Audacious is going to use. The audioctl device is used for ioctl(2) calls
-independent of audio data I/O.
-
-In the 'Buffering' tab you can change how much data the Sun plugin will
-buffer. The 'Buffer size' ranges from 200 - 10000ms. If you want the plugin
-to wait for the buffer to be filled before it starts playing the music,
-change the 'Pre-buffer' value, this ranges from 0% - 90% of the 'Buffer size'
-value.
-
-In the 'Mixer' tab you can select the volume device to be affected when you
-alter the volume from Audacious. `Audacious uses mixer exclusively' causes Audacious to
-keep the mixer device open instead of re-opening it for each operation.
-
-There may also be some more options depending on what your audio mixer
-device supports (eg. loudness, spatial, surround, preamp).
-
-In the 'Status' tab you can see audio device information and real-time
-playback status.
-
-
-3.6.3 Effect plugins
---------------------
-Effect plugins can alter the sound of the music you are listening to.
-
-
-3.6.4 General plugins
----------------------
-Mostly used for controlling Audacious and passing data to other programs.
-
-
-3.6.5 Visualization plugins
----------------------------
-Eye candy plugins.
-
-
-3.6.5.1 Blur scope
--------------------
-A simple blurring oscilloscope, in the configuration you can change the color
-with the standard GTK color dialog.
+It is accessible from the Playlist menu.
 
 
 4. Command Line Options
 -----------------------
 
-beep-media-player --help will produce:
+audacious --help will produce:
 
-Usage: beep-media-player [options] [files] ...
+Usage: audacious [options] [files] ...
 
 Options:
 --------
@@ -783,37 +535,28 @@ Options:
 -e, --enqueue           Don't clear the playlist
 -m, --show-main-window  Show the main window
 -v, --version           Print version number and exit.
+-H, --headless          Headless operation
+-E, --enqueue-to-temp   Enqueues to a temporary playlist.
 
 You can specify files on the command line, e.g:
 
-  beep-media-player file1.mp3 file2.mp3 file3.mp3
-  beep-media-player *.mp3
-  beep-media-player playlist.m3u (note: playlists must be named .m3u)
+  audacious file1.mp3 file2.mp3 file3.mp3
+  audacious *.mp3
+  audacious playlist.m3u playlist.pls playlist.xspf
 
-If you do this while Audacious is running the current playlist
+If you do this while Audacious is running, the current playlist
 will be cleared and the files/playlist specified on the command
 line will be used instead.
 
-To keep the current playlist intact use the -e option.
+To keep the current playlist intact use the -E option, which will
+create a new temporary playlist with the requested media, or the
+-e option, which will append to your currently selected playlist.
 
 
 5. Features
 -----------
 
-5.1 Supported File formats
--------------------------
-
-OGG Vorbis
-MP2 and MP3 streams
-WAV/AU samples
-
-Others:
-
-CD audio
-Shout/Icecast
-
-
-5.2 Supported Features
+5.1 Supported Features
 ----------------------
 
 Seeking in files
@@ -896,7 +639,7 @@ find the file you downloaded 3 minutes ago)
 Audacious is under heavy development and as such, has quite a number of
 bugs. Our bug tracker page is maintained at:
 
-  http://bugs.audacious-media-player.org/
+  http://bugs-meta.atheme.org/
 
 It will continue to have bugs as we fix and introduce new ones through
 rewriting and enhancement. Help us along by reporting new bugs, and
@@ -908,6 +651,6 @@ verifying existing ones.
 
 Project Admins:
 
-  William Pitcock       email: nenolod at nenolod.net
+  William Pitcock       email: nenolod at sacredspiral.co.uk
   Tony Vroon            email: chainsaw at gentoo.org
 

@@ -1,3 +1,11 @@
+2007-01-10 12:18:25 +0000  William Pitcock <nenolod@nenolod.net>
+  revision [3620]
+  - new e-mail address
+  
+  trunk/AUTHORS |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-01-09 22:53:19 +0000  Jonathan Schleifer <js@h3c.de>
   revision [3618]
   Fuck, I forgot to quote the $ in the commit msg, so my home was in the ChangeLog.
