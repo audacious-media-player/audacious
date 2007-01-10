@@ -1,3 +1,11 @@
+2007-01-10 12:46:52 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3622]
+  - this was out of date like whoa
+  
+  trunk/README |  331 ++++++-----------------------------------------------------
+  1 file changed, 37 insertions(+), 294 deletions(-)
+
+
 2007-01-10 12:18:25 +0000  William Pitcock <nenolod@nenolod.net>
   revision [3620]
   - new e-mail address
