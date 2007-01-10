@@ -60,9 +60,9 @@ TABLE OF CONTENTS
 
 We are not liable for any damage caused by the use of this program.
 
-Audacious is NOT a port of WinAmp (http://www.winamp.com). Audacious is a fork of
+Audacious is NOT a port of Winamp (http://www.Winamp.com). Audacious is a fork of
 XMMS (http://xmms.org) and BMP (http://beep-media-player.org) which borrowed the
-WinAmp GUI.
+Winamp GUI.
 
 
 2. Installation
@@ -80,27 +80,6 @@ packages installed:
   libglade >= 2.3.1
   (http://ftp.gnome.org/pub/GNOME/sources/libglade/2.3/)
 
-The following packages are required for optional features:
-
-  Vorbis input plugin:
-    libvorbis >= 1.0
-    (http://www.xiph.org/ogg/vorbis/download.html)
-
-  ESD output plugin:
-    esound >= 0.2.3
-    (http://ftp.gnome.org/pub/GNOME/desktop/2.6/2.6.0/sources/)
-
-  ALSA output plugin:
-    alsa-lib >= 1.0
-    (http://www.alsa-project.org)
-
-  GConf support:
-    GConf >= 2.6.0  
-    (http://ftp.gnome.org/pub/GNOME/desktop/2.6/2.6.0/sources/)
-
-  Taglib:
-    Taglib >= 1.4
-
 If you compile Audacious from a fresh CVS checkout, you will also need
 the following tools:
 
@@ -116,7 +95,7 @@ third-party repositories for them.
 2.1 Basic Installation
 ----------------------
 
-cd audacious-1.1.0
+cd audacious-VERSION
 ./configure
 make
 make install
@@ -163,14 +142,14 @@ NoBorder {
 2.3 Skin Installation
 ---------------------
 
-Audacious will create a directory called ~/.audacious/Skins/. You can unarchive
-the skins the same way as you do for WinAmp.
+Audacious will create a directory called ~/.share/audacious/Skins. You can unarchive
+the skins the same way as you do for Winamp.
 
 However, you don't need to as Audacious supports archived skins. Audacious
 currently reads the following formats: zip, wsz, tar, tar.gz and
 tar.bz2
 
-Just copy the archive to one of the skin path's and Audacious will take care
+Just copy the archive to one of the skin paths and Audacious will take care
 of the rest.
 
 In order to support zipped skins you will need to have unzip. Unzip
@@ -179,6 +158,7 @@ is bundled with most Linux distributions.
 Audacious looks for skins in these directories (in listing order):
 
 <prefix>/share/audacious/Skins
+~/.share/audacious/Skins
 ~/.audacious/Skins
 
 You can set the environment variable SKINSDIR to another location of
@@ -187,7 +167,7 @@ your choice:
 For BASH: 
   export SKINSDIR=/path/to/Skins:/more/paths/to/other/locations/of/Skins
 
-For CSH:
+For C Shell:
   setenv SKINSDIR /path/to/Skins:/more/paths/to/other/locations/of/Skins
 
 
@@ -201,7 +181,7 @@ This file or http://audacious-media-player.org
 --------------------
 
 When you start up Audacious, you will get a console very similar to that of
-WinAmp.
+Winamp.
 
 - On the top is the window title bar. To the right you will see 3 buttons,
    Left button will minimize Audacious.
@@ -372,7 +352,7 @@ the equalizer, once you turned it on you use it as a normal equalizer.
 
 EQ presets will be saved in ~/.audacious/config when you close Audacious. You can also
 have your own presets for different song using the "Preset" button, Audacious can
-also import/export from WinAmp's preset files.
+also import/export from Winamp's preset files.
 
 If 'Auto' is enabled, Audacious will try to load equalizer presets like this:
 
@@ -390,12 +370,12 @@ Load
    Default              : Will load the default preset.
    Zero                 : Will reset the equalizer to zero.
    From file            : Will load from a .preset file
-   From WinAMP EQF file : Will load from a WinAMP equalizer file. If you
+   From Winamp EQF file : Will load from a Winamp equalizer file. If you
                           choose a library file only the first entry will
                           be loaded.
 Import
-   WinAMP presets       : Imports the presets contained in an WinAMP equalizer
-                          library file (often named WINAMP.q1) and add all
+   Winamp presets       : Imports the presets contained in an Winamp equalizer
+                          library file (often named Winamp.q1) and add all
                           the entries to the Preset window.
 Save
    Preset               : Let you name the current preset and save it.
@@ -403,8 +383,8 @@ Save
                           currently playing.
    Default              : Saves the default value for the equalizer.
    From file            : Saves the current settings in a preset file.
-   From WinAMP EQF file : Exports the current settings to a file readable by
-                          WinAMP.
+   From Winamp EQF file : Exports the current settings to a file readable by
+                          Winamp.
 Delete
    Preset               : Let you delete a preset from the list.
    Auto-load preset     : Let you delete a auto-load preset from the list.
@@ -478,11 +458,16 @@ Custom string - When the above option is set to 'Custom' insert a string of
 Enable/disable and configure plugins in this section.
 
 Choose a tab to list one of the types of plugins:
-  - Media (filetype/device support)
+  - Decoders (filetype/device support)
   - General (general plugins)
   - Visualization (visualization plugins)
   - Effects (effect plugins)
-  - Output (output plugins)
+
+3.5.7. Audio
+------------
+
+The settings in this section are related to the audio system.
+
 
 3.6 Plugins
 -----------
@@ -565,13 +550,13 @@ Shuffle play
 Repeat play
 Playlist editor
 Spectrum Analyzer
-One Line mode al'a WinShade in WinAmp
+One Line mode al'a WinShade in Winamp
 Oscilloscope
 Timer Elapsed/Timer Remaining
 Plug-in system Output/Input/Effect/General/Visualization
 Equalizer
 Double Size option
-WinAmp 2.0 skin support (can use wsz files)
+Winamp 2.0 skin support (can use wsz files)
 GTK Requesters (with theme support)
 Streaming/Shoutcast(1.0/1.1)/Icecast support
 Auto remove borders if the WM has support for it
@@ -616,7 +601,7 @@ You can find more places on our website, at:
 7.1. Tips and Tricks
 -------------------
 
-If you have a windows partition with WinAmp installed, a good idea would be to
+If you have a windows partition with Winamp installed, a good idea would be to
 set the SKINSDIR variable to that dir.
 
 Audacious features some command line options like next/previous songs, those
@@ -654,3 +639,15 @@ Project Admins:
   William Pitcock       email: nenolod at sacredspiral.co.uk
   Tony Vroon            email: chainsaw at gentoo.org
 
+Alternatively, you can try the mailing list at audacious@atheme.org.
+Subscription information is available at:
+
+  http://mail.atheme.org/mailman/listinfo/audacious
+
+If a mailing list is not interesting to you, you can try our forums:
+
+  http://boards.nenolod.net
+
+There is also an IRC channel at irc.atheme.org #audacious. You should
+note that this IRC presence is mainly for internal project use, but
+that doesn't stop 50-someodd people from visiting there.
