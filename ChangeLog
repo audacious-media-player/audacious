@@ -1,3 +1,11 @@
+2007-01-10 13:19:46 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3632]
+  - note that WAL (winamp "modern") skins are not supported
+  
+  trunk/README |    4 ++++
+  1 file changed, 4 insertions(+)
+
+
 2007-01-10 13:14:52 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3630]
   - some more updates, e.g. IRC channel/mailing list/forums

@@ -65,6 +65,7 @@ AC_ARG_WITH(rc-path,
 AC_DEFINE_UNQUOTED(BMP_RCPATH, "$rc_path",
     [Resource and configuration path for audacious relative to $HOME.]
 )
+AC_DEFINE(DOTAUDACIOUS_COMPAT, 1, [Enable compatibility for $HOME/.audacious])
 AC_SUBST(BMP_RCPATH)
 
 AC_ARG_ENABLE(one-plugin-dir,
