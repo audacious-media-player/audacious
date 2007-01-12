@@ -37,7 +37,7 @@ AC_PROG_CXX
 AC_ISC_POSIX
 AC_C_BIGENDIAN
 
-test x"$GCC" = x"yes" && CFLAGS="$CFLAGS -Wall"
+test x"$GCC" = x"yes" && CFLAGS="$CFLAGS -Wall -pipe"
 
 dnl Check for assembler
 
