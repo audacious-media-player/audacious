@@ -1,3 +1,187 @@
+2007-01-12 19:43:40 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3636]
+  - objective-make autodepend fixes
+  - move all sourcecode into src/ and adjust Makefiles accordingly
+  
+  trunk/Makefile                           |   10 
+  trunk/configure.ac                       |    2 
+  trunk/mk/objective.mk                    |    2 
+  trunk/po/Makevars                        |    2 
+  trunk/src/Makefile                       |    9 
+  trunk/src/audacious/Makefile             |  228 
+  trunk/src/audacious/actions-equalizer.h  |   72 
+  trunk/src/audacious/actions-mainwin.h    |  154 
+  trunk/src/audacious/actions-playlist.h   |  144 
+  trunk/src/audacious/audacious.desktop.in |   22 
+  trunk/src/audacious/audacious_logo.xpm   |  908 +--
+  trunk/src/audacious/build_stamp.h        |   16 
+  trunk/src/audacious/controlsocket.c      | 1584 +++---
+  trunk/src/audacious/controlsocket.h      |  172 
+  trunk/src/audacious/debug.h              |   88 
+  trunk/src/audacious/dnd.h                |   96 
+  trunk/src/audacious/dock.c               | 1138 ++--
+  trunk/src/audacious/dock.h               |   90 
+  trunk/src/audacious/effect.c             |  440 -
+  trunk/src/audacious/effect.h             |  100 
+  trunk/src/audacious/fft.c                |  598 +-
+  trunk/src/audacious/fft.h                |   96 
+  trunk/src/audacious/general.c            |  332 -
+  trunk/src/audacious/general.h            |   88 
+  trunk/src/audacious/genevent.c           |  292 -
+  trunk/src/audacious/genevent.h           |   66 
+  trunk/src/audacious/getopt.c             | 1922 +++----
+  trunk/src/audacious/getopt.h             |  264 -
+  trunk/src/audacious/getopt1.c            |  366 -
+  trunk/src/audacious/glade.c              |  320 -
+  trunk/src/audacious/glade.h              |   98 
+  trunk/src/audacious/glade/Makefile       |    6 
+  trunk/src/audacious/hints.c              |  114 
+  trunk/src/audacious/hints.h              |   86 
+  trunk/src/audacious/icons-csource.h      | 1898 +++----
+  trunk/src/audacious/icons-stock.h        |   76 
+  trunk/src/audacious/iir.c                |  170 
+  trunk/src/audacious/iir.h                |  168 
+  trunk/src/audacious/iir_cfs.c            |  470 -
+  trunk/src/audacious/iir_cfs.h            |   80 
+  trunk/src/audacious/iir_fpu.c            |  420 -
+  trunk/src/audacious/iir_fpu.h            |   78 
+  trunk/src/audacious/images/Makefile      |    6 
+  trunk/src/audacious/input.c              | 1682 +++---
+  trunk/src/audacious/input.h              |  168 
+  trunk/src/audacious/intl                 |    2 
+  trunk/src/audacious/logger.c             |  304 -
+  trunk/src/audacious/logger.h             |   72 
+  trunk/src/audacious/main.c               | 2572 ++++-----
+  trunk/src/audacious/main.h               |  376 -
+  trunk/src/audacious/memorypool.c         |  264 -
+  trunk/src/audacious/memorypool.h         |   78 
+  trunk/src/audacious/na.xpm               |  474 -
+  trunk/src/audacious/output.c             |  820 +--
+  trunk/src/audacious/output.h             |  142 
+  trunk/src/audacious/pixbuf_effects.c     |  174 
+  trunk/src/audacious/playback.c           |  664 +-
+  trunk/src/audacious/playback.h           |   80 
+  trunk/src/audacious/playlist.c           | 6322 ++++++++++++------------
+  trunk/src/audacious/playlist.h           |  442 -
+  trunk/src/audacious/playlist_container.c |  180 
+  trunk/src/audacious/playlist_container.h |   90 
+  trunk/src/audacious/playlist_manager.c   |  732 +-
+  trunk/src/audacious/playlist_manager.h   |   48 
+  trunk/src/audacious/plugin.h             |  484 -
+  trunk/src/audacious/pluginenum.c         | 1008 +--
+  trunk/src/audacious/pluginenum.h         |   74 
+  trunk/src/audacious/signals.c            |  274 -
+  trunk/src/audacious/signals.h            |   56 
+  trunk/src/audacious/strings.c            |  768 +-
+  trunk/src/audacious/titlestring.h        |  170 
+  trunk/src/audacious/ui/Makefile          |    6 
+  trunk/src/audacious/ui_about.c           |  406 -
+  trunk/src/audacious/ui_credits.c         |  780 +--
+  trunk/src/audacious/ui_credits.h         |   16 
+  trunk/src/audacious/ui_equalizer.c       | 3576 ++++++-------
+  trunk/src/audacious/ui_equalizer.h       |  128 
+  trunk/src/audacious/ui_fileinfo.c        | 1250 ++--
+  trunk/src/audacious/ui_fileinfo.h        |   66 
+  trunk/src/audacious/ui_main.c            | 7982 +++++++++++++++----------------
+  trunk/src/audacious/ui_main.h            |  388 -
+  trunk/src/audacious/ui_manager.c         | 1454 ++---
+  trunk/src/audacious/ui_manager.h         |  148 
+  trunk/src/audacious/ui_playlist.c        | 4292 ++++++++--------
+  trunk/src/audacious/ui_playlist.h        |  160 
+  trunk/src/audacious/ui_preferences.c     | 5414 ++++++++++-----------
+  trunk/src/audacious/ui_preferences.h     |   54 
+  trunk/src/audacious/ui_skinselector.c    |  810 +--
+  trunk/src/audacious/ui_skinselector.h    |   86 
+  trunk/src/audacious/util.c               | 3138 ++++++------
+  trunk/src/audacious/util.h               |  288 -
+  trunk/src/audacious/vfs.c                |  702 +-
+  trunk/src/audacious/vfs.h                |  244 
+  trunk/src/audacious/vfs_buffer.c         |  458 -
+  trunk/src/audacious/vfs_buffer.h         |  140 
+  trunk/src/audacious/vfs_common.c         |  264 -
+  trunk/src/audacious/visualization.c      |  940 +--
+  trunk/src/audacious/visualization.h      |  106 
+  trunk/src/audacious/widgets/Makefile     |    7 
+  trunk/src/audtool/Makefile               |   58 
+  trunk/src/audtool/audtool.c              | 1918 +++----
+  trunk/src/audtool/audtool.h              |  176 
+  trunk/src/intl/ChangeLog                 |    8 
+  trunk/src/intl/Makefile                  |   98 
+  trunk/src/intl/VERSION                   |    2 
+  trunk/src/intl/bindtextdom.c             |  748 +-
+  trunk/src/intl/config.charset            |  934 +--
+  trunk/src/intl/dcgettext.c               |  118 
+  trunk/src/intl/dcigettext.c              | 2476 ++++-----
+  trunk/src/intl/dcngettext.c              |  120 
+  trunk/src/intl/dgettext.c                |  118 
+  trunk/src/intl/dngettext.c               |  122 
+  trunk/src/intl/eval-plural.h             |  228 
+  trunk/src/intl/explodename.c             |  384 -
+  trunk/src/intl/finddomain.c              |  390 -
+  trunk/src/intl/gettext.c                 |  128 
+  trunk/src/intl/gettextP.h                |  448 -
+  trunk/src/intl/gmo.h                     |  296 -
+  trunk/src/intl/hash-string.h             |  118 
+  trunk/src/intl/intl-compat.c             |  302 -
+  trunk/src/intl/l10nflist.c               |  906 +--
+  trunk/src/intl/libgnuintl.h.in           |  618 +-
+  trunk/src/intl/loadinfo.h                |  312 -
+  trunk/src/intl/loadmsgcat.c              | 2644 +++++-----
+  trunk/src/intl/localcharset.c            |  796 +--
+  trunk/src/intl/localcharset.h            |   84 
+  trunk/src/intl/locale.alias              |  156 
+  trunk/src/intl/localealias.c             |  838 +--
+  trunk/src/intl/localename.c              | 1544 ++---
+  trunk/src/intl/log.c                     |  208 
+  trunk/src/intl/ngettext.c                |  136 
+  trunk/src/intl/os2compat.c               |  196 
+  trunk/src/intl/os2compat.h               |   92 
+  trunk/src/intl/osdep.c                   |   48 
+  trunk/src/intl/plural-exp.c              |  312 -
+  trunk/src/intl/plural-exp.h              |  252 
+  trunk/src/intl/plural.c                  | 3036 +++++------
+  trunk/src/intl/plural.y                  |  818 +--
+  trunk/src/intl/ref-add.sin               |   62 
+  trunk/src/intl/ref-del.sin               |   52 
+  trunk/src/intl/relocatable.c             |  878 +--
+  trunk/src/intl/relocatable.h             |  134 
+  trunk/src/intl/textdomain.c              |  284 -
+  trunk/src/libaudacious++/Makefile        |   70 
+  trunk/src/libaudacious++/configdb.cxx    |  242 
+  trunk/src/libaudacious++/configdb.hh     |  150 
+  trunk/src/libaudacious/Makefile          |   98 
+  trunk/src/libaudacious/beepctrl.c        | 3406 ++++++-------
+  trunk/src/libaudacious/beepctrl.h        |  286 -
+  trunk/src/libaudacious/configdb.h        |  396 -
+  trunk/src/libaudacious/configdb_gconf.c  |  552 +-
+  trunk/src/libaudacious/configdb_rcfile.c |  448 -
+  trunk/src/libaudacious/dirbrowser.c      |  826 +--
+  trunk/src/libaudacious/dirbrowser.h      |   70 
+  trunk/src/libaudacious/formatter.c       |  282 -
+  trunk/src/libaudacious/formatter.h       |   56 
+  trunk/src/libaudacious/rcfile.c          | 1130 ++--
+  trunk/src/libaudacious/rcfile.h          |  188 
+  trunk/src/libaudacious/titlestring.c     |  898 +--
+  trunk/src/libaudacious/titlestring.h     |  240 
+  trunk/src/libaudacious/urldecode.c       |  136 
+  trunk/src/libaudacious/urldecode.h       |   54 
+  trunk/src/libaudacious/util.c            |  236 
+  trunk/src/libaudacious/util.h            |    2 
+  trunk/src/libaudacious/xconvert.c        | 1698 +++---
+  trunk/src/libaudacious/xconvert.h        |   68 
+  trunk/src/libguess/Makefile              |   38 
+  trunk/src/libguess/guess.c               |  814 +--
+  trunk/src/libguess/guess.scm             |  768 +-
+  trunk/src/libguess/guess_tab.c           | 1464 ++---
+  trunk/src/libguess/libguess.h            |   94 
+  trunk/src/librcd/Makefile                |   38 
+  trunk/src/librcd/README                  |    8 
+  trunk/src/librcd/librcd.c                |  538 +-
+  trunk/src/librcd/librcd.h                |   90 
+  trunk/src/librcd/russian_table.h         | 1798 +++---
+  176 files changed, 52955 insertions(+), 52937 deletions(-)
+
+
 2007-01-11 13:47:16 +0000  Jonathan Schleifer <js@h3c.de>
   revision [3634]
   Added #ifdefs around $HOME/.audacious compatibility code

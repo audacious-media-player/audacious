@@ -19,6 +19,7 @@
 
 #include "configdb.h"
 
+#include <stdlib.h>
 #include <string.h>
 #include "rcfile.h"
 
