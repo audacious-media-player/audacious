@@ -19,3 +19,5 @@ EXTRA_LOCALE_CATEGORIES =
 MSGID_BUGS_ADDRESS = http://bugs.audacious-media-player.org
 
 build: all
+
+depend:

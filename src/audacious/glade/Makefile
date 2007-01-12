@@ -1,5 +1,5 @@
-include ../../mk/rules.mk
-include ../../mk/init.mk
+include ../../../mk/rules.mk
+include ../../../mk/init.mk
 
 gladexmldir = $(pkgdatadir)/glade
 
@@ -9,4 +9,4 @@ OBJECTIVE_DATA = \
 	prefswin.glade:$(gladexmldir) \
 	addfiles.glade:$(gladexmldir)
 
-include ../../mk/objective.mk
+include ../../../mk/objective.mk

@@ -1,6 +1,6 @@
-include ../mk/rules.mk
-include ../mk/init.mk
-include ../mk/objective.mk
+include ../../mk/rules.mk
+include ../../mk/init.mk
+include ../../mk/objective.mk
 
 beepincludedir = $(includedir)/audacious
 
@@ -17,7 +17,7 @@ CFLAGS += \
 	$(LIBGLADE_CFLAGS) \
 	$(BEEP_DEFINES)    \
 	$(ARCH_DEFINES)    \
-	-I..    \
+	-I.. -I../..   \
 	-I../intl
 
 SOURCES = audtool.c

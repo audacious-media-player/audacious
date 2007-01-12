@@ -3,7 +3,7 @@
 include mk/rules.mk
 include mk/init.mk
 
-SUBDIRS = libaudacious $(INTL_OBJECTIVE) $(SUBDIR_GUESS) audacious audtool po icons skins
+SUBDIRS = src po icons skins
 
 include mk/objective.mk
 
@@ -38,10 +38,10 @@ documentation-build:
 			mkdir -p doc/audacious/xml; \
 		fi; \
 		cd doc/libaudacious; \
-			gtkdoc-scan --module=libaudacious --source-dir=../../libaudacious; \
+			gtkdoc-scan --module=libaudacious --source-dir=../../src/libaudacious; \
 		cd ../..; \
 		cd doc/audacious; \
-			gtkdoc-scan --module=audacious --source-dir=../../audacious --ignore-headers=intl; \
+			gtkdoc-scan --module=audacious --source-dir=../../src/audacious --ignore-headers=intl; \
 		cd ../..; \
 		cd doc/libaudacious; \
 			gtkdoc-mktmpl --module=libaudacious; \
@@ -50,10 +50,10 @@ documentation-build:
 			gtkdoc-mktmpl --module=audacious; \
 		cd ../..; \
 		cd doc/libaudacious; \
-			gtkdoc-mkdb --module=libaudacious --source-dir=../../libaudacious/ --output-format=xml --main-sgml-file=xml/libaudacious-main.sgml; \
+			gtkdoc-mkdb --module=libaudacious --source-dir=../../src/libaudacious/ --output-format=xml --main-sgml-file=xml/libaudacious-main.sgml; \
 		cd ../..; \
 		cd doc/audacious; \
-			gtkdoc-mkdb --module=audacious --source-dir=../../audacious/ --ignore-files=intl --output-format=xml --main-sgml-file=xml/audacious-main.sgml; \
+			gtkdoc-mkdb --module=audacious --source-dir=../../src/audacious/ --ignore-files=intl --output-format=xml --main-sgml-file=xml/audacious-main.sgml; \
 		cd ../..; \
 		rm -rf doc/libaudacious/html; \
 		mkdir -p doc/libaudacious/html; \

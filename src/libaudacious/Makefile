@@ -1,5 +1,5 @@
-include ../mk/rules.mk
-include ../mk/init.mk
+include ../../mk/rules.mk
+include ../../mk/init.mk
 
 PICLDFLAGS = $(LIBLDFLAGS)
 
@@ -16,7 +16,7 @@ CFLAGS += $(PICFLAGS) \
 	$(GTK_CFLAGS)        \
 	$(GCONF_CFLAGS)      \
 	-D_AUDACIOUS_CORE    \
-	-I..		      \
+	-I.. -I../..	      \
 	-I../intl
 
 CONF_SRC = configdb_$(CONFIGDB_BACKEND).c
@@ -39,7 +39,7 @@ HEADERS = \
 	beepctrl.h dirbrowser.h urldecode.h \
 	formatter.h titlestring.h xconvert.h
 
-include ../mk/objective.mk
+include ../../mk/objective.mk
 
 install-posthook:
 	@mv ${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX) ${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX).4.0.0

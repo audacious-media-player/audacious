@@ -394,7 +394,7 @@ AC_CONFIG_FILES([
 	audacious.1
 	audacious.spec
 	audacious.pc
-	audacious/audacious.desktop
+	src/audacious/audacious.desktop
 	po/Makefile.in
 	mk/rules.mk
 ])

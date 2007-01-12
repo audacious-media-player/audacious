@@ -1,3 +1,11 @@
+2007-01-11 13:47:16 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [3634]
+  Added #ifdefs around $HOME/.audacious compatibility code
+  trunk/configure.ac                   |    1 +
+  trunk/libaudacious/configdb_rcfile.c |    4 ++++
+  2 files changed, 5 insertions(+)
+
+
 2007-01-10 13:19:46 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3632]
   - note that WAL (winamp "modern") skins are not supported

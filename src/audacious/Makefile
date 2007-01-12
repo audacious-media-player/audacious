@@ -1,6 +1,6 @@
-include ../mk/rules.mk
-include ../mk/init.mk
-include ../mk/objective.mk
+include ../../mk/rules.mk
+include ../../mk/init.mk
+include ../../mk/objective.mk
 
 SUBDIRS = widgets glade images ui
 
@@ -26,7 +26,7 @@ CFLAGS += \
 	$(ARCH_DEFINES)    \
 	$(REGEX_CFLAGS)    \
 	-D_AUDACIOUS_CORE \
-	-I..    \
+	-I.. -I../..   \
 	-I../intl
 
 HEADERS = \
@@ -111,3 +111,5 @@ build_stamp.c:
 audacious: $(OBJECTS) widgets/libwidgets.a
 	$(CXX) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@ 
 	@printf "%10s     %-20s\n" LINK $@
+
+OBJECTIVE_DATA = audacious.desktop:$(datadir)/applications
