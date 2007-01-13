@@ -1,3 +1,11 @@
+2007-01-13 17:33:35 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [3646]
+  Remove old shit.
+  trunk/configure.ac                       |    3 +--
+  trunk/src/libaudacious/configdb_rcfile.c |   16 +---------------
+  2 files changed, 2 insertions(+), 17 deletions(-)
+
+
 2007-01-13 17:19:52 +0000  Jonathan Schleifer <js@h3c.de>
   revision [3644]
   Full support for XDG basedir added. The old config doesn't get automatically converted yet.

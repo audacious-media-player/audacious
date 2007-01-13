@@ -521,7 +521,7 @@ bmp_init_paths()
 	    "playlist.m3u", NULL);
 #endif
 	bmp_paths[BMP_PATH_ACCEL_FILE] =
-	    g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "accel", NULL);
+	    g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "accels", NULL);
 	bmp_paths[BMP_PATH_LOG_FILE] =
 	    g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "log", NULL);
 
