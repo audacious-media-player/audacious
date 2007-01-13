@@ -60,14 +60,13 @@ dnl Path settings
 AC_PATH_PROG(BEEP_PATH, audacious, no)
 
 AC_ARG_WITH(rc-path,
-    [  --with-rc-path=path                 Resource and configuration path for audacious relative to $HOME.],
+    [  --with-rc-path=path                 Resource and configuration path for audacious relative to $HOME. (deprecated, use XDG)],
     [rc_path=$withval],
     [rc_path=.audacious]
 )
 AC_DEFINE_UNQUOTED(BMP_RCPATH, "$rc_path",
     [Resource and configuration path for audacious relative to $HOME.]
 )
-AC_DEFINE(DOTAUDACIOUS_COMPAT, 1, [Enable compatibility for $HOME/.audacious])
 AC_SUBST(BMP_RCPATH)
 
 AC_ARG_ENABLE(one-plugin-dir,

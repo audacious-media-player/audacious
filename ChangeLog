@@ -1,3 +1,12 @@
+2007-01-13 17:19:52 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [3644]
+  Full support for XDG basedir added. The old config doesn't get automatically converted yet.
+  trunk/src/audacious/main.c            |   66 +++++++++++++++++++++++-----------
+  trunk/src/audacious/main.h            |   12 ------
+  trunk/src/audacious/ui_skinselector.c |    4 +-
+  3 files changed, 48 insertions(+), 34 deletions(-)
+
+
 2007-01-12 20:33:07 +0000  Jonathan Schleifer <js@h3c.de>
   revision [3642]
   Same for -pipe.
