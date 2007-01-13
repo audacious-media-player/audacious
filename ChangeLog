@@ -1,3 +1,11 @@
+2007-01-13 22:27:13 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3652]
+  - update bulgarian translation by proxy
+  
+  trunk/po/bg.po |  896 +++++++++++++++++++++++++--------------------------------
+  1 file changed, 394 insertions(+), 502 deletions(-)
+
+
 2007-01-13 22:25:55 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3650]
   - update POTFILES.in for src/ transition

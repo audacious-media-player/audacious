@@ -393,7 +393,6 @@ AC_SUBST(plugindir)
 AC_CONFIG_FILES([
 	audtool.1
 	audacious.1
-	audacious.spec
 	audacious.pc
 	src/audacious/audacious.desktop
 	po/Makefile.in
