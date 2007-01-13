@@ -1,3 +1,11 @@
+2007-01-13 22:25:55 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3650]
+  - update POTFILES.in for src/ transition
+  
+  trunk/po/POTFILES.in |   50 +++++++++++++++++++++++++-------------------------
+  1 file changed, 25 insertions(+), 25 deletions(-)
+
+
 2007-01-13 17:34:48 +0000  Jonathan Schleifer <js@h3c.de>
   revision [3648]
   Fix missing s

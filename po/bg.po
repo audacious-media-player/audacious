@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-01-08 05:03-0600\n"
-"PO-Revision-Date: 2006-12-29 15:10+0200\n"
+"PO-Revision-Date: 2007-01-13 12:01+0200\n"
 "Last-Translator: Andrew Ivanov <aa.ivanov@gmail.com>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,28 +16,30 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: audacious/ui_about.c:44
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "\n"
 "Copyright (C) 2005-2007 Audacious Development Team"
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
-"Бъдещето на UNIX мултимедията.\n"
 "\n"
-"Copyright (C) 2005-2006 Audacious Development Team\n"
+"Copyright (C) 2005-2007 Audacious Development Team"
 
-#: audacious/ui_about.c:123 audacious/ui_credits.c:323
-#: audacious/ui_manager.c:387 audacious/ui_manager.c:388
+#: audacious/ui_about.c:123
+#: audacious/ui_credits.c:323
+#: audacious/ui_manager.c:387
+#: audacious/ui_manager.c:388
 msgid "About Audacious"
 msgstr "Относно Audacious"
 
-#: audacious/ui_about.c:172 audacious/ui_credits.c:368
+#: audacious/ui_about.c:172
+#: audacious/ui_credits.c:368
 msgid "Credits"
 msgstr "Заслуги"
 
 #: audacious/ui_credits.c:45
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "The future of UNIX multimedia.\n"
@@ -47,7 +49,7 @@ msgstr ""
 "<big><b>Audacious %s</b></big>\n"
 "Бъдещето на UNIX мултимедията.\n"
 "\n"
-"Copyright (C) 2005-2006 Audacious Development Team\n"
+"Copyright (C) 2005-2007 Audacious Development Team\n"
 
 #: audacious/ui_credits.c:51
 msgid "Audacious core developers:"
@@ -106,7 +108,6 @@ msgid "German:"
 msgstr "Немски:"
 
 #: audacious/ui_credits.c:161
-#, fuzzy
 msgid "Georgian:"
 msgstr "Грузински:"
 
@@ -156,15 +157,15 @@ msgstr "Руски:"
 
 #: audacious/ui_credits.c:200
 msgid "Serbian (Latin):"
-msgstr ""
+msgstr "Сръбски (латиница)"
 
 #: audacious/ui_credits.c:203
 msgid "Serbian (Cyrillic):"
-msgstr ""
+msgstr "Сръбски (кирилица)"
 
 #: audacious/ui_credits.c:206
 msgid "Simplified Chinese:"
-msgstr ""
+msgstr "Китайски (опростен):"
 
 #: audacious/ui_credits.c:209
 msgid "Slovak:"
@@ -180,7 +181,7 @@ msgstr "Шведски:"
 
 #: audacious/ui_credits.c:218
 msgid "Traditional Chinese:"
-msgstr ""
+msgstr "Китайски (традиционен):"
 
 #: audacious/ui_credits.c:221
 msgid "Ukrainian:"
@@ -217,7 +218,8 @@ msgstr "%s: опцията `--%s' не позволява наличие на а
 msgid "%s: option `%c%s' doesn't allow an argument\n"
 msgstr "%s: опцията `%c%s' не позволява наличие на аргументи\n"
 
-#: audacious/getopt.c:662 audacious/getopt.c:820
+#: audacious/getopt.c:662
+#: audacious/getopt.c:820
 #, c-format
 msgid "%s: option `%s' requires an argument\n"
 msgstr "%s: опцията `%s' изисква аргумент\n"
@@ -242,7 +244,8 @@ msgstr "%s: непозволена операция -- %c\n"
 msgid "%s: invalid option -- %c\n"
 msgstr "%s: невалидна опция -- %c\n"
 
-#: audacious/getopt.c:746 audacious/getopt.c:862
+#: audacious/getopt.c:746
+#: audacious/getopt.c:862
 #, c-format
 msgid "%s: option requires an argument -- %c\n"
 msgstr "%s: опцията изисква аргумент -- %c\n"
@@ -266,8 +269,7 @@ msgid ""
 msgstr ""
 "<b><big>Грешка при създаването на %s.</big></b>\n"
 "\n"
-"Не може да бъде отворен glade файла (%s). Моля проверете дали програмата е "
-"правилно инсталирана.\n"
+"Не може да бъде отворен glade файла (%s). Моля проверете дали програмата е правилно инсталирана.\n"
 
 #: audacious/input.c:303
 msgid ""
@@ -291,9 +293,12 @@ msgstr "Без показване на това предупреждение з�
 msgid "Show more _details"
 msgstr "Още _детайли"
 
-#: audacious/input.c:344 audacious/ui_preferences.c:116
-#: audacious/ui_preferences.c:484 audacious/ui_preferences.c:572
-#: audacious/ui_preferences.c:661 audacious/ui_preferences.c:757
+#: audacious/input.c:344
+#: audacious/ui_preferences.c:116
+#: audacious/ui_preferences.c:484
+#: audacious/ui_preferences.c:572
+#: audacious/ui_preferences.c:661
+#: audacious/ui_preferences.c:757
 msgid "Filename"
 msgstr "Име на файл"
 
@@ -320,7 +325,9 @@ msgstr "Декодер: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "Грешка при създаване на файл-дневник (%s)!\n"
 
-#: audacious/main.c:84 audacious/main.c:86 audacious/ui_main.c:626
+#: audacious/main.c:84
+#: audacious/main.c:86
+#: audacious/ui_main.c:626
 #: audacious/ui_main.c:3417
 msgid "Audacious"
 msgstr "Audacious"
@@ -356,7 +363,7 @@ msgstr "Прескачане назад в плейлистата"
 
 #: audacious/main.c:814
 msgid "Start playing current playlist"
-msgstr "Начало на просвирване на текущата плейлиста"
+msgstr "Просвирване на текущата плейлиста"
 
 #: audacious/main.c:817
 msgid "Pause current song"
@@ -395,8 +402,9 @@ msgid "Previous session ID"
 msgstr "ID на предишната сесия"
 
 #: audacious/main.c:844
+#, fuzzy
 msgid "Headless operation [experimental]"
-msgstr ""
+msgstr "Без показване на основния прозорец [експериментален режим]"
 
 #: audacious/main.c:847
 msgid "Disable error/warning interception (logging)"
@@ -411,13 +419,11 @@ msgstr "Показване номера на версията и спиране 
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
 "\n"
-"Check that skin at '%s' is usable and default skin is properly installed at "
-"'%s'\n"
+"Check that skin at '%s' is usable and default skin is properly installed at '%s'\n"
 msgstr ""
 "<b><big>Грешка при зареждане на облик.</big></b>\n"
 "\n"
-"Уверете се, че облика '%s' е използваем и че стандартния облик '%s' е "
-"наличен\n"
+"Уверете се, че облика '%s' е използваем и че стандартния облик ('%s') е наличен\n"
 
 #: audacious/main.c:1104
 #, c-format
@@ -432,30 +438,31 @@ msgstr ""
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
-"If you're on a libc5 based linux system and installed Glib & GTK+ before "
-"you\n"
+"If you're on a libc5 based linux system and installed Glib & GTK+ before you\n"
 "installed LinuxThreads you need to recompile Glib & GTK+.\n"
 msgstr ""
 "Съжаляваме, но вашата платформа не поддържа нишки.\n"
 "\n"
-"Ако работите с linux базиран на libc5 и сте инсталирали Glib и GTK+ преди "
-"да\n"
+"Ако работите с linux базиран на libc5 и сте инсталирали Glib и GTK+ преди да\n"
 "инсталирате LinuxThreads, трябва да прекомпилирате Glib & GTK+.\n"
 
 #: audacious/main.c:1134
 msgid "audacious: Unable to open display, exiting.\n"
-msgstr ""
-"audacious: Грешка при инициализиране на дисплея. Спиране на програмата.\n"
+msgstr "audacious: Грешка при инициализиране на дисплея. Спиране на програмата.\n"
 
 #: audacious/signals.c:90
 msgid ""
 "\n"
 "Received SIGSEGV\n"
 "\n"
-"This could be a bug in Audacious. If you don't know why this happened, file "
-"a bug at http://bugs-meta.atheme.org/\n"
+"This could be a bug in Audacious. If you don't know why this happened, file a bug at http://bugs-meta.atheme.org/\n"
 "\n"
 msgstr ""
+"\n"
+"Получен е сигнал SIGSEGV\n"
+"\n"
+"Това може би е програмна грешка в Audacious. Ако не знаете защо е възникнала тази грешка - докладвайте за бъг на адрес: http://bugs-meta.atheme.org/\n"
+"\n"
 
 #: audacious/strings.c:199
 msgid "  (invalid UTF-8)"
@@ -470,15 +477,18 @@ msgstr "%s - Audacious"
 msgid "VBR"
 msgstr "VBR"
 
-#: audacious/ui_main.c:890 audacious/ui_main.c:894
+#: audacious/ui_main.c:890
+#: audacious/ui_main.c:894
 msgid "stereo"
 msgstr "стерео"
 
-#: audacious/ui_main.c:890 audacious/ui_main.c:894
+#: audacious/ui_main.c:890
+#: audacious/ui_main.c:894
 msgid "mono"
 msgstr "моно"
 
-#: audacious/ui_main.c:1383 audacious/ui_manager.c:414
+#: audacious/ui_main.c:1383
+#: audacious/ui_manager.c:414
 #: audacious/ui_manager.c:415
 msgid "Jump to Time"
 msgstr "Прескачане до времева позиция"
@@ -495,7 +505,8 @@ msgstr "Продължителност:"
 msgid "Un_queue"
 msgstr "_Премахване от опашката"
 
-#: audacious/ui_main.c:1501 audacious/ui_main.c:1891
+#: audacious/ui_main.c:1501
+#: audacious/ui_main.c:1891
 msgid "_Queue"
 msgstr "_На опашката"
 
@@ -508,9 +519,8 @@ msgid "Filter: "
 msgstr "Филтър:"
 
 #: audacious/ui_main.c:1858
-#, fuzzy
 msgid "_Filter:"
-msgstr "Филтър:"
+msgstr "_Филтър:"
 
 #: audacious/ui_main.c:2062
 msgid "Enter location to play:"
@@ -521,21 +531,25 @@ msgstr "Адрес за просвирване:"
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "ТЪРСЕНЕ: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: audacious/ui_main.c:2305 audacious/ui_main.c:2938
+#: audacious/ui_main.c:2305
+#: audacious/ui_main.c:2938
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "СИЛА НА ЗВУКА: %d%%"
 
-#: audacious/ui_main.c:2336 audacious/ui_main.c:2941
+#: audacious/ui_main.c:2336
+#: audacious/ui_main.c:2941
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "БАЛАНС: %d%% ЛЯВО"
 
-#: audacious/ui_main.c:2340 audacious/ui_main.c:2944
+#: audacious/ui_main.c:2340
+#: audacious/ui_main.c:2944
 msgid "BALANCE: CENTER"
 msgstr "БАЛАНС: ЦЕНТЪР"
 
-#: audacious/ui_main.c:2344 audacious/ui_main.c:2946
+#: audacious/ui_main.c:2344
+#: audacious/ui_main.c:2946
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "БАЛАНС: %d%% ДЯСНО"
@@ -595,317 +609,303 @@ msgstr ""
 "3. звуковата ви карта е правилно инсталирана.\n"
 
 #: audacious/ui_main.c:3401
-#, fuzzy
 msgid "Error in Audacious."
-msgstr "%s - Audacious"
+msgstr "Грешка в Audacious"
 
-#: audacious/ui_manager.c:43 audacious/ui_manager.c:44
-#, fuzzy
+#: audacious/ui_manager.c:43
+#: audacious/ui_manager.c:44
 msgid "Autoscroll Songname"
-msgstr "/Приплъзване името на песента"
+msgstr "Приплъзване името на песента"
 
-#: audacious/ui_manager.c:46 audacious/ui_manager.c:47
-#, fuzzy
+#: audacious/ui_manager.c:46
+#: audacious/ui_manager.c:47
 msgid "Stop after Current Song"
-msgstr "/Спиране след текущата песен"
+msgstr "Спиране след текущата песен"
 
-#: audacious/ui_manager.c:49 audacious/ui_manager.c:50
+#: audacious/ui_manager.c:49
+#: audacious/ui_manager.c:50
 msgid "Peaks"
-msgstr ""
+msgstr "Пикове"
 
-#: audacious/ui_manager.c:52 audacious/ui_manager.c:53
-#, fuzzy
+#: audacious/ui_manager.c:52
+#: audacious/ui_manager.c:53
 msgid "Repeat"
-msgstr "/Повторение"
+msgstr "Повторение"
 
-#: audacious/ui_manager.c:55 audacious/ui_manager.c:56
-#, fuzzy
+#: audacious/ui_manager.c:55
+#: audacious/ui_manager.c:56
 msgid "Shuffle"
-msgstr "/Разбъркване"
+msgstr "Разбъркване"
 
-#: audacious/ui_manager.c:58 audacious/ui_manager.c:59
-#, fuzzy
+#: audacious/ui_manager.c:58
+#: audacious/ui_manager.c:59
 msgid "No Playlist Advance"
-msgstr "/Без преход към следваща песен"
+msgstr "Без преход към следваща песен"
 
-#: audacious/ui_manager.c:61 audacious/ui_manager.c:62
-#, fuzzy
+#: audacious/ui_manager.c:61
+#: audacious/ui_manager.c:62
 msgid "Show Player"
-msgstr "/Плеър"
+msgstr "Плеър"
 
-#: audacious/ui_manager.c:64 audacious/ui_manager.c:65
-#, fuzzy
+#: audacious/ui_manager.c:64
+#: audacious/ui_manager.c:65
 msgid "Show Playlist Editor"
-msgstr "/Редактор на плейлисти"
+msgstr "Редактор на плейлисти"
 
-#: audacious/ui_manager.c:67 audacious/ui_manager.c:68
-#, fuzzy
+#: audacious/ui_manager.c:67
+#: audacious/ui_manager.c:68
 msgid "Show Equalizer"
-msgstr "/Еквалайзер"
+msgstr "Еквалайзер"
 
-#: audacious/ui_manager.c:70 audacious/ui_manager.c:71
-#, fuzzy
+#: audacious/ui_manager.c:70
+#: audacious/ui_manager.c:71
 msgid "Always on Top"
-msgstr "/Винаги отгоре"
+msgstr "Винаги отгоре"
 
-#: audacious/ui_manager.c:73 audacious/ui_manager.c:74
-#, fuzzy
+#: audacious/ui_manager.c:73
+#: audacious/ui_manager.c:74
 msgid "Put on All Workspaces"
-msgstr "/На всички работни плотове"
+msgstr "На всички работни плотове"
 
-#: audacious/ui_manager.c:76 audacious/ui_manager.c:77
-#, fuzzy
+#: audacious/ui_manager.c:76
+#: audacious/ui_manager.c:77
 msgid "Roll up Player"
-msgstr "/Свиване на плеъра"
+msgstr "Свиване на плеъра"
 
-#: audacious/ui_manager.c:79 audacious/ui_manager.c:80
-#, fuzzy
+#: audacious/ui_manager.c:79
+#: audacious/ui_manager.c:80
 msgid "Roll up Playlist Editor"
-msgstr "/Свиване на редактора на плейлисти"
+msgstr "Свиване на редактора на плейлисти"
 
-#: audacious/ui_manager.c:82 audacious/ui_manager.c:83
-#, fuzzy
+#: audacious/ui_manager.c:82
+#: audacious/ui_manager.c:83
 msgid "Roll up Equalizer"
-msgstr "/Свиване на еквалайзера"
+msgstr "Свиване на еквалайзера"
 
-#: audacious/ui_manager.c:85 audacious/ui_manager.c:86
-#, fuzzy
+#: audacious/ui_manager.c:85
+#: audacious/ui_manager.c:86
 msgid "DoubleSize"
-msgstr "/Двоен размер"
+msgstr "Двоен размер"
 
-#: audacious/ui_manager.c:88 audacious/ui_manager.c:89
-#, fuzzy
+#: audacious/ui_manager.c:88
+#: audacious/ui_manager.c:89
 msgid "Easy Move"
-msgstr "/Лесно местене"
+msgstr "Лесно местене"
 
 #: audacious/ui_manager.c:97
-#, fuzzy
 msgid "Analyzer"
-msgstr "/Анализатор"
+msgstr "Анализатор"
 
 #: audacious/ui_manager.c:98
-#, fuzzy
 msgid "Scope"
-msgstr "/Осцилоскоп"
+msgstr "Осцилоскоп"
 
 #: audacious/ui_manager.c:99
 msgid "Voiceprint"
-msgstr ""
+msgstr "Гласов отпечатък"
 
 #: audacious/ui_manager.c:100
 msgid "Off"
-msgstr ""
+msgstr "Изкл."
 
-#: audacious/ui_manager.c:104 audacious/ui_manager.c:121
+#: audacious/ui_manager.c:104
+#: audacious/ui_manager.c:121
 #: audacious/ui_manager.c:127
 msgid "Normal"
-msgstr ""
+msgstr "Нормално"
 
-#: audacious/ui_manager.c:105 audacious/ui_manager.c:122
+#: audacious/ui_manager.c:105
+#: audacious/ui_manager.c:122
 msgid "Fire"
-msgstr ""
+msgstr "Огън"
 
 #: audacious/ui_manager.c:106
-#, fuzzy
 msgid "Vertical Lines"
-msgstr "/Анализатор/Вертикални линии"
+msgstr "Вертикални линии"
 
 #: audacious/ui_manager.c:110
-#, fuzzy
 msgid "Lines"
-msgstr "реда"
+msgstr "Линии"
 
 #: audacious/ui_manager.c:111
 msgid "Bars"
-msgstr ""
+msgstr "Стълбове"
 
 #: audacious/ui_manager.c:115
-#, fuzzy
 msgid "Dot Scope"
-msgstr "/Осцилоскоп/Точки"
+msgstr "Точки"
 
 #: audacious/ui_manager.c:116
-#, fuzzy
 msgid "Line Scope"
-msgstr "/Осцилоскоп/Линии"
+msgstr "Линии"
 
 #: audacious/ui_manager.c:117
-#, fuzzy
 msgid "Solid Scope"
-msgstr "/Осцилоскоп/Плътен"
+msgstr "Плътен"
 
 #: audacious/ui_manager.c:123
 msgid "Ice"
-msgstr ""
+msgstr "Лед"
 
 #: audacious/ui_manager.c:128
 #, fuzzy
 msgid "Smooth"
-msgstr "моно"
+msgstr "Заглаждане / плавно"
 
 #: audacious/ui_manager.c:132
-#, fuzzy
 msgid "Full (~50 fps)"
-msgstr "/Опресняване/Пълно (~50 fps)"
+msgstr "Пълно (~50 fps)"
 
 #: audacious/ui_manager.c:133
-#, fuzzy
 msgid "Half (~25 fps)"
-msgstr "/Опресняване/Половин (~25 fps)"
+msgstr "Половин (~25 fps)"
 
 #: audacious/ui_manager.c:134
-#, fuzzy
 msgid "Quarter (~13 fps)"
-msgstr "/Опресняване/Четвърт (~13 fps)"
+msgstr "Четвърт (~13 fps)"
 
 #: audacious/ui_manager.c:135
-#, fuzzy
 msgid "Eighth (~6 fps)"
-msgstr "/Опресняване/Осмина (~6 fps)"
+msgstr "Осмина (~6 fps)"
 
-#: audacious/ui_manager.c:139 audacious/ui_manager.c:147
+#: audacious/ui_manager.c:139
+#: audacious/ui_manager.c:147
 msgid "Slowest"
-msgstr ""
+msgstr "Най-бавно"
 
-#: audacious/ui_manager.c:140 audacious/ui_manager.c:148
+#: audacious/ui_manager.c:140
+#: audacious/ui_manager.c:148
 msgid "Slow"
-msgstr ""
+msgstr "Бавно"
 
-#: audacious/ui_manager.c:141 audacious/ui_manager.c:149
+#: audacious/ui_manager.c:141
+#: audacious/ui_manager.c:149
 msgid "Medium"
-msgstr ""
+msgstr "Средно"
 
-#: audacious/ui_manager.c:142 audacious/ui_manager.c:150
+#: audacious/ui_manager.c:142
+#: audacious/ui_manager.c:150
 msgid "Fast"
-msgstr ""
+msgstr "Бързо"
 
-#: audacious/ui_manager.c:143 audacious/ui_manager.c:151
+#: audacious/ui_manager.c:143
+#: audacious/ui_manager.c:151
 msgid "Fastest"
-msgstr ""
+msgstr "Най-бързо"
 
 #: audacious/ui_manager.c:155
-#, fuzzy
 msgid "Time Elapsed"
-msgstr "/Изминало време"
+msgstr "Изминало време"
 
 #: audacious/ui_manager.c:156
-#, fuzzy
 msgid "Time Remaining"
-msgstr "/Оставащо време"
+msgstr "Оставащо време"
 
 #: audacious/ui_manager.c:165
-#, fuzzy
 msgid "Playback"
-msgstr "/_Просвирване"
+msgstr "Просвирване"
 
-#: audacious/ui_manager.c:167 audacious/ui_manager.c:168
-#, fuzzy
+#: audacious/ui_manager.c:167
+#: audacious/ui_manager.c:168
 msgid "Play CD"
-msgstr "/Просвирване на CD"
+msgstr "Просвирване на CD"
 
-#: audacious/ui_manager.c:170 audacious/ui_manager.c:171
-#, fuzzy
+#: audacious/ui_manager.c:170
+#: audacious/ui_manager.c:171
 msgid "Play"
-msgstr "/Просвирване"
+msgstr "Просвирване"
 
-#: audacious/ui_manager.c:173 audacious/ui_manager.c:174
-#, fuzzy
+#: audacious/ui_manager.c:173
+#: audacious/ui_manager.c:174
 msgid "Pause"
-msgstr "/Пауза"
+msgstr "Пауза"
 
-#: audacious/ui_manager.c:176 audacious/ui_manager.c:177
-#, fuzzy
+#: audacious/ui_manager.c:176
+#: audacious/ui_manager.c:177
 msgid "Stop"
-msgstr "/Стоп"
+msgstr "Стоп"
 
-#: audacious/ui_manager.c:179 audacious/ui_manager.c:180
-#, fuzzy
+#: audacious/ui_manager.c:179
+#: audacious/ui_manager.c:180
 msgid "Previous"
-msgstr "/Предишна"
+msgstr "Предишна"
 
-#: audacious/ui_manager.c:182 audacious/ui_manager.c:183
-#, fuzzy
+#: audacious/ui_manager.c:182
+#: audacious/ui_manager.c:183
 msgid "Next"
-msgstr "/Следваща"
+msgstr "Следваща"
 
 #: audacious/ui_manager.c:188
-#, fuzzy
 msgid "Visualization"
-msgstr "/_Визуализация"
+msgstr "Визуализация"
 
 #: audacious/ui_manager.c:189
-#, fuzzy
 msgid "Visualization Mode"
-msgstr "/Визуализация"
+msgstr "Визуализация"
 
 #: audacious/ui_manager.c:190
-#, fuzzy
 msgid "Analyzer Mode"
-msgstr "/Анализатор"
+msgstr "Анализатор"
 
 #: audacious/ui_manager.c:191
-#, fuzzy
 msgid "Scope Mode"
-msgstr "/Осцилоскоп"
+msgstr "Осцилоскоп"
 
 #: audacious/ui_manager.c:192
 msgid "Voiceprint Mode"
-msgstr ""
+msgstr "Гласов отпечатък"
 
 #: audacious/ui_manager.c:193
-#, fuzzy
 msgid "WindowShade VU Mode"
-msgstr "/VU (в сгънат режим)"
+msgstr "VU (в сгънат режим)"
 
 #: audacious/ui_manager.c:194
-#, fuzzy
 msgid "Refresh Rate"
-msgstr "/Опресняване"
+msgstr "Опресняване"
 
 #: audacious/ui_manager.c:195
-#, fuzzy
 msgid "Analyzer Falloff"
-msgstr "/Динамика на анализатора"
+msgstr "Динамика на анализатора"
 
 #: audacious/ui_manager.c:196
-#, fuzzy
 msgid "Peaks Falloff"
-msgstr "/Динамика на пиковете"
+msgstr "Динамика на пиковете"
 
-#: audacious/ui_manager.c:201 audacious/ui_preferences.c:104
-#: audacious/playlist_manager.c:288 audacious/glade/prefswin.glade:2530
+#: audacious/ui_manager.c:201
+#: audacious/ui_preferences.c:104
+#: audacious/playlist_manager.c:288
+#: audacious/glade/prefswin.glade:2530
 msgid "Playlist"
 msgstr "Плейлиста"
 
-#: audacious/ui_manager.c:203 audacious/ui_manager.c:204
-#, fuzzy
+#: audacious/ui_manager.c:203
+#: audacious/ui_manager.c:204
 msgid "New Playlist"
-msgstr "/Нова плейлиста"
+msgstr "Нова плейлиста"
 
-#: audacious/ui_manager.c:206 audacious/ui_manager.c:207
-#, fuzzy
+#: audacious/ui_manager.c:206
+#: audacious/ui_manager.c:207
 msgid "Select Next Playlist"
-msgstr "/Избор на следваща плейлиста"
+msgstr "Избор на следваща плейлиста"
 
-#: audacious/ui_manager.c:209 audacious/ui_manager.c:210
-#, fuzzy
+#: audacious/ui_manager.c:209
+#: audacious/ui_manager.c:210
 msgid "Select Previous Playlist"
-msgstr "/Избор на предишна плейлиста"
+msgstr "Избор на предишна плейлиста"
 
-#: audacious/ui_manager.c:212 audacious/ui_manager.c:213
-#, fuzzy
+#: audacious/ui_manager.c:212
+#: audacious/ui_manager.c:213
 msgid "Delete Playlist"
-msgstr "/Избор на следваща плейлиста"
+msgstr "Изтриване на плейлиста"
 
 #: audacious/ui_manager.c:215
 #, fuzzy
 msgid "Load List"
-msgstr "Зареждане на файлове"
+msgstr "Зареждане на списък"
 
 #: audacious/ui_manager.c:216
-#, fuzzy
 msgid "Loads a playlist file into the selected playlist."
-msgstr "Зарежда плейлиста от файл и я добавя за просвирване."
+msgstr "Зарежда плейлиста от файл и я добавя към текущата."
 
 #: audacious/ui_manager.c:218
 msgid "Save List"
@@ -920,31 +920,29 @@ msgid "Save Default List"
 msgstr "Запис като стандартна плейлиста"
 
 #: audacious/ui_manager.c:222
-#, fuzzy
 msgid "Saves the selected playlist to the default location."
-msgstr "Записва избраната плейлиста на стандартното местоположение"
+msgstr "Записва избраната плейлиста на стандартното местоположение."
 
 #: audacious/ui_manager.c:225
 msgid "Refresh List"
-msgstr "Обновяване на плейлистата"
+msgstr "Обновяване на списъка"
 
 #: audacious/ui_manager.c:226
 msgid "Refreshes metadata associated with a playlist entry."
-msgstr "Обновяване на метаданните свързани с елемента от плейлистата."
+msgstr "Обновяване на мета-данните свързани с елемента от плейлистата."
 
 #: audacious/ui_manager.c:229
+#, fuzzy
 msgid "List Manager"
-msgstr ""
+msgstr "Мениджър на списъци"
 
 #: audacious/ui_manager.c:230
-#, fuzzy
 msgid "Opens the playlist manager."
-msgstr "Инвертиране на плейлистата."
+msgstr "Зареждане на мениджъра на плейлисти"
 
 #: audacious/ui_manager.c:236
-#, fuzzy
 msgid "View"
-msgstr "/_Изглед"
+msgstr "Изглед"
 
 #: audacious/ui_manager.c:240
 msgid "Add CD..."
@@ -956,7 +954,7 @@ msgstr "Добавя CD към плейлистата."
 
 #: audacious/ui_manager.c:244
 msgid "Add Internet Address..."
-msgstr "Добавяне на мрежов адрес..."
+msgstr "Добавяне на Интернет адрес..."
 
 #: audacious/ui_manager.c:245
 msgid "Adds a remote track to the playlist."
@@ -975,10 +973,8 @@ msgid "Search and Select"
 msgstr "Търсене и избор"
 
 #: audacious/ui_manager.c:255
-msgid ""
-"Searches the playlist and selects playlist entries based on specific "
-"criteria."
-msgstr "Претърсване на плейлистата и избор на елементи по конкретни критерии."
+msgid "Searches the playlist and selects playlist entries based on specific criteria."
+msgstr "Претърсва плейлистата и избира елементи по конкретни критерии."
 
 #: audacious/ui_manager.c:258
 msgid "Invert Selection"
@@ -988,13 +984,14 @@ msgstr "Размяна на маркирането"
 msgid "Inverts the selected and unselected entries."
 msgstr "Размяна на маркираните и немаркираните елементи"
 
-#: audacious/ui_manager.c:262 audacious/glade/addfiles.glade:105
+#: audacious/ui_manager.c:262
+#: audacious/glade/addfiles.glade:105
 msgid "Select All"
 msgstr "Всичко"
 
 #: audacious/ui_manager.c:263
 msgid "Selects all of the playlist entries."
-msgstr "Маркиране на всички елементи на плейлистата"
+msgstr "Маркира всички елементи на плейлистата"
 
 #: audacious/ui_manager.c:266
 msgid "Select None"
@@ -1002,16 +999,15 @@ msgstr "Нищо"
 
 #: audacious/ui_manager.c:267
 msgid "Deselects all of the playlist entries."
-msgstr "Размаркиране на всички елементи на плейлистата"
+msgstr "Размаркира всички елементи на плейлистата"
 
 #: audacious/ui_manager.c:272
 msgid "Clear Queue"
 msgstr "Изчистване на опашката"
 
 #: audacious/ui_manager.c:273
-#, fuzzy
 msgid "Clears the queue associated with this playlist."
-msgstr "Изчиства опашката, асоциирана с тази плейлиста"
+msgstr "Изчиства опашката за тази плейлиста."
 
 #: audacious/ui_manager.c:276
 msgid "Remove Unavailable Files"
@@ -1019,13 +1015,14 @@ msgstr "Премахване на неналичните файлове"
 
 #: audacious/ui_manager.c:277
 msgid "Removes unavailable files from the playlist."
-msgstr "Премахване на файловете, които не са налични от плейлистата."
+msgstr "Премахва файловете, които не са налични от плейлистата."
 
 #: audacious/ui_manager.c:280
 msgid "Remove Duplicates"
 msgstr "Премахване на дублирания"
 
-#: audacious/ui_manager.c:282 audacious/ui_manager.c:318
+#: audacious/ui_manager.c:282
+#: audacious/ui_manager.c:318
 #: audacious/ui_manager.c:348
 msgid "By Title"
 msgstr "По заглавие"
@@ -1034,7 +1031,8 @@ msgstr "По заглавие"
 msgid "Removes duplicate entries from the playlist by title."
 msgstr "Премахва дублиращите се заглавия в плейлистата."
 
-#: audacious/ui_manager.c:286 audacious/ui_manager.c:326
+#: audacious/ui_manager.c:286
+#: audacious/ui_manager.c:326
 #: audacious/ui_manager.c:356
 msgid "By Filename"
 msgstr "По име на файл"
@@ -1043,7 +1041,8 @@ msgstr "По име на файл"
 msgid "Removes duplicate entries from the playlist by filename."
 msgstr "Премахва дублиращите се файлови имена от плейлистата"
 
-#: audacious/ui_manager.c:290 audacious/ui_manager.c:330
+#: audacious/ui_manager.c:290
+#: audacious/ui_manager.c:330
 #: audacious/ui_manager.c:360
 msgid "By Path + Filename"
 msgstr "По път и име на файл"
@@ -1066,7 +1065,7 @@ msgstr "Премахване на немаркираните"
 
 #: audacious/ui_manager.c:299
 msgid "Remove unselected entries from the playlist."
-msgstr "Премахване на елементите, които не са маркирани."
+msgstr "Премахва елементите, които не са маркирани."
 
 #: audacious/ui_manager.c:302
 msgid "Remove Selected"
@@ -1074,7 +1073,7 @@ msgstr "Премахване на маркираните"
 
 #: audacious/ui_manager.c:303
 msgid "Remove selected entries from the playlist."
-msgstr "Премахване на маркираните елементи от плейлистата."
+msgstr "Премахва маркираните елементи от плейлистата."
 
 #: audacious/ui_manager.c:308
 msgid "Randomize List"
@@ -1082,7 +1081,7 @@ msgstr "Разбъркване на плейлистата"
 
 #: audacious/ui_manager.c:309
 msgid "Randomizes the playlist."
-msgstr "Разбъркване на плейлистата."
+msgstr "Разбърква плейлистата."
 
 #: audacious/ui_manager.c:312
 msgid "Reverse List"
@@ -1090,127 +1089,132 @@ msgstr "Инвертиране на плейлистата"
 
 #: audacious/ui_manager.c:313
 msgid "Reverses the playlist."
-msgstr "Инвертиране на плейлистата."
+msgstr "Подрежда плейлистата отзад напред."
 
 #: audacious/ui_manager.c:316
 msgid "Sort List"
 msgstr "Сортиране"
 
-#: audacious/ui_manager.c:319 audacious/ui_manager.c:349
+#: audacious/ui_manager.c:319
+#: audacious/ui_manager.c:349
 msgid "Sorts the list by title."
-msgstr "Сортиране по заглавие."
+msgstr "Сортира списъка по заглавие."
 
-#: audacious/ui_manager.c:322 audacious/ui_manager.c:352
+#: audacious/ui_manager.c:322
+#: audacious/ui_manager.c:352
 msgid "By Artist"
 msgstr "По изпълнител"
 
-#: audacious/ui_manager.c:323 audacious/ui_manager.c:353
+#: audacious/ui_manager.c:323
+#: audacious/ui_manager.c:353
 msgid "Sorts the list by artist."
-msgstr "Сортиране по изпълнител."
+msgstr "Сортира списъка по изпълнител."
 
-#: audacious/ui_manager.c:327 audacious/ui_manager.c:357
+#: audacious/ui_manager.c:327
+#: audacious/ui_manager.c:357
 msgid "Sorts the list by filename."
-msgstr "Сортиране по име на файл."
+msgstr "Сортира списъка по име на файл."
 
-#: audacious/ui_manager.c:331 audacious/ui_manager.c:361
+#: audacious/ui_manager.c:331
+#: audacious/ui_manager.c:361
 msgid "Sorts the list by full pathname."
-msgstr "Сортиране по път до файла."
+msgstr "Сортира списъка по път до файла."
 
-#: audacious/ui_manager.c:334 audacious/ui_manager.c:364
+#: audacious/ui_manager.c:334
+#: audacious/ui_manager.c:364
 msgid "By Date"
 msgstr "По дата"
 
-#: audacious/ui_manager.c:335 audacious/ui_manager.c:365
+#: audacious/ui_manager.c:335
+#: audacious/ui_manager.c:365
 msgid "Sorts the list by modification time."
-msgstr "Сортиране по време на последната промяна."
+msgstr "Сортира списъка по време на последната промяна."
 
-#: audacious/ui_manager.c:338 audacious/ui_manager.c:368
+#: audacious/ui_manager.c:338
+#: audacious/ui_manager.c:368
 msgid "By Track Number"
 msgstr "По номер"
 
-#: audacious/ui_manager.c:339 audacious/ui_manager.c:369
+#: audacious/ui_manager.c:339
+#: audacious/ui_manager.c:369
 msgid "Sorts the list by track number."
-msgstr "Сортиране по пореден номер на песента."
+msgstr "Сортира списъка по пореден номер на песента."
 
-#: audacious/ui_manager.c:342 audacious/ui_manager.c:372
+#: audacious/ui_manager.c:342
+#: audacious/ui_manager.c:372
 msgid "By Playlist Entry"
 msgstr "По ред в плейлистата"
 
-#: audacious/ui_manager.c:343 audacious/ui_manager.c:373
+#: audacious/ui_manager.c:343
+#: audacious/ui_manager.c:373
 msgid "Sorts the list by playlist entry."
-msgstr "Сортиране по ред в плейлистата."
+msgstr "Сортира списъка по ред в плейлистата."
 
 #: audacious/ui_manager.c:346
 msgid "Sort Selected"
 msgstr "Сортиране на маркираните"
 
-#: audacious/ui_manager.c:381 audacious/ui_manager.c:384
+#: audacious/ui_manager.c:381
+#: audacious/ui_manager.c:384
 msgid "View Track Details"
 msgstr "Информация за песента"
 
-#: audacious/ui_manager.c:382 audacious/ui_manager.c:385
-#, fuzzy
+#: audacious/ui_manager.c:382
+#: audacious/ui_manager.c:385
 msgid "View track details"
 msgstr "Информация за песента"
 
 #: audacious/ui_manager.c:390
-#, fuzzy
 msgid "Play File"
-msgstr "/Просвирване на файл"
+msgstr "Просвирване на файл"
 
 #: audacious/ui_manager.c:391
-#, fuzzy
 msgid "Load and play a file"
-msgstr "Зареждане на метаданните от плейлистата и файловете"
+msgstr "Зареждане и просвирване на файл"
 
 #: audacious/ui_manager.c:393
-#, fuzzy
 msgid "Play Location"
-msgstr "/Просвирване на адрес"
+msgstr "Просвирване на адрес"
 
 #: audacious/ui_manager.c:394
 msgid "Play media from the selected location"
-msgstr ""
+msgstr "Просвирване от избраното местоположение"
 
 #: audacious/ui_manager.c:396
-#, fuzzy
 msgid "Preferences"
-msgstr "/Настройки"
-
-#: audacious/ui_manager.c:397
-#, fuzzy
-msgid "Open preferences window"
 msgstr "Настройки"
 
+#: audacious/ui_manager.c:397
+msgid "Open preferences window"
+msgstr "Отваряне на прозореца с настройките"
+
 #: audacious/ui_manager.c:399
-#, fuzzy
 msgid "_Quit"
-msgstr "/Из_ход"
+msgstr "Из_ход"
 
 #: audacious/ui_manager.c:400
-#, fuzzy
 msgid "Quit Audacious"
-msgstr "Относно Audacious"
+msgstr "Изход от Audacious"
 
-#: audacious/ui_manager.c:402 audacious/ui_manager.c:403
-#, fuzzy
+#: audacious/ui_manager.c:402
+#: audacious/ui_manager.c:403
 msgid "Set A-B"
-msgstr "/Маркиране на А-Б"
+msgstr "Маркиране на А-Б"
 
-#: audacious/ui_manager.c:405 audacious/ui_manager.c:406
-#, fuzzy
+#: audacious/ui_manager.c:405
+#: audacious/ui_manager.c:406
 msgid "Clear A-B"
-msgstr "/Размаркиране на А-Б"
+msgstr "Размаркиране на А-Б"
 
-#: audacious/ui_manager.c:408 audacious/ui_manager.c:409
-#, fuzzy
+#: audacious/ui_manager.c:408
+#: audacious/ui_manager.c:409
 msgid "Jump to Playlist Start"
-msgstr "/Прескачане в началото на плейлистата"
+msgstr "Прескачане в началото на плейлистата"
 
-#: audacious/ui_manager.c:411 audacious/ui_manager.c:412
-#, fuzzy
+#: audacious/ui_manager.c:411
+#: audacious/ui_manager.c:412
 msgid "Jump to File"
-msgstr "/Прескачане до файл"
+msgstr "Прескачане до файл"
 
 #: audacious/ui_manager.c:417
 msgid "Queue Toggle"
@@ -1219,29 +1223,26 @@ msgstr "Превключване на опашката"
 #: audacious/ui_manager.c:418
 #, fuzzy
 msgid "Enables/disables the entry in the playlist's queue."
-msgstr "Активира/деактивира елемента в опашката на плейлистата."
+msgstr "Активиране/деактивиране елемента в опашката на плейлистата."
 
 #: audacious/ui_manager.c:425
-#, fuzzy
 msgid "Load"
-msgstr "/Зареждане"
+msgstr "Зареждане"
 
 #: audacious/ui_manager.c:426
-#, fuzzy
 msgid "Import"
-msgstr "/Внасяне"
+msgstr "Внасяне"
 
 #: audacious/ui_manager.c:427
-#, fuzzy
 msgid "Save"
-msgstr "/Съхраняване"
+msgstr "Съхраняване"
 
 #: audacious/ui_manager.c:428
-#, fuzzy
 msgid "Delete"
-msgstr "/Изтриване"
+msgstr "Изтриване"
 
-#: audacious/ui_manager.c:430 audacious/ui_manager.c:451
+#: audacious/ui_manager.c:430
+#: audacious/ui_manager.c:451
 #: audacious/ui_manager.c:466
 msgid "Preset"
 msgstr "Фиксирана настройка"
@@ -1250,110 +1251,95 @@ msgstr "Фиксирана настройка"
 msgid "Load preset"
 msgstr "Зареждане на фиксирани настройки"
 
-#: audacious/ui_manager.c:433 audacious/ui_manager.c:454
+#: audacious/ui_manager.c:433
+#: audacious/ui_manager.c:454
 #: audacious/ui_manager.c:469
-#, fuzzy
 msgid "Auto-load preset"
-msgstr "/Запис/Автозареждане на фиксирани"
+msgstr "Автозареждане на фиксирани"
 
 #: audacious/ui_manager.c:434
-#, fuzzy
 msgid "Load auto-load preset"
-msgstr "/Зареждане/Автозареждане на фиксирани"
+msgstr "Зареждана на фиксирани настройки за автозареждане"
 
-#: audacious/ui_manager.c:436 audacious/ui_manager.c:457
-#, fuzzy
+#: audacious/ui_manager.c:436
+#: audacious/ui_manager.c:457
 msgid "Default"
-msgstr "/Запис/Стандартни"
+msgstr "Стандартни"
 
 #: audacious/ui_manager.c:437
 msgid "Load default preset into equalizer"
-msgstr ""
+msgstr "Зареждане на настройките по подразбиране за еквалайзера"
 
 #: audacious/ui_manager.c:439
-#, fuzzy
 msgid "Zero"
-msgstr "стерео"
+msgstr "Нулиране"
 
 #: audacious/ui_manager.c:440
-#, fuzzy
 msgid "Set equalizer preset levels to zero"
-msgstr "Запис на фиксирани настройки за еквалайзер"
+msgstr "Нулиране на всички плъзгачи на еквалайзера"
 
 #: audacious/ui_manager.c:442
-#, fuzzy
 msgid "From file"
-msgstr "/Зареждане/...от файл"
+msgstr "От файл"
 
 #: audacious/ui_manager.c:443
-#, fuzzy
 msgid "Load preset from file"
-msgstr "Зареждане на фиксирани настройки"
+msgstr "Зареждане на фиксирани настройки от файл"
 
 #: audacious/ui_manager.c:445
-#, fuzzy
 msgid "From WinAMP EQF file"
-msgstr "/Зареждане/...от WinAMP EQF файл"
+msgstr "От WinAMP EQF файл"
 
 #: audacious/ui_manager.c:446
-#, fuzzy
 msgid "Load preset from WinAMP EQF file"
-msgstr "/Зареждане/...от WinAMP EQF файл"
+msgstr "Зареждане на фиксирани настройки от WinAMP EQF файл"
 
 #: audacious/ui_manager.c:448
-#, fuzzy
 msgid "WinAMP Presets"
-msgstr "/Внасяне/Настройки от WinAMP"
+msgstr "Настройки от WinAMP"
 
 #: audacious/ui_manager.c:449
-#, fuzzy
 msgid "Import WinAMP presets"
-msgstr "/Внасяне/Настройки от WinAMP"
+msgstr "Внасяне на настройки от WinAMP"
 
 #: audacious/ui_manager.c:452
 msgid "Save preset"
 msgstr "Запис на фиксирани настройки"
 
 #: audacious/ui_manager.c:455
-#, fuzzy
 msgid "Save auto-load preset"
-msgstr "/Запис/Автозареждане на фиксирани"
+msgstr "Запис на фиксирани настройки за автозареждане"
 
 #: audacious/ui_manager.c:458
-#, fuzzy
 msgid "Save default preset"
-msgstr "Запис на автоматично фиксирани настройки"
+msgstr "Запис на фиксирани настройки по подразбиране"
 
 #: audacious/ui_manager.c:460
-#, fuzzy
 msgid "To file"
-msgstr "Зареждане на файлове"
+msgstr "Във файл"
 
 #: audacious/ui_manager.c:461
-#, fuzzy
 msgid "Save preset to file"
-msgstr "Запис на фиксирани настройки"
+msgstr "Запис на фиксирани настройки във файл"
 
 #: audacious/ui_manager.c:463
-#, fuzzy
 msgid "To WinAMP EQF file"
-msgstr "/Запис/...в WinAMP EQF файл"
+msgstr "В WinAMP EQF файл"
 
 #: audacious/ui_manager.c:464
-#, fuzzy
 msgid "Save preset to WinAMP EQF file"
-msgstr "/Запис/...в WinAMP EQF файл"
+msgstr "Запис на фиксирани в WinAMP EQF файл"
 
 #: audacious/ui_manager.c:467
 msgid "Delete preset"
 msgstr "Изтриване на фиксирани настройки"
 
 #: audacious/ui_manager.c:470
-#, fuzzy
 msgid "Delete auto-load preset"
-msgstr "/Изтриване/Автозареждане на фиксирани"
+msgstr "Изтриване на фиксирани настройки за автозареждане"
 
-#: audacious/ui_preferences.c:99 audacious/glade/prefswin.glade:1399
+#: audacious/ui_preferences.c:99
+#: audacious/glade/prefswin.glade:1399
 msgid "Appearance"
 msgstr "Изглед"
 
@@ -1365,15 +1351,18 @@ msgstr "Аудио"
 msgid "Connectivity"
 msgstr "Свързаност"
 
-#: audacious/ui_preferences.c:102 audacious/glade/prefswin.glade:2898
+#: audacious/ui_preferences.c:102
+#: audacious/glade/prefswin.glade:2898
 msgid "Equalizer"
 msgstr "Еквалайзер"
 
-#: audacious/ui_preferences.c:103 audacious/glade/prefswin.glade:1678
+#: audacious/ui_preferences.c:103
+#: audacious/glade/prefswin.glade:1678
 msgid "Mouse"
 msgstr "Мишка"
 
-#: audacious/ui_preferences.c:105 audacious/glade/prefswin.glade:693
+#: audacious/ui_preferences.c:105
+#: audacious/glade/prefswin.glade:693
 msgid "Plugins"
 msgstr "Приставки"
 
@@ -1381,7 +1370,8 @@ msgstr "Приставки"
 msgid "Artist"
 msgstr "Изпълнител"
 
-#: audacious/ui_preferences.c:112 libaudacious/titlestring.c:372
+#: audacious/ui_preferences.c:112
+#: libaudacious/titlestring.c:372
 msgid "Album"
 msgstr "Албум"
 
@@ -1393,7 +1383,8 @@ msgstr "Заглавие"
 msgid "Tracknumber"
 msgstr "Номер"
 
-#: audacious/ui_preferences.c:115 libaudacious/titlestring.c:373
+#: audacious/ui_preferences.c:115
+#: libaudacious/titlestring.c:373
 msgid "Genre"
 msgstr "Жанр"
 
@@ -1401,15 +1392,18 @@ msgstr "Жанр"
 msgid "Filepath"
 msgstr "Път до файла"
 
-#: audacious/ui_preferences.c:118 libaudacious/titlestring.c:379
+#: audacious/ui_preferences.c:118
+#: libaudacious/titlestring.c:379
 msgid "Date"
 msgstr "Дата"
 
-#: audacious/ui_preferences.c:119 libaudacious/titlestring.c:380
+#: audacious/ui_preferences.c:119
+#: libaudacious/titlestring.c:380
 msgid "Year"
 msgstr "Година"
 
-#: audacious/ui_preferences.c:120 libaudacious/titlestring.c:381
+#: audacious/ui_preferences.c:120
+#: libaudacious/titlestring.c:381
 msgid "Comment"
 msgstr "Коментар"
 
@@ -1417,13 +1411,17 @@ msgstr "Коментар"
 msgid "localhost"
 msgstr "localhost"
 
-#: audacious/ui_preferences.c:454 audacious/ui_preferences.c:541
-#: audacious/ui_preferences.c:630 audacious/ui_preferences.c:726
+#: audacious/ui_preferences.c:454
+#: audacious/ui_preferences.c:541
+#: audacious/ui_preferences.c:630
+#: audacious/ui_preferences.c:726
 msgid "Enabled"
 msgstr "Включено"
 
-#: audacious/ui_preferences.c:470 audacious/ui_preferences.c:557
-#: audacious/ui_preferences.c:646 audacious/ui_preferences.c:742
+#: audacious/ui_preferences.c:470
+#: audacious/ui_preferences.c:557
+#: audacious/ui_preferences.c:646
+#: audacious/ui_preferences.c:742
 msgid "Description"
 msgstr "Описание"
 
@@ -1444,32 +1442,20 @@ msgid "Unarchived Winamp 2.x skin"
 msgstr "Неархивиран облик на Winamp 2.x"
 
 #: audacious/ui_fileinfo.c:314
-#, fuzzy
 msgid "Track Information Window"
 msgstr "Информация за песен"
 
 #: audacious/ui_fileinfo.c:336
-#, fuzzy
 msgid "Track Information Popup"
 msgstr "Информация за песен"
 
 #: audacious/ui_playlist.c:496
-#, fuzzy
 msgid "Search entries in active playlist"
-msgstr "Премахва всички елементи от плейлистта"
+msgstr "Търсене в елементите на активната плейлиста"
 
 #: audacious/ui_playlist.c:502
-#, fuzzy
-msgid ""
-"Select entries in playlist by filling one or more fields. Fields use regular "
-"expressions syntax, case-insensitive. If you don't know how regular "
-"expressions work, simply insert a literal portion of what you're searching "
-"for."
-msgstr ""
-"Избиране на елементи от плейлистата чрез попълване на едно или повече "
-"полета. Ситаксиса е като на регулярен израз, без чувствителност към "
-"регистъра. Ако не можете да работите с регулярни изрази, просто напишете "
-"част от това което търсите."
+msgid "Select entries in playlist by filling one or more fields. Fields use regular expressions syntax, case-insensitive. If you don't know how regular expressions work, simply insert a literal portion of what you're searching for."
+msgstr "Избиране на елементи от плейлистата чрез попълване на едно или повече полета. Ситаксиса е като на регулярен израз, без чувствителност към регистъра. Ако не можете да работите с регулярни изрази, просто напишете част от това което търсите."
 
 #: audacious/ui_playlist.c:509
 msgid "Track name: "
@@ -1507,7 +1493,7 @@ msgstr "Грешка при запис на плейлиста \"%s\": %s"
 #: audacious/ui_playlist.c:790
 #, c-format
 msgid "%s already exist. Continue?"
-msgstr "%s вече съществува. Искате ли да продънжите?"
+msgstr "%s вече съществува. Искате ли да продължите?"
 
 #: audacious/ui_playlist.c:804
 #, c-format
@@ -1533,9 +1519,8 @@ msgid "Audacious Playlist Editor"
 msgstr "Редактор на плейлисти на Audacious"
 
 #: audacious/util.c:606
-#, fuzzy
 msgid "Add/Open URL Dialog"
-msgstr "Отваряне/добавяне на файлове"
+msgstr "Отваряне/добавяне на URL адрес"
 
 #: audacious/util.c:858
 msgid "Add/Open Files dialog"
@@ -1549,7 +1534,8 @@ msgstr "Отваряне на файлове"
 msgid "Close dialog on Open"
 msgstr "Затваряне при отваряне на файл"
 
-#: audacious/util.c:927 audacious/glade/addfiles.glade:8
+#: audacious/util.c:927
+#: audacious/glade/addfiles.glade:8
 msgid "Add Files"
 msgstr "Добавяне на файлове"
 
@@ -1574,18 +1560,16 @@ msgstr ""
 "Не сте избрали приставка за възпроизвеждане."
 
 #: audacious/playlist_manager.c:253
-#, fuzzy
 msgid "Playlist Manager"
-msgstr "По ред в плейлистата"
+msgstr "Мениджър на плейлисти"
 
 #: audacious/playlist_manager.c:292
 msgid "Entries"
-msgstr ""
+msgstr "Елементи"
 
 #: audacious/playlist_manager.c:306
-#, fuzzy
 msgid "_Rename"
-msgstr "Име на файл"
+msgstr "Пре_именуване"
 
 #: audacious/glade/addfiles.glade:77
 msgid "Close Dialog on Add"
@@ -1632,7 +1616,6 @@ msgid "<span size=\"small\">Location</span>"
 msgstr "<span size=\"small\">Местоположение</span>"
 
 #: audacious/glade/fileinfo_popup.glade:8
-#, fuzzy
 msgid "Artist Popup"
 msgstr "Изпълнител"
 
@@ -1665,9 +1648,8 @@ msgid "<i>Track Length</i>"
 msgstr "<i>Продължителност</i>"
 
 #: audacious/glade/prefswin.glade:8
-#, fuzzy
 msgid "Audacious Preferences"
-msgstr "Основни разработчици:"
+msgstr "Настройки на Audacious"
 
 #: audacious/glade/prefswin.glade:115
 msgid "_Decoder list:"
@@ -1691,7 +1673,7 @@ msgstr "Приставки за _визуализация:"
 
 #: audacious/glade/prefswin.glade:511
 msgid "<b>Visualization</b>"
-msgstr "<b>Представяне</b>"
+msgstr "<b>Визуализация</b>"
 
 #: audacious/glade/prefswin.glade:553
 msgid "_Effect plugin list:"
@@ -1706,9 +1688,8 @@ msgid "<b>_Skin</b>"
 msgstr "<b>_Облик</b>"
 
 #: audacious/glade/prefswin.glade:799
-#, fuzzy
 msgid "Refresh skin list"
-msgstr "Обновяване на плейлистата"
+msgstr "Обновяване на списъка с облици"
 
 #: audacious/glade/prefswin.glade:893
 msgid "<b>_Fonts</b>"
@@ -1724,17 +1705,15 @@ msgstr "Пле_йлиста:"
 
 #: audacious/glade/prefswin.glade:1023
 msgid "Select main player window font:"
-msgstr ""
+msgstr "Шрифт за основния прозорец:"
 
 #: audacious/glade/prefswin.glade:1091
-msgid ""
-"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
-"strings."
-msgstr ""
+msgid "Use bitmap fonts if they are available. Bitmap fonts do not support Unicode strings."
+msgstr "Използване на растерни шрифтове при възможност. Растерните шрифтове не поддържат Unicode."
 
 #: audacious/glade/prefswin.glade:1093
 msgid "Use Bitmap fonts if available"
-msgstr "Използване на растерни шрифтове"
+msgstr "Използване на растерни шрифтове при възможност"
 
 #: audacious/glade/prefswin.glade:1127
 msgid "<b>_Miscellaneous</b>"
@@ -1752,37 +1731,30 @@ msgstr "Разделители в плейлистата"
 msgid "Use custom cursors"
 msgstr "Потребителски курсори"
 
-#: audacious/glade/prefswin.glade:1279 audacious/glade/prefswin.glade:1290
+#: audacious/glade/prefswin.glade:1279
+#: audacious/glade/prefswin.glade:1290
 msgid "This enables the window manager to show decorations for windows."
-msgstr ""
-"Разрешаване на прозоречния мениджър да показва рамка и заглавна лента за "
-"прозорците."
+msgstr "Разрешаване на прозоречния мениджър да показва рамка и заглавна лента за прозорците."
 
 #: audacious/glade/prefswin.glade:1281
 msgid "Show window manager decoration"
-msgstr "Декорации от прозоречния мениджър"
+msgstr "Декорация от прозоречния мениджър"
 
 #: audacious/glade/prefswin.glade:1289
 msgid "Show window manager decorations"
 msgstr "Декорации от прозоречния мениджър"
 
 #: audacious/glade/prefswin.glade:1319
-msgid ""
-"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
-"provided by Audacious itself and is faster than the default GTK2 selector "
-"(but sadly not as user-friendly)."
-msgstr ""
+msgid "This enables the XMMS/GTK1-style file selection dialogs. This selector is provided by Audacious itself and is faster than the default GTK2 selector (but sadly not as user-friendly)."
+msgstr "Превключване към старомодни диалози за работа с файлове (като XMMS/GTK-1). Те се осигуряват от Audacious и работят по-бързо от стандартните диалозите, но са по-неудобни за използване."
 
 #: audacious/glade/prefswin.glade:1321
 msgid "Use XMMS-style file selector instead of the default selector"
 msgstr "Избор на файлове в стил XMMS"
 
 #: audacious/glade/prefswin.glade:1355
-msgid ""
-"Enables playlist transparency. This is not recommended for slower machines "
-"as it requires some CPU time to create and cache the pixmaps used for the "
-"transparency."
-msgstr ""
+msgid "Enables playlist transparency. This is not recommended for slower machines as it requires some CPU time to create and cache the pixmaps used for the transparency."
+msgstr "Активиране на прозрачност на плейлистата. Не се препоръчва за по-бавни машини, тъй като натоварва повече процесора и изисква кеширане на пикселни карти."
 
 #: audacious/glade/prefswin.glade:1357
 msgid "Enable playlist transparency"
@@ -1826,28 +1798,27 @@ msgstr "Конвертиране на '\\' в '/'"
 
 #: audacious/glade/prefswin.glade:1869
 msgid "<b>Metadata</b>"
-msgstr "<b>Метаданни</b>"
+msgstr "<b>Мета-данни</b>"
 
 #: audacious/glade/prefswin.glade:1908
 msgid "Load metadata (tag information) from music files."
-msgstr ""
+msgstr "Зареждане на мета-данни от музикалните файлове."
 
 #: audacious/glade/prefswin.glade:1910
 msgid "Load metadata from playlists and files"
-msgstr "Зареждане на метаданните от плейлистата и файловете"
+msgstr "Зареждане на мета-данните от плейлистата и файловете"
 
 #: audacious/glade/prefswin.glade:1948
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
+msgstr "Зареждане на мета-данни при отваряне или добавяне на файла към плейлистата."
 
 #: audacious/glade/prefswin.glade:1950
 msgid "On load"
 msgstr "При зареждане"
 
 #: audacious/glade/prefswin.glade:1970
-#, fuzzy
 msgid "Load metadata on demand when displaying the file in the playlist"
-msgstr "Зарежда плейлиста от файл и я добавя за просвирване."
+msgstr "Зареждане на мета-данните при показване на файла в плейлистата."
 
 #: audacious/glade/prefswin.glade:1972
 msgid "On display"
@@ -1855,29 +1826,23 @@ msgstr "При визуализиране"
 
 #: audacious/glade/prefswin.glade:2002
 msgid "Fallback character encodings:"
-msgstr "Стандартни кодирания:"
+msgstr "Потребителски кодови таблици:"
 
 #: audacious/glade/prefswin.glade:2030
-msgid ""
-"List of character encodings used for fall back conversion of metadata. If "
-"automatic character encoding detector failed or has been disabled, encodings "
-"in this list would be treated as candidates of the encoding of metadata, and "
-"fall back conversion from these encodings to UTF-8 would be attempted."
-msgstr ""
+msgid "List of character encodings used for fall back conversion of metadata. If automatic character encoding detector failed or has been disabled, encodings in this list would be treated as candidates of the encoding of metadata, and fall back conversion from these encodings to UTF-8 would be attempted."
+msgstr "Списък от кодови таблици, които да бъдат използвани за разчитането на мета-данните ако автоматичното декодиране е изключено или не може да определи правилната таблица. Ако никоя от посочените кодови таблици не може да декодира данните, кодирането се приема за UTF-8."
 
 #: audacious/glade/prefswin.glade:2071
 msgid "Auto character encoding detector for:"
-msgstr "Автоматичен декодер за:"
+msgstr "Автоматично откриване на кодовата таблица за:"
 
 #: audacious/glade/prefswin.glade:2127
 msgid "<b>File Dialog</b>"
-msgstr "<b>Работа с файлове</b>"
+msgstr "<b>Диалог за работа с файлове</b>"
 
 #: audacious/glade/prefswin.glade:2166
-msgid ""
-"Always refresh the file dialog (this will slow opening the dialog on large "
-"directories, and Gnome VFS should handle automatically)."
-msgstr ""
+msgid "Always refresh the file dialog (this will slow opening the dialog on large directories, and Gnome VFS should handle automatically)."
+msgstr "Задължително опресняване на съдържанието на диалога за работа с файлове (води до забавяния при големи директории)."
 
 #: audacious/glade/prefswin.glade:2168
 msgid "Always refresh directory when opening file dialog"
@@ -1915,26 +1880,24 @@ msgstr ""
 
 #: audacious/glade/prefswin.glade:2351
 msgid "Show information about titlestring format"
-msgstr ""
+msgstr "Показване на информация за формата на заглавието"
 
 #: audacious/glade/prefswin.glade:2401
 msgid "<b>Popup Information</b>"
 msgstr "<b>Изскачаща информация</b>"
 
 #: audacious/glade/prefswin.glade:2452
-msgid ""
-"Toggles popup information window for the pointed entry in the playlist. The "
-"window shows title of song, name of album, genre, year of publish, track "
-"number, track length, and artwork."
-msgstr ""
+msgid "Toggles popup information window for the pointed entry in the playlist. The window shows title of song, name of album, genre, year of publish, track number, track length, and artwork."
+msgstr "Показване на информация за посочения елемент от плейлистата. Тази информация включва заглавие, албум, жанр, година, номер в албума, продължителност и корица."
 
 #: audacious/glade/prefswin.glade:2454
 msgid "Show popup information for playlist entries"
 msgstr "Показване на изскачаща информация за елементите от плейлистата"
 
 #: audacious/glade/prefswin.glade:2481
+#, fuzzy
 msgid "Edit settings for popup information"
-msgstr ""
+msgstr "Редактиране на настройките за изскачащата информация"
 
 #: audacious/glade/prefswin.glade:2589
 msgid "<b>Presets</b>"
@@ -1981,12 +1944,8 @@ msgid "Proxy password:"
 msgstr "Парола:"
 
 #: audacious/glade/prefswin.glade:3331
-msgid ""
-"<span size=\"small\">Changing these settings will require a restart of "
-"Audacious.</span>"
-msgstr ""
-"<span size=\"small\">Промяната на тези настройки налага да рестартирате "
-"Audacious.</span>"
+msgid "<span size=\"small\">Changing these settings will require a restart of Audacious.</span>"
+msgstr "<span size=\"small\">Промяната на тези настройки налага да рестартирате Audacious.</span>"
 
 #: audacious/glade/prefswin.glade:3387
 msgid "label65"
@@ -2002,17 +1961,13 @@ msgstr "Приставка за възпроизвеждане:"
 
 #: audacious/glade/prefswin.glade:3550
 msgid ""
-"<span size=\"small\">This is the amount of time to prebuffer audio streams "
-"by, in milliseconds.\n"
+"<span size=\"small\">This is the amount of time to prebuffer audio streams by, in milliseconds.\n"
 "Increase this value if you are experiencing audio skipping. \n"
-"Please note however, that high values will result in Audacious performing "
-"poorly.</span>"
+"Please note however, that high values will result in Audacious performing poorly.</span>"
 msgstr ""
-"<span size=\"small\">Размер на предварителния буфер за всички аудио потоци в "
-"милисекунди.\n"
+"<span size=\"small\">Размер на предварителния буфер за всички аудио потоци в милисекунди.\n"
 "Увеличете стойността ако има накъсване на звука. \n"
-"Моля отбележете,  че при по-високи стойности Audacious се представя по-зле.</"
-"span>"
+"Моля отбележете,  че при по-високи стойности Audacious се представя по-зле.</span>"
 
 #: audacious/glade/prefswin.glade:3580
 msgid "Buffer size:"
@@ -2031,28 +1986,16 @@ msgid "<b>Format Detection</b>"
 msgstr "<b>Разпознаване на формати</b>"
 
 #: audacious/glade/prefswin.glade:3870
-#, fuzzy
-msgid ""
-"When checked, Audacious will detect file formats on demand. This can result "
-"in a messier playlist, but delivers a major speed benefit."
-msgstr ""
-"Когато е избрано, Audacious ще разпознава формата на файла въз основа на "
-"разширението му. Този метод е малко по-бавен от разпознаването при "
-"необходимост, но осигурява базова функционалност."
+msgid "When checked, Audacious will detect file formats on demand. This can result in a messier playlist, but delivers a major speed benefit."
+msgstr "Когато е избрано, Audacious ще разпознава формата на файла при необходимост. Това води до по-объркана плейлиста, но повишава скоростта на работа."
 
 #: audacious/glade/prefswin.glade:3872
 msgid "Detect file formats on demand, instead of immediately."
 msgstr "Разпознаване на формати при необходимост вместо веднага."
 
 #: audacious/glade/prefswin.glade:3906
-msgid ""
-"When checked, Audacious will detect file formats based by extension. This is "
-"slightly slower than detection on demand, but still provides a minimal level "
-"of format detection."
-msgstr ""
-"Когато е избрано, Audacious ще разпознава формата на файла въз основа на "
-"разширението му. Този метод е малко по-бавен от разпознаването при "
-"необходимост, но осигурява базова функционалност."
+msgid "When checked, Audacious will detect file formats based by extension. This is slightly slower than detection on demand, but still provides a minimal level of format detection."
+msgstr "Когато е избрано, Audacious ще разпознава формата на файла въз основа на разширението му. Този метод е малко по-бавен от разпознаването при необходимост, но осигурява базова функционалност."
 
 #: audacious/glade/prefswin.glade:3908
 msgid "Detect file formats by extension."
@@ -2063,10 +2006,8 @@ msgid "<b>Playback</b>"
 msgstr "<b>Просвирване</b>"
 
 #: audacious/glade/prefswin.glade:3981
-msgid ""
-"When Audacious starts, automatically begin playing from the point where we "
-"stopped before."
-msgstr ""
+msgid "When Audacious starts, automatically begin playing from the point where we stopped before."
+msgstr "При стартиране на Audacious автоматично да продължи просвирването от предишната сесия."
 
 #: audacious/glade/prefswin.glade:3983
 msgid "Continue playback on startup"
@@ -2074,7 +2015,7 @@ msgstr "Продължаване на просвирването при стар
 
 #: audacious/glade/prefswin.glade:4017
 msgid "When finished playing a song, don't automatically advance to the next."
-msgstr ""
+msgstr "След просвирването на песен, програмата да не преминава към следващата."
 
 #: audacious/glade/prefswin.glade:4019
 msgid "Don't advance in the playlist"
@@ -2099,17 +2040,11 @@ msgstr ""
 #: audacious/glade/prefswin.glade:4292
 #, fuzzy
 msgid "Popup Information Settings"
-msgstr "<b>Изскачаща информация</b>"
+msgstr "Настройки на изскачащата информация"
 
 #: audacious/glade/prefswin.glade:4316
-msgid ""
-"While searching for the album's cover, Audacious looks for certain words in "
-"the filename. You can specify those words in the lists below, separated "
-"using commas."
-msgstr ""
-"Докато търси обложката на албума, Audacious претърсва за определени думи в "
-"имената на файловете. По-долу можете да укажете тези думи в списък, разделен "
-"със запетайки."
+msgid "While searching for the album's cover, Audacious looks for certain words in the filename. You can specify those words in the lists below, separated using commas."
+msgstr "Докато търси обложката на албума, Audacious претърсва за определени думи в имената на файловете. По-долу можете да укажете тези думи в списък, разделен със запетайки."
 
 #: audacious/glade/prefswin.glade:4371
 msgid "Include:"
@@ -2133,26 +2068,23 @@ msgstr "Обложки, специфични за файла"
 
 #: audacious/glade/prefswin.glade:4633
 msgid "Color Adjustment"
-msgstr ""
+msgstr "Настройки на цвета"
 
 #: audacious/glade/prefswin.glade:4656
-msgid ""
-"Audacious allows you to alter the color balance of the skinned UI. The "
-"sliders below will allow you to do this."
-msgstr ""
+msgid "Audacious allows you to alter the color balance of the skinned UI. The sliders below will allow you to do this."
+msgstr "Audacious ви позволява да коригирате цветовия баланс на интерфейса. За целта използвайте плъзгачите."
 
 #: audacious/glade/prefswin.glade:4752
 msgid "Red"
-msgstr ""
+msgstr "Червено"
 
 #: audacious/glade/prefswin.glade:4780
-#, fuzzy
 msgid "Green"
-msgstr "Гръцки:"
+msgstr "Зелено"
 
 #: audacious/glade/prefswin.glade:4808
 msgid "Blue"
-msgstr ""
+msgstr "Синьо"
 
 #: audacious/widgets/eq_slider.c:93
 msgid "PREAMP"
@@ -2215,12 +2147,10 @@ msgid "File extension"
 msgstr "Разширение на файла"
 
 #: libaudacious/titlestring.c:377
-#, fuzzy
 msgid "Track name"
 msgstr "Име"
 
 #: libaudacious/titlestring.c:378
-#, fuzzy
 msgid "Track number"
 msgstr "Номер"
 
@@ -2230,120 +2160,82 @@ msgstr "%{n:...%}: Показване на \"...\" само при наличи�
 
 #~ msgid "Chinese:"
 #~ msgstr "Китайски:"
-
 #~ msgid "/Load/Preset"
 #~ msgstr "/Зареждане/Фиксирани настройки"
-
 #~ msgid "/Load/Default"
 #~ msgstr "/Зареждане/Стандартни"
-
 #~ msgid "/Load/Zero"
 #~ msgstr "/Зареждане/Нулиране"
-
 #~ msgid "/Save/Preset"
 #~ msgstr "/Запис/Фиксирани настройки"
-
 #~ msgid "/Save/To file"
 #~ msgstr "/Запис/...във файл"
-
 #~ msgid "/Delete/Preset"
 #~ msgstr "/Изтриване/Фиксирани настройки"
-
 #~ msgid "Load auto-preset"
 #~ msgstr "Автозареждане на фиксирани настройки"
-
 #~ msgid "Load equalizer preset"
 #~ msgstr "Зареждане фиксирани настройки за еквалайзер"
-
 #~ msgid "Delete auto-preset"
 #~ msgstr "Изтриване на  автоматично фиксирани настройки"
-
 #~ msgid "/View Track Details"
 #~ msgstr "/Информация за песента"
-
 #~ msgid "/Visualization Mode/Analyzer"
 #~ msgstr "/Визуализация/Анализатор"
-
 #~ msgid "/Visualization Mode/Scope"
 #~ msgstr "/Визуализация/Осцилоскоп"
-
 #~ msgid "/Visualization Mode/Voiceprint"
 #~ msgstr "/Визуализация/Гласов отпечатък"
-
 #~ msgid "/Visualization Mode/Off"
 #~ msgstr "/Визуализация/Изключване"
-
 #~ msgid "/Analyzer Mode/Normal"
 #~ msgstr "/Анализатор/Нормален"
-
 #~ msgid "/Analyzer Mode/Fire"
 #~ msgstr "/Анализатор/Огън"
-
 #~ msgid "/Analyzer Mode/Lines"
 #~ msgstr "/Анализатор/Линии"
-
 #~ msgid "/Analyzer Mode/Bars"
 #~ msgstr "/Анализатор/Стълбове"
-
 #~ msgid "/Analyzer Mode/Peaks"
 #~ msgstr "/Анализатор/Пикове"
-
 #~ msgid "/WindowShade VU Mode/Normal"
 #~ msgstr "/VU (в сгънат режим)/Нормален"
-
 #~ msgid "/WindowShade VU Mode/Smooth"
 #~ msgstr "/VU (в сгънат режим)/Плавен"
-
 #~ msgid "/Analyzer Falloff/Slowest"
 #~ msgstr "/Динамика на анализатора/Най-бавно"
-
 #~ msgid "/Analyzer Falloff/Slow"
 #~ msgstr "/Динамика на анализатора/Бавно"
-
 #~ msgid "/Analyzer Falloff/Medium"
 #~ msgstr "/Динамика на анализатора/Средно"
-
 #~ msgid "/Analyzer Falloff/Fast"
 #~ msgstr "/Динамика на анализатора/Бързо"
-
 #~ msgid "/Analyzer Falloff/Fastest"
 #~ msgstr "/Динамика на анализатора/Най-бързо"
-
 #~ msgid "/Peaks Falloff/Slowest"
 #~ msgstr "/Динамика на пиковете/Най-бавно"
-
 #~ msgid "/Peaks Falloff/Slow"
 #~ msgstr "/Динамика на пиковете/Бавно"
-
 #~ msgid "/Peaks Falloff/Medium"
 #~ msgstr "/Динамика на пиковете/Средно"
-
 #~ msgid "/Peaks Falloff/Fast"
 #~ msgstr "/Динамика на пиковете/Бързо"
-
 #~ msgid "/Peaks Falloff/Fastest"
 #~ msgstr "/Динамика на пиковете/Най-бързо"
-
 #~ msgid "/-"
 #~ msgstr "/-"
-
 #~ msgid "/Jump to Time"
 #~ msgstr "/Прескачане до позиция"
-
 #~ msgid "/About Audacious"
 #~ msgstr "/Относно Audacious"
-
 #~ msgid "/Files..."
 #~ msgstr "/Файлове..."
-
 #~ msgid "/Internet location..."
 #~ msgstr "/Интернет адрес..."
-
 #~ msgid "New List"
 #~ msgstr "Нова плейлиста"
-
 #~ msgid "Creates a new playlist."
 #~ msgstr "Създава нова плейлиста."
-
 #~ msgid "Displays track information."
 #~ msgstr "Показване на информация за песента."
+
