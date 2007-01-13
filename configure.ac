@@ -22,7 +22,12 @@ if test -d "/usr/X11R6/include"; then
 	CPPFLAGS="$CPPFLAGS -I/usr/X11R6/include"
 fi
 
-AM_INIT_AUTOMAKE
+dnl OMK bootstrap
+AC_SUBST([PACKAGE], [AC_PACKAGE_TARNAME])
+AC_SUBST([VERSION], [AC_PACKAGE_VERSION])
+
+AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of package])
+AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Version number of package])
 
 dnl GNU gettext
 
