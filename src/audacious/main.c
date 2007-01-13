@@ -452,13 +452,10 @@ xmms_get_gentitle_format(void)
 void
 make_directory(const gchar * path, mode_t mode)
 {
-    if (mkdir(path, mode) == 0)
+    if (g_mkdir_with_parents(path, mode) == 0)
         return;
 
-    if (errno == EEXIST)
-        return;
-
-    g_printerr(_("Could not create directory (%s): %s"), path,
+    g_printerr(_("Could not create directory (%s): %s\n"), path,
                g_strerror(errno));
 }
 
@@ -485,26 +482,55 @@ bmp_free_paths(void)
     }
 }
 
-
-#define USER_PATH(path) \
-    g_build_filename(bmp_paths[BMP_PATH_USER_DIR], path, NULL);
-
 static void
-bmp_init_paths(void)
+bmp_init_paths()
 {
-    bmp_paths[BMP_PATH_USER_DIR] = g_build_filename(g_get_home_dir(), BMP_RCPATH, NULL);
+	char *xdg_config_home;
+	char *xdg_data_home;
+	char *xdg_cache_home;
 
-    bmp_paths[BMP_PATH_USER_PLUGIN_DIR] = USER_PATH(BMP_USER_PLUGIN_DIR_BASENAME);
-    bmp_paths[BMP_PATH_USER_SKIN_DIR] = USER_PATH(BMP_SKIN_DIR_BASENAME);
-    bmp_paths[BMP_PATH_SKIN_THUMB_DIR] = USER_PATH(BMP_SKIN_THUMB_DIR_BASENAME);
-    bmp_paths[BMP_PATH_CONFIG_FILE] = USER_PATH(BMP_CONFIG_BASENAME);
-    bmp_paths[BMP_PATH_PLAYLIST_FILE] = USER_PATH(BMP_PLAYLIST_BASENAME);
-    bmp_paths[BMP_PATH_ACCEL_FILE] = USER_PATH(BMP_ACCEL_BASENAME);
-    bmp_paths[BMP_PATH_LOG_FILE] = USER_PATH(BMP_LOG_BASENAME);
+	xdg_config_home = (getenv("XDG_CONFIG_HOME") == NULL
+	    ? g_build_filename(g_get_home_dir(), ".config", NULL)
+	    : g_strdup(getenv("XDG_CONFIG_HOME")));
+	xdg_data_home = (getenv("XDG_DATA_HOME") == NULL
+	    ? g_build_filename(g_get_home_dir(), ".local", "share", NULL)
+	    : g_strdup(getenv("XDG_DATA_HOME")));
+	xdg_cache_home = (getenv("XDG_CACHE_HOME") == NULL
+	    ? g_build_filename(g_get_home_dir(), ".cache", NULL)
+	    : g_strdup(getenv("XDG_CACHE_HOME")));
 
-    g_atexit(bmp_free_paths);
+	bmp_paths[BMP_PATH_USER_DIR] =
+	    g_build_filename(xdg_config_home, "audacious", NULL);
+	bmp_paths[BMP_PATH_USER_SKIN_DIR] =
+	    g_build_filename(xdg_data_home, "audacious", "Skins", NULL);
+	// FIXME: Think of something better for Plugins, XDG is missing this
+	bmp_paths[BMP_PATH_USER_PLUGIN_DIR] =
+	    g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "Plugins", NULL);
+	bmp_paths[BMP_PATH_SKIN_THUMB_DIR] =
+	    g_build_filename(xdg_cache_home, "audacious", "thumbs", NULL);
+
+	bmp_paths[BMP_PATH_CONFIG_FILE] =
+	    g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "config", NULL);
+#ifdef HAVE_XSPF_PLAYLIST
+	bmp_paths[BMP_PATH_PLAYLIST_FILE] =
+	    g_build_filename(bmp_paths[BMP_PATH_USER_DIR],
+	    "playlist.xspf", NULL);
+#else
+	bmp_paths[BMP_PATH_PLAYLIST_FILE] =
+	    g_build_filename(bmp_paths[BMP_PATH_USER_DIR],
+	    "playlist.m3u", NULL);
+#endif
+	bmp_paths[BMP_PATH_ACCEL_FILE] =
+	    g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "accel", NULL);
+	bmp_paths[BMP_PATH_LOG_FILE] =
+	    g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "log", NULL);
+
+	g_free(xdg_config_home);
+	g_free(xdg_data_home);
+	g_free(xdg_cache_home);
+
+	g_atexit(bmp_free_paths);
 }
-
 
 void
 bmp_config_load(void)

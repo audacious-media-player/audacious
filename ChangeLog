@@ -1,3 +1,10 @@
+2007-01-12 20:33:07 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [3642]
+  Same for -pipe.
+  trunk/configure.ac |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-01-12 20:32:12 +0000  Jonathan Schleifer <js@h3c.de>
   revision [3640]
   Add -Wall to CFLAGS by default if the CC is gcc

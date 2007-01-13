@@ -131,7 +131,7 @@ skin_get_thumbnail(const gchar * path)
 
     g_return_val_if_fail(path != NULL, NULL);
 
-    if (g_str_has_suffix(path, BMP_SKIN_THUMB_DIR_BASENAME))
+    if (g_str_has_suffix(path, "thumbs"))
         return NULL;
 
     thumbname = get_thumbnail_filename(path);
@@ -253,7 +253,7 @@ skinlist_update(void)
     skinlist_clear();
 
     scan_skindir(bmp_paths[BMP_PATH_USER_SKIN_DIR]);
-    scan_skindir(DATA_DIR G_DIR_SEPARATOR_S BMP_SKIN_DIR_BASENAME);
+    scan_skindir(DATA_DIR G_DIR_SEPARATOR_S "Skins");
 
     skinsdir = getenv("SKINSDIR");
     if (skinsdir) {
