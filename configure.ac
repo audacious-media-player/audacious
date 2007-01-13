@@ -391,12 +391,12 @@ AC_SUBST(beepdir)
 AC_SUBST(plugindir)
 
 AC_CONFIG_FILES([
-	audtool.1
-	audacious.1
 	audacious.pc
+	mk/rules.mk
+	man/audtool.1
+	man/audacious.1
 	src/audacious/audacious.desktop
 	po/Makefile.in
-	mk/rules.mk
 ])
 
 AC_OUTPUT

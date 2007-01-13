@@ -1,3 +1,13 @@
+2007-01-13 22:35:56 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3654]
+  - remove audacious.spec -- we don't use it for anything, and we're not 
+    packaging RPMs so we don't really need it
+  
+  trunk/audacious.spec.in |  182 ------------------------------------------------
+  trunk/configure.ac      |    1 
+  2 files changed, 183 deletions(-)
+
+
 2007-01-13 22:27:13 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3652]
   - update bulgarian translation by proxy

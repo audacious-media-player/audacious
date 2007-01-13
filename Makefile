@@ -3,7 +3,7 @@
 include mk/rules.mk
 include mk/init.mk
 
-SUBDIRS = src po icons skins
+SUBDIRS = src man po icons skins
 
 include mk/objective.mk
 
