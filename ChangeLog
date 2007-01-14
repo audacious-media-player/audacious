@@ -1,3 +1,23 @@
+2007-01-14 00:41:21 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [3666]
+  - Added script for migration to XDG basedir.
+  - Fixed tons of warnings.
+  
+  trunk/migrate_config.sh              |   28 ++++++++++++++++++++++++++++
+  trunk/src/audacious/output.c         |    6 +-----
+  trunk/src/audacious/playlist.c       |    3 +--
+  trunk/src/audacious/ui_fileinfo.c    |    7 +++----
+  trunk/src/audacious/ui_main.c        |    3 ---
+  trunk/src/audacious/ui_manager.h     |    4 ++--
+  trunk/src/audacious/ui_playlist.c    |    5 -----
+  trunk/src/audacious/ui_playlist.h    |    2 ++
+  trunk/src/audacious/ui_preferences.c |   13 +++++++------
+  trunk/src/audacious/util.c           |    2 ++
+  trunk/src/audacious/widgets/svis.c   |    1 +
+  trunk/src/audacious/widgets/vis.c    |    3 ++-
+  12 files changed, 49 insertions(+), 28 deletions(-)
+
+
 2007-01-14 00:09:38 +0000  Jonathan Schleifer <js@h3c.de>
   revision [3664]
   Fixed: audtool.c:883: warning: implicit declaration of function 'strncmp'
