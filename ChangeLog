@@ -1,3 +1,13 @@
+2007-01-13 23:04:38 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3660]
+  - revert r3646 because it is not a user-friendly method of transitioning.
+    pre-r3646 produces the proper behaviour defined by XDG for migration.
+  
+  trunk/configure.ac                       |    1 +
+  trunk/src/libaudacious/configdb_rcfile.c |   16 +++++++++++++++-
+  2 files changed, 16 insertions(+), 1 deletion(-)
+
+
 2007-01-13 22:49:55 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3658]
   - remove leftover remnants of automake from buildsystem

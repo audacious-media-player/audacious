@@ -54,7 +54,7 @@ bmp_cfg_db_open()
 #ifdef DOTAUDACIOUS_COMPAT
     if (!db->file) {
         tmp = g_build_filename(g_get_home_dir(), BMP_RCPATH, "config", NULL);
-        if (db->file = bmp_rcfile_open(tmp)) {
+        if ((db->file = bmp_rcfile_open(tmp))) {
             g_free(db->filename);
             db->filename = tmp;
         }
