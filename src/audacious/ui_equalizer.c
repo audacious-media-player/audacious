@@ -813,20 +813,6 @@ equalizerwin_create_window(void)
                      G_CALLBACK(equalizerwin_scroll), NULL);
 }
 
-static GtkWidget *
-ui_manager_get_popup(GtkUIManager * self, const gchar * path)
-{
-    GtkWidget *menu_item;
-
-    menu_item = gtk_ui_manager_get_widget(self, path);
-
-    if (GTK_IS_MENU_ITEM(menu_item))
-        return gtk_menu_item_get_submenu(GTK_MENU_ITEM(menu_item));
-    else
-        return NULL;
-}
-
-
 void
 equalizerwin_create(void)
 {

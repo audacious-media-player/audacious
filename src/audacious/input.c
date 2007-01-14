@@ -424,8 +424,8 @@ input_check_file(const gchar * filename, gboolean show_warning)
     ext = strrchr(filename_proxy, '.') + 1;
 
     use_ext_filter = (fd != NULL &&
-	(!g_strcasecmp(fd->base->uri_id, "/") || 
-	!g_strcasecmp(fd->base->uri_id, "file"))) ? TRUE : FALSE;
+    (!g_strcasecmp(fd->base->uri_id, "/") || 
+    !g_strcasecmp(fd->base->uri_id, "file"))) ? TRUE : FALSE;
 
     for (node = get_input_list(); node != NULL; node = g_list_next(node))
     {
@@ -437,7 +437,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
         vfs_fseek(fd, 0, SEEK_SET);
 
         if (cfg.use_extension_probing == TRUE && ip->vfs_extensions != NULL
-		&& ext != NULL && ext != (gpointer) 0x1 && use_ext_filter == TRUE)
+        && ext != NULL && ext != (gpointer) 0x1 && use_ext_filter == TRUE)
         {
             gint i;
             gboolean is_our_ext = FALSE;
@@ -445,10 +445,10 @@ input_check_file(const gchar * filename, gboolean show_warning)
             for (i = 0; ip->vfs_extensions[i] != NULL; i++)
             {
                 if (str_has_prefix_nocase(ext, ip->vfs_extensions[i]))
-	        {
-		    is_our_ext = TRUE;
-		    break;
-		}
+                {
+                    is_our_ext = TRUE;
+                    break;
+                }
             }
 
             /* not a plugin that supports this extension */
@@ -479,8 +479,8 @@ input_check_file(const gchar * filename, gboolean show_warning)
             }
         }
 
-	if (ret <= -1)
-	    break;
+        if (ret <= -1)
+            break;
     }
 
     g_free(filename_proxy);
@@ -512,7 +512,6 @@ input_get_song_info(const gchar * filename, gchar ** title, gint * length)
 {
     InputPlugin *ip = NULL;
     BmpTitleInput *input;
-    GList *node;
     gchar *tmp = NULL, *ext;
     gchar *filename_proxy;
 
@@ -524,7 +523,7 @@ input_get_song_info(const gchar * filename, gchar ** title, gint * length)
 
     ip = input_check_file(filename_proxy, FALSE);
 
-    if (ip && node && ip->get_song_info) {
+    if (ip && ip->get_song_info) {
         ip->get_song_info(filename_proxy, &tmp, length);
         *title = str_to_utf8(tmp);
         g_free(tmp);
@@ -562,29 +561,29 @@ input_get_song_tuple(const gchar * filename)
 {
     InputPlugin *ip = NULL;
     TitleInput *input;
-    GList *node;
     gchar *tmp = NULL, *ext;
     gchar *filename_proxy;
 
     if (filename == NULL)
-	return NULL;
+    return NULL;
 
     filename_proxy = g_strdup(filename);
 
     ip = input_check_file(filename_proxy, FALSE);
 
-    if (ip && node && ip->get_song_tuple)
+    if (ip && ip->get_song_tuple)
         input = ip->get_song_tuple(filename_proxy);
-    else {
+    else
+    {
         input = bmp_title_input_new();
 
         tmp = g_strdup(filename);
         if ((ext = strrchr(tmp, '.')))
             *ext = '\0';
 
-	input->track_name = NULL;
-	input->length = -1;
-	input_get_song_info(filename, &input->track_name, &input->length);
+        input->track_name = NULL;
+        input->length = -1;
+        input_get_song_info(filename, &input->track_name, &input->length);
         input->file_name = g_path_get_basename(tmp);
         input->file_ext = ext ? ext + 1 : NULL;
         input->file_path = g_path_get_dirname(tmp);
@@ -670,7 +669,6 @@ input_general_file_info_box(const gchar * filename, InputPlugin * ip)
 void
 input_file_info_box(const gchar * filename)
 {
-    GList *node;
     InputPlugin *ip;
     gchar *filename_proxy;
 

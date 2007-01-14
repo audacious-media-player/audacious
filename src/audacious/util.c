@@ -65,9 +65,6 @@
 #endif
 #endif
 
-static GQuark quark_popup_data;
-
-
 /*
  * find <file> in directory <dirname> or subdirectories.  return
  * pointer to complete filename which has to be freed by calling

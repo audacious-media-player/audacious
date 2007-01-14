@@ -1,3 +1,10 @@
+2007-01-14 10:50:21 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3670]
+  Added myself to the developer list
+  trunk/src/audacious/ui_credits.c |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2007-01-14 01:02:39 +0000  Jonathan Schleifer <js@h3c.de>
   revision [3668]
   Fixed make install.
