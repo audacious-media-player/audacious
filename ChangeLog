@@ -1,3 +1,10 @@
+2007-01-14 01:02:39 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [3668]
+  Fixed make install.
+  trunk/Makefile |    4 +---
+  1 file changed, 1 insertion(+), 3 deletions(-)
+
+
 2007-01-14 00:41:21 +0000  Jonathan Schleifer <js@h3c.de>
   revision [3666]
   - Added script for migration to XDG basedir.

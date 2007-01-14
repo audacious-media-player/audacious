@@ -52,6 +52,7 @@ static const gchar *credit_text[] = {
     "George Averill",
     "Daniel Bradshaw",
     "Adam Cecile",
+    "Michael Färber",
     "Troels Bang Jensen",
     "Giacomo Lozito",
     "William Pitcock",
