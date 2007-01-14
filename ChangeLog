@@ -1,3 +1,10 @@
+2007-01-14 00:07:48 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [3662]
+  Fixed: configdb_rcfile.c:57: warning: suggest parentheses around assignment used as truth value
+  trunk/src/libaudacious/configdb_rcfile.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-01-13 23:04:38 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3660]
   - revert r3646 because it is not a user-friendly method of transitioning.

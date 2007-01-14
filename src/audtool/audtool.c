@@ -17,6 +17,7 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 #include <glib.h>
 #include <locale.h>
 #include "libaudacious/beepctrl.h"
