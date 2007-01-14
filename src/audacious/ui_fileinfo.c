@@ -454,7 +454,6 @@ is_file_image(const gchar *imgfile, const gchar *file_name)
 {
 	char *imgfile_ext, *file_name_ext;
 	size_t imgfile_len, file_name_len;
-	gboolean matches;
 
 	imgfile_ext = strrchr(imgfile, '.');
 	if (!imgfile_ext) {
@@ -494,7 +493,7 @@ fileinfo_recursive_get_image(const gchar* path,
 
 		if (cfg.use_file_cover && file_name) {
 			/* Look for images matching file name */
-			while(f = g_dir_read_name(d)) { 
+			while((f = g_dir_read_name(d))) { 
 				gchar *newpath = g_strconcat(path, "/", f, NULL);
 
 				if (!g_file_test(newpath, G_FILE_TEST_IS_DIR) &&
@@ -510,7 +509,7 @@ fileinfo_recursive_get_image(const gchar* path,
 		}
 		
 		/* Search for files using filter */
-		while (f = g_dir_read_name(d)) {
+		while ((f = g_dir_read_name(d))) {
 			gchar *newpath = g_strconcat(path, "/", f, NULL);
 
 			if (!g_file_test(newpath, G_FILE_TEST_IS_DIR) &&
@@ -531,7 +530,7 @@ fileinfo_recursive_get_image(const gchar* path,
 		}
 
 		/* Descend into directories recursively. */
-		while (f = g_dir_read_name(d)) {
+		while ((f = g_dir_read_name(d))) {
 			gchar *newpath = g_strconcat(path, "/", f, NULL);
 			
 			if(g_file_test(newpath, G_FILE_TEST_IS_DIR)) {

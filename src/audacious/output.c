@@ -29,6 +29,7 @@
 #include "iir.h"
 #include "main.h"
 #include "input.h"
+#include "playback.h"
 
 #include "playlist.h"
 #include "libaudacious/util.h"
@@ -76,8 +77,6 @@ get_current_output_plugin(void)
 void
 set_current_output_plugin(gint i)
 {
-    gint time;
-    gint pos;
     gboolean playing;
     OutputPlugin *op = get_current_output_plugin();
 
@@ -93,7 +92,6 @@ set_current_output_plugin(gint i)
 
     if (playing == TRUE)
     {
-	gint i = 99;
         guint time, pos;
 	PlaylistEntry *entry;
 
@@ -126,8 +124,6 @@ set_current_output_plugin(gint i)
         if (playlist_get_current_length(playlist_get_active()) > -1 &&
             time <= (playlist_get_current_length(playlist_get_active())))
 	{
-	    gint i;
-
             playback_seek(time / 1000);
         }
     }

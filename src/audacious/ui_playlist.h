@@ -49,6 +49,8 @@
 #define PLAYLISTWIN_DEFAULT_FONT        "Sans Bold 8"
 
 gboolean playlistwin_is_shaded(void);
+gint playlistwin_get_width(void);
+gint playlistwin_get_height(void);
 void playlistwin_update_list(Playlist *playlist);
 gboolean playlistwin_item_visible(gint index);
 gint playlistwin_get_toprow(void);

@@ -341,8 +341,6 @@ playlistwin_set_sinfo_font(gchar *font)
 void
 playlistwin_set_sinfo_scroll(gboolean scroll)
 {
-    GtkWidget *item;
-
     if(playlistwin_is_shaded())
         textbox_set_scroll(playlistwin_sinfo, cfg.autoscroll);
     else
@@ -1039,7 +1037,6 @@ playlistwin_press(GtkWidget * widget,
 {
     gboolean grab = TRUE;
     gint xpos, ypos;
-    GtkWidget *_menu;
     GtkRequisition req;
 
     gtk_window_get_position(GTK_WINDOW(playlistwin), &xpos, &ypos);
@@ -1552,7 +1549,6 @@ local_playlist_next(void)
 static void
 playlistwin_create_widgets(void)
 {
-    gchar *font = NULL, *tmp = NULL;
     /* This function creates the custom widgets used by the playlist editor */
 
     /* text box for displaying song title in shaded mode */
@@ -1772,7 +1768,6 @@ playlistwin_create_window(void)
 void
 playlistwin_create(void)
 {
-    Playlist *playlist;
     playlistwin_create_window();
 
     /* create GC and back pixmap for custom widget to draw on */

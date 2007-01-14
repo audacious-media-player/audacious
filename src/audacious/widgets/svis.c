@@ -29,6 +29,7 @@
 #include "ui_main.h"
 #include "plugin.h"
 #include "widget.h"
+#include "playback.h"
 #include "vis.h"
 
 static gint svis_redraw_delays[] = { 1, 2, 4, 8 };

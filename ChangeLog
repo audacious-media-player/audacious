@@ -1,3 +1,10 @@
+2007-01-14 00:09:38 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [3664]
+  Fixed: audtool.c:883: warning: implicit declaration of function 'strncmp'
+  trunk/src/audtool/audtool.c |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2007-01-14 00:07:48 +0000  Jonathan Schleifer <js@h3c.de>
   revision [3662]
   Fixed: configdb_rcfile.c:57: warning: suggest parentheses around assignment used as truth value

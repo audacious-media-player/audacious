@@ -28,6 +28,7 @@
 #include "main.h"
 #include "skin.h"
 #include "widget.h"
+#include "playback.h"
 
 static const gfloat vis_afalloff_speeds[] = { 0.34, 0.5, 1.0, 1.3, 1.6 };
 static const gfloat vis_pfalloff_speeds[] = { 1.2, 1.3, 1.4, 1.5, 1.6 };
@@ -45,7 +46,7 @@ vis_timeout_func(Vis * vis, guchar * data)
     static GTimer *timer = NULL;
     gulong micros = 9999999;
     gboolean falloff = FALSE;
-    gint i, n;
+    gint i;
 
     if (!timer) {
         timer = g_timer_new();

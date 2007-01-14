@@ -1590,7 +1590,6 @@ mainwin_jump_to_file_keypress_cb(GtkWidget * object,
 static gboolean
 mainwin_jump_to_file_match(const gchar * song, GSList *regex_list)
 {
-    gint i = 0;
     gboolean rv = TRUE;
 
     if ( song == NULL )
@@ -1618,7 +1617,6 @@ mainwin_update_jtf(GtkWidget * widget, gpointer user_data)
     guint row;
     GList *playlist_glist;
     gchar *desc_buf = NULL;
-    gchar *row_str;
     GtkTreeIter iter;
     GtkTreeSelection *selection;
     Playlist *playlist;
@@ -2737,7 +2735,6 @@ static void
 mainwin_mr_release(MenuRowItem i)
 {
     GdkModifierType modmask;
-    GtkWidget *widget;
     gint x, y;
 
     switch (i) {

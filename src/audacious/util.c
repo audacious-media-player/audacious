@@ -277,7 +277,9 @@ archive_decompress(const gchar * filename)
 {
     gchar *tmpdir, *cmd, *escaped_filename;
     ArchiveType type;
+#ifndef HAVE_MKDTEMP
     mode_t mode755 = S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
+#endif
 
     if ((type = archive_get_type(filename)) <= ARCHIVE_DIR)
         return NULL;

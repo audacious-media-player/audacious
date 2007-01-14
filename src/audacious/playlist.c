@@ -96,7 +96,7 @@ static GList *playlists_iter;
 
 G_LOCK_DEFINE(playlist_get_info_going);
 
-static gchar *playlist_current_name = NULL;
+//static gchar *playlist_current_name = NULL;
 
 static gboolean playlist_get_info_scan_active = FALSE;
 static gboolean playlist_get_info_going = FALSE;
@@ -2260,7 +2260,6 @@ playlist_fileinfo(Playlist *playlist, guint pos)
     GList *node;
     PlaylistEntry *entry = NULL;
     TitleInput *tuple = NULL;
-    gint mtime;
 
     PLAYLIST_LOCK(playlist->mutex);
 

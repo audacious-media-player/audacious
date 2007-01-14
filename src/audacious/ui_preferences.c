@@ -57,6 +57,7 @@
 #include "ui_playlist.h"
 #include "ui_skinselector.h"
 #include "ui_preferences.h"
+#include "ui_equalizer.h"
 
 #include "build_stamp.h"
 
@@ -2078,8 +2079,8 @@ on_colorize_button_clicked(GtkButton *button, gpointer data)
 static void
 on_red_scale_value_changed(GtkHScale *scale, gpointer data)
 {
-	GladeXML *xml = prefswin_get_xml();
-	GtkWidget *widget;
+	//GladeXML *xml = prefswin_get_xml();
+	//GtkWidget *widget;
 	gint value;
 
 	value = gtk_range_get_value(GTK_RANGE(scale));
@@ -2099,8 +2100,8 @@ on_red_scale_value_changed(GtkHScale *scale, gpointer data)
 static void
 on_green_scale_value_changed(GtkHScale *scale, gpointer data)
 {
-	GladeXML *xml = prefswin_get_xml();
-	GtkWidget *widget;
+	//GladeXML *xml = prefswin_get_xml();
+	//GtkWidget *widget;
 	gint value;
 
 	value = gtk_range_get_value(GTK_RANGE(scale));
@@ -2120,8 +2121,8 @@ on_green_scale_value_changed(GtkHScale *scale, gpointer data)
 static void
 on_blue_scale_value_changed(GtkHScale *scale, gpointer data)
 {
-	GladeXML *xml = prefswin_get_xml();
-	GtkWidget *widget;
+	//GladeXML *xml = prefswin_get_xml();
+	//GtkWidget *widget;
 	gint value;
 
 	value = gtk_range_get_value(GTK_RANGE(scale));
