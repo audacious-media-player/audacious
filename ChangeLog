@@ -1,3 +1,13 @@
+2007-01-15 16:44:39 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3680]
+  - g_strsplit() wraps strsplit(3), and thus has different results on 
+    different systems (strsplit nul-terminates on uclibc). process URIs
+    in a different way, as a result.
+  
+  trunk/src/audacious/vfs.c |   36 +++++++-----------------------------
+  1 file changed, 7 insertions(+), 29 deletions(-)
+
+
 2007-01-15 16:08:40 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3678]
   - only evaluate -DHAVE_CONFIG_H if we're in audacious core. closes #760.
