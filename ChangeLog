@@ -1,3 +1,11 @@
+2007-01-15 02:58:03 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3676]
+  - gettext requires mkinstalldirs
+  
+  trunk/mkinstalldirs |  111 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+  1 file changed, 111 insertions(+)
+
+
 2007-01-15 02:53:45 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3674]
   - warning cleanups

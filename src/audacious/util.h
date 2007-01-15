@@ -24,8 +24,10 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#ifdef HAVE_CONFIG_H
+#ifdef _AUDACIOUS_CORE
+# ifdef HAVE_CONFIG_H
 #  include "config.h"
+# endif
 #endif
 
 #include <glib.h>
