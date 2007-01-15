@@ -26,6 +26,8 @@
 
 static GList *vfs_transports = NULL;
 
+#define VFS_DEBUG
+
 #ifdef VFS_DEBUG
 # define DBG(x, args...) g_print(x, ## args);
 #else
@@ -62,7 +64,6 @@ vfs_fopen(const gchar * path,
           const gchar * mode)
 {
     VFSFile *file;
-    gchar **vec;
     VFSConstructor *vtable = NULL;
     GList *node;
     gchar *decpath;
@@ -72,49 +73,26 @@ vfs_fopen(const gchar * path,
 
     decpath = xmms_urldecode_plain(path);
 
-    vec = g_strsplit(decpath, "://", 2);
-
-    /* special case: no transport specified, look for the "/" transport */
-    if (vec[1] == NULL)
+    for (node = vfs_transports; node != NULL; node = g_list_next(node))
     {
-        for (node = vfs_transports; node != NULL; node = g_list_next(node))
-        {
-            vtable = (VFSConstructor *) node->data;
+        vtable = (VFSConstructor *) node->data;
 
-            if (*vtable->uri_id == '/')
-                break;
-        }
-    }
-    else
-    {
-        for (node = vfs_transports; node != NULL; node = g_list_next(node))
-        {
-            vtable = (VFSConstructor *) node->data;
-
-            if (!g_strcasecmp(vec[0], vtable->uri_id))
-                break;
-        }
+        if (!strncasecmp(decpath, vtable->uri_id, strlen(vtable->uri_id)))
+            break;
     }
 
     /* no transport vtable has been registered, bail. */
     if (vtable == NULL)
-    {
-        g_strfreev(vec);
         return NULL;
-    }
 
-    file = vtable->vfs_fopen_impl(vec[1] ? vec[1] : vec[0], mode);
+    file = vtable->vfs_fopen_impl(decpath + strlen(vtable->uri_id), mode);
 
     if (file == NULL)
-    {
-        g_strfreev(vec);
         return NULL;
-    }
 
     file->uri = g_strdup(path);
     file->base = vtable;
 
-    g_strfreev(vec);
     g_free(decpath);
 
     return file;
