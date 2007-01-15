@@ -1,3 +1,12 @@
+2007-01-14 18:54:06 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3672]
+  Wiped out some error messages
+  trunk/src/audacious/input.c        |   36 +++++++++++++++++-------------------
+  trunk/src/audacious/ui_equalizer.c |   14 --------------
+  trunk/src/audacious/util.c         |    3 ---
+  3 files changed, 17 insertions(+), 36 deletions(-)
+
+
 2007-01-14 10:50:21 +0000  Michael Farber <01mf02@gmail.com>
   revision [3670]
   Added myself to the developer list

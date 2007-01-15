@@ -66,9 +66,6 @@
 #endif
 #endif
 
-static GQuark quark_popup_data;
-
-
 /*
  * escape_shell_chars()
  *

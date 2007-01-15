@@ -206,7 +206,6 @@ vfs_buffer_new(gpointer data, gsize size)
     g_return_val_if_fail(size > 0, NULL);
 
     handle = g_new0(VFSFile, 1);
-    handle->uri == NULL;
 
     buffer = g_new0(VFSBuffer, 1);
     buffer->data = data;

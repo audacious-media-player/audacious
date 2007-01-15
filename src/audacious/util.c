@@ -1431,8 +1431,8 @@ GdkImage *create_dblsize_image(GdkImage * img)
     if (dblimg->bpp == 1) {
 	register guint8 *srcptr, *ptr, *ptr2, pix;
 
-	srcptr = GDK_IMAGE_XIMAGE(img)->data;
-	ptr = GDK_IMAGE_XIMAGE(dblimg)->data;
+	srcptr = GDK_IMAGE(img)->mem;
+	ptr = GDK_IMAGE(dblimg)->mem;
 	ptr2 = ptr + dblimg->bpl;
 
 	for (y = 0; y < img->height; y++) {
@@ -1471,8 +1471,8 @@ GdkImage *create_dblsize_image(GdkImage * img)
     if (dblimg->bpp == 3) {
 	register guint8 *srcptr, *ptr, *ptr2, pix1, pix2, pix3;
 
-	srcptr = GDK_IMAGE_XIMAGE(img)->data;
-	ptr = GDK_IMAGE_XIMAGE(dblimg)->data;
+	srcptr = GDK_IMAGE(img)->mem;
+	ptr = GDK_IMAGE(dblimg)->mem;
 	ptr2 = ptr + dblimg->bpl;
 
 	for (y = 0; y < img->height; y++) {
@@ -1502,8 +1502,8 @@ GdkImage *create_dblsize_image(GdkImage * img)
     if (dblimg->bpp == 4) {
 	register guint32 *srcptr, *ptr, *ptr2, pix;
 
-	srcptr = (guint32 *) GDK_IMAGE_XIMAGE(img)->data;
-	ptr = (guint32 *) GDK_IMAGE_XIMAGE(dblimg)->data;
+	srcptr = (guint32 *) GDK_IMAGE(img)->mem;
+	ptr = (guint32 *) GDK_IMAGE(dblimg)->mem;
 	ptr2 = ptr + (dblimg->bpl >> 2);
 
 	for (y = 0; y < img->height; y++) {
