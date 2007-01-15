@@ -141,6 +141,8 @@ gchar *xmms_urldecode_path(const gchar * encoded_path);
 
 GdkPixbuf *audacious_create_colorized_pixbuf(GdkPixbuf *src, gint red, gint green, gint blue);
 
+gchar *audacious_get_localdir(void);
+
 G_END_DECLS
 
 #endif

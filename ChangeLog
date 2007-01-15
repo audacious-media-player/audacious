@@ -1,3 +1,10 @@
+2007-01-15 17:48:56 +0000  Giacomo Lozito <james@develia.org>
+  revision [3688]
+  - removed a couple of useless gdk calls in mainwin_real_hide()
+  trunk/src/audacious/ui_main.c |    4 ----
+  1 file changed, 4 deletions(-)
+
+
 2007-01-15 17:18:27 +0000  Giacomo Lozito <james@develia.org>
   revision [3686]
   - in playlistwin_hide(), pass focus to the player main window only if it's visible

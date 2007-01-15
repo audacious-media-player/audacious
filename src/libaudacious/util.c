@@ -24,6 +24,7 @@
 #  include "config.h"
 #endif
 
+#include <stdlib.h>
 #include <glib.h>
 #include <gtk/gtk.h>
 
@@ -91,6 +92,30 @@ xmms_show_message(const gchar * title, const gchar * text,
 
   return dialog;
 }
+
+
+/**
+ * audacious_get_localdir:
+ *
+ * Returns a string with the full path of Audacious local datadir (where config files are placed).
+ * It's useful in order to put in the right place custom config files for audacious plugins.
+ *
+ * Return value: a string with full path of Audacious local datadir (should be freed after use)
+ **/
+gchar*
+audacious_get_localdir(void)
+{
+  gchar *datadir;
+  gchar *tmp;
+
+  if ( (tmp = getenv("XDG_CONFIG_HOME")) == NULL )
+    datadir = g_build_filename( g_get_home_dir() , ".config" , "audacious" ,  NULL );
+  else
+    datadir = g_build_filename( tmp , "audacious" , NULL );
+
+  return datadir;
+}
+
 
 /**
  * xmms_check_realtime_priority:
