@@ -2515,10 +2515,6 @@ mainwin_real_hide(void)
         gdk_draw_rectangle(nullmask, gc, TRUE, 0, 0, 20, 20);
         g_object_unref(gc);
         gtk_widget_shape_combine_mask(mainwin, nullmask, 0, 0);
-
-        gdk_window_set_hints(mainwin->window, 0, 0, 0, 0, 0, 0,
-                             GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE);
-        gdk_window_resize(mainwin->window, 0, 0);
     }
 
     gtk_widget_hide(mainwin);

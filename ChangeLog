@@ -1,3 +1,10 @@
+2007-01-15 17:18:27 +0000  Giacomo Lozito <james@develia.org>
+  revision [3686]
+  - in playlistwin_hide(), pass focus to the player main window only if it's visible
+  trunk/src/audacious/ui_playlist.c |    7 +++++--
+  1 file changed, 5 insertions(+), 2 deletions(-)
+
+
 2007-01-15 16:51:37 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3684]
   - special case for no uri schema
