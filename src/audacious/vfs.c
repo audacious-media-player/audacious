@@ -79,6 +79,8 @@ vfs_fopen(const gchar * path,
     {
         vtable = (VFSConstructor *) node->data;
 
+        DBG("Does %s match %s?\n", decpath, vtable->uri_id);
+
         if (!strncasecmp(decpath, vtable->uri_id, strlen(vtable->uri_id)))
             break;
     }
@@ -87,7 +89,10 @@ vfs_fopen(const gchar * path,
     if (vtable == NULL)
         return NULL;
 
-    file = vtable->vfs_fopen_impl(decpath + strlen(vtable->uri_id), mode);
+    if (strlen(vtable->uri_id) > 1)
+        file = vtable->vfs_fopen_impl(decpath + strlen(vtable->uri_id), mode);
+    else
+        file = vtable->vfs_fopen_impl(decpath, mode);
 
     if (file == NULL)
         return NULL;

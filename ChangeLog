@@ -1,3 +1,11 @@
+2007-01-15 16:48:46 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3682]
+  - warning fixes
+  
+  trunk/src/audacious/vfs.c |    2 ++
+  1 file changed, 2 insertions(+)
+
+
 2007-01-15 16:44:39 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3680]
   - g_strsplit() wraps strsplit(3), and thus has different results on 
