@@ -1811,8 +1811,11 @@ playlistwin_hide(void)
     tbutton_set_toggled(mainwin_pl, FALSE);
     cfg.playlist_visible = FALSE;
 
-    gtk_window_present(GTK_WINDOW(mainwin));
-    gtk_widget_grab_focus(mainwin);
+    if ( cfg.player_visible )
+    {
+      gtk_window_present(GTK_WINDOW(mainwin));
+      gtk_widget_grab_focus(mainwin);
+    }
 }
 
 void action_playlist_track_info(void)
