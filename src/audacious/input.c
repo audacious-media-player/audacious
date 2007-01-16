@@ -423,9 +423,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
 
     ext = strrchr(filename_proxy, '.') + 1;
 
-    use_ext_filter = (fd != NULL &&
-    (!g_strcasecmp(fd->base->uri_id, "/") || 
-    !g_strcasecmp(fd->base->uri_id, "file"))) ? TRUE : FALSE;
+    use_ext_filter = (fd != NULL && (!g_strncasecmp(filename, "/", 1) || !g_strncasecmp(filename, "file://", 7))) ? TRUE : FALSE;
 
     for (node = get_input_list(); node != NULL; node = g_list_next(node))
     {
