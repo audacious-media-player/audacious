@@ -434,7 +434,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
         if (!ip || !input_is_enabled(ip->filename))
             continue;
 
-        vfs_fseek(fd, 0, SEEK_SET);
+        vfs_rewind(fd);
 
         if (cfg.use_extension_probing == TRUE && ip->vfs_extensions != NULL
         && ext != NULL && ext != (gpointer) 0x1 && use_ext_filter == TRUE)

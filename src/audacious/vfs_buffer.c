@@ -61,7 +61,7 @@ buffer_vfs_fread_impl(gpointer i_ptr,
        read++;
     }
 
-    return (read / nmemb);
+    return (read / size);
 }
 
 size_t
@@ -86,7 +86,7 @@ buffer_vfs_fwrite_impl(gconstpointer i_ptr,
        written++;
     }
 
-    return (written / nmemb);
+    return (written / size);
 }
 
 gint
