@@ -2467,11 +2467,11 @@ mainwin_real_show(void)
 
     gtk_widget_show_all(mainwin);
 
-    if (!nullmask)
-        return;
-
-    g_object_unref(nullmask);
-    nullmask = NULL;
+    if (nullmask)
+    {
+      g_object_unref(nullmask);
+      nullmask = NULL;
+    }
 
     gdk_window_set_hints(mainwin->window, 0, 0,
                          !bmp_active_skin->properties.mainwin_width ? PLAYER_WIDTH :
