@@ -1,3 +1,11 @@
+2007-01-16 03:28:19 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3696]
+  - compare against the uri, not the VFSConstructor class the fd comes from
+  
+  trunk/src/audacious/input.c |    4 +---
+  1 file changed, 1 insertion(+), 3 deletions(-)
+
+
 2007-01-16 03:24:54 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3694]
   - use vfs_rewind() instead of vfs_fseek(fd, 0, seek_set) which was wrong

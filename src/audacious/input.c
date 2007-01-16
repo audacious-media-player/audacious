@@ -419,7 +419,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
     gboolean use_ext_filter;
 
     filename_proxy = g_strdup(filename);
-    fd = vfs_fopen(filename, "rb");
+    fd = vfs_buffered_file_new_from_uri(filename_proxy);
 
     ext = strrchr(filename_proxy, '.') + 1;
 
