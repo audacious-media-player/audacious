@@ -44,6 +44,10 @@
 
 #include "libaudacious/util.h"
 
+#include "vfs.h"
+#include "vfs_buffer.h"
+#include "vfs_buffered_file.h"
+
 G_LOCK_DEFINE_STATIC(vis_mutex);
 
 struct _VisNode {

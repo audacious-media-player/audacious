@@ -1,3 +1,15 @@
+2007-01-16 12:41:05 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3702]
+  removed xmms_create_dirbrowser, small config db fixes
+  trunk/src/libaudacious++/configdb.cxx    |    9 
+  trunk/src/libaudacious/Makefile          |    3 
+  trunk/src/libaudacious/configdb.h        |    2 
+  trunk/src/libaudacious/configdb_rcfile.c |    2 
+  trunk/src/libaudacious/dirbrowser.c      |  413 -------------------------------
+  trunk/src/libaudacious/dirbrowser.h      |   35 --
+  6 files changed, 4 insertions(+), 460 deletions(-)
+
+
 2007-01-16 12:18:58 +0000  Giacomo Lozito <james@develia.org>
   revision [3700]
   - in mainwin_real_show, do not return if a nullmask doesn't exist
