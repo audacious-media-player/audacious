@@ -45,6 +45,7 @@ SOURCES = \
 	build_stamp.c \
 	vfs.c \
 	vfs_buffer.c \
+	vfs_buffered_file.c \
 	vfs_common.c \
 	genevent.c \
 	util.c \

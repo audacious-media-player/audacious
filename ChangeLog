@@ -1,3 +1,11 @@
+2007-01-15 20:39:22 +0000  Giacomo Lozito <james@develia.org>
+  revision [3690]
+  - added audacious_get_localdir() in util.c/h, returns a string with the full path of audacious local datadir
+  trunk/src/audacious/util.h    |    2 ++
+  trunk/src/libaudacious/util.c |   25 +++++++++++++++++++++++++
+  2 files changed, 27 insertions(+)
+
+
 2007-01-15 17:48:56 +0000  Giacomo Lozito <james@develia.org>
   revision [3688]
   - removed a couple of useless gdk calls in mainwin_real_hide()
