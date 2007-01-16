@@ -1,3 +1,10 @@
+2007-01-16 18:35:30 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [3708]
+  Replaced intricate part.
+  trunk/migrate_config.sh |    8 ++++----
+  1 file changed, 4 insertions(+), 4 deletions(-)
+
+
 2007-01-16 18:33:13 +0000  Giacomo Lozito <james@develia.org>
   revision [3706]
   - made a public API for fileinfopopup (popup that displays metadata, the same used in playlist); now plugins can include ui_fileinfopopup.h to display metadata popups (i.e. statusicon and libnotify plugins)

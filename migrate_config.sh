@@ -20,9 +20,9 @@ mkdir -p "$XDG_CACHE_HOME/audacious/thumbs"
 
 mv "$HOME/$BMP_RCPATH/config" "$XDG_CONFIG_HOME/audacious/"
 mv "$HOME/$BMP_RCPATH/playlist.xspf" "$XDG_CONFIG_HOME/audacious/"
-mv "$HOME/$BMP_RCPATH/Plugins" "$XDG_CONFIG_HOME/"
-mv "$HOME/$BMP_RCPATH/Skins" "$XDG_DATA_HOME/"
-mv "$HOME/$BMP_RCPATH/accels" "$XDG_CONFIG_HOME/"
-mv "$HOME/$BMP_RCPATH/log" "$XDG_CONFIG_HOME/"
+mv "$HOME/$BMP_RCPATH/Plugins" "$XDG_CONFIG_HOME/audacious/"
+mv "$HOME/$BMP_RCPATH/Skins" "$XDG_DATA_HOME/audacious/"
+mv "$HOME/$BMP_RCPATH/accels" "$XDG_CONFIG_HOME/audacious/"
+mv "$HOME/$BMP_RCPATH/log" "$XDG_CONFIG_HOME/audacious/"
 
 echo "Conversion done. Please move the remaining files manually."
