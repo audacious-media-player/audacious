@@ -36,6 +36,7 @@ HEADERS = \
 	playlist.h \
 	playlist_container.h \
 	plugin.h \
+	ui_fileinfopopup.h \
 	ui_preferences.h \
 	util.h \
 	vfs.h \
@@ -67,6 +68,7 @@ SOURCES = \
 	ui_skinselector.c \
 	ui_preferences.c \
 	ui_fileinfo.c \
+	ui_fileinfopopup.c \
 	ui_playlist.c \
 	ui_manager.c \
 	ui_equalizer.c \

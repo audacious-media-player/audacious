@@ -27,73 +27,30 @@
 #include <gtk/gtk.h>
 #include <glade/glade.h>
 #include <string.h>
-#include <stddef.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <dirent.h>
-#include <unistd.h>
-#include <errno.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 
 #include "glade.h"
-
-#include "plugin.h"
-#include "pluginenum.h"
-#include "input.h"
-#include "effect.h"
-#include "general.h"
-#include "output.h"
-#include "visualization.h"
-
-#include "main.h"
-#include "libaudacious/urldecode.h"
-#include "util.h"
-#include "dnd.h"
 #include "titlestring.h"
-
-#include "libaudacious/configdb.h"
-
-#include "playlist.h"
-
+#include "ui_fileinfopopup.h"
+#include "main.h"
 #include "ui_main.h"
-#include "ui_playlist.h"
-#include "build_stamp.h"
-#include "ui_fileinfo.h"
-#include "ui_playlist.h"
 
-GtkWidget *fileinfo_win;
 
 static void
-fileinfo_entry_set_text(const char *entry, const char *text)
+filepopup_entry_set_text(GtkWidget *filepopup_win, const char *entry, const char *text)
 {
-	GladeXML *xml = g_object_get_data(G_OBJECT(fileinfo_win), "glade-xml");
+	GladeXML *xml = g_object_get_data(G_OBJECT(filepopup_win), "glade-xml");
 	GtkWidget *widget = glade_xml_get_widget(xml, entry);
 
 	if (xml == NULL || widget == NULL)
 		return;
 
-	gtk_entry_set_text(GTK_ENTRY(widget), text);
+	gtk_label_set_text(GTK_LABEL(widget), text);
 }
 
 static void
-fileinfo_entry_set_text_free(const char *entry, char *text)
+filepopup_entry_set_image(GtkWidget *filepopup_win, const char *entry, const char *text)
 {
-	GladeXML *xml = g_object_get_data(G_OBJECT(fileinfo_win), "glade-xml");
-	GtkWidget *widget = glade_xml_get_widget(xml, entry);
-
-	if (xml == NULL || widget == NULL)
-		return;
-
-	gtk_entry_set_text(GTK_ENTRY(widget), text);
-
-	g_free(text);
-}
-
-static void
-fileinfo_entry_set_image(const char *entry, const char *text)
-{
-	GladeXML *xml = g_object_get_data(G_OBJECT(fileinfo_win), "glade-xml");
+	GladeXML *xml = g_object_get_data(G_OBJECT(filepopup_win), "glade-xml");
 	GtkWidget *widget = glade_xml_get_widget(xml, entry);
 	GdkPixbuf *pixbuf;
 	int width, height;
@@ -132,88 +89,18 @@ fileinfo_entry_set_image(const char *entry, const char *text)
 	g_object_unref(G_OBJECT(pixbuf));
 }
 
-void fileinfo_hide(gpointer unused)
+static void
+filepopup_entry_set_text_free(GtkWidget *filepopup_win, const char *entry, char *text)
 {
-	gtk_widget_hide(fileinfo_win);
+	GladeXML *xml = g_object_get_data(G_OBJECT(filepopup_win), "glade-xml");
+	GtkWidget *widget = glade_xml_get_widget(xml, entry);
 
-	/* Clear it out. */
-	fileinfo_entry_set_text("entry_title", "");
-	fileinfo_entry_set_text("entry_artist", "");
-	fileinfo_entry_set_text("entry_album", "");
-	fileinfo_entry_set_text("entry_comment", "");
-	fileinfo_entry_set_text("entry_genre", "");
-	fileinfo_entry_set_text("entry_year", "");
-	fileinfo_entry_set_text("entry_track", "");
-	fileinfo_entry_set_text("entry_location", "");
-
-	fileinfo_entry_set_image("image_artwork", DATA_DIR "/images/audio.png");
-}
-
-void
-create_fileinfo_window(void)
-{
-	const gchar *glade_file = DATA_DIR "/glade/fileinfo.glade";
-	GladeXML *xml;
-	GtkWidget *widget;
-
-	xml = glade_xml_new_or_die(_("Track Information Window"), glade_file, NULL, NULL);
-
-	glade_xml_signal_autoconnect(xml);
-
-	fileinfo_win = glade_xml_get_widget(xml, "fileinfo_win");
-	g_object_set_data(G_OBJECT(fileinfo_win), "glade-xml", xml);
-	gtk_window_set_transient_for(GTK_WINDOW(fileinfo_win), GTK_WINDOW(mainwin));
-
-	widget = glade_xml_get_widget(xml, "image_artwork");
-	gtk_image_set_from_file(GTK_IMAGE(widget), DATA_DIR "/images/audio.png");
-
-	widget = glade_xml_get_widget(xml, "btn_close");
-	g_signal_connect(G_OBJECT(widget), "clicked", (GCallback) fileinfo_hide, NULL);
-}
-
-void
-fileinfo_show_for_tuple(TitleInput *tuple)
-{
-	gchar *tmp = NULL;
-
-	if (tuple == NULL)
+	if (xml == NULL || widget == NULL)
 		return;
 
-	gtk_widget_realize(fileinfo_win);
+	gtk_label_set_text(GTK_LABEL(widget), text);
 
-	if (tuple->track_name)
-		fileinfo_entry_set_text("entry_title", tuple->track_name);
-	if (tuple->performer)
-		fileinfo_entry_set_text("entry_artist", tuple->performer);
-	if (tuple->album_name)
-		fileinfo_entry_set_text("entry_album", tuple->album_name);
-	if (tuple->comment)
-		fileinfo_entry_set_text("entry_comment", tuple->comment);
-	if (tuple->genre)
-		fileinfo_entry_set_text("entry_genre", tuple->genre);
-
-	tmp = g_strdup_printf("%s/%s", tuple->file_path, tuple->file_name);
-	if(tmp){
-		fileinfo_entry_set_text_free("entry_location", str_to_utf8(tmp));
-		g_free(tmp);
-		tmp = NULL;
-	}
-
-	if (tuple->year != 0)
-		fileinfo_entry_set_text_free("entry_year", g_strdup_printf("%d", tuple->year));
-
-	if (tuple->track_number != 0)
-		fileinfo_entry_set_text_free("entry_track", g_strdup_printf("%d", tuple->track_number));
-
-	tmp = fileinfo_recursive_get_image(tuple->file_path, tuple->file_name, 0);
-	
-	if(tmp)
-	{
-		fileinfo_entry_set_image("image_artwork", tmp);
-		g_free(tmp);
-	}
-	
-	gtk_widget_show(fileinfo_win);
+	g_free(text);
 }
 
 static gboolean
@@ -301,7 +188,7 @@ is_file_image(const gchar *imgfile, const gchar *file_name)
 	}
 }
 
-gchar*
+static gchar*
 fileinfo_recursive_get_image(const gchar* path,
 	const gchar* file_name, gint depth)
 {
@@ -376,16 +263,113 @@ fileinfo_recursive_get_image(const gchar* path,
 	return NULL;
 }
 
-void
-fileinfo_show_for_path(gchar *path)
+
+
+GtkWidget *
+audacious_fileinfopopup_create(void)
 {
-	TitleInput *tuple = input_get_song_tuple(path);
+	const gchar *glade_file = DATA_DIR "/glade/fileinfo_popup.glade";
+	GladeXML *xml;
+	GtkWidget *widget;
+	GtkWidget *filepopup_win;
+
+	xml = glade_xml_new_or_die(_("Track Information Popup"), glade_file, NULL, NULL);
+
+	glade_xml_signal_autoconnect(xml);
+
+	filepopup_win = glade_xml_get_widget(xml, "win_pl_popup");
+	g_object_set_data(G_OBJECT(filepopup_win), "glade-xml", xml);
+	gtk_window_set_transient_for(GTK_WINDOW(filepopup_win), GTK_WINDOW(mainwin));
+
+	widget = glade_xml_get_widget(xml, "image_artwork");
+	gtk_image_set_from_file(GTK_IMAGE(widget), DATA_DIR "/images/audio.png");
+	g_object_set_data( G_OBJECT(filepopup_win) , "last_artwork" , NULL );
+
+	return filepopup_win;
+}
+
+void
+audacious_fileinfopopup_destroy(GtkWidget *filepopup_win)
+{
+	gchar *last_artwork = g_object_get_data( G_OBJECT(filepopup_win) , "last_artwork" );
+	if ( last_artwork != NULL ) g_free(last_artwork);
+	g_object_unref( g_object_get_data(G_OBJECT(filepopup_win), "glade-xml") );
+	gtk_widget_destroy( filepopup_win );
+	return;
+}
+
+void
+audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win, TitleInput *tuple)
+{
+	gchar *tmp = NULL;
+	gint x, y, x_off = 3, y_off = 3, h, w;
+
+	gchar *last_artwork = g_object_get_data( G_OBJECT(filepopup_win) , "last_artwork" );
+	const static char default_artwork[] = DATA_DIR "/images/audio.png";
 
 	if (tuple == NULL)
-		return input_file_info_box(path);
+		return;
 
-	fileinfo_show_for_tuple(tuple);
+	gtk_widget_realize(filepopup_win);
 
-	bmp_title_input_free(tuple);
-	tuple = NULL;
+	filepopup_entry_set_text(filepopup_win, "label_title", tuple->track_name);
+	filepopup_entry_set_text(filepopup_win, "label_artist", tuple->performer);
+	filepopup_entry_set_text(filepopup_win, "label_album", tuple->album_name);
+	filepopup_entry_set_text(filepopup_win, "label_genre", tuple->genre);
+
+	if (tuple->length != -1)
+		filepopup_entry_set_text_free(filepopup_win, "label_length", g_strdup_printf("%d:%02d", tuple->length / 60000, (tuple->length / 1000) % 60));
+
+	if (tuple->year != 0)
+		filepopup_entry_set_text_free(filepopup_win, "label_year", g_strdup_printf("%d", tuple->year));
+
+	if (tuple->track_number != 0)
+		filepopup_entry_set_text_free(filepopup_win, "label_track", g_strdup_printf("%d", tuple->track_number));
+
+	tmp = fileinfo_recursive_get_image(tuple->file_path, tuple->file_name, 0);
+	if (tmp) { // picture found
+		if (!last_artwork || strcmp(last_artwork, tmp)) { // new picture
+			filepopup_entry_set_image(filepopup_win, "image_artwork", tmp);
+			if (last_artwork) g_free(last_artwork);
+			last_artwork = tmp;
+			g_object_set_data( G_OBJECT(filepopup_win) , "last_artwork" , last_artwork );
+		}
+		else { // same picture
+		}
+	}
+	else { // no picture found
+		if (!last_artwork || strcmp(last_artwork, default_artwork)) {
+			filepopup_entry_set_image(filepopup_win, "image_artwork", default_artwork);
+			if (last_artwork) g_free(last_artwork);
+			last_artwork = g_strdup(default_artwork);
+			g_object_set_data( G_OBJECT(filepopup_win) , "last_artwork" , last_artwork );
+		}
+		else {
+		}
+	}
+
+	gdk_window_get_pointer(NULL, &x, &y, NULL);
+	gtk_window_get_size(GTK_WINDOW(filepopup_win), &w, &h);
+	if (gdk_screen_width()-(w+3) < x) x_off = (w*-1)-3;
+	if (gdk_screen_height()-(h+3) < y) y_off = (h*-1)-3;
+	gtk_window_move(GTK_WINDOW(filepopup_win), x + x_off, y + y_off);
+
+	gtk_widget_show(filepopup_win);
+}
+
+
+void
+audacious_fileinfopopup_hide(GtkWidget *filepopup_win, gpointer unused)
+{
+	gtk_widget_hide(filepopup_win);
+
+	filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_title", "");
+	filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_artist", "");
+	filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_album", "");
+	filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_genre", "");
+	filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_track", "");
+	filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_year", "");
+	filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_length", "");
+
+	gtk_window_resize(GTK_WINDOW(filepopup_win), 1, 1);
 }

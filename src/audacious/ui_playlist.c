@@ -45,6 +45,7 @@
 #include "main.h"
 #include "ui_main.h"
 #include "ui_manager.h"
+#include "ui_fileinfopopup.h"
 #include "actions-playlist.h"
 #include "playback.h"
 #include "playlist.h"
@@ -68,6 +69,9 @@ static GdkGC *playlistwin_gc;
 
 static gboolean playlistwin_hint_flag = FALSE;
 
+static GtkWidget *playlistwin_infopopup = NULL;
+static gint playlistwin_infopopup_sid = 0;
+
 static PlaylistSlider *playlistwin_slider = NULL;
 static TextBox *playlistwin_time_min, *playlistwin_time_sec;
 static TextBox *playlistwin_info, *playlistwin_sinfo;
@@ -84,6 +88,8 @@ static gboolean playlistwin_select_search_kp_cb( GtkWidget *entry , GdkEventKey 
                                                  gpointer searchdlg_win );
 
 static void playlistwin_draw_frame(void);
+
+static gboolean playlistwin_fileinfopopup_probe(gpointer * filepopup_win);
 
 
 gboolean
@@ -1780,6 +1786,8 @@ playlistwin_create(void)
     playlistwin_create_widgets();
     playlistwin_update_info(playlist_get_active());
 
+    playlistwin_infopopup = audacious_fileinfopopup_create();
+
     gtk_window_add_accel_group(GTK_WINDOW(playlistwin), ui_manager_get_accel_group());
 }
 
@@ -1797,6 +1805,9 @@ playlistwin_show(void)
     playlistwin_set_toprow(0);
     playlist_check_pos_current(playlist_get_active());
 
+    playlistwin_infopopup_sid = g_timeout_add(
+      50 , (GSourceFunc)playlistwin_fileinfopopup_probe , playlistwin_infopopup );
+
     gtk_widget_show(playlistwin);
 }
 
@@ -1810,6 +1821,10 @@ playlistwin_hide(void)
     gtk_widget_hide(playlistwin);
     tbutton_set_toggled(mainwin_pl, FALSE);
     cfg.playlist_visible = FALSE;
+
+    /* no point in probing for playlistwin_infopopup trigger when the playlistwin is hidden */
+    if ( playlistwin_infopopup_sid != 0 )
+      g_source_remove( playlistwin_infopopup_sid );
 
     if ( cfg.player_visible )
     {
@@ -2142,3 +2157,76 @@ playlistwin_select_search_kp_cb( GtkWidget *entry , GdkEventKey *event ,
             return FALSE;
     }
 }
+
+
+/* fileinfopopup callback for playlistwin */
+static gboolean
+playlistwin_fileinfopopup_probe(gpointer * filepopup_win)
+{
+	gint x, y, pos;
+	TitleInput *tuple;
+	static gint prev_x = 0, prev_y = 0, ctr = 0, prev_pos = -1;
+	static gint shaded_pos = -1, shaded_prev_pos = -1;
+	gboolean skip = FALSE;
+	GdkWindow *win;
+	Playlist *playlist = playlist_get_active();
+
+	win = gdk_window_at_pointer(NULL, NULL);
+	gdk_window_get_pointer(GDK_WINDOW(playlistwin->window), &x, &y, NULL);
+	pos = playlist_list_get_playlist_position(playlistwin_list, x, y);
+
+	if (win == NULL
+		|| cfg.show_filepopup_for_tuple == FALSE
+		|| playlistwin_list->pl_tooltips == FALSE
+		|| pos != prev_pos
+		|| win != GDK_WINDOW(playlistwin->window))
+	{
+		prev_pos = pos;
+		ctr = 0;
+                if ( GTK_WIDGET(filepopup_win)->window != NULL &&
+                     gdk_window_is_viewable(GDK_WINDOW(GTK_WIDGET(filepopup_win)->window)) )
+                  audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
+		return TRUE;
+	}
+
+	if (prev_x == x && prev_y == y)
+		ctr++;
+	else
+	{
+		ctr = 0;
+		prev_x = x;
+		prev_y = y;
+		audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
+		return TRUE;
+	}
+
+	if (GTK_WIDGET(filepopup_win)->window == NULL)
+		skip = TRUE;
+
+	if (playlistwin_is_shaded()) {
+		shaded_pos = playlist_get_position(playlist);
+		if (shaded_prev_pos != shaded_pos)
+			skip = TRUE;
+	}
+
+        if (ctr >= cfg.filepopup_delay && (skip == TRUE || gdk_window_is_viewable(GDK_WINDOW(GTK_WIDGET(filepopup_win)->window)) != TRUE)) {
+		if (pos == -1 && !playlistwin_is_shaded()) {
+			audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
+			return TRUE;
+	    	}
+		else { /* shaded mode */
+			tuple = playlist_get_tuple(playlist, shaded_pos);
+			audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
+			audacious_fileinfopopup_show_from_tuple(GTK_WIDGET(filepopup_win), tuple);
+			shaded_prev_pos = shaded_pos;
+		}
+
+		prev_pos = pos;
+
+		tuple = playlist_get_tuple(playlist, pos);
+		audacious_fileinfopopup_show_from_tuple(GTK_WIDGET(filepopup_win), tuple);
+	}
+
+	return TRUE;
+}
+

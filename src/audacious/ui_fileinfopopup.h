@@ -18,15 +18,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef _UI_FILEINFO_H_
-#define _UI_FILEINFO_H_
+#ifndef _UI_FILEINFOPOPUP_H_
+#define _UI_FILEINFOPOPUP_H_
 
-#include "titlestring.h"
-#include <glib.h>
+#include "audacious/titlestring.h"
+#include <gtk/gtk.h>
 
-void create_fileinfo_window(void);
-void fileinfo_show_for_tuple(TitleInput *tuple);
-gchar* fileinfo_recursive_get_image(const gchar* path, const gchar* file_name, gint depth);
-void fileinfo_show_for_path(gchar *path);
+/* create/destroy */
+GtkWidget* audacious_fileinfopopup_create(void);
+void audacious_fileinfopopup_destroy(GtkWidget* fileinfopopup_win);
+
+/* show/hide */
+void audacious_fileinfopopup_show_from_tuple(GtkWidget *fileinfopopup_win, TitleInput *tuple);
+void audacious_fileinfopopup_hide(GtkWidget *filepopup_win, gpointer unused);
 
 #endif
