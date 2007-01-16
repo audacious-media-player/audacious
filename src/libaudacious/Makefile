@@ -25,7 +25,6 @@ SOURCES = \
 	$(CONF_SRC) \
 	rcfile.c \
 	beepctrl.c \
-	dirbrowser.c \
 	util.c \
 	formatter.c \
 	titlestring.c \
@@ -36,7 +35,7 @@ OBJECTS = ${SOURCES:.c=.o}
 
 HEADERS = \
 	rcfile.h configdb.h \
-	beepctrl.h dirbrowser.h urldecode.h \
+	beepctrl.h urldecode.h \
 	formatter.h titlestring.h xconvert.h
 
 include ../../mk/objective.mk

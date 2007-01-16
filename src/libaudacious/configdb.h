@@ -122,7 +122,7 @@ G_BEGIN_DECLS
     void bmp_cfg_db_set_string(ConfigDb *db,
                                const gchar *section,
                                const gchar *key,
-                               gchar *value);
+                               const gchar *value);
 
     /**
      * bmp_cfg_db_set_int:

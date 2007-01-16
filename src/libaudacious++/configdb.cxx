@@ -90,14 +90,7 @@ ConfValue *ConfigDB::GetValue(std::string &section, std::string &value, ConfigDB
 
 void ConfigDB::SetValue(std::string &section, std::string &name, std::string &value)
 {
-	// XXX bmp_cfg_db_set_string should be const char
-	// because it's not, we have to do this:
-
-	gchar *foo = g_strdup(value.c_str());
-
-	bmp_cfg_db_set_string(this->db, section.c_str(), name.c_str(), foo);
-
-	g_free(foo);
+	bmp_cfg_db_set_string(this->db, section.c_str(), name.c_str(), value.c_str());
 }
 
 void ConfigDB::SetValue(std::string &section, std::string &name, gint value)
