@@ -1,3 +1,10 @@
+2007-01-17 20:26:55 +0000  Giacomo Lozito <james@develia.org>
+  revision [3724]
+  - added progressbar with display of elapsed time for metadata tooltip
+  trunk/src/audacious/ui_fileinfopopup.c |  121 ++++++++++++++++++++++++++++++++-
+  1 file changed, 118 insertions(+), 3 deletions(-)
+
+
 2007-01-17 20:11:16 +0000  Michael Farber <01mf02@gmail.com>
   revision [3722]
   right-clicking on playlist entry automatically selects the entry if it was unselected before, closes #728
