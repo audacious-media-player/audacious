@@ -190,7 +190,7 @@ void
 bmp_cfg_db_set_string(ConfigDb * db,
                       const gchar * section,
                       const gchar * key,
-                      gchar * value)
+                      const gchar * value)
 {
     GConfValue *cval;
 
