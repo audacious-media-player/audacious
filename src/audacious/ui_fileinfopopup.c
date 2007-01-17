@@ -31,6 +31,8 @@
 #include "ui_fileinfopopup.h"
 #include "main.h"
 #include "ui_main.h"
+#include "playlist.h"
+#include "playback.h"
 
 
 static void
@@ -259,6 +261,79 @@ fileinfo_recursive_get_image(const gchar* path,
 }
 
 
+static gboolean
+audacious_fileinfopopup_progress_cb ( gpointer filepopup_win )
+{
+  GtkWidget *progressbar = g_object_get_data( G_OBJECT(filepopup_win) , "progressbar" );
+  gchar *tooltip_file = g_object_get_data( G_OBJECT(filepopup_win) , "file" );
+  gchar *current_file;
+  Playlist *pl;
+  gint length = GPOINTER_TO_INT(g_object_get_data( G_OBJECT(filepopup_win) , "length" ));
+  gint pos;
+  gint time;
+
+  pl = playlist_get_active();
+  pos = playlist_get_position(pl);
+
+  current_file = playlist_get_filename( pl , pos );
+  time = playback_get_time();
+
+  if ( ( time != -1 ) &&
+       ( length != -1 ) &&
+       ( ( current_file != NULL ) && ( !strcmp(tooltip_file,current_file) ) ) )
+  {
+    gchar *progress_time = g_strdup_printf("%d:%02d", time / 60000, (time / 1000) % 60);
+    gtk_progress_bar_set_fraction( GTK_PROGRESS_BAR(progressbar) , (gdouble)time / (gdouble)length );
+    gtk_progress_bar_set_text( GTK_PROGRESS_BAR(progressbar) , progress_time );
+    g_free( progress_time );
+    if ( GTK_WIDGET_VISIBLE(progressbar) != TRUE )
+      gtk_widget_show(progressbar);
+  }
+  else
+  {
+    /* tooltip opened, but song is not the same,
+       or playback is stopped, or length is not applicabile */
+    if ( GTK_WIDGET_VISIBLE(progressbar) == TRUE )
+      gtk_widget_hide(progressbar);
+  }
+
+  return TRUE;
+}
+
+static gboolean
+audacious_fileinfopopup_progress_check_active ( GtkWidget * filepopup_win )
+{
+  if ( GPOINTER_TO_INT(g_object_get_data(G_OBJECT(filepopup_win),"progress_sid")) == 0 )
+    return FALSE;
+  else
+    return TRUE;
+}
+
+static void
+audacious_fileinfopopup_progress_init ( GtkWidget * filepopup_win )
+{
+  g_object_set_data( G_OBJECT(filepopup_win) , "progress_sid" , GINT_TO_POINTER(0) );
+}
+
+static void
+audacious_fileinfopopup_progress_start ( GtkWidget * filepopup_win )
+{
+  gint sid = g_timeout_add( 500 , (GSourceFunc)audacious_fileinfopopup_progress_cb , filepopup_win );
+  g_object_set_data( G_OBJECT(filepopup_win) , "progress_sid" , GINT_TO_POINTER(sid) );
+}
+
+static void
+audacious_fileinfopopup_progress_stop ( GtkWidget * filepopup_win )
+{
+  gint sid = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(filepopup_win),"progress_sid"));
+  if ( sid != 0 )
+  {
+    g_source_remove( sid );
+    g_object_set_data(G_OBJECT(filepopup_win),"progress_sid",GINT_TO_POINTER(0));
+  }
+}
+
+
 
 GtkWidget *
 audacious_fileinfopopup_create(void)
@@ -269,6 +344,7 @@ audacious_fileinfopopup_create(void)
   GtkWidget *filepopup_data_table;
   GtkWidget *filepopup_data_info_header[7];
   GtkWidget *filepopup_data_info_label[7];
+  GtkWidget *filepopup_progress;
   gchar *markup;
 
   filepopup_win = gtk_window_new( GTK_WINDOW_POPUP );
@@ -288,7 +364,7 @@ audacious_fileinfopopup_create(void)
 
   gtk_box_pack_start( GTK_BOX(filepopup_hbox) , gtk_vseparator_new() , FALSE , FALSE , 6 );
 
-  filepopup_data_table = gtk_table_new( 7 , 2 , FALSE );
+  filepopup_data_table = gtk_table_new( 8 , 2 , FALSE );
   gtk_table_set_row_spacings( GTK_TABLE(filepopup_data_table) , 6 );
   gtk_table_set_col_spacings( GTK_TABLE(filepopup_data_table) , 6 );
   gtk_box_pack_start( GTK_BOX(filepopup_hbox) , filepopup_data_table , TRUE , TRUE , 0 );
@@ -386,13 +462,27 @@ audacious_fileinfopopup_create(void)
   gtk_label_set_markup( GTK_LABEL(filepopup_data_info_header[6]) , markup );
   g_free( markup );
   g_object_set_data( G_OBJECT(filepopup_win) , "label_tracklen" , filepopup_data_info_label[6] );
+  g_object_set_data( G_OBJECT(filepopup_win), "length" , GINT_TO_POINTER(-1) );
   gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_header[6] ,
     0 , 1 , 6 , 7 , GTK_FILL , 0 , 0 , 0 );
   gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_label[6] ,
     1 , 2 , 6 , 7 , GTK_FILL , 0 , 0 , 0 );
 
+  /* Track Progress */
+  filepopup_progress = gtk_progress_bar_new();
+  gtk_progress_bar_set_orientation( GTK_PROGRESS_BAR(filepopup_progress) , GTK_PROGRESS_LEFT_TO_RIGHT );
+  gtk_progress_bar_set_text( GTK_PROGRESS_BAR(filepopup_progress) , "" );
+  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_progress ,
+    0 , 2 , 7 , 8 , GTK_FILL , 0 , 0 , 0 );
+  g_object_set_data( G_OBJECT(filepopup_win) , "file" , NULL );
+  g_object_set_data( G_OBJECT(filepopup_win) , "progressbar" , filepopup_progress );
+  audacious_fileinfopopup_progress_init( filepopup_win );
+
   /* this will realize all widgets contained in filepopup_hbox */
   gtk_widget_show_all(filepopup_hbox);
+
+  /* do not show the track progress */
+  gtk_widget_hide( filepopup_progress );
 
   return filepopup_win;
 }
@@ -400,6 +490,8 @@ audacious_fileinfopopup_create(void)
 void
 audacious_fileinfopopup_destroy(GtkWidget *filepopup_win)
 {
+  audacious_fileinfopopup_progress_stop( filepopup_win );
+
   gchar *last_artwork = g_object_get_data( G_OBJECT(filepopup_win) , "last_artwork" );
   if ( last_artwork != NULL ) g_free(last_artwork);
   gtk_widget_destroy( filepopup_win );
@@ -418,6 +510,11 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win, TitleInput *tu
 	if (tuple == NULL)
 		return;
 
+	if ( g_object_get_data( G_OBJECT(filepopup_win) , "file" ) != NULL )
+	  g_free( g_object_get_data( G_OBJECT(filepopup_win) , "file" ) );
+	g_object_set_data( G_OBJECT(filepopup_win) , "file" ,
+	  g_build_filename( tuple->file_path , tuple->file_name , NULL ) );
+
 	gtk_widget_realize(filepopup_win);
 
 	filepopup_entry_set_text(filepopup_win, "label_title", tuple->track_name);
@@ -426,13 +523,20 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win, TitleInput *tu
 	filepopup_entry_set_text(filepopup_win, "label_genre", tuple->genre);
 
 	if (tuple->length != -1)
-		filepopup_entry_set_text_free(filepopup_win, "label_length", g_strdup_printf("%d:%02d", tuple->length / 60000, (tuple->length / 1000) % 60));
+	{
+		filepopup_entry_set_text_free(filepopup_win, "label_tracklen", g_strdup_printf("%d:%02d", tuple->length / 60000, (tuple->length / 1000) % 60));
+		g_object_set_data( G_OBJECT(filepopup_win), "length" , GINT_TO_POINTER(tuple->length) );
+	}
+	else
+	{
+		g_object_set_data( G_OBJECT(filepopup_win), "length" , GINT_TO_POINTER(-1) );
+	}
 
 	if (tuple->year != 0)
 		filepopup_entry_set_text_free(filepopup_win, "label_year", g_strdup_printf("%d", tuple->year));
 
 	if (tuple->track_number != 0)
-		filepopup_entry_set_text_free(filepopup_win, "label_track", g_strdup_printf("%d", tuple->track_number));
+		filepopup_entry_set_text_free(filepopup_win, "label_tracknum", g_strdup_printf("%d", tuple->track_number));
 
 	tmp = fileinfo_recursive_get_image(tuple->file_path, tuple->file_name, 0);
 	if (tmp) { // picture found
@@ -456,6 +560,15 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win, TitleInput *tu
 		}
 	}
 
+	/* start a timer that updates a progress bar if the tooltip
+	   is shown for the song that is being currently played */
+	if ( audacious_fileinfopopup_progress_check_active( filepopup_win ) == FALSE )
+	{
+		audacious_fileinfopopup_progress_start( filepopup_win );
+		/* also run immediately the callback once, to update progressbar status  */
+		audacious_fileinfopopup_progress_cb( filepopup_win );
+	}
+
 	gdk_window_get_pointer(NULL, &x, &y, NULL);
 	gtk_window_get_size(GTK_WINDOW(filepopup_win), &w, &h);
 	if (gdk_screen_width()-(w+3) < x) x_off = (w*-1)-3;
@@ -471,6 +584,8 @@ audacious_fileinfopopup_hide(GtkWidget *filepopup_win, gpointer unused)
 {
 	if ( GTK_WIDGET_VISIBLE(filepopup_win) == TRUE )
 	{
+		audacious_fileinfopopup_progress_stop( filepopup_win );
+
 		gtk_widget_hide(filepopup_win);
 
 		filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_title", "");

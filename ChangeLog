@@ -1,3 +1,11 @@
+2007-01-17 20:11:16 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3722]
+  right-clicking on playlist entry automatically selects the entry if it was unselected before, closes #728
+  trunk/src/audacious/ui_playlist.c           |    1 
+  trunk/src/audacious/widgets/playlist_list.c |   29 +++++++++++++++++-----------
+  2 files changed, 19 insertions(+), 11 deletions(-)
+
+
 2007-01-17 16:13:07 +0000  Giacomo Lozito <james@develia.org>
   revision [3720]
   - ui_fileinfopopup.c uses gtk code, no more glade in it
