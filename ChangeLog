@@ -1,3 +1,12 @@
+2007-01-17 16:13:07 +0000  Giacomo Lozito <james@develia.org>
+  revision [3720]
+  - ui_fileinfopopup.c uses gtk code, no more glade in it
+  trunk/src/audacious/glade/Makefile             |    1 
+  trunk/src/audacious/glade/fileinfo_popup.glade |  465 -------------------------
+  trunk/src/audacious/ui_fileinfopopup.c         |  176 +++++++--
+  3 files changed, 142 insertions(+), 500 deletions(-)
+
+
 2007-01-17 12:09:20 +0000  Giacomo Lozito <james@develia.org>
   revision [3718]
   - removed other obsolete (and annoying) gdk_window_set_hints calls

@@ -1165,6 +1165,7 @@ playlistwin_press(GtkWidget * widget,
     }
     else if (event->button == 3 &&
              widget_contains(WIDGET(playlistwin_list), event->x, event->y)) {
+        handle_press_cb(playlistwin_wlist, widget, event);
         ui_manager_popup_menu_show(GTK_MENU(playlistwin_popup_menu),
                                event->x_root, event->y_root + 5,
                                event->button, event->time);

@@ -316,18 +316,24 @@ playlist_list_button_press_cb(GtkWidget * widget,
                               GdkEventButton * event,
                               PlayList_List * pl)
 {
-    gint nr, y;
+    gint nr;
     Playlist *playlist = playlist_get_active();
 
-    if (event->button == 1 && pl->pl_fheight &&
-        widget_contains(&pl->pl_widget, event->x, event->y)) {
+	nr = playlist_list_get_playlist_position(pl, event->x, event->y);
+	if (nr == -1)
+		return;
 
-        y = event->y - pl->pl_widget.y;
-        nr = (y / pl->pl_fheight) + pl->pl_first;
-
-        if (nr >= playlist_get_length(playlist))
-            nr = playlist_get_length(playlist) - 1;
-
+	if (event->button == 3)
+	{
+		GList* selection = playlist_get_selected(playlist);
+		if (g_list_find(selection, GINT_TO_POINTER(nr)) == NULL)
+		{
+			playlist_select_all(playlist, FALSE);
+			playlist_select_range(playlist, nr, nr, TRUE);
+		}
+	}
+	else if (event->button == 1)
+	{
         if (!(event->state & GDK_CONTROL_MASK))
             playlist_select_all(playlist, FALSE);
 
@@ -369,8 +375,9 @@ playlist_list_button_press_cb(GtkWidget * widget,
         }
 
         pl->pl_dragging = TRUE;
-        playlistwin_update_list(playlist);
     }
+
+	playlistwin_update_list(playlist);
 }
 
 gint
@@ -391,7 +398,7 @@ playlist_list_get_playlist_position(PlayList_List * pl,
 
     ret = (iy / pl->pl_fheight) + pl->pl_first;
 
-    if(ret > length-1)
+    if (ret > length - 1)
 	    ret = -1;
 
     return ret;
