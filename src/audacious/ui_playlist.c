@@ -70,7 +70,7 @@ static GdkGC *playlistwin_gc;
 static gboolean playlistwin_hint_flag = FALSE;
 
 static GtkWidget *playlistwin_infopopup = NULL;
-static gint playlistwin_infopopup_sid = 0;
+static guint playlistwin_infopopup_sid = 0;
 
 static PlaylistSlider *playlistwin_slider = NULL;
 static TextBox *playlistwin_time_min, *playlistwin_time_sec;
@@ -1805,8 +1805,9 @@ playlistwin_show(void)
     playlistwin_set_toprow(0);
     playlist_check_pos_current(playlist_get_active());
 
-    playlistwin_infopopup_sid = g_timeout_add(
-      50 , (GSourceFunc)playlistwin_fileinfopopup_probe , playlistwin_infopopup );
+    if ( playlistwin_infopopup_sid == 0 )
+      playlistwin_infopopup_sid = g_timeout_add(
+        50 , (GSourceFunc)playlistwin_fileinfopopup_probe , playlistwin_infopopup );
 
     gtk_widget_show(playlistwin);
 }
@@ -1824,7 +1825,10 @@ playlistwin_hide(void)
 
     /* no point in probing for playlistwin_infopopup trigger when the playlistwin is hidden */
     if ( playlistwin_infopopup_sid != 0 )
+    {
       g_source_remove( playlistwin_infopopup_sid );
+      playlistwin_infopopup_sid = 0;
+    }
 
     if ( cfg.player_visible )
     {
@@ -2183,9 +2187,7 @@ playlistwin_fileinfopopup_probe(gpointer * filepopup_win)
 	{
 		prev_pos = pos;
 		ctr = 0;
-                if ( GTK_WIDGET(filepopup_win)->window != NULL &&
-                     gdk_window_is_viewable(GDK_WINDOW(GTK_WIDGET(filepopup_win)->window)) )
-                  audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
+                audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
 		return TRUE;
 	}
 
@@ -2200,16 +2202,13 @@ playlistwin_fileinfopopup_probe(gpointer * filepopup_win)
 		return TRUE;
 	}
 
-	if (GTK_WIDGET(filepopup_win)->window == NULL)
-		skip = TRUE;
-
 	if (playlistwin_is_shaded()) {
 		shaded_pos = playlist_get_position(playlist);
 		if (shaded_prev_pos != shaded_pos)
 			skip = TRUE;
 	}
 
-        if (ctr >= cfg.filepopup_delay && (skip == TRUE || gdk_window_is_viewable(GDK_WINDOW(GTK_WIDGET(filepopup_win)->window)) != TRUE)) {
+        if (ctr >= cfg.filepopup_delay && (skip == TRUE || GTK_WIDGET_VISIBLE(GTK_WIDGET(filepopup_win)) != TRUE)) {
 		if (pos == -1 && !playlistwin_is_shaded()) {
 			audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
 			return TRUE;

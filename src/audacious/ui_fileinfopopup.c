@@ -361,15 +361,18 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win, TitleInput *tu
 void
 audacious_fileinfopopup_hide(GtkWidget *filepopup_win, gpointer unused)
 {
-	gtk_widget_hide(filepopup_win);
+	if ( GTK_WIDGET_VISIBLE(filepopup_win) == TRUE )
+	{
+		gtk_widget_hide(filepopup_win);
 
-	filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_title", "");
-	filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_artist", "");
-	filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_album", "");
-	filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_genre", "");
-	filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_track", "");
-	filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_year", "");
-	filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_length", "");
+		filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_title", "");
+		filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_artist", "");
+		filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_album", "");
+		filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_genre", "");
+		filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_track", "");
+		filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_year", "");
+		filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_length", "");
 
-	gtk_window_resize(GTK_WINDOW(filepopup_win), 1, 1);
+		gtk_window_resize(GTK_WINDOW(filepopup_win), 1, 1);
+	}
 }
