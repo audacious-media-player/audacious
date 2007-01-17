@@ -143,6 +143,8 @@ GdkPixbuf *audacious_create_colorized_pixbuf(GdkPixbuf *src, gint red, gint gree
 
 gchar *audacious_get_localdir(void);
 
+void audacious_menu_main_show( gint x , gint y , guint button , guint time );
+
 G_END_DECLS
 
 #endif

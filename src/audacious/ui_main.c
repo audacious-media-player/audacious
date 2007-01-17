@@ -3668,6 +3668,16 @@ mainwin_idle_func(gpointer data)
 }
 
 
+void
+audacious_menu_main_show( gint x , gint y , guint button , guint time )
+{
+  /* convenience function that shows the main popup menu wherever requested */
+  ui_manager_popup_menu_show( GTK_MENU(mainwin_general_menu),
+                              x , y , button , time );
+  return;
+}
+
+
 /* toggleactionentries actions */
 
 void
