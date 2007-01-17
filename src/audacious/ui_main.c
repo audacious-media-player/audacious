@@ -2465,6 +2465,9 @@ mainwin_real_show(void)
         return;
     }
 
+    if (cfg.player_x != -1 && cfg.player_y != -1)
+        gtk_window_move(GTK_WINDOW(mainwin), cfg.player_x, cfg.player_y);
+
     gtk_widget_show_all(mainwin);
 
     if (nullmask)
@@ -2473,23 +2476,11 @@ mainwin_real_show(void)
       nullmask = NULL;
     }
 
-    gdk_window_set_hints(mainwin->window, 0, 0,
-                         !bmp_active_skin->properties.mainwin_width ? PLAYER_WIDTH :
-				bmp_active_skin->properties.mainwin_width,
-                         !bmp_active_skin->properties.mainwin_height ? PLAYER_HEIGHT :
-				bmp_active_skin->properties.mainwin_height,
-                         !bmp_active_skin->properties.mainwin_width ? PLAYER_WIDTH :
-				bmp_active_skin->properties.mainwin_width,
-                         !bmp_active_skin->properties.mainwin_height ? PLAYER_HEIGHT :
-				bmp_active_skin->properties.mainwin_height,
-                         GDK_HINT_MIN_SIZE | GDK_HINT_MAX_SIZE);
     gtk_window_resize(GTK_WINDOW(mainwin), 
                          !bmp_active_skin->properties.mainwin_width ? PLAYER_WIDTH :
 				bmp_active_skin->properties.mainwin_width,
                          !bmp_active_skin->properties.mainwin_height ? PLAYER_HEIGHT :
 				bmp_active_skin->properties.mainwin_height);
-    if (cfg.player_x != -1 && cfg.player_y != -1)
-        gtk_window_move(GTK_WINDOW(mainwin), cfg.player_x, cfg.player_y);
 
     draw_main_window(TRUE);
 
