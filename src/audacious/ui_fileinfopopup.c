@@ -25,10 +25,8 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <glade/glade.h>
 #include <string.h>
 
-#include "glade.h"
 #include "titlestring.h"
 #include "ui_fileinfopopup.h"
 #include "main.h"
@@ -36,28 +34,26 @@
 
 
 static void
-filepopup_entry_set_text(GtkWidget *filepopup_win, const char *entry, const char *text)
+filepopup_entry_set_text(GtkWidget *filepopup_win, const char *entry_name, const char *text)
 {
-	GladeXML *xml = g_object_get_data(G_OBJECT(filepopup_win), "glade-xml");
-	GtkWidget *widget = glade_xml_get_widget(xml, entry);
+  GtkWidget *widget = g_object_get_data(G_OBJECT(filepopup_win), entry_name);
 
-	if (xml == NULL || widget == NULL)
-		return;
+  if (widget == NULL)
+    return;
 
-	gtk_label_set_text(GTK_LABEL(widget), text);
+  gtk_label_set_text( GTK_LABEL(widget) , text );
 }
 
 static void
-filepopup_entry_set_image(GtkWidget *filepopup_win, const char *entry, const char *text)
+filepopup_entry_set_image(GtkWidget *filepopup_win, const char *entry_name, const char *text)
 {
-	GladeXML *xml = g_object_get_data(G_OBJECT(filepopup_win), "glade-xml");
-	GtkWidget *widget = glade_xml_get_widget(xml, entry);
+	GtkWidget *widget = g_object_get_data(G_OBJECT(filepopup_win), entry_name);
 	GdkPixbuf *pixbuf;
 	int width, height;
 	double aspect;
 	GdkPixbuf *pixbuf2;
 
-	if (xml == NULL || widget == NULL)
+	if (widget == NULL)
 		return;
 
 	pixbuf = gdk_pixbuf_new_from_file(text, NULL);
@@ -90,12 +86,11 @@ filepopup_entry_set_image(GtkWidget *filepopup_win, const char *entry, const cha
 }
 
 static void
-filepopup_entry_set_text_free(GtkWidget *filepopup_win, const char *entry, char *text)
+filepopup_entry_set_text_free(GtkWidget *filepopup_win, const char *entry_name, char *text)
 {
-	GladeXML *xml = g_object_get_data(G_OBJECT(filepopup_win), "glade-xml");
-	GtkWidget *widget = glade_xml_get_widget(xml, entry);
+	GtkWidget *widget = g_object_get_data(G_OBJECT(filepopup_win), entry_name);
 
-	if (xml == NULL || widget == NULL)
+	if (widget == NULL)
 		return;
 
 	gtk_label_set_text(GTK_LABEL(widget), text);
@@ -268,34 +263,147 @@ fileinfo_recursive_get_image(const gchar* path,
 GtkWidget *
 audacious_fileinfopopup_create(void)
 {
-	const gchar *glade_file = DATA_DIR "/glade/fileinfo_popup.glade";
-	GladeXML *xml;
-	GtkWidget *widget;
-	GtkWidget *filepopup_win;
+  GtkWidget *filepopup_win;
+  GtkWidget *filepopup_hbox;
+  GtkWidget *filepopup_data_image;
+  GtkWidget *filepopup_data_table;
+  GtkWidget *filepopup_data_info_header[7];
+  GtkWidget *filepopup_data_info_label[7];
+  gchar *markup;
 
-	xml = glade_xml_new_or_die(_("Track Information Popup"), glade_file, NULL, NULL);
+  filepopup_win = gtk_window_new( GTK_WINDOW_POPUP );
+  gtk_window_set_decorated( GTK_WINDOW(filepopup_win), FALSE );
+  gtk_container_set_border_width( GTK_CONTAINER(filepopup_win) , 6 );
+  gtk_window_set_transient_for( GTK_WINDOW(filepopup_win) , GTK_WINDOW(mainwin) );
 
-	glade_xml_signal_autoconnect(xml);
+  filepopup_hbox = gtk_hbox_new( FALSE , 0 );
+  gtk_container_add( GTK_CONTAINER(filepopup_win) , filepopup_hbox );
 
-	filepopup_win = glade_xml_get_widget(xml, "win_pl_popup");
-	g_object_set_data(G_OBJECT(filepopup_win), "glade-xml", xml);
-	gtk_window_set_transient_for(GTK_WINDOW(filepopup_win), GTK_WINDOW(mainwin));
+  filepopup_data_image = gtk_image_new();
+  gtk_misc_set_alignment( GTK_MISC(filepopup_data_image) , 0.5 , 0 );
+  gtk_image_set_from_file( GTK_IMAGE(filepopup_data_image) , DATA_DIR "/images/audio.png" );
+  g_object_set_data( G_OBJECT(filepopup_win) , "image_artwork" , filepopup_data_image );
+  g_object_set_data( G_OBJECT(filepopup_win) , "last_artwork" , NULL );
+  gtk_box_pack_start( GTK_BOX(filepopup_hbox) , filepopup_data_image , FALSE , FALSE , 0 );
 
-	widget = glade_xml_get_widget(xml, "image_artwork");
-	gtk_image_set_from_file(GTK_IMAGE(widget), DATA_DIR "/images/audio.png");
-	g_object_set_data( G_OBJECT(filepopup_win) , "last_artwork" , NULL );
+  gtk_box_pack_start( GTK_BOX(filepopup_hbox) , gtk_vseparator_new() , FALSE , FALSE , 6 );
 
-	return filepopup_win;
+  filepopup_data_table = gtk_table_new( 7 , 2 , FALSE );
+  gtk_table_set_row_spacings( GTK_TABLE(filepopup_data_table) , 6 );
+  gtk_table_set_col_spacings( GTK_TABLE(filepopup_data_table) , 6 );
+  gtk_box_pack_start( GTK_BOX(filepopup_hbox) , filepopup_data_table , TRUE , TRUE , 0 );
+
+  /* title */
+  filepopup_data_info_header[0] = gtk_label_new("");
+  filepopup_data_info_label[0] = gtk_label_new("");
+  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_header[0]) , 0 , 0.5 );
+  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_label[0]) , 0 , 0.5 );
+  markup = g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Title") );
+  gtk_label_set_markup( GTK_LABEL(filepopup_data_info_header[0]) , markup );
+  g_free( markup );
+  g_object_set_data( G_OBJECT(filepopup_win) , "label_title" , filepopup_data_info_label[0] );
+  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_header[0] ,
+    0 , 1 , 0 , 1 , GTK_FILL , 0 , 0 , 0 );
+  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_label[0] ,
+    1 , 2 , 0 , 1 , GTK_FILL , 0 , 0 , 0 );
+
+  /* artist */
+  filepopup_data_info_header[1] = gtk_label_new("");
+  filepopup_data_info_label[1] = gtk_label_new("");
+  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_header[1]) , 0 , 0.5 );
+  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_label[1]) , 0 , 0.5 );
+  markup = g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Artist") );
+  gtk_label_set_markup( GTK_LABEL(filepopup_data_info_header[1]) , markup );
+  g_free( markup );
+  g_object_set_data( G_OBJECT(filepopup_win) , "label_artist" , filepopup_data_info_label[1] );
+  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_header[1] ,
+    0 , 1 , 1 , 2 , GTK_FILL , 0 , 0 , 0 );
+  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_label[1] ,
+    1 , 2 , 1 , 2 , GTK_FILL , 0 , 0 , 0 );
+
+  /* album */
+  filepopup_data_info_header[2] = gtk_label_new("");
+  filepopup_data_info_label[2] = gtk_label_new("");
+  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_header[2]) , 0 , 0.5 );
+  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_label[2]) , 0 , 0.5 );
+  markup = g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Album") );
+  gtk_label_set_markup( GTK_LABEL(filepopup_data_info_header[2]) , markup );
+  g_free( markup );
+  g_object_set_data( G_OBJECT(filepopup_win) , "label_album" , filepopup_data_info_label[2] );
+  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_header[2] ,
+    0 , 1 , 2 , 3 , GTK_FILL , 0 , 0 , 0 );
+  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_label[2] ,
+    1 , 2 , 2 , 3 , GTK_FILL , 0 , 0 , 0 );
+
+  /* genre */
+  filepopup_data_info_header[3] = gtk_label_new("");
+  filepopup_data_info_label[3] = gtk_label_new("");
+  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_header[3]) , 0 , 0.5 );
+  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_label[3]) , 0 , 0.5 );
+  markup = g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Genre") );
+  gtk_label_set_markup( GTK_LABEL(filepopup_data_info_header[3]) , markup );
+  g_free( markup );
+  g_object_set_data( G_OBJECT(filepopup_win) , "label_genre" , filepopup_data_info_label[3] );
+  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_header[3] ,
+    0 , 1 , 3 , 4 , GTK_FILL , 0 , 0 , 0 );
+  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_label[3] ,
+    1 , 2 , 3 , 4 , GTK_FILL , 0 , 0 , 0 );
+
+  /* year */
+  filepopup_data_info_header[4] = gtk_label_new("");
+  filepopup_data_info_label[4] = gtk_label_new("");
+  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_header[4]) , 0 , 0.5 );
+  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_label[4]) , 0 , 0.5 );
+  markup = g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Year") );
+  gtk_label_set_markup( GTK_LABEL(filepopup_data_info_header[4]) , markup );
+  g_free( markup );
+  g_object_set_data( G_OBJECT(filepopup_win) , "label_year" , filepopup_data_info_label[4] );
+  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_header[4] ,
+    0 , 1 , 4 , 5 , GTK_FILL , 0 , 0 , 0 );
+  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_label[4] ,
+    1 , 2 , 4 , 5 , GTK_FILL , 0 , 0 , 0 );
+
+  /* Track Number */
+  filepopup_data_info_header[5] = gtk_label_new("");
+  filepopup_data_info_label[5] = gtk_label_new("");
+  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_header[5]) , 0 , 0.5 );
+  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_label[5]) , 0 , 0.5 );
+  markup = g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Track Number") );
+  gtk_label_set_markup( GTK_LABEL(filepopup_data_info_header[5]) , markup );
+  g_free( markup );
+  g_object_set_data( G_OBJECT(filepopup_win) , "label_tracknum" , filepopup_data_info_label[5] );
+  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_header[5] ,
+    0 , 1 , 5 , 6 , GTK_FILL , 0 , 0 , 0 );
+  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_label[5] ,
+    1 , 2 , 5 , 6 , GTK_FILL , 0 , 0 , 0 );
+
+  /* Track Length */
+  filepopup_data_info_header[6] = gtk_label_new("");
+  filepopup_data_info_label[6] = gtk_label_new("");
+  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_header[6]) , 0 , 0.5 );
+  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_label[6]) , 0 , 0.5 );
+  markup = g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Track Length") );
+  gtk_label_set_markup( GTK_LABEL(filepopup_data_info_header[6]) , markup );
+  g_free( markup );
+  g_object_set_data( G_OBJECT(filepopup_win) , "label_tracklen" , filepopup_data_info_label[6] );
+  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_header[6] ,
+    0 , 1 , 6 , 7 , GTK_FILL , 0 , 0 , 0 );
+  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_label[6] ,
+    1 , 2 , 6 , 7 , GTK_FILL , 0 , 0 , 0 );
+
+  /* this will realize all widgets contained in filepopup_hbox */
+  gtk_widget_show_all(filepopup_hbox);
+
+  return filepopup_win;
 }
 
 void
 audacious_fileinfopopup_destroy(GtkWidget *filepopup_win)
 {
-	gchar *last_artwork = g_object_get_data( G_OBJECT(filepopup_win) , "last_artwork" );
-	if ( last_artwork != NULL ) g_free(last_artwork);
-	g_object_unref( g_object_get_data(G_OBJECT(filepopup_win), "glade-xml") );
-	gtk_widget_destroy( filepopup_win );
-	return;
+  gchar *last_artwork = g_object_get_data( G_OBJECT(filepopup_win) , "last_artwork" );
+  if ( last_artwork != NULL ) g_free(last_artwork);
+  gtk_widget_destroy( filepopup_win );
+  return;
 }
 
 void

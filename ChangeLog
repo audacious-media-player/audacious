@@ -1,3 +1,10 @@
+2007-01-17 12:09:20 +0000  Giacomo Lozito <james@develia.org>
+  revision [3718]
+  - removed other obsolete (and annoying) gdk_window_set_hints calls
+  trunk/src/audacious/ui_main.c |   15 +++------------
+  1 file changed, 3 insertions(+), 12 deletions(-)
+
+
 2007-01-17 11:11:48 +0000  Giacomo Lozito <james@develia.org>
   revision [3716]
   - added audacious_menu_main_show(x,y,button,time) in util.h, convenience function to display the audacious main popup menu
