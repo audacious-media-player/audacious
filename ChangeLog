@@ -1,3 +1,10 @@
+2007-01-18 21:21:57 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3736]
+  reformatting and g_return_if_fail()
+  trunk/src/audacious/ui_playlist.c |  177 +++++++++++++++-----------------------
+  1 file changed, 72 insertions(+), 105 deletions(-)
+
+
 2007-01-18 15:32:07 +0000  Giacomo Lozito <james@develia.org>
   revision [3734]
   - ensure that year/tracknumber/length fields are cleared if necessary
