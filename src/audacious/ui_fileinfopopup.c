@@ -529,14 +529,19 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win, TitleInput *tu
 	}
 	else
 	{
+		filepopup_entry_set_text(filepopup_win, "label_tracklen", "");
 		g_object_set_data( G_OBJECT(filepopup_win), "length" , GINT_TO_POINTER(-1) );
 	}
 
 	if (tuple->year != 0)
 		filepopup_entry_set_text_free(filepopup_win, "label_year", g_strdup_printf("%d", tuple->year));
+	else
+		filepopup_entry_set_text(filepopup_win, "label_year", "");
 
 	if (tuple->track_number != 0)
 		filepopup_entry_set_text_free(filepopup_win, "label_tracknum", g_strdup_printf("%d", tuple->track_number));
+	else
+		filepopup_entry_set_text(filepopup_win, "label_tracknum", "");
 
 	tmp = fileinfo_recursive_get_image(tuple->file_path, tuple->file_name, 0);
 	if (tmp) { // picture found

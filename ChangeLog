@@ -1,3 +1,14 @@
+2007-01-18 11:02:55 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3732]
+  - security and warning fixes from ssommer@suse
+  
+  trunk/src/audacious/controlsocket.c         |    9 ++++++++-
+  trunk/src/audacious/util.c                  |    7 ++++++-
+  trunk/src/audacious/widgets/playlist_list.c |    2 +-
+  trunk/src/libaudacious/beepctrl.c           |    9 ++++++++-
+  4 files changed, 23 insertions(+), 4 deletions(-)
+
+
 2007-01-18 09:46:30 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3730]
   - Add GenericName and remove icon filename extension from .desktop file. 
