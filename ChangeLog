@@ -1,3 +1,15 @@
+2007-01-18 05:46:23 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3728]
+  - support for libmcs (pass --enable-mcs to configure)
+  - clean up some idieosyncracies in configure
+  
+  trunk/configure.ac                       |   36 ++++++++++++++++++++++++-------
+  trunk/mk/rules.mk.in                     |    2 +
+  trunk/src/libaudacious/Makefile          |    4 ++-
+  trunk/src/libaudacious/configdb_libmcs.c |    3 --
+  4 files changed, 35 insertions(+), 10 deletions(-)
+
+
 2007-01-17 20:51:12 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3726]
   - add configdb backend based on libmcs.
