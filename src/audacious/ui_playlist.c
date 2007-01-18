@@ -253,25 +253,13 @@ void
 playlistwin_update_list(Playlist *playlist)
 {
     /* this can happen early on. just bail gracefully. */
-    if (playlistwin_list == NULL)
-        return;
+    g_return_if_fail(playlistwin_list);
 
     widget_draw(WIDGET(playlistwin_list));
     widget_draw(WIDGET(playlistwin_slider));
     playlistwin_update_info(playlist);
     playlistwin_update_sinfo(playlist);
 }
-
-#if 0
-static void
-playlistwin_redraw_list(void)
-{
-    g_return_if_fail(playlistwin_list != NULL);
-
-    draw_widget(playlistwin_list);
-    draw_widget(playlistwin_slider);
-}
-#endif
 
 static void
 playlistwin_set_mask(void)
@@ -328,20 +316,19 @@ playlistwin_set_sinfo_font(gchar *font)
 {
     gchar *tmp = NULL, *tmp2 = NULL;
 
-    if(!font)
-        return;
+    g_return_if_fail(font);
 
     tmp = g_strdup(font);
-    if(!tmp)
-        return;
+    g_return_if_fail(tmp);
 
     *strrchr(tmp, ' ') = '\0';
     tmp2 = g_strdup_printf("%s 8", tmp);
-    if(!tmp2)
-        return;
+    g_return_if_fail(tmp2);
+
     textbox_set_xfont(playlistwin_sinfo, cfg.mainwin_use_xfont, tmp2);
 
-    g_free(tmp); g_free(tmp2);
+    g_free(tmp);
+    g_free(tmp2);
 }
 
 void
@@ -731,16 +718,6 @@ playlistwin_show_filebrowser(void)
     util_run_filebrowser(NO_PLAY_BUTTON);
 }
 
-#if 0
-static void
-playlistwin_add_dir_handler(const gchar * dir)
-{
-    g_free(cfg.filesel_path);
-    cfg.filesel_path = g_strdup(dir);
-    playlist_add_dir(dir);
-}
-#endif
-
 static void
 playlistwin_fileinfo(void)
 {
@@ -758,13 +735,13 @@ playlistwin_fileinfo(void)
 }
 
 static void
-show_playlist_save_error(GtkWindow * parent,
-                         const gchar * filename)
+show_playlist_save_error(GtkWindow *parent,
+                         const gchar *filename)
 {
     GtkWidget *dialog;
     
     g_return_if_fail(GTK_IS_WINDOW(parent));
-    g_return_if_fail(filename != NULL);
+    g_return_if_fail(filename);
 
     dialog = gtk_message_dialog_new(GTK_WINDOW(parent),
                                     GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -845,19 +822,6 @@ playlistwin_save_playlist(const gchar * filename)
     if (!playlist_save(playlist_get_active(), filename))
         show_playlist_save_error(GTK_WINDOW(playlistwin), filename);
 }
-
-#if 0
-static void
-playlistwin_save_current(void)
-{
-    const gchar *filename;
-
-    if (!(filename = playlist_get_current_name()))
-        return;
-
-    playlistwin_save_playlist(filename);
-}
-#endif
 
 static void
 playlistwin_load_playlist(const gchar * filename)
@@ -1523,7 +1487,7 @@ playlistwin_drag_data_received(GtkWidget * widget,
     gint pos;
     Playlist *playlist = playlist_get_active();
 
-    g_return_if_fail(selection_data != NULL);
+    g_return_if_fail(selection_data);
 
     if (!selection_data->data) {
         g_message("Received no DND data!");
@@ -2142,21 +2106,21 @@ action_playlist_select_all(void)
 /* playlistwin_select_search callback functions
    placed here to avoid making the code messier :) */
 void
-playlistwin_select_search_cbt_cb( GtkWidget *called_cbt , gpointer other_cbt )
+playlistwin_select_search_cbt_cb(GtkWidget *called_cbt, gpointer other_cbt)
 {
-    if ( gtk_toggle_button_get_active( GTK_TOGGLE_BUTTON(called_cbt) ) == TRUE )
-        gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(other_cbt) , FALSE );
+    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(called_cbt)) == TRUE)
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(other_cbt), FALSE);
     return;
 }
 
 static gboolean
-playlistwin_select_search_kp_cb( GtkWidget *entry , GdkEventKey *event ,
-                                 gpointer searchdlg_win )
+playlistwin_select_search_kp_cb(GtkWidget *entry, GdkEventKey *event,
+                                 gpointer searchdlg_win)
 {
     switch (event->keyval)
     {
         case GDK_Return:
-            gtk_dialog_response( GTK_DIALOG(searchdlg_win) , GTK_RESPONSE_ACCEPT );
+            gtk_dialog_response(GTK_DIALOG(searchdlg_win), GTK_RESPONSE_ACCEPT);
             return TRUE;
         default:
             return FALSE;
@@ -2168,65 +2132,68 @@ playlistwin_select_search_kp_cb( GtkWidget *entry , GdkEventKey *event ,
 static gboolean
 playlistwin_fileinfopopup_probe(gpointer * filepopup_win)
 {
-	gint x, y, pos;
-	TitleInput *tuple;
-	static gint prev_x = 0, prev_y = 0, ctr = 0, prev_pos = -1;
-	static gint shaded_pos = -1, shaded_prev_pos = -1;
-	gboolean skip = FALSE;
-	GdkWindow *win;
-	Playlist *playlist = playlist_get_active();
+    gint x, y, pos;
+    TitleInput *tuple;
+    static gint prev_x = 0, prev_y = 0, ctr = 0, prev_pos = -1;
+    static gint shaded_pos = -1, shaded_prev_pos = -1;
+    gboolean skip = FALSE;
+    GdkWindow *win;
+    Playlist *playlist = playlist_get_active();
 
-	win = gdk_window_at_pointer(NULL, NULL);
-	gdk_window_get_pointer(GDK_WINDOW(playlistwin->window), &x, &y, NULL);
-	pos = playlist_list_get_playlist_position(playlistwin_list, x, y);
+    win = gdk_window_at_pointer(NULL, NULL);
+    gdk_window_get_pointer(GDK_WINDOW(playlistwin->window), &x, &y, NULL);
+    pos = playlist_list_get_playlist_position(playlistwin_list, x, y);
 
-	if (win == NULL
-		|| cfg.show_filepopup_for_tuple == FALSE
-		|| playlistwin_list->pl_tooltips == FALSE
-		|| pos != prev_pos
-		|| win != GDK_WINDOW(playlistwin->window))
-	{
-		prev_pos = pos;
-		ctr = 0;
-                audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
-		return TRUE;
-	}
+    if (win == NULL
+        || cfg.show_filepopup_for_tuple == FALSE
+        || playlistwin_list->pl_tooltips == FALSE
+        || pos != prev_pos
+        || win != GDK_WINDOW(playlistwin->window))
+    {
+        prev_pos = pos;
+        ctr = 0;
+        audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
+        return TRUE;
+    }
 
-	if (prev_x == x && prev_y == y)
-		ctr++;
-	else
-	{
-		ctr = 0;
-		prev_x = x;
-		prev_y = y;
-		audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
-		return TRUE;
-	}
+    if (prev_x == x && prev_y == y)
+        ctr++;
+    else
+    {
+        ctr = 0;
+        prev_x = x;
+        prev_y = y;
+        audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
+        return TRUE;
+    }
 
-	if (playlistwin_is_shaded()) {
-		shaded_pos = playlist_get_position(playlist);
-		if (shaded_prev_pos != shaded_pos)
-			skip = TRUE;
-	}
+    if (playlistwin_is_shaded())
+    {
+        shaded_pos = playlist_get_position(playlist);
+        if (shaded_prev_pos != shaded_pos)
+            skip = TRUE;
+    }
 
         if (ctr >= cfg.filepopup_delay && (skip == TRUE || GTK_WIDGET_VISIBLE(GTK_WIDGET(filepopup_win)) != TRUE)) {
-		if (pos == -1 && !playlistwin_is_shaded()) {
-			audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
-			return TRUE;
-	    	}
-		else { /* shaded mode */
-			tuple = playlist_get_tuple(playlist, shaded_pos);
-			audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
-			audacious_fileinfopopup_show_from_tuple(GTK_WIDGET(filepopup_win), tuple);
-			shaded_prev_pos = shaded_pos;
-		}
+        if (pos == -1 && !playlistwin_is_shaded())
+        {
+            audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
+            return TRUE;
+        }
+        /* shaded mode */
+        else
+        {
+            tuple = playlist_get_tuple(playlist, shaded_pos);
+            audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);
+            audacious_fileinfopopup_show_from_tuple(GTK_WIDGET(filepopup_win), tuple);
+            shaded_prev_pos = shaded_pos;
+        }
 
-		prev_pos = pos;
+        prev_pos = pos;
 
-		tuple = playlist_get_tuple(playlist, pos);
-		audacious_fileinfopopup_show_from_tuple(GTK_WIDGET(filepopup_win), tuple);
-	}
+        tuple = playlist_get_tuple(playlist, pos);
+        audacious_fileinfopopup_show_from_tuple(GTK_WIDGET(filepopup_win), tuple);
+    }
 
-	return TRUE;
+    return TRUE;
 }
-
