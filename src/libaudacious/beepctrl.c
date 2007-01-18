@@ -106,9 +106,16 @@ remote_send_packet(gint fd, guint32 command, gpointer data,
     pkt_hdr.command = command;
     pkt_hdr.data_length = data_length;
     if ((size_t)write(fd, &pkt_hdr, sizeof(ClientPktHeader)) < sizeof(pkt_hdr))
+    {
+        g_warning("remote_send_packet: failed to write packet header");
         return;
+    }
     if (data_length && data)
-        write(fd, data, data_length);
+        if( data_length != write(fd, data, data_length))
+        {
+            g_warning("remote_send_packet: failed to write packet");
+            return;
+        }
 }
 
 static void

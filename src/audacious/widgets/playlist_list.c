@@ -676,7 +676,7 @@ playlist_list_draw(Widget * w)
                        entry->length / 60000, (entry->length / 1000) % 60);
         }
 
-        strncat(tail, length, sizeof(tail));
+        strncat(tail, length, sizeof(tail) - 1);
         tail_len = strlen(tail);
 
         max_time_len = MAX(max_time_len, tail_len);

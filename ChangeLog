@@ -1,3 +1,12 @@
+2007-01-18 09:46:30 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3730]
+  - Add GenericName and remove icon filename extension from .desktop file. 
+    Patch by ssommer. Closes #764.
+  
+  trunk/src/audacious/audacious.desktop.in |    3 ++-
+  1 file changed, 2 insertions(+), 1 deletion(-)
+
+
 2007-01-18 05:46:23 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3728]
   - support for libmcs (pass --enable-mcs to configure)

@@ -268,9 +268,16 @@ ctrl_write_packet(gint fd, gpointer data, gint length)
     pkthdr.version = XMMS_PROTOCOL_VERSION;
     pkthdr.data_length = length;
     if ((size_t)write(fd, &pkthdr, sizeof(ServerPktHeader)) < sizeof(pkthdr))
+    {
+        g_warning("ctrl_write_packet: failed to write packet header");
         return;
+    }
     if (data && length > 0)
-        write(fd, data, length);
+        if(length != write(fd, data, length))
+        {
+            g_warning("ctrl_write_packet: failed to write packet");
+            return;
+        }
 }
 
 static void

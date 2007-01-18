@@ -304,7 +304,12 @@ archive_decompress(const gchar * filename)
         return NULL;
     }
 
-    system(cmd);
+    if(system(cmd) == -1)
+    {
+        g_message("could not execute cmd %s",cmd);
+        g_free(cmd);
+        return NULL;
+    }
     g_free(cmd);
 
     return tmpdir;
