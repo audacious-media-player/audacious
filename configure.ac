@@ -239,7 +239,9 @@ AC_SUBST(REGEX_CFLAGS)
 
 dnl GConf support
 
-AC_ARG_ENABLE( gconf,
+CONFIGDB_BACKEND="rcfile"
+
+AC_ARG_ENABLE(gconf,
     [  --enable-gconf          enable GConf support (default=disabled)],
     [enable_gconf=$enableval],
     [enable_gconf="no"]
@@ -257,8 +259,28 @@ fi
 
 if test "$enable_gconf" = "yes"; then
 	CONFIGDB_BACKEND="gconf"
-else
-	CONFIGDB_BACKEND="rcfile"
+fi
+
+dnl libmcs support
+
+AC_ARG_ENABLE(mcs,
+    [  --enable-mcs            enable mcs support (default=disabled)],
+    [enable_mcs=$enableval],
+    [enable_mcs="no"]
+)
+
+if test "$enable_mcs" = "yes"; then
+    PKG_CHECK_MODULES(LIBMCS, [libmcs >= 0.1],
+        [
+         AC_DEFINE(HAVE_MCS, , [Define if building with libmcs support])
+         ADD_PC_REQUIRES([libmcs >= 0.1])
+        ],
+        [AC_MSG_ERROR([Cannot find libmcs])]
+    )
+fi
+
+if test "$enable_mcs" = "yes"; then
+	CONFIGDB_BACKEND="libmcs"
 fi
 
 AC_SUBST(CONFIGDB_BACKEND)
@@ -417,14 +439,14 @@ if test "$BEEP_PATH" != "no"; then
     echo "  Current Audacious executable:           $BEEP_PATH"
 fi
 
-echo "  Configuration path:                     \$HOME/$rc_path"
+echo "  Legacy configuration path:              \$HOME/$rc_path"
 echo
 echo "  Use one plugin dir:                     $enable_one_plugin_dir"
 echo "  Allow user plugin dir:                  $enable_user_plugin_dir"
 echo
-echo "  GNOME support"
-echo "  -------------"
-echo "  GConf support                           $enable_gconf"
+echo "  GConf support:                          $enable_gconf"
+echo
+echo "  mcs support:                            $enable_mcs"
 echo
 
 if test "$beep_cv_lib_xlibs_threadsafe" = "no"; then

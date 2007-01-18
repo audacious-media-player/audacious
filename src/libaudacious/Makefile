@@ -10,11 +10,13 @@ OBJECTIVE_SONAME_SUFFIX = 4
 
 LIBADD = \
 	$(GTK_LIBS)      \
-	$(GCONF_LIBS)
+	$(GCONF_LIBS)	\
+	$(LIBMCS_LIBS)
 
 CFLAGS += $(PICFLAGS) \
 	$(GTK_CFLAGS)        \
 	$(GCONF_CFLAGS)      \
+	$(LIBMCS_CFLAGS)	\
 	-D_AUDACIOUS_CORE    \
 	-I.. -I../..	      \
 	-I../intl

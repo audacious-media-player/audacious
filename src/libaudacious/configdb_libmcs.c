@@ -39,7 +39,6 @@ ConfigDb *
 bmp_cfg_db_open()
 {
     ConfigDb *db;
-    char *tmp;
 
     db = g_new(ConfigDb, 1);
 
@@ -152,7 +151,7 @@ bmp_cfg_db_set_bool(ConfigDb * db,
     if (!section)
         section = RCFILE_DEFAULT_SECTION_NAME;
 
-    mcs_set_boolean(db->handle, section, key, value);
+    mcs_set_bool(db->handle, section, key, value);
 }
 
 void

@@ -1,3 +1,11 @@
+2007-01-17 20:51:12 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3726]
+  - add configdb backend based on libmcs.
+  
+  trunk/src/libaudacious/configdb_libmcs.c |  194 +++++++++++++++++++++++++++++++
+  1 file changed, 194 insertions(+)
+
+
 2007-01-17 20:26:55 +0000  Giacomo Lozito <james@develia.org>
   revision [3724]
   - added progressbar with display of elapsed time for metadata tooltip
