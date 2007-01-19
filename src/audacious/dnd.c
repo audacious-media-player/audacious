@@ -1,7 +1,11 @@
-/*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2007  Audacious development team
+/*  Audacious
+ *  Copyright (C) 2005-2007  Audacious development team.
  *
- *  Copyright (C) 1999 Richard Boulton <richard@tartarus.org>
+ *  Based on BMP:
+ *  Copyright (C) 2003-2004  BMP development team.
+ *
+ *  Based on XMMS:
+ *  Copyright (C) 1998-2003  XMMS development team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,22 +21,12 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-/* fft.h: header for iterative implementation of a FFT */
+#include "dnd.h"
 
-#ifndef FFT_H
-#define FFT_H
-
-#include <glib.h>
-
-#define FFT_BUFFER_SIZE_LOG 9
-#define FFT_BUFFER_SIZE (1 << FFT_BUFFER_SIZE_LOG)
-
-/* sound sample - should be a signed 16 bit value */
-typedef gint16 sound_sample;
-
-typedef struct _struct_fft_state fft_state;
-fft_state *fft_init(void);
-void fft_perform(const sound_sample * input, float *output, fft_state * state);
-void fft_close(fft_state * state);
-
-#endif
+void
+bmp_drag_dest_set(GtkWidget *widget)
+{
+    gtk_drag_dest_set(widget, GTK_DEST_DEFAULT_MOTION | GTK_DEST_DEFAULT_DROP,
+					  bmp_drop_types, 5,
+                      GDK_ACTION_COPY | GDK_ACTION_MOVE);
+}

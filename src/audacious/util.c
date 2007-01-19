@@ -58,7 +58,6 @@
 #include "ui_playlist.h"
 
 #ifdef USE_CHARDET
-    #include "../libguess/libguess.h"
     #include "../librcd/librcd.h"
 #ifdef HAVE_UDET
     #include <libudet_c.h>

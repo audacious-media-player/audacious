@@ -21,6 +21,9 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+#ifndef DND_H
+#define DND_H
+
 #include <gtk/gtk.h>
 
 /* Designate dropped data types that we know and care about */
@@ -41,8 +44,6 @@ static const GtkTargetEntry bmp_drop_types[] = {
     {"application/x-font-ttf", 0, BMP_DROP_FONT},
 };
 
-#define bmp_drag_dest_set(widget) \
-    gtk_drag_dest_set(widget, \
-		      GTK_DEST_DEFAULT_MOTION | GTK_DEST_DEFAULT_DROP, \
-		      bmp_drop_types, 5, \
-                      GDK_ACTION_COPY | GDK_ACTION_MOVE)
+void bmp_drag_dest_set(GtkWidget*);
+
+#endif

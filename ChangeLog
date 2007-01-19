@@ -1,3 +1,10 @@
+2007-01-18 21:45:05 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3738]
+  beautify and comment main.c
+  trunk/src/audacious/main.c |  250 ++++++++++++++++++++++-----------------------
+  1 file changed, 127 insertions(+), 123 deletions(-)
+
+
 2007-01-18 21:21:57 +0000  Michael Farber <01mf02@gmail.com>
   revision [3736]
   reformatting and g_return_if_fail()

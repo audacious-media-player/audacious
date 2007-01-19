@@ -4,8 +4,6 @@ include ../../mk/objective.mk
 
 SUBDIRS = widgets glade images ui
 
-beepincludedir = $(includedir)/audacious
-
 OBJECTIVE_BINS = audacious
 
 LDFLAGS += $(AUDLDFLAGS)
@@ -29,61 +27,51 @@ CFLAGS += \
 	-I.. -I../..   \
 	-I../intl
 
-HEADERS = \
-	input.h \
-	main.h \
-	output.h \
-	playlist.h \
-	playlist_container.h \
-	plugin.h \
-	ui_fileinfopopup.h \
-	ui_preferences.h \
-	util.h \
-	vfs.h \
-	vfs_buffer.h
-
 SOURCES = \
 	build_stamp.c \
-	vfs.c \
-	vfs_buffer.c \
-	vfs_buffered_file.c \
-	vfs_common.c \
-	genevent.c \
-	util.c \
-	output.c \
-	fft.c \
-	input.c \
-	effect.c \
-	general.c \
-	visualization.c \
-	pluginenum.c \
-	playlist.c \
-	playlist_container.c \
-	playlist_manager.c \
 	controlsocket.c \
+	dnd.c \
 	dock.c \
-	playback.c \
-	main.c \
-	logger.c \
-	ui_skinselector.c \
-	ui_preferences.c \
-	ui_fileinfo.c \
-	ui_fileinfopopup.c \
-	ui_playlist.c \
-	ui_manager.c \
-	ui_equalizer.c \
-	ui_main.c \
-	ui_about.c ui_credits.c \
+	effect.c \
+	fft.c \
+	general.c \
+	genevent.c \
+	getopt1.c \
+	getopt.c \
 	glade.c \
 	hints.c \
-	getopt.c getopt1.c \
 	iir.c \
 	iir_cfs.c \
 	iir_fpu.c \
+	input.c \
+	logger.c \
+	main.c \
+	memorypool.c \
+	output.c \
+	pixbuf_effects.c \
+	playback.c \
+	playlist.c \
+	playlist_container.c \
+	playlist_manager.c \
+	pluginenum.c \
 	signals.c \
 	strings.c \
-	pixbuf_effects.c \
-	memorypool.c
+	ui_about.c \
+	ui_credits.c \
+	ui_equalizer.c \
+	ui_fileinfo.c \
+	ui_fileinfopopup.c \
+	ui_main.c \
+	ui_manager.c \
+	ui_playlist.c \
+	ui_preferences.c \
+	ui_skinselector.c \
+	util.c \
+	vfs_buffer.c \
+	vfs_buffered_file.c \
+	vfs.c \
+	vfs_common.c \
+	visualization.c
 
 OBJECTS = ${SOURCES:.c=.o}
 

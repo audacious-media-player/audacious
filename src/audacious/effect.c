@@ -30,9 +30,7 @@
 
 EffectPluginData ep_data = {
     NULL,
-    NULL,
-    FALSE,
-    FALSE
+    NULL
 };
 
 static gint

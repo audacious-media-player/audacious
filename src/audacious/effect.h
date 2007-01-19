@@ -31,9 +31,6 @@ typedef struct _EffectPluginData EffectPluginData;
 struct _EffectPluginData {
     GList *effect_list;
     GList *enabled_list;
-    /* FIXME: Needed? */
-    gboolean playing;
-    gboolean paused;
 };
 
 GList *get_effect_list(void);
