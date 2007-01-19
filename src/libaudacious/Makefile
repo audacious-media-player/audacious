@@ -3,8 +3,6 @@ include ../../mk/init.mk
 
 PICLDFLAGS = $(LIBLDFLAGS)
 
-beepincludedir = $(includedir)/audacious
-
 OBJECTIVE_LIBS = libaudacious$(SHARED_SUFFIX)
 OBJECTIVE_SONAME_SUFFIX = 4
 

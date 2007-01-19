@@ -30,7 +30,6 @@ gint playback_get_time(void);
 void playback_initiate(void);
 void playback_pause(void);
 void playback_stop(void);
-void playback_stop_reentrant(void);
 gboolean playback_play_file(PlaylistEntry *entry);
 gboolean playback_get_playing(void);
 gboolean playback_get_paused(void);

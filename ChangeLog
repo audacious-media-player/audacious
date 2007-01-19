@@ -1,3 +1,16 @@
+2007-01-19 22:12:34 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3740]
+  cleanups in many regards
+  trunk/src/audacious/Makefile |   80 ++++++++++++++++++-------------------------
+  trunk/src/audacious/dnd.c    |   32 +++++++++++++++++
+  trunk/src/audacious/dnd.h    |   11 +++--
+  trunk/src/audacious/effect.c |    4 --
+  trunk/src/audacious/effect.h |    3 -
+  trunk/src/audacious/fft.h    |   30 +++++-----------
+  trunk/src/audacious/util.c   |    1 
+  7 files changed, 83 insertions(+), 78 deletions(-)
+
+
 2007-01-18 21:45:05 +0000  Michael Farber <01mf02@gmail.com>
   revision [3738]
   beautify and comment main.c

@@ -196,30 +196,6 @@ playback_stop(void)
     playstatus_set_status_buffering(mainwin_playstatus, FALSE);
 }
 
-void
-playback_stop_reentrant(void)
-{
-    if (ip_data.playing && get_current_input_plugin()) {
-
-        if (playback_get_paused())
-            playback_pause();
-
-        ip_data.playing = FALSE;
-
-        free_vis_data();
-        ip_data.paused = FALSE;
-
-        if (input_info_text) {
-            g_free(input_info_text);
-            input_info_text = NULL;
-            mainwin_set_info_text();
-        }
-    }
-
-    ip_data.buffering = FALSE;
-    ip_data.playing = FALSE;
-}
-
 static void
 run_no_output_plugin_dialog(void)
 {
