@@ -1,3 +1,13 @@
+2007-01-19 22:32:23 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3742]
+  some last good-night cleanup
+  trunk/src/audacious/playback.c  |   24 ------------------------
+  trunk/src/audacious/playback.h  |    1 -
+  trunk/src/audtool/Makefile      |    2 --
+  trunk/src/libaudacious/Makefile |    2 --
+  4 files changed, 29 deletions(-)
+
+
 2007-01-19 22:12:34 +0000  Michael Farber <01mf02@gmail.com>
   revision [3740]
   cleanups in many regards

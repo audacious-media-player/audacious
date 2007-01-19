@@ -27,6 +27,19 @@ CFLAGS += \
 	-I.. -I../..   \
 	-I../intl
 
+HEADERS = \
+	input.h \
+	main.h \
+	output.h \
+	playlist.h \
+	playlist_container.h \
+	plugin.h \
+	ui_fileinfopopup.h \
+	ui_preferences.h \
+	util.h \
+	vfs.h \
+	vfs_buffer.h
+
 SOURCES = \
 	build_stamp.c \
 	controlsocket.c \
