@@ -32,7 +32,6 @@
 #include "playback.h"
 
 #include "playlist.h"
-#include "libaudacious/util.h"
 
 OutputPluginData op_data = {
     NULL,
@@ -93,39 +92,37 @@ set_current_output_plugin(gint i)
     if (playing == TRUE)
     {
         guint time, pos;
-	PlaylistEntry *entry;
+        PlaylistEntry *entry;
 
-	/* don't stop yet, get the seek time and playlist position first */
+        /* don't stop yet, get the seek time and playlist position first */
         pos = playlist_get_position(playlist_get_active());
         time = op->output_time();
 
-	/* reset the audio system */
+        /* reset the audio system */
         mainwin_stop_pushed();
         op->close_audio();
 
-	g_usleep(300000);
+        g_usleep(300000);
 
-	/* wait for the playback thread to come online */
+        /* wait for the playback thread to come online */
         while (playback_get_playing())
             g_message("waiting for audio system shutdown...");
 
-	/* wait for the playback thread to come online */
+        /* wait for the playback thread to come online */
         playlist_set_position(playlist_get_active(), pos);
-	entry = playlist_get_entry_to_play(playlist_get_active());
+        entry = playlist_get_entry_to_play(playlist_get_active());
         playback_play_file(entry);
 
-	while (!playback_get_playing())
-	{
-	    gtk_main_iteration();
-            g_message("waiting for audio system startup...");
-	}
+        while (!playback_get_playing())
+        {
+            gtk_main_iteration();
+                g_message("waiting for audio system startup...");
+        }
 
-	/* and signal a reseek */
+        /* and signal a reseek */
         if (playlist_get_current_length(playlist_get_active()) > -1 &&
             time <= (playlist_get_current_length(playlist_get_active())))
-	{
             playback_seek(time / 1000);
-        }
     }
 }
 
@@ -186,8 +183,8 @@ output_set_eq(gboolean active, gfloat pre, gfloat * bands)
 
     for (i = 0; i < 10; ++i)
     {
-	set_gain(i, 0, 0.03 * bands[i] + 0.000999999 * bands[i] * bands[i]);
-	set_gain(i, 1, 0.03 * bands[i] + 0.000999999 * bands[i] * bands[i]);
+    set_gain(i, 0, 0.03 * bands[i] + 0.000999999 * bands[i] * bands[i]);
+    set_gain(i, 1, 0.03 * bands[i] + 0.000999999 * bands[i] * bands[i]);
     }
 }
 
@@ -233,18 +230,18 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
 
     /* Is our output port already open? */
     if ((op_state.rate != 0 && op_state.nch != 0) &&
-	(op_state.rate == rate && op_state.nch == nch && op_state.fmt == fmt))
+    (op_state.rate == rate && op_state.nch == nch && op_state.fmt == fmt))
     {
-	/* Yes, and it's the correct sampling rate. Reset the counter and go. */
-	op->flush(0);
+    /* Yes, and it's the correct sampling rate. Reset the counter and go. */
+    op->flush(0);
         return 1;
     }
     else if (op_state.rate != 0 && op_state.nch != 0)
-	op->close_audio();
+    op->close_audio();
 
     ret = op->open_audio(fmt, rate, nch);
 
-    if (ret == 1)			 /* Success? */
+    if (ret == 1)            /* Success? */
     {
         op_state.fmt = fmt;
         op_state.rate = rate;
@@ -275,7 +272,7 @@ output_close_audio(void)
      * not requested a stop.  --nenolod
      */
     if (ip_data.stop == FALSE && 
-	(playlist_get_position_nolock(playlist_get_active()) < playlist_get_length_nolock(playlist_get_active()) - 1))
+    (playlist_get_position_nolock(playlist_get_active()) < playlist_get_length_nolock(playlist_get_active()) - 1))
         return;
 
     /* Sanity check. */
@@ -349,58 +346,59 @@ produce_audio(gint time,        /* position             */
     OutputPlugin *op = get_current_output_plugin();
     int writeoffs;
 
-    if (!caneq && cfg.equalizer_active) {    /* wrong byte order         */
-        byteswap(length, ptr);               /*  so convert              */
+    if (!caneq && cfg.equalizer_active) {    /* wrong byte order */
+        byteswap(length, ptr);               /* so convert */
         ++swapped;
         ++caneq;
-    }                                        /*  can eq now, mark swapd  */
-    else if (caneq && !cfg.equalizer_active) /* right order but no eq    */
-        caneq = 0;                           /*  so don't eq             */
+    }                                        /* can eq now, mark swapd */
+    else if (caneq && !cfg.equalizer_active) /* right order but no eq */
+        caneq = 0;                           /* so don't eq */
 
-    if (caneq) {                /* if eq enab               */
-        if (!init) {            /*  if first run            */
-            init_iir();         /*   then init eq           */
+    if (caneq) {                /* if eq enab */
+        if (!init) {            /* if first run */
+            init_iir();         /* then init eq */
             ++init;
         }
 
         iir(&ptr, length, nch);
 
-        if (swapped)               /* if was swapped          */
-            byteswap(length, ptr); /*  swap back for output   */
+        if (swapped)               /* if was swapped */
+            byteswap(length, ptr); /* swap back for output */
     }                           
 
     /* do vis plugin(s) */
     input_add_vis_pcm(time, fmt, nch, length, ptr);
 
     writeoffs = 0;
-    while (writeoffs < length) {
-	int writable = length - writeoffs;
+    while (writeoffs < length)
+    {
+        int writable = length - writeoffs;
 
-	if (writable > 2048)
-	    writable = 2048;
+        if (writable > 2048)
+            writable = 2048;
 
-        if (writable == 0)
-	    return;
+            if (writable == 0)
+            return;
 
-	while (op->buffer_free() < writable) { /* wait output buf            */
-	    if (going && !*going)              /*   thread stopped?          */
-		return;                        /*     so finish              */
+        while (op->buffer_free() < writable) { /* wait output buf */
+            if (going && !*going)              /* thread stopped? */
+                return;                        /* so finish */
 
-            if (ip_data.stop)                  /* has a stop been requested? */
-	        return;                        /*     yes, so finish         */
+                if (ip_data.stop)              /* has a stop been requested? */
+                return;                        /* yes, so finish */
 
-	    g_usleep(10000);                   /*   else sleep for retry     */
-	}
+                g_usleep(10000);               /* else sleep for retry */
+        }
 
-	if (ip_data.stop)
-	    return;
+        if (ip_data.stop)
+            return;
 
-	if (going && !*going)                  /*   thread stopped?          */
-	    return;                            /*     so finish              */
+        if (going && !*going)                  /* thread stopped? */
+            return;                            /* so finish */
 
-	/* do output */
-	op->write_audio(((guint8 *) ptr) + writeoffs, writable);
+        /* do output */
+        op->write_audio(((guint8 *) ptr) + writeoffs, writable);
 
-	writeoffs += writable;
+        writeoffs += writable;
     }
 }

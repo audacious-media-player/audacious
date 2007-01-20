@@ -51,7 +51,7 @@
 #include "playlist.h"
 #include "playlist_container.h"
 #include "playlist_manager.h"
-#include "util.h"
+#include "strings.h"
 
 #include "icons-stock.h"
 #include "images/audacious_playlist.xpm"

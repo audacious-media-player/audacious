@@ -41,6 +41,7 @@
 #include "ui_main.h"
 #include "playback.h"
 #include "playlist.h"
+#include "strings.h"
 #include "util.h"
 
 #include "effect.h"

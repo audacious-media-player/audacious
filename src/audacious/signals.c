@@ -58,7 +58,7 @@ signal_install_handler_full (gint           signal_number,
         return NULL;
     }
 
-    return old_action.sa_handler;    
+    return old_action.sa_handler;
 }
 
 /* 

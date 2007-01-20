@@ -22,41 +22,13 @@
  *  02110-1301, USA.
  */
 
-#define WEIRD_UTF_16_PLAYLIST_ENCODING
+#include "strings.h"
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
-#define NEED_GLADE
-#include "util.h"
-
-#include <glib.h>
 #include <glib/gi18n.h>
-#include <glade/glade.h>
-#include <gtk/gtk.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
-#include "platform/smartinclude.h"
-#include <gdk/gdkkeysyms.h>
-#include <X11/Xlib.h>
-//#include <sys/ipc.h>
-#include <unistd.h>
-#include <errno.h>
-
-#ifdef HAVE_FTS_H
-#  include <fts.h>
-#endif
-
-#include "glade.h"
-#include "input.h"
 #include "main.h"
-#include "playback.h"
-#include "playlist.h"
-#include "ui_playlist.h"
 
 #ifdef USE_CHARDET
     #include "../libguess/libguess.h"
@@ -275,7 +247,8 @@ convert_title_text(gchar * title)
 }
 
 gchar *chardet_to_utf8(const gchar *str, gssize len,
-                       gsize *arg_bytes_read, gsize *arg_bytes_write, GError **arg_error)
+                       gsize *arg_bytes_read, gsize *arg_bytes_write,
+					   GError **arg_error)
 {
 #ifdef USE_CHARDET
 	char  *det = NULL, *encoding = NULL;

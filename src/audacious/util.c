@@ -21,8 +21,6 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#define WEIRD_UTF_16_PLAYLIST_ENCODING
-
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
@@ -34,16 +32,11 @@
 #include <glib/gi18n.h>
 #include <glade/glade.h>
 #include <gtk/gtk.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
 #include "platform/smartinclude.h"
-#include <gdk/gdkkeysyms.h>
-#include <X11/Xlib.h>
-//#include <sys/ipc.h>
-#include <unistd.h>
 #include <errno.h>
 
 #ifdef HAVE_FTS_H
@@ -54,7 +47,7 @@
 #include "input.h"
 #include "main.h"
 #include "playback.h"
-#include "playlist.h"
+#include "strings.h"
 #include "ui_playlist.h"
 
 #ifdef USE_CHARDET

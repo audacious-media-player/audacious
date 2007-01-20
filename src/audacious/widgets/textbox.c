@@ -29,6 +29,7 @@
 #include <ctype.h>
 
 #include "main.h"
+#include "strings.h"
 #include "util.h"
 
 static void textbox_generate_pixmap(TextBox * tb);

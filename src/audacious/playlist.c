@@ -62,7 +62,7 @@
 #include "playlist_container.h"
 #include "playlist_manager.h"
 #include "ui_playlist.h"
-#include "util.h"
+#include "strings.h"
 #include "ui_fileinfo.h"
 
 #include "debug.h"

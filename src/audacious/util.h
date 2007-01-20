@@ -46,8 +46,6 @@ typedef gboolean(*DirForeachFunc) (const gchar * path,
                                    gpointer user_data);
 
 
-gchar *escape_shell_chars(const gchar * string);
-
 gchar *find_file_recursively(const gchar * dirname, const gchar * file);
 void del_directory(const gchar * dirname);
 gboolean dir_foreach(const gchar * path, DirForeachFunc function,
@@ -83,20 +81,6 @@ gchar *archive_basename(const gchar * path);
 
 guint gint_count_digits(gint n);
 
-gchar *convert_title_text(gchar * text);
-
-gchar *str_append(gchar * str, const gchar * add_str);
-gchar *str_replace(gchar * str, gchar * new_str);
-void str_replace_in(gchar ** str, gchar * new_str);
-
-gboolean str_has_prefix_nocase(const gchar * str, const gchar * prefix);
-gboolean str_has_suffix_nocase(const gchar * str, const gchar * suffix);
-gboolean str_has_suffixes_nocase(const gchar * str, gchar * const *suffixes);
-const gchar *str_skip_chars(const gchar * str, const gchar * chars);
-
-gchar *filename_to_utf8(const gchar * filename);
-gchar *str_to_utf8(const gchar * str);
-gchar *str_to_utf8_fallback(const gchar * str);
 
 #if ENABLE_NLS
 gchar *bmp_menu_translate(const gchar * path, gpointer func_data);
@@ -112,8 +96,6 @@ typedef struct {
     gint y;
 } MenuPos;
 
-gchar *chardet_to_utf8(const gchar *str, gssize len,
-		       gsize *arg_bytes_read, gsize *arg_bytes_write, GError **arg_error);
 
 GdkPixmap *audacious_pixmap_resize(GdkWindow *src, GdkGC *src_gc, GdkPixmap *in, gint width, gint height);
 

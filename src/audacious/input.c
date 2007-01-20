@@ -35,7 +35,7 @@
 #include "main.h"
 #include "ui_main.h"
 #include "output.h"
-#include "util.h"
+#include "strings.h"
 #include "visualization.h"
 #include "playback.h"
 #include "widgets/widgetcore.h"

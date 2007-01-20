@@ -76,6 +76,7 @@
 #include "playback.h"
 #include "playlist.h"
 #include "libaudacious/urldecode.h"
+#include "strings.h"
 #include "util.h"
 #include "visualization.h"
 #include "libaudacious/configdb.h"
