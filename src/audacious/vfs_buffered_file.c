@@ -55,6 +55,13 @@ buffered_file_vfs_fread_impl(gpointer i_ptr,
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
 
+    /* is this request within the buffered area, or should we switch to 
+     * an FD? --nenolod
+     */
+    if ((vfs_ftell(handle->buffer)) + (size * nmemb) >= 
+	((VFSBuffer *) handle->buffer->handle)->size)
+        handle->which = TRUE;
+
     return vfs_fread(i_ptr, size, nmemb, handle->which == TRUE ? handle->fd : handle->buffer);
 }
 
@@ -77,7 +84,7 @@ buffered_file_vfs_getc_impl(VFSFile *stream)
     /* is this request within the buffered area, or should we switch to 
      * an FD? --nenolod
      */
-    if ((vfs_ftell(handle->buffer)) + (size * nmemb) >= 
+    if ((vfs_ftell(handle->buffer)) + 1 >= 
 	((VFSBuffer *) handle->buffer->handle)->size)
         handle->which = TRUE;
 
