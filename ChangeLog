@@ -1,3 +1,11 @@
+2007-01-20 05:26:43 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3750]
+  - turn off VFS debugging notices
+  
+  trunk/src/audacious/vfs.c |    4 ----
+  1 file changed, 4 deletions(-)
+
+
 2007-01-20 05:25:46 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3748]
   - new headless event loop
