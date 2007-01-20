@@ -22,7 +22,6 @@ src/audacious/playlist_manager.c
 # Glade files.
 src/audacious/glade/addfiles.glade
 src/audacious/glade/fileinfo.glade
-src/audacious/glade/fileinfo_popup.glade
 src/audacious/glade/prefswin.glade
 
 # Widgets.

@@ -1,3 +1,10 @@
+2007-01-19 23:05:01 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3744]
+  fix a stupid bug of mine
+  trunk/src/audacious/Makefile |   13 +++++++++++++
+  1 file changed, 13 insertions(+)
+
+
 2007-01-19 22:32:23 +0000  Michael Farber <01mf02@gmail.com>
   revision [3742]
   some last good-night cleanup
