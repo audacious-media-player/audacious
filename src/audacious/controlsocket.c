@@ -778,6 +778,10 @@ ctrlsocket_check(void)
              * never return anyway, so this will
              * work ok.
              */
+	    if (pkt->data)
+	        memory_pool_release(cs_pool, pkt->data);
+            memory_pool_release(cs_pool, pkt);
+
             g_mutex_unlock(packet_list_mutex);
             mainwin_quit_cb();
             break;

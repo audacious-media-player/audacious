@@ -1109,6 +1109,14 @@ void report_error(const gchar *error_text)
     }
 }
 
+static gboolean
+aud_headless_iteration(gpointer unused)
+{
+	audcore_generic_events();
+	free_vis_data();
+	return TRUE;
+}
+
 gint
 main(gint argc, gchar ** argv)
 {
@@ -1297,18 +1305,16 @@ main(gint argc, gchar ** argv)
     // if we are running headless
     else
     {
+	GMainLoop *loop;
+
         mainwin_set_info_text();
         playlist_start_get_info_thread();
 
         starting_up = FALSE;
 
-        while (TRUE)
-        {
-            /* headless eventloop */
-            audcore_generic_events();
-            free_vis_data();    /* to prevent buffer overflow -- paranoia */
-            xmms_usleep(10000);
-        }
+	loop = g_main_loop_new(NULL, TRUE);
+	g_timeout_add(10, aud_headless_iteration, NULL);
+	g_main_loop_run(loop);
 
         return EXIT_SUCCESS;
     }
