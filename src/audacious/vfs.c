@@ -28,8 +28,6 @@
 
 static GList *vfs_transports = NULL;
 
-#define VFS_DEBUG
-
 #ifdef VFS_DEBUG
 # define DBG(x, args...) g_print(x, ## args);
 #else
@@ -78,8 +76,6 @@ vfs_fopen(const gchar * path,
     for (node = vfs_transports; node != NULL; node = g_list_next(node))
     {
         vtable = (VFSConstructor *) node->data;
-
-        DBG("Does %s match %s?\n", decpath, vtable->uri_id);
 
         if (!strncasecmp(decpath, vtable->uri_id, strlen(vtable->uri_id)))
             break;
