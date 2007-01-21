@@ -1,3 +1,13 @@
+2007-01-21 05:30:24 +0000  Daniel Barkalow <barkalow@iabervon.org>
+  revision [3762]
+  Add a VFSFile method for getting metadata associated with the file.
+  
+  trunk/src/audacious/ui_credits.c |    2 ++
+  trunk/src/audacious/vfs.c        |   21 +++++++++++++++++++++
+  trunk/src/audacious/vfs.h        |    3 +++
+  3 files changed, 26 insertions(+)
+
+
 2007-01-21 04:57:39 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [3760]
   - config.h is necessary to conditional compilation of chardet.
