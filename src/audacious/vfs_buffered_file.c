@@ -188,6 +188,15 @@ vfs_buffered_file_new_from_uri(gchar *uri)
 
     sz = vfs_fread(fd->mem, 1, 32768, fd->fd);
 
+    if (!sz)
+    {
+	g_free(fd->mem);
+	g_free(fd);
+	g_free(handle);
+
+	return NULL;
+    }
+
     fd->buffer = vfs_buffer_new(fd->mem, sz);
 
     handle->handle = fd;
