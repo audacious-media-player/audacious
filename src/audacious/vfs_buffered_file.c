@@ -177,6 +177,15 @@ vfs_buffered_file_new_from_uri(gchar *uri)
     fd->mem = g_malloc0(32768);
     fd->fd = vfs_fopen(uri, "rb");
 
+    if (fd->fd == NULL)
+    {
+	g_free(fd->mem);
+	g_free(fd);
+	g_free(handle);
+
+	return NULL;
+    }
+
     sz = vfs_fread(fd->mem, 1, 32768, fd->fd);
 
     fd->buffer = vfs_buffer_new(fd->mem, sz);

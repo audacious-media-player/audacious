@@ -1,3 +1,22 @@
+2007-01-20 12:48:41 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3756]
+  made strings.h for existing strings.c, cleanups
+  trunk/src/audacious/input.c           |    2 
+  trunk/src/audacious/output.c          |  106 ++++++++++++++++------------------
+  trunk/src/audacious/playlist.c        |    2 
+  trunk/src/audacious/pluginenum.c      |    1 
+  trunk/src/audacious/signals.c         |    2 
+  trunk/src/audacious/strings.c         |   33 ----------
+  trunk/src/audacious/strings.h         |   52 ++++++++++++++++
+  trunk/src/audacious/ui_main.c         |    1 
+  trunk/src/audacious/ui_playlist.c     |    2 
+  trunk/src/audacious/ui_preferences.c  |    1 
+  trunk/src/audacious/util.c            |    9 --
+  trunk/src/audacious/util.h            |   18 -----
+  trunk/src/audacious/widgets/textbox.c |    1 
+  13 files changed, 116 insertions(+), 114 deletions(-)
+
+
 2007-01-20 11:39:28 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3754]
   - that should have been in vfs_fread
