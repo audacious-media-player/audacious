@@ -298,6 +298,27 @@ vfs_truncate(VFSFile * file, glong length)
 }
 
 /**
+ * vfs_get_metadata:
+ * @file: #VFSFile object that represents the VFS stream.
+ * @field: The string constant field name to get.
+ *
+ * Returns metadata about the stream.
+ *
+ * Return value: On success, a copy of the value of the
+ * field. Otherwise, NULL.
+ **/
+gchar *
+vfs_get_metadata(VFSFile * file, const gchar * field)
+{
+    if (file == NULL)
+        return NULL;
+  
+    if (file->base->vfs_get_metadata_impl)
+        return file->base->vfs_get_metadata_impl(file, field);
+    return NULL;
+}
+
+/**
  * vfs_file_test:
  * @path: A path to test.
  * @test: A GFileTest to run.

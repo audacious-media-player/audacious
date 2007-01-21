@@ -74,6 +74,7 @@ struct _VFSConstructor {
 	glong (*vfs_ftell_impl)(VFSFile *file);
 	gboolean (*vfs_feof_impl)(VFSFile *file);
 	gboolean (*vfs_truncate_impl)(VFSFile *file, glong length);
+	gchar *(*vfs_get_metadata_impl)(VFSFile *file, const gchar * field);
 };
 
 G_BEGIN_DECLS
@@ -111,6 +112,8 @@ extern gboolean vfs_file_test(const gchar * path,
 extern gboolean vfs_is_writeable(const gchar * path);
 
 extern gboolean vfs_truncate(VFSFile * file, glong length);
+
+extern gchar *vfs_get_metadata(VFSFile * file, const gchar * field);
 
 extern int vfs_fprintf(VFSFile *stream, gchar const *format, ...)
     __attribute__ ((__format__ (__printf__, 2, 3)));
