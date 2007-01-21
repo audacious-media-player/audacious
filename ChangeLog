@@ -1,3 +1,11 @@
+2007-01-21 12:28:28 +0000  Michael Hanselmann <hansmi@forkbomb.ch>
+  revision [3768]
+  Check for sz == 0 in vfs_buffered_file_new_from_uri(), return NULL if it's the case.
+  
+  trunk/src/audacious/vfs_buffered_file.c |    9 +++++++++
+  1 file changed, 9 insertions(+)
+
+
 2007-01-21 11:32:36 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3766]
   - touch .depend after blanking it out

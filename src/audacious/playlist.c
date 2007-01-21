@@ -1374,7 +1374,7 @@ playlist_eof_reached(Playlist *playlist)
             playlist->position = NULL;
             playlist_generate_shuffle_list_nolock(playlist);
         }
-        else
+        else if (playlist->entries != NULL)
             playlist->position = playlist->entries->data;
 
         if (!cfg.repeat) {
