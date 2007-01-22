@@ -1,3 +1,11 @@
+2007-01-21 15:11:08 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3770]
+  - handle empty playlists gracefully
+  
+  trunk/src/audacious/playlist.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-01-21 12:28:28 +0000  Michael Hanselmann <hansmi@forkbomb.ch>
   revision [3768]
   Check for sz == 0 in vfs_buffered_file_new_from_uri(), return NULL if it's the case.

@@ -71,7 +71,7 @@ vfs_fopen(const gchar * path,
     if (!path || !mode)
 	return NULL;
 
-    decpath = xmms_urldecode_plain(path);
+    decpath = g_strdup(path);
 
     for (node = vfs_transports; node != NULL; node = g_list_next(node))
     {
@@ -85,10 +85,7 @@ vfs_fopen(const gchar * path,
     if (vtable == NULL)
         return NULL;
 
-    if (strlen(vtable->uri_id) > 1)
-        file = vtable->vfs_fopen_impl(decpath + strlen(vtable->uri_id), mode);
-    else
-        file = vtable->vfs_fopen_impl(decpath, mode);
+    file = vtable->vfs_fopen_impl(decpath, mode);
 
     if (file == NULL)
         return NULL;
