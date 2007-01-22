@@ -22,8 +22,8 @@
  *  02110-1301, USA.
  */
 
-#ifndef STRINGS_H
-#define STRINGS_H
+#ifndef AUD_STRINGS_H
+#define AUD_STRINGS_H
 
 #include <glib.h>
 

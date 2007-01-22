@@ -43,6 +43,7 @@
 
 #include "main.h"
 #include "input.h"
+#include "strings.h"
 #include "playback.h"
 #include "playlist.h"
 #include "ui_playlist.h"

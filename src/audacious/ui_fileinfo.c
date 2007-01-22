@@ -42,6 +42,7 @@
 #include "pluginenum.h"
 #include "input.h"
 #include "effect.h"
+#include "strings.h"
 #include "general.h"
 #include "output.h"
 #include "visualization.h"

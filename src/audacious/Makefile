@@ -29,11 +29,11 @@ CFLAGS += \
 
 HEADERS = \
 	input.h \
-	main.h \
 	output.h \
 	playlist.h \
 	playlist_container.h \
 	plugin.h \
+	strings.h \
 	ui_fileinfopopup.h \
 	ui_preferences.h \
 	util.h \

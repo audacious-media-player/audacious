@@ -1,3 +1,11 @@
+2007-01-22 16:38:42 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3778]
+  - improve upon welsh translation grammar
+  
+  trunk/po/cy.po |   60 ++++++++++++++++++++++++++++-----------------------------
+  1 file changed, 30 insertions(+), 30 deletions(-)
+
+
 2007-01-22 13:14:25 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3776]
   - update japanese translation from dai
