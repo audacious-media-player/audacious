@@ -1,3 +1,12 @@
+2007-01-22 09:01:33 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3774]
+  - in vfs_buffered_file, we should only switch to live FD after 32768, 
+    not AT 32768.
+  
+  trunk/src/audacious/vfs_buffered_file.c |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2007-01-22 04:45:17 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3772]
   - changes to the nature of URI handling in the VFS subsystem, will be 
