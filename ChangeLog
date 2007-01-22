@@ -1,3 +1,13 @@
+2007-01-22 17:35:30 +0000  Giacomo Lozito <james@develia.org>
+  revision [3780]
+  - add missing inclusion of strings.h where necessary, do not export main.h and export strings.h
+  trunk/src/audacious/Makefile                |    2 +-
+  trunk/src/audacious/strings.h               |    4 ++--
+  trunk/src/audacious/ui_fileinfo.c           |    1 +
+  trunk/src/audacious/widgets/playlist_list.c |    1 +
+  4 files changed, 5 insertions(+), 3 deletions(-)
+
+
 2007-01-22 16:38:42 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3778]
   - improve upon welsh translation grammar

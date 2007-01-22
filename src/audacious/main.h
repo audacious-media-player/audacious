@@ -21,8 +21,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef AUD_MAIN_H
+#define AUD_MAIN_H
 
 #ifdef _AUDACIOUS_CORE
 # include "widgets/widgetcore.h"
