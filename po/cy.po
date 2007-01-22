@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Audacious 1.3.0\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-01-19 22:53-0600\n"
-"PO-Revision-Date: 2007-01-19 22:55-0600\n"
+"PO-Revision-Date: 2007-01-22 10:36-0600\n"
 "Last-Translator: William Pitcock <nenolod@sacredspiral.co.uk>\n"
 "Language-Team: Cynmaeg <nenolod+cy@sacredspiral.co.uk>\n"
 "MIME-Version: 1.0\n"
@@ -86,119 +86,119 @@ msgstr "Diolchiadau BMP:"
 
 #: src/audacious/ui_credits.c:139
 msgid "Brazilian Portuguese:"
-msgstr "Brazilian Portuguese:"
+msgstr "Portiwgaleg Brasilaidd:"
 
 #: src/audacious/ui_credits.c:142
 msgid "Breton:"
-msgstr "Breton:"
+msgstr "Bretwig:"
 
 #: src/audacious/ui_credits.c:145
 msgid "Bulgarian:"
-msgstr "Bulgarian:"
+msgstr "Bwlgareg:"
 
 #: src/audacious/ui_credits.c:148
 msgid "Czech:"
-msgstr "Czech:"
+msgstr "Tsiec:"
 
 #: src/audacious/ui_credits.c:151
 msgid "Dutch:"
-msgstr "Dutch:"
+msgstr "Isalmaeneg:"
 
 #: src/audacious/ui_credits.c:155
 msgid "Finnish:"
-msgstr "Finnish:"
+msgstr "Ffineg:"
 
 #: src/audacious/ui_credits.c:158
 msgid "French:"
-msgstr "French:"
+msgstr "Ffrangeg:"
 
 #: src/audacious/ui_credits.c:161
 msgid "German:"
-msgstr "German:"
+msgstr "Almaeneg:"
 
 #: src/audacious/ui_credits.c:165
 msgid "Georgian:"
-msgstr "Georgian:"
+msgstr "Georgieg:"
 
 #: src/audacious/ui_credits.c:168
 msgid "Greek:"
-msgstr "Greek:"
+msgstr "Groeg:"
 
 #: src/audacious/ui_credits.c:173
 msgid "Hindi:"
-msgstr "Hindi:"
+msgstr "Hyndig:"
 
 #: src/audacious/ui_credits.c:176
 msgid "Hungarian:"
-msgstr "Hungarian:"
+msgstr "Hwngareg:"
 
 #: src/audacious/ui_credits.c:179
 msgid "Italian:"
-msgstr "Italian:"
+msgstr "Eidaleg:"
 
 #: src/audacious/ui_credits.c:183
 msgid "Japanese:"
-msgstr "Japanese:"
+msgstr "Siapanëeg:"
 
 #: src/audacious/ui_credits.c:186
 msgid "Korean:"
-msgstr "Korean:"
+msgstr "Corëeg:"
 
 #: src/audacious/ui_credits.c:189
 msgid "Lithuanian:"
-msgstr "Lithuanian:"
+msgstr "Lithueneg:"
 
 #: src/audacious/ui_credits.c:192
 msgid "Macedonian:"
-msgstr "Macedonian:"
+msgstr "Macedonieg:"
 
 #: src/audacious/ui_credits.c:195
 msgid "Polish:"
-msgstr "Polish:"
+msgstr "Pwyleg:"
 
 #: src/audacious/ui_credits.c:198
 msgid "Romanian:"
-msgstr "Romanian:"
+msgstr "Romaneg:"
 
 #: src/audacious/ui_credits.c:201
 msgid "Russian:"
-msgstr "Russian:"
+msgstr "Rwsieg:"
 
 #: src/audacious/ui_credits.c:204
 msgid "Serbian (Latin):"
-msgstr "Serbian (Latin):"
+msgstr "Serbeg (Lladin):"
 
 #: src/audacious/ui_credits.c:207
 msgid "Serbian (Cyrillic):"
-msgstr "Serbian (Cyrillic):"
+msgstr "Serbeg (Cwyrileg):"
 
 #: src/audacious/ui_credits.c:210
 msgid "Simplified Chinese:"
-msgstr "Simplified Chinese:"
+msgstr "Tsieineaidd Seml:"
 
 #: src/audacious/ui_credits.c:213
 msgid "Slovak:"
-msgstr "Slovak:"
+msgstr "Slofaceg:"
 
 #: src/audacious/ui_credits.c:216
 msgid "Spanish:"
-msgstr "Spanish:"
+msgstr "Spaeneg:"
 
 #: src/audacious/ui_credits.c:219
 msgid "Swedish:"
-msgstr "Swedish:"
+msgstr "Swedeg:"
 
 #: src/audacious/ui_credits.c:222
 msgid "Traditional Chinese:"
-msgstr "Traditional Chinese:"
+msgstr "Tsieineaidd Traddodiadol:"
 
 #: src/audacious/ui_credits.c:225
 msgid "Ukrainian:"
-msgstr "Ukrainian:"
+msgstr "Wcraneg:"
 
 #: src/audacious/ui_credits.c:228
 msgid "Welsh:"
-msgstr "Welsh:"
+msgstr "Cymraeg:"
 
 #: src/audacious/ui_credits.c:376
 msgid "Translators"

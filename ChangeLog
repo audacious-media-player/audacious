@@ -1,3 +1,11 @@
+2007-01-22 13:14:25 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3776]
+  - update japanese translation from dai
+  
+  trunk/po/ja.po |  593 +++++++++++++++++++++------------------------------------
+  1 file changed, 219 insertions(+), 374 deletions(-)
+
+
 2007-01-22 09:01:33 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3774]
   - in vfs_buffered_file, we should only switch to live FD after 32768, 
