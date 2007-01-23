@@ -1127,6 +1127,8 @@ main(gint argc, gchar ** argv)
     gtk_set_locale();
     bindtextdomain(PACKAGE_NAME, LOCALEDIR);
     bind_textdomain_codeset(PACKAGE_NAME, "UTF-8");
+    bindtextdomain(PACKAGE_NAME "-plugins", LOCALEDIR);
+    bind_textdomain_codeset(PACKAGE_NAME "-plugins", "UTF-8");
     textdomain(PACKAGE_NAME);
 
     bmp_init_paths();
