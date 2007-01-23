@@ -1,5 +1,5 @@
-include ../../mk/rules.mk
-include ../../mk/init.mk
+include ${top_srcdir}/mk/rules.mk
+include ${top_srcdir}/mk/init.mk
 
 OBJECTIVE_LIBS_NOINST = libguess.a
 OBJECTIVE_SONAME_SUFFIX = 0.2.0
@@ -13,7 +13,7 @@ SOURCES = \
 
 OBJECTS = ${SOURCES:.c=.o}
 
-include ../../mk/objective.mk
+include ${top_srcdir}/mk/objective.mk
 
 libguess.a: $(OBJECTS)
 	$(AR) cq $@ $(OBJECTS)

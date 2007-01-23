@@ -24,7 +24,7 @@ OBJECTIVE_DATA =							\
 build-posthook:
 	@( \
 		echo; \
-		echo "Now type '$(MAKE) documentation-build' to build the audacious SDK docs."; \
+		echo "Now type 'make documentation-build' to build the audacious SDK docs."; \
 		echo "This will require GTK-DOC to be installed."; \
 		echo; \
 	);

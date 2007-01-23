@@ -1,5 +1,5 @@
-include ../../mk/rules.mk
-include ../../mk/init.mk
+include ${top_srcdir}/mk/rules.mk
+include ${top_srcdir}/mk/init.mk
 
 PICLDFLAGS = $(LIBLDFLAGS)
 
@@ -16,7 +16,7 @@ CXXFLAGS += $(PICFLAGS) \
 	$(GTK_CFLAGS)        \
 	$(GCONF_CFLAGS)      \
 	-D_AUDACIOUS_CORE    \
-	-I.. -I../..	      \
+	-I.. -I${top_srcdir}	      \
 	-I../intl
 
 SOURCES = configdb.cxx
@@ -25,7 +25,7 @@ OBJECTS = ${SOURCES:.cxx=.o}
 
 HEADERS = configdb.hh
 
-include ../../mk/objective.mk
+include ${top_srcdir}/mk/objective.mk
 
 install-posthook:
 	@mv ${DESTDIR}/${LIBDIR}/libaudacious++$(SHARED_SUFFIX) ${DESTDIR}/${LIBDIR}/libaudacious++$(SHARED_SUFFIX).1.0.0
