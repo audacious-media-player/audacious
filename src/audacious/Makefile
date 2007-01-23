@@ -28,6 +28,7 @@ CFLAGS += \
 	-I../intl
 
 HEADERS = \
+	i18n.h \
 	input.h \
 	main.h \
 	output.h \

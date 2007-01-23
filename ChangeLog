@@ -1,3 +1,11 @@
+2007-01-22 17:51:03 +0000  Giacomo Lozito <james@develia.org>
+  revision [3782]
+  - export main.h again
+  trunk/src/audacious/Makefile |    1 +
+  trunk/src/audacious/main.h   |    4 ++--
+  2 files changed, 3 insertions(+), 2 deletions(-)
+
+
 2007-01-22 17:35:30 +0000  Giacomo Lozito <james@develia.org>
   revision [3780]
   - add missing inclusion of strings.h where necessary, do not export main.h and export strings.h
