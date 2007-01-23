@@ -1,3 +1,33 @@
+2007-01-23 18:22:32 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3792]
+  - rework objective make _a lot_
+  
+  trunk/Makefile                       |    2 
+  trunk/icons/Makefile                 |    6 -
+  trunk/man/Makefile                   |    6 -
+  trunk/mk/init.mk                     |   10 ++
+  trunk/mk/objective.mk                |  148 +++++++++++++++++++++--------------
+  trunk/mk/rules.mk.in                 |    2 
+  trunk/skins/Classic/Makefile         |    6 -
+  trunk/skins/Default/Makefile         |    6 -
+  trunk/skins/Ivory/Makefile           |    6 -
+  trunk/skins/Osmosis/Makefile         |    6 -
+  trunk/skins/TinyPlayer/Makefile      |    6 -
+  trunk/src/Makefile                   |    6 -
+  trunk/src/audacious/Makefile         |    8 -
+  trunk/src/audacious/glade/Makefile   |    6 -
+  trunk/src/audacious/images/Makefile  |    6 -
+  trunk/src/audacious/ui/Makefile      |    6 -
+  trunk/src/audacious/widgets/Makefile |    8 -
+  trunk/src/audtool/Makefile           |    8 -
+  trunk/src/intl/Makefile              |    6 -
+  trunk/src/libaudacious++/Makefile    |    8 -
+  trunk/src/libaudacious/Makefile      |    8 -
+  trunk/src/libguess/Makefile          |    6 -
+  trunk/src/librcd/Makefile            |    6 -
+  23 files changed, 165 insertions(+), 121 deletions(-)
+
+
 2007-01-23 17:21:53 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3790]
   - portability fixes for solaris
