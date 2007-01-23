@@ -39,6 +39,7 @@ HEADERS = \
 	ui_fileinfopopup.h \
 	ui_preferences.h \
 	util.h \
+	strings.h \
 	vfs.h \
 	vfs_buffer.h
 
