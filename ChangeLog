@@ -1,3 +1,11 @@
+2007-01-23 18:23:03 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3794]
+  - missed one
+  
+  trunk/skins/Makefile |    6 +++---
+  1 file changed, 3 insertions(+), 3 deletions(-)
+
+
 2007-01-23 18:22:32 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3792]
   - rework objective make _a lot_
