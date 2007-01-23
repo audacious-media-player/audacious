@@ -15,7 +15,7 @@ install: build
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[installing overlay: $$i]"; \
 			fi; \
-			(pushd $$i > /dev/null; OVERLAYS="" $(MAKE) install || exit; cd ..); \
+			cd $$i; OVERLAYS="" $(MAKE) install || exit; cd ..; \
 		done; \
 	fi
 	@if [ "x$(SUBDIRS)" != "x" ]; then \
@@ -23,7 +23,7 @@ install: build
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[installing subobjective: $$i]"; \
 			fi; \
-			(cd $$i; OVERLAYS="" $(MAKE) install || exit; cd ..); \
+			cd $$i; OVERLAYS="" $(MAKE) install || exit; cd ..; \
 		done; \
 	fi
 	@if [ "x$(OBJECTIVE_DIRECTORIES)" != "x" ]; then \
@@ -73,7 +73,7 @@ clean:
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[cleaning overlay: $$i]"; \
 			fi; \
-			(pushd $$i > /dev/null; OVERLAYS="" $(MAKE) clean || exit; popd); \
+			cd $$i; OVERLAYS="" $(MAKE) clean || exit; cd ..; \
 		done; \
 	fi
 	@if [ "x$(SUBDIRS)" != "x" ]; then \
@@ -81,7 +81,7 @@ clean:
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[cleaning subobjective: $$i]"; \
 			fi; \
-			(cd $$i; OVERLAYS="" $(MAKE) clean || exit; cd ..); \
+			cd $$i; OVERLAYS="" $(MAKE) clean || exit; cd ..; \
 		done; \
 	fi
 	$(MAKE) clean-posthook
@@ -112,7 +112,7 @@ distclean: clean
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[distcleaning overlay: $$i]"; \
 			fi; \
-			(pushd $$i > /dev/null; OVERLAYS="" $(MAKE) distclean || exit; popd); \
+			cd $$i; OVERLAYS="" $(MAKE) distclean || exit; cd ..; \
 		done; \
 	fi
 	@if [ "x$(SUBDIRS)" != "x" ]; then \
@@ -120,7 +120,7 @@ distclean: clean
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[distcleaning subobjective: $$i]"; \
 			fi; \
-			(cd $$i; OVERLAYS="" $(MAKE) distclean || exit; cd ..); \
+			cd $$i; OVERLAYS="" $(MAKE) distclean || exit; cd ..; \
 		done; \
 	fi
 	@if [ -f Makefile.in ]; then \
@@ -137,7 +137,7 @@ build: depend
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[building overlay: $$i]"; \
 			fi; \
-			(pushd $$i > /dev/null; OVERLAYS="" $(MAKE) || exit; popd); \
+			cd $$i; OVERLAYS="" $(MAKE) || exit; cd ..; \
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[finished overlay: $$i]"; \
 			fi; \
@@ -148,7 +148,7 @@ build: depend
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[building subobjective: $$i]"; \
 			fi; \
-			(cd $$i; OVERLAYS="" $(MAKE) || exit; cd ..); \
+			cd $$i; OVERLAYS="" $(MAKE) || exit; cd ..; \
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[finished subobjective: $$i]"; \
 			fi; \
