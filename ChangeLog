@@ -1,3 +1,11 @@
+2007-01-24 19:33:38 +0000  Strahinja Kustudi <kustodian@gmail.com>
+  revision [3802]
+  Fixed fuzzy translations
+  trunk/po/sr.po      |   19 ++++++++-----------
+  trunk/po/sr@Latn.po |   19 ++++++++-----------
+  2 files changed, 16 insertions(+), 22 deletions(-)
+
+
 2007-01-24 00:43:13 +0000  Giacomo Lozito <james@develia.org>
   revision [3800]
   - made the song info popup window a bit smarter; do not display missing information, display filename if title is missing; also, added a audacious_fileinfopopup_show_from_title to show a popup using a generic string (i.e. the one picked from playlist_get_songtitle when a tuple is not available, useful for http streams)
