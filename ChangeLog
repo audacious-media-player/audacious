@@ -1,3 +1,17 @@
+2007-01-23 18:33:25 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3796]
+  - skin install rules -> policy::skins
+  - update relevant files
+  
+  trunk/mk/local_policy/policy_skins.mk |   23 +++++++++++++++++++++++
+  trunk/skins/Classic/Makefile          |   24 +-----------------------
+  trunk/skins/Default/Makefile          |   24 +-----------------------
+  trunk/skins/Ivory/Makefile            |   23 +----------------------
+  trunk/skins/Osmosis/Makefile          |   23 +----------------------
+  trunk/skins/TinyPlayer/Makefile       |   23 +----------------------
+  6 files changed, 28 insertions(+), 112 deletions(-)
+
+
 2007-01-23 18:23:03 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3794]
   - missed one

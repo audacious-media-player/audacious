@@ -563,7 +563,7 @@ input_get_song_tuple(const gchar * filename)
 {
     InputPlugin *ip = NULL;
     TitleInput *input;
-    gchar *tmp = NULL, *ext;
+    gchar *ext = NULL;
     gchar *filename_proxy;
 
     if (filename == NULL)
@@ -579,16 +579,14 @@ input_get_song_tuple(const gchar * filename)
     {
         input = bmp_title_input_new();
 
-        tmp = g_strdup(filename);
-        if ((ext = strrchr(tmp, '.')))
-            *ext = '\0';
+        ext = strrchr(filename, '.');
 
         input->track_name = NULL;
         input->length = -1;
         input_get_song_info(filename, &input->track_name, &input->length);
-        input->file_name = g_path_get_basename(tmp);
-        input->file_ext = ext ? ext + 1 : NULL;
-        input->file_path = g_path_get_dirname(tmp);
+        input->file_name = g_path_get_basename(filename);
+        input->file_ext = ( ( ext != NULL ) ? g_strdup(ext + 1) : NULL );
+        input->file_path = g_path_get_dirname(filename);
     }
 
     return input;
