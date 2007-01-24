@@ -1,3 +1,10 @@
+2007-01-24 00:37:13 +0000  Giacomo Lozito <james@develia.org>
+  revision [3798]
+  - tuple->file_name coming from input plugins have a string with filename + extension, but tuple->file_name coming from input plugins without a get_song_tuple have a string with filename without extension; fix this incongruency, always pass tuple->filename with a string containing filename + extension
+  trunk/src/audacious/input.c |   12 +++++-------
+  1 file changed, 5 insertions(+), 7 deletions(-)
+
+
 2007-01-23 18:33:25 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3796]
   - skin install rules -> policy::skins

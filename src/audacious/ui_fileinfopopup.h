@@ -30,6 +30,7 @@ void audacious_fileinfopopup_destroy(GtkWidget* fileinfopopup_win);
 
 /* show/hide */
 void audacious_fileinfopopup_show_from_tuple(GtkWidget *fileinfopopup_win, TitleInput *tuple);
+void audacious_fileinfopopup_show_from_title(GtkWidget *fileinfopopup_win, gchar *title);
 void audacious_fileinfopopup_hide(GtkWidget *filepopup_win, gpointer unused);
 
 #endif
