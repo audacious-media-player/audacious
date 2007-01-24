@@ -1,3 +1,11 @@
+2007-01-24 23:10:51 +0000  Derek Pomery <nemo@m8y.org>
+  revision [3804]
+  Strip 0xFEFF from start of file.  Windows error?
+  
+  trunk/po/sr.po |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-01-24 19:33:38 +0000  Strahinja Kustudi <kustodian@gmail.com>
   revision [3802]
   Fixed fuzzy translations

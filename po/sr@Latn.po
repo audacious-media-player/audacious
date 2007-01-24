@@ -1,4 +1,4 @@
-﻿# translation of sr@Latn.po to Serbian Latin
+# translation of sr@Latn.po to Serbian Latin
 # Copyright (C) 2007 Strahinja  Kustudić <kustodian@gmail.com>
 # This file is distributed under the same license as the Audacious package.
 
