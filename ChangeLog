@@ -1,3 +1,11 @@
+2007-01-24 00:43:13 +0000  Giacomo Lozito <james@develia.org>
+  revision [3800]
+  - made the song info popup window a bit smarter; do not display missing information, display filename if title is missing; also, added a audacious_fileinfopopup_show_from_title to show a popup using a generic string (i.e. the one picked from playlist_get_songtitle when a tuple is not available, useful for http streams)
+  trunk/src/audacious/ui_fileinfopopup.c |  158 +++++++++++++++++++++++++++------
+  trunk/src/audacious/ui_fileinfopopup.h |    1 
+  2 files changed, 132 insertions(+), 27 deletions(-)
+
+
 2007-01-24 00:37:13 +0000  Giacomo Lozito <james@develia.org>
   revision [3798]
   - tuple->file_name coming from input plugins have a string with filename + extension, but tuple->file_name coming from input plugins without a get_song_tuple have a string with filename without extension; fix this incongruency, always pass tuple->filename with a string containing filename + extension
