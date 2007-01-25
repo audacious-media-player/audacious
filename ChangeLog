@@ -1,3 +1,11 @@
+2007-01-25 02:40:07 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [3808]
+  - should not pass null fd to input plugins.
+  
+  trunk/src/audacious/input.c |    3 +++
+  1 file changed, 3 insertions(+)
+
+
 2007-01-24 23:15:46 +0000  Derek Pomery <nemo@m8y.org>
   revision [3806]
   Strip 0xFEFF 
