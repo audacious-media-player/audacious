@@ -1,3 +1,12 @@
+2007-01-25 14:56:12 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3814]
+  recoded gtk2 style file opener
+  trunk/src/audacious/glade/Makefile       |    3 
+  trunk/src/audacious/glade/addfiles.glade |  169 --------
+  trunk/src/audacious/util.c               |  607 +++++++++++--------------------
+  3 files changed, 219 insertions(+), 560 deletions(-)
+
+
 2007-01-25 14:51:18 +0000  
   revision [3812]
   * Update Japanese translation.

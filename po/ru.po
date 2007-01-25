@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: audacious 1.3\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-01-19 22:53-0600\n"
-"PO-Revision-Date: 2006-01-05 12:11+0400\n"
+"PO-Revision-Date: 2006-01-25 17:00+0300\n"
 "Last-Translator: Alexandr Orlov <alxorlov@pochta.ru>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -88,9 +88,8 @@ msgid "Breton:"
 msgstr "Бретонский:"
 
 #: src/audacious/ui_credits.c:145
-#, fuzzy
 msgid "Bulgarian:"
-msgstr "Венгерский:"
+msgstr "Болгарский:"
 
 #: src/audacious/ui_credits.c:148
 msgid "Czech:"
@@ -332,9 +331,9 @@ msgid "Audacious"
 msgstr ""
 
 #: src/audacious/main.c:458
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "Невозможно создать каталог (%s): %s"
+msgstr "Невозможно создать каталог (%s): %s\n"
 
 #: src/audacious/main.c:826
 msgid ""
@@ -2117,30 +2116,3 @@ msgstr "Номер дорожки"
 #: src/libaudacious/titlestring.c:441
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: Отображать \"...\", когда элемент %n присутствует"
-
-#~ msgid "Track Information Popup"
-#~ msgstr "Всплывающее информационное окно"
-
-#~ msgid "Artist Popup"
-#~ msgstr "Исполнитель"
-
-#~ msgid "<i>Title</i>"
-#~ msgstr "<i>Название</i>"
-
-#~ msgid "<i>Artist</i>"
-#~ msgstr "<i>Исполнитель</i>"
-
-#~ msgid "<i>Album</i>"
-#~ msgstr "<i>Альбом</i>"
-
-#~ msgid "<i>Genre</i>"
-#~ msgstr "<i>Стиль</i>"
-
-#~ msgid "<i>Year</i>"
-#~ msgstr "<i>Год</i>"
-
-#~ msgid "<i>Track Number</i>"
-#~ msgstr "<i>Номер дорожки</i>"
-
-#~ msgid "<i>Track Length</i>"
-#~ msgstr "<i>Длительность</i>"
