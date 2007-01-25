@@ -5,7 +5,6 @@ gladexmldir = $(pkgdatadir)/glade
 
 OBJECTIVE_DATA = \
 	fileinfo.glade:$(gladexmldir) \
-	prefswin.glade:$(gladexmldir) \
-	addfiles.glade:$(gladexmldir)
+	prefswin.glade:$(gladexmldir)
 
 include ${top_srcdir}/mk/objective.mk

@@ -1,3 +1,12 @@
+2007-01-25 14:51:18 +0000  
+  revision [3812]
+  * Update Japanese translation.
+  - Thanks to KAZUKI SHIMURA <kazuki@ma.ccnw.ne.jp>.
+  
+  trunk/po/ja.po | 4876 +++++----------------------------------------------------
+  1 file changed, 497 insertions(+), 4379 deletions(-)
+
+
 2007-01-25 09:52:51 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3810]
   - make a note that hashtable collisions in the plugin matrix are not 
