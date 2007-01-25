@@ -1,3 +1,12 @@
+2007-01-25 09:52:51 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3810]
+  - make a note that hashtable collisions in the plugin matrix are not 
+    only possible, but happening, and have strange side effects.
+  
+  trunk/src/audacious/pluginenum.c |    6 ++++++
+  1 file changed, 6 insertions(+)
+
+
 2007-01-25 02:40:07 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [3808]
   - should not pass null fd to input plugins.
