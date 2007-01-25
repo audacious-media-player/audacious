@@ -1,3 +1,11 @@
+2007-01-24 23:15:46 +0000  Derek Pomery <nemo@m8y.org>
+  revision [3806]
+  Strip 0xFEFF 
+  
+  trunk/po/sr@Latn.po |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-01-24 23:10:51 +0000  Derek Pomery <nemo@m8y.org>
   revision [3804]
   Strip 0xFEFF from start of file.  Windows error?

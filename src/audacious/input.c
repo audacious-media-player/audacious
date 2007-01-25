@@ -425,6 +425,9 @@ input_check_file(const gchar * filename, gboolean show_warning)
     filename_proxy = g_strdup(filename);
     fd = vfs_buffered_file_new_from_uri(filename_proxy);
 
+    if(!fd)
+        return NULL;
+    
     ext = strrchr(filename_proxy, '.') + 1;
 
     use_ext_filter = (fd != NULL && (!g_strncasecmp(filename, "/", 1) || !g_strncasecmp(filename, "file://", 7))) ? TRUE : FALSE;
