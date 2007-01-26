@@ -1,9 +1,9 @@
 .SILENT:
 
-include ${top_srcdir}/mk/rules.mk
-include ${top_srcdir}/mk/init.mk
+include ../mk/rules.mk
+include ../mk/init.mk
 
 SUBDIRS = Default Classic TinyPlayer Osmosis Ivory
 
-include ${top_srcdir}/mk/objective.mk
+include ../mk/objective.mk
 

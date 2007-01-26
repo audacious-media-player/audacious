@@ -1,5 +1,5 @@
-include ${top_srcdir}/mk/rules.mk
-include ${top_srcdir}/mk/init.mk
+include ../../mk/rules.mk
+include ../../mk/init.mk
 
 skindir = $(pkgdatadir)/Skins/Ivory
 OBJECTIVE_DATA = \
@@ -21,4 +21,4 @@ OBJECTIVE_DATA = \
 	viscolor.txt:$(skindir)		\
 	skin.hints:$(skindir)
 
-include ${top_srcdir}/mk/objective.mk
+include ../../mk/objective.mk
