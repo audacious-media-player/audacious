@@ -1,5 +1,5 @@
-include ${top_srcdir}/mk/rules.mk
-include ${top_srcdir}/mk/init.mk
+include ../../../mk/rules.mk
+include ../../../mk/init.mk
 
 imagesdir = $(pkgdatadir)/images
 
@@ -14,4 +14,4 @@ OBJECTIVE_DATA = \
 	plugins.png:$(imagesdir) \
 	eq.png:$(imagesdir)
 
-include ${top_srcdir}/mk/objective.mk
+include ../../../mk/objective.mk

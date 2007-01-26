@@ -1,3 +1,11 @@
+2007-01-26 05:59:33 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3826]
+  - rename some hooks so that they are more logical
+  
+  trunk/src/audacious/playlist.c |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2007-01-26 05:29:51 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3824]
   - add hooks: playback begin, playback end, playlist reached end

@@ -1,6 +1,6 @@
-include ${top_srcdir}/mk/rules.mk
-include ${top_srcdir}/mk/init.mk
-include ${top_srcdir}/mk/objective.mk
+include ../../mk/rules.mk
+include ../../mk/init.mk
+include ../../mk/objective.mk
 
 SUBDIRS = widgets glade images ui
 
@@ -24,7 +24,7 @@ CFLAGS += \
 	$(ARCH_DEFINES)    \
 	$(REGEX_CFLAGS)    \
 	-D_AUDACIOUS_CORE \
-	-I.. -I${top_srcdir}   \
+	-I.. -I../..   \
 	-I../intl
 
 HEADERS = \

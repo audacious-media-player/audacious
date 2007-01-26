@@ -1,6 +1,6 @@
-include ${top_srcdir}/mk/rules.mk
-include ${top_srcdir}/mk/init.mk
-include ${top_srcdir}/mk/objective.mk
+include ../../mk/rules.mk
+include ../../mk/init.mk
+include ../../mk/objective.mk
 
 OBJECTIVE_BINS = audtool
 
@@ -15,7 +15,7 @@ CFLAGS += \
 	$(LIBGLADE_CFLAGS) \
 	$(BEEP_DEFINES)    \
 	$(ARCH_DEFINES)    \
-	-I.. -I${top_srcdir}   \
+	-I.. -I../..   \
 	-I../intl
 
 SOURCES = audtool.c

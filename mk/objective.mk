@@ -1,72 +1,56 @@
-#
-# Objective Make - the dumb buildsystem
-#
-# Copyright (c) 2005 - 2007 William Pitcock <nenolod -at- sacredspiral.co.uk>
-#
-# Redistribution and modification of objective make is expressly
-# allowed, provided that the above copyright notice is left intact.
-#
-
 default: all
 all: build
 
 .SUFFIXES: .cxx .cc
 
-MAKE += $(OMK_FLAGS)
-
 install: build
-	@if [ "x$(top_srcdir)" == "x" ]; then \
-		top_srcdir=`pwd`; \
-		$(MAKE) install || exit; \
-		exit 0; \
-	fi; \
-	$(MAKE) install-prehook; \
-	for i in $(BINDIR) $(LIBDIR) $(INCLUDEDIR); do \
+	$(MAKE) install-prehook
+	@for i in $(BINDIR) $(LIBDIR) $(INCLUDEDIR); do \
 		if [ ! -d $(DESTDIR)/$$i ]; then \
 			$(INSTALL) -d -m 755 $(DESTDIR)/$$i; \
 		fi; \
-	done; \
-	if [ "x$(OVERLAYS)" != "x" ]; then \
+	done;
+	@if [ "x$(OVERLAYS)" != "x" ]; then \
 		for i in `find $(OVERLAYS) -type d -maxdepth 1 -mindepth 1`; do \
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[installing overlay: $$i]"; \
 			fi; \
 			cd $$i; OVERLAYS="" $(MAKE) install || exit; cd ..; \
 		done; \
-	fi; \
-	if [ "x$(SUBDIRS)" != "x" ]; then \
+	fi
+	@if [ "x$(SUBDIRS)" != "x" ]; then \
 		for i in $(SUBDIRS); do \
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[installing subobjective: $$i]"; \
 			fi; \
 			cd $$i; OVERLAYS="" $(MAKE) install || exit; cd ..; \
 		done; \
-	fi; \
-	if [ "x$(OBJECTIVE_DIRECTORIES)" != "x" ]; then \
+	fi
+	@if [ "x$(OBJECTIVE_DIRECTORIES)" != "x" ]; then \
 		for i in $(OBJECTIVE_DIRECTORIES); do \
 			printf "%10s     %-20s\n" MKDIR $$i; \
 			$(INSTALL) -d -m 755 $(DESTDIR)/$$i; \
 		done; \
-	fi; \
-	if [ "x$(HEADERS)" != "x" ]; then \
+	fi
+	@if [ "x$(HEADERS)" != "x" ]; then \
 		for i in $(HEADERS); do \
 			printf "%10s     %-20s\n" INSTALL $$i; \
 			$(INSTALL_DATA) $(INSTALL_OVERRIDE) $$i $(DESTDIR)/$(INCLUDEDIR)/$$i; \
 		done; \
-	fi; \
-	if [ "x$(OBJECTIVE_LIBS)" != "x" ]; then \
+	fi
+	@if [ "x$(OBJECTIVE_LIBS)" != "x" ]; then \
 		for i in $(OBJECTIVE_LIBS); do \
 			printf "%10s     %-20s\n" INSTALL $$i; \
 			$(INSTALL) $(INSTALL_OVERRIDE) $$i $(DESTDIR)/$(LIBDIR)/$$i; \
 		done; \
-	fi; \
-	if [ "x$(OBJECTIVE_BINS)" != "x" ]; then \
+	fi
+	@if [ "x$(OBJECTIVE_BINS)" != "x" ]; then \
 		for i in $(OBJECTIVE_BINS); do \
 			printf "%10s     %-20s\n" INSTALL $$i; \
 			$(INSTALL) $(INSTALL_OVERRIDE) $$i $(DESTDIR)/$(BINDIR)/$$i; \
 		done; \
-	fi; \
-	if [ "x$(OBJECTIVE_DATA)" != "x" ]; then \
+	fi;
+	@if [ "x$(OBJECTIVE_DATA)" != "x" ]; then \
 		for i in $(OBJECTIVE_DATA); do \
 			source=`echo $$i | cut -d ":" -f1`; \
 			destination=`echo $$i | cut -d ":" -f2`; \
@@ -76,94 +60,79 @@ install: build
 			printf "%10s     %-20s\n" INSTALL $$source; \
 			$(INSTALL_DATA) $(INSTALL_OVERRIDE) $$source $(DESTDIR)/$$destination; \
 		done; \
-	fi; \
-	$(MAKE) install-posthook; \
-	if [ $(VERBOSITY) -gt 0 ]; then \
+	fi
+	$(MAKE) install-posthook
+	@if [ $(VERBOSITY) -gt 0 ]; then \
 		echo "[all objectives installed]"; \
 	fi
 
 clean:
-	@if [ "x$(top_srcdir)" == "x" ]; then \
-		top_srcdir=`pwd`; \
-		$(MAKE) clean || exit; \
-		exit 0; \
-	fi; \
-	$(MAKE) clean-prehook; \
-	if [ "x$(OVERLAYS)" != "x" ]; then \
+	$(MAKE) clean-prehook
+	@if [ "x$(OVERLAYS)" != "x" ]; then \
 		for i in `find $(OVERLAYS) -type d -maxdepth 1 -mindepth 1`; do \
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[cleaning overlay: $$i]"; \
 			fi; \
 			cd $$i; OVERLAYS="" $(MAKE) clean || exit; cd ..; \
 		done; \
-	fi; \
-	if [ "x$(SUBDIRS)" != "x" ]; then \
+	fi
+	@if [ "x$(SUBDIRS)" != "x" ]; then \
 		for i in $(SUBDIRS); do \
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[cleaning subobjective: $$i]"; \
 			fi; \
 			cd $$i; OVERLAYS="" $(MAKE) clean || exit; cd ..; \
 		done; \
-	fi; \
-	$(MAKE) clean-posthook; \
-	rm -f *.o *.lo *.so *.a *.sl .depend-done .depend; \
-	touch .depend; \
-	if [ "x$(OBJECTIVE_BINS)" != "x" ]; then \
+	fi
+	$(MAKE) clean-posthook
+	rm -f *.o *.lo *.so *.a *.sl .depend-done .depend
+	touch .depend
+	@if [ "x$(OBJECTIVE_BINS)" != "x" ]; then \
 		for i in $(OBJECTIVE_BINS); do \
 			rm -f $$i; \
 		done; \
-	fi; \
-	if [ "x$(OBJECTIVE_LIBS)" != "x" ]; then \
+	fi
+	@if [ "x$(OBJECTIVE_LIBS)" != "x" ]; then \
 		for i in $(OBJECTIVE_LIBS); do \
 			rm -f $$i; \
 		done; \
-	fi; \
-	if [ "x$(OBJECTIVE_LIBS_NOINST)" != "x" ]; then \
+	fi
+	@if [ "x$(OBJECTIVE_LIBS_NOINST)" != "x" ]; then \
 		for i in $(OBJECTIVE_LIBS_NOINST); do \
 			rm -f $$i; \
 		done; \
-	fi; \
-	if [ $(VERBOSITY) -gt 0 ]; then \
+	fi
+	@if [ $(VERBOSITY) -gt 0 ]; then \
 		echo "[all objectives cleaned]"; \
 	fi
 
 distclean: clean
-	@if [ "x$(top_srcdir)" == "x" ]; then \
-		top_srcdir=`pwd`; \
-		$(MAKE) distclean || exit; \
-		exit 0; \
-	fi; \
-	if [ "x$(OVERLAYS)" != "x" ]; then \
+	@if [ "x$(OVERLAYS)" != "x" ]; then \
 		for i in `find $(OVERLAYS) -type d -maxdepth 1 -mindepth 1`; do \
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[distcleaning overlay: $$i]"; \
 			fi; \
 			cd $$i; OVERLAYS="" $(MAKE) distclean || exit; cd ..; \
 		done; \
-	fi; \
-	if [ "x$(SUBDIRS)" != "x" ]; then \
+	fi
+	@if [ "x$(SUBDIRS)" != "x" ]; then \
 		for i in $(SUBDIRS); do \
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[distcleaning subobjective: $$i]"; \
 			fi; \
 			cd $$i; OVERLAYS="" $(MAKE) distclean || exit; cd ..; \
 		done; \
-	fi; \
-	if [ -f Makefile.in ]; then \
+	fi
+	@if [ -f Makefile.in ]; then \
 		rm -f Makefile; \
-	fi; \
-	if [ -f mk/rules.mk ]; then \
+	fi
+	@if [ -f mk/rules.mk ]; then \
 		rm -f mk/rules.mk; \
 	fi
 
 build: depend
-	@if [ "x$(top_srcdir)" == "x" ]; then \
-		top_srcdir=`pwd`; \
-		$(MAKE) build || exit; \
-		exit 0; \
-	fi; \
-	$(MAKE) build-prehook; \
-	if [ "x$(OVERLAYS)" != "x" ]; then \
+	$(MAKE) build-prehook
+	@if [ "x$(OVERLAYS)" != "x" ]; then \
 		for i in `find $(OVERLAYS) -type d -maxdepth 1 -mindepth 1`; do \
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[building overlay: $$i]"; \
@@ -173,8 +142,8 @@ build: depend
 				echo "[finished overlay: $$i]"; \
 			fi; \
 		done; \
-	fi; \
-	if [ "x$(SUBDIRS)" != "x" ]; then \
+	fi
+	@if [ "x$(SUBDIRS)" != "x" ]; then \
 		for i in $(SUBDIRS); do \
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[building subobjective: $$i]"; \
@@ -184,8 +153,8 @@ build: depend
 				echo "[finished subobjective: $$i]"; \
 			fi; \
 		done; \
-	fi; \
-	if [ "x$(OBJECTIVE_LIBS)" != "x" ]; then \
+	fi
+	@if [ "x$(OBJECTIVE_LIBS)" != "x" ]; then \
 		for i in $(OBJECTIVE_LIBS); do \
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[building library objective: $$i]"; \
@@ -195,8 +164,8 @@ build: depend
 				echo "[finished library objective: $$i]"; \
 			fi; \
 		done; \
-	fi; \
-	if [ "x$(OBJECTIVE_LIBS_NOINST)" != "x" ]; then \
+	fi
+	@if [ "x$(OBJECTIVE_LIBS_NOINST)" != "x" ]; then \
 		for i in $(OBJECTIVE_LIBS_NOINST); do \
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[building library dependency: $$i]"; \
@@ -206,8 +175,8 @@ build: depend
 				echo "[finished library dependency: $$i]"; \
 			fi; \
 		done; \
-	fi; \
-	if test "x$(OBJECTIVE_BINS)" != "x"; then \
+	fi
+	@if test "x$(OBJECTIVE_BINS)" != "x"; then \
 		for i in $(OBJECTIVE_BINS); do \
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[building binary objective: $$i]"; \
@@ -217,9 +186,9 @@ build: depend
 				echo "[finished binary objective: $$i]"; \
 			fi; \
 		done; \
-	fi; \
-	$(MAKE) build-posthook; \
-	if [ $(VERBOSITY) -gt 0 ]; then \
+	fi
+	$(MAKE) build-posthook
+	@if [ $(VERBOSITY) -gt 0 ]; then \
 		echo "[all objectives built]"; \
 	fi
 
@@ -287,12 +256,7 @@ mk/rules.mk:
 
 # default depend rule. if something else is needed -- override depend target
 depend:
-	@if [ "x$(top_srcdir)" == "x" ]; then \
-		top_srcdir=`pwd`; \
-		$(MAKE) depend || exit; \
-		exit 0; \
-	fi; \
-	if [ "x$(SUBDIRS)" != "x" ]; then \
+	@if [ "x$(SUBDIRS)" != "x" ]; then \
 		for i in $(SUBDIRS); do \
 			if [ $(VERBOSITY) -gt 0 ]; then \
 				echo "[building depend file for subobjective: $$i]"; \
@@ -302,7 +266,7 @@ depend:
 				echo "[finished subobjective: $$i]"; \
 			fi; \
 		done; \
-	fi; \
+	fi
 	if [ ! -f .depend-done ]; then \
 		for i in ${SOURCES}; do \
 			echo "[generating dependencies for objective: $$i]"; \
