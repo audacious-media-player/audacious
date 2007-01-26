@@ -30,6 +30,7 @@ CFLAGS += \
 HEADERS = \
 	i18n.h \
 	input.h \
+	hook.h \
 	main.h \
 	output.h \
 	playlist.h \
@@ -56,6 +57,7 @@ SOURCES = \
 	getopt.c \
 	glade.c \
 	hints.c \
+	hook.c \
 	iir.c \
 	iir_cfs.c \
 	iir_fpu.c \

@@ -1,3 +1,10 @@
+2007-01-25 16:19:54 +0000  Alexandr Orlov <alxorlov@pochta.ru>
+  revision [3816]
+  Update russian translation
+  trunk/po/ru.po |   36 ++++--------------------------------
+  1 file changed, 4 insertions(+), 32 deletions(-)
+
+
 2007-01-25 14:56:12 +0000  Michael Farber <01mf02@gmail.com>
   revision [3814]
   recoded gtk2 style file opener
