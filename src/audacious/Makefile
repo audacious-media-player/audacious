@@ -77,11 +77,13 @@ SOURCES = \
 	ui_equalizer.c \
 	ui_fileinfo.c \
 	ui_fileinfopopup.c \
+	ui_fileopener.c \
 	ui_main.c \
 	ui_manager.c \
 	ui_playlist.c \
 	ui_preferences.c \
 	ui_skinselector.c \
+	urldecode.c \
 	util.c \
 	vfs_buffer.c \
 	vfs_buffered_file.c \

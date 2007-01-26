@@ -48,7 +48,7 @@
 
 #include "main.h"
 #include "widgets/widgetcore.h"
-#include "libaudacious/urldecode.h"
+#include "urldecode.h"
 #include "strings.h"
 #include "util.h"
 #include "dnd.h"

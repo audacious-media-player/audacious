@@ -35,11 +35,7 @@
 
 G_BEGIN_DECLS
 
-#define NO_PLAY_BUTTON  FALSE
-#define PLAY_BUTTON     TRUE
-
 #define SWAP(a, b)      { a^=b; b^=a; a^=b; }
-
 
 typedef gboolean(*DirForeachFunc) (const gchar * path,
                                    const gchar * basename,
@@ -65,9 +61,6 @@ GtkWidget *util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
                                    GCallback enqueue_func);
 void util_menu_position(GtkMenu * menu, gint * x, gint * y,
                         gboolean * push_in, gpointer data);
-
-void util_run_filebrowser(gboolean clear_pl_on_ok);
-gboolean util_filechooser_is_dir(GtkFileChooser * filesel);
 
 GdkFont *util_font_load(const gchar * name);
 void util_set_cursor(GtkWidget * window);

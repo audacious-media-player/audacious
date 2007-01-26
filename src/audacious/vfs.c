@@ -24,7 +24,7 @@
 
 #include <string.h>
 
-#include "libaudacious/urldecode.h"
+#include "urldecode.h"
 
 static GList *vfs_transports = NULL;
 

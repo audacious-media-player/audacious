@@ -35,23 +35,23 @@
 #include <unistd.h>
 #include <errno.h>
 
-#include "libaudacious/util.h"
-
+#include "actions-playlist.h"
 #include "dnd.h"
 #include "dock.h"
-#include "ui_equalizer.h"
 #include "hints.h"
 #include "input.h"
 #include "main.h"
-#include "ui_main.h"
-#include "ui_manager.h"
-#include "ui_fileinfopopup.h"
-#include "actions-playlist.h"
 #include "playback.h"
 #include "playlist.h"
 #include "playlist_container.h"
 #include "playlist_manager.h"
 #include "strings.h"
+#include "ui_equalizer.h"
+#include "ui_fileopener.h"
+#include "ui_fileinfopopup.h"
+#include "ui_main.h"
+#include "ui_manager.h"
+#include "util.h"
 
 #include "icons-stock.h"
 #include "images/audacious_playlist.xpm"
@@ -715,7 +715,7 @@ playlistwin_leave(GtkWidget * widget,
 static void
 playlistwin_show_filebrowser(void)
 {
-    util_run_filebrowser(NO_PLAY_BUTTON);
+    run_filebrowser(NO_PLAY_BUTTON);
 }
 
 static void
@@ -1995,7 +1995,7 @@ action_playlist_remove_unselected(void)
 void
 action_playlist_add_files(void)
 {
-    util_run_filebrowser(NO_PLAY_BUTTON);
+    run_filebrowser(NO_PLAY_BUTTON);
 }
 
 void add_medium(void); /* XXX */

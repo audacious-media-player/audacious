@@ -48,7 +48,7 @@
 #include "playlist.h"
 #include "ui_playlist.h"
 #include "ui_skinselector.h"
-#include "libaudacious/urldecode.h"
+#include "urldecode.h"
 #include "util.h"
 
 #include "playback.h"

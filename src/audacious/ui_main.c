@@ -55,31 +55,31 @@
 #include "ui_main.h"
 #include "icons-stock.h"
 
-#include "ui_manager.h"
 #include "actions-mainwin.h"
 
 #include "main.h"
 
 #include "controlsocket.h"
-#include "pluginenum.h"
-
-#include "ui_credits.h"
 #include "dnd.h"
 #include "dock.h"
-#include "ui_equalizer.h"
+#include "genevent.h"
 #include "hints.h"
 #include "input.h"
+#include "libaudacious/configdb.h"
+#include "urldecode.h"
+#include "playback.h"
+#include "playlist.h"
+#include "pluginenum.h"
+#include "ui_credits.h"
+#include "ui_equalizer.h"
+#include "ui_fileopener.h"
+#include "ui_manager.h"
 #include "ui_playlist.h"
 #include "ui_preferences.h"
 #include "ui_skinselector.h"
-#include "genevent.h"
-#include "playback.h"
-#include "playlist.h"
-#include "libaudacious/urldecode.h"
 #include "strings.h"
 #include "util.h"
 #include "visualization.h"
-#include "libaudacious/configdb.h"
 
 static GTimeVal cb_time; /* click delay for tristate is defined by TRISTATE_THRESHOLD */
 
@@ -136,7 +136,7 @@ TextBox *mainwin_info;
 TextBox *mainwin_stime_min, *mainwin_stime_sec;
 
 static TextBox *mainwin_rate_text, *mainwin_freq_text, 
-	*mainwin_othertext;
+    *mainwin_othertext;
 
 PlayStatus *mainwin_playstatus;
 
@@ -279,22 +279,22 @@ mainwin_set_shade_menu_cb(gboolean shaded)
 
         textbox_set_scroll(mainwin_info, FALSE);
         if (playback_get_playing())
-	{
-            	widget_show(WIDGET(mainwin_sposition));
-	        widget_show(WIDGET(mainwin_stime_min));
-        	widget_show(WIDGET(mainwin_stime_sec));
-	}
-	else
-	{
-            	widget_hide(WIDGET(mainwin_sposition));
-	        widget_hide(WIDGET(mainwin_stime_min));
-        	widget_hide(WIDGET(mainwin_stime_sec));
-	}
+    {
+                widget_show(WIDGET(mainwin_sposition));
+            widget_show(WIDGET(mainwin_stime_min));
+            widget_show(WIDGET(mainwin_stime_sec));
+    }
+    else
+    {
+                widget_hide(WIDGET(mainwin_sposition));
+            widget_hide(WIDGET(mainwin_stime_min));
+            widget_hide(WIDGET(mainwin_stime_sec));
+    }
 
         mainwin_shade->pb_ny = mainwin_shade->pb_py = 27;
     }
     else {
-	gint height = !bmp_active_skin->properties.mainwin_height ? MAINWIN_HEIGHT :
+    gint height = !bmp_active_skin->properties.mainwin_height ? MAINWIN_HEIGHT :
                      bmp_active_skin->properties.mainwin_height;
 
         dock_shade(dock_window_list, GTK_WINDOW(mainwin), height * (cfg.doublesize + 1));
@@ -533,9 +533,9 @@ draw_main_window(gboolean force)
                 if (!w->redraw || !w->visible)
                     continue;
 
-	        if (w->x > bmp_active_skin->properties.mainwin_width ||
-		    w->y > bmp_active_skin->properties.mainwin_height)
-		    continue;
+            if (w->x > bmp_active_skin->properties.mainwin_width ||
+            w->y > bmp_active_skin->properties.mainwin_height)
+            continue;
 
                 if (cfg.doublesize) {
                     gint width, height;
@@ -594,11 +594,11 @@ mainwin_lock_info_text(const gchar * text)
 {
     if (mainwin_info_text_locked != TRUE)
         mainwin_tb_old_text = g_strdup(bmp_active_skin->properties.mainwin_othertext_is_status ?
-  	    mainwin_othertext->tb_text : mainwin_info->tb_text);
+        mainwin_othertext->tb_text : mainwin_info->tb_text);
 
     mainwin_info_text_locked = TRUE;
     textbox_set_text(bmp_active_skin->properties.mainwin_othertext_is_status ?
-	mainwin_othertext : mainwin_info, text);
+    mainwin_othertext : mainwin_info, text);
 }
 
 void
@@ -609,12 +609,12 @@ mainwin_release_info_text(void)
     if (mainwin_tb_old_text != NULL)
     {
         textbox_set_text(bmp_active_skin->properties.mainwin_othertext_is_status ?
-  	    mainwin_othertext : mainwin_info, mainwin_tb_old_text);
+        mainwin_othertext : mainwin_info, mainwin_tb_old_text);
         g_free(mainwin_tb_old_text);
         mainwin_tb_old_text = NULL;
     }
     else
-        mainwin_set_info_text();	/* XXX: best we can do */
+        mainwin_set_info_text();    /* XXX: best we can do */
 }
 
 
@@ -640,135 +640,135 @@ static void
 mainwin_refresh_hints(void)
 {
     if (bmp_active_skin && bmp_active_skin->properties.mainwin_othertext
-	== TRUE)
+    == TRUE)
     {
-	widget_hide(WIDGET(mainwin_rate_text));
-	widget_hide(WIDGET(mainwin_freq_text));
-	widget_hide(WIDGET(mainwin_monostereo));
+    widget_hide(WIDGET(mainwin_rate_text));
+    widget_hide(WIDGET(mainwin_freq_text));
+    widget_hide(WIDGET(mainwin_monostereo));
 
-	if (bmp_active_skin->properties.mainwin_othertext_visible)
-	    widget_show(WIDGET(mainwin_othertext));
+    if (bmp_active_skin->properties.mainwin_othertext_visible)
+        widget_show(WIDGET(mainwin_othertext));
     }
     else
     {
-	widget_show(WIDGET(mainwin_rate_text));
-	widget_show(WIDGET(mainwin_freq_text));
-	widget_show(WIDGET(mainwin_monostereo));
-	widget_hide(WIDGET(mainwin_othertext));
+    widget_show(WIDGET(mainwin_rate_text));
+    widget_show(WIDGET(mainwin_freq_text));
+    widget_show(WIDGET(mainwin_monostereo));
+    widget_hide(WIDGET(mainwin_othertext));
     }
 
     /* positioning and size attributes */
     if (bmp_active_skin->properties.mainwin_vis_x && bmp_active_skin->properties.mainwin_vis_y)
-	widget_move(WIDGET(mainwin_vis), bmp_active_skin->properties.mainwin_vis_x,
-		bmp_active_skin->properties.mainwin_vis_y);
+    widget_move(WIDGET(mainwin_vis), bmp_active_skin->properties.mainwin_vis_x,
+        bmp_active_skin->properties.mainwin_vis_y);
 
     if (bmp_active_skin->properties.mainwin_vis_width)
-	widget_resize(WIDGET(mainwin_vis), bmp_active_skin->properties.mainwin_vis_width,
-		mainwin_vis->vs_widget.height);
+    widget_resize(WIDGET(mainwin_vis), bmp_active_skin->properties.mainwin_vis_width,
+        mainwin_vis->vs_widget.height);
 
     if (bmp_active_skin->properties.mainwin_text_x && bmp_active_skin->properties.mainwin_text_y)
-	widget_move(WIDGET(mainwin_info), bmp_active_skin->properties.mainwin_text_x,
-		bmp_active_skin->properties.mainwin_text_y);
+    widget_move(WIDGET(mainwin_info), bmp_active_skin->properties.mainwin_text_x,
+        bmp_active_skin->properties.mainwin_text_y);
 
     if (bmp_active_skin->properties.mainwin_text_width)
-	widget_resize(WIDGET(mainwin_info), bmp_active_skin->properties.mainwin_text_width,
-		mainwin_info->tb_widget.height);
+    widget_resize(WIDGET(mainwin_info), bmp_active_skin->properties.mainwin_text_width,
+        mainwin_info->tb_widget.height);
 
     if (bmp_active_skin->properties.mainwin_infobar_x && bmp_active_skin->properties.mainwin_infobar_y)
-	widget_move(WIDGET(mainwin_othertext), bmp_active_skin->properties.mainwin_infobar_x,
-		bmp_active_skin->properties.mainwin_infobar_y);
+    widget_move(WIDGET(mainwin_othertext), bmp_active_skin->properties.mainwin_infobar_x,
+        bmp_active_skin->properties.mainwin_infobar_y);
 
     if (bmp_active_skin->properties.mainwin_number_0_x && bmp_active_skin->properties.mainwin_number_0_y)
-	widget_move(WIDGET(mainwin_minus_num), bmp_active_skin->properties.mainwin_number_0_x,
-		bmp_active_skin->properties.mainwin_number_0_y);
+    widget_move(WIDGET(mainwin_minus_num), bmp_active_skin->properties.mainwin_number_0_x,
+        bmp_active_skin->properties.mainwin_number_0_y);
 
     if (bmp_active_skin->properties.mainwin_number_1_x && bmp_active_skin->properties.mainwin_number_1_y)
-	widget_move(WIDGET(mainwin_10min_num), bmp_active_skin->properties.mainwin_number_1_x,
-		bmp_active_skin->properties.mainwin_number_1_y);
+    widget_move(WIDGET(mainwin_10min_num), bmp_active_skin->properties.mainwin_number_1_x,
+        bmp_active_skin->properties.mainwin_number_1_y);
 
     if (bmp_active_skin->properties.mainwin_number_2_x && bmp_active_skin->properties.mainwin_number_2_y)
-	widget_move(WIDGET(mainwin_min_num), bmp_active_skin->properties.mainwin_number_2_x,
-		bmp_active_skin->properties.mainwin_number_2_y);
+    widget_move(WIDGET(mainwin_min_num), bmp_active_skin->properties.mainwin_number_2_x,
+        bmp_active_skin->properties.mainwin_number_2_y);
 
     if (bmp_active_skin->properties.mainwin_number_3_x && bmp_active_skin->properties.mainwin_number_3_y)
-	widget_move(WIDGET(mainwin_10sec_num), bmp_active_skin->properties.mainwin_number_3_x,
-		bmp_active_skin->properties.mainwin_number_3_y);
+    widget_move(WIDGET(mainwin_10sec_num), bmp_active_skin->properties.mainwin_number_3_x,
+        bmp_active_skin->properties.mainwin_number_3_y);
 
     if (bmp_active_skin->properties.mainwin_number_4_x && bmp_active_skin->properties.mainwin_number_4_y)
-	widget_move(WIDGET(mainwin_sec_num), bmp_active_skin->properties.mainwin_number_4_x,
-		bmp_active_skin->properties.mainwin_number_4_y);
+    widget_move(WIDGET(mainwin_sec_num), bmp_active_skin->properties.mainwin_number_4_x,
+        bmp_active_skin->properties.mainwin_number_4_y);
 
     if (bmp_active_skin->properties.mainwin_playstatus_x && bmp_active_skin->properties.mainwin_playstatus_y)
-	widget_move(WIDGET(mainwin_playstatus), bmp_active_skin->properties.mainwin_playstatus_x,
-		bmp_active_skin->properties.mainwin_playstatus_y);
+    widget_move(WIDGET(mainwin_playstatus), bmp_active_skin->properties.mainwin_playstatus_x,
+        bmp_active_skin->properties.mainwin_playstatus_y);
 
     if (bmp_active_skin->properties.mainwin_volume_x && bmp_active_skin->properties.mainwin_volume_y)
-	widget_move(WIDGET(mainwin_volume), bmp_active_skin->properties.mainwin_volume_x,
-		bmp_active_skin->properties.mainwin_volume_y);
+    widget_move(WIDGET(mainwin_volume), bmp_active_skin->properties.mainwin_volume_x,
+        bmp_active_skin->properties.mainwin_volume_y);
 
     if (bmp_active_skin->properties.mainwin_balance_x && bmp_active_skin->properties.mainwin_balance_y)
-	widget_move(WIDGET(mainwin_balance), bmp_active_skin->properties.mainwin_balance_x,
-		bmp_active_skin->properties.mainwin_balance_y);
+    widget_move(WIDGET(mainwin_balance), bmp_active_skin->properties.mainwin_balance_x,
+        bmp_active_skin->properties.mainwin_balance_y);
 
     if (bmp_active_skin->properties.mainwin_position_x && bmp_active_skin->properties.mainwin_position_y)
-	widget_move(WIDGET(mainwin_position), bmp_active_skin->properties.mainwin_position_x,
-		bmp_active_skin->properties.mainwin_position_y);
+    widget_move(WIDGET(mainwin_position), bmp_active_skin->properties.mainwin_position_x,
+        bmp_active_skin->properties.mainwin_position_y);
 
     if (bmp_active_skin->properties.mainwin_previous_x && bmp_active_skin->properties.mainwin_previous_y)
-	widget_move(WIDGET(mainwin_rew), bmp_active_skin->properties.mainwin_previous_x,
-		bmp_active_skin->properties.mainwin_previous_y);
+    widget_move(WIDGET(mainwin_rew), bmp_active_skin->properties.mainwin_previous_x,
+        bmp_active_skin->properties.mainwin_previous_y);
 
     if (bmp_active_skin->properties.mainwin_play_x && bmp_active_skin->properties.mainwin_play_y)
-	widget_move(WIDGET(mainwin_play), bmp_active_skin->properties.mainwin_play_x,
-		bmp_active_skin->properties.mainwin_play_y);
+    widget_move(WIDGET(mainwin_play), bmp_active_skin->properties.mainwin_play_x,
+        bmp_active_skin->properties.mainwin_play_y);
 
     if (bmp_active_skin->properties.mainwin_pause_x && bmp_active_skin->properties.mainwin_pause_y)
-	widget_move(WIDGET(mainwin_pause), bmp_active_skin->properties.mainwin_pause_x,
-		bmp_active_skin->properties.mainwin_pause_y);
+    widget_move(WIDGET(mainwin_pause), bmp_active_skin->properties.mainwin_pause_x,
+        bmp_active_skin->properties.mainwin_pause_y);
 
     if (bmp_active_skin->properties.mainwin_stop_x && bmp_active_skin->properties.mainwin_stop_y)
-	widget_move(WIDGET(mainwin_stop), bmp_active_skin->properties.mainwin_stop_x,
-		bmp_active_skin->properties.mainwin_stop_y);
+    widget_move(WIDGET(mainwin_stop), bmp_active_skin->properties.mainwin_stop_x,
+        bmp_active_skin->properties.mainwin_stop_y);
 
     if (bmp_active_skin->properties.mainwin_next_x && bmp_active_skin->properties.mainwin_next_y)
-	widget_move(WIDGET(mainwin_fwd), bmp_active_skin->properties.mainwin_next_x,
-		bmp_active_skin->properties.mainwin_next_y);
+    widget_move(WIDGET(mainwin_fwd), bmp_active_skin->properties.mainwin_next_x,
+        bmp_active_skin->properties.mainwin_next_y);
 
     if (bmp_active_skin->properties.mainwin_eject_x && bmp_active_skin->properties.mainwin_eject_y)
-	widget_move(WIDGET(mainwin_eject), bmp_active_skin->properties.mainwin_eject_x,
-		bmp_active_skin->properties.mainwin_eject_y);
+    widget_move(WIDGET(mainwin_eject), bmp_active_skin->properties.mainwin_eject_x,
+        bmp_active_skin->properties.mainwin_eject_y);
 
     if (bmp_active_skin->properties.mainwin_eqbutton_x && bmp_active_skin->properties.mainwin_eqbutton_y)
-	widget_move(WIDGET(mainwin_eq), bmp_active_skin->properties.mainwin_eqbutton_x,
-		bmp_active_skin->properties.mainwin_eqbutton_y);
+    widget_move(WIDGET(mainwin_eq), bmp_active_skin->properties.mainwin_eqbutton_x,
+        bmp_active_skin->properties.mainwin_eqbutton_y);
 
     if (bmp_active_skin->properties.mainwin_plbutton_x && bmp_active_skin->properties.mainwin_plbutton_y)
-	widget_move(WIDGET(mainwin_pl), bmp_active_skin->properties.mainwin_plbutton_x,
-		bmp_active_skin->properties.mainwin_plbutton_y);
+    widget_move(WIDGET(mainwin_pl), bmp_active_skin->properties.mainwin_plbutton_x,
+        bmp_active_skin->properties.mainwin_plbutton_y);
 
     if (bmp_active_skin->properties.mainwin_shuffle_x && bmp_active_skin->properties.mainwin_shuffle_y)
-	widget_move(WIDGET(mainwin_shuffle), bmp_active_skin->properties.mainwin_shuffle_x,
-		bmp_active_skin->properties.mainwin_shuffle_y);
+    widget_move(WIDGET(mainwin_shuffle), bmp_active_skin->properties.mainwin_shuffle_x,
+        bmp_active_skin->properties.mainwin_shuffle_y);
 
     if (bmp_active_skin->properties.mainwin_repeat_x && bmp_active_skin->properties.mainwin_repeat_y)
-	widget_move(WIDGET(mainwin_repeat), bmp_active_skin->properties.mainwin_repeat_x,
-		bmp_active_skin->properties.mainwin_repeat_y);
+    widget_move(WIDGET(mainwin_repeat), bmp_active_skin->properties.mainwin_repeat_x,
+        bmp_active_skin->properties.mainwin_repeat_y);
 
     if (bmp_active_skin->properties.mainwin_about_x && bmp_active_skin->properties.mainwin_about_y)
-	widget_move(WIDGET(mainwin_about), bmp_active_skin->properties.mainwin_about_x,
-		bmp_active_skin->properties.mainwin_about_y);
+    widget_move(WIDGET(mainwin_about), bmp_active_skin->properties.mainwin_about_x,
+        bmp_active_skin->properties.mainwin_about_y);
 
     if (bmp_active_skin->properties.mainwin_minimize_x && bmp_active_skin->properties.mainwin_minimize_y)
-	widget_move(WIDGET(mainwin_minimize), cfg.player_shaded ? 244 : bmp_active_skin->properties.mainwin_minimize_x,
-		cfg.player_shaded ? 3 : bmp_active_skin->properties.mainwin_minimize_y);
+    widget_move(WIDGET(mainwin_minimize), cfg.player_shaded ? 244 : bmp_active_skin->properties.mainwin_minimize_x,
+        cfg.player_shaded ? 3 : bmp_active_skin->properties.mainwin_minimize_y);
 
     if (bmp_active_skin->properties.mainwin_shade_x && bmp_active_skin->properties.mainwin_shade_y)
-	widget_move(WIDGET(mainwin_shade), cfg.player_shaded ? 254 : bmp_active_skin->properties.mainwin_shade_x,
-		cfg.player_shaded ? 3 : bmp_active_skin->properties.mainwin_shade_y);
+    widget_move(WIDGET(mainwin_shade), cfg.player_shaded ? 254 : bmp_active_skin->properties.mainwin_shade_x,
+        cfg.player_shaded ? 3 : bmp_active_skin->properties.mainwin_shade_y);
 
     if (bmp_active_skin->properties.mainwin_close_x && bmp_active_skin->properties.mainwin_close_y)
-	widget_move(WIDGET(mainwin_close), cfg.player_shaded ? 264 : bmp_active_skin->properties.mainwin_close_x,
-		cfg.player_shaded ? 3 : bmp_active_skin->properties.mainwin_close_y);
+    widget_move(WIDGET(mainwin_close), cfg.player_shaded ? 264 : bmp_active_skin->properties.mainwin_close_x,
+        cfg.player_shaded ? 3 : bmp_active_skin->properties.mainwin_close_y);
 
     /* visibility attributes */
     if (bmp_active_skin->properties.mainwin_menurow_visible)
@@ -794,30 +794,30 @@ mainwin_refresh_hints(void)
     /* window size, mainwinWidth && mainwinHeight properties */
     if (bmp_active_skin->properties.mainwin_height && bmp_active_skin->properties.mainwin_width)
     {
-	gint width, height;
+    gint width, height;
 
-	gdk_window_get_size(mainwin->window, &width, &height);
+    gdk_window_get_size(mainwin->window, &width, &height);
 
         if (width == bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1) &&
-	    height == bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1))
+        height == bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1))
             return;
 
         dock_window_resize(GTK_WINDOW(mainwin), cfg.player_shaded ? MAINWIN_SHADED_WIDTH * (cfg.doublesize + 1) : bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1),
-		cfg.player_shaded ? MAINWIN_SHADED_HEIGHT * (cfg.doublesize + 1) : bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1),
-		bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1),
-		bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1));
+        cfg.player_shaded ? MAINWIN_SHADED_HEIGHT * (cfg.doublesize + 1) : bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1),
+        bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1),
+        bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1));
 
-	g_object_unref(mainwin_bg);
-	g_object_unref(mainwin_bg_x2);
+    g_object_unref(mainwin_bg);
+    g_object_unref(mainwin_bg_x2);
         mainwin_bg = gdk_pixmap_new(mainwin->window,
-				bmp_active_skin->properties.mainwin_width,
-				bmp_active_skin->properties.mainwin_height, -1);
+                bmp_active_skin->properties.mainwin_width,
+                bmp_active_skin->properties.mainwin_height, -1);
         mainwin_bg_x2 = gdk_pixmap_new(mainwin->window,
-				bmp_active_skin->properties.mainwin_width * 2,
-				bmp_active_skin->properties.mainwin_height * 2, -1);
+                bmp_active_skin->properties.mainwin_width * 2,
+                bmp_active_skin->properties.mainwin_height * 2, -1);
         mainwin_set_back_pixmap();
-	widget_list_change_pixmap(mainwin_wlist, mainwin_bg);
-	gdk_flush();
+    widget_list_change_pixmap(mainwin_wlist, mainwin_bg);
+    gdk_flush();
     }
 }
 
@@ -882,7 +882,7 @@ mainwin_set_song_info(gint bitrate,
     }
 
     if (bmp_active_skin && bmp_active_skin->properties.mainwin_othertext 
-	== TRUE)
+    == TRUE)
     {
         if (bitrate != -1)
             g_snprintf(text, 512, "%d kbps, %0.1f kHz, %s",
@@ -996,7 +996,7 @@ mainwin_mouse_button_release(GtkWidget * widget,
 
     if (dock_is_moving(GTK_WINDOW(mainwin))) {
         dock_move_release(GTK_WINDOW(mainwin));
-		draw_playlist_window(TRUE);
+        draw_playlist_window(TRUE);
     }
 
     if (mainwin_menurow->mr_doublesize_selected) {
@@ -1022,11 +1022,11 @@ mainwin_motion(GtkWidget * widget,
     if (event->is_hint != FALSE)
     {
         gdk_window_get_pointer(GDK_WINDOW(mainwin->window),
-		&x, &y, &state);
+        &x, &y, &state);
 
-	/* If it's a hint, we had to query X, so override the 
+    /* If it's a hint, we had to query X, so override the 
          * information we we're given... it's probably useless... --nenolod
-	 */
+     */
         event->x = x;
         event->y = y;
         event->state = state;
@@ -1104,26 +1104,26 @@ void
 mainwin_scrolled(GtkWidget *widget, GdkEventScroll *event,
     gpointer callback_data)
 {
-	Playlist *playlist = playlist_get_active();
+    Playlist *playlist = playlist_get_active();
 
-	switch (event->direction) {
-	case GDK_SCROLL_UP:
-		mainwin_set_volume_diff(cfg.mouse_change);
-		break;
-	case GDK_SCROLL_DOWN:
-		mainwin_set_volume_diff(-cfg.mouse_change);
-		break;
-	case GDK_SCROLL_LEFT:
-		if (playlist_get_current_length(playlist) != -1)
-			playback_seek(CLAMP(playback_get_time() - 1000,
-			    0, playlist_get_current_length(playlist)) / 1000);
-		break;
-	case GDK_SCROLL_RIGHT:
-		if (playlist_get_current_length(playlist) != -1)
-			playback_seek(CLAMP(playback_get_time() + 1000,
-			    0, playlist_get_current_length(playlist)) / 1000);
-		break;
-	}
+    switch (event->direction) {
+    case GDK_SCROLL_UP:
+        mainwin_set_volume_diff(cfg.mouse_change);
+        break;
+    case GDK_SCROLL_DOWN:
+        mainwin_set_volume_diff(-cfg.mouse_change);
+        break;
+    case GDK_SCROLL_LEFT:
+        if (playlist_get_current_length(playlist) != -1)
+            playback_seek(CLAMP(playback_get_time() - 1000,
+                0, playlist_get_current_length(playlist)) / 1000);
+        break;
+    case GDK_SCROLL_RIGHT:
+        if (playlist_get_current_length(playlist) != -1)
+            playback_seek(CLAMP(playback_get_time() + 1000,
+                0, playlist_get_current_length(playlist)) / 1000);
+        break;
+    }
 }
 
 static gboolean
@@ -1224,13 +1224,13 @@ mainwin_mouse_button_press(GtkWidget * widget,
     if (event->button == 1)
     {
         if (widget_contains(WIDGET(mainwin_minus_num), event->x, event->y) ||
-		widget_contains(WIDGET(mainwin_10min_num), event->x, event->y) ||
-		widget_contains(WIDGET(mainwin_min_num), event->x, event->y) ||
-		widget_contains(WIDGET(mainwin_10sec_num), event->x, event->y) ||
-		widget_contains(WIDGET(mainwin_sec_num), event->x, event->y) ||
-		widget_contains(WIDGET(mainwin_stime_min), event->x, event->y) ||
-		widget_contains(WIDGET(mainwin_stime_sec), event->x, event->y))
-	{
+        widget_contains(WIDGET(mainwin_10min_num), event->x, event->y) ||
+        widget_contains(WIDGET(mainwin_min_num), event->x, event->y) ||
+        widget_contains(WIDGET(mainwin_10sec_num), event->x, event->y) ||
+        widget_contains(WIDGET(mainwin_sec_num), event->x, event->y) ||
+        widget_contains(WIDGET(mainwin_stime_min), event->x, event->y) ||
+        widget_contains(WIDGET(mainwin_stime_sec), event->x, event->y))
+    {
             if (cfg.timer_mode == TIMER_ELAPSED)
                 set_timer_mode(TIMER_REMAINING);
             else
@@ -1550,21 +1550,21 @@ mainwin_jump_to_file_selection_changed_cb(GtkTreeSelection *treesel,
 
 static gboolean
 mainwin_jump_to_file_edit_keypress_cb(GtkWidget * object,
-			     GdkEventKey * event,
-			     gpointer data)
+                 GdkEventKey * event,
+                 gpointer data)
 {
-	switch (event->keyval) {
-	case GDK_Return:
-		if (gtk_im_context_filter_keypress (GTK_ENTRY (object)->im_context, event)) {
-			GTK_ENTRY (object)->need_im_reset = TRUE;
-			return TRUE;
-		} else {
-			mainwin_jump_to_file_jump(GTK_TREE_VIEW(data));
-			return TRUE;
-		}
-	default:
-		return FALSE;
-	}
+    switch (event->keyval) {
+    case GDK_Return:
+        if (gtk_im_context_filter_keypress (GTK_ENTRY (object)->im_context, event)) {
+            GTK_ENTRY (object)->need_im_reset = TRUE;
+            return TRUE;
+        } else {
+            mainwin_jump_to_file_jump(GTK_TREE_VIEW(data));
+            return TRUE;
+        }
+    default:
+        return FALSE;
+    }
 }
 
 static gboolean
@@ -1637,21 +1637,21 @@ mainwin_update_jtf(GtkWidget * widget, gpointer user_data)
         PlaylistEntry *entry = PLAYLIST_ENTRY(playlist_glist->data);
 
         if (entry->title)
-		desc_buf = g_strdup(entry->title);
+        desc_buf = g_strdup(entry->title);
         else if (strchr(entry->filename, '/'))
-		desc_buf = str_to_utf8(strrchr(entry->filename, '/') + 1);
+        desc_buf = str_to_utf8(strrchr(entry->filename, '/') + 1);
         else
-		desc_buf = str_to_utf8(entry->filename);
+        desc_buf = str_to_utf8(entry->filename);
 
         gtk_list_store_append(GTK_LIST_STORE(store), &iter);
         gtk_list_store_set(GTK_LIST_STORE(store), &iter,
                            0, row, 1, desc_buf, -1);
         row++;
 
-	if(desc_buf) {
-		g_free(desc_buf);
-		desc_buf = NULL;
-	}
+    if(desc_buf) {
+        g_free(desc_buf);
+        desc_buf = NULL;
+    }
     }
 
     gtk_tree_model_get_iter_first(GTK_TREE_MODEL(store), &iter);
@@ -1715,7 +1715,7 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
 
         title = entry->title;
         if (!title) {
-		filename = str_to_utf8(entry->filename);
+        filename = str_to_utf8(entry->filename);
 
             if (strchr(filename, '/'))
                 title = strrchr(filename, '/') + 1;
@@ -1746,10 +1746,10 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
         }
 
         song_index++;
-	if (filename) {
-		g_free(filename);
-		filename = NULL;
-	}
+    if (filename) {
+        g_free(filename);
+        filename = NULL;
+    }
     }
 
     PLAYLIST_UNLOCK(playlist->mutex);
@@ -1935,21 +1935,21 @@ mainwin_jump_to_file(void)
         PlaylistEntry *entry = PLAYLIST_ENTRY(playlist_glist->data);
 
         if (entry->title)
-		desc_buf = g_strdup(entry->title);
+        desc_buf = g_strdup(entry->title);
         else if (strchr(entry->filename, '/'))
-		desc_buf = str_to_utf8(strrchr(entry->filename, '/') + 1);
+        desc_buf = str_to_utf8(strrchr(entry->filename, '/') + 1);
         else
-		desc_buf = str_to_utf8(entry->filename);
+        desc_buf = str_to_utf8(entry->filename);
 
         gtk_list_store_append(GTK_LIST_STORE(jtf_store), &iter);
         gtk_list_store_set(GTK_LIST_STORE(jtf_store), &iter,
                            0, row, 1, desc_buf, -1);
         row++;
 
-	if (desc_buf) {
-		g_free(desc_buf);
-		desc_buf = NULL;
-	}
+    if (desc_buf) {
+        g_free(desc_buf);
+        desc_buf = NULL;
+    }
     }
 
     PLAYLIST_UNLOCK(playlist->mutex);
@@ -2010,8 +2010,8 @@ mainwin_drag_data_received(GtkWidget * widget,
 
     if (str_has_prefix_nocase((gchar *) selection_data->data, "fonts:///"))
     {
-        gchar *path = (gchar *) selection_data->data + 9;		/* skip fonts:/// */
-	gchar *decoded = xmms_urldecode_plain(path);
+        gchar *path = (gchar *) selection_data->data + 9;       /* skip fonts:/// */
+    gchar *decoded = xmms_urldecode_plain(path);
 
         cfg.playlist_font = g_strconcat(decoded, strrchr(cfg.playlist_font, ' '), NULL);
         playlist_list_set_font(cfg.playlist_font);
@@ -2059,7 +2059,7 @@ mainwin_show_add_url_window(void)
     if (!url_window) {
         url_window =
             util_add_url_dialog_new(_("Enter location to play:"),
-				    G_CALLBACK(on_add_url_ok_clicked),
+                    G_CALLBACK(on_add_url_ok_clicked),
                                     G_CALLBACK(on_add_url_add_clicked));
         gtk_window_set_transient_for(GTK_WINDOW(url_window),
                                      GTK_WINDOW(mainwin));
@@ -2086,7 +2086,7 @@ check_set( GtkActionGroup * action_group ,
 void
 mainwin_eject_pushed(void)
 {
-    util_run_filebrowser(PLAY_BUTTON);
+    run_filebrowser(PLAY_BUTTON);
 }
 
 void
@@ -2479,9 +2479,9 @@ mainwin_real_show(void)
 
     gtk_window_resize(GTK_WINDOW(mainwin), 
                          !bmp_active_skin->properties.mainwin_width ? PLAYER_WIDTH :
-				bmp_active_skin->properties.mainwin_width,
+                bmp_active_skin->properties.mainwin_width,
                          !bmp_active_skin->properties.mainwin_height ? PLAYER_HEIGHT :
-				bmp_active_skin->properties.mainwin_height);
+                bmp_active_skin->properties.mainwin_height);
 
     draw_main_window(TRUE);
 
@@ -2537,8 +2537,8 @@ mainwin_set_doublesize(gboolean doublesize)
     mainwin_set_shape_mask();
 
     dock_window_resize(GTK_WINDOW(mainwin), cfg.player_shaded ? MAINWIN_SHADED_WIDTH : bmp_active_skin->properties.mainwin_width,
-		cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
-		bmp_active_skin->properties.mainwin_width * 2, bmp_active_skin->properties.mainwin_height * 2);
+        cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
+        bmp_active_skin->properties.mainwin_width * 2, bmp_active_skin->properties.mainwin_height * 2);
 
     if (cfg.doublesize) {
         gdk_window_set_back_pixmap(mainwin->window, mainwin_bg_x2, 0);
@@ -2579,7 +2579,7 @@ mainwin_general_menu_callback(gpointer data,
         show_about_window();
         break;
     case MAINWIN_GENERAL_PLAYFILE:
-        util_run_filebrowser(NO_PLAY_BUTTON);
+        run_filebrowser(NO_PLAY_BUTTON);
         break;
     case MAINWIN_GENERAL_PLAYCD:
         play_medium();
@@ -2653,23 +2653,23 @@ mainwin_general_menu_callback(gpointer data,
             if (ab_position_a == -1) {
                 ab_position_a = playback_get_time();
                 ab_position_b = -1;
-		mainwin_lock_info_text("LOOP-POINT A POSITION SET.");
+        mainwin_lock_info_text("LOOP-POINT A POSITION SET.");
             } else if (ab_position_b == -1) {
                 int time = playback_get_time();
                 if (time > ab_position_a)
                     ab_position_b = time;
-		mainwin_release_info_text();
+        mainwin_release_info_text();
             } else {
                 ab_position_a = playback_get_time();
                 ab_position_b = -1;
-		mainwin_lock_info_text("LOOP-POINT A POSITION RESET.");
+        mainwin_lock_info_text("LOOP-POINT A POSITION RESET.");
             }
         }
         break;
     case MAINWIN_GENERAL_CLEARAB:
         if (playlist_get_current_length(playlist) != -1) {
             ab_position_a = ab_position_b = -1;
-	    mainwin_release_info_text();
+        mainwin_release_info_text();
         }
         break;
     case MAINWIN_GENERAL_NEW_PL:
@@ -3208,7 +3208,7 @@ mainwin_create_widgets(void)
     mainwin_rew =
         create_pbutton_ex(&mainwin_wlist, mainwin_bg, mainwin_gc, 16, 88, 23,
                        18, 0, 0, 0, 18, mainwin_rev_pushed, mainwin_rev_release,
-		       SKIN_CBUTTONS, SKIN_CBUTTONS);
+               SKIN_CBUTTONS, SKIN_CBUTTONS);
     mainwin_play =
         create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 39, 88, 23,
                        18, 23, 0, 23, 18, mainwin_play_pushed, SKIN_CBUTTONS);
@@ -3226,7 +3226,7 @@ mainwin_create_widgets(void)
     mainwin_fwd =
         create_pbutton_ex(&mainwin_wlist, mainwin_bg, mainwin_gc, 108, 88, 22,
                        18, 92, 0, 92, 18, mainwin_fwd_pushed, mainwin_fwd_release,
-		       SKIN_CBUTTONS, SKIN_CBUTTONS);
+               SKIN_CBUTTONS, SKIN_CBUTTONS);
 
     mainwin_eject =
         create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 136, 89, 22,
@@ -3280,8 +3280,8 @@ mainwin_create_widgets(void)
     textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
 
     mainwin_othertext =
-	create_textbox(&mainwin_wlist, mainwin_bg, mainwin_gc, 112, 43, 
-			153, 1, SKIN_TEXT);
+    create_textbox(&mainwin_wlist, mainwin_bg, mainwin_gc, 112, 43, 
+            153, 1, SKIN_TEXT);
 
     mainwin_rate_text =
         create_textbox(&mainwin_wlist, mainwin_bg, mainwin_gc, 111, 43, 15,
@@ -3464,10 +3464,10 @@ mainwin_create(void)
     mainwin_gc = gdk_gc_new(mainwin->window);
     mainwin_bg = gdk_pixmap_new(mainwin->window,
                                 bmp_active_skin->properties.mainwin_width,
-				bmp_active_skin->properties.mainwin_height, -1);
+                bmp_active_skin->properties.mainwin_height, -1);
     mainwin_bg_x2 = gdk_pixmap_new(mainwin->window,
                                 bmp_active_skin->properties.mainwin_width * 2,
-				bmp_active_skin->properties.mainwin_height * 2, -1);
+                bmp_active_skin->properties.mainwin_height * 2, -1);
     mainwin_set_back_pixmap();
     mainwin_create_widgets();
 
@@ -3586,7 +3586,7 @@ mainwin_idle_func(gpointer data)
         vis_playback_start();
     else {
         vis_playback_stop();
-	ab_position_a = ab_position_b = -1;
+    ab_position_a = ab_position_b = -1;
     }
 
     draw_main_window(mainwin_force_redraw);
@@ -3856,131 +3856,131 @@ action_viewtime( GtkAction *action, GtkRadioAction *current )
 void
 action_about_audacious( void )
 {
-  show_about_window();
+    show_about_window();
 }
 
 void
 action_play_file( void )
 {
-  util_run_filebrowser(PLAY_BUTTON);
+    run_filebrowser(PLAY_BUTTON);
 }
 
 void
 action_play_location( void )
 {
-  mainwin_show_add_url_window();
+    mainwin_show_add_url_window();
 }
 
 void
 action_ab_set( void )
 {
-  Playlist *playlist = playlist_get_active();
-  if (playlist_get_current_length(playlist) != -1)
-  {
-    if (ab_position_a == -1)
+    Playlist *playlist = playlist_get_active();
+    if (playlist_get_current_length(playlist) != -1)
     {
-      ab_position_a = playback_get_time();
-      ab_position_b = -1;
-      mainwin_lock_info_text("LOOP-POINT A POSITION SET.");
+        if (ab_position_a == -1)
+        {
+            ab_position_a = playback_get_time();
+            ab_position_b = -1;
+            mainwin_lock_info_text("LOOP-POINT A POSITION SET.");
+        }
+        else if (ab_position_b == -1)
+        {
+            int time = playback_get_time();
+            if (time > ab_position_a)
+                ab_position_b = time;
+            mainwin_release_info_text();
+        }
+        else
+        {
+            ab_position_a = playback_get_time();
+            ab_position_b = -1;
+            mainwin_lock_info_text("LOOP-POINT A POSITION RESET.");
+        }
     }
-    else if (ab_position_b == -1)
-    {
-      int time = playback_get_time();
-      if (time > ab_position_a)
-        ab_position_b = time;
-      mainwin_release_info_text();
-    }
-    else
-    {
-      ab_position_a = playback_get_time();
-      ab_position_b = -1;
-      mainwin_lock_info_text("LOOP-POINT A POSITION RESET.");
-    }
-  }
 }
 
 void
 action_ab_clear( void )
 {
-  Playlist *playlist = playlist_get_active();
-  if (playlist_get_current_length(playlist) != -1)
-  {
-    ab_position_a = ab_position_b = -1;
-    mainwin_release_info_text();
-  }
+    Playlist *playlist = playlist_get_active();
+    if (playlist_get_current_length(playlist) != -1)
+    {
+        ab_position_a = ab_position_b = -1;
+        mainwin_release_info_text();
+    }
 }
 
 void
 action_current_track_info( void )
 {
-  playlist_fileinfo_current(playlist_get_active());
+    playlist_fileinfo_current(playlist_get_active());
 }
 
 void
 action_jump_to_file( void )
 {
-  mainwin_jump_to_file();
+    mainwin_jump_to_file();
 }
 
 void
 action_jump_to_playlist_start( void )
 {
-  Playlist *playlist = playlist_get_active();
-  playlist_set_position(playlist, 0);
+    Playlist *playlist = playlist_get_active();
+    playlist_set_position(playlist, 0);
 }
 
 void
 action_jump_to_time( void )
 {
-  mainwin_jump_to_time();
+    mainwin_jump_to_time();
 }
 
 void
 action_playback_next( void )
 {
-  Playlist *playlist = playlist_get_active();
-  playlist_next(playlist);
+    Playlist *playlist = playlist_get_active();
+    playlist_next(playlist);
 }
 
 void
 action_playback_previous( void )
 {
-  Playlist *playlist = playlist_get_active();
-  playlist_prev(playlist);
+    Playlist *playlist = playlist_get_active();
+    playlist_prev(playlist);
 }
 
 void
 action_playback_play( void )
 {
-  mainwin_play_pushed();
+    mainwin_play_pushed();
 }
 
 void
 action_playback_playcd( void )
 {
-  play_medium();
+    play_medium();
 }
 
 void
 action_playback_pause( void )
 {
-  playback_pause();
+    playback_pause();
 }
 
 void
 action_playback_stop( void )
 {
-  mainwin_stop_pushed();
+    mainwin_stop_pushed();
 }
 
 void
 action_preferences( void )
 {
-  show_prefs_window();
+    show_prefs_window();
 }
 
 void
 action_quit( void )
 {
-  mainwin_quit_cb();
+    mainwin_quit_cb();
 }

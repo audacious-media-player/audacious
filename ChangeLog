@@ -1,3 +1,10 @@
+2007-01-26 21:13:24 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3840]
+  reworked file chooser
+  trunk/src/audacious/util.c |  118 ++++++++++++++++++++++++++++++++-------------
+  1 file changed, 84 insertions(+), 34 deletions(-)
+
+
 2007-01-26 17:11:10 +0000  Michael Farber <01mf02@gmail.com>
   revision [3838]
   removed last references to top_srcdir

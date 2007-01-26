@@ -28,15 +28,17 @@ SOURCES = \
 	util.c \
 	formatter.c \
 	titlestring.c \
-	xconvert.c \
-	urldecode.c
+	xconvert.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
 HEADERS = \
-	rcfile.h configdb.h \
-	beepctrl.h urldecode.h \
-	formatter.h titlestring.h xconvert.h
+	rcfile.h \
+	configdb.h \
+	beepctrl.h \
+	formatter.h \
+	titlestring.h \
+	xconvert.h
 
 include ../../mk/objective.mk
 
