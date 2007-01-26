@@ -87,7 +87,7 @@ const gchar *application_name = N_("Audacious");
 
 
 struct _BmpCmdLineOpt {
-    GList *filenames;
+    gchar **filenames;
     gint session;
     gboolean play, stop, pause, fwd, rew, play_pause, playcd, show_jump_box;
     gboolean enqueue, mainwin, remote, activate;
@@ -95,6 +95,7 @@ struct _BmpCmdLineOpt {
     gboolean headless;
     gboolean no_log;
     gboolean enqueue_to_temp;
+    gboolean version;
     gchar *previous_session_id;
 };
 
@@ -822,183 +823,38 @@ register_aud_stock_icons(void)
   g_object_unref( iconfactory );
 }
 
-static void
-display_usage(void)
-{
-    g_print(_("Usage: audacious [options] [files] ...\n\n"
-              "Options:\n"
-              "--------\n"));
-    g_print("\n-h, --help             ");
-    /* -h, --help switch */
-    g_print(_("Display this text and exit"));
-    g_print("\n-n, --session          ");
-    /* -n, --session switch */
-    g_print(_("Select Audacious/BMP/XMMS session (Default: 0)"));
-    g_print("\n-r, --rew              ");
-    /* -r, --rew switch */
-    g_print(_("Skip backwards in playlist"));
-    g_print("\n-p, --play             ");
-    /* -p, --play switch */
-    g_print(_("Start playing current playlist"));
-    g_print("\n-u, --pause            ");
-    /* -u, --pause switch */
-    g_print(_("Pause current song"));
-    g_print("\n-s, --stop             ");
-    /* -s, --stop switch */
-    g_print(_("Stop current song"));
-    g_print("\n-t, --play-pause       ");
-    /* -t, --play-pause switch */
-    g_print(_("Pause if playing, play otherwise"));
-    g_print("\n-f, --fwd              ");
-    /* -f, --fwd switch */
-    g_print(_("Skip forward in playlist"));
-    g_print("\n-j, --show-jump-box    ");
-    /* -j, --show-jump-box switch */
-    g_print(_("Display Jump to file dialog"));
-    g_print("\n-e, --enqueue          ");
-    /* -e, --enqueue switch */
-    g_print(_("Don't clear the playlist"));
-    g_print("\n-m, --show-main-window ");
-    /* -m, --show-main-window switch */
-    g_print(_("Show the main window"));
-    g_print("\n-a, --activate         ");
-    /* -a, --activate switch */
-    g_print(_("Activate Audacious"));
-    g_print("\n-i, --sm-client-id     ");
-    /* -i, --sm-client-id switch */
-    g_print(_("Previous session ID"));
-    g_print("\n-H, --headless         ");
-    /* -h, --headless switch */
-    g_print(_("Headless operation [experimental]"));
-    g_print("\n-N, --no-log           ");
-    /* -N, --no-log switch */
-    g_print(_("Disable error/warning interception (logging)"));
-    g_print("\n-v, --version          ");
-    /* -v, --version switch */
-    g_print(_("Print version number and exit\n"));
-
-    exit(EXIT_SUCCESS);
-}
-
-static void
-parse_cmd_line(gint argc,
-               gchar ** argv,
-               BmpCmdLineOpt * options)
-{
-    static struct option long_options[] = {
-        {"help", 0, NULL, 'h'},
-        {"session", 1, NULL, 'n'},
-        {"rew", 0, NULL, 'r'},
-        {"play", 0, NULL, 'p'},
-        {"pause", 0, NULL, 'u'},
-        {"play-pause", 0, NULL, 't'},
-        {"stop", 0, NULL, 's'},
-        {"fwd", 0, NULL, 'f'},
-        {"show-jump-box", 0, NULL, 'j'},
-        {"enqueue", 0, NULL, 'e'},
-        {"enqueue-to-temp", 0, NULL, 'E'},
-        {"show-main-window", 0, NULL, 'm'},
-        {"activate", 0, NULL, 'a'},
-        {"version", 0, NULL, 'v'},
-        {"sm-client-id", 1, NULL, 'i'},
-        {"xmms", 0, NULL, 'x'},
-        {"headless", 0, NULL, 'H'},
-        {"no-log", 0, NULL, 'N'},
-        {0, 0, 0, 0}
-    };
-
-    gchar *filename, *current_dir;
-    gint c, i;
-
-    memset(options, 0, sizeof(BmpCmdLineOpt));
-    options->session = -1;
-
-    while ((c = getopt_long(argc, argv, "chn:HrpusfemavtLSjE", long_options,
-                            NULL)) != -1) {
-        switch (c) {
-        case 'h':
-            display_usage();
-            break;
-        case 'n':
-            options->session = atoi(optarg);
-            break;
-        case 'H':
-            options->headless = TRUE;
-            break;
-        case 'r':
-            options->rew = TRUE;
-            break;
-        case 'p':
-            options->play = TRUE;
-            break;
-        case 'u':
-            options->pause = TRUE;
-            break;
-        case 's':
-            options->stop = TRUE;
-            break;
-        case 'f':
-            options->fwd = TRUE;
-            break;
-        case 't':
-            options->play_pause = TRUE;
-            break;
-        case 'j':
-            options->show_jump_box = TRUE;
-            break;
-        case 'm':
-            options->mainwin = TRUE;
-            break;
-        case 'a':
-            options->activate = TRUE;
-            break;
-        case 'E':
-            options->enqueue_to_temp = TRUE;
-            break;
-        case 'e':
-            options->enqueue = TRUE;
-            break;
-        case 'v':
-            dump_version();
-            exit(EXIT_SUCCESS);
-            break;
-        case 'i':
-            options->previous_session_id = g_strdup(optarg);
-            break;
-        case 'c':
-            options->playcd = TRUE;
-            break;
-        case 'S':
-            options->load_skins = TRUE;
-            break;
-        case 'N':
-            options->no_log = TRUE;
-            break;
-        }
-    }
-
-    current_dir = g_get_current_dir();
-
-    for (i = optind; i < argc; i++) {
-        if (argv[i][0] == '/' || strstr(argv[i], "://"))
-            filename = g_strdup(argv[i]);
-        else
-            filename = g_build_filename(current_dir, argv[i], NULL);
-
-        options->filenames = g_list_prepend(options->filenames, filename);
-    }
-
-    options->filenames = g_list_reverse(options->filenames);
-
-    g_free(current_dir);
-}
+static GOptionEntry cmd_entries[] = {
+    {"session", 'n', 0, G_OPTION_ARG_INT, &options.session, "Select which Audacious session ID to use", NULL},
+    {"rew", 'r', 0, G_OPTION_ARG_NONE, &options.rew, "Skip backwards in playlist", NULL},
+    {"play", 'p', 0, G_OPTION_ARG_NONE, &options.play, "Start playing current playlist", NULL},
+    {"pause", 'u', 0, G_OPTION_ARG_NONE, &options.pause, "Pause current song", NULL},
+    {"stop", 's', 0, G_OPTION_ARG_NONE, &options.pause, "Stop current song", NULL},
+    {"play-pause", 't', 0, G_OPTION_ARG_NONE, &options.pause, "Pause if playing, play otherwise", NULL},
+    {"fwd", 'f', 0, G_OPTION_ARG_NONE, &options.fwd, "Skip forward in playlist", NULL},
+    {"show-jump-box", 'j', 0, G_OPTION_ARG_NONE, &options.show_jump_box, "Display Jump to File dialog", NULL},
+    {"enqueue", 'e', 0, G_OPTION_ARG_NONE, &options.enqueue, "Don't clear the playlist", NULL},
+    {"enqueue-to-temp", 'E', 0, G_OPTION_ARG_NONE, &options.enqueue_to_temp, "Add new files to a temporary playlist", NULL},
+    {"show-main-window", 'm', 0, G_OPTION_ARG_NONE, &options.mainwin, "Display the main window", NULL},
+    {"activate", 'a', 0, G_OPTION_ARG_NONE, &options.activate, "Display all open Audacious windows", NULL},
+    {"headless", 'H', 0, G_OPTION_ARG_NONE, &options.headless, "Enable headless operation", NULL},
+    {"no-log", 'N', 0, G_OPTION_ARG_NONE, &options.no_log, "Print all errors and warnings to stdout", NULL},
+    {"version", 'v', 0, G_OPTION_ARG_NONE, &options.version, "Show version and builtin features", NULL},
+    {G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &options.filenames, N_("FILE..."), NULL},
+    {NULL},
+};
 
 static void
 handle_cmd_line_options(BmpCmdLineOpt * options,
                         gboolean remote)
 {
-    GList *filenames = options->filenames;
+    gchar **filenames = options->filenames;
     gint session = options->session;
+
+    if (options->version)
+    {
+        dump_version();
+        exit(EXIT_SUCCESS);
+    }
 
     if (session == -1) {
         if (!remote)
@@ -1007,35 +863,41 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
             session = 0;
     }
 
-    if (filenames) {
+    if (filenames != NULL)
+    {
         gint pos = 0;
+        gint i = 0;
 
-        if (options->load_skins) {
-            xmms_remote_set_skin(session, filenames->data);
-            skin_install_skin(filenames->data);
+        for (i = 0; filenames[i] != NULL; i++)
+        {
+            if (options->load_skins)
+            {
+                xmms_remote_set_skin(session, filenames[i]);
+                skin_install_skin(filenames[i]);
+            }
+            else
+            {
+                if (options->enqueue_to_temp)
+                    xmms_remote_playlist_enqueue_to_temp(session, filenames[i]);
+
+                if (options->enqueue && options->play)
+                    pos = xmms_remote_get_playlist_length(session);
+
+                if (!options->enqueue)
+                    xmms_remote_playlist_clear(session);
+
+                xmms_remote_playlist_add_url_string(session, filenames[i]);
+
+                if (options->enqueue && options->play &&
+                    xmms_remote_get_playlist_length(session) > pos)
+                    xmms_remote_set_playlist_pos(session, pos);
+
+                if (!options->enqueue)
+                    xmms_remote_play(session);
+            }
         }
-        else {
-        if (options->enqueue_to_temp)
-                xmms_remote_playlist_enqueue_to_temp(session, filenames->data);
 
-            if (options->enqueue && options->play)
-                pos = xmms_remote_get_playlist_length(session);
-
-            if (!options->enqueue)
-                xmms_remote_playlist_clear(session);
-
-            xmms_remote_playlist_add(session, filenames);
-
-            if (options->enqueue && options->play &&
-                xmms_remote_get_playlist_length(session) > pos)
-                xmms_remote_set_playlist_pos(session, pos);
-
-            if (!options->enqueue)
-                xmms_remote_play(session);
-        }
-
-        g_list_foreach(filenames, (GFunc) g_free, NULL);
-        g_list_free(filenames);
+        g_strfreev(filenames);
     }
 
     if (options->rew)
@@ -1124,6 +986,8 @@ main(gint argc, gchar ** argv)
 {
     gboolean gtk_init_check_ok;
     Playlist *playlist;
+    GOptionContext *context;
+    GError *error = NULL;
 
     /* Setup l10n early so we can print localized error messages */
     gtk_set_locale();
@@ -1162,8 +1026,12 @@ main(gint argc, gchar ** argv)
     mutex_scan = g_mutex_new();
 
     gtk_init_check_ok = gtk_init_check(&argc, &argv);
-    /* Now let's parse the command line options first. */
-    parse_cmd_line(argc, argv, &options);
+
+    context = g_option_context_new(_("- play multimedia files"));
+    g_option_context_add_main_entries(context, cmd_entries, PACKAGE_NAME);
+    g_option_context_add_group(context, gtk_get_option_group(TRUE));
+    g_option_context_parse(context, &argc, &argv, &error);
+
     if (!gtk_init_check_ok) {
         if (argc < 2) {
             /* GTK check failed, and no arguments passed to indicate

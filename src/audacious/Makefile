@@ -53,8 +53,6 @@ SOURCES = \
 	fft.c \
 	general.c \
 	genevent.c \
-	getopt1.c \
-	getopt.c \
 	glade.c \
 	hints.c \
 	hook.c \
