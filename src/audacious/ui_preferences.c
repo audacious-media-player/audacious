@@ -2170,6 +2170,12 @@ on_filepopup_for_tuple_settings_clicked(GtkButton *button, gpointer data)
 	widget = glade_xml_get_widget(xml, "filepopup_settings_use_file_cover");
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget), cfg.use_file_cover);
 
+	widget = glade_xml_get_widget(xml, "filepopup_settings_showprogressbar");
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget), cfg.filepopup_showprogressbar);
+
+	widget = glade_xml_get_widget(xml, "filepopup_settings_delay");
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(widget), cfg.filepopup_delay);
+
 	gtk_widget_show(filepopup_settings);
 }
 
@@ -2195,6 +2201,12 @@ on_filepopup_settings_ok_clicked(GtkButton *button, gpointer data)
 
 	widget = glade_xml_get_widget(xml, "filepopup_settings_use_file_cover");
 	cfg.use_file_cover = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+
+	widget = glade_xml_get_widget(xml, "filepopup_settings_showprogressbar");
+	cfg.filepopup_showprogressbar = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+
+	widget = glade_xml_get_widget(xml, "filepopup_settings_delay");
+	cfg.filepopup_delay = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
 
 	gtk_widget_hide(filepopup_settings);
 }

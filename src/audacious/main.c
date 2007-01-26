@@ -213,6 +213,7 @@ BmpConfig bmp_default_config = {
     TRUE,           /* use extension probing */
     255, 255, 255,  /* colorize r, g, b */
     FALSE,          /* internal: whether or not to terminate */
+    TRUE,           /* whether show progress bar in filepopup or not */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -314,6 +315,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"use_file_cover", &cfg.use_file_cover, TRUE},
     {"use_xmms_style_fileselector", &cfg.use_xmms_style_fileselector, TRUE},
     {"use_extension_probing", &cfg.use_extension_probing, TRUE},
+    {"filepopup_showprogressbar", &cfg.filepopup_showprogressbar, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);

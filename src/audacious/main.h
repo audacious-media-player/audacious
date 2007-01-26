@@ -122,6 +122,7 @@ struct _BmpConfig {
     gboolean use_extension_probing;
     gint colorize_r; gint colorize_g; gint colorize_b;
     gboolean terminate;
+    gboolean filepopup_showprogressbar;
 };
 
 typedef struct _BmpConfig BmpConfig;
