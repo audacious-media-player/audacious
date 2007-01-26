@@ -1343,7 +1343,7 @@ playlist_eof_reached(Playlist *playlist)
     if ((cfg.no_playlist_advance && !cfg.repeat) || cfg.stopaftersong)  
       ip_data.stop = FALSE;
 
-    hook_call("playback finish", playlist->position);
+    hook_call("playback end", playlist->position);
 
     PLAYLIST_LOCK(playlist->mutex);
     
@@ -1383,7 +1383,7 @@ playlist_eof_reached(Playlist *playlist)
 
         if (!cfg.repeat) {
             PLAYLIST_UNLOCK(playlist->mutex);
-	    hook_call("playlist reached end", playlist->position);
+	    hook_call("playlist end reached", playlist->position);
             mainwin_clear_song_info();
             mainwin_set_info_text();
             return;
