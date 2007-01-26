@@ -63,7 +63,13 @@ hook_associate(const gchar *name, HookFunction func)
     hook = hook_find(name);
 
     if (hook == NULL)
-        return;
+    {
+        hook_register(name);
+        hook = hook_find(name);
+    }
+
+    /* this *cant* happen */
+    g_return_if_fail(hook != NULL);
 
     hook->funcs = g_slist_append(hook->funcs, func);
 }

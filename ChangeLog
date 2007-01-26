@@ -1,3 +1,17 @@
+2007-01-26 04:50:15 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [3820]
+  enhancement to popup information settings
+  - progress bar in filepopup can be toggled
+  - delay for filepopup is now configurable
+  
+  trunk/src/audacious/glade/prefswin.glade |  252 ++++++++++++++++++++++++++++++-
+  trunk/src/audacious/main.c               |    2 
+  trunk/src/audacious/main.h               |    1 
+  trunk/src/audacious/ui_fileinfopopup.c   |    3 
+  trunk/src/audacious/ui_preferences.c     |   12 +
+  5 files changed, 266 insertions(+), 4 deletions(-)
+
+
 2007-01-26 04:23:16 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3818]
   - hooking implementation.
