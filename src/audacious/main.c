@@ -1032,12 +1032,18 @@ main(gint argc, gchar ** argv)
     g_option_context_add_group(context, gtk_get_option_group(TRUE));
     g_option_context_parse(context, &argc, &argv, &error);
 
+    if (error != NULL)
+    {
+        g_printerr(_("%s: %s\nTry `%s --help' for more information.\n"), argv[0], error->message, argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
     if (!gtk_init_check_ok) {
         if (argc < 2) {
             /* GTK check failed, and no arguments passed to indicate
                that user is intending to only remote control a running
                session */
-            g_printerr(_("audacious: Unable to open display, exiting.\n"));
+            g_printerr(_("%s: Unable to open display, exiting.\n"), argv[0]);
             exit(EXIT_FAILURE);
         }
 

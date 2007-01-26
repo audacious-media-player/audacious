@@ -1,3 +1,16 @@
+2007-01-26 15:32:55 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3832]
+  - use GOption instead of getopt.
+  - remove nolonger used GNU getopt code
+  
+  trunk/src/audacious/Makefile  |    2 
+  trunk/src/audacious/getopt.c  |  961 ------------------------------------------
+  trunk/src/audacious/getopt.h  |  132 -----
+  trunk/src/audacious/getopt1.c |  183 -------
+  trunk/src/audacious/main.c    |  256 ++---------
+  5 files changed, 62 insertions(+), 1472 deletions(-)
+
+
 2007-01-26 06:33:00 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3830]
   - remove gcc-specific CFLAGs
