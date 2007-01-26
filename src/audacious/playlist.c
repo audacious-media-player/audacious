@@ -67,6 +67,8 @@
 
 #include "debug.h"
 
+#include "hook.h"
+
 typedef gint (*PlaylistCompareFunc) (PlaylistEntry * a, PlaylistEntry * b);
 typedef void (*PlaylistSaveFunc) (FILE * file);
 
@@ -1341,6 +1343,8 @@ playlist_eof_reached(Playlist *playlist)
     if ((cfg.no_playlist_advance && !cfg.repeat) || cfg.stopaftersong)  
       ip_data.stop = FALSE;
 
+    hook_call("playback finish", playlist->position);
+
     PLAYLIST_LOCK(playlist->mutex);
     
     if ((playlist_position_before_jump != NULL) && playlist->queue == NULL)
@@ -1379,6 +1383,7 @@ playlist_eof_reached(Playlist *playlist)
 
         if (!cfg.repeat) {
             PLAYLIST_UNLOCK(playlist->mutex);
+	    hook_call("playlist reached end", playlist->position);
             mainwin_clear_song_info();
             mainwin_set_info_text();
             return;

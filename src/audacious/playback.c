@@ -51,9 +51,9 @@
 #include "libaudacious/urldecode.h"
 #include "util.h"
 
-
 #include "playback.h"
 
+#include "hook.h"
 
 /* FIXME: yuck!! this shouldn't be here... */
 void
@@ -140,6 +140,8 @@ playback_initiate(void)
 
     playlist_check_pos_current(playlist);
     mainwin_set_info_text();
+
+    hook_call("playback begin", entry);
 }
 
 void
