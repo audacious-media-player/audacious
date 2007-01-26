@@ -1027,6 +1027,9 @@ main(gint argc, gchar ** argv)
 
     gtk_init_check_ok = gtk_init_check(&argc, &argv);
 
+    memset(&options, '\0', sizeof(BmpCmdLineOpt));
+    options.session = -1;
+
     context = g_option_context_new(_("- play multimedia files"));
     g_option_context_add_main_entries(context, cmd_entries, PACKAGE_NAME);
     g_option_context_add_group(context, gtk_get_option_group(TRUE));
