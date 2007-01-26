@@ -710,59 +710,109 @@ filebrowser_add_files(GtkFileChooser * browser,
     cfg.filesel_path = ptr;
 }
 
+static void
+action_button_cb(GtkWidget *widget, gpointer data)
+{
+    GtkWidget *window = g_object_get_data(data, "window");
+    GtkWidget *chooser = g_object_get_data(data, "chooser");
+    GtkWidget *toggle = g_object_get_data(data, "toggle-button");
+    cfg.close_dialog_open =
+        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toggle));
+
+    gboolean play_button =
+        GPOINTER_TO_INT(g_object_get_data(data, "play-button"));
+
+
+    GSList *files;
+    files = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER(chooser));
+    if (!files) return;
+
+    if (play_button)
+        playlist_clear(playlist_get_active());
+
+    filebrowser_add_files(GTK_FILE_CHOOSER(chooser), files);
+    g_slist_foreach(files, (GFunc) g_free, NULL);
+    g_slist_free(files);
+
+    if (play_button)
+        playback_initiate();
+
+
+    if (cfg.close_dialog_open)
+        gtk_widget_destroy(window);
+}
+
+
+static void
+close_button_cb(GtkWidget *widget, gpointer data)
+{
+    gtk_widget_destroy(GTK_WIDGET(data));
+}
+
 void
 util_run_filebrowser_gtk2style(gboolean play_button)
 {
-    static GtkWidget *chooser = NULL;
-    static GtkWidget *toggle = NULL;
+    GtkWidget *window;
+    GtkWidget *vbox, *hbox, *bbox;
+    GtkWidget *chooser;
+    GtkWidget *action_button, *close_button;
+    GtkWidget *toggle;
 
-    gint ACCEPT_RESPONSE_ID = 100;
+    gchar *window_title = play_button ? _("Open Files") : _("Add Files");
+    gchar *toggle_text = play_button ?
+        _("Close dialog on Open") : _("Close dialog on Add");
+    gpointer action_stock = play_button ? GTK_STOCK_OPEN : GTK_STOCK_ADD;
 
-    chooser =
-        gtk_file_chooser_dialog_new(play_button ? "Open Files" : "Add Files",
-                                    NULL,
-                                    GTK_FILE_CHOOSER_ACTION_OPEN,
-                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                    play_button ? GTK_STOCK_OPEN : GTK_STOCK_ADD,
-                                    ACCEPT_RESPONSE_ID, NULL);
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), window_title);
+    gtk_window_set_default_size(GTK_WINDOW(window), 700, 450);
+    gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 
+    vbox = gtk_vbox_new(FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(window), vbox);
+
+    chooser = gtk_file_chooser_widget_new(GTK_FILE_CHOOSER_ACTION_OPEN);
     gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(chooser), TRUE);
     if (cfg.filesel_path)
         gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(chooser),
                                             cfg.filesel_path);
+    gtk_box_pack_start(GTK_BOX(vbox), chooser, TRUE, TRUE, 5);
 
+    hbox = gtk_hbox_new(TRUE, 0);
+    gtk_box_pack_end(GTK_BOX(vbox), hbox, FALSE, FALSE, 5);
 
-    toggle = gtk_check_button_new_with_label(play_button ? _("Close dialog on Open") : _("Close dialog on Add"));
+    toggle = gtk_check_button_new_with_label(toggle_text);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle),
                                  cfg.close_dialog_open ? TRUE : FALSE);
-    gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER(chooser), toggle);
+    gtk_box_pack_start(GTK_BOX(hbox), toggle, TRUE, TRUE, 5);
 
-    
-    while(gtk_dialog_run(GTK_DIALOG(chooser)) == ACCEPT_RESPONSE_ID)
-    {
-        cfg.close_dialog_open =
-            gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toggle));
+    bbox = gtk_hbutton_box_new();
+    gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
+    gtk_box_pack_end(GTK_BOX(hbox), bbox, TRUE, TRUE, 5);
 
-        GSList *files;
-        files = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER(chooser));
-        if (!files) return;
+    close_button = gtk_button_new_from_stock(GTK_STOCK_CANCEL);
+    action_button = gtk_button_new_from_stock(action_stock);
+    gtk_container_add(GTK_CONTAINER(bbox), close_button);
+    gtk_container_add(GTK_CONTAINER(bbox), action_button);
 
-        if (play_button)
-            playlist_clear(playlist_get_active());
+    // this storage object holds several other objects which are used in the
+    // callback functions
+    gpointer storage = g_object_new(G_TYPE_OBJECT, NULL);
+    g_object_set_data(storage, "window", window);
+    g_object_set_data(storage, "chooser", chooser);
+    g_object_set_data(storage, "toggle-button", toggle);
+    g_object_set_data(storage, "play-button", GINT_TO_POINTER(play_button));
 
-        filebrowser_add_files(GTK_FILE_CHOOSER(chooser), files);
-        g_slist_foreach(files, (GFunc) g_free, NULL);
-        g_slist_free(files);
+    g_signal_connect(chooser, "file-activated",
+                     G_CALLBACK(action_button_cb), storage);
+    g_signal_connect(action_button, "clicked",
+                     G_CALLBACK(action_button_cb), storage);
+    g_signal_connect(close_button, "clicked",
+                     G_CALLBACK(close_button_cb), window);
+    g_signal_connect(window, "destroy",
+                     G_CALLBACK(gtk_widget_destroyed), &window);
 
-        if (play_button)
-            playback_initiate();
-
-
-        if (cfg.close_dialog_open)
-            break;
-    }
-
-    gtk_widget_destroy(chooser);
+    gtk_widget_show_all(window);
 }
 
 /*

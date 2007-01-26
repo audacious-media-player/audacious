@@ -1,3 +1,15 @@
+2007-01-26 17:11:10 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3838]
+  removed last references to top_srcdir
+  trunk/skins/Classic/Makefile    |    6 +++---
+  trunk/skins/Default/Makefile    |    6 +++---
+  trunk/skins/Ivory/Makefile      |    6 +++---
+  trunk/skins/Makefile            |    6 +++---
+  trunk/skins/Osmosis/Makefile    |    6 +++---
+  trunk/skins/TinyPlayer/Makefile |    6 +++---
+  6 files changed, 18 insertions(+), 18 deletions(-)
+
+
 2007-01-26 16:22:10 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3836]
   - default settings for options.session
