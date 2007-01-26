@@ -1,3 +1,24 @@
+2007-01-26 22:50:30 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3842]
+  integrated urldecode.* from libaudacious into audacious directory, made separate ui_fileopener.*
+  trunk/src/audacious/Makefile         |    2 
+  trunk/src/audacious/playback.c       |    2 
+  trunk/src/audacious/playlist.c       |    4 
+  trunk/src/audacious/ui_fileinfo.c    |    2 
+  trunk/src/audacious/ui_main.c        |  478 +++++++++++++++++------------------
+  trunk/src/audacious/ui_playlist.c    |   18 -
+  trunk/src/audacious/ui_preferences.c |    2 
+  trunk/src/audacious/urldecode.c      |   68 ++++
+  trunk/src/audacious/urldecode.h      |   27 +
+  trunk/src/audacious/util.c           |  411 ------------------------------
+  trunk/src/audacious/util.h           |    7 
+  trunk/src/audacious/vfs.c            |    2 
+  trunk/src/libaudacious/Makefile      |   12 
+  trunk/src/libaudacious/urldecode.c   |   68 ----
+  trunk/src/libaudacious/urldecode.h   |   27 -
+  15 files changed, 358 insertions(+), 772 deletions(-)
+
+
 2007-01-26 21:13:24 +0000  Michael Farber <01mf02@gmail.com>
   revision [3840]
   reworked file chooser
