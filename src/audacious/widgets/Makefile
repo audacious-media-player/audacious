@@ -14,8 +14,7 @@ CFLAGS += \
 	-I../../.. \
 	-I../..    \
 	-I..	   \
-	-I../../intl \
-	-Wno-strict-aliasing
+	-I../../intl
 
 SOURCES = \
 	widget.c \
