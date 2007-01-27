@@ -406,7 +406,9 @@ read_ini_string(const gchar * filename, const gchar * section,
             open_buffer = NULL;
         }
 
-        if (!vfs_file_get_contents(filename, &buffer, &filesize))
+        vfs_file_get_contents(filename, &buffer, &filesize);
+
+	if (buffer == NULL)
             return NULL;
 
         open_buffer = g_strdup(filename);
