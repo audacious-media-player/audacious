@@ -1,3 +1,18 @@
+2007-01-27 14:09:45 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3862]
+  - removed xmms_ prefix from formatter
+  - moved formatter from libaudacious to audacious
+  
+  
+  trunk/src/audacious/Makefile       |    2 
+  trunk/src/audacious/formatter.c    |  141 +++++++++++++++++++++++++++++++++++++
+  trunk/src/audacious/formatter.h    |   28 +++++++
+  trunk/src/libaudacious/Makefile    |    2 
+  trunk/src/libaudacious/formatter.c |  141 -------------------------------------
+  trunk/src/libaudacious/formatter.h |   28 -------
+  6 files changed, 171 insertions(+), 171 deletions(-)
+
+
 2007-01-27 13:01:55 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3860]
   - fix an error
