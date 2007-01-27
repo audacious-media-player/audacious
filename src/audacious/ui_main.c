@@ -77,6 +77,7 @@
 #include "ui_playlist.h"
 #include "ui_preferences.h"
 #include "ui_skinselector.h"
+#include "ui_urlopener.h"
 #include "strings.h"
 #include "util.h"
 #include "visualization.h"

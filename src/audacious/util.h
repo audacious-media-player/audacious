@@ -57,8 +57,6 @@ GArray *string_to_garray(const gchar * str);
 void glist_movedown(GList * list);
 void glist_moveup(GList * list);
 
-GtkWidget *util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
-                                   GCallback enqueue_func);
 void util_menu_position(GtkMenu * menu, gint * x, gint * y,
                         gboolean * push_in, gpointer data);
 

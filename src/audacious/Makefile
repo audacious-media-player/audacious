@@ -83,6 +83,7 @@ SOURCES = \
 	ui_playlist.c \
 	ui_preferences.c \
 	ui_skinselector.c \
+	ui_urlopener.c \
 	urldecode.c \
 	util.c \
 	vfs_buffer.c \

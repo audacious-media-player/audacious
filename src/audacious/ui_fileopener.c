@@ -130,19 +130,20 @@ util_run_filebrowser_gtk2style(gboolean play_button)
     if (cfg.filesel_path)
         gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(chooser),
                                             cfg.filesel_path);
-    gtk_box_pack_start(GTK_BOX(vbox), chooser, TRUE, TRUE, 5);
+    gtk_box_pack_start(GTK_BOX(vbox), chooser, TRUE, TRUE, 3);
 
     hbox = gtk_hbox_new(TRUE, 0);
-    gtk_box_pack_end(GTK_BOX(vbox), hbox, FALSE, FALSE, 5);
+    gtk_box_pack_end(GTK_BOX(vbox), hbox, FALSE, FALSE, 3);
 
     toggle = gtk_check_button_new_with_label(toggle_text);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle),
                                  cfg.close_dialog_open ? TRUE : FALSE);
-    gtk_box_pack_start(GTK_BOX(hbox), toggle, TRUE, TRUE, 5);
+    gtk_box_pack_start(GTK_BOX(hbox), toggle, TRUE, TRUE, 3);
 
     bbox = gtk_hbutton_box_new();
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
-    gtk_box_pack_end(GTK_BOX(hbox), bbox, TRUE, TRUE, 5);
+    gtk_box_set_spacing(GTK_BOX(bbox), 6);
+    gtk_box_pack_end(GTK_BOX(hbox), bbox, TRUE, TRUE, 3);
 
     close_button = gtk_button_new_from_stock(GTK_STOCK_CANCEL);
     action_button = gtk_button_new_from_stock(action_stock);
