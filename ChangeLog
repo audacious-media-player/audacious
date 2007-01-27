@@ -1,3 +1,11 @@
+2007-01-27 02:10:18 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3846]
+  - fix: W:playlist_list.c(162) [get_transparency_pixmap]: possible type-punned pointer dereference
+  
+  trunk/src/audacious/widgets/playlist_list.c |    8 ++++++--
+  1 file changed, 6 insertions(+), 2 deletions(-)
+
+
 2007-01-26 22:55:25 +0000  Michael Farber <01mf02@gmail.com>
   revision [3844]
   oops, forgot to add the fileopener files

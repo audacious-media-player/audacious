@@ -18,8 +18,7 @@ install-posthook:
 	fi
 
 OBJECTIVE_DATA =							\
-	audacious.pc:$(LIBDIR)/pkgconfig				\
-	src/audacious/audacious.desktop:$(datadir)/applications
+	audacious.pc:$(LIBDIR)/pkgconfig
 
 build-posthook:
 	@( \
