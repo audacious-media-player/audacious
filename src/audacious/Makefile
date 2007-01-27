@@ -42,8 +42,10 @@ HEADERS = \
 	ui_preferences.h \
 	util.h \
 	strings.h \
+	titlestring.h \
 	vfs.h \
-	vfs_buffer.h
+	vfs_buffer.h \
+	xconvert.h
 
 SOURCES = \
 	build_stamp.c \
@@ -74,6 +76,7 @@ SOURCES = \
 	pluginenum.c \
 	signals.c \
 	strings.c \
+	titlestring.c \
 	ui_about.c \
 	ui_credits.c \
 	ui_equalizer.c \
@@ -92,7 +95,8 @@ SOURCES = \
 	vfs_buffered_file.c \
 	vfs.c \
 	vfs_common.c \
-	visualization.c
+	visualization.c \
+	xconvert.c
 
 OBJECTS = ${SOURCES:.c=.o}
 

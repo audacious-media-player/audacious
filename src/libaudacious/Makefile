@@ -7,16 +7,16 @@ OBJECTIVE_LIBS = libaudacious$(SHARED_SUFFIX)
 OBJECTIVE_SONAME_SUFFIX = 4
 
 LIBADD = \
-	$(GTK_LIBS)      \
-	$(GCONF_LIBS)	\
+	$(GTK_LIBS) \
+	$(GCONF_LIBS) \
 	$(LIBMCS_LIBS)
 
 CFLAGS += $(PICFLAGS) \
-	$(GTK_CFLAGS)        \
-	$(GCONF_CFLAGS)      \
-	$(LIBMCS_CFLAGS)	\
-	-D_AUDACIOUS_CORE    \
-	-I.. -I../..	      \
+	$(GTK_CFLAGS) \
+	$(GCONF_CFLAGS) \
+	$(LIBMCS_CFLAGS) \
+	-D_AUDACIOUS_CORE \
+	-I.. -I../.. \
 	-I../intl
 
 CONF_SRC = configdb_$(CONFIGDB_BACKEND).c
@@ -24,18 +24,14 @@ CONF_SRC = configdb_$(CONFIGDB_BACKEND).c
 SOURCES = \
 	$(CONF_SRC) \
 	rcfile.c \
-	beepctrl.c \
-	titlestring.c \
-	xconvert.c
+	beepctrl.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
 HEADERS = \
 	rcfile.h \
 	configdb.h \
-	beepctrl.h \
-	titlestring.h \
-	xconvert.h
+	beepctrl.h
 
 include ../../mk/objective.mk
 
