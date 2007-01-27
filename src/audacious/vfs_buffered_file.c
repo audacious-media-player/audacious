@@ -170,7 +170,7 @@ VFSConstructor buffered_file_const = {
 };
 
 VFSFile *
-vfs_buffered_file_new_from_uri(gchar *uri)
+vfs_buffered_file_new_from_uri(const gchar *uri)
 {
     VFSFile *handle;
     VFSBufferedFile *fd;

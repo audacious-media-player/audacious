@@ -418,11 +418,21 @@ input_check_file(const gchar * filename, gboolean show_warning)
     InputPlugin *ip;
     gchar *filename_proxy;
     gint ret = 1;
-    gchar *ext;
+    gchar *ext, *tmp, *tmp_uri;
     gboolean use_ext_filter;
 
     filename_proxy = g_strdup(filename);
-    fd = vfs_buffered_file_new_from_uri(filename_proxy);
+
+    /* Some URIs will end in ?<subsong> to determine the subsong requested. */
+    tmp_uri = g_strdup(filename);
+
+    tmp = strrchr(tmp_uri, '?');
+
+    if (tmp != NULL)
+        *tmp = '\0';
+
+    fd = vfs_buffered_file_new_from_uri(tmp_uri);
+    g_free(tmp_uri);
 
     ext = strrchr(filename_proxy, '.') + 1;
 

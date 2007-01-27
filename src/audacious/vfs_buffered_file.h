@@ -50,7 +50,7 @@ typedef struct {
  *
  * Return value: A VFSFile handle for the VFSBufferedFile.
  **/
-VFSFile *vfs_buffered_file_new_from_uri(gchar *uri);
+VFSFile *vfs_buffered_file_new_from_uri(const gchar *uri);
 
 G_END_DECLS
 
