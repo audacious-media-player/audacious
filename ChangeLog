@@ -1,3 +1,21 @@
+2007-01-27 12:07:46 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3850]
+  Removed util.* from libaudacious
+  Removed my C++ comments from ui_fileopener.c
+  Cleanups
+  
+  
+  trunk/src/audacious/genevent.c      |    7 -
+  trunk/src/audacious/input.c         |   11 +-
+  trunk/src/audacious/main.c          |    1 
+  trunk/src/audacious/playback.c      |   67 +++++++---------
+  trunk/src/audacious/ui_fileopener.c |    5 -
+  trunk/src/libaudacious/Makefile     |    1 
+  trunk/src/libaudacious/util.c       |  143 ------------------------------------
+  trunk/src/libaudacious/util.h       |    1 
+  8 files changed, 39 insertions(+), 197 deletions(-)
+
+
 2007-01-27 02:11:50 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3848]
   - audacious.desktop is already installed, no need to do so here
