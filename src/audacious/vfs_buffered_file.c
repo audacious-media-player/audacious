@@ -60,7 +60,10 @@ buffered_file_vfs_fread_impl(gpointer i_ptr,
      */
     if ((vfs_ftell(handle->buffer)) + (size * nmemb) > 
 	((VFSBuffer *) handle->buffer->handle)->size)
+    {
+        vfs_fseek(handle->fd, vfs_ftell(handle->buffer), SEEK_SET);
         handle->which = TRUE;
+    }
 
     return vfs_fread(i_ptr, size, nmemb, handle->which == TRUE ? handle->fd : handle->buffer);
 }
@@ -86,7 +89,10 @@ buffered_file_vfs_getc_impl(VFSFile *stream)
      */
     if ((vfs_ftell(handle->buffer)) + 1 >
 	((VFSBuffer *) handle->buffer->handle)->size)
+    {
+        vfs_fseek(handle->fd, vfs_ftell(handle->buffer), SEEK_SET);
         handle->which = TRUE;
+    }
 
     return vfs_getc(handle->which == TRUE ? handle->fd : handle->buffer);
 }
