@@ -130,3 +130,33 @@ int vfs_fprintf(VFSFile *stream, gchar const *format, ...)
 
     return rv;
 }
+
+/**
+ * vfs_file_get_contents
+ * @filename: the filename to read in
+ * @buf: pointer to pointer of buffer
+ * @sz: pointer to integer that is the size
+ **/
+void
+vfs_file_get_contents(const gchar *filename, gchar **buf, gsize *size)
+{
+    VFSFile *fd;
+
+    fd = vfs_fopen(filename, "rb");
+
+    if (fd == NULL)
+        return;
+
+    vfs_fseek(fd, 0, SEEK_END);
+    *size = vfs_ftell(fd);
+
+    *buf = g_new(gchar, *size);
+
+    if (*buf == NULL)
+        return;
+
+    vfs_fseek(fd, 0, SEEK_SET);
+    vfs_fread(*buf, 1, *size, fd);
+
+    vfs_fclose(fd);
+}

@@ -120,6 +120,8 @@ extern int vfs_fprintf(VFSFile *stream, gchar const *format, ...)
 
 extern gboolean vfs_register_transport(VFSConstructor *vtable);
 
+extern void vfs_file_get_contents(const gchar *filename, gchar **buf, gsize *size);
+
 G_END_DECLS
 
 #endif /* VFS_H */
