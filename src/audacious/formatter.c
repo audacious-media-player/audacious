@@ -29,29 +29,29 @@
 #include "formatter.h"
 
 /**
- * xmms_formatter_new:
+ * formatter_new:
  *
  * Factory for #Formatter objects.
  *
  * Return value: A #Formatter object.
  **/
 Formatter *
-xmms_formatter_new(void)
+formatter_new(void)
 {
     Formatter *formatter = g_new0(Formatter, 1);
 
-    xmms_formatter_associate(formatter, '%', "%");
+    formatter_associate(formatter, '%', "%");
     return formatter;
 }
 
 /**
- * xmms_formatter_destroy:
+ * formatter_destroy:
  * @formatter: A #Formatter object to destroy.
  *
  * Destroys #Formatter objects.
  **/
 void
-xmms_formatter_destroy(Formatter * formatter)
+formatter_destroy(Formatter * formatter)
 {
     int i;
 
@@ -62,7 +62,7 @@ xmms_formatter_destroy(Formatter * formatter)
 }
 
 /**
- * xmms_formatter_associate:
+ * formatter_associate:
  * @formatter: A #Formatter object to use.
  * @id: The character to use for replacement.
  * @value: The value to replace with.
@@ -70,21 +70,21 @@ xmms_formatter_destroy(Formatter * formatter)
  * Adds a id->replacement set to the formatter's stack.
  **/
 void
-xmms_formatter_associate(Formatter * formatter, guchar id, char *value)
+formatter_associate(Formatter * formatter, guchar id, char *value)
 {
-    xmms_formatter_dissociate(formatter, id);
+    formatter_dissociate(formatter, id);
     formatter->values[id] = g_strdup(value);
 }
 
 /**
- * xmms_formatter_dissociate:
+ * formatter_dissociate:
  * @formatter: A #Formatter object to use.
  * @id: The id to remove the id->replacement mapping for.
  *
  * Removes an id->replacement mapping from the formatter's stack.
  **/
 void
-xmms_formatter_dissociate(Formatter * formatter, guchar id)
+formatter_dissociate(Formatter * formatter, guchar id)
 {
     if (formatter->values[id])
         g_free(formatter->values[id]);
@@ -92,7 +92,7 @@ xmms_formatter_dissociate(Formatter * formatter, guchar id)
 }
 
 /**
- * xmms_formatter_format:
+ * formatter_format:
  * @formatter: A #Formatter object to use.
  * @format: A string to format.
  *
@@ -101,7 +101,7 @@ xmms_formatter_dissociate(Formatter * formatter, guchar id)
  * Returns: The formatted string.
  **/
 gchar *
-xmms_formatter_format(Formatter * formatter, char *format)
+formatter_format(Formatter * formatter, char *format)
 {
     char *p, *q, *buffer;
     int len;

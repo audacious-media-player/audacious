@@ -16,12 +16,12 @@ typedef struct {
 
 G_BEGIN_DECLS
 
-Formatter *xmms_formatter_new(void);
-void xmms_formatter_destroy(Formatter * formatter);
-void xmms_formatter_associate(Formatter * formatter, guchar id,
+Formatter *formatter_new(void);
+void formatter_destroy(Formatter * formatter);
+void formatter_associate(Formatter * formatter, guchar id,
                               gchar * value);
-void xmms_formatter_dissociate(Formatter * formatter, guchar id);
-gchar *xmms_formatter_format(Formatter * formatter, gchar * format);
+void formatter_dissociate(Formatter * formatter, guchar id);
+gchar *formatter_format(Formatter * formatter, gchar * format);
 
 G_END_DECLS
 

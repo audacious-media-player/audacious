@@ -28,6 +28,7 @@ CFLAGS += \
 	-I../intl
 
 HEADERS = \
+	formatter.h \
 	i18n.h \
 	input.h \
 	hook.h \
@@ -51,6 +52,7 @@ SOURCES = \
 	dock.c \
 	effect.c \
 	fft.c \
+	formatter.c \
 	general.c \
 	genevent.c \
 	glade.c \

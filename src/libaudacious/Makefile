@@ -25,7 +25,6 @@ SOURCES = \
 	$(CONF_SRC) \
 	rcfile.c \
 	beepctrl.c \
-	formatter.c \
 	titlestring.c \
 	xconvert.c
 
@@ -35,7 +34,6 @@ HEADERS = \
 	rcfile.h \
 	configdb.h \
 	beepctrl.h \
-	formatter.h \
 	titlestring.h \
 	xconvert.h
 
