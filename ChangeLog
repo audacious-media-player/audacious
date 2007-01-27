@@ -1,3 +1,11 @@
+2007-01-26 22:55:25 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3844]
+  oops, forgot to add the fileopener files
+  trunk/src/audacious/ui_fileopener.c |  440 ++++++++++++++++++++++++++++++++++++
+  trunk/src/audacious/ui_fileopener.h |   28 ++
+  2 files changed, 468 insertions(+)
+
+
 2007-01-26 22:50:30 +0000  Michael Farber <01mf02@gmail.com>
   revision [3842]
   integrated urldecode.* from libaudacious into audacious directory, made separate ui_fileopener.*

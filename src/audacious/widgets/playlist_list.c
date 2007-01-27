@@ -142,11 +142,12 @@ shade_pixmap(GdkPixmap *in, gint x, gint y, gint x_offset, gint y_offset, gint w
 GdkDrawable *get_transparency_pixmap(void)
 {
 	GdkDrawable *root;
-	XID *pixmaps;
+	guchar *pm = NULL;
 	GdkAtom prop_type;
 	gint prop_size;
 	GdkPixmap *pixmap;
 	gboolean ret;
+	XID *pixmaps;
 
 	root = gdk_get_default_root_window();
 
@@ -159,9 +160,12 @@ GdkDrawable *get_transparency_pixmap(void)
 			0, 0, INT_MAX - 3,
 			FALSE,
 			&prop_type, NULL, &prop_size,
-			(guchar **) &pixmaps);
+			&pm);
 
 	gdk_error_trap_pop();
+
+	if (pm != NULL)
+		pixmaps = (XID *) pm;
 
 	if ((ret == TRUE) && (prop_type == GDK_TARGET_PIXMAP) && (prop_size >= sizeof(XID)) && (pixmaps != NULL))
 	{
