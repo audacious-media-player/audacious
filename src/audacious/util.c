@@ -395,14 +395,14 @@ read_ini_string(const gchar * filename, const gchar * section,
     if (open_buffer == NULL || strcasecmp(filename, open_buffer))
     {
         if (buffer != NULL)
-    {
+        {
             g_free(buffer);
             buffer = NULL;
         }
 
-    if (open_buffer != NULL)
+        if (open_buffer != NULL)
         {
-        g_free(open_buffer);
+            g_free(open_buffer);
             open_buffer = NULL;
         }
 

@@ -1,3 +1,17 @@
+2007-01-27 12:37:49 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3854]
+  - break out the URL opener UI code
+  
+  trunk/src/audacious/Makefile        |    1 
+  trunk/src/audacious/ui_fileopener.c |    9 +-
+  trunk/src/audacious/ui_main.c       |    1 
+  trunk/src/audacious/ui_urlopener.c  |  161 ++++++++++++++++++++++++++++++++++++
+  trunk/src/audacious/ui_urlopener.h  |   43 +++++++++
+  trunk/src/audacious/util.c          |  103 -----------------------
+  trunk/src/audacious/util.h          |    2 
+  7 files changed, 211 insertions(+), 109 deletions(-)
+
+
 2007-01-27 12:32:08 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3852]
   - fix accidental removal of xmms_show_message
