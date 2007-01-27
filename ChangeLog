@@ -1,3 +1,11 @@
+2007-01-27 15:34:13 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [3864]
+  - revise logic of r3808 so that cdaudio works again.
+  
+  trunk/src/audacious/input.c |    5 +----
+  1 file changed, 1 insertion(+), 4 deletions(-)
+
+
 2007-01-27 14:09:45 +0000  Michael Farber <01mf02@gmail.com>
   revision [3862]
   - removed xmms_ prefix from formatter

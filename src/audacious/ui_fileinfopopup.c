@@ -281,8 +281,8 @@ audacious_fileinfopopup_progress_cb ( gpointer filepopup_win )
 
   if ( ( time != -1 ) &&
        ( length != -1 ) &&
-       ( ( current_file != NULL ) && ( !strcmp(tooltip_file,current_file) ) &&
-         ( cfg.filepopup_showprogressbar ) ) )
+       ( ( current_file != NULL ) && ( tooltip_file != NULL ) &&
+	 ( !strcmp(tooltip_file, current_file) ) && ( cfg.filepopup_showprogressbar ) ) )
   {
     gchar *progress_time = g_strdup_printf("%d:%02d", time / 60000, (time / 1000) % 60);
     gtk_progress_bar_set_fraction( GTK_PROGRESS_BAR(progressbar) , (gdouble)time / (gdouble)length );
