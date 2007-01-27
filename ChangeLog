@@ -1,3 +1,11 @@
+2007-01-27 02:11:50 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3848]
+  - audacious.desktop is already installed, no need to do so here
+  
+  trunk/Makefile |    3 +--
+  1 file changed, 1 insertion(+), 2 deletions(-)
+
+
 2007-01-27 02:10:18 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3846]
   - fix: W:playlist_list.c(162) [get_transparency_pixmap]: possible type-punned pointer dereference

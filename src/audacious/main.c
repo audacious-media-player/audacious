@@ -47,7 +47,6 @@
 
 #include "libaudacious/configdb.h"
 #include "libaudacious/beepctrl.h"
-#include "libaudacious/util.h"
 #include "vfs.h"
 
 #include "controlsocket.h"

@@ -25,7 +25,6 @@ SOURCES = \
 	$(CONF_SRC) \
 	rcfile.c \
 	beepctrl.c \
-	util.c \
 	formatter.c \
 	titlestring.c \
 	xconvert.c

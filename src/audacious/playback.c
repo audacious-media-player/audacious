@@ -37,15 +37,15 @@
 #include <sys/stat.h>
 #include <dirent.h>
 
-#include "libaudacious/util.h"
 #include "libaudacious/configdb.h"
 
+#include "hook.h"
 #include "input.h"
 #include "main.h"
-#include "ui_main.h"
 #include "ui_equalizer.h"
 #include "output.h"
 #include "playlist.h"
+#include "ui_main.h"
 #include "ui_playlist.h"
 #include "ui_skinselector.h"
 #include "urldecode.h"
@@ -53,7 +53,6 @@
 
 #include "playback.h"
 
-#include "hook.h"
 
 /* FIXME: yuck!! this shouldn't be here... */
 void
@@ -71,11 +70,8 @@ playback_set_random_skin(void)
 gint
 playback_get_time(void)
 {
-    if (!playback_get_playing())
-        return -1;
-
-    if (!get_current_input_plugin())
-        return -1;
+    g_return_val_if_fail(playback_get_playing(), -1);
+    g_return_val_if_fail(get_current_input_plugin(), -1);
 
     return get_current_input_plugin()->get_time();
 }
@@ -87,8 +83,7 @@ playback_initiate(void)
     Playlist *playlist = playlist_get_active();
     gint penalty = 0;
 
-    if (playlist_get_length(playlist) == 0)
-        return;
+    g_return_if_fail(playlist_get_length(playlist) != 0);
 
     if (playback_get_playing())
         playback_stop();
@@ -98,9 +93,7 @@ playback_initiate(void)
     mainwin_disable_seekbar();
 
     entry = playlist_get_entry_to_play(playlist);
-
-    if (entry == NULL)
-        return;
+    g_return_if_fail(entry != NULL);
 
     /*
      * If the playlist entry cannot be played, try to pick another one.
@@ -108,26 +101,25 @@ playback_initiate(void)
      *
      *   - nenolod
      */
-    for ( penalty=0 ; penalty <= 15 && entry != NULL && !playback_play_file(entry) ; penalty++ )
+    for (penalty = 0; penalty <= 15 && entry != NULL && !playback_play_file(entry); penalty++)
     {
         playlist_next(playlist);
 
         entry = playlist_get_entry_to_play(playlist);
 
-	/* XXX ew. workaround for a stupid bug where audacious will keep 
-	 * trying to play a file with no valid decoder.
-	 */
-        if (entry == NULL)
-            return;
+        /* XXX ew. workaround for a stupid bug where audacious will keep 
+         * trying to play a file with no valid decoder.
+         */
+        g_return_if_fail(entry != NULL);
 
-	if (entry->decoder == NULL )
-	    entry->decoder = input_check_file(entry->filename, FALSE);
+        if (entry->decoder == NULL )
+            entry->decoder = input_check_file(entry->filename, FALSE);
 
-	/* if we hit 15 entries in a row with no valid decoder, just 
+        /* if we hit 15 entries in a row with no valid decoder, just 
          * bail due to confusion
-	 */
-	if (penalty == 15)
-	    return;
+         */
+        if (penalty == 15)
+            return;
     }
 
     if (playback_get_time() != -1) {
@@ -235,7 +227,7 @@ playback_play_file(PlaylistEntry *entry)
      *  - nenolod
      */
     if (!entry->decoder && 
-	(((entry->decoder = input_check_file(entry->filename, FALSE)) == NULL) ||
+    (((entry->decoder = input_check_file(entry->filename, FALSE)) == NULL) ||
         !input_is_enabled(entry->decoder->filename)))
     {
         input_file_not_playable(entry->filename);
@@ -273,31 +265,28 @@ playback_seek(gint time)
     gboolean restore_pause = FALSE;
     gint l=0, r=0;
 
-    if (!ip_data.playing)
-        return;
-
-    if (!get_current_input_plugin())
-        return;
+    g_return_if_fail(ip_data.playing);
+    g_return_if_fail(get_current_input_plugin());
 
     /* FIXME WORKAROUND...that should work with all plugins
      * mute the volume, start playback again, do the seek, then pause again
      * -Patrick Sudowe 
      */
-    if(ip_data.paused)
+    if (ip_data.paused)
     {
-	restore_pause = TRUE;
-	output_get_volume(&l, &r);
-	output_set_volume(0,0);
-	playback_pause();	
+        restore_pause = TRUE;
+        output_get_volume(&l, &r);
+        output_set_volume(0,0);
+        playback_pause();
     }
     
     free_vis_data();
     get_current_input_plugin()->seek(time);
     
-    if(restore_pause)
+    if (restore_pause)
     {
-	playback_pause();
-	output_set_volume(l, r);
+        playback_pause();
+        output_set_volume(l, r);
     }
 }
 

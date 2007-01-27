@@ -45,8 +45,6 @@
 
 #include "libaudacious/configdb.h"
 #include "libaudacious/beepctrl.h"
-#include "libaudacious/util.h"
-#include "vfs.h"
 
 #include "controlsocket.h"
 #include "dnd.h"
@@ -55,14 +53,15 @@
 #include "hints.h"
 #include "input.h"
 #include "logger.h"
-#include "ui_main.h"
 #include "output.h"
 #include "playback.h"
 #include "playlist.h"
-#include "ui_playlist.h"
 #include "pluginenum.h"
+#include "ui_main.h"
+#include "ui_playlist.h"
 #include "util.h"
 #include "visualization.h"
+#include "vfs.h"
 
 gboolean ev_waiting = FALSE;
 

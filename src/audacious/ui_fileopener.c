@@ -149,8 +149,9 @@ util_run_filebrowser_gtk2style(gboolean play_button)
     gtk_container_add(GTK_CONTAINER(bbox), close_button);
     gtk_container_add(GTK_CONTAINER(bbox), action_button);
 
-    // this storage object holds several other objects which are used in the
-    // callback functions
+    /* this storage object holds several other objects which are used in the
+     * callback functions
+     */
     gpointer storage = g_object_new(G_TYPE_OBJECT, NULL);
     g_object_set_data(storage, "window", window);
     g_object_set_data(storage, "chooser", chooser);
