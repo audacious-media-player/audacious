@@ -189,6 +189,10 @@ playlist_entry_get_info(PlaylistEntry * entry)
 
     g_return_val_if_fail(entry != NULL, FALSE);
 
+    // Let's not randomly probe streams, mmkay?
+    if (entry->decoder == NULL && (str_has_prefix_nocase(entry->filename, "http://") || str_has_prefix_nocase(entry->filename, "https://")))
+        return TRUE;
+
     if (entry->tuple == NULL || entry->tuple->mtime > 0 || entry->tuple->mtime == -1)
 	modtime = playlist_get_mtime(entry->filename);
     else
