@@ -1,3 +1,21 @@
+2007-01-27 20:10:21 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3872]
+  - moved titlestring.* and xconvert.* from libaudacious to audacious
+  
+  
+  trunk/src/audacious/Makefile         |    8 
+  trunk/src/audacious/titlestring.c    |  449 ++++++++++++++++++
+  trunk/src/audacious/titlestring.h    |   63 ++
+  trunk/src/audacious/xconvert.c       |  849 +++++++++++++++++++++++++++++++++++
+  trunk/src/audacious/xconvert.h       |   34 +
+  trunk/src/libaudacious/Makefile      |   22 
+  trunk/src/libaudacious/titlestring.c |  449 ------------------
+  trunk/src/libaudacious/titlestring.h |  120 ----
+  trunk/src/libaudacious/xconvert.c    |  849 -----------------------------------
+  trunk/src/libaudacious/xconvert.h    |   34 -
+  10 files changed, 1396 insertions(+), 1481 deletions(-)
+
+
 2007-01-27 19:40:05 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3870]
   - make vfs_buffered_file_new_from_uri declaration const

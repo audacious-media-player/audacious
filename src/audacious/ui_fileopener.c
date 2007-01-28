@@ -19,6 +19,7 @@
 
 #include <glib/gi18n.h>
 #include <string.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "input.h"
 #include "main.h"
@@ -103,6 +104,19 @@ close_button_cb(GtkWidget *widget, gpointer data)
     gtk_widget_destroy(GTK_WIDGET(data));
 }
 
+static gboolean
+filebrowser_on_keypress(GtkWidget * browser,
+                        GdkEventKey * event,
+                        gpointer data)
+{
+    if (event->keyval == GDK_Escape) {
+	gtk_widget_destroy(browser);
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
 void
 util_run_filebrowser_gtk2style(gboolean play_button)
 {
@@ -167,6 +181,10 @@ util_run_filebrowser_gtk2style(gboolean play_button)
                      G_CALLBACK(close_button_cb), window);
     g_signal_connect(window, "destroy",
                      G_CALLBACK(gtk_widget_destroyed), &window);
+
+    g_signal_connect(window, "key_press_event",
+		     G_CALLBACK(filebrowser_on_keypress),
+		     NULL);
 
     gtk_widget_show_all(window);
 }
