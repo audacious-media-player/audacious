@@ -91,6 +91,7 @@ static const gchar *credit_text[] = {
     "Mike Frysinger",
     "Chris Kehler",
     "Michael Hanselmann",
+    "Joseph Jezak",
     "Henrik Johansson",
     "Rodrigo Martins de Matos Ventura",
     "Diego Pettenò",

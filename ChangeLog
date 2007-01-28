@@ -1,3 +1,11 @@
+2007-01-28 09:58:22 +0000  George Averill <nhjm449@gmail.com>
+  revision [3876]
+  - Why are we probing streams so unnecessarily often?
+  
+  trunk/src/audacious/playlist.c |    4 ++++
+  1 file changed, 4 insertions(+)
+
+
 2007-01-28 09:54:28 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [3874]
   - restore shortcut key (esc) to close gtk2 fileopener.
