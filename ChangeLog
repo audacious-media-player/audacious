@@ -1,3 +1,10 @@
+2007-01-28 11:55:46 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [3878]
+  Add Joseph Jezak to the list of patch submitters.
+  trunk/src/audacious/ui_credits.c |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2007-01-28 09:58:22 +0000  George Averill <nhjm449@gmail.com>
   revision [3876]
   - Why are we probing streams so unnecessarily often?
