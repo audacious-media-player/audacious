@@ -136,8 +136,6 @@ shade_pixmap(GdkPixmap *in, gint x, gint y, gint x_offset, gint y_offset, gint w
 #ifdef GDK_WINDOWING_X11
 
 #include <gdk/gdkx.h>
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
 
 GdkDrawable *get_transparency_pixmap(void)
 {

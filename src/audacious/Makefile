@@ -9,22 +9,22 @@ OBJECTIVE_BINS = audacious
 LDFLAGS += $(AUDLDFLAGS)
 
 LDADD = \
-	-L.. $(LTLIBINTL)     \
+	-L.. $(LTLIBINTL) \
 	-L../libaudacious -laudacious \
 	$(CHARDET_LIBS) \
-	$(GTK_LIBS)      \
+	$(GTK_LIBS) \
 	$(LIBGLADE_LIBS) \
-	$(REGEX_LIBS)    \
+	$(REGEX_LIBS) \
 	./widgets/libwidgets.a
 
 CFLAGS += \
-	$(GTK_CFLAGS)      \
+	$(GTK_CFLAGS) \
 	$(LIBGLADE_CFLAGS) \
-	$(BEEP_DEFINES)    \
-	$(ARCH_DEFINES)    \
-	$(REGEX_CFLAGS)    \
+	$(BEEP_DEFINES) \
+	$(ARCH_DEFINES) \
+	$(REGEX_CFLAGS) \
 	-D_AUDACIOUS_CORE \
-	-I.. -I../..   \
+	-I.. -I../.. \
 	-I../intl
 
 HEADERS = \
@@ -38,11 +38,10 @@ HEADERS = \
 	playlist_container.h \
 	plugin.h \
 	strings.h \
+	titlestring.h \
 	ui_fileinfopopup.h \
 	ui_preferences.h \
 	util.h \
-	strings.h \
-	titlestring.h \
 	vfs.h \
 	vfs_buffer.h \
 	xconvert.h
