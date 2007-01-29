@@ -77,6 +77,7 @@ SOURCES = \
 	strings.c \
 	titlestring.c \
 	ui_about.c \
+	ui_albumart.c \
 	ui_credits.c \
 	ui_equalizer.c \
 	ui_fileinfo.c \

@@ -1,3 +1,13 @@
+2007-01-29 17:55:26 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3892]
+  - Cleaned up a bit
+  
+  trunk/src/audacious/Makefile                |   19 +++++++++----------
+  trunk/src/audacious/platform/smartinclude.h |    6 ------
+  trunk/src/audacious/widgets/playlist_list.c |    2 --
+  3 files changed, 9 insertions(+), 18 deletions(-)
+
+
 2007-01-29 15:08:18 +0000  Giacomo Lozito <james@develia.org>
   revision [3890]
   - set the gtk2 fileopener position to the center of the screen
