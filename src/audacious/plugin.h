@@ -80,6 +80,8 @@ typedef struct _VisPlugin     VisPlugin;
 
 typedef struct _LowlevelPlugin LowlevelPlugin;
 
+typedef struct _InputPlayback InputPlayback;
+
 /* Sadly, this is the most we can generalize out of the disparate
    plugin structs usable with typecasts - descender */
 struct _Plugin {
@@ -145,6 +147,13 @@ struct _EffectPlugin {
     void (*query_format) (AFormat * fmt, gint * rate, gint * nch);
 };
 
+struct _InputPlayback {
+    gchar *filename;
+    InputPlugin *plugin;
+    void *data;
+    OutputPlugin *output;
+};
+
 struct _InputPlugin {
     gpointer handle;
     gchar *filename;
@@ -158,14 +167,14 @@ struct _InputPlugin {
     gint (*is_our_file) (gchar * filename);
     GList *(*scan_dir) (gchar * dirname);
 
-    void (*play_file) (gchar * filename);
-    void (*stop) (void);
-    void (*pause) (gshort paused);
-    void (*seek) (gint time);
+    void (*play_file) (InputPlayback * playback);
+    void (*stop) (InputPlayback * playback);
+    void (*pause) (InputPlayback * playback, gshort paused);
+    void (*seek) (InputPlayback * playback, gint time);
 
     void (*set_eq) (gint on, gfloat preamp, gfloat * bands);
 
-    gint (*get_time) (void);
+    gint (*get_time) (InputPlayback * playback);
 
     void (*get_volume) (gint * l, gint * r);
     void (*set_volume) (gint l, gint r);

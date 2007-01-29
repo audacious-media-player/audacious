@@ -1,3 +1,13 @@
+2007-01-28 20:15:08 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3880]
+  - new croatian translation from Marin Glibic
+  
+  trunk/po/LINGUAS                 |    1 
+  trunk/po/hr.po                   | 2104 +++++++++++++++++++++++++++++++++++++++
+  trunk/src/audacious/ui_credits.c |    3 
+  3 files changed, 2108 insertions(+)
+
+
 2007-01-28 11:55:46 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [3878]
   Add Joseph Jezak to the list of patch submitters.

@@ -30,7 +30,7 @@ typedef struct _InputPluginData InputPluginData;
 
 struct _InputPluginData {
     GList *input_list;
-    InputPlugin *current_input_plugin;
+    InputPlayback *current_input_playback;
     gboolean playing;
     gboolean paused;
     gboolean stop;
@@ -39,8 +39,9 @@ struct _InputPluginData {
 };
 
 GList *get_input_list(void);
-InputPlugin *get_current_input_plugin(void);
-void set_current_input_plugin(InputPlugin * ip);
+InputPlayback *get_current_input_playback(void);
+void set_current_input_playback(InputPlayback * ip);
+void set_current_input_data(void * data);
 InputVisType input_get_vis_type();
 void free_vis_data(void);
 InputPlugin *input_check_file(const gchar * filename, gboolean show_warning);

@@ -71,9 +71,9 @@ gint
 playback_get_time(void)
 {
     g_return_val_if_fail(playback_get_playing(), -1);
-    g_return_val_if_fail(get_current_input_plugin(), -1);
+    g_return_val_if_fail(get_current_input_playback(), -1);
 
-    return get_current_input_plugin()->get_time();
+    return get_current_input_playback()->plugin->get_time(get_current_input_playback());
 }
 
 void
@@ -142,13 +142,14 @@ playback_pause(void)
     if (!playback_get_playing())
         return;
 
-    if (!get_current_input_plugin())
+    if (!get_current_input_playback())
         return;
 
     ip_data.paused = !ip_data.paused;
 
-    if (get_current_input_plugin()->pause)
-        get_current_input_plugin()->pause(ip_data.paused);
+    if (get_current_input_playback()->plugin->pause)
+        get_current_input_playback()->plugin->pause(get_current_input_playback(),
+						    ip_data.paused);
 
     g_return_if_fail(mainwin_playstatus != NULL);
 
@@ -161,7 +162,7 @@ playback_pause(void)
 void
 playback_stop(void)
 {
-    if (ip_data.playing && get_current_input_plugin()) {
+    if (ip_data.playing && get_current_input_playback()) {
 
         if (playback_get_paused()) {
             output_flush(get_written_time()); /* to avoid noise */
@@ -170,8 +171,8 @@ playback_stop(void)
 
         ip_data.playing = FALSE; 
 
-        if (get_current_input_plugin()->stop)
-            get_current_input_plugin()->stop();
+        if (get_current_input_playback()->plugin->stop)
+            get_current_input_playback()->plugin->stop(get_current_input_playback());
 
         free_vis_data();
         ip_data.paused = FALSE;
@@ -181,6 +182,9 @@ playback_stop(void)
             input_info_text = NULL;
             mainwin_set_info_text();
         }
+
+	g_free(get_current_input_playback());
+	set_current_input_playback(NULL);
     }
 
     ip_data.buffering = FALSE;
@@ -210,6 +214,7 @@ run_no_output_plugin_dialog(void)
 gboolean
 playback_play_file(PlaylistEntry *entry)
 {
+    InputPlayback * playback;
     g_return_val_if_fail(entry != NULL, FALSE);
 
     if (!get_current_output_plugin()) {
@@ -232,15 +237,23 @@ playback_play_file(PlaylistEntry *entry)
     {
         input_file_not_playable(entry->filename);
 
-        set_current_input_plugin(NULL);
+        set_current_input_playback(NULL);
         mainwin_set_info_text();
 
         return FALSE;
     }
 
-    set_current_input_plugin(entry->decoder);
+    playback = g_new0(InputPlayback, 1);
+    
     entry->decoder->output = &psuedo_output_plugin;
-    entry->decoder->play_file(entry->filename);
+
+    playback->plugin = entry->decoder;
+    playback->output = &psuedo_output_plugin;
+    playback->filename = entry->filename;
+    
+    set_current_input_playback(playback);
+
+    entry->decoder->play_file(playback);
 
     ip_data.playing = TRUE;
 
@@ -266,7 +279,7 @@ playback_seek(gint time)
     gint l=0, r=0;
 
     g_return_if_fail(ip_data.playing);
-    g_return_if_fail(get_current_input_plugin());
+    g_return_if_fail(get_current_input_playback());
 
     /* FIXME WORKAROUND...that should work with all plugins
      * mute the volume, start playback again, do the seek, then pause again
@@ -281,7 +294,7 @@ playback_seek(gint time)
     }
     
     free_vis_data();
-    get_current_input_plugin()->seek(time);
+    get_current_input_playback()->plugin->seek(get_current_input_playback(), time);
     
     if (restore_pause)
     {

@@ -73,16 +73,16 @@ static GList *vis_list = NULL;
 
 gchar *input_info_text = NULL;
 
-InputPlugin *
-get_current_input_plugin(void)
+InputPlayback *
+get_current_input_playback(void)
 {
-    return ip_data.current_input_plugin;
+    return ip_data.current_input_playback;
 }
 
 void
-set_current_input_plugin(InputPlugin * ip)
+set_current_input_playback(InputPlayback * ip)
 {
-    ip_data.current_input_plugin = ip;
+    ip_data.current_input_playback = ip;
 }
 
 GList *
@@ -511,11 +511,11 @@ input_set_eq(gint on, gfloat preamp, gfloat * bands)
     if (!ip_data.playing)
         return;
 
-    if (!get_current_input_plugin())
+    if (!get_current_input_playback())
         return;
 
-    if (get_current_input_plugin()->set_eq)
-        get_current_input_plugin()->set_eq(on, preamp, bands);
+    if (get_current_input_playback()->plugin->set_eq)
+        get_current_input_playback()->plugin->set_eq(on, preamp, bands);
 }
 
 void
@@ -736,9 +736,9 @@ input_get_volume(gint * l, gint * r)
     *l = -1;
     *r = -1;
     if (playback_get_playing()) {
-        if (get_current_input_plugin() &&
-            get_current_input_plugin()->get_volume) {
-            get_current_input_plugin()->get_volume(l, r);
+        if (get_current_input_playback() &&
+            get_current_input_playback()->plugin->get_volume) {
+            get_current_input_playback()->plugin->get_volume(l, r);
             return;
         }
     }
@@ -749,9 +749,9 @@ void
 input_set_volume(gint l, gint r)
 {
     if (playback_get_playing()) {
-        if (get_current_input_plugin() &&
-            get_current_input_plugin()->set_volume) {
-            get_current_input_plugin()->set_volume(l, r);
+        if (get_current_input_playback() &&
+            get_current_input_playback()->plugin->set_volume) {
+            get_current_input_playback()->plugin->set_volume(l, r);
             return;
         }
     }
@@ -814,7 +814,7 @@ input_set_status_buffering(gboolean status)
     if (!playback_get_playing())
         return;
 
-    if (!get_current_input_plugin())
+    if (!get_current_input_playback())
         return;
 
     ip_data.buffering = status;
