@@ -750,9 +750,9 @@ input_set_volume(gint l, gint r)
 {
     if (playback_get_playing()) {
         if (get_current_input_playback() &&
-            get_current_input_playback()->plugin->set_volume) {
-            get_current_input_playback()->plugin->set_volume(l, r);
-            return;
+            get_current_input_playback()->plugin->set_volume &&
+            get_current_input_playback()->plugin->set_volume(l, r)) {
+	    return;
         }
     }
     output_set_volume(l, r);

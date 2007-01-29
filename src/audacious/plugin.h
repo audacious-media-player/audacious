@@ -176,8 +176,8 @@ struct _InputPlugin {
 
     gint (*get_time) (InputPlayback * playback);
 
-    void (*get_volume) (gint * l, gint * r);
-    void (*set_volume) (gint l, gint r);
+    gint (*get_volume) (gint * l, gint * r);
+    gint (*set_volume) (gint l, gint r);
 
     void (*cleanup) (void);
 
@@ -189,7 +189,7 @@ struct _InputPlugin {
     void (*get_song_info) (gchar * filename, gchar ** title, gint * length);
     void (*file_info_box) (gchar * filename);
 
-    OutputPlugin *output;
+    OutputPlugin *output; /* deprecated */
 
     /* Added in Audacious 1.1.0 */
     TitleInput *(*get_song_tuple) (gchar * filename);
