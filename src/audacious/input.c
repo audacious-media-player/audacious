@@ -737,8 +737,8 @@ input_get_volume(gint * l, gint * r)
     *r = -1;
     if (playback_get_playing()) {
         if (get_current_input_playback() &&
-            get_current_input_playback()->plugin->get_volume) {
-            get_current_input_playback()->plugin->get_volume(l, r);
+            get_current_input_playback()->plugin->get_volume &&
+            get_current_input_playback()->plugin->get_volume(l, r)) {
             return;
         }
     }

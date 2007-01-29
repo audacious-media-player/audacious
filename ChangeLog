@@ -1,3 +1,13 @@
+2007-01-29 06:09:12 +0000  Daniel Barkalow <barkalow@iabervon.org>
+  revision [3886]
+  Provide flags in InputPlayback for common plugin flag needs, and provide a
+  useful default get_time().
+  
+  trunk/src/audacious/playback.c |   16 +++++++++++++---
+  trunk/src/audacious/plugin.h   |    4 ++++
+  2 files changed, 17 insertions(+), 3 deletions(-)
+
+
 2007-01-29 05:08:08 +0000  Daniel Barkalow <barkalow@iabervon.org>
   revision [3884]
   More input plugin API work
