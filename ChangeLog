@@ -1,3 +1,12 @@
+2007-01-29 05:08:08 +0000  Daniel Barkalow <barkalow@iabervon.org>
+  revision [3884]
+  More input plugin API work
+  
+  trunk/src/audacious/input.c  |    6 +++---
+  trunk/src/audacious/plugin.h |    6 +++---
+  2 files changed, 6 insertions(+), 6 deletions(-)
+
+
 2007-01-29 01:02:15 +0000  Daniel Barkalow <barkalow@iabervon.org>
   revision [3882]
   Change the input plugin API to use a struct for the currently-playing file.

@@ -152,6 +152,10 @@ struct _InputPlayback {
     InputPlugin *plugin;
     void *data;
     OutputPlugin *output;
+
+    int playing;
+    gboolean error;
+    gboolean eof;
 };
 
 struct _InputPlugin {

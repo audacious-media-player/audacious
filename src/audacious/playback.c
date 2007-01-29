@@ -70,10 +70,19 @@ playback_set_random_skin(void)
 gint
 playback_get_time(void)
 {
+    InputPlayback *playback;
     g_return_val_if_fail(playback_get_playing(), -1);
-    g_return_val_if_fail(get_current_input_playback(), -1);
+    playback = get_current_input_playback();
+    g_return_val_if_fail(playback, -1);
 
-    return get_current_input_playback()->plugin->get_time(get_current_input_playback());
+    if (playback->plugin->get_time)
+        return playback->plugin->get_time(playback);
+    if (playback->error)
+        return -2;
+    if (!playback->playing || 
+	(playback->eof && !playback->output->buffer_playing()))
+        return -1;
+    return playback->output->output_time();
 }
 
 void
@@ -183,6 +192,7 @@ playback_stop(void)
             mainwin_set_info_text();
         }
 
+	g_free(get_current_input_playback()->filename);
 	g_free(get_current_input_playback());
 	set_current_input_playback(NULL);
     }
@@ -249,7 +259,7 @@ playback_play_file(PlaylistEntry *entry)
 
     playback->plugin = entry->decoder;
     playback->output = &psuedo_output_plugin;
-    playback->filename = entry->filename;
+    playback->filename = g_strdup(entry->filename);
     
     set_current_input_playback(playback);
 
