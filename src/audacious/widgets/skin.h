@@ -210,6 +210,7 @@ gboolean bmp_active_skin_reload(void);
 
 Skin *skin_new(void);
 gboolean skin_load(Skin * skin, const gchar * path);
+gboolean skin_reload_forced(void);
 void skin_reload(Skin * skin);
 void skin_free(Skin * skin);
 
@@ -240,7 +241,6 @@ void skin_draw_mainwin_titlebar(Skin * skin,
 void skin_parse_hints(Skin * skin, gchar *path_p);
 
 
-gboolean
-skin_reload_forced(void);
+void skin_set_random_skin(void);
 
 #endif

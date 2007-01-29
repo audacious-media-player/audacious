@@ -54,19 +54,6 @@
 #include "playback.h"
 
 
-/* FIXME: yuck!! this shouldn't be here... */
-void
-playback_set_random_skin(void)
-{
-    SkinNode *node;
-    guint32 randval;
-
-    /* Get a random value to select the skin to use */
-    randval = g_random_int_range(0, g_list_length(skinlist));
-    node = g_list_nth(skinlist, randval)->data;
-    bmp_active_skin_load(node->path);
-}
-
 gint
 playback_get_time(void)
 {
@@ -234,7 +221,7 @@ playback_play_file(PlaylistEntry *entry)
     }
 
     if (cfg.random_skin_on_play)
-        playback_set_random_skin();
+        skin_set_random_skin();
 
     /*
      * This is slightly uglier than the original version, but should

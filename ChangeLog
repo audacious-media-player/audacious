@@ -1,3 +1,15 @@
+2007-01-29 18:11:01 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3894]
+  - split out albumart locating functions into a seperate file and make the public API available in util.h
+  
+  trunk/src/audacious/Makefile           |    1 
+  trunk/src/audacious/ui_albumart.c      |  195 +++++++++++++++++++++++++++++++++
+  trunk/src/audacious/ui_fileinfo.c      |  160 ---------------------------
+  trunk/src/audacious/ui_fileinfopopup.c |  163 ---------------------------
+  trunk/src/audacious/util.h             |    3 
+  5 files changed, 200 insertions(+), 322 deletions(-)
+
+
 2007-01-29 17:55:26 +0000  Michael Farber <01mf02@gmail.com>
   revision [3892]
   - Cleaned up a bit

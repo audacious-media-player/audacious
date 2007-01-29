@@ -23,9 +23,8 @@
 
 #include <glib.h>
 
-#include "audacious/playlist.h"
+#include "playlist.h"
 
-void playback_set_random_skin(void);
 gint playback_get_time(void);
 void playback_initiate(void);
 void playback_pause(void);

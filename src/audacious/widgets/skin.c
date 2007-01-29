@@ -1848,3 +1848,16 @@ skin_draw_mainwin_titlebar(Skin * skin,
     skin_draw_pixmap(skin, drawable, gc, SKIN_TITLEBAR, 27, y_offset,
                      0, 0, bmp_active_skin->properties.mainwin_width, MAINWIN_TITLEBAR_HEIGHT);
 }
+
+
+void
+skin_set_random_skin(void)
+{
+    SkinNode *node;
+    guint32 randval;
+
+    /* Get a random value to select the skin to use */
+    randval = g_random_int_range(0, g_list_length(skinlist));
+    node = g_list_nth(skinlist, randval)->data;
+    bmp_active_skin_load(node->path);
+}
