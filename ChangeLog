@@ -1,3 +1,11 @@
+2007-01-29 06:19:02 +0000  Daniel Barkalow <barkalow@iabervon.org>
+  revision [3888]
+  Allow input plugin that implements get_volume to punt to the output plugin.
+  
+  trunk/src/audacious/input.c |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2007-01-29 06:09:12 +0000  Daniel Barkalow <barkalow@iabervon.org>
   revision [3886]
   Provide flags in InputPlayback for common plugin flag needs, and provide a

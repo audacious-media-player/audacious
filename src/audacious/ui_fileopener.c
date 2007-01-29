@@ -134,6 +134,7 @@ util_run_filebrowser_gtk2style(gboolean play_button)
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), window_title);
     gtk_window_set_default_size(GTK_WINDOW(window), 700, 450);
+    gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
     gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 
     vbox = gtk_vbox_new(FALSE, 0);
