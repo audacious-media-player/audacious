@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp-hi\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-19 22:53-0600\n"
+"POT-Creation-Date: 2007-01-30 13:23-0600\n"
 "PO-Revision-Date: 2005-08-20 21:59+0530\n"
 "Last-Translator: धनञ्जय शर्मा (Dhananjaya Sharma) <dysxhi@yahoo.co.in>\n"
 "Language-Team: Hindi, India <dysxhi@yahoo.co.in>\n"
@@ -15,6 +15,154 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.10\n"
+
+#: src/audacious/glade.c:43
+#, c-format
+msgid ""
+"<b><big>Unable to create %s.</big></b>\n"
+"\n"
+"Could not open glade file (%s). Please check your installation.\n"
+msgstr ""
+
+#: src/audacious/input.c:306
+msgid ""
+"<b><big>Unable to play files.</big></b>\n"
+"\n"
+"The following files could not be played. Please check that:\n"
+"1. they are accessible.\n"
+"2. you have enabled the media plugins required."
+msgstr ""
+"<b><big>इन फ़ाइलों को चलाने में असमर्थ।</big></b>\n"
+"\n"
+"इन निम्नलिखित फ़ाइलों को चलाया नहीं जा सका । कृपया जाँचें कि:\n"
+"१. इन तक पहुँच प्राप्त है ।\n"
+"२. आपने आवश्यक मीडिया प्लग-इनों को सक्रिय किया हुआ है।"
+
+#: src/audacious/input.c:331
+msgid "Don't show this warning anymore"
+msgstr "इस चेतावनी को फ़िर कभी ना दिखाएँ"
+
+#: src/audacious/input.c:333
+msgid "Show more _details"
+msgstr "और अधिक विवरण दिखाएँ (_d)"
+
+#: src/audacious/input.c:347 src/audacious/ui_preferences.c:118
+#: src/audacious/ui_preferences.c:486 src/audacious/ui_preferences.c:574
+#: src/audacious/ui_preferences.c:663 src/audacious/ui_preferences.c:759
+#: src/audacious/ui_fileinfopopup.c:396
+msgid "Filename"
+msgstr "संचिकानाम"
+
+#: src/audacious/input.c:620
+#, c-format
+msgid "audacious: %s"
+msgstr ""
+
+#: src/audacious/input.c:636
+msgid "Filename:"
+msgstr "संचिकानाम:"
+
+#: src/audacious/input.c:654
+msgid "No input plugin recognized this file"
+msgstr "कोई आउटपुट प्लग-इन इस संचिका की पहचान नहीं कर पाया"
+
+#: src/audacious/input.c:656
+#, c-format
+msgid "Input plugin: %s"
+msgstr "इन्पुट प्लग-इन: %s"
+
+#: src/audacious/logger.c:122
+#, c-format
+msgid "Unable to create log file (%s)!\n"
+msgstr "लॉग संचिका को निर्मित करने में असमर्थ (%s)!\n"
+
+#: src/audacious/main.c:83 src/audacious/main.c:85 src/audacious/ui_main.c:628
+#: src/audacious/ui_main.c:3403
+msgid "Audacious"
+msgstr ""
+
+#: src/audacious/main.c:460
+#, fuzzy, c-format
+msgid "Could not create directory (%s): %s\n"
+msgstr "निर्देशिका (%s) का निर्माण करने में असफ़लता: %s"
+
+#: src/audacious/main.c:841
+msgid "FILE..."
+msgstr ""
+
+#: src/audacious/main.c:946
+#, c-format
+msgid ""
+"<b><big>Unable to load skin.</big></b>\n"
+"\n"
+"Check that skin at '%s' is usable and default skin is properly installed at "
+"'%s'\n"
+msgstr ""
+"<b><big>स्किन को लोड करने में असमर्थ।</big></b>\n"
+"\n"
+"कृपया जाँचे कि '%s' पर स्थित स्किन उपयोगी है और डिफ़ाल्ट स्किन को भली-भांति '%s' पर "
+"संसाधित है\n"
+
+#: src/audacious/main.c:1005
+#, fuzzy, c-format
+msgid ""
+"Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
+"Please use GTK+ %s or newer.\n"
+msgstr ""
+"क्षमा करें, आपका जीटीके+ संस्मरण (%d.%d.%d) BMP के साथ कार्य नहीं करता है ।\n"
+"कृपया जीटीके+ %s या और नवीन संस्मरण का उपयोग करें ।\n"
+
+#: src/audacious/main.c:1016
+msgid ""
+"Sorry, threads isn't supported on your platform.\n"
+"\n"
+"If you're on a libc5 based linux system and installed Glib & GTK+ before "
+"you\n"
+"installed LinuxThreads you need to recompile Glib & GTK+.\n"
+msgstr ""
+"क्षमा करें, आपके प्लेटफ़ार्म पर थ्रेडों को समर्थन नहीं प्राप्त है।\n"
+"\n"
+"यदि आप एक libc5 पर आधारित लिनक्स सिस्टम पर है और आपने जीलिब व जीटीके+ को संसाधित "
+"किया हुआ है, तो \n"
+"लिनक्स थ्रेडों को संसाधित करने के पूर्व आपको जीलिब व जीटीके+ को पुनः कम्पाइल करने की "
+"आवश्यकता है।\n"
+
+#: src/audacious/main.c:1032
+msgid "- play multimedia files"
+msgstr ""
+
+#: src/audacious/main.c:1039
+#, c-format
+msgid ""
+"%s: %s\n"
+"Try `%s --help' for more information.\n"
+msgstr ""
+
+#: src/audacious/main.c:1048
+#, fuzzy, c-format
+msgid "%s: Unable to open display, exiting.\n"
+msgstr "BMP: डिसप्ले को खोलने में असमर्थ, बाहर निकल रहा है।"
+
+#: src/audacious/signals.c:90
+#, fuzzy
+msgid ""
+"\n"
+"Received SIGSEGV\n"
+"\n"
+"This could be a bug in Audacious. If you don't know why this happened, file "
+"a bug at http://bugs-meta.atheme.org/\n"
+"\n"
+msgstr ""
+"\n"
+"SIGSEGV प्राप्त हुआ\n"
+"\n"
+"यह बीएमपी में एक दोष हो सकता है। ऐसा क्यों हुआ, यदि आप यह नहीं जानते है, तो हमें एक मेल "
+"beepmp-devel@lists.sourceforge.net पर भेजें\n"
+"\n"
+
+#: src/audacious/strings.c:172
+msgid "  (invalid UTF-8)"
+msgstr "   (अवैध यूटीएफ़-८)"
 
 #: src/audacious/ui_about.c:44
 #, fuzzy, c-format
@@ -28,13 +176,13 @@ msgstr ""
 "\n"
 "सर्वाधिकार (C) २००३-२००४ बीएमPई विकास दल\n"
 
-#: src/audacious/ui_about.c:123 src/audacious/ui_credits.c:327
+#: src/audacious/ui_about.c:123 src/audacious/ui_credits.c:333
 #: src/audacious/ui_manager.c:387 src/audacious/ui_manager.c:388
 #, fuzzy
 msgid "About Audacious"
 msgstr "एमपीईजी आडियो प्लग-इन के बारे में"
 
-#: src/audacious/ui_about.c:172 src/audacious/ui_credits.c:372
+#: src/audacious/ui_about.c:172 src/audacious/ui_credits.c:378
 msgid "Credits"
 msgstr "आभार"
 
@@ -56,154 +204,159 @@ msgstr ""
 msgid "Audacious core developers:"
 msgstr "BMP की वरीयतायें"
 
-#: src/audacious/ui_credits.c:65
+#: src/audacious/ui_credits.c:66
 msgid "Graphics:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:70
+#: src/audacious/ui_credits.c:71
 msgid "Default skin:"
 msgstr "डिफ़ाल्ट स्किन:"
 
-#: src/audacious/ui_credits.c:75
+#: src/audacious/ui_credits.c:76
 msgid "Plugin development:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:86
+#: src/audacious/ui_credits.c:88
 msgid "Patch authors:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:101
+#: src/audacious/ui_credits.c:104
 #, fuzzy
 msgid "0.1.x developers:"
 msgstr "सभी विकासकर्ता:"
 
-#: src/audacious/ui_credits.c:107
+#: src/audacious/ui_credits.c:110
 #, fuzzy
 msgid "BMP Developers:"
 msgstr "सभी विकासकर्ता:"
 
-#: src/audacious/ui_credits.c:139
+#: src/audacious/ui_credits.c:142
 msgid "Brazilian Portuguese:"
 msgstr "पुर्तगाली ब्राजील:"
 
-#: src/audacious/ui_credits.c:142
+#: src/audacious/ui_credits.c:145
 msgid "Breton:"
 msgstr "Breton:"
 
-#: src/audacious/ui_credits.c:145
+#: src/audacious/ui_credits.c:148
 #, fuzzy
 msgid "Bulgarian:"
 msgstr "हंगारियन:"
 
-#: src/audacious/ui_credits.c:148
+#: src/audacious/ui_credits.c:151
+#, fuzzy
+msgid "Croatian:"
+msgstr "स्थान:"
+
+#: src/audacious/ui_credits.c:154
 msgid "Czech:"
 msgstr "चेक:"
 
-#: src/audacious/ui_credits.c:151
+#: src/audacious/ui_credits.c:157
 msgid "Dutch:"
 msgstr "डच:"
 
-#: src/audacious/ui_credits.c:155
+#: src/audacious/ui_credits.c:161
 #, fuzzy
 msgid "Finnish:"
 msgstr "स्पैनिस:"
 
-#: src/audacious/ui_credits.c:158
+#: src/audacious/ui_credits.c:164
 msgid "French:"
 msgstr "फ़्रेंच:"
 
-#: src/audacious/ui_credits.c:161
+#: src/audacious/ui_credits.c:167
 msgid "German:"
 msgstr "जर्मन:"
 
-#: src/audacious/ui_credits.c:165
+#: src/audacious/ui_credits.c:171
 #, fuzzy
 msgid "Georgian:"
 msgstr "जर्मन:"
 
-#: src/audacious/ui_credits.c:168
+#: src/audacious/ui_credits.c:174
 msgid "Greek:"
 msgstr "ग्रीक:"
 
-#: src/audacious/ui_credits.c:173
+#: src/audacious/ui_credits.c:179
 msgid "Hindi:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:176
+#: src/audacious/ui_credits.c:182
 msgid "Hungarian:"
 msgstr "हंगारियन:"
 
-#: src/audacious/ui_credits.c:179
+#: src/audacious/ui_credits.c:185
 msgid "Italian:"
 msgstr "इटैलियन:"
 
-#: src/audacious/ui_credits.c:183
+#: src/audacious/ui_credits.c:189
 msgid "Japanese:"
 msgstr "जापानी:"
 
-#: src/audacious/ui_credits.c:186
+#: src/audacious/ui_credits.c:192
 msgid "Korean:"
 msgstr "कोरियन:"
 
-#: src/audacious/ui_credits.c:189
+#: src/audacious/ui_credits.c:195
 msgid "Lithuanian:"
 msgstr "लिथूनियन:"
 
-#: src/audacious/ui_credits.c:192
+#: src/audacious/ui_credits.c:198
 msgid "Macedonian:"
 msgstr "Macedonian:"
 
-#: src/audacious/ui_credits.c:195
+#: src/audacious/ui_credits.c:201
 msgid "Polish:"
 msgstr "पोलिश:"
 
-#: src/audacious/ui_credits.c:198
+#: src/audacious/ui_credits.c:204
 msgid "Romanian:"
 msgstr "रोमानियन:"
 
-#: src/audacious/ui_credits.c:201
+#: src/audacious/ui_credits.c:207
 msgid "Russian:"
 msgstr "रूसी:"
 
-#: src/audacious/ui_credits.c:204
+#: src/audacious/ui_credits.c:210
 msgid "Serbian (Latin):"
 msgstr ""
 
-#: src/audacious/ui_credits.c:207
+#: src/audacious/ui_credits.c:213
 msgid "Serbian (Cyrillic):"
 msgstr ""
 
-#: src/audacious/ui_credits.c:210
+#: src/audacious/ui_credits.c:216
 msgid "Simplified Chinese:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:213
+#: src/audacious/ui_credits.c:219
 msgid "Slovak:"
 msgstr "स्लोवाक:"
 
-#: src/audacious/ui_credits.c:216
+#: src/audacious/ui_credits.c:222
 msgid "Spanish:"
 msgstr "स्पैनिस:"
 
-#: src/audacious/ui_credits.c:219
+#: src/audacious/ui_credits.c:225
 msgid "Swedish:"
 msgstr "स्वीडिस:"
 
-#: src/audacious/ui_credits.c:222
+#: src/audacious/ui_credits.c:228
 #, fuzzy
 msgid "Traditional Chinese:"
 msgstr "निम्न की अतिरिक्त सहायता द्वारा:"
 
-#: src/audacious/ui_credits.c:225
+#: src/audacious/ui_credits.c:231
 #, fuzzy
 msgid "Ukrainian:"
 msgstr "रोमानियन:"
 
-#: src/audacious/ui_credits.c:228
+#: src/audacious/ui_credits.c:234
 msgid "Welsh:"
 msgstr "वाल्श:"
 
-#: src/audacious/ui_credits.c:376
+#: src/audacious/ui_credits.c:382
 msgid "Translators"
 msgstr "सभी अनुवादक"
 
@@ -216,384 +369,118 @@ msgstr "/ईक्यूलाईजर को रोल-अप करें"
 msgid "Presets"
 msgstr "सभी प्रीसेट"
 
-#: src/audacious/getopt.c:616
-#, c-format
-msgid "%s: option `%s' is ambiguous\n"
-msgstr "%s: विकल्प `%s' संदिग्ध है\n"
-
-#: src/audacious/getopt.c:638
-#, c-format
-msgid "%s: option `--%s' doesn't allow an argument\n"
-msgstr "%s: विकल्प `--%s' एक आर्गूमेन्ट को अनुमति नहीं देता है\n"
-
-#: src/audacious/getopt.c:644
-#, c-format
-msgid "%s: option `%c%s' doesn't allow an argument\n"
-msgstr "%s: विकल्प `%c%s' एक आर्गूमेन्ट को अनुमति नहीं देता है\n"
-
-#: src/audacious/getopt.c:662 src/audacious/getopt.c:820
-#, c-format
-msgid "%s: option `%s' requires an argument\n"
-msgstr "%s: विकल्प `%s' को एक आर्गूमेन्ट की आवश्यकता है\n"
-
-#: src/audacious/getopt.c:688
-#, c-format
-msgid "%s: unrecognized option `--%s'\n"
-msgstr "%s: ना पहचाना गया विकल्प `--%s'\n"
-
-#: src/audacious/getopt.c:692
-#, c-format
-msgid "%s: unrecognized option `%c%s'\n"
-msgstr "%s: ना पहचाना गया विकल्प `%c%s'\n"
-
-#: src/audacious/getopt.c:716
-#, c-format
-msgid "%s: illegal option -- %c\n"
-msgstr "%s: अवैध विकल्प -- %c\n"
-
-#: src/audacious/getopt.c:719
-#, c-format
-msgid "%s: invalid option -- %c\n"
-msgstr "%s: अवैध विकल्प -- %c\n"
-
-#: src/audacious/getopt.c:746 src/audacious/getopt.c:862
-#, c-format
-msgid "%s: option requires an argument -- %c\n"
-msgstr "%s: विकल्प को एक आर्गूमेन्ट की आवश्यकता है -- %c\n"
-
-#: src/audacious/getopt.c:791
-#, c-format
-msgid "%s: option `-W %s' is ambiguous\n"
-msgstr "%s: विकल्प `-W %s' संदिग्ध है\n"
-
-#: src/audacious/getopt.c:806
-#, c-format
-msgid "%s: option `-W %s' doesn't allow an argument\n"
-msgstr "%s: विकल्प `-W %s' एक आर्गूमेन्ट की अनुमति नहीं देता है\n"
-
-#: src/audacious/glade.c:43
-#, c-format
-msgid ""
-"<b><big>Unable to create %s.</big></b>\n"
-"\n"
-"Could not open glade file (%s). Please check your installation.\n"
-msgstr ""
-
-#: src/audacious/input.c:307
-msgid ""
-"<b><big>Unable to play files.</big></b>\n"
-"\n"
-"The following files could not be played. Please check that:\n"
-"1. they are accessible.\n"
-"2. you have enabled the media plugins required."
-msgstr ""
-"<b><big>इन फ़ाइलों को चलाने में असमर्थ।</big></b>\n"
-"\n"
-"इन निम्नलिखित फ़ाइलों को चलाया नहीं जा सका । कृपया जाँचें कि:\n"
-"१. इन तक पहुँच प्राप्त है ।\n"
-"२. आपने आवश्यक मीडिया प्लग-इनों को सक्रिय किया हुआ है।"
-
-#: src/audacious/input.c:332
-msgid "Don't show this warning anymore"
-msgstr "इस चेतावनी को फ़िर कभी ना दिखाएँ"
-
-#: src/audacious/input.c:334
-msgid "Show more _details"
-msgstr "और अधिक विवरण दिखाएँ (_d)"
-
-#: src/audacious/input.c:348 src/audacious/ui_preferences.c:117
-#: src/audacious/ui_preferences.c:485 src/audacious/ui_preferences.c:573
-#: src/audacious/ui_preferences.c:662 src/audacious/ui_preferences.c:758
-msgid "Filename"
-msgstr "संचिकानाम"
-
-#: src/audacious/input.c:613
-#, c-format
-msgid "audacious: %s"
-msgstr ""
-
-#: src/audacious/input.c:629
-msgid "Filename:"
-msgstr "संचिकानाम:"
-
-#: src/audacious/input.c:647
-msgid "No input plugin recognized this file"
-msgstr "कोई आउटपुट प्लग-इन इस संचिका की पहचान नहीं कर पाया"
-
-#: src/audacious/input.c:649
-#, c-format
-msgid "Input plugin: %s"
-msgstr "इन्पुट प्लग-इन: %s"
-
-#: src/audacious/logger.c:122
-#, c-format
-msgid "Unable to create log file (%s)!\n"
-msgstr "लॉग संचिका को निर्मित करने में असमर्थ (%s)!\n"
-
-#: src/audacious/main.c:84 src/audacious/main.c:86 src/audacious/ui_main.c:626
-#: src/audacious/ui_main.c:3401
-msgid "Audacious"
-msgstr ""
-
-#: src/audacious/main.c:458
-#, fuzzy, c-format
-msgid "Could not create directory (%s): %s\n"
-msgstr "निर्देशिका (%s) का निर्माण करने में असफ़लता: %s"
-
-#: src/audacious/main.c:826
-#, fuzzy
-msgid ""
-"Usage: audacious [options] [files] ...\n"
-"\n"
-"Options:\n"
-"--------\n"
-msgstr ""
-"उपयोगिता: beep-media-players [options] [files] ...\n"
-"\n"
-"सभी विकल्प:\n"
-"--------\n"
-
-#: src/audacious/main.c:831
-msgid "Display this text and exit"
-msgstr "इस पाठ को दिखायें और बाहर निकलें"
-
-#: src/audacious/main.c:834
-#, fuzzy
-msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-msgstr "BMP/XMMS संत्र का चयन (डिफ़ाल्ट: ०)"
-
-#: src/audacious/main.c:837
-msgid "Skip backwards in playlist"
-msgstr "प्लेसूची में पीछे जाना"
-
-#: src/audacious/main.c:840
-msgid "Start playing current playlist"
-msgstr "वर्तमान प्लेसूची को चलाना आरम्भ करना"
-
-#: src/audacious/main.c:843
-msgid "Pause current song"
-msgstr "वर्तमान गीत को ठहरना"
-
-#: src/audacious/main.c:846
-msgid "Stop current song"
-msgstr "वर्तमान गीत को रोकना"
-
-#: src/audacious/main.c:849
-msgid "Pause if playing, play otherwise"
-msgstr "ठहराना यदि चल रहा हो, अन्यथा चलाना"
-
-#: src/audacious/main.c:852
-msgid "Skip forward in playlist"
-msgstr "प्लेसूची में आगे जाना"
-
-#: src/audacious/main.c:855
-msgid "Display Jump to file dialog"
-msgstr ""
-
-#: src/audacious/main.c:858
-msgid "Don't clear the playlist"
-msgstr "प्लेसूची को साफ़ नहीं करना"
-
-#: src/audacious/main.c:861
-msgid "Show the main window"
-msgstr "मुख्य खिड़की को दिखाना"
-
-#: src/audacious/main.c:864
-#, fuzzy
-msgid "Activate Audacious"
-msgstr "BMP को सक्रिय करें"
-
-#: src/audacious/main.c:867
-msgid "Previous session ID"
-msgstr "पिछले संत्र की आईडी"
-
-#: src/audacious/main.c:870
-msgid "Headless operation [experimental]"
-msgstr ""
-
-#: src/audacious/main.c:873
-msgid "Disable error/warning interception (logging)"
-msgstr ""
-
-#: src/audacious/main.c:876
-msgid "Print version number and exit\n"
-msgstr "संस्मरण संख्या को मुद्रित करें और बाहर निकलें\n"
-
-#: src/audacious/main.c:1083
-#, c-format
-msgid ""
-"<b><big>Unable to load skin.</big></b>\n"
-"\n"
-"Check that skin at '%s' is usable and default skin is properly installed at "
-"'%s'\n"
-msgstr ""
-"<b><big>स्किन को लोड करने में असमर्थ।</big></b>\n"
-"\n"
-"कृपया जाँचे कि '%s' पर स्थित स्किन उपयोगी है और डिफ़ाल्ट स्किन को भली-भांति '%s' पर "
-"संसाधित है\n"
-
-#: src/audacious/main.c:1130
-#, fuzzy, c-format
-msgid ""
-"Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
-"Please use GTK+ %s or newer.\n"
-msgstr ""
-"क्षमा करें, आपका जीटीके+ संस्मरण (%d.%d.%d) BMP के साथ कार्य नहीं करता है ।\n"
-"कृपया जीटीके+ %s या और नवीन संस्मरण का उपयोग करें ।\n"
-
-#: src/audacious/main.c:1141
-msgid ""
-"Sorry, threads isn't supported on your platform.\n"
-"\n"
-"If you're on a libc5 based linux system and installed Glib & GTK+ before "
-"you\n"
-"installed LinuxThreads you need to recompile Glib & GTK+.\n"
-msgstr ""
-"क्षमा करें, आपके प्लेटफ़ार्म पर थ्रेडों को समर्थन नहीं प्राप्त है।\n"
-"\n"
-"यदि आप एक libc5 पर आधारित लिनक्स सिस्टम पर है और आपने जीलिब व जीटीके+ को संसाधित "
-"किया हुआ है, तो \n"
-"लिनक्स थ्रेडों को संसाधित करने के पूर्व आपको जीलिब व जीटीके+ को पुनः कम्पाइल करने की "
-"आवश्यकता है।\n"
-
-#: src/audacious/main.c:1160
-#, fuzzy
-msgid "audacious: Unable to open display, exiting.\n"
-msgstr "BMP: डिसप्ले को खोलने में असमर्थ, बाहर निकल रहा है।"
-
-#: src/audacious/signals.c:90
-#, fuzzy
-msgid ""
-"\n"
-"Received SIGSEGV\n"
-"\n"
-"This could be a bug in Audacious. If you don't know why this happened, file "
-"a bug at http://bugs-meta.atheme.org/\n"
-"\n"
-msgstr ""
-"\n"
-"SIGSEGV प्राप्त हुआ\n"
-"\n"
-"यह बीएमपी में एक दोष हो सकता है। ऐसा क्यों हुआ, यदि आप यह नहीं जानते है, तो हमें एक मेल "
-"beepmp-devel@lists.sourceforge.net पर भेजें\n"
-"\n"
-
-#: src/audacious/strings.c:196
-msgid "  (invalid UTF-8)"
-msgstr "   (अवैध यूटीएफ़-८)"
-
-#: src/audacious/ui_main.c:624
+#: src/audacious/ui_main.c:626
 #, c-format
 msgid "%s - Audacious"
 msgstr ""
 
-#: src/audacious/ui_main.c:849
+#: src/audacious/ui_main.c:851
 msgid "VBR"
 msgstr "VBR"
 
-#: src/audacious/ui_main.c:890 src/audacious/ui_main.c:894
+#: src/audacious/ui_main.c:892 src/audacious/ui_main.c:896
 #, fuzzy
 msgid "stereo"
 msgstr "स्टीरियो"
 
-#: src/audacious/ui_main.c:890 src/audacious/ui_main.c:894
+#: src/audacious/ui_main.c:892 src/audacious/ui_main.c:896
 #, fuzzy
 msgid "mono"
 msgstr "मोनो"
 
-#: src/audacious/ui_main.c:1383 src/audacious/ui_manager.c:414
+#: src/audacious/ui_main.c:1385 src/audacious/ui_manager.c:414
 #: src/audacious/ui_manager.c:415
 msgid "Jump to Time"
 msgstr "समय पर जाएँ"
 
-#: src/audacious/ui_main.c:1404
+#: src/audacious/ui_main.c:1406
 msgid "minutes:seconds"
 msgstr "क्षण:पल"
 
-#: src/audacious/ui_main.c:1414
+#: src/audacious/ui_main.c:1416
 msgid "Track length:"
 msgstr "ट्रैक की लंबाई:"
 
-#: src/audacious/ui_main.c:1499
+#: src/audacious/ui_main.c:1501
 #, fuzzy
 msgid "Un_queue"
 msgstr "कतार"
 
-#: src/audacious/ui_main.c:1501 src/audacious/ui_main.c:1889
+#: src/audacious/ui_main.c:1503 src/audacious/ui_main.c:1891
 #, fuzzy
 msgid "_Queue"
 msgstr "कतार"
 
-#: src/audacious/ui_main.c:1814
+#: src/audacious/ui_main.c:1816
 msgid "Jump to Track"
 msgstr "ट्रैक पर जाएँ"
 
-#: src/audacious/ui_main.c:1855
+#: src/audacious/ui_main.c:1857
 msgid "Filter: "
 msgstr "फ़िल्टर: "
 
-#: src/audacious/ui_main.c:1856
+#: src/audacious/ui_main.c:1858
 #, fuzzy
 msgid "_Filter:"
 msgstr "फ़िल्टर: "
 
-#: src/audacious/ui_main.c:2060
+#: src/audacious/ui_main.c:2062
 msgid "Enter location to play:"
 msgstr ""
 
-#: src/audacious/ui_main.c:2271
+#: src/audacious/ui_main.c:2273
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "को खोजें: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: src/audacious/ui_main.c:2303 src/audacious/ui_main.c:2922
+#: src/audacious/ui_main.c:2305 src/audacious/ui_main.c:2924
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "वाल्यूम: %d%%"
 
-#: src/audacious/ui_main.c:2334 src/audacious/ui_main.c:2925
+#: src/audacious/ui_main.c:2336 src/audacious/ui_main.c:2927
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "संतुलन:  %d%% बायाँ"
 
-#: src/audacious/ui_main.c:2338 src/audacious/ui_main.c:2928
+#: src/audacious/ui_main.c:2340 src/audacious/ui_main.c:2930
 msgid "BALANCE: CENTER"
 msgstr "संतुलन: केन्द्रिय"
 
-#: src/audacious/ui_main.c:2342 src/audacious/ui_main.c:2930
+#: src/audacious/ui_main.c:2344 src/audacious/ui_main.c:2932
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "संतुलन: %d%% दायाँ"
 
-#: src/audacious/ui_main.c:2698
+#: src/audacious/ui_main.c:2700
 msgid "OPTIONS MENU"
 msgstr "विकल्प मीनू"
 
-#: src/audacious/ui_main.c:2702
+#: src/audacious/ui_main.c:2704
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "हमेशा ऊपर निष्क्रिय"
 
-#: src/audacious/ui_main.c:2704
+#: src/audacious/ui_main.c:2706
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "हमेशा ऊपर सक्रिय़"
 
-#: src/audacious/ui_main.c:2707
+#: src/audacious/ui_main.c:2709
 msgid "FILE INFO BOX"
 msgstr "संचिका सूचना बॉक्स"
 
-#: src/audacious/ui_main.c:2711
+#: src/audacious/ui_main.c:2713
 msgid "DISABLE DOUBLESIZE"
 msgstr ""
 
-#: src/audacious/ui_main.c:2713
+#: src/audacious/ui_main.c:2715
 msgid "ENABLE DOUBLESIZE"
 msgstr ""
 
-#: src/audacious/ui_main.c:2716
+#: src/audacious/ui_main.c:2718
 msgid "VISUALIZATION MENU"
 msgstr "कल्पना मीनू"
 
-#: src/audacious/ui_main.c:2762
+#: src/audacious/ui_main.c:2764
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -603,7 +490,7 @@ msgstr ""
 "\n"
 "या तो कोई सीडी डाली नहीं गई है, या फ़िर डाली गयी सीडी एक आडियो सीडी नहीं है।\n"
 
-#: src/audacious/ui_main.c:2779
+#: src/audacious/ui_main.c:2781
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -620,7 +507,7 @@ msgstr ""
 "२। कोई अन्य कार्यक्रम साउण्ड कार्ड को रोक नहीं रहा है।\n"
 "३। आपका साउण्ड कार्ड को भली-भांति संरचित किया गया है।\n"
 
-#: src/audacious/ui_main.c:3385
+#: src/audacious/ui_main.c:3387
 #, fuzzy
 msgid "Error in Audacious."
 msgstr "एमपीईजी आडियो प्लग-इन के बारे में"
@@ -904,7 +791,7 @@ msgstr "/विश्लेषक फ़ॉलऑफ़"
 msgid "Peaks Falloff"
 msgstr "/शिखर फ़ॉलऑफ़"
 
-#: src/audacious/ui_manager.c:201 src/audacious/ui_preferences.c:105
+#: src/audacious/ui_manager.c:201 src/audacious/ui_preferences.c:106
 #: src/audacious/playlist_manager.c:288
 #: src/audacious/glade/prefswin.glade:2530
 msgid "Playlist"
@@ -1031,7 +918,7 @@ msgstr "/चयन को उलटा करें"
 msgid "Inverts the selected and unselected entries."
 msgstr ""
 
-#: src/audacious/ui_manager.c:262 src/audacious/glade/addfiles.glade:105
+#: src/audacious/ui_manager.c:262
 msgid "Select All"
 msgstr "सभी का चयन करें"
 
@@ -1422,86 +1309,90 @@ msgstr "प्रीसेट को हटाना"
 msgid "Delete auto-load preset"
 msgstr "/मिटायें/आटो-लोड प्रीसेट"
 
-#: src/audacious/ui_preferences.c:100 src/audacious/glade/prefswin.glade:1399
+#: src/audacious/ui_preferences.c:101 src/audacious/glade/prefswin.glade:1399
 msgid "Appearance"
 msgstr "वेश-भूषा"
 
-#: src/audacious/ui_preferences.c:101
+#: src/audacious/ui_preferences.c:102
 #, fuzzy
 msgid "Audio"
 msgstr "एमपीईजी आडियो प्लग-इन के बारे में"
 
-#: src/audacious/ui_preferences.c:102
+#: src/audacious/ui_preferences.c:103
 msgid "Connectivity"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:103 src/audacious/glade/prefswin.glade:2898
+#: src/audacious/ui_preferences.c:104 src/audacious/glade/prefswin.glade:2898
 msgid "Equalizer"
 msgstr "ईक्यूलाईजर"
 
-#: src/audacious/ui_preferences.c:104 src/audacious/glade/prefswin.glade:1678
+#: src/audacious/ui_preferences.c:105 src/audacious/glade/prefswin.glade:1678
 msgid "Mouse"
 msgstr "माउस"
 
-#: src/audacious/ui_preferences.c:106 src/audacious/glade/prefswin.glade:693
+#: src/audacious/ui_preferences.c:107 src/audacious/glade/prefswin.glade:693
 msgid "Plugins"
 msgstr "प्लग-इन्स"
 
-#: src/audacious/ui_preferences.c:112
+#: src/audacious/ui_preferences.c:113 src/audacious/ui_fileinfopopup.c:237
 msgid "Artist"
 msgstr "कलाकार"
 
-#: src/audacious/ui_preferences.c:113 src/libaudacious/titlestring.c:372
+#: src/audacious/ui_preferences.c:114 src/audacious/ui_fileinfopopup.c:254
+#: src/audacious/titlestring.c:372
 msgid "Album"
 msgstr "एल्बम"
 
-#: src/audacious/ui_preferences.c:114
+#: src/audacious/ui_preferences.c:115 src/audacious/ui_fileinfopopup.c:220
+#: src/audacious/ui_fileinfopopup.c:388
 msgid "Title"
 msgstr "शीर्षक"
 
-#: src/audacious/ui_preferences.c:115
+#: src/audacious/ui_preferences.c:116
 msgid "Tracknumber"
 msgstr "ट्रैकसंख्या"
 
-#: src/audacious/ui_preferences.c:116 src/libaudacious/titlestring.c:373
+#: src/audacious/ui_preferences.c:117 src/audacious/ui_fileinfopopup.c:271
+#: src/audacious/titlestring.c:373
 msgid "Genre"
 msgstr "प्रकार"
 
-#: src/audacious/ui_preferences.c:118
+#: src/audacious/ui_preferences.c:119
 msgid "Filepath"
 msgstr "संचिकापथ"
 
-#: src/audacious/ui_preferences.c:119 src/libaudacious/titlestring.c:379
+#: src/audacious/ui_preferences.c:120 src/audacious/titlestring.c:379
 msgid "Date"
 msgstr "दिनांक"
 
-#: src/audacious/ui_preferences.c:120 src/libaudacious/titlestring.c:380
+#: src/audacious/ui_preferences.c:121 src/audacious/ui_fileinfopopup.c:288
+#: src/audacious/titlestring.c:380
 msgid "Year"
 msgstr "वर्ष"
 
-#: src/audacious/ui_preferences.c:121 src/libaudacious/titlestring.c:381
+#: src/audacious/ui_preferences.c:122 src/audacious/titlestring.c:381
 msgid "Comment"
 msgstr "टिप्पणी"
 
-#: src/audacious/ui_preferences.c:142
+#: src/audacious/ui_preferences.c:143
 msgid "localhost"
 msgstr ""
 
-#: src/audacious/ui_preferences.c:455 src/audacious/ui_preferences.c:542
-#: src/audacious/ui_preferences.c:631 src/audacious/ui_preferences.c:727
+#: src/audacious/ui_preferences.c:456 src/audacious/ui_preferences.c:543
+#: src/audacious/ui_preferences.c:632 src/audacious/ui_preferences.c:728
 msgid "Enabled"
 msgstr "सक्रिय किया गया"
 
-#: src/audacious/ui_preferences.c:471 src/audacious/ui_preferences.c:558
-#: src/audacious/ui_preferences.c:647 src/audacious/ui_preferences.c:743
+#: src/audacious/ui_preferences.c:472 src/audacious/ui_preferences.c:559
+#: src/audacious/ui_preferences.c:648 src/audacious/ui_preferences.c:744
 msgid "Description"
 msgstr "विवरण"
 
-#: src/audacious/ui_preferences.c:1798
+#: src/audacious/ui_preferences.c:1799
 msgid "Category"
 msgstr "वर्ग"
 
-#: src/audacious/ui_preferences.c:2353
+#: src/audacious/ui_preferences.c:2366
 msgid "Preferences Window"
 msgstr "वरीयताऐं खिड़की"
 
@@ -1513,16 +1404,52 @@ msgstr ""
 msgid "Unarchived Winamp 2.x skin"
 msgstr ""
 
-#: src/audacious/ui_fileinfo.c:159
+#: src/audacious/ui_fileinfo.c:160
 msgid "Track Information Window"
 msgstr ""
 
-#: src/audacious/ui_playlist.c:500
+#: src/audacious/ui_fileinfopopup.c:305
+#, fuzzy
+msgid "Track Number"
+msgstr "ट्रैक की संख्या"
+
+#: src/audacious/ui_fileinfopopup.c:322
+#, fuzzy
+msgid "Track Length"
+msgstr "ट्रैक की लंबाई:"
+
+#: src/audacious/ui_fileopener.c:129
+msgid "Open Files"
+msgstr "संचिकाओं को खोलें"
+
+#: src/audacious/ui_fileopener.c:129
+msgid "Add Files"
+msgstr "संचिकाओं को जोड़ें"
+
+#: src/audacious/ui_fileopener.c:131
+msgid "Close dialog on Open"
+msgstr "खोलने पर बन्द संवाद"
+
+#: src/audacious/ui_fileopener.c:131
+msgid "Close dialog on Add"
+msgstr "जोड़ने पर बन्द संवाद"
+
+#: src/audacious/ui_fileopener.c:361
+#, fuzzy
+msgid "Play files"
+msgstr "/चलायें"
+
+#: src/audacious/ui_fileopener.c:363
+#, fuzzy
+msgid "Load files"
+msgstr "/लायें/संचिका से"
+
+#: src/audacious/ui_playlist.c:487
 #, fuzzy
 msgid "Search entries in active playlist"
 msgstr "प्लेसूची में ट्रैक संख्याओं को दिखाएँ"
 
-#: src/audacious/ui_playlist.c:506
+#: src/audacious/ui_playlist.c:493
 msgid ""
 "Select entries in playlist by filling one or more fields. Fields use regular "
 "expressions syntax, case-insensitive. If you don't know how regular "
@@ -1530,49 +1457,49 @@ msgid ""
 "for."
 msgstr ""
 
-#: src/audacious/ui_playlist.c:513
+#: src/audacious/ui_playlist.c:500
 #, fuzzy
 msgid "Track name: "
 msgstr "ट्रैकों का नाम:"
 
-#: src/audacious/ui_playlist.c:519
+#: src/audacious/ui_playlist.c:506
 #, fuzzy
 msgid "Album name: "
 msgstr "एल्बम"
 
-#: src/audacious/ui_playlist.c:525
+#: src/audacious/ui_playlist.c:512
 #, fuzzy
 msgid "Artist: "
 msgstr "कलाकार:"
 
-#: src/audacious/ui_playlist.c:531
+#: src/audacious/ui_playlist.c:518
 #, fuzzy
 msgid "Filename: "
 msgstr "संचिकानाम:"
 
-#: src/audacious/ui_playlist.c:538
+#: src/audacious/ui_playlist.c:525
 msgid "Clear previous selection before searching"
 msgstr ""
 
-#: src/audacious/ui_playlist.c:541
+#: src/audacious/ui_playlist.c:528
 msgid "Automatically toggle queue for matching entries"
 msgstr ""
 
-#: src/audacious/ui_playlist.c:544
+#: src/audacious/ui_playlist.c:531
 msgid "Create a new playlist with matching entries"
 msgstr ""
 
-#: src/audacious/ui_playlist.c:773
+#: src/audacious/ui_playlist.c:750
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "\"%s\" प्लेसूची लिखने में त्रुटि : %s"
 
-#: src/audacious/ui_playlist.c:794
+#: src/audacious/ui_playlist.c:771
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s पहिले से विद्यमान है। जारी रहा जाएँ?"
 
-#: src/audacious/ui_playlist.c:808
+#: src/audacious/ui_playlist.c:785
 #, fuzzy, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -1580,57 +1507,27 @@ msgid ""
 "Unknown file type for '%s'.\n"
 msgstr "प्लेसूची को सुरक्षित करने में असमर्थ! %s हेतु अज्ञात संचिका प्रकार"
 
-#: src/audacious/ui_playlist.c:961
+#: src/audacious/ui_playlist.c:925
 #, fuzzy
 msgid "Load Playlist"
 msgstr "प्लेसूची को लाना"
 
-#: src/audacious/ui_playlist.c:974
+#: src/audacious/ui_playlist.c:938
 #, fuzzy
 msgid "Save Playlist"
 msgstr "प्लेसूची को सुरक्षित करना"
 
-#: src/audacious/ui_playlist.c:1694
+#: src/audacious/ui_playlist.c:1658
 #, fuzzy
 msgid "Audacious Playlist Editor"
 msgstr "/प्लेसूची संपादक दिखाएँ"
 
-#: src/audacious/util.c:610
+#: src/audacious/ui_urlopener.c:90
 #, fuzzy
 msgid "Add/Open URL Dialog"
 msgstr "फ़ाइलों को जोड़ना/खोलना संवाद"
 
-#: src/audacious/util.c:862
-msgid "Add/Open Files dialog"
-msgstr "फ़ाइलों को जोड़ना/खोलना संवाद"
-
-#: src/audacious/util.c:917
-msgid "Open Files"
-msgstr "संचिकाओं को खोलें"
-
-#: src/audacious/util.c:921
-msgid "Close dialog on Open"
-msgstr "खोलने पर बन्द संवाद"
-
-#: src/audacious/util.c:931 src/audacious/glade/addfiles.glade:8
-msgid "Add Files"
-msgstr "संचिकाओं को जोड़ें"
-
-#: src/audacious/util.c:935
-msgid "Close dialog on Add"
-msgstr "जोड़ने पर बन्द संवाद"
-
-#: src/audacious/util.c:1113
-#, fuzzy
-msgid "Play files"
-msgstr "/चलायें"
-
-#: src/audacious/util.c:1115
-#, fuzzy
-msgid "Load files"
-msgstr "/लायें/संचिका से"
-
-#: src/audacious/playback.c:227
+#: src/audacious/playback.c:198
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1650,13 +1547,33 @@ msgstr ""
 msgid "_Rename"
 msgstr "संचिकानाम"
 
-#: src/audacious/glade/addfiles.glade:77
-msgid "Close Dialog on Add"
-msgstr "जोड़ने पर बन्द संवाद"
+#: src/audacious/titlestring.c:371
+msgid "Performer/Artist"
+msgstr "नट/कलाकार"
 
-#: src/audacious/glade/addfiles.glade:116
-msgid "Deselect All"
-msgstr "सभी का अचयन करें"
+#: src/audacious/titlestring.c:374
+msgid "File name"
+msgstr "संचिका का नाम"
+
+#: src/audacious/titlestring.c:375
+msgid "File path"
+msgstr "संचिका पथ"
+
+#: src/audacious/titlestring.c:376
+msgid "File extension"
+msgstr "संचिका उपनाम"
+
+#: src/audacious/titlestring.c:377
+msgid "Track name"
+msgstr "ट्रैक का नाम"
+
+#: src/audacious/titlestring.c:378
+msgid "Track number"
+msgstr "ट्रैक की संख्या"
+
+#: src/audacious/titlestring.c:441
+msgid "%{n:...%}: Display \"...\" only if element %n is present"
+msgstr "%{n:...%}: दिखाएँ \"...\" तब ही जब %n तत्त्व विद्यमान हो"
 
 #: src/audacious/glade/fileinfo.glade:8
 #, fuzzy
@@ -2042,17 +1959,17 @@ msgid ""
 "Audacious.</span>"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:3409
+#: src/audacious/glade/prefswin.glade:3455
 #, fuzzy
 msgid "<b>Audio System</b>"
 msgstr "<b>प्रीसेट्स</b>"
 
-#: src/audacious/glade/prefswin.glade:3463
+#: src/audacious/glade/prefswin.glade:3509
 #, fuzzy
 msgid "Current output plugin:"
 msgstr "वर्तमान आउटपुट प्लग-इन (_C):"
 
-#: src/audacious/glade/prefswin.glade:3531
+#: src/audacious/glade/prefswin.glade:3577
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
@@ -2061,134 +1978,152 @@ msgid ""
 "poorly.</span>"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:3561
+#: src/audacious/glade/prefswin.glade:3607
 #, fuzzy
 msgid "Buffer size:"
 msgstr "बफ़र का आकार (केबी):"
 
-#: src/audacious/glade/prefswin.glade:3685
+#: src/audacious/glade/prefswin.glade:3731
 #, fuzzy
 msgid "Output Plugin Preferences"
 msgstr "ओएसएस आउटपुट प्लग-इन"
 
-#: src/audacious/glade/prefswin.glade:3760
+#: src/audacious/glade/prefswin.glade:3806
 #, fuzzy
 msgid "Output Plugin Information"
 msgstr "ईएसडी आउटपुट प्लग-इन संरचना"
 
-#: src/audacious/glade/prefswin.glade:3812
+#: src/audacious/glade/prefswin.glade:3858
 #, fuzzy
 msgid "<b>Format Detection</b>"
 msgstr "स्वचालित पहचान"
 
-#: src/audacious/glade/prefswin.glade:3851
+#: src/audacious/glade/prefswin.glade:3897
 msgid ""
 "When checked, Audacious will detect file formats on demand. This can result "
 "in a messier playlist, but delivers a major speed benefit."
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:3853
+#: src/audacious/glade/prefswin.glade:3899
 msgid "Detect file formats on demand, instead of immediately."
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:3887
+#: src/audacious/glade/prefswin.glade:3933
 msgid ""
 "When checked, Audacious will detect file formats based by extension. This is "
 "slightly slower than detection on demand, but still provides a minimal level "
 "of format detection."
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:3889
+#: src/audacious/glade/prefswin.glade:3935
 msgid "Detect file formats by extension."
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:3923
+#: src/audacious/glade/prefswin.glade:3969
 msgid "<b>Playback</b>"
 msgstr "<b>प्लेबैक</b>"
 
-#: src/audacious/glade/prefswin.glade:3962
+#: src/audacious/glade/prefswin.glade:4008
 msgid ""
 "When Audacious starts, automatically begin playing from the point where we "
 "stopped before."
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:3964
+#: src/audacious/glade/prefswin.glade:4010
 msgid "Continue playback on startup"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:3998
+#: src/audacious/glade/prefswin.glade:4044
 msgid "When finished playing a song, don't automatically advance to the next."
 msgstr "जब एक गीत का चलना समाप्त हो जायें, तो अपने-आप अगले की ओर ना बढ़ें।"
 
-#: src/audacious/glade/prefswin.glade:4000
+#: src/audacious/glade/prefswin.glade:4046
 msgid "Don't advance in the playlist"
 msgstr "प्लेसूची में आगे नहीं बढ़ें"
 
-#: src/audacious/glade/prefswin.glade:4035
+#: src/audacious/glade/prefswin.glade:4081
 msgid "Pause between songs"
 msgstr "गीतों के मध्य ठहरें"
 
-#: src/audacious/glade/prefswin.glade:4073
+#: src/audacious/glade/prefswin.glade:4119
 msgid "Pause for"
 msgstr "के लिए ठहरें"
 
-#: src/audacious/glade/prefswin.glade:4119
+#: src/audacious/glade/prefswin.glade:4165
 msgid "seconds"
 msgstr "सेकेन्डस"
 
-#: src/audacious/glade/prefswin.glade:4254
+#: src/audacious/glade/prefswin.glade:4346
 #, fuzzy
 msgid "Popup Information Settings"
 msgstr "एमपीईजी आडियो प्लग-इन संरचना"
 
-#: src/audacious/glade/prefswin.glade:4278
+#: src/audacious/glade/prefswin.glade:4370
+#, fuzzy
+msgid "<b>Cover image retrieve</b>"
+msgstr "स्वचालित पहचान"
+
+#: src/audacious/glade/prefswin.glade:4395
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4333
+#: src/audacious/glade/prefswin.glade:4450
 #, fuzzy
 msgid "Include:"
 msgstr "ईन्डी"
 
-#: src/audacious/glade/prefswin.glade:4361
+#: src/audacious/glade/prefswin.glade:4478
 msgid "Exclude:"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4430
+#: src/audacious/glade/prefswin.glade:4547
 msgid "Recursively search for cover"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4468
+#: src/audacious/glade/prefswin.glade:4585
 msgid "Search depth: "
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4534
+#: src/audacious/glade/prefswin.glade:4651
 msgid "Use per-file cover"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4595
+#: src/audacious/glade/prefswin.glade:4671
+#, fuzzy
+msgid "<b>Miscellaneous</b>"
+msgstr "<b>विविध (_M)</b>"
+
+#: src/audacious/glade/prefswin.glade:4709
+msgid "Show Progress bar for the current track"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4747
+msgid "Delay until filepopup comes up: "
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4841
 msgid "Color Adjustment"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4618
+#: src/audacious/glade/prefswin.glade:4864
 msgid ""
 "Audacious allows you to alter the color balance of the skinned UI. The "
 "sliders below will allow you to do this."
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4714
+#: src/audacious/glade/prefswin.glade:4960
 msgid "Red"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4742
+#: src/audacious/glade/prefswin.glade:4988
 #, fuzzy
 msgid "Green"
 msgstr "ग्रीक:"
 
-#: src/audacious/glade/prefswin.glade:4770
+#: src/audacious/glade/prefswin.glade:5016
 #, fuzzy
 msgid "Blue"
 msgstr "ब्लू"
@@ -2237,33 +2172,100 @@ msgstr "१४ किलोहर्टज"
 msgid "16KHZ"
 msgstr "१६ किलोहर्टज"
 
-#: src/libaudacious/titlestring.c:371
-msgid "Performer/Artist"
-msgstr "नट/कलाकार"
+#~ msgid "%s: option `%s' is ambiguous\n"
+#~ msgstr "%s: विकल्प `%s' संदिग्ध है\n"
 
-#: src/libaudacious/titlestring.c:374
-msgid "File name"
-msgstr "संचिका का नाम"
+#~ msgid "%s: option `--%s' doesn't allow an argument\n"
+#~ msgstr "%s: विकल्प `--%s' एक आर्गूमेन्ट को अनुमति नहीं देता है\n"
 
-#: src/libaudacious/titlestring.c:375
-msgid "File path"
-msgstr "संचिका पथ"
+#~ msgid "%s: option `%c%s' doesn't allow an argument\n"
+#~ msgstr "%s: विकल्प `%c%s' एक आर्गूमेन्ट को अनुमति नहीं देता है\n"
 
-#: src/libaudacious/titlestring.c:376
-msgid "File extension"
-msgstr "संचिका उपनाम"
+#~ msgid "%s: option `%s' requires an argument\n"
+#~ msgstr "%s: विकल्प `%s' को एक आर्गूमेन्ट की आवश्यकता है\n"
 
-#: src/libaudacious/titlestring.c:377
-msgid "Track name"
-msgstr "ट्रैक का नाम"
+#~ msgid "%s: unrecognized option `--%s'\n"
+#~ msgstr "%s: ना पहचाना गया विकल्प `--%s'\n"
 
-#: src/libaudacious/titlestring.c:378
-msgid "Track number"
-msgstr "ट्रैक की संख्या"
+#~ msgid "%s: unrecognized option `%c%s'\n"
+#~ msgstr "%s: ना पहचाना गया विकल्प `%c%s'\n"
 
-#: src/libaudacious/titlestring.c:441
-msgid "%{n:...%}: Display \"...\" only if element %n is present"
-msgstr "%{n:...%}: दिखाएँ \"...\" तब ही जब %n तत्त्व विद्यमान हो"
+#~ msgid "%s: illegal option -- %c\n"
+#~ msgstr "%s: अवैध विकल्प -- %c\n"
+
+#~ msgid "%s: invalid option -- %c\n"
+#~ msgstr "%s: अवैध विकल्प -- %c\n"
+
+#~ msgid "%s: option requires an argument -- %c\n"
+#~ msgstr "%s: विकल्प को एक आर्गूमेन्ट की आवश्यकता है -- %c\n"
+
+#~ msgid "%s: option `-W %s' is ambiguous\n"
+#~ msgstr "%s: विकल्प `-W %s' संदिग्ध है\n"
+
+#~ msgid "%s: option `-W %s' doesn't allow an argument\n"
+#~ msgstr "%s: विकल्प `-W %s' एक आर्गूमेन्ट की अनुमति नहीं देता है\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Usage: audacious [options] [files] ...\n"
+#~ "\n"
+#~ "Options:\n"
+#~ "--------\n"
+#~ msgstr ""
+#~ "उपयोगिता: beep-media-players [options] [files] ...\n"
+#~ "\n"
+#~ "सभी विकल्प:\n"
+#~ "--------\n"
+
+#~ msgid "Display this text and exit"
+#~ msgstr "इस पाठ को दिखायें और बाहर निकलें"
+
+#, fuzzy
+#~ msgid "Select Audacious/BMP/XMMS session (Default: 0)"
+#~ msgstr "BMP/XMMS संत्र का चयन (डिफ़ाल्ट: ०)"
+
+#~ msgid "Skip backwards in playlist"
+#~ msgstr "प्लेसूची में पीछे जाना"
+
+#~ msgid "Start playing current playlist"
+#~ msgstr "वर्तमान प्लेसूची को चलाना आरम्भ करना"
+
+#~ msgid "Pause current song"
+#~ msgstr "वर्तमान गीत को ठहरना"
+
+#~ msgid "Stop current song"
+#~ msgstr "वर्तमान गीत को रोकना"
+
+#~ msgid "Pause if playing, play otherwise"
+#~ msgstr "ठहराना यदि चल रहा हो, अन्यथा चलाना"
+
+#~ msgid "Skip forward in playlist"
+#~ msgstr "प्लेसूची में आगे जाना"
+
+#~ msgid "Don't clear the playlist"
+#~ msgstr "प्लेसूची को साफ़ नहीं करना"
+
+#~ msgid "Show the main window"
+#~ msgstr "मुख्य खिड़की को दिखाना"
+
+#, fuzzy
+#~ msgid "Activate Audacious"
+#~ msgstr "BMP को सक्रिय करें"
+
+#~ msgid "Previous session ID"
+#~ msgstr "पिछले संत्र की आईडी"
+
+#~ msgid "Print version number and exit\n"
+#~ msgstr "संस्मरण संख्या को मुद्रित करें और बाहर निकलें\n"
+
+#~ msgid "Add/Open Files dialog"
+#~ msgstr "फ़ाइलों को जोड़ना/खोलना संवाद"
+
+#~ msgid "Close Dialog on Add"
+#~ msgstr "जोड़ने पर बन्द संवाद"
+
+#~ msgid "Deselect All"
+#~ msgstr "सभी का अचयन करें"
 
 #, fuzzy
 #~ msgid "Artist Popup"
@@ -3648,9 +3650,6 @@ msgstr "%{n:...%}: दिखाएँ \"...\" तब ही जब %n तत्�
 
 #~ msgid "Description:"
 #~ msgstr "विवरण:"
-
-#~ msgid "Location:"
-#~ msgstr "स्थान:"
 
 #~ msgid "Version:"
 #~ msgstr "संस्मरण:"

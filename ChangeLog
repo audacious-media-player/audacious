@@ -1,3 +1,10 @@
+2007-01-30 17:12:24 +0000  Cheng-Wei Chien <e.cwchien@gmail.com>
+  revision [3898]
+  zh_TW.po updated by: Cheng-Wei Chien <e dot cwchien at gmail dot com>
+  trunk/po/zh_TW.po |  546 ++++++++++++++++++++++--------------------------------
+  1 file changed, 232 insertions(+), 314 deletions(-)
+
+
 2007-01-29 18:29:19 +0000  Michael Farber <01mf02@gmail.com>
   revision [3896]
   - Changed playback_set_random_skin() to skin_set_random_skin()

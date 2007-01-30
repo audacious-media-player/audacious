@@ -1,31 +1,32 @@
 # Audacious.
-src/audacious/ui_about.c
-src/audacious/ui_credits.c
-src/audacious/ui_equalizer.c
-src/audacious/getopt.c
 src/audacious/glade.c
 src/audacious/input.c
 src/audacious/logger.c
 src/audacious/main.c
 src/audacious/signals.c
 src/audacious/strings.c
+src/audacious/ui_about.c
+src/audacious/ui_credits.c
+src/audacious/ui_equalizer.c
 src/audacious/ui_main.c
 src/audacious/ui_manager.c
 src/audacious/ui_preferences.c
 src/audacious/ui_skinselector.c
 src/audacious/ui_fileinfo.c
+src/audacious/ui_fileinfopopup.c
+src/audacious/ui_fileopener.c
 src/audacious/ui_playlist.c
+src/audacious/ui_preferences.c
+src/audacious/ui_skinselector.c
+src/audacious/ui_urlopener.c
 src/audacious/util.c
 src/audacious/playback.c
 src/audacious/playlist_manager.c
+src/audacious/titlestring.c
 
 # Glade files.
-src/audacious/glade/addfiles.glade
 src/audacious/glade/fileinfo.glade
 src/audacious/glade/prefswin.glade
 
 # Widgets.
 src/audacious/widgets/eq_slider.c
-
-# libaudacious.
-src/libaudacious/titlestring.c
