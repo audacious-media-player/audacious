@@ -342,7 +342,7 @@ msgstr ""
 #: src/audacious/ui_main.c:626
 #, c-format
 msgid "%s - Audacious"
-msgstr ""
+msgstr "%s - Audacious"
 
 #: src/audacious/ui_main.c:851
 msgid "VBR"
@@ -517,7 +517,7 @@ msgstr "_C'hoarier :"
 
 #: src/audacious/ui_manager.c:70 src/audacious/ui_manager.c:71
 msgid "Always on Top"
-msgstr ""
+msgstr "Bepred a-us"
 
 #: src/audacious/ui_manager.c:73 src/audacious/ui_manager.c:74
 msgid "Put on All Workspaces"

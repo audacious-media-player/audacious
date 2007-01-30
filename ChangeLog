@@ -1,3 +1,12 @@
+2007-01-30 18:50:49 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3902]
+  - update Welsh translation:
+  441 strings (0 fuzzy, 0 bad tokens, 0 not translated)
+  
+  trunk/po/cy.po |  445 ++++++++++++++++++++++++++++-----------------------------
+  1 file changed, 224 insertions(+), 221 deletions(-)
+
+
 2007-01-30 18:33:27 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3900]
   - fix POTFILES.in
