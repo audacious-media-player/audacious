@@ -1,3 +1,14 @@
+2007-01-29 18:29:19 +0000  Michael Farber <01mf02@gmail.com>
+  revision [3896]
+  - Changed playback_set_random_skin() to skin_set_random_skin()
+  
+  trunk/src/audacious/playback.c     |   15 +--------------
+  trunk/src/audacious/playback.h     |    3 +--
+  trunk/src/audacious/widgets/skin.c |   13 +++++++++++++
+  trunk/src/audacious/widgets/skin.h |    4 ++--
+  4 files changed, 17 insertions(+), 18 deletions(-)
+
+
 2007-01-29 18:11:01 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3894]
   - split out albumart locating functions into a seperate file and make the public API available in util.h
