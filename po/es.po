@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-31 04:17-0600\n"
+"POT-Creation-Date: 2007-01-31 11:19-0600\n"
 "PO-Revision-Date: 2006-09-30 16:57+0000\n"
 "Last-Translator: Gustavo D. Vranjes <gvranjes@nerdshack.com>\n"
 "Language-Team:  <es@li.org>\n"
@@ -1478,28 +1478,28 @@ msgstr "Número de pista"
 msgid "Track Length"
 msgstr "Longitud de pista:"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:129
 msgid "Open Files"
 msgstr "Abrir archivos"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:129
 msgid "Add Files"
 msgstr "Añadir archivos..."
 
-#: src/audacious/ui_fileopener.c:133
+#: src/audacious/ui_fileopener.c:131
 msgid "Close dialog on Open"
 msgstr "Cerrar diálogo al abrir"
 
-#: src/audacious/ui_fileopener.c:133
+#: src/audacious/ui_fileopener.c:131
 msgid "Close dialog on Add"
 msgstr "Cerrar diálogo al añadir"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:361
 #, fuzzy
 msgid "Play files"
 msgstr "/Reproducir archivo"
 
-#: src/audacious/ui_fileopener.c:365
+#: src/audacious/ui_fileopener.c:363
 #, fuzzy
 msgid "Load files"
 msgstr "/Cargar/Desde archivo"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.35\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-31 04:17-0600\n"
+"POT-Creation-Date: 2007-01-31 11:19-0600\n"
 "PO-Revision-Date: 2005-10-14 13:54+0400\n"
 "Last-Translator: George Machitidze <giomac@gmail.com>\n"
 "Language-Team: Georgian <giomac@gmail.com>\n"
@@ -1466,28 +1466,28 @@ msgstr "ჩანაწერის ნომერი"
 msgid "Track Length"
 msgstr "ჩანაწერის სიგრძე:"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:129
 msgid "Open Files"
 msgstr "ფაილების გახსნა"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:129
 msgid "Add Files"
 msgstr "ფაილების დამატება"
 
-#: src/audacious/ui_fileopener.c:133
+#: src/audacious/ui_fileopener.c:131
 msgid "Close dialog on Open"
 msgstr "გახსნის შემდეგ დიალოგის დაკეტვა"
 
-#: src/audacious/ui_fileopener.c:133
+#: src/audacious/ui_fileopener.c:131
 msgid "Close dialog on Add"
 msgstr "დამატების შემდეგ დიალოგის დაკეტვა"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:361
 #, fuzzy
 msgid "Play files"
 msgstr "/დაკვრა"
 
-#: src/audacious/ui_fileopener.c:365
+#: src/audacious/ui_fileopener.c:363
 #, fuzzy
 msgid "Load files"
 msgstr "/ჩატვირთვა/ფაილიდან"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-31 04:17-0600\n"
+"POT-Creation-Date: 2007-01-31 11:19-0600\n"
 "PO-Revision-Date: 2006-11-16 20:02+0100\n"
 "Last-Translator: Tony Vroon <chainsaw@gentoo.org>\n"
 "Language-Team: (not responsive)\n"
@@ -1485,27 +1485,27 @@ msgstr "Nummer"
 msgid "Track Length"
 msgstr "Duur:"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:129
 msgid "Open Files"
 msgstr "Bestanden openen"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:129
 msgid "Add Files"
 msgstr "Bestanden toevoegen"
 
-#: src/audacious/ui_fileopener.c:133
+#: src/audacious/ui_fileopener.c:131
 msgid "Close dialog on Open"
 msgstr "Sluit venster bij openen"
 
-#: src/audacious/ui_fileopener.c:133
+#: src/audacious/ui_fileopener.c:131
 msgid "Close dialog on Add"
 msgstr "Sluit venster bij toevoegen"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:361
 msgid "Play files"
 msgstr "Bestanden afspelen"
 
-#: src/audacious/ui_fileopener.c:365
+#: src/audacious/ui_fileopener.c:363
 msgid "Load files"
 msgstr "Bestanden laden"
 

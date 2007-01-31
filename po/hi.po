@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp-hi\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-31 04:17-0600\n"
+"POT-Creation-Date: 2007-01-31 11:19-0600\n"
 "PO-Revision-Date: 2005-08-20 21:59+0530\n"
 "Last-Translator: धनञ्जय शर्मा (Dhananjaya Sharma) <dysxhi@yahoo.co.in>\n"
 "Language-Team: Hindi, India <dysxhi@yahoo.co.in>\n"
@@ -1482,28 +1482,28 @@ msgstr "ट्रैक की संख्या"
 msgid "Track Length"
 msgstr "ट्रैक की लंबाई:"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:129
 msgid "Open Files"
 msgstr "संचिकाओं को खोलें"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:129
 msgid "Add Files"
 msgstr "संचिकाओं को जोड़ें"
 
-#: src/audacious/ui_fileopener.c:133
+#: src/audacious/ui_fileopener.c:131
 msgid "Close dialog on Open"
 msgstr "खोलने पर बन्द संवाद"
 
-#: src/audacious/ui_fileopener.c:133
+#: src/audacious/ui_fileopener.c:131
 msgid "Close dialog on Add"
 msgstr "जोड़ने पर बन्द संवाद"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:361
 #, fuzzy
 msgid "Play files"
 msgstr "/चलायें"
 
-#: src/audacious/ui_fileopener.c:365
+#: src/audacious/ui_fileopener.c:363
 #, fuzzy
 msgid "Load files"
 msgstr "/लायें/संचिका से"

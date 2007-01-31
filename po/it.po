@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-31 04:17-0600\n"
+"POT-Creation-Date: 2007-01-31 11:19-0600\n"
 "PO-Revision-Date: 2006-06-25 03:54+0200\n"
 "Last-Translator: Diego 'Flameeyes' Pettenò <flameeyes@gentoo.org>\n"
 "Language-Team: Italian\n"
@@ -1480,28 +1480,28 @@ msgstr "Traccia n°"
 msgid "Track Length"
 msgstr "Lunghezza traccia:"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:129
 msgid "Open Files"
 msgstr "Apri Files"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:129
 msgid "Add Files"
 msgstr "Aggiungi Files"
 
-#: src/audacious/ui_fileopener.c:133
+#: src/audacious/ui_fileopener.c:131
 msgid "Close dialog on Open"
 msgstr "Chiudi finestra quando Apri"
 
-#: src/audacious/ui_fileopener.c:133
+#: src/audacious/ui_fileopener.c:131
 msgid "Close dialog on Add"
 msgstr "Chiudi finestra quando Aggiungi"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:361
 #, fuzzy
 msgid "Play files"
 msgstr "/Riproduci file"
 
-#: src/audacious/ui_fileopener.c:365
+#: src/audacious/ui_fileopener.c:363
 #, fuzzy
 msgid "Load files"
 msgstr "/Carica/Da file"

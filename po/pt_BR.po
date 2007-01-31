@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BMP 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-31 04:17-0600\n"
+"POT-Creation-Date: 2007-01-31 11:19-0600\n"
 "PO-Revision-Date: 2004-11-15 13:42-0200\n"
 "Last-Translator: Philipi Pinto <philipi@gmx.net>\n"
 "Language-Team: Portuguese/Brazil\n"
@@ -1476,29 +1476,29 @@ msgstr "Número da faixa"
 msgid "Track Length"
 msgstr "Duração da faixa:"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:129
 #, fuzzy
 msgid "Open Files"
 msgstr "/Remover arquivos"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:129
 msgid "Add Files"
 msgstr "Adicionar arquivos"
 
-#: src/audacious/ui_fileopener.c:133
+#: src/audacious/ui_fileopener.c:131
 msgid "Close dialog on Open"
 msgstr ""
 
-#: src/audacious/ui_fileopener.c:133
+#: src/audacious/ui_fileopener.c:131
 msgid "Close dialog on Add"
 msgstr ""
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:361
 #, fuzzy
 msgid "Play files"
 msgstr "Tocar arquivos"
 
-#: src/audacious/ui_fileopener.c:365
+#: src/audacious/ui_fileopener.c:363
 #, fuzzy
 msgid "Load files"
 msgstr "/Carregar/Do arquivo"
