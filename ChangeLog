@@ -1,3 +1,11 @@
+2007-01-31 09:48:50 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [3908]
+  - avoid multiple open of filebrowser
+  
+  trunk/src/audacious/ui_fileopener.c |    8 +++++---
+  1 file changed, 5 insertions(+), 3 deletions(-)
+
+
 2007-01-30 22:21:06 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3906]
   - mark some strings used by GOption as translatable
