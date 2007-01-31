@@ -291,7 +291,7 @@ playback_seek(gint time)
     }
     
     free_vis_data();
-    get_current_input_playback()->seek_request = time;
+    get_current_input_playback()->plugin->seek(time);
     
     if (restore_pause)
     {
