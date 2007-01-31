@@ -1,3 +1,11 @@
+2007-01-30 22:21:06 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3906]
+  - mark some strings used by GOption as translatable
+  
+  trunk/src/audacious/main.c |   30 +++++++++++++++---------------
+  1 file changed, 15 insertions(+), 15 deletions(-)
+
+
 2007-01-30 21:45:10 +0000  Derek Pomery <nemo@m8y.org>
   revision [3904]
   Translation tweak by Thierry Vignaud

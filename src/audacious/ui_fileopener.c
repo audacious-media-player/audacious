@@ -92,7 +92,6 @@ action_button_cb(GtkWidget *widget, gpointer data)
     if (play_button)
         playback_initiate();
 
-
     if (cfg.close_dialog_open)
         gtk_widget_destroy(window);
 }
@@ -110,7 +109,7 @@ filebrowser_on_keypress(GtkWidget * browser,
                         gpointer data)
 {
     if (event->keyval == GDK_Escape) {
-	gtk_widget_destroy(browser);
+        gtk_widget_destroy(browser);
         return TRUE;
     }
 
@@ -120,12 +119,15 @@ filebrowser_on_keypress(GtkWidget * browser,
 void
 util_run_filebrowser_gtk2style(gboolean play_button)
 {
-    GtkWidget *window;
+    static GtkWidget *window = NULL;
     GtkWidget *vbox, *hbox, *bbox;
     GtkWidget *chooser;
     GtkWidget *action_button, *close_button;
     GtkWidget *toggle;
 
+    if(window) /* avoid multiple open of filebrowser */
+        return;
+    
     gchar *window_title = play_button ? _("Open Files") : _("Add Files");
     gchar *toggle_text = play_button ?
         _("Close dialog on Open") : _("Close dialog on Add");
