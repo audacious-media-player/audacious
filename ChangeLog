@@ -1,3 +1,41 @@
+2007-01-31 10:20:19 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
+  revision [3912]
+  Update translations [also fixes bad commit from Chainsaw]
+  
+  trunk/po/audacious.pot |   74 ++++++-
+  trunk/po/bg.po         |  108 ++++++----
+  trunk/po/br.po         |   82 +++++++-
+  trunk/po/cs.po         |  105 ++++++----
+  trunk/po/cy.po         |  499 ++++++++++++++++++++++++++-----------------------
+  trunk/po/de.po         |  129 ++++++++----
+  trunk/po/el.po         |  105 ++++++----
+  trunk/po/es.po         |  105 ++++++----
+  trunk/po/fi.po         |  106 ++++++----
+  trunk/po/fr.po         |  108 ++++++----
+  trunk/po/hi.po         |  106 ++++++----
+  trunk/po/hr.po         |  108 ++++++----
+  trunk/po/hu.po         |  108 ++++++----
+  trunk/po/it.po         |  105 ++++++----
+  trunk/po/ja.po         |  108 ++++++----
+  trunk/po/ka.po         |  106 ++++++----
+  trunk/po/ko.po         |  106 ++++++----
+  trunk/po/lt.po         |  106 ++++++----
+  trunk/po/mk.po         |  106 ++++++----
+  trunk/po/nl.po         |  127 +++++++-----
+  trunk/po/pl.po         |  108 ++++++----
+  trunk/po/pt_BR.po      |  106 ++++++----
+  trunk/po/ro.po         |  108 ++++++----
+  trunk/po/ru.po         |  108 ++++++----
+  trunk/po/sk.po         |  106 ++++++----
+  trunk/po/sr.po         |  109 ++++++----
+  trunk/po/sr@Latn.po    |  108 ++++++----
+  trunk/po/sv.po         |  107 ++++++----
+  trunk/po/uk.po         |  107 ++++++----
+  trunk/po/zh_CN.po      |  108 ++++++----
+  trunk/po/zh_TW.po      |  108 ++++++----
+  31 files changed, 2414 insertions(+), 1276 deletions(-)
+
+
 2007-01-31 10:11:07 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [3910]
   Conflict markers upset msgmerge. Removed them.

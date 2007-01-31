@@ -156,6 +156,8 @@ struct _InputPlayback {
     int playing;
     gboolean error;
     gboolean eof;
+
+    int seek_time;
 };
 
 struct _InputPlugin {
