@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: 2004-02-29 02:46+0100\n"
 "Last-Translator: Martin Persenius <martin@persenius.net>\n"
 "Language-Team: Sweden\n"
@@ -82,6 +82,70 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Kunde ej skapa mapp (%s): %s"
+
+#: src/audacious/main.c:826
+#, fuzzy
+msgid "Select which Audacious session ID to use"
+msgstr "Välj XMMS-session (Förinställt: 0)"
+
+#: src/audacious/main.c:827
+msgid "Skip backwards in playlist"
+msgstr "Hoppa båket i spellista"
+
+#: src/audacious/main.c:828
+msgid "Start playing current playlist"
+msgstr "Börja spela nuvarande spellista"
+
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr "Pausa nuvarande sång"
+
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr "Stoppa nuvarande sång"
+
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr "Pausa om spelandes, spela annars"
+
+#: src/audacious/main.c:832
+msgid "Skip forward in playlist"
+msgstr "Hoppas framåt i spellistan"
+
+#: src/audacious/main.c:833
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "/Hoppa till fil"
+
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr "Rensa inte spellistan"
+
+#: src/audacious/main.c:835
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "Kunde ej skriva spellista!"
+
+#: src/audacious/main.c:836
+#, fuzzy
+msgid "Display the main window"
+msgstr "Visa huvudfönstret."
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
+msgstr ""
 
 #: src/audacious/main.c:841
 msgid "FILE..."
@@ -1411,30 +1475,30 @@ msgstr "Spårnummer"
 msgid "Track Length"
 msgstr "Spårlängd:"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 #, fuzzy
 msgid "Open Files"
 msgstr "/Ta borta icke valda"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 #, fuzzy
 msgid "Add Files"
 msgstr "/Lägg till filer..."
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr ""
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr ""
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 #, fuzzy
 msgid "Play files"
 msgstr "bmp: Spela filer"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 #, fuzzy
 msgid "Load files"
 msgstr "bmp: Ladda filer"
@@ -2223,35 +2287,6 @@ msgstr "16 KHZ"
 #, fuzzy
 #~ msgid "Display this text and exit"
 #~ msgstr "Visa den här texten och avsluta."
-
-#, fuzzy
-#~ msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-#~ msgstr "Välj XMMS-session (Förinställt: 0)"
-
-#~ msgid "Skip backwards in playlist"
-#~ msgstr "Hoppa båket i spellista"
-
-#~ msgid "Start playing current playlist"
-#~ msgstr "Börja spela nuvarande spellista"
-
-#~ msgid "Pause current song"
-#~ msgstr "Pausa nuvarande sång"
-
-#~ msgid "Stop current song"
-#~ msgstr "Stoppa nuvarande sång"
-
-#~ msgid "Pause if playing, play otherwise"
-#~ msgstr "Pausa om spelandes, spela annars"
-
-#~ msgid "Skip forward in playlist"
-#~ msgstr "Hoppas framåt i spellistan"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Rensa inte spellistan"
-
-#, fuzzy
-#~ msgid "Show the main window"
-#~ msgstr "Visa huvudfönstret."
 
 #, fuzzy
 #~ msgid "Activate Audacious"

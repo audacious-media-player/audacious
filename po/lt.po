@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BMP\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: 2004-12-06 19:02+0200\n"
 "Last-Translator: Rimas Kudelis <rq@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -87,6 +87,70 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nepavyko sukurti aplanko (%s): %s"
+
+#: src/audacious/main.c:826
+#, fuzzy
+msgid "Select which Audacious session ID to use"
+msgstr "Pasirinkti BMP/XMMS sesiją (Nutylimai: 0)"
+
+#: src/audacious/main.c:827
+msgid "Skip backwards in playlist"
+msgstr "Šoktelti atgal grojaraštyje"
+
+#: src/audacious/main.c:828
+msgid "Start playing current playlist"
+msgstr "Pradėti groti esamą grojaraštį"
+
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr "Pristabdyti grojamą dainą"
+
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr "Sustabdyti grojamą dainą"
+
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr "Pristabdyti, jei grojama, kitu atveju groti"
+
+#: src/audacious/main.c:832
+msgid "Skip forward in playlist"
+msgstr "Šoktelti pirmyn grojaraštyje"
+
+#: src/audacious/main.c:833
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "/Šokti į bylą"
+
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr "Neišvalyti grojaraščio"
+
+#: src/audacious/main.c:835
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "Neišvalyti grojaraščio"
+
+#: src/audacious/main.c:836
+#, fuzzy
+msgid "Display the main window"
+msgstr "Parodyti pagrindinį langą"
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
+msgstr ""
 
 #: src/audacious/main.c:841
 msgid "FILE..."
@@ -1421,28 +1485,28 @@ msgstr "Takelio numeris"
 msgid "Track Length"
 msgstr "Takelio trukmė:"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Open Files"
 msgstr "Atverti bylas"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Add Files"
 msgstr "Pridėti bylas"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr "Atvėrus, užverti dialogą"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr "Pridėjus, užverti dialogą"
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 #, fuzzy
 msgid "Play files"
 msgstr "/Groti"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 #, fuzzy
 msgid "Load files"
 msgstr "/Įkelti/Iš bylos"
@@ -2219,34 +2283,6 @@ msgstr "16KHZ"
 
 #~ msgid "Display this text and exit"
 #~ msgstr "Parodyti šią žinutę ir baigti darbą"
-
-#, fuzzy
-#~ msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-#~ msgstr "Pasirinkti BMP/XMMS sesiją (Nutylimai: 0)"
-
-#~ msgid "Skip backwards in playlist"
-#~ msgstr "Šoktelti atgal grojaraštyje"
-
-#~ msgid "Start playing current playlist"
-#~ msgstr "Pradėti groti esamą grojaraštį"
-
-#~ msgid "Pause current song"
-#~ msgstr "Pristabdyti grojamą dainą"
-
-#~ msgid "Stop current song"
-#~ msgstr "Sustabdyti grojamą dainą"
-
-#~ msgid "Pause if playing, play otherwise"
-#~ msgstr "Pristabdyti, jei grojama, kitu atveju groti"
-
-#~ msgid "Skip forward in playlist"
-#~ msgstr "Šoktelti pirmyn grojaraštyje"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Neišvalyti grojaraščio"
-
-#~ msgid "Show the main window"
-#~ msgstr "Parodyti pagrindinį langą"
 
 #, fuzzy
 #~ msgid "Activate Audacious"

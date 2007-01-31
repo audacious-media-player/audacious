@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 0.2\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: 2006-01-22 18:07+0100\n"
 "Last-Translator: Jan Nárovec <finn@sendmail.cz>\n"
 "Language-Team: Czech\n"
@@ -87,6 +87,70 @@ msgstr "Audacious"
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nepodařilo se vytvořit adresář (%s): %s"
+
+#: src/audacious/main.c:826
+#, fuzzy
+msgid "Select which Audacious session ID to use"
+msgstr "Výběr sezení Audacious/BMP/XMMS (standardně: 0)"
+
+#: src/audacious/main.c:827
+msgid "Skip backwards in playlist"
+msgstr "Přejít zpět v seznamu skladeb"
+
+#: src/audacious/main.c:828
+msgid "Start playing current playlist"
+msgstr "Přehrát skladby v aktuálním seznamu"
+
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr "Pozastavit přehrávanou skladbu"
+
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr "Zastavit přehrávanou skladbu"
+
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr "Pozastavit při přehrávání; jinak spustit"
+
+#: src/audacious/main.c:832
+msgid "Skip forward in playlist"
+msgstr "Přejít na další skladbu"
+
+#: src/audacious/main.c:833
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "/Přejít na soubor"
+
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr "Nemazat seznam skladeb"
+
+#: src/audacious/main.c:835
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "Nemazat seznam skladeb"
+
+#: src/audacious/main.c:836
+#, fuzzy
+msgid "Display the main window"
+msgstr "Zobrazit hlavní okno"
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
+msgstr ""
 
 #: src/audacious/main.c:841
 msgid "FILE..."
@@ -1408,28 +1472,28 @@ msgstr "Číslo stopy"
 msgid "Track Length"
 msgstr "Délka stopy:"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Open Files"
 msgstr "Otevřít soubory"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Add Files"
 msgstr "Přidat soubory"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr "Zavřít dialog při otevření"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr "Zavřít dialog při přidání"
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 #, fuzzy
 msgid "Play files"
 msgstr "/Přehrát soubor"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 #, fuzzy
 msgid "Load files"
 msgstr "/Načíst/Ze souboru"
@@ -2205,33 +2269,6 @@ msgstr "16 kHz"
 
 #~ msgid "Display this text and exit"
 #~ msgstr "Zobrazí tento text a skončí"
-
-#~ msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-#~ msgstr "Výběr sezení Audacious/BMP/XMMS (standardně: 0)"
-
-#~ msgid "Skip backwards in playlist"
-#~ msgstr "Přejít zpět v seznamu skladeb"
-
-#~ msgid "Start playing current playlist"
-#~ msgstr "Přehrát skladby v aktuálním seznamu"
-
-#~ msgid "Pause current song"
-#~ msgstr "Pozastavit přehrávanou skladbu"
-
-#~ msgid "Stop current song"
-#~ msgstr "Zastavit přehrávanou skladbu"
-
-#~ msgid "Pause if playing, play otherwise"
-#~ msgstr "Pozastavit při přehrávání; jinak spustit"
-
-#~ msgid "Skip forward in playlist"
-#~ msgstr "Přejít na další skladbu"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Nemazat seznam skladeb"
-
-#~ msgid "Show the main window"
-#~ msgstr "Zobrazit hlavní okno"
 
 #~ msgid "Activate Audacious"
 #~ msgstr "Aktivovat Audacious"

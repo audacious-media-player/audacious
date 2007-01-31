@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,6 +79,66 @@ msgstr ""
 #: src/audacious/main.c:460
 #, c-format
 msgid "Could not create directory (%s): %s\n"
+msgstr ""
+
+#: src/audacious/main.c:826
+msgid "Select which Audacious session ID to use"
+msgstr ""
+
+#: src/audacious/main.c:827
+msgid "Skip backwards in playlist"
+msgstr ""
+
+#: src/audacious/main.c:828
+msgid "Start playing current playlist"
+msgstr ""
+
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr ""
+
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr ""
+
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr ""
+
+#: src/audacious/main.c:832
+msgid "Skip forward in playlist"
+msgstr ""
+
+#: src/audacious/main.c:833
+msgid "Display Jump to File dialog"
+msgstr ""
+
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr ""
+
+#: src/audacious/main.c:835
+msgid "Add new files to a temporary playlist"
+msgstr ""
+
+#: src/audacious/main.c:836
+msgid "Display the main window"
+msgstr ""
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
 msgstr ""
 
 #: src/audacious/main.c:841
@@ -1225,27 +1285,27 @@ msgstr ""
 msgid "Track Length"
 msgstr ""
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Open Files"
 msgstr ""
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Add Files"
 msgstr ""
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr ""
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr ""
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 msgid "Play files"
 msgstr ""
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 msgid "Load files"
 msgstr ""
 

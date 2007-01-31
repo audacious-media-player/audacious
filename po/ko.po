@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: 2004-06-29 19:02+0900\n"
 "Last-Translator: DongCheon Park <dcpark@kaist.ac.kr>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -83,6 +83,70 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "(%s) 디렉토리를 생성할 수 없습니다.: %s"
+
+#: src/audacious/main.c:826
+#, fuzzy
+msgid "Select which Audacious session ID to use"
+msgstr "BMP/XMMS 세션 선택 (기본값: 0)"
+
+#: src/audacious/main.c:827
+msgid "Skip backwards in playlist"
+msgstr "재생목록의 뒷부분 건너뛰기"
+
+#: src/audacious/main.c:828
+msgid "Start playing current playlist"
+msgstr "현재 재생목록 재생 시작"
+
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr "현재 노래 멈춤"
+
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr "현재 노래 정지"
+
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr "재생중이면 멈춤, 그 외에는 재생"
+
+#: src/audacious/main.c:832
+msgid "Skip forward in playlist"
+msgstr "재생목록의 앞부분 건너뛰기"
+
+#: src/audacious/main.c:833
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "/파일 이동"
+
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr "재생목록 지우지 않음"
+
+#: src/audacious/main.c:835
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "재생목록 지우지 않음"
+
+#: src/audacious/main.c:836
+#, fuzzy
+msgid "Display the main window"
+msgstr "기본 창 보임"
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
+msgstr ""
 
 #: src/audacious/main.c:841
 msgid "FILE..."
@@ -1417,29 +1481,29 @@ msgstr "트랙 번호"
 msgid "Track Length"
 msgstr "트랙 길이:"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 #, fuzzy
 msgid "Open Files"
 msgstr "/파일 자르기"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Add Files"
 msgstr "파일 추가"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr ""
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr ""
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 #, fuzzy
 msgid "Play files"
 msgstr "파일 재생"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 #, fuzzy
 msgid "Load files"
 msgstr "/읽기/파일"
@@ -2213,34 +2277,6 @@ msgstr "16KHZ"
 
 #~ msgid "Display this text and exit"
 #~ msgstr "이 도움말을 표시하고 끝냄"
-
-#, fuzzy
-#~ msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-#~ msgstr "BMP/XMMS 세션 선택 (기본값: 0)"
-
-#~ msgid "Skip backwards in playlist"
-#~ msgstr "재생목록의 뒷부분 건너뛰기"
-
-#~ msgid "Start playing current playlist"
-#~ msgstr "현재 재생목록 재생 시작"
-
-#~ msgid "Pause current song"
-#~ msgstr "현재 노래 멈춤"
-
-#~ msgid "Stop current song"
-#~ msgstr "현재 노래 정지"
-
-#~ msgid "Pause if playing, play otherwise"
-#~ msgstr "재생중이면 멈춤, 그 외에는 재생"
-
-#~ msgid "Skip forward in playlist"
-#~ msgstr "재생목록의 앞부분 건너뛰기"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "재생목록 지우지 않음"
-
-#~ msgid "Show the main window"
-#~ msgstr "기본 창 보임"
 
 #, fuzzy
 #~ msgid "Activate Audacious"

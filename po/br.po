@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp 0.9.6\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: 2004-08-25 17:10+0200\n"
 "Last-Translator: Thierry Vignaud <tvignaud@mandrakesoft.com>\n"
 "Language-Team: Brezhoneg <LL@li.org>\n"
@@ -79,6 +79,71 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "N'hellan ket krouiñ ar renkell (%s) : %s"
+
+#: src/audacious/main.c:826
+msgid "Select which Audacious session ID to use"
+msgstr ""
+
+#: src/audacious/main.c:827
+#, fuzzy
+msgid "Skip backwards in playlist"
+msgstr "Diskouez niverennoù ar roudenn er roll tonioù"
+
+#: src/audacious/main.c:828
+#, fuzzy
+msgid "Start playing current playlist"
+msgstr "Diskouez niverennoù ar roudenn er roll tonioù"
+
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr ""
+
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr ""
+
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr ""
+
+#: src/audacious/main.c:832
+#, fuzzy
+msgid "Skip forward in playlist"
+msgstr "Diskouez niverennoù ar roudenn er roll tonioù"
+
+#: src/audacious/main.c:833
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "/Lammat d'ar restr"
+
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr "Ne c'houllonderit ket ar roll tonioù"
+
+#: src/audacious/main.c:835
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "Ne c'houllonderit ket ar roll tonioù"
+
+#: src/audacious/main.c:836
+msgid "Display the main window"
+msgstr ""
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
+msgstr ""
 
 #: src/audacious/main.c:841
 msgid "FILE..."
@@ -1322,29 +1387,29 @@ msgstr "Niverenn ar roudenn"
 msgid "Track Length"
 msgstr "Hirder ar roudenn :"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 #, fuzzy
 msgid "Open Files"
 msgstr "Ouzhpennañ Restro¹"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Add Files"
 msgstr "Ouzhpennañ Restro¹"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr ""
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr ""
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 #, fuzzy
 msgid "Play files"
 msgstr "Seniñ Restro¹"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 #, fuzzy
 msgid "Load files"
 msgstr "/Kargañ/Eus ar restr"
@@ -2062,9 +2127,6 @@ msgstr "14 kHz"
 #: src/audacious/widgets/eq_slider.c:96
 msgid "16KHZ"
 msgstr "16 kHz"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Ne c'houllonderit ket ar roll tonioù"
 
 #, fuzzy
 #~ msgid "Activate Audacious"

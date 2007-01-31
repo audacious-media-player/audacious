@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: 2006-11-16 20:02+0100\n"
 "Last-Translator: Tony Vroon <chainsaw@gentoo.org>\n"
 "Language-Team: (not responsive)\n"
@@ -87,6 +87,80 @@ msgstr "Audacious"
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Kon de map (%s) niet aanmaken: %s"
+
+#  -n, --session switch
+#: src/audacious/main.c:826
+#, fuzzy
+msgid "Select which Audacious session ID to use"
+msgstr "Kies Audacious sessie (Standaard: 0)"
+
+#  -r, --rew switch
+#: src/audacious/main.c:827
+msgid "Skip backwards in playlist"
+msgstr "Ga terug in de speellijst"
+
+#  -p, --play switch
+#: src/audacious/main.c:828
+msgid "Start playing current playlist"
+msgstr "Begin de huidige speellijst af te spelen"
+
+#  -u, --pause switch
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr "Pauzeer huidig nummer"
+
+#  -s, --stop switch
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr "Stop huidig nummer"
+
+#  -t, --play-pause switch
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr "Pauzeer tijdens spelen, anders afspelen"
+
+#  -f, --fwd switch
+#: src/audacious/main.c:832
+msgid "Skip forward in playlist"
+msgstr "Ga vooruit in de speellijst"
+
+#: src/audacious/main.c:833
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "Spring-naar-bestand dialoog weergeven"
+
+#  -e, --enqueue switch
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr "Speellijst niet wissen"
+
+#  -e, --enqueue switch
+#: src/audacious/main.c:835
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "Speellijst niet wissen"
+
+#  -m, --show-main-window switch
+#: src/audacious/main.c:836
+#, fuzzy
+msgid "Display the main window"
+msgstr "Geef het hoofdvenster weer"
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
+msgstr ""
 
 #: src/audacious/main.c:841
 msgid "FILE..."
@@ -1411,27 +1485,27 @@ msgstr "Nummer"
 msgid "Track Length"
 msgstr "Duur:"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Open Files"
 msgstr "Bestanden openen"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Add Files"
 msgstr "Bestanden toevoegen"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr "Sluit venster bij openen"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr "Sluit venster bij toevoegen"
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 msgid "Play files"
 msgstr "Bestanden afspelen"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 msgid "Load files"
 msgstr "Bestanden laden"
 
@@ -2220,45 +2294,6 @@ msgstr "16KHZ"
 #  -h, --help switch
 #~ msgid "Display this text and exit"
 #~ msgstr "Deze tekst weergeven en stoppen"
-
-#  -n, --session switch
-#~ msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-#~ msgstr "Kies Audacious sessie (Standaard: 0)"
-
-#  -r, --rew switch
-#~ msgid "Skip backwards in playlist"
-#~ msgstr "Ga terug in de speellijst"
-
-#  -p, --play switch
-#~ msgid "Start playing current playlist"
-#~ msgstr "Begin de huidige speellijst af te spelen"
-
-#  -u, --pause switch
-#~ msgid "Pause current song"
-#~ msgstr "Pauzeer huidig nummer"
-
-#  -s, --stop switch
-#~ msgid "Stop current song"
-#~ msgstr "Stop huidig nummer"
-
-#  -t, --play-pause switch
-#~ msgid "Pause if playing, play otherwise"
-#~ msgstr "Pauzeer tijdens spelen, anders afspelen"
-
-#  -f, --fwd switch
-#~ msgid "Skip forward in playlist"
-#~ msgstr "Ga vooruit in de speellijst"
-
-#~ msgid "Display Jump to file dialog"
-#~ msgstr "Spring-naar-bestand dialoog weergeven"
-
-#  -e, --enqueue switch
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Speellijst niet wissen"
-
-#  -m, --show-main-window switch
-#~ msgid "Show the main window"
-#~ msgstr "Geef het hoofdvenster weer"
 
 #~ msgid "Activate Audacious"
 #~ msgstr "Activeer Audacious"

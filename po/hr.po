@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hr\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: 2007-01-28 20:17+0100\n"
 "Last-Translator: \n"
 "Language-Team:  <en@li.org>\n"
@@ -88,6 +88,70 @@ msgstr "Audacious"
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nije moguće napraviti direktorij (%s): %s\n"
+
+#: src/audacious/main.c:826
+#, fuzzy
+msgid "Select which Audacious session ID to use"
+msgstr "Izaberite Audacious/BMP/XMMS sesiju (Standardno: 0)"
+
+#: src/audacious/main.c:827
+msgid "Skip backwards in playlist"
+msgstr "Skoči unazad u listi zvučnih zapisa"
+
+#: src/audacious/main.c:828
+msgid "Start playing current playlist"
+msgstr "Pusti trenutnu listu zvučnih zapisa"
+
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr "Pauziraj trenutni zvučni zapis"
+
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr "Zaustavi trenutni zvučni zapis"
+
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr "Pauziraj ako svira, inače pusti"
+
+#: src/audacious/main.c:832
+msgid "Skip forward in playlist"
+msgstr "Skoči unaprjed u listi zvučnih zapisa"
+
+#: src/audacious/main.c:833
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "Prikaži \"Skoči na datoteku\" okvir"
+
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr "Nemoj obrisati listu zvučnih zapisa"
+
+#: src/audacious/main.c:835
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "Dodaje datoteke u listu zvučnih zapisa."
+
+#: src/audacious/main.c:836
+#, fuzzy
+msgid "Display the main window"
+msgstr "Prikaži glavni prozor"
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
+msgstr ""
 
 #: src/audacious/main.c:841
 msgid "FILE..."
@@ -1270,27 +1334,27 @@ msgstr "Broj zvučnog zapisa"
 msgid "Track Length"
 msgstr "Dužina zvučnog zapisa:"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Open Files"
 msgstr "Otvori datoteke"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Add Files"
 msgstr "Dodaj datoteke"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr "Zatvori okvir klikom na Otvori"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr "Zatvori okvir klikom na Dodaj"
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 msgid "Play files"
 msgstr "Pusti datoteke"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 msgid "Load files"
 msgstr "Učitaj datoteke"
 
@@ -2067,36 +2131,6 @@ msgstr "16kHz"
 
 #~ msgid "Display this text and exit"
 #~ msgstr "Prikazi ovaj tekst i izađi"
-
-#~ msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-#~ msgstr "Izaberite Audacious/BMP/XMMS sesiju (Standardno: 0)"
-
-#~ msgid "Skip backwards in playlist"
-#~ msgstr "Skoči unazad u listi zvučnih zapisa"
-
-#~ msgid "Start playing current playlist"
-#~ msgstr "Pusti trenutnu listu zvučnih zapisa"
-
-#~ msgid "Pause current song"
-#~ msgstr "Pauziraj trenutni zvučni zapis"
-
-#~ msgid "Stop current song"
-#~ msgstr "Zaustavi trenutni zvučni zapis"
-
-#~ msgid "Pause if playing, play otherwise"
-#~ msgstr "Pauziraj ako svira, inače pusti"
-
-#~ msgid "Skip forward in playlist"
-#~ msgstr "Skoči unaprjed u listi zvučnih zapisa"
-
-#~ msgid "Display Jump to file dialog"
-#~ msgstr "Prikaži \"Skoči na datoteku\" okvir"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Nemoj obrisati listu zvučnih zapisa"
-
-#~ msgid "Show the main window"
-#~ msgstr "Prikaži glavni prozor"
 
 #~ msgid "Activate Audacious"
 #~ msgstr "Aktiviraj Audacious"

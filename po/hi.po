@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bmp-hi\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: 2005-08-20 21:59+0530\n"
 "Last-Translator: धनञ्जय शर्मा (Dhananjaya Sharma) <dysxhi@yahoo.co.in>\n"
 "Language-Team: Hindi, India <dysxhi@yahoo.co.in>\n"
@@ -85,6 +85,70 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "निर्देशिका (%s) का निर्माण करने में असफ़लता: %s"
+
+#: src/audacious/main.c:826
+#, fuzzy
+msgid "Select which Audacious session ID to use"
+msgstr "BMP/XMMS संत्र का चयन (डिफ़ाल्ट: ०)"
+
+#: src/audacious/main.c:827
+msgid "Skip backwards in playlist"
+msgstr "प्लेसूची में पीछे जाना"
+
+#: src/audacious/main.c:828
+msgid "Start playing current playlist"
+msgstr "वर्तमान प्लेसूची को चलाना आरम्भ करना"
+
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr "वर्तमान गीत को ठहरना"
+
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr "वर्तमान गीत को रोकना"
+
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr "ठहराना यदि चल रहा हो, अन्यथा चलाना"
+
+#: src/audacious/main.c:832
+msgid "Skip forward in playlist"
+msgstr "प्लेसूची में आगे जाना"
+
+#: src/audacious/main.c:833
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "/संचिका पर जाएँ"
+
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr "प्लेसूची को साफ़ नहीं करना"
+
+#: src/audacious/main.c:835
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "प्लेसूची को साफ़ नहीं करना"
+
+#: src/audacious/main.c:836
+#, fuzzy
+msgid "Display the main window"
+msgstr "मुख्य खिड़की को दिखाना"
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
+msgstr ""
 
 #: src/audacious/main.c:841
 msgid "FILE..."
@@ -1418,28 +1482,28 @@ msgstr "ट्रैक की संख्या"
 msgid "Track Length"
 msgstr "ट्रैक की लंबाई:"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Open Files"
 msgstr "संचिकाओं को खोलें"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Add Files"
 msgstr "संचिकाओं को जोड़ें"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr "खोलने पर बन्द संवाद"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr "जोड़ने पर बन्द संवाद"
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 #, fuzzy
 msgid "Play files"
 msgstr "/चलायें"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 #, fuzzy
 msgid "Load files"
 msgstr "/लायें/संचिका से"
@@ -2219,34 +2283,6 @@ msgstr "१६ किलोहर्टज"
 
 #~ msgid "Display this text and exit"
 #~ msgstr "इस पाठ को दिखायें और बाहर निकलें"
-
-#, fuzzy
-#~ msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-#~ msgstr "BMP/XMMS संत्र का चयन (डिफ़ाल्ट: ०)"
-
-#~ msgid "Skip backwards in playlist"
-#~ msgstr "प्लेसूची में पीछे जाना"
-
-#~ msgid "Start playing current playlist"
-#~ msgstr "वर्तमान प्लेसूची को चलाना आरम्भ करना"
-
-#~ msgid "Pause current song"
-#~ msgstr "वर्तमान गीत को ठहरना"
-
-#~ msgid "Stop current song"
-#~ msgstr "वर्तमान गीत को रोकना"
-
-#~ msgid "Pause if playing, play otherwise"
-#~ msgstr "ठहराना यदि चल रहा हो, अन्यथा चलाना"
-
-#~ msgid "Skip forward in playlist"
-#~ msgstr "प्लेसूची में आगे जाना"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "प्लेसूची को साफ़ नहीं करना"
-
-#~ msgid "Show the main window"
-#~ msgstr "मुख्य खिड़की को दिखाना"
 
 #, fuzzy
 #~ msgid "Activate Audacious"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.35\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: 2005-10-14 13:54+0400\n"
 "Last-Translator: George Machitidze <giomac@gmail.com>\n"
 "Language-Team: Georgian <giomac@gmail.com>\n"
@@ -87,6 +87,70 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "(%s) დირექტორიის შექმნა შეუძლებელია : %s"
+
+#: src/audacious/main.c:826
+#, fuzzy
+msgid "Select which Audacious session ID to use"
+msgstr "BMP/XMMS სესიის არჩევა (ნაგულისხმევი: 0)"
+
+#: src/audacious/main.c:827
+msgid "Skip backwards in playlist"
+msgstr "რეპერტუარში უკან გადასვლა"
+
+#: src/audacious/main.c:828
+msgid "Start playing current playlist"
+msgstr "მიმდინარე რეპერტუარის დაკვრა"
+
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr "მიმდინარე სიმღერის დაპაუზება"
+
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr "მიმდინარე სიმღერის გაჩერება"
+
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr "დააპაუზება თუ უკრავს, თუ არა - დაკვრა"
+
+#: src/audacious/main.c:832
+msgid "Skip forward in playlist"
+msgstr "რეპერტუარში წინ გადახტომა"
+
+#: src/audacious/main.c:833
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "/ფაილზე გადასვლა"
+
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr "რეპერტუარის გაწმენდის გარეშე"
+
+#: src/audacious/main.c:835
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "რეპერტუარის გაწმენდის გარეშე"
+
+#: src/audacious/main.c:836
+#, fuzzy
+msgid "Display the main window"
+msgstr "ძირითადი ფანჯრის ჩვენება"
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
+msgstr ""
 
 #: src/audacious/main.c:841
 msgid "FILE..."
@@ -1402,28 +1466,28 @@ msgstr "ჩანაწერის ნომერი"
 msgid "Track Length"
 msgstr "ჩანაწერის სიგრძე:"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Open Files"
 msgstr "ფაილების გახსნა"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Add Files"
 msgstr "ფაილების დამატება"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr "გახსნის შემდეგ დიალოგის დაკეტვა"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr "დამატების შემდეგ დიალოგის დაკეტვა"
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 #, fuzzy
 msgid "Play files"
 msgstr "/დაკვრა"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 #, fuzzy
 msgid "Load files"
 msgstr "/ჩატვირთვა/ფაილიდან"
@@ -2195,34 +2259,6 @@ msgstr "16კჰც"
 
 #~ msgid "Display this text and exit"
 #~ msgstr "ამ ტექსტის ჩვენება და გასვლა"
-
-#, fuzzy
-#~ msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-#~ msgstr "BMP/XMMS სესიის არჩევა (ნაგულისხმევი: 0)"
-
-#~ msgid "Skip backwards in playlist"
-#~ msgstr "რეპერტუარში უკან გადასვლა"
-
-#~ msgid "Start playing current playlist"
-#~ msgstr "მიმდინარე რეპერტუარის დაკვრა"
-
-#~ msgid "Pause current song"
-#~ msgstr "მიმდინარე სიმღერის დაპაუზება"
-
-#~ msgid "Stop current song"
-#~ msgstr "მიმდინარე სიმღერის გაჩერება"
-
-#~ msgid "Pause if playing, play otherwise"
-#~ msgstr "დააპაუზება თუ უკრავს, თუ არა - დაკვრა"
-
-#~ msgid "Skip forward in playlist"
-#~ msgstr "რეპერტუარში წინ გადახტომა"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "რეპერტუარის გაწმენდის გარეშე"
-
-#~ msgid "Show the main window"
-#~ msgstr "ძირითადი ფანჯრის ჩვენება"
 
 #, fuzzy
 #~ msgid "Activate Audacious"

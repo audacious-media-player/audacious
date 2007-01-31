@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: 2006-12-05 11:20+0700\n"
 "Last-Translator: Yang Zhang <zyangmath@gmail.com>\n"
 "Language-Team: Chinese/Simplified\n"
@@ -84,6 +84,70 @@ msgid "Could not create directory (%s): %s\n"
 msgstr ""
 "新建目录 %s 失败\n"
 "错误：%s"
+
+#: src/audacious/main.c:826
+#, fuzzy
+msgid "Select which Audacious session ID to use"
+msgstr "选择 Audacious/BMP/XMMS 会话 (默认：0)"
+
+#: src/audacious/main.c:827
+msgid "Skip backwards in playlist"
+msgstr "在播放列表中向后跳"
+
+#: src/audacious/main.c:828
+msgid "Start playing current playlist"
+msgstr "开始播放现有列表"
+
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr "暂停当前歌曲"
+
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr "停止当前歌曲"
+
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr "如正播放则暂停，否则播放"
+
+#: src/audacious/main.c:832
+msgid "Skip forward in playlist"
+msgstr "在播放列表中向前跳"
+
+#: src/audacious/main.c:833
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "显示 “跳到文件” 对话框"
+
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr "不要清除播放列表"
+
+#: src/audacious/main.c:835
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "不要清除播放列表"
+
+#: src/audacious/main.c:836
+#, fuzzy
+msgid "Display the main window"
+msgstr "显示主窗口"
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
+msgstr ""
 
 #: src/audacious/main.c:841
 msgid "FILE..."
@@ -1396,27 +1460,27 @@ msgstr "音轨编号"
 msgid "Track Length"
 msgstr "音轨长度："
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Open Files"
 msgstr "打开文件"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Add Files"
 msgstr "添加文件"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr "打开后关闭对话"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr "添加后关闭对话"
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 msgid "Play files"
 msgstr "播放文件"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 msgid "Load files"
 msgstr "装入文件"
 
@@ -2179,36 +2243,6 @@ msgstr "16KHz"
 
 #~ msgid "Display this text and exit"
 #~ msgstr "显示文字并退出"
-
-#~ msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-#~ msgstr "选择 Audacious/BMP/XMMS 会话 (默认：0)"
-
-#~ msgid "Skip backwards in playlist"
-#~ msgstr "在播放列表中向后跳"
-
-#~ msgid "Start playing current playlist"
-#~ msgstr "开始播放现有列表"
-
-#~ msgid "Pause current song"
-#~ msgstr "暂停当前歌曲"
-
-#~ msgid "Stop current song"
-#~ msgstr "停止当前歌曲"
-
-#~ msgid "Pause if playing, play otherwise"
-#~ msgstr "如正播放则暂停，否则播放"
-
-#~ msgid "Skip forward in playlist"
-#~ msgstr "在播放列表中向前跳"
-
-#~ msgid "Display Jump to file dialog"
-#~ msgstr "显示 “跳到文件” 对话框"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "不要清除播放列表"
-
-#~ msgid "Show the main window"
-#~ msgstr "显示主窗口"
 
 #~ msgid "Activate Audacious"
 #~ msgstr "激活 Audacious"

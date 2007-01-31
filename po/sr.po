@@ -1,12 +1,11 @@
 # translation of sr.po to Serbian Latin
 # Copyright (C) 2007 Strahinja  Kustudić <kustodian@gmail.com>
 # This file is distributed under the same license as the Audacious package.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: sr\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: 2007-01-24 20:26+0100\n"
 "Last-Translator: Strahinja  Kustudić <kustodian@gmail.com>\n"
 "Language-Team: Serbian Cyrillic <kustodian@gmail.com>\n"
@@ -87,6 +86,70 @@ msgstr "Аудациоус"
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Није могуће направити директоријум (%s): %s\n"
+
+#: src/audacious/main.c:826
+#, fuzzy
+msgid "Select which Audacious session ID to use"
+msgstr "Изаберите Аудациоус/BMP/XММS сесију (Подразумевано: 0)"
+
+#: src/audacious/main.c:827
+msgid "Skip backwards in playlist"
+msgstr "Скочи уназад у листи нумера"
+
+#: src/audacious/main.c:828
+msgid "Start playing current playlist"
+msgstr "Пусти текућу листу нумера"
+
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr "Паузирај текућу песму"
+
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr "Заустави текућу песму"
+
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr "Паузирај ако свира, иначе пусти"
+
+#: src/audacious/main.c:832
+msgid "Skip forward in playlist"
+msgstr "Скочи унапред у листи нумера"
+
+#: src/audacious/main.c:833
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "Прикажи Пређи на датотеку оквир"
+
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr "Немој обрисати листу нумера"
+
+#: src/audacious/main.c:835
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "Додаје датотеке у листу нумера."
+
+#: src/audacious/main.c:836
+#, fuzzy
+msgid "Display the main window"
+msgstr "Прикажи главни прозор"
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
+msgstr ""
 
 #: src/audacious/main.c:841
 msgid "FILE..."
@@ -1269,27 +1332,27 @@ msgstr "Број нумере"
 msgid "Track Length"
 msgstr "Дужина нумере:"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Open Files"
 msgstr "Отвори датотеке"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Add Files"
 msgstr "Додај датотеке"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr "Затвори оквир кликом на Отвори"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr "Затвори оквир кликом на Додај"
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 msgid "Play files"
 msgstr "Пусти датотеке"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 msgid "Load files"
 msgstr "Учитај датотеке"
 
@@ -2061,36 +2124,6 @@ msgstr "16kHz"
 
 #~ msgid "Display this text and exit"
 #~ msgstr "Прикажи овај текст и изађи"
-
-#~ msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-#~ msgstr "Изаберите Аудациоус/BMP/XММS сесију (Подразумевано: 0)"
-
-#~ msgid "Skip backwards in playlist"
-#~ msgstr "Скочи уназад у листи нумера"
-
-#~ msgid "Start playing current playlist"
-#~ msgstr "Пусти текућу листу нумера"
-
-#~ msgid "Pause current song"
-#~ msgstr "Паузирај текућу песму"
-
-#~ msgid "Stop current song"
-#~ msgstr "Заустави текућу песму"
-
-#~ msgid "Pause if playing, play otherwise"
-#~ msgstr "Паузирај ако свира, иначе пусти"
-
-#~ msgid "Skip forward in playlist"
-#~ msgstr "Скочи унапред у листи нумера"
-
-#~ msgid "Display Jump to file dialog"
-#~ msgstr "Прикажи Пређи на датотеку оквир"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Немој обрисати листу нумера"
-
-#~ msgid "Show the main window"
-#~ msgstr "Прикажи главни прозор"
 
 #~ msgid "Activate Audacious"
 #~ msgstr "Активирај Аудациоус"

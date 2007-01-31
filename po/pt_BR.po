@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BMP 0.9.7\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: 2004-11-15 13:42-0200\n"
 "Last-Translator: Philipi Pinto <philipi@gmx.net>\n"
 "Language-Team: Portuguese/Brazil\n"
@@ -84,6 +84,70 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Não foi possível criar o diretório (%s): %s"
+
+#: src/audacious/main.c:826
+#, fuzzy
+msgid "Select which Audacious session ID to use"
+msgstr "Selecione uma sessão BMP/XMMS (Padrão: 0)"
+
+#: src/audacious/main.c:827
+msgid "Skip backwards in playlist"
+msgstr "Avançar em sentido inverso na lista de reprodução"
+
+#: src/audacious/main.c:828
+msgid "Start playing current playlist"
+msgstr "Começar a tocar a lista de reprodução atual"
+
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr "Pausar a reprodução"
+
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr "Parar a reprodução"
+
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr "Pausar ou tocar"
+
+#: src/audacious/main.c:832
+msgid "Skip forward in playlist"
+msgstr "Avançar na lista de reprodução"
+
+#: src/audacious/main.c:833
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "/Ir para o arquivo"
+
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr "Não limpar a lista de reprodução"
+
+#: src/audacious/main.c:835
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "Não limpar a lista de reprodução"
+
+#: src/audacious/main.c:836
+#, fuzzy
+msgid "Display the main window"
+msgstr "Mostrar a janela principal"
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
+msgstr ""
 
 #: src/audacious/main.c:841
 msgid "FILE..."
@@ -1412,29 +1476,29 @@ msgstr "Número da faixa"
 msgid "Track Length"
 msgstr "Duração da faixa:"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 #, fuzzy
 msgid "Open Files"
 msgstr "/Remover arquivos"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Add Files"
 msgstr "Adicionar arquivos"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr ""
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr ""
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 #, fuzzy
 msgid "Play files"
 msgstr "Tocar arquivos"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 #, fuzzy
 msgid "Load files"
 msgstr "/Carregar/Do arquivo"
@@ -2210,34 +2274,6 @@ msgstr "16KHZ"
 
 #~ msgid "Display this text and exit"
 #~ msgstr "Mostrar este texto e sair"
-
-#, fuzzy
-#~ msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-#~ msgstr "Selecione uma sessão BMP/XMMS (Padrão: 0)"
-
-#~ msgid "Skip backwards in playlist"
-#~ msgstr "Avançar em sentido inverso na lista de reprodução"
-
-#~ msgid "Start playing current playlist"
-#~ msgstr "Começar a tocar a lista de reprodução atual"
-
-#~ msgid "Pause current song"
-#~ msgstr "Pausar a reprodução"
-
-#~ msgid "Stop current song"
-#~ msgstr "Parar a reprodução"
-
-#~ msgid "Pause if playing, play otherwise"
-#~ msgstr "Pausar ou tocar"
-
-#~ msgid "Skip forward in playlist"
-#~ msgstr "Avançar na lista de reprodução"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Não limpar a lista de reprodução"
-
-#~ msgid "Show the main window"
-#~ msgstr "Mostrar a janela principal"
 
 #, fuzzy
 #~ msgid "Activate Audacious"

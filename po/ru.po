@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.3\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: 2006-01-25 17:00+0300\n"
 "Last-Translator: Alexandr Orlov <alxorlov@pochta.ru>\n"
 "Language-Team: none\n"
@@ -91,6 +91,70 @@ msgstr ""
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Невозможно создать каталог (%s): %s\n"
+
+#: src/audacious/main.c:826
+#, fuzzy
+msgid "Select which Audacious session ID to use"
+msgstr "Указать Audacious/ВМР/XMMS сессию (по умолчанию: 0)"
+
+#: src/audacious/main.c:827
+msgid "Skip backwards in playlist"
+msgstr "Перейти к предыдущей песне в списке песен"
+
+#: src/audacious/main.c:828
+msgid "Start playing current playlist"
+msgstr "Начать проигрывание текущего списка воспроизведения"
+
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr "Приостановить текущую песню"
+
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr "Остановить текущую песню"
+
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr "Приостановить, если что-либо проигрывается, иначе воспроизводить"
+
+#: src/audacious/main.c:832
+msgid "Skip forward in playlist"
+msgstr "Перейти к следующей песне в списке"
+
+#: src/audacious/main.c:833
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "Показать диалог перехода к файлу"
+
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr "Не очищать список воспроизведения"
+
+#: src/audacious/main.c:835
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "Добавляет файлы в список воспроизведения."
+
+#: src/audacious/main.c:836
+#, fuzzy
+msgid "Display the main window"
+msgstr "Показать главное окно"
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
+msgstr ""
 
 #: src/audacious/main.c:841
 msgid "FILE..."
@@ -1274,27 +1338,27 @@ msgstr "Номер дорожки"
 msgid "Track Length"
 msgstr "Длительность:"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Open Files"
 msgstr "Открыть файлы"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Add Files"
 msgstr "Добавление файлов"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr "Закрыть окно при Открытии"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr "Закрыть окно при Добавлении"
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 msgid "Play files"
 msgstr "Воспроизвести файлы"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 msgid "Load files"
 msgstr "Загрузить файлы"
 
@@ -2074,36 +2138,6 @@ msgstr "16 кГц"
 
 #~ msgid "Display this text and exit"
 #~ msgstr "Отобразить этот текст и выйти"
-
-#~ msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-#~ msgstr "Указать Audacious/ВМР/XMMS сессию (по умолчанию: 0)"
-
-#~ msgid "Skip backwards in playlist"
-#~ msgstr "Перейти к предыдущей песне в списке песен"
-
-#~ msgid "Start playing current playlist"
-#~ msgstr "Начать проигрывание текущего списка воспроизведения"
-
-#~ msgid "Pause current song"
-#~ msgstr "Приостановить текущую песню"
-
-#~ msgid "Stop current song"
-#~ msgstr "Остановить текущую песню"
-
-#~ msgid "Pause if playing, play otherwise"
-#~ msgstr "Приостановить, если что-либо проигрывается, иначе воспроизводить"
-
-#~ msgid "Skip forward in playlist"
-#~ msgstr "Перейти к следующей песне в списке"
-
-#~ msgid "Display Jump to file dialog"
-#~ msgstr "Показать диалог перехода к файлу"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Не очищать список воспроизведения"
-
-#~ msgid "Show the main window"
-#~ msgstr "Показать главное окно"
 
 #~ msgid "Activate Audacious"
 #~ msgstr "Активировать Audacious"

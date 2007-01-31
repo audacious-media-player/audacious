@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: 2007-01-13 12:01+0200\n"
 "Last-Translator: Andrew Ivanov <aa.ivanov@gmail.com>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
@@ -88,6 +88,70 @@ msgstr "Audacious"
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Не може да бъде създадена директория (%s): %s"
+
+#: src/audacious/main.c:826
+#, fuzzy
+msgid "Select which Audacious session ID to use"
+msgstr "Избор на сесия на Audacious/BMP/XMMS (Стандартно: 0)"
+
+#: src/audacious/main.c:827
+msgid "Skip backwards in playlist"
+msgstr "Прескачане назад в плейлистата"
+
+#: src/audacious/main.c:828
+msgid "Start playing current playlist"
+msgstr "Просвирване на текущата плейлиста"
+
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr "Пауза на текущата песен"
+
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr "Спиране на текущата песен"
+
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr "Пауза / просвирване"
+
+#: src/audacious/main.c:832
+msgid "Skip forward in playlist"
+msgstr "Прескачане напред в плейлистата"
+
+#: src/audacious/main.c:833
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "Показване диалог \"прескачане до файл\""
+
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr "Без изчистване на плейлистата"
+
+#: src/audacious/main.c:835
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "Добавяне на файлове към плейлистата."
+
+#: src/audacious/main.c:836
+#, fuzzy
+msgid "Display the main window"
+msgstr "Показване на главния прозорец"
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
+msgstr ""
 
 #: src/audacious/main.c:841
 msgid "FILE..."
@@ -1275,27 +1339,27 @@ msgstr "Номер"
 msgid "Track Length"
 msgstr "Продължителност:"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Open Files"
 msgstr "Отваряне на файлове"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Add Files"
 msgstr "Добавяне на файлове"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr "Затваряне при отваряне на файл"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr "Затваряне при добавяне на файл"
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 msgid "Play files"
 msgstr "Просвирване на файлове"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 msgid "Load files"
 msgstr "Зареждане на файлове"
 
@@ -2073,36 +2137,6 @@ msgstr "16KHZ"
 
 #~ msgid "Display this text and exit"
 #~ msgstr "Показване на този текст и спиране на програмата"
-
-#~ msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-#~ msgstr "Избор на сесия на Audacious/BMP/XMMS (Стандартно: 0)"
-
-#~ msgid "Skip backwards in playlist"
-#~ msgstr "Прескачане назад в плейлистата"
-
-#~ msgid "Start playing current playlist"
-#~ msgstr "Просвирване на текущата плейлиста"
-
-#~ msgid "Pause current song"
-#~ msgstr "Пауза на текущата песен"
-
-#~ msgid "Stop current song"
-#~ msgstr "Спиране на текущата песен"
-
-#~ msgid "Pause if playing, play otherwise"
-#~ msgstr "Пауза / просвирване"
-
-#~ msgid "Skip forward in playlist"
-#~ msgstr "Прескачане напред в плейлистата"
-
-#~ msgid "Display Jump to file dialog"
-#~ msgstr "Показване диалог \"прескачане до файл\""
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Без изчистване на плейлистата"
-
-#~ msgid "Show the main window"
-#~ msgstr "Показване на главния прозорец"
 
 #~ msgid "Activate Audacious"
 #~ msgstr "Активиране на Audacious"

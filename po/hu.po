@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious 1.2.1\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: 2006-11-03 18:21+0100\n"
 "Last-Translator: Laszlo Dvornik <dvornik@gnome.hu>\n"
 "Language-Team: Hungarian <dvornik@gnome.hu>\n"
@@ -87,6 +87,70 @@ msgstr "Audacious"
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nem lehet létrehozni a könyvtárat (%s): %s"
+
+#: src/audacious/main.c:826
+#, fuzzy
+msgid "Select which Audacious session ID to use"
+msgstr "Audacious/BMP/XMMS-munkamenet kiválasztása (Alapértelmezés: 0)"
+
+#: src/audacious/main.c:827
+msgid "Skip backwards in playlist"
+msgstr "Visszalépés a lejátszólistában"
+
+#: src/audacious/main.c:828
+msgid "Start playing current playlist"
+msgstr "Jelenlegi lejátszólista lejátszásának elkezdése"
+
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr "Jelenlegi szám szüneteltetése"
+
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr "Jelenlegi szám leállítása"
+
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr "Lejátszás esetén szüneteltetés, különben lejátszás"
+
+#: src/audacious/main.c:832
+msgid "Skip forward in playlist"
+msgstr "Előrelépés a lejátszólistában"
+
+#: src/audacious/main.c:833
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "Ugrás fájlra párbeszédablak megjelenítése"
+
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr "Ne törölje a lejátszólistát"
+
+#: src/audacious/main.c:835
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "Ne törölje a lejátszólistát"
+
+#: src/audacious/main.c:836
+#, fuzzy
+msgid "Display the main window"
+msgstr "Főablak megjelenítése"
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
+msgstr ""
 
 #: src/audacious/main.c:841
 msgid "FILE..."
@@ -1401,28 +1465,28 @@ msgstr "Szám sorszáma"
 msgid "Track Length"
 msgstr "Szám hossza:"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Open Files"
 msgstr "Fájlok megnyitása"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Add Files"
 msgstr "Fájlok hozzáadása"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr "Párbeszédablak bezárása megnyitás után"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr "Párbeszédablak bezárása hozzáadás után"
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 #, fuzzy
 msgid "Play files"
 msgstr "/Fájl lejátszása"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 #, fuzzy
 msgid "Load files"
 msgstr "/Betöltés/Fájlból"
@@ -2202,36 +2266,6 @@ msgstr "16 KHZ"
 
 #~ msgid "Display this text and exit"
 #~ msgstr "Ezen szöveg megjelenítése és kilépés"
-
-#~ msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-#~ msgstr "Audacious/BMP/XMMS-munkamenet kiválasztása (Alapértelmezés: 0)"
-
-#~ msgid "Skip backwards in playlist"
-#~ msgstr "Visszalépés a lejátszólistában"
-
-#~ msgid "Start playing current playlist"
-#~ msgstr "Jelenlegi lejátszólista lejátszásának elkezdése"
-
-#~ msgid "Pause current song"
-#~ msgstr "Jelenlegi szám szüneteltetése"
-
-#~ msgid "Stop current song"
-#~ msgstr "Jelenlegi szám leállítása"
-
-#~ msgid "Pause if playing, play otherwise"
-#~ msgstr "Lejátszás esetén szüneteltetés, különben lejátszás"
-
-#~ msgid "Skip forward in playlist"
-#~ msgstr "Előrelépés a lejátszólistában"
-
-#~ msgid "Display Jump to file dialog"
-#~ msgstr "Ugrás fájlra párbeszédablak megjelenítése"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Ne törölje a lejátszólistát"
-
-#~ msgid "Show the main window"
-#~ msgstr "Főablak megjelenítése"
 
 #~ msgid "Activate Audacious"
 #~ msgstr "Audacious aktiválása"

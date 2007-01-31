@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: 2006-06-22 18:47+0000\n"
 "Last-Translator: Wojciech Myrda <vojcek@tlen.pl>\n"
 "Language-Team:\n"
@@ -94,6 +94,70 @@ msgstr "Audacious"
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Nie można utworzyć folderu (%s) %s"
+
+#: src/audacious/main.c:826
+#, fuzzy
+msgid "Select which Audacious session ID to use"
+msgstr "Wybierz sesje Audacious (Standardowa: 0)"
+
+#: src/audacious/main.c:827
+msgid "Skip backwards in playlist"
+msgstr "Przeskakuje do poprzedniego utworu na liście odtwarzania"
+
+#: src/audacious/main.c:828
+msgid "Start playing current playlist"
+msgstr "Rozpoczyna odtwarzanie bieżącej listy odtwarzania"
+
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr "Wstrzymuje bieżący utwór"
+
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr "Zatrzymuje bieżący utwór"
+
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr "Wstrzymuje, jeśli odtwarzany jest utwór, w przeciwnym razie wznawia"
+
+#: src/audacious/main.c:832
+msgid "Skip forward in playlist"
+msgstr "Przechodzi do następnego utworu na liście odtwarzania"
+
+#: src/audacious/main.c:833
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "Wyświetl okno dialogowe Skocz do pliku"
+
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr "Nie czyści listy odtwarzania"
+
+#: src/audacious/main.c:835
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "Nie czyści listy odtwarzania"
+
+#: src/audacious/main.c:836
+#, fuzzy
+msgid "Display the main window"
+msgstr "Wyświetla główne okno"
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
+msgstr ""
 
 #: src/audacious/main.c:841
 msgid "FILE..."
@@ -1408,28 +1472,28 @@ msgstr "Numer utworu"
 msgid "Track Length"
 msgstr "Długość utworu:"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Open Files"
 msgstr "Przytnij pliki"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Add Files"
 msgstr "Dodaj pliki"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr "Zamknij informację przy otwarciu"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr "Zamknij informację przy dodaniu"
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 #, fuzzy
 msgid "Play files"
 msgstr "Odtwórz pliki"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 #, fuzzy
 msgid "Load files"
 msgstr "/Wczytaj/Z pliku"
@@ -2218,36 +2282,6 @@ msgstr "16KHZ"
 
 #~ msgid "Display this text and exit"
 #~ msgstr "Wyświetla ten tekst i zamyka program"
-
-#~ msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-#~ msgstr "Wybierz sesje Audacious (Standardowa: 0)"
-
-#~ msgid "Skip backwards in playlist"
-#~ msgstr "Przeskakuje do poprzedniego utworu na liście odtwarzania"
-
-#~ msgid "Start playing current playlist"
-#~ msgstr "Rozpoczyna odtwarzanie bieżącej listy odtwarzania"
-
-#~ msgid "Pause current song"
-#~ msgstr "Wstrzymuje bieżący utwór"
-
-#~ msgid "Stop current song"
-#~ msgstr "Zatrzymuje bieżący utwór"
-
-#~ msgid "Pause if playing, play otherwise"
-#~ msgstr "Wstrzymuje, jeśli odtwarzany jest utwór, w przeciwnym razie wznawia"
-
-#~ msgid "Skip forward in playlist"
-#~ msgstr "Przechodzi do następnego utworu na liście odtwarzania"
-
-#~ msgid "Display Jump to file dialog"
-#~ msgstr "Wyświetl okno dialogowe Skocz do pliku"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Nie czyści listy odtwarzania"
-
-#~ msgid "Show the main window"
-#~ msgstr "Wyświetla główne okno"
 
 #~ msgid "Activate Audacious"
 #~ msgstr "Aktywuj Audacious"

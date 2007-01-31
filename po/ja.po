@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: 2007-01-25 23:47+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -93,6 +93,70 @@ msgstr "Audacious"
 #, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "ディレクトリ (%s) を作成できませんでした: %s\n"
+
+#: src/audacious/main.c:826
+#, fuzzy
+msgid "Select which Audacious session ID to use"
+msgstr "Audacious/BMP/XMMS セッションを選択する (デフォルト: 0)"
+
+#: src/audacious/main.c:827
+msgid "Skip backwards in playlist"
+msgstr "プレイリストの一つ前の曲にジャンプする"
+
+#: src/audacious/main.c:828
+msgid "Start playing current playlist"
+msgstr "現在のプレイリストで演奏を開始する"
+
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr "現在の曲を一時停止する"
+
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr "現在の曲を停止する"
+
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr "演奏していたら一時停止し、それ以外は演奏する"
+
+#: src/audacious/main.c:832
+msgid "Skip forward in playlist"
+msgstr "プレイリストの一つ次の曲にジャンプする"
+
+#: src/audacious/main.c:833
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "ファイル・ダイアログへのジャンプを表示"
+
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr "プレイリストをクリアしない"
+
+#: src/audacious/main.c:835
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "ファイルをプレイリストに追加します。"
+
+#: src/audacious/main.c:836
+#, fuzzy
+msgid "Display the main window"
+msgstr "メイン・ウィンドウを表示する"
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
+msgstr ""
 
 #: src/audacious/main.c:841
 msgid "FILE..."
@@ -1275,27 +1339,27 @@ msgstr "トラック番号"
 msgid "Track Length"
 msgstr "トラックの合計時間:"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Open Files"
 msgstr "ファイルを開く"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Add Files"
 msgstr "ファイルの追加"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr "開いたらダイアログを閉じる"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr "追加したらダイアログを閉じる"
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 msgid "Play files"
 msgstr "ファイルを演奏"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 msgid "Load files"
 msgstr "ファイルを読み込む"
 
@@ -2060,36 +2124,6 @@ msgstr "16KHZ"
 
 #~ msgid "Display this text and exit"
 #~ msgstr "このメッセージを表示して終了する"
-
-#~ msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-#~ msgstr "Audacious/BMP/XMMS セッションを選択する (デフォルト: 0)"
-
-#~ msgid "Skip backwards in playlist"
-#~ msgstr "プレイリストの一つ前の曲にジャンプする"
-
-#~ msgid "Start playing current playlist"
-#~ msgstr "現在のプレイリストで演奏を開始する"
-
-#~ msgid "Pause current song"
-#~ msgstr "現在の曲を一時停止する"
-
-#~ msgid "Stop current song"
-#~ msgstr "現在の曲を停止する"
-
-#~ msgid "Pause if playing, play otherwise"
-#~ msgstr "演奏していたら一時停止し、それ以外は演奏する"
-
-#~ msgid "Skip forward in playlist"
-#~ msgstr "プレイリストの一つ次の曲にジャンプする"
-
-#~ msgid "Display Jump to file dialog"
-#~ msgstr "ファイル・ダイアログへのジャンプを表示"
-
-#~ msgid "Don't clear the playlist"
-#~ msgstr "プレイリストをクリアしない"
-
-#~ msgid "Show the main window"
-#~ msgstr "メイン・ウィンドウを表示する"
 
 #~ msgid "Activate Audacious"
 #~ msgstr "Audacious をアクティブにする"

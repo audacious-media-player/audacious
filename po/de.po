@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-01-30 13:23-0600\n"
+"POT-Creation-Date: 2007-01-31 04:17-0600\n"
 "PO-Revision-Date: 2007-01-05 21:15+0100\n"
 "Last-Translator: Michael Hanselmann\n"
 "Language-Team: german <psic4t@netbands.de>\n"
@@ -86,6 +86,81 @@ msgstr "Audacious"
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Konnte Verzeichnis nicht erstellen (%s): %s"
+
+#  -n, --session switch
+#: src/audacious/main.c:826
+#, fuzzy
+msgid "Select which Audacious session ID to use"
+msgstr "Wähle Audacious/BMP/XMMS-Session (Standard: 0)"
+
+#  -r, --rew switch
+#: src/audacious/main.c:827
+msgid "Skip backwards in playlist"
+msgstr "In der Wiedergabeliste rückwärts springen"
+
+#  -p, --play switch
+#: src/audacious/main.c:828
+msgid "Start playing current playlist"
+msgstr "Abspielen der aktuellen Wiedergabeliste beginnen"
+
+#  -u, --pause switch
+#: src/audacious/main.c:829
+msgid "Pause current song"
+msgstr "Aktuellen Song unterbrechen"
+
+#  -s, --stop switch
+#: src/audacious/main.c:830
+msgid "Stop current song"
+msgstr "Aktuellen Song stoppen"
+
+#  -t, --play-pause switch
+#: src/audacious/main.c:831
+msgid "Pause if playing, play otherwise"
+msgstr "Pause falls beim abspielen, andernfalls Wiedergabe starten"
+
+#  -f, --fwd switch
+#: src/audacious/main.c:832
+msgid "Skip forward in playlist"
+msgstr "In der Wiedergabeliste vorwärts springen"
+
+#: src/audacious/main.c:833
+#, fuzzy
+msgid "Display Jump to File dialog"
+msgstr "«Springe zu Datei»-Fenster anzeigen"
+
+#  -e, --enqueue switch
+#: src/audacious/main.c:834
+msgid "Don't clear the playlist"
+msgstr "Wiedergabeliste nicht entfernen"
+
+#  -e, --enqueue switch
+#: src/audacious/main.c:835
+#, fuzzy
+msgid "Add new files to a temporary playlist"
+msgstr "Fügt Dateien zur Wiedergabeliste hinzu"
+
+#  -m, --show-main-window switch
+#  -m, --show-main-window switch
+#: src/audacious/main.c:836
+#, fuzzy
+msgid "Display the main window"
+msgstr "Das Hauptfenster zeigen"
+
+#: src/audacious/main.c:837
+msgid "Display all open Audacious windows"
+msgstr ""
+
+#: src/audacious/main.c:838
+msgid "Enable headless operation"
+msgstr ""
+
+#: src/audacious/main.c:839
+msgid "Print all errors and warnings to stdout"
+msgstr ""
+
+#: src/audacious/main.c:840
+msgid "Show version and builtin features"
+msgstr ""
 
 #: src/audacious/main.c:841
 msgid "FILE..."
@@ -1282,27 +1357,27 @@ msgstr "Titelnummer"
 msgid "Track Length"
 msgstr "Titellänge:"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Open Files"
 msgstr "/Dateien öffnen"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Add Files"
 msgstr "Dateien hinzufügen"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Open"
 msgstr "Dialog nach dem Öffnen schließen"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:133
 msgid "Close dialog on Add"
 msgstr "Dialog nach dem Hinzufügen schließen"
 
-#: src/audacious/ui_fileopener.c:361
+#: src/audacious/ui_fileopener.c:363
 msgid "Play files"
 msgstr "Dateien wiedergeben"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:365
 msgid "Load files"
 msgstr "Dateien laden"
 
@@ -2078,46 +2153,6 @@ msgstr "16KHZ"
 #  -h, --help switch
 #~ msgid "Display this text and exit"
 #~ msgstr "Diesen Text zeigen und beenden"
-
-#  -n, --session switch
-#~ msgid "Select Audacious/BMP/XMMS session (Default: 0)"
-#~ msgstr "Wähle Audacious/BMP/XMMS-Session (Standard: 0)"
-
-#  -r, --rew switch
-#~ msgid "Skip backwards in playlist"
-#~ msgstr "In der Wiedergabeliste rückwärts springen"
-
-#  -p, --play switch
-#~ msgid "Start playing current playlist"
-#~ msgstr "Abspielen der aktuellen Wiedergabeliste beginnen"
-
-#  -u, --pause switch
-#~ msgid "Pause current song"
-#~ msgstr "Aktuellen Song unterbrechen"
-
-#  -s, --stop switch
-#~ msgid "Stop current song"
-#~ msgstr "Aktuellen Song stoppen"
-
-#  -t, --play-pause switch
-#~ msgid "Pause if playing, play otherwise"
-#~ msgstr "Pause falls beim abspielen, andernfalls Wiedergabe starten"
-
-#  -f, --fwd switch
-#~ msgid "Skip forward in playlist"
-#~ msgstr "In der Wiedergabeliste vorwärts springen"
-
-#~ msgid "Display Jump to file dialog"
-#~ msgstr "«Springe zu Datei»-Fenster anzeigen"
-
-#  -e, --enqueue switch
-#~ msgid "Don't clear the playlist"
-#~ msgstr "Wiedergabeliste nicht entfernen"
-
-#  -m, --show-main-window switch
-#  -m, --show-main-window switch
-#~ msgid "Show the main window"
-#~ msgstr "Das Hauptfenster zeigen"
 
 #~ msgid "Activate Audacious"
 #~ msgstr "Audacious aktivieren"
