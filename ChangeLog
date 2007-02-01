@@ -1,3 +1,11 @@
+2007-02-01 07:40:02 +0000  
+  revision [3926]
+  * Update Japanese translation.
+  
+  trunk/po/ja.po |  239 +++++++++++++++++++++++++++------------------------------
+  1 file changed, 116 insertions(+), 123 deletions(-)
+
+
 2007-02-01 02:21:35 +0000  Giacomo Lozito <james@develia.org>
   revision [3924]
   - now it's possible to pass user_data along with the hook function in hook_associate

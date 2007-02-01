@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: sr@Latn\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-01-31 11:19-0600\n"
-"PO-Revision-Date: 2007-01-24 20:29+0100\n"
+"PO-Revision-Date: 2007-02-01 12:09+0100\n"
 "Last-Translator: Strahinja  Kustudić <kustodian@gmail.com>\n"
 "Language-Team: Serbian Latin <kustodian@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -88,9 +88,8 @@ msgid "Could not create directory (%s): %s\n"
 msgstr "Nije moguće napraviti direktorijum (%s): %s\n"
 
 #: src/audacious/main.c:826
-#, fuzzy
 msgid "Select which Audacious session ID to use"
-msgstr "Izaberite Audacious/BMP/XMMS sesiju (Podrazumevano: 0)"
+msgstr "Izaberite koju Audacious sesiju treba koristiti"
 
 #: src/audacious/main.c:827
 msgid "Skip backwards in playlist"
@@ -117,7 +116,6 @@ msgid "Skip forward in playlist"
 msgstr "Skoči unapred u listi numera"
 
 #: src/audacious/main.c:833
-#, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "Prikaži Pređi na datoteku okvir"
 
@@ -126,34 +124,32 @@ msgid "Don't clear the playlist"
 msgstr "Nemoj obrisati listu numera"
 
 #: src/audacious/main.c:835
-#, fuzzy
 msgid "Add new files to a temporary playlist"
-msgstr "Dodaje datoteke u listu numera."
+msgstr "Dodaje nove datoteke u privremenu listu numera"
 
 #: src/audacious/main.c:836
-#, fuzzy
 msgid "Display the main window"
 msgstr "Prikaži glavni prozor"
 
 #: src/audacious/main.c:837
 msgid "Display all open Audacious windows"
-msgstr ""
+msgstr "Prikaži sve otvorene Audacious prozore"
 
 #: src/audacious/main.c:838
 msgid "Enable headless operation"
-msgstr ""
+msgstr "Uključi bezglavu operaciju"
 
 #: src/audacious/main.c:839
 msgid "Print all errors and warnings to stdout"
-msgstr ""
+msgstr "Štampaj sve greške i upozorenja u stdout"
 
 #: src/audacious/main.c:840
 msgid "Show version and builtin features"
-msgstr ""
+msgstr "Prikaži verziju i ugrađena svojstva"
 
 #: src/audacious/main.c:841
 msgid "FILE..."
-msgstr ""
+msgstr "DATOTEKA..."
 
 #: src/audacious/main.c:946
 #, c-format
@@ -193,7 +189,7 @@ msgstr ""
 
 #: src/audacious/main.c:1032
 msgid "- play multimedia files"
-msgstr ""
+msgstr "- pusti multimedijalne datoteke"
 
 #: src/audacious/main.c:1039
 #, c-format
@@ -201,11 +197,12 @@ msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
+"%s: %s\n"
+"Probajte `%s --help' za više informacija.\n"
 
 #: src/audacious/main.c:1048
-#, fuzzy, c-format
 msgid "%s: Unable to open display, exiting.\n"
-msgstr "audacious: Nije moguće otvoriti prikaz, izlazim.\n"
+msgstr "%s: Nije moguće otvoriti prikaz, izlazim.\n"
 
 #: src/audacious/signals.c:90
 msgid ""
@@ -301,9 +298,8 @@ msgid "Bulgarian:"
 msgstr "Bugarski:"
 
 #: src/audacious/ui_credits.c:151
-#, fuzzy
 msgid "Croatian:"
-msgstr "Rumunski:"
+msgstr "Hrvatski:"
 
 #: src/audacious/ui_credits.c:154
 msgid "Czech:"
@@ -1324,14 +1320,12 @@ msgid "Track Information Window"
 msgstr "Prozor informacija o numeri"
 
 #: src/audacious/ui_fileinfopopup.c:305
-#, fuzzy
 msgid "Track Number"
 msgstr "Broj numere"
 
 #: src/audacious/ui_fileinfopopup.c:322
-#, fuzzy
 msgid "Track Length"
-msgstr "Dužina numere:"
+msgstr "Dužina numere"
 
 #: src/audacious/ui_fileopener.c:129
 msgid "Open Files"
@@ -1964,12 +1958,11 @@ msgstr "sekundi"
 
 #: src/audacious/glade/prefswin.glade:4346
 msgid "Popup Information Settings"
-msgstr "<b>Podešavanja iskačućih informacija</b>"
+msgstr "Podešavanja iskačućih informacija"
 
 #: src/audacious/glade/prefswin.glade:4370
-#, fuzzy
 msgid "<b>Cover image retrieve</b>"
-msgstr "<b>Prepoznavanje formata</b>"
+msgstr "<b>Učitavanje naslovne slike</b>"
 
 #: src/audacious/glade/prefswin.glade:4395
 msgid ""
@@ -2001,17 +1994,16 @@ msgid "Use per-file cover"
 msgstr "Koristi jednu naslovnu sliku po datoteci"
 
 #: src/audacious/glade/prefswin.glade:4671
-#, fuzzy
 msgid "<b>Miscellaneous</b>"
-msgstr "<b>_Ostalo</b>"
+msgstr "<b>Ostalo</b>"
 
 #: src/audacious/glade/prefswin.glade:4709
 msgid "Show Progress bar for the current track"
-msgstr ""
+msgstr "Prikaži indikator napredovanja za tekuću numeru"
 
 #: src/audacious/glade/prefswin.glade:4747
 msgid "Delay until filepopup comes up: "
-msgstr ""
+msgstr "Zakašnjenje pojavljivanja iskačućeg proz. datoteke: "
 
 #: src/audacious/glade/prefswin.glade:4841
 msgid "Color Adjustment"
