@@ -35,10 +35,7 @@ static const gfloat vis_pfalloff_speeds[] = { 1.2, 1.3, 1.4, 1.5, 1.6 };
 static const gint vis_redraw_delays[] = { 1, 2, 4, 8 };
 static const guint8 vis_scope_colors[] =
     { 21, 21, 20, 20, 19, 19, 18, 19, 19, 20, 20, 21, 21 };
-//static guint8 vs_data_ext[76 * 16 * 4];
 static guchar voiceprint_data[76*16];
-//static guchar voiceprint_data_normal[76*16];
-//static guchar voiceprint_data_rgb[76*16*4];
 
 void
 vis_timeout_func(Vis * vis, guchar * data)
@@ -124,9 +121,13 @@ vis_draw(Widget * w)
 {
     Vis *vis = (Vis *) w;
     gint x, y, n, h = 0, h2;
+    gfloat delta;
+    guchar skin_col[2][3];
     guchar vis_color[24][3];
+    guchar vis_voice_color[256][3], voice_c[3];
     guchar rgb_data[76 * 16 * 3 * 2 * 2], *ptr, c;
     guint32 colors[24];
+    GdkColor *fgc, *bgc;
     GdkRgbCmap *cmap;
 
     if (!vis->vs_widget.visible)
@@ -140,7 +141,7 @@ vis_draw(Widget * w)
     cmap = gdk_rgb_cmap_new(colors, 24);
 
     if (!vis->vs_doublesize) {
-      if(cfg.vis_type == VIS_VOICEPRINT && cfg.voiceprint_mode != VOICEPRINT_NORMAL){
+      if(cfg.vis_type == VIS_VOICEPRINT /*&& cfg.voiceprint_mode != VOICEPRINT_NORMAL*/){
 	memset(rgb_data, 0, 76 * 16 * 3);
       }
       else{
@@ -153,7 +154,7 @@ vis_draw(Widget * w)
       }
     }
     else{
-      if(cfg.vis_type == VIS_VOICEPRINT && cfg.voiceprint_mode != VOICEPRINT_NORMAL){
+      if(cfg.vis_type == VIS_VOICEPRINT /*&& cfg.voiceprint_mode != VOICEPRINT_NORMAL*/){
 	memset(rgb_data, 0, 3 * 4 * 16 * 76);
       }
       else{
@@ -257,56 +258,75 @@ vis_draw(Widget * w)
 	    voiceprint_data[y * 76] = vis->vs_data[y];
       }
       if(playback_get_playing()){ /*Only draw the data if we're playing*/
+	if(cfg.voiceprint_mode == VOICEPRINT_NORMAL){ 
+	  /* Create color gradient from the skin's background- and foreground color*/
+	  fgc = skin_get_color(bmp_active_skin, SKIN_TEXTFG);
+	  bgc = skin_get_color(bmp_active_skin, SKIN_TEXTBG);
+	  skin_col[0][0] = fgc->red   >> 8;
+	  skin_col[0][1] = fgc->green >> 8;
+	  skin_col[0][2] = fgc->blue  >> 8;
+	  skin_col[1][0] = bgc->red   >> 8;
+	  skin_col[1][1] = bgc->green >> 8;
+	  skin_col[1][2] = bgc->blue  >> 8;
+	  for(n=0;n<3;n++){
+	    for(x=0;x<256;x++){
+	      if(skin_col[0][n] > skin_col[1][n]){
+		delta = (gfloat)(skin_col[0][n] - skin_col[1][n]) / 256.0;
+		vis_voice_color[x][n] = skin_col[1][n] + (gfloat)(delta * x);
+	      }
+	      else if(skin_col[0][n] == skin_col[1][n]){
+		vis_voice_color[x][n] = skin_col[0][n];
+	      }
+	      else{
+		delta = (gfloat)(skin_col[1][n] - skin_col[0][n]) / 256.0;
+		vis_voice_color[x][n] = skin_col[1][n] - (gfloat)(delta * x);
+	      }
+	    }
+	  }
+	}
 	for (y = 0; y < 16; y ++){
 	  for (x = 0; x < 76; x++){
 	    guint8 d = voiceprint_data[x + y*76];
+	    
 	    if(cfg.voiceprint_mode == VOICEPRINT_NORMAL){
-	      d = d > 64 ? 17 : d >> 3 ;
-	      if(!vis->vs_doublesize){
-		rgb_data[x + y * 76] =  d;
-	      }
-	      else{
-		ptr = rgb_data + (x << 1) + y * 304;
-		*ptr = d;
-		*(ptr + 1) = d;
-		*(ptr + 152) = d;
-		*(ptr + 153) = d;
-	      }
+	      voice_c[0] = vis_voice_color[d][0];
+	      voice_c[1] = vis_voice_color[d][1];
+	      voice_c[2] = vis_voice_color[d][2];
+	    }
+	    else if(cfg.voiceprint_mode == VOICEPRINT_FIRE){
+	      voice_c[0] = d < 64 ? (d * 2) : 255;
+	      voice_c[1] = d < 64 ? 0 : (d < 128 ? (d-64) * 2 : 255);
+	      voice_c[2] = d < 128 ? 0 : (d-128) * 2;
+	      /* Test for black->blue->green->red. Isn't pretty, though...
+		 voice_c[0] = d > 192 ? (d - 192) << 2 : 0;
+		 voice_c[1] = d > 64 ? (d < 128 ? (d - 64) << 2 : (d < 192 ? (192 - d) << 2 : 0)) : 0;
+		 voice_c[2] = d < 64 ? d << 2 : (d < 128 ? (128 - d) << 2 : 0);
+	      */
+	    }
+	    else if(cfg.voiceprint_mode == VOICEPRINT_ICE){	    
+	      voice_c[0] = d;
+	      voice_c[1] = d < 128 ? d * 2 : 255;
+	      voice_c[2] = d < 64 ? d * 4 : 255; 
+	    }
+	    if(!vis->vs_doublesize){
+	      for(n=0;n<3;n++)
+		rgb_data[x * 3 + y * 76*3+n] = voice_c[n];
 	    }
 	    else{
-	      guint8 c[3]; // R, G, B array
-	      if(cfg.voiceprint_mode == VOICEPRINT_FIRE){
-		c[0] = d < 64 ? (d * 2) : 255; //R
-		c[1] = d < 64 ? 0 : (d < 128 ? (d-64) * 2 : 255); //G
-		c[2] = d < 128 ? 0 : (d-128) * 2; //B
-	      }
-	      else if(cfg.voiceprint_mode == VOICEPRINT_ICE){	    
-		//c[0] = d < 192 ? 0 : (d-192) * 4; //R
-		//c[1] = d < 192 ? 0 : (d-192) * 4; //G
-		c[0] = d; //R
-		c[1] = d < 128 ? d * 2 : 255; //G
-		c[2] = d < 64 ? d * 4 : 255; //B
-	      }
-	      if(!vis->vs_doublesize){
-		for(n=0;n<3;n++)
-		  rgb_data[x * 3 + y * 76*3+n] = c[n];
-	      }
-	      else{
-		ptr = rgb_data + x * 3 * 2 + y * 2 * 76 * 3 * 2;
-		for(n=0;n<3;n++)
-		  {
-		    *(ptr + n) = c[n];
-		    *(ptr + n + 3) = c[n];
-		    *(ptr + n + 76 * 2 * 3) = c[n];
-		    *(ptr + n + 3 + 76 * 2 * 3) = c[n];
-		  }
-	      }
+	      ptr = rgb_data + x * 3 * 2 + y * 2 * 76 * 3 * 2;
+	      for(n=0;n<3;n++)
+		{
+		  *(ptr + n) = voice_c[n];
+		  *(ptr + n + 3) = voice_c[n];
+		  *(ptr + n + 76 * 2 * 3) = voice_c[n];
+		  *(ptr + n + 3 + 76 * 2 * 3) = voice_c[n];
+		}
 	    }
 	  }
 	}
       }
     }
- if (cfg.vis_type == VIS_SCOPE) {
+    if (cfg.vis_type == VIS_SCOPE) {
       for (x = 0; x < 75; x++) {
 	switch (cfg.scope_mode) {
 	case SCOPE_DOT:
@@ -391,7 +411,7 @@ vis_draw(Widget * w)
     
     if (!vis->vs_doublesize) {
         GDK_THREADS_ENTER();
-	if (cfg.vis_type == VIS_VOICEPRINT && cfg.voiceprint_mode != VOICEPRINT_NORMAL){
+	if (cfg.vis_type == VIS_VOICEPRINT /*&& cfg.voiceprint_mode != VOICEPRINT_NORMAL*/){
 	  gdk_draw_rgb_image(vis->vs_window, vis->vs_widget.gc,
 			     vis->vs_widget.x, vis->vs_widget.y,
 			     vis->vs_widget.width, vis->vs_widget.height,
@@ -409,7 +429,7 @@ vis_draw(Widget * w)
     }
     else {
       GDK_THREADS_ENTER();
-	if (cfg.vis_type == VIS_VOICEPRINT && cfg.voiceprint_mode != VOICEPRINT_NORMAL){
+	if (cfg.vis_type == VIS_VOICEPRINT /*&& cfg.voiceprint_mode != VOICEPRINT_NORMAL*/){
 	  gdk_draw_rgb_image(vis->vs_window, vis->vs_widget.gc,
 				 vis->vs_widget.x << 1,
 				 vis->vs_widget.y << 1,

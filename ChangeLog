@@ -1,3 +1,42 @@
+2007-01-31 16:29:07 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3920]
+  - update-po
+  - new translation drop from thierry vignaud for breton
+  
+  trunk/po/audacious.pot |   14 -
+  trunk/po/bg.po         |   14 -
+  trunk/po/br.po         |  640 ++++++++++++-------------------------------------
+  trunk/po/cs.po         |   14 -
+  trunk/po/cy.po         |   14 -
+  trunk/po/de.po         |   14 -
+  trunk/po/el.po         |   14 -
+  trunk/po/es.po         |   14 -
+  trunk/po/fi.po         |   14 -
+  trunk/po/fr.po         |   14 -
+  trunk/po/hi.po         |   14 -
+  trunk/po/hr.po         |   14 -
+  trunk/po/hu.po         |   14 -
+  trunk/po/it.po         |   14 -
+  trunk/po/ja.po         |   14 -
+  trunk/po/ka.po         |   14 -
+  trunk/po/ko.po         |   14 -
+  trunk/po/lt.po         |   14 -
+  trunk/po/mk.po         |   14 -
+  trunk/po/nl.po         |   14 -
+  trunk/po/pl.po         |   14 -
+  trunk/po/pt_BR.po      |   14 -
+  trunk/po/ro.po         |   14 -
+  trunk/po/ru.po         |   14 -
+  trunk/po/sk.po         |   14 -
+  trunk/po/sr.po         |   14 -
+  trunk/po/sr@Latn.po    |   14 -
+  trunk/po/sv.po         |   14 -
+  trunk/po/uk.po         |   14 -
+  trunk/po/zh_CN.po      |   14 -
+  trunk/po/zh_TW.po      |   14 -
+  31 files changed, 368 insertions(+), 692 deletions(-)
+
+
 2007-01-31 15:58:24 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3918]
   - forgot something kinda important
