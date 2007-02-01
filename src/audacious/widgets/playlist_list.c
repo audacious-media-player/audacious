@@ -61,158 +61,7 @@ static gint width_approx_letters;
 static gint width_colon, width_colon_third;
 static gint width_approx_digits, width_approx_digits_half;
 
-GdkPixmap *rootpix;
-
 void playlist_list_draw(Widget * w);
-
-/* Sort of stolen from XChat, but not really, as theres uses Xlib */
-static void
-shade_gdkimage_generic (GdkVisual *visual, GdkImage *ximg, int bpl, int w, int h, int rm, int gm, int bm, int bg)
-{
-	int x, y;
-	int bgr = (256 - rm) * (bg & visual->red_mask);
-	int bgg = (256 - gm) * (bg & visual->green_mask);
-	int bgb = (256 - bm) * (bg & visual->blue_mask);
-
-	for (x = 0; x < w; x++)
-	{
-		for (y = 0; y < h; y++)
-		{
-			unsigned long pixel = gdk_image_get_pixel (ximg, x, y);
-			int r, g, b;
-
-			r = rm * (pixel & visual->red_mask) + bgr;
-			g = gm * (pixel & visual->green_mask) + bgg;
-			b = bm * (pixel & visual->blue_mask) + bgb;
-
-			gdk_image_put_pixel (ximg, x, y,
-				((r >> 8) & visual->red_mask) |
-				((g >> 8) & visual->green_mask) |
-				((b >> 8) & visual->blue_mask));
-		}
-	}
-}
-
-/* and this is definately mine... -nenolod */
-GdkPixmap *
-shade_pixmap(GdkPixmap *in, gint x, gint y, gint x_offset, gint y_offset, gint w, gint h, GdkColor *shade_color)
-{
-	GdkImage *ximg;
-	GdkPixmap *p;
-	GdkGC *gc;
-
-	g_return_val_if_fail(in != NULL, NULL);
-
-	p = gdk_pixmap_new(in, w, h, -1);
-	gc = gdk_gc_new(p);
-
-        gdk_draw_drawable(p, gc, in, x, y, 0, 0, w, h);
-
-	gdk_error_trap_push();
-
-	ximg = gdk_drawable_copy_to_image(in, NULL, x, y, 0, 0, w, h);	/* copy */
-
-	gdk_error_trap_pop();
-
-	if (GDK_IS_IMAGE(ximg))
-	{
-		shade_gdkimage_generic(gdk_drawable_get_visual(GDK_WINDOW(playlistwin->window)),
-			ximg, ximg->bpl, w, h, 60, 60, 60, shade_color->pixel);
-
-		gdk_draw_image(p, gc, ximg, 0, 0, x, y, w, h);
-
-		g_object_unref(ximg);
-	}
-	else {
-		cfg.playlist_transparent = FALSE;
-	}
-
-	g_object_unref(in);
-	g_object_unref(gc);
-
-	return p;
-}
-
-#ifdef GDK_WINDOWING_X11
-
-#include <gdk/gdkx.h>
-
-GdkDrawable *get_transparency_pixmap(void)
-{
-	GdkDrawable *root;
-	guchar *pm = NULL;
-	GdkAtom prop_type;
-	gint prop_size;
-	GdkPixmap *pixmap;
-	gboolean ret;
-	XID *pixmaps;
-
-	root = gdk_get_default_root_window();
-
-	pixmap = NULL;
-	pixmaps = NULL;
-
-	gdk_error_trap_push();
-
-	ret = gdk_property_get(root, gdk_atom_intern("_XROOTPMAP_ID", TRUE),
-			0, 0, INT_MAX - 3,
-			FALSE,
-			&prop_type, NULL, &prop_size,
-			&pm);
-
-	gdk_error_trap_pop();
-
-	if (pm != NULL)
-		pixmaps = (XID *) pm;
-
-	if ((ret == TRUE) && (prop_type == GDK_TARGET_PIXMAP) && (prop_size >= sizeof(XID)) && (pixmaps != NULL))
-	{
-		pixmap = gdk_pixmap_foreign_new_for_display(gdk_drawable_get_display(root),
-			pixmaps[0]);
-
-		if (pixmaps != NULL)
-			g_free(pixmaps);
-	}
-
-	return GDK_DRAWABLE(pixmap);
-}
-
-static GdkFilterReturn
-root_event_cb (GdkXEvent *xev, GdkEventProperty *event, gpointer data)
-{
-        XEvent *xevent = (XEvent *)xev;
-
-        if (xevent->type == PropertyNotify)
-        {
-	        Atom at = XInternAtom (xevent->xproperty.display, "_XROOTPMAP_ID", True);
-
-                if (at == xevent->xproperty.atom)
-		{
-			if (rootpix != NULL)
-			    g_object_unref(rootpix);
-
-                        rootpix = shade_pixmap(get_transparency_pixmap(), 0, 0, 0, 0, gdk_screen_width(), gdk_screen_height(),
-                            skin_get_color(bmp_active_skin, SKIN_PLEDIT_NORMALBG));
-
-			if (cfg.playlist_transparent)
-			{
-				playlistwin_update_list(playlist_get_active());
-				draw_playlist_window(TRUE);
-			}
-		}
-        }
-
-        return GDK_FILTER_CONTINUE;
-}
-
-#else
-
-GdkPixmap *get_transparency_pixmap(void)
-{
-    return NULL;
-}
-
-#endif
 
 static gboolean
 playlist_list_auto_drag_down_func(gpointer data)
@@ -578,23 +427,11 @@ playlist_list_draw(Widget * w)
     gdk_gc_set_clip_origin(gc, 31, 58);
     gdk_gc_set_clip_rectangle(gc, playlist_rect);
 
-    if (cfg.playlist_transparent == FALSE)
-    {
-        gdk_gc_set_foreground(gc,
-                              skin_get_color(bmp_active_skin,
-                                             SKIN_PLEDIT_NORMALBG));
-        gdk_draw_rectangle(obj, gc, TRUE, pl->pl_widget.x, pl->pl_widget.y,
-                              width, height);
-    }
-    else
-    {
-	if (!rootpix)
-           rootpix = shade_pixmap(get_transparency_pixmap(), 0, 0, 0, 0, gdk_screen_width(), gdk_screen_height(), 
-    			    skin_get_color(bmp_active_skin, SKIN_PLEDIT_NORMALBG));
-        gdk_draw_drawable(obj, gc, rootpix, cfg.playlist_x + pl->pl_widget.x,
-                    cfg.playlist_y + pl->pl_widget.y, pl->pl_widget.x, pl->pl_widget.y,
-                    width, height);
-    }
+    gdk_gc_set_foreground(gc,
+                          skin_get_color(bmp_active_skin,
+                                         SKIN_PLEDIT_NORMALBG));
+    gdk_draw_rectangle(obj, gc, TRUE, pl->pl_widget.x, pl->pl_widget.y,
+                       width, height);
 
     if (!playlist_list_font) {
         g_critical("Couldn't open playlist font");
@@ -938,11 +775,6 @@ create_playlist_list(GList ** wlist,
     pl->pl_prev_max = -1;
 
     widget_list_add(wlist, WIDGET(pl));
-
-#ifdef GDK_WINDOWING_X11
-    gdk_window_set_events (gdk_get_default_root_window(), GDK_PROPERTY_CHANGE_MASK);
-    gdk_window_add_filter (gdk_get_default_root_window(), (GdkFilterFunc)root_event_cb, pl);
-#endif
 
     return pl;
 }

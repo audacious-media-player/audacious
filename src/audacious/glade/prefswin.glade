@@ -1336,42 +1336,6 @@
 			      <property name="fill">False</property>
 			    </packing>
 			  </child>
-
-			  <child>
-			    <widget class="GtkAlignment" id="alignment3">
-			      <property name="visible">True</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xscale">1</property>
-			      <property name="yscale">1</property>
-			      <property name="top_padding">0</property>
-			      <property name="bottom_padding">0</property>
-			      <property name="left_padding">12</property>
-			      <property name="right_padding">0</property>
-
-			      <child>
-				<widget class="GtkCheckButton" id="playlist_transparent">
-				  <property name="visible">True</property>
-				  <property name="tooltip" translatable="yes">Enables playlist transparency. This is not recommended for slower machines as it requires some CPU time to create and cache the pixmaps used for the transparency.</property>
-				  <property name="can_focus">True</property>
-				  <property name="label" translatable="yes">Enable playlist transparency</property>
-				  <property name="use_underline">True</property>
-				  <property name="relief">GTK_RELIEF_NORMAL</property>
-				  <property name="focus_on_click">True</property>
-				  <property name="active">False</property>
-				  <property name="inconsistent">False</property>
-				  <property name="draw_indicator">True</property>
-				  <signal name="toggled" handler="on_playlist_transparent_toggled" last_modification_time="Thu, 23 Nov 2006 17:52:16 GMT"/>
-				  <signal name="realize" handler="on_playlist_transparent_realize" last_modification_time="Thu, 23 Nov 2006 17:52:24 GMT"/>
-				</widget>
-			      </child>
-			    </widget>
-			    <packing>
-			      <property name="padding">0</property>
-			      <property name="expand">False</property>
-			      <property name="fill">False</property>
-			    </packing>
-			  </child>
 			</widget>
 			<packing>
 			  <property name="padding">0</property>

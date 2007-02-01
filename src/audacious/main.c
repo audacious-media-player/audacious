@@ -289,7 +289,6 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"stop_after_current_song", &cfg.stopaftersong, TRUE},
     {"playlist_shaded", &cfg.playlist_shaded, TRUE},
     {"playlist_visible", &cfg.playlist_visible, TRUE},
-    {"playlist_transparent", &cfg.playlist_transparent, TRUE},
     {"use_fontsets", &cfg.use_fontsets, TRUE},
     {"mainwin_use_xfont", &cfg.mainwin_use_xfont, FALSE},
     {"equalizer_visible", &cfg.equalizer_visible, TRUE},

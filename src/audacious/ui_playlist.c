@@ -414,12 +414,7 @@ playlistwin_release(GtkWidget * widget,
     gdk_flush();
  
     if (dock_is_moving(GTK_WINDOW(playlistwin)))
-    {
        dock_move_release(GTK_WINDOW(playlistwin));
-
-       if (cfg.playlist_transparent)
-           playlistwin_update_list(playlist_get_active());
-    }
     else
     {
        handle_release_cb(playlistwin_wlist, widget, event);

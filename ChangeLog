@@ -1,3 +1,10 @@
+2007-02-01 14:09:53 +0000  Giacomo Lozito <james@develia.org>
+  revision [3930]
+  - added a new hook: playlist set info
+  trunk/src/audacious/playlist.c |    6 ++++++
+  1 file changed, 6 insertions(+)
+
+
 2007-02-01 11:34:37 +0000  Strahinja Kustudi <kustodian@gmail.com>
   revision [3928]
   Updated translations
