@@ -103,27 +103,6 @@ OBJECTS = ${SOURCES:.c=.o}
 desktop_DATA = audacious.desktop
 desktopdir = $(datadir)/applications
 
-build-prehook:
-	if [ -d .svn ] && [ -f build_stamp.c ]; then		\
-		rm -f build_stamp.c;				\
-		printf "%10s     %-20s\n" RM build_stamp.c;	\
-	fi
-
-build_stamp.c:
-	if [ -d .svn ] && [ ! -f build_stamp.c ]; then		\
-		( \
-			echo '/* SVN repository version.'; \
-			echo ' * This auto-generated file must not be included in SVN; but must'; \
-			echo ' * be included in release tarballs.'; \
-			echo ' */'; \
-			echo '#include <glib.h>'; \
-			echo -n 'const gchar *svn_stamp = "'; \
-			(svnversion -n .); \
-			echo '";' \
-		) > build_stamp.c; \
-		printf "%10s     %-20s\n" STAMP build_stamp.c;	\
-	fi;
-
 audacious: $(OBJECTS) widgets/libwidgets.a
 	$(CXX) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@ 
 	@printf "%10s     %-20s\n" LINK $@
