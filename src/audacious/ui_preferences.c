@@ -2541,16 +2541,8 @@ create_prefs_window(void)
    widget = glade_xml_get_widget(xml, "audversionlabel");
    aud_version_string = g_string_new( "" );
 
-   if (strcasecmp(svn_stamp, "exported"))
-   {
-       g_string_printf( aud_version_string , "<span size='small'>%s (r%s) (%s@%s)</span>" , "Audacious " PACKAGE_VERSION ,
-                        svn_stamp , g_get_user_name() , g_get_host_name() );
-   }
-   else
-   {
-       g_string_printf( aud_version_string , "<span size='small'>%s (%s@%s)</span>" , "Audacious " PACKAGE_VERSION ,
-                        g_get_user_name() , g_get_host_name() );
-   }
+   g_string_printf( aud_version_string , "<span size='small'>%s (r%s) (%s@%s)</span>" , "Audacious " PACKAGE_VERSION ,
+                    svn_stamp , g_get_user_name() , g_get_host_name() );
 
    gtk_label_set_markup( GTK_LABEL(widget) , aud_version_string->str );
    g_string_free( aud_version_string , TRUE );
