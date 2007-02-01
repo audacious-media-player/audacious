@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-01-31 11:19-0600\n"
-"PO-Revision-Date: 2007-01-25 23:47+0900\n"
+"PO-Revision-Date: 2007-02-01 16:30+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,9 +28,9 @@ msgid ""
 "\n"
 "Could not open glade file (%s). Please check your installation.\n"
 msgstr ""
-"<b><big>%s を作成できません。</big></b>\n"
+"<b><big>%s を作成できません.</big></b>\n"
 "\n"
-"glade ファイル (%s) を開けません。インストール手順を確認してください。\n"
+"glade ファイル (%s) を開けません. インストール手順を確認してください.\n"
 
 #: src/audacious/input.c:306
 msgid ""
@@ -40,11 +40,11 @@ msgid ""
 "1. they are accessible.\n"
 "2. you have enabled the media plugins required."
 msgstr ""
-"<b><big>ファイルを演奏できません。</big></b>\n"
+"<b><big>ファイルを演奏できません.</big></b>\n"
 "\n"
-"次のファイルを演奏できませんでした。以下をチェックして下さい:\n"
-"1. アクセス可能であるか。\n"
-"2. 演奏に必要なメディアのプラグインを有効にしているか。"
+"次のファイルを演奏できませんでした. 以下をチェックして下さい:\n"
+"1. アクセス可能であるか.\n"
+"2. 演奏に必要なメディアのプラグインを有効にしているか."
 
 #: src/audacious/input.c:331
 msgid "Don't show this warning anymore"
@@ -95,9 +95,8 @@ msgid "Could not create directory (%s): %s\n"
 msgstr "ディレクトリ (%s) を作成できませんでした: %s\n"
 
 #: src/audacious/main.c:826
-#, fuzzy
 msgid "Select which Audacious session ID to use"
-msgstr "Audacious/BMP/XMMS セッションを選択する (デフォルト: 0)"
+msgstr "使用する Audacious セッションを選択する"
 
 #: src/audacious/main.c:827
 msgid "Skip backwards in playlist"
@@ -117,14 +116,13 @@ msgstr "現在の曲を停止する"
 
 #: src/audacious/main.c:831
 msgid "Pause if playing, play otherwise"
-msgstr "演奏していたら一時停止し、それ以外は演奏する"
+msgstr "演奏していたら一時停止し, それ以外は演奏する"
 
 #: src/audacious/main.c:832
 msgid "Skip forward in playlist"
 msgstr "プレイリストの一つ次の曲にジャンプする"
 
 #: src/audacious/main.c:833
-#, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "ファイル・ダイアログへのジャンプを表示"
 
@@ -133,34 +131,32 @@ msgid "Don't clear the playlist"
 msgstr "プレイリストをクリアしない"
 
 #: src/audacious/main.c:835
-#, fuzzy
 msgid "Add new files to a temporary playlist"
-msgstr "ファイルをプレイリストに追加します。"
+msgstr "新しいファイルを一時プレイリストに追加する"
 
 #: src/audacious/main.c:836
-#, fuzzy
 msgid "Display the main window"
 msgstr "メイン・ウィンドウを表示する"
 
 #: src/audacious/main.c:837
 msgid "Display all open Audacious windows"
-msgstr ""
+msgstr "開かれた Audacious ウィンドウを全て表示する"
 
 #: src/audacious/main.c:838
 msgid "Enable headless operation"
-msgstr ""
+msgstr "ヘッドレス操作を有効にする"
 
 #: src/audacious/main.c:839
 msgid "Print all errors and warnings to stdout"
-msgstr ""
+msgstr "標準出力に全てのエラーと警告を表示する"
 
 #: src/audacious/main.c:840
 msgid "Show version and builtin features"
-msgstr ""
+msgstr "ヴァージョンと組み込み機能を表示する"
 
 #: src/audacious/main.c:841
 msgid "FILE..."
-msgstr ""
+msgstr "ファイル..."
 
 #: src/audacious/main.c:946
 #, c-format
@@ -170,10 +166,10 @@ msgid ""
 "Check that skin at '%s' is usable and default skin is properly installed at "
 "'%s'\n"
 msgstr ""
-"<b><big>スキンをロードできません。</big></b>\n"
+"<b><big>スキンをロードできません.</big></b>\n"
 "\n"
-"'%s' にあるスキンが利用可能であるか確認して下さい。\n"
-"デフォルトのスキンはおそらく '%s' にインストールされています。\n"
+"'%s' にあるスキンが利用可能であるか確認して下さい.\n"
+"デフォルトのスキンはおそらく '%s' にインストールされています.\n"
 
 #: src/audacious/main.c:1005
 #, c-format
@@ -181,9 +177,9 @@ msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
 "Please use GTK+ %s or newer.\n"
 msgstr ""
-"すみませんが、Audacious ではお使いの GTK+ のバージョン (%d.%d.%d) をサポート"
-"していません。\n"
-"GTK+ %s またはそれ以降のバージョンをお使い下さい。\n"
+"すみませんが, Audacious ではお使いの GTK+ のバージョン (%d.%d.%d) をサポート"
+"していません.\n"
+"GTK+ %s またはそれ以降のバージョンをお使い下さい.\n"
 
 #: src/audacious/main.c:1016
 msgid ""
@@ -193,15 +189,15 @@ msgid ""
 "you\n"
 "installed LinuxThreads you need to recompile Glib & GTK+.\n"
 msgstr ""
-"すみませんが、お使いのシステムでは Thread をサポートしていないようです。\n"
+"すみませんが, お使いのシステムでは Thread をサポートしていないようです.\n"
 "\n"
 "libc5 ベースのシステムの場合と LinuxThreads をインストールする前に Glib と "
-"GTK+ をインストールした場合は、Glib と GTK+ を再コンパイルして再インストール"
-"する必要があります。\n"
+"GTK+ をインストールした場合は, Glib と GTK+ を再コンパイルして再インストール"
+"する必要があります.\n"
 
 #: src/audacious/main.c:1032
 msgid "- play multimedia files"
-msgstr ""
+msgstr "- マルチメディアファイルを再生する"
 
 #: src/audacious/main.c:1039
 #, c-format
@@ -209,11 +205,13 @@ msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
+"%s: %s\n"
+"詳しくは `%s --help' を実行して下さい.\n"
 
 #: src/audacious/main.c:1048
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unable to open display, exiting.\n"
-msgstr "audacious: X ディスプレイを開けません。強制終了します。\n"
+msgstr "%s: ディスプレイを開けません. 終了します.\n"
 
 #: src/audacious/signals.c:90
 msgid ""
@@ -225,10 +223,10 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"シグナル SIGSEGV を受け取りました。\n"
+"シグナル SIGSEGV を受け取りました.\n"
 "\n"
-"これは Audacious のバグの可能性があります。発生の原因が不明な場合は、http://"
-"bugs-meta.atheme.org/ に報告して下さい。\n"
+"これは Audacious のバグの可能性があります. 発生の原因が不明な場合は, http://"
+"bugs-meta.atheme.org/ に報告して下さい.\n"
 "\n"
 
 #: src/audacious/strings.c:172
@@ -309,9 +307,8 @@ msgid "Bulgarian:"
 msgstr "ブルガリア語:"
 
 #: src/audacious/ui_credits.c:151
-#, fuzzy
 msgid "Croatian:"
-msgstr "ルーマニア語:"
+msgstr "クロアチア語:"
 
 #: src/audacious/ui_credits.c:154
 msgid "Czech:"
@@ -541,9 +538,9 @@ msgid ""
 "\n"
 "No CD inserted, or inserted CD is not an audio CD.\n"
 msgstr ""
-"<b><big>演奏できる CD が見つかりませんでした。</big></b>\n"
+"<b><big>演奏できる CD が見つかりませんでした.</big></b>\n"
 "\n"
-"CD が挿入されていないか、挿入された CD はオーディオ CD ではありません。\n"
+"CD が挿入されていないか, 挿入された CD はオーディオ CD ではありません.\n"
 
 #: src/audacious/ui_main.c:2781
 msgid ""
@@ -554,12 +551,12 @@ msgid ""
 "2. No other programs is blocking the soundcard.\n"
 "3. Your soundcard is configured properly.\n"
 msgstr ""
-"<b><big>オーディオ・デバイスを開けませんでした。</big></b>\n"
+"<b><big>オーディオ・デバイスを開けませんでした.</big></b>\n"
 "\n"
 "以下をチェックして下さい:\n"
-"1. 現在選択している出力プラグインが正しいか。\n"
-"2. お使いのサウンドカードをブロックしているアプリが他に存在しないか。\n"
-"3. お使いのサウンドカードが正しく設定されているか。\n"
+"1. 現在選択している出力プラグインが正しいか.\n"
+"2. お使いのサウンドカードをブロックしているアプリが他に存在しないか.\n"
+"3. お使いのサウンドカードが正しく設定されているか.\n"
 
 #: src/audacious/ui_main.c:3387
 msgid "Error in Audacious."
@@ -822,7 +819,7 @@ msgstr "プレイリストの読み込み"
 
 #: src/audacious/ui_manager.c:216
 msgid "Loads a playlist file into the selected playlist."
-msgstr "選択したプレイリストにプレイリストファイルを読み込みます。"
+msgstr "選択したプレイリストにプレイリストファイルを読み込みます."
 
 #: src/audacious/ui_manager.c:218
 msgid "Save List"
@@ -830,7 +827,7 @@ msgstr "プレイリストの保存"
 
 #: src/audacious/ui_manager.c:219
 msgid "Saves the selected playlist."
-msgstr "選択したプレイリストを保存します。"
+msgstr "選択したプレイリストを保存します."
 
 #: src/audacious/ui_manager.c:221
 msgid "Save Default List"
@@ -838,7 +835,7 @@ msgstr "デフォルトのプレイリストの保存"
 
 #: src/audacious/ui_manager.c:222
 msgid "Saves the selected playlist to the default location."
-msgstr "選択したプレイリストをデフォルト位置に保存します。"
+msgstr "選択したプレイリストをデフォルト位置に保存します."
 
 #: src/audacious/ui_manager.c:225
 msgid "Refresh List"
@@ -846,7 +843,7 @@ msgstr "プレイリストの更新"
 
 #: src/audacious/ui_manager.c:226
 msgid "Refreshes metadata associated with a playlist entry."
-msgstr "プレイリストのエントリに関連付けられたメタデータを更新します。"
+msgstr "プレイリストのエントリに関連付けられたメタデータを更新します."
 
 #: src/audacious/ui_manager.c:229
 msgid "List Manager"
@@ -854,7 +851,7 @@ msgstr "プレイリストマネージャ"
 
 #: src/audacious/ui_manager.c:230
 msgid "Opens the playlist manager."
-msgstr "プレイリストマネージャを開きます。"
+msgstr "プレイリストマネージャを開きます."
 
 #: src/audacious/ui_manager.c:236
 msgid "View"
@@ -866,7 +863,7 @@ msgstr "CD の追加..."
 
 #: src/audacious/ui_manager.c:241
 msgid "Adds a CD to the playlist."
-msgstr "CD をプレイリストに追加します。"
+msgstr "CD をプレイリストに追加します."
 
 #: src/audacious/ui_manager.c:244
 msgid "Add Internet Address..."
@@ -874,7 +871,7 @@ msgstr "インターネット・アドレスの追加..."
 
 #: src/audacious/ui_manager.c:245
 msgid "Adds a remote track to the playlist."
-msgstr "リモート・トラックをプレイリストに追加します。"
+msgstr "リモート・トラックをプレイリストに追加します."
 
 #: src/audacious/ui_manager.c:248
 msgid "Add Files..."
@@ -882,7 +879,7 @@ msgstr "ファイルの追加..."
 
 #: src/audacious/ui_manager.c:249
 msgid "Adds files to the playlist."
-msgstr "ファイルをプレイリストに追加します。"
+msgstr "ファイルをプレイリストに追加します."
 
 #: src/audacious/ui_manager.c:254
 msgid "Search and Select"
@@ -892,7 +889,7 @@ msgstr "検索と選択"
 msgid ""
 "Searches the playlist and selects playlist entries based on specific "
 "criteria."
-msgstr "プレイリストを検索し、特定の判定基準に基いて選択します。"
+msgstr "プレイリストを検索し, 特定の判定基準に基いて選択します."
 
 #: src/audacious/ui_manager.c:258
 msgid "Invert Selection"
@@ -900,7 +897,7 @@ msgstr "選択範囲の反転"
 
 #: src/audacious/ui_manager.c:259
 msgid "Inverts the selected and unselected entries."
-msgstr "エントリの選択と未選択を反転します。"
+msgstr "エントリの選択と未選択を反転します."
 
 #: src/audacious/ui_manager.c:262
 msgid "Select All"
@@ -908,7 +905,7 @@ msgstr "全て選択"
 
 #: src/audacious/ui_manager.c:263
 msgid "Selects all of the playlist entries."
-msgstr "プレイリストの全てのエントリを選択します。"
+msgstr "プレイリストの全てのエントリを選択します."
 
 #: src/audacious/ui_manager.c:266
 msgid "Select None"
@@ -916,7 +913,7 @@ msgstr "未選択にする"
 
 #: src/audacious/ui_manager.c:267
 msgid "Deselects all of the playlist entries."
-msgstr "プレイリストの全てのエントリを未選択にします。"
+msgstr "プレイリストの全てのエントリを未選択にします."
 
 #: src/audacious/ui_manager.c:272
 msgid "Clear Queue"
@@ -924,7 +921,7 @@ msgstr "キューのクリア"
 
 #: src/audacious/ui_manager.c:273
 msgid "Clears the queue associated with this playlist."
-msgstr "プレイリストに関連付けられたキューをクリアします。"
+msgstr "プレイリストに関連付けられたキューをクリアします."
 
 #: src/audacious/ui_manager.c:276
 msgid "Remove Unavailable Files"
@@ -932,7 +929,7 @@ msgstr "利用不可ファイルの削除"
 
 #: src/audacious/ui_manager.c:277
 msgid "Removes unavailable files from the playlist."
-msgstr "利用不可ファイルをプレイリストから削除します。"
+msgstr "利用不可ファイルをプレイリストから削除します."
 
 #: src/audacious/ui_manager.c:280
 msgid "Remove Duplicates"
@@ -945,7 +942,7 @@ msgstr "タイトル"
 
 #: src/audacious/ui_manager.c:283
 msgid "Removes duplicate entries from the playlist by title."
-msgstr "重複するタイトルのエントリをプレイリストから削除します。"
+msgstr "重複するタイトルのエントリをプレイリストから削除します."
 
 #: src/audacious/ui_manager.c:286 src/audacious/ui_manager.c:326
 #: src/audacious/ui_manager.c:356
@@ -954,7 +951,7 @@ msgstr "ファイル名"
 
 #: src/audacious/ui_manager.c:287
 msgid "Removes duplicate entries from the playlist by filename."
-msgstr "重複するファイル名のエントリをプレイリストから削除します。"
+msgstr "重複するファイル名のエントリをプレイリストから削除します."
 
 #: src/audacious/ui_manager.c:290 src/audacious/ui_manager.c:330
 #: src/audacious/ui_manager.c:360
@@ -963,7 +960,7 @@ msgstr "パス名とファイル名"
 
 #: src/audacious/ui_manager.c:291
 msgid "Removes duplicate entries from the playlist by their full path."
-msgstr "重複するパス名とファイル名のエントリをプレイリストから削除します。"
+msgstr "重複するパス名とファイル名のエントリをプレイリストから削除します."
 
 #: src/audacious/ui_manager.c:294
 msgid "Remove All"
@@ -971,7 +968,7 @@ msgstr "全て削除"
 
 #: src/audacious/ui_manager.c:295
 msgid "Removes all entries from the playlist."
-msgstr "全てのエントリをプレイリストから削除します。"
+msgstr "全てのエントリをプレイリストから削除します."
 
 #: src/audacious/ui_manager.c:298
 msgid "Remove Unselected"
@@ -979,7 +976,7 @@ msgstr "選択していないエントリの削除"
 
 #: src/audacious/ui_manager.c:299
 msgid "Remove unselected entries from the playlist."
-msgstr "選択していないエントリをプレイリストから削除します。"
+msgstr "選択していないエントリをプレイリストから削除します."
 
 #: src/audacious/ui_manager.c:302
 msgid "Remove Selected"
@@ -987,7 +984,7 @@ msgstr "選択したエントリの削除"
 
 #: src/audacious/ui_manager.c:303
 msgid "Remove selected entries from the playlist."
-msgstr "選択したエントリをプレイリストから削除します。"
+msgstr "選択したエントリをプレイリストから削除します."
 
 #: src/audacious/ui_manager.c:308
 msgid "Randomize List"
@@ -995,7 +992,7 @@ msgstr "プレイリストをランダムにする"
 
 #: src/audacious/ui_manager.c:309
 msgid "Randomizes the playlist."
-msgstr "プレイリストの順序をランダムにします。"
+msgstr "プレイリストの順序をランダムにします."
 
 #: src/audacious/ui_manager.c:312
 msgid "Reverse List"
@@ -1003,7 +1000,7 @@ msgstr "プレイリストを逆順にする"
 
 #: src/audacious/ui_manager.c:313
 msgid "Reverses the playlist."
-msgstr "プレイリストの順序を逆順にします。"
+msgstr "プレイリストの順序を逆順にします."
 
 #: src/audacious/ui_manager.c:316
 msgid "Sort List"
@@ -1011,7 +1008,7 @@ msgstr "プレイリストのソート"
 
 #: src/audacious/ui_manager.c:319 src/audacious/ui_manager.c:349
 msgid "Sorts the list by title."
-msgstr "タイトル順でプレイリストをソートします。"
+msgstr "タイトル順でプレイリストをソートします."
 
 #: src/audacious/ui_manager.c:322 src/audacious/ui_manager.c:352
 msgid "By Artist"
@@ -1019,15 +1016,15 @@ msgstr "アーティスト"
 
 #: src/audacious/ui_manager.c:323 src/audacious/ui_manager.c:353
 msgid "Sorts the list by artist."
-msgstr "アーティスト順でプレイリストをソートします。"
+msgstr "アーティスト順でプレイリストをソートします."
 
 #: src/audacious/ui_manager.c:327 src/audacious/ui_manager.c:357
 msgid "Sorts the list by filename."
-msgstr "ファイル名順でプレイリストをソートします。"
+msgstr "ファイル名順でプレイリストをソートします."
 
 #: src/audacious/ui_manager.c:331 src/audacious/ui_manager.c:361
 msgid "Sorts the list by full pathname."
-msgstr "ファイルのパス名でプレイリストをソートします。"
+msgstr "ファイルのパス名でプレイリストをソートします."
 
 #: src/audacious/ui_manager.c:334 src/audacious/ui_manager.c:364
 msgid "By Date"
@@ -1035,7 +1032,7 @@ msgstr "日付"
 
 #: src/audacious/ui_manager.c:335 src/audacious/ui_manager.c:365
 msgid "Sorts the list by modification time."
-msgstr "変更時間でプレイリストをソートします。"
+msgstr "変更時間でプレイリストをソートします."
 
 #: src/audacious/ui_manager.c:338 src/audacious/ui_manager.c:368
 msgid "By Track Number"
@@ -1043,7 +1040,7 @@ msgstr "トラック番号"
 
 #: src/audacious/ui_manager.c:339 src/audacious/ui_manager.c:369
 msgid "Sorts the list by track number."
-msgstr "トラック番号順でプレイリストをソートします。"
+msgstr "トラック番号順でプレイリストをソートします."
 
 #: src/audacious/ui_manager.c:342 src/audacious/ui_manager.c:372
 msgid "By Playlist Entry"
@@ -1051,7 +1048,7 @@ msgstr "プレイリストのエントリ"
 
 #: src/audacious/ui_manager.c:343 src/audacious/ui_manager.c:373
 msgid "Sorts the list by playlist entry."
-msgstr "プレイリストのエントリ順でソートします。"
+msgstr "プレイリストのエントリ順でソートします."
 
 #: src/audacious/ui_manager.c:346
 msgid "Sort Selected"
@@ -1119,7 +1116,7 @@ msgstr "キューを切り替える"
 
 #: src/audacious/ui_manager.c:418
 msgid "Enables/disables the entry in the playlist's queue."
-msgstr "プレイリストのキューに入っているエントリの有効/無効を切り替えます。"
+msgstr "プレイリストのキューに入っているエントリの有効/無効を切り替えます."
 
 #: src/audacious/ui_manager.c:425
 msgid "Load"
@@ -1330,14 +1327,12 @@ msgid "Track Information Window"
 msgstr "トラック情報ウィンドウ"
 
 #: src/audacious/ui_fileinfopopup.c:305
-#, fuzzy
 msgid "Track Number"
 msgstr "トラック番号"
 
 #: src/audacious/ui_fileinfopopup.c:322
-#, fuzzy
 msgid "Track Length"
-msgstr "トラックの合計時間:"
+msgstr "トラックの長さ:"
 
 #: src/audacious/ui_fileopener.c:129
 msgid "Open Files"
@@ -1374,9 +1369,9 @@ msgid ""
 "expressions work, simply insert a literal portion of what you're searching "
 "for."
 msgstr ""
-"1つ以上の項目を埋めることによって、プレイリストのエントリを選択します。項目は"
-"正規表現が使え、大文字と小文字を区別しません。正規表現がどのように動作するか"
-"わからない場合は、単純に検索しようとしているものの文字を入力します。"
+"1つ以上の項目を埋めることによって, プレイリストのエントリを選択します. 項目は"
+"正規表現が使え, 大文字と小文字を区別しません. 正規表現がどのように動作するか"
+"わからない場合は, 単純に検索しようとしているものの文字を入力します."
 
 #: src/audacious/ui_playlist.c:500
 msgid "Track name: "
@@ -1414,7 +1409,7 @@ msgstr "プレイリスト \"%s\" を書き込む際にエラー: %s"
 #: src/audacious/ui_playlist.c:771
 #, c-format
 msgid "%s already exist. Continue?"
-msgstr "%s は既に存在しています。続行しますか？"
+msgstr "%s は既に存在しています. 続行しますか？"
 
 #: src/audacious/ui_playlist.c:785
 #, c-format
@@ -1425,7 +1420,7 @@ msgid ""
 msgstr ""
 "<b><big>プレイリストを保存できません！</big></b>\n"
 "\n"
-"%s のファイルの種類が不明です。\n"
+"%s のファイルの種類が不明です.\n"
 
 #: src/audacious/ui_playlist.c:925
 msgid "Load Playlist"
@@ -1448,8 +1443,8 @@ msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
 msgstr ""
-"<b><big>出力プラグインが選択されていません。</big></b>\n"
-"出力プラグインを選択していません。"
+"<b><big>出力プラグインが選択されていません.</big></b>\n"
+"出力プラグインを選択していません."
 
 #: src/audacious/playlist_manager.c:253
 msgid "Playlist Manager"
@@ -1592,8 +1587,8 @@ msgid ""
 "Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
 "strings."
 msgstr ""
-"可能ならばビットマップフォントを使用する。ビットマップフォントはユニコード文"
-"字列をサポートしない。"
+"可能ならばビットマップフォントを使用します. ビットマップフォントはユニコード文"
+"字列をサポートしていません."
 
 #: src/audacious/glade/prefswin.glade:1093
 msgid "Use Bitmap fonts if available"
@@ -1618,7 +1613,7 @@ msgstr "カスタム・カーソルを使用する"
 #: src/audacious/glade/prefswin.glade:1279
 #: src/audacious/glade/prefswin.glade:1290
 msgid "This enables the window manager to show decorations for windows."
-msgstr "ファイル・マネージャによるウィンドウ装飾を有効にします。"
+msgstr "ファイル・マネージャによるウィンドウ装飾を有効にします."
 
 #: src/audacious/glade/prefswin.glade:1281
 msgid "Show window manager decoration"
@@ -1634,8 +1629,8 @@ msgid ""
 "provided by Audacious itself and is faster than the default GTK2 selector "
 "(but sadly not as user-friendly)."
 msgstr ""
-"XMMS/GTK1 スタイルのファイル選択ダイアログを有効にします。このセレクタは "
-"Audacious 自身が提供し、GTK2 デフォルトのセレクタより高速です。(ただし、悲し"
+"XMMS/GTK1 スタイルのファイル選択ダイアログを有効にします. このセレクタは "
+"Audacious 自身が提供し, GTK2 デフォルトのセレクタより高速です. (ただし, 悲し"
 "いことにユーザフレンドリではありません)"
 
 #: src/audacious/glade/prefswin.glade:1321
@@ -1648,8 +1643,8 @@ msgid ""
 "as it requires some CPU time to create and cache the pixmaps used for the "
 "transparency."
 msgstr ""
-"プレイリストの透過を有効にする。透過に用いるピックスマップの作成とキャッシュ"
-"にある程度の CPU 時間が必要なので、遅いマシンにはお勧めできない。"
+"プレイリストの透過を有効にします. 透過に用いるピックスマップの作成とキャッシュ"
+"にある程度の CPU 時間が必要なので, 遅いマシンにはお勧めできません."
 
 #: src/audacious/glade/prefswin.glade:1357
 msgid "Enable playlist transparency"
@@ -1697,7 +1692,7 @@ msgstr "<b>メタデータ</b>"
 
 #: src/audacious/glade/prefswin.glade:1908
 msgid "Load metadata (tag information) from music files."
-msgstr "曲ファイルからタグ情報を読み込みます"
+msgstr "曲ファイルからタグ情報を読み込みます."
 
 #: src/audacious/glade/prefswin.glade:1910
 msgid "Load metadata from playlists and files"
@@ -1706,8 +1701,8 @@ msgstr "プレイリストとファイルからメタデータを読み込む"
 #: src/audacious/glade/prefswin.glade:1948
 msgid "Load metadata when adding the file to the playlist or opening it"
 msgstr ""
-"プレイリストへファイルを追加するか、プレイリストを開いたらタグ情報を読み込み"
-"ます"
+"プレイリストへファイルを追加するか, "
+"プレイリストを開いたらタグ情報を読み込みます."
 
 #: src/audacious/glade/prefswin.glade:1950
 msgid "On load"
@@ -1716,7 +1711,7 @@ msgstr "読み込み時"
 #: src/audacious/glade/prefswin.glade:1970
 msgid "Load metadata on demand when displaying the file in the playlist"
 msgstr ""
-"プレイリストのファイルが常時されたら要求に応じてメタデータを読み込みます"
+"プレイリストのファイルが表示されたら要求に応じてメタデータを読み込みます."
 
 #: src/audacious/glade/prefswin.glade:1972
 msgid "On display"
@@ -1733,10 +1728,10 @@ msgid ""
 "in this list would be treated as candidates of the encoding of metadata, and "
 "fall back conversion from these encodings to UTF-8 would be attempted."
 msgstr ""
-"メタデータの変換の代替に用いるキャラクタエンコーディングのリスト。自動キャラ"
-"クタエンコーディング検出が失敗するか無効であれば、メタデータのエンコーディン"
-"グの候補としてリスト中のエンコーディングが用いられ、これらのエンコーディング"
-"から UTF-8 への変換が試みられる。"
+"メタデータの変換の代替に用いるキャラクタエンコーディングのリスト. 自動キャラ"
+"クタエンコーディング検出が失敗するか無効であれば, メタデータのエンコーディン"
+"グの候補としてリスト中のエンコーディングが用いられ, これらのエンコーディング"
+"から UTF-8 への変換が試みられます."
 
 #: src/audacious/glade/prefswin.glade:2071
 msgid "Auto character encoding detector for:"
@@ -1751,8 +1746,8 @@ msgid ""
 "Always refresh the file dialog (this will slow opening the dialog on large "
 "directories, and Gnome VFS should handle automatically)."
 msgstr ""
-"ファイルダイアログを常に更新する(大きなディレクトリがあるとダイアログを開くの"
-"が遅くなるが、Gnome VFS は自動的に扱ってくれるだろう)。"
+"ファイルダイアログを常に更新します(大きなディレクトリがあるとダイアログを開くの"
+"が遅くなりますが, Gnome VFS は自動的に扱ってくれます)."
 
 #: src/audacious/glade/prefswin.glade:2168
 msgid "Always refresh directory when opening file dialog"
@@ -1803,8 +1798,8 @@ msgid ""
 "number, track length, and artwork."
 msgstr ""
 "プレイリスト中でポイントされたエントリのポップアップ情報ウィンドウを切り替え"
-"る。ウィンドウには曲のタイトル、アルバム名、ジャンル、製作年、トラック番号、"
-"トラックの長さとアートワークが表示される。"
+"ます. ウィンドウには曲のタイトル, アルバム名, ジャンル, 製作年, トラック番号, "
+"トラックの長さとアートワークが表示されます."
 
 #: src/audacious/glade/prefswin.glade:2454
 msgid "Show popup information for playlist entries"
@@ -1863,7 +1858,7 @@ msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
-"<span size=\"small\">これらの設定の変更は Audacious の再起動が必要。</span>"
+"<span size=\"small\">変更した設定を有効にするには Audacious の再起動が必要です.</span>"
 
 #: src/audacious/glade/prefswin.glade:3455
 msgid "<b>Audio System</b>"
@@ -1882,8 +1877,8 @@ msgid ""
 "poorly.</span>"
 msgstr ""
 "<span size=\"small\">オーディオストリームのプレバッファするための十分な時間を"
-"ミリ秒で指定する。音飛びがあるなら、この値を増やす。しかし、高い値は "
-"Audacious のパフォーマンスを悪くすることに注意してください。</span>"
+"ミリ秒で指定します. 音飛びがあるなら, この値を増やします. しかし, 高い値は "
+"Audacious のパフォーマンスを悪くすることに注意してください.</span>"
 
 #: src/audacious/glade/prefswin.glade:3607
 msgid "Buffer size:"
@@ -1906,12 +1901,12 @@ msgid ""
 "When checked, Audacious will detect file formats on demand. This can result "
 "in a messier playlist, but delivers a major speed benefit."
 msgstr ""
-"有効ならば、Audacious はファイルフォーマットを要求に応じて検出する。プレイリ"
-"ストが汚くなってしまうが、速度の恩恵を受けることができる。"
+"有効ならば, Audacious はファイルフォーマットを要求に応じて検出します. プレイリ"
+"ストが汚くなってしまいますが, 速度は大いに早くなります."
 
 #: src/audacious/glade/prefswin.glade:3899
 msgid "Detect file formats on demand, instead of immediately."
-msgstr "ファイルフォーマットをすぐにではなく要求に応じて検出する。"
+msgstr "ファイルフォーマットをすぐにではなく要求に応じて検出する"
 
 #: src/audacious/glade/prefswin.glade:3933
 msgid ""
@@ -1919,13 +1914,13 @@ msgid ""
 "slightly slower than detection on demand, but still provides a minimal level "
 "of format detection."
 msgstr ""
-"有効ならば、Audacious はファイルフォーマットを拡張子によって検出する。これは"
-"要求に応じて検出するよりやや遅いが、それでも最低限のフォーマット検出を提供す"
-"る。"
+"有効ならば, Audacious はファイルフォーマットを拡張子によって検出します. これは"
+"要求に応じて検出するよりやや遅いですが, それでも最低限のフォーマット検出を提供"
+"します."
 
 #: src/audacious/glade/prefswin.glade:3935
 msgid "Detect file formats by extension."
-msgstr "ファイルフォーマットを拡張子で検出する。"
+msgstr "ファイルフォーマットを拡張子で検出する"
 
 #: src/audacious/glade/prefswin.glade:3969
 msgid "<b>Playback</b>"
@@ -1935,7 +1930,7 @@ msgstr "<b>再生</b>"
 msgid ""
 "When Audacious starts, automatically begin playing from the point where we "
 "stopped before."
-msgstr "Audacious が開始したとき、以前停止した位置から自動的に演奏を開始する。"
+msgstr "Audacious が開始したとき, 以前停止した位置から自動的に演奏を開始します."
 
 #: src/audacious/glade/prefswin.glade:4010
 msgid "Continue playback on startup"
@@ -1943,7 +1938,7 @@ msgstr "起動時に再生を続ける"
 
 #: src/audacious/glade/prefswin.glade:4044
 msgid "When finished playing a song, don't automatically advance to the next."
-msgstr "曲の演奏が終了したら、次の曲を自動的に演奏しません"
+msgstr "曲の演奏が終了したら, 次の曲を自動的に演奏しません."
 
 #: src/audacious/glade/prefswin.glade:4046
 msgid "Don't advance in the playlist"
@@ -1966,9 +1961,8 @@ msgid "Popup Information Settings"
 msgstr "ポップアップ情報の設定"
 
 #: src/audacious/glade/prefswin.glade:4370
-#, fuzzy
 msgid "<b>Cover image retrieve</b>"
-msgstr "<b>フォーマットの検出</b>"
+msgstr "<b>カバー画像の取得</b>"
 
 #: src/audacious/glade/prefswin.glade:4395
 msgid ""
@@ -1976,8 +1970,8 @@ msgid ""
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
-"アルバムのカバーを検索する際、Audacious はファイル名の中の単語を探します。コ"
-"ンマで区切られた単語リストを以下に指定できます。"
+"アルバムのカバーを検索する際, Audacious はファイル名の中の単語を探します. コ"
+"ンマで区切られた単語リストを以下に指定できます."
 
 #: src/audacious/glade/prefswin.glade:4450
 msgid "Include:"
@@ -2000,17 +1994,16 @@ msgid "Use per-file cover"
 msgstr "ファイルごとのカバーを使う"
 
 #: src/audacious/glade/prefswin.glade:4671
-#, fuzzy
 msgid "<b>Miscellaneous</b>"
-msgstr "<b>その他(_M)</b>"
+msgstr "<b>その他</b>"
 
 #: src/audacious/glade/prefswin.glade:4709
 msgid "Show Progress bar for the current track"
-msgstr ""
+msgstr "現在のトラックのプログレスバーを表示する"
 
 #: src/audacious/glade/prefswin.glade:4747
 msgid "Delay until filepopup comes up: "
-msgstr ""
+msgstr "ファイルポップアップが表示されるまでの遅延: "
 
 #: src/audacious/glade/prefswin.glade:4841
 msgid "Color Adjustment"
@@ -2020,7 +2013,7 @@ msgstr "色補正"
 msgid ""
 "Audacious allows you to alter the color balance of the skinned UI. The "
 "sliders below will allow you to do this."
-msgstr "以下のスライダを用いてスキン UI の色合いの変更ができます。"
+msgstr "以下のスライダを用いてスキン UI の色合いの変更ができます."
 
 #: src/audacious/glade/prefswin.glade:4960
 msgid "Red"
@@ -2036,7 +2029,7 @@ msgstr "青"
 
 #: src/audacious/widgets/eq_slider.c:93
 msgid "PREAMP"
-msgstr "PREAMP"
+msgstr "プリアンプ"
 
 #: src/audacious/widgets/eq_slider.c:93
 msgid "60HZ"

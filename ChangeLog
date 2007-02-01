@@ -1,3 +1,11 @@
+2007-02-01 02:21:35 +0000  Giacomo Lozito <james@develia.org>
+  revision [3924]
+  - now it's possible to pass user_data along with the hook function in hook_associate
+  trunk/src/audacious/hook.c |   52 +++++++++++++++++++++++++++++++--------------
+  trunk/src/audacious/hook.h |   17 ++++++++++----
+  2 files changed, 48 insertions(+), 21 deletions(-)
+
+
 2007-02-01 00:47:18 +0000  Troels Bang Jensen <marvin@fnuck.dk>
   revision [3922]
   - Make the voiceprint use the skin's foreground and background color for the gradient in 'normal' mode
