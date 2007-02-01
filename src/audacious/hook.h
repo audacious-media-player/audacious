@@ -18,16 +18,23 @@
 #ifndef __AUDACIOUS_HOOK_H__
 #define __AUDACIOUS_HOOK_H__
 
-typedef void (*HookFunction)(gpointer user_data);
+#include <glib.h>
+
+typedef void (*HookFunction)(gpointer hook_data, gpointer user_data);
+
+typedef struct {
+    HookFunction func;
+    gpointer user_data;
+} HookItem;
 
 typedef struct {
     const gchar *name;
-    GSList *funcs;
+    GSList *items;
 } Hook;
 
 void hook_register(const gchar *name);
-void hook_associate(const gchar *name, HookFunction func);
-void hook_dissociate(const gchar *name, HookFunction func);
-void hook_call(const gchar *name, gpointer user_data);
+gint hook_associate(const gchar *name, HookFunction func, gpointer user_data);
+gint hook_dissociate(const gchar *name, HookFunction func);
+void hook_call(const gchar *name, gpointer hook_data);
 
 #endif

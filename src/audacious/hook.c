@@ -48,17 +48,19 @@ hook_register(const gchar *name)
 
     hook = g_new0(Hook, 1);
     hook->name = g_strdup(name);
+    hook->items = NULL;
 
     hook_list = g_slist_append(hook_list, hook);
 }
 
-void
-hook_associate(const gchar *name, HookFunction func)
+gint
+hook_associate(const gchar *name, HookFunction func, gpointer user_data)
 {
     Hook *hook;
+    HookItem *hookitem;
 
-    g_return_if_fail(name != NULL);
-    g_return_if_fail(func != NULL);
+    g_return_val_if_fail(name != NULL, -1);
+    g_return_val_if_fail(func != NULL, -1);
 
     hook = hook_find(name);
 
@@ -69,29 +71,47 @@ hook_associate(const gchar *name, HookFunction func)
     }
 
     /* this *cant* happen */
-    g_return_if_fail(hook != NULL);
+    g_return_val_if_fail(hook != NULL, -1);
 
-    hook->funcs = g_slist_append(hook->funcs, func);
+    hookitem = g_new0(HookItem, 1);
+    hookitem->func = func;
+    hookitem->user_data = user_data;
+
+    hook->items = g_slist_append(hook->items, hookitem);
+    return 0;
 }
 
-void
+gint
 hook_dissociate(const gchar *name, HookFunction func)
 {
     Hook *hook;
+    GSList *iter;
 
-    g_return_if_fail(name != NULL);
-    g_return_if_fail(func != NULL);
+    g_return_val_if_fail(name != NULL, -1);
+    g_return_val_if_fail(func != NULL, -1);
 
     hook = hook_find(name);
 
     if (hook == NULL)
-        return;
+        return -1;
 
-    hook->funcs = g_slist_remove(hook->funcs, func);
+    iter = hook->items;
+    while (iter != NULL)
+    {
+        HookItem *hookitem = (HookItem*)iter->data;
+        if (hookitem->func == func)
+        {
+            hook->items = g_slist_delete_link(hook->items, iter);
+            g_free( hookitem );
+            return 0;
+        }
+        iter = g_slist_next(iter);
+    }
+    return -1;
 }
 
 void
-hook_call(const gchar *name, gpointer user_data)
+hook_call(const gchar *name, gpointer hook_data)
 {
     Hook *hook;
     GSList *iter;
@@ -103,12 +123,12 @@ hook_call(const gchar *name, gpointer user_data)
     if (hook == NULL)
         return;
 
-    for (iter = hook->funcs; iter != NULL; iter = g_slist_next(iter))
+    for (iter = hook->items; iter != NULL; iter = g_slist_next(iter))
     {
-        HookFunction func = (HookFunction) iter->data;
+        HookItem *hookitem = (HookItem*)iter->data;
 
-        g_return_if_fail(func != NULL);
+        g_return_if_fail(hookitem->func != NULL);
 
-        func(user_data);
+        hookitem->func(hook_data, hookitem->user_data);
     }
 }
