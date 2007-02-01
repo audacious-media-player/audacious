@@ -1,3 +1,11 @@
+2007-02-01 19:10:10 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3942]
+  - ui adjustment
+  
+  trunk/src/audacious/ui_preferences.c |   12 ++----------
+  1 file changed, 2 insertions(+), 10 deletions(-)
+
+
 2007-02-01 19:06:26 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3940]
   - remove build-stamp autogen crap from Makefile

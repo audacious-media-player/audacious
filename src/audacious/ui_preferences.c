@@ -2339,7 +2339,7 @@ create_prefs_window(void)
 
     GladeXML *xml;
     GtkWidget *widget, *widget2;
-    GString *aud_version_string;
+    gchar *aud_version_string;
 
     GtkWidget *titlestring_tag_menu, *menu_item;
     guint i;
@@ -2539,13 +2539,13 @@ create_prefs_window(void)
 
    /* audacious version label */
    widget = glade_xml_get_widget(xml, "audversionlabel");
-   aud_version_string = g_string_new( "" );
 
-   g_string_printf( aud_version_string , "<span size='small'>%s (r%s) (%s@%s)</span>" , "Audacious " PACKAGE_VERSION ,
+   aud_version_string = g_strdup_printf("<span size='small'>%s (r%s) (%s@%s)</span>",
+		    "Audacious " PACKAGE_VERSION ,
                     svn_stamp , g_get_user_name() , g_get_host_name() );
 
-   gtk_label_set_markup( GTK_LABEL(widget) , aud_version_string->str );
-   g_string_free( aud_version_string , TRUE );
+   gtk_label_set_markup( GTK_LABEL(widget) , aud_version_string );
+   g_free(aud_version_string);
 
 	/* Create window for filepopup settings */
 	filepopup_settings = glade_xml_get_widget(xml, "filepopup_for_tuple_settings");
