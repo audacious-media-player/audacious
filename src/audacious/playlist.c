@@ -981,6 +981,9 @@ playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
     playlist_recalc_total_time(playlist);
 
     mainwin_set_song_info(rate, freq, nch);
+
+    if ( playlist->position )
+        hook_call( "playlist set info" , playlist->position );
 }
 
 void
@@ -1002,6 +1005,9 @@ playlist_set_info(Playlist * playlist, const gchar * title, gint length, gint ra
     playlist_recalc_total_time(playlist);
 
     mainwin_set_song_info(rate, freq, nch);
+
+    if ( playlist->position )
+        hook_call( "playlist set info" , playlist->position );
 }
 
 void

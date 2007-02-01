@@ -1,3 +1,11 @@
+2007-02-01 11:34:37 +0000  Strahinja Kustudi <kustodian@gmail.com>
+  revision [3928]
+  Updated translations
+  trunk/po/sr.po      |   46 +++++++++++++++++++---------------------------
+  trunk/po/sr@Latn.po |   46 +++++++++++++++++++---------------------------
+  2 files changed, 38 insertions(+), 54 deletions(-)
+
+
 2007-02-01 07:40:02 +0000  
   revision [3926]
   * Update Japanese translation.
