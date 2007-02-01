@@ -526,6 +526,9 @@ bmp_init_paths()
     bmp_paths[BMP_PATH_LOG_FILE] =
         g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "log", NULL);
 
+    bmp_paths[BMP_PATH_GTKRC_FILE] =
+	g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "gtkrc", NULL);
+
     g_free(xdg_config_home);
     g_free(xdg_data_home);
     g_free(xdg_cache_home);
@@ -1022,6 +1025,8 @@ main(gint argc, gchar ** argv)
 
     cond_scan = g_cond_new();
     mutex_scan = g_mutex_new();
+
+    gtk_rc_add_default_file(bmp_paths[BMP_PATH_GTKRC_FILE]);
 
     gtk_init_check_ok = gtk_init_check(&argc, &argv);
 
