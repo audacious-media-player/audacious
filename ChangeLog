@@ -1,3 +1,16 @@
+2007-02-01 17:22:56 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3932]
+  - remove buggy playlist transparency patch
+  
+  trunk/src/audacious/glade/prefswin.glade    |   36 -----
+  trunk/src/audacious/main.c                  |    1 
+  trunk/src/audacious/ui_playlist.c           |    5 
+  trunk/src/audacious/ui_preferences.c        |   18 --
+  trunk/src/audacious/widgets/playlist_list.c |  178 ----------------------------
+  trunk/src/audacious/widgets/skin.c          |    9 -
+  6 files changed, 5 insertions(+), 242 deletions(-)
+
+
 2007-02-01 14:09:53 +0000  Giacomo Lozito <james@develia.org>
   revision [3930]
   - added a new hook: playlist set info

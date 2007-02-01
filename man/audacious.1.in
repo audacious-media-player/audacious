@@ -181,25 +181,22 @@ and forth, that you need to do so when starting the program.
 When using Audacious in headless mode, you will need a client. Clients
 compatible with Audacious are listed on the Audacious website.
 .SH FILES
-.TP \w'~/.audacious/playlist.m3uXX'u
-~/.audacious/config
+.TP
+~/.config/audacious/config
 User's Audacious configuration.
 .TP
-~/.audacious/playlist.m3u
+~/.config/audacious/playlist.xspf
 Default playlist usually loaded on startup.
 .TP
-~/.audacious/gtkrc 
+~/.config/audacious/gtkrc 
 User's set of Audacious-specific GTK config settings. Options such as widget
 color and fonts sizes can be set here.
 .TP
-~/.audacious/menurc 
-User's set of keybindings.
-.TP
-~/.audacious/Skins, @datadir@/audacious/Skins
+~/.share/audacious/Skins, @datadir@/audacious/Skins
 Default location(s) where Audacious should look for skinfiles.
 .TP
-~/.audacious/Plugins
-Location of user-installed plugins.
+~/.config/audacious/Plugins
+Location of user-installed plugins. (subject to change)
 .SH ENVIRONMENT
 .TP 12
 .B SKINSDIR
