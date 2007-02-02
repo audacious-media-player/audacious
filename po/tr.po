@@ -1,0 +1,1908 @@
+# translation of audacious-tr.po to
+# translation of audacious.po to
+# Copyright (C) YEAR Translator <translator@invalid>
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Eren Türkay <turkay.eren@gmail.com>, 2007.
+# Murat Şenel <muratasenel@gmail.com>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: audacious-tr\n"
+"Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
+"POT-Creation-Date: 2006-11-16 14:45-0600\n"
+"PO-Revision-Date: 2007-02-02 22:54+0200\n"
+"Last-Translator: Murat Şenel <muratasenel@gmail.com>\n"
+"Language-Team:  <tr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: audacious/about.c:119 audacious/credits.c:312
+msgid "About Audacious"
+msgstr "Audacious Hakkında"
+
+#: audacious/about.c:168 audacious/credits.c:357
+msgid "Credits"
+msgstr "Yazarlar"
+
+#: audacious/credits.c:45
+#, c-format
+msgid ""
+"<big><b>Audacious %s</b></big>\n"
+"The future of UNIX multimedia.\n"
+"\n"
+"Copyright (C) 2005-2006 Audacious Development Team\n"
+msgstr ""
+"<big><b>Audacious %s</b></big>\n"
+"UNIX Çoklu Ortamı'nın Geleceği.\n"
+"\n"
+"Telif Hakkı (C) 2005-2006 Audacious Geliştirme Ekibi\n"
+
+#: audacious/credits.c:51
+msgid "Audacious core developers:"
+msgstr "Audacious ana geliştiricileri:"
+
+#: audacious/credits.c:61
+msgid "Graphics:"
+msgstr "Grafik:"
+
+#: audacious/credits.c:66
+msgid "Default skin:"
+msgstr "Varsayılan tema:"
+
+#: audacious/credits.c:71
+msgid "Plugin development:"
+msgstr "Eklenti oluşturma:"
+
+#: audacious/credits.c:82
+msgid "Patch authors:"
+msgstr "Yama yazarları:"
+
+#: audacious/credits.c:95
+msgid "0.1.x developers:"
+msgstr "0.1.x geliştiricileri:"
+
+#: audacious/credits.c:101
+msgid "BMP Developers:"
+msgstr "BMP Geliştiricileri:"
+
+#: audacious/credits.c:133
+msgid "Brazilian Portuguese:"
+msgstr "Portekizce:"
+
+#: audacious/credits.c:136
+msgid "Breton:"
+msgstr "Bretonyaca"
+
+#: audacious/credits.c:139
+msgid "Chinese:"
+msgstr "Çince:"
+
+#: audacious/credits.c:143
+msgid "Czech:"
+msgstr "Çekce:"
+
+#: audacious/credits.c:146
+msgid "Dutch:"
+msgstr "Flamenkçe:"
+
+#: audacious/credits.c:150
+msgid "Finnish:"
+msgstr "Fince:"
+
+#: audacious/credits.c:153
+msgid "French:"
+msgstr "Fransızca:"
+
+#: audacious/credits.c:156
+msgid "German:"
+msgstr "Almanca:"
+
+#: audacious/credits.c:160
+msgid "Georgian: "
+msgstr "Gürcü:"
+
+#: audacious/credits.c:163
+msgid "Greek:"
+msgstr "Yünanca:"
+
+#: audacious/credits.c:168
+msgid "Hindi:"
+msgstr "Hintçe:"
+
+#: audacious/credits.c:171
+msgid "Hungarian:"
+msgstr "Macarca:"
+
+#: audacious/credits.c:174
+msgid "Italian:"
+msgstr "İtalyanca:"
+
+#: audacious/credits.c:178
+msgid "Japanese:"
+msgstr "Japonca:"
+
+#: audacious/credits.c:181
+msgid "Korean:"
+msgstr "Korece:"
+
+#: audacious/credits.c:184
+msgid "Lithuanian:"
+msgstr "Litvanca:"
+
+#: audacious/credits.c:187
+msgid "Macedonian:"
+msgstr "Makedonca:"
+
+#: audacious/credits.c:190
+msgid "Polish:"
+msgstr "Polonca:"
+
+#: audacious/credits.c:194
+msgid "Romanian:"
+msgstr "Romanca:"
+
+#: audacious/credits.c:197
+msgid "Russian:"
+msgstr "Rusça:"
+
+#: audacious/credits.c:202
+msgid "Slovak:"
+msgstr "Slovakça:"
+
+#: audacious/credits.c:205
+msgid "Spanish:"
+msgstr "İspanyolca:"
+
+#: audacious/credits.c:208
+msgid "Swedish:"
+msgstr "İsveçce:"
+
+#: audacious/credits.c:211
+msgid "Ukrainian:"
+msgstr "Ukraynaca:"
+
+#: audacious/credits.c:214
+msgid "Welsh:"
+msgstr "Galce:"
+
+#: audacious/credits.c:361
+msgid "Translators"
+msgstr "Çevirmenler"
+
+#: audacious/equalizer.c:120
+msgid "/Load"
+msgstr "/Yükle"
+
+#: audacious/equalizer.c:121
+msgid "/Load/Preset"
+msgstr "/Yükle/Kayıtlı"
+
+#: audacious/equalizer.c:123
+msgid "/Load/Auto-load preset"
+msgstr "/Yükle/Otomatik yükle"
+
+#: audacious/equalizer.c:125
+msgid "/Load/Default"
+msgstr "/Yükle/Öntanımlı"
+
+#: audacious/equalizer.c:128
+msgid "/Load/Zero"
+msgstr "/Yükle/Sıfır"
+
+#: audacious/equalizer.c:131
+msgid "/Load/From file"
+msgstr "/Yükle/Dosyadan"
+
+#: audacious/equalizer.c:133
+msgid "/Load/From WinAMP EQF file"
+msgstr "/Yükle/WinAMP EQF dosyasından"
+
+#: audacious/equalizer.c:135
+msgid "/Import"
+msgstr "/İçe Aktar"
+
+#: audacious/equalizer.c:136
+msgid "/Import/WinAMP Presets"
+msgstr "/İçe Aktar/WinAmp Ayarları"
+
+#: audacious/equalizer.c:138
+msgid "/Save"
+msgstr "/Kaydet"
+
+#: audacious/equalizer.c:139
+msgid "/Save/Preset"
+msgstr "/Kaydet/Ayarlar"
+
+#: audacious/equalizer.c:141
+msgid "/Save/Auto-load preset"
+msgstr "/Kaydet/Otomatik ayarlar"
+
+#: audacious/equalizer.c:143
+msgid "/Save/Default"
+msgstr "/Kaydet/Öntanımlı"
+
+#: audacious/equalizer.c:146
+msgid "/Save/To file"
+msgstr "/Kaydet/Dosyaya"
+
+#: audacious/equalizer.c:148
+msgid "/Save/To WinAMP EQF file"
+msgstr "/Kaydet/WinAMP EQF dosyasına"
+
+#: audacious/equalizer.c:150
+msgid "/Delete"
+msgstr "/Sil"
+
+#: audacious/equalizer.c:151
+msgid "/Delete/Preset"
+msgstr "Sil/Ayar"
+
+#: audacious/equalizer.c:153
+msgid "/Delete/Auto-load preset"
+msgstr "/Sil/Otomaik ayar"
+
+#: audacious/equalizer.c:816
+msgid "Audacious Equalizer"
+msgstr "Audacios Ekolayzır"
+
+#: audacious/equalizer.c:1484
+msgid "Preset"
+msgstr "Ayar"
+
+#: audacious/equalizer.c:1529
+msgid "Presets"
+msgstr "Ayarlar"
+
+#: audacious/equalizer.c:1593
+msgid "Load preset"
+msgstr "Ayarları yükle"
+
+#: audacious/equalizer.c:1609
+msgid "Load auto-preset"
+msgstr "Otomatik ayarları yükle"
+
+#: audacious/equalizer.c:1635 audacious/equalizer.c:1641
+#: audacious/equalizer.c:1648
+msgid "Load equalizer preset"
+msgstr "Ekolayzır ayarlarını yükle"
+
+#: audacious/equalizer.c:1657
+msgid "Save preset"
+msgstr "Ayarları kaydet"
+
+#: audacious/equalizer.c:1677
+msgid "Save auto-preset"
+msgstr "Otomatik ayarları kaydet"
+
+#: audacious/equalizer.c:1712 audacious/equalizer.c:1731
+msgid "Save equalizer preset"
+msgstr "Ekolayzır ayarlarını kaydet"
+
+#: audacious/equalizer.c:1740
+msgid "Delete preset"
+msgstr "Ayarı sil"
+
+#: audacious/equalizer.c:1758
+msgid "Delete auto-preset"
+msgstr "Otomatik ayarları sil"
+
+#: audacious/getopt.c:616
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr "%s: seçenek %s belirsiz\n"
+
+#: audacious/getopt.c:638
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr "%s: seçenek `--%s' argümana izin vermiyor\n"
+
+#: audacious/getopt.c:644
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr "%s: seçenek `%c%s' argümana izin vermiyor\n"
+
+#: audacious/getopt.c:662 audacious/getopt.c:820
+#, c-format
+msgid "%s: option `%s' requires an argument\n"
+msgstr "%s: seçenek `%s' argüman gerektirir\n"
+
+#: audacious/getopt.c:688
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr "%s: tanınmayan seçenek `--%s'\n"
+
+#: audacious/getopt.c:692
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr "%s: tanınmayan seçenek `%c%s'\n"
+
+#: audacious/getopt.c:716
+#, c-format
+msgid "%s: illegal option -- %c\n"
+msgstr "%s: geçersiz seçenek -- %c\n"
+
+#: audacious/getopt.c:719
+#, c-format
+msgid "%s: invalid option -- %c\n"
+msgstr "%s: geçersiz seçenek -- %c\n"
+
+#: audacious/getopt.c:746 audacious/getopt.c:862
+#, c-format
+msgid "%s: option requires an argument -- %c\n"
+msgstr "%s: seçenek argüman gerektirir -- %c\n"
+
+#: audacious/getopt.c:791
+#, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr "%s: seçenek `-W %s' belirsiz\n"
+
+#: audacious/getopt.c:806
+#, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr "%s: seçenek `-W %s' argümana izin vermiyor\n"
+
+#: audacious/glade.c:41
+#, c-format
+msgid ""
+"<b><big>Unable to create %s.</big></b>\n"
+"\n"
+"Could not open glade file (%s). Please check your installation.\n"
+msgstr ""
+"<b><big>%s Oluşturulamıyor.</big></b>\n"
+"\n"
+"Glade dosyası (%s) açılamadı. Lütfen kurulumu kontrol edin.\n"
+
+#: audacious/input.c:305
+msgid ""
+"<b><big>Unable to play files.</big></b>\n"
+"\n"
+"The following files could not be played. Please check that:\n"
+"1. they are accessible.\n"
+"2. you have enabled the media plugins required."
+msgstr ""
+"<b><big>Dosyalar çalınamıyor.</big></b>\n"
+"\n"
+"Aşağıdaki dosyalar çalınamadı. Lütfen şunları gözden geçirin: "
+"\n"
+"1. onlar erişilebilir mi?"
+"2. gerekli olan çoklu ortam eklentilerini etkinleştirdiniz mi?"
+
+#: audacious/input.c:330
+msgid "Don't show this warning anymore"
+msgstr "Bu uyarıyı bir daha gösterme"
+
+#: audacious/input.c:332
+msgid "Show more _details"
+msgstr "Daha fazla _bilgi göster"
+
+#: audacious/input.c:346 audacious/prefswin.c:115 audacious/prefswin.c:487
+#: audacious/prefswin.c:575 audacious/prefswin.c:664 audacious/prefswin.c:760
+msgid "Filename"
+msgstr "Dosya adı"
+
+#: audacious/input.c:568
+#, c-format
+msgid "audacious: %s"
+msgstr "audacious: %s"
+
+#: audacious/input.c:584
+msgid "Filename:"
+msgstr "Dosya adı:"
+
+#: audacious/input.c:602
+msgid "No input plugin recognized this file"
+msgstr "Hiç bir giriş eklentisi tanınamadı"
+
+#: audacious/input.c:604
+#, c-format
+msgid "Input plugin: %s"
+msgstr "Giriş eklentisi: %s"
+
+#: audacious/logger.c:120
+#, c-format
+msgid "Unable to create log file (%s)!\n"
+msgstr "Günlük dosyası oluşturulamıyor (%s)!\n"
+
+#: audacious/main.c:84 audacious/main.c:86 audacious/mainwin.c:876
+#: audacious/mainwin.c:3640
+msgid "Audacious"
+msgstr "Audacious"
+
+#: audacious/main.c:447
+#, c-format
+msgid "Could not create directory (%s): %s"
+msgstr "Dizin oluşturulamadı (%s): %s"
+
+#: audacious/main.c:723
+msgid ""
+"Usage: audacious [options] [files] ...\n"
+"\n"
+"Options:\n"
+"--------\n"
+msgstr ""
+"Kullanım: audacious [seçenekler] [dosyalar] ... \n"
+"\n"
+"Seçenekler: \n"
+"--------\n"
+
+#: audacious/main.c:728
+msgid "Display this text and exit"
+msgstr "Bu yazıyı göster ve çık"
+
+#: audacious/main.c:731
+msgid "Select Audacious/BMP/XMMS session (Default: 0)"
+msgstr "Audacious/BMP/XMMS oturumu seç (Öntanımlı: 0)"
+
+#: audacious/main.c:734
+msgid "Skip backwards in playlist"
+msgstr "Parça listesinde geriye atla"
+
+#: audacious/main.c:737
+msgid "Start playing current playlist"
+msgstr "Şu anki parça listesini çalmaya başla"
+
+#: audacious/main.c:740
+msgid "Pause current song"
+msgstr "Şu anki parçayı duraklat"
+
+#: audacious/main.c:743
+msgid "Stop current song"
+msgstr "Şu anki parçayı durdur"
+
+#: audacious/main.c:746
+msgid "Pause if playing, play otherwise"
+msgstr "Çalıyorsa durdur, değilse çal"
+
+#: audacious/main.c:749
+msgid "Skip forward in playlist"
+msgstr "Parça listesinde ileriye atla"
+
+#: audacious/main.c:752
+msgid "Display Jump to file dialog"
+msgstr "Parçaya atla penceresini göster"
+
+#: audacious/main.c:755
+msgid "Don't clear the playlist"
+msgstr "Parça listesini temizleme"
+
+#: audacious/main.c:758
+msgid "Show the main window"
+msgstr "Ana pencereyi göster"
+
+#: audacious/main.c:761
+msgid "Activate Audacious"
+msgstr "Audacious'u Aktifleştir"
+
+#: audacious/main.c:764
+msgid "Previous session ID"
+msgstr "Önceki oturum numarası"
+
+#: audacious/main.c:767
+msgid "Headless operation [experimental]"
+msgstr "Başlıksız işlem [deneysel]"
+
+#: audacious/main.c:770
+msgid "Disable error/warning interception (logging)"
+msgstr "Hata/uyarı kesişimini devre dışı bırak (kaydediliyor)"
+
+#: audacious/main.c:773
+msgid "Print version number and exit\n"
+msgstr "Versiyon numarasını göster ve çık\n"
+
+#: audacious/main.c:963
+msgid ""
+"\n"
+"Received SIGSEGV\n"
+"\n"
+"This could be a bug in Audacious. If you don't know why this happened, file "
+"a bug at http://bugs-meta.atheme.org/\n"
+"\n"
+msgstr ""
+"\n"
+"SIGSEGV sinyali alındı\n"
+"\n"
+"Bu Audacious içerisinde bir hata olabilir. Bunun neden olduğunu bilmiyorsanız lütfen http://bugs-meta.atheme.org/ adresine rapor ediniz\n"
+"\n"
+
+#: audacious/main.c:986
+#, c-format
+msgid ""
+"<b><big>Unable to load skin.</big></b>\n"
+"\n"
+"Check that skin at '%s' is usable and default skin is properly installed at "
+"'%s'\n"
+msgstr ""
+"<b><big>Kabuk yüklenemiyor.</big></b>\n"
+"\n"
+"%s adresindeki kabuğun kullanılabilir olduğunu ve %s adresindeki öntanımlı kabuğun doğru kurulduğunu gözden geçirin."
+"\n"
+
+#: audacious/main.c:1032
+#, c-format
+msgid ""
+"Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
+"Please use GTK+ %s or newer.\n"
+msgstr ""
+"Üzgünüm, GTK+ versiyonunuz (%d.%d.%d) Audacious ile beraber çalışmıyor.\n"
+"Lütfen GTK+ %s veya daha yeni bir sürümünü kullanın.\n"
+
+#: audacious/main.c:1043
+msgid ""
+"Sorry, threads isn't supported on your platform.\n"
+"\n"
+"If you're on a libc5 based linux system and installed Glib & GTK+ before "
+"you\n"
+"installed LinuxThreads you need to recompile Glib & GTK+.\n"
+msgstr ""
+"Üzgünüm, iş parçacıkları platformunuzda desteklenmiyor.\n"
+"\n"
+"Libc5 yüklü linux sisteminde ve Linux İş Parçacıklarını yüklemeden önce Glib & GTK+'yı yüklemişseniz Glib & GTK+'yı yeniden derlemeniz gerekmektedir.\n"
+
+#: audacious/main.c:1059
+msgid "audacious: Unable to open display, exiting.\n"
+msgstr "audacious: Görüntü açılamıyor, çıkılıyor.\n"
+
+#: audacious/mainwin.c:245 audacious/mainwin.c:371 audacious/ui_playlist.c:122
+msgid "/View Track Details"
+msgstr "/Parça Bilgilerini Göster"
+
+#: audacious/mainwin.c:247 audacious/mainwin.c:366
+msgid "/Jump to File"
+msgstr "/Parçaya Zıpla"
+
+#: audacious/mainwin.c:250 audacious/mainwin.c:433
+msgid "/Autoscroll Songname"
+msgstr "/Parça adını otomatik kaydır"
+
+#: audacious/mainwin.c:252 audacious/mainwin.c:344
+msgid "/Stop After Current Song"
+msgstr "/Şu Anki Parçadan Sonra Dur"
+
+#: audacious/mainwin.c:262
+msgid "/Visualization Mode"
+msgstr "/Canlandırma Kipi"
+
+#: audacious/mainwin.c:263
+msgid "/Visualization Mode/Analyzer"
+msgstr "/Canlandırma Kipi/Çözümleyici"
+
+#: audacious/mainwin.c:265
+msgid "/Visualization Mode/Scope"
+msgstr "/Canlandırma Kipi/Kapsam"
+
+#: audacious/mainwin.c:267
+msgid "/Visualization Mode/Off"
+msgstr "/Canlandırma Kipi/Kapalı"
+
+#: audacious/mainwin.c:269
+msgid "/Analyzer Mode"
+msgstr "/Çözümleyici Kipi"
+
+#: audacious/mainwin.c:270
+msgid "/Analyzer Mode/Normal"
+msgstr "/Çözümleyici Kipi/Normal"
+
+#: audacious/mainwin.c:272
+msgid "/Analyzer Mode/Fire"
+msgstr "/Çözümleyici Kipi/Ateş"
+
+#: audacious/mainwin.c:274
+msgid "/Analyzer Mode/Vertical Lines"
+msgstr "/Çözümleyici Kipi/Dikey Satırlar"
+
+#: audacious/mainwin.c:277
+msgid "/Analyzer Mode/Lines"
+msgstr "/Çözümleyici Kipi/Satırlar"
+
+#: audacious/mainwin.c:279
+msgid "/Analyzer Mode/Bars"
+msgstr "/Çözümleyici Kipi/Çubuklar"
+
+#: audacious/mainwin.c:282
+msgid "/Analyzer Mode/Peaks"
+msgstr "/Çözümleyici Kipi/Zirveler"
+
+#: audacious/mainwin.c:284
+msgid "/Scope Mode"
+msgstr "/Kapsam Kipi"
+
+#: audacious/mainwin.c:285
+msgid "/Scope Mode/Dot Scope"
+msgstr "/Kapsam Kipi/Nokta Kapsamı"
+
+#: audacious/mainwin.c:287
+msgid "/Scope Mode/Line Scope"
+msgstr "/Kapsam Kipi/Satır Kapsamı"
+
+#: audacious/mainwin.c:289
+msgid "/Scope Mode/Solid Scope"
+msgstr "/Kapsam Kipi/Katı Kapsam"
+
+#: audacious/mainwin.c:291
+msgid "/WindowShade VU Mode"
+msgstr "/WindowShade VU Kipi"
+
+#: audacious/mainwin.c:292
+msgid "/WindowShade VU Mode/Normal"
+msgstr "/WindowShade VU Kipi/Normal"
+
+#: audacious/mainwin.c:294
+msgid "/WindowShade VU Mode/Smooth"
+msgstr "/WindowShade VU Kipi/Yumuşak"
+
+#: audacious/mainwin.c:296
+msgid "/Refresh Rate"
+msgstr "/Tazeleme Oranı"
+
+#: audacious/mainwin.c:297
+msgid "/Refresh Rate/Full (~50 fps)"
+msgstr "/Tazeleme Oranı/Tam (~50 fps)"
+
+#: audacious/mainwin.c:299
+msgid "/Refresh Rate/Half (~25 fps)"
+msgstr "/Tazeleme Oranı/Yarım (~25 fps)"
+
+#: audacious/mainwin.c:301
+msgid "/Refresh Rate/Quarter (~13 fps)"
+msgstr "/Tazeleme Oranı/Çeyrek (~13 fps)"
+
+#: audacious/mainwin.c:303
+msgid "/Refresh Rate/Eighth (~6 fps)"
+msgstr "/Tazeleme Oranı/Sekizde Bir (~6 fps)"
+
+#: audacious/mainwin.c:305
+msgid "/Analyzer Falloff"
+msgstr "/Analyzer Falloff"
+
+#: audacious/mainwin.c:306
+msgid "/Analyzer Falloff/Slowest"
+msgstr "/Analyzer Falloff/Çok yavaş"
+
+#: audacious/mainwin.c:308
+msgid "/Analyzer Falloff/Slow"
+msgstr "/Analyzer Falloff/Yavaş"
+
+#: audacious/mainwin.c:310
+msgid "/Analyzer Falloff/Medium"
+msgstr "/Analyzer Falloff/Orta"
+
+#: audacious/mainwin.c:312
+msgid "/Analyzer Falloff/Fast"
+msgstr "/Analyzer Falloff/Hızlı"
+
+#: audacious/mainwin.c:314
+msgid "/Analyzer Falloff/Fastest"
+msgstr "/Analyzer Falloff/En hızlı"
+
+#: audacious/mainwin.c:316
+msgid "/Peaks Falloff"
+msgstr "/Peaks Falloff"
+
+#: audacious/mainwin.c:317
+msgid "/Peaks Falloff/Slowest"
+msgstr "/Peaks Falloff/Çok yavaş"
+
+#: audacious/mainwin.c:319
+msgid "/Peaks Falloff/Slow"
+msgstr "/Peaks Falloff/Yavaş"
+
+#: audacious/mainwin.c:321
+msgid "/Peaks Falloff/Medium"
+msgstr "/Peaks Falloff/Orta"
+
+#: audacious/mainwin.c:323
+msgid "/Peaks Falloff/Fast"
+msgstr "/Peaks Falloff/Hızlı"
+
+#: audacious/mainwin.c:325
+msgid "/Peaks Falloff/Fastest"
+msgstr "/Peaks Falloff/Çok hızlı"
+
+#: audacious/mainwin.c:335
+msgid "/Play CD"
+msgstr "/CD Çal"
+
+#: audacious/mainwin.c:338
+msgid "/Repeat"
+msgstr "/Tekrarla"
+
+#: audacious/mainwin.c:340
+msgid "/Shuffle"
+msgstr "/Karıştır"
+
+#: audacious/mainwin.c:342
+msgid "/No Playlist Advance"
+msgstr "/Parça Listesi İlerlemesi Yok"
+
+#: audacious/mainwin.c:347
+msgid "/Play"
+msgstr "/Çal"
+
+#: audacious/mainwin.c:349
+msgid "/Pause"
+msgstr "/Durakla"
+
+#: audacious/mainwin.c:351
+msgid "/Stop"
+msgstr "/Dur"
+
+#: audacious/mainwin.c:353
+msgid "/Previous"
+msgstr "/Önceki"
+
+#: audacious/mainwin.c:355
+msgid "/Next"
+msgstr "/Sonraki"
+
+#: audacious/mainwin.c:358
+msgid "/Jump to Playlist Start"
+msgstr "/Parça Listesi Başına Zıpla"
+
+#: audacious/mainwin.c:360
+msgid "/-"
+msgstr "/-"
+
+#: audacious/mainwin.c:361
+msgid "/Set A-B"
+msgstr "/A-B Ayarla"
+
+#: audacious/mainwin.c:363
+msgid "/Clear A-B"
+msgstr "/A-B Temizle"
+
+#: audacious/mainwin.c:368
+msgid "/Jump to Time"
+msgstr "/Zamana Zıpla"
+
+#: audacious/mainwin.c:381
+msgid "/About Audacious"
+msgstr "/Audacious Hakkında"
+
+#: audacious/mainwin.c:384
+msgid "/Play File"
+msgstr "/Dosya Çal"
+
+#: audacious/mainwin.c:386
+msgid "/Play Location"
+msgstr "/Konum Çal"
+
+#: audacious/mainwin.c:389
+msgid "/V_isualization"
+msgstr "/C_anlandırma"
+
+#: audacious/mainwin.c:390
+msgid "/_Playback"
+msgstr "/_Oynat"
+
+#: audacious/mainwin.c:391
+msgid "/_View"
+msgstr "/_Gör"
+
+#: audacious/mainwin.c:393
+msgid "/Preferences"
+msgstr "/Seçenekler"
+
+#: audacious/mainwin.c:395
+msgid "/_Quit"
+msgstr "/_Çık"
+
+#: audacious/mainwin.c:405
+msgid "/Files..."
+msgstr "/Dosyalar..."
+
+#: audacious/mainwin.c:407
+msgid "/Internet location..."
+msgstr "/İnternet konumu..."
+
+#: audacious/mainwin.c:417
+msgid "/Show Player"
+msgstr "/Oynatıcıyı Göster"
+
+#: audacious/mainwin.c:419
+msgid "/Show Playlist Editor"
+msgstr "/Parça Listesi Düzenleyicisini Göster"
+
+#: audacious/mainwin.c:421
+msgid "/Show Equalizer"
+msgstr "/Ekolayzırı Göster"
+
+#: audacious/mainwin.c:424
+msgid "/Time Elapsed"
+msgstr "/Zaman Geçti"
+
+#: audacious/mainwin.c:426
+msgid "/Time Remaining"
+msgstr "/Zaman Kaldı"
+
+#: audacious/mainwin.c:429
+msgid "/Always On Top"
+msgstr "/Her Zaman Üstte"
+
+#: audacious/mainwin.c:431
+msgid "/Put on All Workspaces"
+msgstr "/Tüm Masaüstlerine Gönder"
+
+#: audacious/mainwin.c:436
+msgid "/Roll up Player"
+msgstr "/Oynatıcıyı Üste Kaydır"
+
+#: audacious/mainwin.c:438
+msgid "/Roll up Playlist Editor"
+msgstr "/Parça Listesi Düzenleyicisini Üste Kaydır"
+
+#: audacious/mainwin.c:440
+msgid "/Roll up Equalizer"
+msgstr "/Ekolayzırı Üste Kaydır"
+
+#: audacious/mainwin.c:443
+msgid "/DoubleSize"
+msgstr "/Büyük"
+
+#: audacious/mainwin.c:445
+msgid "/Easy Move"
+msgstr "/Kolay Taşı"
+
+#: audacious/mainwin.c:874
+#, c-format
+msgid "%s - Audacious"
+msgstr "%s - Audacious"
+
+#: audacious/mainwin.c:1098
+msgid "VBR"
+msgstr "VBR"
+
+#: audacious/mainwin.c:1139 audacious/mainwin.c:1143
+msgid "stereo"
+msgstr "stereo"
+
+#: audacious/mainwin.c:1139 audacious/mainwin.c:1143
+msgid "mono"
+msgstr "mono"
+
+#: audacious/mainwin.c:1627
+msgid "Jump to Time"
+msgstr "Zamana Zıpla"
+
+#: audacious/mainwin.c:1648
+msgid "minutes:seconds"
+msgstr "dakika:saniye"
+
+#: audacious/mainwin.c:1658
+msgid "Track length:"
+msgstr "Parça uzunluğu:"
+
+#: audacious/mainwin.c:1746
+msgid "Un_queue"
+msgstr "K_uyruktan çıkar"
+
+#: audacious/mainwin.c:1748 audacious/mainwin.c:2093
+msgid "_Queue"
+msgstr "_Kuyruk"
+
+#: audacious/mainwin.c:2018
+msgid "Jump to Track"
+msgstr "Parçaya Zıpla"
+
+#: audacious/mainwin.c:2059
+msgid "Filter: "
+msgstr "Filtre:"
+
+#: audacious/mainwin.c:2260
+msgid "Enter location to play:"
+msgstr "Çalmak için konum girin:"
+
+#: audacious/mainwin.c:2467
+#, c-format
+msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
+msgstr "ARA: %d:%-2.2d/%d:%-2.2d (%d%%)"
+
+#: audacious/mainwin.c:2499 audacious/mainwin.c:3286
+#, c-format
+msgid "VOLUME: %d%%"
+msgstr "SES: %d%%"
+
+#: audacious/mainwin.c:2530 audacious/mainwin.c:3289
+#, c-format
+msgid "BALANCE: %d%% LEFT"
+msgstr "DENGE: %d%% SOL"
+
+#: audacious/mainwin.c:2534 audacious/mainwin.c:3292
+msgid "BALANCE: CENTER"
+msgstr "DENGE: ORTA"
+
+#: audacious/mainwin.c:2538 audacious/mainwin.c:3294
+#, c-format
+msgid "BALANCE: %d%% RIGHT"
+msgstr "DENGE: %d%% SAĞ"
+
+#: audacious/mainwin.c:3061
+msgid "OPTIONS MENU"
+msgstr "SEÇENEKLER MENÜSU"
+
+#: audacious/mainwin.c:3065
+msgid "DISABLE ALWAYS ON TOP"
+msgstr "HER ZAMAN ÜSTTE SEÇENEĞİNİ DEVRE DIŞI BIRAK"
+
+#: audacious/mainwin.c:3067
+msgid "ENABLE ALWAYS ON TOP"
+msgstr "HER ZAMAN ÜSTTE SEÇENEĞİNİ ETKİNLEŞTİR"
+
+#: audacious/mainwin.c:3070
+msgid "FILE INFO BOX"
+msgstr "DOSYA BİLGİ KUTUSU"
+
+#: audacious/mainwin.c:3074
+msgid "DISABLE DOUBLESIZE"
+msgstr "BÜYÜK GÖRÜNÜMÜ DEVRE DIŞI BIRAK"
+
+#: audacious/mainwin.c:3076
+msgid "ENABLE DOUBLESIZE"
+msgstr "BÜYÜK GÖRÜNÜMÜ ETKİNLEŞTİR"
+
+#: audacious/mainwin.c:3079
+msgid "VISUALIZATION MENU"
+msgstr "CANLANDIRMA MENÜSÜ"
+
+#: audacious/mainwin.c:3127
+msgid ""
+"<b><big>No playable CD found.</big></b>\n"
+"\n"
+"No CD inserted, or inserted CD is not an audio CD.\n"
+msgstr ""
+"<b><big>Çalınabilir CD bulunamadı.</big></b>\n"
+"\n"
+"CD takılmadı veya takılan CD bir ses CD'si değil.\n"
+
+#: audacious/mainwin.c:3144
+msgid ""
+"<b><big>Couldn't open audio.</big></b>\n"
+"\n"
+"Please check that:\n"
+"1. You have the correct output plugin selected.\n"
+"2. No other programs is blocking the soundcard.\n"
+"3. Your soundcard is configured properly.\n"
+msgstr ""
+"<b><big>Ses açılamadı.</big></b>\n"
+"\n"
+"Lütfen şunları gözden geçirin:\n"
+"1- Doğru çıkış eklentisini seçtiniz mi?\n"
+"2- Herhangi bir uygulama ses kartının kullanılmasını engelliyor mu?\n"
+"3- Ses kartınız doğru olarak ayarlandı mı.\n"
+
+#: audacious/prefswin.c:98 audacious/glade/prefswin.glade:1425
+msgid "Appearance"
+msgstr "Görünüm"
+
+#: audacious/prefswin.c:99
+msgid "Audio"
+msgstr "Ses"
+
+#: audacious/prefswin.c:100
+msgid "Connectivity"
+msgstr "Bağlantı"
+
+#: audacious/prefswin.c:101 audacious/glade/prefswin.glade:2889
+msgid "Equalizer"
+msgstr "Ekolayzır"
+
+#: audacious/prefswin.c:102 audacious/glade/prefswin.glade:1704
+msgid "Mouse"
+msgstr "Fare"
+
+#: audacious/prefswin.c:103 audacious/glade/prefswin.glade:2521
+msgid "Playlist"
+msgstr "Parça Listesi"
+
+#: audacious/prefswin.c:104 audacious/glade/prefswin.glade:693
+msgid "Plugins"
+msgstr "Eklentiler"
+
+#: audacious/prefswin.c:110
+msgid "Artist"
+msgstr "Sanatçı"
+
+#: audacious/prefswin.c:111 libaudacious/titlestring.c:349
+msgid "Album"
+msgstr "Albüm"
+
+#: audacious/prefswin.c:112
+msgid "Title"
+msgstr "Başlık"
+
+#: audacious/prefswin.c:113
+msgid "Tracknumber"
+msgstr "Parça numarası"
+
+#: audacious/prefswin.c:114 libaudacious/titlestring.c:350
+msgid "Genre"
+msgstr "Tarz"
+
+#: audacious/prefswin.c:116
+msgid "Filepath"
+msgstr "Dosya yolu"
+
+#: audacious/prefswin.c:117 libaudacious/titlestring.c:356
+msgid "Date"
+msgstr "Tarih"
+
+#: audacious/prefswin.c:118 libaudacious/titlestring.c:357
+msgid "Year"
+msgstr "Yıl"
+
+#: audacious/prefswin.c:119 libaudacious/titlestring.c:358
+msgid "Comment"
+msgstr "Yorum"
+
+#: audacious/prefswin.c:140
+msgid "localhost"
+msgstr "localhost"
+
+#: audacious/prefswin.c:457 audacious/prefswin.c:544 audacious/prefswin.c:633
+#: audacious/prefswin.c:729
+msgid "Enabled"
+msgstr "Etkin"
+
+#: audacious/prefswin.c:473 audacious/prefswin.c:560 audacious/prefswin.c:649
+#: audacious/prefswin.c:745
+msgid "Description"
+msgstr "Açıklama"
+
+#: audacious/prefswin.c:1784
+msgid "Category"
+msgstr "Kategori"
+
+#: audacious/prefswin.c:2241
+msgid "Preferences Window"
+msgstr "Seçenekler Penceresi"
+
+#: audacious/skinwin.c:177
+msgid "Archived Winamp 2.x skin"
+msgstr "Winamp 2.x kabuğu saklandı"
+
+#: audacious/skinwin.c:182
+msgid "Unarchived Winamp 2.x skin"
+msgstr "Winamp 2.x kabuğu açıldı"
+
+#: audacious/ui_fileinfo.c:313
+msgid "Track Information Window"
+msgstr "Parça Bilgisi Penceresi"
+
+#: audacious/ui_fileinfo.c:335
+msgid "Track Information Popup"
+msgstr "Küçük Parça Bilgisi"
+
+#: audacious/ui_playlist.c:126
+msgid "/Show Popup Info"
+msgstr "/Küçük Bilgis Göster"
+
+#: audacious/ui_playlist.c:132 audacious/ui_playlist.c:197
+msgid "/Remove Selected"
+msgstr "/Seçileni Kaldır"
+
+#: audacious/ui_playlist.c:136 audacious/ui_playlist.c:193
+msgid "/Remove Unselected"
+msgstr "/Seçilmeyeni Kaldır"
+
+#: audacious/ui_playlist.c:140 audacious/ui_playlist.c:189
+msgid "/Remove All"
+msgstr "/Hepsini Kaldır"
+
+#: audacious/ui_playlist.c:146
+msgid "/Queue Toggle"
+msgstr "/Kuyruk geçişi"
+
+#: audacious/ui_playlist.c:152
+msgid "/Add CD..."
+msgstr "/CD Ekle..."
+
+#: audacious/ui_playlist.c:156
+msgid "/Add Internet Address..."
+msgstr "/İnternet Adresi Ekle..."
+
+#: audacious/ui_playlist.c:160
+msgid "/Add Files..."
+msgstr "/Dosya Ekle..."
+
+#: audacious/ui_playlist.c:166
+msgid "/Clear Queue"
+msgstr "/Kuyruğu Temizle"
+
+#: audacious/ui_playlist.c:172
+msgid "/Remove Unavailable Files"
+msgstr "/Olmayan Dosyaları Temizle"
+
+#: audacious/ui_playlist.c:176
+msgid "/Remove Duplicates"
+msgstr "/Kopyaları Kaldır"
+
+#: audacious/ui_playlist.c:177
+msgid "/Remove Duplicates/By Title"
+msgstr "/Kopyaları Kaldır/Başlığa Göre"
+
+#: audacious/ui_playlist.c:180
+msgid "/Remove Duplicates/By Filename"
+msgstr "/Kopyaları Kaldır/Dosya Adına Göre"
+
+#: audacious/ui_playlist.c:183
+msgid "/Remove Duplicates/By Path + Filename"
+msgstr "/Kopyaları Kaldır/Yol ve Dosya Adına Göre"
+
+#: audacious/ui_playlist.c:203
+msgid "/New List"
+msgstr "/Yeni Liste"
+
+#: audacious/ui_playlist.c:209
+msgid "/Load List"
+msgstr "/Liste Yükle"
+
+#: audacious/ui_playlist.c:213
+msgid "/Save List"
+msgstr "/Listeyi Kaydet"
+
+#: audacious/ui_playlist.c:217
+msgid "/Save Default List"
+msgstr "/Öntanımlı Listeyi Kaydet"
+
+#: audacious/ui_playlist.c:223
+msgid "/Update View"
+msgstr "/Görünüşü Güncelle"
+
+#: audacious/ui_playlist.c:229
+msgid "/Invert Selection"
+msgstr "/Seçeneği Ters Çevir"
+
+#: audacious/ui_playlist.c:235
+msgid "/Select None"
+msgstr "/Hiçbirşey Seçme"
+
+#: audacious/ui_playlist.c:239
+msgid "/Select All"
+msgstr "/Hepsini Seç"
+
+#: audacious/ui_playlist.c:245
+msgid "/Randomize List"
+msgstr "/Listeyi Karıştır"
+
+#: audacious/ui_playlist.c:247
+msgid "/Reverse List"
+msgstr "/Listeyi Ters Çevir"
+
+#: audacious/ui_playlist.c:250
+msgid "/Sort List"
+msgstr "/Listeyi Sırala"
+
+#: audacious/ui_playlist.c:251
+msgid "/Sort List/By Title"
+msgstr "/Listeyi Sırala/Başlığa Göre"
+
+#: audacious/ui_playlist.c:253
+msgid "/Sort List/By Artist"
+msgstr "/Listeyi Sırala/Sanatçıya Göre"
+
+#: audacious/ui_playlist.c:255
+msgid "/Sort List/By Filename"
+msgstr "/Listeyi Sırala/Dosya İsmine Göre"
+
+#: audacious/ui_playlist.c:257
+msgid "/Sort List/By Path + Filename"
+msgstr "/Listeyi Sırala/Yol ve Dosya İsmine Göre"
+
+#: audacious/ui_playlist.c:259
+msgid "/Sort List/By Date"
+msgstr "/Listeyi Sırala/Tarihe Göre"
+
+#: audacious/ui_playlist.c:261
+msgid "/Sort List/By Track Number"
+msgstr "/Listeyi Sırala/Parça Numarasına Göre"
+
+#: audacious/ui_playlist.c:263
+msgid "/Sort List/By Playlist Entry"
+msgstr "/Listeyi Sırala/Parça Listesi Girdisine Göre"
+
+#: audacious/ui_playlist.c:265
+msgid "/Sort Selection"
+msgstr "/Seçimi Sırala/"
+
+#: audacious/ui_playlist.c:266
+msgid "/Sort Selection/By Title"
+msgstr "/Seçimi Sırala/Başlığa Göre"
+
+#: audacious/ui_playlist.c:268
+msgid "/Sort Selection/By Artist"
+msgstr "/Seçimi Sırala/Sanatçıya Göre"
+
+#: audacious/ui_playlist.c:270
+msgid "/Sort Selection/By Filename"
+msgstr "/Seçimi Sırala/Dosya Adına Göre"
+
+#: audacious/ui_playlist.c:272
+msgid "/Sort Selection/By Path + Filename"
+msgstr "/Seçimi Sırala/Yol ve Dosya İsmine Göre"
+
+#: audacious/ui_playlist.c:274
+msgid "/Sort Selection/By Date"
+msgstr "/Seçimi Sırala/Tarihe Göre"
+
+#: audacious/ui_playlist.c:276
+msgid "/Sort Selection/By Track Number"
+msgstr "/Seçimi Sırala/Parça Numarasına Göre"
+
+#: audacious/ui_playlist.c:278
+msgid "/Sort Selection/By Playlist Entry"
+msgstr "/Seçimi Sırala/Parça Listesi Girdisine Göre"
+
+#: audacious/ui_playlist.c:841
+#, c-format
+msgid "Error writing playlist \"%s\": %s"
+msgstr "\"%s\" parça listesi yazımında hata: %s"
+
+#: audacious/ui_playlist.c:862
+#, c-format
+msgid "%s already exist. Continue?"
+msgstr "%s zaten mevcut. Devam?"
+
+#: audacious/ui_playlist.c:876
+#, c-format
+msgid ""
+"<b><big>Unable to save playlist.</big></b>\n"
+"\n"
+"Unknown file type for '%s'.\n"
+msgstr ""
+"<b><big>Parça listesi kaydedilemedi.</big></b>\n"
+"\n"
+"%s için bilinmeyen dosya türü.\n"
+
+#: audacious/ui_playlist.c:1027
+msgid "Load Playlist"
+msgstr "Parça Listesi Yükle"
+
+#: audacious/ui_playlist.c:1040
+msgid "Save Playlist"
+msgstr "Parça Listesini Kaydet"
+
+#: audacious/ui_playlist.c:1751
+msgid "Audacious Playlist Editor"
+msgstr "Audacious Parça Listesi Düzenleyicisi"
+
+#: audacious/util.c:951
+msgid "Add/Open Files dialog"
+msgstr "Dosya penceresini Ekle/Aç"
+
+#: audacious/util.c:1006
+msgid "Open Files"
+msgstr "Dosyaları Aç"
+
+#: audacious/util.c:1010
+msgid "Close dialog on Open"
+msgstr "Açtıktan sonra pencereyi kapat"
+
+#: audacious/util.c:1020 audacious/glade/addfiles.glade:8
+msgid "Add Files"
+msgstr "Dosyaları Ekle"
+
+#: audacious/util.c:1024
+msgid "Close dialog on Add"
+msgstr "Ekledikten sonra pencereyi kapat"
+
+#: audacious/util.c:1201
+msgid "Play files"
+msgstr "Dosyaları Çal"
+
+#: audacious/util.c:1203
+msgid "Load files"
+msgstr "Dosyaları Yükle"
+
+#: audacious/util.c:1507
+msgid "  (invalid UTF-8)"
+msgstr "  (geçersiz UTF-8)"
+
+#: audacious/playback.c:208
+msgid ""
+"<b><big>No output plugin selected.</big></b>\n"
+"You have not selected an output plugin."
+msgstr ""
+"<b><big>Hiçbir çıkış eklentisi seçilmedi.</big></b>\n"
+"Çıkış eklentisi seçmediniz."
+
+#: audacious/glade/addfiles.glade:77
+msgid "Close Dialog on Add"
+msgstr "Ekledikten sonra pencereyi kapat"
+
+#: audacious/glade/addfiles.glade:105
+msgid "Select All"
+msgstr "Hepsini Seç"
+
+#: audacious/glade/addfiles.glade:116
+msgid "Deselect All"
+msgstr "Hiçbirini Seçme"
+
+#: audacious/glade/fileinfo.glade:8
+msgid "Track Information"
+msgstr "Parça Bilgisi"
+
+#: audacious/glade/fileinfo.glade:81
+msgid "<span size=\"small\">Title</span>"
+msgstr "<span size=\"small\">Başlık</span>"
+
+#: audacious/glade/fileinfo.glade:139
+msgid "<span size=\"small\">Artist</span>"
+msgstr "<span size=\"small\">Sanatçı</span>"
+
+#: audacious/glade/fileinfo.glade:197
+msgid "<span size=\"small\">Album</span>"
+msgstr "<span size=\"small\">Albüm</span>"
+
+#: audacious/glade/fileinfo.glade:255
+msgid "<span size=\"small\">Comment</span>"
+msgstr "<span size=\"small\">Yorum</span>"
+
+#: audacious/glade/fileinfo.glade:313
+msgid "<span size=\"small\">Genre</span>"
+msgstr "<span size=\"small\">Tarz</span>"
+
+#: audacious/glade/fileinfo.glade:392
+msgid "<span size=\"small\">Year</span>"
+msgstr "<span size=\"small\">Yıl</span>"
+
+#: audacious/glade/fileinfo.glade:441
+msgid "<span size=\"small\">Track Number</span>"
+msgstr "<span size=\"small\">Parça Numarası</span>"
+
+#: audacious/glade/fileinfo.glade:499
+msgid "<span size=\"small\">Location</span>"
+msgstr "<span size=\"small\">Konum</span>"
+
+#: audacious/glade/fileinfo_popup.glade:8
+msgid "Artist Popup"
+msgstr "Küçük Sanatçı Bilgisi"
+
+#: audacious/glade/fileinfo_popup.glade:66
+msgid "<i>Title</i>"
+msgstr "<i>Başlık</i>"
+
+#: audacious/glade/fileinfo_popup.glade:94
+msgid "<i>Artist</i>"
+msgstr "<i>Sanatçı</i>"
+
+#: audacious/glade/fileinfo_popup.glade:122
+msgid "<i>Album</i>"
+msgstr "<i>Albüm</i>"
+
+#: audacious/glade/fileinfo_popup.glade:234
+msgid "<i>Genre</i>"
+msgstr "<i>Tarz</i>"
+
+#: audacious/glade/fileinfo_popup.glade:290
+msgid "<i>Year</i>"
+msgstr "<i>Yıl</i>"
+
+#: audacious/glade/fileinfo_popup.glade:318
+msgid "<i>Track Number</i>"
+msgstr "<i>Parça Numarası</i>"
+
+#: audacious/glade/fileinfo_popup.glade:346
+msgid "<i>Track Length</i>"
+msgstr "<i>Parça Uzunluğu</i>"
+
+#: audacious/glade/prefswin.glade:8
+msgid "Audacious Preferences"
+msgstr "Audacious Seçenekleri"
+
+#: audacious/glade/prefswin.glade:115
+msgid "_Decoder list:"
+msgstr "_Çözümleyici listesi:"
+
+#: audacious/glade/prefswin.glade:219
+msgid "<span size=\"medium\"><b>Decoders</b></span>"
+msgstr "<span size=\"medium\"><b>Çözümleyiciler</b></span>"
+
+#: audacious/glade/prefswin.glade:261
+msgid "_General plugin list:"
+msgstr "_Genel eklenti listesi:"
+
+#: audacious/glade/prefswin.glade:365
+msgid "<span size=\"medium\"><b>General</b></span>"
+msgstr "<span size=\"medium\"><b>Genel</b></span>"
+
+#: audacious/glade/prefswin.glade:407
+msgid "_Visualization plugin list:"
+msgstr "_Canlandırma eklenti listesi:"
+
+#: audacious/glade/prefswin.glade:511
+msgid "<b>Visualization</b>"
+msgstr "<b>Canlandırma</b>"
+
+#: audacious/glade/prefswin.glade:553
+msgid "_Effect plugin list:"
+msgstr "_Efekt eklenti listesi:"
+
+#: audacious/glade/prefswin.glade:657
+msgid "<b>Effects</b>"
+msgstr "<b>Efektler</b>"
+
+#: audacious/glade/prefswin.glade:746
+msgid "<b>_Skin</b>"
+msgstr "<b>_Kabuk</b>"
+
+#: audacious/glade/prefswin.glade:772
+msgid "Refresh skin list"
+msgstr "Kabuk listesini tazele"
+
+#: audacious/glade/prefswin.glade:866
+msgid "<b>_Fonts</b>"
+msgstr "<b>_Yazı Tipleri</b>"
+
+#: audacious/glade/prefswin.glade:921
+msgid "_Player:"
+msgstr "_Oynatıcı:"
+
+#: audacious/glade/prefswin.glade:964
+msgid "_Playlist:"
+msgstr "_Parça Listesi:"
+
+#: audacious/glade/prefswin.glade:996
+msgid "Select main player window font:"
+msgstr "Ana çalıcı penceresi yazı tipini seç:"
+
+#: audacious/glade/prefswin.glade:1018
+msgid "Select playlist font:"
+msgstr "Parça listesi yazı tipini seç:"
+
+#: audacious/glade/prefswin.glade:1064
+msgid ""
+"Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
+"strings."
+msgstr "Kullanılabilir ise bitmap yazı tiplerini kullan. Bitmap yazı tipleri Unicode yazıları desteklemez."
+
+#: audacious/glade/prefswin.glade:1066
+msgid "Use Bitmap fonts if available"
+msgstr "Kullanılabilir ise Bitmap yazı tiplerini kullan"
+
+#: audacious/glade/prefswin.glade:1100
+msgid "<b>_Miscellaneous</b>"
+msgstr "<b>_Çeşitli</b>"
+
+#: audacious/glade/prefswin.glade:1148
+msgid "Show track numbers in playlist"
+msgstr "Parça listesinde parça numaralarını göster"
+
+#: audacious/glade/prefswin.glade:1183
+msgid "Show separators in playlist"
+msgstr "Parça listesinde ayırıcıları göster"
+
+#: audacious/glade/prefswin.glade:1218
+msgid "Use custom cursors"
+msgstr "Özel imleçleri kullan"
+
+#: audacious/glade/prefswin.glade:1265
+msgid "<b>_Miscillaneous UI Features</b>"
+msgstr "<b>_Çeşitli UI Özellikleri</b>"
+
+#: audacious/glade/prefswin.glade:1305
+msgid ""
+"Enables playlist transparency. This is not recommended for slower machines "
+"as it requires some CPU time to create and cache the pixmaps used for the "
+"transparency."
+msgstr "Parça listesi şeffaflığını etkinleştirir.Bu, transparanlığı etkinleştirmek için işlemci zamanı gerektireceği için yavaş makineler için önerilmez"
+
+#: audacious/glade/prefswin.glade:1307
+msgid "Enable playlist transparency"
+msgstr "Parça listesi şeffaflığını etkinleştir."
+
+#: audacious/glade/prefswin.glade:1341
+msgid ""
+"This enables the XMMS/GTK1-style file selection dialogs. This selector is "
+"provided by Audacious itself and is faster than the default GTK2 selector "
+"(but sadly not as user-friendly)."
+msgstr "Bu, XMMS/GTK1 biçimli dosya seçim pencerelerini etkinleştirir. Bu seçim Audacious'da kendiliğinden desteklenmiştir ve öntanımlı GTK2 seçiminden daha hızlıdır. (ancak kullanıcı dostu değildir)"
+
+#: audacious/glade/prefswin.glade:1343
+msgid "Use XMMS-style file selector instead of the default selector"
+msgstr "Öntanımlı seçici yerine XMMS biçimi dosya seçicisi kullan"
+
+#: audacious/glade/prefswin.glade:1377
+msgid "This enables the window mangaer to show decorations for windows."
+msgstr "Bu, pencere yöneticisini dekorasyon göstermek için etkinleştirir"
+
+#: audacious/glade/prefswin.glade:1379
+msgid "Show window manager decoration"
+msgstr "Pencere yöneticisi dekorasyonunu göster"
+
+#: audacious/glade/prefswin.glade:1387
+msgid "Show window manager decorations"
+msgstr "Pencere yöneticisi dekorasyonlarını göster"
+
+#: audacious/glade/prefswin.glade:1388
+msgid "This enables the window manager to show decorations for windows."
+msgstr "Bu, pencere yöneticisini dekorasyon göstermek için etkinleştirir."
+
+#: audacious/glade/prefswin.glade:1472
+msgid "<b>Mouse wheel</b>"
+msgstr "<b>Fare hızı</b>"
+
+#: audacious/glade/prefswin.glade:1520
+msgid "Changes volume by"
+msgstr "Ses değişikliği"
+
+#: audacious/glade/prefswin.glade:1548
+msgid "percent"
+msgstr "yüzde"
+
+#: audacious/glade/prefswin.glade:1576
+msgid "Scrolls playlist by"
+msgstr "Parça listesi kaydırma"
+
+#: audacious/glade/prefswin.glade:1629
+msgid "lines"
+msgstr "satır"
+
+#: audacious/glade/prefswin.glade:1751
+msgid "<b>Filename</b>"
+msgstr "</b>Dosya adı</b>"
+
+#: audacious/glade/prefswin.glade:1791
+msgid "Convert underscores to blanks"
+msgstr "Alt çizgileri boşluklara çevir"
+
+#: audacious/glade/prefswin.glade:1826
+msgid "Convert %20 to blanks"
+msgstr "%20 karakterlerini boşluklara çevir"
+
+#: audacious/glade/prefswin.glade:1860
+msgid "<b>Metadata</b>"
+msgstr "</b>Müzik bilgisi</b>"
+
+#: audacious/glade/prefswin.glade:1899
+msgid "Load metadata (tag information) from music files."
+msgstr "Müzik bilgisini (etiket bilgisi) müzik dosyalarından yükle"
+
+#: audacious/glade/prefswin.glade:1901
+msgid "Load metadata from playlists and files"
+msgstr "Parça bilgisini parça listelerinden ve dosyalardan yükle"
+
+#: audacious/glade/prefswin.glade:1939
+msgid "Load metadata when adding the file to the playlist or opening it"
+msgstr "Parça bilgisini, parça listesine eklenirken veya parça açılırken yükle."
+
+#: audacious/glade/prefswin.glade:1941
+msgid "On load"
+msgstr "Yüklendiğinde"
+
+#: audacious/glade/prefswin.glade:1961
+msgid "Load metadata on demand when displaying the file in the playlist"
+msgstr "Parça bilgisini parça listesinde gösterilirken ve istenildiğinde yükle"
+
+#: audacious/glade/prefswin.glade:1963
+msgid "On display"
+msgstr "Gösterildiğinde"
+
+#: audacious/glade/prefswin.glade:1993
+msgid "Fallback charcter encodings:"
+msgstr "Karakter kodlaması belirle"
+
+#: audacious/glade/prefswin.glade:2021
+msgid ""
+"List of character encodings used for fall back conversion of metadata. If "
+"automatic character encoding detector failed or has been disabled, encodings "
+"in this list would be treated as candidates of the encoding of metadata, and "
+"fall back conversion from these encodings to UTF-8 would be attempted."
+msgstr "Metadatanın geri düşüm dönüşümü için kullanılan karakter kodlama listesi. Eğer, otomatik karakter kodlama denetleyicisi başarısızlığa uğrarsa veya akitf değilse, bu listedeki kodlamalar metadata kodlaması olarak varsayılır ve bu kodlamalardan UTF-8'e geri düşüm dönüşümü denenir."
+
+#: audacious/glade/prefswin.glade:2062
+msgid "Auto character encoding detector for:"
+msgstr "Otomatik karakter kodlama bulucu:"
+
+#: audacious/glade/prefswin.glade:2118
+msgid "<b>File Dialog</b>"
+msgstr "<b>Dosya Penceresi</b>"
+
+#: audacious/glade/prefswin.glade:2157
+msgid ""
+"Always refresh the file dialog (this will slow opening the dialog on large "
+"directories, and Gnome VFS should handle automatically)."
+msgstr "Dosya penceresini her zaman yenile (bu büyük klasörleri açarken yavaş çalışacak ve Gnome VFS otomatik olarak alılamalı)"
+
+#: audacious/glade/prefswin.glade:2159
+msgid "Always refresh directory when opening file dialog"
+msgstr "Dosya penceresi açıldığında her zaman dizini yenile"
+
+#: audacious/glade/prefswin.glade:2193
+msgid "<b>Song Display</b>"
+msgstr "<b>Parça Göster</b>"
+
+#: audacious/glade/prefswin.glade:2241
+msgid "Title format:"
+msgstr "Başlık biçimi:"
+
+#: audacious/glade/prefswin.glade:2269
+msgid "Custom string:"
+msgstr "Özel dizi:"
+
+#: audacious/glade/prefswin.glade:2320
+msgid ""
+"TITLE\n"
+"ARTIST - TITLE\n"
+"ARTIST - ALBUM - TITLE\n"
+"ARTIST - ALBUM - TRACK. TITLE\n"
+"ARTIST [ ALBUM ] - TRACK. TITLE\n"
+"ALBUM - TITLE\n"
+"Custom"
+msgstr ""
+"BAŞLIK\n"
+"SANATÇI - BAŞLIK\n"
+"SANATÇI - ALBÜM - BAŞLIK\n"
+"SANATÇI - ALBÜM - PARÇA - BAŞLIK\n"
+"SANATÇI [ ALBÜM ] - PARÇA - BAŞLIK\n"
+"ALBÜM - BAŞLIK\n"
+"Özel"
+
+#: audacious/glade/prefswin.glade:2342
+msgid "Show information about titlestring format"
+msgstr "Başlık dizisi biçimi hakkında daha fazla bilgi göster"
+
+#: audacious/glade/prefswin.glade:2392
+msgid "<b>Popup Information</b>"
+msgstr "<b>Küçük Bilgi</b>"
+
+#: audacious/glade/prefswin.glade:2443
+msgid ""
+"Toggles popup information window for the pointed entry in the playlist. The "
+"window shows title of song, name of album, genre, year of publish, track "
+"number, track length, and artwork."
+msgstr "Çalma listesindeki seçili giriş için açılır pencere bilgisini değiştirir. Pencere, şarkı başlığını, albüm adını, türünü, yayınlanma yılını, parça uzunluğunu ve resimi gösterir."
+
+#: audacious/glade/prefswin.glade:2445
+msgid "Show popup information for playlist entries"
+msgstr "Parça listesi girdileri için küçük bilgi göster"
+
+#: audacious/glade/prefswin.glade:2472
+msgid "Edit settings for popup information"
+msgstr "Küçük bilgi için ayarları düzenle"
+
+#: audacious/glade/prefswin.glade:2580
+msgid "<b>Presets</b>"
+msgstr "<b>Ayarlar</b>"
+
+#: audacious/glade/prefswin.glade:2680
+msgid "Directory preset file:"
+msgstr "Dizin ayar dosyası:"
+
+#: audacious/glade/prefswin.glade:2708
+msgid "File preset extension:"
+msgstr "Dosya ayar uzantısı"
+
+#: audacious/glade/prefswin.glade:2756
+msgid "Available _Presets:"
+msgstr "Kullanılabilir _Ayarlar:"
+
+#: audacious/glade/prefswin.glade:2936
+msgid "<b>Proxy Configuration</b>"
+msgstr "<b>Vekil Sunucu Seçenekleri</b>"
+
+#: audacious/glade/prefswin.glade:2994
+msgid "Enable proxy usage"
+msgstr "Vekil sunucu kullanımını etkinleştir"
+
+#: audacious/glade/prefswin.glade:3025
+msgid "Proxy hostname:"
+msgstr "Vekil sunucu adı:"
+
+#: audacious/glade/prefswin.glade:3053
+msgid "Proxy port:"
+msgstr "Vekil sunucu port'u:"
+
+#: audacious/glade/prefswin.glade:3147
+msgid "Use authentication with proxy"
+msgstr "Vekil sunucu ile yetkilendirme kullan"
+
+#: audacious/glade/prefswin.glade:3178
+msgid "Proxy username:"
+msgstr "Vekil sunucu kullanıcı adı:"
+
+#: audacious/glade/prefswin.glade:3206
+msgid "Proxy password:"
+msgstr "Vekil sunucu parolası:"
+
+#: audacious/glade/prefswin.glade:3322
+msgid ""
+"<span size=\"small\">Changing these settings will require a restart of "
+"Audacious.</span>"
+msgstr "<span size=\"small\">Bu ayarların değiştirilmesi Audacious'un yeniden başlatılmasını gerektirecek.</span>"
+
+#: audacious/glade/prefswin.glade:3378
+msgid "label65"
+msgstr "label65"
+
+#: audacious/glade/prefswin.glade:3419
+msgid "<b>Audio System</b>"
+msgstr "<b>Ses Sistemi</b>"
+
+#: audacious/glade/prefswin.glade:3473
+msgid "Current output plugin:"
+msgstr "Şu anki çıkış eklentisi:"
+
+#: audacious/glade/prefswin.glade:3518
+msgid "Buffer size:"
+msgstr "Arabellek büyüklüğü:"
+
+#: audacious/glade/prefswin.glade:3588
+msgid ""
+"<span size=\"small\">This is the amount of time to prebuffer audio streams "
+"by, in milliseconds.\n"
+"Increase this value if you are experiencing audio skipping. \n"
+"Please note however, that high values will result in Audacious performing "
+"poorly.</span>"
+msgstr ""
+"<span size=\"small\">Ses akışlarını tamponlamak için kullanılcak milisaniye cinsinden miktar.\n"
+"Ses atlamaları yaşıyorsanız bu bu değeri arttırın.\n"
+"Ancak, yüksek bir değer Audacious'ın düşük performans göstermesine neden olabilir.</span>"
+
+#: audacious/glade/prefswin.glade:3696
+msgid "Output Plugin Preferences"
+msgstr "Çıkış Eklentisi Seçenekleri"
+
+#: audacious/glade/prefswin.glade:3771
+msgid "Output Plugin Information"
+msgstr "Çıkış Eklentisi Bilgisi"
+
+#: audacious/glade/prefswin.glade:3823
+msgid "<b>Format Detection</b>"
+msgstr "<b>Biçim Tanıma</b>"
+
+#: audacious/glade/prefswin.glade:3862
+msgid ""
+"When checked, Audacious will detect file formats on demand. This can result "
+"in a messier playlist, but delivers a major speed benefit."
+msgstr ""
+"İşaretlendiğinde, Audacious, dosya formatlarını isteğe göre saptayacak."
+"Bu hatalı bir çalma listesine sebep olabilir. Fakat, hız açısından büyük yarar sağlar"
+
+#: audacious/glade/prefswin.glade:3864
+msgid "Detect file formats on demand, instead of immediately."
+msgstr "Dosya biçimlerini hemen saptamak yerine istekte bulunulduğu zaman sapta"
+
+#: audacious/glade/prefswin.glade:3898
+msgid "<b>Playback</b>"
+msgstr "<b>Oynat</b>"
+
+#: audacious/glade/prefswin.glade:3937
+msgid ""
+"When Audacious starts, automatically begin playing from the point where we "
+"stopped before."
+msgstr "Audacious başladığında, en son kaldığı yerden çalmaya devam et."
+
+#: audacious/glade/prefswin.glade:3939
+msgid "Continue playback on startup"
+msgstr "Başlangıçta çalmaya devam et"
+
+#: audacious/glade/prefswin.glade:3973
+msgid "When finished playing a song, don't automatically advance to the next."
+msgstr "Bir şarkının çalınması sonlandığında, otomati olarak bir sonraki şarkıya geçme."
+
+#: audacious/glade/prefswin.glade:3975
+msgid "Don't advance in the playlist"
+msgstr "Çalma listesinde ilerleme"
+
+#: audacious/glade/prefswin.glade:4010
+msgid "Pause between songs"
+msgstr "Şarkılar arasında durakla"
+
+#: audacious/glade/prefswin.glade:4048
+msgid "Pause for"
+msgstr "Durakla"
+
+#: audacious/glade/prefswin.glade:4094
+msgid "seconds"
+msgstr "saniye"
+
+#: audacious/glade/prefswin.glade:4134
+msgid "label76"
+msgstr "label76"
+
+#: audacious/glade/prefswin.glade:4248
+msgid "Popup Information Settings"
+msgstr "Açılır Pencere Bilgisi Ayarları"
+
+#: audacious/glade/prefswin.glade:4272
+msgid ""
+"While searching for the album's cover, Audacious looks for certain words in "
+"the filename. You can specify those words in the lists below, separated "
+"using commas."
+msgstr ""
+"Albüm kapakları için ararken, Audacious dosya ismindeki belirli kelimeleri kullanır. "
+"Bu kelimeleri, altta virgülle ayrılmış listede belirtebilirsiniz."
+
+#: audacious/glade/prefswin.glade:4327
+msgid "Include:"
+msgstr "Dahil et:"
+
+#: audacious/glade/prefswin.glade:4355
+msgid "Exclude:"
+msgstr "Dahil etme:"
+
+#: audacious/glade/prefswin.glade:4424
+msgid "Recursively search for cover"
+msgstr "Kapak için özyineli olarak ara"
+
+#: audacious/glade/prefswin.glade:4462
+msgid "Search depth: "
+msgstr "Derinliği araştır:"
+
+#: audacious/glade/prefswin.glade:4528
+msgid "Use per-file cover"
+msgstr "Her dosya için kapak kullan"
+
+#: audacious/widgets/eq_slider.c:93
+msgid "PREAMP"
+msgstr "PREAMP"
+
+#: audacious/widgets/eq_slider.c:93
+msgid "60HZ"
+msgstr "60HZ"
+
+#: audacious/widgets/eq_slider.c:93
+msgid "170HZ"
+msgstr "170HZ"
+
+#: audacious/widgets/eq_slider.c:94
+msgid "310HZ"
+msgstr "310HZ"
+
+#: audacious/widgets/eq_slider.c:94
+msgid "600HZ"
+msgstr "600HZ"
+
+#: audacious/widgets/eq_slider.c:94
+msgid "1KHZ"
+msgstr "1KHZ"
+
+#: audacious/widgets/eq_slider.c:95
+msgid "3KHZ"
+msgstr "3KHZ"
+
+#: audacious/widgets/eq_slider.c:95
+msgid "6KHZ"
+msgstr "6KHZ"
+
+#: audacious/widgets/eq_slider.c:95
+msgid "12KHZ"
+msgstr "12KHZ"
+
+#: audacious/widgets/eq_slider.c:96
+msgid "14KHZ"
+msgstr "14KHZ"
+
+#: audacious/widgets/eq_slider.c:96
+msgid "16KHZ"
+msgstr "16KHZ"
+
+#: libaudacious/titlestring.c:348
+msgid "Performer/Artist"
+msgstr "Oyuncu/Sanatçı"
+
+#: libaudacious/titlestring.c:351
+msgid "File name"
+msgstr "Dosya adı"
+
+#: libaudacious/titlestring.c:352
+msgid "File path"
+msgstr "Dosya yolu"
+
+#: libaudacious/titlestring.c:353
+msgid "File extension"
+msgstr "Dosya uzantısı"
+
+#: libaudacious/titlestring.c:354
+msgid "Track name"
+msgstr "Parça adı"
+
+#: libaudacious/titlestring.c:355
+msgid "Track number"
+msgstr "Parça numarası"
+
+#: libaudacious/titlestring.c:409
+msgid "%{n:...%}: Display \"...\" only if element %n is present"
+msgstr "%{n:...%}: Sadece %n mevcutsa \"...\" göster"
+
