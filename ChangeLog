@@ -1,3 +1,42 @@
+2007-02-02 22:21:12 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3952]
+  - run make update-po to update what works of tr.po to 1.3 automatically
+  
+  trunk/po/audacious.pot |  281 ++--
+  trunk/po/bg.po         |  296 ++---
+  trunk/po/br.po         |  281 ++--
+  trunk/po/cs.po         |  286 ++---
+  trunk/po/cy.po         |  290 ++---
+  trunk/po/de.po         |  294 ++---
+  trunk/po/el.po         |  297 ++---
+  trunk/po/es.po         |  296 ++---
+  trunk/po/fi.po         |  286 ++---
+  trunk/po/fr.po         |  284 ++---
+  trunk/po/hi.po         |  286 ++---
+  trunk/po/hr.po         |  296 ++---
+  trunk/po/hu.po         |  296 ++---
+  trunk/po/it.po         |  296 ++---
+  trunk/po/ja.po         |  326 ++---
+  trunk/po/ka.po         |  281 ++--
+  trunk/po/ko.po         |  286 ++---
+  trunk/po/lt.po         |  281 ++--
+  trunk/po/mk.po         |  286 ++---
+  trunk/po/nl.po         |  296 ++---
+  trunk/po/pl.po         |  296 ++---
+  trunk/po/pt_BR.po      |  286 ++---
+  trunk/po/ro.po         |  284 ++---
+  trunk/po/ru.po         |  296 ++---
+  trunk/po/sk.po         |  286 ++---
+  trunk/po/sr.po         |  297 ++---
+  trunk/po/sr@Latn.po    |  297 ++---
+  trunk/po/sv.po         |  286 ++---
+  trunk/po/tr.po         | 2774 +++++++++++++++++++++++++++++--------------------
+  trunk/po/uk.po         |  286 ++---
+  trunk/po/zh_CN.po      |  294 ++---
+  trunk/po/zh_TW.po      |  294 ++---
+  32 files changed, 6164 insertions(+), 5633 deletions(-)
+
+
 2007-02-02 21:20:15 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3950]
   - update credits

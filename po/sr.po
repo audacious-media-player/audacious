@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: sr\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-02-02 17:11-0600\n"
-"PO-Revision-Date: 2007-02-01 12:20+0100\n"
+"PO-Revision-Date: 2007-02-03 12:22+0100\n"
 "Last-Translator: Strahinja  Kustudić <kustodian@gmail.com>\n"
 "Language-Team: Serbian Cyrillic <kustodian@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -400,7 +400,7 @@ msgstr "Традиционални Кинески:"
 
 #: src/audacious/ui_credits.c:231
 msgid "Turkish:"
-msgstr ""
+msgstr "Турски:"
 
 #: src/audacious/ui_credits.c:235
 msgid "Ukrainian:"
