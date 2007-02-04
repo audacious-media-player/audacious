@@ -1,3 +1,11 @@
+2007-02-03 19:19:07 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3956]
+  - define __AUDACIOUS_INPUT_PLUGIN_API__ to 2 by request of shd
+  
+  trunk/src/audacious/plugin.h |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2007-02-03 11:25:10 +0000  Strahinja Kustudi <kustodian@gmail.com>
   revision [3954]
   Updated Serbian translations.
