@@ -829,7 +829,7 @@ static GOptionEntry cmd_entries[] = {
     {"rew", 'r', 0, G_OPTION_ARG_NONE, &options.rew, N_("Skip backwards in playlist"), NULL},
     {"play", 'p', 0, G_OPTION_ARG_NONE, &options.play, N_("Start playing current playlist"), NULL},
     {"pause", 'u', 0, G_OPTION_ARG_NONE, &options.pause, N_("Pause current song"), NULL},
-    {"stop", 's', 0, G_OPTION_ARG_NONE, &options.pause, N_("Stop current song"), NULL},
+    {"stop", 's', 0, G_OPTION_ARG_NONE, &options.stop, N_("Stop current song"), NULL},
     {"play-pause", 't', 0, G_OPTION_ARG_NONE, &options.pause, N_("Pause if playing, play otherwise"), NULL},
     {"fwd", 'f', 0, G_OPTION_ARG_NONE, &options.fwd, N_("Skip forward in playlist"), NULL},
     {"show-jump-box", 'j', 0, G_OPTION_ARG_NONE, &options.show_jump_box, N_("Display Jump to File dialog"), NULL},

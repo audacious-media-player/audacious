@@ -1,3 +1,12 @@
+2007-02-04 15:47:05 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3958]
+  - add "%U" to arguments of audacious.desktop.in::exec.
+  Closes: bugs-meta #776, launchpad #83112
+  
+  trunk/src/audacious/audacious.desktop.in |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-02-03 19:19:07 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3956]
   - define __AUDACIOUS_INPUT_PLUGIN_API__ to 2 by request of shd
