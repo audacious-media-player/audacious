@@ -1,7 +1,7 @@
 # Russian translation for Audacious.
-# Copyright (C) 2006 Alexandr Orlov <alxorlov@pochta.ru>
+# Copyright (C) 2006,2007 Alexandr Orlov <alxorlov@pochta.ru>
 # This file is distributed under the same license as the Audacious package.
-# Alexandr Orlov <alxorlov@pochta.ru>, 2006.
+# Alexandr Orlov <alxorlov@pochta.ru>, 2007.
 #
 # За основу взят перевод Виталия Липатова для BMP.
 # Улучшения перевода приветствуются :)
@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: audacious 1.3\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-02-02 17:11-0600\n"
-"PO-Revision-Date: 2006-01-25 17:00+0300\n"
+"PO-Revision-Date: 2007-02-05 19:39+0300\n"
 "Last-Translator: Alexandr Orlov <alxorlov@pochta.ru>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -93,9 +93,9 @@ msgid "Could not create directory (%s): %s\n"
 msgstr "Невозможно создать каталог (%s): %s\n"
 
 #: src/audacious/main.c:828
-#, fuzzy
+#, fuzyy
 msgid "Select which Audacious session ID to use"
-msgstr "Указать Audacious/ВМР/XMMS сессию (по умолчанию: 0)"
+msgstr "Указывает, какую сессию Audacious использовать"
 
 #: src/audacious/main.c:829
 msgid "Skip backwards in playlist"
@@ -122,7 +122,6 @@ msgid "Skip forward in playlist"
 msgstr "Перейти к следующей песне в списке"
 
 #: src/audacious/main.c:835
-#, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "Показать диалог перехода к файлу"
 
@@ -131,34 +130,32 @@ msgid "Don't clear the playlist"
 msgstr "Не очищать список воспроизведения"
 
 #: src/audacious/main.c:837
-#, fuzzy
 msgid "Add new files to a temporary playlist"
-msgstr "Добавляет файлы в список воспроизведения."
+msgstr "Добавить файлы во временный список воспроизведения"
 
 #: src/audacious/main.c:838
-#, fuzzy
 msgid "Display the main window"
 msgstr "Показать главное окно"
 
 #: src/audacious/main.c:839
 msgid "Display all open Audacious windows"
-msgstr ""
+msgstr "Показать все открытые окна Audacious"
 
 #: src/audacious/main.c:840
 msgid "Enable headless operation"
-msgstr ""
+msgstr "Включить работу в режиме сервера"
 
 #: src/audacious/main.c:841
 msgid "Print all errors and warnings to stdout"
-msgstr ""
+msgstr "Выводить все ошибки и предупреждения стандартный вывод"
 
 #: src/audacious/main.c:842
 msgid "Show version and builtin features"
-msgstr ""
+msgstr "Показать версию и встроенные возможности"
 
 #: src/audacious/main.c:843
 msgid "FILE..."
-msgstr ""
+msgstr "ФАЙЛ..."
 
 #: src/audacious/main.c:948
 #, c-format
@@ -198,7 +195,7 @@ msgstr ""
 
 #: src/audacious/main.c:1036
 msgid "- play multimedia files"
-msgstr ""
+msgstr "- мультимедийный проигрыватель"
 
 #: src/audacious/main.c:1043
 #, c-format
@@ -206,11 +203,13 @@ msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
+"%s: %s\n"
+"Попробуйте `%s --help' для получения более подробного описания.\n"
 
 #: src/audacious/main.c:1052
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unable to open display, exiting.\n"
-msgstr "audacious: Невозможно открыть экран, выходим.\n"
+msgstr "%s: Невозможно открыть экран, выходим.\n"
 
 #: src/audacious/signals.c:90
 msgid ""
@@ -306,9 +305,8 @@ msgid "Bulgarian:"
 msgstr "Болгарский:"
 
 #: src/audacious/ui_credits.c:151
-#, fuzzy
 msgid "Croatian:"
-msgstr "Румынский:"
+msgstr "Хорватский:"
 
 #: src/audacious/ui_credits.c:154
 msgid "Czech:"
@@ -408,7 +406,7 @@ msgstr "Традиционный Китайский:"
 
 #: src/audacious/ui_credits.c:231
 msgid "Turkish:"
-msgstr ""
+msgstr "Турецкий:"
 
 #: src/audacious/ui_credits.c:235
 msgid "Ukrainian:"
@@ -437,7 +435,7 @@ msgstr ""
 
 #: src/audacious/ui_main.c:851
 msgid "VBR"
-msgstr "VBR"
+msgstr ""
 
 #: src/audacious/ui_main.c:892 src/audacious/ui_main.c:896
 msgid "stereo"
@@ -1333,14 +1331,12 @@ msgid "Track Information Window"
 msgstr "Окно информации о дорожке"
 
 #: src/audacious/ui_fileinfopopup.c:305
-#, fuzzy
 msgid "Track Number"
 msgstr "Номер дорожки"
 
 #: src/audacious/ui_fileinfopopup.c:322
-#, fuzzy
 msgid "Track Length"
-msgstr "Длительность:"
+msgstr "Длительность"
 
 #: src/audacious/ui_fileopener.c:131
 msgid "Open Files"
@@ -1968,9 +1964,8 @@ msgid "Popup Information Settings"
 msgstr "Настройки всплывающей информации"
 
 #: src/audacious/glade/prefswin.glade:4334
-#, fuzzy
 msgid "<b>Cover image retrieve</b>"
-msgstr "<b>Распознавание файлов</b>"
+msgstr "<b>Поиск обложки альбома</b>"
 
 #: src/audacious/glade/prefswin.glade:4359
 msgid ""
@@ -2002,17 +1997,16 @@ msgid "Use per-file cover"
 msgstr "Искать изображение для каждого файла"
 
 #: src/audacious/glade/prefswin.glade:4635
-#, fuzzy
 msgid "<b>Miscellaneous</b>"
-msgstr "<b>_Разное</b>"
+msgstr "<b>Разное</b>"
 
 #: src/audacious/glade/prefswin.glade:4673
 msgid "Show Progress bar for the current track"
-msgstr ""
+msgstr "Показывать полосу завершения для проигрываемой записи"
 
 #: src/audacious/glade/prefswin.glade:4711
 msgid "Delay until filepopup comes up: "
-msgstr ""
+msgstr "Задержка при появлении всплывающей информации: "
 
 #: src/audacious/glade/prefswin.glade:4805
 msgid "Color Adjustment"
@@ -2094,73 +2088,3 @@ msgstr "16 кГц"
 #~ msgid "Enable playlist transparency"
 #~ msgstr "Прозрачный список воспроизведения"
 
-#~ msgid "%s: option `%s' is ambiguous\n"
-#~ msgstr "%s: параметр `%s' неопределён\n"
-
-#~ msgid "%s: option `--%s' doesn't allow an argument\n"
-#~ msgstr "%s: параметр `--%s' не позволяет аргумента\n"
-
-#~ msgid "%s: option `%c%s' doesn't allow an argument\n"
-#~ msgstr "%s: параметр `%c%s' не позволяет аргумента\n"
-
-#~ msgid "%s: option `%s' requires an argument\n"
-#~ msgstr "%s: параметр `%s' требует аргумент\n"
-
-#~ msgid "%s: unrecognized option `--%s'\n"
-#~ msgstr "%s: неизвестный параметр `--%s'\n"
-
-#~ msgid "%s: unrecognized option `%c%s'\n"
-#~ msgstr "%s: неизвестный параметр `%c%s'\n"
-
-#~ msgid "%s: illegal option -- %c\n"
-#~ msgstr "%s: некорректный параметр -- %c\n"
-
-#~ msgid "%s: invalid option -- %c\n"
-#~ msgstr "%s: неправильный параметр -- %c\n"
-
-#~ msgid "%s: option requires an argument -- %c\n"
-#~ msgstr "%s: параметр требует аргумент -- %c\n"
-
-#~ msgid "%s: option `-W %s' is ambiguous\n"
-#~ msgstr "%s: параметр `-W %s' не определён\n"
-
-#~ msgid "%s: option `-W %s' doesn't allow an argument\n"
-#~ msgstr "%s: параметр `-W %s' не требует аргумента\n"
-
-#~ msgid ""
-#~ "Usage: audacious [options] [files] ...\n"
-#~ "\n"
-#~ "Options:\n"
-#~ "--------\n"
-#~ msgstr ""
-#~ "Использование: audacious [параметры] [файлы] ...\n"
-#~ "\n"
-#~ "Параметры:\n"
-#~ "--------\n"
-
-#~ msgid "Display this text and exit"
-#~ msgstr "Отобразить этот текст и выйти"
-
-#~ msgid "Activate Audacious"
-#~ msgstr "Активировать Audacious"
-
-#~ msgid "Previous session ID"
-#~ msgstr "Идентификатор предыдущей сессии"
-
-#~ msgid "Headless operation [experimental]"
-#~ msgstr "Работать в режиме сервера [экспериментальный]"
-
-#~ msgid "Disable error/warning interception (logging)"
-#~ msgstr "Отключить показ ошибок/предупреждений (журналирование)"
-
-#~ msgid "Print version number and exit\n"
-#~ msgstr "Вывести номер версии и выйти\n"
-
-#~ msgid "Add/Open Files dialog"
-#~ msgstr "Добавить/Открыть файлы"
-
-#~ msgid "Close Dialog on Add"
-#~ msgstr "Закрыть окно при Добавлении"
-
-#~ msgid "Deselect All"
-#~ msgstr "Снять выделение"
