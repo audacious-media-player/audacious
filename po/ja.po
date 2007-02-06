@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-02-02 17:11-0600\n"
-"PO-Revision-Date: 2007-02-01 16:30+0900\n"
+"PO-Revision-Date: 2007-02-06 10:52+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -408,7 +408,7 @@ msgstr "繁体中国語:"
 
 #: src/audacious/ui_credits.c:231
 msgid "Turkish:"
-msgstr ""
+msgstr "トルコ語:"
 
 #: src/audacious/ui_credits.c:235
 msgid "Ukrainian:"

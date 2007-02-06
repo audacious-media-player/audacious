@@ -1,3 +1,10 @@
+2007-02-06 00:28:03 +0000  Giacomo Lozito <james@develia.org>
+  revision [3966]
+  - prevent player from crashing when bmp_cfg_db_get_string(db, CDDA, directory, &path) in add_medium returns FALSE
+  trunk/src/audacious/ui_main.c |   10 ++++++++--
+  1 file changed, 8 insertions(+), 2 deletions(-)
+
+
 2007-02-05 16:47:10 +0000  Alexandr Orlov <alxorlov@pochta.ru>
   revision [3964]
   Update russian translation
