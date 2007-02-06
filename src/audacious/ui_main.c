@@ -2805,8 +2805,14 @@ add_medium(void)
 
     db = bmp_cfg_db_open();
 
-    bmp_cfg_db_get_string(db, "CDDA", "directory", &path);
-    bmp_cfg_db_close(db);
+    if ( bmp_cfg_db_get_string(db, "CDDA", "directory", &path) != TRUE )
+    {
+        bmp_cfg_db_close(db);
+        run_no_audiocd_dialog();
+        return;
+    }
+    else
+        bmp_cfg_db_close(db);
 
     if (!(list = input_scan_dir(path))) {
         run_no_audiocd_dialog();
