@@ -2131,7 +2131,6 @@ void
 mainwin_fwd_pushed(void)
 {
     g_get_current_time(&cb_time);
-
     seek_initial_pos = hslider_get_position(mainwin_position);
     seek_state = MAINWIN_SEEK_FWD;
 }
@@ -2152,7 +2151,7 @@ mainwin_fwd_release(void)
 
     if ( now_dur <= TRISTATE_THRESHOLD )
     {
-        /* interpret as 'skip to previous song' */
+        /* interpret as 'skip to next song' */
         playlist_next(playlist_get_active());
     }
     else

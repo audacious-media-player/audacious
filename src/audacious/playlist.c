@@ -1044,8 +1044,7 @@ playlist_next(Playlist *playlist)
 {
     GList *plist_pos_list;
     gboolean restart_playing = FALSE;
-
-    if (!playlist)
+    if (!playlist_get_length(playlist))
         return;
 
     PLAYLIST_LOCK(playlist->mutex);
@@ -1103,7 +1102,7 @@ playlist_prev(Playlist *playlist)
     GList *plist_pos_list;
     gboolean restart_playing = FALSE;
 
-    if (!playlist)
+    if (!playlist_get_length(playlist))
         return;
 
     PLAYLIST_LOCK(playlist->mutex);
