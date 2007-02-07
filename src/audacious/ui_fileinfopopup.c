@@ -93,7 +93,7 @@ filepopup_entry_set_text_free(GtkWidget *filepopup_win, const char *entry_name, 
 {
 	GtkWidget *widget = g_object_get_data(G_OBJECT(filepopup_win), entry_name);
 
-	if (widget == NULL)
+	if (widget == NULL || text == NULL)
 		return;
 
 	gtk_label_set_text(GTK_LABEL(widget), text);
@@ -113,10 +113,16 @@ audacious_fileinfopopup_progress_cb ( gpointer filepopup_win )
   gint time;
 
   pl = playlist_get_active();
+
+  g_return_if_fail(pl != NULL);
+
   pos = playlist_get_position(pl);
 
   current_file = playlist_get_filename( pl , pos );
   time = playback_get_time();
+
+  if (current_file == NULL)
+      return FALSE;
 
   if ( ( time != -1 ) &&
        ( length != -1 ) &&

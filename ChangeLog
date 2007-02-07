@@ -1,3 +1,10 @@
+2007-02-07 18:06:49 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [3976]
+  (I really hate my shell's escaping, ignore this)
+  trunk/ChangeLog |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-02-07 18:05:19 +0000  Jonathan Schleifer <js@h3c.de>
   revision [3974]
   Too much was reverted here. Removing the " around %U would've been sufficient.
