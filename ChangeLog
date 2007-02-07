@@ -1,3 +1,10 @@
+2007-02-07 15:49:45 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [3972]
+  Reverted rev 3958 - it breaks opening files with nautilus completely
+  trunk/src/audacious/audacious.desktop.in |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-02-06 14:06:58 +0000  Troels Bang Jensen <marvin@fnuck.dk>
   revision [3970]
   - fixed crash when skipping to next song with an empty playlist
