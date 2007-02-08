@@ -114,7 +114,7 @@ audacious_fileinfopopup_progress_cb ( gpointer filepopup_win )
 
   pl = playlist_get_active();
 
-  g_return_if_fail(pl != NULL);
+  g_return_val_if_fail(pl != NULL, FALSE);
 
   pos = playlist_get_position(pl);
 
