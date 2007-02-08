@@ -976,7 +976,7 @@ playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
         playlist->position->length = length;
 
         // overwrite tuple->track_name, mainly for streaming. it may incur side effects. --yaz
-        if(playlist->position->tuple){
+        if(playlist->position->tuple && length == -1){
             if(playlist->position->tuple->track_name){
                 g_free(playlist->position->tuple->track_name);
             }

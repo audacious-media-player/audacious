@@ -1,3 +1,13 @@
+2007-02-08 15:00:02 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [3986]
+  make input->set_info overwrite tuple->track_name. it allows input
+  plugins to update fileinfopopup along with meta data in a stream. it
+  may incur side effects, please let me know if you find any problem.
+  
+  trunk/src/audacious/playlist.c |    8 ++++++++
+  1 file changed, 8 insertions(+)
+
+
 2007-02-08 09:43:09 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [3984]
   - suppress warning
