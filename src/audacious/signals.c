@@ -33,6 +33,9 @@
 #include "ui_main.h"
 #include "signals.h"
 
+GCond *exit_cond;
+GMutex *exit_mutex;
+
 typedef void (*SignalHandler) (gint);
 
 static SignalHandler
@@ -103,19 +106,24 @@ static void
 sigterm_handler (gint signal_number)
 {
     cfg.terminate = TRUE;
+    g_cond_signal(exit_cond);
 }
 
-static gboolean
-signal_process_events (gpointer data)
+static void *
+signal_process_events (void *data)
 {
-    if (cfg.terminate == TRUE)
-    {
-        g_message("Audacious has received SIGTERM and is shutting down.");
-        mainwin_quit_cb();
-        return FALSE;
+    while (1) {
+        if (cfg.terminate == TRUE)
+        {
+            g_print("Audacious has received SIGTERM and is shutting down.\n");
+            mainwin_quit_cb();
+        }
+        g_mutex_lock(exit_mutex);
+        g_cond_wait(exit_cond, exit_mutex);
+        g_mutex_unlock(exit_mutex);
     }
 
-    return TRUE;
+    return NULL;
 }
 
 void 
@@ -123,6 +131,9 @@ signal_handlers_init (void)
 {
     char *magic;
     magic = getenv("AUD_ENSURE_BACKTRACE");
+
+    exit_cond = g_cond_new();
+    exit_mutex = g_mutex_new();
 
     signal_install_handler(SIGPIPE, signal_empty_handler);
     signal_install_handler(SIGINT, sigterm_handler);
@@ -133,5 +144,6 @@ signal_handlers_init (void)
     if (magic == NULL)
         signal_install_handler(SIGSEGV, sigsegv_handler);
 
-    g_timeout_add(100, signal_process_events, NULL);
+    g_thread_create(signal_process_events, NULL, FALSE, NULL);
+
 }

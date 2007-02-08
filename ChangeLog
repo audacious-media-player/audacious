@@ -1,3 +1,10 @@
+2007-02-08 02:38:48 +0000  Giacomo Lozito <james@develia.org>
+  revision [3980]
+  - add window class player.Audacious to audacious player window
+  trunk/src/audacious/ui_main.c |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2007-02-07 18:23:29 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3978]
   - add some debugging assertions to this code
