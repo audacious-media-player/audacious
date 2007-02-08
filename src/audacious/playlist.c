@@ -974,6 +974,14 @@ playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
         g_free(playlist->position->title);
         playlist->position->title = g_strdup(title);
         playlist->position->length = length;
+
+        // overwrite tuple->track_name, mainly for streaming. it may incur side effects. --yaz
+        if(playlist->position->tuple){
+            if(playlist->position->tuple->track_name){
+                g_free(playlist->position->tuple->track_name);
+            }
+            playlist->position->tuple->track_name = g_strdup(title);
+        }
     }
 
     PLAYLIST_UNLOCK(playlist->mutex);
