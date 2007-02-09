@@ -125,8 +125,10 @@ util_run_filebrowser_gtk2style(gboolean play_button)
     GtkWidget *action_button, *close_button;
     GtkWidget *toggle;
 
-    if(window) /* avoid multiple open of filebrowser */
+    if(window) {
+        gtk_window_present(GTK_WINDOW(window)); /* raise filebrowser */
         return;
+    }
     
     gchar *window_title = play_button ? _("Open Files") : _("Add Files");
     gchar *toggle_text = play_button ?

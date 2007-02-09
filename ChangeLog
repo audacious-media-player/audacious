@@ -1,3 +1,11 @@
+2007-02-08 16:42:01 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3988]
+  - revise r3986 to only override tuple->track_name on lengthless streams
+  
+  trunk/src/audacious/playlist.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-02-08 15:00:02 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [3986]
   make input->set_info overwrite tuple->track_name. it allows input
