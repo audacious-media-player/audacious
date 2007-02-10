@@ -61,8 +61,6 @@ GtkWidget *playlistwin;
 PlayList_List *playlistwin_list = NULL;
 PButton *playlistwin_shade, *playlistwin_close;
 
-static gboolean playlistwin_resizing = FALSE;
-
 static GdkPixmap *playlistwin_bg;
 static GdkBitmap *playlistwin_mask = NULL;
 static GdkGC *playlistwin_gc;
@@ -91,6 +89,8 @@ static void playlistwin_draw_frame(void);
 
 static gboolean playlistwin_fileinfopopup_probe(gpointer * filepopup_win);
 
+static gboolean playlistwin_resizing = FALSE;
+static gint playlistwin_resize_x, playlistwin_resize_y;
 
 gboolean
 playlistwin_is_shaded(void)
@@ -617,16 +617,31 @@ playlistwin_inverse_selection(void)
 static void
 playlistwin_resize(gint width, gint height)
 {
+    gint tx, ty;
     gboolean redraw;
 
     g_return_if_fail(width > 0 && height > 0);
 
-    cfg.playlist_width = width;
+    tx = (width - PLAYLISTWIN_MIN_WIDTH) / PLAYLISTWIN_WIDTH_SNAP;
+    tx = (tx * PLAYLISTWIN_WIDTH_SNAP) + PLAYLISTWIN_MIN_WIDTH;
+    if (tx < PLAYLISTWIN_MIN_WIDTH)
+        tx = PLAYLISTWIN_MIN_WIDTH;
 
     if (!cfg.playlist_shaded)
-        cfg.playlist_height = height;
+    {
+        ty = (height - PLAYLISTWIN_MIN_HEIGHT) / PLAYLISTWIN_HEIGHT_SNAP;
+        ty = (ty * PLAYLISTWIN_HEIGHT_SNAP) + PLAYLISTWIN_MIN_HEIGHT;
+        if (ty < PLAYLISTWIN_MIN_HEIGHT)
+            ty = PLAYLISTWIN_MIN_HEIGHT;
+    }
     else
-        height = cfg.playlist_height;
+        ty = cfg.playlist_height;
+
+    if (tx == cfg.playlist_width && ty == cfg.playlist_height)
+        return;
+
+    cfg.playlist_width = width = tx;
+    cfg.playlist_height = height = ty;
 
     /* FIXME: why the fsck are we doing this manually? */
     /* adjust widget positions and sizes */
@@ -679,10 +694,25 @@ playlistwin_motion(GtkWidget * widget,
 {
     GdkEvent *gevent;
 
-    if (dock_is_moving(GTK_WINDOW(playlistwin))) {
-        dock_move_motion(GTK_WINDOW(playlistwin), event);
+    /*
+     * GDK2's resize is broken and doesn't really play nice, so we have
+     * to do all of this stuff by hand.
+     */
+    if (playlistwin_resizing == TRUE)
+    {
+        if (event->x + playlistwin_resize_x != playlistwin_get_width() ||
+            event->y + playlistwin_resize_y != playlistwin_get_height())
+        {
+            playlistwin_resize(event->x + playlistwin_resize_x,
+  		 	       event->y + playlistwin_resize_y);
+        }
+        gdk_window_resize(playlistwin->window,
+	    cfg.playlist_width, cfg.playlist_height);
     }
-    else {
+    else if (dock_is_moving(GTK_WINDOW(playlistwin)))
+        dock_move_motion(GTK_WINDOW(playlistwin), event);
+    else
+    {
         handle_motion_cb(playlistwin_wlist, widget, event);
         draw_playlist_window(FALSE);
     }
@@ -1014,6 +1044,10 @@ playlistwin_press(GtkWidget * widget,
           event->x >= playlistwin_get_width() - 31 &&
           event->x < playlistwin_get_width() - 22))) {
 
+        /* This code is disabled because gtk_window_begin_resize_drag is
+         * highly broken. --nenolod
+         */
+#if 0
         /* NOTE: Workaround for bug #214 */
         if (event->type != GDK_2BUTTON_PRESS && 
             event->type != GDK_3BUTTON_PRESS) {
@@ -1025,7 +1059,10 @@ playlistwin_press(GtkWidget * widget,
                                          event->x + xpos, event->y + ypos,
                                          event->time);
         }
-        grab = FALSE;
+#endif
+        playlistwin_resizing = TRUE;
+        playlistwin_resize_x = cfg.playlist_width - event->x;
+        playlistwin_resize_y = cfg.playlist_height - event->y;
     }
     else if (event->button == 1 && REGION_L(12, 37, 29, 11)) {
         /* ADD button menu */
@@ -1162,24 +1199,6 @@ playlistwin_focus_out(GtkWidget * widget,
     playlistwin_shade->pb_allow_draw = FALSE;
     draw_playlist_window(TRUE);
     return FALSE;
-}
-
-static gboolean
-playlistwin_configure(GtkWidget * window,
-                      GdkEventConfigure * event, gpointer data)
-{
-    if (!GTK_WIDGET_VISIBLE(window))
-        return FALSE;
-
-    cfg.playlist_x = event->x;
-    cfg.playlist_y = event->y;
-
-    if (playlistwin_resizing) {
-        if (event->width != playlistwin_get_width() ||
-            event->height != playlistwin_get_height())
-            playlistwin_resize(event->width, event->height);
-    }
-    return TRUE;
 }
 
 void
@@ -1702,8 +1721,6 @@ playlistwin_create_window(void)
                            G_CALLBACK(playlistwin_focus_in), NULL);
     g_signal_connect_after(playlistwin, "focus_out_event",
                            G_CALLBACK(playlistwin_focus_out), NULL);
-    g_signal_connect(playlistwin, "configure_event",
-                     G_CALLBACK(playlistwin_configure), NULL);
     g_signal_connect(playlistwin, "style_set",
                      G_CALLBACK(playlistwin_set_back_pixmap), NULL);
 
