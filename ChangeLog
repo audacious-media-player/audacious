@@ -1,3 +1,11 @@
+2007-02-10 06:30:10 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [3994]
+  - use ConfigureNotify to set playlist location, a proper use of ICCCM.
+  
+  trunk/src/audacious/ui_playlist.c |   32 +++++++++++++++++---------------
+  1 file changed, 17 insertions(+), 15 deletions(-)
+
+
 2007-02-10 06:05:03 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [3992]
   - using ConfigureNotify for resizing is wrong per ICCCM guideline, 

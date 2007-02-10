@@ -89,6 +89,7 @@ static const gchar *credit_text[] = {
     "Laszlo Dvornik",
     "Ralf Ertzinger",
     "Mike Frysinger",
+    "Mark Glines",
     "Chris Kehler",
     "Michael Hanselmann",
     "Joseph Jezak",

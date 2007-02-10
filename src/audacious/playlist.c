@@ -712,6 +712,11 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
         return TRUE;
     }
 
+    if (r > 6 && str_has_prefix_nocase(p, "https:")) {
+        playlist_load_ins(playlist, filename, pos);
+        return TRUE;
+    }
+
     return FALSE;
 }
 
