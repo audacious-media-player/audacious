@@ -685,7 +685,18 @@ playlistwin_resize(gint width, gint height)
     gdk_window_clear(playlistwin->window);
 }
 
+static gboolean
+playlistwin_configure(GtkWidget * window,
+                      GdkEventConfigure * event, gpointer data)
+{
+    if (!GTK_WIDGET_VISIBLE(window))
+        return FALSE;
 
+    cfg.playlist_x = event->x;
+    cfg.playlist_y = event->y;
+
+    return TRUE;
+}
 
 static void
 playlistwin_motion(GtkWidget * widget,
@@ -1044,25 +1055,14 @@ playlistwin_press(GtkWidget * widget,
           event->x >= playlistwin_get_width() - 31 &&
           event->x < playlistwin_get_width() - 22))) {
 
-        /* This code is disabled because gtk_window_begin_resize_drag is
-         * highly broken. --nenolod
-         */
-#if 0
-        /* NOTE: Workaround for bug #214 */
+        g_print("foo\n");
+
         if (event->type != GDK_2BUTTON_PRESS && 
             event->type != GDK_3BUTTON_PRESS) {
-            /* resize area */
             playlistwin_resizing = TRUE;
-            gtk_window_begin_resize_drag(GTK_WINDOW(widget),
-                                         GDK_WINDOW_EDGE_SOUTH_EAST,
-                                         event->button,
-                                         event->x + xpos, event->y + ypos,
-                                         event->time);
+            playlistwin_resize_x = cfg.playlist_width - event->x;
+            playlistwin_resize_y = cfg.playlist_height - event->y;
         }
-#endif
-        playlistwin_resizing = TRUE;
-        playlistwin_resize_x = cfg.playlist_width - event->x;
-        playlistwin_resize_y = cfg.playlist_height - event->y;
     }
     else if (event->button == 1 && REGION_L(12, 37, 29, 11)) {
         /* ADD button menu */
@@ -1721,6 +1721,8 @@ playlistwin_create_window(void)
                            G_CALLBACK(playlistwin_focus_in), NULL);
     g_signal_connect_after(playlistwin, "focus_out_event",
                            G_CALLBACK(playlistwin_focus_out), NULL);
+    g_signal_connect(playlistwin, "configure_event",
+                     G_CALLBACK(playlistwin_configure), NULL);
     g_signal_connect(playlistwin, "style_set",
                      G_CALLBACK(playlistwin_set_back_pixmap), NULL);
 
