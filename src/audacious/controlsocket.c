@@ -55,6 +55,7 @@
 #include "ui_preferences.h"
 #include "libaudacious/beepctrl.h"
 #include "memorypool.h"
+#include "ui_jumptotrack.h"
 
 #define CTRLSOCKET_BACKLOG        100
 #define CTRLSOCKET_TIMEOUT        100000
@@ -715,7 +716,7 @@ ctrlsocket_check(void)
         case CMD_SHOW_JTF_BOX:
 	    if (has_x11_connection != TRUE)
                 break;
-            mainwin_jump_to_file();
+            ui_jump_to_track();
             break;
         case CMD_TOGGLE_AOT:
 	    if (has_x11_connection != TRUE)

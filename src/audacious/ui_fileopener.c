@@ -36,9 +36,6 @@ filebrowser_add_files(GtkFileChooser * browser,
     guint ctr = 0;
     Playlist *playlist = playlist_get_active();
 
-    if (GTK_IS_WIDGET(mainwin_jtf))
-        gtk_widget_set_sensitive(mainwin_jtf, FALSE);
-
     for (cur = files; cur; cur = g_slist_next(cur)) {
 
         if (g_file_test(cur->data,G_FILE_TEST_IS_DIR)) {
@@ -55,9 +52,6 @@ filebrowser_add_files(GtkFileChooser * browser,
     } 
 
     playlistwin_update_list(playlist);
-
-    if (GTK_IS_WIDGET(mainwin_jtf))
-        gtk_widget_set_sensitive(mainwin_jtf, TRUE);
 
     ptr = gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(browser));
 
@@ -276,16 +270,11 @@ static void filebrowser_add_files_classic(gchar ** files,
     char *ptr;
     Playlist *playlist = playlist_get_active();
 
-    if (GTK_IS_WIDGET(mainwin_jtf))
-    gtk_widget_set_sensitive(mainwin_jtf, FALSE);
 
     while (files[ctr] != NULL) {
-    playlist_add(playlist, files[ctr++]);
+        playlist_add(playlist, files[ctr++]);
     }
     playlistwin_update_list(playlist);
-
-    if (GTK_IS_WIDGET(mainwin_jtf))
-    gtk_widget_set_sensitive(mainwin_jtf, TRUE);
 
     gtk_label_get(GTK_LABEL(GTK_BIN(filesel->history_pulldown)->child),
           &ptr);

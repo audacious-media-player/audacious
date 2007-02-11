@@ -82,6 +82,7 @@ SOURCES = \
 	ui_fileinfo.c \
 	ui_fileinfopopup.c \
 	ui_fileopener.c \
+	ui_jumptotrack.c \
 	ui_main.c \
 	ui_manager.c \
 	ui_playlist.c \
