@@ -1057,8 +1057,6 @@ playlistwin_press(GtkWidget * widget,
           event->x >= playlistwin_get_width() - 31 &&
           event->x < playlistwin_get_width() - 22))) {
 
-        g_print("foo\n");
-
         if (event->type != GDK_2BUTTON_PRESS && 
             event->type != GDK_3BUTTON_PRESS) {
             playlistwin_resizing = TRUE;
@@ -1679,9 +1677,6 @@ playlistwin_create_window(void)
                                 playlistwin_get_height());
     gtk_window_set_resizable(GTK_WINDOW(playlistwin), TRUE);
     playlistwin_set_geometry_hints(cfg.playlist_shaded);
-    dock_window_list = dock_window_set_decorated(dock_window_list,
-                                                 GTK_WINDOW(playlistwin),
-                                                 cfg.show_wm_decorations);
 
     gtk_window_set_transient_for(GTK_WINDOW(playlistwin),
                                  GTK_WINDOW(mainwin));

@@ -3416,10 +3416,6 @@ mainwin_create_window(void)
 
     gtk_widget_set_size_request(mainwin, width, height);
 
-    dock_window_list = dock_window_set_decorated(dock_window_list,
-                                                 GTK_WINDOW(mainwin),
-                                                 cfg.show_wm_decorations);
-
     if (cfg.player_x != -1 && cfg.save_window_position)
         gtk_window_move(GTK_WINDOW(mainwin), cfg.player_x, cfg.player_y);
 
