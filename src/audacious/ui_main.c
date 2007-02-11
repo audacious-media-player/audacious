@@ -1097,15 +1097,9 @@ mainwin_mouse_button_press(GtkWidget * widget,
     if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
         !ui_skinned_window_widgetlist_contained(mainwin, event->x, event->y) &&
         (cfg.easy_move || event->y < 14)) {
-        if (0 && hint_move_resize_available()) {
-            hint_move_resize(mainwin, event->x_root, event->y_root, TRUE);
-            grab = FALSE;
-        }
-        else {
-            gtk_window_present(GTK_WINDOW(mainwin));
-            dock_move_press(dock_window_list, GTK_WINDOW(mainwin), event,
-                            TRUE);
-        }
+        gtk_window_present(GTK_WINDOW(mainwin));
+        dock_move_press(dock_window_list, GTK_WINDOW(mainwin), event,
+                        TRUE);
     }
     else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS &&
              event->y < 14 && !ui_skinned_window_widgetlist_contained(mainwin, event->x, event->y)) {

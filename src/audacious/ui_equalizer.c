@@ -362,16 +362,9 @@ equalizerwin_press(GtkWidget * widget, GdkEventButton * event,
     if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
         ((cfg.easy_move || cfg.equalizer_shaded || event->y < 14) &&
          !inside_sensitive_widgets(event->x, event->y))) {
-        if (0 && hint_move_resize_available()) {
-            hint_move_resize(equalizerwin, event->x_root,
-                             event->y_root, TRUE);
-            grab = FALSE;
-        }
-        else {
-            equalizerwin_raise();
-            dock_move_press(dock_window_list, GTK_WINDOW(equalizerwin), event,
-                            FALSE);
-        }
+         equalizerwin_raise();
+         dock_move_press(dock_window_list, GTK_WINDOW(equalizerwin), event,
+                         FALSE);
     }
     else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS
              && event->y < 14) {
