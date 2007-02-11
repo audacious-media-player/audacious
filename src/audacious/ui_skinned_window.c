@@ -18,6 +18,7 @@
  */
 
 #include "platform/smartinclude.h"
+#include "widgets/widgetcore.h"
 
 #include <gtk/gtkmain.h>
 #include <glib-object.h>
@@ -155,3 +156,51 @@ ui_skinned_window_new(GtkWindowType type)
 
     return widget;
 }
+
+void
+ui_skinned_window_widgetlist_associate(GtkWidget * widget, Widget * w)
+{
+    SkinnedWindow *sw;
+
+    g_return_if_fail(widget != NULL);
+    g_return_if_fail(w != NULL);
+
+    sw = SKINNED_WINDOW(widget);
+
+    sw->widget_list = g_list_append(sw->widget_list, w);
+}
+
+void
+ui_skinned_window_widgetlist_dissociate(GtkWidget * widget, Widget * w)
+{
+    SkinnedWindow *sw;
+
+    g_return_if_fail(widget != NULL);
+    g_return_if_fail(w != NULL);
+
+    sw = SKINNED_WINDOW(widget);
+
+    sw->widget_list = g_list_remove(sw->widget_list, w);
+}
+
+gboolean
+ui_skinned_window_widgetlist_contained(GtkWidget * widget, gint x, gint y)
+{
+    SkinnedWindow *sw;
+    GList *l;
+
+    g_return_val_if_fail(widget != NULL, FALSE);
+
+    sw = SKINNED_WINDOW(widget);
+
+    for (l = sw->widget_list; l != NULL; l = g_list_next(l))
+    {
+        Widget *w = WIDGET(l->data);
+
+        if (widget_contains(WIDGET(w), x, y) == TRUE)
+            return TRUE;
+    }
+
+    return FALSE;
+}
+

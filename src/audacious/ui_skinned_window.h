@@ -34,6 +34,8 @@ struct _SkinnedWindow
 
   GtkWidget *canvas;
   gint x,y;
+
+  GList *widget_list;
 };
 
 struct _SkinnedWindowClass
@@ -42,5 +44,8 @@ struct _SkinnedWindowClass
 };
 
 extern GtkWidget *ui_skinned_window_new(GtkWindowType type);
+extern void ui_skinned_window_widgetlist_associate(GtkWidget * widget, Widget * w);
+extern void ui_skinned_window_widgetlist_dissociate(GtkWidget * widget, Widget * w);
+extern gboolean ui_skinned_window_widgetlist_contained(GtkWidget * widget, gint x, gint y);
 
 #endif

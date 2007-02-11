@@ -111,6 +111,7 @@ struct _PlaybackInfo {
     gint n_channels;
 };
 
+static GList *mainwin_wlist = NULL;
 
 GtkWidget *mainwin = NULL;
 GtkWidget *err = NULL; /* an error dialog for miscellaneous error messages */
@@ -159,8 +160,6 @@ static HSlider *mainwin_volume, *mainwin_balance, *mainwin_position;
 static MonoStereo *mainwin_monostereo;
 static SButton *mainwin_srew, *mainwin_splay, *mainwin_spause;
 static SButton *mainwin_sstop, *mainwin_sfwd, *mainwin_seject, *mainwin_about;
-
-static GList *mainwin_wlist = NULL;
 
 static gint mainwin_timeout_id;
 
@@ -534,9 +533,9 @@ draw_main_window(gboolean force)
                 if (!w->redraw || !w->visible)
                     continue;
 
-            if (w->x > bmp_active_skin->properties.mainwin_width ||
-            w->y > bmp_active_skin->properties.mainwin_height)
-            continue;
+                if (w->x > bmp_active_skin->properties.mainwin_width ||
+                    w->y > bmp_active_skin->properties.mainwin_height)
+                    continue;
 
                 if (cfg.doublesize) {
                     gint width, height;
@@ -1051,52 +1050,6 @@ mainwin_motion(GtkWidget * widget,
     return FALSE;
 }
 
-static gboolean
-inside_sensitive_widgets(gint x, gint y)
-{
-    return (widget_contains(WIDGET(mainwin_menubtn), x, y)
-            || widget_contains(WIDGET(mainwin_minimize), x, y)
-            || widget_contains(WIDGET(mainwin_shade), x, y)
-            || widget_contains(WIDGET(mainwin_close), x, y)
-            || widget_contains(WIDGET(mainwin_rew), x, y)
-            || widget_contains(WIDGET(mainwin_play), x, y)
-            || widget_contains(WIDGET(mainwin_pause), x, y)
-            || widget_contains(WIDGET(mainwin_stop), x, y)
-            || widget_contains(WIDGET(mainwin_fwd), x, y)
-            || widget_contains(WIDGET(mainwin_eject), x, y)
-            || widget_contains(WIDGET(mainwin_shuffle), x, y)
-            || widget_contains(WIDGET(mainwin_repeat), x, y)
-            || widget_contains(WIDGET(mainwin_pl), x, y)
-            || widget_contains(WIDGET(mainwin_eq), x, y)
-            || widget_contains(WIDGET(mainwin_info), x, y)
-            || widget_contains(WIDGET(mainwin_menurow), x, y)
-            || widget_contains(WIDGET(mainwin_volume), x, y)
-            || widget_contains(WIDGET(mainwin_balance), x, y)
-            || (widget_contains(WIDGET(mainwin_position), x, y) &&
-                widget_is_visible(WIDGET(mainwin_position)))
-            || widget_contains(WIDGET(mainwin_minus_num), x, y)
-            || widget_contains(WIDGET(mainwin_10min_num), x, y)
-            || widget_contains(WIDGET(mainwin_min_num), x, y)
-            || widget_contains(WIDGET(mainwin_10sec_num), x, y)
-            || widget_contains(WIDGET(mainwin_sec_num), x, y)
-            || widget_contains(WIDGET(mainwin_vis), x, y)
-            || widget_contains(WIDGET(mainwin_minimize), x, y)
-            || widget_contains(WIDGET(mainwin_shade), x, y)
-            || widget_contains(WIDGET(mainwin_close), x, y)
-            || widget_contains(WIDGET(mainwin_menubtn), x, y)
-            || widget_contains(WIDGET(mainwin_sposition), x, y)
-            || widget_contains(WIDGET(mainwin_stime_min), x, y)
-            || widget_contains(WIDGET(mainwin_stime_sec), x, y)
-            || widget_contains(WIDGET(mainwin_srew), x, y)
-            || widget_contains(WIDGET(mainwin_splay), x, y)
-            || widget_contains(WIDGET(mainwin_spause), x, y)
-            || widget_contains(WIDGET(mainwin_sstop), x, y)
-            || widget_contains(WIDGET(mainwin_sfwd), x, y)
-            || widget_contains(WIDGET(mainwin_seject), x, y)
-            || widget_contains(WIDGET(mainwin_svis), x, y)
-            || widget_contains(WIDGET(mainwin_about), x, y));
-}
-
 void
 mainwin_scrolled(GtkWidget *widget, GdkEventScroll *event,
     gpointer callback_data)
@@ -1142,7 +1095,7 @@ mainwin_mouse_button_press(GtkWidget * widget,
     }
 
     if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
-        !inside_sensitive_widgets(event->x, event->y) &&
+        !ui_skinned_window_widgetlist_contained(mainwin, event->x, event->y) &&
         (cfg.easy_move || event->y < 14)) {
         if (0 && hint_move_resize_available()) {
             hint_move_resize(mainwin, event->x_root, event->y_root, TRUE);
@@ -1155,7 +1108,7 @@ mainwin_mouse_button_press(GtkWidget * widget,
         }
     }
     else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS &&
-             event->y < 14 && !inside_sensitive_widgets(event->x, event->y)) {
+             event->y < 14 && !ui_skinned_window_widgetlist_contained(mainwin, event->x, event->y)) {
         mainwin_set_shade(!cfg.player_shaded);
         if (dock_is_moving(GTK_WINDOW(mainwin)))
             dock_move_release(GTK_WINDOW(mainwin));
@@ -1645,10 +1598,10 @@ mainwin_update_jtf(GtkWidget * widget, gpointer user_data)
                            0, row, 1, desc_buf, -1);
         row++;
 
-    if(desc_buf) {
-        g_free(desc_buf);
-        desc_buf = NULL;
-    }
+        if(desc_buf) {
+            g_free(desc_buf);
+            desc_buf = NULL;
+        }
     }
 
     gtk_tree_model_get_iter_first(GTK_TREE_MODEL(store), &iter);
@@ -1743,10 +1696,11 @@ mainwin_jump_to_file_edit_cb(GtkEntry * entry, gpointer user_data)
         }
 
         song_index++;
-    if (filename) {
-        g_free(filename);
-        filename = NULL;
-    }
+
+        if (filename) {
+            g_free(filename);
+            filename = NULL;
+        }
     }
 
     PLAYLIST_UNLOCK(playlist->mutex);
@@ -3220,11 +3174,6 @@ mainwin_create_widgets(void)
     mainwin_stop =
         create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 85, 88, 23,
                        18, 69, 0, 69, 18, mainwin_stop_pushed, SKIN_CBUTTONS);
-#if 0
-    mainwin_fwd =
-        create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 108, 88, 22,
-                       18, 92, 0, 92, 18, playlist_next, SKIN_CBUTTONS);
-#endif
     mainwin_fwd =
         create_pbutton_ex(&mainwin_wlist, mainwin_bg, mainwin_gc, 108, 88, 22,
                        18, 92, 0, 92, 18, mainwin_fwd_pushed, mainwin_fwd_release,
@@ -3393,6 +3342,62 @@ mainwin_create_widgets(void)
     gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(err),
                                              "Boo! Bad stuff! Booga Booga!");
 
+    /* XXX: eventually update widgetcore API to not need this */
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_menubtn));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_minimize));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_shade));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_close));
+
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_rew));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_play));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_pause));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_stop));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_fwd));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_eject));
+
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_srew));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_splay));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_spause));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_sstop));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_sfwd));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_seject));
+
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_shuffle));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_repeat));
+
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_eq));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_pl));
+
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_info));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_othertext));
+
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_rate_text));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_freq_text));
+
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_menurow));
+
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_volume));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_balance));
+
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_monostereo));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_playstatus));
+
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_minus_num));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_10min_num));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_min_num));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_10sec_num));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_sec_num));
+
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_about));
+
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_vis));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_svis));
+
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_position));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_sposition));
+
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_stime_min));
+    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_stime_sec));
 }
 
 static void
