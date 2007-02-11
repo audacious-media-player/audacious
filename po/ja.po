@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-02-02 17:11-0600\n"
+"POT-Creation-Date: 2007-02-11 03:00-0600\n"
 "PO-Revision-Date: 2007-02-06 10:52+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -57,7 +57,7 @@ msgstr "詳細を表示する(_D)"
 #: src/audacious/input.c:347 src/audacious/ui_preferences.c:118
 #: src/audacious/ui_preferences.c:486 src/audacious/ui_preferences.c:574
 #: src/audacious/ui_preferences.c:663 src/audacious/ui_preferences.c:759
-#: src/audacious/ui_fileinfopopup.c:396
+#: src/audacious/ui_fileinfopopup.c:402
 msgid "Filename"
 msgstr "ファイル名"
 
@@ -84,8 +84,8 @@ msgstr "入力プラグイン: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "ログ・ファイル (%s) を作成できません！\n"
 
-#: src/audacious/main.c:83 src/audacious/main.c:85 src/audacious/ui_main.c:628
-#: src/audacious/ui_main.c:3403
+#: src/audacious/main.c:83 src/audacious/main.c:85 src/audacious/ui_main.c:627
+#: src/audacious/ui_main.c:2897
 msgid "Audacious"
 msgstr "Audacious"
 
@@ -213,7 +213,7 @@ msgstr ""
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "%s: ディスプレイを開けません. 終了します.\n"
 
-#: src/audacious/signals.c:90
+#: src/audacious/signals.c:93
 msgid ""
 "\n"
 "Received SIGSEGV\n"
@@ -244,12 +244,12 @@ msgstr ""
 "\n"
 "Copyright (C) 2005-2007 Audacious 開発チーム"
 
-#: src/audacious/ui_about.c:123 src/audacious/ui_credits.c:337
+#: src/audacious/ui_about.c:123 src/audacious/ui_credits.c:338
 #: src/audacious/ui_manager.c:387 src/audacious/ui_manager.c:388
 msgid "About Audacious"
 msgstr "Audacious について"
 
-#: src/audacious/ui_about.c:172 src/audacious/ui_credits.c:382
+#: src/audacious/ui_about.c:172 src/audacious/ui_credits.c:383
 msgid "Credits"
 msgstr "クレジット"
 
@@ -286,257 +286,237 @@ msgstr "プラグイン開発:"
 msgid "Patch authors:"
 msgstr "パッチ作者:"
 
-#: src/audacious/ui_credits.c:104
+#: src/audacious/ui_credits.c:105
 msgid "0.1.x developers:"
 msgstr "0.1.x 開発者:"
 
-#: src/audacious/ui_credits.c:110
+#: src/audacious/ui_credits.c:111
 msgid "BMP Developers:"
 msgstr "BMP 開発者:"
 
-#: src/audacious/ui_credits.c:142
+#: src/audacious/ui_credits.c:143
 msgid "Brazilian Portuguese:"
 msgstr "ブラジル・ポルトガル語:"
 
-#: src/audacious/ui_credits.c:145
+#: src/audacious/ui_credits.c:146
 msgid "Breton:"
 msgstr "ブレトン語:"
 
-#: src/audacious/ui_credits.c:148
+#: src/audacious/ui_credits.c:149
 msgid "Bulgarian:"
 msgstr "ブルガリア語:"
 
-#: src/audacious/ui_credits.c:151
+#: src/audacious/ui_credits.c:152
 msgid "Croatian:"
 msgstr "クロアチア語:"
 
-#: src/audacious/ui_credits.c:154
+#: src/audacious/ui_credits.c:155
 msgid "Czech:"
 msgstr "チェコ語:"
 
-#: src/audacious/ui_credits.c:157
+#: src/audacious/ui_credits.c:158
 msgid "Dutch:"
 msgstr "オランダ語:"
 
-#: src/audacious/ui_credits.c:161
+#: src/audacious/ui_credits.c:162
 msgid "Finnish:"
 msgstr "フィンランド語:"
 
-#: src/audacious/ui_credits.c:164
+#: src/audacious/ui_credits.c:165
 msgid "French:"
 msgstr "フランス語:"
 
-#: src/audacious/ui_credits.c:167
+#: src/audacious/ui_credits.c:168
 msgid "German:"
 msgstr "ドイツ語:"
 
-#: src/audacious/ui_credits.c:171
+#: src/audacious/ui_credits.c:172
 msgid "Georgian:"
 msgstr "グルジア語:"
 
-#: src/audacious/ui_credits.c:174
+#: src/audacious/ui_credits.c:175
 msgid "Greek:"
 msgstr "ギリシア語:"
 
-#: src/audacious/ui_credits.c:179
+#: src/audacious/ui_credits.c:180
 msgid "Hindi:"
 msgstr "ヒンディー語:"
 
-#: src/audacious/ui_credits.c:182
+#: src/audacious/ui_credits.c:183
 msgid "Hungarian:"
 msgstr "ハンガリー語:"
 
-#: src/audacious/ui_credits.c:185
+#: src/audacious/ui_credits.c:186
 msgid "Italian:"
 msgstr "イタリア語:"
 
-#: src/audacious/ui_credits.c:189
+#: src/audacious/ui_credits.c:190
 msgid "Japanese:"
 msgstr "日本語:"
 
-#: src/audacious/ui_credits.c:192
+#: src/audacious/ui_credits.c:193
 msgid "Korean:"
 msgstr "韓国語:"
 
-#: src/audacious/ui_credits.c:195
+#: src/audacious/ui_credits.c:196
 msgid "Lithuanian:"
 msgstr "リトアニア語:"
 
-#: src/audacious/ui_credits.c:198
+#: src/audacious/ui_credits.c:199
 msgid "Macedonian:"
 msgstr "マケドニア語:"
 
-#: src/audacious/ui_credits.c:201
+#: src/audacious/ui_credits.c:202
 msgid "Polish:"
 msgstr "ポーランド語:"
 
-#: src/audacious/ui_credits.c:204
+#: src/audacious/ui_credits.c:205
 msgid "Romanian:"
 msgstr "ルーマニア語:"
 
-#: src/audacious/ui_credits.c:207
+#: src/audacious/ui_credits.c:208
 msgid "Russian:"
 msgstr "ロシア語:"
 
-#: src/audacious/ui_credits.c:210
+#: src/audacious/ui_credits.c:211
 msgid "Serbian (Latin):"
 msgstr "セルビア語 (ラテン語):"
 
-#: src/audacious/ui_credits.c:213
+#: src/audacious/ui_credits.c:214
 msgid "Serbian (Cyrillic):"
 msgstr "セルビア語 (キリル語):"
 
-#: src/audacious/ui_credits.c:216
+#: src/audacious/ui_credits.c:217
 msgid "Simplified Chinese:"
 msgstr "簡体中国語:"
 
-#: src/audacious/ui_credits.c:219
+#: src/audacious/ui_credits.c:220
 msgid "Slovak:"
 msgstr "スロバキア語:"
 
-#: src/audacious/ui_credits.c:222
+#: src/audacious/ui_credits.c:223
 msgid "Spanish:"
 msgstr "スペイン語:"
 
-#: src/audacious/ui_credits.c:225
+#: src/audacious/ui_credits.c:226
 msgid "Swedish:"
 msgstr "スウェーデン語:"
 
-#: src/audacious/ui_credits.c:228
+#: src/audacious/ui_credits.c:229
 msgid "Traditional Chinese:"
 msgstr "繁体中国語:"
 
-#: src/audacious/ui_credits.c:231
+#: src/audacious/ui_credits.c:232
 msgid "Turkish:"
 msgstr "トルコ語:"
 
-#: src/audacious/ui_credits.c:235
+#: src/audacious/ui_credits.c:236
 msgid "Ukrainian:"
 msgstr "ウクライナ語:"
 
-#: src/audacious/ui_credits.c:238
+#: src/audacious/ui_credits.c:239
 msgid "Welsh:"
 msgstr "ウェールズ語:"
 
-#: src/audacious/ui_credits.c:386
+#: src/audacious/ui_credits.c:387
 msgid "Translators"
 msgstr "翻訳者"
 
-#: src/audacious/ui_equalizer.c:752
+#: src/audacious/ui_equalizer.c:741
 msgid "Audacious Equalizer"
 msgstr "Audacious イコライザ"
 
-#: src/audacious/ui_equalizer.c:1452
+#: src/audacious/ui_equalizer.c:1429
 msgid "Presets"
 msgstr "プリセット"
 
-#: src/audacious/ui_main.c:626
+#: src/audacious/ui_main.c:625
 #, c-format
 msgid "%s - Audacious"
 msgstr "%s - Audacious"
 
-#: src/audacious/ui_main.c:851
+#: src/audacious/ui_main.c:850
 msgid "VBR"
 msgstr "VBR"
 
-#: src/audacious/ui_main.c:892 src/audacious/ui_main.c:896
+#: src/audacious/ui_main.c:891 src/audacious/ui_main.c:895
 msgid "stereo"
 msgstr "ステレオ"
 
-#: src/audacious/ui_main.c:892 src/audacious/ui_main.c:896
+#: src/audacious/ui_main.c:891 src/audacious/ui_main.c:895
 msgid "mono"
 msgstr "モノラル"
 
-#: src/audacious/ui_main.c:1385 src/audacious/ui_manager.c:414
+#: src/audacious/ui_main.c:1328 src/audacious/ui_manager.c:414
 #: src/audacious/ui_manager.c:415
 msgid "Jump to Time"
 msgstr "指定した時間へ移動"
 
-#: src/audacious/ui_main.c:1406
+#: src/audacious/ui_main.c:1349
 msgid "minutes:seconds"
 msgstr "分:秒"
 
-#: src/audacious/ui_main.c:1416
+#: src/audacious/ui_main.c:1359
 msgid "Track length:"
 msgstr "トラックの合計時間:"
 
-#: src/audacious/ui_main.c:1501
-msgid "Un_queue"
-msgstr "キューから外す"
-
-#: src/audacious/ui_main.c:1503 src/audacious/ui_main.c:1891
-msgid "_Queue"
-msgstr "キューに入れる"
-
-#: src/audacious/ui_main.c:1816
-msgid "Jump to Track"
-msgstr "指定トラックへ移動"
-
-#: src/audacious/ui_main.c:1857
-msgid "Filter: "
-msgstr "フィルタ:"
-
-#: src/audacious/ui_main.c:1858
-msgid "_Filter:"
-msgstr "フィルタ(_F):"
-
-#: src/audacious/ui_main.c:2062
+#: src/audacious/ui_main.c:1500
 msgid "Enter location to play:"
 msgstr "演奏する位置の入力:"
 
-#: src/audacious/ui_main.c:2273
+#: src/audacious/ui_main.c:1710
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "移動先: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: src/audacious/ui_main.c:2305 src/audacious/ui_main.c:2924
+#: src/audacious/ui_main.c:1742 src/audacious/ui_main.c:2367
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "音量: %d%%"
 
-#: src/audacious/ui_main.c:2336 src/audacious/ui_main.c:2927
+#: src/audacious/ui_main.c:1773 src/audacious/ui_main.c:2370
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "バランス: %d%% (左寄り)"
 
-#: src/audacious/ui_main.c:2340 src/audacious/ui_main.c:2930
+#: src/audacious/ui_main.c:1777 src/audacious/ui_main.c:2373
 msgid "BALANCE: CENTER"
 msgstr "バランス: 中央"
 
-#: src/audacious/ui_main.c:2344 src/audacious/ui_main.c:2932
+#: src/audacious/ui_main.c:1781 src/audacious/ui_main.c:2375
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "バランス: %d%% (右寄り)"
 
-#: src/audacious/ui_main.c:2700
+#: src/audacious/ui_main.c:2137
 msgid "OPTIONS MENU"
 msgstr "オプション・メニュー"
 
-#: src/audacious/ui_main.c:2704
+#: src/audacious/ui_main.c:2141
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "\"常に最前面に配置\" は無効"
 
-#: src/audacious/ui_main.c:2706
+#: src/audacious/ui_main.c:2143
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "\"常に最前面に配置\" は有効"
 
-#: src/audacious/ui_main.c:2709
+#: src/audacious/ui_main.c:2146
 msgid "FILE INFO BOX"
 msgstr "ファイル情報ボックス"
 
-#: src/audacious/ui_main.c:2713
+#: src/audacious/ui_main.c:2150
 msgid "DISABLE DOUBLESIZE"
 msgstr "ダブル・サイズは無効"
 
-#: src/audacious/ui_main.c:2715
+#: src/audacious/ui_main.c:2152
 msgid "ENABLE DOUBLESIZE"
 msgstr "ダブル・サイズは有効"
 
-#: src/audacious/ui_main.c:2718
+#: src/audacious/ui_main.c:2155
 msgid "VISUALIZATION MENU"
 msgstr "視覚化メニュー"
 
-#: src/audacious/ui_main.c:2764
+#: src/audacious/ui_main.c:2201
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -546,7 +526,7 @@ msgstr ""
 "\n"
 "CD が挿入されていないか, 挿入された CD はオーディオ CD ではありません.\n"
 
-#: src/audacious/ui_main.c:2781
+#: src/audacious/ui_main.c:2218
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -562,7 +542,7 @@ msgstr ""
 "2. お使いのサウンドカードをブロックしているアプリが他に存在しないか.\n"
 "3. お使いのサウンドカードが正しく設定されているか.\n"
 
-#: src/audacious/ui_main.c:3387
+#: src/audacious/ui_main.c:2825
 msgid "Error in Audacious."
 msgstr "Audacious エラー"
 
@@ -796,7 +776,7 @@ msgid "Peaks Falloff"
 msgstr "ピーク・フォールオフ"
 
 #: src/audacious/ui_manager.c:201 src/audacious/ui_preferences.c:106
-#: src/audacious/playlist_manager.c:288
+#: src/audacious/ui_playlist_manager.c:288
 #: src/audacious/glade/prefswin.glade:2494
 msgid "Playlist"
 msgstr "プレイリスト"
@@ -1256,17 +1236,17 @@ msgstr "マウス"
 msgid "Plugins"
 msgstr "プラグイン"
 
-#: src/audacious/ui_preferences.c:113 src/audacious/ui_fileinfopopup.c:237
+#: src/audacious/ui_preferences.c:113 src/audacious/ui_fileinfopopup.c:243
 msgid "Artist"
 msgstr "アーティスト"
 
-#: src/audacious/ui_preferences.c:114 src/audacious/ui_fileinfopopup.c:254
+#: src/audacious/ui_preferences.c:114 src/audacious/ui_fileinfopopup.c:260
 #: src/audacious/titlestring.c:372
 msgid "Album"
 msgstr "アルバム名"
 
-#: src/audacious/ui_preferences.c:115 src/audacious/ui_fileinfopopup.c:220
-#: src/audacious/ui_fileinfopopup.c:388
+#: src/audacious/ui_preferences.c:115 src/audacious/ui_fileinfopopup.c:226
+#: src/audacious/ui_fileinfopopup.c:394
 msgid "Title"
 msgstr "タイトル"
 
@@ -1274,7 +1254,7 @@ msgstr "タイトル"
 msgid "Tracknumber"
 msgstr "トラック番号"
 
-#: src/audacious/ui_preferences.c:117 src/audacious/ui_fileinfopopup.c:271
+#: src/audacious/ui_preferences.c:117 src/audacious/ui_fileinfopopup.c:277
 #: src/audacious/titlestring.c:373
 msgid "Genre"
 msgstr "ジャンル"
@@ -1287,7 +1267,7 @@ msgstr "パス名"
 msgid "Date"
 msgstr "日付"
 
-#: src/audacious/ui_preferences.c:121 src/audacious/ui_fileinfopopup.c:288
+#: src/audacious/ui_preferences.c:121 src/audacious/ui_fileinfopopup.c:294
 #: src/audacious/titlestring.c:380
 msgid "Year"
 msgstr "制作年"
@@ -1330,43 +1310,43 @@ msgstr "Unarchived Winamp 2.x スキン"
 msgid "Track Information Window"
 msgstr "トラック情報ウィンドウ"
 
-#: src/audacious/ui_fileinfopopup.c:305
+#: src/audacious/ui_fileinfopopup.c:311
 msgid "Track Number"
 msgstr "トラック番号"
 
-#: src/audacious/ui_fileinfopopup.c:322
+#: src/audacious/ui_fileinfopopup.c:328
 msgid "Track Length"
 msgstr "トラックの長さ:"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:127
 msgid "Open Files"
 msgstr "ファイルを開く"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:127
 msgid "Add Files"
 msgstr "ファイルの追加"
 
-#: src/audacious/ui_fileopener.c:133
+#: src/audacious/ui_fileopener.c:129
 msgid "Close dialog on Open"
 msgstr "開いたらダイアログを閉じる"
 
-#: src/audacious/ui_fileopener.c:133
+#: src/audacious/ui_fileopener.c:129
 msgid "Close dialog on Add"
 msgstr "追加したらダイアログを閉じる"
 
-#: src/audacious/ui_fileopener.c:363
+#: src/audacious/ui_fileopener.c:354
 msgid "Play files"
 msgstr "ファイルを演奏"
 
-#: src/audacious/ui_fileopener.c:365
+#: src/audacious/ui_fileopener.c:356
 msgid "Load files"
 msgstr "ファイルを読み込む"
 
-#: src/audacious/ui_playlist.c:482
+#: src/audacious/ui_playlist.c:484
 msgid "Search entries in active playlist"
 msgstr "有効になっているプレイリストのエントリを検索"
 
-#: src/audacious/ui_playlist.c:488
+#: src/audacious/ui_playlist.c:490
 msgid ""
 "Select entries in playlist by filling one or more fields. Fields use regular "
 "expressions syntax, case-insensitive. If you don't know how regular "
@@ -1377,45 +1357,45 @@ msgstr ""
 "正規表現が使え, 大文字と小文字を区別しません. 正規表現がどのように動作するか"
 "わからない場合は, 単純に検索しようとしているものの文字を入力します."
 
-#: src/audacious/ui_playlist.c:495
+#: src/audacious/ui_playlist.c:497
 msgid "Track name: "
 msgstr "トラック名: "
 
-#: src/audacious/ui_playlist.c:501
+#: src/audacious/ui_playlist.c:503
 msgid "Album name: "
 msgstr "アルバム・モード: "
 
-#: src/audacious/ui_playlist.c:507
+#: src/audacious/ui_playlist.c:509
 msgid "Artist: "
 msgstr "アーティスト: "
 
-#: src/audacious/ui_playlist.c:513
+#: src/audacious/ui_playlist.c:515
 msgid "Filename: "
 msgstr "ファイル名: "
 
-#: src/audacious/ui_playlist.c:520
+#: src/audacious/ui_playlist.c:522
 msgid "Clear previous selection before searching"
 msgstr "検索前に以前の選択をクリア"
 
-#: src/audacious/ui_playlist.c:523
+#: src/audacious/ui_playlist.c:525
 msgid "Automatically toggle queue for matching entries"
 msgstr "マッチしたエントリのキューを自動的にトグル"
 
-#: src/audacious/ui_playlist.c:526
+#: src/audacious/ui_playlist.c:528
 msgid "Create a new playlist with matching entries"
 msgstr "マッチしたエントリで新しいプレイリストを作成"
 
-#: src/audacious/ui_playlist.c:745
+#: src/audacious/ui_playlist.c:788
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "プレイリスト \"%s\" を書き込む際にエラー: %s"
 
-#: src/audacious/ui_playlist.c:766
+#: src/audacious/ui_playlist.c:809
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s は既に存在しています. 続行しますか？"
 
-#: src/audacious/ui_playlist.c:780
+#: src/audacious/ui_playlist.c:823
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -1426,21 +1406,53 @@ msgstr ""
 "\n"
 "%s のファイルの種類が不明です.\n"
 
-#: src/audacious/ui_playlist.c:920
+#: src/audacious/ui_playlist.c:963
 msgid "Load Playlist"
 msgstr "プレイリストの読み込み"
 
-#: src/audacious/ui_playlist.c:933
+#: src/audacious/ui_playlist.c:976
 msgid "Save Playlist"
 msgstr "プレイリストの保存"
 
-#: src/audacious/ui_playlist.c:1653
+#: src/audacious/ui_playlist.c:1672
 msgid "Audacious Playlist Editor"
 msgstr "Audacious プレイリストエディタ"
 
 #: src/audacious/ui_urlopener.c:90
 msgid "Add/Open URL Dialog"
 msgstr "ファイルの追加/URL を開く"
+
+#: src/audacious/ui_playlist_manager.c:253
+msgid "Playlist Manager"
+msgstr "プレイリストマネージャ"
+
+#: src/audacious/ui_playlist_manager.c:292
+msgid "Entries"
+msgstr "エントリ"
+
+#: src/audacious/ui_playlist_manager.c:306
+msgid "_Rename"
+msgstr "リネーム(_R)"
+
+#: src/audacious/ui_jumptotrack.c:134
+msgid "Un_queue"
+msgstr "キューから外す"
+
+#: src/audacious/ui_jumptotrack.c:136 src/audacious/ui_jumptotrack.c:525
+msgid "_Queue"
+msgstr "キューに入れる"
+
+#: src/audacious/ui_jumptotrack.c:450
+msgid "Jump to Track"
+msgstr "指定トラックへ移動"
+
+#: src/audacious/ui_jumptotrack.c:491
+msgid "Filter: "
+msgstr "フィルタ:"
+
+#: src/audacious/ui_jumptotrack.c:492
+msgid "_Filter:"
+msgstr "フィルタ(_F):"
 
 #: src/audacious/playback.c:198
 msgid ""
@@ -1449,18 +1461,6 @@ msgid ""
 msgstr ""
 "<b><big>出力プラグインが選択されていません.</big></b>\n"
 "出力プラグインを選択していません."
-
-#: src/audacious/playlist_manager.c:253
-msgid "Playlist Manager"
-msgstr "プレイリストマネージャ"
-
-#: src/audacious/playlist_manager.c:292
-msgid "Entries"
-msgstr "エントリ"
-
-#: src/audacious/playlist_manager.c:306
-msgid "_Rename"
-msgstr "リネーム(_R)"
 
 #: src/audacious/titlestring.c:371
 msgid "Performer/Artist"

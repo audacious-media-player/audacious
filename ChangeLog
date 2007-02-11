@@ -1,3 +1,16 @@
+2007-02-11 04:47:46 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4010]
+  - split out jump to track
+  
+  trunk/src/audacious/Makefile         |    1 
+  trunk/src/audacious/controlsocket.c  |    3 
+  trunk/src/audacious/ui_fileopener.c  |   13 
+  trunk/src/audacious/ui_jumptotrack.c |  594 +++++++++++++++++++++++++++++++++++
+  trunk/src/audacious/ui_jumptotrack.h |   30 +
+  trunk/src/audacious/ui_main.c        |  514 ------------------------------
+  6 files changed, 632 insertions(+), 523 deletions(-)
+
+
 2007-02-11 04:21:42 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4008]
   - playlist_manager -> ui_playlist_manager, since it's a UI component.
