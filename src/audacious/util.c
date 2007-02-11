@@ -598,26 +598,6 @@ bmp_menu_translate(const gchar * path, gpointer func_data)
 }
 #endif
 
-void
-util_set_cursor(GtkWidget * window)
-{
-    static GdkCursor *cursor = NULL;
-
-    if (!window) {
-        if (cursor) {
-            gdk_cursor_unref(cursor);
-            cursor = NULL;
-        }
-
-        return;
-    }
-
-    if (!cursor)
-        cursor = gdk_cursor_new(GDK_LEFT_PTR);
-
-    gdk_window_set_cursor(window->window, cursor);
-}
-
 /* text_get_extents() taken from The GIMP (C) Spencer Kimball, Peter
  * Mattis et al */
 gboolean

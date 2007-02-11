@@ -87,13 +87,15 @@ SOURCES = \
 	ui_manager.c \
 	ui_playlist.c \
 	ui_preferences.c \
+	ui_skinned_cursor.c \
+	ui_skinned_window.c \
 	ui_skinselector.c \
 	ui_urlopener.c \
 	urldecode.c \
 	util.c \
+	vfs.c \
 	vfs_buffer.c \
 	vfs_buffered_file.c \
-	vfs.c \
 	vfs_common.c \
 	visualization.c \
 	xconvert.c

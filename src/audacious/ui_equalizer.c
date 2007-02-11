@@ -52,6 +52,8 @@
 
 #include "images/audacious_eq.xpm"
 
+#include "ui_skinned_window.h"
+
 enum PresetViewCols {
     PRESET_VIEW_COL_NAME,
     PRESET_VIEW_N_COLS
@@ -422,15 +424,9 @@ equalizerwin_motion(GtkWidget * widget,
         event->x /= 2;
         event->y /= 2;
     }
-    if (dock_is_moving(GTK_WINDOW(equalizerwin)))
-    {
-        dock_move_motion(GTK_WINDOW(equalizerwin), event);
-    }
-    else 
-    {
-        handle_motion_cb(equalizerwin_wlist, widget, event);
-        draw_equalizer_window(FALSE);
-    }
+
+    handle_motion_cb(equalizerwin_wlist, widget, event);
+    draw_equalizer_window(FALSE);
 
     gdk_flush();
 
@@ -748,7 +744,7 @@ equalizerwin_create_window(void)
     GdkPixbuf *icon;
     gint width, height;
 
-    equalizerwin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    equalizerwin = ui_skinned_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(equalizerwin), _("Audacious Equalizer"));
     gtk_window_set_wmclass(GTK_WINDOW(equalizerwin), "equalizer", "Audacious");
     gtk_window_set_role(GTK_WINDOW(equalizerwin), "equalizer");
@@ -782,14 +778,6 @@ equalizerwin_create_window(void)
     if (cfg.equalizer_x != -1 && cfg.save_window_position)
         gtk_window_move(GTK_WINDOW(equalizerwin),
                         cfg.equalizer_x, cfg.equalizer_y);
-
-    gtk_widget_set_events(equalizerwin,
-                          GDK_FOCUS_CHANGE_MASK | GDK_BUTTON_MOTION_MASK |
-                          GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
-                          GDK_VISIBILITY_NOTIFY_MASK);
-    gtk_widget_realize(equalizerwin);
-
-    util_set_cursor(equalizerwin);
 
     g_signal_connect(equalizerwin, "delete_event",
                      G_CALLBACK(equalizerwin_delete), NULL);

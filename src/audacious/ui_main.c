@@ -82,6 +82,8 @@
 #include "util.h"
 #include "visualization.h"
 
+#include "ui_skinned_window.h"
+
 static GTimeVal cb_time; /* click delay for tristate is defined by TRISTATE_THRESHOLD */
 
 #define ITEM_SEPARATOR {"/-", NULL, NULL, 0, "<Separator>"}
@@ -440,8 +442,6 @@ mainwin_quit_cb(void)
     gdk_flush();
 
     g_source_remove(mainwin_timeout_id);
-
-    util_set_cursor(NULL);
 
     bmp_config_save();
     gtk_accel_map_save(bmp_paths[BMP_PATH_ACCEL_FILE]);
@@ -1020,14 +1020,13 @@ mainwin_motion(GtkWidget * widget,
     int x, y;
     GdkModifierType state;
 
+    /* If it's a hint, we had to query X, so override the 
+     * information we we're given... it's probably useless... --nenolod
+     */
     if (event->is_hint != FALSE)
     {
-        gdk_window_get_pointer(GDK_WINDOW(mainwin->window),
-        &x, &y, &state);
+        gdk_window_get_pointer(GDK_WINDOW(mainwin->window), &x, &y, &state);
 
-    /* If it's a hint, we had to query X, so override the 
-         * information we we're given... it's probably useless... --nenolod
-     */
         event->x = x;
         event->y = y;
         event->state = state;
@@ -1041,9 +1040,6 @@ mainwin_motion(GtkWidget * widget,
     if (cfg.doublesize) {
         event->x /= 2;
         event->y /= 2;
-    }
-    if (dock_is_moving(GTK_WINDOW(mainwin))) {
-        dock_move_motion(GTK_WINDOW(mainwin), event);
     }
     else {
         handle_motion_cb(mainwin_wlist, widget, event);
@@ -3404,7 +3400,7 @@ mainwin_create_window(void)
 {
     gint width, height;
 
-    mainwin = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    mainwin = ui_skinned_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(mainwin), _("Audacious"));
     gtk_window_set_wmclass(GTK_WINDOW(mainwin), "player", "Audacious");
     gtk_window_set_role(GTK_WINDOW(mainwin), "player");
@@ -3419,7 +3415,6 @@ mainwin_create_window(void)
     }
 
     gtk_widget_set_size_request(mainwin, width, height);
-    gtk_widget_set_app_paintable(mainwin, TRUE);
 
     dock_window_list = dock_window_set_decorated(dock_window_list,
                                                  GTK_WINDOW(mainwin),
@@ -3427,15 +3422,6 @@ mainwin_create_window(void)
 
     if (cfg.player_x != -1 && cfg.save_window_position)
         gtk_window_move(GTK_WINDOW(mainwin), cfg.player_x, cfg.player_y);
-
-    gtk_widget_add_events(mainwin,
-                          GDK_FOCUS_CHANGE_MASK | GDK_BUTTON_MOTION_MASK |
-                          GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
-                          GDK_SCROLL_MASK | GDK_KEY_PRESS_MASK |
-                          GDK_VISIBILITY_NOTIFY_MASK);
-    gtk_widget_realize(mainwin);
-
-    util_set_cursor(mainwin);
 
     g_signal_connect(mainwin, "destroy", G_CALLBACK(mainwin_destroy), NULL);
     g_signal_connect(mainwin, "button_press_event",

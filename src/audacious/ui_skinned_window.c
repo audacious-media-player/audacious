@@ -1,0 +1,157 @@
+/*
+ * Audacious: A cross-platform multimedia player
+ * Copyright (c) 2007 William Pitcock <nenolod -at- sacredspiral.co.uk>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; under version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ */
+
+#include "platform/smartinclude.h"
+
+#include <gtk/gtkmain.h>
+#include <glib-object.h>
+#include <glib/gmacros.h>
+#include <gtk/gtkmarshal.h>
+#include <gtk/gtkwindow.h>
+
+#include "main.h"
+#include "dock.h"
+#include "ui_skinned_window.h"
+#include "ui_skinned_cursor.h"
+
+static void ui_skinned_window_class_init(SkinnedWindowClass *klass);
+static void ui_skinned_window_init(GtkWidget *widget);
+static GtkWindowClass *parent = NULL;
+
+GType
+ui_skinned_window_get_type(void)
+{
+  static GType window_type = 0;
+
+  if (!window_type)
+    {
+      static const GTypeInfo window_info =
+      {
+        sizeof (SkinnedWindowClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) ui_skinned_window_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (SkinnedWindow),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) ui_skinned_window_init
+      };
+
+      window_type =
+        g_type_register_static (GTK_TYPE_WINDOW, "SkinnedWindow",
+                                &window_info, 0);
+    }
+
+  return window_type;
+}
+
+static gboolean
+ui_skinned_window_configure(GtkWidget *widget,
+                            GdkEventConfigure *event)
+{
+    GtkWidgetClass *widget_class;
+    SkinnedWindow *window = SKINNED_WINDOW(widget);
+
+    widget_class = (GtkWidgetClass*) parent;
+
+    if (widget_class->configure_event != NULL)
+        widget_class->configure_event(widget, event);
+
+    window->x = event->x;
+    window->y = event->y;
+
+    return FALSE;
+}
+
+static gboolean
+ui_skinned_window_motion_notify_event(GtkWidget *widget,
+                                      GdkEventMotion *event)
+{
+    GtkWidgetClass *widget_class;
+
+    widget_class = (GtkWidgetClass*) parent;
+
+    if (widget_class->motion_notify_event != NULL)
+        widget_class->motion_notify_event(widget, event);
+
+    if (dock_is_moving(GTK_WINDOW(widget)))
+        dock_move_motion(GTK_WINDOW(widget), event);
+
+    return FALSE;
+}
+
+static void
+ui_skinned_window_class_init(SkinnedWindowClass *klass)
+{
+    GtkWidgetClass *widget_class;
+
+    widget_class = (GtkWidgetClass*) klass;
+
+    parent = gtk_type_class(gtk_window_get_type());
+
+    widget_class->configure_event = ui_skinned_window_configure;
+    widget_class->motion_notify_event = ui_skinned_window_motion_notify_event;
+}
+
+void
+ui_skinned_window_hide(SkinnedWindow *window)
+{
+    g_return_if_fail(SKINNED_CHECK_WINDOW(window));
+
+    gtk_window_get_position(GTK_WINDOW(window), &window->x, &window->y);
+    gtk_widget_hide(GTK_WIDGET(window));
+}
+
+void
+ui_skinned_window_show(SkinnedWindow *window)
+{
+    g_return_if_fail(SKINNED_CHECK_WINDOW(window));
+
+    gtk_window_move(GTK_WINDOW(window), window->x, window->y);
+    gtk_widget_show_all(GTK_WIDGET(window));
+}
+
+static void
+ui_skinned_window_init(GtkWidget *widget)
+{
+    SkinnedWindow *window;
+    window = SKINNED_WINDOW(widget);
+}
+
+GtkWidget *
+ui_skinned_window_new(GtkWindowType type)
+{
+    GtkWidget *widget = g_object_new(ui_skinned_window_get_type(), NULL);
+
+    gtk_widget_add_events(GTK_WIDGET(widget),
+                          GDK_FOCUS_CHANGE_MASK | GDK_BUTTON_MOTION_MASK |
+                          GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
+                          GDK_SCROLL_MASK | GDK_KEY_PRESS_MASK |
+                          GDK_VISIBILITY_NOTIFY_MASK);
+    gtk_widget_realize(GTK_WIDGET(widget));
+
+    dock_window_list = dock_window_set_decorated(dock_window_list,
+	GTK_WINDOW(widget), cfg.show_wm_decorations);
+    gtk_widget_set_app_paintable(GTK_WIDGET(widget), TRUE);
+
+    ui_skinned_cursor_set(GTK_WIDGET(widget));
+
+    return widget;
+}
