@@ -94,6 +94,13 @@ PKG_CHECK_MODULES(GTK, [glib-2.0 >= 2.6.0 gtk+-2.0 >= 2.6.0 gthread-2.0 pango],
     [AC_MSG_ERROR([Cannot find glib2/gtk2/pango])]
 )
 
+dnl Check for GLib
+
+PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.6.0],
+    [ADD_PC_REQUIRES([glib-2.0 >= 2.6.0])],
+    [AC_MSG_ERROR([Cannot find glib2])]
+)
+
 dnl Check for libglade
 
 PKG_CHECK_MODULES(LIBGLADE, [libglade-2.0 >= 2.3.1],
