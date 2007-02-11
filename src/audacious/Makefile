@@ -71,7 +71,6 @@ SOURCES = \
 	playback.c \
 	playlist.c \
 	playlist_container.c \
-	playlist_manager.c \
 	pluginenum.c \
 	signals.c \
 	strings.c \
@@ -86,6 +85,7 @@ SOURCES = \
 	ui_main.c \
 	ui_manager.c \
 	ui_playlist.c \
+	ui_playlist_manager.c \
 	ui_preferences.c \
 	ui_skinned_cursor.c \
 	ui_skinned_window.c \

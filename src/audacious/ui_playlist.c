@@ -44,7 +44,7 @@
 #include "playback.h"
 #include "playlist.h"
 #include "playlist_container.h"
-#include "playlist_manager.h"
+#include "ui_playlist_manager.h"
 #include "strings.h"
 #include "ui_equalizer.h"
 #include "ui_fileopener.h"

@@ -15,7 +15,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include "playlist_manager.h"
+#include "ui_playlist_manager.h"
 #include "ui_playlist.h"
 #include "playlist.h"
 #include "ui_main.h"
