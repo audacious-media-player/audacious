@@ -1,3 +1,10 @@
+2007-02-12 15:18:47 +0000  Giacomo Lozito <james@develia.org>
+  revision [4020]
+  - added set volume hook
+  trunk/src/audacious/input.c |    7 +++++++
+  1 file changed, 7 insertions(+)
+
+
 2007-02-12 12:34:56 +0000  Giacomo Lozito <james@develia.org>
   revision [4018]
   - convert filename string to utf8 for playlist->title (closes bug #789)

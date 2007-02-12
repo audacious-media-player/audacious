@@ -504,9 +504,9 @@ bmp_init_paths()
         g_build_filename(xdg_config_home, "audacious", NULL);
     bmp_paths[BMP_PATH_USER_SKIN_DIR] =
         g_build_filename(xdg_data_home, "audacious", "Skins", NULL);
-    // FIXME: Think of something better for Plugins, XDG is missing this
     bmp_paths[BMP_PATH_USER_PLUGIN_DIR] =
-        g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "Plugins", NULL);
+        g_build_filename(xdg_data_home, "audacious", "Plugins", NULL);
+
     bmp_paths[BMP_PATH_SKIN_THUMB_DIR] =
         g_build_filename(xdg_cache_home, "audacious", "thumbs", NULL);
 
@@ -527,7 +527,7 @@ bmp_init_paths()
         g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "log", NULL);
 
     bmp_paths[BMP_PATH_GTKRC_FILE] =
-	g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "gtkrc", NULL);
+		g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "gtkrc", NULL);
 
     g_free(xdg_config_home);
     g_free(xdg_data_home);
@@ -977,9 +977,9 @@ void report_error(const gchar *error_text)
 static gboolean
 aud_headless_iteration(gpointer unused)
 {
-	audcore_generic_events();
-	free_vis_data();
-	return TRUE;
+    audcore_generic_events();
+    free_vis_data();
+    return TRUE;
 }
 
 gint
@@ -1189,16 +1189,16 @@ main(gint argc, gchar ** argv)
     // if we are running headless
     else
     {
-	GMainLoop *loop;
+        GMainLoop *loop;
 
         mainwin_set_info_text();
         playlist_start_get_info_thread();
 
         starting_up = FALSE;
 
-	loop = g_main_loop_new(NULL, TRUE);
-	g_timeout_add(10, aud_headless_iteration, NULL);
-	g_main_loop_run(loop);
+        loop = g_main_loop_new(NULL, TRUE);
+        g_timeout_add(10, aud_headless_iteration, NULL);
+        g_main_loop_run(loop);
 
         return EXIT_SUCCESS;
     }
