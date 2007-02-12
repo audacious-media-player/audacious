@@ -1,7 +1,9 @@
 include ../../mk/rules.mk
 include ../../mk/init.mk
 
-OBJECTIVE_LIBS = libid3tag.so
+OBJECTIVE_LIBS = libaudid3tag.so
+
+LIBDIR = $(plugindir)
 
 LDFLAGS += -Wl,-export-dynamic
 
