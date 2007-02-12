@@ -1,3 +1,12 @@
+2007-02-12 18:08:11 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4028]
+  - bundled libid3tag.so has been renamed libaudid3tag.so to avoid conflict.
+  - install location of libaudid3tag.so also has been changed to $(plugindir) since bundled build depends on audacious vfs.
+  
+  trunk/src/libid3tag/Makefile |    4 +++-
+  1 file changed, 3 insertions(+), 1 deletion(-)
+
+
 2007-02-12 17:22:32 +0000  Michael Farber <01mf02@gmail.com>
   revision [4026]
   - more playlist cleanups (generalized code for playlist loading/saving 

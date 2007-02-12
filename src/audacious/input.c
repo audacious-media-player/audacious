@@ -429,7 +429,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
 
     tmp = strrchr(tmp_uri, '?');
 
-    if (tmp != NULL)
+    if (tmp != NULL && g_ascii_isdigit(*(tmp + 1)))
         *tmp = '\0';
 
     fd = vfs_buffered_file_new_from_uri(tmp_uri);
