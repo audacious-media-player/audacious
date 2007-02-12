@@ -346,7 +346,7 @@ playlist_set_current_name(Playlist *playlist, const gchar * filename)
         return FALSE;
     }
 
-    playlist->title = g_strdup(filename);
+    playlist->title = filename_to_utf8(filename);
     return TRUE;
 }
 
