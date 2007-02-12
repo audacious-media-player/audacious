@@ -1,3 +1,10 @@
+2007-02-12 12:34:56 +0000  Giacomo Lozito <james@develia.org>
+  revision [4018]
+  - convert filename string to utf8 for playlist->title (closes bug #789)
+  trunk/src/audacious/playlist.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-02-11 13:19:07 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4016]
   first try for libid3tag integration. this improved libid3tag supports vfs operations and is capable of adding id3v2 tag to files which doesn't have id3v2 tag ever.

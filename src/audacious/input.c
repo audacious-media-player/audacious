@@ -42,6 +42,7 @@
 #include "util.h"
 #include "visualization.h"
 #include "widgets/widgetcore.h"
+#include "hook.h"
 
 #include "vfs.h"
 #include "vfs_buffer.h"
@@ -748,6 +749,8 @@ input_get_volume(gint * l, gint * r)
 void
 input_set_volume(gint l, gint r)
 {
+    gint h_vol[2];
+    
     if (playback_get_playing()) {
         if (get_current_input_playback() &&
             get_current_input_playback()->plugin->set_volume &&
@@ -756,6 +759,10 @@ input_set_volume(gint l, gint r)
         }
     }
     output_set_volume(l, r);
+    
+    h_vol[0] = l;
+    h_vol[1] = r;
+    hook_call("volume set", h_vol);
 }
 
 void
