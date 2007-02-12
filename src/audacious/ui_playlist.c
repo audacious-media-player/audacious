@@ -620,6 +620,7 @@ static void
 playlistwin_resize(gint width, gint height)
 {
     gint tx, ty;
+    gint dx, dy;
     gboolean redraw;
 
     g_return_if_fail(width > 0 && height > 0);
@@ -642,33 +643,35 @@ playlistwin_resize(gint width, gint height)
     if (tx == cfg.playlist_width && ty == cfg.playlist_height)
         return;
 
+    /* difference between previous size and new size */
+    dx = tx - cfg.playlist_width;
+    dy = ty - cfg.playlist_height;
+
     cfg.playlist_width = width = tx;
     cfg.playlist_height = height = ty;
 
-    /* FIXME: why the fsck are we doing this manually? */
-    /* adjust widget positions and sizes */
 
-    widget_resize(WIDGET(playlistwin_list), width - 31, height - 58);
+    widget_resize_relative(WIDGET(playlistwin_list), dx, dy);
 
-    widget_move(WIDGET(playlistwin_slider), width - 15, 20);
-    widget_resize(WIDGET(playlistwin_slider), 8, height - 58);
+    widget_move_relative(WIDGET(playlistwin_slider), dx, 0);
+    widget_resize_relative(WIDGET(playlistwin_slider), 0, dy);
 
-    widget_resize(WIDGET(playlistwin_sinfo), width - 35, 14);
+    widget_resize_relative(WIDGET(playlistwin_sinfo), dx, 0);
     playlistwin_update_sinfo(playlist_get_active());
 
-    widget_move(WIDGET(playlistwin_shade), width - 21, 3);
-    widget_move(WIDGET(playlistwin_close), width - 11, 3);
-    widget_move(WIDGET(playlistwin_time_min), width - 82, height - 15);
-    widget_move(WIDGET(playlistwin_time_sec), width - 64, height - 15);
-    widget_move(WIDGET(playlistwin_info), width - 143, height - 28);
-    widget_move(WIDGET(playlistwin_srew), width - 144, height - 16);
-    widget_move(WIDGET(playlistwin_splay), width - 138, height - 16);
-    widget_move(WIDGET(playlistwin_spause), width - 128, height - 16);
-    widget_move(WIDGET(playlistwin_sstop), width - 118, height - 16);
-    widget_move(WIDGET(playlistwin_sfwd), width - 109, height - 16);
-    widget_move(WIDGET(playlistwin_seject), width - 100, height - 16);
-    widget_move(WIDGET(playlistwin_sscroll_up), width - 14, height - 35);
-    widget_move(WIDGET(playlistwin_sscroll_down), width - 14, height - 30);
+    widget_move_relative(WIDGET(playlistwin_shade), dx, 0);
+    widget_move_relative(WIDGET(playlistwin_close), dx, 0);
+    widget_move_relative(WIDGET(playlistwin_time_min), dx, dy);
+    widget_move_relative(WIDGET(playlistwin_time_sec), dx, dy);
+    widget_move_relative(WIDGET(playlistwin_info), dx, dy);
+    widget_move_relative(WIDGET(playlistwin_srew), dx, dy);
+    widget_move_relative(WIDGET(playlistwin_splay), dx, dy);
+    widget_move_relative(WIDGET(playlistwin_spause), dx, dy);
+    widget_move_relative(WIDGET(playlistwin_sstop), dx, dy);
+    widget_move_relative(WIDGET(playlistwin_sfwd), dx, dy);
+    widget_move_relative(WIDGET(playlistwin_seject), dx, dy);
+    widget_move_relative(WIDGET(playlistwin_sscroll_up), dx, dy);
+    widget_move_relative(WIDGET(playlistwin_sscroll_down), dx, dy);
 
     g_object_unref(playlistwin_bg);
     playlistwin_bg = gdk_pixmap_new(playlistwin->window, width, height, -1);
@@ -717,10 +720,10 @@ playlistwin_motion(GtkWidget * widget,
             event->y + playlistwin_resize_y != playlistwin_get_height())
         {
             playlistwin_resize(event->x + playlistwin_resize_x,
-  		 	       event->y + playlistwin_resize_y);
+                               event->y + playlistwin_resize_y);
         }
         gdk_window_resize(playlistwin->window,
-	    cfg.playlist_width, cfg.playlist_height);
+                          cfg.playlist_width, cfg.playlist_height);
     }
     else if (dock_is_moving(GTK_WINDOW(playlistwin)))
         dock_move_motion(GTK_WINDOW(playlistwin), event);

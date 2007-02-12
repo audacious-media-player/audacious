@@ -107,6 +107,12 @@ widget_resize(Widget * widget, gint width, gint height)
 }
 
 void
+widget_resize_relative(Widget * widget, gint width, gint height)
+{
+    widget_resize(widget, widget->width + width, widget->height + height);
+}
+
+void
 widget_move(Widget * widget, gint x, gint y)
 {
     widget_lock(widget);
@@ -115,10 +121,15 @@ widget_move(Widget * widget, gint x, gint y)
 }
 
 void
+widget_move_relative(Widget * widget, gint x, gint y)
+{
+    widget_move(widget, widget->x + x, widget->y + y);
+}
+
+void
 widget_draw(Widget * widget)
 {
-    if (widget->visible == FALSE)
-	return;
+    g_return_if_fail(widget->visible == TRUE);
 
     widget_lock(widget);
     WIDGET(widget)->redraw = TRUE;
@@ -131,7 +142,7 @@ widget_draw_quick(Widget * widget)
     widget_lock(widget);
     if (WIDGET(widget)->draw != NULL)
     {
-	WIDGET(widget)->draw(widget);
+        WIDGET(widget)->draw(widget);
         gdk_flush();
     }
     widget_unlock(widget);

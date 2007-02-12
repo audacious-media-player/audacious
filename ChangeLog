@@ -1,3 +1,15 @@
+2007-02-12 16:13:53 +0000  Michael Farber <01mf02@gmail.com>
+  revision [4022]
+  - changed plugin directory to ~/.local/share/audacious/Plugins (seems more logical to me)
+  - updated migrate_config.sh to reflect the change
+  - reindented a bit
+  
+  
+  trunk/migrate_config.sh    |   12 ++++++------
+  trunk/src/audacious/main.c |   20 ++++++++++----------
+  2 files changed, 16 insertions(+), 16 deletions(-)
+
+
 2007-02-12 15:18:47 +0000  Giacomo Lozito <james@develia.org>
   revision [4020]
   - added set volume hook

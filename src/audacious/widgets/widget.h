@@ -82,7 +82,9 @@ void widget_hide(Widget * widget);
 gboolean widget_is_visible(Widget * widget);
 
 void widget_resize(Widget * widget, gint width, gint height);
+void widget_resize_relative(Widget * widget, gint width, gint height);
 void widget_move(Widget * widget, gint x, gint y);
+void widget_move_relative(Widget * widget, gint x, gint y);
 void widget_draw(Widget * widget);
 void widget_draw_quick(Widget * widget);
 
@@ -101,7 +103,5 @@ void widget_list_change_pixmap(GList * list, GdkPixmap * pixmap);
 void widget_list_clear_redraw(GList * list);
 void widget_list_lock(GList * list);
 void widget_list_unlock(GList * list);
-
-
 
 #endif
