@@ -871,15 +871,23 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
 
         for (i = 0; filenames[i] != NULL; i++)
         {
+	    gchar *filename;
+            gchar *current_dir = g_get_current_dir();
+
+            if (filenames[i][0] == '/' || strstr(filenames[i], "://"))
+                filename = g_strdup(filenames[i]);
+            else
+                filename = g_build_filename(current_dir, filenames[i], NULL);
+
             if (options->load_skins)
             {
-                xmms_remote_set_skin(session, filenames[i]);
-                skin_install_skin(filenames[i]);
+                xmms_remote_set_skin(session, filename);
+                skin_install_skin(filename);
             }
             else
             {
                 if (options->enqueue_to_temp)
-                    xmms_remote_playlist_enqueue_to_temp(session, filenames[i]);
+                    xmms_remote_playlist_enqueue_to_temp(session, filename);
 
                 if (options->enqueue && options->play)
                     pos = xmms_remote_get_playlist_length(session);
@@ -887,7 +895,7 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
                 if (!options->enqueue)
                     xmms_remote_playlist_clear(session);
 
-                xmms_remote_playlist_add_url_string(session, filenames[i]);
+                xmms_remote_playlist_add_url_string(session, filename);
 
                 if (options->enqueue && options->play &&
                     xmms_remote_get_playlist_length(session) > pos)
@@ -896,6 +904,9 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
                 if (!options->enqueue)
                     xmms_remote_play(session);
             }
+
+            g_free(filename);
+            g_free(current_dir);
         }
 
         g_strfreev(filenames);

@@ -1,3 +1,13 @@
+2007-02-12 20:51:11 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4032]
+  - add Catalan translation file. Closes #786.
+  
+  trunk/po/LINGUAS                 |    1 
+  trunk/po/ca.po                   | 2153 +++++++++++++++++++++++++++++++++++++++
+  trunk/src/audacious/ui_credits.c |    3 
+  3 files changed, 2157 insertions(+)
+
+
 2007-02-12 20:41:51 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4030]
   - only strip the subsong identifier if it is really a valid subsong identifier. closes #792.
