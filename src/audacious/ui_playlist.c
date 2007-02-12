@@ -694,12 +694,10 @@ static gboolean
 playlistwin_configure(GtkWidget * window,
                       GdkEventConfigure * event, gpointer data)
 {
-    if (!GTK_WIDGET_VISIBLE(window))
-        return FALSE;
+    g_return_val_if_fail(GTK_WIDGET_VISIBLE(window), FALSE);
 
     cfg.playlist_x = event->x;
     cfg.playlist_y = event->y;
-
     return TRUE;
 }
 
@@ -881,35 +879,50 @@ playlistwin_load_playlist(const gchar * filename)
     playlist_set_current_name(playlist, filename);
 }
 
+static GtkWidget *
+playlist_file_selection_browser(const gchar *title,
+                                const gchar *default_filename,
+                                GtkFileChooserAction action)
+{
+    GtkWidget *dialog;
+    GtkWidget *button;
+
+    dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(mainwin),
+                                         action, NULL, NULL);
+
+    if (default_filename)
+        gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog),
+                                      default_filename);
+
+    button = gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CANCEL,
+                                   GTK_RESPONSE_REJECT);
+
+    gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
+    GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
+
+    button = gtk_dialog_add_button(GTK_DIALOG(dialog),
+                                   (action == GTK_FILE_CHOOSER_ACTION_OPEN) ?
+                                   GTK_STOCK_OPEN : GTK_STOCK_SAVE,
+                                   GTK_RESPONSE_ACCEPT);
+
+    gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
+    gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
+
+    return dialog;
+}
+
 static gchar *
 playlist_file_selection_load(const gchar * title,
                         const gchar * default_filename)
 {
     static GtkWidget *dialog = NULL;
-    GtkWidget *button;
     gchar *filename;
 
     g_return_val_if_fail(title != NULL, NULL);
 
-    if(!dialog) {
-        dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(mainwin),
-                                             GTK_FILE_CHOOSER_ACTION_OPEN, NULL, NULL);
-
-        if (default_filename)
-            gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog),
-                                          default_filename);
-
-        button = gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CANCEL,
-                                       GTK_RESPONSE_REJECT);
-        gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
-        GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-
-        button = gtk_dialog_add_button(GTK_DIALOG(dialog),
-                                       GTK_STOCK_OPEN,
-                                       GTK_RESPONSE_ACCEPT);
-        gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
-        gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
-    }
+    if (!dialog)
+        dialog = playlist_file_selection_browser(title, default_filename,
+                                                 GTK_FILE_CHOOSER_ACTION_OPEN);
 
     if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
         filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
@@ -925,31 +938,14 @@ playlist_file_selection_save(const gchar * title,
                         const gchar * default_filename)
 {
     static GtkWidget *dialog = NULL;
-    GtkWidget *button;
     gchar *filename;
 
     g_return_val_if_fail(title != NULL, NULL);
 
-    if(!dialog) {
-        dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(mainwin),
-                                             GTK_FILE_CHOOSER_ACTION_SAVE, NULL, NULL);
-
-        if (default_filename)
-            gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog),
-                                          default_filename);
-
-        button = gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CANCEL,
-                                       GTK_RESPONSE_REJECT);
-        gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
-        GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-
-        button = gtk_dialog_add_button(GTK_DIALOG(dialog),
-                                       GTK_STOCK_SAVE,
-                                       GTK_RESPONSE_ACCEPT);
-        gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
-        gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
-    }
-
+    if (!dialog)
+        dialog = playlist_file_selection_browser(title, default_filename,
+                                                 GTK_FILE_CHOOSER_ACTION_SAVE);
+   
     if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
         filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
     else
