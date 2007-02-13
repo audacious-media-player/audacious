@@ -1,3 +1,20 @@
+2007-02-13 14:09:50 +0000  Michael Farber <01mf02@gmail.com>
+  revision [4038]
+  - removed unused function bmp_menu_translate()
+  - removed playlist_file_selection_browser() and replaced it with 
+  make_filebrowser()
+  - modified make_filebrowser() behaviour
+  - adapted equalizer file loading/saving functions to new 
+  make_filebrowser()
+  
+  
+  trunk/src/audacious/ui_equalizer.c |  334 ++++++++++++++++++-------------------
+  trunk/src/audacious/ui_playlist.c  |   50 -----
+  trunk/src/audacious/util.c         |   82 +++------
+  trunk/src/audacious/util.h         |   15 -
+  4 files changed, 205 insertions(+), 276 deletions(-)
+
+
 2007-02-13 13:48:33 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4036]
   - delete id3 tag feature has been added.

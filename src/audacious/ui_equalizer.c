@@ -737,9 +737,8 @@ equalizerwin_create_window(void)
     GdkPixbuf *icon;
     gint width, height;
 
-    equalizerwin = ui_skinned_window_new(GTK_WINDOW_TOPLEVEL);
+    equalizerwin = ui_skinned_window_new(GTK_WINDOW_TOPLEVEL, "equalizer");
     gtk_window_set_title(GTK_WINDOW(equalizerwin), _("Audacious Equalizer"));
-    gtk_window_set_wmclass(GTK_WINDOW(equalizerwin), "equalizer", "Audacious");
     gtk_window_set_role(GTK_WINDOW(equalizerwin), "equalizer");
 
     width = 275;

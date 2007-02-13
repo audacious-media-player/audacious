@@ -43,7 +43,7 @@ struct _SkinnedWindowClass
   GtkWindowClass        parent_class;
 };
 
-extern GtkWidget *ui_skinned_window_new(GtkWindowType type);
+extern GtkWidget *ui_skinned_window_new(GtkWindowType type, const gchar *wmclass_name);
 extern void ui_skinned_window_widgetlist_associate(GtkWidget * widget, Widget * w);
 extern void ui_skinned_window_widgetlist_dissociate(GtkWidget * widget, Widget * w);
 extern gboolean ui_skinned_window_widgetlist_contained(GtkWidget * widget, gint x, gint y);
