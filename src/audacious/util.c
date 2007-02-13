@@ -408,7 +408,7 @@ read_ini_string(const gchar * filename, const gchar * section,
 
         vfs_file_get_contents(filename, &buffer, &filesize);
 
-	if (buffer == NULL)
+        if (buffer == NULL)
             return NULL;
 
         open_buffer = g_strdup(filename);
@@ -490,6 +490,22 @@ read_ini_string(const gchar * filename, const gchar * section,
 }
 
 GArray *
+read_ini_array(const gchar * filename, const gchar * section,
+               const gchar * key)
+{
+    gchar *temp;
+    GArray *a;
+
+    if ((temp = read_ini_string(filename, section, key)) == NULL) {
+        g_free(temp);
+        return NULL;
+    }
+    a = string_to_garray(temp);
+    g_free(temp);
+    return a;
+}
+
+GArray *
 string_to_garray(const gchar * str)
 {
     GArray *array;
@@ -510,22 +526,6 @@ string_to_garray(const gchar * str)
             break;
     }
     return (array);
-}
-
-GArray *
-read_ini_array(const gchar * filename, const gchar * section,
-               const gchar * key)
-{
-    gchar *temp;
-    GArray *a;
-
-    if ((temp = read_ini_string(filename, section, key)) == NULL) {
-        g_free(temp);
-        return NULL;
-    }
-    a = string_to_garray(temp);
-    g_free(temp);
-    return a;
 }
 
 void
@@ -582,21 +582,6 @@ util_font_load(const gchar * name)
 
     return font;
 }
-
-#ifdef ENABLE_NLS
-gchar *
-bmp_menu_translate(const gchar * path, gpointer func_data)
-{
-    gchar *translation = gettext(path);
-
-    if (!translation || *translation != '/') {
-        g_warning("Bad translation for menupath: %s", path);
-        translation = (gchar *) path;
-    }
-
-    return translation;
-}
-#endif
 
 /* text_get_extents() taken from The GIMP (C) Spencer Kimball, Peter
  * Mattis et al */
@@ -692,42 +677,31 @@ dir_foreach(const gchar * path, DirForeachFunc function,
 }
 
 GtkWidget *
-make_filebrowser(const gchar * title,
-                 gboolean save)
+make_filebrowser(const gchar *title, gboolean save)
 {
     GtkWidget *dialog;
     GtkWidget *button;
-    GtkWidget *button_close;
 
     g_return_val_if_fail(title != NULL, NULL);
 
     dialog = gtk_file_chooser_dialog_new(title, GTK_WINDOW(mainwin),
-                                         GTK_FILE_CHOOSER_ACTION_OPEN, NULL, NULL);
-    if (save)
-        gtk_file_chooser_set_action(GTK_FILE_CHOOSER(dialog),
-                                    GTK_FILE_CHOOSER_ACTION_SAVE);
+                                         save ?
+                                         GTK_FILE_CHOOSER_ACTION_SAVE :
+                                         GTK_FILE_CHOOSER_ACTION_OPEN,
+                                         NULL, NULL);
 
-    if (!save)
-        gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(dialog), TRUE);
+    button = gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CANCEL,
+                                   GTK_RESPONSE_REJECT);
 
-    g_signal_connect(dialog, "destroy",
-                     G_CALLBACK(gtk_widget_destroyed), &dialog);
-
-    button_close = gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CANCEL,
-                                         GTK_RESPONSE_REJECT);
-    gtk_button_set_use_stock(GTK_BUTTON(button_close), TRUE);
-    GTK_WIDGET_SET_FLAGS(button_close, GTK_CAN_DEFAULT);
-    g_signal_connect_swapped(button_close, "clicked",
-                             G_CALLBACK(gtk_widget_destroy), dialog);
+    gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
+    GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
 
     button = gtk_dialog_add_button(GTK_DIALOG(dialog), save ?
                                    GTK_STOCK_SAVE : GTK_STOCK_OPEN,
                                    GTK_RESPONSE_ACCEPT);
-    gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
-    GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-    gtk_window_set_default(GTK_WINDOW(dialog), button);
 
-    gtk_widget_show(dialog);
+    gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
+    gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
 
     return dialog;
 }

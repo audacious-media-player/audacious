@@ -73,14 +73,7 @@ gchar *archive_basename(const gchar * path);
 guint gint_count_digits(gint n);
 
 
-#if ENABLE_NLS
-gchar *bmp_menu_translate(const gchar * path, gpointer func_data);
-#else
-#  define bmp_menu_translate NULL
-#endif
-
-GtkWidget *make_filebrowser(const gchar * title,
-                            gboolean save);
+GtkWidget *make_filebrowser(const gchar *title, gboolean save);
 
 typedef struct {
     gint x;
@@ -116,10 +109,10 @@ GdkPixbuf *audacious_create_colorized_pixbuf(GdkPixbuf *src, gint red, gint gree
 
 gchar *audacious_get_localdir(void);
 
-void audacious_menu_main_show( gint x , gint y , guint button , guint time );
+void audacious_menu_main_show(gint x, gint y, guint button, guint time);
 
-gchar* fileinfo_recursive_get_image(const gchar* path,
-        const gchar* file_name, gint depth);
+gchar *fileinfo_recursive_get_image(const gchar *path, const gchar *file_name,
+                                    gint depth);
 
 G_END_DECLS
 
