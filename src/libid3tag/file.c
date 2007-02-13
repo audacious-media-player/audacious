@@ -349,7 +349,6 @@ int search_tags(struct id3_file *file)
 
   /* restore seek position */
 
-//  if (fsetpos(file->iofile, &save_position) == -1)
   if (vfs_fseek(file->iofile, save_position, SEEK_SET) == -1)
     return -1;
 
@@ -546,7 +545,7 @@ static
 int v1_write(struct id3_file *file,
 	     id3_byte_t const *data, id3_length_t length)
 {
-  assert(!data || length == 128);
+//  assert(!data || length == 128);
 
   if (data) {
     long location;
@@ -589,7 +588,6 @@ int v1_write(struct id3_file *file,
 	(length >= 0 && length < 128))
       return -1;
 
-//    if (ftruncate(fileno(file->iofile), length - 128) == -1) //XXX
     if (vfs_truncate(file->iofile, length - 128) == -1)
       return -1;
 
@@ -612,7 +610,45 @@ static
 int v2_write(struct id3_file *file,
 	     id3_byte_t const *data, id3_length_t length)
 {
-  assert(!data || length > 0);
+//  assert(!data || length > 0);
+
+    // delete tag request
+    if(!data && length == 0){
+        int file_size;
+        int remainder_size;
+        char *remainder;
+
+        /* read in the remainder of the file */
+        vfs_fseek(file->iofile, 0, SEEK_END);
+        file_size = vfs_ftell(file->iofile);
+        remainder_size = file_size - file->tags[0].location - file->tags[0].length;
+        remainder = (char*)malloc(remainder_size);
+
+        if (vfs_fseek(file->iofile, file->tags[0].location + file->tags[0].length, SEEK_SET) == -1 ||
+            vfs_fread(remainder, remainder_size, 1, file->iofile) != 1) {
+            free(remainder);
+            return -1;
+        }
+
+        /* write the remainder where the old tag was */
+        if (vfs_fseek(file->iofile, file->tags[0].location, SEEK_SET) == -1 ||
+            vfs_fwrite(remainder, remainder_size, 1, file->iofile) != 1) {
+            free(remainder);
+            return -1;
+        }
+
+        free(remainder);
+
+        /* flush the FILE */
+#ifndef AUDACIOUS
+        if (fflush(file->iofile) == EOF)
+            return -1;
+#endif
+        /* truncate if required */
+        if (vfs_ftell(file->iofile) < file_size)
+            vfs_truncate(file->iofile, vfs_ftell(file->iofile));
+
+    }
 
   // append a new id3v2 tag to the file which doesn't have any tag or only have v1tag.
   if(data &&
@@ -669,14 +705,14 @@ int v2_write(struct id3_file *file,
     remainder = (char*)malloc(remainder_size);
     if (vfs_fseek(file->iofile, file->tags[0].location + file->tags[0].length, SEEK_SET) == -1 ||
 	vfs_fread(remainder, remainder_size, 1, file->iofile) != 1) {
-      free(remainder);
+	    free(remainder);
       return -1;
     }
 
     /* write the tag where the old one was */
     if (vfs_fseek(file->iofile, file->tags[0].location, SEEK_SET) == -1 ||
 	vfs_fwrite(data, length, 1, file->iofile) != 1) {
-      free(remainder);
+	    free(remainder);
       return -1;
     }
 
@@ -753,7 +789,7 @@ int id3_file_update(struct id3_file *file)
 
   /* write tags */
 
-  if (v2_write(file, id3v2, v2size) == -1 ||
+  if (v2_write(file, id3v2, v2size) == -1 &&
       v1_write(file, id3v1, v1size) == -1)
     goto fail;
 
