@@ -54,7 +54,7 @@ void clean_history()
 
 __inline__ int iir(gpointer * d, gint length, gint nch)
 {
-//  FTZ_ON;
+/*  FTZ_ON; */
   gint16 *data = (gint16 *) * d;
   /* Indexes for the history arrays
    * These have to be kept between calls to this function
@@ -66,7 +66,7 @@ __inline__ int iir(gpointer * d, gint length, gint nch)
   sample_t out[EQ_CHANNELS], pcm[EQ_CHANNELS];
 
 #if 0
-  // Load the correct filter table according to the sampling rate if needed
+  /* Load the correct filter table according to the sampling rate if needed */
   if (srate != rate)
   {
     band_count = eqcfg.band_num;
@@ -78,7 +78,7 @@ __inline__ int iir(gpointer * d, gint length, gint nch)
 
 #ifdef BENCHMARK
   start_counter();
-#endif //BENCHMARK
+#endif /* BENCHMARK */
 
   /**
    * IIR filter equation is
@@ -127,7 +127,7 @@ __inline__ int iir(gpointer * d, gint length, gint nch)
          * The multiplication by 2.0 was 'moved' into the coefficients to save
          * CPU cycles here */
         /* Apply the gain  */
-        out[channel] +=  data_history[band][channel].y[i]*gain[band][channel]; // * 2.0;
+        out[channel] += data_history[band][channel].y[i]*gain[band][channel]; /* * 2.0; */
       } /* For each band */
 
       if (cfg.eq_extra_filtering)
@@ -203,8 +203,8 @@ __inline__ int iir(gpointer * d, gint length, gint nch)
     timex = 0.;
     count = 0;
   }
-#endif // BENCHMARK
+#endif /* BENCHMARK */
 
-//  FTZ_OFF;
+/*  FTZ_OFF; */
   return length;
 }

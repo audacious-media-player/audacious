@@ -88,7 +88,7 @@ enum {
 
     MAINWIN_GENERAL_NEXT_PL,
     MAINWIN_GENERAL_PREV_PL,
-    MAINWIN_GENERAL_NEW_PL,
+    MAINWIN_GENERAL_NEW_PL
 };
 
 extern GtkWidget *mainwin;

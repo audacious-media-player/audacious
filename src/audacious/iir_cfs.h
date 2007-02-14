@@ -30,7 +30,7 @@ typedef struct
     float beta;
     float alpha; 
     float gamma;
-    float dummy; // Word alignment
+    float dummy; /* Word alignment */
 }sIIRCoefficients;
 
 sIIRCoefficients* get_coeffs(gint *bands, gint sfreq, 

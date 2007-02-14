@@ -1,3 +1,11 @@
+2007-02-14 19:24:39 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4048]
+  - fix: vfs_buffer.c:218: warning: pointer of type 'void *' used in arithmetic
+  
+  trunk/src/audacious/vfs_buffer.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-02-14 19:05:36 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4046]
   - fix signed vs unsigned comparisons and missing initializer warnings
