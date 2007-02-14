@@ -55,7 +55,9 @@ buffer_vfs_fread_impl(gpointer i_ptr,
 
     handle = (VFSBuffer *) file->handle;
 
-    for (i = ptr; i - ptr < nmemb * size && i - ptr <= handle->size; i++, handle->iter++)
+    for (i = ptr; (gsize) (i - ptr) < nmemb * size && 
+	 (gsize) (i - ptr) <= handle->size;
+	 i++, handle->iter++)
     {
        *i = *handle->iter;
        read++;
@@ -80,7 +82,9 @@ buffer_vfs_fwrite_impl(gconstpointer i_ptr,
 
     handle = (VFSBuffer *) file->handle;
 
-    for (i = ptr; (i - ptr) < nmemb * size && (i - ptr) <= handle->size; i++, handle->iter++)
+    for (i = ptr; (gsize) (i - ptr) < nmemb * size &&
+	 (gsize) (i - ptr) <= handle->size;
+	 i++, handle->iter++)
     {
        *handle->iter = *i;
        written++;
@@ -193,7 +197,8 @@ VFSConstructor buffer_const = {
 	buffer_vfs_rewind_impl,
 	buffer_vfs_ftell_impl,
 	buffer_vfs_feof_impl,
-	buffer_vfs_truncate_impl
+	buffer_vfs_truncate_impl,
+	NULL
 };
 
 VFSFile *
