@@ -96,7 +96,7 @@ remote_read_ack(gint fd)
 
 static void
 remote_send_packet(gint fd, guint32 command, gpointer data,
-                   guint32 data_length)
+                   gsize data_length)
 {
     ClientPktHeader pkt_hdr;
 
@@ -111,7 +111,7 @@ remote_send_packet(gint fd, guint32 command, gpointer data,
         return;
     }
     if (data_length && data)
-        if( data_length != write(fd, data, data_length))
+        if( data_length != (gsize) write(fd, data, data_length))
         {
             g_warning("remote_send_packet: failed to write packet");
             return;

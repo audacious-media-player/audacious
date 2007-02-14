@@ -1,3 +1,11 @@
+2007-02-14 14:42:50 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4042]
+  - avoid double free while playing cdda.
+  
+  trunk/src/audacious/ui_fileinfopopup.c |    8 ++++++--
+  1 file changed, 6 insertions(+), 2 deletions(-)
+
+
 2007-02-13 21:22:51 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [4040]
   gtk_window_set_wmclass() has to be called before gtk_widget_realize(). Patched by Christian "Joker" Birchinger from Gentoo.
