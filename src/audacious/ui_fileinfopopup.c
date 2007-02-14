@@ -379,8 +379,12 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win, TitleInput *tu
 	if (tuple == NULL)
 		return;
 
-	if ( g_object_get_data( G_OBJECT(filepopup_win) , "file" ) != NULL )
-	  g_free( g_object_get_data( G_OBJECT(filepopup_win) , "file" ) );
+	tmp = g_object_get_data( G_OBJECT(filepopup_win) , "file" );
+	if ( tmp != NULL ) {
+		g_free( tmp );
+		tmp = NULL;
+		g_object_set_data( G_OBJECT(filepopup_win) , "file" , NULL );
+	}
 	if ( ( tuple->file_path ) && ( tuple->file_name ) )
 	{
 		g_object_set_data( G_OBJECT(filepopup_win) , "file" ,
