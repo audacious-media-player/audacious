@@ -31,7 +31,7 @@ extern "C" {
     enum
     {
         AUDACIOUS_TYPE_UNIX,
-	AUDACIOUS_TYPE_TCP,
+	AUDACIOUS_TYPE_TCP
     };
 
     /* Do NOT use this! This is only for control socket initialization now. */
