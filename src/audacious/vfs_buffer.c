@@ -215,7 +215,7 @@ vfs_buffer_new(gpointer data, gsize size)
     buffer = g_new0(VFSBuffer, 1);
     buffer->data = data;
     buffer->iter = data;
-    buffer->end = data + size;
+    buffer->end = (guchar *) data + size;
     buffer->size = size;
 
     handle->handle = buffer;
