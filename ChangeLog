@@ -1,3 +1,17 @@
+2007-02-15 08:33:21 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4060]
+  - move the GC into the SkinnedWindow class.
+  
+  trunk/src/audacious/ui_main.c           |   94 ++++++++++++++++----------------
+  trunk/src/audacious/ui_main.h           |    1 
+  trunk/src/audacious/ui_skinned_window.c |    2 
+  trunk/src/audacious/ui_skinned_window.h |    2 
+  trunk/src/audacious/widgets/skin.c      |    4 +
+  trunk/src/audacious/widgets/svis.c      |    6 +-
+  trunk/src/audacious/widgets/widget.c    |    3 -
+  7 files changed, 60 insertions(+), 52 deletions(-)
+
+
 2007-02-15 08:14:11 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4058]
   - ui_skinned_window_widgetlist_associate
