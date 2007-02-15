@@ -955,26 +955,6 @@ playlistwin_select_playlist_to_save(const gchar * default_filename)
     }
 }
 
-static gboolean
-inside_sensitive_widgets(gint x, gint y)
-{
-    return (widget_contains(WIDGET(playlistwin_list), x, y) ||
-            widget_contains(WIDGET(playlistwin_slider), x, y) ||
-            widget_contains(WIDGET(playlistwin_close), x, y) ||
-            widget_contains(WIDGET(playlistwin_shade), x, y) ||
-            widget_contains(WIDGET(playlistwin_time_min), x, y) ||
-            widget_contains(WIDGET(playlistwin_time_sec), x, y) ||
-            widget_contains(WIDGET(playlistwin_info), x, y) ||
-            widget_contains(WIDGET(playlistwin_srew), x, y) ||
-            widget_contains(WIDGET(playlistwin_splay), x, y) ||
-            widget_contains(WIDGET(playlistwin_spause), x, y) ||
-            widget_contains(WIDGET(playlistwin_sstop), x, y) ||
-            widget_contains(WIDGET(playlistwin_sfwd), x, y) ||
-            widget_contains(WIDGET(playlistwin_seject), x, y) ||
-            widget_contains(WIDGET(playlistwin_sscroll_up), x, y) ||
-            widget_contains(WIDGET(playlistwin_sscroll_down), x, y));
-}
-
 #define REGION_L(x1,x2,y1,y2)                   \
     (event->x >= (x1) && event->x < (x2) &&     \
      event->y >= cfg.playlist_height - (y1) &&  \
@@ -1090,14 +1070,15 @@ playlistwin_press(GtkWidget * widget,
                               GDK_TARGET_STRING, event->time);
     }
     else if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
-             !inside_sensitive_widgets(event->x, event->y) && (cfg.easy_move || event->y < 14))
+             !ui_skinned_window_widgetlist_contained(playlistwin, event->x,
+		event->y) && (cfg.easy_move || event->y < 14))
     {
         dock_move_press(dock_window_list, GTK_WINDOW(playlistwin), event,
                         FALSE);
         gtk_window_present(GTK_WINDOW(playlistwin));
     }
     else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS &&
-             !inside_sensitive_widgets(event->x, event->y)
+             !ui_skinned_window_widgetlist_contained(playlistwin, event->x, event->y)
              && event->y < 14) {
         /* double click on title bar */
         playlistwin_shade_toggle();
@@ -1525,6 +1506,7 @@ playlistwin_create_widgets(void)
                            SKIN_PLEDIT);
 
     playlistwin_shade->pb_allow_draw = FALSE;
+    ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_shade));
 
     /* close window push button */
     playlistwin_close =
@@ -1534,6 +1516,7 @@ playlistwin_create_widgets(void)
                        cfg.playlist_shaded ? 45 : 3, 52, 42,
                        playlistwin_hide, SKIN_PLEDIT);
     playlistwin_close->pb_allow_draw = FALSE;
+    ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_close));
 
     /* playlist list box */
     playlistwin_list =
@@ -1542,29 +1525,35 @@ playlistwin_create_widgets(void)
                              playlistwin_get_width() - 31,
                              cfg.playlist_height - 58);
     playlist_list_set_font(cfg.playlist_font);
+    ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_list));
 
     /* playlist list box slider */
     playlistwin_slider =
         create_playlistslider(&playlistwin_wlist, playlistwin_bg,
                               SKINNED_WINDOW(playlistwin)->gc, playlistwin_get_width() - 15,
                               20, cfg.playlist_height - 58, playlistwin_list);
+    ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_slider));
+
     /* track time (minute) */
     playlistwin_time_min =
         create_textbox(&playlistwin_wlist, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
                        playlistwin_get_width() - 82,
                        cfg.playlist_height - 15, 15, FALSE, SKIN_TEXT);
+    ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_time_min));
 
     /* track time (second) */
     playlistwin_time_sec =
         create_textbox(&playlistwin_wlist, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
                        playlistwin_get_width() - 64,
                        cfg.playlist_height - 15, 10, FALSE, SKIN_TEXT);
+    ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_time_sec));
 
     /* playlist information (current track length / total track length) */
     playlistwin_info =
         create_textbox(&playlistwin_wlist, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
                        playlistwin_get_width() - 143,
                        cfg.playlist_height - 28, 90, FALSE, SKIN_TEXT);
+    ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_info));
 
     /* mini play control buttons at right bottom corner */
 
@@ -1573,49 +1562,56 @@ playlistwin_create_widgets(void)
         create_sbutton(&playlistwin_wlist, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
                        playlistwin_get_width() - 144,
                        cfg.playlist_height - 16, 8, 7, local_playlist_prev);
+    ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_srew));
 
     /* play button */
     playlistwin_splay =
         create_sbutton(&playlistwin_wlist, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
                        playlistwin_get_width() - 138,
                        cfg.playlist_height - 16, 10, 7, mainwin_play_pushed);
+    ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_splay));
 
     /* pause button */
     playlistwin_spause =
         create_sbutton(&playlistwin_wlist, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
                        playlistwin_get_width() - 128,
                        cfg.playlist_height - 16, 10, 7, playback_pause);
+    ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_spause));
 
     /* stop button */
     playlistwin_sstop =
         create_sbutton(&playlistwin_wlist, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
                        playlistwin_get_width() - 118,
                        cfg.playlist_height - 16, 9, 7, mainwin_stop_pushed);
+    ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_sstop));
 
     /* forward button */
     playlistwin_sfwd =
         create_sbutton(&playlistwin_wlist, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
                        playlistwin_get_width() - 109,
                        cfg.playlist_height - 16, 8, 7, local_playlist_next);
+    ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_sfwd));
 
     /* eject button */
     playlistwin_seject =
         create_sbutton(&playlistwin_wlist, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
                        playlistwin_get_width() - 100,
                        cfg.playlist_height - 16, 9, 7, mainwin_eject_pushed);
-
+    ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_seject));
 
     playlistwin_sscroll_up =
         create_sbutton(&playlistwin_wlist, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
                        playlistwin_get_width() - 14,
                        cfg.playlist_height - 35, 8, 5,
                        playlistwin_scroll_up_pushed);
+    ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_sscroll_up));
+
     playlistwin_sscroll_down =
         create_sbutton(&playlistwin_wlist, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
                        playlistwin_get_width() - 14,
                        cfg.playlist_height - 30, 8, 5,
                        playlistwin_scroll_down_pushed);
-
+    ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_sscroll_down));
 }
 
 static void
