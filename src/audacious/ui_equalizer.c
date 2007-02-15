@@ -322,29 +322,6 @@ draw_equalizer_window(gboolean force)
     widget_list_unlock(equalizerwin_wlist);
 }
 
-static gboolean
-inside_sensitive_widgets(gint x, gint y)
-{
-    return (widget_contains(WIDGET(equalizerwin_on), x, y) ||
-            widget_contains(WIDGET(equalizerwin_auto), x, y) ||
-            widget_contains(WIDGET(equalizerwin_presets), x, y) ||
-            widget_contains(WIDGET(equalizerwin_close), x, y) ||
-            widget_contains(WIDGET(equalizerwin_shade), x, y) ||
-            widget_contains(WIDGET(equalizerwin_preamp), x, y) ||
-            widget_contains(WIDGET(equalizerwin_bands[0]), x, y) ||
-            widget_contains(WIDGET(equalizerwin_bands[1]), x, y) ||
-            widget_contains(WIDGET(equalizerwin_bands[2]), x, y) ||
-            widget_contains(WIDGET(equalizerwin_bands[3]), x, y) ||
-            widget_contains(WIDGET(equalizerwin_bands[4]), x, y) ||
-            widget_contains(WIDGET(equalizerwin_bands[5]), x, y) ||
-            widget_contains(WIDGET(equalizerwin_bands[6]), x, y) ||
-            widget_contains(WIDGET(equalizerwin_bands[7]), x, y) ||
-            widget_contains(WIDGET(equalizerwin_bands[8]), x, y) ||
-            widget_contains(WIDGET(equalizerwin_bands[9]), x, y) ||
-            widget_contains(WIDGET(equalizerwin_volume), x, y) ||
-            widget_contains(WIDGET(equalizerwin_balance), x, y));
-}
-
 gboolean
 equalizerwin_press(GtkWidget * widget, GdkEventButton * event,
                    gpointer callback_data)
@@ -361,7 +338,7 @@ equalizerwin_press(GtkWidget * widget, GdkEventButton * event,
 
     if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
         ((cfg.easy_move || cfg.equalizer_shaded || event->y < 14) &&
-         !inside_sensitive_widgets(event->x, event->y))) {
+         !ui_skinned_window_widgetlist_contained(equalizerwin, event->x, event->y))) {
          equalizerwin_raise();
          dock_move_press(dock_window_list, GTK_WINDOW(equalizerwin), event,
                          FALSE);
@@ -669,40 +646,61 @@ equalizerwin_create_widgets(void)
                        69, 119, 187, 119, equalizerwin_on_pushed,
                        SKIN_EQMAIN);
     tbutton_set_toggled(equalizerwin_on, cfg.equalizer_active);
+    ui_skinned_window_widgetlist_associate(equalizerwin, 
+        WIDGET(equalizerwin_on));
+
     equalizerwin_auto =
         create_tbutton(&equalizerwin_wlist, equalizerwin_bg,
                        equalizerwin_gc, 39, 18, 33, 12, 35, 119, 153, 119,
                        94, 119, 212, 119, equalizerwin_auto_pushed,
                        SKIN_EQMAIN);
     tbutton_set_toggled(equalizerwin_auto, cfg.equalizer_autoload);
+    ui_skinned_window_widgetlist_associate(equalizerwin, 
+        WIDGET(equalizerwin_auto));
+
     equalizerwin_presets =
         create_pbutton(&equalizerwin_wlist, equalizerwin_bg,
                        equalizerwin_gc, 217, 18, 44, 12, 224, 164, 224,
                        176, equalizerwin_presets_pushed, SKIN_EQMAIN);
+    ui_skinned_window_widgetlist_associate(equalizerwin, 
+        WIDGET(equalizerwin_presets));
+
     equalizerwin_close =
         create_pbutton(&equalizerwin_wlist, equalizerwin_bg,
                        equalizerwin_gc, 264, 3, 9, 9, 0, 116, 0, 125,
                        equalizerwin_close_cb, SKIN_EQMAIN);
     equalizerwin_close->pb_allow_draw = FALSE;
+    ui_skinned_window_widgetlist_associate(equalizerwin, 
+        WIDGET(equalizerwin_close));
 
     equalizerwin_shade =
         create_pbutton_ex(&equalizerwin_wlist, equalizerwin_bg,
                           equalizerwin_gc, 254, 3, 9, 9, 254, 137, 1, 38,
                           equalizerwin_shade_toggle, NULL, SKIN_EQMAIN, SKIN_EQ_EX);
     equalizerwin_shade->pb_allow_draw = FALSE;
+    ui_skinned_window_widgetlist_associate(equalizerwin, 
+        WIDGET(equalizerwin_shade));
 
     equalizerwin_graph =
         create_eqgraph(&equalizerwin_wlist, equalizerwin_bg,
                        equalizerwin_gc, 86, 17);
+    ui_skinned_window_widgetlist_associate(equalizerwin, 
+        WIDGET(equalizerwin_graph));
+
     equalizerwin_preamp =
         create_eqslider(&equalizerwin_wlist, equalizerwin_bg,
                         equalizerwin_gc, 21, 38);
     eqslider_set_position(equalizerwin_preamp, cfg.equalizer_preamp);
+    ui_skinned_window_widgetlist_associate(equalizerwin, 
+        WIDGET(equalizerwin_preamp));
+
     for (i = 0; i < 10; i++) {
         equalizerwin_bands[i] =
             create_eqslider(&equalizerwin_wlist, equalizerwin_bg,
                             equalizerwin_gc, 78 + (i * 18), 38);
         eqslider_set_position(equalizerwin_bands[i], cfg.equalizer_bands[i]);
+        ui_skinned_window_widgetlist_associate(equalizerwin, 
+	    WIDGET(equalizerwin_bands[i]));
     }
 
     equalizerwin_volume =
@@ -711,12 +709,17 @@ equalizerwin_create_widgets(void)
                        4, 61, 0, 94, equalizerwin_volume_frame_cb,
                        equalizerwin_volume_motion_cb,
                        equalizerwin_volume_release_cb, SKIN_EQ_EX);
+    ui_skinned_window_widgetlist_associate(equalizerwin, 
+        WIDGET(equalizerwin_volume));
+
     equalizerwin_balance =
         create_hslider(&equalizerwin_wlist, equalizerwin_bg,
                        equalizerwin_gc, 164, 4, 42, 8, 11, 30, 11, 30, 3,
                        7, 4, 164, 0, 39, equalizerwin_balance_frame_cb,
                        equalizerwin_balance_motion_cb,
                        equalizerwin_balance_release_cb, SKIN_EQ_EX);
+    ui_skinned_window_widgetlist_associate(equalizerwin, 
+        WIDGET(equalizerwin_balance));
 
     if (!cfg.equalizer_shaded) {
         widget_hide(WIDGET(equalizerwin_volume));

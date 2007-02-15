@@ -1,3 +1,11 @@
+2007-02-15 02:02:49 +0000  
+  revision [4056]
+  * Update Japanese translation.
+  
+  trunk/po/ja.po |  152 +++++++++++++--------------------------------------------
+  1 file changed, 35 insertions(+), 117 deletions(-)
+
+
 2007-02-14 19:56:02 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4054]
   - fix beepctrl.h:35: warning: comma at end of enumerator list
