@@ -44,6 +44,8 @@
 #include "platform/smartinclude.h"
 #include "vfs.h"
 
+#include "ui_skinned_window.h"
+
 #define EXTENSION_TARGETS 7
 
 static gchar *ext_targets[EXTENSION_TARGETS] = { "bmp", "xpm", "png", "svg", 
@@ -317,7 +319,7 @@ pixmap_new_from_file(const gchar * filename)
     pixbuf2 = audacious_create_colorized_pixbuf(pixbuf, cfg.colorize_r, cfg.colorize_g, cfg.colorize_b);
     g_object_unref(pixbuf);
 
-    gdk_draw_pixbuf(pixmap, mainwin_gc, pixbuf2, 0, 0, 0, 0, width, height,
+    gdk_draw_pixbuf(pixmap, SKINNED_WINDOW(mainwin)->gc, pixbuf2, 0, 0, 0, 0, width, height,
 		    GDK_RGB_DITHER_MAX, 0, 0);
     g_object_unref(pixbuf2);
 

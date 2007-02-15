@@ -32,6 +32,8 @@
 #include "playback.h"
 #include "vis.h"
 
+#include "ui_skinned_window.h"
+
 static gint svis_redraw_delays[] = { 1, 2, 4, 8 };
 
 /* FIXME: Are the svis_scope_colors correct? */
@@ -179,7 +181,7 @@ svis_draw(Widget * w)
             }
         }
 
-        gdk_draw_indexed_image(mainwin->window, mainwin_gc,
+        gdk_draw_indexed_image(mainwin->window, SKINNED_WINDOW(mainwin)->gc,
                                svis->vs_widget.x, svis->vs_widget.y,
                                svis->vs_widget.width,
                                svis->vs_widget.height,
@@ -252,7 +254,7 @@ svis_draw(Widget * w)
             }
         }
 
-        gdk_draw_indexed_image(mainwin->window, mainwin_gc,
+        gdk_draw_indexed_image(mainwin->window, SKINNED_WINDOW(mainwin)->gc,
                                svis->vs_widget.x << 1,
                                svis->vs_widget.y << 1,
                                svis->vs_widget.width << 1,

@@ -125,7 +125,6 @@ static GtkWidget *mainwin_jtt = NULL;
 gint seek_state = MAINWIN_SEEK_NIL;
 gint seek_initial_pos = 0;
 
-GdkGC *mainwin_gc;
 static GdkPixmap *mainwin_bg = NULL, *mainwin_bg_x2 = NULL;
 
 static PButton *mainwin_menubtn;
@@ -476,7 +475,9 @@ mainwin_destroy(GtkWidget * widget, gpointer data)
 static void
 mainwin_draw_titlebar(gboolean focus)
 {
-    skin_draw_mainwin_titlebar(bmp_active_skin, mainwin_bg, mainwin_gc,
+    /* FIXME: uses SkinnedWindow::gc directly. -nenolod */
+    skin_draw_mainwin_titlebar(bmp_active_skin, mainwin_bg, 
+			       SKINNED_WINDOW(mainwin)->gc,
                                cfg.player_shaded, focus || !cfg.dim_titlebar);
 }
 
@@ -498,7 +499,7 @@ draw_main_window(gboolean force)
 
     if (force) {
         if (!cfg.player_shaded)
-            skin_draw_pixmap(bmp_active_skin, mainwin_bg, mainwin_gc,
+            skin_draw_pixmap(bmp_active_skin, mainwin_bg, SKINNED_WINDOW(mainwin)->gc,
                              SKIN_MAIN, 0, 0, 0, 0, bmp_active_skin->properties.mainwin_width,
                              bmp_active_skin->properties.mainwin_height);
         mainwin_draw_titlebar(gtk_window_has_toplevel_focus
@@ -515,7 +516,7 @@ draw_main_window(gboolean force)
                                              MAINWIN_SHADED_HEIGHT :
                                              bmp_active_skin->properties.mainwin_height);
                 img2x = create_dblsize_image(img);
-                gdk_draw_image(mainwin_bg_x2, mainwin_gc, img2x, 0, 0,
+                gdk_draw_image(mainwin_bg_x2, SKINNED_WINDOW(mainwin)->gc, img2x, 0, 0,
                                0, 0, bmp_active_skin->properties.mainwin_width * 2,
                                cfg.player_shaded ? MAINWIN_SHADED_HEIGHT *
                                2 : bmp_active_skin->properties.mainwin_height * 2);
@@ -546,7 +547,7 @@ draw_main_window(gboolean force)
                     img = gdk_drawable_get_image(mainwin_bg, w->x, w->y,
                                                  width, height);
                     img2x = create_dblsize_image(img);
-                    gdk_draw_image(mainwin_bg_x2, mainwin_gc,
+                    gdk_draw_image(mainwin_bg_x2, SKINNED_WINDOW(mainwin)->gc,
                                    img2x, 0, 0, w->x << 1, w->y << 1,
                                    width << 1, height << 1);
                     g_object_unref(img2x);
@@ -2631,182 +2632,182 @@ static void
 mainwin_create_widgets(void)
 {
     mainwin_menubtn =
-        create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 6, 3, 9, 9,
+        create_pbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 6, 3, 9, 9,
                        0, 0, 0, 9, mainwin_menubtn_cb, SKIN_TITLEBAR);
     mainwin_menubtn->pb_allow_draw = FALSE;
     mainwin_minimize =
-        create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 244, 3, 9,
+        create_pbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 244, 3, 9,
                        9, 9, 0, 9, 9, mainwin_minimize_cb, SKIN_TITLEBAR);
     mainwin_minimize->pb_allow_draw = FALSE;
     mainwin_shade =
-        create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 254, 3, 9,
+        create_pbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 254, 3, 9,
                        9, 0, cfg.player_shaded ? 27 : 18, 9,
                        cfg.player_shaded ? 27 : 18, mainwin_shade_toggle,
                        SKIN_TITLEBAR);
     mainwin_shade->pb_allow_draw = FALSE;
     mainwin_close =
-        create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 264, 3, 9,
+        create_pbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 264, 3, 9,
                        9, 18, 0, 18, 9, mainwin_quit_cb, SKIN_TITLEBAR);
     mainwin_close->pb_allow_draw = FALSE;
 
     mainwin_rew =
-        create_pbutton_ex(&mainwin_wlist, mainwin_bg, mainwin_gc, 16, 88, 23,
+        create_pbutton_ex(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 16, 88, 23,
                        18, 0, 0, 0, 18, mainwin_rev_pushed, mainwin_rev_release,
                SKIN_CBUTTONS, SKIN_CBUTTONS);
     mainwin_play =
-        create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 39, 88, 23,
+        create_pbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 39, 88, 23,
                        18, 23, 0, 23, 18, mainwin_play_pushed, SKIN_CBUTTONS);
     mainwin_pause =
-        create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 62, 88, 23,
+        create_pbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 62, 88, 23,
                        18, 46, 0, 46, 18, playback_pause, SKIN_CBUTTONS);
     mainwin_stop =
-        create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 85, 88, 23,
+        create_pbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 85, 88, 23,
                        18, 69, 0, 69, 18, mainwin_stop_pushed, SKIN_CBUTTONS);
     mainwin_fwd =
-        create_pbutton_ex(&mainwin_wlist, mainwin_bg, mainwin_gc, 108, 88, 22,
+        create_pbutton_ex(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 108, 88, 22,
                        18, 92, 0, 92, 18, mainwin_fwd_pushed, mainwin_fwd_release,
                SKIN_CBUTTONS, SKIN_CBUTTONS);
 
     mainwin_eject =
-        create_pbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 136, 89, 22,
+        create_pbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 136, 89, 22,
                        16, 114, 0, 114, 16, mainwin_eject_pushed,
                        SKIN_CBUTTONS);
 
     mainwin_srew =
-        create_sbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 169, 4, 8,
+        create_sbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 169, 4, 8,
                        7, mainwin_playlist_prev);
     mainwin_splay =
-        create_sbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 177, 4, 10,
+        create_sbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 177, 4, 10,
                        7, mainwin_play_pushed);
     mainwin_spause =
-        create_sbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 187, 4, 10,
+        create_sbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 187, 4, 10,
                        7, playback_pause);
     mainwin_sstop =
-        create_sbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 197, 4, 9,
+        create_sbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 197, 4, 9,
                        7, mainwin_stop_pushed);
     mainwin_sfwd =
-        create_sbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 206, 4, 8,
+        create_sbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 206, 4, 8,
                        7, mainwin_playlist_next);
     mainwin_seject =
-        create_sbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 216, 4, 9,
+        create_sbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 216, 4, 9,
                        7, mainwin_eject_pushed);
 
     mainwin_shuffle =
-        create_tbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 164, 89, 46,
+        create_tbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 164, 89, 46,
                        15, 28, 0, 28, 15, 28, 30, 28, 45,
                        mainwin_shuffle_pushed, SKIN_SHUFREP);
 
     mainwin_repeat =
-        create_tbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 210, 89, 28,
+        create_tbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 210, 89, 28,
                        15, 0, 0, 0, 15, 0, 30, 0, 45,
                        mainwin_repeat_pushed, SKIN_SHUFREP);
 
     mainwin_eq =
-        create_tbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 219, 58, 23,
+        create_tbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 219, 58, 23,
                        12, 0, 61, 46, 61, 0, 73, 46, 73, equalizerwin_show,
                        SKIN_SHUFREP);
     tbutton_set_toggled(mainwin_eq, cfg.equalizer_visible);
     mainwin_pl =
-        create_tbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 242, 58, 23,
+        create_tbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 242, 58, 23,
                        12, 23, 61, 69, 61, 23, 73, 69, 73,
                        mainwin_pl_pushed, SKIN_SHUFREP);
     tbutton_set_toggled(mainwin_pl, cfg.playlist_visible);
 
     mainwin_info =
-        create_textbox(&mainwin_wlist, mainwin_bg, mainwin_gc, 112, 27,
+        create_textbox(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 112, 27,
                        153, 1, SKIN_TEXT);
     textbox_set_scroll(mainwin_info, cfg.autoscroll);
     textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
 
     mainwin_othertext =
-    create_textbox(&mainwin_wlist, mainwin_bg, mainwin_gc, 112, 43, 
+    create_textbox(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 112, 43, 
             153, 1, SKIN_TEXT);
 
     mainwin_rate_text =
-        create_textbox(&mainwin_wlist, mainwin_bg, mainwin_gc, 111, 43, 15,
+        create_textbox(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 111, 43, 15,
                        0, SKIN_TEXT);
     mainwin_freq_text =
-        create_textbox(&mainwin_wlist, mainwin_bg, mainwin_gc, 156, 43, 10,
+        create_textbox(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 156, 43, 10,
                        0, SKIN_TEXT);
 
     mainwin_menurow =
-        create_menurow(&mainwin_wlist, mainwin_bg, mainwin_gc, 10, 22, 304,
+        create_menurow(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 10, 22, 304,
                        0, 304, 44, mainwin_mr_change, mainwin_mr_release,
                        SKIN_TITLEBAR);
     mainwin_menurow->mr_doublesize_selected = cfg.doublesize;
     mainwin_menurow->mr_always_selected = cfg.always_on_top;
 
     mainwin_volume =
-        create_hslider(&mainwin_wlist, mainwin_bg, mainwin_gc, 107, 57, 68,
+        create_hslider(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 107, 57, 68,
                        13, 15, 422, 0, 422, 14, 11, 15, 0, 0, 51,
                        mainwin_volume_frame_cb, mainwin_volume_motion_cb,
                        mainwin_volume_release_cb, SKIN_VOLUME);
     mainwin_balance =
-        create_hslider(&mainwin_wlist, mainwin_bg, mainwin_gc, 177, 57, 38,
+        create_hslider(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 177, 57, 38,
                        13, 15, 422, 0, 422, 14, 11, 15, 9, 0, 24,
                        mainwin_balance_frame_cb, mainwin_balance_motion_cb,
                        mainwin_balance_release_cb, SKIN_BALANCE);
 
     mainwin_monostereo =
-        create_monostereo(&mainwin_wlist, mainwin_bg, mainwin_gc, 212, 41,
+        create_monostereo(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 212, 41,
                           SKIN_MONOSTEREO);
 
     mainwin_playstatus =
-        create_playstatus(&mainwin_wlist, mainwin_bg, mainwin_gc, 24, 28);
+        create_playstatus(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 24, 28);
 
     mainwin_minus_num =
-        create_number(&mainwin_wlist, mainwin_bg, mainwin_gc, 36, 26,
+        create_number(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 36, 26,
                       SKIN_NUMBERS);
     widget_hide(WIDGET(mainwin_minus_num));
     mainwin_10min_num =
-        create_number(&mainwin_wlist, mainwin_bg, mainwin_gc, 48, 26,
+        create_number(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 48, 26,
                       SKIN_NUMBERS);
     widget_hide(WIDGET(mainwin_10min_num));
 
     mainwin_min_num =
-        create_number(&mainwin_wlist, mainwin_bg, mainwin_gc, 60, 26,
+        create_number(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 60, 26,
                       SKIN_NUMBERS);
     widget_hide(WIDGET(mainwin_min_num));
 
     mainwin_10sec_num =
-        create_number(&mainwin_wlist, mainwin_bg, mainwin_gc, 78, 26,
+        create_number(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 78, 26,
                       SKIN_NUMBERS);
     widget_hide(WIDGET(mainwin_10sec_num));
 
     mainwin_sec_num =
-        create_number(&mainwin_wlist, mainwin_bg, mainwin_gc, 90, 26,
+        create_number(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 90, 26,
                       SKIN_NUMBERS);
     widget_hide(WIDGET(mainwin_sec_num));
 
     mainwin_about =
-        create_sbutton(&mainwin_wlist, mainwin_bg, mainwin_gc, 247, 83, 20,
+        create_sbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 247, 83, 20,
                        25, show_about_window);
 
     mainwin_vis =
-        create_vis(&mainwin_wlist, mainwin_bg, mainwin->window, mainwin_gc,
+        create_vis(&mainwin_wlist, mainwin_bg, mainwin->window, SKINNED_WINDOW(mainwin)->gc,
                    24, 43, 76, cfg.doublesize);
-    mainwin_svis = create_svis(&mainwin_wlist, mainwin_bg, mainwin_gc, 79, 5);
+    mainwin_svis = create_svis(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 79, 5);
     active_vis = mainwin_vis;
 
     mainwin_position =
-        create_hslider(&mainwin_wlist, mainwin_bg, mainwin_gc, 16, 72, 248,
+        create_hslider(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 16, 72, 248,
                        10, 248, 0, 278, 0, 29, 10, 10, 0, 0, 219, NULL,
                        mainwin_position_motion_cb,
                        mainwin_position_release_cb, SKIN_POSBAR);
     widget_hide(WIDGET(mainwin_position));
 
     mainwin_sposition =
-        create_hslider(&mainwin_wlist, mainwin_bg, mainwin_gc, 226, 4, 17,
+        create_hslider(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 226, 4, 17,
                        7, 17, 36, 17, 36, 3, 7, 36, 0, 1, 13,
                        mainwin_spos_frame_cb, mainwin_spos_motion_cb,
                        mainwin_spos_release_cb, SKIN_TITLEBAR);
     widget_hide(WIDGET(mainwin_sposition));
 
     mainwin_stime_min =
-        create_textbox(&mainwin_wlist, mainwin_bg, mainwin_gc, 130, 4, 15,
+        create_textbox(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 130, 4, 15,
                        FALSE, SKIN_TEXT);
     mainwin_stime_sec =
-        create_textbox(&mainwin_wlist, mainwin_bg, mainwin_gc, 147, 4, 10,
+        create_textbox(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 147, 4, 10,
                        FALSE, SKIN_TEXT);
 
     if (!cfg.player_shaded) {
@@ -2942,7 +2943,6 @@ mainwin_create(void)
 
     gtk_window_add_accel_group( GTK_WINDOW(mainwin) , ui_manager_get_accel_group() );
 
-    mainwin_gc = gdk_gc_new(mainwin->window);
     mainwin_bg = gdk_pixmap_new(mainwin->window,
                                 bmp_active_skin->properties.mainwin_width,
                 bmp_active_skin->properties.mainwin_height, -1);

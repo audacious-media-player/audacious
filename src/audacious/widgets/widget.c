@@ -129,7 +129,8 @@ widget_move_relative(Widget * widget, gint x, gint y)
 void
 widget_draw(Widget * widget)
 {
-    g_return_if_fail(widget->visible == TRUE);
+    if (widget->visible != TRUE)
+        return;
 
     widget_lock(widget);
     WIDGET(widget)->redraw = TRUE;

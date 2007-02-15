@@ -157,6 +157,8 @@ ui_skinned_window_new(GtkWindowType type, const gchar *wmclass_name)
 
     ui_skinned_cursor_set(GTK_WIDGET(widget));
 
+    SKINNED_WINDOW(widget)->gc = gdk_gc_new(widget->window);
+
     return widget;
 }
 

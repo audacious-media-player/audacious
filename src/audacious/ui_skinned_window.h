@@ -36,6 +36,7 @@ struct _SkinnedWindow
   gint x,y;
 
   GList *widget_list;
+  GdkGC *gc;
 };
 
 struct _SkinnedWindowClass
@@ -43,6 +44,7 @@ struct _SkinnedWindowClass
   GtkWindowClass        parent_class;
 };
 
+extern GType ui_skinned_window_get_type(void);
 extern GtkWidget *ui_skinned_window_new(GtkWindowType type, const gchar *wmclass_name);
 extern void ui_skinned_window_widgetlist_associate(GtkWidget * widget, Widget * w);
 extern void ui_skinned_window_widgetlist_dissociate(GtkWidget * widget, Widget * w);
