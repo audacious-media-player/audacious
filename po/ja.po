@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-02-11 03:00-0600\n"
-"PO-Revision-Date: 2007-02-06 10:52+0900\n"
+"PO-Revision-Date: 2007-02-15 11:00+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -82,7 +82,7 @@ msgstr "入力プラグイン: %s"
 #: src/audacious/logger.c:122
 #, c-format
 msgid "Unable to create log file (%s)!\n"
-msgstr "ログ・ファイル (%s) を作成できません！\n"
+msgstr "ログファイル (%s) を作成できません!\n"
 
 #: src/audacious/main.c:83 src/audacious/main.c:85 src/audacious/ui_main.c:627
 #: src/audacious/ui_main.c:2897
@@ -124,7 +124,7 @@ msgstr "プレイリストの一つ次の曲にジャンプする"
 
 #: src/audacious/main.c:835
 msgid "Display Jump to File dialog"
-msgstr "ファイル・ダイアログへのジャンプを表示"
+msgstr "ファイルダイアログへのジャンプを表示"
 
 #: src/audacious/main.c:836
 msgid "Don't clear the playlist"
@@ -136,7 +136,7 @@ msgstr "新しいファイルを一時プレイリストに追加する"
 
 #: src/audacious/main.c:838
 msgid "Display the main window"
-msgstr "メイン・ウィンドウを表示する"
+msgstr "メインウィンドウを表示する"
 
 #: src/audacious/main.c:839
 msgid "Display all open Audacious windows"
@@ -296,7 +296,7 @@ msgstr "BMP 開発者:"
 
 #: src/audacious/ui_credits.c:143
 msgid "Brazilian Portuguese:"
-msgstr "ブラジル・ポルトガル語:"
+msgstr "ブラジルポルトガル語:"
 
 #: src/audacious/ui_credits.c:146
 msgid "Breton:"
@@ -340,7 +340,7 @@ msgstr "ギリシア語:"
 
 #: src/audacious/ui_credits.c:180
 msgid "Hindi:"
-msgstr "ヒンディー語:"
+msgstr "ヒンディ語:"
 
 #: src/audacious/ui_credits.c:183
 msgid "Hungarian:"
@@ -356,7 +356,7 @@ msgstr "日本語:"
 
 #: src/audacious/ui_credits.c:193
 msgid "Korean:"
-msgstr "韓国語:"
+msgstr "朝鮮語:"
 
 #: src/audacious/ui_credits.c:196
 msgid "Lithuanian:"
@@ -380,15 +380,15 @@ msgstr "ロシア語:"
 
 #: src/audacious/ui_credits.c:211
 msgid "Serbian (Latin):"
-msgstr "セルビア語 (ラテン語):"
+msgstr "セルビア語 (ラテン文字):"
 
 #: src/audacious/ui_credits.c:214
 msgid "Serbian (Cyrillic):"
-msgstr "セルビア語 (キリル語):"
+msgstr "セルビア語 (キリル文字):"
 
 #: src/audacious/ui_credits.c:217
 msgid "Simplified Chinese:"
-msgstr "簡体中国語:"
+msgstr "簡体字中国語:"
 
 #: src/audacious/ui_credits.c:220
 msgid "Slovak:"
@@ -404,7 +404,7 @@ msgstr "スウェーデン語:"
 
 #: src/audacious/ui_credits.c:229
 msgid "Traditional Chinese:"
-msgstr "繁体中国語:"
+msgstr "繁体字中国語:"
 
 #: src/audacious/ui_credits.c:232
 msgid "Turkish:"
@@ -490,7 +490,7 @@ msgstr "バランス: %d%% (右寄り)"
 
 #: src/audacious/ui_main.c:2137
 msgid "OPTIONS MENU"
-msgstr "オプション・メニュー"
+msgstr "オプションメニュー"
 
 #: src/audacious/ui_main.c:2141
 msgid "DISABLE ALWAYS ON TOP"
@@ -506,11 +506,11 @@ msgstr "ファイル情報ボックス"
 
 #: src/audacious/ui_main.c:2150
 msgid "DISABLE DOUBLESIZE"
-msgstr "ダブル・サイズは無効"
+msgstr "ダブルサイズ無効"
 
 #: src/audacious/ui_main.c:2152
 msgid "ENABLE DOUBLESIZE"
-msgstr "ダブル・サイズは有効"
+msgstr "ダブルサイズ有効"
 
 #: src/audacious/ui_main.c:2155
 msgid "VISUALIZATION MENU"
@@ -535,7 +535,7 @@ msgid ""
 "2. No other programs is blocking the soundcard.\n"
 "3. Your soundcard is configured properly.\n"
 msgstr ""
-"<b><big>オーディオ・デバイスを開けませんでした.</big></b>\n"
+"<b><big>オーディオデバイスを開けませんでした.</big></b>\n"
 "\n"
 "以下をチェックして下さい:\n"
 "1. 現在選択している出力プラグインが正しいか.\n"
@@ -749,11 +749,11 @@ msgstr "視覚化モード"
 
 #: src/audacious/ui_manager.c:190
 msgid "Analyzer Mode"
-msgstr "アナライザ・モード"
+msgstr "アナライザモード"
 
 #: src/audacious/ui_manager.c:191
 msgid "Scope Mode"
-msgstr "スコープ・モード"
+msgstr "スコープモード"
 
 #: src/audacious/ui_manager.c:192
 msgid "Voiceprint Mode"
@@ -765,15 +765,15 @@ msgstr "WindowShade VU モード"
 
 #: src/audacious/ui_manager.c:194
 msgid "Refresh Rate"
-msgstr "リフレッシュ・レート"
+msgstr "リフレッシュレート"
 
 #: src/audacious/ui_manager.c:195
 msgid "Analyzer Falloff"
-msgstr "アナライザ・フォールオフ"
+msgstr "アナライザ フォールオフ"
 
 #: src/audacious/ui_manager.c:196
 msgid "Peaks Falloff"
-msgstr "ピーク・フォールオフ"
+msgstr "ピーク フォールオフ"
 
 #: src/audacious/ui_manager.c:201 src/audacious/ui_preferences.c:106
 #: src/audacious/ui_playlist_manager.c:288
@@ -851,11 +851,11 @@ msgstr "CD をプレイリストに追加します."
 
 #: src/audacious/ui_manager.c:244
 msgid "Add Internet Address..."
-msgstr "インターネット・アドレスの追加..."
+msgstr "インターネットアドレスの追加..."
 
 #: src/audacious/ui_manager.c:245
 msgid "Adds a remote track to the playlist."
-msgstr "リモート・トラックをプレイリストに追加します."
+msgstr "リモートトラックをプレイリストに追加します."
 
 #: src/audacious/ui_manager.c:248
 msgid "Add Files..."
@@ -1142,7 +1142,7 @@ msgstr "デフォルト"
 
 #: src/audacious/ui_manager.c:437
 msgid "Load default preset into equalizer"
-msgstr "イコライザにデフォルト・プリセットを読み込む"
+msgstr "イコライザにデフォルトプリセットを読み込む"
 
 #: src/audacious/ui_manager.c:439
 msgid "Zero"
@@ -1150,7 +1150,7 @@ msgstr "ゼロ"
 
 #: src/audacious/ui_manager.c:440
 msgid "Set equalizer preset levels to zero"
-msgstr "イコライザ・プリセット・レベルをゼロにセット"
+msgstr "イコライザプリセットレベルをゼロにセット"
 
 #: src/audacious/ui_manager.c:442
 msgid "From file"
@@ -1363,7 +1363,7 @@ msgstr "トラック名: "
 
 #: src/audacious/ui_playlist.c:503
 msgid "Album name: "
-msgstr "アルバム・モード: "
+msgstr "アルバムモード: "
 
 #: src/audacious/ui_playlist.c:509
 msgid "Artist: "
@@ -1402,7 +1402,7 @@ msgid ""
 "\n"
 "Unknown file type for '%s'.\n"
 msgstr ""
-"<b><big>プレイリストを保存できません！</big></b>\n"
+"<b><big>プレイリストを保存できません!</big></b>\n"
 "\n"
 "%s のファイルの種類が不明です.\n"
 
@@ -1556,7 +1556,7 @@ msgstr "<b>視覚化</b>"
 
 #: src/audacious/glade/prefswin.glade:553
 msgid "_Effect plugin list:"
-msgstr "エフェクト・プラグインの一覧(_E):"
+msgstr "エフェクトプラグインの一覧(_E):"
 
 #: src/audacious/glade/prefswin.glade:657
 msgid "<b>Effects</b>"
@@ -1576,7 +1576,7 @@ msgstr "<b>フォント(_F)</b>"
 
 #: src/audacious/glade/prefswin.glade:948
 msgid "_Player:"
-msgstr "プレイヤー(_P):"
+msgstr "プレイヤ(_P):"
 
 #: src/audacious/glade/prefswin.glade:991
 msgid "_Playlist:"
@@ -1584,14 +1584,14 @@ msgstr "プレイリスト(_P):"
 
 #: src/audacious/glade/prefswin.glade:1023
 msgid "Select main player window font:"
-msgstr "メイン・ウィンドウで使用するフォントの選択"
+msgstr "メインウィンドウで使用するフォントの選択"
 
 #: src/audacious/glade/prefswin.glade:1091
 msgid ""
 "Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
 "strings."
 msgstr ""
-"可能ならばビットマップフォントを使用します. ビットマップフォントはユニコード"
+"可能ならばビットマップフォントを使用します. ビットマップフォントは Unicode "
 "文字列をサポートしていません."
 
 #: src/audacious/glade/prefswin.glade:1093
@@ -1612,20 +1612,20 @@ msgstr "プレイリストの区切り線を表示する"
 
 #: src/audacious/glade/prefswin.glade:1245
 msgid "Use custom cursors"
-msgstr "カスタム・カーソルを使用する"
+msgstr "カスタムカーソルを使用する"
 
 #: src/audacious/glade/prefswin.glade:1279
 #: src/audacious/glade/prefswin.glade:1290
 msgid "This enables the window manager to show decorations for windows."
-msgstr "ファイル・マネージャによるウィンドウ装飾を有効にします."
+msgstr "ファイルマネージャによるウィンドウ装飾を有効にします."
 
 #: src/audacious/glade/prefswin.glade:1281
 msgid "Show window manager decoration"
-msgstr "ファイル・マネージャ装飾を表示する"
+msgstr "ファイルマネージャ装飾を表示する"
 
 #: src/audacious/glade/prefswin.glade:1289
 msgid "Show window manager decorations"
-msgstr "ファイル・マネージャ装飾を表示する"
+msgstr "ファイルマネージャ装飾を表示する"
 
 #: src/audacious/glade/prefswin.glade:1319
 msgid ""
@@ -1639,7 +1639,7 @@ msgstr ""
 
 #: src/audacious/glade/prefswin.glade:1321
 msgid "Use XMMS-style file selector instead of the default selector"
-msgstr "デフォルトのセレクタの代わりに XMMS スタイルのファイル・セレクタを使う"
+msgstr "デフォルトのセレクタの代わりに XMMS スタイルのファイルセレクタを使う"
 
 #: src/audacious/glade/prefswin.glade:1410
 msgid "<b>Mouse wheel</b>"
@@ -2063,85 +2063,3 @@ msgstr "14KHZ"
 #: src/audacious/widgets/eq_slider.c:96
 msgid "16KHZ"
 msgstr "16KHZ"
-
-#~ msgid ""
-#~ "Enables playlist transparency. This is not recommended for slower "
-#~ "machines as it requires some CPU time to create and cache the pixmaps "
-#~ "used for the transparency."
-#~ msgstr ""
-#~ "プレイリストの透過を有効にします. 透過に用いるピックスマップの作成とキャッ"
-#~ "シュにある程度の CPU 時間が必要なので, 遅いマシンにはお勧めできません."
-
-#~ msgid "Enable playlist transparency"
-#~ msgstr "プレイリストの透過を有効にする"
-
-#~ msgid "%s: option `%s' is ambiguous\n"
-#~ msgstr "%s: オプション '%s' があいまいです\n"
-
-#~ msgid "%s: option `--%s' doesn't allow an argument\n"
-#~ msgstr "%s: オプション '--%s' は引数をとりません\n"
-
-#~ msgid "%s: option `%c%s' doesn't allow an argument\n"
-#~ msgstr "%s: オプション '%c%s' は引数をとりません\n"
-
-#~ msgid "%s: option `%s' requires an argument\n"
-#~ msgstr "%s: オプション '%s' には引数が必要です\n"
-
-#~ msgid "%s: unrecognized option `--%s'\n"
-#~ msgstr "%s: 無効なオプション '--%s'\n"
-
-#~ msgid "%s: unrecognized option `%c%s'\n"
-#~ msgstr "%s: 無効なオプション '%c%s'\n"
-
-#~ msgid "%s: illegal option -- %c\n"
-#~ msgstr "%s: 間違ったオプション -- %c\n"
-
-#~ msgid "%s: invalid option -- %c\n"
-#~ msgstr "%s: 間違ったオプション -- %c\n"
-
-#~ msgid "%s: option requires an argument -- %c\n"
-#~ msgstr "%s: オプションには引数が必要です -- %c\n"
-
-#~ msgid "%s: option `-W %s' is ambiguous\n"
-#~ msgstr "%s: オプション '-W %s' があいまいです\n"
-
-#~ msgid "%s: option `-W %s' doesn't allow an argument\n"
-#~ msgstr "%s: オプション '-W %s' は引数をとりません\n"
-
-#~ msgid ""
-#~ "Usage: audacious [options] [files] ...\n"
-#~ "\n"
-#~ "Options:\n"
-#~ "--------\n"
-#~ msgstr ""
-#~ "用法: audacious [オプション] [ファイル] ...\n"
-#~ "\n"
-#~ "オプション:\n"
-#~ "--------\n"
-
-#~ msgid "Display this text and exit"
-#~ msgstr "このメッセージを表示して終了する"
-
-#~ msgid "Activate Audacious"
-#~ msgstr "Audacious をアクティブにする"
-
-#~ msgid "Previous session ID"
-#~ msgstr "以前のセッション ID を指定する"
-
-#~ msgid "Headless operation [experimental]"
-#~ msgstr "ヘッドレス動作 [実験的]"
-
-#~ msgid "Disable error/warning interception (logging)"
-#~ msgstr "エラー/警告の捕獲(ロギング)を無効にする"
-
-#~ msgid "Print version number and exit\n"
-#~ msgstr "バージョンを表示して終了する\n"
-
-#~ msgid "Add/Open Files dialog"
-#~ msgstr "ファイルの追加/ダイアログを開く"
-
-#~ msgid "Close Dialog on Add"
-#~ msgstr "追加したらダイアログを閉じる"
-
-#~ msgid "Deselect All"
-#~ msgstr "全て選択解除"
