@@ -365,141 +365,234 @@ del_directory(const gchar * path)
 
 #endif                          /* ifdef HAVE_FTS */
 
-gchar *
-read_ini_string(const gchar * filename, const gchar * section,
-                const gchar * key)
+static void
+strip_string(GString *string)
 {
-    static gchar *buffer = NULL;
-    static gchar *open_buffer = NULL;
-    gchar *ret_buffer = NULL;
-    gint found_section = 0, len = 0;
-    static gsize filesize = 0;
-    gsize off = 0;
-    gchar *outbuf;
-    unsigned char x[] = { 0xff, 0xfe, 0x00 };
-    guint counter;
+    while (string->len > 0 && string->str[0] == ' ')
+        g_string_erase(string, 0, 1);
 
-    if (!filename)
+    while (string->len > 0 && string->str[string->len - 1] == ' ')
+        g_string_erase(string, string->len - 1, 1);
+}
+
+static void
+strip_lower_string(GString *string)
+{
+    strip_string(string);
+    
+    gchar *lower = g_ascii_strdown(string->str, -1);
+    g_free(string->str);
+    string->str = lower;
+}
+
+INIFile *
+open_ini_file(const gchar *filename)
+{
+    GHashTable *ini_file = g_hash_table_new(NULL, NULL);
+    GHashTable *section = g_hash_table_new(NULL, NULL);
+    GString *section_name, *key_name, *value;
+    gpointer section_hash, key_hash;
+    gchar *buffer = NULL;
+    gsize off = 0;
+    gsize filesize = 0;
+
+    unsigned char x[] = { 0xff, 0xfe, 0x00 };
+
+
+    g_return_val_if_fail(filename, NULL);
+
+    section_name = g_string_new("");
+    key_name = g_string_new(NULL);
+    value = g_string_new(NULL);
+
+    /* make a nameless section which should store all entries that are not
+     * embedded in a section */
+    section_hash = GINT_TO_POINTER(g_string_hash(section_name));
+    g_hash_table_insert(ini_file, section_hash, section);
+
+    vfs_file_get_contents(filename, &buffer, &filesize);
+    if (buffer == NULL)
         return NULL;
 
-    /*
-     * We optimise for the condition that we may be reading from the
-     * same ini-file multiple times. This is fairly common; it happens
-     * on .pls playlist loads. To do otherwise would take entirely too
-     * long, as fstat() can be very slow when done 21,000 times too many.
-     *
-     * Therefore, we optimise by keeping the last ini file in memory.
-     * Yes, this is a memory leak, but it is not too bad, hopefully.
-     *      - nenolod
-     */
-    if (open_buffer == NULL || strcasecmp(filename, open_buffer))
-    {
-        if (buffer != NULL)
-        {
-            g_free(buffer);
-            buffer = NULL;
-        }
-
-        if (open_buffer != NULL)
-        {
-            g_free(open_buffer);
-            open_buffer = NULL;
-        }
-
-        vfs_file_get_contents(filename, &buffer, &filesize);
-
-        if (buffer == NULL)
-            return NULL;
-
-        open_buffer = g_strdup(filename);
-    }
 
     /*
      * Convert UTF-16 into something useful. Original implementation
      * by incomp@#audacious. Cleanups \nenolod
+     * FIXME: can't we use a GLib function for that? -- 01mf02
      */
-    if (!memcmp(&buffer[0],&x,2)) {
-        outbuf = g_malloc (filesize);   /* it's safe to waste memory. */
+    if (!memcmp(&buffer[0],&x,2))
+    {
+        gchar *outbuf = g_malloc (filesize);   /* it's safe to waste memory. */
+        guint counter;
 
         for (counter = 2; counter < filesize; counter += 2)
+        {
             if (!memcmp(&buffer[counter+1], &x[2], 1))
                 outbuf[(counter-2)/2] = buffer[counter];
             else
-        return NULL;
+                return NULL;
+        }
 
         outbuf[(counter-2)/2] = '\0';
 
-        if ((filesize - 2) / 2 == (counter - 2) / 2) {
+        if ((filesize - 2) / 2 == (counter - 2) / 2)
+        {
             g_free(buffer);
             buffer = outbuf;
-        } else {
+        }
+        else
+        {
             g_free(outbuf);
-        return NULL;    /* XXX wrong encoding */
+            return NULL;    /* XXX wrong encoding */
         }
     }
 
-    while (!ret_buffer && off < filesize) {
-        while (off < filesize &&
-               (buffer[off] == '\r' || buffer[off] == '\n' ||
-                buffer[off] == ' ' || buffer[off] == '\t'))
+    while (off < filesize)
+    {
+        /* ignore the following characters */
+        if (buffer[off] == '\r' || buffer[off] == '\n' ||
+            buffer[off] == ' '  || buffer[off] == '\t')
+        {
+            if (buffer[off] == '\n')
+            {
+                g_string_free(key_name, TRUE);
+                g_string_free(value, FALSE);
+                key_name = g_string_new(NULL);
+                value = g_string_new(NULL);
+            }
+
             off++;
-        if (off >= filesize)
-            break;
-        if (buffer[off] == '[') {
-            gint slen = strlen(section);
+            continue;
+        }
+
+        /* if we encounter a possible section statement */
+        if (buffer[off] == '[')
+        {
+            g_string_free(section_name, TRUE);
+            section_name = g_string_new(NULL);
             off++;
-            found_section = 0;
-            if (off + slen + 1 < filesize &&
-                !strncasecmp(section, &buffer[off], slen)) {
-                off += slen;
-                if (buffer[off] == ']') {
-                    off++;
-                    found_section = 1;
+
+            if (off >= filesize)
+                goto return_sequence;
+
+            while (buffer[off] != ']')
+            {
+                /* if the section statement has not been closed before a
+                 * linebreak */
+                if (buffer[off] == '\n')
+                    break;
+
+                g_string_append_c(section_name, buffer[off]);
+                off++;
+                if (off >= filesize)
+                    goto return_sequence;
+            }
+            if (buffer[off] == '\n')
+                continue;
+            if (buffer[off] == ']')
+            {
+                off++;
+                if (off >= filesize)
+                    goto return_sequence;
+
+                strip_lower_string(section_name);
+                section_hash = GINT_TO_POINTER(g_string_hash(section_name));
+
+                /* if this section already exists, we don't make a new one,
+                 * but reuse the old one */
+                if (g_hash_table_lookup(ini_file, section_hash) != NULL)
+                    section = g_hash_table_lookup(ini_file, section_hash);
+                else
+                {
+                    section = g_hash_table_new(NULL, NULL);
+                    g_hash_table_insert(ini_file, section_hash, section);
                 }
+
+                continue;
             }
         }
-        else if (found_section && off + strlen(key) < filesize &&
-                 !strncasecmp(key, &buffer[off], strlen(key))) {
-            off += strlen(key);
-            while (off < filesize &&
-                   (buffer[off] == ' ' || buffer[off] == '\t'))
-                off++;
+
+        if (buffer[off] == '=')
+        {
+            off++;
             if (off >= filesize)
-                break;
-            if (buffer[off] == '=') {
+                goto return_sequence;
+
+            while (buffer[off] != '\n')
+            {
+                g_string_append_c(value, buffer[off]);
                 off++;
-                while (off < filesize &&
-                       (buffer[off] == ' ' || buffer[off] == '\t'))
-                    off++;
                 if (off >= filesize)
                     break;
-                len = 0;
-                while (off + len < filesize &&
-                       buffer[off + len] != '\r' &&
-                       buffer[off + len] != '\n' && buffer[off + len] != ';')
-                    len++;
-                ret_buffer = g_strndup(&buffer[off], len);
-                off += len;
             }
+
+            strip_lower_string(key_name);
+            key_hash = GINT_TO_POINTER(g_string_hash(key_name));
+            strip_string(value);
+
+            if (key_name->len > 0 && value->len > 0)
+                g_hash_table_insert(section, key_hash, value->str);
         }
-        while (off < filesize && buffer[off] != '\r' && buffer[off] != '\n')
+        else
+        {
+            g_string_append_c(key_name, buffer[off]);
             off++;
+            if (off >= filesize)
+                goto return_sequence;
+        }
     }
 
-    return ret_buffer;
+return_sequence:
+    g_string_free(section_name, TRUE);
+    g_string_free(key_name, TRUE);
+    g_string_free(value, TRUE);
+    g_free(buffer);
+    return ini_file;
+}
+
+void
+close_ini_file(INIFile *inifile)
+{
+    g_return_if_fail(inifile);
+
+    /* we don't have to destroy anything in the hash table manually, as the
+     * keys are represented as integers and the string values may be used in
+     * functions which have read the strings from the hash table
+     */
+    g_hash_table_destroy(inifile);
+}
+
+gchar *
+read_ini_string(INIFile *inifile, const gchar *section, const gchar *key)
+{
+    g_return_val_if_fail(inifile, NULL);
+
+    GString *section_string = g_string_new(section);
+    GString *key_string = g_string_new(key);
+    gchar *value = NULL;
+
+    strip_lower_string(section_string);
+    strip_lower_string(key_string);
+    gpointer section_hash = GINT_TO_POINTER(g_string_hash(section_string));
+    gpointer key_hash = GINT_TO_POINTER(g_string_hash(key_string));
+    g_string_free(section_string, FALSE);
+    g_string_free(key_string, FALSE);
+
+    GHashTable *section_table = g_hash_table_lookup(inifile, section_hash);
+    g_return_val_if_fail(section_table, NULL);
+
+    value = g_hash_table_lookup(section_table, GINT_TO_POINTER(key_hash));
+    return value;
 }
 
 GArray *
-read_ini_array(const gchar * filename, const gchar * section,
-               const gchar * key)
+read_ini_array(INIFile *inifile, const gchar *section, const gchar *key)
 {
     gchar *temp;
     GArray *a;
 
-    if ((temp = read_ini_string(filename, section, key)) == NULL) {
-        g_free(temp);
-        return NULL;
-    }
+    g_return_val_if_fail((temp = read_ini_string(inifile, section, key)), NULL);
+
     a = string_to_garray(temp);
     g_free(temp);
     return a;

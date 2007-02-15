@@ -37,6 +37,8 @@ G_BEGIN_DECLS
 
 #define SWAP(a, b)      { a^=b; b^=a; a^=b; }
 
+typedef GHashTable INIFile;
+
 typedef gboolean(*DirForeachFunc) (const gchar * path,
                                    const gchar * basename,
                                    gpointer user_data);
@@ -47,10 +49,13 @@ void del_directory(const gchar * dirname);
 gboolean dir_foreach(const gchar * path, DirForeachFunc function,
                      gpointer user_data, GError ** error);
 
-gchar *read_ini_string(const gchar * filename, const gchar * section,
-                       const gchar * key);
-GArray *read_ini_array(const gchar * filename, const gchar * section,
-                       const gchar * key);
+
+INIFile *open_ini_file(const gchar *filename);
+void close_ini_file(INIFile *key_file);
+gchar *read_ini_string(INIFile *key_file, const gchar *section,
+					   const gchar *key);
+GArray *read_ini_array(INIFile *key_file, const gchar *section,
+                       const gchar *key);
 
 GArray *string_to_garray(const gchar * str);
 
