@@ -689,17 +689,6 @@ playlistwin_resize(gint width, gint height)
     gdk_window_clear(playlistwin->window);
 }
 
-static gboolean
-playlistwin_configure(GtkWidget * window,
-                      GdkEventConfigure * event, gpointer data)
-{
-    g_return_val_if_fail(GTK_WIDGET_VISIBLE(window), FALSE);
-
-    cfg.playlist_x = event->x;
-    cfg.playlist_y = event->y;
-    return TRUE;
-}
-
 static void
 playlistwin_motion(GtkWidget * widget,
                    GdkEventMotion * event,
@@ -1675,8 +1664,6 @@ playlistwin_create_window(void)
                            G_CALLBACK(playlistwin_focus_in), NULL);
     g_signal_connect_after(playlistwin, "focus_out_event",
                            G_CALLBACK(playlistwin_focus_out), NULL);
-    g_signal_connect(playlistwin, "configure_event",
-                     G_CALLBACK(playlistwin_configure), NULL);
     g_signal_connect(playlistwin, "style_set",
                      G_CALLBACK(playlistwin_set_back_pixmap), NULL);
 

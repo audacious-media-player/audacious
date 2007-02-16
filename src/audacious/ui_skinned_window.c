@@ -78,6 +78,10 @@ ui_skinned_window_configure(GtkWidget *widget,
     window->x = event->x;
     window->y = event->y;
 
+#if 0
+    g_print("%p window->x = %d, window->y = %d\n", window, window->x, window->y);
+#endif
+
     return FALSE;
 }
 

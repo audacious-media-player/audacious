@@ -72,6 +72,7 @@
 #include "build_stamp.h"
 #include "ui_fileinfo.h"
 #include "signals.h"
+#include "ui_skinned_window.h"
 
 #include "icons-csource.h"
 #include "icons-stock.h"
@@ -674,6 +675,27 @@ bmp_config_save(void)
      * could do with being done a bit neater.  -larne   */
     bmp_cfg_db_set_int(db, NULL, "playlist_position",
                        playlist_get_position(playlist));
+
+    /* FIXME: we're looking up SkinnedWindow::x &c ourselves here.
+     * this isn't exactly right. -nenolod
+     */
+    bmp_cfg_db_set_int(db, NULL, "playlist_x",
+                       SKINNED_WINDOW(playlistwin)->x);
+
+    bmp_cfg_db_set_int(db, NULL, "playlist_y",
+                       SKINNED_WINDOW(playlistwin)->y);
+
+    bmp_cfg_db_set_int(db, NULL, "player_x",
+                       SKINNED_WINDOW(mainwin)->x);
+
+    bmp_cfg_db_set_int(db, NULL, "player_y",
+                       SKINNED_WINDOW(mainwin)->y);
+
+    bmp_cfg_db_set_int(db, NULL, "equalizer_x",
+                       SKINNED_WINDOW(equalizerwin)->x);
+
+    bmp_cfg_db_set_int(db, NULL, "equalizer_y",
+                       SKINNED_WINDOW(equalizerwin)->y);
 
     bmp_cfg_db_set_bool(db, NULL, "mainwin_use_xfont",
             cfg.mainwin_use_xfont);
