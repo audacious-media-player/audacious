@@ -450,9 +450,7 @@ int id3_field_settextencoding(union id3_field *field,
 {
   assert(field);
 
-  printf("field type=%d ", field->type);
   if (field->type != ID3_FIELD_TYPE_TEXTENCODING) {
-	  printf("not textencoding\n");
     return -1;
   }
 
