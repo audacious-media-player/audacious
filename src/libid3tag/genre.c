@@ -61,7 +61,7 @@ id3_ucs4_t const *id3_genre_name(id3_ucs4_t const *string)
   if (string[0] == 'C' && string[1] == 'R' && string[2] == 0)
     return genre_cover;
 
-  for (ptr = string; *ptr; ++ptr) {
+  for (ptr = (id3_ucs4_t *)string; *ptr; ++ptr) {
     if (*ptr < '0' || *ptr > '9')
       return string;
   }

@@ -11,7 +11,7 @@ LIBADD += $(GLIB_LIBS)
 
 CFLAGS += $(PICFLAGS) \
 	-I.. \
-	$(GLIB_CFLAGS)
+	$(GLIB_CFLAGS) -Wall
 
 HEADERS = id3tag.h
 

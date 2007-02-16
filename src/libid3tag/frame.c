@@ -26,6 +26,7 @@
 # include "global.h"
 
 # include <stdlib.h>
+# include <stdio.h>
 # include <string.h>
 
 # ifdef HAVE_ASSERT_H
@@ -280,7 +281,7 @@ struct id3_frame *id3_frame_parse(id3_byte_t const **ptr, id3_length_t length,
       if (length < 6)
 	goto fail;
 
-      compat = id3_compat_lookup(id, 3);
+      compat = id3_compat_lookup((char *)id, 3);
 
       *ptr += 3;
       size  = id3_parse_uint(ptr, 3);
@@ -296,7 +297,7 @@ struct id3_frame *id3_frame_parse(id3_byte_t const **ptr, id3_length_t length,
       if (length < 10)
 	goto fail;
 
-      compat = id3_compat_lookup(id, 4);
+      compat = id3_compat_lookup((char *)id, 4);
 
       *ptr += 4;
       size  = id3_parse_uint(ptr, 4);
@@ -308,7 +309,7 @@ struct id3_frame *id3_frame_parse(id3_byte_t const **ptr, id3_length_t length,
       end = *ptr + size;
 
       if (flags & (ID3_FRAME_FLAG_FORMATFLAGS & ~0x00e0)) {
-	frame = unparseable(id, ptr, end - *ptr, 0, 0, 0, 0);
+       frame = unparseable((char *)id, ptr, end - *ptr, 0, 0, 0, 0);
 	goto done;
       }
 
@@ -348,14 +349,14 @@ struct id3_frame *id3_frame_parse(id3_byte_t const **ptr, id3_length_t length,
     /* canonicalize frame ID for ID3v2.4 */
 
     if (compat && compat->equiv)
-      id = compat->equiv;
+	    id = (id3_byte_t *)compat->equiv;
     else if (ID3_TAG_VERSION_MAJOR(version) == 2) {
       xid[0] = 'Y';
       xid[1] = id[0];
       xid[2] = id[1];
       xid[3] = id[2];
 
-      id = xid;
+      id = (id3_byte_t *)xid;
 
       flags |=
 	ID3_FRAME_FLAG_TAGALTERPRESERVATION |
@@ -376,7 +377,7 @@ struct id3_frame *id3_frame_parse(id3_byte_t const **ptr, id3_length_t length,
     end = *ptr + size;
 
     if (flags & (ID3_FRAME_FLAG_FORMATFLAGS & ~ID3_FRAME_FLAG_KNOWNFLAGS)) {
-      frame = unparseable(id, ptr, end - *ptr, flags, 0, 0, 0);
+	    frame = unparseable((char *)id, ptr, end - *ptr, flags, 0, 0, 0);
       goto done;
     }
 
@@ -423,7 +424,7 @@ struct id3_frame *id3_frame_parse(id3_byte_t const **ptr, id3_length_t length,
   }
 
   if (flags & ID3_FRAME_FLAG_ENCRYPTION) {
-    frame = unparseable(id, &data, end - data, flags,
+	  frame = unparseable((char *)id, &data, end - data, flags,
 			group_id, encryption_method, decoded_length);
     goto done;
   }
@@ -445,13 +446,13 @@ struct id3_frame *id3_frame_parse(id3_byte_t const **ptr, id3_length_t length,
   /* check for obsolescence */
 
   if (compat && !compat->equiv) {
-    frame = obsolete(id, data, end - data);
+	  frame = obsolete((char *)id, data, end - data);
     goto done;
   }
 
   /* generate the internal frame structure */
 
-  frame = id3_frame_new(id);
+  frame = id3_frame_new((char *)id);
   if (frame) {
     frame->flags    = flags;
     frame->group_id = group_id;
