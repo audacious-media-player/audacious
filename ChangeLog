@@ -1,3 +1,16 @@
+2007-02-17 09:02:11 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4082]
+  - relocate configdb to audacious core
+  
+  trunk/src/audacious/Makefile      |    1 
+  trunk/src/audacious/configdb.c    |  193 +++++++++++++++++++++++++++++++++++++
+  trunk/src/audacious/configdb.h    |  198 ++++++++++++++++++++++++++++++++++++++
+  trunk/src/libaudacious/Makefile   |    3 
+  trunk/src/libaudacious/configdb.c |  193 -------------------------------------
+  trunk/src/libaudacious/configdb.h |  198 --------------------------------------
+  6 files changed, 392 insertions(+), 394 deletions(-)
+
+
 2007-02-17 08:59:50 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4080]
   - make libmcs a forced requirement

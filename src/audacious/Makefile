@@ -29,6 +29,7 @@ CFLAGS += \
 
 HEADERS = \
 	formatter.h \
+	rcfile.h \
 	i18n.h \
 	input.h \
 	hook.h \
@@ -73,6 +74,7 @@ SOURCES = \
 	playlist.c \
 	playlist_container.c \
 	pluginenum.c \
+	rcfile.c \
 	signals.c \
 	strings.c \
 	titlestring.c \
