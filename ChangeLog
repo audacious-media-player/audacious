@@ -1,3 +1,17 @@
+2007-02-17 10:19:35 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4086]
+  - Patch to use libsamplerate for high-quality interpolated upsampling,
+    similar to what foobar2000 can do. Patch by Teru KAMOGASHIRA.
+  
+  trunk/configure.ac                       |   14 +
+  trunk/mk/rules.mk.in                     |    2 
+  trunk/src/audacious/Makefile             |    2 
+  trunk/src/audacious/glade/prefswin.glade |  268 +++++++++++++++++++++++++++++++
+  trunk/src/audacious/output.c             |  101 +++++++++++
+  trunk/src/audacious/ui_preferences.c     |  102 +++++++++++
+  6 files changed, 489 insertions(+)
+
+
 2007-02-17 09:54:30 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4084]
   - reinstate rcfile class for now
