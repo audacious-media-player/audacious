@@ -52,7 +52,6 @@ HEADERS = \
 SOURCES = \
 	build_stamp.c \
 	controlsocket.c \
-	configdb.c \
 	dnd.c \
 	dock.c \
 	effect.c \
