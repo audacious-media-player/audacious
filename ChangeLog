@@ -1,3 +1,16 @@
+2007-02-17 10:32:37 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4092]
+  - put configdb back in libaudacious as the client library needs it
+  
+  trunk/src/audacious/Makefile      |    1 
+  trunk/src/audacious/configdb.c    |  193 -------------------------------------
+  trunk/src/audacious/configdb.h    |  198 --------------------------------------
+  trunk/src/libaudacious/Makefile   |    2 
+  trunk/src/libaudacious/configdb.c |  193 +++++++++++++++++++++++++++++++++++++
+  trunk/src/libaudacious/configdb.h |  198 ++++++++++++++++++++++++++++++++++++++
+  6 files changed, 393 insertions(+), 392 deletions(-)
+
+
 2007-02-17 10:30:32 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4090]
   - update options printout

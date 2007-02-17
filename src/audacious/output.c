@@ -33,6 +33,9 @@
 
 #include "playlist.h"
 #include "libaudacious/configdb.h"
+
+#include <math.h>
+
 #ifdef USE_SRC
 #include <samplerate.h>
 #endif
@@ -414,9 +417,9 @@ produce_audio(gint time,        /* position             */
 #ifdef USE_SRC
     if(isSrcAlloc == TRUE)
       {
-        free(srcIn);
-        free(srcOut);
-        free(wOut);
+        g_free(srcIn);
+        g_free(srcOut);
+        g_free(wOut);
         isSrcAlloc = FALSE;
       }
     
@@ -424,9 +427,9 @@ produce_audio(gint time,        /* position             */
       {
         int lrLength = length/2;
         int overLrLength = (int)floor(lrLength*(src_data.src_ratio+1));
-        srcIn = (float*)malloc(sizeof(float)*lrLength);
-        srcOut = (float*)malloc(sizeof(float)*overLrLength);
-        wOut = (short int*)malloc(sizeof(short int)*overLrLength);
+        srcIn = (float*) g_malloc(sizeof(float)*lrLength);
+        srcOut = (float*) g_malloc(sizeof(float)*overLrLength);
+        wOut = (short int*) g_malloc(sizeof(short int)*overLrLength);
         src_short_to_float_array((short int*)ptr, srcIn, lrLength);
         isSrcAlloc = TRUE;
         src_data.data_in = srcIn;
@@ -434,7 +437,7 @@ produce_audio(gint time,        /* position             */
         src_data.end_of_input = 0;
         src_data.input_frames = lrLength/2;
         src_data.output_frames = overLrLength/2;
-        if (srcError = src_process(src_state, &src_data))
+        if ((srcError = src_process(src_state, &src_data)) > 0)
           {
             fprintf(stderr, "src_process(): %s\n", src_strerror(srcError));
           }
