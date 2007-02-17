@@ -75,10 +75,13 @@ vfs_fopen(const gchar * path,
 
     for (node = vfs_transports; node != NULL; node = g_list_next(node))
     {
-        vtable = (VFSConstructor *) node->data;
+        VFSConstruct *vtptr = (VFSConstructor *) node->data;
 
-        if (!strncasecmp(decpath, vtable->uri_id, strlen(vtable->uri_id)))
+        if (!strncasecmp(decpath, vtptr->uri_id, strlen(vtptr->uri_id)))
+        {
+            vtable = vtptr;
             break;
+        }
     }
 
     /* no transport vtable has been registered, bail. */

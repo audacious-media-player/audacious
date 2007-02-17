@@ -1,3 +1,16 @@
+2007-02-16 12:21:17 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4074]
+  - include stdio.h for debug print out.
+  - suppress warnings.
+  
+  trunk/src/libid3tag/Makefile |    2 +-
+  trunk/src/libid3tag/field.c  |    1 +
+  trunk/src/libid3tag/frame.c  |   19 ++++++++++---------
+  trunk/src/libid3tag/genre.c  |    2 +-
+  trunk/src/libid3tag/tag.c    |    2 +-
+  5 files changed, 14 insertions(+), 12 deletions(-)
+
+
 2007-02-16 03:31:14 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4072]
   - remove debugging notice
