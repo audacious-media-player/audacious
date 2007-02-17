@@ -19,11 +19,8 @@ CFLAGS += $(PICFLAGS) \
 	-I.. -I../.. \
 	-I../intl
 
-CONF_SRC = configdb_$(CONFIGDB_BACKEND).c
-
 SOURCES = \
-	$(CONF_SRC) \
-	rcfile.c \
+	configdb.c \
 	beepctrl.c
 
 OBJECTS = ${SOURCES:.c=.o}

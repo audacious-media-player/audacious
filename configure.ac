@@ -276,21 +276,13 @@ AC_ARG_ENABLE(mcs,
     [enable_mcs="no"]
 )
 
-if test "$enable_mcs" = "yes"; then
-    PKG_CHECK_MODULES(LIBMCS, [libmcs >= 0.1],
-        [
-         AC_DEFINE(HAVE_MCS, , [Define if building with libmcs support])
-         ADD_PC_REQUIRES([libmcs >= 0.1])
-        ],
-        [AC_MSG_ERROR([Cannot find libmcs])]
-    )
-fi
-
-if test "$enable_mcs" = "yes"; then
-	CONFIGDB_BACKEND="libmcs"
-fi
-
-AC_SUBST(CONFIGDB_BACKEND)
+PKG_CHECK_MODULES(LIBMCS, [libmcs >= 0.1],
+   [
+      AC_DEFINE(HAVE_MCS, , [Define if building with libmcs support])
+      ADD_PC_REQUIRES([libmcs >= 0.1])
+   ],
+   [AC_MSG_ERROR([Cannot find libmcs])]
+)
 
 AC_CHECK_HEADERS(unistd.h)
 AC_CHECK_HEADERS(fcntl.h)

@@ -1,3 +1,11 @@
+2007-02-17 02:28:07 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4078]
+  - fix a typo
+  
+  trunk/src/audacious/vfs.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-02-17 02:27:31 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4076]
   - don't return a bogus vtable for an unregistered URI scheme
