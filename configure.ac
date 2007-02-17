@@ -208,8 +208,8 @@ dnl libsamplerate support
 dnl ========================
 AC_ARG_ENABLE(samplerate,
   [  --enable-samplerate          enable libsamplerate support (default=no)],
-  [cv_samplerate="$enable_samplerate"], [cv_samplerate="no"])
-if test "x$cv_samplerate" = "xyes"; then
+  [enable_samplerate=$enableval], [enable_samplerate=no])
+if test "x$enable_samplerate" = "xyes"; then
    AC_DEFINE(USE_SRC, 1, [Define if libsamplerate enabled] )
    PKG_CHECK_MODULES(samplerate, samplerate)
    AC_SUBST(USE_SRC)
