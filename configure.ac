@@ -282,14 +282,6 @@ if test "$enable_gconf" = "yes"; then
 	CONFIGDB_BACKEND="gconf"
 fi
 
-dnl libmcs support
-
-AC_ARG_ENABLE(mcs,
-    [  --enable-mcs            enable mcs support (default=disabled)],
-    [enable_mcs=$enableval],
-    [enable_mcs="no"]
-)
-
 PKG_CHECK_MODULES(LIBMCS, [libmcs >= 0.1],
    [
       AC_DEFINE(HAVE_MCS, , [Define if building with libmcs support])
@@ -456,10 +448,8 @@ echo "  Legacy configuration path:              \$HOME/$rc_path"
 echo
 echo "  Use one plugin dir:                     $enable_one_plugin_dir"
 echo "  Allow user plugin dir:                  $enable_user_plugin_dir"
-echo
-echo "  GConf support:                          $enable_gconf"
-echo
-echo "  mcs support:                            $enable_mcs"
+echo 
+echo "  Sample rate upconversion:               $enable_samplerate"
 echo
 
 if test "$beep_cv_lib_xlibs_threadsafe" = "no"; then
