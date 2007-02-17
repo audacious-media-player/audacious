@@ -75,7 +75,7 @@ vfs_fopen(const gchar * path,
 
     for (node = vfs_transports; node != NULL; node = g_list_next(node))
     {
-        VFSConstruct *vtptr = (VFSConstructor *) node->data;
+        VFSConstructor *vtptr = (VFSConstructor *) node->data;
 
         if (!strncasecmp(decpath, vtptr->uri_id, strlen(vtptr->uri_id)))
         {
