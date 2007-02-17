@@ -204,6 +204,20 @@ AC_SUBST(USE_CHARDET)
 AC_SUBST(CHARDET_LIBS)
 AC_SUBST(SUBDIR_GUESS)
 
+dnl libsamplerate support
+dnl ========================
+AC_ARG_ENABLE(samplerate,
+  [  --enable-samplerate          enable libsamplerate support (default=no)],
+  [cv_samplerate="$enable_samplerate"], [cv_samplerate="no"])
+if test "x$cv_samplerate" = "xyes"; then
+   AC_DEFINE(USE_SRC, 1, [Define if libsamplerate enabled] )
+   PKG_CHECK_MODULES(samplerate, samplerate)
+   AC_SUBST(USE_SRC)
+   AC_SUBST(samplerate_CFLAGS)
+   AC_SUBST(samplerate_LIBS)
+   AC_CHECK_LIB(samplerate, src_process,,AC_MSG_ERROR([*** Unable to find libsamplerate library!]))
+fi
+
 dnl regex support (gnu/oniguruma/pcre)
 dnl ========================
 REGEX_LIBS=

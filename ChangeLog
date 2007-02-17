@@ -1,3 +1,14 @@
+2007-02-17 09:54:30 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4084]
+  - reinstate rcfile class for now
+  
+  trunk/src/audacious/Makefile       |    2 
+  trunk/src/audacious/rcfile.c       |  565 +++++++++++++++++++++++++++++++++++++
+  trunk/src/audacious/rcfile.h       |   94 ++++++
+  trunk/src/audacious/ui_equalizer.c |    2 
+  4 files changed, 662 insertions(+), 1 deletion(-)
+
+
 2007-02-17 09:02:11 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4082]
   - relocate configdb to audacious core

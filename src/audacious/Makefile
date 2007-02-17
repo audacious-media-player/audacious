@@ -11,6 +11,7 @@ LDFLAGS += $(AUDLDFLAGS)
 LDADD = \
 	-L.. $(LTLIBINTL) \
 	-L../libaudacious -laudacious \
+	$(samplerate_LIBS) \
 	$(CHARDET_LIBS) \
 	$(GTK_LIBS) \
 	$(LIBGLADE_LIBS) \
@@ -22,6 +23,7 @@ CFLAGS += \
 	$(LIBGLADE_CFLAGS) \
 	$(BEEP_DEFINES) \
 	$(ARCH_DEFINES) \
+	$(samplerate_CFLAGS) \
 	$(REGEX_CFLAGS) \
 	-D_AUDACIOUS_CORE \
 	-I.. -I../.. \

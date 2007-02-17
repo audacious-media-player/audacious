@@ -32,6 +32,10 @@
 #include "playback.h"
 
 #include "playlist.h"
+#include "libaudacious/configdb.h"
+#ifdef USE_SRC
+#include <samplerate.h>
+#endif
 
 OutputPluginData op_data = {
     NULL,
@@ -217,11 +221,62 @@ get_output_time(void)
     return op->output_time();
 }
 
+#ifdef USE_SRC
+static SRC_STATE *src_state;
+static SRC_DATA src_data;
+static int overSamplingFs = 96000;
+static int converter_type = SRC_SINC_BEST_QUALITY;
+static int srcError = 0;
+static void freeSRC()
+{
+  if(src_state != NULL)
+    src_state = src_delete(src_state);
+}
+#endif
+
 gint
 output_open_audio(AFormat fmt, gint rate, gint nch)
 {
     gint ret;
     OutputPlugin *op;
+    
+#ifdef USE_SRC
+    ConfigDb *db;
+    gboolean src_enabled;
+    gint src_rate, src_type;
+    db = bmp_cfg_db_open();
+    
+    if (bmp_cfg_db_get_bool(db, NULL, "enable_src", &src_enabled) == FALSE)
+      src_enabled = FALSE;
+
+    if (bmp_cfg_db_get_int(db, NULL, "src_rate", &src_rate) == FALSE)
+      overSamplingFs = 48000;
+    else
+      overSamplingFs = src_rate;
+
+    if (bmp_cfg_db_get_int(db, NULL, "src_type", &src_type) == FALSE)
+      converter_type = SRC_SINC_BEST_QUALITY;
+    else
+      converter_type = src_type;
+    
+    bmp_cfg_db_close(db);
+    
+    freeSRC();
+    
+    if(src_enabled&&
+       (fmt == FMT_S16_NE||(fmt == FMT_S16_LE && G_BYTE_ORDER == G_LITTLE_ENDIAN)||
+	(fmt == FMT_S16_BE && G_BYTE_ORDER == G_BIG_ENDIAN)))
+      {
+	src_state = src_new(converter_type, nch, &srcError);
+	if (src_state != NULL)
+	  {
+	    src_data.src_ratio = (float)overSamplingFs/(float)rate;
+	    rate = overSamplingFs;
+	  }
+	else
+	  fprintf(stderr, "src_new(): %s\n\n", src_strerror(srcError));
+      }
+#endif
     
     op = get_current_output_plugin();
 
@@ -267,6 +322,10 @@ void
 output_close_audio(void)
 {
     OutputPlugin *op = get_current_output_plugin();
+
+#ifdef USE_SRC
+    freeSRC();
+#endif
 
     /* Do not close if there are still songs to play and the user has 
      * not requested a stop.  --nenolod
@@ -329,6 +388,12 @@ output_buffer_playing(void)
     return op->buffer_playing();
 }
 
+#ifdef USE_SRC
+static float *srcIn = NULL, *srcOut = NULL;
+static short int *wOut = NULL;
+static gboolean isSrcAlloc = FALSE;
+#endif
+
 /* called by input plugin when data is ready */
 void
 produce_audio(gint time,        /* position             */
@@ -345,6 +410,42 @@ produce_audio(gint time,        /* position             */
     int caneq = (fmt == FMT_S16_NE || fmt == myorder);
     OutputPlugin *op = get_current_output_plugin();
     int writeoffs;
+
+#ifdef USE_SRC
+    if(isSrcAlloc == TRUE)
+      {
+        free(srcIn);
+        free(srcOut);
+        free(wOut);
+        isSrcAlloc = FALSE;
+      }
+    
+    if(src_state != NULL&&length > 0)
+      {
+        int lrLength = length/2;
+        int overLrLength = (int)floor(lrLength*(src_data.src_ratio+1));
+        srcIn = (float*)malloc(sizeof(float)*lrLength);
+        srcOut = (float*)malloc(sizeof(float)*overLrLength);
+        wOut = (short int*)malloc(sizeof(short int)*overLrLength);
+        src_short_to_float_array((short int*)ptr, srcIn, lrLength);
+        isSrcAlloc = TRUE;
+        src_data.data_in = srcIn;
+        src_data.data_out = srcOut;
+        src_data.end_of_input = 0;
+        src_data.input_frames = lrLength/2;
+        src_data.output_frames = overLrLength/2;
+        if (srcError = src_process(src_state, &src_data))
+          {
+            fprintf(stderr, "src_process(): %s\n", src_strerror(srcError));
+          }
+        else
+          {
+            src_float_to_short_array(srcOut, wOut, src_data.output_frames_gen*2);
+            ptr = wOut;
+            length = src_data.output_frames_gen*4;
+          }
+      }
+#endif
 
     if (!caneq && cfg.equalizer_active) {    /* wrong byte order */
         byteswap(length, ptr);               /* so convert */
