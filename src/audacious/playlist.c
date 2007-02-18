@@ -588,11 +588,11 @@ playlist_delete(Playlist * playlist, gboolean crop)
 
 static void
 __playlist_ins_with_info(Playlist * playlist,
-			 const gchar * filename,
+                         const gchar * filename,
                          gint pos,
                          const gchar * title,
                          gint len,
-			 InputPlugin * dec)
+                         InputPlugin * dec)
 {
     g_return_if_fail(filename != NULL);
 
@@ -639,11 +639,12 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
     }
 
     PLAYLIST_UNLOCK(playlist->mutex);
-
-    g_mutex_lock(mutex_scan);
-    playlist_get_info_scan_active = TRUE;
-    g_mutex_unlock(mutex_scan);
-    g_cond_signal(cond_scan);
+    if(tuple->mtime == -1) { // kick the scanner thread only if mtime = -1 (uninitialized).
+        g_mutex_lock(mutex_scan);
+        playlist_get_info_scan_active = TRUE;
+        g_mutex_unlock(mutex_scan);
+        g_cond_signal(cond_scan);
+    }
 }
 
 static void
@@ -679,9 +680,9 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
 
     if (cfg.playlist_detect == TRUE || playlist->loading_playlist == TRUE || (playlist->loading_playlist == FALSE && dec != NULL))
     {
-	__playlist_ins(playlist, filename, pos, dec);
-	playlist_generate_shuffle_list(playlist);
-	playlistwin_update_list(playlist);
+        __playlist_ins(playlist, filename, pos, dec);
+        playlist_generate_shuffle_list(playlist);
+        playlistwin_update_list(playlist);
         return TRUE;
     }
 
@@ -2468,7 +2469,7 @@ playlist_get_info_func(gpointer arg)
                         update_playlistwin = TRUE;
                         if (entry == playlist->position)
                             update_mainwin = TRUE;
-			// no need for break here since this iteration is very short.
+                        // no need for break here since this iteration is very short.
                     }
                 }
                 PLAYLIST_UNLOCK(playlist->mutex);
