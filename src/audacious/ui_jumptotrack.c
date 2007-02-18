@@ -341,11 +341,13 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
     PLAYLIST_LOCK(playlist->mutex);
 
     for (playlist_glist = playlist->entries; playlist_glist;
-         playlist_glist = g_list_next(playlist_glist)) {
-
+         playlist_glist = g_list_next(playlist_glist))
+    {
         PlaylistEntry *entry = PLAYLIST_ENTRY(playlist_glist->data);
         const gchar *title;
         gchar *filename = NULL;
+
+        g_main_context_iteration(g_main_context_default(), FALSE);
 
         title = entry->title;
         if (!title) {
