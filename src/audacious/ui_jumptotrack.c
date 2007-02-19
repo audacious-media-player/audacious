@@ -347,7 +347,7 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
         const gchar *title;
         gchar *filename = NULL;
 
-        g_main_context_iteration(g_main_context_default(), FALSE);
+//        g_main_context_iteration(g_main_context_default(), FALSE);
 
         title = entry->title;
         if (!title) {
