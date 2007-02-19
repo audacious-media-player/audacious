@@ -615,22 +615,37 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
 			       TitleInput *tuple,
 			       InputPlugin * dec)
 {
-    GList *node;
     PlaylistEntry *entry;
 
     g_return_if_fail(playlist != NULL);
     g_return_if_fail(filename != NULL);
 
+    entry = playlist_entry_new(filename, tuple->track_name, tuple->length, dec);
+    if(!playlist->tail)
+        playlist->tail = g_list_last(playlist->entries);
+
     PLAYLIST_LOCK(playlist->mutex);
-    playlist->entries = g_list_insert(playlist->entries,
-                             playlist_entry_new(filename, tuple->track_name, tuple->length, dec),
-                             pos);
 
-    if (pos < 0)
-	    pos = g_list_length(playlist->entries) - 1; /* last element. */
+    if(pos == -1) { // the common case
+        GList *element;
+        element = g_list_alloc();
+        element->data = entry;
+        element->prev = playlist->tail; // NULL is allowed here.
+        element->next = NULL;
 
-    node = g_list_nth(playlist->entries, pos);
-    entry = PLAYLIST_ENTRY(node->data);
+        if(!playlist->entries) { // this is the first element
+            playlist->entries = element;
+            playlist->tail = element;
+        }
+        else { // the rests
+            g_return_if_fail(playlist->tail != NULL);
+            playlist->tail->next = element;
+            playlist->tail = element;
+        }
+    }
+    else {
+        playlist->entries = g_list_insert(playlist->entries, entry, pos);
+    }
 
     if (tuple != NULL) {
         entry->title = xmms_get_titlestring(tuple->formatter != NULL ? tuple->formatter : xmms_get_gentitle_format(), tuple);

@@ -77,6 +77,7 @@ typedef struct _Playlist {
     gboolean       pl_selection_more;
     gboolean       loading_playlist;
     GMutex        *mutex;       /* this is required for multiple playlist */
+    GList *tail; /* marker for the last element in playlist->entries */
 } Playlist;
 
 typedef enum {
