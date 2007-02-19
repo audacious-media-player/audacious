@@ -1,3 +1,12 @@
+2007-02-19 04:42:53 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4106]
+  - highly experimental code to speed up loading huge playlist. let me know if it breaks something.
+  
+  trunk/src/audacious/playlist.c |   31 +++++++++++++++++++++++--------
+  trunk/src/audacious/playlist.h |    1 +
+  2 files changed, 24 insertions(+), 8 deletions(-)
+
+
 2007-02-19 04:40:14 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4104]
   - changes in r4102 break jtf. disabled for now.
