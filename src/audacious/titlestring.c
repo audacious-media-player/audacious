@@ -53,6 +53,7 @@ bmp_title_input_new()
     input = g_new0(BmpTitleInput, 1);
     input->__size = XMMS_TITLEINPUT_SIZE;
     input->__version = XMMS_TITLEINPUT_VERSION;
+    input->mtime = -1;
     return input;
 }
 
