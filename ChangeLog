@@ -1,3 +1,10 @@
+2007-02-19 14:11:23 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [4112]
+  Fix --play-pause commandline option, by Alex "Monkeh" Maclean in #gentoo-x86
+  trunk/src/audacious/main.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-02-19 08:16:28 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4110]
   - mtime should be initialized to -1, otherwise 0 will be recorded for not yet scanned entries. it means static and will suppress on-demand scanning.
