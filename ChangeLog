@@ -1,3 +1,11 @@
+2007-02-19 08:16:28 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4110]
+  - mtime should be initialized to -1, otherwise 0 will be recorded for not yet scanned entries. it means static and will suppress on-demand scanning.
+  
+  trunk/src/audacious/titlestring.c |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2007-02-19 06:33:03 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4108]
   - update playlist->tail when an entry has been removed.
