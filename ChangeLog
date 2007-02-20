@@ -1,3 +1,10 @@
+2007-02-20 12:54:56 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [4118]
+  Use VFS.
+  trunk/src/libid3tag/file.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-02-19 20:27:45 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4116]
   - new translation drop from flameeyes

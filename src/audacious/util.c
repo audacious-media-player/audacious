@@ -518,7 +518,7 @@ open_ini_file(const gchar *filename)
             if (off >= filesize)
                 goto return_sequence;
 
-            while (buffer[off] != '\n')
+            while (buffer[off] != '\n' || buffer[off] != '\r')
             {
                 g_string_append_c(value, buffer[off]);
                 off++;
