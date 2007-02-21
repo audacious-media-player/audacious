@@ -93,6 +93,9 @@ bmp_title_input_free(BmpTitleInput * input)
     if (input->file_path != NULL)
         g_free(input->file_path);
 
+    if (input->custom != NULL)
+        g_free(input->custom);
+
     g_free(input);
 }
 

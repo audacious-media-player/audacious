@@ -64,8 +64,9 @@ typedef struct {
     gchar *file_name;           /* %f */
     const gchar *file_ext;      /* %e *//* is not always strdup'ed, see xmms_input_get_song_info and plugins! */
     gchar *file_path;           /* %F */
-    gint length;		/* not displayable */
-    gchar *formatter;		/* not displayable */
+    gint length;                /* not displayable */
+    gchar *formatter;           /* not displayable */
+    gchar *custom;              /* not displayable, for internal use */
     time_t mtime;
 } TitleInput;
 

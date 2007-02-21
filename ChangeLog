@@ -1,3 +1,22 @@
+2007-02-21 12:25:12 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4128]
+  revise str_to_utf8():
+  - new utf8 validator using libguess DFA has been implemented. str_to_utf8() tries utf8 validation first.
+  - default conversion from ISO-8859-1 is enabled regardless of chardet.
+  - libguess and librcd is always compiled in.
+  - some libguess cleanups.
+  
+  trunk/configure.ac             |    7 +
+  trunk/src/audacious/strings.c  |   40 +++++----
+  trunk/src/libguess/Makefile    |    3 
+  trunk/src/libguess/guess.c     |   17 ++++
+  trunk/src/libguess/guess.scm   |   45 +++++-----
+  trunk/src/libguess/guess_tab.c |  168 -----------------------------------------
+  trunk/src/libguess/libguess.h  |    1 
+  trunk/src/librcd/Makefile      |    3 
+  8 files changed, 68 insertions(+), 216 deletions(-)
+
+
 2007-02-21 11:52:52 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4126]
   - vfs layer doesn't provide fdopen.
