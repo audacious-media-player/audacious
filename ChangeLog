@@ -1,3 +1,11 @@
+2007-02-21 00:17:08 +0000  George Averill <nhjm449@gmail.com>
+  revision [4124]
+  - Make unplayable files dialog resizable and centered on the screen. (closes #802)
+  
+  trunk/src/audacious/input.c |    2 ++
+  1 file changed, 2 insertions(+)
+
+
 2007-02-20 16:11:40 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4122]
   - or comparison should be an and comparison
