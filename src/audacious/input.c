@@ -325,6 +325,8 @@ input_show_unplayable_files(const gchar * filename)
                                                GTK_MESSAGE_ERROR,
                                                GTK_BUTTONS_OK,
                                                _(markup));
+	gtk_window_set_resizable(GTK_WINDOW(dialog), TRUE);
+	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
 
         vbox = gtk_vbox_new(FALSE, 6);
 
