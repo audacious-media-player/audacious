@@ -34,12 +34,10 @@
 
 #include "main.h"
 
-#ifdef USE_CHARDET
-    #include "../libguess/libguess.h"
-    #include "../librcd/librcd.h"
+#include "../libguess/libguess.h"
+#include "../librcd/librcd.h"
 #ifdef HAVE_UDET
     #include <libudet_c.h>
-#endif
 #endif
 
 /*
@@ -203,17 +201,31 @@ str_to_utf8(const gchar * str)
      * if the string is already converted into utf-8.
      * chardet_to_utf8() would convert a valid utf-8 string into a
      * different utf-8 string, if fallback encodings were supplied and
-     * the given string could be treated as a string in one of fallback
-     * encodings. To avoid this, the order of evaluation has been
-     * changed. (It might cause a drawback?)
+     * the given string could be treated as a string in one of
+     * fallback encodings. To avoid this, g_utf8_validate() had been
+     * used at the top of evaluation.
      */
+
+    /* Note 2: g_utf8_validate() has so called encapsulated utf-8
+     * problem, thus chardet_to_utf8() took the place of that.
+     */
+
+    /* Note 3: As introducing madplug, the problem of conversion from
+     * ISO-8859-1 to UTF-8 arose. This may be coped with g_convert()
+     * located near the end of chardet_to_utf8(), but it requires utf8
+     * validation guard where g_utf8_validate() was. New
+     * dfa_validate_utf8() employs libguess' DFA engine to validate
+     * utf-8 and can properly distinguish examples of encapsulated
+     * utf-8. It is considered to be safe to use as a guard.
+     */
+    
+    /* already UTF-8? */
+    if (dfa_validate_utf8(str, strlen(str)))
+        return g_strdup(str);
+
     /* chardet encoding detector */
     if ((out_str = chardet_to_utf8(str, strlen(str), NULL, NULL, NULL)))
         return out_str;
-
-    /* already UTF-8? */
-    if (g_utf8_validate(str, -1, NULL))
-        return g_strdup(str);
 
     /* assume encoding associated with locale */
     if ((out_str = g_locale_to_utf8(str, -1, NULL, NULL, NULL)))
@@ -335,15 +347,9 @@ fallback:
 		}
 	}
 
-#ifdef USE_CHARDET
-	/* many tag libraries return 2byte latin1 utf8 character as
-	   converted 8bit iso-8859-1 character, if they are asked to return
-	   latin1 string.
-	 */
 	if(!ret){
 		ret = g_convert(str, len, "UTF-8", "ISO-8859-1", bytes_read, bytes_write, error);
 	}
-#endif
 
 	if(ret){
 		if(g_utf8_validate(ret, -1, NULL))

@@ -231,33 +231,32 @@
 ;;;
 ;;; UCS-2LE
 ;;;
-
-(define-dfa ucs2le
-  (init
-   ((#xff) le 1.0)
-   (((#x00 #x7f)) ascii 1.0)
-   (((#x00 #xff)) multi 1.0))
-  (le
-   ((#xfe) init 1.0))
-  (ascii
-   ((#x00) init 1.0))
-  (multi
-   (((#x00 #xff)) init 1.0)))
+; (define-dfa ucs2le
+;   (init
+;    ((#xff) le 1.0)
+;    (((#x00 #x7f)) ascii 1.0)
+;    (((#x00 #xff)) multi 1.0))
+;   (le
+;    ((#xfe) init 1.0))
+;   (ascii
+;    ((#x00) init 1.0))
+;   (multi
+;    (((#x00 #xff)) init 1.0)))
 
 ;;;
 ;;; UCS-2BE
 ;;;
-(define-dfa ucs2be
-  (init
-   ((#xfe) be 1.0)
-   ((#x00) ascii 1.0)
-   (((#x00 #xff)) multi 1.0))
-  (be
-   ((#xff) init 1.0))
-  (ascii
-   (((#x00 #x7f)) init 1.0))
-  (multi
-   (((#x00 #xff)) init 1.0)))
+; (define-dfa ucs2be
+;   (init
+;    ((#xfe) be 1.0)
+;    ((#x00) ascii 1.0)
+;    (((#x00 #xff)) multi 1.0))
+;   (be
+;    ((#xff) init 1.0))
+;   (ascii
+;    (((#x00 #x7f)) init 1.0))
+;   (multi
+;    (((#x00 #xff)) init 1.0)))
 
 
 ;;;

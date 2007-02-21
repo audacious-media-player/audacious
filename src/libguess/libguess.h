@@ -43,5 +43,6 @@ const char *guess_jp(const char *buf, int buflen);
 const char *guess_tw(const char *buf, int buflen);
 const char *guess_cn(const char *buf, int buflen);
 const char *guess_kr(const char *buf, int buflen);
+int dfa_validate_utf8(const char *buf, int buflen);
 
 #endif
