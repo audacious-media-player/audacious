@@ -1,3 +1,15 @@
+2007-02-24 14:01:39 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4134]
+  - add reference-counting to VFS and add new function, vfs_dup() to 
+    mark a VFS handle as duplicated.
+  
+  trunk/src/audacious/vfs.c               |   24 ++++++++++++++++++++++++
+  trunk/src/audacious/vfs.h               |    4 ++++
+  trunk/src/audacious/vfs_buffer.c        |    1 +
+  trunk/src/audacious/vfs_buffered_file.c |    1 +
+  4 files changed, 30 insertions(+)
+
+
 2007-02-24 04:10:54 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4132]
   - provide fd->uri for buffered files

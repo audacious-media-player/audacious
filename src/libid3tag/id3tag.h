@@ -29,6 +29,8 @@
 extern "C" {
 # endif
 
+#include <audacious/vfs.h>
+
 # define ID3_TAG_VERSION		0x0400
 # define ID3_TAG_VERSION_MAJOR(x)	(((x) >> 8) & 0xff)
 # define ID3_TAG_VERSION_MINOR(x)	(((x) >> 0) & 0xff)
@@ -245,6 +247,7 @@ enum id3_file_mode {
 };
 
 struct id3_file *id3_file_open(char const *, enum id3_file_mode);
+struct id3_file *id3_file_vfsopen(VFSFile *, enum id3_file_mode);
 struct id3_file *id3_file_fdopen(int, enum id3_file_mode);
 int id3_file_close(struct id3_file *);
 

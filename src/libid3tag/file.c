@@ -473,6 +473,35 @@ struct id3_file *id3_file_open(char const *path, enum id3_file_mode mode)
 }
 
 /*
+ * NAME:	file->vfsopen()
+ * DESCRIPTION:	open a file given its vfs
+ */
+struct id3_file *id3_file_vfsopen(VFSFile *iofile, enum id3_file_mode mode)
+{
+  struct id3_file *file;
+  glong curpos;
+  gchar *path;
+
+  assert(iofile);
+  
+  path = iofile->uri;
+
+  vfs_dup(iofile);
+
+  curpos = vfs_ftell(iofile);
+  vfs_fseek(iofile, 0, SEEK_SET);
+
+  file = new_file(iofile, mode, path);
+  if (file == 0){
+    printf("id3_vfs_open: file failed\n");
+  }
+
+  vfs_fseek(iofile, curpos, SEEK_SET);
+
+  return file;
+}
+
+/*
  * NAME:	file->fdopen()
  * DESCRIPTION:	open a file using an existing file descriptor
  */
