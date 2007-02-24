@@ -789,9 +789,8 @@ devino_destroy(gpointer key,
 static gboolean
 file_is_hidden(const gchar * filename)
 {
-    // FIXME: remove the const cast
     g_return_val_if_fail(filename != NULL, FALSE);
-    return (g_basename((gchar *) filename)[0] == '.');
+    return (g_basename(filename)[0] == '.');
 }
 
 static GList *

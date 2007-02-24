@@ -1,3 +1,13 @@
+2007-02-24 21:36:36 +0000  Michael Farber <01mf02@gmail.com>
+  revision [4148]
+  - Spring clean (removed one function)
+  
+  
+  trunk/src/audacious/input.c |   32 ++++++++++++++------------------
+  trunk/src/audacious/input.h |    6 +++++-
+  2 files changed, 19 insertions(+), 19 deletions(-)
+
+
 2007-02-24 15:53:09 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4146]
   - make a note that MCS is required now.

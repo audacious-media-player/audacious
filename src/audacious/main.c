@@ -528,7 +528,7 @@ bmp_init_paths()
         g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "log", NULL);
 
     bmp_paths[BMP_PATH_GTKRC_FILE] =
-		g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "gtkrc", NULL);
+        g_build_filename(bmp_paths[BMP_PATH_USER_DIR], "gtkrc", NULL);
 
     g_free(xdg_config_home);
     g_free(xdg_data_home);
@@ -893,7 +893,7 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
 
         for (i = 0; filenames[i] != NULL; i++)
         {
-	    gchar *filename;
+            gchar *filename;
             gchar *current_dir = g_get_current_dir();
 
             if (filenames[i][0] == '/' || strstr(filenames[i], "://"))
@@ -999,7 +999,9 @@ run_load_skin_error_dialog(const gchar * skin_path)
 void report_error(const gchar *error_text)
 {
     fprintf(stderr, error_text);
-    if (options.headless!=1) {
+
+    if (options.headless != 1)
+    {
         gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(err),
                                                  error_text);
         gtk_dialog_run(GTK_DIALOG(err));
