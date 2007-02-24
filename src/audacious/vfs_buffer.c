@@ -220,6 +220,7 @@ vfs_buffer_new(gpointer data, gsize size)
 
     handle->handle = buffer;
     handle->base = &buffer_const;
+    handle->ref = 1;
 
     return handle;
 }

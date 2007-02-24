@@ -30,6 +30,7 @@ typedef struct _VFSConstructor VFSConstructor;
  * @uri: The URI of the stream.
  * @handle: Opaque data used by the transport plugins.
  * @base: The base vtable used for VFS functions.
+ * @ref: The amount of references that the VFSFile object has.
  *
  * #VFSFile objects describe a VFS stream.
  **/
@@ -37,6 +38,7 @@ struct _VFSFile {
 	gchar *uri;
 	gpointer handle;
 	VFSConstructor *base;
+	gint ref;
 };
 
 /**
@@ -82,6 +84,8 @@ G_BEGIN_DECLS
 extern VFSFile * vfs_fopen(const gchar * path,
                     const gchar * mode);
 extern gint vfs_fclose(VFSFile * file);
+
+extern VFSFile * vfs_dup(VFSFile *in);
 
 extern size_t vfs_fread(gpointer ptr,
                  size_t size,

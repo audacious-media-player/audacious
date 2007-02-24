@@ -95,6 +95,7 @@ vfs_fopen(const gchar * path,
 
     file->uri = g_strdup(path);
     file->base = vtable;
+    file->ref = 1;
 
     g_free(decpath);
 
@@ -115,6 +116,9 @@ vfs_fclose(VFSFile * file)
     gint ret = 0;
 
     if (file == NULL)
+        return -1;
+
+    if (--file->ref > 0)
         return -1;
 
     if (file->base->vfs_fclose_impl(file) != 0)
@@ -350,4 +354,24 @@ vfs_is_writeable(const gchar * path)
         return FALSE;
 
     return (info.st_mode & S_IWUSR);
+}
+
+/**
+ * vfs_dup:
+ * @in: The VFSFile handle to mark as duplicated.
+ *
+ * Increments the amount of references that are using this FD.
+ * References are removed by calling vfs_fclose on the handle returned
+ * from this function.
+ * If the amount of references reaches zero, then the file will be
+ * closed.
+ **/
+VFSFile *
+vfs_dup(VFSFile *in)
+{
+    g_return_val_if_fail(in != NULL, NULL);
+
+    in->ref++;
+
+    return in;
 }

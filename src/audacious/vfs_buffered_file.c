@@ -208,6 +208,7 @@ vfs_buffered_file_new_from_uri(const gchar *uri)
     handle->handle = fd;
     handle->base = &buffered_file_const;
     handle->uri = g_strdup(uri);
+    handle->ref = 1;
 
     return handle;
 }
