@@ -260,12 +260,6 @@ input_get_vis_type()
 }
 
 void
-input_add_vis(gint time, guchar * s, InputVisType type)
-{
-    g_warning("plugin uses obsoleted input_add_vis()");
-}
-
-void
 input_add_vis_pcm(gint time, AFormat fmt, gint nch, gint length, gpointer ptr)
 {
     VisNode *vis_node;
@@ -325,8 +319,8 @@ input_show_unplayable_files(const gchar * filename)
                                                GTK_MESSAGE_ERROR,
                                                GTK_BUTTONS_OK,
                                                _(markup));
-	gtk_window_set_resizable(GTK_WINDOW(dialog), TRUE);
-	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
+        gtk_window_set_resizable(GTK_WINDOW(dialog), TRUE);
+        gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
 
         vbox = gtk_vbox_new(FALSE, 6);
 
@@ -439,7 +433,9 @@ input_check_file(const gchar * filename, gboolean show_warning)
 
     ext = strrchr(filename_proxy, '.') + 1;
 
-    use_ext_filter = (fd != NULL && (!g_strncasecmp(filename, "/", 1) || !g_strncasecmp(filename, "file://", 7))) ? TRUE : FALSE;
+    use_ext_filter =
+        (fd != NULL && (!g_strncasecmp(filename, "/", 1) ||
+                        !g_strncasecmp(filename, "file://", 7))) ? TRUE : FALSE;
 
     for (node = get_input_list(); node != NULL; node = g_list_next(node))
     {
@@ -450,8 +446,8 @@ input_check_file(const gchar * filename, gboolean show_warning)
 
         vfs_rewind(fd);
 
-        if (cfg.use_extension_probing == TRUE && ip->vfs_extensions != NULL
-        && ext != NULL && ext != (gpointer) 0x1 && use_ext_filter == TRUE)
+        if (cfg.use_extension_probing == TRUE && ip->vfs_extensions != NULL &&
+            ext != NULL && ext != (gpointer) 0x1 && use_ext_filter == TRUE)
         {
             gint i;
             gboolean is_our_ext = FALSE;
@@ -601,6 +597,7 @@ input_get_song_tuple(const gchar * filename)
         input->file_path = g_path_get_dirname(filename);
     }
 
+    g_free(filename_proxy);
     return input;
 }
 
@@ -753,13 +750,12 @@ input_set_volume(gint l, gint r)
 {
     gint h_vol[2];
     
-    if (playback_get_playing()) {
-        if (get_current_input_playback() &&
-            get_current_input_playback()->plugin->set_volume &&
-            get_current_input_playback()->plugin->set_volume(l, r)) {
-	    return;
-        }
-    }
+    if (playback_get_playing() &&
+        get_current_input_playback() &&
+        get_current_input_playback()->plugin->set_volume &&
+        get_current_input_playback()->plugin->set_volume(l, r))
+        return;
+
     output_set_volume(l, r);
     
     h_vol[0] = l;

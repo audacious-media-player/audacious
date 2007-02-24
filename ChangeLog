@@ -1,3 +1,11 @@
+2007-02-24 15:53:09 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4146]
+  - make a note that MCS is required now.
+  
+  trunk/README |    3 +++
+  1 file changed, 3 insertions(+)
+
+
 2007-02-24 15:52:26 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4144]
   - GTK+ 2.6 is required.

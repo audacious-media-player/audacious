@@ -44,8 +44,10 @@ void set_current_input_playback(InputPlayback * ip);
 void set_current_input_data(void * data);
 InputVisType input_get_vis_type();
 void free_vis_data(void);
+
 InputPlugin *input_check_file(const gchar * filename, gboolean show_warning);
 TitleInput *input_get_song_tuple(const gchar * filename);
+
 void input_play(gchar * filename);
 void input_stop(void);
 void input_pause(void);
@@ -54,12 +56,14 @@ void input_set_eq(gint on, gfloat preamp, gfloat * bands);
 void input_seek(gint time);
 void input_get_song_info(const gchar * filename, gchar ** title,
                          gint * length);
+
 guchar *input_get_vis(gint time);
 void input_update_vis_plugin(gint time);
+
 gchar *input_get_info_text(void);
 void input_about(gint index);
 void input_configure(gint index);
-void input_add_vis(gint time, guchar * s, InputVisType type);
+
 void input_add_vis_pcm(gint time, AFormat fmt, gint nch, gint length,
                        gpointer ptr);
 InputVisType input_get_vis_type();
