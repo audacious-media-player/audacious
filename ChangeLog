@@ -1,3 +1,11 @@
+2007-02-21 23:02:54 +0000  Giacomo Lozito <james@develia.org>
+  revision [4130]
+  - added custom field in tuple, for internal use by plugins or by whatever wanting to use it
+  trunk/src/audacious/titlestring.c |    3 +++
+  trunk/src/audacious/titlestring.h |    5 +++--
+  2 files changed, 6 insertions(+), 2 deletions(-)
+
+
 2007-02-21 12:25:12 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4128]
   revise str_to_utf8():
