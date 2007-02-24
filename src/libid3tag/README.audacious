@@ -1,0 +1,9 @@
+The sources in libid3tag are heavily modified by the Audacious team for 
+use in Audacious. If you are a package maintainer, please do not patch 
+out this library as Audacious needs the modifications made here.
+
+The modifications are as follows:
+  - use the Audacious VFS subsystem for stream I/O instead of libc
+  - add support for opening an id3 tagged file from a live VFS handle.
+  - some minor portability improvements
+

@@ -1,3 +1,13 @@
+2007-02-24 15:41:14 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4136]
+  - add support for opening id3 tags from a live vfs handle.
+  Patch by Christian Birchinger (joker).
+  
+  trunk/src/libid3tag/file.c   |   29 +++++++++++++++++++++++++++++
+  trunk/src/libid3tag/id3tag.h |    3 +++
+  2 files changed, 32 insertions(+)
+
+
 2007-02-24 14:01:39 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4134]
   - add reference-counting to VFS and add new function, vfs_dup() to 
