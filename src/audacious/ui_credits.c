@@ -86,6 +86,7 @@ static const gchar *credit_text[] = {
     NULL,
 
     N_("Patch authors:"),
+    "Christian Birchinger",
     "Laszlo Dvornik",
     "Ralf Ertzinger",
     "Mike Frysinger",
