@@ -1,3 +1,13 @@
+2007-02-25 08:31:25 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4154]
+  - bump libaudacious API revision. this will make 1.2 plugins binary 
+    incompatible with audacious provided that previous libaudaciouses are 
+    not installed. (most likely)
+  
+  trunk/src/libaudacious/Makefile |    8 ++++----
+  1 file changed, 4 insertions(+), 4 deletions(-)
+
+
 2007-02-25 02:39:17 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4152]
   - use $(LIBINTL) rule, not $(LTLIBINTL). unbreaks OSX platform port.

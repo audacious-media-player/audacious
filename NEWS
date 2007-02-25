@@ -1,4 +1,44 @@
-Audacious 1.3.0 (2007-??-??)
+Audacious 1.3.0 (2007-03-??)
+
+Enhancements
+* The playlist code has been rewritten using conditional variables, 
+  which has resulted in speed improvements for the playlist code overall.
+* The behaviour for detecting filemagic has been redone and is now more
+  scalable.
+* DoubleSize support has been improved significantly.
+* Race conditions in produce_audio() have been corrected.
+* The playlist editor is now properly drawn in shaded mode.
+* g_utf8_validate has been replaced with a more strict utf8 validator, 
+  which solves the encapsulated UTF-8 phenomenon properly.
+* The controlsocket code no longer uses the stack in an improper manner.
+* Behaviour regarding conversion of %20 in the playlist has been corrected.
+* Window decorations can now be enabled in preferences.
+* The translation templates have been simplified.
+* Support for translating plugins has been re-added.
+* The Jump-to-File code has been rewritten and now searches using 
+  regular expressions. In addition, the search is done without GTK 
+  queueing redraws for each entry, which has resulted in interface 
+  speedups.
+* The overall UI code has been reworked significantly and should be of 
+  better quality. Notable enhancements include support for UIManager xml
+  file declarations.
+* A facility for searching and selecting/acting upon entries in the 
+  playlist has been added.
+* Support for multiple playlists has been added, and a playlist manager 
+  has been added to manage them.
+* Audacious now uses libmcs to store it's settings, which allows for 
+  tighter desktop environment integration.
+* Audacious now supports the XDG BASEDIR standard.
+* A lot of XMMS and BMP code has been either removed or rewritten so 
+  that it is less confusing. This should allow for easier maintainability 
+  in the future.
+* Debugging tools have been added for tracking memory allocation and freeing.
+* A safe signaling implementation has been added.
+* A voiceprint visualizer mode has been added.
+* Support for changing the tint in the graphics of skins has been added.
+* InputPlugins now use an InputPlayback context to track activity 
+  instead of blindly pushing data down a potentially undefined pipeline.
+* Audacious now uses GOption to parse the commandline.
 
 *** See http://audacious-media-player.org/1.3_Release for more information. ***
 
