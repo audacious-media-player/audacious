@@ -4,7 +4,7 @@ include ../../mk/init.mk
 PICLDFLAGS = $(LIBLDFLAGS)
 
 OBJECTIVE_LIBS = libaudacious$(SHARED_SUFFIX)
-OBJECTIVE_SONAME_SUFFIX = 4
+OBJECTIVE_SONAME_SUFFIX = 5
 
 LIBADD = \
 	$(GTK_LIBS) \
@@ -33,7 +33,7 @@ include ../../mk/objective.mk
 
 install-posthook:
 	@mv ${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX) ${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX).4.0.0
-	@ln -sf libaudacious$(SHARED_SUFFIX).4.0.0 \
-		${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX).4
-	@ln -sf libaudacious$(SHARED_SUFFIX).4 \
+	@ln -sf libaudacious$(SHARED_SUFFIX).5.0.0 \
+		${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX).5
+	@ln -sf libaudacious$(SHARED_SUFFIX).5 \
 		${DESTDIR}/${LIBDIR}/libaudacious$(SHARED_SUFFIX)
