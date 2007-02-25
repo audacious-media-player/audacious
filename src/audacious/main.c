@@ -915,7 +915,10 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
                     pos = xmms_remote_get_playlist_length(session);
 
                 if (!options->enqueue)
+                {
                     xmms_remote_playlist_clear(session);
+                    xmms_remote_stop(session);
+                }
 
                 xmms_remote_playlist_add_url_string(session, filename);
 

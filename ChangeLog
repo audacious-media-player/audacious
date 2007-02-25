@@ -1,3 +1,11 @@
+2007-02-25 08:43:25 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4156]
+  - update documentation
+  
+  trunk/NEWS |   42 +++++++++++++++++++++++++++++++++++++++++-
+  1 file changed, 41 insertions(+), 1 deletion(-)
+
+
 2007-02-25 08:31:25 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4154]
   - bump libaudacious API revision. this will make 1.2 plugins binary 
