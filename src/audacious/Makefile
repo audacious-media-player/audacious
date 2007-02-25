@@ -9,7 +9,7 @@ OBJECTIVE_BINS = audacious
 LDFLAGS += $(AUDLDFLAGS)
 
 LDADD = \
-	-L.. $(LTLIBINTL) \
+	-L.. $(LIBINTL) \
 	-L../libaudacious -laudacious \
 	$(samplerate_LIBS) \
 	$(CHARDET_LIBS) \
