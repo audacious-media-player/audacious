@@ -939,7 +939,7 @@ playlist_ins_url(Playlist * playlist, const gchar * string,
 
         decoded = g_strdup(string);
 
-        if (g_file_test(decoded, G_FILE_TEST_IS_DIR)) {
+        if (vfs_file_test(decoded, G_FILE_TEST_IS_DIR)) {
             i = playlist_ins_dir(playlist, decoded, pos, FALSE);
         }
         else {

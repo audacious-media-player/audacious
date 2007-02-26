@@ -334,7 +334,19 @@ vfs_get_metadata(VFSFile * file, const gchar * field)
 gboolean
 vfs_file_test(const gchar * path, GFileTest test)
 {
-    return g_file_test(path, test);
+    gchar *path2;
+    gboolean ret;
+
+    if (strlen(path) > 5)
+        path2 = xmms_urldecode_plain(path + 5); /* skip file: */
+    else
+        path2 = g_strdup(path);
+
+    ret = g_file_test(path2, test);
+
+    g_free(path2);
+
+    return ret;
 }
 
 /**
