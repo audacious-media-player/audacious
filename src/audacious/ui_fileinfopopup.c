@@ -34,6 +34,7 @@
 #include "playlist.h"
 #include "playback.h"
 #include "util.h"
+#include "strings.h"
 
 static void
 filepopup_entry_set_text(GtkWidget *filepopup_win, const char *entry_name, const char *text)
@@ -404,9 +405,11 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win, TitleInput *tu
 	{
         /* display the filename if track_name is not available */
 	  gchar *markup = g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Filename") );
+	  gchar *utf_filename = filename_to_utf8(tuple->file_name);
 	  gtk_label_set_markup( GTK_LABEL(g_object_get_data(G_OBJECT(filepopup_win),"header_title")), markup );
 	  g_free( markup );
-        filepopup_entry_set_text(filepopup_win, "label_title", tuple->file_name);
+	  filepopup_entry_set_text(filepopup_win, "label_title", utf_filename);
+	  g_free( utf_filename );
 	}
 
 	if ( tuple->performer != NULL )

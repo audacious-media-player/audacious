@@ -1,3 +1,12 @@
+2007-02-26 01:55:30 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4160]
+  - make directory drag-and-drop work again.
+  
+  trunk/src/audacious/playlist.c |    2 +-
+  trunk/src/audacious/vfs.c      |   14 +++++++++++++-
+  2 files changed, 14 insertions(+), 2 deletions(-)
+
+
 2007-02-25 08:53:19 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4158]
   - enforce playback stop when clearing the playlist to load new files in. closes #808.
