@@ -383,6 +383,9 @@ vfs_file_test(const gchar * path, GFileTest test)
 
     path2 = _vfs_urldecode_basic_path(path);
 
+    if (path2 == NULL)
+        path2 = g_strdup(path);
+
     ret = g_file_test(path2, test);
 
     g_free(path2);

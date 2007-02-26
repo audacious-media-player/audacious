@@ -1,3 +1,12 @@
+2007-02-26 09:14:48 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4168]
+  - urldecode playlist paths
+  
+  trunk/src/audacious/playlist.c |   47 ++++++++++++++++++++++++++++++++++++++-
+  trunk/src/audacious/vfs.c      |   49 +++++++++++++++++++++++++++++++++++++----
+  2 files changed, 91 insertions(+), 5 deletions(-)
+
+
 2007-02-26 06:41:59 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4166]
   - change the order that hints are processed in.

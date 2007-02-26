@@ -932,6 +932,9 @@ playlist_ins_dir(Playlist * playlist, const gchar * path,
     GHashTable *htab;
     gchar *path2 = _playlist_urldecode_basic_path(path);
 
+    if (path2 == NULL)
+        path2 = g_strdup(path);
+
     htab = g_hash_table_new(devino_hash, devino_compare);
 
     list = playlist_dir_find_files(path2, background, htab);
