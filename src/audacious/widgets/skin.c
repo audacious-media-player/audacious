@@ -542,6 +542,10 @@ skin_parse_hints(Skin * skin, gchar *path_p)
     path_p = path_p ? path_p : skin->path;
 
     filename = find_file_recursively(path_p, "skin.hints");
+
+    if (filename == NULL)
+        return;
+
     inifile = open_ini_file(filename);
 
     skin->properties.mainwin_othertext = FALSE;
