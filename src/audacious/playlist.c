@@ -879,6 +879,49 @@ playlist_add_url(Playlist * playlist, const gchar * url)
     return playlist_ins_url(playlist, url, -1);
 }
 
+static gchar *
+_playlist_urldecode_basic_path(const gchar * encoded_path)
+{
+    const gchar *cur, *ext;
+    gchar *path, *tmp;
+    gint realchar;
+
+    if (!encoded_path)
+        return NULL;
+
+    if (!str_has_prefix_nocase(encoded_path, "file:"))
+        return NULL;
+
+    cur = encoded_path + 5;
+
+    if (str_has_prefix_nocase(cur, "//localhost"))
+        cur += 11;
+
+    if (*cur == '/')
+        while (cur[1] == '/')
+            cur++;
+
+    tmp = g_malloc0(strlen(cur) + 1);
+
+    while ((ext = strchr(cur, '%')) != NULL) {
+        strncat(tmp, cur, ext - cur);
+        ext++;
+        cur = ext + 2;
+        if (!sscanf(ext, "%2x", &realchar)) {
+            /* Assume it is a literal '%'.  Several file
+             * managers send unencoded file: urls on drag
+             * and drop. */
+            realchar = '%';
+            cur -= 2;
+        }
+        tmp[strlen(tmp)] = realchar;
+    }
+
+    path = g_strconcat(tmp, cur, NULL);
+    g_free(tmp);
+    return path;
+}
+
 guint
 playlist_ins_dir(Playlist * playlist, const gchar * path,
                     gint pos,
@@ -887,10 +930,11 @@ playlist_ins_dir(Playlist * playlist, const gchar * path,
     guint entries = 0;
     GList *list, *node;
     GHashTable *htab;
+    gchar *path2 = _playlist_urldecode_basic_path(path);
 
     htab = g_hash_table_new(devino_hash, devino_compare);
 
-    list = playlist_dir_find_files(path, background, htab);
+    list = playlist_dir_find_files(path2, background, htab);
     list = g_list_sort(list, (GCompareFunc) path_compare);
 
     g_hash_table_foreach_remove(htab, devino_destroy, NULL);
@@ -904,6 +948,7 @@ playlist_ins_dir(Playlist * playlist, const gchar * path,
     }
 
     g_list_free(list);
+    g_free(path2);
 
     playlist_recalc_total_time(playlist);
     playlist_generate_shuffle_list(playlist);
