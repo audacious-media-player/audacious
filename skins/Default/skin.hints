@@ -22,4 +22,7 @@ mainwinPlayStatusX=19
 mainwinPlayStatusY=58
 mainwinMenurowVisible=1
 mainwinOthertextIsStatus=1
+mainwinOthertextVisible=1
+mainwinTextVisible=1
+mainwinVisVisible=1
 
