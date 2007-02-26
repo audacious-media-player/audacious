@@ -975,6 +975,8 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         g_free(tmp);
     }
 
+    skin_mask_info[0].width = skin->properties.mainwin_width;
+
     tmp = read_ini_string(inifile, "skin", "mainwinHeight");
 
     if (tmp != NULL)
@@ -982,6 +984,8 @@ skin_parse_hints(Skin * skin, gchar *path_p)
         skin->properties.mainwin_height = atoi(tmp);
         g_free(tmp);
     }
+
+    skin_mask_info[0].height = skin->properties.mainwin_height;
 
     tmp = read_ini_string(inifile, "skin", "mainwinAboutX");
 
