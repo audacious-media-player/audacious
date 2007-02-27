@@ -38,6 +38,7 @@ struct commandhandler handlers[] = {
 	{"current-song-frequency", get_current_song_frequency, "returns current song frequency in hertz"},
 	{"current-song-frequency-khz", get_current_song_frequency_khz, "returns current song frequency in kilohertz"},
 	{"current-song-channels", get_current_song_channels, "returns current song channels"},
+	{"current-song-tuple-data", get_current_song_tuple_field_data, "returns the value of a tuple field for the current song"},
 	{"<sep>", NULL, "Playlist manipulation"},
 	{"playlist-advance", playlist_advance, "go to the next song in the playlist"},
 	{"playlist-reverse", playlist_reverse, "go to the previous song in the playlist"},
@@ -57,6 +58,7 @@ struct commandhandler handlers[] = {
 	{"playlist-repeat-toggle", playlist_repeat_toggle, "toggles playlist repeat"},
 	{"playlist-shuffle-status", playlist_shuffle_status, "returns the status of playlist shuffle"},
 	{"playlist-shuffle-toggle", playlist_shuffle_toggle, "toggles playlist shuffle"},
+	{"playlist-tuple-data", playlist_tuple_field_data, "returns the value of a tuple field for a song in the playlist"},
 	{"<sep>", NULL, "Playqueue manipulation"},
 	{"playqueue-add", playqueue_add, "adds a song to the playqueue"},
 	{"playqueue-remove", playqueue_remove, "removes a song from the playqueue"},
@@ -250,6 +252,38 @@ void get_current_song_channels(gint session, gint argc, gchar **argv)
 	xmms_remote_get_info(session, &rate, &freq, &nch);
 
 	g_print("%d\n", nch);
+}
+
+
+void get_current_song_tuple_field_data(gint session, gint argc, gchar **argv)
+{
+	gpointer data;
+
+	if (argc < 3)
+	{
+		g_print("%s: invalid parameters for current-song-tuple-data.\n", argv[0]);
+		g_print("%s: syntax: %s current-song-tuple-data <fieldname>\n", argv[0], argv[0]);
+		g_print("%s:   - fieldname example choices: performer, album_name,\n", argv[0]);
+		g_print("%s:       track_name, track_number, year, date, genre, comment,\n", argv[0]);
+		g_print("%s:       file_name, file_ext, file_path, length, formatter, mtime\n", argv[0]);
+		return;
+	}
+
+	if (!(data = audacious_get_tuple_field_data(session, argv[2], xmms_remote_get_playlist_pos(session))))
+	{
+		return;
+	}
+	
+	if (!strcasecmp(argv[2], "track_number") || !strcasecmp(argv[2], "year") || !strcasecmp(argv[2], "length") || !strcasecmp(argv[2], "mtime"))
+	{
+		if (*(gint *)data > 0)
+		{
+			g_print("%d\n", *(gint *)data);
+		}
+		return;
+	}
+
+	g_print("%s\n", (gchar *)data);
 }
 
 void playlist_reverse(gint session, gint argc, gchar **argv)
@@ -654,6 +688,46 @@ void playlist_shuffle_status(gint session, gint argc, gchar **argv)
 void playlist_shuffle_toggle(gint session, gint argc, gchar **argv)
 {
 	xmms_remote_toggle_shuffle(session);
+}
+
+void playlist_tuple_field_data(gint session, gint argc, gchar **argv)
+{
+	gint i;
+	gpointer data;
+
+	if (argc < 4)
+	{
+		g_print("%s: invalid parameters for playlist-tuple-data.\n", argv[0]);
+		g_print("%s: syntax: %s playlist-tuple-data <fieldname> <position>\n", argv[0], argv[0]);
+		g_print("%s:   - fieldname example choices: performer, album_name,\n", argv[0]);
+		g_print("%s:       track_name, track_number, year, date, genre, comment,\n", argv[0]);
+		g_print("%s:       file_name, file_ext, file_path, length, formatter, mtime\n", argv[0]);
+		return;
+	}
+
+	i = atoi(argv[3]);
+
+	if (i < 1 || i > xmms_remote_get_playlist_length(session))
+	{
+		g_print("%s: invalid playlist position %d\n", argv[0], i);
+		return;
+	}
+
+	if (!(data = audacious_get_tuple_field_data(session, argv[2], i - 1)))
+	{
+		return;
+	}
+	
+	if (!strcasecmp(argv[2], "track_number") || !strcasecmp(argv[2], "year") || !strcasecmp(argv[2], "length") || !strcasecmp(argv[2], "mtime"))
+	{
+		if (*(gint *)data > 0)
+		{
+			g_print("%d\n", *(gint *)data);
+		}
+		return;
+	}
+
+	g_print("%s\n", (gchar *)data);
 }
 
 void playqueue_add(gint session, gint argc, gchar **argv)

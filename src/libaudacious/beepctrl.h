@@ -78,7 +78,6 @@ extern "C" {
     void xmms_remote_playlist_prev(gint session);
     void xmms_remote_playlist_next(gint session);
     void xmms_remote_playlist_add_url_string(gint session, gchar * string);
-    void xmms_remote_playlist_enqueue_to_temp(gint session, gchar * string);
     gboolean xmms_remote_is_running(gint session);
     void xmms_remote_toggle_repeat(gint session);
     void xmms_remote_toggle_shuffle(gint session);
@@ -121,6 +120,10 @@ extern "C" {
     void audacious_set_session_uri(gchar *uri);
     gchar *audacious_get_session_uri(gint session);
     void audacious_set_session_type(gint type);
+
+/* Added in Audacious 1.3 */
+    void xmms_remote_playlist_enqueue_to_temp(gint session, gchar * string);
+    gchar *audacious_get_tuple_field_data(gint session, gchar * field, gint pos);
 
 #ifdef __cplusplus
 };

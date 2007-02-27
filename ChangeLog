@@ -1,3 +1,12 @@
+2007-02-26 18:30:06 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4178]
+  - add explicit hints to show bit rate, sampling frequency and audio mode.
+  
+  trunk/skins/Classic/skin.hints |    4 ++++
+  trunk/skins/Default/skin.hints |    3 +++
+  2 files changed, 7 insertions(+)
+
+
 2007-02-26 14:14:54 +0000  Goetz Waschk <waschk@mandriva.org>
   revision [4176]
   fix wrong library symlink, there was a hardcoded libaudacious.so.4.0.0

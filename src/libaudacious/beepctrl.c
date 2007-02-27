@@ -436,6 +436,42 @@ audacious_decode_unix_uri(gint session, gchar *in, gchar **key)
 }
 
 /**
+ * audacious_get_tuple_field_data:
+ * @session: Legacy XMMS-style session identifier.
+ * @field: The name of the tuple field to retrieve.
+ * @pos: The playlist position to query for.
+ *
+ * Queries Audacious about a playlist entry's tuple information.
+ *
+ * Return value: The requested field's data for the entry in the playlist at %pos position.
+ **/
+gchar *
+audacious_get_tuple_field_data(gint session, gchar * field, gint pos)
+{
+    gint fd, size;
+    gchar *packet;
+    gpointer data;
+
+    if (field == NULL)
+        return NULL;
+
+    size = strlen(field) + 1 + sizeof(gint);
+
+    if ((fd = xmms_connect_to_session(session)) == -1)
+        return NULL;
+
+    packet = g_malloc0(size);
+    *((gint *) packet) = pos;
+    strcpy(packet + sizeof(gint), field);
+    remote_send_packet(fd, CMD_PLAYLIST_GET_TUPLE_DATA, packet, size);
+    data = remote_read_packet(fd);
+    remote_read_ack(fd);
+    close(fd);
+    g_free(packet);
+    return data;
+}
+
+/**
  * xmms_connect_to_session:
  * @session: Legacy XMMS-style session identifier.
  *

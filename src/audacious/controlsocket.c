@@ -55,6 +55,7 @@
 #include "ui_preferences.h"
 #include "libaudacious/beepctrl.h"
 #include "memorypool.h"
+#include "titlestring.h"
 #include "ui_jumptotrack.h"
 
 #define CTRLSOCKET_BACKLOG        100
@@ -559,6 +560,50 @@ ctrlsocket_func(gpointer arg)
             mainwin_clear_song_info();
             mainwin_set_info_text();
             GDK_THREADS_LEAVE();
+            ctrl_ack_packet(pkt);
+            break;
+        case CMD_PLAYLIST_GET_TUPLE_DATA:
+            if (pkt->data) {
+                gint pos = *(gint *) pkt->data;
+                gchar *ptr = pkt->data;
+                ptr += sizeof(gint);
+                TitleInput *tuple = playlist_get_tuple(playlist_get_active(), pos);
+                if (!tuple) {
+                    ctrl_ack_packet(pkt);
+                    break;
+                }
+                if (!strcasecmp(ptr, "performer")) {
+                    ctrl_write_string(pkt->fd, tuple->performer);
+                } else if (!strcasecmp(ptr, "album_name")) {
+                    ctrl_write_string(pkt->fd, tuple->album_name);
+                } else if (!strcasecmp(ptr, "track_name")) {
+                    ctrl_write_string(pkt->fd, tuple->track_name);
+                } else if (!strcasecmp(ptr, "track_number")) {
+                    ctrl_write_gint(pkt->fd, tuple->track_number);
+                } else if (!strcasecmp(ptr, "year")) {
+                    ctrl_write_gint(pkt->fd, tuple->year);
+                } else if (!strcasecmp(ptr, "date")) {
+                    ctrl_write_string(pkt->fd, tuple->date);
+                } else if (!strcasecmp(ptr, "genre")) {
+                    ctrl_write_string(pkt->fd, tuple->genre);
+                } else if (!strcasecmp(ptr, "comment")) {
+                    ctrl_write_string(pkt->fd, tuple->comment);
+                } else if (!strcasecmp(ptr, "file_name")) {
+                    ctrl_write_string(pkt->fd, tuple->file_name);
+                } else if (!strcasecmp(ptr, "file_ext")) {
+                    ctrl_write_string(pkt->fd, g_strdup(tuple->file_ext));
+                } else if (!strcasecmp(ptr, "file_path")) {
+                    ctrl_write_string(pkt->fd, tuple->file_path);
+                } else if (!strcasecmp(ptr, "length")) {
+                    ctrl_write_gint(pkt->fd, tuple->length);
+                } else if (!strcasecmp(ptr, "album_name")) {
+                    ctrl_write_string(pkt->fd, tuple->album_name);
+                } else if (!strcasecmp(ptr, "formatter")) {
+                    ctrl_write_string(pkt->fd, tuple->formatter);
+                } else if (!strcasecmp(ptr, "mtime")) {
+                    ctrl_write_gint(pkt->fd, tuple->mtime);
+                }
+            }
             ctrl_ack_packet(pkt);
             break;
         case CMD_IS_MAIN_WIN:
