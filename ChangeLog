@@ -1,3 +1,22 @@
+2007-02-27 04:11:44 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4182]
+  - update libaudacious gtkdoc configuration
+  - remove a kludge wrt gentoo+subversion.eclass which is no longer required.
+  
+  trunk/autogen.sh                                     |    4 
+  trunk/doc/libaudacious/libaudacious-decl-list.txt    |   65 ---
+  trunk/doc/libaudacious/libaudacious-decl.txt         |  205 ------------
+  trunk/doc/libaudacious/libaudacious-undocumented.txt |    2 
+  trunk/doc/libaudacious/libaudacious-unused.txt       |    2 
+  trunk/doc/libaudacious/tmpl/dirbrowser.sgml          |   12 
+  trunk/doc/libaudacious/tmpl/formatter.sgml           |   52 ---
+  trunk/doc/libaudacious/tmpl/libaudacious-unused.sgml |  311 +++++++++++++++++++
+  trunk/doc/libaudacious/tmpl/rcfile.sgml              |  183 -----------
+  trunk/doc/libaudacious/tmpl/titlestring.sgml         |   86 -----
+  trunk/doc/libaudacious/tmpl/xconvert.sgml            |    6 
+  11 files changed, 313 insertions(+), 615 deletions(-)
+
+
 2007-02-27 03:06:45 +0000  George Averill <nhjm449@gmail.com>
   revision [4180]
   - tuple reading now available through audtool with audacious_get_tuple_field_data()
