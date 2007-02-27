@@ -154,6 +154,14 @@ buffered_file_vfs_truncate_impl(VFSFile * file, glong size)
     return 0;
 }
 
+gchar *
+buffered_file_vfs_metadata_impl(VFSFile * file, const gchar * field)
+{
+    VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
+
+    return vfs_get_metadata(handle->fd, field);
+}
+
 VFSConstructor buffered_file_const = {
 	NULL,			// not a normal VFS class
 	buffered_file_vfs_fopen_impl,
@@ -166,7 +174,8 @@ VFSConstructor buffered_file_const = {
 	buffered_file_vfs_rewind_impl,
 	buffered_file_vfs_ftell_impl,
 	buffered_file_vfs_feof_impl,
-	buffered_file_vfs_truncate_impl
+	buffered_file_vfs_truncate_impl,
+	buffered_file_vfs_metadata_impl
 };
 
 VFSFile *
