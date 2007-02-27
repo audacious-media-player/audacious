@@ -38,7 +38,9 @@ buffered_file_vfs_fclose_impl(VFSFile * file)
     {
         VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
 
-        vfs_fclose(handle->fd);
+        if (handle->fd != NULL)
+            vfs_fclose(handle->fd);
+
         vfs_fclose(handle->buffer);
         g_free(handle->mem);
         g_free(handle);
@@ -222,3 +224,18 @@ vfs_buffered_file_new_from_uri(const gchar *uri)
     return handle;
 }
 
+VFSFile *
+vfs_buffered_file_release_live_fd(VFSFile *fd)
+{
+    VFSBufferedFile *file = (VFSBufferedFile *) fd;
+    VFSFile *out;
+
+    g_return_val_if_fail(file != NULL, NULL);
+
+    out = file->fd;
+    file->fd = NULL;
+
+    vfs_fclose(fd);
+
+    return out;
+}

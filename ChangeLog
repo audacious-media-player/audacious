@@ -1,3 +1,12 @@
+2007-02-27 11:49:22 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4186]
+  - proxy requests for metadata attached to a VFSBufferedFile to the live 
+    FD associated with the VFSBufferedFile.
+  
+  trunk/src/audacious/vfs_buffered_file.c |   11 ++++++++++-
+  1 file changed, 10 insertions(+), 1 deletion(-)
+
+
 2007-02-27 10:15:51 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4184]
   - always make sure we are operating on a copy of the ini string

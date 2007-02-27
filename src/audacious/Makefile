@@ -47,6 +47,7 @@ HEADERS = \
 	util.h \
 	vfs.h \
 	vfs_buffer.h \
+	vfs_buffered_file.h \
 	xconvert.h
 
 SOURCES = \

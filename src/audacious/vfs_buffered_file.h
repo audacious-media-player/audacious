@@ -52,6 +52,9 @@ typedef struct {
  **/
 VFSFile *vfs_buffered_file_new_from_uri(const gchar *uri);
 
+VFSFile *vfs_buffered_file_release_live_fd(VFSFile *fd);
+
+
 G_END_DECLS
 
 #endif
