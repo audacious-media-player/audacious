@@ -8,10 +8,6 @@ if test ! -f $TOP_DIR/configure.ac ; then
     exit 1
 fi
 
-### XXX: Gentoo's subversion.eclass sucks, yet people insist on using 
-###      it.
-mkdir -p audacious/.svn
-
 AUTOCONF=${AUTOCONF:-autoconf}
 ACLOCAL=${ACLOCAL:-aclocal}
 AUTOHEADER=${AUTOHEADER:-autoheader}

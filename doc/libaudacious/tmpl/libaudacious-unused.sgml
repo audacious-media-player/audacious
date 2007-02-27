@@ -22,6 +22,64 @@
 xml_document
 
 
+<!-- ##### TYPEDEF BmpTitleInput ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT Formatter ##### -->
+<para>
+
+</para>
+
+@values: 
+
+<!-- ##### STRUCT RcFile ##### -->
+<para>
+
+</para>
+
+@sections: 
+
+<!-- ##### STRUCT RcLine ##### -->
+<para>
+
+</para>
+
+@key: 
+@value: 
+
+<!-- ##### STRUCT RcSection ##### -->
+<para>
+
+</para>
+
+@name: 
+@lines: 
+
+<!-- ##### STRUCT TitleInput ##### -->
+<para>
+
+</para>
+
+@__size: 
+@__version: 
+@performer: 
+@album_name: 
+@track_name: 
+@track_number: 
+@year: 
+@date: 
+@genre: 
+@comment: 
+@file_name: 
+@file_ext: 
+@file_path: 
+@length: 
+@formatter: 
+@mtime: 
+
 <!-- ##### STRUCT VFSConstructor ##### -->
 <para>
 
@@ -49,12 +107,190 @@ xml_document
 @handle: 
 @base: 
 
+<!-- ##### MACRO XMMS_NEW_TITLEINPUT ##### -->
+<para>
+
+</para>
+
+@input: 
+
+<!-- ##### MACRO XMMS_TITLEINPUT_SIZE ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO XMMS_TITLEINPUT_VERSION ##### -->
+<para>
+
+</para>
+
+
 <!-- ##### STRUCT XmmsEntry ##### -->
 <para>
 
 </para>
 
 @entry: 
+
+<!-- ##### FUNCTION bmp_rcfile_free ##### -->
+<para>
+
+</para>
+
+@file: 
+
+<!-- ##### FUNCTION bmp_rcfile_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION bmp_rcfile_open ##### -->
+<para>
+
+</para>
+
+@filename: 
+@Returns: 
+
+<!-- ##### FUNCTION bmp_rcfile_read_bool ##### -->
+<para>
+
+</para>
+
+@file: 
+@section: 
+@key: 
+@value: 
+@Returns: 
+
+<!-- ##### FUNCTION bmp_rcfile_read_double ##### -->
+<para>
+
+</para>
+
+@file: 
+@section: 
+@key: 
+@value: 
+@Returns: 
+
+<!-- ##### FUNCTION bmp_rcfile_read_float ##### -->
+<para>
+
+</para>
+
+@file: 
+@section: 
+@key: 
+@value: 
+@Returns: 
+
+<!-- ##### FUNCTION bmp_rcfile_read_int ##### -->
+<para>
+
+</para>
+
+@file: 
+@section: 
+@key: 
+@value: 
+@Returns: 
+
+<!-- ##### FUNCTION bmp_rcfile_read_string ##### -->
+<para>
+
+</para>
+
+@file: 
+@section: 
+@key: 
+@value: 
+@Returns: 
+
+<!-- ##### FUNCTION bmp_rcfile_remove_key ##### -->
+<para>
+
+</para>
+
+@file: 
+@section: 
+@key: 
+
+<!-- ##### FUNCTION bmp_rcfile_write ##### -->
+<para>
+
+</para>
+
+@file: 
+@filename: 
+@Returns: 
+
+<!-- ##### FUNCTION bmp_rcfile_write_boolean ##### -->
+<para>
+
+</para>
+
+@file: 
+@section: 
+@key: 
+@value: 
+
+<!-- ##### FUNCTION bmp_rcfile_write_double ##### -->
+<para>
+
+</para>
+
+@file: 
+@section: 
+@key: 
+@value: 
+
+<!-- ##### FUNCTION bmp_rcfile_write_float ##### -->
+<para>
+
+</para>
+
+@file: 
+@section: 
+@key: 
+@value: 
+
+<!-- ##### FUNCTION bmp_rcfile_write_int ##### -->
+<para>
+
+</para>
+
+@file: 
+@section: 
+@key: 
+@value: 
+
+<!-- ##### FUNCTION bmp_rcfile_write_string ##### -->
+<para>
+
+</para>
+
+@file: 
+@section: 
+@key: 
+@value: 
+
+<!-- ##### FUNCTION bmp_title_input_free ##### -->
+<para>
+
+</para>
+
+@input: 
+
+<!-- ##### FUNCTION bmp_title_input_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
 
 <!-- ##### FUNCTION convert_free_buffer ##### -->
 <para>
@@ -212,10 +448,85 @@ xml_document
 @stream: 
 @Returns: 
 
+<!-- ##### STRUCT xmms_convert_buffers ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION xmms_create_dir_browser ##### -->
+<para>
+
+</para>
+
+@title: 
+@current_path: 
+@mode: 
+@handler: 
+@Returns: 
+
 <!-- ##### FUNCTION xmms_entry_new ##### -->
 <para>
 
 </para>
 
+@Returns: 
+
+<!-- ##### FUNCTION xmms_formatter_associate ##### -->
+<para>
+
+</para>
+
+@formatter: 
+@id: 
+@value: 
+
+<!-- ##### FUNCTION xmms_formatter_destroy ##### -->
+<para>
+
+</para>
+
+@formatter: 
+
+<!-- ##### FUNCTION xmms_formatter_dissociate ##### -->
+<para>
+
+</para>
+
+@formatter: 
+@id: 
+
+<!-- ##### FUNCTION xmms_formatter_format ##### -->
+<para>
+
+</para>
+
+@formatter: 
+@format: 
+@Returns: 
+
+<!-- ##### FUNCTION xmms_formatter_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION xmms_get_titlestring ##### -->
+<para>
+
+</para>
+
+@fmt: 
+@input: 
+@Returns: 
+
+<!-- ##### FUNCTION xmms_titlestring_descriptions ##### -->
+<para>
+
+</para>
+
+@tags: 
+@columns: 
 @Returns: 
 

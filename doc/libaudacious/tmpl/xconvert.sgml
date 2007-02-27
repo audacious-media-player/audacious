@@ -17,9 +17,3 @@ Audacious plugins use XConvert to resample, downmix, upmix, and byteswap audio.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
-<!-- ##### STRUCT xmms_convert_buffers ##### -->
-<para>
-
-</para>
-
-

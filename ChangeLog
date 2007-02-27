@@ -1,3 +1,16 @@
+2007-02-27 03:06:45 +0000  George Averill <nhjm449@gmail.com>
+  revision [4180]
+  - tuple reading now available through audtool with audacious_get_tuple_field_data()
+  
+  trunk/src/audacious/controlsocket.c |   45 +++++++++++++++++++++
+  trunk/src/audacious/controlsocket.h |    2 
+  trunk/src/audtool/audtool.c         |   74 ++++++++++++++++++++++++++++++++++++
+  trunk/src/audtool/audtool.h         |    2 
+  trunk/src/libaudacious/beepctrl.c   |   36 +++++++++++++++++
+  trunk/src/libaudacious/beepctrl.h   |    5 +-
+  6 files changed, 162 insertions(+), 2 deletions(-)
+
+
 2007-02-26 18:30:06 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4178]
   - add explicit hints to show bit rate, sampling frequency and audio mode.

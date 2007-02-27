@@ -17,15 +17,3 @@ A directory browser widget.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
-<!-- ##### FUNCTION xmms_create_dir_browser ##### -->
-<para>
-
-</para>
-
-@title: 
-@current_path: 
-@mode: 
-@handler: 
-@Returns: 
-
-
