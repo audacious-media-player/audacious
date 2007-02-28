@@ -77,7 +77,6 @@ playback_initiate(void)
 {
     PlaylistEntry *entry = NULL;
     Playlist *playlist = playlist_get_active();
-    gint penalty = 0;
 
     g_return_if_fail(playlist_get_length(playlist) != 0);
 
@@ -90,33 +89,7 @@ playback_initiate(void)
 
     entry = playlist_get_entry_to_play(playlist);
     g_return_if_fail(entry != NULL);
-
-    /*
-     * If the playlist entry cannot be played, try to pick another one.
-     * If that does not work, e.g. entry == NULL, then bail.
-     *
-     *   - nenolod
-     */
-    for (penalty = 0; penalty <= 15 && entry != NULL && !playback_play_file(entry); penalty++)
-    {
-        playlist_next(playlist);
-
-        entry = playlist_get_entry_to_play(playlist);
-
-        /* XXX ew. workaround for a stupid bug where audacious will keep 
-         * trying to play a file with no valid decoder.
-         */
-        g_return_if_fail(entry != NULL);
-
-        if (entry->decoder == NULL )
-            entry->decoder = input_check_file(entry->filename, FALSE);
-
-        /* if we hit 15 entries in a row with no valid decoder, just 
-         * bail due to confusion
-         */
-        if (penalty == 15)
-            return;
-    }
+    playback_play_file(entry);
 
     if (playback_get_time() != -1) {
         equalizerwin_load_auto_preset(entry->filename);
