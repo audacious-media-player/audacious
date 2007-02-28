@@ -214,6 +214,7 @@ xmms_get_titlestring(const gchar * fmt, TitleInput * input)
                 char n = *fmt++;
                 if (!((n == 'a' && VS(input, album_name)) ||
                       (n == 'c' && VS(input, comment)) ||
+                      (n == 'C' && VS(input, custom)) ||
                       (n == 'd' && VS(input, date)) ||
                       (n == 'e' && VS(input, file_ext)) ||
                       (n == 'f' && VS(input, file_name)) ||
@@ -244,6 +245,9 @@ xmms_get_titlestring(const gchar * fmt, TitleInput * input)
             goto Print_string;
         case 'c':
             string = VS(input, comment);
+            goto Print_string;
+        case 'C':
+            string = VS(input, custom);
             goto Print_string;
         case 'd':
             string = VS(input, date);
