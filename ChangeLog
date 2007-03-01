@@ -1,3 +1,14 @@
+2007-02-28 17:52:22 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4194]
+  - revert the penalty-based "find something to play" logic of 1.2. it's 
+    mostly irrelevant now, because entries should have a decoder mapped to 
+    them by the time we get here now, and if they don't, 
+    playback_play_file() can handle it.
+  
+  trunk/src/audacious/playback.c |   29 +----------------------------
+  1 file changed, 1 insertion(+), 28 deletions(-)
+
+
 2007-02-28 15:44:30 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4192]
   - there was a missing delimeter in the patch credits

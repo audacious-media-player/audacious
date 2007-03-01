@@ -265,7 +265,8 @@ void get_current_song_tuple_field_data(gint session, gint argc, gchar **argv)
 		g_print("%s: syntax: %s current-song-tuple-data <fieldname>\n", argv[0], argv[0]);
 		g_print("%s:   - fieldname example choices: performer, album_name,\n", argv[0]);
 		g_print("%s:       track_name, track_number, year, date, genre, comment,\n", argv[0]);
-		g_print("%s:       file_name, file_ext, file_path, length, formatter, mtime\n", argv[0]);
+		g_print("%s:       file_name, file_ext, file_path, length, formatter,\n", argv[0]);
+		g_print("%s:       custom, mtime\n", argv[0]);
 		return;
 	}
 
@@ -701,7 +702,8 @@ void playlist_tuple_field_data(gint session, gint argc, gchar **argv)
 		g_print("%s: syntax: %s playlist-tuple-data <fieldname> <position>\n", argv[0], argv[0]);
 		g_print("%s:   - fieldname example choices: performer, album_name,\n", argv[0]);
 		g_print("%s:       track_name, track_number, year, date, genre, comment,\n", argv[0]);
-		g_print("%s:       file_name, file_ext, file_path, length, formatter, mtime\n", argv[0]);
+		g_print("%s:       file_name, file_ext, file_path, length, formatter,\n", argv[0]);
+		g_print("%s:       custom, mtime\n", argv[0]);
 		return;
 	}
 

@@ -600,6 +600,8 @@ ctrlsocket_func(gpointer arg)
                     ctrl_write_string(pkt->fd, tuple->album_name);
                 } else if (!strcasecmp(ptr, "formatter")) {
                     ctrl_write_string(pkt->fd, tuple->formatter);
+                } else if (!strcasecmp(ptr, "custom")) {
+                    ctrl_write_string(pkt->fd, tuple->custom);
                 } else if (!strcasecmp(ptr, "mtime")) {
                     ctrl_write_gint(pkt->fd, tuple->mtime);
                 }

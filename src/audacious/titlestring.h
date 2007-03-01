@@ -42,6 +42,7 @@
  * @file_path: The path that the media is in.
  * @length: The length of the media.
  * @formatter: The format string that should be used.
+ * @custom: A custom field for miscellaneous information.
  * @mtime: The last modified time of the file.
  *
  * Tuple which is passed to xmms_get_titlestring().  An input tuple
