@@ -720,7 +720,15 @@ playlistwin_motion(GtkWidget * widget,
     }
     gdk_flush();
 
-    while ((gevent = gdk_event_get()) != NULL) gdk_event_free(gevent);
+    while ((gevent = gdk_event_peek()) != NULL)
+    {
+        GdkEventAny *gev = (GdkEventAny *) gevent;
+
+        if (gev->type == GDK_MOTION_NOTIFY)
+            gdk_event_free(gdk_event_get());
+
+        gdk_event_free(gevent);
+    }
 }
 
 static void
