@@ -402,7 +402,7 @@ static GtkActionEntry action_entries_others[] = {
 	{ "ab set", NULL , N_("Set A-B"), "A",
 	  N_("Set A-B"), G_CALLBACK(action_ab_set) },
 
-	{ "ab clear", NULL , N_("Clear A-B"), "<Ctrl><Alt>S",
+	{ "ab clear", NULL , N_("Clear A-B"), "<Shift>A",
 	  N_("Clear A-B"), G_CALLBACK(action_ab_clear) },
 
 	{ "jump to playlist start", GTK_STOCK_GOTO_TOP , N_("Jump to Playlist Start"), "<Ctrl>Z",
