@@ -839,15 +839,7 @@ equalizerwin_show(gboolean show)
 void
 equalizerwin_real_show(void)
 {
-    /*
-     * This function should only be called from the
-     * main menu signal handler
-     */
-
-    gint x, y;
-
-    gtk_window_get_position(GTK_WINDOW(equalizerwin), &x, &y);
-    gtk_window_move(GTK_WINDOW(equalizerwin), x, y);
+    gtk_window_move(GTK_WINDOW(equalizerwin), cfg.equalizer_x, cfg.equalizer_y);
     if (cfg.doublesize && cfg.eq_doublesize_linked)
         gtk_widget_set_size_request(equalizerwin, 550,
                                     (cfg.equalizer_shaded ? 28 : 232));
