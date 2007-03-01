@@ -83,6 +83,7 @@ static const gchar *credit_text[] = {
     "Derek Pomery",
     "Jonathan Schleifer",
     "Tony Vroon",
+    "Yoshiki Yazawa",
     NULL,
 
     N_("Patch authors:"),
@@ -91,7 +92,7 @@ static const gchar *credit_text[] = {
     "Ralf Ertzinger",
     "Mike Frysinger",
     "Mark Glines",
-    "Teru KAGOMASHIRA",
+    "Teru KAMOGASHIRA",
     "Chris Kehler",
     "Alex Maclean",
     "Michael Hanselmann",
