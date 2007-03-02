@@ -110,9 +110,13 @@ int dfa_validate_utf8(const char *buf, int buflen)
         if (DFA_ALIVE(utf8))
             DFA_NEXT(utf8, c);
         else
-            return 0;
+            break;
     }
-    return 1;
+
+    if(DFA_ALIVE(utf8))
+        return 1;
+    else 
+        return 0;
 }
 
 const char *guess_jp(const char *buf, int buflen)
