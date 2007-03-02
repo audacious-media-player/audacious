@@ -1,3 +1,11 @@
+2007-03-02 07:04:21 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4210]
+  - update chinese translation via Jiang Tao
+  
+  trunk/po/zh_CN.po |   44 ++++++++++++++++++++++----------------------
+  1 file changed, 22 insertions(+), 22 deletions(-)
+
+
 2007-03-02 04:00:06 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4208]
   - bug fix for dfa_validate_utf8().
