@@ -1,4 +1,4 @@
-Audacious 1.3.0 (2007-03-??)
+Audacious 1.3.0 (2007-03-02)
 
 Enhancements
 * The playlist code has been rewritten using conditional variables, 
@@ -39,6 +39,9 @@ Enhancements
 * InputPlugins now use an InputPlayback context to track activity 
   instead of blindly pushing data down a potentially undefined pipeline.
 * Audacious now uses GOption to parse the commandline.
+
+Bugfixes:
+* Too many to count.
 
 *** See http://audacious-media-player.org/1.3_Release for more information. ***
 

@@ -1,3 +1,12 @@
+2007-03-02 15:00:26 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4212]
+  - back out r4200 for now.
+  
+  trunk/src/audacious/ui_equalizer.c |   10 +---------
+  trunk/src/audacious/ui_playlist.c  |   10 +---------
+  2 files changed, 2 insertions(+), 18 deletions(-)
+
+
 2007-03-02 07:04:21 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4210]
   - update chinese translation via Jiang Tao
