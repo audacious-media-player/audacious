@@ -1,3 +1,11 @@
+2007-03-02 04:00:06 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4208]
+  - bug fix for dfa_validate_utf8().
+  
+  trunk/src/libguess/guess.c |    8 ++++++--
+  1 file changed, 6 insertions(+), 2 deletions(-)
+
+
 2007-03-01 16:47:28 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4206]
   - how about <Shift>A for Clear A-B?

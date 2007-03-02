@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Audacious\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-02-17 23:400-0600\n"
+"POT-Creation-Date: 2007-02-23 14:41+0800\n"
 "PO-Revision-Date: 2006-12-05 11:20+0700\n"
 "Last-Translator: Jiang Tao <jiangtao9999@163.com>\n"
 "Language-Team: Chinese/Simplified\n"
@@ -145,7 +145,7 @@ msgstr "显示版本和内建特性"
 
 #: src/audacious/main.c:843
 msgid "FILE..."
-msgstr "文件……"
+msgstr "文件..."
 
 #: src/audacious/main.c:948
 #, c-format
@@ -605,7 +605,7 @@ msgstr "示波器模式"
 
 #: src/audacious/ui_manager.c:99
 msgid "Voiceprint"
-msgstr "分析器模式"
+msgstr "声波纹模式"
 
 #: src/audacious/ui_manager.c:100
 msgid "Off"
@@ -742,7 +742,7 @@ msgstr "示波器模式"
 
 #: src/audacious/ui_manager.c:192
 msgid "Voiceprint Mode"
-msgstr "分析器模式"
+msgstr "声波纹模式"
 
 #: src/audacious/ui_manager.c:193
 msgid "WindowShade VU Mode"
@@ -1109,20 +1109,20 @@ msgstr "删除"
 #: src/audacious/ui_manager.c:430 src/audacious/ui_manager.c:451
 #: src/audacious/ui_manager.c:466
 msgid "Preset"
-msgstr "调整"
+msgstr "均衡设置"
 
 #: src/audacious/ui_manager.c:431
 msgid "Load preset"
-msgstr "读取调整"
+msgstr "读取均衡设置"
 
 #: src/audacious/ui_manager.c:433 src/audacious/ui_manager.c:454
 #: src/audacious/ui_manager.c:469
 msgid "Auto-load preset"
-msgstr "自动装入调整"
+msgstr "自动装入均衡设置"
 
 #: src/audacious/ui_manager.c:434
 msgid "Load auto-load preset"
-msgstr "读取自动装入调整"
+msgstr "读取自动装入均衡设置"
 
 #: src/audacious/ui_manager.c:436 src/audacious/ui_manager.c:457
 msgid "Default"
@@ -1130,15 +1130,15 @@ msgstr "默认"
 
 #: src/audacious/ui_manager.c:437
 msgid "Load default preset into equalizer"
-msgstr "读取默认调整到均衡器"
+msgstr "读取默认均衡设置到均衡器"
 
 #: src/audacious/ui_manager.c:439
 msgid "Zero"
-msgstr "零"
+msgstr "无增益调节"
 
 #: src/audacious/ui_manager.c:440
 msgid "Set equalizer preset levels to zero"
-msgstr "设置均衡器调整为零"
+msgstr "设置均衡器均衡设置为无增益调节"
 
 #: src/audacious/ui_manager.c:442
 msgid "From file"
@@ -1146,7 +1146,7 @@ msgstr "从文件"
 
 #: src/audacious/ui_manager.c:443
 msgid "Load preset from file"
-msgstr "读取调整"
+msgstr "从文件读取均衡设置"
 
 #: src/audacious/ui_manager.c:445
 msgid "From WinAMP EQF file"
@@ -1154,27 +1154,27 @@ msgstr "从 WinAMP EQF 文件"
 
 #: src/audacious/ui_manager.c:446
 msgid "Load preset from WinAMP EQF file"
-msgstr "从 WinAMP EQF 文件读取调整"
+msgstr "从 WinAMP EQF 文件读取均衡设置"
 
 #: src/audacious/ui_manager.c:448
 msgid "WinAMP Presets"
-msgstr "WinAMP 调整"
+msgstr "WinAMP 均衡设置"
 
 #: src/audacious/ui_manager.c:449
 msgid "Import WinAMP presets"
-msgstr "导入 WinAMP 预设调整"
+msgstr "导入 WinAMP 预设均衡设置"
 
 #: src/audacious/ui_manager.c:452
 msgid "Save preset"
-msgstr "保存调整"
+msgstr "保存均衡设置"
 
 #: src/audacious/ui_manager.c:455
 msgid "Save auto-load preset"
-msgstr "保存自动读取调整"
+msgstr "保存自动读取均衡设置"
 
 #: src/audacious/ui_manager.c:458
 msgid "Save default preset"
-msgstr "保存默认调整"
+msgstr "保存默认均衡设置"
 
 #: src/audacious/ui_manager.c:460
 msgid "To file"
@@ -1182,7 +1182,7 @@ msgstr "到文件"
 
 #: src/audacious/ui_manager.c:461
 msgid "Save preset to file"
-msgstr "保存调整到文件"
+msgstr "保存均衡设置到文件"
 
 #: src/audacious/ui_manager.c:463
 msgid "To WinAMP EQF file"
@@ -1190,15 +1190,15 @@ msgstr "到 WinAMP EQF 文件"
 
 #: src/audacious/ui_manager.c:464
 msgid "Save preset to WinAMP EQF file"
-msgstr "保存调整到 WinAMP EQF 文件"
+msgstr "保存均衡设置到 WinAMP EQF 文件"
 
 #: src/audacious/ui_manager.c:467
 msgid "Delete preset"
-msgstr "删除调整"
+msgstr "删除均衡设置"
 
 #: src/audacious/ui_manager.c:470
 msgid "Delete auto-load preset"
-msgstr "删除自动读取调整"
+msgstr "删除自动读取均衡设置"
 
 #: src/audacious/ui_preferences.c:101 src/audacious/glade/prefswin.glade:1363
 msgid "Appearance"
