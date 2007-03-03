@@ -14,3 +14,7 @@ SOURCES = \
 OBJECTS = ${SOURCES:.c=.o}
 
 include ../../mk/objective.mk
+
+libguess.a: $(OBJECTS)
+	$(AR) cq $@ $(OBJECTS)
+

@@ -14,3 +14,6 @@ SOURCES = \
 OBJECTS = ${SOURCES:.c=.o}
 
 include ../../mk/objective.mk
+
+librcd.a: $(OBJECTS)
+	$(AR) cq $@ $(OBJECTS)
