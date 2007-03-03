@@ -27,158 +27,162 @@
 #include <gtk/gtk.h>
 #include <string.h>
 
-#include "titlestring.h"
-#include "ui_fileinfopopup.h"
 #include "main.h"
-#include "ui_main.h"
 #include "playlist.h"
 #include "playback.h"
-#include "util.h"
 #include "strings.h"
+#include "titlestring.h"
+#include "ui_fileinfopopup.h"
+#include "ui_fileinfo.h"
 
 static void
-filepopup_entry_set_text(GtkWidget *filepopup_win, const char *entry_name, const char *text)
+filepopup_entry_set_text(GtkWidget *filepopup_win, const gchar *entry_name,
+                         const gchar *text)
 {
-  GtkWidget *widget = g_object_get_data(G_OBJECT(filepopup_win), entry_name);
+    GtkWidget *widget = g_object_get_data(G_OBJECT(filepopup_win), entry_name);
+    g_return_if_fail(widget != NULL);
 
-  if (widget == NULL)
-    return;
-
-  gtk_label_set_text( GTK_LABEL(widget) , text );
-  return;
+    gtk_label_set_text(GTK_LABEL(widget), text);
 }
 
 static void
-filepopup_entry_set_image(GtkWidget *filepopup_win, const char *entry_name, const char *text)
+filepopup_entry_set_image(GtkWidget *filepopup_win, const gchar *entry_name,
+                          const gchar *text)
 {
-	GtkWidget *widget = g_object_get_data(G_OBJECT(filepopup_win), entry_name);
-	GdkPixbuf *pixbuf;
-	int width, height;
-	double aspect;
-	GdkPixbuf *pixbuf2;
+    GtkWidget *widget = g_object_get_data(G_OBJECT(filepopup_win), entry_name);
+    GdkPixbuf *pixbuf, *pixbuf2;
+    int width, height;
+    double aspect;
 
-	if (widget == NULL)
-		return;
+    g_return_if_fail(widget != NULL);
 
-	pixbuf = gdk_pixbuf_new_from_file(text, NULL);
+    pixbuf = gdk_pixbuf_new_from_file(text, NULL);
+    g_return_if_fail(pixbuf != NULL);
 
-	if (pixbuf == NULL)
-		return;
+    width  = gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf));
+    height = gdk_pixbuf_get_height(GDK_PIXBUF(pixbuf));
 
-	width  = gdk_pixbuf_get_width(GDK_PIXBUF(pixbuf));
-	height = gdk_pixbuf_get_height(GDK_PIXBUF(pixbuf));
+    if (strcmp(DATA_DIR "/images/audio.png", text))
+    {
+        if (width == 0)
+            width = 1;
 
-	if(strcmp(DATA_DIR "/images/audio.png", text))
-	{
-		if(width == 0)
-			width = 1;
-		aspect = (double)height / (double)width;
-		if(aspect > 1.0) {
-			height = (int)(cfg.filepopup_pixelsize * aspect);
-			width = cfg.filepopup_pixelsize;
-		} else {
-			height = cfg.filepopup_pixelsize;
-			width = (int)(cfg.filepopup_pixelsize / aspect);
-		}
-		pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), width, height, GDK_INTERP_BILINEAR);
-		g_object_unref(G_OBJECT(pixbuf));
-		pixbuf = pixbuf2;
-	}
+        aspect = (double)height / (double)width;
+        if (aspect > 1.0) {
+            height = (int)(cfg.filepopup_pixelsize * aspect);
+            width = cfg.filepopup_pixelsize;
+        } else {
+            height = cfg.filepopup_pixelsize;
+            width = (int)(cfg.filepopup_pixelsize / aspect);
+        }
+        
+        pixbuf2 = gdk_pixbuf_scale_simple(GDK_PIXBUF(pixbuf), width, height,
+                                          GDK_INTERP_BILINEAR);
+        g_object_unref(G_OBJECT(pixbuf));
+        pixbuf = pixbuf2;
+    }
 
-	gtk_image_set_from_pixbuf(GTK_IMAGE(widget), GDK_PIXBUF(pixbuf));
-	g_object_unref(G_OBJECT(pixbuf));
+    gtk_image_set_from_pixbuf(GTK_IMAGE(widget), GDK_PIXBUF(pixbuf));
+    g_object_unref(G_OBJECT(pixbuf));
 }
 
 static void
-filepopup_entry_set_text_free(GtkWidget *filepopup_win, const char *entry_name, char *text)
+filepopup_entry_set_text_free(GtkWidget *filepopup_win, const gchar *entry_name,
+                              gchar *text)
+
 {
-	GtkWidget *widget = g_object_get_data(G_OBJECT(filepopup_win), entry_name);
+    GtkWidget *widget = g_object_get_data(G_OBJECT(filepopup_win), entry_name);
+    g_return_if_fail(widget != NULL);
 
-	if (widget == NULL || text == NULL)
-		return;
+    gtk_label_set_text(GTK_LABEL(widget), text);
 
-	gtk_label_set_text(GTK_LABEL(widget), text);
-
-	g_free(text);
+    g_free(text);
 }
 
 static gboolean
-audacious_fileinfopopup_progress_cb ( gpointer filepopup_win )
+audacious_fileinfopopup_progress_cb(gpointer filepopup_win)
 {
-  GtkWidget *progressbar = g_object_get_data( G_OBJECT(filepopup_win) , "progressbar" );
-  gchar *tooltip_file = g_object_get_data( G_OBJECT(filepopup_win) , "file" );
-  gchar *current_file;
-  Playlist *pl;
-  gint length = GPOINTER_TO_INT(g_object_get_data( G_OBJECT(filepopup_win) , "length" ));
-  gint pos;
-  gint time;
+    GtkWidget *progressbar =
+        g_object_get_data(G_OBJECT(filepopup_win), "progressbar");
+    gchar *tooltip_file = g_object_get_data(G_OBJECT(filepopup_win), "file");
+    gchar *current_file;
+    Playlist *pl;
+    gint length =
+        GPOINTER_TO_INT(g_object_get_data(G_OBJECT(filepopup_win), "length"));
+    gint pos, time;
 
-  pl = playlist_get_active();
+    g_return_val_if_fail(progressbar != NULL, FALSE);
 
-  g_return_val_if_fail(pl != NULL, FALSE);
+    pl = playlist_get_active();
+    g_return_val_if_fail(pl != NULL, FALSE);
 
-  pos = playlist_get_position(pl);
+    pos = playlist_get_position(pl);
 
-  current_file = playlist_get_filename( pl , pos );
-  time = playback_get_time();
+    current_file = playlist_get_filename(pl , pos);
+    time = playback_get_time();
 
-  if (current_file == NULL)
-      return FALSE;
+    g_return_val_if_fail(current_file != NULL, FALSE);
 
-  if ( ( time != -1 ) &&
-       ( length != -1 ) &&
-       ( ( current_file != NULL ) && ( tooltip_file != NULL ) &&
-	 ( !strcmp(tooltip_file, current_file) ) && ( cfg.filepopup_showprogressbar ) ) )
-  {
-    gchar *progress_time = g_strdup_printf("%d:%02d", time / 60000, (time / 1000) % 60);
-    gtk_progress_bar_set_fraction( GTK_PROGRESS_BAR(progressbar) , (gdouble)time / (gdouble)length );
-    gtk_progress_bar_set_text( GTK_PROGRESS_BAR(progressbar) , progress_time );
-    g_free( progress_time );
-    if ( GTK_WIDGET_VISIBLE(progressbar) != TRUE )
-      gtk_widget_show(progressbar);
-  }
-  else
-  {
-    /* tooltip opened, but song is not the same,
-       or playback is stopped, or length is not applicabile */
-    if ( GTK_WIDGET_VISIBLE(progressbar) == TRUE )
-      gtk_widget_hide(progressbar);
-  }
+    if (time != -1 && length != -1 &&
+        current_file != NULL && tooltip_file != NULL &&
+        !strcmp(tooltip_file, current_file) && cfg.filepopup_showprogressbar)
+    {
+        gchar *progress_time =
+            g_strdup_printf("%d:%02d", time / 60000, (time / 1000) % 60);
+        gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(progressbar),
+                                      (gdouble)time / (gdouble)length);
+        gtk_progress_bar_set_text(GTK_PROGRESS_BAR(progressbar), progress_time);
 
-  return TRUE;
+        if (!GTK_WIDGET_VISIBLE(progressbar))
+            gtk_widget_show(progressbar);
+
+        g_free(progress_time);
+    }
+    else
+    {
+        /* tooltip opened, but song is not the same,
+         * or playback is stopped, or length is not applicabile */
+        if (GTK_WIDGET_VISIBLE(progressbar))
+            gtk_widget_hide(progressbar);
+    }
+
+    return TRUE;
 }
 
 static gboolean
-audacious_fileinfopopup_progress_check_active ( GtkWidget * filepopup_win )
+audacious_fileinfopopup_progress_check_active(GtkWidget *filepopup_win)
 {
-  if ( GPOINTER_TO_INT(g_object_get_data(G_OBJECT(filepopup_win),"progress_sid")) == 0 )
-    return FALSE;
-  else
+    if (g_object_get_data(G_OBJECT(filepopup_win), "progress_sid") == NULL)
+        return FALSE;
     return TRUE;
 }
 
 static void
-audacious_fileinfopopup_progress_init ( GtkWidget * filepopup_win )
+audacious_fileinfopopup_progress_init(GtkWidget *filepopup_win)
 {
-  g_object_set_data( G_OBJECT(filepopup_win) , "progress_sid" , GINT_TO_POINTER(0) );
+    g_object_set_data(G_OBJECT(filepopup_win), "progress_sid", NULL);
 }
 
 static void
-audacious_fileinfopopup_progress_start ( GtkWidget * filepopup_win )
+audacious_fileinfopopup_progress_start(GtkWidget *filepopup_win)
 {
-  gint sid = g_timeout_add( 500 , (GSourceFunc)audacious_fileinfopopup_progress_cb , filepopup_win );
-  g_object_set_data( G_OBJECT(filepopup_win) , "progress_sid" , GINT_TO_POINTER(sid) );
+    gint sid =
+        g_timeout_add(500, (GSourceFunc)audacious_fileinfopopup_progress_cb,
+                      filepopup_win);
+    g_object_set_data(G_OBJECT(filepopup_win), "progress_sid",
+                      GINT_TO_POINTER(sid));
 }
 
 static void
-audacious_fileinfopopup_progress_stop ( GtkWidget * filepopup_win )
+audacious_fileinfopopup_progress_stop(GtkWidget *filepopup_win)
 {
-  gint sid = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(filepopup_win),"progress_sid"));
-  if ( sid != 0 )
-  {
-    g_source_remove( sid );
-    g_object_set_data(G_OBJECT(filepopup_win),"progress_sid",GINT_TO_POINTER(0));
-  }
+    gint sid = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(filepopup_win),
+                                                 "progress_sid"));
+    if (sid != 0)
+    {
+        g_source_remove(sid);
+        g_object_set_data(G_OBJECT(filepopup_win), "progress_sid", NULL);
+    }
 }
 
 
