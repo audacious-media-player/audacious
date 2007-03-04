@@ -890,6 +890,7 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
     {
         gint pos = 0;
         gint i = 0;
+        GList *fns = NULL;
 
         for (i = 0; filenames[i] != NULL; i++)
         {
@@ -901,38 +902,44 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
             else
                 filename = g_build_filename(current_dir, filenames[i], NULL);
 
-            if (options->load_skins)
-            {
-                xmms_remote_set_skin(session, filename);
-                skin_install_skin(filename);
-            }
-            else
-            {
-                if (options->enqueue_to_temp)
-                    xmms_remote_playlist_enqueue_to_temp(session, filename);
+            fns = g_list_prepend(fns, filename);
 
-                if (options->enqueue && options->play)
-                    pos = xmms_remote_get_playlist_length(session);
-
-                if (!options->enqueue)
-                {
-                    xmms_remote_playlist_clear(session);
-                    xmms_remote_stop(session);
-                }
-
-                xmms_remote_playlist_add_url_string(session, filename);
-
-                if (options->enqueue && options->play &&
-                    xmms_remote_get_playlist_length(session) > pos)
-                    xmms_remote_set_playlist_pos(session, pos);
-
-                if (!options->enqueue)
-                    xmms_remote_play(session);
-            }
-
-            g_free(filename);
             g_free(current_dir);
         }
+
+        fns = g_list_reverse(fns);
+
+        if (options->load_skins)
+        {
+            xmms_remote_set_skin(session, filenames[0]);
+            skin_install_skin(filenames[0]);
+        }
+        else
+        {
+            if (options->enqueue_to_temp)
+                xmms_remote_playlist_enqueue_to_temp(session, filenames[0]);
+
+            if (options->enqueue && options->play)
+                pos = xmms_remote_get_playlist_length(session);
+
+            if (!options->enqueue)
+            {
+                xmms_remote_playlist_clear(session);
+                xmms_remote_stop(session);
+            }
+
+            xmms_remote_playlist_add(session, fns);
+
+            if (options->enqueue && options->play &&
+                xmms_remote_get_playlist_length(session) > pos)
+                xmms_remote_set_playlist_pos(session, pos);
+
+            if (!options->enqueue)
+                xmms_remote_play(session);
+        }
+
+        g_list_foreach(fns, (GFunc) g_free, NULL);
+        g_list_free(fns);
 
         g_strfreev(filenames);
     }
