@@ -185,383 +185,332 @@ audacious_fileinfopopup_progress_stop(GtkWidget *filepopup_win)
     }
 }
 
+static void
+audacious_fileinfopopup_add_category(GtkWidget *filepopup_win,
+                                     GtkWidget *filepopup_data_table,
+                                     const gchar *category,
+                                     const gchar *header_data,
+                                     const gchar *label_data,
+                                     const gint position)
+{
+    gchar *markup;
+
+    GtkWidget *filepopup_data_info_header = gtk_label_new("");
+    GtkWidget *filepopup_data_info_label = gtk_label_new("");
+    gtk_misc_set_alignment(GTK_MISC(filepopup_data_info_header), 0, 0.5);
+    gtk_misc_set_alignment(GTK_MISC(filepopup_data_info_label), 0, 0.5);
+    gtk_misc_set_padding(GTK_MISC(filepopup_data_info_header), 0, 3);
+    gtk_misc_set_padding(GTK_MISC(filepopup_data_info_label), 0, 3);
+    
+    markup =
+        g_markup_printf_escaped("<span style=\"italic\">%s</span>", category);
+
+    gtk_label_set_markup(GTK_LABEL(filepopup_data_info_header), markup);
+    g_free(markup);
+
+    g_object_set_data(G_OBJECT(filepopup_win), header_data,
+                      filepopup_data_info_header);
+    g_object_set_data(G_OBJECT(filepopup_win), label_data,
+                      filepopup_data_info_label);
+    gtk_table_attach(GTK_TABLE(filepopup_data_table),
+                     filepopup_data_info_header,
+                     0, 1, position, position + 1, GTK_FILL, 0, 0, 0);
+    gtk_table_attach(GTK_TABLE(filepopup_data_table),
+                     filepopup_data_info_label,
+                     1, 2, position, position + 1, GTK_FILL, 0, 0, 0);
+}
+
 
 
 GtkWidget *
 audacious_fileinfopopup_create(void)
 {
-  GtkWidget *filepopup_win;
-  GtkWidget *filepopup_hbox;
-  GtkWidget *filepopup_data_image;
-  GtkWidget *filepopup_data_table;
-  GtkWidget *filepopup_data_info_header[7];
-  GtkWidget *filepopup_data_info_label[7];
-  GtkWidget *filepopup_progress;
-  gchar *markup;
+    GtkWidget *filepopup_win;
+    GtkWidget *filepopup_hbox;
+    GtkWidget *filepopup_data_image;
+    GtkWidget *filepopup_data_table;
+    GtkWidget *filepopup_progress;
 
-  filepopup_win = gtk_window_new( GTK_WINDOW_POPUP );
-  gtk_window_set_decorated( GTK_WINDOW(filepopup_win), FALSE );
-  gtk_container_set_border_width( GTK_CONTAINER(filepopup_win) , 6 );
-  gtk_window_set_transient_for( GTK_WINDOW(filepopup_win) , GTK_WINDOW(mainwin) );
+    filepopup_win = gtk_window_new(GTK_WINDOW_POPUP);
+    gtk_window_set_decorated(GTK_WINDOW(filepopup_win), FALSE);
+    gtk_container_set_border_width(GTK_CONTAINER(filepopup_win), 6);
+    gtk_window_set_transient_for(GTK_WINDOW(filepopup_win),
+                                 GTK_WINDOW(mainwin));
 
-  filepopup_hbox = gtk_hbox_new( FALSE , 0 );
-  gtk_container_add( GTK_CONTAINER(filepopup_win) , filepopup_hbox );
+    filepopup_hbox = gtk_hbox_new(FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(filepopup_win), filepopup_hbox);
 
-  filepopup_data_image = gtk_image_new();
-  gtk_misc_set_alignment( GTK_MISC(filepopup_data_image) , 0.5 , 0 );
-  gtk_image_set_from_file( GTK_IMAGE(filepopup_data_image) , DATA_DIR "/images/audio.png" );
-  g_object_set_data( G_OBJECT(filepopup_win) , "image_artwork" , filepopup_data_image );
-  g_object_set_data( G_OBJECT(filepopup_win) , "last_artwork" , NULL );
-  gtk_box_pack_start( GTK_BOX(filepopup_hbox) , filepopup_data_image , FALSE , FALSE , 0 );
+    filepopup_data_image = gtk_image_new();
+    gtk_misc_set_alignment(GTK_MISC(filepopup_data_image), 0.5, 0);
+    gtk_image_set_from_file(GTK_IMAGE(filepopup_data_image),
+                            DATA_DIR "/images/audio.png");
 
-  gtk_box_pack_start( GTK_BOX(filepopup_hbox) , gtk_vseparator_new() , FALSE , FALSE , 6 );
+    g_object_set_data(G_OBJECT(filepopup_win), "image_artwork",
+                      filepopup_data_image);
+    g_object_set_data(G_OBJECT(filepopup_win), "last_artwork", NULL);
+    gtk_box_pack_start(GTK_BOX(filepopup_hbox), filepopup_data_image,
+                       FALSE, FALSE, 0);
 
-  filepopup_data_table = gtk_table_new( 8 , 2 , FALSE );
-  gtk_table_set_row_spacings( GTK_TABLE(filepopup_data_table) , 0 );
-  gtk_table_set_col_spacings( GTK_TABLE(filepopup_data_table) , 6 );
-  gtk_box_pack_start( GTK_BOX(filepopup_hbox) , filepopup_data_table , TRUE , TRUE , 0 );
+    gtk_box_pack_start(GTK_BOX(filepopup_hbox), gtk_vseparator_new(),
+                       FALSE, FALSE, 6);
 
-  /* title */
-  filepopup_data_info_header[0] = gtk_label_new("");
-  filepopup_data_info_label[0] = gtk_label_new("");
-  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_header[0]) , 0 , 0.5 );
-  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_label[0]) , 0 , 0.5 );
-  gtk_misc_set_padding( GTK_MISC(filepopup_data_info_header[0]) , 0 , 3 );
-  gtk_misc_set_padding( GTK_MISC(filepopup_data_info_label[0]) , 0 , 3 );
-  markup = g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Title") );
-  gtk_label_set_markup( GTK_LABEL(filepopup_data_info_header[0]) , markup );
-  g_free( markup );
-  g_object_set_data( G_OBJECT(filepopup_win) , "header_title" , filepopup_data_info_header[0] );
-  g_object_set_data( G_OBJECT(filepopup_win) , "label_title" , filepopup_data_info_label[0] );
-  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_header[0] ,
-    0 , 1 , 0 , 1 , GTK_FILL , 0 , 0 , 0 );
-  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_label[0] ,
-    1 , 2 , 0 , 1 , GTK_FILL , 0 , 0 , 0 );
+    filepopup_data_table = gtk_table_new(8, 2, FALSE);
+    gtk_table_set_row_spacings(GTK_TABLE(filepopup_data_table), 0);
+    gtk_table_set_col_spacings(GTK_TABLE(filepopup_data_table), 6);
+    gtk_box_pack_start(GTK_BOX(filepopup_hbox), filepopup_data_table,
+                       TRUE, TRUE, 0);
 
-  /* artist */
-  filepopup_data_info_header[1] = gtk_label_new("");
-  filepopup_data_info_label[1] = gtk_label_new("");
-  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_header[1]) , 0 , 0.5 );
-  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_label[1]) , 0 , 0.5 );
-  gtk_misc_set_padding( GTK_MISC(filepopup_data_info_header[1]) , 0 , 3 );
-  gtk_misc_set_padding( GTK_MISC(filepopup_data_info_label[1]) , 0 , 3 );
-  markup = g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Artist") );
-  gtk_label_set_markup( GTK_LABEL(filepopup_data_info_header[1]) , markup );
-  g_free( markup );
-  g_object_set_data( G_OBJECT(filepopup_win) , "header_artist" , filepopup_data_info_header[1] );
-  g_object_set_data( G_OBJECT(filepopup_win) , "label_artist" , filepopup_data_info_label[1] );
-  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_header[1] ,
-    0 , 1 , 1 , 2 , GTK_FILL , 0 , 0 , 0 );
-  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_label[1] ,
-    1 , 2 , 1 , 2 , GTK_FILL , 0 , 0 , 0 );
+    audacious_fileinfopopup_add_category(filepopup_win, filepopup_data_table,
+                                         _("Title"),
+                                         "header_title", "label_title", 0);
+    audacious_fileinfopopup_add_category(filepopup_win, filepopup_data_table,
+                                         _("Artist"),
+                                         "header_artist", "label_artist", 1);
+    audacious_fileinfopopup_add_category(filepopup_win, filepopup_data_table,
+                                         _("Album"),
+                                         "header_album", "label_album", 2);
+    audacious_fileinfopopup_add_category(filepopup_win, filepopup_data_table,
+                                         _("Genre"),
+                                         "header_genre", "label_genre", 3);
+    audacious_fileinfopopup_add_category(filepopup_win, filepopup_data_table,
+                                         _("Year"),
+                                         "header_year", "label_year", 4);
+    audacious_fileinfopopup_add_category(filepopup_win, filepopup_data_table,
+                                         _("Track Number"),
+                                         "header_tracknum", "label_tracknum",
+                                         5);
+    audacious_fileinfopopup_add_category(filepopup_win, filepopup_data_table,
+                                         _("Track Length"),
+                                         "header_tracklen", "label_tracklen",
+                                         6);
+    
+    gtk_table_set_row_spacing(GTK_TABLE(filepopup_data_table), 6, 6);
 
-  /* album */
-  filepopup_data_info_header[2] = gtk_label_new("");
-  filepopup_data_info_label[2] = gtk_label_new("");
-  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_header[2]) , 0 , 0.5 );
-  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_label[2]) , 0 , 0.5 );
-  gtk_misc_set_padding( GTK_MISC(filepopup_data_info_header[2]) , 0 , 3 );
-  gtk_misc_set_padding( GTK_MISC(filepopup_data_info_label[2]) , 0 , 3 );
-  markup = g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Album") );
-  gtk_label_set_markup( GTK_LABEL(filepopup_data_info_header[2]) , markup );
-  g_free( markup );
-  g_object_set_data( G_OBJECT(filepopup_win) , "header_album" , filepopup_data_info_header[2] );
-  g_object_set_data( G_OBJECT(filepopup_win) , "label_album" , filepopup_data_info_label[2] );
-  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_header[2] ,
-    0 , 1 , 2 , 3 , GTK_FILL , 0 , 0 , 0 );
-  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_label[2] ,
-    1 , 2 , 2 , 3 , GTK_FILL , 0 , 0 , 0 );
+    /* track progress */
+    filepopup_progress = gtk_progress_bar_new();
+    gtk_progress_bar_set_orientation(GTK_PROGRESS_BAR(filepopup_progress),
+                                     GTK_PROGRESS_LEFT_TO_RIGHT);
+    gtk_progress_bar_set_text(GTK_PROGRESS_BAR(filepopup_progress), "");
+    gtk_table_attach(GTK_TABLE(filepopup_data_table), filepopup_progress,
+                     0, 2, 7, 8, GTK_FILL, 0, 0, 0);
+    g_object_set_data(G_OBJECT(filepopup_win), "file", NULL);
+    g_object_set_data(G_OBJECT(filepopup_win), "progressbar",
+                      filepopup_progress);
+    audacious_fileinfopopup_progress_init(filepopup_win);
+    
+    /* this will realize all widgets contained in filepopup_hbox */
+    gtk_widget_show_all(filepopup_hbox);
 
-  /* genre */
-  filepopup_data_info_header[3] = gtk_label_new("");
-  filepopup_data_info_label[3] = gtk_label_new("");
-  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_header[3]) , 0 , 0.5 );
-  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_label[3]) , 0 , 0.5 );
-  gtk_misc_set_padding( GTK_MISC(filepopup_data_info_header[3]) , 0 , 3 );
-  gtk_misc_set_padding( GTK_MISC(filepopup_data_info_label[3]) , 0 , 3 );
-  markup = g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Genre") );
-  gtk_label_set_markup( GTK_LABEL(filepopup_data_info_header[3]) , markup );
-  g_free( markup );
-  g_object_set_data( G_OBJECT(filepopup_win) , "header_genre" , filepopup_data_info_header[3] );
-  g_object_set_data( G_OBJECT(filepopup_win) , "label_genre" , filepopup_data_info_label[3] );
-  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_header[3] ,
-    0 , 1 , 3 , 4 , GTK_FILL , 0 , 0 , 0 );
-  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_label[3] ,
-    1 , 2 , 3 , 4 , GTK_FILL , 0 , 0 , 0 );
+    /* do not show the track progress */
+    gtk_widget_hide(filepopup_progress);
 
-  /* year */
-  filepopup_data_info_header[4] = gtk_label_new("");
-  filepopup_data_info_label[4] = gtk_label_new("");
-  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_header[4]) , 0 , 0.5 );
-  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_label[4]) , 0 , 0.5 );
-  gtk_misc_set_padding( GTK_MISC(filepopup_data_info_header[4]) , 0 , 3 );
-  gtk_misc_set_padding( GTK_MISC(filepopup_data_info_label[4]) , 0 , 3 );
-  markup = g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Year") );
-  gtk_label_set_markup( GTK_LABEL(filepopup_data_info_header[4]) , markup );
-  g_free( markup );
-  g_object_set_data( G_OBJECT(filepopup_win) , "header_year" , filepopup_data_info_header[4] );
-  g_object_set_data( G_OBJECT(filepopup_win) , "label_year" , filepopup_data_info_label[4] );
-  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_header[4] ,
-    0 , 1 , 4 , 5 , GTK_FILL , 0 , 0 , 0 );
-  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_label[4] ,
-    1 , 2 , 4 , 5 , GTK_FILL , 0 , 0 , 0 );
-
-  /* Track Number */
-  filepopup_data_info_header[5] = gtk_label_new("");
-  filepopup_data_info_label[5] = gtk_label_new("");
-  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_header[5]) , 0 , 0.5 );
-  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_label[5]) , 0 , 0.5 );
-  gtk_misc_set_padding( GTK_MISC(filepopup_data_info_header[5]) , 0 , 3 );
-  gtk_misc_set_padding( GTK_MISC(filepopup_data_info_label[5]) , 0 , 3 );
-  markup = g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Track Number") );
-  gtk_label_set_markup( GTK_LABEL(filepopup_data_info_header[5]) , markup );
-  g_free( markup );
-  g_object_set_data( G_OBJECT(filepopup_win) , "header_tracknum" , filepopup_data_info_header[5] );
-  g_object_set_data( G_OBJECT(filepopup_win) , "label_tracknum" , filepopup_data_info_label[5] );
-  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_header[5] ,
-    0 , 1 , 5 , 6 , GTK_FILL , 0 , 0 , 0 );
-  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_label[5] ,
-    1 , 2 , 5 , 6 , GTK_FILL , 0 , 0 , 0 );
-
-  /* Track Length */
-  filepopup_data_info_header[6] = gtk_label_new("");
-  filepopup_data_info_label[6] = gtk_label_new("");
-  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_header[6]) , 0 , 0.5 );
-  gtk_misc_set_alignment( GTK_MISC(filepopup_data_info_label[6]) , 0 , 0.5 );
-  gtk_misc_set_padding( GTK_MISC(filepopup_data_info_header[6]) , 0 , 3 );
-  gtk_misc_set_padding( GTK_MISC(filepopup_data_info_label[6]) , 0 , 3 );
-  markup = g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Track Length") );
-  gtk_label_set_markup( GTK_LABEL(filepopup_data_info_header[6]) , markup );
-  g_free( markup );
-  g_object_set_data( G_OBJECT(filepopup_win) , "header_tracklen" , filepopup_data_info_header[6] );
-  g_object_set_data( G_OBJECT(filepopup_win) , "label_tracklen" , filepopup_data_info_label[6] );
-  g_object_set_data( G_OBJECT(filepopup_win), "length" , GINT_TO_POINTER(-1) );
-  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_header[6] ,
-    0 , 1 , 6 , 7 , GTK_FILL , 0 , 0 , 0 );
-  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_data_info_label[6] ,
-    1 , 2 , 6 , 7 , GTK_FILL , 0 , 0 , 0 );
-  gtk_table_set_row_spacing( GTK_TABLE(filepopup_data_table) , 6 , 6 );
-
-  /* Track Progress */
-  filepopup_progress = gtk_progress_bar_new();
-  gtk_progress_bar_set_orientation( GTK_PROGRESS_BAR(filepopup_progress) , GTK_PROGRESS_LEFT_TO_RIGHT );
-  gtk_progress_bar_set_text( GTK_PROGRESS_BAR(filepopup_progress) , "" );
-  gtk_table_attach( GTK_TABLE(filepopup_data_table) , filepopup_progress ,
-    0 , 2 , 7 , 8 , GTK_FILL , 0 , 0 , 0 );
-  g_object_set_data( G_OBJECT(filepopup_win) , "file" , NULL );
-  g_object_set_data( G_OBJECT(filepopup_win) , "progressbar" , filepopup_progress );
-  audacious_fileinfopopup_progress_init( filepopup_win );
-
-  /* this will realize all widgets contained in filepopup_hbox */
-  gtk_widget_show_all(filepopup_hbox);
-
-  /* do not show the track progress */
-  gtk_widget_hide( filepopup_progress );
-
-  return filepopup_win;
+    return filepopup_win;
 }
 
 void
 audacious_fileinfopopup_destroy(GtkWidget *filepopup_win)
 {
-  audacious_fileinfopopup_progress_stop( filepopup_win );
+    audacious_fileinfopopup_progress_stop(filepopup_win);
 
-  gchar *last_artwork = g_object_get_data( G_OBJECT(filepopup_win) , "last_artwork" );
-  if ( last_artwork != NULL ) g_free(last_artwork);
-  gtk_widget_destroy( filepopup_win );
-  return;
+    gchar *last_artwork =
+        g_object_get_data(G_OBJECT(filepopup_win), "last_artwork");
+    if (last_artwork != NULL)
+        g_free(last_artwork);
+
+    gtk_widget_destroy(filepopup_win);
 }
 
 void
-audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win, TitleInput *tuple)
+audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
+                                        TitleInput *tuple)
 {
-	gchar *tmp = NULL;
-	gint x, y, x_off = 3, y_off = 3, h, w;
+    gchar *tmp = NULL;
+    gint x, y, x_off = 3, y_off = 3, h, w;
 
-	gchar *last_artwork = g_object_get_data( G_OBJECT(filepopup_win) , "last_artwork" );
-	const static char default_artwork[] = DATA_DIR "/images/audio.png";
+    gchar *last_artwork =
+        g_object_get_data(G_OBJECT(filepopup_win), "last_artwork");
+    const static gchar default_artwork[] = DATA_DIR "/images/audio.png";
 
-	if (tuple == NULL)
-		return;
+    g_return_if_fail(tuple != NULL);
 
-	tmp = g_object_get_data( G_OBJECT(filepopup_win) , "file" );
-	if ( tmp != NULL ) {
-		g_free( tmp );
-		tmp = NULL;
-		g_object_set_data( G_OBJECT(filepopup_win) , "file" , NULL );
-	}
-	if ( ( tuple->file_path ) && ( tuple->file_name ) )
-	{
-		g_object_set_data( G_OBJECT(filepopup_win) , "file" ,
-		  g_build_filename( tuple->file_path , tuple->file_name , NULL ) );
-	}
+    tmp = g_object_get_data(G_OBJECT(filepopup_win), "file");
+    if (tmp != NULL) {
+        g_free(tmp);
+        tmp = NULL;
+        g_object_set_data(G_OBJECT(filepopup_win), "file", NULL);
+    }
+    if (tuple->file_path && tuple->file_name)
+        g_object_set_data(G_OBJECT(filepopup_win), "file",
+                          g_build_filename(tuple->file_path, tuple->file_name,
+                                           NULL));
 
-	gtk_widget_realize(filepopup_win);
+    gtk_widget_realize(filepopup_win);
 
-	if ( tuple->track_name != NULL )
-	{
-	  gchar *markup = g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Title") );
-	  gtk_label_set_markup( GTK_LABEL(g_object_get_data(G_OBJECT(filepopup_win),"header_title")), markup );
-	  g_free( markup );
+    if (tuple->track_name != NULL)
+    {
+        gchar *markup =
+            g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Title") );
+      gtk_label_set_markup( GTK_LABEL(g_object_get_data(G_OBJECT(filepopup_win),"header_title")), markup );
+      g_free( markup );
         filepopup_entry_set_text(filepopup_win, "label_title", tuple->track_name);
-	}
-	else
-	{
+    }
+    else
+    {
         /* display the filename if track_name is not available */
-	  gchar *markup = g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Filename") );
-	  gchar *utf_filename = filename_to_utf8(tuple->file_name);
-	  gtk_label_set_markup( GTK_LABEL(g_object_get_data(G_OBJECT(filepopup_win),"header_title")), markup );
-	  g_free( markup );
-	  filepopup_entry_set_text(filepopup_win, "label_title", utf_filename);
-	  g_free( utf_filename );
-	}
+      gchar *markup = g_markup_printf_escaped( "<span style=\"italic\">%s</span>" , _("Filename") );
+      gchar *utf_filename = filename_to_utf8(tuple->file_name);
+      gtk_label_set_markup( GTK_LABEL(g_object_get_data(G_OBJECT(filepopup_win),"header_title")), markup );
+      g_free( markup );
+      filepopup_entry_set_text(filepopup_win, "label_title", utf_filename);
+      g_free( utf_filename );
+    }
 
-	if ( tuple->performer != NULL )
-	{
-	  filepopup_entry_set_text(filepopup_win, "label_artist", tuple->performer);
-	  gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_artist")));
-	  gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_artist")));
-	}
-	else
-	{
-	  gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_artist")));
-	  gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_artist")));
-	}
+    if ( tuple->performer != NULL )
+    {
+      filepopup_entry_set_text(filepopup_win, "label_artist", tuple->performer);
+      gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_artist")));
+      gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_artist")));
+    }
+    else
+    {
+      gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_artist")));
+      gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_artist")));
+    }
 
-	if ( tuple->album_name != NULL )
-	{
-	  filepopup_entry_set_text(filepopup_win, "label_album", tuple->album_name);
-	  gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_album")));
-	  gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_album")));
-	}
-	else
-	{
-	  gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_album")));
-	  gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_album")));
-	}
+    if ( tuple->album_name != NULL )
+    {
+      filepopup_entry_set_text(filepopup_win, "label_album", tuple->album_name);
+      gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_album")));
+      gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_album")));
+    }
+    else
+    {
+      gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_album")));
+      gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_album")));
+    }
 
-	if ( tuple->genre != NULL )
-	{
-	  filepopup_entry_set_text(filepopup_win, "label_genre", tuple->genre);
-	  gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_genre")));
-	  gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_genre")));
-	}
-	else
-	{
-	  gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_genre")));
-	  gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_genre")));
-	}
+    if ( tuple->genre != NULL )
+    {
+      filepopup_entry_set_text(filepopup_win, "label_genre", tuple->genre);
+      gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_genre")));
+      gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_genre")));
+    }
+    else
+    {
+      gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_genre")));
+      gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_genre")));
+    }
 
-	if (tuple->length > 0)
-	{
-		filepopup_entry_set_text_free(filepopup_win, "label_tracklen", g_strdup_printf("%d:%02d", tuple->length / 60000, (tuple->length / 1000) % 60));
-		g_object_set_data( G_OBJECT(filepopup_win), "length" , GINT_TO_POINTER(tuple->length) );
-		gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_tracklen")));
-		gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_tracklen")));
-	}
-	else
-	{
-		filepopup_entry_set_text(filepopup_win, "label_tracklen", "");
-		g_object_set_data( G_OBJECT(filepopup_win), "length" , GINT_TO_POINTER(-1) );
-		gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_tracklen")));
-		gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_tracklen")));
-	}
+    if (tuple->length > 0)
+    {
+        filepopup_entry_set_text_free(filepopup_win, "label_tracklen", g_strdup_printf("%d:%02d", tuple->length / 60000, (tuple->length / 1000) % 60));
+        g_object_set_data( G_OBJECT(filepopup_win), "length" , GINT_TO_POINTER(tuple->length) );
+        gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_tracklen")));
+        gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_tracklen")));
+    }
+    else
+    {
+        filepopup_entry_set_text(filepopup_win, "label_tracklen", "");
+        g_object_set_data( G_OBJECT(filepopup_win), "length" , GINT_TO_POINTER(-1) );
+        gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_tracklen")));
+        gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_tracklen")));
+    }
 
-	if (tuple->year != 0)
-	{
-		filepopup_entry_set_text_free(filepopup_win, "label_year", g_strdup_printf("%d", tuple->year));
-		gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_year")));
-		gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_year")));
-	}
-	else
-	{
-		gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_year")));
-		gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_year")));
-	}
+    if (tuple->year != 0)
+    {
+        filepopup_entry_set_text_free(filepopup_win, "label_year", g_strdup_printf("%d", tuple->year));
+        gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_year")));
+        gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_year")));
+    }
+    else
+    {
+        gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_year")));
+        gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_year")));
+    }
 
-	if (tuple->track_number != 0)
-	{
-		filepopup_entry_set_text_free(filepopup_win, "label_tracknum", g_strdup_printf("%d", tuple->track_number));
-		gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_tracknum")));
-		gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_tracknum")));
-	}
-	else
-	{
-		filepopup_entry_set_text(filepopup_win, "label_tracknum", "");
-		gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_tracknum")));
-		gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_tracknum")));
-	}
+    if (tuple->track_number != 0)
+    {
+        filepopup_entry_set_text_free(filepopup_win, "label_tracknum", g_strdup_printf("%d", tuple->track_number));
+        gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_tracknum")));
+        gtk_widget_show(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_tracknum")));
+    }
+    else
+    {
+        filepopup_entry_set_text(filepopup_win, "label_tracknum", "");
+        gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"header_tracknum")));
+        gtk_widget_hide(GTK_WIDGET(g_object_get_data(G_OBJECT(filepopup_win),"label_tracknum")));
+    }
 
-	if ( ( tuple->file_path ) && ( tuple->file_name ) )
-	{
-		tmp = fileinfo_recursive_get_image(tuple->file_path, tuple->file_name, 0);
-		if (tmp) { // picture found
-			if (!last_artwork || strcmp(last_artwork, tmp)) { // new picture
-				filepopup_entry_set_image(filepopup_win, "image_artwork", tmp);
-				if (last_artwork) g_free(last_artwork);
-				last_artwork = tmp;
-				g_object_set_data( G_OBJECT(filepopup_win) , "last_artwork" , last_artwork );
-			}
-			else { // same picture
-			}
-		}
-		else { // no picture found
-			if (!last_artwork || strcmp(last_artwork, default_artwork)) {
-				filepopup_entry_set_image(filepopup_win, "image_artwork", default_artwork);
-				if (last_artwork) g_free(last_artwork);
-				last_artwork = g_strdup(default_artwork);
-				g_object_set_data( G_OBJECT(filepopup_win) , "last_artwork" , last_artwork );
-			}
-			else {
-			}
-		}
-	}
+    if ( ( tuple->file_path ) && ( tuple->file_name ) )
+    {
+        tmp = fileinfo_recursive_get_image(tuple->file_path, tuple->file_name, 0);
+        if (tmp) { // picture found
+            if (!last_artwork || strcmp(last_artwork, tmp)) { // new picture
+                filepopup_entry_set_image(filepopup_win, "image_artwork", tmp);
+                if (last_artwork) g_free(last_artwork);
+                last_artwork = tmp;
+                g_object_set_data( G_OBJECT(filepopup_win) , "last_artwork" , last_artwork );
+            }
+            else { // same picture
+            }
+        }
+        else { // no picture found
+            if (!last_artwork || strcmp(last_artwork, default_artwork)) {
+                filepopup_entry_set_image(filepopup_win, "image_artwork", default_artwork);
+                if (last_artwork) g_free(last_artwork);
+                last_artwork = g_strdup(default_artwork);
+                g_object_set_data( G_OBJECT(filepopup_win) , "last_artwork" , last_artwork );
+            }
+            else {
+            }
+        }
+    }
 
-	/* start a timer that updates a progress bar if the tooltip
-	   is shown for the song that is being currently played */
-	if ( audacious_fileinfopopup_progress_check_active( filepopup_win ) == FALSE )
-	{
-		audacious_fileinfopopup_progress_start( filepopup_win );
-		/* also run immediately the callback once, to update progressbar status  */
-		audacious_fileinfopopup_progress_cb( filepopup_win );
-	}
+    /* start a timer that updates a progress bar if the tooltip
+       is shown for the song that is being currently played */
+    if ( audacious_fileinfopopup_progress_check_active( filepopup_win ) == FALSE )
+    {
+        audacious_fileinfopopup_progress_start( filepopup_win );
+        /* also run immediately the callback once, to update progressbar status  */
+        audacious_fileinfopopup_progress_cb( filepopup_win );
+    }
 
-	gdk_window_get_pointer(NULL, &x, &y, NULL);
-	gtk_window_get_size(GTK_WINDOW(filepopup_win), &w, &h);
-	if (gdk_screen_width()-(w+3) < x) x_off = (w*-1)-3;
-	if (gdk_screen_height()-(h+3) < y) y_off = (h*-1)-3;
-	gtk_window_move(GTK_WINDOW(filepopup_win), x + x_off, y + y_off);
+    gdk_window_get_pointer(NULL, &x, &y, NULL);
+    gtk_window_get_size(GTK_WINDOW(filepopup_win), &w, &h);
+    if (gdk_screen_width()-(w+3) < x) x_off = (w*-1)-3;
+    if (gdk_screen_height()-(h+3) < y) y_off = (h*-1)-3;
+    gtk_window_move(GTK_WINDOW(filepopup_win), x + x_off, y + y_off);
 
-	gtk_widget_show(filepopup_win);
+    gtk_widget_show(filepopup_win);
 }
 
 void
 audacious_fileinfopopup_show_from_title(GtkWidget *filepopup_win, gchar *title)
 {
-	TitleInput * tuple = bmp_title_input_new();
-	tuple->track_name = g_strdup(title);
-	audacious_fileinfopopup_show_from_tuple( filepopup_win , tuple );
-	bmp_title_input_free( tuple );
-	return;
+    TitleInput * tuple = bmp_title_input_new();
+    tuple->track_name = g_strdup(title);
+    audacious_fileinfopopup_show_from_tuple(filepopup_win, tuple);
+    bmp_title_input_free(tuple);
+    return;
 }
 
 void
 audacious_fileinfopopup_hide(GtkWidget *filepopup_win, gpointer unused)
 {
-	if ( GTK_WIDGET_VISIBLE(filepopup_win) == TRUE )
-	{
-		audacious_fileinfopopup_progress_stop( filepopup_win );
+    if (GTK_WIDGET_VISIBLE(filepopup_win))
+    {
+        audacious_fileinfopopup_progress_stop(filepopup_win);
 
-		gtk_widget_hide(filepopup_win);
+        gtk_widget_hide(filepopup_win);
 
-		filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_title", "");
-		filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_artist", "");
-		filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_album", "");
-		filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_genre", "");
-		filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_track", "");
-		filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_year", "");
-		filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_length", "");
+        filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_title", "");
+        filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_artist", "");
+        filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_album", "");
+        filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_genre", "");
+        filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_track", "");
+        filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_year", "");
+        filepopup_entry_set_text(GTK_WIDGET(filepopup_win), "label_length", "");
 
-		gtk_window_resize(GTK_WINDOW(filepopup_win), 1, 1);
-	}
+        gtk_window_resize(GTK_WINDOW(filepopup_win), 1, 1);
+    }
 }
