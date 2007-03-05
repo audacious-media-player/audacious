@@ -1,3 +1,11 @@
+2007-03-05 21:43:09 +0000  Michael Hanselmann <hansmi@forkbomb.ch>
+  revision [4224]
+  Check filesize before doing memcmp (potential sigsegv).
+  
+  trunk/src/audacious/util.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-03-04 18:43:38 +0000  Michael Farber <01mf02@gmail.com>
   revision [4222]
   - Removed some of the horrible code duplication in the file popup code
