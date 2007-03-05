@@ -1,3 +1,12 @@
+2007-03-04 18:43:38 +0000  Michael Farber <01mf02@gmail.com>
+  revision [4222]
+  - Removed some of the horrible code duplication in the file popup code
+  
+  
+  trunk/src/audacious/ui_fileinfopopup.c |  593 +++++++++++++++------------------
+  1 file changed, 271 insertions(+), 322 deletions(-)
+
+
 2007-03-04 06:34:27 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4220]
   - fix handling of multiple files on the command line.

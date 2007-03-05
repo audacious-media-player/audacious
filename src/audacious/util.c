@@ -420,7 +420,7 @@ open_ini_file(const gchar *filename)
      * by incomp@#audacious. Cleanups \nenolod
      * FIXME: can't we use a GLib function for that? -- 01mf02
      */
-    if (!memcmp(&buffer[0],&x,2))
+    if (filesize > 2 && !memcmp(&buffer[0],&x,2))
     {
         gchar *outbuf = g_malloc (filesize);   /* it's safe to waste memory. */
         guint counter;
