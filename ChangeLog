@@ -1,3 +1,11 @@
+2007-03-06 00:28:45 +0000  Michael Hanselmann <hansmi@forkbomb.ch>
+  revision [4228]
+  Prevent double free() by strdup'ing value.
+  
+  trunk/src/audacious/util.c |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2007-03-05 21:50:32 +0000  Michael Farber <01mf02@gmail.com>
   revision [4226]
   - Remove even more duplicate code

@@ -139,7 +139,7 @@ audacious_fileinfopopup_progress_cb(gpointer filepopup_win)
 static gboolean
 audacious_fileinfopopup_progress_check_active(GtkWidget *filepopup_win)
 {
-    if (g_object_get_data(G_OBJECT(filepopup_win), "progress_sid") == NULL)
+    if (GPOINTER_TO_INT(g_object_get_data(G_OBJECT(filepopup_win),"progress_sid")) == 0)
         return FALSE;
     return TRUE;
 }
@@ -147,7 +147,7 @@ audacious_fileinfopopup_progress_check_active(GtkWidget *filepopup_win)
 static void
 audacious_fileinfopopup_progress_init(GtkWidget *filepopup_win)
 {
-    g_object_set_data(G_OBJECT(filepopup_win), "progress_sid", NULL);
+    g_object_set_data( G_OBJECT(filepopup_win) , "progress_sid" , GINT_TO_POINTER(0) );
 }
 
 static void
@@ -168,7 +168,7 @@ audacious_fileinfopopup_progress_stop(GtkWidget *filepopup_win)
     if (sid != 0)
     {
         g_source_remove(sid);
-        g_object_set_data(G_OBJECT(filepopup_win), "progress_sid", NULL);
+        g_object_set_data(G_OBJECT(filepopup_win),"progress_sid",GINT_TO_POINTER(0));
     }
 }
 
@@ -384,6 +384,11 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
     audacious_fileinfopupup_update_data(filepopup_win, length_string,
                                         "label_tracklen", "header_tracklen");
     g_free(length_string);
+
+    if ( tuple->length > 0 )
+      g_object_set_data( G_OBJECT(filepopup_win), "length" , GINT_TO_POINTER(tuple->length) );
+    else
+      g_object_set_data( G_OBJECT(filepopup_win), "length" , GINT_TO_POINTER(-1) );
 
     gchar *year_string = (tuple->year == 0) ? NULL : g_strdup_printf("%d", tuple->year);
     audacious_fileinfopupup_update_data(filepopup_win, year_string,
