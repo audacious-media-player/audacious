@@ -1,3 +1,12 @@
+2007-03-05 21:50:32 +0000  Michael Farber <01mf02@gmail.com>
+  revision [4226]
+  - Remove even more duplicate code
+  
+  
+  trunk/src/audacious/ui_fileinfopopup.c |  162 +++++++++++----------------------
+  1 file changed, 58 insertions(+), 104 deletions(-)
+
+
 2007-03-05 21:43:09 +0000  Michael Hanselmann <hansmi@forkbomb.ch>
   revision [4224]
   Check filesize before doing memcmp (potential sigsegv).

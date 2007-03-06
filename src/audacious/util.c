@@ -379,7 +379,7 @@ static void
 strip_lower_string(GString *string)
 {
     strip_string(string);
-    
+
     gchar *lower = g_ascii_strdown(string->str, -1);
     g_free(string->str);
     string->str = lower;
@@ -531,7 +531,7 @@ open_ini_file(const gchar *filename)
             strip_string(value);
 
             if (key_name->len > 0 && value->len > 0)
-                g_hash_table_insert(section, key_hash, value->str);
+                g_hash_table_insert(section, key_hash, g_strdup(value->str));
         }
         else
         {
