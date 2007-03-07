@@ -1,3 +1,10 @@
+2007-03-06 01:30:33 +0000  Giacomo Lozito <james@develia.org>
+  revision [4230]
+  - made progress bar in fileinfo popup work again; it's ok to do code cleaning/beautifying but please, do ensure and test that things work as they should
+  trunk/src/audacious/ui_fileinfopopup.c |   11 ++++++++---
+  1 file changed, 8 insertions(+), 3 deletions(-)
+
+
 2007-03-06 00:28:45 +0000  Michael Hanselmann <hansmi@forkbomb.ch>
   revision [4228]
   Prevent double free() by strdup'ing value.

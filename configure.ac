@@ -263,28 +263,6 @@ AC_SUBST(REGEX_CFLAGS)
 
 dnl GConf support
 
-CONFIGDB_BACKEND="rcfile"
-
-AC_ARG_ENABLE(gconf,
-    [  --enable-gconf          enable GConf support (default=disabled)],
-    [enable_gconf=$enableval],
-    [enable_gconf="no"]
-)
-
-if test "$enable_gconf" = "yes"; then
-    PKG_CHECK_MODULES(GCONF, [gconf-2.0 >= 2.6.0],
-        [
-         AC_DEFINE(HAVE_GCONF, , [Define if building with GConf support])
-         ADD_PC_REQUIRES([gconf-2.0 >= 2.6.0])
-        ],
-        [AC_MSG_ERROR([Cannot find GConf])]
-    )
-fi
-
-if test "$enable_gconf" = "yes"; then
-	CONFIGDB_BACKEND="gconf"
-fi
-
 PKG_CHECK_MODULES(LIBMCS, [libmcs >= 0.1],
    [
       AC_DEFINE(HAVE_MCS, , [Define if building with libmcs support])
