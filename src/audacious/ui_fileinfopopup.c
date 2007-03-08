@@ -434,7 +434,7 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
         audacious_fileinfopopup_progress_cb(filepopup_win);
     }
 
-    gdk_window_get_pointer(NULL, &x, &y, NULL);
+    gdk_window_get_pointer(gdk_get_default_root_window(), &x, &y, NULL);
     gtk_window_get_size(GTK_WINDOW(filepopup_win), &w, &h);
     if (gdk_screen_width()-(w+3) < x) x_off = (w*-1)-3;
     if (gdk_screen_height()-(h+3) < y) y_off = (h*-1)-3;

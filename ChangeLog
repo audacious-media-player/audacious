@@ -1,3 +1,18 @@
+2007-03-07 03:04:48 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
+  revision [4234]
+  remove autotools macros that aren't used in audacious core any more
+  
+  trunk/m4/amidi-plug.m4 |   33 --
+  trunk/m4/arts.m4       |  131 -----------
+  trunk/m4/jack.m4       |   56 ----
+  trunk/m4/libFLAC.m4    |  106 ---------
+  trunk/m4/libmikmod.m4  |   86 -------
+  trunk/m4/lirc.m4       |  363 --------------------------------
+  trunk/m4/sdl.m4        |   70 ------
+  trunk/m4/sidplay.m4    |  552 -------------------------------------------------
+  8 files changed, 1397 deletions(-)
+
+
 2007-03-07 02:54:10 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
   revision [4232]
   why are we still checking for GConf? checks and related OMK data removed
