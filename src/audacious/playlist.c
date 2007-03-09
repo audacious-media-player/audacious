@@ -1926,10 +1926,16 @@ playlist_compare_track(PlaylistEntry * a,
     g_return_val_if_fail(a != NULL, 0);
     g_return_val_if_fail(b != NULL, 0);
 
+    if(!a->tuple)
+        playlist_entry_get_info(a);
+    if(!b->tuple)
+        playlist_entry_get_info(b);
+
     g_return_val_if_fail(a->tuple != NULL, 0);
     g_return_val_if_fail(b->tuple != NULL, 0);
 
-    return (a->tuple->track_number - b->tuple->track_number);
+    return (a->tuple->track_number && b->tuple->track_number ?
+	    a->tuple->track_number - b->tuple->track_number : 0);
 }
 
 static gint
@@ -1970,6 +1976,11 @@ playlist_compare_title(PlaylistEntry * a,
 
     g_return_val_if_fail(a != NULL, 0);
     g_return_val_if_fail(b != NULL, 0);
+
+    if(!a->tuple)
+        playlist_entry_get_info(a);
+    if(!b->tuple)
+        playlist_entry_get_info(b);
 
     if (a->tuple != NULL && a->tuple->track_name != NULL)
         a_title = a->tuple->track_name;

@@ -1,3 +1,10 @@
+2007-03-08 00:26:51 +0000  Giacomo Lozito <james@develia.org>
+  revision [4236]
+  - use gdk_get_default_root_window in place of NULL for gdk_window_get_pointer
+  trunk/src/audacious/ui_fileinfopopup.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-03-07 03:04:48 +0000  Kiyoshi Aman <kiyoshi.aman@gmail.com>
   revision [4234]
   remove autotools macros that aren't used in audacious core any more
