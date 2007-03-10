@@ -1,3 +1,11 @@
+2007-03-09 02:33:20 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4238]
+  - now sort by track number and sort by title work even if on display metadata loading is specified. 
+  
+  trunk/src/audacious/playlist.c |   13 ++++++++++++-
+  1 file changed, 12 insertions(+), 1 deletion(-)
+
+
 2007-03-08 00:26:51 +0000  Giacomo Lozito <james@develia.org>
   revision [4236]
   - use gdk_get_default_root_window in place of NULL for gdk_window_get_pointer
