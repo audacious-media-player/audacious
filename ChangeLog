@@ -1,3 +1,11 @@
+2007-03-10 02:08:14 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4242]
+  - update polish translation, closes #838.
+  
+  trunk/po/pl.po |  569 +++++++++++++++++++++++----------------------------------
+  1 file changed, 234 insertions(+), 335 deletions(-)
+
+
 2007-03-10 02:07:21 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4240]
   - version bump to 1.3.1.

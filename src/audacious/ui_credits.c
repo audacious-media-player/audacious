@@ -225,7 +225,7 @@ static const gchar *translators[] = {
     "Yang Zhang",
     NULL,
     N_("Slovak:"),
-    "Pavel Kanzelsberger",
+    "Andrej Herceg",
     NULL,
     N_("Spanish:"),
     "Gustavo D. Vranjes",
