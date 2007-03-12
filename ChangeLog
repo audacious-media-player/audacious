@@ -1,3 +1,13 @@
+2007-03-10 02:10:47 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4244]
+  - new slovak translator (timeout 180d)
+  - update slovak translation per bug #842.
+  
+  trunk/po/sk.po                   | 3476 ++++-----------------------------------
+  trunk/src/audacious/ui_credits.c |    2 
+  2 files changed, 441 insertions(+), 3037 deletions(-)
+
+
 2007-03-10 02:08:14 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4242]
   - update polish translation, closes #838.
