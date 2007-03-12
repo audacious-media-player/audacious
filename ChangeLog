@@ -1,3 +1,11 @@
+2007-03-12 17:31:24 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4250]
+  - version bump to 1.4.
+  
+  trunk/configure.ac |    3 +--
+  1 file changed, 1 insertion(+), 2 deletions(-)
+
+
 2007-03-12 00:05:07 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4246]
   - add "Language-Team: Default (i18n-default@i18n.atheme.org)\n" to shut 

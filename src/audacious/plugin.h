@@ -204,6 +204,9 @@ struct _InputPlugin {
     /* Added in Audacious 1.3.0 */
     gint (*is_our_file_from_vfs) (gchar *filename, VFSFile *fd);
     gchar **vfs_extensions;
+
+    /* Added in Audacious 1.4.0 */
+    void (*mseek) (InputPlayback * playback, gulong millisecond);
 };
 
 struct _GeneralPlugin {
