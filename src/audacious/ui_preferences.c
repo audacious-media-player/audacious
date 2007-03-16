@@ -2327,7 +2327,18 @@ on_show_wm_decorations_toggled(GtkToggleButton * button,
     gtk_window_set_decorated(GTK_WINDOW(mainwin), cfg.show_wm_decorations);
     gtk_window_set_decorated(GTK_WINDOW(playlistwin), cfg.show_wm_decorations);
     gtk_window_set_decorated(GTK_WINDOW(equalizerwin), cfg.show_wm_decorations);
+}
 
+static void
+on_reload_plugins_clicked(GtkButton * button, gpointer data)
+{
+    /* TBD: should every playlist entry have to be reprobed?
+     * Pointers could come back stale if new plugins are added or
+     * symbol sizes change.                       - nenolod
+     */
+
+    plugin_system_cleanup();
+    plugin_system_init();
 }
 
 /* FIXME: complete the map */
@@ -2432,6 +2443,8 @@ FUNC_MAP_BEGIN(prefswin_func_map)
     FUNC_MAP_ENTRY(on_green_scale_value_changed)
     FUNC_MAP_ENTRY(on_blue_scale_value_changed)
     FUNC_MAP_ENTRY(on_colorize_close_clicked)
+
+    FUNC_MAP_ENTRY(on_reload_plugins_clicked)
 FUNC_MAP_END
 
 void

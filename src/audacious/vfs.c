@@ -27,7 +27,7 @@
 
 #include "urldecode.h"
 
-static GList *vfs_transports = NULL;
+GList *vfs_transports = NULL; /* temporary. -nenolod */
 
 #ifdef VFS_DEBUG
 # define DBG(x, args...) g_print(x, ## args);

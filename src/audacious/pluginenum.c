@@ -58,6 +58,8 @@ const gchar *plugin_dir_list[] = {
 GHashTable *plugin_matrix = NULL;
 GList *lowlevel_list = NULL;
 
+extern GList *vfs_transports;
+
 static gint
 inputlist_compare_func(gconstpointer a, gconstpointer b)
 {
@@ -218,6 +220,8 @@ add_plugin(const gchar * filename)
 
     if (plugin_is_duplicate(filename))
         return;
+
+    g_message("Loaded plugin (%s)", filename);
 
     if (!(module = g_module_open(filename, G_MODULE_BIND_LOCAL))) {
         printf("Failed to load plugin (%s): %s\n", 
@@ -397,6 +401,9 @@ plugin_system_cleanup(void)
         ip_data.stop = FALSE;
     }
 
+    /* FIXME: race condition -nenolod */
+    op_data.current_output_plugin = NULL;
+
     for (node = get_input_list(); node; node = g_list_next(node)) {
         ip = INPUT_PLUGIN(node->data);
         if (ip && ip->cleanup) {
@@ -408,8 +415,11 @@ plugin_system_cleanup(void)
         g_module_close(ip->handle);
     }
 
-    if (ip_data.input_list)
+    if (ip_data.input_list != NULL)
+    {
         g_list_free(ip_data.input_list);
+        ip_data.input_list = NULL;
+    }
 
     for (node = get_output_list(); node; node = g_list_next(node)) {
         op = OUTPUT_PLUGIN(node->data);
@@ -422,8 +432,11 @@ plugin_system_cleanup(void)
         g_module_close(op->handle);
     }
     
-    if (op_data.output_list)
+    if (op_data.output_list != NULL)
+    {
         g_list_free(op_data.output_list);
+        op_data.output_list = NULL;
+    }
 
     for (node = get_effect_list(); node; node = g_list_next(node)) {
         ep = EFFECT_PLUGIN(node->data);
@@ -436,22 +449,11 @@ plugin_system_cleanup(void)
         g_module_close(ep->handle);
     }
 
-    if (ep_data.effect_list)
+    if (ep_data.effect_list != NULL)
+    {
         g_list_free(ep_data.effect_list);
-
-#if 0
-    for (node = get_general_enabled_list(); node; node = g_list_next(node)) {
-        gp = GENERAL_PLUGIN(node->data);
-        enable_general_plugin(g_list_index(gp_data.general_list, gp), FALSE);
+        ep_data.effect_list = NULL;
     }
-
-    if (gp_data.enabled_list)
-        g_list_free(gp_data.enabled_list);
-
-    GDK_THREADS_LEAVE();
-    while (g_main_context_iteration(NULL, FALSE));
-    GDK_THREADS_ENTER();
-#endif
 
     for (node = get_general_list(); node; node = g_list_next(node)) {
         gp = GENERAL_PLUGIN(node->data);
@@ -464,22 +466,11 @@ plugin_system_cleanup(void)
         g_module_close(gp->handle);
     }
 
-    if (gp_data.general_list)
+    if (gp_data.general_list != NULL)
+    {
         g_list_free(gp_data.general_list);
-
-#if 0
-    for (node = get_vis_enabled_list(); node; node = g_list_next(node)) {
-        vp = VIS_PLUGIN(node->data);
-        enable_vis_plugin(g_list_index(vp_data.vis_list, vp), FALSE);
+        gp_data.general_list = NULL;
     }
-
-    if (vp_data.enabled_list)
-        g_list_free(vp_data.enabled_list);
-
-    GDK_THREADS_LEAVE();
-    while (g_main_context_iteration(NULL, FALSE));
-    GDK_THREADS_ENTER();
-#endif
 
     for (node = get_vis_list(); node; node = g_list_next(node)) {
         vp = VIS_PLUGIN(node->data);
@@ -492,8 +483,11 @@ plugin_system_cleanup(void)
         g_module_close(vp->handle);
     }
 
-    if (vp_data.vis_list)
+    if (vp_data.vis_list != NULL)
+    {
         g_list_free(vp_data.vis_list);
+        vp_data.vis_list = NULL;
+    }
 
     for (node = lowlevel_list; node; node = g_list_next(node)) {
         lp = LOWLEVEL_PLUGIN(node->data);
@@ -506,6 +500,16 @@ plugin_system_cleanup(void)
         g_module_close(lp->handle);
     }
 
-    if (lowlevel_list)
+    if (lowlevel_list != NULL)
+    {
         g_list_free(lowlevel_list);
+        lowlevel_list = NULL;
+    }
+
+    /* XXX: vfs will crash otherwise. -nenolod */
+    if (vfs_transports != NULL)
+    {
+        g_list_free(vfs_transports);
+        vfs_transports = NULL;
+    }
 }
