@@ -1,3 +1,14 @@
+2007-03-16 02:25:27 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4258]
+  - plugin reloading.
+  
+  trunk/src/audacious/glade/prefswin.glade |   79 ++++++++++++++++++++++++++++++-
+  trunk/src/audacious/pluginenum.c         |   68 ++++++++++++++------------
+  trunk/src/audacious/ui_preferences.c     |   13 +++++
+  trunk/src/audacious/vfs.c                |    2 
+  4 files changed, 127 insertions(+), 35 deletions(-)
+
+
 2007-03-16 01:44:52 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4256]
   - due to some bug in buffer management, bump the buffer side of things up to ~40kb instead of 32kb for now.

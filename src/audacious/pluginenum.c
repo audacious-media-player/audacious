@@ -281,13 +281,7 @@ plugin_system_init(void)
         return;
     }
 
-    /*
-     * FIXME: this collides in many cases. this is really bad.
-     * i have no idea why we use a hashtable here, there is no point, when
-     * a list of enabled plugins would realistically offer the same 
-     * scalability.                                       - nenolod
-     */
-    plugin_matrix = g_hash_table_new_full(g_str_hash, g_int_equal, g_free,
+    plugin_matrix = g_hash_table_new_full(g_str_hash, g_str_equal, g_free,
                                           NULL);
 
 #ifndef DISABLE_USER_PLUGIN_DIR
