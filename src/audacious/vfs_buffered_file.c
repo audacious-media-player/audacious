@@ -191,7 +191,7 @@ vfs_buffered_file_new_from_uri(const gchar *uri)
 
     handle = g_new0(VFSFile, 1);
     fd = g_new0(VFSBufferedFile, 1);
-    fd->mem = g_malloc0(32768);
+    fd->mem = g_malloc0(40000);
     fd->fd = vfs_fopen(uri, "rb");
 
     if (fd->fd == NULL)
@@ -203,7 +203,7 @@ vfs_buffered_file_new_from_uri(const gchar *uri)
 	return NULL;
     }
 
-    sz = vfs_fread(fd->mem, 1, 32768, fd->fd);
+    sz = vfs_fread(fd->mem, 1, 40000, fd->fd);
 
     if (!sz)
     {
