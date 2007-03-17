@@ -1,3 +1,11 @@
+2007-03-17 01:11:57 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4268]
+  - update pl.po, closes #839.
+  
+  trunk/po/pl.po |  138 +++++++++++++++++++++------------------------------------
+  1 file changed, 51 insertions(+), 87 deletions(-)
+
+
 2007-03-16 07:25:44 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4260]
   - [security, backport to 1.3] fix improper comparisons of hashtables used by the plugin loader.
