@@ -1857,7 +1857,6 @@ on_skin_view_realize(GtkTreeView * treeview,
     xml = prefswin_get_xml();
     widget = glade_xml_get_widget(xml, "skin_refresh_button");
     skin_view_realize(treeview);
-    skin_view_update(treeview, GTK_WIDGET(widget));
 
     return TRUE;
 }
@@ -2681,7 +2680,22 @@ create_prefs_window(void)
 void
 show_prefs_window(void)
 {
+    static gboolean skinlist_filled = FALSE;
+
     gtk_widget_show(prefswin);
+
+    if ( !skinlist_filled )
+    {
+      GladeXML *xml;
+      GtkWidget *widget, *widget2;
+
+      xml = prefswin_get_xml();
+
+      widget = glade_xml_get_widget(xml, "skin_view");
+      widget2 = glade_xml_get_widget(xml, "skin_refresh_button");
+      skin_view_update(GTK_TREE_VIEW(widget), GTK_WIDGET(widget2));
+      skinlist_filled = TRUE;
+    }
 }
 
 static void

@@ -1,3 +1,11 @@
+2007-03-17 02:07:19 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4272]
+  - performance is better without r4270.
+  
+  trunk/src/audacious/ui_jumptotrack.c |    2 --
+  1 file changed, 2 deletions(-)
+
+
 2007-03-17 01:44:03 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4270]
   - run gtkevents while populating the list.
