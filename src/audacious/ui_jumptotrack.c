@@ -347,8 +347,6 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
         const gchar *title;
         gchar *filename = NULL;
 
-        while (gtk_events_pending()) gtk_main_iteration();
-
         title = entry->title;
         if (!title) {
         filename = str_to_utf8(entry->filename);

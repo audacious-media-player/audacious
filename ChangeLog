@@ -1,3 +1,11 @@
+2007-03-17 01:44:03 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4270]
+  - run gtkevents while populating the list.
+  
+  trunk/src/audacious/ui_jumptotrack.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-03-17 01:11:57 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4268]
   - update pl.po, closes #839.
