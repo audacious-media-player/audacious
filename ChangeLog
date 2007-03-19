@@ -1,3 +1,15 @@
+2007-03-19 15:35:08 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4276]
+  simplify and enhance signal handler:
+  - implement an independent signal processing thread using sigwait().
+  - new signal thread can always generate meaningful back trace. (AUD_ENSURE_BACKTRACE is no longer needed.)
+  - this thread is also capable of dumping config file upon receiving SIGSEGV. (but not yet tested thoroughly).
+  - g_cond_signal() has been removed. however g_cond_signal() can be used safely within the signal thread. the former implementation depended on an indefinite behavior of pthread.
+  
+  trunk/src/audacious/signals.c |  134 ++++++++++++------------------------------
+  1 file changed, 41 insertions(+), 93 deletions(-)
+
+
 2007-03-17 02:21:54 +0000  Giacomo Lozito <james@develia.org>
   revision [4274]
   - prevent skin list overlap when it's populated for the first time and user quickly switchs to other tabs in the prefswin

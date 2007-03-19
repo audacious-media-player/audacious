@@ -60,8 +60,8 @@ signal_process_signals (void *data)
                          "This could be a bug in Audacious. If you don't know why this happened, "
                          "file a bug at http://bugs-meta.atheme.org/\n\n"));
             g_critical("Received SIGSEGV");
-	    bmp_config_save();
-	    abort();
+            bmp_config_save();
+            abort();
             break;
 
         case SIGINT:
