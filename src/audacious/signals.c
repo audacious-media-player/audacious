@@ -33,117 +33,65 @@
 #include "ui_main.h"
 #include "signals.h"
 
-GCond *exit_cond;
-GMutex *exit_mutex;
-
-typedef void (*SignalHandler) (gint);
-
-static SignalHandler
-signal_install_handler_full (gint           signal_number,
-                             SignalHandler  handler,
-                             gint          *signals_to_block,
-                             gsize          n_signals)
-{
-    struct sigaction action, old_action;
-    gsize i;
-
-    action.sa_handler = handler;
-    action.sa_flags = SA_RESTART;
-
-    sigemptyset (&action.sa_mask);
-
-    for (i = 0; i < n_signals; i++)
-        sigaddset (&action.sa_mask, signals_to_block[i]);
-
-    if (sigaction (signal_number, &action, &old_action) == -1)
-    {
-        g_message ("Failed to install handler for signal %d", signal_number);
-        return NULL;
-    }
-
-    return old_action.sa_handler;
-}
-
-/* 
- * A version of signal() that works more reliably across different
- * platforms. It: 
- * a. restarts interrupted system calls
- * b. does not reset the handler
- * c. blocks the same signal within the handler
- *
- * (adapted from Unix Network Programming Vol. 1)
- */
-static SignalHandler
-signal_install_handler (gint          signal_number,
-                        SignalHandler handler)
-{
-    return signal_install_handler_full (signal_number, handler, NULL, 0);
-}
-
-static void
-signal_empty_handler (gint signal_number)
-{
-    /* empty */
-}
-
-static void
-sigsegv_handler (gint signal_number)
-{
-#ifndef SIGSEGV_ABORT
-    g_printerr(_("\nReceived SIGSEGV\n\n"
-                 "This could be a bug in Audacious. If you don't know why this happened, "
-                 "file a bug at http://bugs-meta.atheme.org/\n\n"));
-    g_critical("Received SIGSEGV");
-
-    /* TO DO: log stack trace and possibly dump config file. */
-    exit (EXIT_FAILURE);
-#else
-    abort ();
-#endif
-}
-
-static void
-sigterm_handler (gint signal_number)
-{
-    cfg.terminate = TRUE;
-    g_cond_signal(exit_cond);
-}
-
 static void *
-signal_process_events (void *data)
+signal_process_signals (void *data)
 {
-    while (1) {
-        if (cfg.terminate == TRUE)
-        {
+    sigset_t waitset;
+    int sig;
+
+    sigemptyset(&waitset);
+    sigaddset(&waitset, SIGPIPE);
+    sigaddset(&waitset, SIGSEGV);  
+    sigaddset(&waitset, SIGINT);
+    sigaddset(&waitset, SIGTERM);
+
+    while(1) {
+        sigwait(&waitset, &sig);
+
+        switch(sig){
+        case SIGPIPE:
+            /*
+             * do something.
+             */
+            break;
+
+        case SIGSEGV:
+            g_printerr(_("\nReceived SIGSEGV\n\n"
+                         "This could be a bug in Audacious. If you don't know why this happened, "
+                         "file a bug at http://bugs-meta.atheme.org/\n\n"));
+            g_critical("Received SIGSEGV");
+	    bmp_config_save();
+	    abort();
+            break;
+
+        case SIGINT:
+            g_print("Audacious has received SIGINT and is shutting down.\n");
+            mainwin_quit_cb();
+            break;
+
+        case SIGTERM:
             g_print("Audacious has received SIGTERM and is shutting down.\n");
             mainwin_quit_cb();
+            break;
         }
-        g_mutex_lock(exit_mutex);
-        g_cond_wait(exit_cond, exit_mutex);
-        g_mutex_unlock(exit_mutex);
     }
 
-    return NULL;
+    return NULL; //dummy
 }
 
 void 
 signal_handlers_init (void)
 {
-    char *magic;
-    magic = getenv("AUD_ENSURE_BACKTRACE");
+    sigset_t blockset;
 
-    exit_cond = g_cond_new();
-    exit_mutex = g_mutex_new();
+    sigemptyset(&blockset);
+    sigaddset(&blockset, SIGPIPE);
+    sigaddset(&blockset, SIGSEGV);  
+    sigaddset(&blockset, SIGINT);
+    sigaddset(&blockset, SIGTERM);
 
-    signal_install_handler(SIGPIPE, signal_empty_handler);
-    signal_install_handler(SIGINT, sigterm_handler);
-    signal_install_handler(SIGTERM, sigterm_handler);
+    if(pthread_sigmask(SIG_BLOCK, &blockset, NULL))
+        g_print("pthread_sigmask() failed.\n");
 
-    /* in particular environment (maybe with glibc 2.5), core file
-       through signal handler doesn't contain useful back trace. --yaz */
-    if (magic == NULL)
-        signal_install_handler(SIGSEGV, sigsegv_handler);
-
-    g_thread_create(signal_process_events, NULL, FALSE, NULL);
-
+    g_thread_create(signal_process_signals, NULL, FALSE, NULL);
 }
