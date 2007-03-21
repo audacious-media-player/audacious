@@ -73,6 +73,13 @@ typedef struct _PlaylistEntry {
 } PlaylistEntry;
 
 #define PLAYLIST(x)  ((Playlist *)(x))
+
+typedef enum {
+    PLAYLIST_PLAIN = 0,
+    PLAYLIST_STATIC = 1,
+//  PLAYLIST_FOO = 1 << 1, // for future use.
+} PlaylistAttribute;
+
 typedef struct _Playlist {
     gchar         *title;
     gchar         *filename;
@@ -88,6 +95,7 @@ typedef struct _Playlist {
     gboolean       loading_playlist;
     GMutex        *mutex;       /* this is required for multiple playlist */
     GList *tail; /* marker for the last element in playlist->entries */
+    gint           attribute; /* PlaylistAttribute */
 } Playlist;
 
 typedef enum {

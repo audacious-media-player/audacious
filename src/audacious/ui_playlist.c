@@ -889,17 +889,36 @@ playlist_file_selection_load(const gchar * title,
     return filename;
 }
 
+static void
+on_static_toggle(GtkToggleButton *button, gpointer data)
+{
+    Playlist *playlist = playlist_get_active();
+
+    playlist->attribute =
+        gtk_toggle_button_get_active(button) & PLAYLIST_STATIC ? PLAYLIST_STATIC : PLAYLIST_PLAIN;
+    g_print("static_toggle: e: attribute = %d\n", playlist->attribute);
+}
+
+
 static gchar *
 playlist_file_selection_save(const gchar * title,
                         const gchar * default_filename)
 {
     GtkWidget *dialog;
     gchar *filename;
+    GtkWidget *toggle;
 
     g_return_val_if_fail(title != NULL, NULL);
 
     dialog = make_filebrowser(title, TRUE);
     gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog), default_filename);
+
+    /* static playlist */
+    toggle = gtk_check_button_new_with_label("Save as a Static Playlist");
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle),
+                                 (playlist_get_active()->attribute & PLAYLIST_STATIC) ? TRUE : FALSE);
+    gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER(dialog), toggle);
+    g_signal_connect(G_OBJECT(toggle), "toggled", G_CALLBACK(on_static_toggle), dialog);
    
     if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
         filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));

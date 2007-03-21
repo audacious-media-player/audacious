@@ -197,9 +197,9 @@ playlist_entry_get_info(PlaylistEntry * entry)
         return TRUE;
 
     if (entry->tuple == NULL || entry->tuple->mtime > 0 || entry->tuple->mtime == -1)
-	modtime = playlist_get_mtime(entry->filename);
+        modtime = playlist_get_mtime(entry->filename);
     else
-	modtime = 0;  /* URI -nenolod */
+        modtime = 0;  /* URI -nenolod */
 
     if (entry->decoder == NULL)
         entry->decoder = input_check_file(entry->filename, FALSE);
@@ -2484,7 +2484,8 @@ playlist_get_info_func(gpointer arg)
             for (node = playlist->entries; node; node = g_list_next(node)) {
                 entry = node->data;
 
-                if(entry->tuple && (entry->tuple->length > -1)) {
+                if(playlist->attribute & PLAYLIST_STATIC ||
+                   (entry->tuple && entry->tuple->length > -1 && entry->tuple->mtime != -1)) {
                     update_playlistwin = TRUE;
                     continue;
                 }
@@ -2534,7 +2535,8 @@ playlist_get_info_func(gpointer arg)
 
                     entry = node->data;
 
-                    if(entry->tuple && (entry->tuple->length > -1)) {
+                    if(playlist->attribute & PLAYLIST_STATIC ||
+                       (entry->tuple && entry->tuple->length > -1 && entry->tuple->mtime != -1)) {
                         update_playlistwin = TRUE;
                         continue;
                     }
