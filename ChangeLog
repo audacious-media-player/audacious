@@ -1,3 +1,11 @@
+2007-03-21 10:25:21 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4292]
+  - clear playlist attribute when playlist_clear() is called.
+  
+  trunk/src/audacious/playlist.c |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2007-03-21 09:13:02 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4290]
   improve support for static playlist.
