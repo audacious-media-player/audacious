@@ -1,3 +1,11 @@
+2007-03-19 15:41:23 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4278]
+  - tweak wrong indentations.
+  
+  trunk/src/audacious/signals.c |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2007-03-19 15:35:08 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4276]
   simplify and enhance signal handler:

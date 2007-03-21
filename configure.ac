@@ -93,11 +93,18 @@ PKG_CHECK_MODULES(GTK, [glib-2.0 >= 2.6.0 gtk+-2.0 >= 2.6.0 gthread-2.0 pango],
     [AC_MSG_ERROR([Cannot find glib2/gtk2/pango])]
 )
 
-dnl Check for GLib
+dnl Check for GLib.
 
 PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.6.0],
     [ADD_PC_REQUIRES([glib-2.0 >= 2.6.0])],
     [AC_MSG_ERROR([Cannot find glib2])]
+)
+
+dnl Check for libmowgli.
+
+PKG_CHECK_MODULES(MOWGLI, [libmowgli >= 0.1.1],
+    [ADD_PC_REQUIRES([libmowgli >= 0.1.1])],
+    [AC_MSG_ERROR([Cannot find libmowgli: try http://sacredspiral.co.uk/~nenolod/mowgli])]
 )
 
 dnl Check for libglade

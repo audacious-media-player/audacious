@@ -14,11 +14,13 @@ LDADD = \
 	$(samplerate_LIBS) \
 	$(CHARDET_LIBS) \
 	$(GTK_LIBS) \
+	$(MOWGLI_LIBS) \
 	$(LIBGLADE_LIBS) \
 	$(REGEX_LIBS) \
 	./widgets/libwidgets.a
 
 CFLAGS += \
+	$(MOWGLI_CFLAGS) \
 	$(GTK_CFLAGS) \
 	$(LIBGLADE_CFLAGS) \
 	$(BEEP_DEFINES) \
