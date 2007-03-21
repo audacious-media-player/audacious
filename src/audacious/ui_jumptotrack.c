@@ -412,6 +412,59 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
     }
 }
 
+static gboolean
+ui_jump_to_track_fill(gpointer treeview)
+{
+    GList *playlist_glist;
+    Playlist *playlist;
+    gchar *desc_buf = NULL;
+    guint row;
+    GtkTreeIter iter;
+    GtkListStore *jtf_store = (GtkListStore*)gtk_tree_view_get_model( GTK_TREE_VIEW(treeview) );
+
+    /* detach model from treeview before fill */
+    g_object_ref(jtf_store);
+    gtk_tree_view_set_model( GTK_TREE_VIEW(treeview), NULL );
+
+    gtk_list_store_clear(jtf_store);
+
+    row = 1;
+
+    playlist = playlist_get_active();
+
+    PLAYLIST_LOCK(playlist->mutex);
+
+    for (playlist_glist = playlist->entries; playlist_glist;
+         playlist_glist = g_list_next(playlist_glist)) {
+
+        PlaylistEntry *entry = PLAYLIST_ENTRY(playlist_glist->data);
+
+        if (entry->title)
+        desc_buf = g_strdup(entry->title);
+        else if (strchr(entry->filename, '/'))
+        desc_buf = str_to_utf8(strrchr(entry->filename, '/') + 1);
+        else
+        desc_buf = str_to_utf8(entry->filename);
+
+        gtk_list_store_append(GTK_LIST_STORE(jtf_store), &iter);
+        gtk_list_store_set(GTK_LIST_STORE(jtf_store), &iter,
+                           0, row, 1, desc_buf, -1);
+        row++;
+
+        if (desc_buf) {
+            g_free(desc_buf);
+            desc_buf = NULL;
+        }
+    }
+
+    PLAYLIST_UNLOCK(playlist->mutex);
+
+    /* attach liststore to treeview */
+    gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), GTK_TREE_MODEL(jtf_store));
+    g_object_unref(jtf_store);
+    return FALSE;
+}
+
 void
 ui_jump_to_track(void)
 {
@@ -420,15 +473,10 @@ ui_jump_to_track(void)
     GtkWidget *jump, *queue, *cancel;
     GtkWidget *rescan, *edit;
     GtkWidget *search_label, *hbox;
-    GList *playlist_glist;
-    Playlist *playlist;
-    gchar *desc_buf = NULL;
-    guint row;
 
     GtkWidget *treeview;
     GtkListStore *jtf_store;
 
-    GtkTreeIter iter;
     GtkCellRenderer *renderer;
     GtkTreeViewColumn *column;
 
@@ -556,39 +604,9 @@ ui_jump_to_track(void)
                              jump_to_track_win);
     GTK_WIDGET_SET_FLAGS(cancel, GTK_CAN_DEFAULT);
 
-    gtk_list_store_clear(jtf_store);
-
-    row = 1;
-
-    playlist = playlist_get_active();
-
-    PLAYLIST_LOCK(playlist->mutex);
-
-    for (playlist_glist = playlist->entries; playlist_glist;
-         playlist_glist = g_list_next(playlist_glist)) {
-
-        PlaylistEntry *entry = PLAYLIST_ENTRY(playlist_glist->data);
-
-        if (entry->title)
-        desc_buf = g_strdup(entry->title);
-        else if (strchr(entry->filename, '/'))
-        desc_buf = str_to_utf8(strrchr(entry->filename, '/') + 1);
-        else
-        desc_buf = str_to_utf8(entry->filename);
-
-        gtk_list_store_append(GTK_LIST_STORE(jtf_store), &iter);
-        gtk_list_store_set(GTK_LIST_STORE(jtf_store), &iter,
-                           0, row, 1, desc_buf, -1);
-        row++;
-
-        if (desc_buf) {
-            g_free(desc_buf);
-            desc_buf = NULL;
-        }
-    }
-
-    PLAYLIST_UNLOCK(playlist->mutex);
+    g_timeout_add(100, (GSourceFunc)ui_jump_to_track_fill, treeview);
 
     gtk_widget_show_all(jump_to_track_win);
+    gtk_widget_grab_focus(edit);
 }
 

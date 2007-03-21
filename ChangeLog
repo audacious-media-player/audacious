@@ -1,3 +1,11 @@
+2007-03-21 12:51:52 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4294]
+  - reassign copyright to yaz.
+  
+  trunk/src/audacious/signals.c |    5 +----
+  1 file changed, 1 insertion(+), 4 deletions(-)
+
+
 2007-03-21 10:25:21 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4292]
   - clear playlist attribute when playlist_clear() is called.
