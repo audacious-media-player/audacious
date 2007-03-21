@@ -23,6 +23,15 @@
 #ifndef PLAYLIST_H
 #define PLAYLIST_H
 
+/* XXX: Allow pre-0.2 libmowgli to build audacious. */
+#ifdef TRUE
+# undef TRUE
+#endif
+
+#ifdef FALSE
+# undef FALSE
+#endif
+
 #include <mowgli.h>
 #include <glib.h>
 #include "audacious/titlestring.h"
