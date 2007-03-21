@@ -1,3 +1,11 @@
+2007-03-21 04:40:54 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4282]
+  - typo
+  
+  trunk/configure.ac |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2007-03-21 04:39:00 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4280]
   - integrate libmowgli requirement into buildsystem

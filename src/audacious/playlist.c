@@ -30,6 +30,7 @@
 
 #include "playlist.h"
 
+#include <mowgli.h>
 #include <glib.h>
 #include <glib/gprintf.h>
 #include <stdlib.h>
@@ -137,6 +138,8 @@ static void playlist_recalc_total_time_nolock(Playlist *);
 static void playlist_recalc_total_time(Playlist *);
 static gboolean playlist_entry_get_info(PlaylistEntry * entry);
 
+static mowgli_heap_t *playlist_entry_heap = NULL;
+
 /* *********************** playlist entry code ********************** */
 
 PlaylistEntry *
@@ -147,7 +150,7 @@ playlist_entry_new(const gchar * filename,
 {
     PlaylistEntry *entry;
 
-    entry = g_new0(PlaylistEntry, 1);
+    entry = mowgli_heap_alloc(playlist_entry_heap);
     entry->filename = g_strdup(filename);
     entry->title = str_to_utf8(title);
     entry->length = length;
@@ -178,7 +181,7 @@ playlist_entry_free(PlaylistEntry * entry)
     if (entry->title != NULL)
         g_free(entry->title);
 
-    g_free(entry);
+    mowgli_heap_free(playlist_entry_heap, entry);
 }
 
 static gboolean
@@ -236,6 +239,10 @@ void
 playlist_init(void)
 {
     Playlist *initial_pl;
+
+    /* create a heap with 1024 playlist entry nodes preallocated. --nenolod */
+    playlist_entry_heap = mowgli_heap_create(sizeof(PlaylistEntry), 1024,
+	BH_NOW);
 
     /* FIXME: is this really necessary? REQUIRE_STATIC_LOCK(playlists); */
 

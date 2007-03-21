@@ -7,6 +7,7 @@ LDFLAGS += -Wl,-export-dynamic
 
 CFLAGS += \
 	$(GTK_CFLAGS)      \
+	$(MOWGLI_CFLAGS)   \
 	$(LIBGLADE_CFLAGS) \
 	$(BEEP_DEFINES)    \
 	$(ARCH_DEFINES)    \

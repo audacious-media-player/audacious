@@ -23,6 +23,7 @@
 #ifndef PLAYLIST_H
 #define PLAYLIST_H
 
+#include <mowgli.h>
 #include <glib.h>
 #include "audacious/titlestring.h"
 #include "input.h"
