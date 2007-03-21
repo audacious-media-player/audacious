@@ -400,6 +400,7 @@ playlist_clear(Playlist *playlist)
     playlist->position = NULL;
     playlist->entries = NULL;
     playlist->tail = NULL;
+    playlist->attribute = PLAYLIST_PLAIN;
 
     PLAYLIST_UNLOCK( playlist->mutex );
 

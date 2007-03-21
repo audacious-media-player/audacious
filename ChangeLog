@@ -1,3 +1,16 @@
+2007-03-21 09:13:02 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4290]
+  improve support for static playlist.
+  - Playlist.attribute has been introduced. if loading playlist file is marked as static playlist, this value would be set.
+  - now user can specify whether save as a static playlist or not.
+  - thanks to Playlist.attribute, meaningful mtime in a static playlist will be preserved.
+  
+  trunk/src/audacious/playlist.c    |   10 ++++++----
+  trunk/src/audacious/playlist.h    |    8 ++++++++
+  trunk/src/audacious/ui_playlist.c |   19 +++++++++++++++++++
+  3 files changed, 33 insertions(+), 4 deletions(-)
+
+
 2007-03-21 08:59:48 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4288]
   tweak UI behaviors:
