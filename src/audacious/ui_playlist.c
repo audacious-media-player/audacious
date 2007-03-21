@@ -798,6 +798,7 @@ show_playlist_overwrite_prompt(GtkWindow * parent,
                                     _("%s already exist. Continue?"),
                                     filename);
 
+    gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER); /* centering */
     result = gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
 

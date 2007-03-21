@@ -2468,8 +2468,6 @@ create_prefs_window(void)
 
     prefswin = glade_xml_get_widget(xml, "prefswin");
     g_object_set_data(G_OBJECT(prefswin), "glade-xml", xml);
-    /* this will hide only mainwin. it's annoying! yaz */
-//    gtk_window_set_transient_for(GTK_WINDOW(prefswin), GTK_WINDOW(mainwin));
 
     /* create category view */
     widget = glade_xml_get_widget(xml, "category_view");
@@ -2671,7 +2669,7 @@ create_prefs_window(void)
 		G_CALLBACK(on_recurse_for_cover_toggled),
 		widget);
 
-	/* Create window for filepopup settings */
+	/* Create window for color adjustment settings */
 	colorize_settings = glade_xml_get_widget(xml, "colorize_popup");
 	gtk_window_set_transient_for(GTK_WINDOW(colorize_settings), GTK_WINDOW(prefswin));
 	gtk_widget_hide(colorize_settings);
@@ -2682,7 +2680,7 @@ show_prefs_window(void)
 {
     static gboolean skinlist_filled = FALSE;
 
-    gtk_widget_show(prefswin);
+    gtk_window_present(GTK_WINDOW(prefswin)); /* show or raise prefs window */
 
     if ( !skinlist_filled )
     {

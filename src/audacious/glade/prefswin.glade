@@ -4628,6 +4628,7 @@ SRC_LINEAR</property>
 		  <property name="relief">GTK_RELIEF_NORMAL</property>
 		  <property name="focus_on_click">True</property>
 		  <signal name="clicked" handler="gtk_widget_hide" object="prefswin" last_modification_time="Fri, 16 Mar 2007 02:05:32 GMT"/>
+		  <accelerator key="Escape" modifiers="0" signal="clicked"/>
 		</widget>
 	      </child>
 	    </widget>

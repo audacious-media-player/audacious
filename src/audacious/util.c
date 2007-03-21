@@ -795,6 +795,7 @@ make_filebrowser(const gchar *title, gboolean save)
 
     gtk_button_set_use_stock(GTK_BUTTON(button), TRUE);
     gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
+    gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER); /* centering */
 
     return dialog;
 }
