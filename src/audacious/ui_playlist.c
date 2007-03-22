@@ -777,6 +777,7 @@ show_playlist_save_error(GtkWindow *parent,
                                     _("Error writing playlist \"%s\": %s"),
                                     filename, strerror(errno));
 
+    gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER); /* centering */
     gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
 }
@@ -825,6 +826,8 @@ show_playlist_save_format_error(GtkWindow * parent,
                                            GTK_BUTTONS_OK,
                                            _(markup),
                                            filename);
+
+    gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER); /* centering */
     gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
 }
@@ -858,7 +861,7 @@ playlistwin_load_playlist(const gchar * filename)
 
     g_return_if_fail(filename != NULL);
 
-    str_replace_in(&cfg.playlist_path, g_strdup(filename));
+    str_replace_in(&cfg.playlist_path, g_path_get_dirname(filename));
 
     playlist_clear(playlist);
     mainwin_clear_song_info();
@@ -878,7 +881,9 @@ playlist_file_selection_load(const gchar * title,
     g_return_val_if_fail(title != NULL, NULL);
 
     dialog = make_filebrowser(title, FALSE);
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), cfg.playlist_path);
     gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog), default_filename);
+    gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER); /* centering */
 
     if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
         filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
@@ -895,10 +900,10 @@ on_static_toggle(GtkToggleButton *button, gpointer data)
     Playlist *playlist = playlist_get_active();
 
     playlist->attribute =
-        gtk_toggle_button_get_active(button) & PLAYLIST_STATIC ? PLAYLIST_STATIC : PLAYLIST_PLAIN;
-    g_print("static_toggle: e: attribute = %d\n", playlist->attribute);
+        gtk_toggle_button_get_active(button) ?
+        playlist->attribute | PLAYLIST_STATIC :
+        playlist->attribute & ~PLAYLIST_STATIC;
 }
-
 
 static gchar *
 playlist_file_selection_save(const gchar * title,
@@ -911,10 +916,11 @@ playlist_file_selection_save(const gchar * title,
     g_return_val_if_fail(title != NULL, NULL);
 
     dialog = make_filebrowser(title, TRUE);
+    gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), cfg.playlist_path);
     gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog), default_filename);
 
     /* static playlist */
-    toggle = gtk_check_button_new_with_label("Save as a Static Playlist");
+    toggle = gtk_check_button_new_with_label("Save as Static Playlist");
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle),
                                  (playlist_get_active()->attribute & PLAYLIST_STATIC) ? TRUE : FALSE);
     gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER(dialog), toggle);
