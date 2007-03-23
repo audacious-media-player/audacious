@@ -77,7 +77,7 @@ typedef struct _PlaylistEntry {
 typedef enum {
     PLAYLIST_PLAIN = 0,
     PLAYLIST_STATIC = 1,
-//  PLAYLIST_FOO = 1 << 1, // for future use.
+    PLAYLIST_USE_RELATIVE = 1 << 1,
 } PlaylistAttribute;
 
 typedef struct _Playlist {

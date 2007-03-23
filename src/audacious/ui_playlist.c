@@ -905,13 +905,25 @@ on_static_toggle(GtkToggleButton *button, gpointer data)
         playlist->attribute & ~PLAYLIST_STATIC;
 }
 
+static void
+on_relative_toggle(GtkToggleButton *button, gpointer data)
+{
+    Playlist *playlist = playlist_get_active();
+
+    playlist->attribute =
+        gtk_toggle_button_get_active(button) ?
+        playlist->attribute | PLAYLIST_USE_RELATIVE :
+        playlist->attribute & ~PLAYLIST_USE_RELATIVE;
+}
+
 static gchar *
 playlist_file_selection_save(const gchar * title,
                         const gchar * default_filename)
 {
     GtkWidget *dialog;
     gchar *filename;
-    GtkWidget *toggle;
+    GtkWidget *hbox;
+    GtkWidget *toggle, *toggle2;
 
     g_return_val_if_fail(title != NULL, NULL);
 
@@ -919,12 +931,24 @@ playlist_file_selection_save(const gchar * title,
     gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), cfg.playlist_path);
     gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog), default_filename);
 
+    hbox = gtk_hbox_new(FALSE, 5);
+
     /* static playlist */
     toggle = gtk_check_button_new_with_label("Save as Static Playlist");
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle),
                                  (playlist_get_active()->attribute & PLAYLIST_STATIC) ? TRUE : FALSE);
-    gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER(dialog), toggle);
     g_signal_connect(G_OBJECT(toggle), "toggled", G_CALLBACK(on_static_toggle), dialog);
+    gtk_box_pack_start(GTK_BOX(hbox), toggle, FALSE, FALSE, 0);
+
+    /* use relative path */
+    toggle2 = gtk_check_button_new_with_label("Use Relative Path");
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle2),
+                                 (playlist_get_active()->attribute & PLAYLIST_USE_RELATIVE) ? TRUE : FALSE);
+    g_signal_connect(G_OBJECT(toggle2), "toggled", G_CALLBACK(on_relative_toggle), dialog);
+    gtk_box_pack_start(GTK_BOX(hbox), toggle2, FALSE, FALSE, 0);
+
+    gtk_widget_show_all(hbox);
+    gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER(dialog), hbox);
    
     if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
         filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));

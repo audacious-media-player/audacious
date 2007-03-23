@@ -1,3 +1,13 @@
+2007-03-22 07:38:29 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4302]
+  improve save/load playlist UI:
+  - Load/Save List dialog remembers last used directory for playlist.
+  - centering some error dialogs.
+  
+  trunk/src/audacious/ui_playlist.c |   16 +++++++++++-----
+  1 file changed, 11 insertions(+), 5 deletions(-)
+
+
 2007-03-21 20:47:48 +0000  Giacomo Lozito <james@develia.org>
   revision [4296]
   - give focus to jump_to_track window before filling it with information; this way user can start typing while huge playlists are loaded
