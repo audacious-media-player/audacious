@@ -14,7 +14,7 @@ DEFS += -DLOCALEDIR=\"$(localedir)\" -DLOCALE_ALIAS_PATH=\"$(aliaspath)\" \
 -Drelocate=libintl_relocate \
 -DDEPENDS_ON_LIBICONV=1
 
-CFLAGS += $(PICFLAGS) -I../ -I. $(DEFS)
+CFLAGS += $(PICFLAGS) -I../.. -I. $(DEFS)
 
 SOURCES = \
   bindtextdom.c \
@@ -46,4 +46,4 @@ OBJECTS = ${SOURCES:.c=.o}
 include ../../mk/objective.mk
 
 libintl.a: $(OBJECTS)
-	$(AR) cq $@ $(OBJECTS)
+	$(AR) cr $@ $(OBJECTS)

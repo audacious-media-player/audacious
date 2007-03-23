@@ -1,3 +1,12 @@
+2007-03-23 05:20:59 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4304]
+  - add support for writing relative path.
+  
+  trunk/src/audacious/playlist.h    |    2 +-
+  trunk/src/audacious/ui_playlist.c |   28 ++++++++++++++++++++++++++--
+  2 files changed, 27 insertions(+), 3 deletions(-)
+
+
 2007-03-22 07:38:29 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4302]
   improve save/load playlist UI:
