@@ -1035,6 +1035,18 @@ main(gint argc, gchar ** argv)
     GOptionContext *context;
     GError *error = NULL;
 
+    /* glib-2.13.0 requires g_thread_init() to be called before all
+       other GLib functions */
+    g_thread_init(NULL);
+    if (!g_thread_supported()) {
+        g_printerr(_("Sorry, threads isn't supported on your platform.\n\n"
+                     "If you're on a libc5 based linux system and installed Glib & GTK+ before you\n"
+                     "installed LinuxThreads you need to recompile Glib & GTK+.\n"));
+        exit(EXIT_FAILURE);
+    }
+
+    gdk_threads_init();
+
     /* Setup l10n early so we can print localized error messages */
     gtk_set_locale();
     bindtextdomain(PACKAGE_NAME, LOCALEDIR);
@@ -1057,16 +1069,6 @@ main(gint argc, gchar ** argv)
     }
 
     g_set_application_name(_(application_name));
-
-    g_thread_init(NULL);
-    if (!g_thread_supported()) {
-        g_printerr(_("Sorry, threads isn't supported on your platform.\n\n"
-                     "If you're on a libc5 based linux system and installed Glib & GTK+ before you\n"
-                     "installed LinuxThreads you need to recompile Glib & GTK+.\n"));
-        exit(EXIT_FAILURE);
-    }
-
-    gdk_threads_init();
 
     cond_scan = g_cond_new();
     mutex_scan = g_mutex_new();

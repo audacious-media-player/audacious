@@ -1,3 +1,12 @@
+2007-03-23 17:51:02 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4308]
+  - rename libgnuintl.h.in to libgnuintl.h
+  
+  trunk/src/intl/libgnuintl.h    |  309 +++++++++++++++++++++++++++++++++++++++++
+  trunk/src/intl/libgnuintl.h.in |  309 -----------------------------------------
+  2 files changed, 309 insertions(+), 309 deletions(-)
+
+
 2007-03-23 17:16:00 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4306]
   - included gettext didn't compile. closes #866
