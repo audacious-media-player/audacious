@@ -290,10 +290,25 @@ input_dont_show_warning(GtkObject * object, gpointer user_data)
         !gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(object));
 }
 
+static gchar *extname(const char *filename)
+{
+    gchar *ext = strrchr(filename, '.');
+
+    if (ext != NULL) {
+        ++ext;
+        return ext;
+    }
+    else return "";
+}
 
 void
 input_show_unplayable_files(const gchar * filename)
 {
+    if (!strcmp(extname(filename), "jpeg") ||
+      !strcmp(extname(filename), "jpg") ||
+      !strcmp(extname(filename), "txt"))
+        return;
+
     static GtkWidget *dialog = NULL;
     static GtkListStore *store = NULL;
 

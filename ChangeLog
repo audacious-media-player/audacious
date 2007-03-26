@@ -1,3 +1,11 @@
+2007-03-25 06:25:20 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4310]
+  - glib-2.13.0 requires g_thread_init() to be called before all other GLib functions.
+  
+  trunk/src/audacious/main.c |   22 ++++++++++++----------
+  1 file changed, 12 insertions(+), 10 deletions(-)
+
+
 2007-03-23 17:51:02 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4308]
   - rename libgnuintl.h.in to libgnuintl.h
