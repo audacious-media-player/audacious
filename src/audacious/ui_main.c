@@ -1041,10 +1041,9 @@ mainwin_motion(GtkWidget * widget,
         event->x /= 2;
         event->y /= 2;
     }
-    else {
-        handle_motion_cb(mainwin_wlist, widget, event);
-        draw_main_window(FALSE);
-    }
+
+    handle_motion_cb(mainwin_wlist, widget, event);
+    draw_main_window(FALSE);
 
     gdk_flush();
 
