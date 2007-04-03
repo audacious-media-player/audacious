@@ -60,7 +60,8 @@ buffered_file_vfs_fread_impl(gpointer i_ptr,
     /* is this request within the buffered area, or should we switch to 
      * an FD? --nenolod
      */
-    if ((vfs_ftell(handle->buffer)) + (size * nmemb) > 
+    if (handle->which == FALSE && 
+	(vfs_ftell(handle->buffer)) + (size * nmemb) > 
 	((VFSBuffer *) handle->buffer->handle)->size)
     {
         vfs_fseek(handle->fd, vfs_ftell(handle->buffer), SEEK_SET);

@@ -1,3 +1,11 @@
+2007-04-01 02:33:04 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4314]
+  - fix doublesize motion events. patch by gagern, closes #856.
+  
+  trunk/src/audacious/ui_main.c |    7 +++----
+  1 file changed, 3 insertions(+), 4 deletions(-)
+
+
 2007-03-26 16:21:40 +0000  Jonathan Schleifer <js@h3c.de>
   revision [4312]
   Don't show a warning dialog when trying to add .{jpeg,jpg,txt} files.
