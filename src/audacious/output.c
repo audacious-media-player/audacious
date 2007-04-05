@@ -230,10 +230,24 @@ static SRC_DATA src_data;
 static int overSamplingFs = 96000;
 static int converter_type = SRC_SINC_BEST_QUALITY;
 static int srcError = 0;
+
+static float *srcIn = NULL, *srcOut = NULL;
+static short int *wOut = NULL;
+static int lengthOfSrcIn = 0;
+static int lengthOfSrcOut = 0;
+
 static void freeSRC()
 {
   if(src_state != NULL)
     src_state = src_delete(src_state);
+  free(srcIn);
+  free(srcOut);
+  free(wOut);
+  srcIn = NULL;
+  srcOut = NULL;
+  wOut = NULL;
+  lengthOfSrcIn = 0;
+  lengthOfSrcOut = 0;
 }
 #endif
 
@@ -391,12 +405,6 @@ output_buffer_playing(void)
     return op->buffer_playing();
 }
 
-#ifdef USE_SRC
-static float *srcIn = NULL, *srcOut = NULL;
-static short int *wOut = NULL;
-static gboolean isSrcAlloc = FALSE;
-#endif
-
 /* called by input plugin when data is ready */
 void
 produce_audio(gint time,        /* position             */
@@ -415,23 +423,25 @@ produce_audio(gint time,        /* position             */
     int writeoffs;
 
 #ifdef USE_SRC
-    if(isSrcAlloc == TRUE)
-      {
-        g_free(srcIn);
-        g_free(srcOut);
-        g_free(wOut);
-        isSrcAlloc = FALSE;
-      }
-    
     if(src_state != NULL&&length > 0)
       {
         int lrLength = length/2;
         int overLrLength = (int)floor(lrLength*(src_data.src_ratio+1));
-        srcIn = (float*) g_malloc(sizeof(float)*lrLength);
-        srcOut = (float*) g_malloc(sizeof(float)*overLrLength);
-        wOut = (short int*) g_malloc(sizeof(short int)*overLrLength);
+	if(lengthOfSrcIn < lrLength)
+	  {
+	    lengthOfSrcIn = lrLength;
+	    free(srcIn);
+	    srcIn = (float*)malloc(sizeof(float)*lrLength);
+	  }
+	if(lengthOfSrcOut < overLrLength)
+	  {
+	    lengthOfSrcOut = overLrLength;
+	    free(srcOut);
+	    free(wOut);
+	    srcOut = (float*)malloc(sizeof(float)*overLrLength);
+	    wOut = (short int*)malloc(sizeof(short int)*overLrLength);
+	  }
         src_short_to_float_array((short int*)ptr, srcIn, lrLength);
-        isSrcAlloc = TRUE;
         src_data.data_in = srcIn;
         src_data.data_out = srcOut;
         src_data.end_of_input = 0;
