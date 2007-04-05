@@ -1,3 +1,11 @@
+2007-04-05 12:32:15 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4322]
+  - synchronize SRC conversion patch with upstream
+  
+  trunk/src/audacious/output.c |   46 ++++++++++++++++++++++++++-----------------
+  1 file changed, 28 insertions(+), 18 deletions(-)
+
+
 2007-04-03 18:54:52 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4316]
   - this probably fixes bug #858

@@ -271,6 +271,10 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
     else
       overSamplingFs = src_rate;
 
+    /* don't resample if sampling rates are the same --nenolod */
+    if (rate == overSamplingFs)
+      src_enabled = FALSE;
+
     if (bmp_cfg_db_get_int(db, NULL, "src_type", &src_type) == FALSE)
       converter_type = SRC_SINC_BEST_QUALITY;
     else
