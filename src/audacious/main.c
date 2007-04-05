@@ -149,6 +149,7 @@ BmpConfig bmp_default_config = {
     TRUE,                       /* UNUSED (smooth title scrolling) */
     TRUE,                       /* use playlist metadata */
     TRUE,                       /* warn about unplayables */
+    TRUE,                       /* warn about windows visibility */
     FALSE,                      /* use \ as directory delimiter */
     FALSE,                      /* random skin on play */
     FALSE,                      /* use fontsets */
@@ -280,6 +281,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"sort_jump_to_file", &cfg.sort_jump_to_file, TRUE},
     {"use_pl_metadata", &cfg.use_pl_metadata, TRUE},
     {"warn_about_unplayables", &cfg.warn_about_unplayables, TRUE},
+    {"warn_about_win_visibility", &cfg.warn_about_win_visibility, TRUE},
     {"use_backslash_as_dir_delimiter", &cfg.use_backslash_as_dir_delimiter, TRUE},
     {"player_shaded", &cfg.player_shaded, TRUE},
     {"player_visible", &cfg.player_visible, TRUE},
@@ -679,23 +681,32 @@ bmp_config_save(void)
     /* FIXME: we're looking up SkinnedWindow::x &c ourselves here.
      * this isn't exactly right. -nenolod
      */
-    bmp_cfg_db_set_int(db, NULL, "playlist_x",
-                       SKINNED_WINDOW(playlistwin)->x);
+    if ( SKINNED_WINDOW(playlistwin)->x != -1 &&
+         SKINNED_WINDOW(playlistwin)->y != -1 )
+    {
+        bmp_cfg_db_set_int(db, NULL, "playlist_x",
+                           SKINNED_WINDOW(playlistwin)->x);
+        bmp_cfg_db_set_int(db, NULL, "playlist_y",
+                           SKINNED_WINDOW(playlistwin)->y);
+    }
+    
+    if ( SKINNED_WINDOW(mainwin)->x != -1 &&
+         SKINNED_WINDOW(mainwin)->y != -1 )
+    {
+        bmp_cfg_db_set_int(db, NULL, "player_x",
+                           SKINNED_WINDOW(mainwin)->x);
+        bmp_cfg_db_set_int(db, NULL, "player_y",
+                           SKINNED_WINDOW(mainwin)->y);
+    }
 
-    bmp_cfg_db_set_int(db, NULL, "playlist_y",
-                       SKINNED_WINDOW(playlistwin)->y);
-
-    bmp_cfg_db_set_int(db, NULL, "player_x",
-                       SKINNED_WINDOW(mainwin)->x);
-
-    bmp_cfg_db_set_int(db, NULL, "player_y",
-                       SKINNED_WINDOW(mainwin)->y);
-
-    bmp_cfg_db_set_int(db, NULL, "equalizer_x",
-                       SKINNED_WINDOW(equalizerwin)->x);
-
-    bmp_cfg_db_set_int(db, NULL, "equalizer_y",
-                       SKINNED_WINDOW(equalizerwin)->y);
+    if ( SKINNED_WINDOW(equalizerwin)->x != -1 &&
+         SKINNED_WINDOW(equalizerwin)->y != -1 )
+    {
+        bmp_cfg_db_set_int(db, NULL, "equalizer_x",
+                           SKINNED_WINDOW(equalizerwin)->x);
+        bmp_cfg_db_set_int(db, NULL, "equalizer_y",
+                           SKINNED_WINDOW(equalizerwin)->y);
+    }
 
     bmp_cfg_db_set_bool(db, NULL, "mainwin_use_xfont",
             cfg.mainwin_use_xfont);
@@ -1182,7 +1193,10 @@ main(gint argc, gchar ** argv)
         if (cfg.player_visible)
             mainwin_show(TRUE);
         else if (!cfg.playlist_visible && !cfg.equalizer_visible)
-            mainwin_show(TRUE);
+        {
+          /* all of the windows are hidden... warn user about this */
+          mainwin_show_visibility_warning();
+        }
 
         if (cfg.equalizer_visible)
             equalizerwin_show(TRUE);

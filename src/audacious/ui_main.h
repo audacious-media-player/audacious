@@ -184,6 +184,8 @@ void mainwin_jump_to_time(void);
 
 void mainwin_ewmh_activate(void);
 
+void mainwin_show_visibility_warning(void);
+
 /* FIXME: placed here for now */
 void playback_get_sample_params(gint * bitrate,
                                 gint * frequency,

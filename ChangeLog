@@ -1,3 +1,11 @@
+2007-04-05 13:11:33 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4326]
+  - patch by Vincent Ratier to add Alt+Click enqueue to the playlist editor. Closes #860.
+  
+  trunk/src/audacious/ui_playlist.c |   10 ++++++++++
+  1 file changed, 10 insertions(+)
+
+
 2007-04-05 12:56:00 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4324]
   - don't resample if source rate matches the internal clock rate. closes #881.

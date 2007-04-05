@@ -1490,6 +1490,57 @@ on_add_url_ok_clicked(GtkWidget * widget,
     }
 }
 
+static void
+on_visibility_warning_toggle(GtkToggleButton *tbt, gpointer unused)
+{
+    cfg.warn_about_win_visibility = !gtk_toggle_button_get_active(tbt);
+}
+
+static void
+on_visibility_warning_response(GtkDialog *dlg, gint r_id, gpointer unused)
+{
+    switch (r_id)
+    {
+        case GTK_RESPONSE_OK:
+            mainwin_show(TRUE);
+            break;
+        case GTK_RESPONSE_CANCEL:
+        default:
+            break;
+    }
+    gtk_widget_destroy(GTK_WIDGET(dlg));
+}
+
+void
+mainwin_show_visibility_warning(void)
+{
+    if (cfg.warn_about_win_visibility)
+    {
+        GtkWidget *label, *checkbt, *vbox;
+        GtkWidget *warning_dlg = gtk_dialog_new_with_buttons( _("Audacious - visibility warning") ,
+            GTK_WINDOW(mainwin) , GTK_DIALOG_DESTROY_WITH_PARENT ,
+            _("Show main player window") , GTK_RESPONSE_OK ,
+            _("Ignore") , GTK_RESPONSE_CANCEL , NULL );
+        vbox = gtk_vbox_new( FALSE , 4 );
+        gtk_container_set_border_width( GTK_CONTAINER(vbox) , 4 );
+        gtk_box_pack_start( GTK_BOX(GTK_DIALOG(warning_dlg)->vbox) , vbox , TRUE , TRUE , 0 );
+        label = gtk_label_new( _("Audacious has been started with all of its windows hidden.\n"
+                                 "You may want to show the player window again to control Audacious; "
+                                 "otherwise, you'll have to control it remotely via audtool or "
+                                 "enabled plugins (such as the statusicon plugin).") );
+        gtk_label_set_line_wrap( GTK_LABEL(label) , TRUE );
+        gtk_misc_set_alignment( GTK_MISC(label) , 0.0 , 0.0 );
+        checkbt = gtk_check_button_new_with_label( _("Always ignore, show/hide is controlled remotely") );
+        gtk_box_pack_start( GTK_BOX(vbox) , label , TRUE , TRUE , 0 );
+        gtk_box_pack_start( GTK_BOX(vbox) , checkbt , TRUE , TRUE , 0 );
+        g_signal_connect( G_OBJECT(checkbt) , "toggled" ,
+            G_CALLBACK(on_visibility_warning_toggle) , NULL );
+        g_signal_connect( G_OBJECT(warning_dlg) , "response" ,
+            G_CALLBACK(on_visibility_warning_response) , NULL );
+        gtk_widget_show_all(warning_dlg);
+    }
+}
+
 void
 mainwin_show_add_url_window(void)
 {
@@ -1904,9 +1955,6 @@ mainwin_real_show(void)
         return;
     }
 
-    if (cfg.player_x != -1 && cfg.player_y != -1)
-        gtk_window_move(GTK_WINDOW(mainwin), cfg.player_x, cfg.player_y);
-
     gtk_widget_show_all(mainwin);
 
     if (nullmask)
@@ -1922,6 +1970,9 @@ mainwin_real_show(void)
                 bmp_active_skin->properties.mainwin_height);
 
     draw_main_window(TRUE);
+
+    if (cfg.player_x != -1 && cfg.save_window_position)
+        gtk_window_move(GTK_WINDOW(mainwin), cfg.player_x, cfg.player_y);
 
     gtk_window_present(GTK_WINDOW(mainwin));
 }

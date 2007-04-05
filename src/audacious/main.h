@@ -67,6 +67,7 @@ struct _BmpConfig {
     gboolean smooth_title_scroll;
     gboolean use_pl_metadata;
     gboolean warn_about_unplayables;
+    gboolean warn_about_win_visibility;
     gboolean use_backslash_as_dir_delimiter;
     gboolean random_skin_on_play;
     gboolean use_fontsets;

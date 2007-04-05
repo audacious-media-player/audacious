@@ -138,6 +138,8 @@ ui_skinned_window_init(GtkWidget *widget)
 {
     SkinnedWindow *window;
     window = SKINNED_WINDOW(widget);
+    window->x = -1;
+    window->y = -1;
 }
 
 GtkWidget *
