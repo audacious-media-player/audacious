@@ -1,3 +1,14 @@
+2007-04-05 16:26:13 +0000  Giacomo Lozito <james@develia.org>
+  revision [4328]
+  - allow the player to start with all of its windows hidden (but give a warning to the user, whose display can be disabled); also, try to remember player windows positions when they stay hidden between sessions
+  trunk/src/audacious/main.c              |   48 +++++++++++++++++---------
+  trunk/src/audacious/main.h              |    1 
+  trunk/src/audacious/ui_main.c           |   57 ++++++++++++++++++++++++++++++--
+  trunk/src/audacious/ui_main.h           |    2 +
+  trunk/src/audacious/ui_skinned_window.c |    2 +
+  5 files changed, 90 insertions(+), 20 deletions(-)
+
+
 2007-04-05 13:11:33 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4326]
   - patch by Vincent Ratier to add Alt+Click enqueue to the playlist editor. Closes #860.

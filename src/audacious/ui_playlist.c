@@ -1153,11 +1153,14 @@ playlistwin_press(GtkWidget * widget,
     }
     else if (event->button == 1 && (event->state & GDK_MOD1_MASK))
     {
-        Playlist *playlist = playlist_get_active();
-        int index = GPOINTER_TO_INT(playlist_get_selected(playlist)->data);
+        Playlist *playlist;
+	gint index;
 
         handle_press_cb(playlistwin_wlist, widget, event);
         draw_playlist_window(FALSE);
+
+	playlist = playlist_get_active();
+        index = GPOINTER_TO_INT(playlist_get_selected(playlist)->data);
 
         playlist_queue_position(playlist, index);
     }
