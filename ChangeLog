@@ -1,3 +1,11 @@
+2007-04-06 00:01:26 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4330]
+  - fix alt+click enqueue. this is more like vincent ratier's original patch except that it's C90-capable for freebsd 4.
+  
+  trunk/src/audacious/ui_playlist.c |    7 +++++--
+  1 file changed, 5 insertions(+), 2 deletions(-)
+
+
 2007-04-05 16:26:13 +0000  Giacomo Lozito <james@develia.org>
   revision [4328]
   - allow the player to start with all of its windows hidden (but give a warning to the user, whose display can be disabled); also, try to remember player windows positions when they stay hidden between sessions

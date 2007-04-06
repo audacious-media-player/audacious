@@ -1029,6 +1029,8 @@ playlistwin_press(GtkWidget * widget,
     gboolean grab = TRUE;
     gint xpos, ypos;
     GtkRequisition req;
+    Playlist *playlist = playlist_get_active();
+    gint idx = 0;
 
     gtk_window_get_position(GTK_WINDOW(playlistwin), &xpos, &ypos);
 
@@ -1153,16 +1155,20 @@ playlistwin_press(GtkWidget * widget,
     }
     else if (event->button == 1 && (event->state & GDK_MOD1_MASK))
     {
-        Playlist *playlist;
-	gint index;
+        GList *node;
 
         handle_press_cb(playlistwin_wlist, widget, event);
         draw_playlist_window(FALSE);
 
-	playlist = playlist_get_active();
-        index = GPOINTER_TO_INT(playlist_get_selected(playlist)->data);
+        node = playlist_get_selected(playlist);
 
-        playlist_queue_position(playlist, index);
+        if (node != NULL)
+        {
+            idx = GPOINTER_TO_INT(playlist_get_selected(playlist)->data);
+            playlist_queue_position(playlist, idx);
+        }
+
+        grab = FALSE;
     }
     else {
         handle_press_cb(playlistwin_wlist, widget, event);
