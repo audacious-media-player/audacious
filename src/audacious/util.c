@@ -378,9 +378,10 @@ strip_string(GString *string)
 static void
 strip_lower_string(GString *string)
 {
+    gchar *lower;
     strip_string(string);
 
-    gchar *lower = g_ascii_strdown(string->str, -1);
+    lower = g_ascii_strdown(string->str, -1);
     g_free(string->str);
     string->str = lower;
 }
@@ -565,20 +566,26 @@ close_ini_file(INIFile *inifile)
 gchar *
 read_ini_string(INIFile *inifile, const gchar *section, const gchar *key)
 {
+    GString *section_string;
+    GString *key_string;
+    gchar *value = NULL;
+    gpointer section_hash, key_hash;
+    GHashTable *section_table;
+    
     g_return_val_if_fail(inifile, NULL);
 
-    GString *section_string = g_string_new(section);
-    GString *key_string = g_string_new(key);
-    gchar *value = NULL;
+    section_string = g_string_new(section);
+    key_string = g_string_new(key);
+    value = NULL;
 
     strip_lower_string(section_string);
     strip_lower_string(key_string);
-    gpointer section_hash = GINT_TO_POINTER(g_string_hash(section_string));
-    gpointer key_hash = GINT_TO_POINTER(g_string_hash(key_string));
+    section_hash = GINT_TO_POINTER(g_string_hash(section_string));
+    key_hash = GINT_TO_POINTER(g_string_hash(key_string));
     g_string_free(section_string, FALSE);
     g_string_free(key_string, FALSE);
 
-    GHashTable *section_table = g_hash_table_lookup(inifile, section_hash);
+    section_table = g_hash_table_lookup(inifile, section_hash);
     g_return_val_if_fail(section_table, NULL);
 
     value = g_hash_table_lookup(section_table, GINT_TO_POINTER(key_hash));
