@@ -1392,6 +1392,8 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
 {
     GdkPixmap *text_pm;
     guint i;
+    gchar *filename;
+    INIFile *inifile;
 
     for (i = 0; i < SKIN_PIXMAP_COUNT; i++)
         skin_load_pixmap_id(skin, i, path);
@@ -1406,8 +1408,8 @@ skin_load_pixmaps(Skin * skin, const gchar * path)
         skin_numbers_generate_dash(skin);
 #endif
 
-    gchar *filename = find_file_recursively(path, "pledit.txt");
-    INIFile *inifile = open_ini_file(filename);
+    filename = find_file_recursively(path, "pledit.txt");
+    inifile = open_ini_file(filename);
 
     skin->colors[SKIN_PLEDIT_NORMAL] =
         skin_load_color(inifile, "Text", "Normal", "#2499ff");
