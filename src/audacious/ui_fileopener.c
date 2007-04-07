@@ -65,14 +65,14 @@ action_button_cb(GtkWidget *widget, gpointer data)
     GtkWidget *window = g_object_get_data(data, "window");
     GtkWidget *chooser = g_object_get_data(data, "chooser");
     GtkWidget *toggle = g_object_get_data(data, "toggle-button");
+    gboolean play_button;
+    GSList *files;
     cfg.close_dialog_open =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toggle));
 
-    gboolean play_button =
+    play_button =
         GPOINTER_TO_INT(g_object_get_data(data, "play-button"));
 
-
-    GSList *files;
     files = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER(chooser));
     if (!files) return;
 
@@ -118,16 +118,18 @@ util_run_filebrowser_gtk2style(gboolean play_button)
     GtkWidget *chooser;
     GtkWidget *action_button, *close_button;
     GtkWidget *toggle;
+    gchar *window_title, *toggle_text;
+    gpointer action_stock, storage;
 
     if(window) {
         gtk_window_present(GTK_WINDOW(window)); /* raise filebrowser */
         return;
     }
     
-    gchar *window_title = play_button ? _("Open Files") : _("Add Files");
-    gchar *toggle_text = play_button ?
+    window_title = play_button ? _("Open Files") : _("Add Files");
+    toggle_text = play_button ?
         _("Close dialog on Open") : _("Close dialog on Add");
-    gpointer action_stock = play_button ? GTK_STOCK_OPEN : GTK_STOCK_ADD;
+    action_stock = play_button ? GTK_STOCK_OPEN : GTK_STOCK_ADD;
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), window_title);
@@ -166,7 +168,7 @@ util_run_filebrowser_gtk2style(gboolean play_button)
     /* this storage object holds several other objects which are used in the
      * callback functions
      */
-    gpointer storage = g_object_new(G_TYPE_OBJECT, NULL);
+    storage = g_object_new(G_TYPE_OBJECT, NULL);
     g_object_set_data(storage, "window", window);
     g_object_set_data(storage, "chooser", chooser);
     g_object_set_data(storage, "toggle-button", toggle);
