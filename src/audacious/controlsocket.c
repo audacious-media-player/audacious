@@ -566,8 +566,9 @@ ctrlsocket_func(gpointer arg)
             if (pkt->data) {
                 gint pos = *(gint *) pkt->data;
                 gchar *ptr = pkt->data;
+                TitleInput *tuple;
                 ptr += sizeof(gint);
-                TitleInput *tuple = playlist_get_tuple(playlist_get_active(), pos);
+                tuple = playlist_get_tuple(playlist_get_active(), pos);
                 if (!tuple) {
                     ctrl_ack_packet(pkt);
                     break;

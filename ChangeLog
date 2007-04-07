@@ -1,3 +1,10 @@
+2007-04-07 11:36:14 +0000  Giacomo Lozito <james@develia.org>
+  revision [4334]
+  - fixed c++ish declaration in a c file
+  trunk/src/audacious/widgets/skin.c |    6 ++++--
+  1 file changed, 4 insertions(+), 2 deletions(-)
+
+
 2007-04-06 00:16:09 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4332]
   - fix crashes related to alt+click enqueue
