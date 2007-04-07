@@ -297,9 +297,10 @@ audacious_fileinfopopup_create(void)
 void
 audacious_fileinfopopup_destroy(GtkWidget *filepopup_win)
 {
+    gchar *last_artwork;
     audacious_fileinfopopup_progress_stop(filepopup_win);
 
-    gchar *last_artwork =
+    last_artwork =
         g_object_get_data(G_OBJECT(filepopup_win), "last_artwork");
     if (last_artwork != NULL)
         g_free(last_artwork);
@@ -332,8 +333,10 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
 {
     gchar *tmp = NULL;
     gint x, y, x_off = 3, y_off = 3, h, w;
+    gchar *length_string, *year_string, *track_string;
+    gchar *last_artwork;
 
-    gchar *last_artwork =
+    last_artwork =
         g_object_get_data(G_OBJECT(filepopup_win), "last_artwork");
     const static gchar default_artwork[] = DATA_DIR "/images/audio.png";
 
@@ -379,7 +382,7 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
     audacious_fileinfopupup_update_data(filepopup_win, tuple->genre,
                                         "label_genre", "header_genre");
 
-    gchar *length_string = (tuple->length > 0) ?
+    length_string = (tuple->length > 0) ?
         g_strdup_printf("%d:%02d", tuple->length / 60000, (tuple->length / 1000) % 60) : NULL;
     audacious_fileinfopupup_update_data(filepopup_win, length_string,
                                         "label_tracklen", "header_tracklen");
@@ -390,12 +393,12 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
     else
       g_object_set_data( G_OBJECT(filepopup_win), "length" , GINT_TO_POINTER(-1) );
 
-    gchar *year_string = (tuple->year == 0) ? NULL : g_strdup_printf("%d", tuple->year);
+    year_string = (tuple->year == 0) ? NULL : g_strdup_printf("%d", tuple->year);
     audacious_fileinfopupup_update_data(filepopup_win, year_string,
                                         "label_year", "header_year");
     g_free(year_string);
 
-    gchar *track_string = (tuple->track_number == 0) ? NULL : g_strdup_printf("%d", tuple->track_number);
+    track_string = (tuple->track_number == 0) ? NULL : g_strdup_printf("%d", tuple->track_number);
     audacious_fileinfopupup_update_data(filepopup_win, track_string,
                                         "label_tracknum", "header_tracknum");
     g_free(track_string);
