@@ -182,7 +182,7 @@ playlist_manager_cb_lv_name_edited ( GtkCellRendererText *cell , gchar *path_str
                                      gchar *new_text , gpointer lv )
 {
   /* this is currently used to change playlist names */
-  GtkTreeModel *store = gtk_tree_view_get_model( GTK_TREE_VIEW(lv) );;
+  GtkTreeModel *store = gtk_tree_view_get_model( GTK_TREE_VIEW(lv) );
   GtkTreeIter iter;
 
   if ( gtk_tree_model_get_iter_from_string( store , &iter , path_string ) == TRUE )

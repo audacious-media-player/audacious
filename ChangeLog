@@ -1,3 +1,10 @@
+2007-04-07 12:25:22 +0000  Giacomo Lozito <james@develia.org>
+  revision [4342]
+  - fixed c++ish declaration in a c file (part 5)
+  trunk/src/audacious/ui_fileopener.c |   16 +++++++++-------
+  1 file changed, 9 insertions(+), 7 deletions(-)
+
+
 2007-04-07 12:15:25 +0000  Giacomo Lozito <james@develia.org>
   revision [4340]
   - fixed c++ish declaration in a c file (part 4)
