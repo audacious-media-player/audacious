@@ -335,10 +335,10 @@ audacious_fileinfopopup_show_from_tuple(GtkWidget *filepopup_win,
     gint x, y, x_off = 3, y_off = 3, h, w;
     gchar *length_string, *year_string, *track_string;
     gchar *last_artwork;
+    const static gchar default_artwork[] = DATA_DIR "/images/audio.png";
 
     last_artwork =
         g_object_get_data(G_OBJECT(filepopup_win), "last_artwork");
-    const static gchar default_artwork[] = DATA_DIR "/images/audio.png";
 
     g_return_if_fail(tuple != NULL);
 

@@ -1,3 +1,10 @@
+2007-04-07 12:08:36 +0000  Giacomo Lozito <james@develia.org>
+  revision [4338]
+  - fixed c++ish declaration in a c file (part 3)
+  trunk/src/audacious/ui_fileinfopopup.c |   13 ++++++++-----
+  1 file changed, 8 insertions(+), 5 deletions(-)
+
+
 2007-04-07 11:56:27 +0000  Giacomo Lozito <james@develia.org>
   revision [4336]
   - fixed c++ish declaration in a c file (part 2)
