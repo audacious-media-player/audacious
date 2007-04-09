@@ -301,99 +301,6 @@ static gchar *extname(const char *filename)
     else return "";
 }
 
-void
-input_show_unplayable_files(const gchar * filename)
-{
-    if (!strcmp(extname(filename), "jpeg") ||
-      !strcmp(extname(filename), "jpg") ||
-      !strcmp(extname(filename), "txt"))
-        return;
-
-    static GtkWidget *dialog = NULL;
-    static GtkListStore *store = NULL;
-
-    const gchar *markup = 
-        N_("<b><big>Unable to play files.</big></b>\n\n"
-           "The following files could not be played. Please check that:\n"
-           "1. they are accessible.\n"
-           "2. you have enabled the media plugins required.");
-
-    GtkTreeIter iter;
-
-    gchar *filename_utf8;
-
-    if (!dialog) {
-        GtkWidget *vbox, *check;
-        GtkWidget *expander;
-        GtkWidget *scrolled, *treeview;
-        GtkCellRenderer *renderer;
-
-        dialog =
-            gtk_message_dialog_new_with_markup(GTK_WINDOW(mainwin),
-                                               GTK_DIALOG_DESTROY_WITH_PARENT,
-                                               GTK_MESSAGE_ERROR,
-                                               GTK_BUTTONS_OK,
-                                               _(markup));
-        gtk_window_set_resizable(GTK_WINDOW(dialog), TRUE);
-        gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
-
-        vbox = gtk_vbox_new(FALSE, 6);
-
-        check = gtk_check_button_new_with_label
-                  (_("Don't show this warning anymore"));
-
-        expander = gtk_expander_new_with_mnemonic(_("Show more _details"));
-
-        scrolled = gtk_scrolled_window_new(NULL, NULL);
-        gtk_container_add(GTK_CONTAINER(expander), scrolled);
-
-        store = gtk_list_store_new(1, G_TYPE_STRING);
-
-        treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
-        gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeview), FALSE);
-        gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(scrolled),
-                                              treeview);
-        
-        renderer = gtk_cell_renderer_text_new();
-        gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(treeview), 
-                                                    -1, _("Filename"),
-                                                    renderer,
-                                                    "text", 0, 
-                                                    NULL);
-
-        vbox = GTK_DIALOG(dialog)->vbox;
-        gtk_box_pack_start(GTK_BOX(vbox), check, FALSE, FALSE, 0);
-        gtk_box_pack_start(GTK_BOX(vbox), expander, TRUE, TRUE, 0);
-
-        g_signal_connect(dialog, "response",
-                         G_CALLBACK(gtk_widget_destroy),
-                         dialog);
-        g_signal_connect(dialog, "destroy",
-                         G_CALLBACK(gtk_widget_destroyed),
-                         &dialog);
-        g_signal_connect(check, "clicked",
-                         G_CALLBACK(input_dont_show_warning),
-                         &cfg.warn_about_unplayables);
-
-        gtk_widget_show_all(dialog);
-    }
-
-    gtk_window_present(GTK_WINDOW(dialog));
-
-    filename_utf8 = filename_to_utf8(filename);
-    gtk_list_store_append(store, &iter);
-    gtk_list_store_set(store, &iter, 0, filename_utf8, -1);
-    g_free(filename_utf8);
-}
-
-
-void
-input_file_not_playable(const gchar * filename)
-{
-    if (cfg.warn_about_unplayables)
-        input_show_unplayable_files(filename);
-}
-
 /*
  * input_check_file()
  *
@@ -509,9 +416,6 @@ input_check_file(const gchar * filename, gboolean show_warning)
     }
 
     g_free(filename_proxy);
-
-    if (show_warning && ret != -1)
-        input_file_not_playable(filename);
 
     vfs_fclose(fd);
 

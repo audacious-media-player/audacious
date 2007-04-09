@@ -1,3 +1,12 @@
+2007-04-09 01:05:09 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4348]
+  - use execinfo.h to provide more useful information about crashes
+  
+  trunk/configure.ac            |    2 -
+  trunk/src/audacious/signals.c |   54 +++++++++++++++++++++++++++++++++++++-----
+  2 files changed, 49 insertions(+), 7 deletions(-)
+
+
 2007-04-07 12:36:05 +0000  Giacomo Lozito <james@develia.org>
   revision [4346]
   - fixed c++ish declaration in a c file (part 7)

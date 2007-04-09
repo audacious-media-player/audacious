@@ -148,7 +148,7 @@ BmpConfig bmp_default_config = {
     TRUE,                       /* refresh file list */
     TRUE,                       /* UNUSED (smooth title scrolling) */
     TRUE,                       /* use playlist metadata */
-    TRUE,                       /* warn about unplayables */
+    TRUE,                       /* deprecated */
     TRUE,                       /* warn about windows visibility */
     FALSE,                      /* use \ as directory delimiter */
     FALSE,                      /* random skin on play */
@@ -280,7 +280,6 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"refresh_file_list", &cfg.refresh_file_list, TRUE},
     {"sort_jump_to_file", &cfg.sort_jump_to_file, TRUE},
     {"use_pl_metadata", &cfg.use_pl_metadata, TRUE},
-    {"warn_about_unplayables", &cfg.warn_about_unplayables, TRUE},
     {"warn_about_win_visibility", &cfg.warn_about_win_visibility, TRUE},
     {"use_backslash_as_dir_delimiter", &cfg.use_backslash_as_dir_delimiter, TRUE},
     {"player_shaded", &cfg.player_shaded, TRUE},
