@@ -33,7 +33,6 @@ dnl GNU gettext
 AM_GNU_GETTEXT
 AM_GNU_GETTEXT_VERSION([0.12.1])
 
-
 dnl Check for C compiler
 
 AC_PROG_CC
@@ -284,6 +283,7 @@ AC_CHECK_HEADERS(fnmatch.h)
 AC_CHECK_HEADERS(limits.h)
 AC_CHECK_HEADERS(wchar.h)
 AC_CHECK_HEADERS(fts.h)
+AC_CHECK_HEADERS(execinfo.h)
 
 AC_CHECK_FUNCS([mkdtemp getmntinfo statvfs strtoul lrintf])
 

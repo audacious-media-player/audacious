@@ -1,3 +1,10 @@
+2007-04-07 12:36:05 +0000  Giacomo Lozito <james@develia.org>
+  revision [4346]
+  - fixed c++ish declaration in a c file (part 7)
+  trunk/src/audacious/util.c |   21 ++++++++++++++-------
+  1 file changed, 14 insertions(+), 7 deletions(-)
+
+
 2007-04-07 12:29:39 +0000  Giacomo Lozito <james@develia.org>
   revision [4344]
   - fixed c++ish declaration in a c file (part 6)

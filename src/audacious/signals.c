@@ -26,9 +26,56 @@
 #include <sys/types.h>
 #include <signal.h>
 
+#ifdef HAVE_EXECINFO_H
+# include <execinfo.h>
+#endif
+
 #include "main.h"
 #include "ui_main.h"
 #include "signals.h"
+#include "build_stamp.h"
+
+static void
+signal_process_segv(void)
+{
+    g_printerr(_("\nAudacious has caught signal 11 (SIGSEGV).\n\n"
+         "We apologize for the inconvenience, but Audacious has crashed.\n"
+         "This is a bug in the program, and should never happen under normal circumstances.\n"
+	 "Your current configuration has been saved and should not be damaged.\n\n"
+	 "You can help improve the quality of Audacious by filing a bug at http://bugs-meta.atheme.org\n"
+         "Please include the entire text of this message and a description of what you were doing when\n"
+         "this crash occured in order to quickly expedite the handling of your bug report:\n\n"));
+
+    g_printerr("Program version: Audacious %s (buildid: %s)\n\n", VERSION, svn_stamp);
+
+#ifdef HAVE_EXECINFO_H
+    {
+        void *stack[20];
+        size_t size;
+        char **strings;
+        size_t i;
+
+        size = backtrace(stack, 20);
+        strings = backtrace_symbols(stack, size);
+
+        g_printerr("Stacktrace (%zd frames):\n", size);
+
+        for (i = 0; i < size; i++)
+           g_printerr("   %d. %s\n", i + 1, strings[i]);
+
+        g_free(strings);
+    }
+#else
+    g_printerr("Stacktrace was unavailable.\n");
+#endif
+
+    g_printerr(_("\nBugs can be reported at http://bugs-meta.atheme.org against the Audacious product.\n"));
+
+    g_critical("Received SIGSEGV -- Audacious has crashed.");
+
+    bmp_config_save();
+    abort();
+}
 
 static void *
 signal_process_signals (void *data)
@@ -53,12 +100,7 @@ signal_process_signals (void *data)
             break;
 
         case SIGSEGV:
-            g_printerr(_("\nReceived SIGSEGV\n\n"
-                         "This could be a bug in Audacious. If you don't know why this happened, "
-                         "file a bug at http://bugs-meta.atheme.org/\n\n"));
-            g_critical("Received SIGSEGV");
-            bmp_config_save();
-            abort();
+            signal_process_segv();
             break;
 
         case SIGINT:
