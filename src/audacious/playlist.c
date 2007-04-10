@@ -1047,8 +1047,6 @@ playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
 {
     Playlist *playlist = playlist_get_active();
 
-    PLAYLIST_LOCK(playlist->mutex);
-
     g_return_if_fail(playlist != NULL);
 
     if (playlist->position) {
@@ -1065,8 +1063,6 @@ playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
         }
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
-
     playlist_recalc_total_time(playlist);
 
     mainwin_set_song_info(rate, freq, nch);
@@ -1079,8 +1075,6 @@ void
 playlist_set_info(Playlist * playlist, const gchar * title, gint length, gint rate,
                   gint freq, gint nch)
 {
-    PLAYLIST_LOCK(playlist->mutex);
-
     g_return_if_fail(playlist != NULL);
 
     if (playlist->position) {
@@ -1088,8 +1082,6 @@ playlist_set_info(Playlist * playlist, const gchar * title, gint length, gint ra
         playlist->position->title = g_strdup(title);
         playlist->position->length = length;
     }
-
-    PLAYLIST_UNLOCK(playlist->mutex);
 
     playlist_recalc_total_time(playlist);
 
