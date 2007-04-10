@@ -1,3 +1,11 @@
+2007-04-10 18:29:11 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4370]
+  - chase r4368.
+  
+  trunk/src/audacious/widgets/playlist_list.c |   10 +++++-----
+  1 file changed, 5 insertions(+), 5 deletions(-)
+
+
 2007-04-10 18:27:26 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4368]
   - playlist_get_length_nolock() -> playlist_get_length(), no need for 

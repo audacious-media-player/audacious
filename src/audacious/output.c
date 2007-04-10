@@ -352,7 +352,8 @@ output_close_audio(void)
      * not requested a stop.  --nenolod
      */
     if (ip_data.stop == FALSE && 
-    (playlist_get_position_nolock(playlist_get_active()) < playlist_get_length_nolock(playlist_get_active()) - 1))
+       (playlist_get_position_nolock(playlist_get_active()) < 
+        playlist_get_length(playlist_get_active()) - 1))
         return;
 
     /* Sanity check. */
