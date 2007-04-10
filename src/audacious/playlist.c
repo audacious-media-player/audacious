@@ -1881,10 +1881,7 @@ playlist_get_tuple(Playlist *playlist, guint pos)
     if (!playlist)
         return NULL;
 
-    PLAYLIST_LOCK(playlist->mutex);
-
     if (!(node = g_list_nth(playlist->entries, pos))) {
-        PLAYLIST_UNLOCK(playlist->mutex);
         return NULL;
     }
 
@@ -1900,8 +1897,6 @@ playlist_get_tuple(Playlist *playlist, guint pos)
         tuple = entry->tuple;
     }
 
-    PLAYLIST_UNLOCK(playlist->mutex);
-
     return tuple;
 }
 
@@ -1915,10 +1910,7 @@ playlist_get_songtime(Playlist *playlist, guint pos)
     if (!playlist)
         return -1;
 
-    PLAYLIST_LOCK(playlist->mutex);
-
     if (!(node = g_list_nth(playlist->entries, pos))) {
-        PLAYLIST_UNLOCK(playlist->mutex);
         return -1;
     }
 
@@ -1928,12 +1920,9 @@ playlist_get_songtime(Playlist *playlist, guint pos)
 
         if (playlist_entry_get_info(entry))
             song_time = entry->length;
-
-        PLAYLIST_UNLOCK(playlist->mutex);
     }
     else {
         song_time = entry->length;
-        PLAYLIST_UNLOCK(playlist->mutex);
     }
 
     return song_time;

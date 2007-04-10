@@ -1,3 +1,15 @@
+2007-04-10 18:12:56 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4362]
+  - unlock many playlist operations that do not really need locking
+  - information retrieval should not be atomic
+  - add code to expose potentially unnecessary playlist locks
+  - now playlists with remote URIs can mostly be probed in the background
+  
+  trunk/src/audacious/playlist.c |   82 +++++++++++++++++------------------------
+  trunk/src/audacious/playlist.h |    4 +-
+  2 files changed, 37 insertions(+), 49 deletions(-)
+
+
 2007-04-10 17:17:48 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4360]
   - probe remote sources (hardcoded to http://, https://) in the background.
