@@ -1,3 +1,11 @@
+2007-04-10 15:39:56 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4354]
+  - handle sigwait(2) brokenness on linuxthreads
+  
+  trunk/src/audacious/signals.c |   19 +++++++++++++++----
+  1 file changed, 15 insertions(+), 4 deletions(-)
+
+
 2007-04-10 00:55:56 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4352]
   - unbreak the build
