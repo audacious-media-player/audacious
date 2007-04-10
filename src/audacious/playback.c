@@ -205,8 +205,6 @@ playback_play_file(PlaylistEntry *entry)
     (((entry->decoder = input_check_file(entry->filename, FALSE)) == NULL) ||
         !input_is_enabled(entry->decoder->filename)))
     {
-        input_file_not_playable(entry->filename);
-
         set_current_input_playback(NULL);
         mainwin_set_info_text();
 

@@ -77,7 +77,6 @@ void input_get_volume(gint * l, gint * r);
 void input_set_volume(gint l, gint r);
 void input_file_info_box(const gchar * filename);
 
-void input_file_not_playable(const gchar * filename);
 gboolean input_is_disabled(const gchar * filename);
 gboolean input_is_enabled(const gchar * filename);
 gchar *input_stringify_disabled_list(void);
