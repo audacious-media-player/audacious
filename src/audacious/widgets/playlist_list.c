@@ -332,7 +332,7 @@ playlist_list_draw_string(PlayList_List * pl,
     if (cfg.show_numbers_in_pl) {
         gchar *pos_string = g_strdup_printf(cfg.show_separator_in_pl == TRUE ? "%d" : "%d.", ppos);
         plist_length_int =
-            gint_count_digits(playlist_get_length_nolock(playlist)) + !cfg.show_separator_in_pl + 1; /* cf.show_separator_in_pl will be 0 if false */
+            gint_count_digits(playlist_get_length(playlist)) + !cfg.show_separator_in_pl + 1; /* cf.show_separator_in_pl will be 0 if false */
 
         padding = plist_length_int;
         padding = ((padding + 1) * width_approx_digits);
@@ -626,7 +626,7 @@ playlist_list_draw(Widget * w)
 	gint x, y, plx, ply;
 
         if (cfg.show_numbers_in_pl) {
-            lpadding = gint_count_digits(playlist_get_length_nolock(playlist)) + 1;
+            lpadding = gint_count_digits(playlist_get_length(playlist)) + 1;
             lpadding = ((lpadding + 1) * width_approx_digits);
         }
         else {
@@ -635,7 +635,7 @@ playlist_list_draw(Widget * w)
 
         /* We already hold the mutex and have the playlist locked, so call
            the non-locking function. */
-        plength = playlist_get_length_nolock(playlist);
+        plength = playlist_get_length(playlist);
 
         x = pl->drag_motion_x;
         y = pl->drag_motion_y;
@@ -696,13 +696,13 @@ playlist_list_draw(Widget * w)
 
     if (cfg.show_numbers_in_pl)
     {
-        padding_plength = playlist_get_length_nolock(playlist);
+        padding_plength = playlist_get_length(playlist);
 
         if (padding_plength == 0) {
             padding_dwidth = 0;
         }
         else {
-            padding_dwidth = gint_count_digits(playlist_get_length_nolock(playlist));
+            padding_dwidth = gint_count_digits(playlist_get_length(playlist));
         }
 
         padding =

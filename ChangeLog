@@ -1,3 +1,12 @@
+2007-04-10 18:27:26 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4368]
+  - playlist_get_length_nolock() -> playlist_get_length(), no need for 
+    locking here.
+  
+  trunk/src/audacious/playlist.c |   16 ++--------------
+  1 file changed, 2 insertions(+), 14 deletions(-)
+
+
 2007-04-10 18:25:39 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4366]
   - playlist_set_info() does not change the playlist and shouldn't block
