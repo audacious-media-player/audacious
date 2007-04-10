@@ -118,8 +118,12 @@ signal_process_signals (void *data)
     return NULL; //dummy
 }
 
-void 
-signal_handlers_init (void)
+/* sets up blocking signals for pthreads. 
+ * linuxthreads sucks and needs this to make sigwait(2) work 
+ * correctly. --nenolod
+ */
+static void
+signal_initialize_blockers(void)
 {
     sigset_t blockset;
 
@@ -129,8 +133,15 @@ signal_handlers_init (void)
     sigaddset(&blockset, SIGINT);
     sigaddset(&blockset, SIGTERM);
 
-    if(pthread_sigmask(SIG_BLOCK, &blockset, NULL))
-        g_print("pthread_sigmask() failed.\n");
+    if(pthread_sigmask(SIG_SETMASK, &blockset, NULL))
+        g_print("pthread_sigmask() failed.\n");    
+}
+
+void 
+signal_handlers_init (void)
+{
+    signal_initialize_blockers();
+    pthread_atfork(NULL, NULL, signal_initialize_blockers);
 
     g_thread_create(signal_process_signals, NULL, FALSE, NULL);
 }
