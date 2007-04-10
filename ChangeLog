@@ -1,3 +1,11 @@
+2007-04-10 15:42:11 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4356]
+  - include missing header
+  
+  trunk/src/audacious/signals.c |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2007-04-10 15:39:56 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4354]
   - handle sigwait(2) brokenness on linuxthreads

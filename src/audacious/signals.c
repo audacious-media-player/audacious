@@ -17,6 +17,9 @@
  * 02110-1301, USA.
  */
 
+#define _XOPEN_SOURCE
+#include <unistd.h>	/* for signal_check_for_broken_impl() */
+
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <glib/gprintf.h>
@@ -25,7 +28,8 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <signal.h>
-#include <pthread.h>
+#include <pthread.h>	/* for pthread_sigmask() */
+#include <strings.h>
 
 #ifdef HAVE_EXECINFO_H
 # include <execinfo.h>
@@ -122,6 +126,9 @@ signal_process_signals (void *data)
 /* sets up blocking signals for pthreads. 
  * linuxthreads sucks and needs this to make sigwait(2) work 
  * correctly. --nenolod
+ *
+ * correction -- this trick does not work on linuxthreads.
+ * going to keep it in it's own function though --nenolod
  */
 static void
 signal_initialize_blockers(void)
@@ -138,11 +145,31 @@ signal_initialize_blockers(void)
         g_print("pthread_sigmask() failed.\n");    
 }
 
-void 
-signal_handlers_init (void)
+static gboolean
+signal_check_for_broken_impl(void)
 {
-    signal_initialize_blockers();
-    pthread_atfork(NULL, NULL, signal_initialize_blockers);
+#ifdef _CS_GNU_LIBPTHREAD_VERSION
+    {
+        gchar str[1024];
+        confstr(_CS_GNU_LIBPTHREAD_VERSION, str, sizeof(str));
 
-    g_thread_create(signal_process_signals, NULL, FALSE, NULL);
+        if (!strncasecmp("linuxthreads", str, 12))
+            return TRUE;
+    }
+#endif
+
+    return FALSE;
+}
+
+void 
+signal_handlers_init(void)
+{
+    if (signal_check_for_broken_impl() != TRUE)
+    {
+        signal_initialize_blockers();
+        g_thread_create(signal_process_signals, NULL, FALSE, NULL);
+    }
+    else
+        g_printerr(_("Your signaling implementation is broken.\n"
+		     "Expect unusable crash reports.\n"));
 }
