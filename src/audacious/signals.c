@@ -27,8 +27,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
-#include <signal.h>
 #include <pthread.h>	/* for pthread_sigmask() */
+#include <signal.h>
 #include <strings.h>
 
 #ifdef HAVE_EXECINFO_H
@@ -141,7 +141,7 @@ signal_initialize_blockers(void)
     sigaddset(&blockset, SIGINT);
     sigaddset(&blockset, SIGTERM);
 
-    if(pthread_sigmask(SIG_SETMASK, &blockset, NULL))
+    if(pthread_sigmask(SIG_BLOCK, &blockset, NULL))
         g_print("pthread_sigmask() failed.\n");    
 }
 
