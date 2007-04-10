@@ -1112,7 +1112,7 @@ playlist_check_pos_current(Playlist *playlist)
         return;
     }
 
-    bottom = MAX(0, playlist_get_length_nolock(playlist) -
+    bottom = MAX(0, playlist_get_length(playlist) -
                  playlistwin_list->pl_num_visible);
     row = CLAMP(pos - playlistwin_list->pl_num_visible / 2, 0, bottom);
     PLAYLIST_UNLOCK(playlist->mutex);
@@ -1491,18 +1491,6 @@ playlist_eof_reached(Playlist *playlist)
 }
 
 gint
-playlist_get_length(Playlist *playlist)
-{
-    gint retval;
-
-    PLAYLIST_LOCK(playlist->mutex);
-    retval = playlist_get_length_nolock(playlist);
-    PLAYLIST_UNLOCK(playlist->mutex);
-
-    return retval;
-}
-
-gint
 playlist_queue_get_length(Playlist *playlist)
 {
     gint length;
@@ -1515,7 +1503,7 @@ playlist_queue_get_length(Playlist *playlist)
 }
 
 gint
-playlist_get_length_nolock(Playlist *playlist)
+playlist_get_length(Playlist *playlist)
 {
     return g_list_length(playlist->entries);
 }
