@@ -1,3 +1,11 @@
+2007-04-10 21:16:32 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4374]
+  - use pthread_sigmask(SIG_BLOCK, ...) instead of of SIG_SETMASK
+  
+  trunk/src/audacious/signals.c |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2007-04-10 18:29:48 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4372]
   - chase r4368.

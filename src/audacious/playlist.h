@@ -152,7 +152,6 @@ gint playlist_get_queue_qposition_number(Playlist *playlist, guint pos);
 void playlist_eof_reached(Playlist *playlist);
 void playlist_set_position(Playlist *playlist, guint pos);
 gint playlist_get_length(Playlist *playlist);
-gint playlist_get_length_nolock(Playlist *playlist);
 gint playlist_get_position(Playlist *playlist);
 gint playlist_get_position_nolock(Playlist *playlist);
 gchar *playlist_get_info_text(Playlist *playlist);
