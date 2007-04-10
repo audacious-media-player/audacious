@@ -193,7 +193,9 @@ playlist_entry_get_info(PlaylistEntry * entry)
     g_return_val_if_fail(entry != NULL, FALSE);
 
     // Let's not randomly probe streams, mmkay?
-    if (entry->decoder == NULL && (str_has_prefix_nocase(entry->filename, "http://") || str_has_prefix_nocase(entry->filename, "https://")))
+    if (entry->decoder == NULL && 
+	(str_has_prefix_nocase(entry->filename, "http://") || 
+	 str_has_prefix_nocase(entry->filename, "https://")))
         return TRUE;
 
     if (entry->tuple == NULL || entry->tuple->mtime > 0 || entry->tuple->mtime == -1)
@@ -686,7 +688,7 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
     gchar buf[64], *p;
     gint r;
     VFSFile *file;
-    InputPlugin *dec;
+    InputPlugin *dec = NULL;
 
     g_return_val_if_fail(playlist != NULL, FALSE);
     g_return_val_if_fail(filename != NULL, FALSE);
@@ -700,10 +702,11 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
 
     if (playlist->loading_playlist == TRUE || cfg.playlist_detect == TRUE)
 	dec = NULL;
-    else
+    else if (!str_has_prefix_nocase(filename, "http://") && 
+	     !str_has_prefix_nocase(filename, "https://"))
 	dec = input_check_file(filename, TRUE);
 
-    if (cfg.playlist_detect == TRUE || playlist->loading_playlist == TRUE || (playlist->loading_playlist == FALSE && dec != NULL))
+    if (cfg.playlist_detect == TRUE || playlist->loading_playlist == TRUE || (playlist->loading_playlist == FALSE && dec != NULL) || (playlist->loading_playlist == FALSE && !is_playlist_name(filename)))
     {
         __playlist_ins(playlist, filename, pos, dec);
         playlist_generate_shuffle_list(playlist);
@@ -1638,7 +1641,7 @@ playlist_load_ins_file(Playlist *playlist,
 {
     gchar *filename;
     gchar *tmp, *path;
-    InputPlugin *dec;		/* for decoder cache */
+    InputPlugin *dec = NULL;		/* for decoder cache */
 
     g_return_if_fail(filename_p != NULL);
     g_return_if_fail(playlist != NULL);
@@ -1655,10 +1658,12 @@ playlist_load_ins_file(Playlist *playlist,
         if ((tmp = strrchr(path, '/')))
             *tmp = '\0';
         else {
-	    if (playlist->loading_playlist != TRUE || cfg.playlist_detect == FALSE)
-	        dec = input_check_file(filename, FALSE);
-	    else
-		dec = NULL;
+	    if ((playlist->loading_playlist == TRUE ||
+		cfg.playlist_detect == TRUE))
+                dec = NULL;
+	    else if (!str_has_prefix_nocase(filename, "http://") && 
+	        !str_has_prefix_nocase(filename, "https://"))
+		dec = input_check_file(filename, FALSE);
 
             __playlist_ins_with_info(playlist, filename, pos, title, len, dec);
             return;
@@ -1676,10 +1681,12 @@ playlist_load_ins_file(Playlist *playlist,
     }
     else
     {
-	if (playlist->loading_playlist != TRUE && cfg.playlist_detect != TRUE)
+        if ((playlist->loading_playlist == TRUE ||
+  	    cfg.playlist_detect == TRUE))
+            dec = NULL;
+	else if (!str_has_prefix_nocase(filename, "http://") && 
+	    !str_has_prefix_nocase(filename, "https://"))
 	    dec = input_check_file(filename, FALSE);
-	else
-	    dec = NULL;
 
         __playlist_ins_with_info(playlist, filename, pos, title, len, dec);
     }
@@ -1696,7 +1703,7 @@ playlist_load_ins_file_tuple(Playlist * playlist,
 {
     gchar *filename;
     gchar *tmp, *path;
-    InputPlugin *dec;		/* for decoder cache */
+    InputPlugin *dec = NULL;		/* for decoder cache */
 
     g_return_if_fail(filename_p != NULL);
     g_return_if_fail(playlist_name != NULL);
@@ -1712,20 +1719,24 @@ playlist_load_ins_file_tuple(Playlist * playlist,
         if ((tmp = strrchr(path, '/')))
             *tmp = '\0';
         else {
-	    if (playlist->loading_playlist != TRUE || cfg.playlist_detect == FALSE)
+            if ((playlist->loading_playlist == TRUE ||
+    	        cfg.playlist_detect == TRUE))
+                dec = NULL;
+	    else if (!str_has_prefix_nocase(filename, "http://") && 
+	        !str_has_prefix_nocase(filename, "https://"))
 	        dec = input_check_file(filename, FALSE);
-	    else
-		dec = NULL;
 
             __playlist_ins_with_info_tuple(playlist, filename, pos, tuple, dec);
             return;
         }
         tmp = g_build_filename(path, filename, NULL);
 
-	if (playlist->loading_playlist != TRUE && cfg.playlist_detect != TRUE)
-	    dec = input_check_file(tmp, FALSE);
-	else
-	    dec = NULL;
+        if ((playlist->loading_playlist == TRUE ||
+            cfg.playlist_detect == TRUE))
+            dec = NULL;
+        else if (!str_has_prefix_nocase(filename, "http://") && 
+            !str_has_prefix_nocase(filename, "https://"))
+            dec = input_check_file(filename, FALSE);
 
         __playlist_ins_with_info_tuple(playlist, tmp, pos, tuple, dec);
         g_free(tmp);
@@ -1733,10 +1744,12 @@ playlist_load_ins_file_tuple(Playlist * playlist,
     }
     else
     {
-	if (playlist->loading_playlist != TRUE && cfg.playlist_detect != TRUE)
-	    dec = input_check_file(filename, FALSE);
-	else
-	    dec = NULL;
+        if ((playlist->loading_playlist == TRUE ||
+            cfg.playlist_detect == TRUE))
+            dec = NULL;
+        else if (!str_has_prefix_nocase(filename, "http://") && 
+            !str_has_prefix_nocase(filename, "https://"))
+            dec = input_check_file(filename, FALSE);
 
         __playlist_ins_with_info_tuple(playlist, filename, pos, tuple, dec);
     }

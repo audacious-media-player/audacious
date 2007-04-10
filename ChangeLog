@@ -1,3 +1,11 @@
+2007-04-10 16:45:30 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4358]
+  - do not use the signal handler at all on linuxthreads and hope for the best
+  
+  trunk/src/audacious/signals.c |   39 +++++++++++++++++++++++++++++++++------
+  1 file changed, 33 insertions(+), 6 deletions(-)
+
+
 2007-04-10 15:42:11 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4356]
   - include missing header
