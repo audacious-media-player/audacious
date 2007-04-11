@@ -331,13 +331,13 @@ void trim(char *str)
 
 static
 int v1_attachstr(struct id3_tag *tag, char const *id,
-		 char *text, unsigned long number)
+		 id3_byte_t *text, unsigned long number)
 {
   struct id3_frame *frame;
   id3_ucs4_t ucs4[31];
 
   if (text) {
-    trim(text);
+      trim((char *)text);
     if (*text == 0)
       return 0;
   }
@@ -385,7 +385,7 @@ struct id3_tag *v1_parse(id3_byte_t const *data)
 
   tag = id3_tag_new();
   if (tag) {
-    char title[31], artist[31], album[31], year[5], comment[31];
+    id3_byte_t title[31], artist[31], album[31], year[5], comment[31];
     unsigned int genre, track;
 
     tag->version = 0x0100;
@@ -409,7 +409,7 @@ struct id3_tag *v1_parse(id3_byte_t const *data)
 
     track = 0;
     if (comment[28] == 0 && comment[29] != 0) {
-      track = comment[29];
+        track = comment[29];
       tag->version = 0x0101;
     }
 

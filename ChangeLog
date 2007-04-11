@@ -1,3 +1,11 @@
+2007-04-10 21:17:31 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4376]
+  - chase r4268 (patch by Joker)
+  
+  trunk/src/audacious/playlist.h |    1 -
+  1 file changed, 1 deletion(-)
+
+
 2007-04-10 21:16:32 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4374]
   - use pthread_sigmask(SIG_BLOCK, ...) instead of of SIG_SETMASK
