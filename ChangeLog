@@ -1,3 +1,11 @@
+2007-04-12 07:16:37 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4380]
+  - workaround for linuxthread's broken implementation of sigwait().
+  
+  trunk/src/audacious/signals.c |  105 +++++++++++++++++++++++++++++++++++++++++-
+  1 file changed, 104 insertions(+), 1 deletion(-)
+
+
 2007-04-11 07:28:41 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4378]
   - unsigned char should be used during id3v1 parse. closes #888.
