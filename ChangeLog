@@ -1,3 +1,11 @@
+2007-04-11 07:28:41 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4378]
+  - unsigned char should be used during id3v1 parse. closes #888.
+  
+  trunk/src/libid3tag/tag.c |    8 ++++----
+  1 file changed, 4 insertions(+), 4 deletions(-)
+
+
 2007-04-10 21:17:31 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4376]
   - chase r4268 (patch by Joker)

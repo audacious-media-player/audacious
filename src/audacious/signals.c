@@ -17,7 +17,7 @@
  * 02110-1301, USA.
  */
 
-#define _XOPEN_SOURCE
+//#define _XOPEN_SOURCE
 #include <unistd.h>	/* for signal_check_for_broken_impl() */
 
 #include <glib.h>
@@ -39,6 +39,8 @@
 #include "ui_main.h"
 #include "signals.h"
 #include "build_stamp.h"
+
+gint linuxthread_signal_number = 0;
 
 static void
 signal_process_segv(void)
@@ -123,6 +125,95 @@ signal_process_signals (void *data)
     return NULL; //dummy
 }
 
+/********************************************************************************/
+/* for linuxthread */
+/********************************************************************************/
+
+typedef void (*SignalHandler) (gint);
+
+static void *
+signal_process_signals_linuxthread (void *data)
+{
+    while(1) {
+        g_usleep(1000000);
+
+        switch(linuxthread_signal_number){
+        case SIGPIPE:
+            /*
+             * do something.
+             */
+            linuxthread_signal_number = 0;
+            break;
+
+        case SIGSEGV:
+            signal_process_segv();
+            break;
+
+        case SIGINT:
+            g_print("Audacious has received SIGINT and is shutting down.\n");
+            mainwin_quit_cb();
+            break;
+
+        case SIGTERM:
+            g_print("Audacious has received SIGTERM and is shutting down.\n");
+            mainwin_quit_cb();
+            break;
+        }
+    }
+
+    return NULL; //dummy
+}
+
+static void
+linuxthread_handler (gint signal_number)
+{
+    /* note: cannot manipulate mutex from signal handler */
+    linuxthread_signal_number = signal_number;
+}
+
+static SignalHandler
+signal_install_handler_full (gint           signal_number,
+                             SignalHandler  handler,
+                             gint          *signals_to_block,
+                             gsize          n_signals)
+{
+    struct sigaction action, old_action;
+    gsize i;
+
+    action.sa_handler = handler;
+    action.sa_flags = SA_RESTART;
+
+    sigemptyset (&action.sa_mask);
+
+    for (i = 0; i < n_signals; i++)
+        sigaddset (&action.sa_mask, signals_to_block[i]);
+
+    if (sigaction (signal_number, &action, &old_action) == -1)
+    {
+        g_message ("Failed to install handler for signal %d", signal_number);
+        return NULL;
+    }
+
+    return old_action.sa_handler;
+}
+
+/* 
+ * A version of signal() that works more reliably across different
+ * platforms. It: 
+ * a. restarts interrupted system calls
+ * b. does not reset the handler
+ * c. blocks the same signal within the handler
+ *
+ * (adapted from Unix Network Programming Vol. 1)
+ */
+static SignalHandler
+signal_install_handler (gint          signal_number,
+                        SignalHandler handler)
+{
+    return signal_install_handler_full (signal_number, handler, NULL, 0);
+}
+
+
 /* sets up blocking signals for pthreads. 
  * linuxthreads sucks and needs this to make sigwait(2) work 
  * correctly. --nenolod
@@ -170,6 +261,18 @@ signal_handlers_init(void)
         g_thread_create(signal_process_signals, NULL, FALSE, NULL);
     }
     else
+    {
         g_printerr(_("Your signaling implementation is broken.\n"
 		     "Expect unusable crash reports.\n"));
+
+        /* install special handler which catches signals and forwards to the signal handling thread */
+        signal_install_handler(SIGPIPE, linuxthread_handler);
+        signal_install_handler(SIGSEGV, linuxthread_handler);
+        signal_install_handler(SIGINT, linuxthread_handler);
+        signal_install_handler(SIGTERM, linuxthread_handler);
+
+        /* create handler thread */
+        g_thread_create(signal_process_signals_linuxthread, NULL, FALSE, NULL);
+
+    }
 }
