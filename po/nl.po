@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-02-11 03:00-0600\n"
+"POT-Creation-Date: 2007-04-14 15:19-0500\n"
 "PO-Revision-Date: 2006-11-16 20:02+0100\n"
 "Last-Translator: Tony Vroon <chainsaw@gentoo.org>\n"
 "Language-Team: (not responsive)\n"
@@ -26,49 +26,20 @@ msgstr ""
 "\n"
 "Het glade-bestand (%s) kon niet geopend worden. Is uw installatie compleet?\n"
 
-#: src/audacious/input.c:306
-msgid ""
-"<b><big>Unable to play files.</big></b>\n"
-"\n"
-"The following files could not be played. Please check that:\n"
-"1. they are accessible.\n"
-"2. you have enabled the media plugins required."
-msgstr ""
-"<b><big>Kon bestanden niet afspelen.</big></b>\n"
-"\n"
-"De bestanden konden niet afgespeeld worden, controleer dat:\n"
-"1. U toegang heeft to de bestanden.\n"
-"2. U de correcte plugins heeft aanstaan."
-
-#: src/audacious/input.c:331
-msgid "Don't show this warning anymore"
-msgstr "Deze waarschuwing niet meer weergeven"
-
-#: src/audacious/input.c:333
-msgid "Show more _details"
-msgstr "Geef meer _details weer"
-
-#: src/audacious/input.c:347 src/audacious/ui_preferences.c:118
-#: src/audacious/ui_preferences.c:486 src/audacious/ui_preferences.c:574
-#: src/audacious/ui_preferences.c:663 src/audacious/ui_preferences.c:759
-#: src/audacious/ui_fileinfopopup.c:402
-msgid "Filename"
-msgstr "Bestandsnaam"
-
-#: src/audacious/input.c:620
+#: src/audacious/input.c:539
 #, c-format
 msgid "audacious: %s"
 msgstr "audacious: %s"
 
-#: src/audacious/input.c:636
+#: src/audacious/input.c:555
 msgid "Filename:"
 msgstr "Bestandsnaam:"
 
-#: src/audacious/input.c:654
+#: src/audacious/input.c:573
 msgid "No input plugin recognized this file"
 msgstr "Geen invoer-plugin heeft dit bestand herkend"
 
-#: src/audacious/input.c:656
+#: src/audacious/input.c:575
 #, c-format
 msgid "Input plugin: %s"
 msgstr "Invoer plugin: %s"
@@ -78,95 +49,95 @@ msgstr "Invoer plugin: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "Kon logbestand niet aanmaken (%s)!\n"
 
-#: src/audacious/main.c:83 src/audacious/main.c:85 src/audacious/ui_main.c:627
-#: src/audacious/ui_main.c:2897
+#: src/audacious/main.c:84 src/audacious/main.c:86 src/audacious/ui_main.c:628
+#: src/audacious/ui_main.c:2948
 msgid "Audacious"
 msgstr "Audacious"
 
-#: src/audacious/main.c:459
+#: src/audacious/main.c:461
 #, fuzzy, c-format
 msgid "Could not create directory (%s): %s\n"
 msgstr "Kon de map (%s) niet aanmaken: %s"
 
 #  -n, --session switch
-#: src/audacious/main.c:828
+#: src/audacious/main.c:860
 #, fuzzy
 msgid "Select which Audacious session ID to use"
 msgstr "Kies Audacious sessie (Standaard: 0)"
 
 #  -r, --rew switch
-#: src/audacious/main.c:829
+#: src/audacious/main.c:861
 msgid "Skip backwards in playlist"
 msgstr "Ga terug in de speellijst"
 
 #  -p, --play switch
-#: src/audacious/main.c:830
+#: src/audacious/main.c:862
 msgid "Start playing current playlist"
 msgstr "Begin de huidige speellijst af te spelen"
 
 #  -u, --pause switch
-#: src/audacious/main.c:831
+#: src/audacious/main.c:863
 msgid "Pause current song"
 msgstr "Pauzeer huidig nummer"
 
 #  -s, --stop switch
-#: src/audacious/main.c:832
+#: src/audacious/main.c:864
 msgid "Stop current song"
 msgstr "Stop huidig nummer"
 
 #  -t, --play-pause switch
-#: src/audacious/main.c:833
+#: src/audacious/main.c:865
 msgid "Pause if playing, play otherwise"
 msgstr "Pauzeer tijdens spelen, anders afspelen"
 
 #  -f, --fwd switch
-#: src/audacious/main.c:834
+#: src/audacious/main.c:866
 msgid "Skip forward in playlist"
 msgstr "Ga vooruit in de speellijst"
 
-#: src/audacious/main.c:835
+#: src/audacious/main.c:867
 #, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "Spring-naar-bestand dialoog weergeven"
 
 #  -e, --enqueue switch
-#: src/audacious/main.c:836
+#: src/audacious/main.c:868
 msgid "Don't clear the playlist"
 msgstr "Speellijst niet wissen"
 
 #  -e, --enqueue switch
-#: src/audacious/main.c:837
+#: src/audacious/main.c:869
 #, fuzzy
 msgid "Add new files to a temporary playlist"
 msgstr "Speellijst niet wissen"
 
 #  -m, --show-main-window switch
-#: src/audacious/main.c:838
+#: src/audacious/main.c:870
 #, fuzzy
 msgid "Display the main window"
 msgstr "Geef het hoofdvenster weer"
 
-#: src/audacious/main.c:839
+#: src/audacious/main.c:871
 msgid "Display all open Audacious windows"
 msgstr ""
 
-#: src/audacious/main.c:840
+#: src/audacious/main.c:872
 msgid "Enable headless operation"
 msgstr ""
 
-#: src/audacious/main.c:841
+#: src/audacious/main.c:873
 msgid "Print all errors and warnings to stdout"
 msgstr ""
 
-#: src/audacious/main.c:842
+#: src/audacious/main.c:874
 msgid "Show version and builtin features"
 msgstr ""
 
-#: src/audacious/main.c:843
+#: src/audacious/main.c:875
 msgid "FILE..."
 msgstr ""
 
-#: src/audacious/main.c:948
+#: src/audacious/main.c:1001
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -179,16 +150,7 @@ msgstr ""
 "Controleer dat de skin bij '%s' bruikbaar is en de standaardskin correct "
 "geinstalleerd bij '%s'\n"
 
-#: src/audacious/main.c:1007
-#, c-format
-msgid ""
-"Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
-"Please use GTK+ %s or newer.\n"
-msgstr ""
-"Sorry, uw GTK+ versie (%d.%d.%d) werkt niet met Audacious.\n"
-"Gelieve GTK+ %s of nieuwer te installeren.\n"
-
-#: src/audacious/main.c:1018
+#: src/audacious/main.c:1052
 msgid ""
 "Sorry, threads isn't supported on your platform.\n"
 "\n"
@@ -202,41 +164,64 @@ msgstr ""
 "geinstalleerd voordat u\n"
 "LinuxThreads heeft geinstalleerd moet u Glib/GTK+ hercompileren.\n"
 
-#: src/audacious/main.c:1036
+#: src/audacious/main.c:1074
+#, c-format
+msgid ""
+"Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
+"Please use GTK+ %s or newer.\n"
+msgstr ""
+"Sorry, uw GTK+ versie (%d.%d.%d) werkt niet met Audacious.\n"
+"Gelieve GTK+ %s of nieuwer te installeren.\n"
+
+#: src/audacious/main.c:1093
 msgid "- play multimedia files"
 msgstr ""
 
-#: src/audacious/main.c:1043
+#: src/audacious/main.c:1100
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
 
-#: src/audacious/main.c:1052
+#: src/audacious/main.c:1109
 #, fuzzy, c-format
 msgid "%s: Unable to open display, exiting.\n"
 msgstr "audacious: Kan het venster niet openen, het programma sluit nu af.\n"
 
-#: src/audacious/signals.c:93
+#: src/audacious/signals.c:48
 msgid ""
 "\n"
-"Received SIGSEGV\n"
+"Audacious has caught signal 11 (SIGSEGV).\n"
 "\n"
-"This could be a bug in Audacious. If you don't know why this happened, file "
-"a bug at http://bugs-meta.atheme.org/\n"
+"We apologize for the inconvenience, but Audacious has crashed.\n"
+"This is a bug in the program, and should never happen under normal "
+"circumstances.\n"
+"Your current configuration has been saved and should not be damaged.\n"
+"\n"
+"You can help improve the quality of Audacious by filing a bug at http://bugs-"
+"meta.atheme.org\n"
+"Please include the entire text of this message and a description of what you "
+"were doing when\n"
+"this crash occured in order to quickly expedite the handling of your bug "
+"report:\n"
 "\n"
 msgstr ""
-"\n"
-"SIGSEGV-signaal ontvangen\n"
-"\n"
-"Dit is mogelijk een bug in Audacious. Gelieve zonder externe plugins te "
-"proberen.\n"
-"Als u niet weet waarom dit gebeurde, rapporteer dan een bug bij uw "
-"linuxdistributie.\n"
-"\n"
 
-#: src/audacious/strings.c:172
+#: src/audacious/signals.c:79
+msgid ""
+"\n"
+"Bugs can be reported at http://bugs-meta.atheme.org against the Audacious "
+"product.\n"
+msgstr ""
+
+#: src/audacious/signals.c:265
+msgid ""
+"Your signaling implementation is broken.\n"
+"Expect unusable crash reports.\n"
+msgstr ""
+
+#: src/audacious/strings.c:170
 msgid "  (invalid UTF-8)"
 msgstr "  (ongeldige UTF-8)"
 
@@ -252,12 +237,12 @@ msgstr ""
 "\n"
 "Copyright (C) 2005-2006 Audacious ontwikkelteam\n"
 
-#: src/audacious/ui_about.c:123 src/audacious/ui_credits.c:338
+#: src/audacious/ui_about.c:123 src/audacious/ui_credits.c:345
 #: src/audacious/ui_manager.c:387 src/audacious/ui_manager.c:388
 msgid "About Audacious"
 msgstr "Over Audacious"
 
-#: src/audacious/ui_about.c:172 src/audacious/ui_credits.c:383
+#: src/audacious/ui_about.c:172 src/audacious/ui_credits.c:390
 msgid "Credits"
 msgstr "Met dank aan"
 
@@ -290,171 +275,176 @@ msgstr "Standaard skin:"
 msgid "Plugin development:"
 msgstr "Plugin-ontwikkeling:"
 
-#: src/audacious/ui_credits.c:88
+#: src/audacious/ui_credits.c:89
 msgid "Patch authors:"
 msgstr "Patches aangeleverd door:"
 
-#: src/audacious/ui_credits.c:105
+#: src/audacious/ui_credits.c:109
 msgid "0.1.x developers:"
 msgstr "0.1.x ontwikkelaars:"
 
-#: src/audacious/ui_credits.c:111
+#: src/audacious/ui_credits.c:115
 msgid "BMP Developers:"
 msgstr "BMP ontwikkelaars:"
 
-#: src/audacious/ui_credits.c:143
+#: src/audacious/ui_credits.c:147
 msgid "Brazilian Portuguese:"
 msgstr "Braziliaans Portugees:"
 
-#: src/audacious/ui_credits.c:146
+#: src/audacious/ui_credits.c:150
 msgid "Breton:"
 msgstr "Bretons:"
 
-#: src/audacious/ui_credits.c:149
+#: src/audacious/ui_credits.c:153
 #, fuzzy
 msgid "Bulgarian:"
 msgstr "Hongaars:"
 
-#: src/audacious/ui_credits.c:152
+#: src/audacious/ui_credits.c:156
+#, fuzzy
+msgid "Catalan:"
+msgstr "Italiaans:"
+
+#: src/audacious/ui_credits.c:159
 #, fuzzy
 msgid "Croatian:"
 msgstr "Roemeens:"
 
-#: src/audacious/ui_credits.c:155
+#: src/audacious/ui_credits.c:162
 msgid "Czech:"
 msgstr "Tjechisch:"
 
-#: src/audacious/ui_credits.c:158
+#: src/audacious/ui_credits.c:165
 msgid "Dutch:"
 msgstr "Nederlands:"
 
-#: src/audacious/ui_credits.c:162
+#: src/audacious/ui_credits.c:169
 msgid "Finnish:"
 msgstr "Fins:"
 
-#: src/audacious/ui_credits.c:165
+#: src/audacious/ui_credits.c:172
 msgid "French:"
 msgstr "Frans:"
 
-#: src/audacious/ui_credits.c:168
+#: src/audacious/ui_credits.c:175
 msgid "German:"
 msgstr "Duits:"
 
-#: src/audacious/ui_credits.c:172
+#: src/audacious/ui_credits.c:179
 #, fuzzy
 msgid "Georgian:"
 msgstr "Georgisch:"
 
-#: src/audacious/ui_credits.c:175
+#: src/audacious/ui_credits.c:182
 msgid "Greek:"
 msgstr "Grieks:"
 
-#: src/audacious/ui_credits.c:180
+#: src/audacious/ui_credits.c:187
 msgid "Hindi:"
 msgstr "Hindi:"
 
-#: src/audacious/ui_credits.c:183
+#: src/audacious/ui_credits.c:190
 msgid "Hungarian:"
 msgstr "Hongaars:"
 
-#: src/audacious/ui_credits.c:186
+#: src/audacious/ui_credits.c:193
 msgid "Italian:"
 msgstr "Italiaans:"
 
-#: src/audacious/ui_credits.c:190
+#: src/audacious/ui_credits.c:197
 msgid "Japanese:"
 msgstr "Japans:"
 
-#: src/audacious/ui_credits.c:193
+#: src/audacious/ui_credits.c:200
 msgid "Korean:"
 msgstr "Koreaans:"
 
-#: src/audacious/ui_credits.c:196
+#: src/audacious/ui_credits.c:203
 msgid "Lithuanian:"
 msgstr "Lets:"
 
-#: src/audacious/ui_credits.c:199
+#: src/audacious/ui_credits.c:206
 msgid "Macedonian:"
 msgstr "Macedonisch:"
 
-#: src/audacious/ui_credits.c:202
+#: src/audacious/ui_credits.c:209
 msgid "Polish:"
 msgstr "Pools:"
 
-#: src/audacious/ui_credits.c:205
+#: src/audacious/ui_credits.c:212
 msgid "Romanian:"
 msgstr "Roemeens:"
 
-#: src/audacious/ui_credits.c:208
+#: src/audacious/ui_credits.c:215
 msgid "Russian:"
 msgstr "Russisch:"
 
-#: src/audacious/ui_credits.c:211
+#: src/audacious/ui_credits.c:218
 msgid "Serbian (Latin):"
 msgstr ""
 
-#: src/audacious/ui_credits.c:214
+#: src/audacious/ui_credits.c:221
 msgid "Serbian (Cyrillic):"
 msgstr ""
 
-#: src/audacious/ui_credits.c:217
+#: src/audacious/ui_credits.c:224
 msgid "Simplified Chinese:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:220
+#: src/audacious/ui_credits.c:227
 msgid "Slovak:"
 msgstr "Slowaaks:"
 
-#: src/audacious/ui_credits.c:223
+#: src/audacious/ui_credits.c:230
 msgid "Spanish:"
 msgstr "Spaans:"
 
-#: src/audacious/ui_credits.c:226
+#: src/audacious/ui_credits.c:233
 msgid "Swedish:"
 msgstr "Zweeds:"
 
-#: src/audacious/ui_credits.c:229
+#: src/audacious/ui_credits.c:236
 msgid "Traditional Chinese:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:232
+#: src/audacious/ui_credits.c:239
 msgid "Turkish:"
 msgstr ""
 
-#: src/audacious/ui_credits.c:236
+#: src/audacious/ui_credits.c:243
 msgid "Ukrainian:"
 msgstr "Ukrainees:"
 
-#: src/audacious/ui_credits.c:239
+#: src/audacious/ui_credits.c:246
 msgid "Welsh:"
 msgstr "Welsh:"
 
-#: src/audacious/ui_credits.c:387
+#: src/audacious/ui_credits.c:394
 msgid "Translators"
 msgstr "Vertalers"
 
-#: src/audacious/ui_equalizer.c:741
+#: src/audacious/ui_equalizer.c:743
 msgid "Audacious Equalizer"
 msgstr "Audacious Equalizer"
 
-#: src/audacious/ui_equalizer.c:1429
+#: src/audacious/ui_equalizer.c:1391
 msgid "Presets"
 msgstr "Standen"
 
-#: src/audacious/ui_main.c:625
+#: src/audacious/ui_main.c:626
 #, c-format
 msgid "%s - Audacious"
 msgstr "%s - Audacious"
 
-#: src/audacious/ui_main.c:850
+#: src/audacious/ui_main.c:851
 msgid "VBR"
 msgstr "VBR"
 
-#: src/audacious/ui_main.c:891 src/audacious/ui_main.c:895
+#: src/audacious/ui_main.c:892 src/audacious/ui_main.c:896
 msgid "stereo"
 msgstr "stereo"
 
-#: src/audacious/ui_main.c:891 src/audacious/ui_main.c:895
+#: src/audacious/ui_main.c:892 src/audacious/ui_main.c:896
 msgid "mono"
 msgstr "mono"
 
@@ -471,63 +461,88 @@ msgstr "minuten:seconden"
 msgid "Track length:"
 msgstr "Duur:"
 
-#: src/audacious/ui_main.c:1500
+#: src/audacious/ui_main.c:1520
+msgid "Audacious - visibility warning"
+msgstr ""
+
+#: src/audacious/ui_main.c:1522
+#, fuzzy
+msgid "Show main player window"
+msgstr "Kies het lettertype voor het hoofdvenster:"
+
+#: src/audacious/ui_main.c:1523
+msgid "Ignore"
+msgstr ""
+
+#: src/audacious/ui_main.c:1527
+msgid ""
+"Audacious has been started with all of its windows hidden.\n"
+"You may want to show the player window again to control Audacious; "
+"otherwise, you'll have to control it remotely via audtool or enabled plugins "
+"(such as the statusicon plugin)."
+msgstr ""
+
+#: src/audacious/ui_main.c:1533
+msgid "Always ignore, show/hide is controlled remotely"
+msgstr ""
+
+#: src/audacious/ui_main.c:1551
 msgid "Enter location to play:"
 msgstr "Geef afspeellocatie op:"
 
-#: src/audacious/ui_main.c:1710
+#: src/audacious/ui_main.c:1761
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "ZOEK NAAR: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: src/audacious/ui_main.c:1742 src/audacious/ui_main.c:2367
+#: src/audacious/ui_main.c:1793 src/audacious/ui_main.c:2418
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "VOLUME: %d%%"
 
-#: src/audacious/ui_main.c:1773 src/audacious/ui_main.c:2370
+#: src/audacious/ui_main.c:1824 src/audacious/ui_main.c:2421
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "BALANS: %d%% LINKS"
 
-#: src/audacious/ui_main.c:1777 src/audacious/ui_main.c:2373
+#: src/audacious/ui_main.c:1828 src/audacious/ui_main.c:2424
 msgid "BALANCE: CENTER"
 msgstr "BALANS: MIDDEN"
 
-#: src/audacious/ui_main.c:1781 src/audacious/ui_main.c:2375
+#: src/audacious/ui_main.c:1832 src/audacious/ui_main.c:2426
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "BALANS: %d%% RECHTS"
 
-#: src/audacious/ui_main.c:2137
+#: src/audacious/ui_main.c:2188
 msgid "OPTIONS MENU"
 msgstr "OPTIES-MENU"
 
-#: src/audacious/ui_main.c:2141
+#: src/audacious/ui_main.c:2192
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "ALTIJD OP VOORGROND UITSCHAKELEN"
 
-#: src/audacious/ui_main.c:2143
+#: src/audacious/ui_main.c:2194
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "ALTIJD OP VOORGROND INSCHAKELEN"
 
-#: src/audacious/ui_main.c:2146
+#: src/audacious/ui_main.c:2197
 msgid "FILE INFO BOX"
 msgstr "BESTANDSINFORMATIE BOX"
 
-#: src/audacious/ui_main.c:2150
+#: src/audacious/ui_main.c:2201
 msgid "DISABLE DOUBLESIZE"
 msgstr "DUBBEL FORMAAT UIT"
 
-#: src/audacious/ui_main.c:2152
+#: src/audacious/ui_main.c:2203
 msgid "ENABLE DOUBLESIZE"
 msgstr "DUBBEL FORMAAT AAN"
 
-#: src/audacious/ui_main.c:2155
+#: src/audacious/ui_main.c:2206
 msgid "VISUALIZATION MENU"
 msgstr "VISUALISATIE MENU"
 
-#: src/audacious/ui_main.c:2201
+#: src/audacious/ui_main.c:2252
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -537,7 +552,7 @@ msgstr ""
 "\n"
 "Geen CD aanwezig of de aanwezige CD is geen audio CD.\n"
 
-#: src/audacious/ui_main.c:2218
+#: src/audacious/ui_main.c:2269
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -553,7 +568,7 @@ msgstr ""
 "2. Geen andere programma's de geluidskaart blokkeren\n"
 "3. Uw geluidskaart juist geconfigureerd is\n"
 
-#: src/audacious/ui_main.c:2825
+#: src/audacious/ui_main.c:2876
 #, fuzzy
 msgid "Error in Audacious."
 msgstr "%s - Audacious"
@@ -1383,17 +1398,17 @@ msgstr "Muis"
 msgid "Plugins"
 msgstr "Plugins"
 
-#: src/audacious/ui_preferences.c:113 src/audacious/ui_fileinfopopup.c:243
+#: src/audacious/ui_preferences.c:113 src/audacious/ui_fileinfopopup.c:254
 msgid "Artist"
 msgstr "Artiest"
 
-#: src/audacious/ui_preferences.c:114 src/audacious/ui_fileinfopopup.c:260
-#: src/audacious/titlestring.c:372
+#: src/audacious/ui_preferences.c:114 src/audacious/ui_fileinfopopup.c:257
+#: src/audacious/titlestring.c:380
 msgid "Album"
 msgstr "Album"
 
-#: src/audacious/ui_preferences.c:115 src/audacious/ui_fileinfopopup.c:226
-#: src/audacious/ui_fileinfopopup.c:394
+#: src/audacious/ui_preferences.c:115 src/audacious/ui_fileinfopopup.c:251
+#: src/audacious/ui_fileinfopopup.c:361
 msgid "Title"
 msgstr "Titel"
 
@@ -1401,25 +1416,31 @@ msgstr "Titel"
 msgid "Tracknumber"
 msgstr "Nummer"
 
-#: src/audacious/ui_preferences.c:117 src/audacious/ui_fileinfopopup.c:277
-#: src/audacious/titlestring.c:373
+#: src/audacious/ui_preferences.c:117 src/audacious/ui_fileinfopopup.c:260
+#: src/audacious/titlestring.c:381
 msgid "Genre"
 msgstr "Genre"
+
+#: src/audacious/ui_preferences.c:118 src/audacious/ui_preferences.c:486
+#: src/audacious/ui_preferences.c:574 src/audacious/ui_preferences.c:663
+#: src/audacious/ui_preferences.c:759 src/audacious/ui_fileinfopopup.c:370
+msgid "Filename"
+msgstr "Bestandsnaam"
 
 #: src/audacious/ui_preferences.c:119
 msgid "Filepath"
 msgstr "Bestandslocatie"
 
-#: src/audacious/ui_preferences.c:120 src/audacious/titlestring.c:379
+#: src/audacious/ui_preferences.c:120 src/audacious/titlestring.c:387
 msgid "Date"
 msgstr "Datum"
 
-#: src/audacious/ui_preferences.c:121 src/audacious/ui_fileinfopopup.c:294
-#: src/audacious/titlestring.c:380
+#: src/audacious/ui_preferences.c:121 src/audacious/ui_fileinfopopup.c:263
+#: src/audacious/titlestring.c:388
 msgid "Year"
 msgstr "Jaar"
 
-#: src/audacious/ui_preferences.c:122 src/audacious/titlestring.c:381
+#: src/audacious/ui_preferences.c:122 src/audacious/titlestring.c:389
 msgid "Comment"
 msgstr "Opmerking"
 
@@ -1437,12 +1458,12 @@ msgstr "Actief"
 msgid "Description"
 msgstr "Beschrijving"
 
-#: src/audacious/ui_preferences.c:1783
+#: src/audacious/ui_preferences.c:1878
 msgid "Category"
 msgstr "Categorie"
 
 #  load the interface
-#: src/audacious/ui_preferences.c:2348
+#: src/audacious/ui_preferences.c:2462
 msgid "Preferences Window"
 msgstr "Instellingen venster"
 
@@ -1458,47 +1479,47 @@ msgstr "Uitgepakte Winamp 2.x skin"
 msgid "Track Information Window"
 msgstr "Nummer-info"
 
-#: src/audacious/ui_fileinfopopup.c:311
+#: src/audacious/ui_fileinfopopup.c:266
 #, fuzzy
 msgid "Track Number"
 msgstr "Nummer"
 
-#: src/audacious/ui_fileinfopopup.c:328
+#: src/audacious/ui_fileinfopopup.c:270
 #, fuzzy
 msgid "Track Length"
 msgstr "Duur:"
 
-#: src/audacious/ui_fileopener.c:127
+#: src/audacious/ui_fileopener.c:129
 msgid "Open Files"
 msgstr "Bestanden openen"
 
-#: src/audacious/ui_fileopener.c:127
+#: src/audacious/ui_fileopener.c:129
 msgid "Add Files"
 msgstr "Bestanden toevoegen"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Close dialog on Open"
 msgstr "Sluit venster bij openen"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:131
 msgid "Close dialog on Add"
 msgstr "Sluit venster bij toevoegen"
 
-#: src/audacious/ui_fileopener.c:354
+#: src/audacious/ui_fileopener.c:356
 msgid "Play files"
 msgstr "Bestanden afspelen"
 
-#: src/audacious/ui_fileopener.c:356
+#: src/audacious/ui_fileopener.c:358
 msgid "Load files"
 msgstr "Bestanden laden"
 
 #  -r, --rew switch
-#: src/audacious/ui_playlist.c:484
+#: src/audacious/ui_playlist.c:483
 #, fuzzy
 msgid "Search entries in active playlist"
 msgstr "Scheidingslijnen in de speellijst weergeven"
 
-#: src/audacious/ui_playlist.c:490
+#: src/audacious/ui_playlist.c:489
 msgid ""
 "Select entries in playlist by filling one or more fields. Fields use regular "
 "expressions syntax, case-insensitive. If you don't know how regular "
@@ -1506,48 +1527,48 @@ msgid ""
 "for."
 msgstr ""
 
-#: src/audacious/ui_playlist.c:497
+#: src/audacious/ui_playlist.c:496
 #, fuzzy
 msgid "Track name: "
 msgstr "Titel"
 
-#: src/audacious/ui_playlist.c:503
+#: src/audacious/ui_playlist.c:502
 msgid "Album name: "
 msgstr ""
 
-#: src/audacious/ui_playlist.c:509
+#: src/audacious/ui_playlist.c:508
 #, fuzzy
 msgid "Artist: "
 msgstr "Artiest"
 
-#: src/audacious/ui_playlist.c:515
+#: src/audacious/ui_playlist.c:514
 #, fuzzy
 msgid "Filename: "
 msgstr "Bestandsnaam:"
 
-#: src/audacious/ui_playlist.c:522
+#: src/audacious/ui_playlist.c:521
 msgid "Clear previous selection before searching"
 msgstr ""
 
-#: src/audacious/ui_playlist.c:525
+#: src/audacious/ui_playlist.c:524
 msgid "Automatically toggle queue for matching entries"
 msgstr ""
 
-#: src/audacious/ui_playlist.c:528
+#: src/audacious/ui_playlist.c:527
 msgid "Create a new playlist with matching entries"
 msgstr ""
 
-#: src/audacious/ui_playlist.c:788
+#: src/audacious/ui_playlist.c:777
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "Fout bij wegschrijven afspeellijst \"%s\": %s"
 
-#: src/audacious/ui_playlist.c:809
+#: src/audacious/ui_playlist.c:799
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s bestaat reeds. Wilt u doorgaan?"
 
-#: src/audacious/ui_playlist.c:823
+#: src/audacious/ui_playlist.c:814
 #, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
@@ -1558,15 +1579,15 @@ msgstr ""
 "\n"
 "Onbekend bestandstype voor '%s'.\n"
 
-#: src/audacious/ui_playlist.c:963
+#: src/audacious/ui_playlist.c:966
 msgid "Load Playlist"
 msgstr "Afspeellijst laden"
 
-#: src/audacious/ui_playlist.c:976
+#: src/audacious/ui_playlist.c:979
 msgid "Save Playlist"
 msgstr "Afspeellijst opslaan"
 
-#: src/audacious/ui_playlist.c:1672
+#: src/audacious/ui_playlist.c:1690
 msgid "Audacious Playlist Editor"
 msgstr "Audacious afspeellijst-editor"
 
@@ -1593,24 +1614,24 @@ msgstr "Bestandsnaam"
 msgid "Un_queue"
 msgstr "_Uit wachtrij verwijderen"
 
-#: src/audacious/ui_jumptotrack.c:136 src/audacious/ui_jumptotrack.c:525
+#: src/audacious/ui_jumptotrack.c:136 src/audacious/ui_jumptotrack.c:573
 msgid "_Queue"
 msgstr "_In wachtrij plaatsen"
 
-#: src/audacious/ui_jumptotrack.c:450
+#: src/audacious/ui_jumptotrack.c:498
 msgid "Jump to Track"
 msgstr "Ga naar nummer"
 
-#: src/audacious/ui_jumptotrack.c:491
+#: src/audacious/ui_jumptotrack.c:539
 msgid "Filter: "
 msgstr "Filter: "
 
-#: src/audacious/ui_jumptotrack.c:492
+#: src/audacious/ui_jumptotrack.c:540
 #, fuzzy
 msgid "_Filter:"
 msgstr "Filter: "
 
-#: src/audacious/playback.c:198
+#: src/audacious/playback.c:171
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
@@ -1618,31 +1639,31 @@ msgstr ""
 "<b><big>Geen uitvoer-plugin geselecteerd.</big></b>\n"
 "U heeft (nog) geen uitvoer-plugin gekozen."
 
-#: src/audacious/titlestring.c:371
+#: src/audacious/titlestring.c:379
 msgid "Performer/Artist"
 msgstr "Artiest"
 
-#: src/audacious/titlestring.c:374
+#: src/audacious/titlestring.c:382
 msgid "File name"
 msgstr "Bestandsnaam"
 
-#: src/audacious/titlestring.c:375
+#: src/audacious/titlestring.c:383
 msgid "File path"
 msgstr "Bestandslocatie"
 
-#: src/audacious/titlestring.c:376
+#: src/audacious/titlestring.c:384
 msgid "File extension"
 msgstr "Bestandstype"
 
-#: src/audacious/titlestring.c:377
+#: src/audacious/titlestring.c:385
 msgid "Track name"
 msgstr "Titel"
 
-#: src/audacious/titlestring.c:378
+#: src/audacious/titlestring.c:386
 msgid "Track number"
 msgstr "Nummer"
 
-#: src/audacious/titlestring.c:441
+#: src/audacious/titlestring.c:449
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: Geef \"...\" alleen weer wanneer element %n beschikbaar is"
 
@@ -2118,16 +2139,53 @@ msgstr "Pauzeer voor"
 msgid "seconds"
 msgstr "seconden"
 
-#: src/audacious/glade/prefswin.glade:4310
+#: src/audacious/glade/prefswin.glade:4175
+msgid "<b>Sampling Rate Converter</b>"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4215
+msgid "Enable Sampling Rate Converter"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4264
+msgid "Sampling Rate [Hz]:"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4334
+msgid ""
+"<span size=\"small\">All stream will be converted to this sampling rate.\n"
+"This should be the max supported sampling rate of\n"
+"the sound card or output plugin.</span>"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4364
+msgid "Converter Type:"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4392
+msgid ""
+"SRC_SINC_BEST_QUALITY\n"
+"SRC_SINC_MEDIUM_QUALITY\n"
+"SRC_SINC_FASTEST\n"
+"SRC_ZERO_ORDER_HOLD\n"
+"SRC_LINEAR"
+msgstr ""
+
+#: src/audacious/glade/prefswin.glade:4593
+#, fuzzy
+msgid "Reload Plugins"
+msgstr "Plugins"
+
+#: src/audacious/glade/prefswin.glade:4654
 msgid "Popup Information Settings"
 msgstr "Instellingen van popup-informatie"
 
-#: src/audacious/glade/prefswin.glade:4334
+#: src/audacious/glade/prefswin.glade:4678
 #, fuzzy
 msgid "<b>Cover image retrieve</b>"
 msgstr "<b>Formaat-detectie</b>"
 
-#: src/audacious/glade/prefswin.glade:4359
+#: src/audacious/glade/prefswin.glade:4703
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
@@ -2137,59 +2195,59 @@ msgstr ""
 "bestandsnaam gekeken. Deze woorden kunnen hier worden opgegeven, gescheiden "
 "door komma's."
 
-#: src/audacious/glade/prefswin.glade:4414
+#: src/audacious/glade/prefswin.glade:4758
 msgid "Include:"
 msgstr "Zoeken naar:"
 
-#: src/audacious/glade/prefswin.glade:4442
+#: src/audacious/glade/prefswin.glade:4786
 msgid "Exclude:"
 msgstr "Uitsluiten:"
 
-#: src/audacious/glade/prefswin.glade:4511
+#: src/audacious/glade/prefswin.glade:4855
 msgid "Recursively search for cover"
 msgstr "Recursief zoeken naar covers"
 
-#: src/audacious/glade/prefswin.glade:4549
+#: src/audacious/glade/prefswin.glade:4893
 msgid "Search depth: "
 msgstr "Zoekdiepte: "
 
-#: src/audacious/glade/prefswin.glade:4615
+#: src/audacious/glade/prefswin.glade:4959
 msgid "Use per-file cover"
 msgstr "Cover per bestand"
 
-#: src/audacious/glade/prefswin.glade:4635
+#: src/audacious/glade/prefswin.glade:4979
 #, fuzzy
 msgid "<b>Miscellaneous</b>"
 msgstr "<b>_Diversen</b>"
 
-#: src/audacious/glade/prefswin.glade:4673
+#: src/audacious/glade/prefswin.glade:5017
 msgid "Show Progress bar for the current track"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4711
+#: src/audacious/glade/prefswin.glade:5055
 msgid "Delay until filepopup comes up: "
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4805
+#: src/audacious/glade/prefswin.glade:5149
 msgid "Color Adjustment"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4828
+#: src/audacious/glade/prefswin.glade:5172
 msgid ""
 "Audacious allows you to alter the color balance of the skinned UI. The "
 "sliders below will allow you to do this."
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4924
+#: src/audacious/glade/prefswin.glade:5268
 msgid "Red"
 msgstr ""
 
-#: src/audacious/glade/prefswin.glade:4952
+#: src/audacious/glade/prefswin.glade:5296
 #, fuzzy
 msgid "Green"
 msgstr "Grieks:"
 
-#: src/audacious/glade/prefswin.glade:4980
+#: src/audacious/glade/prefswin.glade:5324
 msgid "Blue"
 msgstr ""
 
@@ -2236,6 +2294,42 @@ msgstr "14KHZ"
 #: src/audacious/widgets/eq_slider.c:96
 msgid "16KHZ"
 msgstr "16KHZ"
+
+#~ msgid ""
+#~ "<b><big>Unable to play files.</big></b>\n"
+#~ "\n"
+#~ "The following files could not be played. Please check that:\n"
+#~ "1. they are accessible.\n"
+#~ "2. you have enabled the media plugins required."
+#~ msgstr ""
+#~ "<b><big>Kon bestanden niet afspelen.</big></b>\n"
+#~ "\n"
+#~ "De bestanden konden niet afgespeeld worden, controleer dat:\n"
+#~ "1. U toegang heeft to de bestanden.\n"
+#~ "2. U de correcte plugins heeft aanstaan."
+
+#~ msgid "Don't show this warning anymore"
+#~ msgstr "Deze waarschuwing niet meer weergeven"
+
+#~ msgid "Show more _details"
+#~ msgstr "Geef meer _details weer"
+
+#~ msgid ""
+#~ "\n"
+#~ "Received SIGSEGV\n"
+#~ "\n"
+#~ "This could be a bug in Audacious. If you don't know why this happened, "
+#~ "file a bug at http://bugs-meta.atheme.org/\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "SIGSEGV-signaal ontvangen\n"
+#~ "\n"
+#~ "Dit is mogelijk een bug in Audacious. Gelieve zonder externe plugins te "
+#~ "proberen.\n"
+#~ "Als u niet weet waarom dit gebeurde, rapporteer dan een bug bij uw "
+#~ "linuxdistributie.\n"
+#~ "\n"
 
 #~ msgid ""
 #~ "Enables playlist transparency. This is not recommended for slower "

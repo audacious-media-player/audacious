@@ -1,3 +1,10 @@
+2007-04-12 17:53:22 +0000  Alexandr Orlov <alxorlov@pochta.ru>
+  revision [4382]
+  Update russian translation.
+  trunk/po/ru.po |   18 +++++++++---------
+  1 file changed, 9 insertions(+), 9 deletions(-)
+
+
 2007-04-12 07:16:37 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4380]
   - workaround for linuxthread's broken implementation of sigwait().
