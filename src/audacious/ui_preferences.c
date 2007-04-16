@@ -2336,7 +2336,10 @@ on_reload_plugins_clicked(GtkButton * button, gpointer data)
      * symbol sizes change.                       - nenolod
      */
 
+    bmp_config_save();
     plugin_system_cleanup();
+    bmp_config_free();
+    bmp_config_load();
     plugin_system_init();
 }
 

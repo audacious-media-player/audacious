@@ -506,4 +506,6 @@ plugin_system_cleanup(void)
         g_list_free(vfs_transports);
         vfs_transports = NULL;
     }
+
+    g_hash_table_destroy( plugin_matrix );
 }

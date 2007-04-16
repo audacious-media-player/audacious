@@ -539,6 +539,19 @@ bmp_init_paths()
 }
 
 void
+bmp_config_free(void)
+{
+  gint i;
+  for (i = 0; i < ncfgsent; ++i) {
+    if ( *(bmp_strents[i].se_vloc) != NULL )
+    {
+      g_free( *(bmp_strents[i].se_vloc) );
+      *(bmp_strents[i].se_vloc) = NULL;
+    }
+  }
+}
+
+void
 bmp_config_load(void)
 {
     ConfigDb *db;
