@@ -1,3 +1,11 @@
+2007-04-14 20:25:06 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4386]
+  - disable debugging notices
+  
+  trunk/src/audacious/playlist.h |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2007-04-14 20:20:43 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4384]
   - run update-po. closes #891.
