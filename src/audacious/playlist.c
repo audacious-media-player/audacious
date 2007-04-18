@@ -2015,10 +2015,17 @@ playlist_compare_artist(PlaylistEntry * a,
     if (b->tuple != NULL)
         playlist_entry_get_info(b);
 
-    if (a->tuple != NULL && a->tuple->performer != NULL)
+    if (a->tuple != NULL && a->tuple->performer != NULL) {
         a_artist = a->tuple->performer;
-    if (b->tuple != NULL && b->tuple->performer != NULL)
+        if (str_has_prefix_nocase(a_artist, "the "))
+            a_artist += 4;
+    }
+
+    if (b->tuple != NULL && b->tuple->performer != NULL) {
         b_artist = b->tuple->performer;
+        if (str_has_prefix_nocase(b_artist, "the "))
+            b_artist += 4;
+    }
 
     if (a_artist != NULL && b_artist != NULL)
         return strcasecmp(a_artist, b_artist);

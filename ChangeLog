@@ -1,3 +1,13 @@
+2007-04-16 11:19:03 +0000  Giacomo Lozito <james@develia.org>
+  revision [4390]
+  - make the evil 'reload plugins' button behave a bit better
+  trunk/src/audacious/main.c           |   13 +++++++++++++
+  trunk/src/audacious/main.h           |    1 +
+  trunk/src/audacious/pluginenum.c     |    2 ++
+  trunk/src/audacious/ui_preferences.c |    3 +++
+  4 files changed, 19 insertions(+)
+
+
 2007-04-16 03:00:32 +0000  
   revision [4388]
   * Update Japanese translation.
