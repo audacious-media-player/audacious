@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: sr\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-04-14 15:19-0500\n"
-"PO-Revision-Date: 2007-02-03 12:22+0100\n"
+"PO-Revision-Date: 2007-05-19 12:22+0100\n"
 "Last-Translator: Strahinja  Kustudić <kustodian@gmail.com>\n"
 "Language-Team: Serbian Cyrillic <kustodian@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -194,6 +194,21 @@ msgid ""
 "report:\n"
 "\n"
 msgstr ""
+"\n"
+"Аудациоус је ухватио сигнал 11 (SIGSEGV).\n"
+"\n"
+"Извињавамо се због непрелика, али Аудациоус је отказао.\n"
+"Ово је грешка у програму, и никед не би требала да се деси под "
+"нормалним околностима.\n"
+"Ваша тренутна конфигурација је сачувана и неби требала бити оштећена.\n"
+"\n"
+"Можете побољшати квалитет Аудациоус-а пријављивањем грешке на http://bugs-"
+"meta.atheme.org\n"
+"Молим вас укључите целокупан текст ове поруке и опишите нам шта сте "
+"радили кад се овај\n"
+"отказ догодио, да бисмо брзо могли обрадити Ваш извештај "
+"грешке:\n"
+"\n"
 
 #: src/audacious/signals.c:79
 msgid ""
@@ -201,12 +216,17 @@ msgid ""
 "Bugs can be reported at http://bugs-meta.atheme.org against the Audacious "
 "product.\n"
 msgstr ""
+"\n"
+"Грешке за производ Аудациоус се могу пријавити на http://bugs-meta.atheme.org"
+"\n"
 
 #: src/audacious/signals.c:265
 msgid ""
 "Your signaling implementation is broken.\n"
 "Expect unusable crash reports.\n"
 msgstr ""
+"Ваша имплементација сигнала је покварена.\n"
+"Очекујте неискористиве извештаје о грешкама.\n"
 
 #: src/audacious/strings.c:170
 msgid "  (invalid UTF-8)"
@@ -286,9 +306,8 @@ msgid "Bulgarian:"
 msgstr "Бугарски:"
 
 #: src/audacious/ui_credits.c:156
-#, fuzzy
 msgid "Catalan:"
-msgstr "Италијански:"
+msgstr "Каталонски:"
 
 #: src/audacious/ui_credits.c:159
 msgid "Croatian:"
@@ -446,16 +465,15 @@ msgstr "Дужина нумере:"
 
 #: src/audacious/ui_main.c:1520
 msgid "Audacious - visibility warning"
-msgstr ""
+msgstr "Аудациоус - упозорење видљивости"
 
 #: src/audacious/ui_main.c:1522
-#, fuzzy
 msgid "Show main player window"
-msgstr "Изаберите фонт главног прозора плејера:"
+msgstr "Прикажи главни прозор плејера"
 
 #: src/audacious/ui_main.c:1523
 msgid "Ignore"
-msgstr ""
+msgstr "Игнориши"
 
 #: src/audacious/ui_main.c:1527
 msgid ""
@@ -464,10 +482,14 @@ msgid ""
 "otherwise, you'll have to control it remotely via audtool or enabled plugins "
 "(such as the statusicon plugin)."
 msgstr ""
+"Аудациоус је покренут са свим његовим прозорима сакривеним.\n"
+"Можда бисте хтели да поново прикажете прозор плејера да бисте контролисали Аудациоус; "
+"у супротном, мораћете га контролисати даљински преко audtool или укључених додатака "
+"(као што је додатак "статусна иконица")."
 
 #: src/audacious/ui_main.c:1533
 msgid "Always ignore, show/hide is controlled remotely"
-msgstr ""
+msgstr "Увек игнориши, прикажи/сакриј се контролише даљински"
 
 #: src/audacious/ui_main.c:1551
 msgid "Enter location to play:"
@@ -1969,15 +1991,15 @@ msgstr "секунди"
 
 #: src/audacious/glade/prefswin.glade:4175
 msgid "<b>Sampling Rate Converter</b>"
-msgstr ""
+msgstr "<b>Претварач учесталости узимања узорака</b>"
 
 #: src/audacious/glade/prefswin.glade:4215
 msgid "Enable Sampling Rate Converter"
-msgstr ""
+msgstr "Укључи претварач учесталости узимања узорака"
 
 #: src/audacious/glade/prefswin.glade:4264
 msgid "Sampling Rate [Hz]:"
-msgstr ""
+msgstr "Учесталост узимања узорака [Hz]:"
 
 #: src/audacious/glade/prefswin.glade:4334
 msgid ""
@@ -1985,10 +2007,13 @@ msgid ""
 "This should be the max supported sampling rate of\n"
 "the sound card or output plugin.</span>"
 msgstr ""
+"<span size=\"small\">Сви токови ће бити претворени у ову учесталост узимања узорака.\n"
+"Ово би требала да буде максимална подржана учесталост узимања узорака\н"
+"музичке картице или излазног додатка.</span>"
 
 #: src/audacious/glade/prefswin.glade:4364
 msgid "Converter Type:"
-msgstr ""
+msgstr "Тип претварача:"
 
 #: src/audacious/glade/prefswin.glade:4392
 msgid ""
@@ -1998,11 +2023,15 @@ msgid ""
 "SRC_ZERO_ORDER_HOLD\n"
 "SRC_LINEAR"
 msgstr ""
+"SRC_SINC_BEST_QUALITY\n"
+"SRC_SINC_MEDIUM_QUALITY\n"
+"SRC_SINC_FASTEST\n"
+"SRC_ZERO_ORDER_HOLD\n"
+"SRC_LINEAR"
 
 #: src/audacious/glade/prefswin.glade:4593
-#, fuzzy
 msgid "Reload Plugins"
-msgstr "Додаци"
+msgstr "Освежи додатке"
 
 #: src/audacious/glade/prefswin.glade:4654
 msgid "Popup Information Settings"

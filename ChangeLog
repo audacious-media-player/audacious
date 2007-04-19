@@ -1,3 +1,12 @@
+2007-04-18 06:36:31 +0000  Ben Tucker <bnt@interchange.ubc.ca>
+  revision [4392]
+  Modified playlist_compare_artist so that a leading "the" in an artist's 
+  name is ignored during sorting.
+  
+  trunk/src/audacious/playlist.c |   11 +++++++++--
+  1 file changed, 9 insertions(+), 2 deletions(-)
+
+
 2007-04-16 11:19:03 +0000  Giacomo Lozito <james@develia.org>
   revision [4390]
   - make the evil 'reload plugins' button behave a bit better
