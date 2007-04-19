@@ -1,3 +1,11 @@
+2007-04-19 15:25:50 +0000  Strahinja Kustudic <kustodian@gmail.com>
+  revision [4394]
+  Updated Serbian translations
+  trunk/po/sr.po      |   57 +++++++++++++++++++++++++++++++++++++++-------------
+  trunk/po/sr@Latn.po |   57 +++++++++++++++++++++++++++++++++++++++-------------
+  2 files changed, 86 insertions(+), 28 deletions(-)
+
+
 2007-04-18 06:36:31 +0000  Ben Tucker <bnt@interchange.ubc.ca>
   revision [4392]
   Modified playlist_compare_artist so that a leading "the" in an artist's 

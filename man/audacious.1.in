@@ -192,11 +192,11 @@ Default playlist usually loaded on startup.
 User's set of Audacious-specific GTK config settings. Options such as widget
 color and fonts sizes can be set here.
 .TP
-~/.share/audacious/Skins, @datadir@/audacious/Skins
+~/.local/share/audacious/Skins, @datadir@/audacious/Skins
 Default location(s) where Audacious should look for skinfiles.
 .TP
-~/.config/audacious/Plugins
-Location of user-installed plugins. (subject to change)
+~/.local/share/audacious/Plugins
+Location of user-installed plugins.
 .SH ENVIRONMENT
 .TP 12
 .B SKINSDIR

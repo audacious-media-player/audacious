@@ -144,7 +144,7 @@ NoBorder {
 2.3 Skin Installation
 ---------------------
 
-Audacious will create a directory called ~/.share/audacious/Skins. You can unarchive
+Audacious will create a directory called ~/.local/share/audacious/Skins. You can unarchive
 the skins the same way as you do for Winamp.
 
 However, you don't need to as Audacious supports archived skins. Audacious
@@ -160,7 +160,7 @@ is bundled with most Linux distributions.
 Audacious looks for skins in these directories (in listing order):
 
 <prefix>/share/audacious/Skins
-~/.share/audacious/Skins
+~/.local/share/audacious/Skins
 ~/.audacious/Skins
 
 You can set the environment variable SKINSDIR to another location of
