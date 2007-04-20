@@ -1,3 +1,11 @@
+2007-04-19 16:24:13 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [4396]
+  XDG path fixes in documentation, submitted by nine on irc.atheme.org
+  trunk/README             |    4 ++--
+  trunk/man/audacious.1.in |    6 +++---
+  2 files changed, 5 insertions(+), 5 deletions(-)
+
+
 2007-04-19 15:25:50 +0000  Strahinja Kustudic <kustodian@gmail.com>
   revision [4394]
   Updated Serbian translations
