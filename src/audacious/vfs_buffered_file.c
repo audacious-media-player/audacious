@@ -157,6 +157,14 @@ buffered_file_vfs_truncate_impl(VFSFile * file, glong size)
     return 0;
 }
 
+off_t
+buffered_file_vfs_fsize_impl(VFSFile * file)
+{
+    VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
+
+    return vfs_fsize(handle->which == TRUE ? handle->fd : handle->buffer);
+}
+
 gchar *
 buffered_file_vfs_metadata_impl(VFSFile * file, const gchar * field)
 {
@@ -178,6 +186,7 @@ VFSConstructor buffered_file_const = {
 	buffered_file_vfs_ftell_impl,
 	buffered_file_vfs_feof_impl,
 	buffered_file_vfs_truncate_impl,
+	buffered_file_vfs_fsize_impl,
 	buffered_file_vfs_metadata_impl
 };
 

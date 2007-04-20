@@ -185,6 +185,19 @@ buffer_vfs_truncate_impl(VFSFile * file, glong size)
     return 0;
 }
 
+off_t
+buffer_vfs_fsize_impl(VFSFile * file)
+{
+    VFSBuffer *handle;
+
+    if (file == NULL)
+        return -1;
+
+    handle = (VFSBuffer *) file->handle;
+
+    return (off_t)handle->end;
+}
+
 VFSConstructor buffer_const = {
 	NULL,			// not a normal VFS class
 	buffer_vfs_fopen_impl,
@@ -198,6 +211,7 @@ VFSConstructor buffer_const = {
 	buffer_vfs_ftell_impl,
 	buffer_vfs_feof_impl,
 	buffer_vfs_truncate_impl,
+	buffer_vfs_fsize_impl,
 	NULL
 };
 

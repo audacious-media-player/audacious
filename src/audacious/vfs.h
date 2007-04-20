@@ -21,6 +21,7 @@
 
 #include <glib.h>
 #include <stdio.h>
+#include <sys/types.h>
 
 typedef struct _VFSFile VFSFile;
 typedef struct _VFSConstructor VFSConstructor;
@@ -76,6 +77,7 @@ struct _VFSConstructor {
 	glong (*vfs_ftell_impl)(VFSFile *file);
 	gboolean (*vfs_feof_impl)(VFSFile *file);
 	gboolean (*vfs_truncate_impl)(VFSFile *file, glong length);
+	off_t (*vfs_fsize_impl)(VFSFile *file);
 	gchar *(*vfs_get_metadata_impl)(VFSFile *file, const gchar * field);
 };
 
@@ -116,6 +118,8 @@ extern gboolean vfs_file_test(const gchar * path,
 extern gboolean vfs_is_writeable(const gchar * path);
 
 extern gboolean vfs_truncate(VFSFile * file, glong length);
+
+extern off_t vfs_fsize(VFSFile * file);
 
 extern gchar *vfs_get_metadata(VFSFile * file, const gchar * field);
 

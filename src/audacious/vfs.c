@@ -303,6 +303,24 @@ vfs_truncate(VFSFile * file, glong length)
 }
 
 /**
+ * vfs_fsize:
+ * @file: #VFSFile object that represents the VFS stream.
+ *
+ * Returns te size of the file
+ *
+ * Return value: On success, the size of the file in bytes.
+ * Otherwise, -1.
+ */
+off_t
+vfs_fsize(VFSFile * file)
+{
+    if (file == NULL)
+        return -1;
+
+    return file->base->vfs_fsize_impl(file);
+}
+
+/**
  * vfs_get_metadata:
  * @file: #VFSFile object that represents the VFS stream.
  * @field: The string constant field name to get.
