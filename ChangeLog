@@ -1,3 +1,10 @@
+2007-04-20 11:45:22 +0000  Ralf Ertzinger <ralf@skytale.net>
+  revision [4398]
+  Fix some wrong escape sequences
+  trunk/po/sr.po |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2007-04-19 16:24:13 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [4396]
   XDG path fixes in documentation, submitted by nine on irc.atheme.org

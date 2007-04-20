@@ -485,7 +485,7 @@ msgstr ""
 "Audacious je pokrenut sa svim njegovim prozorima sakrivenim.\n"
 "Možda biste hteli da ponovo prikažete prozor plejera da biste kontrolisali Audacious; "
 "u suprotnom, moraćete ga kontrolisati daljinski preko audtool ili uključenih dodataka "
-"(kao što je dodatak "statusna ikonica")."
+"(kao što je dodatak \"statusna ikonica\")."
 
 #: src/audacious/ui_main.c:1533
 msgid "Always ignore, show/hide is controlled remotely"
