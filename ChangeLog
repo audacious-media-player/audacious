@@ -1,3 +1,15 @@
+2007-04-20 13:49:07 +0000  Ralf Ertzinger <ralf@skytale.net>
+  revision [4402]
+  
+  - Add a vfs_fsize() call to the VFS layer
+  
+  trunk/src/audacious/vfs.c               |   18 ++++++++++++++++++
+  trunk/src/audacious/vfs.h               |    4 ++++
+  trunk/src/audacious/vfs_buffer.c        |   14 ++++++++++++++
+  trunk/src/audacious/vfs_buffered_file.c |    9 +++++++++
+  4 files changed, 45 insertions(+)
+
+
 2007-04-20 11:49:29 +0000  Ralf Ertzinger <ralf@skytale.net>
   revision [4400]
   Some more bad escapes
