@@ -201,8 +201,8 @@ CHARDET_LIBS="../libguess/libguess.a ../librcd/librcd.a"
 dnl chardet support
 dnl ========================
 AC_ARG_ENABLE(chardet,
-	[  --enable-chardet	  enable character set detection support (default=no)],
-			enable_chardet=$enableval, enable_chardet=no)
+	[  --enable-chardet	  enable character set detection support (default=yes)],
+			enable_chardet=$enableval, enable_chardet=yes)
 if test "x$enable_chardet" = xyes; then
     AC_DEFINE(USE_CHARDET, 1, [Define if character set detection enabled] )
     AC_CHECK_LIB(udet_c, detectCharset, [AC_DEFINE(HAVE_UDET, 1,[Define if the system has Mozilla universal character detector library]) CHARDET_LIBS=["$CHARDET_LIBS -ludet -ludet_c"]])
@@ -436,6 +436,7 @@ echo
 echo "  Use one plugin dir:                     $enable_one_plugin_dir"
 echo "  Allow user plugin dir:                  $enable_user_plugin_dir"
 echo 
+echo "  Automatic character code detection:     $enable_chardet"
 echo "  Sample rate upconversion:               $enable_samplerate"
 echo
 

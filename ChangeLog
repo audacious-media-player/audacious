@@ -1,3 +1,18 @@
+2007-05-01 03:49:38 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4408]
+  maintenance of build system:
+  - LIBDEP macro has been introduced as like audacious plugins r1888.
+  - make rules such as $(AR) cq $@ $(OBJECTS) in individual Makefile have been removed. these linkage will be done through objective.mk.
+  
+  trunk/mk/objective.mk                |    2 +-
+  trunk/src/audacious/Makefile         |    4 +++-
+  trunk/src/audacious/widgets/Makefile |    3 ---
+  trunk/src/intl/Makefile              |    3 ---
+  trunk/src/libguess/Makefile          |    4 ----
+  trunk/src/librcd/Makefile            |    4 ----
+  6 files changed, 4 insertions(+), 16 deletions(-)
+
+
 2007-04-27 17:22:03 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4406]
   - temporal workaround for a bug which introduced in r4360. without this patch, cuesheet plugin endlessly adds entries in a cue sheet to the current playlist.
