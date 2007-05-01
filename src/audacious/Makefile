@@ -110,10 +110,12 @@ SOURCES = \
 
 OBJECTS = ${SOURCES:.c=.o}
 
+LIBDEP = widgets/libwidgets.a ../libguess/libguess.a ../librcd/librcd.a
+
 desktop_DATA = audacious.desktop
 desktopdir = $(datadir)/applications
 
-audacious: $(OBJECTS) widgets/libwidgets.a
+audacious: $(OBJECTS) $(LIBDEP)
 	$(CXX) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@ 
 	@printf "%10s     %-20s\n" LINK $@
 

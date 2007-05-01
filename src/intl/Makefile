@@ -44,6 +44,3 @@ SOURCES = \
 OBJECTS = ${SOURCES:.c=.o}
 
 include ../../mk/objective.mk
-
-libintl.a: $(OBJECTS)
-	$(AR) cr $@ $(OBJECTS)

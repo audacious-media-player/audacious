@@ -223,7 +223,7 @@ $(OBJECTIVE_LIBS): $(OBJECTS)
 		 fi;) \
 	fi
 
-%.a: $(OBJECTS)
+$(OBJECTIVE_LIBS_NOINST): $(OBJECTS)
 	if [ "x$(OBJECTS)" != "x" ]; then \
 		$(MAKE) $(OBJECTS) || exit;		\
 		printf "%10s     %-20s\n" LINK $@; \
