@@ -1,3 +1,12 @@
+2007-05-01 04:07:19 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4410]
+  - make --enable-chardet default.
+  - now configure shows the configure status for chardet.
+  
+  trunk/configure.ac |    5 +++--
+  1 file changed, 3 insertions(+), 2 deletions(-)
+
+
 2007-05-01 03:49:38 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4408]
   maintenance of build system:

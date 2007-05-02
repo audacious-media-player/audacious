@@ -477,7 +477,7 @@ mainwin_draw_titlebar(gboolean focus)
 {
     /* FIXME: uses SkinnedWindow::gc directly. -nenolod */
     skin_draw_mainwin_titlebar(bmp_active_skin, mainwin_bg, 
-			       SKINNED_WINDOW(mainwin)->gc,
+                               SKINNED_WINDOW(mainwin)->gc,
                                cfg.player_shaded, focus || !cfg.dim_titlebar);
 }
 
@@ -1266,6 +1266,9 @@ mainwin_keypress(GtkWidget * grab_widget,
         break;
     case GDK_KP_5:
         mainwin_play_pushed();
+        break;
+    case GDK_space:
+        playback_pause();
         break;
     case GDK_Escape:
         mainwin_minimize_cb();
