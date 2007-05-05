@@ -1,3 +1,13 @@
+2007-05-05 23:24:08 +0000  Ben Tucker <bnt@interchange.ubc.ca>
+  revision [4418]
+  Fixed licensing issues and DBus node/interface names. Also implemented playlist advance and reverse.
+  
+  trunk/src/audacious/dbus.c      |   37 ++++++++++++++++++------------------
+  trunk/src/audacious/dbus.h      |   41 ++++++++++++++++++----------------------
+  trunk/src/audacious/objects.xml |   28 ++++++++++++++++++++++-----
+  3 files changed, 61 insertions(+), 45 deletions(-)
+
+
 2007-05-05 23:04:39 +0000  Ben Tucker <bnt@interchange.ubc.ca>
   revision [4416]
   Fixed formatting. Tabs + tw=2 ==> spaces + tw=4.
