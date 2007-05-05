@@ -1,3 +1,22 @@
+<--
+ * Audacious: A cross-platform multimedia player
+ * Copyright (c) 2007 Ben Tucker
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; under version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ -->
+
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
@@ -41,7 +60,6 @@
     CMD_TOGGLE_AOT
     CMD_SHOW_ABOUT_BOX
     CMD_EJECT
-    CMD_PING?
     CMD_GET_BALANCE
     CMD_MAIN_WIN_TOGGLE
     CMD_IS_EQ_WIN
@@ -72,9 +90,9 @@
     CMD_PLAYLIST_GET_TUPLE_DATA
 -->
 
-<node name="/org/audacious">
+<node name="/org/atheme/audacious">
     <!-- Audacious General Information -->
-    <interface name="org.audacious.general">
+    <interface name="org.atheme.audacious.general">
         <!-- Audacious version -->
         <method name="Version">
             <arg type="s" direction="out" name="version"/>
@@ -82,7 +100,7 @@
     </interface>
 
     <!-- Playback Information/Manipulation -->
-    <interface name="org.audacious.playback">
+    <interface name="org.atheme.audacious.playback">
         <!-- Begin or resume playback -->
         <method name="Play"/>
 
@@ -128,7 +146,7 @@
     </interface>
 
     <!-- Playlist Information/Manipulation -->
-    <interface name="org.audacious.playlist">
+    <interface name="org.atheme.audacious.playlist">
         <!-- Playlist position -->
         <method name="Position">
             <!-- Return position of current song in current playlist -->

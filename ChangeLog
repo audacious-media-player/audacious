@@ -1,3 +1,14 @@
+2007-05-05 23:04:39 +0000  Ben Tucker <bnt@interchange.ubc.ca>
+  revision [4416]
+  Fixed formatting. Tabs + tw=2 ==> spaces + tw=4.
+  
+  trunk/src/audacious/dbus.c      |  192 ++++++++++----------
+  trunk/src/audacious/dbus.h      |   32 +--
+  trunk/src/audacious/main.c      |    2 
+  trunk/src/audacious/objects.xml |  372 ++++++++++++++++++++--------------------
+  4 files changed, 299 insertions(+), 299 deletions(-)
+
+
 2007-05-05 22:37:54 +0000  Ben Tucker <bnt@interchange.ubc.ca>
   revision [4414]
   Added basic DBus support, disabled by default with a configuration option to enable it. The general and playback information/manipulation methods are currently the only ones implemented. That is version, play, pause, stop, playing, paused, stopped, status, and seek. There are stubs for many unimplemented methods.
