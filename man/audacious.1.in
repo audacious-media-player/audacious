@@ -56,7 +56,7 @@ Starts Audacious in headless mode.
 Audacious supports Winamp Classic style skins.  Skins may be stored in either
 archived (\fI.zip\fP, \fI.wsz\fP, \fI.tgz\fP, \fI.tar.gz\fP, 
 or \fI.tar.bz2\fP) or unarchived format.  Audacious looks for skinfiles in
-@datadir@/audacious/Skins, ~/.audacious/Skins, and locations specified by the
+@datarootdir@/audacious/Skins, ~/.audacious/Skins, and locations specified by the
 \fBSKINSDIR\fP variable.
 .SH KEYBINDINGS
 Global keybindings for Audacious:
@@ -192,7 +192,7 @@ Default playlist usually loaded on startup.
 User's set of Audacious-specific GTK config settings. Options such as widget
 color and fonts sizes can be set here.
 .TP
-~/.local/share/audacious/Skins, @datadir@/audacious/Skins
+~/.local/share/audacious/Skins, @datarootdir@/audacious/Skins
 Default location(s) where Audacious should look for skinfiles.
 .TP
 ~/.local/share/audacious/Plugins
