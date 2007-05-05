@@ -1,3 +1,17 @@
+2007-05-05 22:37:54 +0000  Ben Tucker <bnt@interchange.ubc.ca>
+  revision [4414]
+  Added basic DBus support, disabled by default with a configuration option to enable it. The general and playback information/manipulation methods are currently the only ones implemented. That is version, play, pause, stop, playing, paused, stopped, status, and seek. There are stubs for many unimplemented methods.
+  
+  trunk/configure.ac              |   36 ++++++
+  trunk/mk/rules.mk.in            |    5 
+  trunk/src/audacious/Makefile    |    7 +
+  trunk/src/audacious/dbus.c      |  229 ++++++++++++++++++++++++++++++++++++++++
+  trunk/src/audacious/dbus.h      |   88 +++++++++++++++
+  trunk/src/audacious/main.c      |    8 +
+  trunk/src/audacious/objects.xml |  223 ++++++++++++++++++++++++++++++++++++++
+  7 files changed, 596 insertions(+)
+
+
 2007-05-02 17:34:59 +0000  Michael Farber <01mf02@gmail.com>
   revision [4412]
   - Made the Space key pause/unpause playback (like e.g. mplayer)

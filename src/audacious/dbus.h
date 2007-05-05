@@ -30,12 +30,12 @@
 #define DBUS_OBJECT_PATH "/org/audacious"
 
 typedef struct {
-	GObject parent;
-	DBusGConnection *connection;
+    GObject parent;
+    DBusGConnection *connection;
 } RemoteObject;
 
 typedef struct {
-	GObjectClass parent_class;
+    GObjectClass parent_class;
 } RemoteObjectClass;
 
 RemoteObject *init_dbus();
@@ -44,20 +44,20 @@ RemoteObject *init_dbus();
 
 // Audacious General Information
 gboolean audacious_remote_version(RemoteObject *obj, gchar **version,
-																	GError **error);
+                                  GError **error);
 
 // Playback Information/Manipulation
 gboolean audacious_remote_play(RemoteObject *obj, GError **error);
 gboolean audacious_remote_pause(RemoteObject *obj, GError **error);
 gboolean audacious_remote_stop(RemoteObject *obj, GError **error);
 gboolean audacious_remote_playing(RemoteObject *obj, gboolean *is_playing,
-																	GError **error);
+                                  GError **error);
 gboolean audacious_remote_paused(RemoteObject *obj, gboolean *is_paused,
-																 GError **error);
+                                 GError **error);
 gboolean audacious_remote_stopped(RemoteObject *obj, gboolean *is_stopped,
-																	GError **error);
+                                  GError **error);
 gboolean audacious_remote_status(RemoteObject *obj, gchar **status,
-																 GError **error);
+                                 GError **error);
 gboolean audacious_remote_seek(RemoteObject *obj, guint pos, GError **error);
 
 // Playlist Information/Manipulation
@@ -65,24 +65,24 @@ gboolean audacious_remote_position(RemoteObject *obj, int *pos, GError **error);
 gboolean audacious_remote_advance(RemoteObject *obj, GError **error);
 gboolean audacious_remote_reverse(RemoteObject *obj, GError **error);
 gboolean audacious_remote_length(RemoteObject *obj, int *length,
-																 GError **error);
+                                 GError **error);
 gboolean audacious_remote_song_title(RemoteObject *obj, int pos,
-																		gchar **title, GError **error);
+                                     gchar **title, GError **error);
 gboolean audacious_remote_song_filename(RemoteObject *obj, int pos,
-																			 gchar **filename, GError **error);
+                                        gchar **filename, GError **error);
 gboolean audacious_remote_song_length(RemoteObject *obj, int pos, int *length,
-																		 GError **error);
+                                      GError **error);
 gboolean audacious_remote_song_frames(RemoteObject *obj, int pos, int *length,
-																		 GError **error);
+                                      GError **error);
 gboolean audacious_remote_jump(RemoteObject *obj, int pos, GError **error);
 gboolean audacious_remote_add_url(RemoteObject *obj, gchar *url,
-																	GError **error);
+                                  GError **error);
 gboolean audacious_remote_delete(RemoteObject *obj, int pos, GError **error);
 gboolean audacious_remote_clear(RemoteObject *obj, GError **error);
 gboolean audacious_remote_repeating(RemoteObject *obj, gboolean *is_repeating,
-																		GError **error);
+                                    GError **error);
 gboolean audacious_remote_repeat(RemoteObject *obj, GError **error);
 gboolean audacious_remote_shuffling(RemoteObject *obj, gboolean *is_shuffling,
-																		GError **error);
+                                    GError **error);
 gboolean audacious_remote_shuffle(RemoteObject *obj, GError **error);
 #endif // !_AUDDBUS_H

@@ -1,223 +1,223 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
-  Defined:
-  CMD_GET_VERSION
-  CMD_PLAY
-  CMD_PAUSE
-  CMD_STOP
-  CMD_IS_PLAYING
-  CMD_GET_PLAYLIST_POS
-  CMD_SET_PLAYLIST_POS
-  CMD_GET_PLAYLIST_LENGTH
-  CMD_PLAYLIST_CLEAR
-	CMD_GET_OUTPUT_TIME
-	CMD_JUMP_TO_TIME
-	CMD_GET_PLAYLIST_FILE
-	CMD_GET_PLAYLIST_TITLE
-	CMD_GET_PLAYLIST_TIME
-	CMD_PLAYLIST_PREV
-	CMD_PLAYLIST_NEXT
-	CMD_TOGGLE_REPEAT
-	CMD_TOGGLE_SHUFFLE
-  CMD_PLAYLIST_ADD_URL_STRING
-	CMD_PLAYLIST_DELETE
-	CMD_IS_REPEAT
-	CMD_IS_SHUFFLE
+    Defined:
+    CMD_GET_VERSION
+    CMD_PLAY
+    CMD_PAUSE
+    CMD_STOP
+    CMD_IS_PLAYING
+    CMD_GET_PLAYLIST_POS
+    CMD_SET_PLAYLIST_POS
+    CMD_GET_PLAYLIST_LENGTH
+    CMD_PLAYLIST_CLEAR
+    CMD_GET_OUTPUT_TIME
+    CMD_JUMP_TO_TIME
+    CMD_GET_PLAYLIST_FILE
+    CMD_GET_PLAYLIST_TITLE
+    CMD_GET_PLAYLIST_TIME
+    CMD_PLAYLIST_PREV
+    CMD_PLAYLIST_NEXT
+    CMD_TOGGLE_REPEAT
+    CMD_TOGGLE_SHUFFLE
+    CMD_PLAYLIST_ADD_URL_STRING
+    CMD_PLAYLIST_DELETE
+    CMD_IS_REPEAT
+    CMD_IS_SHUFFLE
 
-  
-  Remaining:
-  CMD_PLAYLIST_ADD
-	CMD_GET_VOLUME
-	CMD_SET_VOLUME
-	CMD_GET_SKIN
-	CMD_SET_SKIN
-	CMD_GET_INFO
-	CMD_GET_EQ_DATA
-	CMD_SET_EQ_DATA
-	CMD_PL_WIN_TOGGLE
-	CMD_EQ_WIN_TOGGLE
-	CMD_SHOW_PREFS_BOX
-	CMD_TOGGLE_AOT
-	CMD_SHOW_ABOUT_BOX
-	CMD_EJECT
-	CMD_PING?
-	CMD_GET_BALANCE
-	CMD_MAIN_WIN_TOGGLE
-	CMD_IS_EQ_WIN
-	CMD_IS_PL_WIN
-	CMD_IS_MAIN_WIN
-	CMD_GET_EQ
-	CMD_GET_EQ_PREAMP
-	CMD_GET_EQ_BAND
-	CMD_SET_EQ
-	CMD_SET_EQ_PREAMP
-	CMD_SET_EQ_BAND
-	CMD_QUIT
-	CMD_PLAYLIST_INS_URL_STRING
-	CMD_PLAYLIST_INS
-	CMD_PLAY_PAUSE
-	CMD_PLAYQUEUE_ADD
-	CMD_GET_PLAYQUEUE_LENGTH
-	CMD_PLAYQUEUE_REMOVE
-	CMD_TOGGLE_ADVANCE
-	CMD_IS_ADVANCE
-	CMD_ACTIVATE
-	CMD_SHOW_JTF_BOX
-	CMD_PLAYQUEUE_CLEAR
-	CMD_PLAYQUEUE_IS_QUEUED
-	CMD_PLAYQUEUE_GET_POS
-	CMD_PLAYQUEUE_GET_QPOS
-	CMD_PLAYLIST_ENQUEUE_TO_TEMP
-	CMD_PLAYLIST_GET_TUPLE_DATA
+
+    Remaining:
+    CMD_PLAYLIST_ADD
+    CMD_GET_VOLUME
+    CMD_SET_VOLUME
+    CMD_GET_SKIN
+    CMD_SET_SKIN
+    CMD_GET_INFO
+    CMD_GET_EQ_DATA
+    CMD_SET_EQ_DATA
+    CMD_PL_WIN_TOGGLE
+    CMD_EQ_WIN_TOGGLE
+    CMD_SHOW_PREFS_BOX
+    CMD_TOGGLE_AOT
+    CMD_SHOW_ABOUT_BOX
+    CMD_EJECT
+    CMD_PING?
+    CMD_GET_BALANCE
+    CMD_MAIN_WIN_TOGGLE
+    CMD_IS_EQ_WIN
+    CMD_IS_PL_WIN
+    CMD_IS_MAIN_WIN
+    CMD_GET_EQ
+    CMD_GET_EQ_PREAMP
+    CMD_GET_EQ_BAND
+    CMD_SET_EQ
+    CMD_SET_EQ_PREAMP
+    CMD_SET_EQ_BAND
+    CMD_QUIT
+    CMD_PLAYLIST_INS_URL_STRING
+    CMD_PLAYLIST_INS
+    CMD_PLAY_PAUSE
+    CMD_PLAYQUEUE_ADD
+    CMD_GET_PLAYQUEUE_LENGTH
+    CMD_PLAYQUEUE_REMOVE
+    CMD_TOGGLE_ADVANCE
+    CMD_IS_ADVANCE
+    CMD_ACTIVATE
+    CMD_SHOW_JTF_BOX
+    CMD_PLAYQUEUE_CLEAR
+    CMD_PLAYQUEUE_IS_QUEUED
+    CMD_PLAYQUEUE_GET_POS
+    CMD_PLAYQUEUE_GET_QPOS
+    CMD_PLAYLIST_ENQUEUE_TO_TEMP
+    CMD_PLAYLIST_GET_TUPLE_DATA
 -->
 
 <node name="/org/audacious">
-	<!-- Audacious General Information -->
-	<interface name="org.audacious.general">
-		<!-- Audacious version -->
-		<method name="Version">
-			<arg type="s" direction="out" name="version"/>
-		</method>
-	</interface>
+    <!-- Audacious General Information -->
+    <interface name="org.audacious.general">
+        <!-- Audacious version -->
+        <method name="Version">
+            <arg type="s" direction="out" name="version"/>
+        </method>
+    </interface>
 
-	<!-- Playback Information/Manipulation -->
-	<interface name="org.audacious.playback">
-		<!-- Begin or resume playback -->
-		<method name="Play"/>
+    <!-- Playback Information/Manipulation -->
+    <interface name="org.audacious.playback">
+        <!-- Begin or resume playback -->
+        <method name="Play"/>
 
-		<!-- Pause playback -->
-		<method name="Pause"/>
+        <!-- Pause playback -->
+        <method name="Pause"/>
 
-		<!-- Stop playback -->
-		<method name="Stop"/>
+        <!-- Stop playback -->
+        <method name="Stop"/>
 
-		<!-- Is playback playing? -->
-		<method name="Playing">
-			<!-- Return true if playing, false otherwise -->
-			<arg type="b" direction="out" name="is_playing"/>
-		</method>
+        <!-- Is playback playing? -->
+        <method name="Playing">
+            <!-- Return true if playing, false otherwise -->
+            <arg type="b" direction="out" name="is_playing"/>
+        </method>
 
-		<!-- Is playback paused? -->
-		<method name="Paused">
-			<!-- Return true if paused, false otherwise -->
-			<arg type="b" direction="out" name="is_paused"/>
-		</method>
+        <!-- Is playback paused? -->
+        <method name="Paused">
+            <!-- Return true if paused, false otherwise -->
+            <arg type="b" direction="out" name="is_paused"/>
+        </method>
 
-		<!-- Is playback stopped? -->
-		<method name="Stopped">
-			<!-- Return true if stopped, false otherwise -->
-			<arg type="b" direction="out" name="is_stopped"/>
-		</method>
+        <!-- Is playback stopped? -->
+        <method name="Stopped">
+            <!-- Return true if stopped, false otherwise -->
+            <arg type="b" direction="out" name="is_stopped"/>
+        </method>
 
-		<!-- What is the playback status? -->
-		<method name="Status">
-			<!-- Return the status as a string: -->
-			<!-- one of {"playing" "paused" "stopped"} -->
-			<arg type="s" direction="out" name="status"/>
-		</method>
+        <!-- What is the playback status? -->
+        <method name="Status">
+            <!-- Return the status as a string: -->
+            <!-- one of {"playing" "paused" "stopped"} -->
+            <arg type="s" direction="out" name="status"/>
+        </method>
 
-		<!-- Seek to some absolute position in the current song -->
-		<method name="Seek">
-			<!-- Position of song, in ms, to seek to -->
-			<arg type="i" name="pos"/>
+        <!-- Seek to some absolute position in the current song -->
+        <method name="Seek">
+            <!-- Position of song, in ms, to seek to -->
+            <arg type="i" name="pos"/>
 
-			<!-- Return true on success, or false if position out of range? -->
-			<!-- <arg type="b" direction="out"/> -->
-		</method>
-	</interface>
+            <!-- Return true on success, or false if position out of range? -->
+            <!-- <arg type="b" direction="out"/> -->
+        </method>
+    </interface>
 
-	<!-- Playlist Information/Manipulation -->
-	<interface name="org.audacious.playlist">
-		<!-- Playlist position -->
-		<method name="Position">
-			<!-- Return position of current song in current playlist -->
-			<arg type="i" direction="out" name="pos"/>
-		</method>
+    <!-- Playlist Information/Manipulation -->
+    <interface name="org.audacious.playlist">
+        <!-- Playlist position -->
+        <method name="Position">
+            <!-- Return position of current song in current playlist -->
+            <arg type="i" direction="out" name="pos"/>
+        </method>
 
-		<!-- Skip ahead one song in the current playlist -->
-		<method name="Advance"/>
+        <!-- Skip ahead one song in the current playlist -->
+        <method name="Advance"/>
 
-		<!-- Skip backwards one song in the current playlist -->
-		<method name="Reverse"/>
+        <!-- Skip backwards one song in the current playlist -->
+        <method name="Reverse"/>
 
-		<!-- Playlist length -->
-		<method name="Length">
-			<!-- Return length of current playlist -->
-			<arg type="i" direction="out" name="length"/>
-		</method>
+        <!-- Playlist length -->
+        <method name="Length">
+            <!-- Return length of current playlist -->
+            <arg type="i" direction="out" name="length"/>
+        </method>
 
-		<!-- Get a song's title -->
-		<method name="SongTitle">
-			<!-- Song position in the playlist -->
-			<arg type="i" name="pos"/>
+        <!-- Get a song's title -->
+        <method name="SongTitle">
+            <!-- Song position in the playlist -->
+            <arg type="i" name="pos"/>
 
-			<!-- Return title of desired song -->
-			<arg type="s" direction="out" name="title"/>
-		</method>
+            <!-- Return title of desired song -->
+            <arg type="s" direction="out" name="title"/>
+        </method>
 
-		<!-- Get a song's filename -->
-		<method name="SongFilename">
-			<!-- Song position in the playlist -->
-			<arg type="i" name="pos"/>
+        <!-- Get a song's filename -->
+        <method name="SongFilename">
+            <!-- Song position in the playlist -->
+            <arg type="i" name="pos"/>
 
-			<!-- Return filename of desired song -->
-			<arg type="s" direction="out" name="filename"/>
-		</method>
+            <!-- Return filename of desired song -->
+            <arg type="s" direction="out" name="filename"/>
+        </method>
 
-		<!-- Get the length of some song, in seconds -->
-		<method name="SongLength">
-			<!-- Song position in the playlist -->
-			<arg type="i" name="pos"/>
+        <!-- Get the length of some song, in seconds -->
+        <method name="SongLength">
+            <!-- Song position in the playlist -->
+            <arg type="i" name="pos"/>
 
-			<!-- Return length, in seconds, of desired song -->
-			<arg type="i" direction="out" name="length"/>
-		</method>
+            <!-- Return length, in seconds, of desired song -->
+            <arg type="i" direction="out" name="length"/>
+        </method>
 
-		<!-- Get the length of some song, in frames -->
-		<method name="SongFrames">
-			<!-- Song position in the playlist -->
-			<arg type="i" name="pos"/>
+        <!-- Get the length of some song, in frames -->
+        <method name="SongFrames">
+            <!-- Song position in the playlist -->
+            <arg type="i" name="pos"/>
 
-			<!-- Return length, in frames, of desired song -->
-			<arg type="i" direction="out" name="length"/>
-		</method>
+            <!-- Return length, in frames, of desired song -->
+            <arg type="i" direction="out" name="length"/>
+        </method>
 
-		<!-- Jump to some position in the playlist -->
-		<method name="Jump">
-			<!-- Song position to jump to -->
-			<arg type="i" name="pos"/>
-		</method>
+        <!-- Jump to some position in the playlist -->
+        <method name="Jump">
+            <!-- Song position to jump to -->
+            <arg type="i" name="pos"/>
+        </method>
 
-		<!-- Add some URL to the current playlist -->
-		<method name="AddUrl">
-			<!-- URL to add -->
-			<arg type="s" name="url"/>
-		</method>
+        <!-- Add some URL to the current playlist -->
+        <method name="AddUrl">
+            <!-- URL to add -->
+            <arg type="s" name="url"/>
+        </method>
 
-		<!-- Delete some song from the playlist -->
-		<method name="Delete">
-			<!-- Position of song to delete -->
-			<arg type="i" name="pos"/>
-		</method>
+        <!-- Delete some song from the playlist -->
+        <method name="Delete">
+            <!-- Position of song to delete -->
+            <arg type="i" name="pos"/>
+        </method>
 
-		<!-- Clear the playlist -->
-		<method name="Clear"/>
+        <!-- Clear the playlist -->
+        <method name="Clear"/>
 
-		<!-- Query repeat status -->
-		<method name="Repeating">
-			<arg type="b" direction="out" name="is_repeating"/>
-		</method>
+        <!-- Query repeat status -->
+        <method name="Repeating">
+            <arg type="b" direction="out" name="is_repeating"/>
+        </method>
 
-		<!-- Toggle repeat -->
-		<method name="Repeat"/>
+        <!-- Toggle repeat -->
+        <method name="Repeat"/>
 
-		<!-- Query shuffle status -->
-		<method name="Shuffling">
-			<arg type="b" direction="out" name="is_shuffling"/>
-		</method>
+        <!-- Query shuffle status -->
+        <method name="Shuffling">
+            <arg type="b" direction="out" name="is_shuffling"/>
+        </method>
 
-		<!-- Toggle shuffle -->
-		<method name="Shuffle"/>
-	</interface>
+        <!-- Toggle shuffle -->
+        <method name="Shuffle"/>
+    </interface>
 </node>

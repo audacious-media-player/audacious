@@ -1189,7 +1189,7 @@ main(gint argc, gchar ** argv)
         GDK_THREADS_LEAVE();
 
 #ifdef USE_DBUS
-		RemoteObject *object = init_dbus();
+    RemoteObject *object = init_dbus();
 #endif
 
     ctrlsocket_start();
