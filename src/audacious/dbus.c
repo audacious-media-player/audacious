@@ -78,11 +78,9 @@ void audacious_remote_init(RemoteObject *object) {
     g_object_unref(driver_proxy);
 }
 
-RemoteObject *init_dbus() {
-    RemoteObject *object;
+void init_dbus() {
     g_type_init();
-    object = g_object_new(audacious_remote_get_type(), NULL);
-    return object;
+    g_object_new(audacious_remote_get_type(), NULL);
 }
 
 // Audacious General Information

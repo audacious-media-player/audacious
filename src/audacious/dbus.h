@@ -37,7 +37,7 @@ typedef struct {
     GObjectClass parent_class;
 } RemoteObjectClass;
 
-RemoteObject *init_dbus();
+void init_dbus();
 
 // Audacious General Information
 gboolean audacious_remote_version(RemoteObject *obj, gchar **version,
