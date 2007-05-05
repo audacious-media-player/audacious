@@ -49,6 +49,10 @@
 #include "libaudacious/beepctrl.h"
 #include "vfs.h"
 
+#ifdef USE_DBUS
+#  include "dbus.h"
+#endif
+
 #include "controlsocket.h"
 #include "dnd.h"
 #include "effect.h"
@@ -1183,6 +1187,10 @@ main(gint argc, gchar ** argv)
 
     if (options.headless != 1)
         GDK_THREADS_LEAVE();
+
+#ifdef USE_DBUS
+		RemoteObject *object = init_dbus();
+#endif
 
     ctrlsocket_start();
 

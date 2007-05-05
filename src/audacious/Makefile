@@ -5,6 +5,7 @@ include ../../mk/objective.mk
 SUBDIRS = widgets glade images ui
 
 OBJECTIVE_BINS = audacious
+OBJECTIVE_LIBS_NOINST += $(DBUS_BINDINGS_H)
 
 LDFLAGS += $(AUDLDFLAGS)
 
@@ -14,6 +15,7 @@ LDADD = \
 	$(samplerate_LIBS) \
 	$(CHARDET_LIBS) \
 	$(GTK_LIBS) \
+	$(DBUS_LIBS) \
 	$(MOWGLI_LIBS) \
 	$(LIBGLADE_LIBS) \
 	$(REGEX_LIBS) \
@@ -25,6 +27,7 @@ CFLAGS += \
 	$(LIBGLADE_CFLAGS) \
 	$(BEEP_DEFINES) \
 	$(ARCH_DEFINES) \
+	$(DBUS_CFLAGS) \
 	$(samplerate_CFLAGS) \
 	$(REGEX_CFLAGS) \
 	-D_AUDACIOUS_CORE \
@@ -55,6 +58,7 @@ HEADERS = \
 SOURCES = \
 	build_stamp.c \
 	controlsocket.c \
+	$(DBUS_C) \
 	dnd.c \
 	dock.c \
 	effect.c \
@@ -118,5 +122,8 @@ desktopdir = $(datadir)/applications
 audacious: $(OBJECTS) $(LIBDEP)
 	$(CXX) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@ 
 	@printf "%10s     %-20s\n" LINK $@
+
+dbus-bindings.h:
+	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=audacious_remote objects.xml > $@
 
 OBJECTIVE_DATA = audacious.desktop:$(datadir)/applications

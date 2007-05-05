@@ -1,3 +1,12 @@
+2007-05-02 17:34:59 +0000  Michael Farber <01mf02@gmail.com>
+  revision [4412]
+  - Made the Space key pause/unpause playback (like e.g. mplayer)
+  
+  
+  trunk/src/audacious/ui_main.c |    5 ++++-
+  1 file changed, 4 insertions(+), 1 deletion(-)
+
+
 2007-05-01 04:07:19 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4410]
   - make --enable-chardet default.

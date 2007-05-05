@@ -212,6 +212,41 @@ AC_SUBST(USE_CHARDET)
 AC_SUBST(CHARDET_LIBS)
 AC_SUBST(SUBDIR_GUESS)
 
+dnl D-Bus support
+dnl ========================
+AC_ARG_ENABLE(dbus,
+    [  --enable-dbus    enable D-Bus support (default=no)],
+    [enable_dbus=$enableval],
+    [enable_dbus="no"]
+)
+
+AM_CONDITIONAL(USE_DBUS, test "x$enable_dbus" = "xyes")
+if test "x$enable_dbus" = "xyes"; then
+	PKG_CHECK_MODULES(DBUS, [dbus-1 >= 0.60 dbus-glib-1 >= 0.60 gthread-2.0],
+										enable_dbus="yes", [
+		AC_MSG_RESULT(no)
+		enable_dbus="no"
+	])
+	AC_PATH_PROG(DBUS_BINDING_TOOL, dbus-binding-tool, no)
+	AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal, no)
+	if test "x$DBUS_BINDING_TOOL" = "xno" || test "x$GLIB_GENMARSHAL" = "xno" || test "x$enable_dbus" = "xno" ; then
+		enable_dbus="no"
+	else
+		AC_DEFINE(USE_DBUS, 1, [Define if D-Bus support enabled])
+		AC_DEFINE(DBUS_SERVICES_DIR, "$datadir/dbus-1/services",
+			[Location of D-Bus services directory])
+		DBUS_C=dbus.c
+		DBUS_BINDINGS_H=dbus-bindings.h
+		AC_SUBST(DBUS_C)
+		AC_SUBST(DBUS_BINDINGS_H)
+		AC_SUBST(USE_DBUS)
+		AC_SUBST(DBUS_CFLAGS)
+		AC_SUBST(DBUS_LIBS)
+		AC_SUBST(DBUS_SERVICES_DIR)
+		AC_SUBST(DBUS_BINDING_TOOL)
+	fi
+fi
+
 dnl libsamplerate support
 dnl ========================
 AC_ARG_ENABLE(samplerate,
@@ -438,6 +473,7 @@ echo "  Allow user plugin dir:                  $enable_user_plugin_dir"
 echo 
 echo "  Automatic character code detection:     $enable_chardet"
 echo "  Sample rate upconversion:               $enable_samplerate"
+echo "  D-Bus support:                          $enable_dbus"
 echo
 
 if test "$beep_cv_lib_xlibs_threadsafe" = "no"; then
