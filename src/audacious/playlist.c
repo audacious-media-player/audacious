@@ -706,13 +706,10 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
 	     !str_has_prefix_nocase(filename, "https://"))
 	dec = input_check_file(filename, TRUE);
 
-#if 0
     printf("loading_playlist = %d filename = %s is_playlist_name = %d\n",
            playlist->loading_playlist, filename, playlist->loading_playlist);
-#endif
-    /* XXX this line causes cuesheet plugin infinite addition to the playlist. --yaz */
-//    if (cfg.playlist_detect == TRUE || playlist->loading_playlist == TRUE || (playlist->loading_playlist == FALSE && dec != NULL) || (playlist->loading_playlist == FALSE && !is_playlist_name(filename)))
-    if (cfg.playlist_detect == TRUE || playlist->loading_playlist == TRUE || (playlist->loading_playlist == FALSE && dec != NULL))
+
+    if (cfg.playlist_detect == TRUE || playlist->loading_playlist == TRUE || (playlist->loading_playlist == FALSE && dec != NULL) || (playlist->loading_playlist == FALSE && !is_playlist_name(filename) && str_has_prefix_nocase(filename, "http")))
     {
         __playlist_ins(playlist, filename, pos, dec);
         playlist_generate_shuffle_list(playlist);

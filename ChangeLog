@@ -1,3 +1,13 @@
+2007-05-05 23:50:36 +0000  Ben Tucker <bnt@interchange.ubc.ca>
+  revision [4426]
+  Improved DBus initialization and fixed a warning.
+  
+  trunk/src/audacious/dbus.c |    6 ++----
+  trunk/src/audacious/dbus.h |    2 +-
+  trunk/src/audacious/main.c |    2 +-
+  3 files changed, 4 insertions(+), 6 deletions(-)
+
+
 2007-05-05 23:37:04 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4424]
   - update manpage for autoconf 2.60
