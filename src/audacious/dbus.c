@@ -154,6 +154,7 @@ gboolean audacious_remote_seek(RemoteObject *obj, guint pos, GError **error) {
 // Playlist Information/Manipulation
 gboolean audacious_remote_position(RemoteObject *obj, int *pos, GError **error)
 {
+    *pos = playlist_get_position(playlist_get_active());
     return TRUE;
 }
 
@@ -169,60 +170,76 @@ gboolean audacious_remote_reverse(RemoteObject *obj, GError **error) {
 
 gboolean audacious_remote_length(RemoteObject *obj, int *length,
                                  GError **error) {
+    *length = playlist_get_length(playlist_get_active());
     return TRUE;
 }
 
 gboolean audacious_remote_song_title(RemoteObject *obj, int pos,
                                      gchar **title, GError **error) {
+    *title = playlist_get_songtitle(playlist_get_active(), pos);
     return TRUE;
 }
 
 gboolean audacious_remote_song_filename(RemoteObject *obj, int pos,
                                         gchar **filename, GError **error) {
+    *filename = playlist_get_filename(playlist_get_active(), pos);
     return TRUE;
 }
 
 gboolean audacious_remote_song_length(RemoteObject *obj, int pos, int *length,
                                       GError **error) {
+    *length = playlist_get_songtime(playlist_get_active(), pos) / 1000;
     return TRUE;
 }
 
 gboolean audacious_remote_song_frames(RemoteObject *obj, int pos, int *length,
                                       GError **error) {
+    *length = playlist_get_songtime(playlist_get_active(), pos);
     return TRUE;
 }
 
 gboolean audacious_remote_jump(RemoteObject *obj, int pos, GError **error) {
+    if (pos < (guint)playlist_get_length(playlist_get_active()))
+                playlist_set_position(playlist_get_active(), pos);
     return TRUE;
 }
 
 gboolean audacious_remote_add_url(RemoteObject *obj, gchar *url,
                                   GError **error) {
+    playlist_add_url(playlist_get_active(), url);
     return TRUE;
 }
 
 gboolean audacious_remote_delete(RemoteObject *obj, int pos, GError **error) {
+    playlist_delete_index(playlist_get_active(), pos);
     return TRUE;
 }
 
 gboolean audacious_remote_clear(RemoteObject *obj, GError **error) {
+    playlist_clear(playlist_get_active());
+    mainwin_clear_song_info();
+    mainwin_set_info_text();
     return TRUE;
 }
 
 gboolean audacious_remote_repeating(RemoteObject *obj, gboolean *is_repeating,
                                     GError **error) {
+    *is_repeating = cfg.repeat;
     return TRUE;
 }
 
 gboolean audacious_remote_repeat(RemoteObject *obj, GError **error) {
+    mainwin_repeat_pushed(!cfg.repeat);
     return TRUE;
 }
 
 gboolean audacious_remote_shuffling(RemoteObject *obj, gboolean *is_shuffling,
                                     GError **error) {
+    *is_shuffling = cfg.shuffle;
     return TRUE;
 }
 
 gboolean audacious_remote_shuffle(RemoteObject *obj, GError **error) {
+    mainwin_shuffle_pushed(!cfg.shuffle);
     return TRUE;
 }

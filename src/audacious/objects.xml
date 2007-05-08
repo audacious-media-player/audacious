@@ -90,7 +90,7 @@
     CMD_PLAYLIST_GET_TUPLE_DATA
 -->
 
-<node name="/org/atheme/audacious">
+<node name="/">
     <!-- Audacious General Information -->
     <interface name="org.atheme.audacious.general">
         <!-- Audacious version -->
