@@ -1,3 +1,13 @@
+2007-05-08 17:26:29 +0000  Ben Tucker <bnt@interchange.ubc.ca>
+  revision [4438]
+  Completed the implementation of all the stubs in dbus.c, and commented the creation of the mpris dbus bindings to fix compilation issues.
+  
+  trunk/src/audacious/Makefile    |    6 +++---
+  trunk/src/audacious/dbus.c      |   17 +++++++++++++++++
+  trunk/src/audacious/objects.xml |    2 +-
+  3 files changed, 21 insertions(+), 4 deletions(-)
+
+
 2007-05-08 01:04:06 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4436]
   - define mpris /Player object in XML.
