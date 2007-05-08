@@ -125,7 +125,8 @@ audacious: $(OBJECTS) $(LIBDEP)
 
 dbus-bindings.h:
 	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=audacious_remote objects.xml > $@
-	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris mpris_root.xml >> $@
+	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_root mpris_root.xml >> $@
+	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_tracklist mpris_tracklist.xml >> $@
 	@printf "%10s     %-20s\n" DBUS-BIND $@
 
 OBJECTIVE_DATA = audacious.desktop:$(datadir)/applications
