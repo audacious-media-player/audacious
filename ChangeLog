@@ -1,3 +1,11 @@
+2007-05-08 00:09:15 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4430]
+  - rename *class prototypes to *klass to avoid keyword collisions in sun studio and icc.
+  
+  trunk/src/audacious/dbus.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-05-06 22:16:34 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4428]
   - fix cuesheet bug in a better way (e.g. unbreak http:// streams)
