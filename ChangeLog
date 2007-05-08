@@ -1,3 +1,11 @@
+2007-05-06 22:16:34 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4428]
+  - fix cuesheet bug in a better way (e.g. unbreak http:// streams)
+  
+  trunk/src/audacious/playlist.c |    7 ++-----
+  1 file changed, 2 insertions(+), 5 deletions(-)
+
+
 2007-05-05 23:50:36 +0000  Ben Tucker <bnt@interchange.ubc.ca>
   revision [4426]
   Improved DBus initialization and fixed a warning.

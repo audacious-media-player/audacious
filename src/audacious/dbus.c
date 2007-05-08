@@ -41,7 +41,7 @@
 
 G_DEFINE_TYPE(RemoteObject, audacious_remote, G_TYPE_OBJECT);
 
-void audacious_remote_class_init(RemoteObjectClass *class) {}
+void audacious_remote_class_init(RemoteObjectClass *klass) {}
 
 void audacious_remote_init(RemoteObject *object) {
     GError *error = NULL;
