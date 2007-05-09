@@ -1,3 +1,18 @@
+2007-05-09 21:03:11 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4444]
+  - drop controlsocket code. this probably does not compile yet.
+  
+  trunk/src/audacious/Makefile         |    1 
+  trunk/src/audacious/controlsocket.c  |  852 -----------------------------------
+  trunk/src/audacious/controlsocket.h  |   86 ---
+  trunk/src/audacious/genevent.c       |    3 
+  trunk/src/audacious/main.c           |   12 
+  trunk/src/audacious/pluginenum.c     |    5 
+  trunk/src/audacious/ui_jumptotrack.c |    1 
+  trunk/src/audacious/ui_main.c        |    3 
+  8 files changed, 3 insertions(+), 960 deletions(-)
+
+
 2007-05-09 06:24:26 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4442]
   - add dependency for dbus bindings.

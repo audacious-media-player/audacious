@@ -23,14 +23,12 @@ CFLAGS += $(PICFLAGS) \
 	-I../intl
 
 SOURCES = \
-	configdb.c \
-	beepctrl.c
+	configdb.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
 HEADERS = \
-	configdb.h \
-	beepctrl.h
+	configdb.h
 
 include ../../mk/objective.mk
 
