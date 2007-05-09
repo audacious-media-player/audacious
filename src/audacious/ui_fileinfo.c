@@ -53,8 +53,6 @@
 #include "dnd.h"
 #include "titlestring.h"
 
-#include "libaudacious/configdb.h"
-
 #include "playlist.h"
 
 #include "ui_main.h"

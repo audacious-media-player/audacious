@@ -37,7 +37,7 @@
 #include <sys/stat.h>
 #include <dirent.h>
 
-#include "libaudacious/configdb.h"
+#include "configdb.h"
 
 #include "hook.h"
 #include "input.h"

@@ -52,7 +52,7 @@
 #include "strings.h"
 #include "util.h"
 #include "dnd.h"
-#include "libaudacious/configdb.h"
+#include "configdb.h"
 
 #include "ui_main.h"
 #include "ui_playlist.h"

@@ -45,8 +45,7 @@
 
 #include "platform/smartinclude.h"
 
-#include "libaudacious/configdb.h"
-#include "libaudacious/beepctrl.h"
+#include "configdb.h"
 #include "vfs.h"
 
 #ifdef USE_DBUS
@@ -905,6 +904,7 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
         exit(EXIT_SUCCESS);
     }
 
+#if 0
     if (filenames != NULL)
     {
         gint pos = 0;
@@ -989,6 +989,7 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
 
     if (options->activate)
         xmms_remote_activate(session);
+#endif
 
     if (options->playcd)
         play_medium();

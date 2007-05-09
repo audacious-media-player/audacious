@@ -35,7 +35,6 @@
 #include "playlist.h"
 #include "ui_playlist.h"
 #include "ui_preferences.h"
-#include "libaudacious/beepctrl.h"
 #include "memorypool.h"
 #include "titlestring.h"
 #include "ui_jumptotrack.h"

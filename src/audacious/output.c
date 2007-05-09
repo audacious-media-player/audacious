@@ -32,7 +32,7 @@
 #include "playback.h"
 
 #include "playlist.h"
-#include "libaudacious/configdb.h"
+#include "configdb.h"
 
 #include <math.h>
 

@@ -54,7 +54,7 @@
 #include "main.h"
 #include "ui_main.h"
 #include "util.h"
-#include "libaudacious/configdb.h"
+#include "configdb.h"
 #include "vfs.h"
 #include "urldecode.h"
 #include "ui_equalizer.h"

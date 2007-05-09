@@ -58,13 +58,12 @@
 #include "actions-mainwin.h"
 
 #include "main.h"
-
+#include "configdb.h"
 #include "dnd.h"
 #include "dock.h"
 #include "genevent.h"
 #include "hints.h"
 #include "input.h"
-#include "libaudacious/configdb.h"
 #include "urldecode.h"
 #include "playback.h"
 #include "playlist.h"

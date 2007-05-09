@@ -43,9 +43,6 @@
 #include <sys/stat.h>
 #include <signal.h>
 
-#include "libaudacious/configdb.h"
-#include "libaudacious/beepctrl.h"
-
 #include "dnd.h"
 #include "effect.h"
 #include "general.h"
