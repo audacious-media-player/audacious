@@ -1,3 +1,11 @@
+2007-05-09 21:41:39 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4454]
+  - fix boilerplate
+  
+  trunk/src/libaudclient/audctrl.h |   32 +++++++++++++++-----------------
+  1 file changed, 15 insertions(+), 17 deletions(-)
+
+
 2007-05-09 21:40:01 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4452]
   - rename to libaudclient

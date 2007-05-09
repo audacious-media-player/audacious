@@ -20,7 +20,7 @@
 #include <string.h>
 #include <glib.h>
 #include <locale.h>
-#include "libaudacious/beepctrl.h"
+#include "libaudclient/audctrl.h"
 #include "audtool.h"
 
 struct commandhandler handlers[] = {
@@ -110,9 +110,6 @@ gint main(gint argc, gchar **argv)
 		exit(-2);
 	}
 
-	remote_uri = getenv("AUDTOOL_REMOTE_URI");
-	audacious_set_session_uri(remote_uri);
-
 	if (!xmms_remote_is_running(0) && g_strcasecmp("help", argv[1])
 		&& g_strcasecmp("list-handlers", argv[1]))
 	{
@@ -139,7 +136,7 @@ gint main(gint argc, gchar **argv)
 
 /*** MOVE TO HANDLERS.C ***/
 
-void get_current_song(gint session, gint argc, gchar **argv)
+void get_current_song(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint playpos = xmms_remote_get_playlist_pos(session);
 	gchar *song = xmms_remote_get_playlist_title(session, playpos);
@@ -153,14 +150,14 @@ void get_current_song(gint session, gint argc, gchar **argv)
 	g_print("%s\n", song);
 }
 
-void get_current_song_filename(gint session, gint argc, gchar **argv)
+void get_current_song_filename(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint playpos = xmms_remote_get_playlist_pos(session);
 
 	g_print("%s\n", xmms_remote_get_playlist_file(session, playpos));
 }
 
-void get_current_song_output_length(gint session, gint argc, gchar **argv)
+void get_current_song_output_length(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint frames = xmms_remote_get_output_time(session);
 	gint length = frames / 1000;
@@ -168,7 +165,7 @@ void get_current_song_output_length(gint session, gint argc, gchar **argv)
 	g_print("%d:%.2d\n", length / 60, length % 60);
 }
 
-void get_current_song_output_length_seconds(gint session, gint argc, gchar **argv)
+void get_current_song_output_length_seconds(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint frames = xmms_remote_get_output_time(session);
 	gint length = frames / 1000;
@@ -176,14 +173,14 @@ void get_current_song_output_length_seconds(gint session, gint argc, gchar **arg
 	g_print("%d\n", length);
 }
 
-void get_current_song_output_length_frames(gint session, gint argc, gchar **argv)
+void get_current_song_output_length_frames(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint frames = xmms_remote_get_output_time(session);
 
 	g_print("%d\n", frames);
 }
 
-void get_current_song_length(gint session, gint argc, gchar **argv)
+void get_current_song_length(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint playpos = xmms_remote_get_playlist_pos(session);
 	gint frames = xmms_remote_get_playlist_time(session, playpos);
@@ -192,7 +189,7 @@ void get_current_song_length(gint session, gint argc, gchar **argv)
 	g_print("%d:%.2d\n", length / 60, length % 60);
 }
 
-void get_current_song_length_seconds(gint session, gint argc, gchar **argv)
+void get_current_song_length_seconds(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint playpos = xmms_remote_get_playlist_pos(session);
 	gint frames = xmms_remote_get_playlist_time(session, playpos);
@@ -201,7 +198,7 @@ void get_current_song_length_seconds(gint session, gint argc, gchar **argv)
 	g_print("%d\n", length);
 }
 
-void get_current_song_length_frames(gint session, gint argc, gchar **argv)
+void get_current_song_length_frames(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint playpos = xmms_remote_get_playlist_pos(session);
 	gint frames = xmms_remote_get_playlist_time(session, playpos);
@@ -209,7 +206,7 @@ void get_current_song_length_frames(gint session, gint argc, gchar **argv)
 	g_print("%d\n", frames);
 }
 
-void get_current_song_bitrate(gint session, gint argc, gchar **argv)
+void get_current_song_bitrate(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint rate, freq, nch;
 
@@ -218,7 +215,7 @@ void get_current_song_bitrate(gint session, gint argc, gchar **argv)
 	g_print("%d\n", rate);
 }
 
-void get_current_song_bitrate_kbps(gint session, gint argc, gchar **argv)
+void get_current_song_bitrate_kbps(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint rate, freq, nch;
 
@@ -227,7 +224,7 @@ void get_current_song_bitrate_kbps(gint session, gint argc, gchar **argv)
 	g_print("%d\n", rate / 1000);
 }
 
-void get_current_song_frequency(gint session, gint argc, gchar **argv)
+void get_current_song_frequency(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint rate, freq, nch;
 
@@ -236,7 +233,7 @@ void get_current_song_frequency(gint session, gint argc, gchar **argv)
 	g_print("%d\n", freq);
 }
 
-void get_current_song_frequency_khz(gint session, gint argc, gchar **argv)
+void get_current_song_frequency_khz(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint rate, freq, nch;
 
@@ -245,7 +242,7 @@ void get_current_song_frequency_khz(gint session, gint argc, gchar **argv)
 	g_print("%0.1f\n", (gfloat) freq / 1000);
 }
 
-void get_current_song_channels(gint session, gint argc, gchar **argv)
+void get_current_song_channels(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint rate, freq, nch;
 
@@ -255,7 +252,7 @@ void get_current_song_channels(gint session, gint argc, gchar **argv)
 }
 
 
-void get_current_song_tuple_field_data(gint session, gint argc, gchar **argv)
+void get_current_song_tuple_field_data(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gpointer data;
 
@@ -287,27 +284,27 @@ void get_current_song_tuple_field_data(gint session, gint argc, gchar **argv)
 	g_print("%s\n", (gchar *)data);
 }
 
-void playlist_reverse(gint session, gint argc, gchar **argv)
+void playlist_reverse(DBusGProxy *session, gint argc, gchar **argv)
 {
 	xmms_remote_playlist_prev(session);
 }
 
-void playlist_advance(gint session, gint argc, gchar **argv)
+void playlist_advance(DBusGProxy *session, gint argc, gchar **argv)
 {
 	xmms_remote_playlist_next(session);
 }
 
-void playback_play(gint session, gint argc, gchar **argv)
+void playback_play(DBusGProxy *session, gint argc, gchar **argv)
 {
 	xmms_remote_play(session);
 }
 
-void playback_pause(gint session, gint argc, gchar **argv)
+void playback_pause(DBusGProxy *session, gint argc, gchar **argv)
 {
 	xmms_remote_pause(session);
 }
 
-void playback_playpause(gint session, gint argc, gchar **argv)
+void playback_playpause(DBusGProxy *session, gint argc, gchar **argv)
 {
 	if (xmms_remote_is_playing(session))
 	{
@@ -319,12 +316,12 @@ void playback_playpause(gint session, gint argc, gchar **argv)
 	}
 }
 
-void playback_stop(gint session, gint argc, gchar **argv)
+void playback_stop(DBusGProxy *session, gint argc, gchar **argv)
 {
 	xmms_remote_stop(session);
 }
 
-void playback_playing(gint session, gint argc, gchar **argv)
+void playback_playing(DBusGProxy *session, gint argc, gchar **argv)
 {
 	if (!xmms_remote_is_paused(session))
 	{
@@ -336,12 +333,12 @@ void playback_playing(gint session, gint argc, gchar **argv)
 	}
 }
 
-void playback_paused(gint session, gint argc, gchar **argv)
+void playback_paused(DBusGProxy *session, gint argc, gchar **argv)
 {
 	exit(!xmms_remote_is_paused(session));
 }
 
-void playback_stopped(gint session, gint argc, gchar **argv)
+void playback_stopped(DBusGProxy *session, gint argc, gchar **argv)
 {
 	if (!xmms_remote_is_playing(session) && !xmms_remote_is_paused(session))
 	{
@@ -353,7 +350,7 @@ void playback_stopped(gint session, gint argc, gchar **argv)
 	}
 }
 
-void playback_status(gint session, gint argc, gchar **argv)
+void playback_status(DBusGProxy *session, gint argc, gchar **argv)
 {
 	if (xmms_remote_is_paused(session))
 	{
@@ -372,7 +369,7 @@ void playback_status(gint session, gint argc, gchar **argv)
 	}
 }
 
-void playback_seek(gint session, gint argc, gchar **argv)
+void playback_seek(DBusGProxy *session, gint argc, gchar **argv)
 {
 	if (argc < 3)
 	{
@@ -384,7 +381,7 @@ void playback_seek(gint session, gint argc, gchar **argv)
 	xmms_remote_jump_to_time(session, atoi(argv[2]) * 1000);
 }
 
-void playback_seek_relative(gint session, gint argc, gchar **argv)
+void playback_seek_relative(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint oldtime, newtime, diff;
 
@@ -402,7 +399,7 @@ void playback_seek_relative(gint session, gint argc, gchar **argv)
 	xmms_remote_jump_to_time(session, newtime);
 }
 
-void playlist_add_url_string(gint session, gint argc, gchar **argv)
+void playlist_add_url_string(DBusGProxy *session, gint argc, gchar **argv)
 {
 	if (argc < 3)
 	{
@@ -414,7 +411,7 @@ void playlist_add_url_string(gint session, gint argc, gchar **argv)
 	xmms_remote_playlist_add_url_string(session, argv[2]);
 }
 
-void playlist_delete(gint session, gint argc, gchar **argv)
+void playlist_delete(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint playpos;
 
@@ -436,7 +433,7 @@ void playlist_delete(gint session, gint argc, gchar **argv)
 	xmms_remote_playlist_delete(session, playpos - 1);
 }
 
-void playlist_length(gint session, gint argc, gchar **argv)
+void playlist_length(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint i;
 
@@ -445,7 +442,7 @@ void playlist_length(gint session, gint argc, gchar **argv)
 	g_print("%d\n", i);
 }
 
-void playlist_song(gint session, gint argc, gchar **argv)
+void playlist_song(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint playpos;
 	gchar *song;
@@ -471,7 +468,7 @@ void playlist_song(gint session, gint argc, gchar **argv)
 }
 
 
-void playlist_song_length(gint session, gint argc, gchar **argv)
+void playlist_song_length(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint playpos, frames, length;
 
@@ -496,7 +493,7 @@ void playlist_song_length(gint session, gint argc, gchar **argv)
 	g_print("%d:%.2d\n", length / 60, length % 60);
 }
 
-void playlist_song_length_seconds(gint session, gint argc, gchar **argv)
+void playlist_song_length_seconds(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint playpos, frames, length;
 
@@ -521,7 +518,7 @@ void playlist_song_length_seconds(gint session, gint argc, gchar **argv)
 	g_print("%d\n", length);
 }
 
-void playlist_song_length_frames(gint session, gint argc, gchar **argv)
+void playlist_song_length_frames(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint playpos, frames;
 
@@ -545,7 +542,7 @@ void playlist_song_length_frames(gint session, gint argc, gchar **argv)
 	g_print("%d\n", frames);
 }
 
-void playlist_display(gint session, gint argc, gchar **argv)
+void playlist_display(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint i, ii, frames, length, total;
 	gchar *songname;
@@ -595,7 +592,7 @@ void playlist_display(gint session, gint argc, gchar **argv)
 	g_print("Total length: %d:%.2d\n", total / 60, total % 60);
 }
 
-void playlist_position(gint session, gint argc, gchar **argv)
+void playlist_position(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint i;
 
@@ -604,7 +601,7 @@ void playlist_position(gint session, gint argc, gchar **argv)
 	g_print("%d\n", i + 1);
 }
 
-void playlist_song_filename(gint session, gint argc, gchar **argv)
+void playlist_song_filename(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint i;
 
@@ -626,7 +623,7 @@ void playlist_song_filename(gint session, gint argc, gchar **argv)
 	g_print("%s\n", xmms_remote_get_playlist_file(session, i - 1));
 }
 
-void playlist_jump(gint session, gint argc, gchar **argv)
+void playlist_jump(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint i;
 
@@ -648,12 +645,12 @@ void playlist_jump(gint session, gint argc, gchar **argv)
 	xmms_remote_set_playlist_pos(session, i - 1);
 }
 
-void playlist_clear(gint session, gint argc, gchar **argv)
+void playlist_clear(DBusGProxy *session, gint argc, gchar **argv)
 {
 	xmms_remote_playlist_clear(session);
 }
 
-void playlist_repeat_status(gint session, gint argc, gchar **argv)
+void playlist_repeat_status(DBusGProxy *session, gint argc, gchar **argv)
 {
 	if (xmms_remote_is_repeat(session))
 	{
@@ -667,12 +664,12 @@ void playlist_repeat_status(gint session, gint argc, gchar **argv)
 	}
 }
 
-void playlist_repeat_toggle(gint session, gint argc, gchar **argv)
+void playlist_repeat_toggle(DBusGProxy *session, gint argc, gchar **argv)
 {
 	xmms_remote_toggle_repeat(session);
 }
 
-void playlist_shuffle_status(gint session, gint argc, gchar **argv)
+void playlist_shuffle_status(DBusGProxy *session, gint argc, gchar **argv)
 {
 	if (xmms_remote_is_shuffle(session))
 	{
@@ -686,12 +683,12 @@ void playlist_shuffle_status(gint session, gint argc, gchar **argv)
 	}
 }
 
-void playlist_shuffle_toggle(gint session, gint argc, gchar **argv)
+void playlist_shuffle_toggle(DBusGProxy *session, gint argc, gchar **argv)
 {
 	xmms_remote_toggle_shuffle(session);
 }
 
-void playlist_tuple_field_data(gint session, gint argc, gchar **argv)
+void playlist_tuple_field_data(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint i;
 	gpointer data;
@@ -732,7 +729,7 @@ void playlist_tuple_field_data(gint session, gint argc, gchar **argv)
 	g_print("%s\n", (gchar *)data);
 }
 
-void playqueue_add(gint session, gint argc, gchar **argv)
+void playqueue_add(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint i;
 
@@ -755,7 +752,7 @@ void playqueue_add(gint session, gint argc, gchar **argv)
 		xmms_remote_playqueue_add(session, i - 1);
 }
 
-void playqueue_remove(gint session, gint argc, gchar **argv)
+void playqueue_remove(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint i;
 
@@ -778,7 +775,7 @@ void playqueue_remove(gint session, gint argc, gchar **argv)
 		xmms_remote_playqueue_remove(session, i - 1);
 }
 
-void playqueue_is_queued(gint session, gint argc, gchar **argv)
+void playqueue_is_queued(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint i;
 
@@ -800,7 +797,7 @@ void playqueue_is_queued(gint session, gint argc, gchar **argv)
 	exit(!(xmms_remote_playqueue_is_queued(session, i - 1)));
 }
 
-void playqueue_get_position(gint session, gint argc, gchar **argv)
+void playqueue_get_position(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint i, pos;
 
@@ -827,7 +824,7 @@ void playqueue_get_position(gint session, gint argc, gchar **argv)
 	g_print("%d\n", pos);
 }
 
-void playqueue_get_qposition(gint session, gint argc, gchar **argv)
+void playqueue_get_qposition(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint i, pos;
 
@@ -854,7 +851,7 @@ void playqueue_get_qposition(gint session, gint argc, gchar **argv)
 	g_print("%d\n", pos);
 }
 
-void playqueue_display(gint session, gint argc, gchar **argv)
+void playqueue_display(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint i, ii, position, frames, length, total;
 	gchar *songname;
@@ -904,7 +901,7 @@ void playqueue_display(gint session, gint argc, gchar **argv)
 	g_print("Total length: %d:%.2d\n", total / 60, total % 60);
 }
 
-void playqueue_length(gint session, gint argc, gchar **argv)
+void playqueue_length(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint i;
 
@@ -913,12 +910,12 @@ void playqueue_length(gint session, gint argc, gchar **argv)
 	g_print("%d\n", i);
 }
 
-void playqueue_clear(gint session, gint argc, gchar **argv)
+void playqueue_clear(DBusGProxy *session, gint argc, gchar **argv)
 {
 	xmms_remote_playqueue_clear(session);
 }
 
-void get_volume(gint session, gint argc, gchar **argv)
+void get_volume(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint i;
 
@@ -927,7 +924,7 @@ void get_volume(gint session, gint argc, gchar **argv)
 	g_print("%d\n", i);
 }
 
-void set_volume(gint session, gint argc, gchar **argv)
+void set_volume(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint i, current_volume;
 
@@ -953,7 +950,7 @@ void set_volume(gint session, gint argc, gchar **argv)
 	xmms_remote_set_main_volume(session, i);
 }
 
-void mainwin_show(gint session, gint argc, gchar **argv)
+void mainwin_show(DBusGProxy *session, gint argc, gchar **argv)
 {
 	if (argc > 2)
 	{
@@ -970,7 +967,7 @@ void mainwin_show(gint session, gint argc, gchar **argv)
 	g_print("%s: syntax: %s mainwin-show <on/off>\n",argv[0],argv[0]);
 }
 
-void playlist_show(gint session, gint argc, gchar **argv)
+void playlist_show(DBusGProxy *session, gint argc, gchar **argv)
 {
 	if (argc > 2)
 	{
@@ -987,7 +984,7 @@ void playlist_show(gint session, gint argc, gchar **argv)
 	g_print("%s: syntax: %s playlist-show <on/off>\n",argv[0],argv[0]);
 }
 
-void equalizer_show(gint session, gint argc, gchar **argv)
+void equalizer_show(DBusGProxy *session, gint argc, gchar **argv)
 {
 	if (argc > 2)
 	{
@@ -1004,22 +1001,22 @@ void equalizer_show(gint session, gint argc, gchar **argv)
 	g_print("%s: syntax: %s equalizer-show <on/off>\n",argv[0],argv[0]);
 }
 
-void show_preferences_window(gint session, gint argc, gchar **argv)
+void show_preferences_window(DBusGProxy *session, gint argc, gchar **argv)
 {
 	xmms_remote_show_prefs_box(session);
 }
 
-void show_jtf_window(gint session, gint argc, gchar **argv)
+void show_jtf_window(DBusGProxy *session, gint argc, gchar **argv)
 {
 	xmms_remote_show_jtf_box(session);
 }
 
-void shutdown_audacious_server(gint session, gint argc, gchar **argv)
+void shutdown_audacious_server(DBusGProxy *session, gint argc, gchar **argv)
 {
 	xmms_remote_quit(session);
 }
 
-void get_handlers_list(gint session, gint argc, gchar **argv)
+void get_handlers_list(DBusGProxy *session, gint argc, gchar **argv)
 {
 	gint i;
 

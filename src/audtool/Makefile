@@ -6,12 +6,14 @@ OBJECTIVE_BINS = audtool
 
 LDFLAGS += $(AUDLDFLAGS)
 LDADD = \
-	-L../libaudacious -laudacious \
+	$(DBUS_LIBS) \
+	-L../libaudclient -laudclient \
 	$(GTK_LIBS)      \
 	$(LIBGLADE_LIBS)
 
 CFLAGS += \
 	$(GTK_CFLAGS)      \
+	$(DBUS_CFLAGS)     \
 	$(LIBGLADE_CFLAGS) \
 	$(BEEP_DEFINES)    \
 	$(ARCH_DEFINES)    \
