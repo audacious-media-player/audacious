@@ -1,3 +1,11 @@
+2007-05-09 22:14:52 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4462]
+  - disable audtool for now, needs to be ported to DBus.
+  
+  trunk/src/Makefile |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-05-09 22:07:50 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4460]
   - make audacious build again
