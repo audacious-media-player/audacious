@@ -236,9 +236,9 @@ if test "x$enable_dbus" = "xyes"; then
 		AC_DEFINE(DBUS_SERVICES_DIR, "$datadir/dbus-1/services",
 			[Location of D-Bus services directory])
 		DBUS_C=dbus.c
-		DBUS_BINDINGS_H=dbus-bindings.h
+		DBUS_BINDINGS="dbus-server-bindings.h dbus-client-bindings.h"
 		AC_SUBST(DBUS_C)
-		AC_SUBST(DBUS_BINDINGS_H)
+		AC_SUBST(DBUS_BINDINGS)
 		AC_SUBST(USE_DBUS)
 		AC_SUBST(DBUS_CFLAGS)
 		AC_SUBST(DBUS_LIBS)

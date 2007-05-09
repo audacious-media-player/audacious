@@ -102,13 +102,19 @@
     <!-- Playback Information/Manipulation -->
     <interface name="org.atheme.audacious.playback">
         <!-- Begin or resume playback -->
-        <method name="Play"/>
+        <method name="Play">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
 
         <!-- Pause playback -->
-        <method name="Pause"/>
+        <method name="Pause">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
 
         <!-- Stop playback -->
-        <method name="Stop"/>
+        <method name="Stop">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
 
         <!-- Is playback playing? -->
         <method name="Playing">
@@ -135,13 +141,43 @@
             <arg type="s" direction="out" name="status"/>
         </method>
 
+        <!-- What is the current output position? -->
+        <method name="Time">
+            <!-- Position of song, in ms -->
+            <arg type="i" direction="out" name="time"/>
+        </method>
+
         <!-- Seek to some absolute position in the current song -->
         <method name="Seek">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <!-- Position of song, in ms, to seek to -->
             <arg type="i" name="pos"/>
 
             <!-- Return true on success, or false if position out of range? -->
             <!-- <arg type="b" direction="out"/> -->
+        </method>
+
+        <!-- What is the playback volume? -->
+        <method name="Volume">
+            <!-- Volume of the left channel -->
+            <arg type="i" direction="out" name="vl"/>
+            <!-- Volume of the right channel -->
+            <arg type="i" direction="out" name="vr"/>
+        </method>
+
+        <!-- Set the playback volume -->
+        <method name="SetVolume">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <!-- Volume of the left channel -->
+            <arg type="i" name="vl"/>
+            <!-- Volume of the right channel -->
+            <arg type="i" name="vr"/>
+        </method>
+
+        <!-- Get the playback balance -->
+        <method name="Balance">
+            <!-- Balance between left and right channels -->
+            <arg type="i" direction="out" name="balance"/>
         </method>
     </interface>
 
@@ -154,10 +190,14 @@
         </method>
 
         <!-- Skip ahead one song in the current playlist -->
-        <method name="Advance"/>
+        <method name="Advance">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
 
         <!-- Skip backwards one song in the current playlist -->
-        <method name="Reverse"/>
+        <method name="Reverse">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
 
         <!-- Playlist length -->
         <method name="Length">
@@ -203,24 +243,29 @@
 
         <!-- Jump to some position in the playlist -->
         <method name="Jump">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <!-- Song position to jump to -->
             <arg type="i" name="pos"/>
         </method>
 
         <!-- Add some URL to the current playlist -->
         <method name="AddUrl">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <!-- URL to add -->
             <arg type="s" name="url"/>
         </method>
 
         <!-- Delete some song from the playlist -->
         <method name="Delete">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <!-- Position of song to delete -->
             <arg type="i" name="pos"/>
         </method>
 
         <!-- Clear the playlist -->
-        <method name="Clear"/>
+        <method name="Clear">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
 
         <!-- Query repeat status -->
         <method name="Repeating">
@@ -228,7 +273,9 @@
         </method>
 
         <!-- Toggle repeat -->
-        <method name="Repeat"/>
+        <method name="Repeat">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
 
         <!-- Query shuffle status -->
         <method name="Shuffling">
@@ -236,6 +283,8 @@
         </method>
 
         <!-- Toggle shuffle -->
-        <method name="Shuffle"/>
+        <method name="Shuffle">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
     </interface>
 </node>

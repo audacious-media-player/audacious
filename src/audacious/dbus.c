@@ -24,7 +24,8 @@
 #include <glib.h>
 #include <dbus/dbus-glib-bindings.h>
 #include "dbus.h"
-#include "dbus-bindings.h"
+#include "dbus-service.h"
+#include "dbus-server-bindings.h"
 
 #include "main.h"
 #include "ui_equalizer.h"
@@ -39,13 +40,14 @@
 #include "titlestring.h"
 #include "ui_jumptotrack.h"
 
+static DBusGProxy *dbproxy = NULL;
+
 G_DEFINE_TYPE(RemoteObject, audacious_remote, G_TYPE_OBJECT);
 
 void audacious_remote_class_init(RemoteObjectClass *klass) {}
 
 void audacious_remote_init(RemoteObject *object) {
     GError *error = NULL;
-    DBusGProxy *driver_proxy;
     unsigned int request_ret;
 
     // Initialize the DBus connection
@@ -60,27 +62,34 @@ void audacious_remote_init(RemoteObject *object) {
                                     &dbus_glib_audacious_remote_object_info);
     
     // Register DBUS path
-    dbus_g_connection_register_g_object(object->connection, DBUS_OBJECT_PATH,
-                                        G_OBJECT(object));
+    dbus_g_connection_register_g_object(object->connection,
+                                        AUDACIOUS_DBUS_PATH, G_OBJECT(object));
 
     // Register the service name, the constants here are defined in
     // dbus-glib-bindings.h
-    driver_proxy = dbus_g_proxy_new_for_name(object->connection,
+    dbproxy = dbus_g_proxy_new_for_name(object->connection,
                                              DBUS_SERVICE_DBUS, DBUS_PATH_DBUS,
                                              DBUS_INTERFACE_DBUS);
 
-    if (!org_freedesktop_DBus_request_name(driver_proxy, DBUS_SERVICE, 0,
-            &request_ret, &error)) {
+    if (!org_freedesktop_DBus_request_name(dbproxy,
+        AUDACIOUS_DBUS_SERVICE, 0, &request_ret, &error)) {
         g_warning("Unable to register service: %s", error->message);
         g_error_free(error);
     }
-    
-    g_object_unref(driver_proxy);
 }
 
 void init_dbus() {
     g_type_init();
     g_object_new(audacious_remote_get_type(), NULL);
+}
+
+void free_dbus() {
+    if (dbproxy != NULL)
+        g_object_unref(dbproxy);
+}
+
+DBusGProxy *audacious_get_dbus_proxy() {
+    return dbproxy;
 }
 
 // Audacious General Information
@@ -143,11 +152,50 @@ gboolean audacious_remote_status(RemoteObject *obj, gchar **status,
     return TRUE;
 }
 
+gboolean audacious_remote_time(RemoteObject *obj, gint *time, GError **error) {
+    if (playback_get_playing())
+        *time = playback_get_time();
+    else
+        *time = 0;
+    return TRUE;
+}
+
 gboolean audacious_remote_seek(RemoteObject *obj, guint pos, GError **error) {
     if (playlist_get_current_length(playlist_get_active()) > 0 &&
             pos < (guint)playlist_get_current_length(playlist_get_active()))
             playback_seek(pos / 1000);
 
+    return TRUE;
+}
+
+gboolean audacious_remote_volume(RemoteObject *obj, gint *vl, gint *vr,
+                                 GError **error) {
+    input_get_volume(vl, vr);
+    return TRUE;
+}
+
+gboolean audacious_remote_set_volume(RemoteObject *obj, gint vl, gint vr,
+                                     GError **error) {
+    if (vl > 100)
+        vl = 100;
+    if (vr > 100)
+        vr = 100;
+    input_set_volume(vl, vr);
+    return TRUE;
+}
+
+gboolean audacious_remote_balance(RemoteObject *obj, gint *balance,
+                                  GError **error) {
+    gint vl, vr;
+    input_get_volume(&vl, &vr);
+    if (vl < 0 || vr < 0)
+        *balance = 0;
+    else if (vl > vr)
+        *balance = -100 + ((vr * 100) / vl);
+    else if (vr > vl)
+        *balance = 100 - ((vl * 100) / vr);
+    else
+        *balance = 0;
     return TRUE;
 }
 

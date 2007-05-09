@@ -36,6 +36,11 @@
 #include <glib/gprintf.h>
 #include <string.h>
 
+
+#ifdef USE_DBUS
+#include "dbus-service.h"
+#endif
+
 #include "main.h"
 #include "ui_main.h"
 #include "playback.h"
@@ -173,6 +178,9 @@ general_plugin_init(Plugin * plugin)
 {
     GeneralPlugin *p = GENERAL_PLUGIN(plugin);
     p->xmms_session = -1;
+#ifdef USE_DBUS
+    p->dbus_proxy = audacious_get_dbus_proxy();
+#endif
     gp_data.general_list = g_list_append(gp_data.general_list, p);
 }
 
@@ -181,6 +189,9 @@ vis_plugin_init(Plugin * plugin)
 {
     VisPlugin *p = VIS_PLUGIN(plugin);
     p->xmms_session = -1;
+#ifdef USE_DBUS
+    p->dbus_proxy = audacious_get_dbus_proxy();
+#endif
     p->disable_plugin = vis_disable_plugin;
     vp_data.vis_list = g_list_append(vp_data.vis_list, p);
 }

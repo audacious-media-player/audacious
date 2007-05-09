@@ -50,7 +50,7 @@
 #include "vfs.h"
 
 #ifdef USE_DBUS
-#  include "dbus.h"
+#  include "dbus-service.h"
 #endif
 
 #include "dnd.h"
@@ -1252,6 +1252,10 @@ main(gint argc, gchar ** argv)
 
         GDK_THREADS_LEAVE();
 
+#ifdef USE_DBUS
+        free_dbus();
+#endif
+
         g_cond_free(cond_scan);
         g_mutex_free(mutex_scan);
 
@@ -1270,6 +1274,10 @@ main(gint argc, gchar ** argv)
         loop = g_main_loop_new(NULL, TRUE);
         g_timeout_add(10, aud_headless_iteration, NULL);
         g_main_loop_run(loop);
+
+#ifdef USE_DBUS
+        free_dbus();
+#endif
 
         return EXIT_SUCCESS;
     }

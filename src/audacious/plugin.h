@@ -37,10 +37,17 @@
 #ifndef BMP_PLUGIN_H
 #define BMP_PLUGIN_H
 
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
 
 #include <glib.h>
 #include "audacious/vfs.h"
 #include "audacious/titlestring.h"
+
+#ifdef USE_DBUS
+#include <dbus/dbus-glib.h>
+#endif
 
 #define INPUT_PLUGIN(x)   ((InputPlugin *)(x))
 #define OUTPUT_PLUGIN(x)  ((OutputPlugin *)(x))
@@ -214,6 +221,9 @@ struct _GeneralPlugin {
     gchar *filename;
 
     gint xmms_session;
+#ifdef USE_DBUS
+    DBusGProxy *dbus_proxy;
+#endif
     gchar *description;
 
     void (*init) (void);
@@ -227,6 +237,9 @@ struct _VisPlugin {
     gchar *filename;
 
     gint xmms_session;
+#ifdef USE_DBUS
+    DBusGProxy *dbus_proxy;
+#endif
     gchar *description;
 
     gint num_pcm_chs_wanted;
