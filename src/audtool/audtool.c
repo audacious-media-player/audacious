@@ -103,7 +103,8 @@ DBusGProxy *audtool_connect(GError *error)
 		return NULL;
 
 	return dbus_g_proxy_new_for_name(connection,
-		DBUS_SERVICE_DBUS, DBUS_PATH_DBUS, DBUS_INTERFACE_DBUS);
+		"org.atheme.audacious", "/org/atheme/audacious", 
+		"org.atheme.audacious");
 }
 
 gint main(gint argc, gchar **argv)

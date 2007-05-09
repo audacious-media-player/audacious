@@ -1,3 +1,11 @@
+2007-05-09 22:37:59 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4464]
+  - make this build again, most functionality does not work
+  
+  trunk/src/audtool/audtool.c |  250 ++++++++++++++++++++++++++------------------
+  1 file changed, 153 insertions(+), 97 deletions(-)
+
+
 2007-05-09 22:14:52 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4462]
   - disable audtool for now, needs to be ported to DBus.
