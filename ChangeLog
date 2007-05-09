@@ -1,3 +1,11 @@
+2007-05-08 19:30:53 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4440]
+  - remove unused function 'extname'
+  
+  trunk/src/audacious/input.c |   11 -----------
+  1 file changed, 11 deletions(-)
+
+
 2007-05-08 17:26:29 +0000  Ben Tucker <bnt@interchange.ubc.ca>
   revision [4438]
   Completed the implementation of all the stubs in dbus.c, and commented the creation of the mpris dbus bindings to fix compilation issues.

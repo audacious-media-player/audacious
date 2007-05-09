@@ -112,6 +112,12 @@ SOURCES = \
 	visualization.c \
 	xconvert.c
 
+DBUS_BINDINGS = \
+	objects.xml \
+	mpris_root.xml \
+	mpris_tracklist.xml \
+	mpris_player.xml
+
 OBJECTS = ${SOURCES:.c=.o}
 
 LIBDEP = widgets/libwidgets.a ../libguess/libguess.a ../librcd/librcd.a
@@ -119,11 +125,13 @@ LIBDEP = widgets/libwidgets.a ../libguess/libguess.a ../librcd/librcd.a
 desktop_DATA = audacious.desktop
 desktopdir = $(datadir)/applications
 
+dbus.o: dbus-bindings.h
+
 audacious: $(OBJECTS) $(LIBDEP)
 	$(CXX) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@ 
 	@printf "%10s     %-20s\n" LINK $@
 
-dbus-bindings.h:
+dbus-bindings.h: $(DBUS_BINDINGS)
 	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=audacious_remote objects.xml > $@
 	# $(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_root mpris_root.xml >> $@
 	# $(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_tracklist mpris_tracklist.xml >> $@
