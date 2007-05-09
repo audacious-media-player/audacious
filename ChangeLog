@@ -1,3 +1,24 @@
+2007-05-09 21:36:37 +0000  Ben Tucker <bnt@interchange.ubc.ca>
+  revision [4448]
+  Initial commit of dbus client library for plugins. Various changes were made to the plugin structure to support dbus.
+  
+  trunk/configure.ac                 |    4 
+  trunk/mk/rules.mk.in               |    2 
+  trunk/src/Makefile                 |    2 
+  trunk/src/audacious/Makefile       |   14 +-
+  trunk/src/audacious/dbus-service.h |   91 +++++++++++++++++
+  trunk/src/audacious/dbus.c         |   66 ++++++++++--
+  trunk/src/audacious/dbus.h         |   64 ------------
+  trunk/src/audacious/main.c         |   10 +
+  trunk/src/audacious/objects.xml    |   65 ++++++++++--
+  trunk/src/audacious/plugin.h       |   13 ++
+  trunk/src/audacious/pluginenum.c   |   11 ++
+  trunk/src/libaudaciousng/Makefile  |   42 ++++++++
+  trunk/src/libaudaciousng/audctrl.c |  193 +++++++++++++++++++++++++++++++++++++
+  trunk/src/libaudaciousng/audctrl.h |  130 ++++++++++++++++++++++++
+  14 files changed, 620 insertions(+), 87 deletions(-)
+
+
 2007-05-09 21:35:33 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4446]
   - drop client code

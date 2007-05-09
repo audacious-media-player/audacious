@@ -35,6 +35,7 @@ CFLAGS += \
 	-I../intl
 
 HEADERS = \
+	configdb.h \
 	dbus.h \
 	formatter.h \
 	rcfile.h \
@@ -58,7 +59,7 @@ HEADERS = \
 
 SOURCES = \
 	build_stamp.c \
-	controlsocket.c \
+	configdb.c \
 	$(DBUS_C) \
 	dnd.c \
 	dock.c \
