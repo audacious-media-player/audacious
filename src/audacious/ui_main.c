@@ -59,7 +59,6 @@
 
 #include "main.h"
 
-#include "controlsocket.h"
 #include "dnd.h"
 #include "dock.h"
 #include "genevent.h"
@@ -443,8 +442,6 @@ mainwin_quit_cb(void)
 
     bmp_config_save();
     gtk_accel_map_save(bmp_paths[BMP_PATH_ACCEL_FILE]);
-
-    ctrlsocket_cleanup();
 
     plugin_system_cleanup();
 

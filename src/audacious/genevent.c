@@ -46,7 +46,6 @@
 #include "libaudacious/configdb.h"
 #include "libaudacious/beepctrl.h"
 
-#include "controlsocket.h"
 #include "dnd.h"
 #include "effect.h"
 #include "general.h"
@@ -123,8 +122,6 @@ gint
 audcore_generic_events(void)
 {
     gint time = 0;
-
-    ctrlsocket_check();
 
     if (playback_get_playing()) {
         time = playback_get_time();

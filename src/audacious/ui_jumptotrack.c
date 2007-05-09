@@ -59,7 +59,6 @@
 
 #include "main.h"
 
-#include "controlsocket.h"
 #include "dnd.h"
 #include "dock.h"
 #include "genevent.h"

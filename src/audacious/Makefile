@@ -57,7 +57,6 @@ HEADERS = \
 
 SOURCES = \
 	build_stamp.c \
-	controlsocket.c \
 	$(DBUS_C) \
 	dnd.c \
 	dock.c \

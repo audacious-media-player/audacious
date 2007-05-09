@@ -1,3 +1,11 @@
+2007-05-09 06:24:26 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4442]
+  - add dependency for dbus bindings.
+  
+  trunk/src/audacious/Makefile |   10 +++++++++-
+  1 file changed, 9 insertions(+), 1 deletion(-)
+
+
 2007-05-08 19:30:53 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4440]
   - remove unused function 'extname'

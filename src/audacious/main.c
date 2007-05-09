@@ -53,7 +53,6 @@
 #  include "dbus.h"
 #endif
 
-#include "controlsocket.h"
 #include "dnd.h"
 #include "effect.h"
 #include "ui_equalizer.h"
@@ -906,13 +905,6 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
         exit(EXIT_SUCCESS);
     }
 
-    if (session == -1) {
-        if (!remote)
-            session = ctrlsocket_get_session_id();
-        else
-            session = 0;
-    }
-
     if (filenames != NULL)
     {
         gint pos = 0;
@@ -1143,7 +1135,7 @@ main(gint argc, gchar ** argv)
 
     bmp_config_load();
 
-    if (options.session != -1 || !ctrlsocket_setup()) {
+    if (options.session != -1) {
         handle_cmd_line_options(&options, TRUE);
         exit(EXIT_SUCCESS);
     }
@@ -1191,8 +1183,6 @@ main(gint argc, gchar ** argv)
 #ifdef USE_DBUS
     init_dbus();
 #endif
-
-    ctrlsocket_start();
 
     handle_cmd_line_options(&options, FALSE);
 
