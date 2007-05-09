@@ -17,7 +17,7 @@ LDADD = \
 	$(GTK_LIBS) \
 	$(DBUS_LIBS) \
 	$(MOWGLI_LIBS) \
-	$(MCS_LIBS) \
+	$(LIBMCS_LIBS) \
 	$(LIBGLADE_LIBS) \
 	$(REGEX_LIBS) \
 	./widgets/libwidgets.a
@@ -31,7 +31,7 @@ CFLAGS += \
 	$(DBUS_CFLAGS) \
 	$(samplerate_CFLAGS) \
 	$(REGEX_CFLAGS) \
-	$(MCS_CFLAGS) \
+	$(LIBMCS_CFLAGS) \
 	-D_AUDACIOUS_CORE \
 	-I.. -I../.. \
 	-I../intl

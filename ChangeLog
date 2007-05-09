@@ -1,3 +1,11 @@
+2007-05-09 22:42:13 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4468]
+  - fix compilation
+  
+  trunk/src/audacious/Makefile |    2 ++
+  1 file changed, 2 insertions(+)
+
+
 2007-05-09 22:41:21 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4466]
   - this needs work. lots of work.
