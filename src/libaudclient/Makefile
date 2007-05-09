@@ -3,7 +3,7 @@ include ../../mk/init.mk
 
 PICLDFLAGS = $(LIBLDFLAGS)
 
-OBJECTIVE_LIBS = libaudaciousng$(SHARED_SUFFIX)
+OBJECTIVE_LIBS = libaudclient$(SHARED_SUFFIX)
 OBJECTIVE_SONAME_SUFFIX = 1
 LIBAUDACIOUS_SUFFIX = 1.0.0
 
@@ -35,8 +35,8 @@ HEADERS = \
 include ../../mk/objective.mk
 
 install-posthook:
-	@mv ${DESTDIR}/${LIBDIR}/libaudaciousng$(SHARED_SUFFIX) ${DESTDIR}/${LIBDIR}/libaudaciousng$(SHARED_SUFFIX).$(LIBAUDACIOUS_SUFFIX)
-	@ln -sf libaudaciousng$(SHARED_SUFFIX).$(LIBAUDACIOUS_SUFFIX) \
-		${DESTDIR}/${LIBDIR}/libaudaciousng$(SHARED_SUFFIX).5
-	@ln -sf libaudaciousng$(SHARED_SUFFIX).5 \
-		${DESTDIR}/${LIBDIR}/libaudaciousng$(SHARED_SUFFIX)
+	@mv ${DESTDIR}/${LIBDIR}/libaudclient$(SHARED_SUFFIX) ${DESTDIR}/${LIBDIR}/libaudclient$(SHARED_SUFFIX).$(LIBAUDACIOUS_SUFFIX)
+	@ln -sf libaudclient$(SHARED_SUFFIX).$(LIBAUDACIOUS_SUFFIX) \
+		${DESTDIR}/${LIBDIR}/libaudclient$(SHARED_SUFFIX).1
+	@ln -sf libaudclient$(SHARED_SUFFIX).1 \
+		${DESTDIR}/${LIBDIR}/libaudclient$(SHARED_SUFFIX)
