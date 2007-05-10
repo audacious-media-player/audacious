@@ -80,6 +80,7 @@ void audacious_remote_init(RemoteObject *object) {
 void init_dbus() {
     g_type_init();
     g_object_new(audacious_remote_get_type(), NULL);
+    g_message("D-Bus support has been activated");
 }
 
 void free_dbus() {

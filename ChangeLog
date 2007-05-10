@@ -1,3 +1,12 @@
+2007-05-10 19:30:19 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4480]
+  - rename xmms_remote namespace to audacious_remote namespace
+  - if HAVE_DBUS get the dbus proxy provider for audacious_remote.
+  
+  trunk/src/audacious/main.c |   40 +++++++++++++++++++++-------------------
+  1 file changed, 21 insertions(+), 19 deletions(-)
+
+
 2007-05-10 04:21:02 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4478]
   - enable dbus support by default
