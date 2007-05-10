@@ -1,3 +1,16 @@
+2007-05-10 04:16:57 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4474]
+  Fix build without --enable-dbus -- this will render an audacious which
+  is not remote-controllable (the buggy controlsocket code has been removed
+  in a prior build), but makes our dependency on dbus optional. When built 
+  without dbus, MPRIS support is also disabled (as it needs D-Bus).
+  
+  trunk/configure.ac   |    2 ++
+  trunk/mk/rules.mk.in |    1 +
+  trunk/src/Makefile   |    2 +-
+  3 files changed, 4 insertions(+), 1 deletion(-)
+
+
 2007-05-10 00:14:46 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4472]
   - bind to the right dbus interfaces, but this still has problems building

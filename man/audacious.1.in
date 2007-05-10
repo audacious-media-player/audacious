@@ -3,7 +3,7 @@
 Audacious \- an audio player for X.
 .SH SYNOPSIS
 .B audacious
-[\-h] [\-\-help] [\-n \fI<session>\fP] [\-\-session=\fI<session>\fP] [\-r]
+[\-h] [\-\-help] [\-r]
 [\-\-rew] [\-p] [\-\-play] [\-u] [\-\-pause] [\-s] [\-\-stop] [\-f]
 [\-\-fwd] [\-e] [\-\-enqueue] [\-m] [\-\-show\-main\-window] [\-v]
 [\-\-version] [\-\-headless] [\fIfilename\fP]...
@@ -19,9 +19,6 @@ Audacious accepts the following options:
 .TP
 .B \-h, \-\-help
 Show summary of options.
-.TP
-.B \-n, \-\-session
-Select Audacious/BMP/XMMS session (Default: 0).
 .TP
 .B \-r, \-\-rew
 Skip backwards in playlist.
