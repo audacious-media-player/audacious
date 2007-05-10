@@ -1,3 +1,12 @@
+2007-05-10 00:14:46 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4472]
+  - bind to the right dbus interfaces, but this still has problems building
+  
+  trunk/src/audtool/audtool.c |  180 +++++++++++++++++++++++++-------------------
+  trunk/src/audtool/audtool.h |  124 +++++++++++++++---------------
+  2 files changed, 166 insertions(+), 138 deletions(-)
+
+
 2007-05-09 23:43:29 +0000  Tony Vroon <chainsaw@gentoo.org>
   revision [4470]
   MCS_LIBS != LIBMCS_LIBS, allow audacious binary to link.
