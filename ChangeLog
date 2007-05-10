@@ -1,3 +1,12 @@
+2007-05-10 04:19:09 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4476]
+  Remove documentation about XMMS controlsocket compatibility. This code 
+  has been removed.
+  
+  trunk/man/audacious.1.in |    5 +----
+  1 file changed, 1 insertion(+), 4 deletions(-)
+
+
 2007-05-10 04:16:57 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4474]
   Fix build without --enable-dbus -- this will render an audacious which

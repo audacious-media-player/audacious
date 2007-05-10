@@ -215,9 +215,9 @@ AC_SUBST(SUBDIR_GUESS)
 dnl D-Bus support
 dnl ========================
 AC_ARG_ENABLE(dbus,
-    [  --enable-dbus    enable D-Bus support (default=no)],
+    [  --enable-dbus    enable D-Bus support (default=yes)],
     [enable_dbus=$enableval],
-    [enable_dbus="no"]
+    [enable_dbus="yes"]
 )
 
 AM_CONDITIONAL(USE_DBUS, test "x$enable_dbus" = "xyes")
