@@ -896,7 +896,9 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
                         gboolean remote)
 {
     gchar **filenames = options->filenames;
-    gint session = options->session;
+#ifdef HAVE_DBUS
+    DBusGProxy *session = audacious_get_dbus_proxy();
+#endif
 
     if (options->version)
     {
@@ -930,31 +932,31 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
 
         if (options->load_skins)
         {
-            xmms_remote_set_skin(session, filenames[0]);
+            audacious_remote_set_skin(session, filenames[0]);
             skin_install_skin(filenames[0]);
         }
         else
         {
             if (options->enqueue_to_temp)
-                xmms_remote_playlist_enqueue_to_temp(session, filenames[0]);
+                audacious_remote_playlist_enqueue_to_temp(session, filenames[0]);
 
             if (options->enqueue && options->play)
-                pos = xmms_remote_get_playlist_length(session);
+                pos = audacious_remote_get_playlist_length(session);
 
             if (!options->enqueue)
             {
-                xmms_remote_playlist_clear(session);
-                xmms_remote_stop(session);
+                audacious_remote_playlist_clear(session);
+                audacious_remote_stop(session);
             }
 
-            xmms_remote_playlist_add(session, fns);
+            audacious_remote_playlist_add(session, fns);
 
             if (options->enqueue && options->play &&
-                xmms_remote_get_playlist_length(session) > pos)
-                xmms_remote_set_playlist_pos(session, pos);
+                audacious_remote_get_playlist_length(session) > pos)
+                audacious_remote_set_playlist_pos(session, pos);
 
             if (!options->enqueue)
-                xmms_remote_play(session);
+                audacious_remote_play(session);
         }
 
         g_list_foreach(fns, (GFunc) g_free, NULL);
@@ -964,31 +966,31 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
     }
 
     if (options->rew)
-        xmms_remote_playlist_prev(session);
+        audacious_remote_playlist_prev(session);
 
     if (options->play)
-        xmms_remote_play(session);
+        audacious_remote_play(session);
 
     if (options->pause)
-        xmms_remote_pause(session);
+        audacious_remote_pause(session);
 
     if (options->stop)
-        xmms_remote_stop(session);
+        audacious_remote_stop(session);
 
     if (options->fwd)
-        xmms_remote_playlist_next(session);
+        audacious_remote_playlist_next(session);
 
     if (options->play_pause)
-        xmms_remote_play_pause(session);
+        audacious_remote_play_pause(session);
 
     if (options->show_jump_box)
-        xmms_remote_show_jtf_box(session);
+        audacious_remote_show_jtf_box(session);
 
     if (options->mainwin)
-        xmms_remote_main_win_toggle(session, TRUE);
+        audacious_remote_main_win_toggle(session, TRUE);
 
     if (options->activate)
-        xmms_remote_activate(session);
+        audacious_remote_activate(session);
 #endif
 
     if (options->playcd)
