@@ -1,3 +1,11 @@
+2007-05-10 21:13:20 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4484]
+  - fix ABI
+  
+  trunk/src/audacious/plugin.h |   14 ++++++++------
+  1 file changed, 8 insertions(+), 6 deletions(-)
+
+
 2007-05-10 20:21:55 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4482]
   - log when dbus has been successfully started up
