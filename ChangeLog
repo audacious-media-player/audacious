@@ -1,3 +1,10 @@
+2007-05-09 23:43:29 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [4470]
+  MCS_LIBS != LIBMCS_LIBS, allow audacious binary to link.
+  trunk/src/audacious/Makefile |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2007-05-09 22:42:13 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4468]
   - fix compilation
