@@ -221,15 +221,16 @@ struct _GeneralPlugin {
     gchar *filename;
 
     gint xmms_session;
-#ifdef USE_DBUS
-    DBusGProxy *dbus_proxy;
-#endif
     gchar *description;
 
     void (*init) (void);
     void (*about) (void);
     void (*configure) (void);
     void (*cleanup) (void);
+
+#ifdef USE_DBUS
+    DBusGProxy *dbus_proxy;
+#endif
 };
 
 struct _VisPlugin {
@@ -237,9 +238,6 @@ struct _VisPlugin {
     gchar *filename;
 
     gint xmms_session;
-#ifdef USE_DBUS
-    DBusGProxy *dbus_proxy;
-#endif
     gchar *description;
 
     gint num_pcm_chs_wanted;
@@ -254,6 +252,10 @@ struct _VisPlugin {
     void (*playback_stop) (void);
     void (*render_pcm) (gint16 pcm_data[2][512]);
     void (*render_freq) (gint16 freq_data[2][256]);
+
+#ifdef USE_DBUS
+    DBusGProxy *dbus_proxy;
+#endif
 };
 
 
