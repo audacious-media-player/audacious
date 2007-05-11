@@ -214,12 +214,24 @@ void audacious_remote_set_skin(DBusGProxy *proxy, gchar *skinfile) {
 }
 
 gchar *audacious_remote_get_playlist_file(DBusGProxy *proxy, gint pos) {
+    gchar *out;
+    org_atheme_audacious_song_filename(proxy, pos, &out, &error);
+    g_clear_error(&error);
+    return out;
 }
 
 gchar *audacious_remote_get_playlist_title(DBusGProxy *proxy, gint pos) {
+    gchar *out;
+    org_atheme_audacious_song_title(proxy, pos, &out, &error);
+    g_clear_error(&error);
+    return out;
 }
 
 gint audacious_remote_get_playlist_time(DBusGProxy *proxy, gint pos) {
+    gint out;
+    org_atheme_audacious_song_length(proxy, pos, &out, &error);
+    g_clear_error(&error);
+    return out;
 }
 
 void audacious_remote_get_info(DBusGProxy *proxy, gint *rate, gint *freq,

@@ -1,3 +1,13 @@
+2007-05-11 19:22:38 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4494]
+  - BSDify code
+  - use mowgli.error_backtrace in parts of the code
+  
+  trunk/src/audtool/Makefile  |    2 +
+  trunk/src/audtool/audtool.c |   72 ++++++++++++++++++++++++++------------------
+  2 files changed, 45 insertions(+), 29 deletions(-)
+
+
 2007-05-11 18:52:56 +0000  Ben Tucker <bnt@interchange.ubc.ca>
   revision [4492]
   Implemented more of the stubs in audctrl; Added more methods to objects.xml with implementations in dbus.c. I'm still trying to get plugins working with libaudclient.
