@@ -1,3 +1,14 @@
+2007-05-11 19:49:05 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4500]
+  - split handlers out to handlers.c
+  
+  trunk/src/audtool/Makefile   |    2 
+  trunk/src/audtool/audtool.c  |  901 -----------------------------------------
+  trunk/src/audtool/audtool.h  |    6 
+  trunk/src/audtool/handlers.c |  933 +++++++++++++++++++++++++++++++++++++++++++
+  4 files changed, 942 insertions(+), 900 deletions(-)
+
+
 2007-05-11 19:39:47 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4498]
   - avoid null dereferences

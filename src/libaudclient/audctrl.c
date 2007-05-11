@@ -229,7 +229,7 @@ gchar *audacious_remote_get_playlist_title(DBusGProxy *proxy, gint pos) {
 
 gint audacious_remote_get_playlist_time(DBusGProxy *proxy, gint pos) {
     gint out;
-    org_atheme_audacious_song_length(proxy, pos, &out, &error);
+    org_atheme_audacious_song_frames(proxy, pos, &out, &error);
     g_clear_error(&error);
     return out;
 }
