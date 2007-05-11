@@ -1,0 +1,115 @@
+/*
+ * Audacious: A cross-platform multimedia player
+ * Copyright (c) 2007 Giacomo Lozito
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; under version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ */
+
+/* audacious_drct_* provides a handy interface for player
+   plugins, originally intended for migration from xmms_remote_* calls */
+
+
+#include "input.h"
+#include "playback.h"
+#include "ui_main.h"
+
+
+/* playback */
+
+void
+audacious_drct_play ( void )
+{
+  if (playback_get_paused())
+    playback_pause();
+  else if (playlist_get_length(playlist_get_active()))
+    playback_initiate();
+  else
+    mainwin_eject_pushed();
+  return;
+}
+
+void
+audacious_drct_pause ( void )
+{
+  playback_pause();
+  return;
+}
+
+void
+audacious_drct_stop ( void )
+{
+  ip_data.stop = TRUE;
+  playback_stop();
+  ip_data.stop = FALSE;
+  mainwin_clear_song_info();
+  return;
+}
+
+gboolean
+audacious_drct_get_playing ( void )
+{
+  return playback_get_playing();
+}
+
+gboolean
+audacious_drct_get_paused ( void )
+{
+  return playback_get_paused();
+}
+
+gboolean
+audacious_drct_get_stopped ( void )
+{
+  return !playback_get_playing();
+}
+
+gint
+audacious_drct_get_time ( void )
+{
+  gint time;
+  if (playback_get_playing())
+    time = playback_get_time();
+  else
+    time = 0;
+  return time;
+}
+
+void
+audacious_drct_seek ( guint pos )
+{
+  if (playlist_get_current_length(playlist_get_active()) > 0 &&
+      pos < (guint)playlist_get_current_length(playlist_get_active()))
+    playback_seek(pos / 1000);
+  return;
+}
+
+void
+audacious_drct_get_volume( gint *vl, gint *vr )
+{
+  input_get_volume(vl, vr);
+  return;
+}
+
+void
+audacious_drct_set_volume( gint vl, gint vr )
+{
+  if (vl > 100)
+    vl = 100;
+  if (vr > 100)
+    vr = 100;
+  input_set_volume(vl, vr);
+  return;
+}
+

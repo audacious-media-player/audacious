@@ -37,6 +37,7 @@ CFLAGS += \
 	-I../intl
 
 HEADERS = \
+	auddrct.h \
 	configdb.h \
 	dbus.h \
 	formatter.h \
@@ -60,6 +61,7 @@ HEADERS = \
 	xconvert.h
 
 SOURCES = \
+	auddrct.c \
 	build_stamp.c \
 	configdb.c \
 	$(DBUS_C) \
