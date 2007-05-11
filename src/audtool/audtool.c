@@ -1,24 +1,38 @@
-/*  Audtool -- Audacious scripting tool
- *  Copyright (c) 2005-2007  Audacious development team
+/*
+ * Audtool2
+ * Copyright (c) 2007 Audacious development team
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * 3. The name of the author may not be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
+#include <mowgli.h>
 #include <locale.h>
 #include "libaudclient/audctrl.h"
 #include "audtool.h"
@@ -95,21 +109,21 @@ struct commandhandler handlers[] = {
 	{NULL, NULL, NULL}
 };
 
+static mowgli_error_context_t *e = NULL;
 static DBusGProxy *dbus_proxy = NULL;
 static DBusGConnection *connection = NULL;
 
-static void audtool_connect()
+static void audtool_connect(void)
 {
 	GError *error = NULL;
+
+	mowgli_error_context_push(e, "While attempting to connect to the D-Bus session bus");
 	connection = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
 
 	if (connection == NULL)
-	{
-		g_printerr("audtool: D-Bus error: %s", error->message);
-		g_error_free(error);
+		mowgli_error_context_display_with_error(e, "\n  * ", g_strdup_printf("D-Bus Error: %s", error->message));
 
-		exit(EXIT_FAILURE);
-	}
+	mowgli_error_context_pop(e);
 
 	dbus_proxy = dbus_g_proxy_new_for_name(connection, AUDACIOUS_DBUS_SERVICE,
                                            AUDACIOUS_DBUS_PATH,
@@ -122,16 +136,17 @@ gint main(gint argc, gchar **argv)
 
 	setlocale(LC_CTYPE, "");
 	g_type_init();
+	mowgli_init();
+
+	e = mowgli_error_context_create();
+	mowgli_error_context_push(e, "In program %s", argv[0]);
+
+	audtool_connect();
+
+	mowgli_error_context_push(e, "While processing the commandline");
 
 	if (argc < 2)
-	{
-		g_print("%s: usage: %s <command>\n", argv[0], argv[0]);
-		g_print("%s: use `%s help' to get a listing of available commands.\n",
-			argv[0], argv[0]);
-		exit(-2);
-	}
-
-    audtool_connect();
+		mowgli_error_context_display_with_error(e, "\n  * ", "not enough parameters, use audtool --help for more information.");
 
 	for (i = 0; handlers[i].name != NULL; i++)
 	{
@@ -144,8 +159,7 @@ gint main(gint argc, gchar **argv)
 		}
 	}
 
-	g_print("%s: invalid command '%s'\n", argv[0], argv[1]);
-	g_print("%s: use `%s help' to get a listing of available commands.\n", argv[0], argv[0]);
+	mowgli_error_context_display_with_error(e, "\n  * ", g_strdup_printf("Unknown command `%s' encountered, use audtool --help for a command list.", argv[1]));
 
 	return 0;
 }

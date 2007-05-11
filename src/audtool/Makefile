@@ -9,6 +9,7 @@ LDADD = \
 	$(DBUS_LIBS) \
 	-L../libaudclient -laudclient \
 	$(GTK_LIBS)      \
+	$(MOWGLI_LIBS)	 \
 	$(LIBGLADE_LIBS)
 
 CFLAGS += \
@@ -17,6 +18,7 @@ CFLAGS += \
 	$(LIBGLADE_CFLAGS) \
 	$(BEEP_DEFINES)    \
 	$(ARCH_DEFINES)    \
+	$(MOWGLI_CFLAGS)   \
 	-I.. -I../..   \
 	-I../intl
 

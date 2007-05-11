@@ -1,3 +1,17 @@
+2007-05-11 18:52:56 +0000  Ben Tucker <bnt@interchange.ubc.ca>
+  revision [4492]
+  Implemented more of the stubs in audctrl; Added more methods to objects.xml with implementations in dbus.c. I'm still trying to get plugins working with libaudclient.
+  
+  trunk/src/audacious/Makefile       |    4 -
+  trunk/src/audacious/dbus-service.h |   73 +++++++++++-------
+  trunk/src/audacious/dbus.c         |  143 ++++++++++++++++++++++++-------------
+  trunk/src/audacious/main.c         |   18 +---
+  trunk/src/audacious/objects.xml    |   65 +++++++++++++---
+  trunk/src/audacious/pluginenum.c   |   27 ++++++
+  trunk/src/libaudclient/audctrl.c   |   32 ++++++++
+  7 files changed, 258 insertions(+), 104 deletions(-)
+
+
 2007-05-11 15:59:22 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4490]
   - build audtool if libaudclient will be built.
