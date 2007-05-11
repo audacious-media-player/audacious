@@ -19,13 +19,19 @@
 #ifndef AUDTOOL_H
 #define AUDTOOL_H
 
+#include <mowgli.h>
 #include <audacious/dbus.h>
+
+extern mowgli_error_context_t *e;
+extern DBusGProxy *dbus_proxy;
 
 struct commandhandler {
 	gchar *name;
 	void (*handler)(gint argc, gchar **argv);
 	gchar *desc;
 }; 
+
+extern struct commandhandler handlers[];
 
 extern void get_handlers_list(gint, gchar **);
 extern void get_current_song(gint, gchar **);

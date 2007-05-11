@@ -1,3 +1,13 @@
+2007-05-11 19:39:47 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4498]
+  - avoid null dereferences
+  - handle command line options before plugin system is loaded
+  
+  trunk/src/audacious/main.c     |    5 +----
+  trunk/src/audacious/playlist.c |    5 ++++-
+  2 files changed, 5 insertions(+), 5 deletions(-)
+
+
 2007-05-11 19:35:52 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4496]
   - finish some stubs to make audtool work for my scripts
