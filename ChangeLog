@@ -1,3 +1,11 @@
+2007-05-11 19:35:52 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4496]
+  - finish some stubs to make audtool work for my scripts
+  
+  trunk/src/libaudclient/audctrl.c |   12 ++++++++++++
+  1 file changed, 12 insertions(+)
+
+
 2007-05-11 19:22:38 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4494]
   - BSDify code

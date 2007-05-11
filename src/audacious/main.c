@@ -1138,10 +1138,7 @@ main(gint argc, gchar ** argv)
 
     bmp_config_load();
 
-    if (options.session != -1) {
-        handle_cmd_line_options(&options, TRUE);
-        exit(EXIT_SUCCESS);
-    }
+    handle_cmd_line_options(&options, TRUE);
 
 #ifdef USE_DBUS
     init_dbus();

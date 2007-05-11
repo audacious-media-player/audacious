@@ -3140,7 +3140,10 @@ playlist_get_active(void)
     if (playlists_iter != NULL)
         return (Playlist *) playlists_iter->data;
 
-    return (Playlist *) playlists->data;
+    if (playlists)
+        return (Playlist *) playlists->data;
+
+    return NULL;
 }
 
 void
