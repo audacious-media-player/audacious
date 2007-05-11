@@ -1,3 +1,17 @@
+2007-05-11 08:42:32 +0000  Ben Tucker <bnt@interchange.ubc.ca>
+  revision [4488]
+  Added stubs in audctrl.c for the unimplemented functions defined in audctrl.h.
+  Fixed audtool by moving all the DBus methods defined in objects.xml to a common interface; this will be decentralized for MPRIS.
+  Modified the Makefile so that libaudclient is built after audacious to eliminates a build warning.
+  
+  trunk/src/Makefile               |    2 
+  trunk/src/audacious/objects.xml  |   10 -
+  trunk/src/audtool/audtool.c      |  280 ++++++++++++++-------------------------
+  trunk/src/audtool/audtool.h      |    2 
+  trunk/src/libaudclient/audctrl.c |  236 +++++++++++++++++++++++++++-----
+  5 files changed, 310 insertions(+), 220 deletions(-)
+
+
 2007-05-10 23:59:22 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4486]
   - build fix.

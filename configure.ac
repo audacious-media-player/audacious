@@ -237,7 +237,7 @@ if test "x$enable_dbus" = "xyes"; then
 			[Location of D-Bus services directory])
 		DBUS_C=dbus.c
 		DBUS_BINDINGS="dbus-server-bindings.h dbus-client-bindings.h"
-		LIBAUDCLIENT_OBJECTIVE="libaudclient"
+		LIBAUDCLIENT_OBJECTIVE="libaudclient audtool"
 		AC_SUBST(DBUS_C)
 		AC_SUBST(DBUS_BINDINGS)
 		AC_SUBST(USE_DBUS)
