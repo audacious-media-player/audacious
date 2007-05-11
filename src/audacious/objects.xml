@@ -92,15 +92,13 @@
 
 <node name="/">
     <!-- Audacious General Information -->
-    <interface name="org.atheme.audacious.general">
+    <interface name="org.atheme.audacious">
         <!-- Audacious version -->
         <method name="Version">
             <arg type="s" direction="out" name="version"/>
         </method>
-    </interface>
 
-    <!-- Playback Information/Manipulation -->
-    <interface name="org.atheme.audacious.playback">
+        <!-- Playback Information/Manipulation -->
         <!-- Begin or resume playback -->
         <method name="Play">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
@@ -179,10 +177,8 @@
             <!-- Balance between left and right channels -->
             <arg type="i" direction="out" name="balance"/>
         </method>
-    </interface>
 
-    <!-- Playlist Information/Manipulation -->
-    <interface name="org.atheme.audacious.playlist">
+        <!-- Playlist Information/Manipulation -->
         <!-- Playlist position -->
         <method name="Position">
             <!-- Return position of current song in current playlist -->

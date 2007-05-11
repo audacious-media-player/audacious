@@ -19,6 +19,8 @@
 #ifndef AUDTOOL_H
 #define AUDTOOL_H
 
+#include <audacious/dbus.h>
+
 struct commandhandler {
 	gchar *name;
 	void (*handler)(gint argc, gchar **argv);

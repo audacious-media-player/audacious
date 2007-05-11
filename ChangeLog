@@ -1,3 +1,12 @@
+2007-05-10 23:59:22 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4486]
+  - build fix.
+  
+  trunk/src/Makefile           |    2 +-
+  trunk/src/audacious/Makefile |    2 +-
+  2 files changed, 2 insertions(+), 2 deletions(-)
+
+
 2007-05-10 21:13:20 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4484]
   - fix ABI
