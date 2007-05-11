@@ -43,35 +43,35 @@
     CMD_PLAYLIST_DELETE
     CMD_IS_REPEAT
     CMD_IS_SHUFFLE
+    CMD_GET_VOLUME
+    CMD_SET_VOLUME
+    CMD_GET_BALANCE
+    CMD_IS_EQ_WIN
+    CMD_IS_PL_WIN
+    CMD_IS_MAIN_WIN
+    CMD_PL_WIN_TOGGLE
+    CMD_EQ_WIN_TOGGLE
+    CMD_MAIN_WIN_TOGGLE
+    CMD_QUIT
+    CMD_EJECT
 
 
     Remaining:
     CMD_PLAYLIST_ADD
-    CMD_GET_VOLUME
-    CMD_SET_VOLUME
     CMD_GET_SKIN
     CMD_SET_SKIN
     CMD_GET_INFO
     CMD_GET_EQ_DATA
     CMD_SET_EQ_DATA
-    CMD_PL_WIN_TOGGLE
-    CMD_EQ_WIN_TOGGLE
     CMD_SHOW_PREFS_BOX
     CMD_TOGGLE_AOT
     CMD_SHOW_ABOUT_BOX
-    CMD_EJECT
-    CMD_GET_BALANCE
-    CMD_MAIN_WIN_TOGGLE
-    CMD_IS_EQ_WIN
-    CMD_IS_PL_WIN
-    CMD_IS_MAIN_WIN
     CMD_GET_EQ
     CMD_GET_EQ_PREAMP
     CMD_GET_EQ_BAND
     CMD_SET_EQ
     CMD_SET_EQ_PREAMP
     CMD_SET_EQ_BAND
-    CMD_QUIT
     CMD_PLAYLIST_INS_URL_STRING
     CMD_PLAYLIST_INS
     CMD_PLAY_PAUSE
@@ -96,6 +96,49 @@
         <!-- Audacious version -->
         <method name="Version">
             <arg type="s" direction="out" name="version"/>
+        </method>
+
+        <!-- Quit Audacious -->
+        <method name="Quit">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
+
+        <!-- Open files (Eject) -->
+        <method name="Eject">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
+
+        <!-- Main window visibility -->
+        <method name="MainWinVisible">
+            <arg type="b" direction="out" name="is_main_win"/>
+        </method>
+
+        <!-- Toggle main window visibility -->
+        <method name="ShowMainWin">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="b" name="show"/>
+        </method>
+
+        <!-- Equalizer visibility -->
+        <method name="EqualizerVisible">
+            <arg type="b" direction="out" name="is_eq_win"/>
+        </method>
+
+        <!-- Toggle equalizer visibility -->
+        <method name="ShowEqualizer">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="b" name="show"/>
+        </method>
+
+        <!-- Playlist visibility -->
+        <method name="PlaylistVisible">
+            <arg type="b" direction="out" name="is_pl_win"/>
+        </method>
+
+        <!-- Toggle playlist visibility -->
+        <method name="ShowPlaylist">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+            <arg type="b" name="show"/>
         </method>
 
         <!-- Playback Information/Manipulation -->

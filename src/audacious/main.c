@@ -897,7 +897,7 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
 {
     gchar **filenames = options->filenames;
 #ifdef HAVE_DBUS
-    DBusGProxy *session = audacious_get_dbus_proxy();
+    // DBusGProxy *session = audacious_get_dbus_proxy();
 #endif
 
     if (options->version)
@@ -1143,6 +1143,10 @@ main(gint argc, gchar ** argv)
         exit(EXIT_SUCCESS);
     }
 
+#ifdef USE_DBUS
+    init_dbus();
+#endif
+
     plugin_system_init();
 
     /* Initialize the playlist system. */
@@ -1182,10 +1186,6 @@ main(gint argc, gchar ** argv)
 
     if (options.headless != 1)
         GDK_THREADS_LEAVE();
-
-#ifdef USE_DBUS
-    init_dbus();
-#endif
 
     handle_cmd_line_options(&options, FALSE);
 
@@ -1255,10 +1255,6 @@ main(gint argc, gchar ** argv)
 
         GDK_THREADS_LEAVE();
 
-#ifdef USE_DBUS
-        free_dbus();
-#endif
-
         g_cond_free(cond_scan);
         g_mutex_free(mutex_scan);
 
@@ -1277,10 +1273,6 @@ main(gint argc, gchar ** argv)
         loop = g_main_loop_new(NULL, TRUE);
         g_timeout_add(10, aud_headless_iteration, NULL);
         g_main_loop_run(loop);
-
-#ifdef USE_DBUS
-        free_dbus();
-#endif
 
         return EXIT_SUCCESS;
     }

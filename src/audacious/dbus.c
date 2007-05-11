@@ -39,14 +39,13 @@
 #include "titlestring.h"
 #include "ui_jumptotrack.h"
 
-static DBusGProxy *dbproxy = NULL;
+G_DEFINE_TYPE(RemoteObject, audacious_rc, G_TYPE_OBJECT);
 
-G_DEFINE_TYPE(RemoteObject, audacious_remote, G_TYPE_OBJECT);
+void audacious_rc_class_init(RemoteObjectClass *klass) {}
 
-void audacious_remote_class_init(RemoteObjectClass *klass) {}
-
-void audacious_remote_init(RemoteObject *object) {
+void audacious_rc_init(RemoteObject *object) {
     GError *error = NULL;
+    DBusGProxy *driver_proxy;
     unsigned int request_ret;
 
     // Initialize the DBus connection
@@ -57,8 +56,8 @@ void audacious_remote_init(RemoteObject *object) {
         return;
     }
     
-    dbus_g_object_type_install_info(audacious_remote_get_type(),
-                                    &dbus_glib_audacious_remote_object_info);
+    dbus_g_object_type_install_info(audacious_rc_get_type(),
+                                    &dbus_glib_audacious_rc_object_info);
     
     // Register DBUS path
     dbus_g_connection_register_g_object(object->connection,
@@ -66,41 +65,91 @@ void audacious_remote_init(RemoteObject *object) {
 
     // Register the service name, the constants here are defined in
     // dbus-glib-bindings.h
-    dbproxy = dbus_g_proxy_new_for_name(object->connection,
+    driver_proxy = dbus_g_proxy_new_for_name(object->connection,
                                              DBUS_SERVICE_DBUS, DBUS_PATH_DBUS,
                                              DBUS_INTERFACE_DBUS);
 
-    if (!org_freedesktop_DBus_request_name(dbproxy,
+    if (!org_freedesktop_DBus_request_name(driver_proxy,
         AUDACIOUS_DBUS_SERVICE, 0, &request_ret, &error)) {
         g_warning("Unable to register service: %s", error->message);
         g_error_free(error);
     }
+
+    g_object_unref(driver_proxy);
 }
 
 void init_dbus() {
     g_type_init();
-    g_object_new(audacious_remote_get_type(), NULL);
+    g_object_new(audacious_rc_get_type(), NULL);
     g_message("D-Bus support has been activated");
 }
 
-void free_dbus() {
-    if (dbproxy != NULL)
-        g_object_unref(dbproxy);
-}
-
-DBusGProxy *audacious_get_dbus_proxy() {
-    return dbproxy;
-}
-
 // Audacious General Information
-gboolean audacious_remote_version(RemoteObject *obj, gchar **version,
+gboolean audacious_rc_version(RemoteObject *obj, gchar **version,
                                   GError **error) {
     *version = g_strdup(VERSION);
     return TRUE;
 }
 
+gboolean audacious_rc_quit(RemoteObject *obj, GError **error) {
+    mainwin_quit_cb();
+    return TRUE;
+}
+
+gboolean audacious_rc_eject(RemoteObject *obj, GError **error) {
+    if (has_x11_connection)
+        mainwin_eject_pushed();
+    return TRUE;
+}
+
+gboolean audacious_rc_main_win_visible(RemoteObject *obj,
+                                  gboolean *is_main_win, GError **error) {
+    *is_main_win = cfg.player_visible;
+    g_message("main win %s\n", (cfg.player_visible? "visible" : "hidden"));
+    return TRUE;
+}
+
+gboolean audacious_rc_show_main_win(RemoteObject *obj, gboolean show,
+                                        GError **error) {
+    g_message("%s main win\n", (show? "showing": "hiding"));
+    if (has_x11_connection)
+        mainwin_show(show);
+    return TRUE;
+}
+
+gboolean audacious_rc_equalizer_visible(RemoteObject *obj,
+                                  gboolean *is_eq_win, GError **error) {
+    *is_eq_win = cfg.playlist_visible;
+    return TRUE;
+}
+
+gboolean audacious_rc_show_equalizer(RemoteObject *obj, gboolean show,
+                                         GError **error) {
+    if (has_x11_connection)
+        equalizerwin_show(show);
+    return TRUE;
+}
+
+gboolean audacious_rc_playlist_visible(RemoteObject *obj,
+                                           gboolean *is_pl_win,
+                                           GError **error) {
+    *is_pl_win = cfg.equalizer_visible;
+    return TRUE;
+}
+
+gboolean audacious_rc_show_playlist(RemoteObject *obj, gboolean show,
+                                        GError **error) {
+    if (has_x11_connection) {
+        if (show)
+            playlistwin_show();
+        else
+            playlistwin_hide();
+    }
+    return TRUE;
+}
+
 // Playback Information/Manipulation
-gboolean audacious_remote_play(RemoteObject *obj, GError **error) {
+gboolean audacious_rc_play(RemoteObject *obj, GError **error) {
     if (playback_get_paused())
         playback_pause();
     else if (playlist_get_length(playlist_get_active()))
@@ -110,12 +159,12 @@ gboolean audacious_remote_play(RemoteObject *obj, GError **error) {
     return TRUE;
 }
 
-gboolean audacious_remote_pause(RemoteObject *obj, GError **error) {
+gboolean audacious_rc_pause(RemoteObject *obj, GError **error) {
     playback_pause();
     return TRUE;
 }
 
-gboolean audacious_remote_stop(RemoteObject *obj, GError **error) {
+gboolean audacious_rc_stop(RemoteObject *obj, GError **error) {
     ip_data.stop = TRUE;
     playback_stop();
     ip_data.stop = FALSE;
@@ -123,25 +172,25 @@ gboolean audacious_remote_stop(RemoteObject *obj, GError **error) {
     return TRUE;
 }
 
-gboolean audacious_remote_playing(RemoteObject *obj, gboolean *is_playing,
+gboolean audacious_rc_playing(RemoteObject *obj, gboolean *is_playing,
                                   GError **error) {
     *is_playing = playback_get_playing();
     return TRUE;
 }
 
-gboolean audacious_remote_paused(RemoteObject *obj, gboolean *is_paused,
+gboolean audacious_rc_paused(RemoteObject *obj, gboolean *is_paused,
                                  GError **error) {
     *is_paused = playback_get_paused();
     return TRUE;
 }
 
-gboolean audacious_remote_stopped(RemoteObject *obj, gboolean *is_stopped,
+gboolean audacious_rc_stopped(RemoteObject *obj, gboolean *is_stopped,
                                   GError **error) {
     *is_stopped = !playback_get_playing();
     return TRUE;
 }
 
-gboolean audacious_remote_status(RemoteObject *obj, gchar **status,
+gboolean audacious_rc_status(RemoteObject *obj, gchar **status,
                                  GError **error) {
     if (playback_get_paused())
         *status = g_strdup("paused");
@@ -152,7 +201,7 @@ gboolean audacious_remote_status(RemoteObject *obj, gchar **status,
     return TRUE;
 }
 
-gboolean audacious_remote_time(RemoteObject *obj, gint *time, GError **error) {
+gboolean audacious_rc_time(RemoteObject *obj, gint *time, GError **error) {
     if (playback_get_playing())
         *time = playback_get_time();
     else
@@ -160,7 +209,7 @@ gboolean audacious_remote_time(RemoteObject *obj, gint *time, GError **error) {
     return TRUE;
 }
 
-gboolean audacious_remote_seek(RemoteObject *obj, guint pos, GError **error) {
+gboolean audacious_rc_seek(RemoteObject *obj, guint pos, GError **error) {
     if (playlist_get_current_length(playlist_get_active()) > 0 &&
             pos < (guint)playlist_get_current_length(playlist_get_active()))
             playback_seek(pos / 1000);
@@ -168,13 +217,13 @@ gboolean audacious_remote_seek(RemoteObject *obj, guint pos, GError **error) {
     return TRUE;
 }
 
-gboolean audacious_remote_volume(RemoteObject *obj, gint *vl, gint *vr,
+gboolean audacious_rc_volume(RemoteObject *obj, gint *vl, gint *vr,
                                  GError **error) {
     input_get_volume(vl, vr);
     return TRUE;
 }
 
-gboolean audacious_remote_set_volume(RemoteObject *obj, gint vl, gint vr,
+gboolean audacious_rc_set_volume(RemoteObject *obj, gint vl, gint vr,
                                      GError **error) {
     if (vl > 100)
         vl = 100;
@@ -184,7 +233,7 @@ gboolean audacious_remote_set_volume(RemoteObject *obj, gint vl, gint vr,
     return TRUE;
 }
 
-gboolean audacious_remote_balance(RemoteObject *obj, gint *balance,
+gboolean audacious_rc_balance(RemoteObject *obj, gint *balance,
                                   GError **error) {
     gint vl, vr;
     input_get_volume(&vl, &vr);
@@ -200,94 +249,94 @@ gboolean audacious_remote_balance(RemoteObject *obj, gint *balance,
 }
 
 // Playlist Information/Manipulation
-gboolean audacious_remote_position(RemoteObject *obj, int *pos, GError **error)
+gboolean audacious_rc_position(RemoteObject *obj, int *pos, GError **error)
 {
     *pos = playlist_get_position(playlist_get_active());
     return TRUE;
 }
 
-gboolean audacious_remote_advance(RemoteObject *obj, GError **error) {
+gboolean audacious_rc_advance(RemoteObject *obj, GError **error) {
     playlist_next(playlist_get_active());
     return TRUE;
 }
 
-gboolean audacious_remote_reverse(RemoteObject *obj, GError **error) {
+gboolean audacious_rc_reverse(RemoteObject *obj, GError **error) {
     playlist_prev(playlist_get_active());
     return TRUE;
 }
 
-gboolean audacious_remote_length(RemoteObject *obj, int *length,
+gboolean audacious_rc_length(RemoteObject *obj, int *length,
                                  GError **error) {
     *length = playlist_get_length(playlist_get_active());
     return TRUE;
 }
 
-gboolean audacious_remote_song_title(RemoteObject *obj, int pos,
+gboolean audacious_rc_song_title(RemoteObject *obj, int pos,
                                      gchar **title, GError **error) {
     *title = playlist_get_songtitle(playlist_get_active(), pos);
     return TRUE;
 }
 
-gboolean audacious_remote_song_filename(RemoteObject *obj, int pos,
+gboolean audacious_rc_song_filename(RemoteObject *obj, int pos,
                                         gchar **filename, GError **error) {
     *filename = playlist_get_filename(playlist_get_active(), pos);
     return TRUE;
 }
 
-gboolean audacious_remote_song_length(RemoteObject *obj, int pos, int *length,
+gboolean audacious_rc_song_length(RemoteObject *obj, int pos, int *length,
                                       GError **error) {
     *length = playlist_get_songtime(playlist_get_active(), pos) / 1000;
     return TRUE;
 }
 
-gboolean audacious_remote_song_frames(RemoteObject *obj, int pos, int *length,
+gboolean audacious_rc_song_frames(RemoteObject *obj, int pos, int *length,
                                       GError **error) {
     *length = playlist_get_songtime(playlist_get_active(), pos);
     return TRUE;
 }
 
-gboolean audacious_remote_jump(RemoteObject *obj, int pos, GError **error) {
+gboolean audacious_rc_jump(RemoteObject *obj, int pos, GError **error) {
     if (pos < (guint)playlist_get_length(playlist_get_active()))
                 playlist_set_position(playlist_get_active(), pos);
     return TRUE;
 }
 
-gboolean audacious_remote_add_url(RemoteObject *obj, gchar *url,
+gboolean audacious_rc_add_url(RemoteObject *obj, gchar *url,
                                   GError **error) {
     playlist_add_url(playlist_get_active(), url);
     return TRUE;
 }
 
-gboolean audacious_remote_delete(RemoteObject *obj, int pos, GError **error) {
+gboolean audacious_rc_delete(RemoteObject *obj, int pos, GError **error) {
     playlist_delete_index(playlist_get_active(), pos);
     return TRUE;
 }
 
-gboolean audacious_remote_clear(RemoteObject *obj, GError **error) {
+gboolean audacious_rc_clear(RemoteObject *obj, GError **error) {
     playlist_clear(playlist_get_active());
     mainwin_clear_song_info();
     mainwin_set_info_text();
     return TRUE;
 }
 
-gboolean audacious_remote_repeating(RemoteObject *obj, gboolean *is_repeating,
+gboolean audacious_rc_repeating(RemoteObject *obj, gboolean *is_repeating,
                                     GError **error) {
     *is_repeating = cfg.repeat;
     return TRUE;
 }
 
-gboolean audacious_remote_repeat(RemoteObject *obj, GError **error) {
+gboolean audacious_rc_repeat(RemoteObject *obj, GError **error) {
     mainwin_repeat_pushed(!cfg.repeat);
     return TRUE;
 }
 
-gboolean audacious_remote_shuffling(RemoteObject *obj, gboolean *is_shuffling,
+gboolean audacious_rc_shuffling(RemoteObject *obj, gboolean *is_shuffling,
                                     GError **error) {
     *is_shuffling = cfg.shuffle;
     return TRUE;
 }
 
-gboolean audacious_remote_shuffle(RemoteObject *obj, GError **error) {
+gboolean audacious_rc_shuffle(RemoteObject *obj, GError **error) {
     mainwin_shuffle_pushed(!cfg.shuffle);
     return TRUE;
 }

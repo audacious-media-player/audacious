@@ -227,21 +227,49 @@ void audacious_remote_get_info(DBusGProxy *proxy, gint *rate, gint *freq,
 }
 
 void audacious_remote_main_win_toggle(DBusGProxy *proxy, gboolean show) {
+    const char* path = dbus_g_proxy_get_path(proxy);
+    g_print("path: %s\n", path);
+    org_atheme_audacious_show_main_win(proxy, show, &error);
+    g_clear_error(&error);
 }
 
 void audacious_remote_pl_win_toggle(DBusGProxy *proxy, gboolean show) {
+    org_atheme_audacious_show_playlist(proxy, show, &error);
+    g_clear_error(&error);
 }
 
 void audacious_remote_eq_win_toggle(DBusGProxy *proxy, gboolean show) {
+    org_atheme_audacious_show_equalizer(proxy, show, &error);
+    g_clear_error(&error);
 }
 
+/**
+ * xmms_remote_is_main_win:
+ * @session: Legacy XMMS-style session identifier.
+ *
+ * Queries Audacious about the main window's visibility.
+ *
+ * Return value: TRUE if visible, FALSE otherwise.
+ **/
 gboolean audacious_remote_is_main_win(DBusGProxy *proxy) {
+    gboolean visible;
+    org_atheme_audacious_main_win_visible(proxy, &visible, &error);
+    g_clear_error(&error);
+    return visible;
 }
 
 gboolean audacious_remote_is_pl_win(DBusGProxy *proxy) {
+    gboolean visible;
+    org_atheme_audacious_playlist_visible(proxy, &visible, &error);
+    g_clear_error(&error);
+    return visible;
 }
 
 gboolean audacious_remote_is_eq_win(DBusGProxy *proxy) {
+    gboolean visible;
+    org_atheme_audacious_equalizer_visible(proxy, &visible, &error);
+    g_clear_error(&error);
+    return visible;
 }
 
 void audacious_remote_show_prefs_box(DBusGProxy *proxy) {
@@ -251,6 +279,8 @@ void audacious_remote_toggle_aot(DBusGProxy *proxy, gboolean ontop) {
 }
 
 void audacious_remote_eject(DBusGProxy *proxy) {
+    org_atheme_audacious_eject(proxy, &error);
+    g_clear_error(&error);
 }
 
 void audacious_remote_playlist_prev(DBusGProxy *proxy) {
@@ -303,6 +333,8 @@ void audacious_remote_set_eq_band(DBusGProxy *proxy, gint band,
 }
 
 void audacious_remote_quit(DBusGProxy *proxy) {
+    org_atheme_audacious_quit(proxy, &error);
+    g_clear_error(&error);
 }
 
 void audacious_remote_play_pause(DBusGProxy *proxy) {

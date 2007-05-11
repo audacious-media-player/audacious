@@ -39,53 +39,68 @@ void free_dbus();
 DBusGProxy *audacious_get_dbus_proxy();
 
 // Audacious General Information
-gboolean audacious_remote_version(RemoteObject *obj, gchar **version,
+gboolean audacious_rc_version(RemoteObject *obj, gchar **version,
                                   GError **error);
+gboolean audacious_rc_quit(RemoteObject *obj, GError **error);
+gboolean audacious_rc_eject(RemoteObject *obj, GError **error);
+gboolean audacious_rc_main_win_visible(RemoteObject *obj,
+                                  gboolean *is_main_win, GError **error);
+gboolean audacious_rc_show_main_win(RemoteObject *obj, gboolean show,
+                                        GError **error);
+gboolean audacious_rc_equalizer_visible(RemoteObject *obj,
+                                  gboolean *is_eq_win, GError **error);
+gboolean audacious_rc_show_equalizer(RemoteObject *obj, gboolean show,
+                                         GError **error);
+gboolean audacious_rc_playlist_visible(RemoteObject *obj,
+                                           gboolean *is_pl_win,
+                                           GError **error);
+gboolean audacious_rc_show_playlist(RemoteObject *obj, gboolean show,
+                                        GError **error);
 
 // Playback Information/Manipulation
-gboolean audacious_remote_play(RemoteObject *obj, GError **error);
-gboolean audacious_remote_pause(RemoteObject *obj, GError **error);
-gboolean audacious_remote_stop(RemoteObject *obj, GError **error);
-gboolean audacious_remote_playing(RemoteObject *obj, gboolean *is_playing,
+gboolean audacious_rc_play(RemoteObject *obj, GError **error);
+gboolean audacious_rc_pause(RemoteObject *obj, GError **error);
+gboolean audacious_rc_stop(RemoteObject *obj, GError **error);
+gboolean audacious_rc_playing(RemoteObject *obj, gboolean *is_playing,
                                   GError **error);
-gboolean audacious_remote_paused(RemoteObject *obj, gboolean *is_paused,
+gboolean audacious_rc_paused(RemoteObject *obj, gboolean *is_paused,
                                  GError **error);
-gboolean audacious_remote_stopped(RemoteObject *obj, gboolean *is_stopped,
+gboolean audacious_rc_stopped(RemoteObject *obj, gboolean *is_stopped,
                                   GError **error);
-gboolean audacious_remote_status(RemoteObject *obj, gchar **status,
+gboolean audacious_rc_status(RemoteObject *obj, gchar **status,
                                  GError **error);
-gboolean audacious_remote_time(RemoteObject *obj, gint *time, GError **error);
-gboolean audacious_remote_seek(RemoteObject *obj, guint pos, GError **error);
-gboolean audacious_remote_volume(RemoteObject *obj, gint *vl, gint *vr,
+gboolean audacious_rc_time(RemoteObject *obj, gint *time, GError **error);
+gboolean audacious_rc_seek(RemoteObject *obj, guint pos, GError **error);
+gboolean audacious_rc_volume(RemoteObject *obj, gint *vl, gint *vr,
                                  GError **error);
-gboolean audacious_remote_set_volume(RemoteObject *obj, gint vl, gint vr,
+gboolean audacious_rc_set_volume(RemoteObject *obj, gint vl, gint vr,
                                      GError **error);
-gboolean audacious_remote_balance(RemoteObject *obj, gint *balance,
+gboolean audacious_rc_balance(RemoteObject *obj, gint *balance,
                                   GError **error);
 
 // Playlist Information/Manipulation
-gboolean audacious_remote_position(RemoteObject *obj, int *pos, GError **error);
-gboolean audacious_remote_advance(RemoteObject *obj, GError **error);
-gboolean audacious_remote_reverse(RemoteObject *obj, GError **error);
-gboolean audacious_remote_length(RemoteObject *obj, int *length,
+gboolean audacious_rc_position(RemoteObject *obj, int *pos, GError **error);
+gboolean audacious_rc_advance(RemoteObject *obj, GError **error);
+gboolean audacious_rc_reverse(RemoteObject *obj, GError **error);
+gboolean audacious_rc_length(RemoteObject *obj, int *length,
                                  GError **error);
-gboolean audacious_remote_song_title(RemoteObject *obj, int pos,
+gboolean audacious_rc_song_title(RemoteObject *obj, int pos,
                                      gchar **title, GError **error);
-gboolean audacious_remote_song_filename(RemoteObject *obj, int pos,
+gboolean audacious_rc_song_filename(RemoteObject *obj, int pos,
                                         gchar **filename, GError **error);
-gboolean audacious_remote_song_length(RemoteObject *obj, int pos, int *length,
+gboolean audacious_rc_song_length(RemoteObject *obj, int pos, int *length,
                                       GError **error);
-gboolean audacious_remote_song_frames(RemoteObject *obj, int pos, int *length,
+gboolean audacious_rc_song_frames(RemoteObject *obj, int pos, int *length,
                                       GError **error);
-gboolean audacious_remote_jump(RemoteObject *obj, int pos, GError **error);
-gboolean audacious_remote_add_url(RemoteObject *obj, gchar *url,
+gboolean audacious_rc_jump(RemoteObject *obj, int pos, GError **error);
+gboolean audacious_rc_add_url(RemoteObject *obj, gchar *url,
                                   GError **error);
-gboolean audacious_remote_delete(RemoteObject *obj, int pos, GError **error);
-gboolean audacious_remote_clear(RemoteObject *obj, GError **error);
-gboolean audacious_remote_repeating(RemoteObject *obj, gboolean *is_repeating,
+gboolean audacious_rc_delete(RemoteObject *obj, int pos, GError **error);
+gboolean audacious_rc_clear(RemoteObject *obj, GError **error);
+gboolean audacious_rc_repeating(RemoteObject *obj, gboolean *is_repeating,
                                     GError **error);
-gboolean audacious_remote_repeat(RemoteObject *obj, GError **error);
-gboolean audacious_remote_shuffling(RemoteObject *obj, gboolean *is_shuffling,
+gboolean audacious_rc_repeat(RemoteObject *obj, GError **error);
+gboolean audacious_rc_shuffling(RemoteObject *obj, gboolean *is_shuffling,
                                     GError **error);
-gboolean audacious_remote_shuffle(RemoteObject *obj, GError **error);
+gboolean audacious_rc_shuffle(RemoteObject *obj, GError **error);
 #endif // !_DBUS_SERVICE_H

@@ -38,6 +38,7 @@
 
 
 #ifdef USE_DBUS
+#include "dbus.h"
 #include "dbus-service.h"
 #endif
 
@@ -61,6 +62,11 @@ const gchar *plugin_dir_list[] = {
 
 GHashTable *plugin_matrix = NULL;
 GList *lowlevel_list = NULL;
+
+#ifdef USE_DBUS
+static DBusGProxy *dbus_proxy = NULL;
+static DBusGConnection *connection = NULL;
+#endif
 
 extern GList *vfs_transports;
 
@@ -179,7 +185,7 @@ general_plugin_init(Plugin * plugin)
     GeneralPlugin *p = GENERAL_PLUGIN(plugin);
     p->xmms_session = -1;
 #ifdef USE_DBUS
-    p->dbus_proxy = audacious_get_dbus_proxy();
+    p->dbus_proxy = dbus_proxy;
 #endif
     gp_data.general_list = g_list_append(gp_data.general_list, p);
 }
@@ -190,7 +196,7 @@ vis_plugin_init(Plugin * plugin)
     VisPlugin *p = VIS_PLUGIN(plugin);
     p->xmms_session = -1;
 #ifdef USE_DBUS
-    p->dbus_proxy = audacious_get_dbus_proxy();
+    p->dbus_proxy = dbus_proxy;
 #endif
     p->disable_plugin = vis_disable_plugin;
     vp_data.vis_list = g_list_append(vp_data.vis_list, p);
@@ -285,6 +291,23 @@ plugin_system_init(void)
     InputPlugin *ip;
     LowlevelPlugin *lp;
     gint dirsel = 0, i = 0;
+
+#ifdef USE_DBUS
+	GError *error = NULL;
+	connection = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
+
+	if (connection == NULL)
+	{
+		g_printerr("audtool: D-Bus error: %s", error->message);
+		g_error_free(error);
+
+		exit(EXIT_FAILURE);
+	}
+
+	dbus_proxy = dbus_g_proxy_new_for_name(connection, AUDACIOUS_DBUS_SERVICE,
+                                           AUDACIOUS_DBUS_PATH,
+                                           AUDACIOUS_DBUS_INTERFACE);
+#endif
 
     if (!g_module_supported()) {
         report_error("Module loading not supported! Plugins will not be loaded.\n");
