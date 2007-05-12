@@ -6,7 +6,7 @@
 #   - support org.freedesktop.MediaPlayer (MPRIS)?
 #
 # This script is in the public domain.
-#   $Id: xchat-audacious.py 4540 2007-05-12 04:35:06Z nenolod $
+#   $Id: xchat-audacious.py 4542 2007-05-12 04:48:49Z nenolod $
 #
 
 __module_name__ = "xchat-audacious"
@@ -36,7 +36,7 @@ def command_np(word, word_eol, userdata):
 	return xchat.EAT_ALL
 
 def command_next(word, word_eol, userdata):
-	bus.get_object('org.atheme.audacious', '/org/atheme/audacious').Next()
+	bus.get_object('org.atheme.audacious', '/org/atheme/audacious').Advance()
 	return xchat.EAT_ALL
 
 def command_prev(word, word_eol, userdata):
@@ -72,4 +72,4 @@ xchat.hook_command("STOP", command_stop, help="Stops playback.")
 xchat.hook_command("PLAY", command_play, help="Begins playback.")
 xchat.hook_command("SENDTRACK", command_send, help="Sends the currently playing track to a user.")
 
-print "xchat-audacious $Id: xchat-audacious.py 4540 2007-05-12 04:35:06Z nenolod $ loaded"
+print "xchat-audacious $Id: xchat-audacious.py 4542 2007-05-12 04:48:49Z nenolod $ loaded"
