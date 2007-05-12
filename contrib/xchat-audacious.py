@@ -50,8 +50,8 @@ def command_play(word, word_eol, userdata):
 xchat.hook_command("NP", command_np, help="Displays current playing song.")
 xchat.hook_command("NEXT", command_next, help="Advances in Audacious' playlist.")
 xchat.hook_command("PREV", command_prev, help="Goes backwards in Audacious' playlist.")
-xchat.hook_command("PAUSE", command_np, help="Toggles paused status.")
-xchat.hook_command("STOP", command_np, help="Stops playback.")
-xchat.hook_command("PLAY", command_np, help="Begins playback.")
+xchat.hook_command("PAUSE", command_pause, help="Toggles paused status.")
+xchat.hook_command("STOP", command_stop, help="Stops playback.")
+xchat.hook_command("PLAY", command_play, help="Begins playback.")
 
-print "xchat-audacious $Id: xchat-audacious.py 4524 2007-05-12 04:19:21Z nenolod $ loaded"
+print "xchat-audacious $Id: xchat-audacious.py 4526 2007-05-12 04:20:27Z nenolod $ loaded"
