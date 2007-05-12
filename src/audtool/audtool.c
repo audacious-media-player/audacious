@@ -121,7 +121,7 @@ static void audtool_connect(void)
 	connection = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
 
 	if (connection == NULL)
-		mowgli_error_context_display_with_error(e, "\n  * ", g_strdup_printf("D-Bus Error: %s", error->message));
+		mowgli_error_context_display_with_error(e, ":\n  * ", g_strdup_printf("D-Bus Error: %s", error->message));
 
 	mowgli_error_context_pop(e);
 
@@ -146,7 +146,7 @@ gint main(gint argc, gchar **argv)
 	mowgli_error_context_push(e, "While processing the commandline");
 
 	if (argc < 2)
-		mowgli_error_context_display_with_error(e, "\n  * ", "not enough parameters, use audtool --help for more information.");
+		mowgli_error_context_display_with_error(e, ":\n  * ", "not enough parameters, use audtool --help for more information.");
 
 	for (i = 0; handlers[i].name != NULL; i++)
 	{
@@ -159,7 +159,7 @@ gint main(gint argc, gchar **argv)
 		}
 	}
 
-	mowgli_error_context_display_with_error(e, "\n  * ", g_strdup_printf("Unknown command `%s' encountered, use audtool --help for a command list.", argv[1]));
+	mowgli_error_context_display_with_error(e, ":\n  * ", g_strdup_printf("Unknown command `%s' encountered, use audtool --help for a command list.", argv[1]));
 
 	return 0;
 }
