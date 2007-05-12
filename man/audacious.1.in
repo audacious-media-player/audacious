@@ -53,7 +53,7 @@ Starts Audacious in headless mode.
 Audacious supports Winamp Classic style skins.  Skins may be stored in either
 archived (\fI.zip\fP, \fI.wsz\fP, \fI.tgz\fP, \fI.tar.gz\fP, 
 or \fI.tar.bz2\fP) or unarchived format.  Audacious looks for skinfiles in
-@datarootdir@/audacious/Skins, ~/.audacious/Skins, and locations specified by the
+@datarootdir@/audacious/Skins, ~/.local/share/audacious/Skins, and locations specified by the
 \fBSKINSDIR\fP variable.
 .SH KEYBINDINGS
 Global keybindings for Audacious:
