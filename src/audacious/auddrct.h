@@ -45,6 +45,10 @@ gint audacious_drct_get_time ( void );
 void audacious_drct_seek ( guint pos );
 void audacious_drct_get_volume( gint *vl, gint *vr );
 void audacious_drct_set_volume( gint vl, gint vr );
+void audacious_drct_get_volume_main( gint *v );
+void audacious_drct_set_volume_main( gint v );
+void audacious_drct_get_volume_balance( gint *b );
+void audacious_drct_set_volume_balance( gint b );
 
 /* playlist */
 void audacious_drct_pl_next( void );
@@ -57,3 +61,5 @@ gchar *audacious_drct_pl_get_title( gint pos );
 gint audacious_drct_pl_get_time( gint pos );
 gint audacious_drct_pl_get_pos( void );
 gchar *audacious_drct_pl_get_file( gint pos );
+void audacious_drct_pl_add ( GList * list );
+void audacious_drct_pl_clear ( void );

@@ -28,6 +28,7 @@
 #include "ui_playlist.h"
 #include "ui_equalizer.h"
 #include "ui_jumptotrack.h"
+#include "auddrct.h"
 
 
 /* player */
@@ -178,20 +179,89 @@ audacious_drct_seek ( guint pos )
 }
 
 void
-audacious_drct_get_volume( gint *vl, gint *vr )
+audacious_drct_get_volume ( gint *vl, gint *vr )
 {
   input_get_volume(vl, vr);
   return;
 }
 
 void
-audacious_drct_set_volume( gint vl, gint vr )
+audacious_drct_set_volume ( gint vl, gint vr )
 {
   if (vl > 100)
     vl = 100;
   if (vr > 100)
     vr = 100;
   input_set_volume(vl, vr);
+  return;
+}
+
+void
+audacious_drct_get_volume_main( gint *v )
+{
+  gint vl, vr;
+  audacious_drct_get_volume(&vl, &vr);
+  *v = (vl > vr) ? vl : vr;
+  return;
+}
+
+void
+audacious_drct_set_volume_main ( gint v )
+{
+  gint b, vl, vr;
+  audacious_drct_get_volume_balance(&b);
+  if (b < 0) {
+    vl = v;
+    vr = (v * (100 - abs(b))) / 100;
+  }
+  else if (b > 0) {
+    vl = (v * (100 - b)) / 100;
+    vr = v;
+  }
+  else
+    vl = vr = v;
+  audacious_drct_set_volume(vl, vr);
+}
+
+void
+audacious_drct_get_volume_balance ( gint *b )
+{
+  gint vl, vr;
+  input_get_volume(&vl, &vr);
+  if (vl < 0 || vr < 0)
+    *b = 0;
+  else if (vl > vr)
+    *b = -100 + ((vr * 100) / vl);
+  else if (vr > vl)
+    *b = 100 - ((vl * 100) / vr);
+  else
+    *b = 0;
+  return;
+}
+
+void
+audacious_drct_set_volume_balance ( gint b )
+{
+  gint v, vl, vr;
+  if (b < -100)
+    b = -100;
+  if (b > 100)
+    b = 100;
+  audacious_drct_get_volume_main(&v);
+  if (b < 0) {
+    vl = v;
+    vr = (v * (100 - abs(b))) / 100;
+  }
+  else if (b > 0) {
+    vl = (v * (100 - b)) / 100;
+    vr = v;
+  }
+  else
+  {
+    vl = v;
+    vr = v;
+  }
+  audacious_drct_set_volume(vl, vr);
   return;
 }
 
@@ -260,4 +330,25 @@ gchar *
 audacious_drct_pl_get_file( gint pos )
 {
     return playlist_get_filename(playlist_get_active(), pos);
+}
+
+void
+audacious_drct_pl_add ( GList * list )
+{
+  GList *node = list;
+  while ( node != NULL )
+  {
+    playlist_add_url(playlist_get_active(), (gchar*)node->data);
+    node = g_list_next(node);
+  }
+  return;
+}
+
+void
+audacious_drct_pl_clear ( void )
+{
+  playlist_clear(playlist_get_active());
+  mainwin_clear_song_info();
+  mainwin_set_info_text();
+  return;
 }
