@@ -151,6 +151,12 @@ audacious_drct_get_stopped ( void )
   return !playback_get_playing();
 }
 
+void
+audacious_drct_get_info( gint *rate, gint *freq, gint *nch)
+{
+    playback_get_sample_params(rate, freq, nch);
+}
+
 gint
 audacious_drct_get_time ( void )
 {
@@ -230,4 +236,28 @@ audacious_drct_pl_shuffle_toggle( void )
 {
   mainwin_shuffle_pushed(!cfg.shuffle);
   return;
+}
+
+gchar *
+audacious_drct_pl_get_title( gint pos )
+{
+    return playlist_get_songtitle(playlist_get_active(), pos);
+}
+
+gint
+audacious_drct_pl_get_time( gint pos )
+{
+    return playlist_get_songtime(playlist_get_active(), pos);
+}
+
+gint
+audacious_drct_pl_get_pos( void )
+{
+    return playlist_get_position_nolock(playlist_get_active());
+}
+
+gchar *
+audacious_drct_pl_get_file( gint pos )
+{
+    return playlist_get_filename(playlist_get_active(), pos);
 }

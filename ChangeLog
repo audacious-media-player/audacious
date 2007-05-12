@@ -1,3 +1,11 @@
+2007-05-12 02:31:36 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4520]
+  - change the appearance that backtraces are presented as
+  
+  trunk/src/audtool/audtool.c |    6 +++---
+  1 file changed, 3 insertions(+), 3 deletions(-)
+
+
 2007-05-12 02:31:07 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4518]
   - adjust build order for libaudclient and audacious. reported by Crazy_Hopper.
