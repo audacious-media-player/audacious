@@ -25,6 +25,7 @@
 /* player */
 void audacious_drct_quit ( void );
 void audacious_drct_eject ( void );
+void audacious_drct_jtf_show ( void );
 gboolean audacious_drct_main_win_is_visible ( void );
 void audacious_drct_main_win_toggle ( gboolean );
 gboolean audacious_drct_eq_win_is_visible ( void );
@@ -47,3 +48,7 @@ void audacious_drct_set_volume( gint vl, gint vr );
 /* playlist */
 void audacious_drct_pl_next( void );
 void audacious_drct_pl_prev( void );
+gboolean audacious_drct_pl_repeat_is_enabled ( void );
+void audacious_drct_pl_repeat_toggle ( void );
+gboolean audacious_drct_pl_repeat_is_shuffled ( void );
+void audacious_drct_pl_shuffle_toggle ( void );

@@ -27,6 +27,7 @@
 #include "ui_main.h"
 #include "ui_playlist.h"
 #include "ui_equalizer.h"
+#include "ui_jumptotrack.h"
 
 
 /* player */
@@ -43,6 +44,14 @@ audacious_drct_eject ( void )
 {
   if (has_x11_connection)
     mainwin_eject_pushed();
+  return;
+}
+
+void
+audacious_drct_jtf_show ( void )
+{
+  if (has_x11_connection)
+    ui_jump_to_track();
   return;
 }
 
@@ -194,5 +203,31 @@ void
 audacious_drct_pl_prev ( void )
 {
   playlist_prev(playlist_get_active());
+  return;
+}
+
+gboolean
+audacious_drct_pl_repeat_is_enabled( void )
+{
+    return cfg.repeat;
+}
+
+void
+audacious_drct_pl_repeat_toggle( void )
+{
+  mainwin_repeat_pushed(!cfg.repeat);
+  return;
+}
+
+gboolean
+audacious_drct_pl_repeat_is_shuffled( void )
+{
+    return cfg.shuffle;
+}
+
+void
+audacious_drct_pl_shuffle_toggle( void )
+{
+  mainwin_shuffle_pushed(!cfg.shuffle);
   return;
 }
