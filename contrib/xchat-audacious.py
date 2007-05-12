@@ -5,6 +5,9 @@
 # To consider later:
 #   - support org.freedesktop.MediaPlayer (MPRIS)?
 #
+# This script is in the public domain.
+#   $Id: xchat-audacious.py 4530 2007-05-12 04:27:02Z nenolod $
+#
 
 __module_name__ = "xchat-audacious"
 __module_version__ = "1.0"
@@ -52,11 +55,21 @@ def command_play(word, word_eol, userdata):
 	bus.get_object('org.atheme.audacious', '/org/atheme/audacious').Play()
 	return xchat.EAT_ALL
 
+def command_send(word, word_eol, userdata):
+	if len(word) < 1:
+		print "You must provide a user to send the track to."
+		return xchat.EAT_ALL
+
+	aud = bus.get_object('org.atheme.audacious', '/org/atheme/audacious')
+	xchat.command("DCC SEND %s %s" % (word[0], aud.SongFilename(aud.Position()))
+	return xchat.EAT_ALL
+
 xchat.hook_command("NP", command_np, help="Displays current playing song.")
 xchat.hook_command("NEXT", command_next, help="Advances in Audacious' playlist.")
 xchat.hook_command("PREV", command_prev, help="Goes backwards in Audacious' playlist.")
 xchat.hook_command("PAUSE", command_pause, help="Toggles paused status.")
 xchat.hook_command("STOP", command_stop, help="Stops playback.")
 xchat.hook_command("PLAY", command_play, help="Begins playback.")
+xchat.hook_command("SENDTRACK", command_send, help="Sends the currently playing track to a user.")
 
-print "xchat-audacious $Id: xchat-audacious.py 4528 2007-05-12 04:21:09Z nenolod $ loaded"
+print "xchat-audacious $Id: xchat-audacious.py 4530 2007-05-12 04:27:02Z nenolod $ loaded"
