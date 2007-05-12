@@ -1,3 +1,11 @@
+2007-05-12 04:28:08 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4532]
+  - fix syntax error
+  
+  trunk/contrib/xchat-audacious.py |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-05-12 04:27:02 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4530]
   - add /SENDTRACK which can DCC the current track to a user
