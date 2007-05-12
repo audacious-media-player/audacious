@@ -26,11 +26,11 @@
 void audacious_drct_quit ( void );
 void audacious_drct_eject ( void );
 gboolean audacious_drct_main_win_is_visible ( void );
-void audacious_drct_main_win_show ( gboolean );
-gboolean audacious_drct_equalizer_is_visible ( void );
-void audacious_drct_equalizer_show ( gboolean );
-gboolean audacious_drct_playlist_is_visible ( void );
-void audacious_drct_playlist_show ( gboolean );
+void audacious_drct_main_win_toggle ( gboolean );
+gboolean audacious_drct_eq_win_is_visible ( void );
+void audacious_drct_eq_win_toggle ( gboolean );
+gboolean audacious_drct_pl_win_is_visible ( void );
+void audacious_drct_pl_win_toggle ( gboolean );
 
 /* playback */
 void audacious_drct_play ( void );

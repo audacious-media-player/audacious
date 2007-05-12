@@ -53,7 +53,7 @@ audacious_drct_main_win_is_visible ( void )
 }
 
 void
-audacious_drct_main_win_show ( gboolean show )
+audacious_drct_main_win_toggle ( gboolean show )
 {
   if (has_x11_connection)
     mainwin_show(show);
@@ -61,13 +61,13 @@ audacious_drct_main_win_show ( gboolean show )
 }
 
 gboolean
-audacious_drct_equalizer_is_visible ( void )
+audacious_drct_eq_win_is_visible ( void )
 {
   return cfg.equalizer_visible;
 }
 
 void
-audacious_drct_equalizer_show ( gboolean show )
+audacious_drct_eq_win_toggle ( gboolean show )
 {
   if (has_x11_connection)
     equalizerwin_show(show);
@@ -75,13 +75,13 @@ audacious_drct_equalizer_show ( gboolean show )
 }
 
 gboolean
-audacious_drct_playlist_is_visible ( void )
+audacious_drct_pl_win_is_visible ( void )
 {
   return cfg.playlist_visible;
 }
 
 void
-audacious_drct_playlist_show ( gboolean show )
+audacious_drct_pl_win_toggle ( gboolean show )
 {
   if (has_x11_connection) {
     if (show)
