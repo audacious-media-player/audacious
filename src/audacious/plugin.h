@@ -37,17 +37,10 @@
 #ifndef BMP_PLUGIN_H
 #define BMP_PLUGIN_H
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
 
 #include <glib.h>
 #include "audacious/vfs.h"
 #include "audacious/titlestring.h"
-
-#ifdef USE_DBUS
-#include <dbus/dbus-glib.h>
-#endif
 
 #define INPUT_PLUGIN(x)   ((InputPlugin *)(x))
 #define OUTPUT_PLUGIN(x)  ((OutputPlugin *)(x))
@@ -227,10 +220,6 @@ struct _GeneralPlugin {
     void (*about) (void);
     void (*configure) (void);
     void (*cleanup) (void);
-
-#ifdef USE_DBUS
-    DBusGProxy *dbus_proxy;
-#endif
 };
 
 struct _VisPlugin {
@@ -252,10 +241,6 @@ struct _VisPlugin {
     void (*playback_stop) (void);
     void (*render_pcm) (gint16 pcm_data[2][512]);
     void (*render_freq) (gint16 freq_data[2][256]);
-
-#ifdef USE_DBUS
-    DBusGProxy *dbus_proxy;
-#endif
 };
 
 

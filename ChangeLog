@@ -1,3 +1,11 @@
+2007-05-12 21:35:30 +0000  Ben Tucker <bnt@interchange.ubc.ca>
+  revision [4550]
+  Added lots of comments (styled after beepctrl).
+  
+  trunk/src/libaudclient/audctrl.c |  449 ++++++++++++++++++++++++++++++++++++++-
+  1 file changed, 446 insertions(+), 3 deletions(-)
+
+
 2007-05-12 18:44:30 +0000  Ralf Ertzinger <ralf@skytale.net>
   revision [4548]
   
