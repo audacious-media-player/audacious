@@ -1,3 +1,12 @@
+2007-05-11 23:27:54 +0000  Giacomo Lozito <james@develia.org>
+  revision [4504]
+  - added auddrct.c/h, a migration api for plugins that once used xmms_remote; to be completed
+  trunk/src/audacious/Makefile  |    2 
+  trunk/src/audacious/auddrct.c |  115 ++++++++++++++++++++++++++++++++++++++++++
+  trunk/src/audacious/auddrct.h |   36 +++++++++++++
+  3 files changed, 153 insertions(+)
+
+
 2007-05-11 20:02:49 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4502]
   - call SongFrames not SongLength
