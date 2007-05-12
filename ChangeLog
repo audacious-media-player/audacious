@@ -1,3 +1,11 @@
+2007-05-12 01:35:26 +0000  Giacomo Lozito <james@develia.org>
+  revision [4516]
+  - auddrct: more calls implemented (part 4)
+  trunk/src/audacious/auddrct.c |   35 +++++++++++++++++++++++++++++++++++
+  trunk/src/audacious/auddrct.h |    5 +++++
+  2 files changed, 40 insertions(+)
+
+
 2007-05-12 01:12:56 +0000  Giacomo Lozito <james@develia.org>
   revision [4514]
   - auddrct: more calls implemented (part 3)
