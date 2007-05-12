@@ -1,3 +1,11 @@
+2007-05-12 04:20:27 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4526]
+  - map to right handlers
+  
+  trunk/contrib/xchat-audacious.py |    6 +++---
+  1 file changed, 3 insertions(+), 3 deletions(-)
+
+
 2007-05-12 04:19:21 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4524]
   - add stop, pause, next, prev, play functions

@@ -34,18 +34,23 @@ def command_np(word, word_eol, userdata):
 
 def command_next(word, word_eol, userdata):
 	bus.get_object('org.atheme.audacious', '/org/atheme/audacious').Next()
+	return xchat.EAT_ALL
 
 def command_prev(word, word_eol, userdata):
 	bus.get_object('org.atheme.audacious', '/org/atheme/audacious').Reverse()
+	return xchat.EAT_ALL
 
 def command_pause(word, word_eol, userdata):
 	bus.get_object('org.atheme.audacious', '/org/atheme/audacious').Pause()
+	return xchat.EAT_ALL
 
 def command_stop(word, word_eol, userdata):
 	bus.get_object('org.atheme.audacious', '/org/atheme/audacious').Stop()
+	return xchat.EAT_ALL
 
 def command_play(word, word_eol, userdata):
 	bus.get_object('org.atheme.audacious', '/org/atheme/audacious').Play()
+	return xchat.EAT_ALL
 
 xchat.hook_command("NP", command_np, help="Displays current playing song.")
 xchat.hook_command("NEXT", command_next, help="Advances in Audacious' playlist.")
@@ -54,4 +59,4 @@ xchat.hook_command("PAUSE", command_pause, help="Toggles paused status.")
 xchat.hook_command("STOP", command_stop, help="Stops playback.")
 xchat.hook_command("PLAY", command_play, help="Begins playback.")
 
-print "xchat-audacious $Id: xchat-audacious.py 4526 2007-05-12 04:20:27Z nenolod $ loaded"
+print "xchat-audacious $Id: xchat-audacious.py 4528 2007-05-12 04:21:09Z nenolod $ loaded"
