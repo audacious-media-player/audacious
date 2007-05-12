@@ -119,7 +119,7 @@ gboolean audacious_rc_show_main_win(RemoteObject *obj, gboolean show,
 
 gboolean audacious_rc_equalizer_visible(RemoteObject *obj,
                                   gboolean *is_eq_win, GError **error) {
-    *is_eq_win = cfg.playlist_visible;
+    *is_eq_win = cfg.equalizer_visible;
     return TRUE;
 }
 
@@ -133,7 +133,7 @@ gboolean audacious_rc_show_equalizer(RemoteObject *obj, gboolean show,
 gboolean audacious_rc_playlist_visible(RemoteObject *obj,
                                            gboolean *is_pl_win,
                                            GError **error) {
-    *is_pl_win = cfg.equalizer_visible;
+    *is_pl_win = cfg.playlist_visible;
     return TRUE;
 }
 

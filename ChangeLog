@@ -1,3 +1,11 @@
+2007-05-12 00:20:46 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4506]
+  - add an xchat script which wraps our DBus API using dbus-python.
+  
+  trunk/contrib/xchat-audacious.py |   35 +++++++++++++++++++++++++++++++++++
+  1 file changed, 35 insertions(+)
+
+
 2007-05-11 23:27:54 +0000  Giacomo Lozito <james@develia.org>
   revision [4504]
   - added auddrct.c/h, a migration api for plugins that once used xmms_remote; to be completed
