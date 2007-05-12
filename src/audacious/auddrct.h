@@ -22,6 +22,15 @@
 
 #include <glib.h>
 
+/* player */
+void audacious_drct_quit ( void );
+void audacious_drct_eject ( void );
+gboolean audacious_drct_main_win_is_visible ( void );
+void audacious_drct_main_win_show ( void );
+gboolean audacious_drct_equalizer_is_visible ( void );
+void audacious_drct_equalizer_show ( void );
+gboolean audacious_drct_playlist_is_visible ( void );
+void audacious_drct_playlist_show ( void );
 
 /* playback */
 void audacious_drct_play ( void );
@@ -34,3 +43,7 @@ gint audacious_drct_get_time ( void );
 void audacious_drct_seek ( guint pos );
 void audacious_drct_get_volume( gint *vl, gint *vr );
 void audacious_drct_set_volume( gint vl, gint vr );
+
+/* playlist */
+void audacious_drct_pl_next( void );
+void audacious_drct_pl_prev( void );

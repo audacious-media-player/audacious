@@ -26,6 +26,70 @@
 #include "ui_main.h"
 
 
+/* player */
+
+void
+audacious_drct_quit ( void )
+{
+  mainwin_quit_cb();
+  return;
+}
+
+void
+audacious_drct_eject ( void )
+{
+  if (has_x11_connection)
+    mainwin_eject_pushed();
+  return;
+}
+
+gboolean
+audacious_drct_main_win_is_visible ( void )
+{
+  return cfg.player_visible;
+}
+
+void
+audacious_drct_main_win_show ( void )
+{
+  if (has_x11_connection)
+    mainwin_show(show);
+  return;
+}
+
+gboolean
+audacious_drct_equalizer_is_visible ( void )
+{
+  return cfg.equalizer_visible;
+}
+
+void
+audacious_drct_equalizer_show ( void )
+{
+  if (has_x11_connection)
+    equalizerwin_show(show);
+  return;
+}
+
+gboolean
+audacious_drct_playlist_is_visible ( void )
+{
+  return cfg.playlist_visible;
+}
+
+void
+audacious_drct_playlist_show ( void )
+{
+  if (has_x11_connection) {
+    if (show)
+      playlistwin_show();
+    else
+      playlistwin_hide();
+  }
+  return;
+}
+
+
 /* playback */
 
 void
@@ -113,3 +177,19 @@ audacious_drct_set_volume( gint vl, gint vr )
   return;
 }
 
+
+/* playlist */
+
+void
+audacious_drct_pl_next ( void )
+{
+  playlist_next(playlist_get_active());
+  return;
+}
+
+void
+audacious_drct_pl_prev ( void )
+{
+  playlist_prev(playlist_get_active());
+  return;
+}

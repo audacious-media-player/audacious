@@ -1,3 +1,10 @@
+2007-05-12 00:49:37 +0000  Giacomo Lozito <james@develia.org>
+  revision [4508]
+  - fix cfg options for visibility
+  trunk/src/audacious/dbus.c |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2007-05-12 00:20:46 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4506]
   - add an xchat script which wraps our DBus API using dbus-python.
