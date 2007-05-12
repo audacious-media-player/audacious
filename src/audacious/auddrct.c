@@ -21,9 +21,12 @@
    plugins, originally intended for migration from xmms_remote_* calls */
 
 
+#include "main.h"
 #include "input.h"
 #include "playback.h"
 #include "ui_main.h"
+#include "ui_playlist.h"
+#include "ui_equalizer.h"
 
 
 /* player */
@@ -50,7 +53,7 @@ audacious_drct_main_win_is_visible ( void )
 }
 
 void
-audacious_drct_main_win_show ( void )
+audacious_drct_main_win_show ( gboolean show )
 {
   if (has_x11_connection)
     mainwin_show(show);
@@ -64,7 +67,7 @@ audacious_drct_equalizer_is_visible ( void )
 }
 
 void
-audacious_drct_equalizer_show ( void )
+audacious_drct_equalizer_show ( gboolean show )
 {
   if (has_x11_connection)
     equalizerwin_show(show);
@@ -78,7 +81,7 @@ audacious_drct_playlist_is_visible ( void )
 }
 
 void
-audacious_drct_playlist_show ( void )
+audacious_drct_playlist_show ( gboolean show )
 {
   if (has_x11_connection) {
     if (show)
