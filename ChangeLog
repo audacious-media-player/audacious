@@ -1,3 +1,12 @@
+2007-05-12 18:44:30 +0000  Ralf Ertzinger <ralf@skytale.net>
+  revision [4548]
+  
+  - Change reference to user specific skin directory to ~/.local/share/audacious/Skins
+  
+  trunk/man/audacious.1.in |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-05-12 12:20:40 +0000  Giacomo Lozito <james@develia.org>
   revision [4546]
   - auddrct: more calls implemented (part 6)
