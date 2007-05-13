@@ -7,3 +7,6 @@ SUBDIRS = $(INTL_OBJECTIVE) $(SUBDIR_GUESS) $(LIBAUDCLIENT_OBJECTIVE) audacious 
 
 include ../mk/objective.mk
 
+depend-prehook:
+	@cd audacious; $(MAKE) $@ || exit; cd ..;
+

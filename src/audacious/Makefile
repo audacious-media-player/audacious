@@ -130,7 +130,7 @@ LIBDEP = widgets/libwidgets.a ../libguess/libguess.a ../librcd/librcd.a
 desktop_DATA = audacious.desktop
 desktopdir = $(datadir)/applications
 
-depend: $(DBUS_BINDINGS)
+depend-prehook: $(DBUS_BINDINGS)
 
 audacious: $(OBJECTS) $(LIBDEP)
 	$(CXX) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@ 

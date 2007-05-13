@@ -1,3 +1,12 @@
+2007-05-13 18:56:01 +0000  Ben Tucker <bnt@interchange.ubc.ca>
+  revision [4560]
+  Changed signedness and formatting.
+  
+  trunk/src/libaudclient/audctrl.c |   30 +++++++++++++++---------------
+  trunk/src/libaudclient/audctrl.h |   26 +++++++++++++-------------
+  2 files changed, 28 insertions(+), 28 deletions(-)
+
+
 2007-05-13 09:31:11 +0000  Ben Tucker <bnt@interchange.ubc.ca>
   revision [4558]
   Added CMD_GET_INFO and CMD_PLAYLIST_GET_TUPLE_DATA replacements; Changed some formatting and used unsigned numbers where appropriate.

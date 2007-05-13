@@ -251,11 +251,13 @@ mk/rules.mk:
 		echo "[complete]"; \
 	fi
 
-.PHONY: .depend depend clean distclean
+.PHONY: .depend depend depend-prehook clean distclean
 .depend:
+depend-prehook:
 
 # default depend rule. if something else is needed -- override depend target
 depend:
+	$(MAKE) depend-prehook
 	@if [ "x$(SUBDIRS)" != "x" ]; then \
 		for i in $(SUBDIRS); do \
 			if [ $(VERBOSITY) -gt 0 ]; then \
