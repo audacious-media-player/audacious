@@ -86,7 +86,7 @@ void init_dbus() {
 
 // Audacious General Information
 gboolean audacious_rc_version(RemoteObject *obj, gchar **version,
-                                  GError **error) {
+                              GError **error) {
     *version = g_strdup(VERSION);
     return TRUE;
 }
@@ -103,14 +103,14 @@ gboolean audacious_rc_eject(RemoteObject *obj, GError **error) {
 }
 
 gboolean audacious_rc_main_win_visible(RemoteObject *obj,
-                                  gboolean *is_main_win, GError **error) {
+                                       gboolean *is_main_win, GError **error) {
     *is_main_win = cfg.player_visible;
     g_message("main win %s\n", (cfg.player_visible? "visible" : "hidden"));
     return TRUE;
 }
 
 gboolean audacious_rc_show_main_win(RemoteObject *obj, gboolean show,
-                                        GError **error) {
+                                    GError **error) {
     g_message("%s main win\n", (show? "showing": "hiding"));
     if (has_x11_connection)
         mainwin_show(show);
@@ -118,27 +118,26 @@ gboolean audacious_rc_show_main_win(RemoteObject *obj, gboolean show,
 }
 
 gboolean audacious_rc_equalizer_visible(RemoteObject *obj,
-                                  gboolean *is_eq_win, GError **error) {
+                                        gboolean *is_eq_win, GError **error) {
     *is_eq_win = cfg.equalizer_visible;
     return TRUE;
 }
 
 gboolean audacious_rc_show_equalizer(RemoteObject *obj, gboolean show,
-                                         GError **error) {
+                                     GError **error) {
     if (has_x11_connection)
         equalizerwin_show(show);
     return TRUE;
 }
 
-gboolean audacious_rc_playlist_visible(RemoteObject *obj,
-                                           gboolean *is_pl_win,
-                                           GError **error) {
+gboolean audacious_rc_playlist_visible(RemoteObject *obj, gboolean *is_pl_win,
+                                       GError **error) {
     *is_pl_win = cfg.playlist_visible;
     return TRUE;
 }
 
 gboolean audacious_rc_show_playlist(RemoteObject *obj, gboolean show,
-                                        GError **error) {
+                                    GError **error) {
     if (has_x11_connection) {
         if (show)
             playlistwin_show();
@@ -173,31 +172,37 @@ gboolean audacious_rc_stop(RemoteObject *obj, GError **error) {
 }
 
 gboolean audacious_rc_playing(RemoteObject *obj, gboolean *is_playing,
-                                  GError **error) {
+                              GError **error) {
     *is_playing = playback_get_playing();
     return TRUE;
 }
 
 gboolean audacious_rc_paused(RemoteObject *obj, gboolean *is_paused,
-                                 GError **error) {
+                             GError **error) {
     *is_paused = playback_get_paused();
     return TRUE;
 }
 
 gboolean audacious_rc_stopped(RemoteObject *obj, gboolean *is_stopped,
-                                  GError **error) {
+                              GError **error) {
     *is_stopped = !playback_get_playing();
     return TRUE;
 }
 
 gboolean audacious_rc_status(RemoteObject *obj, gchar **status,
-                                 GError **error) {
+                             GError **error) {
     if (playback_get_paused())
         *status = g_strdup("paused");
     else if (playback_get_playing())
         *status = g_strdup("playing");
     else
         *status = g_strdup("stopped");
+    return TRUE;
+}
+
+gboolean audacious_rc_info(RemoteObject *obj, gint *rate, gint *freq,
+                           gint *nch, GError **error) {
+    playback_get_sample_params(rate, freq, nch);
     return TRUE;
 }
 
@@ -218,13 +223,13 @@ gboolean audacious_rc_seek(RemoteObject *obj, guint pos, GError **error) {
 }
 
 gboolean audacious_rc_volume(RemoteObject *obj, gint *vl, gint *vr,
-                                 GError **error) {
+                             GError **error) {
     input_get_volume(vl, vr);
     return TRUE;
 }
 
 gboolean audacious_rc_set_volume(RemoteObject *obj, gint vl, gint vr,
-                                     GError **error) {
+                                 GError **error) {
     if (vl > 100)
         vl = 100;
     if (vr > 100)
@@ -234,7 +239,7 @@ gboolean audacious_rc_set_volume(RemoteObject *obj, gint vl, gint vr,
 }
 
 gboolean audacious_rc_balance(RemoteObject *obj, gint *balance,
-                                  GError **error) {
+                              GError **error) {
     gint vl, vr;
     input_get_volume(&vl, &vr);
     if (vl < 0 || vr < 0)
@@ -249,8 +254,7 @@ gboolean audacious_rc_balance(RemoteObject *obj, gint *balance,
 }
 
 // Playlist Information/Manipulation
-gboolean audacious_rc_position(RemoteObject *obj, int *pos, GError **error)
-{
+gboolean audacious_rc_position(RemoteObject *obj, int *pos, GError **error) {
     *pos = playlist_get_position(playlist_get_active());
     return TRUE;
 }
@@ -266,48 +270,111 @@ gboolean audacious_rc_reverse(RemoteObject *obj, GError **error) {
 }
 
 gboolean audacious_rc_length(RemoteObject *obj, int *length,
-                                 GError **error) {
+                             GError **error) {
     *length = playlist_get_length(playlist_get_active());
     return TRUE;
 }
 
-gboolean audacious_rc_song_title(RemoteObject *obj, int pos,
-                                     gchar **title, GError **error) {
+gboolean audacious_rc_song_title(RemoteObject *obj, guint pos,
+                                 gchar **title, GError **error) {
     *title = playlist_get_songtitle(playlist_get_active(), pos);
     return TRUE;
 }
 
-gboolean audacious_rc_song_filename(RemoteObject *obj, int pos,
-                                        gchar **filename, GError **error) {
+gboolean audacious_rc_song_filename(RemoteObject *obj, guint pos,
+                                    gchar **filename, GError **error) {
     *filename = playlist_get_filename(playlist_get_active(), pos);
     return TRUE;
 }
 
-gboolean audacious_rc_song_length(RemoteObject *obj, int pos, int *length,
-                                      GError **error) {
+gboolean audacious_rc_song_length(RemoteObject *obj, guint pos, int *length,
+                                  GError **error) {
     *length = playlist_get_songtime(playlist_get_active(), pos) / 1000;
     return TRUE;
 }
 
-gboolean audacious_rc_song_frames(RemoteObject *obj, int pos, int *length,
-                                      GError **error) {
+gboolean audacious_rc_song_frames(RemoteObject *obj, guint pos, int *length,
+                                  GError **error) {
     *length = playlist_get_songtime(playlist_get_active(), pos);
     return TRUE;
 }
 
-gboolean audacious_rc_jump(RemoteObject *obj, int pos, GError **error) {
+gboolean audacious_rc_song_tuple(RemoteObject *obj, guint pos, gchar *field,
+                                 GValue *value, GError **error) {
+    TitleInput *tuple;
+    tuple = playlist_get_tuple(playlist_get_active(), pos);
+    if (!tuple) {
+        return FALSE;
+    } else {
+        if (!strcasecmp(field, "performer")) {
+            g_value_init(value, G_TYPE_STRING);
+            g_value_set_string(value, tuple->performer);
+        } else if (!strcasecmp(field, "album_name")) {
+            g_value_init(value, G_TYPE_STRING);
+            g_value_set_string(value, tuple->album_name);
+        } else if (!strcasecmp(field, "track_name")) {
+            g_value_init(value, G_TYPE_STRING);
+            g_value_set_string(value, tuple->track_name);
+        } else if (!strcasecmp(field, "track_number")) {
+            g_value_init(value, G_TYPE_INT);
+            g_value_set_int(value, tuple->track_number);
+        } else if (!strcasecmp(field, "year")) {
+            g_value_init(value, G_TYPE_INT);
+            g_value_set_int(value, tuple->year);
+        } else if (!strcasecmp(field, "date")) {
+            g_value_init(value, G_TYPE_STRING);
+            g_value_set_string(value, tuple->date);
+        } else if (!strcasecmp(field, "genre")) {
+            g_value_init(value, G_TYPE_STRING);
+            g_value_set_string(value, tuple->genre);
+        } else if (!strcasecmp(field, "comment")) {
+            g_value_init(value, G_TYPE_STRING);
+            g_value_set_string(value, tuple->comment);
+        } else if (!strcasecmp(field, "file_name")) {
+            g_value_init(value, G_TYPE_STRING);
+            g_value_set_string(value, tuple->file_name);
+        } else if (!strcasecmp(field, "file_ext")) {
+            g_value_init(value, G_TYPE_STRING);
+            g_value_set_string(value, g_strdup(tuple->file_ext));
+        } else if (!strcasecmp(field, "file_path")) {
+            g_value_init(value, G_TYPE_STRING);
+            g_value_set_string(value, tuple->file_path);
+        } else if (!strcasecmp(field, "length")) {
+            g_value_init(value, G_TYPE_INT);
+            g_value_set_int(value, tuple->length);
+        } else if (!strcasecmp(field, "album_name")) {
+            g_value_init(value, G_TYPE_STRING);
+            g_value_set_string(value, tuple->album_name);
+        } else if (!strcasecmp(field, "formatter")) {
+            g_value_init(value, G_TYPE_STRING);
+            g_value_set_string(value, tuple->formatter);
+        } else if (!strcasecmp(field, "custom")) {
+            g_value_init(value, G_TYPE_STRING);
+            g_value_set_string(value, tuple->custom);
+        } else if (!strcasecmp(field, "mtime")) {
+            g_value_init(value, G_TYPE_INT);
+            g_value_set_int(value, tuple->mtime);
+        }
+    }
+    return TRUE;
+}
+
+gboolean audacious_rc_jump(RemoteObject *obj, guint pos, GError **error) {
     if (pos < (guint)playlist_get_length(playlist_get_active()))
                 playlist_set_position(playlist_get_active(), pos);
     return TRUE;
 }
 
-gboolean audacious_rc_add_url(RemoteObject *obj, gchar *url,
-                                  GError **error) {
+gboolean audacious_rc_add(RemoteObject *obj, gchar *file, GError **error) {
+    playlist_add_url(playlist_get_active(), file);
+    return TRUE;
+}
+gboolean audacious_rc_add_url(RemoteObject *obj, gchar *url, GError **error) {
     playlist_add_url(playlist_get_active(), url);
     return TRUE;
 }
 
-gboolean audacious_rc_delete(RemoteObject *obj, int pos, GError **error) {
+gboolean audacious_rc_delete(RemoteObject *obj, guint pos, GError **error) {
     playlist_delete_index(playlist_get_active(), pos);
     return TRUE;
 }
@@ -320,7 +387,7 @@ gboolean audacious_rc_clear(RemoteObject *obj, GError **error) {
 }
 
 gboolean audacious_rc_repeating(RemoteObject *obj, gboolean *is_repeating,
-                                    GError **error) {
+                                GError **error) {
     *is_repeating = cfg.repeat;
     return TRUE;
 }
@@ -331,7 +398,7 @@ gboolean audacious_rc_repeat(RemoteObject *obj, GError **error) {
 }
 
 gboolean audacious_rc_shuffling(RemoteObject *obj, gboolean *is_shuffling,
-                                    GError **error) {
+                                GError **error) {
     *is_shuffling = cfg.shuffle;
     return TRUE;
 }
