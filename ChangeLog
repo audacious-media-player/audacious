@@ -1,3 +1,12 @@
+2007-05-12 22:22:58 +0000  Ben Tucker <bnt@interchange.ubc.ca>
+  revision [4552]
+  Reverted the modifications that were initially needed for DBus support.
+  
+  trunk/src/audacious/plugin.h     |   15 ---------------
+  trunk/src/audacious/pluginenum.c |   34 ----------------------------------
+  2 files changed, 49 deletions(-)
+
+
 2007-05-12 21:35:30 +0000  Ben Tucker <bnt@interchange.ubc.ca>
   revision [4550]
   Added lots of comments (styled after beepctrl).

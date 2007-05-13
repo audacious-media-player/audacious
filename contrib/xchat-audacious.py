@@ -6,7 +6,7 @@
 #   - support org.freedesktop.MediaPlayer (MPRIS)?
 #
 # This script is in the public domain.
-#   $Id: xchat-audacious.py 4544 2007-05-12 04:57:25Z nenolod $
+#   $Id: xchat-audacious.py 4554 2007-05-13 02:45:21Z nenolod $
 #
 
 __module_name__ = "xchat-audacious"
@@ -61,7 +61,7 @@ def command_send(word, word_eol, userdata):
 		return xchat.EAT_ALL
 
 	aud = bus.get_object('org.atheme.audacious', '/org/atheme/audacious')
-	xchat.command('DCC SEND %s "%s"' % (word[1], aud.SongFilename(aud.Position())))
+	xchat.command('DCC SEND %s "%s"' % (word[1], aud.SongFilename(aud.Position()).encode("utf8")))
 	return xchat.EAT_ALL
 
 xchat.hook_command("NP", command_np, help="Displays current playing song.")
@@ -72,4 +72,4 @@ xchat.hook_command("STOP", command_stop, help="Stops playback.")
 xchat.hook_command("PLAY", command_play, help="Begins playback.")
 xchat.hook_command("SENDTRACK", command_send, help="Sends the currently playing track to a user.")
 
-print "xchat-audacious $Id: xchat-audacious.py 4544 2007-05-12 04:57:25Z nenolod $ loaded"
+print "xchat-audacious $Id: xchat-audacious.py 4554 2007-05-13 02:45:21Z nenolod $ loaded"
