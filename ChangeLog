@@ -1,3 +1,11 @@
+2007-05-13 02:45:21 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4554]
+  - handle UTF-8 filenames
+  
+  trunk/contrib/xchat-audacious.py |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-05-12 22:22:58 +0000  Ben Tucker <bnt@interchange.ubc.ca>
   revision [4552]
   Reverted the modifications that were initially needed for DBus support.

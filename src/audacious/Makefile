@@ -11,7 +11,6 @@ LDFLAGS += $(AUDLDFLAGS)
 
 LDADD = \
 	-L.. $(LIBINTL) \
-	-L../libaudclient -laudclient \
 	$(samplerate_LIBS) \
 	$(CHARDET_LIBS) \
 	$(GTK_LIBS) \
