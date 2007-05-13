@@ -1,3 +1,13 @@
+2007-05-13 09:31:11 +0000  Ben Tucker <bnt@interchange.ubc.ca>
+  revision [4558]
+  Added CMD_GET_INFO and CMD_PLAYLIST_GET_TUPLE_DATA replacements; Changed some formatting and used unsigned numbers where appropriate.
+  
+  trunk/src/audacious/dbus-service.h |   63 +++++++++--------
+  trunk/src/audacious/dbus.c         |  133 +++++++++++++++++++++++++++----------
+  trunk/src/audacious/objects.xml    |   51 ++++++++++----
+  3 files changed, 172 insertions(+), 75 deletions(-)
+
+
 2007-05-13 08:29:56 +0000  Ben Tucker <bnt@interchange.ubc.ca>
   revision [4556]
   Fixed link error caused by libaudclient being in LDADD for audacious.

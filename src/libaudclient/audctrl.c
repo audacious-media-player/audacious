@@ -72,7 +72,7 @@ void audacious_remote_playlist_add(DBusGProxy *proxy, GList *list) {
  *
  * Deletes a playlist entry.
  **/
-void audacious_remote_playlist_delete(DBusGProxy *proxy, gint pos) {
+void audacious_remote_playlist_delete(DBusGProxy *proxy, guint pos) {
 }
 
 /**
@@ -147,7 +147,7 @@ gboolean audacious_remote_is_paused(DBusGProxy *proxy) {
  * Return value: The current playlist position.
  **/
 gint audacious_remote_get_playlist_pos(DBusGProxy *proxy) {
-    gint pos;
+    guint pos;
     org_atheme_audacious_position(proxy, &pos, &error);
     g_clear_error(&error);
     return pos;
@@ -160,7 +160,7 @@ gint audacious_remote_get_playlist_pos(DBusGProxy *proxy) {
  *
  * Tells audacious to jump to a different playlist position.
  **/
-void audacious_remote_set_playlist_pos(DBusGProxy *proxy, gint pos) {
+void audacious_remote_set_playlist_pos(DBusGProxy *proxy, guint pos) {
 }
 
 /**
@@ -198,7 +198,7 @@ void audacious_remote_playlist_clear(DBusGProxy *proxy) {
  * Return value: The current output position.
  **/
 gint audacious_remote_get_output_time(DBusGProxy *proxy) {
-    gint time;
+    guint time;
     org_atheme_audacious_time(proxy, &time, &error);
     g_clear_error(&error);
     return time;
@@ -211,7 +211,7 @@ gint audacious_remote_get_output_time(DBusGProxy *proxy) {
  *
  * Tells audacious to seek to a new time position.
  **/
-void audacious_remote_jump_to_time(DBusGProxy *proxy, gint pos) {
+void audacious_remote_jump_to_time(DBusGProxy *proxy, guint pos) {
 }
 
 /**
@@ -353,7 +353,7 @@ void audacious_remote_set_skin(DBusGProxy *proxy, gchar *skinfile) {
  *
  * Return value: A path to the file in the playlist at %pos position.
  **/
-gchar *audacious_remote_get_playlist_file(DBusGProxy *proxy, gint pos) {
+gchar *audacious_remote_get_playlist_file(DBusGProxy *proxy, guint pos) {
     gchar *out;
     org_atheme_audacious_song_filename(proxy, pos, &out, &error);
     g_clear_error(&error);
@@ -369,7 +369,7 @@ gchar *audacious_remote_get_playlist_file(DBusGProxy *proxy, gint pos) {
  *
  * Return value: The title for the entry in the playlist at %pos position.
  **/
-gchar *audacious_remote_get_playlist_title(DBusGProxy *proxy, gint pos) {
+gchar *audacious_remote_get_playlist_title(DBusGProxy *proxy, guint pos) {
     gchar *out;
     org_atheme_audacious_song_title(proxy, pos, &out, &error);
     g_clear_error(&error);
@@ -385,7 +385,7 @@ gchar *audacious_remote_get_playlist_title(DBusGProxy *proxy, gint pos) {
  *
  * Return value: The length of the entry in the playlist at %pos position.
  **/
-gint audacious_remote_get_playlist_time(DBusGProxy *proxy, gint pos) {
+gint audacious_remote_get_playlist_time(DBusGProxy *proxy, guint pos) {
     gint out;
     org_atheme_audacious_song_frames(proxy, pos, &out, &error);
     g_clear_error(&error);
@@ -698,7 +698,7 @@ void audacious_remote_play_pause(DBusGProxy *proxy) {
  * Tells audacious to add an URI to the playlist at a specific position.
  **/
 void audacious_remote_playlist_ins_url_string(DBusGProxy *proxy,
-                                              gchar *string, gint pos) {
+                                              gchar *string, guint pos) {
 }
 
 /**
@@ -708,7 +708,7 @@ void audacious_remote_playlist_ins_url_string(DBusGProxy *proxy,
  *
  * Tells audacious to add a playlist entry to the playqueue.
  **/
-void audacious_remote_playqueue_add(DBusGProxy *proxy, gint pos) {
+void audacious_remote_playqueue_add(DBusGProxy *proxy, guint pos) {
 }
 
 /**
@@ -718,7 +718,7 @@ void audacious_remote_playqueue_add(DBusGProxy *proxy, gint pos) {
  *
  * Tells audacious to remove a playlist entry from the playqueue.
  **/
-void audacious_remote_playqueue_remove(DBusGProxy *proxy, gint pos) {
+void audacious_remote_playqueue_remove(DBusGProxy *proxy, guint pos) {
 }
 
 /**
@@ -788,7 +788,7 @@ void audacious_remote_playqueue_clear(DBusGProxy *proxy) {
  *
  * Return value: TRUE if yes, FALSE otherwise.
  **/
-gboolean audacious_remote_playqueue_is_queued(DBusGProxy *proxy, gint pos) {
+gboolean audacious_remote_playqueue_is_queued(DBusGProxy *proxy, guint pos) {
 }
 
 /**
@@ -800,7 +800,7 @@ gboolean audacious_remote_playqueue_is_queued(DBusGProxy *proxy, gint pos) {
  *
  * Return value: TRUE if yes, FALSE otherwise.
  **/
-gint audacious_remote_get_playqueue_position(DBusGProxy *proxy, gint pos) {
+gint audacious_remote_get_playqueue_position(DBusGProxy *proxy, guint pos) {
 }
 
 /**
@@ -813,7 +813,7 @@ gint audacious_remote_get_playqueue_position(DBusGProxy *proxy, gint pos) {
  * Return value: TRUE if yes, FALSE otherwise.
  **/
 gint audacious_remote_get_playqueue_queue_position(DBusGProxy *proxy,
-                                                   gint pos) {
+                                                   guint pos) {
 }
 
 /**
@@ -838,5 +838,5 @@ void audacious_remote_playlist_enqueue_to_temp(DBusGProxy *proxy,
  * Return value: The requested field's data for the entry in the playlist at %pos position.
  **/
 gchar *audacious_get_tuple_field_data(DBusGProxy *proxy, gchar *field,
-                                      gint pos) {
+                                      guint pos) {
 }
