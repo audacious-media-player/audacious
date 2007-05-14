@@ -18,5 +18,5 @@ Name: Audacious
 Description: Audacious is a versatile and handy multi platform media player
 Version: @PACKAGE_VERSION@
 Requires: @PC_REQUIRES@
-Libs: -L${lib_dir} -laudacious
+Libs: -L${lib_dir} @LIBAUDCLIENT_LDFLAGS@
 Cflags: -I${audacious_include_dir}

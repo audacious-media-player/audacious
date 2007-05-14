@@ -238,6 +238,7 @@ if test "x$enable_dbus" = "xyes"; then
 		DBUS_C=dbus.c
 		DBUS_BINDINGS="dbus-server-bindings.h dbus-client-bindings.h"
 		LIBAUDCLIENT_OBJECTIVE="libaudclient audtool"
+		LIBAUDCLIENT_LDFLAGS="-laudclient"
 		AC_SUBST(DBUS_C)
 		AC_SUBST(DBUS_BINDINGS)
 		AC_SUBST(USE_DBUS)
@@ -246,6 +247,7 @@ if test "x$enable_dbus" = "xyes"; then
 		AC_SUBST(DBUS_SERVICES_DIR)
 		AC_SUBST(DBUS_BINDING_TOOL)
 		AC_SUBST(LIBAUDCLIENT_OBJECTIVE)
+		AC_SUBST(LIBAUDCLIENT_LDFLAGS)
 	fi
 fi
 

@@ -1,3 +1,19 @@
+2007-05-14 01:38:53 +0000  Ben Tucker <bnt@interchange.ubc.ca>
+  revision [4564]
+  Implemented CMD_IS_ADVANCE and CMD_TOGGLE_ADVANCE. Added partial MPRIS support. Root is complete, Player is partially implemented, and TrackList has not been started.
+  
+  trunk/src/audacious/Makefile         |    4 -
+  trunk/src/audacious/dbus-service.h   |   43 +++++++++--
+  trunk/src/audacious/dbus.c           |  132 +++++++++++++++++++++++++++++++----
+  trunk/src/audacious/dbus.h           |    4 +
+  trunk/src/audacious/mpris_player.xml |   27 +++++--
+  trunk/src/audacious/objects.xml      |   26 ++++--
+  trunk/src/audacious/ui_main.c        |    6 +
+  trunk/src/audacious/ui_main.h        |    1 
+  trunk/src/libaudclient/audctrl.c     |   21 +++++
+  9 files changed, 226 insertions(+), 38 deletions(-)
+
+
 2007-05-13 18:57:18 +0000  Ben Tucker <bnt@interchange.ubc.ca>
   revision [4562]
   Added a hook when building dependencies so that the dbus-bindings are created first without producing any error messages.
