@@ -332,6 +332,7 @@ void audacious_remote_set_balance(DBusGProxy *proxy, gint b) {
  * Return value: A path to the currently selected skin.
  **/
 gchar *audacious_remote_get_skin(DBusGProxy *proxy) {
+    return NULL;
 }
 
 /**
@@ -558,6 +559,7 @@ void audacious_remote_playlist_add_url_string(DBusGProxy *proxy,
  * Return value: TRUE if yes, otherwise FALSE.
  **/
 gboolean audacious_remote_is_running(DBusGProxy *proxy) {
+    return FALSE;
 }
 
 /**
@@ -587,6 +589,10 @@ void audacious_remote_toggle_shuffle(DBusGProxy *proxy) {
  * Return value: TRUE if yes, otherwise FALSE.
  **/
 gboolean audacious_remote_is_repeat(DBusGProxy *proxy) {
+    gboolean is_repeat;
+    org_atheme_audacious_repeat(proxy, &is_repeat, &error);
+    g_clear_error(&error);
+    return is_repeat;
 }
 
 /**
@@ -598,6 +604,10 @@ gboolean audacious_remote_is_repeat(DBusGProxy *proxy) {
  * Return value: TRUE if yes, otherwise FALSE.
  **/
 gboolean audacious_remote_is_shuffle(DBusGProxy *proxy) {
+    gboolean is_shuffle;
+    org_atheme_audacious_shuffle(proxy, &is_shuffle, &error);
+    g_clear_error(&error);
+    return is_shuffle;
 }
 
 /**
@@ -730,6 +740,11 @@ void audacious_remote_playqueue_remove(DBusGProxy *proxy, guint pos) {
  * Return value: The number of entries in the playqueue.
  **/
 gint audacious_remote_get_playqueue_length(DBusGProxy *proxy) {
+    gint len = 0;
+    // this returns the lenght of the playlist, NOT the length of the playqueue
+    org_atheme_audacious_length(proxy, &len, &error);
+    g_clear_error(&error);
+    return len;
 }
 
 /**
@@ -739,6 +754,8 @@ gint audacious_remote_get_playqueue_length(DBusGProxy *proxy) {
  * Tells audacious to toggle the no-playlist-advance feature.
  **/
 void audacious_remote_toggle_advance(DBusGProxy *proxy) {
+    org_atheme_audacious_toggle_auto_advance(proxy, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -750,6 +767,10 @@ void audacious_remote_toggle_advance(DBusGProxy *proxy) {
  * Return value: TRUE if yes, otherwise FALSE.
  **/
 gboolean audacious_remote_is_advance(DBusGProxy *proxy) {
+    gboolean is_advance;
+    org_atheme_audacious_auto_advance(proxy, &is_advance, &error);
+    g_clear_error(&error);
+    return is_advance;
 }
 
 /**

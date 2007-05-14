@@ -138,9 +138,9 @@ audacious: $(OBJECTS) $(LIBDEP)
 
 dbus-server-bindings.h: $(DBUS_BINDINGS_SOURCES)
 	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=audacious_rc objects.xml > $@
-	# $(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_root mpris_root.xml >> $@
+	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_root mpris_root.xml >> $@
 	# $(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_tracklist mpris_tracklist.xml >> $@
-	# $(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_player mpris_player.xml >> $@
+	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_player mpris_player.xml >> $@
 	@printf "%10s     %-20s\n" DBUS-BIND $@
 
 dbus-client-bindings.h: $(DBUS_BINDINGS_SOURCES)

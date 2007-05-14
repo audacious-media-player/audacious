@@ -21,14 +21,27 @@
 
 <node name="/Player">
     <interface name="org.freedesktop.MediaPlayer">
-        <method name="Next" />
-        <method name="Prev" />
-        <method name="Pause" />
-        <method name="Stop" />
-        <method name="Play" />
-        <method name="Quit" />
+        <method name="Next">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
+        <method name="Prev">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
+        <method name="Pause">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
+        <method name="Stop">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
+        <method name="Play">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
+        <method name="Quit">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
 
         <method name="Repeat">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="b" direction="in" />
         </method>
 
@@ -41,6 +54,7 @@
         </method>
 
         <method name="VolumeSet">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="i" direction="in" />
         </method>
 
@@ -49,6 +63,7 @@
         </method>
 
         <method name="PositionSet">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
             <arg type="i" direction="in" />
         </method>
 

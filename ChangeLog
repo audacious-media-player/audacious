@@ -1,3 +1,13 @@
+2007-05-13 18:57:18 +0000  Ben Tucker <bnt@interchange.ubc.ca>
+  revision [4562]
+  Added a hook when building dependencies so that the dbus-bindings are created first without producing any error messages.
+  
+  trunk/mk/objective.mk        |    4 +++-
+  trunk/src/Makefile           |    3 +++
+  trunk/src/audacious/Makefile |    2 +-
+  3 files changed, 7 insertions(+), 2 deletions(-)
+
+
 2007-05-13 18:56:01 +0000  Ben Tucker <bnt@interchange.ubc.ca>
   revision [4560]
   Changed signedness and formatting.

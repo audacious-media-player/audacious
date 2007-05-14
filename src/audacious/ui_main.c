@@ -2011,6 +2011,12 @@ mainwin_set_stopaftersong(gboolean stop)
     check_set(toggleaction_group_others, "stop after current song", cfg.stopaftersong);
 }
 
+void
+mainwin_set_noplaylistadvance(gboolean no_advance)
+{
+    cfg.no_playlist_advance = no_advance;
+    check_set(toggleaction_group_others, "playback no playlist advance", cfg.no_playlist_advance);
+}
 
 static void
 mainwin_set_doublesize(gboolean doublesize)

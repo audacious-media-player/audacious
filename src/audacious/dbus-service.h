@@ -27,16 +27,38 @@
 
 typedef struct {
     GObject parent;
-    DBusGConnection *connection;
-} RemoteObject;
+} RemoteObject, MprisRoot, MprisPlayer;
 
 typedef struct {
     GObjectClass parent_class;
-} RemoteObjectClass;
+} RemoteObjectClass, MprisRootClass, MprisPlayerClass;
 
 void init_dbus();
 void free_dbus();
 DBusGProxy *audacious_get_dbus_proxy();
+
+///////////////////////////
+// MPRIS defined methods //
+///////////////////////////
+gboolean mpris_root_identity(MprisRoot *obj, gchar **identity,
+                             GError **error);
+gboolean mpris_player_next(MprisPlayer *obj, GError **error);
+gboolean mpris_player_prev(MprisPlayer *obj, GError **error);
+gboolean mpris_player_pause(MprisPlayer *obj, GError **error);
+gboolean mpris_player_stop(MprisPlayer *obj, GError **error);
+gboolean mpris_player_play(MprisPlayer *obj, GError **error);
+gboolean mpris_player_quit(MprisPlayer *obj, GError **error);
+gboolean mpris_player_repeat(MprisPlayer *obj, gboolean rpt, GError **error);
+gboolean mpris_player_get_status(MprisPlayer *obj, gint *status,
+                                 GError **error);
+gboolean mpris_player_get_caps(MprisPlayer *obj, gint *capabilities,
+                                 GError **error);
+gboolean mpris_player_volume_set(MprisPlayer *obj, gint vol, GError **error);
+gboolean mpris_player_volume_get(MprisPlayer *obj, gint *vol,
+                                 GError **error);
+gboolean mpris_player_position_set(MprisPlayer *obj, gint pos, GError **error);
+gboolean mpris_player_position_get(MprisPlayer *obj, gint *pos,
+                                   GError **error);
 
 // Audacious General Information
 gboolean audacious_rc_version(RemoteObject *obj, gchar **version,
@@ -102,10 +124,13 @@ gboolean audacious_rc_add_url(RemoteObject *obj, gchar *url,
                               GError **error);
 gboolean audacious_rc_delete(RemoteObject *obj, guint pos, GError **error);
 gboolean audacious_rc_clear(RemoteObject *obj, GError **error);
-gboolean audacious_rc_repeating(RemoteObject *obj, gboolean *is_repeating,
-                                GError **error);
-gboolean audacious_rc_repeat(RemoteObject *obj, GError **error);
-gboolean audacious_rc_shuffling(RemoteObject *obj, gboolean *is_shuffling,
-                                GError **error);
-gboolean audacious_rc_shuffle(RemoteObject *obj, GError **error);
+gboolean audacious_rc_auto_advance(RemoteObject *obj, gboolean *is_advance,
+                                   GError **error);
+gboolean audacious_rc_toggle_auto_advance(RemoteObject *obj, GError **error);
+gboolean audacious_rc_repeat(RemoteObject *obj, gboolean *is_repeat,
+                             GError **error);
+gboolean audacious_rc_toggle_repeat(RemoteObject *obj, GError **error);
+gboolean audacious_rc_shuffle(RemoteObject *obj, gboolean *is_shuffle,
+                              GError **error);
+gboolean audacious_rc_toggle_shuffle(RemoteObject *obj, GError **error);
 #endif // !_DBUS_SERVICE_H

@@ -39,33 +39,34 @@
 #include "titlestring.h"
 #include "ui_jumptotrack.h"
 
+static DBusGConnection *dbus_conn = NULL;
+
 G_DEFINE_TYPE(RemoteObject, audacious_rc, G_TYPE_OBJECT);
+G_DEFINE_TYPE(MprisRoot, mpris_root, G_TYPE_OBJECT);
+G_DEFINE_TYPE(MprisPlayer, mpris_player, G_TYPE_OBJECT);
+// G_DEFINE_TYPE(MprisTracklist, mpris_tracklist, G_TYPE_OBJECT);
 
 void audacious_rc_class_init(RemoteObjectClass *klass) {}
+void mpris_root_class_init(MprisRootClass *klass) {}
+void mpris_player_class_init(MprisPlayerClass *klass) {}
+// void mpris_tracklist_class_init(MprisTracklistClass *klass) {}
 
 void audacious_rc_init(RemoteObject *object) {
     GError *error = NULL;
     DBusGProxy *driver_proxy;
     unsigned int request_ret;
 
-    // Initialize the DBus connection
-    object->connection = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
-    if (object->connection == NULL) {
-        g_warning("Unable to connect to dbus: %s", error->message);
-        g_error_free(error);
-        return;
-    }
     
     dbus_g_object_type_install_info(audacious_rc_get_type(),
                                     &dbus_glib_audacious_rc_object_info);
     
     // Register DBUS path
-    dbus_g_connection_register_g_object(object->connection,
+    dbus_g_connection_register_g_object(dbus_conn,
                                         AUDACIOUS_DBUS_PATH, G_OBJECT(object));
 
     // Register the service name, the constants here are defined in
     // dbus-glib-bindings.h
-    driver_proxy = dbus_g_proxy_new_for_name(object->connection,
+    driver_proxy = dbus_g_proxy_new_for_name(dbus_conn,
                                              DBUS_SERVICE_DBUS, DBUS_PATH_DBUS,
                                              DBUS_INTERFACE_DBUS);
 
@@ -75,13 +76,107 @@ void audacious_rc_init(RemoteObject *object) {
         g_error_free(error);
     }
 
+    if (!org_freedesktop_DBus_request_name(driver_proxy,
+        AUDACIOUS_DBUS_SERVICE_MPRIS, 0, &request_ret, &error)) {
+        g_warning("Unable to register service: %s", error->message);
+        g_error_free(error);
+    }
+
     g_object_unref(driver_proxy);
 }
 
+void mpris_root_init(MprisRoot *object) {
+    dbus_g_object_type_install_info(mpris_root_get_type(),
+                                    &dbus_glib_mpris_root_object_info);
+    
+    // Register DBUS path
+    dbus_g_connection_register_g_object(dbus_conn,
+                                        AUDACIOUS_DBUS_PATH_MPRIS_ROOT,
+                                        G_OBJECT(object));
+}
+
+void mpris_player_init(MprisPlayer *object) {
+    dbus_g_object_type_install_info(mpris_player_get_type(),
+                                    &dbus_glib_mpris_player_object_info);
+    
+    // Register DBUS path
+    dbus_g_connection_register_g_object(dbus_conn,
+                                        AUDACIOUS_DBUS_PATH_MPRIS_PLAYER,
+                                        G_OBJECT(object));
+}
+
 void init_dbus() {
+    GError *error = NULL;
+    // Initialize the DBus connection
+    dbus_conn = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
+    if (dbus_conn == NULL) {
+        g_warning("Unable to connect to dbus: %s", error->message);
+        g_error_free(error);
+        return;
+    }
+
     g_type_init();
     g_object_new(audacious_rc_get_type(), NULL);
+    g_object_new(mpris_root_get_type(), NULL);
+    g_object_new(mpris_player_get_type(), NULL);
+    // g_object_new(mpris_tracklist_get_type(), NULL);
     g_message("D-Bus support has been activated");
+}
+
+///////////////////////////
+// MPRIS defined methods //
+///////////////////////////
+gboolean mpris_root_identity(MprisRoot *obj, gchar **identity,
+                             GError **error) {
+    *identity = g_strdup_printf("Audacious %s", VERSION);
+    return TRUE;
+}
+
+gboolean mpris_player_next(MprisPlayer *obj, GError **error) {
+    return audacious_rc_advance(obj, error);
+}
+gboolean mpris_player_prev(MprisPlayer *obj, GError **error) {
+    return audacious_rc_reverse(obj, error);
+}
+gboolean mpris_player_pause(MprisPlayer *obj, GError **error) {
+    return audacious_rc_pause(obj, error);
+}
+gboolean mpris_player_stop(MprisPlayer *obj, GError **error) {
+    return audacious_rc_stop(obj, error);
+}
+gboolean mpris_player_play(MprisPlayer *obj, GError **error) {
+    return audacious_rc_play(obj, error);
+}
+gboolean mpris_player_quit(MprisPlayer *obj, GError **error) {
+    return audacious_rc_quit(obj, error);
+}
+gboolean mpris_player_repeat(MprisPlayer *obj, gboolean rpt, GError **error) {
+    mainwin_repeat_pushed(rpt);
+    mainwin_set_noplaylistadvance(rpt);
+    return TRUE;
+}
+gboolean mpris_player_get_status(MprisPlayer *obj, gint *status,
+                                 GError **error) {
+    return TRUE;
+}
+gboolean mpris_player_get_caps(MprisPlayer *obj, gint *capabilities,
+                                 GError **error) {
+    return TRUE;
+}
+gboolean mpris_player_volume_set(MprisPlayer *obj, gint vol, GError **error) {
+    return TRUE;
+}
+gboolean mpris_player_volume_get(MprisPlayer *obj, gint *vol,
+                                 GError **error) {
+    return TRUE;
+}
+gboolean mpris_player_position_set(MprisPlayer *obj, gint pos,
+                                   GError **error) {
+    return TRUE;
+}
+gboolean mpris_player_position_get(MprisPlayer *obj, gint *pos,
+                                   GError **error) {
+    return TRUE;
 }
 
 // Audacious General Information
@@ -386,24 +481,35 @@ gboolean audacious_rc_clear(RemoteObject *obj, GError **error) {
     return TRUE;
 }
 
-gboolean audacious_rc_repeating(RemoteObject *obj, gboolean *is_repeating,
+gboolean audacious_rc_auto_advance(RemoteObject *obj, gboolean *is_advance,
+                                   GError **error) {
+    *is_advance = cfg.no_playlist_advance;
+    return TRUE;
+}
+
+gboolean audacious_rc_toggle_auto_advance(RemoteObject *obj, GError **error) {
+    cfg.no_playlist_advance = !cfg.no_playlist_advance;
+    return TRUE;
+}
+
+gboolean audacious_rc_repeat(RemoteObject *obj, gboolean *is_repeating,
                                 GError **error) {
     *is_repeating = cfg.repeat;
     return TRUE;
 }
 
-gboolean audacious_rc_repeat(RemoteObject *obj, GError **error) {
+gboolean audacious_rc_toggle_repeat(RemoteObject *obj, GError **error) {
     mainwin_repeat_pushed(!cfg.repeat);
     return TRUE;
 }
 
-gboolean audacious_rc_shuffling(RemoteObject *obj, gboolean *is_shuffling,
+gboolean audacious_rc_shuffle(RemoteObject *obj, gboolean *is_shuffling,
                                 GError **error) {
     *is_shuffling = cfg.shuffle;
     return TRUE;
 }
 
-gboolean audacious_rc_shuffle(RemoteObject *obj, GError **error) {
+gboolean audacious_rc_toggle_shuffle(RemoteObject *obj, GError **error) {
     mainwin_shuffle_pushed(!cfg.shuffle);
     return TRUE;
 }

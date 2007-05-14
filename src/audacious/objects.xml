@@ -56,6 +56,8 @@
     CMD_EJECT
     CMD_GET_INFO
     CMD_PLAYLIST_GET_TUPLE_DATA
+    CMD_IS_ADVANCE
+    CMD_TOGGLE_ADVANCE
 
 
     Remaining:
@@ -80,8 +82,6 @@
     CMD_PLAYQUEUE_ADD
     CMD_GET_PLAYQUEUE_LENGTH
     CMD_PLAYQUEUE_REMOVE
-    CMD_TOGGLE_ADVANCE
-    CMD_IS_ADVANCE
     CMD_ACTIVATE
     CMD_SHOW_JTF_BOX
     CMD_PLAYQUEUE_CLEAR
@@ -331,23 +331,33 @@
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
         </method>
 
+        <!-- Query auto-advance status -->
+        <method name="AutoAdvance">
+            <arg type="b" direction="out" name="is_advance"/>
+        </method>
+
+        <!-- Toggle auto-advance -->
+        <method name="ToggleAutoAdvance">
+            <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
+        </method>
+
         <!-- Query repeat status -->
-        <method name="Repeating">
-            <arg type="b" direction="out" name="is_repeating"/>
+        <method name="Repeat">
+            <arg type="b" direction="out" name="is_repeat"/>
         </method>
 
         <!-- Toggle repeat -->
-        <method name="Repeat">
+        <method name="ToggleRepeat">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
         </method>
 
         <!-- Query shuffle status -->
-        <method name="Shuffling">
-            <arg type="b" direction="out" name="is_shuffling"/>
+        <method name="Shuffle">
+            <arg type="b" direction="out" name="is_shuffle"/>
         </method>
 
         <!-- Toggle shuffle -->
-        <method name="Shuffle">
+        <method name="ToggleShuffle">
             <annotation name="org.freedesktop.DBus.GLib.NoReply" value=""/>
         </method>
     </interface>
