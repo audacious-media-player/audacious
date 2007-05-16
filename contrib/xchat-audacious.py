@@ -6,21 +6,30 @@
 #   - support org.freedesktop.MediaPlayer (MPRIS)?
 #
 # This script is in the public domain.
-#   $Id: xchat-audacious.py 4554 2007-05-13 02:45:21Z nenolod $
+#   $Id: xchat-audacious.py 4570 2007-05-16 06:53:07Z deitarion $
 #
 
 __module_name__ = "xchat-audacious"
 __module_version__ = "1.0"
 __module_description__ = "Get NP information from Audacious"
 
-from dbus import Bus, Interface
+from dbus import Bus, DBusException, Interface
 import xchat
 
 # connect to DBus
 bus = Bus(Bus.TYPE_SESSION)
 
+def get_aud():
+	try:
+		return bus.get_object('org.atheme.audacious', '/org/atheme/audacious')
+	except DBusException:
+		print "\x02Either Audacious is not running or you have something wrong with your D-Bus setup."
+		return None
+
 def command_np(word, word_eol, userdata):
-	aud = bus.get_object('org.atheme.audacious', '/org/atheme/audacious')
+	aud = get_aud()
+	if not aud:
+		return None
 
 	# this seems to be best, probably isn't!
 	length = "stream"
@@ -35,32 +44,30 @@ def command_np(word, word_eol, userdata):
 
 	return xchat.EAT_ALL
 
-def command_next(word, word_eol, userdata):
-	bus.get_object('org.atheme.audacious', '/org/atheme/audacious').Advance()
-	return xchat.EAT_ALL
+def makeVoidCommand(cmd):
+	def callback(word, word_eol, userdata):
+		aud = get_aud()
+		if not aud:
+			return None
+		getattr(aud, cmd)()
+		return xchat.EAT_ALL
+	return callback
 
-def command_prev(word, word_eol, userdata):
-	bus.get_object('org.atheme.audacious', '/org/atheme/audacious').Reverse()
-	return xchat.EAT_ALL
-
-def command_pause(word, word_eol, userdata):
-	bus.get_object('org.atheme.audacious', '/org/atheme/audacious').Pause()
-	return xchat.EAT_ALL
-
-def command_stop(word, word_eol, userdata):
-	bus.get_object('org.atheme.audacious', '/org/atheme/audacious').Stop()
-	return xchat.EAT_ALL
-
-def command_play(word, word_eol, userdata):
-	bus.get_object('org.atheme.audacious', '/org/atheme/audacious').Play()
-	return xchat.EAT_ALL
+command_next  = makeVoidCommand('Advance')
+command_prev  = makeVoidCommand('Reverse')
+command_pause = makeVoidCommand('Pause')
+command_stop  = makeVoidCommand('Stop')
+command_play  = makeVoidCommand('Play')
 
 def command_send(word, word_eol, userdata):
-	if len(word) < 1:
+	if len(word) < 2:
 		print "You must provide a user to send the track to."
 		return xchat.EAT_ALL
 
-	aud = bus.get_object('org.atheme.audacious', '/org/atheme/audacious')
+	aud = get_aud()
+	if not aud:
+		return None
+
 	xchat.command('DCC SEND %s "%s"' % (word[1], aud.SongFilename(aud.Position()).encode("utf8")))
 	return xchat.EAT_ALL
 
@@ -72,4 +79,4 @@ xchat.hook_command("STOP", command_stop, help="Stops playback.")
 xchat.hook_command("PLAY", command_play, help="Begins playback.")
 xchat.hook_command("SENDTRACK", command_send, help="Sends the currently playing track to a user.")
 
-print "xchat-audacious $Id: xchat-audacious.py 4554 2007-05-13 02:45:21Z nenolod $ loaded"
+print "xchat-audacious $Id: xchat-audacious.py 4570 2007-05-16 06:53:07Z deitarion $ loaded"

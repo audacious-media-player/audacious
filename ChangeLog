@@ -1,3 +1,20 @@
+2007-05-16 04:53:37 +0000  Ben Tucker <bnt@interchange.ubc.ca>
+  revision [4568]
+  -Renamed MPRIS /TrackList Shuffle method to Random
+  -Added stubs for the MPRIS /Player signals
+  -Added stubs for the MPRIS /TrackList methods (implemented AddTrack)
+  -Modified build system to be more ignorant of DBus support
+  
+  trunk/configure.ac                      |    7 --
+  trunk/mk/rules.mk.in                    |    4 -
+  trunk/src/Makefile                      |   11 ++-
+  trunk/src/audacious/Makefile            |   13 ++-
+  trunk/src/audacious/dbus-service.h      |   32 ++++++++-
+  trunk/src/audacious/dbus.c              |  109 +++++++++++++++++++++++++++++---
+  trunk/src/audacious/mpris_tracklist.xml |    2 
+  7 files changed, 151 insertions(+), 27 deletions(-)
+
+
 2007-05-14 08:10:54 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4566]
   - remove -laudacious from audacious.pc.in. -laudclient will be put into audacious.pc if --enable-dbus is specified.
