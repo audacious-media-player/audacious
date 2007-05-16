@@ -1,3 +1,14 @@
+2007-05-16 06:53:07 +0000  Stephen Sokolow <deitarion@gmail.com>
+  revision [4570]
+  Fixes for xchat-audacious.py:
+  - Added checks for DBusException (bad D-Bus or no Audacious)
+  - Fixed an off-by-one error that rendered /sendtrack's check for a username useless
+  - Removed some duplication
+  
+  trunk/contrib/xchat-audacious.py |   51 ++++++++++++++++++++++-----------------
+  1 file changed, 29 insertions(+), 22 deletions(-)
+
+
 2007-05-16 04:53:37 +0000  Ben Tucker <bnt@interchange.ubc.ca>
   revision [4568]
   -Renamed MPRIS /TrackList Shuffle method to Random

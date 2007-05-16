@@ -6,7 +6,7 @@
 #   - support org.freedesktop.MediaPlayer (MPRIS)?
 #
 # This script is in the public domain.
-#   $Id: xchat-audacious.py 4570 2007-05-16 06:53:07Z deitarion $
+#   $Id: xchat-audacious.py 4572 2007-05-16 07:24:43Z deitarion $
 #
 
 __module_name__ = "xchat-audacious"
@@ -29,13 +29,10 @@ def get_aud():
 def command_np(word, word_eol, userdata):
 	aud = get_aud()
 	if not aud:
-		return None
+		return xchat.EAT_ALL
 
-	# this seems to be best, probably isn't!
-	length = "stream"
-	if aud.SongLength(aud.Position()) > 0:
-		length = "%d:%02d" % (aud.SongLength(aud.Position()) / 60,
-				      aud.SongLength(aud.Position()) % 60)
+	length = aud.SongLength(aud.Position())
+	length = (length > 0) and ("%d:%02d" % (length / 60, length % 60)) or "stream"
 
 	xchat.command("SAY [%s | %d:%02d/%s]" % (
 		aud.SongTitle(aud.Position()).encode("utf8"),
@@ -46,10 +43,7 @@ def command_np(word, word_eol, userdata):
 
 def makeVoidCommand(cmd):
 	def callback(word, word_eol, userdata):
-		aud = get_aud()
-		if not aud:
-			return None
-		getattr(aud, cmd)()
+		getattr(get_aud(), cmd, lambda: None)()
 		return xchat.EAT_ALL
 	return callback
 
@@ -66,7 +60,7 @@ def command_send(word, word_eol, userdata):
 
 	aud = get_aud()
 	if not aud:
-		return None
+		return xchat.EAT_ALL
 
 	xchat.command('DCC SEND %s "%s"' % (word[1], aud.SongFilename(aud.Position()).encode("utf8")))
 	return xchat.EAT_ALL
@@ -79,4 +73,4 @@ xchat.hook_command("STOP", command_stop, help="Stops playback.")
 xchat.hook_command("PLAY", command_play, help="Begins playback.")
 xchat.hook_command("SENDTRACK", command_send, help="Sends the currently playing track to a user.")
 
-print "xchat-audacious $Id: xchat-audacious.py 4570 2007-05-16 06:53:07Z deitarion $ loaded"
+print "xchat-audacious $Id: xchat-audacious.py 4572 2007-05-16 07:24:43Z deitarion $ loaded"
