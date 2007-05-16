@@ -40,16 +40,44 @@
 #include "ui_jumptotrack.h"
 
 static DBusGConnection *dbus_conn = NULL;
+static guint signals[LAST_SIG] = { 0 };
 
 G_DEFINE_TYPE(RemoteObject, audacious_rc, G_TYPE_OBJECT);
 G_DEFINE_TYPE(MprisRoot, mpris_root, G_TYPE_OBJECT);
 G_DEFINE_TYPE(MprisPlayer, mpris_player, G_TYPE_OBJECT);
-// G_DEFINE_TYPE(MprisTracklist, mpris_tracklist, G_TYPE_OBJECT);
+G_DEFINE_TYPE(MprisTrackList, mpris_tracklist, G_TYPE_OBJECT);
 
 void audacious_rc_class_init(RemoteObjectClass *klass) {}
 void mpris_root_class_init(MprisRootClass *klass) {}
-void mpris_player_class_init(MprisPlayerClass *klass) {}
-// void mpris_tracklist_class_init(MprisTracklistClass *klass) {}
+
+void mpris_player_class_init(MprisPlayerClass *klass) {
+    signals[CAPS_CHANGE_SIG] =
+        g_signal_new("caps_change",
+            G_OBJECT_CLASS_TYPE(klass),
+                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                0,
+                NULL, NULL,
+                g_cclosure_marshal_VOID__STRING,
+                G_TYPE_NONE, 1, G_TYPE_STRING);
+    signals[TRACK_CHANGE_SIG] =
+        g_signal_new("track_change",
+            G_OBJECT_CLASS_TYPE(klass),
+                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                0,
+                NULL, NULL,
+                g_cclosure_marshal_VOID__STRING,
+                G_TYPE_NONE, 1, G_TYPE_STRING);
+    signals[STATUS_CHANGE_SIG] =
+        g_signal_new("status_change",
+            G_OBJECT_CLASS_TYPE(klass),
+                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                0,
+                NULL, NULL,
+                g_cclosure_marshal_VOID__STRING,
+                G_TYPE_NONE, 1, G_TYPE_STRING);
+}
+
+void mpris_tracklist_class_init(MprisTrackListClass *klass) {}
 
 void audacious_rc_init(RemoteObject *object) {
     GError *error = NULL;
@@ -105,6 +133,16 @@ void mpris_player_init(MprisPlayer *object) {
                                         G_OBJECT(object));
 }
 
+void mpris_tracklist_init(MprisTrackList *object) {
+    dbus_g_object_type_install_info(mpris_tracklist_get_type(),
+                                    &dbus_glib_mpris_tracklist_object_info);
+    
+    // Register DBUS path
+    dbus_g_connection_register_g_object(dbus_conn,
+                                        AUDACIOUS_DBUS_PATH_MPRIS_TRACKLIST,
+                                        G_OBJECT(object));
+}
+
 void init_dbus() {
     GError *error = NULL;
     // Initialize the DBus connection
@@ -119,19 +157,21 @@ void init_dbus() {
     g_object_new(audacious_rc_get_type(), NULL);
     g_object_new(mpris_root_get_type(), NULL);
     g_object_new(mpris_player_get_type(), NULL);
-    // g_object_new(mpris_tracklist_get_type(), NULL);
+    g_object_new(mpris_tracklist_get_type(), NULL);
     g_message("D-Bus support has been activated");
 }
 
 ///////////////////////////
 // MPRIS defined methods //
 ///////////////////////////
+// MPRIS /
 gboolean mpris_root_identity(MprisRoot *obj, gchar **identity,
                              GError **error) {
     *identity = g_strdup_printf("Audacious %s", VERSION);
     return TRUE;
 }
 
+// MPRIS /Player
 gboolean mpris_player_next(MprisPlayer *obj, GError **error) {
     return audacious_rc_advance(obj, error);
 }
@@ -157,26 +197,77 @@ gboolean mpris_player_repeat(MprisPlayer *obj, gboolean rpt, GError **error) {
 }
 gboolean mpris_player_get_status(MprisPlayer *obj, gint *status,
                                  GError **error) {
-    return TRUE;
+    return FALSE;
 }
 gboolean mpris_player_get_caps(MprisPlayer *obj, gint *capabilities,
                                  GError **error) {
-    return TRUE;
+    return FALSE;
 }
 gboolean mpris_player_volume_set(MprisPlayer *obj, gint vol, GError **error) {
-    return TRUE;
+    return FALSE;
 }
 gboolean mpris_player_volume_get(MprisPlayer *obj, gint *vol,
                                  GError **error) {
-    return TRUE;
+    return FALSE;
 }
 gboolean mpris_player_position_set(MprisPlayer *obj, gint pos,
                                    GError **error) {
-    return TRUE;
+    return FALSE;
 }
 gboolean mpris_player_position_get(MprisPlayer *obj, gint *pos,
                                    GError **error) {
+    return FALSE;
+}
+// MPRIS /Player signals
+gboolean mpris_player_emit_caps_change(MprisPlayer *obj, GError **error) {
+    g_signal_emit(obj, signals[CAPS_CHANGE_SIG], 0, "capabilities changed");
     return TRUE;
+}
+
+gboolean mpris_player_emit_track_change(MprisPlayer *obj, GError **error) {
+    g_signal_emit(obj, signals[TRACK_CHANGE_SIG], 0, "track changed");
+    return TRUE;
+}
+
+gboolean mpris_player_emit_status_change(MprisPlayer *obj, GError **error) {
+    g_signal_emit(obj, signals[STATUS_CHANGE_SIG], 0, "status changed");
+    return TRUE;
+}
+
+// MPRIS /TrackList
+gboolean mpris_tracklist_get_metadata(MprisTrackList *obj, gint pos,
+                                      GHashTable *metadata, GError **error) {
+    return FALSE;
+}
+gboolean mpris_tracklist_get_current_track(MprisTrackList *obj, gint *pos,
+                                           GError **error) {
+    return audacious_rc_position(obj, pos, error);
+}
+gboolean mpris_tracklist_get_length(MprisTrackList *obj, gint *pos,
+                                    GError **error) {
+    return FALSE;
+}
+gboolean mpris_tracklist_add_track(MprisTrackList *obj, gchar *uri,
+                                   gboolean play, GError **error) {
+    playlist_add_url(playlist_get_active(), uri);
+    if (play) {
+        int pos = playlist_get_length(playlist_get_active()) - 1;
+        playlist_set_position(playlist_get_active(), pos);
+        playback_initiate();
+    }
+    return TRUE;
+}
+gboolean mpris_tracklist_del_track(MprisTrackList *obj, gint pos,
+                                   GError **error) {
+    return FALSE;
+}
+gboolean mpris_tracklist_loop(MprisTrackList *obj, gboolean loop,
+                              GError **error) {
+    return FALSE;
+}
+gboolean mpris_tracklist_random(MprisTrackList *obj, gboolean random,
+                                GError **error) {
+    return FALSE;
 }
 
 // Audacious General Information

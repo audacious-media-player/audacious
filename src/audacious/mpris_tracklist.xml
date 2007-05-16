@@ -41,7 +41,7 @@
         <method name="Loop">
             <arg type="b" direction="in" />
         </method>
-        <method name="Shuffle">
+        <method name="Random">
             <arg type="b" direction="in" />
         </method>
     </interface>

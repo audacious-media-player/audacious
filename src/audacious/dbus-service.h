@@ -27,11 +27,11 @@
 
 typedef struct {
     GObject parent;
-} RemoteObject, MprisRoot, MprisPlayer;
+} RemoteObject, MprisRoot, MprisPlayer, MprisTrackList;
 
 typedef struct {
     GObjectClass parent_class;
-} RemoteObjectClass, MprisRootClass, MprisPlayerClass;
+} RemoteObjectClass, MprisRootClass, MprisPlayerClass, MprisTrackListClass;
 
 void init_dbus();
 void free_dbus();
@@ -40,8 +40,10 @@ DBusGProxy *audacious_get_dbus_proxy();
 ///////////////////////////
 // MPRIS defined methods //
 ///////////////////////////
+// MPRIS /
 gboolean mpris_root_identity(MprisRoot *obj, gchar **identity,
                              GError **error);
+// MPRIS /Player
 gboolean mpris_player_next(MprisPlayer *obj, GError **error);
 gboolean mpris_player_prev(MprisPlayer *obj, GError **error);
 gboolean mpris_player_pause(MprisPlayer *obj, GError **error);
@@ -59,6 +61,32 @@ gboolean mpris_player_volume_get(MprisPlayer *obj, gint *vol,
 gboolean mpris_player_position_set(MprisPlayer *obj, gint pos, GError **error);
 gboolean mpris_player_position_get(MprisPlayer *obj, gint *pos,
                                    GError **error);
+enum {
+    CAPS_CHANGE_SIG,
+    TRACK_CHANGE_SIG,
+    STATUS_CHANGE_SIG,
+    LAST_SIG
+};
+gboolean mpris_player_emit_caps_change(MprisPlayer *obj, GError **error);
+gboolean mpris_player_emit_track_change(MprisPlayer *obj, GError **error);
+gboolean mpris_player_emit_status_change(MprisPlayer *obj, GError **error);
+
+// MPRIS /TrackList
+gboolean mpris_tracklist_get_metadata(MprisTrackList *obj, gint pos,
+                                      GHashTable *metadata, GError **error);
+gboolean mpris_tracklist_get_current_track(MprisTrackList *obj, gint *pos,
+                                           GError **error);
+gboolean mpris_tracklist_get_length(MprisTrackList *obj, gint *pos,
+                                    GError **error);
+gboolean mpris_tracklist_add_track(MprisTrackList *obj, gchar *uri,
+                                   gboolean play, GError **error);
+gboolean mpris_tracklist_del_track(MprisTrackList *obj, gint pos,
+                                   GError **error);
+gboolean mpris_tracklist_loop(MprisTrackList *obj, gboolean loop,
+                              GError **error);
+gboolean mpris_tracklist_random(MprisTrackList *obj, gboolean random,
+                                GError **error);
+
 
 // Audacious General Information
 gboolean audacious_rc_version(RemoteObject *obj, gchar **version,

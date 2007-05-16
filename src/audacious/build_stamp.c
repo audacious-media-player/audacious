@@ -1,2 +1,2 @@
 #include <glib.h>
-const gchar *svn_stamp = "20070514-4564";
+const gchar *svn_stamp = "20070514-4566";

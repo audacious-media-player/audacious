@@ -5,7 +5,6 @@ include ../../mk/objective.mk
 SUBDIRS = widgets glade images ui
 
 OBJECTIVE_BINS = audacious
-OBJECTIVE_LIBS_NOINST = $(DBUS_BINDINGS)
 
 LDFLAGS += $(AUDLDFLAGS)
 
@@ -63,7 +62,6 @@ SOURCES = \
 	auddrct.c \
 	build_stamp.c \
 	configdb.c \
-	$(DBUS_C) \
 	dnd.c \
 	dock.c \
 	effect.c \
@@ -117,6 +115,13 @@ SOURCES = \
 	visualization.c \
 	xconvert.c
 
+ifdef USE_DBUS
+SOURCES += dbus.c
+DBUS_BINDINGS = dbus-server-bindings.h dbus-client-bindings.h
+depend-prehook: $(DBUS_BINDINGS)
+OBJECTIVE_LIBS_NOINST += $(DBUS_BINDINGS)
+endif
+
 DBUS_BINDINGS_SOURCES = \
 	objects.xml \
 	mpris_root.xml \
@@ -130,8 +135,6 @@ LIBDEP = widgets/libwidgets.a ../libguess/libguess.a ../librcd/librcd.a
 desktop_DATA = audacious.desktop
 desktopdir = $(datadir)/applications
 
-depend-prehook: $(DBUS_BINDINGS)
-
 audacious: $(OBJECTS) $(LIBDEP)
 	$(CXX) $(LDFLAGS) $(OBJECTS) $(LDADD) -o $@ 
 	@printf "%10s     %-20s\n" LINK $@
@@ -139,7 +142,7 @@ audacious: $(OBJECTS) $(LIBDEP)
 dbus-server-bindings.h: $(DBUS_BINDINGS_SOURCES)
 	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=audacious_rc objects.xml > $@
 	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_root mpris_root.xml >> $@
-	# $(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_tracklist mpris_tracklist.xml >> $@
+	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_tracklist mpris_tracklist.xml >> $@
 	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=mpris_player mpris_player.xml >> $@
 	@printf "%10s     %-20s\n" DBUS-BIND $@
 

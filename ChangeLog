@@ -1,3 +1,12 @@
+2007-05-14 08:10:54 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4566]
+  - remove -laudacious from audacious.pc.in. -laudclient will be put into audacious.pc if --enable-dbus is specified.
+  
+  trunk/audacious.pc.in |    2 +-
+  trunk/configure.ac    |    2 ++
+  2 files changed, 3 insertions(+), 1 deletion(-)
+
+
 2007-05-14 01:38:53 +0000  Ben Tucker <bnt@interchange.ubc.ca>
   revision [4564]
   Implemented CMD_IS_ADVANCE and CMD_TOGGLE_ADVANCE. Added partial MPRIS support. Root is complete, Player is partially implemented, and TrackList has not been started.
