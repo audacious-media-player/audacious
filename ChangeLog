@@ -1,3 +1,13 @@
+2007-05-16 07:24:43 +0000  Stephen Sokolow <deitarion@gmail.com>
+  revision [4572]
+  A few more xchat-audacious.py corrections:
+  - Oops. "return None" --> "return xchat.EAT_ALL"
+  - Compacted the code a bit more.
+  
+  trunk/contrib/xchat-audacious.py |   16 +++++-----------
+  1 file changed, 5 insertions(+), 11 deletions(-)
+
+
 2007-05-16 06:53:07 +0000  Stephen Sokolow <deitarion@gmail.com>
   revision [4570]
   Fixes for xchat-audacious.py:

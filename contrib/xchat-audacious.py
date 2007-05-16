@@ -6,14 +6,14 @@
 #   - support org.freedesktop.MediaPlayer (MPRIS)?
 #
 # This script is in the public domain.
-#   $Id: xchat-audacious.py 4572 2007-05-16 07:24:43Z deitarion $
+#   $Id: xchat-audacious.py 4574 2007-05-16 07:46:17Z deitarion $
 #
 
 __module_name__ = "xchat-audacious"
-__module_version__ = "1.0"
+__module_version__ = "1.0.1"
 __module_description__ = "Get NP information from Audacious"
 
-from dbus import Bus, DBusException, Interface
+from dbus import Bus, DBusException
 import xchat
 
 # connect to DBus
@@ -28,17 +28,16 @@ def get_aud():
 
 def command_np(word, word_eol, userdata):
 	aud = get_aud()
-	if not aud:
-		return xchat.EAT_ALL
+	if aud:
+		pos = aud.Position()
 
-	length = aud.SongLength(aud.Position())
-	length = (length > 0) and ("%d:%02d" % (length / 60, length % 60)) or "stream"
+		length = aud.SongLength(pos)
+		length = (length > 0) and ("%d:%02d" % (length / 60, length % 60)) or "stream"
 
-	xchat.command("SAY [%s | %d:%02d/%s]" % (
-		aud.SongTitle(aud.Position()).encode("utf8"),
-		aud.Time() / 1000 / 60, aud.Time() / 1000 % 60,
-		length))
-
+		playSecs = aud.Time() / 1000
+		xchat.command("SAY [%s | %d:%02d/%s]" % (
+			aud.SongTitle(pos).encode("utf8"),
+			playSecs / 60, playSecs % 60, length))
 	return xchat.EAT_ALL
 
 def makeVoidCommand(cmd):
@@ -47,30 +46,22 @@ def makeVoidCommand(cmd):
 		return xchat.EAT_ALL
 	return callback
 
-command_next  = makeVoidCommand('Advance')
-command_prev  = makeVoidCommand('Reverse')
-command_pause = makeVoidCommand('Pause')
-command_stop  = makeVoidCommand('Stop')
-command_play  = makeVoidCommand('Play')
-
 def command_send(word, word_eol, userdata):
 	if len(word) < 2:
 		print "You must provide a user to send the track to."
 		return xchat.EAT_ALL
 
 	aud = get_aud()
-	if not aud:
-		return xchat.EAT_ALL
-
-	xchat.command('DCC SEND %s "%s"' % (word[1], aud.SongFilename(aud.Position()).encode("utf8")))
+	if aud:
+		xchat.command('DCC SEND %s "%s"' % (word[1], aud.SongFilename(aud.Position()).encode("utf8")))
 	return xchat.EAT_ALL
 
-xchat.hook_command("NP", command_np, help="Displays current playing song.")
-xchat.hook_command("NEXT", command_next, help="Advances in Audacious' playlist.")
-xchat.hook_command("PREV", command_prev, help="Goes backwards in Audacious' playlist.")
-xchat.hook_command("PAUSE", command_pause, help="Toggles paused status.")
-xchat.hook_command("STOP", command_stop, help="Stops playback.")
-xchat.hook_command("PLAY", command_play, help="Begins playback.")
-xchat.hook_command("SENDTRACK", command_send, help="Sends the currently playing track to a user.")
+xchat.hook_command("NP",    command_np,                 help="Displays current playing song.")
+xchat.hook_command("NEXT",  makeVoidCommand('Advance'), help="Advances in Audacious' playlist.")
+xchat.hook_command("PREV",  makeVoidCommand('Reverse'), help="Goes backwards in Audacious' playlist.")
+xchat.hook_command("PAUSE", makeVoidCommand('Pause'),   help="Toggles paused status.")
+xchat.hook_command("STOP",  makeVoidCommand('Stop'),    help="Stops playback.")
+xchat.hook_command("PLAY",  makeVoidCommand('Play'),    help="Begins playback.")
+xchat.hook_command("SENDTRACK", command_send, help="Syntax: /SENDTRACK <nick>\nSends the currently playing track to a user.")
 
-print "xchat-audacious $Id: xchat-audacious.py 4572 2007-05-16 07:24:43Z deitarion $ loaded"
+print "xchat-audacious $Id: xchat-audacious.py 4574 2007-05-16 07:46:17Z deitarion $ loaded"
