@@ -451,7 +451,7 @@ void playlist_display(gint argc, gchar **argv)
 
 	i = audacious_remote_get_playlist_length(dbus_proxy);
 
-	g_print("%d tracks.\n", i);
+	g_print("%d track%s.\n", i, i != 1 ? "s" : "");
 
 	total = 0;
 
