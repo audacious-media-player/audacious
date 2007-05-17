@@ -1,3 +1,13 @@
+2007-05-17 05:50:52 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4576]
+  - auddrct: more calls implemented (part 7)
+  - almost all of playlist and playqueue functions are implemented. be careful in using new functions, these are not tested yet.
+  
+  trunk/src/audacious/auddrct.c |   98 ++++++++++++++++++++++++++++++++++++++++++
+  trunk/src/audacious/auddrct.h |   21 +++++++++
+  2 files changed, 119 insertions(+)
+
+
 2007-05-16 07:46:17 +0000  Stephen Sokolow <deitarion@gmail.com>
   revision [4574]
   xchat-audacious.py:
