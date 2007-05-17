@@ -29,6 +29,7 @@
 #include "ui_equalizer.h"
 #include "ui_jumptotrack.h"
 #include "auddrct.h"
+#include "playlist.h"
 
 
 /* player */
@@ -351,4 +352,101 @@ audacious_drct_pl_clear ( void )
   mainwin_clear_song_info();
   mainwin_set_info_text();
   return;
+}
+
+
+/* following functions are not tested yet. be careful. --yaz */
+void
+audacious_drct_pl_delete ( gint pos )
+{
+    GDK_THREADS_ENTER();
+    playlist_delete_index(playlist_get_active(), pos);
+    GDK_THREADS_LEAVE();
+}
+
+void
+audacious_drct_pl_set_pos( gint pos )
+{
+    Playlist *playlist = playlist_get_active();
+    if (pos < (guint)playlist_get_length(playlist))
+        playlist_set_position(playlist, pos);
+}
+
+gint
+audacious_drct_pl_get_length( void )
+{
+    return playlist_get_length(playlist_get_active());
+}
+
+void
+audacious_drct_pl_ins_url_string( gchar * string, gint pos )
+{
+    playlist_ins_url(playlist_get_active(), string, pos);
+}
+
+void
+audacious_drct_pl_add_url_string( gchar * string )
+{
+    GDK_THREADS_ENTER();
+    playlist_add_url(playlist_get_active(), string);
+    GDK_THREADS_LEAVE();
+}
+
+void
+audacious_drct_pl_enqueue_to_temp( gchar * string )
+{
+    Playlist *new_pl = playlist_new();
+
+    GDK_THREADS_ENTER();
+    playlist_select_playlist(new_pl);
+    playlist_add_url(new_pl, string);
+    GDK_THREADS_LEAVE();
+}
+
+
+/* playqueue */
+gint
+audacious_drct_pq_get_length( void )
+{
+    return playlist_queue_get_length(playlist_get_active());
+}
+
+void
+audacious_drct_pq_add( gint pos )
+{
+    Playlist *playlist = playlist_get_active();
+    if (pos < (guint)playlist_get_length(playlist))
+        playlist_queue_position(playlist, pos);
+}
+
+void
+audacious_drct_pq_remove( gint pos )
+{
+    Playlist *playlist = playlist_get_active();
+    if (pos < (guint)playlist_get_length(playlist))
+        playlist_queue_remove(playlist_get_active(), pos);
+}
+
+void
+audacious_drct_pq_clear( void )
+{
+    playlist_clear_queue(playlist_get_active());
+}
+
+gboolean
+audacious_drct_pq_is_queued( gint pos )
+{
+    return playlist_is_position_queued(playlist_get_active(), pos);
+}
+
+gint
+audacious_drct_pq_get_position( gint pos )
+{
+    return playlist_get_queue_position_number(playlist_get_active(), pos);
+}
+
+gint
+audaciuos_drct_pq_get_queue_position( gint pos )
+{
+    return playlist_get_queue_position_number(playlist_get_active(), pos);
 }

@@ -20,6 +20,9 @@
 /* audacious_drct_* provides a handy interface for player
    plugins, originally intended for migration from xmms_remote_* calls */
 
+#ifndef AUDDRCT_H
+#define AUDDRCT_H
+
 #include <glib.h>
 
 /* player */
@@ -63,3 +66,21 @@ gint audacious_drct_pl_get_pos( void );
 gchar *audacious_drct_pl_get_file( gint pos );
 void audacious_drct_pl_add ( GList * list );
 void audacious_drct_pl_clear ( void );
+gint audacious_drct_pl_get_length( void );
+void audacious_drct_pl_delete ( gint pos );
+void audacious_drct_pl_set_pos( gint pos );
+gint audacious_drct_pl_get_length( void );
+void audacious_drct_pl_ins_url_string( gchar * string, gint pos );
+void audacious_drct_pl_add_url_string( gchar * string );
+void audacious_drct_pl_enqueue_to_temp( gchar * string );
+
+/* playqueue */
+gint audacious_drct_pq_get_length( void );
+void audacious_drct_pq_add( gint pos );
+void audacious_drct_pq_remove( gint pos );
+void audacious_drct_pq_clear( void );
+gboolean audacious_drct_pq_is_queued( gint pos );
+gint audacious_drct_pq_get_position( gint pos );
+gint audaciuos_drct_pq_get_queue_position( gint pos );
+
+#endif

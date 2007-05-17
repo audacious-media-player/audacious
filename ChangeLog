@@ -1,3 +1,13 @@
+2007-05-16 07:46:17 +0000  Stephen Sokolow <deitarion@gmail.com>
+  revision [4574]
+  xchat-audacious.py:
+  - One final clean-up.
+  - Bump the version number (like I should have done two revisions ago when I fixed that bug)
+  
+  trunk/contrib/xchat-audacious.py |   47 +++++++++++++++------------------------
+  1 file changed, 19 insertions(+), 28 deletions(-)
+
+
 2007-05-16 07:24:43 +0000  Stephen Sokolow <deitarion@gmail.com>
   revision [4572]
   A few more xchat-audacious.py corrections:
