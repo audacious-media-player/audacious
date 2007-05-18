@@ -1,3 +1,15 @@
+2007-05-18 02:47:56 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4584]
+  Entirely rework the default skin from scratch. A comparison is available 
+  at http://mail.atheme.org/~nenolod/new_and_old_skins.png. The rationale 
+  of this rework is that the old skin had become a hodgepodge of multiple 
+  styles during 1.3 development, etcetera. There are some minor tweaks 
+  that could still be done, I will take care of those in the next 
+  few commits.
+  
+  0 files changed
+
+
 2007-05-17 08:59:45 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4582]
   - drop no-longer-used libaudacious C++ bindings
