@@ -1,3 +1,10 @@
+2007-05-19 23:51:17 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4592]
+  Fix the colon in the main texture.
+  
+  0 files changed
+
+
 2007-05-19 09:22:34 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4590]
   Use a better antialiasing method.
