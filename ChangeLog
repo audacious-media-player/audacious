@@ -1,3 +1,11 @@
+2007-05-19 09:12:25 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4588]
+  Use rounded corners on the main texture for the display area.
+  Suggested by James Sanderson <zofrex -at- liquidcreativity.co.uk>.
+  
+  0 files changed
+
+
 2007-05-18 21:01:45 +0000  Jonathan Schleifer <js@h3c.de>
   revision [4586]
   Moved migrate_config.sh to contrib.
