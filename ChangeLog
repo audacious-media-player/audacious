@@ -1,3 +1,11 @@
+2007-05-18 21:01:45 +0000  Jonathan Schleifer <js@h3c.de>
+  revision [4586]
+  Moved migrate_config.sh to contrib.
+  trunk/contrib/migrate_config.sh |   28 ++++++++++++++++++++++++++++
+  trunk/migrate_config.sh         |   28 ----------------------------
+  2 files changed, 28 insertions(+), 28 deletions(-)
+
+
 2007-05-18 02:47:56 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4584]
   Entirely rework the default skin from scratch. A comparison is available 
