@@ -115,11 +115,16 @@ SOURCES = \
 	visualization.c \
 	xconvert.c
 
+LIBDEP = widgets/libwidgets.a ../libguess/libguess.a ../librcd/librcd.a
+
 ifdef USE_DBUS
 SOURCES += dbus.c
+CFLAGS += -I../libaudclient
 DBUS_BINDINGS = dbus-server-bindings.h dbus-client-bindings.h
 depend-prehook: $(DBUS_BINDINGS)
 OBJECTIVE_LIBS_NOINST += $(DBUS_BINDINGS)
+LIBDEP += ../libaudclient/libaudclient.so
+LDADD += -L../libaudclient -laudclient
 endif
 
 DBUS_BINDINGS_SOURCES = \
@@ -129,8 +134,6 @@ DBUS_BINDINGS_SOURCES = \
 	mpris_player.xml
 
 OBJECTS = ${SOURCES:.c=.o}
-
-LIBDEP = widgets/libwidgets.a ../libguess/libguess.a ../librcd/librcd.a
 
 desktop_DATA = audacious.desktop
 desktopdir = $(datadir)/applications

@@ -103,6 +103,23 @@ audacious_drct_pl_win_toggle ( gboolean show )
   return;
 }
 
+void audacious_drct_set_skin(gchar *skinfile)
+{
+    if (has_x11_connection)
+        bmp_active_skin_load(skinfile);
+}
+
+void audacious_drct_show_jtf_box(void)
+{
+    if (!has_x11_connection)
+        return;
+    ui_jump_to_track();
+}
+
+void audacious_drct_activate(void)
+{
+    gtk_window_present(GTK_WINDOW(mainwin));
+}
 
 /* playback */
 
@@ -450,3 +467,4 @@ audaciuos_drct_pq_get_queue_position( gint pos )
 {
     return playlist_get_queue_position_number(playlist_get_active(), pos);
 }
+

@@ -50,6 +50,7 @@
 
 #ifdef USE_DBUS
 #  include "dbus-service.h"
+#  include "audctrl.h"
 #endif
 
 #include "dnd.h"
@@ -896,8 +897,9 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
                         gboolean remote)
 {
     gchar **filenames = options->filenames;
-#ifdef HAVE_DBUS
-    // DBusGProxy *session = audacious_get_dbus_proxy();
+#ifdef USE_DBUS
+    DBusGProxy *session = audacious_get_dbus_proxy();
+    printf("session = %p\n", session);
 #endif
 
     if (options->version)
@@ -906,7 +908,7 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
         exit(EXIT_SUCCESS);
     }
 
-#if 0
+#if 1
     if (filenames != NULL)
     {
         gint pos = 0;
@@ -995,6 +997,14 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
 
     if (options->playcd)
         play_medium();
+
+    printf("remote = %d\n", remote);
+    {
+        gboolean is_running = audacious_remote_is_running(session);
+        printf("is_running %d\n", is_running);
+        if (is_running)
+            exit(EXIT_SUCCESS);
+    }
 }
 
 static void

@@ -604,3 +604,14 @@ gboolean audacious_rc_toggle_shuffle(RemoteObject *obj, GError **error) {
     mainwin_shuffle_pushed(!cfg.shuffle);
     return TRUE;
 }
+
+DBusGProxy *audacious_get_dbus_proxy(void)
+{
+    DBusGConnection *connection = NULL;
+    GError *error = NULL;
+    connection = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
+    g_clear_error(&error);
+    return dbus_g_proxy_new_for_name(connection, AUDACIOUS_DBUS_SERVICE,
+                                     AUDACIOUS_DBUS_PATH,
+                                     AUDACIOUS_DBUS_INTERFACE);
+}

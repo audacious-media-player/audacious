@@ -999,9 +999,9 @@ equalizerwin_delete_selected_presets(GtkTreeView *view, gchar *filename)
 
         gtk_tree_model_get(model, &iter, 0, &text, -1);
 
-        if (filename == "eq.preset")
+        if (!strcmp(filename, "eq.preset"))
             equalizer_presets = equalizerwin_delete_preset(equalizer_presets, text, filename);
-        else if (filename == "eq.auto_preset")
+        else if (!strcmp(filename, "eq.auto_preset"))
             equalizer_auto_presets = equalizerwin_delete_preset(equalizer_auto_presets, text, filename);
 
         gtk_list_store_remove(GTK_LIST_STORE(model), &iter);

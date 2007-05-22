@@ -41,6 +41,7 @@ GError *error = NULL;
  **/
 void audacious_remote_playlist(DBusGProxy *proxy, gchar **list, gint num,
                                gboolean enqueue) {
+//XXX
 }
 
 /**
@@ -52,6 +53,7 @@ void audacious_remote_playlist(DBusGProxy *proxy, gchar **list, gint num,
  * Return value: The protocol version used by Audacious.
  **/
 gint audacious_remote_get_version(DBusGProxy *proxy) {
+//XXX
     return 0;
 }
 
@@ -63,6 +65,7 @@ gint audacious_remote_get_version(DBusGProxy *proxy) {
  * Sends a list of URIs to Audacious to add to the playlist.
  **/
 void audacious_remote_playlist_add(DBusGProxy *proxy, GList *list) {
+//XXX
 }
 
 /**
@@ -73,6 +76,7 @@ void audacious_remote_playlist_add(DBusGProxy *proxy, GList *list) {
  * Deletes a playlist entry.
  **/
 void audacious_remote_playlist_delete(DBusGProxy *proxy, guint pos) {
+//XXX
 }
 
 /**
@@ -161,6 +165,8 @@ gint audacious_remote_get_playlist_pos(DBusGProxy *proxy) {
  * Tells audacious to jump to a different playlist position.
  **/
 void audacious_remote_set_playlist_pos(DBusGProxy *proxy, guint pos) {
+    org_atheme_audacious_jump (proxy, pos, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -212,6 +218,8 @@ gint audacious_remote_get_output_time(DBusGProxy *proxy) {
  * Tells audacious to seek to a new time position.
  **/
 void audacious_remote_jump_to_time(DBusGProxy *proxy, guint pos) {
+    org_atheme_audacious_seek (proxy, pos, &error);
+    g_clear_error(&error);    
 }
 
 /**
@@ -332,6 +340,7 @@ void audacious_remote_set_balance(DBusGProxy *proxy, gint b) {
  * Return value: A path to the currently selected skin.
  **/
 gchar *audacious_remote_get_skin(DBusGProxy *proxy) {
+//XXX
     return NULL;
 }
 
@@ -343,6 +352,7 @@ gchar *audacious_remote_get_skin(DBusGProxy *proxy) {
  * Tells audacious to start using the skinfile provided.
  **/
 void audacious_remote_set_skin(DBusGProxy *proxy, gchar *skinfile) {
+//XXX
 }
 
 /**
@@ -404,6 +414,8 @@ gint audacious_remote_get_playlist_time(DBusGProxy *proxy, guint pos) {
  **/
 void audacious_remote_get_info(DBusGProxy *proxy, gint *rate, gint *freq,
                                gint *nch) {
+    org_atheme_audacious_info(proxy, rate, freq, nch, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -496,6 +508,7 @@ gboolean audacious_remote_is_eq_win(DBusGProxy *proxy) {
  * Tells audacious to show the preferences pane.
  **/
 void audacious_remote_show_prefs_box(DBusGProxy *proxy) {
+//XXX
 }
 
 /**
@@ -506,6 +519,7 @@ void audacious_remote_show_prefs_box(DBusGProxy *proxy) {
  * Tells audacious to toggle the always-on-top feature.
  **/
 void audacious_remote_toggle_aot(DBusGProxy *proxy, gboolean ontop) {
+//XXX
 }
 
 /**
@@ -526,6 +540,8 @@ void audacious_remote_eject(DBusGProxy *proxy) {
  * Tells audacious to move backwards in the playlist.
  **/
 void audacious_remote_playlist_prev(DBusGProxy *proxy) {
+    org_atheme_audacious_reverse(proxy, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -535,6 +551,8 @@ void audacious_remote_playlist_prev(DBusGProxy *proxy) {
  * Tells audacious to move forward in the playlist.
  **/
 void audacious_remote_playlist_next(DBusGProxy *proxy) {
+    org_atheme_audacious_advance(proxy, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -559,7 +577,15 @@ void audacious_remote_playlist_add_url_string(DBusGProxy *proxy,
  * Return value: TRUE if yes, otherwise FALSE.
  **/
 gboolean audacious_remote_is_running(DBusGProxy *proxy) {
-    return FALSE;
+    char *string = NULL;
+    org_atheme_audacious_version(proxy, &string, &error);
+    g_clear_error(&error);
+    if(string) {
+        g_free(string);
+        return TRUE;
+    }
+    else
+        return FALSE;
 }
 
 /**
@@ -569,6 +595,8 @@ gboolean audacious_remote_is_running(DBusGProxy *proxy) {
  * Tells audacious to toggle the repeat feature.
  **/
 void audacious_remote_toggle_repeat(DBusGProxy *proxy) {
+    org_atheme_audacious_toggle_repeat(proxy, &error);
+    g_clear_error(&error);
 }
 
 /**
@@ -578,6 +606,8 @@ void audacious_remote_toggle_repeat(DBusGProxy *proxy) {
  * Tells audacious to toggle the shuffle feature.
  **/
 void audacious_remote_toggle_shuffle(DBusGProxy *proxy) {
+    org_atheme_audacious_toggle_shuffle (proxy, &error);
+    g_clear_error(&error);    
 }
 
 /**
@@ -620,6 +650,7 @@ gboolean audacious_remote_is_shuffle(DBusGProxy *proxy) {
  **/
 void audacious_remote_get_eq(DBusGProxy *proxy, gfloat *preamp,
                              gfloat **bands) {
+//XXX
 }
 
 /**
@@ -631,6 +662,8 @@ void audacious_remote_get_eq(DBusGProxy *proxy, gfloat *preamp,
  * Return value: The equalizer preamp's setting.
  **/
 gfloat audacious_remote_get_eq_preamp(DBusGProxy *proxy) {
+//XXX
+    return 0.0;
 }
 
 /**
@@ -643,6 +676,8 @@ gfloat audacious_remote_get_eq_preamp(DBusGProxy *proxy) {
  * Return value: The equalizer band's value.
  **/
 gfloat audacious_remote_get_eq_band(DBusGProxy *proxy, gint band) {
+//XXX
+    return 0.0;
 }
 
 /**
@@ -655,6 +690,7 @@ gfloat audacious_remote_get_eq_band(DBusGProxy *proxy, gint band) {
  **/
 void audacious_remote_set_eq(DBusGProxy *proxy, gfloat preamp,
                              gfloat *bands) {
+//XXX
 }
 
 /**
@@ -665,6 +701,7 @@ void audacious_remote_set_eq(DBusGProxy *proxy, gfloat preamp,
  * Tells audacious to set the equalizer's preamp setting.
  **/
 void audacious_remote_set_eq_preamp(DBusGProxy *proxy, gfloat preamp) {
+//XXX
 }
 
 /**
@@ -677,6 +714,7 @@ void audacious_remote_set_eq_preamp(DBusGProxy *proxy, gfloat preamp) {
  **/
 void audacious_remote_set_eq_band(DBusGProxy *proxy, gint band,
                                   gfloat value) {
+//XXX
 }
 
 /**
@@ -697,6 +735,7 @@ void audacious_remote_quit(DBusGProxy *proxy) {
  * Tells audacious to either play or pause.
  **/
 void audacious_remote_play_pause(DBusGProxy *proxy) {
+//XXX
 }
 
 /**
@@ -709,6 +748,7 @@ void audacious_remote_play_pause(DBusGProxy *proxy) {
  **/
 void audacious_remote_playlist_ins_url_string(DBusGProxy *proxy,
                                               gchar *string, guint pos) {
+//XXX
 }
 
 /**
@@ -719,6 +759,7 @@ void audacious_remote_playlist_ins_url_string(DBusGProxy *proxy,
  * Tells audacious to add a playlist entry to the playqueue.
  **/
 void audacious_remote_playqueue_add(DBusGProxy *proxy, guint pos) {
+//XXX
 }
 
 /**
@@ -729,6 +770,7 @@ void audacious_remote_playqueue_add(DBusGProxy *proxy, guint pos) {
  * Tells audacious to remove a playlist entry from the playqueue.
  **/
 void audacious_remote_playqueue_remove(DBusGProxy *proxy, guint pos) {
+//XXX
 }
 
 /**
@@ -780,6 +822,7 @@ gboolean audacious_remote_is_advance(DBusGProxy *proxy) {
  * Tells audacious to display the main window and become the selected window.
  **/
 void audacious_remote_activate(DBusGProxy *proxy) {
+//XXX
 }
 
 /**
@@ -789,6 +832,7 @@ void audacious_remote_activate(DBusGProxy *proxy) {
  * Tells audacious to show the Jump-to-File pane.
  **/
 void audacious_remote_show_jtf_box(DBusGProxy *proxy) {
+//XXX
 }
 
 /**
@@ -798,6 +842,7 @@ void audacious_remote_show_jtf_box(DBusGProxy *proxy) {
  * Tells audacious to clear the playqueue.
  **/
 void audacious_remote_playqueue_clear(DBusGProxy *proxy) {
+//XXX
 }
 
 /**
@@ -810,6 +855,8 @@ void audacious_remote_playqueue_clear(DBusGProxy *proxy) {
  * Return value: TRUE if yes, FALSE otherwise.
  **/
 gboolean audacious_remote_playqueue_is_queued(DBusGProxy *proxy, guint pos) {
+//XXX
+    return FALSE;
 }
 
 /**
@@ -822,6 +869,8 @@ gboolean audacious_remote_playqueue_is_queued(DBusGProxy *proxy, guint pos) {
  * Return value: TRUE if yes, FALSE otherwise.
  **/
 gint audacious_remote_get_playqueue_position(DBusGProxy *proxy, guint pos) {
+//XXX
+    return 0;
 }
 
 /**
@@ -835,6 +884,8 @@ gint audacious_remote_get_playqueue_position(DBusGProxy *proxy, guint pos) {
  **/
 gint audacious_remote_get_playqueue_queue_position(DBusGProxy *proxy,
                                                    guint pos) {
+//XXX
+    return 0;
 }
 
 /**
@@ -846,6 +897,7 @@ gint audacious_remote_get_playqueue_queue_position(DBusGProxy *proxy,
  **/
 void audacious_remote_playlist_enqueue_to_temp(DBusGProxy *proxy,
                                                gchar *string) {
+//XXX
 }
 
 /**
@@ -860,4 +912,6 @@ void audacious_remote_playlist_enqueue_to_temp(DBusGProxy *proxy,
  **/
 gchar *audacious_get_tuple_field_data(DBusGProxy *proxy, gchar *field,
                                       guint pos) {
+//XXX
+    return NULL;
 }

@@ -68,7 +68,7 @@ signal_process_segv(void)
         g_printerr("Stacktrace (%zd frames):\n", size);
 
         for (i = 0; i < size; i++)
-           g_printerr("   %d. %s\n", i + 1, strings[i]);
+            g_printerr("   %ld. %s\n", (long)i + 1, strings[i]);
 
         g_free(strings);
     }

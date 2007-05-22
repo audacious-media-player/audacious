@@ -35,6 +35,9 @@ gboolean audacious_drct_eq_win_is_visible ( void );
 void audacious_drct_eq_win_toggle ( gboolean );
 gboolean audacious_drct_pl_win_is_visible ( void );
 void audacious_drct_pl_win_toggle ( gboolean );
+void audacious_drct_set_skin(gchar *skinfile);
+void audacious_drct_show_jtf_box(void);
+void audacious_drct_activate(void);
 
 /* playback */
 void audacious_drct_play ( void );
@@ -69,7 +72,6 @@ void audacious_drct_pl_clear ( void );
 gint audacious_drct_pl_get_length( void );
 void audacious_drct_pl_delete ( gint pos );
 void audacious_drct_pl_set_pos( gint pos );
-gint audacious_drct_pl_get_length( void );
 void audacious_drct_pl_ins_url_string( gchar * string, gint pos );
 void audacious_drct_pl_add_url_string( gchar * string );
 void audacious_drct_pl_enqueue_to_temp( gchar * string );
