@@ -908,7 +908,6 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
         exit(EXIT_SUCCESS);
     }
 
-#if 1
     if (filenames != NULL)
     {
         gint pos = 0;
@@ -965,7 +964,7 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
         g_list_free(fns);
 
         g_strfreev(filenames);
-    }
+    } /* filename */
 
     if (options->rew)
         audacious_remote_playlist_prev(session);
@@ -993,13 +992,12 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
 
     if (options->activate)
         audacious_remote_activate(session);
-#endif
 
     if (options->playcd)
         play_medium();
 
     printf("remote = %d\n", remote);
-    {
+    if(remote) {
         gboolean is_running = audacious_remote_is_running(session);
         printf("is_running %d\n", is_running);
         if (is_running)

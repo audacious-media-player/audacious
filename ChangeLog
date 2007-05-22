@@ -1,3 +1,21 @@
+2007-05-22 22:17:15 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4596]
+  - implement some audacious-remote functions.
+  - implement some audacious-drct functions.
+  - make some command line options work. (this may incur very slow startup.)
+  - suppress warnings.
+  
+  trunk/src/audacious/Makefile       |    7 +++-
+  trunk/src/audacious/auddrct.c      |   18 +++++++++++
+  trunk/src/audacious/auddrct.h      |    4 +-
+  trunk/src/audacious/dbus.c         |   11 +++++++
+  trunk/src/audacious/main.c         |   16 ++++++++--
+  trunk/src/audacious/signals.c      |    2 -
+  trunk/src/audacious/ui_equalizer.c |    4 +-
+  trunk/src/libaudclient/audctrl.c   |   56 ++++++++++++++++++++++++++++++++++++-
+  8 files changed, 108 insertions(+), 10 deletions(-)
+
+
 2007-05-19 23:59:48 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4594]
   Rework the curved border a little.
