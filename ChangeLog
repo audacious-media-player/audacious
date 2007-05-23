@@ -1,3 +1,11 @@
+2007-05-22 23:55:33 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4598]
+  - reduce startup time.
+  
+  trunk/src/audacious/main.c |    6 ++----
+  1 file changed, 2 insertions(+), 4 deletions(-)
+
+
 2007-05-22 22:17:15 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4596]
   - implement some audacious-remote functions.

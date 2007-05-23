@@ -194,8 +194,7 @@ str_to_utf8(const gchar * str)
     gchar *out_str;
 
     /* NULL in NULL out */
-    if (!str)
-        return NULL;
+    g_return_val_if_fail(str != NULL, NULL);
 
     /* Note: Currently, playlist calls this function repeatedly, even
      * if the string is already converted into utf-8.
@@ -277,6 +276,8 @@ gchar *chardet_to_utf8(const gchar *str, gssize len,
 	bytes_read  = arg_bytes_read ? arg_bytes_read : &my_bytes_read;
 	bytes_write = arg_bytes_write ? arg_bytes_write : &my_bytes_write;
 	error       = arg_error ? arg_error : NULL;
+
+	g_return_val_if_fail(str != NULL, NULL);
 
 #ifdef USE_CHARDET
 	if(cfg.chardet_detector)
