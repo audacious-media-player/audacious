@@ -8,10 +8,10 @@
 # Murat Şenel <muratasenel@gmail.com>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: tr\n"
+"Project-Id-Version: audacious\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-04-14 15:19-0500\n"
-"PO-Revision-Date: 2007-02-03 01:42+0200\n"
+"PO-Revision-Date: 2007-05-23 00:04+0300\n"
 "Last-Translator: Murat Şenel <muratasenel@gmail.com>\n"
 "Language-Team:  <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -117,7 +117,7 @@ msgstr "Başsız uygulamaları etkinleştir"
 
 #: src/audacious/main.c:873
 msgid "Print all errors and warnings to stdout"
-msgstr "stdout'a tüm hata ve uyarıları gönder"
+msgstr "Tüm hata ve uyarıları stdout'a bas"
 
 #: src/audacious/main.c:874
 msgid "Show version and builtin features"
@@ -291,9 +291,8 @@ msgid "Bulgarian:"
 msgstr "Bulgarca:"
 
 #: src/audacious/ui_credits.c:156
-#, fuzzy
 msgid "Catalan:"
-msgstr "İtalyanca:"
+msgstr "Katalanca:"
 
 #: src/audacious/ui_credits.c:159
 msgid "Croatian:"
@@ -325,7 +324,7 @@ msgstr "Georgian:"
 
 #: src/audacious/ui_credits.c:182
 msgid "Greek:"
-msgstr "Yünanca:"
+msgstr "Yunanca:"
 
 #: src/audacious/ui_credits.c:187
 msgid "Hindi:"
@@ -454,9 +453,8 @@ msgid "Audacious - visibility warning"
 msgstr ""
 
 #: src/audacious/ui_main.c:1522
-#, fuzzy
 msgid "Show main player window"
-msgstr "Ana çalıcı penceresi yazı tipini seç:"
+msgstr "Ana çalma penceresini göster"
 
 #: src/audacious/ui_main.c:1523
 msgid "Ignore"
@@ -602,7 +600,7 @@ msgstr "Her Zaman Üstte"
 
 #: src/audacious/ui_manager.c:73 src/audacious/ui_manager.c:74
 msgid "Put on All Workspaces"
-msgstr "Tüm Masaüstlerinde Gönder"
+msgstr "Tüm Masaüstlerinde Göster"
 
 #: src/audacious/ui_manager.c:76 src/audacious/ui_manager.c:77
 msgid "Roll up Player"
@@ -755,7 +753,7 @@ msgstr "Sonraki"
 
 #: src/audacious/ui_manager.c:188
 msgid "Visualization"
-msgstr "C_anlandırma"
+msgstr "Canlandırma"
 
 #: src/audacious/ui_manager.c:189
 msgid "Visualization Mode"
@@ -817,7 +815,7 @@ msgstr "Liste Yükle"
 
 #: src/audacious/ui_manager.c:216
 msgid "Loads a playlist file into the selected playlist."
-msgstr "Seçili çalma listesine çalma listesi dosyası yükler."
+msgstr "Seçili çalma listesine, bir çalma listesi dosyasını yükler."
 
 #: src/audacious/ui_manager.c:218
 msgid "Save List"
@@ -984,7 +982,7 @@ msgstr "Seçileni Kaldır"
 
 #: src/audacious/ui_manager.c:303
 msgid "Remove selected entries from the playlist."
-msgstr "Çalma listsinde seili olanlaı kaldır."
+msgstr "Çalma listesinde seçili olanları kaldır."
 
 #: src/audacious/ui_manager.c:308
 msgid "Randomize List"
@@ -1024,7 +1022,7 @@ msgstr "Listeyi dosya ismine göre sıralar."
 
 #: src/audacious/ui_manager.c:331 src/audacious/ui_manager.c:361
 msgid "Sorts the list by full pathname."
-msgstr "Dosya yolu adına göre listeyi sıralar."
+msgstr "Tam dosya yoluna göre listeyi sıralar."
 
 #: src/audacious/ui_manager.c:334 src/audacious/ui_manager.c:364
 msgid "By Date"
@@ -1162,11 +1160,11 @@ msgstr "Öntanımlı ayarı ekolayzıra yükle"
 
 #: src/audacious/ui_manager.c:439
 msgid "Zero"
-msgstr "Zero"
+msgstr "Sıfır"
 
 #: src/audacious/ui_manager.c:440
 msgid "Set equalizer preset levels to zero"
-msgstr "Ekolayzır ayar düzeyini zero olarak kaydet"
+msgstr "Ekolayzır ayar düzeyini sıfır olarak kaydet"
 
 #: src/audacious/ui_manager.c:442
 msgid "From file"
@@ -1226,7 +1224,7 @@ msgstr "Ayarı sil"
 
 #: src/audacious/ui_manager.c:470
 msgid "Delete auto-load preset"
-msgstr "Otomaik ayar yüklemeyi sil"
+msgstr "Otomatik ayar yüklemeyi sil"
 
 #: src/audacious/ui_preferences.c:101 src/audacious/glade/prefswin.glade:1363
 msgid "Appearance"
@@ -1666,7 +1664,7 @@ msgstr "Öntanımlı seçici yerine XMMS biçimi dosya seçicisi kullan"
 
 #: src/audacious/glade/prefswin.glade:1410
 msgid "<b>Mouse wheel</b>"
-msgstr "<b>Fare hızı</b>"
+msgstr "<b>Fare tekerleği</b>"
 
 #: src/audacious/glade/prefswin.glade:1458
 msgid "Changes volume by"
@@ -1686,7 +1684,7 @@ msgstr "satır"
 
 #: src/audacious/glade/prefswin.glade:1689
 msgid "<b>Filename</b>"
-msgstr "</b>Dosya adı</b>"
+msgstr "<b>Dosya adı</b>"
 
 #: src/audacious/glade/prefswin.glade:1729
 msgid "Convert underscores to blanks"
@@ -1702,7 +1700,7 @@ msgstr "Backslash '\\'ı slash '/' olarak çevir"
 
 #: src/audacious/glade/prefswin.glade:1833
 msgid "<b>Metadata</b>"
-msgstr "</b>Müzik bilgisi</b>"
+msgstr "<b>Müzik bilgisi</b>"
 
 #: src/audacious/glade/prefswin.glade:1872
 msgid "Load metadata (tag information) from music files."
@@ -1714,8 +1712,7 @@ msgstr "Parça bilgisini parça listelerinden ve dosyalardan yükle"
 
 #: src/audacious/glade/prefswin.glade:1912
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"Parça bilgisini, parça listesine eklenirken veya parça açılırken yükle."
+msgstr "Parça bilgisini, parça listesine eklenirken veya parça açılırken yükle."
 
 #: src/audacious/glade/prefswin.glade:1914
 msgid "On load"
@@ -1759,7 +1756,7 @@ msgid ""
 "directories, and Gnome VFS should handle automatically)."
 msgstr ""
 "Dosya penceresini her zaman yenile (bu büyük klasörleri açarken yavaş "
-"çalışacak ve Gnome VFS otomatik olarak alılamalı)"
+"çalışacak ve Gnome VFS otomatik olarak algılamalı)"
 
 #: src/audacious/glade/prefswin.glade:2132
 msgid "Always refresh directory when opening file dialog"
@@ -1891,7 +1888,7 @@ msgid ""
 msgstr ""
 "<span size=\"small\">Ses akışlarını tamponlamak için kullanılcak milisaniye "
 "cinsinden miktar.\n"
-"Ses atlamaları yaşıyorsanız bu bu değeri arttırın.\n"
+"Ses atlamaları yaşıyorsanız bu değeri arttırın.\n"
 "Ancak, yüksek bir değer Audacious'ın düşük performans göstermesine neden "
 "olabilir.</span>"
 
@@ -1916,22 +1913,20 @@ msgid ""
 "When checked, Audacious will detect file formats on demand. This can result "
 "in a messier playlist, but delivers a major speed benefit."
 msgstr ""
-"İşaretlendiğinde, Audacious, dosya formatlarını isteğe göre saptayacak.Bu "
+"İşaretlendiğinde, Audacious, dosya formatlarını isteğe göre saptayacak. Bu "
 "hatalı bir çalma listesine sebep olabilir. Fakat, hız açısından büyük yarar "
 "sağlar"
 
 #: src/audacious/glade/prefswin.glade:3863
 msgid "Detect file formats on demand, instead of immediately."
-msgstr ""
-"Dosya biçimlerini hemen saptamak yerine istekte bulunulduğu zaman sapta"
+msgstr "Dosya biçimlerini hemen saptamak yerine istekte bulunulduğu zaman sapta"
 
 #: src/audacious/glade/prefswin.glade:3897
 msgid ""
 "When checked, Audacious will detect file formats based by extension. This is "
 "slightly slower than detection on demand, but still provides a minimal level "
 "of format detection."
-msgstr ""
-"İşaretlendiğinde, Audacious, dosya formatlarını uzantıya göre saptayacak."
+msgstr "İşaretlendiğinde, Audacious, dosya formatlarını uzantıya göre saptayacak."
 
 #: src/audacious/glade/prefswin.glade:3899
 msgid "Detect file formats by extension."
@@ -2006,9 +2001,8 @@ msgid ""
 msgstr ""
 
 #: src/audacious/glade/prefswin.glade:4593
-#, fuzzy
 msgid "Reload Plugins"
-msgstr "Eklentiler"
+msgstr "Eklentileri yeniden yükle"
 
 #: src/audacious/glade/prefswin.glade:4654
 msgid "Popup Information Settings"
@@ -2037,7 +2031,7 @@ msgstr "Dahil etme:"
 
 #: src/audacious/glade/prefswin.glade:4855
 msgid "Recursively search for cover"
-msgstr "Kapak için özyineli olarak ara"
+msgstr "Kapak için özyinelemeli olarak ara"
 
 #: src/audacious/glade/prefswin.glade:4893
 msgid "Search depth: "
@@ -2069,7 +2063,7 @@ msgid ""
 "sliders below will allow you to do this."
 msgstr ""
 "Audacious, arayüzün renk dengesini değiştirmenize olanak sağlar. Alttaki "
-"kaydırıcılar sayesinde bnu yapabilirsiniz."
+"kaydırıcılar sayesinde bunu yapabilirsiniz."
 
 #: src/audacious/glade/prefswin.glade:5268
 msgid "Red"
@@ -2127,36 +2121,3 @@ msgstr "14KHZ"
 msgid "16KHZ"
 msgstr "16KHZ"
 
-#~ msgid ""
-#~ "<b><big>Unable to play files.</big></b>\n"
-#~ "\n"
-#~ "The following files could not be played. Please check that:\n"
-#~ "1. they are accessible.\n"
-#~ "2. you have enabled the media plugins required."
-#~ msgstr ""
-#~ "<b><big>Dosyalar çalınamıyor.</big></b>\n"
-#~ "\n"
-#~ "Aşağıdaki dosyalar çalınamadı. Lütfen şunları gözden geçirin: \n"
-#~ "1. onlar erişilebilir mi?2. gerekli olan çoklu ortam eklentilerini "
-#~ "etkinleştirdiniz mi?"
-
-#~ msgid "Don't show this warning anymore"
-#~ msgstr "Bu uyarıyı bir daha gösterme"
-
-#~ msgid "Show more _details"
-#~ msgstr "Daha fazla _bilgi göster"
-
-#~ msgid ""
-#~ "\n"
-#~ "Received SIGSEGV\n"
-#~ "\n"
-#~ "This could be a bug in Audacious. If you don't know why this happened, "
-#~ "file a bug at http://bugs-meta.atheme.org/\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "SIGSEGV sinyali alındı\n"
-#~ "\n"
-#~ "Bu Audacious içerisinde bir hata olabilir. Bunun neden olduğunu "
-#~ "bilmiyorsanız lütfen http://bugs-meta.atheme.org/ adresine rapor ediniz\n"
-#~ "\n"
