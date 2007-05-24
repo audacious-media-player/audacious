@@ -908,6 +908,7 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
         exit(EXIT_SUCCESS);
     }
 
+#ifdef USE_DBUS
     if (filenames != NULL)
     {
         gint pos = 0;
@@ -1003,6 +1004,7 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
         if (is_running)
             exit(EXIT_SUCCESS);
     }
+#endif
 }
 
 static void

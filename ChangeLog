@@ -1,3 +1,11 @@
+2007-05-23 22:45:00 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4600]
+  - add some assertions to chardet_to_utf8() to try to trace bad g_convert() calls
+  
+  trunk/src/audacious/strings.c |    5 +++--
+  1 file changed, 3 insertions(+), 2 deletions(-)
+
+
 2007-05-22 23:55:33 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4598]
   - reduce startup time.
