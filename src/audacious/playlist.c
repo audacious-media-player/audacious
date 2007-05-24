@@ -533,9 +533,9 @@ playlist_delete_filenames(Playlist * playlist, GList * filenames)
         }
     }
 
-    playlist_recalc_total_time(playlist);
     PLAYLIST_UNLOCK(playlist->mutex);
 
+    playlist_recalc_total_time(playlist);
     playlistwin_update_list(playlist);
 
     if (restart_playing) {
