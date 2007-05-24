@@ -190,6 +190,96 @@ lowlevel_plugin_init(Plugin * plugin)
     lowlevel_list = g_list_append(lowlevel_list, p);    
 }
 
+/*******************************************************************/
+
+static void
+plugin2_dispose(GModule *module, const gchar *str, ...)
+{
+    gchar buf[4096];
+    va_list va;
+
+    va_start(va, str);
+    vsnprintf(buf, 4096, str, va);
+    va_end(va);
+
+    g_print("*** %s\n", buf);
+    g_module_close(module);
+}
+
+void
+plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
+{
+    InputPlugin **ip_iter;
+    OutputPlugin **op_iter;
+    EffectPlugin **ep_iter;
+    GeneralPlugin **gp_iter;
+    VisPlugin **vp_iter;
+
+    if (header->magic != PLUGIN_MAGIC)
+        return plugin2_dispose(module, "plugin <%s> discarded, invalid module magic", filename);
+
+    if (header->api_version != __AUDACIOUS_PLUGIN_API__)
+        return plugin2_dispose(module, "plugin <%s> discarded, wanting API version %d, we implement API version %d",
+                               filename, header->api_version, __AUDACIOUS_PLUGIN_API__);
+
+    if (header->init)
+        header->init();
+
+    header->priv_assoc = g_new0(Plugin, 1);
+    header->priv_assoc->handle = module;
+    header->priv_assoc->filename = g_strdup(filename);
+
+    for (ip_iter = header->ip_list; *ip_iter != NULL; ip_iter++)
+    {
+        g_print("plugin2 '%s' provides InputPlugin <%p>", filename, *ip_iter);
+        input_plugin_init(PLUGIN(*ip_iter));
+    }
+
+    for (op_iter = header->op_list; *op_iter != NULL; op_iter++)
+    {
+        g_print("plugin2 '%s' provides OutputPlugin <%p>", filename, *op_iter);
+        output_plugin_init(PLUGIN(*op_iter));
+    }
+
+    for (ep_iter = header->ep_list; *ep_iter != NULL; ep_iter++)
+    {
+        g_print("plugin2 '%s' provides EffectPlugin <%p>", filename, *ep_iter);
+        effect_plugin_init(PLUGIN(*ep_iter));
+    }
+
+    for (gp_iter = header->gp_list; *gp_iter != NULL; gp_iter++)
+    {
+        g_print("plugin2 '%s' provides GeneralPlugin <%p>", filename, *gp_iter);
+        general_plugin_init(PLUGIN(*gp_iter));
+    }
+
+    for (vp_iter = header->vp_list; *vp_iter != NULL; vp_iter++)
+    {
+        g_print("plugin2 '%s' provides VisPlugin <%p>", filename, *vp_iter);
+        vis_plugin_init(PLUGIN(*vp_iter));
+    }
+}
+
+void
+plugin2_unload(PluginHeader *header)
+{
+    GModule *module;
+
+    g_return_if_fail(header->priv_assoc != NULL);
+
+    module = header->priv_assoc->handle;
+
+    g_free(header->priv_assoc->filename);
+    g_free(header->priv_assoc);
+
+    if (header->fini)
+        header->fini();
+
+    g_module_close(module);
+}
+
+/******************************************************************/
+
 /* FIXME: Placed here (hopefully) temporarily - descender */
 
 typedef struct {
@@ -226,6 +316,20 @@ add_plugin(const gchar * filename)
         return;
     }
 
+    /* v2 plugin loading */
+    if (g_module_symbol(module, "get_plugin_info", &func))
+    {
+        PluginHeader *(*header_func_p)() = func;
+        PluginHeader *header;
+
+        /* this should never happen. */
+        g_return_if_fail((header = header_func_p()) != NULL);
+
+        plugin2_process(header, module, filename);
+        return;
+    }
+
+    /* v1 plugin loading */
     for (type = plugin_types; type->name; type++)
     {
         if (g_module_symbol(module, type->id, &func)) {
@@ -403,7 +507,9 @@ plugin_system_cleanup(void)
             while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
-        g_module_close(ip->handle);
+
+        if (ip->handle)
+            g_module_close(ip->handle);
     }
 
     if (ip_data.input_list != NULL)
@@ -420,7 +526,9 @@ plugin_system_cleanup(void)
             while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
-        g_module_close(op->handle);
+
+        if (op->handle)
+            g_module_close(op->handle);
     }
     
     if (op_data.output_list != NULL)
@@ -437,7 +545,9 @@ plugin_system_cleanup(void)
             while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
-        g_module_close(ep->handle);
+
+        if (ep->handle)
+            g_module_close(ep->handle);
     }
 
     if (ep_data.effect_list != NULL)
@@ -454,7 +564,9 @@ plugin_system_cleanup(void)
             while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
-        g_module_close(gp->handle);
+
+        if (gp->handle)
+            g_module_close(gp->handle);
     }
 
     if (gp_data.general_list != NULL)
@@ -471,7 +583,9 @@ plugin_system_cleanup(void)
             while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
-        g_module_close(vp->handle);
+
+        if (vp->handle)
+            g_module_close(vp->handle);
     }
 
     if (vp_data.vis_list != NULL)
@@ -488,7 +602,9 @@ plugin_system_cleanup(void)
             while (g_main_context_iteration(NULL, FALSE));
             GDK_THREADS_ENTER();
         }
-        g_module_close(lp->handle);
+
+        if (lp->handle)
+            g_module_close(lp->handle);
     }
 
     if (lowlevel_list != NULL)

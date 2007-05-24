@@ -1,3 +1,11 @@
+2007-05-24 09:03:17 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4618]
+  - add functions for defining the v2 plugin header
+  
+  trunk/src/audacious/plugin.h |   34 +++++++++++++++++++++++++++++++---
+  1 file changed, 31 insertions(+), 3 deletions(-)
+
+
 2007-05-24 08:48:28 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4616]
   - chase r4614.

@@ -39,6 +39,7 @@
 #include "audacious/vfs.h"
 #include "audacious/titlestring.h"
 
+#define PLUGIN(x)         ((Plugin *)(x))
 #define INPUT_PLUGIN(x)   ((InputPlugin *)(x))
 #define OUTPUT_PLUGIN(x)  ((OutputPlugin *)(x))
 #define EFFECT_PLUGIN(x)  ((EffectPlugin *)(x))
