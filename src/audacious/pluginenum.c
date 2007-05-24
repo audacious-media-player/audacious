@@ -172,7 +172,6 @@ static void
 general_plugin_init(Plugin * plugin)
 {
     GeneralPlugin *p = GENERAL_PLUGIN(plugin);
-    p->xmms_session = -1;
     gp_data.general_list = g_list_append(gp_data.general_list, p);
 }
 
@@ -180,7 +179,6 @@ static void
 vis_plugin_init(Plugin * plugin)
 {
     VisPlugin *p = VIS_PLUGIN(plugin);
-    p->xmms_session = -1;
     p->disable_plugin = vis_disable_plugin;
     vp_data.vis_list = g_list_append(vp_data.vis_list, p);
 }

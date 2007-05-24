@@ -1,3 +1,11 @@
+2007-05-24 08:47:50 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4614]
+  - begin work on the host side of plugin API v2.
+  
+  trunk/src/audacious/plugin.h |    6 +++---
+  1 file changed, 3 insertions(+), 3 deletions(-)
+
+
 2007-05-24 06:03:10 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4612]
   - update macedonian translation. closes #915.
