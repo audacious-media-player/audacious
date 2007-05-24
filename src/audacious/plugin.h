@@ -51,7 +51,8 @@
 #define LOWLEVEL_PLUGIN(x) ((LowlevelPlugin *)(x))
 
 #define __AUDACIOUS_NEWVFS__
-#define __AUDACIOUS_INPUT_PLUGIN_API__ 2
+#define __AUDACIOUS_PLUGIN_API__ 2
+#define __AUDACIOUS_INPUT_PLUGIN_API__ 3
 
 typedef enum {
     FMT_U8,
@@ -88,6 +89,7 @@ typedef struct _InputPlayback InputPlayback;
 struct _Plugin {
     gpointer handle;
     gchar *filename;
+    gchar *description;
 };
 
 /*
@@ -213,7 +215,6 @@ struct _GeneralPlugin {
     gpointer handle;
     gchar *filename;
 
-    gint xmms_session;
     gchar *description;
 
     void (*init) (void);
@@ -226,7 +227,6 @@ struct _VisPlugin {
     gpointer handle;
     gchar *filename;
 
-    gint xmms_session;
     gchar *description;
 
     gint num_pcm_chs_wanted;
