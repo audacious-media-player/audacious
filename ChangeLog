@@ -1,3 +1,11 @@
+2007-05-24 10:37:54 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4622]
+  - temporarily work around plugin API v1 retardation
+  
+  trunk/src/audacious/pluginenum.c |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2007-05-24 10:27:54 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4620]
   - first attempt at an plugin API2 loader. this is entirely implemented inside the plugin2 namespace, so please respect that if you go editing this ;p

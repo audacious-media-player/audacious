@@ -229,35 +229,50 @@ plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
     header->priv_assoc->handle = module;
     header->priv_assoc->filename = g_strdup(filename);
 
-    for (ip_iter = header->ip_list; *ip_iter != NULL; ip_iter++)
+    if (header->ip_list)
     {
-        PLUGIN(*ip_iter)->filename = g_strdup(filename);
-        g_print("plugin2 '%s' provides InputPlugin <%p>", filename, *ip_iter);
-        input_plugin_init(PLUGIN(*ip_iter));
+        for (ip_iter = header->ip_list; *ip_iter != NULL; ip_iter++)
+        {
+            PLUGIN(*ip_iter)->filename = g_strdup(filename);
+            g_print("plugin2 '%s' provides InputPlugin <%p>\n", filename, *ip_iter);
+            input_plugin_init(PLUGIN(*ip_iter));
+        }
     }
 
-    for (op_iter = header->op_list; *op_iter != NULL; op_iter++)
+    if (header->op_list)
     {
-        g_print("plugin2 '%s' provides OutputPlugin <%p>", filename, *op_iter);
-        output_plugin_init(PLUGIN(*op_iter));
+        for (op_iter = header->op_list; *op_iter != NULL; op_iter++)
+        {
+            g_print("plugin2 '%s' provides OutputPlugin <%p>\n", filename, *op_iter);
+            output_plugin_init(PLUGIN(*op_iter));
+        }
     }
 
-    for (ep_iter = header->ep_list; *ep_iter != NULL; ep_iter++)
+    if (header->ep_list)
     {
-        g_print("plugin2 '%s' provides EffectPlugin <%p>", filename, *ep_iter);
-        effect_plugin_init(PLUGIN(*ep_iter));
+        for (ep_iter = header->ep_list; *ep_iter != NULL; ep_iter++)
+        {
+            g_print("plugin2 '%s' provides EffectPlugin <%p>\n", filename, *ep_iter);
+            effect_plugin_init(PLUGIN(*ep_iter));
+        }
     }
 
-    for (gp_iter = header->gp_list; *gp_iter != NULL; gp_iter++)
+    if (header->gp_list)
     {
-        g_print("plugin2 '%s' provides GeneralPlugin <%p>", filename, *gp_iter);
-        general_plugin_init(PLUGIN(*gp_iter));
+        for (gp_iter = header->gp_list; *gp_iter != NULL; gp_iter++)
+        {
+            g_print("plugin2 '%s' provides GeneralPlugin <%p>\n", filename, *gp_iter);
+            general_plugin_init(PLUGIN(*gp_iter));
+        }
     }
 
-    for (vp_iter = header->vp_list; *vp_iter != NULL; vp_iter++)
+    if (header->vp_list)
     {
-        g_print("plugin2 '%s' provides VisPlugin <%p>", filename, *vp_iter);
-        vis_plugin_init(PLUGIN(*vp_iter));
+        for (vp_iter = header->vp_list; *vp_iter != NULL; vp_iter++)
+        {
+            g_print("plugin2 '%s' provides VisPlugin <%p>\n", filename, *vp_iter);
+            vis_plugin_init(PLUGIN(*vp_iter));
+        }
     }
 }
 
