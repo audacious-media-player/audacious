@@ -1,3 +1,11 @@
+2007-05-24 08:48:28 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4616]
+  - chase r4614.
+  
+  trunk/src/audacious/pluginenum.c |    2 --
+  1 file changed, 2 deletions(-)
+
+
 2007-05-24 08:47:50 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4614]
   - begin work on the host side of plugin API v2.

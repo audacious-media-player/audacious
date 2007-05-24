@@ -32,11 +32,8 @@
  * SUCH DAMAGE.
  */
 
-/* Please see the BMP Wiki for information about the plugin interface */
-
 #ifndef BMP_PLUGIN_H
 #define BMP_PLUGIN_H
-
 
 #include <glib.h>
 #include "audacious/vfs.h"
@@ -83,6 +80,37 @@ typedef struct _VisPlugin     VisPlugin;
 typedef struct _LowlevelPlugin LowlevelPlugin;
 
 typedef struct _InputPlayback InputPlayback;
+
+/*
+ * The v2 Module header.
+ *
+ * _list fields contain a null-terminated list of "plugins" to register.
+ * A single library can provide multiple plugins.
+ *     --nenolod
+ */
+typedef struct {
+    gint magic;
+    gint api_version;
+    gchar *name;
+    GCallback init;
+    GCallback fini;
+    Plugin *priv_assoc;
+    InputPlugin **ip_list;
+    OutputPlugin **op_list;
+    EffectPlugin **ep_list;
+    GeneralPlugin **gp_list;
+    VisPlugin **vp_list;
+} PluginHeader;
+
+#define PLUGIN_MAGIC 0x8EAC8DE2
+
+#define DECLARE_PLUGIN(name, init, fini, ip_list, op_list, ep_list, gp_list, vp_list) \
+	static PluginHeader _pluginInfo = { PLUGIN_MAGIC, __AUDACIOUS_PLUGIN_API__, \
+		#name, init, fini, NULL, ip_list, op_list, ep_list, gp_list, \
+		vp_list }; \
+	PluginHeader *get_plugin_info(void) { \
+		return &_pluginInfo; \
+	}
 
 /* Sadly, this is the most we can generalize out of the disparate
    plugin structs usable with typecasts - descender */
