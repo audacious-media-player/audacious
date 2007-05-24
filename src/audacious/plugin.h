@@ -106,12 +106,14 @@ typedef struct {
 #define PLUGIN_MAGIC 0x8EAC8DE2
 
 #define DECLARE_PLUGIN(name, init, fini, ip_list, op_list, ep_list, gp_list, vp_list) \
+	G_BEGIN_DECLS \
 	static PluginHeader _pluginInfo = { PLUGIN_MAGIC, __AUDACIOUS_PLUGIN_API__, \
 		#name, init, fini, NULL, ip_list, op_list, ep_list, gp_list, \
 		vp_list }; \
 	PluginHeader *get_plugin_info(void) { \
 		return &_pluginInfo; \
-	}
+	} \
+	G_END_DECLS
 
 /* Sadly, this is the most we can generalize out of the disparate
    plugin structs usable with typecasts - descender */
