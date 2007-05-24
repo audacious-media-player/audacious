@@ -1,3 +1,11 @@
+2007-05-24 10:41:13 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4624]
+  - improve plugin2 loader's robustness (e.g. make it not crash)
+  
+  trunk/src/audacious/pluginenum.c |   47 +++++++++++++++++++++++++--------------
+  1 file changed, 31 insertions(+), 16 deletions(-)
+
+
 2007-05-24 10:37:54 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4622]
   - temporarily work around plugin API v1 retardation

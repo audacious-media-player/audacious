@@ -28,7 +28,7 @@
 #include "audacious/dbus-client-bindings.h"
 #include "audctrl.h"
 
-GError *error = NULL;
+static GError *error = NULL; //it must be hidden from outside, otherwise symbol conflict likely to happen.
 
 /**
  * audacious_remote_playlist:
