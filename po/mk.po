@@ -1,20 +1,21 @@
+# translation of mk.po to Macedonian
 # Macedonian translation for BMP
 # This file is distributed under the same license as the BMP package.
 # Copyright (C) 2004 Arangel Angov <ufo@linux.net.mk>, 2004.
-# , fuzzy
-# 
-# 
+#
+# Jovan Naumovski <jovan@lugola.net>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: mk 0.9.7\n"
+"Project-Id-Version: mk\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
-"POT-Creation-Date: 2007-04-14 15:19-0500\n"
-"PO-Revision-Date: 2005-05-18 11:38+0200\n"
-"Last-Translator: Арангел Ангов <ufo@linux.net.mk>\n"
+"POT-Creation-Date: 2007-02-11 03:00-0600\n"
+"PO-Revision-Date: 2007-04-29 22:25+0200\n"
+"Last-Translator: Jovan Naumovski <jovan@lugola.net>\n"
 "Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: src/audacious/glade.c:43
 #, c-format
@@ -23,21 +24,53 @@ msgid ""
 "\n"
 "Could not open glade file (%s). Please check your installation.\n"
 msgstr ""
+"<b><big>Не можам да креирам %s.</big></b>\n"
+"\n"
+"Не можам да ја отворам glade датотеката (%s). Ве молам, проверете си ја инсталацијата.\n"
 
-#: src/audacious/input.c:539
+#: src/audacious/input.c:306
+msgid ""
+"<b><big>Unable to play files.</big></b>\n"
+"\n"
+"The following files could not be played. Please check that:\n"
+"1. they are accessible.\n"
+"2. you have enabled the media plugins required."
+msgstr ""
+"<b><big>Не успеав да ги пуштам датотеките.</big></b>\n"
+"\n"
+"Следниве датотеки не можат да бидат пуштени. Ве молам проверете дека:\n"
+"1. имате пристап до нив.\n"
+"2. ги имате вклучено потребните додатоци."
+
+#: src/audacious/input.c:331
+msgid "Don't show this warning anymore"
+msgstr "Не го прикажувај предупредувањето повеќе"
+
+#: src/audacious/input.c:333
+msgid "Show more _details"
+msgstr "Покажи повеќе _детали"
+
+#: src/audacious/input.c:347 src/audacious/ui_preferences.c:118
+#: src/audacious/ui_preferences.c:486 src/audacious/ui_preferences.c:574
+#: src/audacious/ui_preferences.c:663 src/audacious/ui_preferences.c:759
+#: src/audacious/ui_fileinfopopup.c:402
+msgid "Filename"
+msgstr "Име на датотека"
+
+#: src/audacious/input.c:620
 #, c-format
 msgid "audacious: %s"
-msgstr ""
+msgstr "audacious: %s"
 
-#: src/audacious/input.c:555
+#: src/audacious/input.c:636
 msgid "Filename:"
 msgstr "Име на датотека:"
 
-#: src/audacious/input.c:573
+#: src/audacious/input.c:654
 msgid "No input plugin recognized this file"
 msgstr "Ниеден влезен додаток не ја препоознава оваа датотека"
 
-#: src/audacious/input.c:575
+#: src/audacious/input.c:656
 #, c-format
 msgid "Input plugin: %s"
 msgstr "Влезен додаток: %s"
@@ -47,85 +80,81 @@ msgstr "Влезен додаток: %s"
 msgid "Unable to create log file (%s)!\n"
 msgstr "Unable to create log file (%s)!\n"
 
-#: src/audacious/main.c:84 src/audacious/main.c:86 src/audacious/ui_main.c:628
-#: src/audacious/ui_main.c:2948
+#: src/audacious/main.c:83 src/audacious/main.c:85 src/audacious/ui_main.c:627
+#: src/audacious/ui_main.c:2897
 msgid "Audacious"
-msgstr ""
+msgstr "Audacious"
 
-#: src/audacious/main.c:461
-#, fuzzy, c-format
+#: src/audacious/main.c:459
+#, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "Не можам да креирам директориум (%s): %s"
+msgstr "Не можам да го креирам директориумот (%s): %s\n"
 
-#: src/audacious/main.c:860
-#, fuzzy
+#: src/audacious/main.c:828
 msgid "Select which Audacious session ID to use"
-msgstr "Одберете BMP/XMMS сесија (Стандардна: 0)"
+msgstr "Одберете кое Ид. на сесија на Audacious ќе се користи"
 
-#: src/audacious/main.c:861
+#: src/audacious/main.c:829
 msgid "Skip backwards in playlist"
 msgstr "Скокни назад на листата"
 
-#: src/audacious/main.c:862
+#: src/audacious/main.c:830
 msgid "Start playing current playlist"
 msgstr "Пушти ја тековната листа"
 
-#: src/audacious/main.c:863
+#: src/audacious/main.c:831
 msgid "Pause current song"
 msgstr "Паузирај ја оваа песна"
 
-#: src/audacious/main.c:864
+#: src/audacious/main.c:832
 msgid "Stop current song"
 msgstr "Стопирај ја оваа песна"
 
-#: src/audacious/main.c:865
+#: src/audacious/main.c:833
 msgid "Pause if playing, play otherwise"
 msgstr "Паузирај ако е пуштена, инаку пушти"
 
-#: src/audacious/main.c:866
+#: src/audacious/main.c:834
 msgid "Skip forward in playlist"
 msgstr "Скокни напред на листата"
 
-#: src/audacious/main.c:867
-#, fuzzy
+#: src/audacious/main.c:835
 msgid "Display Jump to File dialog"
-msgstr "/Оди до датотека"
+msgstr "Прикажи го дијалог прозорецот „Оди до датотека“"
 
-#: src/audacious/main.c:868
+#: src/audacious/main.c:836
 msgid "Don't clear the playlist"
 msgstr "Не ја чисти листата"
 
-#: src/audacious/main.c:869
-#, fuzzy
+#: src/audacious/main.c:837
 msgid "Add new files to a temporary playlist"
-msgstr "Не ја чисти листата"
+msgstr "Додај нови датотеки во привремена плеј листа"
 
-#: src/audacious/main.c:870
-#, fuzzy
+#: src/audacious/main.c:838
 msgid "Display the main window"
-msgstr "Покажи го главниот прозорец"
+msgstr "Прикажи го главниот прозорец"
 
-#: src/audacious/main.c:871
+#: src/audacious/main.c:839
 msgid "Display all open Audacious windows"
-msgstr ""
+msgstr "Прикажи ги сите отворени прозорци на Audacious"
 
-#: src/audacious/main.c:872
+#: src/audacious/main.c:840
 msgid "Enable headless operation"
-msgstr ""
+msgstr "Овозможи безглаво дејствување"
 
-#: src/audacious/main.c:873
+#: src/audacious/main.c:841
 msgid "Print all errors and warnings to stdout"
-msgstr ""
+msgstr "Испечати ги сите грешки и предупредувања во stdout"
 
-#: src/audacious/main.c:874
+#: src/audacious/main.c:842
 msgid "Show version and builtin features"
-msgstr ""
+msgstr "Прикажи верзија и вградени можности"
 
-#: src/audacious/main.c:875
+#: src/audacious/main.c:843
 msgid "FILE..."
-msgstr ""
+msgstr "ДАТОТЕКА..."
 
-#: src/audacious/main.c:1001
+#: src/audacious/main.c:948
 #, c-format
 msgid ""
 "<b><big>Unable to load skin.</big></b>\n"
@@ -138,124 +167,107 @@ msgstr ""
 "Check that skin at '%s' is usable and default skin is properly installed at "
 "'%s'\n"
 
-#: src/audacious/main.c:1052
-msgid ""
-"Sorry, threads isn't supported on your platform.\n"
-"\n"
-"If you're on a libc5 based linux system and installed Glib & GTK+ before "
-"you\n"
-"installed LinuxThreads you need to recompile Glib & GTK+.\n"
-msgstr ""
-"Sorry, threads isn't supported on your platform.\n"
-"\n"
-"If you're on a libc5 based linux system and installed Glib & GTK+ before "
-"you\n"
-"installed LinuxThreads you need to recompile Glib & GTK+.\n"
-
-#: src/audacious/main.c:1074
-#, fuzzy, c-format
+#: src/audacious/main.c:1007
+#, c-format
 msgid ""
 "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
 "Please use GTK+ %s or newer.\n"
 msgstr ""
-"Извинете, вашата верзија на GTK+ (%d.%d.%d) не работи со BMP.\n"
+"Извинете, вашата верзија на GTK+ (%d.%d.%d) не работи со Audacious.\n"
 "Ве молам користете GTK+ %s или понова верзија.\n"
 
-#: src/audacious/main.c:1093
-msgid "- play multimedia files"
+#: src/audacious/main.c:1018
+msgid ""
+"Sorry, threads isn't supported on your platform.\n"
+"\n"
+"If you're on a libc5 based linux system and installed Glib & GTK+ before "
+"you\n"
+"installed LinuxThreads you need to recompile Glib & GTK+.\n"
 msgstr ""
+"Sorry, threads isn't supported on your platform.\n"
+"\n"
+"If you're on a libc5 based linux system and installed Glib & GTK+ before "
+"you\n"
+"installed LinuxThreads you need to recompile Glib & GTK+.\n"
 
-#: src/audacious/main.c:1100
+#: src/audacious/main.c:1036
+msgid "- play multimedia files"
+msgstr "- пушти мултимедијални датотеки"
+
+#: src/audacious/main.c:1043
 #, c-format
 msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
+"%s: %s\n"
+"Обидете се `%s --help' за повеќе информации.\n"
 
-#: src/audacious/main.c:1109
-#, fuzzy, c-format
+#: src/audacious/main.c:1052
+#, c-format
 msgid "%s: Unable to open display, exiting.\n"
-msgstr "BMP: Не успеав да го отворам приказот, излегувам."
+msgstr "%s: Не можам да го отворам приказот, напуштам.\n"
 
-#: src/audacious/signals.c:48
+#: src/audacious/signals.c:93
 msgid ""
 "\n"
-"Audacious has caught signal 11 (SIGSEGV).\n"
+"Received SIGSEGV\n"
 "\n"
-"We apologize for the inconvenience, but Audacious has crashed.\n"
-"This is a bug in the program, and should never happen under normal "
-"circumstances.\n"
-"Your current configuration has been saved and should not be damaged.\n"
-"\n"
-"You can help improve the quality of Audacious by filing a bug at http://bugs-"
-"meta.atheme.org\n"
-"Please include the entire text of this message and a description of what you "
-"were doing when\n"
-"this crash occured in order to quickly expedite the handling of your bug "
-"report:\n"
+"This could be a bug in Audacious. If you don't know why this happened, file "
+"a bug at http://bugs-meta.atheme.org/\n"
 "\n"
 msgstr ""
-
-#: src/audacious/signals.c:79
-msgid ""
 "\n"
-"Bugs can be reported at http://bugs-meta.atheme.org against the Audacious "
-"product.\n"
-msgstr ""
+"Добив SIGSEGV\n"
+"\n"
+"Ова може да е бубачка во Audacious. Ако не знаете зошто се случи ова, испратете "
+"порака на http://bugs-meta.atheme.org/\n"
+"\n"
 
-#: src/audacious/signals.c:265
-msgid ""
-"Your signaling implementation is broken.\n"
-"Expect unusable crash reports.\n"
-msgstr ""
-
-#: src/audacious/strings.c:170
+#: src/audacious/strings.c:172
 msgid "  (invalid UTF-8)"
 msgstr "  (невалиден UTF-8)"
 
 #: src/audacious/ui_about.c:44
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "\n"
-"Copyright (C) 2005-2007 Audacious Development Team"
+"Copyright (C) 2005-2007 Audacious Development Team\n"
 msgstr ""
-"<big><b>Beep Media Player %s</b></big>\n"
-"A media player based on XMMS\n"
+"<big><b>Audacious %s</b></big>\n"
 "\n"
-"Copyright (C) 2003-2004 BMP Development Team\n"
+"Aвторски права (C) 2005-2007 Audacious Development Team\n"
 
-#: src/audacious/ui_about.c:123 src/audacious/ui_credits.c:345
+#: src/audacious/ui_about.c:123 src/audacious/ui_credits.c:338
 #: src/audacious/ui_manager.c:387 src/audacious/ui_manager.c:388
-#, fuzzy
 msgid "About Audacious"
-msgstr "За MPEG аудио додаток"
+msgstr "За Audacious"
 
-#: src/audacious/ui_about.c:172 src/audacious/ui_credits.c:390
+#: src/audacious/ui_about.c:172 src/audacious/ui_credits.c:383
 msgid "Credits"
 msgstr "Заслуги"
 
 #: src/audacious/ui_credits.c:45
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "The future of UNIX multimedia.\n"
 "\n"
 "Copyright (C) 2005-2007 Audacious Development Team\n"
 msgstr ""
-"<big><b>Beep Media Player %s</b></big>\n"
-"A media player based on XMMS\n"
+"<big><b>Audacious %s</b></big>\n"
+"Иднината на UNIX мултимедијата.\n"
 "\n"
-"Copyright (C) 2003-2004 BMP Development Team\n"
+"Авторски права (C) 2005-2007 Audacious Development Team\n"
 
 #: src/audacious/ui_credits.c:51
-#, fuzzy
 msgid "Audacious core developers:"
-msgstr "Параметри"
+msgstr "Главни развивачи на Audacious:"
 
 #: src/audacious/ui_credits.c:66
 msgid "Graphics:"
-msgstr ""
+msgstr "Графика"
 
 #: src/audacious/ui_credits.c:71
 msgid "Default skin:"
@@ -263,193 +275,177 @@ msgstr "Стандардна тема:"
 
 #: src/audacious/ui_credits.c:76
 msgid "Plugin development:"
-msgstr ""
+msgstr "Развој на приклучоци:"
 
-#: src/audacious/ui_credits.c:89
+#: src/audacious/ui_credits.c:88
 msgid "Patch authors:"
-msgstr ""
+msgstr "Автори на закрпата:"
 
-#: src/audacious/ui_credits.c:109
-#, fuzzy
+#: src/audacious/ui_credits.c:105
 msgid "0.1.x developers:"
-msgstr "Развивачи:"
+msgstr "Развивачи на 0.1.x:"
 
-#: src/audacious/ui_credits.c:115
-#, fuzzy
+#: src/audacious/ui_credits.c:111
 msgid "BMP Developers:"
-msgstr "Развивачи:"
+msgstr "Развивачи на BMP:"
 
-#: src/audacious/ui_credits.c:147
+#: src/audacious/ui_credits.c:143
 msgid "Brazilian Portuguese:"
 msgstr "Бразилско-португалски:"
 
-#: src/audacious/ui_credits.c:150
+#: src/audacious/ui_credits.c:146
 msgid "Breton:"
 msgstr "Бретонски:"
 
-#: src/audacious/ui_credits.c:153
-#, fuzzy
+#: src/audacious/ui_credits.c:149
 msgid "Bulgarian:"
-msgstr "Унгарски:"
+msgstr "Бугарски:"
 
-#: src/audacious/ui_credits.c:156
-#, fuzzy
-msgid "Catalan:"
-msgstr "Италијански:"
-
-#: src/audacious/ui_credits.c:159
-#, fuzzy
+#: src/audacious/ui_credits.c:152
 msgid "Croatian:"
-msgstr "Локација:"
+msgstr "Хрватски:"
 
-#: src/audacious/ui_credits.c:162
+#: src/audacious/ui_credits.c:155
 msgid "Czech:"
 msgstr "Француски:"
 
-#: src/audacious/ui_credits.c:165
+#: src/audacious/ui_credits.c:158
 msgid "Dutch:"
 msgstr "Холандски"
 
-#: src/audacious/ui_credits.c:169
-#, fuzzy
+#: src/audacious/ui_credits.c:162
 msgid "Finnish:"
-msgstr "Шпански:"
+msgstr "Фински:"
 
-#: src/audacious/ui_credits.c:172
+#: src/audacious/ui_credits.c:165
 msgid "French:"
 msgstr "Француски:"
 
-#: src/audacious/ui_credits.c:175
+#: src/audacious/ui_credits.c:168
 msgid "German:"
 msgstr "Германски:"
 
-#: src/audacious/ui_credits.c:179
-#, fuzzy
+#: src/audacious/ui_credits.c:172
 msgid "Georgian:"
-msgstr "Германски:"
+msgstr "Грузиски:"
 
-#: src/audacious/ui_credits.c:182
+#: src/audacious/ui_credits.c:175
 msgid "Greek:"
 msgstr "Грчки:"
 
-#: src/audacious/ui_credits.c:187
+#: src/audacious/ui_credits.c:180
 msgid "Hindi:"
-msgstr ""
+msgstr "Хинди:"
 
-#: src/audacious/ui_credits.c:190
+#: src/audacious/ui_credits.c:183
 msgid "Hungarian:"
 msgstr "Унгарски:"
 
-#: src/audacious/ui_credits.c:193
+#: src/audacious/ui_credits.c:186
 msgid "Italian:"
 msgstr "Италијански:"
 
-#: src/audacious/ui_credits.c:197
+#: src/audacious/ui_credits.c:190
 msgid "Japanese:"
 msgstr "Јапонски:"
 
-#: src/audacious/ui_credits.c:200
+#: src/audacious/ui_credits.c:193
 msgid "Korean:"
 msgstr "Корејски:"
 
-#: src/audacious/ui_credits.c:203
+#: src/audacious/ui_credits.c:196
 msgid "Lithuanian:"
 msgstr "Литвански:"
 
-#: src/audacious/ui_credits.c:206
+#: src/audacious/ui_credits.c:199
 msgid "Macedonian:"
 msgstr "Македонски:"
 
-#: src/audacious/ui_credits.c:209
+#: src/audacious/ui_credits.c:202
 msgid "Polish:"
 msgstr "Полски:"
 
-#: src/audacious/ui_credits.c:212
+#: src/audacious/ui_credits.c:205
 msgid "Romanian:"
 msgstr "Романски:"
 
-#: src/audacious/ui_credits.c:215
+#: src/audacious/ui_credits.c:208
 msgid "Russian:"
 msgstr "Руски:"
 
-#: src/audacious/ui_credits.c:218
+#: src/audacious/ui_credits.c:211
 msgid "Serbian (Latin):"
-msgstr ""
+msgstr "Српски (Латиница):"
 
-#: src/audacious/ui_credits.c:221
+#: src/audacious/ui_credits.c:214
 msgid "Serbian (Cyrillic):"
-msgstr ""
+msgstr "Српски (Кирилица):"
 
-#: src/audacious/ui_credits.c:224
+#: src/audacious/ui_credits.c:217
 msgid "Simplified Chinese:"
-msgstr ""
+msgstr "Поедноставен кинески:"
 
-#: src/audacious/ui_credits.c:227
+#: src/audacious/ui_credits.c:220
 msgid "Slovak:"
 msgstr "Словачки:"
 
-#: src/audacious/ui_credits.c:230
+#: src/audacious/ui_credits.c:223
 msgid "Spanish:"
 msgstr "Шпански:"
 
-#: src/audacious/ui_credits.c:233
+#: src/audacious/ui_credits.c:226
 msgid "Swedish:"
 msgstr "Шведски:"
 
-#: src/audacious/ui_credits.c:236
-#, fuzzy
+#: src/audacious/ui_credits.c:229
 msgid "Traditional Chinese:"
-msgstr "Со додатна помош:"
+msgstr "Традиционален кинески:"
+
+#: src/audacious/ui_credits.c:232
+msgid "Turkish:"
+msgstr "Турски:"
+
+#: src/audacious/ui_credits.c:236
+msgid "Ukrainian:"
+msgstr "Украински:"
 
 #: src/audacious/ui_credits.c:239
-msgid "Turkish:"
-msgstr ""
-
-#: src/audacious/ui_credits.c:243
-#, fuzzy
-msgid "Ukrainian:"
-msgstr "Романски:"
-
-#: src/audacious/ui_credits.c:246
 msgid "Welsh:"
 msgstr "Велшки:"
 
-#: src/audacious/ui_credits.c:394
+#: src/audacious/ui_credits.c:387
 msgid "Translators"
 msgstr "Преведувачи"
 
-#: src/audacious/ui_equalizer.c:743
-#, fuzzy
+#: src/audacious/ui_equalizer.c:741
 msgid "Audacious Equalizer"
-msgstr "/Завиткај го изедначувачот"
+msgstr "Изедначувач на Audacious"
 
-#: src/audacious/ui_equalizer.c:1391
+#: src/audacious/ui_equalizer.c:1429
 msgid "Presets"
 msgstr "Модификатори"
 
-#: src/audacious/ui_main.c:626
+#: src/audacious/ui_main.c:625
 #, c-format
 msgid "%s - Audacious"
-msgstr ""
+msgstr "%s - Audacious"
 
-#: src/audacious/ui_main.c:851
+#: src/audacious/ui_main.c:850
 msgid "VBR"
 msgstr "VBR"
 
-#: src/audacious/ui_main.c:892 src/audacious/ui_main.c:896
-#, fuzzy
+#: src/audacious/ui_main.c:891 src/audacious/ui_main.c:895
 msgid "stereo"
-msgstr "Стерео"
+msgstr "стерео"
 
-#: src/audacious/ui_main.c:892 src/audacious/ui_main.c:896
-#, fuzzy
+#: src/audacious/ui_main.c:891 src/audacious/ui_main.c:895
 msgid "mono"
-msgstr "Моно"
+msgstr "моно"
 
 #: src/audacious/ui_main.c:1328 src/audacious/ui_manager.c:414
 #: src/audacious/ui_manager.c:415
 msgid "Jump to Time"
-msgstr "Скокни до (време)"
+msgstr "Скокни до време"
 
 #: src/audacious/ui_main.c:1349
 msgid "minutes:seconds"
@@ -459,89 +455,63 @@ msgstr "минути:секунди"
 msgid "Track length:"
 msgstr "Должина на песна:"
 
-#: src/audacious/ui_main.c:1520
-msgid "Audacious - visibility warning"
-msgstr ""
-
-#: src/audacious/ui_main.c:1522
-#, fuzzy
-msgid "Show main player window"
-msgstr "Избор прозорец:"
-
-#: src/audacious/ui_main.c:1523
-#, fuzzy
-msgid "Ignore"
-msgstr "Ништо"
-
-#: src/audacious/ui_main.c:1527
-msgid ""
-"Audacious has been started with all of its windows hidden.\n"
-"You may want to show the player window again to control Audacious; "
-"otherwise, you'll have to control it remotely via audtool or enabled plugins "
-"(such as the statusicon plugin)."
-msgstr ""
-
-#: src/audacious/ui_main.c:1533
-msgid "Always ignore, show/hide is controlled remotely"
-msgstr ""
-
-#: src/audacious/ui_main.c:1551
+#: src/audacious/ui_main.c:1500
 msgid "Enter location to play:"
-msgstr ""
+msgstr "Внесете локација за пуштање:"
 
-#: src/audacious/ui_main.c:1761
+#: src/audacious/ui_main.c:1710
 #, c-format
 msgid "SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 msgstr "Барај до: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
-#: src/audacious/ui_main.c:1793 src/audacious/ui_main.c:2418
+#: src/audacious/ui_main.c:1742 src/audacious/ui_main.c:2367
 #, c-format
 msgid "VOLUME: %d%%"
 msgstr "Звук: %d%%"
 
-#: src/audacious/ui_main.c:1824 src/audacious/ui_main.c:2421
+#: src/audacious/ui_main.c:1773 src/audacious/ui_main.c:2370
 #, c-format
 msgid "BALANCE: %d%% LEFT"
 msgstr "Баланс: %d%% лев"
 
-#: src/audacious/ui_main.c:1828 src/audacious/ui_main.c:2424
+#: src/audacious/ui_main.c:1777 src/audacious/ui_main.c:2373
 msgid "BALANCE: CENTER"
 msgstr "Баланс: средина"
 
-#: src/audacious/ui_main.c:1832 src/audacious/ui_main.c:2426
+#: src/audacious/ui_main.c:1781 src/audacious/ui_main.c:2375
 #, c-format
 msgid "BALANCE: %d%% RIGHT"
 msgstr "Баланс: %d%% десен"
 
-#: src/audacious/ui_main.c:2188
+#: src/audacious/ui_main.c:2137
 msgid "OPTIONS MENU"
 msgstr "Мени со опции"
 
-#: src/audacious/ui_main.c:2192
+#: src/audacious/ui_main.c:2141
 msgid "DISABLE ALWAYS ON TOP"
 msgstr "Оневозможи секогаш најгоре"
 
-#: src/audacious/ui_main.c:2194
+#: src/audacious/ui_main.c:2143
 msgid "ENABLE ALWAYS ON TOP"
 msgstr "Овозможи секогаш најгоре"
 
-#: src/audacious/ui_main.c:2197
+#: src/audacious/ui_main.c:2146
 msgid "FILE INFO BOX"
 msgstr "Поле со информации за датотека"
 
-#: src/audacious/ui_main.c:2201
+#: src/audacious/ui_main.c:2150
 msgid "DISABLE DOUBLESIZE"
 msgstr "Оневозможи двоjно поголем XMMS"
 
-#: src/audacious/ui_main.c:2203
+#: src/audacious/ui_main.c:2152
 msgid "ENABLE DOUBLESIZE"
 msgstr "Овозможи двојно поголем XMMS"
 
-#: src/audacious/ui_main.c:2206
+#: src/audacious/ui_main.c:2155
 msgid "VISUALIZATION MENU"
 msgstr "Мени за визуелизација"
 
-#: src/audacious/ui_main.c:2252
+#: src/audacious/ui_main.c:2201
 msgid ""
 "<b><big>No playable CD found.</big></b>\n"
 "\n"
@@ -551,7 +521,7 @@ msgstr ""
 "\n"
 "Немате внесено CD, или пак CD-то не е аудио CD.\n"
 
-#: src/audacious/ui_main.c:2269
+#: src/audacious/ui_main.c:2218
 msgid ""
 "<b><big>Couldn't open audio.</big></b>\n"
 "\n"
@@ -567,419 +537,346 @@ msgstr ""
 "2. No other programs is blocking the soundcard.\n"
 "3. Your soundcard is configured properly.\n"
 
-#: src/audacious/ui_main.c:2876
-#, fuzzy
+#: src/audacious/ui_main.c:2825
 msgid "Error in Audacious."
-msgstr "За MPEG аудио додаток"
+msgstr "Грешка во Audacious."
 
 #: src/audacious/ui_manager.c:43 src/audacious/ui_manager.c:44
-#, fuzzy
 msgid "Autoscroll Songname"
-msgstr "/Автоматско лизгање"
+msgstr "Автоматско лизгање на името на песната"
 
 #: src/audacious/ui_manager.c:46 src/audacious/ui_manager.c:47
-#, fuzzy
 msgid "Stop after Current Song"
-msgstr "Стопирај ја оваа песна"
+msgstr "Стопирај после оваа песна"
 
 #: src/audacious/ui_manager.c:49 src/audacious/ui_manager.c:50
-#, fuzzy
 msgid "Peaks"
-msgstr "Pranks"
+msgstr "Врвови"
 
 #: src/audacious/ui_manager.c:52 src/audacious/ui_manager.c:53
-#, fuzzy
 msgid "Repeat"
-msgstr "/Повторување"
+msgstr "Повторување"
 
 #: src/audacious/ui_manager.c:55 src/audacious/ui_manager.c:56
-#, fuzzy
 msgid "Shuffle"
-msgstr "/Мешање"
+msgstr "Мешање"
 
 #: src/audacious/ui_manager.c:58 src/audacious/ui_manager.c:59
-#, fuzzy
 msgid "No Playlist Advance"
-msgstr "/Без напредување во листата"
+msgstr "Без напредување во листата"
 
 #: src/audacious/ui_manager.c:61 src/audacious/ui_manager.c:62
-#, fuzzy
 msgid "Show Player"
-msgstr "/Покажи уредувач за листата"
+msgstr "Покажи го пуштачот"
 
 #: src/audacious/ui_manager.c:64 src/audacious/ui_manager.c:65
-#, fuzzy
 msgid "Show Playlist Editor"
-msgstr "/Покажи уредувач за листата"
+msgstr "Покажи уредувач за листата"
 
 #: src/audacious/ui_manager.c:67 src/audacious/ui_manager.c:68
-#, fuzzy
 msgid "Show Equalizer"
-msgstr "/Покажи изедначувач"
+msgstr "Покажи изедначувач"
 
 #: src/audacious/ui_manager.c:70 src/audacious/ui_manager.c:71
-#, fuzzy
 msgid "Always on Top"
-msgstr "/Секогаш најгоре"
+msgstr "Секогаш најгоре"
 
 #: src/audacious/ui_manager.c:73 src/audacious/ui_manager.c:74
-#, fuzzy
 msgid "Put on All Workspaces"
-msgstr "/Стави на сите работни површини"
+msgstr "Стави на сите работни површини"
 
 #: src/audacious/ui_manager.c:76 src/audacious/ui_manager.c:77
-#, fuzzy
 msgid "Roll up Player"
-msgstr "/Завиткај го пуштачот"
+msgstr "Завиткај го пуштачот"
 
 #: src/audacious/ui_manager.c:79 src/audacious/ui_manager.c:80
-#, fuzzy
 msgid "Roll up Playlist Editor"
-msgstr "/Завиткај ја листата"
+msgstr "Завиткај го уредувачот на листата"
 
 #: src/audacious/ui_manager.c:82 src/audacious/ui_manager.c:83
-#, fuzzy
 msgid "Roll up Equalizer"
-msgstr "/Завиткај го изедначувачот"
+msgstr "Завиткај го изедначувачот"
 
 #: src/audacious/ui_manager.c:85 src/audacious/ui_manager.c:86
-#, fuzzy
 msgid "DoubleSize"
-msgstr "/Двојна големина"
+msgstr "Двојна големина"
 
 #: src/audacious/ui_manager.c:88 src/audacious/ui_manager.c:89
-#, fuzzy
 msgid "Easy Move"
-msgstr "/Лесно преместување"
+msgstr "Лесно преместување"
 
 #: src/audacious/ui_manager.c:97
-#, fuzzy
 msgid "Analyzer"
-msgstr "/Режим на анализатор"
+msgstr "Анализатор"
 
 #: src/audacious/ui_manager.c:98
-#, fuzzy
 msgid "Scope"
-msgstr "/Scope режим"
+msgstr "Scope режим"
 
 #: src/audacious/ui_manager.c:99
-#, fuzzy
 msgid "Voiceprint"
-msgstr "/Анализатор режим/Оган"
+msgstr "Гласовен печат"
 
 #: src/audacious/ui_manager.c:100
 msgid "Off"
-msgstr ""
+msgstr "Исклучено"
 
 #: src/audacious/ui_manager.c:104 src/audacious/ui_manager.c:121
 #: src/audacious/ui_manager.c:127
-#, fuzzy
 msgid "Normal"
-msgstr "ID3 формат:"
+msgstr "Нормално"
 
 #: src/audacious/ui_manager.c:105 src/audacious/ui_manager.c:122
-#, fuzzy
 msgid "Fire"
-msgstr "Сатира"
+msgstr "Оган"
 
 #: src/audacious/ui_manager.c:106
-#, fuzzy
 msgid "Vertical Lines"
-msgstr "/Анализатор режим/Вертикални линии"
+msgstr "Вертикални линии"
 
 #: src/audacious/ui_manager.c:110
-#, fuzzy
 msgid "Lines"
-msgstr "линии"
+msgstr "Линии"
 
 #: src/audacious/ui_manager.c:111
-#, fuzzy
 msgid "Bars"
-msgstr "Bass"
+msgstr "Ленти"
 
 #: src/audacious/ui_manager.c:115
-#, fuzzy
 msgid "Dot Scope"
-msgstr "/Scope режим/Точкeст scope"
+msgstr "Scope со точки"
 
 #: src/audacious/ui_manager.c:116
-#, fuzzy
 msgid "Line Scope"
-msgstr "/Scope режим/Линиски scope"
+msgstr "Scope со линии"
 
 #: src/audacious/ui_manager.c:117
-#, fuzzy
 msgid "Solid Scope"
-msgstr "/Scope режим/Површински scope"
+msgstr "Solid Scope"
 
 #: src/audacious/ui_manager.c:123
 msgid "Ice"
-msgstr ""
+msgstr "Мраз"
 
 #: src/audacious/ui_manager.c:128
-#, fuzzy
 msgid "Smooth"
-msgstr "Моно"
+msgstr "Мазно"
 
 #: src/audacious/ui_manager.c:132
-#, fuzzy
 msgid "Full (~50 fps)"
-msgstr "/Стапка на освежување/Целосна (~50 fps)"
+msgstr "Целосно (~50 fps)"
 
 #: src/audacious/ui_manager.c:133
-#, fuzzy
 msgid "Half (~25 fps)"
-msgstr "Стапка на освежување/Половина (~25fps)"
+msgstr "Половина (~25 fps)"
 
 #: src/audacious/ui_manager.c:134
-#, fuzzy
 msgid "Quarter (~13 fps)"
-msgstr "Стапка на освежување/Четвртина (~13 fps)"
+msgstr "Четвртина (~13 fps)"
 
 #: src/audacious/ui_manager.c:135
-#, fuzzy
 msgid "Eighth (~6 fps)"
-msgstr "Стапка на освежување/Осмина (~6 fps)"
+msgstr "Осмина (~6 fps)"
 
 #: src/audacious/ui_manager.c:139 src/audacious/ui_manager.c:147
-#, fuzzy
 msgid "Slowest"
-msgstr "Showtunes"
+msgstr "Најбавно"
 
 #: src/audacious/ui_manager.c:140 src/audacious/ui_manager.c:148
-#, fuzzy
 msgid "Slow"
-msgstr "Бавен џем"
+msgstr "Бавно"
 
 #: src/audacious/ui_manager.c:141 src/audacious/ui_manager.c:149
 msgid "Medium"
-msgstr ""
+msgstr "Средно"
 
 #: src/audacious/ui_manager.c:142 src/audacious/ui_manager.c:150
 msgid "Fast"
-msgstr ""
+msgstr "Брзо"
 
 #: src/audacious/ui_manager.c:143 src/audacious/ui_manager.c:151
 msgid "Fastest"
-msgstr ""
+msgstr "Најбрзо"
 
 #: src/audacious/ui_manager.c:155
-#, fuzzy
 msgid "Time Elapsed"
-msgstr "/Поминато време"
+msgstr "Поминато време"
 
 #: src/audacious/ui_manager.c:156
-#, fuzzy
 msgid "Time Remaining"
-msgstr "/Преостанато време"
+msgstr "Преостанато време"
 
 #: src/audacious/ui_manager.c:165
-#, fuzzy
 msgid "Playback"
-msgstr "/Плејбек"
+msgstr "Плејбек"
 
 #: src/audacious/ui_manager.c:167 src/audacious/ui_manager.c:168
-#, fuzzy
 msgid "Play CD"
-msgstr "/Пушти CD"
+msgstr "Пушти CD"
 
 #: src/audacious/ui_manager.c:170 src/audacious/ui_manager.c:171
-#, fuzzy
 msgid "Play"
-msgstr "/Пушти"
+msgstr "Пушти"
 
 #: src/audacious/ui_manager.c:173 src/audacious/ui_manager.c:174
-#, fuzzy
 msgid "Pause"
-msgstr "/Пауза"
+msgstr "Пауза"
 
 #: src/audacious/ui_manager.c:176 src/audacious/ui_manager.c:177
-#, fuzzy
 msgid "Stop"
-msgstr "/Стоп"
+msgstr "Стоп"
 
 #: src/audacious/ui_manager.c:179 src/audacious/ui_manager.c:180
-#, fuzzy
 msgid "Previous"
-msgstr "/Претходна"
+msgstr "Претходна"
 
 #: src/audacious/ui_manager.c:182 src/audacious/ui_manager.c:183
-#, fuzzy
 msgid "Next"
-msgstr "/Следна"
+msgstr "Следна"
 
 #: src/audacious/ui_manager.c:188
-#, fuzzy
 msgid "Visualization"
-msgstr "/Режим на визуелизација"
+msgstr "Визуелизација"
 
 #: src/audacious/ui_manager.c:189
-#, fuzzy
 msgid "Visualization Mode"
-msgstr "/Режим на визуелизација"
+msgstr "Режим на визуелизација"
 
 #: src/audacious/ui_manager.c:190
-#, fuzzy
 msgid "Analyzer Mode"
-msgstr "/Анализатор режим/Оган"
+msgstr "Режим на анализатор"
 
 #: src/audacious/ui_manager.c:191
-#, fuzzy
 msgid "Scope Mode"
-msgstr "/Scope режим"
+msgstr "Scope режим"
 
 #: src/audacious/ui_manager.c:192
-#, fuzzy
 msgid "Voiceprint Mode"
-msgstr "/Анализатор режим/Оган"
+msgstr "Режим на гласовен печат"
 
 #: src/audacious/ui_manager.c:193
-#, fuzzy
 msgid "WindowShade VU Mode"
-msgstr "/WindowShade VU режим"
+msgstr "WindowShade VU режим"
 
 #: src/audacious/ui_manager.c:194
-#, fuzzy
 msgid "Refresh Rate"
-msgstr "/Стапка на освежување"
+msgstr "Стапка на освежување"
 
 #: src/audacious/ui_manager.c:195
-#, fuzzy
 msgid "Analyzer Falloff"
-msgstr "/Спуштање на анализаторот"
+msgstr "Спуштање на анализаторот"
 
 #: src/audacious/ui_manager.c:196
-#, fuzzy
 msgid "Peaks Falloff"
-msgstr "/Спуштање на врвовите"
+msgstr "Спуштање на врвовите"
 
 #: src/audacious/ui_manager.c:201 src/audacious/ui_preferences.c:106
 #: src/audacious/ui_playlist_manager.c:288
 #: src/audacious/glade/prefswin.glade:2494
 msgid "Playlist"
-msgstr "Листа со песни"
+msgstr "Плеј листа"
 
 #: src/audacious/ui_manager.c:203 src/audacious/ui_manager.c:204
-#, fuzzy
 msgid "New Playlist"
-msgstr "/Листа на песни"
+msgstr "Нова плеј листа"
 
 #: src/audacious/ui_manager.c:206 src/audacious/ui_manager.c:207
-#, fuzzy
 msgid "Select Next Playlist"
-msgstr "Одберете фонт за листата:"
+msgstr "Одбери ја следната плеј листа"
 
 #: src/audacious/ui_manager.c:209 src/audacious/ui_manager.c:210
-#, fuzzy
 msgid "Select Previous Playlist"
-msgstr "/Избор на подредување/По наслов"
+msgstr "Одбери ја претходната плеј листа"
 
 #: src/audacious/ui_manager.c:212 src/audacious/ui_manager.c:213
-#, fuzzy
 msgid "Delete Playlist"
-msgstr "Одберете фонт за листата:"
+msgstr "Избриши ја плеј листата"
 
 #: src/audacious/ui_manager.c:215
-#, fuzzy
 msgid "Load List"
-msgstr "/Вчитај листа"
+msgstr "Вчитај листа"
 
 #: src/audacious/ui_manager.c:216
-#, fuzzy
 msgid "Loads a playlist file into the selected playlist."
-msgstr ""
-"Вчитај ги податоците по потреба кога се прикажува датотеката во листата"
+msgstr "Вчитува датотека со плејлиста во избраната плејлиста."
 
 #: src/audacious/ui_manager.c:218
-#, fuzzy
 msgid "Save List"
-msgstr "/Зачувај листа"
+msgstr "Зачувај листа"
 
 #: src/audacious/ui_manager.c:219
-#, fuzzy
 msgid "Saves the selected playlist."
-msgstr "Одберете фонт за листата:"
+msgstr "Ја зачувува избраната плеј листа."
 
 #: src/audacious/ui_manager.c:221
-#, fuzzy
 msgid "Save Default List"
-msgstr "/Сними/Стандардно"
+msgstr "Зачувај стандардна листа"
 
 #: src/audacious/ui_manager.c:222
 msgid "Saves the selected playlist to the default location."
-msgstr ""
+msgstr "Ја зачувува избраната плеј листа во стандардната локација."
 
 #: src/audacious/ui_manager.c:225
-#, fuzzy
 msgid "Refresh List"
-msgstr "/Стапка на освежување"
+msgstr "Освежи ја листата"
 
 #: src/audacious/ui_manager.c:226
 msgid "Refreshes metadata associated with a playlist entry."
-msgstr ""
+msgstr "Ги превчитува мета податоците поврзани со записот на плеј листата."
 
 #: src/audacious/ui_manager.c:229
 msgid "List Manager"
-msgstr ""
+msgstr "Менаџер на листи"
 
 #: src/audacious/ui_manager.c:230
-#, fuzzy
 msgid "Opens the playlist manager."
-msgstr "Не ја чисти листата"
+msgstr "Отвора менаџер на плеј листи."
 
 #: src/audacious/ui_manager.c:236
-#, fuzzy
 msgid "View"
-msgstr "/_Поглед"
+msgstr "Поглед"
 
 #: src/audacious/ui_manager.c:240
-#, fuzzy
 msgid "Add CD..."
-msgstr "/Додај CD..."
+msgstr "Додај CD..."
 
 #: src/audacious/ui_manager.c:241
-#, fuzzy
 msgid "Adds a CD to the playlist."
-msgstr "Не ја чисти листата"
+msgstr "Додава CD во плеј листата."
 
 #: src/audacious/ui_manager.c:244
-#, fuzzy
 msgid "Add Internet Address..."
-msgstr "/Додаj адреса..."
+msgstr "Додаj Интернет адреса..."
 
 #: src/audacious/ui_manager.c:245
 msgid "Adds a remote track to the playlist."
-msgstr ""
+msgstr "Додава оддалечена трака во плеј листата."
 
 #: src/audacious/ui_manager.c:248
-#, fuzzy
 msgid "Add Files..."
-msgstr "/Додаj датотеки..."
+msgstr "Додаj датотеки..."
 
 #: src/audacious/ui_manager.c:249
-#, fuzzy
 msgid "Adds files to the playlist."
-msgstr "Не ја чисти листата"
+msgstr "Додава датотеки во плеј листата."
 
 #: src/audacious/ui_manager.c:254
-#, fuzzy
 msgid "Search and Select"
-msgstr "/Избор на подредување"
+msgstr "Барај и избери"
 
 #: src/audacious/ui_manager.c:255
 msgid ""
 "Searches the playlist and selects playlist entries based on specific "
 "criteria."
-msgstr ""
+msgstr "Ја пребарува плејлистата и одбира записи од плејлистата врз одреден критериум."
 
 #: src/audacious/ui_manager.c:258
-#, fuzzy
 msgid "Invert Selection"
-msgstr "/Обратен избор"
+msgstr "Обратен избор"
 
 #: src/audacious/ui_manager.c:259
 msgid "Inverts the selected and unselected entries."
-msgstr ""
+msgstr "Ги избира записите ако не се избрани и обратно."
 
 #: src/audacious/ui_manager.c:262
 msgid "Select All"
@@ -987,259 +884,218 @@ msgstr "Избери ги сите"
 
 #: src/audacious/ui_manager.c:263
 msgid "Selects all of the playlist entries."
-msgstr ""
+msgstr "Ги избира сите записи во плеј листата."
 
 #: src/audacious/ui_manager.c:266
-#, fuzzy
 msgid "Select None"
-msgstr "/Откажи избрано"
+msgstr "Откажи избрано"
 
 #: src/audacious/ui_manager.c:267
 msgid "Deselects all of the playlist entries."
-msgstr ""
+msgstr "Го откажува изборот на сите записи од плеј листата."
 
 #: src/audacious/ui_manager.c:272
-#, fuzzy
 msgid "Clear Queue"
-msgstr "/Исчисти ред"
+msgstr "Исчисти ред"
 
 #: src/audacious/ui_manager.c:273
 msgid "Clears the queue associated with this playlist."
-msgstr ""
+msgstr "Ја чисти редицата која се однесува на оваа плеј листа."
 
 #: src/audacious/ui_manager.c:276
-#, fuzzy
 msgid "Remove Unavailable Files"
-msgstr "/Отстрани недостапни датотеки"
+msgstr "Отстрани недостапни датотеки"
 
 #: src/audacious/ui_manager.c:277
-#, fuzzy
 msgid "Removes unavailable files from the playlist."
-msgstr "/Отстрани недостапни датотеки"
+msgstr "Отстрани недостапни датотеки од плеј листата."
 
 #: src/audacious/ui_manager.c:280
-#, fuzzy
 msgid "Remove Duplicates"
-msgstr "/Отстрани го избраното"
+msgstr "Отстрани ги дупликатите"
 
 #: src/audacious/ui_manager.c:282 src/audacious/ui_manager.c:318
 #: src/audacious/ui_manager.c:348
-#, fuzzy
 msgid "By Title"
-msgstr "Наслов"
+msgstr "По наслов"
 
 #: src/audacious/ui_manager.c:283
 msgid "Removes duplicate entries from the playlist by title."
-msgstr ""
+msgstr "Ги отстранува записите дупликати од плеј листата по наслов."
 
 #: src/audacious/ui_manager.c:286 src/audacious/ui_manager.c:326
 #: src/audacious/ui_manager.c:356
-#, fuzzy
 msgid "By Filename"
-msgstr "Име на датотека"
+msgstr "По име на датотека"
 
 #: src/audacious/ui_manager.c:287
-#, fuzzy
 msgid "Removes duplicate entries from the playlist by filename."
-msgstr "/Подреди Листа/По патека + име на датотека"
+msgstr "Ги отстранува дупликатите од плејлистата по име на датотека."
 
 #: src/audacious/ui_manager.c:290 src/audacious/ui_manager.c:330
 #: src/audacious/ui_manager.c:360
-#, fuzzy
 msgid "By Path + Filename"
-msgstr "/Подреди Листа/По патека + име на датотека"
+msgstr "По патека + име на датотека"
 
 #: src/audacious/ui_manager.c:291
 msgid "Removes duplicate entries from the playlist by their full path."
-msgstr ""
+msgstr "Ги отстранува записите дупликати од плеј листата по нивната целосна патека."
 
 #: src/audacious/ui_manager.c:294
-#, fuzzy
 msgid "Remove All"
-msgstr "/Отстрани сѐ"
+msgstr "Отстрани сѐ"
 
 #: src/audacious/ui_manager.c:295
 msgid "Removes all entries from the playlist."
-msgstr ""
+msgstr "Ги отстранува записите дупликати од плеј листата."
 
 #: src/audacious/ui_manager.c:298
-#, fuzzy
 msgid "Remove Unselected"
-msgstr "/Отстрани го неизбраното"
+msgstr "Отстрани го неизбраното"
 
 #: src/audacious/ui_manager.c:299
 msgid "Remove unselected entries from the playlist."
-msgstr ""
+msgstr "Отстрани ги записите од плеј листата кои не се избрани."
 
 #: src/audacious/ui_manager.c:302
-#, fuzzy
 msgid "Remove Selected"
-msgstr "/Отстрани го избраното"
+msgstr "Отстрани го избраното"
 
 #: src/audacious/ui_manager.c:303
 msgid "Remove selected entries from the playlist."
-msgstr ""
+msgstr "Отстрани ги избраните записи од плеј листата."
 
 #: src/audacious/ui_manager.c:308
-#, fuzzy
 msgid "Randomize List"
-msgstr "/Измешај ја листата"
+msgstr "Измешај ја листата"
 
 #: src/audacious/ui_manager.c:309
-#, fuzzy
 msgid "Randomizes the playlist."
-msgstr "/Измешај ја листата"
+msgstr "Ја меша листата."
 
 #: src/audacious/ui_manager.c:312
-#, fuzzy
 msgid "Reverse List"
-msgstr "/Преврти ја листата"
+msgstr "Преврти ја листата"
 
 #: src/audacious/ui_manager.c:313
-#, fuzzy
 msgid "Reverses the playlist."
-msgstr "Не ја чисти листата"
+msgstr "Ја превртува листата."
 
 #: src/audacious/ui_manager.c:316
-#, fuzzy
 msgid "Sort List"
-msgstr "/Подреди листа"
+msgstr "Подреди ја листата"
 
 #: src/audacious/ui_manager.c:319 src/audacious/ui_manager.c:349
-#, fuzzy
 msgid "Sorts the list by title."
-msgstr "/Подреди листа/По наслов"
+msgstr "Ја сортира листата по наслов."
 
 #: src/audacious/ui_manager.c:322 src/audacious/ui_manager.c:352
-#, fuzzy
 msgid "By Artist"
-msgstr "Изведувач"
+msgstr "По изведувач"
 
 #: src/audacious/ui_manager.c:323 src/audacious/ui_manager.c:353
-#, fuzzy
 msgid "Sorts the list by artist."
-msgstr "/Подреди листа/По наслов"
+msgstr "Ја сортира листата по изведувач."
 
 #: src/audacious/ui_manager.c:327 src/audacious/ui_manager.c:357
-#, fuzzy
 msgid "Sorts the list by filename."
-msgstr "/Подреди листа/По име на датотека"
+msgstr "Ја сортира листата по име на датотека."
 
 #: src/audacious/ui_manager.c:331 src/audacious/ui_manager.c:361
 msgid "Sorts the list by full pathname."
-msgstr ""
+msgstr "Ја сортира листата по целосното име на патеката."
 
 #: src/audacious/ui_manager.c:334 src/audacious/ui_manager.c:364
-#, fuzzy
 msgid "By Date"
-msgstr "Датум"
+msgstr "По датум"
 
 #: src/audacious/ui_manager.c:335 src/audacious/ui_manager.c:365
 msgid "Sorts the list by modification time."
-msgstr ""
+msgstr "Ја сортира листата по времето на измена."
 
 #: src/audacious/ui_manager.c:338 src/audacious/ui_manager.c:368
-#, fuzzy
 msgid "By Track Number"
-msgstr "Број на песна"
+msgstr "По број на песна"
 
 #: src/audacious/ui_manager.c:339 src/audacious/ui_manager.c:369
-#, fuzzy
 msgid "Sorts the list by track number."
-msgstr "/Подреди листа/По дата"
+msgstr "Ја сортира листата по број на песна."
 
 #: src/audacious/ui_manager.c:342 src/audacious/ui_manager.c:372
-#, fuzzy
 msgid "By Playlist Entry"
-msgstr "BMP уредувач за листата со песни"
+msgstr "По запис во плеј листата"
 
 #: src/audacious/ui_manager.c:343 src/audacious/ui_manager.c:373
-#, fuzzy
 msgid "Sorts the list by playlist entry."
-msgstr "/Подреди листа/По наслов"
+msgstr "Ја сортира листата по записот во плеј листата."
 
 #: src/audacious/ui_manager.c:346
-#, fuzzy
 msgid "Sort Selected"
-msgstr "/Избор на подредување"
+msgstr "Подреди го избраното"
 
 #: src/audacious/ui_manager.c:381 src/audacious/ui_manager.c:384
-#, fuzzy
 msgid "View Track Details"
-msgstr "/Види детали за песна"
+msgstr "Види детали за песна"
 
 #: src/audacious/ui_manager.c:382 src/audacious/ui_manager.c:385
-#, fuzzy
 msgid "View track details"
-msgstr "/Види детали за песна"
+msgstr "Види детали за песна"
 
 #: src/audacious/ui_manager.c:390
-#, fuzzy
 msgid "Play File"
-msgstr "Пушти датотеки"
+msgstr "Пушти датотека"
 
 #: src/audacious/ui_manager.c:391
-#, fuzzy
 msgid "Load and play a file"
-msgstr "Вчитувај податоци од листи и датотеки"
+msgstr "Вчитај и пушти датотека"
 
 #: src/audacious/ui_manager.c:393
-#, fuzzy
 msgid "Play Location"
-msgstr "Локација:"
+msgstr "Пушти локација"
 
 #: src/audacious/ui_manager.c:394
 msgid "Play media from the selected location"
-msgstr ""
+msgstr "Пушти медиуми од избраната локација"
 
 #: src/audacious/ui_manager.c:396
-#, fuzzy
 msgid "Preferences"
-msgstr "/Параметри"
+msgstr "Преференции"
 
 #: src/audacious/ui_manager.c:397
-#, fuzzy
 msgid "Open preferences window"
-msgstr "Параметри Прозорец"
+msgstr "Отвори го прозорецот за преференции"
 
 #: src/audacious/ui_manager.c:399
-#, fuzzy
 msgid "_Quit"
-msgstr "/_Излез"
+msgstr "_Излез"
 
 #: src/audacious/ui_manager.c:400
-#, fuzzy
 msgid "Quit Audacious"
-msgstr "За MPEG аудио додаток"
+msgstr "Излез од Audacious"
 
 #: src/audacious/ui_manager.c:402 src/audacious/ui_manager.c:403
-#, fuzzy
 msgid "Set A-B"
-msgstr "/Избери сѐ"
+msgstr "Постави A-B"
 
 #: src/audacious/ui_manager.c:405 src/audacious/ui_manager.c:406
-#, fuzzy
 msgid "Clear A-B"
-msgstr "/Исчисти ред"
+msgstr "Исчисти A-B"
 
 #: src/audacious/ui_manager.c:408 src/audacious/ui_manager.c:409
-#, fuzzy
 msgid "Jump to Playlist Start"
-msgstr "/Оди до почетокот на листата"
+msgstr "Оди до почетокот на листата"
 
 #: src/audacious/ui_manager.c:411 src/audacious/ui_manager.c:412
-#, fuzzy
 msgid "Jump to File"
-msgstr "/Оди до датотека"
+msgstr "Оди до датотека"
 
 #: src/audacious/ui_manager.c:417
-#, fuzzy
 msgid "Queue Toggle"
-msgstr "/Менување помеѓу редови"
+msgstr "Пушти/исклучи редица"
 
 #: src/audacious/ui_manager.c:418
 msgid "Enables/disables the entry in the playlist's queue."
-msgstr ""
+msgstr "Го овозможува/оневозможува записот во записот на плеј листата."
 
 #: src/audacious/ui_manager.c:425
 msgid "Load"
@@ -1250,19 +1106,17 @@ msgid "Import"
 msgstr "Увези"
 
 #: src/audacious/ui_manager.c:427
-#, fuzzy
 msgid "Save"
-msgstr "/Сними"
+msgstr "Зачувај"
 
 #: src/audacious/ui_manager.c:428
-#, fuzzy
 msgid "Delete"
-msgstr "/Избриши"
+msgstr "Избриши"
 
 #: src/audacious/ui_manager.c:430 src/audacious/ui_manager.c:451
 #: src/audacious/ui_manager.c:466
 msgid "Preset"
-msgstr "Модификатор"
+msgstr "Шаблон"
 
 #: src/audacious/ui_manager.c:431
 msgid "Load preset"
@@ -1274,9 +1128,8 @@ msgid "Auto-load preset"
 msgstr "Автоматски вчитај модификатор"
 
 #: src/audacious/ui_manager.c:434
-#, fuzzy
 msgid "Load auto-load preset"
-msgstr "/Вчитај/автоматски-вчитлив модификатор"
+msgstr "Вчитај автоматски-вчитлив шаблон"
 
 #: src/audacious/ui_manager.c:436 src/audacious/ui_manager.c:457
 msgid "Default"
@@ -1284,99 +1137,87 @@ msgstr "Стандардно"
 
 #: src/audacious/ui_manager.c:437
 msgid "Load default preset into equalizer"
-msgstr ""
+msgstr "Вчитај стандардно поставување за израмнувачот"
 
 #: src/audacious/ui_manager.c:439
 msgid "Zero"
 msgstr "Нула"
 
 #: src/audacious/ui_manager.c:440
-#, fuzzy
 msgid "Set equalizer preset levels to zero"
-msgstr "Сними модификатор за изедначувачот"
+msgstr "Постави ги нивоата на шаблонот на изедначувачот на нула"
 
 #: src/audacious/ui_manager.c:442
-#, fuzzy
 msgid "From file"
-msgstr "/Вчитај/Од датотека"
+msgstr "Од датотека"
 
 #: src/audacious/ui_manager.c:443
-#, fuzzy
 msgid "Load preset from file"
-msgstr "Вчитај модификација"
+msgstr "Вчитај шаблон од датотека"
 
 #: src/audacious/ui_manager.c:445
 msgid "From WinAMP EQF file"
 msgstr "Од датотека"
 
 #: src/audacious/ui_manager.c:446
-#, fuzzy
 msgid "Load preset from WinAMP EQF file"
-msgstr "/Вчитај/Од WinAMP EQF датотека"
+msgstr "Вчитај шаблон од WinAMP EQF датотека"
 
 #: src/audacious/ui_manager.c:448
-#, fuzzy
 msgid "WinAMP Presets"
-msgstr "Модификатори од WinAMP"
+msgstr "WinAMP шаблони"
 
 #: src/audacious/ui_manager.c:449
-#, fuzzy
 msgid "Import WinAMP presets"
-msgstr "/Увези/модификатори од WinAMP"
+msgstr "Увези WinAMP шаблони"
 
 #: src/audacious/ui_manager.c:452
 msgid "Save preset"
 msgstr "Сними модификатор"
 
 #: src/audacious/ui_manager.c:455
-#, fuzzy
 msgid "Save auto-load preset"
-msgstr "/Сними/автоматски-вчитлив модификатор"
+msgstr "Зачувај автоматски-вчитувачки шаблон"
 
 #: src/audacious/ui_manager.c:458
-#, fuzzy
 msgid "Save default preset"
-msgstr "Сними автоматски-модификатор"
+msgstr "Зачувај стандарден шаблон"
 
 #: src/audacious/ui_manager.c:460
 msgid "To file"
 msgstr "До датотека"
 
 #: src/audacious/ui_manager.c:461
-#, fuzzy
 msgid "Save preset to file"
-msgstr "Сними модификатор"
+msgstr "Зачувај го шаблонот во датотека"
 
 #: src/audacious/ui_manager.c:463
 msgid "To WinAMP EQF file"
 msgstr "До WinAMP EQF датотека"
 
 #: src/audacious/ui_manager.c:464
-#, fuzzy
 msgid "Save preset to WinAMP EQF file"
-msgstr "/Сними/Во WinAMP EQF датотека"
+msgstr "Зачувај го шаблонот во WinAMP EQF датотека"
 
 #: src/audacious/ui_manager.c:467
 msgid "Delete preset"
 msgstr "Избриши модификатор"
 
 #: src/audacious/ui_manager.c:470
-#, fuzzy
 msgid "Delete auto-load preset"
-msgstr "/Избриши/автоматски-вчитлив модификатор"
+msgstr "Избриши автоматски-вчитувачки шаблон"
 
 #: src/audacious/ui_preferences.c:101 src/audacious/glade/prefswin.glade:1363
 msgid "Appearance"
 msgstr "Изглед"
 
 #: src/audacious/ui_preferences.c:102
-#, fuzzy
 msgid "Audio"
-msgstr "За MPEG аудио додаток"
+msgstr "Аудио"
 
 #: src/audacious/ui_preferences.c:103
 msgid "Connectivity"
-msgstr ""
+msgstr "Поврзливост"
 
 #: src/audacious/ui_preferences.c:104 src/audacious/glade/prefswin.glade:2862
 msgid "Equalizer"
@@ -1390,17 +1231,17 @@ msgstr "Глушец"
 msgid "Plugins"
 msgstr "Додатоци"
 
-#: src/audacious/ui_preferences.c:113 src/audacious/ui_fileinfopopup.c:254
+#: src/audacious/ui_preferences.c:113 src/audacious/ui_fileinfopopup.c:243
 msgid "Artist"
 msgstr "Изведувач"
 
-#: src/audacious/ui_preferences.c:114 src/audacious/ui_fileinfopopup.c:257
-#: src/audacious/titlestring.c:380
+#: src/audacious/ui_preferences.c:114 src/audacious/ui_fileinfopopup.c:260
+#: src/audacious/titlestring.c:372
 msgid "Album"
 msgstr "Албум"
 
-#: src/audacious/ui_preferences.c:115 src/audacious/ui_fileinfopopup.c:251
-#: src/audacious/ui_fileinfopopup.c:361
+#: src/audacious/ui_preferences.c:115 src/audacious/ui_fileinfopopup.c:226
+#: src/audacious/ui_fileinfopopup.c:394
 msgid "Title"
 msgstr "Наслов"
 
@@ -1408,37 +1249,31 @@ msgstr "Наслов"
 msgid "Tracknumber"
 msgstr "Број на песната"
 
-#: src/audacious/ui_preferences.c:117 src/audacious/ui_fileinfopopup.c:260
-#: src/audacious/titlestring.c:381
+#: src/audacious/ui_preferences.c:117 src/audacious/ui_fileinfopopup.c:277
+#: src/audacious/titlestring.c:373
 msgid "Genre"
 msgstr "Вид"
-
-#: src/audacious/ui_preferences.c:118 src/audacious/ui_preferences.c:486
-#: src/audacious/ui_preferences.c:574 src/audacious/ui_preferences.c:663
-#: src/audacious/ui_preferences.c:759 src/audacious/ui_fileinfopopup.c:370
-msgid "Filename"
-msgstr "Име на датотека"
 
 #: src/audacious/ui_preferences.c:119
 msgid "Filepath"
 msgstr "Патека на датотеката"
 
-#: src/audacious/ui_preferences.c:120 src/audacious/titlestring.c:387
+#: src/audacious/ui_preferences.c:120 src/audacious/titlestring.c:379
 msgid "Date"
 msgstr "Датум"
 
-#: src/audacious/ui_preferences.c:121 src/audacious/ui_fileinfopopup.c:263
-#: src/audacious/titlestring.c:388
+#: src/audacious/ui_preferences.c:121 src/audacious/ui_fileinfopopup.c:294
+#: src/audacious/titlestring.c:380
 msgid "Year"
 msgstr "Година"
 
-#: src/audacious/ui_preferences.c:122 src/audacious/titlestring.c:389
+#: src/audacious/ui_preferences.c:122 src/audacious/titlestring.c:381
 msgid "Comment"
 msgstr "Коментар"
 
 #: src/audacious/ui_preferences.c:143
 msgid "localhost"
-msgstr ""
+msgstr "localhost"
 
 #: src/audacious/ui_preferences.c:456 src/audacious/ui_preferences.c:543
 #: src/audacious/ui_preferences.c:632 src/audacious/ui_preferences.c:728
@@ -1450,275 +1285,253 @@ msgstr "Вклучен"
 msgid "Description"
 msgstr "Опис"
 
-#: src/audacious/ui_preferences.c:1878
+#: src/audacious/ui_preferences.c:1783
 msgid "Category"
 msgstr "Категорија"
 
-#: src/audacious/ui_preferences.c:2462
+#: src/audacious/ui_preferences.c:2348
 msgid "Preferences Window"
 msgstr "Параметри Прозорец"
 
 #: src/audacious/ui_skinselector.c:176
 msgid "Archived Winamp 2.x skin"
-msgstr ""
+msgstr "Архивирана тема за Winamp 2.x"
 
 #: src/audacious/ui_skinselector.c:181
 msgid "Unarchived Winamp 2.x skin"
-msgstr ""
+msgstr "Неархивирана тема за Winamp 2.x"
 
 #: src/audacious/ui_fileinfo.c:160
 msgid "Track Information Window"
-msgstr ""
+msgstr "Прозорец за информации на песната"
 
-#: src/audacious/ui_fileinfopopup.c:266
-#, fuzzy
+#: src/audacious/ui_fileinfopopup.c:311
 msgid "Track Number"
 msgstr "Број на песна"
 
-#: src/audacious/ui_fileinfopopup.c:270
-#, fuzzy
+#: src/audacious/ui_fileinfopopup.c:328
 msgid "Track Length"
-msgstr "Должина на песна:"
+msgstr "Должина на песна"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:127
 msgid "Open Files"
 msgstr "Отвори датотеки"
 
-#: src/audacious/ui_fileopener.c:129
+#: src/audacious/ui_fileopener.c:127
 msgid "Add Files"
 msgstr "Додај датотеки"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:129
 msgid "Close dialog on Open"
 msgstr "Затвори дијалог на отворање"
 
-#: src/audacious/ui_fileopener.c:131
+#: src/audacious/ui_fileopener.c:129
 msgid "Close dialog on Add"
 msgstr "Затвори дијалог на додавање"
 
-#: src/audacious/ui_fileopener.c:356
-#, fuzzy
+#: src/audacious/ui_fileopener.c:354
 msgid "Play files"
 msgstr "Пушти датотеки"
 
-#: src/audacious/ui_fileopener.c:358
-#, fuzzy
+#: src/audacious/ui_fileopener.c:356
 msgid "Load files"
-msgstr "/Вчитај/Од датотека"
+msgstr "Вчитај датотеки"
 
-#: src/audacious/ui_playlist.c:483
-#, fuzzy
+#: src/audacious/ui_playlist.c:484
 msgid "Search entries in active playlist"
-msgstr "Покажи ги броевите на песните во листата"
+msgstr "Барај записи во активната плеј листа"
 
-#: src/audacious/ui_playlist.c:489
+#: src/audacious/ui_playlist.c:490
 msgid ""
 "Select entries in playlist by filling one or more fields. Fields use regular "
 "expressions syntax, case-insensitive. If you don't know how regular "
 "expressions work, simply insert a literal portion of what you're searching "
 "for."
 msgstr ""
+"Одберете записи во плеј листата со пополнување на едно или повеќе полиња. Полињата "
+"користат синтакса со регуларни изрази, со разликување на мали-големи букви. Ако не знаете "
+"како работат регуларните изрази, едноставно вметнете мало делче од тоа што го барате."
 
-#: src/audacious/ui_playlist.c:496
-#, fuzzy
+#: src/audacious/ui_playlist.c:497
 msgid "Track name: "
-msgstr "Имиња на песни:"
+msgstr "Име на песна: "
 
-#: src/audacious/ui_playlist.c:502
-#, fuzzy
+#: src/audacious/ui_playlist.c:503
 msgid "Album name: "
-msgstr "Албум"
+msgstr "Име на албум: "
 
-#: src/audacious/ui_playlist.c:508
-#, fuzzy
+#: src/audacious/ui_playlist.c:509
 msgid "Artist: "
-msgstr "Изведувач:"
+msgstr "Изведувач: "
 
-#: src/audacious/ui_playlist.c:514
-#, fuzzy
+#: src/audacious/ui_playlist.c:515
 msgid "Filename: "
-msgstr "Име на датотека:"
+msgstr "Име на датотека: "
 
-#: src/audacious/ui_playlist.c:521
+#: src/audacious/ui_playlist.c:522
 msgid "Clear previous selection before searching"
-msgstr ""
+msgstr "Исчисти го претходниот избор пред пребарување"
 
-#: src/audacious/ui_playlist.c:524
+#: src/audacious/ui_playlist.c:525
 msgid "Automatically toggle queue for matching entries"
-msgstr ""
+msgstr "Автоматски овозможи редица за совпаѓачките записи"
 
-#: src/audacious/ui_playlist.c:527
+#: src/audacious/ui_playlist.c:528
 msgid "Create a new playlist with matching entries"
-msgstr ""
+msgstr "Креирај нова плеј листа со совпаѓачките записи"
 
-#: src/audacious/ui_playlist.c:777
+#: src/audacious/ui_playlist.c:788
 #, c-format
 msgid "Error writing playlist \"%s\": %s"
 msgstr "Грешка при снимање на листата \"%s\": %s"
 
-#: src/audacious/ui_playlist.c:799
+#: src/audacious/ui_playlist.c:809
 #, c-format
 msgid "%s already exist. Continue?"
 msgstr "%s веќе постои. Да продолжам?"
 
-#: src/audacious/ui_playlist.c:814
-#, fuzzy, c-format
+#: src/audacious/ui_playlist.c:823
+#, c-format
 msgid ""
 "<b><big>Unable to save playlist.</big></b>\n"
 "\n"
 "Unknown file type for '%s'.\n"
-msgstr "Не успеав да ја зачувам плејлистата! Непознат тип на датотека за %s"
+msgstr ""
+"<b><big>Не можам да ја зачувам плеј листата.</big></b>\n"
+"\n"
+"Непознат тип на датотека за „%s“.\n"
 
-#: src/audacious/ui_playlist.c:966
-#, fuzzy
+#: src/audacious/ui_playlist.c:963
 msgid "Load Playlist"
-msgstr "Вчитај плејлиста"
+msgstr "Вчитај плеј листа"
 
-#: src/audacious/ui_playlist.c:979
-#, fuzzy
+#: src/audacious/ui_playlist.c:976
 msgid "Save Playlist"
-msgstr "Зачувај плејлиста"
+msgstr "Зачувај плеј листа"
 
-#: src/audacious/ui_playlist.c:1690
-#, fuzzy
+#: src/audacious/ui_playlist.c:1672
 msgid "Audacious Playlist Editor"
-msgstr "/Покажи уредувач за листата"
+msgstr "Уредувач на плеј листи на Audacious"
 
 #: src/audacious/ui_urlopener.c:90
-#, fuzzy
 msgid "Add/Open URL Dialog"
-msgstr "Додаj/Отвори го дијалогот за датотеки"
+msgstr "Додаj/Отвори го дијалогот за URL"
 
 #: src/audacious/ui_playlist_manager.c:253
-#, fuzzy
 msgid "Playlist Manager"
-msgstr "/Без напредување во листата"
+msgstr "Менаџер на плеј листи"
 
 #: src/audacious/ui_playlist_manager.c:292
 msgid "Entries"
-msgstr ""
+msgstr "Записи"
 
 #: src/audacious/ui_playlist_manager.c:306
-#, fuzzy
 msgid "_Rename"
-msgstr "Име на датотека"
+msgstr "_Преименувај"
 
 #: src/audacious/ui_jumptotrack.c:134
-#, fuzzy
 msgid "Un_queue"
-msgstr "Редица"
+msgstr "Из_вади од редива"
 
-#: src/audacious/ui_jumptotrack.c:136 src/audacious/ui_jumptotrack.c:573
-#, fuzzy
+#: src/audacious/ui_jumptotrack.c:136 src/audacious/ui_jumptotrack.c:525
 msgid "_Queue"
-msgstr "Редица"
+msgstr "Во _редица"
 
-#: src/audacious/ui_jumptotrack.c:498
+#: src/audacious/ui_jumptotrack.c:450
 msgid "Jump to Track"
 msgstr "Оди до песна"
 
-#: src/audacious/ui_jumptotrack.c:539
+#: src/audacious/ui_jumptotrack.c:491
 msgid "Filter: "
 msgstr "Филтер "
 
-#: src/audacious/ui_jumptotrack.c:540
-#, fuzzy
+#: src/audacious/ui_jumptotrack.c:492
 msgid "_Filter:"
-msgstr "Филтер "
+msgstr "_Филтер: "
 
-#: src/audacious/playback.c:171
+#: src/audacious/playback.c:198
 msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
 msgstr ""
+"<b><big>Не е избран приклучок за излез.</big></b>\n"
+"Немате избрано приклучок за излез."
 
-#: src/audacious/titlestring.c:379
+#: src/audacious/titlestring.c:371
 msgid "Performer/Artist"
 msgstr "Изведувач"
 
-#: src/audacious/titlestring.c:382
+#: src/audacious/titlestring.c:374
 msgid "File name"
 msgstr "Име на датотека"
 
-#: src/audacious/titlestring.c:383
+#: src/audacious/titlestring.c:375
 msgid "File path"
 msgstr "Патека на датотеката"
 
-#: src/audacious/titlestring.c:384
+#: src/audacious/titlestring.c:376
 msgid "File extension"
 msgstr "Наставка на датотека"
 
-#: src/audacious/titlestring.c:385
+#: src/audacious/titlestring.c:377
 msgid "Track name"
 msgstr "Име на песна"
 
-#: src/audacious/titlestring.c:386
+#: src/audacious/titlestring.c:378
 msgid "Track number"
 msgstr "Број на песна"
 
-#: src/audacious/titlestring.c:449
+#: src/audacious/titlestring.c:441
 msgid "%{n:...%}: Display \"...\" only if element %n is present"
 msgstr "%{n:...%}: Display \"...\" only if element %n is present"
 
 #: src/audacious/glade/fileinfo.glade:8
-#, fuzzy
 msgid "Track Information"
-msgstr "Засилување на песна:"
+msgstr "Информации за песната"
 
 #: src/audacious/glade/fileinfo.glade:81
-#, fuzzy
 msgid "<span size=\"small\">Title</span>"
-msgstr "<span size=\"medium\"><b>Медиум</b></span>"
+msgstr "<span size=\"small\">Наслов</span>"
 
 #: src/audacious/glade/fileinfo.glade:139
-#, fuzzy
 msgid "<span size=\"small\">Artist</span>"
-msgstr "<span size=\"medium\"><b> Подесувања</b></span>"
+msgstr "<span size=\"small\">Изведувач</span>"
 
 #: src/audacious/glade/fileinfo.glade:197
-#, fuzzy
 msgid "<span size=\"small\">Album</span>"
-msgstr "<span size=\"medium\"><b> Излезни</b></span>"
+msgstr "<span size=\"medium\"><b> Албум</b></span>"
 
 #: src/audacious/glade/fileinfo.glade:255
-#, fuzzy
 msgid "<span size=\"small\">Comment</span>"
-msgstr "<span size=\"medium\"><b> Општо</b></span>"
+msgstr "<span size=\"medium\"><b> Коментар</b></span>"
 
 #: src/audacious/glade/fileinfo.glade:313
-#, fuzzy
 msgid "<span size=\"small\">Genre</span>"
-msgstr "<span size=\"medium\"><b> Општо</b></span>"
+msgstr "<span size=\"small\">Жанр</span>"
 
 #: src/audacious/glade/fileinfo.glade:392
-#, fuzzy
 msgid "<span size=\"small\">Year</span>"
-msgstr "<span size=\"medium\"><b>Медиум</b></span>"
+msgstr "<span size=\"small\">Година</span>"
 
 #: src/audacious/glade/fileinfo.glade:441
-#, fuzzy
 msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"medium\"><b> Општо</b></span>"
+msgstr "<span size=\"small\">Број на песна</span>"
 
 #: src/audacious/glade/fileinfo.glade:499
-#, fuzzy
 msgid "<span size=\"small\">Location</span>"
-msgstr "<span size=\"medium\"><b> Подесувања</b></span>"
+msgstr "<span size=\"small\">Локација</span>"
 
 #: src/audacious/glade/prefswin.glade:8
-#, fuzzy
 msgid "Audacious Preferences"
-msgstr "Параметри"
+msgstr "Преференции на Audacious"
 
 #: src/audacious/glade/prefswin.glade:115
-#, fuzzy
 msgid "_Decoder list:"
-msgstr "Декодер"
+msgstr "Листа на _декодери:"
 
 #: src/audacious/glade/prefswin.glade:219
-#, fuzzy
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
-msgstr "<span size=\"medium\"><b> Општо</b></span>"
+msgstr "<span size=\"medium\"><b>Декодери</b></span>"
 
 #: src/audacious/glade/prefswin.glade:261
 msgid "_General plugin list:"
@@ -1749,9 +1562,8 @@ msgid "<b>_Skin</b>"
 msgstr "<b>_Тема</b>"
 
 #: src/audacious/glade/prefswin.glade:799
-#, fuzzy
 msgid "Refresh skin list"
-msgstr "/Стапка на освежување"
+msgstr "Освежи ја листата со теми"
 
 #: src/audacious/glade/prefswin.glade:893
 msgid "<b>_Fonts</b>"
@@ -1774,11 +1586,12 @@ msgid ""
 "Use bitmap fonts if they are available. Bitmap fonts do not support Unicode "
 "strings."
 msgstr ""
+"Користете битмап фонтови ако се достапни. Битмап фонтовите не поддржуваат"
+"Unicode низи."
 
 #: src/audacious/glade/prefswin.glade:1093
-#, fuzzy
 msgid "Use Bitmap fonts if available"
-msgstr "Стерео (ако е достапно)"
+msgstr "Користи битмап фонтови ако се достапни"
 
 #: src/audacious/glade/prefswin.glade:1127
 msgid "<b>_Miscellaneous</b>"
@@ -1789,9 +1602,8 @@ msgid "Show track numbers in playlist"
 msgstr "Покажи ги броевите на песните во листата"
 
 #: src/audacious/glade/prefswin.glade:1210
-#, fuzzy
 msgid "Show separators in playlist"
-msgstr "Покажи ги броевите на песните во листата"
+msgstr "Покажи разделувачи во плеј листата"
 
 #: src/audacious/glade/prefswin.glade:1245
 msgid "Use custom cursors"
@@ -1800,15 +1612,15 @@ msgstr "Користи сопствени стрелки"
 #: src/audacious/glade/prefswin.glade:1279
 #: src/audacious/glade/prefswin.glade:1290
 msgid "This enables the window manager to show decorations for windows."
-msgstr ""
+msgstr "Ова овозможува менаџерот на прозорци да прикажи декорации на прозорците."
 
 #: src/audacious/glade/prefswin.glade:1281
 msgid "Show window manager decoration"
-msgstr ""
+msgstr "Прикажи декорација од менаџерот на прозорци"
 
 #: src/audacious/glade/prefswin.glade:1289
 msgid "Show window manager decorations"
-msgstr ""
+msgstr "Прикажи декорации од менаџерот на прозорци"
 
 #: src/audacious/glade/prefswin.glade:1319
 msgid ""
@@ -1816,28 +1628,29 @@ msgid ""
 "provided by Audacious itself and is faster than the default GTK2 selector "
 "(but sadly not as user-friendly)."
 msgstr ""
+"Ова ги овозможува дијалог прозорците за избор на датотеки со стилот на XMMS/GTK1. "
+"Овој избирач е овозможен од Audacious и е побрз од стандардниот GTK2 избирач "
+"(но за жал, не е толку добар за корисниците)."
 
 #: src/audacious/glade/prefswin.glade:1321
 msgid "Use XMMS-style file selector instead of the default selector"
-msgstr ""
+msgstr "Користи избирач на датотеки во стилот на XMMS, наместо стандардниот"
 
 #: src/audacious/glade/prefswin.glade:1410
 msgid "<b>Mouse wheel</b>"
 msgstr "<b>Тркалцето на глушецот</b>"
 
 #: src/audacious/glade/prefswin.glade:1458
-#, fuzzy
 msgid "Changes volume by"
-msgstr "Тркалцето на глушецот ја менува јачината за"
+msgstr "Ја променува јачината на звукот за"
 
 #: src/audacious/glade/prefswin.glade:1486
 msgid "percent"
 msgstr "проценти"
 
 #: src/audacious/glade/prefswin.glade:1514
-#, fuzzy
 msgid "Scrolls playlist by"
-msgstr "Глушецот ја поместува листата за"
+msgstr "Ја придвижува плеј листата за"
 
 #: src/audacious/glade/prefswin.glade:1567
 msgid "lines"
@@ -1857,7 +1670,7 @@ msgstr "Конвертирај %20 во празни"
 
 #: src/audacious/glade/prefswin.glade:1799
 msgid "Convert backslash '\\' to forward slash '/'"
-msgstr ""
+msgstr "Конвертирај ги „\\“  во „/“"
 
 #: src/audacious/glade/prefswin.glade:1833
 msgid "<b>Metadata</b>"
@@ -1880,9 +1693,8 @@ msgid "On load"
 msgstr "При вчитување"
 
 #: src/audacious/glade/prefswin.glade:1934
-#, fuzzy
 msgid "Load metadata on demand when displaying the file in the playlist"
-msgstr "Belastning датотека до or"
+msgstr "Вчитај ги мета податоците по барање, кога се прикажува датотеката во плеј листата"
 
 #: src/audacious/glade/prefswin.glade:1936
 msgid "On display"
@@ -1890,7 +1702,7 @@ msgstr "При приказ"
 
 #: src/audacious/glade/prefswin.glade:1966
 msgid "Fallback character encodings:"
-msgstr ""
+msgstr "Помошни енкодирања на знаци:"
 
 #: src/audacious/glade/prefswin.glade:1994
 msgid ""
@@ -1899,30 +1711,34 @@ msgid ""
 "in this list would be treated as candidates of the encoding of metadata, and "
 "fall back conversion from these encodings to UTF-8 would be attempted."
 msgstr ""
+"Листа на енкодирања на знаци кои се користат за помошно конвертирање на мета податоци. "
+"Ако автоматскиот детектор на енкодирања не успее или е оневозможен, енкодирањата од "
+"оваа листа ќе бидат третирани како кандидати за енкодирање на мета податоците и "
+"ќе се направи обид за конверзија на овие енкодирања во UTF-8."
 
 #: src/audacious/glade/prefswin.glade:2035
 msgid "Auto character encoding detector for:"
-msgstr ""
+msgstr "Откривач на автоматско енкодирање на знаци за:"
 
 #: src/audacious/glade/prefswin.glade:2091
-#, fuzzy
 msgid "<b>File Dialog</b>"
-msgstr "<b> Име на датотека</b>"
+msgstr "<b>Дијалог прозорец за датотеки</b>"
 
 #: src/audacious/glade/prefswin.glade:2130
 msgid ""
 "Always refresh the file dialog (this will slow opening the dialog on large "
 "directories, and Gnome VFS should handle automatically)."
 msgstr ""
+"Секогаш освежувај го дијалогот (ова ќе го забави отворањето на дијалогот на"
+"големи директориуми и Gnome VFS ќе се справува автоматски)."
 
 #: src/audacious/glade/prefswin.glade:2132
 msgid "Always refresh directory when opening file dialog"
-msgstr ""
+msgstr "Секогаш освежувај го директориумот кога се отвора дијалогот за датотеки"
 
 #: src/audacious/glade/prefswin.glade:2166
-#, fuzzy
 msgid "<b>Song Display</b>"
-msgstr "<b> Приказ за песните</b>"
+msgstr "<b>Приказ на песни</b>"
 
 #: src/audacious/glade/prefswin.glade:2214
 msgid "Title format:"
@@ -1933,7 +1749,6 @@ msgid "Custom string:"
 msgstr "Сопствен стринг:"
 
 #: src/audacious/glade/prefswin.glade:2293
-#, fuzzy
 msgid ""
 "TITLE\n"
 "ARTIST - TITLE\n"
@@ -1945,7 +1760,8 @@ msgid ""
 msgstr ""
 "НАСЛОВ\n"
 "ИЗВЕДУВАЧ -- НАСЛОВ\n"
-"ИЗВЕДУВАЧ - АЛБУМ - НАСЛОВ\n"
+"ИЗВЕДУВАЧ - АЛБУМ - ПЕСНА. НАСЛОВ\n"
+"ИЗВЕДУВАЧ [ АЛБУМ ] - ПЕСНА. НАСЛОВ\n"
 "АЛБУМ - НАСЛОВ\n"
 "Сопствено"
 
@@ -1954,9 +1770,8 @@ msgid "Show information about titlestring format"
 msgstr "Покажи информации за форматот на насловот"
 
 #: src/audacious/glade/prefswin.glade:2365
-#, fuzzy
 msgid "<b>Popup Information</b>"
-msgstr "Конфигурација за MPEG аудио додаток"
+msgstr "<b>Информации во скокачки прозорец</b>"
 
 #: src/audacious/glade/prefswin.glade:2416
 msgid ""
@@ -1964,14 +1779,17 @@ msgid ""
 "window shows title of song, name of album, genre, year of publish, track "
 "number, track length, and artwork."
 msgstr ""
+"Приклучува скокачки прозорец со информации за посочениот запис од плеј листата. "
+"Прозорецот покажува наслов од песната, име на албумот, жанр, година на издавање, број "
+"на песна, должина на песната и слики."
 
 #: src/audacious/glade/prefswin.glade:2418
 msgid "Show popup information for playlist entries"
-msgstr ""
+msgstr "Прикажи информации во скокачки прозорец за записите од плеј листата"
 
 #: src/audacious/glade/prefswin.glade:2445
 msgid "Edit settings for popup information"
-msgstr ""
+msgstr "Уреди ги поставувањата за скокачките информации"
 
 #: src/audacious/glade/prefswin.glade:2553
 msgid "<b>Presets</b>"
@@ -1990,53 +1808,48 @@ msgid "Available _Presets:"
 msgstr "Достапни _модификатори:"
 
 #: src/audacious/glade/prefswin.glade:2909
-#, fuzzy
 msgid "<b>Proxy Configuration</b>"
-msgstr "Конфигурација за MPEG аудио додаток"
+msgstr "<b>Конфигурација на прокси</b>"
 
 #: src/audacious/glade/prefswin.glade:2967
 msgid "Enable proxy usage"
-msgstr ""
+msgstr "Овозможи употреба на прокси"
 
 #: src/audacious/glade/prefswin.glade:2998
 msgid "Proxy hostname:"
-msgstr ""
+msgstr "Име на хост на прокси:"
 
 #: src/audacious/glade/prefswin.glade:3026
-#, fuzzy
 msgid "Proxy port:"
-msgstr "Proxy:"
+msgstr "Порта за прокси:"
 
 #: src/audacious/glade/prefswin.glade:3120
-#, fuzzy
 msgid "Use authentication with proxy"
-msgstr "Користи автентикација"
+msgstr "Користи проверка на автентичност со прокси"
 
 #: src/audacious/glade/prefswin.glade:3151
-#, fuzzy
 msgid "Proxy username:"
-msgstr "Корисничко име:"
+msgstr "Корисничко име на проксито:"
 
 #: src/audacious/glade/prefswin.glade:3179
-#, fuzzy
 msgid "Proxy password:"
-msgstr "Лозинка:"
+msgstr "Лозинка на проксито:"
 
 #: src/audacious/glade/prefswin.glade:3295
 msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
+"<span size=\"small\">Промената на тие поставувања ќе бара рестартирање на"
+"Audacious.</span>"
 
 #: src/audacious/glade/prefswin.glade:3419
-#, fuzzy
 msgid "<b>Audio System</b>"
-msgstr "<b>Модификатори</b>"
+msgstr "<b>Аудио систем</b>"
 
 #: src/audacious/glade/prefswin.glade:3473
-#, fuzzy
 msgid "Current output plugin:"
-msgstr "_Тековен излезен додаток:"
+msgstr "Тековен излезен додаток:"
 
 #: src/audacious/glade/prefswin.glade:3541
 msgid ""
@@ -2046,36 +1859,38 @@ msgid ""
 "Please note however, that high values will result in Audacious performing "
 "poorly.</span>"
 msgstr ""
+"<span size=\"small\">Ова е количеството време за пребаферирање на аудио"
+"тековите во милисекунди.\n"
+"Зголемете ја оваа вредност ако имате скокања во пуштањето. \n"
+"Сепак забележете дека повисоките вредности резултираат во неправилно однесување на Audacious.</span>"
 
 #: src/audacious/glade/prefswin.glade:3571
-#, fuzzy
 msgid "Buffer size:"
-msgstr "Бафер големина (kb):"
+msgstr "Бафер големина:"
 
 #: src/audacious/glade/prefswin.glade:3695
-#, fuzzy
 msgid "Output Plugin Preferences"
-msgstr "OSS излезен додаток"
+msgstr "Преференции за излезниот додаток"
 
 #: src/audacious/glade/prefswin.glade:3770
-#, fuzzy
 msgid "Output Plugin Information"
-msgstr "ESD конфигурација на излезниот додаток"
+msgstr "Информации за излезниот додаток"
 
 #: src/audacious/glade/prefswin.glade:3822
-#, fuzzy
 msgid "<b>Format Detection</b>"
-msgstr "Автоматска детекција"
+msgstr "<b>Откривање на формат</b>"
 
 #: src/audacious/glade/prefswin.glade:3861
 msgid ""
 "When checked, Audacious will detect file formats on demand. This can result "
 "in a messier playlist, but delivers a major speed benefit."
 msgstr ""
+"Кога е чекирано, Audacious ќе го проверува форматот на датотеките по потреба. Ова можи да "
+"резултира во неуредни плеј листи, но носи голема придобивка во брзина."
 
 #: src/audacious/glade/prefswin.glade:3863
 msgid "Detect file formats on demand, instead of immediately."
-msgstr ""
+msgstr "Откривај ги форматите на датотеките по потреба, наместо веднаш."
 
 #: src/audacious/glade/prefswin.glade:3897
 msgid ""
@@ -2083,10 +1898,13 @@ msgid ""
 "slightly slower than detection on demand, but still provides a minimal level "
 "of format detection."
 msgstr ""
+"Кога е чекирано, Audacious ќе ги открива форматите на датотеките, базирано на "
+"екстензијата. Ова е нешто побавно од откривањето по потреба, но овозможува "
+"минимално ниво на откривање на форматите."
 
 #: src/audacious/glade/prefswin.glade:3899
 msgid "Detect file formats by extension."
-msgstr ""
+msgstr "Откривај ги форматите на датотеките по екстензија."
 
 #: src/audacious/glade/prefswin.glade:3933
 msgid "<b>Playback</b>"
@@ -2097,10 +1915,12 @@ msgid ""
 "When Audacious starts, automatically begin playing from the point where we "
 "stopped before."
 msgstr ""
+"Кога Audacious се стартува, автоматски почни со пуштање од таму каде што "
+"застанав."
 
 #: src/audacious/glade/prefswin.glade:3974
 msgid "Continue playback on startup"
-msgstr ""
+msgstr "Продолжи со пуштањето по стартување"
 
 #: src/audacious/glade/prefswin.glade:4008
 msgid "When finished playing a song, don't automatically advance to the next."
@@ -2122,120 +1942,79 @@ msgstr "Пауза за"
 msgid "seconds"
 msgstr "секунди"
 
-#: src/audacious/glade/prefswin.glade:4175
-#, fuzzy
-msgid "<b>Sampling Rate Converter</b>"
-msgstr "Фрекфенција на семплување:"
-
-#: src/audacious/glade/prefswin.glade:4215
-#, fuzzy
-msgid "Enable Sampling Rate Converter"
-msgstr "Фрекфенција на семплување:"
-
-#: src/audacious/glade/prefswin.glade:4264
-#, fuzzy
-msgid "Sampling Rate [Hz]:"
-msgstr "Фрекфенција на семплување:"
+#: src/audacious/glade/prefswin.glade:4310
+msgid "Popup Information Settings"
+msgstr "Поставувања на информациите во скокачки прозорци"
 
 #: src/audacious/glade/prefswin.glade:4334
-msgid ""
-"<span size=\"small\">All stream will be converted to this sampling rate.\n"
-"This should be the max supported sampling rate of\n"
-"the sound card or output plugin.</span>"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4364
-msgid "Converter Type:"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4392
-msgid ""
-"SRC_SINC_BEST_QUALITY\n"
-"SRC_SINC_MEDIUM_QUALITY\n"
-"SRC_SINC_FASTEST\n"
-"SRC_ZERO_ORDER_HOLD\n"
-"SRC_LINEAR"
-msgstr ""
-
-#: src/audacious/glade/prefswin.glade:4593
-#, fuzzy
-msgid "Reload Plugins"
-msgstr "/Вчитај тема пак"
-
-#: src/audacious/glade/prefswin.glade:4654
-#, fuzzy
-msgid "Popup Information Settings"
-msgstr "Конфигурација за MPEG аудио додаток"
-
-#: src/audacious/glade/prefswin.glade:4678
-#, fuzzy
 msgid "<b>Cover image retrieve</b>"
-msgstr "Автоматска детекција"
+msgstr "<b>Добивање на слика од албумот</b>"
 
-#: src/audacious/glade/prefswin.glade:4703
+#: src/audacious/glade/prefswin.glade:4359
 msgid ""
 "While searching for the album's cover, Audacious looks for certain words in "
 "the filename. You can specify those words in the lists below, separated "
 "using commas."
 msgstr ""
+"При барање на слика од албумот, Audacious бара одредени зборови во името на "
+"датотеката. Можете да ги одредите тие зборови во листата подолу, одделени со "
+"запирки."
 
-#: src/audacious/glade/prefswin.glade:4758
-#, fuzzy
+#: src/audacious/glade/prefswin.glade:4414
 msgid "Include:"
-msgstr "Инди"
+msgstr "Вклучи:"
 
-#: src/audacious/glade/prefswin.glade:4786
+#: src/audacious/glade/prefswin.glade:4442
 msgid "Exclude:"
-msgstr ""
+msgstr "Исклучи:"
 
-#: src/audacious/glade/prefswin.glade:4855
+#: src/audacious/glade/prefswin.glade:4511
 msgid "Recursively search for cover"
-msgstr ""
+msgstr "Рекурзивно пребарувај слики од пакувања"
 
-#: src/audacious/glade/prefswin.glade:4893
+#: src/audacious/glade/prefswin.glade:4549
 msgid "Search depth: "
-msgstr ""
+msgstr "Длабочина на барањето:"
 
-#: src/audacious/glade/prefswin.glade:4959
+#: src/audacious/glade/prefswin.glade:4615
 msgid "Use per-file cover"
-msgstr ""
+msgstr "Овозможи слики од пакувања по датотеки"
 
-#: src/audacious/glade/prefswin.glade:4979
-#, fuzzy
+#: src/audacious/glade/prefswin.glade:4635
 msgid "<b>Miscellaneous</b>"
-msgstr "<b> Разно</b>"
+msgstr "<b>Разно</b>"
 
-#: src/audacious/glade/prefswin.glade:5017
+#: src/audacious/glade/prefswin.glade:4673
 msgid "Show Progress bar for the current track"
-msgstr ""
+msgstr "Прикажи лента за напредок на тековната песна"
 
-#: src/audacious/glade/prefswin.glade:5055
+#: src/audacious/glade/prefswin.glade:4711
 msgid "Delay until filepopup comes up: "
-msgstr ""
+msgstr "Задржи додека скокачкиот прозорец за датотека не се појави: "
 
-#: src/audacious/glade/prefswin.glade:5149
+#: src/audacious/glade/prefswin.glade:4805
 msgid "Color Adjustment"
-msgstr ""
+msgstr "Прилагодување на бои"
 
-#: src/audacious/glade/prefswin.glade:5172
+#: src/audacious/glade/prefswin.glade:4828
 msgid ""
 "Audacious allows you to alter the color balance of the skinned UI. The "
 "sliders below will allow you to do this."
 msgstr ""
+"Audacious Ви овозможува да го измените балансот на боите на темата на интерфејсот. Лизгачите"
+"подолу ќе Ви овозможат да го направите тоа."
 
-#: src/audacious/glade/prefswin.glade:5268
+#: src/audacious/glade/prefswin.glade:4924
 msgid "Red"
-msgstr ""
+msgstr "Црвено"
 
-#: src/audacious/glade/prefswin.glade:5296
-#, fuzzy
+#: src/audacious/glade/prefswin.glade:4952
 msgid "Green"
-msgstr "Грчки:"
+msgstr "Зелено"
 
-#: src/audacious/glade/prefswin.glade:5324
-#, fuzzy
+#: src/audacious/glade/prefswin.glade:4980
 msgid "Blue"
-msgstr "Блуз"
+msgstr "Сино"
 
 #: src/audacious/widgets/eq_slider.c:93
 msgid "PREAMP"
@@ -2281,2533 +2060,3 @@ msgstr "14KHZ"
 msgid "16KHZ"
 msgstr "16KHZ"
 
-#~ msgid ""
-#~ "<b><big>Unable to play files.</big></b>\n"
-#~ "\n"
-#~ "The following files could not be played. Please check that:\n"
-#~ "1. they are accessible.\n"
-#~ "2. you have enabled the media plugins required."
-#~ msgstr ""
-#~ "<b><big>Не успеав да ги пуштам датотеките.</big></b>\n"
-#~ "\n"
-#~ "Следниве датотеки не можат да бидат пуштени. Ве молам проверете дека:\n"
-#~ "1. имате пристап до нив.\n"
-#~ "2. ги имате вклучено потребните додатоци."
-
-#~ msgid "Don't show this warning anymore"
-#~ msgstr "Не го прикажувај предупредувањето повеќе"
-
-#~ msgid "Show more _details"
-#~ msgstr "Покажи повеќе _детали"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Received SIGSEGV\n"
-#~ "\n"
-#~ "This could be a bug in Audacious. If you don't know why this happened, "
-#~ "file a bug at http://bugs-meta.atheme.org/\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Добив SIGSEGV\n"
-#~ "\n"
-#~ "Ова може да е бубачка во BMP. Ако не знаете зошто се случи ова, испратете "
-#~ "порака на beepmp-devel@lists.sourceforge.net\n"
-#~ "\n"
-
-#, fuzzy
-#~ msgid "Enable playlist transparency"
-#~ msgstr "Овозможи ReplayGain"
-
-#~ msgid "%s: option `%s' is ambiguous\n"
-#~ msgstr "%s опцијата `%s' е двосмислена\n"
-
-#~ msgid "%s: option `--%s' doesn't allow an argument\n"
-#~ msgstr "%s: опцијата `--%s' не дозволува аргумент\n"
-
-#~ msgid "%s: option `%c%s' doesn't allow an argument\n"
-#~ msgstr "%s: опцијата `%c%s' не дозволува аргумент\n"
-
-#~ msgid "%s: option `%s' requires an argument\n"
-#~ msgstr "%s: опцијата `%s' бара аргумент\n"
-
-#~ msgid "%s: unrecognized option `--%s'\n"
-#~ msgstr "%s: непозната опција `--%s'\n"
-
-#~ msgid "%s: unrecognized option `%c%s'\n"
-#~ msgstr "%s: непозната опција `%c%s'\n"
-
-#~ msgid "%s: illegal option -- %c\n"
-#~ msgstr "%s: нелегална опција -- %c\n"
-
-#~ msgid "%s: invalid option -- %c\n"
-#~ msgstr "%s: невалидна опција -- %c\n"
-
-#~ msgid "%s: option requires an argument -- %c\n"
-#~ msgstr "%s: опцијата бара аргумент -- %c\n"
-
-#~ msgid "%s: option `-W %s' is ambiguous\n"
-#~ msgstr "%s: опцијата `-W %s' е двосмислена\n"
-
-#~ msgid "%s: option `-W %s' doesn't allow an argument\n"
-#~ msgstr "%s: опцијата `-W %s' не дозволува аргумент\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Usage: audacious [options] [files] ...\n"
-#~ "\n"
-#~ "Options:\n"
-#~ "--------\n"
-#~ msgstr ""
-#~ "Usage: beep-media-player [options] [files] ...\n"
-#~ "\n"
-#~ "Options:\n"
-#~ "--------\n"
-
-#~ msgid "Display this text and exit"
-#~ msgstr "Прикажи текст и"
-
-#, fuzzy
-#~ msgid "Activate Audacious"
-#~ msgstr "Активирај го BMP"
-
-#~ msgid "Previous session ID"
-#~ msgstr "ID на претходната сесија"
-
-#~ msgid "Print version number and exit\n"
-#~ msgstr "Отпечати го бројот на верзијата и излези\n"
-
-#~ msgid "Add/Open Files dialog"
-#~ msgstr "Додаj/Отвори го дијалогот за датотеки"
-
-#~ msgid "Close Dialog on Add"
-#~ msgstr "Затвори дијалог на додавање"
-
-#~ msgid "Deselect All"
-#~ msgstr "Остави сѐ"
-
-#, fuzzy
-#~ msgid "Artist Popup"
-#~ msgstr "Изведувач"
-
-#, fuzzy
-#~ msgid "<i>Title</i>"
-#~ msgstr "<b> Име на датотека</b>"
-
-#, fuzzy
-#~ msgid "<i>Artist</i>"
-#~ msgstr "Изведувач"
-
-#, fuzzy
-#~ msgid "<i>Album</i>"
-#~ msgstr "<b> Име на датотека</b>"
-
-#, fuzzy
-#~ msgid "<i>Genre</i>"
-#~ msgstr "<b> Име на датотека</b>"
-
-#, fuzzy
-#~ msgid "<i>Year</i>"
-#~ msgstr "<b> Име на датотека</b>"
-
-#, fuzzy
-#~ msgid "<i>Track Number</i>"
-#~ msgstr "Број на песна"
-
-#, fuzzy
-#~ msgid "<i>Track Length</i>"
-#~ msgstr "Должина на песна:"
-
-#~ msgid "/View Track Details"
-#~ msgstr "/Види детали за песна"
-
-#~ msgid "/Visualization Mode/Analyzer"
-#~ msgstr "/Режим на визуелизација/Анализатор"
-
-#~ msgid "/Visualization Mode/Scope"
-#~ msgstr "/Режим на визуелизација/Scope"
-
-#, fuzzy
-#~ msgid "/Visualization Mode/Voiceprint"
-#~ msgstr "/Режим на визуелизација/Scope"
-
-#~ msgid "/Visualization Mode/Off"
-#~ msgstr "/Режим на визуелизација/Исклучен"
-
-#~ msgid "/Analyzer Mode/Normal"
-#~ msgstr "/Анализатор режим/Нормален"
-
-#~ msgid "/Analyzer Mode/Lines"
-#~ msgstr "/Анализатор режим/Линии"
-
-#~ msgid "/Analyzer Mode/Bars"
-#~ msgstr "/Анализатор режим/Бар линии"
-
-#~ msgid "/Analyzer Mode/Peaks"
-#~ msgstr "/Анализатор режим/Врвови"
-
-#, fuzzy
-#~ msgid "/Voiceprint mode/Normal"
-#~ msgstr "/Анализатор режим/Нормален"
-
-#~ msgid "/WindowShade VU Mode/Normal"
-#~ msgstr "/WindowShade VU режим/Нормален"
-
-#~ msgid "/WindowShade VU Mode/Smooth"
-#~ msgstr "/WindowShade VU режим/Мек"
-
-#~ msgid "/Analyzer Falloff/Slowest"
-#~ msgstr "/Спуштање на анализаторот/најбавно"
-
-#~ msgid "/Analyzer Falloff/Slow"
-#~ msgstr "/Спуштање на анализаторот/бавно"
-
-#~ msgid "/Analyzer Falloff/Medium"
-#~ msgstr "/Спуштање на анализаторот/средно"
-
-#~ msgid "/Analyzer Falloff/Fast"
-#~ msgstr "/Спуштање на анализаторот/брзо"
-
-#~ msgid "/Analyzer Falloff/Fastest"
-#~ msgstr "/Спуштање на анализаторот/најбрзо"
-
-#~ msgid "/Peaks Falloff/Slowest"
-#~ msgstr "/Спуштање на врвовите/Најспоро"
-
-#~ msgid "/Peaks Falloff/Slow"
-#~ msgstr "/Спуштање на врвовите/најбавно"
-
-#~ msgid "/Peaks Falloff/Medium"
-#~ msgstr "/Спуштање на врвовите/средно"
-
-#~ msgid "/Peaks Falloff/Fast"
-#~ msgstr "/Спуштање на врвовите/брзо"
-
-#~ msgid "/Peaks Falloff/Fastest"
-#~ msgstr "/Спуштање на врвовите/Најбрзо"
-
-#~ msgid "/Pause"
-#~ msgstr "/Пауза"
-
-#~ msgid "/-"
-#~ msgstr "/-"
-
-#~ msgid "/Jump to Time"
-#~ msgstr "Оди до време"
-
-#, fuzzy
-#~ msgid "/About Audacious"
-#~ msgstr "За MPEG аудио додаток"
-
-#~ msgid "/Files..."
-#~ msgstr "/Датотеки..."
-
-#~ msgid "/Internet location..."
-#~ msgstr "/Интернет локација..."
-
-#, fuzzy
-#~ msgid "New List"
-#~ msgstr "/Нова листа"
-
-#, fuzzy
-#~ msgid "Creates a new playlist."
-#~ msgstr "Покажи ги броевите на песните во листата"
-
-#, fuzzy
-#~ msgid "Displays track information."
-#~ msgstr "Засилување на песна:"
-
-#~ msgid "Chinese:"
-#~ msgstr "Кинески:"
-
-#~ msgid "/Load"
-#~ msgstr "/Вчитај"
-
-#~ msgid "/Load/Preset"
-#~ msgstr "/Вчитај/модификатор"
-
-#~ msgid "/Load/Default"
-#~ msgstr "/Вчитај/Стандардно"
-
-#~ msgid "/Load/Zero"
-#~ msgstr "/Вчитај/Нула"
-
-#~ msgid "/Import"
-#~ msgstr "/Увези"
-
-#~ msgid "/Save"
-#~ msgstr "/Сними"
-
-#~ msgid "/Save/Preset"
-#~ msgstr "/Сними/модификатор"
-
-#~ msgid "/Save/Default"
-#~ msgstr "/Сними/Стандардно"
-
-#~ msgid "/Save/To file"
-#~ msgstr "/Сними/Во датотека"
-
-#~ msgid "/Delete"
-#~ msgstr "/Избриши"
-
-#~ msgid "/Delete/Preset"
-#~ msgstr "/Избриши/модификатор"
-
-#~ msgid "Load auto-preset"
-#~ msgstr "Вчитај автоматски-модификатор"
-
-#~ msgid "Load equalizer preset"
-#~ msgstr "Вчитај модификатор за изедначувачот"
-
-#~ msgid "Delete auto-preset"
-#~ msgstr "Избриши автоматски-модификатор"
-
-#, fuzzy
-#~ msgid "/Remove Duplicates/By Title"
-#~ msgstr "/Подреди листа/По наслов"
-
-#, fuzzy
-#~ msgid "/Remove Duplicates/By Filename"
-#~ msgstr "/Подреди листа/По име на датотека"
-
-#~ msgid "/Update View"
-#~ msgstr "/Надгради поглед"
-
-#~ msgid "/Select All"
-#~ msgstr "/Избери сѐ"
-
-#~ msgid "/Sort List/By Date"
-#~ msgstr "/Подреди листа/По дата"
-
-#~ msgid "/Sort Selection/By Title"
-#~ msgstr "/Избор на подредување/По наслов"
-
-#, fuzzy
-#~ msgid "/Sort Selection/By Artist"
-#~ msgstr "/Избор на подредување/По наслов"
-
-#~ msgid "/Sort Selection/By Filename"
-#~ msgstr "/Избор на подредување/По име на датотека"
-
-#~ msgid "/Sort Selection/By Path + Filename"
-#~ msgstr "/Избор на подредување/По патека + име на датотека"
-
-#~ msgid "/Sort Selection/By Date"
-#~ msgstr "/Избор на подредување/По датум"
-
-#, fuzzy
-#~ msgid "/Sort Selection/By Track Number"
-#~ msgstr "/Избор на подредување/По датум"
-
-#, fuzzy
-#~ msgid "/Sort Selection/By Playlist Entry"
-#~ msgstr "/Избор на подредување/По наслов"
-
-#, fuzzy
-#~ msgid "<b>_Miscillaneous UI Features</b>"
-#~ msgstr "<b> Разно</b>"
-
-#, fuzzy
-#~ msgid "About AudioCompress"
-#~ msgstr "За MPEG аудио додаток"
-
-#~ msgid "Ok"
-#~ msgstr "Во ред"
-
-#, fuzzy
-#~ msgid "About Extra Stereo Plugin"
-#~ msgstr "За додатокот ESounD"
-
-#, fuzzy
-#~ msgid "Effect intensity:"
-#~ msgstr "_Листа на додатоци за ефекти:"
-
-#, fuzzy
-#~ msgid "Cancel"
-#~ msgstr "Денс"
-
-#, fuzzy
-#~ msgid "About LIRC Audacious Plugin"
-#~ msgstr "За додатокот ESounD"
-
-#, fuzzy
-#~ msgid "LIRC Plugin "
-#~ msgstr "Додатоци"
-
-#, fuzzy
-#~ msgid "Close"
-#~ msgstr "Затвори"
-
-#, fuzzy
-#~ msgid "LIRC Plugin"
-#~ msgstr "Додатоци"
-
-#~ msgid "Username:"
-#~ msgstr "Корисничко име:"
-
-#~ msgid "Password:"
-#~ msgstr "Лозинка:"
-
-#, fuzzy
-#~ msgid "About Scrobbler Plugin"
-#~ msgstr "За додатокот ESounD"
-
-#, fuzzy
-#~ msgid "Scrobbler Plugin"
-#~ msgstr "Додатоци"
-
-#, fuzzy
-#~ msgid "Commands"
-#~ msgstr "Коментар"
-
-#, fuzzy
-#~ msgid "Command:"
-#~ msgstr "Коментар:"
-
-#, fuzzy
-#~ msgid "Command to run when Audacious reaches the end of the playlist."
-#~ msgstr ""
-#~ "Вчитај ги податоците по потреба кога се прикажува датотеката во листата"
-
-#, fuzzy
-#~ msgid "About "
-#~ msgstr "За"
-
-#, fuzzy
-#~ msgid "AMIDI-Plug - warning"
-#~ msgstr "Конфигурација за MPEG аудио додаток"
-
-#, fuzzy
-#~ msgid "AMIDI-Plug - select file"
-#~ msgstr "Конфигурација за MPEG аудио додаток"
-
-#, fuzzy
-#~ msgid "AMIDI-Plug - configuration"
-#~ msgstr "Конфигурација за MPEG аудио додаток"
-
-#~ msgid "Name:"
-#~ msgstr "Име:"
-
-#, fuzzy
-#~ msgid " MIDI Info "
-#~ msgstr "Информации за CD-то"
-
-#, fuzzy
-#~ msgid "Length (msec):"
-#~ msgstr "Должина:"
-
-#, fuzzy
-#~ msgid "Num of Tracks:"
-#~ msgstr "Оди до песна"
-
-#~ msgid "CD Audio Plugin"
-#~ msgstr "CD додаток за аудио"
-
-#~ msgid "CD Audio Track %02u"
-#~ msgstr "CD аудио песна %02u"
-
-#~ msgid "(unknown)"
-#~ msgstr "(непознато)"
-
-#~ msgid "Drive %d"
-#~ msgstr "Уред %d"
-
-#~ msgid ""
-#~ "Failed to open device %s\n"
-#~ "Error: %s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Не успеав да го отворам уредот %s\n"
-#~ "Грешка: %s\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Failed to read \"Table of Contents\"\n"
-#~ "Maybe no disc in the drive?\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Не можам да ја прочитам „Содржината“\n"
-#~ "Можеби нема диск во уредот?\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Device %s OK.\n"
-#~ "Disc has %d tracks"
-#~ msgstr ""
-#~ "Уредот %s е во ред.\n"
-#~ "Дискот има %d песни"
-
-#~ msgid " (%d data tracks)"
-#~ msgstr " (%d песни)"
-
-#~ msgid ""
-#~ "\n"
-#~ "Total length: %d:%d\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Целосна должина: %d:%d\n"
-
-#~ msgid ""
-#~ "Digital audio extraction not tested as the disc has no audio tracks\n"
-#~ msgstr "Вадењето од аудио не е тестирано бидејќи дискот нема аудио песни\n"
-
-#~ msgid ""
-#~ "Digital audio extraction test: OK\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Тест за дигитално аудио екстрахирање: Во ред\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Digital audio extraction test failed: %s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Тестот за дигитално аудио екстрахирање не успеа. %s\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Failed to check directory %s\n"
-#~ "Error: %s"
-#~ msgstr ""
-#~ "Не успеав да го проверам директориумот %s\n"
-#~ "Грешка: %s"
-
-#~ msgid "Error: %s exist, but is not a directory"
-#~ msgstr "Грешка: %s постои но не е директориум"
-
-#~ msgid "Directory %s OK."
-#~ msgstr "Директориумот %s е во ред."
-
-#~ msgid "Device:"
-#~ msgstr "Уред:"
-
-#~ msgid "_Device:"
-#~ msgstr "_Уред:"
-
-#~ msgid "Dir_ectory:"
-#~ msgstr "Ди_ректориум:"
-
-#~ msgid "Play mode:"
-#~ msgstr "Режим на пуштање:"
-
-#~ msgid "Analog"
-#~ msgstr "Аналоген"
-
-#~ msgid "Digital audio extraction"
-#~ msgstr "Дигитално аудио екстрахирање"
-
-#~ msgid "Volume control:"
-#~ msgstr "Контрола на гласност:"
-
-#~ msgid "No mixer"
-#~ msgstr "Нема миксер"
-
-#~ msgid "CDROM drive"
-#~ msgstr "CDRОМ уред"
-
-#~ msgid "OSS mixer"
-#~ msgstr "OSS миксер"
-
-#~ msgid "Check drive..."
-#~ msgstr "Провери уред..."
-
-#~ msgid "Remove drive"
-#~ msgstr "Отстрани уред"
-
-#~ msgid "CD Audio Player Configuration"
-#~ msgstr "Конфигурација на CD аудио плеер"
-
-#~ msgid "Add drive"
-#~ msgstr "Додај уред"
-
-#~ msgid "Device"
-#~ msgstr "Уред"
-
-#~ msgid "CDDB:"
-#~ msgstr "CDDB:"
-
-#~ msgid "Use CDDB"
-#~ msgstr "Користи CDDB"
-
-#~ msgid "Get server list"
-#~ msgstr "Земи листа на сервери"
-
-#~ msgid "Show network window"
-#~ msgstr "Прикажи мрежен прозорец"
-
-#~ msgid "CDDB server:"
-#~ msgstr "CDDB сервер:"
-
-#~ msgid "CD Index:"
-#~ msgstr "CD индекс:"
-
-#~ msgid "Use CD Index"
-#~ msgstr "Користи CD индекс"
-
-#~ msgid "CD Index server:"
-#~ msgstr "CD индекс сервер:"
-
-#~ msgid "Override generic titles"
-#~ msgstr "Заобиколи ги генеричните наслови"
-
-#~ msgid "Name format:"
-#~ msgstr "Формат на име:"
-
-#~ msgid "CD Info"
-#~ msgstr "Информации за CD-то"
-
-#, fuzzy
-#~ msgid "Japanese (EUC-JP)"
-#~ msgstr "Јапонски:"
-
-#, fuzzy
-#~ msgid "Unicode (UTF-8)"
-#~ msgstr "  (невалиден UTF-8)"
-
-#, fuzzy
-#~ msgid "Korean (UHC)"
-#~ msgstr "Корејски:"
-
-#~ msgid "Select the directory where you want to store the MPEG streams:"
-#~ msgstr "Изберете го директориумот каде ќе бидат сместени MPEG стримовите:"
-
-#, fuzzy
-#~ msgid "Flac Configuration"
-#~ msgstr "Конфигурација на CD аудио плеер"
-
-#~ msgid "ReplayGain"
-#~ msgstr "ReplayGain"
-
-#, fuzzy
-#~ msgid "Enable ReplayGain processing"
-#~ msgstr "Овозможи ReplayGain"
-
-#, fuzzy
-#~ msgid "Preamp:"
-#~ msgstr "Dream"
-
-#, fuzzy
-#~ msgid "6dB hard limiting"
-#~ msgstr "Овозможи 6db зголемување + тешко ограничување"
-
-#, fuzzy
-#~ msgid "Resolution"
-#~ msgstr "Резолуција:"
-
-#, fuzzy
-#~ msgid "Without ReplayGain"
-#~ msgstr "ReplayGain"
-
-#, fuzzy
-#~ msgid "With ReplayGain"
-#~ msgstr "ReplayGain"
-
-#, fuzzy
-#~ msgid "Enable dithering"
-#~ msgstr "Вклучен"
-
-#, fuzzy
-#~ msgid "16 bps"
-#~ msgstr "16 бита"
-
-#~ msgid "Buffering:"
-#~ msgstr "Баферирање:"
-
-#~ msgid "Buffer size (kb):"
-#~ msgstr "Бафер големина (kb):"
-
-#~ msgid "Pre-buffer (percent):"
-#~ msgstr "Пре-бафер (процент):"
-
-#~ msgid "Save stream to disk:"
-#~ msgstr "Сними стрим на диск:"
-
-#~ msgid "Save stream to disk"
-#~ msgstr "Сними стрим на диск"
-
-#~ msgid "Path:"
-#~ msgstr "Патека:"
-
-#~ msgid "Browse"
-#~ msgstr "Разгледај"
-
-#~ msgid "SHOUT/Icecast:"
-#~ msgstr "SHOUT/Icecast:"
-
-#~ msgid "Enable SHOUT/Icecast title streaming"
-#~ msgstr "Овозможи SHOUT/Icecast title streaming"
-
-#~ msgid "Enable Icecast Metadata UDP Channel"
-#~ msgstr "Овозможи Icecast Metadata UDP канал"
-
-#~ msgid "Streaming"
-#~ msgstr "Стриминг"
-
-#, fuzzy
-#~ msgid "About Flac Plugin"
-#~ msgstr "За додатокот ESounD"
-
-#~ msgid "Classic Rock"
-#~ msgstr "Класичен рок"
-
-#~ msgid "Country"
-#~ msgstr "Земја"
-
-#~ msgid "Dance"
-#~ msgstr "Денс"
-
-#~ msgid "Disco"
-#~ msgstr "Диско"
-
-#~ msgid "Funk"
-#~ msgstr "Фанк"
-
-#~ msgid "Grunge"
-#~ msgstr "Гранџ"
-
-#~ msgid "Hip-Hop"
-#~ msgstr "Хип-хип"
-
-#~ msgid "Jazz"
-#~ msgstr "Џез"
-
-#~ msgid "Metal"
-#~ msgstr "Метал"
-
-#~ msgid "New Age"
-#~ msgstr "New Age"
-
-#~ msgid "Oldies"
-#~ msgstr "Oldies"
-
-#~ msgid "Other"
-#~ msgstr "Друго"
-
-#~ msgid "Pop"
-#~ msgstr "Поп"
-
-#~ msgid "R&B"
-#~ msgstr "R&B"
-
-#~ msgid "Rap"
-#~ msgstr "Рап"
-
-#~ msgid "Reggae"
-#~ msgstr "Реге"
-
-#~ msgid "Rock"
-#~ msgstr "Рок"
-
-#~ msgid "Techno"
-#~ msgstr "Техно"
-
-#~ msgid "Industrial"
-#~ msgstr "Industrial"
-
-#~ msgid "Alternative"
-#~ msgstr "Алтернатива"
-
-#~ msgid "Ska"
-#~ msgstr "Ска"
-
-#~ msgid "Death Metal"
-#~ msgstr "Death Metal"
-
-#~ msgid "Soundtrack"
-#~ msgstr "Музика од филм"
-
-#~ msgid "Euro-Techno"
-#~ msgstr "Euro-Techno"
-
-#~ msgid "Ambient"
-#~ msgstr "Ambient"
-
-#~ msgid "Trip-Hop"
-#~ msgstr "Trip-Hop"
-
-#~ msgid "Vocal"
-#~ msgstr "Vocal"
-
-#~ msgid "Jazz+Funk"
-#~ msgstr "Џез и фанк"
-
-#~ msgid "Fusion"
-#~ msgstr "Fusion"
-
-#~ msgid "Trance"
-#~ msgstr "Транс"
-
-#~ msgid "Classical"
-#~ msgstr "Класична музика"
-
-#~ msgid "Instrumental"
-#~ msgstr "Инстументална"
-
-#~ msgid "Acid"
-#~ msgstr "Acid"
-
-#~ msgid "House"
-#~ msgstr "House"
-
-#~ msgid "Game"
-#~ msgstr "Игра"
-
-#~ msgid "Sound Clip"
-#~ msgstr "Звучно клипче"
-
-#~ msgid "Gospel"
-#~ msgstr "Госпел"
-
-#~ msgid "Noise"
-#~ msgstr "Ноиз (бучава)"
-
-#~ msgid "Soul"
-#~ msgstr "Соул"
-
-#~ msgid "Punk"
-#~ msgstr "Панк"
-
-#~ msgid "Space"
-#~ msgstr "Space"
-
-#~ msgid "Meditative"
-#~ msgstr "Meditative"
-
-#~ msgid "Instrumental Pop"
-#~ msgstr "Инструментален поп"
-
-#~ msgid "Instrumental Rock"
-#~ msgstr "Инструментален рок"
-
-#~ msgid "Ethnic"
-#~ msgstr "Етничка"
-
-#~ msgid "Gothic"
-#~ msgstr "Готичка"
-
-#~ msgid "Darkwave"
-#~ msgstr "Darkwave"
-
-#~ msgid "Techno-Industrial"
-#~ msgstr "Techno-Industrial"
-
-#~ msgid "Electronic"
-#~ msgstr "Електронска"
-
-#~ msgid "Pop-Folk"
-#~ msgstr "Поп-фолк"
-
-#~ msgid "Eurodance"
-#~ msgstr "Eurodance"
-
-#~ msgid "Dream"
-#~ msgstr "Dream"
-
-#~ msgid "Southern Rock"
-#~ msgstr "Јужњачки рок"
-
-#~ msgid "Comedy"
-#~ msgstr "Комедија"
-
-#~ msgid "Cult"
-#~ msgstr "Култно"
-
-#~ msgid "Gangsta Rap"
-#~ msgstr "Гангстерски рап"
-
-#~ msgid "Top 40"
-#~ msgstr "Top 40"
-
-#~ msgid "Christian Rap"
-#~ msgstr "Христијански рап"
-
-#~ msgid "Pop/Funk"
-#~ msgstr "Поп/фанк"
-
-#~ msgid "Jungle"
-#~ msgstr "Jungle"
-
-#~ msgid "Native American"
-#~ msgstr "Native American"
-
-#~ msgid "Cabaret"
-#~ msgstr "Кабаре"
-
-#~ msgid "New Wave"
-#~ msgstr "New Wave"
-
-#~ msgid "Psychedelic"
-#~ msgstr "Психоделија"
-
-#~ msgid "Rave"
-#~ msgstr "Рејв"
-
-#~ msgid "Trailer"
-#~ msgstr "Trailer"
-
-#~ msgid "Lo-Fi"
-#~ msgstr "Lo-Fi"
-
-#~ msgid "Tribal"
-#~ msgstr "Tribal"
-
-#~ msgid "Acid Punk"
-#~ msgstr "Есид панк"
-
-#~ msgid "Acid Jazz"
-#~ msgstr "Есид џез"
-
-#~ msgid "Polka"
-#~ msgstr "Полка"
-
-#~ msgid "Retro"
-#~ msgstr "Ретро"
-
-#~ msgid "Musical"
-#~ msgstr "Музикално"
-
-#~ msgid "Rock & Roll"
-#~ msgstr "Rock & Roll"
-
-#~ msgid "Hard Rock"
-#~ msgstr "Hard Rock"
-
-#~ msgid "Folk"
-#~ msgstr "Фолк"
-
-#~ msgid "Folk/Rock"
-#~ msgstr "Фолк/рок"
-
-#~ msgid "National Folk"
-#~ msgstr "Национален фолк"
-
-#~ msgid "Swing"
-#~ msgstr "Swing"
-
-#~ msgid "Fast-Fusion"
-#~ msgstr "Fast-Fusion"
-
-#~ msgid "Bebob"
-#~ msgstr "Бибоб"
-
-#~ msgid "Latin"
-#~ msgstr "Латино"
-
-#~ msgid "Revival"
-#~ msgstr "Revival"
-
-#~ msgid "Celtic"
-#~ msgstr "Келтски"
-
-#~ msgid "Bluegrass"
-#~ msgstr "Bluegrass"
-
-#~ msgid "Avantgarde"
-#~ msgstr "Авангардно"
-
-#~ msgid "Gothic Rock"
-#~ msgstr "Готски рок"
-
-#~ msgid "Progressive Rock"
-#~ msgstr "Прогресивен рок"
-
-#~ msgid "Psychedelic Rock"
-#~ msgstr "Психоделичен рок"
-
-#~ msgid "Symphonic Rock"
-#~ msgstr "Симфоничен рок"
-
-#~ msgid "Slow Rock"
-#~ msgstr "Бавен рок"
-
-#~ msgid "Big Band"
-#~ msgstr "Big Band"
-
-#~ msgid "Chorus"
-#~ msgstr "Хорско пеење"
-
-#~ msgid "Easy Listening"
-#~ msgstr "Лесни мелодии"
-
-#~ msgid "Acoustic"
-#~ msgstr "Акустично"
-
-#~ msgid "Humour"
-#~ msgstr "Смешно"
-
-#~ msgid "Speech"
-#~ msgstr "Говор"
-
-#~ msgid "Chanson"
-#~ msgstr "Шансони"
-
-#~ msgid "Opera"
-#~ msgstr "Опера"
-
-#~ msgid "Chamber Music"
-#~ msgstr "Камерна музика"
-
-#~ msgid "Sonata"
-#~ msgstr "Соната"
-
-#~ msgid "Symphony"
-#~ msgstr "Симфонија"
-
-#~ msgid "Booty Bass"
-#~ msgstr "Booty Bass"
-
-#~ msgid "Primus"
-#~ msgstr "Primus"
-
-#~ msgid "Porn Groove"
-#~ msgstr "Porn Groove"
-
-#~ msgid "Club"
-#~ msgstr "Клубски"
-
-#~ msgid "Tango"
-#~ msgstr "Танго"
-
-#~ msgid "Samba"
-#~ msgstr "Samba"
-
-#~ msgid "Folklore"
-#~ msgstr "Фолклор"
-
-#~ msgid "Ballad"
-#~ msgstr "Балада"
-
-#~ msgid "Power Ballad"
-#~ msgstr "Силна балада"
-
-#~ msgid "Rhythmic Soul"
-#~ msgstr "Ритмичен соул"
-
-#~ msgid "Freestyle"
-#~ msgstr "Фристајл"
-
-#~ msgid "Duet"
-#~ msgstr "Дует"
-
-#~ msgid "Punk Rock"
-#~ msgstr "Панк рок"
-
-#~ msgid "Drum Solo"
-#~ msgstr "Соло на тапани"
-
-#~ msgid "A Cappella"
-#~ msgstr "А капела (пеење без инструментална придружба)"
-
-#~ msgid "Euro-House"
-#~ msgstr "Euro-House"
-
-#~ msgid "Dance Hall"
-#~ msgstr "Dance Hall"
-
-#~ msgid "Goa"
-#~ msgstr "Гоа"
-
-#~ msgid "Drum & Bass"
-#~ msgstr "Drum & Bass"
-
-#~ msgid "Club-House"
-#~ msgstr "Клубски хаус"
-
-#~ msgid "Hardcore"
-#~ msgstr "Hardcore"
-
-#~ msgid "Terror"
-#~ msgstr "Терор"
-
-#~ msgid "Indie"
-#~ msgstr "Инди"
-
-#~ msgid "BritPop"
-#~ msgstr "BritPop"
-
-#~ msgid "Negerpunk"
-#~ msgstr "Negerpunk"
-
-#~ msgid "Polsk Punk"
-#~ msgstr "Полски панк"
-
-#~ msgid "Beat"
-#~ msgstr "Beat"
-
-#~ msgid "Christian Gangsta Rap"
-#~ msgstr "Христијански гангстерски рап"
-
-#~ msgid "Heavy Metal"
-#~ msgstr "Хеви метал"
-
-#~ msgid "Black Metal"
-#~ msgstr "Black Metal"
-
-#~ msgid "Crossover"
-#~ msgstr "Crossover"
-
-#~ msgid "Contemporary Christian"
-#~ msgstr "Современа христијанска"
-
-#~ msgid "Christian Rock"
-#~ msgstr "Христијански рок"
-
-#~ msgid "Merengue"
-#~ msgstr "Маренга"
-
-#~ msgid "Salsa"
-#~ msgstr "Салса"
-
-#~ msgid "Thrash Metal"
-#~ msgstr "Треш метал"
-
-#~ msgid "Anime"
-#~ msgstr "Anime"
-
-#~ msgid "JPop"
-#~ msgstr "JPop"
-
-#~ msgid "Synthpop"
-#~ msgstr "Synthpop"
-
-#, fuzzy
-#~ msgid "Samplerate: %d Hz"
-#~ msgstr "Фрекфенција на семплување:"
-
-#, fuzzy
-#~ msgid "Channels: %d"
-#~ msgstr "Канали:"
-
-#, fuzzy
-#~ msgid ""
-#~ "Samples: %llu\n"
-#~ "Length: %d:%.2d"
-#~ msgstr ""
-#~ "\n"
-#~ "Целосна должина: %d:%d\n"
-
-#, fuzzy
-#~ msgid "Filesize: %ld B"
-#~ msgstr "Големина на датотеката:"
-
-#, fuzzy
-#~ msgid "Tag:"
-#~ msgstr "Танго"
-
-#~ msgid "Title:"
-#~ msgstr "Наслов:"
-
-#~ msgid "Album:"
-#~ msgstr "Албум:"
-
-#~ msgid "Comment:"
-#~ msgstr "Коментар:"
-
-#~ msgid "Date:"
-#~ msgstr "Дата:"
-
-#~ msgid "Track number:"
-#~ msgstr "Број на песна:"
-
-#~ msgid "Genre:"
-#~ msgstr "Вид:"
-
-#, fuzzy
-#~ msgid "Remove Tag"
-#~ msgstr "/Отстрани сѐ"
-
-#, fuzzy
-#~ msgid "FLAC Info:"
-#~ msgstr "Информации за CD-то"
-
-#, fuzzy
-#~ msgid "File Info - %s"
-#~ msgstr "Информации за датотеката"
-
-#~ msgid "Error"
-#~ msgstr "Грешка"
-
-#~ msgid "LOOKING UP %s"
-#~ msgstr "БАРАМ %s"
-
-#~ msgid "Couldn't look up host %s"
-#~ msgstr "Не можам да го најдам серверот %s"
-
-#~ msgid "CONNECTING TO %s:%d"
-#~ msgstr "СЕ ВРЗУВАМ НА %s: %d"
-
-#~ msgid "Couldn't connect to host %s"
-#~ msgstr "Не можам да се поврзам со хостот %s"
-
-#~ msgid "CONNECTED: WAITING FOR REPLY"
-#~ msgstr "СЕ ВРЗАВ И ЧЕКАМ ОДГОВОР"
-
-#~ msgid ""
-#~ "Couldn't connect to host %s\n"
-#~ "Server reported: %s"
-#~ msgstr ""
-#~ "Не можам да се поврзам со серверот %s\n"
-#~ "Серверот одговори: %s"
-
-#~ msgid "PRE-BUFFERING: %dKB/%dKB"
-#~ msgstr "ПРЕ-БАФЕРИРАЊЕ: %dKB/%dKB"
-
-#, fuzzy
-#~ msgid "FLAC Audio Plugin"
-#~ msgstr "CD додаток за аудио"
-
-#, fuzzy
-#~ msgid "ModPlug Configuration"
-#~ msgstr "Конфигурација за MPEG аудио додаток"
-
-#~ msgid "16 bit"
-#~ msgstr "16 бита"
-
-#~ msgid "8 bit"
-#~ msgstr "8 бита"
-
-#, fuzzy
-#~ msgid "Channels"
-#~ msgstr "Канали:"
-
-#~ msgid "Stereo"
-#~ msgstr "Стерео"
-
-#, fuzzy
-#~ msgid "48 kHz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "44 kHz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "22 kHz"
-#~ msgstr "1:2 (22 kHz)"
-
-#, fuzzy
-#~ msgid "11 kHz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "Resampling"
-#~ msgstr "Стриминг"
-
-#, fuzzy
-#~ msgid "Quality"
-#~ msgstr "/_Излез"
-
-#, fuzzy
-#~ msgid "General"
-#~ msgstr "Вид"
-
-#, fuzzy
-#~ msgid "Fast Playlist Info"
-#~ msgstr "Вчитај плејлиста"
-
-#, fuzzy
-#~ msgid "Reverb"
-#~ msgstr "Сервер"
-
-#, fuzzy
-#~ msgid "Enable"
-#~ msgstr "Вклучен"
-
-#, fuzzy
-#~ msgid "Depth"
-#~ msgstr "Дует"
-
-#, fuzzy
-#~ msgid "Amount"
-#~ msgstr "За"
-
-#, fuzzy
-#~ msgid "Range"
-#~ msgstr "Рејв"
-
-#, fuzzy
-#~ msgid "Preamp"
-#~ msgstr "Dream"
-
-#, fuzzy
-#~ msgid "Effects"
-#~ msgstr "<b>Ефекти</b>"
-
-#, fuzzy
-#~ msgid "MOD Info"
-#~ msgstr "Информации за CD-то"
-
-#, fuzzy
-#~ msgid "Samples"
-#~ msgstr "Салса"
-
-#, fuzzy
-#~ msgid "Instruments"
-#~ msgstr "Инстументална"
-
-#, fuzzy
-#~ msgid "About Modplug"
-#~ msgstr "За додатокот ESounD"
-
-#~ msgid "MPEG Audio Plugin Configuration"
-#~ msgstr "Конфигурација за MPEG аудио додаток"
-
-#~ msgid "Resolution:"
-#~ msgstr "Резолуција:"
-
-#~ msgid "Channels:"
-#~ msgstr "Канали:"
-
-#~ msgid "Stereo (if available)"
-#~ msgstr "Стерео (ако е достапно)"
-
-#~ msgid "Mono"
-#~ msgstr "Моно"
-
-#~ msgid "Down sample:"
-#~ msgstr "Долу:"
-
-#~ msgid "1:1 (44 kHz)"
-#~ msgstr "1:1 (44 kHz)"
-
-#~ msgid "1:2 (22 kHz)"
-#~ msgstr "1:2 (22 kHz)"
-
-#~ msgid "1:4 (11 kHz)"
-#~ msgstr "1:4 (11 kHz)"
-
-#~ msgid "Decoder"
-#~ msgstr "Декодер"
-
-#~ msgid "ID3 Tags:"
-#~ msgstr "ID3 тагови:"
-
-#~ msgid "Disable ID3V2 tags"
-#~ msgstr "Оневозможи ID3V2 тагови"
-
-#~ msgid "ID3 format:"
-#~ msgstr "ID3 формат:"
-
-#~ msgid "Joint stereo"
-#~ msgstr "Џоинт стерео"
-
-#~ msgid "Dual channel"
-#~ msgstr "Двоен канал"
-
-#~ msgid "Single channel"
-#~ msgstr "Единечен канал"
-
-#~ msgid "%d KBit/s"
-#~ msgstr "%d KBit/s"
-
-#~ msgid "%ld Hz"
-#~ msgstr "%ld Hz"
-
-#~ msgid "None"
-#~ msgstr "Ништо"
-
-#~ msgid "50/15 ms"
-#~ msgstr "50/15 ms"
-
-#~ msgid "CCIT J.17"
-#~ msgstr "CCIT J.17"
-
-#~ msgid "No"
-#~ msgstr "Не"
-
-#~ msgid "Yes"
-#~ msgstr "Да"
-
-#~ msgid " MPEG Info "
-#~ msgstr "Информации за MPEG "
-
-#~ msgid "MPEG Level:"
-#~ msgstr "Ниво на MPEG:"
-
-#~ msgid "Bit rate:"
-#~ msgstr "Бит рејт:"
-
-#~ msgid "Sample rate:"
-#~ msgstr "Фрекфенција на семплување:"
-
-#~ msgid "File size:"
-#~ msgstr "Големина на датотеката:"
-
-#, fuzzy
-#~ msgid "Mode:"
-#~ msgstr "Декодер:"
-
-#~ msgid "Error Protection:"
-#~ msgstr "Заштита од грешки:"
-
-#~ msgid "Copyright:"
-#~ msgstr "Copyright:"
-
-#~ msgid "Original:"
-#~ msgstr "Оригинал:"
-
-#~ msgid "Emphasis:"
-#~ msgstr "Нагласи:"
-
-#~ msgid " ID3 Tag "
-#~ msgstr " ID3 таг"
-
-#~ msgid "Year:"
-#~ msgstr "Година:"
-
-#~ msgid "N/A"
-#~ msgstr "N/A"
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "%lu Bytes"
-#~ msgstr "%lu бајти"
-
-#, fuzzy
-#~ msgid "Couldn't connect to host %s:%d"
-#~ msgstr "Не можам да се поврзам со хостот %s"
-
-#, fuzzy
-#~ msgid "PRE-BUFFERING: %zuKB/%zuKB"
-#~ msgstr "ПРЕ-БАФЕРИРАЊЕ: %dKB/%dKB"
-
-#~ msgid "AlternRock"
-#~ msgstr "AlternRock"
-
-#~ msgid "About MPEG Audio Plugin"
-#~ msgstr "За MPEG аудио додаток"
-
-#~ msgid "MPEG Audio Plugin"
-#~ msgstr "MPEG аудио додаток"
-
-#, fuzzy
-#~ msgid "TiMidity Configuration"
-#~ msgstr "Конфигурација за MPEG аудио додаток"
-
-#, fuzzy
-#~ msgid "11000 Hz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "22000 Hz"
-#~ msgstr "1:2 (22 kHz)"
-
-#, fuzzy
-#~ msgid "44100 Hz"
-#~ msgstr "1:1 (44 kHz)"
-
-#, fuzzy
-#~ msgid "Sample Width"
-#~ msgstr "Фрекфенција на семплување:"
-
-#, fuzzy
-#~ msgid "TiMidity Configuration File"
-#~ msgstr "Конфигурација за MPEG аудио додаток"
-
-#, fuzzy
-#~ msgid "TiMidity Plugin %s"
-#~ msgstr "Влезен додаток: %s"
-
-#, fuzzy
-#~ msgid "Couldn't load MIDI file"
-#~ msgstr "Не можам да го најдам серверот %s"
-
-#~ msgid "Select the directory where you want to store the Ogg Vorbis streams:"
-#~ msgstr "Избери директориум каде ќе бидат сместени Ogg Vorbis стримовите:"
-
-#~ msgid "Ogg Vorbis Audio Plugin Configuration"
-#~ msgstr "Конфигурација за Ogg Vorbis аудио додатокот"
-
-#~ msgid "Ogg Vorbis Tags:"
-#~ msgstr "Ogg Vorbis тагови:"
-
-#~ msgid "ReplayGain Settings:"
-#~ msgstr "ReplayGain подесувања:"
-
-#~ msgid "Enable Clipping Prevention"
-#~ msgstr "Овозможи заштита од clipping"
-
-#~ msgid "Enable ReplayGain"
-#~ msgstr "Овозможи ReplayGain"
-
-#~ msgid "ReplayGain Type:"
-#~ msgstr "ReplayGain тип:"
-
-#~ msgid "use Track Gain/Peak"
-#~ msgstr "користи Gain/Peak за песна"
-
-#~ msgid "use Album Gain/Peak"
-#~ msgstr "користи Gain/Peak за албум"
-
-#~ msgid "Enable 6dB Boost + Hard Limiting"
-#~ msgstr "Овозможи 6db зголемување + тешко ограничување"
-
-#~ msgid ""
-#~ "An error occured:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Се појави грешка:\n"
-#~ "%s"
-
-#~ msgid "Error!"
-#~ msgstr "Грешка!"
-
-#~ msgid "Failed to modify tag (open)"
-#~ msgstr "Не успеав да го променам тагот (отворен)"
-
-#~ msgid "Failed to modify tag (close)"
-#~ msgstr "Не успеав да го променам тагот (затворен)"
-
-#~ msgid "Failed to modify tag"
-#~ msgstr "Не може да се измени тагот"
-
-#~ msgid " Ogg Vorbis Tag "
-#~ msgstr "Етикета "
-
-#~ msgid "Description:"
-#~ msgstr "Опис:"
-
-#~ msgid "Version:"
-#~ msgstr "Верзија:"
-
-#~ msgid "ISRC number:"
-#~ msgstr "ISRC број:"
-
-#~ msgid "Organization:"
-#~ msgstr "Организација:"
-
-#~ msgid " Ogg Vorbis ReplayGain "
-#~ msgstr "ReplayGain "
-
-#~ msgid "Track peak:"
-#~ msgstr "Track peak:"
-
-#~ msgid "Album gain:"
-#~ msgstr "Засилување на албум: "
-
-#~ msgid "Album peak:"
-#~ msgstr "Албум peak:"
-
-#~ msgid " Ogg Vorbis Info "
-#~ msgstr "Информации за Ogg Vorbis"
-
-#~ msgid "Length:"
-#~ msgstr "Должина:"
-
-#~ msgid "%d KBit/s (nominal)"
-#~ msgstr "%d KBit/s (номинално)"
-
-#~ msgid "%d Hz"
-#~ msgstr "%d Hz"
-
-#~ msgid "%d"
-#~ msgstr "%d"
-
-#~ msgid "%d:%.2d"
-#~ msgstr "%d:%.2d"
-
-#~ msgid "%d Bytes"
-#~ msgstr "%d бајти"
-
-#~ msgid "Ogg Vorbis Audio Plugin"
-#~ msgstr "Аудио додаток"
-
-#~ msgid "About Ogg Vorbis Audio Plugin"
-#~ msgstr "За аудио додаток"
-
-#~ msgid ""
-#~ "Ogg Vorbis Plugin by the Xiph.org Foundation\n"
-#~ "\n"
-#~ "Original code by\n"
-#~ "Tony Arcieri <bascule@inferno.tusculum.edu>\n"
-#~ "Contributions from\n"
-#~ "Chris Montgomery <monty@xiph.org>\n"
-#~ "Peter Alm <peter@xmms.org>\n"
-#~ "Michael Smith <msmith@labyrinth.edu.au>\n"
-#~ "Jack Moffitt <jack@icecast.org>\n"
-#~ "Jorn Baayen <jorn@nl.linux.org>\n"
-#~ "Haavard Kvaalen <havardk@xmms.org>\n"
-#~ "Gian-Carlo Pascutto <gcp@sjeng.org>\n"
-#~ "\n"
-#~ "Visit the Xiph.org Foundation at http://www.xiph.org/\n"
-#~ msgstr ""
-#~ "Ogg Vorbis додаток од Фондацијата Xiph.org\n"
-#~ "\n"
-#~ "Оригинален код од\n"
-#~ "Tony Arcieri <bascule@inferno.tusculum.edu>\n"
-#~ "Со помошта на\n"
-#~ "Chris Montgomery <monty@xiph.org>\n"
-#~ "Peter Alm <peter@xmms.org>\n"
-#~ "Michael Smith <msmith@labyrinth.edu.au>\n"
-#~ "Jack Moffitt <jack@icecast.org>\n"
-#~ "Jorn Baayen <jorn@nl.linux.org>\n"
-#~ "Haavard Kvaalen <havardk@xmms.org>\n"
-#~ "Gian-Carlo Pascutto <gcp@sjeng.org>\n"
-#~ "\n"
-#~ "Посетете ја the Xiph.org Foundation на http://www.xiph.org/\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Adapted for Audacious usage by Tony Vroon <chainsaw@gentoo.org>\n"
-#~ "from the xmms_sndfile plugin which is:\n"
-#~ "Copyright (C) 2000, 2002 Erik de Castro Lopo\n"
-#~ "\n"
-#~ "This program is free software ; you can redistribute it and/or modify \n"
-#~ "it under the terms of the GNU General Public License as published by \n"
-#~ "the Free Software Foundation ; either version 2 of the License, or \n"
-#~ "(at your option) any later version. \n"
-#~ " \n"
-#~ "This program is distributed in the hope that it will be useful, \n"
-#~ "but WITHOUT ANY WARRANTY ; without even the implied warranty of \n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  \n"
-#~ "See the GNU General Public License for more details. \n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public \n"
-#~ "License along with this program ; if not, write to \n"
-#~ "the Free Software Foundation, Inc., \n"
-#~ "51 Franklin Street, Fifth Floor, \n"
-#~ "Boston, MA  02110-1301  USA"
-#~ msgstr ""
-#~ "XMMS ESounD Plugin\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
-#~ msgid "WAV Audio Plugin"
-#~ msgstr "WAV аудио додаток"
-
-#, fuzzy
-#~ msgid "About %s"
-#~ msgstr "За"
-
-#, fuzzy
-#~ msgid " Close "
-#~ msgstr "Затвори"
-
-#~ msgid "OSS Output Plugin"
-#~ msgstr "OSS излезен додаток"
-
-#~ msgid "About OSS Driver"
-#~ msgstr "За OSS драјверот"
-
-#, fuzzy
-#~ msgid ""
-#~ "Audacious OSS Driver\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "XMMS OSS Driver\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
-#~ msgid "Default (%s)"
-#~ msgstr "Стандардно (%s)"
-
-#~ msgid "OSS Driver configuration"
-#~ msgstr "Конфигурација на OSS драјверот"
-
-#~ msgid "Audio device:"
-#~ msgstr "Аудио уред:"
-
-#~ msgid "Use alternate device:"
-#~ msgstr "Користи алтернативен уред:"
-
-#~ msgid "Mixer device:"
-#~ msgstr "Миксер:"
-
-#~ msgid "Devices"
-#~ msgstr "Уреди"
-
-#~ msgid "Buffer size (ms):"
-#~ msgstr "Големина на бафер (ms):"
-
-#~ msgid "Buffering"
-#~ msgstr "Меѓумеморирање"
-
-#~ msgid "Mixer Settings:"
-#~ msgstr "Миксер подесувања:"
-
-#~ msgid "Volume controls Master not PCM"
-#~ msgstr "Контрола за гласност Master не PCM"
-
-#~ msgid "Mixer"
-#~ msgstr "Миксер"
-
-#~ msgid "About ALSA Driver"
-#~ msgstr "За ALSA драјверот"
-
-#, fuzzy
-#~ msgid ""
-#~ "Audacious ALSA Driver\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
-#~ "USA.\n"
-#~ "Author: Matthieu Sozeau (mattam@altern.org)"
-#~ msgstr ""
-#~ "XMMS ALSA драјвер\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA.\n"
-#~ "Author: Matthieu Sozeau (mattam@altern.org)"
-
-#~ msgid "ALSA %s output plugin"
-#~ msgstr "ALSA %s излезен додаток"
-
-#~ msgid "Unknown soundcard"
-#~ msgstr "Непозната звучна картичка"
-
-#~ msgid "Default PCM device (%s)"
-#~ msgstr "Стандарден PCM уред (%s)"
-
-#~ msgid "ALSA Driver configuration"
-#~ msgstr "ALSA драјвер конфигурација"
-
-#~ msgid "Mixer:"
-#~ msgstr "Миксер:"
-
-#~ msgid "Use software volume control"
-#~ msgstr "Користи софтверска јачина на гласноста"
-
-#~ msgid "Mixer card:"
-#~ msgstr "Миксер картичка:"
-
-#~ msgid "Device settings"
-#~ msgstr "Подесувања на уредот"
-
-#, fuzzy
-#~ msgid "Soundcard:"
-#~ msgstr "Музика од филм"
-
-#~ msgid "Buffer time (ms):"
-#~ msgstr "Бафер време (ms):"
-
-#~ msgid "Period time (ms):"
-#~ msgstr "Период време (ms):"
-
-#~ msgid "Advanced settings"
-#~ msgstr "Напредни подесувања"
-
-#, fuzzy
-#~ msgid "aRts Driver configuration"
-#~ msgstr "Конфигурација на OSS драјверот"
-
-#, fuzzy
-#~ msgid "Select the directory where you want to store the output files:"
-#~ msgstr "Изберете го директориумот каде ќе бидат сместени MPEG стримовите:"
-
-#, fuzzy
-#~ msgid "Disk Writer Configuration"
-#~ msgstr "Конфигурација на OSS драјверот"
-
-#~ msgid "About ESounD Plugin"
-#~ msgstr "За додатокот ESounD"
-
-#, fuzzy
-#~ msgid ""
-#~ "Audacious ESounD Plugin\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-"
-#~ "1301,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "XMMS ESounD Plugin\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
-#~ msgid "Host:"
-#~ msgstr "Сервер:"
-
-#~ msgid "Use remote host"
-#~ msgstr "Користи мрежен сервер"
-
-#~ msgid "Volume controls OSS mixer"
-#~ msgstr "OSS миксер за контрола на гласност"
-
-#~ msgid "Port:"
-#~ msgstr "Порта:"
-
-#~ msgid "Server"
-#~ msgstr "Сервер"
-
-#~ msgid "eSound Output Plugin"
-#~ msgstr "eSound излезен додаток"
-
-#, fuzzy
-#~ msgid "About JACK Output Plugin 0.15"
-#~ msgstr "eSound излезен додаток"
-
-#, fuzzy
-#~ msgid "About the Sun Driver"
-#~ msgstr "За OSS драјверот"
-
-#, fuzzy
-#~ msgid "Audio control device:"
-#~ msgstr "Аудио уред:"
-
-#, fuzzy
-#~ msgid "Volume controls device:"
-#~ msgstr "Контрола на гласност:"
-
-#, fuzzy
-#~ msgid "Sun driver configuration"
-#~ msgstr "Конфигурација на OSS драјверот"
-
-#~ msgid "/Toggle Decorations"
-#~ msgstr "Промени"
-
-#~ msgid "/Close"
-#~ msgstr "Затвори"
-
-#~ msgid "Blur scope"
-#~ msgstr "Blur scope"
-
-#~ msgid "Blur Scope: Color selection"
-#~ msgstr "Blur Scope: Избор на боја"
-
-#~ msgid "Options:"
-#~ msgstr "Опции:"
-
-#~ msgid "** DOUBLESIZE HAS BEEN REMOVED **"
-#~ msgstr "** ДВОЈНАТА ГОЛЕМИНА Е ОТСТРАНЕТА **"
-
-#, fuzzy
-#~ msgid "<b>_Transparency</b>"
-#~ msgstr "<b>Плејбек</b>"
-
-#, fuzzy
-#~ msgid "Scrobbler Configuration"
-#~ msgstr "Конфигурација за MPEG аудио додаток"
-
-#, fuzzy
-#~ msgid "Song Change Configuration"
-#~ msgstr "Конфигурација на CD аудио плеер"
-
-#, fuzzy
-#~ msgid "Song Metadata"
-#~ msgstr "Соната"
-
-#, fuzzy
-#~ msgid "Port"
-#~ msgstr "Порта:"
-
-#, fuzzy
-#~ msgid "Client name"
-#~ msgstr "Име на датотека"
-
-#, fuzzy
-#~ msgid "Port name"
-#~ msgstr "Име на песна"
-
-#, fuzzy
-#~ msgid "ALSA output ports"
-#~ msgstr "ALSA %s излезен додаток"
-
-#, fuzzy
-#~ msgid "Mixer settings"
-#~ msgstr "Миксер подесувања:"
-
-#~ msgid "Convert non-UTF8 ID3 tags to UTF8"
-#~ msgstr "Конвертирај невалидни UTF8 во ID3 тагови во UTF8"
-
-#~ msgid "ID3 encoding:"
-#~ msgstr "ID3 енкодинг:"
-
-#, fuzzy
-#~ msgid "Convert non-UTF8 Vorbis tags to UTF8"
-#~ msgstr "Конвертирај невалидни UTF8 во ID3 тагови во UTF8"
-
-#, fuzzy
-#~ msgid "Vorbis encoding:"
-#~ msgstr "ID3 енкодинг:"
-
-#, fuzzy
-#~ msgid "%d Kb/s"
-#~ msgstr "%d KBit/s"
-
-#, fuzzy
-#~ msgid "<b>Name:</b>"
-#~ msgstr "<b> Име на датотека</b>"
-
-#, fuzzy
-#~ msgid "<b>WMA Version:</b>"
-#~ msgstr "<b> Визуелизација</b>"
-
-#, fuzzy
-#~ msgid "<b>Bitrate:</b>"
-#~ msgstr "Бит рејт:"
-
-#, fuzzy
-#~ msgid "<b>Channels:</b>"
-#~ msgstr "Канали:"
-
-#, fuzzy
-#~ msgid "<b>Play time:</b>"
-#~ msgstr "<b> Име на датотека</b>"
-
-#, fuzzy
-#~ msgid "<b>Filesize:</b>"
-#~ msgstr "<b> Име на датотека</b>"
-
-#, fuzzy
-#~ msgid "WMA Info"
-#~ msgstr "Информации за CD-то"
-
-#, fuzzy
-#~ msgid "<b>Comments:</b>"
-#~ msgstr "<b>_Фонтови</b>"
-
-#, fuzzy
-#~ msgid "<b>Track:</b>"
-#~ msgstr "<b>Плејбек</b>"
-
-#, fuzzy
-#~ msgid "Tags"
-#~ msgstr "Танго"
-
-#~ msgid "Artem Baguinski"
-#~ msgstr "Artem Baguinski"
-
-#~ msgid "Edward Brocklesby"
-#~ msgstr "Edward Brocklesby"
-
-#~ msgid "Chong Kai Xiong"
-#~ msgstr "Chong Kai Xiong"
-
-#~ msgid "Milosz Derezynski"
-#~ msgstr "Milosz Derezynski"
-
-#~ msgid "David Lau"
-#~ msgstr "David"
-
-#~ msgid "Ole Andre Vadla Ravnaas"
-#~ msgstr "Ole Andre Vadla Ravnaas"
-
-#~ msgid "Michiel Sikkes"
-#~ msgstr "Michiel Sikkes"
-
-#~ msgid "Andrei Badea"
-#~ msgstr "Andrei Badea"
-
-#~ msgid "Peter Behroozi"
-#~ msgstr "  \tPeter Behroozi"
-
-#~ msgid "Bernard Blackham"
-#~ msgstr "Bernard Blackham"
-
-#~ msgid "Oliver Blin"
-#~ msgstr "Oliver Blin"
-
-#~ msgid "Tomas Bzatek"
-#~ msgstr "Tomas Bzatek"
-
-#~ msgid "Liviu Danicel"
-#~ msgstr "  \tLiviu Danicel"
-
-#~ msgid "Jon Dowland"
-#~ msgstr "Jon Dowland"
-
-#~ msgid "Artur Frysiak"
-#~ msgstr "Artur Frysiak"
-
-#~ msgid "Sebastian Kapfer"
-#~ msgstr "Sebastian Kapfer"
-
-#~ msgid "Lukas Koberstein"
-#~ msgstr "Lukas Koberstein"
-
-#~ msgid "Dan Korostelev"
-#~ msgstr "  \tDan Korostelev"
-
-#~ msgid "Jolan Luff"
-#~ msgstr "Jolan Luff"
-
-#~ msgid "Michael Marineau"
-#~ msgstr "Michael Marineau"
-
-#~ msgid "Tim-Philipp Muller"
-#~ msgstr "Tim-Philipp Muller"
-
-#~ msgid "Julien Portalier"
-#~ msgstr "Julien Portalier"
-
-#~ msgid "Andrew Ruder"
-#~ msgstr "Andrew Ruder"
-
-#~ msgid "Olivier Samyn"
-#~ msgstr "Olivier Samyn"
-
-#~ msgid "Martijn Vernooij"
-#~ msgstr "Martijn Vernooij"
-
-#~ msgid "Philipi Pinto"
-#~ msgstr "Philipi Pinto"
-
-#~ msgid "Thierry Vignaud"
-#~ msgstr "Thierry Vignaud"
-
-#~ msgid "Jan Narovec"
-#~ msgstr "Jan Narovec"
-
-#~ msgid "Laurens Buhler"
-#~ msgstr "Laurens Buhler"
-
-#~ msgid "David Le Brun"
-#~ msgstr "David"
-
-#~ msgid "Matthias Debus"
-#~ msgstr "Matthias Debus"
-
-#~ msgid "Kouzinopoulos Haris"
-#~ msgstr "Kouzinopoulos Haris"
-
-#~ msgid "Laszlo Dvornik"
-#~ msgstr " Laszlo Dvornik"
-
-#~ msgid "Alessio D'Ascanio"
-#~ msgstr "  \tAlessio D'Ascanio"
-
-#~ msgid "DongCheon Park"
-#~ msgstr "DongCheon Park"
-
-#~ msgid "Rimas Kudelis"
-#~ msgstr "Rimas Kudelis"
-
-#~ msgid "Arangel Angov"
-#~ msgstr "Арангел Ангов"
-
-#~ msgid "Jacek Wolszczak"
-#~ msgstr "Jacek Wolszczak"
-
-#~ msgid "Pavlo Bohmat"
-#~ msgstr "Pavlo Bohmat"
-
-#~ msgid "Pavel Kanzelsberger"
-#~ msgstr "  \tPavel Kanzelsberger"
-
-#~ msgid "Martin Persenius"
-#~ msgstr "Martin Persenius"
-
-#~ msgid "<span size=\"xx-large\"><b>Plugins</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b> Додатоци</b></span>"
-
-#~ msgid "_Media plugin list:"
-#~ msgstr "_Листа на додатоци:"
-
-#, fuzzy
-#~ msgid ""
-#~ "The change is now effective in Audacious' configuration database, but "
-#~ "won't take effect for playback until the next song!\n"
-#~ "\n"
-#~ "Optionally, you can stop and restart playback for the change to take "
-#~ "effect."
-#~ msgstr ""
-#~ "Промената е применета во конфигурациската база на BMP, но нема да се "
-#~ "одрази на плејбекот до наредната песна!\n"
-#~ "\n"
-#~ "Можете да го рестартирате плејбекот за да ги примените промените."
-
-#~ msgid "<span size=\"xx-large\"><b>Appearance</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b> Изглед</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Mouse</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Глушец</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Playlist</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b> Листа со песни</b></span>"
-
-#~ msgid "<span size=\"xx-large\"><b>Equalizer</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Изедначувач</b></span>"
-
-#, fuzzy
-#~ msgid "<span size=\"xx-large\"><b>Connectivity</b></span>"
-#~ msgstr "<span size=\"xx-large\"><b>Глушец</b></span>"
-
-#~ msgid "Use proxy"
-#~ msgstr "Користи прокси"
-
-#~ msgid "Frames:"
-#~ msgstr "Рамки:"
-
-#~ msgid ""
-#~ "Variable,\n"
-#~ "avg. bitrate: %d KBit/s"
-#~ msgstr ""
-#~ "Варијабла,\n"
-#~ "avg. bitrate: %d KBit/s"
-
-#~ msgid "Francisco Javier F. Serrador"
-#~ msgstr "Francisco Javier F. Serrador"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to write to file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Не можам да ја снимам датотеката: %s"
-
-#~ msgid "Couldn't write tag!"
-#~ msgstr "Тагот не може да се запише!"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to open file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Не можам да ја отворам датотеката: %s"
-
-#~ msgid "File Info"
-#~ msgstr "Информации за датотеката"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "Unable to truncate file: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "Не можам да ја намалам датотеката: %s"
-
-#~ msgid "Couldn't remove tag!"
-#~ msgstr "Не можам да го отстранам тагот!"
-
-#~ msgid "No tag to remove!"
-#~ msgstr "Нема таг за отстранување!"
-
-#~ msgid "Copy album tags"
-#~ msgstr "Копирај ги таговите од албумот"
-
-#~ msgid "Paste album tags"
-#~ msgstr "Вметни ги таговите од албумот"
-
-#, fuzzy
-#~ msgid "About TiMidity Plugin"
-#~ msgstr "За MPEG аудио додаток"
-
-#, fuzzy
-#~ msgid "TiMidity Plugin"
-#~ msgstr "MPEG аудио додаток"
-
-#~ msgid "Options"
-#~ msgstr "Опции"
-
-#~ msgid "Content"
-#~ msgstr "Содржина"
-
-#~ msgid "Extension"
-#~ msgstr "Наставка"
-
-#~ msgid "Extension and content"
-#~ msgstr "Наставка и содржина"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Copyright (C) 2000-2004  Peter Eisenlohr <peter@eisenlohr.org>\n"
-#~ "\n"
-#~ "based on the original OSS Output Plugin  Copyright (C) 1998-2000\n"
-#~ "Peter Alm, Mikael Alm, Olle Hallnas, Thomas Nilsson and 4Front "
-#~ "Technologies\n"
-#~ "\n"
-#~ "This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-#~ msgstr ""
-#~ "XMMS ESounD Plugin\n"
-#~ "\n"
-#~ " This program is free software; you can redistribute it and/or modify\n"
-#~ "it under the terms of the GNU General Public License as published by\n"
-#~ "the Free Software Foundation; either version 2 of the License, or\n"
-#~ "(at your option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful,\n"
-#~ "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-#~ "GNU General Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License\n"
-#~ "along with this program; if not, write to the Free Software\n"
-#~ "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,\n"
-#~ "USA."
-
-#, fuzzy
-#~ msgid " Enable"
-#~ msgstr "Вклучен"
-
-#, fuzzy
-#~ msgid "About XMMS Crossfade Plugin"
-#~ msgstr "За додатокот ESounD"
-
-#, fuzzy
-#~ msgid "Advanced"
-#~ msgstr "Напредни подесувања"
-
-#, fuzzy
-#~ msgid "Advanced XF"
-#~ msgstr "Напредни подесувања"
-
-#, fuzzy
-#~ msgid "Advanced options"
-#~ msgstr "Напредни подесувања"
-
-#, fuzzy
-#~ msgid "Configure"
-#~ msgstr "Конфигурирај изедначувач"
-
-#, fuzzy
-#~ msgid "Crossfade"
-#~ msgstr "Crossover"
-
-#, fuzzy
-#~ msgid "Crossfader"
-#~ msgstr "Crossover"
-
-#, fuzzy
-#~ msgid "Custom (ms):"
-#~ msgstr "Сопствен стринг:"
-
-#, fuzzy
-#~ msgid "Enable volume control"
-#~ msgstr "Контрола на гласност:"
-
-#, fuzzy
-#~ msgid "Limit OP buffer usage (ms):"
-#~ msgstr "Големина на бафер (ms):"
-
-#, fuzzy
-#~ msgid "Mixing buffer size (ms):"
-#~ msgstr "Големина на бафер (ms):"
-
-#, fuzzy
-#~ msgid "Plugin compatibility options"
-#~ msgstr "Режим на компатибилност со XMMS"
-
-#, fuzzy
-#~ msgid "Position:"
-#~ msgstr "Опис:"
-
-#, fuzzy
-#~ msgid "Quality:"
-#~ msgstr "/_Излез"
-
-#, fuzzy
-#~ msgid "Rate:"
-#~ msgstr "Дата:"
-
-#, fuzzy
-#~ msgid "Reopen"
-#~ msgstr "/Повторување"
-
-#, fuzzy
-#~ msgid "Use plugin"
-#~ msgstr "Додатоци"
-
-#, fuzzy
-#~ msgid "Volume control options"
-#~ msgstr "Контрола на гласност:"
-
-#, fuzzy
-#~ msgid "Volume normalizer"
-#~ msgstr "Контрола на гласност:"
-
-#, fuzzy
-#~ msgid "same file"
-#~ msgstr "Од датотека"
-
-#, fuzzy
-#~ msgid "LibVisual Audacious Plugin"
-#~ msgstr "_Листа на додатоци за визуелизација"
-
-#, fuzzy
-#~ msgid "Visualization Plugins"
-#~ msgstr "_Листа на додатоци за визуелизација"
-
-#, fuzzy
-#~ msgid "All plugins"
-#~ msgstr "Додатоци"
-
-#, fuzzy
-#~ msgid "GL plugins only"
-#~ msgstr "_Барај додатоци во:"
-
-#, fuzzy
-#~ msgid "non GL plugins only"
-#~ msgstr "_Барај додатоци во:"
-
-#, fuzzy
-#~ msgid " (enabled)"
-#~ msgstr "Вклучен"
-
-#, fuzzy
-#~ msgid "Version: "
-#~ msgstr "Верзија:"
-
-#, fuzzy
-#~ msgid " error"
-#~ msgstr "Терор"
-
-#, fuzzy
-#~ msgid "Audacious plugin"
-#~ msgstr "CD додаток за аудио"
-
-#, fuzzy
-#~ msgid "Cannot initialize SDL!\n"
-#~ msgstr "Не можам да го иницијализирам gnome-vfs.\n"
-
-#~ msgid "Developers:"
-#~ msgstr "Развивачи:"
-
-#~ msgid "DISABLE ALWAYS ON TOP (N/A)"
-#~ msgstr "Оневозможи секогаш најгоре (N/A)"
-
-#~ msgid "ENABLE ALWAYS ON TOP (N/A)"
-#~ msgstr "Овозможи секогаш најгоре (N/A)"
-
-#, fuzzy
-#~ msgid "Downsample:"
-#~ msgstr "Долу:"
-
-#, fuzzy
-#~ msgid "Use interpolation"
-#~ msgstr "Користи автентикација"
-
-#~ msgid "%s - BMP"
-#~ msgstr "%s - BMP"
-
-#~ msgid "bmp: %s"
-#~ msgstr "bmp: %s"
-
-#, fuzzy
-#~ msgid "/Play Directory"
-#~ msgstr "Ди_ректориум:"
-
-#~ msgid "Add Folders"
-#~ msgstr "Додај папки"
-
-#, fuzzy
-#~ msgid "/Add Folders..."
-#~ msgstr "/Додади/папки..."
-
-#~ msgid "3DNow! optimized decoder"
-#~ msgstr "3DNow! оптимизиран декодер"
-
-#~ msgid "MMX optimized decoder"
-#~ msgstr "MMX оптимизиран декодер"
-
-#~ msgid "FPU decoder"
-#~ msgstr "FPU декодер"
-
-#~ msgid ""
-#~ "mpg123 decoding engine by Michael Hipp <mh@mpg123.de>\n"
-#~ "Plugin by The XMMS team"
-#~ msgstr ""
-#~ "mpg123 енџин за декодирање од Michael Hipp <mh@mpg123.de>\n"
-#~ "Додаток од The XMMS team"
-
-#~ msgid "Advanced settings:"
-#~ msgstr "Напредни подесувања:"
-
-#, fuzzy
-#~ msgid "Thread buffer time (ms):"
-#~ msgstr "Бафер време (ms):"
-
-#~ msgid "Mmap mode"
-#~ msgstr "Мmap режим"
-
-#~ msgid "Homepage and Graphics:"
-#~ msgstr "Интернет страница и графика:"
-
-#~ msgid "Takeshi Aihana"
-#~ msgstr "Takeshi Aihana"
-
-#~ msgid "BMP Equalizer"
-#~ msgstr "Изедначувач"
-
-#~ msgid "Beep Media Player"
-#~ msgstr "Пуштач на музика"
-
-#~ msgid "/About BMP"
-#~ msgstr "/За BMP"
-
-#~ msgid "BMP"
-#~ msgstr "BMP"
-
-#~ msgid "Add Internet Address"
-#~ msgstr "/Додај адреса..."
-
-#~ msgid "*"
-#~ msgstr "*"
-
-#~ msgid "Vlad Gerasimov"
-#~ msgstr "Vlad Gerasimov"
-
-#~ msgid "/By extension"
-#~ msgstr "/По наставка"
-
-#~ msgid "Danicel Liviu Cristian"
-#~ msgstr "Danicel Liviu Cristian"
-
-#~ msgid "/5 seconds REW"
-#~ msgstr "/5 секунди назад"
-
-#~ msgid "/5 seconds FFWD"
-#~ msgstr "/5 секунди напред"
-
-#~ msgid "/Add"
-#~ msgstr "/Додади"
-
-#~ msgid "/_Options"
-#~ msgstr "/_Опции"
-
-#~ msgid "/Show Graphical EQ"
-#~ msgstr "/Покажи графички EQ"
-
-#~ msgid "/Show on all desktops"
-#~ msgstr "/Прикажи на сите работни површини"
-
-#~ msgid "/WindowShade Mode"
-#~ msgstr "/Режим на засенети прозорци"
-
-#~ msgid "/Playlist WindowShade Mode"
-#~ msgstr "/Листа во режим на засенет прозорец"
-
-#~ msgid "/Equalizer WindowShade Mode"
-#~ msgstr "/Изедначувач во режим на засенет прозорец"
-
-#~ msgid "Jump to:"
-#~ msgstr "Оди на:"
-
-#~ msgid "Jump"
-#~ msgstr "Оди"
-
-#~ msgid "Add URL"
-#~ msgstr "Додади URL"
-
-#~ msgid "/Close Window"
-#~ msgstr "/Затвори прозорец"
-
-#~ msgid "/Sort by Title"
-#~ msgstr "/Подреди по наслов"
-
-#~ msgid "/Sort by Filename"
-#~ msgstr "/Подреди по име на датотека"
-
-#~ msgid "/Sort by Date"
-#~ msgstr "/Подреди по датум"
-
-#~ msgid "Failed to delete \"%s\": %s."
-#~ msgstr "Не можам да избиршам \"%s\": %s."
-
-#~ msgid "%d of %d files successfully deleted."
-#~ msgstr "%d од %d датотеки успено се избришани."
-
-#~ msgid "XMMS: Files deleted"
-#~ msgstr "XMMS: Избришани датотеки"
-
-#~ msgid "Really delete %d files?"
-#~ msgstr "Навистина да ги избришам %d датотеките?"
-
-#~ msgid "Really delete: \"%s\"?"
-#~ msgstr "Навистина да го избришам : \"%s\"?"
-
-#~ msgid "Smooth title scrolling in main window"
-#~ msgstr "Мазно лизгање на наслови во главниот прозорец"
