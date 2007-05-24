@@ -1,3 +1,11 @@
+2007-05-24 05:53:38 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4604]
+  - update polish translation. closes #839.
+  
+  trunk/po/pl.po |  109 ++++++++++++++++++++++++++++++---------------------------
+  1 file changed, 59 insertions(+), 50 deletions(-)
+
+
 2007-05-24 04:02:55 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4602]
   - exclude codes which use session if USE_DBUS is not defined.
