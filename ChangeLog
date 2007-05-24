@@ -1,3 +1,12 @@
+2007-05-24 10:27:54 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4620]
+  - first attempt at an plugin API2 loader. this is entirely implemented inside the plugin2 namespace, so please respect that if you go editing this ;p
+  
+  trunk/src/audacious/plugin.h     |    1 
+  trunk/src/audacious/pluginenum.c |  128 +++++++++++++++++++++++++++++++++++++--
+  2 files changed, 123 insertions(+), 6 deletions(-)
+
+
 2007-05-24 09:03:17 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4618]
   - add functions for defining the v2 plugin header

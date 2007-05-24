@@ -231,6 +231,7 @@ plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
 
     for (ip_iter = header->ip_list; *ip_iter != NULL; ip_iter++)
     {
+        PLUGIN(*ip_iter)->filename = g_strdup(filename);
         g_print("plugin2 '%s' provides InputPlugin <%p>", filename, *ip_iter);
         input_plugin_init(PLUGIN(*ip_iter));
     }
