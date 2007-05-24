@@ -243,6 +243,7 @@ plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
     {
         for (op_iter = header->op_list; *op_iter != NULL; op_iter++)
         {
+            PLUGIN(*op_iter)->filename = g_strdup(filename);
             g_print("plugin2 '%s' provides OutputPlugin <%p>\n", filename, *op_iter);
             output_plugin_init(PLUGIN(*op_iter));
         }
@@ -252,6 +253,7 @@ plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
     {
         for (ep_iter = header->ep_list; *ep_iter != NULL; ep_iter++)
         {
+            PLUGIN(*ep_iter)->filename = g_strdup(filename);
             g_print("plugin2 '%s' provides EffectPlugin <%p>\n", filename, *ep_iter);
             effect_plugin_init(PLUGIN(*ep_iter));
         }
@@ -261,6 +263,7 @@ plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
     {
         for (gp_iter = header->gp_list; *gp_iter != NULL; gp_iter++)
         {
+            PLUGIN(*gp_iter)->filename = g_strdup(filename);
             g_print("plugin2 '%s' provides GeneralPlugin <%p>\n", filename, *gp_iter);
             general_plugin_init(PLUGIN(*gp_iter));
         }
@@ -270,6 +273,7 @@ plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
     {
         for (vp_iter = header->vp_list; *vp_iter != NULL; vp_iter++)
         {
+            PLUGIN(*vp_iter)->filename = g_strdup(filename);
             g_print("plugin2 '%s' provides VisPlugin <%p>\n", filename, *vp_iter);
             vis_plugin_init(PLUGIN(*vp_iter));
         }
