@@ -1,3 +1,11 @@
+2007-05-24 04:02:55 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4602]
+  - exclude codes which use session if USE_DBUS is not defined.
+  
+  trunk/src/audacious/main.c |    2 ++
+  1 file changed, 2 insertions(+)
+
+
 2007-05-23 22:45:00 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4600]
   - add some assertions to chardet_to_utf8() to try to trace bad g_convert() calls

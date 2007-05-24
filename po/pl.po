@@ -138,7 +138,7 @@ msgid ""
 "Check that skin at '%s' is usable and default skin is properly installed at "
 "'%s'\n"
 msgstr ""
-"<b><big>Nie można wgrać skóry.</big></b>\n"
+"<b><big>Nie można wczytać skóry.</big></b>\n"
 "\n"
 "Sprawdź czy skóra '%s' jest poprawna i czy domyślna skóra jest zainstalowana "
 "w '%s'\n"
@@ -151,7 +151,7 @@ msgid ""
 "you\n"
 "installed LinuxThreads you need to recompile Glib & GTK+.\n"
 msgstr ""
-"Niestety wątkowanie jest niewspierane przez twoją platformę.\n"
+"Niestety, twoja platforma nie wspiera wielowątkowości.\n"
 "\n"
 "Jeśli używasz Linuksa bazowanego na libc5 i zainstalowałeś Glib i GTK+ "
 "zanim \n"
@@ -202,6 +202,21 @@ msgid ""
 "report:\n"
 "\n"
 msgstr ""
+"\n"
+"Audacious przechwycił sygnał 11 (SIGSEGV).\n"
+"\n"
+"Przepraszamy za kłopot, ale Audacious spowodował błąd i teraz nastąpi "
+"jego zamknięcie.\n"
+"Jest to błąd w programie i nie powinien nigdy wystąpić w normalnych "
+"okolicznościach.\n"
+"Twoja bieżąca konfiguracja została zapisana i nie powinna zostać uszkodzona.\n"
+"\n"
+"Możesz pomóc udoskonalać Audacious poprzez wypełnienie raportu na "
+"http://bugs-meta.atheme.org\n"
+"Proszę załącz całą treść tej wiadomości i opisz, co robiłeś, gdy wystąþił "
+"ten błąd,\n"
+"abyśmy mogli szybciej zająć się tym raportem:\n"
+"\n"
 
 #: src/audacious/signals.c:79
 msgid ""
@@ -209,28 +224,31 @@ msgid ""
 "Bugs can be reported at http://bugs-meta.atheme.org against the Audacious "
 "product.\n"
 msgstr ""
+"\n"
+"Błędy mogą być raportowane na http://bugs-meta.atheme.org w projekcie Audacious.\n"
 
 #: src/audacious/signals.c:265
 msgid ""
 "Your signaling implementation is broken.\n"
 "Expect unusable crash reports.\n"
 msgstr ""
+"Twoja implementacja sygnałów jest uszkodzona.\n"
+"Możesz się spodziewać nieużywalnych raportów o błędach.\n"
 
 #: src/audacious/strings.c:170
 msgid "  (invalid UTF-8)"
 msgstr " (nieprawidłowy UTF-8)"
 
 #: src/audacious/ui_about.c:44
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>Audacious %s</b></big>\n"
 "\n"
 "Copyright (C) 2005-2007 Audacious Development Team"
 msgstr ""
 "<big><b>Audacious %s</b></big>\n"
-"Przyszłość multimediów w Unixie\n"
 "\n"
-"Copyright (C) 2005-2007 Zespół autorów Audacious\n"
+"Copyright (C) 2005-2007 Zespół twórców Audacious"
 
 #: src/audacious/ui_about.c:123 src/audacious/ui_credits.c:345
 #: src/audacious/ui_manager.c:387 src/audacious/ui_manager.c:388
@@ -295,9 +313,8 @@ msgid "Bulgarian:"
 msgstr "Bułgarski:"
 
 #: src/audacious/ui_credits.c:156
-#, fuzzy
 msgid "Catalan:"
-msgstr "Włoski:"
+msgstr "Kataloński:"
 
 #: src/audacious/ui_credits.c:159
 msgid "Croatian:"
@@ -455,17 +472,15 @@ msgstr "Długość utworu:"
 
 #: src/audacious/ui_main.c:1520
 msgid "Audacious - visibility warning"
-msgstr ""
+msgstr "Audacious - ostrzeżenie o widoczności"
 
 #: src/audacious/ui_main.c:1522
-#, fuzzy
 msgid "Show main player window"
-msgstr "Wybór czcionki okna głównego:"
+msgstr "Pokaż głowne okno"
 
 #: src/audacious/ui_main.c:1523
-#, fuzzy
 msgid "Ignore"
-msgstr "brak"
+msgstr "Ignoruj"
 
 #: src/audacious/ui_main.c:1527
 msgid ""
@@ -473,11 +488,14 @@ msgid ""
 "You may want to show the player window again to control Audacious; "
 "otherwise, you'll have to control it remotely via audtool or enabled plugins "
 "(such as the statusicon plugin)."
-msgstr ""
+msgstr "Audacious został uruchomiony ze schowanymi wszystkimi oknami.\n"
+"Możesz wyświetlić główne okno, aby kontrolować Audacious; "
+"możesz też kontrolować go zdalnie poprzez audtool lub uruchomione pluginy "
+"(takie jak statusicon)."
 
 #: src/audacious/ui_main.c:1533
 msgid "Always ignore, show/hide is controlled remotely"
-msgstr ""
+msgstr "Zawsze ignoruj, wyświetlanie/chowanie kontrolowane zdalnie"
 
 #: src/audacious/ui_main.c:1551
 msgid "Enter location to play:"
@@ -491,7 +509,7 @@ msgstr "SKOK DO: %d:%-2.2d/%d:%-2.2d (%d%%)"
 #: src/audacious/ui_main.c:1793 src/audacious/ui_main.c:2418
 #, c-format
 msgid "VOLUME: %d%%"
-msgstr "GŁOŚNOŚĆ: %d%%"
+msgstr "GLOSNOSC: %d%%"
 
 #: src/audacious/ui_main.c:1824 src/audacious/ui_main.c:2421
 #, c-format
@@ -500,7 +518,7 @@ msgstr "BALANS: %d%% LEWY"
 
 #: src/audacious/ui_main.c:1828 src/audacious/ui_main.c:2424
 msgid "BALANCE: CENTER"
-msgstr "BALANS: ŚRODEK"
+msgstr "BALANS: SRODEK"
 
 #: src/audacious/ui_main.c:1832 src/audacious/ui_main.c:2426
 #, c-format
@@ -675,7 +693,6 @@ msgid "Line Scope"
 msgstr "Linie"
 
 #: src/audacious/ui_manager.c:117
-#, fuzzy
 msgid "Solid Scope"
 msgstr "Ciągły"
 
@@ -692,19 +709,16 @@ msgid "Full (~50 fps)"
 msgstr "Pełna (~50 fps)"
 
 #: src/audacious/ui_manager.c:133
-#, fuzzy
 msgid "Half (~25 fps)"
-msgstr "/Częstość odświeżania/Połowa (~25 fps)"
+msgstr "Połowa (~25 fps)"
 
 #: src/audacious/ui_manager.c:134
-#, fuzzy
 msgid "Quarter (~13 fps)"
-msgstr "/Częstość odświeżania/Ćwiartka (~13 fps)"
+msgstr "Jedna czwarta (~13 fps)"
 
 #: src/audacious/ui_manager.c:135
-#, fuzzy
 msgid "Eighth (~6 fps)"
-msgstr "/Częstość odświeżania/Ósemka (~6 fps)"
+msgstr "Jedna ósma (~6 fps)"
 
 #: src/audacious/ui_manager.c:139 src/audacious/ui_manager.c:147
 msgid "Slowest"
@@ -880,7 +894,6 @@ msgid "Add Internet Address..."
 msgstr "Dodaj adres internetowy..."
 
 #: src/audacious/ui_manager.c:245
-#, fuzzy
 msgid "Adds a remote track to the playlist."
 msgstr "Dodaje zdalną ścieżkę do listy odtwarzania."
 
@@ -1204,7 +1217,6 @@ msgid "WinAMP Presets"
 msgstr "Ustawienia WinAMPa"
 
 #: src/audacious/ui_manager.c:449
-#, fuzzy
 msgid "Import WinAMP presets"
 msgstr "Importuj ustawienia WinAMPa"
 
@@ -1213,7 +1225,6 @@ msgid "Save preset"
 msgstr "Zapisywanie ustawienia"
 
 #: src/audacious/ui_manager.c:455
-#, fuzzy
 msgid "Save auto-load preset"
 msgstr "Zapisz automatycznie wczytywane ustawienie"
 
@@ -1346,9 +1357,8 @@ msgid "Unarchived Winamp 2.x skin"
 msgstr "Niezarchiwizowana sĸóra Winamp 2.x"
 
 #: src/audacious/ui_fileinfo.c:160
-#, fuzzy
 msgid "Track Information Window"
-msgstr "Ustawienia Informacje o dymkach"
+msgstr "Informacje o utworze"
 
 #: src/audacious/ui_fileinfopopup.c:266
 msgid "Track Number"
@@ -1393,7 +1403,7 @@ msgid ""
 "expressions work, simply insert a literal portion of what you're searching "
 "for."
 msgstr ""
-"Wybierz pozycje w liście odtwarzania wypełniając jedno lub więcej pól.Pola "
+"Wybierz pozycje w liście odtwarzania wypełniając jedno lub więcej pól. Pola "
 "wykorzystują wyrażenia regularne, bez uwzględnienia wielkości znaków. Jeżeli "
 "nie wiesz, jak działają wyrażenia regularne, po prostu wstaw część nazwy "
 "tego, czego szukasz."
@@ -1420,7 +1430,7 @@ msgstr "Wyczyść poprzednie zaznaczenie przed szukaniem"
 
 #: src/audacious/ui_playlist.c:524
 msgid "Automatically toggle queue for matching entries"
-msgstr "Autmatycznie ustaw kolejkę dla znalezionych pozycji"
+msgstr "Autmatycznie wstaw do kolejki znalezione pozycje"
 
 #: src/audacious/ui_playlist.c:527
 msgid "Create a new playlist with matching entries"
@@ -1434,7 +1444,7 @@ msgstr "Błąd zapisu listy utworów \"%s\": %s"
 #: src/audacious/ui_playlist.c:799
 #, c-format
 msgid "%s already exist. Continue?"
-msgstr "%s już istnieje. Kontynuować?"
+msgstr "%s już istnieje. Czy chcesz kontynuować?"
 
 #: src/audacious/ui_playlist.c:814
 #, c-format
@@ -1563,7 +1573,7 @@ msgstr "<span size=\"medium\"><b>Rok</b></span>"
 
 #: src/audacious/glade/fileinfo.glade:441
 msgid "<span size=\"small\">Track Number</span>"
-msgstr "<span size=\"medium\"><b>Numer Utworu</b></span>"
+msgstr "<span size=\"medium\"><b>Numer utworu</b></span>"
 
 #: src/audacious/glade/fileinfo.glade:499
 msgid "<span size=\"small\">Location</span>"
@@ -1575,7 +1585,7 @@ msgstr "Ustawienia Audacious"
 
 #: src/audacious/glade/prefswin.glade:115
 msgid "_Decoder list:"
-msgstr "Lista _Dekoderów:"
+msgstr "Lista _dekoderów:"
 
 #: src/audacious/glade/prefswin.glade:219
 msgid "<span size=\"medium\"><b>Decoders</b></span>"
@@ -1749,7 +1759,7 @@ msgstr ""
 
 #: src/audacious/glade/prefswin.glade:1936
 msgid "On display"
-msgstr "Na żądanie"
+msgstr "Przy wyświetlaniu"
 
 #: src/audacious/glade/prefswin.glade:1966
 msgid "Fallback character encodings:"
@@ -1764,7 +1774,7 @@ msgid ""
 msgstr ""
 "Lista kodowania znaków używana jest podczas konwersji informacji o plikach. "
 "Jeśli automatyczne ustawienie kodowania się niepowiodło lub zostało "
-"wyłączone, znaki  kodowania w tej liście będą uważane jako kandydaci dla "
+"wyłączone, znaki kodowania w tej liście będą uważane jako kandydaci dla "
 "kodowania informacji o pliku. Wówczas ta zastępcza próba to kodowania w UTF-"
 "8 zostanie podjęta."
 
@@ -1862,7 +1872,7 @@ msgstr "Dostę_pne ustawienia:"
 
 #: src/audacious/glade/prefswin.glade:2909
 msgid "<b>Proxy Configuration</b>"
-msgstr "<b>Konfiguracja Proxy</b>"
+msgstr "<b>Konfiguracja proxy</b>"
 
 #: src/audacious/glade/prefswin.glade:2967
 msgid "Enable proxy usage"
@@ -1874,7 +1884,7 @@ msgstr "Nazwa proxy:"
 
 #: src/audacious/glade/prefswin.glade:3026
 msgid "Proxy port:"
-msgstr "Port Proxy:"
+msgstr "Port proxy:"
 
 #: src/audacious/glade/prefswin.glade:3120
 msgid "Use authentication with proxy"
@@ -1912,8 +1922,8 @@ msgid ""
 "Please note however, that high values will result in Audacious performing "
 "poorly.</span>"
 msgstr ""
-"<span size=\"small\">To jest długość czasu, na który buforowane są ścieżki "
-"audio, w milisekundach\n"
+"<span size=\"small\">Jest to długość czasu w milisekundach, na który "
+"buforowane są ścieżki audio\n"
 "Zwiększ tę wartość, jeśli doświadczasz przerywania płynności odtwarzania. \n"
 "Zwróć jednak uwagę, że ustawienie tej wartości za wysoko może powodować, że "
 "Audacious będzie się słabo sprawował.</span>"
@@ -2000,19 +2010,16 @@ msgid "seconds"
 msgstr "sekund"
 
 #: src/audacious/glade/prefswin.glade:4175
-#, fuzzy
 msgid "<b>Sampling Rate Converter</b>"
-msgstr "<b>Próbkowanie:</b>"
+msgstr "<b>Konwersja częstotliwości próbkowania</b>"
 
 #: src/audacious/glade/prefswin.glade:4215
-#, fuzzy
 msgid "Enable Sampling Rate Converter"
-msgstr "Próbkowanie"
+msgstr "Włącz konwersję częstotliwości próbkowania"
 
 #: src/audacious/glade/prefswin.glade:4264
-#, fuzzy
 msgid "Sampling Rate [Hz]:"
-msgstr "Próbkowanie"
+msgstr "Częstotliwość próbkowania [Hz]:"
 
 #: src/audacious/glade/prefswin.glade:4334
 msgid ""
@@ -2020,11 +2027,14 @@ msgid ""
 "This should be the max supported sampling rate of\n"
 "the sound card or output plugin.</span>"
 msgstr ""
+"<span size=\"small\">Wszystkie strumienie będą konwertowane "
+"do tej częstotliwości próbkowania.\n"
+"Powinna to być maksymalna częstotliwość wspierana przez "
+"kartę dźwiękową lub wtyczkę wyjściową.</span>"
 
 #: src/audacious/glade/prefswin.glade:4364
-#, fuzzy
 msgid "Converter Type:"
-msgstr "Konwertuj Tablicę Kodową"
+msgstr "Rodzaj konwertera:"
 
 #: src/audacious/glade/prefswin.glade:4392
 msgid ""
@@ -2036,9 +2046,8 @@ msgid ""
 msgstr ""
 
 #: src/audacious/glade/prefswin.glade:4593
-#, fuzzy
 msgid "Reload Plugins"
-msgstr "/Przeładuj skórę"
+msgstr "Załaduj ponownie wtyczki"
 
 #: src/audacious/glade/prefswin.glade:4654
 msgid "Popup Information Settings"
@@ -2100,7 +2109,7 @@ msgid ""
 "Audacious allows you to alter the color balance of the skinned UI. The "
 "sliders below will allow you to do this."
 msgstr ""
-"Audacious pozwala na modyfikację intensywności kolorów w skórce.Aby to "
+"Audacious pozwala na modyfikację intensywności kolorów w skórce. Aby to "
 "zrobić, użyj poniższych suwaków."
 
 #: src/audacious/glade/prefswin.glade:5268
