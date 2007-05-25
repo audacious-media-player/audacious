@@ -109,13 +109,6 @@ void audacious_drct_set_skin(gchar *skinfile)
         bmp_active_skin_load(skinfile);
 }
 
-void audacious_drct_show_jtf_box(void)
-{
-    if (!has_x11_connection)
-        return;
-    ui_jump_to_track();
-}
-
 void audacious_drct_activate(void)
 {
     gtk_window_present(GTK_WINDOW(mainwin));

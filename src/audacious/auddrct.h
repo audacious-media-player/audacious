@@ -36,7 +36,6 @@ void audacious_drct_eq_win_toggle ( gboolean );
 gboolean audacious_drct_pl_win_is_visible ( void );
 void audacious_drct_pl_win_toggle ( gboolean );
 void audacious_drct_set_skin(gchar *skinfile);
-void audacious_drct_show_jtf_box(void);
 void audacious_drct_activate(void);
 
 /* playback */
@@ -84,5 +83,45 @@ void audacious_drct_pq_clear( void );
 gboolean audacious_drct_pq_is_queued( gint pos );
 gint audacious_drct_pq_get_position( gint pos );
 gint audaciuos_drct_pq_get_queue_position( gint pos );
+
+/* adjust naming scheme to audacious_remote_* functions */
+#define audacious_drct_show_jtf_box audacious_drct_jtf_show
+#define audacious_drct_is_eq_win audacious_drct_eq_win_is_visible
+#define audacious_drct_is_pl_win audacious_drct_pl_win_is_visible
+#define audacious_drct_is_playing audacious_drct_get_playing
+#define audacious_drct_is_paused audacious_drct_get_paused
+#define audacious_drct_get_output_time audacious_drct_get_time
+#define audacious_drct_jump_to_time audacious_drct_seek
+#define audacious_drct_get_main_volume audacious_drct_get_volume_main
+#define audacious_drct_set_main_volume audacious_drct_set_volume_main
+#define audacious_drct_get__balance audacious_drct_get_volume_balance
+#define audacious_drct_set_balance audacious_drct_set_volume_balance
+#define audacious_drct_playlist_next audacious_drct_pl_next
+#define audacious_drct_playlist_prev audacious_drct_pl_prev
+#define audacious_drct_is_repeat audacious_drct_pl_repeat_is_enabled
+
+#define audacious_drct_toggle_repeat audacious_drct_pl_repeat_toggle
+#define audacious_drct_is_shuffle audacious_drct_pl_repeat_is_shuffled
+#define audacious_drct_toggle_shuffle audacious_drct_pl_shuffle_toggle
+#define audacious_drct_get_playlist_title audacious_drct_pl_get_title
+#define audacious_drct_get_playlist_time audacious_drct_pl_get_time
+#define audacious_drct_get_playlist_pos audacious_drct_pl_get_pos
+#define audacious_drct_get_playlist_file audacious_drct_pl_get_file
+#define audacious_drct_playlist_add audacious_drct_pl_add
+#define audacious_drct_playlist_clear audacious_drct_pl_clear
+#define audacious_drct_get_playlist_length audacious_drct_pl_get_length
+#define audacious_drct_playlist_delete audacious_drct_pl_delete
+#define audacious_drct_set_playlist_pos audacious_drct_pl_set_pos
+#define audacious_drct_playlist_ins_url_string audacious_drct_pl_ins_url_string
+#define audacious_drct_playlist_add_url_string audacious_drct_pl_add_url_string
+#define audacious_drct_playlist_enqueue_to_temp audacious_drct_pl_enqueue_to_temp
+
+#define audacious_drct_get_playqueue_length audacious_drct_pq_get_length
+#define audacious_drct_playqueue_add audacious_drct_pq_add
+#define audacious_drct_playqueue_remove audacious_drct_pq_remove
+#define audacious_drct_playqueue_clear audacious_drct_pq_clear
+#define audacious_drct_playqueue_is_queued audacious_drct_pq_is_queued
+#define audacious_drct_get_playqueue_position audacious_drct_pq_get_position
+#define audacious_drct_get_playqueue_queue_position audaciuos_drct_pq_get_queue_position
 
 #endif
