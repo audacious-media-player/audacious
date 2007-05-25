@@ -113,8 +113,17 @@ ui_jump_to_track_jump(GtkTreeView * treeview)
     change_song(pos - 1);
 
     /* FIXME: should only hide window */
-    gtk_widget_destroy(jump_to_track_win);
-    jump_to_track_win = NULL;
+    if(cfg.close_jtf_dialog){
+        gtk_widget_destroy(jump_to_track_win);
+        jump_to_track_win = NULL;
+    }
+}
+
+static void
+ui_jump_to_track_toggle_cb(GtkWidget * toggle)
+{
+    cfg.close_jtf_dialog =
+        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toggle));
 }
 
 static void
@@ -468,6 +477,7 @@ ui_jump_to_track(void)
 {
     GtkWidget *scrollwin;
     GtkWidget *vbox, *bbox, *sep;
+    GtkWidget *toggle;
     GtkWidget *jump, *queue, *cancel;
     GtkWidget *rescan, *edit;
     GtkWidget *search_label, *hbox;
@@ -567,6 +577,16 @@ ui_jump_to_track(void)
     gtk_button_box_set_layout(GTK_BUTTON_BOX(bbox), GTK_BUTTONBOX_END);
     gtk_button_box_set_spacing(GTK_BUTTON_BOX(bbox), 5);
     gtk_box_pack_start(GTK_BOX(vbox), bbox, FALSE, FALSE, 0);
+
+    /* close dialog toggle */
+    toggle = gtk_check_button_new_with_label(_("Close on Jump"));
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(toggle),
+                                 cfg.close_jtf_dialog ? TRUE : FALSE);
+    gtk_box_pack_start(GTK_BOX(bbox), toggle, FALSE, FALSE, 0);
+    g_signal_connect(toggle, "clicked", 
+                     G_CALLBACK(ui_jump_to_track_toggle_cb),
+                     toggle);
+
 
     queue = gtk_button_new_with_mnemonic(_("_Queue"));
     gtk_box_pack_start(GTK_BOX(bbox), queue, FALSE, FALSE, 0);

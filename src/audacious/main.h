@@ -124,6 +124,7 @@ struct _BmpConfig {
     gint colorize_r; gint colorize_g; gint colorize_b;
     gboolean terminate;
     gboolean filepopup_showprogressbar;
+    gboolean close_jtf_dialog;
 };
 
 typedef struct _BmpConfig BmpConfig;

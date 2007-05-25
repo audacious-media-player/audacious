@@ -1,3 +1,11 @@
+2007-05-25 08:35:44 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4634]
+  - temporal fix for crash in compare_func().
+  
+  trunk/src/audacious/pluginenum.c |   25 ++++++++++++++++++++-----
+  1 file changed, 20 insertions(+), 5 deletions(-)
+
+
 2007-05-25 07:28:41 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4632]
   - adjust naming scheme of audacious_drct_* to audacious_remote_* by defining macros.
