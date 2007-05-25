@@ -63,35 +63,50 @@ static gint
 inputlist_compare_func(gconstpointer a, gconstpointer b)
 {
     const InputPlugin *ap = a, *bp = b;
-    return strcasecmp(ap->description, bp->description);
+    if(ap->description && bp->description)
+        return strcasecmp(ap->description, bp->description);
+    else
+        return 0;
 }
 
 static gint
 outputlist_compare_func(gconstpointer a, gconstpointer b)
 {
     const OutputPlugin *ap = a, *bp = b;
-    return strcasecmp(ap->description, bp->description);
+    if(ap->description && bp->description)
+        return strcasecmp(ap->description, bp->description);
+    else
+        return 0;
 }
 
 static gint
 effectlist_compare_func(gconstpointer a, gconstpointer b)
 {
     const EffectPlugin *ap = a, *bp = b;
-    return strcasecmp(ap->description, bp->description);
+    if(ap->description && bp->description)
+        return strcasecmp(ap->description, bp->description);
+    else
+        return 0;
 }
 
 static gint
 generallist_compare_func(gconstpointer a, gconstpointer b)
 {
     const GeneralPlugin *ap = a, *bp = b;
-    return strcasecmp(ap->description, bp->description);
+    if(ap->description && bp->description)
+        return strcasecmp(ap->description, bp->description);
+    else
+        return 0;
 }
 
 static gint
 vislist_compare_func(gconstpointer a, gconstpointer b)
 {
     const VisPlugin *ap = a, *bp = b;
-    return strcasecmp(ap->description, bp->description);
+    if(ap->description && bp->description)
+        return strcasecmp(ap->description, bp->description);
+    else
+        return 0;
 }
 
 static gboolean
