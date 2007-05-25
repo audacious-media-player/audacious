@@ -1,3 +1,13 @@
+2007-05-25 18:18:58 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4636]
+  - add toggle button to keep jtf dialog opened on jump.
+  
+  trunk/src/audacious/main.c           |    1 +
+  trunk/src/audacious/main.h           |    1 +
+  trunk/src/audacious/ui_jumptotrack.c |   24 ++++++++++++++++++++++--
+  3 files changed, 24 insertions(+), 2 deletions(-)
+
+
 2007-05-25 08:35:44 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4634]
   - temporal fix for crash in compare_func().

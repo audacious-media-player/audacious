@@ -219,6 +219,7 @@ BmpConfig bmp_default_config = {
     255, 255, 255,  /* colorize r, g, b */
     FALSE,          /* internal: whether or not to terminate */
     TRUE,           /* whether show progress bar in filepopup or not */
+    TRUE,           /* close jtf dialog on jump */
 };
 
 typedef struct bmp_cfg_boolent_t {
