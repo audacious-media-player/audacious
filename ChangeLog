@@ -1,3 +1,14 @@
+2007-05-26 11:39:16 +0000  Michael Farber <01mf02@gmail.com>
+  revision [4640]
+  - Fixed naming inconsistencies in search dialog
+  - Made URL opener follow button ordering conventions
+  
+  
+  trunk/src/audacious/ui_playlist.c  |   51 ++++++++++++++++++-------------------
+  trunk/src/audacious/ui_urlopener.c |   35 +++++++++++++------------
+  2 files changed, 43 insertions(+), 43 deletions(-)
+
+
 2007-05-25 18:38:54 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4638]
   - add default value for close_jtf_dialog.
