@@ -1,3 +1,12 @@
+2007-05-26 11:59:17 +0000  Michael Farber <01mf02@gmail.com>
+  revision [4642]
+  - More button reordering
+  
+  
+  trunk/src/audacious/ui_playlist_manager.c |  452 +++++++++++++++---------------
+  1 file changed, 226 insertions(+), 226 deletions(-)
+
+
 2007-05-26 11:39:16 +0000  Michael Farber <01mf02@gmail.com>
   revision [4640]
   - Fixed naming inconsistencies in search dialog

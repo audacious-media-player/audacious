@@ -128,6 +128,7 @@ util_add_url_dialog_new(const gchar * caption, GCallback ok_func,
 
     cancel = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
     gtk_box_pack_start(GTK_BOX(bbox), cancel, FALSE, FALSE, 0);
+    gtk_button_box_set_child_secondary(GTK_BUTTON_BOX(bbox), cancel, TRUE);
 
     g_signal_connect_swapped(cancel, "clicked",
                              G_CALLBACK(gtk_widget_destroy),

@@ -261,7 +261,7 @@ playlist_manager_ui_show ( void )
     gtk_window_set_geometry_hints( GTK_WINDOW(playman_win) , GTK_WIDGET(playman_win) ,
                                    &playman_win_hints , GDK_HINT_MIN_SIZE );
 
-    playman_vbox = gtk_vbox_new( FALSE , 0 );
+    playman_vbox = gtk_vbox_new( FALSE , 10 );
     gtk_container_add( GTK_CONTAINER(playman_win) , playman_vbox );
 
     /* current liststore model
@@ -299,8 +299,6 @@ playlist_manager_ui_show ( void )
     gtk_container_add( GTK_CONTAINER(playman_pl_lv_frame) , playman_pl_lv_sw );
     gtk_box_pack_start( GTK_BOX(playman_vbox) , playman_pl_lv_frame , TRUE , TRUE , 0 );
 
-    gtk_box_pack_start( GTK_BOX(playman_vbox) , gtk_hseparator_new() , FALSE , FALSE , 4 );
-
     /* listview popup menu */
     playman_pl_lv_pmenu = gtk_menu_new();
     playman_pl_lv_pmenu_rename = gtk_menu_item_new_with_mnemonic( _( "_Rename" ) );
@@ -315,6 +313,7 @@ playlist_manager_ui_show ( void )
     /* button bar */
     playman_bbar_hbbox = gtk_hbutton_box_new();
     gtk_button_box_set_layout( GTK_BUTTON_BOX(playman_bbar_hbbox) , GTK_BUTTONBOX_END );
+	gtk_button_box_set_spacing(GTK_BUTTON_BOX(playman_bbar_hbbox), 5);
     playman_bbar_bt_close = gtk_button_new_from_stock( GTK_STOCK_CLOSE );
     playman_bbar_bt_del = gtk_button_new_from_stock( GTK_STOCK_DELETE );
     playman_bbar_bt_new = gtk_button_new_from_stock( GTK_STOCK_NEW );
