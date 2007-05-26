@@ -469,8 +469,8 @@ playlistwin_select_search(void)
     Playlist *playlist = playlist_get_active();
     GtkWidget *searchdlg_win, *searchdlg_table;
     GtkWidget *searchdlg_hbox, *searchdlg_logo, *searchdlg_helptext;
-    GtkWidget *searchdlg_entry_track_name, *searchdlg_label_track_name;
-    GtkWidget *searchdlg_entry_album_name, *searchdlg_label_album_name;
+    GtkWidget *searchdlg_entry_title, *searchdlg_label_title;
+    GtkWidget *searchdlg_entry_album, *searchdlg_label_album;
     GtkWidget *searchdlg_entry_file_name, *searchdlg_label_file_name;
     GtkWidget *searchdlg_entry_performer, *searchdlg_label_performer;
     GtkWidget *searchdlg_checkbt_clearprevsel;
@@ -492,17 +492,17 @@ playlistwin_select_search(void)
     gtk_label_set_line_wrap( GTK_LABEL(searchdlg_helptext) , TRUE );
     gtk_box_pack_start( GTK_BOX(searchdlg_hbox) , searchdlg_logo , FALSE , FALSE , 0 );
     gtk_box_pack_start( GTK_BOX(searchdlg_hbox) , searchdlg_helptext , FALSE , FALSE , 0 );
-    /* track name */
-    searchdlg_label_track_name = gtk_label_new( _("Track name: ") );
-    searchdlg_entry_track_name = gtk_entry_new();
-    gtk_misc_set_alignment( GTK_MISC(searchdlg_label_track_name) , 0 , 0.5 );
-    g_signal_connect( G_OBJECT(searchdlg_entry_track_name) , "key-press-event" ,
+    /* title */
+    searchdlg_label_title = gtk_label_new( _("Title: ") );
+    searchdlg_entry_title = gtk_entry_new();
+    gtk_misc_set_alignment( GTK_MISC(searchdlg_label_title) , 0 , 0.5 );
+    g_signal_connect( G_OBJECT(searchdlg_entry_title) , "key-press-event" ,
       G_CALLBACK(playlistwin_select_search_kp_cb) , searchdlg_win );
-    /* album name */
-    searchdlg_label_album_name = gtk_label_new( _("Album name: ") );
-    searchdlg_entry_album_name = gtk_entry_new();
-    gtk_misc_set_alignment( GTK_MISC(searchdlg_label_album_name) , 0 , 0.5 );
-    g_signal_connect( G_OBJECT(searchdlg_entry_album_name) , "key-press-event" ,
+    /* album */
+    searchdlg_label_album= gtk_label_new( _("Album: ") );
+    searchdlg_entry_album= gtk_entry_new();
+    gtk_misc_set_alignment( GTK_MISC(searchdlg_label_album) , 0 , 0.5 );
+    g_signal_connect( G_OBJECT(searchdlg_entry_album) , "key-press-event" ,
       G_CALLBACK(playlistwin_select_search_kp_cb) , searchdlg_win );
     /* artist */
     searchdlg_label_performer = gtk_label_new( _("Artist: ") );
@@ -536,13 +536,13 @@ playlistwin_select_search(void)
     gtk_table_set_row_spacing( GTK_TABLE(searchdlg_table) , 4 , 8 );
     gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_hbox ,
       0 , 2 , 0 , 1 , GTK_FILL | GTK_EXPAND , GTK_FILL | GTK_EXPAND , 0 , 2 );
-    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_label_track_name ,
+    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_label_title ,
       0 , 1 , 1 , 2 , GTK_FILL , GTK_FILL | GTK_EXPAND , 0 , 2 );
-    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_entry_track_name ,
+    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_entry_title ,
       1 , 2 , 1 , 2 , GTK_FILL | GTK_EXPAND , GTK_FILL | GTK_EXPAND , 0 , 2 );
-    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_label_album_name ,
+    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_label_album,
       0 , 1 , 2 , 3 , GTK_FILL , GTK_FILL | GTK_EXPAND , 0 , 2 );
-    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_entry_album_name ,
+    gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_entry_album,
       1 , 2 , 2 , 3 , GTK_FILL | GTK_EXPAND , GTK_FILL | GTK_EXPAND , 0 , 2 );
     gtk_table_attach( GTK_TABLE(searchdlg_table) , searchdlg_label_performer ,
       0 , 1 , 3 , 4 , GTK_FILL , GTK_FILL | GTK_EXPAND , 0 , 2 );
@@ -571,9 +571,9 @@ playlistwin_select_search(void)
          /* create a TitleInput tuple with user search data */
          TitleInput *tuple = g_malloc(sizeof(TitleInput));
          gchar *searchdata = NULL;
-         searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_track_name) );
+         searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_title) );
          tuple->track_name = ( strcmp(searchdata,"") ) ? g_strdup(searchdata) : NULL;
-         searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_album_name) );
+         searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_album) );
          tuple->album_name = ( strcmp(searchdata,"") ) ? g_strdup(searchdata) : NULL;
          searchdata = (gchar*)gtk_entry_get_text( GTK_ENTRY(searchdlg_entry_performer) );
          tuple->performer = ( strcmp(searchdata,"") ) ? g_strdup(searchdata) : NULL;
@@ -1112,7 +1112,8 @@ playlistwin_press(GtkWidget * widget,
     }
     else if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
              !ui_skinned_window_widgetlist_contained(playlistwin, event->x,
-		event->y) && (cfg.easy_move || event->y < 14))
+                                                     event->y) &&
+             (cfg.easy_move || event->y < 14))
     {
         dock_move_press(dock_window_list, GTK_WINDOW(playlistwin), event,
                         FALSE);
@@ -2021,8 +2022,6 @@ action_playlist_add_files(void)
     run_filebrowser(NO_PLAY_BUTTON);
 }
 
-void add_medium(void); /* XXX */
-
 void
 action_playlist_add_cd(void)
 {
@@ -2046,19 +2045,19 @@ action_playlist_new( void )
 void
 action_playlist_prev( void )
 {
-  playlist_select_prev();
+    playlist_select_prev();
 }
 
 void
 action_playlist_next( void )
 {
-  playlist_select_next();
+    playlist_select_next();
 }
 
 void
 action_playlist_delete( void )
 {
-  playlist_remove_playlist( playlist_get_active() );
+    playlist_remove_playlist( playlist_get_active() );
 }
 
 void
@@ -2138,7 +2137,7 @@ playlistwin_select_search_cbt_cb(GtkWidget *called_cbt, gpointer other_cbt)
 
 static gboolean
 playlistwin_select_search_kp_cb(GtkWidget *entry, GdkEventKey *event,
-                                 gpointer searchdlg_win)
+                                gpointer searchdlg_win)
 {
     switch (event->keyval)
     {
@@ -2197,7 +2196,7 @@ playlistwin_fileinfopopup_probe(gpointer * filepopup_win)
             skip = TRUE;
     }
 
-        if (ctr >= cfg.filepopup_delay && (skip == TRUE || GTK_WIDGET_VISIBLE(GTK_WIDGET(filepopup_win)) != TRUE)) {
+    if (ctr >= cfg.filepopup_delay && (skip == TRUE || GTK_WIDGET_VISIBLE(GTK_WIDGET(filepopup_win)) != TRUE)) {
         if (pos == -1 && !playlistwin_is_shaded())
         {
             audacious_fileinfopopup_hide(GTK_WIDGET(filepopup_win), NULL);

@@ -1,3 +1,11 @@
+2007-05-25 18:38:54 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4638]
+  - add default value for close_jtf_dialog.
+  
+  trunk/src/audacious/main.c |    1 +
+  1 file changed, 1 insertion(+)
+
+
 2007-05-25 18:18:58 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4636]
   - add toggle button to keep jtf dialog opened on jump.
