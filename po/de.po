@@ -817,7 +817,7 @@ msgstr "Nächste Wiedergabeliste wählen"
 
 #: src/audacious/ui_manager.c:209 src/audacious/ui_manager.c:210
 msgid "Select Previous Playlist"
-msgstr "Vorherige Wiedergabelisteneintrag wählen:"
+msgstr "Vorherige Wiedergabeliste wählen"
 
 #: src/audacious/ui_manager.c:212 src/audacious/ui_manager.c:213
 msgid "Delete Playlist"
@@ -857,7 +857,7 @@ msgstr "Aktualisiert mit diesem Eintrag verknüpfte Metadaten"
 
 #: src/audacious/ui_manager.c:229
 msgid "List Manager"
-msgstr "Listenverwatung"
+msgstr "Listenverwaltung"
 
 #  -e, --enqueue switch
 #: src/audacious/ui_manager.c:230

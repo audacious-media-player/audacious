@@ -1,3 +1,13 @@
+2007-05-26 12:47:35 +0000  Michael Farber <01mf02@gmail.com>
+  revision [4644]
+  - Made stuff prettier
+  
+  
+  trunk/src/audacious/ui_playlist_manager.c |    5 ++---
+  trunk/src/audacious/ui_urlopener.c        |    1 +
+  2 files changed, 3 insertions(+), 3 deletions(-)
+
+
 2007-05-26 11:59:17 +0000  Michael Farber <01mf02@gmail.com>
   revision [4642]
   - More button reordering
