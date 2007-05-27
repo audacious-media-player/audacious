@@ -1,3 +1,12 @@
+2007-05-26 16:18:11 +0000  Michael Farber <01mf02@gmail.com>
+  revision [4646]
+  - Fixed some very visible errors in German translation
+  
+  
+  trunk/po/de.po |    4 ++--
+  1 file changed, 2 insertions(+), 2 deletions(-)
+
+
 2007-05-26 12:47:35 +0000  Michael Farber <01mf02@gmail.com>
   revision [4644]
   - Made stuff prettier
