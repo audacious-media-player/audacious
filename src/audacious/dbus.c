@@ -38,6 +38,7 @@
 #include "memorypool.h"
 #include "titlestring.h"
 #include "ui_jumptotrack.h"
+#include "strings.h"
 
 static DBusGConnection *dbus_conn = NULL;
 static guint signals[LAST_SIG] = { 0 };
@@ -469,7 +470,15 @@ gboolean audacious_rc_song_title(RemoteObject *obj, guint pos,
 
 gboolean audacious_rc_song_filename(RemoteObject *obj, guint pos,
                                     gchar **filename, GError **error) {
-    *filename = playlist_get_filename(playlist_get_active(), pos);
+    gchar *tmp = NULL;
+    tmp = playlist_get_filename(playlist_get_active(), pos);
+
+    if(tmp){
+        *filename = str_to_utf8(tmp);
+    }
+    free(tmp);
+    tmp = NULL;
+
     return TRUE;
 }
 

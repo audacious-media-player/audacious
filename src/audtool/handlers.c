@@ -54,8 +54,15 @@ void get_current_song(gint argc, gchar **argv)
 void get_current_song_filename(gint argc, gchar **argv)
 {
 	gint playpos = audacious_remote_get_playlist_pos(dbus_proxy);
+	gchar *file = audacious_remote_get_playlist_file(dbus_proxy, playpos);
 
-	g_print("%s\n", audacious_remote_get_playlist_file(dbus_proxy, playpos));
+	if (!file)
+	{
+		g_print("No song playing.\n");
+		return;
+	}
+        
+	g_print("%s\n", file);
 }
 
 void get_current_song_output_length(gint argc, gchar **argv)

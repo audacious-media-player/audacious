@@ -53,8 +53,7 @@ void audacious_remote_playlist(DBusGProxy *proxy, gchar **list, gint num,
  * Return value: The protocol version used by Audacious.
  **/
 gint audacious_remote_get_version(DBusGProxy *proxy) {
-//XXX
-    return 0;
+    return 0x09a3; // XXX should do actual dbus call.
 }
 
 /**
@@ -121,7 +120,7 @@ void audacious_remote_stop(DBusGProxy *proxy) {
  * Return value: TRUE if playing, FALSE otherwise.
  **/
 gboolean audacious_remote_is_playing(DBusGProxy *proxy) {
-    gboolean is_playing;
+    gboolean is_playing = FALSE;
     org_atheme_audacious_playing(proxy, &is_playing, &error);
     g_clear_error(&error);
     return is_playing;
@@ -136,7 +135,7 @@ gboolean audacious_remote_is_playing(DBusGProxy *proxy) {
  * Return value: TRUE if playing, FALSE otherwise.
  **/
 gboolean audacious_remote_is_paused(DBusGProxy *proxy) {
-    gboolean is_paused;
+    gboolean is_paused = FALSE;
     org_atheme_audacious_paused(proxy, &is_paused, &error);
     g_clear_error(&error);
     return is_paused;
@@ -151,7 +150,7 @@ gboolean audacious_remote_is_paused(DBusGProxy *proxy) {
  * Return value: The current playlist position.
  **/
 gint audacious_remote_get_playlist_pos(DBusGProxy *proxy) {
-    guint pos;
+    guint pos = 0;
     org_atheme_audacious_position(proxy, &pos, &error);
     g_clear_error(&error);
     return pos;
@@ -178,7 +177,7 @@ void audacious_remote_set_playlist_pos(DBusGProxy *proxy, guint pos) {
  * Return value: The amount of entries in the playlist.
  **/
 gint audacious_remote_get_playlist_length(DBusGProxy *proxy) {
-    gint len;
+    gint len = 0;
     org_atheme_audacious_length(proxy, &len, &error);
     g_clear_error(&error);
     return len;
@@ -204,7 +203,7 @@ void audacious_remote_playlist_clear(DBusGProxy *proxy) {
  * Return value: The current output position.
  **/
 gint audacious_remote_get_output_time(DBusGProxy *proxy) {
-    guint time;
+    guint time = 0;
     org_atheme_audacious_time(proxy, &time, &error);
     g_clear_error(&error);
     return time;
@@ -244,7 +243,7 @@ void audacious_remote_get_volume(DBusGProxy *proxy, gint * vl, gint * vr) {
  * Return value: The current volume.
  **/
 gint audacious_remote_get_main_volume(DBusGProxy *proxy) {
-    gint vl, vr;
+    gint vl = 0, vr = 0;
 
     audacious_remote_get_volume(proxy, &vl, &vr);
 
@@ -260,7 +259,7 @@ gint audacious_remote_get_main_volume(DBusGProxy *proxy) {
  * Return value: The current balance.
  **/
 gint audacious_remote_get_balance(DBusGProxy *proxy) {
-    gint balance;
+    gint balance = 50;
     org_atheme_audacious_balance(proxy, &balance,  &error);
     g_clear_error(&error);
     return balance;
@@ -288,7 +287,7 @@ void audacious_remote_set_volume(DBusGProxy *proxy, gint vl, gint vr) {
  * Sets the volume in Audacious.
  **/
 void audacious_remote_set_main_volume(DBusGProxy *proxy, gint v) {
-    gint b, vl, vr;
+    gint b = 50, vl = 0, vr = 0;
 
     b = audacious_remote_get_balance(proxy);
 
@@ -311,7 +310,7 @@ void audacious_remote_set_main_volume(DBusGProxy *proxy, gint v) {
  * Sets the balance in Audacious.
  **/
 void audacious_remote_set_balance(DBusGProxy *proxy, gint b) {
-    gint v, vl, vr;
+    gint v = 0, vl = 0, vr = 0;
 
     if (b < -100)
         b = -100;
@@ -365,7 +364,7 @@ void audacious_remote_set_skin(DBusGProxy *proxy, gchar *skinfile) {
  * Return value: A path to the file in the playlist at %pos position.
  **/
 gchar *audacious_remote_get_playlist_file(DBusGProxy *proxy, guint pos) {
-    gchar *out;
+    gchar *out = NULL;
     org_atheme_audacious_song_filename(proxy, pos, &out, &error);
     g_clear_error(&error);
     return out;
@@ -381,7 +380,7 @@ gchar *audacious_remote_get_playlist_file(DBusGProxy *proxy, guint pos) {
  * Return value: The title for the entry in the playlist at %pos position.
  **/
 gchar *audacious_remote_get_playlist_title(DBusGProxy *proxy, guint pos) {
-    gchar *out;
+    gchar *out = NULL;
     org_atheme_audacious_song_title(proxy, pos, &out, &error);
     g_clear_error(&error);
     return out;
@@ -397,7 +396,7 @@ gchar *audacious_remote_get_playlist_title(DBusGProxy *proxy, guint pos) {
  * Return value: The length of the entry in the playlist at %pos position.
  **/
 gint audacious_remote_get_playlist_time(DBusGProxy *proxy, guint pos) {
-    gint out;
+    gint out = 0;
     org_atheme_audacious_song_frames(proxy, pos, &out, &error);
     g_clear_error(&error);
     return out;
@@ -426,8 +425,6 @@ void audacious_remote_get_info(DBusGProxy *proxy, gint *rate, gint *freq,
  * Toggles the main window's visibility.
  **/
 void audacious_remote_main_win_toggle(DBusGProxy *proxy, gboolean show) {
-    const char* path = dbus_g_proxy_get_path(proxy);
-    g_print("path: %s\n", path);
     org_atheme_audacious_show_main_win(proxy, show, &error);
     g_clear_error(&error);
 }
@@ -465,7 +462,7 @@ void audacious_remote_eq_win_toggle(DBusGProxy *proxy, gboolean show) {
  * Return value: TRUE if visible, FALSE otherwise.
  **/
 gboolean audacious_remote_is_main_win(DBusGProxy *proxy) {
-    gboolean visible;
+    gboolean visible = TRUE;
     org_atheme_audacious_main_win_visible(proxy, &visible, &error);
     g_clear_error(&error);
     return visible;
@@ -480,7 +477,7 @@ gboolean audacious_remote_is_main_win(DBusGProxy *proxy) {
  * Return value: TRUE if visible, FALSE otherwise.
  **/
 gboolean audacious_remote_is_pl_win(DBusGProxy *proxy) {
-    gboolean visible;
+    gboolean visible = TRUE;
     org_atheme_audacious_playlist_visible(proxy, &visible, &error);
     g_clear_error(&error);
     return visible;
@@ -495,7 +492,7 @@ gboolean audacious_remote_is_pl_win(DBusGProxy *proxy) {
  * Return value: TRUE if visible, FALSE otherwise.
  **/
 gboolean audacious_remote_is_eq_win(DBusGProxy *proxy) {
-    gboolean visible;
+    gboolean visible = FALSE;
     org_atheme_audacious_equalizer_visible(proxy, &visible, &error);
     g_clear_error(&error);
     return visible;
@@ -809,7 +806,7 @@ void audacious_remote_toggle_advance(DBusGProxy *proxy) {
  * Return value: TRUE if yes, otherwise FALSE.
  **/
 gboolean audacious_remote_is_advance(DBusGProxy *proxy) {
-    gboolean is_advance;
+    gboolean is_advance = FALSE;
     org_atheme_audacious_auto_advance(proxy, &is_advance, &error);
     g_clear_error(&error);
     return is_advance;
