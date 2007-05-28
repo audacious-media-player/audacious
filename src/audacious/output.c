@@ -192,8 +192,8 @@ output_set_eq(gboolean active, gfloat pre, gfloat * bands)
 
     for (i = 0; i < 10; ++i)
     {
-    set_gain(i, 0, 0.03 * bands[i] + 0.000999999 * bands[i] * bands[i]);
-    set_gain(i, 1, 0.03 * bands[i] + 0.000999999 * bands[i] * bands[i]);
+        set_gain(i, 0, 0.03 * bands[i] + 0.000999999 * bands[i] * bands[i]);
+        set_gain(i, 1, 0.03 * bands[i] + 0.000999999 * bands[i] * bands[i]);
     }
 }
 
@@ -227,6 +227,7 @@ get_output_time(void)
 }
 
 #ifdef USE_SRC
+
 static SRC_STATE *src_state;
 static SRC_DATA src_data;
 static int overSamplingFs = 96000;
@@ -251,6 +252,7 @@ static void freeSRC()
   lengthOfSrcIn = 0;
   lengthOfSrcOut = 0;
 }
+
 #endif
 
 gint
@@ -308,14 +310,14 @@ output_open_audio(AFormat fmt, gint rate, gint nch)
 
     /* Is our output port already open? */
     if ((op_state.rate != 0 && op_state.nch != 0) &&
-    (op_state.rate == rate && op_state.nch == nch && op_state.fmt == fmt))
+        (op_state.rate == rate && op_state.nch == nch && op_state.fmt == fmt))
     {
-    /* Yes, and it's the correct sampling rate. Reset the counter and go. */
-    op->flush(0);
+        /* Yes, and it's the correct sampling rate. Reset the counter and go. */
+        op->flush(0);
         return 1;
     }
     else if (op_state.rate != 0 && op_state.nch != 0)
-    op->close_audio();
+        op->close_audio();
 
     ret = op->open_audio(fmt, rate, nch);
 
@@ -530,7 +532,7 @@ produce_audio(gint time,        /* position             */
         if (writable > 2048)
             writable = 2048;
 
-            if (writable == 0)
+        if (writable == 0)
             return;
 
         while (op->buffer_free() < writable) { /* wait output buf */

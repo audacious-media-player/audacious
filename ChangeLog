@@ -1,3 +1,11 @@
+2007-05-28 10:16:56 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4650]
+  - remove xmms-like plugin loader
+  
+  trunk/src/audacious/pluginenum.c |   14 --------------
+  1 file changed, 14 deletions(-)
+
+
 2007-05-27 21:31:34 +0000  Ralf Ertzinger <ralf@skytale.net>
   revision [4648]
   Move effect plugin handling into the main thread
