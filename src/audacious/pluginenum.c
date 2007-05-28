@@ -364,20 +364,6 @@ add_plugin(const gchar * filename)
         return;
     }
 
-    /* v1 plugin loading */
-    for (type = plugin_types; type->name; type++)
-    {
-        if (g_module_symbol(module, type->id, &func)) {
-            Plugin *plugin = PLUGIN_GET_INFO(func);
-
-            plugin->handle = module;
-            plugin->filename = g_strdup(filename);
-            type->init(PLUGIN_GET_INFO(func));
-
-            return;
-        }
-    }
-
     printf("Invalid plugin (%s)\n", filename);
     g_module_close(module);
 }

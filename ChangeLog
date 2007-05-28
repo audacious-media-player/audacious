@@ -1,3 +1,10 @@
+2007-05-27 21:31:34 +0000  Ralf Ertzinger <ralf@skytale.net>
+  revision [4648]
+  Move effect plugin handling into the main thread
+  trunk/src/audacious/output.c |   34 ++++++++++++++++++++++++++++++++++
+  1 file changed, 34 insertions(+)
+
+
 2007-05-26 16:18:11 +0000  Michael Farber <01mf02@gmail.com>
   revision [4646]
   - Fixed some very visible errors in German translation
