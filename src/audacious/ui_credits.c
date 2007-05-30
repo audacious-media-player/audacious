@@ -237,7 +237,7 @@ static const gchar *translators[] = {
     "Cheng-Wei Chien",
     NULL,
     N_("Turkish:"),
-    "Murat Senel",
+    "Murat Şenel",
     "Eren Turkay",
     NULL,
     N_("Ukrainian:"),

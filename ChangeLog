@@ -1,3 +1,15 @@
+2007-05-28 17:28:41 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4654]
+  - give default values to audacious_remote_* functions. if dbus call fails, default value will be returned.
+  - now audacious_rc_song_filename() calls str_to_utf8() to ensure that the string to return is in utf-8.
+  
+  
+  trunk/src/audacious/dbus.c       |   11 ++++++++++-
+  trunk/src/audtool/handlers.c     |    9 ++++++++-
+  trunk/src/libaudclient/audctrl.c |   37 +++++++++++++++++--------------------
+  3 files changed, 35 insertions(+), 22 deletions(-)
+
+
 2007-05-28 10:25:22 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4652]
   - code cleanups involving SRC patch and indentation
