@@ -1,3 +1,10 @@
+2007-05-30 16:15:07 +0000  Tony Vroon <chainsaw@gentoo.org>
+  revision [4656]
+  Correct name of turkish translator Murat ?\197?\158enel.
+  trunk/src/audacious/ui_credits.c |    2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+
 2007-05-28 17:28:41 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4654]
   - give default values to audacious_remote_* functions. if dbus call fails, default value will be returned.
