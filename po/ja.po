@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: audacious HEAD\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-04-14 15:19-0500\n"
-"PO-Revision-Date: 2007-04-16 11:56+0900\n"
+"PO-Revision-Date: 2007-06-03 22:33+0900\n"
 "Last-Translator: dai <d+po@vdr.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1659,15 +1659,15 @@ msgstr "カスタムカーソルを使用する"
 #: src/audacious/glade/prefswin.glade:1279
 #: src/audacious/glade/prefswin.glade:1290
 msgid "This enables the window manager to show decorations for windows."
-msgstr "ファイルマネージャによるウィンドウ装飾を有効にします."
+msgstr "ウィンドウマネージャによるウィンドウ装飾を有効にします."
 
 #: src/audacious/glade/prefswin.glade:1281
 msgid "Show window manager decoration"
-msgstr "ファイルマネージャ装飾を表示する"
+msgstr "ウィンドウマネージャ装飾を表示する"
 
 #: src/audacious/glade/prefswin.glade:1289
 msgid "Show window manager decorations"
-msgstr "ファイルマネージャ装飾を表示する"
+msgstr "ウィンドウマネージャ装飾を表示する"
 
 #: src/audacious/glade/prefswin.glade:1319
 msgid ""
