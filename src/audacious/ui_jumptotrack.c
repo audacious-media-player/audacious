@@ -351,18 +351,14 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
          playlist_glist = g_list_next(playlist_glist))
     {
         PlaylistEntry *entry = PLAYLIST_ENTRY(playlist_glist->data);
-        const gchar *title;
-        gchar *filename = NULL;
-
-        title = entry->title;
-        if (!title) {
+        const gchar *title=NULL;
+        gchar   *filename = NULL;
         filename = str_to_utf8(entry->filename);
-
-            if (strchr(filename, '/'))
-                title = strrchr(filename, '/') + 1;
-            else
+        if (entry->title)
+                title = entry->title;
+        else
                 title = filename;
-        }
+        /*we are matching all the path not just the filename or title*/
 
         /* Compare the reg.expressions to the string - if all the
            regexp in regex_list match, add to the ListStore */
@@ -376,16 +372,23 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
          * In any case the string to match should _never_ contain
          * something the user can't actually see in the playlist.
          */
+        //g_print ("it passed\n");
         if (regex_list != NULL)
-            match = ui_jump_to_track_match(title, regex_list);
+                match = ui_jump_to_track_match(title, regex_list);
         else
-            match = TRUE;
+                match = TRUE;
 
         if (match) {
-            gtk_list_store_append(store, &iter);
-            gtk_list_store_set(store, &iter, 0, song_index + 1 , 1, title, -1);
+                if (entry->title)
+                        title = g_strdup(entry->title);
+                else if (strchr(entry->filename, '/'))
+                        title = str_to_utf8(strrchr(entry->filename, '/') + 1);
+                else
+                        title = str_to_utf8(entry->filename);
+                
+                gtk_list_store_append(store, &iter);
+                gtk_list_store_set(store, &iter, 0, song_index + 1 , 1, title, -1);
         }
-
         song_index++;
 
         if (filename) {
