@@ -268,6 +268,14 @@ playlist_add_playlist(Playlist *playlist)
 void
 playlist_remove_playlist(Playlist *playlist)
 {
+    /* users suppose playback will be stopped on removing playlist */
+    if (playback_get_playing()) {
+        ip_data.stop = TRUE;
+        playback_stop();
+        ip_data.stop = FALSE;
+        mainwin_clear_song_info();
+    }
+
     /* trying to free the last playlist simply clears and resets it */
     if (g_list_length(playlists) < 2) {
         playlist_clear(playlist);

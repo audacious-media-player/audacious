@@ -1,3 +1,11 @@
+2007-06-04 01:03:40 +0000  Cristi Magherusan <majeru@atheme.org>
+  revision [4664]
+  match the whole filename when tag isn't available, but i couldnt figure out how to do this all the time because it kept crashing...
+  
+  trunk/src/audacious/ui_jumptotrack.c |   33 ++++++++++++++++++---------------
+  1 file changed, 18 insertions(+), 15 deletions(-)
+
+
 2007-06-03 13:34:33 +0000  
   revision [4662]
   * Update Japanese translation.
