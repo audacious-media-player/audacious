@@ -315,28 +315,9 @@ plugin2_unload(PluginHeader *header)
 
 /******************************************************************/
 
-/* FIXME: Placed here (hopefully) temporarily - descender */
-
-typedef struct {
-    const gchar *name;
-    const gchar *id;
-    void (*init)(Plugin *);
-} PluginType;
-
-static PluginType plugin_types[] = {
-    { "input"        , "get_iplugin_info", input_plugin_init },
-    { "output"       , "get_oplugin_info", output_plugin_init },
-    { "effect"       , "get_eplugin_info", effect_plugin_init },
-    { "general"      , "get_gplugin_info", general_plugin_init },
-    { "visualization", "get_vplugin_info", vis_plugin_init },
-    { "lowlevel"     , "get_lplugin_info", lowlevel_plugin_init },
-    { NULL, NULL, NULL }
-};
-
 static void
 add_plugin(const gchar * filename)
 {
-    PluginType *type;
     GModule *module;
     gpointer func;
 
