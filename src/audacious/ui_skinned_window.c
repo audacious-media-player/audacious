@@ -165,6 +165,17 @@ ui_skinned_window_new(GtkWindowType type, const gchar *wmclass_name)
 
     SKINNED_WINDOW(widget)->gc = gdk_gc_new(widget->window);
 
+    /* GtkFixed hasn't got its GdkWindow, this means that it can be used to
+       display widgets while the logo below will be displayed anyway;
+       however fixed positions are not that great, cause the button sizes may (will)
+       vary depending on the gtk style used, so it's not possible to center
+       them unless a fixed width and heigth is forced (and this may bring to cutted
+       text if someone, i.e., uses a big font for gtk widgets);
+       other types of container most likely have their GdkWindow, this simply
+       means that the logo must be drawn on the container widget, instead of the
+       window; otherwise, it won't be displayed correctly */
+    SKINNED_WINDOW(widget)->fixed = gtk_fixed_new();
+
     return widget;
 }
 

@@ -37,6 +37,7 @@ struct _SkinnedWindow
 
   GList *widget_list;
   GdkGC *gc;
+  GtkWidget *fixed;
 };
 
 struct _SkinnedWindowClass

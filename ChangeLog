@@ -1,3 +1,11 @@
+2007-06-04 04:48:44 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4666]
+  - make playback stop on removing playlist.
+  
+  trunk/src/audacious/playlist.c |    8 ++++++++
+  1 file changed, 8 insertions(+)
+
+
 2007-06-04 01:03:40 +0000  Cristi Magherusan <majeru@atheme.org>
   revision [4664]
   match the whole filename when tag isn't available, but i couldnt figure out how to do this all the time because it kept crashing...

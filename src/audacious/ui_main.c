@@ -125,12 +125,12 @@ gint seek_initial_pos = 0;
 
 static GdkPixmap *mainwin_bg = NULL, *mainwin_bg_x2 = NULL;
 
-static PButton *mainwin_menubtn;
-static PButton *mainwin_minimize, *mainwin_shade, *mainwin_close;
+static GtkWidget *mainwin_menubtn;
+static GtkWidget *mainwin_minimize, *mainwin_shade, *mainwin_close;
 
-static PButton *mainwin_rew, *mainwin_fwd;
-static PButton *mainwin_eject;
-static PButton *mainwin_play, *mainwin_pause, *mainwin_stop;
+static GtkWidget *mainwin_rew, *mainwin_fwd;
+static GtkWidget *mainwin_eject;
+static GtkWidget *mainwin_play, *mainwin_pause, *mainwin_stop;
 
 TButton *mainwin_shuffle, *mainwin_repeat, *mainwin_eq, *mainwin_pl;
 TextBox *mainwin_info;
@@ -290,7 +290,6 @@ mainwin_set_shade_menu_cb(gboolean shaded)
             widget_hide(WIDGET(mainwin_stime_sec));
     }
 
-        mainwin_shade->pb_ny = mainwin_shade->pb_py = 27;
     }
     else {
     gint height = !bmp_active_skin->properties.mainwin_height ? MAINWIN_HEIGHT :
@@ -313,7 +312,6 @@ mainwin_set_shade_menu_cb(gboolean shaded)
         widget_hide(WIDGET(mainwin_sposition));
 
         textbox_set_scroll(mainwin_info, cfg.autoscroll);
-        mainwin_shade->pb_ny = mainwin_shade->pb_py = 18;
     }
 
     draw_main_window(TRUE);
@@ -525,6 +523,7 @@ draw_main_window(gboolean force)
         }
         else {
             for (wl = mainwin_wlist; wl; wl = g_list_next(wl)) {
+		if(AUDACIOUS_IS_PBUTTON(wl->data)) continue;
                 w = WIDGET(wl->data);
 
                 if (!w->redraw || !w->visible)
@@ -712,27 +711,27 @@ mainwin_refresh_hints(void)
         bmp_active_skin->properties.mainwin_position_y);
 
     if (bmp_active_skin->properties.mainwin_previous_x && bmp_active_skin->properties.mainwin_previous_y)
-    widget_move(WIDGET(mainwin_rew), bmp_active_skin->properties.mainwin_previous_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), mainwin_rew, bmp_active_skin->properties.mainwin_previous_x,
         bmp_active_skin->properties.mainwin_previous_y);
 
     if (bmp_active_skin->properties.mainwin_play_x && bmp_active_skin->properties.mainwin_play_y)
-    widget_move(WIDGET(mainwin_play), bmp_active_skin->properties.mainwin_play_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_play), bmp_active_skin->properties.mainwin_play_x,
         bmp_active_skin->properties.mainwin_play_y);
 
     if (bmp_active_skin->properties.mainwin_pause_x && bmp_active_skin->properties.mainwin_pause_y)
-    widget_move(WIDGET(mainwin_pause), bmp_active_skin->properties.mainwin_pause_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_pause), bmp_active_skin->properties.mainwin_pause_x,
         bmp_active_skin->properties.mainwin_pause_y);
 
     if (bmp_active_skin->properties.mainwin_stop_x && bmp_active_skin->properties.mainwin_stop_y)
-    widget_move(WIDGET(mainwin_stop), bmp_active_skin->properties.mainwin_stop_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_stop), bmp_active_skin->properties.mainwin_stop_x,
         bmp_active_skin->properties.mainwin_stop_y);
 
     if (bmp_active_skin->properties.mainwin_next_x && bmp_active_skin->properties.mainwin_next_y)
-    widget_move(WIDGET(mainwin_fwd), bmp_active_skin->properties.mainwin_next_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_fwd), bmp_active_skin->properties.mainwin_next_x,
         bmp_active_skin->properties.mainwin_next_y);
 
     if (bmp_active_skin->properties.mainwin_eject_x && bmp_active_skin->properties.mainwin_eject_y)
-    widget_move(WIDGET(mainwin_eject), bmp_active_skin->properties.mainwin_eject_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_eject), bmp_active_skin->properties.mainwin_eject_x,
         bmp_active_skin->properties.mainwin_eject_y);
 
     if (bmp_active_skin->properties.mainwin_eqbutton_x && bmp_active_skin->properties.mainwin_eqbutton_y)
@@ -756,15 +755,15 @@ mainwin_refresh_hints(void)
         bmp_active_skin->properties.mainwin_about_y);
 
     if (bmp_active_skin->properties.mainwin_minimize_x && bmp_active_skin->properties.mainwin_minimize_y)
-    widget_move(WIDGET(mainwin_minimize), cfg.player_shaded ? 244 : bmp_active_skin->properties.mainwin_minimize_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_minimize), cfg.player_shaded ? 244 : bmp_active_skin->properties.mainwin_minimize_x,
         cfg.player_shaded ? 3 : bmp_active_skin->properties.mainwin_minimize_y);
 
     if (bmp_active_skin->properties.mainwin_shade_x && bmp_active_skin->properties.mainwin_shade_y)
-    widget_move(WIDGET(mainwin_shade), cfg.player_shaded ? 254 : bmp_active_skin->properties.mainwin_shade_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_shade), cfg.player_shaded ? 254 : bmp_active_skin->properties.mainwin_shade_x,
         cfg.player_shaded ? 3 : bmp_active_skin->properties.mainwin_shade_y);
 
     if (bmp_active_skin->properties.mainwin_close_x && bmp_active_skin->properties.mainwin_close_y)
-    widget_move(WIDGET(mainwin_close), cfg.player_shaded ? 264 : bmp_active_skin->properties.mainwin_close_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_close), cfg.player_shaded ? 264 : bmp_active_skin->properties.mainwin_close_x,
         cfg.player_shaded ? 3 : bmp_active_skin->properties.mainwin_close_y);
 
     /* visibility attributes */
@@ -1192,10 +1191,6 @@ mainwin_focus_in(GtkWidget * window,
                  GdkEventFocus * event,
                  gpointer data)
 {
-    mainwin_menubtn->pb_allow_draw = TRUE;
-    mainwin_minimize->pb_allow_draw = TRUE;
-    mainwin_shade->pb_allow_draw = TRUE;
-    mainwin_close->pb_allow_draw = TRUE;
     draw_main_window(TRUE);
 
     return TRUE;
@@ -1207,10 +1202,6 @@ mainwin_focus_out(GtkWidget * widget,
                   GdkEventFocus * event,
                   gpointer callback_data)
 {
-    mainwin_menubtn->pb_allow_draw = FALSE;
-    mainwin_minimize->pb_allow_draw = FALSE;
-    mainwin_shade->pb_allow_draw = FALSE;
-    mainwin_close->pb_allow_draw = FALSE;
     draw_main_window(TRUE);
 
     return TRUE;
@@ -2041,6 +2032,13 @@ mainwin_set_doublesize(gboolean doublesize)
         gdk_window_set_back_pixmap(mainwin->window, mainwin_bg, 0);
     }
 
+    GList *iter;
+    for (iter = GTK_FIXED (SKINNED_WINDOW(mainwin)->fixed)->children; iter; iter = g_list_next (iter)) {
+        GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
+        GtkWidget *child = child_data->widget;
+        g_signal_emit_by_name(child, "set-double-size");
+    }
+
     draw_main_window(TRUE);
     vis_set_doublesize(mainwin_vis, doublesize);
 }
@@ -2686,47 +2684,58 @@ mainwin_setup_menus(void)
 static void
 mainwin_create_widgets(void)
 {
-    mainwin_menubtn =
-        create_pbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 6, 3, 9, 9,
-                       0, 0, 0, 9, mainwin_menubtn_cb, SKIN_TITLEBAR);
-    mainwin_menubtn->pb_allow_draw = FALSE;
-    mainwin_minimize =
-        create_pbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 244, 3, 9,
-                       9, 9, 0, 9, 9, mainwin_minimize_cb, SKIN_TITLEBAR);
-    mainwin_minimize->pb_allow_draw = FALSE;
-    mainwin_shade =
-        create_pbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 254, 3, 9,
-                       9, 0, cfg.player_shaded ? 27 : 18, 9,
-                       cfg.player_shaded ? 27 : 18, mainwin_shade_toggle,
-                       SKIN_TITLEBAR);
-    mainwin_shade->pb_allow_draw = FALSE;
-    mainwin_close =
-        create_pbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 264, 3, 9,
-                       9, 18, 0, 18, 9, mainwin_quit_cb, SKIN_TITLEBAR);
-    mainwin_close->pb_allow_draw = FALSE;
+	mainwin_menubtn = audacious_pbutton_new();
+	audacious_pbutton_setup(mainwin_menubtn, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+			SKINNED_WINDOW(mainwin)->gc, 6, 3, 9, 9, 0, 0, 0, 9, SKIN_TITLEBAR);
+	g_signal_connect(mainwin_menubtn, "clicked", mainwin_menubtn_cb, NULL );
 
-    mainwin_rew =
-        create_pbutton_ex(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 16, 88, 23,
-                       18, 0, 0, 0, 18, mainwin_rev_pushed, mainwin_rev_release,
-               SKIN_CBUTTONS, SKIN_CBUTTONS);
-    mainwin_play =
-        create_pbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 39, 88, 23,
-                       18, 23, 0, 23, 18, mainwin_play_pushed, SKIN_CBUTTONS);
-    mainwin_pause =
-        create_pbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 62, 88, 23,
-                       18, 46, 0, 46, 18, playback_pause, SKIN_CBUTTONS);
-    mainwin_stop =
-        create_pbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 85, 88, 23,
-                       18, 69, 0, 69, 18, mainwin_stop_pushed, SKIN_CBUTTONS);
-    mainwin_fwd =
-        create_pbutton_ex(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 108, 88, 22,
-                       18, 92, 0, 92, 18, mainwin_fwd_pushed, mainwin_fwd_release,
-               SKIN_CBUTTONS, SKIN_CBUTTONS);
+	mainwin_minimize = audacious_pbutton_new();
+	audacious_pbutton_setup(mainwin_minimize, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+			SKINNED_WINDOW(mainwin)->gc, 244, 3, 9, 9, 9, 0, 9, 9, SKIN_TITLEBAR);
+	g_signal_connect(mainwin_minimize, "clicked", mainwin_minimize_cb, NULL );
 
-    mainwin_eject =
-        create_pbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 136, 89, 22,
-                       16, 114, 0, 114, 16, mainwin_eject_pushed,
-                       SKIN_CBUTTONS);
+	mainwin_shade = audacious_pbutton_new();
+	audacious_pbutton_setup(mainwin_shade, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+			SKINNED_WINDOW(mainwin)->gc,  254, 3, 9, 9, 0,
+			cfg.player_shaded ? 27 : 18, 9, cfg.player_shaded ? 27 : 18, SKIN_TITLEBAR);
+	g_signal_connect(mainwin_shade, "clicked", mainwin_shade_toggle, NULL );
+
+	mainwin_close = audacious_pbutton_new();
+	audacious_pbutton_setup(mainwin_close, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+			SKINNED_WINDOW(mainwin)->gc, 264, 3, 9, 9, 18, 0, 18, 9, SKIN_TITLEBAR);
+	g_signal_connect(mainwin_close, "clicked", mainwin_quit_cb, NULL );
+
+	mainwin_rew = audacious_pbutton_new();
+	audacious_pbutton_setup(mainwin_rew, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+			SKINNED_WINDOW(mainwin)->gc, 16, 88, 23, 18, 0, 0, 0, 18, SKIN_CBUTTONS);
+	g_signal_connect(mainwin_rew, "pressed", mainwin_rev_pushed, NULL);
+	g_signal_connect(mainwin_rew, "released", mainwin_rev_release, NULL);
+
+	mainwin_fwd = audacious_pbutton_new();
+	audacious_pbutton_setup(mainwin_fwd, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+			SKINNED_WINDOW(mainwin)->gc, 108, 88, 22, 18, 92, 0, 92, 18, SKIN_CBUTTONS);
+	g_signal_connect(mainwin_fwd, "pressed", mainwin_fwd_pushed, NULL);
+	g_signal_connect(mainwin_fwd, "released", mainwin_fwd_release, NULL);
+
+	mainwin_play = audacious_pbutton_new();
+	audacious_pbutton_setup(mainwin_play, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+			SKINNED_WINDOW(mainwin)->gc, 39, 88, 23, 18, 23, 0, 23, 18, SKIN_CBUTTONS);
+	g_signal_connect(mainwin_play, "clicked", mainwin_play_pushed, NULL );
+
+	mainwin_pause = audacious_pbutton_new();
+	audacious_pbutton_setup(mainwin_pause, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+			SKINNED_WINDOW(mainwin)->gc, 62, 88, 23, 18, 46, 0, 46, 18, SKIN_CBUTTONS);
+	g_signal_connect(mainwin_pause, "clicked", playback_pause, NULL );
+
+	mainwin_stop = audacious_pbutton_new();
+	audacious_pbutton_setup(mainwin_stop, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+			SKINNED_WINDOW(mainwin)->gc, 85, 88, 23, 18, 69, 0, 69, 18, SKIN_CBUTTONS);
+	g_signal_connect(mainwin_stop, "clicked", mainwin_stop_pushed, NULL );
+
+	mainwin_eject = audacious_pbutton_new();
+	audacious_pbutton_setup(mainwin_eject, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+			SKINNED_WINDOW(mainwin)->gc, 136, 89, 22, 16, 114, 0, 114, 16, SKIN_CBUTTONS);
+	g_signal_connect(mainwin_eject, "clicked", mainwin_eject_pushed, NULL);
 
     mainwin_srew =
         create_sbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 169, 4, 8,
@@ -2886,17 +2895,9 @@ mainwin_create_widgets(void)
     gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(err),
                                              "Boo! Bad stuff! Booga Booga!");
 
+    gtk_container_add(GTK_CONTAINER(mainwin), GTK_WIDGET(SKINNED_WINDOW(mainwin)->fixed));
     /* XXX: eventually update widgetcore API to not need this */
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_menubtn));
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_minimize));
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_shade));
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_close));
 
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_rew));
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_play));
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_pause));
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_stop));
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_fwd));
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_eject));
 
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_srew));
