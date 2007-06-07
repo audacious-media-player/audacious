@@ -198,13 +198,6 @@ vis_plugin_init(Plugin * plugin)
     vp_data.vis_list = g_list_append(vp_data.vis_list, p);
 }
 
-static void
-lowlevel_plugin_init(Plugin * plugin)
-{
-    LowlevelPlugin *p = LOWLEVEL_PLUGIN(plugin);
-    lowlevel_list = g_list_append(lowlevel_list, p);    
-}
-
 /*******************************************************************/
 
 static void

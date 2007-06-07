@@ -1,3 +1,11 @@
+2007-06-07 11:21:59 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
+  revision [4674]
+  - APIv1 cruft removal
+  
+  trunk/src/audacious/pluginenum.c |   19 -------------------
+  1 file changed, 19 deletions(-)
+
+
 2007-06-07 11:17:39 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4672]
   - missing changelog names
