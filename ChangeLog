@@ -1,4 +1,12 @@
-2007-06-07 10:54:12 +0000  
+2007-06-07 10:55:03 +0000  Tomasz Mon <desowin@atheme.org>
+  revision [4670]
+  and of course I forgot new files
+  trunk/src/audacious/widgets/audacious_pbutton.c |  368 ++++++++++++++++++++++++
+  trunk/src/audacious/widgets/audacious_pbutton.h |   80 +++++
+  2 files changed, 448 insertions(+)
+
+
+2007-06-07 10:54:12 +0000  Tomasz Mon <desowin@atheme.org>
   revision [4668]
   beginning of widgetcore rewrite
   trunk/src/audacious/ui_main.c            |  145 +++++++++++++++----------------
