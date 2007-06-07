@@ -1,3 +1,14 @@
+2007-06-07 10:54:12 +0000  
+  revision [4668]
+  beginning of widgetcore rewrite
+  trunk/src/audacious/ui_main.c            |  145 +++++++++++++++----------------
+  trunk/src/audacious/ui_skinned_window.c  |   11 ++
+  trunk/src/audacious/ui_skinned_window.h  |    1 
+  trunk/src/audacious/widgets/Makefile     |    3 
+  trunk/src/audacious/widgets/widgetcore.h |    1 
+  5 files changed, 88 insertions(+), 73 deletions(-)
+
+
 2007-06-04 04:48:44 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4666]
   - make playback stop on removing playlist.
