@@ -19,6 +19,7 @@
 
 #include "widgetcore.h"
 #include "audacious_pbutton.h"
+#include "../util.h"
 
 #include <gtk/gtkmain.h>
 #include <gtk/gtkmarshal.h>
@@ -31,13 +32,12 @@ struct _AudaciousPButtonPrivate {
         //Skinned part
         GtkWidget        *image;
         GdkGC            *gc;
-        gint             x;
-        gint             y;
         gint             w;
         gint             h;
         SkinPixmapId     skin_index1;
         SkinPixmapId     skin_index2;
         GtkWidget        *fixed;
+        gboolean         double_size;
 };
 
 
@@ -61,7 +61,7 @@ static gint audacious_pbutton_button_release(GtkWidget *widget, GdkEventButton *
 static void button_pressed(AudaciousPButton *button);
 static void button_released(AudaciousPButton *button);
 static void audacious_pbutton_add(GtkContainer *container, GtkWidget *widget);
-static void audacious_pbutton_set_doublesize(AudaciousPButton *button);
+static void audacious_pbutton_toggle_doublesize(AudaciousPButton *button);
 
 static gint audacious_pbutton_enter_notify(GtkWidget *widget, GdkEventCrossing *event);
 static gint audacious_pbutton_leave_notify(GtkWidget *widget, GdkEventCrossing *event);
@@ -119,7 +119,7 @@ static void audacious_pbutton_class_init (AudaciousPButtonClass *klass) {
         klass->pressed = button_pressed;
         klass->released = button_released;
         klass->clicked = NULL;
-        klass->doubled = audacious_pbutton_set_doublesize;
+        klass->doubled = audacious_pbutton_toggle_doublesize;
 
         button_signals[PRESSED] = 
                     g_signal_new ("pressed", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST,
@@ -137,7 +137,7 @@ static void audacious_pbutton_class_init (AudaciousPButtonClass *klass) {
                                   gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
         button_signals[DOUBLED] = 
-                    g_signal_new ("set-double-size", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
+                    g_signal_new ("toggle-double-size", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
                                   G_STRUCT_OFFSET (AudaciousPButtonClass, doubled), NULL, NULL,
                                   gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
@@ -244,6 +244,7 @@ void audacious_pbutton_setup(GtkWidget *button, GtkWidget *fixed, GdkPixmap *par
         priv->skin_index1 = si;
         priv->skin_index2 = si;
         priv->fixed = fixed;
+        priv->double_size = FALSE;
 
         gtk_widget_set_size_request(button, priv->w, priv->h);
         gtk_fixed_put(GTK_FIXED(priv->fixed),GTK_WIDGET(button), pbutton->x, pbutton->y);
@@ -348,9 +349,20 @@ static void audacious_pbutton_add(GtkContainer *container, GtkWidget *widget) {
         GTK_CONTAINER_CLASS (parent_class)->add(container, widget);
 }
 
-static void audacious_pbutton_set_doublesize(AudaciousPButton *button) {
-        //FIXME!
-        printf("Double size not implemented yet!\n");
+static void audacious_pbutton_toggle_doublesize(AudaciousPButton *button) {
+        GtkWidget *widget = GTK_WIDGET (button);
+        AudaciousPButtonPrivate *priv = AUDACIOUS_PBUTTON_GET_PRIVATE (button);
+        priv->double_size = !priv->double_size;
+
+        gtk_widget_set_size_request(widget, priv->w*(1+priv->double_size), priv->h*(1+priv->double_size));
+        gtk_widget_set_uposition(widget, button->x*(1+priv->double_size), button->y*(1+priv->double_size));
+
+        if (GDK_IS_WINDOW(button->event_window)) {
+            gdk_window_resize(button->event_window, priv->w*(1+priv->double_size), priv->h*(1+priv->double_size));
+            gdk_window_move(button->event_window, button->x*(1+priv->double_size), button->y*(1+priv->double_size));
+        }
+
+        audacious_pbutton_paint(button);
 }
 
 static void audacious_pbutton_paint(AudaciousPButton *button) {
@@ -363,6 +375,12 @@ static void audacious_pbutton_paint(AudaciousPButton *button) {
                         button->pressed ? button->px : button->nx,
                         button->pressed ? button->py : button->ny,
                         0, 0, priv->w, priv->h);
-        gtk_image_set_from_pixmap(GTK_IMAGE(priv->image), obj, NULL);
+        if(priv->double_size) {
+             GdkImage *img, *img2x;
+             img = gdk_drawable_get_image(obj, 0, 0, priv->w, priv->h);
+             img2x = create_dblsize_image(img);
+             gtk_image_set(GTK_IMAGE(priv->image), img2x, NULL);
+        } else
+             gtk_image_set_from_pixmap(GTK_IMAGE(priv->image), obj, NULL);
         gtk_widget_queue_resize(widget);
 }

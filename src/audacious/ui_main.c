@@ -2035,7 +2035,7 @@ mainwin_set_doublesize(gboolean doublesize)
     for (iter = GTK_FIXED (SKINNED_WINDOW(mainwin)->fixed)->children; iter; iter = g_list_next (iter)) {
         GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
         GtkWidget *child = child_data->widget;
-        g_signal_emit_by_name(child, "set-double-size");
+        g_signal_emit_by_name(child, "toggle-double-size");
     }
 
     draw_main_window(TRUE);

@@ -1,3 +1,10 @@
+2007-06-07 11:51:40 +0000  Tomasz Mon <desowin@atheme.org>
+  revision [4678]
+  remove obsolete code
+  trunk/src/audacious/ui_main.c |    1 -
+  1 file changed, 1 deletion(-)
+
+
 2007-06-07 11:23:23 +0000  William Pitcock <nenolod@sacredspiral.co.uk>
   revision [4676]
   - more cruft removal
