@@ -523,7 +523,6 @@ draw_main_window(gboolean force)
         }
         else {
             for (wl = mainwin_wlist; wl; wl = g_list_next(wl)) {
-		if(AUDACIOUS_IS_PBUTTON(wl->data)) continue;
                 w = WIDGET(wl->data);
 
                 if (!w->redraw || !w->visible)
