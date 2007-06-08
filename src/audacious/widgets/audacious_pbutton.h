@@ -45,6 +45,7 @@ enum {
 	RELEASED,
 	CLICKED,
 	DOUBLED,
+	REDRAW,
 	LAST_SIGNAL
 };
 
@@ -66,6 +67,7 @@ struct _AudaciousPButtonClass {
 	void (* released) (AudaciousPButton *button);
 	void (* clicked)  (AudaciousPButton *button);
 	void (* doubled)  (AudaciousPButton *button);
+	void (* redraw)   (AudaciousPButton *button);
 };
 
 GType audacious_pbutton_get_type(void) G_GNUC_CONST;

@@ -522,6 +522,13 @@ draw_main_window(gboolean force)
 
         }
         else {
+            GList *iter;
+            for (iter = GTK_FIXED (SKINNED_WINDOW(mainwin)->fixed)->children; iter; iter = g_list_next (iter)) {
+                GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
+                GtkWidget *child = child_data->widget;
+                g_signal_emit_by_name(child, "redraw");
+            }
+
             for (wl = mainwin_wlist; wl; wl = g_list_next(wl)) {
                 w = WIDGET(wl->data);
 

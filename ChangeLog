@@ -1,3 +1,10 @@
+2007-06-08 09:02:12 +0000  Tomasz Mon <desowin@atheme.org>
+  revision [4682]
+  - fix audacious_pbutton_size_allocate
+  trunk/src/audacious/widgets/audacious_pbutton.c |    9 ++++-----
+  1 file changed, 4 insertions(+), 5 deletions(-)
+
+
 2007-06-07 20:24:13 +0000  Tomasz Mon <desowin@atheme.org>
   revision [4680]
   implement toggle-double-size

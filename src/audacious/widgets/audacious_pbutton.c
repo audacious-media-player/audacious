@@ -120,6 +120,7 @@ static void audacious_pbutton_class_init (AudaciousPButtonClass *klass) {
         klass->released = button_released;
         klass->clicked = NULL;
         klass->doubled = audacious_pbutton_toggle_doublesize;
+        klass->redraw = audacious_pbutton_paint;
 
         button_signals[PRESSED] = 
                     g_signal_new ("pressed", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST,
@@ -139,6 +140,11 @@ static void audacious_pbutton_class_init (AudaciousPButtonClass *klass) {
         button_signals[DOUBLED] = 
                     g_signal_new ("toggle-double-size", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
                                   G_STRUCT_OFFSET (AudaciousPButtonClass, doubled), NULL, NULL,
+                                  gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
+
+        button_signals[REDRAW] = 
+                    g_signal_new ("redraw", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
+                                  G_STRUCT_OFFSET (AudaciousPButtonClass, redraw), NULL, NULL,
                                   gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
         g_type_class_add_private (gobject_class, sizeof (AudaciousPButtonPrivate));
@@ -184,8 +190,6 @@ static void audacious_pbutton_realize (GtkWidget *widget) {
 
         button->event_window = gdk_window_new(gtk_widget_get_parent_window(widget), &attrib, GDK_WA_X | GDK_WA_Y);
         gdk_window_set_user_data (button->event_window, button);
-
-        audacious_pbutton_paint(button);
 }
 
 static void audacious_pbutton_unrealize(GtkWidget *widget) {
