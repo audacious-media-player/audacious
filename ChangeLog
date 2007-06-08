@@ -1,3 +1,12 @@
+2007-06-08 10:42:32 +0000  Tomasz Mon <desowin@atheme.org>
+  revision [4684]
+  - draw_main_window redraws custom gtk widgets
+  trunk/src/audacious/ui_main.c                   |    7 +++++++
+  trunk/src/audacious/widgets/audacious_pbutton.c |    8 ++++++--
+  trunk/src/audacious/widgets/audacious_pbutton.h |    2 ++
+  3 files changed, 15 insertions(+), 2 deletions(-)
+
+
 2007-06-08 09:02:12 +0000  Tomasz Mon <desowin@atheme.org>
   revision [4682]
   - fix audacious_pbutton_size_allocate
