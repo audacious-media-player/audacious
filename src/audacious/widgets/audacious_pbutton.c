@@ -263,6 +263,10 @@ static void audacious_pbutton_size_allocate(GtkWidget *widget, GtkAllocation *al
 
                 gtk_widget_size_allocate (GTK_BIN (button)->child, &child_alloc);
         }
+
+        if (GDK_IS_WINDOW(button->event_window))
+            gdk_window_move_resize (button->event_window, widget->allocation.x, widget->allocation.y,
+                                    widget->allocation.width, widget->allocation.height);
 }
 
 static void button_pressed(AudaciousPButton *button) {
@@ -356,11 +360,6 @@ static void audacious_pbutton_toggle_doublesize(AudaciousPButton *button) {
 
         gtk_widget_set_size_request(widget, priv->w*(1+priv->double_size), priv->h*(1+priv->double_size));
         gtk_widget_set_uposition(widget, button->x*(1+priv->double_size), button->y*(1+priv->double_size));
-
-        if (GDK_IS_WINDOW(button->event_window)) {
-            gdk_window_resize(button->event_window, priv->w*(1+priv->double_size), priv->h*(1+priv->double_size));
-            gdk_window_move(button->event_window, button->x*(1+priv->double_size), button->y*(1+priv->double_size));
-        }
 
         audacious_pbutton_paint(button);
 }
