@@ -1,3 +1,13 @@
+2007-06-08 14:32:10 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
+  revision [4686]
+  - load transport plugins from Transport subdirectory.
+  
+  trunk/audacious.pc.in |    2 ++
+  trunk/configure.ac    |    5 ++++-
+  trunk/mk/rules.mk.in  |    2 ++
+  3 files changed, 8 insertions(+), 1 deletion(-)
+
+
 2007-06-08 10:42:32 +0000  Tomasz Mon <desowin@atheme.org>
   revision [4684]
   - draw_main_window redraws custom gtk widgets

@@ -383,7 +383,10 @@ static void audacious_pbutton_paint(AudaciousPButton *button) {
              img = gdk_drawable_get_image(obj, 0, 0, priv->w, priv->h);
              img2x = create_dblsize_image(img);
              gtk_image_set(GTK_IMAGE(priv->image), img2x, NULL);
+             g_object_unref(img2x);
+             g_object_unref(img);
         } else
              gtk_image_set_from_pixmap(GTK_IMAGE(priv->image), obj, NULL);
+        g_object_unref(obj);
         gtk_widget_queue_resize(widget);
 }
