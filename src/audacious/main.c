@@ -969,35 +969,37 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
         g_strfreev(filenames);
     } /* filename */
 
-    if (options->rew)
-        audacious_remote_playlist_prev(session);
+    if (remote) {
+        if (options->rew)
+            audacious_remote_playlist_prev(session);
 
-    if (options->play)
-        audacious_remote_play(session);
+        if (options->play)
+            audacious_remote_play(session);
 
-    if (options->pause)
-        audacious_remote_pause(session);
+        if (options->pause)
+            audacious_remote_pause(session);
 
-    if (options->stop)
-        audacious_remote_stop(session);
+        if (options->stop)
+            audacious_remote_stop(session);
 
-    if (options->fwd)
-        audacious_remote_playlist_next(session);
+        if (options->fwd)
+            audacious_remote_playlist_next(session);
 
-    if (options->play_pause)
-        audacious_remote_play_pause(session);
+        if (options->play_pause)
+            audacious_remote_play_pause(session);
 
-    if (options->show_jump_box)
-        audacious_remote_show_jtf_box(session);
+        if (options->show_jump_box)
+            audacious_remote_show_jtf_box(session);
 
-    if (options->mainwin)
-        audacious_remote_main_win_toggle(session, TRUE);
+        if (options->mainwin)
+            audacious_remote_main_win_toggle(session, TRUE);
 
-    if (options->activate)
-        audacious_remote_activate(session);
+        if (options->activate)
+            audacious_remote_activate(session);
 
-    if (options->playcd)
-        play_medium();
+        if (options->playcd)
+            play_medium();
+    }
 
     printf("remote = %d\n", remote);
     if(remote) {

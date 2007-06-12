@@ -1,3 +1,10 @@
+2007-06-11 19:53:55 +0000  Tomasz Mon <desowin@atheme.org>
+  revision [4688]
+  - free images
+  trunk/src/audacious/widgets/audacious_pbutton.c |    3 +++
+  1 file changed, 3 insertions(+)
+
+
 2007-06-08 14:32:10 +0000  Yoshiki Yazawa <yaz@cc.rim.or.jp>
   revision [4686]
   - load transport plugins from Transport subdirectory.
