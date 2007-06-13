@@ -75,10 +75,5 @@ struct _AudaciousPButtonClass {
 GType audacious_pbutton_get_type(void) G_GNUC_CONST;
 GtkWidget* audacious_pbutton_new();
 void audacious_pbutton_setup(GtkWidget *button, GtkWidget *fixed, GdkPixmap * parent, GdkGC * gc, gint x, gint y, gint w, gint h, gint nx, gint ny, gint px, gint py, SkinPixmapId si);
-void audacious_pbutton_pressed(AudaciousPButton *button);
-void audacious_pbutton_released(AudaciousPButton *button);
-void audacious_pbutton_clicked(AudaciousPButton *button);
-
-void _audacious_pbutton_set_pressed(AudaciousPButton *button, gboolean pressed);
 
 #endif

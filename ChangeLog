@@ -1,3 +1,11 @@
+2007-06-13 16:16:36 +0000  Tomasz Mon <desowin@atheme.org>
+  revision [4692]
+  - reduce number of redraws
+  trunk/src/audacious/widgets/audacious_pbutton.c |   46 +++++++++++++++---------
+  trunk/src/audacious/widgets/audacious_pbutton.h |    2 +
+  2 files changed, 32 insertions(+), 16 deletions(-)
+
+
 2007-06-12 06:32:00 +0000  Ben Tucker <bnt@interchange.ubc.ca>
   revision [4690]
   fixed bug #972

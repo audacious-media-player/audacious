@@ -60,6 +60,11 @@ static gint audacious_pbutton_button_press(GtkWidget *widget, GdkEventButton *ev
 static gint audacious_pbutton_button_release(GtkWidget *widget, GdkEventButton *event);
 static void button_pressed(AudaciousPButton *button);
 static void button_released(AudaciousPButton *button);
+static void audacious_pbutton_pressed(AudaciousPButton *button);
+static void audacious_pbutton_released(AudaciousPButton *button);
+static void audacious_pbutton_clicked(AudaciousPButton *button);
+static void audacious_pbutton_set_pressed (AudaciousPButton *button, gboolean pressed);
+
 static void audacious_pbutton_add(GtkContainer *container, GtkWidget *widget);
 static void audacious_pbutton_toggle_doublesize(AudaciousPButton *button);
 
@@ -288,10 +293,10 @@ static void button_released(AudaciousPButton *button) {
 }
 
 static void audacious_pbutton_update_state(AudaciousPButton *button) {
-        _audacious_pbutton_set_pressed(button, button->button_down); 
+        audacious_pbutton_set_pressed(button, button->button_down); 
 }
 
-void _audacious_pbutton_set_pressed (AudaciousPButton *button, gboolean pressed) {
+static void audacious_pbutton_set_pressed (AudaciousPButton *button, gboolean pressed) {
         if (pressed != button->pressed) {
                 button->pressed = pressed;
                 button->redraw = TRUE;
@@ -323,17 +328,17 @@ static gboolean audacious_pbutton_button_release(GtkWidget *widget, GdkEventButt
         return TRUE;
 }
 
-void audacious_pbutton_pressed(AudaciousPButton *button) {
+static void audacious_pbutton_pressed(AudaciousPButton *button) {
         g_return_if_fail(AUDACIOUS_IS_PBUTTON(button));
         g_signal_emit(button, button_signals[PRESSED], 0);
 }
 
-void audacious_pbutton_released(AudaciousPButton *button) {
+static void audacious_pbutton_released(AudaciousPButton *button) {
         g_return_if_fail(AUDACIOUS_IS_PBUTTON(button));
         g_signal_emit(button, button_signals[RELEASED], 0);
 }
 
-void audacious_pbutton_clicked(AudaciousPButton *button) {
+static void audacious_pbutton_clicked(AudaciousPButton *button) {
         g_return_if_fail(AUDACIOUS_IS_PBUTTON(button));
         g_signal_emit(button, button_signals[CLICKED], 0);
 }
@@ -343,7 +348,7 @@ static gboolean audacious_pbutton_enter_notify(GtkWidget *widget, GdkEventCrossi
 
         button = AUDACIOUS_PBUTTON(widget);
         button->hover = TRUE;
-        if(button->button_down) _audacious_pbutton_set_pressed(button, TRUE);
+        if(button->button_down) audacious_pbutton_set_pressed(button, TRUE);
 
         return FALSE;
 }
@@ -353,7 +358,7 @@ static gboolean audacious_pbutton_leave_notify(GtkWidget *widget, GdkEventCrossi
 
         button = AUDACIOUS_PBUTTON (widget);
         button->hover = FALSE;
-        if(button->button_down) _audacious_pbutton_set_pressed(button, FALSE);
+        if(button->button_down) audacious_pbutton_set_pressed(button, FALSE);
 
         return FALSE;
 }
