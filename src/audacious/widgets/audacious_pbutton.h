@@ -59,6 +59,8 @@ struct _AudaciousPButton {
 	gboolean hover : 1;
 	//Skinned part, used in ui_playlist.c
 	gint x, y, nx, ny, px, py;
+
+	gboolean redraw;
 };
 
 struct _AudaciousPButtonClass {

@@ -1,3 +1,10 @@
+2007-06-12 06:32:00 +0000  Ben Tucker <bnt@interchange.ubc.ca>
+  revision [4690]
+  fixed bug #972
+  trunk/src/audacious/main.c |   42 ++++++++++++++++++++++--------------------
+  1 file changed, 22 insertions(+), 20 deletions(-)
+
+
 2007-06-11 19:53:55 +0000  Tomasz Mon <desowin@atheme.org>
   revision [4688]
   - free images

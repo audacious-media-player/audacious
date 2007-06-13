@@ -66,6 +66,7 @@ static void audacious_pbutton_toggle_doublesize(AudaciousPButton *button);
 static gint audacious_pbutton_enter_notify(GtkWidget *widget, GdkEventCrossing *event);
 static gint audacious_pbutton_leave_notify(GtkWidget *widget, GdkEventCrossing *event);
 static void audacious_pbutton_paint(AudaciousPButton *button);
+static void audacious_pbutton_redraw(AudaciousPButton *button);
 
 GType audacious_pbutton_get_type (void) {
         static GType button_type = 0;
@@ -120,7 +121,7 @@ static void audacious_pbutton_class_init (AudaciousPButtonClass *klass) {
         klass->released = button_released;
         klass->clicked = NULL;
         klass->doubled = audacious_pbutton_toggle_doublesize;
-        klass->redraw = audacious_pbutton_paint;
+        klass->redraw = audacious_pbutton_redraw;
 
         button_signals[PRESSED] = 
                     g_signal_new ("pressed", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST,
@@ -153,6 +154,8 @@ static void audacious_pbutton_class_init (AudaciousPButtonClass *klass) {
 static void audacious_pbutton_init (AudaciousPButton *button) {
         AudaciousPButtonPrivate *priv = AUDACIOUS_PBUTTON_GET_PRIVATE (button);
         priv->image = gtk_image_new();
+        button->redraw = TRUE;
+
         g_object_set (priv->image, "visible", TRUE, NULL);
         gtk_container_add(GTK_CONTAINER(GTK_WIDGET(button)), priv->image);
 
@@ -291,6 +294,7 @@ static void audacious_pbutton_update_state(AudaciousPButton *button) {
 void _audacious_pbutton_set_pressed (AudaciousPButton *button, gboolean pressed) {
         if (pressed != button->pressed) {
                 button->pressed = pressed;
+                button->redraw = TRUE;
                 audacious_pbutton_paint(button);
         }
 }
@@ -312,6 +316,7 @@ static gboolean audacious_pbutton_button_release(GtkWidget *widget, GdkEventButt
         AudaciousPButton *button;
         if (event->button == 1) {
                 button = AUDACIOUS_PBUTTON(widget);
+                button->redraw = TRUE;
                 audacious_pbutton_released(button);
         }
 
@@ -365,6 +370,7 @@ static void audacious_pbutton_toggle_doublesize(AudaciousPButton *button) {
         gtk_widget_set_size_request(widget, priv->w*(1+priv->double_size), priv->h*(1+priv->double_size));
         gtk_widget_set_uposition(widget, button->x*(1+priv->double_size), button->y*(1+priv->double_size));
 
+        button->redraw = TRUE;
         audacious_pbutton_paint(button);
 }
 
@@ -372,21 +378,29 @@ static void audacious_pbutton_paint(AudaciousPButton *button) {
         GtkWidget *widget = GTK_WIDGET (button);
         AudaciousPButtonPrivate *priv = AUDACIOUS_PBUTTON_GET_PRIVATE (button);
 
-        GdkPixmap *obj;
-        obj = gdk_pixmap_new(NULL, priv->w, priv->h, gdk_rgb_get_visual()->depth);
-        skin_draw_pixmap(bmp_active_skin, obj, priv->gc, priv->skin_index2,
-                        button->pressed ? button->px : button->nx,
-                        button->pressed ? button->py : button->ny,
-                        0, 0, priv->w, priv->h);
-        if(priv->double_size) {
-             GdkImage *img, *img2x;
-             img = gdk_drawable_get_image(obj, 0, 0, priv->w, priv->h);
-             img2x = create_dblsize_image(img);
-             gtk_image_set(GTK_IMAGE(priv->image), img2x, NULL);
-             g_object_unref(img2x);
-             g_object_unref(img);
-        } else
-             gtk_image_set_from_pixmap(GTK_IMAGE(priv->image), obj, NULL);
+        if (button->redraw == TRUE) {
+            button->redraw = FALSE;
+            GdkPixmap *obj;
+            obj = gdk_pixmap_new(NULL, priv->w, priv->h, gdk_rgb_get_visual()->depth);
+            skin_draw_pixmap(bmp_active_skin, obj, priv->gc, priv->skin_index2,
+                             button->pressed ? button->px : button->nx,
+                             button->pressed ? button->py : button->ny,
+                             0, 0, priv->w, priv->h);
+            if(priv->double_size) {
+                 GdkImage *img, *img2x;
+                 img = gdk_drawable_get_image(obj, 0, 0, priv->w, priv->h);
+                 img2x = create_dblsize_image(img);
+                 gtk_image_set(GTK_IMAGE(priv->image), img2x, NULL);
+                 g_object_unref(img2x);
+                 g_object_unref(img);
+            } else
+                 gtk_image_set_from_pixmap(GTK_IMAGE(priv->image), obj, NULL);
         g_object_unref(obj);
         gtk_widget_queue_resize(widget);
+        }
+}
+
+static void audacious_pbutton_redraw(AudaciousPButton *button) {
+        button->redraw = TRUE;
+        audacious_pbutton_paint(button);
 }
