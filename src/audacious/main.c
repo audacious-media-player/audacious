@@ -901,7 +901,6 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
     gchar **filenames = options->filenames;
 #ifdef USE_DBUS
     DBusGProxy *session = audacious_get_dbus_proxy();
-    printf("session = %p\n", session);
 #endif
 
     if (options->version)
@@ -1001,10 +1000,8 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
             play_medium();
     }
 
-    printf("remote = %d\n", remote);
     if(remote) {
         gboolean is_running = audacious_remote_is_running(session);
-        printf("is_running %d\n", is_running);
         if (is_running)
             exit(EXIT_SUCCESS);
     }
