@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Audacious 1.3.0\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-04-14 15:19-0500\n"
-"PO-Revision-Date: 2007-04-22 04:57-0600\n"
+"PO-Revision-Date: 2007-06-15 13:51-0600\n"
 "Last-Translator: William Pitcock <nenolod@sacredspiral.co.uk>\n"
 "Language-Team: Cynmaeg <nenolod+cy@sacredspiral.co.uk>\n"
 "MIME-Version: 1.0\n"
@@ -204,6 +204,8 @@ msgid ""
 "\n"
 "Bugs can be reported at http://bugs-meta.atheme.org against the Audacious product.\n"
 msgstr ""
+"\n"
+"Bygiau dichon cofnodi am http://bugs-meta.atheme.org yn lluoswm Audacious.\n"
 
 #: src/audacious/signals.c:265
 msgid ""
@@ -455,7 +457,7 @@ msgstr "Hyd trac:"
 
 #: src/audacious/ui_main.c:1520
 msgid "Audacious - visibility warning"
-msgstr ""
+msgstr "Audacious - rhybudd gwelededd"
 
 #: src/audacious/ui_main.c:1522
 msgid "Show main player window"
@@ -463,7 +465,7 @@ msgstr "Dangos y brif ffenestr"
 
 #: src/audacious/ui_main.c:1523
 msgid "Ignore"
-msgstr ""
+msgstr "Anwybyddu"
 
 #: src/audacious/ui_main.c:1527
 msgid ""
@@ -1988,15 +1990,15 @@ msgstr "eiliad"
 
 #: src/audacious/glade/prefswin.glade:4175
 msgid "<b>Sampling Rate Converter</b>"
-msgstr ""
+msgstr "<b>Dychweliad Graddfa Samplo</b>"
 
 #: src/audacious/glade/prefswin.glade:4215
 msgid "Enable Sampling Rate Converter"
-msgstr ""
+msgstr "Galluogi Dychweliad Graddfa Samplo"
 
 #: src/audacious/glade/prefswin.glade:4264
 msgid "Sampling Rate [Hz]:"
-msgstr ""
+msgstr "Graddfa samplo [Hz]:"
 
 #: src/audacious/glade/prefswin.glade:4334
 msgid ""
@@ -2007,7 +2009,7 @@ msgstr ""
 
 #: src/audacious/glade/prefswin.glade:4364
 msgid "Converter Type:"
-msgstr ""
+msgstr "Trefn Dychweliad:"
 
 #: src/audacious/glade/prefswin.glade:4392
 msgid ""
