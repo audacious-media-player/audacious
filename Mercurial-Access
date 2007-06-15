@@ -1,0 +1,8 @@
+The atheme.org mercurial repository is available for anonymous read-only 
+access.
+
+To retrieve the audacious development branch from hg.atheme.org, do:
+   $ hg clone http://hg.atheme.org/audacious audacious-devel
+
+To retrieve the audacious stable branch from hg.atheme.org, do:
+   $ hg clone http://hg.atheme.org/audacious-stable 
