@@ -121,11 +121,16 @@ ifdef USE_DBUS
 SOURCES += dbus.c
 CFLAGS += -I../libaudclient
 DBUS_BINDINGS = dbus-server-bindings.h dbus-client-bindings.h
-depend-prehook: $(DBUS_BINDINGS)
 OBJECTIVE_LIBS_NOINST += $(DBUS_BINDINGS)
 LIBDEP += ../libaudclient/libaudclient.so
 LDADD += -L../libaudclient -laudclient
 endif
+
+depend-prehook: $(DBUS_BINDINGS)
+	if [ -d .hg ]; then \
+		revh=`hg tip --template 'const char *svn_stamp = "#rev#:#node|short#"\n' 2>/dev/null`; \
+		[ -z "$$revh" ] || echo "$$revh" > build_stamp.c; \
+	fi
 
 DBUS_BINDINGS_SOURCES = \
 	objects.xml \
