@@ -175,7 +175,7 @@ ui_skinned_window_new(GtkWindowType type, const gchar *wmclass_name)
        means that the logo must be drawn on the container widget, instead of the
        window; otherwise, it won't be displayed correctly */
     SKINNED_WINDOW(widget)->fixed = gtk_fixed_new();
-
+    gtk_container_add(GTK_CONTAINER(widget), GTK_WIDGET(SKINNED_WINDOW(widget)->fixed));
     return widget;
 }
 

@@ -518,10 +518,6 @@ draw_main_window(gboolean force)
                 g_object_unref(img);
             }
 
-            gdk_window_clear(mainwin->window);
-
-        }
-        else {
             GList *iter;
             for (iter = GTK_FIXED (SKINNED_WINDOW(mainwin)->fixed)->children; iter; iter = g_list_next (iter)) {
                 GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
@@ -529,6 +525,8 @@ draw_main_window(gboolean force)
                 g_signal_emit_by_name(child, "redraw");
             }
 
+        }
+        else {
             for (wl = mainwin_wlist; wl; wl = g_list_next(wl)) {
                 w = WIDGET(wl->data);
 
@@ -2901,7 +2899,6 @@ mainwin_create_widgets(void)
     gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(err),
                                              "Boo! Bad stuff! Booga Booga!");
 
-    gtk_container_add(GTK_CONTAINER(mainwin), GTK_WIDGET(SKINNED_WINDOW(mainwin)->fixed));
     /* XXX: eventually update widgetcore API to not need this */
 
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_eject));
