@@ -35,8 +35,7 @@ SOURCES = \
 	playlist_slider.c \
 	eq_graph.c \
 	eq_slider.c \
-	skin.c \
-	audacious_pbutton.c
+	skin.c
 
 OBJECTS = ${SOURCES:.c=.o}
 

@@ -104,6 +104,7 @@ SOURCES = \
 	ui_preferences.c \
 	ui_skinned_cursor.c \
 	ui_skinned_window.c \
+	ui_skinned_button.c \
 	ui_skinselector.c \
 	ui_urlopener.c \
 	urldecode.c \

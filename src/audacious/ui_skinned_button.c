@@ -17,18 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include "widgetcore.h"
-#include "audacious_pbutton.h"
-#include "../util.h"
+#include "widgets/widgetcore.h"
+#include "ui_skinned_button.h"
+#include "util.h"
 
 #include <gtk/gtkmain.h>
 #include <gtk/gtkmarshal.h>
 #include <gtk/gtkimage.h>
 
-#define AUDACIOUS_PBUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), AUDACIOUS_TYPE_PBUTTON, AudaciousPButtonPrivate))
-typedef struct _AudaciousPButtonPrivate AudaciousPButtonPrivate;
+#define UI_SKINNED_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UI_TYPE_SKINNED_BUTTON, UiSkinnedButtonPrivate))
+typedef struct _UiSkinnedButtonPrivate UiSkinnedButtonPrivate;
 
-struct _AudaciousPButtonPrivate {
+struct _UiSkinnedButtonPrivate {
         //Skinned part
         GtkWidget        *image;
         GdkGC            *gc;
@@ -42,59 +42,59 @@ struct _AudaciousPButtonPrivate {
 
 
 static GtkBinClass *parent_class = NULL;
-static void audacious_pbutton_class_init(AudaciousPButtonClass *klass);
-static void audacious_pbutton_init(AudaciousPButton *button);
-static GObject* audacious_pbutton_constructor(GType type, guint n_construct_properties, GObjectConstructParam *construct_params);
-static void audacious_pbutton_destroy(GtkObject *object);
-static void audacious_pbutton_realize(GtkWidget *widget);
-static void audacious_pbutton_unrealize(GtkWidget *widget);
-static void audacious_pbutton_map(GtkWidget *widget);
-static void audacious_pbutton_unmap(GtkWidget *widget);
-static gint audacious_pbutton_expose(GtkWidget *widget,GdkEventExpose *event);
+static void ui_skinned_button_class_init(UiSkinnedButtonClass *klass);
+static void ui_skinned_button_init(UiSkinnedButton *button);
+static GObject* ui_skinned_button_constructor(GType type, guint n_construct_properties, GObjectConstructParam *construct_params);
+static void ui_skinned_button_destroy(GtkObject *object);
+static void ui_skinned_button_realize(GtkWidget *widget);
+static void ui_skinned_button_unrealize(GtkWidget *widget);
+static void ui_skinned_button_map(GtkWidget *widget);
+static void ui_skinned_button_unmap(GtkWidget *widget);
+static gint ui_skinned_button_expose(GtkWidget *widget,GdkEventExpose *event);
 
-static void audacious_pbutton_size_allocate(GtkWidget *widget, GtkAllocation *allocation);
-static void audacious_pbutton_update_state(AudaciousPButton *button);
+static void ui_skinned_button_size_allocate(GtkWidget *widget, GtkAllocation *allocation);
+static void ui_skinned_button_update_state(UiSkinnedButton *button);
 
 static guint button_signals[LAST_SIGNAL] = { 0 };
-static gint audacious_pbutton_button_press(GtkWidget *widget, GdkEventButton *event);
-static gint audacious_pbutton_button_release(GtkWidget *widget, GdkEventButton *event);
-static void button_pressed(AudaciousPButton *button);
-static void button_released(AudaciousPButton *button);
-static void audacious_pbutton_pressed(AudaciousPButton *button);
-static void audacious_pbutton_released(AudaciousPButton *button);
-static void audacious_pbutton_clicked(AudaciousPButton *button);
-static void audacious_pbutton_set_pressed (AudaciousPButton *button, gboolean pressed);
+static gint ui_skinned_button_button_press(GtkWidget *widget, GdkEventButton *event);
+static gint ui_skinned_button_button_release(GtkWidget *widget, GdkEventButton *event);
+static void button_pressed(UiSkinnedButton *button);
+static void button_released(UiSkinnedButton *button);
+static void ui_skinned_button_pressed(UiSkinnedButton *button);
+static void ui_skinned_button_released(UiSkinnedButton *button);
+static void ui_skinned_button_clicked(UiSkinnedButton *button);
+static void ui_skinned_button_set_pressed (UiSkinnedButton *button, gboolean pressed);
 
-static void audacious_pbutton_add(GtkContainer *container, GtkWidget *widget);
-static void audacious_pbutton_toggle_doublesize(AudaciousPButton *button);
+static void ui_skinned_button_add(GtkContainer *container, GtkWidget *widget);
+static void ui_skinned_button_toggle_doublesize(UiSkinnedButton *button);
 
-static gint audacious_pbutton_enter_notify(GtkWidget *widget, GdkEventCrossing *event);
-static gint audacious_pbutton_leave_notify(GtkWidget *widget, GdkEventCrossing *event);
-static void audacious_pbutton_paint(AudaciousPButton *button);
-static void audacious_pbutton_redraw(AudaciousPButton *button);
+static gint ui_skinned_button_enter_notify(GtkWidget *widget, GdkEventCrossing *event);
+static gint ui_skinned_button_leave_notify(GtkWidget *widget, GdkEventCrossing *event);
+static void ui_skinned_button_paint(UiSkinnedButton *button);
+static void ui_skinned_button_redraw(UiSkinnedButton *button);
 
-GType audacious_pbutton_get_type (void) {
+GType ui_skinned_button_get_type (void) {
         static GType button_type = 0;
 
         if (!button_type) {
                 static const GTypeInfo button_info = {
-                        sizeof (AudaciousPButtonClass),
+                        sizeof (UiSkinnedButtonClass),
                         NULL,                /* base_init */
                         NULL,                /* base_finalize */
-                        (GClassInitFunc) audacious_pbutton_class_init,
+                        (GClassInitFunc) ui_skinned_button_class_init,
                         NULL,                /* class_finalize */
                         NULL,                /* class_data */
-                        sizeof (AudaciousPButton),
+                        sizeof (UiSkinnedButton),
                         16,                /* n_preallocs */
-                        (GInstanceInitFunc) audacious_pbutton_init,
+                        (GInstanceInitFunc) ui_skinned_button_init,
                 };
 
-                button_type = g_type_register_static (GTK_TYPE_BIN, "AudaciousPButton", &button_info, 0);
+                button_type = g_type_register_static (GTK_TYPE_BIN, "UiSkinnedButton", &button_info, 0);
         }
         return button_type;
 }
 
-static void audacious_pbutton_class_init (AudaciousPButtonClass *klass) {
+static void ui_skinned_button_class_init (UiSkinnedButtonClass *klass) {
         GObjectClass *gobject_class;
         GtkObjectClass *object_class;
         GtkWidgetClass *widget_class;
@@ -106,58 +106,58 @@ static void audacious_pbutton_class_init (AudaciousPButtonClass *klass) {
         container_class = (GtkContainerClass*)klass;
 
         parent_class = g_type_class_peek_parent(klass);
-        gobject_class->constructor = audacious_pbutton_constructor;
-        object_class->destroy = audacious_pbutton_destroy;
+        gobject_class->constructor = ui_skinned_button_constructor;
+        object_class->destroy = ui_skinned_button_destroy;
 
-        widget_class->realize = audacious_pbutton_realize;
-        widget_class->unrealize = audacious_pbutton_unrealize;
-        widget_class->map = audacious_pbutton_map;
-        widget_class->unmap = audacious_pbutton_unmap;
-        widget_class->size_allocate = audacious_pbutton_size_allocate;
-        widget_class->expose_event = audacious_pbutton_expose;
-        widget_class->button_press_event = audacious_pbutton_button_press;
-        widget_class->button_release_event = audacious_pbutton_button_release;
-        widget_class->enter_notify_event = audacious_pbutton_enter_notify;
-        widget_class->leave_notify_event = audacious_pbutton_leave_notify;
+        widget_class->realize = ui_skinned_button_realize;
+        widget_class->unrealize = ui_skinned_button_unrealize;
+        widget_class->map = ui_skinned_button_map;
+        widget_class->unmap = ui_skinned_button_unmap;
+        widget_class->size_allocate = ui_skinned_button_size_allocate;
+        widget_class->expose_event = ui_skinned_button_expose;
+        widget_class->button_press_event = ui_skinned_button_button_press;
+        widget_class->button_release_event = ui_skinned_button_button_release;
+        widget_class->enter_notify_event = ui_skinned_button_enter_notify;
+        widget_class->leave_notify_event = ui_skinned_button_leave_notify;
 
-        container_class->add = audacious_pbutton_add;
+        container_class->add = ui_skinned_button_add;
 
         klass->pressed = button_pressed;
         klass->released = button_released;
         klass->clicked = NULL;
-        klass->doubled = audacious_pbutton_toggle_doublesize;
-        klass->redraw = audacious_pbutton_redraw;
+        klass->doubled = ui_skinned_button_toggle_doublesize;
+        klass->redraw = ui_skinned_button_redraw;
 
         button_signals[PRESSED] = 
                     g_signal_new ("pressed", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST,
-                                  G_STRUCT_OFFSET (AudaciousPButtonClass, pressed), NULL, NULL,
+                                  G_STRUCT_OFFSET (UiSkinnedButtonClass, pressed), NULL, NULL,
                                   gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
         button_signals[RELEASED] = 
                     g_signal_new ("released", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST,
-                                  G_STRUCT_OFFSET (AudaciousPButtonClass, released), NULL, NULL,
+                                  G_STRUCT_OFFSET (UiSkinnedButtonClass, released), NULL, NULL,
                                   gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
         button_signals[CLICKED] = 
                     g_signal_new ("clicked", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                                  G_STRUCT_OFFSET (AudaciousPButtonClass, clicked), NULL, NULL,
+                                  G_STRUCT_OFFSET (UiSkinnedButtonClass, clicked), NULL, NULL,
                                   gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
         button_signals[DOUBLED] = 
                     g_signal_new ("toggle-double-size", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                                  G_STRUCT_OFFSET (AudaciousPButtonClass, doubled), NULL, NULL,
+                                  G_STRUCT_OFFSET (UiSkinnedButtonClass, doubled), NULL, NULL,
                                   gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
         button_signals[REDRAW] = 
                     g_signal_new ("redraw", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                                  G_STRUCT_OFFSET (AudaciousPButtonClass, redraw), NULL, NULL,
+                                  G_STRUCT_OFFSET (UiSkinnedButtonClass, redraw), NULL, NULL,
                                   gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
-        g_type_class_add_private (gobject_class, sizeof (AudaciousPButtonPrivate));
+        g_type_class_add_private (gobject_class, sizeof (UiSkinnedButtonPrivate));
 }
 
-static void audacious_pbutton_init (AudaciousPButton *button) {
-        AudaciousPButtonPrivate *priv = AUDACIOUS_PBUTTON_GET_PRIVATE (button);
+static void ui_skinned_button_init (UiSkinnedButton *button) {
+        UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
         priv->image = gtk_image_new();
         button->redraw = TRUE;
 
@@ -168,18 +168,18 @@ static void audacious_pbutton_init (AudaciousPButton *button) {
         GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
 }
 
-static void audacious_pbutton_destroy (GtkObject *object) {
+static void ui_skinned_button_destroy (GtkObject *object) {
         (*GTK_OBJECT_CLASS (parent_class)->destroy) (object);
 }
 
-static GObject* audacious_pbutton_constructor(GType type, guint n_construct_properties, GObjectConstructParam *construct_params) {
+static GObject* ui_skinned_button_constructor(GType type, guint n_construct_properties, GObjectConstructParam *construct_params) {
         GObject *object = (*G_OBJECT_CLASS (parent_class)->constructor)(type, n_construct_properties, construct_params);
 
         return object;
 }
 
-static void audacious_pbutton_realize (GtkWidget *widget) {
-        AudaciousPButton *button = AUDACIOUS_PBUTTON (widget);
+static void ui_skinned_button_realize (GtkWidget *widget) {
+        UiSkinnedButton *button = UI_SKINNED_BUTTON (widget);
         GdkWindowAttr attrib;
 
         GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
@@ -200,8 +200,8 @@ static void audacious_pbutton_realize (GtkWidget *widget) {
         gdk_window_set_user_data (button->event_window, button);
 }
 
-static void audacious_pbutton_unrealize(GtkWidget *widget) {
-        AudaciousPButton *button = AUDACIOUS_PBUTTON (widget);
+static void ui_skinned_button_unrealize(GtkWidget *widget) {
+        UiSkinnedButton *button = UI_SKINNED_BUTTON (widget);
 
         if (button->event_window) {
                 gdk_window_set_user_data (button->event_window, NULL);
@@ -212,16 +212,16 @@ static void audacious_pbutton_unrealize(GtkWidget *widget) {
         GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
 
-static void audacious_pbutton_map(GtkWidget *widget) {
-        AudaciousPButton *button = AUDACIOUS_PBUTTON (widget);
-        g_return_if_fail (AUDACIOUS_IS_PBUTTON (widget));
+static void ui_skinned_button_map(GtkWidget *widget) {
+        UiSkinnedButton *button = UI_SKINNED_BUTTON (widget);
+        g_return_if_fail (UI_IS_SKINNED_BUTTON (widget));
         GTK_WIDGET_CLASS (parent_class)->map(widget);
         gdk_window_show (button->event_window);
 }
 
-static void audacious_pbutton_unmap (GtkWidget *widget) {
-        AudaciousPButton *button = AUDACIOUS_PBUTTON (widget);
-        g_return_if_fail (AUDACIOUS_IS_PBUTTON(widget));
+static void ui_skinned_button_unmap (GtkWidget *widget) {
+        UiSkinnedButton *button = UI_SKINNED_BUTTON (widget);
+        g_return_if_fail (UI_IS_SKINNED_BUTTON(widget));
 
         if (button->event_window)
                 gdk_window_hide (button->event_window);
@@ -229,41 +229,41 @@ static void audacious_pbutton_unmap (GtkWidget *widget) {
         GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
 
-static gboolean audacious_pbutton_expose(GtkWidget *widget, GdkEventExpose *event) {
+static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *event) {
         if (GTK_WIDGET_DRAWABLE (widget))
                 (*GTK_WIDGET_CLASS (parent_class)->expose_event) (widget, event);
 
         return FALSE;
 }
 
-GtkWidget* audacious_pbutton_new () {
-        return g_object_new (AUDACIOUS_TYPE_PBUTTON, NULL);
+GtkWidget* ui_skinned_button_new () {
+        return g_object_new (UI_TYPE_SKINNED_BUTTON, NULL);
 }
 
-void audacious_pbutton_setup(GtkWidget *button, GtkWidget *fixed, GdkPixmap *parent, GdkGC *gc, gint x, gint y, gint w, gint h, gint nx, gint ny, gint px, gint py, SkinPixmapId si) {
+void ui_skinned_push_button_setup(GtkWidget *button, GtkWidget *fixed, GdkPixmap *parent, GdkGC *gc, gint x, gint y, gint w, gint h, gint nx, gint ny, gint px, gint py, SkinPixmapId si) {
 
-        AudaciousPButton *pbutton = AUDACIOUS_PBUTTON(button);
-        AudaciousPButtonPrivate *priv = AUDACIOUS_PBUTTON_GET_PRIVATE(pbutton);
+        UiSkinnedButton *sbutton = UI_SKINNED_BUTTON(button);
+        UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE(sbutton);
         priv->gc = gc;
         priv->w = w;
         priv->h = h;
-        pbutton->x = x;
-        pbutton->y = y;
-        pbutton->nx = nx;
-        pbutton->ny = ny;
-        pbutton->px = px;
-        pbutton->py = py;
+        sbutton->x = x;
+        sbutton->y = y;
+        sbutton->nx = nx;
+        sbutton->ny = ny;
+        sbutton->px = px;
+        sbutton->py = py;
         priv->skin_index1 = si;
         priv->skin_index2 = si;
         priv->fixed = fixed;
         priv->double_size = FALSE;
 
         gtk_widget_set_size_request(button, priv->w, priv->h);
-        gtk_fixed_put(GTK_FIXED(priv->fixed),GTK_WIDGET(button), pbutton->x, pbutton->y);
+        gtk_fixed_put(GTK_FIXED(priv->fixed),GTK_WIDGET(button), sbutton->x, sbutton->y);
 }
 
-static void audacious_pbutton_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
-        AudaciousPButton *button = AUDACIOUS_PBUTTON (widget);
+static void ui_skinned_button_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
+        UiSkinnedButton *button = UI_SKINNED_BUTTON (widget);
         GtkAllocation child_alloc;
 
         widget->allocation = *allocation;
@@ -281,107 +281,107 @@ static void audacious_pbutton_size_allocate(GtkWidget *widget, GtkAllocation *al
                                     widget->allocation.width, widget->allocation.height);
 }
 
-static void button_pressed(AudaciousPButton *button) {
+static void button_pressed(UiSkinnedButton *button) {
         button->button_down = TRUE;
-        audacious_pbutton_update_state(button);
+        ui_skinned_button_update_state(button);
 }
 
-static void button_released(AudaciousPButton *button) {
+static void button_released(UiSkinnedButton *button) {
         button->button_down = FALSE;
-        if(button->hover) audacious_pbutton_clicked(button);
-        audacious_pbutton_update_state(button);
+        if(button->hover) ui_skinned_button_clicked(button);
+        ui_skinned_button_update_state(button);
 }
 
-static void audacious_pbutton_update_state(AudaciousPButton *button) {
-        audacious_pbutton_set_pressed(button, button->button_down); 
+static void ui_skinned_button_update_state(UiSkinnedButton *button) {
+        ui_skinned_button_set_pressed(button, button->button_down); 
 }
 
-static void audacious_pbutton_set_pressed (AudaciousPButton *button, gboolean pressed) {
+static void ui_skinned_button_set_pressed (UiSkinnedButton *button, gboolean pressed) {
         if (pressed != button->pressed) {
                 button->pressed = pressed;
                 button->redraw = TRUE;
-                audacious_pbutton_paint(button);
+                ui_skinned_button_paint(button);
         }
 }
 
-static gboolean audacious_pbutton_button_press(GtkWidget *widget, GdkEventButton *event) {
-        AudaciousPButton *button;
+static gboolean ui_skinned_button_button_press(GtkWidget *widget, GdkEventButton *event) {
+        UiSkinnedButton *button;
 
         if (event->type == GDK_BUTTON_PRESS) {
-                button = AUDACIOUS_PBUTTON(widget);
+                button = UI_SKINNED_BUTTON(widget);
 
                 if (event->button == 1)
-                        audacious_pbutton_pressed (button);
+                        ui_skinned_button_pressed (button);
         }
 
         return TRUE;
 }
 
-static gboolean audacious_pbutton_button_release(GtkWidget *widget, GdkEventButton *event) {
-        AudaciousPButton *button;
+static gboolean ui_skinned_button_button_release(GtkWidget *widget, GdkEventButton *event) {
+        UiSkinnedButton *button;
         if (event->button == 1) {
-                button = AUDACIOUS_PBUTTON(widget);
+                button = UI_SKINNED_BUTTON(widget);
                 button->redraw = TRUE;
-                audacious_pbutton_released(button);
+                ui_skinned_button_released(button);
         }
 
         return TRUE;
 }
 
-static void audacious_pbutton_pressed(AudaciousPButton *button) {
-        g_return_if_fail(AUDACIOUS_IS_PBUTTON(button));
+static void ui_skinned_button_pressed(UiSkinnedButton *button) {
+        g_return_if_fail(UI_IS_SKINNED_BUTTON(button));
         g_signal_emit(button, button_signals[PRESSED], 0);
 }
 
-static void audacious_pbutton_released(AudaciousPButton *button) {
-        g_return_if_fail(AUDACIOUS_IS_PBUTTON(button));
+static void ui_skinned_button_released(UiSkinnedButton *button) {
+        g_return_if_fail(UI_IS_SKINNED_BUTTON(button));
         g_signal_emit(button, button_signals[RELEASED], 0);
 }
 
-static void audacious_pbutton_clicked(AudaciousPButton *button) {
-        g_return_if_fail(AUDACIOUS_IS_PBUTTON(button));
+static void ui_skinned_button_clicked(UiSkinnedButton *button) {
+        g_return_if_fail(UI_IS_SKINNED_BUTTON(button));
         g_signal_emit(button, button_signals[CLICKED], 0);
 }
 
-static gboolean audacious_pbutton_enter_notify(GtkWidget *widget, GdkEventCrossing *event) {
-        AudaciousPButton *button;
+static gboolean ui_skinned_button_enter_notify(GtkWidget *widget, GdkEventCrossing *event) {
+        UiSkinnedButton *button;
 
-        button = AUDACIOUS_PBUTTON(widget);
+        button = UI_SKINNED_BUTTON(widget);
         button->hover = TRUE;
-        if(button->button_down) audacious_pbutton_set_pressed(button, TRUE);
+        if(button->button_down) ui_skinned_button_set_pressed(button, TRUE);
 
         return FALSE;
 }
 
-static gboolean audacious_pbutton_leave_notify(GtkWidget *widget, GdkEventCrossing *event) {
-        AudaciousPButton *button;
+static gboolean ui_skinned_button_leave_notify(GtkWidget *widget, GdkEventCrossing *event) {
+        UiSkinnedButton *button;
 
-        button = AUDACIOUS_PBUTTON (widget);
+        button = UI_SKINNED_BUTTON (widget);
         button->hover = FALSE;
-        if(button->button_down) audacious_pbutton_set_pressed(button, FALSE);
+        if(button->button_down) ui_skinned_button_set_pressed(button, FALSE);
 
         return FALSE;
 }
 
-static void audacious_pbutton_add(GtkContainer *container, GtkWidget *widget) {
+static void ui_skinned_button_add(GtkContainer *container, GtkWidget *widget) {
         GTK_CONTAINER_CLASS (parent_class)->add(container, widget);
 }
 
-static void audacious_pbutton_toggle_doublesize(AudaciousPButton *button) {
+static void ui_skinned_button_toggle_doublesize(UiSkinnedButton *button) {
         GtkWidget *widget = GTK_WIDGET (button);
-        AudaciousPButtonPrivate *priv = AUDACIOUS_PBUTTON_GET_PRIVATE (button);
+        UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
         priv->double_size = !priv->double_size;
 
         gtk_widget_set_size_request(widget, priv->w*(1+priv->double_size), priv->h*(1+priv->double_size));
         gtk_widget_set_uposition(widget, button->x*(1+priv->double_size), button->y*(1+priv->double_size));
 
         button->redraw = TRUE;
-        audacious_pbutton_paint(button);
+        ui_skinned_button_paint(button);
 }
 
-static void audacious_pbutton_paint(AudaciousPButton *button) {
+static void ui_skinned_button_paint(UiSkinnedButton *button) {
         GtkWidget *widget = GTK_WIDGET (button);
-        AudaciousPButtonPrivate *priv = AUDACIOUS_PBUTTON_GET_PRIVATE (button);
+        UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
 
         if (button->redraw == TRUE) {
             button->redraw = FALSE;
@@ -405,7 +405,7 @@ static void audacious_pbutton_paint(AudaciousPButton *button) {
         }
 }
 
-static void audacious_pbutton_redraw(AudaciousPButton *button) {
+static void ui_skinned_button_redraw(UiSkinnedButton *button) {
         button->redraw = TRUE;
-        audacious_pbutton_paint(button);
+        ui_skinned_button_paint(button);
 }

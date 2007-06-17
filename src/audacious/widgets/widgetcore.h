@@ -20,7 +20,6 @@
 #ifndef _WIDGETCORE_H_
 #define _WIDGETCORE_H_
 
-#include "audacious_pbutton.h"
 #include "tbutton.h"
 #include "eq_graph.h"
 #include "eq_slider.h"

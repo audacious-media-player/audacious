@@ -81,6 +81,7 @@
 #include "visualization.h"
 
 #include "ui_skinned_window.h"
+#include "ui_skinned_button.h"
 #include "ui_jumptotrack.h"
 
 static GTimeVal cb_time; /* click delay for tristate is defined by TRISTATE_THRESHOLD */
@@ -2688,56 +2689,56 @@ mainwin_setup_menus(void)
 static void
 mainwin_create_widgets(void)
 {
-	mainwin_menubtn = audacious_pbutton_new();
-	audacious_pbutton_setup(mainwin_menubtn, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+	mainwin_menubtn = ui_skinned_button_new();
+	ui_skinned_push_button_setup(mainwin_menubtn, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
 			SKINNED_WINDOW(mainwin)->gc, 6, 3, 9, 9, 0, 0, 0, 9, SKIN_TITLEBAR);
 	g_signal_connect(mainwin_menubtn, "clicked", mainwin_menubtn_cb, NULL );
 
-	mainwin_minimize = audacious_pbutton_new();
-	audacious_pbutton_setup(mainwin_minimize, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+	mainwin_minimize = ui_skinned_button_new();
+	ui_skinned_push_button_setup(mainwin_minimize, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
 			SKINNED_WINDOW(mainwin)->gc, 244, 3, 9, 9, 9, 0, 9, 9, SKIN_TITLEBAR);
 	g_signal_connect(mainwin_minimize, "clicked", mainwin_minimize_cb, NULL );
 
-	mainwin_shade = audacious_pbutton_new();
-	audacious_pbutton_setup(mainwin_shade, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+	mainwin_shade = ui_skinned_button_new();
+	ui_skinned_push_button_setup(mainwin_shade, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
 			SKINNED_WINDOW(mainwin)->gc,  254, 3, 9, 9, 0,
 			cfg.player_shaded ? 27 : 18, 9, cfg.player_shaded ? 27 : 18, SKIN_TITLEBAR);
 	g_signal_connect(mainwin_shade, "clicked", mainwin_shade_toggle, NULL );
 
-	mainwin_close = audacious_pbutton_new();
-	audacious_pbutton_setup(mainwin_close, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+	mainwin_close = ui_skinned_button_new();
+	ui_skinned_push_button_setup(mainwin_close, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
 			SKINNED_WINDOW(mainwin)->gc, 264, 3, 9, 9, 18, 0, 18, 9, SKIN_TITLEBAR);
 	g_signal_connect(mainwin_close, "clicked", mainwin_quit_cb, NULL );
 
-	mainwin_rew = audacious_pbutton_new();
-	audacious_pbutton_setup(mainwin_rew, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+	mainwin_rew = ui_skinned_button_new();
+	ui_skinned_push_button_setup(mainwin_rew, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
 			SKINNED_WINDOW(mainwin)->gc, 16, 88, 23, 18, 0, 0, 0, 18, SKIN_CBUTTONS);
 	g_signal_connect(mainwin_rew, "pressed", mainwin_rev_pushed, NULL);
 	g_signal_connect(mainwin_rew, "released", mainwin_rev_release, NULL);
 
-	mainwin_fwd = audacious_pbutton_new();
-	audacious_pbutton_setup(mainwin_fwd, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+	mainwin_fwd = ui_skinned_button_new();
+	ui_skinned_push_button_setup(mainwin_fwd, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
 			SKINNED_WINDOW(mainwin)->gc, 108, 88, 22, 18, 92, 0, 92, 18, SKIN_CBUTTONS);
 	g_signal_connect(mainwin_fwd, "pressed", mainwin_fwd_pushed, NULL);
 	g_signal_connect(mainwin_fwd, "released", mainwin_fwd_release, NULL);
 
-	mainwin_play = audacious_pbutton_new();
-	audacious_pbutton_setup(mainwin_play, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+	mainwin_play = ui_skinned_button_new();
+	ui_skinned_push_button_setup(mainwin_play, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
 			SKINNED_WINDOW(mainwin)->gc, 39, 88, 23, 18, 23, 0, 23, 18, SKIN_CBUTTONS);
 	g_signal_connect(mainwin_play, "clicked", mainwin_play_pushed, NULL );
 
-	mainwin_pause = audacious_pbutton_new();
-	audacious_pbutton_setup(mainwin_pause, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+	mainwin_pause = ui_skinned_button_new();
+	ui_skinned_push_button_setup(mainwin_pause, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
 			SKINNED_WINDOW(mainwin)->gc, 62, 88, 23, 18, 46, 0, 46, 18, SKIN_CBUTTONS);
 	g_signal_connect(mainwin_pause, "clicked", playback_pause, NULL );
 
-	mainwin_stop = audacious_pbutton_new();
-	audacious_pbutton_setup(mainwin_stop, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+	mainwin_stop = ui_skinned_button_new();
+	ui_skinned_push_button_setup(mainwin_stop, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
 			SKINNED_WINDOW(mainwin)->gc, 85, 88, 23, 18, 69, 0, 69, 18, SKIN_CBUTTONS);
 	g_signal_connect(mainwin_stop, "clicked", mainwin_stop_pushed, NULL );
 
-	mainwin_eject = audacious_pbutton_new();
-	audacious_pbutton_setup(mainwin_eject, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+	mainwin_eject = ui_skinned_button_new();
+	ui_skinned_push_button_setup(mainwin_eject, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
 			SKINNED_WINDOW(mainwin)->gc, 136, 89, 22, 16, 114, 0, 114, 16, SKIN_CBUTTONS);
 	g_signal_connect(mainwin_eject, "clicked", mainwin_eject_pushed, NULL);
 
