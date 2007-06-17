@@ -292,6 +292,23 @@ void ui_skinned_toggle_button_setup(GtkWidget *button, GtkWidget *fixed, GdkPixm
         gtk_fixed_put(GTK_FIXED(priv->fixed),GTK_WIDGET(button), sbutton->x, sbutton->y);
 }
 
+void ui_skinned_small_button_setup(GtkWidget *button, GtkWidget *fixed, GdkPixmap *parent, GdkGC *gc, gint x, gint y, gint w, gint h) {
+
+        UiSkinnedButton *sbutton = UI_SKINNED_BUTTON(button);
+        UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE(sbutton);
+        priv->gc = gc;
+        priv->w = w;
+        priv->h = h;
+        sbutton->x = x;
+        sbutton->y = y;
+        sbutton->type = TYPE_SMALL;
+        priv->fixed = fixed;
+        priv->double_size = FALSE;
+
+        gtk_widget_set_size_request(button, priv->w, priv->h);
+        gtk_fixed_put(GTK_FIXED(priv->fixed),GTK_WIDGET(button), sbutton->x, sbutton->y);
+}
+
 static void ui_skinned_button_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
         UiSkinnedButton *button = UI_SKINNED_BUTTON (widget);
         GtkAllocation child_alloc;
@@ -414,6 +431,7 @@ static void ui_skinned_button_paint(UiSkinnedButton *button) {
         GtkWidget *widget = GTK_WIDGET (button);
         UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
 
+        //TYPE_SMALL doesn't have its own face
         if (button->type == TYPE_SMALL || button->type == TYPE_NOT_SET)
             return;
 
