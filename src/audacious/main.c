@@ -53,6 +53,7 @@
 #  include "audctrl.h"
 #endif
 
+#include "auddrct.h"
 #include "dnd.h"
 #include "effect.h"
 #include "ui_equalizer.h"
@@ -995,6 +996,40 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
 
         if (options->activate)
             audacious_remote_activate(session);
+
+        if (options->playcd)
+            play_medium();
+    } else {
+        if (options->rew)
+            audacious_drct_playlist_prev();
+
+        if (options->play)
+            audacious_drct_play();
+
+        if (options->pause)
+            audacious_drct_pause();
+
+        if (options->stop)
+            audacious_drct_stop();
+
+        if (options->fwd)
+            audacious_drct_playlist_next();
+
+        if (options->play_pause) {
+            if (audacious_drct_get_paused)
+                audacious_drct_play();
+            else
+                audacious_drct_pause();
+        }
+
+        if (options->show_jump_box)
+            audacious_drct_show_jtf_box();
+
+        if (options->mainwin)
+            audacious_drct_main_win_toggle(TRUE);
+
+        if (options->activate)
+            audacious_drct_activate();
 
         if (options->playcd)
             play_medium();
