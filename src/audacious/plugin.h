@@ -108,7 +108,7 @@ typedef struct {
 #define DECLARE_PLUGIN(name, init, fini, ip_list, op_list, ep_list, gp_list, vp_list) \
 	G_BEGIN_DECLS \
 	static PluginHeader _pluginInfo = { PLUGIN_MAGIC, __AUDACIOUS_PLUGIN_API__, \
-		#name, init, fini, NULL, ip_list, op_list, ep_list, gp_list, \
+		(gchar *)#name, init, fini, NULL, ip_list, op_list, ep_list, gp_list, \
 		vp_list }; \
 	PluginHeader *get_plugin_info(void) { \
 		return &_pluginInfo; \
