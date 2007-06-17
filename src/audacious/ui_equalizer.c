@@ -841,7 +841,7 @@ equalizerwin_real_show(void)
     gdk_flush();
     draw_equalizer_window(TRUE);
     cfg.equalizer_visible = TRUE;
-    tbutton_set_toggled(mainwin_eq, TRUE);
+    //FIXME: set mainwin_eq->inside as TRUE and redraw it
 
     gtk_widget_show(equalizerwin);
 }
@@ -855,7 +855,7 @@ equalizerwin_real_hide(void)
      */
     gtk_widget_hide(equalizerwin);
     cfg.equalizer_visible = FALSE;
-    tbutton_set_toggled(mainwin_eq, FALSE);
+    //FIXME: set mainwin_eq->inside as FALSE and redraw it
 }
 
 static EqualizerPreset *

@@ -44,6 +44,13 @@ enum {
 	LAST_SIGNAL
 };
 
+enum {
+	TYPE_NOT_SET,
+	TYPE_PUSH,
+	TYPE_TOGGLE,
+	TYPE_SMALL
+};
+
 struct _UiSkinnedButton {
 	GtkBin bin;
 
@@ -52,8 +59,13 @@ struct _UiSkinnedButton {
 	gboolean button_down : 1;
 	gboolean pressed : 1;
 	gboolean hover : 1;
+	gboolean inside : 1;
+	gint type;
 	//Skinned part, used in ui_playlist.c
 	gint x, y, nx, ny, px, py;
+
+	//Toogle button needs also those
+	gint pnx, pny, ppx, ppy;
 
 	gboolean redraw;
 };
@@ -70,5 +82,6 @@ struct _UiSkinnedButtonClass {
 GType ui_skinned_button_get_type(void) G_GNUC_CONST;
 GtkWidget* ui_skinned_button_new();
 void ui_skinned_push_button_setup(GtkWidget *button, GtkWidget *fixed, GdkPixmap * parent, GdkGC * gc, gint x, gint y, gint w, gint h, gint nx, gint ny, gint px, gint py, SkinPixmapId si);
+void ui_skinned_toggle_button_setup(GtkWidget *button, GtkWidget *fixed, GdkPixmap *parent, GdkGC *gc, gint x, gint y, gint w, gint h, gint nx, gint ny, gint px, gint py, gint pnx, gint pny, gint ppx, gint ppy, SkinPixmapId si);
 
 #endif

@@ -133,7 +133,8 @@ static GtkWidget *mainwin_rew, *mainwin_fwd;
 static GtkWidget *mainwin_eject;
 static GtkWidget *mainwin_play, *mainwin_pause, *mainwin_stop;
 
-TButton *mainwin_shuffle, *mainwin_repeat, *mainwin_eq, *mainwin_pl;
+static GtkWidget *mainwin_shuffle, *mainwin_repeat, *mainwin_eq, *mainwin_pl;
+
 TextBox *mainwin_info;
 TextBox *mainwin_stime_min, *mainwin_stime_sec;
 
@@ -184,7 +185,8 @@ void mainwin_position_motion_cb(gint pos);
 void mainwin_position_release_cb(gint pos);
 
 void set_doublesize(gboolean doublesize);
-
+void mainwin_eq_pushed(gboolean toggled);
+void mainwin_pl_pushed(gboolean toggled);
 
 
 /* FIXME: placed here for now */
@@ -740,19 +742,19 @@ mainwin_refresh_hints(void)
         bmp_active_skin->properties.mainwin_eject_y);
 
     if (bmp_active_skin->properties.mainwin_eqbutton_x && bmp_active_skin->properties.mainwin_eqbutton_y)
-    widget_move(WIDGET(mainwin_eq), bmp_active_skin->properties.mainwin_eqbutton_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_eq), bmp_active_skin->properties.mainwin_eqbutton_x,
         bmp_active_skin->properties.mainwin_eqbutton_y);
 
     if (bmp_active_skin->properties.mainwin_plbutton_x && bmp_active_skin->properties.mainwin_plbutton_y)
-    widget_move(WIDGET(mainwin_pl), bmp_active_skin->properties.mainwin_plbutton_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_pl), bmp_active_skin->properties.mainwin_plbutton_x,
         bmp_active_skin->properties.mainwin_plbutton_y);
 
     if (bmp_active_skin->properties.mainwin_shuffle_x && bmp_active_skin->properties.mainwin_shuffle_y)
-    widget_move(WIDGET(mainwin_shuffle), bmp_active_skin->properties.mainwin_shuffle_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_shuffle), bmp_active_skin->properties.mainwin_shuffle_x,
         bmp_active_skin->properties.mainwin_shuffle_y);
 
     if (bmp_active_skin->properties.mainwin_repeat_x && bmp_active_skin->properties.mainwin_repeat_y)
-    widget_move(WIDGET(mainwin_repeat), bmp_active_skin->properties.mainwin_repeat_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_repeat), bmp_active_skin->properties.mainwin_repeat_x,
         bmp_active_skin->properties.mainwin_repeat_y);
 
     if (bmp_active_skin->properties.mainwin_about_x && bmp_active_skin->properties.mainwin_about_y)
@@ -1678,10 +1680,32 @@ mainwin_shuffle_pushed(gboolean toggled)
     check_set( toggleaction_group_others , "playback shuffle" , toggled );
 }
 
+void mainwin_shuffle_pushed_cb(void) {
+    mainwin_shuffle_pushed(UI_SKINNED_BUTTON(mainwin_shuffle)->inside);
+}
+
 void
 mainwin_repeat_pushed(gboolean toggled)
 {
     check_set( toggleaction_group_others , "playback repeat" , toggled );
+}
+
+void mainwin_repeat_pushed_cb(void) {
+    mainwin_repeat_pushed(UI_SKINNED_BUTTON(mainwin_repeat)->inside);
+}
+
+void mainwin_equalizer_pushed_cb(void) {
+    mainwin_eq_pushed(UI_SKINNED_BUTTON(mainwin_eq)->inside);
+}
+
+void mainwin_playlist_pushed_cb(void) {
+    mainwin_pl_pushed(UI_SKINNED_BUTTON(mainwin_pl)->inside);
+}
+
+void
+mainwin_eq_pushed(gboolean toggled)
+{
+        equalizerwin_show(toggled);
 }
 
 void
@@ -2761,26 +2785,31 @@ mainwin_create_widgets(void)
         create_sbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 216, 4, 9,
                        7, mainwin_eject_pushed);
 
-    mainwin_shuffle =
-        create_tbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 164, 89, 46,
-                       15, 28, 0, 28, 15, 28, 30, 28, 45,
-                       mainwin_shuffle_pushed, SKIN_SHUFREP);
+    mainwin_shuffle = ui_skinned_button_new();
+    ui_skinned_toggle_button_setup(mainwin_shuffle, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+			SKINNED_WINDOW(mainwin)->gc, 164, 89, 46,
+                       15, 28, 0, 28, 15, 28, 30, 28, 45, SKIN_SHUFREP);
+    g_signal_connect(mainwin_shuffle, "clicked", mainwin_shuffle_pushed_cb, NULL);
 
-    mainwin_repeat =
-        create_tbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 210, 89, 28,
-                       15, 0, 0, 0, 15, 0, 30, 0, 45,
-                       mainwin_repeat_pushed, SKIN_SHUFREP);
+    mainwin_repeat = ui_skinned_button_new();
+    ui_skinned_toggle_button_setup(mainwin_repeat, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+			SKINNED_WINDOW(mainwin)->gc, 210, 89, 28,
+                       15, 0, 0, 0, 15, 0, 30, 0, 45, SKIN_SHUFREP);
+    g_signal_connect(mainwin_repeat, "clicked", mainwin_repeat_pushed_cb, NULL);
 
-    mainwin_eq =
-        create_tbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 219, 58, 23,
-                       12, 0, 61, 46, 61, 0, 73, 46, 73, equalizerwin_show,
-                       SKIN_SHUFREP);
-    tbutton_set_toggled(mainwin_eq, cfg.equalizer_visible);
-    mainwin_pl =
-        create_tbutton(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 242, 58, 23,
-                       12, 23, 61, 69, 61, 23, 73, 69, 73,
-                       mainwin_pl_pushed, SKIN_SHUFREP);
-    tbutton_set_toggled(mainwin_pl, cfg.playlist_visible);
+    mainwin_eq = ui_skinned_button_new();
+    ui_skinned_toggle_button_setup(mainwin_eq, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+			SKINNED_WINDOW(mainwin)->gc, 219, 58, 23,
+                       12, 0, 61, 46, 61, 0, 73, 46, 73, SKIN_SHUFREP);
+    g_signal_connect(mainwin_eq, "clicked", mainwin_equalizer_pushed_cb, NULL);
+    UI_SKINNED_BUTTON(mainwin_eq)->inside = cfg.equalizer_visible;
+
+    mainwin_pl = ui_skinned_button_new();
+    ui_skinned_toggle_button_setup(mainwin_pl, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+			SKINNED_WINDOW(mainwin)->gc, 242, 58, 23,
+                       12, 23, 61, 69, 61, 23, 73, 69, 73, SKIN_SHUFREP);
+    g_signal_connect(mainwin_pl, "clicked", mainwin_playlist_pushed_cb, NULL);
+    UI_SKINNED_BUTTON(mainwin_pl)->inside = cfg.playlist_visible;
 
     mainwin_info =
         create_textbox(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 112, 27,
@@ -2910,12 +2939,6 @@ mainwin_create_widgets(void)
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_sstop));
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_sfwd));
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_seject));
-
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_shuffle));
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_repeat));
-
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_eq));
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_pl));
 
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_info));
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_othertext));
@@ -3236,7 +3259,7 @@ void
 action_playback_repeat( GtkToggleAction * action )
 {
   cfg.repeat = gtk_toggle_action_get_active( action );
-  tbutton_set_toggled(mainwin_repeat, cfg.repeat);
+  UI_SKINNED_BUTTON(mainwin_repeat)->inside = cfg.repeat;
 }
 
 void
@@ -3244,7 +3267,7 @@ action_playback_shuffle( GtkToggleAction * action )
 {
   cfg.shuffle = gtk_toggle_action_get_active( action );
   playlist_set_shuffle(cfg.shuffle);
-  tbutton_set_toggled(mainwin_shuffle, cfg.shuffle);
+  UI_SKINNED_BUTTON(mainwin_shuffle)->inside = cfg.shuffle;
 }
 
 void

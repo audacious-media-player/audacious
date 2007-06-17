@@ -1788,8 +1788,8 @@ playlistwin_show(void)
       toggleaction_group_others , "show playlist editor" );
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(action) , TRUE );
 
-    tbutton_set_toggled(mainwin_pl, TRUE);
     cfg.playlist_visible = TRUE;
+    //FIXME: set mainwin_pl->inside as TRUE and redraw it
 
     playlistwin_set_toprow(0);
     playlist_check_pos_current(playlist_get_active());
@@ -1809,8 +1809,8 @@ playlistwin_hide(void)
     gtk_toggle_action_set_active( GTK_TOGGLE_ACTION(action) , FALSE );
 
     gtk_widget_hide(playlistwin);
-    tbutton_set_toggled(mainwin_pl, FALSE);
     cfg.playlist_visible = FALSE;
+    //FIXME: set mainwin_pl->inside as FALSE and redraw it
 
     /* no point in probing for playlistwin_infopopup trigger when the playlistwin is hidden */
     if ( playlistwin_infopopup_sid != 0 )
