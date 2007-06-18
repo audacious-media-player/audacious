@@ -1016,7 +1016,7 @@ handle_cmd_line_options(BmpCmdLineOpt * options,
             audacious_drct_playlist_next();
 
         if (options->play_pause) {
-            if (audacious_drct_get_paused)
+            if (audacious_drct_get_paused())
                 audacious_drct_play();
             else
                 audacious_drct_pause();
