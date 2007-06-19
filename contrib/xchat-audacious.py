@@ -92,6 +92,7 @@ def unset_ignore_services(userdata=None):
 	global ignore_services
 
 	ignore_services = 0
+	return 1
 
 def presence_notification_dispatch(userdata=None):
 	global ignore_services
@@ -109,6 +110,8 @@ def presence_notification_dispatch(userdata=None):
 			ctx = xchat.find_context(i)
 
 			ctx.command("nickserv set qproperty np %s" % (title))
+
+	return 1
 
 presence_notification_dispatch()
 xchat.hook_timer(60000, presence_notification_dispatch)
