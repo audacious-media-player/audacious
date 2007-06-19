@@ -94,8 +94,10 @@ def unset_ignore_services(userdata=None):
 	ignore_services = 0
 	return 1
 
+last_title = None
+
 def presence_notification_dispatch(userdata=None):
-	global ignore_services
+	global ignore_services, last_title
 
 	aud = get_aud()
 
@@ -105,16 +107,19 @@ def presence_notification_dispatch(userdata=None):
 
 		title = aud.SongTitle(pos).encode("utf8")
 
-		slist = get_servers()
-		for i in slist:
-			ctx = xchat.find_context(i)
+		if title != last_title:
+			slist = get_servers()
+			for i in slist:
+				ctx = xchat.find_context(i)
 
-			ctx.command("nickserv set qproperty np %s" % (title))
+				ctx.command("nickserv set qproperty np %s" % (title))
+
+		last_title = title
 
 	return 1
 
 presence_notification_dispatch()
 xchat.hook_timer(60000, presence_notification_dispatch)
-xchat.hook_timer(1000, unset_ignore_services)
+xchat.hook_timer(2000, unset_ignore_services)
 
 print "xchat-audacious $Id: xchat-audacious.py 4574 2007-05-16 07:46:17Z deitarion $ loaded"
