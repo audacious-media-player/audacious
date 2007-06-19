@@ -92,7 +92,6 @@ def unset_ignore_services(userdata=None):
 	global ignore_services
 
 	ignore_services = 0
-	return 1
 
 last_title = None
 
@@ -116,10 +115,10 @@ def presence_notification_dispatch(userdata=None):
 
 		last_title = title
 
+	xchat.hook_timer(2000, unset_ignore_services)
 	return 1
 
 presence_notification_dispatch()
-xchat.hook_timer(60000, presence_notification_dispatch)
-xchat.hook_timer(2000, unset_ignore_services)
+xchat.hook_timer(3000, presence_notification_dispatch)
 
 print "xchat-audacious $Id: xchat-audacious.py 4574 2007-05-16 07:46:17Z deitarion $ loaded"
