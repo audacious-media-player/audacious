@@ -98,6 +98,7 @@ extern gboolean mainwin_moving;
 extern gboolean mainwin_focus;
 
 extern GtkWidget *mainwin_jtf;
+extern GtkWidget *mainwin_eq, *mainwin_pl;
 
 extern TextBox *mainwin_stime_min, *mainwin_stime_sec;
 extern TextBox *mainwin_info;

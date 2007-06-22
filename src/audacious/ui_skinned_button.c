@@ -482,3 +482,27 @@ static void ui_skinned_button_redraw(UiSkinnedButton *button) {
         button->redraw = TRUE;
         ui_skinned_button_paint(button);
 }
+
+
+void ui_skinned_set_push_button_data(GtkWidget *button, gint nx, gint ny, gint px, gint py) {
+        UiSkinnedButton *b = UI_SKINNED_BUTTON(button);
+        if (nx > -1) b->nx = nx;
+        if (ny > -1) b->ny = ny;
+        if (px > -1) b->px = px;
+        if (py > -1) b->py = py;
+}
+
+void ui_skinned_button_set_skin_index(GtkWidget *button, SkinPixmapId si) {
+        UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
+        priv->skin_index1 = priv->skin_index2 = si;
+}
+
+void ui_skinned_button_set_skin_index1(GtkWidget *button, SkinPixmapId si) {
+        UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
+        priv->skin_index1 = si;
+}
+
+void ui_skinned_button_set_skin_index2(GtkWidget *button, SkinPixmapId si) {
+        UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
+        priv->skin_index2 = si;
+}
