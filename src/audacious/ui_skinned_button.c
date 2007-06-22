@@ -442,19 +442,22 @@ static void ui_skinned_button_paint(UiSkinnedButton *button) {
             obj = gdk_pixmap_new(NULL, priv->w, priv->h, gdk_rgb_get_visual()->depth);
             switch (button->type) {
                 case TYPE_PUSH:
-                    skin_draw_pixmap(bmp_active_skin, obj, priv->gc, priv->skin_index2,
+                    skin_draw_pixmap(bmp_active_skin, obj, priv->gc,
+                                     button->pressed ? priv->skin_index2 : priv->skin_index1,
                                      button->pressed ? button->px : button->nx,
                                      button->pressed ? button->py : button->ny,
                                      0, 0, priv->w, priv->h);
                     break;
                 case TYPE_TOGGLE:
                     if (button->inside)
-                        skin_draw_pixmap(bmp_active_skin, obj, priv->gc, priv->skin_index2,
+                        skin_draw_pixmap(bmp_active_skin, obj, priv->gc,
+                                         button->pressed ? priv->skin_index2 : priv->skin_index1,
                                          button->pressed ? button->ppx : button->pnx,
                                          button->pressed ? button->ppy : button->pny,
                                          0, 0, priv->w, priv->h);
                     else
-                        skin_draw_pixmap(bmp_active_skin, obj, priv->gc, priv->skin_index2,
+                        skin_draw_pixmap(bmp_active_skin, obj, priv->gc,
+                                         button->pressed ? priv->skin_index2 : priv->skin_index1,
                                          button->pressed ? button->px : button->nx,
                                          button->pressed ? button->py : button->ny,
                                          0, 0, priv->w, priv->h);
