@@ -1189,7 +1189,7 @@ main(gint argc, gchar ** argv)
 #ifdef USE_DBUS
     init_dbus();
 #endif
-
+    mowgli_init();
     plugin_system_init();
 
     /* Initialize the playlist system. */
