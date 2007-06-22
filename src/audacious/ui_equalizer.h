@@ -58,7 +58,6 @@ gfloat equalizerwin_get_band(gint band);
 gboolean equalizerwin_has_focus(void);
 
 extern GtkWidget *equalizerwin;
-extern PButton *equalizerwin_close;
 extern gboolean equalizerwin_focus;
 
 #endif

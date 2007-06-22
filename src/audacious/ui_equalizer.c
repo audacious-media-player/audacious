@@ -53,6 +53,7 @@
 #include "images/audacious_eq.xpm"
 
 #include "ui_skinned_window.h"
+#include "ui_skinned_button.h"
 
 enum PresetViewCols {
     PRESET_VIEW_COL_NAME,
@@ -84,14 +85,12 @@ static GList *equalizerwin_wlist = NULL;
 
 static TButton *equalizerwin_on, *equalizerwin_auto;
 
-static PButton *equalizerwin_presets, *equalizerwin_shade;
-PButton *equalizerwin_close;
+static GtkWidget *equalizerwin_close, *equalizerwin_presets, *equalizerwin_shade;
 static EqGraph *equalizerwin_graph;
 static EqSlider *equalizerwin_preamp, *equalizerwin_bands[10];
 static HSlider *equalizerwin_volume, *equalizerwin_balance;
 
 static GList *equalizer_presets = NULL, *equalizer_auto_presets = NULL;
-
 
 EqualizerPreset *
 equalizer_preset_new(const gchar * name)
@@ -148,6 +147,13 @@ equalizerwin_set_doublesize(gboolean ds)
         gdk_window_set_back_pixmap(equalizerwin->window, equalizerwin_bg, 0);
     }
 
+    GList *iter;
+    for (iter = GTK_FIXED (SKINNED_WINDOW(equalizerwin)->fixed)->children; iter; iter = g_list_next (iter)) {
+        GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
+        GtkWidget *child = child_data->widget;
+        g_signal_emit_by_name(child, "toggle-double-size");
+    }
+
     draw_equalizer_window(TRUE);
 }
 
@@ -161,20 +167,20 @@ equalizerwin_set_shade_menu_cb(gboolean shaded)
     if (shaded) {
         dock_shade(dock_window_list, GTK_WINDOW(equalizerwin),
                    14 * (EQUALIZER_DOUBLESIZE + 1));
-        pbutton_set_button_data(equalizerwin_shade, -1, 3, -1, 47);
-        pbutton_set_skin_index1(equalizerwin_shade, SKIN_EQ_EX);
-        pbutton_set_button_data(equalizerwin_close, 11, 38, 11, 47);
-        pbutton_set_skin_index(equalizerwin_close, SKIN_EQ_EX);
+        ui_skinned_set_push_button_data(equalizerwin_shade, -1, 3, -1, 47);
+        ui_skinned_button_set_skin_index1(equalizerwin_shade, SKIN_EQ_EX);
+        ui_skinned_set_push_button_data(equalizerwin_close, 11, 38, 11, 47);
+        ui_skinned_button_set_skin_index(equalizerwin_close, SKIN_EQ_EX);
         widget_show(WIDGET(equalizerwin_volume));
         widget_show(WIDGET(equalizerwin_balance));
     }
     else {
         dock_shade(dock_window_list, GTK_WINDOW(equalizerwin),
                    116 * (EQUALIZER_DOUBLESIZE + 1));
-        pbutton_set_button_data(equalizerwin_shade, -1, 137, -1, 38);
-        pbutton_set_skin_index1(equalizerwin_shade, SKIN_EQMAIN);
-        pbutton_set_button_data(equalizerwin_close, 0, 116, 0, 125);
-        pbutton_set_skin_index(equalizerwin_close, SKIN_EQMAIN);
+        ui_skinned_set_push_button_data(equalizerwin_shade, -1, 137, -1, 38);
+        ui_skinned_button_set_skin_index1(equalizerwin_shade, SKIN_EQMAIN);
+        ui_skinned_set_push_button_data(equalizerwin_close, 0, 116, 0, 125);
+        ui_skinned_button_set_skin_index(equalizerwin_close, SKIN_EQMAIN);
         widget_hide(WIDGET(equalizerwin_volume));
         widget_hide(WIDGET(equalizerwin_balance));
     }
@@ -244,19 +250,7 @@ equalizerwin_auto_pushed(gboolean toggled)
     cfg.equalizer_autoload = toggled;
 }
 
-void
-draw_equalizer_window(gboolean force)
-{
-    GdkImage *img, *img2;
-    GList *wl;
-    Widget *w;
-    gboolean redraw;
-
-    widget_list_lock(equalizerwin_wlist);
-
-    if (force) {
-        skin_draw_pixmap(bmp_active_skin, equalizerwin_bg, SKINNED_WINDOW(equalizerwin)->gc,
-                         SKIN_EQMAIN, 0, 0, 0, 0, 275, 116);
+static void equalizerwin_draw_titlebar() {
         if (gtk_window_has_toplevel_focus(GTK_WINDOW(equalizerwin)) ||
             !cfg.dim_titlebar) {
             if (!cfg.equalizer_shaded)
@@ -277,8 +271,27 @@ draw_equalizer_window(gboolean force)
                 skin_draw_pixmap(bmp_active_skin, equalizerwin_bg,
                                  SKINNED_WINDOW(equalizerwin)->gc, SKIN_EQ_EX, 0, 15, 0, 0,
                                  275, 14);
-
         }
+}
+
+void
+draw_equalizer_window(gboolean force)
+{
+    GdkImage *img, *img2x;
+    GList *wl;
+    Widget *w;
+    gboolean redraw;
+
+    if (!cfg.equalizer_visible)
+        return;
+
+    widget_list_lock(equalizerwin_wlist);
+
+    if (force) {
+        if (!cfg.equalizer_shaded)
+            skin_draw_pixmap(bmp_active_skin, equalizerwin_bg, SKINNED_WINDOW(equalizerwin)->gc,
+                             SKIN_EQMAIN, 0, 0, 0, 0, 275, 116);
+            equalizerwin_draw_titlebar();
     }
 
     widget_list_draw(equalizerwin_wlist, &redraw, force);
@@ -287,10 +300,10 @@ draw_equalizer_window(gboolean force)
         if (cfg.doublesize && cfg.eq_doublesize_linked) {
             if (force) {
                 img = gdk_drawable_get_image(equalizerwin_bg, 0, 0, 275, 116);
-                img2 = create_dblsize_image(img);
+                img2x = create_dblsize_image(img);
                 gdk_draw_image(equalizerwin_bg_x2, SKINNED_WINDOW(equalizerwin)->gc,
-                               img2, 0, 0, 0, 0, 550, 232);
-                g_object_unref(img2);
+                               img2x, 0, 0, 0, 0, 550, 232);
+                g_object_unref(img2x);
                 g_object_unref(img);
             }
             else {
@@ -300,12 +313,12 @@ draw_equalizer_window(gboolean force)
                         img = gdk_drawable_get_image(equalizerwin_bg,
                                                      w->x, w->y,
                                                      w->width, w->height);
-                        img2 = create_dblsize_image(img);
+                        img2x = create_dblsize_image(img);
                         gdk_draw_image(equalizerwin_bg_x2,
-                                       SKINNED_WINDOW(equalizerwin)->gc, img2, 0, 0,
+                                       SKINNED_WINDOW(equalizerwin)->gc, img2x, 0, 0,
                                        w->x << 1, w->y << 1, w->width << 1,
                                        w->height << 1);
-                        g_object_unref(img2);
+                        g_object_unref(img2x);
                         g_object_unref(img);
                         w->redraw = FALSE;
                     }
@@ -314,7 +327,13 @@ draw_equalizer_window(gboolean force)
         }
         else
             widget_list_clear_redraw(equalizerwin_wlist);
-        gdk_window_clear(equalizerwin->window);
+
+        GList *iter;
+        for (iter = GTK_FIXED (SKINNED_WINDOW(mainwin)->fixed)->children; iter; iter = g_list_next (iter)) {
+            GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
+            GtkWidget *child = child_data->widget;
+            g_signal_emit_by_name(child, "redraw");
+        }
         gdk_flush();
     }
 
@@ -418,10 +437,9 @@ equalizerwin_release(GtkWidget * widget,
     if (dock_is_moving(GTK_WINDOW(equalizerwin))) {
         dock_move_release(GTK_WINDOW(equalizerwin));
     }
-    else {
-        handle_release_cb(equalizerwin_wlist, widget, event);
-        draw_equalizer_window(FALSE);
-    }
+
+    handle_release_cb(equalizerwin_wlist, widget, event);
+    draw_equalizer_window(FALSE);
 
     return FALSE;
 }
@@ -431,8 +449,6 @@ equalizerwin_focus_in(GtkWidget * widget,
                       GdkEvent * event,
                       gpointer data)
 {
-    equalizerwin_close->pb_allow_draw = TRUE;
-    equalizerwin_shade->pb_allow_draw = TRUE;
     draw_equalizer_window(TRUE);
     return TRUE;
 }
@@ -442,8 +458,6 @@ equalizerwin_focus_out(GtkWidget * widget,
                        GdkEventButton * event,
                        gpointer data)
 {
-    equalizerwin_close->pb_allow_draw = FALSE;
-    equalizerwin_shade->pb_allow_draw = FALSE;
     draw_equalizer_window(TRUE);
     return TRUE;
 }
@@ -657,28 +671,21 @@ equalizerwin_create_widgets(void)
     ui_skinned_window_widgetlist_associate(equalizerwin, 
         WIDGET(equalizerwin_auto));
 
-    equalizerwin_presets =
-        create_pbutton(&equalizerwin_wlist, equalizerwin_bg,
-                       SKINNED_WINDOW(equalizerwin)->gc, 217, 18, 44, 12, 224, 164, 224,
-                       176, equalizerwin_presets_pushed, SKIN_EQMAIN);
-    ui_skinned_window_widgetlist_associate(equalizerwin, 
-        WIDGET(equalizerwin_presets));
+    equalizerwin_presets = ui_skinned_button_new();
+    ui_skinned_push_button_setup(equalizerwin_presets, SKINNED_WINDOW(equalizerwin)->fixed, equalizerwin_bg,
+                                 SKINNED_WINDOW(equalizerwin)->gc, 217, 18, 44, 12, 224, 164, 224, 176, SKIN_EQMAIN);
+    g_signal_connect(equalizerwin_presets, "clicked", equalizerwin_presets_pushed, NULL );
 
-    equalizerwin_close =
-        create_pbutton(&equalizerwin_wlist, equalizerwin_bg,
-                       SKINNED_WINDOW(equalizerwin)->gc, 264, 3, 9, 9, 0, 116, 0, 125,
-                       equalizerwin_close_cb, SKIN_EQMAIN);
-    equalizerwin_close->pb_allow_draw = FALSE;
-    ui_skinned_window_widgetlist_associate(equalizerwin, 
-        WIDGET(equalizerwin_close));
+    equalizerwin_close = ui_skinned_button_new();
+    ui_skinned_push_button_setup(equalizerwin_close, SKINNED_WINDOW(equalizerwin)->fixed, equalizerwin_bg,
+                                 SKINNED_WINDOW(equalizerwin)->gc, 264, 3, 9, 9, 0, 116, 0, 125, SKIN_EQMAIN);
+    g_signal_connect(equalizerwin_close, "clicked", equalizerwin_close_cb, NULL );
 
-    equalizerwin_shade =
-        create_pbutton_ex(&equalizerwin_wlist, equalizerwin_bg,
-                          SKINNED_WINDOW(equalizerwin)->gc, 254, 3, 9, 9, 254, 137, 1, 38,
-                          equalizerwin_shade_toggle, NULL, SKIN_EQMAIN, SKIN_EQ_EX);
-    equalizerwin_shade->pb_allow_draw = FALSE;
-    ui_skinned_window_widgetlist_associate(equalizerwin, 
-        WIDGET(equalizerwin_shade));
+    equalizerwin_shade = ui_skinned_button_new();
+    ui_skinned_push_button_setup(equalizerwin_shade, SKINNED_WINDOW(equalizerwin)->fixed, equalizerwin_bg,
+                                 SKINNED_WINDOW(equalizerwin)->gc, 254, 3, 9, 9, 254, 137, 1, 38, SKIN_EQMAIN);
+    ui_skinned_button_set_skin_index2(equalizerwin_shade, SKIN_EQ_EX);
+    g_signal_connect(equalizerwin_shade, "clicked", equalizerwin_shade_toggle, NULL );
 
     equalizerwin_graph =
         create_eqgraph(&equalizerwin_wlist, equalizerwin_bg,
@@ -725,10 +732,10 @@ equalizerwin_create_widgets(void)
         widget_hide(WIDGET(equalizerwin_balance));
     }
     else {
-        pbutton_set_button_data(equalizerwin_shade, -1, 3, -1, 47);
-        pbutton_set_skin_index1(equalizerwin_shade, SKIN_EQ_EX);
-        pbutton_set_button_data(equalizerwin_close, 11, 38, 11, 47);
-        pbutton_set_skin_index(equalizerwin_close, SKIN_EQ_EX);
+        ui_skinned_set_push_button_data(equalizerwin_shade, -1, 3, -1, 47);
+        ui_skinned_button_set_skin_index1(equalizerwin_shade, SKIN_EQ_EX);
+        ui_skinned_set_push_button_data(equalizerwin_close, 11, 38, 11, 47);
+        ui_skinned_button_set_skin_index(equalizerwin_close, SKIN_EQ_EX);
     }
 }
 
@@ -739,20 +746,20 @@ equalizerwin_create_window(void)
     GdkPixbuf *icon;
     gint width, height;
 
+    width = 275;
+    height = cfg.equalizer_shaded ? 14 : 116;
+
     equalizerwin = ui_skinned_window_new(GTK_WINDOW_TOPLEVEL, "equalizer");
     gtk_window_set_title(GTK_WINDOW(equalizerwin), _("Audacious Equalizer"));
     gtk_window_set_role(GTK_WINDOW(equalizerwin), "equalizer");
-
-    width = 275;
-    height = cfg.equalizer_shaded ? 14 : 116;
+    gtk_window_set_resizable(GTK_WINDOW(equalizerwin), FALSE);
 
     if (cfg.doublesize && cfg.eq_doublesize_linked) {
         width *= 2;
         height *= 2;
     }
 
-    gtk_window_set_default_size(GTK_WINDOW(equalizerwin), width, height);
-    gtk_window_set_resizable(GTK_WINDOW(equalizerwin), FALSE);
+    gtk_widget_set_size_request(equalizerwin, width, height);
 
     /* this will hide only mainwin. it's annoying! yaz */
     gtk_window_set_transient_for(GTK_WINDOW(equalizerwin),
@@ -804,14 +811,8 @@ equalizerwin_create(void)
     equalizerwin_bg = gdk_pixmap_new(equalizerwin->window, 275, 116, -1);
     equalizerwin_bg_x2 = gdk_pixmap_new(equalizerwin->window, 550, 232, -1);
 
-    equalizerwin_create_widgets();
-
     equalizerwin_set_back_pixmap();
-    if (cfg.doublesize && cfg.eq_doublesize_linked)
-        gdk_window_set_back_pixmap(equalizerwin->window,
-                                   equalizerwin_bg_x2, 0);
-    else
-        gdk_window_set_back_pixmap(equalizerwin->window, equalizerwin_bg, 0);
+    equalizerwin_create_widgets();
 }
 
 
@@ -841,9 +842,11 @@ equalizerwin_real_show(void)
     gdk_flush();
     draw_equalizer_window(TRUE);
     cfg.equalizer_visible = TRUE;
-    //FIXME: set mainwin_eq->inside as TRUE and redraw it
+    UI_SKINNED_BUTTON(mainwin_eq)->inside = TRUE;
+    g_signal_emit_by_name(mainwin_eq, "redraw");
 
-    gtk_widget_show(equalizerwin);
+    gtk_widget_show_all(equalizerwin);
+    gtk_window_present(GTK_WINDOW(equalizerwin));
 }
 
 void
@@ -855,7 +858,8 @@ equalizerwin_real_hide(void)
      */
     gtk_widget_hide(equalizerwin);
     cfg.equalizer_visible = FALSE;
-    //FIXME: set mainwin_eq->inside as FALSE and redraw it
+    UI_SKINNED_BUTTON(mainwin_eq)->inside = FALSE;
+    g_signal_emit_by_name(mainwin_eq, "redraw");
 }
 
 static EqualizerPreset *

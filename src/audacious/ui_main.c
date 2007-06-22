@@ -133,7 +133,8 @@ static GtkWidget *mainwin_rew, *mainwin_fwd;
 static GtkWidget *mainwin_eject;
 static GtkWidget *mainwin_play, *mainwin_pause, *mainwin_stop;
 
-static GtkWidget *mainwin_shuffle, *mainwin_repeat, *mainwin_eq, *mainwin_pl;
+static GtkWidget *mainwin_shuffle, *mainwin_repeat;
+GtkWidget *mainwin_eq, *mainwin_pl;
 
 TextBox *mainwin_info;
 TextBox *mainwin_stime_min, *mainwin_stime_sec;

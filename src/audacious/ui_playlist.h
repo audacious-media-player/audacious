@@ -75,8 +75,6 @@ void playlistwin_set_sinfo_scroll(gboolean scroll);
 extern GtkWidget *playlistwin;
 extern PlayList_List *playlistwin_list;
 
-extern PButton *playlistwin_shade, *playlistwin_close;
-
 extern gboolean playlistwin_focus;
 
 #endif
