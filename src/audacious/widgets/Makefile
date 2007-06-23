@@ -22,7 +22,6 @@ SOURCES = \
 	widget.c \
 	sbutton.c \
 	pbutton.c \
-	tbutton.c \
 	textbox.c \
 	hslider.c \
 	menurow.c \

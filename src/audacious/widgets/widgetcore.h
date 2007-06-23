@@ -20,7 +20,6 @@
 #ifndef _WIDGETCORE_H_
 #define _WIDGETCORE_H_
 
-#include "tbutton.h"
 #include "eq_graph.h"
 #include "eq_slider.h"
 #include "hslider.h"

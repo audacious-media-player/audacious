@@ -83,7 +83,7 @@ static GdkPixmap *equalizerwin_bg, *equalizerwin_bg_x2;
 
 static GList *equalizerwin_wlist = NULL;
 
-static TButton *equalizerwin_on, *equalizerwin_auto;
+static GtkWidget *equalizerwin_on, *equalizerwin_auto;
 
 static GtkWidget *equalizerwin_close, *equalizerwin_presets, *equalizerwin_shade;
 static EqGraph *equalizerwin_graph;
@@ -228,9 +228,9 @@ equalizerwin_eq_changed(void)
 }
 
 static void
-equalizerwin_on_pushed(gboolean toggled)
+equalizerwin_on_pushed(void)
 {
-    cfg.equalizer_active = toggled;
+    cfg.equalizer_active = UI_SKINNED_BUTTON(equalizerwin_on)->inside;
     equalizerwin_eq_changed();
 }
 
@@ -245,9 +245,9 @@ equalizerwin_presets_pushed(void)
 }
 
 static void
-equalizerwin_auto_pushed(gboolean toggled)
+equalizerwin_auto_pushed(void)
 {
-    cfg.equalizer_autoload = toggled;
+    cfg.equalizer_autoload = UI_SKINNED_BUTTON(equalizerwin_auto)->inside;
 }
 
 static void equalizerwin_draw_titlebar() {
@@ -328,8 +328,9 @@ draw_equalizer_window(gboolean force)
         else
             widget_list_clear_redraw(equalizerwin_wlist);
 
+        gdk_window_clear(equalizerwin->window);
         GList *iter;
-        for (iter = GTK_FIXED (SKINNED_WINDOW(mainwin)->fixed)->children; iter; iter = g_list_next (iter)) {
+        for (iter = GTK_FIXED (SKINNED_WINDOW(equalizerwin)->fixed)->children; iter; iter = g_list_next (iter)) {
             GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
             GtkWidget *child = child_data->widget;
             g_signal_emit_by_name(child, "redraw");
@@ -367,9 +368,7 @@ equalizerwin_press(GtkWidget * widget, GdkEventButton * event,
         if (dock_is_moving(GTK_WINDOW(equalizerwin)))
             dock_move_release(GTK_WINDOW(equalizerwin));
     }
-    else if (event->button == 3 &&
-             !(widget_contains(WIDGET(equalizerwin_on), event->x, event->y) ||
-               widget_contains(WIDGET(equalizerwin_auto), event->x, event->y))) {
+    else if (event->button == 3) {
         /*
          * Pop up the main menu a few pixels down to avoid
          * anything to be selected initially.
@@ -653,23 +652,19 @@ equalizerwin_create_widgets(void)
 {
     gint i;
 
-    equalizerwin_on =
-        create_tbutton(&equalizerwin_wlist, equalizerwin_bg,
-                       SKINNED_WINDOW(equalizerwin)->gc, 14, 18, 25, 12, 10, 119, 128, 119,
-                       69, 119, 187, 119, equalizerwin_on_pushed,
-                       SKIN_EQMAIN);
-    tbutton_set_toggled(equalizerwin_on, cfg.equalizer_active);
-    ui_skinned_window_widgetlist_associate(equalizerwin, 
-        WIDGET(equalizerwin_on));
+    equalizerwin_on = ui_skinned_button_new();
+    ui_skinned_toggle_button_setup(equalizerwin_on, SKINNED_WINDOW(equalizerwin)->fixed, equalizerwin_bg,
+			SKINNED_WINDOW(equalizerwin)->gc, 14, 18, 25, 12, 10, 119, 128, 119,
+                        69, 119, 187, 119, SKIN_EQMAIN);
+    g_signal_connect(equalizerwin_on, "clicked", equalizerwin_on_pushed, NULL);
+    UI_SKINNED_BUTTON(equalizerwin_on)->inside = cfg.equalizer_active;
 
-    equalizerwin_auto =
-        create_tbutton(&equalizerwin_wlist, equalizerwin_bg,
-                       SKINNED_WINDOW(equalizerwin)->gc, 39, 18, 33, 12, 35, 119, 153, 119,
-                       94, 119, 212, 119, equalizerwin_auto_pushed,
-                       SKIN_EQMAIN);
-    tbutton_set_toggled(equalizerwin_auto, cfg.equalizer_autoload);
-    ui_skinned_window_widgetlist_associate(equalizerwin, 
-        WIDGET(equalizerwin_auto));
+    equalizerwin_auto = ui_skinned_button_new();
+    ui_skinned_toggle_button_setup(equalizerwin_auto, SKINNED_WINDOW(equalizerwin)->fixed, equalizerwin_bg,
+			SKINNED_WINDOW(equalizerwin)->gc,39, 18, 33, 12, 35, 119, 153, 119,
+                       94, 119, 212, 119, SKIN_EQMAIN);
+    g_signal_connect(equalizerwin_auto, "clicked", equalizerwin_auto_pushed, NULL);
+    UI_SKINNED_BUTTON(equalizerwin_auto)->inside = cfg.equalizer_autoload;
 
     equalizerwin_presets = ui_skinned_button_new();
     ui_skinned_push_button_setup(equalizerwin_presets, SKINNED_WINDOW(equalizerwin)->fixed, equalizerwin_bg,
