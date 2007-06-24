@@ -86,7 +86,7 @@ def ignore_service_errors_cb(word, word_eol, userdata):
 
 	return xchat.EAT_NONE
 
-xchat.hook_print("Notice", ignore_service_errors_cb)
+#xchat.hook_print("Notice", ignore_service_errors_cb)
 
 def unset_ignore_services(userdata=None):
 	global ignore_services
@@ -118,8 +118,8 @@ def presence_notification_dispatch(userdata=None):
 
 	return 1
 
-presence_notification_dispatch()
-xchat.hook_timer(3000, presence_notification_dispatch)
-xchat.hook_timer(500, unset_ignore_services)
+#presence_notification_dispatch()
+#xchat.hook_timer(3000, presence_notification_dispatch)
+#xchat.hook_timer(500, unset_ignore_services)
 
 print "xchat-audacious $Id: xchat-audacious.py 4574 2007-05-16 07:46:17Z deitarion $ loaded"
