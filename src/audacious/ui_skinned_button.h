@@ -88,5 +88,6 @@ void ui_skinned_small_button_setup(GtkWidget *button, GtkWidget *fixed, GdkPixma
 void ui_skinned_button_set_skin_index(GtkWidget *button, SkinPixmapId si);
 void ui_skinned_button_set_skin_index1(GtkWidget *button, SkinPixmapId si);
 void ui_skinned_button_set_skin_index2(GtkWidget *button, SkinPixmapId si);
+void ui_skinned_button_move_relative(GtkWidget *button, gint x, gint y);
 
 #endif

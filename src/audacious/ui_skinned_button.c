@@ -326,6 +326,9 @@ static void ui_skinned_button_size_allocate(GtkWidget *widget, GtkAllocation *al
         if (GDK_IS_WINDOW(button->event_window))
             gdk_window_move_resize (button->event_window, widget->allocation.x, widget->allocation.y,
                                     widget->allocation.width, widget->allocation.height);
+
+        button->x = widget->allocation.x;
+        button->y = widget->allocation.y;
 }
 
 static void button_pressed(UiSkinnedButton *button) {
@@ -508,4 +511,10 @@ void ui_skinned_button_set_skin_index1(GtkWidget *button, SkinPixmapId si) {
 void ui_skinned_button_set_skin_index2(GtkWidget *button, SkinPixmapId si) {
         UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
         priv->skin_index2 = si;
+}
+
+void ui_skinned_button_move_relative(GtkWidget *button, gint x, gint y) {
+        UiSkinnedButton *b = UI_SKINNED_BUTTON(button);
+        UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
+        gtk_fixed_move(GTK_FIXED(priv->fixed), button, b->x+x, b->y+y);
 }

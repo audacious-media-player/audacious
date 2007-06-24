@@ -26,7 +26,6 @@
 #include "menurow.h"
 #include "monostereo.h"
 #include "number.h"
-#include "pbutton.h"
 #include "playlist_list.h"
 #include "playlist_slider.h"
 #include "playstatus.h"
