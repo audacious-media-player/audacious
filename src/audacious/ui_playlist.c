@@ -484,6 +484,8 @@ playlistwin_select_search(void)
       _("Search entries in active playlist") , GTK_WINDOW(mainwin) ,
       GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT ,
       GTK_STOCK_CANCEL , GTK_RESPONSE_REJECT , GTK_STOCK_OK , GTK_RESPONSE_ACCEPT , NULL );
+    gtk_window_set_position(GTK_WINDOW(searchdlg_win), GTK_WIN_POS_CENTER);
+
     /* help text and logo */
     searchdlg_hbox = gtk_hbox_new( FALSE , 4 );
     searchdlg_logo = gtk_image_new_from_stock( GTK_STOCK_FIND , GTK_ICON_SIZE_DIALOG );
@@ -493,30 +495,35 @@ playlistwin_select_search(void)
     gtk_label_set_line_wrap( GTK_LABEL(searchdlg_helptext) , TRUE );
     gtk_box_pack_start( GTK_BOX(searchdlg_hbox) , searchdlg_logo , FALSE , FALSE , 0 );
     gtk_box_pack_start( GTK_BOX(searchdlg_hbox) , searchdlg_helptext , FALSE , FALSE , 0 );
+
     /* title */
     searchdlg_label_title = gtk_label_new( _("Title: ") );
     searchdlg_entry_title = gtk_entry_new();
     gtk_misc_set_alignment( GTK_MISC(searchdlg_label_title) , 0 , 0.5 );
     g_signal_connect( G_OBJECT(searchdlg_entry_title) , "key-press-event" ,
       G_CALLBACK(playlistwin_select_search_kp_cb) , searchdlg_win );
+
     /* album */
     searchdlg_label_album= gtk_label_new( _("Album: ") );
     searchdlg_entry_album= gtk_entry_new();
     gtk_misc_set_alignment( GTK_MISC(searchdlg_label_album) , 0 , 0.5 );
     g_signal_connect( G_OBJECT(searchdlg_entry_album) , "key-press-event" ,
       G_CALLBACK(playlistwin_select_search_kp_cb) , searchdlg_win );
+
     /* artist */
     searchdlg_label_performer = gtk_label_new( _("Artist: ") );
     searchdlg_entry_performer = gtk_entry_new();
     gtk_misc_set_alignment( GTK_MISC(searchdlg_label_performer) , 0 , 0.5 );
     g_signal_connect( G_OBJECT(searchdlg_entry_performer) , "key-press-event" ,
       G_CALLBACK(playlistwin_select_search_kp_cb) , searchdlg_win );
+
     /* file name */
     searchdlg_label_file_name = gtk_label_new( _("Filename: ") );
     searchdlg_entry_file_name = gtk_entry_new();
     gtk_misc_set_alignment( GTK_MISC(searchdlg_label_file_name) , 0 , 0.5 );
     g_signal_connect( G_OBJECT(searchdlg_entry_file_name) , "key-press-event" ,
       G_CALLBACK(playlistwin_select_search_kp_cb) , searchdlg_win );
+
     /* some options that control behaviour */
     searchdlg_checkbt_clearprevsel = gtk_check_button_new_with_label(
       _("Clear previous selection before searching") );
@@ -531,6 +538,7 @@ playlistwin_select_search(void)
       G_CALLBACK(playlistwin_select_search_cbt_cb) , searchdlg_checkbt_newplaylist );
     g_signal_connect( G_OBJECT(searchdlg_checkbt_newplaylist) , "clicked" ,
       G_CALLBACK(playlistwin_select_search_cbt_cb) , searchdlg_checkbt_autoenqueue );
+
     /* place fields in searchdlg_table */
     searchdlg_table = gtk_table_new( 8 , 2 , FALSE );
     gtk_table_set_row_spacing( GTK_TABLE(searchdlg_table) , 0 , 8 );
