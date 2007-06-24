@@ -1414,6 +1414,12 @@ draw_playlist_window(gboolean force)
     if (redraw || force) {
         if (force) {
             gdk_window_clear(playlistwin->window);
+            GList *iter;
+            for (iter = GTK_FIXED (SKINNED_WINDOW(playlistwin)->fixed)->children; iter; iter = g_list_next (iter)) {
+                GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
+                GtkWidget *child = child_data->widget;
+                g_signal_emit_by_name(child, "redraw");
+            }
         }
         else {
             for (wl = playlistwin_wlist; wl; wl = g_list_next(wl)) {
