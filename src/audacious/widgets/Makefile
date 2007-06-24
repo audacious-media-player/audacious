@@ -20,7 +20,6 @@ CFLAGS += \
 
 SOURCES = \
 	widget.c \
-	sbutton.c \
 	textbox.c \
 	hslider.c \
 	menurow.c \
