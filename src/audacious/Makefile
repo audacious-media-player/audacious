@@ -128,10 +128,17 @@ LDADD += -L../libaudclient -laudclient
 endif
 
 depend-prehook: $(DBUS_BINDINGS)
+
+build_stamp.c: 
 	if [ -d ../../.hg ]; then \
 		revh=`hg tip --template 'const char *svn_stamp = "#rev#:#node|short#";\n' 2>/dev/null`; \
 		[ -z "$$revh" ] || echo "$$revh" > build_stamp.c; \
 		printf "%10s     %-20s\n" STAMP "build_stamp.c"; \
+	fi
+
+clean-prehook:
+	if [ -d ../../.hg ]; then \
+		rm -f build_stamp.c; \
 	fi
 
 DBUS_BINDINGS_SOURCES = \
