@@ -391,8 +391,6 @@ gchar *bmp_paths[BMP_PATH_COUNT] = {};
 
 GList *dock_window_list = NULL;
 
-gboolean pposition_broken = FALSE;
-
 gboolean starting_up = TRUE;
 
 /* XXX: case-sensitivity is bad for lazy nenolods. :( -nenolod */

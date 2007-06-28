@@ -161,7 +161,6 @@ extern const gchar *chardet_detector_presets[];
 extern const guint n_chardet_detector_presets;
 
 extern GList *dock_window_list;
-extern gboolean pposition_broken;
 
 extern gboolean starting_up;
 

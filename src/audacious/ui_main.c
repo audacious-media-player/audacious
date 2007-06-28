@@ -1973,16 +1973,10 @@ mainwin_real_show(void)
     mainwin_set_shape_mask();
 
     if (cfg.show_wm_decorations) {
-        if (!pposition_broken && cfg.player_x != -1
-            && cfg.save_window_position)
+        if (cfg.player_x != -1 && cfg.save_window_position)
             gtk_window_move(GTK_WINDOW(mainwin), cfg.player_x, cfg.player_y);
 
         gtk_widget_show(mainwin);
-
-        if (pposition_broken && cfg.player_x != -1
-            && cfg.save_window_position)
-            gtk_window_move(GTK_WINDOW(mainwin), cfg.player_x, cfg.player_y);
-
         return;
     }
 
