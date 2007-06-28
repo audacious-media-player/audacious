@@ -1069,18 +1069,26 @@ run_load_skin_error_dialog(const gchar * skin_path)
     gtk_widget_destroy(dialog);
 }
 
-// use a format string?
-void report_error(const gchar *error_text)
+void report_error(const gchar *error_message, ...)
 {
-    fprintf(stderr, error_text);
+    gchar *buf;
+    va_list va;
+
+    va_start(va, error_message);
+    buf = g_strdup_vprintf(error_message, va);
+    va_end(va);
+
+    fprintf(stderr, buf);
 
     if (options.headless != 1)
     {
         gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(err),
-                                                 error_text);
+                                                 buf);
         gtk_dialog_run(GTK_DIALOG(err));
         gtk_widget_hide(err);
     }
+
+    g_free(buf);
 }
 
 static gboolean
