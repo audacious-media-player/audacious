@@ -48,6 +48,7 @@
 
 #include "main.h"
 #include "widgets/widgetcore.h"
+#include "ui_skinned_textbox.h"
 #include "urldecode.h"
 #include "strings.h"
 #include "util.h"
@@ -887,7 +888,7 @@ on_mainwin_font_button_font_set(GtkFontButton * button,
     g_free(cfg.mainwin_font);
     cfg.mainwin_font = g_strdup(gtk_font_button_get_font_name(button));
 
-    textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
+    ui_skinned_textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
     mainwin_set_info_text();
     draw_main_window(TRUE);
 }
@@ -906,7 +907,7 @@ on_use_bitmap_fonts_toggled(GtkToggleButton * button,
 {
     gboolean useit = gtk_toggle_button_get_active(button);
     cfg.mainwin_use_xfont = useit != FALSE ? FALSE : TRUE;
-    textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
+    ui_skinned_textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
     playlistwin_set_sinfo_font(cfg.playlist_font);
 
     mainwin_set_info_text();

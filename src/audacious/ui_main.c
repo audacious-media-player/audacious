@@ -82,6 +82,7 @@
 
 #include "ui_skinned_window.h"
 #include "ui_skinned_button.h"
+#include "ui_skinned_textbox.h"
 #include "ui_jumptotrack.h"
 
 static GTimeVal cb_time; /* click delay for tristate is defined by TRISTATE_THRESHOLD */
@@ -136,7 +137,7 @@ static GtkWidget *mainwin_play, *mainwin_pause, *mainwin_stop;
 static GtkWidget *mainwin_shuffle, *mainwin_repeat;
 GtkWidget *mainwin_eq, *mainwin_pl;
 
-TextBox *mainwin_info;
+GtkWidget *mainwin_info;
 TextBox *mainwin_stime_min, *mainwin_stime_sec;
 
 static TextBox *mainwin_rate_text, *mainwin_freq_text, 
@@ -225,7 +226,7 @@ static void
 mainwin_set_title_scroll(gboolean scroll)
 {
     cfg.autoscroll = scroll;
-    textbox_set_scroll(mainwin_info, cfg.autoscroll);
+    ui_skinned_textbox_set_scroll(mainwin_info, cfg.autoscroll);
 }
 
 
@@ -280,7 +281,7 @@ mainwin_set_shade_menu_cb(gboolean shaded)
         gtk_widget_show(mainwin_sfwd);
         gtk_widget_show(mainwin_seject);
 
-        textbox_set_scroll(mainwin_info, FALSE);
+        ui_skinned_textbox_set_scroll(mainwin_info, FALSE);
         if (playback_get_playing())
     {
                 widget_show(WIDGET(mainwin_sposition));
@@ -315,7 +316,7 @@ mainwin_set_shade_menu_cb(gboolean shaded)
         widget_hide(WIDGET(mainwin_stime_sec));
         widget_hide(WIDGET(mainwin_sposition));
 
-        textbox_set_scroll(mainwin_info, cfg.autoscroll);
+        ui_skinned_textbox_set_scroll(mainwin_info, cfg.autoscroll);
     }
 
     draw_main_window(TRUE);
@@ -582,11 +583,11 @@ mainwin_set_info_text(void)
         return;
 
     if ((text = input_get_info_text()) != NULL) {
-        textbox_set_text(mainwin_info, text);
+        ui_skinned_textbox_set_text(mainwin_info, text);
         g_free(text);
     }
     else if ((text = playlist_get_info_text(playlist_get_active())) != NULL) {
-        textbox_set_text(mainwin_info, text);
+        ui_skinned_textbox_set_text(mainwin_info, text);
         g_free(text);
     }
 }
@@ -598,11 +599,13 @@ mainwin_lock_info_text(const gchar * text)
 {
     if (mainwin_info_text_locked != TRUE)
         mainwin_tb_old_text = g_strdup(bmp_active_skin->properties.mainwin_othertext_is_status ?
-        mainwin_othertext->tb_text : mainwin_info->tb_text);
+        mainwin_othertext->tb_text : UI_SKINNED_TEXTBOX(mainwin_info)->text);
 
     mainwin_info_text_locked = TRUE;
-    textbox_set_text(bmp_active_skin->properties.mainwin_othertext_is_status ?
-    mainwin_othertext : mainwin_info, text);
+    if (bmp_active_skin->properties.mainwin_othertext_is_status)
+        textbox_set_text(mainwin_othertext, text);
+    else
+        ui_skinned_textbox_set_text(mainwin_info, text);
 }
 
 void
@@ -612,8 +615,10 @@ mainwin_release_info_text(void)
 
     if (mainwin_tb_old_text != NULL)
     {
-        textbox_set_text(bmp_active_skin->properties.mainwin_othertext_is_status ?
-        mainwin_othertext : mainwin_info, mainwin_tb_old_text);
+        if (bmp_active_skin->properties.mainwin_othertext_is_status)
+            textbox_set_text(mainwin_othertext, mainwin_tb_old_text);
+        else
+            ui_skinned_textbox_set_text(mainwin_info, mainwin_tb_old_text);
         g_free(mainwin_tb_old_text);
         mainwin_tb_old_text = NULL;
     }
@@ -671,12 +676,12 @@ mainwin_refresh_hints(void)
         mainwin_vis->vs_widget.height);
 
     if (bmp_active_skin->properties.mainwin_text_x && bmp_active_skin->properties.mainwin_text_y)
-    widget_move(WIDGET(mainwin_info), bmp_active_skin->properties.mainwin_text_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_info), bmp_active_skin->properties.mainwin_text_x,
         bmp_active_skin->properties.mainwin_text_y);
 
     if (bmp_active_skin->properties.mainwin_text_width)
-    widget_resize(WIDGET(mainwin_info), bmp_active_skin->properties.mainwin_text_width,
-        mainwin_info->tb_widget.height);
+    gtk_widget_set_size_request(mainwin_info, bmp_active_skin->properties.mainwin_text_width*(1+cfg.doublesize),
+        UI_SKINNED_TEXTBOX(mainwin_info)->height*(1+cfg.doublesize));
 
     if (bmp_active_skin->properties.mainwin_infobar_x && bmp_active_skin->properties.mainwin_infobar_y)
     widget_move(WIDGET(mainwin_othertext), bmp_active_skin->properties.mainwin_infobar_x,
@@ -781,9 +786,9 @@ mainwin_refresh_hints(void)
         widget_hide(WIDGET(mainwin_menurow));
 
     if (bmp_active_skin->properties.mainwin_text_visible)
-        widget_show(WIDGET(mainwin_info));
+        gtk_widget_show(mainwin_info);
     else
-        widget_hide(WIDGET(mainwin_info));
+        gtk_widget_hide(mainwin_info);
 
     if (bmp_active_skin->properties.mainwin_othertext_visible)
         widget_show(WIDGET(mainwin_othertext));
@@ -1121,10 +1126,6 @@ mainwin_mouse_button_press(GtkWidget * widget,
         if (dock_is_moving(GTK_WINDOW(mainwin)))
             dock_move_release(GTK_WINDOW(mainwin));
     }
-    else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS &&
-             widget_contains(WIDGET(mainwin_info), event->x, event->y)) {
-        playlist_fileinfo_current(playlist_get_active());
-    }
     else {
         handle_press_cb(mainwin_wlist, widget, event);
         draw_main_window(FALSE);
@@ -1143,13 +1144,7 @@ mainwin_mouse_button_press(GtkWidget * widget,
     }
 
     if (event->button == 3) {
-        if (widget_contains(WIDGET(mainwin_info), event->x, event->y)) {
-            ui_manager_popup_menu_show(GTK_MENU(mainwin_songname_menu),
-                   event->x_root, event->y_root,
-                   3, event->time);
-            grab = FALSE;
-        }
-        else if (widget_contains(WIDGET(mainwin_vis), event->x, event->y) ||
+            if (widget_contains(WIDGET(mainwin_vis), event->x, event->y) ||
                  widget_contains(WIDGET(mainwin_svis), event->x, event->y)) {
             ui_manager_popup_menu_show(GTK_MENU(mainwin_visualization_menu), event->x_root,
                                     event->y_root, 3, event->time);
@@ -2716,6 +2711,16 @@ mainwin_setup_menus(void)
 
 }
 
+static void mainwin_info_double_clicked_cb(void) {
+     playlist_fileinfo_current(playlist_get_active());
+}
+
+static void mainwin_info_right_clicked_cb(void) {
+     gint x, y;
+     gdk_window_get_pointer(NULL, &x, &y, NULL);
+     ui_manager_popup_menu_show(GTK_MENU(mainwin_songname_menu), x, y, 3, GDK_CURRENT_TIME);
+}
+
 static void
 mainwin_create_widgets(void)
 {
@@ -2828,11 +2833,13 @@ mainwin_create_widgets(void)
     g_signal_connect(mainwin_pl, "clicked", mainwin_playlist_pushed_cb, NULL);
     UI_SKINNED_BUTTON(mainwin_pl)->inside = cfg.playlist_visible;
 
-    mainwin_info =
-        create_textbox(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 112, 27,
-                       153, 1, SKIN_TEXT);
-    textbox_set_scroll(mainwin_info, cfg.autoscroll);
-    textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
+    mainwin_info = ui_skinned_textbox_new();
+    ui_skinned_textbox_setup(mainwin_info, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 112, 27,
+                      153, 1, SKIN_TEXT);
+    ui_skinned_textbox_set_scroll(mainwin_info, cfg.autoscroll);
+    ui_skinned_textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
+    g_signal_connect(mainwin_info, "double-clicked", mainwin_info_double_clicked_cb, NULL);
+    g_signal_connect(mainwin_info, "right-clicked", mainwin_info_right_clicked_cb, NULL);
 
     mainwin_othertext =
     create_textbox(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 112, 43, 
@@ -2937,7 +2944,6 @@ mainwin_create_widgets(void)
 
     /* XXX: eventually update widgetcore API to not need this */
 
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_info));
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_othertext));
 
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_rate_text));
