@@ -311,6 +311,7 @@ void ui_skinned_small_button_setup(GtkWidget *button, GtkWidget *fixed, GdkPixma
 
 static void ui_skinned_button_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
         UiSkinnedButton *button = UI_SKINNED_BUTTON (widget);
+        UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
         GtkAllocation child_alloc;
 
         widget->allocation = *allocation;
@@ -326,6 +327,9 @@ static void ui_skinned_button_size_allocate(GtkWidget *widget, GtkAllocation *al
         if (GDK_IS_WINDOW(button->event_window))
             gdk_window_move_resize (button->event_window, widget->allocation.x, widget->allocation.y,
                                     widget->allocation.width, widget->allocation.height);
+
+        button->x = widget->allocation.x/(priv->double_size ? 2 : 1);
+        button->y = widget->allocation.y/(priv->double_size ? 2 : 1);
 }
 
 static void button_pressed(UiSkinnedButton *button) {
