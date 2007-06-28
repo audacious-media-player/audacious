@@ -3277,9 +3277,7 @@ action_view_always_on_top( GtkToggleAction * action )
   mainwin_menurow->mr_always_selected = gtk_toggle_action_get_active( action );
   cfg.always_on_top = mainwin_menurow->mr_always_selected;
   widget_draw(WIDGET(mainwin_menurow));
-
-  if (starting_up == FALSE)
-    hint_set_always(cfg.always_on_top);
+  hint_set_always(cfg.always_on_top);
 }
 
 void

@@ -391,8 +391,6 @@ gchar *bmp_paths[BMP_PATH_COUNT] = {};
 
 GList *dock_window_list = NULL;
 
-gboolean starting_up = TRUE;
-
 /* XXX: case-sensitivity is bad for lazy nenolods. :( -nenolod */
 static gchar *pl_candidates[] = {
     PLUGIN_FILENAME("ALSA"),
@@ -1263,8 +1261,6 @@ main(gint argc, gchar ** argv)
         playlist_start_get_info_thread();
         mainwin_attach_idle_func();
 
-
-        starting_up = FALSE;
         has_x11_connection = TRUE;
 
         if (cfg.resume_playback_on_startup)
@@ -1308,8 +1304,6 @@ main(gint argc, gchar ** argv)
 
         mainwin_set_info_text();
         playlist_start_get_info_thread();
-
-        starting_up = FALSE;
 
         loop = g_main_loop_new(NULL, TRUE);
         g_timeout_add(10, aud_headless_iteration, NULL);

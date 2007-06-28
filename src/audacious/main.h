@@ -162,8 +162,6 @@ extern const guint n_chardet_detector_presets;
 
 extern GList *dock_window_list;
 
-extern gboolean starting_up;
-
 extern gboolean has_x11_connection;
 
 void bmp_config_save(void);
