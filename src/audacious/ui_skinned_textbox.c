@@ -788,26 +788,6 @@ textbox_handle_special_char(gchar c, gint * x, gint * y)
         tx = 30;
         ty = 1;
         break;
-    case 'å':
-    case 'Å':
-        tx = 0;
-        ty = 2;
-        break;
-    case 'ö':
-    case 'Ö':
-        tx = 1;
-        ty = 2;
-        break;
-    case 'ä':
-    case 'Ä':
-        tx = 2;
-        ty = 2;
-        break;
-    case 'ü':
-    case 'Ü':
-        tx = 20;
-        ty = 0;
-        break;
     case '?':
         tx = 3;
         ty = 2;
