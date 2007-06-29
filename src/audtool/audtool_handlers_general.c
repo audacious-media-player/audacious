@@ -145,7 +145,7 @@ void get_handlers_list(gint argc, gchar **argv)
 	for (i = 0; handlers[i].name != NULL; i++)
 	{
 		if (!g_strcasecmp("<sep>", handlers[i].name))
-			audtool_report("%s%s:", i == 0 ? "" : "", handlers[i].desc);
+			audtool_report("%s%s:", i == 0 ? "" : "\n", handlers[i].desc);
 		else
 			audtool_report("   %-34s - %s", handlers[i].name, handlers[i].desc);
 	}
