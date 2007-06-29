@@ -537,7 +537,7 @@ static void textbox_generate_xfont_pixmap(UiSkinnedTextbox *textbox, const gchar
     c = skin_get_color(bmp_active_skin, SKIN_TEXTBG);
     for (i = 0; i < textbox->height; i++) {
         gdk_gc_set_foreground(gc, &c[6 * i / textbox->height]);
-        gdk_draw_line(priv->pixmap, gc, 0, i, priv->w, i);
+        gdk_draw_line(priv->pixmap, gc, 0, i, priv->pixmap_width, i);
     }
 
     mask = gdk_pixmap_new(mainwin->window, priv->pixmap_width, textbox->height, 1);
