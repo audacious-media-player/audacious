@@ -76,11 +76,11 @@ void mainwin_show(gint argc, gchar **argv)
 {
 	if (argc > 1)
 	{
-		if (!strncmp(argv[1],"on",2)) {
+		if (!g_ascii_strcasecmp(argv[1], "on")) {
 			audacious_remote_main_win_toggle(dbus_proxy, TRUE);
 			return;
 		}
-		else if (!strncmp(argv[1],"off",3)) {
+		else if (!g_ascii_strcasecmp(argv[1], "off")) {
 			audacious_remote_main_win_toggle(dbus_proxy, FALSE);
 			return;
 		}
@@ -93,11 +93,11 @@ void playlist_show(gint argc, gchar **argv)
 {
 	if (argc > 1)
 	{
-		if (!strncmp(argv[1],"on",2)) {
+		if (!g_ascii_strcasecmp(argv[1], "on")) {
 			audacious_remote_pl_win_toggle(dbus_proxy, TRUE);
 			return;
 		}
-		else if (!strncmp(argv[1],"off",3)) {
+		else if (!g_ascii_strcasecmp(argv[1], "off")) {
 			audacious_remote_pl_win_toggle(dbus_proxy, FALSE);
 			return;
 		}
@@ -110,11 +110,11 @@ void equalizer_show(gint argc, gchar **argv)
 {
 	if (argc > 1)
 	{
-		if (!strncmp(argv[1],"on",2)) {
+		if (!g_ascii_strcasecmp(argv[1] ,"on")) {
 			audacious_remote_eq_win_toggle(dbus_proxy, TRUE);
 			return;
 		}
-		else if (!strncmp(argv[1],"off",3)) {
+		else if (!g_ascii_strcasecmp(argv[1] ,"off")) {
 			audacious_remote_eq_win_toggle(dbus_proxy, FALSE);
 			return;
 		}
