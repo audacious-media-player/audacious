@@ -96,4 +96,7 @@ extern void show_preferences_window(gint, gchar **);
 extern void show_jtf_window(gint, gchar **);
 extern void shutdown_audacious_server(gint, gchar **);
 
+extern void audtool_report(const gchar *str, ...);
+extern void audtool_whine(const gchar *str, ...);
+
 #endif
