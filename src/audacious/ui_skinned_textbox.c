@@ -616,7 +616,16 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
     priv->is_scrollable = FALSE;
 
     priv->is_scrollable = ui_skinned_textbox_should_scroll(textbox);
-    pixmaptext = g_strdup(priv->pixmap_text);
+
+    if (!priv->is_scrollable && !priv->font && length <= wl) {
+        gint pad = wl - length;
+        gchar *padchars = g_strnfill(pad, ' ');
+
+        pixmaptext = g_strconcat(priv->pixmap_text, padchars, NULL);
+        g_free(padchars);
+        length += pad;
+    } else
+        pixmaptext = g_strdup(priv->pixmap_text);
 
     if (priv->is_scrollable) {
         if (priv->scroll_enabled && !priv->scroll_timeout) {
