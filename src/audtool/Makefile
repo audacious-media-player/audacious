@@ -24,7 +24,8 @@ CFLAGS += \
 
 SOURCES =	 			\
 	audtool_main.c			\
-	audtool_handlers_general.c
+	audtool_handlers_general.c	\
+	audtool_handlers_vitals.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
