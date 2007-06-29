@@ -4,7 +4,7 @@
 - a small tool to modify behavior of a running audacious instance.
 .SH SYNOPSIS
 .B audtool
-[\-\-[[handler [parameters]]
+[\-\-[[handler [parameters]] [...]
 .SH DESCRIPTION
 .B audtool
 is designed to send commands to a running audacious.
