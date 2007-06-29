@@ -347,10 +347,10 @@ static gboolean ui_skinned_textbox_motion_notify(GtkWidget *widget, GdkEventMoti
             priv->offset = priv->drag_off - (event->x - priv->drag_x);
 
             while (priv->offset < 0)
-                priv->offset += priv->pixmap_width;
+                priv->offset = 0;
 
             while (priv->offset > (priv->pixmap_width - priv->w))
-                priv->offset -= priv->pixmap_width;
+                priv->offset = (priv->pixmap_width - priv->w);
 
             ui_skinned_textbox_redraw(textbox);
         }
