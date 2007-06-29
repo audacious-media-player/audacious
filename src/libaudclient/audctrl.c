@@ -64,7 +64,10 @@ gint audacious_remote_get_version(DBusGProxy *proxy) {
  * Sends a list of URIs to Audacious to add to the playlist.
  **/
 void audacious_remote_playlist_add(DBusGProxy *proxy, GList *list) {
-//XXX
+	GList *iter;
+	for (iter = list; iter != NULL; iter = g_list_next(iter))
+		org_atheme_audacious_add(proxy, iter->data, &error);
+	g_clear_error(&error);
 }
 
 /**

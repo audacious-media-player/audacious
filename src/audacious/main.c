@@ -1130,16 +1130,6 @@ main(gint argc, gchar ** argv)
     bmp_init_paths();
     bmp_make_user_dir();
 
-    /* Check GTK version. Really, this is only needed for binary
-     * distribution since configure already checks. */
-    if (!GTK_CHECK_VERSION(2, 6, 0)) {
-        g_printerr(_("Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
-                     "Please use GTK+ %s or newer.\n"),
-                   gtk_major_version, gtk_minor_version, gtk_micro_version,
-                   "2.6.0");
-        exit(EXIT_FAILURE);
-    }
-
     g_set_application_name(_(application_name));
 
     cond_scan = g_cond_new();
@@ -1159,7 +1149,8 @@ main(gint argc, gchar ** argv)
 
     if (error != NULL)
     {
-        g_printerr(_("%s: %s\nTry `%s --help' for more information.\n"), argv[0], error->message, argv[0]);
+        g_printerr(_("%s: %s\nTry `%s --help' for more information.\n"),
+	  argv[0], error->message, argv[0]);
         exit(EXIT_FAILURE);
     }
 
@@ -1176,7 +1167,7 @@ main(gint argc, gchar ** argv)
 
         /* we could be running headless, so GTK probably wont matter */
         if (options.headless != 1)
-          exit(EXIT_SUCCESS);
+            exit(EXIT_SUCCESS);
     }
 
     if (options.no_log == FALSE)
