@@ -22,7 +22,9 @@ CFLAGS += \
 	-I.. -I../..   \
 	-I../intl
 
-SOURCES = audtool.c handlers.c
+SOURCES =	 	\
+	audtool_main.c
+	audtool_handlers_general.c
 
 OBJECTS = ${SOURCES:.c=.o}
 
