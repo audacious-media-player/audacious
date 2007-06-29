@@ -44,11 +44,11 @@ void get_current_song(gint argc, gchar **argv)
 
 	if (!song)
 	{
-		g_print("No song playing.\n");
+		audtool_report("No song playing.");
 		return;
 	}
 
-	g_print("%s\n", song);
+	audtool_report("%s", song);
 }
 
 void get_current_song_filename(gint argc, gchar **argv)
@@ -58,11 +58,11 @@ void get_current_song_filename(gint argc, gchar **argv)
 
 	if (!file)
 	{
-		g_print("No song playing.\n");
+		audtool_report("No song playing.");
 		return;
 	}
         
-	g_print("%s\n", file);
+	audtool_report("%s", file);
 }
 
 void get_current_song_output_length(gint argc, gchar **argv)
@@ -70,7 +70,7 @@ void get_current_song_output_length(gint argc, gchar **argv)
 	gint frames = audacious_remote_get_output_time(dbus_proxy);
 	gint length = frames / 1000;
 
-	g_print("%d:%.2d\n", length / 60, length % 60);
+	audtool_report("%d:%.2d", length / 60, length % 60);
 }
 
 void get_current_song_output_length_seconds(gint argc, gchar **argv)
@@ -78,14 +78,14 @@ void get_current_song_output_length_seconds(gint argc, gchar **argv)
 	gint frames = audacious_remote_get_output_time(dbus_proxy);
 	gint length = frames / 1000;
 
-	g_print("%d\n", length);
+	audtool_report("%d", length);
 }
 
 void get_current_song_output_length_frames(gint argc, gchar **argv)
 {
 	gint frames = audacious_remote_get_output_time(dbus_proxy);
 
-	g_print("%d\n", frames);
+	audtool_report("%d", frames);
 }
 
 void get_current_song_length(gint argc, gchar **argv)
@@ -94,7 +94,7 @@ void get_current_song_length(gint argc, gchar **argv)
 	gint frames = audacious_remote_get_playlist_time(dbus_proxy, playpos);
 	gint length = frames / 1000;
 
-	g_print("%d:%.2d\n", length / 60, length % 60);
+	audtool_report("%d:%.2d", length / 60, length % 60);
 }
 
 void get_current_song_length_seconds(gint argc, gchar **argv)
@@ -103,7 +103,7 @@ void get_current_song_length_seconds(gint argc, gchar **argv)
 	gint frames = audacious_remote_get_playlist_time(dbus_proxy, playpos);
 	gint length = frames / 1000;
 
-	g_print("%d\n", length);
+	audtool_report("%d", length);
 }
 
 void get_current_song_length_frames(gint argc, gchar **argv)
@@ -111,7 +111,7 @@ void get_current_song_length_frames(gint argc, gchar **argv)
 	gint playpos = audacious_remote_get_playlist_pos(dbus_proxy);
 	gint frames = audacious_remote_get_playlist_time(dbus_proxy, playpos);
 
-	g_print("%d\n", frames);
+	audtool_report("%d", frames);
 }
 
 void get_current_song_bitrate(gint argc, gchar **argv)
@@ -120,7 +120,7 @@ void get_current_song_bitrate(gint argc, gchar **argv)
 
 	audacious_remote_get_info(dbus_proxy, &rate, &freq, &nch);
 
-	g_print("%d\n", rate);
+	audtool_report("%d", rate);
 }
 
 void get_current_song_bitrate_kbps(gint argc, gchar **argv)
@@ -129,7 +129,7 @@ void get_current_song_bitrate_kbps(gint argc, gchar **argv)
 
 	audacious_remote_get_info(dbus_proxy, &rate, &freq, &nch);
 
-	g_print("%d\n", rate / 1000);
+	audtool_report("%d", rate / 1000);
 }
 
 void get_current_song_frequency(gint argc, gchar **argv)
@@ -138,7 +138,7 @@ void get_current_song_frequency(gint argc, gchar **argv)
 
 	audacious_remote_get_info(dbus_proxy, &rate, &freq, &nch);
 
-	g_print("%d\n", freq);
+	audtool_report("%d", freq);
 }
 
 void get_current_song_frequency_khz(gint argc, gchar **argv)
@@ -147,7 +147,7 @@ void get_current_song_frequency_khz(gint argc, gchar **argv)
 
 	audacious_remote_get_info(dbus_proxy, &rate, &freq, &nch);
 
-	g_print("%0.1f\n", (gfloat) freq / 1000);
+	audtool_report("%0.1f", (gfloat) freq / 1000);
 }
 
 void get_current_song_channels(gint argc, gchar **argv)
@@ -156,7 +156,7 @@ void get_current_song_channels(gint argc, gchar **argv)
 
 	audacious_remote_get_info(dbus_proxy, &rate, &freq, &nch);
 
-	g_print("%d\n", nch);
+	audtool_report("%d", nch);
 }
 
 void get_current_song_tuple_field_data(gint argc, gchar **argv)
@@ -165,12 +165,12 @@ void get_current_song_tuple_field_data(gint argc, gchar **argv)
 
 	if (argc < 2)
 	{
-		g_print("%s: invalid parameters for current-song-tuple-data.\n", argv[0]);
-		g_print("%s: syntax: %s current-song-tuple-data <fieldname>\n", argv[0], argv[0]);
-		g_print("%s:   - fieldname example choices: performer, album_name,\n", argv[0]);
-		g_print("%s:       track_name, track_number, year, date, genre, comment,\n", argv[0]);
-		g_print("%s:       file_name, file_ext, file_path, length, formatter,\n", argv[0]);
-		g_print("%s:       custom, mtime\n", argv[0]);
+		audtool_whine("invalid parameters for %s.", argv[0]);
+		audtool_whine("syntax: %s <fieldname>", argv[0]);
+		audtool_whine("   - fieldname example choices: performer, album_name,");
+		audtool_whine("       track_name, track_number, year, date, genre, comment,");
+		audtool_whine("       file_name, file_ext, file_path, length, formatter,");
+		audtool_whine("       custom, mtime");
 		return;
 	}
 
@@ -183,10 +183,10 @@ void get_current_song_tuple_field_data(gint argc, gchar **argv)
 	{
 		if (*(gint *)data > 0)
 		{
-			g_print("%d\n", *(gint *)data);
+			audtool_report("%d", *(gint *)data);
 		}
 		return;
 	}
 
-	g_print("%s\n", (gchar *)data);
+	audtool_report("%s", (gchar *)data);
 }
