@@ -97,17 +97,17 @@ void playback_status(gint argc, gchar **argv)
 {
 	if (audacious_remote_is_paused(dbus_proxy))
 	{
-		g_print("paused\n");
+		audtool_report("paused");
 		return;
 	}
 	else if (audacious_remote_is_playing(dbus_proxy))
 	{
-		g_print("playing\n");
+		audtool_report("playing");
 		return;
 	}
 	else
 	{
-		g_print("stopped\n");
+		audtool_report("stopped");
 		return;
 	}
 }
@@ -116,8 +116,8 @@ void playback_seek(gint argc, gchar **argv)
 {
 	if (argc < 2)
 	{
-		g_print("%s: invalid parameters for playback-seek.\n", argv[0]);
-		g_print("%s: syntax: %s playback-seek <position>\n", argv[0], argv[0]);
+		audtool_whine("invalid parameters for %s.", argv[0]);
+		audtool_whine("syntax: %s <position>", argv[0]);
 		return;
 	}
 
@@ -130,8 +130,8 @@ void playback_seek_relative(gint argc, gchar **argv)
 
 	if (argc < 2)
 	{
-		g_print("%s: invalid parameters for playback-seek-relative.\n", argv[0]);
-		g_print("%s: syntax: %s playback-seek <position>\n", argv[0], argv[0]);
+		audtool_whine("invalid parameters for %s.", argv[0]);
+		audtool_whine("syntax: %s <position>", argv[0]);
 		return;
 	}
 

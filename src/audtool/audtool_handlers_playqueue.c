@@ -43,8 +43,8 @@ void playqueue_add(gint argc, gchar **argv)
 
 	if (argc < 2)
 	{
-		g_print("%s: invalid parameters for playqueue-add.\n", argv[0]);
-		g_print("%s: syntax: %s playqueue-add <position>\n", argv[0], argv[0]);
+		audtool_whine("invalid parameters for %s.", argv[0]);
+		audtool_whine("syntax: %s <position>", argv[0]);
 		return;
 	}
 
@@ -52,7 +52,7 @@ void playqueue_add(gint argc, gchar **argv)
 
 	if (i < 1 || i > audacious_remote_get_playlist_length(dbus_proxy))
 	{
-		g_print("%s: invalid playlist position %d\n", argv[0], i);
+		audtool_whine("invalid playlist position %d", i);
 		return;
 	}
 
@@ -66,8 +66,8 @@ void playqueue_remove(gint argc, gchar **argv)
 
 	if (argc < 2)
 	{
-		g_print("%s: invalid parameters for playqueue-remove.\n", argv[0]);
-		g_print("%s: syntax: %s playqueue-remove <position>\n", argv[0], argv[0]);
+		audtool_whine("invalid parameters for %s.", argv[0]);
+		audtool_whine("syntax: %s <position>", argv[0]);
 		return;
 	}
 
@@ -75,7 +75,7 @@ void playqueue_remove(gint argc, gchar **argv)
 
 	if (i < 1 || i > audacious_remote_get_playlist_length(dbus_proxy))
 	{
-		g_print("%s: invalid playlist position %d\n", argv[0], i);
+		audtool_whine("invalid playlist position %d", i);
 		return;
 	}
 
@@ -89,8 +89,8 @@ void playqueue_is_queued(gint argc, gchar **argv)
 
 	if (argc < 2)
 	{
-		g_print("%s: invalid parameters for playqueue-is-queued.\n", argv[0]);
-		g_print("%s: syntax: %s playqueue-is-queued <position>\n", argv[0], argv[0]);
+		audtool_whine("invalid parameters for playqueue-is-queued.", argv[0]);
+		audtool_whine("syntax: %s playqueue-is-queued <position>", argv[0]);
 		return;
 	}
 
@@ -98,7 +98,7 @@ void playqueue_is_queued(gint argc, gchar **argv)
 
 	if (i < 1 || i > audacious_remote_get_playlist_length(dbus_proxy))
 	{
-		g_print("%s: invalid playlist position %d\n", argv[0], i);
+		audtool_whine("invalid playlist position %d", i);
 		return;
 	}
 
@@ -111,8 +111,8 @@ void playqueue_get_position(gint argc, gchar **argv)
 
 	if (argc < 2)
 	{
-		g_print("%s: invalid parameters for playqueue-get-position.\n", argv[0]);
-		g_print("%s: syntax: %s playqueue-get-position <position>\n", argv[0], argv[0]);
+		audtool_whine("invalid parameters for %s.", argv[0]);
+		audtool_whine("syntax: %s <position>", argv[0]);
 		return;
 	}
 
@@ -120,7 +120,7 @@ void playqueue_get_position(gint argc, gchar **argv)
 
 	if (i < 1 || i > audacious_remote_get_playlist_length(dbus_proxy))
 	{
-		g_print("%s: invalid playlist position %d\n", argv[0], i);
+		audtool_whine("invalid playlist position %d", i);
 		return;
 	}
 
@@ -129,7 +129,7 @@ void playqueue_get_position(gint argc, gchar **argv)
 	if (pos < 1)
 		return;
 
-	g_print("%d\n", pos);
+	audtool_report("%d", pos);
 }
 
 void playqueue_get_qposition(gint argc, gchar **argv)
@@ -138,8 +138,8 @@ void playqueue_get_qposition(gint argc, gchar **argv)
 
 	if (argc < 2)
 	{
-		g_print("%s: invalid parameters for playqueue-get-qposition.\n", argv[0]);
-		g_print("%s: syntax: %s playqueue-get-qposition <position>\n", argv[0], argv[0]);
+		audtool_whine("invalid parameters for %s.", argv[0]);
+		audtool_whine("syntax: %s <position>", argv[0]);
 		return;
 	}
 
@@ -147,7 +147,7 @@ void playqueue_get_qposition(gint argc, gchar **argv)
 
 	if (i < 1 || i > audacious_remote_get_playqueue_length(dbus_proxy))
 	{
-		g_print("%s: invalid playlist position %d\n", argv[0], i);
+		audtool_whine("invalid playlist position %d", i);
 		return;
 	}
 
@@ -156,7 +156,7 @@ void playqueue_get_qposition(gint argc, gchar **argv)
 	if (pos < 1)
 		return;
 
-	g_print("%d\n", pos);
+	audtool_report("%d", pos);
 }
 
 void playqueue_display(gint argc, gchar **argv)
@@ -168,7 +168,7 @@ void playqueue_display(gint argc, gchar **argv)
 	
 	i = audacious_remote_get_playqueue_length(dbus_proxy);
 
-	g_print("%d queued tracks.\n", i);
+	audtool_report("%d queued tracks.", i);
 
 	total = 0;
 
@@ -201,12 +201,12 @@ void playqueue_display(gint argc, gchar **argv)
 			}
 		}
 
-		fmt = g_strdup_printf("%%4d | %%4d | %%-%ds | %%d:%%.2d\n", column);
-		g_print(fmt, ii + 1, position + 1, songname, length / 60, length % 60);
+		fmt = g_strdup_printf("%%4d | %%4d | %%-%ds | %%d:%%.2d", column);
+		audtool_report(fmt, ii + 1, position + 1, songname, length / 60, length % 60);
 		g_free(fmt);
 	}
 
-	g_print("Total length: %d:%.2d\n", total / 60, total % 60);
+	audtool_report("Total length: %d:%.2d", total / 60, total % 60);
 }
 
 void playqueue_length(gint argc, gchar **argv)
@@ -215,7 +215,7 @@ void playqueue_length(gint argc, gchar **argv)
 
 	i = audacious_remote_get_playqueue_length(dbus_proxy);
 
-	g_print("%d\n", i);
+	audtool_report("%d", i);
 }
 
 void playqueue_clear(gint argc, gchar **argv)
