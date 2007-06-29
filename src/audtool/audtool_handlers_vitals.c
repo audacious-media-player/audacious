@@ -179,7 +179,7 @@ void get_current_song_tuple_field_data(gint argc, gchar **argv)
 		return;
 	}
 	
-	if (!strcasecmp(argv[1], "track_number") || !strcasecmp(argv[1], "year") || !strcasecmp(argv[1], "length") || !strcasecmp(argv[1], "mtime"))
+	if (!g_ascii_strcasecmp(argv[1], "track_number") || !g_ascii_strcasecmp(argv[1], "year") || !g_ascii_strcasecmp(argv[1], "length") || !g_ascii_strcasecmp(argv[1], "mtime"))
 	{
 		if (*(gint *)data > 0)
 		{

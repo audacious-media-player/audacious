@@ -152,9 +152,9 @@ gint main(gint argc, gchar **argv)
 	{
 		for (i = 0; handlers[i].name != NULL; i++)
 		{
-			if ((!g_strcasecmp(handlers[i].name, argv[j]) ||
-			     !g_strcasecmp(g_strconcat("--", handlers[i].name, NULL), argv[j]))
-			    && g_strcasecmp("<sep>", handlers[i].name))
+			if ((!g_ascii_strcasecmp(handlers[i].name, argv[j]) ||
+			     !g_ascii_strcasecmp(g_strconcat("--", handlers[i].name, NULL), argv[j]))
+			    && g_ascii_strcasecmp("<sep>", handlers[i].name))
   			{
  				handlers[i].handler(handlers[i].args + 1, &argv[j]);
 				j += handlers[i].args;
