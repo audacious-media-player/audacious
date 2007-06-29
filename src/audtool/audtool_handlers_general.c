@@ -163,7 +163,7 @@ void get_current_song_tuple_field_data(gint argc, gchar **argv)
 {
 	gpointer data;
 
-	if (argc < 3)
+	if (argc < 2)
 	{
 		g_print("%s: invalid parameters for current-song-tuple-data.\n", argv[0]);
 		g_print("%s: syntax: %s current-song-tuple-data <fieldname>\n", argv[0], argv[0]);
@@ -174,12 +174,12 @@ void get_current_song_tuple_field_data(gint argc, gchar **argv)
 		return;
 	}
 
-	if (!(data = audacious_get_tuple_field_data(dbus_proxy, argv[2], audacious_remote_get_playlist_pos(dbus_proxy))))
+	if (!(data = audacious_get_tuple_field_data(dbus_proxy, argv[1], audacious_remote_get_playlist_pos(dbus_proxy))))
 	{
 		return;
 	}
 	
-	if (!strcasecmp(argv[2], "track_number") || !strcasecmp(argv[2], "year") || !strcasecmp(argv[2], "length") || !strcasecmp(argv[2], "mtime"))
+	if (!strcasecmp(argv[1], "track_number") || !strcasecmp(argv[1], "year") || !strcasecmp(argv[1], "length") || !strcasecmp(argv[1], "mtime"))
 	{
 		if (*(gint *)data > 0)
 		{
@@ -278,21 +278,21 @@ void playback_status(gint argc, gchar **argv)
 
 void playback_seek(gint argc, gchar **argv)
 {
-	if (argc < 3)
+	if (argc < 2)
 	{
 		g_print("%s: invalid parameters for playback-seek.\n", argv[0]);
 		g_print("%s: syntax: %s playback-seek <position>\n", argv[0], argv[0]);
 		return;
 	}
 
-	audacious_remote_jump_to_time(dbus_proxy, atoi(argv[2]) * 1000);
+	audacious_remote_jump_to_time(dbus_proxy, atoi(argv[1]) * 1000);
 }
 
 void playback_seek_relative(gint argc, gchar **argv)
 {
 	gint oldtime, newtime, diff;
 
-	if (argc < 3)
+	if (argc < 2)
 	{
 		g_print("%s: invalid parameters for playback-seek-relative.\n", argv[0]);
 		g_print("%s: syntax: %s playback-seek <position>\n", argv[0], argv[0]);
@@ -300,7 +300,7 @@ void playback_seek_relative(gint argc, gchar **argv)
 	}
 
 	oldtime = audacious_remote_get_output_time(dbus_proxy);
-	diff = atoi(argv[2]) * 1000;
+	diff = atoi(argv[1]) * 1000;
 	newtime = oldtime + diff;
 
 	audacious_remote_jump_to_time(dbus_proxy, newtime);
@@ -308,28 +308,28 @@ void playback_seek_relative(gint argc, gchar **argv)
 
 void playlist_add_url_string(gint argc, gchar **argv)
 {
-	if (argc < 3)
+	if (argc < 2)
 	{
 		g_print("%s: invalid parameters for playlist-addurl.\n", argv[0]);
 		g_print("%s: syntax: %s playlist-addurl <url>\n", argv[0], argv[0]);
 		return;
 	}
 
-	audacious_remote_playlist_add_url_string(dbus_proxy, argv[2]);
+	audacious_remote_playlist_add_url_string(dbus_proxy, argv[1]);
 }
 
 void playlist_delete(gint argc, gchar **argv)
 {
 	gint playpos;
 
-	if (argc < 3)
+	if (argc < 2)
 	{
 		g_print("%s: invalid parameters for playlist-delete.\n", argv[0]);
 		g_print("%s: syntax: %s playlist-delete <position>\n", argv[0], argv[0]);
 		return;
 	}
 
-	playpos = atoi(argv[2]);
+	playpos = atoi(argv[1]);
 
 	if (playpos < 1 || playpos > audacious_remote_get_playlist_length(dbus_proxy))
 	{
@@ -354,14 +354,14 @@ void playlist_song(gint argc, gchar **argv)
 	gint playpos;
 	gchar *song;
 
-	if (argc < 3)
+	if (argc < 2)
 	{
 		g_print("%s: invalid parameters for playlist-song-title.\n", argv[0]);
 		g_print("%s: syntax: %s playlist-song-title <position>\n", argv[0], argv[0]);
 		return;
 	}
 
-	playpos = atoi(argv[2]);
+	playpos = atoi(argv[1]);
 
 	if (playpos < 1 || playpos > audacious_remote_get_playlist_length(dbus_proxy))
 	{
@@ -379,14 +379,14 @@ void playlist_song_length(gint argc, gchar **argv)
 {
 	gint playpos, frames, length;
 
-	if (argc < 3)
+	if (argc < 2)
 	{
 		g_print("%s: invalid parameters for playlist-song-length.\n", argv[0]);
 		g_print("%s: syntax: %s playlist-song-length <position>\n", argv[0], argv[0]);
 		return;
 	}
 
-	playpos = atoi(argv[2]);
+	playpos = atoi(argv[1]);
 
 	if (playpos < 1 || playpos > audacious_remote_get_playlist_length(dbus_proxy))
 	{
@@ -404,14 +404,14 @@ void playlist_song_length_seconds(gint argc, gchar **argv)
 {
 	gint playpos, frames, length;
 
-	if (argc < 3)
+	if (argc < 2)
 	{
 		g_print("%s: invalid parameters for playlist-song-length-seconds.\n", argv[0]);
 		g_print("%s: syntax: %s playlist-song-length-seconds <position>\n", argv[0], argv[0]);
 		return;
 	}
 
-	playpos = atoi(argv[2]);
+	playpos = atoi(argv[1]);
 
 	if (playpos < 1 || playpos > audacious_remote_get_playlist_length(dbus_proxy))
 	{
@@ -429,14 +429,14 @@ void playlist_song_length_frames(gint argc, gchar **argv)
 {
 	gint playpos, frames;
 
-	if (argc < 3)
+	if (argc < 2)
 	{
 		g_print("%s: invalid parameters for playlist-song-length-frames.\n", argv[0]);
 		g_print("%s: syntax: %s playlist-song-length-frames <position>\n", argv[0], argv[0]);
 		return;
 	}
 
-	playpos = atoi(argv[2]);
+	playpos = atoi(argv[1]);
 
 	if (playpos < 1 || playpos > audacious_remote_get_playlist_length(dbus_proxy))
 	{
@@ -512,14 +512,14 @@ void playlist_song_filename(gint argc, gchar **argv)
 {
 	gint i;
 
-	if (argc < 3)
+	if (argc < 2)
 	{
 		g_print("%s: invalid parameters for playlist-filename.\n", argv[0]);
 		g_print("%s: syntax: %s playlist-filename <position>\n", argv[0], argv[0]);
 		return;
 	}
 
-	i = atoi(argv[2]);
+	i = atoi(argv[1]);
 
 	if (i < 1 || i > audacious_remote_get_playlist_length(dbus_proxy))
 	{
@@ -534,14 +534,14 @@ void playlist_jump(gint argc, gchar **argv)
 {
 	gint i;
 
-	if (argc < 3)
+	if (argc < 2)
 	{
 		g_print("%s: invalid parameters for playlist-jump.\n", argv[0]);
 		g_print("%s: syntax: %s playlist-jump <position>\n", argv[0], argv[0]);
 		return;
 	}
 
-	i = atoi(argv[2]);
+	i = atoi(argv[1]);
 
 	if (i < 1 || i > audacious_remote_get_playlist_length(dbus_proxy))
 	{
@@ -600,7 +600,7 @@ void playlist_tuple_field_data(gint argc, gchar **argv)
 	gint i;
 	gpointer data;
 
-	if (argc < 4)
+	if (argc < 3)
 	{
 		g_print("%s: invalid parameters for playlist-tuple-data.\n", argv[0]);
 		g_print("%s: syntax: %s playlist-tuple-data <fieldname> <position>\n", argv[0], argv[0]);
@@ -611,7 +611,7 @@ void playlist_tuple_field_data(gint argc, gchar **argv)
 		return;
 	}
 
-	i = atoi(argv[3]);
+	i = atoi(argv[2]);
 
 	if (i < 1 || i > audacious_remote_get_playlist_length(dbus_proxy))
 	{
@@ -619,12 +619,12 @@ void playlist_tuple_field_data(gint argc, gchar **argv)
 		return;
 	}
 
-	if (!(data = audacious_get_tuple_field_data(dbus_proxy, argv[2], i - 1)))
+	if (!(data = audacious_get_tuple_field_data(dbus_proxy, argv[1], i - 1)))
 	{
 		return;
 	}
 	
-	if (!strcasecmp(argv[2], "track_number") || !strcasecmp(argv[2], "year") || !strcasecmp(argv[2], "length") || !strcasecmp(argv[2], "mtime"))
+	if (!strcasecmp(argv[1], "track_number") || !strcasecmp(argv[1], "year") || !strcasecmp(argv[1], "length") || !strcasecmp(argv[1], "mtime"))
 	{
 		if (*(gint *)data > 0)
 		{
@@ -640,14 +640,14 @@ void playqueue_add(gint argc, gchar **argv)
 {
 	gint i;
 
-	if (argc < 3)
+	if (argc < 2)
 	{
 		g_print("%s: invalid parameters for playqueue-add.\n", argv[0]);
 		g_print("%s: syntax: %s playqueue-add <position>\n", argv[0], argv[0]);
 		return;
 	}
 
-	i = atoi(argv[2]);
+	i = atoi(argv[1]);
 
 	if (i < 1 || i > audacious_remote_get_playlist_length(dbus_proxy))
 	{
@@ -663,14 +663,14 @@ void playqueue_remove(gint argc, gchar **argv)
 {
 	gint i;
 
-	if (argc < 3)
+	if (argc < 2)
 	{
 		g_print("%s: invalid parameters for playqueue-remove.\n", argv[0]);
 		g_print("%s: syntax: %s playqueue-remove <position>\n", argv[0], argv[0]);
 		return;
 	}
 
-	i = atoi(argv[2]);
+	i = atoi(argv[1]);
 
 	if (i < 1 || i > audacious_remote_get_playlist_length(dbus_proxy))
 	{
@@ -686,14 +686,14 @@ void playqueue_is_queued(gint argc, gchar **argv)
 {
 	gint i;
 
-	if (argc < 3)
+	if (argc < 2)
 	{
 		g_print("%s: invalid parameters for playqueue-is-queued.\n", argv[0]);
 		g_print("%s: syntax: %s playqueue-is-queued <position>\n", argv[0], argv[0]);
 		return;
 	}
 
-	i = atoi(argv[2]);
+	i = atoi(argv[1]);
 
 	if (i < 1 || i > audacious_remote_get_playlist_length(dbus_proxy))
 	{
@@ -708,14 +708,14 @@ void playqueue_get_position(gint argc, gchar **argv)
 {
 	gint i, pos;
 
-	if (argc < 3)
+	if (argc < 2)
 	{
 		g_print("%s: invalid parameters for playqueue-get-position.\n", argv[0]);
 		g_print("%s: syntax: %s playqueue-get-position <position>\n", argv[0], argv[0]);
 		return;
 	}
 
-	i = atoi(argv[2]);
+	i = atoi(argv[1]);
 
 	if (i < 1 || i > audacious_remote_get_playlist_length(dbus_proxy))
 	{
@@ -735,14 +735,14 @@ void playqueue_get_qposition(gint argc, gchar **argv)
 {
 	gint i, pos;
 
-	if (argc < 3)
+	if (argc < 2)
 	{
 		g_print("%s: invalid parameters for playqueue-get-qposition.\n", argv[0]);
 		g_print("%s: syntax: %s playqueue-get-qposition <position>\n", argv[0], argv[0]);
 		return;
 	}
 
-	i = atoi(argv[2]);
+	i = atoi(argv[1]);
 
 	if (i < 1 || i > audacious_remote_get_playqueue_length(dbus_proxy))
 	{
@@ -835,7 +835,7 @@ void set_volume(gint argc, gchar **argv)
 {
 	gint i, current_volume;
 
-	if (argc < 3)
+	if (argc < 2)
 	{
 		g_print("%s: invalid parameters for set-volume.\n", argv[0]);
 		g_print("%s: syntax: %s set-volume <level>\n", argv[0], argv[0]);
@@ -843,14 +843,14 @@ void set_volume(gint argc, gchar **argv)
 	}
 
 	current_volume = audacious_remote_get_main_volume(dbus_proxy);
-	switch (argv[2][0]) 
+	switch (argv[1][0]) 
 	{
 		case '+':
 		case '-':
-			i = current_volume + atoi(argv[2]);
+			i = current_volume + atoi(argv[1]);
 			break;
 		default:
-			i = atoi(argv[2]);
+			i = atoi(argv[1]);
 			break;
 	}
 
@@ -859,13 +859,13 @@ void set_volume(gint argc, gchar **argv)
 
 void mainwin_show(gint argc, gchar **argv)
 {
-	if (argc > 2)
+	if (argc > 1)
 	{
-		if (!strncmp(argv[2],"on",2)) {
+		if (!strncmp(argv[1],"on",2)) {
 			audacious_remote_main_win_toggle(dbus_proxy, TRUE);
 			return;
 		}
-		else if (!strncmp(argv[2],"off",3)) {
+		else if (!strncmp(argv[1],"off",3)) {
 			audacious_remote_main_win_toggle(dbus_proxy, FALSE);
 			return;
 		}
@@ -876,13 +876,13 @@ void mainwin_show(gint argc, gchar **argv)
 
 void playlist_show(gint argc, gchar **argv)
 {
-	if (argc > 2)
+	if (argc > 1)
 	{
-		if (!strncmp(argv[2],"on",2)) {
+		if (!strncmp(argv[1],"on",2)) {
 			audacious_remote_pl_win_toggle(dbus_proxy, TRUE);
 			return;
 		}
-		else if (!strncmp(argv[2],"off",3)) {
+		else if (!strncmp(argv[1],"off",3)) {
 			audacious_remote_pl_win_toggle(dbus_proxy, FALSE);
 			return;
 		}
@@ -893,13 +893,13 @@ void playlist_show(gint argc, gchar **argv)
 
 void equalizer_show(gint argc, gchar **argv)
 {
-	if (argc > 2)
+	if (argc > 1)
 	{
-		if (!strncmp(argv[2],"on",2)) {
+		if (!strncmp(argv[1],"on",2)) {
 			audacious_remote_eq_win_toggle(dbus_proxy, TRUE);
 			return;
 		}
-		else if (!strncmp(argv[2],"off",3)) {
+		else if (!strncmp(argv[1],"off",3)) {
 			audacious_remote_eq_win_toggle(dbus_proxy, FALSE);
 			return;
 		}

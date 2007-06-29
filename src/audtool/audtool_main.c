@@ -97,9 +97,9 @@ struct commandhandler handlers[] = {
 	{"get-volume", get_volume, "returns the current volume level in percent", 0},
 	{"set-volume", set_volume, "sets the current volume level in percent", 1},
 	{"<sep>", NULL, "Miscellaneous", 0},
-	{"mainwin-show", mainwin_show, "shows/hides the main window", 0},
-	{"playlist-show", playlist_show, "shows/hides the playlist window", 0},
-	{"equalizer-show", equalizer_show, "shows/hides the equalizer window", 0},
+	{"mainwin-show", mainwin_show, "shows/hides the main window", 1},
+	{"playlist-show", playlist_show, "shows/hides the playlist window", 1},
+	{"equalizer-show", equalizer_show, "shows/hides the equalizer window", 1},
 	{"preferences", show_preferences_window, "shows/hides the preferences window", 0},
 	{"jumptofile", show_jtf_window, "shows the jump to file window", 0},
 	{"shutdown", shutdown_audacious_server, "shuts down audacious", 0},
@@ -132,7 +132,7 @@ static void audtool_connect(void)
 
 gint main(gint argc, gchar **argv)
 {
-	gint i;
+	gint i, j = 0, k = 0;
 
 	setlocale(LC_CTYPE, "");
 	g_type_init();
@@ -148,18 +148,23 @@ gint main(gint argc, gchar **argv)
 	if (argc < 2)
 		mowgli_error_context_display_with_error(e, ":\n  * ", "not enough parameters, use audtool --help for more information.");
 
-	for (i = 0; handlers[i].name != NULL; i++)
+	for (j = 1; j < argc; j++)
 	{
-		if ((!g_strcasecmp(handlers[i].name, argv[1]) ||
-		     !g_strcasecmp(g_strconcat("--", handlers[i].name, NULL), argv[1]))
-		    && g_strcasecmp("<sep>", handlers[i].name))
-  		{
- 			handlers[i].handler(argc, argv);
-			exit(0);
+		for (i = 0; handlers[i].name != NULL; i++)
+		{
+			if ((!g_strcasecmp(handlers[i].name, argv[j]) ||
+			     !g_strcasecmp(g_strconcat("--", handlers[i].name, NULL), argv[j]))
+			    && g_strcasecmp("<sep>", handlers[i].name))
+  			{
+ 				handlers[i].handler(handlers[i].args + 1, &argv[j]);
+				j += handlers[i].args;
+				k++;
+			}
 		}
 	}
 
-	mowgli_error_context_display_with_error(e, ":\n  * ", g_strdup_printf("Unknown command `%s' encountered, use audtool --help for a command list.", argv[1]));
+	if (k == 0)
+		mowgli_error_context_display_with_error(e, ":\n  * ", g_strdup_printf("Unknown command `%s' encountered, use audtool --help for a command list.", argv[1]));
 
 	return 0;
 }
