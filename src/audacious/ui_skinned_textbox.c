@@ -298,6 +298,14 @@ static void ui_skinned_textbox_size_allocate(GtkWidget *widget, GtkAllocation *a
 
     textbox->x = widget->allocation.x/(priv->double_size ? 2 : 1);
     textbox->y = widget->allocation.y/(priv->double_size ? 2 : 1);
+
+    if (priv->w !=  widget->allocation.width) {
+        priv->w = widget->allocation.width;
+        if (priv->pixmap_text) g_free(priv->pixmap_text);
+        priv->pixmap_text = NULL;
+        priv->offset = 0;
+        ui_skinned_textbox_redraw(textbox);
+    }
 }
 
 static gboolean ui_skinned_textbox_textbox_press(GtkWidget *widget, GdkEventButton *event) {
