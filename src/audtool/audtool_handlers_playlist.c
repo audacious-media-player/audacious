@@ -51,8 +51,8 @@ void playlist_add_url_string(gint argc, gchar **argv)
 {
 	if (argc < 2)
 	{
-		g_print("%s: invalid parameters for playlist-addurl.\n", argv[0]);
-		g_print("%s: syntax: %s playlist-addurl <url>\n", argv[0], argv[0]);
+		audtool_whine("invalid parameters for %s.", argv[0]);
+		audtool_whine("syntax: %s <url>", argv[0]);
 		return;
 	}
 
@@ -65,8 +65,8 @@ void playlist_delete(gint argc, gchar **argv)
 
 	if (argc < 2)
 	{
-		g_print("%s: invalid parameters for playlist-delete.\n", argv[0]);
-		g_print("%s: syntax: %s playlist-delete <position>\n", argv[0], argv[0]);
+		audtool_whine("invalid parameters for %s.", argv[0]);
+		audtool_whine("syntax: %s <position>", argv[0]);
 		return;
 	}
 
@@ -74,7 +74,7 @@ void playlist_delete(gint argc, gchar **argv)
 
 	if (playpos < 1 || playpos > audacious_remote_get_playlist_length(dbus_proxy))
 	{
-		g_print("%s: invalid playlist position %d\n", argv[0], playpos);
+		audtool_whine("invalid playlist position %d", playpos);
 		return;
 	}
 
@@ -87,7 +87,7 @@ void playlist_length(gint argc, gchar **argv)
 
 	i = audacious_remote_get_playlist_length(dbus_proxy);
 
-	g_print("%d\n", i);
+	audtool_report("%d", i);
 }
 
 void playlist_song(gint argc, gchar **argv)
@@ -97,8 +97,8 @@ void playlist_song(gint argc, gchar **argv)
 
 	if (argc < 2)
 	{
-		g_print("%s: invalid parameters for playlist-song-title.\n", argv[0]);
-		g_print("%s: syntax: %s playlist-song-title <position>\n", argv[0], argv[0]);
+		audtool_whine("invalid parameters for %s.", argv[0]);
+		audtool_whine("syntax: %s <position>", argv[0]);
 		return;
 	}
 
@@ -106,13 +106,13 @@ void playlist_song(gint argc, gchar **argv)
 
 	if (playpos < 1 || playpos > audacious_remote_get_playlist_length(dbus_proxy))
 	{
-		g_print("%s: invalid playlist position %d\n", argv[0], playpos);
+		audtool_whine("invalid playlist position %d", playpos);
 		return;
 	}
 
 	song = audacious_remote_get_playlist_title(dbus_proxy, playpos - 1);
 
-	g_print("%s\n", song);
+	audtool_report("%s", song);
 }
 
 
@@ -122,8 +122,8 @@ void playlist_song_length(gint argc, gchar **argv)
 
 	if (argc < 2)
 	{
-		g_print("%s: invalid parameters for playlist-song-length.\n", argv[0]);
-		g_print("%s: syntax: %s playlist-song-length <position>\n", argv[0], argv[0]);
+		audtool_whine("invalid parameters for %s.", argv[0]);
+		audtool_whine("syntax: %s <position>", argv[0]);
 		return;
 	}
 
@@ -131,14 +131,14 @@ void playlist_song_length(gint argc, gchar **argv)
 
 	if (playpos < 1 || playpos > audacious_remote_get_playlist_length(dbus_proxy))
 	{
-		g_print("%s: invalid playlist position %d\n", argv[0], playpos);
+		audtool_whine("invalid playlist position %d", playpos);
 		return;
 	}
 
 	frames = audacious_remote_get_playlist_time(dbus_proxy, playpos - 1);
 	length = frames / 1000;
 
-	g_print("%d:%.2d\n", length / 60, length % 60);
+	audtool_report("%d:%.2d", length / 60, length % 60);
 }
 
 void playlist_song_length_seconds(gint argc, gchar **argv)
@@ -147,8 +147,8 @@ void playlist_song_length_seconds(gint argc, gchar **argv)
 
 	if (argc < 2)
 	{
-		g_print("%s: invalid parameters for playlist-song-length-seconds.\n", argv[0]);
-		g_print("%s: syntax: %s playlist-song-length-seconds <position>\n", argv[0], argv[0]);
+		audtool_whine("invalid parameters for %s.", argv[0]);
+		audtool_whine("syntax: %s <position>", argv[0]);
 		return;
 	}
 
@@ -156,14 +156,14 @@ void playlist_song_length_seconds(gint argc, gchar **argv)
 
 	if (playpos < 1 || playpos > audacious_remote_get_playlist_length(dbus_proxy))
 	{
-		g_print("%s: invalid playlist position %d\n", argv[0], playpos);
+		audtool_whine("invalid playlist position %d", playpos);
 		return;
 	}
 
 	frames = audacious_remote_get_playlist_time(dbus_proxy, playpos - 1);
 	length = frames / 1000;
 
-	g_print("%d\n", length);
+	audtool_report("%d", length);
 }
 
 void playlist_song_length_frames(gint argc, gchar **argv)
@@ -172,8 +172,8 @@ void playlist_song_length_frames(gint argc, gchar **argv)
 
 	if (argc < 2)
 	{
-		g_print("%s: invalid parameters for playlist-song-length-frames.\n", argv[0]);
-		g_print("%s: syntax: %s playlist-song-length-frames <position>\n", argv[0], argv[0]);
+		audtool_whine("invalid parameters for %s.", argv[0]);
+		audtool_whine("syntax: %s <position>", argv[0]);
 		return;
 	}
 
@@ -181,13 +181,13 @@ void playlist_song_length_frames(gint argc, gchar **argv)
 
 	if (playpos < 1 || playpos > audacious_remote_get_playlist_length(dbus_proxy))
 	{
-		g_print("%s: invalid playlist position %d\n", argv[0], playpos);
+		audtool_whine("invalid playlist position %d", playpos);
 		return;
 	}
 
 	frames = audacious_remote_get_playlist_time(dbus_proxy, playpos - 1);
 
-	g_print("%d\n", frames);
+	audtool_report("%d", frames);
 }
 
 void playlist_display(gint argc, gchar **argv)
@@ -199,7 +199,7 @@ void playlist_display(gint argc, gchar **argv)
 
 	i = audacious_remote_get_playlist_length(dbus_proxy);
 
-	g_print("%d track%s.\n", i, i != 1 ? "s" : "");
+	audtool_report("%d track%s.", i, i != 1 ? "s" : "");
 
 	total = 0;
 
@@ -232,12 +232,12 @@ void playlist_display(gint argc, gchar **argv)
 
 		}
 
-		fmt = g_strdup_printf("%%4d | %%-%ds | %%d:%%.2d\n", column);
-		g_print(fmt, ii + 1, songname, length / 60, length % 60);
+		fmt = g_strdup_printf("%%4d | %%-%ds | %%d:%%.2d", column);
+		audtool_report(fmt, ii + 1, songname, length / 60, length % 60);
 		g_free(fmt);
 	}
 
-	g_print("Total length: %d:%.2d\n", total / 60, total % 60);
+	audtool_report("Total length: %d:%.2d", total / 60, total % 60);
 }
 
 void playlist_position(gint argc, gchar **argv)
@@ -246,7 +246,7 @@ void playlist_position(gint argc, gchar **argv)
 
 	i = audacious_remote_get_playlist_pos(dbus_proxy);
 
-	g_print("%d\n", i + 1);
+	audtool_report("%d", i + 1);
 }
 
 void playlist_song_filename(gint argc, gchar **argv)
@@ -255,8 +255,8 @@ void playlist_song_filename(gint argc, gchar **argv)
 
 	if (argc < 2)
 	{
-		g_print("%s: invalid parameters for playlist-filename.\n", argv[0]);
-		g_print("%s: syntax: %s playlist-filename <position>\n", argv[0], argv[0]);
+		audtool_whine("invalid parameters for %s.", argv[0]);
+		audtool_whine("syntax: %s <position>", argv[0]);
 		return;
 	}
 
@@ -264,11 +264,11 @@ void playlist_song_filename(gint argc, gchar **argv)
 
 	if (i < 1 || i > audacious_remote_get_playlist_length(dbus_proxy))
 	{
-		g_print("%s: invalid playlist position %d\n", argv[0], i);
+		audtool_whine("invalid playlist position %d", i);
 		return;
 	}
 
-	g_print("%s\n", audacious_remote_get_playlist_file(dbus_proxy, i - 1));
+	audtool_report("%s", audacious_remote_get_playlist_file(dbus_proxy, i - 1));
 }
 
 void playlist_jump(gint argc, gchar **argv)
@@ -277,8 +277,8 @@ void playlist_jump(gint argc, gchar **argv)
 
 	if (argc < 2)
 	{
-		g_print("%s: invalid parameters for playlist-jump.\n", argv[0]);
-		g_print("%s: syntax: %s playlist-jump <position>\n", argv[0], argv[0]);
+		audtool_whine("invalid parameters for %s.", argv[0]);
+		audtool_whine("syntax: %s <position>", argv[0]);
 		return;
 	}
 
@@ -286,7 +286,7 @@ void playlist_jump(gint argc, gchar **argv)
 
 	if (i < 1 || i > audacious_remote_get_playlist_length(dbus_proxy))
 	{
-		g_print("%s: invalid playlist position %d\n", argv[0], i);
+		audtool_whine("invalid playlist position %d", i);
 		return;
 	}
 
@@ -302,12 +302,12 @@ void playlist_repeat_status(gint argc, gchar **argv)
 {
 	if (audacious_remote_is_repeat(dbus_proxy))
 	{
-		g_print("on\n");
+		audtool_report("on");
 		return;
 	}
 	else
 	{
-		g_print("off\n");
+		audtool_report("off");
 		return;
 	}
 }
@@ -321,12 +321,12 @@ void playlist_shuffle_status(gint argc, gchar **argv)
 {
 	if (audacious_remote_is_shuffle(dbus_proxy))
 	{
-		g_print("on\n");
+		audtool_report("on");
 		return;
 	}
 	else
 	{
-		g_print("off\n");
+		audtool_report("off");
 		return;
 	}
 }
@@ -343,12 +343,12 @@ void playlist_tuple_field_data(gint argc, gchar **argv)
 
 	if (argc < 3)
 	{
-		g_print("%s: invalid parameters for playlist-tuple-data.\n", argv[0]);
-		g_print("%s: syntax: %s playlist-tuple-data <fieldname> <position>\n", argv[0], argv[0]);
-		g_print("%s:   - fieldname example choices: performer, album_name,\n", argv[0]);
-		g_print("%s:       track_name, track_number, year, date, genre, comment,\n", argv[0]);
-		g_print("%s:       file_name, file_ext, file_path, length, formatter,\n", argv[0]);
-		g_print("%s:       custom, mtime\n", argv[0]);
+		audtool_whine("invalid parameters for %s.", argv[0]);
+		audtool_whine("syntax: %s <fieldname> <position>", argv[0]);
+		audtool_whine("  - fieldname example choices: performer, album_name,");
+		audtool_whine("      track_name, track_number, year, date, genre, comment,");
+		audtool_whine("      file_name, file_ext, file_path, length, formatter,");
+		audtool_whine("      custom, mtime");
 		return;
 	}
 
@@ -356,7 +356,7 @@ void playlist_tuple_field_data(gint argc, gchar **argv)
 
 	if (i < 1 || i > audacious_remote_get_playlist_length(dbus_proxy))
 	{
-		g_print("%s: invalid playlist position %d\n", argv[0], i);
+		audtool_whine("invalid playlist position %d", i);
 		return;
 	}
 
@@ -369,10 +369,10 @@ void playlist_tuple_field_data(gint argc, gchar **argv)
 	{
 		if (*(gint *)data > 0)
 		{
-			g_print("%d\n", *(gint *)data);
+			audtool_report("%d", *(gint *)data);
 		}
 		return;
 	}
 
-	g_print("%s\n", (gchar *)data);
+	audtool_report("%s", (gchar *)data);
 }
