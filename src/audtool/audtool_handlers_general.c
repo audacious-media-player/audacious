@@ -43,7 +43,7 @@ void get_volume(gint argc, gchar **argv)
 
 	i = audacious_remote_get_main_volume(dbus_proxy);
 
-	g_print("%d\n", i);
+	audtool_report("%d", i);
 }
 
 void set_volume(gint argc, gchar **argv)
@@ -52,8 +52,8 @@ void set_volume(gint argc, gchar **argv)
 
 	if (argc < 2)
 	{
-		g_print("%s: invalid parameters for set-volume.\n", argv[0]);
-		g_print("%s: syntax: %s set-volume <level>\n", argv[0], argv[0]);
+		audtool_whine("invalid parameters for %s.", argv[0]);
+		audtool_whine("syntax: %s <level>", argv[0]);
 		return;
 	}
 
@@ -85,8 +85,8 @@ void mainwin_show(gint argc, gchar **argv)
 			return;
 		}
 	}
-	g_print("%s: invalid parameter for mainwin-show.\n",argv[0]);
-	g_print("%s: syntax: %s mainwin-show <on/off>\n",argv[0],argv[0]);
+	audtool_whine("invalid parameter for %s.", argv[0]);
+	audtool_whine("syntax: %s <on/off>", argv[0]);
 }
 
 void playlist_show(gint argc, gchar **argv)
@@ -102,8 +102,8 @@ void playlist_show(gint argc, gchar **argv)
 			return;
 		}
 	}
-	g_print("%s: invalid parameter for playlist-show.\n",argv[0]);
-	g_print("%s: syntax: %s playlist-show <on/off>\n",argv[0],argv[0]);
+	audtool_whine("invalid parameter for %s.", argv[0]);
+	audtool_whine("syntax: %s <on/off>", argv[0]);
 }
 
 void equalizer_show(gint argc, gchar **argv)
@@ -119,8 +119,8 @@ void equalizer_show(gint argc, gchar **argv)
 			return;
 		}
 	}
-	g_print("%s: invalid parameter for equalizer-show.\n",argv[0]);
-	g_print("%s: syntax: %s equalizer-show <on/off>\n",argv[0],argv[0]);
+	audtool_whine("invalid parameter for %s.", argv[0]);
+	audtool_whine("syntax: %s <on/off>", argv[0]);
 }
 
 void show_preferences_window(gint argc, gchar **argv)
@@ -145,11 +145,11 @@ void get_handlers_list(gint argc, gchar **argv)
 	for (i = 0; handlers[i].name != NULL; i++)
 	{
 		if (!g_strcasecmp("<sep>", handlers[i].name))
-			g_print("%s%s:\n", i == 0 ? "" : "\n", handlers[i].desc);
+			audtool_report("%s%s:", i == 0 ? "" : "", handlers[i].desc);
 		else
-			g_print("   %-34s - %s\n", handlers[i].name, handlers[i].desc);
+			audtool_report("   %-34s - %s", handlers[i].name, handlers[i].desc);
 	}
 
-	g_print("\nHandlers may be prefixed with `--' (GNU-style long-options) or not, your choice.\n");
-	g_print("Report bugs to http://bugs-meta.atheme.org/\n");
+	audtool_report("Handlers may be prefixed with `--' (GNU-style long-options) or not, your choice.");
+	audtool_report("Report bugs to http://bugs-meta.atheme.org/");
 }
