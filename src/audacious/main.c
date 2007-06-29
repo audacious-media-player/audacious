@@ -1232,14 +1232,7 @@ main(gint argc, gchar ** argv)
     mainwin_setup_menus();
 
     if (options.headless != 1)
-        GDK_THREADS_LEAVE();
-
-    handle_cmd_line_options(&options, FALSE);
-
-    if (options.headless != 1)
     {
-        GDK_THREADS_ENTER();
-
         read_volume(VOLSET_STARTUP);
         mainwin_set_info_text();
 
