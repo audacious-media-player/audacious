@@ -101,7 +101,7 @@ extern GtkWidget *mainwin_jtf;
 extern GtkWidget *mainwin_eq, *mainwin_pl;
 extern GtkWidget *mainwin_info;
 
-extern TextBox *mainwin_stime_min, *mainwin_stime_sec;
+extern GtkWidget *mainwin_stime_min, *mainwin_stime_sec;
 
 extern Vis *active_vis;
 extern Vis *mainwin_vis;

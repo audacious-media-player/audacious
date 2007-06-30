@@ -138,9 +138,9 @@ static GtkWidget *mainwin_shuffle, *mainwin_repeat;
 GtkWidget *mainwin_eq, *mainwin_pl;
 
 GtkWidget *mainwin_info;
-TextBox *mainwin_stime_min, *mainwin_stime_sec;
+GtkWidget *mainwin_stime_min, *mainwin_stime_sec;
 
-static TextBox *mainwin_rate_text, *mainwin_freq_text, 
+static GtkWidget *mainwin_rate_text, *mainwin_freq_text, 
     *mainwin_othertext;
 
 PlayStatus *mainwin_playstatus;
@@ -180,7 +180,7 @@ static gint mainwin_idle_func(gpointer data);
 
 static void set_timer_mode_menu_cb(TimerMode mode);
 static void set_timer_mode(TimerMode mode);
-
+static void change_timer_mode(void);
 static void mainwin_refresh_hints(void);
 
 void mainwin_position_motion_cb(gint pos);
@@ -285,14 +285,14 @@ mainwin_set_shade_menu_cb(gboolean shaded)
         if (playback_get_playing())
     {
                 widget_show(WIDGET(mainwin_sposition));
-            widget_show(WIDGET(mainwin_stime_min));
-            widget_show(WIDGET(mainwin_stime_sec));
+            gtk_widget_show(mainwin_stime_min);
+            gtk_widget_show(mainwin_stime_sec);
     }
     else
     {
                 widget_hide(WIDGET(mainwin_sposition));
-            widget_hide(WIDGET(mainwin_stime_min));
-            widget_hide(WIDGET(mainwin_stime_sec));
+            gtk_widget_hide(mainwin_stime_min);
+            gtk_widget_hide(mainwin_stime_sec);
     }
 
     }
@@ -312,8 +312,8 @@ mainwin_set_shade_menu_cb(gboolean shaded)
         gtk_widget_hide(mainwin_sfwd);
         gtk_widget_hide(mainwin_seject);
 
-        widget_hide(WIDGET(mainwin_stime_min));
-        widget_hide(WIDGET(mainwin_stime_sec));
+        gtk_widget_hide(mainwin_stime_min);
+        gtk_widget_hide(mainwin_stime_sec);
         widget_hide(WIDGET(mainwin_sposition));
 
         ui_skinned_textbox_set_scroll(mainwin_info, cfg.autoscroll);
@@ -599,11 +599,11 @@ mainwin_lock_info_text(const gchar * text)
 {
     if (mainwin_info_text_locked != TRUE)
         mainwin_tb_old_text = g_strdup(bmp_active_skin->properties.mainwin_othertext_is_status ?
-        mainwin_othertext->tb_text : UI_SKINNED_TEXTBOX(mainwin_info)->text);
+        UI_SKINNED_TEXTBOX(mainwin_othertext)->text : UI_SKINNED_TEXTBOX(mainwin_info)->text);
 
     mainwin_info_text_locked = TRUE;
     if (bmp_active_skin->properties.mainwin_othertext_is_status)
-        textbox_set_text(mainwin_othertext, text);
+        ui_skinned_textbox_set_text(mainwin_othertext, text);
     else
         ui_skinned_textbox_set_text(mainwin_info, text);
 }
@@ -616,7 +616,7 @@ mainwin_release_info_text(void)
     if (mainwin_tb_old_text != NULL)
     {
         if (bmp_active_skin->properties.mainwin_othertext_is_status)
-            textbox_set_text(mainwin_othertext, mainwin_tb_old_text);
+            ui_skinned_textbox_set_text(mainwin_othertext, mainwin_tb_old_text);
         else
             ui_skinned_textbox_set_text(mainwin_info, mainwin_tb_old_text);
         g_free(mainwin_tb_old_text);
@@ -651,19 +651,19 @@ mainwin_refresh_hints(void)
     if (bmp_active_skin && bmp_active_skin->properties.mainwin_othertext
     == TRUE)
     {
-    widget_hide(WIDGET(mainwin_rate_text));
-    widget_hide(WIDGET(mainwin_freq_text));
+    gtk_widget_hide(mainwin_rate_text);
+    gtk_widget_hide(mainwin_freq_text);
     widget_hide(WIDGET(mainwin_monostereo));
 
     if (bmp_active_skin->properties.mainwin_othertext_visible)
-        widget_show(WIDGET(mainwin_othertext));
+        gtk_widget_show(mainwin_othertext);
     }
     else
     {
-    widget_show(WIDGET(mainwin_rate_text));
-    widget_show(WIDGET(mainwin_freq_text));
+    gtk_widget_show(mainwin_rate_text);
+    gtk_widget_show(mainwin_freq_text);
     widget_show(WIDGET(mainwin_monostereo));
-    widget_hide(WIDGET(mainwin_othertext));
+    gtk_widget_hide(mainwin_othertext);
     }
 
     /* positioning and size attributes */
@@ -684,7 +684,7 @@ mainwin_refresh_hints(void)
         UI_SKINNED_TEXTBOX(mainwin_info)->height*(1+cfg.doublesize));
 
     if (bmp_active_skin->properties.mainwin_infobar_x && bmp_active_skin->properties.mainwin_infobar_y)
-    widget_move(WIDGET(mainwin_othertext), bmp_active_skin->properties.mainwin_infobar_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_othertext), bmp_active_skin->properties.mainwin_infobar_x,
         bmp_active_skin->properties.mainwin_infobar_y);
 
     if (bmp_active_skin->properties.mainwin_number_0_x && bmp_active_skin->properties.mainwin_number_0_y)
@@ -791,9 +791,9 @@ mainwin_refresh_hints(void)
         gtk_widget_hide(mainwin_info);
 
     if (bmp_active_skin->properties.mainwin_othertext_visible)
-        widget_show(WIDGET(mainwin_othertext));
+        gtk_widget_show(mainwin_othertext);
     else
-        widget_hide(WIDGET(mainwin_othertext));
+        gtk_widget_hide(mainwin_othertext);
 
     if (bmp_active_skin->properties.mainwin_vis_visible)
         widget_show(WIDGET(mainwin_vis));
@@ -807,8 +807,8 @@ mainwin_refresh_hints(void)
         gtk_widget_hide(mainwin_sstop);
         gtk_widget_hide(mainwin_sfwd);
         gtk_widget_hide(mainwin_seject);
-        widget_hide(WIDGET(mainwin_stime_min));
-        widget_hide(WIDGET(mainwin_stime_sec));
+        gtk_widget_hide(mainwin_stime_min);
+        gtk_widget_hide(mainwin_stime_sec);
     }
 
     /* window size, mainwinWidth && mainwinHeight properties */
@@ -858,27 +858,27 @@ mainwin_set_song_info(gint bitrate,
         if (bitrate < 1000) {
             /* Show bitrate in 1000s */
             g_snprintf(text, sizeof(text), "%3d", bitrate);
-            textbox_set_text(mainwin_rate_text, text);
+            ui_skinned_textbox_set_text(mainwin_rate_text, text);
         }
         else {
             /* Show bitrate in 100,000s */
             g_snprintf(text, sizeof(text), "%2dH", bitrate / 100);
-            textbox_set_text(mainwin_rate_text, text);
+            ui_skinned_textbox_set_text(mainwin_rate_text, text);
         }
     }
     else
-        textbox_set_text(mainwin_rate_text, _("VBR"));
+        ui_skinned_textbox_set_text(mainwin_rate_text, _("VBR"));
 
     /* Show sampling frequency in kHz */
     g_snprintf(text, sizeof(text), "%2d", frequency / 1000);
-    textbox_set_text(mainwin_freq_text, text);
+    ui_skinned_textbox_set_text(mainwin_freq_text, text);
 
     monostereo_set_num_channels(mainwin_monostereo, n_channels);
 
     if (cfg.player_shaded)
     {
-        widget_show(WIDGET(mainwin_stime_min));
-        widget_show(WIDGET(mainwin_stime_sec));
+        gtk_widget_show(mainwin_stime_min);
+        gtk_widget_show(mainwin_stime_sec);
     }
 
     widget_show(WIDGET(mainwin_minus_num));
@@ -914,21 +914,21 @@ mainwin_set_song_info(gint bitrate,
             (gfloat) frequency / 1000,
             (n_channels > 1) ? _("stereo") : _("mono"));
 
-        textbox_set_text(mainwin_othertext, text);
+        ui_skinned_textbox_set_text(mainwin_othertext, text);
 
-        widget_hide(WIDGET(mainwin_rate_text));
-        widget_hide(WIDGET(mainwin_freq_text));
+        gtk_widget_hide(mainwin_rate_text);
+        gtk_widget_hide(mainwin_freq_text);
         widget_hide(WIDGET(mainwin_monostereo));
 
         if (bmp_active_skin->properties.mainwin_othertext_visible)
-            widget_show(WIDGET(mainwin_othertext));
+            gtk_widget_show(mainwin_othertext);
     }
     else
     {
-        widget_show(WIDGET(mainwin_rate_text));
-        widget_show(WIDGET(mainwin_freq_text));
+        gtk_widget_show(mainwin_rate_text);
+        gtk_widget_show(mainwin_freq_text);
         widget_show(WIDGET(mainwin_monostereo));
-        widget_hide(WIDGET(mainwin_othertext));
+        gtk_widget_hide(mainwin_othertext);
     }
 
     title = playlist_get_info_text(playlist);
@@ -955,8 +955,8 @@ mainwin_clear_song_info(void)
     mainwin_sposition->hs_pressed = FALSE;
 
     /* clear sampling parameter displays */
-    textbox_set_text(mainwin_rate_text, "   ");
-    textbox_set_text(mainwin_freq_text, "  ");
+    ui_skinned_textbox_set_text(mainwin_rate_text, "   ");
+    ui_skinned_textbox_set_text(mainwin_freq_text, "  ");
     monostereo_set_num_channels(mainwin_monostereo, 0);
 
     if (mainwin_playstatus != NULL)
@@ -969,13 +969,13 @@ mainwin_clear_song_info(void)
     widget_hide(WIDGET(mainwin_10sec_num));
     widget_hide(WIDGET(mainwin_sec_num));
 
-    widget_hide(WIDGET(mainwin_stime_min));
-    widget_hide(WIDGET(mainwin_stime_sec));
+    gtk_widget_hide(mainwin_stime_min);
+    gtk_widget_hide(mainwin_stime_sec);
 
     widget_hide(WIDGET(mainwin_position));
     widget_hide(WIDGET(mainwin_sposition));
 
-    widget_hide(WIDGET(mainwin_othertext));
+    gtk_widget_hide(mainwin_othertext);
 
     playlistwin_hide_timer();
     draw_main_window(TRUE);
@@ -1180,14 +1180,11 @@ mainwin_mouse_button_press(GtkWidget * widget,
         widget_contains(WIDGET(mainwin_10min_num), event->x, event->y) ||
         widget_contains(WIDGET(mainwin_min_num), event->x, event->y) ||
         widget_contains(WIDGET(mainwin_10sec_num), event->x, event->y) ||
-        widget_contains(WIDGET(mainwin_sec_num), event->x, event->y) ||
-        widget_contains(WIDGET(mainwin_stime_min), event->x, event->y) ||
-        widget_contains(WIDGET(mainwin_stime_sec), event->x, event->y))
+        widget_contains(WIDGET(mainwin_sec_num), event->x, event->y))// ||
+        //widget_contains(WIDGET(mainwin_stime_min), event->x, event->y) ||
+        //widget_contains(WIDGET(mainwin_stime_sec), event->x, event->y))
     {
-            if (cfg.timer_mode == TIMER_ELAPSED)
-                set_timer_mode(TIMER_REMAINING);
-            else
-                set_timer_mode(TIMER_ELAPSED);
+        change_timer_mode();
         }
     }
 
@@ -1755,17 +1752,17 @@ mainwin_spos_motion_cb(gint pos)
     if (cfg.timer_mode == TIMER_REMAINING) {
         time = (playlist_get_current_length(playlist) / 1000) - time;
         time_msg = g_strdup_printf("-%2.2d", time / 60);
-        textbox_set_text(mainwin_stime_min, time_msg);
+        ui_skinned_textbox_set_text(mainwin_stime_min, time_msg);
         g_free(time_msg);
     }
     else {
         time_msg = g_strdup_printf(" %2.2d", time / 60);
-        textbox_set_text(mainwin_stime_min, time_msg);
+        ui_skinned_textbox_set_text(mainwin_stime_min, time_msg);
         g_free(time_msg);
     }
 
     time_msg = g_strdup_printf("%2.2d", time % 60);
-    textbox_set_text(mainwin_stime_sec, time_msg);
+    ui_skinned_textbox_set_text(mainwin_stime_sec, time_msg);
     g_free(time_msg);
 }
 
@@ -2529,6 +2526,13 @@ set_timer_mode_menu_cb(TimerMode mode)
     cfg.timer_mode = mode;
 }
 
+void change_timer_mode(void) {
+    if (cfg.timer_mode == TIMER_ELAPSED)
+        set_timer_mode(TIMER_REMAINING);
+    else
+        set_timer_mode(TIMER_ELAPSED);
+}
+
 static void
 mainwin_playlist_prev(void)
 {
@@ -2841,15 +2845,16 @@ mainwin_create_widgets(void)
     g_signal_connect(mainwin_info, "double-clicked", mainwin_info_double_clicked_cb, NULL);
     g_signal_connect(mainwin_info, "right-clicked", mainwin_info_right_clicked_cb, NULL);
 
-    mainwin_othertext =
-    create_textbox(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 112, 43, 
-            153, 1, SKIN_TEXT);
+    mainwin_othertext = ui_skinned_textbox_new();
+    ui_skinned_textbox_setup(mainwin_othertext, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 112, 43,
+                      153, 1, SKIN_TEXT);
 
-    mainwin_rate_text =
-        create_textbox(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 111, 43, 15,
+    mainwin_rate_text = ui_skinned_textbox_new();
+    ui_skinned_textbox_setup(mainwin_rate_text, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 111, 43, 15,
                        0, SKIN_TEXT);
-    mainwin_freq_text =
-        create_textbox(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 156, 43, 10,
+
+    mainwin_freq_text = ui_skinned_textbox_new();
+    ui_skinned_textbox_setup(mainwin_freq_text, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 156, 43, 10,
                        0, SKIN_TEXT);
 
     mainwin_menurow =
@@ -2926,12 +2931,15 @@ mainwin_create_widgets(void)
                        mainwin_spos_release_cb, SKIN_TITLEBAR);
     widget_hide(WIDGET(mainwin_sposition));
 
-    mainwin_stime_min =
-        create_textbox(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 130, 4, 15,
+    mainwin_stime_min = ui_skinned_textbox_new();
+    ui_skinned_textbox_setup(mainwin_stime_min, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 130, 4, 15,
                        FALSE, SKIN_TEXT);
-    mainwin_stime_sec =
-        create_textbox(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 147, 4, 10,
+    g_signal_connect(mainwin_stime_min, "clicked", change_timer_mode, NULL);
+
+    mainwin_stime_sec = ui_skinned_textbox_new();
+    ui_skinned_textbox_setup(mainwin_stime_sec, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 147, 4, 10,
                        FALSE, SKIN_TEXT);
+    g_signal_connect(mainwin_stime_sec, "clicked", change_timer_mode, NULL);
 
     err = gtk_message_dialog_new(GTK_WINDOW(mainwin), GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_MODAL,
                                  GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE, _("Error in Audacious."));
@@ -2943,8 +2951,6 @@ mainwin_create_widgets(void)
                                              "Boo! Bad stuff! Booga Booga!");
 
     /* XXX: eventually update widgetcore API to not need this */
-
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_othertext));
 
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_rate_text));
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_freq_text));
@@ -2968,9 +2974,6 @@ mainwin_create_widgets(void)
 
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_position));
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_sposition));
-
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_stime_min));
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_stime_sec));
 }
 
 static void
@@ -3094,11 +3097,11 @@ idle_func_update_song_info(gint time)
         gchar *time_str;
 
         time_str = g_strdup_printf("%c%2.2d", stime_prefix, t / 60);
-        textbox_set_text(mainwin_stime_min, time_str);
+        ui_skinned_textbox_set_text(mainwin_stime_min, time_str);
         g_free(time_str);
 
         time_str = g_strdup_printf("%2.2d", t % 60);
-        textbox_set_text(mainwin_stime_sec, time_str);
+        ui_skinned_textbox_set_text(mainwin_stime_sec, time_str);
         g_free(time_str);
     }
 

@@ -37,6 +37,7 @@
 typedef struct _UiSkinnedTextboxPrivate UiSkinnedTextboxPrivate;
 
 enum {
+    CLICKED,
     DOUBLE_CLICKED,
     RIGHT_CLICKED,
     DOUBLED,
@@ -143,10 +144,16 @@ static void ui_skinned_textbox_class_init (UiSkinnedTextboxClass *klass) {
 
     container_class->add = ui_skinned_textbox_add;
 
+    klass->clicked = NULL;
     klass->double_clicked = NULL;
     klass->right_clicked = NULL;
     klass->doubled = ui_skinned_textbox_toggle_doublesize;
     klass->redraw = ui_skinned_textbox_redraw;
+
+    textbox_signals[CLICKED] = 
+        g_signal_new ("clicked", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
+                      G_STRUCT_OFFSET (UiSkinnedTextboxClass, clicked), NULL, NULL,
+                      gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
     textbox_signals[DOUBLE_CLICKED] = 
         g_signal_new ("double-clicked", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
@@ -316,12 +323,16 @@ static gboolean ui_skinned_textbox_textbox_press(GtkWidget *widget, GdkEventButt
         textbox = UI_SKINNED_TEXTBOX(widget);
 
         if (event->button == 1) {
-            if (priv->scroll_allowed && (priv->pixmap_width > priv->w) && priv->is_scrollable) {
-                priv->is_dragging = TRUE;
-                textbox->redraw = TRUE;
-                priv->drag_off = priv->offset;
-                priv->drag_x = event->x;
-            }
+            if (priv->scroll_allowed) {
+                if ((priv->pixmap_width > priv->w) && priv->is_scrollable) {
+                    priv->is_dragging = TRUE;
+                    textbox->redraw = TRUE;
+                    priv->drag_off = priv->offset;
+                    priv->drag_x = event->x;
+                }
+            } else
+                g_signal_emit(widget, textbox_signals[CLICKED], 0);
+
         } else if (event->button == 3) {
             g_signal_emit(widget, textbox_signals[RIGHT_CLICKED], 0);
         }
@@ -577,8 +588,15 @@ static gboolean textbox_scroll(gpointer data) {
         if (priv->scroll_back) priv->offset -= 1;
         else priv->offset += 1;
 
-        if (priv->offset >= (priv->pixmap_width - priv->w)) priv->scroll_back = TRUE;
-        if (priv->offset <= 0) priv->scroll_back = FALSE;
+        if (priv->offset >= (priv->pixmap_width - priv->w)) {
+            priv->scroll_back = TRUE;
+            /* There are 1 million microseconds per second */
+            g_usleep(1000000);
+        }
+        if (priv->offset <= 0) {
+            priv->scroll_back = FALSE;
+            g_usleep(1000000);
+        }
         ui_skinned_textbox_redraw(textbox);
     }
 

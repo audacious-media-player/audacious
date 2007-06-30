@@ -55,6 +55,7 @@
 #include "pluginenum.h"
 #include "ui_main.h"
 #include "ui_playlist.h"
+#include "ui_skinned_textbox.h"
 #include "util.h"
 #include "visualization.h"
 #include "vfs.h"
@@ -91,10 +92,10 @@ idle_func_change_song(gboolean waiting)
             gchar time_str[5];
 
             g_snprintf(time_str, sizeof(time_str), "%2.2d", timeleft / 60);
-            textbox_set_text(mainwin_stime_min, time_str);
+            ui_skinned_textbox_set_text(mainwin_stime_min, time_str);
 
             g_snprintf(time_str, sizeof(time_str), "%2.2d", timeleft % 60);
-            textbox_set_text(mainwin_stime_sec, time_str);
+            ui_skinned_textbox_set_text(mainwin_stime_sec, time_str);
         }
 
         playlistwin_set_time(timeleft * 1000, 0, TIMER_ELAPSED);
