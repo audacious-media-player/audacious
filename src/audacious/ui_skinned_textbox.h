@@ -24,6 +24,9 @@
 #include <gtk/gtkenums.h>
 #include "widgets/skin.h"
 
+#define	TEXTBOX_SCROLL_TIMEOUT	       200
+#define TEXTBOX_SCROLL_SMOOTH_TIMEOUT  30
+
 #define UI_TYPE_SKINNED_TEXTBOX            (ui_skinned_textbox_get_type())
 #define UI_SKINNED_TEXTBOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), UI_TYPE_SKINNED_TEXTBOX, UiSkinnedTextbox))
 #define UI_SKINNED_TEXTBOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), UI_TYPE_SKINNED_TEXTBOX, UiSkinnedTextboxClass))
@@ -57,5 +60,7 @@ void ui_skinned_textbox_setup(GtkWidget *widget, GtkWidget *fixed, GdkPixmap *pa
 void ui_skinned_textbox_set_text(GtkWidget *widget, const gchar *text);
 void ui_skinned_textbox_set_xfont(GtkWidget *widget, gboolean use_xfont, const gchar *fontname);
 void ui_skinned_textbox_set_scroll(GtkWidget *widget, gboolean scroll);
+void ui_skinned_textbox_move_relative(GtkWidget *widget, gint x, gint y);
+void ui_skinned_textbox_resize_relative(GtkWidget *widget, gint w, gint h);
 
 #endif

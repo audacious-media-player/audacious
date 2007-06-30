@@ -591,11 +591,11 @@ static gboolean textbox_scroll(gpointer data) {
         if (priv->offset >= (priv->pixmap_width - priv->w)) {
             priv->scroll_back = TRUE;
             /* There are 1 million microseconds per second */
-            g_usleep(1000000);
+            //g_usleep(1000000);
         }
         if (priv->offset <= 0) {
             priv->scroll_back = FALSE;
-            g_usleep(1000000);
+            //g_usleep(1000000);
         }
         ui_skinned_textbox_redraw(textbox);
     }
@@ -838,4 +838,16 @@ textbox_handle_special_char(gchar c, gint * x, gint * y)
 
     *x = tx * bmp_active_skin->properties.textbox_bitmap_font_width;
     *y = ty * bmp_active_skin->properties.textbox_bitmap_font_height;
+}
+
+void ui_skinned_textbox_move_relative(GtkWidget *widget, gint x, gint y) {
+        UiSkinnedTextbox *t = UI_SKINNED_TEXTBOX(widget);
+        UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE (widget);
+        gtk_fixed_move(GTK_FIXED(priv->fixed), widget, t->x+x, t->y+y);
+}
+
+void ui_skinned_textbox_resize_relative(GtkWidget *widget, gint w, gint h) {
+        UiSkinnedTextbox *t = UI_SKINNED_TEXTBOX(widget);
+        UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE (widget);
+        gtk_widget_set_size_request(widget, priv->w+w, t->height+h);
 }

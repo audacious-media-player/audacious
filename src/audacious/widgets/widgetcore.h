@@ -31,7 +31,6 @@
 #include "playstatus.h"
 #include "skin.h"
 #include "svis.h"
-#include "textbox.h"
 #include "vis.h"
 #include "widget.h"
 

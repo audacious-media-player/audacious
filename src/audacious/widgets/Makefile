@@ -20,7 +20,6 @@ CFLAGS += \
 
 SOURCES = \
 	widget.c \
-	textbox.c \
 	hslider.c \
 	menurow.c \
 	monostereo.c \
