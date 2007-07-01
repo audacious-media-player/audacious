@@ -605,7 +605,7 @@ static gboolean textbox_scroll(gpointer data) {
 static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
     gint length, i, x, y, wl;
     gchar *pixmaptext;
-    gchar *tmp;
+    gchar *tmp, *stxt;
     GdkGC *gc;
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE (textbox);
     g_return_if_fail(textbox != NULL);
@@ -678,7 +678,7 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
                                      gdk_rgb_get_visual()->depth);
     gc = priv->gc;
 
-    for (tmp = g_utf8_strup(pixmaptext, -1), i = 0;
+    for (tmp = stxt = g_utf8_strup(pixmaptext, -1), i = 0;
          tmp != NULL && i < length; i++, tmp = g_utf8_next_char(tmp)) {
         gchar c = *tmp;
         x = y = -1;
@@ -699,7 +699,7 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
                          bmp_active_skin->properties.textbox_bitmap_font_width, 
                          bmp_active_skin->properties.textbox_bitmap_font_height);
     }
-    g_free(tmp);
+    g_free(stxt);
     g_free(pixmaptext);
 }
 
