@@ -1582,8 +1582,6 @@ playlistwin_create_widgets(void)
 
     g_signal_connect(playlistwin_close, "clicked", playlistwin_hide, NULL );
 
-    ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_close));
-
     /* playlist list box */
     playlistwin_list =
         create_playlist_list(&playlistwin_wlist, playlistwin_bg,
