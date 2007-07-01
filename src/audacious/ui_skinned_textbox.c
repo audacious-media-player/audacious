@@ -268,6 +268,7 @@ void ui_skinned_textbox_setup(GtkWidget *widget, GtkWidget *fixed,GdkPixmap * pa
     textbox->height = bmp_active_skin->properties.textbox_bitmap_font_height;
     textbox->x = x;
     textbox->y = y;
+    textbox->text = g_strdup("");
     priv->gc = gc;
     textbox->width = w;
     priv->scroll_allowed = allow_scroll;
@@ -514,6 +515,8 @@ void ui_skinned_textbox_set_text(GtkWidget *widget, const gchar *text) {
     UiSkinnedTextbox *textbox = UI_SKINNED_TEXTBOX (widget);
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE (textbox);
 
+    if (!strcmp(textbox->text, text))
+         return;
     if (textbox->text)
         g_free(textbox->text);
 
