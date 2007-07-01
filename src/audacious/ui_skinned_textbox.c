@@ -402,7 +402,6 @@ static void ui_skinned_textbox_paint(UiSkinnedTextbox *textbox) {
         textbox->redraw = FALSE;
         gint cw;
         GdkPixmap *obj;
-        GdkPixmap *src;
 
         if (textbox->text && (!priv->pixmap_text || strcmp(textbox->text, priv->pixmap_text)))
             textbox_generate_pixmap(textbox);
@@ -413,14 +412,13 @@ static void ui_skinned_textbox_paint(UiSkinnedTextbox *textbox) {
                 textbox_generate_pixmap(textbox);
             }
             obj = gdk_pixmap_new(NULL, textbox->width, textbox->height, gdk_rgb_get_visual()->depth);
-            src = priv->pixmap;
 
             cw = priv->pixmap_width - priv->offset;
             if (cw > textbox->width)
                 cw = textbox->width;
-            gdk_draw_drawable(obj, priv->gc, src, priv->offset, 0, 0, 0, cw, textbox->height);
+            gdk_draw_drawable(obj, priv->gc, priv->pixmap, priv->offset, 0, 0, 0, cw, textbox->height);
             if (cw < textbox->width)
-                gdk_draw_drawable(obj, priv->gc, src, 0, 0,
+                gdk_draw_drawable(obj, priv->gc, priv->pixmap, 0, 0,
                                   textbox->x + cw, textbox->y,
                                   textbox->width - cw, textbox->height);
 
