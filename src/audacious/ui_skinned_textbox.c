@@ -517,7 +517,7 @@ void ui_skinned_textbox_set_text(GtkWidget *widget, const gchar *text) {
     if (textbox->text)
         g_free(textbox->text);
 
-    textbox->text = g_utf8_strup(text, -1);
+    textbox->text = str_to_utf8(text);
     priv->scroll_back = FALSE;
     ui_skinned_textbox_redraw(textbox);
 }
@@ -678,7 +678,8 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
                                      gdk_rgb_get_visual()->depth);
     gc = priv->gc;
 
-    for (tmp = pixmaptext, i = 0; tmp != NULL && i < length; i++, tmp = g_utf8_next_char(tmp)) {
+    for (tmp = g_utf8_strup(pixmaptext, -1), i = 0;
+         tmp != NULL && i < length; i++, tmp = g_utf8_next_char(tmp)) {
         gchar c = *tmp;
         x = y = -1;
         if (c >= 'A' && c <= 'Z') {
@@ -698,6 +699,7 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
                          bmp_active_skin->properties.textbox_bitmap_font_width, 
                          bmp_active_skin->properties.textbox_bitmap_font_height);
     }
+    g_free(tmp);
     g_free(pixmaptext);
 }
 
