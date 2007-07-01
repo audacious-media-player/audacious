@@ -40,7 +40,7 @@ typedef struct _UiSkinnedTextboxClass	UiSkinnedTextboxClass;
 struct _UiSkinnedTextbox {
     GtkBin bin;
     GdkWindow *event_window;
-    gint x, y, weight, height;
+    gint x, y, height;
     gboolean redraw;
     gchar *text;
 };
@@ -61,5 +61,6 @@ void ui_skinned_textbox_set_text(GtkWidget *widget, const gchar *text);
 void ui_skinned_textbox_set_xfont(GtkWidget *widget, gboolean use_xfont, const gchar *fontname);
 void ui_skinned_textbox_set_scroll(GtkWidget *widget, gboolean scroll);
 void ui_skinned_textbox_move_relative(GtkWidget *widget, gint x, gint y);
+void ui_skinned_textbox_resize_relative(GtkWidget *widget, gint w, gint h);
 
 #endif
