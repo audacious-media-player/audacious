@@ -64,6 +64,7 @@ struct _UiSkinnedTextboxPrivate {
     gint             pixmap_width;
     GdkPixmap        *pixmap;
     gboolean         scroll_allowed, scroll_enabled;
+    gint             scroll_dummy;
 };
 
 
@@ -275,6 +276,7 @@ void ui_skinned_textbox_setup(GtkWidget *widget, GtkWidget *fixed,GdkPixmap * pa
     priv->nominal_y = y;
     priv->nominal_height = textbox->height;
     priv->scroll_timeout = 0;
+    priv->scroll_dummy = 0;
 
     priv->fixed = fixed;
     priv->double_size = FALSE;
@@ -584,21 +586,22 @@ static gboolean textbox_scroll(gpointer data) {
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE (data);
 
     if (!priv->is_dragging) {
-        if (priv->scroll_back) priv->offset -= 1;
-        else priv->offset += 1;
+        if (priv->scroll_dummy < TEXTBOX_SCROLL_WAIT) priv->scroll_dummy++;
+        else {
+            if (priv->scroll_back) priv->offset -= 1;
+            else priv->offset += 1;
 
-        if (priv->offset >= (priv->pixmap_width - textbox->width)) {
-            priv->scroll_back = TRUE;
-            /* There are 1 million microseconds per second */
-            //g_usleep(1000000);
+            if (priv->offset >= (priv->pixmap_width - textbox->width)) {
+                priv->scroll_back = TRUE;
+                priv->scroll_dummy = 0;
+            }
+            if (priv->offset <= 0) {
+                priv->scroll_back = FALSE;
+                priv->scroll_dummy = 0;
+            }
+            ui_skinned_textbox_redraw(textbox);
         }
-        if (priv->offset <= 0) {
-            priv->scroll_back = FALSE;
-            //g_usleep(1000000);
-        }
-        ui_skinned_textbox_redraw(textbox);
     }
-
     return TRUE;
 }
 

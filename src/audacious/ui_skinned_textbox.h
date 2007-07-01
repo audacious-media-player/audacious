@@ -24,8 +24,8 @@
 #include <gtk/gtkenums.h>
 #include "widgets/skin.h"
 
-#define	TEXTBOX_SCROLL_TIMEOUT	       200
 #define TEXTBOX_SCROLL_SMOOTH_TIMEOUT  30
+#define TEXTBOX_SCROLL_WAIT            80
 
 #define UI_TYPE_SKINNED_TEXTBOX            (ui_skinned_textbox_get_type())
 #define UI_SKINNED_TEXTBOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), UI_TYPE_SKINNED_TEXTBOX, UiSkinnedTextbox))
