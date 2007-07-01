@@ -89,12 +89,12 @@ idle_func_change_song(gboolean waiting)
         }
 
         if (mainwin_sposition != NULL && !mainwin_sposition->hs_pressed) {
-            gchar time_str[5];
+            gchar *time_str;
 
-            g_snprintf(time_str, sizeof(time_str), "%2.2d", timeleft / 60);
+            time_str = g_strdup_printf("%2.2d", timeleft / 60);
             ui_skinned_textbox_set_text(mainwin_stime_min, time_str);
 
-            g_snprintf(time_str, sizeof(time_str), "%2.2d", timeleft % 60);
+            time_str = g_strdup_printf("%2.2d", timeleft % 60);
             ui_skinned_textbox_set_text(mainwin_stime_sec, time_str);
         }
 
