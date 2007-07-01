@@ -675,7 +675,7 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
     }
 
     priv->pixmap_width = length * bmp_active_skin->properties.textbox_bitmap_font_width;
-    priv->pixmap = gdk_pixmap_new(mainwin->window,
+    priv->pixmap = gdk_pixmap_new(NULL,
                                      priv->pixmap_width, bmp_active_skin->properties.textbox_bitmap_font_height,
                                      gdk_rgb_get_visual()->depth);
     gc = priv->gc;

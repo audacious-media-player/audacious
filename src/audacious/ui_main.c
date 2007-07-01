@@ -834,7 +834,7 @@ mainwin_set_song_info(gint bitrate,
                       gint frequency,
                       gint n_channels)
 {
-    gchar text[512];
+    gchar *text;
     gchar *title;
     Playlist *playlist = playlist_get_active();
 
@@ -845,12 +845,12 @@ mainwin_set_song_info(gint bitrate,
 
         if (bitrate < 1000) {
             /* Show bitrate in 1000s */
-            g_snprintf(text, sizeof(text), "%3d", bitrate);
+            text = g_strdup_printf("%3d", bitrate);
             ui_skinned_textbox_set_text(mainwin_rate_text, text);
         }
         else {
             /* Show bitrate in 100,000s */
-            g_snprintf(text, sizeof(text), "%2dH", bitrate / 100);
+            text = g_strdup_printf("%2dH", bitrate / 100);
             ui_skinned_textbox_set_text(mainwin_rate_text, text);
         }
     }
@@ -858,7 +858,7 @@ mainwin_set_song_info(gint bitrate,
         ui_skinned_textbox_set_text(mainwin_rate_text, _("VBR"));
 
     /* Show sampling frequency in kHz */
-    g_snprintf(text, sizeof(text), "%2d", frequency / 1000);
+    text = g_strdup_printf("%2d", frequency / 1000);
     ui_skinned_textbox_set_text(mainwin_freq_text, text);
 
     monostereo_set_num_channels(mainwin_monostereo, n_channels);
@@ -893,12 +893,12 @@ mainwin_set_song_info(gint bitrate,
     == TRUE)
     {
         if (bitrate != -1)
-            g_snprintf(text, 512, "%d kbps, %0.1f kHz, %s",
+            text = g_strdup_printf("%d kbps, %0.1f kHz, %s",
             bitrate,
             (gfloat) frequency / 1000,
             (n_channels > 1) ? _("stereo") : _("mono"));
         else
-            g_snprintf(text, 512, "VBR, %0.1f kHz, %s",
+            text = g_strdup_printf("VBR, %0.1f kHz, %s",
             (gfloat) frequency / 1000,
             (n_channels > 1) ? _("stereo") : _("mono"));
 
@@ -2933,9 +2933,6 @@ mainwin_create_widgets(void)
                                              "Boo! Bad stuff! Booga Booga!");
 
     /* XXX: eventually update widgetcore API to not need this */
-
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_rate_text));
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_freq_text));
 
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_menurow));
 
