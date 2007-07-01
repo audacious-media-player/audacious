@@ -103,7 +103,6 @@ extern GtkWidget *mainwin_info;
 
 extern GtkWidget *mainwin_stime_min, *mainwin_stime_sec;
 
-extern Vis *active_vis;
 extern Vis *mainwin_vis;
 extern SVis *mainwin_svis;
 

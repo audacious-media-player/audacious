@@ -40,7 +40,7 @@ typedef struct _UiSkinnedTextboxClass	UiSkinnedTextboxClass;
 struct _UiSkinnedTextbox {
     GtkBin bin;
     GdkWindow *event_window;
-    gint x, y, height;
+    gint x, y, width, height;
     gboolean redraw;
     gchar *text;
 };

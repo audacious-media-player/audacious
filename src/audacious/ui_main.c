@@ -98,11 +98,6 @@ enum {
     MAINWIN_SEEK_FWD
 };
 
-enum {
-    MAINWIN_VIS_ACTIVE_MAINWIN, MAINWIN_VIS_ACTIVE_PLAYLISTWIN
-};
-
-
 typedef struct _PlaybackInfo PlaybackInfo;
 
 struct _PlaybackInfo {
@@ -150,7 +145,6 @@ Number *mainwin_10sec_num, *mainwin_sec_num;
 
 static gboolean setting_volume = FALSE;
 
-Vis *active_vis;
 Vis *mainwin_vis;
 SVis *mainwin_svis;
 
@@ -323,12 +317,6 @@ mainwin_set_shade_menu_cb(gboolean shaded)
 }
 
 static void
-mainwin_vis_set_active_vis(gint new_vis)
-{
-    active_vis = mainwin_vis;
-}
-
-static void
 mainwin_vis_set_refresh(RefreshRate rate)
 {
     cfg.vis_refresh = rate;
@@ -396,10 +384,10 @@ mainwin_vis_set_type_menu_cb(VisType mode)
         if (cfg.player_shaded && cfg.player_visible)
             svis_clear(mainwin_svis);
         else
-            vis_clear(active_vis);
+            vis_clear(mainwin_vis);
     }
     if (mode == VIS_ANALYZER || mode == VIS_SCOPE || mode == VIS_VOICEPRINT) {
-        vis_clear_data(active_vis);
+        vis_clear_data(mainwin_vis);
         svis_clear_data(mainwin_svis);
     }
 }
@@ -980,7 +968,7 @@ mainwin_clear_song_info(void)
     playlistwin_hide_timer();
     draw_main_window(TRUE);
 
-    vis_clear(active_vis);
+    vis_clear(mainwin_vis);
 }
 
 void
@@ -1180,10 +1168,7 @@ mainwin_mouse_button_press(GtkWidget * widget,
         widget_contains(WIDGET(mainwin_10min_num), event->x, event->y) ||
         widget_contains(WIDGET(mainwin_min_num), event->x, event->y) ||
         widget_contains(WIDGET(mainwin_10sec_num), event->x, event->y) ||
-        widget_contains(WIDGET(mainwin_sec_num), event->x, event->y))// ||
-        //widget_contains(WIDGET(mainwin_stime_min), event->x, event->y) ||
-        //widget_contains(WIDGET(mainwin_stime_sec), event->x, event->y))
-    {
+        widget_contains(WIDGET(mainwin_sec_num), event->x, event->y)) {
         change_timer_mode();
         }
     }
@@ -1959,9 +1944,8 @@ mainwin_real_show(void)
     check_set( toggleaction_group_others , "show player" , TRUE );
 
     if (cfg.player_shaded)
-        vis_clear_data(active_vis);
+        vis_clear_data(mainwin_vis);
 
-    mainwin_vis_set_active_vis(MAINWIN_VIS_ACTIVE_MAINWIN);
     mainwin_set_shape_mask();
 
     if (cfg.show_wm_decorations) {
@@ -2017,7 +2001,6 @@ mainwin_real_hide(void)
 
     gtk_widget_hide(mainwin);
 
-    mainwin_vis_set_active_vis(MAINWIN_VIS_ACTIVE_PLAYLISTWIN);
     cfg.player_visible = FALSE;
 }
 
@@ -2915,7 +2898,6 @@ mainwin_create_widgets(void)
         create_vis(&mainwin_wlist, mainwin_bg, mainwin->window, SKINNED_WINDOW(mainwin)->gc,
                    24, 43, 76, cfg.doublesize);
     mainwin_svis = create_svis(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 79, 5);
-    active_vis = mainwin_vis;
 
     mainwin_position =
         create_hslider(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 16, 72, 248,
