@@ -435,6 +435,7 @@ static void ui_skinned_textbox_paint(UiSkinnedTextbox *textbox) {
 
             g_object_unref(obj);
             gtk_widget_queue_resize(widget);
+            gdk_flush(); // maybe it's evil. only for investigation. --yaz
         }
     }
 }
