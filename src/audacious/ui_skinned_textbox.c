@@ -514,13 +514,10 @@ void ui_skinned_textbox_set_text(GtkWidget *widget, const gchar *text) {
     UiSkinnedTextbox *textbox = UI_SKINNED_TEXTBOX (widget);
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE (textbox);
 
-    if (textbox->text) {
-        if (!strcmp(text, textbox->text))
-            return;
+    if (textbox->text)
         g_free(textbox->text);
-    }
 
-    textbox->text = str_to_utf8(text);
+    textbox->text = g_utf8_strup(text, -1);
     priv->scroll_back = FALSE;
     ui_skinned_textbox_redraw(textbox);
 }
@@ -608,6 +605,7 @@ static gboolean textbox_scroll(gpointer data) {
 static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
     gint length, i, x, y, wl;
     gchar *pixmaptext;
+    gchar *tmp;
     GdkGC *gc;
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE (textbox);
     g_return_if_fail(textbox != NULL);
@@ -680,10 +678,9 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
                                      gdk_rgb_get_visual()->depth);
     gc = priv->gc;
 
-    for (i = 0; i < length; i++) {
-        gchar c;
+    for (tmp = pixmaptext, i = 0; tmp != NULL && i < length; i++, tmp = g_utf8_next_char(tmp)) {
+        gchar c = *tmp;
         x = y = -1;
-        c = toupper((int) pixmaptext[i]);
         if (c >= 'A' && c <= 'Z') {
             x = bmp_active_skin->properties.textbox_bitmap_font_width * (c - 'A');
             y = 0;
