@@ -1120,8 +1120,8 @@ mainwin_mouse_button_press(GtkWidget * widget,
     }
 
     if ((event->button == 1) && event->type != GDK_2BUTTON_PRESS &&
-        (widget_contains(WIDGET(mainwin_vis), event->x, event->y) ||
-         widget_contains(WIDGET(mainwin_svis), event->x, event->y))) {
+        !cfg.player_shaded ? widget_contains(WIDGET(mainwin_vis), event->x, event->y) :
+         widget_contains(WIDGET(mainwin_svis), event->x, event->y) ) {
 
         cfg.vis_type++;
 
