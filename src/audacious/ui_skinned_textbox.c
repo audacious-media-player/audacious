@@ -725,10 +725,10 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
         g_free(padchars);
         length += pad;
     } else {
-        if(cfg.twoway_scroll)
-            pixmaptext = g_strdup(priv->pixmap_text);
-        else
+        if(!cfg.twoway_scroll && priv->is_scrollable)
             pixmaptext = g_strdup_printf("%s *** ", priv->pixmap_text);
+        else
+            pixmaptext = g_strdup(priv->pixmap_text);
     }
 
     if (priv->is_scrollable) {
