@@ -251,8 +251,10 @@ static void ui_skinned_textbox_unmap (GtkWidget *widget) {
 }
 
 static gboolean ui_skinned_textbox_expose(GtkWidget *widget, GdkEventExpose *event) {
-    if (GTK_WIDGET_DRAWABLE (widget))
+    if (GTK_WIDGET_DRAWABLE (widget)) {
+        ui_skinned_textbox_paint(UI_SKINNED_TEXTBOX(widget));
         (*GTK_WIDGET_CLASS (parent_class)->expose_event) (widget, event);
+    }
 
     return FALSE;
 }
@@ -392,6 +394,7 @@ static void ui_skinned_textbox_toggle_doublesize(UiSkinnedTextbox *textbox) {
     gtk_widget_set_uposition(widget, textbox->x*(1+priv->double_size), textbox->y*(1+priv->double_size));
 
     textbox->redraw = TRUE;
+    gtk_widget_queue_draw(GTK_WIDGET(textbox));
 }
 
 static void ui_skinned_textbox_paint(UiSkinnedTextbox *textbox) {
@@ -440,7 +443,7 @@ static void ui_skinned_textbox_paint(UiSkinnedTextbox *textbox) {
 
 static void ui_skinned_textbox_redraw(UiSkinnedTextbox *textbox) {
     textbox->redraw = TRUE;
-    ui_skinned_textbox_paint(textbox);
+    gtk_widget_queue_draw(GTK_WIDGET(textbox));
 }
 
 static gboolean ui_skinned_textbox_should_scroll(UiSkinnedTextbox *textbox) {
