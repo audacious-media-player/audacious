@@ -231,8 +231,10 @@ static void ui_skinned_button_unmap (GtkWidget *widget) {
 }
 
 static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *event) {
-        if (GTK_WIDGET_DRAWABLE (widget))
+        if (GTK_WIDGET_DRAWABLE (widget)) {
+                ui_skinned_button_paint(UI_SKINNED_BUTTON(widget));
                 (*GTK_WIDGET_CLASS (parent_class)->expose_event) (widget, event);
+        }
 
         return FALSE;
 }
@@ -350,7 +352,7 @@ static void ui_skinned_button_set_pressed (UiSkinnedButton *button, gboolean pre
         if (pressed != button->pressed) {
                 button->pressed = pressed;
                 button->redraw = TRUE;
-                ui_skinned_button_paint(button);
+                gtk_widget_queue_draw(GTK_WIDGET(button));
         }
 }
 
@@ -427,7 +429,7 @@ static void ui_skinned_button_toggle_doublesize(UiSkinnedButton *button) {
         gtk_widget_set_uposition(widget, button->x*(1+priv->double_size), button->y*(1+priv->double_size));
 
         button->redraw = TRUE;
-        ui_skinned_button_paint(button);
+        gtk_widget_queue_draw(widget);
 }
 
 static void ui_skinned_button_paint(UiSkinnedButton *button) {
@@ -486,7 +488,7 @@ static void ui_skinned_button_paint(UiSkinnedButton *button) {
 
 static void ui_skinned_button_redraw(UiSkinnedButton *button) {
         button->redraw = TRUE;
-        ui_skinned_button_paint(button);
+        gtk_widget_queue_draw(GTK_WIDGET(button));
 }
 
 
