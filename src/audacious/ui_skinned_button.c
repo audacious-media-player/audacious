@@ -27,6 +27,16 @@
 #define UI_SKINNED_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UI_TYPE_SKINNED_BUTTON, UiSkinnedButtonPrivate))
 typedef struct _UiSkinnedButtonPrivate UiSkinnedButtonPrivate;
 
+enum {
+	PRESSED,
+	RELEASED,
+	CLICKED,
+	RIGHT_CLICKED,
+	DOUBLED,
+	REDRAW,
+	LAST_SIGNAL
+};
+
 struct _UiSkinnedButtonPrivate {
         //Skinned part
         GtkWidget        *image;
@@ -124,6 +134,7 @@ static void ui_skinned_button_class_init (UiSkinnedButtonClass *klass) {
         klass->pressed = button_pressed;
         klass->released = button_released;
         klass->clicked = NULL;
+        klass->right_clicked = NULL;
         klass->doubled = ui_skinned_button_toggle_doublesize;
         klass->redraw = ui_skinned_button_redraw;
 
@@ -140,6 +151,11 @@ static void ui_skinned_button_class_init (UiSkinnedButtonClass *klass) {
         button_signals[CLICKED] = 
                     g_signal_new ("clicked", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
                                   G_STRUCT_OFFSET (UiSkinnedButtonClass, clicked), NULL, NULL,
+                                  gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
+
+        button_signals[RIGHT_CLICKED] = 
+                    g_signal_new ("right-clicked", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
+                                  G_STRUCT_OFFSET (UiSkinnedButtonClass, right_clicked), NULL, NULL,
                                   gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
         button_signals[DOUBLED] = 
@@ -375,6 +391,8 @@ static gboolean ui_skinned_button_button_release(GtkWidget *widget, GdkEventButt
                 button = UI_SKINNED_BUTTON(widget);
                 button->redraw = TRUE;
                 ui_skinned_button_released(button);
+        } else if (event->button == 3) {
+                g_signal_emit(widget, button_signals[RIGHT_CLICKED], 0);
         }
 
         return TRUE;

@@ -403,6 +403,17 @@ mainwin_menubtn_cb(void)
                             1, GDK_CURRENT_TIME);
 }
 
+static void
+mainwin_about_cb(void)
+{
+    gint x, y;
+    gdk_window_get_pointer(NULL, &x, &y, NULL);
+    ui_manager_popup_menu_show(GTK_MENU(mainwin_general_menu),
+                            x + 6 * (1 + cfg.doublesize),
+                            y + MAINWIN_SHADED_HEIGHT * (1 + cfg.doublesize),
+                            1, GDK_CURRENT_TIME);
+}
+
 void
 mainwin_minimize_cb(void)
 {
@@ -2796,33 +2807,33 @@ mainwin_create_widgets(void)
 
     mainwin_shuffle = ui_skinned_button_new();
     ui_skinned_toggle_button_setup(mainwin_shuffle, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-			SKINNED_WINDOW(mainwin)->gc, 164, 89, 46,
-                       15, 28, 0, 28, 15, 28, 30, 28, 45, SKIN_SHUFREP);
+                                   SKINNED_WINDOW(mainwin)->gc, 164, 89, 46,
+                                   15, 28, 0, 28, 15, 28, 30, 28, 45, SKIN_SHUFREP);
     g_signal_connect(mainwin_shuffle, "clicked", mainwin_shuffle_pushed_cb, NULL);
 
     mainwin_repeat = ui_skinned_button_new();
     ui_skinned_toggle_button_setup(mainwin_repeat, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-			SKINNED_WINDOW(mainwin)->gc, 210, 89, 28,
-                       15, 0, 0, 0, 15, 0, 30, 0, 45, SKIN_SHUFREP);
+                                   SKINNED_WINDOW(mainwin)->gc, 210, 89, 28,
+                                   15, 0, 0, 0, 15, 0, 30, 0, 45, SKIN_SHUFREP);
     g_signal_connect(mainwin_repeat, "clicked", mainwin_repeat_pushed_cb, NULL);
 
     mainwin_eq = ui_skinned_button_new();
     ui_skinned_toggle_button_setup(mainwin_eq, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-			SKINNED_WINDOW(mainwin)->gc, 219, 58, 23,
-                       12, 0, 61, 46, 61, 0, 73, 46, 73, SKIN_SHUFREP);
+                                   SKINNED_WINDOW(mainwin)->gc, 219, 58, 23,
+                                   12, 0, 61, 46, 61, 0, 73, 46, 73, SKIN_SHUFREP);
     g_signal_connect(mainwin_eq, "clicked", mainwin_equalizer_pushed_cb, NULL);
     UI_SKINNED_BUTTON(mainwin_eq)->inside = cfg.equalizer_visible;
 
     mainwin_pl = ui_skinned_button_new();
     ui_skinned_toggle_button_setup(mainwin_pl, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-			SKINNED_WINDOW(mainwin)->gc, 242, 58, 23,
-                       12, 23, 61, 69, 61, 23, 73, 69, 73, SKIN_SHUFREP);
+                                   SKINNED_WINDOW(mainwin)->gc, 242, 58, 23,
+                                   12, 23, 61, 69, 61, 23, 73, 69, 73, SKIN_SHUFREP);
     g_signal_connect(mainwin_pl, "clicked", mainwin_playlist_pushed_cb, NULL);
     UI_SKINNED_BUTTON(mainwin_pl)->inside = cfg.playlist_visible;
 
     mainwin_info = ui_skinned_textbox_new();
     ui_skinned_textbox_setup(mainwin_info, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 112, 27,
-                      153, 1, SKIN_TEXT);
+                             153, 1, SKIN_TEXT);
     ui_skinned_textbox_set_scroll(mainwin_info, cfg.autoscroll);
     ui_skinned_textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
     g_signal_connect(mainwin_info, "double-clicked", mainwin_info_double_clicked_cb, NULL);
@@ -2830,15 +2841,15 @@ mainwin_create_widgets(void)
 
     mainwin_othertext = ui_skinned_textbox_new();
     ui_skinned_textbox_setup(mainwin_othertext, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 112, 43,
-                      153, 1, SKIN_TEXT);
+                             153, 1, SKIN_TEXT);
 
     mainwin_rate_text = ui_skinned_textbox_new();
     ui_skinned_textbox_setup(mainwin_rate_text, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 111, 43, 15,
-                       0, SKIN_TEXT);
+                             0, SKIN_TEXT);
 
     mainwin_freq_text = ui_skinned_textbox_new();
     ui_skinned_textbox_setup(mainwin_freq_text, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 156, 43, 10,
-                       0, SKIN_TEXT);
+                            0, SKIN_TEXT);
 
     mainwin_menurow =
         create_menurow(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 10, 22, 304,
@@ -2889,10 +2900,11 @@ mainwin_create_widgets(void)
                       SKIN_NUMBERS);
     widget_hide(WIDGET(mainwin_sec_num));
 
-	mainwin_about = ui_skinned_button_new();
-	ui_skinned_small_button_setup(mainwin_about, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-			SKINNED_WINDOW(mainwin)->gc, 247, 83, 20, 25);
-	g_signal_connect(mainwin_about, "clicked", show_about_window, NULL);
+    mainwin_about = ui_skinned_button_new();
+    ui_skinned_small_button_setup(mainwin_about, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
+                                  SKINNED_WINDOW(mainwin)->gc, 247, 83, 20, 25);
+    g_signal_connect(mainwin_about, "clicked", show_about_window, NULL);
+    g_signal_connect(mainwin_about, "right-clicked", mainwin_about_cb, NULL );
 
     mainwin_vis =
         create_vis(&mainwin_wlist, mainwin_bg, mainwin->window, SKINNED_WINDOW(mainwin)->gc,

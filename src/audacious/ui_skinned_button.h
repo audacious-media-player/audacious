@@ -35,15 +35,6 @@ typedef struct _UiSkinnedButton		UiSkinnedButton;
 typedef struct _UiSkinnedButtonClass	UiSkinnedButtonClass;
 
 enum {
-	PRESSED,
-	RELEASED,
-	CLICKED,
-	DOUBLED,
-	REDRAW,
-	LAST_SIGNAL
-};
-
-enum {
 	TYPE_NOT_SET,
 	TYPE_PUSH,
 	TYPE_TOGGLE,
@@ -71,11 +62,12 @@ struct _UiSkinnedButton {
 
 struct _UiSkinnedButtonClass {
 	GtkBinClass parent_class;
-	void (* pressed)  (UiSkinnedButton *button);
-	void (* released) (UiSkinnedButton *button);
-	void (* clicked)  (UiSkinnedButton *button);
-	void (* doubled)  (UiSkinnedButton *button);
-	void (* redraw)   (UiSkinnedButton *button);
+	void (* pressed)       (UiSkinnedButton *button);
+	void (* released)      (UiSkinnedButton *button);
+	void (* clicked)       (UiSkinnedButton *button);
+	void (* right_clicked) (UiSkinnedButton *button);
+	void (* doubled)       (UiSkinnedButton *button);
+	void (* redraw)        (UiSkinnedButton *button);
 };
 
 GType ui_skinned_button_get_type(void) G_GNUC_CONST;
