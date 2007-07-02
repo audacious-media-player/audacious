@@ -323,7 +323,7 @@ static void ui_skinned_textbox_size_allocate(GtkWidget *widget, GtkAllocation *a
     priv->move_y = 0;
 
     if (textbox->width != widget->allocation.width) {
-        textbox->width = widget->allocation.width;
+        textbox->width = widget->allocation.width/(priv->double_size ? 2 : 1);
         priv->resize_width = 0;
         priv->resize_height = 0;
         if (priv->pixmap_text) g_free(priv->pixmap_text);
