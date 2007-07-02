@@ -687,7 +687,12 @@ playlistwin_resize(gint width, gint height)
     playlistwin_set_mask();
 
     widget_list_lock(playlistwin_wlist);
-
+    GList *iter;
+    for (iter = GTK_FIXED (SKINNED_WINDOW(playlistwin)->fixed)->children; iter; iter = g_list_next (iter)) {
+         GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
+         GtkWidget *child = child_data->widget;
+         g_signal_emit_by_name(child, "redraw");
+    }
     widget_list_change_pixmap(playlistwin_wlist, playlistwin_bg);
     playlistwin_draw_frame();
     widget_list_draw(playlistwin_wlist, &redraw, TRUE);
