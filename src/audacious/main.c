@@ -221,6 +221,7 @@ BmpConfig bmp_default_config = {
     FALSE,          /* internal: whether or not to terminate */
     TRUE,           /* whether show progress bar in filepopup or not */
     TRUE,           /* close jtf dialog on jump */
+    FALSE,          /* use back and forth scroll */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -323,6 +324,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"use_extension_probing", &cfg.use_extension_probing, TRUE},
     {"filepopup_showprogressbar", &cfg.filepopup_showprogressbar, TRUE},
     {"close_jtf_dialog", &cfg.close_jtf_dialog, TRUE},
+    {"twoway_scroll", &cfg.twoway_scroll, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);

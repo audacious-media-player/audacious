@@ -433,24 +433,56 @@ static void ui_skinned_textbox_paint(UiSkinnedTextbox *textbox) {
             }
             obj = gdk_pixmap_new(NULL, textbox->width, textbox->height, gdk_rgb_get_visual()->depth);
 
-            cw = priv->pixmap_width - priv->offset;
-            if (cw > textbox->width)
-                cw = textbox->width;
-            gdk_draw_drawable(obj, priv->gc, priv->pixmap, priv->offset, 0, 0, 0, cw, textbox->height);
-            if (cw < textbox->width)
-                gdk_draw_drawable(obj, priv->gc, priv->pixmap, 0, 0,
-                                  textbox->x + cw, textbox->y,
-                                  textbox->width - cw, textbox->height);
+            if(cfg.twoway_scroll) { // twoway scroll
+                cw = priv->pixmap_width - priv->offset;
+                if (cw > textbox->width)
+                    cw = textbox->width;
+                gdk_draw_drawable(obj, priv->gc, priv->pixmap, priv->offset, 0, 0, 0, cw, textbox->height);
+                if (cw < textbox->width)
+                    gdk_draw_drawable(obj, priv->gc, priv->pixmap, 0, 0,
+                                      textbox->x + cw, textbox->y,
+                                      textbox->width - cw, textbox->height);
 
-            if (priv->double_size) {
-                GdkImage *img, *img2x;
-                img = gdk_drawable_get_image(obj, 0, 0, textbox->width, textbox->height);
-                img2x = create_dblsize_image(img);
-                gtk_image_set(GTK_IMAGE(priv->image), img2x, NULL);
-                g_object_unref(img2x);
-                g_object_unref(img);
-            } else
-                gtk_image_set_from_pixmap(GTK_IMAGE(priv->image), obj, NULL);
+                if (priv->double_size) {
+                    GdkImage *img, *img2x;
+                    img = gdk_drawable_get_image(obj, 0, 0, textbox->width, textbox->height);
+                    img2x = create_dblsize_image(img);
+                    gtk_image_set(GTK_IMAGE(priv->image), img2x, NULL);
+                    g_object_unref(img2x);
+                    g_object_unref(img);
+                } else
+                    gtk_image_set_from_pixmap(GTK_IMAGE(priv->image), obj, NULL);
+            }
+            else { // oneway scroll
+                int cw1, cw2;
+
+                if(priv->offset >= priv->pixmap_width)
+                    priv->offset = 0;
+
+                if(priv->pixmap_width - priv->offset > textbox->width){ // case1
+                    cw1 = textbox->width;
+                    gdk_draw_drawable(obj, priv->gc, priv->pixmap, priv->offset, 0,
+                                      0, 0, cw1, textbox->height);
+                }
+                else { // case 2
+                    cw1 = priv->pixmap_width - priv->offset;
+                    gdk_draw_drawable(obj, priv->gc, priv->pixmap, priv->offset, 0,
+                                      0, 0, cw1, textbox->height);
+                    cw2 = textbox->width - cw1;
+                    gdk_draw_drawable(obj, priv->gc, priv->pixmap, 0, 0, cw1, 0, cw2, textbox->height);
+                }
+
+                if (priv->double_size) {
+                    GdkImage *img, *img2x;
+                    img = gdk_drawable_get_image(obj, 0, 0, textbox->width, textbox->height);
+                    img2x = create_dblsize_image(img);
+                    gtk_image_set(GTK_IMAGE(priv->image), img2x, NULL);
+                    g_object_unref(img2x);
+                    g_object_unref(img);
+                } else {
+                    gtk_image_set_from_pixmap(GTK_IMAGE(priv->image), obj, NULL);
+                }
+            }
 
             g_object_unref(obj);
             gtk_widget_queue_resize(widget);
@@ -615,19 +647,29 @@ static gboolean textbox_scroll(gpointer data) {
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE (data);
 
     if (!priv->is_dragging) {
-        if (priv->scroll_dummy < TEXTBOX_SCROLL_WAIT) priv->scroll_dummy++;
+        if (priv->scroll_dummy < TEXTBOX_SCROLL_WAIT)
+            priv->scroll_dummy++;
         else {
-            if (priv->scroll_back) priv->offset -= 1;
-            else priv->offset += 1;
+            if(cfg.twoway_scroll) {
+                if (priv->scroll_back)
+                    priv->offset -= 1;
+                else
+                    priv->offset += 1;
 
-            if (priv->offset >= (priv->pixmap_width - textbox->width)) {
-                priv->scroll_back = TRUE;
-                priv->scroll_dummy = 0;
+                if (priv->offset >= (priv->pixmap_width - textbox->width)) {
+                    priv->scroll_back = TRUE;
+                    priv->scroll_dummy = 0;
+                }
+                if (priv->offset <= 0) {
+                    priv->scroll_back = FALSE;
+                    priv->scroll_dummy = 0;
+                }
             }
-            if (priv->offset <= 0) {
+            else { // oneway scroll
                 priv->scroll_back = FALSE;
-                priv->scroll_dummy = 0;
+                priv->offset += 1;
             }
+
             textbox->redraw = TRUE;
             gtk_widget_queue_draw(GTK_WIDGET(textbox));
         }
