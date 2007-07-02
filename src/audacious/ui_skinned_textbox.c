@@ -521,6 +521,7 @@ void ui_skinned_textbox_set_text(GtkWidget *widget, const gchar *text) {
     textbox->text = str_to_utf8(text);
     priv->scroll_back = FALSE;
     textbox->redraw = TRUE;
+    gtk_widget_queue_draw(GTK_WIDGET(textbox));
 }
 
 static void textbox_generate_xfont_pixmap(UiSkinnedTextbox *textbox, const gchar *pixmaptext) {
