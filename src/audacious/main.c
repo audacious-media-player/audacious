@@ -221,7 +221,7 @@ BmpConfig bmp_default_config = {
     FALSE,          /* internal: whether or not to terminate */
     TRUE,           /* whether show progress bar in filepopup or not */
     TRUE,           /* close jtf dialog on jump */
-    FALSE,          /* use back and forth scroll */
+    TRUE,          /* use back and forth scroll */
 };
 
 typedef struct bmp_cfg_boolent_t {
