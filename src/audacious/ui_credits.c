@@ -78,6 +78,7 @@ static const gchar *credit_text[] = {
     "Kiyoshi Aman",
     "Luca Barbato",
     "Daniel Barkalow",
+    "Michael Färber",
     "Shay Green",
     "Giacomo Lozito",
     "William Pitcock",
