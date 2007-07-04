@@ -717,19 +717,22 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
 
     priv->is_scrollable = ui_skinned_textbox_should_scroll(textbox);
 
-    if (!priv->is_scrollable && !priv->font && length <= wl) {
+    if (priv->is_scrollable) {
+        if(!cfg.twoway_scroll) {
+            pixmaptext = g_strdup_printf("%s *** ", priv->pixmap_text);
+            length += 5;
+        } else
+            pixmaptext = g_strdup(priv->pixmap_text);
+    } else
+    if (!priv->font && length <= wl) {
         gint pad = wl - length;
         gchar *padchars = g_strnfill(pad, ' ');
 
         pixmaptext = g_strconcat(priv->pixmap_text, padchars, NULL);
         g_free(padchars);
         length += pad;
-    } else {
-        if(!cfg.twoway_scroll && priv->is_scrollable)
-            pixmaptext = g_strdup_printf("%s *** ", priv->pixmap_text);
-        else
-            pixmaptext = g_strdup(priv->pixmap_text);
-    }
+    } else
+        pixmaptext = g_strdup(priv->pixmap_text);
 
     if (priv->is_scrollable) {
         if (priv->scroll_enabled && !priv->scroll_timeout) {
