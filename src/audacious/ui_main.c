@@ -1426,7 +1426,7 @@ mainwin_set_back_pixmap(void)
  * Remove all of this flaky iter/sourcelist/strsplit stuff.
  * All we care about is the filepath.
  *
- * We can figure this out and easily pass it to xmms_urldecode_plain().
+ * We can figure this out and easily pass it to g_filename_from_uri().
  *   - nenolod
  */
 void
@@ -1446,8 +1446,11 @@ mainwin_drag_data_received(GtkWidget * widget,
 
     if (str_has_prefix_nocase((gchar *) selection_data->data, "fonts:///"))
     {
-        gchar *path = (gchar *) selection_data->data + 9;       /* skip fonts:/// */
-    gchar *decoded = xmms_urldecode_plain(path);
+        gchar *path = (gchar *) selection_data->data;
+        gchar *decoded = g_filename_from_uri(path, NULL, NULL);
+
+        if (decoded == NULL)
+            return;
 
         cfg.playlist_font = g_strconcat(decoded, strrchr(cfg.playlist_font, ' '), NULL);
         playlist_list_set_font(cfg.playlist_font);
