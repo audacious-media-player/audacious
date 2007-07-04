@@ -285,15 +285,15 @@ static gboolean ui_skinned_textbox_expose(GtkWidget *widget, GdkEventExpose *eve
 
                 if(textbox->pixmap_width - textbox->offset > textbox->width){ // case1
                     cw1 = textbox->width;
-                    gdk_draw_drawable(textbox->img, textbox->gc, textbox->pixmap, textbox->offset, 0,
+                    gdk_draw_drawable(obj, textbox->gc, textbox->pixmap, textbox->offset, 0,
                                       0, 0, cw1, textbox->height);
                 }
                 else { // case 2
                     cw1 = textbox->pixmap_width - textbox->offset;
-                    gdk_draw_drawable(textbox->img, textbox->gc, textbox->pixmap, textbox->offset, 0,
+                    gdk_draw_drawable(obj, textbox->gc, textbox->pixmap, textbox->offset, 0,
                                       0, 0, cw1, textbox->height);
                     cw2 = textbox->width - cw1;
-                    gdk_draw_drawable(textbox->img, textbox->gc, textbox->pixmap, 0, 0, cw1, 0, cw2, textbox->height);
+                    gdk_draw_drawable(obj, textbox->gc, textbox->pixmap, 0, 0, cw1, 0, cw2, textbox->height);
                 }
 
             }
