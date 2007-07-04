@@ -339,49 +339,6 @@ vfs_get_metadata(VFSFile * file, const gchar * field)
     return NULL;
 }
 
-static gchar *
-_vfs_urldecode_basic_path(const gchar * encoded_path)
-{
-    const gchar *cur, *ext;
-    gchar *path, *tmp;
-    gint realchar;
-
-    if (!encoded_path)
-        return NULL;
-
-    if (!str_has_prefix_nocase(encoded_path, "file:"))
-        return NULL;
-
-    cur = encoded_path + 5;
-
-    if (str_has_prefix_nocase(cur, "//localhost"))
-        cur += 11;
-
-    if (*cur == '/')
-        while (cur[1] == '/')
-            cur++;
-
-    tmp = g_malloc0(strlen(cur) + 1);
-
-    while ((ext = strchr(cur, '%')) != NULL) {
-        strncat(tmp, cur, ext - cur);
-        ext++;
-        cur = ext + 2;
-        if (!sscanf(ext, "%2x", &realchar)) {
-            /* Assume it is a literal '%'.  Several file
-             * managers send unencoded file: urls on drag
-             * and drop. */
-            realchar = '%';
-            cur -= 2;
-        }
-        tmp[strlen(tmp)] = realchar;
-    }
-
-    path = g_strconcat(tmp, cur, NULL);
-    g_free(tmp);
-    return path;
-}
-
 /**
  * vfs_file_test:
  * @path: A path to test.
@@ -397,7 +354,7 @@ vfs_file_test(const gchar * path, GFileTest test)
     gchar *path2;
     gboolean ret;
 
-    path2 = _vfs_urldecode_basic_path(path);
+    path2 = g_filename_from_uri(path, NULL, NULL);
 
     if (path2 == NULL)
         path2 = g_strdup(path);

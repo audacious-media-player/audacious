@@ -897,49 +897,6 @@ playlist_add_url(Playlist * playlist, const gchar * url)
     return playlist_ins_url(playlist, url, -1);
 }
 
-static gchar *
-_playlist_urldecode_basic_path(const gchar * encoded_path)
-{
-    const gchar *cur, *ext;
-    gchar *path, *tmp;
-    gint realchar;
-
-    if (!encoded_path)
-        return NULL;
-
-    if (!str_has_prefix_nocase(encoded_path, "file:"))
-        return NULL;
-
-    cur = encoded_path + 5;
-
-    if (str_has_prefix_nocase(cur, "//localhost"))
-        cur += 11;
-
-    if (*cur == '/')
-        while (cur[1] == '/')
-            cur++;
-
-    tmp = g_malloc0(strlen(cur) + 1);
-
-    while ((ext = strchr(cur, '%')) != NULL) {
-        strncat(tmp, cur, ext - cur);
-        ext++;
-        cur = ext + 2;
-        if (!sscanf(ext, "%2x", &realchar)) {
-            /* Assume it is a literal '%'.  Several file
-             * managers send unencoded file: urls on drag
-             * and drop. */
-            realchar = '%';
-            cur -= 2;
-        }
-        tmp[strlen(tmp)] = realchar;
-    }
-
-    path = g_strconcat(tmp, cur, NULL);
-    g_free(tmp);
-    return path;
-}
-
 guint
 playlist_ins_dir(Playlist * playlist, const gchar * path,
                     gint pos,
@@ -948,7 +905,7 @@ playlist_ins_dir(Playlist * playlist, const gchar * path,
     guint entries = 0;
     GList *list, *node;
     GHashTable *htab;
-    gchar *path2 = _playlist_urldecode_basic_path(path);
+    gchar *path2 = g_filename_from_uri(path, NULL, NULL);
 
     if (path2 == NULL)
         path2 = g_strdup(path);
