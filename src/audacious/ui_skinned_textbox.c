@@ -167,6 +167,8 @@ GtkWidget* ui_skinned_textbox_new(GtkWidget *fixed, GdkPixmap * parent, GdkGC * 
     textbox->fixed = fixed;
     textbox->double_size = FALSE;
 
+    gtk_fixed_put(GTK_FIXED(textbox->fixed), GTK_WIDGET(textbox), textbox->x, textbox->y);
+
     return GTK_WIDGET(textbox);
 }
 
