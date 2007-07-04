@@ -48,7 +48,6 @@
 #include "ui_main.h"
 #include "ui_playlist.h"
 #include "ui_skinselector.h"
-#include "urldecode.h"
 #include "util.h"
 
 #include "playback.h"

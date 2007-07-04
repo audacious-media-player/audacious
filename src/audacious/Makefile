@@ -108,7 +108,6 @@ SOURCES = \
 	ui_skinned_textbox.c \
 	ui_skinselector.c \
 	ui_urlopener.c \
-	urldecode.c \
 	util.c \
 	vfs.c \
 	vfs_buffer.c \

@@ -25,8 +25,6 @@
 
 #include <string.h>
 
-#include "urldecode.h"
-
 GList *vfs_transports = NULL; /* temporary. -nenolod */
 
 #ifdef VFS_DEBUG

@@ -49,7 +49,6 @@
 #include "main.h"
 #include "widgets/widgetcore.h"
 #include "ui_skinned_textbox.h"
-#include "urldecode.h"
 #include "strings.h"
 #include "util.h"
 #include "dnd.h"

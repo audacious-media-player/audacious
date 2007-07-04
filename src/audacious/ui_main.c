@@ -64,7 +64,6 @@
 #include "genevent.h"
 #include "hints.h"
 #include "input.h"
-#include "urldecode.h"
 #include "playback.h"
 #include "playlist.h"
 #include "pluginenum.h"
