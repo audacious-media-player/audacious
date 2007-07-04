@@ -2833,25 +2833,23 @@ mainwin_create_widgets(void)
     g_signal_connect(mainwin_pl, "clicked", mainwin_playlist_pushed_cb, NULL);
     UI_SKINNED_BUTTON(mainwin_pl)->inside = cfg.playlist_visible;
 
-    mainwin_info = ui_skinned_textbox_new();
-    ui_skinned_textbox_setup(mainwin_info, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 112, 27,
+    mainwin_info = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 112, 27,
                              153, 1, SKIN_TEXT);
+    gtk_fixed_put(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), mainwin_info, 112, 27);
     ui_skinned_textbox_set_scroll(mainwin_info, cfg.autoscroll);
     ui_skinned_textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
     g_signal_connect(mainwin_info, "double-clicked", mainwin_info_double_clicked_cb, NULL);
     g_signal_connect(mainwin_info, "right-clicked", mainwin_info_right_clicked_cb, NULL);
 
-    mainwin_othertext = ui_skinned_textbox_new();
-    ui_skinned_textbox_setup(mainwin_othertext, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 112, 43,
+    mainwin_othertext = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 112, 43,
                              153, 1, SKIN_TEXT);
-
-    mainwin_rate_text = ui_skinned_textbox_new();
-    ui_skinned_textbox_setup(mainwin_rate_text, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 111, 43, 15,
+    gtk_fixed_put(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), mainwin_othertext, 112, 43);
+    mainwin_rate_text = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 111, 43, 15,
                              0, SKIN_TEXT);
-
-    mainwin_freq_text = ui_skinned_textbox_new();
-    ui_skinned_textbox_setup(mainwin_freq_text, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 156, 43, 10,
+    gtk_fixed_put(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), mainwin_rate_text, 111, 43);
+    mainwin_freq_text = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 156, 43, 10,
                             0, SKIN_TEXT);
+    gtk_fixed_put(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), mainwin_freq_text, 156, 43);
 
     mainwin_menurow =
         create_menurow(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 10, 22, 304,
@@ -2927,13 +2925,11 @@ mainwin_create_widgets(void)
                        mainwin_spos_release_cb, SKIN_TITLEBAR);
     widget_hide(WIDGET(mainwin_sposition));
 
-    mainwin_stime_min = ui_skinned_textbox_new();
-    ui_skinned_textbox_setup(mainwin_stime_min, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 130, 4, 15,
+    mainwin_stime_min = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 130, 4, 15,
                        FALSE, SKIN_TEXT);
     g_signal_connect(mainwin_stime_min, "clicked", change_timer_mode, NULL);
 
-    mainwin_stime_sec = ui_skinned_textbox_new();
-    ui_skinned_textbox_setup(mainwin_stime_sec, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 147, 4, 10,
+    mainwin_stime_sec = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 147, 4, 10,
                        FALSE, SKIN_TEXT);
     g_signal_connect(mainwin_stime_sec, "clicked", change_timer_mode, NULL);
 

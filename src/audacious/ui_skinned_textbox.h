@@ -2,6 +2,12 @@
  * Audacious - a cross-platform multimedia player
  * Copyright (c) 2007  Audacious development team.
  *
+ * Based on:
+ * BMP - Cross-platform multimedia player
+ * Copyright (C) 2003-2004  BMP development team.
+ * XMMS:
+ * Copyright (C) 1998-2003  XMMS development team.
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; under version 2 of the License.
@@ -20,33 +26,51 @@
 #define UISKINNEDTEXTBOX_H
 
 #include <gdk/gdk.h>
-#include <gtk/gtkbin.h>
-#include <gtk/gtkenums.h>
-#include "widgets/skin.h"
+#include <gtk/gtkadjustment.h>
+#include <gtk/gtkwidget.h>
 
-#define TEXTBOX_SCROLL_SMOOTH_TIMEOUT  30
-#define TEXTBOX_SCROLL_WAIT            80
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-#define UI_TYPE_SKINNED_TEXTBOX            (ui_skinned_textbox_get_type())
-#define UI_SKINNED_TEXTBOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), UI_TYPE_SKINNED_TEXTBOX, UiSkinnedTextbox))
-#define UI_SKINNED_TEXTBOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), UI_TYPE_SKINNED_TEXTBOX, UiSkinnedTextboxClass))
-#define UI_IS_SKINNED_TEXTBOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), UI_TYPE_SKINNED_TEXTBOX))
-#define UI_IS_SKINNED_TEXTBOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), UI_TYPE_SKINNED_TEXTBOX))
-#define UI_SKINNED_TEXTBOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), UI_TYPE_SKINNED_TEXTBOX, GtkFlatTextboxClass))
+#define UI_SKINNED_TEXTBOX(obj)          GTK_CHECK_CAST (obj, ui_skinned_textbox_get_type (), UiSkinnedTextbox)
+#define UI_SKINNED_TEXTBOX_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, ui_skinned_textbox_get_type (), UiSkinnedTextboxClass)
+#define UI_SKINNED_IS_TEXTBOX(obj)       GTK_CHECK_TYPE (obj, ui_skinned_textbox_get_type ())
 
-typedef struct _UiSkinnedTextbox	UiSkinnedTextbox;
-typedef struct _UiSkinnedTextboxClass	UiSkinnedTextboxClass;
+typedef struct _UiSkinnedTextbox        UiSkinnedTextbox;
+typedef struct _UiSkinnedTextboxClass   UiSkinnedTextboxClass;
 
 struct _UiSkinnedTextbox {
-    GtkBin bin;
-    GdkWindow *event_window;
-    gint x, y, width, height;
-    gboolean redraw;
-    gchar *text;
+    GtkWidget        widget;
+
+    gint             x, y, width, height;
+    gchar            *text;
+    gboolean         redraw;
+    GdkPixmap        *img;
+    GdkGC            *gc;
+    SkinPixmapId     skin_index;
+    GtkWidget        *fixed;
+    gboolean         double_size;
+    gboolean         scroll_back;
+    gint             nominal_y, nominal_height;
+    gint             scroll_timeout;
+    gint             font_ascent, font_descent;
+    PangoFontDescription *font;
+    gchar            *fontname;
+    gchar            *pixmap_text;
+    gint             skin_id;
+    gint             drag_x, drag_off, offset;
+    gboolean         is_scrollable, is_dragging;
+    gint             pixmap_width;
+    GdkPixmap        *pixmap;
+    gboolean         scroll_allowed, scroll_enabled;
+    gint             scroll_dummy;
+    gint             resize_width, resize_height;
+    gint             move_x, move_y;
 };
 
 struct _UiSkinnedTextboxClass {
-    GtkBinClass parent_class;
+    GtkWidgetClass          parent_class;
     void (* clicked)        (UiSkinnedTextbox *textbox);
     void (* double_clicked) (UiSkinnedTextbox *textbox);
     void (* right_clicked)  (UiSkinnedTextbox *textbox);
@@ -54,13 +78,16 @@ struct _UiSkinnedTextboxClass {
     void (* redraw)         (UiSkinnedTextbox *textbox);
 };
 
-GType ui_skinned_textbox_get_type(void) G_GNUC_CONST;
-GtkWidget* ui_skinned_textbox_new();
-void ui_skinned_textbox_setup(GtkWidget *widget, GtkWidget *fixed, GdkPixmap *parent, GdkGC *gc, gint x, gint y, gint w, gboolean allow_scroll, SkinPixmapId si);
+GtkWidget* ui_skinned_textbox_new (GtkWidget *fixed, GdkPixmap * parent, GdkGC * gc, gint x, gint y, gint w, gboolean allow_scroll, SkinPixmapId si);
+GtkType ui_skinned_textbox_get_type(void);
+void ui_skinned_textbox_set_xfont(GtkWidget *widget, gboolean use_xfont, const gchar * fontname);
 void ui_skinned_textbox_set_text(GtkWidget *widget, const gchar *text);
-void ui_skinned_textbox_set_xfont(GtkWidget *widget, gboolean use_xfont, const gchar *fontname);
 void ui_skinned_textbox_set_scroll(GtkWidget *widget, gboolean scroll);
 void ui_skinned_textbox_move_relative(GtkWidget *widget, gint x, gint y);
 void ui_skinned_textbox_resize_relative(GtkWidget *widget, gint w, gint h);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

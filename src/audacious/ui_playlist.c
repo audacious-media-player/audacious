@@ -1558,8 +1558,7 @@ playlistwin_create_widgets(void)
     /* This function creates the custom widgets used by the playlist editor */
 
     /* text box for displaying song title in shaded mode */
-    playlistwin_sinfo = ui_skinned_textbox_new();
-    ui_skinned_textbox_setup(playlistwin_sinfo, SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
+    playlistwin_sinfo = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
                              4, 4, playlistwin_get_width() - 35, TRUE, SKIN_TEXT);
 
     playlistwin_set_sinfo_font(cfg.playlist_font);
@@ -1604,20 +1603,17 @@ playlistwin_create_widgets(void)
     ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_slider));
 
     /* track time (minute) */
-    playlistwin_time_min = ui_skinned_textbox_new();
-    ui_skinned_textbox_setup(playlistwin_time_min, SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
+    playlistwin_time_min = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
                        playlistwin_get_width() - 82,
                        cfg.playlist_height - 15, 15, FALSE, SKIN_TEXT);
 
     /* track time (second) */
-    playlistwin_time_sec = ui_skinned_textbox_new();
-    ui_skinned_textbox_setup(playlistwin_time_sec, SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
+    playlistwin_time_sec = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
                        playlistwin_get_width() - 64,
                        cfg.playlist_height - 15, 10, FALSE, SKIN_TEXT);
 
     /* playlist information (current track length / total track length) */
-    playlistwin_info = ui_skinned_textbox_new();
-    ui_skinned_textbox_setup(playlistwin_info, SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
+    playlistwin_info = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
                        playlistwin_get_width() - 143,
                        cfg.playlist_height - 28, 90, FALSE, SKIN_TEXT);
 
