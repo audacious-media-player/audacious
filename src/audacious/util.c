@@ -99,13 +99,17 @@ gchar *
 find_file_recursively(const gchar * path, const gchar * filename)
 {
     FindFileContext context;
+    gchar *out;
 
     context.to_match = filename;
     context.match = NULL;
     context.found = FALSE;
 
     dir_foreach(path, find_file_func, &context, NULL);
-    return context.match;
+    out = g_strconcat("file:", context.match);
+    g_free(context.match);
+
+    return out;
 }
 
 
