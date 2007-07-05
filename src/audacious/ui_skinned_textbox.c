@@ -349,7 +349,7 @@ static gboolean ui_skinned_textbox_button_press(GtkWidget *widget, GdkEventButto
         }
     }
 
-    return FALSE;
+    return TRUE;
 }
 
 static gboolean ui_skinned_textbox_button_release(GtkWidget *widget, GdkEventButton *event) {
