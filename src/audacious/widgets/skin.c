@@ -277,7 +277,7 @@ skin_pixmap_locate(const gchar * dirname, gchar ** basenames)
     gint i;
 
     for (i = 0; basenames[i]; i++)
-    if (!(filename = find_file_recursively(dirname, basenames[i]))) 
+    if (!(filename = find_path_recursively(dirname, basenames[i]))) 
         g_free(filename);
     else
         return filename;

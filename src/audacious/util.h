@@ -45,6 +45,7 @@ typedef gboolean(*DirForeachFunc) (const gchar * path,
 
 
 gchar *find_file_recursively(const gchar * dirname, const gchar * file);
+gchar *find_path_recursively(const gchar * dirname, const gchar * file);
 void del_directory(const gchar * dirname);
 gboolean dir_foreach(const gchar * path, DirForeachFunc function,
                      gpointer user_data, GError ** error);

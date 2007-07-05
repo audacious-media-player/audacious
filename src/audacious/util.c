@@ -79,14 +79,14 @@ find_file_func(const gchar * path, const gchar * basename, gpointer data)
         return TRUE;
     }
 
-    if (g_file_test(path, G_FILE_TEST_IS_REGULAR)) {
+    if (vfs_file_test(path, G_FILE_TEST_IS_REGULAR)) {
         if (!strcasecmp(basename, context->to_match)) {
             context->match = g_strdup(path);
             context->found = TRUE;
             return TRUE;
         }
     }
-    else if (g_file_test(path, G_FILE_TEST_IS_DIR)) {
+    else if (vfs_file_test(path, G_FILE_TEST_IS_DIR)) {
         dir_foreach(path, find_file_func, context, NULL);
         if (context->found)
             return TRUE;
@@ -99,17 +99,36 @@ gchar *
 find_file_recursively(const gchar * path, const gchar * filename)
 {
     FindFileContext context;
-    gchar *out;
+    gchar *out = NULL;
 
     context.to_match = filename;
     context.match = NULL;
     context.found = FALSE;
 
     dir_foreach(path, find_file_func, &context, NULL);
-    out = g_strconcat("file:", context.match);
-    g_free(context.match);
+
+    if (context.match)
+    {
+        out = g_filename_to_uri(context.match, NULL, NULL);
+        g_free(context.match);
+    }
 
     return out;
+}
+
+gchar *
+find_path_recursively(const gchar * path, const gchar * filename)
+{
+    FindFileContext context;
+    gchar *out = NULL;
+
+    context.to_match = filename;
+    context.match = NULL;
+    context.found = FALSE;
+
+    dir_foreach(path, find_file_func, &context, NULL);
+
+    return context.match;
 }
 
 
