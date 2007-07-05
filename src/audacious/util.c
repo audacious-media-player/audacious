@@ -120,7 +120,6 @@ gchar *
 find_path_recursively(const gchar * path, const gchar * filename)
 {
     FindFileContext context;
-    gchar *out = NULL;
 
     context.to_match = filename;
     context.match = NULL;
