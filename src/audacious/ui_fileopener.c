@@ -73,7 +73,7 @@ action_button_cb(GtkWidget *widget, gpointer data)
     play_button =
         GPOINTER_TO_INT(g_object_get_data(data, "play-button"));
 
-    files = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER(chooser));
+    files = gtk_file_chooser_get_uris(GTK_FILE_CHOOSER(chooser));
     if (!files) return;
 
     if (play_button)
