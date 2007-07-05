@@ -85,7 +85,10 @@ vfs_fopen(const gchar * path,
 
     /* no transport vtable has been registered, bail. */
     if (vtable == NULL)
+    {
+        g_warning("could not open '%s', no transport plugin available", decpath);
         return NULL;
+    }
 
     file = vtable->vfs_fopen_impl(decpath, mode);
 
