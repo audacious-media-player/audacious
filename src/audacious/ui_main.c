@@ -2835,7 +2835,6 @@ mainwin_create_widgets(void)
 
     mainwin_info = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 112, 27,
                              153, 1, SKIN_TEXT);
-    gtk_fixed_put(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), mainwin_info, 112, 27);
     ui_skinned_textbox_set_scroll(mainwin_info, cfg.autoscroll);
     ui_skinned_textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
     g_signal_connect(mainwin_info, "double-clicked", mainwin_info_double_clicked_cb, NULL);
@@ -2843,13 +2842,12 @@ mainwin_create_widgets(void)
 
     mainwin_othertext = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 112, 43,
                              153, 1, SKIN_TEXT);
-    gtk_fixed_put(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), mainwin_othertext, 112, 43);
+
     mainwin_rate_text = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 111, 43, 15,
                              0, SKIN_TEXT);
-    gtk_fixed_put(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), mainwin_rate_text, 111, 43);
+
     mainwin_freq_text = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 156, 43, 10,
                             0, SKIN_TEXT);
-    gtk_fixed_put(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), mainwin_freq_text, 156, 43);
 
     mainwin_menurow =
         create_menurow(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 10, 22, 304,
