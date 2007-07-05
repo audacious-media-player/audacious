@@ -38,7 +38,7 @@ filebrowser_add_files(GtkFileChooser * browser,
 
     for (cur = files; cur; cur = g_slist_next(cur)) {
 
-        if (g_file_test(cur->data,G_FILE_TEST_IS_DIR)) {
+        if (vfs_file_test(cur->data, G_FILE_TEST_IS_DIR)) {
             playlist_add_dir(playlist, (const gchar *) cur->data);
         } else {
             playlist_add(playlist, (const gchar *) cur->data);
