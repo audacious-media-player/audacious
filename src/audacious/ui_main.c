@@ -932,6 +932,7 @@ mainwin_set_song_info(gint bitrate,
     title = playlist_get_info_text(playlist);
     mainwin_set_song_title(title);
     g_free(title);
+    mainwin_force_redraw = TRUE;
 }
 
 void
