@@ -101,11 +101,11 @@ GType ui_skinned_button_get_type() {
 }
 
 static void ui_skinned_button_class_init (UiSkinnedButtonClass *klass) {
-GObjectClass *gobject_class;
-gobject_class = G_OBJECT_CLASS(klass);
+    GObjectClass *gobject_class;
     GtkObjectClass *object_class;
     GtkWidgetClass *widget_class;
 
+    gobject_class = G_OBJECT_CLASS(klass);
     object_class = (GtkObjectClass*) klass;
     widget_class = (GtkWidgetClass*) klass;
     parent_class = gtk_type_class (gtk_widget_get_type ());

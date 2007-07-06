@@ -45,28 +45,6 @@ struct _UiSkinnedTextbox {
 
     gint             x, y, width, height;
     gchar            *text;
-    gboolean         redraw;
-    GdkPixmap        *img;
-    GdkGC            *gc;
-    SkinPixmapId     skin_index;
-    GtkWidget        *fixed;
-    gboolean         double_size;
-    gboolean         scroll_back;
-    gint             nominal_y, nominal_height;
-    gint             scroll_timeout;
-    gint             font_ascent, font_descent;
-    PangoFontDescription *font;
-    gchar            *fontname;
-    gchar            *pixmap_text;
-    gint             skin_id;
-    gint             drag_x, drag_off, offset;
-    gboolean         is_scrollable, is_dragging;
-    gint             pixmap_width;
-    GdkPixmap        *pixmap;
-    gboolean         scroll_allowed, scroll_enabled;
-    gint             scroll_dummy;
-    gint             resize_width, resize_height;
-    gint             move_x, move_y;
 };
 
 struct _UiSkinnedTextboxClass {
