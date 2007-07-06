@@ -823,7 +823,7 @@ playlist_dir_find_files(const gchar * path,
     struct stat statbuf;
     DeviceInode *devino;
 
-    if (!g_file_test(path, G_FILE_TEST_IS_DIR))
+    if (!vfs_file_test(path, G_FILE_TEST_IS_DIR))
         return NULL;
 
     stat(path, &statbuf);
@@ -858,7 +858,7 @@ playlist_dir_find_files(const gchar * path,
 
         filename = g_build_filename(path, dir_entry, NULL);
 
-        if (g_file_test(filename, G_FILE_TEST_IS_DIR)) {
+        if (vfs_file_test(filename, G_FILE_TEST_IS_DIR)) {
             GList *sub;
             sub = playlist_dir_find_files(filename, background, htab);
             g_free(filename);
