@@ -836,6 +836,7 @@ playlist_dir_find_files(const gchar * path,
 
     g_hash_table_insert(htab, devino, GINT_TO_POINTER(1));
 
+    /* XXX: what the hell is this for? --nenolod */
     if ((ilist = input_scan_dir(path))) {
         GList *node;
         for (node = ilist; node; node = g_list_next(node)) {
@@ -851,12 +852,14 @@ playlist_dir_find_files(const gchar * path,
         return NULL;
 
     while ((dir_entry = g_dir_read_name(dir))) {
-        gchar *filename;
+        gchar *filename, *tmp;
 
         if (file_is_hidden(dir_entry))
             continue;
 
-        filename = g_build_filename(path, dir_entry, NULL);
+        tmp = g_build_filename(path, dir_entry, NULL);
+        filename = g_filename_to_uri(tmp, NULL, NULL);
+        g_free(tmp);
 
         if (vfs_file_test(filename, G_FILE_TEST_IS_DIR)) {
             GList *sub;
