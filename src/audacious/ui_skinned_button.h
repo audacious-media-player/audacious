@@ -27,7 +27,7 @@
 #define UI_TYPE_SKINNED_BUTTON            (ui_skinned_button_get_type())
 #define UI_SKINNED_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), UI_TYPE_SKINNED_BUTTON, UiSkinnedButton))
 #define UI_SKINNED_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), UI_TYPE_SKINNED_BUTTON, UiSkinnedButtonClass))
-#define UI_IS_SKINNED_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), UI_TYPE_SKINNED_BUTTON))
+#define UI_SKINNED_IS_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), UI_TYPE_SKINNED_BUTTON))
 #define UI_IS_SKINNED_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), UI_TYPE_SKINNED_BUTTON))
 #define UI_SKINNED_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), UI_TYPE_SKINNED_BUTTON, GtkFlatButtonClass))
 
@@ -42,7 +42,7 @@ enum {
 };
 
 struct _UiSkinnedButton {
-	GtkBin bin;
+	GtkWidget widget;
 
 	GdkWindow *event_window;
 
@@ -61,7 +61,7 @@ struct _UiSkinnedButton {
 };
 
 struct _UiSkinnedButtonClass {
-	GtkBinClass parent_class;
+	GtkWidgetClass          parent_class;
 	void (* pressed)       (UiSkinnedButton *button);
 	void (* released)      (UiSkinnedButton *button);
 	void (* clicked)       (UiSkinnedButton *button);
