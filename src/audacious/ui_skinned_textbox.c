@@ -383,8 +383,6 @@ static gboolean ui_skinned_textbox_button_press(GtkWidget *widget, GdkEventButto
             } else
                 g_signal_emit(widget, textbox_signals[CLICKED], 0);
 
-        } else if (event->button == 3) {
-            g_signal_emit(widget, textbox_signals[RIGHT_CLICKED], 0);
         }
     } else if (event->type == GDK_2BUTTON_PRESS) {
         if (event->button == 1) {
@@ -400,9 +398,11 @@ static gboolean ui_skinned_textbox_button_release(GtkWidget *widget, GdkEventBut
 
     if (event->button == 1) {
         priv->is_dragging = FALSE;
+    } else if (event->button == 3) {
+        g_signal_emit(widget, textbox_signals[RIGHT_CLICKED], 0);
     }
 
-    return FALSE;
+    return TRUE;
 }
 
 static gboolean ui_skinned_textbox_motion_notify(GtkWidget *widget, GdkEventMotion *event) {
@@ -428,7 +428,7 @@ static gboolean ui_skinned_textbox_motion_notify(GtkWidget *widget, GdkEventMoti
         }
     }
 
-  return FALSE;
+  return TRUE;
 }
 
 static void ui_skinned_textbox_toggle_doublesize(UiSkinnedTextbox *textbox) {
