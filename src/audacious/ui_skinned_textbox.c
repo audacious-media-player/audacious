@@ -52,7 +52,6 @@ enum {
 };
 
 struct _UiSkinnedTextboxPrivate {
-    gboolean         redraw;
     GdkPixmap        *img;
     GdkGC            *gc;
     SkinPixmapId     skin_index;
@@ -293,74 +292,70 @@ static gboolean ui_skinned_textbox_expose(GtkWidget *widget, GdkEventExpose *eve
     UiSkinnedTextbox *textbox = UI_SKINNED_TEXTBOX (widget);
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
 
-    if(priv->redraw) {
-        priv->redraw = FALSE;
-        GdkPixmap *obj = NULL;
-        gint cw;
+    GdkPixmap *obj = NULL;
+    gint cw;
 
-        if (textbox->text && (!priv->pixmap_text || strcmp(textbox->text, priv->pixmap_text)))
+    if (textbox->text && (!priv->pixmap_text || strcmp(textbox->text, priv->pixmap_text)))
+        textbox_generate_pixmap(textbox);
+
+    if (priv->pixmap) {
+        if (skin_get_id() != priv->skin_id) {
+            priv->skin_id = skin_get_id();
             textbox_generate_pixmap(textbox);
-
-        if (priv->pixmap) {
-            if (skin_get_id() != priv->skin_id) {
-                priv->skin_id = skin_get_id();
-                textbox_generate_pixmap(textbox);
-            }
-            obj = gdk_pixmap_new(NULL, textbox->width, textbox->height, gdk_rgb_get_visual()->depth);
-
-            if(cfg.twoway_scroll) { // twoway scroll
-                cw = priv->pixmap_width - priv->offset;
-                if (cw > textbox->width)
-                    cw = textbox->width;
-                gdk_draw_drawable(obj, priv->gc, priv->pixmap, priv->offset, 0, 0, 0, cw, textbox->height);
-                if (cw < textbox->width)
-                    gdk_draw_drawable(obj, priv->gc, priv->pixmap, 0, 0,
-                                      textbox->x + cw, textbox->y,
-                                      textbox->width - cw, textbox->height);
-            }
-            else { // oneway scroll
-                int cw1, cw2;
-
-                if(priv->offset >= priv->pixmap_width)
-                    priv->offset = 0;
-
-                if(priv->pixmap_width - priv->offset > textbox->width){ // case1
-                    cw1 = textbox->width;
-                    gdk_draw_drawable(obj, priv->gc, priv->pixmap, priv->offset, 0,
-                                      0, 0, cw1, textbox->height);
-                }
-                else { // case 2
-                    cw1 = priv->pixmap_width - priv->offset;
-                    gdk_draw_drawable(obj, priv->gc, priv->pixmap, priv->offset, 0,
-                                      0, 0, cw1, textbox->height);
-                    cw2 = textbox->width - cw1;
-                    gdk_draw_drawable(obj, priv->gc, priv->pixmap, 0, 0, cw1, 0, cw2, textbox->height);
-                }
-
-            }
-        if (priv->img)
-                g_object_unref(priv->img);
-        priv->img = gdk_pixmap_new(NULL, textbox->width*(1+priv->double_size),
-                                            textbox->height*(1+priv->double_size),
-                                            gdk_rgb_get_visual()->depth);
-
-        if (priv->double_size) {
-            GdkImage *img, *img2x;
-            img = gdk_drawable_get_image(obj, 0, 0, textbox->width, textbox->height);
-            img2x = create_dblsize_image(img);
-            gdk_draw_image (priv->img, priv->gc, img2x, 0, 0, 0, 0, textbox->width*2, textbox->height*2);
-            g_object_unref(img2x);
-            g_object_unref(img);
-        } else
-            gdk_draw_drawable (priv->img, priv->gc, obj, 0, 0, 0, 0, textbox->width, textbox->height);
-            g_object_unref(obj);
-            gtk_widget_queue_resize(widget);
         }
+        obj = gdk_pixmap_new(NULL, textbox->width, textbox->height, gdk_rgb_get_visual()->depth);
+
+        if (cfg.twoway_scroll) { // twoway scroll
+            cw = priv->pixmap_width - priv->offset;
+            if (cw > textbox->width)
+                cw = textbox->width;
+            gdk_draw_drawable(obj, priv->gc, priv->pixmap, priv->offset, 0, 0, 0, cw, textbox->height);
+            if (cw < textbox->width)
+                gdk_draw_drawable(obj, priv->gc, priv->pixmap, 0, 0,
+                                  textbox->x + cw, textbox->y,
+                                  textbox->width - cw, textbox->height);
+        } else { // oneway scroll
+            int cw1, cw2;
+
+            if (priv->offset >= priv->pixmap_width)
+                priv->offset = 0;
+
+            if (priv->pixmap_width - priv->offset > textbox->width) { // case1
+                cw1 = textbox->width;
+                gdk_draw_drawable(obj, priv->gc, priv->pixmap, priv->offset, 0,
+                                  0, 0, cw1, textbox->height);
+            } else { // case 2
+                cw1 = priv->pixmap_width - priv->offset;
+                gdk_draw_drawable(obj, priv->gc, priv->pixmap, priv->offset, 0,
+                                  0, 0, cw1, textbox->height);
+                cw2 = textbox->width - cw1;
+                gdk_draw_drawable(obj, priv->gc, priv->pixmap, 0, 0, cw1, 0, cw2, textbox->height);
+            }
+
+        }
+    if (priv->img)
+        g_object_unref(priv->img);
+    priv->img = gdk_pixmap_new(NULL, textbox->width*(1+priv->double_size),
+                               textbox->height*(1+priv->double_size),
+                               gdk_rgb_get_visual()->depth);
+
+    if (priv->double_size) {
+        GdkImage *img, *img2x;
+        img = gdk_drawable_get_image(obj, 0, 0, textbox->width, textbox->height);
+        img2x = create_dblsize_image(img);
+        gdk_draw_image (priv->img, priv->gc, img2x, 0, 0, 0, 0, textbox->width*2, textbox->height*2);
+        g_object_unref(img2x);
+        g_object_unref(img);
+    } else
+        gdk_draw_drawable (priv->img, priv->gc, obj, 0, 0, 0, 0, textbox->width, textbox->height);
+
+
+        g_object_unref(obj);
     }
 
     gdk_draw_drawable (widget->window, priv->gc, priv->img, 0, 0, 0, 0,
                        textbox->width*(1+priv->double_size), textbox->height*(1+priv->double_size));
-  return FALSE;
+    return FALSE;
 }
 
 static gboolean ui_skinned_textbox_button_press(GtkWidget *widget, GdkEventButton *event) {
@@ -423,7 +418,6 @@ static gboolean ui_skinned_textbox_motion_notify(GtkWidget *widget, GdkEventMoti
             while (priv->offset > (priv->pixmap_width - textbox->width))
                 priv->offset = (priv->pixmap_width - textbox->width);
 
-            priv->redraw = TRUE;
             gtk_widget_queue_draw(widget);
         }
     }
@@ -440,7 +434,6 @@ static void ui_skinned_textbox_toggle_doublesize(UiSkinnedTextbox *textbox) {
     gtk_widget_set_size_request(widget, textbox->width*(1+priv->double_size), textbox->height*(1+priv->double_size));
     gtk_widget_set_uposition(widget, textbox->x*(1+priv->double_size), textbox->y*(1+priv->double_size));
 
-    priv->redraw = TRUE;
     gtk_widget_queue_draw(GTK_WIDGET(textbox));
 }
 
@@ -455,7 +448,6 @@ static void ui_skinned_textbox_redraw(UiSkinnedTextbox *textbox) {
     if (priv->move_x || priv->move_y)
         gtk_fixed_move(GTK_FIXED(priv->fixed), GTK_WIDGET(textbox), textbox->x+priv->move_x, textbox->y+priv->move_y);
 
-    priv->redraw = TRUE;
     gtk_widget_queue_draw(GTK_WIDGET(textbox));
     g_mutex_unlock(mutex);
 }
@@ -537,7 +529,6 @@ void ui_skinned_textbox_set_text(GtkWidget *widget, const gchar *text) {
     if (textbox->text)
         g_free(textbox->text);
 
-    priv->redraw = TRUE;
     textbox->text = str_to_utf8(text);
     priv->scroll_back = FALSE;
     gtk_widget_queue_draw(GTK_WIDGET(textbox));
@@ -627,7 +618,6 @@ static gboolean textbox_scroll(gpointer data) {
                 priv->scroll_back = FALSE;
                 priv->offset += 1;
             }
-            priv->redraw=TRUE;
             gtk_widget_queue_draw(GTK_WIDGET(textbox));
         }
     }

@@ -56,8 +56,6 @@ struct _UiSkinnedButton {
 
 	//Toogle button needs also those
 	gint pnx, pny, ppx, ppy;
-
-	gboolean redraw;
 };
 
 struct _UiSkinnedButtonClass {

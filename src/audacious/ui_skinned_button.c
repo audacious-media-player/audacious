@@ -164,7 +164,6 @@ static void ui_skinned_button_class_init (UiSkinnedButtonClass *klass) {
 static void ui_skinned_button_init (UiSkinnedButton *button) {
     UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
     mutex = g_mutex_new();
-    button->redraw = TRUE;
     button->inside = FALSE;
     button->type = TYPE_NOT_SET;
     priv->move_x = 0;
@@ -253,57 +252,51 @@ static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *even
     if (button->type == TYPE_SMALL || button->type == TYPE_NOT_SET)
         return FALSE;
 
-    if (button->redraw == TRUE) {
-        button->redraw = FALSE;
-
-        GdkPixmap *obj;
-        obj = gdk_pixmap_new(NULL, priv->w, priv->h, gdk_rgb_get_visual()->depth);
-        switch (button->type) {
-            case TYPE_PUSH:
+    GdkPixmap *obj;
+    obj = gdk_pixmap_new(NULL, priv->w, priv->h, gdk_rgb_get_visual()->depth);
+    switch (button->type) {
+        case TYPE_PUSH:
+            skin_draw_pixmap(bmp_active_skin, obj, priv->gc,
+                             button->pressed ? priv->skin_index2 : priv->skin_index1,
+                             button->pressed ? button->px : button->nx,
+                             button->pressed ? button->py : button->ny,
+                             0, 0, priv->w, priv->h);
+            break;
+        case TYPE_TOGGLE:
+            if (button->inside)
+                skin_draw_pixmap(bmp_active_skin, obj, priv->gc,
+                                 button->pressed ? priv->skin_index2 : priv->skin_index1,
+                                 button->pressed ? button->ppx : button->pnx,
+                                 button->pressed ? button->ppy : button->pny,
+                                 0, 0, priv->w, priv->h);
+            else
                 skin_draw_pixmap(bmp_active_skin, obj, priv->gc,
                                  button->pressed ? priv->skin_index2 : priv->skin_index1,
                                  button->pressed ? button->px : button->nx,
                                  button->pressed ? button->py : button->ny,
                                  0, 0, priv->w, priv->h);
-                break;
-            case TYPE_TOGGLE:
-                if (button->inside)
-                    skin_draw_pixmap(bmp_active_skin, obj, priv->gc,
-                                     button->pressed ? priv->skin_index2 : priv->skin_index1,
-                                     button->pressed ? button->ppx : button->pnx,
-                                     button->pressed ? button->ppy : button->pny,
-                                     0, 0, priv->w, priv->h);
-                else
-                    skin_draw_pixmap(bmp_active_skin, obj, priv->gc,
-                                     button->pressed ? priv->skin_index2 : priv->skin_index1,
-                                     button->pressed ? button->px : button->nx,
-                                     button->pressed ? button->py : button->ny,
-                                     0, 0, priv->w, priv->h);
-                break;
-            default:
-                break;
-        }
-
-        if (priv->img)
-                g_object_unref(priv->img);
-        priv->img = gdk_pixmap_new(NULL, priv->w*(1+priv->double_size),
-                                         priv->h*(1+priv->double_size),
-                                         gdk_rgb_get_visual()->depth);
-
-        if (priv->double_size) {
-            GdkImage *img, *img2x;
-            img = gdk_drawable_get_image(obj, 0, 0, priv->w, priv->h);
-            img2x = create_dblsize_image(img);
-            gdk_draw_image (priv->img, priv->gc, img2x, 0, 0, 0, 0, priv->w*2, priv->h*2);
-            g_object_unref(img2x);
-            g_object_unref(img);
-        } else
-            gdk_draw_drawable (priv->img, priv->gc, obj, 0, 0, 0, 0, priv->w, priv->h);
-
-        g_object_unref(obj);
-        gtk_widget_queue_resize(widget);
-
+            break;
+        default:
+            break;
     }
+
+    if (priv->img)
+        g_object_unref(priv->img);
+    priv->img = gdk_pixmap_new(NULL, priv->w*(1+priv->double_size),
+                               priv->h*(1+priv->double_size),
+                               gdk_rgb_get_visual()->depth);
+
+    if (priv->double_size) {
+        GdkImage *img, *img2x;
+        img = gdk_drawable_get_image(obj, 0, 0, priv->w, priv->h);
+        img2x = create_dblsize_image(img);
+        gdk_draw_image (priv->img, priv->gc, img2x, 0, 0, 0, 0, priv->w*2, priv->h*2);
+        g_object_unref(img2x);
+        g_object_unref(img);
+    } else
+        gdk_draw_drawable (priv->img, priv->gc, obj, 0, 0, 0, 0, priv->w, priv->h);
+
+    g_object_unref(obj);
 
     gdk_draw_drawable (widget->window, priv->gc, priv->img, 0, 0, 0, 0,
                        priv->w*(1+priv->double_size), priv->h*(1+priv->double_size));
@@ -398,7 +391,6 @@ static void ui_skinned_button_update_state(UiSkinnedButton *button) {
 static void ui_skinned_button_set_pressed (UiSkinnedButton *button, gboolean pressed) {
     if (pressed != button->pressed) {
         button->pressed = pressed;
-        button->redraw = TRUE;
         gtk_widget_queue_draw(GTK_WIDGET(button));
     }
 }
@@ -420,7 +412,6 @@ static gboolean ui_skinned_button_button_release(GtkWidget *widget, GdkEventButt
     UiSkinnedButton *button;
     if (event->button == 1) {
             button = UI_SKINNED_BUTTON(widget);
-            button->redraw = TRUE;
             ui_skinned_button_released(button);
     } else if (event->button == 3) {
             g_signal_emit(widget, button_signals[RIGHT_CLICKED], 0);
@@ -473,7 +464,6 @@ static void ui_skinned_button_toggle_doublesize(UiSkinnedButton *button) {
     gtk_widget_set_size_request(widget, priv->w*(1+priv->double_size), priv->h*(1+priv->double_size));
     gtk_widget_set_uposition(widget, button->x*(1+priv->double_size), button->y*(1+priv->double_size));
 
-    button->redraw = TRUE;
     gtk_widget_queue_draw(widget);
 }
 
@@ -482,7 +472,7 @@ static void ui_skinned_button_redraw(UiSkinnedButton *button) {
     UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
     if (priv->move_x || priv->move_y)
         gtk_fixed_move(GTK_FIXED(priv->fixed), GTK_WIDGET(button), button->x+priv->move_x, button->y+priv->move_y);
-    button->redraw = TRUE;
+
     gtk_widget_queue_draw(GTK_WIDGET(button));
     g_mutex_unlock(mutex);
 }
