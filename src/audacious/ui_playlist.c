@@ -1429,10 +1429,10 @@ draw_playlist_window(gboolean force)
         if (force) {
             gdk_window_clear(playlistwin->window);
             GList *iter;
-            for (iter = GTK_FIXED (SKINNED_WINDOW(playlistwin)->fixed)->children; iter; iter = g_list_next (iter)) {
+            for (iter = GTK_FIXED (SKINNED_WINDOW(mainwin)->fixed)->children; iter; iter = g_list_next (iter)) {
                 GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
                 GtkWidget *child = child_data->widget;
-                g_signal_emit_by_name(child, "redraw");
+                gtk_widget_queue_draw(child);
             }
         }
         else {
@@ -1791,7 +1791,7 @@ playlistwin_show(void)
 
     cfg.playlist_visible = TRUE;
     UI_SKINNED_BUTTON(mainwin_pl)->inside = TRUE;
-    g_signal_emit_by_name(mainwin_pl, "redraw");
+    gtk_widget_queue_draw(mainwin_pl);
 
     playlistwin_set_toprow(0);
     playlist_check_pos_current(playlist_get_active());
@@ -1817,7 +1817,7 @@ playlistwin_hide(void)
     gtk_widget_hide(playlistwin);
     cfg.playlist_visible = FALSE;
     UI_SKINNED_BUTTON(mainwin_pl)->inside = FALSE;
-    g_signal_emit_by_name(mainwin_pl, "redraw");
+    gtk_widget_queue_draw(mainwin_pl);
 
     /* no point in probing for playlistwin_infopopup trigger when the playlistwin is hidden */
     if ( playlistwin_infopopup_sid != 0 )

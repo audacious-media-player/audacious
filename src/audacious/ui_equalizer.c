@@ -330,10 +330,10 @@ draw_equalizer_window(gboolean force)
 
         gdk_window_clear(equalizerwin->window);
         GList *iter;
-        for (iter = GTK_FIXED (SKINNED_WINDOW(equalizerwin)->fixed)->children; iter; iter = g_list_next (iter)) {
-            GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
-            GtkWidget *child = child_data->widget;
-            g_signal_emit_by_name(child, "redraw");
+        for (iter = GTK_FIXED (SKINNED_WINDOW(mainwin)->fixed)->children; iter; iter = g_list_next (iter)) {
+             GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
+             GtkWidget *child = child_data->widget;
+             gtk_widget_queue_draw(child);
         }
         gdk_flush();
     }
@@ -838,7 +838,7 @@ equalizerwin_real_show(void)
     draw_equalizer_window(TRUE);
     cfg.equalizer_visible = TRUE;
     UI_SKINNED_BUTTON(mainwin_eq)->inside = TRUE;
-    g_signal_emit_by_name(mainwin_eq, "redraw");
+    gtk_widget_queue_draw(mainwin_eq);
 
     gtk_widget_show_all(equalizerwin);
     gtk_window_present(GTK_WINDOW(equalizerwin));
@@ -854,7 +854,7 @@ equalizerwin_real_hide(void)
     gtk_widget_hide(equalizerwin);
     cfg.equalizer_visible = FALSE;
     UI_SKINNED_BUTTON(mainwin_eq)->inside = FALSE;
-    g_signal_emit_by_name(mainwin_eq, "redraw");
+    gtk_widget_queue_draw(mainwin_eq);
 }
 
 static EqualizerPreset *

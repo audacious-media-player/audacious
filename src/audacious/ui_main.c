@@ -520,14 +520,12 @@ draw_main_window(gboolean force)
                 g_object_unref(img2x);
                 g_object_unref(img);
             }
-
             GList *iter;
             for (iter = GTK_FIXED (SKINNED_WINDOW(mainwin)->fixed)->children; iter; iter = g_list_next (iter)) {
                 GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
                 GtkWidget *child = child_data->widget;
-                g_signal_emit_by_name(child, "redraw");
+                gtk_widget_queue_draw(child);
             }
-
         }
         else {
             for (wl = mainwin_wlist; wl; wl = g_list_next(wl)) {
