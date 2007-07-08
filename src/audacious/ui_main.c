@@ -2679,129 +2679,115 @@ static void
 mainwin_create_widgets(void)
 {
     mainwin_menubtn = ui_skinned_button_new();
-    ui_skinned_push_button_setup(mainwin_menubtn, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                 SKINNED_WINDOW(mainwin)->gc, 6, 3, 9, 9, 0, 0, 0, 9, SKIN_TITLEBAR);
+    ui_skinned_push_button_setup(mainwin_menubtn, SKINNED_WINDOW(mainwin)->fixed,
+                                 6, 3, 9, 9, 0, 0, 0, 9, SKIN_TITLEBAR);
     g_signal_connect(mainwin_menubtn, "clicked", mainwin_menubtn_cb, NULL );
 
     mainwin_minimize = ui_skinned_button_new();
-    ui_skinned_push_button_setup(mainwin_minimize, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                 SKINNED_WINDOW(mainwin)->gc, 244, 3, 9, 9, 9, 0, 9, 9, SKIN_TITLEBAR);
+    ui_skinned_push_button_setup(mainwin_minimize, SKINNED_WINDOW(mainwin)->fixed,
+                                 244, 3, 9, 9, 9, 0, 9, 9, SKIN_TITLEBAR);
     g_signal_connect(mainwin_minimize, "clicked", mainwin_minimize_cb, NULL );
 
     mainwin_shade = ui_skinned_button_new();
-    ui_skinned_push_button_setup(mainwin_shade, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                 SKINNED_WINDOW(mainwin)->gc,  254, 3, 9, 9, 0,
+    ui_skinned_push_button_setup(mainwin_shade, SKINNED_WINDOW(mainwin)->fixed,
+                                 254, 3, 9, 9, 0,
                                  cfg.player_shaded ? 27 : 18, 9, cfg.player_shaded ? 27 : 18, SKIN_TITLEBAR);
     g_signal_connect(mainwin_shade, "clicked", mainwin_shade_toggle, NULL );
 
     mainwin_close = ui_skinned_button_new();
-    ui_skinned_push_button_setup(mainwin_close, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                 SKINNED_WINDOW(mainwin)->gc, 264, 3, 9, 9, 18, 0, 18, 9, SKIN_TITLEBAR);
+    ui_skinned_push_button_setup(mainwin_close, SKINNED_WINDOW(mainwin)->fixed,
+                                 264, 3, 9, 9, 18, 0, 18, 9, SKIN_TITLEBAR);
     g_signal_connect(mainwin_close, "clicked", mainwin_quit_cb, NULL );
 
     mainwin_rew = ui_skinned_button_new();
-    ui_skinned_push_button_setup(mainwin_rew, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                 SKINNED_WINDOW(mainwin)->gc, 16, 88, 23, 18, 0, 0, 0, 18, SKIN_CBUTTONS);
+    ui_skinned_push_button_setup(mainwin_rew, SKINNED_WINDOW(mainwin)->fixed,
+                                 16, 88, 23, 18, 0, 0, 0, 18, SKIN_CBUTTONS);
     g_signal_connect(mainwin_rew, "pressed", mainwin_rev_pushed, NULL);
     g_signal_connect(mainwin_rew, "released", mainwin_rev_release, NULL);
 
     mainwin_fwd = ui_skinned_button_new();
-    ui_skinned_push_button_setup(mainwin_fwd, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                 SKINNED_WINDOW(mainwin)->gc, 108, 88, 22, 18, 92, 0, 92, 18, SKIN_CBUTTONS);
+    ui_skinned_push_button_setup(mainwin_fwd, SKINNED_WINDOW(mainwin)->fixed,
+                                 108, 88, 22, 18, 92, 0, 92, 18, SKIN_CBUTTONS);
     g_signal_connect(mainwin_fwd, "pressed", mainwin_fwd_pushed, NULL);
     g_signal_connect(mainwin_fwd, "released", mainwin_fwd_release, NULL);
 
     mainwin_play = ui_skinned_button_new();
-    ui_skinned_push_button_setup(mainwin_play, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                 SKINNED_WINDOW(mainwin)->gc, 39, 88, 23, 18, 23, 0, 23, 18, SKIN_CBUTTONS);
+    ui_skinned_push_button_setup(mainwin_play, SKINNED_WINDOW(mainwin)->fixed,
+                                 39, 88, 23, 18, 23, 0, 23, 18, SKIN_CBUTTONS);
     g_signal_connect(mainwin_play, "clicked", mainwin_play_pushed, NULL );
 
     mainwin_pause = ui_skinned_button_new();
-    ui_skinned_push_button_setup(mainwin_pause, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                 SKINNED_WINDOW(mainwin)->gc, 62, 88, 23, 18, 46, 0, 46, 18, SKIN_CBUTTONS);
+    ui_skinned_push_button_setup(mainwin_pause, SKINNED_WINDOW(mainwin)->fixed,
+                                 62, 88, 23, 18, 46, 0, 46, 18, SKIN_CBUTTONS);
     g_signal_connect(mainwin_pause, "clicked", playback_pause, NULL );
 
     mainwin_stop = ui_skinned_button_new();
-    ui_skinned_push_button_setup(mainwin_stop, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                 SKINNED_WINDOW(mainwin)->gc, 85, 88, 23, 18, 69, 0, 69, 18, SKIN_CBUTTONS);
+    ui_skinned_push_button_setup(mainwin_stop, SKINNED_WINDOW(mainwin)->fixed,
+                                 85, 88, 23, 18, 69, 0, 69, 18, SKIN_CBUTTONS);
     g_signal_connect(mainwin_stop, "clicked", mainwin_stop_pushed, NULL );
 
     mainwin_eject = ui_skinned_button_new();
-    ui_skinned_push_button_setup(mainwin_eject, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                 SKINNED_WINDOW(mainwin)->gc, 136, 89, 22, 16, 114, 0, 114, 16, SKIN_CBUTTONS);
+    ui_skinned_push_button_setup(mainwin_eject, SKINNED_WINDOW(mainwin)->fixed,
+                                 136, 89, 22, 16, 114, 0, 114, 16, SKIN_CBUTTONS);
     g_signal_connect(mainwin_eject, "clicked", mainwin_eject_pushed, NULL);
 
     mainwin_srew = ui_skinned_button_new();
-    ui_skinned_small_button_setup(mainwin_srew, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                  SKINNED_WINDOW(mainwin)->gc, 169, 4, 8, 7);
+    ui_skinned_small_button_setup(mainwin_srew, SKINNED_WINDOW(mainwin)->fixed, 169, 4, 8, 7);
     g_signal_connect(mainwin_srew, "clicked", mainwin_playlist_prev, NULL);
 
     mainwin_splay = ui_skinned_button_new();
-    ui_skinned_small_button_setup(mainwin_splay, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                  SKINNED_WINDOW(mainwin)->gc, 177, 4, 10, 7);
+    ui_skinned_small_button_setup(mainwin_splay, SKINNED_WINDOW(mainwin)->fixed, 177, 4, 10, 7);
     g_signal_connect(mainwin_splay, "clicked", mainwin_play_pushed, NULL);
 
     mainwin_spause = ui_skinned_button_new();
-    ui_skinned_small_button_setup(mainwin_spause, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                  SKINNED_WINDOW(mainwin)->gc, 187, 4, 10, 7);
+    ui_skinned_small_button_setup(mainwin_spause, SKINNED_WINDOW(mainwin)->fixed, 187, 4, 10, 7);
     g_signal_connect(mainwin_spause, "clicked", playback_pause, NULL);
 
     mainwin_sstop = ui_skinned_button_new();
-    ui_skinned_small_button_setup(mainwin_sstop, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                  SKINNED_WINDOW(mainwin)->gc, 197, 4, 9, 7);
+    ui_skinned_small_button_setup(mainwin_sstop, SKINNED_WINDOW(mainwin)->fixed, 197, 4, 9, 7);
     g_signal_connect(mainwin_sstop, "clicked", mainwin_stop_pushed, NULL);
 
     mainwin_sfwd = ui_skinned_button_new();
-    ui_skinned_small_button_setup(mainwin_sfwd, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                  SKINNED_WINDOW(mainwin)->gc, 206, 4, 8, 7);
+    ui_skinned_small_button_setup(mainwin_sfwd, SKINNED_WINDOW(mainwin)->fixed, 206, 4, 8, 7);
     g_signal_connect(mainwin_sfwd, "clicked", mainwin_playlist_next, NULL);
 
     mainwin_seject = ui_skinned_button_new();
-    ui_skinned_small_button_setup(mainwin_seject, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                  SKINNED_WINDOW(mainwin)->gc, 216, 4, 9, 7);
+    ui_skinned_small_button_setup(mainwin_seject, SKINNED_WINDOW(mainwin)->fixed, 216, 4, 9, 7);
     g_signal_connect(mainwin_seject, "clicked", mainwin_eject_pushed, NULL);
 
     mainwin_shuffle = ui_skinned_button_new();
-    ui_skinned_toggle_button_setup(mainwin_shuffle, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                   SKINNED_WINDOW(mainwin)->gc, 164, 89, 46,
-                                   15, 28, 0, 28, 15, 28, 30, 28, 45, SKIN_SHUFREP);
+    ui_skinned_toggle_button_setup(mainwin_shuffle, SKINNED_WINDOW(mainwin)->fixed,
+                                   164, 89, 46, 15, 28, 0, 28, 15, 28, 30, 28, 45, SKIN_SHUFREP);
     g_signal_connect(mainwin_shuffle, "clicked", mainwin_shuffle_pushed_cb, NULL);
 
     mainwin_repeat = ui_skinned_button_new();
-    ui_skinned_toggle_button_setup(mainwin_repeat, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                   SKINNED_WINDOW(mainwin)->gc, 210, 89, 28,
-                                   15, 0, 0, 0, 15, 0, 30, 0, 45, SKIN_SHUFREP);
+    ui_skinned_toggle_button_setup(mainwin_repeat, SKINNED_WINDOW(mainwin)->fixed,
+                                   210, 89, 28, 15, 0, 0, 0, 15, 0, 30, 0, 45, SKIN_SHUFREP);
     g_signal_connect(mainwin_repeat, "clicked", mainwin_repeat_pushed_cb, NULL);
 
     mainwin_eq = ui_skinned_button_new();
-    ui_skinned_toggle_button_setup(mainwin_eq, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                   SKINNED_WINDOW(mainwin)->gc, 219, 58, 23,
-                                   12, 0, 61, 46, 61, 0, 73, 46, 73, SKIN_SHUFREP);
+    ui_skinned_toggle_button_setup(mainwin_eq, SKINNED_WINDOW(mainwin)->fixed,
+                                   219, 58, 23, 12, 0, 61, 46, 61, 0, 73, 46, 73, SKIN_SHUFREP);
     g_signal_connect(mainwin_eq, "clicked", mainwin_equalizer_pushed_cb, NULL);
     UI_SKINNED_BUTTON(mainwin_eq)->inside = cfg.equalizer_visible;
 
     mainwin_pl = ui_skinned_button_new();
-    ui_skinned_toggle_button_setup(mainwin_pl, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                   SKINNED_WINDOW(mainwin)->gc, 242, 58, 23,
-                                   12, 23, 61, 69, 61, 23, 73, 69, 73, SKIN_SHUFREP);
+    ui_skinned_toggle_button_setup(mainwin_pl, SKINNED_WINDOW(mainwin)->fixed,
+                                   242, 58, 23, 12, 23, 61, 69, 61, 23, 73, 69, 73, SKIN_SHUFREP);
     g_signal_connect(mainwin_pl, "clicked", mainwin_playlist_pushed_cb, NULL);
     UI_SKINNED_BUTTON(mainwin_pl)->inside = cfg.playlist_visible;
 
-    mainwin_info = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 112, 27,
-                             153, 1, SKIN_TEXT);
+    mainwin_info = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, 112, 27, 153, 1, SKIN_TEXT);
     ui_skinned_textbox_set_scroll(mainwin_info, cfg.autoscroll);
     ui_skinned_textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
     g_signal_connect(mainwin_info, "double-clicked", mainwin_info_double_clicked_cb, NULL);
     g_signal_connect(mainwin_info, "right-clicked", mainwin_info_right_clicked_cb, NULL);
 
-    mainwin_othertext = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 112, 43,
-                             153, 1, SKIN_TEXT);
+    mainwin_othertext = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, 112, 43, 153, 1, SKIN_TEXT);
 
-    mainwin_rate_text = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 111, 43, 15,
-                             0, SKIN_TEXT);
+    mainwin_rate_text = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, 111, 43, 15, 0, SKIN_TEXT);
 
-    mainwin_freq_text = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 156, 43, 10,
-                            0, SKIN_TEXT);
+    mainwin_freq_text = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, 156, 43, 10, 0, SKIN_TEXT);
 
     mainwin_menurow =
         create_menurow(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 10, 22, 304,
@@ -2828,29 +2814,23 @@ mainwin_create_widgets(void)
     mainwin_playstatus =
         create_playstatus(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 24, 28);
 
-    mainwin_minus_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 36, 26,
-                      SKIN_NUMBERS);
+    mainwin_minus_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, 36, 26, SKIN_NUMBERS);
     g_signal_connect(mainwin_minus_num, "clicked", change_timer_mode, NULL);
 
-    mainwin_10min_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 48, 26,
-                      SKIN_NUMBERS);
+    mainwin_10min_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, 48, 26, SKIN_NUMBERS);
     g_signal_connect(mainwin_10min_num, "clicked", change_timer_mode, NULL);
 
-    mainwin_min_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 60, 26,
-                      SKIN_NUMBERS);
+    mainwin_min_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, 60, 26, SKIN_NUMBERS);
     g_signal_connect(mainwin_min_num, "clicked", change_timer_mode, NULL);
 
-    mainwin_10sec_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 78, 26,
-                      SKIN_NUMBERS);
+    mainwin_10sec_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, 78, 26, SKIN_NUMBERS);
     g_signal_connect(mainwin_10sec_num, "clicked", change_timer_mode, NULL);
 
-    mainwin_sec_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 90, 26,
-                      SKIN_NUMBERS);
+    mainwin_sec_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, 90, 26, SKIN_NUMBERS);
     g_signal_connect(mainwin_sec_num, "clicked", change_timer_mode, NULL);
 
     mainwin_about = ui_skinned_button_new();
-    ui_skinned_small_button_setup(mainwin_about, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
-                                  SKINNED_WINDOW(mainwin)->gc, 247, 83, 20, 25);
+    ui_skinned_small_button_setup(mainwin_about, SKINNED_WINDOW(mainwin)->fixed, 247, 83, 20, 25);
     g_signal_connect(mainwin_about, "clicked", show_about_window, NULL);
     g_signal_connect(mainwin_about, "right-clicked", mainwin_about_cb, NULL );
 
@@ -2873,12 +2853,10 @@ mainwin_create_widgets(void)
                        mainwin_spos_release_cb, SKIN_TITLEBAR);
     widget_hide(WIDGET(mainwin_sposition));
 
-    mainwin_stime_min = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 130, 4, 15,
-                       FALSE, SKIN_TEXT);
+    mainwin_stime_min = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, 130, 4, 15, FALSE, SKIN_TEXT);
     g_signal_connect(mainwin_stime_min, "clicked", change_timer_mode, NULL);
 
-    mainwin_stime_sec = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 147, 4, 10,
-                       FALSE, SKIN_TEXT);
+    mainwin_stime_sec = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, 147, 4, 10, FALSE, SKIN_TEXT);
     g_signal_connect(mainwin_stime_sec, "clicked", change_timer_mode, NULL);
 
     err = gtk_message_dialog_new(GTK_WINDOW(mainwin), GTK_DIALOG_DESTROY_WITH_PARENT|GTK_DIALOG_MODAL,

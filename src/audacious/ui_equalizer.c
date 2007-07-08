@@ -654,32 +654,30 @@ equalizerwin_create_widgets(void)
     gint i;
 
     equalizerwin_on = ui_skinned_button_new();
-    ui_skinned_toggle_button_setup(equalizerwin_on, SKINNED_WINDOW(equalizerwin)->fixed, equalizerwin_bg,
-			SKINNED_WINDOW(equalizerwin)->gc, 14, 18, 25, 12, 10, 119, 128, 119,
-                        69, 119, 187, 119, SKIN_EQMAIN);
+    ui_skinned_toggle_button_setup(equalizerwin_on, SKINNED_WINDOW(equalizerwin)->fixed,
+                                   14, 18, 25, 12, 10, 119, 128, 119, 69, 119, 187, 119, SKIN_EQMAIN);
     g_signal_connect(equalizerwin_on, "clicked", equalizerwin_on_pushed, NULL);
     UI_SKINNED_BUTTON(equalizerwin_on)->inside = cfg.equalizer_active;
 
     equalizerwin_auto = ui_skinned_button_new();
-    ui_skinned_toggle_button_setup(equalizerwin_auto, SKINNED_WINDOW(equalizerwin)->fixed, equalizerwin_bg,
-			SKINNED_WINDOW(equalizerwin)->gc,39, 18, 33, 12, 35, 119, 153, 119,
-                       94, 119, 212, 119, SKIN_EQMAIN);
+    ui_skinned_toggle_button_setup(equalizerwin_auto, SKINNED_WINDOW(equalizerwin)->fixed,
+                                   39, 18, 33, 12, 35, 119, 153, 119, 94, 119, 212, 119, SKIN_EQMAIN);
     g_signal_connect(equalizerwin_auto, "clicked", equalizerwin_auto_pushed, NULL);
     UI_SKINNED_BUTTON(equalizerwin_auto)->inside = cfg.equalizer_autoload;
 
     equalizerwin_presets = ui_skinned_button_new();
-    ui_skinned_push_button_setup(equalizerwin_presets, SKINNED_WINDOW(equalizerwin)->fixed, equalizerwin_bg,
-                                 SKINNED_WINDOW(equalizerwin)->gc, 217, 18, 44, 12, 224, 164, 224, 176, SKIN_EQMAIN);
+    ui_skinned_push_button_setup(equalizerwin_presets, SKINNED_WINDOW(equalizerwin)->fixed,
+                                 217, 18, 44, 12, 224, 164, 224, 176, SKIN_EQMAIN);
     g_signal_connect(equalizerwin_presets, "clicked", equalizerwin_presets_pushed, NULL );
 
     equalizerwin_close = ui_skinned_button_new();
-    ui_skinned_push_button_setup(equalizerwin_close, SKINNED_WINDOW(equalizerwin)->fixed, equalizerwin_bg,
-                                 SKINNED_WINDOW(equalizerwin)->gc, 264, 3, 9, 9, 0, 116, 0, 125, SKIN_EQMAIN);
+    ui_skinned_push_button_setup(equalizerwin_close, SKINNED_WINDOW(equalizerwin)->fixed,
+                                 264, 3, 9, 9, 0, 116, 0, 125, SKIN_EQMAIN);
     g_signal_connect(equalizerwin_close, "clicked", equalizerwin_close_cb, NULL );
 
     equalizerwin_shade = ui_skinned_button_new();
-    ui_skinned_push_button_setup(equalizerwin_shade, SKINNED_WINDOW(equalizerwin)->fixed, equalizerwin_bg,
-                                 SKINNED_WINDOW(equalizerwin)->gc, 254, 3, 9, 9, 254, 137, 1, 38, SKIN_EQMAIN);
+    ui_skinned_push_button_setup(equalizerwin_shade, SKINNED_WINDOW(equalizerwin)->fixed,
+                                 254, 3, 9, 9, 254, 137, 1, 38, SKIN_EQMAIN);
     ui_skinned_button_set_skin_index2(equalizerwin_shade, SKIN_EQ_EX);
     g_signal_connect(equalizerwin_shade, "clicked", equalizerwin_shade_toggle, NULL );
 

@@ -1558,28 +1558,27 @@ playlistwin_create_widgets(void)
     /* This function creates the custom widgets used by the playlist editor */
 
     /* text box for displaying song title in shaded mode */
-    playlistwin_sinfo = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
-                             4, 4, playlistwin_get_width() - 35, TRUE, SKIN_TEXT);
+    playlistwin_sinfo = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed, 
+                                               4, 4, playlistwin_get_width() - 35, TRUE, SKIN_TEXT);
 
     playlistwin_set_sinfo_font(cfg.playlist_font);
 
     playlistwin_shade = ui_skinned_button_new();
     /* shade/unshade window push button */
     if (cfg.playlist_shaded)
-        ui_skinned_push_button_setup(playlistwin_shade, SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg,
-                                     SKINNED_WINDOW(playlistwin)->gc, playlistwin_get_width() - 21, 3,
+        ui_skinned_push_button_setup(playlistwin_shade, SKINNED_WINDOW(playlistwin)->fixed,
+                                     playlistwin_get_width() - 21, 3,
                                      9, 9, 128, 45, 150, 42, SKIN_PLEDIT);
     else
-        ui_skinned_push_button_setup(playlistwin_shade, SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg,
-                                     SKINNED_WINDOW(playlistwin)->gc, playlistwin_get_width() - 21, 3,
+        ui_skinned_push_button_setup(playlistwin_shade, SKINNED_WINDOW(playlistwin)->fixed,
+                                     playlistwin_get_width() - 21, 3,
                                      9, 9, 157, 3, 62, 42, SKIN_PLEDIT);
 
     g_signal_connect(playlistwin_shade, "clicked", playlistwin_shade_toggle, NULL );
 
     /* close window push button */
     playlistwin_close = ui_skinned_button_new();
-    ui_skinned_push_button_setup(playlistwin_close, SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg,
-                                 SKINNED_WINDOW(playlistwin)->gc,
+    ui_skinned_push_button_setup(playlistwin_close, SKINNED_WINDOW(playlistwin)->fixed,
                                  playlistwin_get_width() - 11, 3, 9, 9,
                                  cfg.playlist_shaded ? 138 : 167,
                                  cfg.playlist_shaded ? 45 : 3, 52, 42, SKIN_PLEDIT);
@@ -1603,17 +1602,17 @@ playlistwin_create_widgets(void)
     ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_slider));
 
     /* track time (minute) */
-    playlistwin_time_min = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
+    playlistwin_time_min = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed,
                        playlistwin_get_width() - 82,
                        cfg.playlist_height - 15, 15, FALSE, SKIN_TEXT);
 
     /* track time (second) */
-    playlistwin_time_sec = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
+    playlistwin_time_sec = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed,
                        playlistwin_get_width() - 64,
                        cfg.playlist_height - 15, 10, FALSE, SKIN_TEXT);
 
     /* playlist information (current track length / total track length) */
-    playlistwin_info = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
+    playlistwin_info = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed,
                        playlistwin_get_width() - 143,
                        cfg.playlist_height - 28, 90, FALSE, SKIN_TEXT);
 
@@ -1621,55 +1620,55 @@ playlistwin_create_widgets(void)
 
     /* rewind button */
     playlistwin_srew = ui_skinned_button_new();
-    ui_skinned_small_button_setup(playlistwin_srew, SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg,
-                                  SKINNED_WINDOW(playlistwin)->gc, playlistwin_get_width() - 144,
+    ui_skinned_small_button_setup(playlistwin_srew, SKINNED_WINDOW(playlistwin)->fixed,
+                                  playlistwin_get_width() - 144,
                                   cfg.playlist_height - 16, 8, 7);
     g_signal_connect(playlistwin_srew, "clicked", local_playlist_prev, NULL);
 
     /* play button */
     playlistwin_splay = ui_skinned_button_new();
-    ui_skinned_small_button_setup(playlistwin_splay, SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg,
-                                  SKINNED_WINDOW(playlistwin)->gc, playlistwin_get_width() - 138,
+    ui_skinned_small_button_setup(playlistwin_splay, SKINNED_WINDOW(playlistwin)->fixed,
+                                  playlistwin_get_width() - 138,
                                   cfg.playlist_height - 16, 10, 7);
     g_signal_connect(playlistwin_splay, "clicked", mainwin_play_pushed, NULL);
 
     /* pause button */
     playlistwin_spause = ui_skinned_button_new();
-    ui_skinned_small_button_setup(playlistwin_spause, SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg,
-                                  SKINNED_WINDOW(playlistwin)->gc, playlistwin_get_width() - 128,
+    ui_skinned_small_button_setup(playlistwin_spause, SKINNED_WINDOW(playlistwin)->fixed,
+                                  playlistwin_get_width() - 128,
                                   cfg.playlist_height - 16, 10, 7);
     g_signal_connect(playlistwin_spause, "clicked", playback_pause, NULL);
 
     /* stop button */
     playlistwin_sstop = ui_skinned_button_new();
-    ui_skinned_small_button_setup(playlistwin_sstop, SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg,
-                                  SKINNED_WINDOW(playlistwin)->gc, playlistwin_get_width() - 118,
+    ui_skinned_small_button_setup(playlistwin_sstop, SKINNED_WINDOW(playlistwin)->fixed,
+                                  playlistwin_get_width() - 118,
                                   cfg.playlist_height - 16, 9, 7);
     g_signal_connect(playlistwin_sstop, "clicked", mainwin_stop_pushed, NULL);
 
     /* forward button */
     playlistwin_sfwd = ui_skinned_button_new();
-    ui_skinned_small_button_setup(playlistwin_sfwd, SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg,
-                                  SKINNED_WINDOW(playlistwin)->gc, playlistwin_get_width() - 109,
+    ui_skinned_small_button_setup(playlistwin_sfwd, SKINNED_WINDOW(playlistwin)->fixed,
+                                  playlistwin_get_width() - 109,
                                   cfg.playlist_height - 16, 8, 7);
     g_signal_connect(playlistwin_sfwd, "clicked", local_playlist_next, NULL);
 
     /* eject button */
     playlistwin_seject = ui_skinned_button_new();
-    ui_skinned_small_button_setup(playlistwin_seject, SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg,
-                                  SKINNED_WINDOW(playlistwin)->gc, playlistwin_get_width() - 100,
+    ui_skinned_small_button_setup(playlistwin_seject, SKINNED_WINDOW(playlistwin)->fixed,
+                                  playlistwin_get_width() - 100,
                                   cfg.playlist_height - 16, 9, 7);
     g_signal_connect(playlistwin_seject, "clicked", mainwin_eject_pushed, NULL);
 
     playlistwin_sscroll_up = ui_skinned_button_new();
-    ui_skinned_small_button_setup(playlistwin_sscroll_up, SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg,
-                                  SKINNED_WINDOW(playlistwin)->gc, playlistwin_get_width() - 14,
+    ui_skinned_small_button_setup(playlistwin_sscroll_up, SKINNED_WINDOW(playlistwin)->fixed,
+                                  playlistwin_get_width() - 14,
                                   cfg.playlist_height - 35, 8, 5);
     g_signal_connect(playlistwin_sscroll_up, "clicked", playlistwin_scroll_up_pushed, NULL);
 
     playlistwin_sscroll_down = ui_skinned_button_new();
-    ui_skinned_small_button_setup(playlistwin_sscroll_down, SKINNED_WINDOW(playlistwin)->fixed, playlistwin_bg,
-                                  SKINNED_WINDOW(playlistwin)->gc, playlistwin_get_width() - 14,
+    ui_skinned_small_button_setup(playlistwin_sscroll_down, SKINNED_WINDOW(playlistwin)->fixed,
+                                  playlistwin_get_width() - 14,
                                   cfg.playlist_height - 30, 8, 5);
     g_signal_connect(playlistwin_sscroll_down, "clicked", playlistwin_scroll_down_pushed, NULL);
 }

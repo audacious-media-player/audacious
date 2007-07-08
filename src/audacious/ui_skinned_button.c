@@ -253,10 +253,13 @@ static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *even
         return FALSE;
 
     GdkPixmap *obj;
+    GdkGC *gc;
     obj = gdk_pixmap_new(NULL, priv->w, priv->h, gdk_rgb_get_visual()->depth);
+    gc = gdk_gc_new(obj);
+
     switch (button->type) {
         case TYPE_PUSH:
-            skin_draw_pixmap(bmp_active_skin, obj, priv->gc,
+            skin_draw_pixmap(bmp_active_skin, obj, gc,
                              button->pressed ? priv->skin_index2 : priv->skin_index1,
                              button->pressed ? button->px : button->nx,
                              button->pressed ? button->py : button->ny,
@@ -264,13 +267,13 @@ static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *even
             break;
         case TYPE_TOGGLE:
             if (button->inside)
-                skin_draw_pixmap(bmp_active_skin, obj, priv->gc,
+                skin_draw_pixmap(bmp_active_skin, obj, gc,
                                  button->pressed ? priv->skin_index2 : priv->skin_index1,
                                  button->pressed ? button->ppx : button->pnx,
                                  button->pressed ? button->ppy : button->pny,
                                  0, 0, priv->w, priv->h);
             else
-                skin_draw_pixmap(bmp_active_skin, obj, priv->gc,
+                skin_draw_pixmap(bmp_active_skin, obj, gc,
                                  button->pressed ? priv->skin_index2 : priv->skin_index1,
                                  button->pressed ? button->px : button->nx,
                                  button->pressed ? button->py : button->ny,
@@ -290,16 +293,18 @@ static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *even
         GdkImage *img, *img2x;
         img = gdk_drawable_get_image(obj, 0, 0, priv->w, priv->h);
         img2x = create_dblsize_image(img);
-        gdk_draw_image (priv->img, priv->gc, img2x, 0, 0, 0, 0, priv->w*2, priv->h*2);
+        gdk_draw_image (priv->img, gc, img2x, 0, 0, 0, 0, priv->w*2, priv->h*2);
         g_object_unref(img2x);
         g_object_unref(img);
     } else
-        gdk_draw_drawable (priv->img, priv->gc, obj, 0, 0, 0, 0, priv->w, priv->h);
+        gdk_draw_drawable (priv->img, gc, obj, 0, 0, 0, 0, priv->w, priv->h);
 
     g_object_unref(obj);
 
-    gdk_draw_drawable (widget->window, priv->gc, priv->img, 0, 0, 0, 0,
+    gdk_draw_drawable (widget->window, gc, priv->img, 0, 0, 0, 0,
                        priv->w*(1+priv->double_size), priv->h*(1+priv->double_size));
+
+    g_object_unref(gc);
     return FALSE;
 }
 
@@ -309,11 +314,10 @@ GtkWidget* ui_skinned_button_new () {
     return GTK_WIDGET(button);
 }
 
-void ui_skinned_push_button_setup(GtkWidget *button, GtkWidget *fixed, GdkPixmap *parent, GdkGC *gc, gint x, gint y, gint w, gint h, gint nx, gint ny, gint px, gint py, SkinPixmapId si) {
+void ui_skinned_push_button_setup(GtkWidget *button, GtkWidget *fixed, gint x, gint y, gint w, gint h, gint nx, gint ny, gint px, gint py, SkinPixmapId si) {
 
     UiSkinnedButton *sbutton = UI_SKINNED_BUTTON(button);
     UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE(sbutton);
-    priv->gc = gc;
     priv->w = w;
     priv->h = h;
     sbutton->x = x;
@@ -331,11 +335,10 @@ void ui_skinned_push_button_setup(GtkWidget *button, GtkWidget *fixed, GdkPixmap
     gtk_fixed_put(GTK_FIXED(priv->fixed),GTK_WIDGET(button), sbutton->x, sbutton->y);
 }
 
-void ui_skinned_toggle_button_setup(GtkWidget *button, GtkWidget *fixed, GdkPixmap *parent, GdkGC *gc, gint x, gint y, gint w, gint h, gint nx, gint ny, gint px, gint py, gint pnx, gint pny, gint ppx, gint ppy, SkinPixmapId si) {
+void ui_skinned_toggle_button_setup(GtkWidget *button, GtkWidget *fixed, gint x, gint y, gint w, gint h, gint nx, gint ny, gint px, gint py, gint pnx, gint pny, gint ppx, gint ppy, SkinPixmapId si) {
 
     UiSkinnedButton *sbutton = UI_SKINNED_BUTTON(button);
     UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE(sbutton);
-    priv->gc = gc;
     priv->w = w;
     priv->h = h;
     sbutton->x = x;
@@ -357,11 +360,10 @@ void ui_skinned_toggle_button_setup(GtkWidget *button, GtkWidget *fixed, GdkPixm
     gtk_fixed_put(GTK_FIXED(priv->fixed),GTK_WIDGET(button), sbutton->x, sbutton->y);
 }
 
-void ui_skinned_small_button_setup(GtkWidget *button, GtkWidget *fixed, GdkPixmap *parent, GdkGC *gc, gint x, gint y, gint w, gint h) {
+void ui_skinned_small_button_setup(GtkWidget *button, GtkWidget *fixed, gint x, gint y, gint w, gint h) {
 
     UiSkinnedButton *sbutton = UI_SKINNED_BUTTON(button);
     UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE(sbutton);
-    priv->gc = gc;
     priv->w = w;
     priv->h = h;
     sbutton->x = x;

@@ -111,13 +111,12 @@ static void ui_skinned_number_init(UiSkinnedNumber *number) {
     number->img = NULL;
 }
 
-GtkWidget* ui_skinned_number_new(GtkWidget *fixed, GdkPixmap * parent, GdkGC * gc, gint x, gint y, SkinPixmapId si) {
+GtkWidget* ui_skinned_number_new(GtkWidget *fixed, gint x, gint y, SkinPixmapId si) {
     UiSkinnedNumber *number = g_object_new (ui_skinned_number_get_type (), NULL);
 
     number->x = x;
     number->y = y;
     number->num = 0;
-    number->gc = gc;
     number->skin_index = si;
 
     number->fixed = fixed;
@@ -196,12 +195,14 @@ static gboolean ui_skinned_number_expose(GtkWidget *widget, GdkEventExpose *even
     UiSkinnedNumber *number = UI_SKINNED_NUMBER (widget);
 
     GdkPixmap *obj = NULL;
+    GdkGC *gc;
     obj = gdk_pixmap_new(NULL, number->width, number->height, gdk_rgb_get_visual()->depth);
+    gc = gdk_gc_new(obj);
 
     if (number->num > 11)
         number->num = 10;
 
-    skin_draw_pixmap(bmp_active_skin, obj, number->gc,
+    skin_draw_pixmap(bmp_active_skin, obj, gc,
                      number->skin_index, number->num * 9, 0,
                      0, 0, number->width, number->height);
 
@@ -215,16 +216,17 @@ static gboolean ui_skinned_number_expose(GtkWidget *widget, GdkEventExpose *even
         GdkImage *img, *img2x;
         img = gdk_drawable_get_image(obj, 0, 0, number->width, number->height);
         img2x = create_dblsize_image(img);
-        gdk_draw_image (number->img, number->gc, img2x, 0, 0, 0, 0, number->width*2, number->height*2);
+        gdk_draw_image (number->img, gc, img2x, 0, 0, 0, 0, number->width*2, number->height*2);
         g_object_unref(img2x);
         g_object_unref(img);
     } else
-        gdk_draw_drawable (number->img, number->gc, obj, 0, 0, 0, 0, number->width, number->height);
+        gdk_draw_drawable (number->img, gc, obj, 0, 0, 0, 0, number->width, number->height);
 
     g_object_unref(obj);
 
-    gdk_draw_drawable (widget->window, number->gc, number->img, 0, 0, 0, 0,
+    gdk_draw_drawable (widget->window, gc, number->img, 0, 0, 0, 0,
                        number->width*(1+number->double_size), number->height*(1+number->double_size));
+    g_object_unref(gc);
     return FALSE;
 }
 

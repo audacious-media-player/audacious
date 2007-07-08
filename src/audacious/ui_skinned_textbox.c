@@ -53,7 +53,6 @@ enum {
 
 struct _UiSkinnedTextboxPrivate {
     GdkPixmap        *img;
-    GdkGC            *gc;
     SkinPixmapId     skin_index;
     GtkWidget        *fixed;
     gboolean         double_size;
@@ -180,7 +179,7 @@ static void ui_skinned_textbox_init(UiSkinnedTextbox *textbox) {
     priv->img = NULL;
 }
 
-GtkWidget* ui_skinned_textbox_new(GtkWidget *fixed, GdkPixmap * parent, GdkGC * gc, gint x, gint y, gint w, gboolean allow_scroll, SkinPixmapId si) {
+GtkWidget* ui_skinned_textbox_new(GtkWidget *fixed, gint x, gint y, gint w, gboolean allow_scroll, SkinPixmapId si) {
     UiSkinnedTextbox *textbox = g_object_new (ui_skinned_textbox_get_type (), NULL);
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
 
@@ -188,7 +187,6 @@ GtkWidget* ui_skinned_textbox_new(GtkWidget *fixed, GdkPixmap * parent, GdkGC * 
     textbox->x = x;
     textbox->y = y;
     textbox->text = g_strdup("");
-    priv->gc = gc;
     textbox->width = w;
     priv->scroll_allowed = allow_scroll;
     priv->scroll_enabled = TRUE;
@@ -293,6 +291,7 @@ static gboolean ui_skinned_textbox_expose(GtkWidget *widget, GdkEventExpose *eve
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
 
     GdkPixmap *obj = NULL;
+    GdkGC *gc;
     gint cw;
 
     if (textbox->text && (!priv->pixmap_text || strcmp(textbox->text, priv->pixmap_text)))
@@ -304,14 +303,15 @@ static gboolean ui_skinned_textbox_expose(GtkWidget *widget, GdkEventExpose *eve
             textbox_generate_pixmap(textbox);
         }
         obj = gdk_pixmap_new(NULL, textbox->width, textbox->height, gdk_rgb_get_visual()->depth);
+        gc = gdk_gc_new(obj);
 
         if (cfg.twoway_scroll) { // twoway scroll
             cw = priv->pixmap_width - priv->offset;
             if (cw > textbox->width)
                 cw = textbox->width;
-            gdk_draw_drawable(obj, priv->gc, priv->pixmap, priv->offset, 0, 0, 0, cw, textbox->height);
+            gdk_draw_drawable(obj, gc, priv->pixmap, priv->offset, 0, 0, 0, cw, textbox->height);
             if (cw < textbox->width)
-                gdk_draw_drawable(obj, priv->gc, priv->pixmap, 0, 0,
+                gdk_draw_drawable(obj, gc, priv->pixmap, 0, 0,
                                   textbox->x + cw, textbox->y,
                                   textbox->width - cw, textbox->height);
         } else { // oneway scroll
@@ -322,14 +322,14 @@ static gboolean ui_skinned_textbox_expose(GtkWidget *widget, GdkEventExpose *eve
 
             if (priv->pixmap_width - priv->offset > textbox->width) { // case1
                 cw1 = textbox->width;
-                gdk_draw_drawable(obj, priv->gc, priv->pixmap, priv->offset, 0,
+                gdk_draw_drawable(obj, gc, priv->pixmap, priv->offset, 0,
                                   0, 0, cw1, textbox->height);
             } else { // case 2
                 cw1 = priv->pixmap_width - priv->offset;
-                gdk_draw_drawable(obj, priv->gc, priv->pixmap, priv->offset, 0,
+                gdk_draw_drawable(obj, gc, priv->pixmap, priv->offset, 0,
                                   0, 0, cw1, textbox->height);
                 cw2 = textbox->width - cw1;
-                gdk_draw_drawable(obj, priv->gc, priv->pixmap, 0, 0, cw1, 0, cw2, textbox->height);
+                gdk_draw_drawable(obj, gc, priv->pixmap, 0, 0, cw1, 0, cw2, textbox->height);
             }
 
         }
@@ -343,18 +343,20 @@ static gboolean ui_skinned_textbox_expose(GtkWidget *widget, GdkEventExpose *eve
         GdkImage *img, *img2x;
         img = gdk_drawable_get_image(obj, 0, 0, textbox->width, textbox->height);
         img2x = create_dblsize_image(img);
-        gdk_draw_image (priv->img, priv->gc, img2x, 0, 0, 0, 0, textbox->width*2, textbox->height*2);
+        gdk_draw_image (priv->img, gc, img2x, 0, 0, 0, 0, textbox->width*2, textbox->height*2);
         g_object_unref(img2x);
         g_object_unref(img);
     } else
-        gdk_draw_drawable (priv->img, priv->gc, obj, 0, 0, 0, 0, textbox->width, textbox->height);
+        gdk_draw_drawable (priv->img, gc, obj, 0, 0, 0, 0, textbox->width, textbox->height);
 
 
         g_object_unref(obj);
+
+        gdk_draw_drawable (widget->window, gc, priv->img, 0, 0, 0, 0,
+                           textbox->width*(1+priv->double_size), textbox->height*(1+priv->double_size));
+        g_object_unref(gc);
     }
 
-    gdk_draw_drawable (widget->window, priv->gc, priv->img, 0, 0, 0, 0,
-                       textbox->width*(1+priv->double_size), textbox->height*(1+priv->double_size));
     return FALSE;
 }
 
@@ -555,7 +557,7 @@ static void textbox_generate_xfont_pixmap(UiSkinnedTextbox *textbox, const gchar
     priv->pixmap = gdk_pixmap_new(mainwin->window, priv->pixmap_width,
                                    textbox->height,
                                    gdk_rgb_get_visual()->depth);
-    gc = priv->gc;
+    gc = gdk_gc_new(priv->pixmap);
     c = skin_get_color(bmp_active_skin, SKIN_TEXTBG);
     for (i = 0; i < textbox->height; i++) {
         gdk_gc_set_foreground(gc, &c[6 * i / textbox->height]);
@@ -588,7 +590,7 @@ static void textbox_generate_xfont_pixmap(UiSkinnedTextbox *textbox, const gchar
         gdk_draw_line(priv->pixmap, gc, 0, i, priv->pixmap_width, i);
     }
     g_object_unref(mask);
-    gdk_gc_set_clip_mask(gc, NULL);
+    g_object_unref(gc);
 }
 
 static gboolean textbox_scroll(gpointer data) {
@@ -706,7 +708,7 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
     priv->pixmap = gdk_pixmap_new(NULL,
                                      priv->pixmap_width, bmp_active_skin->properties.textbox_bitmap_font_height,
                                      gdk_rgb_get_visual()->depth);
-    gc = priv->gc;
+    gc = gdk_gc_new(priv->pixmap);
 
     for (tmp = stxt = g_utf8_strup(pixmaptext, -1), i = 0;
          tmp != NULL && i < length; i++, tmp = g_utf8_next_char(tmp)) {
@@ -731,6 +733,7 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
     }
     g_free(stxt);
     g_free(pixmaptext);
+    g_object_unref(gc);
 }
 
 void ui_skinned_textbox_set_scroll(GtkWidget *widget, gboolean scroll) {

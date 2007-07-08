@@ -56,7 +56,7 @@ struct _UiSkinnedTextboxClass {
     void (* redraw)         (UiSkinnedTextbox *textbox);
 };
 
-GtkWidget* ui_skinned_textbox_new (GtkWidget *fixed, GdkPixmap * parent, GdkGC * gc, gint x, gint y, gint w, gboolean allow_scroll, SkinPixmapId si);
+GtkWidget* ui_skinned_textbox_new (GtkWidget *fixed, gint x, gint y, gint w, gboolean allow_scroll, SkinPixmapId si);
 GtkType ui_skinned_textbox_get_type(void);
 void ui_skinned_textbox_set_xfont(GtkWidget *widget, gboolean use_xfont, const gchar * fontname);
 void ui_skinned_textbox_set_text(GtkWidget *widget, const gchar *text);

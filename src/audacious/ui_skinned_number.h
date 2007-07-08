@@ -41,7 +41,6 @@ struct _UiSkinnedNumber {
     gint             num;
     gboolean         double_size;
     GdkPixmap        *img;
-    GdkGC            *gc;
     SkinPixmapId     skin_index;
     GtkWidget        *fixed;
 };
@@ -52,7 +51,7 @@ struct _UiSkinnedNumberClass {
     void (* doubled)        (UiSkinnedNumber *textbox);
 };
 
-GtkWidget* ui_skinned_number_new (GtkWidget *fixed, GdkPixmap * parent, GdkGC * gc, gint x, gint y, SkinPixmapId si);
+GtkWidget* ui_skinned_number_new (GtkWidget *fixed, gint x, gint y, SkinPixmapId si);
 GtkType ui_skinned_number_get_type(void);
 void ui_skinned_number_set_number(GtkWidget *widget, gint num);
 
