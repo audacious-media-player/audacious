@@ -101,6 +101,11 @@ playback_initiate(void)
     playlist_check_pos_current(playlist);
     mainwin_set_info_text();
 
+    if (cfg.player_shaded) {
+        gtk_widget_show(mainwin_stime_min);
+        gtk_widget_show(mainwin_stime_sec);
+    }
+
     hook_call("playback begin", entry);
 }
 

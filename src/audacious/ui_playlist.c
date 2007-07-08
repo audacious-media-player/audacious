@@ -1429,7 +1429,7 @@ draw_playlist_window(gboolean force)
         if (force) {
             gdk_window_clear(playlistwin->window);
             GList *iter;
-            for (iter = GTK_FIXED (SKINNED_WINDOW(mainwin)->fixed)->children; iter; iter = g_list_next (iter)) {
+            for (iter = GTK_FIXED (SKINNED_WINDOW(playlistwin)->fixed)->children; iter; iter = g_list_next (iter)) {
                 GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
                 GtkWidget *child = child_data->widget;
                 gtk_widget_queue_draw(child);

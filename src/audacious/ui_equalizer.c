@@ -292,6 +292,13 @@ draw_equalizer_window(gboolean force)
             skin_draw_pixmap(bmp_active_skin, equalizerwin_bg, SKINNED_WINDOW(equalizerwin)->gc,
                              SKIN_EQMAIN, 0, 0, 0, 0, 275, 116);
             equalizerwin_draw_titlebar();
+
+        GList *iter;
+        for (iter = GTK_FIXED (SKINNED_WINDOW(equalizerwin)->fixed)->children; iter; iter = g_list_next (iter)) {
+             GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
+             GtkWidget *child = child_data->widget;
+             gtk_widget_queue_draw(child);
+        }
     }
 
     widget_list_draw(equalizerwin_wlist, &redraw, force);
@@ -329,12 +336,6 @@ draw_equalizer_window(gboolean force)
             widget_list_clear_redraw(equalizerwin_wlist);
 
         gdk_window_clear(equalizerwin->window);
-        GList *iter;
-        for (iter = GTK_FIXED (SKINNED_WINDOW(mainwin)->fixed)->children; iter; iter = g_list_next (iter)) {
-             GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
-             GtkWidget *child = child_data->widget;
-             gtk_widget_queue_draw(child);
-        }
         gdk_flush();
     }
 

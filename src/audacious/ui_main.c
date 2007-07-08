@@ -786,11 +786,6 @@ mainwin_refresh_hints(void)
     else
         gtk_widget_hide(mainwin_info);
 
-    if (bmp_active_skin->properties.mainwin_othertext_visible)
-        gtk_widget_show(mainwin_othertext);
-    else
-        gtk_widget_hide(mainwin_othertext);
-
     if (bmp_active_skin->properties.mainwin_vis_visible)
         widget_show(WIDGET(mainwin_vis));
     else
@@ -871,12 +866,6 @@ mainwin_set_song_info(gint bitrate,
 
     monostereo_set_num_channels(mainwin_monostereo, n_channels);
 
-    if (cfg.player_shaded)
-    {
-        gtk_widget_show(mainwin_stime_min);
-        gtk_widget_show(mainwin_stime_sec);
-    }
-
     widget_show(WIDGET(mainwin_minus_num));
     widget_show(WIDGET(mainwin_10min_num));
     widget_show(WIDGET(mainwin_min_num));
@@ -912,19 +901,11 @@ mainwin_set_song_info(gint bitrate,
 
         ui_skinned_textbox_set_text(mainwin_othertext, text);
 
-        gtk_widget_hide(mainwin_rate_text);
-        gtk_widget_hide(mainwin_freq_text);
         widget_hide(WIDGET(mainwin_monostereo));
-
-        if (bmp_active_skin->properties.mainwin_othertext_visible)
-            gtk_widget_show(mainwin_othertext);
     }
     else
     {
-        gtk_widget_show(mainwin_rate_text);
-        gtk_widget_show(mainwin_freq_text);
         widget_show(WIDGET(mainwin_monostereo));
-        gtk_widget_hide(mainwin_othertext);
     }
 
     title = playlist_get_info_text(playlist);
