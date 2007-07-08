@@ -790,26 +790,10 @@ mainwin_refresh_hints(void)
     else
         widget_hide(WIDGET(mainwin_menurow));
 
-    if (bmp_active_skin->properties.mainwin_text_visible)
-        gtk_widget_show(mainwin_info);
-    else
-        gtk_widget_hide(mainwin_info);
-
     if (bmp_active_skin->properties.mainwin_vis_visible)
         widget_show(WIDGET(mainwin_vis));
     else
         widget_hide(WIDGET(mainwin_vis));
-
-    if (!cfg.player_shaded) {
-        gtk_widget_hide(mainwin_srew);
-        gtk_widget_hide(mainwin_splay);
-        gtk_widget_hide(mainwin_spause);
-        gtk_widget_hide(mainwin_sstop);
-        gtk_widget_hide(mainwin_sfwd);
-        gtk_widget_hide(mainwin_seject);
-        gtk_widget_hide(mainwin_stime_min);
-        gtk_widget_hide(mainwin_stime_sec);
-    }
 
     /* window size, mainwinWidth && mainwinHeight properties */
     if (bmp_active_skin->properties.mainwin_height && bmp_active_skin->properties.mainwin_width)
@@ -2987,10 +2971,20 @@ mainwin_create(void)
     mainwin_create_widgets();
     gtk_widget_show_all(mainwin);
 
-    if (cfg.player_shaded) {
-        gtk_widget_show(mainwin_stime_min);
-        gtk_widget_show(mainwin_stime_sec);
+    if (!bmp_active_skin->properties.mainwin_text_visible)
+        gtk_widget_hide(mainwin_info);
+
+    if (!cfg.player_shaded) {
+        gtk_widget_hide(mainwin_srew);
+        gtk_widget_hide(mainwin_splay);
+        gtk_widget_hide(mainwin_spause);
+        gtk_widget_hide(mainwin_sstop);
+        gtk_widget_hide(mainwin_sfwd);
+        gtk_widget_hide(mainwin_seject);
+        gtk_widget_hide(mainwin_stime_min);
+        gtk_widget_hide(mainwin_stime_sec);
     }
+
     gtk_widget_hide(mainwin_minus_num);
     gtk_widget_hide(mainwin_10min_num);
     gtk_widget_hide(mainwin_min_num);
