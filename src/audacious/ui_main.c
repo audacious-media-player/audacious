@@ -310,6 +310,14 @@ mainwin_set_shade_menu_cb(gboolean shaded)
         gtk_widget_hide(mainwin_stime_sec);
         widget_hide(WIDGET(mainwin_sposition));
 
+        if (!GTK_WIDGET_VISIBLE(mainwin_minus_num)) {
+            gtk_widget_show(mainwin_minus_num);
+            gtk_widget_show(mainwin_10min_num);
+            gtk_widget_show(mainwin_min_num);
+            gtk_widget_show(mainwin_10sec_num);
+            gtk_widget_show(mainwin_sec_num);
+        }
+
         ui_skinned_textbox_set_scroll(mainwin_info, cfg.autoscroll);
     }
 
