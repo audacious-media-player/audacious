@@ -108,8 +108,8 @@ extern SVis *mainwin_svis;
 
 extern PlayStatus *mainwin_playstatus;
 
-extern Number *mainwin_minus_num, *mainwin_10min_num, *mainwin_min_num;
-extern Number *mainwin_10sec_num, *mainwin_sec_num;
+extern GtkWidget *mainwin_minus_num, *mainwin_10min_num, *mainwin_min_num;
+extern GtkWidget *mainwin_10sec_num, *mainwin_sec_num;
 
 extern HSlider *mainwin_sposition;
 

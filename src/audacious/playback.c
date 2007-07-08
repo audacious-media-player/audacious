@@ -104,6 +104,12 @@ playback_initiate(void)
     if (cfg.player_shaded) {
         gtk_widget_show(mainwin_stime_min);
         gtk_widget_show(mainwin_stime_sec);
+    } else {
+        gtk_widget_show(mainwin_minus_num);
+        gtk_widget_show(mainwin_10min_num);
+        gtk_widget_show(mainwin_min_num);
+        gtk_widget_show(mainwin_10sec_num);
+        gtk_widget_show(mainwin_sec_num);
     }
 
     hook_call("playback begin", entry);

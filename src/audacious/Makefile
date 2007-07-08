@@ -106,6 +106,7 @@ SOURCES = \
 	ui_skinned_window.c \
 	ui_skinned_button.c \
 	ui_skinned_textbox.c \
+	ui_skinned_number.c \
 	ui_skinselector.c \
 	ui_urlopener.c \
 	util.c \

@@ -25,7 +25,6 @@ SOURCES = \
 	monostereo.c \
 	vis.c \
 	svis.c \
-	number.c \
 	playstatus.c \
 	playlist_list.c \
 	playlist_slider.c \

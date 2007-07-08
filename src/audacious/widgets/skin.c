@@ -1619,8 +1619,12 @@ skin_draw_pixmap(Skin * skin, GdkDrawable * drawable, GdkGC * gc,
     g_return_if_fail(pixmap != NULL);
     g_return_if_fail(pixmap->pixmap != NULL);
 
-    if (xsrc > pixmap->width || ysrc > pixmap->height)
-        return;
+    if (xsrc+width > pixmap->width || ysrc+height > pixmap->height) {
+        if (pixmap_id == SKIN_NUMBERS)
+            xsrc = 90;
+        else
+            return;
+    }
 
     width = MIN(width, pixmap->width - xsrc);
     height = MIN(height, pixmap->height - ysrc);

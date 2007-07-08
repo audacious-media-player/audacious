@@ -82,6 +82,7 @@
 #include "ui_skinned_window.h"
 #include "ui_skinned_button.h"
 #include "ui_skinned_textbox.h"
+#include "ui_skinned_number.h"
 #include "ui_jumptotrack.h"
 
 static GTimeVal cb_time; /* click delay for tristate is defined by TRISTATE_THRESHOLD */
@@ -139,8 +140,8 @@ static GtkWidget *mainwin_rate_text, *mainwin_freq_text,
 
 PlayStatus *mainwin_playstatus;
 
-Number *mainwin_minus_num, *mainwin_10min_num, *mainwin_min_num;
-Number *mainwin_10sec_num, *mainwin_sec_num;
+GtkWidget *mainwin_minus_num, *mainwin_10min_num, *mainwin_min_num;
+GtkWidget *mainwin_10sec_num, *mainwin_sec_num;
 
 static gboolean setting_volume = FALSE;
 
@@ -684,23 +685,23 @@ mainwin_refresh_hints(void)
         bmp_active_skin->properties.mainwin_infobar_y);
 
     if (bmp_active_skin->properties.mainwin_number_0_x && bmp_active_skin->properties.mainwin_number_0_y)
-    widget_move(WIDGET(mainwin_minus_num), bmp_active_skin->properties.mainwin_number_0_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_minus_num), bmp_active_skin->properties.mainwin_number_0_x,
         bmp_active_skin->properties.mainwin_number_0_y);
 
     if (bmp_active_skin->properties.mainwin_number_1_x && bmp_active_skin->properties.mainwin_number_1_y)
-    widget_move(WIDGET(mainwin_10min_num), bmp_active_skin->properties.mainwin_number_1_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_10min_num), bmp_active_skin->properties.mainwin_number_1_x,
         bmp_active_skin->properties.mainwin_number_1_y);
 
     if (bmp_active_skin->properties.mainwin_number_2_x && bmp_active_skin->properties.mainwin_number_2_y)
-    widget_move(WIDGET(mainwin_min_num), bmp_active_skin->properties.mainwin_number_2_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_min_num), bmp_active_skin->properties.mainwin_number_2_x,
         bmp_active_skin->properties.mainwin_number_2_y);
 
     if (bmp_active_skin->properties.mainwin_number_3_x && bmp_active_skin->properties.mainwin_number_3_y)
-    widget_move(WIDGET(mainwin_10sec_num), bmp_active_skin->properties.mainwin_number_3_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_10sec_num), bmp_active_skin->properties.mainwin_number_3_x,
         bmp_active_skin->properties.mainwin_number_3_y);
 
     if (bmp_active_skin->properties.mainwin_number_4_x && bmp_active_skin->properties.mainwin_number_4_y)
-    widget_move(WIDGET(mainwin_sec_num), bmp_active_skin->properties.mainwin_number_4_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_sec_num), bmp_active_skin->properties.mainwin_number_4_x,
         bmp_active_skin->properties.mainwin_number_4_y);
 
     if (bmp_active_skin->properties.mainwin_playstatus_x && bmp_active_skin->properties.mainwin_playstatus_y)
@@ -866,12 +867,6 @@ mainwin_set_song_info(gint bitrate,
 
     monostereo_set_num_channels(mainwin_monostereo, n_channels);
 
-    widget_show(WIDGET(mainwin_minus_num));
-    widget_show(WIDGET(mainwin_10min_num));
-    widget_show(WIDGET(mainwin_min_num));
-    widget_show(WIDGET(mainwin_10sec_num));
-    widget_show(WIDGET(mainwin_sec_num));
-
     if (!playback_get_paused() && mainwin_playstatus != NULL)
         playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
 
@@ -941,11 +936,11 @@ mainwin_clear_song_info(void)
         playstatus_set_status(mainwin_playstatus, STATUS_STOP);
 
     /* hide playback time */
-    widget_hide(WIDGET(mainwin_minus_num));
-    widget_hide(WIDGET(mainwin_10min_num));
-    widget_hide(WIDGET(mainwin_min_num));
-    widget_hide(WIDGET(mainwin_10sec_num));
-    widget_hide(WIDGET(mainwin_sec_num));
+    gtk_widget_hide(mainwin_minus_num);
+    gtk_widget_hide(mainwin_10min_num);
+    gtk_widget_hide(mainwin_min_num);
+    gtk_widget_hide(mainwin_10sec_num);
+    gtk_widget_hide(mainwin_sec_num);
 
     gtk_widget_hide(mainwin_stime_min);
     gtk_widget_hide(mainwin_stime_sec);
@@ -1149,17 +1144,6 @@ mainwin_mouse_button_press(GtkWidget * widget,
                                     event->x_root,
                                     event->y_root, 3, event->time);
             grab = FALSE;
-        }
-    }
-
-    if (event->button == 1)
-    {
-        if (widget_contains(WIDGET(mainwin_minus_num), event->x, event->y) ||
-        widget_contains(WIDGET(mainwin_10min_num), event->x, event->y) ||
-        widget_contains(WIDGET(mainwin_min_num), event->x, event->y) ||
-        widget_contains(WIDGET(mainwin_10sec_num), event->x, event->y) ||
-        widget_contains(WIDGET(mainwin_sec_num), event->x, event->y)) {
-        change_timer_mode();
         }
     }
 
@@ -1948,8 +1932,6 @@ mainwin_real_show(void)
         gtk_widget_show(mainwin);
         return;
     }
-
-    gtk_widget_show_all(mainwin);
 
     if (nullmask)
     {
@@ -2854,29 +2836,25 @@ mainwin_create_widgets(void)
     mainwin_playstatus =
         create_playstatus(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 24, 28);
 
-    mainwin_minus_num =
-        create_number(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 36, 26,
+    mainwin_minus_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 36, 26,
                       SKIN_NUMBERS);
-    widget_hide(WIDGET(mainwin_minus_num));
-    mainwin_10min_num =
-        create_number(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 48, 26,
-                      SKIN_NUMBERS);
-    widget_hide(WIDGET(mainwin_10min_num));
+    g_signal_connect(mainwin_minus_num, "clicked", change_timer_mode, NULL);
 
-    mainwin_min_num =
-        create_number(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 60, 26,
+    mainwin_10min_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 48, 26,
                       SKIN_NUMBERS);
-    widget_hide(WIDGET(mainwin_min_num));
+    g_signal_connect(mainwin_10min_num, "clicked", change_timer_mode, NULL);
 
-    mainwin_10sec_num =
-        create_number(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 78, 26,
+    mainwin_min_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 60, 26,
                       SKIN_NUMBERS);
-    widget_hide(WIDGET(mainwin_10sec_num));
+    g_signal_connect(mainwin_min_num, "clicked", change_timer_mode, NULL);
 
-    mainwin_sec_num =
-        create_number(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 90, 26,
+    mainwin_10sec_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 78, 26,
                       SKIN_NUMBERS);
-    widget_hide(WIDGET(mainwin_sec_num));
+    g_signal_connect(mainwin_10sec_num, "clicked", change_timer_mode, NULL);
+
+    mainwin_sec_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 90, 26,
+                      SKIN_NUMBERS);
+    g_signal_connect(mainwin_sec_num, "clicked", change_timer_mode, NULL);
 
     mainwin_about = ui_skinned_button_new();
     ui_skinned_small_button_setup(mainwin_about, SKINNED_WINDOW(mainwin)->fixed, mainwin_bg,
@@ -2929,12 +2907,6 @@ mainwin_create_widgets(void)
 
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_monostereo));
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_playstatus));
-
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_minus_num));
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_10min_num));
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_min_num));
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_10sec_num));
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_sec_num));
 
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_vis));
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_svis));
@@ -3005,6 +2977,18 @@ mainwin_create(void)
                 bmp_active_skin->properties.mainwin_height * 2, -1);
     mainwin_set_back_pixmap();
     mainwin_create_widgets();
+    gtk_widget_show_all(mainwin);
+
+    if (cfg.player_shaded) {
+        gtk_widget_show(mainwin_stime_min);
+        gtk_widget_show(mainwin_stime_sec);
+    }
+    gtk_widget_hide(mainwin_minus_num);
+    gtk_widget_hide(mainwin_10min_num);
+    gtk_widget_hide(mainwin_min_num);
+    gtk_widget_hide(mainwin_10sec_num);
+    gtk_widget_hide(mainwin_sec_num);
+    gtk_widget_hide(mainwin_othertext);
 
     vis_set_window(mainwin_vis, mainwin->window);
 }
@@ -3034,18 +3018,18 @@ idle_func_update_song_info(gint time)
 
     if (cfg.timer_mode == TIMER_REMAINING) {
         if (length != -1) {
-            number_set_number(mainwin_minus_num, 11);
+            ui_skinned_number_set_number(mainwin_minus_num, 11);
             t = length - time;
             stime_prefix = '-';
         }
         else {
-            number_set_number(mainwin_minus_num, 10);
+            ui_skinned_number_set_number(mainwin_minus_num, 10);
             t = time;
             stime_prefix = ' ';
         }
     }
     else {
-        number_set_number(mainwin_minus_num, 10);
+        ui_skinned_number_set_number(mainwin_minus_num, 10);
         t = time;
         stime_prefix = ' ';
     }
@@ -3055,10 +3039,10 @@ idle_func_update_song_info(gint time)
      * minutes. */
     if (t >= 100 * 60)
         t /= 60;
-    number_set_number(mainwin_10min_num, t / 600);
-    number_set_number(mainwin_min_num, (t / 60) % 10);
-    number_set_number(mainwin_10sec_num, (t / 10) % 6);
-    number_set_number(mainwin_sec_num, t % 10);
+    ui_skinned_number_set_number(mainwin_10min_num, t / 600);
+    ui_skinned_number_set_number(mainwin_min_num, (t / 60) % 10);
+    ui_skinned_number_set_number(mainwin_10sec_num, (t / 10) % 6);
+    ui_skinned_number_set_number(mainwin_sec_num, t % 10);
 
     if (!mainwin_sposition->hs_pressed) {
         gchar *time_str;
