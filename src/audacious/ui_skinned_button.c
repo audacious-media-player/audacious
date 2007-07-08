@@ -40,16 +40,20 @@ enum {
 };
 
 struct _UiSkinnedButtonPrivate {
-        //Skinned part
-        GdkPixmap        *img;
-        GdkGC            *gc;
-        gint             w;
-        gint             h;
-        SkinPixmapId     skin_index1;
-        SkinPixmapId     skin_index2;
-        GtkWidget        *fixed;
-        gboolean         double_size;
-        gint             move_x, move_y;
+    //Skinned part
+    GdkPixmap        *img;
+    GdkGC            *gc;
+    gint             w;
+    gint             h;
+    SkinPixmapId     skin_index1;
+    SkinPixmapId     skin_index2;
+    GtkWidget        *fixed;
+    gboolean         double_size;
+    gint             move_x, move_y;
+
+    gint             nx, ny, px, py;
+    //Toogle button needs also those
+    gint             pnx, pny, ppx, ppy;
 };
 
 
@@ -230,8 +234,7 @@ static void ui_skinned_button_size_allocate(GtkWidget *widget, GtkAllocation *al
     UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
     widget->allocation = *allocation;
     if (GTK_WIDGET_REALIZED (widget))
-        gdk_window_move_resize(widget->window, allocation->x, allocation->y, allocation->width, allocation->height);
-
+gdk_window_move_resize(widget->window, allocation->x*(1+priv->double_size), allocation->y*(1+priv->double_size), allocation->width, allocation->height);
     button->x = widget->allocation.x/(priv->double_size ? 2 : 1);
     button->y = widget->allocation.y/(priv->double_size ? 2 : 1);
     priv->move_x = 0;
@@ -261,22 +264,22 @@ static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *even
         case TYPE_PUSH:
             skin_draw_pixmap(bmp_active_skin, obj, gc,
                              button->pressed ? priv->skin_index2 : priv->skin_index1,
-                             button->pressed ? button->px : button->nx,
-                             button->pressed ? button->py : button->ny,
+                             button->pressed ? priv->px : priv->nx,
+                             button->pressed ? priv->py : priv->ny,
                              0, 0, priv->w, priv->h);
             break;
         case TYPE_TOGGLE:
             if (button->inside)
                 skin_draw_pixmap(bmp_active_skin, obj, gc,
                                  button->pressed ? priv->skin_index2 : priv->skin_index1,
-                                 button->pressed ? button->ppx : button->pnx,
-                                 button->pressed ? button->ppy : button->pny,
+                                 button->pressed ? priv->ppx : priv->pnx,
+                                 button->pressed ? priv->ppy : priv->pny,
                                  0, 0, priv->w, priv->h);
             else
                 skin_draw_pixmap(bmp_active_skin, obj, gc,
                                  button->pressed ? priv->skin_index2 : priv->skin_index1,
-                                 button->pressed ? button->px : button->nx,
-                                 button->pressed ? button->py : button->ny,
+                                 button->pressed ? priv->px : priv->nx,
+                                 button->pressed ? priv->py : priv->ny,
                                  0, 0, priv->w, priv->h);
             break;
         default:
@@ -322,10 +325,10 @@ void ui_skinned_push_button_setup(GtkWidget *button, GtkWidget *fixed, gint x, g
     priv->h = h;
     sbutton->x = x;
     sbutton->y = y;
-    sbutton->nx = nx;
-    sbutton->ny = ny;
-    sbutton->px = px;
-    sbutton->py = py;
+    priv->nx = nx;
+    priv->ny = ny;
+    priv->px = px;
+    priv->py = py;
     sbutton->type = TYPE_PUSH;
     priv->skin_index1 = si;
     priv->skin_index2 = si;
@@ -343,14 +346,14 @@ void ui_skinned_toggle_button_setup(GtkWidget *button, GtkWidget *fixed, gint x,
     priv->h = h;
     sbutton->x = x;
     sbutton->y = y;
-    sbutton->nx = nx;
-    sbutton->ny = ny;
-    sbutton->px = px;
-    sbutton->py = py;
-    sbutton->pnx = pnx;
-    sbutton->pny = pny;
-    sbutton->ppx = ppx;
-    sbutton->ppy = ppy;
+    priv->nx = nx;
+    priv->ny = ny;
+    priv->px = px;
+    priv->py = py;
+    priv->pnx = pnx;
+    priv->pny = pny;
+    priv->ppx = ppx;
+    priv->ppy = ppy;
     sbutton->type = TYPE_TOGGLE;
     priv->skin_index1 = si;
     priv->skin_index2 = si;
@@ -464,7 +467,7 @@ static void ui_skinned_button_toggle_doublesize(UiSkinnedButton *button) {
     priv->double_size = !priv->double_size;
 
     gtk_widget_set_size_request(widget, priv->w*(1+priv->double_size), priv->h*(1+priv->double_size));
-    gtk_widget_set_uposition(widget, button->x*(1+priv->double_size), button->y*(1+priv->double_size));
+    //gtk_widget_set_uposition(widget, button->x*(1+priv->double_size), button->y*(1+priv->double_size));
 
     gtk_widget_queue_draw(widget);
 }
@@ -481,11 +484,11 @@ static void ui_skinned_button_redraw(UiSkinnedButton *button) {
 
 
 void ui_skinned_set_push_button_data(GtkWidget *button, gint nx, gint ny, gint px, gint py) {
-    UiSkinnedButton *b = UI_SKINNED_BUTTON(button);
-    if (nx > -1) b->nx = nx;
-    if (ny > -1) b->ny = ny;
-    if (px > -1) b->px = px;
-    if (py > -1) b->py = py;
+    UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE(button);
+    if (nx > -1) priv->nx = nx;
+    if (ny > -1) priv->ny = ny;
+    if (px > -1) priv->px = px;
+    if (py > -1) priv->py = py;
 }
 
 void ui_skinned_button_set_skin_index(GtkWidget *button, SkinPixmapId si) {

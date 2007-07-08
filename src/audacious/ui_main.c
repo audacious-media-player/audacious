@@ -321,6 +321,7 @@ mainwin_set_shade_menu_cb(gboolean shaded)
         ui_skinned_textbox_set_scroll(mainwin_info, cfg.autoscroll);
     }
 
+    ui_skinned_set_push_button_data(mainwin_shade, 0, cfg.player_shaded ? 27 : 18, 9, cfg.player_shaded ? 27 : 18);
     draw_main_window(TRUE);
 }
 

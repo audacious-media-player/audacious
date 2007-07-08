@@ -51,11 +51,8 @@ struct _UiSkinnedButton {
 	gboolean hover : 1;
 	gboolean inside : 1;
 	gint type;
-	//Skinned part, used in ui_playlist.c
-	gint x, y, nx, ny, px, py;
 
-	//Toogle button needs also those
-	gint pnx, pny, ppx, ppy;
+	gint x, y;
 };
 
 struct _UiSkinnedButtonClass {

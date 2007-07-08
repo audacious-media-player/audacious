@@ -352,22 +352,14 @@ playlistwin_set_shade(gboolean shaded)
         playlistwin_set_sinfo_font(cfg.playlist_font);
         playlistwin_set_sinfo_scroll(cfg.autoscroll);
         gtk_widget_show(playlistwin_sinfo);
-        UI_SKINNED_BUTTON(playlistwin_shade)->nx = 128;
-        UI_SKINNED_BUTTON(playlistwin_shade)->ny = 45;
-        UI_SKINNED_BUTTON(playlistwin_shade)->px = 150;
-        UI_SKINNED_BUTTON(playlistwin_shade)->py = 42;
-        UI_SKINNED_BUTTON(playlistwin_close)->nx = 138;
-        UI_SKINNED_BUTTON(playlistwin_close)->ny = 45;
+        ui_skinned_set_push_button_data(playlistwin_shade, 128, 45, 150, 42);
+        ui_skinned_set_push_button_data(playlistwin_close, 138, 45, -1, -1);
     }
     else {
         gtk_widget_hide(playlistwin_sinfo);
         playlistwin_set_sinfo_scroll(FALSE);
-        UI_SKINNED_BUTTON(playlistwin_shade)->nx = 157;
-        UI_SKINNED_BUTTON(playlistwin_shade)->ny = 3;
-        UI_SKINNED_BUTTON(playlistwin_shade)->px = 62;
-        UI_SKINNED_BUTTON(playlistwin_shade)->py = 42;
-        UI_SKINNED_BUTTON(playlistwin_close)->nx = 167;
-        UI_SKINNED_BUTTON(playlistwin_close)->ny = 3;
+        ui_skinned_set_push_button_data(playlistwin_shade, 157, 3, 62, 42);
+        ui_skinned_set_push_button_data(playlistwin_close, 167, 3, -1, -1);
     }
 
     dock_shade(dock_window_list, GTK_WINDOW(playlistwin),
