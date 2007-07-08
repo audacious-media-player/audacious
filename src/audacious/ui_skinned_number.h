@@ -50,7 +50,6 @@ struct _UiSkinnedNumberClass {
     GtkWidgetClass          parent_class;
     void (* clicked)        (UiSkinnedNumber *textbox);
     void (* doubled)        (UiSkinnedNumber *textbox);
-    void (* redraw)         (UiSkinnedNumber *textbox);
 };
 
 GtkWidget* ui_skinned_number_new (GtkWidget *fixed, GdkPixmap * parent, GdkGC * gc, gint x, gint y, SkinPixmapId si);

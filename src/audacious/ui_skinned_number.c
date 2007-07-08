@@ -51,7 +51,6 @@ static void ui_skinned_number_size_allocate      (GtkWidget *widget, GtkAllocati
 static gboolean ui_skinned_number_expose         (GtkWidget *widget, GdkEventExpose *event);
 static gboolean ui_skinned_number_button_press   (GtkWidget *widget, GdkEventButton *event);
 static void ui_skinned_number_toggle_doublesize  (UiSkinnedNumber *number);
-static void ui_skinned_number_redraw             (UiSkinnedNumber *number);
 
 static GtkWidgetClass *parent_class = NULL;
 static guint number_signals[LAST_SIGNAL] = { 0 };
@@ -94,7 +93,6 @@ static void ui_skinned_number_class_init(UiSkinnedNumberClass *klass) {
 
     klass->clicked = NULL;
     klass->doubled = ui_skinned_number_toggle_doublesize;
-    klass->redraw = ui_skinned_number_redraw;
 
     number_signals[CLICKED] = 
         g_signal_new ("clicked", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
@@ -104,11 +102,6 @@ static void ui_skinned_number_class_init(UiSkinnedNumberClass *klass) {
     number_signals[DOUBLED] = 
         g_signal_new ("toggle-double-size", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
                       G_STRUCT_OFFSET (UiSkinnedNumberClass, doubled), NULL, NULL,
-                      gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
-
-    number_signals[REDRAW] = 
-        g_signal_new ("redraw", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                      G_STRUCT_OFFSET (UiSkinnedNumberClass, redraw), NULL, NULL,
                       gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 }
 
@@ -257,10 +250,6 @@ static void ui_skinned_number_toggle_doublesize(UiSkinnedNumber *number) {
     gtk_widget_set_size_request(widget, number->width*(1+number->double_size), number->height*(1+number->double_size));
     gtk_widget_set_uposition(widget, number->x*(1+number->double_size), number->y*(1+number->double_size));
 
-    gtk_widget_queue_draw(GTK_WIDGET(number));
-}
-
-static void ui_skinned_number_redraw(UiSkinnedNumber *number) {
     gtk_widget_queue_draw(GTK_WIDGET(number));
 }
 
