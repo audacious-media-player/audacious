@@ -663,6 +663,9 @@ mainwin_refresh_hints(void)
 
     if (bmp_active_skin->properties.mainwin_othertext_visible)
         gtk_widget_show(mainwin_othertext);
+    else
+        if (GTK_WIDGET_VISIBLE(mainwin_othertext))
+            gtk_widget_hide(mainwin_othertext);
     }
     else
     {
