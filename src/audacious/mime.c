@@ -33,6 +33,9 @@ void mime_set_plugin(const gchar *mimetype, InputPlugin *ip)
 
 InputPlugin *mime_get_plugin(const gchar *mimetype)
 {
+	if (mimetype == NULL)
+		return NULL;
+
 	if (mime_type_dict == NULL)
 		return NULL;
 
