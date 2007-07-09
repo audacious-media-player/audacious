@@ -44,6 +44,7 @@ HEADERS = \
 	input.h \
 	hook.h \
 	main.h \
+	mime.h \
 	output.h \
 	playlist.h \
 	playlist_container.h \
@@ -79,6 +80,7 @@ SOURCES = \
 	logger.c \
 	main.c \
 	memorypool.c \
+	mime.c \
 	output.c \
 	pixbuf_effects.c \
 	playback.c \
