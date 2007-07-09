@@ -317,6 +317,10 @@ input_dont_show_warning(GtkObject * object, gpointer user_data)
  * Adapted to use the NewVFS extension probing system if enabled.
  *
  * --nenolod, Dec 12 2006
+ *
+ * Adapted to use the mimetype system.
+ *
+ * --nenolod, Jul  9 2007
  */
 InputPlugin *
 input_check_file(const gchar * filename, gboolean show_warning)
@@ -328,6 +332,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
     gint ret = 1;
     gchar *ext, *tmp, *tmp_uri;
     gboolean use_ext_filter;
+    gchar *mimetype;
 
     filename_proxy = g_strdup(filename);
 
@@ -347,6 +352,14 @@ input_check_file(const gchar * filename, gboolean show_warning)
     use_ext_filter =
         (fd != NULL && (!g_strncasecmp(filename, "/", 1) ||
                         !g_strncasecmp(filename, "file://", 7))) ? TRUE : FALSE;
+
+    mimetype = vfs_get_metadata(fd, "content-type");
+    if ((ip = mime_get_plugin(mimetype)) != NULL)
+    {
+        g_free(filename_proxy);
+        vfs_fclose(fd);
+        return ip;
+    }
 
     for (node = get_input_list(); node != NULL; node = g_list_next(node))
     {
