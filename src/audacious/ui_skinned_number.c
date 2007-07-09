@@ -180,8 +180,10 @@ static void ui_skinned_number_size_allocate(GtkWidget *widget, GtkAllocation *al
     UiSkinnedNumber *number = UI_SKINNED_NUMBER (widget);
 
     widget->allocation = *allocation;
+    widget->allocation.x *= (1+number->double_size);
+    widget->allocation.y *= (1+number->double_size);
     if (GTK_WIDGET_REALIZED (widget))
-        gdk_window_move_resize(widget->window, allocation->x, allocation->y, allocation->width, allocation->height);
+        gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
 
     number->x = widget->allocation.x/(number->double_size ? 2 : 1);
     number->y = widget->allocation.y/(number->double_size ? 2 : 1);
@@ -250,7 +252,6 @@ static void ui_skinned_number_toggle_doublesize(UiSkinnedNumber *number) {
     number->double_size = !number->double_size;
 
     gtk_widget_set_size_request(widget, number->width*(1+number->double_size), number->height*(1+number->double_size));
-    gtk_widget_set_uposition(widget, number->x*(1+number->double_size), number->y*(1+number->double_size));
 
     gtk_widget_queue_draw(GTK_WIDGET(number));
 }

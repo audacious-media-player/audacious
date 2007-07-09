@@ -233,8 +233,12 @@ static void ui_skinned_button_size_allocate(GtkWidget *widget, GtkAllocation *al
     UiSkinnedButton *button = UI_SKINNED_BUTTON (widget);
     UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
     widget->allocation = *allocation;
+    widget->allocation.x *= (1+priv->double_size);
+    widget->allocation.y *= (1+priv->double_size);
+
     if (GTK_WIDGET_REALIZED (widget))
-        gdk_window_move_resize(widget->window, allocation->x, allocation->y, allocation->width, allocation->height);
+        gdk_window_move_resize(widget->window, allocation->x*(1+priv->double_size), allocation->y*(1+priv->double_size), allocation->width, allocation->height);
+
     button->x = widget->allocation.x/(priv->double_size ? 2 : 1);
     button->y = widget->allocation.y/(priv->double_size ? 2 : 1);
     priv->move_x = 0;
@@ -467,7 +471,6 @@ static void ui_skinned_button_toggle_doublesize(UiSkinnedButton *button) {
     priv->double_size = !priv->double_size;
 
     gtk_widget_set_size_request(widget, priv->w*(1+priv->double_size), priv->h*(1+priv->double_size));
-    gtk_widget_set_uposition(widget, button->x*(1+priv->double_size), button->y*(1+priv->double_size));
 
     gtk_widget_queue_draw(widget);
 }

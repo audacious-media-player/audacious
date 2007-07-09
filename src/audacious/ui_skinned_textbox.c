@@ -262,8 +262,10 @@ static void ui_skinned_textbox_size_allocate(GtkWidget *widget, GtkAllocation *a
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
 
     widget->allocation = *allocation;
+    widget->allocation.x *= (1+priv->double_size);
+    widget->allocation.y *= (1+priv->double_size);
     if (GTK_WIDGET_REALIZED (widget))
-        gdk_window_move_resize(widget->window, allocation->x, allocation->y, allocation->width, allocation->height);
+        gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
 
     textbox->x = widget->allocation.x/(priv->double_size ? 2 : 1);
     textbox->y = widget->allocation.y/(priv->double_size ? 2 : 1);
@@ -434,7 +436,6 @@ static void ui_skinned_textbox_toggle_doublesize(UiSkinnedTextbox *textbox) {
     priv->double_size = !priv->double_size;
 
     gtk_widget_set_size_request(widget, textbox->width*(1+priv->double_size), textbox->height*(1+priv->double_size));
-    gtk_widget_set_uposition(widget, textbox->x*(1+priv->double_size), textbox->y*(1+priv->double_size));
 
     gtk_widget_queue_draw(GTK_WIDGET(textbox));
 }
