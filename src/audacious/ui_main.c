@@ -311,7 +311,7 @@ mainwin_set_shade_menu_cb(gboolean shaded)
         gtk_widget_hide(mainwin_stime_sec);
         widget_hide(WIDGET(mainwin_sposition));
 
-        if (!GTK_WIDGET_VISIBLE(mainwin_minus_num)) {
+        if (playback_get_playing() && !GTK_WIDGET_VISIBLE(mainwin_minus_num)) {
             gtk_widget_show(mainwin_minus_num);
             gtk_widget_show(mainwin_10min_num);
             gtk_widget_show(mainwin_min_num);
