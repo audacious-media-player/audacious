@@ -52,6 +52,7 @@ HEADERS = \
 	strings.h \
 	titlestring.h \
 	ui_fileinfopopup.h \
+	ui_lastfm.h\
 	ui_preferences.h \
 	util.h \
 	vfs.h \
@@ -99,6 +100,7 @@ SOURCES = \
 	ui_fileinfopopup.c \
 	ui_fileopener.c \
 	ui_jumptotrack.c \
+	ui_lastfm.c\
 	ui_main.c \
 	ui_manager.c \
 	ui_playlist.c \

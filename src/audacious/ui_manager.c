@@ -163,10 +163,7 @@ static GtkRadioActionEntry radioaction_entries_viewtime[] = {
 static GtkActionEntry action_entries_playback[] = {
 
 	{ "playback", NULL, N_("Playback") },
-
-	{ "playback play cd", GTK_STOCK_CDROM , N_("Play CD"), "<Alt>C",
-	  N_("Play CD"), G_CALLBACK(action_playback_playcd) },
-
+	
 	{ "playback play", GTK_STOCK_MEDIA_PLAY , N_("Play"), "X",
 	  N_("Play"), G_CALLBACK(action_playback_play) },
 
@@ -392,6 +389,12 @@ static GtkActionEntry action_entries_others[] = {
 
 	{ "play location", GTK_STOCK_NETWORK , N_("Play Location"), "<Ctrl>L",
 	  N_("Play media from the selected location"), G_CALLBACK(action_play_location) },
+
+        { "playback play cd", GTK_STOCK_CDROM , N_("Play CD"), "<Alt>C",
+	  N_("Play CD"), G_CALLBACK(action_playback_playcd) },
+
+        { "lastfm", NULL, N_("Last.fm radio"), "<Alt>L",
+          N_("Play Last.fm radio"), G_CALLBACK(action_lastfm) },
 
 	{ "preferences", GTK_STOCK_PREFERENCES , N_("Preferences"), "<Ctrl>P",
 	  N_("Open preferences window"), G_CALLBACK(action_preferences) },
