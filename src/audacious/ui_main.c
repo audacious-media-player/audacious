@@ -145,7 +145,7 @@ GtkWidget *mainwin_10sec_num, *mainwin_sec_num;
 
 static gboolean setting_volume = FALSE;
 
-Vis *mainwin_vis;
+GtkWidget *mainwin_vis;
 SVis *mainwin_svis;
 
 HSlider *mainwin_sposition = NULL;
@@ -266,7 +266,7 @@ mainwin_set_shade_menu_cb(gboolean shaded)
                    MAINWIN_SHADED_HEIGHT * (cfg.doublesize + 1));
 
         widget_show(WIDGET(mainwin_svis));
-        vis_clear_data(mainwin_vis);
+        ui_vis_clear_data(mainwin_vis);
 
         gtk_widget_show(mainwin_srew);
         gtk_widget_show(mainwin_splay);
@@ -392,11 +392,14 @@ mainwin_vis_set_type_menu_cb(VisType mode)
     if (mode == VIS_OFF) {
         if (cfg.player_shaded && cfg.player_visible)
             svis_clear(mainwin_svis);
-        else
-            vis_clear(mainwin_vis);
+        else {
+            ui_vis_clear(mainwin_vis);
+            ui_vis_set_visible(mainwin_vis, FALSE);
+        }
     }
     if (mode == VIS_ANALYZER || mode == VIS_SCOPE || mode == VIS_VOICEPRINT) {
-        vis_clear_data(mainwin_vis);
+        ui_vis_clear_data(mainwin_vis);
+        ui_vis_set_visible(mainwin_vis, TRUE);
         svis_clear_data(mainwin_svis);
     }
 }
@@ -471,6 +474,26 @@ mainwin_quit_cb(void)
     gtk_main_quit();
 
     exit(EXIT_SUCCESS);
+}
+
+void
+mainwin_vis_cb(void)
+{
+    cfg.vis_type++;
+
+    if (cfg.vis_type > VIS_OFF)
+        cfg.vis_type = VIS_ANALYZER;
+
+    mainwin_vis_set_type(cfg.vis_type);
+}
+
+void
+mainwin_vis_menu_cb(void)
+{
+    gint x, y;
+    gdk_window_get_pointer(NULL, &x, &y, NULL);
+    ui_manager_popup_menu_show(GTK_MENU(mainwin_visualization_menu),
+                               x, y, 3, GDK_CURRENT_TIME);
 }
 
 static void
@@ -677,12 +700,12 @@ mainwin_refresh_hints(void)
 
     /* positioning and size attributes */
     if (bmp_active_skin->properties.mainwin_vis_x && bmp_active_skin->properties.mainwin_vis_y)
-    widget_move(WIDGET(mainwin_vis), bmp_active_skin->properties.mainwin_vis_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_vis), bmp_active_skin->properties.mainwin_vis_x,
         bmp_active_skin->properties.mainwin_vis_y);
 
     if (bmp_active_skin->properties.mainwin_vis_width)
-    widget_resize(WIDGET(mainwin_vis), bmp_active_skin->properties.mainwin_vis_width,
-        mainwin_vis->vs_widget.height);
+    gtk_widget_set_size_request(mainwin_vis, bmp_active_skin->properties.mainwin_vis_width*(1+cfg.doublesize),
+        UI_VIS(mainwin_vis)->height*(1+cfg.doublesize));
 
     if (bmp_active_skin->properties.mainwin_text_x && bmp_active_skin->properties.mainwin_text_y)
     gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_info), bmp_active_skin->properties.mainwin_text_x,
@@ -793,11 +816,6 @@ mainwin_refresh_hints(void)
         widget_show(WIDGET(mainwin_menurow));
     else
         widget_hide(WIDGET(mainwin_menurow));
-
-    if (bmp_active_skin->properties.mainwin_vis_visible)
-        widget_show(WIDGET(mainwin_vis));
-    else
-        widget_hide(WIDGET(mainwin_vis));
 
     /* window size, mainwinWidth && mainwinHeight properties */
     if (bmp_active_skin->properties.mainwin_height && bmp_active_skin->properties.mainwin_width)
@@ -949,7 +967,7 @@ mainwin_clear_song_info(void)
     playlistwin_hide_timer();
     draw_main_window(TRUE);
 
-    vis_clear(mainwin_vis);
+    ui_vis_clear(mainwin_vis);
 }
 
 void
@@ -1101,20 +1119,12 @@ mainwin_mouse_button_press(GtkWidget * widget,
     }
 
     if ((event->button == 1) && event->type != GDK_2BUTTON_PRESS &&
-        !cfg.player_shaded ? widget_contains(WIDGET(mainwin_vis), event->x, event->y) :
          widget_contains(WIDGET(mainwin_svis), event->x, event->y) ) {
-
-        cfg.vis_type++;
-
-        if (cfg.vis_type > VIS_OFF)
-            cfg.vis_type = VIS_ANALYZER;
-
-        mainwin_vis_set_type(cfg.vis_type);
+         mainwin_vis_cb();
     }
 
     if (event->button == 3) {
-            if (widget_contains(WIDGET(mainwin_vis), event->x, event->y) ||
-                 widget_contains(WIDGET(mainwin_svis), event->x, event->y)) {
+            if (widget_contains(WIDGET(mainwin_svis), event->x, event->y)) {
             ui_manager_popup_menu_show(GTK_MENU(mainwin_visualization_menu), event->x_root,
                                     event->y_root, 3, event->time);
             grab = FALSE;
@@ -1917,7 +1927,7 @@ mainwin_real_show(void)
     check_set( toggleaction_group_others , "show player" , TRUE );
 
     if (cfg.player_shaded)
-        vis_clear_data(mainwin_vis);
+        ui_vis_clear_data(mainwin_vis);
 
     mainwin_set_shape_mask();
 
@@ -2021,7 +2031,6 @@ mainwin_set_doublesize(gboolean doublesize)
     }
 
     draw_main_window(TRUE);
-    vis_set_doublesize(mainwin_vis, doublesize);
 }
 
 void
@@ -2839,9 +2848,10 @@ mainwin_create_widgets(void)
     g_signal_connect(mainwin_about, "clicked", show_about_window, NULL);
     g_signal_connect(mainwin_about, "right-clicked", mainwin_about_cb, NULL );
 
-    mainwin_vis =
-        create_vis(&mainwin_wlist, mainwin_bg, mainwin->window, SKINNED_WINDOW(mainwin)->gc,
-                   24, 43, 76, cfg.doublesize);
+    mainwin_vis = ui_vis_new(SKINNED_WINDOW(mainwin)->fixed, 24, 43, 76);
+    g_signal_connect(mainwin_vis, "clicked", mainwin_vis_cb, NULL);
+    g_signal_connect(mainwin_vis, "right-clicked", mainwin_vis_menu_cb, NULL);
+
     mainwin_svis = create_svis(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 79, 5);
 
     mainwin_position =
@@ -2883,7 +2893,6 @@ mainwin_create_widgets(void)
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_monostereo));
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_playstatus));
 
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_vis));
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_svis));
 
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_position));
@@ -2975,7 +2984,10 @@ mainwin_create(void)
     gtk_widget_hide(mainwin_sec_num);
     gtk_widget_hide(mainwin_othertext);
 
-    vis_set_window(mainwin_vis, mainwin->window);
+    if (bmp_active_skin->properties.mainwin_vis_visible)
+        gtk_widget_show(mainwin_vis);
+    else
+        gtk_widget_hide(mainwin_vis);
 }
 
 void

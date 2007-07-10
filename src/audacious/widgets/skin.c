@@ -168,7 +168,6 @@ bmp_active_skin_load(const gchar * path)
     draw_playlist_window(TRUE);
     draw_equalizer_window(TRUE);
 
-    vis_set_window(mainwin_vis, mainwin->window);
     playlistwin_update_list(playlist_get_active());
 
     return TRUE;
