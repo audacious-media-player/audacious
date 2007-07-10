@@ -103,7 +103,7 @@ skin_get_preview(const gchar * path)
     {
         sprintf(buf, "main.%s", ext_targets[i]);
 
-        if ((preview_path = find_file_recursively(dec_path, buf)) != NULL)
+        if ((preview_path = find_path_recursively(dec_path, buf)) != NULL)
             break;
     }
 
