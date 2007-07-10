@@ -477,24 +477,34 @@ mainwin_quit_cb(void)
     exit(EXIT_SUCCESS);
 }
 
-void
-mainwin_vis_cb(void)
+gboolean
+mainwin_num_clicked(GtkWidget *widget, GdkEventButton *event)
 {
-    cfg.vis_type++;
+    if (event->button == 1) {
+        change_timer_mode();
+    } else if (event->button == 3)
+        return FALSE;
 
-    if (cfg.vis_type > VIS_OFF)
-        cfg.vis_type = VIS_ANALYZER;
-
-    mainwin_vis_set_type(cfg.vis_type);
+    return TRUE;
 }
 
-void
-mainwin_vis_menu_cb(void)
+gboolean
+mainwin_vis_cb(GtkWidget *widget, GdkEventButton *event)
 {
-    gint x, y;
-    gdk_window_get_pointer(NULL, &x, &y, NULL);
-    ui_manager_popup_menu_show(GTK_MENU(mainwin_visualization_menu),
-                               x, y, 3, GDK_CURRENT_TIME);
+    if (event->button == 1) {
+        cfg.vis_type++;
+
+        if (cfg.vis_type > VIS_OFF)
+            cfg.vis_type = VIS_ANALYZER;
+
+        mainwin_vis_set_type(cfg.vis_type);
+    } else if (event->button == 3) {
+        gint x, y;
+        gdk_window_get_pointer(NULL, &x, &y, NULL);
+        ui_manager_popup_menu_show(GTK_MENU(mainwin_visualization_menu),
+                                   x, y, 3, event->time);
+    }
+    return TRUE;
 }
 
 static void
@@ -1121,7 +1131,7 @@ mainwin_mouse_button_press(GtkWidget * widget,
 
     if ((event->button == 1) && event->type != GDK_2BUTTON_PRESS &&
          widget_contains(WIDGET(mainwin_svis), event->x, event->y) ) {
-         mainwin_vis_cb();
+         /* it'll get sorted out when svis will become UiSvis */
     }
 
     if (event->button == 3) {
@@ -2833,19 +2843,19 @@ mainwin_create_widgets(void)
         create_playstatus(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 24, 28);
 
     mainwin_minus_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, 36, 26, SKIN_NUMBERS);
-    g_signal_connect(mainwin_minus_num, "clicked", change_timer_mode, NULL);
+    g_signal_connect(mainwin_minus_num, "button-press-event", G_CALLBACK(mainwin_num_clicked), NULL);
 
     mainwin_10min_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, 48, 26, SKIN_NUMBERS);
-    g_signal_connect(mainwin_10min_num, "clicked", change_timer_mode, NULL);
+    g_signal_connect(mainwin_10min_num, "button-press-event", G_CALLBACK(mainwin_num_clicked), NULL);
 
     mainwin_min_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, 60, 26, SKIN_NUMBERS);
-    g_signal_connect(mainwin_min_num, "clicked", change_timer_mode, NULL);
+    g_signal_connect(mainwin_min_num, "button-press-event", G_CALLBACK(mainwin_num_clicked), NULL);
 
     mainwin_10sec_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, 78, 26, SKIN_NUMBERS);
-    g_signal_connect(mainwin_10sec_num, "clicked", change_timer_mode, NULL);
+    g_signal_connect(mainwin_10sec_num, "button-press-event", G_CALLBACK(mainwin_num_clicked), NULL);
 
     mainwin_sec_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, 90, 26, SKIN_NUMBERS);
-    g_signal_connect(mainwin_sec_num, "clicked", change_timer_mode, NULL);
+    g_signal_connect(mainwin_sec_num, "button-press-event", G_CALLBACK(mainwin_num_clicked), NULL);
 
     mainwin_about = ui_skinned_button_new();
     ui_skinned_small_button_setup(mainwin_about, SKINNED_WINDOW(mainwin)->fixed, 247, 83, 20, 25);
@@ -2853,9 +2863,7 @@ mainwin_create_widgets(void)
     g_signal_connect(mainwin_about, "right-clicked", mainwin_about_cb, NULL );
 
     mainwin_vis = ui_vis_new(SKINNED_WINDOW(mainwin)->fixed, 24, 43, 76);
-    g_signal_connect(mainwin_vis, "clicked", mainwin_vis_cb, NULL);
-    g_signal_connect(mainwin_vis, "right-clicked", mainwin_vis_menu_cb, NULL);
-
+    g_signal_connect(mainwin_vis, "button-press-event", G_CALLBACK(mainwin_vis_cb), NULL);
     mainwin_svis = create_svis(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 79, 5);
 
     mainwin_position =

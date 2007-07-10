@@ -44,10 +44,7 @@ static const guint8 vis_scope_colors[] =
 static guchar voiceprint_data[76*16];
 
 enum {
-    CLICKED,
-    RIGHT_CLICKED,
     DOUBLED,
-    REDRAW,
     LAST_SIGNAL
 };
 
@@ -59,8 +56,6 @@ static void ui_vis_unrealize          (GtkWidget *widget);
 static void ui_vis_size_request       (GtkWidget *widget, GtkRequisition *requisition);
 static void ui_vis_size_allocate      (GtkWidget *widget, GtkAllocation *allocation);
 static gboolean ui_vis_expose         (GtkWidget *widget, GdkEventExpose *event);
-static gboolean ui_vis_button_press   (GtkWidget *widget, GdkEventButton *event);
-static gboolean ui_vis_button_release (GtkWidget *widget, GdkEventButton *event);
 static void ui_vis_toggle_doublesize  (UiVis *vis);
 
 static GtkWidgetClass *parent_class = NULL;
@@ -101,22 +96,8 @@ static void ui_vis_class_init(UiVisClass *klass) {
     widget_class->expose_event = ui_vis_expose;
     widget_class->size_request = ui_vis_size_request;
     widget_class->size_allocate = ui_vis_size_allocate;
-    widget_class->button_press_event = ui_vis_button_press;
-    widget_class->button_release_event = ui_vis_button_release;
 
-    klass->clicked = NULL;
-    klass->right_clicked = NULL;
     klass->doubled = ui_vis_toggle_doublesize;
-
-    vis_signals[CLICKED] = 
-        g_signal_new ("clicked", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                      G_STRUCT_OFFSET (UiVisClass, clicked), NULL, NULL,
-                      gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
-
-    vis_signals[RIGHT_CLICKED] = 
-        g_signal_new ("right-clicked", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                      G_STRUCT_OFFSET (UiVisClass, right_clicked), NULL, NULL,
-                      gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
     vis_signals[DOUBLED] = 
         g_signal_new ("toggle-double-size", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
@@ -558,31 +539,6 @@ static gboolean ui_vis_expose(GtkWidget *widget, GdkEventExpose *event) {
     g_object_unref(gc);
     gdk_rgb_cmap_free(cmap);
     return FALSE;
-}
-
-static gboolean ui_vis_button_press(GtkWidget *widget, GdkEventButton *event) {
-    g_return_val_if_fail (widget != NULL, FALSE);
-    g_return_val_if_fail (UI_IS_VIS (widget), FALSE);
-    g_return_val_if_fail (event != NULL, FALSE);
-
-    if (event->type == GDK_BUTTON_PRESS) {
-        if (event->button == 1) {
-                g_signal_emit(widget, vis_signals[CLICKED], 0);
-        }
-    }
-
-    return TRUE;
-}
-
-static gboolean ui_vis_button_release(GtkWidget *widget, GdkEventButton *event) {
-    g_return_val_if_fail (widget != NULL, FALSE);
-    g_return_val_if_fail (UI_IS_VIS (widget), FALSE);
-    g_return_val_if_fail (event != NULL, FALSE);
-
-    if (event->button == 3)
-        g_signal_emit(widget, vis_signals[RIGHT_CLICKED], 0);
-
-    return TRUE;
 }
 
 static void ui_vis_toggle_doublesize(UiVis *vis) {

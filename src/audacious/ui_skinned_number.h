@@ -47,7 +47,6 @@ struct _UiSkinnedNumber {
 
 struct _UiSkinnedNumberClass {
     GtkWidgetClass          parent_class;
-    void (* clicked)        (UiSkinnedNumber *textbox);
     void (* doubled)        (UiSkinnedNumber *textbox);
 };
 

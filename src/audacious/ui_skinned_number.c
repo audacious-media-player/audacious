@@ -36,9 +36,7 @@
 #define UI_TYPE_SKINNED_NUMBER           (ui_skinned_number_get_type())
 
 enum {
-    CLICKED,
     DOUBLED,
-    REDRAW,
     LAST_SIGNAL
 };
 
@@ -49,7 +47,6 @@ static void ui_skinned_number_realize            (GtkWidget *widget);
 static void ui_skinned_number_size_request       (GtkWidget *widget, GtkRequisition *requisition);
 static void ui_skinned_number_size_allocate      (GtkWidget *widget, GtkAllocation *allocation);
 static gboolean ui_skinned_number_expose         (GtkWidget *widget, GdkEventExpose *event);
-static gboolean ui_skinned_number_button_press   (GtkWidget *widget, GdkEventButton *event);
 static void ui_skinned_number_toggle_doublesize  (UiSkinnedNumber *number);
 
 static GtkWidgetClass *parent_class = NULL;
@@ -89,15 +86,8 @@ static void ui_skinned_number_class_init(UiSkinnedNumberClass *klass) {
     widget_class->expose_event = ui_skinned_number_expose;
     widget_class->size_request = ui_skinned_number_size_request;
     widget_class->size_allocate = ui_skinned_number_size_allocate;
-    widget_class->button_press_event = ui_skinned_number_button_press;
 
-    klass->clicked = NULL;
     klass->doubled = ui_skinned_number_toggle_doublesize;
-
-    number_signals[CLICKED] = 
-        g_signal_new ("clicked", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                      G_STRUCT_OFFSET (UiSkinnedNumberClass, clicked), NULL, NULL,
-                      gtk_marshal_VOID__VOID, G_TYPE_NONE, 0);
 
     number_signals[DOUBLED] = 
         g_signal_new ("toggle-double-size", G_OBJECT_CLASS_TYPE (object_class), G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
@@ -230,21 +220,6 @@ static gboolean ui_skinned_number_expose(GtkWidget *widget, GdkEventExpose *even
                        number->width*(1+number->double_size), number->height*(1+number->double_size));
     g_object_unref(gc);
     return FALSE;
-}
-
-static gboolean ui_skinned_number_button_press(GtkWidget *widget, GdkEventButton *event) {
-    g_return_val_if_fail (widget != NULL, FALSE);
-    g_return_val_if_fail (UI_SKINNED_IS_NUMBER (widget), FALSE);
-    g_return_val_if_fail (event != NULL, FALSE);
-
-    if (event->type == GDK_BUTTON_PRESS) {
-        if (event->button == 1) {
-                g_signal_emit(widget, number_signals[CLICKED], 0);
-        } else if (event->button == 3)
-                   return FALSE;
-    }
-
-    return TRUE;
 }
 
 static void ui_skinned_number_toggle_doublesize(UiSkinnedNumber *number) {

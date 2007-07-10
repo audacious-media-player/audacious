@@ -80,8 +80,6 @@ struct _UiVis {
 
 struct _UiVisClass {
     GtkWidgetClass          parent_class;
-    void (* clicked)        (UiVis *vis);
-    void (* right_clicked)  (UiVis *vis);
     void (* doubled)        (UiVis *vis);
 };
 
