@@ -52,6 +52,7 @@
 
 #include "playback.h"
 
+static int song_info_timeout_source = 0;
 
 gint
 playback_get_time(void)
@@ -100,6 +101,11 @@ playback_initiate(void)
 
     playlist_check_pos_current(playlist);
     mainwin_set_info_text();
+    mainwin_update_song_info();
+
+    /* FIXME: use g_timeout_add_seconds when glib-2.14 is required */
+    song_info_timeout_source = g_timeout_add(1000,
+        (GSourceFunc) mainwin_update_song_info, NULL);
 
     if (cfg.player_shaded) {
         gtk_widget_show(mainwin_stime_min);
@@ -169,7 +175,10 @@ playback_stop(void)
 
     ip_data.buffering = FALSE;
     ip_data.playing = FALSE;
-    
+
+    if (song_info_timeout_source)
+        g_source_remove(song_info_timeout_source);
+
     g_return_if_fail(mainwin_playstatus != NULL);
     playstatus_set_status_buffering(mainwin_playstatus, FALSE);
 }
