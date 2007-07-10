@@ -590,13 +590,6 @@ void ui_vis_set_visible(GtkWidget *widget, gboolean window_is_visible)
         gtk_widget_queue_resize(widget);
 }
 
-void ui_vis_clear(GtkWidget *widget) {
-    UiVis *vis = UI_VIS (widget);
-        gdk_window_clear_area(widget->window, 0,
-                              0, vis->width,
-                              vis->height);
-}
-
 void ui_vis_clear_data(GtkWidget *widget) {
     gint i;
     UiVis *vis = UI_VIS (widget);

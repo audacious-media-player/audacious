@@ -394,7 +394,6 @@ mainwin_vis_set_type_menu_cb(VisType mode)
         if (cfg.player_shaded && cfg.player_visible)
             svis_clear(mainwin_svis);
         else {
-            ui_vis_clear(mainwin_vis);
             ui_vis_set_visible(mainwin_vis, FALSE);
         }
     }
@@ -976,9 +975,8 @@ mainwin_clear_song_info(void)
     gtk_widget_hide(mainwin_othertext);
 
     playlistwin_hide_timer();
+    ui_vis_clear_data(mainwin_vis);
     draw_main_window(TRUE);
-
-    ui_vis_clear(mainwin_vis);
 }
 
 void
