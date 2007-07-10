@@ -2485,6 +2485,7 @@ void change_timer_mode(void) {
         set_timer_mode(TIMER_REMAINING);
     else
         set_timer_mode(TIMER_ELAPSED);
+    mainwin_update_song_info();
 }
 
 static void
@@ -2984,21 +2985,21 @@ mainwin_attach_idle_func(void)
                                        mainwin_idle_func, NULL);
 }
 
-static void
-idle_func_update_song_info(gint time)
+gboolean
+mainwin_update_song_info(void)
 {
+    gint time = playback_get_time();
     gint length, t;
     gchar stime_prefix;
+
+    if (!playback_get_playing() || time < 0)
+        return FALSE;
 
     if (ab_position_a != -1 && ab_position_b != -1 && time > ab_position_b)
         playback_seek(ab_position_a/1000);
 
     length = playlist_get_current_length(playlist_get_active());
-    if (playback_get_playing())
-        playlistwin_set_time(time, length, cfg.timer_mode);
-    else
-        playlistwin_hide_timer();
-    input_update_vis(time);
+    playlistwin_set_time(time, length, cfg.timer_mode);
 
     if (cfg.timer_mode == TIMER_REMAINING) {
         if (length != -1) {
@@ -3058,6 +3059,8 @@ idle_func_update_song_info(gint time)
         hslider_set_position(mainwin_position, 0);
         hslider_set_position(mainwin_sposition, 1);
     }
+
+    return TRUE;
 }
 
 static gboolean
@@ -3079,7 +3082,7 @@ mainwin_idle_func(gpointer data)
             break;
 
         default:
-            idle_func_update_song_info(time);
+            input_update_vis(time);
             /* nothing at this time */
     }
 
