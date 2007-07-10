@@ -286,7 +286,7 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
             if (cfg.player_shaded && cfg.player_visible)
                 svis_timeout_func(mainwin_svis, NULL);
             else
-                vis_timeout_func(mainwin_vis, NULL);
+                ui_vis_timeout_func(mainwin_vis, NULL);
         }
         return;
     }
@@ -466,5 +466,5 @@ vis_send_data(gint16 pcm_data[2][512], gint nch, gint length)
     if (cfg.player_shaded && cfg.player_visible)
         svis_timeout_func(mainwin_svis, intern_vis_data);
     else
-        vis_timeout_func(mainwin_vis, intern_vis_data);
+        ui_vis_timeout_func(mainwin_vis, intern_vis_data);
 }

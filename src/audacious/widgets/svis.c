@@ -30,7 +30,7 @@
 #include "plugin.h"
 #include "widget.h"
 #include "playback.h"
-#include "vis.h"
+#include "../ui_vis.h"
 
 #include "ui_skinned_window.h"
 

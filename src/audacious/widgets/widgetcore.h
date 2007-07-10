@@ -30,7 +30,6 @@
 #include "playstatus.h"
 #include "skin.h"
 #include "svis.h"
-#include "vis.h"
 #include "widget.h"
 
 #endif

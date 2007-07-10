@@ -82,7 +82,7 @@ playback_initiate(void)
     if (playback_get_playing())
         playback_stop();
 
-    vis_clear_data(mainwin_vis);
+    ui_vis_clear_data(mainwin_vis);
     svis_clear_data(mainwin_svis);
     mainwin_disable_seekbar();
 

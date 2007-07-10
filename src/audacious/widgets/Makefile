@@ -23,7 +23,6 @@ SOURCES = \
 	hslider.c \
 	menurow.c \
 	monostereo.c \
-	vis.c \
 	svis.c \
 	playstatus.c \
 	playlist_list.c \
