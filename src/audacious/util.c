@@ -40,6 +40,8 @@
 #include <errno.h>
 
 #ifdef HAVE_FTS_H
+#  include <sys/types.h>
+#  include <sys/stat.h>
 #  include <fts.h>
 #endif
 
@@ -859,6 +861,7 @@ GdkPixmap *audacious_pixmap_resize(GdkWindow *src, GdkGC *src_gc, GdkPixmap *in,
 
 GdkImage *create_dblsize_image(GdkImage * img)
 {
+#ifdef GDK_WINDOWING_X11
     GdkImage *dblimg;
     register guint x, y;
 
@@ -961,6 +964,9 @@ GdkImage *create_dblsize_image(GdkImage * img)
     }
     }
     return dblimg;
+#else
+    return img;
+#endif
 }
 
 /**
