@@ -136,6 +136,11 @@ playback_pause(void)
         get_current_input_playback()->plugin->pause(get_current_input_playback(),
 						    ip_data.paused);
 
+    if (ip_data.paused)
+        hook_call("playback pause", NULL);
+    else
+        hook_call("playback unpause", NULL);
+
     g_return_if_fail(mainwin_playstatus != NULL);
 
     if (ip_data.paused)
