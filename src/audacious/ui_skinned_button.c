@@ -41,7 +41,6 @@ enum {
 
 struct _UiSkinnedButtonPrivate {
     //Skinned part
-    GdkPixmap        *img;
     GdkGC            *gc;
     gint             w;
     gint             h;
@@ -172,7 +171,6 @@ static void ui_skinned_button_init (UiSkinnedButton *button) {
     button->type = TYPE_NOT_SET;
     priv->move_x = 0;
     priv->move_y = 0;
-    priv->img = NULL;
 }
 
 static void ui_skinned_button_destroy (GtkObject *object) {
@@ -290,28 +288,29 @@ static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *even
             break;
     }
 
-    if (priv->img)
-        g_object_unref(priv->img);
-    priv->img = gdk_pixmap_new(NULL, priv->w*(1+priv->double_size),
-                               priv->h*(1+priv->double_size),
-                               gdk_rgb_get_visual()->depth);
+    GdkPixmap *image;
+    image = gdk_pixmap_new(NULL, priv->w*(1+priv->double_size),
+                                 priv->h*(1+priv->double_size),
+                                 gdk_rgb_get_visual()->depth);
 
     if (priv->double_size) {
         GdkImage *img, *img2x;
         img = gdk_drawable_get_image(obj, 0, 0, priv->w, priv->h);
         img2x = create_dblsize_image(img);
-        gdk_draw_image (priv->img, gc, img2x, 0, 0, 0, 0, priv->w*2, priv->h*2);
+        gdk_draw_image (image, gc, img2x, 0, 0, 0, 0, priv->w*2, priv->h*2);
         g_object_unref(img2x);
         g_object_unref(img);
     } else
-        gdk_draw_drawable (priv->img, gc, obj, 0, 0, 0, 0, priv->w, priv->h);
+        gdk_draw_drawable (image, gc, obj, 0, 0, 0, 0, priv->w, priv->h);
 
     g_object_unref(obj);
 
-    gdk_draw_drawable (widget->window, gc, priv->img, 0, 0, 0, 0,
+    gdk_draw_drawable (widget->window, gc, image, 0, 0, 0, 0,
                        priv->w*(1+priv->double_size), priv->h*(1+priv->double_size));
 
     g_object_unref(gc);
+    g_object_unref(image);
+
     return FALSE;
 }
 

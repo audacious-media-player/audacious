@@ -40,7 +40,6 @@ struct _UiSkinnedNumber {
     gint             x, y, width, height;
     gint             num;
     gboolean         double_size;
-    GdkPixmap        *img;
     SkinPixmapId     skin_index;
     GtkWidget        *fixed;
 };
