@@ -89,7 +89,7 @@ static gboolean ui_skinned_textbox_should_scroll  (UiSkinnedTextbox *textbox);
 static void textbox_generate_xfont_pixmap         (UiSkinnedTextbox *textbox, const gchar *pixmaptext);
 static gboolean textbox_scroll                    (gpointer data);
 static void textbox_generate_pixmap               (UiSkinnedTextbox *textbox);
-static void textbox_handle_special_char           (gchar c, gint * x, gint * y);
+static void textbox_handle_special_char           (gchar *c, gint * x, gint * y);
 
 static GtkWidgetClass *parent_class = NULL;
 static guint textbox_signals[LAST_SIGNAL] = { 0 };
@@ -724,7 +724,7 @@ static void textbox_generate_pixmap(UiSkinnedTextbox *textbox) {
             y = bmp_active_skin->properties.textbox_bitmap_font_height;
         }
         else
-            textbox_handle_special_char(c, &x, &y);
+            textbox_handle_special_char(tmp, &x, &y);
 
         skin_draw_pixmap(bmp_active_skin,
                          priv->pixmap, gc, priv->skin_index,
@@ -764,10 +764,10 @@ void ui_skinned_textbox_set_scroll(GtkWidget *widget, gboolean scroll) {
     }
 }
 
-static void textbox_handle_special_char(gchar c, gint * x, gint * y) {
+static void textbox_handle_special_char(gchar *c, gint * x, gint * y) {
     gint tx, ty;
 
-    switch (c) {
+    switch (*c) {
     case '"':
         tx = 26;
         ty = 0;
@@ -867,6 +867,28 @@ static void textbox_handle_special_char(gchar c, gint * x, gint * y) {
         tx = 29;
         ty = 0;
         break;
+    }
+
+    const gchar *change[] = {"Ą", "A", "Ę", "E", "Ć", "C", "Ł", "L", "Ó", "O", "Ś", "S", "Ż", "Z", "Ź", "Z",
+                             "Ü", "U", NULL};
+    int i;
+    for (i = 0; change[i]; i+=2) {
+         if (!strncmp(c, change[i], strlen(change[i]))) {
+             tx = (*change[i+1] - 'A');
+             break;
+         }
+    }
+
+    /* those are commonly included into skins */
+    if (!strncmp(c, "Å", strlen("Å"))) {
+        tx = 0;
+        ty = 2;
+    } else if (!strncmp(c, "Ö", strlen("Ö"))) {
+        tx = 1;
+        ty = 2;
+    } else if (!strncmp(c, "Ä", strlen("Ä"))) {
+        tx = 2;
+        ty = 2;
     }
 
     *x = tx * bmp_active_skin->properties.textbox_bitmap_font_width;
