@@ -381,7 +381,8 @@ static gboolean ui_skinned_textbox_button_press(GtkWidget *widget, GdkEventButto
             } else
                 g_signal_emit(widget, textbox_signals[CLICKED], 0);
 
-        }
+        } else
+            priv->is_dragging = FALSE;
     } else if (event->type == GDK_2BUTTON_PRESS) {
         if (event->button == 1) {
             g_signal_emit(widget, textbox_signals[DOUBLE_CLICKED], 0);
