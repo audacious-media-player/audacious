@@ -5,8 +5,6 @@ OBJECTIVE_LIBS = libaudid3tag.so
 
 LIBDIR = $(plugindir)
 
-LDFLAGS += -Wl,-export-dynamic
-
 LIBADD += $(GLIB_LIBS)
 
 CFLAGS += $(PICFLAGS) \

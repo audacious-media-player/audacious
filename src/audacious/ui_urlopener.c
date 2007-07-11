@@ -39,10 +39,6 @@
 #include "platform/smartinclude.h"
 #include <errno.h>
 
-#ifdef HAVE_FTS_H
-#  include <fts.h>
-#endif
-
 #include "glade.h"
 #include "input.h"
 #include "main.h"
