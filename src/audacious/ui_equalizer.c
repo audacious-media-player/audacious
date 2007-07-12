@@ -796,18 +796,6 @@ equalizerwin_create(void)
 
     equalizerwin_set_back_pixmap();
     equalizerwin_create_widgets();
-    gtk_widget_show_all(equalizerwin);
-
-    if (!cfg.equalizer_shaded) {
-        gtk_widget_hide(equalizerwin_volume);
-        gtk_widget_hide(equalizerwin_balance);
-    }
-    else {
-        ui_skinned_set_push_button_data(equalizerwin_shade, -1, 3, -1, 47);
-        ui_skinned_button_set_skin_index1(equalizerwin_shade, SKIN_EQ_EX);
-        ui_skinned_set_push_button_data(equalizerwin_close, 11, 38, 11, 47);
-        ui_skinned_button_set_skin_index(equalizerwin_close, SKIN_EQ_EX);
-    }
 }
 
 
@@ -838,7 +826,18 @@ equalizerwin_real_show(void)
     draw_equalizer_window(TRUE);
     cfg.equalizer_visible = TRUE;
     UI_SKINNED_BUTTON(mainwin_eq)->inside = TRUE;
-    gtk_widget_queue_draw(mainwin_eq);
+    gtk_widget_show_all(equalizerwin);
+
+    if (!cfg.equalizer_shaded) {
+        gtk_widget_hide(equalizerwin_volume);
+        gtk_widget_hide(equalizerwin_balance);
+    }
+    else {
+        ui_skinned_set_push_button_data(equalizerwin_shade, -1, 3, -1, 47);
+        ui_skinned_button_set_skin_index1(equalizerwin_shade, SKIN_EQ_EX);
+        ui_skinned_set_push_button_data(equalizerwin_close, 11, 38, 11, 47);
+        ui_skinned_button_set_skin_index(equalizerwin_close, SKIN_EQ_EX);
+    }
 
     gtk_window_present(GTK_WINDOW(equalizerwin));
 }
