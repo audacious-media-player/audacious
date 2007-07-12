@@ -1,5 +1,5 @@
-include ../../mk/rules.mk
-include ../../mk/init.mk
+include ../../../mk/rules.mk
+include ../../../mk/init.mk
 
 localedir = $(datadir)/locale
 gettextsrcdir = $(datadir)/gettext/intl
@@ -43,4 +43,4 @@ SOURCES = \
 
 OBJECTS = ${SOURCES:.c=.o}
 
-include ../../mk/objective.mk
+include ../../../mk/objective.mk
