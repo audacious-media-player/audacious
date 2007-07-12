@@ -196,8 +196,7 @@ static void ui_skinned_horizontal_slider_realize(GtkWidget *widget) {
     attributes.window_type = GDK_WINDOW_CHILD;
     attributes.event_mask = gtk_widget_get_events(widget);
     attributes.event_mask |= GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | 
-                             GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK |
-                             GDK_POINTER_MOTION_HINT_MASK;
+                             GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK;
     attributes.visual = gtk_widget_get_visual(widget);
     attributes.colormap = gtk_widget_get_colormap(widget);
 
@@ -340,7 +339,7 @@ static gboolean ui_skinned_horizontal_slider_motion_notify(GtkWidget *widget, Gd
     if (hs->pressed) {
         gint x;
 
-        x = event->x;
+        x = event->x - priv->knob_width / 2;
         priv->position = x;
 
         if (priv->position < priv->min)
