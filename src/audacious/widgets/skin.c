@@ -1621,7 +1621,13 @@ skin_draw_pixmap(Skin * skin, GdkDrawable * drawable, GdkGC * gc,
     if (xsrc+width > pixmap->width || ysrc+height > pixmap->height) {
         if (pixmap_id == SKIN_NUMBERS)
             xsrc = 90;
-        else
+        else if (pixmap_id == SKIN_VOLUME) {
+            /* some winamp skins have too strait SKIN_VOLUME, so let's copy what's remain from SKIN_MAIN */
+            gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
+                              skin->properties.mainwin_volume_x, skin->properties.mainwin_volume_y,
+                              pixmap->width, ydest, width - pixmap->width, height);
+            width = pixmap->width;
+        } else
             return;
     }
 
