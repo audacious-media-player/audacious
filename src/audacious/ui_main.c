@@ -153,7 +153,7 @@ SVis *mainwin_svis;
 GtkWidget *mainwin_sposition = NULL;
 
 static MenuRow *mainwin_menurow;
-static HSlider *mainwin_volume, *mainwin_balance;
+static GtkWidget *mainwin_volume, *mainwin_balance;
 GtkWidget *mainwin_position;
 
 static MonoStereo *mainwin_monostereo;
@@ -758,11 +758,11 @@ mainwin_refresh_hints(void)
         bmp_active_skin->properties.mainwin_playstatus_y);
 
     if (bmp_active_skin->properties.mainwin_volume_x && bmp_active_skin->properties.mainwin_volume_y)
-    widget_move(WIDGET(mainwin_volume), bmp_active_skin->properties.mainwin_volume_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_volume), bmp_active_skin->properties.mainwin_volume_x,
         bmp_active_skin->properties.mainwin_volume_y);
 
     if (bmp_active_skin->properties.mainwin_balance_x && bmp_active_skin->properties.mainwin_balance_y)
-    widget_move(WIDGET(mainwin_balance), bmp_active_skin->properties.mainwin_balance_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_balance), bmp_active_skin->properties.mainwin_balance_x,
         bmp_active_skin->properties.mainwin_balance_y);
 
     if (bmp_active_skin->properties.mainwin_position_x && bmp_active_skin->properties.mainwin_position_y)
@@ -1835,18 +1835,17 @@ mainwin_adjust_balance_release(void)
 void
 mainwin_set_volume_slider(gint percent)
 {
-    hslider_set_position(mainwin_volume, (gint) rint((percent * 51) / 100.0));
+    ui_skinned_horizontal_slider_set_position(mainwin_volume, (gint) rint((percent * 51) / 100.0));
 }
 
 void
 mainwin_set_balance_slider(gint percent)
 {
-    hslider_set_position(mainwin_balance,
-                         (gint) rint(((percent * 12) / 100.0) + 12));
+    ui_skinned_horizontal_slider_set_position(mainwin_balance, (gint) rint(((percent * 12) / 100.0) + 12));
 }
 
 void
-mainwin_volume_motion_cb(gint pos)
+mainwin_volume_motion_cb(GtkWidget *widget, gint pos)
 {
     gint vol = (pos * 100) / 51;
     mainwin_adjust_volume_motion(vol);
@@ -1854,7 +1853,7 @@ mainwin_volume_motion_cb(gint pos)
 }
 
 void
-mainwin_volume_release_cb(gint pos)
+mainwin_volume_release_cb(GtkWidget *widget, gint pos)
 {
     mainwin_adjust_volume_release();
 }
@@ -1866,7 +1865,7 @@ mainwin_balance_frame_cb(gint pos)
 }
 
 void
-mainwin_balance_motion_cb(gint pos)
+mainwin_balance_motion_cb(GtkWidget *widget, gint pos)
 {
     gint bal = ((pos - 12) * 100) / 12;
     mainwin_adjust_balance_motion(bal);
@@ -1874,7 +1873,7 @@ mainwin_balance_motion_cb(gint pos)
 }
 
 void
-mainwin_balance_release_cb(gint pos)
+mainwin_balance_release_cb(GtkWidget *widget, gint pos)
 {
     mainwin_adjust_volume_release();
 }
@@ -2810,16 +2809,17 @@ mainwin_create_widgets(void)
     mainwin_menurow->mr_doublesize_selected = cfg.doublesize;
     mainwin_menurow->mr_always_selected = cfg.always_on_top;
 
-    mainwin_volume =
-        create_hslider(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 107, 57, 68,
-                       13, 15, 422, 0, 422, 14, 11, 15, 0, 0, 51,
-                       mainwin_volume_frame_cb, mainwin_volume_motion_cb,
-                       mainwin_volume_release_cb, SKIN_VOLUME);
-    mainwin_balance =
-        create_hslider(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 177, 57, 38,
-                       13, 15, 422, 0, 422, 14, 11, 15, 9, 0, 24,
-                       mainwin_balance_frame_cb, mainwin_balance_motion_cb,
-                       mainwin_balance_release_cb, SKIN_BALANCE);
+    mainwin_volume = ui_skinned_horizontal_slider_new(SKINNED_WINDOW(mainwin)->fixed, 107, 57, 68,
+                                                      13, 15, 422, 0, 422, 14, 11, 15, 0, 0, 51,
+                                                      mainwin_volume_frame_cb, SKIN_VOLUME);
+    g_signal_connect(mainwin_volume, "motion", G_CALLBACK(mainwin_volume_motion_cb), NULL);
+    g_signal_connect(mainwin_volume, "release", G_CALLBACK(mainwin_volume_release_cb), NULL);
+
+    mainwin_balance = ui_skinned_horizontal_slider_new(SKINNED_WINDOW(mainwin)->fixed, 177, 57, 38,
+                                                       13, 15, 422, 0, 422, 14, 11, 15, 9, 0, 24,
+                                                       mainwin_balance_frame_cb, SKIN_BALANCE);
+    g_signal_connect(mainwin_balance, "motion", G_CALLBACK(mainwin_balance_motion_cb), NULL);
+    g_signal_connect(mainwin_balance, "release", G_CALLBACK(mainwin_balance_release_cb), NULL);
 
     mainwin_monostereo =
         create_monostereo(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 212, 41,
@@ -2882,9 +2882,6 @@ mainwin_create_widgets(void)
     /* XXX: eventually update widgetcore API to not need this */
 
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_menurow));
-
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_volume));
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_balance));
 
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_monostereo));
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_playstatus));
