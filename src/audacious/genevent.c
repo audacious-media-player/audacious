@@ -57,6 +57,7 @@
 #include "ui_playlist.h"
 #include "ui_skinned_textbox.h"
 #include "ui_skinned_number.h"
+#include "ui_skinned_horizontal_slider.h"
 #include "util.h"
 #include "visualization.h"
 #include "vfs.h"
@@ -89,7 +90,7 @@ idle_func_change_song(gboolean waiting)
             ui_skinned_number_set_number(mainwin_sec_num, timeleft % 10);
         }
 
-        if (mainwin_sposition != NULL && !mainwin_sposition->hs_pressed) {
+        if (mainwin_sposition != NULL && !UI_SKINNED_HORIZONTAL_SLIDER(mainwin_sposition)->pressed) {
             gchar *time_str;
 
             time_str = g_strdup_printf("%2.2d", timeleft / 60);

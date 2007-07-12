@@ -45,7 +45,6 @@ struct _UiSkinnedHorizontalSliderPrivate {
     SkinPixmapId     skin_index;
     gboolean         double_size;
     gint             frame, frame_offset, frame_height, min, max;
-    gint             knob_nx, knob_ny, knob_px, knob_py;
     gint             knob_width, knob_height;
     gint             position;
     gint             width, height;
@@ -145,10 +144,10 @@ GtkWidget* ui_skinned_horizontal_slider_new(GtkWidget *fixed, gint x, gint y, gi
     priv->width = w;
     priv->height = h;
     priv->fixed = fixed;
-    priv->knob_nx = knx;
-    priv->knob_ny = kny;
-    priv->knob_px = kpx;
-    priv->knob_py = kpy;
+    hs->knob_nx = knx;
+    hs->knob_ny = kny;
+    hs->knob_px = kpx;
+    hs->knob_py = kpy;
     priv->knob_width = kw;
     priv->knob_height = kh;
     priv->frame_height = fh;
@@ -249,14 +248,14 @@ static gboolean ui_skinned_horizontal_slider_expose(GtkWidget *widget, GdkEventE
                      0, 0, priv->width, priv->height);
     if (hs->pressed)
         skin_draw_pixmap(bmp_active_skin, obj, gc,
-                         priv->skin_index, priv->knob_px,
-                         priv->knob_py, priv->position,
+                         priv->skin_index, hs->knob_px,
+                         hs->knob_py, priv->position,
                          ((priv->height - priv->knob_height) / 2),
                          priv->knob_width, priv->knob_height);
     else
         skin_draw_pixmap(bmp_active_skin, obj, gc,
-                         priv->skin_index, priv->knob_nx,
-                         priv->knob_ny, priv->position,
+                         priv->skin_index, hs->knob_nx,
+                         hs->knob_ny, priv->position,
                          ((priv->height - priv->knob_height) / 2),
                          priv->knob_width, priv->knob_height);
 
@@ -341,7 +340,7 @@ static gboolean ui_skinned_horizontal_slider_motion_notify(GtkWidget *widget, Gd
     if (hs->pressed) {
         gint x;
 
-        x = event->x - hs->x;
+        x = event->x;
         priv->position = x;
 
         if (priv->position < priv->min)

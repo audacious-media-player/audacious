@@ -110,6 +110,7 @@ playback_initiate(void)
     if (cfg.player_shaded) {
         gtk_widget_show(mainwin_stime_min);
         gtk_widget_show(mainwin_stime_sec);
+        gtk_widget_show(mainwin_sposition);
     } else {
         gtk_widget_show(mainwin_minus_num);
         gtk_widget_show(mainwin_10min_num);

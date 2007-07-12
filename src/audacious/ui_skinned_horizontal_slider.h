@@ -44,6 +44,7 @@ struct _UiSkinnedHorizontalSlider {
     GtkWidget   widget;
     gboolean    pressed;
     gint        x, y;
+    gint        knob_nx, knob_ny, knob_px, knob_py;
 };
 
 struct _UiSkinnedHorizontalSliderClass {

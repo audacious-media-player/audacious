@@ -150,7 +150,7 @@ static gboolean setting_volume = FALSE;
 GtkWidget *mainwin_vis;
 SVis *mainwin_svis;
 
-HSlider *mainwin_sposition = NULL;
+GtkWidget *mainwin_sposition = NULL;
 
 static MenuRow *mainwin_menurow;
 static HSlider *mainwin_volume, *mainwin_balance;
@@ -282,13 +282,13 @@ mainwin_set_shade_menu_cb(gboolean shaded)
         ui_skinned_textbox_set_scroll(mainwin_info, FALSE);
         if (playback_get_playing())
     {
-                widget_show(WIDGET(mainwin_sposition));
+            gtk_widget_show(mainwin_sposition);
             gtk_widget_show(mainwin_stime_min);
             gtk_widget_show(mainwin_stime_sec);
     }
     else
     {
-                widget_hide(WIDGET(mainwin_sposition));
+            gtk_widget_hide(mainwin_sposition);
             gtk_widget_hide(mainwin_stime_min);
             gtk_widget_hide(mainwin_stime_sec);
     }
@@ -312,14 +312,15 @@ mainwin_set_shade_menu_cb(gboolean shaded)
 
         gtk_widget_hide(mainwin_stime_min);
         gtk_widget_hide(mainwin_stime_sec);
-        widget_hide(WIDGET(mainwin_sposition));
+        gtk_widget_hide(mainwin_sposition);
 
-        if (playback_get_playing() && !GTK_WIDGET_VISIBLE(mainwin_minus_num)) {
+        if (playback_get_playing()) {
             gtk_widget_show(mainwin_minus_num);
             gtk_widget_show(mainwin_10min_num);
             gtk_widget_show(mainwin_min_num);
             gtk_widget_show(mainwin_10sec_num);
             gtk_widget_show(mainwin_sec_num);
+            gtk_widget_show(mainwin_position);
         }
 
         ui_skinned_textbox_set_scroll(mainwin_info, cfg.autoscroll);
@@ -897,15 +898,6 @@ mainwin_set_song_info(gint bitrate,
     if (!playback_get_paused() && mainwin_playstatus != NULL)
         playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
 
-    if (playlist_get_current_length(playlist) != -1) {
-        if (cfg.player_shaded)
-            widget_show(WIDGET(mainwin_sposition));
-    }
-    else {
-        widget_hide(WIDGET(mainwin_sposition));
-        mainwin_force_redraw = TRUE;
-    }
-
     if (bmp_active_skin && bmp_active_skin->properties.mainwin_othertext 
     == TRUE)
     {
@@ -950,7 +942,7 @@ mainwin_clear_song_info(void)
     playback_set_sample_params(0, 0, 0);
 
     UI_SKINNED_HORIZONTAL_SLIDER(mainwin_position)->pressed = FALSE;
-    mainwin_sposition->hs_pressed = FALSE;
+    UI_SKINNED_HORIZONTAL_SLIDER(mainwin_sposition)->pressed = FALSE;
 
     /* clear sampling parameter displays */
     ui_skinned_textbox_set_text(mainwin_rate_text, "   ");
@@ -971,7 +963,7 @@ mainwin_clear_song_info(void)
     gtk_widget_hide(mainwin_stime_sec);
 
     gtk_widget_hide(mainwin_position);
-    widget_hide(WIDGET(mainwin_sposition));
+    gtk_widget_hide(mainwin_sposition);
 
     gtk_widget_hide(mainwin_othertext);
 
@@ -987,14 +979,7 @@ mainwin_disable_seekbar(void)
         return;
 
     gtk_widget_hide(mainwin_position);
-
-    /*
-     * We dont call draw_main_window() here so this will not
-     * remove them visually.  It will only prevent us from sending
-     * any seek calls to the input plugin before the input plugin
-     * calls ->set_info().
-     */
-    widget_hide(WIDGET(mainwin_sposition));
+    gtk_widget_hide(mainwin_sposition);
 }
 
 static gboolean
@@ -1704,21 +1689,22 @@ gint
 mainwin_spos_frame_cb(gint pos)
 {
     if (mainwin_sposition) {
+        gint x = 0;
         if (pos < 6)
-            mainwin_sposition->hs_knob_nx = mainwin_sposition->hs_knob_px =
-                17;
+            x = 17;
         else if (pos < 9)
-            mainwin_sposition->hs_knob_nx = mainwin_sposition->hs_knob_px =
-                20;
+            x = 20;
         else
-            mainwin_sposition->hs_knob_nx = mainwin_sposition->hs_knob_px =
-                23;
+            x = 23;
+
+        UI_SKINNED_HORIZONTAL_SLIDER(mainwin_sposition)->knob_nx = x;
+        UI_SKINNED_HORIZONTAL_SLIDER(mainwin_sposition)->knob_px = x;
     }
     return 1;
 }
 
 void
-mainwin_spos_motion_cb(gint pos)
+mainwin_spos_motion_cb(GtkWidget *widget, gint pos)
 {
     gint time;
     gchar *time_msg;
@@ -1746,7 +1732,7 @@ mainwin_spos_motion_cb(gint pos)
 }
 
 void
-mainwin_spos_release_cb(gint pos)
+mainwin_spos_release_cb(GtkWidget *widget, gint pos)
 {
     playback_seek(((playlist_get_current_length(playlist_get_active()) / 1000) *
                        (pos - 1)) / 12);
@@ -2867,16 +2853,16 @@ mainwin_create_widgets(void)
     mainwin_svis = create_svis(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 79, 5);
 
     mainwin_position = ui_skinned_horizontal_slider_new(SKINNED_WINDOW(mainwin)->fixed, 16, 72, 248,
-                                                        10, 248, 0, 278, 0, 29, 10, 10, 0, 0, 219, NULL, SKIN_POSBAR);
+                                                        10, 248, 0, 278, 0, 29, 10, 10, 0, 0, 219,
+                                                        NULL, SKIN_POSBAR);
     g_signal_connect(mainwin_position, "motion", G_CALLBACK(mainwin_position_motion_cb), NULL);
     g_signal_connect(mainwin_position, "release", G_CALLBACK(mainwin_position_release_cb), NULL);
 
-    mainwin_sposition =
-        create_hslider(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 226, 4, 17,
-                       7, 17, 36, 17, 36, 3, 7, 36, 0, 1, 13,
-                       mainwin_spos_frame_cb, mainwin_spos_motion_cb,
-                       mainwin_spos_release_cb, SKIN_TITLEBAR);
-    widget_hide(WIDGET(mainwin_sposition));
+    mainwin_sposition = ui_skinned_horizontal_slider_new(SKINNED_WINDOW(mainwin)->fixed, 226, 4, 17,
+                                                         7, 17, 36, 17, 36, 3, 7, 36, 0, 1, 13,
+                                                         mainwin_spos_frame_cb, SKIN_TITLEBAR);
+    g_signal_connect(mainwin_sposition, "motion", G_CALLBACK(mainwin_spos_motion_cb), NULL);
+    g_signal_connect(mainwin_sposition, "release", G_CALLBACK(mainwin_spos_release_cb), NULL);
 
     mainwin_stime_min = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, 130, 4, 15, FALSE, SKIN_TEXT);
     g_signal_connect(mainwin_stime_min, "clicked", change_timer_mode, NULL);
@@ -2904,8 +2890,6 @@ mainwin_create_widgets(void)
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_playstatus));
 
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_svis));
-
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_sposition));
 }
 
 static void
@@ -2994,6 +2978,7 @@ mainwin_create(void)
     gtk_widget_hide(mainwin_othertext);
 
     gtk_widget_hide(mainwin_position);
+    gtk_widget_hide(mainwin_sposition);
 
     if (bmp_active_skin->properties.mainwin_vis_visible)
         gtk_widget_show(mainwin_vis);
@@ -3052,7 +3037,7 @@ mainwin_update_song_info(void)
     ui_skinned_number_set_number(mainwin_10sec_num, (t / 10) % 6);
     ui_skinned_number_set_number(mainwin_sec_num, t % 10);
 
-    if (!mainwin_sposition->hs_pressed) {
+    if (!UI_SKINNED_HORIZONTAL_SLIDER(mainwin_sposition)->pressed) {
         gchar *time_str;
 
         time_str = g_strdup_printf("%c%2.2d", stime_prefix, t / 60);
@@ -3069,18 +3054,18 @@ mainwin_update_song_info(void)
     if (length > 0) {
         if (time > length) {
             ui_skinned_horizontal_slider_set_position(mainwin_position, 219);
-            hslider_set_position(mainwin_sposition, 13);
+            ui_skinned_horizontal_slider_set_position(mainwin_sposition, 13);
         }
         /* update the slider position ONLY if there is not a seek in progress */
         else if (seek_state == MAINWIN_SEEK_NIL)  {
             ui_skinned_horizontal_slider_set_position(mainwin_position, (time * 219) / length);
-            hslider_set_position(mainwin_sposition,
+            ui_skinned_horizontal_slider_set_position(mainwin_sposition,
                                  ((time * 12) / length) + 1);
         }
     }
     else {
         ui_skinned_horizontal_slider_set_position(mainwin_position, 0);
-        hslider_set_position(mainwin_sposition, 1);
+        ui_skinned_horizontal_slider_set_position(mainwin_sposition, 1);
     }
 
     return TRUE;
