@@ -54,6 +54,7 @@
 
 #include "ui_skinned_window.h"
 #include "ui_skinned_button.h"
+#include "ui_skinned_horizontal_slider.h"
 
 enum PresetViewCols {
     PRESET_VIEW_COL_NAME,
@@ -88,7 +89,7 @@ static GtkWidget *equalizerwin_on, *equalizerwin_auto;
 static GtkWidget *equalizerwin_close, *equalizerwin_presets, *equalizerwin_shade;
 static EqGraph *equalizerwin_graph;
 static EqSlider *equalizerwin_preamp, *equalizerwin_bands[10];
-static HSlider *equalizerwin_volume, *equalizerwin_balance;
+static GtkWidget *equalizerwin_volume, *equalizerwin_balance;
 
 static GList *equalizer_presets = NULL, *equalizer_auto_presets = NULL;
 
@@ -171,8 +172,8 @@ equalizerwin_set_shade_menu_cb(gboolean shaded)
         ui_skinned_button_set_skin_index1(equalizerwin_shade, SKIN_EQ_EX);
         ui_skinned_set_push_button_data(equalizerwin_close, 11, 38, 11, 47);
         ui_skinned_button_set_skin_index(equalizerwin_close, SKIN_EQ_EX);
-        widget_show(WIDGET(equalizerwin_volume));
-        widget_show(WIDGET(equalizerwin_balance));
+        gtk_widget_show(equalizerwin_volume);
+        gtk_widget_show(equalizerwin_balance);
     }
     else {
         dock_shade(dock_window_list, GTK_WINDOW(equalizerwin),
@@ -181,8 +182,8 @@ equalizerwin_set_shade_menu_cb(gboolean shaded)
         ui_skinned_button_set_skin_index1(equalizerwin_shade, SKIN_EQMAIN);
         ui_skinned_set_push_button_data(equalizerwin_close, 0, 116, 0, 125);
         ui_skinned_button_set_skin_index(equalizerwin_close, SKIN_EQMAIN);
-        widget_hide(WIDGET(equalizerwin_volume));
-        widget_hide(WIDGET(equalizerwin_balance));
+        gtk_widget_hide(equalizerwin_volume);
+        gtk_widget_hide(equalizerwin_balance);
     }
 
     draw_equalizer_window(TRUE);
@@ -572,21 +573,22 @@ gint
 equalizerwin_volume_frame_cb(gint pos)
 {
     if (equalizerwin_volume) {
+        gint x;
         if (pos < 32)
-            equalizerwin_volume->hs_knob_nx =
-                equalizerwin_volume->hs_knob_px = 1;
+            x = 1;
         else if (pos < 63)
-            equalizerwin_volume->hs_knob_nx =
-                equalizerwin_volume->hs_knob_px = 4;
+            x = 4;
         else
-            equalizerwin_volume->hs_knob_nx =
-                equalizerwin_volume->hs_knob_px = 7;
+            x = 7;
+
+        UI_SKINNED_HORIZONTAL_SLIDER(equalizerwin_volume)->knob_nx = x;
+        UI_SKINNED_HORIZONTAL_SLIDER(equalizerwin_volume)->knob_px = x;
     }
     return 1;
 }
 
 static void
-equalizerwin_volume_motion_cb(gint pos)
+equalizerwin_volume_motion_cb(GtkWidget *widget, gint pos)
 {
     gint v = (gint) rint(pos * 100 / 94.0);
     mainwin_adjust_volume_motion(v);
@@ -594,7 +596,7 @@ equalizerwin_volume_motion_cb(gint pos)
 }
 
 static void
-equalizerwin_volume_release_cb(gint pos)
+equalizerwin_volume_release_cb(GtkWidget *widget, gint pos)
 {
     mainwin_adjust_volume_release();
 }
@@ -603,22 +605,23 @@ static gint
 equalizerwin_balance_frame_cb(gint pos)
 {
     if (equalizerwin_balance) {
+        gint x;
         if (pos < 13)
-            equalizerwin_balance->hs_knob_nx =
-                equalizerwin_balance->hs_knob_px = 11;
+            x = 11;
         else if (pos < 26)
-            equalizerwin_balance->hs_knob_nx =
-                equalizerwin_balance->hs_knob_px = 14;
+            x = 14;
         else
-            equalizerwin_balance->hs_knob_nx =
-                equalizerwin_balance->hs_knob_px = 17;
+            x = 17;
+
+        UI_SKINNED_HORIZONTAL_SLIDER(equalizerwin_balance)->knob_nx = x;
+        UI_SKINNED_HORIZONTAL_SLIDER(equalizerwin_balance)->knob_px = x;
     }
 
     return 1;
 }
 
 static void
-equalizerwin_balance_motion_cb(gint pos)
+equalizerwin_balance_motion_cb(GtkWidget *widget, gint pos)
 {
     gint b;
     pos = MIN(pos, 38);         /* The skin uses a even number of pixels
@@ -629,7 +632,7 @@ equalizerwin_balance_motion_cb(gint pos)
 }
 
 static void
-equalizerwin_balance_release_cb(gint pos)
+equalizerwin_balance_release_cb(GtkWidget *widget, gint pos)
 {
     mainwin_adjust_balance_release();
 }
@@ -637,14 +640,14 @@ equalizerwin_balance_release_cb(gint pos)
 void
 equalizerwin_set_balance_slider(gint percent)
 {
-    hslider_set_position(equalizerwin_balance,
+    ui_skinned_horizontal_slider_set_position(equalizerwin_balance,
                          (gint) rint((percent * 19 / 100.0) + 19));
 }
 
 void
 equalizerwin_set_volume_slider(gint percent)
 {
-    hslider_set_position(equalizerwin_volume,
+    ui_skinned_horizontal_slider_set_position(equalizerwin_volume,
                          (gint) rint(percent * 94 / 100.0));
 }
 
@@ -704,33 +707,19 @@ equalizerwin_create_widgets(void)
     }
 
     equalizerwin_volume =
-        create_hslider(&equalizerwin_wlist, equalizerwin_bg,
-                       SKINNED_WINDOW(equalizerwin)->gc, 61, 4, 97, 8, 1, 30, 1, 30, 3, 7,
-                       4, 61, 0, 94, equalizerwin_volume_frame_cb,
-                       equalizerwin_volume_motion_cb,
-                       equalizerwin_volume_release_cb, SKIN_EQ_EX);
-    ui_skinned_window_widgetlist_associate(equalizerwin, 
-        WIDGET(equalizerwin_volume));
+        ui_skinned_horizontal_slider_new(SKINNED_WINDOW(equalizerwin)->fixed,
+                                         61, 4, 97, 8, 1, 30, 1, 30, 3, 7, 4, 61, 0, 94,
+                                         equalizerwin_volume_frame_cb, SKIN_EQ_EX);
+    g_signal_connect(equalizerwin_volume, "motion", G_CALLBACK(equalizerwin_volume_motion_cb), NULL);
+    g_signal_connect(equalizerwin_volume, "release", G_CALLBACK(equalizerwin_volume_release_cb), NULL);
+
 
     equalizerwin_balance =
-        create_hslider(&equalizerwin_wlist, equalizerwin_bg,
-                       SKINNED_WINDOW(equalizerwin)->gc, 164, 4, 42, 8, 11, 30, 11, 30, 3,
-                       7, 4, 164, 0, 39, equalizerwin_balance_frame_cb,
-                       equalizerwin_balance_motion_cb,
-                       equalizerwin_balance_release_cb, SKIN_EQ_EX);
-    ui_skinned_window_widgetlist_associate(equalizerwin, 
-        WIDGET(equalizerwin_balance));
-
-    if (!cfg.equalizer_shaded) {
-        widget_hide(WIDGET(equalizerwin_volume));
-        widget_hide(WIDGET(equalizerwin_balance));
-    }
-    else {
-        ui_skinned_set_push_button_data(equalizerwin_shade, -1, 3, -1, 47);
-        ui_skinned_button_set_skin_index1(equalizerwin_shade, SKIN_EQ_EX);
-        ui_skinned_set_push_button_data(equalizerwin_close, 11, 38, 11, 47);
-        ui_skinned_button_set_skin_index(equalizerwin_close, SKIN_EQ_EX);
-    }
+        ui_skinned_horizontal_slider_new(SKINNED_WINDOW(equalizerwin)->fixed,
+                       164, 4, 42, 8, 11, 30, 11, 30, 3, 7, 4, 164, 0, 39,
+                       equalizerwin_balance_frame_cb, SKIN_EQ_EX);
+    g_signal_connect(equalizerwin_balance, "motion", G_CALLBACK(equalizerwin_balance_motion_cb), NULL);
+    g_signal_connect(equalizerwin_balance, "release", G_CALLBACK(equalizerwin_balance_release_cb), NULL);
 }
 
 
@@ -807,6 +796,18 @@ equalizerwin_create(void)
 
     equalizerwin_set_back_pixmap();
     equalizerwin_create_widgets();
+    gtk_widget_show_all(equalizerwin);
+
+    if (!cfg.equalizer_shaded) {
+        gtk_widget_hide(equalizerwin_volume);
+        gtk_widget_hide(equalizerwin_balance);
+    }
+    else {
+        ui_skinned_set_push_button_data(equalizerwin_shade, -1, 3, -1, 47);
+        ui_skinned_button_set_skin_index1(equalizerwin_shade, SKIN_EQ_EX);
+        ui_skinned_set_push_button_data(equalizerwin_close, 11, 38, 11, 47);
+        ui_skinned_button_set_skin_index(equalizerwin_close, SKIN_EQ_EX);
+    }
 }
 
 
@@ -839,7 +840,6 @@ equalizerwin_real_show(void)
     UI_SKINNED_BUTTON(mainwin_eq)->inside = TRUE;
     gtk_widget_queue_draw(mainwin_eq);
 
-    gtk_widget_show_all(equalizerwin);
     gtk_window_present(GTK_WINDOW(equalizerwin));
 }
 

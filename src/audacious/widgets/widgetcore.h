@@ -22,7 +22,6 @@
 
 #include "eq_graph.h"
 #include "eq_slider.h"
-#include "hslider.h"
 #include "menurow.h"
 #include "monostereo.h"
 #include "playlist_list.h"
