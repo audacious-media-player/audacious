@@ -111,6 +111,7 @@ SOURCES = \
 	ui_skinned_button.c \
 	ui_skinned_textbox.c \
 	ui_skinned_number.c \
+	ui_skinned_horizontal_slider.c \
 	ui_vis.c \
 	ui_skinselector.c \
 	ui_urlopener.c \

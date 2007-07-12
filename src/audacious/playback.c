@@ -116,6 +116,7 @@ playback_initiate(void)
         gtk_widget_show(mainwin_min_num);
         gtk_widget_show(mainwin_10sec_num);
         gtk_widget_show(mainwin_sec_num);
+        gtk_widget_show(mainwin_position);
     }
 
     hook_call("playback begin", entry);
