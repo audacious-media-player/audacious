@@ -84,6 +84,7 @@
 #include "ui_skinned_button.h"
 #include "ui_skinned_textbox.h"
 #include "ui_skinned_number.h"
+#include "ui_skinned_horizontal_slider.h"
 #include "ui_jumptotrack.h"
 
 static GTimeVal cb_time; /* click delay for tristate is defined by TRISTATE_THRESHOLD */
@@ -152,7 +153,9 @@ SVis *mainwin_svis;
 HSlider *mainwin_sposition = NULL;
 
 static MenuRow *mainwin_menurow;
-static HSlider *mainwin_volume, *mainwin_balance, *mainwin_position;
+static HSlider *mainwin_volume, *mainwin_balance;
+GtkWidget *mainwin_position;
+
 static MonoStereo *mainwin_monostereo;
 static GtkWidget *mainwin_srew, *mainwin_splay, *mainwin_spause;
 static GtkWidget *mainwin_sstop, *mainwin_sfwd, *mainwin_seject, *mainwin_about;
@@ -178,8 +181,8 @@ static void set_timer_mode(TimerMode mode);
 static void change_timer_mode(void);
 static void mainwin_refresh_hints(void);
 
-void mainwin_position_motion_cb(gint pos);
-void mainwin_position_release_cb(gint pos);
+void mainwin_position_motion_cb(GtkWidget *widget, gint pos);
+void mainwin_position_release_cb(GtkWidget *widget, gint pos);
 
 void set_doublesize(gboolean doublesize);
 void mainwin_eq_pushed(gboolean toggled);
@@ -762,7 +765,7 @@ mainwin_refresh_hints(void)
         bmp_active_skin->properties.mainwin_balance_y);
 
     if (bmp_active_skin->properties.mainwin_position_x && bmp_active_skin->properties.mainwin_position_y)
-    widget_move(WIDGET(mainwin_position), bmp_active_skin->properties.mainwin_position_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_position), bmp_active_skin->properties.mainwin_position_x,
         bmp_active_skin->properties.mainwin_position_y);
 
     if (bmp_active_skin->properties.mainwin_previous_x && bmp_active_skin->properties.mainwin_previous_y)
@@ -897,10 +900,8 @@ mainwin_set_song_info(gint bitrate,
     if (playlist_get_current_length(playlist) != -1) {
         if (cfg.player_shaded)
             widget_show(WIDGET(mainwin_sposition));
-        widget_show(WIDGET(mainwin_position));
     }
     else {
-        widget_hide(WIDGET(mainwin_position));
         widget_hide(WIDGET(mainwin_sposition));
         mainwin_force_redraw = TRUE;
     }
@@ -948,7 +949,7 @@ mainwin_clear_song_info(void)
     /* clear sampling parameters */
     playback_set_sample_params(0, 0, 0);
 
-    mainwin_position->hs_pressed = FALSE;
+    UI_SKINNED_HORIZONTAL_SLIDER(mainwin_position)->pressed = FALSE;
     mainwin_sposition->hs_pressed = FALSE;
 
     /* clear sampling parameter displays */
@@ -969,7 +970,7 @@ mainwin_clear_song_info(void)
     gtk_widget_hide(mainwin_stime_min);
     gtk_widget_hide(mainwin_stime_sec);
 
-    widget_hide(WIDGET(mainwin_position));
+    gtk_widget_hide(mainwin_position);
     widget_hide(WIDGET(mainwin_sposition));
 
     gtk_widget_hide(mainwin_othertext);
@@ -985,13 +986,14 @@ mainwin_disable_seekbar(void)
     if (!mainwin)
         return;
 
+    gtk_widget_hide(mainwin_position);
+
     /*
      * We dont call draw_main_window() here so this will not
      * remove them visually.  It will only prevent us from sending
      * any seek calls to the input plugin before the input plugin
      * calls ->set_info().
      */
-    widget_hide(WIDGET(mainwin_position));
     widget_hide(WIDGET(mainwin_sposition));
 }
 
@@ -1562,7 +1564,7 @@ mainwin_rev_pushed(void)
 {
     g_get_current_time(&cb_time);
 
-    seek_initial_pos = hslider_get_position(mainwin_position);
+    seek_initial_pos = ui_skinned_horizontal_slider_get_position(mainwin_position);
     seek_state = MAINWIN_SEEK_REV;
 }
 
@@ -1588,7 +1590,7 @@ mainwin_rev_release(void)
     else
     {
         /* interpret as 'seek' */
-        mainwin_position_release_cb( hslider_get_position(mainwin_position) );
+        mainwin_position_release_cb( mainwin_position, ui_skinned_horizontal_slider_get_position(mainwin_position) );
     }
 
     seek_state = MAINWIN_SEEK_NIL;
@@ -1598,7 +1600,7 @@ void
 mainwin_fwd_pushed(void)
 {
     g_get_current_time(&cb_time);
-    seek_initial_pos = hslider_get_position(mainwin_position);
+    seek_initial_pos = ui_skinned_horizontal_slider_get_position(mainwin_position);
     seek_state = MAINWIN_SEEK_FWD;
 }
 
@@ -1624,7 +1626,7 @@ mainwin_fwd_release(void)
     else
     {
         /* interpret as 'seek' */
-        mainwin_position_release_cb( hslider_get_position(mainwin_position) );
+        mainwin_position_release_cb( mainwin_position, ui_skinned_horizontal_slider_get_position(mainwin_position) );
     }
 
     seek_state = MAINWIN_SEEK_NIL;
@@ -1751,7 +1753,7 @@ mainwin_spos_release_cb(gint pos)
 }
 
 void
-mainwin_position_motion_cb(gint pos)
+mainwin_position_motion_cb(GtkWidget *widget, gint pos)
 {
     gint length, time;
     gchar *seek_msg;
@@ -1767,7 +1769,7 @@ mainwin_position_motion_cb(gint pos)
 }
 
 void
-mainwin_position_release_cb(gint pos)
+mainwin_position_release_cb(GtkWidget *widget, gint pos)
 {
     gint length, time;
 
@@ -2864,12 +2866,10 @@ mainwin_create_widgets(void)
     g_signal_connect(mainwin_vis, "button-press-event", G_CALLBACK(mainwin_vis_cb), NULL);
     mainwin_svis = create_svis(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 79, 5);
 
-    mainwin_position =
-        create_hslider(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 16, 72, 248,
-                       10, 248, 0, 278, 0, 29, 10, 10, 0, 0, 219, NULL,
-                       mainwin_position_motion_cb,
-                       mainwin_position_release_cb, SKIN_POSBAR);
-    widget_hide(WIDGET(mainwin_position));
+    mainwin_position = ui_skinned_horizontal_slider_new(SKINNED_WINDOW(mainwin)->fixed, 16, 72, 248,
+                                                        10, 248, 0, 278, 0, 29, 10, 10, 0, 0, 219, NULL, SKIN_POSBAR);
+    g_signal_connect(mainwin_position, "motion", G_CALLBACK(mainwin_position_motion_cb), NULL);
+    g_signal_connect(mainwin_position, "release", G_CALLBACK(mainwin_position_release_cb), NULL);
 
     mainwin_sposition =
         create_hslider(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 226, 4, 17,
@@ -2905,7 +2905,6 @@ mainwin_create_widgets(void)
 
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_svis));
 
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_position));
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_sposition));
 }
 
@@ -2994,6 +2993,8 @@ mainwin_create(void)
     gtk_widget_hide(mainwin_sec_num);
     gtk_widget_hide(mainwin_othertext);
 
+    gtk_widget_hide(mainwin_position);
+
     if (bmp_active_skin->properties.mainwin_vis_visible)
         gtk_widget_show(mainwin_vis);
     else
@@ -3067,18 +3068,18 @@ mainwin_update_song_info(void)
     length /= 1000;
     if (length > 0) {
         if (time > length) {
-            hslider_set_position(mainwin_position, 219);
+            ui_skinned_horizontal_slider_set_position(mainwin_position, 219);
             hslider_set_position(mainwin_sposition, 13);
         }
         /* update the slider position ONLY if there is not a seek in progress */
         else if (seek_state == MAINWIN_SEEK_NIL)  {
-            hslider_set_position(mainwin_position, (time * 219) / length);
+            ui_skinned_horizontal_slider_set_position(mainwin_position, (time * 219) / length);
             hslider_set_position(mainwin_sposition,
                                  ((time * 12) / length) + 1);
         }
     }
     else {
-        hslider_set_position(mainwin_position, 0);
+        ui_skinned_horizontal_slider_set_position(mainwin_position, 0);
         hslider_set_position(mainwin_sposition, 1);
     }
 
@@ -3168,8 +3169,8 @@ mainwin_idle_func(gpointer data)
         else if ( np > 219 )
           np = 219;
 
-        hslider_set_position( mainwin_position , np );
-        mainwin_position_motion_cb( np );
+        ui_skinned_horizontal_slider_set_position( mainwin_position , np );
+        mainwin_position_motion_cb( mainwin_position, np );
       }
     }
 

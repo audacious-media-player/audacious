@@ -114,6 +114,7 @@ extern GtkWidget *mainwin_minus_num, *mainwin_10min_num, *mainwin_min_num;
 extern GtkWidget *mainwin_10sec_num, *mainwin_sec_num;
 
 extern HSlider *mainwin_sposition;
+extern GtkWidget *mainwin_position;
 
 void mainwin_create(void);
 void read_volume(gint when);
