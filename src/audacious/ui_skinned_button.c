@@ -207,6 +207,7 @@ static void ui_skinned_button_realize (GtkWidget *widget) {
     if (button->type == TYPE_SMALL || button->type == TYPE_NOT_SET) {
         attributes.wclass = GDK_INPUT_ONLY;
         attributes_mask = GDK_WA_X | GDK_WA_Y;
+        GTK_WIDGET_SET_FLAGS (widget, GTK_NO_WINDOW);
     } else {
         attributes.wclass = GDK_INPUT_OUTPUT;
         attributes.event_mask |= GDK_EXPOSURE_MASK;
@@ -218,6 +219,9 @@ static void ui_skinned_button_realize (GtkWidget *widget) {
     widget->style = gtk_style_attach(widget->style, widget->window);
 
     gdk_window_set_user_data(widget->window, widget);
+
+    if (attributes.wclass == GDK_INPUT_ONLY)
+        gdk_window_show (widget->window);
 }
 
 static void ui_skinned_button_size_request(GtkWidget *widget, GtkRequisition *requisition) {
