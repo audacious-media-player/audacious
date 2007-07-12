@@ -9,7 +9,7 @@ OBJECTIVE_BINS = audacious
 LDFLAGS += $(AUDLDFLAGS)
 
 LDADD = \
-	-L.. $(LIBINTL) \
+	$(LIBINTL) \
 	$(samplerate_LIBS) \
 	$(CHARDET_LIBS) \
 	$(GTK_LIBS) \
@@ -32,7 +32,7 @@ CFLAGS += \
 	$(LIBMCS_CFLAGS) \
 	-D_AUDACIOUS_CORE \
 	-I.. -I../.. \
-	-I../intl
+	-I./intl
 
 HEADERS = \
 	auddrct.h \
