@@ -48,6 +48,7 @@
 #include "ui_main.h"
 #include "ui_playlist.h"
 #include "ui_skinselector.h"
+#include "ui_skinned_playstatus.h"
 #include "util.h"
 
 #include "playback.h"
@@ -146,9 +147,9 @@ playback_pause(void)
     g_return_if_fail(mainwin_playstatus != NULL);
 
     if (ip_data.paused)
-        playstatus_set_status(mainwin_playstatus, STATUS_PAUSE);
+        ui_skinned_playstatus_set_status(mainwin_playstatus, STATUS_PAUSE);
     else
-        playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
+        ui_skinned_playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
 }
 
 void
@@ -187,7 +188,7 @@ playback_stop(void)
         g_source_remove(song_info_timeout_source);
 
     g_return_if_fail(mainwin_playstatus != NULL);
-    playstatus_set_status_buffering(mainwin_playstatus, FALSE);
+    ui_skinned_playstatus_set_buffering(mainwin_playstatus, FALSE);
 }
 
 static void

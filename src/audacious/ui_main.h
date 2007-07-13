@@ -109,7 +109,7 @@ extern GtkWidget *mainwin_stime_min, *mainwin_stime_sec;
 extern GtkWidget *mainwin_vis;
 extern GtkWidget *mainwin_svis;
 
-extern PlayStatus *mainwin_playstatus;
+extern GtkWidget *mainwin_playstatus;
 
 extern GtkWidget *mainwin_minus_num, *mainwin_10min_num, *mainwin_min_num;
 extern GtkWidget *mainwin_10sec_num, *mainwin_sec_num;

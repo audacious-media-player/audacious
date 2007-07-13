@@ -86,6 +86,7 @@
 #include "ui_skinned_number.h"
 #include "ui_skinned_horizontal_slider.h"
 #include "ui_skinned_menurow.h"
+#include "ui_skinned_playstatus.h"
 #include "ui_jumptotrack.h"
 
 static GTimeVal cb_time; /* click delay for tristate is defined by TRISTATE_THRESHOLD */
@@ -141,7 +142,7 @@ GtkWidget *mainwin_stime_min, *mainwin_stime_sec;
 static GtkWidget *mainwin_rate_text, *mainwin_freq_text, 
     *mainwin_othertext;
 
-PlayStatus *mainwin_playstatus;
+GtkWidget *mainwin_playstatus;
 
 GtkWidget *mainwin_minus_num, *mainwin_10min_num, *mainwin_min_num;
 GtkWidget *mainwin_10sec_num, *mainwin_sec_num;
@@ -780,7 +781,7 @@ mainwin_refresh_hints(void)
         bmp_active_skin->properties.mainwin_number_4_y);
 
     if (bmp_active_skin->properties.mainwin_playstatus_x && bmp_active_skin->properties.mainwin_playstatus_y)
-    widget_move(WIDGET(mainwin_playstatus), bmp_active_skin->properties.mainwin_playstatus_x,
+    gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), mainwin_playstatus, bmp_active_skin->properties.mainwin_playstatus_x,
         bmp_active_skin->properties.mainwin_playstatus_y);
 
     if (bmp_active_skin->properties.mainwin_volume_x && bmp_active_skin->properties.mainwin_volume_y)
@@ -922,7 +923,7 @@ mainwin_set_song_info(gint bitrate,
     monostereo_set_num_channels(mainwin_monostereo, n_channels);
 
     if (!playback_get_paused() && mainwin_playstatus != NULL)
-        playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
+        ui_skinned_playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
 
     if (bmp_active_skin && bmp_active_skin->properties.mainwin_othertext 
     == TRUE)
@@ -976,7 +977,7 @@ mainwin_clear_song_info(void)
     monostereo_set_num_channels(mainwin_monostereo, 0);
 
     if (mainwin_playstatus != NULL)
-        playstatus_set_status(mainwin_playstatus, STATUS_STOP);
+        ui_skinned_playstatus_set_status(mainwin_playstatus, STATUS_STOP);
 
     /* hide playback time */
     gtk_widget_hide(mainwin_minus_num);
@@ -2834,8 +2835,7 @@ mainwin_create_widgets(void)
         create_monostereo(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 212, 41,
                           SKIN_MONOSTEREO);
 
-    mainwin_playstatus =
-        create_playstatus(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 24, 28);
+    mainwin_playstatus = ui_skinned_playstatus_new(SKINNED_WINDOW(mainwin)->fixed, 24, 28);
 
     mainwin_minus_num = ui_skinned_number_new(SKINNED_WINDOW(mainwin)->fixed, 36, 26, SKIN_NUMBERS);
     g_signal_connect(mainwin_minus_num, "button-press-event", G_CALLBACK(mainwin_num_clicked), NULL);
@@ -2892,7 +2892,6 @@ mainwin_create_widgets(void)
     /* XXX: eventually update widgetcore API to not need this */
 
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_monostereo));
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_playstatus));
 }
 
 static void

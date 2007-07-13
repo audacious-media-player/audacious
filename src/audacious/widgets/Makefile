@@ -21,7 +21,6 @@ CFLAGS += \
 SOURCES = \
 	widget.c \
 	monostereo.c \
-	playstatus.c \
 	playlist_list.c \
 	playlist_slider.c \
 	eq_graph.c \

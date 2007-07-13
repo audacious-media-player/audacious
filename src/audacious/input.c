@@ -42,6 +42,7 @@
 #include "util.h"
 #include "visualization.h"
 #include "widgets/widgetcore.h"
+#include "ui_skinned_playstatus.h"
 #include "hook.h"
 
 #include "vfs.h"
@@ -747,10 +748,10 @@ input_set_status_buffering(gboolean status)
 
     g_return_if_fail(mainwin_playstatus != NULL);
 
-    if (ip_data.buffering == TRUE && mainwin_playstatus != NULL && mainwin_playstatus->ps_status == STATUS_STOP)
-        mainwin_playstatus->ps_status = STATUS_PLAY;
+    if (ip_data.buffering == TRUE && mainwin_playstatus != NULL && UI_SKINNED_PLAYSTATUS(mainwin_playstatus)->status == STATUS_STOP)
+        UI_SKINNED_PLAYSTATUS(mainwin_playstatus)->status = STATUS_PLAY;
 
-    playstatus_set_status_buffering(mainwin_playstatus, ip_data.buffering);
+    ui_skinned_playstatus_set_buffering(mainwin_playstatus, ip_data.buffering);
 }
 
 void

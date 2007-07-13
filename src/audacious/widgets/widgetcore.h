@@ -24,7 +24,6 @@
 #include "monostereo.h"
 #include "playlist_list.h"
 #include "playlist_slider.h"
-#include "playstatus.h"
 #include "skin.h"
 #include "widget.h"
 
