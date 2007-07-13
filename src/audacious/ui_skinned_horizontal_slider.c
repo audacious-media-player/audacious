@@ -239,6 +239,9 @@ static gboolean ui_skinned_horizontal_slider_expose(GtkWidget *widget, GdkEventE
     GdkPixmap *obj = NULL;
     GdkGC *gc;
 
+    if (priv->position > priv->max) priv->position = priv->max;
+    else if (priv->position < priv->min) priv->position = priv->min;
+
     obj = gdk_pixmap_new(NULL, priv->width, priv->height, gdk_rgb_get_visual()->depth);
     gc = gdk_gc_new(obj);
 
@@ -300,10 +303,10 @@ static gboolean ui_skinned_horizontal_slider_button_press(GtkWidget *widget, Gdk
         if (event->button == 1) {
         gint x;
 
-        x = event->x - priv->knob_width / 2;
+        x = event->x - (priv->knob_width / (priv->double_size ? 1 : 2));
         hs->pressed = TRUE;
 
-        priv->position = x;
+        priv->position = x/(1+priv->double_size);
         if (priv->position < priv->min)
                     priv->position = priv->min;
                 if (priv->position > priv->max)
@@ -340,8 +343,8 @@ static gboolean ui_skinned_horizontal_slider_motion_notify(GtkWidget *widget, Gd
     if (hs->pressed) {
         gint x;
 
-        x = event->x - priv->knob_width / 2;
-        priv->position = x;
+        x = event->x - (priv->knob_width / (priv->double_size ? 1 : 2));
+        priv->position = x/(1+priv->double_size);
 
         if (priv->position < priv->min)
             priv->position = priv->min;
