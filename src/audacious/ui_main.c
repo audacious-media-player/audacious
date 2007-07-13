@@ -112,8 +112,6 @@ struct _PlaybackInfo {
     gint n_channels;
 };
 
-static GList *mainwin_wlist = NULL;
-
 GtkWidget *mainwin = NULL;
 GtkWidget *err = NULL; /* an error dialog for miscellaneous error messages */
 
@@ -552,17 +550,12 @@ void
 draw_main_window(gboolean force)
 {
     GdkImage *img, *img2x;
-    GList *wl;
-    Widget *w;
-    gboolean redraw;
 
     if (!cfg.player_visible)
         return;
 
     if (force)
         mainwin_refresh_hints();
-
-    widget_list_lock(mainwin_wlist);
 
     if (force) {
         if (!cfg.player_shaded)
@@ -573,70 +566,29 @@ draw_main_window(gboolean force)
                               (GTK_WINDOW(mainwin)));
     }
 
-    widget_list_draw(mainwin_wlist, &redraw, force);
-
-    if (redraw || force) {
-        if (force) {
-            if (cfg.doublesize) {
-                img = gdk_drawable_get_image(mainwin_bg, 0, 0, bmp_active_skin->properties.mainwin_width,
-                                             cfg.player_shaded ?
-                                             MAINWIN_SHADED_HEIGHT :
-                                             bmp_active_skin->properties.mainwin_height);
-                img2x = create_dblsize_image(img);
-                gdk_draw_image(mainwin_bg_x2, SKINNED_WINDOW(mainwin)->gc, img2x, 0, 0,
-                               0, 0, bmp_active_skin->properties.mainwin_width * 2,
-                               cfg.player_shaded ? MAINWIN_SHADED_HEIGHT *
-                               2 : bmp_active_skin->properties.mainwin_height * 2);
-                g_object_unref(img2x);
-                g_object_unref(img);
-            }
-            GList *iter;
-            for (iter = GTK_FIXED (SKINNED_WINDOW(mainwin)->fixed)->children; iter; iter = g_list_next (iter)) {
-                GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
-                GtkWidget *child = child_data->widget;
-                gtk_widget_queue_draw(child);
-            }
+    if (force) {
+        if (cfg.doublesize) {
+            img = gdk_drawable_get_image(mainwin_bg, 0, 0, bmp_active_skin->properties.mainwin_width,
+                                         cfg.player_shaded ?
+                                         MAINWIN_SHADED_HEIGHT :
+                                         bmp_active_skin->properties.mainwin_height);
+            img2x = create_dblsize_image(img);
+            gdk_draw_image(mainwin_bg_x2, SKINNED_WINDOW(mainwin)->gc, img2x, 0, 0,
+                           0, 0, bmp_active_skin->properties.mainwin_width * 2,
+                           cfg.player_shaded ? MAINWIN_SHADED_HEIGHT *
+                           2 : bmp_active_skin->properties.mainwin_height * 2);
+            g_object_unref(img2x);
+            g_object_unref(img);
         }
-        else {
-            for (wl = mainwin_wlist; wl; wl = g_list_next(wl)) {
-                w = WIDGET(wl->data);
-
-                if (!w->redraw || !w->visible)
-                    continue;
-
-                if (w->x > bmp_active_skin->properties.mainwin_width ||
-                    w->y > bmp_active_skin->properties.mainwin_height)
-                    continue;
-
-                if (cfg.doublesize) {
-                    gint width, height;
-
-                    width = w->x + w->width <= bmp_active_skin->properties.mainwin_width ? w->width : (w->width - ((w->x + w->width) - bmp_active_skin->properties.mainwin_width));
-                    height = w->y + w->height <= bmp_active_skin->properties.mainwin_width ? w->height : (w->height - ((w->y + w->height) - bmp_active_skin->properties.mainwin_height));
-
-                    img = gdk_drawable_get_image(mainwin_bg, w->x, w->y,
-                                                 width, height);
-                    img2x = create_dblsize_image(img);
-                    gdk_draw_image(mainwin_bg_x2, SKINNED_WINDOW(mainwin)->gc,
-                                   img2x, 0, 0, w->x << 1, w->y << 1,
-                                   width << 1, height << 1);
-                    g_object_unref(img2x);
-                    g_object_unref(img);
-                    gdk_window_clear_area(mainwin->window, w->x << 1,
-                                          w->y << 1, width << 1,
-                                          height << 1);
-                }
-                else
-                    gdk_window_clear_area(mainwin->window, w->x, w->y,
-                                          w->width, w->height);
-                w->redraw = FALSE;
-            }
+        GList *iter;
+        for (iter = GTK_FIXED (SKINNED_WINDOW(mainwin)->fixed)->children; iter; iter = g_list_next (iter)) {
+            GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
+            GtkWidget *child = child_data->widget;
+            gtk_widget_queue_draw(child);
         }
 
         gdk_flush();
     }
-
-    widget_list_unlock(mainwin_wlist);
 }
 
 
@@ -884,7 +836,6 @@ mainwin_refresh_hints(void)
                 bmp_active_skin->properties.mainwin_width * 2,
                 bmp_active_skin->properties.mainwin_height * 2, -1);
         mainwin_set_back_pixmap();
-    widget_list_change_pixmap(mainwin_wlist, mainwin_bg);
     gdk_flush();
     }
 }
@@ -998,7 +949,6 @@ mainwin_clear_song_info(void)
     playlistwin_hide_timer();
     ui_vis_clear_data(mainwin_vis);
     ui_svis_clear_data(mainwin_svis);
-    draw_main_window(TRUE);
 }
 
 void
@@ -1030,8 +980,6 @@ mainwin_mouse_button_release(GtkWidget * widget,
         dock_move_release(GTK_WINDOW(mainwin));
         draw_playlist_window(TRUE);
     }
-
-    handle_release_cb(mainwin_wlist, widget, event);
 
     draw_main_window(FALSE);
 
@@ -1068,7 +1016,6 @@ mainwin_motion(GtkWidget * widget,
         event->y /= 2;
     }
 
-    handle_motion_cb(mainwin_wlist, widget, event);
     draw_main_window(FALSE);
 
     gdk_flush();
@@ -1134,7 +1081,6 @@ mainwin_mouse_button_press(GtkWidget * widget,
             dock_move_release(GTK_WINDOW(mainwin));
     }
     else {
-        handle_press_cb(mainwin_wlist, widget, event);
         draw_main_window(FALSE);
     }
 
@@ -1170,27 +1116,6 @@ mainwin_mouse_button_press(GtkWidget * widget,
                          GDK_WINDOW(GDK_NONE), NULL, GDK_CURRENT_TIME);
 
     return FALSE;
-}
-
-static gboolean
-mainwin_focus_in(GtkWidget * window,
-                 GdkEventFocus * event,
-                 gpointer data)
-{
-    draw_main_window(TRUE);
-
-    return TRUE;
-}
-
-
-static gboolean
-mainwin_focus_out(GtkWidget * widget,
-                  GdkEventFocus * event,
-                  gpointer callback_data)
-{
-    draw_main_window(TRUE);
-
-    return TRUE;
 }
 
 static gboolean
@@ -2921,10 +2846,6 @@ mainwin_create_window(void)
                      G_CALLBACK(mainwin_mouse_button_release), NULL);
     g_signal_connect(mainwin, "motion_notify_event",
                      G_CALLBACK(mainwin_motion), NULL);
-    g_signal_connect_after(mainwin, "focus_in_event",
-                           G_CALLBACK(mainwin_focus_in), NULL);
-    g_signal_connect_after(mainwin, "focus_out_event",
-                           G_CALLBACK(mainwin_focus_out), NULL);
     g_signal_connect(mainwin, "configure_event",
                      G_CALLBACK(mainwin_configure), NULL);
     g_signal_connect(mainwin, "style_set",
