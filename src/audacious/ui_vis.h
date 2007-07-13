@@ -76,6 +76,7 @@ struct _UiVis {
     gboolean         double_size;
     GtkWidget        *fixed;
     gboolean         visible_window;
+    GdkWindow        *event_window;
 };
 
 struct _UiVisClass {

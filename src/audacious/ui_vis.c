@@ -53,6 +53,8 @@ static void ui_vis_init               (UiVis *vis);
 static void ui_vis_destroy            (GtkObject *object);
 static void ui_vis_realize            (GtkWidget *widget);
 static void ui_vis_unrealize          (GtkWidget *widget);
+static void ui_vis_map                (GtkWidget *widget);
+static void ui_vis_unmap              (GtkWidget *widget);
 static void ui_vis_size_request       (GtkWidget *widget, GtkRequisition *requisition);
 static void ui_vis_size_allocate      (GtkWidget *widget, GtkAllocation *allocation);
 static gboolean ui_vis_expose         (GtkWidget *widget, GdkEventExpose *event);
@@ -93,6 +95,8 @@ static void ui_vis_class_init(UiVisClass *klass) {
 
     widget_class->realize = ui_vis_realize;
     widget_class->unrealize = ui_vis_unrealize;
+    widget_class->map = ui_vis_map;
+    widget_class->unmap = ui_vis_unmap;
     widget_class->expose_event = ui_vis_expose;
     widget_class->size_request = ui_vis_size_request;
     widget_class->size_allocate = ui_vis_size_allocate;
@@ -122,6 +126,7 @@ GtkWidget* ui_vis_new(GtkWidget *fixed, gint x, gint y, gint width) {
     vis->double_size = FALSE;
 
     vis->visible_window = TRUE;
+    vis->event_window = NULL;
 
     gtk_fixed_put(GTK_FIXED(vis->fixed), GTK_WIDGET(vis), vis->x, vis->y);
 
@@ -167,29 +172,60 @@ static void ui_vis_realize(GtkWidget *widget) {
       attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
       widget->window = gdk_window_new(widget->parent->window, &attributes, attributes_mask);
       GTK_WIDGET_UNSET_FLAGS(widget, GTK_NO_WINDOW);
+      gdk_window_set_user_data(widget->window, widget);
     }
     else
     {
+      widget->window = gtk_widget_get_parent_window (widget);
+      g_object_ref (widget->window);
+
       attributes.wclass = GDK_INPUT_ONLY;
       attributes_mask = GDK_WA_X | GDK_WA_Y;
-      widget->window = gdk_window_new (widget->parent->window, &attributes, attributes_mask);
+      vis->event_window = gdk_window_new (widget->window, &attributes, attributes_mask);
       GTK_WIDGET_SET_FLAGS (widget, GTK_NO_WINDOW);
+      gdk_window_set_user_data(vis->event_window, widget);
     }
 
     widget->style = gtk_style_attach(widget->style, widget->window);
-
-    gdk_window_set_user_data(widget->window, widget);
-
-    if (attributes.wclass == GDK_INPUT_ONLY)
-        gdk_window_show (widget->window);
 }
 
 static void ui_vis_unrealize(GtkWidget *widget) {
     UiVis *vis;
     vis = UI_VIS(widget);
 
+    if ( vis->event_window != NULL )
+    {
+      gdk_window_set_user_data( vis->event_window , NULL );
+      gdk_window_destroy( vis->event_window );
+      vis->event_window = NULL;
+    }
+
     if (GTK_WIDGET_CLASS (parent_class)->unrealize)
         (* GTK_WIDGET_CLASS (parent_class)->unrealize) (widget);
+}
+
+static void ui_vis_map(GtkWidget *widget)
+{
+    UiVis *vis;
+    vis = UI_VIS(widget);
+
+    if (vis->event_window != NULL)
+      gdk_window_show (vis->event_window);
+
+    if (GTK_WIDGET_CLASS (parent_class)->map)
+      (* GTK_WIDGET_CLASS (parent_class)->map) (widget);
+}
+
+static void ui_vis_unmap (GtkWidget *widget)
+{
+    UiVis *vis;
+    vis = UI_VIS(widget);
+
+    if (vis->event_window != NULL)
+      gdk_window_hide (vis->event_window);
+
+    if (GTK_WIDGET_CLASS (parent_class)->unmap)
+      (* GTK_WIDGET_CLASS (parent_class)->unmap) (widget);
 }
 
 static void ui_vis_size_request(GtkWidget *widget, GtkRequisition *requisition) {
@@ -206,7 +242,12 @@ static void ui_vis_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
     widget->allocation.x *= (1+vis->double_size);
     widget->allocation.y *= (1+vis->double_size);
     if (GTK_WIDGET_REALIZED (widget))
-        gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
+    {
+        if (vis->event_window != NULL)
+            gdk_window_move_resize(vis->event_window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
+        else
+            gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
+    }
 
     vis->x = widget->allocation.x/(vis->double_size ? 2 : 1);
     vis->y = widget->allocation.y/(vis->double_size ? 2 : 1);
