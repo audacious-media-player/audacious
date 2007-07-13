@@ -20,7 +20,6 @@ CFLAGS += \
 
 SOURCES = \
 	widget.c \
-	menurow.c \
 	monostereo.c \
 	playstatus.c \
 	playlist_list.c \
