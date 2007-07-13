@@ -110,7 +110,7 @@ typedef struct {
 	static PluginHeader _pluginInfo = { PLUGIN_MAGIC, __AUDACIOUS_PLUGIN_API__, \
 		(gchar *)#name, init, fini, NULL, ip_list, op_list, ep_list, gp_list, \
 		vp_list }; \
-	PluginHeader *get_plugin_info(void) { \
+	G_MODULE_EXPORT PluginHeader *get_plugin_info(void) { \
 		return &_pluginInfo; \
 	} \
 	G_END_DECLS
