@@ -2909,7 +2909,7 @@ mainwin_create_window(void)
 {
     gint width, height;
 
-    mainwin = ui_skinned_window_new(GTK_WINDOW_TOPLEVEL, "player");
+    mainwin = ui_skinned_window_new(GTK_WINDOW_POPUP, "player");
     gtk_window_set_title(GTK_WINDOW(mainwin), _("Audacious"));
     gtk_window_set_role(GTK_WINDOW(mainwin), "player");
     gtk_window_set_resizable(GTK_WINDOW(mainwin), FALSE);
