@@ -28,7 +28,6 @@
 #include "playlist_slider.h"
 #include "playstatus.h"
 #include "skin.h"
-#include "svis.h"
 #include "widget.h"
 
 #endif

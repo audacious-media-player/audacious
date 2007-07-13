@@ -25,6 +25,7 @@
 
 #include "widgets/widgetcore.h"
 #include "ui_vis.h"
+#include "ui_svis.h"
 
 /* yes, main window size is fixed */
 #define MAINWIN_WIDTH            (gint)275
@@ -106,7 +107,7 @@ extern GtkWidget *mainwin_info;
 extern GtkWidget *mainwin_stime_min, *mainwin_stime_sec;
 
 extern GtkWidget *mainwin_vis;
-extern SVis *mainwin_svis;
+extern GtkWidget *mainwin_svis;
 
 extern PlayStatus *mainwin_playstatus;
 

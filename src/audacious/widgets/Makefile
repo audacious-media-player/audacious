@@ -22,7 +22,6 @@ SOURCES = \
 	widget.c \
 	menurow.c \
 	monostereo.c \
-	svis.c \
 	playstatus.c \
 	playlist_list.c \
 	playlist_slider.c \

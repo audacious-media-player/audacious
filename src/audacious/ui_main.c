@@ -148,7 +148,7 @@ GtkWidget *mainwin_10sec_num, *mainwin_sec_num;
 static gboolean setting_volume = FALSE;
 
 GtkWidget *mainwin_vis;
-SVis *mainwin_svis;
+GtkWidget *mainwin_svis;
 
 GtkWidget *mainwin_sposition = NULL;
 
@@ -269,8 +269,12 @@ mainwin_set_shade_menu_cb(gboolean shaded)
         dock_shade(dock_window_list, GTK_WINDOW(mainwin),
                    MAINWIN_SHADED_HEIGHT * (cfg.doublesize + 1));
 
-        widget_show(WIDGET(mainwin_svis));
-        ui_vis_clear_data(mainwin_vis);
+        gtk_widget_show(mainwin_svis);
+        ui_svis_clear_data(mainwin_svis);
+        if (cfg.vis_type != VIS_OFF)
+            ui_svis_set_visible(mainwin_svis, TRUE);
+        else
+            ui_svis_set_visible(mainwin_svis, FALSE);
 
         gtk_widget_show(mainwin_srew);
         gtk_widget_show(mainwin_splay);
@@ -300,8 +304,14 @@ mainwin_set_shade_menu_cb(gboolean shaded)
 
         dock_shade(dock_window_list, GTK_WINDOW(mainwin), height * (cfg.doublesize + 1));
 
-        widget_hide(WIDGET(mainwin_svis));
-        svis_clear_data(mainwin_svis);
+        gtk_widget_hide(mainwin_svis);
+        ui_svis_clear_data(mainwin_svis);
+
+        gtk_widget_show(mainwin_vis);
+        if (cfg.vis_type != VIS_OFF)
+            ui_vis_set_visible(mainwin_vis, TRUE);
+        else
+            ui_vis_set_visible(mainwin_vis, FALSE);
 
         gtk_widget_hide(mainwin_srew);
         gtk_widget_hide(mainwin_splay);
@@ -395,16 +405,26 @@ mainwin_vis_set_type_menu_cb(VisType mode)
     cfg.vis_type = mode;
 
     if (mode == VIS_OFF) {
-        if (cfg.player_shaded && cfg.player_visible)
-            svis_clear(mainwin_svis);
-        else {
+        if (cfg.player_shaded) {
+            ui_svis_set_visible(mainwin_svis, FALSE);
+            ui_vis_set_visible(mainwin_vis, TRUE);
+        } else {
+            ui_svis_set_visible(mainwin_svis, TRUE);
             ui_vis_set_visible(mainwin_vis, FALSE);
         }
     }
     if (mode == VIS_ANALYZER || mode == VIS_SCOPE || mode == VIS_VOICEPRINT) {
-        ui_vis_clear_data(mainwin_vis);
-        ui_vis_set_visible(mainwin_vis, TRUE);
-        svis_clear_data(mainwin_svis);
+        if (cfg.player_shaded) {
+            ui_svis_clear_data(mainwin_svis);
+            ui_svis_set_visible(mainwin_svis, TRUE);
+            ui_vis_clear_data(mainwin_vis);
+            ui_vis_set_visible(mainwin_vis, FALSE);
+        } else {
+            ui_svis_clear_data(mainwin_svis);
+            ui_svis_set_visible(mainwin_svis, FALSE);
+            ui_vis_clear_data(mainwin_vis);
+            ui_vis_set_visible(mainwin_vis, TRUE);
+        }
     }
 }
 
@@ -969,6 +989,7 @@ mainwin_clear_song_info(void)
 
     playlistwin_hide_timer();
     ui_vis_clear_data(mainwin_vis);
+    ui_svis_clear_data(mainwin_svis);
     draw_main_window(TRUE);
 }
 
@@ -1114,18 +1135,8 @@ mainwin_mouse_button_press(GtkWidget * widget,
         draw_main_window(FALSE);
     }
 
-    if ((event->button == 1) && event->type != GDK_2BUTTON_PRESS &&
-         widget_contains(WIDGET(mainwin_svis), event->x, event->y) ) {
-         /* it'll get sorted out when svis will become UiSvis */
-    }
-
     if (event->button == 3) {
-            if (widget_contains(WIDGET(mainwin_svis), event->x, event->y)) {
-            ui_manager_popup_menu_show(GTK_MENU(mainwin_visualization_menu), event->x_root,
-                                    event->y_root, 3, event->time);
-            grab = FALSE;
-        }
-        else if ( (event->y > 70) && (event->x < 128) )
+        if ( (event->y > 70) && (event->x < 128) )
         {
 
             ui_manager_popup_menu_show(GTK_MENU(mainwin_playback_menu),
@@ -1964,7 +1975,7 @@ mainwin_real_hide(void)
     check_set( toggleaction_group_others , "show player", FALSE);
 
     if (cfg.player_shaded)
-        svis_clear_data(mainwin_svis);
+        ui_svis_clear_data(mainwin_svis);
 
     if (!cfg.show_wm_decorations) {
         nullmask = gdk_pixmap_new(mainwin->window, 20, 20, 1);
@@ -2850,7 +2861,8 @@ mainwin_create_widgets(void)
 
     mainwin_vis = ui_vis_new(SKINNED_WINDOW(mainwin)->fixed, 24, 43, 76);
     g_signal_connect(mainwin_vis, "button-press-event", G_CALLBACK(mainwin_vis_cb), NULL);
-    mainwin_svis = create_svis(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 79, 5);
+    mainwin_svis = ui_svis_new(SKINNED_WINDOW(mainwin)->fixed, 79, 5);
+    g_signal_connect(mainwin_svis, "button-press-event", G_CALLBACK(mainwin_vis_cb), NULL);
 
     mainwin_position = ui_skinned_horizontal_slider_new(SKINNED_WINDOW(mainwin)->fixed, 16, 72, 248,
                                                         10, 248, 0, 278, 0, 29, 10, 10, 0, 0, 219,
@@ -2885,8 +2897,6 @@ mainwin_create_widgets(void)
 
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_monostereo));
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_playstatus));
-
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_svis));
 }
 
 static void
@@ -2965,6 +2975,7 @@ mainwin_create(void)
         gtk_widget_hide(mainwin_seject);
         gtk_widget_hide(mainwin_stime_min);
         gtk_widget_hide(mainwin_stime_sec);
+        gtk_widget_hide(mainwin_svis);
     }
 
     gtk_widget_hide(mainwin_minus_num);

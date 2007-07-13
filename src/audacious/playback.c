@@ -84,7 +84,7 @@ playback_initiate(void)
         playback_stop();
 
     ui_vis_clear_data(mainwin_vis);
-    svis_clear_data(mainwin_svis);
+    ui_svis_clear_data(mainwin_svis);
     mainwin_disable_seekbar();
 
     entry = playlist_get_entry_to_play(playlist);
