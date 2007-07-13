@@ -87,6 +87,7 @@
 #include "ui_skinned_horizontal_slider.h"
 #include "ui_skinned_menurow.h"
 #include "ui_skinned_playstatus.h"
+#include "ui_skinned_monostereo.h"
 #include "ui_jumptotrack.h"
 
 static GTimeVal cb_time; /* click delay for tristate is defined by TRISTATE_THRESHOLD */
@@ -158,7 +159,7 @@ static GtkWidget *mainwin_menurow;
 static GtkWidget *mainwin_volume, *mainwin_balance;
 GtkWidget *mainwin_position;
 
-static MonoStereo *mainwin_monostereo;
+static GtkWidget *mainwin_monostereo;
 static GtkWidget *mainwin_srew, *mainwin_splay, *mainwin_spause;
 static GtkWidget *mainwin_sstop, *mainwin_sfwd, *mainwin_seject, *mainwin_about;
 
@@ -718,7 +719,7 @@ mainwin_refresh_hints(void)
     {
     gtk_widget_hide(mainwin_rate_text);
     gtk_widget_hide(mainwin_freq_text);
-    widget_hide(WIDGET(mainwin_monostereo));
+    gtk_widget_hide(mainwin_monostereo);
 
     if (bmp_active_skin->properties.mainwin_othertext_visible)
         gtk_widget_show(mainwin_othertext);
@@ -730,7 +731,7 @@ mainwin_refresh_hints(void)
     {
     gtk_widget_show(mainwin_rate_text);
     gtk_widget_show(mainwin_freq_text);
-    widget_show(WIDGET(mainwin_monostereo));
+    gtk_widget_show(mainwin_monostereo);
     gtk_widget_hide(mainwin_othertext);
     }
 
@@ -920,7 +921,7 @@ mainwin_set_song_info(gint bitrate,
     text = g_strdup_printf("%2d", frequency / 1000);
     ui_skinned_textbox_set_text(mainwin_freq_text, text);
 
-    monostereo_set_num_channels(mainwin_monostereo, n_channels);
+    ui_skinned_monostereo_set_num_channels(mainwin_monostereo, n_channels);
 
     if (!playback_get_paused() && mainwin_playstatus != NULL)
         ui_skinned_playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
@@ -940,11 +941,11 @@ mainwin_set_song_info(gint bitrate,
 
         ui_skinned_textbox_set_text(mainwin_othertext, text);
 
-        widget_hide(WIDGET(mainwin_monostereo));
+        gtk_widget_hide(mainwin_monostereo);
     }
     else
     {
-        widget_show(WIDGET(mainwin_monostereo));
+        gtk_widget_show(mainwin_monostereo);
     }
 
     title = playlist_get_info_text(playlist);
@@ -974,7 +975,7 @@ mainwin_clear_song_info(void)
     /* clear sampling parameter displays */
     ui_skinned_textbox_set_text(mainwin_rate_text, "   ");
     ui_skinned_textbox_set_text(mainwin_freq_text, "  ");
-    monostereo_set_num_channels(mainwin_monostereo, 0);
+    ui_skinned_monostereo_set_num_channels(mainwin_monostereo, 0);
 
     if (mainwin_playstatus != NULL)
         ui_skinned_playstatus_set_status(mainwin_playstatus, STATUS_STOP);
@@ -2831,9 +2832,7 @@ mainwin_create_widgets(void)
     g_signal_connect(mainwin_balance, "motion", G_CALLBACK(mainwin_balance_motion_cb), NULL);
     g_signal_connect(mainwin_balance, "release", G_CALLBACK(mainwin_balance_release_cb), NULL);
 
-    mainwin_monostereo =
-        create_monostereo(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 212, 41,
-                          SKIN_MONOSTEREO);
+    mainwin_monostereo = ui_skinned_monostereo_new(SKINNED_WINDOW(mainwin)->fixed, 212, 41, SKIN_MONOSTEREO);
 
     mainwin_playstatus = ui_skinned_playstatus_new(SKINNED_WINDOW(mainwin)->fixed, 24, 28);
 
@@ -2888,10 +2887,6 @@ mainwin_create_widgets(void)
     /* Dang well better set an error message or you'll see this */
     gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(err),
                                              "Boo! Bad stuff! Booga Booga!");
-
-    /* XXX: eventually update widgetcore API to not need this */
-
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_monostereo));
 }
 
 static void
