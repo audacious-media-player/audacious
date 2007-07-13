@@ -298,15 +298,12 @@ static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *even
                                  gdk_rgb_get_visual()->depth);
 
     if (priv->double_size) {
-        GdkPixbuf *img, *img2x;
-        GdkColormap *colormap = gdk_colormap_get_system();
-        img = gdk_pixbuf_new(GDK_COLORSPACE_RGB, FALSE, 8, priv->w, priv->h);
-        gdk_pixbuf_get_from_drawable(img, obj, colormap, 0, 0, 0, 0, priv->w, priv->h);
-        img2x = gdk_pixbuf_scale_simple(img, priv->w*2, priv->h*2, GDK_INTERP_NEAREST);
-        gdk_draw_pixbuf (image, gc, img2x, 0, 0, 0, 0, priv->w*2, priv->h*2, GDK_RGB_DITHER_NONE, 0, 0);
-        g_object_unref(img);
+        GdkImage *img, *img2x;
+        img = gdk_drawable_get_image(obj, 0, 0, priv->w, priv->h);
+        img2x = create_dblsize_image(img);
+        gdk_draw_image (image, gc, img2x, 0, 0, 0, 0, priv->w*2, priv->h*2);
         g_object_unref(img2x);
-        g_object_unref(colormap);
+        g_object_unref(img);
     } else
         gdk_draw_drawable (image, gc, obj, 0, 0, 0, 0, priv->w, priv->h);
 
