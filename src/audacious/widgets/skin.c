@@ -1626,6 +1626,11 @@ skin_draw_pixmap(Skin * skin, GdkDrawable * drawable, GdkGC * gc,
                               skin->properties.mainwin_volume_x, skin->properties.mainwin_volume_y,
                               pixmap->width, ydest, width - pixmap->width, height);
             width = pixmap->width;
+        } else if (pixmap_id == SKIN_MONOSTEREO) {
+            /* XMMS skins seems to have SKIN_MONOSTEREO with size 58x20 instead of 58x24 */
+            gdk_draw_drawable(drawable, gc, skin_get_pixmap(bmp_active_skin, SKIN_MAIN)->pixmap,
+                              212 + xdest, 41, xdest, ydest, width, height);
+            height = pixmap->height;
         } else
             return;
     }
