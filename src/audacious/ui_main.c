@@ -85,6 +85,7 @@
 #include "ui_skinned_textbox.h"
 #include "ui_skinned_number.h"
 #include "ui_skinned_horizontal_slider.h"
+#include "ui_skinned_menurow.h"
 #include "ui_jumptotrack.h"
 
 static GTimeVal cb_time; /* click delay for tristate is defined by TRISTATE_THRESHOLD */
@@ -152,7 +153,7 @@ GtkWidget *mainwin_svis;
 
 GtkWidget *mainwin_sposition = NULL;
 
-static MenuRow *mainwin_menurow;
+static GtkWidget *mainwin_menurow;
 static GtkWidget *mainwin_volume, *mainwin_balance;
 GtkWidget *mainwin_position;
 
@@ -852,9 +853,9 @@ mainwin_refresh_hints(void)
 
     /* visibility attributes */
     if (bmp_active_skin->properties.mainwin_menurow_visible)
-        widget_show(WIDGET(mainwin_menurow));
+        gtk_widget_show(mainwin_menurow);
     else
-        widget_hide(WIDGET(mainwin_menurow));
+        gtk_widget_hide(mainwin_menurow);
 
     /* window size, mainwinWidth && mainwinHeight properties */
     if (bmp_active_skin->properties.mainwin_height && bmp_active_skin->properties.mainwin_width)
@@ -1026,11 +1027,6 @@ mainwin_mouse_button_release(GtkWidget * widget,
     if (dock_is_moving(GTK_WINDOW(mainwin))) {
         dock_move_release(GTK_WINDOW(mainwin));
         draw_playlist_window(TRUE);
-    }
-
-    if (mainwin_menurow->mr_doublesize_selected) {
-        event->x /= 2;
-        event->y /= 2;
     }
 
     handle_release_cb(mainwin_wlist, widget, event);
@@ -2186,7 +2182,7 @@ mainwin_general_menu_callback(gpointer data,
 }
 
 static void
-mainwin_mr_change(MenuRowItem i)
+mainwin_mr_change(GtkWidget *widget, MenuRowItem i)
 {
     switch (i) {
     case MENUROW_NONE:
@@ -2196,7 +2192,7 @@ mainwin_mr_change(MenuRowItem i)
         mainwin_lock_info_text(_("OPTIONS MENU"));
         break;
     case MENUROW_ALWAYS:
-        if (mainwin_menurow->mr_always_selected)
+        if (UI_SKINNED_MENUROW(mainwin_menurow)->always_selected)
             mainwin_lock_info_text(_("DISABLE ALWAYS ON TOP"));
         else
             mainwin_lock_info_text(_("ENABLE ALWAYS ON TOP"));
@@ -2205,7 +2201,7 @@ mainwin_mr_change(MenuRowItem i)
         mainwin_lock_info_text(_("FILE INFO BOX"));
         break;
     case MENUROW_DOUBLESIZE:
-        if (mainwin_menurow->mr_doublesize_selected)
+        if (UI_SKINNED_MENUROW(mainwin_menurow)->doublesize_selected)
             mainwin_lock_info_text(_("DISABLE DOUBLESIZE"));
         else
             mainwin_lock_info_text(_("ENABLE DOUBLESIZE"));
@@ -2217,7 +2213,7 @@ mainwin_mr_change(MenuRowItem i)
 }
 
 static void
-mainwin_mr_release(MenuRowItem i)
+mainwin_mr_release(GtkWidget *widget, MenuRowItem i)
 {
     GdkModifierType modmask;
     gint x, y;
@@ -2232,7 +2228,7 @@ mainwin_mr_release(MenuRowItem i)
         gtk_toggle_action_set_active(
           GTK_TOGGLE_ACTION(gtk_action_group_get_action(
           toggleaction_group_others , "view always on top" )) ,
-          mainwin_menurow->mr_always_selected );
+          UI_SKINNED_MENUROW(mainwin_menurow)->always_selected );
         break;
     case MENUROW_FILEINFOBOX:
         playlist_fileinfo_current(playlist_get_active());
@@ -2241,7 +2237,7 @@ mainwin_mr_release(MenuRowItem i)
         gtk_toggle_action_set_active(
           GTK_TOGGLE_ACTION(gtk_action_group_get_action(
           toggleaction_group_others , "view doublesize" )) ,
-          mainwin_menurow->mr_doublesize_selected );
+          UI_SKINNED_MENUROW(mainwin_menurow)->doublesize_selected );
         break;
     case MENUROW_VISUALIZATION:
         gdk_window_get_pointer(NULL, &x, &y, &modmask);
@@ -2818,12 +2814,9 @@ mainwin_create_widgets(void)
 
     mainwin_freq_text = ui_skinned_textbox_new(SKINNED_WINDOW(mainwin)->fixed, 156, 43, 10, 0, SKIN_TEXT);
 
-    mainwin_menurow =
-        create_menurow(&mainwin_wlist, mainwin_bg, SKINNED_WINDOW(mainwin)->gc, 10, 22, 304,
-                       0, 304, 44, mainwin_mr_change, mainwin_mr_release,
-                       SKIN_TITLEBAR);
-    mainwin_menurow->mr_doublesize_selected = cfg.doublesize;
-    mainwin_menurow->mr_always_selected = cfg.always_on_top;
+    mainwin_menurow = ui_skinned_menurow_new(SKINNED_WINDOW(mainwin)->fixed, 10, 22, 304, 0, 304, 44,  SKIN_TITLEBAR);
+    g_signal_connect(mainwin_menurow, "change", G_CALLBACK(mainwin_mr_change), NULL);
+    g_signal_connect(mainwin_menurow, "release", G_CALLBACK(mainwin_mr_release), NULL);
 
     mainwin_volume = ui_skinned_horizontal_slider_new(SKINNED_WINDOW(mainwin)->fixed, 107, 57, 68,
                                                       13, 15, 422, 0, 422, 14, 11, 15, 0, 0, 51,
@@ -2897,8 +2890,6 @@ mainwin_create_widgets(void)
                                              "Boo! Bad stuff! Booga Booga!");
 
     /* XXX: eventually update widgetcore API to not need this */
-
-    ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_menurow));
 
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_monostereo));
     ui_skinned_window_widgetlist_associate(mainwin, WIDGET(mainwin_playstatus));
@@ -3242,18 +3233,18 @@ action_stop_after_current_song( GtkToggleAction * action )
 void
 action_view_always_on_top( GtkToggleAction * action )
 {
-  mainwin_menurow->mr_always_selected = gtk_toggle_action_get_active( action );
-  cfg.always_on_top = mainwin_menurow->mr_always_selected;
-  widget_draw(WIDGET(mainwin_menurow));
+  UI_SKINNED_MENUROW(mainwin_menurow)->always_selected = gtk_toggle_action_get_active( action );
+  cfg.always_on_top = UI_SKINNED_MENUROW(mainwin_menurow)->always_selected;
+  gtk_widget_queue_draw(mainwin_menurow);
   hint_set_always(cfg.always_on_top);
 }
 
 void
 action_view_doublesize( GtkToggleAction * action )
 {
-  mainwin_menurow->mr_doublesize_selected = gtk_toggle_action_get_active( action );
-  widget_draw(WIDGET(mainwin_menurow));
-  set_doublesize(mainwin_menurow->mr_doublesize_selected);
+  UI_SKINNED_MENUROW(mainwin_menurow)->doublesize_selected = gtk_toggle_action_get_active( action );
+  gtk_widget_queue_draw(mainwin_menurow);
+  set_doublesize(UI_SKINNED_MENUROW(mainwin_menurow)->doublesize_selected);
   gdk_flush();
 }
 
