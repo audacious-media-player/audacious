@@ -732,6 +732,11 @@ mainwin_refresh_hints(void)
     gtk_widget_hide(mainwin_othertext);
     }
 
+    if (bmp_active_skin->properties.mainwin_vis_visible)
+        gtk_widget_show(mainwin_vis);
+    else
+        gtk_widget_hide(mainwin_vis);
+
     /* positioning and size attributes */
     if (bmp_active_skin->properties.mainwin_vis_x && bmp_active_skin->properties.mainwin_vis_y)
     gtk_fixed_move(GTK_FIXED(SKINNED_WINDOW(mainwin)->fixed), GTK_WIDGET(mainwin_vis), bmp_active_skin->properties.mainwin_vis_x,
