@@ -1679,7 +1679,7 @@ playlistwin_create_window(void)
 {
     GdkPixbuf *icon;
 
-    playlistwin = ui_skinned_window_new(GTK_WINDOW_POPUP, "playlist");
+    playlistwin = ui_skinned_window_new("playlist");
     gtk_window_set_title(GTK_WINDOW(playlistwin), _("Audacious Playlist Editor"));
     gtk_window_set_role(GTK_WINDOW(playlistwin), "playlist");
     gtk_window_set_default_size(GTK_WINDOW(playlistwin),

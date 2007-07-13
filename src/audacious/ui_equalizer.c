@@ -732,7 +732,7 @@ equalizerwin_create_window(void)
     width = 275;
     height = cfg.equalizer_shaded ? 14 : 116;
 
-    equalizerwin = ui_skinned_window_new(GTK_WINDOW_POPUP, "equalizer");
+    equalizerwin = ui_skinned_window_new("equalizer");
     gtk_window_set_title(GTK_WINDOW(equalizerwin), _("Audacious Equalizer"));
     gtk_window_set_role(GTK_WINDOW(equalizerwin), "equalizer");
     gtk_window_set_resizable(GTK_WINDOW(equalizerwin), FALSE);

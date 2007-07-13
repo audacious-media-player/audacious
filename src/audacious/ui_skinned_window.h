@@ -25,6 +25,12 @@
 #define SKINNED_CHECK_WINDOW(obj)    GTK_CHECK_TYPE (obj, ui_skinned_window_get_type ())
 #define SKINNED_TYPE_WINDOW          (ui_skinned_window_get_type())
 
+#ifdef GDK_WINDOWING_QUARTZ
+# define SKINNED_WINDOW_TYPE		GTK_WINDOW_POPUP
+#else
+# define SKINNED_WINDOW_TYPE		GTK_WINDOW_TOPLEVEL
+#endif
+
 typedef struct _SkinnedWindow SkinnedWindow;
 typedef struct _SkinnedWindowClass SkinnedWindowClass;
 
@@ -46,7 +52,7 @@ struct _SkinnedWindowClass
 };
 
 extern GType ui_skinned_window_get_type(void);
-extern GtkWidget *ui_skinned_window_new(GtkWindowType type, const gchar *wmclass_name);
+extern GtkWidget *ui_skinned_window_new(const gchar *wmclass_name);
 extern void ui_skinned_window_widgetlist_associate(GtkWidget * widget, Widget * w);
 extern void ui_skinned_window_widgetlist_dissociate(GtkWidget * widget, Widget * w);
 extern gboolean ui_skinned_window_widgetlist_contained(GtkWidget * widget, gint x, gint y);
