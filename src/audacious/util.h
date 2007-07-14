@@ -107,6 +107,7 @@ GtkWidget *xmms_show_message(const gchar * title, const gchar * text,
 gboolean xmms_check_realtime_priority(void);
 void xmms_usleep(gint usec);
 
+GdkPixmap *create_dblsize_pixmap(GdkPixmap *pix);
 GdkImage *create_dblsize_image(GdkImage * img);
 
 GdkPixbuf *audacious_create_colorized_pixbuf(GdkPixbuf *src, gint red, gint green, gint blue);

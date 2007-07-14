@@ -208,21 +208,14 @@ static gboolean ui_skinned_playstatus_expose(GtkWidget *widget, GdkEventExpose *
         break;
     }
 
-    GdkPixmap *image;
-    image = gdk_pixmap_new(NULL, playstatus->width*(1+playstatus->double_size),
-                                 playstatus->height*(1+playstatus->double_size),
-                                 gdk_rgb_get_visual()->depth);
+    GdkPixmap *image = NULL;
 
     if (playstatus->double_size) {
-        GdkImage *img, *img2x;
-        img = gdk_drawable_get_image(obj, 0, 0, playstatus->width, playstatus->height);
-        img2x = create_dblsize_image(img);
-        gdk_draw_image (image, gc, img2x, 0, 0, 0, 0, playstatus->width*2, playstatus->height*2);
-        g_object_unref(img2x);
-        g_object_unref(img);
-    } else
+        image = create_dblsize_pixmap(obj);
+    } else {
+        image = gdk_pixmap_new(NULL, playstatus->width, playstatus->height, gdk_rgb_get_visual()->depth);
         gdk_draw_drawable (image, gc, obj, 0, 0, 0, 0, playstatus->width, playstatus->height);
-
+    }
 
     g_object_unref(obj);
 

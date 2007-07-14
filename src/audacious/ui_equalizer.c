@@ -307,12 +307,10 @@ draw_equalizer_window(gboolean force)
     if (force || redraw) {
         if (cfg.doublesize && cfg.eq_doublesize_linked) {
             if (force) {
-                img = gdk_drawable_get_image(equalizerwin_bg, 0, 0, 275, 116);
-                img2x = create_dblsize_image(img);
-                gdk_draw_image(equalizerwin_bg_x2, SKINNED_WINDOW(equalizerwin)->gc,
-                               img2x, 0, 0, 0, 0, 550, 232);
-                g_object_unref(img2x);
-                g_object_unref(img);
+                GdkPixmap *img2;
+                img2 = create_dblsize_pixmap(equalizerwin_bg);
+                gdk_draw_drawable(equalizerwin_bg_x2, SKINNED_WINDOW(equalizerwin)->gc, img2, 0, 0, 0, 0, 550, 232);
+                g_object_unref(img2);
             }
             else {
                 for (wl = equalizerwin_wlist; wl; wl = g_list_next(wl)) {

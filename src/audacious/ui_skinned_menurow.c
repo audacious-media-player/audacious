@@ -243,21 +243,14 @@ static gboolean ui_skinned_menurow_expose(GtkWidget *widget, GdkEventExpose *eve
                              menurow->sx + 24, menurow->sy + 26, 0, 26, 8, 8);
     }
 
-    GdkPixmap *image;
-    image = gdk_pixmap_new(NULL, menurow->width*(1+menurow->double_size),
-                                 menurow->height*(1+menurow->double_size),
-                                 gdk_rgb_get_visual()->depth);
+    GdkPixmap *image = NULL;
 
     if (menurow->double_size) {
-        GdkImage *img, *img2x;
-        img = gdk_drawable_get_image(obj, 0, 0, menurow->width, menurow->height);
-        img2x = create_dblsize_image(img);
-        gdk_draw_image (image, gc, img2x, 0, 0, 0, 0, menurow->width*2, menurow->height*2);
-        g_object_unref(img2x);
-        g_object_unref(img);
-    } else
-        gdk_draw_drawable (image, gc, obj, 0, 0, 0, 0, menurow->width, menurow->height);
-
+        image = create_dblsize_pixmap(obj);
+    } else {
+        image = gdk_pixmap_new(NULL, menurow->width, menurow->height, gdk_rgb_get_visual()->depth);
+        gdk_draw_drawable(image, gc, obj, 0, 0, 0, 0, menurow->width, menurow->height);
+    }
 
     g_object_unref(obj);
 

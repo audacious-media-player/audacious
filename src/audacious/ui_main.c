@@ -549,8 +549,6 @@ mainwin_draw_titlebar(gboolean focus)
 void
 draw_main_window(gboolean force)
 {
-    GdkImage *img, *img2x;
-
     if (!cfg.player_visible)
         return;
 
@@ -568,17 +566,13 @@ draw_main_window(gboolean force)
 
     if (force) {
         if (cfg.doublesize) {
-            img = gdk_drawable_get_image(mainwin_bg, 0, 0, bmp_active_skin->properties.mainwin_width,
-                                         cfg.player_shaded ?
-                                         MAINWIN_SHADED_HEIGHT :
-                                         bmp_active_skin->properties.mainwin_height);
-            img2x = create_dblsize_image(img);
-            gdk_draw_image(mainwin_bg_x2, SKINNED_WINDOW(mainwin)->gc, img2x, 0, 0,
+            GdkPixmap *img2x = NULL;
+            img2x = create_dblsize_pixmap(mainwin_bg);
+            gdk_draw_drawable(mainwin_bg_x2, SKINNED_WINDOW(mainwin)->gc, img2x, 0, 0,
                            0, 0, bmp_active_skin->properties.mainwin_width * 2,
                            cfg.player_shaded ? MAINWIN_SHADED_HEIGHT *
                            2 : bmp_active_skin->properties.mainwin_height * 2);
             g_object_unref(img2x);
-            g_object_unref(img);
         }
         GList *iter;
         for (iter = GTK_FIXED (SKINNED_WINDOW(mainwin)->fixed)->children; iter; iter = g_list_next (iter)) {

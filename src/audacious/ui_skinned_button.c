@@ -344,20 +344,14 @@ static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *even
             break;
     }
 
-    GdkPixmap *image;
-    image = gdk_pixmap_new(NULL, priv->w*(1+priv->double_size),
-                                 priv->h*(1+priv->double_size),
-                                 gdk_rgb_get_visual()->depth);
+    GdkPixmap *image = NULL;
 
     if (priv->double_size) {
-        GdkImage *img, *img2x;
-        img = gdk_drawable_get_image(obj, 0, 0, priv->w, priv->h);
-        img2x = create_dblsize_image(img);
-        gdk_draw_image (image, gc, img2x, 0, 0, 0, 0, priv->w*2, priv->h*2);
-        g_object_unref(img2x);
-        g_object_unref(img);
-    } else
+        image = create_dblsize_pixmap(obj);
+    } else {
+        image = gdk_pixmap_new(NULL, priv->w, priv->h, gdk_rgb_get_visual()->depth);
         gdk_draw_drawable (image, gc, obj, 0, 0, 0, 0, priv->w, priv->h);
+    }
 
     g_object_unref(obj);
 
