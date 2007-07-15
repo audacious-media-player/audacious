@@ -823,6 +823,9 @@ playlist_dir_find_files(const gchar * path,
     struct stat statbuf;
     DeviceInode *devino;
 
+    if (!path)
+        return NULL;
+
     if (!vfs_file_test(path, G_FILE_TEST_IS_DIR))
         return NULL;
 
@@ -848,6 +851,7 @@ playlist_dir_find_files(const gchar * path,
         return list;
     }
 
+    /* g_dir_open does not handle URI, so path should come here not-urified. --giacomo */
     if (!(dir = g_dir_open(path, 0, NULL)))
         return NULL;
 
@@ -863,7 +867,9 @@ playlist_dir_find_files(const gchar * path,
 
         if (vfs_file_test(filename, G_FILE_TEST_IS_DIR)) {
             GList *sub;
-            sub = playlist_dir_find_files(filename, background, htab);
+            gchar *dirfilename = g_filename_from_uri(filename, NULL, NULL);
+            sub = playlist_dir_find_files(dirfilename, background, htab);
+            g_free(dirfilename);
             g_free(filename);
             list = g_list_concat(list, sub);
         }
