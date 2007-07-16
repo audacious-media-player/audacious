@@ -61,7 +61,6 @@
 
 #include "dnd.h"
 #include "dock.h"
-#include "genevent.h"
 #include "hints.h"
 #include "input.h"
 #include "playback.h"

@@ -123,8 +123,6 @@ playback_initiate(void)
     }
 
     vis_playback_start();
-
-    hook_call("playback begin", entry);
 }
 
 void
@@ -158,29 +156,38 @@ playback_pause(void)
 void
 playback_stop(void)
 {
-    if (ip_data.playing && get_current_input_playback()) {
+    InputPlayback *playback = get_current_input_playback();
 
-        if (playback_get_paused()) {
+    if (ip_data.playing && playback != NULL)
+    {
+        if (playback_get_paused())
+        {
             output_flush(get_written_time()); /* to avoid noise */
             playback_pause();
         }
 
         ip_data.playing = FALSE; 
 
-        if (get_current_input_playback()->plugin->stop)
-            get_current_input_playback()->plugin->stop(get_current_input_playback());
+        if (playback->plugin->stop)
+            playback->plugin->stop(playback);
 
         free_vis_data();
         ip_data.paused = FALSE;
 
-        if (input_info_text) {
+        if (input_info_text != NULL)
+        {
             g_free(input_info_text);
             input_info_text = NULL;
             mainwin_set_info_text();
         }
 
-	g_free(get_current_input_playback()->filename);
-	g_free(get_current_input_playback());
+        g_cond_signal(playback->playback_cond);
+        g_thread_join(playback->playback_control);
+        g_cond_free(playback->playback_cond);
+        g_mutex_free(playback->playback_mutex);
+
+	g_free(playback->filename);
+	g_free(playback);
 	set_current_input_playback(NULL);
     }
 
@@ -213,10 +220,37 @@ run_no_output_plugin_dialog(void)
     gtk_widget_destroy(dialog);
 }
 
+static gpointer
+playback_control_thread(gpointer data)
+{
+    InputPlayback *playback = (InputPlayback *) data;
+    g_return_val_if_fail(playback != NULL, NULL);
+
+    ip_data.playing = TRUE;
+
+    playback->plugin->play_file(playback);
+
+    hook_call("playback begin", playback->entry);
+
+    while (ip_data.playing == TRUE && playback->eof == FALSE && playback->playing == TRUE)
+    {
+        GTimeVal tmwait;
+        g_get_current_time(&tmwait);
+        g_time_val_add(&tmwait, 1000000);
+        g_cond_timed_wait(playback->playback_cond, playback->playback_mutex, &tmwait);
+    }
+
+    ip_data.playing = FALSE;
+
+    hook_call("playback end", playback->entry);
+
+    return NULL;
+}
+
 gboolean
 playback_play_file(PlaylistEntry *entry)
 {
-    InputPlayback * playback;
+    InputPlayback *playback;
     g_return_val_if_fail(entry != NULL, FALSE);
 
     if (!get_current_output_plugin()) {
@@ -244,18 +278,17 @@ playback_play_file(PlaylistEntry *entry)
     }
 
     playback = g_new0(InputPlayback, 1);
-    
-    entry->decoder->output = &psuedo_output_plugin;
 
+    set_current_input_playback(playback);
+    
     playback->plugin = entry->decoder;
     playback->output = &psuedo_output_plugin;
+    playback->plugin->output = playback->output;
     playback->filename = g_strdup(entry->filename);
-    
-    set_current_input_playback(playback);
-
-    entry->decoder->play_file(playback);
-
-    ip_data.playing = TRUE;
+    playback->playback_mutex = g_mutex_new();
+    playback->playback_cond = g_cond_new();
+    playback->playback_control = g_thread_create(playback_control_thread, playback, TRUE, NULL);
+    playback->entry = entry;
 
     return TRUE;
 }

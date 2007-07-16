@@ -58,7 +58,6 @@
 #include "effect.h"
 #include "ui_equalizer.h"
 #include "general.h"
-#include "genevent.h"
 #include "hints.h"
 #include "input.h"
 #include "logger.h"
@@ -1096,7 +1095,6 @@ void report_error(const gchar *error_message, ...)
 static gboolean
 aud_headless_iteration(gpointer unused)
 {
-    audcore_generic_events();
     free_vis_data();
     return TRUE;
 }

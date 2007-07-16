@@ -190,6 +190,12 @@ struct _InputPlayback {
     int playing;
     gboolean error;
     gboolean eof;
+
+    GThread *playback_control;
+    GMutex *playback_mutex;
+    GCond *playback_cond;
+
+    gpointer entry;
 };
 
 struct _InputPlugin {
