@@ -1639,6 +1639,7 @@ mainwin_stop_pushed(void)
     ip_data.stop = TRUE;
     mainwin_clear_song_info();
     playback_stop();
+    ab_position_a = ab_position_b = -1;
     ip_data.stop = FALSE;
 }
 
@@ -3095,13 +3096,6 @@ mainwin_idle_func(gpointer data)
     }
 
     GDK_THREADS_ENTER();
-
-    if (playback_get_playing())
-        vis_playback_start();
-    else {
-        vis_playback_stop();
-    ab_position_a = ab_position_b = -1;
-    }
 
     draw_main_window(mainwin_force_redraw);
 
