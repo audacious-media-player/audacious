@@ -1602,8 +1602,8 @@ playlist_load_ins_file(Playlist *playlist,
     filename = g_strchug(g_strdup(filename_p));
 
     if(cfg.convert_slash)
-    while ((tmp = strchr(filename, '\\')) != NULL)
-        *tmp = '/';
+        while ((tmp = strchr(filename, '\\')) != NULL)
+            *tmp = '/';
 
     if (filename[0] != '/' && !strstr(filename, "://")) {
         path = g_strdup(playlist_name);
@@ -1664,8 +1664,9 @@ playlist_load_ins_file_tuple(Playlist * playlist,
 
     filename = g_strchug(g_strdup(filename_p));
 
-    while ((tmp = strchr(filename, '\\')) != NULL)
-        *tmp = '/';
+    if(cfg.convert_slash)
+        while ((tmp = strchr(filename, '\\')) != NULL)
+            *tmp = '/';
 
     if (filename[0] != '/' && !strstr(filename, "://")) {
         path = g_strdup(playlist_name);
