@@ -70,6 +70,7 @@ SOURCES = \
 	fft.c \
 	formatter.c \
 	general.c \
+	genevent.c \
 	glade.c \
 	hints.c \
 	hook.c \
