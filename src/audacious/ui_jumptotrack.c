@@ -450,8 +450,15 @@ ui_jump_to_track_fill(gpointer treeview)
 
         if (entry->title)
         desc_buf = g_strdup(entry->title);
-        else if (strchr(entry->filename, '/'))
-        desc_buf = str_to_utf8(strrchr(entry->filename, '/') + 1);
+        else if (strchr(entry->filename, '/')) {
+            gchar *realfn = NULL;
+            realfn = g_filename_from_uri(entry->filename, NULL, NULL);
+            if(realfn)
+                desc_buf = str_to_utf8(strrchr(realfn, '/') + 1);
+            else
+                desc_buf = str_to_utf8(strrchr(entry->filename, '/') + 1);
+            g_free(realfn); realfn = NULL;
+        }
         else
         desc_buf = str_to_utf8(entry->filename);
 

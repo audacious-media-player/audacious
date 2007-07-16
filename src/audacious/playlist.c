@@ -352,6 +352,7 @@ playlist_get_current_name(Playlist *playlist)
     return playlist->title;
 }
 
+/* filename is real filename here. --yaz */
 gboolean
 playlist_set_current_name(Playlist *playlist, const gchar * filename)
 {
@@ -1817,7 +1818,10 @@ playlist_get_songtitle(Playlist *playlist, guint pos)
     PLAYLIST_UNLOCK(playlist->mutex);
 
     if (!title) {
-        title = g_path_get_basename(entry->filename);
+        gchar *realfn = NULL;
+        realfn = g_filename_from_uri(entry->filename, NULL, NULL);
+        title = g_path_get_basename(realfn ? realfn : entry->filename);
+        g_free(realfn); realfn = NULL;
         return str_replace(title, filename_to_utf8(title));
     }
 
@@ -2069,8 +2073,12 @@ playlist_get_mtime(const gchar *filename)
 {
     struct stat buf;
     gint rv;
+    gchar *realfn = NULL;
 
-    rv = stat(filename, &buf);
+    /* stat() does not accept file:// --yaz */
+    realfn = g_filename_from_uri(filename, NULL, NULL);
+    rv = stat(realfn ? realfn : filename, &buf);
+    g_free(realfn); realfn = NULL;
 
     if (rv == 0) {
         return buf.st_mtime;

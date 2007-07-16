@@ -532,12 +532,14 @@ input_general_file_info_box(const gchar * filename, InputPlugin * ip)
 
     gchar *title, *fileinfo, *basename, *iplugin;
     gchar *filename_utf8;
+    gchar *realfn = NULL;
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 
-    basename = g_path_get_basename(filename);
+    realfn = g_filename_from_uri(filename, NULL, NULL);
+    basename = g_path_get_basename(realfn ? realfn : filename);
     fileinfo = filename_to_utf8(basename);
     title = g_strdup_printf(_("audacious: %s"), fileinfo);
 
@@ -559,7 +561,8 @@ input_general_file_info_box(const gchar * filename, InputPlugin * ip)
     gtk_box_pack_start(GTK_BOX(filename_hbox), label, FALSE, TRUE, 0);
 
     filename_entry = gtk_entry_new();
-    filename_utf8 = filename_to_utf8(filename);
+    filename_utf8 = filename_to_utf8(realfn ? realfn : filename);
+    g_free(realfn); realfn = NULL;
 
     gtk_entry_set_text(GTK_ENTRY(filename_entry), filename_utf8);
     gtk_editable_set_editable(GTK_EDITABLE(filename_entry), FALSE);
