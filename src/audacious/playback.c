@@ -232,7 +232,7 @@ playback_control_thread(gpointer data)
 
     hook_call("playback begin", playback->entry);
 
-    while (playback_get_playing())
+    while (ip_data.playing == TRUE && playback->eof == FALSE && playback->playing == TRUE)
     {
         GTimeVal tmwait;
         g_get_current_time(&tmwait);
