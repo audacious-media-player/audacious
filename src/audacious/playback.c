@@ -50,6 +50,7 @@
 #include "ui_skinselector.h"
 #include "ui_skinned_playstatus.h"
 #include "util.h"
+#include "visualization.h"
 
 #include "playback.h"
 
@@ -121,6 +122,8 @@ playback_initiate(void)
         gtk_widget_show(mainwin_position);
     }
 
+    vis_playback_start();
+
     hook_call("playback begin", entry);
 }
 
@@ -186,6 +189,8 @@ playback_stop(void)
 
     if (song_info_timeout_source)
         g_source_remove(song_info_timeout_source);
+
+    vis_playback_stop();
 
     g_return_if_fail(mainwin_playstatus != NULL);
     ui_skinned_playstatus_set_buffering(mainwin_playstatus, FALSE);
