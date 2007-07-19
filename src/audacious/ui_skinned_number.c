@@ -31,7 +31,6 @@
 #include <ctype.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkmarshal.h>
-#include <gtk/gtkimage.h>
 
 #define UI_TYPE_SKINNED_NUMBER           (ui_skinned_number_get_type())
 
@@ -203,12 +202,7 @@ static gboolean ui_skinned_number_expose(GtkWidget *widget, GdkEventExpose *even
                                  gdk_rgb_get_visual()->depth);
 
     if (number->double_size) {
-        GdkImage *img, *img2x;
-        img = gdk_drawable_get_image(obj, 0, 0, number->width, number->height);
-        img2x = create_dblsize_image(img);
-        gdk_draw_image (image, gc, img2x, 0, 0, 0, 0, number->width*2, number->height*2);
-        g_object_unref(img2x);
-        g_object_unref(img);
+        image = create_dblsize_pixmap(obj);
     } else
         gdk_draw_drawable (image, gc, obj, 0, 0, 0, 0, number->width, number->height);
 

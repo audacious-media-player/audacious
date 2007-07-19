@@ -28,7 +28,6 @@
 #include "util.h"
 #include <gtk/gtkmain.h>
 #include <gtk/gtkmarshal.h>
-#include <gtk/gtkimage.h>
 
 #define UI_TYPE_SKINNED_PLAYSTATUS           (ui_skinned_playstatus_get_type())
 

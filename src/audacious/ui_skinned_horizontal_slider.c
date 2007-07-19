@@ -28,7 +28,6 @@
 #include "util.h"
 #include <gtk/gtkmain.h>
 #include <gtk/gtkmarshal.h>
-#include <gtk/gtkimage.h>
 
 #define UI_TYPE_SKINNED_HORIZONTAL_SLIDER           (ui_skinned_horizontal_slider_get_type())
 #define UI_SKINNED_HORIZONTAL_SLIDER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UI_TYPE_SKINNED_HORIZONTAL_SLIDER, UiSkinnedHorizontalSliderPrivate))

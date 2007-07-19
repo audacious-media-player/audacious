@@ -31,7 +31,6 @@
 #include <ctype.h>
 #include <gtk/gtkmain.h>
 #include <gtk/gtkmarshal.h>
-#include <gtk/gtkimage.h>
 
 #define UI_TYPE_SKINNED_TEXTBOX           (ui_skinned_textbox_get_type())
 #define UI_SKINNED_TEXTBOX_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UI_TYPE_SKINNED_TEXTBOX, UiSkinnedTextboxPrivate))

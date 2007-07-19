@@ -22,7 +22,6 @@
 
 #include <gtk/gtkmain.h>
 #include <gtk/gtkmarshal.h>
-#include <gtk/gtkimage.h>
 
 #define UI_SKINNED_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UI_TYPE_SKINNED_BUTTON, UiSkinnedButtonPrivate))
 typedef struct _UiSkinnedButtonPrivate UiSkinnedButtonPrivate;
