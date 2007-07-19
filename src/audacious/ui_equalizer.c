@@ -84,8 +84,6 @@ static GtkWidget *equalizerwin_delete_auto_window = NULL;
 
 static GdkPixmap *equalizerwin_bg, *equalizerwin_bg_x2;
 
-static GList *equalizerwin_wlist = NULL;
-
 static GtkWidget *equalizerwin_on, *equalizerwin_auto;
 
 static GtkWidget *equalizerwin_close, *equalizerwin_presets, *equalizerwin_shade;
@@ -280,15 +278,8 @@ static void equalizerwin_draw_titlebar() {
 void
 draw_equalizer_window(gboolean force)
 {
-    GdkImage *img, *img2x;
-    GList *wl;
-    Widget *w;
-    gboolean redraw;
-
     if (!cfg.equalizer_visible)
         return;
-
-    widget_list_lock(equalizerwin_wlist);
 
     if (force) {
         if (!cfg.equalizer_shaded)
@@ -302,45 +293,17 @@ draw_equalizer_window(gboolean force)
              GtkWidget *child = child_data->widget;
              gtk_widget_queue_draw(child);
         }
-    }
 
-    widget_list_draw(equalizerwin_wlist, &redraw, force);
-
-    if (force || redraw) {
         if (cfg.doublesize && cfg.eq_doublesize_linked) {
-            if (force) {
-                GdkPixmap *img2;
-                img2 = create_dblsize_pixmap(equalizerwin_bg);
-                gdk_draw_drawable(equalizerwin_bg_x2, SKINNED_WINDOW(equalizerwin)->gc, img2, 0, 0, 0, 0, 550, 232);
-                g_object_unref(img2);
-            }
-            else {
-                for (wl = equalizerwin_wlist; wl; wl = g_list_next(wl)) {
-                    w = WIDGET(wl->data);
-                    if (w->redraw && w->visible) {
-                        img = gdk_drawable_get_image(equalizerwin_bg,
-                                                     w->x, w->y,
-                                                     w->width, w->height);
-                        img2x = create_dblsize_image(img);
-                        gdk_draw_image(equalizerwin_bg_x2,
-                                       SKINNED_WINDOW(equalizerwin)->gc, img2x, 0, 0,
-                                       w->x << 1, w->y << 1, w->width << 1,
-                                       w->height << 1);
-                        g_object_unref(img2x);
-                        g_object_unref(img);
-                        w->redraw = FALSE;
-                    }
-                }
-            }
+            GdkPixmap *img2;
+            img2 = create_dblsize_pixmap(equalizerwin_bg);
+            gdk_draw_drawable(equalizerwin_bg_x2, SKINNED_WINDOW(equalizerwin)->gc, img2, 0, 0, 0, 0, 550, 232);
+            g_object_unref(img2);
         }
-        else
-            widget_list_clear_redraw(equalizerwin_wlist);
 
         gdk_window_clear(equalizerwin->window);
         gdk_flush();
     }
-
-    widget_list_unlock(equalizerwin_wlist);
 }
 
 gboolean
@@ -379,47 +342,11 @@ equalizerwin_press(GtkWidget * widget, GdkEventButton * event,
                                 event->y_root + 2, 3, event->time);
         grab = FALSE;
     }
-    else {
-        handle_press_cb(equalizerwin_wlist, widget, event);
-        draw_equalizer_window(FALSE);
-    }
+
     if (grab)
         gdk_pointer_grab(GDK_WINDOW(equalizerwin->window), FALSE,
                          GDK_BUTTON_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
                          NULL, NULL, GDK_CURRENT_TIME);
-
-    return FALSE;
-}
-
-static void
-equalizerwin_scroll(GtkWidget * widget, GdkEventScroll * event, gpointer data)
-{
-    if (cfg.doublesize && cfg.eq_doublesize_linked) {
-        event->x /= 2;
-        event->y /= 2;
-    }
-
-    handle_scroll_cb(equalizerwin_wlist, widget, event);
-    draw_equalizer_window(FALSE);
-}
-
-static gboolean
-equalizerwin_motion(GtkWidget * widget,
-                    GdkEventMotion * event, gpointer callback_data)
-{
-    GdkEvent *gevent;
-
-    if (cfg.doublesize && cfg.eq_doublesize_linked) {
-        event->x /= 2;
-        event->y /= 2;
-    }
-
-    handle_motion_cb(equalizerwin_wlist, widget, event);
-    draw_equalizer_window(FALSE);
-
-    gdk_flush();
-
-    while ((gevent = gdk_event_get()) != NULL) gdk_event_free(gevent);
 
     return FALSE;
 }
@@ -439,28 +366,9 @@ equalizerwin_release(GtkWidget * widget,
         dock_move_release(GTK_WINDOW(equalizerwin));
     }
 
-    handle_release_cb(equalizerwin_wlist, widget, event);
     draw_equalizer_window(FALSE);
 
     return FALSE;
-}
-
-static gboolean
-equalizerwin_focus_in(GtkWidget * widget,
-                      GdkEvent * event,
-                      gpointer data)
-{
-    draw_equalizer_window(TRUE);
-    return TRUE;
-}
-
-static gboolean
-equalizerwin_focus_out(GtkWidget * widget,
-                       GdkEventButton * event,
-                       gpointer data)
-{
-    draw_equalizer_window(TRUE);
-    return TRUE;
 }
 
 static gboolean
@@ -754,20 +662,12 @@ equalizerwin_create_window(void)
                      G_CALLBACK(equalizerwin_press), NULL);
     g_signal_connect(equalizerwin, "button_release_event",
                      G_CALLBACK(equalizerwin_release), NULL);
-    g_signal_connect(equalizerwin, "motion_notify_event",
-                     G_CALLBACK(equalizerwin_motion), NULL);
-    g_signal_connect_after(equalizerwin, "focus_in_event",
-                           G_CALLBACK(equalizerwin_focus_in), NULL);
-    g_signal_connect_after(equalizerwin, "focus_out_event",
-                           G_CALLBACK(equalizerwin_focus_out), NULL);
     g_signal_connect(equalizerwin, "configure_event",
                      G_CALLBACK(equalizerwin_configure), NULL);
     g_signal_connect(equalizerwin, "style_set",
                      G_CALLBACK(equalizerwin_set_back_pixmap), NULL);
     g_signal_connect(equalizerwin, "key_press_event",
                      G_CALLBACK(equalizerwin_keypress), NULL);
-    g_signal_connect(equalizerwin, "scroll_event",
-                     G_CALLBACK(equalizerwin_scroll), NULL);
 }
 
 void
