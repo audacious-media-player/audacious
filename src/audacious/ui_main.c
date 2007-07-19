@@ -138,7 +138,7 @@ GtkWidget *mainwin_eq, *mainwin_pl;
 GtkWidget *mainwin_info;
 GtkWidget *mainwin_stime_min, *mainwin_stime_sec;
 
-static GtkWidget *mainwin_rate_text, *mainwin_freq_text, 
+static GtkWidget *mainwin_rate_text, *mainwin_freq_text,
     *mainwin_othertext;
 
 GtkWidget *mainwin_playstatus;
@@ -541,7 +541,7 @@ static void
 mainwin_draw_titlebar(gboolean focus)
 {
     /* FIXME: uses SkinnedWindow::gc directly. -nenolod */
-    skin_draw_mainwin_titlebar(bmp_active_skin, mainwin_bg, 
+    skin_draw_mainwin_titlebar(bmp_active_skin, mainwin_bg,
                                SKINNED_WINDOW(mainwin)->gc,
                                cfg.player_shaded, focus || !cfg.dim_titlebar);
 }
@@ -871,7 +871,7 @@ mainwin_set_song_info(gint bitrate,
     if (!playback_get_paused() && mainwin_playstatus != NULL)
         ui_skinned_playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
 
-    if (bmp_active_skin && bmp_active_skin->properties.mainwin_othertext 
+    if (bmp_active_skin && bmp_active_skin->properties.mainwin_othertext
     == TRUE)
     {
         if (bitrate != -1)
@@ -988,7 +988,7 @@ mainwin_motion(GtkWidget * widget,
     int x, y;
     GdkModifierType state;
 
-    /* If it's a hint, we had to query X, so override the 
+    /* If it's a hint, we had to query X, so override the
      * information we we're given... it's probably useless... --nenolod
      */
     if (event->is_hint != FALSE)
@@ -1680,7 +1680,7 @@ mainwin_position_motion_cb(GtkWidget *widget, gint pos)
 
     length = playlist_get_current_length(playlist_get_active()) / 1000;
     time = (length * pos) / 219;
-    seek_msg = g_strdup_printf(_("SEEK TO: %d:%-2.2d/%d:%-2.2d (%d%%)"),
+    seek_msg = g_strdup_printf(_("Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"),
                                time / 60, time % 60,
                                length / 60, length % 60,
                                (length != 0) ? (time * 100) / length : 0);
@@ -1712,7 +1712,7 @@ mainwin_adjust_volume_motion(gint v)
 
     setting_volume = TRUE;
 
-    volume_msg = g_strdup_printf(_("VOLUME: %d%%"), v);
+    volume_msg = g_strdup_printf(_("Volume: %d%%"), v);
     mainwin_lock_info_text(volume_msg);
     g_free(volume_msg);
 
@@ -1743,15 +1743,15 @@ mainwin_adjust_balance_motion(gint b)
     input_get_volume(&pvl, &pvr);
     v = MAX(pvl, pvr);
     if (b < 0) {
-        balance_msg = g_strdup_printf(_("BALANCE: %d%% LEFT"), -b);
+        balance_msg = g_strdup_printf(_("Balance: %d%% left"), -b);
         input_set_volume(v, (gint) rint(((100 + b) / 100.0) * v));
     }
     else if (b == 0) {
-        balance_msg = g_strdup_printf(_("BALANCE: CENTER"));
+        balance_msg = g_strdup_printf(_("Balance: center"));
         input_set_volume(v, v);
     }
     else {                      /* b > 0 */
-        balance_msg = g_strdup_printf(_("BALANCE: %d%% RIGHT"), b);
+        balance_msg = g_strdup_printf(_("Balance: %d%% right"), b);
         input_set_volume((gint) rint(((100 - b) / 100.0) * v), v);
     }
     mainwin_lock_info_text(balance_msg);
@@ -1875,7 +1875,7 @@ mainwin_real_show(void)
       nullmask = NULL;
     }
 
-    gtk_window_resize(GTK_WINDOW(mainwin), 
+    gtk_window_resize(GTK_WINDOW(mainwin),
                          !bmp_active_skin->properties.mainwin_width ? PLAYER_WIDTH :
                 bmp_active_skin->properties.mainwin_width,
                          !bmp_active_skin->properties.mainwin_height ? PLAYER_HEIGHT :
@@ -2068,7 +2068,7 @@ mainwin_general_menu_callback(gpointer data,
             if (ab_position_a == -1) {
                 ab_position_a = playback_get_time();
                 ab_position_b = -1;
-        mainwin_lock_info_text("LOOP-POINT A POSITION SET.");
+        mainwin_lock_info_text("'Loop-Point A Position' set.");
             } else if (ab_position_b == -1) {
                 int time = playback_get_time();
                 if (time > ab_position_a)
@@ -2077,7 +2077,7 @@ mainwin_general_menu_callback(gpointer data,
             } else {
                 ab_position_a = playback_get_time();
                 ab_position_b = -1;
-        mainwin_lock_info_text("LOOP-POINT A POSITION RESET.");
+        mainwin_lock_info_text("'Loop-Point A Position' reset.");
             }
         }
         break;
@@ -2111,25 +2111,25 @@ mainwin_mr_change(GtkWidget *widget, MenuRowItem i)
         mainwin_set_info_text();
         break;
     case MENUROW_OPTIONS:
-        mainwin_lock_info_text(_("OPTIONS MENU"));
+        mainwin_lock_info_text(_("Options Menu"));
         break;
     case MENUROW_ALWAYS:
         if (UI_SKINNED_MENUROW(mainwin_menurow)->always_selected)
-            mainwin_lock_info_text(_("DISABLE ALWAYS ON TOP"));
+            mainwin_lock_info_text(_("Disable 'Always On Top'"));
         else
-            mainwin_lock_info_text(_("ENABLE ALWAYS ON TOP"));
+            mainwin_lock_info_text(_("Enable 'Always On Top'"));
         break;
     case MENUROW_FILEINFOBOX:
-        mainwin_lock_info_text(_("FILE INFO BOX"));
+        mainwin_lock_info_text(_("File Info Box"));
         break;
     case MENUROW_DOUBLESIZE:
         if (UI_SKINNED_MENUROW(mainwin_menurow)->doublesize_selected)
-            mainwin_lock_info_text(_("DISABLE DOUBLESIZE"));
+            mainwin_lock_info_text(_("Disable 'Doublesize'"));
         else
-            mainwin_lock_info_text(_("ENABLE DOUBLESIZE"));
+            mainwin_lock_info_text(_("Enable 'Doublesize'"));
         break;
     case MENUROW_VISUALIZATION:
-        mainwin_lock_info_text(_("VISUALIZATION MENU"));
+        mainwin_lock_info_text(_("Visualization Menu"));
         break;
     }
 }
