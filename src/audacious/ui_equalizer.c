@@ -55,6 +55,7 @@
 #include "ui_skinned_window.h"
 #include "ui_skinned_button.h"
 #include "ui_skinned_horizontal_slider.h"
+#include "ui_skinned_equalizer_slider.h"
 
 enum PresetViewCols {
     PRESET_VIEW_COL_NAME,
@@ -88,7 +89,7 @@ static GtkWidget *equalizerwin_on, *equalizerwin_auto;
 
 static GtkWidget *equalizerwin_close, *equalizerwin_presets, *equalizerwin_shade;
 static EqGraph *equalizerwin_graph;
-static EqSlider *equalizerwin_preamp, *equalizerwin_bands[10];
+static GtkWidget *equalizerwin_preamp,*equalizerwin_bands[10];
 static GtkWidget *equalizerwin_volume, *equalizerwin_balance;
 
 static GList *equalizer_presets = NULL, *equalizer_auto_presets = NULL;
@@ -215,9 +216,9 @@ equalizerwin_eq_changed(void)
 {
     gint i;
 
-    cfg.equalizer_preamp = eqslider_get_position(equalizerwin_preamp);
+    cfg.equalizer_preamp = ui_skinned_equalizer_slider_get_position(equalizerwin_preamp);
     for (i = 0; i < 10; i++)
-        cfg.equalizer_bands[i] = eqslider_get_position(equalizerwin_bands[i]);
+        cfg.equalizer_bands[i] = ui_skinned_equalizer_slider_get_position(equalizerwin_bands[i]);
     /* um .. i think we need both of these for xmms compatibility ..
        not sure. -larne */
     input_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
@@ -688,20 +689,13 @@ equalizerwin_create_widgets(void)
     ui_skinned_window_widgetlist_associate(equalizerwin, 
         WIDGET(equalizerwin_graph));
 
-    equalizerwin_preamp =
-        create_eqslider(&equalizerwin_wlist, equalizerwin_bg,
-                        SKINNED_WINDOW(equalizerwin)->gc, 21, 38);
-    eqslider_set_position(equalizerwin_preamp, cfg.equalizer_preamp);
-    ui_skinned_window_widgetlist_associate(equalizerwin, 
-        WIDGET(equalizerwin_preamp));
+    equalizerwin_preamp = ui_skinned_equalizer_slider_new(SKINNED_WINDOW(equalizerwin)->fixed, 21, 38);
+    ui_skinned_equalizer_slider_set_position(equalizerwin_preamp, cfg.equalizer_preamp);
 
     for (i = 0; i < 10; i++) {
         equalizerwin_bands[i] =
-            create_eqslider(&equalizerwin_wlist, equalizerwin_bg,
-                            SKINNED_WINDOW(equalizerwin)->gc, 78 + (i * 18), 38);
-        eqslider_set_position(equalizerwin_bands[i], cfg.equalizer_bands[i]);
-        ui_skinned_window_widgetlist_associate(equalizerwin, 
-	    WIDGET(equalizerwin_bands[i]));
+            ui_skinned_equalizer_slider_new(SKINNED_WINDOW(equalizerwin)->fixed, 78 + (i * 18), 38);
+        ui_skinned_equalizer_slider_set_position(equalizerwin_bands[i], cfg.equalizer_bands[i]);
     }
 
     equalizerwin_volume =
@@ -907,9 +901,9 @@ equalizerwin_load_preset(GList * list, const gchar * name)
     gint i;
 
     if ((preset = equalizerwin_find_preset(list, name)) != NULL) {
-        eqslider_set_position(equalizerwin_preamp, preset->preamp);
+        ui_skinned_equalizer_slider_set_position(equalizerwin_preamp, preset->preamp);
         for (i = 0; i < 10; i++)
-            eqslider_set_position(equalizerwin_bands[i], preset->bands[i]);
+            ui_skinned_equalizer_slider_set_position(equalizerwin_bands[i], preset->bands[i]);
         equalizerwin_eq_changed();
         return TRUE;
     }
@@ -929,9 +923,9 @@ equalizerwin_save_preset(GList * list, const gchar * name,
         list = g_list_append(list, preset);
     }
 
-    preset->preamp = eqslider_get_position(equalizerwin_preamp);
+    preset->preamp = ui_skinned_equalizer_slider_get_position(equalizerwin_preamp);
     for (i = 0; i < 10; i++)
-        preset->bands[i] = eqslider_get_position(equalizerwin_bands[i]);
+        preset->bands[i] = ui_skinned_equalizer_slider_get_position(equalizerwin_bands[i]);
 
     equalizerwin_write_preset_file(list, filename);
 
@@ -1050,11 +1044,11 @@ equalizerwin_read_winamp_eqf(VFSFile * file)
         if (vfs_fread(bands, 1, 11, file) != 11)
             return;
 
-        eqslider_set_position(equalizerwin_preamp,
+        ui_skinned_equalizer_slider_set_position(equalizerwin_preamp,
                               20.0 - ((bands[10] * 40.0) / 63.0));
 
         for (i = 0; i < 10; i++)
-            eqslider_set_position(equalizerwin_bands[i],
+            ui_skinned_equalizer_slider_set_position(equalizerwin_bands[i],
                                   20.0 - ((bands[i] * 40.0) / 64.0));
     }
 
@@ -1068,12 +1062,12 @@ equalizerwin_read_bmp_preset(RcFile * rcfile)
     gint i;
 
     if (bmp_rcfile_read_float(rcfile, "Equalizer preset", "Preamp", &val))
-        eqslider_set_position(equalizerwin_preamp, val);
+        ui_skinned_equalizer_slider_set_position(equalizerwin_preamp, val);
     for (i = 0; i < 10; i++) {
         gchar tmp[7];
         g_snprintf(tmp, sizeof(tmp), "Band%d", i);
         if (bmp_rcfile_read_float(rcfile, "Equalizer preset", tmp, &val))
-            eqslider_set_position(equalizerwin_bands[i], val);
+            ui_skinned_equalizer_slider_set_position(equalizerwin_bands[i], val);
     }
     equalizerwin_eq_changed();
 }
@@ -1278,13 +1272,13 @@ save_preset_file(const gchar * filename)
 
     rcfile = bmp_rcfile_new();
     bmp_rcfile_write_float(rcfile, "Equalizer preset", "Preamp",
-                           eqslider_get_position(equalizerwin_preamp));
+                           ui_skinned_equalizer_slider_get_position(equalizerwin_preamp));
 
     for (i = 0; i < 10; i++) {
         gchar tmp[7];
         g_snprintf(tmp, sizeof(tmp), "Band%d", i);
         bmp_rcfile_write_float(rcfile, "Equalizer preset", tmp,
-                               eqslider_get_position(equalizerwin_bands[i]));
+                               ui_skinned_equalizer_slider_get_position(equalizerwin_bands[i]));
     }
 
     bmp_rcfile_write(rcfile, filename);
@@ -1315,8 +1309,8 @@ save_winamp_file(const gchar * filename)
     vfs_fwrite(name, 1, 257, file);
 
     for (i = 0; i < 10; i++)
-        bands[i] = 63 - (((eqslider_get_position(equalizerwin_bands[i]) + 20) * 63) / 40);
-    bands[10] = 63 - (((eqslider_get_position(equalizerwin_preamp) + 20) * 63) / 40);
+        bands[i] = 63 - (((ui_skinned_equalizer_slider_get_position(equalizerwin_bands[i]) + 20) * 63) / 40);
+    bands[10] = 63 - (((ui_skinned_equalizer_slider_get_position(equalizerwin_preamp) + 20) * 63) / 40);
     vfs_fwrite(bands, 1, 11, file);
 
     vfs_fclose(file);
@@ -1479,7 +1473,7 @@ equalizerwin_load_auto_preset(const gchar * filename)
 void
 equalizerwin_set_preamp(gfloat preamp)
 {
-    eqslider_set_position(equalizerwin_preamp, preamp);
+    ui_skinned_equalizer_slider_set_position(equalizerwin_preamp, preamp);
     equalizerwin_eq_changed();
 }
 
@@ -1487,20 +1481,20 @@ void
 equalizerwin_set_band(gint band, gfloat value)
 {
     g_return_if_fail(band >= 0 && band < 10);
-    eqslider_set_position(equalizerwin_bands[band], value);
+    ui_skinned_equalizer_slider_set_position(equalizerwin_bands[band], value);
 }
 
 gfloat
 equalizerwin_get_preamp(void)
 {
-    return eqslider_get_position(equalizerwin_preamp);
+    return ui_skinned_equalizer_slider_get_position(equalizerwin_preamp);
 }
 
 gfloat
 equalizerwin_get_band(gint band)
 {
     g_return_val_if_fail(band >= 0 && band < 10, 0);
-    return eqslider_get_position(equalizerwin_bands[band]);
+    return ui_skinned_equalizer_slider_get_position(equalizerwin_bands[band]);
 }
 
 void
@@ -1547,10 +1541,10 @@ void
 action_equ_zero_preset(void)
 {
     gint i;
-    
-    eqslider_set_position(equalizerwin_preamp, 0);
+
+    ui_skinned_equalizer_slider_set_position(equalizerwin_preamp, 0);
     for (i = 0; i < 10; i++)
-        eqslider_set_position(equalizerwin_bands[i], 0);
+        ui_skinned_equalizer_slider_set_position(equalizerwin_bands[i], 0);
 
     equalizerwin_eq_changed();
 }

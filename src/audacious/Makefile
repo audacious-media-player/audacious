@@ -117,6 +117,7 @@ SOURCES = \
 	ui_skinned_menurow.c \
 	ui_skinned_playstatus.c \
 	ui_skinned_monostereo.c \
+	ui_skinned_equalizer_slider.c \
 	ui_skinselector.c \
 	ui_urlopener.c \
 	util.c \
