@@ -1501,9 +1501,13 @@ playlist_get_info_text(Playlist *playlist)
         title = str_to_utf8(playlist->position->title);
     }
     else {
-        gchar *basename = g_path_get_basename(playlist->position->filename);
+        gchar *realfn = NULL;
+        gchar *basename = NULL;
+        realfn = g_filename_from_uri(playlist->position->filename, NULL, NULL);
+        basename = g_path_get_basename(realfn ? realfn : playlist->position->filename);
         title = filename_to_utf8(basename);
-        g_free(basename);
+        g_free(realfn); realfn = NULL;
+        g_free(basename); basename = NULL;
     }
 
     /*
