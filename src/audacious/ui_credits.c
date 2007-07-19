@@ -357,7 +357,7 @@ show_credits_window(void)
     about_vbox = gtk_vbox_new(FALSE, 5);
     gtk_container_add(GTK_CONTAINER(about_window), about_vbox);
 
-    logo_pixbuf = gdk_pixbuf_new_from_xpm_data(audacious_logo_xpm);
+    logo_pixbuf = gdk_pixbuf_new_from_xpm_data((const char **)audacious_logo_xpm);
 
     about_credits_logo_box = gtk_hbox_new(TRUE, 0);
     gtk_box_pack_start(GTK_BOX(about_vbox), about_credits_logo_box,
