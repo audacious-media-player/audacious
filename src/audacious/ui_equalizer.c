@@ -56,6 +56,7 @@
 #include "ui_skinned_button.h"
 #include "ui_skinned_horizontal_slider.h"
 #include "ui_skinned_equalizer_slider.h"
+#include "ui_skinned_equalizer_graph.h"
 
 enum PresetViewCols {
     PRESET_VIEW_COL_NAME,
@@ -88,7 +89,7 @@ static GList *equalizerwin_wlist = NULL;
 static GtkWidget *equalizerwin_on, *equalizerwin_auto;
 
 static GtkWidget *equalizerwin_close, *equalizerwin_presets, *equalizerwin_shade;
-static EqGraph *equalizerwin_graph;
+static GtkWidget *equalizerwin_graph;
 static GtkWidget *equalizerwin_preamp,*equalizerwin_bands[10];
 static GtkWidget *equalizerwin_volume, *equalizerwin_balance;
 
@@ -226,7 +227,7 @@ equalizerwin_eq_changed(void)
     output_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
                   cfg.equalizer_bands);
 
-    widget_draw(WIDGET(equalizerwin_graph));
+    gtk_widget_queue_draw(equalizerwin_graph);
 }
 
 static void
@@ -683,11 +684,7 @@ equalizerwin_create_widgets(void)
     ui_skinned_button_set_skin_index2(equalizerwin_shade, SKIN_EQ_EX);
     g_signal_connect(equalizerwin_shade, "clicked", equalizerwin_shade_toggle, NULL );
 
-    equalizerwin_graph =
-        create_eqgraph(&equalizerwin_wlist, equalizerwin_bg,
-                       SKINNED_WINDOW(equalizerwin)->gc, 86, 17);
-    ui_skinned_window_widgetlist_associate(equalizerwin, 
-        WIDGET(equalizerwin_graph));
+    equalizerwin_graph = ui_skinned_equalizer_graph_new(SKINNED_WINDOW(equalizerwin)->fixed, 86, 17);
 
     equalizerwin_preamp = ui_skinned_equalizer_slider_new(SKINNED_WINDOW(equalizerwin)->fixed, 21, 38);
     ui_skinned_equalizer_slider_set_position(equalizerwin_preamp, cfg.equalizer_preamp);
