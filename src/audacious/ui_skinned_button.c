@@ -20,22 +20,19 @@
 #include "ui_skinned_button.h"
 #include "util.h"
 
-#include <gtk/gtkmain.h>
-#include <gtk/gtkmarshal.h>
-
-#define UI_SKINNED_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UI_TYPE_SKINNED_BUTTON, UiSkinnedButtonPrivate))
+#define UI_SKINNED_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), ui_skinned_button_get_type(), UiSkinnedButtonPrivate))
 typedef struct _UiSkinnedButtonPrivate UiSkinnedButtonPrivate;
 
 static GMutex *mutex = NULL;
 
 enum {
-	PRESSED,
-	RELEASED,
-	CLICKED,
-	RIGHT_CLICKED,
-	DOUBLED,
-	REDRAW,
-	LAST_SIGNAL
+    PRESSED,
+    RELEASED,
+    CLICKED,
+    RIGHT_CLICKED,
+    DOUBLED,
+    REDRAW,
+    LAST_SIGNAL
 };
 
 struct _UiSkinnedButtonPrivate {

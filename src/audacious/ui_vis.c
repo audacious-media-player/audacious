@@ -26,15 +26,7 @@
 #include "ui_vis.h"
 #include "main.h"
 #include "util.h"
-#include "strings.h"
 #include "playback.h"
-#include <string.h>
-#include <ctype.h>
-#include <gtk/gtkmain.h>
-#include <gtk/gtkmarshal.h>
-#include <gtk/gtkimage.h>
-
-#define UI_TYPE_VIS           (ui_vis_get_type())
 
 static const gfloat vis_afalloff_speeds[] = { 0.34, 0.5, 1.0, 1.3, 1.6 };
 static const gfloat vis_pfalloff_speeds[] = { 1.2, 1.3, 1.4, 1.5, 1.6 };

@@ -25,13 +25,9 @@
 #ifndef UISKINNEDTEXTBOX_H
 #define UISKINNEDTEXTBOX_H
 
-#include <gdk/gdk.h>
-#include <gtk/gtkadjustment.h>
-#include <gtk/gtkwidget.h>
-
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */
+#endif
 
 #define UI_SKINNED_TEXTBOX(obj)          GTK_CHECK_CAST (obj, ui_skinned_textbox_get_type (), UiSkinnedTextbox)
 #define UI_SKINNED_TEXTBOX_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, ui_skinned_textbox_get_type (), UiSkinnedTextboxClass)

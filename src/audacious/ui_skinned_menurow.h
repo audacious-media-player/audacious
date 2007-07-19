@@ -25,10 +25,6 @@
 #ifndef UISKINNEDMENUROW_H
 #define UISKINNEDMENUROW_H
 
-#include <gdk/gdk.h>
-#include <gtk/gtkadjustment.h>
-#include <gtk/gtkwidget.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif

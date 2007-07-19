@@ -25,10 +25,6 @@
 #ifndef UISKINNEDMONOSTEREO_H
 #define UISKINNEDMONOSTEREO_H
 
-#include <gdk/gdk.h>
-#include <gtk/gtkadjustment.h>
-#include <gtk/gtkwidget.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif

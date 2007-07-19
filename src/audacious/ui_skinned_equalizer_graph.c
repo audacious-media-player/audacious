@@ -26,8 +26,6 @@
 #include "ui_skinned_equalizer_graph.h"
 #include "main.h"
 #include "util.h"
-#include <gtk/gtkmain.h>
-#include <gtk/gtkmarshal.h>
 
 #define UI_TYPE_SKINNED_EQUALIZER_GRAPH           (ui_skinned_equalizer_graph_get_type())
 

@@ -25,10 +25,6 @@
 #ifndef UISKINNEDEQUALIZERGRAPH_H
 #define UISKINNEDEQUALIZERGRAPH_H
 
-#include <gdk/gdk.h>
-#include <gtk/gtkadjustment.h>
-#include <gtk/gtkwidget.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif

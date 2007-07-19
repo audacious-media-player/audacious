@@ -19,50 +19,40 @@
 #ifndef UISKINNEDBUTTON_H
 #define UISKINNEDBUTTON_H
 
-#include <gdk/gdk.h>
-#include <gtk/gtkbin.h>
-#include <gtk/gtkenums.h>
-#include "widgets/skin.h"
-
-#define UI_TYPE_SKINNED_BUTTON            (ui_skinned_button_get_type())
-#define UI_SKINNED_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), UI_TYPE_SKINNED_BUTTON, UiSkinnedButton))
-#define UI_SKINNED_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), UI_TYPE_SKINNED_BUTTON, UiSkinnedButtonClass))
-#define UI_SKINNED_IS_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), UI_TYPE_SKINNED_BUTTON))
-#define UI_IS_SKINNED_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), UI_TYPE_SKINNED_BUTTON))
-#define UI_SKINNED_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), UI_TYPE_SKINNED_BUTTON, GtkFlatButtonClass))
+#define UI_SKINNED_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), ui_skinned_button_get_type(), UiSkinnedButton))
+#define UI_SKINNED_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  ui_skinned_button_get_type(), UiSkinnedButtonClass))
+#define UI_SKINNED_IS_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), ui_skinned_button_get_type()))
 
 typedef struct _UiSkinnedButton		UiSkinnedButton;
 typedef struct _UiSkinnedButtonClass	UiSkinnedButtonClass;
 
 enum {
-	TYPE_NOT_SET,
-	TYPE_PUSH,
-	TYPE_TOGGLE,
-	TYPE_SMALL
+    TYPE_NOT_SET,
+    TYPE_PUSH,
+    TYPE_TOGGLE,
+    TYPE_SMALL
 };
 
 struct _UiSkinnedButton {
-	GtkWidget widget;
+    GtkWidget widget;
 
-	GdkWindow *event_window;
-
-	gboolean button_down : 1;
-	gboolean pressed : 1;
-	gboolean hover : 1;
-	gboolean inside : 1;
-	gint type;
-
-	gint x, y;
+    GdkWindow *event_window;
+    gboolean button_down;
+    gboolean pressed;
+    gboolean hover;
+    gboolean inside;
+    gint type;
+    gint x, y;
 };
 
 struct _UiSkinnedButtonClass {
-	GtkWidgetClass          parent_class;
-	void (* pressed)       (UiSkinnedButton *button);
-	void (* released)      (UiSkinnedButton *button);
-	void (* clicked)       (UiSkinnedButton *button);
-	void (* right_clicked) (UiSkinnedButton *button);
-	void (* doubled)       (UiSkinnedButton *button);
-	void (* redraw)        (UiSkinnedButton *button);
+    GtkWidgetClass          parent_class;
+    void (* pressed)       (UiSkinnedButton *button);
+    void (* released)      (UiSkinnedButton *button);
+    void (* clicked)       (UiSkinnedButton *button);
+    void (* right_clicked) (UiSkinnedButton *button);
+    void (* doubled)       (UiSkinnedButton *button);
+    void (* redraw)        (UiSkinnedButton *button);
 };
 
 GType ui_skinned_button_get_type(void) G_GNUC_CONST;

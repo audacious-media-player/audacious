@@ -25,13 +25,9 @@
 #ifndef UISKINNEDHORIZONTAL_SLIDER_H
 #define UISKINNEDHORIZONTAL_SLIDER_H
 
-#include <gdk/gdk.h>
-#include <gtk/gtkadjustment.h>
-#include <gtk/gtkwidget.h>
-
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */
+#endif
 
 #define UI_SKINNED_HORIZONTAL_SLIDER(obj)          GTK_CHECK_CAST (obj, ui_skinned_horizontal_slider_get_type (), UiSkinnedHorizontalSlider)
 #define UI_SKINNED_HORIZONTAL_SLIDER_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, ui_skinned_horizontal_slider_get_type (), UiSkinnedHorizontalSliderClass)

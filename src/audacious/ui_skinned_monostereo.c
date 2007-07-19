@@ -26,10 +26,6 @@
 #include "ui_skinned_monostereo.h"
 #include "main.h"
 #include "util.h"
-#include <gtk/gtkmain.h>
-#include <gtk/gtkmarshal.h>
-
-#define UI_TYPE_SKINNED_MONOSTEREO           (ui_skinned_monostereo_get_type())
 
 enum {
     DOUBLED,

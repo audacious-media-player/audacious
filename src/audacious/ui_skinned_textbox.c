@@ -28,12 +28,8 @@
 #include "util.h"
 #include "strings.h"
 #include <string.h>
-#include <ctype.h>
-#include <gtk/gtkmain.h>
-#include <gtk/gtkmarshal.h>
 
-#define UI_TYPE_SKINNED_TEXTBOX           (ui_skinned_textbox_get_type())
-#define UI_SKINNED_TEXTBOX_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), UI_TYPE_SKINNED_TEXTBOX, UiSkinnedTextboxPrivate))
+#define UI_SKINNED_TEXTBOX_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), ui_skinned_textbox_get_type(), UiSkinnedTextboxPrivate))
 typedef struct _UiSkinnedTextboxPrivate UiSkinnedTextboxPrivate;
 
 static GMutex *mutex = NULL;
