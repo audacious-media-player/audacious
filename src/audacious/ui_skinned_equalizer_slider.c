@@ -258,7 +258,7 @@ static gboolean ui_skinned_equalizer_slider_button_press(GtkWidget *widget, GdkE
     if (event->type == GDK_BUTTON_PRESS) {
         if (event->button == 1) {
             priv->pressed = TRUE;
-            y = event->y;
+            y = event->y/(priv->double_size ? 2 : 1);
 
             if (y >= priv->position && y < priv->position + 11)
                 priv->drag_y = y - priv->position;
@@ -303,7 +303,7 @@ static gboolean ui_skinned_equalizer_slider_motion_notify(GtkWidget *widget, Gdk
     if (priv->pressed) {
         gint y;
 
-        y = event->y;
+        y = event->y/(priv->double_size ? 2 : 1);
         priv->position = y - priv->drag_y;
 
         if (priv->position < 0)
