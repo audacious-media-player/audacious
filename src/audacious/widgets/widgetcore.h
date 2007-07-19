@@ -20,7 +20,6 @@
 #define _WIDGETCORE_H_
 
 #include "eq_graph.h"
-#include "eq_slider.h"
 #include "playlist_list.h"
 #include "playlist_slider.h"
 #include "skin.h"
