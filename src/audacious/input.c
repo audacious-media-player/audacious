@@ -351,7 +351,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
     g_free(tmp_uri);
 
     if (!fd) {
-        printf("Unreadable to read from %s, giving up.\n", filename_proxy);
+        printf("Unable to read from %s, giving up.\n", filename_proxy);
         g_free(filename_proxy);
         return NULL;
     }
