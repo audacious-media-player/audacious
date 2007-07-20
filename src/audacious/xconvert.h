@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2003  Haavard Kvaalen <havardk@xmms.org>
  *
- *  Licensed under GNU LGPL version 2.
+ *  Licensed under GNU GPL version 3.
  */
 
 #include <audacious/plugin.h>
