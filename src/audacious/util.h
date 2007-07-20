@@ -45,6 +45,7 @@ typedef gboolean(*DirForeachFunc) (const gchar * path,
 
 
 gchar *find_file_recursively(const gchar * dirname, const gchar * file);
+gchar *find_path_recursively(const gchar * dirname, const gchar * file);
 void del_directory(const gchar * dirname);
 gboolean dir_foreach(const gchar * path, DirForeachFunc function,
                      gpointer user_data, GError ** error);
@@ -106,9 +107,7 @@ GtkWidget *xmms_show_message(const gchar * title, const gchar * text,
 gboolean xmms_check_realtime_priority(void);
 void xmms_usleep(gint usec);
 
-GdkImage *create_dblsize_image(GdkImage * img);
-
-gchar *xmms_urldecode_path(const gchar * encoded_path);
+GdkPixmap *create_dblsize_pixmap(GdkPixmap *pix);
 
 GdkPixbuf *audacious_create_colorized_pixbuf(GdkPixbuf *src, gint red, gint green, gint blue);
 

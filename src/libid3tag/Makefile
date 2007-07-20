@@ -1,11 +1,11 @@
 include ../../mk/rules.mk
 include ../../mk/init.mk
 
-OBJECTIVE_LIBS = libaudid3tag.so
+OBJECTIVE_LIBS = libaudid3tag$(SHARED_SUFFIX)
+
+PICLDFLAGS = $(LIBLDFLAGS)
 
 LIBDIR = $(plugindir)
-
-LDFLAGS += -Wl,-export-dynamic
 
 LIBADD += $(GLIB_LIBS)
 

@@ -38,7 +38,7 @@ filebrowser_add_files(GtkFileChooser * browser,
 
     for (cur = files; cur; cur = g_slist_next(cur)) {
 
-        if (g_file_test(cur->data,G_FILE_TEST_IS_DIR)) {
+        if (vfs_file_test(cur->data, G_FILE_TEST_IS_DIR)) {
             playlist_add_dir(playlist, (const gchar *) cur->data);
         } else {
             playlist_add(playlist, (const gchar *) cur->data);
@@ -73,7 +73,7 @@ action_button_cb(GtkWidget *widget, gpointer data)
     play_button =
         GPOINTER_TO_INT(g_object_get_data(data, "play-button"));
 
-    files = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER(chooser));
+    files = gtk_file_chooser_get_uris(GTK_FILE_CHOOSER(chooser));
     if (!files) return;
 
     if (play_button)

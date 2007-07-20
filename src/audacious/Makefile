@@ -2,14 +2,14 @@ include ../../mk/rules.mk
 include ../../mk/init.mk
 include ../../mk/objective.mk
 
-SUBDIRS = widgets glade images ui
+SUBDIRS = $(INTL_OBJECTIVE) widgets glade images ui
 
 OBJECTIVE_BINS = audacious
 
 LDFLAGS += $(AUDLDFLAGS)
 
 LDADD = \
-	-L.. $(LIBINTL) \
+	$(LIBINTL) \
 	$(samplerate_LIBS) \
 	$(CHARDET_LIBS) \
 	$(GTK_LIBS) \
@@ -32,7 +32,7 @@ CFLAGS += \
 	$(LIBMCS_CFLAGS) \
 	-D_AUDACIOUS_CORE \
 	-I.. -I../.. \
-	-I../intl
+	-I./intl
 
 HEADERS = \
 	auddrct.h \
@@ -44,6 +44,7 @@ HEADERS = \
 	input.h \
 	hook.h \
 	main.h \
+	mime.h \
 	output.h \
 	playlist.h \
 	playlist_container.h \
@@ -51,6 +52,7 @@ HEADERS = \
 	strings.h \
 	titlestring.h \
 	ui_fileinfopopup.h \
+	ui_lastfm.h\
 	ui_preferences.h \
 	util.h \
 	vfs.h \
@@ -79,6 +81,7 @@ SOURCES = \
 	logger.c \
 	main.c \
 	memorypool.c \
+	mime.c \
 	output.c \
 	pixbuf_effects.c \
 	playback.c \
@@ -97,6 +100,7 @@ SOURCES = \
 	ui_fileinfopopup.c \
 	ui_fileopener.c \
 	ui_jumptotrack.c \
+	ui_lastfm.c\
 	ui_main.c \
 	ui_manager.c \
 	ui_playlist.c \
@@ -106,9 +110,17 @@ SOURCES = \
 	ui_skinned_window.c \
 	ui_skinned_button.c \
 	ui_skinned_textbox.c \
+	ui_skinned_number.c \
+	ui_skinned_horizontal_slider.c \
+	ui_vis.c \
+	ui_svis.c \
+	ui_skinned_menurow.c \
+	ui_skinned_playstatus.c \
+	ui_skinned_monostereo.c \
+	ui_skinned_equalizer_slider.c \
+	ui_skinned_equalizer_graph.c \
 	ui_skinselector.c \
 	ui_urlopener.c \
-	urldecode.c \
 	util.c \
 	vfs.c \
 	vfs_buffer.c \

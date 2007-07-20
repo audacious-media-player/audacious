@@ -24,6 +24,8 @@
 #include <gtk/gtk.h>
 
 #include "widgets/widgetcore.h"
+#include "ui_vis.h"
+#include "ui_svis.h"
 
 /* yes, main window size is fixed */
 #define MAINWIN_WIDTH            (gint)275
@@ -50,6 +52,7 @@ enum {
     
     MAINWIN_GENERAL_PLAYFILE,
     MAINWIN_GENERAL_PLAYLOCATION,
+    MAINWIN_GENERAL_LASTFM,
 
     MAINWIN_GENERAL_FILEINFO,
     MAINWIN_GENERAL_PREFS,
@@ -103,16 +106,15 @@ extern GtkWidget *mainwin_info;
 
 extern GtkWidget *mainwin_stime_min, *mainwin_stime_sec;
 
-extern Vis *active_vis;
-extern Vis *mainwin_vis;
-extern SVis *mainwin_svis;
+extern GtkWidget *mainwin_vis;
+extern GtkWidget *mainwin_svis;
 
-extern PlayStatus *mainwin_playstatus;
+extern GtkWidget *mainwin_playstatus;
 
-extern Number *mainwin_minus_num, *mainwin_10min_num, *mainwin_min_num;
-extern Number *mainwin_10sec_num, *mainwin_sec_num;
+extern GtkWidget *mainwin_minus_num, *mainwin_10min_num, *mainwin_min_num;
+extern GtkWidget *mainwin_10sec_num, *mainwin_sec_num;
 
-extern HSlider *mainwin_sposition;
+extern GtkWidget *mainwin_position, *mainwin_sposition;
 
 void mainwin_create(void);
 void read_volume(gint when);
@@ -169,6 +171,7 @@ void mainwin_general_menu_callback(gpointer cb_data,
                                    GtkWidget * widget);
 
 void mainwin_attach_idle_func(void);
+gboolean mainwin_update_song_info(void);
 void mainwin_drag_data_received(GtkWidget * widget,
                                 GdkDragContext * context,
                                 gint x,

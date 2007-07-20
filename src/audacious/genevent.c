@@ -56,6 +56,8 @@
 #include "ui_main.h"
 #include "ui_playlist.h"
 #include "ui_skinned_textbox.h"
+#include "ui_skinned_number.h"
+#include "ui_skinned_horizontal_slider.h"
 #include "util.h"
 #include "visualization.h"
 #include "vfs.h"
@@ -82,20 +84,22 @@ idle_func_change_song(gboolean waiting)
             (gint) g_timer_elapsed(pause_timer, NULL);
 
         if (mainwin_10min_num != NULL) {
-            number_set_number(mainwin_10min_num, timeleft / 600);
-            number_set_number(mainwin_min_num, (timeleft / 60) % 10);
-            number_set_number(mainwin_10sec_num, (timeleft / 10) % 6);
-            number_set_number(mainwin_sec_num, timeleft % 10);
+            ui_skinned_number_set_number(mainwin_10min_num, timeleft / 600);
+            ui_skinned_number_set_number(mainwin_min_num, (timeleft / 60) % 10);
+            ui_skinned_number_set_number(mainwin_10sec_num, (timeleft / 10) % 6);
+            ui_skinned_number_set_number(mainwin_sec_num, timeleft % 10);
         }
 
-        if (mainwin_sposition != NULL && !mainwin_sposition->hs_pressed) {
-            gchar time_str[5];
+        if (mainwin_sposition != NULL && !UI_SKINNED_HORIZONTAL_SLIDER(mainwin_sposition)->pressed) {
+            gchar *time_str;
 
-            g_snprintf(time_str, sizeof(time_str), "%2.2d", timeleft / 60);
+            time_str = g_strdup_printf("%2.2d", timeleft / 60);
             ui_skinned_textbox_set_text(mainwin_stime_min, time_str);
+            g_free(time_str);
 
-            g_snprintf(time_str, sizeof(time_str), "%2.2d", timeleft % 60);
+            time_str = g_strdup_printf("%2.2d", timeleft % 60);
             ui_skinned_textbox_set_text(mainwin_stime_sec, time_str);
+            g_free(time_str);
         }
 
         playlistwin_set_time(timeleft * 1000, 0, TIMER_ELAPSED);

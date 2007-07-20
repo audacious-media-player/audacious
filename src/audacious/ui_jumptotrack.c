@@ -64,7 +64,6 @@
 #include "genevent.h"
 #include "hints.h"
 #include "input.h"
-#include "urldecode.h"
 #include "playback.h"
 #include "playlist.h"
 #include "pluginenum.h"
@@ -278,21 +277,24 @@ ui_jump_to_track_update(GtkWidget * widget, gpointer user_data)
         PlaylistEntry *entry = PLAYLIST_ENTRY(playlist_glist->data);
 
         if (entry->title)
-        desc_buf = g_strdup(entry->title);
-        else if (strchr(entry->filename, '/'))
-        desc_buf = str_to_utf8(strrchr(entry->filename, '/') + 1);
-        else
-        desc_buf = str_to_utf8(entry->filename);
+            desc_buf = g_strdup(entry->title);
+        else {
+            gchar *realfn = NULL;
+            realfn = g_filename_from_uri(entry->filename, NULL, NULL);
+            if (strchr(realfn ? realfn : entry->filename, '/'))
+                desc_buf = str_to_utf8(strrchr(realfn ? realfn : entry->filename, '/') + 1);
+            else
+                desc_buf = str_to_utf8(realfn ? realfn : entry->filename);
+            g_free(realfn); realfn = NULL;
+        }
 
         gtk_list_store_append(GTK_LIST_STORE(store), &iter);
         gtk_list_store_set(GTK_LIST_STORE(store), &iter,
                            0, row, 1, desc_buf, -1);
         row++;
 
-        if(desc_buf) {
-            g_free(desc_buf);
-            desc_buf = NULL;
-        }
+        g_free(desc_buf);
+        desc_buf = NULL;
     }
 
     gtk_tree_model_get_iter_first(GTK_TREE_MODEL(store), &iter);
@@ -351,13 +353,17 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
          playlist_glist = g_list_next(playlist_glist))
     {
         PlaylistEntry *entry = PLAYLIST_ENTRY(playlist_glist->data);
-        const gchar *title=NULL;
-        gchar   *filename = NULL;
-        filename = str_to_utf8(entry->filename);
+        gchar *title = NULL;
+
         if (entry->title)
-                title = entry->title;
-        else
-                title = filename;
+            title = g_strdup(entry->title);
+        else {
+            gchar *realfn = NULL;
+            realfn = g_filename_from_uri(entry->filename, NULL, NULL);
+            title = str_to_utf8(realfn ? realfn : entry->filename);
+            g_free(realfn); realfn = NULL;
+        }
+
         /*we are matching all the path not just the filename or title*/
 
         /* Compare the reg.expressions to the string - if all the
@@ -380,21 +386,21 @@ ui_jump_to_track_edit_cb(GtkEntry * entry, gpointer user_data)
 
         if (match) {
                 if (entry->title)
-                        title = g_strdup(entry->title);
-                else if (strchr(entry->filename, '/'))
-                        title = str_to_utf8(strrchr(entry->filename, '/') + 1);
-                else
-                        title = str_to_utf8(entry->filename);
-                
+                    title = g_strdup(entry->title);
+                else {
+                    gchar *realfn = NULL;
+                    realfn = g_filename_from_uri(entry->filename, NULL, NULL);
+                    if (strchr(realfn ? realfn : entry->filename, '/'))
+                        title = str_to_utf8(strrchr(realfn ? realfn : entry->filename, '/') + 1);
+                    else
+                        title = str_to_utf8(realfn ? realfn : entry->filename);
+                    g_free(realfn); realfn = NULL;
+                }
                 gtk_list_store_append(store, &iter);
                 gtk_list_store_set(store, &iter, 0, song_index + 1 , 1, title, -1);
         }
         song_index++;
-
-        if (filename) {
-            g_free(filename);
-            filename = NULL;
-        }
+        g_free(title); title = NULL;
     }
 
     PLAYLIST_UNLOCK(playlist->mutex);
@@ -450,11 +456,16 @@ ui_jump_to_track_fill(gpointer treeview)
         PlaylistEntry *entry = PLAYLIST_ENTRY(playlist_glist->data);
 
         if (entry->title)
-        desc_buf = g_strdup(entry->title);
-        else if (strchr(entry->filename, '/'))
-        desc_buf = str_to_utf8(strrchr(entry->filename, '/') + 1);
-        else
-        desc_buf = str_to_utf8(entry->filename);
+            desc_buf = g_strdup(entry->title);
+        else {
+            gchar *realfn = NULL;
+            realfn = g_filename_from_uri(entry->filename, NULL, NULL);
+            if (strchr(realfn ? realfn : entry->filename, '/'))
+                desc_buf = str_to_utf8(strrchr(realfn ? realfn : entry->filename, '/') + 1);
+            else
+                desc_buf = str_to_utf8(realfn ? realfn : entry->filename);
+            g_free(realfn); realfn = NULL;
+        }
 
         gtk_list_store_append(GTK_LIST_STORE(jtf_store), &iter);
         gtk_list_store_set(GTK_LIST_STORE(jtf_store), &iter,

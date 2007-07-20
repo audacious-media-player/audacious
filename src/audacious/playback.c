@@ -48,11 +48,13 @@
 #include "ui_main.h"
 #include "ui_playlist.h"
 #include "ui_skinselector.h"
-#include "urldecode.h"
+#include "ui_skinned_playstatus.h"
 #include "util.h"
+#include "visualization.h"
 
 #include "playback.h"
 
+static int song_info_timeout_source = 0;
 
 gint
 playback_get_time(void)
@@ -83,8 +85,8 @@ playback_initiate(void)
     if (playback_get_playing())
         playback_stop();
 
-    vis_clear_data(mainwin_vis);
-    svis_clear_data(mainwin_svis);
+    ui_vis_clear_data(mainwin_vis);
+    ui_svis_clear_data(mainwin_svis);
     mainwin_disable_seekbar();
 
     entry = playlist_get_entry_to_play(playlist);
@@ -101,6 +103,26 @@ playback_initiate(void)
 
     playlist_check_pos_current(playlist);
     mainwin_set_info_text();
+    mainwin_update_song_info();
+
+    /* FIXME: use g_timeout_add_seconds when glib-2.14 is required */
+    song_info_timeout_source = g_timeout_add(1000,
+        (GSourceFunc) mainwin_update_song_info, NULL);
+
+    if (cfg.player_shaded) {
+        gtk_widget_show(mainwin_stime_min);
+        gtk_widget_show(mainwin_stime_sec);
+        gtk_widget_show(mainwin_sposition);
+    } else {
+        gtk_widget_show(mainwin_minus_num);
+        gtk_widget_show(mainwin_10min_num);
+        gtk_widget_show(mainwin_min_num);
+        gtk_widget_show(mainwin_10sec_num);
+        gtk_widget_show(mainwin_sec_num);
+        gtk_widget_show(mainwin_position);
+    }
+
+    vis_playback_start();
 
     hook_call("playback begin", entry);
 }
@@ -120,12 +142,17 @@ playback_pause(void)
         get_current_input_playback()->plugin->pause(get_current_input_playback(),
 						    ip_data.paused);
 
+    if (ip_data.paused)
+        hook_call("playback pause", NULL);
+    else
+        hook_call("playback unpause", NULL);
+
     g_return_if_fail(mainwin_playstatus != NULL);
 
     if (ip_data.paused)
-        playstatus_set_status(mainwin_playstatus, STATUS_PAUSE);
+        ui_skinned_playstatus_set_status(mainwin_playstatus, STATUS_PAUSE);
     else
-        playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
+        ui_skinned_playstatus_set_status(mainwin_playstatus, STATUS_PLAY);
 }
 
 void
@@ -159,9 +186,14 @@ playback_stop(void)
 
     ip_data.buffering = FALSE;
     ip_data.playing = FALSE;
-    
+
+    if (song_info_timeout_source)
+        g_source_remove(song_info_timeout_source);
+
+    vis_playback_stop();
+
     g_return_if_fail(mainwin_playstatus != NULL);
-    playstatus_set_status_buffering(mainwin_playstatus, FALSE);
+    ui_skinned_playstatus_set_buffering(mainwin_playstatus, FALSE);
 }
 
 static void

@@ -3,7 +3,7 @@
 include ../mk/rules.mk
 include ../mk/init.mk
 
-SUBDIRS = $(INTL_OBJECTIVE) $(SUBDIR_GUESS)
+SUBDIRS = $(SUBDIR_GUESS)
 
 ifdef USE_DBUS
 SUBDIRS += libaudclient audtool

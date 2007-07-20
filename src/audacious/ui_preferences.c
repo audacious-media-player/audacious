@@ -49,7 +49,6 @@
 #include "main.h"
 #include "widgets/widgetcore.h"
 #include "ui_skinned_textbox.h"
-#include "urldecode.h"
 #include "strings.h"
 #include "util.h"
 #include "dnd.h"
@@ -1922,46 +1921,6 @@ on_category_view_realize(GtkTreeView * treeview,
 }
 
 static void
-mainwin_drag_data_received1(GtkWidget * widget,
-                            GdkDragContext * context,
-                            gint x, gint y,
-                            GtkSelectionData * selection_data,
-                            guint info, guint time,
-                            gpointer user_data) 
-{
-    gchar *path, *decoded;
-
-    if (!selection_data->data) {
-        g_warning("DND data string is NULL");
-        return;
-    }
-
-    path = (gchar *) selection_data->data;
-
-    /* FIXME: use a real URL validator/parser */
-
-    if (!str_has_prefix_nocase(path, "fonts:///"))
-        return;
-
-    path[strlen(path) - 2] = 0; /* Why the hell a CR&LF? */
-    path += 8;
-
-    /* plain, since we already stripped the first URI part */
-    decoded = xmms_urldecode_plain(path);
-
-    /* Get the old font's size, and add it to the dropped
-     * font's name */
-    cfg.playlist_font = g_strconcat(decoded+1,
-                                    strrchr(cfg.playlist_font, ' '),
-                                    NULL);
-    playlist_list_set_font(cfg.playlist_font);
-    playlistwin_update_list(playlist_get_active());
-    gtk_font_button_set_font_name(user_data, cfg.playlist_font);	
-    
-    g_free(decoded);
-}
-
-static void
 on_skin_view_drag_data_received(GtkWidget * widget,
                                 GdkDragContext * context,
                                 gint x, gint y,
@@ -2619,7 +2578,7 @@ create_prefs_window(void)
 
     widget = glade_xml_get_widget(xml, "playlist_font_button");
     g_signal_connect(mainwin, "drag-data-received",
-                     G_CALLBACK(mainwin_drag_data_received1),
+                     G_CALLBACK(mainwin_drag_data_received),
                      widget);
 
     widget = glade_xml_get_widget(xml, "titlestring_cbox");

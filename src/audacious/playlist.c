@@ -56,7 +56,6 @@
 #include "util.h"
 #include "configdb.h"
 #include "vfs.h"
-#include "urldecode.h"
 #include "ui_equalizer.h"
 #include "playback.h"
 #include "playlist.h"
@@ -353,6 +352,7 @@ playlist_get_current_name(Playlist *playlist)
     return playlist->title;
 }
 
+/* filename is real filename here. --yaz */
 gboolean
 playlist_set_current_name(Playlist *playlist, const gchar * filename)
 {
@@ -824,7 +824,10 @@ playlist_dir_find_files(const gchar * path,
     struct stat statbuf;
     DeviceInode *devino;
 
-    if (!g_file_test(path, G_FILE_TEST_IS_DIR))
+    if (!path)
+        return NULL;
+
+    if (!vfs_file_test(path, G_FILE_TEST_IS_DIR))
         return NULL;
 
     stat(path, &statbuf);
@@ -837,6 +840,7 @@ playlist_dir_find_files(const gchar * path,
 
     g_hash_table_insert(htab, devino, GINT_TO_POINTER(1));
 
+    /* XXX: what the hell is this for? --nenolod */
     if ((ilist = input_scan_dir(path))) {
         GList *node;
         for (node = ilist; node; node = g_list_next(node)) {
@@ -848,20 +852,25 @@ playlist_dir_find_files(const gchar * path,
         return list;
     }
 
+    /* g_dir_open does not handle URI, so path should come here not-urified. --giacomo */
     if (!(dir = g_dir_open(path, 0, NULL)))
         return NULL;
 
     while ((dir_entry = g_dir_read_name(dir))) {
-        gchar *filename;
+        gchar *filename, *tmp;
 
         if (file_is_hidden(dir_entry))
             continue;
 
-        filename = g_build_filename(path, dir_entry, NULL);
+        tmp = g_build_filename(path, dir_entry, NULL);
+        filename = g_filename_to_uri(tmp, NULL, NULL);
+        g_free(tmp);
 
-        if (g_file_test(filename, G_FILE_TEST_IS_DIR)) {
+        if (vfs_file_test(filename, G_FILE_TEST_IS_DIR)) {
             GList *sub;
-            sub = playlist_dir_find_files(filename, background, htab);
+            gchar *dirfilename = g_filename_from_uri(filename, NULL, NULL);
+            sub = playlist_dir_find_files(dirfilename, background, htab);
+            g_free(dirfilename);
             g_free(filename);
             list = g_list_concat(list, sub);
         }
@@ -898,49 +907,6 @@ playlist_add_url(Playlist * playlist, const gchar * url)
     return playlist_ins_url(playlist, url, -1);
 }
 
-static gchar *
-_playlist_urldecode_basic_path(const gchar * encoded_path)
-{
-    const gchar *cur, *ext;
-    gchar *path, *tmp;
-    gint realchar;
-
-    if (!encoded_path)
-        return NULL;
-
-    if (!str_has_prefix_nocase(encoded_path, "file:"))
-        return NULL;
-
-    cur = encoded_path + 5;
-
-    if (str_has_prefix_nocase(cur, "//localhost"))
-        cur += 11;
-
-    if (*cur == '/')
-        while (cur[1] == '/')
-            cur++;
-
-    tmp = g_malloc0(strlen(cur) + 1);
-
-    while ((ext = strchr(cur, '%')) != NULL) {
-        strncat(tmp, cur, ext - cur);
-        ext++;
-        cur = ext + 2;
-        if (!sscanf(ext, "%2x", &realchar)) {
-            /* Assume it is a literal '%'.  Several file
-             * managers send unencoded file: urls on drag
-             * and drop. */
-            realchar = '%';
-            cur -= 2;
-        }
-        tmp[strlen(tmp)] = realchar;
-    }
-
-    path = g_strconcat(tmp, cur, NULL);
-    g_free(tmp);
-    return path;
-}
-
 guint
 playlist_ins_dir(Playlist * playlist, const gchar * path,
                     gint pos,
@@ -949,7 +915,7 @@ playlist_ins_dir(Playlist * playlist, const gchar * path,
     guint entries = 0;
     GList *list, *node;
     GHashTable *htab;
-    gchar *path2 = _playlist_urldecode_basic_path(path);
+    gchar *path2 = g_filename_from_uri(path, NULL, NULL);
 
     if (path2 == NULL)
         path2 = g_strdup(path);
@@ -1535,9 +1501,13 @@ playlist_get_info_text(Playlist *playlist)
         title = str_to_utf8(playlist->position->title);
     }
     else {
-        gchar *basename = g_path_get_basename(playlist->position->filename);
+        gchar *realfn = NULL;
+        gchar *basename = NULL;
+        realfn = g_filename_from_uri(playlist->position->filename, NULL, NULL);
+        basename = g_path_get_basename(realfn ? realfn : playlist->position->filename);
         title = filename_to_utf8(basename);
-        g_free(basename);
+        g_free(realfn); realfn = NULL;
+        g_free(basename); basename = NULL;
     }
 
     /*
@@ -1636,8 +1606,8 @@ playlist_load_ins_file(Playlist *playlist,
     filename = g_strchug(g_strdup(filename_p));
 
     if(cfg.convert_slash)
-    while ((tmp = strchr(filename, '\\')) != NULL)
-        *tmp = '/';
+        while ((tmp = strchr(filename, '\\')) != NULL)
+            *tmp = '/';
 
     if (filename[0] != '/' && !strstr(filename, "://")) {
         path = g_strdup(playlist_name);
@@ -1698,8 +1668,9 @@ playlist_load_ins_file_tuple(Playlist * playlist,
 
     filename = g_strchug(g_strdup(filename_p));
 
-    while ((tmp = strchr(filename, '\\')) != NULL)
-        *tmp = '/';
+    if(cfg.convert_slash)
+        while ((tmp = strchr(filename, '\\')) != NULL)
+            *tmp = '/';
 
     if (filename[0] != '/' && !strstr(filename, "://")) {
         path = g_strdup(playlist_name);
@@ -1852,7 +1823,10 @@ playlist_get_songtitle(Playlist *playlist, guint pos)
     PLAYLIST_UNLOCK(playlist->mutex);
 
     if (!title) {
-        title = g_path_get_basename(entry->filename);
+        gchar *realfn = NULL;
+        realfn = g_filename_from_uri(entry->filename, NULL, NULL);
+        title = g_path_get_basename(realfn ? realfn : entry->filename);
+        g_free(realfn); realfn = NULL;
         return str_replace(title, filename_to_utf8(title));
     }
 
@@ -2104,8 +2078,12 @@ playlist_get_mtime(const gchar *filename)
 {
     struct stat buf;
     gint rv;
+    gchar *realfn = NULL;
 
-    rv = stat(filename, &buf);
+    /* stat() does not accept file:// --yaz */
+    realfn = g_filename_from_uri(filename, NULL, NULL);
+    rv = stat(realfn ? realfn : filename, &buf);
+    g_free(realfn); realfn = NULL;
 
     if (rv == 0) {
         return buf.st_mtime;
