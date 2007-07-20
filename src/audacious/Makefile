@@ -46,6 +46,7 @@ HEADERS = \
 	main.h \
 	mime.h \
 	output.h \
+	playback.h \
 	playlist.h \
 	playlist_container.h \
 	plugin.h \
