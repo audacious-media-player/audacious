@@ -930,13 +930,15 @@ xmms_show_message(const gchar * title, const gchar * text,
   if ( button_action )
     g_signal_connect( G_OBJECT(dialog_bbox_b1) , "clicked" ,
                       button_action , action_data );
-  GTK_WIDGET_SET_FLAGS( dialog_bbox_b1 , GTK_CAN_DEFAULT);
-  gtk_widget_grab_default( dialog_bbox_b1 );
 
   gtk_container_add( GTK_CONTAINER(dialog_bbox) , dialog_bbox_b1 );
   gtk_box_pack_start( GTK_BOX(dialog_vbox) , dialog_bbox , FALSE , FALSE , 0 );
 
   gtk_container_add( GTK_CONTAINER(dialog) , dialog_vbox );
+
+  GTK_WIDGET_SET_FLAGS( dialog_bbox_b1 , GTK_CAN_DEFAULT);
+  gtk_widget_grab_default( dialog_bbox_b1 );
+
   gtk_widget_show_all(dialog);
 
   return dialog;
