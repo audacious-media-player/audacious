@@ -348,6 +348,12 @@ input_check_file(const gchar * filename, gboolean show_warning)
     fd = vfs_buffered_file_new_from_uri(tmp_uri);
     g_free(tmp_uri);
 
+    if (!fd) {
+        printf("Unreadable to read from %s, giving up.\n", filename_proxy);
+        g_free(filename_proxy);
+        return NULL;
+    }
+
     ext = strrchr(filename_proxy, '.') + 1;
 
     use_ext_filter =
