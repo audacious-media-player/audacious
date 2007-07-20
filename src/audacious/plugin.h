@@ -240,6 +240,7 @@ struct _InputPlugin {
 
     /* Added in Audacious 1.4.0 */
     void (*mseek) (InputPlayback * playback, gulong millisecond);
+    TitleInput *(*probe_for_tuple)(gchar *uri, VFSFile *fd);
 };
 
 struct _GeneralPlugin {
