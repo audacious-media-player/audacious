@@ -18,7 +18,8 @@ install-posthook:
 	fi
 
 OBJECTIVE_DATA =							\
-	audacious.pc:$(LIBDIR)/pkgconfig
+	audacious.pc:$(LIBDIR)/pkgconfig				\
+	audclient.pc:$(LIBDIR)/pkgconfig
 
 build-posthook:
 	@( \

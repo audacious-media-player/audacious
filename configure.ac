@@ -449,6 +449,7 @@ AC_SUBST(plugindir)
 
 AC_CONFIG_FILES([
 	audacious.pc
+	audclient.pc
 	mk/rules.mk
 	man/audtool.1
 	man/audacious.1

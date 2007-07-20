@@ -1,0 +1,14 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+data_dir=@datadir@/@PACKAGE_NAME@
+
+version=@PACKAGE_VERSION@
+audacious_include_dir=@includedir@
+lib_dir=@libdir@
+
+Name: Audacious Client Library
+Description: Remote control library for Audacious
+Version: @PACKAGE_VERSION@
+Requires: @PC_REQUIRES@
+Libs: -L${lib_dir} @LIBAUDCLIENT_LDFLAGS@
+Cflags: -I${audacious_include_dir}
