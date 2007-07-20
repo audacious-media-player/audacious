@@ -78,10 +78,6 @@ ui_skinned_window_configure(GtkWidget *widget,
     window->x = event->x;
     window->y = event->y;
 
-#if 0
-    g_print("%p window->x = %d, window->y = %d\n", window, window->x, window->y);
-#endif
-
     return FALSE;
 }
 
@@ -143,9 +139,12 @@ ui_skinned_window_init(GtkWidget *widget)
 }
 
 GtkWidget *
-ui_skinned_window_new(GtkWindowType type, const gchar *wmclass_name)
+ui_skinned_window_new(const gchar *wmclass_name)
 {
     GtkWidget *widget = g_object_new(ui_skinned_window_get_type(), NULL);
+    GtkWindow *window = GTK_WINDOW(widget);
+
+    window->type = SKINNED_WINDOW_TYPE;
 
     if (wmclass_name)
         gtk_window_set_wmclass(GTK_WINDOW(widget), wmclass_name, "Audacious");

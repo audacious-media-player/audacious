@@ -42,6 +42,7 @@
 #include "util.h"
 #include "visualization.h"
 #include "widgets/widgetcore.h"
+#include "ui_skinned_playstatus.h"
 #include "hook.h"
 
 #include "vfs.h"
@@ -317,6 +318,10 @@ input_dont_show_warning(GtkObject * object, gpointer user_data)
  * Adapted to use the NewVFS extension probing system if enabled.
  *
  * --nenolod, Dec 12 2006
+ *
+ * Adapted to use the mimetype system.
+ *
+ * --nenolod, Jul  9 2007
  */
 InputPlugin *
 input_check_file(const gchar * filename, gboolean show_warning)
@@ -328,6 +333,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
     gint ret = 1;
     gchar *ext, *tmp, *tmp_uri;
     gboolean use_ext_filter;
+    gchar *mimetype;
 
     filename_proxy = g_strdup(filename);
 
@@ -342,11 +348,25 @@ input_check_file(const gchar * filename, gboolean show_warning)
     fd = vfs_buffered_file_new_from_uri(tmp_uri);
     g_free(tmp_uri);
 
+    if (!fd) {
+        printf("Unreadable to read from %s, giving up.\n", filename_proxy);
+        g_free(filename_proxy);
+        return NULL;
+    }
+
     ext = strrchr(filename_proxy, '.') + 1;
 
     use_ext_filter =
         (fd != NULL && (!g_strncasecmp(filename, "/", 1) ||
                         !g_strncasecmp(filename, "file://", 7))) ? TRUE : FALSE;
+
+    mimetype = vfs_get_metadata(fd, "content-type");
+    if ((ip = mime_get_plugin(mimetype)) != NULL)
+    {
+        g_free(filename_proxy);
+        vfs_fclose(fd);
+        return ip;
+    }
 
     for (node = get_input_list(); node != NULL; node = g_list_next(node))
     {
@@ -518,12 +538,14 @@ input_general_file_info_box(const gchar * filename, InputPlugin * ip)
 
     gchar *title, *fileinfo, *basename, *iplugin;
     gchar *filename_utf8;
+    gchar *realfn = NULL;
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 
-    basename = g_path_get_basename(filename);
+    realfn = g_filename_from_uri(filename, NULL, NULL);
+    basename = g_path_get_basename(realfn ? realfn : filename);
     fileinfo = filename_to_utf8(basename);
     title = g_strdup_printf(_("audacious: %s"), fileinfo);
 
@@ -545,7 +567,8 @@ input_general_file_info_box(const gchar * filename, InputPlugin * ip)
     gtk_box_pack_start(GTK_BOX(filename_hbox), label, FALSE, TRUE, 0);
 
     filename_entry = gtk_entry_new();
-    filename_utf8 = filename_to_utf8(filename);
+    filename_utf8 = filename_to_utf8(realfn ? realfn : filename);
+    g_free(realfn); realfn = NULL;
 
     gtk_entry_set_text(GTK_ENTRY(filename_entry), filename_utf8);
     gtk_editable_set_editable(GTK_EDITABLE(filename_entry), FALSE);
@@ -734,10 +757,10 @@ input_set_status_buffering(gboolean status)
 
     g_return_if_fail(mainwin_playstatus != NULL);
 
-    if (ip_data.buffering == TRUE && mainwin_playstatus != NULL && mainwin_playstatus->ps_status == STATUS_STOP)
-        mainwin_playstatus->ps_status = STATUS_PLAY;
+    if (ip_data.buffering == TRUE && mainwin_playstatus != NULL && UI_SKINNED_PLAYSTATUS(mainwin_playstatus)->status == STATUS_STOP)
+        UI_SKINNED_PLAYSTATUS(mainwin_playstatus)->status = STATUS_PLAY;
 
-    playstatus_set_status_buffering(mainwin_playstatus, ip_data.buffering);
+    ui_skinned_playstatus_set_buffering(mainwin_playstatus, ip_data.buffering);
 }
 
 void

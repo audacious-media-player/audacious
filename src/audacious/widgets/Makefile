@@ -20,20 +20,8 @@ CFLAGS += \
 
 SOURCES = \
 	widget.c \
-	sbutton.c \
-	pbutton.c \
-	textbox.c \
-	hslider.c \
-	menurow.c \
-	monostereo.c \
-	vis.c \
-	svis.c \
-	number.c \
-	playstatus.c \
 	playlist_list.c \
 	playlist_slider.c \
-	eq_graph.c \
-	eq_slider.c \
 	skin.c
 
 OBJECTS = ${SOURCES:.c=.o}

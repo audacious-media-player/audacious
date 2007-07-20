@@ -22,7 +22,14 @@ CFLAGS += \
 	-I.. -I../..   \
 	-I../intl
 
-SOURCES = audtool.c handlers.c
+SOURCES =	 			\
+	audtool_main.c			\
+	audtool_handlers_general.c	\
+	audtool_handlers_playback.c	\
+	audtool_handlers_playlist.c	\
+	audtool_handlers_playqueue.c	\
+	audtool_handlers_vitals.c	\
+	audtool_report.c
 
 OBJECTS = ${SOURCES:.c=.o}
 

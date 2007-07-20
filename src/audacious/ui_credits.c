@@ -61,6 +61,7 @@ static const gchar *credit_text[] = {
     "Jonathan Schleifer",
     "Tony Vroon",
     "Yoshiki Yazawa",
+    "Tomasz Moń",
     NULL,
 
     N_("Graphics:"),
@@ -77,6 +78,7 @@ static const gchar *credit_text[] = {
     "Kiyoshi Aman",
     "Luca Barbato",
     "Daniel Barkalow",
+    "Michael Färber",
     "Shay Green",
     "Giacomo Lozito",
     "William Pitcock",
@@ -324,7 +326,7 @@ show_credits_window(void)
 {
     static GtkWidget *about_window = NULL;
 
-    GdkPixmap *beep_logo_pmap = NULL, *beep_logo_mask = NULL;
+    GdkPixbuf *logo_pixbuf;
     GtkWidget *about_vbox;
     GtkWidget *about_credits_logo_box, *about_credits_logo_frame;
     GtkWidget *about_credits_logo;
@@ -355,10 +357,7 @@ show_credits_window(void)
     about_vbox = gtk_vbox_new(FALSE, 5);
     gtk_container_add(GTK_CONTAINER(about_window), about_vbox);
 
-    if (!beep_logo_pmap)
-        beep_logo_pmap =
-            gdk_pixmap_create_from_xpm_d(about_window->window,
-                                         &beep_logo_mask, NULL, audacious_logo_xpm);
+    logo_pixbuf = gdk_pixbuf_new_from_xpm_data((const char **)audacious_logo_xpm);
 
     about_credits_logo_box = gtk_hbox_new(TRUE, 0);
     gtk_box_pack_start(GTK_BOX(about_vbox), about_credits_logo_box,
@@ -370,9 +369,10 @@ show_credits_window(void)
     gtk_box_pack_start(GTK_BOX(about_credits_logo_box),
                        about_credits_logo_frame, FALSE, FALSE, 0);
 
-    about_credits_logo = gtk_pixmap_new(beep_logo_pmap, beep_logo_mask);
+    about_credits_logo = gtk_image_new_from_pixbuf(logo_pixbuf);
     gtk_container_add(GTK_CONTAINER(about_credits_logo_frame),
                       about_credits_logo);
+    g_object_unref(logo_pixbuf);
 
     label = gtk_label_new(NULL);
     text = g_strdup_printf(_(bmp_brief), VERSION);

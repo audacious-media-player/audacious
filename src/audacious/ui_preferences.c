@@ -1,34 +1,21 @@
-/*
- * audacious: Cross-platform multimedia player.
- * ui_preferences.c: Preferences UI.
+/*  Audacious - Cross-platform multimedia player
+ *  Copyright (C) 2005-2006  Audacious development team.
  *
- * Copyright (c) 2005-2007 Audacious development team.
+ *  BMP - Cross-platform multimedia player
+ *  Copyright (C) 2003-2004  BMP development team.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are
- * met:
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; under version 2 of the License.
  *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * 3. The name of the author may not be used to endorse or promote products
- *    derived from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -61,7 +48,7 @@
 
 #include "main.h"
 #include "widgets/widgetcore.h"
-#include "urldecode.h"
+#include "ui_skinned_textbox.h"
 #include "strings.h"
 #include "util.h"
 #include "dnd.h"
@@ -900,7 +887,7 @@ on_mainwin_font_button_font_set(GtkFontButton * button,
     g_free(cfg.mainwin_font);
     cfg.mainwin_font = g_strdup(gtk_font_button_get_font_name(button));
 
-    textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
+    ui_skinned_textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
     mainwin_set_info_text();
     draw_main_window(TRUE);
 }
@@ -919,7 +906,7 @@ on_use_bitmap_fonts_toggled(GtkToggleButton * button,
 {
     gboolean useit = gtk_toggle_button_get_active(button);
     cfg.mainwin_use_xfont = useit != FALSE ? FALSE : TRUE;
-    textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
+    ui_skinned_textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
     playlistwin_set_sinfo_font(cfg.playlist_font);
 
     mainwin_set_info_text();
@@ -1934,46 +1921,6 @@ on_category_view_realize(GtkTreeView * treeview,
 }
 
 static void
-mainwin_drag_data_received1(GtkWidget * widget,
-                            GdkDragContext * context,
-                            gint x, gint y,
-                            GtkSelectionData * selection_data,
-                            guint info, guint time,
-                            gpointer user_data) 
-{
-    gchar *path, *decoded;
-
-    if (!selection_data->data) {
-        g_warning("DND data string is NULL");
-        return;
-    }
-
-    path = (gchar *) selection_data->data;
-
-    /* FIXME: use a real URL validator/parser */
-
-    if (!str_has_prefix_nocase(path, "fonts:///"))
-        return;
-
-    path[strlen(path) - 2] = 0; /* Why the hell a CR&LF? */
-    path += 8;
-
-    /* plain, since we already stripped the first URI part */
-    decoded = xmms_urldecode_plain(path);
-
-    /* Get the old font's size, and add it to the dropped
-     * font's name */
-    cfg.playlist_font = g_strconcat(decoded+1,
-                                    strrchr(cfg.playlist_font, ' '),
-                                    NULL);
-    playlist_list_set_font(cfg.playlist_font);
-    playlistwin_update_list(playlist_get_active());
-    gtk_font_button_set_font_name(user_data, cfg.playlist_font);	
-    
-    g_free(decoded);
-}
-
-static void
 on_skin_view_drag_data_received(GtkWidget * widget,
                                 GdkDragContext * context,
                                 gint x, gint y,
@@ -2631,7 +2578,7 @@ create_prefs_window(void)
 
     widget = glade_xml_get_widget(xml, "playlist_font_button");
     g_signal_connect(mainwin, "drag-data-received",
-                     G_CALLBACK(mainwin_drag_data_received1),
+                     G_CALLBACK(mainwin_drag_data_received),
                      widget);
 
     widget = glade_xml_get_widget(xml, "titlestring_cbox");

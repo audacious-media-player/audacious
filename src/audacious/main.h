@@ -125,6 +125,7 @@ struct _BmpConfig {
     gboolean terminate;
     gboolean filepopup_showprogressbar;
     gboolean close_jtf_dialog;
+    gboolean twoway_scroll;
 };
 
 typedef struct _BmpConfig BmpConfig;
@@ -161,9 +162,6 @@ extern const gchar *chardet_detector_presets[];
 extern const guint n_chardet_detector_presets;
 
 extern GList *dock_window_list;
-extern gboolean pposition_broken;
-
-extern gboolean starting_up;
 
 extern gboolean has_x11_connection;
 
@@ -171,7 +169,7 @@ void bmp_config_save(void);
 void bmp_config_load(void);
 void bmp_config_free(void);
 void make_directory(const gchar * path, mode_t mode);
-void report_error(const gchar *error_text);
+void report_error(const gchar *error_message, ...);
 
 extern GCond *cond_scan;
 extern GMutex *mutex_scan;

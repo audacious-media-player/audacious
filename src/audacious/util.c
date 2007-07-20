@@ -40,6 +40,8 @@
 #include <errno.h>
 
 #ifdef HAVE_FTS_H
+#  include <sys/types.h>
+#  include <sys/stat.h>
 #  include <fts.h>
 #endif
 
@@ -79,14 +81,14 @@ find_file_func(const gchar * path, const gchar * basename, gpointer data)
         return TRUE;
     }
 
-    if (g_file_test(path, G_FILE_TEST_IS_REGULAR)) {
+    if (vfs_file_test(path, G_FILE_TEST_IS_REGULAR)) {
         if (!strcasecmp(basename, context->to_match)) {
             context->match = g_strdup(path);
             context->found = TRUE;
             return TRUE;
         }
     }
-    else if (g_file_test(path, G_FILE_TEST_IS_DIR)) {
+    else if (vfs_file_test(path, G_FILE_TEST_IS_DIR)) {
         dir_foreach(path, find_file_func, context, NULL);
         if (context->found)
             return TRUE;
@@ -99,12 +101,34 @@ gchar *
 find_file_recursively(const gchar * path, const gchar * filename)
 {
     FindFileContext context;
+    gchar *out = NULL;
 
     context.to_match = filename;
     context.match = NULL;
     context.found = FALSE;
 
     dir_foreach(path, find_file_func, &context, NULL);
+
+    if (context.match)
+    {
+        out = g_filename_to_uri(context.match, NULL, NULL);
+        g_free(context.match);
+    }
+
+    return out;
+}
+
+gchar *
+find_path_recursively(const gchar * path, const gchar * filename)
+{
+    FindFileContext context;
+
+    context.to_match = filename;
+    context.match = NULL;
+    context.found = FALSE;
+
+    dir_foreach(path, find_file_func, &context, NULL);
+
     return context.match;
 }
 
@@ -835,154 +859,23 @@ GdkPixmap *audacious_pixmap_resize(GdkWindow *src, GdkGC *src_gc, GdkPixmap *in,
     return out;
 }
 
-GdkImage *create_dblsize_image(GdkImage * img)
-{
-    GdkImage *dblimg;
-    register guint x, y;
+GdkPixmap *create_dblsize_pixmap(GdkPixmap *pix) {
+    int w, h;
+    gdk_drawable_get_size(pix, &w, &h);
+    GdkGC* gc = gdk_gc_new(pix);
+    GdkPixbuf *img, *img2x;
+    GdkColormap *colormap = gdk_colormap_get_system();
+    img = gdk_pixbuf_new(GDK_COLORSPACE_RGB, FALSE, 8, w, h);
+    gdk_pixbuf_get_from_drawable(img, pix, colormap, 0, 0, 0, 0, w, h);
+    img2x = gdk_pixbuf_scale_simple(img, w*2, h*2, GDK_INTERP_NEAREST);
 
-    /*
-     * This needs to be optimized
-     */
-
-    dblimg =
-    gdk_image_new(GDK_IMAGE_NORMAL, gdk_visual_get_system(),
-              img->width << 1, img->height << 1);
-    if (dblimg->bpp == 1) {
-    register guint8 *srcptr, *ptr, *ptr2, pix;
-
-    srcptr = GDK_IMAGE(img)->mem;
-    ptr = GDK_IMAGE(dblimg)->mem;
-    ptr2 = ptr + dblimg->bpl;
-
-    for (y = 0; y < img->height; y++) {
-        for (x = 0; x < img->width; x++) {
-        pix = *srcptr++;
-        *ptr++ = pix;
-        *ptr++ = pix;
-        *ptr2++ = pix;
-        *ptr2++ = pix;
-        }
-        srcptr += img->bpl - img->width;
-        ptr += (dblimg->bpl << 1) - dblimg->width;
-        ptr2 += (dblimg->bpl << 1) - dblimg->width;
-    }
-    }
-    if (dblimg->bpp == 2) {
-    guint16 *srcptr, *ptr, *ptr2, pix;
-
-    srcptr = (guint16 *) GDK_IMAGE_XIMAGE(img)->data;
-    ptr = (guint16 *) GDK_IMAGE_XIMAGE(dblimg)->data;
-    ptr2 = ptr + (dblimg->bpl >> 1);
-
-    for (y = 0; y < img->height; y++) {
-        for (x = 0; x < img->width; x++) {
-        pix = *srcptr++;
-        *ptr++ = pix;
-        *ptr++ = pix;
-        *ptr2++ = pix;
-        *ptr2++ = pix;
-        }
-        srcptr += (img->bpl >> 1) - img->width;
-        ptr += (dblimg->bpl) - dblimg->width;
-        ptr2 += (dblimg->bpl) - dblimg->width;
-    }
-    }
-    if (dblimg->bpp == 3) {
-    register guint8 *srcptr, *ptr, *ptr2, pix1, pix2, pix3;
-
-    srcptr = GDK_IMAGE(img)->mem;
-    ptr = GDK_IMAGE(dblimg)->mem;
-    ptr2 = ptr + dblimg->bpl;
-
-    for (y = 0; y < img->height; y++) {
-        for (x = 0; x < img->width; x++) {
-        pix1 = *srcptr++;
-        pix2 = *srcptr++;
-        pix3 = *srcptr++;
-        *ptr++ = pix1;
-        *ptr++ = pix2;
-        *ptr++ = pix3;
-        *ptr++ = pix1;
-        *ptr++ = pix2;
-        *ptr++ = pix3;
-        *ptr2++ = pix1;
-        *ptr2++ = pix2;
-        *ptr2++ = pix3;
-        *ptr2++ = pix1;
-        *ptr2++ = pix2;
-        *ptr2++ = pix3;
-
-        }
-        srcptr += img->bpl - (img->width * 3);
-        ptr += (dblimg->bpl << 1) - (dblimg->width * 3);
-        ptr2 += (dblimg->bpl << 1) - (dblimg->width * 3);
-    }
-    }
-    if (dblimg->bpp == 4) {
-    register guint32 *srcptr, *ptr, *ptr2, pix;
-
-    srcptr = (guint32 *) GDK_IMAGE(img)->mem;
-    ptr = (guint32 *) GDK_IMAGE(dblimg)->mem;
-    ptr2 = ptr + (dblimg->bpl >> 2);
-
-    for (y = 0; y < img->height; y++) {
-        for (x = 0; x < img->width; x++) {
-        pix = *srcptr++;
-        *ptr++ = pix;
-        *ptr++ = pix;
-        *ptr2++ = pix;
-        *ptr2++ = pix;
-        }
-        srcptr += (img->bpl >> 2) - img->width;
-        ptr += (dblimg->bpl >> 1) - dblimg->width;
-        ptr2 += (dblimg->bpl >> 1) - dblimg->width;
-    }
-    }
-    return dblimg;
-}
-
-/* URL-decode a file: URL path, return NULL if it's not what we expect */
-gchar *
-xmms_urldecode_path(const gchar * encoded_path)
-{
-    const gchar *cur, *ext;
-    gchar *path, *tmp;
-    gint realchar;
-
-    if (!encoded_path)
-        return NULL;
-
-    if (!str_has_prefix_nocase(encoded_path, "file:"))
-        return NULL;
-
-    cur = encoded_path + 5;
-
-    if (str_has_prefix_nocase(cur, "//localhost"))
-        cur += 11;
-
-    if (*cur == '/')
-        while (cur[1] == '/')
-            cur++;
-
-    tmp = g_malloc0(strlen(cur) + 1);
-
-    while ((ext = strchr(cur, '%')) != NULL) {
-        strncat(tmp, cur, ext - cur);
-        ext++;
-        cur = ext + 2;
-        if (!sscanf(ext, "%2x", &realchar)) {
-            /* Assume it is a literal '%'.  Several file
-             * managers send unencoded file: urls on drag
-             * and drop. */
-            realchar = '%';
-            cur -= 2;
-        }
-        tmp[strlen(tmp)] = realchar;
-    }
-
-    path = g_strconcat(tmp, cur, NULL);
-    g_free(tmp);
-    return path;
+    GdkPixmap *image;
+    image = gdk_pixmap_new(NULL, w*2, h*2, gdk_rgb_get_visual()->depth);
+    gdk_draw_pixbuf(image, gc, img2x, 0, 0, 0, 0, w*2, h*2, GDK_RGB_DITHER_NONE, 0, 0);
+    g_object_unref(img);
+    g_object_unref(img2x);
+    g_object_unref(gc);
+    return image;
 }
 
 /**

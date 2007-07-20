@@ -221,6 +221,7 @@ BmpConfig bmp_default_config = {
     FALSE,          /* internal: whether or not to terminate */
     TRUE,           /* whether show progress bar in filepopup or not */
     TRUE,           /* close jtf dialog on jump */
+    TRUE,          /* use back and forth scroll */
 };
 
 typedef struct bmp_cfg_boolent_t {
@@ -323,6 +324,7 @@ static bmp_cfg_boolent bmp_boolents[] = {
     {"use_extension_probing", &cfg.use_extension_probing, TRUE},
     {"filepopup_showprogressbar", &cfg.filepopup_showprogressbar, TRUE},
     {"close_jtf_dialog", &cfg.close_jtf_dialog, TRUE},
+    {"twoway_scroll", &cfg.twoway_scroll, TRUE},
 };
 
 static gint ncfgbent = G_N_ELEMENTS(bmp_boolents);
@@ -390,10 +392,6 @@ static gint ncfgsent = G_N_ELEMENTS(bmp_strents);
 gchar *bmp_paths[BMP_PATH_COUNT] = {};
 
 GList *dock_window_list = NULL;
-
-gboolean pposition_broken = FALSE;
-
-gboolean starting_up = TRUE;
 
 /* XXX: case-sensitivity is bad for lazy nenolods. :( -nenolod */
 static gchar *pl_candidates[] = {
@@ -1073,18 +1071,26 @@ run_load_skin_error_dialog(const gchar * skin_path)
     gtk_widget_destroy(dialog);
 }
 
-// use a format string?
-void report_error(const gchar *error_text)
+void report_error(const gchar *error_message, ...)
 {
-    fprintf(stderr, error_text);
+    gchar *buf;
+    va_list va;
+
+    va_start(va, error_message);
+    buf = g_strdup_vprintf(error_message, va);
+    va_end(va);
+
+    fprintf(stderr, buf);
 
     if (options.headless != 1)
     {
         gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(err),
-                                                 error_text);
+                                                 buf);
         gtk_dialog_run(GTK_DIALOG(err));
         gtk_widget_hide(err);
     }
+
+    g_free(buf);
 }
 
 static gboolean
@@ -1126,16 +1132,6 @@ main(gint argc, gchar ** argv)
     bmp_init_paths();
     bmp_make_user_dir();
 
-    /* Check GTK version. Really, this is only needed for binary
-     * distribution since configure already checks. */
-    if (!GTK_CHECK_VERSION(2, 6, 0)) {
-        g_printerr(_("Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
-                     "Please use GTK+ %s or newer.\n"),
-                   gtk_major_version, gtk_minor_version, gtk_micro_version,
-                   "2.6.0");
-        exit(EXIT_FAILURE);
-    }
-
     g_set_application_name(_(application_name));
 
     cond_scan = g_cond_new();
@@ -1155,7 +1151,8 @@ main(gint argc, gchar ** argv)
 
     if (error != NULL)
     {
-        g_printerr(_("%s: %s\nTry `%s --help' for more information.\n"), argv[0], error->message, argv[0]);
+        g_printerr(_("%s: %s\nTry `%s --help' for more information.\n"),
+	  argv[0], error->message, argv[0]);
         exit(EXIT_FAILURE);
     }
 
@@ -1172,7 +1169,7 @@ main(gint argc, gchar ** argv)
 
         /* we could be running headless, so GTK probably wont matter */
         if (options.headless != 1)
-          exit(EXIT_SUCCESS);
+            exit(EXIT_SUCCESS);
     }
 
     if (options.no_log == FALSE)
@@ -1228,14 +1225,7 @@ main(gint argc, gchar ** argv)
     mainwin_setup_menus();
 
     if (options.headless != 1)
-        GDK_THREADS_LEAVE();
-
-    handle_cmd_line_options(&options, FALSE);
-
-    if (options.headless != 1)
     {
-        GDK_THREADS_ENTER();
-
         read_volume(VOLSET_STARTUP);
         mainwin_set_info_text();
 
@@ -1265,8 +1255,6 @@ main(gint argc, gchar ** argv)
         playlist_start_get_info_thread();
         mainwin_attach_idle_func();
 
-
-        starting_up = FALSE;
         has_x11_connection = TRUE;
 
         if (cfg.resume_playback_on_startup)
@@ -1310,8 +1298,6 @@ main(gint argc, gchar ** argv)
 
         mainwin_set_info_text();
         playlist_start_get_info_thread();
-
-        starting_up = FALSE;
 
         loop = g_main_loop_new(NULL, TRUE);
         g_timeout_add(10, aud_headless_iteration, NULL);

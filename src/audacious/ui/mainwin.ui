@@ -14,7 +14,9 @@
 			<separator />
 			<menuitem action="play file" />
 			<menuitem action="play location" />
-			<separator />
+			<menuitem action="playback play cd" />
+			<menuitem action="lastfm" />
+        		<separator />
 			<menu action="visualization">
 				<menu action="vismode">
 					<menuitem action="vismode analyzer" />
@@ -68,8 +70,6 @@
 				</menu>
 			</menu>
 			<menu action="playback">
-				<menuitem action="playback play cd" />
-				<separator />
 				<menuitem action="playback repeat" />
 				<menuitem action="playback shuffle" />
 				<menuitem action="playback no playlist advance" />
