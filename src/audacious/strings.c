@@ -194,7 +194,9 @@ str_to_utf8(const gchar * str)
     gchar *out_str;
 
     /* NULL in NULL out */
-    g_return_val_if_fail(str != NULL, NULL);
+    /* g_return_val_if_fail(str != NULL, NULL); */
+    if (!str)
+        return NULL;
 
     /* Note: Currently, playlist calls this function repeatedly, even
      * if the string is already converted into utf-8.
