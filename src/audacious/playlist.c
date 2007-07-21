@@ -691,14 +691,6 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
     }
 }
 
-static void
-__playlist_ins(Playlist * playlist, const gchar * filename, gint pos, InputPlugin *dec)
-{
-    __playlist_ins_with_info(playlist, filename, pos, NULL, -1, dec);
-    playlist_recalc_total_time(playlist);
-    playlist_manager_update();
-}
-
 gboolean
 playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
 {
