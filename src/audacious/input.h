@@ -40,6 +40,11 @@ struct _InputPluginData {
     GMutex *playback_mutex;
 };
 
+typedef struct {
+    TitleInput *tuple;
+    InputPlugin *ip;
+} ProbeResult;
+
 GList *get_input_list(void);
 InputPlayback *get_current_input_playback(void);
 void set_current_input_playback(InputPlayback * ip);
@@ -47,7 +52,7 @@ void set_current_input_data(void * data);
 InputVisType input_get_vis_type();
 void free_vis_data(void);
 
-InputPlugin *input_check_file(const gchar * filename, gboolean show_warning);
+ProbeResult *input_check_file(const gchar * filename, gboolean show_warning);
 TitleInput *input_get_song_tuple(const gchar * filename);
 
 void input_play(gchar * filename);

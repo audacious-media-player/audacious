@@ -324,8 +324,12 @@ input_dont_show_warning(GtkObject * object, gpointer user_data)
  * Adapted to use the mimetype system.
  *
  * --nenolod, Jul  9 2007
+ *
+ * Adapted to return ProbeResult structure.
+ *
+ * --nenolod, Jul 20 2007
  */
-InputPlugin *
+ProbeResult *
 input_check_file(const gchar * filename, gboolean show_warning)
 {
     VFSFile *fd;
@@ -336,6 +340,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
     gchar *ext, *tmp, *tmp_uri;
     gboolean use_ext_filter;
     gchar *mimetype;
+    ProbeResult *pr = NULL;
 
     filename_proxy = g_strdup(filename);
 
@@ -367,7 +372,11 @@ input_check_file(const gchar * filename, gboolean show_warning)
     {
         g_free(filename_proxy);
         vfs_fclose(fd);
-        return ip;
+
+        pr = g_new0(ProbeResult, 1);
+        pr->ip = NULL;
+
+        return pr;
     }
 
     for (node = get_input_list(); node != NULL; node = g_list_next(node))
@@ -399,7 +408,23 @@ input_check_file(const gchar * filename, gboolean show_warning)
                 continue;
         }
 
-        if (fd && ip->is_our_file_from_vfs != NULL)
+        if (fd && ip->probe_for_tuple != NULL)
+        {
+            TitleInput *tuple = ip->probe_for_tuple(filename_proxy, fd);
+
+            if (tuple != NULL)
+            {
+                g_free(filename_proxy);
+                vfs_fclose(fd);
+
+                pr = g_new0(ProbeResult, 1);
+                pr->ip = ip;
+                pr->tuple = tuple;
+
+                return pr;
+            }
+        }
+        else if (fd && ip->is_our_file_from_vfs != NULL)
         {
             ret = ip->is_our_file_from_vfs(filename_proxy, fd);
 
@@ -407,7 +432,11 @@ input_check_file(const gchar * filename, gboolean show_warning)
             {
                 g_free(filename_proxy);
                 vfs_fclose(fd);
-                return ip;
+
+                pr = g_new0(ProbeResult, 1);
+                pr->ip = ip;
+
+                return pr;
             }
         }
         else if (ip->is_our_file != NULL)
@@ -418,7 +447,11 @@ input_check_file(const gchar * filename, gboolean show_warning)
             {
                 g_free(filename_proxy);
                 vfs_fclose(fd);
-                return ip;
+
+                pr = g_new0(ProbeResult, 1);
+                pr->ip = ip;
+
+                return pr;
             }
         }
 
@@ -454,6 +487,7 @@ input_get_song_info(const gchar * filename, gchar ** title, gint * length)
     BmpTitleInput *input;
     gchar *tmp = NULL, *ext;
     gchar *filename_proxy;
+    ProbeResult *pr;
 
     g_return_if_fail(filename != NULL);
     g_return_if_fail(title != NULL);
@@ -461,7 +495,14 @@ input_get_song_info(const gchar * filename, gchar ** title, gint * length)
 
     filename_proxy = g_strdup(filename);
 
-    ip = input_check_file(filename_proxy, FALSE);
+    pr = input_check_file(filename_proxy, FALSE);
+
+    if (!pr)
+        return;
+
+    ip = pr->ip;
+
+    g_free(pr);
 
     if (ip && ip->get_song_info) {
         ip->get_song_info(filename_proxy, &tmp, length);
@@ -503,13 +544,21 @@ input_get_song_tuple(const gchar * filename)
     TitleInput *input;
     gchar *ext = NULL;
     gchar *filename_proxy;
+    ProbeResult *pr;
 
     if (filename == NULL)
     return NULL;
 
     filename_proxy = g_strdup(filename);
 
-    ip = input_check_file(filename_proxy, FALSE);
+    pr = input_check_file(filename_proxy, FALSE);
+
+    if (!pr)
+        return NULL;
+
+    ip = pr->ip;
+
+    g_free(pr);
 
     if (ip && ip->get_song_tuple)
         input = ip->get_song_tuple(filename_proxy);
@@ -613,10 +662,18 @@ input_file_info_box(const gchar * filename)
 {
     InputPlugin *ip;
     gchar *filename_proxy;
+    ProbeResult *pr;
 
     filename_proxy = g_strdup(filename);
 
-    ip = input_check_file(filename_proxy, FALSE);
+    pr = input_check_file(filename_proxy, FALSE);
+
+    if (!pr)
+        return;
+
+    ip = pr->ip;
+
+    g_free(pr);
 
     if (ip->file_info_box)
         ip->file_info_box(filename_proxy);

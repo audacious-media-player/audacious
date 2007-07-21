@@ -218,7 +218,7 @@ run_no_output_plugin_dialog(void)
 gboolean
 playback_play_file(PlaylistEntry *entry)
 {
-    InputPlayback * playback;
+    InputPlayback *playback;
     g_return_val_if_fail(entry != NULL, FALSE);
 
     if (!get_current_output_plugin()) {
@@ -230,14 +230,20 @@ playback_play_file(PlaylistEntry *entry)
     if (cfg.random_skin_on_play)
         skin_set_random_skin();
 
-    /*
-     * This is slightly uglier than the original version, but should
-     * fix the "crash" issues as seen in 0.2 when dealing with this situation.
-     *  - nenolod
-     */
-    if (!entry->decoder && 
-    (((entry->decoder = input_check_file(entry->filename, FALSE)) == NULL) ||
-        !input_is_enabled(entry->decoder->filename)))
+    if (!entry->decoder)
+    {
+        ProbeResult *pr = input_check_file(entry->filename, FALSE);
+
+        if (pr != NULL)
+        {
+            entry->decoder = pr->ip;
+            entry->tuple = pr->tuple;
+
+            g_free(pr);
+        }
+    }
+
+    if (!entry->decoder || !input_is_enabled(entry->decoder->filename))
     {
         set_current_input_playback(NULL);
         mainwin_set_info_text();
