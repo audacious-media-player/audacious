@@ -65,6 +65,8 @@
 
 GtkWidget *playlistwin;
 
+static GMutex *resize_mutex = NULL;
+
 PlayList_List *playlistwin_list = NULL;
 GtkWidget *playlistwin_shade, *playlistwin_close;
 
@@ -669,7 +671,7 @@ playlistwin_resize(gint width, gint height)
     cfg.playlist_width = width = tx;
     cfg.playlist_height = height = ty;
 
-
+    g_mutex_lock(resize_mutex);
     widget_resize_relative(WIDGET(playlistwin_list), dx, dy);
 
     ui_skinned_playlist_slider_move_relative(playlistwin_slider, dx);
@@ -708,6 +710,7 @@ playlistwin_resize(gint width, gint height)
     widget_list_draw(playlistwin_wlist, &redraw, TRUE);
     widget_list_clear_redraw(playlistwin_wlist);
 
+    g_mutex_unlock(resize_mutex);
     widget_list_unlock(playlistwin_wlist);
 
     gdk_window_set_back_pixmap(playlistwin->window, playlistwin_bg, 0);
@@ -1771,6 +1774,7 @@ playlistwin_create_window(void)
 void
 playlistwin_create(void)
 {
+    resize_mutex = g_mutex_new();
     playlistwin_create_window();
 
     /* create GC and back pixmap for custom widget to draw on */

@@ -34,8 +34,6 @@
 #define UI_SKINNED_TEXTBOX_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), ui_skinned_textbox_get_type(), UiSkinnedTextboxPrivate))
 typedef struct _UiSkinnedTextboxPrivate UiSkinnedTextboxPrivate;
 
-static GMutex *mutex = NULL;
-
 #define TEXTBOX_SCROLL_SMOOTH_TIMEOUT  30
 #define TEXTBOX_SCROLL_WAIT            80
 
@@ -167,7 +165,6 @@ static void ui_skinned_textbox_class_init(UiSkinnedTextboxClass *klass) {
 
 static void ui_skinned_textbox_init(UiSkinnedTextbox *textbox) {
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
-    mutex = g_mutex_new();
     priv->resize_width = 0;
     priv->resize_height = 0;
     priv->move_x = 0;
@@ -252,7 +249,6 @@ static void ui_skinned_textbox_size_request(GtkWidget *widget, GtkRequisition *r
 }
 
 static void ui_skinned_textbox_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
-    g_mutex_lock(mutex);
     UiSkinnedTextbox *textbox = UI_SKINNED_TEXTBOX (widget);
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
 
@@ -262,21 +258,23 @@ static void ui_skinned_textbox_size_allocate(GtkWidget *widget, GtkAllocation *a
     if (GTK_WIDGET_REALIZED (widget))
         gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
 
+    if (textbox->x + priv->move_x == widget->allocation.x/(priv->double_size ? 2 : 1))
+        priv->move_x = 0;
+    if (textbox->y + priv->move_y == widget->allocation.y/(priv->double_size ? 2 : 1))
+        priv->move_y = 0;
     textbox->x = widget->allocation.x/(priv->double_size ? 2 : 1);
     textbox->y = widget->allocation.y/(priv->double_size ? 2 : 1);
-    priv->move_x = 0;
-    priv->move_y = 0;
 
     if (textbox->width != widget->allocation.width/(priv->double_size ? 2 : 1)) {
+        if (textbox->width + priv->resize_width == widget->allocation.width/(priv->double_size ? 2 : 1))
+            priv->resize_width = 0;
         textbox->width = widget->allocation.width/(priv->double_size ? 2 : 1);
-        priv->resize_width = 0;
         priv->resize_height = 0;
         if (priv->pixmap_text) g_free(priv->pixmap_text);
         priv->pixmap_text = NULL;
         priv->offset = 0;
         gtk_widget_queue_draw(GTK_WIDGET(textbox));
     }
-    g_mutex_unlock(mutex);
 }
 
 static gboolean ui_skinned_textbox_expose(GtkWidget *widget, GdkEventExpose *event) {
@@ -431,7 +429,6 @@ static void ui_skinned_textbox_toggle_doublesize(UiSkinnedTextbox *textbox) {
 }
 
 static void ui_skinned_textbox_redraw(UiSkinnedTextbox *textbox) {
-    g_mutex_lock(mutex);
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(textbox);
 
     if (priv->resize_width || priv->resize_height)
@@ -442,7 +439,6 @@ static void ui_skinned_textbox_redraw(UiSkinnedTextbox *textbox) {
         gtk_fixed_move(GTK_FIXED(priv->fixed), GTK_WIDGET(textbox), textbox->x+priv->move_x, textbox->y+priv->move_y);
 
     gtk_widget_queue_draw(GTK_WIDGET(textbox));
-    g_mutex_unlock(mutex);
 }
 
 static gboolean ui_skinned_textbox_should_scroll(UiSkinnedTextbox *textbox) {
@@ -886,17 +882,13 @@ static void textbox_handle_special_char(gchar *c, gint * x, gint * y) {
 }
 
 void ui_skinned_textbox_move_relative(GtkWidget *widget, gint x, gint y) {
-    g_mutex_lock(mutex);
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(widget);
     priv->move_x += x;
     priv->move_y += y;
-    g_mutex_unlock(mutex);
 }
 
 void ui_skinned_textbox_resize_relative(GtkWidget *widget, gint w, gint h) {
-    g_mutex_lock(mutex);
     UiSkinnedTextboxPrivate *priv = UI_SKINNED_TEXTBOX_GET_PRIVATE(widget);
     priv->resize_width += w;
     priv->resize_height += h;
-    g_mutex_unlock(mutex);
 }

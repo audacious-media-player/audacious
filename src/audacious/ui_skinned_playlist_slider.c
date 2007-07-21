@@ -30,8 +30,6 @@
 #include "util.h"
 #include "ui_playlist.h"
 
-static GMutex *mutex = NULL;
-
 #define UI_SKINNED_PLAYLIST_SLIDER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), ui_skinned_playlist_slider_get_type(), UiSkinnedPlaylistSliderPrivate))
 typedef struct _UiSkinnedPlaylistSliderPrivate UiSkinnedPlaylistSliderPrivate;
 
@@ -117,7 +115,6 @@ static void ui_skinned_playlist_slider_class_init(UiSkinnedPlaylistSliderClass *
 
 static void ui_skinned_playlist_slider_init(UiSkinnedPlaylistSlider *playlist_slider) {
     UiSkinnedPlaylistSliderPrivate *priv = UI_SKINNED_PLAYLIST_SLIDER_GET_PRIVATE(playlist_slider);
-    mutex = g_mutex_new();
     playlist_slider->pressed = FALSE;
     priv->resize_height = 0;
     priv->move_x = 0;
@@ -190,7 +187,6 @@ static void ui_skinned_playlist_slider_size_request(GtkWidget *widget, GtkRequis
 }
 
 static void ui_skinned_playlist_slider_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
-    g_mutex_lock(mutex);
     UiSkinnedPlaylistSlider *playlist_slider = UI_SKINNED_PLAYLIST_SLIDER (widget);
     UiSkinnedPlaylistSliderPrivate *priv = UI_SKINNED_PLAYLIST_SLIDER_GET_PRIVATE(playlist_slider);
 
@@ -198,17 +194,16 @@ static void ui_skinned_playlist_slider_size_allocate(GtkWidget *widget, GtkAlloc
     if (GTK_WIDGET_REALIZED (widget))
         gdk_window_move_resize(widget->window, widget->allocation.x, widget->allocation.y, allocation->width, allocation->height);
 
+    if (playlist_slider->x + priv->move_x == widget->allocation.x)
+        priv->move_x = 0;
     playlist_slider->x = widget->allocation.x;
     playlist_slider->y = widget->allocation.y;
-
-    priv->move_x = 0;
 
     if (priv->height != widget->allocation.height) {
         priv->height = priv->height + priv->resize_height;
         priv->resize_height = 0;
         gtk_widget_queue_draw(widget);
     }
-    g_mutex_unlock(mutex);
 }
 
 static gboolean ui_skinned_playlist_slider_expose(GtkWidget *widget, GdkEventExpose *event) {
@@ -307,7 +302,6 @@ static gboolean ui_skinned_playlist_slider_motion_notify(GtkWidget *widget, GdkE
 }
 
 static void ui_skinned_playlist_slider_redraw(UiSkinnedPlaylistSlider *playlist_slider) {
-    g_mutex_lock(mutex);
     UiSkinnedPlaylistSliderPrivate *priv = UI_SKINNED_PLAYLIST_SLIDER_GET_PRIVATE(playlist_slider);
 
     if (priv->resize_height)
@@ -316,19 +310,14 @@ static void ui_skinned_playlist_slider_redraw(UiSkinnedPlaylistSlider *playlist_
         gtk_fixed_move(GTK_FIXED(priv->fixed), GTK_WIDGET(playlist_slider), playlist_slider->x+priv->move_x, playlist_slider->y);
 
     gtk_widget_queue_draw(GTK_WIDGET(playlist_slider));
-    g_mutex_unlock(mutex);
 }
 
 void ui_skinned_playlist_slider_move_relative(GtkWidget *widget, gint x) {
-    g_mutex_lock(mutex);
     UiSkinnedPlaylistSliderPrivate *priv = UI_SKINNED_PLAYLIST_SLIDER_GET_PRIVATE(widget);
     priv->move_x += x;
-    g_mutex_unlock(mutex);
 }
 
 void ui_skinned_playlist_slider_resize_relative(GtkWidget *widget, gint h) {
-    g_mutex_lock(mutex);
     UiSkinnedPlaylistSliderPrivate *priv = UI_SKINNED_PLAYLIST_SLIDER_GET_PRIVATE(widget);
     priv->resize_height += h;
-    g_mutex_unlock(mutex);
 }
