@@ -189,6 +189,7 @@ static gboolean
 playlist_entry_get_info(PlaylistEntry * entry)
 {
     TitleInput *tuple;
+    ProbeResult *pr = NULL;
     time_t modtime;
 
     g_return_val_if_fail(entry != NULL, FALSE);
@@ -206,7 +207,10 @@ playlist_entry_get_info(PlaylistEntry * entry)
     }
 
     if (entry->decoder == NULL)
-        entry->decoder = input_check_file(entry->filename, FALSE);
+    {
+        pr = input_check_file(entry->filename, FALSE);
+        entry->decoder = pr->ip;
+    }
 
     /* renew tuple if file mtime is newer than tuple mtime. */
     if(entry->tuple){
@@ -218,9 +222,9 @@ playlist_entry_get_info(PlaylistEntry * entry)
         }
     }
 
-    if (entry->decoder == NULL || entry->decoder->get_song_tuple == NULL)
-        tuple = input_get_song_tuple(entry->filename);
-    else
+    if (pr != NULL && pr->tuple != NULL)
+        tuple = pr->tuple;
+    else if (entry->decoder != NULL && entry->decoder->get_song_tuple != NULL)
         tuple = entry->decoder->get_song_tuple(entry->filename);
 
     if (tuple == NULL)
@@ -233,6 +237,8 @@ playlist_entry_get_info(PlaylistEntry * entry)
     entry->title = xmms_get_titlestring(tuple->formatter != NULL ? tuple->formatter : xmms_get_gentitle_format(), tuple);
     entry->length = tuple->length;
     entry->tuple = tuple;
+
+    g_free(pr);
 
     return TRUE;
 }
@@ -698,7 +704,9 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
     gchar buf[64], *p;
     gint r;
     VFSFile *file;
+    ProbeResult *pr = NULL;
     InputPlugin *dec = NULL;
+    TitleInput *tuple = NULL;
 
     g_return_val_if_fail(playlist != NULL, FALSE);
     g_return_val_if_fail(filename != NULL, FALSE);
@@ -714,11 +722,21 @@ playlist_ins(Playlist * playlist, const gchar * filename, gint pos)
 	dec = NULL;
     else if (!str_has_prefix_nocase(filename, "http://") && 
 	     !str_has_prefix_nocase(filename, "https://"))
-	dec = input_check_file(filename, TRUE);
+    {
+        pr = input_check_file(filename, TRUE);
+
+        if (pr)
+        {
+            dec = pr->ip;
+            tuple = pr->tuple;
+        }
+
+        g_free(pr);
+    }
 
     if (cfg.playlist_detect == TRUE || playlist->loading_playlist == TRUE || (playlist->loading_playlist == FALSE && dec != NULL) || (playlist->loading_playlist == FALSE && !is_playlist_name(filename) && str_has_prefix_nocase(filename, "http")))
     {
-        __playlist_ins(playlist, filename, pos, dec);
+        __playlist_ins_with_info_tuple(playlist, filename, pos, tuple, dec);
         playlist_generate_shuffle_list(playlist);
         playlistwin_update_list(playlist);
         return TRUE;
@@ -822,6 +840,7 @@ playlist_dir_find_files(const gchar * path,
     GDir *dir;
     GList *list = NULL, *ilist;
     const gchar *dir_entry;
+    ProbeResult *pr = NULL;
 
     struct stat statbuf;
     DeviceInode *devino;
@@ -878,8 +897,13 @@ playlist_dir_find_files(const gchar * path,
         }
         else if (cfg.playlist_detect == TRUE)
             list = g_list_prepend(list, filename);
-        else if (input_check_file(filename, TRUE))
+        else if ((pr = input_check_file(filename, TRUE)) != NULL)
+        {
             list = g_list_prepend(list, filename);
+
+            g_free(pr);
+            pr = NULL;
+        }
         else
             g_free(filename);
 
@@ -1599,7 +1623,7 @@ playlist_load_ins_file(Playlist *playlist,
 {
     gchar *filename;
     gchar *tmp, *path;
-    InputPlugin *dec = NULL;		/* for decoder cache */
+    ProbeResult *pr = NULL;
 
     g_return_if_fail(filename_p != NULL);
     g_return_if_fail(playlist != NULL);
@@ -1618,36 +1642,41 @@ playlist_load_ins_file(Playlist *playlist,
         else {
 	    if ((playlist->loading_playlist == TRUE ||
 		cfg.playlist_detect == TRUE))
-                dec = NULL;
+                pr = NULL;
 	    else if (!str_has_prefix_nocase(filename, "http://") && 
 	        !str_has_prefix_nocase(filename, "https://"))
-		dec = input_check_file(filename, FALSE);
+		pr = input_check_file(filename, FALSE);
 
-            __playlist_ins_with_info(playlist, filename, pos, title, len, dec);
+            __playlist_ins_with_info(playlist, filename, pos, title, len, pr ? pr->ip : NULL);
+
+            g_free(pr);
             return;
         }
         tmp = g_build_filename(path, filename, NULL);
 
 	if (playlist->loading_playlist == TRUE && cfg.playlist_detect == TRUE)
-	    dec = NULL;
+	    pr = NULL;
         else if (!str_has_prefix_nocase(tmp, "http://") && 
 	    !str_has_prefix_nocase(tmp, "https://"))
-	    dec = input_check_file(tmp, FALSE);
+	    pr = input_check_file(tmp, FALSE);
 
-        __playlist_ins_with_info(playlist, tmp, pos, title, len, dec);
+        __playlist_ins_with_info(playlist, tmp, pos, title, len, dec, pr ? pr->ip : NULL);
         g_free(tmp);
         g_free(path);
+        g_free(pr);
     }
     else
     {
         if ((playlist->loading_playlist == TRUE ||
   	    cfg.playlist_detect == TRUE))
-            dec = NULL;
+            pr = NULL;
 	else if (!str_has_prefix_nocase(filename, "http://") && 
 	    !str_has_prefix_nocase(filename, "https://"))
-	    dec = input_check_file(filename, FALSE);
+	    pr = input_check_file(filename, FALSE);
 
-        __playlist_ins_with_info(playlist, filename, pos, title, len, dec);
+        __playlist_ins_with_info(playlist, filename, pos, title, len, pr ? pr->ip : NULL);
+
+        g_free(pr);
     }
 
     g_free(filename);
@@ -1662,7 +1691,7 @@ playlist_load_ins_file_tuple(Playlist * playlist,
 {
     gchar *filename;
     gchar *tmp, *path;
-    InputPlugin *dec = NULL;		/* for decoder cache */
+    ProbeResult *pr = NULL;		/* for decoder cache */
 
     g_return_if_fail(filename_p != NULL);
     g_return_if_fail(playlist_name != NULL);
@@ -1681,37 +1710,41 @@ playlist_load_ins_file_tuple(Playlist * playlist,
         else {
             if ((playlist->loading_playlist == TRUE ||
     	        cfg.playlist_detect == TRUE))
-                dec = NULL;
+                pr = NULL;
 	    else if (!str_has_prefix_nocase(filename, "http://") && 
 	        !str_has_prefix_nocase(filename, "https://"))
-	        dec = input_check_file(filename, FALSE);
+	        pr = input_check_file(filename, FALSE);
 
-            __playlist_ins_with_info_tuple(playlist, filename, pos, tuple, dec);
+            __playlist_ins_with_info_tuple(playlist, filename, pos, tuple, pr ? pr->ip : NULL);
+
+            g_free(pr);
             return;
         }
         tmp = g_build_filename(path, filename, NULL);
 
         if ((playlist->loading_playlist == TRUE ||
             cfg.playlist_detect == TRUE))
-            dec = NULL;
+            pr = NULL;
         else if (!str_has_prefix_nocase(filename, "http://") && 
             !str_has_prefix_nocase(filename, "https://"))
-            dec = input_check_file(filename, FALSE);
+            pr = input_check_file(filename, FALSE);
 
-        __playlist_ins_with_info_tuple(playlist, tmp, pos, tuple, dec);
+        __playlist_ins_with_info_tuple(playlist, tmp, pos, tuple, pr ? pr->ip : NULL);
         g_free(tmp);
         g_free(path);
+        g_free(pr);
     }
     else
     {
         if ((playlist->loading_playlist == TRUE ||
             cfg.playlist_detect == TRUE))
-            dec = NULL;
+            pr = NULL;
         else if (!str_has_prefix_nocase(filename, "http://") && 
             !str_has_prefix_nocase(filename, "https://"))
-            dec = input_check_file(filename, FALSE);
+            pr = input_check_file(filename, FALSE);
 
-        __playlist_ins_with_info_tuple(playlist, filename, pos, tuple, dec);
+        __playlist_ins_with_info_tuple(playlist, filename, pos, tuple, pr ? pr->ip : NULL);
+        g_free(pr);
     }
 
     g_free(filename);
@@ -2347,6 +2380,7 @@ playlist_fileinfo(Playlist *playlist, guint pos)
     GList *node;
     PlaylistEntry *entry = NULL;
     TitleInput *tuple = NULL;
+    ProbeResult *pr = NULL;
 
     PLAYLIST_LOCK(playlist->mutex);
 
@@ -2370,7 +2404,12 @@ playlist_fileinfo(Playlist *playlist, guint pos)
     if (tuple != NULL)
     {
         if (entry->decoder == NULL)
-            entry->decoder = input_check_file(entry->filename, FALSE); /* try to find a decoder */
+        {
+            pr = input_check_file(entry->filename, FALSE); /* try to find a decoder */
+            entry->decoder = pr ? pr->ip : NULL;
+
+            g_free(pr);
+        }
 
         if (entry->decoder != NULL && entry->decoder->file_info_box == NULL)
             fileinfo_show_for_tuple(tuple);
