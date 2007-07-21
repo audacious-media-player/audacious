@@ -120,6 +120,7 @@ SOURCES = \
 	ui_skinned_monostereo.c \
 	ui_skinned_equalizer_slider.c \
 	ui_skinned_equalizer_graph.c \
+	ui_skinned_playlist_slider.c \
 	ui_skinselector.c \
 	ui_urlopener.c \
 	util.c \

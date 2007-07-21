@@ -22,7 +22,6 @@
 #define _WIDGETCORE_H_
 
 #include "playlist_list.h"
-#include "playlist_slider.h"
 #include "skin.h"
 #include "widget.h"
 

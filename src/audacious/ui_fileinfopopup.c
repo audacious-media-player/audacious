@@ -107,14 +107,14 @@ audacious_fileinfopopup_progress_cb(gpointer filepopup_win)
     pos = playlist_get_position(pl);
 
     current_file = playlist_get_filename(pl , pos);
-    time = playback_get_time();
 
     g_return_val_if_fail(current_file != NULL, FALSE);
 
-    if (time != -1 && length != -1 &&
+    if (playback_get_playing() && length != -1 &&
         current_file != NULL && tooltip_file != NULL &&
         !strcmp(tooltip_file, current_file) && cfg.filepopup_showprogressbar)
     {
+        time = playback_get_time();
         gchar *progress_time =
             g_strdup_printf("%d:%02d", time / 60000, (time / 1000) % 60);
         gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(progressbar),

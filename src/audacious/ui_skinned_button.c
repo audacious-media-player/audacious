@@ -25,8 +25,6 @@
 #define UI_SKINNED_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), ui_skinned_button_get_type(), UiSkinnedButtonPrivate))
 typedef struct _UiSkinnedButtonPrivate UiSkinnedButtonPrivate;
 
-static GMutex *mutex = NULL;
-
 enum {
     PRESSED,
     RELEASED,
@@ -170,7 +168,6 @@ static void ui_skinned_button_class_init (UiSkinnedButtonClass *klass) {
 
 static void ui_skinned_button_init (UiSkinnedButton *button) {
     UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
-    mutex = g_mutex_new();
     button->inside = FALSE;
     button->type = TYPE_NOT_SET;
     priv->move_x = 0;
@@ -272,7 +269,6 @@ static void ui_skinned_button_size_request(GtkWidget *widget, GtkRequisition *re
 }
 
 static void ui_skinned_button_size_allocate(GtkWidget *widget, GtkAllocation *allocation) {
-    g_mutex_lock(mutex);
     UiSkinnedButton *button = UI_SKINNED_BUTTON (widget);
     UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
     widget->allocation = *allocation;
@@ -287,12 +283,13 @@ static void ui_skinned_button_size_allocate(GtkWidget *widget, GtkAllocation *al
             gdk_window_move_resize(widget->window, allocation->x*(1+priv->double_size), allocation->y*(1+priv->double_size), allocation->width, allocation->height);
     }
 
+    if (button->x + priv->move_x == widget->allocation.x/(priv->double_size ? 2 : 1))
+        priv->move_x = 0;
+    if (button->y + priv->move_y == widget->allocation.y/(priv->double_size ? 2 : 1))
+        priv->move_y = 0;
+
     button->x = widget->allocation.x/(priv->double_size ? 2 : 1);
     button->y = widget->allocation.y/(priv->double_size ? 2 : 1);
-    priv->move_x = 0;
-    priv->move_y = 0;
-
-    g_mutex_unlock(mutex);
 }
 
 static gboolean ui_skinned_button_expose(GtkWidget *widget, GdkEventExpose *event) {
@@ -523,13 +520,11 @@ static void ui_skinned_button_toggle_doublesize(UiSkinnedButton *button) {
 }
 
 static void ui_skinned_button_redraw(UiSkinnedButton *button) {
-    g_mutex_lock(mutex);
     UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
     if (priv->move_x || priv->move_y)
         gtk_fixed_move(GTK_FIXED(priv->fixed), GTK_WIDGET(button), button->x+priv->move_x, button->y+priv->move_y);
 
     gtk_widget_queue_draw(GTK_WIDGET(button));
-    g_mutex_unlock(mutex);
 }
 
 
@@ -557,9 +552,7 @@ void ui_skinned_button_set_skin_index2(GtkWidget *button, SkinPixmapId si) {
 }
 
 void ui_skinned_button_move_relative(GtkWidget *button, gint x, gint y) {
-    g_mutex_lock(mutex);
     UiSkinnedButtonPrivate *priv = UI_SKINNED_BUTTON_GET_PRIVATE (button);
     priv->move_x += x;
     priv->move_y += y;
-    g_mutex_unlock(mutex);
 }
