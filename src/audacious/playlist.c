@@ -650,7 +650,7 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
     g_return_if_fail(playlist != NULL);
     g_return_if_fail(filename != NULL);
 
-    entry = playlist_entry_new(filename, tuple->track_name, tuple->length, dec);
+    entry = playlist_entry_new(filename, tuple ? tuple->track_name : NULL, tuple ? tuple->length : -1, dec);
     if(!playlist->tail)
         playlist->tail = g_list_last(playlist->entries);
 
@@ -683,7 +683,7 @@ __playlist_ins_with_info_tuple(Playlist * playlist,
         entry->tuple = tuple;
     }
 
-    if(tuple->mtime == -1) { // kick the scanner thread only if mtime = -1 (uninitialized).
+    if(tuple != NULL && tuple->mtime == -1) { // kick the scanner thread only if mtime = -1 (uninitialized).
         g_mutex_lock(mutex_scan);
         playlist_get_info_scan_active = TRUE;
         g_mutex_unlock(mutex_scan);
