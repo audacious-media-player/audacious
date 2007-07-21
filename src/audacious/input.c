@@ -293,6 +293,25 @@ input_dont_show_warning(GtkObject * object, gpointer user_data)
         !gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(object));
 }
 
+static time_t
+input_get_mtime(const gchar *filename)
+{
+    struct stat buf;
+    gint rv;
+    gchar *realfn = NULL;
+
+    /* stat() does not accept file:// --yaz */
+    realfn = g_filename_from_uri(filename, NULL, NULL);
+    rv = stat(realfn ? realfn : filename, &buf);
+    g_free(realfn); realfn = NULL;
+
+    if (rv == 0) {
+        return buf.st_mtime;
+    } else {
+        return 0; //error
+    }
+}
+
 /*
  * input_check_file()
  *
@@ -420,6 +439,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
                 pr = g_new0(ProbeResult, 1);
                 pr->ip = ip;
                 pr->tuple = tuple;
+                pr->tuple->mtime = input_get_mtime(filename_proxy);
 
                 return pr;
             }
