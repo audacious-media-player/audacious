@@ -243,7 +243,7 @@ playback_play_file(PlaylistEntry *entry)
         }
     }
 
-    if (!entry->decoder || !input_is_enabled(entry->decoder))
+    if (!entry->decoder || !input_is_enabled(entry->decoder->filename))
     {
         set_current_input_playback(NULL);
         mainwin_set_info_text();

@@ -372,7 +372,11 @@ input_check_file(const gchar * filename, gboolean show_warning)
     {
         g_free(filename_proxy);
         vfs_fclose(fd);
-        return ip;
+
+        pr = g_new0(ProbeResult, 1);
+        pr->ip = NULL;
+
+        return pr;
     }
 
     for (node = get_input_list(); node != NULL; node = g_list_next(node))
@@ -550,7 +554,7 @@ input_get_song_tuple(const gchar * filename)
     pr = input_check_file(filename_proxy, FALSE);
 
     if (!pr)
-        return;
+        return NULL;
 
     ip = pr->ip;
 

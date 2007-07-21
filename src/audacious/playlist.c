@@ -188,7 +188,7 @@ playlist_entry_free(PlaylistEntry * entry)
 static gboolean
 playlist_entry_get_info(PlaylistEntry * entry)
 {
-    TitleInput *tuple;
+    TitleInput *tuple = NULL;
     ProbeResult *pr = NULL;
     time_t modtime;
 
@@ -209,7 +209,8 @@ playlist_entry_get_info(PlaylistEntry * entry)
     if (entry->decoder == NULL)
     {
         pr = input_check_file(entry->filename, FALSE);
-        entry->decoder = pr->ip;
+        if (pr)
+           entry->decoder = pr->ip;
     }
 
     /* renew tuple if file mtime is newer than tuple mtime. */
@@ -1660,7 +1661,7 @@ playlist_load_ins_file(Playlist *playlist,
 	    !str_has_prefix_nocase(tmp, "https://"))
 	    pr = input_check_file(tmp, FALSE);
 
-        __playlist_ins_with_info(playlist, tmp, pos, title, len, dec, pr ? pr->ip : NULL);
+        __playlist_ins_with_info(playlist, tmp, pos, title, len, pr ? pr->ip : NULL);
         g_free(tmp);
         g_free(path);
         g_free(pr);
