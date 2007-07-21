@@ -21,7 +21,6 @@ CFLAGS += \
 SOURCES = \
 	widget.c \
 	playlist_list.c \
-	playlist_slider.c \
 	skin.c
 
 OBJECTS = ${SOURCES:.c=.o}

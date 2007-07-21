@@ -73,6 +73,8 @@ void playlistwin_scroll_down_pushed(void);
 void playlistwin_select_playlist_to_load(const gchar * default_filename);
 void playlistwin_set_sinfo_font(gchar *font);
 void playlistwin_set_sinfo_scroll(gboolean scroll);
+gint playlistwin_list_get_visible_count(void);
+gint playlistwin_list_get_first(void);
 
 extern GtkWidget *playlistwin;
 extern PlayList_List *playlistwin_list;

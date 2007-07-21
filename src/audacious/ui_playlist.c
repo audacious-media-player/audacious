@@ -58,6 +58,7 @@
 #include "ui_skinned_window.h"
 #include "ui_skinned_button.h"
 #include "ui_skinned_textbox.h"
+#include "ui_skinned_playlist_slider.h"
 
 #include "icons-stock.h"
 #include "images/audacious_playlist.xpm"
@@ -75,7 +76,7 @@ static gboolean playlistwin_hint_flag = FALSE;
 static GtkWidget *playlistwin_infopopup = NULL;
 static guint playlistwin_infopopup_sid = 0;
 
-static PlaylistSlider *playlistwin_slider = NULL;
+static GtkWidget *playlistwin_slider = NULL;
 static GtkWidget *playlistwin_time_min, *playlistwin_time_sec;
 static GtkWidget *playlistwin_info, *playlistwin_sinfo;
 static GtkWidget *playlistwin_srew, *playlistwin_splay;
@@ -239,6 +240,22 @@ playlistwin_item_visible(gint index)
 }
 
 gint
+playlistwin_list_get_visible_count(void)
+{
+    if (playlistwin_list)
+    return playlistwin_list->pl_num_visible;
+    return (-1);
+}
+
+gint
+playlistwin_list_get_first(void)
+{
+    if (playlistwin_list)
+    return playlistwin_list->pl_first;
+    return (-1);
+}
+
+gint
 playlistwin_get_toprow(void)
 {
     if (playlistwin_list)
@@ -261,7 +278,7 @@ playlistwin_update_list(Playlist *playlist)
     g_return_if_fail(playlistwin_list);
 
     widget_draw(WIDGET(playlistwin_list));
-    widget_draw(WIDGET(playlistwin_slider));
+    gtk_widget_queue_draw(playlistwin_slider);
     playlistwin_update_info(playlist);
     playlistwin_update_sinfo(playlist);
 }
@@ -376,7 +393,6 @@ playlistwin_set_shade(gboolean shaded)
     playlistwin_set_mask();
 
     widget_draw(WIDGET(playlistwin_list));
-    widget_draw(WIDGET(playlistwin_slider));
 
     draw_playlist_window(TRUE);
 }
@@ -656,8 +672,8 @@ playlistwin_resize(gint width, gint height)
 
     widget_resize_relative(WIDGET(playlistwin_list), dx, dy);
 
-    widget_move_relative(WIDGET(playlistwin_slider), dx, 0);
-    widget_resize_relative(WIDGET(playlistwin_slider), 0, dy);
+    ui_skinned_playlist_slider_move_relative(playlistwin_slider, dx);
+    ui_skinned_playlist_slider_resize_relative(playlistwin_slider, dy);
 
     ui_skinned_textbox_resize_relative(playlistwin_sinfo, dx, 0);
     playlistwin_update_sinfo(playlist_get_active());
@@ -1589,11 +1605,8 @@ playlistwin_create_widgets(void)
     ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_list));
 
     /* playlist list box slider */
-    playlistwin_slider =
-        create_playlistslider(&playlistwin_wlist, playlistwin_bg,
-                              SKINNED_WINDOW(playlistwin)->gc, playlistwin_get_width() - 15,
-                              20, cfg.playlist_height - 58, playlistwin_list);
-    ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_slider));
+    playlistwin_slider = ui_skinned_playlist_slider_new(SKINNED_WINDOW(playlistwin)->fixed, playlistwin_get_width() - 15,
+                              20, cfg.playlist_height - 58);
 
     /* track time (minute) */
     playlistwin_time_min = ui_skinned_textbox_new(SKINNED_WINDOW(playlistwin)->fixed,
