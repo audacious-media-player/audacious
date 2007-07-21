@@ -955,7 +955,7 @@ playlist_ins_dir(Playlist * playlist, const gchar * path,
     g_hash_table_foreach_remove(htab, devino_destroy, NULL);
 
     for (node = list; node; node = g_list_next(node)) {
-        __playlist_ins(playlist, node->data, pos, NULL);
+        playlist_ins(playlist, node->data, pos);
         g_free(node->data);
         entries++;
         if (pos >= 0)
