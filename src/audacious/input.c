@@ -364,11 +364,12 @@ input_check_file(const gchar * filename, gboolean show_warning)
     filename_proxy = g_strdup(filename);
 
     /* Some URIs will end in ?<subsong> to determine the subsong requested. */
+    /* other streams (like lastfm's) end in  ?Session=<session>*/
     tmp_uri = g_strdup(filename);
 
     tmp = strrchr(tmp_uri, '?');
 
-    if (tmp != NULL && g_ascii_isdigit(*(tmp + 1)))
+    if (tmp != NULL && (g_ascii_isdigit(*(tmp + 1))|| !g_strncasecmp(tmp+1,"Session=",8)))
         *tmp = '\0';
 
     fd = vfs_buffered_file_new_from_uri(tmp_uri);
