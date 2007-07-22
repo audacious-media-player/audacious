@@ -182,7 +182,7 @@ buffered_file_vfs_fsize_impl(VFSFile * file)
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
 
-    return vfs_fsize(handle->which == TRUE ? handle->fd : handle->buffer);
+    return vfs_fsize(handle->fd);
 }
 
 gchar *
