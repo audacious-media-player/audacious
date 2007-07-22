@@ -393,7 +393,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
         vfs_fclose(fd);
 
         pr = g_new0(ProbeResult, 1);
-        pr->ip = NULL;
+        pr->ip = ip;
 
         return pr;
     }
