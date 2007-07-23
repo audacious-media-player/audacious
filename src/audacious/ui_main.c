@@ -476,7 +476,6 @@ mainwin_quit_cb(void)
     gtk_widget_hide(equalizerwin);
     gtk_widget_hide(playlistwin);
     gtk_widget_hide(mainwin);
-    gdk_flush();
 
     g_source_remove(mainwin_timeout_id);
 
