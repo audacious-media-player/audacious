@@ -63,7 +63,6 @@
 #include "configdb.h"
 #include "dnd.h"
 #include "dock.h"
-#include "genevent.h"
 #include "hints.h"
 #include "input.h"
 #include "playback.h"
@@ -2992,8 +2991,7 @@ mainwin_idle_func(gpointer data)
     static gint count = 0;
     gint time = 0;
 
-    /* run audcore events, then run our own. --nenolod */
-    switch((time = audcore_generic_events()))
+    switch((time = playback_get_time()))
     {
         case -2:
             /* no usable output device */
@@ -3001,7 +2999,6 @@ mainwin_idle_func(gpointer data)
             run_no_output_device_dialog();
             mainwin_stop_pushed();
             GDK_THREADS_LEAVE();
-            ev_waiting = FALSE;
             break;
 
         default:
