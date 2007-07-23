@@ -63,7 +63,6 @@ static int song_info_timeout_source = 0;
 void
 playback_eof(void)
 {
-    g_print("playback eof called: %p", g_thread_self());
     event_queue("playback eof", playlist_get_active());
 }
 
