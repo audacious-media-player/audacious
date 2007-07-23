@@ -1888,6 +1888,37 @@ mainwin_real_show(void)
         gtk_window_move(GTK_WINDOW(mainwin), cfg.player_x, cfg.player_y);
 
     gtk_window_present(GTK_WINDOW(mainwin));
+    gtk_widget_show_all(mainwin);
+
+    if (!bmp_active_skin->properties.mainwin_text_visible)
+        gtk_widget_hide(mainwin_info);
+
+    if (!cfg.player_shaded) {
+        gtk_widget_hide(mainwin_srew);
+        gtk_widget_hide(mainwin_splay);
+        gtk_widget_hide(mainwin_spause);
+        gtk_widget_hide(mainwin_sstop);
+        gtk_widget_hide(mainwin_sfwd);
+        gtk_widget_hide(mainwin_seject);
+        gtk_widget_hide(mainwin_stime_min);
+        gtk_widget_hide(mainwin_stime_sec);
+        gtk_widget_hide(mainwin_svis);
+    }
+
+    gtk_widget_hide(mainwin_minus_num);
+    gtk_widget_hide(mainwin_10min_num);
+    gtk_widget_hide(mainwin_min_num);
+    gtk_widget_hide(mainwin_10sec_num);
+    gtk_widget_hide(mainwin_sec_num);
+    gtk_widget_hide(mainwin_othertext);
+
+    gtk_widget_hide(mainwin_position);
+    gtk_widget_hide(mainwin_sposition);
+
+    if (bmp_active_skin->properties.mainwin_vis_visible)
+        gtk_widget_show(mainwin_vis);
+    else
+        gtk_widget_hide(mainwin_vis);
 }
 
 void
@@ -2868,37 +2899,6 @@ mainwin_create(void)
                 bmp_active_skin->properties.mainwin_height * 2, -1);
     mainwin_set_back_pixmap();
     mainwin_create_widgets();
-    gtk_widget_show_all(mainwin);
-
-    if (!bmp_active_skin->properties.mainwin_text_visible)
-        gtk_widget_hide(mainwin_info);
-
-    if (!cfg.player_shaded) {
-        gtk_widget_hide(mainwin_srew);
-        gtk_widget_hide(mainwin_splay);
-        gtk_widget_hide(mainwin_spause);
-        gtk_widget_hide(mainwin_sstop);
-        gtk_widget_hide(mainwin_sfwd);
-        gtk_widget_hide(mainwin_seject);
-        gtk_widget_hide(mainwin_stime_min);
-        gtk_widget_hide(mainwin_stime_sec);
-        gtk_widget_hide(mainwin_svis);
-    }
-
-    gtk_widget_hide(mainwin_minus_num);
-    gtk_widget_hide(mainwin_10min_num);
-    gtk_widget_hide(mainwin_min_num);
-    gtk_widget_hide(mainwin_10sec_num);
-    gtk_widget_hide(mainwin_sec_num);
-    gtk_widget_hide(mainwin_othertext);
-
-    gtk_widget_hide(mainwin_position);
-    gtk_widget_hide(mainwin_sposition);
-
-    if (bmp_active_skin->properties.mainwin_vis_visible)
-        gtk_widget_show(mainwin_vis);
-    else
-        gtk_widget_hide(mainwin_vis);
 }
 
 void
