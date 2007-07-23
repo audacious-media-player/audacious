@@ -36,5 +36,6 @@ gboolean playback_get_playing(void);
 gboolean playback_get_paused(void);
 void playback_seek(gint time);
 void playback_seek_relative(gint offset);
+void playback_eof(void);
 
 #endif

@@ -42,6 +42,7 @@
 #include "configdb.h"
 
 #include "hook.h"
+#include "eventqueue.h"
 #include "input.h"
 #include "main.h"
 #include "ui_equalizer.h"
@@ -55,8 +56,15 @@
 #include "visualization.h"
 
 #include "playback.h"
+#include "playback_evlisteners.h"
 
 static int song_info_timeout_source = 0;
+
+void
+playback_eof(void)
+{
+    event_queue("playback eof", playlist_get_active());
+}
 
 gint
 playback_get_time(void)
@@ -83,6 +91,9 @@ playback_initiate(void)
     Playlist *playlist = playlist_get_active();
 
     g_return_if_fail(playlist_get_length(playlist) != 0);
+
+    /* initialize playback event listeners if not done already */
+    playback_evlistener_init();
 
     if (playback_get_playing())
         playback_stop();

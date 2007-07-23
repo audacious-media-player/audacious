@@ -87,6 +87,7 @@ SOURCES = \
 	output.c \
 	pixbuf_effects.c \
 	playback.c \
+	playback_evlisteners.c \
 	playlist.c \
 	playlist_container.c \
 	pluginenum.c \
