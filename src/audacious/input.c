@@ -371,6 +371,27 @@ input_check_file(const gchar * filename, gboolean show_warning)
     if (tmp != NULL && g_ascii_isdigit(*(tmp + 1)))
         *tmp = '\0';
 
+    /* CD-Audio uses cdda:// dummy paths, no filedescriptor handling for it */
+    if (!g_strncasecmp(filename, "cdda://", 7)) {
+        for (node = get_input_list(); node != NULL; node = g_list_next(node))
+        {
+            ip = INPUT_PLUGIN(node->data);
+            if (!ip || !input_is_enabled(ip->filename))
+                continue;
+            if (ip->is_our_file != NULL)
+                ret = ip->is_our_file(filename_proxy);
+            if (ret > 0)
+            {
+                g_free(filename_proxy);
+                pr = g_new0(ProbeResult, 1);
+                pr->ip = ip;
+                return pr;
+            }
+        }
+        g_free(filename_proxy);
+        return NULL;
+    }
+
     fd = vfs_buffered_file_new_from_uri(tmp_uri);
     g_free(tmp_uri);
 
@@ -393,7 +414,7 @@ input_check_file(const gchar * filename, gboolean show_warning)
         vfs_fclose(fd);
 
         pr = g_new0(ProbeResult, 1);
-        pr->ip = NULL;
+        pr->ip = ip;
 
         return pr;
     }

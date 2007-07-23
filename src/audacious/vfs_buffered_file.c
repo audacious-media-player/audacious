@@ -116,14 +116,33 @@ buffered_file_vfs_fseek_impl(VFSFile * file,
 
     vfs_fseek(handle->buffer, offset, whence);
 
-    /* if we go OOB, switch to live FD */
-    if (vfs_ftell(handle->buffer) > ((VFSBuffer *) handle->buffer->handle)->size)
+    switch(whence)
     {
-        vfs_rewind(handle->buffer);
-        handle->which = TRUE;
-        vfs_fseek(handle->buffer, offset, whence);
+        case SEEK_END:
+            handle->which = TRUE;
+            vfs_fseek(handle->fd, offset, whence);
+            break;
+        case SEEK_CUR:
+            if (vfs_ftell(handle->buffer) + offset > ((VFSBuffer *) handle->buffer->handle)->size)
+            {
+                handle->which = TRUE;
+                vfs_fseek(handle->fd, offset, whence);
+            }                
+            break;
+        case SEEK_SET:
+        default:
+            if (offset > ((VFSBuffer *) handle->buffer->handle)->size)
+            {
+                handle->which = TRUE;
+                vfs_fseek(handle->fd, offset, whence);
+            }
+            else
+            {
+                handle->which = FALSE;
+                vfs_fseek(handle->buffer, offset, whence);
+            }
+            break;
     }
-
     return 0;
 }
 
@@ -163,7 +182,7 @@ buffered_file_vfs_fsize_impl(VFSFile * file)
 {
     VFSBufferedFile *handle = (VFSBufferedFile *) file->handle;
 
-    return vfs_fsize(handle->which == TRUE ? handle->fd : handle->buffer);
+    return vfs_fsize(handle->fd);
 }
 
 gchar *
@@ -215,6 +234,7 @@ vfs_buffered_file_new_from_uri(const gchar *uri)
     }
 
     sz = vfs_fread(fd->mem, 1, 40000, fd->fd);
+    vfs_rewind(fd->fd);
 
     if (!sz)
     {
