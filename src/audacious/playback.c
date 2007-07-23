@@ -63,6 +63,7 @@ static int song_info_timeout_source = 0;
 void
 playback_eof(void)
 {
+    g_print("playback eof called: %p", g_thread_self());
     event_queue("playback eof", playlist_get_active());
 }
 
@@ -227,9 +228,9 @@ run_no_output_plugin_dialog(void)
 }
 
 static gpointer
-playback_monitor_thread(gpointer *data)
+playback_monitor_thread(gpointer data)
 {
-    PlaylistEntry *entry;
+    PlaylistEntry *entry = (PlaylistEntry *) data;
     InputPlayback *playback;
 
     playback = g_new0(InputPlayback, 1);
