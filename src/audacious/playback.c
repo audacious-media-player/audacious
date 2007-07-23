@@ -226,10 +226,32 @@ run_no_output_plugin_dialog(void)
     gtk_widget_destroy(dialog);
 }
 
+static gpointer
+playback_monitor_thread(gpointer *data)
+{
+    PlaylistEntry *entry;
+    InputPlayback *playback;
+
+    playback = g_new0(InputPlayback, 1);
+    
+    entry->decoder->output = &psuedo_output_plugin;
+
+    playback->plugin = entry->decoder;
+    playback->output = &psuedo_output_plugin;
+    playback->filename = g_strdup(entry->filename);
+    
+    set_current_input_playback(playback);
+
+    entry->decoder->play_file(playback);
+
+    playback_eof();
+
+    return NULL;
+}
+
 gboolean
 playback_play_file(PlaylistEntry *entry)
 {
-    InputPlayback *playback;
     g_return_val_if_fail(entry != NULL, FALSE);
 
     if (!get_current_output_plugin()) {
@@ -262,19 +284,8 @@ playback_play_file(PlaylistEntry *entry)
         return FALSE;
     }
 
-    playback = g_new0(InputPlayback, 1);
-    
-    entry->decoder->output = &psuedo_output_plugin;
-
-    playback->plugin = entry->decoder;
-    playback->output = &psuedo_output_plugin;
-    playback->filename = g_strdup(entry->filename);
-    
-    set_current_input_playback(playback);
-
-    entry->decoder->play_file(playback);
-
     ip_data.playing = TRUE;
+    g_thread_create(playback_monitor_thread, entry, TRUE, NULL);
 
     return TRUE;
 }
