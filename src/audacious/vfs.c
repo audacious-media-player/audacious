@@ -409,3 +409,75 @@ vfs_dup(VFSFile *in)
 
     return in;
 }
+
+/**
+ * vfs_is_remote:
+ * @path: A path to test.
+ *
+ * Tests if a path is remote uri.
+ *
+ * Return value: TRUE if the file is remote, otherwise FALSE.
+ **/
+gboolean
+vfs_is_remote(const gchar * path)
+{
+    VFSConstructor *vtable = NULL;
+    GList *node;
+    gchar *decpath;
+
+    if (!path)
+	return FALSE;
+
+    decpath = g_strdup(path);
+
+    for (node = vfs_transports; node != NULL; node = g_list_next(node))
+    {
+        VFSConstructor *vtptr = (VFSConstructor *) node->data;
+
+        if (!strncasecmp(decpath, vtptr->uri_id, strlen(vtptr->uri_id)))
+        {
+            vtable = vtptr;
+            break;
+        }
+    }
+
+    /* no transport vtable has been registered, bail. */
+    if (vtable == NULL)
+    {
+        g_warning("could not open '%s', no transport plugin available", decpath);
+        return FALSE;
+    }
+
+    /* check if vtable->uri_id is file:// or not, for now. */
+    if(!strncasecmp("file://", vtable->uri_id, strlen(vtable->uri_id)))
+        return FALSE;
+    else
+        return TRUE;
+}
+
+/**
+ * vfs_is_streaming:
+ * @file: A #VFSFile object to test.
+ *
+ * Tests if a file is associated to streaming.
+ *
+ * Return value: TRUE if the file is streaming, otherwise FALSE.
+ **/
+gboolean
+vfs_is_streaming(VFSFile *file)
+{
+    off_t size = 0;
+    glong curpos;
+
+    if(!file)
+        return FALSE;
+
+    curpos = file->base->vfs_ftell_impl(file);
+    size = file->base->vfs_fsize_impl(file);
+    file->base->vfs_fseek_impl(file, curpos, SEEK_SET);
+
+    if(size == -1)
+        return TRUE;
+    else
+        return FALSE;
+}

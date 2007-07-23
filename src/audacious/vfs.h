@@ -132,6 +132,10 @@ extern gboolean vfs_register_transport(VFSConstructor *vtable);
 
 extern void vfs_file_get_contents(const gchar *filename, gchar **buf, gsize *size);
 
+extern gboolean vfs_is_remote(const gchar * path);
+
+extern gboolean vfs_is_streaming(VFSFile *file);
+
 G_END_DECLS
 
 #endif /* VFS_H */

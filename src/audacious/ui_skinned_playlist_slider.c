@@ -45,6 +45,8 @@ struct _UiSkinnedPlaylistSliderPrivate {
 
     gint             resize_height;
     gint             move_x;
+    gint             prev_y;
+    gint             drag_y;
 };
 
 static void ui_skinned_playlist_slider_class_init         (UiSkinnedPlaylistSliderClass *klass);
@@ -118,6 +120,8 @@ static void ui_skinned_playlist_slider_init(UiSkinnedPlaylistSlider *playlist_sl
     playlist_slider->pressed = FALSE;
     priv->resize_height = 0;
     priv->move_x = 0;
+    priv->drag_y = 0;
+    priv->prev_y = 0;
 }
 
 GtkWidget* ui_skinned_playlist_slider_new(GtkWidget *fixed, gint x, gint y, gint h) {
@@ -236,6 +240,8 @@ static gboolean ui_skinned_playlist_slider_expose(GtkWidget *widget, GdkEventExp
     if (y < 0) y=0;
     if (y > priv->height - 19) y = priv->height - 19;
 
+    priv->prev_y = y;
+
     /* FIXME: uses bmp_active_skin->pixmaps directly and may need calibration */
     /* drawing background */
     gint c;
@@ -269,13 +275,26 @@ static void ui_skinned_playlist_slider_set_position(GtkWidget *widget, gint y) {
 
 static gboolean ui_skinned_playlist_slider_button_press(GtkWidget *widget, GdkEventButton *event) {
     UiSkinnedPlaylistSlider *ps = UI_SKINNED_PLAYLIST_SLIDER (widget);
+    UiSkinnedPlaylistSliderPrivate *priv = UI_SKINNED_PLAYLIST_SLIDER_GET_PRIVATE(widget);
 
+    if (event->button != 1 && event->button != 2)
+        return TRUE;
+
+    gint y = event->y;
     if (event->type == GDK_BUTTON_PRESS) {
-        if (event->button == 1) {
-            ps->pressed = TRUE;
-            gint y = event->y;
+        ps->pressed = TRUE;
+        if ((y >= priv->prev_y && y < priv->prev_y + 18)) {
+            priv->drag_y = y - priv->prev_y;
+        } else if (event->button == 2) {
             ui_skinned_playlist_slider_set_position(widget, y);
+            priv->drag_y = 0;
+        } else {
+            gint n = playlistwin_list_get_visible_count() / 2;
+            if (y < priv->prev_y)
+                n *= -1;
+            playlistwin_scroll(n);
         }
+        gtk_widget_queue_draw(widget);
     }
 
     return TRUE;
@@ -284,7 +303,7 @@ static gboolean ui_skinned_playlist_slider_button_press(GtkWidget *widget, GdkEv
 static gboolean ui_skinned_playlist_slider_button_release(GtkWidget *widget, GdkEventButton *event) {
     UiSkinnedPlaylistSlider *ps = UI_SKINNED_PLAYLIST_SLIDER(widget);
 
-    if (event->button == 1) {
+    if (event->button == 1 || event->button == 2) {
         ps->pressed = FALSE;
         gtk_widget_queue_draw(widget);
     }
@@ -293,9 +312,10 @@ static gboolean ui_skinned_playlist_slider_button_release(GtkWidget *widget, Gdk
 
 static gboolean ui_skinned_playlist_slider_motion_notify(GtkWidget *widget, GdkEventMotion *event) {
     UiSkinnedPlaylistSlider *ps = UI_SKINNED_PLAYLIST_SLIDER(widget);
+    UiSkinnedPlaylistSliderPrivate *priv = UI_SKINNED_PLAYLIST_SLIDER_GET_PRIVATE(widget);
 
     if (ps->pressed) {
-        gint y = event->y;
+        gint y = event->y - priv->drag_y;
         ui_skinned_playlist_slider_set_position(widget, y);
     }
     return TRUE;
