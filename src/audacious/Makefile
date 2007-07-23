@@ -38,6 +38,7 @@ HEADERS = \
 	auddrct.h \
 	configdb.h \
 	dbus.h \
+	eventqueue.h \
 	formatter.h \
 	rcfile.h \
 	i18n.h \
@@ -68,6 +69,7 @@ SOURCES = \
 	dnd.c \
 	dock.c \
 	effect.c \
+	eventqueue.c \
 	fft.c \
 	formatter.c \
 	general.c \

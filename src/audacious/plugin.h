@@ -38,6 +38,7 @@
 #include <glib.h>
 #include "audacious/vfs.h"
 #include "audacious/titlestring.h"
+#include "audacious/eventqueue.h"
 
 #define PLUGIN(x)         ((Plugin *)(x))
 #define INPUT_PLUGIN(x)   ((InputPlugin *)(x))
