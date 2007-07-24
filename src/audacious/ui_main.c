@@ -2219,8 +2219,8 @@ run_no_audiocd_dialog(void)
     gtk_widget_destroy(dialog);
 }
 
-static void
-run_no_output_device_dialog(void)
+void
+run_no_output_device_dialog(gpointer hook_data, gpointer user_data)
 {
     const gchar *markup =
         N_("<b><big>Couldn't open audio.</big></b>\n\n"
@@ -2229,6 +2229,7 @@ run_no_output_device_dialog(void)
            "2. No other programs is blocking the soundcard.\n"
            "3. Your soundcard is configured properly.\n");
 
+    GDK_THREADS_ENTER();
     GtkWidget *dialog =
         gtk_message_dialog_new_with_markup(GTK_WINDOW(mainwin),
                                            GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -2237,6 +2238,7 @@ run_no_output_device_dialog(void)
                                            _(markup));
     gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
+    GDK_THREADS_LEAVE();
 }
 
 
@@ -2838,6 +2840,9 @@ mainwin_create_widgets(void)
     /* Dang well better set an error message or you'll see this */
     gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(err),
                                              "Boo! Bad stuff! Booga Booga!");
+
+    hook_associate("playback audio error", (void *) mainwin_stop_pushed, NULL);
+    hook_associate("playback audio error", (void *) run_no_output_device_dialog, NULL);
 }
 
 static void
@@ -2993,14 +2998,6 @@ mainwin_idle_func(gpointer data)
 
     switch((time = playback_get_time()))
     {
-        case -2:
-            /* no usable output device */
-            GDK_THREADS_ENTER();
-            run_no_output_device_dialog();
-            mainwin_stop_pushed();
-            GDK_THREADS_LEAVE();
-            break;
-
         default:
             input_update_vis(time);
             /* nothing at this time */
