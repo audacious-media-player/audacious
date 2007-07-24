@@ -71,6 +71,9 @@
 
 #include "hook.h"
 
+#include "playlist_evmessages.h"
+#include "playlist_evlisteners.h"
+
 typedef gint (*PlaylistCompareFunc) (PlaylistEntry * a, PlaylistEntry * b);
 typedef void (*PlaylistSaveFunc) (FILE * file);
 
@@ -260,6 +263,8 @@ playlist_init(void)
     initial_pl = playlist_new();
 
     playlist_add_playlist(initial_pl);
+
+    playlist_evlistener_init();
 }
 
 void
@@ -1039,6 +1044,7 @@ playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
                           gint freq, gint nch)
 {
     Playlist *playlist = playlist_get_active();
+    PlaylistEventInfoChange *msg;
 
     g_return_if_fail(playlist != NULL);
 
@@ -1058,7 +1064,13 @@ playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
 
     playlist_recalc_total_time(playlist);
 
-    mainwin_set_song_info(rate, freq, nch);
+    /* broadcast a PlaylistEventInfoChange message. */
+    msg = g_new0(PlaylistEventInfoChange, 1);
+    msg->bitrate = rate;
+    msg->samplerate = freq;
+    msg->channels = nch;
+
+    event_queue("playlist info change", msg);
 
     if ( playlist->position )
         hook_call( "playlist set info" , playlist->position );

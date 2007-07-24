@@ -90,6 +90,7 @@ SOURCES = \
 	playback_evlisteners.c \
 	playlist.c \
 	playlist_container.c \
+	playlist_evlisteners.c \
 	pluginenum.c \
 	rcfile.c \
 	signals.c \
