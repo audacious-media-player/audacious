@@ -24,22 +24,23 @@ mowgli_dictionary_t *mime_type_dict = NULL;
 
 void mime_set_plugin(const gchar *mimetype, InputPlugin *ip)
 {
-	g_return_if_fail(mimetype != NULL);
-	g_return_if_fail(ip != NULL);
+    g_return_if_fail(mimetype != NULL);
+    g_return_if_fail(ip != NULL);
 
-	if (mime_type_dict == NULL)
-		mime_type_dict = mowgli_dictionary_create(strcasecmp);
-
-	mowgli_dictionary_add(mime_type_dict, mimetype, ip);
+    if (mime_type_dict == NULL)
+        mime_type_dict = mowgli_dictionary_create(strcasecmp);
+    else if (mowgli_dictionary_find(mime_type_dict, mimetype))
+        mowgli_dictionary_delete(mime_type_dict, mimetype);
+    mowgli_dictionary_add(mime_type_dict, mimetype, ip);
 }
 
 InputPlugin *mime_get_plugin(const gchar *mimetype)
 {
-	if (mimetype == NULL)
-		return NULL;
+    if (mimetype == NULL)
+        return NULL;
 
-	if (mime_type_dict == NULL)
-		return NULL;
+    if (mime_type_dict == NULL)
+        return NULL;
 
-	return mowgli_dictionary_retrieve(mime_type_dict, mimetype);
+    return mowgli_dictionary_retrieve(mime_type_dict, mimetype);
 }
