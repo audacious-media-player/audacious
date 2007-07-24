@@ -244,7 +244,8 @@ playback_monitor_thread(gpointer data)
 
     entry->decoder->play_file(playback);
 
-    playback_eof();
+    if (ip_data.playing)
+        playback_eof();
 
     return NULL;
 }
