@@ -66,6 +66,12 @@ playback_eof(void)
     event_queue("playback eof", playlist_get_active());
 }
 
+void
+playback_error(void)
+{
+    event_queue("playback audio error", NULL);
+}
+
 gint
 playback_get_time(void)
 {
@@ -244,8 +250,10 @@ playback_monitor_thread(gpointer data)
 
     entry->decoder->play_file(playback);
 
-    if (ip_data.playing)
+    if (!playback->error && ip_data.playing)
         playback_eof();
+    else if (playback->error)
+        playback_error();
 
     return NULL;
 }
