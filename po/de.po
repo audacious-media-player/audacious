@@ -19,7 +19,7 @@ msgid ""
 "\n"
 "Could not open glade file (%s). Please check your installation.\n"
 msgstr ""
-"<b><big>Das Erstellen von %s war nicht möglich.</big></b>\n"
+"<b><big>Konnte %s nicht erstellen.</big></b>\n"
 "\n"
 "Konnte die Glade-Datei nicht öffnen (%s). Bitte überprüfen Sie Ihre "
 "Installation.\n"
@@ -45,7 +45,7 @@ msgstr "Input-Plugin: %s"
 #: src/audacious/logger.c:122
 #, c-format
 msgid "Unable to create log file (%s)!\n"
-msgstr "Konnte Logfile nicht erstellen (%s)!\n"
+msgstr "Konnte Logdatei nicht erstellen (%s)!\n"
 
 #: src/audacious/main.c:84 src/audacious/main.c:86 src/audacious/ui_main.c:628
 #: src/audacious/ui_main.c:2948
@@ -53,15 +53,14 @@ msgid "Audacious"
 msgstr "Audacious"
 
 #: src/audacious/main.c:461
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create directory (%s): %s\n"
-msgstr "Konnte Verzeichnis nicht erstellen (%s): %s"
+msgstr "Konnte Verzeichnis nicht erstellen (%s): %s\n"
 
 #  -n, --session switch
 #: src/audacious/main.c:860
-#, fuzzy
 msgid "Select which Audacious session ID to use"
-msgstr "Wähle Audacious/BMP/XMMS-Session (Standard: 0)"
+msgstr "Audacious-Session-ID wählen"
 
 #  -r, --rew switch
 #: src/audacious/main.c:861
@@ -86,7 +85,7 @@ msgstr "Aktuellen Song stoppen"
 #  -t, --play-pause switch
 #: src/audacious/main.c:865
 msgid "Pause if playing, play otherwise"
-msgstr "Pause falls beim abspielen, andernfalls Wiedergabe starten"
+msgstr "Pause falls beim Abspielen, andernfalls Wiedergabe starten"
 
 #  -f, --fwd switch
 #: src/audacious/main.c:866
@@ -94,7 +93,6 @@ msgid "Skip forward in playlist"
 msgstr "In der Wiedergabeliste vorwärts springen"
 
 #: src/audacious/main.c:867
-#, fuzzy
 msgid "Display Jump to File dialog"
 msgstr "«Springe zu Datei»-Fenster anzeigen"
 
@@ -105,36 +103,34 @@ msgstr "Wiedergabeliste nicht entfernen"
 
 #  -e, --enqueue switch
 #: src/audacious/main.c:869
-#, fuzzy
 msgid "Add new files to a temporary playlist"
 msgstr "Fügt Dateien zur Wiedergabeliste hinzu"
 
 #  -m, --show-main-window switch
 #  -m, --show-main-window switch
 #: src/audacious/main.c:870
-#, fuzzy
 msgid "Display the main window"
 msgstr "Das Hauptfenster zeigen"
 
 #: src/audacious/main.c:871
 msgid "Display all open Audacious windows"
-msgstr ""
+msgstr "Alle offenen Audacious-Fenster anzeigen"
 
 #: src/audacious/main.c:872
 msgid "Enable headless operation"
-msgstr ""
+msgstr "Headless-Operation aktivieren"
 
 #: src/audacious/main.c:873
 msgid "Print all errors and warnings to stdout"
-msgstr ""
+msgstr "Alle Fehler und Warnungen an stdout schicken"
 
 #: src/audacious/main.c:874
 msgid "Show version and builtin features"
-msgstr ""
+msgstr "Version und eingebaute Features zeigen"
 
 #: src/audacious/main.c:875
 msgid "FILE..."
-msgstr ""
+msgstr "DATEI..."
 
 #: src/audacious/main.c:1001
 #, c-format
@@ -146,7 +142,7 @@ msgid ""
 msgstr ""
 "<b><big>Konnte Skin nicht laden.</big></b>\n"
 "\n"
-"Überprüfen Sie, dass der Skin in '%s' benutzbar ist und der Default-Skin "
+"Überprüfen Sie, dass der Skin in '%s' benutzbar ist und der Standard-Skin "
 "ordnungsgemäß in '%s' installiert wurde.\n"
 
 #: src/audacious/main.c:1052
@@ -159,7 +155,7 @@ msgid ""
 msgstr ""
 "Tut uns Leid, aber Threads werden auf Ihrer Plattform nicht unterstützt.\n"
 "\n"
-"Wenn Sie auf einem libc5-basierten Linux-System arbeiten und Glib und GTK+ "
+"Wenn Sie auf einem libc5-basierten Linux-System arbeiten und Glib & GTK+ "
 "vor LinuxThreads installiert haben, müssen Sie Glib und GTK+ erneut "
 "kompilieren.\n"
 
@@ -175,7 +171,7 @@ msgstr ""
 
 #: src/audacious/main.c:1093
 msgid "- play multimedia files"
-msgstr ""
+msgstr " - gib Multimediadateien wieder"
 
 #: src/audacious/main.c:1100
 #, c-format
@@ -183,11 +179,13 @@ msgid ""
 "%s: %s\n"
 "Try `%s --help' for more information.\n"
 msgstr ""
+"%s: %s\n"
+"Versuche `%s --help' für weitere Informationen.\n"
 
 #: src/audacious/main.c:1109
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Unable to open display, exiting.\n"
-msgstr "audacious: Kann Display nicht öffnen, beende.\n"
+msgstr "%s: Kann Display nicht öffnen, beende.\n"
 
 #: src/audacious/signals.c:48
 msgid ""
@@ -214,6 +212,8 @@ msgid ""
 "Bugs can be reported at http://bugs-meta.atheme.org against the Audacious "
 "product.\n"
 msgstr ""
+"\n"
+"Bugs in Audacious können bei http://bugs-meta.atheme.org gemeldet werden.\n"
 
 #: src/audacious/signals.c:265
 msgid ""
@@ -295,19 +295,16 @@ msgid "Breton:"
 msgstr "Bretonisch:"
 
 #: src/audacious/ui_credits.c:153
-#, fuzzy
 msgid "Bulgarian:"
-msgstr "Ungarisch:"
+msgstr "Bulgarisch:"
 
 #: src/audacious/ui_credits.c:156
-#, fuzzy
 msgid "Catalan:"
-msgstr "Italienisch:"
+msgstr "Katalanisch:"
 
 #: src/audacious/ui_credits.c:159
-#, fuzzy
 msgid "Croatian:"
-msgstr "Ort:"
+msgstr "Kroatisch:"
 
 #: src/audacious/ui_credits.c:162
 msgid "Czech:"
@@ -331,7 +328,7 @@ msgstr "Deutsch:"
 
 #: src/audacious/ui_credits.c:179
 msgid "Georgian:"
-msgstr "Georgisch: "
+msgstr "Georgisch:"
 
 #: src/audacious/ui_credits.c:182
 msgid "Greek:"
@@ -407,7 +404,7 @@ msgstr "Traditionelles Chinesisch:"
 
 #: src/audacious/ui_credits.c:239
 msgid "Turkish:"
-msgstr ""
+msgstr "Türkisch:"
 
 #: src/audacious/ui_credits.c:243
 msgid "Ukrainian:"
@@ -461,17 +458,15 @@ msgstr "Titellänge:"
 
 #: src/audacious/ui_main.c:1520
 msgid "Audacious - visibility warning"
-msgstr ""
+msgstr "Audacious - Sichtbarkeits-Warnung"
 
 #: src/audacious/ui_main.c:1522
-#, fuzzy
 msgid "Show main player window"
-msgstr "Schriftart für Hauptfenster wählen:"
+msgstr "Zeige Hauptfenster:"
 
 #: src/audacious/ui_main.c:1523
-#, fuzzy
 msgid "Ignore"
-msgstr "Kein/e"
+msgstr "Ignorieren"
 
 #: src/audacious/ui_main.c:1527
 msgid ""
@@ -829,7 +824,7 @@ msgstr "Liste laden"
 
 #: src/audacious/ui_manager.c:216
 msgid "Loads a playlist file into the selected playlist."
-msgstr "Wiedergabeliste in selektierte Wiedergabeliste laden"
+msgstr "Wiedergabeliste in gewählte Wiedergabeliste laden"
 
 #: src/audacious/ui_manager.c:218
 msgid "Save List"
@@ -837,7 +832,7 @@ msgstr "Liste speichern"
 
 #: src/audacious/ui_manager.c:219
 msgid "Saves the selected playlist."
-msgstr "Speicherte die selektierte Wiedergabeliste."
+msgstr "Speichert die gewählte Wiedergabeliste."
 
 #: src/audacious/ui_manager.c:221
 msgid "Save Default List"
@@ -845,7 +840,7 @@ msgstr "Standardliste speichern"
 
 #: src/audacious/ui_manager.c:222
 msgid "Saves the selected playlist to the default location."
-msgstr "Speichert die ausgewählte Wiedergabeliste an den standardmässigen Ort"
+msgstr "Speichert die ausgewählte Wiedergabeliste an dem standardmäßigen Ort"
 
 #: src/audacious/ui_manager.c:225
 msgid "Refresh List"
@@ -1505,7 +1500,7 @@ msgid ""
 "<b><big>No output plugin selected.</big></b>\n"
 "You have not selected an output plugin."
 msgstr ""
-"<b><big>Kein Ausgabe-Plugin selektiert.</big></b>\n"
+"<b><big>Kein Ausgabe-Plugin gewählt.</big></b>\n"
 "Sie haben kein Ausgabe-Plugin ausgewählt."
 
 #: src/audacious/titlestring.c:379
@@ -1679,13 +1674,13 @@ msgid ""
 "provided by Audacious itself and is faster than the default GTK2 selector "
 "(but sadly not as user-friendly)."
 msgstr ""
-"XMMS/GTK1-mässiger Dateiauswahldialog aktivieren. Dieser wird von Audacious "
-"zur Verfügung gestellt und ist schneller als derjenige von GTK2, aber auch "
+"XMMS/GTK1-artigen Dateiauswahldialog aktivieren. Dieser wird von Audacious "
+"zur Verfügung gestellt und ist schneller als derjenige von GTK2, aber dafür "
 "nicht so benutzerfreundlich."
 
 #: src/audacious/glade/prefswin.glade:1321
 msgid "Use XMMS-style file selector instead of the default selector"
-msgstr "Benutze XMMS-mässige Dateiauswahl anstatt die standardmässige"
+msgstr "Benutze XMMS-mäßige Dateiauswahl statt der standardmäßigen"
 
 #: src/audacious/glade/prefswin.glade:1410
 msgid "<b>Mouse wheel</b>"
@@ -1954,9 +1949,9 @@ msgid ""
 "slightly slower than detection on demand, but still provides a minimal level "
 "of format detection."
 msgstr ""
-"Falls aktiviert, wird Audacious Dateiformat anhand der Dateierweiterung "
-"erkennen. Dies ist etwas langsamer als die Erkennung bei Bedarf, bringt aber "
-"doch eine gewisse Ordnung in die Dateien."
+"Wenn aktiviert wird Audacious das Dateiformat anhand der Dateierweiterung "
+"erkennen. Dies ist etwas langsamer als die Erkennung bei Bedarf, garantiert "
+"aber trotzdem einen minimalen Grad an Format-Erkennung."
 
 #: src/audacious/glade/prefswin.glade:3899
 msgid "Detect file formats by extension."
@@ -2000,31 +1995,30 @@ msgid "seconds"
 msgstr "Sekunden"
 
 #: src/audacious/glade/prefswin.glade:4175
-#, fuzzy
 msgid "<b>Sampling Rate Converter</b>"
-msgstr "<b>Samplerate:</b>"
+msgstr "<b>Abtastfrequenz:</b>"
 
 #: src/audacious/glade/prefswin.glade:4215
-#, fuzzy
 msgid "Enable Sampling Rate Converter"
-msgstr "Abtastfrequenz"
+msgstr "Aktiviere Abtastfrequenz-Umwandler"
 
 #: src/audacious/glade/prefswin.glade:4264
-#, fuzzy
 msgid "Sampling Rate [Hz]:"
-msgstr "Abtastfrequenz"
+msgstr "Abtastfrequenz [Hz]:"
 
 #: src/audacious/glade/prefswin.glade:4334
 msgid ""
-"<span size=\"small\">All stream will be converted to this sampling rate.\n"
+"<span size=\"small\">All streams will be converted to this sampling rate.\n"
 "This should be the max supported sampling rate of\n"
 "the sound card or output plugin.</span>"
 msgstr ""
+"<span size=\"small\">Alle Streams werden in diese Abtastfrequenz umgewandelt.\n"
+"Sie sollte die maximal unterstützte Abtastfrequenz der\n"
+"Soundkarte oder des Output-Plugins sein.</span>"
 
 #: src/audacious/glade/prefswin.glade:4364
-#, fuzzy
 msgid "Converter Type:"
-msgstr "Zeichensatz konvertieren"
+msgstr "Umwandlungsart:"
 
 #: src/audacious/glade/prefswin.glade:4392
 msgid ""
@@ -2036,18 +2030,16 @@ msgid ""
 msgstr ""
 
 #: src/audacious/glade/prefswin.glade:4593
-#, fuzzy
 msgid "Reload Plugins"
-msgstr "Plugins"
+msgstr "Plugins neu einlesen"
 
 #: src/audacious/glade/prefswin.glade:4654
 msgid "Popup Information Settings"
 msgstr "Popup-Informations-Einstellungen"
 
 #: src/audacious/glade/prefswin.glade:4678
-#, fuzzy
 msgid "<b>Cover image retrieve</b>"
-msgstr "<b>Formaterkennung</b>"
+msgstr "<b>Cover-Bild finden</b>"
 
 #: src/audacious/glade/prefswin.glade:4703
 msgid ""
@@ -2061,11 +2053,11 @@ msgstr ""
 
 #: src/audacious/glade/prefswin.glade:4758
 msgid "Include:"
-msgstr "Einschliessen:"
+msgstr "Einschließen:"
 
 #: src/audacious/glade/prefswin.glade:4786
 msgid "Exclude:"
-msgstr "Ausschliessen:"
+msgstr "Ausschließen:"
 
 #: src/audacious/glade/prefswin.glade:4855
 msgid "Recursively search for cover"
@@ -2080,17 +2072,16 @@ msgid "Use per-file cover"
 msgstr "Pro-Datei-Titelbild benutzen"
 
 #: src/audacious/glade/prefswin.glade:4979
-#, fuzzy
 msgid "<b>Miscellaneous</b>"
-msgstr "<b>_Verschiedenes</b>"
+msgstr "<b>Verschiedenes</b>"
 
 #: src/audacious/glade/prefswin.glade:5017
 msgid "Show Progress bar for the current track"
-msgstr ""
+msgstr "Zeige Fortschrittsbalken für den aktuellen Titel"
 
 #: src/audacious/glade/prefswin.glade:5055
 msgid "Delay until filepopup comes up: "
-msgstr ""
+msgstr "Verzögerung bis zum Erscheinen des Popups: "
 
 #: src/audacious/glade/prefswin.glade:5149
 msgid "Color Adjustment"
@@ -4713,7 +4704,7 @@ msgstr "16KHZ"
 #~ "ports."
 #~ msgstr ""
 #~ "* ALSA-Ausgabe-Ports auswählen *\n"
-#~ "MIDI-Ereignisse werden an die hier selektierten Ports gesendet. Es muss "
+#~ "MIDI-Ereignisse werden an die hier gewählten Ports gesendet. Es muss "
 #~ "mindestens ein Port ausgewählt werden. Im Zweifelsfalle sollte der "
 #~ "“Wavetable synthesizer“-Port verwendet werden."
 

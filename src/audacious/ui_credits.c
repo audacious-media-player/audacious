@@ -177,6 +177,7 @@ static const gchar *translators[] = {
     "Adam Cecile",
     NULL,
     N_("German:"),
+    "Michael Färber",
     "Michael Hanselmann",
     "Matthias Debus",
     NULL,
