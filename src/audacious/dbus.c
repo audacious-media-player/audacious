@@ -578,7 +578,6 @@ gboolean audacious_rc_delete(RemoteObject *obj, guint pos, GError **error) {
 gboolean audacious_rc_clear(RemoteObject *obj, GError **error) {
     playlist_clear(playlist_get_active());
     mainwin_clear_song_info();
-    mainwin_set_info_text();
     return TRUE;
 }
 

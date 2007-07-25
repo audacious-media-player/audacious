@@ -893,7 +893,6 @@ playlistwin_load_playlist(const gchar * filename)
 
     playlist_clear(playlist);
     mainwin_clear_song_info();
-    mainwin_set_info_text();
 
     playlist_load(playlist, filename);
     playlist_set_current_name(playlist, filename);
@@ -2018,7 +2017,6 @@ action_playlist_remove_all(void)
 
     /* XXX -- should this really be coupled here? -nenolod */
     mainwin_clear_song_info();
-    mainwin_set_info_text();
 }
 
 void

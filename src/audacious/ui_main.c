@@ -91,6 +91,8 @@
 #include "ui_skinned_monostereo.h"
 #include "ui_jumptotrack.h"
 
+#include "ui_main_evlisteners.h"
+
 static GTimeVal cb_time; /* click delay for tristate is defined by TRISTATE_THRESHOLD */
 
 #define ITEM_SEPARATOR {"/-", NULL, NULL, 0, "<Separator>"}
@@ -586,24 +588,6 @@ draw_main_window(gboolean force)
 }
 
 
-void
-mainwin_set_info_text(void)
-{
-    gchar *text;
-
-    if (mainwin_info_text_locked)
-        return;
-
-    if ((text = input_get_info_text()) != NULL) {
-        ui_skinned_textbox_set_text(mainwin_info, text);
-        g_free(text);
-    }
-    else if ((text = playlist_get_info_text(playlist_get_active())) != NULL) {
-        ui_skinned_textbox_set_text(mainwin_info, text);
-        g_free(text);
-    }
-}
-
 static gchar *mainwin_tb_old_text = NULL;
 
 void
@@ -634,8 +618,6 @@ mainwin_release_info_text(void)
         g_free(mainwin_tb_old_text);
         mainwin_tb_old_text = NULL;
     }
-    else
-        mainwin_set_info_text();    /* XXX: best we can do */
 }
 
 
@@ -2138,9 +2120,6 @@ static void
 mainwin_mr_change(GtkWidget *widget, MenuRowItem i)
 {
     switch (i) {
-    case MENUROW_NONE:
-        mainwin_set_info_text();
-        break;
     case MENUROW_OPTIONS:
         mainwin_lock_info_text(_("Options Menu"));
         break;
@@ -2161,6 +2140,8 @@ mainwin_mr_change(GtkWidget *widget, MenuRowItem i)
         break;
     case MENUROW_VISUALIZATION:
         mainwin_lock_info_text(_("Visualization Menu"));
+        break;
+    case MENUROW_NONE:
         break;
     }
 }
@@ -2886,6 +2867,8 @@ mainwin_create_window(void)
 
     g_signal_connect(mainwin, "key_press_event",
                      G_CALLBACK(mainwin_keypress), NULL);
+
+    ui_main_evlistener_init();
 }
 
 void
@@ -3025,7 +3008,6 @@ mainwin_idle_func(gpointer data)
         mainwin_title_text = NULL;
         G_UNLOCK(mainwin_title);
 
-        mainwin_set_info_text();
         playlistwin_update_list(playlist_get_active());
     }
 

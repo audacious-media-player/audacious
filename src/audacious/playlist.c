@@ -526,9 +526,6 @@ playlist_delete_index(Playlist *playlist, guint pos)
             mainwin_clear_song_info();
         }
     }
-    else if (set_info_text) {
-        mainwin_set_info_text();
-    }
 
     playlist_manager_update();
 }
@@ -568,9 +565,6 @@ playlist_delete_filenames(Playlist * playlist, GList * filenames)
             mainwin_clear_song_info();
         }
     }
-    else if (set_info_text) {
-        mainwin_set_info_text();
-    }
 
     playlist_manager_update();
 }
@@ -603,10 +597,6 @@ playlist_delete(Playlist * playlist, gboolean crop)
     PLAYLIST_UNLOCK(playlist->mutex);
 
     playlist_recalc_total_time(playlist);
-
-    if (set_info_text) {
-        mainwin_set_info_text();
-    }
 
     if (restart_playing) {
         if (playlist->position) {
@@ -1045,6 +1035,7 @@ playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
 {
     Playlist *playlist = playlist_get_active();
     PlaylistEventInfoChange *msg;
+    gchar *text;
 
     g_return_if_fail(playlist != NULL);
 
@@ -1071,6 +1062,9 @@ playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
     msg->channels = nch;
 
     event_queue("playlist info change", msg);
+
+    text = playlist_get_info_text(playlist);
+    event_queue("title change", text);
 
     if ( playlist->position )
         hook_call( "playlist set info" , playlist->position );
@@ -1177,7 +1171,6 @@ playlist_next(Playlist *playlist)
     if (restart_playing)
         playback_initiate();
     else {
-        mainwin_set_info_text();
         playlistwin_update_list(playlist);
     }
 }
@@ -1239,7 +1232,6 @@ playlist_prev(Playlist *playlist)
     if (restart_playing)
         playback_initiate();
     else {
-        mainwin_set_info_text();
         playlistwin_update_list(playlist);
     }
 }
@@ -1422,7 +1414,6 @@ playlist_set_position(Playlist *playlist, guint pos)
     if (restart_playing)
         playback_initiate();
     else {
-        mainwin_set_info_text();
         playlistwin_update_list(playlist);
     }
 }
@@ -1480,7 +1471,6 @@ playlist_eof_reached(Playlist *playlist)
             PLAYLIST_UNLOCK(playlist->mutex);
 	    hook_call("playlist end reached", playlist->position);
             mainwin_clear_song_info();
-            mainwin_set_info_text();
             return;
         }
     }
@@ -1491,7 +1481,6 @@ playlist_eof_reached(Playlist *playlist)
 
     playlist_check_pos_current(playlist);
     playback_initiate();
-    mainwin_set_info_text();
     playlistwin_update_list(playlist);
 }
 
@@ -2490,7 +2479,6 @@ playlist_get_info_func(gpointer arg)
 {
     GList *node;
     gboolean update_playlistwin = FALSE;
-    gboolean update_mainwin = FALSE;
 
     while (playlist_get_info_is_going()) {
         PlaylistEntry *entry;
@@ -2518,8 +2506,6 @@ playlist_get_info_func(gpointer arg)
                 }
                 else if ((entry->tuple != NULL || entry->title != NULL) && entry->length != -1) {
                     update_playlistwin = TRUE;
-                    if (entry == playlist->position)
-                        update_mainwin = TRUE;
                     break;
                 }
             }
@@ -2563,8 +2549,6 @@ playlist_get_info_func(gpointer arg)
                  }
                  else if ((entry->tuple != NULL || entry->title != NULL) && entry->length != -1) {
                      update_playlistwin = TRUE;
-                     if (entry == playlist->position)
-                         update_mainwin = TRUE;
                         // no need for break here since this iteration is very short.
                 }
             }
@@ -2588,11 +2572,6 @@ playlist_get_info_func(gpointer arg)
         if (update_playlistwin) {
             playlistwin_update_list(playlist);
             update_playlistwin = FALSE;
-        }
-
-        if (update_mainwin) {
-            mainwin_set_info_text();
-            update_mainwin = FALSE;
         }
 
         if (playlist_get_info_scan_active) {

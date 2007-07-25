@@ -361,7 +361,6 @@ audacious_drct_pl_clear ( void )
 {
   playlist_clear(playlist_get_active());
   mainwin_clear_song_info();
-  mainwin_set_info_text();
   return;
 }
 

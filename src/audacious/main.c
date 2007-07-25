@@ -1227,7 +1227,6 @@ main(gint argc, gchar ** argv)
     if (options.headless != 1)
     {
         read_volume(VOLSET_STARTUP);
-        mainwin_set_info_text();
 
         /* FIXME: delayed, because it deals directly with the plugin
          * interface to set menu items */
@@ -1296,7 +1295,6 @@ main(gint argc, gchar ** argv)
     {
         GMainLoop *loop;
 
-        mainwin_set_info_text();
         playlist_start_get_info_thread();
 
         loop = g_main_loop_new(NULL, TRUE);

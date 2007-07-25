@@ -890,7 +890,6 @@ on_mainwin_font_button_font_set(GtkFontButton * button,
     cfg.mainwin_font = g_strdup(gtk_font_button_get_font_name(button));
 
     ui_skinned_textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
-    mainwin_set_info_text();
     draw_main_window(TRUE);
 }
 
@@ -911,7 +910,6 @@ on_use_bitmap_fonts_toggled(GtkToggleButton * button,
     ui_skinned_textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
     playlistwin_set_sinfo_font(cfg.playlist_font);
 
-    mainwin_set_info_text();
     draw_main_window(TRUE);
     if (cfg.playlist_shaded) {
         playlistwin_update_list(playlist_get_active());

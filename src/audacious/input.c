@@ -75,8 +75,6 @@ InputPluginData ip_data = {
 
 static GList *vis_list = NULL;
 
-gchar *input_info_text = NULL;
-
 InputPlayback *
 get_current_input_playback(void)
 {
@@ -829,19 +827,12 @@ input_update_vis(gint time)
         vis_send_data(NULL, 0, 0);
 }
 
-
-gchar *
-input_get_info_text(void)
-{
-    return g_strdup(input_info_text);
-}
-
+/* FIXME: move this somewhere else */
 void
-input_set_info_text(const gchar * text)
+input_set_info_text(gchar *text)
 {
-    g_free(input_info_text);
-    input_info_text = g_strdup(text);
-    mainwin_set_info_text();
+    gchar *title = g_strdup(text);
+    event_queue("title change", title);
 }
 
 void

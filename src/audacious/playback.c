@@ -121,7 +121,6 @@ playback_initiate(void)
     }
 
     playlist_check_pos_current(playlist);
-    mainwin_set_info_text();
     mainwin_update_song_info();
 
     /* FIXME: use g_timeout_add_seconds when glib-2.14 is required */
@@ -191,12 +190,6 @@ playback_stop(void)
 
         free_vis_data();
         ip_data.paused = FALSE;
-
-        if (input_info_text) {
-            g_free(input_info_text);
-            input_info_text = NULL;
-            mainwin_set_info_text();
-        }
 
 	g_free(get_current_input_playback()->filename);
 	g_free(get_current_input_playback());
@@ -288,7 +281,6 @@ playback_play_file(PlaylistEntry *entry)
     if (!entry->decoder || !input_is_enabled(entry->decoder->filename))
     {
         set_current_input_playback(NULL);
-        mainwin_set_info_text();
 
         return FALSE;
     }

@@ -162,8 +162,8 @@ input_plugin_init(Plugin * plugin)
        else thinks we could use a CONST macro to solve the warnings?
        - descender */
     p->set_info = (void (*)(gchar *, gint, gint, gint, gint)) playlist_set_info_old_abi;
-    p->set_info_text = (void (*)(gchar *)) input_set_info_text;
-    p->set_status_buffering = (void (*)(gboolean)) input_set_status_buffering;     
+    p->set_info_text = input_set_info_text;
+    p->set_status_buffering = input_set_status_buffering;
 
     ip_data.input_list = g_list_append(ip_data.input_list, p);
     
@@ -228,9 +228,11 @@ plugin2_process(PluginHeader *header, GModule *module, const gchar *filename)
     if (header->magic != PLUGIN_MAGIC)
         return plugin2_dispose(module, "plugin <%s> discarded, invalid module magic", filename);
 
+#if 0
     if (header->api_version != __AUDACIOUS_PLUGIN_API__)
         return plugin2_dispose(module, "plugin <%s> discarded, wanting API version %d, we implement API version %d",
                                filename, header->api_version, __AUDACIOUS_PLUGIN_API__);
+#endif
 
     if (header->init)
         header->init();

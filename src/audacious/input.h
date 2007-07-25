@@ -67,7 +67,6 @@ void input_get_song_info(const gchar * filename, gchar ** title,
 guchar *input_get_vis(gint time);
 void input_update_vis_plugin(gint time);
 
-gchar *input_get_info_text(void);
 void input_about(gint index);
 void input_configure(gint index);
 
@@ -76,7 +75,7 @@ void input_add_vis_pcm(gint time, AFormat fmt, gint nch, gint length,
 InputVisType input_get_vis_type();
 void input_update_vis(gint time);
 
-void input_set_info_text(const gchar * text);
+void input_set_info_text(gchar * text);
 void input_set_status_buffering(gboolean status);
 
 GList *input_scan_dir(const gchar * dir);
@@ -89,7 +88,6 @@ gboolean input_is_enabled(const gchar * filename);
 gchar *input_stringify_disabled_list(void);
 
 extern InputPluginData ip_data;
-extern gchar *input_info_text;
 
 
 #endif
