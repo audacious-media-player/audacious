@@ -383,9 +383,12 @@ gboolean
 vfs_is_writeable(const gchar * path)
 {
     struct stat info;
+    gchar *realfn = g_filename_from_uri(path, NULL, NULL);
 
-    if (stat(path, &info) == -1)
+    if (stat(realfn, &info) == -1)
         return FALSE;
+
+    g_free(realfn);
 
     return (info.st_mode & S_IWUSR);
 }
