@@ -4331,7 +4331,7 @@ Please note however, that high values will result in Audacious performing poorly
 			      <child>
 				<widget class="GtkLabel" id="label92">
 				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">&lt;span size=&quot;small&quot;&gt;All stream will be converted to this sampling rate.
+				  <property name="label" translatable="yes">&lt;span size=&quot;small&quot;&gt;All streams will be converted to this sampling rate.
 This should be the max supported sampling rate of
 the sound card or output plugin.&lt;/span&gt;</property>
 				  <property name="use_underline">False</property>
