@@ -909,7 +909,8 @@ playlist_file_selection_load(const gchar * title,
 
     dialog = make_filebrowser(title, FALSE);
     gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), cfg.playlist_path);
-    gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog), default_filename);
+    if (default_filename)
+        gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(dialog), default_filename);
     gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER); /* centering */
 
     if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
