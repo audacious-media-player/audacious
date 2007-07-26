@@ -112,13 +112,13 @@ playback_initiate(void)
     g_return_if_fail(entry != NULL);
     playback_play_file(entry);
 
-    if (playback_get_time() != -1) {
+//    if (playback_get_time() != -1) {
         equalizerwin_load_auto_preset(entry->filename);
         input_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
                      cfg.equalizer_bands);
         output_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
                       cfg.equalizer_bands);
-    }
+//    }
 
     playlist_check_pos_current(playlist);
     mainwin_update_song_info();
