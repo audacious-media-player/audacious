@@ -2984,9 +2984,9 @@ static gboolean
 mainwin_idle_func(gpointer data)
 {
     static gint count = 0;
-    gint time = playback_get_time();
 
-    input_update_vis(time);
+    if (playback_get_playing())  
+        input_update_vis(playback_get_time());    
 
     GDK_THREADS_ENTER();
 
