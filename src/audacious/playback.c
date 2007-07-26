@@ -148,17 +148,18 @@ playback_initiate(void)
 void
 playback_pause(void)
 {
+    InputPlayback *playback;
+
     if (!playback_get_playing())
         return;
 
-    if (!get_current_input_playback())
+    if ((playback = get_current_input_playback()) == NULL)
         return;
 
     ip_data.paused = !ip_data.paused;
 
-    if (get_current_input_playback()->plugin->pause)
-        get_current_input_playback()->plugin->pause(get_current_input_playback(),
-						    ip_data.paused);
+    if (playback->plugin->pause)
+        playback->plugin->pause(playback, ip_data.paused);
 
     if (ip_data.paused)
         hook_call("playback pause", NULL);
@@ -176,23 +177,26 @@ playback_pause(void)
 void
 playback_stop(void)
 {
-    if (ip_data.playing && get_current_input_playback()) {
+    InputPlayback *playback;
 
-        if (playback_get_paused()) {
+    if (ip_data.playing && (playback = get_current_input_playback()) != NULL)
+    {
+        if (playback_get_paused() == TRUE)
+        {
             output_flush(get_written_time()); /* to avoid noise */
             playback_pause();
         }
 
         ip_data.playing = FALSE; 
 
-        if (get_current_input_playback()->plugin->stop)
-            get_current_input_playback()->plugin->stop(get_current_input_playback());
+        if (playback->plugin->stop)
+            playback->plugin->stop(playback);
 
         free_vis_data();
         ip_data.paused = FALSE;
 
-	g_free(get_current_input_playback()->filename);
-	g_free(get_current_input_playback());
+	g_free(playback->filename);
+	g_free(playback);
 	set_current_input_playback(NULL);
     }
 
