@@ -43,6 +43,8 @@
 
 #define MAINWIN_DEFAULT_FONT     "Sans Bold 9"
 
+#define CDDA_DUMMY_PATH          "cdda://default"
+
 
 typedef enum {
     TIMER_ELAPSED,

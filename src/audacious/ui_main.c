@@ -2228,6 +2228,8 @@ add_medium(void)
 {
     GList *list, *node;
     gchar *filename;
+	
+	/*
     gchar *path;
     ConfigDb *db;
 
@@ -2241,20 +2243,21 @@ add_medium(void)
     }
     else
         bmp_cfg_db_close(db);
+	*/
 
-    if (!(list = input_scan_dir(path))) {
+    if (!(list = input_scan_dir(CDDA_DUMMY_PATH))) {
         run_no_audiocd_dialog();
         return;
     }
 
     for (node = list; node; node = g_list_next(node)) {
-        filename = g_build_filename(path, node->data, NULL);
+        filename = g_build_filename(CDDA_DUMMY_PATH, node->data, NULL);
         playlist_add(playlist_get_active(), filename);
         g_free(filename);
         g_free(node->data);
     }
 
-    g_free(path);
+    /*g_free(path);*/
     g_list_free(list);
 
 }
@@ -2264,15 +2267,19 @@ play_medium(void)
 {
     GList *list, *node;
     gchar *filename;
+	/*
     gchar *path;
     ConfigDb *db;
+	*/
     Playlist *playlist = playlist_get_active();
 
+	/*
     db = bmp_cfg_db_open();
     bmp_cfg_db_get_string(db, "CDDA", "directory", &path);
     bmp_cfg_db_close(db);
+	*/
 
-    if (!(list = input_scan_dir(path))) {
+    if (!(list = input_scan_dir(CDDA_DUMMY_PATH))) {
         run_no_audiocd_dialog();
         return;
     }
@@ -2280,13 +2287,13 @@ play_medium(void)
     playlist_clear(playlist);
 
     for (node = list; node; node = g_list_next(node)) {
-        filename = g_build_filename(path, node->data, NULL);
+        filename = g_build_filename(CDDA_DUMMY_PATH, node->data, NULL);
         playlist_add(playlist, filename);
         g_free(filename);
         g_free(node->data);
     }
 
-    g_free(path);
+    /*g_free(path);*/
     g_list_free(list);
 
     playlist_set_position(playlist, 0);

@@ -380,6 +380,8 @@ input_check_file(const gchar * filename, gboolean show_warning)
                 continue;
             if (ip->is_our_file != NULL)
                 ret = ip->is_our_file(filename_proxy);
+            else
+                ret = 0;
             if (ret > 0)
             {
                 g_free(filename_proxy);
