@@ -306,11 +306,12 @@ playback_get_paused(void)
 void
 playback_seek(gint time)
 {
+    InputPlayback *playback = get_current_input_playback();
     gboolean restore_pause = FALSE;
     gint l=0, r=0;
 
     g_return_if_fail(ip_data.playing);
-    g_return_if_fail(get_current_input_playback());
+    g_return_if_fail(playback != NULL);
 
     /* FIXME WORKAROUND...that should work with all plugins
      * mute the volume, start playback again, do the seek, then pause again
@@ -324,8 +325,8 @@ playback_seek(gint time)
         playback_pause();
     }
     
+    playback->plugin->seek(playback, time);
     free_vis_data();
-    get_current_input_playback()->plugin->seek(get_current_input_playback(), time);
     
     if (restore_pause)
     {
