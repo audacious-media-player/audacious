@@ -191,6 +191,8 @@ struct _InputPlayback {
     int playing;
     gboolean error;
     gboolean eof;
+
+    GThread *thread;
 };
 
 struct _InputPlugin {
