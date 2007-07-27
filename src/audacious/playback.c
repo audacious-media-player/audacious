@@ -193,6 +193,9 @@ playback_stop(void)
         if (playback->plugin->stop)
             playback->plugin->stop(playback);
 
+        if (playback->thread != NULL)
+            g_thread_join(playback->thread);
+
         free_vis_data();
         ip_data.paused = FALSE;
 
@@ -243,6 +246,7 @@ playback_monitor_thread(gpointer data)
     playback->plugin = entry->decoder;
     playback->output = &psuedo_output_plugin;
     playback->filename = g_strdup(entry->filename);
+    playback->thread = g_thread_self();
     
     set_current_input_playback(playback);
 
@@ -253,6 +257,8 @@ playback_monitor_thread(gpointer data)
     else if (playback->error)
         playback_error();
 
+    playback->thread = NULL;
+    g_thread_exit(NULL);
     return NULL;
 }
 
