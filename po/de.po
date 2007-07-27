@@ -577,7 +577,7 @@ msgstr ""
 "<b><big>Kann keinen Ton wiedergeben.</big></b>\n"
 "\n"
 "Bitte folgendes überprüfen:\n"
-"1. Das richtige Output-Plugin wurde gewählt.\n"
+"1. Das richtige Ausgabe-Plugin wurde gewählt.\n"
 "2. Keine anderen Programme blockieren die Soundkarte.\n"
 "3. Die Soundkarte ist richtig konfiguriert.\n"
 
@@ -1174,16 +1174,16 @@ msgstr "Equalizer-Voreinstellung"
 
 #: src/audacious/ui_manager.c:431
 msgid "Load preset"
-msgstr "Lade Equalizer-Voreinstellung"
+msgstr "Equalizer-Voreinstellung laden"
 
 #: src/audacious/ui_manager.c:433 src/audacious/ui_manager.c:454
 #: src/audacious/ui_manager.c:469
 msgid "Auto-load preset"
-msgstr "Autolade-Voreinstellung"
+msgstr "Automatisch geladene Equalizer-Voreinstellung"
 
 #: src/audacious/ui_manager.c:434
 msgid "Load auto-load preset"
-msgstr "Autolade-Voreinstellung laden"
+msgstr "Automatisch geladene Equalizer-Voreinstellung laden"
 
 #: src/audacious/ui_manager.c:436 src/audacious/ui_manager.c:457
 msgid "Default"
@@ -1191,7 +1191,7 @@ msgstr "Standard"
 
 #: src/audacious/ui_manager.c:437
 msgid "Load default preset into equalizer"
-msgstr "Standardeinstellung in Equalizer laden"
+msgstr "Standard-Equalizer-Voreinstellung in Equalizer laden"
 
 #: src/audacious/ui_manager.c:439
 msgid "Zero"
@@ -1207,35 +1207,35 @@ msgstr "Aus Datei"
 
 #: src/audacious/ui_manager.c:443
 msgid "Load preset from file"
-msgstr "Lade Voreinstellung aus Datei"
+msgstr "Equalizer-Voreinstellung aus Datei laden"
 
 #: src/audacious/ui_manager.c:445
 msgid "From WinAMP EQF file"
-msgstr "Aus WinAMP-EQF-Datei"
+msgstr "Aus Winamp-EQF-Datei"
 
 #: src/audacious/ui_manager.c:446
 msgid "Load preset from WinAMP EQF file"
-msgstr "Voreinstellungen aus WinAMP-EQF-Datei laden"
+msgstr "Equalizer-Voreinstellung aus Winamp-EQF-Datei laden"
 
 #: src/audacious/ui_manager.c:448
 msgid "WinAMP Presets"
-msgstr "WinAMP-Voreinstellungen"
+msgstr "Winamp-Equalizer-Voreinstellungen"
 
 #: src/audacious/ui_manager.c:449
 msgid "Import WinAMP presets"
-msgstr "WinAMP-Voreinstellungen importieren"
+msgstr "Winamp-Equalizer-Voreinstellungen importieren"
 
 #: src/audacious/ui_manager.c:452
 msgid "Save preset"
-msgstr "Speichere Voreinstellung"
+msgstr "Equalizer-Voreinstellung speichern"
 
 #: src/audacious/ui_manager.c:455
 msgid "Save auto-load preset"
-msgstr "Speichere Autolade-Voreinstellung"
+msgstr "Automatisch geladene Equalizer-Voreinstellung speichern"
 
 #: src/audacious/ui_manager.c:458
 msgid "Save default preset"
-msgstr "Speichere Voreinstellung"
+msgstr "Standard-Equalizer-Voreinstellung speichern"
 
 #: src/audacious/ui_manager.c:460
 msgid "To file"
@@ -1243,23 +1243,23 @@ msgstr "In Datei"
 
 #: src/audacious/ui_manager.c:461
 msgid "Save preset to file"
-msgstr "Speichere Voreinstellung in Datei"
+msgstr "Equalizer-Voreinstellung in Datei speichern"
 
 #: src/audacious/ui_manager.c:463
 msgid "To WinAMP EQF file"
-msgstr "In WinAMP EQF-Datei"
+msgstr "In Winamp-EQF-Datei"
 
 #: src/audacious/ui_manager.c:464
 msgid "Save preset to WinAMP EQF file"
-msgstr "Voreinstellung in WinAMP EQF-Datei speichern"
+msgstr "Equalizer-Voreinstellung in Winamp-EQF-Datei speichern"
 
 #: src/audacious/ui_manager.c:467
 msgid "Delete preset"
-msgstr "Lösche Voreinstellung"
+msgstr "Equalizer-Voreinstellung löschen"
 
 #: src/audacious/ui_manager.c:470
 msgid "Delete auto-load preset"
-msgstr "Autolade-Voreinstellung löschen"
+msgstr "Automatisch geladene Equalizer-Voreinstellung löschen"
 
 #: src/audacious/ui_preferences.c:101 src/audacious/glade/prefswin.glade:1363
 msgid "Appearance"
@@ -1287,7 +1287,7 @@ msgstr "Plugins"
 
 #: src/audacious/ui_preferences.c:113 src/audacious/ui_fileinfopopup.c:254
 msgid "Artist"
-msgstr "Artist"
+msgstr "Künstler"
 
 #: src/audacious/ui_preferences.c:114 src/audacious/ui_fileinfopopup.c:257
 #: src/audacious/titlestring.c:380
@@ -1378,7 +1378,7 @@ msgstr "Titellänge:"
 
 #: src/audacious/ui_fileopener.c:129
 msgid "Open Files"
-msgstr "/Dateien öffnen"
+msgstr "Dateien öffnen"
 
 #: src/audacious/ui_fileopener.c:129
 msgid "Add Files"
@@ -1411,26 +1411,27 @@ msgid ""
 "expressions work, simply insert a literal portion of what you're searching "
 "for."
 msgstr ""
-"Wiedergabelisteneinträge durch Eingabe von einem oder mehreren Feldern "
-"auswählen. Benutzt reguläre Ausdrücke ohne Beachtung der Gross- und "
-"Kleinschreibung. Falls diese unbekannt sind, kann auch einfach ein "
-"Suchbegriff eingegeben werden."
+"Wiedergabelisteneinträge können durch Ausfüllen von einem oder mehreren "
+"Feldern auswählt werden. Die Felder benutzen reguläre Ausdrücke ohne "
+"Beachtung der Gross- und Kleinschreibung. Falls der Umgang mit regulären "
+"Ausdrücken nicht vertraut ist, kann auch einfach ein Suchbegriff "
+"eingegeben werden."
 
 #: src/audacious/ui_playlist.c:496
 msgid "Track name: "
-msgstr "Titelname:"
+msgstr "Titelname: "
 
 #: src/audacious/ui_playlist.c:502
 msgid "Album name: "
-msgstr "Albumname:"
+msgstr "Albumname: "
 
 #: src/audacious/ui_playlist.c:508
 msgid "Artist: "
-msgstr "Künstler:"
+msgstr "Künstler: "
 
 #: src/audacious/ui_playlist.c:514
 msgid "Filename: "
-msgstr "Dateiname:"
+msgstr "Dateiname: "
 
 #: src/audacious/ui_playlist.c:521
 msgid "Clear previous selection before searching"
@@ -1475,11 +1476,11 @@ msgstr "Wiedergabeliste speichern"
 
 #: src/audacious/ui_playlist.c:1690
 msgid "Audacious Playlist Editor"
-msgstr "Audacious Wiedergabelisteneditor"
+msgstr "Audacious-Wiedergabelisteneditor"
 
 #: src/audacious/ui_urlopener.c:90
 msgid "Add/Open URL Dialog"
-msgstr "URL hinzufügen/öffnen-Dialog"
+msgstr "«URL hinzufügen/öffnen»-Fenster"
 
 #: src/audacious/ui_playlist_manager.c:253
 msgid "Playlist Manager"
@@ -1523,7 +1524,7 @@ msgstr ""
 
 #: src/audacious/titlestring.c:379
 msgid "Performer/Artist"
-msgstr "Performer/Artist"
+msgstr "Interpret/Künstler"
 
 #: src/audacious/titlestring.c:382
 msgid "File name"
@@ -1655,7 +1656,7 @@ msgstr ""
 
 #: src/audacious/glade/prefswin.glade:1093
 msgid "Use Bitmap fonts if available"
-msgstr "Bitmap-Schriften (falls verfügbar)"
+msgstr "Bitmap-Schriften benützen (falls verfügbar)"
 
 #: src/audacious/glade/prefswin.glade:1127
 msgid "<b>_Miscellaneous</b>"
@@ -1667,11 +1668,11 @@ msgstr "Nummern in der Wiedergabeliste zeigen"
 
 #: src/audacious/glade/prefswin.glade:1210
 msgid "Show separators in playlist"
-msgstr "Trennzeichen in Wiedergabeliste zeigen"
+msgstr "Trennstriche in Wiedergabeliste zeigen"
 
 #: src/audacious/glade/prefswin.glade:1245
 msgid "Use custom cursors"
-msgstr "Eigenen Cursor benutzen"
+msgstr "Benutzerdefinierte Mauszeiger benutzen"
 
 #: src/audacious/glade/prefswin.glade:1279
 #: src/audacious/glade/prefswin.glade:1290
@@ -1693,7 +1694,7 @@ msgid ""
 "(but sadly not as user-friendly)."
 msgstr ""
 "XMMS/GTK1-artigen Dateiauswahldialog aktivieren. Dieser wird von Audacious "
-"zur Verfügung gestellt und ist schneller als derjenige von GTK2, aber dafür "
+"zur Verfügung gestellt und ist schneller als derjenige von GTK2, dafür aber "
 "nicht so benutzerfreundlich."
 
 #: src/audacious/glade/prefswin.glade:1321
@@ -1706,7 +1707,7 @@ msgstr "<b>Mausrad</b>"
 
 #: src/audacious/glade/prefswin.glade:1458
 msgid "Changes volume by"
-msgstr "Lautstärke verändern von"
+msgstr "Lautstärke verändern um"
 
 #: src/audacious/glade/prefswin.glade:1486
 msgid "percent"
@@ -1714,7 +1715,7 @@ msgstr "Prozent"
 
 #: src/audacious/glade/prefswin.glade:1514
 msgid "Scrolls playlist by"
-msgstr "Wiedergabeliste bewegen von"
+msgstr "Wiedergabeliste bewegen um"
 
 #: src/audacious/glade/prefswin.glade:1567
 msgid "lines"
@@ -1726,15 +1727,15 @@ msgstr "<b>Dateiname</b>"
 
 #: src/audacious/glade/prefswin.glade:1729
 msgid "Convert underscores to blanks"
-msgstr "Unterstriche zu Leerzeichen konvertieren"
+msgstr "Unterstriche in Leerzeichen umwandeln"
 
 #: src/audacious/glade/prefswin.glade:1764
 msgid "Convert %20 to blanks"
-msgstr "%20 zu Leerzeichen konvertieren"
+msgstr "%20 in Leerzeichen umwandeln"
 
 #: src/audacious/glade/prefswin.glade:1799
 msgid "Convert backslash '\\' to forward slash '/'"
-msgstr "Umgekehrter Schrägstich (\\) zu normalem Schrägstrich (/) umwandeln"
+msgstr "Umgekehrten Schrägstrich (\\) in normalen Schrägstrich (/) umwandeln"
 
 #: src/audacious/glade/prefswin.glade:1833
 msgid "<b>Metadata</b>"
@@ -1779,8 +1780,8 @@ msgid ""
 msgstr ""
 "Alternativ für Metadaten verwendete Zeichensätze. Wenn die automatische "
 "Erkennung des Zeichensatzes fehlgeschlagen oder deaktiviert ist, werden die "
-"nachfolgend aufgelisteten Zeichensätze ausprobiert. Von diesen aus dann noch "
-"einmal probiert, UTF-8 zu dekodieren."
+"nachfolgend aufgelisteten Zeichensätze ausprobiert. Nach diesen wird dann "
+"noch einmal probiert, von diesen Zeichensätzen nach UTF-8 zu dekodieren."
 
 #: src/audacious/glade/prefswin.glade:2035
 msgid "Auto character encoding detector for:"
@@ -1796,8 +1797,8 @@ msgid ""
 "directories, and Gnome VFS should handle automatically)."
 msgstr ""
 "Dateidialog immer aktualisieren (dies wird das Öffnen des Dialogs mit "
-"grossen Verzeichnissen langsamer machen, sollte Gnome VFS sollte es "
-"automatisch aktiviert sein)"
+"großen Verzeichnissen langsamer machen, und Gnome VFS sollte das "
+"automatisch machen)"
 
 #: src/audacious/glade/prefswin.glade:2132
 msgid "Always refresh directory when opening file dialog"
@@ -1826,10 +1827,10 @@ msgid ""
 "Custom"
 msgstr ""
 "TITEL\n"
-"ARTIST - TITEL\n"
-"ARTIST - ALBUM - TITEL\n"
-"ARTIST - ALBUM - TRACK. TITEL\n"
-"ARTIST [ ALBUM ] - TRACK. TITEL\n"
+"KÜNSTLER - TITEL\n"
+"KÜNSTLER - ALBUM - TITEL\n"
+"KÜNSTLER - ALBUM - TRACK. TITEL\n"
+"KÜNSTLER [ ALBUM ] - TRACK. TITEL\n"
 "ALBUM - TITEL\n"
 "Eigene"
 
@@ -1849,7 +1850,8 @@ msgid ""
 msgstr ""
 "Schaltet die Popup-Informationen ein und aus. Diese werden angezeigt, wenn "
 "mit der Maus über einen Wiedergabelisteneintrag gefahren wird. Gezeigt "
-"werden Titel, Album, Genre, Publikationsjahr und weitere Informationen."
+"werden Titel, Album, Genre, Publikationsjahr, Titelnummer, Titellänge und "
+"Cover-Bild."
 
 #: src/audacious/glade/prefswin.glade:2418
 msgid "Show popup information for playlist entries"
@@ -1861,19 +1863,19 @@ msgstr "Einstellungen für Popup-Informationen bearbeiten"
 
 #: src/audacious/glade/prefswin.glade:2553
 msgid "<b>Presets</b>"
-msgstr "<b>Voreinstellungen</b>"
+msgstr "<b>Equalizer-Voreinstellungen</b>"
 
 #: src/audacious/glade/prefswin.glade:2653
 msgid "Directory preset file:"
-msgstr "Verzeichnis für Voreinstellungs-Dateien:"
+msgstr "Verzeichnis für Equalizer-Voreinstellungs-Dateien:"
 
 #: src/audacious/glade/prefswin.glade:2681
 msgid "File preset extension:"
-msgstr "Endung von Voreinstellungs-Dateien:"
+msgstr "Endung von Equalizer-Voreinstellungs-Dateien:"
 
 #: src/audacious/glade/prefswin.glade:2729
 msgid "Available _Presets:"
-msgstr "Verfügbare _Voreinstellungen:"
+msgstr "Verfügbare Equalizer-_Voreinstellungen:"
 
 #: src/audacious/glade/prefswin.glade:2909
 msgid "<b>Proxy Configuration</b>"
@@ -1908,8 +1910,8 @@ msgid ""
 "<span size=\"small\">Changing these settings will require a restart of "
 "Audacious.</span>"
 msgstr ""
-"<span size=\"small\">Das Ändern dieser Einstellungen wird einen Neustart von "
-"Audacious benötigen.</span>"
+"<span size=\"small\">Das Ändern dieser Einstellungen benötigt einen Neustart "
+"von Audacious.</span>"
 
 #: src/audacious/glade/prefswin.glade:3419
 msgid "<b>Audio System</b>"
@@ -1923,14 +1925,15 @@ msgstr "Aktives Ausgabe-Plugin"
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
-"Increase this value if you are experiencing audio skipping. \n"
+"Increase this value if you are experiencing audio skipping.\n"
 "Please note however, that high values will result in Audacious performing "
 "poorly.</span>"
 msgstr ""
 "<span size=\"small\">Dies ist die Grösse des Puffers für Audio-Streams, "
 "angegeben in Millisekunden.\n"
-"Erhöhen sie diesen Wert, wenn sie Unterbrüche im Ton haben.\n"
-"Hohe Werte können dazu führen, dass Audacious langsamer läuft.</span>"
+"Dieser Wert sollte erhöht werden, wenn Unterbrechungen im Ton festgestellt "
+"werden.\n"
+"Hohe Werte können jedoch dazu führen, dass Audacious langsamer läuft.</span>"
 
 #: src/audacious/glade/prefswin.glade:3571
 msgid "Buffer size:"
@@ -1938,11 +1941,11 @@ msgstr "Puffergrösse:"
 
 #: src/audacious/glade/prefswin.glade:3695
 msgid "Output Plugin Preferences"
-msgstr "Output-Plugin-Einstellungen"
+msgstr "Ausgabe-Plugin-Einstellungen"
 
 #: src/audacious/glade/prefswin.glade:3770
 msgid "Output Plugin Information"
-msgstr "Output-Plugin-Information"
+msgstr "Ausgabe-Plugin-Information"
 
 #: src/audacious/glade/prefswin.glade:3822
 msgid "<b>Format Detection</b>"
@@ -1955,7 +1958,7 @@ msgid ""
 msgstr ""
 "Falls aktiviert, wird Audacious Dateiformate nur bei Bedarf ermitteln. Dies "
 "kann zu einer unordentlichen Wiedergabeliste führen, bringt gleichzeitig "
-"aber eine Geschwindigkeitserhöhung."
+"aber eine beträchtliche Geschwindigkeitserhöhung."
 
 #: src/audacious/glade/prefswin.glade:3863
 msgid "Detect file formats on demand, instead of immediately."
@@ -1967,13 +1970,13 @@ msgid ""
 "slightly slower than detection on demand, but still provides a minimal level "
 "of format detection."
 msgstr ""
-"Wenn aktiviert wird Audacious das Dateiformat anhand der Dateierweiterung "
+"Falls aktiviert, wird Audacious das Dateiformat anhand der Dateierweiterung "
 "erkennen. Dies ist etwas langsamer als die Erkennung bei Bedarf, garantiert "
 "aber trotzdem einen minimalen Grad an Format-Erkennung."
 
 #: src/audacious/glade/prefswin.glade:3899
 msgid "Detect file formats by extension."
-msgstr "Dateiformat nach Dateiendung erkennen"
+msgstr "Dateiformat an Dateiendung erkennen"
 
 #: src/audacious/glade/prefswin.glade:3933
 msgid "<b>Playback</b>"
@@ -1988,21 +1991,21 @@ msgstr ""
 
 #: src/audacious/glade/prefswin.glade:3974
 msgid "Continue playback on startup"
-msgstr "Wiedergabe beim Start fortführen"
+msgstr "Wiedergabe am Start fortführen"
 
 #: src/audacious/glade/prefswin.glade:4008
 msgid "When finished playing a song, don't automatically advance to the next."
 msgstr ""
-"Nicht automatisch beim nächsten fortfahren, wenn ein Song zuende gespielt "
-"worden ist."
+"Nicht automatisch mit dem nächsten Titel fortfahren, wenn ein Titel zuende "
+"gespielt wurde."
 
 #: src/audacious/glade/prefswin.glade:4010
 msgid "Don't advance in the playlist"
-msgstr "Nicht an die Wiedergabeliste anfügen"
+msgstr "Nicht in der Wiedergabeliste weitergehen"
 
 #: src/audacious/glade/prefswin.glade:4045
 msgid "Pause between songs"
-msgstr "Zwischen Songs unterbrechen"
+msgstr "Zwischen Titeln unterbrechen"
 
 #: src/audacious/glade/prefswin.glade:4083
 msgid "Pause for"
@@ -2030,9 +2033,10 @@ msgid ""
 "This should be the max supported sampling rate of\n"
 "the sound card or output plugin.</span>"
 msgstr ""
-"<span size=\"small\">Alle Streams werden in diese Abtastfrequenz umgewandelt.\n"
+"<span size=\"small\">Alle Streams werden in diese Abtastfrequenz "
+"umgewandelt.\n"
 "Sie sollte die maximal unterstützte Abtastfrequenz der\n"
-"Soundkarte oder des Output-Plugins sein.</span>"
+"Soundkarte oder des Ausgabe-Plugins sein.</span>"
 
 #: src/audacious/glade/prefswin.glade:4364
 msgid "Converter Type:"
@@ -2066,8 +2070,8 @@ msgid ""
 "using commas."
 msgstr ""
 "Wenn Audacious das Titelbild sucht, sucht es nach bestimmten Worten im "
-"Dateinamen. Diese können nachfolgend eingegeben werden, jeweils mit Kommas "
-"getrennt."
+"Dateinamen. Diese können nachfolgend eingegeben werden, jeweils durch "
+"Beistriche getrennt."
 
 #: src/audacious/glade/prefswin.glade:4758
 msgid "Include:"
