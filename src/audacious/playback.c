@@ -78,8 +78,9 @@ playback_get_time(void)
     InputPlayback *playback;
     g_return_val_if_fail(playback_get_playing(), -1);
     playback = get_current_input_playback();
-    g_return_val_if_fail(playback, -1);
 
+    if (!playback) /* playback can be NULL during init even if playing is TRUE */              
+        return -1;
     if (playback->plugin->get_time)
         return playback->plugin->get_time(playback);
     if (playback->error)
