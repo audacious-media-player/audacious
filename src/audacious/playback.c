@@ -78,8 +78,9 @@ playback_get_time(void)
     InputPlayback *playback;
     g_return_val_if_fail(playback_get_playing(), -1);
     playback = get_current_input_playback();
-    g_return_val_if_fail(playback, -1);
 
+    if (!playback) /* playback can be NULL during init even if playing is TRUE */              
+        return -1;
     if (playback->plugin->get_time)
         return playback->plugin->get_time(playback);
     if (playback->error)
@@ -112,13 +113,13 @@ playback_initiate(void)
     g_return_if_fail(entry != NULL);
     playback_play_file(entry);
 
-    if (playback_get_time() != -1) {
+//    if (playback_get_time() != -1) {
         equalizerwin_load_auto_preset(entry->filename);
         input_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
                      cfg.equalizer_bands);
         output_set_eq(cfg.equalizer_active, cfg.equalizer_preamp,
                       cfg.equalizer_bands);
-    }
+//    }
 
     playlist_check_pos_current(playlist);
     mainwin_update_song_info();
@@ -148,17 +149,18 @@ playback_initiate(void)
 void
 playback_pause(void)
 {
+    InputPlayback *playback;
+
     if (!playback_get_playing())
         return;
 
-    if (!get_current_input_playback())
+    if ((playback = get_current_input_playback()) == NULL)
         return;
 
     ip_data.paused = !ip_data.paused;
 
-    if (get_current_input_playback()->plugin->pause)
-        get_current_input_playback()->plugin->pause(get_current_input_playback(),
-						    ip_data.paused);
+    if (playback->plugin->pause)
+        playback->plugin->pause(playback, ip_data.paused);
 
     if (ip_data.paused)
         hook_call("playback pause", NULL);
@@ -176,23 +178,26 @@ playback_pause(void)
 void
 playback_stop(void)
 {
-    if (ip_data.playing && get_current_input_playback()) {
+    InputPlayback *playback;
 
-        if (playback_get_paused()) {
+    if (ip_data.playing && (playback = get_current_input_playback()) != NULL)
+    {
+        if (playback_get_paused() == TRUE)
+        {
             output_flush(get_written_time()); /* to avoid noise */
             playback_pause();
         }
 
         ip_data.playing = FALSE; 
 
-        if (get_current_input_playback()->plugin->stop)
-            get_current_input_playback()->plugin->stop(get_current_input_playback());
+        if (playback->plugin->stop)
+            playback->plugin->stop(playback);
 
         free_vis_data();
         ip_data.paused = FALSE;
 
-	g_free(get_current_input_playback()->filename);
-	g_free(get_current_input_playback());
+	g_free(playback->filename);
+	g_free(playback);
 	set_current_input_playback(NULL);
     }
 

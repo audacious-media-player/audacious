@@ -1,5 +1,5 @@
 /*  Audacious - Cross-platform multimedia player
- *  Copyright (C) 2005-2006  Audacious development team
+ *  Copyright (C) 2005-2007  Audacious development team
  *
  *  Based on BMP:
  *  Copyright (C) 2003-2004  BMP development team
@@ -380,6 +380,8 @@ input_check_file(const gchar * filename, gboolean show_warning)
                 continue;
             if (ip->is_our_file != NULL)
                 ret = ip->is_our_file(filename_proxy);
+            else
+                ret = 0;
             if (ret > 0)
             {
                 g_free(filename_proxy);
@@ -511,14 +513,16 @@ input_check_file(const gchar * filename, gboolean show_warning)
 void
 input_set_eq(gint on, gfloat preamp, gfloat * bands)
 {
+    InputPlayback *playback;
+
     if (!ip_data.playing)
         return;
 
-    if (!get_current_input_playback())
+    if ((playback = get_current_input_playback()) == NULL)
         return;
 
-    if (get_current_input_playback()->plugin->set_eq)
-        get_current_input_playback()->plugin->set_eq(on, preamp, bands);
+    if (playback->plugin->set_eq)
+        playback->plugin->set_eq(on, preamp, bands);
 }
 
 void
@@ -764,14 +768,15 @@ input_scan_dir(const gchar * path)
 void
 input_get_volume(gint * l, gint * r)
 {
+    InputPlayback *playback;
+
     *l = -1;
     *r = -1;
     if (playback_get_playing()) {
-        if (get_current_input_playback() &&
-            get_current_input_playback()->plugin->get_volume &&
-            get_current_input_playback()->plugin->get_volume(l, r)) {
+        if ((playback = get_current_input_playback()) != NULL &&
+            playback->plugin->get_volume &&
+            playback->plugin->get_volume(l, r))
             return;
-        }
     }
     output_get_volume(l, r);
 }
@@ -779,19 +784,21 @@ input_get_volume(gint * l, gint * r)
 void
 input_set_volume(gint l, gint r)
 {
-    gint h_vol[2];
-    
-    if (playback_get_playing() &&
-        get_current_input_playback() &&
-        get_current_input_playback()->plugin->set_volume &&
-        get_current_input_playback()->plugin->set_volume(l, r))
-        return;
+    InputPlayback *playback;
 
-    output_set_volume(l, r);
-    
+    gint h_vol[2];
+
     h_vol[0] = l;
     h_vol[1] = r;
     hook_call("volume set", h_vol);
+    
+    if (playback_get_playing() &&
+        (playback = get_current_input_playback()) != NULL &&
+        playback->plugin->set_volume &&
+        playback->plugin->set_volume(l, r))
+        return;
+
+    output_set_volume(l, r);
 }
 
 void
