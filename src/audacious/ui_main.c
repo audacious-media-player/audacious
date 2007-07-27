@@ -1138,6 +1138,8 @@ mainwin_keypress(GtkWidget * grab_widget,
     case GDK_KP_Insert:
         ui_jump_to_track();
         break;
+    case GDK_Return:
+    case GDK_KP_Enter:
     case GDK_KP_5:
         mainwin_play_pushed();
         break;
