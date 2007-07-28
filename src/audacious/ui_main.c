@@ -2903,7 +2903,7 @@ mainwin_update_song_info(void)
     gint length, t;
     gchar stime_prefix;
 
-    if (!playback_get_playing() || time < 0)
+    if (!playback_get_playing())
         return FALSE;
 
     if (ab_position_a != -1 && ab_position_b != -1 && time > ab_position_b)
