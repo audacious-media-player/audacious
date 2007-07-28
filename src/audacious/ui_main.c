@@ -2968,7 +2968,6 @@ mainwin_update_song_info(void)
         gtk_widget_show(mainwin_position);
         if (cfg.player_shaded)
             gtk_widget_show(mainwin_sposition);
-        return TRUE;
     }
 
     time /= 1000;
