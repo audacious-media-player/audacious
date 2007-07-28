@@ -2960,6 +2960,17 @@ mainwin_update_song_info(void)
         g_free(time_str);
     }
 
+    if (length == -1) {
+        gtk_widget_hide(mainwin_position);
+        gtk_widget_hide(mainwin_sposition);
+        return TRUE;
+    } else {
+        gtk_widget_show(mainwin_position);
+        if (cfg.player_shaded)
+            gtk_widget_show(mainwin_sposition);
+        return TRUE;
+    }
+
     time /= 1000;
     length /= 1000;
     if (length > 0) {
