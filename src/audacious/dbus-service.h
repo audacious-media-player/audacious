@@ -28,6 +28,7 @@
 
 typedef struct {
     GObject parent;
+	DBusGProxy *proxy;
 } RemoteObject, MprisRoot, MprisPlayer, MprisTrackList;
 
 typedef struct {
