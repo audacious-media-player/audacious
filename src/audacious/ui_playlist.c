@@ -279,7 +279,7 @@ playlistwin_update_list(Playlist *playlist)
     /* this can happen early on. just bail gracefully. */
     g_return_if_fail(playlistwin_list);
 
-    widget_draw(WIDGET(playlistwin_list));
+    widget_queue_redraw(WIDGET(playlistwin_list));
     gtk_widget_queue_draw(playlistwin_slider);
     playlistwin_update_info(playlist);
     playlistwin_update_sinfo(playlist);
@@ -394,7 +394,7 @@ playlistwin_set_shade(gboolean shaded)
 
     playlistwin_set_mask();
 
-    widget_draw(WIDGET(playlistwin_list));
+    widget_queue_redraw(WIDGET(playlistwin_list));
 
     draw_playlist_window(TRUE);
 }
@@ -710,8 +710,8 @@ playlistwin_resize(gint width, gint height)
     widget_list_draw(playlistwin_wlist, &redraw, TRUE);
     widget_list_clear_redraw(playlistwin_wlist);
 
-    g_mutex_unlock(resize_mutex);
     widget_list_unlock(playlistwin_wlist);
+    g_mutex_unlock(resize_mutex);
 
     gdk_window_set_back_pixmap(playlistwin->window, playlistwin_bg, 0);
     gdk_window_clear(playlistwin->window);
@@ -1440,6 +1440,7 @@ draw_playlist_window(gboolean force)
 
     if (redraw || force) {
         if (force) {
+            widget_list_unlock(playlistwin_wlist);
             gdk_window_clear(playlistwin->window);
             GList *iter;
             for (iter = GTK_FIXED (SKINNED_WINDOW(playlistwin)->fixed)->children; iter; iter = g_list_next (iter)) {
@@ -1457,6 +1458,7 @@ draw_playlist_window(gboolean force)
                     w->redraw = FALSE;
                 }
             }
+            widget_list_unlock(playlistwin_wlist);
         }
 
         gdk_flush();
