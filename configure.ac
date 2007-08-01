@@ -195,8 +195,8 @@ esac
 
 dnl libguess always compiled in
 dnl ========================
-SUBDIR_GUESS="libguess librcd"
-CHARDET_LIBS="../libguess/libguess.a ../librcd/librcd.a"
+SUBDIR_GUESS="libguess"
+CHARDET_LIBS="../libguess/libguess.a"
 
 dnl chardet support
 dnl ========================
