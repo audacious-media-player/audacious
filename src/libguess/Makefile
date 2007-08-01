@@ -10,7 +10,9 @@ CFLAGS += $(PICFLAGS)
 
 SOURCES = \
 	guess.c \
-	russian_impl.c
+	arabic_impl.c \
+	russian_impl.c \
+	turkish_impl.c
 
 OBJECTS = ${SOURCES:.c=.o}
 

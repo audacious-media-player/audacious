@@ -458,6 +458,8 @@ void guess_init(void)
     guess_impl_register(GUESS_REGION_CN, guess_cn);
     guess_impl_register(GUESS_REGION_KR, guess_kr);
     guess_impl_register(GUESS_REGION_RU, guess_ru);
+    guess_impl_register(GUESS_REGION_AR, guess_ar);
+    guess_impl_register(GUESS_REGION_TR, guess_tr);
 }
 
 const char *guess_encoding(const char *inbuf, int buflen, const char *lang)
