@@ -57,7 +57,7 @@ int dfa_validate_utf8(const char *buf, int buflen);
 #define GUESS_REGION_KR		"korean"
 #define GUESS_REGION_RU		"russian"
 #define GUESS_REGION_AR		"arabic"
-#define GUESS_REGION_AR		"turkish"
+#define GUESS_REGION_TR		"turkish"
 
 const char *guess_encoding(const char *buf, int buflen, const char *lang);
 void guess_init(void);
