@@ -38,8 +38,15 @@ ui_main_evlistener_title_change(gpointer hook_data, gpointer user_data)
     g_free(text);
 }
 
+static void
+ui_main_evlistener_hide_seekbar(gpointer hook_data, gpointer user_data)
+{
+    mainwin_disable_seekbar();
+}
+
 void
 ui_main_evlistener_init(void)
 {
     hook_associate("title change", ui_main_evlistener_title_change, NULL);
+    hook_associate("hide seekbar", ui_main_evlistener_hide_seekbar, NULL);
 }

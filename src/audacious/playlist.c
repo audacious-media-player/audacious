@@ -1037,6 +1037,10 @@ playlist_set_info_old_abi(const gchar * title, gint length, gint rate,
     PlaylistEventInfoChange *msg;
     gchar *text;
 
+    if(length == -1) {
+        event_queue("hide seekbar", (gpointer)0xdeadbeef); // event_queue hates NULL --yaz
+    }
+
     g_return_if_fail(playlist != NULL);
 
     if (playlist->position) {

@@ -166,10 +166,7 @@ static GtkWidget *mainwin_sstop, *mainwin_sfwd, *mainwin_seject, *mainwin_about;
 
 static gint mainwin_timeout_id;
 
-G_LOCK_DEFINE_STATIC(mainwin_title);
-
 static gboolean mainwin_force_redraw = FALSE;
-static gchar *mainwin_title_text = NULL;
 static gboolean mainwin_info_text_locked = FALSE;
 
 static int ab_position_a = -1;
@@ -633,10 +630,8 @@ make_mainwin_title(const gchar * title)
 void
 mainwin_set_song_title(const gchar * title)
 {
-    G_LOCK(mainwin_title);
-    g_free(mainwin_title_text);
-    mainwin_title_text = make_mainwin_title(title);
-    G_UNLOCK(mainwin_title);
+    gchar *mainwin_title_text = make_mainwin_title(title);
+    gtk_window_set_title(GTK_WINDOW(mainwin), mainwin_title_text);
 }
 
 static void
@@ -888,10 +883,7 @@ mainwin_clear_song_info(void)
         return;
 
     /* clear title */
-    G_LOCK(mainwin_title);
-    g_free(mainwin_title_text);
-    mainwin_title_text = NULL;
-    G_UNLOCK(mainwin_title);
+    mainwin_set_song_title(NULL);
 
     /* clear sampling parameters */
     playback_set_sample_params(0, 0, 0);
@@ -2911,7 +2903,7 @@ mainwin_update_song_info(void)
     gint length, t;
     gchar stime_prefix;
 
-    if (!playback_get_playing() || time < 0)
+    if (!playback_get_playing())
         return FALSE;
 
     if (ab_position_a != -1 && ab_position_b != -1 && time > ab_position_b)
@@ -2960,16 +2952,6 @@ mainwin_update_song_info(void)
         g_free(time_str);
     }
 
-    if (length == -1) {
-        gtk_widget_hide(mainwin_position);
-        gtk_widget_hide(mainwin_sposition);
-        return TRUE;
-    } else {
-        gtk_widget_show(mainwin_position);
-        if (cfg.player_shaded)
-            gtk_widget_show(mainwin_sposition);
-    }
-
     time /= 1000;
     length /= 1000;
     if (length > 0) {
@@ -3014,16 +2996,6 @@ mainwin_idle_func(gpointer data)
     mainwin_force_redraw = FALSE;
     draw_equalizer_window(FALSE);
     draw_playlist_window(FALSE);
-
-    if (mainwin_title_text) {
-        G_LOCK(mainwin_title);
-        gtk_window_set_title(GTK_WINDOW(mainwin), mainwin_title_text);
-        g_free(mainwin_title_text);
-        mainwin_title_text = NULL;
-        G_UNLOCK(mainwin_title);
-
-        playlistwin_update_list(playlist_get_active());
-    }
 
     /* tristate buttons seek */
     if ( seek_state != MAINWIN_SEEK_NIL )
