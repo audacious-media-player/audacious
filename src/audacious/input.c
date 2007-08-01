@@ -410,11 +410,9 @@ input_check_file(const gchar * filename, gboolean show_warning)
                         !g_strncasecmp(filename, "file://", 7))) ? TRUE : FALSE;
 
     mimetype = vfs_get_metadata(fd, "content-type");
-    if ((ip = mime_get_plugin(mimetype)) != NULL)
+    if ((ip = mime_get_plugin(mimetype)) != NULL &&
+	input_is_enabled(ip->filename) == TRUE)
     {
-        if (!input_is_enabled(ip->filename))
-            break;
-
         if (ip->probe_for_tuple != NULL)
         {
             TitleInput *tuple = ip->probe_for_tuple(filename_proxy, fd);
