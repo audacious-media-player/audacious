@@ -412,13 +412,56 @@ input_check_file(const gchar * filename, gboolean show_warning)
     mimetype = vfs_get_metadata(fd, "content-type");
     if ((ip = mime_get_plugin(mimetype)) != NULL)
     {
-        g_free(filename_proxy);
-        vfs_fclose(fd);
+        if (!input_is_enabled(ip->filename))
+            break;
 
-        pr = g_new0(ProbeResult, 1);
-        pr->ip = ip;
+        if (ip->probe_for_tuple != NULL)
+        {
+            TitleInput *tuple = ip->probe_for_tuple(filename_proxy, fd);
 
-        return pr;
+            if (tuple != NULL)
+            {
+                g_free(filename_proxy);
+                vfs_fclose(fd);
+
+                pr = g_new0(ProbeResult, 1);
+                pr->ip = ip;
+                pr->tuple = tuple;
+                pr->tuple->mtime = input_get_mtime(filename_proxy);
+
+                return pr;
+            }
+        }
+        else if (fd && ip->is_our_file_from_vfs != NULL)
+        {
+            ret = ip->is_our_file_from_vfs(filename_proxy, fd);
+
+            if (ret > 0)
+            {
+                g_free(filename_proxy);
+                vfs_fclose(fd);
+
+                pr = g_new0(ProbeResult, 1);
+                pr->ip = ip;
+
+                return pr;
+            }
+        }
+        else if (ip->is_our_file != NULL)
+        {
+            ret = ip->is_our_file(filename_proxy);
+
+            if (ret > 0)
+            {
+                g_free(filename_proxy);
+                vfs_fclose(fd);
+
+                pr = g_new0(ProbeResult, 1);
+                pr->ip = ip;
+
+                return pr;
+            }
+        }
     }
 
     for (node = get_input_list(); node != NULL; node = g_list_next(node))
