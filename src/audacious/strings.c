@@ -36,7 +36,6 @@
 #include "main.h"
 
 #include "../libguess/libguess.h"
-#include "../librcd/librcd.h"
 #ifdef HAVE_UDET
     #include <libudet_c.h>
 #endif
@@ -286,48 +285,11 @@ gchar *chardet_to_utf8(const gchar *str, gssize len,
 	if(cfg.chardet_detector)
 		det = cfg.chardet_detector;
 
+	guess_init();
+
 	if(det){
-		if(!strncasecmp("japanese", det, sizeof("japanese"))) {
-			encoding = (char *)guess_jp(str, strlen(str));
-			if (!encoding)
-				goto fallback;
-		} else if(!strncasecmp("taiwanese", det, sizeof("taiwanese"))) {
-			encoding = (char *)guess_tw(str, strlen(str));
-			if (!encoding)
-				goto fallback;
-		} else if(!strncasecmp("chinese", det, sizeof("chinese"))) {
-			encoding = (char *)guess_cn(str, strlen(str));
-			if (!encoding)
-				goto fallback;
-		} else if(!strncasecmp("korean", det, sizeof("korean"))) {
-			encoding = (char *)guess_kr(str, strlen(str));
-			if (!encoding)
-				goto fallback;
-		} else if(!strncasecmp("russian", det, sizeof("russian"))) {
-			rcd_russian_charset res = rcdGetRussianCharset(str, strlen(str));
-			switch(res) {
-			    case RUSSIAN_CHARSET_WIN:
-				encoding = "CP1251";
-			    break;
-			    case RUSSIAN_CHARSET_ALT:
-				encoding = "CP866";
-			    break;
-			    case RUSSIAN_CHARSET_KOI:
-				encoding = "KOI8-R";
-			    break;
-			    case RUSSIAN_CHARSET_UTF8:
-				encoding = "UTF-8";
-			    break;
-			}
-			if (!encoding)
-				goto fallback;
-#ifdef HAVE_UDET
-		} else if (!strncasecmp("universal", det, sizeof("universal"))) {
-			encoding = (char *)detectCharset((char *)str, strlen(str));
-			if (!encoding)
-				goto fallback;
-#endif
-		} else /* none, invalid */
+		encoding = (char *) guess_encoding(str, strlen(str), det);
+		if (!encoding)
 			goto fallback;
 
 		ret = g_convert(str, len, "UTF-8", encoding, bytes_read, bytes_write, error);
