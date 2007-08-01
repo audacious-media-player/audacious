@@ -1,4 +1,5 @@
-# translation of sr@Latn.po to Serbian Latin
+# translation of sr@Latn.po to
+# Strahinja Kustudic <kustudic@gmail.com>, 2007.
 # Copyright (C) 2007 Strahinja  Kustudić <kustodian@gmail.com>
 # This file is distributed under the same license as the Audacious package.
 msgid ""
@@ -6,9 +7,9 @@ msgstr ""
 "Project-Id-Version: sr@Latn\n"
 "Report-Msgid-Bugs-To: http://bugs.audacious-media-player.org\n"
 "POT-Creation-Date: 2007-07-29 17:21+0200\n"
-"PO-Revision-Date: 2007-05-19 12:21+0100\n"
-"Last-Translator: Strahinja  Kustudić <kustodian@gmail.com>\n"
-"Language-Team: Serbian Latin <kustodian@gmail.com>\n"
+"PO-Revision-Date: 2007-07-31 14:31+0200\n"
+"Last-Translator: Strahinja Kustudić <kustudic@gmail.com>\n"
+"Language-Team:  Serbian Latin <kustodian@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -486,61 +487,56 @@ msgid "Enter location to play:"
 msgstr "Unesite lokaciju za reprodukovanje:"
 
 #: src/audacious/ui_main.c:1659
-#, fuzzy, c-format
+#, c-format
 msgid "Seek to: %d:%-2.2d/%d:%-2.2d (%d%%)"
-msgstr "TRAŽI DO: %d:%-2.2d/%d:%-2.2d (%d%%)"
+msgstr "Traži do: %d:%-2.2d/%d:%-2.2d (%d%%)"
 
 #: src/audacious/ui_main.c:1691
 #, c-format
 msgid "Volume: %d%%"
-msgstr ""
+msgstr "Jačina zvuka: %d%%"
 
 #: src/audacious/ui_main.c:1722
 #, c-format
 msgid "Balance: %d%% left"
-msgstr ""
+msgstr "Balans: %d%% levi"
 
 #: src/audacious/ui_main.c:1726
 msgid "Balance: center"
-msgstr ""
+msgstr "Balans: centrirano"
 
 #: src/audacious/ui_main.c:1730
 #, c-format
 msgid "Balance: %d%% right"
-msgstr ""
+msgstr "Balans: %d%% desni"
 
 #: src/audacious/ui_main.c:2118
 msgid "Options Menu"
-msgstr ""
+msgstr "Meni opcija"
 
 #: src/audacious/ui_main.c:2122
-#, fuzzy
 msgid "Disable 'Always On Top'"
-msgstr "Uvek na vrhu"
+msgstr "Isključi 'Uvek na vrhu'"
 
 #: src/audacious/ui_main.c:2124
-#, fuzzy
 msgid "Enable 'Always On Top'"
-msgstr "Uvek na vrhu"
+msgstr "Uključi 'Uvek na vrhu'"
 
 #: src/audacious/ui_main.c:2127
 msgid "File Info Box"
-msgstr ""
+msgstr "Okvir informacija o datoteci"
 
 #: src/audacious/ui_main.c:2131
-#, fuzzy
 msgid "Disable 'Doublesize'"
-msgstr "Dupla veličina"
+msgstr "Isključi 'Duplu veličinu'"
 
 #: src/audacious/ui_main.c:2133
-#, fuzzy
 msgid "Enable 'Doublesize'"
-msgstr "Dupla veličina"
+msgstr "Uključi 'Duplu veličinu'"
 
 #: src/audacious/ui_main.c:2136
-#, fuzzy
 msgid "Visualization Menu"
-msgstr "Režim vizuelizacije"
+msgstr "Meni vizuelizacije"
 
 #: src/audacious/ui_main.c:2184
 msgid ""
@@ -1111,12 +1107,11 @@ msgstr "Pusti CD"
 
 #: src/audacious/ui_manager.c:398
 msgid "Last.fm radio"
-msgstr ""
+msgstr "Last.fm radio"
 
 #: src/audacious/ui_manager.c:399
-#, fuzzy
 msgid "Play Last.fm radio"
-msgstr "Pusti lokaciju"
+msgstr "Pusti Last.fm radio"
 
 #: src/audacious/ui_manager.c:401
 msgid "Preferences"
@@ -1421,14 +1416,12 @@ msgstr ""
 "tražite."
 
 #: src/audacious/ui_playlist.c:513
-#, fuzzy
 msgid "Title: "
-msgstr "Naslov"
+msgstr "Naslov: "
 
 #: src/audacious/ui_playlist.c:520
-#, fuzzy
 msgid "Album: "
-msgstr "Album"
+msgstr "Album: "
 
 #: src/audacious/ui_playlist.c:527
 msgid "Artist: "
@@ -1472,13 +1465,12 @@ msgstr ""
 "Nepoznata vrsta datoteke za '%s'.\n"
 
 #: src/audacious/ui_playlist.c:965
-#, fuzzy
 msgid "Save as Static Playlist"
-msgstr "Sačuvaj listu numera"
+msgstr "Sačuvaj kao statičku listu numera"
 
 #: src/audacious/ui_playlist.c:972
 msgid "Use Relative Path"
-msgstr ""
+msgstr "Koristi relativne putanje"
 
 #: src/audacious/ui_playlist.c:994
 msgid "Load Playlist"
@@ -1529,9 +1521,8 @@ msgid "_Filter:"
 msgstr "_Filter:"
 
 #: src/audacious/ui_jumptotrack.c:597
-#, fuzzy
 msgid "Close on Jump"
-msgstr "Zatvori okvir klikom na Otvori"
+msgstr "Zatvori posle skoka"
 
 #: src/audacious/playback.c:223
 msgid ""
@@ -1666,9 +1657,8 @@ msgid "Select main player window font:"
 msgstr "Izaberite font glavnog prozora plejera:"
 
 #: src/audacious/glade/prefswin.glade:1045
-#, fuzzy
 msgid "Select playlist font:"
-msgstr "Izaberite font glavnog prozora plejera:"
+msgstr "Izaberite font liste numera:"
 
 #: src/audacious/glade/prefswin.glade:1091
 msgid ""
@@ -1777,8 +1767,7 @@ msgstr "Učitaj meta-podatke iz lista numera i datoteka"
 
 #: src/audacious/glade/prefswin.glade:1912
 msgid "Load metadata when adding the file to the playlist or opening it"
-msgstr ""
-"Učitaj meta-podatke pri dodavanju datoteke u listu ili prilikom otvaranja"
+msgstr "Učitaj meta-podatke pri dodavanju datoteke u listu ili prilikom otvaranja"
 
 #: src/audacious/glade/prefswin.glade:1914
 msgid "On load"
@@ -1945,7 +1934,6 @@ msgid "Current output plugin:"
 msgstr "Tekući izlazni dodatak:"
 
 #: src/audacious/glade/prefswin.glade:3541
-#, fuzzy
 msgid ""
 "<span size=\"small\">This is the amount of time to prebuffer audio streams "
 "by, in milliseconds.\n"
@@ -1953,11 +1941,11 @@ msgid ""
 "Please note however, that high values will result in Audacious performing "
 "poorly.</span>"
 msgstr ""
-"<span size=\"small\">Ovo je količina vremena unapred učitanih audio tokove "
-"za, u milisekundama.\n"
+"<span size=\"small\">Ovo je količina vremena za koliko se unapred učitaju audio "
+"tokovi, u milisekundama.\n"
 "Povećajte ovu vrednost ako vam se dešavaju preskakanja zvuka. \n"
-"Imajte na umu, da visoke vrednosti će izazvati da Audacious slabije radi.</"
-"span>"
+"Imajte na umu, da visoke vrednosti će izazvati da Audacious slabije "
+"radi.</span>"
 
 #: src/audacious/glade/prefswin.glade:3571
 msgid "Buffer size:"
@@ -2039,26 +2027,24 @@ msgstr "sekundi"
 
 #: src/audacious/glade/prefswin.glade:4175
 msgid "<b>Sampling Rate Converter</b>"
-msgstr "<b>Pretvarač učestalosti uzimanja uzoraka</b>"
+msgstr "<b>Pretvarač učestalosti odabiranja uzoraka</b>"
 
 #: src/audacious/glade/prefswin.glade:4215
 msgid "Enable Sampling Rate Converter"
-msgstr "Uključi pretvarač učestalosti uzimanja uzoraka"
+msgstr "Uključi pretvarač učestalosti odabiranja uzoraka"
 
 #: src/audacious/glade/prefswin.glade:4264
 msgid "Sampling Rate [Hz]:"
-msgstr "Učestalost uzimanja uzoraka [Hz]:"
+msgstr "Učestalost odabiranja uzoraka [Hz]:"
 
 #: src/audacious/glade/prefswin.glade:4334
-#, fuzzy
 msgid ""
 "<span size=\"small\">All streams will be converted to this sampling rate.\n"
 "This should be the max supported sampling rate of\n"
 "the sound card or output plugin.</span>"
 msgstr ""
-"<span size=\"small\">Svi tokovi će biti pretvoreni u ovu učestalost uzimanja "
-"uzoraka.\n"
-"Ovo bi trebala da bude maksimalna podržana učestalost uzimanja uzoraka\n"
+"<span size=\"small\">Svi tokovi će biti pretvoreni u ovu učestalost odabiranja uzoraka.\n"
+"Ovo bi trebala da bude maksimalna podržana učestalost odabiranja uzoraka\n"
 "muzičke kartice ili izlaznog dodatka.</span>"
 
 #: src/audacious/glade/prefswin.glade:4364
@@ -2156,219 +2142,3 @@ msgstr "Zeleno"
 msgid "Blue"
 msgstr "Plavo"
 
-#~ msgid ""
-#~ "Sorry, your GTK+ version (%d.%d.%d) does not work with Audacious.\n"
-#~ "Please use GTK+ %s or newer.\n"
-#~ msgstr ""
-#~ "Izvinite, vaša verzija GTK+ (%d.%d.%d) ne radi sa Audacious-om.\n"
-#~ "Molim vas koristite GTK+ %s ili noviji.\n"
-
-#~ msgid "OPTIONS MENU"
-#~ msgstr "MENI OPCIJA"
-
-#~ msgid "DISABLE ALWAYS ON TOP"
-#~ msgstr "ISKLJUČI UVEK NA VRHU"
-
-#~ msgid "ENABLE ALWAYS ON TOP"
-#~ msgstr "UKLJUČI UVEK NA VRHU"
-
-#~ msgid "FILE INFO BOX"
-#~ msgstr "POLJE INFORMACIJE DATOTEKE"
-
-#~ msgid "DISABLE DOUBLESIZE"
-#~ msgstr "ISKLJUČI DUPLU VELIČINU"
-
-#~ msgid "ENABLE DOUBLESIZE"
-#~ msgstr "UKLJUČI DUPLU VELIČINU"
-
-#~ msgid "VISUALIZATION MENU"
-#~ msgstr "MENI VIZUELIZACIJE"
-
-#~ msgid "Track name: "
-#~ msgstr "Ime numere: "
-
-#~ msgid "Album name: "
-#~ msgstr "Ime albuma: "
-
-#~ msgid "PREAMP"
-#~ msgstr "PREAMP"
-
-#~ msgid "60HZ"
-#~ msgstr "60Hz"
-
-#~ msgid "170HZ"
-#~ msgstr "170Hz"
-
-#~ msgid "310HZ"
-#~ msgstr "310Hz"
-
-#~ msgid "600HZ"
-#~ msgstr "600Hz"
-
-#~ msgid "1KHZ"
-#~ msgstr "1kHz"
-
-#~ msgid "3KHZ"
-#~ msgstr "3kHz"
-
-#~ msgid "6KHZ"
-#~ msgstr "6kHz"
-
-#~ msgid "12KHZ"
-#~ msgstr "12kHz"
-
-#~ msgid "14KHZ"
-#~ msgstr "14kHz"
-
-#~ msgid "16KHZ"
-#~ msgstr "16kHz"
-
-#~ msgid ""
-#~ "<b><big>Unable to play files.</big></b>\n"
-#~ "\n"
-#~ "The following files could not be played. Please check that:\n"
-#~ "1. they are accessible.\n"
-#~ "2. you have enabled the media plugins required."
-#~ msgstr ""
-#~ "<b><big>Nije moguće reprodukovati datoteke.</big></b>\n"
-#~ "\n"
-#~ "Sledeće datoteke nije moguće reprodukovati. Molim vas proverite da li:\n"
-#~ "1. su dostupni.\n"
-#~ "2. ste uključili potrebne medija dodatke."
-
-#~ msgid "Don't show this warning anymore"
-#~ msgstr "Više ne prikazuj ovo upozorenje"
-
-#~ msgid "Show more _details"
-#~ msgstr "Prikaži više _detalja"
-
-#~ msgid ""
-#~ "\n"
-#~ "Received SIGSEGV\n"
-#~ "\n"
-#~ "This could be a bug in Audacious. If you don't know why this happened, "
-#~ "file a bug at http://bugs-meta.atheme.org/\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Primljen SIGSEGV\n"
-#~ "\n"
-#~ "Ovo bi mogla biti greška u Audacious-u. Ako ne znate zašto se ovo desilo, "
-#~ "prijavite grešku na http://bugs-meta.atheme.org/\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Enables playlist transparency. This is not recommended for slower "
-#~ "machines as it requires some CPU time to create and cache the pixmaps "
-#~ "used for the transparency."
-#~ msgstr ""
-#~ "Uključuje providnost liste numera. Ovo se ne preporučuje za sporije "
-#~ "računare, jer zahteva nešto CPU vremena da bi se napravile i keširale "
-#~ "sličice koje se koriste za providnost."
-
-#~ msgid "Enable playlist transparency"
-#~ msgstr "Uključi providnost liste numera"
-
-#~ msgid "%s: option `%s' is ambiguous\n"
-#~ msgstr "%s: opcija `%s' je nejasna\n"
-
-#~ msgid "%s: option `--%s' doesn't allow an argument\n"
-#~ msgstr "%s: opcija `--%s' ne dozvoljava argument\n"
-
-#~ msgid "%s: option `%c%s' doesn't allow an argument\n"
-#~ msgstr "%s: opcija `%c%s' ne dozvoljava argument\n"
-
-#~ msgid "%s: option `%s' requires an argument\n"
-#~ msgstr "%s: opcija `%s' zahteva argument\n"
-
-#~ msgid "%s: unrecognized option `--%s'\n"
-#~ msgstr "%s: nepoznata opcija `--%s'\n"
-
-#~ msgid "%s: unrecognized option `%c%s'\n"
-#~ msgstr "%s: nepoznata opcija `%c%s'\n"
-
-#~ msgid "%s: illegal option -- %c\n"
-#~ msgstr "%s: nedopuštena opcija -- %c\n"
-
-#~ msgid "%s: invalid option -- %c\n"
-#~ msgstr "%s: neispravna opcija -- %c\n"
-
-#~ msgid "%s: option requires an argument -- %c\n"
-#~ msgstr "%s: opcija zahteva argument -- %c\n"
-
-#~ msgid "%s: option `-W %s' is ambiguous\n"
-#~ msgstr "%s: opcija `-W %s' je nejasna\n"
-
-#~ msgid "%s: option `-W %s' doesn't allow an argument\n"
-#~ msgstr "%s: opcija `-W %s' ne dozvoljava argument\n"
-
-#~ msgid ""
-#~ "Usage: audacious [options] [files] ...\n"
-#~ "\n"
-#~ "Options:\n"
-#~ "--------\n"
-#~ msgstr ""
-#~ "Upotreba: audacious [opcije] [datoteke] ...\n"
-#~ "\n"
-#~ "Opcije:\n"
-#~ "--------\n"
-
-#~ msgid "Display this text and exit"
-#~ msgstr "Prikazi ovaj tekst i izađi"
-
-#~ msgid "Activate Audacious"
-#~ msgstr "Aktiviraj Audacious"
-
-#~ msgid "Previous session ID"
-#~ msgstr "Ime prethodne sesije"
-
-#~ msgid "Headless operation [experimental]"
-#~ msgstr "Bezglava operacija [eksperimentno]"
-
-#~ msgid "Disable error/warning interception (logging)"
-#~ msgstr "Isključi prekidanje zbog greške/upozorenja (evidentiranje)"
-
-#~ msgid "Print version number and exit\n"
-#~ msgstr "Ispiši broj verzije i izađi\n"
-
-#~ msgid "Add/Open Files dialog"
-#~ msgstr "Dodaj/otvori datoteke okvir"
-
-#~ msgid "Close Dialog on Add"
-#~ msgstr "Zatvori okvir klikom na Dodaj"
-
-#~ msgid "Deselect All"
-#~ msgstr "Skini oznaku sa svih"
-
-#~ msgid "Track Information Popup"
-#~ msgstr "Iskačuće informacije o numeri"
-
-#~ msgid "Artist Popup"
-#~ msgstr "Iskakač izvođača"
-
-#~ msgid "<i>Title</i>"
-#~ msgstr "<i>Naslov</i>"
-
-#~ msgid "<i>Artist</i>"
-#~ msgstr "<i>Izvođač</i>"
-
-#~ msgid "<i>Album</i>"
-#~ msgstr "<i>Album</i>"
-
-#~ msgid "<i>Genre</i>"
-#~ msgstr "<i>Žanr</i>"
-
-#~ msgid "<i>Year</i>"
-#~ msgstr "<i>Godina</i>"
-
-#~ msgid "<i>Track Number</i>"
-#~ msgstr "<i>Broj numere</i>"
-
-#~ msgid "<i>Track Length</i>"
-#~ msgstr "<i>Dužina numere</i>"
-
-#~ msgid "label65"
-#~ msgstr "label65"
-
-#~ msgid "label76"
-#~ msgstr "label76"
