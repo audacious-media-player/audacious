@@ -135,7 +135,7 @@ SOURCES = \
 	visualization.c \
 	xconvert.c
 
-LIBDEP = widgets/libwidgets.a ../libguess/libguess.a ../librcd/librcd.a
+LIBDEP = widgets/libwidgets.a ../libguess/libguess.a
 
 ifdef USE_DBUS
 SOURCES += dbus.c
