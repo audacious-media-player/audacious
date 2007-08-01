@@ -45,4 +45,14 @@ const char *guess_cn(const char *buf, int buflen);
 const char *guess_kr(const char *buf, int buflen);
 int dfa_validate_utf8(const char *buf, int buflen);
 
+#define GUESS_REGION_JP		"japanese"
+#define GUESS_REGION_TW		"taiwanese"
+#define GUESS_REGION_CN		"chinese"
+#define GUESS_REGION_KR		"korean"
+
+const char *guess_encoding(const char *buf, int buflen, const char *lang);
+void guess_init(void);
+void guess_impl_register(const char *name,
+	const char *(impl)(const char *buf, int buflen));
+
 #endif
