@@ -9,7 +9,8 @@ LDFLAGS += -Wl,-export-dynamic
 CFLAGS += $(PICFLAGS)
 
 SOURCES = \
-	guess.c
+	guess.c \
+	russian_impl.c
 
 OBJECTS = ${SOURCES:.c=.o}
 

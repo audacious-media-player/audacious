@@ -457,6 +457,7 @@ void guess_init(void)
     guess_impl_register(GUESS_REGION_TW, guess_tw);
     guess_impl_register(GUESS_REGION_CN, guess_cn);
     guess_impl_register(GUESS_REGION_KR, guess_kr);
+    guess_impl_register(GUESS_REGION_RU, guess_ru);
 }
 
 const char *guess_encoding(const char *inbuf, int buflen, const char *lang)
