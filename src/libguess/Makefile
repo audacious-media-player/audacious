@@ -11,6 +11,7 @@ CFLAGS += $(PICFLAGS)
 SOURCES = \
 	guess.c \
 	arabic_impl.c \
+	cjk_impl.c \
 	russian_impl.c \
 	turkish_impl.c
 
