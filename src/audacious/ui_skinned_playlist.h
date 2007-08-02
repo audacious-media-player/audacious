@@ -27,6 +27,8 @@
 #ifndef UISKINNEDPLAYLIST_H
 #define UISKINNEDPLAYLIST_H
 
+#include <gtk/gtk.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif

@@ -21,9 +21,7 @@
 #ifndef UISVIS_H
 #define UISVIS_H
 
-#include <gdk/gdk.h>
-#include <gtk/gtkadjustment.h>
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -27,6 +27,8 @@
 #ifndef UISKINNEDEQUALIZERGRAPH_H
 #define UISKINNEDEQUALIZERGRAPH_H
 
+#include <gtk/gtk.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif

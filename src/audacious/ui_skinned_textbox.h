@@ -27,6 +27,8 @@
 #ifndef UISKINNEDTEXTBOX_H
 #define UISKINNEDTEXTBOX_H
 
+#include <gtk/gtk.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif

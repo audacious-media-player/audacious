@@ -21,6 +21,8 @@
 #ifndef UIVIS_H
 #define UIVIS_H
 
+#include <gtk/gtk.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif

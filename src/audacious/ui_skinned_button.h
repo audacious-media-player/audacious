@@ -21,6 +21,8 @@
 #ifndef UISKINNEDBUTTON_H
 #define UISKINNEDBUTTON_H
 
+#include <gtk/gtk.h>
+
 #define UI_SKINNED_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), ui_skinned_button_get_type(), UiSkinnedButton))
 #define UI_SKINNED_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  ui_skinned_button_get_type(), UiSkinnedButtonClass))
 #define UI_SKINNED_IS_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), ui_skinned_button_get_type()))

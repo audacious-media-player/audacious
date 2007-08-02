@@ -27,6 +27,8 @@
 #ifndef UISKINNEDMENUROW_H
 #define UISKINNEDMENUROW_H
 
+#include <gtk/gtk.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif

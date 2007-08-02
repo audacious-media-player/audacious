@@ -24,6 +24,8 @@
 #ifndef UISKINNEDEQUALIZER_SLIDER_H
 #define UISKINNEDEQUALIZER_SLIDER_H
 
+#include <gtk/gtk.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
