@@ -89,6 +89,7 @@
 #include "ui_skinned_menurow.h"
 #include "ui_skinned_playstatus.h"
 #include "ui_skinned_monostereo.h"
+#include "ui_skinned_playlist.h"
 #include "ui_jumptotrack.h"
 
 #include "ui_main_evlisteners.h"
@@ -1327,7 +1328,7 @@ mainwin_drag_data_received(GtkWidget * widget,
             return;
 
         cfg.playlist_font = g_strconcat(decoded, strrchr(cfg.playlist_font, ' '), NULL);
-        playlist_list_set_font(cfg.playlist_font);
+        ui_skinned_playlist_set_font(cfg.playlist_font);
         playlistwin_update_list(playlist);
 
         g_free(decoded);

@@ -21,7 +21,6 @@
 #ifndef _WIDGETCORE_H_
 #define _WIDGETCORE_H_
 
-#include "playlist_list.h"
 #include "skin.h"
 #include "widget.h"
 

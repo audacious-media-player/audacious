@@ -73,6 +73,7 @@
 
 #include "playlist_evmessages.h"
 #include "playlist_evlisteners.h"
+#include "ui_skinned_playlist.h"
 
 typedef gint (*PlaylistCompareFunc) (PlaylistEntry * a, PlaylistEntry * b);
 typedef void (*PlaylistSaveFunc) (FILE * file);
@@ -1116,8 +1117,8 @@ playlist_check_pos_current(Playlist *playlist)
     }
 
     bottom = MAX(0, playlist_get_length(playlist) -
-                 playlistwin_list->pl_num_visible);
-    row = CLAMP(pos - playlistwin_list->pl_num_visible / 2, 0, bottom);
+                 UI_SKINNED_PLAYLIST(playlistwin_list)->num_visible);
+    row = CLAMP(pos - UI_SKINNED_PLAYLIST(playlistwin_list)->num_visible / 2, 0, bottom);
     PLAYLIST_UNLOCK(playlist->mutex);
     playlistwin_set_toprow(row);
     g_cond_signal(cond_scan);

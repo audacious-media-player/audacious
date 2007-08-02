@@ -77,7 +77,7 @@ gint playlistwin_list_get_visible_count(void);
 gint playlistwin_list_get_first(void);
 
 extern GtkWidget *playlistwin;
-extern PlayList_List *playlistwin_list;
+extern GtkWidget *playlistwin_list;
 
 extern gboolean playlistwin_focus;
 

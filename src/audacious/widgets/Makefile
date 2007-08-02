@@ -20,7 +20,6 @@ CFLAGS += \
 
 SOURCES = \
 	widget.c \
-	playlist_list.c \
 	skin.c
 
 OBJECTS = ${SOURCES:.c=.o}

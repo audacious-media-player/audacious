@@ -61,6 +61,7 @@
 #include "ui_skinselector.h"
 #include "ui_preferences.h"
 #include "ui_equalizer.h"
+#include "ui_skinned_playlist.h"
 
 #include "build_stamp.h"
 
@@ -931,7 +932,7 @@ on_playlist_font_button_font_set(GtkFontButton * button,
     g_free(cfg.playlist_font);
     cfg.playlist_font = g_strdup(gtk_font_button_get_font_name(button));
 
-    playlist_list_set_font(cfg.playlist_font);
+    ui_skinned_playlist_set_font(cfg.playlist_font);
     playlistwin_set_sinfo_font(cfg.playlist_font);  /* propagate font setting to playlistwin_sinfo */
     playlistwin_update_list(playlist_get_active());
     draw_playlist_window(TRUE);

@@ -59,6 +59,7 @@
 #include "ui_skinned_button.h"
 #include "ui_skinned_textbox.h"
 #include "ui_skinned_playlist_slider.h"
+#include "ui_skinned_playlist.h"
 
 #include "icons-stock.h"
 #include "images/audacious_playlist.xpm"
@@ -67,7 +68,7 @@ GtkWidget *playlistwin;
 
 static GMutex *resize_mutex = NULL;
 
-PlayList_List *playlistwin_list = NULL;
+GtkWidget *playlistwin_list = NULL;
 GtkWidget *playlistwin_shade, *playlistwin_close;
 
 static GdkPixmap *playlistwin_bg;
@@ -234,9 +235,9 @@ playlistwin_update_sinfo(Playlist *playlist)
 gboolean
 playlistwin_item_visible(gint index)
 {
-    if (index >= playlistwin_list->pl_first
+    if (index >= UI_SKINNED_PLAYLIST(playlistwin_list)->first
         && index <
-        (playlistwin_list->pl_first + playlistwin_list->pl_num_visible))
+        (UI_SKINNED_PLAYLIST(playlistwin_list)->first + UI_SKINNED_PLAYLIST(playlistwin_list)->num_visible))
         return TRUE;
     return FALSE;
 }
@@ -245,7 +246,7 @@ gint
 playlistwin_list_get_visible_count(void)
 {
     if (playlistwin_list)
-    return playlistwin_list->pl_num_visible;
+    return UI_SKINNED_PLAYLIST(playlistwin_list)->num_visible;
     return (-1);
 }
 
@@ -253,7 +254,7 @@ gint
 playlistwin_list_get_first(void)
 {
     if (playlistwin_list)
-    return playlistwin_list->pl_first;
+    return UI_SKINNED_PLAYLIST(playlistwin_list)->first;
     return (-1);
 }
 
@@ -261,7 +262,7 @@ gint
 playlistwin_get_toprow(void)
 {
     if (playlistwin_list)
-        return (playlistwin_list->pl_first);
+        return (UI_SKINNED_PLAYLIST(playlistwin_list)->first);
     return (-1);
 }
 
@@ -269,7 +270,7 @@ void
 playlistwin_set_toprow(gint toprow)
 {
     if (playlistwin_list)
-        playlistwin_list->pl_first = toprow;
+        UI_SKINNED_PLAYLIST(playlistwin_list)->first = toprow;
     playlistwin_update_list(playlist_get_active());
 }
 
@@ -279,7 +280,7 @@ playlistwin_update_list(Playlist *playlist)
     /* this can happen early on. just bail gracefully. */
     g_return_if_fail(playlistwin_list);
 
-    widget_queue_redraw(WIDGET(playlistwin_list));
+    gtk_widget_queue_draw(playlistwin_list);
     gtk_widget_queue_draw(playlistwin_slider);
     playlistwin_update_info(playlist);
     playlistwin_update_sinfo(playlist);
@@ -394,8 +395,6 @@ playlistwin_set_shade(gboolean shaded)
 
     playlistwin_set_mask();
 
-    widget_queue_redraw(WIDGET(playlistwin_list));
-
     draw_playlist_window(TRUE);
 }
 
@@ -440,7 +439,7 @@ playlistwin_release(GtkWidget * widget,
 void
 playlistwin_scroll(gint num)
 {
-    playlistwin_list->pl_first += num;
+    UI_SKINNED_PLAYLIST(playlistwin_list)->first += num;
     playlistwin_update_list(playlist_get_active());
 }
 
@@ -462,9 +461,9 @@ playlistwin_select_all(void)
     Playlist *playlist = playlist_get_active();
 
     playlist_select_all(playlist, TRUE);
-    playlistwin_list->pl_prev_selected = 0;
-    playlistwin_list->pl_prev_min = 0;
-    playlistwin_list->pl_prev_max = playlist_get_length(playlist) - 1;
+    UI_SKINNED_PLAYLIST(playlistwin_list)->prev_selected = 0;
+    UI_SKINNED_PLAYLIST(playlistwin_list)->prev_min = 0;
+    UI_SKINNED_PLAYLIST(playlistwin_list)->prev_max = playlist_get_length(playlist) - 1;
     playlistwin_update_list(playlist);
 }
 
@@ -472,8 +471,8 @@ static void
 playlistwin_select_none(void)
 {
     playlist_select_all(playlist_get_active(), FALSE);
-    playlistwin_list->pl_prev_selected = -1;
-    playlistwin_list->pl_prev_min = -1;
+    UI_SKINNED_PLAYLIST(playlistwin_list)->prev_selected = -1;
+    UI_SKINNED_PLAYLIST(playlistwin_list)->prev_min = -1;
     playlistwin_update_list(playlist_get_active());
 }
 
@@ -632,8 +631,8 @@ static void
 playlistwin_inverse_selection(void)
 {
     playlist_select_invert_all(playlist_get_active());
-    playlistwin_list->pl_prev_selected = -1;
-    playlistwin_list->pl_prev_min = -1;
+    UI_SKINNED_PLAYLIST(playlistwin_list)->prev_selected = -1;
+    UI_SKINNED_PLAYLIST(playlistwin_list)->prev_min = -1;
     playlistwin_update_list(playlist_get_active());
 }
 
@@ -672,7 +671,7 @@ playlistwin_resize(gint width, gint height)
     cfg.playlist_height = height = ty;
 
     g_mutex_lock(resize_mutex);
-    widget_resize_relative(WIDGET(playlistwin_list), dx, dy);
+    ui_skinned_playlist_resize_relative(playlistwin_list, dx, dy);
 
     ui_skinned_playlist_slider_move_relative(playlistwin_slider, dx);
     ui_skinned_playlist_slider_resize_relative(playlistwin_slider, dy);
@@ -756,7 +755,7 @@ playlistwin_enter(GtkWidget * widget,
                    GdkEventMotion * event,
                    gpointer callback_data)
 {
-    playlistwin_list->pl_tooltips = TRUE;
+    UI_SKINNED_PLAYLIST(playlistwin_list)->tooltips = TRUE;
 }
 
 static void
@@ -764,7 +763,7 @@ playlistwin_leave(GtkWidget * widget,
                    GdkEventMotion * event,
                    gpointer callback_data)
 {
-    playlistwin_list->pl_tooltips = FALSE;
+    UI_SKINNED_PLAYLIST(playlistwin_list)->tooltips = FALSE;
 }
 
 static void
@@ -1133,11 +1132,6 @@ playlistwin_press(GtkWidget * widget,
         else
             cfg.timer_mode = TIMER_ELAPSED;
     }
-    else if (event->button == 2 && (event->type == GDK_BUTTON_PRESS) &&
-             widget_contains(WIDGET(playlistwin_list), event->x, event->y)) {
-        gtk_selection_convert(widget, GDK_SELECTION_PRIMARY,
-                              GDK_TARGET_STRING, event->time);
-    }
     else if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
              !ui_skinned_window_widgetlist_contained(playlistwin, event->x,
                                                      event->y) &&
@@ -1157,7 +1151,6 @@ playlistwin_press(GtkWidget * widget,
         return TRUE;
     }
     else if (event->button == 3 &&
-             !(widget_contains(WIDGET(playlistwin_list), event->x, event->y) ||
                (event->y >= cfg.playlist_height - 29 &&
                 event->y < cfg.playlist_height - 11 &&
                 ((event->x >= 12 && event->x < 37) ||
@@ -1165,21 +1158,13 @@ playlistwin_press(GtkWidget * widget,
                  (event->x >= 70 && event->x < 95) ||
                  (event->x >= 99 && event->x < 124) ||
                  (event->x >= playlistwin_get_width() - 46 &&
-                  event->x < playlistwin_get_width() - 23))))) {
+                  event->x < playlistwin_get_width() - 23)))) {
         /*
          * Pop up the main menu a few pixels down to avoid
          * anything to be selected initially.
          */
         ui_manager_popup_menu_show(GTK_MENU(mainwin_general_menu), event->x_root,
                                 event->y_root + 2, 3, event->time);
-        grab = FALSE;
-    }
-    else if (event->button == 3 &&
-             widget_contains(WIDGET(playlistwin_list), event->x, event->y)) {
-        handle_press_cb(playlistwin_wlist, widget, event);
-        ui_manager_popup_menu_show(GTK_MENU(playlistwin_popup_menu),
-                               event->x_root, event->y_root + 5,
-                               event->button, event->time);
         grab = FALSE;
     }
     else if (event->button == 1 && (event->state & GDK_MOD1_MASK))
@@ -1244,7 +1229,7 @@ playlistwin_delete(GtkWidget * w, gpointer data)
 }
 
 static void
-playlistwin_keypress_up_down_handler(PlayList_List * pl,
+playlistwin_keypress_up_down_handler(UiSkinnedPlaylist * pl,
                                      gboolean up, guint state)
 {
     Playlist *playlist = playlist_get_active();
@@ -1254,52 +1239,52 @@ playlistwin_keypress_up_down_handler(PlayList_List * pl,
     if (!(state & GDK_MOD1_MASK))
         playlist_select_all(playlist, FALSE);
 
-    if (pl->pl_prev_selected == -1 ||
-        (!playlistwin_item_visible(pl->pl_prev_selected) &&
-         !(state & GDK_SHIFT_MASK && pl->pl_prev_min != -1))) {
-        pl->pl_prev_selected = pl->pl_first;
+    if (pl->prev_selected == -1 ||
+        (!playlistwin_item_visible(pl->prev_selected) &&
+         !(state & GDK_SHIFT_MASK && pl->prev_min != -1))) {
+        pl->prev_selected = pl->first;
     }
     else if (state & GDK_SHIFT_MASK) {
-        if (pl->pl_prev_min == -1) {
-            pl->pl_prev_max = pl->pl_prev_selected;
-            pl->pl_prev_min = pl->pl_prev_selected;
+        if (pl->prev_min == -1) {
+            pl->prev_max = pl->prev_selected;
+            pl->prev_min = pl->prev_selected;
         }
-        pl->pl_prev_max += (up ? -1 : 1);
-        pl->pl_prev_max =
-            CLAMP(pl->pl_prev_max, 0, playlist_get_length(playlist) - 1);
+        pl->prev_max += (up ? -1 : 1);
+        pl->prev_max =
+            CLAMP(pl->prev_max, 0, playlist_get_length(playlist) - 1);
 
-        pl->pl_first = MIN(pl->pl_first, pl->pl_prev_max);
-        pl->pl_first = MAX(pl->pl_first, pl->pl_prev_max -
-                           pl->pl_num_visible + 1);
-        playlist_select_range(playlist, pl->pl_prev_min, pl->pl_prev_max, TRUE);
+        pl->first = MIN(pl->first, pl->prev_max);
+        pl->first = MAX(pl->first, pl->prev_max -
+                           pl->num_visible + 1);
+        playlist_select_range(playlist, pl->prev_min, pl->prev_max, TRUE);
         return;
     }
     else if (state & GDK_MOD1_MASK) {
         if (up)
-            playlist_list_move_up(pl);
+            ui_skinned_playlist_move_up(pl);
         else
-            playlist_list_move_down(pl);
-        if (pl->pl_prev_min < pl->pl_first)
-            pl->pl_first = pl->pl_prev_min;
-        else if (pl->pl_prev_max >= (pl->pl_first + pl->pl_num_visible))
-            pl->pl_first = pl->pl_prev_max - pl->pl_num_visible + 1;
+            ui_skinned_playlist_move_down(pl);
+        if (pl->prev_min < pl->first)
+            pl->first = pl->prev_min;
+        else if (pl->prev_max >= (pl->first + pl->num_visible))
+            pl->first = pl->prev_max - pl->num_visible + 1;
         return;
     }
     else if (up)
-        pl->pl_prev_selected--;
+        pl->prev_selected--;
     else
-        pl->pl_prev_selected++;
+        pl->prev_selected++;
 
-    pl->pl_prev_selected =
-        CLAMP(pl->pl_prev_selected, 0, playlist_get_length(playlist) - 1);
+    pl->prev_selected =
+        CLAMP(pl->prev_selected, 0, playlist_get_length(playlist) - 1);
 
-    if (pl->pl_prev_selected < pl->pl_first)
-        pl->pl_first--;
-    else if (pl->pl_prev_selected >= (pl->pl_first + pl->pl_num_visible))
-        pl->pl_first++;
+    if (pl->prev_selected < pl->first)
+        pl->first--;
+    else if (pl->prev_selected >= (pl->first + pl->num_visible))
+        pl->first++;
 
-    playlist_select_range(playlist, pl->pl_prev_selected, pl->pl_prev_selected, TRUE);
-    pl->pl_prev_min = -1;
+    playlist_select_range(playlist, pl->prev_selected, pl->prev_selected, TRUE);
+    pl->prev_min = -1;
 }
 
 /* FIXME: Handle the keys through menu */
@@ -1320,33 +1305,33 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
     case GDK_KP_Down:
     case GDK_Up:
     case GDK_Down:
-        playlistwin_keypress_up_down_handler(playlistwin_list,
+        playlistwin_keypress_up_down_handler(UI_SKINNED_PLAYLIST(playlistwin_list),
                                              keyval == GDK_Up
                                              || keyval == GDK_KP_Up,
                                              event->state);
         refresh = TRUE;
         break;
     case GDK_Page_Up:
-        playlistwin_scroll(-playlistwin_list->pl_num_visible);
+        playlistwin_scroll(-UI_SKINNED_PLAYLIST(playlistwin_list)->num_visible);
         refresh = TRUE;
         break;
     case GDK_Page_Down:
-        playlistwin_scroll(playlistwin_list->pl_num_visible);
+        playlistwin_scroll(UI_SKINNED_PLAYLIST(playlistwin_list)->num_visible);
         refresh = TRUE;
         break;
     case GDK_Home:
-        playlistwin_list->pl_first = 0;
+        UI_SKINNED_PLAYLIST(playlistwin_list)->first = 0;
         refresh = TRUE;
         break;
     case GDK_End:
-        playlistwin_list->pl_first =
-            playlist_get_length(playlist) - playlistwin_list->pl_num_visible;
+        UI_SKINNED_PLAYLIST(playlistwin_list)->first =
+            playlist_get_length(playlist) - UI_SKINNED_PLAYLIST(playlistwin_list)->num_visible;
         refresh = TRUE;
         break;
     case GDK_Return:
-        if (playlistwin_list->pl_prev_selected > -1
-            && playlistwin_item_visible(playlistwin_list->pl_prev_selected)) {
-            playlist_set_position(playlist, playlistwin_list->pl_prev_selected);
+        if (UI_SKINNED_PLAYLIST(playlistwin_list)->prev_selected > -1
+            && playlistwin_item_visible(UI_SKINNED_PLAYLIST(playlistwin_list)->prev_selected)) {
+            playlist_set_position(playlist, UI_SKINNED_PLAYLIST(playlistwin_list)->prev_selected);
             if (!playback_get_playing())
                 playback_initiate();
         }
@@ -1510,9 +1495,9 @@ playlistwin_drag_motion(GtkWidget * widget,
                         GtkSelectionData * selection_data,
                         guint info, guint time, gpointer user_data)
 {
-    playlistwin_list->pl_drag_motion = TRUE;
-    playlistwin_list->drag_motion_x = x;
-    playlistwin_list->drag_motion_y = y;
+    UI_SKINNED_PLAYLIST(playlistwin_list)->drag_motion = TRUE;
+    UI_SKINNED_PLAYLIST(playlistwin_list)->drag_motion_x = x;
+    UI_SKINNED_PLAYLIST(playlistwin_list)->drag_motion_y = y;
     playlistwin_update_list(playlist_get_active());
     playlistwin_hint_flag = TRUE;
 }
@@ -1521,7 +1506,7 @@ static void
 playlistwin_drag_end(GtkWidget * widget,
                      GdkDragContext * context, gpointer user_data)
 {
-    playlistwin_list->pl_drag_motion = FALSE;
+    UI_SKINNED_PLAYLIST(playlistwin_list)->drag_motion = FALSE;
     playlistwin_hint_flag = FALSE;
     playlistwin_update_list(playlist_get_active());
 }
@@ -1543,10 +1528,8 @@ playlistwin_drag_data_received(GtkWidget * widget,
         g_message("Received no DND data!");
         return;
     }
-
-    if (widget_contains(WIDGET(playlistwin_list), x, y)) {
-        pos = (y - WIDGET(playlistwin_list)->y) /
-            playlistwin_list->pl_fheight + playlistwin_list->pl_first;
+    if (x < playlistwin_get_width() - 20 || y < cfg.playlist_height - 38) {
+        pos = y / UI_SKINNED_PLAYLIST(playlistwin_list)->fheight + UI_SKINNED_PLAYLIST(playlistwin_list)->first;
 
         pos = MIN(pos, playlist_get_length(playlist));
         playlist_ins_url(playlist, (gchar *) selection_data->data, pos);
@@ -1601,13 +1584,10 @@ playlistwin_create_widgets(void)
     g_signal_connect(playlistwin_close, "clicked", playlistwin_hide, NULL );
 
     /* playlist list box */
-    playlistwin_list =
-        create_playlist_list(&playlistwin_wlist, playlistwin_bg,
-                             SKINNED_WINDOW(playlistwin)->gc, 12, 20,
+    playlistwin_list = ui_skinned_playlist_new(SKINNED_WINDOW(playlistwin)->fixed, 12, 20,
                              playlistwin_get_width() - 31,
                              cfg.playlist_height - 58);
-    playlist_list_set_font(cfg.playlist_font);
-    ui_skinned_window_widgetlist_associate(playlistwin, WIDGET(playlistwin_list));
+    ui_skinned_playlist_set_font(cfg.playlist_font);
 
     /* playlist list box slider */
     playlistwin_slider = ui_skinned_playlist_slider_new(SKINNED_WINDOW(playlistwin)->fixed, playlistwin_get_width() - 15,
@@ -2182,11 +2162,11 @@ playlistwin_fileinfopopup_probe(gpointer * filepopup_win)
 
     win = gdk_window_at_pointer(NULL, NULL);
     gdk_window_get_pointer(GDK_WINDOW(playlistwin->window), &x, &y, NULL);
-    pos = playlist_list_get_playlist_position(playlistwin_list, x, y);
+    pos = ui_skinned_playlist_get_position(playlistwin_list, x - 12, y - 20);
 
     if (win == NULL
         || cfg.show_filepopup_for_tuple == FALSE
-        || playlistwin_list->pl_tooltips == FALSE
+        || UI_SKINNED_PLAYLIST(playlistwin_list)->tooltips == FALSE
         || pos != prev_pos
         || win != GDK_WINDOW(playlistwin->window))
     {
