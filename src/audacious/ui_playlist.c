@@ -724,22 +724,6 @@ playlistwin_motion(GtkWidget * widget,
 }
 
 static void
-playlistwin_enter(GtkWidget * widget,
-                   GdkEventMotion * event,
-                   gpointer callback_data)
-{
-    UI_SKINNED_PLAYLIST(playlistwin_list)->tooltips = TRUE;
-}
-
-static void
-playlistwin_leave(GtkWidget * widget,
-                   GdkEventMotion * event,
-                   gpointer callback_data)
-{
-    UI_SKINNED_PLAYLIST(playlistwin_list)->tooltips = FALSE;
-}
-
-static void
 playlistwin_show_filebrowser(void)
 {
     run_filebrowser(NO_PLAY_BUTTON);
@@ -1596,10 +1580,6 @@ playlistwin_create_window(void)
                      G_CALLBACK(playlistwin_scrolled), NULL);
     g_signal_connect(playlistwin, "motion_notify_event",
                      G_CALLBACK(playlistwin_motion), NULL);
-    g_signal_connect(playlistwin, "enter_notify_event",
-                     G_CALLBACK(playlistwin_enter), NULL);
-    g_signal_connect(playlistwin, "leave_notify_event",
-                     G_CALLBACK(playlistwin_leave), NULL);
 
     bmp_drag_dest_set(playlistwin);
 
@@ -2033,8 +2013,7 @@ playlistwin_fileinfopopup_probe(gpointer * filepopup_win)
     if (win == NULL
         || cfg.show_filepopup_for_tuple == FALSE
         || UI_SKINNED_PLAYLIST(playlistwin_list)->tooltips == FALSE
-        || pos != prev_pos
-        || win != GDK_WINDOW(playlistwin->window))
+        || pos != prev_pos)
     {
         prev_pos = pos;
         ctr = 0;
