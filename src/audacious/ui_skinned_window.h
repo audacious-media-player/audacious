@@ -49,7 +49,6 @@ struct _SkinnedWindow
   gint x,y;
 
   gint type;
-  GdkGC *gc;
   GtkWidget *fixed;
 };
 

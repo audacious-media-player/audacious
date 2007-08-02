@@ -322,8 +322,10 @@ pixmap_new_from_file(const gchar * filename)
     pixbuf2 = audacious_create_colorized_pixbuf(pixbuf, cfg.colorize_r, cfg.colorize_g, cfg.colorize_b);
     g_object_unref(pixbuf);
 
-    gdk_draw_pixbuf(pixmap, SKINNED_WINDOW(mainwin)->gc, pixbuf2, 0, 0, 0, 0, width, height,
-                    GDK_RGB_DITHER_MAX, 0, 0);
+    GdkGC *gc;
+    gc = gdk_gc_new(pixmap);
+    gdk_draw_pixbuf(pixmap, gc, pixbuf2, 0, 0, 0, 0, width, height, GDK_RGB_DITHER_MAX, 0, 0);
+    g_object_unref(gc);
     g_object_unref(pixbuf2);
 
     return pixmap;
