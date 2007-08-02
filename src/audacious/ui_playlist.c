@@ -664,7 +664,7 @@ playlistwin_resize(gint width, gint height)
     ui_skinned_playlist_slider_move_relative(playlistwin_slider, dx);
     ui_skinned_playlist_slider_resize_relative(playlistwin_slider, dy);
 
-    ui_skinned_textbox_resize_relative(playlistwin_sinfo, dx, 0);
+    ui_skinned_textbox_resize_relative(playlistwin_sinfo, dx);
     playlistwin_update_sinfo(playlist_get_active());
 
     ui_skinned_button_move_relative(playlistwin_shade, dx, 0);
