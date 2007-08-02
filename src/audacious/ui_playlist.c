@@ -2013,7 +2013,8 @@ playlistwin_fileinfopopup_probe(gpointer * filepopup_win)
     if (win == NULL
         || cfg.show_filepopup_for_tuple == FALSE
         || UI_SKINNED_PLAYLIST(playlistwin_list)->tooltips == FALSE
-        || pos != prev_pos)
+        || pos != prev_pos
+        || win != playlistwin_list->window)
     {
         prev_pos = pos;
         ctr = 0;
