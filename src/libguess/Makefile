@@ -12,6 +12,8 @@ SOURCES = \
 	guess.c \
 	arabic_impl.c \
 	cjk_impl.c \
+	greek_impl.c \
+	hebrew_impl.c \
 	russian_impl.c \
 	turkish_impl.c
 
