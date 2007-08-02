@@ -323,8 +323,7 @@ equalizerwin_press(GtkWidget * widget, GdkEventButton * event,
     }
 
     if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
-        ((cfg.easy_move || cfg.equalizer_shaded || event->y < 14) &&
-         !ui_skinned_window_widgetlist_contained(equalizerwin, event->x, event->y))) {
+        (cfg.easy_move || cfg.equalizer_shaded || event->y < 14)) {
          equalizerwin_raise();
          dock_move_press(dock_window_list, GTK_WINDOW(equalizerwin), event,
                          FALSE);

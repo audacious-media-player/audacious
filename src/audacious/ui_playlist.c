@@ -87,8 +87,6 @@ static GtkWidget *playlistwin_spause, *playlistwin_sstop;
 static GtkWidget *playlistwin_sfwd, *playlistwin_seject;
 static GtkWidget *playlistwin_sscroll_up, *playlistwin_sscroll_down;
 
-static GList *playlistwin_wlist = NULL;
-
 void playlistwin_select_search_cbt_cb( GtkWidget *called_cbt ,
                                               gpointer other_cbt );
 static gboolean playlistwin_select_search_kp_cb( GtkWidget *entry , GdkEventKey *event ,
@@ -429,11 +427,6 @@ playlistwin_release(GtkWidget * widget,
 
     if (dock_is_moving(GTK_WINDOW(playlistwin)))
        dock_move_release(GTK_WINDOW(playlistwin));
-    else
-    {
-       handle_release_cb(playlistwin_wlist, widget, event);
-       draw_playlist_window(FALSE);
-    }
 }
 
 void
@@ -641,7 +634,6 @@ playlistwin_resize(gint width, gint height)
 {
     gint tx, ty;
     gint dx, dy;
-    gboolean redraw;
 
     g_return_if_fail(width > 0 && height > 0);
 
@@ -697,19 +689,14 @@ playlistwin_resize(gint width, gint height)
     playlistwin_bg = gdk_pixmap_new(playlistwin->window, width, height, -1);
     playlistwin_set_mask();
 
-    widget_list_lock(playlistwin_wlist);
     GList *iter;
     for (iter = GTK_FIXED (SKINNED_WINDOW(playlistwin)->fixed)->children; iter; iter = g_list_next (iter)) {
          GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
          GtkWidget *child = child_data->widget;
          g_signal_emit_by_name(child, "redraw");
     }
-    widget_list_change_pixmap(playlistwin_wlist, playlistwin_bg);
     playlistwin_draw_frame();
-    widget_list_draw(playlistwin_wlist, &redraw, TRUE);
-    widget_list_clear_redraw(playlistwin_wlist);
 
-    widget_list_unlock(playlistwin_wlist);
     g_mutex_unlock(resize_mutex);
 
     gdk_window_set_back_pixmap(playlistwin->window, playlistwin_bg, 0);
@@ -740,11 +727,6 @@ playlistwin_motion(GtkWidget * widget,
     }
     else if (dock_is_moving(GTK_WINDOW(playlistwin)))
         dock_move_motion(GTK_WINDOW(playlistwin), event);
-    else
-    {
-        handle_motion_cb(playlistwin_wlist, widget, event);
-        draw_playlist_window(FALSE);
-    }
     gdk_flush();
 
     while ((gevent = gdk_event_get()) != NULL) gdk_event_free(gevent);
@@ -1133,16 +1115,13 @@ playlistwin_press(GtkWidget * widget,
             cfg.timer_mode = TIMER_ELAPSED;
     }
     else if (event->button == 1 && event->type == GDK_BUTTON_PRESS &&
-             !ui_skinned_window_widgetlist_contained(playlistwin, event->x,
-                                                     event->y) &&
              (cfg.easy_move || event->y < 14))
     {
         dock_move_press(dock_window_list, GTK_WINDOW(playlistwin), event,
                         FALSE);
         gtk_window_present(GTK_WINDOW(playlistwin));
     }
-    else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS &&
-             !ui_skinned_window_widgetlist_contained(playlistwin, event->x, event->y)
+    else if (event->button == 1 && event->type == GDK_2BUTTON_PRESS
              && event->y < 14) {
         /* double click on title bar */
         playlistwin_shade_toggle();
@@ -1171,9 +1150,6 @@ playlistwin_press(GtkWidget * widget,
     {
         GList *node;
 
-        handle_press_cb(playlistwin_wlist, widget, event);
-        draw_playlist_window(FALSE);
-
         node = playlist_get_selected(playlist);
 
         if (node != NULL)
@@ -1183,10 +1159,6 @@ playlistwin_press(GtkWidget * widget,
         }
 
         grab = FALSE;
-    }
-    else {
-        handle_press_cb(playlistwin_wlist, widget, event);
-        draw_playlist_window(FALSE);
     }
 
     if (grab)
@@ -1413,43 +1385,18 @@ playlistwin_draw_frame(void)
 void
 draw_playlist_window(gboolean force)
 {
-    gboolean redraw;
-    GList *wl;
-    Widget *w;
 
-    if (force)
+    if (force) {
         playlistwin_draw_frame();
-
-    widget_list_lock(playlistwin_wlist);
-    widget_list_draw(playlistwin_wlist, &redraw, force);
-
-    if (redraw || force) {
-        if (force) {
-            widget_list_unlock(playlistwin_wlist);
-            gdk_window_clear(playlistwin->window);
-            GList *iter;
-            for (iter = GTK_FIXED (SKINNED_WINDOW(playlistwin)->fixed)->children; iter; iter = g_list_next (iter)) {
-                GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
-                GtkWidget *child = child_data->widget;
-                gtk_widget_queue_draw(child);
-            }
+        gdk_window_clear(playlistwin->window);
+        GList *iter;
+        for (iter = GTK_FIXED (SKINNED_WINDOW(playlistwin)->fixed)->children; iter; iter = g_list_next (iter)) {
+            GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
+            GtkWidget *child = child_data->widget;
+            gtk_widget_queue_draw(child);
         }
-        else {
-            for (wl = playlistwin_wlist; wl; wl = g_list_next(wl)) {
-                w = WIDGET(wl->data);
-                if (w->redraw && w->visible) {
-                    gdk_window_clear_area(playlistwin->window, w->x, w->y,
-                                          w->width, w->height);
-                    w->redraw = FALSE;
-                }
-            }
-            widget_list_unlock(playlistwin_wlist);
-        }
-
         gdk_flush();
     }
-
-    widget_list_unlock(playlistwin_wlist);
 }
 
 

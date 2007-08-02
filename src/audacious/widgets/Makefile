@@ -19,7 +19,6 @@ CFLAGS += \
 	-I../../intl
 
 SOURCES = \
-	widget.c \
 	skin.c
 
 OBJECTS = ${SOURCES:.c=.o}

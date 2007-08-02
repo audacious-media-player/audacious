@@ -22,6 +22,6 @@
 #define _WIDGETCORE_H_
 
 #include "skin.h"
-#include "widget.h"
+#include <gtk/gtk.h>
 
 #endif
