@@ -127,8 +127,6 @@ static GtkWidget *mainwin_jtt = NULL;
 gint seek_state = MAINWIN_SEEK_NIL;
 gint seek_initial_pos = 0;
 
-static GdkPixmap *mainwin_bg = NULL, *mainwin_bg_x2 = NULL;
-
 static GtkWidget *mainwin_menubtn;
 static GtkWidget *mainwin_minimize, *mainwin_shade, *mainwin_close;
 
@@ -167,7 +165,6 @@ static GtkWidget *mainwin_sstop, *mainwin_sfwd, *mainwin_seject, *mainwin_about;
 
 static gint mainwin_timeout_id;
 
-static gboolean mainwin_force_redraw = FALSE;
 static gboolean mainwin_info_text_locked = FALSE;
 
 static int ab_position_a = -1;
@@ -181,7 +178,6 @@ static gint mainwin_idle_func(gpointer data);
 static void set_timer_mode_menu_cb(TimerMode mode);
 static void set_timer_mode(TimerMode mode);
 static void change_timer_mode(void);
-static void mainwin_refresh_hints(void);
 
 void mainwin_position_motion_cb(GtkWidget *widget, gint pos);
 void mainwin_position_release_cb(GtkWidget *widget, gint pos);
@@ -339,7 +335,6 @@ mainwin_set_shade_menu_cb(gboolean shaded)
     }
 
     ui_skinned_set_push_button_data(mainwin_shade, 0, cfg.player_shaded ? 27 : 18, 9, cfg.player_shaded ? 27 : 18);
-    draw_main_window(TRUE);
 }
 
 static void
@@ -537,55 +532,6 @@ mainwin_destroy(GtkWidget * widget, gpointer data)
     mainwin_quit_cb();
 }
 
-static void
-mainwin_draw_titlebar(gboolean focus)
-{
-    /* FIXME: uses SkinnedWindow::gc directly. -nenolod */
-    skin_draw_mainwin_titlebar(bmp_active_skin, mainwin_bg,
-                               SKINNED_WINDOW(mainwin)->gc,
-                               cfg.player_shaded, focus || !cfg.dim_titlebar);
-}
-
-void
-draw_main_window(gboolean force)
-{
-    if (!cfg.player_visible)
-        return;
-
-    if (force)
-        mainwin_refresh_hints();
-
-    if (force) {
-        if (!cfg.player_shaded)
-            skin_draw_pixmap(bmp_active_skin, mainwin_bg, SKINNED_WINDOW(mainwin)->gc,
-                             SKIN_MAIN, 0, 0, 0, 0, bmp_active_skin->properties.mainwin_width,
-                             bmp_active_skin->properties.mainwin_height);
-        mainwin_draw_titlebar(gtk_window_has_toplevel_focus
-                              (GTK_WINDOW(mainwin)));
-    }
-
-    if (force) {
-        if (cfg.doublesize) {
-            GdkPixmap *img2x = NULL;
-            img2x = create_dblsize_pixmap(mainwin_bg);
-            gdk_draw_drawable(mainwin_bg_x2, SKINNED_WINDOW(mainwin)->gc, img2x, 0, 0,
-                           0, 0, bmp_active_skin->properties.mainwin_width * 2,
-                           cfg.player_shaded ? MAINWIN_SHADED_HEIGHT *
-                           2 : bmp_active_skin->properties.mainwin_height * 2);
-            g_object_unref(img2x);
-        }
-        GList *iter;
-        for (iter = GTK_FIXED (SKINNED_WINDOW(mainwin)->fixed)->children; iter; iter = g_list_next (iter)) {
-            GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
-            GtkWidget *child = child_data->widget;
-            gtk_widget_queue_draw(child);
-        }
-
-        gdk_flush();
-    }
-}
-
-
 static gchar *mainwin_tb_old_text = NULL;
 
 void
@@ -635,7 +581,7 @@ mainwin_set_song_title(const gchar * title)
     gtk_window_set_title(GTK_WINDOW(mainwin), mainwin_title_text);
 }
 
-static void
+void
 mainwin_refresh_hints(void)
 {
     if (bmp_active_skin && bmp_active_skin->properties.mainwin_othertext
@@ -799,15 +745,6 @@ mainwin_refresh_hints(void)
         bmp_active_skin->properties.mainwin_width * (cfg.doublesize + 1),
         bmp_active_skin->properties.mainwin_height * (cfg.doublesize + 1));
 
-    g_object_unref(mainwin_bg);
-    g_object_unref(mainwin_bg_x2);
-        mainwin_bg = gdk_pixmap_new(mainwin->window,
-                bmp_active_skin->properties.mainwin_width,
-                bmp_active_skin->properties.mainwin_height, -1);
-        mainwin_bg_x2 = gdk_pixmap_new(mainwin->window,
-                bmp_active_skin->properties.mainwin_width * 2,
-                bmp_active_skin->properties.mainwin_height * 2, -1);
-        mainwin_set_back_pixmap();
     gdk_flush();
     }
 }
@@ -823,6 +760,7 @@ mainwin_set_song_info(gint bitrate,
 
     playback_set_sample_params(bitrate, frequency, n_channels);
 
+    GDK_THREADS_ENTER();
     if (bitrate != -1) {
         bitrate /= 1000;
 
@@ -874,7 +812,7 @@ mainwin_set_song_info(gint bitrate,
     title = playlist_get_info_text(playlist);
     mainwin_set_song_title(title);
     g_free(title);
-    mainwin_force_redraw = TRUE;
+    GDK_THREADS_LEAVE();
 }
 
 void
@@ -947,10 +885,7 @@ mainwin_mouse_button_release(GtkWidget * widget,
 
     if (dock_is_moving(GTK_WINDOW(mainwin))) {
         dock_move_release(GTK_WINDOW(mainwin));
-        draw_playlist_window(TRUE);
     }
-
-    draw_main_window(FALSE);
 
     return FALSE;
 }
@@ -984,8 +919,6 @@ mainwin_motion(GtkWidget * widget,
         event->x /= 2;
         event->y /= 2;
     }
-
-    draw_main_window(FALSE);
 
     gdk_flush();
 
@@ -1046,9 +979,6 @@ mainwin_mouse_button_press(GtkWidget * widget,
         mainwin_set_shade(!cfg.player_shaded);
         if (dock_is_moving(GTK_WINDOW(mainwin)))
             dock_move_release(GTK_WINDOW(mainwin));
-    }
-    else {
-        draw_main_window(FALSE);
     }
 
     if (event->button == 3) {
@@ -1281,16 +1211,6 @@ mainwin_configure(GtkWidget * window,
         gdk_window_get_deskrelative_origin(window->window,
                                            &cfg.player_x, &cfg.player_y);
     return FALSE;
-}
-
-void
-mainwin_set_back_pixmap(void)
-{
-    if (cfg.doublesize)
-        gdk_window_set_back_pixmap(mainwin->window, mainwin_bg_x2, 0);
-    else
-        gdk_window_set_back_pixmap(mainwin->window, mainwin_bg, 0);
-    gdk_window_clear(mainwin->window);
 }
 
 /*
@@ -1856,8 +1776,6 @@ mainwin_real_show(void)
                          !bmp_active_skin->properties.mainwin_height ? PLAYER_HEIGHT :
                 bmp_active_skin->properties.mainwin_height);
 
-    draw_main_window(TRUE);
-
     if (cfg.player_x != -1 && cfg.save_window_position)
         gtk_window_move(GTK_WINDOW(mainwin), cfg.player_x, cfg.player_y);
 
@@ -1893,6 +1811,11 @@ mainwin_real_show(void)
         gtk_widget_show(mainwin_vis);
     else
         gtk_widget_hide(mainwin_vis);
+
+    if (bmp_active_skin->properties.mainwin_menurow_visible)
+        gtk_widget_show(mainwin_menurow);
+    else
+        gtk_widget_hide(mainwin_menurow);
 }
 
 void
@@ -1952,13 +1875,6 @@ mainwin_set_doublesize(gboolean doublesize)
         cfg.player_shaded ? MAINWIN_SHADED_HEIGHT : bmp_active_skin->properties.mainwin_height,
         bmp_active_skin->properties.mainwin_width * 2, bmp_active_skin->properties.mainwin_height * 2);
 
-    if (cfg.doublesize) {
-        gdk_window_set_back_pixmap(mainwin->window, mainwin_bg_x2, 0);
-    }
-    else {
-        gdk_window_set_back_pixmap(mainwin->window, mainwin_bg, 0);
-    }
-
     GList *iter;
     for (iter = GTK_FIXED (SKINNED_WINDOW(mainwin)->fixed)->children; iter; iter = g_list_next (iter)) {
         GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
@@ -1966,7 +1882,7 @@ mainwin_set_doublesize(gboolean doublesize)
         g_signal_emit_by_name(child, "toggle-double-size");
     }
 
-    draw_main_window(TRUE);
+    mainwin_refresh_hints();
 }
 
 void
@@ -2860,8 +2776,6 @@ mainwin_create_window(void)
                      G_CALLBACK(mainwin_motion), NULL);
     g_signal_connect(mainwin, "configure_event",
                      G_CALLBACK(mainwin_configure), NULL);
-    g_signal_connect(mainwin, "style_set",
-                     G_CALLBACK(mainwin_set_back_pixmap), NULL);
 
     bmp_drag_dest_set(mainwin);
 
@@ -2878,13 +2792,6 @@ mainwin_create(void)
 
     gtk_window_add_accel_group( GTK_WINDOW(mainwin) , ui_manager_get_accel_group() );
 
-    mainwin_bg = gdk_pixmap_new(mainwin->window,
-                                bmp_active_skin->properties.mainwin_width,
-                bmp_active_skin->properties.mainwin_height, -1);
-    mainwin_bg_x2 = gdk_pixmap_new(mainwin->window,
-                                bmp_active_skin->properties.mainwin_width * 2,
-                bmp_active_skin->properties.mainwin_height * 2, -1);
-    mainwin_set_back_pixmap();
     mainwin_create_widgets();
 }
 
@@ -2983,18 +2890,12 @@ mainwin_idle_func(gpointer data)
 
     GDK_THREADS_ENTER();
 
-    draw_main_window(mainwin_force_redraw);
-
     if (!count) {
         read_volume(VOLSET_UPDATE);
         count = 10;
     }
     else
         count--;
-
-    mainwin_force_redraw = FALSE;
-    draw_equalizer_window(FALSE);
-    draw_playlist_window(FALSE);
 
     /* tristate buttons seek */
     if ( seek_state != MAINWIN_SEEK_NIL )

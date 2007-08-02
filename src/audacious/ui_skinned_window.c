@@ -26,11 +26,14 @@
 #include <glib/gmacros.h>
 #include <gtk/gtkmarshal.h>
 #include <gtk/gtkwindow.h>
+#include <string.h>
 
 #include "main.h"
 #include "dock.h"
 #include "ui_skinned_window.h"
 #include "ui_skinned_cursor.h"
+#include "util.h"
+#include "ui_playlist.h"
 
 static void ui_skinned_window_class_init(SkinnedWindowClass *klass);
 static void ui_skinned_window_init(GtkWidget *widget);
@@ -99,6 +102,79 @@ ui_skinned_window_motion_notify_event(GtkWidget *widget,
     return FALSE;
 }
 
+static gboolean ui_skinned_window_expose(GtkWidget *widget, GdkEventExpose *event) {
+    SkinnedWindow *window = SKINNED_WINDOW(widget);
+
+    GdkPixmap *obj = NULL;
+    GdkGC *gc;
+
+    gint width = 0, height = 0;
+    switch (window->type) {
+        case WINDOW_MAIN:
+            width = bmp_active_skin->properties.mainwin_width;
+            height = bmp_active_skin->properties.mainwin_height;
+            break;
+        case WINDOW_EQ:
+            width = 275;
+            height = 116;
+            break;
+        case WINDOW_PLAYLIST:
+            width = playlistwin_get_width();
+            height = cfg.playlist_height;
+            break;
+        default:
+            return FALSE;
+    }
+    obj = gdk_pixmap_new(NULL, width, height, gdk_rgb_get_visual()->depth);
+    gc = gdk_gc_new(obj);
+
+    gboolean focus = gtk_window_has_toplevel_focus(GTK_WINDOW(widget));
+
+    switch (window->type) {
+        case WINDOW_MAIN:
+            skin_draw_pixmap(bmp_active_skin, obj, gc, SKIN_MAIN, 0, 0, 0, 0, width, height);
+            skin_draw_mainwin_titlebar(bmp_active_skin, obj, gc, cfg.player_shaded, focus || !cfg.dim_titlebar);
+            break;
+        case WINDOW_EQ:
+            skin_draw_pixmap(bmp_active_skin, obj, gc, SKIN_EQMAIN, 0, 0, 0, 0, width, height);
+            if (focus || !cfg.dim_titlebar) {
+                if (!cfg.equalizer_shaded)
+                    skin_draw_pixmap(bmp_active_skin, obj, gc, SKIN_EQMAIN, 0, 134, 0, 0, width, 14);
+                else
+                    skin_draw_pixmap(bmp_active_skin, obj, gc, SKIN_EQ_EX, 0, 0, 0, 0, width, 14);
+            } else {
+                if (!cfg.equalizer_shaded)
+                    skin_draw_pixmap(bmp_active_skin, obj, gc, SKIN_EQMAIN, 0, 149, 0, 0, width, 14);
+                else
+                    skin_draw_pixmap(bmp_active_skin, obj, gc, SKIN_EQ_EX, 0, 15, 0, 0, width, 14);
+            }
+            break;
+        case WINDOW_PLAYLIST:
+            focus |= !cfg.dim_titlebar;
+            if (cfg.playlist_shaded) {
+                skin_draw_playlistwin_shaded(bmp_active_skin, obj, gc, playlistwin_get_width(), focus);
+            } else {
+                skin_draw_playlistwin_frame(bmp_active_skin, obj, gc, playlistwin_get_width(), cfg.playlist_height, focus);
+            }
+            break;
+    }
+
+    GdkPixmap *image = NULL;
+
+    if (window->type != WINDOW_PLAYLIST && cfg.doublesize) {
+        image = create_dblsize_pixmap(obj);
+    } else {
+        image = gdk_pixmap_new(NULL, width, height, gdk_rgb_get_visual()->depth);
+        gdk_draw_drawable (image, gc, obj, 0, 0, 0, 0, width, height);
+    }
+    g_object_unref(obj);
+    gdk_draw_drawable (widget->window, gc, image, 0, 0, 0, 0, width*(1+cfg.doublesize), height*(1+cfg.doublesize));
+    g_object_unref(gc);
+    g_object_unref(image);
+
+    return FALSE;
+}
+
 static void
 ui_skinned_window_class_init(SkinnedWindowClass *klass)
 {
@@ -110,6 +186,7 @@ ui_skinned_window_class_init(SkinnedWindowClass *klass)
 
     widget_class->configure_event = ui_skinned_window_configure;
     widget_class->motion_notify_event = ui_skinned_window_motion_notify_event;
+    widget_class->expose_event = ui_skinned_window_expose;
 }
 
 void
@@ -154,7 +231,7 @@ ui_skinned_window_new(const gchar *wmclass_name)
                           GDK_FOCUS_CHANGE_MASK | GDK_BUTTON_MOTION_MASK |
                           GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
                           GDK_SCROLL_MASK | GDK_KEY_PRESS_MASK |
-                          GDK_VISIBILITY_NOTIFY_MASK);
+                          GDK_VISIBILITY_NOTIFY_MASK | GDK_EXPOSURE_MASK);
     gtk_widget_realize(GTK_WIDGET(widget));
 
     dock_window_list = dock_window_set_decorated(dock_window_list,
@@ -164,6 +241,12 @@ ui_skinned_window_new(const gchar *wmclass_name)
     ui_skinned_cursor_set(GTK_WIDGET(widget));
 
     SKINNED_WINDOW(widget)->gc = gdk_gc_new(widget->window);
+    if (!strcmp(wmclass_name, "player"))
+        SKINNED_WINDOW(widget)->type = WINDOW_MAIN;
+    if (!strcmp(wmclass_name, "equalizer"))
+        SKINNED_WINDOW(widget)->type = WINDOW_EQ;
+    if (!strcmp(wmclass_name, "playlist"))
+        SKINNED_WINDOW(widget)->type = WINDOW_PLAYLIST;
 
     /* GtkFixed hasn't got its GdkWindow, this means that it can be used to
        display widgets while the logo below will be displayed anyway;
@@ -177,4 +260,17 @@ ui_skinned_window_new(const gchar *wmclass_name)
     SKINNED_WINDOW(widget)->fixed = gtk_fixed_new();
     gtk_container_add(GTK_CONTAINER(widget), GTK_WIDGET(SKINNED_WINDOW(widget)->fixed));
     return widget;
+}
+
+void ui_skinned_window_draw_all(GtkWidget *widget) {
+    if (SKINNED_WINDOW(widget)->type == WINDOW_MAIN)
+        mainwin_refresh_hints();
+
+    gtk_widget_queue_draw(widget);
+    GList *iter;
+    for (iter = GTK_FIXED (SKINNED_WINDOW(widget)->fixed)->children; iter; iter = g_list_next (iter)) {
+         GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
+         GtkWidget *child = child_data->widget;
+         gtk_widget_queue_draw(child);
+    }
 }

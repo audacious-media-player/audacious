@@ -32,6 +32,12 @@
 # define SKINNED_WINDOW_TYPE		GTK_WINDOW_TOPLEVEL
 #endif
 
+enum {
+    WINDOW_MAIN,
+    WINDOW_EQ,
+    WINDOW_PLAYLIST
+};
+
 typedef struct _SkinnedWindow SkinnedWindow;
 typedef struct _SkinnedWindowClass SkinnedWindowClass;
 
@@ -42,6 +48,7 @@ struct _SkinnedWindow
   GtkWidget *canvas;
   gint x,y;
 
+  gint type;
   GdkGC *gc;
   GtkWidget *fixed;
 };
@@ -53,5 +60,6 @@ struct _SkinnedWindowClass
 
 extern GType ui_skinned_window_get_type(void);
 extern GtkWidget *ui_skinned_window_new(const gchar *wmclass_name);
+extern void ui_skinned_window_draw_all(GtkWidget *widget);
 
 #endif

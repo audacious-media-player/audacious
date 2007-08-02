@@ -62,6 +62,7 @@
 #include "ui_preferences.h"
 #include "ui_equalizer.h"
 #include "ui_skinned_playlist.h"
+#include "ui_skinned_window.h"
 
 #include "build_stamp.h"
 
@@ -891,7 +892,6 @@ on_mainwin_font_button_font_set(GtkFontButton * button,
     cfg.mainwin_font = g_strdup(gtk_font_button_get_font_name(button));
 
     ui_skinned_textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
-    draw_main_window(TRUE);
 }
 
 static void
@@ -911,10 +911,9 @@ on_use_bitmap_fonts_toggled(GtkToggleButton * button,
     ui_skinned_textbox_set_xfont(mainwin_info, cfg.mainwin_use_xfont, cfg.mainwin_font);
     playlistwin_set_sinfo_font(cfg.playlist_font);
 
-    draw_main_window(TRUE);
     if (cfg.playlist_shaded) {
         playlistwin_update_list(playlist_get_active());
-        draw_playlist_window(TRUE);
+        ui_skinned_window_draw_all(playlistwin);
     }
 }
 
@@ -935,7 +934,7 @@ on_playlist_font_button_font_set(GtkFontButton * button,
     ui_skinned_playlist_set_font(cfg.playlist_font);
     playlistwin_set_sinfo_font(cfg.playlist_font);  /* propagate font setting to playlistwin_sinfo */
     playlistwin_update_list(playlist_get_active());
-    draw_playlist_window(TRUE);
+    gtk_widget_queue_draw(playlistwin_list);
 }
 
 static void
@@ -958,7 +957,7 @@ on_playlist_show_pl_numbers_toggled(GtkToggleButton * button,
 {
     cfg.show_numbers_in_pl = gtk_toggle_button_get_active(button);
     playlistwin_update_list(playlist_get_active());
-    draw_playlist_window(TRUE);
+    gtk_widget_queue_draw(playlistwin_list);
 }
 
 static void
@@ -974,7 +973,7 @@ on_playlist_show_pl_separator_toggled(GtkToggleButton * button,
 {
     cfg.show_separator_in_pl = gtk_toggle_button_get_active(button);
     playlistwin_update_list(playlist_get_active());
-    draw_playlist_window(TRUE);
+    gtk_widget_queue_draw(playlistwin_list);
 }
 
 /* format detection */
@@ -2132,9 +2131,9 @@ on_red_scale_value_changed(GtkHScale *scale, gpointer data)
 
 		/* reload the skin to apply the change */
 		skin_reload_forced();
-		draw_main_window(TRUE);
-		draw_equalizer_window(TRUE);
-		draw_playlist_window(TRUE);
+		ui_skinned_window_draw_all(mainwin);
+		ui_skinned_window_draw_all(equalizerwin);
+		ui_skinned_window_draw_all(playlistwin);
 	}
 }
 
@@ -2153,9 +2152,9 @@ on_green_scale_value_changed(GtkHScale *scale, gpointer data)
 
 		/* reload the skin to apply the change */
 		skin_reload_forced();
-		draw_main_window(TRUE);
-		draw_equalizer_window(TRUE);
-		draw_playlist_window(TRUE);
+		ui_skinned_window_draw_all(mainwin);
+		ui_skinned_window_draw_all(equalizerwin);
+		ui_skinned_window_draw_all(playlistwin);
 	}
 }
 
@@ -2174,9 +2173,9 @@ on_blue_scale_value_changed(GtkHScale *scale, gpointer data)
 
 		/* reload the skin to apply the change */
 		skin_reload_forced();
-		draw_main_window(TRUE);
-		draw_equalizer_window(TRUE);
-		draw_playlist_window(TRUE);
+		ui_skinned_window_draw_all(mainwin);
+		ui_skinned_window_draw_all(equalizerwin);
+		ui_skinned_window_draw_all(playlistwin);
 	}
 }
 

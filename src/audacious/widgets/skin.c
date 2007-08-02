@@ -168,9 +168,9 @@ bmp_active_skin_load(const gchar * path)
 
     skin_setup_masks(bmp_active_skin);
 
-    draw_main_window(TRUE);
-    draw_playlist_window(TRUE);
-    draw_equalizer_window(TRUE);
+    ui_skinned_window_draw_all(mainwin);
+    ui_skinned_window_draw_all(equalizerwin);
+    ui_skinned_window_draw_all(playlistwin);
 
     playlistwin_update_list(playlist_get_active());
 

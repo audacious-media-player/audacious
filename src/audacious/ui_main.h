@@ -150,6 +150,7 @@ void mainwin_set_balance_slider(gint percent);
 
 void mainwin_vis_set_type(VisType mode);
 
+void mainwin_refresh_hints(void);
 void mainwin_set_info_text(void);
 void mainwin_set_song_info(gint rate, gint freq, gint nch);
 void mainwin_clear_song_info(void);

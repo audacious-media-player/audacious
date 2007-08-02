@@ -156,8 +156,6 @@ equalizerwin_set_doublesize(gboolean ds)
         GtkWidget *child = child_data->widget;
         g_signal_emit_by_name(child, "toggle-double-size");
     }
-
-    draw_equalizer_window(TRUE);
 }
 
 void
@@ -187,8 +185,6 @@ equalizerwin_set_shade_menu_cb(gboolean shaded)
         gtk_widget_hide(equalizerwin_volume);
         gtk_widget_hide(equalizerwin_balance);
     }
-
-    draw_equalizer_window(TRUE);
 }
 
 static void
@@ -253,61 +249,6 @@ equalizerwin_auto_pushed(void)
     cfg.equalizer_autoload = UI_SKINNED_BUTTON(equalizerwin_auto)->inside;
 }
 
-static void equalizerwin_draw_titlebar() {
-        if (gtk_window_has_toplevel_focus(GTK_WINDOW(equalizerwin)) ||
-            !cfg.dim_titlebar) {
-            if (!cfg.equalizer_shaded)
-                skin_draw_pixmap(bmp_active_skin, equalizerwin_bg,
-                                 SKINNED_WINDOW(equalizerwin)->gc, SKIN_EQMAIN, 0, 134, 0,
-                                 0, 275, 14);
-            else
-                skin_draw_pixmap(bmp_active_skin, equalizerwin_bg,
-                                 SKINNED_WINDOW(equalizerwin)->gc, SKIN_EQ_EX, 0, 0, 0, 0,
-                                 275, 14);
-        }
-        else {
-            if (!cfg.equalizer_shaded)
-                skin_draw_pixmap(bmp_active_skin, equalizerwin_bg,
-                                 SKINNED_WINDOW(equalizerwin)->gc, SKIN_EQMAIN, 0, 149, 0,
-                                 0, 275, 14);
-            else
-                skin_draw_pixmap(bmp_active_skin, equalizerwin_bg,
-                                 SKINNED_WINDOW(equalizerwin)->gc, SKIN_EQ_EX, 0, 15, 0, 0,
-                                 275, 14);
-        }
-}
-
-void
-draw_equalizer_window(gboolean force)
-{
-    if (!cfg.equalizer_visible)
-        return;
-
-    if (force) {
-        if (!cfg.equalizer_shaded)
-            skin_draw_pixmap(bmp_active_skin, equalizerwin_bg, SKINNED_WINDOW(equalizerwin)->gc,
-                             SKIN_EQMAIN, 0, 0, 0, 0, 275, 116);
-            equalizerwin_draw_titlebar();
-
-        GList *iter;
-        for (iter = GTK_FIXED (SKINNED_WINDOW(equalizerwin)->fixed)->children; iter; iter = g_list_next (iter)) {
-             GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
-             GtkWidget *child = child_data->widget;
-             gtk_widget_queue_draw(child);
-        }
-
-        if (cfg.doublesize && cfg.eq_doublesize_linked) {
-            GdkPixmap *img2;
-            img2 = create_dblsize_pixmap(equalizerwin_bg);
-            gdk_draw_drawable(equalizerwin_bg_x2, SKINNED_WINDOW(equalizerwin)->gc, img2, 0, 0, 0, 0, 550, 232);
-            g_object_unref(img2);
-        }
-
-        gdk_window_clear(equalizerwin->window);
-        gdk_flush();
-    }
-}
-
 gboolean
 equalizerwin_press(GtkWidget * widget, GdkEventButton * event,
                    gpointer callback_data)
@@ -366,8 +307,6 @@ equalizerwin_release(GtkWidget * widget,
     if (dock_is_moving(GTK_WINDOW(equalizerwin))) {
         dock_move_release(GTK_WINDOW(equalizerwin));
     }
-
-    draw_equalizer_window(FALSE);
 
     return FALSE;
 }
@@ -712,8 +651,6 @@ equalizerwin_real_show(void)
     else
         gtk_widget_set_size_request(equalizerwin, 275,
                                     (cfg.equalizer_shaded ? 14 : 116));
-    gdk_flush();
-    draw_equalizer_window(TRUE);
     cfg.equalizer_visible = TRUE;
     UI_SKINNED_BUTTON(mainwin_eq)->inside = TRUE;
     gtk_widget_show_all(equalizerwin);

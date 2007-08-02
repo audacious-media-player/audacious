@@ -92,8 +92,6 @@ void playlistwin_select_search_cbt_cb( GtkWidget *called_cbt ,
 static gboolean playlistwin_select_search_kp_cb( GtkWidget *entry , GdkEventKey *event ,
                                                  gpointer searchdlg_win );
 
-static void playlistwin_draw_frame(void);
-
 static gboolean playlistwin_fileinfopopup_probe(gpointer * filepopup_win);
 
 static gboolean playlistwin_resizing = FALSE;
@@ -392,8 +390,6 @@ playlistwin_set_shade(gboolean shaded)
                       playlistwin_get_height());
 
     playlistwin_set_mask();
-
-    draw_playlist_window(TRUE);
 }
 
 static void
@@ -695,12 +691,7 @@ playlistwin_resize(gint width, gint height)
          GtkWidget *child = child_data->widget;
          g_signal_emit_by_name(child, "redraw");
     }
-    playlistwin_draw_frame();
-
     g_mutex_unlock(resize_mutex);
-
-    gdk_window_set_back_pixmap(playlistwin->window, playlistwin_bg, 0);
-    gdk_window_clear(playlistwin->window);
 }
 
 static void
@@ -1172,28 +1163,6 @@ playlistwin_press(GtkWidget * widget,
 }
 
 static gboolean
-playlistwin_focus_in(GtkWidget * widget, GdkEvent * event, gpointer data)
-{
-    draw_playlist_window(TRUE);
-    return FALSE;
-}
-
-static gboolean
-playlistwin_focus_out(GtkWidget * widget,
-                      GdkEventButton * event, gpointer data)
-{
-    draw_playlist_window(TRUE);
-    return FALSE;
-}
-
-void
-playlistwin_set_back_pixmap(void)
-{
-    gdk_window_set_back_pixmap(playlistwin->window, playlistwin_bg, 0);
-    gdk_window_clear(playlistwin->window);
-}
-
-static gboolean
 playlistwin_delete(GtkWidget * w, gpointer data)
 {
     playlistwin_hide();
@@ -1361,44 +1330,6 @@ playlistwin_keypress(GtkWidget * w, GdkEventKey * event, gpointer data)
 
     return TRUE;
 }
-
-static void
-playlistwin_draw_frame(void)
-{
-    gboolean focus =
-        gtk_window_has_toplevel_focus(GTK_WINDOW(playlistwin)) ||
-        !cfg.dim_titlebar;
-
-    if (cfg.playlist_shaded) {
-        skin_draw_playlistwin_shaded(bmp_active_skin,
-                                     playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
-                                     playlistwin_get_width(), focus);
-    }
-    else {
-        skin_draw_playlistwin_frame(bmp_active_skin,
-                                    playlistwin_bg, SKINNED_WINDOW(playlistwin)->gc,
-                                    playlistwin_get_width(),
-                                    cfg.playlist_height, focus);
-    }
-}
-
-void
-draw_playlist_window(gboolean force)
-{
-
-    if (force) {
-        playlistwin_draw_frame();
-        gdk_window_clear(playlistwin->window);
-        GList *iter;
-        for (iter = GTK_FIXED (SKINNED_WINDOW(playlistwin)->fixed)->children; iter; iter = g_list_next (iter)) {
-            GtkFixedChild *child_data = (GtkFixedChild *) iter->data;
-            GtkWidget *child = child_data->widget;
-            gtk_widget_queue_draw(child);
-        }
-        gdk_flush();
-    }
-}
-
 
 void
 playlistwin_hide_timer(void)
@@ -1669,12 +1600,6 @@ playlistwin_create_window(void)
                      G_CALLBACK(playlistwin_enter), NULL);
     g_signal_connect(playlistwin, "leave_notify_event",
                      G_CALLBACK(playlistwin_leave), NULL);
-    g_signal_connect_after(playlistwin, "focus_in_event",
-                           G_CALLBACK(playlistwin_focus_in), NULL);
-    g_signal_connect_after(playlistwin, "focus_out_event",
-                           G_CALLBACK(playlistwin_focus_out), NULL);
-    g_signal_connect(playlistwin, "style_set",
-                     G_CALLBACK(playlistwin_set_back_pixmap), NULL);
 
     bmp_drag_dest_set(playlistwin);
 
@@ -1705,12 +1630,6 @@ playlistwin_create(void)
 {
     resize_mutex = g_mutex_new();
     playlistwin_create_window();
-
-    /* create GC and back pixmap for custom widget to draw on */
-    playlistwin_bg = gdk_pixmap_new(playlistwin->window,
-                                    playlistwin_get_width(),
-                                    playlistwin_get_height_unshaded(), -1);
-    gdk_window_set_back_pixmap(playlistwin->window, playlistwin_bg, 0);
 
     playlistwin_create_widgets();
     playlistwin_update_info(playlist_get_active());
